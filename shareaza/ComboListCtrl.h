@@ -1,7 +1,7 @@
 //
 // ComboListCtrl.h
 //
-// Copyright (c) Shareaza Development Team, 2008.
+// Copyright (c) Shareaza Development Team, 2008-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -21,7 +21,7 @@
 
 #pragma once
 
-#include "CtrlCoolTip.h"
+#include "CtrlLibraryTip.h"
 
 
 class CComboListCtrl : public CListCtrl
@@ -37,13 +37,13 @@ public:
 	typedef std::vector< CIntIntMap > CIntIntMapVector;
 	typedef std::map< int, CIntStringMap > CIntIntStringMapMap;
 
-	void EnableTips(auto_ptr< CCoolTipCtrl > pTip);
+	void EnableTips(auto_ptr< CLibraryTipCtrl > pTip);
 	int GetColumnData(int iItem, int iColumn) const;
 	void SetColumnData(int iItem, int iColumn, int iData);
 	void SetColumnValues(int iColumn, const CIntStringMap& oValues);
 
 protected:
-	auto_ptr< CCoolTipCtrl >	m_pTip;
+	auto_ptr< CLibraryTipCtrl >	m_pTip;
 	CComboBox*					m_pCombo;
 	int							m_iSelectedItem;
 	int							m_iSelectedSubItem;

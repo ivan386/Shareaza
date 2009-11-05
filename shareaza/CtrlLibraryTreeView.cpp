@@ -109,7 +109,6 @@ CLibraryTreeView::CLibraryTreeView()
 , m_nScroll( 0 )
 , m_nSelected( 0 )
 , m_nCleanCookie( 0 )
-, m_pTip( NULL )
 , m_pSelFirst( NULL )
 , m_pSelLast( NULL )
 , m_pFocus( NULL )
@@ -133,7 +132,11 @@ void CLibraryTreeView::SetVirtual(BOOL bVirtual)
 	if ( bVirtual == m_bVirtual ) return;
 
 	m_bVirtual = bVirtual;
-	SetToolTip( m_bVirtual ? (CCoolTipCtrl*)&m_wndAlbumTip : (CCoolTipCtrl*)&m_wndFolderTip );
+	
+	m_wndAlbumTip.Hide();
+	m_wndFolderTip.Hide();
+	m_wndAlbumTip.SetOwner( this );
+	m_wndFolderTip.SetOwner( this );
 
 	Clear();
 }
@@ -167,13 +170,6 @@ BOOL CLibraryTreeView::Create(CWnd* pParentWnd)
 		WS_TABSTOP|WS_VSCROLL, rect, pParentWnd, IDC_LIBRARY_TREE, NULL );
 }
 
-void CLibraryTreeView::SetToolTip(CCoolTipCtrl* pTip)
-{
-	if ( m_pTip ) m_pTip->Hide();
-	m_pTip = pTip;
-	if ( m_pTip ) m_pTip->SetOwner( this );
-}
-
 void CLibraryTreeView::Clear()
 {
 	CQuickLock( Library.m_pSection );
@@ -189,7 +185,8 @@ void CLibraryTreeView::Clear()
 	m_pFocus		= NULL;
 	m_pDropItem		= NULL;
 
-	if ( m_pTip ) m_pTip->Hide();
+	m_wndAlbumTip.Hide();
+	m_wndFolderTip.Hide();
 
 	// NotifySelection(); NOT NOTIFIED
 	UpdateScroll();
@@ -519,7 +516,8 @@ void CLibraryTreeView::OnLButtonDown(UINT nFlags, CPoint point)
 
 	SetFocus();
 
-	if ( m_pTip ) m_pTip->Hide();
+	m_wndAlbumTip.Hide();
+	m_wndFolderTip.Hide();
 
 	if ( pHit && !pHit->empty() && point.x >= rc.left && point.x < rc.left + 16 )
 	{
@@ -597,15 +595,19 @@ void CLibraryTreeView::OnMouseMove(UINT nFlags, CPoint point)
 	else
 		m_bDrag = FALSE;
 
-	if ( ! m_bDrag && m_pTip != NULL )
+	if ( ! m_bDrag )
 	{
 		if ( CLibraryTreeItem* pItem = HitTest( point ) )
 		{
-			m_pTip->Show( pItem->m_pPhysical ? (LPVOID)pItem->m_pPhysical : (LPVOID)pItem->m_pVirtual );
+			if ( pItem->m_pPhysical )
+				m_wndFolderTip.Show( pItem->m_pPhysical );
+			else
+				m_wndAlbumTip.Show( pItem->m_pVirtual );
 		}
 		else
 		{
-			m_pTip->Hide();
+			m_wndAlbumTip.Hide();
+			m_wndFolderTip.Hide();
 		}
 	}
 
@@ -625,7 +627,8 @@ void CLibraryTreeView::OnKeyDown(UINT nChar, UINT /*nRepCnt*/, UINT /*nFlags*/)
 	BOOL bChanged = FALSE;
 	CRect rc;
 
-	if ( m_pTip ) m_pTip->Hide();
+	m_wndAlbumTip.Hide();
+	m_wndFolderTip.Hide();
 
 	if ( nChar == VK_HOME || ( nChar == VK_UP && m_pFocus == NULL ) )
 	{
@@ -2056,6 +2059,8 @@ BOOL CLibraryTreeView::OnDrop(IDataObject* pDataObj, DWORD grfKeyState, POINT pt
 			RedrawWindow();
 		}
 	}
+
+	CQuickLock oLock( Library.m_pSection );
 
 	if ( pHit )
 	{

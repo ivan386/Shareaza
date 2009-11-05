@@ -357,7 +357,7 @@ STDMETHODIMP CLibraryCollectionView::External::XView::Hover(BSTR sURN)
 	if ( pView->m_nWebIndex != 0 )
 	{
 		HWND hWnd = pView->m_pWebCtrl->GetSafeHwnd();
-		pView->GetToolTip()->Show( reinterpret_cast<void*>(&pView->m_nWebIndex), hWnd );
+		pView->GetToolTip()->Show( pView->m_nWebIndex, hWnd );
 	}
 	else
 	{

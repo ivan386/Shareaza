@@ -1,7 +1,7 @@
 //
 // CtrlTipList.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,49 +19,28 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_CTRLTIPLIST_H__DAA67E67_69E9_400A_9DA9_6D38FC119CC5__INCLUDED_)
-#define AFX_CTRLTIPLIST_H__DAA67E67_69E9_400A_9DA9_6D38FC119CC5__INCLUDED_
-
 #pragma once
 
-#include "CtrlCoolTip.h"
+#include "CtrlNeighbourTip.h"
 
 
 class CTipListCtrl : public CListCtrl
 {
-// Construction
+	DECLARE_DYNAMIC(CTipListCtrl)
+
 public:
 	CTipListCtrl();
 	virtual ~CTipListCtrl();
 
-	DECLARE_DYNAMIC(CTipListCtrl)
+	void	SetTip(CNeighbourTipCtrl* pTip);
 
-// Attributes
 protected:
-	CCoolTipCtrl*	m_pTip;
+	CNeighbourTipCtrl*	m_pTip;
 
-// Operations
-public:
-	void	SetTip(CCoolTipCtrl* pTip);
-
-// Overrides
-public:
-	//{{AFX_VIRTUAL(CTipListCtrl)
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
-	//{{AFX_MSG(CTipListCtrl)
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
-	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()
-
 };
-
-//{{AFX_INSERT_LOCATION}}
-
-#endif // !defined(AFX_CTRLTIPLIST_H__DAA67E67_69E9_400A_9DA9_6D38FC119CC5__INCLUDED_)

@@ -1,7 +1,7 @@
 //
 // ComboListCtrl.cpp
 //
-// Copyright (c) Shareaza Development Team, 2008.
+// Copyright (c) Shareaza Development Team, 2008-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -111,7 +111,7 @@ void CComboListCtrl::OnMouseMove(UINT nFlags, CPoint point)
 		int iItem = HitTest( point );
 		if ( iItem >= 0 )
 		{
-			m_pTip->Show( (void*)GetItemData( iItem ) );
+			m_pTip->Show( (CShareazaFile*)GetItemData( iItem ) );
 		}
 		else
 		{
@@ -180,7 +180,7 @@ void CComboListCtrl::Hide()
 	}
 }
 
-void CComboListCtrl::EnableTips(auto_ptr< CCoolTipCtrl > pTip)
+void CComboListCtrl::EnableTips(auto_ptr< CLibraryTipCtrl > pTip)
 {
 	m_pTip = pTip;
 }

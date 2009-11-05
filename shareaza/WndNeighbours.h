@@ -1,7 +1,7 @@
 //
 // WndNeighbours.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -26,7 +26,6 @@
 
 #include "WndPanel.h"
 #include "CtrlTipList.h"
-#include "CtrlNeighbourTip.h"
 
 class CNeighbour;
 

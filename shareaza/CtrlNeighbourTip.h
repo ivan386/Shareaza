@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_CTRLNEIGHBOURTIP_H__07D9C280_7166_4F2E_932B_1C9F5DB936C2__INCLUDED_)
-#define AFX_CTRLNEIGHBOURTIP_H__07D9C280_7166_4F2E_932B_1C9F5DB936C2__INCLUDED_
-
 #pragma once
 
 #include "CtrlCoolTip.h"
@@ -31,39 +28,33 @@ class CGraphItem;
 
 class CNeighbourTipCtrl : public CCoolTipCtrl
 {
-// Construction
+	DECLARE_DYNAMIC(CNeighbourTipCtrl)
+
 public:
 	CNeighbourTipCtrl();
 	virtual ~CNeighbourTipCtrl();
 
-// Attributes
-public:
+	void Show(DWORD_PTR pContext, HWND hAltWnd = NULL)
+	{
+		bool bChanged = ( pContext != m_nNeighbour );
+		m_nNeighbour = pContext;
+		m_hAltWnd = hAltWnd;
+		ShowImpl( bChanged );
+	}
+
+protected:
+	DWORD_PTR	m_nNeighbour;
 	CLineGraph*	m_pGraph;
 	CGraphItem*	m_pItemIn;
 	CGraphItem*	m_pItemOut;
 
-// Operations
-protected:
 	virtual BOOL OnPrepare();
 	virtual void OnShow();
 	virtual void OnHide();
 	virtual void OnCalcSize(CDC* pDC);
 	virtual void OnPaint(CDC* pDC);
 
-// Overrides
-public:
-	//{{AFX_VIRTUAL(CNeighbourTipCtrl)
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
-	//{{AFX_MSG(CNeighbourTipCtrl)
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
-	//}}AFX_MSG
+
 	DECLARE_MESSAGE_MAP()
-
 };
-
-//{{AFX_INSERT_LOCATION}}
-
-#endif // !defined(AFX_CTRLNEIGHBOURTIP_H__07D9C280_7166_4F2E_932B_1C9F5DB936C2__INCLUDED_)

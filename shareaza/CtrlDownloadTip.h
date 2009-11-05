@@ -1,7 +1,7 @@
 //
 // CtrlDownloadTip.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -32,15 +32,33 @@ class CGraphItem;
 
 class CDownloadTipCtrl : public CCoolTipCtrl
 {
-// Construction
+	DECLARE_DYNAMIC(CDownloadTipCtrl)
+
 public:
 	CDownloadTipCtrl();
 	virtual ~CDownloadTipCtrl();
 
-	DECLARE_DYNAMIC(CDownloadTipCtrl)
+	void Show(CDownload* pContext, HWND hAltWnd = NULL)
+	{
+		bool bChanged = ( pContext != m_pDownload );
+		m_pDownload = pContext;
+		m_pSource = NULL;
+		m_hAltWnd = hAltWnd;
+		ShowImpl( bChanged );
+	}
 
-// Attributes
+	void Show(CDownloadSource* pContext, HWND hAltWnd = NULL)
+	{
+		bool bChanged = ( pContext != m_pSource );
+		m_pDownload = NULL;
+		m_pSource = pContext;
+		m_hAltWnd = hAltWnd;
+		ShowImpl( bChanged );
+	}
+
 protected:
+	CDownload*			m_pDownload;
+	CDownloadSource*	m_pSource;
 	CString			m_sName;
 	CString			m_sSHA1;
 	CString			m_sTiger;
@@ -52,10 +70,8 @@ protected:
 	CString			m_sType;
 	CString			m_sCountryName;
 	int				m_nIcon;
-protected:
 	CLineGraph*		m_pGraph;
 	CGraphItem*		m_pItem;
-protected:
 	CArray< CString >	m_pHeaderName;
 	CArray< CString >	m_pHeaderValue;
 	int				m_nHeaderWidth;
@@ -63,34 +79,23 @@ protected:
 	BOOL			m_bDrawGraph;		//Draw the download graph?
 	BOOL			m_bDrawError;		//Display the tracker error?
 
-// Operations
-protected:
 	virtual BOOL OnPrepare();
 	virtual void OnCalcSize(CDC* pDC);
 	virtual void OnShow();
 	virtual void OnHide();
 	virtual void OnPaint(CDC* pDC);
-protected:
+
 	void OnCalcSize(CDC* pDC, CDownload* pDownload);
 	void OnCalcSize(CDC* pDC, CDownloadSource* pSource);
 	void OnPaint(CDC* pDC, CDownload* pDownload);
 	void OnPaint(CDC* pDC, CDownloadSource* pSource);
-protected:
+
 	void PrepareDownloadInfo(CDownload* pDownload);
 	void PrepareFileInfo(CShareazaFile* pDownload);
 	void DrawProgressBar(CDC* pDC, CPoint* pPoint, CDownload* pDownload);
 	void DrawProgressBar(CDC* pDC, CPoint* pPoint, CDownloadSource* pSource);
 
-// Overrides
-public:
-	//{{AFX_VIRTUAL(CDownloadTipCtrl)
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
-	//{{AFX_MSG(CDownloadTipCtrl)
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
 
+	DECLARE_MESSAGE_MAP()
 };

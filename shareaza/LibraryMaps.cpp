@@ -125,7 +125,7 @@ CLibraryFile* CLibraryMaps::LookupFileByName(LPCTSTR pszName, QWORD nSize, BOOL 
 	ASSERT( pszName && *pszName );
 
 	CLibraryFile* pFile = NULL;
-	CString strName( pszName );
+	CString strName = PathFindFileName( pszName );
 	ToLower( strName );
 
 	CQuickLock oLock( Library.m_pSection );

@@ -1,7 +1,7 @@
 //
 // CtrlTipList.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -32,12 +32,10 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNAMIC(CTipListCtrl, CListCtrl)
 
 BEGIN_MESSAGE_MAP(CTipListCtrl, CListCtrl)
-	//{{AFX_MSG_MAP(CTipListCtrl)
 	ON_WM_MOUSEMOVE()
 	ON_WM_LBUTTONDOWN()
 	ON_WM_RBUTTONDOWN()
 	ON_WM_KEYDOWN()
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
@@ -45,8 +43,8 @@ END_MESSAGE_MAP()
 // CTipListCtrl construction
 
 CTipListCtrl::CTipListCtrl()
+	: m_pTip( NULL )
 {
-	m_pTip = NULL;
 }
 
 CTipListCtrl::~CTipListCtrl()
@@ -56,7 +54,7 @@ CTipListCtrl::~CTipListCtrl()
 /////////////////////////////////////////////////////////////////////////////
 // CTipListCtrl operations
 
-void CTipListCtrl::SetTip(CCoolTipCtrl* pTip)
+void CTipListCtrl::SetTip(CNeighbourTipCtrl* pTip)
 {
 	m_pTip = pTip;
 }
@@ -74,7 +72,7 @@ void CTipListCtrl::OnMouseMove(UINT nFlags, CPoint point)
 
 		if ( nHit >= 0 )
 		{
-			m_pTip->Show( (LPVOID)GetItemData( nHit ) );
+			m_pTip->Show( GetItemData( nHit ) );
 		}
 		else
 		{

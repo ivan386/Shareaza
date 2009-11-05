@@ -1,7 +1,7 @@
 //
 // CtrlTipAlbum.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_CTRLTIPALBUM_H__0E00863D_B269_42BF_9A76_D145F7560390__INCLUDED_)
-#define AFX_CTRLTIPALBUM_H__0E00863D_B269_42BF_9A76_D145F7560390__INCLUDED_
-
 #pragma once
 
 #include "CtrlCoolTip.h"
@@ -30,15 +27,22 @@
 
 class CAlbumTipCtrl : public CCoolTipCtrl
 {
-// Construction
+	DECLARE_DYNAMIC(CAlbumTipCtrl)
+
 public:
 	CAlbumTipCtrl();
 	virtual ~CAlbumTipCtrl();
 
-	DECLARE_DYNAMIC(CAlbumTipCtrl)
+	void Show(CAlbumFolder* pContext, HWND hAltWnd = NULL)
+	{
+		bool bChanged = ( pContext != m_pAlbumFolder );
+		m_pAlbumFolder = pContext;
+		m_hAltWnd = hAltWnd;
+		ShowImpl( bChanged );
+	}
 
-// Attributes
 protected:
+	CAlbumFolder*	m_pAlbumFolder;
 	CString			m_sName;
 	CString			m_sType;
 	int				m_nIcon32;
@@ -48,27 +52,11 @@ protected:
 	int				m_nKeyWidth;
 	COLORREF		m_crLight;
 
-// Operations
-public:
 	virtual BOOL OnPrepare();
 	virtual void OnCalcSize(CDC* pDC);
 	virtual void OnPaint(CDC* pDC);
-protected:
+
 	void		DrawThumb(CDC* pDC, CRect& rcThumb);
-
-// Overrides
-public:
-	//{{AFX_VIRTUAL(CAlbumTipCtrl)
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
-	//{{AFX_MSG(CAlbumTipCtrl)
-	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()
 };
-
-//{{AFX_INSERT_LOCATION}}
-
-#endif // !defined(AFX_CTRLTIPALBUM_H__0E00863D_B269_42BF_9A76_D145F7560390__INCLUDED_)

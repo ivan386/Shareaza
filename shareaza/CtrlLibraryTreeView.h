@@ -1,7 +1,7 @@
 //
 // CtrlLibraryTreeView.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -26,7 +26,6 @@
 #include "ShareazaDataSource.h"
 
 class CLibraryTreeItem;
-class CCoolTipCtrl;
 class CLibraryFolder;
 class CAlbumFolder;
 
@@ -53,14 +52,12 @@ private:
 	CPoint				m_ptDrag;
 	CLibraryTreeItem*	m_pDropItem;
 	DWORD				m_nCleanCookie;
-	CCoolTipCtrl*		m_pTip;
 	BOOL				m_bVirtual;
 	CFolderTipCtrl		m_wndFolderTip;
 	CAlbumTipCtrl		m_wndAlbumTip;
 
 // Operations
 public:
-	void				SetToolTip(CCoolTipCtrl* pTip);
 	BOOL				Expand(CLibraryTreeItem* pItem, TRISTATE bExpand = TRI_TRUE, BOOL bInvalidate = TRUE);
 	BOOL				Select(CLibraryTreeItem* pItem, TRISTATE bSelect = TRI_TRUE, BOOL bInvalidate = TRUE);
 	BOOL				SelectAll(CLibraryTreeItem* pParent = NULL, BOOL bInvalidate = TRUE);

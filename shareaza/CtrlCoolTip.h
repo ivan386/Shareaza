@@ -1,7 +1,7 @@
 //
 // CtrlCoolTip.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -26,15 +26,26 @@ class CLineGraph;
 
 class CCoolTipCtrl : public CWnd
 {
+	DECLARE_DYNAMIC(CCoolTipCtrl)
+
 public:
 	CCoolTipCtrl();
 	virtual ~CCoolTipCtrl();
 
-	DECLARE_DYNAMIC(CCoolTipCtrl)
+	virtual BOOL Create(CWnd* pParentWnd, bool* pbEnable = NULL);
+
+	//void Show(T* pContext, HWND hAltWnd = NULL)
+	//{
+	//	bool bChanged = ( pContext != m_pContext );
+	//	m_pContext = pContext;
+	//	m_hAltWnd = hAltWnd;
+	//	ShowImpl( bChanged );
+	//}
+
+	virtual void Hide();
 
 protected:
 	bool*	m_pbEnable;
-	void*	m_pContext;
 	HWND	m_hAltWnd;
 	BOOL	m_bTimer;
 	BOOL	m_bVisible;
@@ -43,13 +54,7 @@ protected:
 	CSize	m_sz;
 	static LPCTSTR	m_hClass;
 
-public:
-	virtual BOOL Create(CWnd* pParentWnd, bool* pbEnable = NULL);
-	virtual void Show(void* pContext, HWND hAltWnd = NULL);
-	virtual void Hide();
-
-protected:
-	virtual void ShowImpl();
+	void	ShowImpl(bool bChanged = false);
 	void	CalcSizeHelper();
 	void	AddSize(CDC* pDC, LPCTSTR pszText, int nBase = 0);
 	void	GetPaintRect(RECT* pRect);
@@ -58,6 +63,7 @@ protected:
 	void	DrawRule(CDC* pDC, POINT* pPoint, BOOL bPos = FALSE);
 	BOOL	WindowFromPointBelongsToOwner(const CPoint& point);
 	CLineGraph*	CreateLineGraph();
+
 	virtual BOOL OnPrepare();
 	virtual void OnCalcSize(CDC* pDC);
 	virtual void OnShow();

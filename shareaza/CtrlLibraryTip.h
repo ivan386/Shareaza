@@ -21,6 +21,7 @@
 
 #pragma once
 
+#include "ShareazaFile.h"
 #include "ThreadImpl.h"
 #include "CtrlCoolTip.h"
 #include "MetaList.h"
@@ -28,14 +29,33 @@
 
 class CLibraryTipCtrl : public CCoolTipCtrl, public CThreadImpl
 {
-// Construction
-public:
-	CLibraryTipCtrl();
-
 	DECLARE_DYNAMIC(CLibraryTipCtrl)
 
-// Attributes
+public:
+	CLibraryTipCtrl();
+	virtual ~CLibraryTipCtrl();
+
+	void Show(DWORD pContext, HWND hAltWnd = NULL)
+	{
+		bool bChanged = ( pContext != m_nFileIndex );
+		m_nFileIndex = pContext;
+		m_pFile = NULL;
+		m_hAltWnd = hAltWnd;
+		ShowImpl( bChanged );
+	}
+
+	void Show(CShareazaFile* pContext, HWND hAltWnd = NULL)
+	{
+		bool bChanged = ( pContext != m_pFile );
+		m_nFileIndex = 0;
+		m_pFile = pContext;
+		m_hAltWnd = hAltWnd;
+		ShowImpl( bChanged );
+	}
+
 protected:
+	DWORD			m_nFileIndex;
+	CShareazaFile*	m_pFile;
 	CString			m_sName;
 	CString			m_sPath;
 	CString			m_sFolder;
@@ -50,32 +70,20 @@ protected:
 	CMetaList		m_pMetadata;
 	int				m_nKeyWidth;
 	CCriticalSection	m_pSection;
-	CBitmap				m_bmThumb;
-	DWORD				m_tHidden;
+	CBitmap			m_bmThumb;
+	DWORD			m_tHidden;
 
-// Operations
-public:
 	virtual BOOL OnPrepare();
 	virtual void OnCalcSize(CDC* pDC);
 	virtual void OnShow();
 	virtual void OnHide();
 	virtual void OnPaint(CDC* pDC);
-protected:
+
 	void		StopThread();
 	void		OnRun();
 
-// Overrides
-public:
-	//{{AFX_VIRTUAL(CLibraryTipCtrl)
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
-	//{{AFX_MSG(CLibraryTipCtrl)
 	afx_msg void OnDestroy();
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
-	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()
-
 };

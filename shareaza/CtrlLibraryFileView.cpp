@@ -246,7 +246,7 @@ void CLibraryFileView::OnMouseMove(UINT nFlags, CPoint point)
 
 	if ( DWORD_PTR nFile = HitTestIndex( point ) )
 	{
-		GetToolTip()->Show( (void*)nFile );
+		GetToolTip()->Show( nFile );
 	}
 	else
 	{

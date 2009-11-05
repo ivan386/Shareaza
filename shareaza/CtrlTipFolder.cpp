@@ -37,8 +37,6 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNAMIC(CFolderTipCtrl, CCoolTipCtrl)
 
 BEGIN_MESSAGE_MAP(CFolderTipCtrl, CCoolTipCtrl)
-	//{{AFX_MSG_MAP(CFolderTipCtrl)
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
@@ -46,6 +44,7 @@ END_MESSAGE_MAP()
 // CFolderTipCtrl construction
 
 CFolderTipCtrl::CFolderTipCtrl()
+	: m_pLibraryFolder( NULL )
 {
 }
 
@@ -61,21 +60,20 @@ BOOL CFolderTipCtrl::OnPrepare()
 	CSingleLock pLock( &Library.m_pSection );
 	if ( ! pLock.Lock( 250 ) ) return FALSE;
 
-	CLibraryFolder* pFolder = (CLibraryFolder*)m_pContext;
-	if ( ! LibraryFolders.CheckFolder( pFolder, TRUE ) ) return FALSE;
+	if ( ! m_pLibraryFolder || ! LibraryFolders.CheckFolder( m_pLibraryFolder, TRUE ) ) return FALSE;
 
-	m_sName		= pFolder->m_sName;
-	m_sPath		= pFolder->m_sPath;
+	m_sName		= m_pLibraryFolder->m_sName;
+	m_sPath		= m_pLibraryFolder->m_sPath;
 
-	m_sFiles.Format( _T("%lu"), pFolder->m_nFiles );
-	m_sVolume = Settings.SmartVolume( pFolder->m_nVolume );
+	m_sFiles.Format( _T("%lu"), m_pLibraryFolder->m_nFiles );
+	m_sVolume = Settings.SmartVolume( m_pLibraryFolder->m_nVolume );
 
 	QWORD nTotal;
 	LibraryMaps.GetStatistics( NULL, &nTotal );
 
 	if ( nTotal )
 		m_sPercentage.Format( _T("%.2f%% %s"),
-			100.0 * ( pFolder->m_nVolume >> 10 ) / nTotal,
+			100.0 * ( m_pLibraryFolder->m_nVolume >> 10 ) / nTotal,
 			LoadString( IDS_TIP_LIBRARY_PERCENT ) );
 	else
 		m_sPercentage.Empty();
