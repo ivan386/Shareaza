@@ -327,8 +327,6 @@ BOOL CLibrary::Load()
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 
-	GetAlbumRoot();
-
 	FILETIME pFileTime1 = { 0, 0 }, pFileTime2 = { 0, 0 };
 	CFile pFile1, pFile2;
 	BOOL bFile1, bFile2;

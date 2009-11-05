@@ -55,11 +55,11 @@ public:
 	BOOL			RemoveFolder(CLibraryFolder* pFolder);
 	CLibraryFolder*	IsFolderShared(const CString& strPath) const;
 	CLibraryFolder*	IsSubFolderShared(const CString& strPath) const;
-	bool			IsShareable(const CString& strPath) const;
+	static bool		IsShareable(const CString& strPath);
 	void			Maintain();
 
 // Virtual Album Operations
-	CAlbumFolder*	GetAlbumRoot();
+	CAlbumFolder*	GetAlbumRoot() const;
 	BOOL			CheckAlbum(CAlbumFolder* pFolder) const;
 	CAlbumFolder*	GetAlbumTarget(LPCTSTR pszSchemaURI, LPCTSTR pszMember, LPCTSTR pszValue) const;
 	CAlbumFolder*	GetCollection(const Hashes::Sha1Hash& oSHA1);

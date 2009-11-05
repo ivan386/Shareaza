@@ -342,6 +342,8 @@ BOOL CLibraryView::OnDrop(IDataObject* pDataObj, DWORD grfKeyState, POINT ptScre
 		oHit = GetFolder();
 	}
 
+	CQuickLock oLock( Library.m_pSection );
+
 	switch ( oHit.Type )
 	{
 		case CLibraryListItem::LibraryFolder:

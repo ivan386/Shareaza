@@ -64,7 +64,7 @@ CLibraryFolders::CLibraryFolders() :
 
 CLibraryFolders::~CLibraryFolders()
 {
-	if ( m_pAlbumRoot != NULL ) delete m_pAlbumRoot;
+	delete m_pAlbumRoot;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -72,11 +72,15 @@ CLibraryFolders::~CLibraryFolders()
 
 POSITION CLibraryFolders::GetFolderIterator() const
 {
+	ASSUME_LOCK( Library.m_pSection );
+
 	return m_pFolders.GetHeadPosition();
 }
 
 CLibraryFolder* CLibraryFolders::GetNextFolder(POSITION& pos) const
 {
+	ASSUME_LOCK( Library.m_pSection );
+
 	return m_pFolders.GetNext( pos );
 }
 
@@ -85,10 +89,13 @@ CLibraryFolder* CLibraryFolders::GetNextFolder(POSITION& pos) const
 
 CLibraryFolder* CLibraryFolders::GetFolder(LPCTSTR pszPath) const
 {
+	ASSUME_LOCK( Library.m_pSection );
+
 	for ( POSITION pos = GetFolderIterator() ; pos ; )
 	{
 		CLibraryFolder* pFolder = GetNextFolder( pos )->GetFolderByPath( pszPath );
-		if ( pFolder != NULL ) return pFolder;
+		if ( pFolder != NULL )
+			return pFolder;
 	}
 
 	return NULL;
@@ -96,12 +103,18 @@ CLibraryFolder* CLibraryFolders::GetFolder(LPCTSTR pszPath) const
 
 BOOL CLibraryFolders::CheckFolder(CLibraryFolder* pFolder, BOOL bRecursive) const
 {
-	if ( m_pFolders.Find( pFolder ) != NULL ) return TRUE;
-	if ( ! bRecursive ) return FALSE;
+	ASSUME_LOCK( Library.m_pSection );
+
+	if ( m_pFolders.Find( pFolder ) != NULL )
+		return TRUE;
+
+	if ( ! bRecursive )
+		return FALSE;
 
 	for ( POSITION pos = GetFolderIterator() ; pos ; )
 	{
-		if ( GetNextFolder( pos )->CheckFolder( pFolder, TRUE ) ) return TRUE;
+		if ( GetNextFolder( pos )->CheckFolder( pFolder, TRUE ) )
+			return TRUE;
 	}
 
 	return FALSE;
@@ -109,6 +122,8 @@ BOOL CLibraryFolders::CheckFolder(CLibraryFolder* pFolder, BOOL bRecursive) cons
 
 CLibraryFolder* CLibraryFolders::GetFolderByName(LPCTSTR pszName) const
 {
+	ASSUME_LOCK( Library.m_pSection );
+
 	CString strName( pszName );
 	ToLower( strName );
 
@@ -141,38 +156,42 @@ CLibraryFolder* CLibraryFolders::GetFolderByName(LPCTSTR pszName) const
 
 CLibraryFolder* CLibraryFolders::AddFolder(LPCTSTR pszPath)
 {
+	CQuickLock oLock( Library.m_pSection );
+
 	CString strPath = pszPath;
 
 	if ( strPath.GetLength() == 3 && strPath.GetAt( 2 ) == '\\' )
 		strPath = strPath.Left( 2 );
 
-	if ( IsFolderShared( strPath ) ) return NULL;
-	if ( IsSubFolderShared( strPath ) ) return NULL;
+	if ( IsFolderShared( strPath ) )
+		return NULL;
+
+	if ( IsSubFolderShared( strPath ) )
+		return NULL;
 
 	CLibraryFolder* pFolder = new CLibraryFolder( NULL, strPath );
+	if ( ! pFolder )
+		return NULL;
+
+	BOOL bAdded = FALSE;
+
+	for ( POSITION pos = GetFolderIterator() ; pos ; )
 	{
-		CQuickLock oLock( Library.m_pSection );
+		POSITION posAdd = pos;
 
-		BOOL bAdded = FALSE;
-
-		for ( POSITION pos = GetFolderIterator() ; pos ; )
+		if ( GetNextFolder( pos )->m_sName.CompareNoCase( pFolder->m_sName ) >= 0 )
 		{
-			POSITION posAdd = pos;
-
-			if ( GetNextFolder( pos )->m_sName.CompareNoCase( pFolder->m_sName ) >= 0 )
-			{
-				m_pFolders.InsertBefore( posAdd, pFolder );
-				bAdded = TRUE;
-				break;
-			}
+			m_pFolders.InsertBefore( posAdd, pFolder );
+			bAdded = TRUE;
+			break;
 		}
-
-		if ( ! bAdded ) m_pFolders.AddTail( pFolder );
-
-		pFolder->Maintain( TRUE );
-
-		Library.Update( true );
 	}
+
+	if ( ! bAdded ) m_pFolders.AddTail( pFolder );
+
+	pFolder->Maintain( TRUE );
+
+	Library.Update( true );
 
 	return pFolder;
 }
@@ -303,6 +322,8 @@ BOOL CLibraryFolders::RemoveFolder(CLibraryFolder* pFolder)
 
 CLibraryFolder* CLibraryFolders::IsFolderShared(const CString& strPath) const
 {
+	CQuickLock oLock( Library.m_pSection );
+
 	// Convert path to lowercase
 	CString strPathLC( strPath );
 	ToLower( strPathLC );
@@ -335,6 +356,8 @@ CLibraryFolder* CLibraryFolders::IsFolderShared(const CString& strPath) const
 
 CLibraryFolder* CLibraryFolders::IsSubFolderShared(const CString& strPath) const
 {
+	CQuickLock oLock( Library.m_pSection );
+
 	// Convert path to lowercase
 	CString strPathLC( strPath );
 	ToLower( strPathLC );
@@ -361,7 +384,7 @@ CLibraryFolder* CLibraryFolders::IsSubFolderShared(const CString& strPath) const
 //////////////////////////////////////////////////////////////////////
 // CLibraryFolders check if folder is not a system directory, incomplete folder etc...
 
-bool CLibraryFolders::IsShareable(const CString& strPath) const
+bool CLibraryFolders::IsShareable(const CString& strPath)
 {
 	// Convert path to lowercase
 	CString strPathLC( strPath );
@@ -398,19 +421,17 @@ bool CLibraryFolders::IsShareable(const CString& strPath) const
 //////////////////////////////////////////////////////////////////////
 // CLibraryFolders virtual album list access
 
-CAlbumFolder* CLibraryFolders::GetAlbumRoot()
+CAlbumFolder* CLibraryFolders::GetAlbumRoot() const
 {
-	if ( m_pAlbumRoot == NULL )
-	{
-		m_pAlbumRoot = new CAlbumFolder( NULL, CSchema::uriLibrary );
-	}
-
+	ASSUME_LOCK( Library.m_pSection );
+	ASSERT( m_pAlbumRoot );
 	return m_pAlbumRoot;
 }
 
 BOOL CLibraryFolders::CheckAlbum(CAlbumFolder* pFolder) const
 {
-	if ( m_pAlbumRoot == NULL ) return FALSE;
+	ASSUME_LOCK( Library.m_pSection );
+	ASSERT( m_pAlbumRoot );
 	return m_pAlbumRoot->CheckFolder( pFolder, TRUE );
 }
 
@@ -450,7 +471,9 @@ CAlbumFolder* CLibraryFolders::GetAlbumTarget(LPCTSTR pszSchemaURI, LPCTSTR pszM
 
 CAlbumFolder* CLibraryFolders::GetCollection(const Hashes::Sha1Hash& oSHA1)
 {
-	return GetAlbumRoot()->FindCollection( oSHA1 );
+	ASSUME_LOCK( Library.m_pSection );
+
+	return m_pAlbumRoot ? m_pAlbumRoot->FindCollection( oSHA1 ) : NULL;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -465,7 +488,7 @@ BOOL CLibraryFolders::MountCollection(const Hashes::Sha1Hash& oSHA1, CCollection
 
 	if ( pCollection->GetThisURI().GetLength() )
 	{
-		bSuccess |= GetAlbumRoot()->MountCollection( oSHA1, pCollection );
+		bSuccess |= m_pAlbumRoot->MountCollection( oSHA1, pCollection );
 	}
 
 /*
@@ -485,7 +508,7 @@ BOOL CLibraryFolders::MountCollection(const Hashes::Sha1Hash& oSHA1, CCollection
 
 void CLibraryFolders::CreateAlbumTree()
 {
-	INT_PTR nCount = GetAlbumRoot()->GetFolderCount();
+	INT_PTR nCount = m_pAlbumRoot->GetFolderCount();
 
 	if ( m_pAlbumRoot->GetFolderByURI( CSchema::uriAllFiles ) == NULL )
 	{
@@ -564,6 +587,8 @@ void CLibraryFolders::CreateAlbumTree()
 
 BOOL CLibraryFolders::OnFileDelete(CLibraryFile* pFile, BOOL bDeleteGhost)
 {
+	ASSUME_LOCK( Library.m_pSection );
+
 	if ( m_pAlbumRoot )
 		m_pAlbumRoot->OnFileDelete( pFile, bDeleteGhost );
 
@@ -579,12 +604,14 @@ BOOL CLibraryFolders::OnFileDelete(CLibraryFile* pFile, BOOL bDeleteGhost)
 
 void CLibraryFolders::Clear()
 {
+	ASSUME_LOCK( Library.m_pSection );
+
 	for ( POSITION pos = GetFolderIterator() ; pos ; )
 		delete GetNextFolder( pos );
 	m_pFolders.RemoveAll();
 
 	delete m_pAlbumRoot;
-	m_pAlbumRoot = NULL;
+	m_pAlbumRoot = new CAlbumFolder( NULL, CSchema::uriLibrary );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -592,6 +619,8 @@ void CLibraryFolders::Clear()
 
 BOOL CLibraryFolders::ThreadScan(const BOOL bForce)
 {
+	ASSUME_LOCK( Library.m_pSection );
+
 	BOOL bChanged = FALSE;
 
 	for ( POSITION pos = GetFolderIterator() ; pos && Library.IsThreadEnabled() ; )
@@ -619,6 +648,8 @@ BOOL CLibraryFolders::ThreadScan(const BOOL bForce)
 
 void CLibraryFolders::Serialize(CArchive& ar, int nVersion)
 {
+	ASSUME_LOCK( Library.m_pSection );
+
 	if ( ar.IsStoring() )
 	{
 		ar.WriteCount( GetFolderCount() );
@@ -630,6 +661,9 @@ void CLibraryFolders::Serialize(CArchive& ar, int nVersion)
 	}
 	else
 	{
+		if ( m_pAlbumRoot == NULL )
+			m_pAlbumRoot = new CAlbumFolder( NULL, CSchema::uriLibrary );
+
 		for ( DWORD_PTR nCount = ar.ReadCount() ; nCount > 0 ; nCount-- )
 		{
 			CLibraryFolder* pFolder = new CLibraryFolder( NULL );
@@ -640,11 +674,14 @@ void CLibraryFolders::Serialize(CArchive& ar, int nVersion)
 		}
 	}
 
-	if ( nVersion >= 6 ) GetAlbumRoot()->Serialize( ar, nVersion );
+	if ( nVersion >= 6 )
+		m_pAlbumRoot->Serialize( ar, nVersion );
 }
 
 void CLibraryFolders::Maintain()
 {
+	CQuickLock oLock( Library.m_pSection );
+
 	for ( POSITION pos = GetFolderIterator() ; pos ; )
 	{
 		GetNextFolder( pos )->Maintain( TRUE );
@@ -678,6 +715,8 @@ STDMETHODIMP CLibraryFolders::XLibraryFolders::get__NewEnum(IUnknown FAR* FAR* /
 STDMETHODIMP CLibraryFolders::XLibraryFolders::get_Item(VARIANT vIndex, ILibraryFolder FAR* FAR* ppFolder)
 {
 	METHOD_PROLOGUE( CLibraryFolders, LibraryFolders )
+
+	CQuickLock oLock( Library.m_pSection );
 
 	CLibraryFolder* pFolder = NULL;
 	*ppFolder = NULL;
@@ -713,6 +752,10 @@ STDMETHODIMP CLibraryFolders::XLibraryFolders::get_Item(VARIANT vIndex, ILibrary
 STDMETHODIMP CLibraryFolders::XLibraryFolders::get_Count(LONG FAR* pnCount)
 {
 	METHOD_PROLOGUE( CLibraryFolders, LibraryFolders )
+
+	CQuickLock oLock( Library.m_pSection );
+
 	*pnCount = static_cast< LONG >( pThis->GetFolderCount() );
+
 	return S_OK;
 }

@@ -957,6 +957,8 @@ STDMETHODIMP CLibraryFolder::XLibraryFolders::get_Item(VARIANT vIndex, ILibraryF
 {
 	METHOD_PROLOGUE( CLibraryFolder, LibraryFolders )
 
+	CQuickLock oLock( Library.m_pSection );
+
 	CLibraryFolder* pFolder = NULL;
 	*ppFolder = NULL;
 
@@ -994,7 +996,11 @@ STDMETHODIMP CLibraryFolder::XLibraryFolders::get_Item(VARIANT vIndex, ILibraryF
 STDMETHODIMP CLibraryFolder::XLibraryFolders::get_Count(LONG FAR* pnCount)
 {
 	METHOD_PROLOGUE( CLibraryFolder, LibraryFolders )
+
+	CQuickLock oLock( Library.m_pSection );
+
 	*pnCount = static_cast< LONG >( pThis->GetFolderCount() );
+
 	return S_OK;
 }
 
@@ -1025,6 +1031,8 @@ STDMETHODIMP CLibraryFolder::XLibraryFiles::get__NewEnum(IUnknown FAR* FAR* /*pp
 STDMETHODIMP CLibraryFolder::XLibraryFiles::get_Item(VARIANT vIndex, ILibraryFile FAR* FAR* ppFile)
 {
 	METHOD_PROLOGUE( CLibraryFolder, LibraryFiles )
+
+	CQuickLock oLock( Library.m_pSection );
 
 	CLibraryFile* pFile = NULL;
 	*ppFile = NULL;
@@ -1060,6 +1068,10 @@ STDMETHODIMP CLibraryFolder::XLibraryFiles::get_Item(VARIANT vIndex, ILibraryFil
 STDMETHODIMP CLibraryFolder::XLibraryFiles::get_Count(LONG FAR* pnCount)
 {
 	METHOD_PROLOGUE( CLibraryFolder, LibraryFiles )
+
+	CQuickLock oLock( Library.m_pSection );
+
 	*pnCount = static_cast< LONG >( pThis->GetFileCount() );
+
 	return S_OK;
 }
