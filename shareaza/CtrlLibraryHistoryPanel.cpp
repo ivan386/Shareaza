@@ -20,6 +20,7 @@
 //
 
 #include "StdAfx.h"
+#include "Settings.h"
 #include "Library.h"
 #include "LibraryHistory.h"
 #include "ShellIcons.h"
@@ -35,6 +36,8 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNAMIC(CLibraryHistoryPanel, CPanelCtrl)
 
 BEGIN_MESSAGE_MAP(CLibraryHistoryPanel, CPanelCtrl)
+	ON_WM_CREATE()
+	ON_WM_DESTROY()
 	ON_WM_PAINT()
 	ON_WM_SETCURSOR()
 	ON_WM_LBUTTONUP()
@@ -62,6 +65,8 @@ CLibraryHistoryPanel::~CLibraryHistoryPanel()
 
 void CLibraryHistoryPanel::Update()
 {
+	m_wndTip.Hide();
+
 	CSingleLock pLock( &Library.m_pSection, TRUE );
 	BOOL bChanged = FALSE;
 	
@@ -138,6 +143,22 @@ void CLibraryHistoryPanel::Update()
 
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryHistoryPanel message handlers
+
+int CLibraryHistoryPanel::OnCreate(LPCREATESTRUCT lpCreateStruct)
+{
+	if ( CPanelCtrl::OnCreate( lpCreateStruct ) == -1 ) return -1;
+
+	m_wndTip.Create( this, &Settings.Interface.TipLibrary );
+
+	return 0;
+}
+
+void CLibraryHistoryPanel::OnDestroy()
+{
+	if ( m_wndTip.m_hWnd ) m_wndTip.DestroyWindow();
+
+	CPanelCtrl::OnDestroy();
+}
 
 void CLibraryHistoryPanel::OnPaint() 
 {
@@ -259,36 +280,40 @@ BOOL CLibraryHistoryPanel::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 
 		if ( pItem->m_rect.PtInRect( point ) )
 		{
+			m_wndTip.Show( pItem->m_nIndex );
 			SetCursor( AfxGetApp()->LoadCursor( IDC_HAND ) );
 			return TRUE;
 		}
 	}
+
+	m_wndTip.Hide();
 	
 	return CPanelCtrl::OnSetCursor( pWnd, nHitTest, message );
 }
 
 void CLibraryHistoryPanel::OnLButtonUp(UINT nFlags, CPoint point) 
 {
-	point.y += GetScrollPos( SB_VERT );
-	
+	m_wndTip.Hide();
+
+	CPoint pt( point.x, point.y + GetScrollPos( SB_VERT ) );
 	for ( int nItem = 0 ; nItem < m_pList.GetSize() ; nItem++ )
 	{
 		Item* pItem = m_pList.GetAt( nItem );
 		
-		if ( pItem->m_rect.PtInRect( point ) )
+		if ( pItem->m_rect.PtInRect( pt ) )
 		{
 			OnClickFile( pItem->m_nIndex );
 			break;
 		}
 	}
 	
-	point.y -= GetScrollPos( SB_VERT );
-	
 	CPanelCtrl::OnLButtonUp( nFlags, point );
 }
 
 void CLibraryHistoryPanel::OnLButtonDown(UINT /*nFlags*/, CPoint /*point*/)
 {
+	m_wndTip.Hide();
+
 	SetFocus();
 }
 
