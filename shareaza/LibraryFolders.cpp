@@ -508,6 +508,11 @@ BOOL CLibraryFolders::MountCollection(const Hashes::Sha1Hash& oSHA1, CCollection
 
 void CLibraryFolders::CreateAlbumTree()
 {
+	ASSUME_LOCK( Library.m_pSection );
+
+	if ( m_pAlbumRoot == NULL )
+		m_pAlbumRoot = new CAlbumFolder( NULL, CSchema::uriLibrary );
+
 	INT_PTR nCount = m_pAlbumRoot->GetFolderCount();
 
 	if ( m_pAlbumRoot->GetFolderByURI( CSchema::uriAllFiles ) == NULL )
