@@ -232,7 +232,7 @@ BOOL CTrafficWnd::Serialize(BOOL bSave)
 	CString strFile;
 	CFile pFile;
 
-	strFile.Format( _T("%s\\Data\\Graph%.4i.dat"), (LPCTSTR)Settings.General.Path, m_nUnique );
+	strFile.Format( _T("%s\\Data\\Graph%.4i.dat"), (LPCTSTR)Settings.General.UserPath, m_nUnique );
 
 	if ( ! pFile.Open( strFile, bSave ? ( CFile::modeWrite | CFile::modeCreate ) : CFile::modeRead ) )
 		return FALSE;
