@@ -123,6 +123,7 @@
 #include <winioctl.h>		// Sparse files support
 #include <atltime.h>		// Time classes
 #include <atlenc.h>			// Base64Encode, UUEncode etc.
+#include <atlfile.h>		// Thin file classes
 
 // If this header is not found, you'll need to install the Windows XP SP2 Platform SDK (or later)
 // from http://www.microsoft.com/msdownload/platformsdk/sdkupdate/

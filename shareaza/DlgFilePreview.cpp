@@ -51,8 +51,8 @@ BEGIN_INTERFACE_MAP(CFilePreviewDlg, CSkinDialog)
 	INTERFACE_PART(CFilePreviewDlg, IID_IDownloadPreviewSite, DownloadPreviewSite)
 END_INTERFACE_MAP()
 
-const DWORD BUFFER_SIZE = 40960u;
-CList< CFilePreviewDlg* > CFilePreviewDlg::m_pWindows;
+CPreviewList		CFilePreviewDlg::m_pWindows;
+CCriticalSection	CFilePreviewDlg::m_pSection;
 
 /////////////////////////////////////////////////////////////////////////////
 // CFilePreviewDlg dialog
@@ -67,8 +67,9 @@ CFilePreviewDlg::CFilePreviewDlg(CDownloadWithExtras* pDownload, DWORD nIndex, C
 	, m_nPosition	( 0 )
 	, m_nScaled		( 0 )
 	, m_nOldScaled	( 0 )
-	, m_bCancel		( FALSE )
 {
+	CQuickLock oLock( m_pSection );
+
 	int nPos = m_sSourceName.ReverseFind( '\\' );
 	if ( nPos >= 0 )
 	{
@@ -128,33 +129,36 @@ CFilePreviewDlg::CFilePreviewDlg(CDownloadWithExtras* pDownload, DWORD nIndex, C
 
 CFilePreviewDlg::~CFilePreviewDlg()
 {
-	if ( POSITION pos = m_pWindows.Find( this ) ) m_pWindows.RemoveAt( pos );
+	CQuickLock oLock( m_pSection );
+
+	if ( POSITION pos = m_pWindows.Find( this ) )
+		m_pWindows.RemoveAt( pos );
+
 	ASSERT( m_pDownload == NULL );
 }
 
 void CFilePreviewDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CSkinDialog::DoDataExchange( pDX );
-	//{{AFX_DATA_MAP(CFilePreviewDlg)
+
 	DDX_Control(pDX, IDCANCEL, m_wndCancel);
 	DDX_Control(pDX, IDC_PROGRESS, m_wndProgress);
 	DDX_Control(pDX, IDC_PREVIEW_STATUS, m_wndStatus);
 	DDX_Control(pDX, IDC_FILE_NAME, m_wndName);
-	//}}AFX_DATA_MAP
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // CFilePreviewDlg operations
 
-BOOL CFilePreviewDlg::Create()
+BOOL CFilePreviewDlg::Create(UINT nIDTemplate, CWnd* pParentWnd)
 {
 	ASSERT( m_hWnd == NULL );
 	ASSERT( m_pDownload != NULL );
 
-	LPCTSTR lpszTemplateName = MAKEINTRESOURCE( IDD );
+	LPCTSTR lpszTemplateName = MAKEINTRESOURCE( nIDTemplate );
 	BOOL bResult = FALSE;
-	HINSTANCE hInst		= AfxFindResourceHandle( lpszTemplateName, RT_DIALOG );
-	HRSRC hResource		= ::FindResource( hInst, lpszTemplateName, RT_DIALOG );
+	HINSTANCE hInst = AfxFindResourceHandle( lpszTemplateName, RT_DIALOG );
+	HRSRC hResource = ::FindResource( hInst, lpszTemplateName, RT_DIALOG );
 	if ( hResource )
 	{
 		HGLOBAL hTemplate = LoadResource( hInst, hResource );
@@ -163,7 +167,7 @@ BOOL CFilePreviewDlg::Create()
 			LPCDLGTEMPLATE lpDialogTemplate = (LPCDLGTEMPLATE)LockResource( hTemplate );
 			if ( lpDialogTemplate )
 			{
-				bResult = CreateDlgIndirect( lpDialogTemplate, NULL, hInst );
+				bResult = CreateDlgIndirect( lpDialogTemplate, pParentWnd, hInst );
 			}
 			FreeResource( hTemplate );
 		}
@@ -173,6 +177,8 @@ BOOL CFilePreviewDlg::Create()
 
 void CFilePreviewDlg::OnSkinChange(BOOL bSet)
 {
+	CQuickLock oLock( m_pSection );
+
 	for ( POSITION pos = m_pWindows.GetHeadPosition() ; pos ; )
 	{
 		CFilePreviewDlg* pDlg = m_pWindows.GetNext( pos );
@@ -191,10 +197,13 @@ void CFilePreviewDlg::OnSkinChange(BOOL bSet)
 
 void CFilePreviewDlg::CloseAll()
 {
+	CQuickLock oLock( m_pSection );
+
 	for ( POSITION pos = m_pWindows.GetHeadPosition() ; pos ; )
 	{
 		delete m_pWindows.GetNext( pos );
 	}
+
 	m_pWindows.RemoveAll();
 }
 
@@ -211,16 +220,18 @@ BOOL CFilePreviewDlg::OnInitDialog()
 	m_nPosition	= 0;
 	m_nScaled	= m_nOldScaled = 0;
 
-	if ( Settings.General.LanguageRTL ) m_wndProgress.ModifyStyleEx( WS_EX_LAYOUTRTL, 0, 0 );
+	if ( Settings.General.LanguageRTL )
+		m_wndProgress.ModifyStyleEx( WS_EX_LAYOUTRTL, 0, 0 );
+
 	m_wndStatus.GetWindowText( m_sStatus );
-	m_wndProgress.SetRange( 0, 1000 );
+	m_wndProgress.SetRange( 0, 100 );
 	m_wndProgress.SetPos( 0 );
+
 	m_sOldStatus = m_sStatus;
 
 	m_wndName.SetWindowText( m_sDisplayName );
-	m_wndCancel.EnableWindow( FALSE );
 
-	m_bCancel = FALSE;
+	m_wndCancel.EnableWindow( FALSE );
 
 	BeginThread( "DlgFilePreview" );
 
@@ -242,7 +253,9 @@ void CFilePreviewDlg::OnTimer(UINT_PTR nIDEvent)
 		CString strExecute = m_sExecute;
 		m_sExecute.Empty();
 		pLock.Unlock();
+
 		CFileExecutor::Execute( strExecute, TRUE );
+
 		return;
 	}
 
@@ -258,17 +271,36 @@ void CFilePreviewDlg::OnTimer(UINT_PTR nIDEvent)
 		m_sOldStatus = m_sStatus;
 	}
 
-	if ( ! m_wndCancel.IsWindowEnabled() ) m_wndCancel.EnableWindow( TRUE );
+	pLock.Unlock();
+
+	if ( IsThreadAlive() && IsThreadEnabled() && ! m_wndCancel.IsWindowEnabled() )
+		m_wndCancel.EnableWindow( TRUE );
+
+	UpdateWindow();
+}
+
+void CFilePreviewDlg::OnOK()
+{
+	OnClose();
+}
+
+void CFilePreviewDlg::OnCancel()
+{
+	OnClose();
 }
 
 void CFilePreviewDlg::OnClose()
 {
+	m_wndCancel.EnableWindow( FALSE );
+
 	if ( IsThreadAlive() )
 	{
-		m_pSection.Lock();
-		m_bCancel = TRUE;
-		if ( m_pPlugin != NULL ) m_pPlugin->Cancel();
-		m_pSection.Unlock();
+		CQuickLock oLock( m_pSection );
+
+		Exit();
+
+		if ( m_pPlugin != NULL )
+			m_pPlugin->Cancel();
 	}
 	else
 	{
@@ -282,9 +314,11 @@ void CFilePreviewDlg::OnDestroy()
 
 	if ( m_pDownload != NULL )
 	{
-		CSingleLock oLock( &Transfers.m_pSection, TRUE );
+		CQuickLock oTransfersLock( Transfers.m_pSection );
+
 		if ( Downloads.Check( (CDownload*)m_pDownload ) )
 			m_pDownload->m_pPreviewWnd = NULL;
+
 		m_pDownload = NULL;
 	}
 
@@ -301,15 +335,8 @@ void CFilePreviewDlg::PostNcDestroy()
 
 void CFilePreviewDlg::OnRun()
 {
-	HANDLE hFile = CreateFile( m_sSourceName, GENERIC_READ,
-		FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
-		NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
-	VERIFY_FILE_ACCESS( hFile, m_sSourceName )
-	if ( hFile != INVALID_HANDLE_VALUE )
-	{
-		if ( ! RunPlugin( hFile ) && ! m_bCancel ) RunManual( hFile );
-		CloseHandle( hFile );
-	}
+	if ( ! RunPlugin() && IsThreadEnabled() )
+		RunManual();
 
 	Sleep( 2000 );
 
@@ -319,105 +346,102 @@ void CFilePreviewDlg::OnRun()
 /////////////////////////////////////////////////////////////////////////////
 // CFilePreviewDlg plugin execution
 
-BOOL CFilePreviewDlg::RunPlugin(HANDLE hFile)
+BOOL CFilePreviewDlg::RunPlugin()
 {
-	CString strType;
+	CSingleLock oLock( &m_pSection, TRUE );
 
-	int nExtPos = m_sTargetName.ReverseFind( '.' );
-	if ( nExtPos != -1 ) strType = m_sTargetName.Mid( nExtPos );
-	ToLower( strType );
+	CString strType = PathFindExtension( m_sTargetName );
+	strType.MakeLower();
 
-	if ( ! LoadPlugin( strType ) ) return FALSE;
-
-	HRESULT hr = S_FALSE;
-
-	if ( SUCCEEDED( m_pPlugin->SetSite( &m_xDownloadPreviewSite ) ) )
-	{
-		BSTR bsFile = m_sTargetName.AllocSysString();
-		hr = m_pPlugin->Preview( hFile, bsFile );
-		SysFreeString( bsFile );
-	}
-
-	m_pSection.Lock();
-	m_pPlugin->Release();
-	m_pPlugin = NULL;
-	m_pSection.Unlock();
-
-	return ( hr != S_FALSE );	// Fall through if it's S_FALSE
-}
-
-BOOL CFilePreviewDlg::LoadPlugin(LPCTSTR pszType)
-{
 	CLSID pCLSID;
+	if ( ! Plugins.LookupCLSID( _T("DownloadPreview"), strType, pCLSID ) )
+		return FALSE;
 
-	if ( ! Plugins.LookupCLSID( _T("DownloadPreview"), pszType, pCLSID ) ) return FALSE;
+	HRESULT hr = m_pPlugin.CoCreateInstance( pCLSID );
+	if ( FAILED( hr ) )
+		return FALSE;
 
-	HRESULT hResult = CoCreateInstance( pCLSID, NULL, CLSCTX_ALL,
-		IID_IDownloadPreviewPlugin, (void**)&m_pPlugin );
+	hr = m_pPlugin->SetSite( &m_xDownloadPreviewSite );
+	if ( FAILED( hr ) )
+		return FALSE;
 
-	return SUCCEEDED( hResult );
+	oLock.Unlock();
+
+	hr = m_pPlugin->Preview2( CComBSTR( m_sSourceName ), CComBSTR( m_sTargetName ) );
+
+	oLock.Lock();
+
+	m_pPlugin.Release();
+
+	return SUCCEEDED( hr );
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // CFilePreviewDlg manual execution
 
-BOOL CFilePreviewDlg::RunManual(HANDLE hFile)
+BOOL CFilePreviewDlg::RunManual()
 {
-	HANDLE hTarget = CreateFile( m_sTargetName, GENERIC_WRITE, 0,
-		NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL );
-	VERIFY_FILE_ACCESS( hTarget, m_sTargetName )
-	if ( hTarget == INVALID_HANDLE_VALUE ) return FALSE;
+	CAtlFile oSourceFile;
+	HRESULT hr = oSourceFile.Create( m_sSourceName, GENERIC_READ,
+		FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, OPEN_EXISTING );
+	if ( FAILED( hr ) )
+		 return FALSE;
 
-	m_nRange = m_nPosition = 0;
+	CAtlFile oTargetFile;
+	hr = oTargetFile.Create( m_sTargetName, GENERIC_WRITE, 0, CREATE_ALWAYS );
+	if ( FAILED( hr ) )
+		return FALSE;
 
-	for ( QWORD nRange = 0 ; nRange < (QWORD)m_pRanges.GetSize() ; nRange += 2 )
+	QWORD nProgressRange = 0;
+	for ( INT_PTR i = 0 ; i < m_pRanges.GetSize() ; i += 2 )
 	{
-		m_nRange += m_pRanges.GetAt( nRange + 1 );
+		nProgressRange += m_pRanges.GetAt( i + 1 );
 	}
+	UpdateProgress( TRUE, nProgressRange, TRUE, 0 );
 
-	UpdateProgress( TRUE, m_nRange, TRUE, m_nPosition );
+	const DWORD BUFFER_SIZE = 4 * 1024 * 1024u; // 4 MB
+	auto_array< BYTE > pData( new BYTE[ BUFFER_SIZE ] );
+	if ( ! pData.get() )
+		return FALSE;
 
-	BYTE* pData = new BYTE[ BUFFER_SIZE ];
-
-	for ( QWORD nRange = 0 ; nRange < (QWORD)m_pRanges.GetSize() ; nRange += 2 )
+	QWORD nProgressPosition = 0;
+	for ( INT_PTR i = 0 ; i < m_pRanges.GetSize() && IsThreadEnabled(); i += 2 )
 	{
-		QWORD nOffset = m_pRanges.GetAt( nRange );
-		QWORD nLength = m_pRanges.GetAt( nRange + 1 );
+		QWORD nOffset = m_pRanges.GetAt( i );
+		QWORD nLength = m_pRanges.GetAt( i + 1 );
 
-		DWORD nOffsetLow	= (DWORD)( nOffset & 0x00000000FFFFFFFF );
-		DWORD nOffsetHigh	= (DWORD)( ( nOffset & 0xFFFFFFFF00000000 ) >> 32 );
-		SetFilePointer( hFile, nOffsetLow, (PLONG)&nOffsetHigh, FILE_BEGIN );
-		// SetFilePointer( hTarget, nOffsetLow, (PLONG)&nOffsetHigh, FILE_BEGIN );
+		oSourceFile.Seek( nOffset, FILE_BEGIN );
+		// oTargetFile.Seek( nOffset, FILE_BEGIN );
 
-		while ( nLength )
+		while ( nLength && IsThreadEnabled() )
 		{
 			DWORD nChunk = (DWORD)min( BUFFER_SIZE, nLength );
 
-			if ( ! ReadFile( hFile, pData, nChunk, &nChunk, NULL ) || nChunk == 0 )
+			hr = oSourceFile.Read( pData.get(), nChunk, nChunk );
+			if ( FAILED( hr ) || nChunk == 0 )
 			{
 				theApp.Message( MSG_DEBUG, _T("Preview: read error %d."), GetLastError() );
-				m_bCancel = TRUE;
+				Exit();
 			}
 
-			if ( ! WriteFile( hTarget, pData, nChunk, &nChunk, NULL ) || nChunk == 0 )
+			hr = oTargetFile.Write( pData.get(), nChunk, &nChunk );
+			if ( FAILED( hr ) || nChunk == 0 )
 			{
 				theApp.Message( MSG_DEBUG, _T("Preview: write error %d."), GetLastError() );
-				m_bCancel = TRUE;
+				Exit();
 			}
 
 			nLength -= nChunk;
 
-			if ( m_bCancel ) break;
-
-			UpdateProgress( FALSE, 0, TRUE, m_nPosition + nChunk );
+			nProgressPosition += nChunk;
+			UpdateProgress( FALSE, 0, TRUE, nProgressPosition );
 		}
 	}
 
-	delete [] pData;
+	oTargetFile.Close();
+	oSourceFile.Close();
 
-	CloseHandle( hTarget );
-
-	if ( m_bCancel )
+	if ( ! IsThreadEnabled() )
 	{
 		DeleteFileEx( m_sTargetName, FALSE, FALSE, TRUE );
 		return FALSE;
@@ -434,9 +458,9 @@ BOOL CFilePreviewDlg::RunManual(HANDLE hFile)
 
 BOOL CFilePreviewDlg::QueueDeleteFile(LPCTSTR pszFile)
 {
-	CSingleLock pLock( &Transfers.m_pSection );
+	CSingleLock oTransfersLock( &Transfers.m_pSection );
 
-	if ( pLock.Lock( 500 ) )
+	if ( oTransfersLock.Lock( 500 ) )
 	{
 		if ( Downloads.Check( (CDownload*)m_pDownload ) )
 		{
@@ -450,26 +474,29 @@ BOOL CFilePreviewDlg::QueueDeleteFile(LPCTSTR pszFile)
 
 BOOL CFilePreviewDlg::ExecuteFile(LPCTSTR pszFile)
 {
-	m_pSection.Lock();
+	CQuickLock oLock( m_pSection );
+
 	m_sExecute = pszFile;
+
 	PostMessage( WM_TIMER, 2 );
-	m_pSection.Unlock();
 
 	return TRUE;
 }
 
 void CFilePreviewDlg::UpdateProgress(BOOL bRange, QWORD nRange, BOOL bPosition, QWORD nPosition)
 {
-	m_pSection.Lock();
+	CQuickLock oLock( m_pSection );
 
-	if ( bRange ) m_nRange = nRange;
-	if ( bPosition ) m_nPosition = nPosition;
+	if ( bRange )
+		m_nRange = nRange;
 
-	m_nScaled = (DWORD)( (double)m_nPosition / (double)m_nRange * 1000.0f );
-	BOOL bRefresh = ( m_nScaled != m_nOldScaled );
+	if ( bPosition )
+		m_nPosition = nPosition;
 
-	m_pSection.Unlock();
-	if ( bRefresh ) PostMessage( WM_TIMER, 1 );
+	m_nScaled = min( (DWORD)( (double)m_nPosition / (double)m_nRange * 100 ), 100u );
+
+	if ( m_nScaled != m_nOldScaled )
+		PostMessage( WM_TIMER, 1 );
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -480,7 +507,9 @@ IMPLEMENT_UNKNOWN(CFilePreviewDlg, DownloadPreviewSite)
 STDMETHODIMP CFilePreviewDlg::XDownloadPreviewSite::GetSuggestedFilename(BSTR FAR* psFile)
 {
 	METHOD_PROLOGUE( CFilePreviewDlg, DownloadPreviewSite )
+
 	pThis->m_sTargetName.SetSysString( psFile );
+
 	return S_OK;
 }
 
@@ -507,35 +536,43 @@ STDMETHODIMP CFilePreviewDlg::XDownloadPreviewSite::GetAvailableRanges(SAFEARRAY
 STDMETHODIMP CFilePreviewDlg::XDownloadPreviewSite::SetProgressRange(DWORD nRange)
 {
 	METHOD_PROLOGUE( CFilePreviewDlg, DownloadPreviewSite )
+
 	pThis->UpdateProgress( TRUE, nRange, FALSE, 0 );
+
 	return S_OK;
 }
 
 STDMETHODIMP CFilePreviewDlg::XDownloadPreviewSite::SetProgressPosition(DWORD nPosition)
 {
 	METHOD_PROLOGUE( CFilePreviewDlg, DownloadPreviewSite )
+
 	pThis->UpdateProgress( FALSE, 0, TRUE, nPosition );
+
 	return S_OK;
 }
 
 STDMETHODIMP CFilePreviewDlg::XDownloadPreviewSite::SetProgressMessage(BSTR sMessage)
 {
 	METHOD_PROLOGUE( CFilePreviewDlg, DownloadPreviewSite )
-	pThis->m_pSection.Lock();
+
+	CQuickLock oLock( pThis->m_pSection );
+
 	pThis->m_sStatus = sMessage;
-	pThis->m_pSection.Unlock();
 	pThis->PostMessage( WM_TIMER );
+
 	return S_OK;
 }
 
 STDMETHODIMP CFilePreviewDlg::XDownloadPreviewSite::QueueDeleteFile(BSTR sTempFile)
 {
 	METHOD_PROLOGUE( CFilePreviewDlg, DownloadPreviewSite )
+
 	return pThis->QueueDeleteFile( CString( sTempFile ) ) ? S_OK : E_FAIL;
 }
 
 STDMETHODIMP CFilePreviewDlg::XDownloadPreviewSite::ExecuteFile(BSTR sFile)
 {
 	METHOD_PROLOGUE( CFilePreviewDlg, DownloadPreviewSite )
+
 	return pThis->ExecuteFile( CString( sFile ) ) ? S_OK : E_FAIL;
 }

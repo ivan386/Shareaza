@@ -250,8 +250,14 @@ library Shareaza
 	interface IDownloadPreviewPlugin : stdole.IUnknown
 	{
 		HRESULT SetSite( [in] IDownloadPreviewSite* pSite );
-		HRESULT Preview( [in] HANDLE hFile, [in] BSTR sFile );
+		[ helpstring("deprecated") ] HRESULT Preview( [in] HANDLE hFile, [in] BSTR sTarget );
 		HRESULT Cancel();
+	};
+
+	[ uuid(7682913F-2AE7-44d6-852A-1AB1B913818C), oleautomation ]
+	interface IDownloadPreviewPlugin2 : IDownloadPreviewPlugin
+	{
+		HRESULT Preview2( [in] BSTR sSource, [in] BSTR sTarget );
 	};
 
 	//
