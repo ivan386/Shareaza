@@ -617,7 +617,7 @@ void CIRCFrame::OnIrcConnect()
 	strCommand += Settings.IRC.RealName;
 	SendString( strCommand );
 
-	WSAEventSelect( m_nSocket, m_pWakeup, FD_READ );
+	WSAEventSelect( m_nSocket, m_pWakeup, FD_READ | FD_CLOSE );
 	m_nTimerVal = 0;
 	OnStatusMessage( _T("Activating Connection..."), ID_COLOR_NOTICE );
 	m_nMsgsInSec = 0;
