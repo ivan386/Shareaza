@@ -1055,9 +1055,9 @@ void CIRCFrame::OnTimer(UINT_PTR nIDEvent)
 		{
 			auto_array< char > pszData( new char[ 4096 ] );
 			pszData[ 0 ] = '\0';
-			int nRetVal = recv( m_nSocket, pszData.get(), 4094, 0 );
+			int nRetVal = recv( m_nSocket, pszData.get(), 4095, 0 );
 			if ( nRetVal > 0 )
-				pszData[ nRetVal + 1 ] = '\0';
+				pszData[ nRetVal ] = '\0';
 			CStringA strTmp = m_sWsaBuffer + pszData.get();
 			m_sWsaBuffer.Empty();
 
@@ -2142,22 +2142,14 @@ CString CIRCFrame::GetStringAfterParsedItem(int nItem) const
 
 CString CIRCFrame::TrimString(CString strMessage) const
 {
-	int nIndex;
-	CString strTmp;
-
 	// If "\x000A" exists as the first character, remove it from the string.
-	if ( strMessage.Find( _T("\x000A") ) == 0 )
+	if ( strMessage.GetAt( 0 ) == _T('\x000A') )
 		strMessage = strMessage.Mid( 1 );	
-	
+
 	// Go through each character in the message.
 	// If the character is \x05BC, stop adding characters
-	for( nIndex = 0 ; nIndex < strMessage.GetLength() - 1 ; nIndex++ )
-	{
-		if ( strMessage.Mid( nIndex, 1 ) == _T("\x05BC") )
-			return strTmp;
-		strTmp = strTmp + strMessage.Mid( nIndex, 1 );
-	}
-	return strTmp;
+	int nPos = strMessage.Find( _T('\x05BC') );
+	return ( nPos == -1 ) ? strMessage : strMessage.Left( nPos );
 }
 
 int CIRCFrame::IsTabExist(const CString& strTabName) const
