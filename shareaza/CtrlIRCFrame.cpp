@@ -1054,16 +1054,17 @@ void CIRCFrame::OnTimer(UINT_PTR nIDEvent)
 		if ( WaitForSingleObject( m_pWakeup, 0 ) == WAIT_OBJECT_0 )
 		{
 			auto_array< char > pszData( new char[ 4096 ] );
+			pszData[ 0 ] = '\0';
 			int nRetVal = recv( m_nSocket, pszData.get(), 4094, 0 );
 			if ( nRetVal > 0 )
 				pszData[ nRetVal + 1 ] = '\0';
-			CString strTmp = TrimString( m_sWsaBuffer + UTF8Decode( pszData.get() ) );
+			CStringA strTmp = m_sWsaBuffer + pszData.get();
 			m_sWsaBuffer.Empty();
 
 			switch ( nRetVal )
 			{
 			case 0:
-				OnStatusMessage( strTmp, ID_COLOR_NOTICE );
+				OnStatusMessage( TrimString( UTF8Decode( strTmp ) ), ID_COLOR_NOTICE );
 				OnIrcDisconnect();
 				return;
 			
@@ -1085,7 +1086,7 @@ void CIRCFrame::OnTimer(UINT_PTR nIDEvent)
 				m_nMsgsInSec++;
 
 				// If it's not a complete line, add it to the buffer until we get the rest
-				int nIndex = strTmp.Find( _T("\r\n") );
+				int nIndex = strTmp.Find( "\r\n" );
 				if ( nIndex == -1 )
 				{
 					m_sWsaBuffer = strTmp;
@@ -1094,14 +1095,14 @@ void CIRCFrame::OnTimer(UINT_PTR nIDEvent)
 				{
 					while ( nIndex != -1 && ! strTmp.IsEmpty() )
 					{
-						CString strMessage = strTmp.Left( nIndex );
+						CStringA strMessage = strTmp.Left( nIndex );
 						strMessage.TrimLeft();
 
 						if ( ! strMessage.IsEmpty() )
-							OnNewMessage( strMessage );
+							OnNewMessage( TrimString( UTF8Decode( strMessage ) ) );
 
 						strTmp = strTmp.Mid( nIndex + 2 );
-						nIndex = strTmp.Find( _T("\r\n") );
+						nIndex = strTmp.Find( "\r\n" );
 					}
 
 					if ( ! strTmp.IsEmpty() ) 

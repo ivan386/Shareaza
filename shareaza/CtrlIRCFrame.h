@@ -201,7 +201,7 @@ protected:
 	int				m_nLocalTextLimit;
 	int				m_nLocalLinesLimit;
 	CEvent 			m_pWakeup;
-	CString         m_sWsaBuffer;
+	CStringA         m_sWsaBuffer;
 
 	CFont			m_fntEdit;
 	CStringArray	m_pWords;
