@@ -1004,8 +1004,9 @@ void CDownloadWithTorrent::CloseTorrent()
 
 float CDownloadWithTorrent::GetRatio() const
 {
-	if ( m_pTorrent.m_nTotalUpload == 0 || m_pTorrent.m_nTotalDownload == 0 ) return 0;
-	return float( m_pTorrent.m_nTotalUpload * 10000 / m_pTorrent.m_nTotalDownload ) / 100.0f;
+	return float( m_pTorrent.m_nTotalUpload * 10000 /
+		( m_pTorrent.m_nTotalDownload ? m_pTorrent.m_nTotalDownload :
+		m_pTorrent.m_nTotalSize ) ) / 100.0f;
 }
 
 //////////////////////////////////////////////////////////////////////
