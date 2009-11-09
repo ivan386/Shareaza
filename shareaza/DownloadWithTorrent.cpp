@@ -233,7 +233,7 @@ void CDownloadWithTorrent::Serialize(CArchive& ar, int nVersion)
 			if ( sServingFileName.IsEmpty() )
 				sServingFileName = sPath;
 
-			CProgressBarDlg oProgress( CWnd::GetDesktopWindow() );
+			CProgressBarDlg oProgress( AfxGetMainWnd() );
 			oProgress.SetWindowText( LoadString( IDS_BT_UPDATE_TITLE ) );
 			oProgress.SetActionText( LoadString( IDS_BT_UPDATE_CONVERTING ) );
 			oProgress.SetEventText( m_sName );
@@ -296,6 +296,10 @@ void CDownloadWithTorrent::Serialize(CArchive& ar, int nVersion)
 					oProgress.StepSubEvent( (int)( nBuffer / 1024ul ) );
 					oProgress.SetEventPos( (int)( nTotal / 1024ull ) );
 					oProgress.UpdateWindow();
+
+					AfxGetMainWnd()->UpdateWindow();
+
+					Sleep( 50 );
 				}
 			}
 
