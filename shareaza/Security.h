@@ -71,14 +71,14 @@ public:
 	void			MoveUp(CSecureRule* pRule);
 	void			MoveDown(CSecureRule* pRule);
 
-	inline void		Ban(const IN_ADDR* pAddress, int nBanLength, BOOL bMessage = TRUE)
+	inline void		Ban(const IN_ADDR* pAddress, int nBanLength, BOOL bMessage = TRUE, LPCTSTR szComment = NULL)
 	{
-		BanHelper( pAddress, NULL, nBanLength, bMessage );
+		BanHelper( pAddress, NULL, nBanLength, bMessage, szComment );
 	}
 
-	inline void		Ban(const CShareazaFile* pFile, int nBanLength, BOOL bMessage = TRUE)
+	inline void		Ban(const CShareazaFile* pFile, int nBanLength, BOOL bMessage = TRUE, LPCTSTR szComment = NULL)
 	{
-		BanHelper( NULL, pFile, nBanLength, bMessage );
+		BanHelper( NULL, pFile, nBanLength, bMessage, szComment );
 	}
 
 	bool			Complain(const IN_ADDR* pAddress, int nBanLength = ban5Mins, int nExpire = 30, int nCount = 3);
@@ -101,8 +101,15 @@ public:
 	// Test new releases, and remove block if/when they are fixed.
 	BOOL			IsClientBanned(const CString& sUserAgent);
 
+	// Check the other computer's software title against our list of programs
+	// not to talk to
+	BOOL			IsAgentBlocked(const CString& sUserAgent);
+	
+	// Check the evil's G1/G2 vendor code
+	BOOL			IsVendorBlocked(const CString& sVendor);
+
 protected:
-	void			BanHelper(const IN_ADDR* pAddress, const CShareazaFile* pFile, int nBanLength, BOOL bMessage);
+	void			BanHelper(const IN_ADDR* pAddress, const CShareazaFile* pFile, int nBanLength, BOOL bMessage, LPCTSTR szComment);
 	CSecureRule*	GetGUID(const GUID& oGUID) const;
 	CXMLElement*	ToXML(BOOL bRules = TRUE);
 	BOOL			FromXML(CXMLElement* pXML);

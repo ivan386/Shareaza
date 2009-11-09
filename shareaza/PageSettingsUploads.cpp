@@ -129,13 +129,10 @@ BOOL CUploadsSettingsPage::OnInitDialog()
 
 	Settings.SetRange( &Settings.Uploads.MaxPerHost, m_wndMaxPerHost );
 
-	for ( CString strList = Settings.Uploads.BlockAgents + '|' ; strList.GetLength() ; )
+	for ( string_set::const_iterator i = Settings.Uploads.BlockAgents.begin() ;
+		i != Settings.Uploads.BlockAgents.end(); i++ )
 	{
-		CString strType = strList.SpanExcluding( _T("|") );
-		strList = strList.Mid( strType.GetLength() + 1 );
-		strType.TrimLeft();
-		strType.TrimRight();
-		if ( strType.GetLength() ) m_wndAgentList.AddString( strType );
+		m_wndAgentList.AddString( *i );
 	}
 
 	UpdateData( FALSE );
@@ -390,25 +387,17 @@ void CUploadsSettingsPage::OnOK()
 	}
 
 	// Set blocked user agents/strings
-	Settings.Uploads.BlockAgents.Empty();
+	Settings.Uploads.BlockAgents.clear();
 
 	for ( int nItem = 0 ; nItem < m_wndAgentList.GetCount() ; nItem++ )
 	{
 		CString str;
 		m_wndAgentList.GetLBText( nItem, str );
-
 		if ( str.GetLength() )
 		{
-			if ( Settings.Uploads.BlockAgents.IsEmpty() )
-				Settings.Uploads.BlockAgents += '|';
-			Settings.Uploads.BlockAgents += str;
-			Settings.Uploads.BlockAgents += '|';
+			Settings.Uploads.BlockAgents.insert( str );
 		}
 	}
-
-	// Initialize it to an empty list ("||") to prevent the default being reloaded.
-	if ( m_wndAgentList.GetCount() == 0 )
-		Settings.Uploads.BlockAgents += "||";
 
 	// Create/Validate queues
 	if ( UploadQueues.GetCount() == 0 )

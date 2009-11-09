@@ -33,6 +33,7 @@
 #include "Datagrams.h"
 #include "Kademlia.h"
 #include "VendorCache.h"
+#include "Security.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -426,7 +427,6 @@ BOOL CDiscoveryServices::Load()
 	{
 		CArchive ar( &pFile, CArchive::load );
 		Serialize( ar );
-		ar.Close();
 	}
 	catch ( CException* pException )
 	{
@@ -456,15 +456,21 @@ BOOL CDiscoveryServices::Save()
 	if ( ! pLock.Lock( 250 ) )
 		return FALSE;
 
-	CFile pFile;
-
 	CString strFile = Settings.General.UserPath + _T("\\Data\\Discovery.dat");
-	if ( !pFile.Open( strFile, CFile::modeWrite|CFile::modeCreate ) )
+	CFile pFile;
+	if ( ! pFile.Open( strFile, CFile::modeWrite | CFile::modeCreate ) )
 		return FALSE;
 
-	CArchive ar( &pFile, CArchive::store );
-	Serialize( ar );
-	ar.Close();
+	try
+	{
+		CArchive ar( &pFile, CArchive::store );
+		Serialize( ar );
+	}
+	catch ( CException* pException )
+	{
+		pException->Delete();
+		return FALSE;
+	}
 
 	return TRUE;
 }
@@ -1457,7 +1463,11 @@ BOOL CDiscoveryServices::RunWebCacheGet(BOOL bCaches)
 					CVendor* pVendor = NULL;
 					if ( oParts.GetCount() >= 6 && ! oParts[ 5 ].IsEmpty() )
 					{
-						pVendor = VendorCache.Lookup( oParts[ 5 ].Left( 4 ) );
+						CString sVendor = oParts[ 5 ].Left( 4 );
+						if ( Security.IsVendorBlocked( sVendor ) )
+							// Invalid client
+							return FALSE;
+						pVendor = VendorCache.Lookup( sVendor );
 					}
 
 					// Get uptime field

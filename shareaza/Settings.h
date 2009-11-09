@@ -550,7 +550,7 @@ public:
 		DWORD		PreviewTransfers;
 		bool		AllowBackwards;				// Allow data to be sent from end of range to begining where supported
 		bool		HubUnshare;
-		CString		BlockAgents;
+		string_set	BlockAgents;
 		bool		AutoClear;					// Automatically clear completed uploads ('Completed' queue)
 		DWORD		ClearDelay;					// Delay between auto-clears
 		DWORD		FilterMask;

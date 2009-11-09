@@ -35,6 +35,7 @@
 #include "XML.h"
 #include "VendorCache.h"
 #include "Transfers.h"
+#include "Security.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -704,7 +705,7 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 		m_sUserAgent = strValue;
 		m_bClientExtended = VendorCache.IsExtended( m_sUserAgent );
 		
-		if ( IsAgentBlocked() )
+		if ( Security.IsAgentBlocked( m_sUserAgent ) )
 		{
 			Close( TRI_FALSE );
 			return FALSE;

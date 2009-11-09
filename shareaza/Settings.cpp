@@ -521,7 +521,7 @@ void CSettings::Load()
 
 	Add( _T("Uploads"), _T("AllowBackwards"), &Uploads.AllowBackwards, true );
 	Add( _T("Uploads"), _T("AutoClear"), &Uploads.AutoClear, false );
-	Add( _T("Uploads"), _T("BlockAgents"), &Uploads.BlockAgents, _T("|Mozilla|") );
+	Add( _T("Uploads"), _T("BlockAgents"), &Uploads.BlockAgents, _T("|Mozilla|Fake Shareaza|") );
 	Add( _T("Uploads"), _T("ClampdownFactor"), &Uploads.ClampdownFactor, 20, 1, 0, 100, _T("%") );
 	Add( _T("Uploads"), _T("ClampdownFloor"), &Uploads.ClampdownFloor, 8*128, 128, 0, 4096, _T(" Kb/s") );
 	Add( _T("Uploads"), _T("ClearDelay"), &Uploads.ClearDelay, 30*1000, 1000, 1, 1800, _T(" s") );

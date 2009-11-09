@@ -31,6 +31,7 @@
 #include "Network.h"
 #include "ShareazaURL.h"
 #include "GProfile.h"
+#include "Security.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -403,7 +404,7 @@ BOOL CDownloadTransferFTP::OnHeaderLine( CString& strHeader, CString& strValue )
 		{
 			m_LIST.m_sUserAgent = m_RETR.m_sUserAgent = m_sUserAgent =
 				m_pSource->m_sServer = strValue.Trim( _T(" \t\r\n-=_") );
-			if ( IsAgentBlocked() )
+			if ( Security.IsAgentBlocked( m_sUserAgent ) )
 			{
 				// Ban
 				Close( TRI_FALSE );

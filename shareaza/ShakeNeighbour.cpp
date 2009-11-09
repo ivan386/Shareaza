@@ -790,11 +790,11 @@ BOOL CShakeNeighbour::OnHeaderLine(CString& strHeader, CString& strValue)
 			m_nState = nrsRejected;
 			m_bBadClient = TRUE;
 			m_bDelayClose = TRUE;
-			Security.Ban( &m_pHost.sin_addr, ban2Hours, TRUE );
+			Security.Ban( &m_pHost.sin_addr, ban2Hours );
 		}
 		
 		// If the remote computer is running a client the user has blocked
-		if ( IsAgentBlocked() )
+		if ( Security.IsAgentBlocked( m_sUserAgent ) )
 		{
 			m_nState = nrsRejected;
 			m_bBadClient = TRUE;

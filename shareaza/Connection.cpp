@@ -706,51 +706,6 @@ BOOL CConnection::SendMyAddress()
 	return FALSE;
 }
 
-//////////////////////////////////////////////////////////////////////
-// CConnection blocked agent filter
-
-// Call to determine if the remote computer is running software we'd rather not
-// communicate with.
-// Returns true to block or false to allow the program.
-
-BOOL CConnection::IsAgentBlocked()
-{
-	// Block "Fake Shareaza"
-	if ( m_sUserAgent == _T("Fake Shareaza") )
-		return TRUE;
-
-	// The remote computer didn't send a "User-Agent", or it sent whitespace
-	if ( m_sUserAgent.Trim().IsEmpty() )
-		return TRUE;
-
-	// If the list of programs to block is empty, allow this program
-	if ( Settings.Uploads.BlockAgents.IsEmpty() )
-		return FALSE;
-
-	// Get the list of blocked programs, and make a copy here of it all in lowercase letters
-	CString strBlocked = Settings.Uploads.BlockAgents;
-	ToLower( strBlocked );
-
-	// Get the name of the program running on the other side of the connection, and make it lowercase also
-	CString strAgent = m_sUserAgent;
-	ToLower( strAgent );
-
-	// Loop through the list of programs to block
-	for ( strBlocked += '|' ; strBlocked.GetLength() ; )
-	{
-		// Break off a blocked program name from the start of the list
-		CString strBrowser	= strBlocked.SpanExcluding( _T("|;,") );		// Get the text before a puncutation mark
-		strBlocked			= strBlocked.Mid( strBrowser.GetLength() + 1 );	// Remove that much text from the start
-
-		// If the blocked list still exists and the blocked program and remote program match, block it
-		if ( strBrowser.GetLength() > 0 && strAgent.Find( strBrowser ) >= 0 )
-			return TRUE;
-	}
-
-	// Allow it
-	return FALSE;
-}
-
 void CConnection::UpdateCountry()
 {
 	m_sCountry     = theApp.GetCountryCode( m_pHost.sin_addr );

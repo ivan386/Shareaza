@@ -181,7 +181,7 @@ void CSecurity::Clear()
 //////////////////////////////////////////////////////////////////////
 // CSecurity ban
 
-void CSecurity::BanHelper(const IN_ADDR* pAddress, const CShareazaFile* pFile, int nBanLength, BOOL bMessage)
+void CSecurity::BanHelper(const IN_ADDR* pAddress, const CShareazaFile* pFile, int nBanLength, BOOL bMessage, LPCTSTR szComment)
 {
 	CQuickLock oLock( m_pSection );
 
@@ -247,6 +247,9 @@ void CSecurity::BanHelper(const IN_ADDR* pAddress, const CShareazaFile* pFile, i
 		pRule->m_nExpire	= CSecureRule::srSession;
 		pRule->m_sComment	= _T("Quick Ban");
 	}
+
+	if ( szComment )
+		pRule->m_sComment = szComment;
 
 	if ( pAddress )
 		CopyMemory( pRule->m_nIP, pAddress, sizeof pRule->m_nIP );
@@ -802,9 +805,42 @@ BOOL CSecurity::IsClientBanned(const CString& sUserAgent)
 	// i2hub - leecher client. (Tested, does not upload)
 	if ( _tcsistr( sUserAgent, _T("i2hub 2.0") ) )					return TRUE;
 
+	// foxy - leecher client. (Tested, does not upload)
+	// having something like Authentication which is not defined on specification
+	if ( _tcsistr( sUserAgent, _T("foxy") ) )						return TRUE;
+
 	// Check by content filter
+	// TODO: Implement user agent filter type
 	return IsDenied( sUserAgent );
 }
+
+BOOL CSecurity::IsAgentBlocked(const CString& sUserAgent)
+{
+	// The remote computer didn't send a "User-Agent", or it sent whitespace
+	if ( sUserAgent.IsEmpty() ||
+		CString( sUserAgent ).Trim().IsEmpty() )					return TRUE;
+
+	// Loop through the list of programs to block
+	for ( string_set::const_iterator i = Settings.Uploads.BlockAgents.begin() ;
+		i != Settings.Uploads.BlockAgents.end(); i++ )
+	{
+		if ( _tcsistr( sUserAgent, *i ) )							return TRUE;
+	}
+
+	// Allow it
+	return FALSE;
+}
+
+BOOL CSecurity::IsVendorBlocked(const CString& sVendor)
+{
+	// foxy - leecher client. (Tested, does not upload)
+	// having something like Authentication which is not defined on specification
+	if ( sVendor.CompareNoCase( _T("foxy") ) == 0 )					return TRUE;
+
+	// Allow it
+	return FALSE;
+}
+
 
 //////////////////////////////////////////////////////////////////////
 // CSecureRule construction

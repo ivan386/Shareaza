@@ -77,19 +77,17 @@ BOOL CHostCache::Load()
 {
 	CQuickLock oLock( m_pSection );
 
-	CString strFile;
+	CString strFile = Settings.General.UserPath + _T("\\Data\\HostCache.dat");
 	CFile pFile;
 	
 	Clear();
 	
-	strFile.Format( _T("%s\\Data\\HostCache.dat"), (LPCTSTR)Settings.General.UserPath );
 	if ( ! pFile.Open( strFile, CFile::modeRead ) ) return FALSE;
 	
 	try
 	{
 		CArchive ar( &pFile, CArchive::load );
 		Serialize( ar );
-		ar.Close();
 	}
 	catch ( CException* pException )
 	{
@@ -105,16 +103,19 @@ BOOL CHostCache::Save()
 {
 	CQuickLock oLock( m_pSection );
 
-	CString strFile;
+	CString strFile = Settings.General.UserPath + _T("\\Data\\HostCache.dat");
 	CFile pFile;
-	
-	strFile.Format( _T("%s\\Data\\HostCache.dat"), (LPCTSTR)Settings.General.UserPath );
-	
-	if ( ! pFile.Open( strFile, CFile::modeWrite|CFile::modeCreate ) ) return FALSE;
-	
-	CArchive ar( &pFile, CArchive::store );
-	Serialize( ar );
-	ar.Close();
+	if ( ! pFile.Open( strFile, CFile::modeWrite | CFile::modeCreate ) ) return FALSE;
+
+	try
+	{
+		CArchive ar( &pFile, CArchive::store );
+		Serialize( ar );
+	}
+	catch ( CException* pException )
+	{
+		pException->Delete();
+	}
 	
 	return TRUE;
 }
@@ -472,7 +473,8 @@ void CHostCacheList::SanityCheck()
 	for( CHostCacheMap::iterator i = m_Hosts.begin(); i != m_Hosts.end(); )
 	{
 		CHostCacheHostPtr pHost = (*i).second;
-		if ( Security.IsDenied( &pHost->m_pAddress ) )
+		if ( Security.IsDenied( &pHost->m_pAddress ) ||
+			( pHost->m_pVendor && Security.IsVendorBlocked( pHost->m_pVendor->m_sCode ) ) )
 		{
 			m_HostsTime.erase(
 				std::find( m_HostsTime.begin(), m_HostsTime.end(), pHost ) );

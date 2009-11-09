@@ -314,7 +314,15 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 {
 	if ( Uploads.EnforcePerHostLimit( this, TRUE ) ) return FALSE;
 	
-	if ( m_bClientExtended )
+	if ( Security.IsClientBanned( m_sUserAgent ) )
+	{
+		SendResponse( IDR_HTML_BROWSER );
+		theApp.Message( MSG_ERROR, _T("Client %s has a prohibited user agent \"%s\", banning"), (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
+		Security.Ban( &m_pHost.sin_addr, ban5Mins, FALSE, CString( _T("Prohibited user agent: ") ) + m_sUserAgent );
+		Remove( FALSE );
+		return FALSE;
+	}
+	else if ( m_bClientExtended )
 	{
 		// Assume certain capabilitites for various Shareaza versions
 		m_nGnutella |= 3;
@@ -325,7 +333,6 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 		{
 			SendResponse( IDR_HTML_FILENOTFOUND );
 			theApp.Message( MSG_ERROR, _T("Client %s has a spoofed user agent, banning"), (LPCTSTR)m_sAddress );
-					
 			Security.Ban( &m_pHost.sin_addr, banWeek, FALSE );
 			Remove( FALSE );
 			return FALSE;
@@ -411,7 +418,7 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 			return FALSE;
 		}
 	}
-	else if ( IsAgentBlocked() )
+	else if ( Security.IsAgentBlocked( m_sUserAgent ) )
 	{
 		if ( m_sName.IsEmpty() ) m_sName = _T("file");
 		SendResponse( IDR_HTML_BROWSER );

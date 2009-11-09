@@ -165,7 +165,14 @@ CQueryHit* CQueryHit::FromG1Packet(CG1Packet* pPacket, int* pnHops)
 		{
 			CHAR szaVendor[ 4 ];
 			pPacket->Read( szaVendor, 4 );
+
 			TCHAR szVendor[ 5 ] = { szaVendor[0], szaVendor[1], szaVendor[2], szaVendor[3], 0 };
+			if ( Security.IsVendorBlocked( szVendor ) )
+			{
+				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet from invalid client") );
+				AfxThrowUserException();
+			}
+
 			pVendor = VendorCache.Lookup( szVendor );
 			if ( ! pVendor )
 				pVendor = VendorCache.m_pNull;
@@ -300,7 +307,7 @@ CQueryHit* CQueryHit::FromG2Packet(CG2Packet* pPacket, int* pnHops)
 	
 	if ( ! pPacket->m_bCompound )
 	{
-		theApp.Message( MSG_DEBUG, _T("[G2] Hit Error: No compounded packet") );
+		theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G2] Hit Error: No compounded packet") );
 		return NULL;
 	}
 
@@ -364,7 +371,7 @@ CQueryHit* CQueryHit::FromG2Packet(CG2Packet* pPacket, int* pnHops)
 						AfxThrowUserException();
 				}
 				else
-					theApp.Message( MSG_DEBUG, _T("[G2 Hit] Error: Got hit descriptor without compound flag") );
+					theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G2 Hit] Error: Got hit descriptor without compound flag") );
 				break;
 
 			case G2_PACKET_HIT_GROUP:
@@ -402,7 +409,7 @@ CQueryHit* CQueryHit::FromG2Packet(CG2Packet* pPacket, int* pnHops)
 					}
 				}
 				else
-					theApp.Message( MSG_DEBUG, _T("[G2] Hit Error: Got hit group without compound flag") );
+					theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G2] Hit Error: Got hit group without compound flag") );
 				break;
 
 			case G2_PACKET_PROFILE:
@@ -429,7 +436,7 @@ CQueryHit* CQueryHit::FromG2Packet(CG2Packet* pPacket, int* pnHops)
 					}
 				}
 				else
-					theApp.Message( MSG_DEBUG, _T("[G2] Hit Error: Got profile without compound flag") );
+					theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G2] Hit Error: Got profile without compound flag") );
 				break;
 
 			case G2_PACKET_NEIGHBOUR_HUB:
@@ -447,7 +454,7 @@ CQueryHit* CQueryHit::FromG2Packet(CG2Packet* pPacket, int* pnHops)
 					}
 				}
 				else
-					theApp.Message( MSG_DEBUG, _T("[G2] Hit Error: Got neighbour hub with invalid length (%u bytes)"), nLength );
+					theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G2] Hit Error: Got neighbour hub with invalid length (%u bytes)"), nLength );
 				break;
 
 			case G2_PACKET_NODE_GUID:
@@ -457,7 +464,7 @@ CQueryHit* CQueryHit::FromG2Packet(CG2Packet* pPacket, int* pnHops)
 					oClientID.validate();
 				}
 				else
-					theApp.Message( MSG_DEBUG, _T("[G2] Hit Error: Got node guid with invalid length (%u bytes)"), nLength );
+					theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G2] Hit Error: Got node guid with invalid length (%u bytes)"), nLength );
 				break;
 
 			case G2_PACKET_NODE_ADDRESS:
@@ -471,19 +478,25 @@ CQueryHit* CQueryHit::FromG2Packet(CG2Packet* pPacket, int* pnHops)
 					nPort = pPacket->ReadShortBE();
 				}
 				else
-					theApp.Message( MSG_DEBUG, _T("[G2] Hit Error: Got node address with invalid length (%u bytes)"), nLength );
+					theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G2] Hit Error: Got node address with invalid length (%u bytes)"), nLength );
 				break;
 
 			case G2_PACKET_VENDOR:
 				if ( nLength >= 4 )
 				{
 					CString strVendor = pPacket->ReadString( 4 );
+					if ( Security.IsVendorBlocked( strVendor ) )
+					{
+						theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G2] Got hit packet from invalid client") );
+						AfxThrowUserException();
+					}
+
 					pVendor = VendorCache.Lookup( strVendor );
 					if ( !pVendor )
 						pVendor = VendorCache.m_pNull;
 				}
 				else
-					theApp.Message( MSG_DEBUG, _T("[G2] Hit Error: Got vendor with invalid length (%u bytes)"), nLength );
+					theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G2] Hit Error: Got vendor with invalid length (%u bytes)"), nLength );
 				break;
 
 			case G2_PACKET_METADATA:
@@ -548,11 +561,11 @@ CQueryHit* CQueryHit::FromG2Packet(CG2Packet* pPacket, int* pnHops)
 					}
 				}
 				else
-					theApp.Message( MSG_DEBUG, _T("[G2] Hit Error: Got peer status with invalid length (%u bytes)"), nLength );
+					theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G2] Hit Error: Got peer status with invalid length (%u bytes)"), nLength );
 				break;
 
 			default:
-				theApp.Message( MSG_DEBUG, _T("[G2] Hit Error: Got unknown type (0x%08I64x +%u)"), nType, pPacket->m_nPosition - 8 );
+				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G2] Hit Error: Got unknown type (0x%08I64x +%u)"), nType, pPacket->m_nPosition - 8 );
 			}
 
 			pPacket->m_nPosition = nSkip;
@@ -560,12 +573,12 @@ CQueryHit* CQueryHit::FromG2Packet(CG2Packet* pPacket, int* pnHops)
 		
 		if ( ! oClientID )
 		{
-			theApp.Message( MSG_DEBUG, _T("[G2] Hit Error: Node guid missed") );
+			theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G2] Hit Error: Node guid missed") );
 			AfxThrowUserException();
 		}
 		if ( pPacket->GetRemaining() < 17 )
 		{
-			theApp.Message( MSG_DEBUG, _T("[G2] Hit Error: Too short packet (remaining %u bytes)"), pPacket->GetRemaining() );
+			theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G2] Hit Error: Too short packet (remaining %u bytes)"), pPacket->GetRemaining() );
 			AfxThrowUserException();
 		}
 
