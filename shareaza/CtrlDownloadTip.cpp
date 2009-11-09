@@ -484,7 +484,7 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 		pt.y += TIP_GAP;
 	}
 
-	if ( m_bDrawGraph )
+	if ( m_bDrawGraph && m_pGraph )
 	{	// Don't draw empty graph.
 		CRect rc( pt.x, pt.y, m_sz.cx, pt.y + 40 );
 		pDC->Draw3dRect( &rc, CoolInterface.m_crTipBorder, CoolInterface.m_crTipBorder );
@@ -811,13 +811,16 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownloadSource* pSource)
 	DrawProgressBar( pDC, &pt, pSource );
 	pt.y += TIP_GAP;
 
-	CRect rc( pt.x, pt.y, m_sz.cx, pt.y + 40 );
-	pDC->Draw3dRect( &rc, CoolInterface.m_crTipBorder, CoolInterface.m_crTipBorder );
-	rc.DeflateRect( 1, 1 );
-	m_pGraph->BufferedPaint( pDC, &rc );
-	rc.InflateRect( 1, 1 );
-	pDC->ExcludeClipRect( &rc );
-	pt.y += 40;
+	if ( m_pGraph )
+	{
+		CRect rc( pt.x, pt.y, m_sz.cx, pt.y + 40 );
+		pDC->Draw3dRect( &rc, CoolInterface.m_crTipBorder, CoolInterface.m_crTipBorder );
+		rc.DeflateRect( 1, 1 );
+		m_pGraph->BufferedPaint( pDC, &rc );
+		rc.InflateRect( 1, 1 );
+		pDC->ExcludeClipRect( &rc );
+		pt.y += 40;
+	}
 	pt.y += TIP_GAP;
 
 	for ( int nHeader = 0 ; nHeader < m_pHeaderName.GetSize() ; nHeader++ )
