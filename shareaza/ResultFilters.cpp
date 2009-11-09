@@ -145,33 +145,37 @@ void CResultFilters::Load()
 	}
 	delete [] ( m_pFilters );
 	
-	CString strFile;
+	CString strFile = Settings.General.UserPath + _T("\\Data\\Filters.dat");
 	CFile f;
-
-	strFile.Format( _T("%s\\Data\\Filters.dat"), (LPCTSTR)Settings.General.UserPath );
-
 	if ( f.Open( strFile, CFile::modeRead ) )
 	{
-		CArchive ar( &f, CArchive::load );
-		Serialize(ar);
-		ar.Close();
-		f.Close();
+		try
+		{
+			CArchive ar( &f, CArchive::load );
+			Serialize( ar );
+		}
+		catch ( CException* pException )
+		{
+			pException->Delete();
+		}
 	}
 }
 
 void CResultFilters::Save()
 {
-	CString strFile;
+	CString strFile = Settings.General.UserPath + _T("\\Data\\Filters.dat");
 	CFile f;
-
-	strFile.Format( _T("%s\\Data\\Filters.dat"), (LPCTSTR)Settings.General.UserPath );
-
 	if (f.Open(strFile, CFile::modeCreate | CFile::modeWrite))
 	{
-		CArchive ar( &f, CArchive::store );
-		Serialize( ar );
-		ar.Close();
-		f.Close();
+		try
+		{
+			CArchive ar( &f, CArchive::store );
+			Serialize( ar );
+		}
+		catch ( CException* pException )
+		{
+			pException->Delete();
+		}
 	}
 }
 ////////////////////////////////////////////////////

@@ -418,7 +418,7 @@ void CWindowManager::LoadWindowStates()
 //////////////////////////////////////////////////////////////////////
 // CWindowManager save complex window states
 
-void CWindowManager::SaveWindowStates()
+void CWindowManager::SaveWindowStates() const
 {
 //	if ( Settings.General.GUIMode != GUI_WINDOWED ) return;
 
@@ -451,19 +451,17 @@ void CWindowManager::SaveWindowStates()
 //////////////////////////////////////////////////////////////////////
 // CWindowManager search load and save
 
-BOOL CWindowManager::LoadSearchWindows()
+void CWindowManager::LoadSearchWindows()
 {
 	CString strFile = Settings.General.UserPath + _T("\\Data\\Searches.dat");
-	CFile pFile;
-
-	if ( ! pFile.Open( strFile, CFile::modeRead ) ) return FALSE;
-
-	CArchive ar( &pFile, CArchive::load );
-	CWaitCursor pCursor;
-	BOOL bSuccess = TRUE;
 
 	try
 	{
+		CFile pFile;
+		if ( ! pFile.Open( strFile, CFile::modeRead ) )
+			return;
+
+		CArchive ar( &pFile, CArchive::load );
 		while ( ar.ReadCount() == 1 )
 		{
 			CSearchWnd* pWnd = new CSearchWnd();
@@ -473,41 +471,42 @@ BOOL CWindowManager::LoadSearchWindows()
 	catch ( CException* pException )
 	{
 		pException->Delete();
-		bSuccess = FALSE;
 	}
 
-	if ( Settings.General.GUIMode != GUI_WINDOWED ) Open( RUNTIME_CLASS(CHomeWnd) );
-
-	return bSuccess;
+	if ( Settings.General.GUIMode != GUI_WINDOWED )
+		Open( RUNTIME_CLASS(CHomeWnd) );
 }
 
-void CWindowManager::SaveSearchWindows()
+void CWindowManager::SaveSearchWindows() const
 {
 	CString strFile = Settings.General.UserPath + _T("\\Data\\Searches.dat");
-	CFile pFile;
-
-	if ( ! pFile.Open( strFile, CFile::modeWrite|CFile::modeCreate ) ) return;
-
-	CArchive ar( &pFile, CArchive::store );
 	int nCount = 0;
 
-	for ( POSITION pos = GetIterator() ; pos ; )
+	try
 	{
-		CSearchWnd* pWnd = (CSearchWnd*)GetNext( pos );
+		CFile pFile;
+		if ( ! pFile.Open( strFile, CFile::modeWrite | CFile::modeCreate ) )
+			return;
 
-		if ( pWnd->IsKindOf( RUNTIME_CLASS(CSearchWnd) ) && pWnd->GetLastSearch() )
+		CArchive ar( &pFile, CArchive::store );
+		for ( POSITION pos = GetIterator() ; pos ; )
 		{
-			ar.WriteCount( 1 );
-			pWnd->Serialize( ar );
-			nCount++;
+			CSearchWnd* pWnd = (CSearchWnd*)GetNext( pos );
+
+			if ( pWnd->IsKindOf( RUNTIME_CLASS(CSearchWnd) ) && pWnd->GetLastSearch() )
+			{
+				ar.WriteCount( 1 );
+				pWnd->Serialize( ar );
+				nCount++;
+			}
 		}
+
+		ar.WriteCount( 0 );
 	}
-
-	ar.WriteCount( 0 );
-	ar.Close();
-	pFile.Close();
-
-	theApp.Message( MSG_DEBUG, _T("Searches successfully saved to: %s"), strFile );
+	catch ( CException* pException )
+	{
+		pException->Delete();
+	}
 
 	if ( ! nCount )
 		DeleteFileEx( strFile, FALSE, FALSE, FALSE );
@@ -516,19 +515,17 @@ void CWindowManager::SaveSearchWindows()
 //////////////////////////////////////////////////////////////////////
 // CWindowManager browse host load and save
 
-BOOL CWindowManager::LoadBrowseHostWindows()
+void CWindowManager::LoadBrowseHostWindows()
 {
 	CString strFile = Settings.General.UserPath + _T("\\Data\\BrowseHosts.dat");
-	CFile pFile;
-
-	if ( ! pFile.Open( strFile, CFile::modeRead ) ) return FALSE;
-
-	CArchive ar( &pFile, CArchive::load );
-	CWaitCursor pCursor;
-	BOOL bSuccess = TRUE;
 
 	try
 	{
+		CFile pFile;
+		if ( ! pFile.Open( strFile, CFile::modeRead ) )
+			return;
+
+		CArchive ar( &pFile, CArchive::load );
 		while ( ar.ReadCount() == 1 )
 		{
 			CBrowseHostWnd* pWnd = new CBrowseHostWnd();
@@ -538,41 +535,42 @@ BOOL CWindowManager::LoadBrowseHostWindows()
 	catch ( CException* pException )
 	{
 		pException->Delete();
-		bSuccess = FALSE;
 	}
 
-	if ( Settings.General.GUIMode != GUI_WINDOWED ) Open( RUNTIME_CLASS(CHomeWnd) );
-
-	return bSuccess;
+	if ( Settings.General.GUIMode != GUI_WINDOWED )
+		Open( RUNTIME_CLASS(CHomeWnd) );
 }
 
-void CWindowManager::SaveBrowseHostWindows()
+void CWindowManager::SaveBrowseHostWindows() const
 {
 	CString strFile = Settings.General.UserPath + _T("\\Data\\BrowseHosts.dat");
-	CFile pFile;
-
-	if ( ! pFile.Open( strFile, CFile::modeWrite|CFile::modeCreate ) ) return;
-
-	CArchive ar( &pFile, CArchive::store );
 	int nCount = 0;
 
-	for ( POSITION pos = GetIterator() ; pos ; )
+	try
 	{
-		CBrowseHostWnd* pWnd = (CBrowseHostWnd*) GetNext( pos );
+		CFile pFile;
+		if ( ! pFile.Open( strFile, CFile::modeWrite | CFile::modeCreate ) )
+			return;
 
-		if ( pWnd->IsKindOf( RUNTIME_CLASS(CBrowseHostWnd) ) )
+		CArchive ar( &pFile, CArchive::store );
+		for ( POSITION pos = GetIterator() ; pos ; )
 		{
-			ar.WriteCount( 1 );
-			pWnd->Serialize( ar );
-			nCount++;
+			CBrowseHostWnd* pWnd = (CBrowseHostWnd*) GetNext( pos );
+
+			if ( pWnd->IsKindOf( RUNTIME_CLASS(CBrowseHostWnd) ) )
+			{
+				ar.WriteCount( 1 );
+				pWnd->Serialize( ar );
+				nCount++;
+			}
 		}
+
+		ar.WriteCount( 0 );
 	}
-
-	ar.WriteCount( 0 );
-	ar.Close();
-	pFile.Close();
-
-	theApp.Message( MSG_DEBUG, _T("Browses successfully saved to: %s"), strFile );
+	catch ( CException* pException )
+	{
+		pException->Delete();
+	}
 
 	if ( ! nCount )
 		DeleteFileEx( strFile, FALSE, FALSE, FALSE );

@@ -1268,10 +1268,9 @@ BOOL CDownloads::LoadFromCompoundFile(LPCTSTR pszFile)
 
 	if ( ! pFile.Open( pszFile, CFile::modeRead ) ) return FALSE;
 
-	CArchive ar( &pFile, CArchive::load );
-
 	try
 	{
+		CArchive ar( &pFile, CArchive::load );
 		SerializeCompound( ar );
 	}
 	catch ( CException* pException )

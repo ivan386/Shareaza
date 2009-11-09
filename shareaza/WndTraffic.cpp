@@ -229,51 +229,58 @@ void CTrafficWnd::OnTrafficWindow()
 BOOL CTrafficWnd::Serialize(BOOL bSave)
 {
 	WINDOWPLACEMENT pPos = { sizeof(WINDOWPLACEMENT) };
+
 	CString strFile;
+	strFile.Format( _T("%s\\Data\\Graph%.4i.dat"),
+		(LPCTSTR)Settings.General.UserPath, m_nUnique );
+
 	CFile pFile;
-
-	strFile.Format( _T("%s\\Data\\Graph%.4i.dat"), (LPCTSTR)Settings.General.UserPath, m_nUnique );
-
-	if ( ! pFile.Open( strFile, bSave ? ( CFile::modeWrite | CFile::modeCreate ) : CFile::modeRead ) )
+	if ( ! pFile.Open( strFile, bSave ?
+		( CFile::modeWrite | CFile::modeCreate ) : CFile::modeRead ) )
 		return FALSE;
 
-	CArchive ar( &pFile, bSave ? CArchive::store : CArchive::load );
-	int nVersion = 0;
-
-	if ( ar.IsStoring() )
+	try
 	{
-		nVersion = 0xFFFFFFFF;
-		ar << nVersion;
-		nVersion = 1;
-		ar << nVersion;
+		CArchive ar( &pFile, bSave ? CArchive::store : CArchive::load );
+		int nVersion = 0;
 
-		ar << m_nUnique;
-		ar << m_sName;
-
-		GetWindowPlacement( &pPos );
-		ar.Write( &pPos, sizeof(pPos) );
-	}
-	else
-	{
-		ar >> m_nUnique;
-
-		if ( m_nUnique == 0xFFFFFFFF )
+		if ( ar.IsStoring() )
 		{
-			ar >> nVersion;
+			nVersion = 0xFFFFFFFF;
+			ar << nVersion;
+			nVersion = 1;
+			ar << nVersion;
+
+			ar << m_nUnique;
+			ar << m_sName;
+
+			GetWindowPlacement( &pPos );
+			ar.Write( &pPos, sizeof(pPos) );
+		}
+		else
+		{
 			ar >> m_nUnique;
+
+			if ( m_nUnique == 0xFFFFFFFF )
+			{
+				ar >> nVersion;
+				ar >> m_nUnique;
+			}
+
+			if ( nVersion >= 1 ) ar >> m_sName;
+
+			ReadArchive( ar, &pPos, sizeof(pPos) );
+			if ( pPos.showCmd == SW_SHOWNORMAL )
+				SetWindowPlacement( &pPos );
 		}
 
-		if ( nVersion >= 1 ) ar >> m_sName;
-
-		ReadArchive( ar, &pPos, sizeof(pPos) );
-		if ( pPos.showCmd == SW_SHOWNORMAL )
-			SetWindowPlacement( &pPos );
+		m_pGraph->Serialize( ar );
 	}
-
-	m_pGraph->Serialize( ar );
-
-	ar.Close();
-	pFile.Close();
+	catch ( CException* pException )
+	{
+		pException->Delete();
+		return FALSE;
+	}
 
 	if ( ! bSave ) SetUpdateRate();
 

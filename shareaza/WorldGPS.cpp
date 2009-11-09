@@ -75,10 +75,15 @@ BOOL CWorldGPS::Load()
 
 	if ( !bImport )
 	{
-		CArchive ar( &pFile, CArchive::load );
-		Serialize( ar );
-		ar.Close();
-		pFile.Close();
+		try
+		{
+			CArchive ar( &pFile, CArchive::load );
+			Serialize( ar );
+		}
+		catch ( CException* pException )
+		{
+			pException->Delete();
+		}
 		return TRUE;
 	}
 
@@ -99,10 +104,15 @@ BOOL CWorldGPS::Load()
 	strFile = Settings.General.Path + L"\\Data\\WorldGPS.dat";
 	if ( ! pFile.Open( strFile, CFile::modeWrite|CFile::modeCreate ) ) return FALSE;
 
-	CArchive ar( &pFile, CArchive::store );
-	Serialize( ar );
-	ar.Close();
-	pFile.Close();
+	try
+	{
+		CArchive ar( &pFile, CArchive::store );
+		Serialize( ar );
+	}
+	catch ( CException* pException )
+	{
+		pException->Delete();
+	}
 
 	return TRUE;
 }

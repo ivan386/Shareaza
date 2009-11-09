@@ -50,11 +50,11 @@ public:
 	void		Cascade(BOOL bActiveOnly = FALSE);
 	void		SetGUIMode(int nMode, BOOL bSaveState = TRUE);
 	void		LoadWindowStates();
-	void		SaveWindowStates();
-	BOOL		LoadSearchWindows();
-	void		SaveSearchWindows();
-	BOOL		LoadBrowseHostWindows();
-	void		SaveBrowseHostWindows();
+	void		SaveWindowStates() const;
+	void		LoadSearchWindows();
+	void		SaveSearchWindows() const;
+	void		LoadBrowseHostWindows();
+	void		SaveBrowseHostWindows() const;
 	void		OpenNewSearchWindow();
 	void		PostSkinChange();
 	void		PostSkinRemove();
