@@ -979,8 +979,8 @@ void CDownloadsWnd::OnUpdateDownloadsLaunchCopy(CCmdUI* pCmdUI)
 {
 	Prepare();
 	if ( CCoolBarItem* pcCmdUI = CCoolBarItem::FromCmdUI( pCmdUI ) )
-		pcCmdUI->Show( m_bSelStartedAndNotMoving || ! m_bSelCompleted );
-	pCmdUI->Enable( m_bSelStartedAndNotMoving || ! m_bSelCompleted );
+		pcCmdUI->Show( m_bSelStartedAndNotMoving && ! m_bSelCompleted );
+	pCmdUI->Enable( m_bSelStartedAndNotMoving && ! m_bSelCompleted );
 }
 
 void CDownloadsWnd::OnDownloadsLaunchCopy()
