@@ -656,7 +656,7 @@ bool CLibraryBuilderInternals::CopyID3v2Field(CXMLElement* pXML, LPCTSTR pszAttr
 			{
 				pBuffer += 2;
 				DWORD nOut = 0, nChar = 0;
-				for ( ; nChar < nLength - nOffset ; nChar++, nOut++ )
+				for ( ; nChar < nNewLength ; nChar++, nOut++ )
 				{
 					pszOutput[ nOut ] = (TCHAR)pBuffer[ nOffset + nChar*2+1 ] | ( (TCHAR)pBuffer[ nOffset + nChar*2+0 ] << 8 );
 					if ( pszOutput[ nOut ] == 0 )
@@ -667,7 +667,7 @@ bool CLibraryBuilderInternals::CopyID3v2Field(CXMLElement* pXML, LPCTSTR pszAttr
 				}
 				strValue.ReleaseBuffer( nOut );
 				pBuffer -= 2;
-				if ( nChar == nLength - nOffset )
+				if ( nChar == nNewLength )
 					nOffset += nLength - nOffset;
 			}
 			else
