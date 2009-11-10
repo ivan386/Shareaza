@@ -160,7 +160,8 @@ CChildWnd* CWindowManager::Open(CRuntimeClass* pClass, BOOL bToggle, BOOL bFocus
 		bToggle = FALSE;
 	}
 
-	if ( pChild && pChild->m_bTabMode ) bToggle = FALSE;
+	if ( pChild && pChild->m_bTabMode )
+		bToggle = FALSE;
 
 	if ( pChild && bToggle && GetActive() == pChild )
 	{
@@ -170,9 +171,11 @@ CChildWnd* CWindowManager::Open(CRuntimeClass* pClass, BOOL bToggle, BOOL bFocus
 
 	pLock.Unlock();
 
-	if ( ! pChild ) pChild = (CChildWnd*)pClass->CreateObject();
+	if ( ! pChild )
+		pChild = static_cast< CChildWnd* >( pClass->CreateObject() );
 
-	if ( bFocus ) pChild->BringWindowToTop();
+	if ( pChild && bFocus  )
+		pChild->BringWindowToTop();
 
 	return pChild;
 }
