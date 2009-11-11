@@ -1341,7 +1341,9 @@ void CHomeTorrentsBox::Update()
 {
 	if ( m_pDocument == NULL ) return;
 	
-	
+	CSingleLock pLock( &Transfers.m_pSection );
+	if ( ! pLock.Lock( 50 ) ) return;
+		
 	// Torrent Count
 	int nCount = Downloads.GetSeedCount();
 	
