@@ -90,8 +90,11 @@ BOOL CTorrentSeedDlg::OnInitDialog()
 
 	if ( m_pInfo.LoadTorrentFile( m_sTorrent ) )
 	{
+		CSingleLock pTransfersLock( &Transfers.m_pSection, TRUE );
 		if ( Downloads.FindByBTH( m_pInfo.m_oBTH ) )
 		{
+			pTransfersLock.Unlock();
+
 			// We are already seeding the torrent
 			CString strMessage;
 			strMessage.Format( LoadString( IDS_BT_SEED_ALREADY ), (LPCTSTR)m_pInfo.m_sName );
@@ -102,6 +105,8 @@ BOOL CTorrentSeedDlg::OnInitDialog()
 		}
 		else
 		{
+			pTransfersLock.Unlock();
+
 			if ( m_pInfo.HasEncodingError() )		// Check the torrent is valid
 			{
 				CHelpDlg::Show( _T("GeneralHelp.BadTorrentEncoding") );

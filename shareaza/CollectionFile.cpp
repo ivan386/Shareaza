@@ -32,6 +32,7 @@
 
 #include "Library.h"
 #include "Downloads.h"
+#include "Transfers.h"
 #include "ShareazaURL.h"
 #include "SharedFile.h"
 
@@ -577,6 +578,8 @@ BOOL CCollectionFile::File::IsComplete() const
 
 BOOL CCollectionFile::File::IsDownloading() const
 {
+	CQuickLock oLock( Transfers.m_pSection );
+
 	return Downloads.FindBySHA1( m_oSHA1 )
 		|| Downloads.FindByTiger( m_oTiger )
 		|| Downloads.FindByED2K( m_oED2K )
