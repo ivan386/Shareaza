@@ -32,6 +32,7 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
+IMPLEMENT_DYNAMIC(CDownloadBase, CShareazaFile)
 
 //////////////////////////////////////////////////////////////////////
 // CDownloadBase construction
@@ -43,6 +44,7 @@ CDownloadBase::CDownloadBase() :
 ,	m_bBTHTrusted		( false )
 ,	m_bMD5Trusted		( false )
 ,	m_nCookie			( 1 )
+,	m_nSaveCookie		( 0 )
 ,	m_pTask				( NULL )
 {
 }
@@ -56,7 +58,12 @@ CDownloadBase::~CDownloadBase()
 
 bool CDownloadBase::IsTasking() const
 {
-	return m_pTask != NULL;
+	return ( m_pTask != NULL );
+}
+
+bool CDownloadBase::IsMoving() const
+{
+	return ( GetTaskType() == dtaskCopy );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -70,9 +77,9 @@ void CDownloadBase::SetTask(CDownloadTask* pTask)
 //////////////////////////////////////////////////////////////////////
 // CDownloadBase return currently running task
 
-DWORD CDownloadBase::GetTaskType() const
+dtask CDownloadBase::GetTaskType() const
 {
-	return m_pTask->GetTaskType();
+	return m_pTask ? m_pTask->GetTaskType() : dtaskNone;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -80,7 +87,7 @@ DWORD CDownloadBase::GetTaskType() const
 
 bool CDownloadBase::CheckTask(CDownloadTask* pTask) const
 {
-	return m_pTask == pTask;
+	return ( m_pTask == pTask );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -88,7 +95,7 @@ bool CDownloadBase::CheckTask(CDownloadTask* pTask) const
 
 void CDownloadBase::AbortTask()
 {
-	if ( !IsTasking() )
+	if ( ! IsTasking() )
 		return;
 
 	m_pTask->Abort();
@@ -98,6 +105,11 @@ void CDownloadBase::AbortTask()
 
 //////////////////////////////////////////////////////////////////////
 // CDownloadBase modified
+
+bool CDownloadBase::IsModified() const
+{
+	return ( m_nCookie != m_nSaveCookie );
+}
 
 void CDownloadBase::SetModified()
 {
@@ -112,7 +124,8 @@ void CDownloadBase::Serialize(CArchive& ar, int nVersion)
 	if ( ar.IsStoring() )
 	{
 		ar << m_sName;
-		ar << m_sSearchKeyword;
+		CString sSearchKeyword;
+		ar << sSearchKeyword;
 		ar << m_nSize;
 		SerializeOut( ar, m_oSHA1 );
 		ar << (uint32)m_bSHA1Trusted;
@@ -133,7 +146,8 @@ void CDownloadBase::Serialize(CArchive& ar, int nVersion)
 		{
 			if ( nVersion >= 33 )
 			{
-				ar >> m_sSearchKeyword;
+				CString sSearchKeyword;
+				ar >> sSearchKeyword;
 			}
 			ar >> m_nSize;
 		}

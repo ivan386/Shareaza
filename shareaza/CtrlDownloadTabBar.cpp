@@ -531,11 +531,10 @@ void CDownloadTabBar::OnDownloadGroupNew()
 
 	if ( dlg.DoModal() == IDOK )
 	{
-		if ( Transfers.m_pSection.Lock( 300 ) )
-		{
-			if ( DownloadGroups.Check( pGroup ) ) pGroup->LinkAll();
-			Transfers.m_pSection.Unlock();
-		}
+		CQuickLock oLock( Transfers.m_pSection );
+
+		if ( DownloadGroups.Check( pGroup ) )
+			pGroup->LinkAll();
 	}
 	else
 	{
@@ -567,13 +566,16 @@ void CDownloadTabBar::OnDownloadGroupProperties()
 	CDownloadGroupDlg dlg( pGroup );
 	if ( dlg.DoModal() == IDOK )
 	{
+		CQuickLock oLock( Transfers.m_pSection );
+
 		if ( pGroup != DownloadGroups.GetSuperGroup() )
 		{
 			pGroup->Clear();
 			pGroup->LinkAll();
 		}
-		NotifySelection();
 	}
+
+	NotifySelection();
 }
 
 void CDownloadTabBar::OnUpdateDownloadGroupResume(CCmdUI* pCmdUI)

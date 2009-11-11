@@ -91,7 +91,7 @@ public:
 	void		DeleteReview(CDownloadReview* pReview);
 	int			GetReviewCount() const { return m_nReviewCount; }
 	int			GetReviewAverage() const;
-	void		OnPreviewRequestComplete(CDownloadTask* pTask);
+	void		OnPreviewRequestComplete(const CDownloadTask* pTask);
 protected:
 	virtual void Serialize(CArchive& ar, int nVersion);
 public:

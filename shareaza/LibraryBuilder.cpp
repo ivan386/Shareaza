@@ -29,7 +29,8 @@
 #include "HashDatabase.h"
 #include "Security.h"
 #include "ThumbCache.h"
-
+#include "Downloads.h"
+#include "Transfers.h"
 #include "XML.h"
 #include "Schema.h"
 #include "SchemaCache.h"
@@ -577,6 +578,12 @@ bool CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile)
 
 	pFileHash->Finish();
 
+	// Get associated download (if any)
+	CSingleLock oTransfersLock( &Transfers.m_pSection, TRUE );
+	CDownload* pDownload = Downloads.FindByPath( szPath );
+	if ( ! pDownload )
+		oTransfersLock.Unlock();
+
 	CSingleLock oLibraryLock( &Library.m_pSection, FALSE );
 	while ( ! oLibraryLock.Lock( 100 ) )
 		if ( m_bSkip )
@@ -611,7 +618,13 @@ bool CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile)
 
 	Library.AddFile( pFile );
 
+	if ( pDownload )
+		pFile->UpdateMetadata( pDownload );
+
 	oLibraryLock.Unlock();
+
+	if ( pDownload )
+		oTransfersLock.Unlock();
 
 	Library.Update();
 

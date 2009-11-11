@@ -42,7 +42,6 @@ static char THIS_FILE[]=__FILE__;
 CDownloadWithFile::CDownloadWithFile() :
 	m_bVerify		( TRI_UNKNOWN )
 ,	m_tReceived		( GetTickCount() )
-,	m_bMoving		( false )
 ,	m_pFile			( new CFragmentedFile )
 ,	m_nFileError	( ERROR_SUCCESS )
 {
@@ -124,17 +123,6 @@ int CDownloadWithFile::SelectFile(CSingleLock* pLock) const
 	return m_pFile.get() ? m_pFile->SelectFile( pLock ) : -1;
 }
 
-void CDownloadWithFile::SetMoving(bool bMoving)
-{
-	m_bMoving = bMoving;
-}
-
-// Is file under move operation?
-bool CDownloadWithFile::IsMoving() const
-{
-	return m_bMoving;
-}
-
 // Get last file/disk operation error
 DWORD CDownloadWithFile::GetFileError() const
 {
@@ -158,7 +146,6 @@ void CDownloadWithFile::ClearFileError()
 
 BOOL CDownloadWithFile::OpenFile()
 {
-	ASSERT( ! m_bMoving );
 	ASSERT( ! m_sName.IsEmpty() );
 
 	if ( m_sName.IsEmpty() )
@@ -246,7 +233,7 @@ void CDownloadWithFile::AttachFile(auto_ptr< CFragmentedFile >& pFile)
 
 void CDownloadWithFile::DeleteFile()
 {
-	ASSERT( ! m_bMoving );
+	ASSERT( ! IsTasking() );
 
 	if ( m_pFile.get() )
 	{
@@ -260,7 +247,7 @@ void CDownloadWithFile::DeleteFile()
 // Move file(s) to destination. Returns 0 on success or file error number.
 DWORD CDownloadWithFile::MoveFile(LPCTSTR pszDestination, LPPROGRESS_ROUTINE lpProgressRoutine, LPVOID lpData)
 {
-	ASSERT( m_bMoving );
+	ASSERT( IsMoving() );
 
 	if ( ! m_pFile.get() )
 		return ERROR_FILE_NOT_FOUND;
@@ -308,9 +295,13 @@ DWORD CDownloadWithFile::MoveFile(LPCTSTR pszDestination, LPPROGRESS_ROUTINE lpP
 				GetSourceURLs( NULL, 0, PROTOCOL_NULL, NULL ) );
 		}
 
-		CQuickLock oLibraryLock( Library.m_pSection );
-		if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( sPath ) )
-			pFile->UpdateMetadata( static_cast< CDownload* >( this ) );
+		// Early update
+		CSingleLock oLibraryLock( &Library.m_pSection, FALSE );
+		if ( oLibraryLock.Lock( 100 ) )
+		{
+			if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( sPath ) )
+				pFile->UpdateMetadata( static_cast< CDownload* >( this ) );
+		}
 	}
 
 	theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_MOVED,

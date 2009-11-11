@@ -50,7 +50,6 @@ public:
 	BOOL		m_bSelected;
 	DWORD		m_tCompleted;
 	int			m_nRunCookie;
-	int			m_nSaveCookie;
 	int			m_nGroupCookie;
 private:
 	BOOL		m_bTempPaused;
@@ -82,7 +81,7 @@ public:
 	void		ForceComplete();
 	BOOL		Launch(int nIndex, CSingleLock* pLock, BOOL bForceOriginal);
 	BOOL		Enqueue(int nIndex, CSingleLock* pLock);
-	void		OnTaskComplete(CDownloadTask* pTask);
+	void		OnTaskComplete(const CDownloadTask* pTask);
 private:
 	void		StopTrying();
 	DWORD		GetStartTimer() const;

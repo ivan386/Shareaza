@@ -936,11 +936,11 @@ void CRemote::PageDownloads()
 			}
 			else if ( str == _T("pause") )
 			{
-				if ( ! pDownload->IsPaused() && ! pDownload->IsMoving() ) pDownload->Pause();
+				if ( ! pDownload->IsPaused() && ! pDownload->IsTasking() ) pDownload->Pause();
 			}
 			else if ( str == _T("cancel") )
 			{
-				if ( ! pDownload->IsMoving() )
+				if ( ! pDownload->IsTasking() )
 					pDownload->Remove();
 				continue;
 			}
@@ -1034,7 +1034,7 @@ void CRemote::PageDownloads()
 			LoadString( str, IDS_STATUS_PENDING );
 		else if ( pDownload->IsTorrent() )
 		{
-			if ( pDownload->IsTasking() )
+			if ( pDownload->GetTaskType() == dtaskAllocate )
 				LoadString( str, IDS_STATUS_CREATING );
 			else if ( pDownload->m_bTorrentTrackerError )
 				LoadString( str, IDS_STATUS_TRACKERDOWN );

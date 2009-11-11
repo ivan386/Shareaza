@@ -1638,7 +1638,7 @@ CString CDownloadsCtrl::GetDownloadStatus(CDownload *pDownload)
 		LoadString( strText, IDS_STATUS_PENDING );
 	else if ( pDownload->IsTorrent() )
 	{
-		if ( pDownload->IsTasking() )
+		if ( pDownload->GetTaskType() == dtaskAllocate )
 			LoadString( strText, IDS_STATUS_CREATING );
 		else if ( pDownload->m_bTorrentTrackerError )
 			LoadString( strText, IDS_STATUS_TRACKERDOWN );

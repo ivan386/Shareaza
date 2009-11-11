@@ -106,10 +106,6 @@ CLibraryFile::CLibraryFile(CLibraryFolder* pFolder, LPCTSTR pszName) :
 	if ( pFolder )
 		m_sPath = pFolder->m_sPath;
 
-	if ( pFolder && pszName )
-		if ( CDownload* pDownload = Downloads.FindByPath( GetPath() ) )
-			UpdateMetadata( pDownload );
-
 	EnableDispatch( IID_ILibraryFile );
 }
 
@@ -387,14 +383,28 @@ void CLibraryFile::UpdateMetadata(const CDownload* pDownload)
 	}
 
 	// Get metadata of recently downloaded file
-	if ( ! m_pSchema && ! m_pMetadata &&
-		pDownload->GetMetadata() && pDownload->GetMetadata()->GetFirstElement() )
+	if ( CXMLElement* pXML = pDownload->GetMetadata() )
 	{
-		m_bMetadataAuto = TRUE;
-		m_pSchema = SchemaCache.Get(
-			pDownload->GetMetadata()->GetAttributeValue( CXMLAttribute::schemaName ) );
-		m_pMetadata = pDownload->GetMetadata()->GetFirstElement()->Clone();
-		ModifyMetadata();
+		if ( m_pMetadata )
+		{
+			// Update existing
+			BOOL bMetadataAuto = m_bMetadataAuto;
+			if ( MergeMetadata( pXML, FALSE ) )
+			{
+				if ( bMetadataAuto )
+					m_bMetadataAuto = TRUE;
+			}
+		}
+		else if ( CXMLElement* pBody = pXML->GetFirstElement() )
+		{
+			// Recreate metadata
+			TRACE( _T("Using download XML:%s"), pBody->ToString( FALSE, TRUE ) );
+			m_pSchema = SchemaCache.Get( pXML->GetAttributeValue(
+				CXMLAttribute::schemaName ) );
+			m_pMetadata = pBody->Clone();
+			m_bMetadataAuto = TRUE;
+			ModifyMetadata();
+		}
 	}
 }
 

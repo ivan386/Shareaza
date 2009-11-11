@@ -76,26 +76,36 @@ CDownloads::~CDownloads()
 
 POSITION CDownloads::GetIterator() const
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	return m_pList.GetHeadPosition();
 }
 
 POSITION CDownloads::GetReverseIterator() const
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	return m_pList.GetTailPosition();
 }
 
 CDownload* CDownloads::GetNext(POSITION& pos) const
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	return m_pList.GetNext( pos );
 }
 
 CDownload* CDownloads::GetPrevious(POSITION& pos) const
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	return m_pList.GetPrev( pos );
 }
 
 BOOL CDownloads::Check(CDownload* pDownload) const
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	return m_pList.Find( pDownload ) != NULL;
 }
 
@@ -120,6 +130,8 @@ void CDownloads::StopTrying(bool bIsTorrent)
 
 CDownload* CDownloads::Add()
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	CDownload* pDownload = new CDownload();
 	m_pList.AddTail( pDownload );
 	return pDownload;
@@ -372,7 +384,7 @@ CDownload* CDownloads::Add(const CShareazaURL& oURL)
 
 void CDownloads::PauseAll()
 {
-	CSingleLock pLock( &Transfers.m_pSection, TRUE );
+	CQuickLock pLock( Transfers.m_pSection );
 
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
@@ -382,7 +394,7 @@ void CDownloads::PauseAll()
 
 void CDownloads::ClearCompleted()
 {
-	CSingleLock pLock( &Transfers.m_pSection, TRUE );
+	CQuickLock pLock( Transfers.m_pSection );
 
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
@@ -393,7 +405,7 @@ void CDownloads::ClearCompleted()
 
 void CDownloads::ClearPaused()
 {
-	CSingleLock pLock( &Transfers.m_pSection, TRUE );
+	CQuickLock pLock( Transfers.m_pSection );
 
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
@@ -404,7 +416,8 @@ void CDownloads::ClearPaused()
 
 void CDownloads::Clear(bool bShutdown)
 {
-	CSingleLock pLock( &Transfers.m_pSection, TRUE );
+	CQuickLock pLock( Transfers.m_pSection );
+
 	m_bClosing = true;
 
 	for ( POSITION pos = GetIterator() ; pos ; )
@@ -418,7 +431,7 @@ void CDownloads::Clear(bool bShutdown)
 
 void CDownloads::CloseTransfers()
 {
-	CSingleLock pLock( &Transfers.m_pSection, TRUE );
+	CQuickLock pLock( Transfers.m_pSection );
 
 	m_bClosing = true;
 
@@ -439,6 +452,8 @@ int CDownloads::GetSeedCount() const
 {
 	int nCount = 0;
 
+	CQuickLock pLock( Transfers.m_pSection );
+
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CDownload* pDownload = GetNext( pos );
@@ -452,6 +467,8 @@ int CDownloads::GetSeedCount() const
 int CDownloads::GetActiveTorrentCount() const
 {
 	int nCount = 0;
+
+	CQuickLock pLock( Transfers.m_pSection );
 
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
@@ -472,6 +489,8 @@ DWORD CDownloads::GetCount(BOOL bActiveOnly) const
 
 	DWORD nCount = 0;
 
+	CQuickLock pLock( Transfers.m_pSection );
+
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CDownload* pDownload = GetNext( pos );
@@ -487,6 +506,8 @@ DWORD CDownloads::GetCount(BOOL bActiveOnly) const
 DWORD CDownloads::GetTransferCount() const
 {
 	DWORD nCount = 0;
+
+	CQuickLock pLock( Transfers.m_pSection );
 
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
@@ -508,6 +529,8 @@ DWORD CDownloads::GetConnectingTransferCount() const
 {
 	DWORD nCount = 0;
 
+	CQuickLock pLock( Transfers.m_pSection );
+
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CDownload* pDownload = GetNext( pos );
@@ -520,8 +543,12 @@ DWORD CDownloads::GetConnectingTransferCount() const
 
 void CDownloads::Remove(CDownload* pDownload)
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	POSITION pos = m_pList.Find( pDownload );
-	if ( pos != NULL ) m_pList.RemoveAt( pos );
+	if ( pos != NULL )
+		m_pList.RemoveAt( pos );
+
 	delete pDownload;
 }
 
@@ -530,10 +557,14 @@ void CDownloads::Remove(CDownload* pDownload)
 
 BOOL CDownloads::Check(CDownloadSource* pSource) const
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
-		if ( GetNext( pos )->CheckSource( pSource ) ) return TRUE;
+		if ( GetNext( pos )->CheckSource( pSource ) )
+			return TRUE;
 	}
+
 	return FALSE;
 }
 
@@ -556,6 +587,8 @@ bool CDownloads::CheckActive(CDownload* pDownload, int nScope) const
 
 CDownload* CDownloads::FindByPath(const CString& sPath) const
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CDownload* pDownload = GetNext( pos );
@@ -567,6 +600,8 @@ CDownload* CDownloads::FindByPath(const CString& sPath) const
 
 CDownload* CDownloads::FindByURN(LPCTSTR pszURN, BOOL bSharedOnly) const
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	CDownload* pDownload;
 	Hashes::TigerHash oTiger;
 	Hashes::Sha1Hash oSHA1;
@@ -697,6 +732,8 @@ DWORD CDownloads::GetFreeSID()
 {
 	for ( ;; )
 	{
+		CQuickLock pLock( Transfers.m_pSection );
+
 		DWORD nSerID = GetRandomNum( 0ui32, _UI32_MAX );
 		for ( POSITION pos = GetIterator() ; pos ; )
 		{
@@ -716,7 +753,7 @@ DWORD CDownloads::GetFreeSID()
 
 BOOL CDownloads::Move(CDownload* pDownload, int nDelta)
 {
-	CSingleLock pLock( &Transfers.m_pSection, TRUE );
+	CQuickLock pLock( Transfers.m_pSection );
 
 	POSITION posMe = m_pList.Find( pDownload );
 	if ( posMe == NULL ) return FALSE;
@@ -746,7 +783,7 @@ BOOL CDownloads::Move(CDownload* pDownload, int nDelta)
 
 BOOL CDownloads::Swap(CDownload* p1, CDownload*p2)
 {
-	CSingleLock pLock( &Transfers.m_pSection, TRUE );
+	CQuickLock pLock( Transfers.m_pSection );
 
 	POSITION pos1 = m_pList.Find( p1 );
 	if (pos1 == NULL) return FALSE;
@@ -763,7 +800,7 @@ BOOL CDownloads::Swap(CDownload* p1, CDownload*p2)
 
 BOOL CDownloads::Reorder(CDownload* pDownload, CDownload* pBefore)
 {
-	CSingleLock pLock( &Transfers.m_pSection, TRUE );
+	CQuickLock pLock( Transfers.m_pSection );
 
 	POSITION pos1 = m_pList.Find( pDownload );
 	if ( pos1 == NULL ) return FALSE;
@@ -795,12 +832,15 @@ QWORD CDownloads::GetAmountDownloadedFrom(IN_ADDR* pAddress)
 
 	if ( pAddress == NULL ) return 0;
 
+	CQuickLock pLock( Transfers.m_pSection );
+
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CDownload* pDownload = GetNext( pos );
 
 		nTotal += pDownload->GetAmountDownloadedFrom(pAddress);
 	}
+
 	return nTotal;
 }
 
@@ -810,10 +850,14 @@ QWORD CDownloads::GetAmountDownloadedFrom(IN_ADDR* pAddress)
 DWORD CDownloads::GetBandwidth() const
 {
 	DWORD nTotal = 0;
+
+	CQuickLock pLock( Transfers.m_pSection );
+
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		nTotal += GetNext( pos )->GetMeasuredSpeed();
 	}
+
 	return nTotal;
 }
 
@@ -839,6 +883,10 @@ bool CDownloads::AllowMoreTransfers() const
 bool CDownloads::AllowMoreTransfers(IN_ADDR* pAddress) const
 {
 	DWORD nCount = 0, nLimit = 0;
+
+	CSingleLock oLock( &Transfers.m_pSection );
+	if ( ! oLock.Lock( 100 ) )
+		return false;
 
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
@@ -1154,7 +1202,7 @@ void CDownloads::OnRename(LPCTSTR pszSource, LPCTSTR /*pszTarget*/)
 
 	if ( CDownload* pDownload = Downloads.FindByPath( pszSource ) )
 	{
-		if ( ! pDownload->IsMoving() )
+		if ( ! pDownload->IsTasking() )
 		{
 			pDownload->Remove();
 		}
@@ -1233,7 +1281,8 @@ void CDownloads::Save(BOOL bForce)
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CDownload* pDownload = GetNext( pos );
-		if ( bForce || pDownload->m_nCookie != pDownload->m_nSaveCookie ) pDownload->Save( TRUE );
+		if ( bForce || pDownload->IsModified() )
+			pDownload->Save( TRUE );
 	}
 }
 

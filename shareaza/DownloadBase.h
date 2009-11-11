@@ -22,43 +22,47 @@
 #pragma once
 
 #include "ShareazaFile.h"
-
-class CDownloadTask;
+#include "DownloadTask.h"
 
 
 class CDownloadBase : public CShareazaFile
 {
-// Construction
+	DECLARE_DYNAMIC(CDownloadBase)
+
 protected:
 	CDownloadBase();
 	virtual ~CDownloadBase();
 
-// Attributes
 public:
 	bool			m_bSHA1Trusted;		// True if SHA1 hash is trusted
-	bool			m_bTigerTrusted;
-	bool			m_bED2KTrusted;
-	bool			m_bBTHTrusted;
-	bool			m_bMD5Trusted;
-	int				m_nCookie;
-	CString			m_sSearchKeyword;	// Search keyword to override G1 keyword search.
-private:
-	CDownloadTask*	m_pTask;
+	bool			m_bTigerTrusted;	// True if TTH hash is trusted
+	bool			m_bED2KTrusted;		// True if ED2K hash is trusted
+	bool			m_bBTHTrusted;		// True if BTH hash is trusted
+	bool			m_bMD5Trusted;		// True if MD5 hash is trusted
 
-// Operations
-public:
-	bool		IsTasking() const;						// Check if a task is already running
-	void		SetTask(CDownloadTask* pTask);
-	DWORD		GetTaskType() const;
-	bool		CheckTask(CDownloadTask* pTask) const;
-	void		AbortTask();
-	void		SetModified();
+	void			SetModified();
+	bool			IsModified() const;
 
-// Overrides
-protected:
+	// Check if a task is already running
+	virtual bool	IsTasking() const;
+	// Check if a task is already running and its a moving task
+	virtual bool	IsMoving() const;
 	virtual bool	IsCompleted() const = 0;
-	virtual bool	IsMoving() const = 0;
 	virtual bool	IsPaused(bool bRealState = false) const = 0;
 	virtual bool	IsTrying() const = 0;
+
+	// Task callback
+	virtual void	OnTaskComplete(const CDownloadTask* pTask) = 0;
+
+	dtask			GetTaskType() const;
+	void			SetTask(CDownloadTask* pTask);
+	bool			CheckTask(CDownloadTask* pTask) const;
+	void			AbortTask();
+
+protected:
+	int				m_nCookie;
+	int				m_nSaveCookie;
+	CDownloadTask*	m_pTask;
+
 	virtual void	Serialize(CArchive& ar, int nVersion);
 };

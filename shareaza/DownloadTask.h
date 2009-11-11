@@ -27,19 +27,22 @@
 class CDownload;
 class CHttpRequest;
 
+
+enum dtask
+{
+	dtaskNone = 0,			// No task
+	dtaskAllocate,			// Allocating...
+	dtaskCopy,				// Moving...
+	dtaskPreviewRequest,	// Previewing...
+	dtaskMergeFile			// Merging...
+};
+
+
 class CDownloadTask : public CRazaThread
 {
 	DECLARE_DYNAMIC(CDownloadTask)
 
 public:
-	enum dtask
-	{
-//		dtaskAllocate,
-		dtaskCopy,
-		dtaskPreviewRequest,
-		dtaskMergeFile
-	};
-
 	static void			Copy(CDownload* pDownload);
 	static void			PreviewRequest(CDownload* pDownload, LPCTSTR szURL);
 	static void			MergeFile(CDownload* pDownload, LPCTSTR szPath,
@@ -51,9 +54,9 @@ public:
 	void				Abort();
 	bool				WasAborted() const;
 	DWORD				GetFileError() const;
-	DWORD				GetTaskType() const;
+	dtask				GetTaskType() const;
 	const CHttpRequest*	GetRequest() const;
-	CBuffer*			IsPreviewAnswerValid();
+	CBuffer*			IsPreviewAnswerValid() const;
 
 protected:
 	CDownloadTask(CDownload* pDownload, dtask nTask);

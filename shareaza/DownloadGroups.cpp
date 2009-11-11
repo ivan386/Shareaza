@@ -27,6 +27,7 @@
 #include "Downloads.h"
 #include "Download.h"
 #include "Schema.h"
+#include "Transfers.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -124,6 +125,7 @@ void CDownloadGroups::Remove(CDownloadGroup* pGroup)
 
 void CDownloadGroups::Link(CDownload* pDownload)
 {
+	ASSUME_LOCK( Transfers.m_pSection );
 	CQuickLock pLock( m_pSection );
 
 	GetSuperGroup()->Add( pDownload );
@@ -140,6 +142,7 @@ void CDownloadGroups::Link(CDownload* pDownload)
 
 void CDownloadGroups::Unlink(CDownload* pDownload, BOOL bAndSuper)
 {
+	ASSUME_LOCK( Transfers.m_pSection );
 	CQuickLock pLock( m_pSection );
 
 	for ( POSITION pos = GetIterator() ; pos ; )
@@ -246,6 +249,7 @@ BOOL CDownloadGroups::Load()
 
 BOOL CDownloadGroups::Save(BOOL bForce)
 {
+	CQuickLock pTransfersLock( Transfers.m_pSection );
 	CQuickLock pLock( m_pSection );
 
 	if ( ! bForce && m_nBaseCookie == m_nSaveCookie ) return FALSE;

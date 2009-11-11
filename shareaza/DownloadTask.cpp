@@ -149,7 +149,7 @@ DWORD CDownloadTask::GetFileError() const
 	return m_nFileError;
 }
 
-DWORD CDownloadTask::GetTaskType() const
+dtask CDownloadTask::GetTaskType() const
 {
 	return m_nTask;
 }
@@ -186,7 +186,6 @@ int CDownloadTask::Run()
 	switch ( m_nTask )
 	{
 	case dtaskCopy:
-		ASSERT( Downloads.Check( m_pDownload ) );
 		RunCopy();
 		break;
 
@@ -197,6 +196,9 @@ int CDownloadTask::Run()
 	case dtaskMergeFile:
 		RunMerge();
 		break;
+
+	default:
+		;
 	}
 
 	if ( bCOM )
@@ -405,9 +407,9 @@ void CDownloadTask::RunMerge()
 			{
 				pLock.Lock();
 				m_pDownload->SubmitData( qwOffset, Buf.get(), (QWORD) dwReaded );
+				pLock.Unlock();
 				qwOffset += (QWORD) dwReaded;
 				qwLength -= (QWORD) dwReaded;
-				pLock.Unlock();
 			}
 			else
 			{
@@ -416,10 +418,14 @@ void CDownloadTask::RunMerge()
 			}
 		}
 
+		pLock.Lock();
+
 		if ( m_bMergeValidation )
 			m_pDownload->RunValidation();
 
 		m_pDownload->SetModified();
+
+		pLock.Unlock();
 	}
 
 	CloseHandle( hSource );
@@ -524,7 +530,7 @@ void CDownloadTask::CreatePathForFile(const CString& strBase, const CString& str
 	CreateDirectory( strFolder.Left( strFolder.ReverseFind( _T('\\') ) ) );
 }
 
-CBuffer* CDownloadTask::IsPreviewAnswerValid()
+CBuffer* CDownloadTask::IsPreviewAnswerValid() const
 {
 	if ( m_nTask != dtaskPreviewRequest || !m_pRequest->IsFinished() )
 		return NULL;

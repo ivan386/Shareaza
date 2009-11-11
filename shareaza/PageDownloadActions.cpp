@@ -173,7 +173,7 @@ void CDownloadActionsPage::OnErase()
 
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 	CDownload* pDownload = ((CDownloadSheet*)GetParent())->m_pDownload;
-	if ( ! Downloads.Check( pDownload ) || pDownload->IsMoving() ) return;
+	if ( ! Downloads.Check( pDownload ) || pDownload->IsTasking() ) return;
 
 	pDownload->CloseTransfers();
 	QWORD nErased = pDownload->EraseRange( nFrom, nTo + 1 - nFrom );
@@ -203,7 +203,7 @@ void CDownloadActionsPage::OnForgetVerify()
 
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 	CDownload* pDownload = ((CDownloadSheet*)GetParent())->m_pDownload;
-	if ( ! Downloads.Check( pDownload ) || pDownload->IsMoving() ) return;
+	if ( ! Downloads.Check( pDownload ) || pDownload->IsTasking() ) return;
 
 	pDownload->ClearVerification();
 }
@@ -216,7 +216,7 @@ void CDownloadActionsPage::OnForgetSources()
 
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 	CDownload* pDownload = ((CDownloadSheet*)GetParent())->m_pDownload;
-	if ( ! Downloads.Check( pDownload ) || pDownload->IsMoving() ) return;
+	if ( ! Downloads.Check( pDownload ) || pDownload->IsTasking() ) return;
 
 	pDownload->CloseTransfers();
 	pDownload->ClearSources();
@@ -227,7 +227,7 @@ void CDownloadActionsPage::OnCompleteVerify()
 {
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 	CDownload* pDownload = ((CDownloadSheet*)GetParent())->m_pDownload;
-	if ( ! Downloads.Check( pDownload ) || pDownload->IsMoving() ) return;
+	if ( ! Downloads.Check( pDownload ) || pDownload->IsTasking() ) return;
 	
 	if ( pDownload->NeedTigerTree() && pDownload->NeedHashset() &&
 		! pDownload->IsTorrent() )
@@ -247,7 +247,7 @@ void CDownloadActionsPage::OnCompleteVerify()
 	}
 
 	pLock.Lock();
-	if ( ! Downloads.Check( pDownload ) || pDownload->IsMoving() ) return;
+	if ( ! Downloads.Check( pDownload ) || pDownload->IsTasking() ) return;
 
 	pDownload->MakeComplete();
 	pDownload->ResetVerification();
@@ -262,7 +262,7 @@ void CDownloadActionsPage::OnMergeAndVerify()
 	CDownload* pDownload = ((CDownloadSheet*)GetParent())->m_pDownload;
 	if ( ! Downloads.Check( pDownload ) ||
 		pDownload->IsCompleted() ||
-		pDownload->IsMoving() ||
+		pDownload->IsTasking() ||
 		! pDownload->PrepareFile() )
 	{
 		// Download almost completed
@@ -328,7 +328,7 @@ void CDownloadActionsPage::OnCancelDownload()
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 	CDownload* pDownload = ((CDownloadSheet*)GetParent())->m_pDownload;
 	if ( ! Downloads.Check( pDownload ) ||
-		pDownload->IsMoving() || pDownload->IsCompleted() ) return;
+		pDownload->IsTasking() || pDownload->IsCompleted() ) return;
 
 	pDownload->ForceComplete();
 }

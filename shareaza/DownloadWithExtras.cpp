@@ -91,7 +91,7 @@ BOOL CDownloadWithExtras::IsPreviewVisible() const
 
 BOOL CDownloadWithExtras::CanPreview(DWORD nIndex)
 {
-	return ( m_pPreviewWnd == NULL ) && ! IsMoving() && GetCompleted( nIndex );
+	return ( m_pPreviewWnd == NULL ) && ! IsTasking() && GetCompleted( nIndex );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -410,7 +410,7 @@ void CDownloadWithExtras::Serialize(CArchive& ar, int nVersion)
 //////////////////////////////////////////////////////////////////////
 // CDownload preview saver
 
-void CDownloadWithExtras::OnPreviewRequestComplete(CDownloadTask* pTask)
+void CDownloadWithExtras::OnPreviewRequestComplete(const CDownloadTask* pTask)
 {
 	m_bWaitingPreview = FALSE;
 

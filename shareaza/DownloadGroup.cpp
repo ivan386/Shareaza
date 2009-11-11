@@ -25,11 +25,11 @@
 #include "DownloadGroups.h"
 #include "Downloads.h"
 #include "Download.h"
-
 #include "Settings.h"
 #include "SchemaCache.h"
 #include "ShellIcons.h"
 #include "QuerySearch.h"
+#include "Transfers.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -108,6 +108,8 @@ void CDownloadGroup::CopyList(CList< CDownload* >& pList)
 
 BOOL CDownloadGroup::Link(CDownload* pDownload)
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	// Filter by BitTorrent flag
 	if ( m_bTorrent && pDownload->IsTorrent() )
 	{
@@ -152,6 +154,8 @@ BOOL CDownloadGroup::Link(CDownload* pDownload)
 int CDownloadGroup::LinkAll()
 {
 	int nCount = 0;
+
+	ASSUME_LOCK( Transfers.m_pSection );
 
 	for ( POSITION pos = Downloads.GetIterator() ; pos ; )
 	{
@@ -366,6 +370,8 @@ BOOL CDownloadGroup::IsTemporary()
 		for ( POSITION pos = GetIterator() ; bAllCompleted && pos ; )
 		{
 			CDownload* pDownload = GetNext( pos );
+
+			CQuickLock oLock( Transfers.m_pSection );
 			if ( Downloads.Check( pDownload ) && ! pDownload->IsCompleted() )
 				bAllCompleted = FALSE;
 		}

@@ -56,7 +56,6 @@ CDownload::CDownload() :
 ,	m_bSelected		( FALSE )
 ,	m_tCompleted	( 0 )
 ,	m_nRunCookie	( 0 )
-,	m_nSaveCookie	( 0 )
 ,	m_nGroupCookie	( 0 )
 
 ,	m_bTempPaused	( FALSE )
@@ -453,7 +452,7 @@ void CDownload::OnRun()
 	if ( tNow - m_tSaved >=
 		( GetCount() > 20 ? 5 * Settings.Downloads.SaveInterval : Settings.Downloads.SaveInterval ) )
 	{
-		if ( m_nCookie != m_nSaveCookie )
+		if ( IsModified() )
 		{
 			FlushFile();
 			if ( Save() )
@@ -477,13 +476,10 @@ void CDownload::OnDownloaded()
 
 	// AppendMetadata();
 
-	if ( IsTasking() && ( GetTaskType() == CDownloadTask::dtaskMergeFile ||
-		GetTaskType() == CDownloadTask::dtaskPreviewRequest ) )
+	if ( GetTaskType() == dtaskMergeFile || GetTaskType() == dtaskPreviewRequest )
 	{
 		AbortTask();
 	}
-
-	SetMoving( true );
 
 	CDownloadTask::Copy( this );
 
@@ -493,22 +489,21 @@ void CDownload::OnDownloaded()
 //////////////////////////////////////////////////////////////////////
 // CDownload task completion
 
-void CDownload::OnTaskComplete(CDownloadTask* pTask)
+void CDownload::OnTaskComplete(const CDownloadTask* pTask)
 {
-	ASSERT( CheckTask( pTask ) );
 	SetTask( NULL );
 
 	// Check if task was aborted
 	if ( pTask->WasAborted() )
 		return;
 
-	if ( pTask->GetTaskType() == CDownloadTask::dtaskPreviewRequest )
+	if ( pTask->GetTaskType() == dtaskPreviewRequest )
 	{
 		OnPreviewRequestComplete( pTask );
 	}
-	else if ( pTask->GetTaskType() == CDownloadTask::dtaskCopy )
+	else if ( pTask->GetTaskType() == dtaskCopy )
 	{
-		if ( !pTask->HasSucceeded() )
+		if ( ! pTask->HasSucceeded() )
 			SetFileError( pTask->GetFileError() );
 		else
 			OnMoved();
@@ -555,7 +550,6 @@ void CDownload::OnMoved()
 	// Download finalized, tracker notified, set flags that we completed
 	m_bComplete		= true;
 	m_tCompleted	= GetTickCount();
-	SetMoving( false );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -751,10 +745,12 @@ void CDownload::Serialize(CArchive& ar, int nVersion)
 		DownloadGroups.Link( this );
 
 		if ( nVersion == 32 )
-		{ // Compatibility for CB Branch.
+		{
+			// Compatibility for CB Branch.
 			if ( ! ar.IsBufferEmpty() )
 			{
-				ar >> m_sSearchKeyword;
+				CString sSearchKeyword;
+				ar >> sSearchKeyword;
 			}
 		}
 	}

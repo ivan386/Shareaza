@@ -195,8 +195,6 @@ int CDownloadsWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	SetTimer( 4, 10000, NULL );
 	PostMessage( WM_TIMER, 4 );
 
-	SetTimer( 6, 2 * 3600 * 1000, NULL );
-
 	m_pDragList		= NULL;
 	m_pDragImage	= NULL;
 	m_hCursMove		= AfxGetApp()->LoadCursor( theApp.m_bIsVistaOrNewer ? IDC_MOVE_VISTA : IDC_MOVE );
@@ -294,16 +292,6 @@ void CDownloadsWnd::OnSize(UINT nType, int cx, int cy)
 
 void CDownloadsWnd::OnTimer(UINT_PTR nIDEvent)
 {
-	 // Purge old failed sources ( X-NAlt mesh ) every 2 hours
-	if ( nIDEvent == 6 )
-	{
-		for ( POSITION pos = Downloads.GetIterator() ; pos ; )
-		{
-			CDownload* pDownload = Downloads.GetNext( pos );
-			pDownload->ExpireFailedSources();
-		}
-	}
-
 	// Reset Selection Timer event (posted by ctrldownloads)
 	if ( nIDEvent == 5 ) m_tSel = 0;
 
@@ -319,13 +307,19 @@ void CDownloadsWnd::OnTimer(UINT_PTR nIDEvent)
 			m_tMoreSourcesTimer = tNow;
 		}
 
+		CSingleLock pLock( &Transfers.m_pSection );
+		if ( ! pLock.Lock( 100 ) ) return;
+
+		// Purge old failed sources ( X-NAlt mesh )
+		for ( POSITION pos = Downloads.GetIterator() ; pos ; )
+		{
+			CDownload* pDownload = Downloads.GetNext( pos );
+			pDownload->ExpireFailedSources();
+		}
+
 		// If some kind of auto-clear is active
 		if ( Settings.Downloads.AutoClear || Settings.BitTorrent.AutoClear )
 		{
-			// Lock transfers section
-			CSingleLock pLock( &Transfers.m_pSection );
-			if ( ! pLock.Lock( 10 ) ) return;
-
 			// Loop through all downloads
 			for ( POSITION pos = Downloads.GetIterator() ; pos ; )
 			{
@@ -364,14 +358,23 @@ void CDownloadsWnd::OnTimer(UINT_PTR nIDEvent)
 	// Window Update event (2 second timer)
 	if ( ( nIDEvent == 2 ) && ( m_pDragList == NULL ) )
 	{
-		for ( POSITION pos = Downloads.GetIterator() ; pos ; )
+		// Lock transfers section
+		CSingleLock pLock( &Transfers.m_pSection );
+		if ( pLock.Lock( 100 ) )
 		{
-			CDownload* pDownload = Downloads.GetNext( pos );
-			if ( pDownload->m_bGotPreview && pDownload->m_bWaitingPreview )
+			for ( POSITION pos = Downloads.GetIterator() ; pos ; )
 			{
-				pDownload->m_bWaitingPreview = FALSE;
-				CFile pFile;
-				CFileExecutor::Execute( pDownload->m_sPath + L".png", TRUE );
+				CDownload* pDownload = Downloads.GetNext( pos );
+				if ( pDownload->m_bGotPreview && pDownload->m_bWaitingPreview )
+				{
+					pDownload->m_bWaitingPreview = FALSE;
+					CString sPreview = pDownload->m_sPath + L".png";
+					pLock.Unlock();
+
+					CFileExecutor::Execute( sPreview, TRUE );
+
+					break; // Show next preview on next update
+				}
 			}
 		}
 
@@ -668,7 +671,7 @@ void CDownloadsWnd::OnDownloadsPause()
 
 		if ( pDownload->m_bSelected )
 		{
-			if ( ! pDownload->IsPaused() && ! pDownload->IsMoving() ) pDownload->Pause( TRUE );
+			if ( ! pDownload->IsPaused() && ! pDownload->IsTasking() ) pDownload->Pause( TRUE );
 		}
 	}
 
@@ -700,7 +703,7 @@ void CDownloadsWnd::OnDownloadsClear()
 	{
 		CDownload* pDownload = pList.RemoveHead();
 
-		if ( Downloads.Check( pDownload ) && ! pDownload->IsMoving() )
+		if ( Downloads.Check( pDownload ) && ! pDownload->IsTasking() )
 		{
 			if ( pDownload->IsPreviewVisible() )
 			{
@@ -721,7 +724,7 @@ void CDownloadsWnd::OnDownloadsClear()
 					break;
 				pLock.Lock();
 
-				if ( Downloads.Check( pDownload ) && ! pDownload->IsMoving() )
+				if ( Downloads.Check( pDownload ) && ! pDownload->IsTasking() )
 				{
 					dlg.Create( pDownload, bShared );
 					pDownload->Remove();
@@ -780,7 +783,7 @@ void CDownloadsWnd::OnDownloadsClearIncomplete()
 						dlg.Create( pDownload, bShared );
 				}
 
-				if ( Downloads.Check( pDownload ) && ! pDownload->IsMoving() )
+				if ( Downloads.Check( pDownload ) && ! pDownload->IsTasking() )
 					pDownload->Remove();
 			}
 		}
@@ -846,6 +849,13 @@ void CDownloadsWnd::OnDownloadsViewReviews()
 
 void CDownloadsWnd::OnUpdateDownloadsRemotePreview(CCmdUI* pCmdUI)
 {
+	CSingleLock pLock( &Transfers.m_pSection );
+	if ( ! pLock.Lock( 100 ) )
+	{
+		pCmdUI->Enable( FALSE );
+		return;
+	}
+
 	int nSelected = 0;
 	CDownload* pDownload = NULL;
 
@@ -1715,7 +1725,7 @@ void CDownloadsWnd::OnDownloadsHelp()
 		strHelp = L"DownloadHelp.Pending";
 	else if ( pDownload->m_nSize == SIZE_UNKNOWN )
 		strHelp = L"DownloadHelp.Searching";
-	else if ( pDownload->IsTorrent() && pDownload->IsTasking() )
+	else if ( pDownload->GetTaskType() == dtaskAllocate )
 		strHelp = L"DownloadHelp.Creating";
 	else if ( pDownload->m_bTorrentTrackerError )
 		strHelp = L"DownloadHelp.Tracker";
