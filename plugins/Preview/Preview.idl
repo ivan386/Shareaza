@@ -1,0 +1,26 @@
+// Preview.idl : IDL source for Preview
+//
+
+import "oaidl.idl";
+import "ocidl.idl";
+import "../../Shareaza/Shareaza.idl";
+
+[
+	uuid(9DB3D2BA-C333-4691-AFDC-52279AF2D71F),
+	version(1.0),
+	helpstring("Shareaza Preview Plugin 1.0 Type Library")
+]
+library PreviewLib
+{
+	importlib("stdole2.tlb");
+
+	[
+		uuid(0F74BA53-C842-4CB5-B388-DD5663F62479),
+		helpstring("Shareaza Preview Plugin")
+	]
+	coclass PreviewPlugin
+	{
+		[default] interface IGeneralPlugin;
+		interface IDownloadPreviewPlugin2;
+	};
+};
