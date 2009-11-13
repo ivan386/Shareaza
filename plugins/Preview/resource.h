@@ -13,6 +13,8 @@
 #define IDC_EXT                         205
 #define IDC_COMMAND                     206
 #define IDC_BROWSE                      207
+#define IDC_BUTTON1                     208
+#define IDC_WEB                         208
 
 // Next default values for new objects
 // 
@@ -20,7 +22,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        202
 #define _APS_NEXT_COMMAND_VALUE         32768
-#define _APS_NEXT_CONTROL_VALUE         208
+#define _APS_NEXT_CONTROL_VALUE         209
 #define _APS_NEXT_SYMED_VALUE           104
 #endif
 #endif

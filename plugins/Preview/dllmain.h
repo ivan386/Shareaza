@@ -1,5 +1,15 @@
 // dllmain.h : Declaration of module class.
 
+#pragma once
+
+#include "resource.h"
+#include "Preview_i.h"
+
+
+#define REGISTRY_PATH	_T("Software\\Shareaza\\Shareaza Preview Plugin")
+#define PLUGIN_PATH		_T("Software\\Shareaza\\Shareaza\\Plugins\\DownloadPreview")
+
+
 class CPreviewModule : public CAtlDllModuleT< CPreviewModule >
 {
 public :
@@ -8,3 +18,6 @@ public :
 };
 
 extern class CPreviewModule _AtlModule;
+
+void LoadData(CAtlMap< CString, CString >& oData);
+void SaveData(const CAtlMap< CString, CString >& oData);

@@ -2,8 +2,7 @@
 
 #include "stdafx.h"
 #include "ConfigDlg.h"
-
-#define REGISTRY_PATH _T("Software\\Shareaza\\Shareaza Preview Plugin")
+#include "dllmain.h"
 
 // CConfigDlg
 
@@ -14,49 +13,42 @@ CConfigDlg::CConfigDlg()
 
 void CConfigDlg::Load()
 {
-	HUSKEY hKey = NULL;
-	LSTATUS ret = SHRegOpenUSKey( REGISTRY_PATH, KEY_READ, NULL, &hKey, FALSE );
-	if ( ERROR_SUCCESS == ret )
-	{
-		for ( DWORD i = 0; ; i++ )
-		{
-			TCHAR szExt[ MAX_PATH ] = {};
-			DWORD nExtSize = _countof( szExt );
-			DWORD nType = 0;
-			TCHAR szCommand[ MAX_PATH ] = {};
-			DWORD nCommandSize = _countof( szCommand );
-			ret = SHRegEnumUSValue( hKey, i, szExt, &nExtSize, &nType,
-				szCommand, &nCommandSize, SHREGENUM_HKCU );
-			if ( ERROR_SUCCESS != ret )
-				break;
-			if ( nType == REG_SZ && *szExt && *szCommand )
-			{
-				Add( szExt, szCommand );
-			}
-		}
+	CAtlMap< CString, CString > oData;
+	LoadData( oData );
 
-		SHRegCloseUSKey( hKey );
+	for ( POSITION pos = oData.GetStartPosition(); pos; )
+	{
+		CString sExt, sCommand;
+		oData.GetNextAssoc( pos, sExt, sCommand );
+
+		Add( sExt, sCommand );
 	}
 }
 
 void CConfigDlg::Save()
 {
+	CAtlMap< CString, CString > oData;
+
 	CWindow wndList = GetDlgItem( IDC_LIST );
-
-	SHDeleteKey( HKEY_CURRENT_USER, REGISTRY_PATH );
-
 	int nCount = ListView_GetItemCount( wndList.m_hWnd );
 	for ( int i = 0; i < nCount; i++ )
 	{
 		TCHAR szExt[ MAX_PATH ] = {};
 		ListView_GetItemText( wndList.m_hWnd, i, 0, szExt, _countof( szExt ) );
+		StrTrim( szExt, _T(" /t") );
+		if ( ! *szExt )
+			continue;
 
 		TCHAR szCommand[ MAX_PATH ] = {};
 		ListView_GetItemText( wndList.m_hWnd, i, 1, szCommand, _countof( szCommand ) );
+		StrTrim( szCommand, _T(" /t") );
+		if ( ! *szCommand )
+			continue;
 
-		SHRegSetUSValue( REGISTRY_PATH, szExt, REG_SZ, szCommand,
-			lstrlen( szCommand ) * sizeof( TCHAR ), SHREGSET_FORCE_HKCU );
+		oData.SetAt( szExt, szCommand );
 	}
+
+	SaveData( oData );
 }
 
 int CConfigDlg::GetActive() const
@@ -289,7 +281,7 @@ LRESULT CConfigDlg::OnBnClickedBrowse(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /
 			if ( lstrcmpi( szFilename, _T("DivFix++.exe") ) == 0 )
 			{
 				// DivFix++
-				lstrcat( szCommand, _T(" -nk -i \"%1\" -o \"%2\"") );
+				lstrcat( szCommand, _T(" -i \"%1\" -o \"%2\"") );
 			}
 			else
 			{
@@ -300,7 +292,7 @@ LRESULT CConfigDlg::OnBnClickedBrowse(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /
 			SetDlgItemText( IDC_COMMAND, szCommand );
 			ListView_SetItemText( wndList.m_hWnd, m_nActive, 1, szCommand );
 
-			UpdateWindow();
+			GetDlgItem( IDC_COMMAND ).SetFocus();
 		}
 	}
 
@@ -326,6 +318,7 @@ LRESULT CConfigDlg::OnEnChangeExt(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWn
 
 		TCHAR szExt[ MAX_PATH ] = {};
 		GetDlgItemText( IDC_EXT, szExt, _countof( szExt ) );
+		StrTrim( szExt, _T(". /t") );
 
 		ListView_SetItemText( wndList.m_hWnd, m_nActive, 0, szExt );
 	}
@@ -342,9 +335,19 @@ LRESULT CConfigDlg::OnEnChangeCommand(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /
 
 		TCHAR szCommand[ MAX_PATH ] = {};
 		GetDlgItemText( IDC_COMMAND, szCommand, _countof( szCommand ) );
+		StrTrim( szCommand, _T(" /t") );
 
 		ListView_SetItemText( wndList.m_hWnd, m_nActive, 1, szCommand );
 	}
+
+	bHandled = TRUE;
+	return 0;
+}
+
+LRESULT CConfigDlg::OnBnClickedWeb(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& bHandled)
+{
+	ShellExecute( GetActiveWindow(), _T("open"),
+		_T("http://shareaza.sourceforge.net/help/?preview"), NULL, NULL, SW_SHOWNORMAL ); 
 
 	bHandled = TRUE;
 	return 0;

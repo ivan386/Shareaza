@@ -25,11 +25,12 @@ BEGIN_MSG_MAP(CConfigDlg)
 	NOTIFY_HANDLER(IDC_LIST, LVN_ITEMACTIVATE, OnLvnItemActivateList)
 	COMMAND_HANDLER(IDC_EXT, EN_CHANGE, OnEnChangeExt)
 	COMMAND_HANDLER(IDC_COMMAND, EN_CHANGE, OnEnChangeCommand)
+	COMMAND_HANDLER(IDC_WEB, BN_CLICKED, OnBnClickedWeb)
 	CHAIN_MSG_MAP(CAxDialogImpl<CConfigDlg>)
 END_MSG_MAP()
 
 protected:
-	int		m_nActive;
+	int		m_nActive;			// Selected item index (or -1 if no item)
 
 	void Load();
 	void Save();
@@ -55,4 +56,5 @@ protected:
 	LRESULT OnLvnItemActivateList(int idCtrl, LPNMHDR pNMHDR, BOOL& bHandled);
 	LRESULT OnEnChangeExt(WORD wNotifyCode, WORD wID, HWND hWndCtl, BOOL& bHandled);
 	LRESULT OnEnChangeCommand(WORD wNotifyCode, WORD wID, HWND hWndCtl, BOOL& bHandled);
+	LRESULT OnBnClickedWeb(WORD wNotifyCode, WORD wID, HWND hWndCtl, BOOL& bHandled);
 };

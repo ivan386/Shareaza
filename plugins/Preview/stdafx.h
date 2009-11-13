@@ -19,6 +19,7 @@
 #include <atlbase.h>
 #include <atlcom.h>
 #include <atlctl.h>
-#include <atlhost.h>
+#include <atlcoll.h>
+#include <atlstr.h>
 
 using namespace ATL;
