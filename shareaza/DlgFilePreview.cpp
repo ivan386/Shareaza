@@ -125,6 +125,13 @@ CFilePreviewDlg::CFilePreviewDlg(CDownloadWithExtras* pDownload, DWORD nIndex, C
 			while ( m_pRanges.GetSize() > 2 ) m_pRanges.RemoveAt( 2 );
 		}
 	}
+
+	if ( Create( CFilePreviewDlg::IDD, pParent ) )
+	{
+		CenterWindow();
+		ShowWindow( SW_SHOWNORMAL );
+		BringWindowToTop();
+	}
 }
 
 CFilePreviewDlg::~CFilePreviewDlg()
@@ -145,34 +152,6 @@ void CFilePreviewDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_PROGRESS, m_wndProgress);
 	DDX_Control(pDX, IDC_PREVIEW_STATUS, m_wndStatus);
 	DDX_Control(pDX, IDC_FILE_NAME, m_wndName);
-}
-
-/////////////////////////////////////////////////////////////////////////////
-// CFilePreviewDlg operations
-
-BOOL CFilePreviewDlg::Create(UINT nIDTemplate, CWnd* pParentWnd)
-{
-	ASSERT( m_hWnd == NULL );
-	ASSERT( m_pDownload != NULL );
-
-	LPCTSTR lpszTemplateName = MAKEINTRESOURCE( nIDTemplate );
-	BOOL bResult = FALSE;
-	HINSTANCE hInst = AfxFindResourceHandle( lpszTemplateName, RT_DIALOG );
-	HRSRC hResource = ::FindResource( hInst, lpszTemplateName, RT_DIALOG );
-	if ( hResource )
-	{
-		HGLOBAL hTemplate = LoadResource( hInst, hResource );
-		if ( hTemplate )
-		{
-			LPCDLGTEMPLATE lpDialogTemplate = (LPCDLGTEMPLATE)LockResource( hTemplate );
-			if ( lpDialogTemplate )
-			{
-				bResult = CreateDlgIndirect( lpDialogTemplate, pParentWnd, hInst );
-			}
-			FreeResource( hTemplate );
-		}
-	}
-	return bResult;
 }
 
 void CFilePreviewDlg::OnSkinChange(BOOL bSet)
@@ -424,11 +403,14 @@ BOOL CFilePreviewDlg::RunManual()
 				Exit();
 			}
 
-			hr = oTargetFile.Write( pData.get(), nChunk, &nChunk );
-			if ( FAILED( hr ) || nChunk == 0 )
+			if ( nChunk )
 			{
-				theApp.Message( MSG_DEBUG, _T("Preview: write error %d."), GetLastError() );
-				Exit();
+				hr = oTargetFile.Write( pData.get(), nChunk, &nChunk );
+				if ( FAILED( hr ) || nChunk == 0 )
+				{
+					theApp.Message( MSG_DEBUG, _T("Preview: write error %d."), GetLastError() );
+					Exit();
+				}
 			}
 
 			nLength -= nChunk;

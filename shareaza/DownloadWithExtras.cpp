@@ -73,14 +73,6 @@ BOOL CDownloadWithExtras::PreviewFile(DWORD nIndex, CSingleLock* pLock)
 	ASSERT( m_pPreviewWnd == NULL );
 	m_pPreviewWnd = new CFilePreviewDlg( this, nIndex );
 
-	if ( pLock ) pLock->Unlock();
-
-	m_pPreviewWnd->Create();
-	m_pPreviewWnd->ShowWindow( SW_SHOWNORMAL );
-	m_pPreviewWnd->BringWindowToTop();
-
-	if ( pLock ) pLock->Lock();
-
 	return TRUE;
 }
 

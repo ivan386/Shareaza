@@ -42,8 +42,6 @@ public:
 
 	enum { IDD = IDD_FILE_PREVIEW };
 
-	virtual BOOL Create(UINT nIDTemplate = IDD, CWnd* pParentWnd = NULL);
-
 	static void	OnSkinChange(BOOL bSet);
 	static void	CloseAll();
 
