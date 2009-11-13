@@ -169,15 +169,26 @@ void CPluginsSettingsPage::OnItemChangedPlugins(NMHDR* pNMHDR, LRESULT* pResult)
 
 void CPluginsSettingsPage::OnPluginsSetup()
 {
-	CString strExt;
-	if ( m_wndList.GetSelectedCount() != 1 ) return;
+	if ( m_wndList.GetSelectedCount() != 1 )
+		return;
 
 	int nItem = m_wndList.GetNextItem( -1, LVNI_SELECTED );
 	CPlugin* pPlugin = (CPlugin*)m_wndList.GetItemData( nItem );
-	strExt = m_wndList.GetItemText( nItem, 2 );
+	CString strExt = m_wndList.GetItemText( nItem, 2 );
 
-	if ( pPlugin != NULL && pPlugin->m_pPlugin != NULL ) 
-		pPlugin->m_pPlugin->Configure();
+	if ( pPlugin != NULL )
+	{
+		bool bStopped = ( pPlugin->m_pPlugin == NULL );
+
+		if ( bStopped )
+			pPlugin->Start();
+
+		if ( pPlugin->m_pPlugin )
+			pPlugin->m_pPlugin->Configure();
+
+		if ( bStopped )
+			pPlugin->Stop();
+	}
 	else if ( ! strExt.IsEmpty() )
 	{
 		CPluginExtSetupDlg dlg( &m_wndList, strExt );
@@ -256,8 +267,11 @@ void CPluginsSettingsPage::InsertPlugin(LPCTSTR pszCLSID, LPCTSTR pszName,
 				CString strCurrAssoc = m_wndList.GetItemText( nItem, 2 );
 				if ( strCurrAssoc.Find( strAssocAdd ) == -1 )
 				{
-					strCurrAssoc.Append( (LPCTSTR)strAssocAdd + 1 );
-					m_wndList.SetItemText( nItem, 2, strCurrAssoc );
+					if ( strCurrAssoc.IsEmpty() || strCurrAssoc == _T("-") )
+						m_wndList.SetItemText( nItem, 2, strAssocAdd );
+					else
+						m_wndList.SetItemText( nItem, 2, strCurrAssoc +
+							( (LPCTSTR)strAssocAdd + 1 ) );
 				}
 			}
 			return;
