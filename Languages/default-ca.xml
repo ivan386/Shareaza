@@ -3046,10 +3046,9 @@
 	<string id="16536" value="Ràtio de pings rebuts/enviats de Gnutella"/>
 	<string id="16537" value="Ràtio de pongs rebuts/enviats de Gnutella"/>
 	<string id="16538" value="Connection Errors (%)"/>
-	<string id="16768" value="Errors de connexió (%)"/>
-	<string id="16769" value="Shareaza no ha entés l'URL &quot;%s&quot;."/>
-	<string id="16770" value="L'adreça URL no s'ha pogut processar, Shareaza no la pot interpretar."/>
-	<string id="16771" value="L'arxiu &quot;%s&quot; ja està en La meva Col·lecció.  ¿Vols descarregar-lo de totes formes?"/>
+	<string id="16768" value="Shareaza no ha entés l'URL &quot;%s&quot;."/>
+	<string id="16769" value="L'adreça URL no s'ha pogut processar, Shareaza no la pot interpretar."/>
+	<string id="16770" value="Unable to display URL action dialog because Shareaza is busy."/>
 	<string id="16772" value="Servidor:"/>
 	<string id="16773" value="Port:"/>
 	<string id="16774" value="&amp;Connectar"/>
