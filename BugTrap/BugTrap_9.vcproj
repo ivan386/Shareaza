@@ -51,6 +51,7 @@
 				RuntimeTypeInfo="false"
 				UsePrecompiledHeader="2"
 				WarningLevel="4"
+				DebugInformationFormat="4"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -120,12 +121,9 @@
 				ExceptionHandling="0"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
-				BufferSecurityCheck="true"
-				EnableFunctionLevelLinking="false"
 				RuntimeTypeInfo="false"
 				UsePrecompiledHeader="2"
 				WarningLevel="4"
-				Detect64BitPortabilityProblems="false"
 				DebugInformationFormat="3"
 			/>
 			<Tool
@@ -144,9 +142,7 @@
 				AdditionalDependencies="comctl32.lib version.lib shlwapi.lib ws2_32.lib wininet.lib"
 				ModuleDefinitionFile=""
 				GenerateDebugInformation="true"
-				GenerateMapFile="false"
 				MapFileName=""
-				MapExports="false"
 				SubSystem="2"
 				OptimizeForWindows98="0"
 				TargetMachine="17"
@@ -211,6 +207,7 @@
 				RuntimeTypeInfo="false"
 				UsePrecompiledHeader="2"
 				WarningLevel="4"
+				DebugInformationFormat="3"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -225,6 +222,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="comctl32.lib version.lib shlwapi.lib ws2_32.lib wininet.lib"
 				LinkIncremental="1"
+				GenerateDebugInformation="true"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				SetChecksum="true"
@@ -288,12 +286,10 @@
 				StringPooling="true"
 				ExceptionHandling="0"
 				RuntimeLibrary="0"
-				BufferSecurityCheck="true"
-				EnableFunctionLevelLinking="false"
 				RuntimeTypeInfo="false"
 				UsePrecompiledHeader="2"
 				WarningLevel="4"
-				Detect64BitPortabilityProblems="false"
+				DebugInformationFormat="3"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -311,9 +307,8 @@
 				AdditionalDependencies="comctl32.lib version.lib shlwapi.lib ws2_32.lib wininet.lib"
 				LinkIncremental="1"
 				ModuleDefinitionFile=""
-				GenerateMapFile="false"
+				GenerateDebugInformation="true"
 				MapFileName=""
-				MapExports="false"
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
