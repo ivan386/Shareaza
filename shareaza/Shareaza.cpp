@@ -562,12 +562,7 @@ int CShareazaApp::ExitInstance()
 	if ( m_hShlWapi != NULL )
 		FreeLibrary( m_hShlWapi );
 
-	if ( m_hGeoIP != NULL )
-	{
-		if ( m_pGeoIP && m_pfnGeoIP_delete )
-			m_pfnGeoIP_delete( m_pGeoIP );
-		FreeLibrary( m_hGeoIP );
-	}
+	FreeCountry();
 
 	if ( m_hLibGFL != NULL )
 		FreeLibrary( m_hLibGFL );
@@ -906,16 +901,7 @@ void CShareazaApp::InitResources()
 		(FARPROC&)m_pfnSHGetKnownFolderPath = GetProcAddress( m_hShell32, "SHGetKnownFolderPath" );
 	}
 
-	// Load the GeoIP library for mapping IPs to countries
-	if ( ( m_hGeoIP = CustomLoadLibrary( _T("geoip.dll") ) ) != NULL )
-	{
-		GeoIP_newFunc pfnGeoIP_new = (GeoIP_newFunc)GetProcAddress( m_hGeoIP, "GeoIP_new" );
-		m_pfnGeoIP_delete = (GeoIP_deleteFunc)GetProcAddress( m_hGeoIP, "GeoIP_delete" );
-		m_pfnGeoIP_country_code_by_ipnum = (GeoIP_country_code_by_ipnumFunc)GetProcAddress( m_hGeoIP, "GeoIP_country_code_by_ipnum" );
-		m_pfnGeoIP_country_name_by_ipnum = (GeoIP_country_name_by_ipnumFunc)GetProcAddress( m_hGeoIP, "GeoIP_country_name_by_ipnum" );
-		if ( pfnGeoIP_new )
-			m_pGeoIP = pfnGeoIP_new( GEOIP_MEMORY_CACHE );
-	}
+	LoadCountry();
 
 	// We load it in a custom way, so Shareaza plugins can use this library also when it isn't in its search path but loaded by CustomLoadLibrary (very useful when running Shareaza inside Visual Studio)
 	m_hLibGFL = CustomLoadLibrary( _T("libgfl290.dll") );
@@ -1243,6 +1229,39 @@ CString CShareazaApp::GetCountryName(IN_ADDR pAddress) const
 	if ( m_pfnGeoIP_country_name_by_ipnum && m_pGeoIP )
 		return CString( m_pfnGeoIP_country_name_by_ipnum( m_pGeoIP, htonl( pAddress.s_addr ) ) );
 	return _T("");
+}
+
+void CShareazaApp::LoadCountry()
+{
+	if ( ( m_hGeoIP = CustomLoadLibrary( _T("geoip.dll") ) ) != NULL )
+	{
+		GeoIP_newFunc pfnGeoIP_new = (GeoIP_newFunc)GetProcAddress( m_hGeoIP, "GeoIP_new" );
+		m_pfnGeoIP_delete = (GeoIP_deleteFunc)GetProcAddress( m_hGeoIP, "GeoIP_delete" );
+		m_pfnGeoIP_country_code_by_ipnum = (GeoIP_country_code_by_ipnumFunc)GetProcAddress( m_hGeoIP, "GeoIP_country_code_by_ipnum" );
+		m_pfnGeoIP_country_name_by_ipnum = (GeoIP_country_name_by_ipnumFunc)GetProcAddress( m_hGeoIP, "GeoIP_country_name_by_ipnum" );
+		if ( pfnGeoIP_new )
+			m_pGeoIP = pfnGeoIP_new( GEOIP_MEMORY_CACHE );
+	}
+}
+
+void CShareazaApp::FreeCountry()
+{
+	if ( m_hGeoIP != NULL )
+	{
+		if ( m_pGeoIP && m_pfnGeoIP_delete )
+		{
+			__try
+			{
+				m_pfnGeoIP_delete( m_pGeoIP );
+			}
+			__except( EXCEPTION_EXECUTE_HANDLER )
+			{
+			}
+			m_pGeoIP = NULL;
+		}
+		FreeLibrary( m_hGeoIP );
+		m_hGeoIP = NULL;
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////

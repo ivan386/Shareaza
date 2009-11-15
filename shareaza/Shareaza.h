@@ -196,6 +196,9 @@ protected:
 	void				InitResources();	// Initialize Shareaza version, system info, load DLLs, etc.
 	void				InitFonts();		// Create default fonts
 
+	void				LoadCountry();		// Load the GeoIP library for mapping IPs to countries
+	void				FreeCountry();		// Free GeoIP resources
+
 	DECLARE_MESSAGE_MAP()
 };
 
