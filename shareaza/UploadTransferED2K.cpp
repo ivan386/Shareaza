@@ -466,9 +466,11 @@ BOOL CUploadTransferED2K::ServeRequests()
 			m_tRotateTime = 0;
 			m_bStopTransfer	= FALSE;
 
-			CUploadQueue* pQueue = m_pQueue;
-			if ( pQueue ) pQueue->Dequeue( this );
-			pQueue->Enqueue( this, TRUE, FALSE );
+			if ( CUploadQueue* pQueue = m_pQueue )
+			{
+				pQueue->Dequeue( this );
+				pQueue->Enqueue( this, TRUE, FALSE );
+			}
 
 			int nQpos = UploadQueues.GetPosition( this, TRUE );
 			if ( nQpos != 0 )
