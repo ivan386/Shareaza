@@ -436,9 +436,6 @@ BOOL CDownloadWithTiger::FindNewValidationBlock(int nHash)
 {
 	CQuickLock oLock( m_pTigerSection );
 
-	if ( nHash == HASH_TIGERTREE && ! Settings.Downloads.VerifyTiger ) return FALSE;
-	if ( nHash == HASH_ED2K && ! Settings.Downloads.VerifyED2K ) return FALSE;
-
 	DWORD nBlockCount;
 	QWORD nBlockSize;
 	BYTE* pBlockPtr;
@@ -446,19 +443,20 @@ BOOL CDownloadWithTiger::FindNewValidationBlock(int nHash)
 	switch ( nHash )
 	{
 	case HASH_TIGERTREE:
-		if ( m_pTigerBlock == NULL ) return FALSE;
+		if ( ! Settings.Downloads.VerifyTiger )
+			return FALSE;
 		pBlockPtr	= m_pTigerBlock;
 		nBlockCount	= m_nTigerBlock;
 		nBlockSize	= m_nTigerSize;
 		break;
 	case HASH_ED2K:
-		if ( m_pHashsetBlock == NULL ) return FALSE;
+		if ( ! Settings.Downloads.VerifyED2K )
+			return FALSE;
 		pBlockPtr	= m_pHashsetBlock;
 		nBlockCount	= m_nHashsetBlock;
 		nBlockSize	= ED2K_PART_SIZE;
 		break;
 	case HASH_TORRENT:
-		if ( m_pTorrentBlock == NULL ) return FALSE;
 		pBlockPtr	= m_pTorrentBlock;
 		nBlockCount	= m_nTorrentBlock;
 		nBlockSize	= m_nTorrentSize;
@@ -466,6 +464,9 @@ BOOL CDownloadWithTiger::FindNewValidationBlock(int nHash)
 	default:
 		return FALSE;
 	}
+
+	if ( ! pBlockPtr || ! nBlockCount || ! nBlockSize )
+		return FALSE;
 
 	DWORD nTarget = 0xFFFFFFFF;
 
@@ -549,25 +550,23 @@ BOOL CDownloadWithTiger::FindNewValidationBlock(int nHash)
 		if ( nTarget == 0xFFFFFFFF ) nTarget = nRetry;
 	}
 
-	if ( nTarget != 0xFFFFFFFF )
-	{
-		m_nVerifyHash	= nHash;
-		m_nVerifyBlock	= nTarget;
-		m_nVerifyOffset	= nTarget * nBlockSize;
-		m_nVerifyLength	= min( nBlockSize, m_nSize - m_nVerifyOffset );
-		m_tVerifyLast	= GetTickCount();
+	if ( nTarget == 0xFFFFFFFF )
+		return FALSE;
 
-		if ( m_nVerifyHash == HASH_TIGERTREE )
-			m_pTigerTree.BeginBlockTest();
-		else if ( m_nVerifyHash == HASH_ED2K )
-			m_pHashset.BeginBlockTest();
-		else if ( m_nVerifyHash == HASH_TORRENT )
-			m_pTorrent.BeginBlockTest();
+	m_nVerifyHash	= nHash;
+	m_nVerifyBlock	= nTarget;
+	m_nVerifyOffset	= nTarget * nBlockSize;
+	m_nVerifyLength	= min( nBlockSize, m_nSize - m_nVerifyOffset );
+	m_tVerifyLast	= GetTickCount();
 
-		return TRUE;
-	}
+	if ( m_nVerifyHash == HASH_TIGERTREE )
+		m_pTigerTree.BeginBlockTest();
+	else if ( m_nVerifyHash == HASH_ED2K )
+		m_pHashset.BeginBlockTest();
+	else if ( m_nVerifyHash == HASH_TORRENT )
+		m_pTorrent.BeginBlockTest();
 
-	return FALSE;
+	return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////
