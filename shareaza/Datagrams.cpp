@@ -204,8 +204,7 @@ void CDatagrams::Disconnect()
 {
 	if ( ! IsValid() ) return;
 
-	closesocket( m_hSocket );
-	m_hSocket = INVALID_SOCKET;
+	CNetwork::CloseSocket( m_hSocket, false );
 
 	delete [] m_pOutputBuffer;
 	m_pOutputBuffer = NULL;

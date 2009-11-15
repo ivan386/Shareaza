@@ -1111,3 +1111,40 @@ void CNetwork::UDPKnownHubCache(IN_ADDR* pAddress, WORD nPort)
 	CG2Packet* pKHLR = CG2Packet::New( G2_PACKET_KHL_REQ );
 	Datagrams.Send( pAddress, nPort, pKHLR, TRUE, NULL, FALSE );
 }
+
+SOCKET CNetwork::AcceptSocket(SOCKET hSocket, SOCKADDR_IN* addr, LPCONDITIONPROC lpfnCondition, DWORD_PTR dwCallbackData)
+{
+	__try	// Fix against stupid firewalls like (iS3 Anti-Spyware or Norman Virus Control)
+	{
+		int len = sizeof( SOCKADDR_IN );
+		return WSAAccept( hSocket, (SOCKADDR*)addr, &len, lpfnCondition, dwCallbackData );
+	}
+	__except( EXCEPTION_EXECUTE_HANDLER )
+	{
+		return INVALID_SOCKET;
+	}
+}
+
+void CNetwork::CloseSocket(SOCKET& hSocket, const bool bForce)
+{
+	if ( hSocket != INVALID_SOCKET )
+	{
+		__try	// Fix against stupid firewalls like (iS3 Anti-Spyware or Norman Virus Control)
+		{
+			if ( bForce )
+			{
+				const LINGER ls = { 1, 0 };
+				setsockopt( hSocket, SOL_SOCKET, SO_LINGER, (char*)&ls, sizeof( ls ) );
+			}
+			else
+			{
+				shutdown( hSocket, SD_BOTH );
+			}
+			closesocket( hSocket );
+		}
+		__except( EXCEPTION_EXECUTE_HANDLER )
+		{
+		}
+		hSocket = INVALID_SOCKET;
+	}
+}

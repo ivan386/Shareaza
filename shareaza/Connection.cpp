@@ -199,15 +199,7 @@ BOOL CConnection::ConnectTo(const IN_ADDR* pAddress, WORD nPort)
 		// An error of "would block" is normal because connections can't be made instantly and this is a non-blocking socket
 		if ( nError != WSAEWOULDBLOCK )
 		{
-			// Set linger period to zero (it will close the socket immediately)
-			// Default behavior is to send data and close or timeout and close
-			linger ls = {1, 0};
-			int ret = setsockopt( m_hSocket, SOL_SOCKET, SO_LINGER, (char*)&ls, sizeof(ls) );
-
-			// The error is something else, record it, close the socket, set the value of m_hSocket, and leave
-			shutdown( m_hSocket, SD_RECEIVE );
-			ret = closesocket( m_hSocket );
-			m_hSocket = INVALID_SOCKET;
+			CNetwork::CloseSocket( m_hSocket, true );
 
 			if ( nError != 0 ) 
 				Statistics.Current.Connections.Errors++;
@@ -322,16 +314,7 @@ void CConnection::Close()
 	ASSERT( this != NULL );
 	ASSERT( AfxIsValidAddress( this, sizeof(*this) ) );
 
-	// The socket is valid
-	if ( IsValid() )
-	{
-		// Don't use SO_LINGER here
-
-		// Close it and mark it invalid
-		//shutdown( m_hSocket, SD_RECEIVE );
-		closesocket( m_hSocket );
-		m_hSocket = INVALID_SOCKET;
-	}
+	CNetwork::CloseSocket( m_hSocket, false );
 
 	// Delete and mark null the input and output buffers
 	DestroyBuffers();

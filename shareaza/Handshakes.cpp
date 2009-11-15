@@ -185,15 +185,7 @@ BOOL CHandshakes::Listen()
 // Closes the socket and kills the thread
 void CHandshakes::Disconnect()
 {
-	if ( IsValid() )
-	{
-		// Don't use SO_LINGER here
-
-		// Close it and set it invalid
-		shutdown( m_hSocket, SD_RECEIVE );
-		closesocket( m_hSocket );
-		m_hSocket = INVALID_SOCKET;
-	}
+	CNetwork::CloseSocket( m_hSocket, false );
 
 	CloseThread();
 
@@ -375,20 +367,10 @@ void CHandshakes::RunHandshakes()
 // Returns true or false if we accepted the connection
 BOOL CHandshakes::AcceptConnection()
 {
-	// Local variables to receive the IP address and port number of the remote computer
 	SOCKADDR_IN pHost = {};
-	int nHost = sizeof( pHost );
-
-	// Accept the connection in a new socket, hSocket
-	SOCKET hSocket =		// Make a new local socket here
-		WSAAccept(			// Conditionally accepts an incoming connection from a remote computer
-		m_hSocket,			// The socket listening for connections
-		(SOCKADDR*)&pHost,	// Have WSAAccept tell us what it thinks the IP address and port number of the remote computer is
-		&nHost,				// The number of bytes it has to write there
-		AcceptCheck,		// Call this function, and it will tell you if we wish to accept this connection or not
-		0 ); // Note: as of now this parameter is unused - it's not safe to pass this here in a 64bit environment
-			// if we should need this in the future, a LUT needs to be used instead
-	if ( hSocket == INVALID_SOCKET ) return FALSE; // AcceptCheck refused the connection, or it didn't work, leave now
+	SOCKET hSocket = CNetwork::AcceptSocket( m_hSocket, &pHost, AcceptCheck );
+	if ( hSocket == INVALID_SOCKET )
+		return FALSE;
 
 	// We've listened for and accepted one more stable connection
 	InterlockedIncrement( (PLONG)&m_nStableCount ); // Use an interlocked function to do this in a thread-safe way
@@ -396,14 +378,7 @@ BOOL CHandshakes::AcceptConnection()
 	// If the remote computer's IP address is blocked or banned
 	if ( Security.IsDenied( &pHost.sin_addr ) )
 	{
-		// Set linger period to zero (it will close the socket immediately)
-		// Default behavior is to send data and close or timeout and close
-		linger ls = {1, 0};
-		int ret = setsockopt( hSocket, SOL_SOCKET, SO_LINGER, (char*)&ls, sizeof(ls) );
-
-		// Close the socket we just accepted the connection with
-		shutdown( hSocket, SD_RECEIVE );
-		ret = closesocket( hSocket );
+		CNetwork::CloseSocket( hSocket, true );
 
 		// Report that this connection was denied for security reasons
 		theApp.Message( MSG_ERROR, IDS_NETWORK_SECURITY_DENIED, (LPCTSTR)CString( inet_ntoa( pHost.sin_addr ) ) );

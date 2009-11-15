@@ -22,7 +22,7 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
-
+#include "Network.h"
 #include "Skin.h"
 #include "RichElement.h"
 #include "RichFragment.h"
@@ -348,8 +348,7 @@ void CIRCFrame::OnDestroy()
 
 	m_pChanList.RemoveAll();
 
-	closesocket( m_nSocket );
-	m_nSocket = INVALID_SOCKET;
+	CNetwork::CloseSocket( m_nSocket, false );
 
 	CWnd::OnDestroy();
 }
@@ -859,8 +858,7 @@ void CIRCFrame::OnIrcDisconnect()
 
 	SendString( _T("QUIT") );
 
-	closesocket( m_nSocket );
-	m_nSocket = INVALID_SOCKET;
+	CNetwork::CloseSocket( m_nSocket, false );
 
 	KillTimer( 9 );
 	KillTimer( 7 );

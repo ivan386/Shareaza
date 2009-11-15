@@ -128,6 +128,12 @@ public:
 	void		UDPHostCache(IN_ADDR* pAddress, WORD nPort);
 	void		UDPKnownHubCache(IN_ADDR* pAddress, WORD nPort);
 
+	// Safe way to accept socket
+	static SOCKET AcceptSocket(SOCKET hSocket, SOCKADDR_IN* addr, LPCONDITIONPROC lpfnCondition, DWORD_PTR dwCallbackData = 0);
+
+	// Safe way to close socket
+	static void	CloseSocket(SOCKET& hSocket, const bool bForce);
+
 	friend class CHandshakes;
 	friend class CNeighbours;
 };
