@@ -885,6 +885,7 @@
 		<!-- SEARCH WINDOW -->
 		<menu name="CSearchWnd.Basic">
 			<item id="ID_SEARCH_DOWNLOAD" text="_Загрузить"/>
+			<item id="ID_SEARCH_COPY" text="_Копировать ссылку..."/>
 			<separator/>
 			<item id="ID_BROWSE_LAUNCH" text="Просмотр _хоста"/>
 			<item id="ID_SEARCH_CHAT" text="_Чат"/>
@@ -898,13 +899,12 @@
 			</menu>
 			<menu text="_Сервис">
 				<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
-				<item id="ID_SEARCH_COPY" text="Копировать _ссылку..."/>
 			</menu>
 		</menu>
 		<menu name="CSearchWnd">
 			<item id="ID_SEARCH_DOWNLOAD" text="_Загрузить"/>
 			<item id="ID_SEARCH_DOWNLOADNOW" text="Загрузить сейчас"/>
-			<item id="ID_SEARCH_COPY" text="_Копировать ссылку"/>
+			<item id="ID_SEARCH_COPY" text="_Копировать ссылку..."/>
 			<separator/>
 			<item id="ID_BROWSE_LAUNCH" text="Просмотр _хоста"/>
 			<item id="ID_SEARCH_CHAT" text="_Чат"/>
@@ -933,6 +933,7 @@
 		<menu name="CBrowseHostWnd.Basic">
 			<item id="ID_SEARCH_DOWNLOAD" text="_Загрузить"/>
 			<item id="ID_SEARCH_DOWNLOADNOW" text="Загрузить сейчас"/>
+			<item id="ID_SEARCH_COPY" text="_Копировать ссылку..."/>
 			<separator/>
 			<item id="ID_SEARCH_CHAT" text="_Чат"/>
 			<separator/>
@@ -945,13 +946,12 @@
 			</menu>
 			<menu text="_Сервис">
 				<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
-				<item id="ID_SEARCH_COPY" text="Копировать _ссылку..."/>
 			</menu>
 		</menu>
 		<menu name="CBrowseHostWnd">
 			<item id="ID_SEARCH_DOWNLOAD" text="_Загрузить"/>
 			<item id="ID_SEARCH_DOWNLOADNOW" text="Загрузить сейчас"/>
-			<item id="ID_SEARCH_COPY" text="_Копировать ссылку"/>
+			<item id="ID_SEARCH_COPY" text="_Копировать ссылку..."/>
 			<separator/>
 			<item id="ID_SEARCH_CHAT" text="_Чат"/>
 			<separator/>
@@ -975,7 +975,7 @@
 		<!-- HIT MONITOR WINDOW -->
 		<menu name="CHitMonitorWnd">
 			<item id="ID_SEARCH_DOWNLOAD" text="_Загрузить"/>
-			<item id="ID_SEARCH_COPY" text="_Копировать ссылку"/>
+			<item id="ID_SEARCH_COPY" text="_Копировать ссылку..."/>
 			<separator/>
 			<item id="ID_BROWSE_LAUNCH" text="Просмотр _хоста"/>
 			<item id="ID_SEARCH_CHAT" text="_Чат"/>
@@ -1011,9 +1011,8 @@
 			<item id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="_Отменить загрузку"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_SOURCES" text="_Найти больше источников"/>
-			<!-- <separator/>
-		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="C_lear Completed"/>
-		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="A_uto Clear"/> -->
+			<separator/>
+			<item id="ID_DOWNLOADS_COPY" text="_Копировать ссылку..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_HELP" text="_Справка..."/>
 		</menu>
@@ -1033,7 +1032,7 @@
 			<menu text="_Опытным">
 				<item id="ID_DOWNLOADS_SHARE" text="_Общий доступ"/>
 				<separator/>
-				<item id="ID_DOWNLOADS_COPY" text="_Копировать ссылку"/>
+				<item id="ID_DOWNLOADS_COPY" text="_Копировать ссылку..."/>
 				<item id="ID_DOWNLOADS_URL" text="_Добавить источник..."/>
 				<separator/>
 				<item id="ID_DOWNLOADS_MONITOR" text="Окно _монитора"/>
@@ -1051,7 +1050,7 @@
 			<separator/>
 			<item id="ID_BROWSE_LAUNCH" text="Просмотр _хоста"/>
 			<item id="ID_TRANSFERS_CHAT" text="_Чат"/>
-			<item id="ID_DOWNLOADS_COPY" text="_Копировать ссылку"/>
+			<item id="ID_DOWNLOADS_COPY" text="_Копировать ссылку..."/>
 			<separator/>
 			<item id="ID_TRANSFERS_DISCONNECT" text="_Отключиться"/>
 			<item id="ID_TRANSFERS_FORGET" text="_Забыть"/>
@@ -1068,7 +1067,7 @@
 			<item id="ID_DOWNLOADS_ENQUEUE" text="_Добавить в список"/>
 			<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="У_брать"/>
 			<separator/>
-			<item id="ID_DOWNLOADS_COPY" text="_Копировать ссылку"/>
+			<item id="ID_DOWNLOADS_COPY" text="_Копировать ссылку..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_FILE_DELETE" text="_Удалить файл"/>
 			<item id="ID_DOWNLOADS_RATE" text="_Оценка файла..."/>
@@ -1194,6 +1193,7 @@
 			<separator/>
 			<item id="ID_LIBRARY_SHARED_FILE" text="_Общий доступ"/>
 			<separator/>
+			<item id="ID_LIBRARY_URL" text="_Копировать ссылку..."/>
 			<item id="ID_LIBRARY_DELETE" text="_Удалить"/>
 			<separator/>
 			<menu text="_Искать">
@@ -1224,7 +1224,7 @@
 			<separator/>
 			<item id="ID_LIBRARY_SHARED_FILE" text="_Общий доступ"/>
 			<separator/>
-			<item id="ID_LIBRARY_URL" text="_Копировать ссылку"/>
+			<item id="ID_LIBRARY_URL" text="_Копировать ссылку..."/>
 			<item id="ID_LIBRARY_DELETE" text="_Удалить"/>
 			<separator/>
 			<menu text="_Искать">
@@ -1262,6 +1262,7 @@
 			<separator/>
 			<item id="ID_LIBRARY_SHARED_FILE" text="_Общий доступ"/>
 			<separator/>
+			<item id="ID_LIBRARY_URL" text="_Копировать ссылку..."/>
 			<item id="ID_LIBRARY_DELETE" text="_Удалить"/>
 			<separator/>
 			<menu text="_Искать">
@@ -1296,7 +1297,7 @@
 			<separator/>
 			<item id="ID_LIBRARY_SHARED_FILE" text="_Общий доступ"/>
 			<separator/>
-			<item id="ID_LIBRARY_URL" text="_Копировать ссылку"/>
+			<item id="ID_LIBRARY_URL" text="_Копировать ссылку..."/>
 			<item id="ID_LIBRARY_DELETE" text="_Удалить"/>
 			<separator/>
 			<menu text="_Искать">
@@ -3632,8 +3633,8 @@
 		</dialog>
 		<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuBuStEdmsStBuStBu" caption="eDonkey">
 			<control caption="_Сеть eDonkey:"/>
-			<control caption="Соединиться с eDonkey сегодня"/>
 			<control caption="Всегда соединяться с eDonkey"/>
+			<control caption="Соединиться с eDonkey сегодня"/>
 			<control caption="_Глобальный поиск:"/>
 			<control caption="Искать по списку известных серверов:"/>
 			<control caption="Останов поиска после:"/>

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2009-10-27 06:05+0000\n"
+"POT-Creation-Date: 2009-11-15 20:05+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -977,13 +977,7 @@ msgstr "_Следующий трэк"
 msgid "_Connect Now"
 msgstr "Под_ключиться сейчас"
 
-#: chostcachewnd;item;id_neighbours_copy csearchwnd;item;id_search_copy
-#: cbrowsehostwnd;item;id_search_copy chitmonitorwnd;item;id_search_copy
-#: cdownloadswnd.download;39;item;id_downloads_copy
-#: cdownloadswnd.source;item;id_downloads_copy
-#: cdownloadswnd.completed;item;id_downloads_copy
-#: clibraryfileview.physical;item;id_library_url
-#: clibraryfileview.virtual;item;id_library_url
+#: chostcachewnd;item;id_neighbours_copy
 #: cneighbourswnd.basic;item;id_neighbours_copy
 #: cneighbourswnd;item;id_neighbours_copy
 msgid "Copy _URI"
@@ -1039,6 +1033,20 @@ msgstr "_Загрузить MET..."
 #: chitmonitorwnd;item;id_search_download
 msgid "_Download"
 msgstr "_Загрузить"
+
+#: csearchwnd.basic;item;id_search_copy csearchwnd;item;id_search_copy
+#: cbrowsehostwnd.basic;item;id_search_copy cbrowsehostwnd;item;id_search_copy
+#: chitmonitorwnd;item;id_search_copy
+#: cdownloadswnd.download.basic;item;id_downloads_copy
+#: cdownloadswnd.download;39;item;id_downloads_copy
+#: cdownloadswnd.source;item;id_downloads_copy
+#: cdownloadswnd.completed;item;id_downloads_copy
+#: clibraryfileview.physical.basic;item;id_library_url
+#: clibraryfileview.physical;item;id_library_url
+#: clibraryfileview.virtual.basic;item;id_library_url
+#: clibraryfileview.virtual;item;id_library_url
+msgid "Copy _URI..."
+msgstr "_Копировать ссылку..."
 
 #: csearchwnd.basic;item;id_browse_launch csearchwnd;item;id_browse_launch
 #: chitmonitorwnd;item;id_browse_launch
@@ -1118,9 +1126,10 @@ msgstr "Музыку из этого же альбома"
 msgid "_Episodes in the same Series"
 msgstr "Серии из этого же сериала"
 
-#: csearchwnd.basic;30 csearchwnd;32 cbrowsehostwnd;36 chitmonitorwnd;38
-#: clibraryfileview.physical.basic;41 clibraryfileview.physical;44
-#: clibraryfileview.virtual.basic;47 clibraryfileview.virtual;50
+#: csearchwnd.basic;30 csearchwnd;32 cbrowsehostwnd.basic;34 cbrowsehostwnd;36
+#: chitmonitorwnd;38 clibraryfileview.physical.basic;41
+#: clibraryfileview.physical;44 clibraryfileview.virtual.basic;47
+#: clibraryfileview.virtual;50
 msgid "_Web Services"
 msgstr "_Сервис"
 
@@ -1135,11 +1144,6 @@ msgstr "_Сервис"
 #: clibraryfileview.virtual;50;item;id_library_bitzi_web
 msgid "View _Bitzi Ticket"
 msgstr "Посмотреть _Bitzi этикетку"
-
-#: csearchwnd.basic;30;item;id_search_copy
-#: cbrowsehostwnd.basic;34;item;id_search_copy
-msgid "Copy _URI..."
-msgstr "Копировать _ссылку..."
 
 #: csearchwnd;item;id_search_downloadnow
 #: cbrowsehostwnd.basic;item;id_search_downloadnow
@@ -1181,10 +1185,6 @@ msgstr "О_чистить результаты"
 #: chitmonitorwnd;item;id_search_columns
 msgid "Edit C_olumns..."
 msgstr "Выбрать ко_лонки..."
-
-#: cbrowsehostwnd.basic;34
-msgid "_Web File Info"
-msgstr "_Сервис"
 
 #: chitmonitorwnd;item;id_hitmonitor_pause
 #: csearchmonitorwnd;item;id_searchmonitor_pause
@@ -8032,11 +8032,11 @@ msgstr "_Сеть eDonkey:"
 
 #: cdonkeysettingspage;control;2
 msgid "Always connect to eDonkey"
-msgstr "Соединиться с eDonkey сегодня"
+msgstr "Всегда соединяться с eDonkey"
 
 #: cdonkeysettingspage;control;3
 msgid "Connect to eDonkey today"
-msgstr "Всегда соединяться с eDonkey"
+msgstr "Соединиться с eDonkey сегодня"
 
 #: cdonkeysettingspage;control;4
 msgid "_Global Searching:"
@@ -9843,6 +9843,8 @@ msgstr "Пользователь"
 msgid "Comments"
 msgstr "Комментарии"
 
+#~ msgid "_Web File Info"
+#~ msgstr "_Сервис"
 #~ msgid "English"
 #~ msgstr "Pусский"
 #~ msgid "2.4.0.2"

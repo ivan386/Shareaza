@@ -868,6 +868,7 @@
 	<!-- SEARCH WINDOW -->
 	<menu name="CSearchWnd.Basic">
 		<item id="ID_SEARCH_DOWNLOAD" text="_Download"/>
+		<item id="ID_SEARCH_COPY" text="Copy _URI..."/>
 		<separator/>
 		<item id="ID_BROWSE_LAUNCH" text="_Browse User"/>
 		<item id="ID_SEARCH_CHAT" text="_Chat to User"/>
@@ -881,13 +882,13 @@
 		</menu>
 		<menu text="_Web Services">
 			<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
-			<item id="ID_SEARCH_COPY" text="Copy _URI..."/>
+			
 		</menu>
 	</menu>
 	<menu name="CSearchWnd">
 		<item id="ID_SEARCH_DOWNLOAD" text="_Download"/>
 		<item id="ID_SEARCH_DOWNLOADNOW" text="Download _Now"/>
-		<item id="ID_SEARCH_COPY" text="Copy _URI"/>
+		<item id="ID_SEARCH_COPY" text="Copy _URI..."/>
 		<separator/>
 		<item id="ID_BROWSE_LAUNCH" text="Bro_wse User"/>
 		<item id="ID_SEARCH_CHAT" text="_Chat to User"/>
@@ -916,6 +917,7 @@
 	<menu name="CBrowseHostWnd.Basic">
 		<item id="ID_SEARCH_DOWNLOAD" text="_Download"/>
 		<item id="ID_SEARCH_DOWNLOADNOW" text="Download _Now"/>
+		<item id="ID_SEARCH_COPY" text="Copy _URI..."/>
 		<separator/>
 		<item id="ID_SEARCH_CHAT" text="_Chat to User"/>
 		<separator/>
@@ -926,15 +928,15 @@
 			<item id="ID_SEARCH_FOR_ALBUM" text="Music in the same _Album"/>
 			<item id="ID_SEARCH_FOR_SERIES" text="_Episodes in the same Series"/>
 		</menu>
-		<menu text="_Web File Info">
+		<menu text="_Web Services">
 			<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
-			<item id="ID_SEARCH_COPY" text="Copy _URI..."/>
+			
 		</menu>
 	</menu>
 	<menu name="CBrowseHostWnd">
 		<item id="ID_SEARCH_DOWNLOAD" text="_Download"/>
 		<item id="ID_SEARCH_DOWNLOADNOW" text="Download _Now"/>
-		<item id="ID_SEARCH_COPY" text="Copy _URI"/>
+		<item id="ID_SEARCH_COPY" text="Copy _URI..."/>
 		<separator/>
 		<item id="ID_SEARCH_CHAT" text="_Chat to User"/>
 		<separator/>
@@ -958,7 +960,7 @@
 	<!-- HIT MONITOR WINDOW -->
 	<menu name="CHitMonitorWnd">
 		<item id="ID_SEARCH_DOWNLOAD" text="_Download"/>
-		<item id="ID_SEARCH_COPY" text="Copy _URI"/>
+		<item id="ID_SEARCH_COPY" text="Copy _URI..."/>
 		<separator/>
 		<item id="ID_BROWSE_LAUNCH" text="_Browse User"/>
 		<item id="ID_SEARCH_CHAT" text="_Chat to User"/>
@@ -994,9 +996,8 @@
 		<item id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="_Cancel Download"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_SOURCES" text="_Find More Sources"/>
-		<!-- <separator/>
-		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="C_lear Completed"/>
-		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="A_uto Clear"/> -->
+		<separator/>
+		<item id="ID_DOWNLOADS_COPY" text="Copy _URI..."/>
 		<separator/>
 		<item id="ID_DOWNLOADS_HELP" text="_Help..."/>
 	</menu>
@@ -1016,7 +1017,7 @@
 		<menu text="_Advanced">
 			<item id="ID_DOWNLOADS_SHARE" text="_Share File"/>
 			<separator/>
-			<item id="ID_DOWNLOADS_COPY" text="_Copy URI"/>
+			<item id="ID_DOWNLOADS_COPY" text="Copy _URI..."/>
 			<item id="ID_DOWNLOADS_URL" text="_Add Source..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_MONITOR" text="Monitor _Window"/>
@@ -1034,7 +1035,7 @@
 		<separator/>
 		<item id="ID_BROWSE_LAUNCH" text="_Browse User"/>
 		<item id="ID_TRANSFERS_CHAT" text="_Chat to User"/>
-		<item id="ID_DOWNLOADS_COPY" text="Copy _URI"/>
+		<item id="ID_DOWNLOADS_COPY" text="Copy _URI..."/>
 		<separator/>
 		<item id="ID_TRANSFERS_DISCONNECT" text="_Disconnect"/>
 		<item id="ID_TRANSFERS_FORGET" text="_Forget"/>
@@ -1051,7 +1052,7 @@
 		<item id="ID_DOWNLOADS_ENQUEUE" text="_Add to Playlist"/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Clear"/>
 		<separator/>
-		<item id="ID_DOWNLOADS_COPY" text="Copy _URI"/>
+		<item id="ID_DOWNLOADS_COPY" text="Copy _URI..."/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="_Delete File"/>
 		<item id="ID_DOWNLOADS_RATE" text="_Rate File..."/>
@@ -1177,6 +1178,7 @@
 		<separator/>
 		<item id="ID_LIBRARY_SHARED_FILE" text="_Shared"/>
 		<separator/>
+		<item id="ID_LIBRARY_URL" text="Copy _URI..."/>
 		<item id="ID_LIBRARY_DELETE" text="_Delete"/>
 		<separator/>
 		<menu text="S_earch For">
@@ -1207,7 +1209,7 @@
 		<separator/>
 		<item id="ID_LIBRARY_SHARED_FILE" text="_Shared"/>
 		<separator/>
-		<item id="ID_LIBRARY_URL" text="Copy _URI"/>
+		<item id="ID_LIBRARY_URL" text="Copy _URI..."/>
 		<item id="ID_LIBRARY_DELETE" text="_Delete"/>
 		<separator/>
 		<menu text="S_earch For">
@@ -1245,6 +1247,7 @@
 		<separator/>
 		<item id="ID_LIBRARY_SHARED_FILE" text="_Shared"/>
 		<separator/>
+		<item id="ID_LIBRARY_URL" text="Copy _URI..."/>
 		<item id="ID_LIBRARY_DELETE" text="_Delete"/>
 		<separator/>
 		<menu text="S_earch For">
@@ -1279,7 +1282,7 @@
 		<separator/>
 		<item id="ID_LIBRARY_SHARED_FILE" text="_Shared"/>
 		<separator/>
-		<item id="ID_LIBRARY_URL" text="Copy _URI"/>
+		<item id="ID_LIBRARY_URL" text="Copy _URI..."/>
 		<item id="ID_LIBRARY_DELETE" text="_Delete"/>
 		<separator/>
 		<menu text="S_earch For">
