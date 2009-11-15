@@ -728,8 +728,6 @@ Begin
 
   // Malware check
   Result := NOT MalwareCheck( ExpandConstant('{win}\vgraph.dll') );
-  if Result then Begin Result := NOT MalwareCheck( ExpandConstant('{win}\pxwma.dll') ); End;
-  if Result then Begin Result := NOT MalwareCheck( ExpandConstant('{sys}\pxwma.dll') ); End;
   if Result then Begin Result := NOT MalwareCheck( ExpandConstant('{win}\Shareaza.exe') ); End;
   if Result then Begin Result := NOT MalwareCheck( ExpandConstant('{sys}\Shareaza.exe') ); End;
   if Result then Begin Result := NOT MalwareCheck( ExpandConstant('{pf}\Shareaza\vc2.dll') ); End;
