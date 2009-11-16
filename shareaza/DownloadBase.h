@@ -42,7 +42,8 @@ public:
 
 	void			SetModified();
 	bool			IsModified() const;
-
+	// Set download safe name
+	bool			Rename(const CString& strName);
 	// Check if a task is already running
 	virtual bool	IsTasking() const;
 	// Check if a task is already running and its a moving task

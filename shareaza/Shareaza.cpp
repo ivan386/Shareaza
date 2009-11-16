@@ -2212,6 +2212,40 @@ void CShareazaApp::OnRename(LPCTSTR pszSource, LPCTSTR pszTarget)
 	}
 }
 
+CString SafeFilename(const CString& sOriginalName, bool bPath)
+{
+	CString strName = sOriginalName;
+
+	// Restore spaces
+	strName.Replace( _T("%20"), _T(" ") );
+
+	// Replace incompatible symbols
+	int nNameLen = strName.GetLength();
+	for ( int nChar = 0; nChar < nNameLen; ++nChar )
+	{
+		nChar = StrCSpn( ((LPCTSTR)strName) + nChar,
+			bPath ? _T("/:*?\"<>|") : _T("\\/:*?\"<>|") ) + nChar;
+		if ( nChar < 0 || nChar >= nNameLen )
+			break;
+		strName.SetAt( nChar, _T('_') );
+	}
+
+	LPCTSTR szExt = PathFindExtension( strName );
+	int nExtLen = lstrlen( szExt );
+
+	// Limit maximum filepath length
+	int nMaxFilenameLength = MAX_PATH - 1 - max( max(
+		Settings.Downloads.IncompletePath.GetLength(),
+		Settings.Downloads.CompletePath.GetLength() ),
+		Settings.Downloads.TorrentPath.GetLength() );
+	if ( strName.GetLength() > nMaxFilenameLength )
+	{
+		strName = strName.Left( nMaxFilenameLength - nExtLen ) + strName.Right( nExtLen );
+	}
+
+	return strName;
+}
+
 BOOL CreateDirectory(LPCTSTR szPath)
 {
 	CString strDir = szPath;

@@ -174,7 +174,7 @@ BOOL CFragmentedFile::Open(LPCTSTR pszFile, QWORD nOffset, QWORD nLength,
 		part.m_nPriority = nPriority;
 
 		if ( pszName )
-			part.m_sName = pszName;
+			part.m_sName = SafeFilename( pszName, true );
 
 		m_oFile.push_back( part );
 		pItr = --m_oFile.end();
@@ -414,7 +414,7 @@ void CFragmentedFile::SetName(DWORD nIndex, LPCTSTR szName)
 	CQuickLock oLock( m_pSection );
 
 	if ( nIndex < m_oFile.size() )
-		m_oFile[ nIndex ].m_sName = szName;
+		m_oFile[ nIndex ].m_sName = SafeFilename( szName, true );
 }
 
 int CFragmentedFile::GetPriority(DWORD nIndex) const

@@ -242,6 +242,9 @@ HBITMAP	CreateMirroredBitmap(HBITMAP hbmOrig);
 LRESULT CALLBACK KbdHook(int nCode, WPARAM wParam, LPARAM lParam);
 LRESULT CALLBACK MouseHook(int nCode, WPARAM wParam, LPARAM lParam);
 
+// Generate safe file name for file system (bPath == true - allow path i.e. "\" symbol)
+CString SafeFilename(const CString& sOriginalName, bool bPath = false);
+
 // Create directory. If one or more of the intermediate folders do not exist, they are created as well.
 BOOL CreateDirectory(LPCTSTR szPath);
 

@@ -69,7 +69,6 @@ public:
 	void		Remove();
 	void		Boost();
 	void		Share(BOOL bShared);
-	bool		Rename(const CString& strName);
 	void		SetStartTimer();
 	bool		IsStarted() const;		// Has the download actually downloaded anything?
 	bool		IsDownloading() const;	// Is the download receiving data?

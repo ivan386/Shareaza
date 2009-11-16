@@ -321,7 +321,7 @@ CDownload* CDownloads::Add(const CShareazaURL& oURL)
 
 	if ( ! pDownload->m_sName.GetLength() && oURL.m_sName.GetLength() )
 	{
-		pDownload->m_sName = oURL.m_sName;
+		pDownload->Rename( oURL.m_sName );
 	}
 
 	if ( pDownload->m_nSize == SIZE_UNKNOWN && oURL.m_bSize )

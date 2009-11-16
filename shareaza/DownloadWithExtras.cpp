@@ -63,7 +63,7 @@ CDownloadWithExtras::~CDownloadWithExtras()
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithExtras preview function
 
-BOOL CDownloadWithExtras::PreviewFile(DWORD nIndex, CSingleLock* pLock)
+BOOL CDownloadWithExtras::PreviewFile(DWORD nIndex, CSingleLock* /* pLock */)
 {
 	DeletePreviews();
 

@@ -117,6 +117,25 @@ void CDownloadBase::SetModified()
 }
 
 //////////////////////////////////////////////////////////////////////
+// CDownload control : rename
+
+bool CDownloadBase::Rename(const CString& strName)
+{
+	CString sNewName = SafeFilename( strName );
+
+	// Don't bother if renaming to same name.
+	if ( m_sName == sNewName )
+		return false;
+
+	// Set new name
+	m_sName = sNewName;
+
+	SetModified();
+
+	return true;
+}
+
+//////////////////////////////////////////////////////////////////////
 // CDownloadBase serialize
 
 void CDownloadBase::Serialize(CArchive& ar, int nVersion)

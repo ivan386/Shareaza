@@ -132,7 +132,7 @@ public:
 	BOOL		LoadTorrentFile(LPCTSTR pszFile);
 	BOOL		LoadTorrentBuffer(const CBuffer* pBuffer);
 	BOOL		LoadTorrentTree(const CBENode* pRoot);
-	BOOL		SaveTorrentFile(LPCTSTR pszPath);
+	BOOL		SaveTorrentFile(const CString& sFolder);
 
 	void		BeginBlockTest();
 	void		AddToTest(LPCVOID pInput, DWORD nLength);

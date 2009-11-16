@@ -208,22 +208,6 @@ void CDownload::Share(BOOL bShared)
 }
 
 //////////////////////////////////////////////////////////////////////
-// CDownload control : rename
-
-bool CDownload::Rename(const CString& strName)
-{
-	// Don't bother if renaming to same name.
-	if ( m_sName == strName )
-		return false;
-
-	// Set new name
-	m_sName = strName;
-
-	SetModified();
-	return TRUE;
-}
-
-//////////////////////////////////////////////////////////////////////
 // CDownload control : Stop trying
 
 void CDownload::StopTrying()

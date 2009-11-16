@@ -478,50 +478,6 @@ BOOL CDownloadTask::CopyFile(HANDLE hSource, LPCTSTR pszTarget, QWORD nLength)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// CDownloadTask filename processor
-
-CString CDownloadTask::SafeFilename(LPCTSTR pszName)
-{
-	static LPCTSTR pszValid = _T(" `~!@#$%^&()-_=+[]{}';.,");
-	CString strName = pszName;
-
-	for ( int nChar = 0 ; nChar < strName.GetLength() ; nChar++ )
-	{
-		TCHAR cChar = strName.GetAt( nChar );
-
-		if ( (DWORD)cChar > 128 )
-			continue;
-		else
-		{
-			if ( IsCharacter( cChar ) )
-				continue;
-			if ( _tcschr( pszValid, cChar ) != NULL )
-				continue;
-		}
-
-		strName.SetAt( nChar, '_' );
-	}
-
-	LPCTSTR pszExt = _tcsrchr( strName, '.' );
-	if ( pszExt )
-	{
-		if ( _tcsicmp( pszExt, _T(".sd") ) == 0 )
-			strName += _T("x");
-	}
-
-	// Maximum filepath length is
-	// <Windows limit = 256 - 1> - <length of path to download directory> - <length of hash = 39(tiger)> -<space = 1> - <length of ".sd.sav" = 7>
-	int nMaxFilenameLength = 256 - 1 - Settings.Downloads.IncompletePath.GetLength() - 47;
-	if ( strName.GetLength() > nMaxFilenameLength )
-	{
-		int nExtLen = pszExt ? static_cast< int >( _tcslen( pszExt ) ) : 0;
-		strName = strName.Left( nMaxFilenameLength - nExtLen ) + strName.Right( nExtLen );
-	}
-
-	return strName;
-}
-
-/////////////////////////////////////////////////////////////////////////////
 // CDownloadTask path creator
 
 void CDownloadTask::CreatePathForFile(const CString& strBase, const CString& strPath)

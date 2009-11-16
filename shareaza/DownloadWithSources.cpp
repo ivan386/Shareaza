@@ -322,7 +322,7 @@ BOOL CDownloadWithSources::AddSourceHit(const CQueryHit* pHit, BOOL bForce)
 
 	if ( m_sName.IsEmpty() && pHit->m_sName.GetLength() )
 	{
-		m_sName = pHit->m_sName;
+		Rename( pHit->m_sName );
 	}
 	
 	if ( Settings.Downloads.Metadata && m_pXML == NULL )
@@ -500,7 +500,7 @@ BOOL CDownloadWithSources::AddSourceURL(LPCTSTR pszURL, BOOL bURN, FILETIME* pLa
 	// Get name
 	if ( m_sName.IsEmpty() && pURL.m_sName.GetLength() )
 	{
-		m_sName = pURL.m_sName;
+		Rename( pURL.m_sName );
 	}
 
 	return AddSourceInternal( new CDownloadSource( static_cast< const CDownload* >( this ),

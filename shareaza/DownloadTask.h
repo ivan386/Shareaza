@@ -48,8 +48,6 @@ public:
 	static void			MergeFile(CDownload* pDownload, LPCTSTR szPath,
 		BOOL bValidation = TRUE, const Fragments::List* pGaps = NULL);
 
-	static CString		SafeFilename(LPCTSTR pszName);
-
 	bool				HasSucceeded() const;
 	void				Abort();
 	bool				WasAborted() const;
