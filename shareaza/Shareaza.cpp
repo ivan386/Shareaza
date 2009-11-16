@@ -2214,12 +2214,17 @@ void CShareazaApp::OnRename(LPCTSTR pszSource, LPCTSTR pszTarget)
 
 BOOL CreateDirectory(LPCTSTR szPath)
 {
-	DWORD dwAttr = GetFileAttributes( CString( _T("\\\\?\\") ) + szPath );
+	CString strDir = szPath;
+
+	DWORD dwAttr = ( strDir.GetLength() == 2 ) ?
+		// Disk only
+		GetFileAttributes( strDir + _T("\\") ) :
+		// Normal directory
+		GetFileAttributes( CString( _T("\\\\?\\") ) + strDir );
 	if ( ( dwAttr != INVALID_FILE_ATTRIBUTES ) &&
 		( dwAttr & FILE_ATTRIBUTE_DIRECTORY ) )
 		return TRUE;
 
-	CString strDir( szPath );
 	for ( int nStart = 3; ; )
 	{
 		int nSlash = strDir.Find( _T('\\'), nStart );
