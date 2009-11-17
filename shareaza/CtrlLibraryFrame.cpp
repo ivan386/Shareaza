@@ -1106,11 +1106,13 @@ void CLibraryFrame::RunLocalSearch(auto_ptr< CQuerySearch > pSearch)
 
 	pSearch->BuildWordList( true, true );
 
-	CAlbumFolder* pRoot		= Library.GetAlbumRoot();
+	CSingleLock oLock( &Library.m_pSection, TRUE );
+
+	CAlbumFolder* pRoot = Library.GetAlbumRoot();
 	if ( ! pRoot )
 		return;
-	CAlbumFolder* pFolder	= pRoot->GetFolderByURI( CSchema::uriSearchFolder );
 
+	CAlbumFolder* pFolder = pRoot->GetFolderByURI( CSchema::uriSearchFolder );
 	if ( pFolder == NULL )
 	{
 		pFolder = pRoot->AddFolder( CSchema::uriSearchFolder, _T("Search Results") );
@@ -1146,7 +1148,7 @@ void CLibraryFrame::RunLocalSearch(auto_ptr< CQuerySearch > pSearch)
 			pFolder->Clear();
 	}
 
-	if ( pFolder->m_pSchema != NULL )
+	if ( pFolder->m_pSchema )
 	{
 		CString strDate, strTime;
 		SYSTEMTIME pTime;
@@ -1166,29 +1168,23 @@ void CLibraryFrame::RunLocalSearch(auto_ptr< CQuerySearch > pSearch)
 		delete pOuter;
 	}
 
+	if ( CFileList* pFiles = Library.Search( pSearch.get(), 0, TRUE ) )
 	{
-		CQuickLock oLock( Library.m_pSection );
-
-		CFileList* pFiles = Library.Search( pSearch.get(), 0, TRUE );
-
-		if ( pFiles != NULL )
+		for ( POSITION pos = pFiles->GetHeadPosition() ; pos ; )
 		{
-			for ( POSITION pos = pFiles->GetHeadPosition() ; pos ; )
+			const CLibraryFile* pFile = pFiles->GetNext( pos );
+
+			if ( Settings.Search.SchemaTypes && pSearch->m_pSchema != NULL )
 			{
-				const CLibraryFile* pFile = pFiles->GetNext( pos );
-
-				if ( Settings.Search.SchemaTypes && pSearch->m_pSchema != NULL )
-				{
-					if ( pSearch->m_pSchema->FilterType( pFile->m_sName, TRUE ) == FALSE )
-						pFile = NULL;
-				}
-
-				if ( pFile != NULL && pFile->IsAvailable() )
-					pFolder->AddFile( const_cast< CLibraryFile* >( pFile ) );
+				if ( pSearch->m_pSchema->FilterType( pFile->m_sName, TRUE ) == FALSE )
+					pFile = NULL;
 			}
 
-			delete pFiles;
+			if ( pFile != NULL && pFile->IsAvailable() )
+				pFolder->AddFile( const_cast< CLibraryFile* >( pFile ) );
 		}
+
+		delete pFiles;
 	}
 
 	Update();
