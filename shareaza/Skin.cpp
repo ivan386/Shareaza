@@ -2070,9 +2070,16 @@ UINT_PTR CSkin::TrackPopupMenu(LPCTSTR pszMenu, const CPoint& point,
 		VERIFY( DestroyMenu( hSubMenu ) );
 	}
 
-	return pPopup->TrackPopupMenu(
-		TPM_LEFTALIGN | TPM_LEFTBUTTON | TPM_RIGHTBUTTON | nFlags,
-		point.x, point.y, pWnd );
+	__try	// Fix for very strange TrackPopupMenu crash inside GUI
+	{
+		return pPopup->TrackPopupMenu(
+			TPM_LEFTALIGN | TPM_LEFTBUTTON | TPM_RIGHTBUTTON | nFlags,
+			point.x, point.y, pWnd );
+	}
+	__except( EXCEPTION_EXECUTE_HANDLER )
+	{
+		return 0;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////
