@@ -66,8 +66,7 @@ public:
 	BOOL			MountCollection(const Hashes::Sha1Hash& oSHA1, CCollectionFile* pCollection);
 	// Remove file from all albums and folders
 	BOOL			OnFileDelete(CLibraryFile* pFile, BOOL bDeleteGhost = FALSE);
-protected:
-	void			CreateAlbumTree();
+	CAlbumFolder* 	CreateAlbumTree();
 
 // Core
 protected:

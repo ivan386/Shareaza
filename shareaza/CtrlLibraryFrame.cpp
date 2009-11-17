@@ -885,7 +885,8 @@ BOOL CLibraryFrame::Display(CLibraryFile* pFile)
 {
 	if ( Settings.Library.ShowVirtual )
 	{
-		if ( CAlbumFolder* pFolder = Library.GetAlbumRoot()->FindFile( pFile ) )
+		CAlbumFolder* pRoot = Library.GetAlbumRoot();
+		if ( CAlbumFolder* pFolder = pRoot ? pRoot->FindFile( pFile ) : NULL )
 		{
 			Display( pFolder );
 		}
@@ -1106,6 +1107,8 @@ void CLibraryFrame::RunLocalSearch(auto_ptr< CQuerySearch > pSearch)
 	pSearch->BuildWordList( true, true );
 
 	CAlbumFolder* pRoot		= Library.GetAlbumRoot();
+	if ( ! pRoot )
+		return;
 	CAlbumFolder* pFolder	= pRoot->GetFolderByURI( CSchema::uriSearchFolder );
 
 	if ( pFolder == NULL )

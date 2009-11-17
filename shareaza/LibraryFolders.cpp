@@ -424,15 +424,15 @@ bool CLibraryFolders::IsShareable(const CString& strPath)
 CAlbumFolder* CLibraryFolders::GetAlbumRoot() const
 {
 	ASSUME_LOCK( Library.m_pSection );
-	ASSERT( m_pAlbumRoot );
+
 	return m_pAlbumRoot;
 }
 
 BOOL CLibraryFolders::CheckAlbum(CAlbumFolder* pFolder) const
 {
 	ASSUME_LOCK( Library.m_pSection );
-	ASSERT( m_pAlbumRoot );
-	return m_pAlbumRoot->CheckFolder( pFolder, TRUE );
+
+	return m_pAlbumRoot && m_pAlbumRoot->CheckFolder( pFolder, TRUE );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -506,7 +506,7 @@ BOOL CLibraryFolders::MountCollection(const Hashes::Sha1Hash& oSHA1, CCollection
 //////////////////////////////////////////////////////////////////////
 // CLibraryFolders virtual album default tree
 
-void CLibraryFolders::CreateAlbumTree()
+CAlbumFolder* CLibraryFolders::CreateAlbumTree()
 {
 	ASSUME_LOCK( Library.m_pSection );
 
@@ -585,6 +585,8 @@ void CLibraryFolders::CreateAlbumTree()
 			if ( pFile->IsAvailable() ) m_pAlbumRoot->OrganiseFile( pFile );
 		}
 	}
+
+	return m_pAlbumRoot;
 }
 
 //////////////////////////////////////////////////////////////////////

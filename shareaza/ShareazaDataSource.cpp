@@ -656,6 +656,10 @@ BOOL CShareazaDataSource::DropToAlbum(IDataObject* pIDataObject, DWORD grfKeySta
 		return FALSE;
 	}
 
+	CAlbumFolder* pRoot = Library.GetAlbumRoot();
+	if ( ! pRoot )
+		return FALSE;
+
 	BOOL bRet = FALSE;
 
 	// Drop files to album
@@ -683,8 +687,7 @@ BOOL CShareazaDataSource::DropToAlbum(IDataObject* pIDataObject, DWORD grfKeySta
 						{
 							Hashes::Guid oGUID;
 							CopyMemory( oGUID.begin(), p + sizeof( DWORD ), 16 );							
-							CAlbumFolder* pFolder = 
-								Library.GetAlbumRoot()->FindFolder( oGUID );
+							CAlbumFolder* pFolder = pRoot->FindFolder( oGUID );
 							if ( pFolder && *pAlbumFolder == *pFolder )
 							{
 								// Drop disabled to same album
@@ -755,17 +758,12 @@ BOOL CShareazaDataSource::DropToAlbum(IDataObject* pIDataObject, DWORD grfKeySta
 								if ( *pdwEffect == DROPEFFECT_MOVE )
 								{
 									// Delete old album (by GUID)
-									CAlbumFolder* pRealFodler =
-										Library.GetAlbumRoot()->
-											FindFolder( pFolder->m_oGUID );
-									if ( pRealFodler )
+									if ( CAlbumFolder* pRealFodler = pRoot->FindFolder( pFolder->m_oGUID ) )
 									{
 										if ( pRealFodler->m_pParent )
-											pRealFodler->m_pParent->
-												OnFolderDelete( pRealFodler );
+											pRealFodler->m_pParent->OnFolderDelete( pRealFodler );
 										else
-											Library.GetAlbumRoot()->
-												OnFolderDelete( pRealFodler );
+											pRoot->OnFolderDelete( pRealFodler );
 									}
 								}
 

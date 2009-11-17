@@ -1445,6 +1445,9 @@ BOOL CLibraryTreeView::Update(CAlbumFolder* pFolder, CLibraryTreeItem* pItem, CL
 {
 	BOOL bChanged = FALSE;
 
+	if ( ! pFolder )
+		return bChanged;
+
 	if ( pItem != NULL && pParent != NULL && pItem->m_sText != pFolder->m_sName )
 	{
 		// CleanCookie is not updated so it will be dropped later
@@ -1904,6 +1907,8 @@ void CLibraryTreeView::OnLibraryFolderNew()
 		CQuickLock oLock( Library.m_pSection );
 
 		pFolder = Library.GetAlbumRoot();
+		if ( ! pFolder )
+			pFolder = LibraryFolders.CreateAlbumTree();
 
 		if ( m_pSelFirst ) pFolder = m_pSelFirst->m_pVirtual;
 

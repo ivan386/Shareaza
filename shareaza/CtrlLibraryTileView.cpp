@@ -176,7 +176,7 @@ void CLibraryTileView::Update()
 
 	for ( iterator pTile = begin(); pTile != end(); )
 	{
-		if ( pFolder->CheckFolder( pTile->m_pFolder ) )
+		if ( pFolder && pFolder->CheckFolder( pTile->m_pFolder ) )
 		{
 			bChanged = pTile->Update() || bChanged;
 			pTile->m_pFolder->m_nListCookie = nCookie;
@@ -202,7 +202,7 @@ void CLibraryTileView::Update()
 		m_nScroll	= max( 0, min( m_nScroll, nMax - rcClient.Height() + 1 ) );
 	}
 
-	for ( POSITION pos = pFolder->GetFolderIterator() ; pos ; )
+	for ( POSITION pos = pFolder ? pFolder->GetFolderIterator() : NULL; pos ; )
 	{
 		CAlbumFolder* pChild = pFolder->GetNextFolder( pos );
 
