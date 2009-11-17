@@ -2757,7 +2757,7 @@ void CMainWnd::OnNcLButtonDown(UINT nHitTest, CPoint point)
 	CMDIFrameWnd::OnNcLButtonDown( nHitTest, point );
 
 	// Windows Vista skinning workaround (system caption buttons over skin drawing)
-	if ( m_pSkin && ! theApp.m_bClosing )	// Window can be destroyed at this point
+	if ( ! theApp.m_bClosing && m_pSkin )	// Window can be destroyed at this point
 		m_pSkin->OnNcPaint( this );
 }
 
