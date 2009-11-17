@@ -641,7 +641,7 @@ Function MalwareCheck(MalwareFile: string): Boolean;
 Begin
   Result := False;
   if FileExists( MalwareFile ) then Begin
-    if MsgBox(ExpandConstant( '{cm:dialog_malwaredetected,' + MalwareFile + '}' ), mbConfirmation, MB_OKCANCEL) = IDOK then begin
+    if MsgBox(ExpandConstant( '{cm:dialog_malwaredetected,' + MalwareFile + '}' ), mbConfirmation, MB_YESNO) = IDYES then begin
       Result := True;
     End;
     MalwareDetected := True;
@@ -899,6 +899,7 @@ End;
 #include "pages.iss"
 
 #expr SaveToFile("builds\Preprocessed.iss")
+
 
 
 
