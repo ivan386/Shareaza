@@ -84,50 +84,8 @@ CQuerySearch::CQuerySearch(BOOL bGUID) :
 
 	ZeroMemory( &m_pEndpoint, sizeof( m_pEndpoint ) );
 	m_pEndpoint.sin_family = AF_INET;
-}
 
-CQuerySearch::CQuerySearch(const CQuerySearch* pOrigin) :
-	m_bAutostart( pOrigin->m_bAutostart ),
-	m_oGUID( pOrigin->m_oGUID ),
-	m_sSearch( pOrigin->m_sSearch ),
-	m_sKeywords( pOrigin->m_sKeywords ),
-	m_sPosKeywords( pOrigin->m_sPosKeywords ),
-	m_sG2Keywords( pOrigin->m_sG2Keywords ),
-	m_pSchema( pOrigin->m_pSchema ),
-	m_pXML( pOrigin->m_pXML ? pOrigin->m_pXML->Clone() : NULL ),
-	m_nMinSize( pOrigin->m_nMinSize ),
-	m_nMaxSize( pOrigin->m_nMaxSize ),
-	m_oSimilarED2K(),         //! \todo verify this
-	m_bWantURL( pOrigin->m_bWantURL ),
-	m_bWantDN( pOrigin->m_bWantDN ),
-	m_bWantXML( pOrigin->m_bWantXML ),
-	m_bWantCOM( pOrigin->m_bWantCOM ),
-	m_bWantPFS( pOrigin->m_bWantPFS ),
-	m_bAndG1( pOrigin->m_bAndG1 ),
-	m_nTTL( pOrigin->m_nTTL ),
-	m_bUDP( pOrigin->m_bUDP ),
-	m_pEndpoint( pOrigin->m_pEndpoint ),
-	m_nKey( pOrigin->m_nKey ),
-	m_bFirewall( pOrigin->m_bFirewall ),
-	m_bDynamic( pOrigin->m_bDynamic ),
-	m_bBinHash( pOrigin->m_bBinHash ),
-	m_bOOB( pOrigin->m_bOOB ),
-	m_bOOBv3( pOrigin->m_bOOBv3 ),
-	m_nMeta( pOrigin->m_nMeta ),
-	m_bPartial( pOrigin->m_bPartial ),
-	m_bNoProxy( pOrigin->m_bNoProxy ),
-	m_bExtQuery( pOrigin->m_bExtQuery ),
-	m_bWarning( pOrigin->m_bWarning ),
-	m_oURNs( pOrigin->m_oURNs ),
-	m_oKeywordHashList( pOrigin->m_oKeywordHashList )
-	//m_oWords()                //! \todo comment this - we copy the search string but not the word list
-	//m_oNegWords()
-{
-	m_oSHA1		= pOrigin->m_oSHA1;
-	m_oTiger	= pOrigin->m_oTiger;
-	m_oED2K		= pOrigin->m_oED2K;
-	m_oBTH		= pOrigin->m_oBTH;
-	m_oMD5		= pOrigin->m_oMD5;
+	m_dwRef = 0;
 }
 
 CQuerySearch::~CQuerySearch()
@@ -135,15 +93,10 @@ CQuerySearch::~CQuerySearch()
 	if ( m_pXML ) delete m_pXML;
 }
 
-auto_ptr< CQuerySearch > CQuerySearch::clone() const
-{
-	return auto_ptr< CQuerySearch >( new CQuerySearch( this ) );
-}
-
 //////////////////////////////////////////////////////////////////////
 // CQuerySearch to G1 packet
 
-CG1Packet* CQuerySearch::ToG1Packet(DWORD nTTL)
+CG1Packet* CQuerySearch::ToG1Packet(DWORD nTTL) const
 {
 	CG1Packet* pPacket = CG1Packet::New( G1_PACKET_QUERY,
 		( nTTL ? min( nTTL, Settings.Gnutella1.SearchTTL ) : Settings.Gnutella1.SearchTTL ),
@@ -315,7 +268,7 @@ CG1Packet* CQuerySearch::ToG1Packet(DWORD nTTL)
 //////////////////////////////////////////////////////////////////////
 // CQuerySearch to G2 packet
 
-CG2Packet* CQuerySearch::ToG2Packet(SOCKADDR_IN* pUDP, DWORD nKey)
+CG2Packet* CQuerySearch::ToG2Packet(SOCKADDR_IN* pUDP, DWORD nKey) const
 {
 	CG2Packet* pPacket = CG2Packet::New( G2_PACKET_QUERY, TRUE );
 
@@ -460,7 +413,7 @@ CG2Packet* CQuerySearch::ToG2Packet(SOCKADDR_IN* pUDP, DWORD nKey)
 //////////////////////////////////////////////////////////////////////
 // CQuerySearch to ED2K packet
 
-CEDPacket* CQuerySearch::ToEDPacket(BOOL bUDP, DWORD nServerFlags)
+CEDPacket* CQuerySearch::ToEDPacket(BOOL bUDP, DWORD nServerFlags) const
 {
 	BOOL bUTF8, bGetS2;
 
@@ -580,7 +533,7 @@ CEDPacket* CQuerySearch::ToEDPacket(BOOL bUDP, DWORD nServerFlags)
 	return pPacket;
 }
 
-BOOL CQuerySearch::WriteHashesToEDPacket(CEDPacket* pPacket, BOOL bUDP)
+BOOL CQuerySearch::WriteHashesToEDPacket(CEDPacket* pPacket, BOOL bUDP) const
 {
 	ASSERT ( pPacket != NULL );
 	ASSERT ( pPacket->m_nType == bUDP ? ED2K_C2SG_GETSOURCES2 : ED2K_C2S_GETSOURCES );
@@ -638,9 +591,9 @@ BOOL CQuerySearch::WriteHashesToEDPacket(CEDPacket* pPacket, BOOL bUDP)
 //////////////////////////////////////////////////////////////////////
 // CQuerySearch from packet root
 
-CQuerySearch* CQuerySearch::FromPacket(CPacket* pPacket, SOCKADDR_IN* pEndpoint)
+CQuerySearchPtr CQuerySearch::FromPacket(CPacket* pPacket, SOCKADDR_IN* pEndpoint)
 {
-	CQuerySearch* pSearch = new CQuerySearch( FALSE );
+	CQuerySearchPtr pSearch = new CQuerySearch( FALSE );
 
 	try
 	{
@@ -669,9 +622,7 @@ CQuerySearch* CQuerySearch::FromPacket(CPacket* pPacket, SOCKADDR_IN* pEndpoint)
 		pException->Delete();
 	}
 
-	delete pSearch;
-
-	return NULL;
+	return CQuerySearchPtr();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -2014,9 +1965,9 @@ void CQuerySearch::Serialize(CArchive& ar)
 //////////////////////////////////////////////////////////////////////
 // CQuerySearch open window
 
-CSearchWnd* CQuerySearch::OpenWindow(auto_ptr< CQuerySearch > pSearch)
+CSearchWnd* CQuerySearch::OpenWindow(CQuerySearch* pSearch)
 {
-	if ( pSearch.get() && pSearch->CheckValid( false ) )
+	if ( pSearch && pSearch->CheckValid( false ) )
 	{
 		return new CSearchWnd( pSearch );
 	}

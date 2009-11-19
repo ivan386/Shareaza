@@ -39,7 +39,7 @@ public:
 	void					Invalidate();						// Force dictionary and hash table to re-build
 	const CQueryHashTable*	GetHashTable();
 	void					Clear();
-	CFileList*			Search(const CQuerySearch& oSearch, int nMaximum = 0, bool bLocal = false, bool bAvailableOnly = true);
+	CFileList*				Search(const CQuerySearch* pSearch, int nMaximum = 0, bool bLocal = false, bool bAvailableOnly = true);
 	void					Serialize(CArchive& ar, int nVersion);
 
 private:

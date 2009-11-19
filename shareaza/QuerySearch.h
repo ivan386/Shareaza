@@ -30,6 +30,10 @@ class CSearchWnd;
 class CG1Packet;
 class CG2Packet;
 class CEDPacket;
+class CQuerySearch;
+
+
+typedef CComObjectPtr< CQuerySearch > CQuerySearchPtr;
 
 
 class CQuerySearch : public CShareazaFile
@@ -38,11 +42,9 @@ class CQuerySearch : public CShareazaFile
 public:
 	CQuerySearch(BOOL bGUID = TRUE);
 	virtual ~CQuerySearch();
-private:
-	CQuerySearch(const CQuerySearch* pOrigin);
-public:
-	auto_ptr< CQuerySearch > clone() const;
+
 	typedef std::vector<DWORD>					Hash32List;
+
 // Attributes
 public:
 	bool				m_bAutostart;	// Autostart search (default - true)
@@ -127,9 +129,9 @@ private:
 
 // Packet Operations
 public:
-	CG1Packet*				ToG1Packet(DWORD nTTL = 0);
-	CG2Packet*				ToG2Packet(SOCKADDR_IN* pUDP, DWORD nKey);
-	CEDPacket*				ToEDPacket(BOOL bUDP, DWORD nServerFlags = 0);
+	CG1Packet*				ToG1Packet(DWORD nTTL = 0) const;
+	CG2Packet*				ToG2Packet(SOCKADDR_IN* pUDP, DWORD nKey) const;
+	CEDPacket*				ToEDPacket(BOOL bUDP, DWORD nServerFlags = 0) const;
 private:
 	BOOL					ReadG1Packet(CG1Packet* pPacket);
 	void					ReadGGEP(CG1Packet* pPacket);
@@ -150,14 +152,14 @@ private:
 	void					BuildWordTable();
 	void					BuildG2PosKeywords();
 	void					SlideKeywords(CString& strPhrase);
-	BOOL					WriteHashesToEDPacket(CEDPacket* pPacket, BOOL bUDP);
+	BOOL					WriteHashesToEDPacket(CEDPacket* pPacket, BOOL bUDP) const;
 
 // Utilities
 public:
-	static CQuerySearch*	FromPacket(CPacket* pPacket, SOCKADDR_IN* pEndpoint = NULL);
-	static	CSearchWnd*		OpenWindow(auto_ptr< CQuerySearch > pSearch);
-	static	BOOL			WordMatch(LPCTSTR pszString, LPCTSTR pszFind, bool* bReject=NULL);
-	static	BOOL			NumberMatch(const CString& strValue, const CString& strRange);
-	static	void			MakeKeywords(CString& strPhrase, bool bExpression=true);
-	static	void			SearchHelp();	// Shows some search help dialogs
+	static CQuerySearchPtr	FromPacket(CPacket* pPacket, SOCKADDR_IN* pEndpoint = NULL);
+	static CSearchWnd*		OpenWindow(CQuerySearch* pSearch);
+	static BOOL				WordMatch(LPCTSTR pszString, LPCTSTR pszFind, bool* bReject=NULL);
+	static BOOL				NumberMatch(const CString& strValue, const CString& strRange);
+	static void				MakeKeywords(CString& strPhrase, bool bExpression=true);
+	static void				SearchHelp();	// Shows some search help dialogs
 };

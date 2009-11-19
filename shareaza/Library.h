@@ -104,7 +104,7 @@ protected:
 public:
 	// Update library files alternate sources
 	bool			OnQueryHits(const CQueryHit* pHits);
-	CFileList*		Search(CQuerySearch* pSearch, int nMaximum = 0, bool bLocal = false, bool bAvailableOnly = false);
+	CFileList*		Search(const CQuerySearch* pSearch, int nMaximum = 0, bool bLocal = false, bool bAvailableOnly = false);
 	void			Clear();
 	BOOL			Load();
 	BOOL			Save();

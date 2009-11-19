@@ -544,7 +544,7 @@ void CBaseMatchWnd::OnHitMonitorSearch()
 
 	if ( strFile.IsEmpty() ) return;
 
-	auto_ptr< CQuerySearch > pSearch( new CQuerySearch() );
+	CQuerySearchPtr pSearch = new CQuerySearch();
 	pSearch->m_sSearch = strFile;
 
 	CNewSearchDlg dlg( NULL, pSearch );

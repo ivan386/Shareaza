@@ -157,7 +157,7 @@ void CSearchMonitorWnd::OnSearchMonitorSearch()
 
 	if ( nItem >= 0 )
 	{
-		auto_ptr< CQuerySearch > pSearch( new CQuerySearch() );
+		CQuerySearchPtr pSearch = new CQuerySearch();
 		pSearch->m_sSearch = m_wndList.GetItemText( nItem, 0 );
 
 		if ( pSearch->m_sSearch.GetLength() == 0 || 
@@ -201,7 +201,7 @@ void CSearchMonitorWnd::OnDblClkList(NMHDR* /*pNotifyStruct*/, LRESULT *pResult)
 /////////////////////////////////////////////////////////////////////////////
 // CPanelWnd event handlers
 
-void CSearchMonitorWnd::OnQuerySearch(CQuerySearch* pSearch)
+void CSearchMonitorWnd::OnQuerySearch(const CQuerySearch* pSearch)
 {
 	if ( m_bPaused || m_hWnd == NULL ) return;
 

@@ -513,7 +513,7 @@ void CChildWnd::OnSkinChange()
 	}
 }
 
-void CChildWnd::OnQuerySearch(CQuerySearch* /*pSearch*/)
+void CChildWnd::OnQuerySearch(const CQuerySearch* /*pSearch*/)
 {
 }
 

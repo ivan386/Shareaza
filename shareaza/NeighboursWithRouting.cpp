@@ -103,7 +103,7 @@ int CNeighboursWithRouting::Broadcast(CPacket* pPacket, CNeighbour* pExcept, BOO
 // Takes a CQuerySearch object (do), the packet that goes along with it, the neighbour it's from, and true to forward it to hubs (do)
 // Forwards the query to connected computers, converting it into a Gnutella or Gnutella2 query if necessary
 // Returns the number of computers we sent the packet to
-int CNeighboursWithRouting::RouteQuery(CQuerySearch* pSearch, CPacket* pPacket, CNeighbour* pFrom, BOOL bToHubs)
+int CNeighboursWithRouting::RouteQuery(const CQuerySearch* pSearch, CPacket* pPacket, CNeighbour* pFrom, BOOL bToHubs)
 {
 	// Local variables
 	BOOL bHubLoop = FALSE; // We'll set this to true if this is a Gnutella Q2 packet and we found at least one Gnutella2 computer

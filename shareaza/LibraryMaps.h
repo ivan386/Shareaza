@@ -70,7 +70,7 @@ protected:
 	void			OnFileAdd(CLibraryFile* pFile);
 	void			OnFileRemove(CLibraryFile* pFile);
 	void			CullDeletedFiles(CLibraryFile* pMatch);
-	CFileList*		Search(CQuerySearch* pSearch, int nMaximum, BOOL bLocal, BOOL bAvailableOnly);
+	CFileList*		Search(const CQuerySearch* pSearch, int nMaximum, BOOL bLocal, BOOL bAvailableOnly);
 	void			Serialize1(CArchive& ar, int nVersion);
 	void			Serialize2(CArchive& ar, int nVersion);
 

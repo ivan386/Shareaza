@@ -590,7 +590,7 @@ void CWindowManager::OpenNewSearchWindow()
 
 		if ( pChild->IsKindOf( RUNTIME_CLASS(CSearchWnd) ) )
 		{
-			if ( pChild->GetLastSearch() == NULL )
+			if ( ! pChild->GetLastSearch() )
 			{
 				if ( pChild->IsIconic() ) pChild->ShowWindow( SW_SHOWNORMAL );
 				pChild->BringWindowToTop();

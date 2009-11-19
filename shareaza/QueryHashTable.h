@@ -76,7 +76,7 @@ public:
 	// Add string exactly
 	void	AddExactString(const CString& strString);
 	bool	CheckString(const CString& strString) const;
-	bool	Check(const CQuerySearch& oSearch) const;
+	bool	Check(const CQuerySearch* pSearch) const;
 	bool	CheckHash(const DWORD nHash) const;
 	int		GetPercent() const;
 	void	Draw(HDC hDC, const RECT* pRC);

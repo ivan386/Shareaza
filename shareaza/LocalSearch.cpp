@@ -373,7 +373,7 @@ void CLocalSearch::AddHitG1(CLibraryFile const * const pFile, int nIndex)
 		m_pPacket->WriteByte( 0 );
 	}
 
-	if ( pFile->m_pSchema != NULL && pFile->m_pMetadata != NULL && ( m_pSearch == NULL || m_pSearch->m_bWantXML ) )
+	if ( pFile->m_pSchema != NULL && pFile->m_pMetadata != NULL && ( ! m_pSearch || m_pSearch->m_bWantXML ) )
 	{
 		AddMetadata( pFile->m_pSchema, pFile->m_pMetadata, nIndex );
 	}
@@ -472,7 +472,7 @@ void CLocalSearch::AddHitG2(CLibraryFile const * const pFile, int /*nIndex*/)
 			}
 		}
 
-		if ( m_pSearch == NULL || m_pSearch->m_bWantDN )
+		if ( ! m_pSearch || m_pSearch->m_bWantDN )
 		{
 			if ( pFile->GetSize() <= 0xFFFFFFFF )
 			{
@@ -516,7 +516,7 @@ void CLocalSearch::AddHitG2(CLibraryFile const * const pFile, int /*nIndex*/)
 			}
 		}
 
-		if ( m_pSearch == NULL || m_pSearch->m_bWantURL )
+		if ( ! m_pSearch || m_pSearch->m_bWantURL )
 		{
 			if ( bCalculate )
 				nGroup += G2_PACKET_LEN( G2_PACKET_URL, 0 );
@@ -545,7 +545,7 @@ void CLocalSearch::AddHitG2(CLibraryFile const * const pFile, int /*nIndex*/)
 			}
 		}
 
-		if ( pFile->m_pMetadata != NULL && ( m_pSearch == NULL || m_pSearch->m_bWantXML ) )
+		if ( pFile->m_pMetadata != NULL && ( ! m_pSearch || m_pSearch->m_bWantXML ) )
 		{
 			CString strMetadata = pFile->m_pMetadata->ToString();
 			if ( bCalculate )
@@ -569,7 +569,7 @@ void CLocalSearch::AddHitG2(CLibraryFile const * const pFile, int /*nIndex*/)
 			}
 		}
 
-		if ( m_pSearch == NULL || m_pSearch->m_bWantCOM )
+		if ( ! m_pSearch || m_pSearch->m_bWantCOM )
 		{
 			if ( pFile->IsRated() )
 			{
@@ -601,7 +601,7 @@ void CLocalSearch::AddHitG2(CLibraryFile const * const pFile, int /*nIndex*/)
 		}
 
 
-		if ( m_pSearch == NULL )
+		if ( ! m_pSearch )
 		{
 			if ( bCalculate )
 				nGroup += G2_PACKET_LEN( G2_PACKET_OBJECT_ID, sizeof( DWORD ) );

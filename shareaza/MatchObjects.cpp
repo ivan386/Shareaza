@@ -196,7 +196,7 @@ void CMatchList::UpdateStats()
 //////////////////////////////////////////////////////////////////////
 // CMatchList add hits
 
-void CMatchList::AddHits(const CQueryHit* pHits, CQuerySearch* pFilter)
+void CMatchList::AddHits(const CQueryHit* pHits, const CQuerySearch* pFilter)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 	CMatchFile** pMap = NULL;
@@ -225,7 +225,7 @@ void CMatchList::AddHits(const CQueryHit* pHits, CQuerySearch* pFilter)
 
 		pHit->m_bNew = m_bNew;
 
-		if ( pFilter != NULL )
+		if ( pFilter )
 		{
 			// TODO: pHit->m_bExactMatch is broken anyway, since it m_sKeywords
 			// has no punctuation marks.
@@ -698,7 +698,7 @@ bool CMatchList::CreateRegExpFilter(CString strPattern, CString& strFilter)
 
 	CSearchWnd* pParent = static_cast< CSearchWnd* >( GetParent() );
 	ASSERT( pParent );
-	CQuerySearch* pQuery = pParent->GetLastSearch();
+	CQuerySearchPtr pQuery = pParent->GetLastSearch();
 
 	if ( pQuery )
 	{
@@ -899,7 +899,7 @@ BOOL CMatchList::FilterHit(CQueryHit* pHit)
 	CBaseMatchWnd* pParent = GetParent();
 	if ( pParent && pParent->IsKindOf( RUNTIME_CLASS( CSearchWnd ) ) )
 	{
-		CQuerySearch* pQuery = static_cast< CSearchWnd* >( pParent )->GetLastSearch();
+		CQuerySearchPtr pQuery = static_cast< CSearchWnd* >( pParent )->GetLastSearch();
 		if ( pQuery && Security.IsDenied( pQuery->begin(), pQuery->end(), pHit->m_sName ) )
 			return FALSE;
 	}

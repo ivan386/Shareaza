@@ -21,9 +21,8 @@
 
 #pragma once
 
-#include "ShareazaFile.h"
+#include "QuerySearch.h"
 
-class CQuerySearch;
 class CBTInfo;
 
 
@@ -65,7 +64,7 @@ public:
 	// Parse single URL
 	BOOL	Parse(LPCTSTR pszURL, BOOL bResolve = TRUE);
 	// Construct CQuerySearch object
-	auto_ptr< CQuerySearch > ToQuery();
+	CQuerySearchPtr ToQuery() const;
 
 protected:
 	void	Clear();

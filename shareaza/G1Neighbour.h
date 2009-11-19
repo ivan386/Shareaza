@@ -76,7 +76,7 @@ public:
 	void OnNewPong(CPongItem* pPong);
 
 	// Query packet
-	virtual BOOL SendQuery(CQuerySearch* pSearch, CPacket* pPacket, BOOL bLocal);
+	virtual BOOL SendQuery(const CQuerySearch* pSearch, CPacket* pPacket, BOOL bLocal);
 
 	// Push packet
 	void SendG2Push(const Hashes::Guid& oGUID, CPacket* pPacket);

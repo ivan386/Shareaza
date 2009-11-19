@@ -1,7 +1,7 @@
 //
 // WndSearch.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -25,34 +25,62 @@
 #include "CtrlSearchPanel.h"
 #include "CtrlSearchDetailPanel.h"
 #include "QuerySearch.h"
+#include "MatchObjects.h"
 
 class CManagedSearch;
+
+typedef CLocked< CMatchList*, CMutex* > CLockedMatchList;
 
 
 class CSearchWnd : public CBaseMatchWnd
 {
+	DECLARE_DYNCREATE(CSearchWnd)
+
 public:
-	CSearchWnd(auto_ptr< CQuerySearch > pSearch = auto_ptr< CQuerySearch >());
+	CSearchWnd(CQuerySearch* pSearch = NULL);
 	virtual ~CSearchWnd();
 
-	DECLARE_DYNCREATE(CSearchWnd)
-	friend class CRemote;
+	BOOL IsWaitMore() const
+	{
+		return m_bWaitMore;
+	}
 
-// Attributes
-private:
+	CString GetCaption() const
+	{
+		return m_sCaption;
+	}
+
+	CLockedMatchList GetMatches()
+	{
+		return CLockedMatchList( m_pMatches, &m_pMatches->m_pSection );
+	}
+
+	void			Serialize(CArchive& ar);
+	CQuerySearchPtr	GetLastSearch() const;
+
+protected:
+	typedef boost::ptr_list< CManagedSearch > List;
+	typedef List::iterator iterator;
+	typedef List::const_iterator const_iterator;
+	typedef List::reverse_iterator reverse_iterator;
+	typedef List::const_reverse_iterator const_reverse_iterator;
+
 	CSearchPanel		m_wndPanel;
 	BOOL				m_bPanel;
 	BOOL				m_bSetFocus;
 	CSearchDetailPanel	m_wndDetails;
 	BOOL				m_bDetails;
 	int					m_nDetails;
-	typedef boost::ptr_list< CManagedSearch > List;
 	List				m_oSearches;
-public:
-	typedef List::iterator iterator;
-	typedef List::const_iterator const_iterator;
-	typedef List::reverse_iterator reverse_iterator;
-	typedef List::const_reverse_iterator const_reverse_iterator;
+	DWORD				m_tSearch;
+	DWORD				m_nCacheHits;
+	DWORD				m_nCacheHubs;
+	DWORD				m_nCacheLeaves;
+	CString				m_sCaption;
+	BOOL				m_bWaitMore;
+	DWORD				m_nMaxResults;
+	DWORD				m_nMaxED2KResults;
+	DWORD				m_nMaxQueryCount;
 
 	iterator               begin()        { return m_oSearches.begin(); }
 	const_iterator         begin()  const { return m_oSearches.begin(); }
@@ -63,36 +91,22 @@ public:
 	reverse_iterator       rend()         { return m_oSearches.rend(); }
 	const_reverse_iterator rend()   const { return m_oSearches.rend(); }
 
-	size_t size() const { return m_oSearches.size(); }
-	bool empty() const { return m_oSearches.empty(); }
+	size_t size() const
+	{
+		return m_oSearches.size();
+	}
 
-	DWORD				m_tSearch;
-	DWORD				m_nCacheHits;
-	DWORD				m_nCacheHubs;
-	DWORD				m_nCacheLeaves;
-	CString				m_sCaption;
-	BOOL				m_bWaitMore;
-	DWORD				m_nMaxResults;
-	DWORD				m_nMaxED2KResults;
-	DWORD				m_nMaxQueryCount;
-	
-// Operations
-public:
-	void			Serialize(CArchive& ar);
-	CManagedSearch*	GetLastManager();
-	CQuerySearch*	GetLastSearch();
+	bool empty() const
+	{
+		return m_oSearches.empty();
+	}
+
 	void			ExecuteSearch();
-protected:
-	BOOL			DoSizeDetails();
-public:	
 	virtual void	OnSkinChange();
 	virtual BOOL	OnQueryHits(const CQueryHit* pHits);
-	virtual void	UpdateMessages(BOOL bActive = TRUE);
-	virtual void	UpdateMessages(BOOL bActive, CManagedSearch* pManaged);
+	BOOL			DoSizeDetails();
+	void			UpdateMessages();
 
-// Implementation
-protected:
-	DECLARE_MESSAGE_MAP()
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnDestroy();
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
@@ -116,4 +130,6 @@ protected:
 	afx_msg void OnMDIActivate(BOOL bActivate, CWnd* pActivateWnd, CWnd* pDeactivateWnd);
 	afx_msg void OnUpdateFilters(CCmdUI* pCmdUI);
 	afx_msg void OnFilters(UINT nID);
+
+	DECLARE_MESSAGE_MAP()
 };

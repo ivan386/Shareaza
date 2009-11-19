@@ -52,7 +52,7 @@ public:
 	int Broadcast(CPacket* pPacket, CNeighbour* pExcept = NULL, BOOL bGGEP = FALSE);
 
 	// Send a query packet to all the computers we're connected to, translating it to Gnutella and Gnutella2 for computers running that software
-	int RouteQuery(CQuerySearch* pSearch, CPacket* pPacket, CNeighbour* pFrom, BOOL bToHubs);
+	int RouteQuery(const CQuerySearch* pSearch, CPacket* pPacket, CNeighbour* pFrom, BOOL bToHubs);
 };
 
 // End the group of lines to only include once, pragma once doesn't require an endif at the bottom

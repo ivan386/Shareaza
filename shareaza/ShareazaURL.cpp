@@ -1098,12 +1098,12 @@ void CShareazaURL::SafeString(CString& strInput)
 /////////////////////////////////////////////////////////////////////////////
 // CShareazaURL query constructor
 
-auto_ptr< CQuerySearch > CShareazaURL::ToQuery()
+CQuerySearchPtr CShareazaURL::ToQuery() const
 {
 	if ( m_nAction != uriDownload && m_nAction != uriSearch )
-		return auto_ptr< CQuerySearch >();
+		return CQuerySearchPtr();
 
-	auto_ptr< CQuerySearch > pSearch( new CQuerySearch() );
+	CQuerySearchPtr pSearch = new CQuerySearch();
 
 	if ( m_sName.GetLength() )
 	{

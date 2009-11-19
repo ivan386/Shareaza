@@ -88,7 +88,7 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CSearchWnd construction
 
-CSearchWnd::CSearchWnd(auto_ptr< CQuerySearch > pSearch) :
+CSearchWnd::CSearchWnd(CQuerySearch* pSearch) :
 	m_bPanel( Settings.Search.SearchPanel ),
 	m_bSetFocus( TRUE ),
 	m_bDetails( Settings.Search.DetailPanelVisible ),
@@ -103,10 +103,8 @@ CSearchWnd::CSearchWnd(auto_ptr< CQuerySearch > pSearch) :
 	m_nMaxED2KResults( 0 ),
 	m_nMaxQueryCount( 0 )
 {
-	if ( pSearch.get() )
-	{
+	if ( pSearch )
 		m_oSearches.push_back( new CManagedSearch( pSearch ) );
-	}
 
 	Create( IDR_SEARCHFRAME );
 }
@@ -128,7 +126,7 @@ int CSearchWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndPanel.Create( this );
 	m_wndDetails.Create( this );
 
-	CQuerySearch* pSearch = GetLastSearch();
+	CQuerySearchPtr pSearch = GetLastSearch();
 
 	if ( pSearch && pSearch->m_pSchema != NULL )
 	{
@@ -147,7 +145,7 @@ int CSearchWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	ExecuteSearch();
 
-	if ( pSearch == NULL || ! pSearch->m_bAutostart )
+	if ( ! pSearch || ! pSearch->m_bAutostart )
 	{
 		m_wndPanel.ShowSearch( NULL );
 	}
@@ -165,7 +163,7 @@ int CSearchWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 void CSearchWnd::OnDestroy()
 {
-	CQuerySearch* pSearch = GetLastSearch();
+	CQuerySearchPtr pSearch = GetLastSearch();
 
 	if ( pSearch && pSearch->m_pSchema == NULL )
 	{
@@ -456,33 +454,37 @@ void CSearchWnd::OnSearchSearch()
 
 	SetModified();
 
-	//The 'Search More' situation
-	if ( !m_bPaused && m_bWaitMore && !empty() )
+	// The 'Search More' situation
+	if ( ! m_bPaused && m_bWaitMore )
 	{
-		CManagedSearch& oSearch = m_oSearches.back();
+		CQuickLock pLock( m_pMatches->m_pSection );
+		if ( ! empty() )
+		{
+			CManagedSearch* pManaged = &m_oSearches.back();
 
-		//Re-activate search window
-		theApp.Message( MSG_DEBUG, _T("Resuming Search") );
-		oSearch.m_bActive = TRUE;
-		m_bWaitMore = FALSE;
+			//Re-activate search window
+			theApp.Message( MSG_DEBUG, _T("Resuming Search") );
+			pManaged->m_bActive = TRUE;
+			m_bWaitMore = FALSE;
 
-		//Resume G2 search
-		m_nMaxResults = m_pMatches->m_nGnutellaHits + Settings.Gnutella.MaxResults;
-		m_nMaxQueryCount = m_oSearches.back().m_nQueryCount + Settings.Gnutella2.QueryLimit;
+			//Resume G2 search
+			m_nMaxResults = m_pMatches->m_nGnutellaHits + Settings.Gnutella.MaxResults;
+			m_nMaxQueryCount = pManaged->m_nQueryCount + Settings.Gnutella2.QueryLimit;
 
-		//Resume ED2K search
-		m_nMaxED2KResults = m_pMatches->m_nED2KHits + Settings.eDonkey.MaxResults;
-		oSearch.m_tLastED2K = GetTickCount();
-		oSearch.m_tMoreResults = 0;
+			//Resume ED2K search
+			m_nMaxED2KResults = m_pMatches->m_nED2KHits + Settings.eDonkey.MaxResults;
+			pManaged->m_tLastED2K = GetTickCount();
+			pManaged->m_tMoreResults = 0;
 
-		if ( ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0x8000 )
-			oSearch.m_nPriority = CManagedSearch::spMedium;
+			if ( ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0x8000 )
+				pManaged->m_nPriority = CManagedSearch::spMedium;
 
-		m_bUpdate = TRUE;
-		UpdateMessages();
-		return;
+			m_bUpdate = TRUE;
+			UpdateMessages();
+			return;
+		}
 	}
-	//End of 'Search More'
+	// End of 'Search More'
 
 	// Check if user mistakenly pasted download link to search input box
 	CString sText;
@@ -493,7 +495,7 @@ void CSearchWnd::OnSearchSearch()
 		return;
 	}
 
-	auto_ptr< CManagedSearch > pSearch;
+	auto_ptr< CManagedSearch > pManaged;
 
 	if ( m_pMatches->m_nFiles > 0 )
 	{
@@ -509,29 +511,24 @@ void CSearchWnd::OnSearchSearch()
 
 	if ( m_wndPanel.m_bSendSearch )
 	{
-		pSearch = m_wndPanel.GetSearch();
+		pManaged = m_wndPanel.GetSearch();
+		CQuerySearchPtr pSearch = pManaged->GetSearch();
 
-		if ( m_pMatches->m_nFiles == 0 && pSearch->m_pSearch->m_pSchema != NULL )
+		if ( m_pMatches->m_nFiles == 0 && pSearch->m_pSchema != NULL )
 		{
 			CList< CSchemaMember* > pColumns;
-			CSchemaColumnsDlg::LoadColumns( pSearch->m_pSearch->m_pSchema, &pColumns );
-			m_wndList.SelectSchema( pSearch->m_pSearch->m_pSchema, &pColumns );
+			CSchemaColumnsDlg::LoadColumns( pSearch->m_pSchema, &pColumns );
+			m_wndList.SelectSchema( pSearch->m_pSchema, &pColumns );
 		}
 	}
 	else
 	{
-		auto_ptr< CQuerySearch > pCriteria = GetLastSearch()
-			? GetLastSearch()->clone()
-			: auto_ptr< CQuerySearch >();
-
-		CNewSearchDlg dlg( NULL, pCriteria, FALSE, TRUE );
+		CNewSearchDlg dlg( NULL, GetLastSearch(), FALSE, TRUE );
 		if ( dlg.DoModal() != IDOK ) return;
-		pCriteria = dlg.GetSearch();
-
-		pSearch.reset( new CManagedSearch( pCriteria ) );
+		pManaged.reset( new CManagedSearch( dlg.GetSearch() ) );
 	}
 
-	Network.CreateID( pSearch->m_pSearch->m_oGUID );
+	Network.CreateID( pManaged->GetSearch()->m_oGUID );
 
 	{
 		CQuickLock oLock( m_pMatches->m_pSection );
@@ -541,7 +538,7 @@ void CSearchWnd::OnSearchSearch()
 			for_each( begin(), end(), std::mem_fun_ref( &CManagedSearch::Stop ) );
 		}
 
-		m_oSearches.push_back( pSearch.release() );
+		m_oSearches.push_back( pManaged.release() );
 	}
 
 	ExecuteSearch();
@@ -573,13 +570,15 @@ void CSearchWnd::OnUpdateSearchStop(CCmdUI* pCmdUI)
 
 void CSearchWnd::OnSearchStop()
 {
+	CQuickLock pLock( m_pMatches->m_pSection );
+
 	if ( ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0x8000 )
 	{
 		if ( ( !m_bPaused ) && ( !m_bWaitMore ) )
-		{	//Pause search
-			if ( !empty() )
+		{
+			// Pause search
+			if ( ! empty() )
 			{
-				theApp.Message( MSG_DEBUG, _T("Pausing Search") );
 				m_oSearches.back().m_bActive = FALSE;
 				m_bWaitMore = TRUE;
 				m_bUpdate = TRUE;
@@ -587,8 +586,6 @@ void CSearchWnd::OnSearchStop()
 			}
 		}
 	}
-
-	CQuickLock pLock( m_pMatches->m_pSection );
 
 	for ( iterator pManaged = begin(); pManaged != end(); ++pManaged )
 	{
@@ -646,55 +643,56 @@ void CSearchWnd::OnSysCommand(UINT nID, LPARAM lParam)
 /////////////////////////////////////////////////////////////////////////////
 // CSearchWnd operations
 
-CManagedSearch* CSearchWnd::GetLastManager()
+CQuerySearchPtr CSearchWnd::GetLastSearch() const
 {
-	//CQuickLock pLock( m_pMatches->m_pSection );
-	return empty() ? NULL : &m_oSearches.back();
-}
+	CQuickLock pLock( m_pMatches->m_pSection );
 
-CQuerySearch* CSearchWnd::GetLastSearch()
-{
-	//CManagedSearch* pManaged = GetLastManager();
-	return empty() ? NULL : m_oSearches.back().m_pSearch.get();
+	return empty() ? CQuerySearchPtr() : m_oSearches.back().GetSearch();
 }
 
 void CSearchWnd::ExecuteSearch()
 {
-	CManagedSearch* pManaged = GetLastManager();
+	CSingleLock pLock( &m_pMatches->m_pSection );
+
+	CManagedSearch* pManaged = empty() ? NULL : &m_oSearches.back();
 
 	m_wndPanel.ShowSearch( pManaged );
 
-	if ( pManaged && pManaged->m_pSearch.get() && pManaged->m_pSearch->m_bAutostart )
+	if ( pManaged )
 	{
-		if ( ! pManaged->m_pSearch->CheckValid() )
+		CQuerySearchPtr pSearch = pManaged->GetSearch();
+		if ( pSearch && pSearch->m_bAutostart )
 		{
-			// Invalid search, open help window
-			CQuerySearch::SearchHelp();
-		}
-		else if ( AdultFilter.IsSearchFiltered( pManaged->m_pSearch->m_sKeywords ) )
-		{
-			// Adult search blocked, open help window
-			CHelpDlg::Show( _T("SearchHelp.AdultSearch") );
-		}
-		else
-		{
-			m_bPaused			= FALSE;
-			m_tSearch			= GetTickCount();
-			m_bWaitMore			= FALSE;
-
-			pManaged->Stop();
-			pManaged->Start();
-
-			m_nMaxResults = m_pMatches->m_nGnutellaHits + Settings.Gnutella.MaxResults;
-			m_nMaxED2KResults = m_pMatches->m_nED2KHits + Settings.eDonkey.MaxResults;
-			m_nMaxQueryCount = pManaged->m_nQueryCount + Settings.Gnutella2.QueryLimit;
-
-			m_wndPanel.Disable();
-
-			if ( m_bPanel && Settings.Search.HideSearchPanel )
+			if ( ! pSearch->CheckValid() )
 			{
-				m_bPanel = FALSE;
-				OnSkinChange();
+				// Invalid search, open help window
+				CQuerySearch::SearchHelp();
+			}
+			else if ( AdultFilter.IsSearchFiltered( pSearch->m_sKeywords ) )
+			{
+				// Adult search blocked, open help window
+				CHelpDlg::Show( _T("SearchHelp.AdultSearch") );
+			}
+			else
+			{
+				m_bPaused			= FALSE;
+				m_tSearch			= GetTickCount();
+				m_bWaitMore			= FALSE;
+
+				pManaged->Stop();
+				pManaged->Start();
+
+				m_nMaxResults = m_pMatches->m_nGnutellaHits + Settings.Gnutella.MaxResults;
+				m_nMaxED2KResults = m_pMatches->m_nED2KHits + Settings.eDonkey.MaxResults;
+				m_nMaxQueryCount = pManaged->m_nQueryCount + Settings.Gnutella2.QueryLimit;
+
+				m_wndPanel.Disable();
+
+				if ( m_bPanel && Settings.Search.HideSearchPanel )
+				{
+					m_bPanel = FALSE;
+					OnSkinChange();
+				}
 			}
 		}
 	}
@@ -702,65 +700,67 @@ void CSearchWnd::ExecuteSearch()
 	UpdateMessages();
 }
 
-void CSearchWnd::UpdateMessages(BOOL bActive)
+void CSearchWnd::UpdateMessages()
 {
-	UpdateMessages( bActive, GetLastManager() );
-}
+	CSingleLock pLock( &m_pMatches->m_pSection );
 
-void CSearchWnd::UpdateMessages(BOOL bActive, CManagedSearch* pManaged)
-{
-	CQuerySearch* pSearch = pManaged ? pManaged->m_pSearch.get() : NULL;
+	CManagedSearch* pManaged = empty() ? NULL : &m_oSearches.back();
 
 	CString strCaption;
 	Skin.LoadString( strCaption, IDR_SEARCHFRAME );
 	if ( Settings.General.LanguageRTL ) strCaption = _T("\x200F") + strCaption + _T("\x202E");
 
-	if ( pSearch != NULL )
+	if ( pManaged )
 	{
-		strCaption += _T(" : ");
-		if ( Settings.General.LanguageRTL ) strCaption += _T("\x202B");
+		CQuerySearchPtr pSearch = pManaged->GetSearch();
+		if ( pSearch )
+		{
+			strCaption += _T(" : ");
+			if ( Settings.General.LanguageRTL ) strCaption += _T("\x202B");
 
-		if ( pSearch->m_sSearch.GetLength() )
-		{
-			strCaption += pSearch->m_sSearch;
-		}
-		else if ( pSearch->m_oSHA1 )
-		{
-			strCaption += pSearch->m_oSHA1.toUrn();
-		}
-		else if ( pSearch->m_oTiger )
-		{
-			strCaption += pSearch->m_oTiger.toUrn();
-		}
-		else if ( pSearch->m_oED2K )
-		{
-			strCaption += pSearch->m_oED2K.toUrn();
-		}
-		else if ( pSearch->m_oBTH )
-		{
-			strCaption += pSearch->m_oBTH.toUrn();
-		}
-		else if ( pSearch->m_oMD5 )
-		{
-			strCaption += pSearch->m_oMD5.toUrn();
-		}
-		else if ( pSearch->m_pSchema && pSearch->m_pXML )
-		{
-			strCaption += pSearch->m_pSchema->GetIndexedWords( pSearch->m_pXML->GetFirstElement() );
-		}
+			if ( pSearch->m_sSearch.GetLength() )
+			{
+				strCaption += pSearch->m_sSearch;
+			}
+			else if ( pSearch->m_oSHA1 )
+			{
+				strCaption += pSearch->m_oSHA1.toUrn();
+			}
+			else if ( pSearch->m_oTiger )
+			{
+				strCaption += pSearch->m_oTiger.toUrn();
+			}
+			else if ( pSearch->m_oED2K )
+			{
+				strCaption += pSearch->m_oED2K.toUrn();
+			}
+			else if ( pSearch->m_oBTH )
+			{
+				strCaption += pSearch->m_oBTH.toUrn();
+			}
+			else if ( pSearch->m_oMD5 )
+			{
+				strCaption += pSearch->m_oMD5.toUrn();
+			}
+			else if ( pSearch->m_pSchema && pSearch->m_pXML )
+			{
+				strCaption += pSearch->m_pSchema->GetIndexedWords(
+					pSearch->m_pXML->GetFirstElement() );
+			}
 
-		if ( pSearch->m_pSchema )
-		{
-			strCaption += _T(" (") + pSearch->m_pSchema->m_sTitle + _T(")");
-		}
+			if ( pSearch->m_pSchema )
+			{
+				strCaption += _T(" (") + pSearch->m_pSchema->m_sTitle + _T(")");
+			}
 
-		if ( m_pMatches->m_nFilteredFiles || m_pMatches->m_nFilteredHits )
-		{
-			CString strStats;
-			strStats.Format( _T(" [%lu/%lu]"), m_pMatches->m_nFilteredFiles, m_pMatches->m_nFilteredHits );
-			if ( Settings.General.LanguageRTL ) strStats = _T("\x200F") + strStats;
-			strCaption += strStats;
-			pManaged->m_nHits = m_pMatches->m_nFilteredHits;
+			if ( m_pMatches->m_nFilteredFiles || m_pMatches->m_nFilteredHits )
+			{
+				CString strStats;
+				strStats.Format( _T(" [%lu/%lu]"), m_pMatches->m_nFilteredFiles, m_pMatches->m_nFilteredHits );
+				if ( Settings.General.LanguageRTL ) strStats = _T("\x200F") + strStats;
+				strCaption += strStats;
+				pManaged->m_nHits = m_pMatches->m_nFilteredHits;
+			}
 		}
 	}
 
@@ -773,29 +773,25 @@ void CSearchWnd::UpdateMessages(BOOL bActive, CManagedSearch* pManaged)
 		m_sCaption = strCaption;
 	}
 
-	if ( pManaged != NULL )
+	if ( pManaged )
 	{
 		if ( m_nCacheHubs != pManaged->m_nHubs ||
 			 m_nCacheLeaves != pManaged->m_nLeaves )
 		{
 			m_nCacheHubs = pManaged->m_nHubs;
 			m_nCacheLeaves = pManaged->m_nLeaves;
-			bActive = TRUE;
 		}
 	}
 
-	if ( bActive )
-	{
-		m_wndPanel.ShowStatus( ! m_bPaused, !m_bWaitMore,
-			m_pMatches->m_nFilteredFiles,
-			m_pMatches->m_nFilteredHits,
-			m_nCacheHubs, m_nCacheLeaves );
+	m_wndPanel.ShowStatus( ! m_bPaused, !m_bWaitMore,
+		m_pMatches->m_nFilteredFiles,
+		m_pMatches->m_nFilteredHits,
+		m_nCacheHubs, m_nCacheLeaves );
 
-		CRect rcList;
-		m_wndList.GetWindowRect( &rcList );
-		ScreenToClient( &rcList );
-		if ( ( rcList.top == 0 ) != (m_bPaused||m_bWaitMore) ) OnSize( SIZE_INTERNAL, 0, 0 );
-	}
+	CRect rcList;
+	m_wndList.GetWindowRect( &rcList );
+	ScreenToClient( &rcList );
+	if ( ( rcList.top == 0 ) != (m_bPaused||m_bWaitMore) ) OnSize( SIZE_INTERNAL, 0, 0 );
 
 	if ( m_pMatches->m_nFilteredFiles == 0 )
 	{
@@ -834,10 +830,11 @@ BOOL CSearchWnd::OnQueryHits(const CQueryHit* pHits)
 	{
 		if ( pManaged->m_bReceive )
 		{
-			if ( validAndEqual( pManaged->m_pSearch->m_oGUID, pHits->m_oSearchID ) ||	// The hits GUID matches the search
+			CQuerySearchPtr pSearch = pManaged->GetSearch();
+			if ( ( pSearch && validAndEqual( pSearch->m_oGUID, pHits->m_oSearchID ) ) ||	// The hits GUID matches the search
 				 ( !pHits->m_oSearchID && ( pManaged->IsLastED2KSearch() ) ) )	// The hits have no GUID and the search is the most recent ED2K text search
 			{
-				m_pMatches->AddHits( pHits, pManaged->m_pSearch.get() );
+				m_pMatches->AddHits( pHits, pSearch );
 				m_bUpdate = TRUE;
 
 				SetModified();
@@ -871,15 +868,17 @@ BOOL CSearchWnd::OnQueryHits(const CQueryHit* pHits)
 void CSearchWnd::OnTimer(UINT_PTR nIDEvent)
 {
 	CManagedSearch* pManaged = NULL;
-	CSingleLock pLock( &m_pMatches->m_pSection );
 
+	CSingleLock pLock( &m_pMatches->m_pSection );
 	if ( pLock.Lock( 100 ) )
 	{
-		if ( !empty() ) pManaged = &m_oSearches.back();
+		if ( ! empty() )
+			pManaged = &m_oSearches.back();
 
 		if ( pManaged )
 		{
-			if ( ( pManaged->m_bActive ) && (pManaged->m_nQueryCount > m_nMaxQueryCount) )
+			if ( pManaged->m_bActive &&
+				 pManaged->m_nQueryCount > m_nMaxQueryCount )
 			{
 				m_bWaitMore = TRUE;
 				pManaged->m_bActive = FALSE;
@@ -910,13 +909,14 @@ void CSearchWnd::OnTimer(UINT_PTR nIDEvent)
 			if ( m_nCacheHubs   != pManaged->m_nHubs ||
 				 m_nCacheLeaves != pManaged->m_nLeaves )
 			{
-				UpdateMessages(TRUE, pManaged);
+				UpdateMessages();
 			}
 		}
 	}
 
 	// Unlock if we were locked
-	if ( pManaged ) pLock.Unlock();
+	if ( pManaged )
+		pLock.Unlock();
 
 	CBaseMatchWnd::OnTimer( nIDEvent );
 
@@ -967,7 +967,8 @@ void CSearchWnd::Serialize(CArchive& ar)
 
 	if ( ar.IsLoading() )
 	{
-		if ( !empty() ) m_wndPanel.ShowSearch( GetLastManager() );
+		if ( ! empty() )
+			m_wndPanel.ShowSearch( &m_oSearches.back() );
 
 		PostMessage( WM_TIMER, 1 );
 		SendMessage( WM_TIMER, 2 );

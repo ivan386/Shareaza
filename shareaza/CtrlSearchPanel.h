@@ -209,7 +209,7 @@ public:
 // Operations
 public:
 	void			SetSearchFocus();
-	void			ShowSearch(CManagedSearch* pSearch);
+	void			ShowSearch(const CManagedSearch* pSearch);
 	void			ShowStatus(BOOL bStarted, BOOL bSearching, DWORD nFiles, DWORD nHits, DWORD nHubs, DWORD nLeaves);
 	void			OnSchemaChange();
 	void			ExecuteSearch();

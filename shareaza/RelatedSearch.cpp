@@ -122,7 +122,7 @@ BOOL CRelatedSearch::CanSearchForThis()
 BOOL CRelatedSearch::RunSearchForThis()
 {
 	if ( ! CanSearchForThis() ) return FALSE;
-	auto_ptr< CQuerySearch > pSearch( new CQuerySearch() );
+	CQuerySearchPtr pSearch = new CQuerySearch();
 	pSearch->m_oSHA1	= m_oSHA1;
 	pSearch->m_oTiger	= m_oTiger;
 	pSearch->m_oED2K	= m_oED2K;
@@ -142,7 +142,7 @@ BOOL CRelatedSearch::CanSearchForSimilar()
 BOOL CRelatedSearch::RunSearchForSimilar()
 {
 	if ( ! CanSearchForSimilar() ) return FALSE;
-	auto_ptr< CQuerySearch > pSearch( new CQuerySearch() );
+	CQuerySearchPtr pSearch = new CQuerySearch();
 	pSearch->m_sSearch = Tokenise( m_sName );
 
 	// Support "Related Search" in ed2k
@@ -164,7 +164,7 @@ BOOL CRelatedSearch::CanSearchForArtist()
 BOOL CRelatedSearch::RunSearchForArtist()
 {
 	if ( ! CanSearchForArtist() ) return FALSE;
-	auto_ptr< CQuerySearch > pSearch( new CQuerySearch() );
+	CQuerySearchPtr pSearch = new CQuerySearch();
 	pSearch->m_pSchema	= m_pSchema ? m_pSchema : SchemaCache.Get( CSchema::uriAudio );
 	pSearch->m_pXML		= pSearch->m_pSchema->Instantiate();
 	CXMLElement* pXML	= pSearch->m_pXML->AddElement( pSearch->m_pSchema->m_sSingular );
@@ -185,7 +185,7 @@ BOOL CRelatedSearch::CanSearchForAlbum()
 BOOL CRelatedSearch::RunSearchForAlbum()
 {
 	if ( ! CanSearchForAlbum() ) return FALSE;
-	auto_ptr< CQuerySearch > pSearch( new CQuerySearch() );
+	CQuerySearchPtr pSearch = new CQuerySearch();
 	pSearch->m_pSchema	= m_pSchema ? m_pSchema : SchemaCache.Get( CSchema::uriAudio );
 	pSearch->m_pXML		= pSearch->m_pSchema->Instantiate();
 	CXMLElement* pXML	= pSearch->m_pXML->AddElement( pSearch->m_pSchema->m_sSingular );
@@ -206,7 +206,7 @@ BOOL CRelatedSearch::CanSearchForSeries()
 BOOL CRelatedSearch::RunSearchForSeries()
 {
 	if ( ! CanSearchForSeries() ) return FALSE;
-	auto_ptr< CQuerySearch > pSearch( new CQuerySearch() );
+	CQuerySearchPtr pSearch = new CQuerySearch();
 	pSearch->m_pSchema	= m_pSchema ? m_pSchema : SchemaCache.Get( CSchema::uriVideo );
 	pSearch->m_pXML		= pSearch->m_pSchema->Instantiate();
 	CXMLElement* pXML	= pSearch->m_pXML->AddElement( pSearch->m_pSchema->m_sSingular );

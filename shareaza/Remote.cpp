@@ -552,9 +552,11 @@ void CRemote::PageSearch()
 	if ( CheckCookie() ) return;
 	
 	CSingleLock pLock( &theApp.m_pSection );
-	if ( ! pLock.Lock( 1000 ) ) return;
+	if ( ! pLock.Lock( 1000 ) )
+		return;
 	CMainWnd* pMainWnd = static_cast< CMainWnd* >( theApp.m_pMainWnd );
-	if ( pMainWnd == NULL || ! pMainWnd->IsKindOf( RUNTIME_CLASS(CMainWnd) ) ) return;
+	if ( pMainWnd == NULL || ! pMainWnd->IsKindOf( RUNTIME_CLASS(CMainWnd) ) )
+		return;
 	
 	INT_PTR nSearchID = NULL;
 	INT_PTR nCloseID = NULL;
@@ -584,7 +586,7 @@ void CRemote::PageSearch()
 		
 		str.Format( _T("%Ii"), nFindWnd );
 		Add( _T("search_id"), str );
-		str = pFindWnd->m_sCaption;
+		str = pFindWnd->GetCaption();
 		if ( str.Find( _T("Search : ") ) == 0 ) str = str.Mid( 9 ).SpanExcluding( _T("[") );
 		Add( _T("search_caption"), str );
 		Output( _T("searchTab") );
@@ -617,27 +619,29 @@ void CRemote::PageSearch()
 		pSearchWnd->PostMessage( WM_COMMAND, ID_SEARCH_STOP );
 		Sleep( 500 );
 	}
-	
+
+	CLockedMatchList pMatches( pSearchWnd->GetMatches() );
+
 	str = GetKey( _T("sort") );
 	if ( ! str.IsEmpty() )
 	{
 		int nColumn = 0;
 		_stscanf( str, _T("%i"), &nColumn );
 		
-		if ( pSearchWnd->m_pMatches->m_nSortColumn == nColumn )
+		if ( pMatches->m_nSortColumn == nColumn )
 		{
-			if ( pSearchWnd->m_pMatches->m_bSortDir == 1 )
+			if ( pMatches->m_bSortDir == 1 )
 			{
-				pSearchWnd->m_pMatches->SetSortColumn( nColumn, TRUE );
+				pMatches->SetSortColumn( nColumn, TRUE );
 			}
 			else
 			{
-				pSearchWnd->m_pMatches->SetSortColumn( nColumn, FALSE );
+				pMatches->SetSortColumn( nColumn, FALSE );
 			}
 		}
 		else
 		{
-			pSearchWnd->m_pMatches->SetSortColumn( nColumn, TRUE );
+			pMatches->SetSortColumn( nColumn, TRUE );
 		}
 		
 		pSearchWnd->PostMessage( WM_TIMER, 7 );
@@ -646,8 +650,8 @@ void CRemote::PageSearch()
 	str = GetKey( _T("expcol") );
 	if ( ! str.IsEmpty() )
 	{
-		CMatchFile** pLoop = pSearchWnd->m_pMatches->m_pFiles;
-		for ( DWORD nCount = 0 ; nCount < pSearchWnd->m_pMatches->m_nFiles ; nCount++, pLoop++ )
+		CMatchFile** pLoop = pMatches->m_pFiles;
+		for ( DWORD nCount = 0 ; nCount < pMatches->m_nFiles ; nCount++, pLoop++ )
 		{
 			if ( (*pLoop)->GetURN() == str )
 			{
@@ -661,8 +665,8 @@ void CRemote::PageSearch()
 	str = GetKey( _T("download") );
 	if ( ! str.IsEmpty() )
 	{
-		CMatchFile** pLoop = pSearchWnd->m_pMatches->m_pFiles;
-		for ( DWORD nCount = 0 ; nCount < pSearchWnd->m_pMatches->m_nFiles ; nCount++, pLoop++ )
+		CMatchFile** pLoop = pMatches->m_pFiles;
+		for ( DWORD nCount = 0 ; nCount < pMatches->m_nFiles ; nCount++, pLoop++ )
 		{
 			if ( (*pLoop)->GetURN() == str )
 			{
@@ -677,8 +681,8 @@ void CRemote::PageSearch()
 	
 	if ( ! GetKey( _T("setfilter") ).IsEmpty() )
 	{
-		pSearchWnd->m_pMatches->m_sFilter = GetKey( _T("filter") );
-		pSearchWnd->m_pMatches->Filter();
+		pMatches->m_sFilter = GetKey( _T("filter") );
+		pMatches->Filter();
 		pSearchWnd->PostMessage( WM_TIMER, 7 );
 	}
 	
@@ -687,8 +691,8 @@ void CRemote::PageSearch()
 	Add( _T("search_id"), str );
 	str.Format( _T("%i"), GetRandomNum( 0i32, _I32_MAX ) );
 	Add( _T("random"), str );
-	if ( ! pSearchWnd->m_bPaused ) Add( _T("searching"), _T("true") );
-	Add( _T("search_filter"), pSearchWnd->m_pMatches->m_sFilter );
+	if ( ! pSearchWnd->IsPaused() ) Add( _T("searching"), _T("true") );
+	Add( _T("search_filter"), pMatches->m_sFilter );
 	Output( _T("searchTop") );
 	
 	PageSearchHeaderColumn( MATCH_COL_NAME, Skin.GetHeaderTranslation( L"CMatchCtrl", L"File" ), L"left" );
@@ -701,11 +705,9 @@ void CRemote::PageSearch()
 	
 	Output( _T("searchMiddle") );
 	
-	pLock.Unlock();
-	CSingleLock pLock2( &pSearchWnd->m_pMatches->m_pSection, TRUE );
-	CMatchFile** pLoop = pSearchWnd->m_pMatches->m_pFiles;
+	CMatchFile** pLoop = pMatches->m_pFiles;
 	
-	for ( DWORD nCount = 0 ; nCount < pSearchWnd->m_pMatches->m_nFiles ; nCount++, pLoop++ )
+	for ( DWORD nCount = 0 ; nCount < pMatches->m_nFiles ; nCount++, pLoop++ )
 	{
 		CMatchFile* pFile = *pLoop;
 		if ( pFile->GetFilteredCount() == 0 ) continue;
@@ -838,7 +840,7 @@ void CRemote::PageNewSearch()
 		return;
 	}
 	
-	CQuerySearch* pSearch	= new CQuerySearch();
+	CQuerySearchPtr pSearch	= new CQuerySearch();
 	pSearch->m_sSearch		= strSearch;
 	pSearch->m_pSchema		= SchemaCache.Get( strSchema );
 
@@ -846,7 +848,7 @@ void CRemote::PageNewSearch()
 	
 	Settings.Search.LastSchemaURI = strURI;
 	
-	pMainWnd->PostMessage( WM_OPENSEARCH, (WPARAM)pSearch );
+	pMainWnd->PostMessage( WM_OPENSEARCH, (WPARAM)pSearch.Detach() );
 	pLock.Unlock();
 	Sleep( 500 );
 	

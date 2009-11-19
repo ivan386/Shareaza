@@ -137,7 +137,7 @@ protected:
 	BOOL		DoSizePanel();
 	void		UpdatePanel(BOOL bForce);
 	void		SetPanel(CPanelCtrl* pPanel);
-	void		RunLocalSearch(auto_ptr< CQuerySearch > pSearch);
+	void		RunLocalSearch(CQuerySearch* pSearch);
 
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnDestroy();

@@ -271,60 +271,57 @@ void CHomeSearchCtrl::Search(bool bAutostart)
 
 	Settings.Search.LastSchemaURI = strURI;
 
-	auto_ptr< CQuerySearch > pSearch( new CQuerySearch() );
-	if ( pSearch.get() )
+	CQuerySearchPtr pSearch = new CQuerySearch();
+	pSearch->m_bAutostart	= bAutostart;
+	pSearch->m_sSearch		= strText;
+	pSearch->m_pSchema		= pSchema;
+	BOOL bValid = pSearch->CheckValid( false );
+	if ( ! bValid && bAutostart )
 	{
-		pSearch->m_bAutostart	= bAutostart;
-		pSearch->m_sSearch		= strText;
-		pSearch->m_pSchema		= pSchema;
-		BOOL bValid = pSearch->CheckValid( false );
-		if ( ! bValid && bAutostart )
+		// Invalid search, open help window
+		CQuerySearch::SearchHelp();
+	}
+	else if ( AdultFilter.IsSearchFiltered( pSearch->m_sSearch ) && bAutostart )
+	{
+		// Adult search blocked, open help window
+		CHelpDlg::Show( _T("SearchHelp.AdultSearch") );
+	}
+	else
+	{
+		if ( bValid )
 		{
-			// Invalid search, open help window
-			CQuerySearch::SearchHelp();
-		}
-		else if ( AdultFilter.IsSearchFiltered( pSearch->m_sSearch ) && bAutostart )
-		{
-			// Adult search blocked, open help window
-			CHelpDlg::Show( _T("SearchHelp.AdultSearch") );
-		}
-		else
-		{
-			if ( bValid )
+			// Load all
+			CStringList oList;
+			for ( int i = 0; ; i++ )
 			{
-				// Load all
-				CStringList oList;
-				for ( int i = 0; ; i++ )
-				{
-					strEntry.Format( _T("Search.%.2i"), i + 1 );
-					CString strValue( theApp.GetProfileString( _T("Search"), strEntry ) );
-					if ( strValue.IsEmpty() )
-						break;
-					int lf = strValue.Find( _T('\n') );
-					if ( strText.CompareNoCase( ( lf != -1 ) ? strValue.Left( lf ) : strValue ) )
-						oList.AddTail( strValue );
-				}
-
-				// Cut to 200 items
-				while ( oList.GetCount() >= 200 )
-					oList.RemoveTail();
-
-				// New one (at top)
-				oList.AddHead( strURI.IsEmpty() ? strText : ( strText + _T('\n') + strURI ) );
-
-				// Save list
-				POSITION pos = oList.GetHeadPosition();
-				for ( int i = 0; pos; ++i )
-				{
-					strEntry.Format( _T("Search.%.2i"), i + 1 );
-					theApp.WriteProfileString( _T("Search"), strEntry, oList.GetNext( pos ) );
-				}
-
-				FillHistory();
+				strEntry.Format( _T("Search.%.2i"), i + 1 );
+				CString strValue( theApp.GetProfileString( _T("Search"), strEntry ) );
+				if ( strValue.IsEmpty() )
+					break;
+				int lf = strValue.Find( _T('\n') );
+				if ( strText.CompareNoCase( ( lf != -1 ) ? strValue.Left( lf ) : strValue ) )
+					oList.AddTail( strValue );
 			}
 
-			new CSearchWnd( pSearch );
+			// Cut to 200 items
+			while ( oList.GetCount() >= 200 )
+				oList.RemoveTail();
+
+			// New one (at top)
+			oList.AddHead( strURI.IsEmpty() ? strText : ( strText + _T('\n') + strURI ) );
+
+			// Save list
+			POSITION pos = oList.GetHeadPosition();
+			for ( int i = 0; pos; ++i )
+			{
+				strEntry.Format( _T("Search.%.2i"), i + 1 );
+				theApp.WriteProfileString( _T("Search"), strEntry, oList.GetNext( pos ) );
+			}
+
+			FillHistory();
 		}
+
+		new CSearchWnd( pSearch );
 	}
 
 	m_wndText.SetWindowText( _T("") );

@@ -112,7 +112,7 @@ protected:
 	
 public:
 	void		UpdateStats();
-	void		AddHits(const CQueryHit* pHits, CQuerySearch* pFilter = NULL);
+	void		AddHits(const CQueryHit* pHits, const CQuerySearch* pFilter = NULL);
 	DWORD		FileToItem(CMatchFile* pFile);
 	void		Clear();
 	BOOL		Select(CMatchFile* pFile, CQueryHit* pHit, BOOL bSelected = TRUE);

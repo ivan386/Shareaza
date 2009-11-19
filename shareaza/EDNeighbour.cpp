@@ -778,7 +778,7 @@ BOOL CEDNeighbour::SendSharedDownload(CDownload* pDownload)
 //////////////////////////////////////////////////////////////////////
 // CEDNeighbour file adverising
 
-BOOL CEDNeighbour::SendQuery(CQuerySearch* pSearch, CPacket* pPacket, BOOL bLocal)
+BOOL CEDNeighbour::SendQuery(const CQuerySearch* pSearch, CPacket* pPacket, BOOL bLocal)
 {
 	// If the caller didn't give us a packet, or one that isn't for our protocol, leave now
 	if ( pPacket == NULL || pPacket->m_nProtocol != PROTOCOL_ED2K )

@@ -21,7 +21,8 @@
 
 #pragma once
 
-class CQuerySearch;
+#include "QuerySearch.h"
+
 class CNeighbour;
 class CLibraryFile;
 class CAlbumFolder;
@@ -45,7 +46,7 @@ public:
 
 // Attributes
 protected:
-	CQuerySearch*	m_pSearch;
+	CQuerySearchPtr	m_pSearch;
 	CNeighbour*		m_pNeighbour;
 	SOCKADDR_IN*	m_pEndpoint;
 	CBuffer*		m_pBuffer;

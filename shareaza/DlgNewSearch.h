@@ -1,7 +1,7 @@
 //
 // DlgNewSearch.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_DLGNEWSEARCH_H__6120C263_1A9E_4C29_8D73_7B9FF200AF5C__INCLUDED_)
-#define AFX_DLGNEWSEARCH_H__6120C263_1A9E_4C29_8D73_7B9FF200AF5C__INCLUDED_
-
 #pragma once
 
 #include "DlgSkinDialog.h"
@@ -33,57 +30,38 @@ class CQuerySearch;
 
 class CNewSearchDlg : public CSkinDialog
 {
-// Construction
 public:
-	CNewSearchDlg(CWnd* pParent = NULL,
-			auto_ptr< CQuerySearch > pSearch = auto_ptr< CQuerySearch >(),
-			BOOL bLocal = FALSE, BOOL bAgain = FALSE);
+	CNewSearchDlg(CWnd* pParent = NULL, CQuerySearch* pSearch = NULL,
+		BOOL bLocal = FALSE, BOOL bAgain = FALSE);
 
-// Dialog Data
-public:
-	//{{AFX_DATA(CNewSearchDlg)
 	enum { IDD = IDD_NEW_SEARCH };
-	CButton	m_wndCancel;
-	CButton	m_wndOK;
+
+	CQuerySearchPtr GetSearch() const
+	{
+		return m_pSearch;
+	}
+
+protected:
+	CButton			m_wndCancel;
+	CButton			m_wndOK;
 	CSchemaCombo	m_wndSchemas;
 	CComboBox		m_wndSearch;
-	//}}AFX_DATA
-
-// Attributes
-private:
 	CSchemaCtrl		m_wndSchema;
 	BOOL			m_bLocal;
 	BOOL			m_bAgain;
-	auto_ptr< CQuerySearch > m_pSearch;
+	CQuerySearchPtr m_pSearch;
 
-// Operations
-public:
-	auto_ptr< CQuerySearch > GetSearch() { return m_pSearch; }
-
-// Overrides
-public:
-	//{{AFX_VIRTUAL(CNewSearchDlg)
-	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
-	//{{AFX_MSG(CNewSearchDlg)
 	virtual BOOL OnInitDialog();
+	virtual void OnOK();
+
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnGetMinMaxInfo(MINMAXINFO FAR* lpMMI);
-	virtual void OnOK();
 	afx_msg void OnSelChangeSchemas();
 	afx_msg void OnCloseUpSchemas();
 	afx_msg void OnChangeSearch();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
 
+	DECLARE_MESSAGE_MAP()
 };
 
-//{{AFX_INSERT_LOCATION}}
-
 #define IDC_METADATA		100
-
-#endif // !defined(AFX_DLGNEWSEARCH_H__6120C263_1A9E_4C29_8D73_7B9FF200AF5C__INCLUDED_)

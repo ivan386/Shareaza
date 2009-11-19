@@ -1,7 +1,7 @@
 //
 // ManagedSearch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -46,8 +46,8 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CManagedSearch construction
 
-CManagedSearch::CManagedSearch(auto_ptr< CQuerySearch > pSearch, int nPriority) :
-	m_pSearch		( pSearch.release() ),
+CManagedSearch::CManagedSearch(CQuerySearch* pSearch, int nPriority) :
+	m_pSearch		( pSearch ? pSearch : new CQuerySearch() ),
 	m_nPriority		( nPriority ),
 	m_bAllowG2		( TRUE ),
 	m_bAllowG1		( TRUE ),
@@ -69,8 +69,6 @@ CManagedSearch::CManagedSearch(auto_ptr< CQuerySearch > pSearch, int nPriority) 
 	m_nEDClients	( 0 ),
 	m_tExecute		( 0 )
 {
-	if ( ! m_pSearch.get() )
-		m_pSearch.reset( new CQuerySearch() );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -97,7 +95,6 @@ void CManagedSearch::Serialize(CArchive& ar)
 		ar >> nVersion;
 		if ( nVersion < 2 ) AfxThrowUserException();
 
-		m_pSearch.reset( new CQuerySearch() );
 		m_pSearch->Serialize( ar );
 
 		ar >> m_nPriority;
@@ -155,7 +152,7 @@ void CManagedSearch::Stop()
 
 BOOL CManagedSearch::Execute()
 {
-	if ( ! m_bActive || ! m_pSearch.get() ) return FALSE;
+	if ( ! m_bActive || ! m_pSearch ) return FALSE;
 
 	DWORD tTicks	= GetTickCount();
 	DWORD tSecs		= static_cast< DWORD >( time( NULL ) );
@@ -331,7 +328,7 @@ BOOL CManagedSearch::ExecuteNeighbours(DWORD tTicks, DWORD tSecs)
 			// Set the last query time for this host for this search
 			m_pNodes.SetAt( nAddress, tSecs );
 
-			if ( pNeighbour->SendQuery( m_pSearch.get(), pPacket, TRUE ) )
+			if ( pNeighbour->SendQuery( m_pSearch, pPacket, TRUE ) )
 			{
 				// Reset the last "search more" sent to this neighbour (if applicable)
 				pNeighbour->m_oMoreResultsGUID.clear();

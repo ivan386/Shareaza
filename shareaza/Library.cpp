@@ -246,7 +246,7 @@ bool CLibrary::OnQueryHits(const CQueryHit* pHits)
 //////////////////////////////////////////////////////////////////////
 // CLibrary search
 
-CFileList* CLibrary::Search(CQuerySearch* pSearch, int nMaximum, bool bLocal, bool bAvailableOnly)
+CFileList* CLibrary::Search(const CQuerySearch* pSearch, int nMaximum, bool bLocal, bool bAvailableOnly)
 {
 	CSingleLock oLock( &m_pSection );
 
@@ -256,7 +256,7 @@ CFileList* CLibrary::Search(CQuerySearch* pSearch, int nMaximum, bool bLocal, bo
 
 	if ( pHits == NULL && pSearch != NULL )
 	{
-		pHits = LibraryDictionary.Search( *pSearch, nMaximum, bLocal, bAvailableOnly );
+		pHits = LibraryDictionary.Search( pSearch, nMaximum, bLocal, bAvailableOnly );
 	}
 
 	return pHits;

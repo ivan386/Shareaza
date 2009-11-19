@@ -1012,7 +1012,7 @@ void CLibraryFrame::OnLibraryPanel()
 
 void CLibraryFrame::OnLibrarySearch()
 {
-	CNewSearchDlg dlg( NULL, auto_ptr< CQuerySearch >(), TRUE );
+	CNewSearchDlg dlg( NULL, NULL, TRUE );
 
 	if ( dlg.DoModal() == IDOK )
 	{
@@ -1027,7 +1027,7 @@ void CLibraryFrame::OnLibrarySearchQuick()
 
 	if ( str.GetLength() > 0 )
 	{
-		auto_ptr< CQuerySearch > pSearch( new CQuerySearch() );
+		CQuerySearchPtr pSearch = new CQuerySearch();
 		pSearch->m_sSearch = str;
 		RunLocalSearch( pSearch );
 		m_wndSearch.SetWindowText( _T("") );
@@ -1100,7 +1100,7 @@ void CLibraryFrame::HideDynamicBar()
 	}
 }
 
-void CLibraryFrame::RunLocalSearch(auto_ptr< CQuerySearch > pSearch)
+void CLibraryFrame::RunLocalSearch(CQuerySearch* pSearch)
 {
 	CWaitCursor pCursor;
 
@@ -1168,7 +1168,7 @@ void CLibraryFrame::RunLocalSearch(auto_ptr< CQuerySearch > pSearch)
 		delete pOuter;
 	}
 
-	if ( CFileList* pFiles = Library.Search( pSearch.get(), 0, TRUE ) )
+	if ( CFileList* pFiles = Library.Search( pSearch, 0, TRUE ) )
 	{
 		for ( POSITION pos = pFiles->GetHeadPosition() ; pos ; )
 		{

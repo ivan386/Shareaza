@@ -1272,7 +1272,9 @@ LRESULT CMainWnd::OnOpenChat(WPARAM wParam, LPARAM /*lParam*/)
 // Used from Remote pages when the search is performed. Receives WM_OPENSEARCH message
 LRESULT CMainWnd::OnOpenSearch(WPARAM wParam, LPARAM /*lParam*/)
 {
-	CQuerySearch::OpenWindow( auto_ptr< CQuerySearch >( (CQuerySearch*)wParam ) );
+	CQuerySearchPtr pSearch;
+	pSearch.Attach( (CQuerySearch*)wParam );
+	CQuerySearch::OpenWindow( pSearch );
 	m_wndTabBar.OnSkinChange();
 	return 0;
 }

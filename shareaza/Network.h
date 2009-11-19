@@ -121,7 +121,7 @@ public:
 	BOOL		SendPush(const Hashes::Guid& oGUID, DWORD nIndex = 0);
 	BOOL		RouteHits(CQueryHit* pHits, CPacket* pPacket);
 	void		OnWinsock(WPARAM wParam, LPARAM lParam);
-	void		OnQuerySearch(CQuerySearch* pSearch);
+	void		OnQuerySearch(const CQuerySearch* pSearch);
 	// Add query hit to queue
 	void		OnQueryHits(CQueryHit* pHits);
 public:

@@ -981,7 +981,7 @@ BOOL CNetwork::RouteHits(CQueryHit* pHits, CPacket* pPacket)
 //////////////////////////////////////////////////////////////////////
 // CNetwork common handler functions
 
-void CNetwork::OnQuerySearch(CQuerySearch* pSearch)
+void CNetwork::OnQuerySearch(const CQuerySearch* pSearch)
 {
 	// Send searches to monitor window
 	CSingleLock pLock( &theApp.m_pSection );

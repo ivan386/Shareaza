@@ -59,7 +59,7 @@ public:
 	void			RemoveSkin();
 
 	virtual void	OnSkinChange();
-	virtual void	OnQuerySearch(CQuerySearch* pSearch);
+	virtual void	OnQuerySearch(const CQuerySearch* pSearch);
 	virtual BOOL	OnQueryHits(const CQueryHit* pHits);
 	virtual void	SanityCheck();
 	virtual BOOL	OnPush(const Hashes::Guid& pClientID, CConnection* pConnection);

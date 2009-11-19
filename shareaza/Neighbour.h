@@ -134,7 +134,7 @@ public:
 	virtual BOOL Send(CPacket* pPacket, BOOL bRelease = TRUE, BOOL bBuffered = FALSE);
 	virtual void Close(UINT nError = IDS_CONNECTION_CLOSED);
 	void         DelayClose(UINT nError = 0); // Send the buffer then close the socket, record the error given
-	virtual BOOL SendQuery(CQuerySearch* pSearch, CPacket* pPacket, BOOL bLocal); // Validate query
+	virtual BOOL SendQuery(const CQuerySearch* pSearch, CPacket* pPacket, BOOL bLocal); // Validate query
 
 protected:
 	virtual BOOL OnRun();

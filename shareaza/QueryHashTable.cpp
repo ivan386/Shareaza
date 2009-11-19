@@ -1210,15 +1210,15 @@ bool CQueryHashTable::CheckHash(const DWORD nHash) const
 //////////////////////////////////////////////////////////////////////
 // CQueryHashTable check query object
 
-bool CQueryHashTable::Check(const CQuerySearch& oSearch) const
+bool CQueryHashTable::Check(const CQuerySearch* pSearch) const
 {
 	if ( !m_bLive || !m_pHash )
 		return true;
 
-	if ( !oSearch.m_oURNs.empty() )
+	if ( ! pSearch->m_oURNs.empty() )
 	{
-		CQuerySearch::const_hash_iterator iUrn = oSearch.urnBegin();
-		const CQuerySearch::const_hash_iterator iUrnEnd = oSearch.urnEnd();
+		CQuerySearch::const_hash_iterator iUrn = pSearch->urnBegin();
+		const CQuerySearch::const_hash_iterator iUrnEnd = pSearch->urnEnd();
 		for ( ; iUrn != iUrnEnd ; ++iUrn )
 		{
 			if ( CheckHash(*iUrn) )
@@ -1230,10 +1230,10 @@ bool CQueryHashTable::Check(const CQuerySearch& oSearch) const
 	DWORD nWordHits		= 0;
 	DWORD nWords		= 0;
 
-	if ( !oSearch.m_oKeywordHashList.empty() )
+	if ( ! pSearch->m_oKeywordHashList.empty() )
 	{
-		CQuerySearch::const_hash_iterator iKeyword = oSearch.keywordBegin();
-		const CQuerySearch::const_hash_iterator iKeywordEnd = oSearch.keywordEnd();
+		CQuerySearch::const_hash_iterator iKeyword = pSearch->keywordBegin();
+		const CQuerySearch::const_hash_iterator iKeywordEnd = pSearch->keywordEnd();
 		for ( ; iKeyword != iKeywordEnd ; ++iKeyword )
 		{
 			++nWords;

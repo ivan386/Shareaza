@@ -1315,10 +1315,10 @@ BOOL CG1Neighbour::OnQuery(CG1Packet* pPacket)
 	}
 
 	// Have the CQuerySearch class turn the query search packet into a CQuerySearch object (do)
-	CQuerySearch* pSearch = CQuerySearch::FromPacket( pPacket );
-	if ( pSearch == NULL || pSearch->m_bWarning )
+	CQuerySearchPtr pSearch = CQuerySearch::FromPacket( pPacket );
+	if ( ! pSearch|| pSearch->m_bWarning )
 		pPacket->Debug( _T("Malformed query.") );
-	if ( pSearch == NULL )
+	if ( ! pSearch )
 	{
 		// The CQuerySearch class rejected the search, drop the packet
 		theApp.Message( MSG_INFO, IDS_PROTOCOL_BAD_QUERY, (LPCTSTR)m_sAddress );
@@ -1345,7 +1345,6 @@ BOOL CG1Neighbour::OnQuery(CG1Packet* pPacket)
 		pLocalSearch.Execute();
 
 	// Delete the local object, and record another Gnutella query packet processed
-	delete pSearch;
 	Statistics.Current.Gnutella1.Queries++;
 	return TRUE; // Stay connected to the remote computer
 }
@@ -1353,7 +1352,7 @@ BOOL CG1Neighbour::OnQuery(CG1Packet* pPacket)
 // Takes a CQuerySearch object, a Gnutella packet, and (do)
 // Makes sure the search makes sense, and then sends the packet to the remote computer
 // Returns true if we sent the packet, false if we discovered something wrong with the situation and didn't send it
-BOOL CG1Neighbour::SendQuery(CQuerySearch* pSearch, CPacket* pPacket, BOOL bLocal)
+BOOL CG1Neighbour::SendQuery(const CQuerySearch* pSearch, CPacket* pPacket, BOOL bLocal)
 {
 	// If the caller didn't give us a packet, or one that isn't for our protocol, leave now
 	if ( pPacket == NULL || pPacket->m_nProtocol != PROTOCOL_G1 )

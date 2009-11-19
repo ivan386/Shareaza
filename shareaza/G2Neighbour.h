@@ -34,7 +34,7 @@ public:
 	virtual ~CG2Neighbour();
 
 	virtual BOOL	Send(CPacket* pPacket, BOOL bRelease = TRUE, BOOL bBuffered = FALSE);
-	virtual BOOL	SendQuery(CQuerySearch* pSearch, CPacket* pPacket, BOOL bLocal);
+	virtual BOOL	SendQuery(const CQuerySearch* pSearch, CPacket* pPacket, BOOL bLocal);
 
 	BOOL			OnPing(CG2Packet* pPacket, BOOL bTCP = TRUE);
 	BOOL			OnPong(CG2Packet* pPacket, BOOL bTCP = TRUE);

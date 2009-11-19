@@ -242,10 +242,10 @@ BOOL CNeighbour::Send(CPacket* pPacket, BOOL bRelease, BOOL /*bBuffered*/)
 }
 
 // CG1Neighbour, which inherits from CNeighbour, overrides this method with its own version that does something
-BOOL CNeighbour::SendQuery(CQuerySearch* pSearch, CPacket* pPacket, BOOL bLocal)
+BOOL CNeighbour::SendQuery(const CQuerySearch* pSearch, CPacket* pPacket, BOOL bLocal)
 {
 	ASSERT( pSearch );
-	if ( !pSearch )
+	if ( ! pSearch )
 		return FALSE;
 
 	// If we're still negotiating the handshake with this remote computer, leave now
@@ -260,7 +260,7 @@ BOOL CNeighbour::SendQuery(CQuerySearch* pSearch, CPacket* pPacket, BOOL bLocal)
 	if ( m_pQueryTableRemote != NULL && m_pQueryTableRemote->m_bLive )
 	{
 		// If QHT disables search, leave now
-		if ( !m_pQueryTableRemote->Check( *pSearch ) )
+		if ( !m_pQueryTableRemote->Check( pSearch ) )
 			return FALSE;
 
 	} // If QHT doesn't exist and this connection is to a leaf below us, leave now

@@ -1120,7 +1120,7 @@ BOOL CG2Neighbour::OnHAW(CG2Packet* pPacket)
 //////////////////////////////////////////////////////////////////////
 // CG2Neighbour QUERY packet handler
 
-BOOL CG2Neighbour::SendQuery(CQuerySearch* pSearch, CPacket* pPacket, BOOL bLocal)
+BOOL CG2Neighbour::SendQuery(const CQuerySearch* pSearch, CPacket* pPacket, BOOL bLocal)
 {
 	// If the caller didn't give us a packet, or one that isn't for our protocol, leave now
 	if ( pPacket == NULL || pPacket->m_nProtocol != PROTOCOL_G2 )
@@ -1131,10 +1131,10 @@ BOOL CG2Neighbour::SendQuery(CQuerySearch* pSearch, CPacket* pPacket, BOOL bLoca
 
 BOOL CG2Neighbour::OnQuery(CG2Packet* pPacket)
 {
-	CQuerySearch* pSearch = CQuerySearch::FromPacket( pPacket );
-	if ( pSearch == NULL || pSearch->m_bWarning )
+	CQuerySearchPtr pSearch = CQuerySearch::FromPacket( pPacket );
+	if ( ! pSearch || pSearch->m_bWarning )
 		pPacket->Debug( _T("Malformed query.") );
-	if ( pSearch == NULL )
+	if ( ! pSearch )
 	{
 		theApp.Message( MSG_INFO, IDS_PROTOCOL_BAD_QUERY, (LPCTSTR)m_sAddress );
 		Statistics.Current.Gnutella2.Dropped++;
@@ -1166,7 +1166,6 @@ BOOL CG2Neighbour::OnQuery(CG2Packet* pPacket)
 			if ( ! m_bBlacklisted )
 				theApp.Message( MSG_DEBUG, _T("Dropping excess query traffic from %s"), (LPCTSTR)m_sAddress );
 
-			delete pSearch;
 			Statistics.Current.Gnutella2.Dropped++;
 			m_nDropCount++;
 			return TRUE;
@@ -1177,7 +1176,6 @@ BOOL CG2Neighbour::OnQuery(CG2Packet* pPacket)
 	if ( pPacket->IsType( G2_PACKET_QUERY_WRAP ) )
 	{
 		theApp.Message( MSG_DEBUG, _T("CG2Neighbour::OnQuery Ignoring wrapped query packet") );
-		delete pSearch;
 		Statistics.Current.Gnutella2.Dropped++;
 		m_nDropCount++;
 		return TRUE;
@@ -1186,7 +1184,6 @@ BOOL CG2Neighbour::OnQuery(CG2Packet* pPacket)
 	if ( m_nNodeType == ntLeaf && pSearch->m_bUDP &&
 		 pSearch->m_pEndpoint.sin_addr.S_un.S_addr != m_pHost.sin_addr.S_un.S_addr )
 	{
-		delete pSearch;
 		Statistics.Current.Gnutella2.Dropped++;
 		m_nDropCount++;
 		return TRUE;
@@ -1194,7 +1191,6 @@ BOOL CG2Neighbour::OnQuery(CG2Packet* pPacket)
 
 	if ( ! Network.QueryRoute->Add( pSearch->m_oGUID, this ) )
 	{
-		delete pSearch;
 		Statistics.Current.Gnutella2.Dropped++;
 		m_nDropCount++;
 		return TRUE;
@@ -1249,7 +1245,6 @@ BOOL CG2Neighbour::OnQuery(CG2Packet* pPacket)
 	if ( m_nNodeType == ntLeaf )
 		Send( Neighbours.CreateQueryWeb( pSearch->m_oGUID, this ), TRUE, FALSE );
 
-	delete pSearch;
 	Statistics.Current.Gnutella2.Queries++;
 
 	return TRUE;

@@ -1,7 +1,7 @@
 //
 // ManagedSearch.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_MANAGEDSEARCH_H__F6DF037C_8FF5_4D18_AB90_3BF637B3CAA9__INCLUDED_)
-#define AFX_MANAGEDSEARCH_H__F6DF037C_8FF5_4D18_AB90_3BF637B3CAA9__INCLUDED_
-
 #pragma once
 
 #include "QuerySearch.h"
@@ -30,27 +27,23 @@ class CPacket;
 class CNeighbour;
 
 
-class CManagedSearch : private boost::noncopyable
+class CManagedSearch
 {
 // Construction
 public:
-	CManagedSearch(auto_ptr< CQuerySearch > pSearch = auto_ptr< CQuerySearch >( new CQuerySearch() ),
-			int nPriority = 0);
+	CManagedSearch(CQuerySearch* pSearch = NULL, int nPriority = 0);
 	~CManagedSearch() { Stop(); }
 	
 	enum { spHighest, spMedium, spLowest, spMax };
 
 // Attributes
 public:
-	auto_ptr< CQuerySearch > m_pSearch;
 	int				m_nPriority;
 	BOOL			m_bAllowG2;
 	BOOL			m_bAllowG1;
 	BOOL			m_bAllowED2K;
-public:
 	BOOL			m_bActive;
 	BOOL			m_bReceive;
-public:
 	DWORD			m_tStarted;					// Time search was started
 	DWORD			m_nHits;					// Total hits
 	DWORD			m_nG1Hits;					// G1 hits
@@ -64,7 +57,9 @@ public:
 	DWORD			m_tMoreResults;				// Time more results were requested from an ed2k server
 	DWORD			m_nEDServers;				// Number of EDonkey servers searched
 	DWORD			m_nEDClients;				// Number of ED2K clients searched (Guess)
+
 protected:
+	CQuerySearchPtr m_pSearch;
 	CMap< DWORD, DWORD, DWORD, DWORD > m_pNodes;	// Pair of IP and query time (s)
 	CMap< DWORD, DWORD, DWORD, DWORD > m_pG1Nodes;	// Pair of IP and last sent packet TTL
 	DWORD			m_tExecute;
@@ -85,11 +80,9 @@ protected:
 // Inlines
 public:
 
-	inline CQuerySearch* GetSearch() const { return m_pSearch.get(); }
+	inline CQuerySearchPtr GetSearch() const { return m_pSearch; }
 	inline BOOL IsActive() const { return m_bActive; }
 	inline int GetPriority() const { return m_nPriority; }
 	inline void SetPriority(int nPriority) { m_nPriority = nPriority; }
 
 };
-
-#endif // !defined(AFX_MANAGEDSEARCH_H__F6DF037C_8FF5_4D18_AB90_3BF637B3CAA9__INCLUDED_)

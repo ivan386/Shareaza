@@ -1,7 +1,7 @@
 //
 // DlgNewSearch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -46,9 +46,9 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CNewSearchDlg dialog
 
-CNewSearchDlg::CNewSearchDlg(CWnd* pParent, auto_ptr< CQuerySearch > pSearch, BOOL bLocal, BOOL bAgain)
-: CSkinDialog( CNewSearchDlg::IDD, pParent ),
-  m_pSearch( pSearch )
+CNewSearchDlg::CNewSearchDlg(CWnd* pParent, CQuerySearch* pSearch, BOOL bLocal, BOOL bAgain)
+	: CSkinDialog( CNewSearchDlg::IDD, pParent )
+	, m_pSearch( pSearch ? pSearch : new CQuerySearch() )
 {
 	m_bLocal	= bLocal;
 	m_bAgain	= bAgain;
@@ -84,14 +84,7 @@ BOOL CNewSearchDlg::OnInitDialog()
 	m_wndSchemas.m_sNoSchemaText = strText;
 	m_wndSchemas.Load( Settings.Search.LastSchemaURI );
 
-	if ( m_pSearch.get() )
-	{
-		m_wndSchemas.Select( m_pSearch->m_pSchema );
-	}
-	else
-	{
-		m_pSearch.reset( new CQuerySearch() );
-	}
+	m_wndSchemas.Select( m_pSearch->m_pSchema );
 
 	OnSelChangeSchemas();
 

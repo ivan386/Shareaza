@@ -91,9 +91,10 @@ CManagedSearch* CSearchManager::Find(const Hashes::Guid& oGUID)
 {
 	for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
 	{
-		CManagedSearch* pSearch = m_pList.GetNext( pos );
-		if ( pSearch->m_pSearch.get() && validAndEqual( pSearch->m_pSearch->m_oGUID, oGUID ) )
-			return pSearch;
+		CManagedSearch* pManaged = m_pList.GetNext( pos );
+		CQuerySearchPtr pSearch = pManaged->GetSearch();
+		if ( pSearch && validAndEqual( pSearch->m_oGUID, oGUID ) )
+			return pManaged;
 	}
 
 	return NULL;

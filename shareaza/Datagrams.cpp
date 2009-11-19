@@ -1306,12 +1306,11 @@ BOOL CDatagrams::OnPong(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 
 BOOL CDatagrams::OnQuery(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 {
-	CQuerySearch* pSearch = CQuerySearch::FromPacket( pPacket, pHost );
-	if ( pSearch == NULL || pSearch->m_bWarning )
+	CQuerySearchPtr pSearch = CQuerySearch::FromPacket( pPacket, pHost );
+	if ( ! pSearch || pSearch->m_bWarning )
 		pPacket->Debug( _T("Malformed query.") );
-	if ( pSearch == NULL || ! pSearch->m_bUDP )
+	if ( ! pSearch || ! pSearch->m_bUDP )
 	{
-		if ( pSearch ) delete pSearch;
 		theApp.Message( MSG_INFO, IDS_PROTOCOL_BAD_QUERY,
 			(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ) );
 		Statistics.Current.Gnutella2.Dropped++;
@@ -1320,7 +1319,6 @@ BOOL CDatagrams::OnQuery(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 
 	if ( Security.IsDenied( &pSearch->m_pEndpoint.sin_addr ) || !Settings.Gnutella2.EnableToday )
 	{
-		delete pSearch;
 		Statistics.Current.Gnutella2.Dropped++;
 		return FALSE;
 	}
@@ -1345,7 +1343,6 @@ BOOL CDatagrams::OnQuery(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 
 		Send( &pSearch->m_pEndpoint, pAnswer, TRUE );
 
-		delete pSearch;
 		return TRUE;
 	}
 	
@@ -1360,7 +1357,6 @@ BOOL CDatagrams::OnQuery(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 		pAnswer->Write( pSearch->m_oGUID );
 		Send( &pSearch->m_pEndpoint, pAnswer, TRUE );
 
-		delete pSearch;
 		Statistics.Current.Gnutella2.Dropped++;
 		return TRUE;
 	}
@@ -1373,8 +1369,6 @@ BOOL CDatagrams::OnQuery(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 	pLocal.Execute();
 	
 	Send( &pSearch->m_pEndpoint, Neighbours.CreateQueryWeb( pSearch->m_oGUID ), TRUE );
-	
-	delete pSearch;
 
 	return TRUE;
 }
