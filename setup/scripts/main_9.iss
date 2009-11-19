@@ -248,6 +248,7 @@ Filename: "{app}\skin.exe"; Parameters: "/uninstallsilent"; WorkingDir: "{app}";
 
 [Registry]
 ; Write installation path to registry
+Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Settings"; ValueType: dword; ValueName: "Upgrade" ; ValueData: "1"; Flags: uninsdeletekey deletevalue
 Root: HKCU; Subkey: "Software\Shareaza\Shareaza"; ValueType: string; ValueName: "Installer" ; ValueData: "{srcexe}"; Flags: uninsdeletekey deletevalue
 Root: HKCU; Subkey: "Software\Shareaza\Shareaza"; ValueType: string; ValueName: "Path" ; ValueData: "{app}"; Flags: uninsdeletekey deletevalue
 Root: HKCU; Subkey: "Software\Shareaza\Shareaza"; ValueType: string; ValueName: "UserPath" ; ValueData: "{ini:{param:SETTINGS|},Locations,UserPath|{userappdata}\Shareaza}"; Flags: uninsdeletekey deletevalue

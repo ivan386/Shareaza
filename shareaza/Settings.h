@@ -66,7 +66,8 @@ public:
 		bool		IgnoreXPsp2;				// Ignore the presence of Windows XPsp2 limits
 		bool		DebugBTSources;				// Display received sources for BT download when seeding
 		bool		ItWasLimited;				// If the user path the half-open connection limit we change the settings back to gain full speed
-		bool		FirstRun;
+		bool		FirstRun;					// Is this the first time Shareaza is being run?
+		bool		Upgrade;					// Just installed or upgraded
 		DWORD		SmartVersion;				// Settings version
 		bool		Running;
 		bool		CoolMenuEnable;				// Use cool skinned menus

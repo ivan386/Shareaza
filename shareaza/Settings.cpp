@@ -100,6 +100,7 @@ void CSettings::Load()
 	Add( _T("Settings"), _T("AlwaysOpenURLs"), &General.AlwaysOpenURLs, false );
 	Add( _T("Settings"), _T("CloseMode"), &General.CloseMode, 0, 1, 0, 3 );
 	Add( _T("Settings"), _T("FirstRun"), &General.FirstRun, true, true );
+	Add( _T("Settings"), _T("Upgrade"), &General.Upgrade, true, true );
 	Add( _T("Settings"), _T("GUIMode"), &General.GUIMode, GUI_BASIC );
 	Add( _T("Settings"), _T("IgnoreXPsp2"), &General.IgnoreXPsp2, false );
 	Add( _T("Settings"), _T("Language"), &General.Language, _T("en") );
@@ -647,22 +648,28 @@ void CSettings::Load()
 	CreateDirectory( Downloads.TorrentPath );
 	CreateDirectory( Downloads.CollectionPath );
 
-	if ( Live.FirstRun )
+	if ( General.Upgrade )
 	{
-		// Delete old Shareaza installers
-		CFileFind ff;
-		BOOL res = ff.FindFile( Downloads.CompletePath + _T("\\Shareaza_*.exe") );
-		while ( res )
-		{
-			res = ff.FindNextFile();
-			DeleteFile( ff.GetFilePath() );
-		}
+		General.Upgrade = false;
 
 		// Copy installer to complete folder
 		CString strInstaller = CRegistry::GetString( _T(""), _T("Installer") );
 		if ( PathFileExists( strInstaller ) )
 		{
-			CopyFile( strInstaller, Downloads.CompletePath + _T("\\") + PathFindFileName( strInstaller ), FALSE );
+			// Delete old Shareaza installers
+			CFileFind ff;
+			BOOL res = ff.FindFile( Downloads.CompletePath + _T("\\Shareaza_*.exe") );
+			while ( res )
+			{
+				res = ff.FindNextFile();
+				CString strPath = ff.GetFilePath();
+				if ( strPath.CompareNoCase( strInstaller ) != 0 )	// Keep ourself
+					DeleteFile( strPath );
+			}
+
+			CString strNewPath = Downloads.CompletePath + _T("\\") + PathFindFileName( strInstaller );
+			if ( strNewPath.CompareNoCase( strInstaller ) != 0 )	// Keep ourself
+				CopyFile( strInstaller, strNewPath, FALSE );
 		}
 	}
 
@@ -779,22 +786,8 @@ void CSettings::SetDefault(LPVOID pSetting)
 // CSettings smart upgrade
 
 void CSettings::SmartUpgrade()
-{	//This function resets certain values when upgrading, depending on version.
-
-	// Add OGG handling if needed
-	if ( ( General.SmartVersion < SMART_VERSION || Live.FirstRun ) &&
-		! IsIn( MediaPlayer.FileTypes, _T("ogg") ) )
-	{
-		LONG nReg = 0;
-
-		if ( RegQueryValue( HKEY_CLASSES_ROOT,
-			_T("CLSID\\{02391F44-2767-4E6A-A484-9B47B506F3A4}"), NULL, &nReg )
-			== ERROR_SUCCESS && nReg > 0 )
-		{
-			MediaPlayer.FileTypes.insert( _T("ogg") );
-		}
-	}
-
+{
+	// This function resets certain values when upgrading, depending on version.
 	if ( General.SmartVersion > SMART_VERSION )
 		General.SmartVersion = 1;
 
