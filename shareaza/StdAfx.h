@@ -440,6 +440,49 @@ private:
 	CGuarded* operator&() const; // too unsafe
 };
 
+typedef boost::shared_ptr< CCriticalSection > CCriticalSectionPtr;
+
+template< typename T, typename L >
+class CLocked
+{
+public:
+	CLocked(const CLocked& pGB) :
+		m_oValue( pGB.m_oValue ),
+		m_oLock( pGB.m_oLock )
+	{
+		m_oLock->Lock();
+	}
+
+	CLocked(T oValue, L oLock) :
+		m_oValue( oValue ),
+		m_oLock( oLock )
+	{
+		m_oLock->Lock();
+	}
+
+	~CLocked()
+	{
+		m_oLock->Unlock();
+	}
+	
+	operator T() const throw()
+	{
+		return m_oValue;
+	}
+
+	T operator->() const throw()
+	{
+		return m_oValue;
+	}
+
+private:
+	T	m_oValue;
+	L	m_oLock;
+
+	CLocked* operator&() const;
+	CLocked& operator=(const CLocked&);
+};
+
 #ifdef _DEBUG
 
 	// Assume we already entered to this lock

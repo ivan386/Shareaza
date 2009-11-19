@@ -27,7 +27,6 @@
 #include "Buffer.h"
 #include "Packet.h"
 
-typedef boost::shared_ptr< CCriticalSection > CCriticalSectionPtr;
 
 // A socket connection to a remote computer on the Internet running peer-to-peer software
 class CConnection
@@ -57,44 +56,7 @@ public:
 // Buffers access
 protected:
 	// Class that looks like CBuffer* but with syncronization
-	class __declspec(novtable) CLockedBuffer
-	{
-	public:
-		inline CLockedBuffer(const CLockedBuffer& pGB) :
-			m_pBuffer( pGB.m_pBuffer ),
-			m_pLock( pGB.m_pLock )
-		{
-			m_pLock->Lock();
-		}
-
-		inline ~CLockedBuffer()
-		{
-			m_pLock->Unlock();
-		}
-		
-		inline operator CBuffer*() const throw()
-		{
-			return m_pBuffer;
-		}
-
-		inline CBuffer* operator->() const throw()
-		{
-			return m_pBuffer;
-		}
-
-	protected:
-		inline explicit CLockedBuffer(CBuffer* pBuffer, CCriticalSectionPtr pLock) :
-			m_pBuffer( pBuffer ),
-			m_pLock( pLock )
-		{
-			m_pLock->Lock();
-		}
-
-		CBuffer*			m_pBuffer;
-		CCriticalSectionPtr	m_pLock;
-
-		friend class CConnection;
-	};
+	typedef CLocked< CBuffer*, CCriticalSectionPtr > CLockedBuffer;
 
 private:
 	CCriticalSectionPtr	m_pInputSection;
