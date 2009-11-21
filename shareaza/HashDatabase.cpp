@@ -1,7 +1,7 @@
 //
 // HashDatabase.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -233,19 +233,27 @@ BOOL CHashDatabase::Erase(DWORD nIndex, DWORD nType)
 //////////////////////////////////////////////////////////////////////
 // CHashDatabase commit the changes and flush
 
-void CHashDatabase::Commit()
+BOOL CHashDatabase::Commit()
 {
 	ASSERT( m_bOpen );
 
-	m_pFile.SetLength( m_nOffset + sizeof(HASHDB_INDEX) * m_nIndex );
-	m_pFile.Seek( 0, 0 );
-	m_pFile.Write( "HFDB1001", 8 );
-	m_pFile.Write( &m_nOffset, 4 );
-	m_pFile.Write( &m_nIndex, 4 );
-	m_pFile.Seek( m_nOffset, 0 );
-	m_pFile.Write( m_pIndex, sizeof(HASHDB_INDEX) * m_nIndex );
-
-	m_pFile.Flush();
+	try
+	{
+		m_pFile.SetLength( m_nOffset + sizeof(HASHDB_INDEX) * m_nIndex );
+		m_pFile.Seek( 0, 0 );
+		m_pFile.Write( "HFDB1001", 8 );
+		m_pFile.Write( &m_nOffset, 4 );
+		m_pFile.Write( &m_nIndex, 4 );
+		m_pFile.Seek( m_nOffset, 0 );
+		m_pFile.Write( m_pIndex, sizeof(HASHDB_INDEX) * m_nIndex );
+		m_pFile.Flush();
+		return TRUE;
+	}
+	catch ( CException* pException )
+	{
+		pException->Delete();
+		return FALSE;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////
