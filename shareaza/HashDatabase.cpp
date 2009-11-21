@@ -297,7 +297,7 @@ BOOL CHashDatabase::GetTiger(DWORD nIndex, CTigerTree* pTree)
 	try
 	{
 		m_pFile.Seek( pIndex->nOffset, 0 );
-		CArchive ar( &m_pFile, CArchive::load );
+		CArchive ar( &m_pFile, CArchive::load, 32768 );	// 32 KB buffer
 		Serialize( ar, pTree );
 	}
 	catch ( CException* pException )
@@ -347,7 +347,7 @@ BOOL CHashDatabase::StoreTiger(DWORD nIndex, CTigerTree* pTree)
 	try
 	{
 		m_pFile.Seek( pIndex->nOffset, 0 );
-		CArchive ar( &m_pFile, CArchive::store );
+		CArchive ar( &m_pFile, CArchive::store, 32768 );	// 32 KB buffer
 		Serialize( ar, pTree );
 	}
 	catch ( CException* pException )
@@ -383,7 +383,7 @@ BOOL CHashDatabase::GetED2K(DWORD nIndex, CED2K* pSet)
 	try
 	{
 		m_pFile.Seek( pIndex->nOffset, 0 );
-		CArchive ar( &m_pFile, CArchive::load );
+		CArchive ar( &m_pFile, CArchive::load, 32768 );	// 32 KB buffer
 		Serialize( ar, pSet );
 	}
 	catch ( CException* pException )
@@ -433,7 +433,7 @@ BOOL CHashDatabase::StoreED2K(DWORD nIndex, CED2K* pSet)
 	try
 	{
 		m_pFile.Seek( pIndex->nOffset, 0 );
-		CArchive ar( &m_pFile, CArchive::store );
+		CArchive ar( &m_pFile, CArchive::store, 32768 );	// 32 KB buffer
 		Serialize( ar, pSet );
 	}
 	catch ( CException* pException )

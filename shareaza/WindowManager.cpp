@@ -464,7 +464,7 @@ void CWindowManager::LoadSearchWindows()
 		if ( ! pFile.Open( strFile, CFile::modeRead ) )
 			return;
 
-		CArchive ar( &pFile, CArchive::load );
+		CArchive ar( &pFile, CArchive::load, 262144 );	// 256 KB buffer
 		while ( ar.ReadCount() == 1 )
 		{
 			CSearchWnd* pWnd = new CSearchWnd();
@@ -491,7 +491,7 @@ void CWindowManager::SaveSearchWindows() const
 		if ( ! pFile.Open( strFile, CFile::modeWrite | CFile::modeCreate ) )
 			return;
 
-		CArchive ar( &pFile, CArchive::store );
+		CArchive ar( &pFile, CArchive::store, 262144 );	// 256 KB buffer
 		for ( POSITION pos = GetIterator() ; pos ; )
 		{
 			CSearchWnd* pWnd = (CSearchWnd*)GetNext( pos );
@@ -528,7 +528,7 @@ void CWindowManager::LoadBrowseHostWindows()
 		if ( ! pFile.Open( strFile, CFile::modeRead ) )
 			return;
 
-		CArchive ar( &pFile, CArchive::load );
+		CArchive ar( &pFile, CArchive::load, 262144 );	// 256 KB buffer
 		while ( ar.ReadCount() == 1 )
 		{
 			CBrowseHostWnd* pWnd = new CBrowseHostWnd();
@@ -555,7 +555,7 @@ void CWindowManager::SaveBrowseHostWindows() const
 		if ( ! pFile.Open( strFile, CFile::modeWrite | CFile::modeCreate ) )
 			return;
 
-		CArchive ar( &pFile, CArchive::store );
+		CArchive ar( &pFile, CArchive::store, 262144 );	// 256 KB buffer
 		for ( POSITION pos = GetIterator() ; pos ; )
 		{
 			CBrowseHostWnd* pWnd = (CBrowseHostWnd*) GetNext( pos );

@@ -425,7 +425,7 @@ BOOL CDiscoveryServices::Load()
 
 	try
 	{
-		CArchive ar( &pFile, CArchive::load );
+		CArchive ar( &pFile, CArchive::load, 16384 );	// 16 KB buffer
 		Serialize( ar );
 	}
 	catch ( CException* pException )
@@ -463,7 +463,7 @@ BOOL CDiscoveryServices::Save()
 
 	try
 	{
-		CArchive ar( &pFile, CArchive::store );
+		CArchive ar( &pFile, CArchive::store, 16384 );	// 16 KB buffer
 		Serialize( ar );
 	}
 	catch ( CException* pException )

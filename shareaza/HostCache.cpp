@@ -86,7 +86,7 @@ BOOL CHostCache::Load()
 	
 	try
 	{
-		CArchive ar( &pFile, CArchive::load );
+		CArchive ar( &pFile, CArchive::load, 262144 );	// 256 KB buffer
 		Serialize( ar );
 	}
 	catch ( CException* pException )
@@ -109,7 +109,7 @@ BOOL CHostCache::Save()
 
 	try
 	{
-		CArchive ar( &pFile, CArchive::store );
+		CArchive ar( &pFile, CArchive::store, 262144 );	// 256 KB buffer
 		Serialize( ar );
 	}
 	catch ( CException* pException )

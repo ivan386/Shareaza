@@ -360,7 +360,7 @@ BOOL CLibrary::Load()
 			( ( CompareFileTime( &pFileTime1, &pFileTime2 ) >= 0 ) ? &pFile1 : &pFile2 ) :
 			( bFile1 ? &pFile1 : &pFile2 );
 
-		CArchive ar( pNewest, CArchive::load, 40960 );
+		CArchive ar( pNewest, CArchive::load, 262144 );	// 256 KB buffer
 		if ( ! SafeSerialize( ar ) )
 		{
 			if ( pNewest == &pFile1 && bFile2 )
@@ -372,7 +372,7 @@ BOOL CLibrary::Load()
 
 			if ( pNewest != NULL )
 			{
-				CArchive ar( pNewest, CArchive::load, 40960 );
+				CArchive ar( pNewest, CArchive::load, 262144 );	// 256 KB buffer
 				SafeSerialize( ar );
 			}
 		}
@@ -427,7 +427,7 @@ BOOL CLibrary::Save()
 		{
 			pFile.Write( &pFileTime, sizeof(FILETIME) );
 
-			CArchive ar( &pFile, CArchive::store, 40960 );
+			CArchive ar( &pFile, CArchive::store, 262144 );	// 256 KB buffer
 			Serialize( ar );
 			ar.Close();
 			pFile.Flush();

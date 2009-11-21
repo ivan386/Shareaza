@@ -233,7 +233,7 @@ BOOL CDownloadGroups::Load()
 
 	try
 	{
-		CArchive ar( &pFile, CArchive::load );
+		CArchive ar( &pFile, CArchive::load );	// 4 KB buffer
 		Serialize( ar );
 	}
 	catch ( CException* pException )
@@ -261,21 +261,16 @@ BOOL CDownloadGroups::Save(BOOL bForce)
 	CFile pFile;
 	if ( ! pFile.Open( strPath + _T(".tmp"), CFile::modeWrite | CFile::modeCreate ) ) return FALSE;
 
-	BYTE* pBuffer = new BYTE[ 4096 ];
-
 	try
 	{
-		CArchive ar( &pFile, CArchive::store, 4096, pBuffer );
+		CArchive ar( &pFile, CArchive::store );	// 4 KB buffer
 		Serialize( ar );
 	}
 	catch ( CException* pException )
 	{
-		delete [] pBuffer;
 		pException->Delete();
 		return FALSE;
 	}
-
-	delete [] pBuffer;
 
 	pFile.Close();
 

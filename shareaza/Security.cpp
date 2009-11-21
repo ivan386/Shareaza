@@ -498,7 +498,7 @@ BOOL CSecurity::Load()
 
 	try
 	{
-		CArchive ar( &pFile, CArchive::load );
+		CArchive ar( &pFile, CArchive::load, 131072 );	// 128 KB buffer
 		Serialize( ar );
 		ar.Close();
 	}
@@ -522,7 +522,7 @@ BOOL CSecurity::Save()
 
 	if ( pFile.Open( strFile, CFile::modeWrite|CFile::modeCreate ) )
 	{
-		CArchive ar( &pFile, CArchive::store );
+		CArchive ar( &pFile, CArchive::store, 131072 );	// 128 KB buffer
 		Serialize( ar );
 		ar.Close();
 	}

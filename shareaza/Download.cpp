@@ -550,7 +550,7 @@ BOOL CDownload::Load(LPCTSTR pszName)
 	{
 		TRY
 		{
-			CArchive ar( &pFile, CArchive::load );
+			CArchive ar( &pFile, CArchive::load, 32768 );	// 32 KB buffer
 			Serialize( ar, 0 );
 			bSuccess = TRUE;
 		}
@@ -575,7 +575,7 @@ BOOL CDownload::Load(LPCTSTR pszName)
 	{
 		TRY
 		{
-			CArchive ar( &pFile, CArchive::load );
+			CArchive ar( &pFile, CArchive::load, 32768 );	// 32 KB buffer
 			Serialize( ar, 0 );
 			bSuccess = TRUE;
 		}
@@ -632,11 +632,9 @@ BOOL CDownload::Save(BOOL bFlush)
 		return FALSE;
 
 	{
-		const int nBufferLength = 65536;
-		auto_array< BYTE > pBuffer( new BYTE[ nBufferLength ] );
 		try
 		{
-			CArchive ar( &pFile, CArchive::store, nBufferLength, pBuffer.get() );
+			CArchive ar( &pFile, CArchive::store, 32768 );	// 32 KB buffer
 			Serialize( ar, 0 );
 		}
 		catch ( CException* pException )

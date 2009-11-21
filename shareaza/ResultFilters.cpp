@@ -151,7 +151,7 @@ void CResultFilters::Load()
 	{
 		try
 		{
-			CArchive ar( &f, CArchive::load );
+			CArchive ar( &f, CArchive::load );	// 4 KB buffer
 			Serialize( ar );
 		}
 		catch ( CException* pException )
@@ -169,7 +169,7 @@ void CResultFilters::Save()
 	{
 		try
 		{
-			CArchive ar( &f, CArchive::store );
+			CArchive ar( &f, CArchive::store );	// 4 KB buffer
 			Serialize( ar );
 		}
 		catch ( CException* pException )

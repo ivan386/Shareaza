@@ -241,7 +241,7 @@ BOOL CTrafficWnd::Serialize(BOOL bSave)
 
 	try
 	{
-		CArchive ar( &pFile, bSave ? CArchive::store : CArchive::load );
+		CArchive ar( &pFile, bSave ? CArchive::store : CArchive::load );	// 4 KB buffer
 		int nVersion = 0;
 
 		if ( ar.IsStoring() )
