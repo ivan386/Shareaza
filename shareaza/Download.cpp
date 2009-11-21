@@ -633,17 +633,14 @@ BOOL CDownload::Save(BOOL bFlush)
 
 	{
 		const int nBufferLength = 65536;
-
 		auto_array< BYTE > pBuffer( new BYTE[ nBufferLength ] );
-		CArchive ar( &pFile, CArchive::store, nBufferLength, pBuffer.get() );
 		try
 		{
+			CArchive ar( &pFile, CArchive::store, nBufferLength, pBuffer.get() );
 			Serialize( ar, 0 );
-			ar.Close();
 		}
-		catch ( CFileException* pException )
+		catch ( CException* pException )
 		{
-			ar.Abort();
 			pFile.Abort();
 			pException->Delete();
 			return FALSE;
