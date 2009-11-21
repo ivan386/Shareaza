@@ -182,6 +182,7 @@ namespace Hashes
 		//!       try to use this function with a type that has no urns.
 		//!       Currently the compilation fails but the error message does not
 		//!       show the point of instantiation.
+		template<Encoding encoding>
 		bool fromUrn(const wchar* input)
 		{
 			ASSERT( input );
@@ -192,10 +193,16 @@ namespace Hashes
 						&& _tcsnicmp( input, urns[ i ].signature,
 								urns[ i ].signatureLength ) == 0 )
 				{
-					return fromString( input + urns[ i ].hashOffset );
+					return fromString< encoding >( input + urns[ i ].hashOffset );
 				}
 			}
 			return false;
+		}
+		//! \brief Generates hash from urn using the default encoding
+		//!        for this hash type.
+		bool fromUrn(const wchar* input)
+		{
+			return fromUrn< encoding >( input );
 		}
 	};
 

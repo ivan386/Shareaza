@@ -350,10 +350,12 @@ auto_ptr< CManagedSearch > CSearchPanel::GetSearch()
 		pSearch->m_oTiger.fromString( sSearch );
 	pSearch->m_oED2K.fromUrn( sSearch ) ||
 		pSearch->m_oED2K.fromString( sSearch );
-	pSearch->m_oBTH.fromUrn( sSearch ) ||
-		pSearch->m_oBTH.fromString( sSearch );
 	pSearch->m_oMD5.fromUrn( sSearch ) ||
 		pSearch->m_oMD5.fromString( sSearch );
+	pSearch->m_oBTH.fromUrn( sSearch ) ||
+		pSearch->m_oBTH.fromString( sSearch ) ||
+		pSearch->m_oBTH.fromUrn< Hashes::base16Encoding >( sSearch ) ||
+		pSearch->m_oBTH.fromString< Hashes::base16Encoding >( sSearch );
 	if ( pSearch->m_oSHA1  ||
 		 pSearch->m_oTiger ||
 		 pSearch->m_oED2K  ||
@@ -744,7 +746,10 @@ void CSearchInputBox::OnSearchPrefixBTH()
 	CString sSearch;
 	m_wndSearch.GetWindowText( sSearch );
 	Hashes::BtHash oBTH;
-	if ( oBTH.fromUrn( sSearch ) || oBTH.fromString( sSearch ) )
+	if ( oBTH.fromUrn( sSearch ) ||
+		 oBTH.fromString( sSearch ) ||
+		 oBTH.fromUrn< Hashes::base16Encoding >( sSearch ) ||
+		 oBTH.fromString< Hashes::base16Encoding >( sSearch ) )
 		sSearch = oBTH.toUrn();
 	else
 		sSearch = _T("urn:btih:[BTIH]");

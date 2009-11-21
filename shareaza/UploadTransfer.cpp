@@ -390,8 +390,9 @@ BOOL CUploadTransfer::HashesFromURN(LPCTSTR pszURN)
 	if ( !m_oSHA1 ) m_oSHA1.fromUrn( pszURN );
 	if ( !m_oTiger ) m_oTiger.fromUrn( pszURN );
 	if ( !m_oED2K ) m_oED2K.fromUrn( pszURN );
-	if ( !m_oBTH ) m_oBTH.fromUrn( pszURN );
 	if ( !m_oMD5 ) m_oMD5.fromUrn( pszURN );
+	if ( !m_oBTH ) m_oBTH.fromUrn( pszURN );
+	if ( !m_oBTH ) m_oBTH.fromUrn< Hashes::base16Encoding >( pszURN );
 	return TRUE;
 }
 

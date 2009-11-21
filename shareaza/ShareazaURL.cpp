@@ -302,10 +302,11 @@ BOOL CShareazaURL::ParseHTTP(LPCTSTR pszURL, BOOL bResolve)
 	{
 		strURL = m_sPath.Mid( 13 );
 		if ( m_oSHA1.fromUrn( strURL ) );
-		else if ( ! m_oTiger.fromUrn( strURL ) );
-		else if ( ! m_oED2K.fromUrn( strURL ) );
-		else if ( ! m_oBTH.fromUrn( strURL ) );
-		else if ( ! m_oMD5.fromUrn( strURL ) );
+		else if ( m_oTiger.fromUrn( strURL ) );
+		else if ( m_oED2K.fromUrn( strURL ) );
+		else if ( m_oBTH.fromUrn( strURL ) );
+		else if ( m_oBTH.fromUrn< Hashes::base16Encoding >( strURL ) );
+		else if ( m_oMD5.fromUrn( strURL ) );
 		else
 			return FALSE;
 
@@ -564,6 +565,7 @@ BOOL CShareazaURL::ParseMagnet(LPCTSTR pszURL)
 				if ( !m_oMD5 ) m_oMD5.fromUrn( strValue );
 				if ( !m_oED2K ) m_oED2K.fromUrn( strValue );
 				if ( !m_oBTH ) m_oBTH.fromUrn( strValue );
+				if ( !m_oBTH ) m_oBTH.fromUrn< Hashes::base16Encoding >( strValue );
 			}
 			else if (	_tcsnicmp( strValue, _T("http://"), 7 ) == 0 ||
 						_tcsnicmp( strValue, _T("http%3A//"), 9 ) == 0 ||
@@ -741,6 +743,7 @@ BOOL CShareazaURL::ParseShareazaFile(LPCTSTR pszURL)
 			if ( !m_oMD5 ) m_oMD5.fromUrn( strPart );
 			if ( !m_oED2K ) m_oED2K.fromUrn( strPart );
 			if ( !m_oBTH ) m_oBTH.fromUrn( strPart );
+			if ( !m_oBTH ) m_oBTH.fromUrn< Hashes::base16Encoding >( strPart );
 		}
 		else if ( _tcsnicmp( strPart, _T("source:"), 7 ) == 0 )
 		{

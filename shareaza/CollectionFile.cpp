@@ -113,7 +113,7 @@ CCollectionFile::File* CCollectionFile::FindByURN(LPCTSTR pszURN)
     oMD5.fromUrn( pszURN );
     oTiger.fromUrn( pszURN );
     oED2K.fromUrn( pszURN );
-	oBTH.fromUrn( pszURN );
+	oBTH.fromUrn( pszURN ) || oBTH.fromUrn< Hashes::base16Encoding >( pszURN );
 	
 	for ( POSITION pos = GetFileIterator() ; pos ; )
 	{
@@ -467,6 +467,7 @@ BOOL CCollectionFile::File::Parse(CXMLElement* pRoot)
 			if ( !m_oTiger ) m_oTiger.fromUrn( pXML->GetValue() );
 			if ( !m_oED2K ) m_oED2K.fromUrn( pXML->GetValue() );
 			if ( !m_oBTH ) m_oBTH.fromUrn( pXML->GetValue() );
+			if ( !m_oBTH ) m_oBTH.fromUrn< Hashes::base16Encoding >( pXML->GetValue() );
 		}
 		else if ( pXML->IsNamed( _T("description") ) )
 		{

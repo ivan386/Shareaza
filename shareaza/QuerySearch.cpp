@@ -787,8 +787,9 @@ void CQuerySearch::ReadGGEP(CG1Packet* pPacket)
 				if (      oSHA1.fromUrn(  strURN ) );	// Got SHA1
 				else if ( oTiger.fromUrn( strURN ) );	// Got Tiger
 				else if ( oED2K.fromUrn(  strURN ) );	// Got ED2K
-				else if ( oBTH.fromUrn(   strURN ) );	// Got BTH
 				else if ( oMD5.fromUrn(   strURN ) );	// Got MD5
+				else if ( oBTH.fromUrn(   strURN ) );	// Got BTH base32
+				else if ( oBTH.fromUrn< Hashes::base16Encoding >( strURN ) );	// Got BTH base16
 				else
 					theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got query packet with GGEP \"u\" unknown URN: \"%s\" (%d bytes)"), strURN, pItemPos->m_nLength );
 			}
@@ -861,8 +862,9 @@ void CQuerySearch::ReadExtension(CG1Packet* pPacket)
 		else if ( oSHA1.fromUrn(  strURN ) );	// Got SHA1
 		else if ( oTiger.fromUrn( strURN ) );	// Got Tiger
 		else if ( oED2K.fromUrn(  strURN ) );	// Got ED2K
-		else if ( oBTH.fromUrn(   strURN ) );	// Got BTH
 		else if ( oMD5.fromUrn(   strURN ) );	// Got MD5
+		else if ( oBTH.fromUrn(   strURN ) );	// Got BTH base32
+		else if ( oBTH.fromUrn< Hashes::base16Encoding >( strURN ) );	// Got BTH base16
 		else
 			theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got query packet with unknown URN \"%s\" (%d bytes)"), strURN, nLength );
 
@@ -1527,7 +1529,8 @@ void CQuerySearch::BuildWordList(bool bExpression, bool /* bLocal */ )
 		}
 		if ( ! m_oBTH )
 		{
-			if ( m_oBTH.fromUrn( m_sSearch ) )
+			if ( m_oBTH.fromUrn( m_sSearch ) ||
+				 m_oBTH.fromUrn< Hashes::base16Encoding >( m_sSearch ) )
 				bHash = TRUE;
 			else
 				m_oBTH.clear();

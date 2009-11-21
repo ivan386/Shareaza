@@ -183,14 +183,19 @@ void CNewSearchDlg::OnChangeSearch()
 	m_wndSearch.GetWindowText( strSearch );
 
 	BOOL bHash = FALSE;
-    Hashes::TigerHash oTiger;
-    Hashes::Sha1Hash oSHA1;
-    Hashes::Ed2kHash oED2K;
-	
+	Hashes::TigerHash oTiger;
+	Hashes::Sha1Hash oSHA1;
+	Hashes::Ed2kHash oED2K;
+	Hashes::Md5Hash oMD5;
+	Hashes::BtHash oBTH;
+
 	bHash |= static_cast< BOOL >( oSHA1.fromUrn( strSearch ) );
 	bHash |= static_cast< BOOL >( oTiger.fromUrn( strSearch ) );
 	bHash |= static_cast< BOOL >( oED2K.fromUrn( strSearch ) );
-	
+	bHash |= static_cast< BOOL >( oMD5.fromUrn( strSearch ) );
+	bHash |= static_cast< BOOL >( oBTH.fromUrn( strSearch ) ||
+		oBTH.fromUrn< Hashes::base16Encoding >( strSearch ) );
+
 	if ( m_wndSchema.IsWindowVisible() == bHash )
 	{
 		m_wndSchema.ShowWindow( bHash ? SW_HIDE : SW_SHOW );
