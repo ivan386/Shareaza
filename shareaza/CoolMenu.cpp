@@ -651,8 +651,7 @@ UINT_PTR CCoolMenu::DoExplorerMenu(HWND hwnd, const CStringList& oFiles, POINT p
 				ici.lpVerb = reinterpret_cast< LPCSTR >( nCmd - ID_SHELL_MENU_MIN );
 				ici.lpVerbW = reinterpret_cast< LPCWSTR >( nCmd - ID_SHELL_MENU_MIN );
 				ici.nShow = SW_SHOWNORMAL;
-				HRESULT hr = pContextMenu1->InvokeCommand( (CMINVOKECOMMANDINFO*)&ici );
-				VERIFY( SUCCEEDED( hr ) );
+				pContextMenu1->InvokeCommand( (CMINVOKECOMMANDINFO*)&ici );
 			}
 			else if ( ( TPM_RETURNCMD & nFlags ) == 0 )
 			{
