@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
+<manifest
+	name="Winter"
+	author="Ryo-oh-ki"
+	link="http://en.wikipedia.org/wiki/Winter"
+	email="ryo-oh-ki@narod.ru"
+	Description="Skin for Winter"
+	version="1.0"
+	type="Skin"/>
+<watermarks>
+	<watermark target="CHomeViewCtrl.Header1" path="Winter.png"/>
+</watermarks>
+</skin>

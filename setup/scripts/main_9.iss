@@ -168,13 +168,16 @@ Source: "Schemas\*"; DestDir: "{app}\Schemas"; Flags: ignoreversion overwriterea
 ; Visualisations
 Source: "plugins\MediaVis\*"; DestDir: "{app}\Vis"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
 
-; Skins
+; Common skins
 Source: "Skins\BlueStreak\*"; DestDir: "{app}\Skins\BlueStreak"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
 Source: "Skins\CleanBlue\*";  DestDir: "{app}\Skins\CleanBlue";  Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
 Source: "Skins\Corona\*";     DestDir: "{app}\Skins\Corona";     Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
-Source: "Skins\Halloween\*";  DestDir: "{app}\Skins\Halloween";  Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
 Source: "Skins\Shareaza2\*";  DestDir: "{app}\Skins\Shareaza2";  Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
 Source: "Skins\ShareazaOS\*"; DestDir: "{app}\Skins\ShareazaOS"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
+
+; Thematic skins
+; Source: "Skins\Halloween\*";  DestDir: "{app}\Skins\Halloween";  Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
+Source: "Skins\Winter\*";  DestDir: "{app}\Skins\Winter";  Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
 
 ; Templates
 Source: "Templates\*"; DestDir: "{app}\Templates"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
@@ -342,11 +345,12 @@ Root: HKCU; Subkey: "Software\Shareaza\TorrentWizard\Folders"; ValueType: string
 Root: HKCU; Subkey: "Software\Shareaza\TorrentWizard\Folders"; ValueType: string; ValueName: "Last"; ValueData: "{userappdata}\Shareaza\Torrents"; Flags: createvalueifdoesntexist
 Root: HKCU; Subkey: "Software\Shareaza\Shareaza\BitTorrent"; ValueType: string; ValueName: "TorrentCreatorPath"; ValueData: "TorrentWizard.exe" ; Flags: createvalueifdoesntexist uninsdeletekey
 
-; Turn on ShareazaOS skin
+; Turn on default ShareazaOS skin
 Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Skins"; ValueType: dword; ValueName: "ShareazaOS\ShareazaOS.xml"; ValueData: "{ini:{param:SETTINGS|},Skins,ShareazaOS|1}"; Flags: createvalueifdoesntexist uninsdeletekey
 
-; Turn on Halloween skin
-Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Skins"; ValueType: dword; ValueName: "Halloween\Halloween.xml"; ValueData: "{ini:{param:SETTINGS|},Skins,Halloween|1}"; Flags: createvalueifdoesntexist uninsdeletekey
+; Turn on thematic skin
+; Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Skins"; ValueType: dword; ValueName: "Halloween\Halloween.xml"; ValueData: "{ini:{param:SETTINGS|},Skins,Halloween|1}"; Flags: createvalueifdoesntexist uninsdeletekey
+; Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Skins"; ValueType: dword; ValueName: "Winter\Winter.xml"; ValueData: "{ini:{param:SETTINGS|},Skins,Winter|1}"; Flags: createvalueifdoesntexist uninsdeletekey
 
 ; Disable extensions for plugins which make trouble
 ; Since it is image services plugin we need to add extensions required for the first run
