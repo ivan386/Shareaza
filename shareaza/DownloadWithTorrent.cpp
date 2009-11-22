@@ -237,9 +237,9 @@ void CDownloadWithTorrent::Serialize(CArchive& ar, int nVersion)
 			oProgress.SetWindowText( LoadString( IDS_BT_UPDATE_TITLE ) );
 			oProgress.SetActionText( LoadString( IDS_BT_UPDATE_CONVERTING ) );
 			oProgress.SetEventText( m_sName );
-			oProgress.SetEventRange( 0, (int)( m_pTorrent.m_nTotalSize / 1024ull ) );
+			oProgress.SetEventRange( 0, (int)( m_pTorrent.m_nSize / 1024ull ) );
 			oProgress.SetSubEventText( sServingFileName );
-			oProgress.SetSubEventRange( 0, (int)( m_pTorrent.m_nTotalSize / 1024ull ) );
+			oProgress.SetSubEventRange( 0, (int)( m_pTorrent.m_nSize / 1024ull ) );
 
 			oProgress.CenterWindow();
 			oProgress.ShowWindow( SW_SHOW );
@@ -260,7 +260,7 @@ void CDownloadWithTorrent::Serialize(CArchive& ar, int nVersion)
 			if ( ! IsSeeding() )
 			{
 				// Check for free space
-				if ( ! Downloads.IsSpaceAvailable( m_pTorrent.m_nTotalSize,
+				if ( ! Downloads.IsSpaceAvailable( m_pTorrent.m_nSize,
 					Downloads.dlPathIncomplete ) )
 					AfxThrowFileException( CFileException::diskFull );
 
@@ -275,7 +275,7 @@ void CDownloadWithTorrent::Serialize(CArchive& ar, int nVersion)
 					AfxThrowMemoryException();
 				// TODO: Optimize this by reading only available data
 				QWORD nTotal = 0ull;
-				for ( QWORD nLength = m_pTorrent.m_nTotalSize; nLength; )
+				for ( QWORD nLength = m_pTorrent.m_nSize; nLength; )
 				{
 					DWORD nBuffer = (DWORD)min( nLength, BUFFER_SIZE );
 					nBuffer = oSource.Read( pBuffer.get(), nBuffer );
@@ -291,7 +291,7 @@ void CDownloadWithTorrent::Serialize(CArchive& ar, int nVersion)
 					strText.Format( _T("%s %s %s"),
 						Settings.SmartVolume( nTotal, KiloBytes ),
 						LoadString( IDS_GENERAL_OF ),
-						Settings.SmartVolume( m_pTorrent.m_nTotalSize, KiloBytes ) );
+						Settings.SmartVolume( m_pTorrent.m_nSize, KiloBytes ) );
 					oProgress.SetSubActionText( strText );
 					oProgress.StepSubEvent( (int)( nBuffer / 1024ul ) );
 					oProgress.SetEventPos( (int)( nTotal / 1024ull ) );
@@ -317,28 +317,48 @@ void CDownloadWithTorrent::Serialize(CArchive& ar, int nVersion)
 
 BOOL CDownloadWithTorrent::SetTorrent(const CBTInfo& oTorrent)
 {
-	if ( IsTorrent() ) return FALSE;
-	if ( ! oTorrent.IsAvailable() ) return FALSE;
+	if ( &m_pTorrent != &oTorrent )
+	{
+		if ( IsTorrent() )
+			return FALSE;
 
-	m_pTorrent = oTorrent;
+		if ( ! oTorrent.IsAvailable() )
+			return FALSE;
+
+		m_pTorrent = oTorrent;
+	}
+
+	if ( m_nSize == SIZE_UNKNOWN && m_pTorrent.m_nSize != SIZE_UNKNOWN )
+	{
+		m_nSize = m_pTorrent.m_nSize;
+	}
+
+	if ( m_sName.IsEmpty() && ! m_pTorrent.m_sName.IsEmpty() )
+	{
+		m_sName = m_pTorrent.m_sName;
+	}
 
 	m_oBTH = m_pTorrent.m_oBTH;
 	m_bBTHTrusted = true;
+
 	if ( ! m_oTiger && m_pTorrent.m_oTiger )
 	{
 		m_oTiger = m_pTorrent.m_oTiger;
 		m_bTigerTrusted = true;
 	}
+
 	if ( ! m_oSHA1 && m_pTorrent.m_oSHA1 )
 	{
 		m_oSHA1 = m_pTorrent.m_oSHA1;
 		m_bSHA1Trusted = true;
 	}
+
 	if ( ! m_oED2K && m_pTorrent.m_oED2K )
 	{
 		m_oED2K = m_pTorrent.m_oED2K;
 		m_bED2KTrusted = true;
 	}
+
 	if ( ! m_oMD5 && m_pTorrent.m_oMD5 )
 	{
 		m_oMD5 = m_pTorrent.m_oMD5;
@@ -1010,7 +1030,7 @@ float CDownloadWithTorrent::GetRatio() const
 {
 	return float( m_pTorrent.m_nTotalUpload * 10000 /
 		( m_pTorrent.m_nTotalDownload ? m_pTorrent.m_nTotalDownload :
-		m_pTorrent.m_nTotalSize ) ) / 100.0f;
+		m_pTorrent.m_nSize ) ) / 100.0f;
 }
 
 //////////////////////////////////////////////////////////////////////

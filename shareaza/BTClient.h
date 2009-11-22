@@ -41,6 +41,7 @@ public:
 public:
     Hashes::BtGuid          m_oGUID;
 	BOOL					m_bExchange;		// Exchange sources/other info (with extended client)
+	BOOL					m_bExtended;		// Extension Protocol support
 	CUploadTransferBT*		m_pUpload;
 	CDownload*				m_pDownload;
 	CDownloadTransferBT*	m_pDownloadTransfer;
@@ -50,6 +51,9 @@ protected:
 	BOOL					m_bOnline;
 	BOOL					m_bClosing;
 	DWORD					m_tLastKeepAlive;
+	DWORD					m_dUtMetadataID;
+	DWORD					m_dUtMetadataSize;
+	CBuffer					m_oBitfield;		// Until have no torrent info
 
 // Operations
 public:
@@ -68,6 +72,9 @@ protected:
 	virtual BOOL	OnRead();
 
 	void			SendHandshake(BOOL bPart1, BOOL bPart2);
+	void			SendExtendedHandshake();
+	void			SendExtendedPacket(BYTE Type, CBuffer *pOutput);
+	void			SendInfoRequest(QWORD nPiece);
 	BOOL			OnHandshake1();								// First part of handshake
 	BOOL			OnHandshake2();								// Second part- Peer ID
 	//BOOL			OnNoHandshake2();							// If no peer ID is received
@@ -77,6 +84,7 @@ protected:
 	BOOL			OnBeHandshake(CBTPacket* pPacket);			// Process extended client handshake
 	BOOL			OnSourceRequest(CBTPacket* pPacket);
 	BOOL			OnDHTPort(CBTPacket* pPacket);
+	BOOL			OnExtended(CBTPacket* pPacket);
 	void			DetermineUserAgent();						// Figure out the other client name/version from the peer ID
 
 	// Get download transfer source

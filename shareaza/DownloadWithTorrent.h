@@ -81,6 +81,7 @@ public:
 	CDownloadTransferBT*	CreateTorrentTransfer(CBTClient* pClient);
 	CBTPacket*		CreateBitfieldPacket();
 	BOOL			SetTorrent(const CBTInfo& oTorrent);
+	BOOL			GenerateTorrentDownloadID();	// Generate Peer ID
 protected:
 	bool			RunTorrent(DWORD tNow);
 	void			SendCompleted();
@@ -91,7 +92,6 @@ protected:
 	void			OnFinishedTorrentBlock(DWORD nBlock);
 	virtual void	Serialize(CArchive& ar, int nVersion);
 private:
-	BOOL			GenerateTorrentDownloadID();	//Generate Peer ID
 	DWORD			GetRetryTime() const;
 	void			SendStarted(DWORD nNumWant);
 	void			SendUpdate(DWORD nNumWant);

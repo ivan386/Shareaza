@@ -1,7 +1,7 @@
 //
 // BTPacket.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -18,9 +18,6 @@
 // along with Shareaza; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-
-#if !defined(AFX_BTPACKET_H__F3CA41D9_F0E8_4996_A551_F7EEE8D509B3__INCLUDED_)
-#define AFX_BTPACKET_H__F3CA41D9_F0E8_4996_A551_F7EEE8D509B3__INCLUDED_
 
 #pragma once
 
@@ -103,6 +100,7 @@ inline void CBTPacket::CBTPacketPool::FreePoolImpl(CPacket* pPacket)
 #define BT_PACKET_PIECE				7
 #define BT_PACKET_CANCEL			8
 #define BT_PACKET_DHT_PORT			9
+#define BT_PACKET_EXTENSION			20 // http://www.bittorrent.org/beps/bep_0010.html
 
 #define BT_PACKET_HANDSHAKE			128
 #define BT_PACKET_SOURCE_REQUEST	129
@@ -121,5 +119,3 @@ typedef struct
 } BT_PIECE_HEADER;
 
 #pragma pack()
-
-#endif // !defined(AFX_BTPACKET_H__F3CA41D9_F0E8_4996_A551_F7EEE8D509B3__INCLUDED_)

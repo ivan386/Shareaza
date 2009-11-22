@@ -48,7 +48,6 @@ CDownloadTransferBT::CDownloadTransferBT(CDownloadSource* pSource, CBTClient* pC
 {
 	ASSUME_LOCK( Transfers.m_pSection );
 	ASSERT( m_pDownload->IsTorrent() );
-	ASSERT( m_pDownload->m_nSize != SIZE_UNKNOWN );
 	
 	m_pClient			= pClient;
 	m_nState			= pClient ? dtsConnecting : dtsNull;

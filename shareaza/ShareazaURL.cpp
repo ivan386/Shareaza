@@ -67,7 +67,7 @@ CShareazaURL::CShareazaURL(CBTInfo* pTorrent)
 	m_oTiger	= pTorrent->m_oTiger;
 	m_sName		= pTorrent->m_sName;
 	m_bSize		= TRUE;
-	m_nSize		= pTorrent->m_nTotalSize;
+	m_nSize		= pTorrent->m_nSize;
 }
 
 CShareazaURL::CShareazaURL(const CShareazaURL& pURL)
@@ -529,6 +529,7 @@ BOOL CShareazaURL::ParseMagnet(LPCTSTR pszURL)
 	Clear();
 
 	CString strURL( pszURL );
+	CBTInfo* pTorrent = new CBTInfo();
 
 	for ( strURL += '&' ; strURL.GetLength() ; )
 	{
@@ -548,7 +549,8 @@ BOOL CShareazaURL::ParseMagnet(LPCTSTR pszURL)
 
 		if ( _tcsicmp( strKey, _T("xt") ) == 0 ||
 			 _tcsicmp( strKey, _T("xs") ) == 0 ||
-			 _tcsicmp( strKey, _T("as") ) == 0 )
+			 _tcsicmp( strKey, _T("as") ) == 0 ||
+			 _tcsicmp( strKey, _T("tr") ) == 0 )
 		{
 			if (	_tcsnicmp( strValue, _T("urn:"), 4 ) == 0 ||
 					_tcsnicmp( strValue, _T("sha1:"), 5 ) == 0 ||
@@ -584,6 +586,10 @@ BOOL CShareazaURL::ParseMagnet(LPCTSTR pszURL)
 					else
 						m_sURL = strURL;
 				}
+				else if( _tcsicmp( strKey, _T("tr") ) == 0 )
+				{
+					pTorrent->SetTracker( strValue );
+				}
 				else
 				{
 					if ( m_sURL.GetLength() ) m_sURL += _T(", ");
@@ -605,7 +611,7 @@ BOOL CShareazaURL::ParseMagnet(LPCTSTR pszURL)
 			m_oBTH.clear();
 		}
 		else if ( _tcsicmp( strKey, _T("xl") ) == 0 ||
-//			_tcsicmp( strKey, _T("sz") ) == 0 ||	// TODO: Uncomment this if/when 'sz' is officially added
+			_tcsicmp( strKey, _T("sz") ) == 0 ||	// Non-standard
 			_tcsicmp( strKey, _T("fs") ) == 0 )		// Foxy
 		{
 			QWORD nSize;
@@ -616,6 +622,23 @@ BOOL CShareazaURL::ParseMagnet(LPCTSTR pszURL)
 			}
 		}
 	}
+
+	if ( m_oBTH && ! m_pTorrent )
+	{
+		pTorrent->SetTrackerMode( pTorrent->GetTrackerCount() > 1 ? CBTInfo::tMultiFinding : CBTInfo::tSingle );
+		
+		m_pTorrent = pTorrent;
+		pTorrent = NULL;
+		m_pTorrent->m_oMD5			= m_oMD5;
+		m_pTorrent->m_oBTH			= m_oBTH;
+		m_pTorrent->m_oSHA1			= m_oSHA1;
+		m_pTorrent->m_oED2K			= m_oED2K;
+		m_pTorrent->m_oTiger		= m_oTiger;
+		m_pTorrent->m_sName			= m_sName;
+		m_pTorrent->m_nSize			= m_nSize;
+	}
+	
+	delete pTorrent;
 
 	if ( IsHashed() || m_sURL.GetLength() )
 	{

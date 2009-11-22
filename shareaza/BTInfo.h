@@ -98,7 +98,6 @@ public:
 // Attributes
 public:
 	CStringList m_sURLs;				// Add sources from torrents - DWK
-	QWORD		m_nTotalSize;
 	DWORD		m_nBlockSize;
 	DWORD		m_nBlockCount;
 	Hashes::BtPureHash* m_pBlockBTH;
@@ -120,6 +119,8 @@ private:
 	CSHA		m_pTestSHA1;
 	DWORD		m_nTestByte;
 	CBuffer		m_pSource;
+	DWORD		m_nInfoStart;
+	DWORD		m_nInfoSize;
 
 	void		Clear();
 	BOOL		CheckFiles();
@@ -129,6 +130,11 @@ private:
 public:
 	void		Serialize(CArchive& ar);
 
+	BOOL		LoadInfoPiece(DWORD nInfoSize, DWORD nInfoPiece, BYTE *pPacketBuffer, DWORD nPacketLength);
+	int			NextInfoPiece();
+	DWORD		GetInfoPiece(DWORD nPiece, BYTE *pInfoPiece);
+	DWORD		GetInfoSize();
+	BOOL		CheckInfoData(const CBuffer* pSource);
 	BOOL		LoadTorrentFile(LPCTSTR pszFile);
 	BOOL		LoadTorrentBuffer(const CBuffer* pBuffer);
 	BOOL		LoadTorrentTree(const CBENode* pRoot);
@@ -158,6 +164,11 @@ public:
 	inline bool IsAvailable() const
 	{
 		return m_oBTH;
+	}
+
+	inline bool IsAvailableInfo() const
+	{
+		return IsAvailable() && m_nBlockSize && m_nBlockCount;
 	}
 
 	inline bool HasEncodingError() const

@@ -146,8 +146,6 @@ void CDownloadWithFile::ClearFileError()
 
 BOOL CDownloadWithFile::OpenFile()
 {
-	ASSERT( ! m_sName.IsEmpty() );
-
 	if ( m_sName.IsEmpty() )
 		return FALSE;
 
