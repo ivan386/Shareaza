@@ -476,6 +476,7 @@ BOOL CBTInfo::SaveTorrentFile(const CString& sFolder)
 {
 	if ( ! IsAvailable() )
 		return FALSE;
+
 	if ( m_pSource.m_nLength == 0 )
 		return FALSE;
 
@@ -501,7 +502,37 @@ BOOL CBTInfo::LoadInfoPiece(DWORD nInfoSize, DWORD nInfoPiece, BYTE *pPacketBuff
 {
 	if ( m_pSource.m_nLength == 0 && nInfoPiece == 0 )
 	{
-		m_pSource.Add("d4:info", 7);
+		m_pSource.Add( "d", 1 );
+		if ( GetTrackerCount() > 0 )
+		{
+			CString sAddress = GetTrackerAddress();
+			if ( sAddress.GetLength() > 0 )
+			{
+				sAddress.Format( _T("8:announce%d:%s" ), sAddress.GetLength(), sAddress );
+				CStringA sAnnounce = UTF8Encode( sAddress );
+				m_pSource.Add( sAnnounce.GetBuffer(), sAnnounce.GetLength() );
+				sAnnounce.ReleaseBuffer();
+			}
+
+			if ( GetTrackerCount() > 1 )
+			{
+				m_pSource.Add( "13:announce-listll", 18 );
+				for ( int i = 0; i < GetTrackerCount(); i++ )
+				{
+					CString sAddress = GetTrackerAddress( i );
+					if ( sAddress.GetLength() > 0 )
+					{
+						sAddress.Format( _T("%d:%s"), sAddress.GetLength(), sAddress );
+						CStringA sAnnounce = UTF8Encode( sAddress );
+						m_pSource.Add( sAnnounce.GetBuffer(), sAnnounce.GetLength() );
+						sAnnounce.ReleaseBuffer();
+					}
+				}
+				m_pSource.Add( "ee", 2 );
+			}
+
+		}
+		m_pSource.Add( "4:info", 6 );
 		m_nInfoSize = nInfoSize;
 		m_nInfoStart = m_pSource.m_nLength;
 	}
@@ -518,7 +549,7 @@ BOOL CBTInfo::LoadInfoPiece(DWORD nInfoSize, DWORD nInfoPiece, BYTE *pPacketBuff
 
 		if ( m_pSource.m_nLength - m_nInfoStart == m_nInfoSize )
 		{
-			m_pSource.Add("e", 1);
+			m_pSource.Add( "e", 1 );
 			return LoadTorrentBuffer( &m_pSource );
 		}
 	}
@@ -729,6 +760,9 @@ BOOL CBTInfo::LoadTorrentBuffer(const CBuffer* pBuffer)
 BOOL CBTInfo::LoadTorrentTree(const CBENode* pRoot)
 {
 	ASSERT( ! m_pBlockBTH );
+
+	theApp.Message( MSG_DEBUG,
+		_T("[BT] Loading torrent tree: %s"), (LPCTSTR)pRoot->Encode() );
 
 	if ( ! pRoot->IsType( CBENode::beDict ) )
 		return FALSE;

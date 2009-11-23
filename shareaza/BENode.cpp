@@ -372,7 +372,8 @@ const CString CBENode::Encode() const
 	case beString:
 		{
 			sOutput += _T('\"');
-			for ( QWORD n = 0; n < m_nValue; n++ )
+			QWORD nLen = min( m_nValue, 100ull );
+			for ( QWORD n = 0; n < nLen; n++ )
 				sOutput += ( ( ( (LPSTR)m_pValue )[ n ] < ' ' ) ?
 				'.' : ( (LPSTR)m_pValue )[ n ] );
 			sOutput += _T('\"');
