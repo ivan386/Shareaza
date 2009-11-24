@@ -856,18 +856,6 @@ BOOL CBTClient::OnPacket(CBTPacket* pPacket)
 {
 	if ( m_bClosing ) return FALSE;
 
-	if ( m_oBitfield.m_nLength > 0 &&
-		 m_pDownload->m_pTorrent.IsAvailableInfo() &&
-		 m_pDownloadTransfer )
-	{
-		CBTPacket* pBitfieldPacket = CBTPacket::New( BT_PACKET_BITFIELD );
-		pBitfieldPacket->ReadBuffer( &m_oBitfield );
-		m_pDownloadTransfer->OnBitfield( pBitfieldPacket );
-		pBitfieldPacket->Release();
-		m_oBitfield.Clear();
-		m_pDownloadTransfer->m_bInterested = TRUE;
-	}
-
 	switch ( pPacket->m_nType )
 	{
 	case BT_PACKET_KEEPALIVE:
@@ -891,16 +879,7 @@ BOOL CBTClient::OnPacket(CBTPacket* pPacket)
 	case BT_PACKET_HAVE:
 		return m_pDownloadTransfer == NULL || m_pDownloadTransfer->OnHave( pPacket );
 	case BT_PACKET_BITFIELD:
-		if ( m_pDownload->m_pTorrent.IsAvailableInfo() )
-		{
 			return m_pDownloadTransfer == NULL || m_pDownloadTransfer->OnBitfield( pPacket );
-		}
-		else
-		{
-			m_oBitfield.Clear();
-			pPacket->ToBuffer( &m_oBitfield );
-			return m_oBitfield.m_nLength > 0;
-		}
 	case BT_PACKET_REQUEST:
 		return m_pUpload->OnRequest( pPacket );
 	case BT_PACKET_PIECE:
