@@ -218,7 +218,7 @@ IDB_BOX_MARK            BITMAP                  "Res\\BoxMark.bmp"
 // Dialog
 //
 
-IDD_CONNECT_TO DIALOGEX 0, 0, 242, 111
+IDD_CONNECT_TO DIALOGEX 0, 0, 242, 120
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Connect To|Browse Host"
 FONT 8, "Tahoma", 0, 0, 0x1
@@ -229,8 +229,8 @@ BEGIN
     GROUPBOX        "Network &Protocol:",IDC_CONNECT_ADVANCED,5,50,230,39
     COMBOBOX        IDC_CONNECT_PROTOCOL,15,65,95,75,CBS_DROPDOWNLIST | CBS_OWNERDRAWFIXED | CBS_HASSTRINGS | WS_VSCROLL | WS_TABSTOP
     CONTROL         "&Suppress Ultrapeer",IDC_CONNECT_ULTRAPEER,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,137,65,91,15
-    DEFPUSHBUTTON   "Connect",IDOK,130,93,50,14
-    PUSHBUTTON      "Cancel",IDCANCEL,185,93,50,14
+    DEFPUSHBUTTON   "Connect",IDOK,108,98,60,16
+    PUSHBUTTON      "Cancel",IDCANCEL,175,98,60,16
 END
 
 IDD_NEW_SEARCH DIALOGEX 0, 0, 238, 60
@@ -457,18 +457,18 @@ BEGIN
     COMBOBOX        IDC_TRAY_MINIMISE,180,192,85,55,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
 END
 
-IDD_ABOUT DIALOGEX 0, 0, 292, 162
+IDD_ABOUT DIALOGEX 0, 0, 292, 180
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "About Shareaza"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    CONTROL         154,IDC_BANNER,"Static",SS_BITMAP,0,0,367,31
+    CONTROL         154,IDC_BANNER,"Static",SS_BITMAP,0,0,400,31
     LTEXT           "Shareaza File Sharing Client ",IDC_TITLE,20,45,262,10,SS_CENTERIMAGE
     LTEXT           "Copyright © Shareaza Development Team, 2002-",IDC_COPYRIGHT,20,60,262,12
     LTEXT           "Shareaza is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.",IDC_STATIC,20,75,262,24
     LTEXT           "Logo by Kid at pakkeimak.com",IDC_STATIC,20,105,262,12
     LTEXT           "http://shareaza.sourceforge.net/",IDC_WEB,20,142,125,10
-    DEFPUSHBUTTON   "OK",IDOK,235,141,50,14
+    DEFPUSHBUTTON   "OK",IDOK,225,157,60,16
     LTEXT           "This product includes GeoLite data created by MaxMind, available from http://maxmind.com/",IDC_STATIC,20,120,262,18
 END
 
@@ -641,36 +641,36 @@ BEGIN
     LTEXT           "0",IDC_SCAN_FILES,80,22,80,10
     LTEXT           "Volume:",IDC_STATIC,40,32,35,10
     LTEXT           "0",IDC_SCAN_VOLUME,80,32,80,10
-    PUSHBUTTON      "Close",IDCANCEL,180,27,50,14
+    PUSHBUTTON      "Close",IDCANCEL,170,26,60,16
 END
 
-IDD_DOWNLOAD DIALOGEX 0, 0, 292, 201
+IDD_DOWNLOAD DIALOGEX 0, 0, 292, 204
 STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Download File or Torrent"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    CONTROL         154,IDC_BANNER,"Static",SS_BITMAP,0,0,292,31
-    ICON            IDI_FILE,IDC_STATIC,6,36,20,20
-    LTEXT           "Downloading any file with Shareaza is easy.  Simply type or paste the URL or URI describing the file into the box below and press Enter.",IDC_STATIC,36,38,246,18
-    EDITTEXT        IDC_URL,6,66,276,30,ES_MULTILINE | ES_AUTOVSCROLL
-    DEFPUSHBUTTON   "Download",IDOK,179,102,50,14,WS_DISABLED
-    PUSHBUTTON      "Cancel",IDCANCEL,233,102,50,14
-    LTEXT           "Shareaza can download files from the web (HTTP), and automatically search and download P2P links (Magnet, Gnutella, eDonkey, mP2P).",IDC_STATIC,6,125,276,18
-    LTEXT           "Shareaza can also download BitTorrent files.  A torrent can be described by a .torrent file, or a HTTP link to the .torrent file.  To download a torrent HTTP link, paste it in the box above.  If you already have a .torrent file, click Open Torrent:",IDC_STATIC,6,149,276,26
-    PUSHBUTTON      "Open &Torrent...",IDC_TORRENT_FILE,213,180,70,14
+    CONTROL         154,IDC_BANNER,"Static",SS_BITMAP,0,0,400,31
+    ICON            IDI_FILE,IDC_STATIC,6,36,21,20
+    LTEXT           "Downloading any file with Shareaza is easy.  Simply type or paste the URL or URI describing the file into the box below and press Enter.",IDC_STATIC,36,38,249,18
+    EDITTEXT        IDC_URL,7,66,278,30,ES_MULTILINE | ES_AUTOVSCROLL
+    DEFPUSHBUTTON   "Download",IDOK,158,102,60,16,WS_DISABLED
+    PUSHBUTTON      "Cancel",IDCANCEL,225,102,60,16
+    LTEXT           "Shareaza can download files from the web (HTTP), and automatically search and download P2P links (Magnet, Gnutella, eDonkey, mP2P).",IDC_STATIC,7,125,278,18
+    LTEXT           "Shareaza can also download BitTorrent files.  A torrent can be described by a .torrent file, or a HTTP link to the .torrent file.  To download a torrent HTTP link, paste it in the box above.  If you already have a .torrent file, click Open Torrent:",IDC_STATIC,7,149,278,26
+    PUSHBUTTON      "Open &Torrent...",IDC_TORRENT_FILE,205,181,80,16
 END
 
-IDD_BITZI_DOWNLOAD DIALOG  0, 0, 262, 124
+IDD_BITZI_DOWNLOAD DIALOGEX 0, 0, 262, 132
 STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Downloading Metadata..."
-FONT 8, "Tahoma"
+FONT 8, "Tahoma", 0, 0, 0x0
 BEGIN
-    ICON            IDR_MAINFRAME,IDC_STATIC,10,10,20,20
-    LTEXT           "Shareaza is attempting to download metadata from Bitzi(TM)...",IDC_STATIC,40,10,210,10
-    CONTROL         "Progress1",IDC_PROGRESS,"msctls_progress32",WS_BORDER,40,25,210,10
-    PUSHBUTTON      "Cancel",IDCANCEL,200,105,50,14
-    CONTROL         "List1",IDC_FILES,"SysListView32",LVS_REPORT | LVS_SHAREIMAGELISTS | LVS_NOCOLUMNHEADER | WS_BORDER | WS_TABSTOP,40,40,210,60
-    LTEXT           "www.bitzi.com",IDC_WEB,10,110,50,10
+    ICON            IDR_MAINFRAME,IDC_STATIC,10,10,21,20
+    LTEXT           "Shareaza is attempting to download metadata from Bitzi(TM)...",IDC_STATIC,40,10,215,10
+    CONTROL         "Progress1",IDC_PROGRESS,"msctls_progress32",WS_BORDER,40,25,215,10
+    PUSHBUTTON      "Cancel",IDCANCEL,195,109,60,16
+    CONTROL         "List1",IDC_FILES,"SysListView32",LVS_REPORT | LVS_SHAREIMAGELISTS | LVS_NOCOLUMNHEADER | WS_BORDER | WS_TABSTOP,40,40,215,60
+    LTEXT           "www.bitzi.com",IDC_WEB,7,115,50,10
 END
 
 IDD_SECURE_RULE DIALOGEX 0, 0, 192, 220
@@ -714,18 +714,18 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,135,200,50,14
 END
 
-IDD_FILE_COPY DIALOG  0, 0, 217, 190
+IDD_FILE_COPY DIALOGEX 0, 0, 217, 194
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Copy Files|Move Files"
-FONT 8, "Tahoma"
+FONT 8, "Tahoma", 0, 0, 0x0
 BEGIN
     LTEXT           "You have selected %i file(s) to copy to the following folder:",IDC_MESSAGE_COPY,5,5,205,10,NOT WS_VISIBLE
-    CONTROL         "",IDC_PLACEHOLDER,"Static",SS_BLACKFRAME | NOT WS_VISIBLE,5,20,205,105
-    CONTROL         "Progress1",IDC_PROGRESS,"msctls_progress32",WS_BORDER,5,130,205,10
-    DEFPUSHBUTTON   "OK",IDOK,105,170,50,14
-    PUSHBUTTON      "Cancel",IDCANCEL,161,170,50,14
-    CONTROL         "Progress1",IDC_PROGRESS_FILE,"msctls_progress32",WS_BORDER,5,155,205,10
-    CTEXT           "Ready...",IDC_FILE_NAME,5,142,205,10,SS_CENTERIMAGE
+    CONTROL         "",IDC_PLACEHOLDER,"Static",SS_BLACKFRAME | NOT WS_VISIBLE,7,20,203,105
+    CONTROL         "Progress1",IDC_PROGRESS,"msctls_progress32",WS_BORDER,7,130,203,10
+    DEFPUSHBUTTON   "OK",IDOK,83,171,60,16
+    PUSHBUTTON      "Cancel",IDCANCEL,150,171,60,16
+    CONTROL         "Progress1",IDC_PROGRESS_FILE,"msctls_progress32",WS_BORDER,7,155,203,10
+    CTEXT           "Ready...",IDC_FILE_NAME,7,142,203,10,SS_CENTERIMAGE
     LTEXT           "You have selected %i file(s) to move to the following folder:",IDC_MESSAGE_MOVE,5,5,205,10,NOT WS_VISIBLE
 END
 
@@ -764,7 +764,7 @@ BEGIN
     CONTROL         "...",IDC_URL_HOST,"Static",SS_LEFTNOWORDWRAP | SS_NOPREFIX | SS_WORDELLIPSIS | WS_GROUP,10,100,270,10
     CONTROL         "Include &myself as a fixed source in the URL",IDC_INCLUDE_SELF,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,10,130,160,14
-    PUSHBUTTON      "Cancel",IDCANCEL,230,130,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,225,127,60,16
 END
 
 IDD_SPLASH DIALOGEX 0, 0, 292, 39
@@ -783,8 +783,8 @@ BEGIN
     EDITTEXT        IDC_ADDRESS,14,55,264,12,ES_AUTOHSCROLL
     RTEXT           "Discovery Service Type:",IDC_STATIC,14,74,129,12,SS_CENTERIMAGE
     COMBOBOX        IDC_SERVICE_TYPE,148,74,130,70,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    DEFPUSHBUTTON   "OK",IDOK,179,124,50,14
-    PUSHBUTTON      "Cancel",IDCANCEL,235,124,50,14
+    DEFPUSHBUTTON   "OK",IDOK,158,122,60,16
+    PUSHBUTTON      "Cancel",IDCANCEL,225,122,60,16
     CONTROL         154,IDC_BANNER,"Static",SS_BITMAP,0,0,400,31
 END
 
@@ -858,16 +858,16 @@ CAPTION "Export URIs"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     CONTROL         154,IDC_BANNER,"Static",SS_BITMAP,0,0,293,172
-    LTEXT           "You have selected %lu files to export as Shareaza-powered URI references.  Please select the format for the URIs, and click Save:",IDC_MESSAGE,10,40,270,20
-    EDITTEXT        IDC_URL_FORMAT,10,65,270,12,ES_AUTOHSCROLL
-    LTEXT           "Insert Token:",IDC_STATIC,10,85,45,12,SS_CENTERIMAGE
+    LTEXT           "You have selected %lu files to export as Shareaza-powered URI references.  Please select the format for the URIs, and click Save:",IDC_MESSAGE,7,40,278,20
+    EDITTEXT        IDC_URL_FORMAT,7,65,278,12,ES_AUTOHSCROLL
+    LTEXT           "Insert Token:",IDC_STATIC,7,85,45,12,SS_CENTERIMAGE
     COMBOBOX        IDC_URL_TOKEN,60,85,85,140,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     LTEXT           "Select preset:",IDC_STATIC,160,85,45,12,SS_CENTERIMAGE
-    COMBOBOX        IDC_URL_PRESET,210,85,70,79,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    DEFPUSHBUTTON   "&Copy",IDC_COPY,10,105,45,14
-    PUSHBUTTON      "&Save...",IDC_SAVE,60,105,45,14
-    CONTROL         "Progress2",IDC_PROGRESS,"msctls_progress32",WS_BORDER,110,107,120,10
-    PUSHBUTTON      "Cancel",IDCANCEL,235,105,45,14
+    COMBOBOX        IDC_URL_PRESET,210,85,75,79,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "&Copy",IDC_COPY,7,106,60,16
+    PUSHBUTTON      "&Save...",IDC_SAVE,73,106,60,16
+    CONTROL         "Progress2",IDC_PROGRESS,"msctls_progress32",WS_BORDER,140,110,78,10
+    PUSHBUTTON      "Cancel",IDCANCEL,225,106,60,16
 END
 
 IDD_UPGRADE DIALOGEX 0, 0, 292, 154
@@ -900,16 +900,16 @@ BEGIN
     CONTROL         "Censor profanity in chat",IDC_CHAT_CENSOR,"Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,15,132,250,15
 END
 
-IDD_DOWNLOAD_MONITOR DIALOGEX 0, 0, 252, 154
+IDD_DOWNLOAD_MONITOR DIALOGEX 0, 0, 252, 160
 STYLE DS_SETFONT | DS_MODALFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Download : Shareaza"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    LTEXT           "Shareaza is downloading:",IDC_DOWNLOAD_STATUS,5,5,240,10
-    CONTROL         "...",IDC_DOWNLOAD_FILE,"Static",SS_LEFTNOWORDWRAP | SS_CENTERIMAGE | SS_WORDELLIPSIS | WS_GROUP,5,15,240,15
-    CONTROL         "",IDC_PROGRESS,"Static",SS_BLACKFRAME | NOT WS_VISIBLE,5,31,240,10
-    CONTROL         "",IDC_DOWNLOAD_GRAPH,"Static",SS_BLACKFRAME | NOT WS_VISIBLE,5,45,240,25
-    ICON            IDR_MAINFRAME,IDC_DOWNLOAD_ICON,10,85,20,20
+    LTEXT           "Shareaza is downloading:",IDC_DOWNLOAD_STATUS,7,5,238,10
+    CONTROL         "...",IDC_DOWNLOAD_FILE,"Static",SS_LEFTNOWORDWRAP | SS_CENTERIMAGE | SS_WORDELLIPSIS | WS_GROUP,7,15,238,15
+    CONTROL         "",IDC_PROGRESS,"Static",SS_BLACKFRAME | NOT WS_VISIBLE,7,31,238,10
+    CONTROL         "",IDC_DOWNLOAD_GRAPH,"Static",SS_BLACKFRAME | NOT WS_VISIBLE,7,45,238,25
+    ICON            IDR_MAINFRAME,IDC_DOWNLOAD_ICON,10,85,21,20
     LTEXT           "Total transfer speed:",IDC_STATIC,40,75,100,10
     CONTROL         "...",IDC_DOWNLOAD_SPEED,"Static",SS_LEFTNOWORDWRAP | WS_GROUP,140,75,105,10
     LTEXT           "Estimated time remaining:",IDC_STATIC,40,85,100,10
@@ -919,11 +919,11 @@ BEGIN
     LTEXT           "Number of sources:",IDC_STATIC,40,104,100,10
     CONTROL         "...",IDC_DOWNLOAD_SOURCES,"Static",SS_LEFTNOWORDWRAP | WS_GROUP,140,104,105,10
     CONTROL         "Close this window when the download completes",IDC_DOWNLOAD_CLOSE,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,10,115,205,15
-    PUSHBUTTON      "Open File",IDC_DOWNLOAD_LAUNCH,5,135,55,14,WS_GROUP
-    PUSHBUTTON      "View Library",IDC_DOWNLOAD_LIBRARY,65,135,55,14,NOT WS_VISIBLE
-    PUSHBUTTON      "Cancel Download",IDC_DOWNLOAD_STOP,65,135,65,14
-    PUSHBUTTON      "Hide",IDC_DOWNLOAD_CANCEL,195,135,50,14
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,10,115,235,15
+    PUSHBUTTON      "Open File",IDC_DOWNLOAD_LAUNCH,7,137,60,16,WS_GROUP
+    PUSHBUTTON      "View Library",IDC_DOWNLOAD_LIBRARY,74,137,70,16,NOT WS_VISIBLE
+    PUSHBUTTON      "Cancel Download",IDC_DOWNLOAD_STOP,74,137,70,16
+    PUSHBUTTON      "Hide",IDC_DOWNLOAD_CANCEL,185,137,60,16
 END
 
 IDD_SETTINGS_SKINS DIALOG  0, 0, 282, 220
@@ -944,17 +944,17 @@ BEGIN
     PUSHBUTTON      "Get More",IDC_SKINS_WEB,220,200,55,15
 END
 
-IDD_FILE_PREVIEW DIALOGEX 0, 0, 257, 81
+IDD_FILE_PREVIEW DIALOGEX 0, 0, 257, 86
 STYLE DS_SETFONT | DS_MODALFRAME | WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Smart Download Preview..."
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    ICON            IDR_DOWNLOADSFRAME,IDC_STATIC,10,7,20,20
+    ICON            IDR_DOWNLOADSFRAME,IDC_STATIC,10,7,21,20
     LTEXT           "Shareaza is creating a preview of the download:",IDC_STATIC,40,10,210,10
     LTEXT           "Some File That I Downloaded.ext",IDC_FILE_NAME,40,20,210,12,SS_ENDELLIPSIS
     CONTROL         "Progress1",IDC_PROGRESS,"msctls_progress32",WS_BORDER,40,35,210,10
     CTEXT           "(copying downloaded chunks to a new preview file)",IDC_PREVIEW_STATUS,40,48,210,11
-    PUSHBUTTON      "Cancel",IDCANCEL,200,61,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,190,63,60,16
 END
 
 IDD_LANGUAGE DIALOGEX 0, 0, 292, 154
@@ -986,7 +986,7 @@ BEGIN
     PUSHBUTTON      "Get More",IDC_PLUGINS_WEB,220,200,55,15
 END
 
-IDD_FOLDER_PROPERTIES DIALOGEX 0, 0, 236, 198
+IDD_FOLDER_PROPERTIES DIALOGEX 0, 0, 237, 204
 STYLE DS_SETFONT | WS_POPUP | WS_CLIPCHILDREN | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME
 CAPTION "Album Folder Properties"
 FONT 8, "Tahoma", 0, 0, 0x1
@@ -996,9 +996,9 @@ BEGIN
     LTEXT           "Folder Type:",IDC_STATIC,75,32,155,10
     COMBOBOX        IDC_SCHEMAS,75,42,155,208,CBS_DROPDOWNLIST | CBS_OWNERDRAWVARIABLE | CBS_SORT | CBS_HASSTRINGS | WS_VSCROLL | WS_TABSTOP
     CONTROL         "All",IDC_SHOW_SYSTEM,"Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,205,42,25,15
-    LTEXT           "Add this information to the files contained in the folder",IDC_APPLY_METADATA,5,165,225,10
-    DEFPUSHBUTTON   "OK",IDOK,126,179,50,14
-    PUSHBUTTON      "Cancel",IDCANCEL,181,179,50,14
+    LTEXT           "Add this information to the files contained in the folder",IDC_APPLY_METADATA,7,165,223,10
+    DEFPUSHBUTTON   "OK",IDOK,103,181,60,16
+    PUSHBUTTON      "Cancel",IDCANCEL,170,181,60,16
 END
 
 IDD_SETTINGS_MEDIA DIALOGEX 0, 0, 282, 220
@@ -1332,7 +1332,7 @@ BEGIN
     LTEXT           "You should not have had to pay any money to obtain Shareaza.  Shareaza can be freely downloaded by anyone from http://shareaza.sourceforge.net/.  If you paid someone money for Shareaza, you should demand a full refund immediately.",IDC_STATIC,15,143,265,35
     LTEXT           "Shareaza respects its users!",IDC_RESPECT,15,178,232,13
     LTEXT           "http://shareaza.sourceforge.net/",IDC_WEB,15,195,125,10
-    DEFPUSHBUTTON   "Close",IDOK,245,190,39,14
+    DEFPUSHBUTTON   "Close",IDOK,225,191,60,16
 END
 
 IDD_PROMOTE DIALOGEX 0, 0, 292, 185
@@ -1363,25 +1363,25 @@ BEGIN
     CONTROL         "Show me the file in my library",IDC_ACTION_0,"Button",BS_AUTORADIOBUTTON | WS_GROUP,28,106,250,10
     CONTROL         "Download the file again",IDC_ACTION_1,"Button",BS_AUTORADIOBUTTON,28,121,250,10
     CONTROL         "Don't download this file",IDC_ACTION_2,"Button",BS_AUTORADIOBUTTON,28,136,250,10
-    DEFPUSHBUTTON   "OK",IDOK,180,150,50,14,WS_GROUP
-    PUSHBUTTON      "Cancel",IDCANCEL,235,150,50,14
+    DEFPUSHBUTTON   "OK",IDOK,158,149,60,16,WS_GROUP
+    PUSHBUTTON      "Cancel",IDCANCEL,225,149,60,16
     LTEXT           "You have downloaded and deleted this file before.  What would you like to do?",IDC_MESSAGE_DELETED,15,78,260,18
     LTEXT           "Warning!!! Duplicate files detected. Some malicious software may infect your Library. Make sure that you downloaded this file or placed it manually. Otherwise, shutdown Shareaza and scan your computer with an antivirus program.",IDC_MESSAGE_DUPLICATES,15,74,262,28
 END
 
-IDD_CLOSE_MODE DIALOGEX 0, 0, 292, 145
+IDD_CLOSE_MODE DIALOGEX 0, 0, 292, 150
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Close Button"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    CONTROL         154,IDC_BANNER,"Static",SS_BITMAP | WS_GROUP,0,0,292,31
+    CONTROL         154,IDC_BANNER,"Static",SS_BITMAP | WS_GROUP,0,0,400,31
     LTEXT           "This is the first time you have clicked Shareaza's close button.  Please choose what action you would like Shareaza to take when clicking the close button from now on:",IDC_STATIC,15,40,260,30
     CONTROL         "Minimise to the tray area",IDC_CLOSE_0,"Button",BS_AUTORADIOBUTTON | WS_GROUP,30,75,245,10
     CONTROL         "Shut down Shareaza immediately",IDC_CLOSE_1,"Button",BS_AUTORADIOBUTTON,30,90,245,10
     CONTROL         "Shut down Shareaza after any downloads and uploads finish",IDC_CLOSE_2,
                     "Button",BS_AUTORADIOBUTTON,30,105,245,10
-    DEFPUSHBUTTON   "OK",IDOK,179,124,50,14,WS_GROUP
-    PUSHBUTTON      "Cancel",IDCANCEL,235,124,50,14
+    DEFPUSHBUTTON   "OK",IDOK,159,127,60,16,WS_GROUP
+    PUSHBUTTON      "Cancel",IDCANCEL,225,127,60,16
 END
 
 IDD_SETTINGS_DONKEY DIALOGEX 0, 0, 282, 220
@@ -1487,17 +1487,17 @@ BEGIN
     CONTROL         "Reward uploaders",IDC_REWARD_ENABLE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,205,185,115,12
 END
 
-IDD_DONKEY_SERVERS DIALOGEX 0, 0, 292, 124
+IDD_DONKEY_SERVERS DIALOGEX 0, 0, 292, 126
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Download Server.met File"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    CONTROL         154,IDC_BANNER,"Static",SS_BITMAP,0,0,292,31
-    LTEXT           "You can download an eDonkey server.met file from the web to refresh your local list of servers.",IDC_STATIC,10,40,270,20
-    EDITTEXT        IDC_URL,10,65,270,12,ES_AUTOHSCROLL
-    CONTROL         "Progress1",IDC_PROGRESS,"msctls_progress32",WS_BORDER,10,85,270,10
-    DEFPUSHBUTTON   "OK",IDOK,180,102,50,14
-    PUSHBUTTON      "Cancel",IDCANCEL,235,102,50,14
+    CONTROL         154,IDC_BANNER,"Static",SS_BITMAP,0,0,400,31
+    LTEXT           "You can download an eDonkey server.met file from the web to refresh your local list of servers.",IDC_STATIC,7,40,278,20
+    EDITTEXT        IDC_URL,7,65,278,12,ES_AUTOHSCROLL
+    CONTROL         "Progress1",IDC_PROGRESS,"msctls_progress32",WS_BORDER,7,85,278,10
+    DEFPUSHBUTTON   "OK",IDOK,158,103,60,16
+    PUSHBUTTON      "Cancel",IDCANCEL,225,103,60,16
 END
 
 IDD_FILE_SHARING DIALOGEX 0, 0, 246, 218
@@ -1526,10 +1526,10 @@ FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     CONTROL         154,IDC_BANNER,"Static",SS_BITMAP,0,0,292,31
     LTEXT           "Shareaza has detected that you have another eDonkey program installed on your computer.  Would you like to import any unfinished downloads into Shareaza?",IDC_STATIC,15,40,260,30
-    DEFPUSHBUTTON   "Yes",IDC_IMPORT,15,75,50,14
-    PUSHBUTTON      "No|Cancel",IDCANCEL,70,75,50,14
+    DEFPUSHBUTTON   "Yes",IDC_IMPORT,15,73,60,16
+    PUSHBUTTON      "No|Cancel",IDCANCEL,83,73,60,16
     EDITTEXT        IDC_LOG,15,95,260,65,ES_MULTILINE | ES_AUTOVSCROLL | ES_READONLY | WS_VSCROLL
-    PUSHBUTTON      "Close",IDC_CLOSE,225,75,50,14,NOT WS_VISIBLE
+    PUSHBUTTON      "Close",IDC_CLOSE,215,73,60,16,NOT WS_VISIBLE
 END
 
 IDD_DOWNLOAD_GROUP DIALOGEX 0, 0, 280, 254
@@ -1554,13 +1554,13 @@ BEGIN
     GROUPBOX        "&Type of file:",IDC_STATIC,7,46,266,36,WS_GROUP
 END
 
-IDD_HELP DIALOG  0, 0, 292, 159
+IDD_HELP DIALOGEX 0, 0, 292, 180
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Shareaza Help"
-FONT 8, "Tahoma"
+FONT 8, "Tahoma", 0, 0, 0x0
 BEGIN
-    CONTROL         154,IDC_BANNER,"Static",SS_BITMAP,0,0,37,12
-    DEFPUSHBUTTON   "Close",IDOK,236,140,50,14
+    CONTROL         154,IDC_BANNER,"Static",SS_BITMAP,0,0,400,31
+    DEFPUSHBUTTON   "Close",IDOK,225,157,60,16
 END
 
 IDD_DELETE_FILE DIALOGEX 0, 0, 292, 202
@@ -1568,13 +1568,13 @@ STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Delete File"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    LTEXT           "Are you sure that you want to delete:",IDC_STATIC,12,6,264,12,SS_CENTERIMAGE
-    CONTROL         "Filename.ext",IDC_FILE_NAME,"Static",SS_LEFTNOWORDWRAP | SS_CENTERIMAGE | SS_WORDELLIPSIS | WS_GROUP,19,22,266,12
-    DEFPUSHBUTTON   "Delete",IDOK,124,39,50,14,WS_GROUP
-    PUSHBUTTON      "Delete All",IDC_DELETE_ALL,178,39,50,14,WS_DISABLED | WS_GROUP
-    PUSHBUTTON      "Cancel",IDCANCEL,232,39,50,14
-    CONTROL         "",IDC_STATIC,"Static",SS_ETCHEDHORZ,8,59,276,1
-    LTEXT           "Shareaza can remember this file and warn you if you come across it again in another search.  It will create a ghost file with your comments and rating.",IDC_STATIC,12,63,264,25
+    LTEXT           "Are you sure that you want to delete:",IDC_STATIC,12,6,273,12,SS_CENTERIMAGE
+    CONTROL         "Filename.ext",IDC_FILE_NAME,"Static",SS_LEFTNOWORDWRAP | SS_CENTERIMAGE | SS_WORDELLIPSIS | WS_GROUP,19,20,266,12
+    DEFPUSHBUTTON   "Delete",IDOK,89,37,60,16,WS_GROUP
+    PUSHBUTTON      "Delete All",IDC_DELETE_ALL,157,37,61,16,WS_DISABLED | WS_GROUP
+    PUSHBUTTON      "Cancel",IDCANCEL,225,37,60,16
+    CONTROL         "",IDC_STATIC,"Static",SS_ETCHEDHORZ,7,59,279,1
+    LTEXT           "Shareaza can remember this file and warn you if you come across it again in another search.  It will create a ghost file with your comments and rating.",IDC_STATIC,12,64,264,25
     CONTROL         "Create a ghost file",IDC_CREATE_GHOST,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,19,93,256,10
     LTEXT           "The reason for deleting:",IDC_STATIC,31,110,90,8
     COMBOBOX        IDC_DELETE_OPTIONS,127,107,151,100,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
@@ -1598,9 +1598,9 @@ BEGIN
     LTEXT           "...",IDC_TEMPLATE_AUTHOR,264,61,78,10,0,WS_EX_TRANSPARENT
     LTEXT           "Description:",IDC_STATIC_DESC,219,80,113,10,0,WS_EX_TRANSPARENT
     EDITTEXT        IDC_TEMPLATE_DESC,218,98,122,111,ES_MULTILINE | ES_AUTOVSCROLL | ES_READONLY | WS_VSCROLL
-    PUSHBUTTON      "Delete|&Back",IDC_TEMPLATES_DELETE,7,225,55,15,WS_GROUP
-    DEFPUSHBUTTON   "&Next|&Export...",IDOK,234,226,50,14
-    PUSHBUTTON      "&Cancel",IDCANCEL,298,226,50,14
+    PUSHBUTTON      "Delete|&Back",IDC_TEMPLATES_DELETE,7,224,60,16,WS_GROUP
+    DEFPUSHBUTTON   "&Next|&Export...",IDOK,221,224,60,16
+    PUSHBUTTON      "&Cancel",IDCANCEL,288,224,60,16
 END
 
 IDD_TORRENT_SEED DIALOGEX 0, 0, 292, 129
@@ -1610,9 +1610,9 @@ FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     CONTROL         154,IDC_BANNER,"Static",SS_BITMAP,0,0,292,31
     LTEXT           "You have opened a BitTorrent torrent file.  Would you like to download its contents, or re-seed it?",IDC_STATIC,7,36,276,18
-    DEFPUSHBUTTON   "Download",IDC_DOWNLOAD,66,61,50,14,WS_GROUP
-    PUSHBUTTON      "Seed",IDC_SEED,120,61,50,14
-    PUSHBUTTON      "Cancel",IDCANCEL,174,61,50,14
+    DEFPUSHBUTTON   "Download",IDC_DOWNLOAD,47,61,60,16,WS_GROUP
+    PUSHBUTTON      "Seed",IDC_SEED,115,61,60,16
+    PUSHBUTTON      "Cancel",IDCANCEL,183,61,60,16
     LTEXT           "To share complete files using BitTorrent they must first be seeded.  Once this process is complete the Torrent will appear as a new item in your download list.",IDC_STATIC,8,84,276,18
     CONTROL         "",IDC_PROGRESS,"msctls_progress32",WS_BORDER,7,109,276,11
 END
@@ -1745,12 +1745,12 @@ CAPTION "Download Reviews"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     CONTROL         154,IDC_BANNER,"Static",SS_BITMAP,0,0,367,31
-    DEFPUSHBUTTON   "OK",IDOK,305,181,50,14
+    DEFPUSHBUTTON   "OK",IDOK,295,179,60,16
     CONTROL         "",IDC_REVIEWS,"SysListView32",LVS_REPORT | LVS_SHAREIMAGELISTS | WS_BORDER | WS_TABSTOP,7,39,348,134
-    EDITTEXT        IDC_REVIEW_FILENAME,7,183,289,12,ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER | NOT WS_TABSTOP,WS_EX_TRANSPARENT
+    EDITTEXT        IDC_REVIEW_FILENAME,7,183,282,12,ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER | NOT WS_TABSTOP,WS_EX_TRANSPARENT
 END
 
-IDD_CODEPAGES DIALOGEX 0, 0, 186, 187
+IDD_CODEPAGES DIALOGEX 0, 0, 186, 190
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Metadata Localisation"
 FONT 8, "Tahoma", 0, 0, 0x1
@@ -1762,8 +1762,8 @@ BEGIN
     CONTROL         "",IDC_METHOD2,"Button",BS_AUTORADIOBUTTON,15,109,13,8,WS_EX_TRANSPARENT
     LTEXT           "Static",IDC_PREVIEW1,31,62,141,41,NOT WS_GROUP
     LTEXT           "Static",IDC_PREVIEW2,31,109,141,41,NOT WS_GROUP
-    DEFPUSHBUTTON   "OK",IDOK,39,166,50,14
-    PUSHBUTTON      "Cancel",IDCANCEL,100,166,50,14
+    DEFPUSHBUTTON   "OK",IDOK,29,167,60,16
+    PUSHBUTTON      "Cancel",IDCANCEL,100,167,60,16
 END
 
 IDD_SETTINGS_IRC DIALOGEX 0, 0, 282, 220
@@ -1867,12 +1867,12 @@ BEGIN
     CONTROL         "",IDC_TORRENT_FILES,"SysListView32",LVS_REPORT | LVS_SHAREIMAGELISTS | WS_BORDER | WS_TABSTOP,7,7,286,206
 END
 
-IDD_PLUGIN_EXT_SETUP DIALOGEX 0, 0, 100, 147
+IDD_PLUGIN_EXT_SETUP DIALOGEX 0, 0, 100, 150
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Setup"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    DEFPUSHBUTTON   "OK",IDOK,25,125,50,14
+    DEFPUSHBUTTON   "OK",IDOK,19,126,60,16
     CONTROL         "",IDC_ASSOCIATIONS,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SORTASCENDING | LVS_ALIGNLEFT | LVS_NOCOLUMNHEADER | WS_BORDER | WS_TABSTOP,19,7,60,112,WS_EX_CLIENTEDGE
 END
 
@@ -1912,9 +1912,9 @@ STYLE DS_SETFONT | DS_MODALFRAME | WS_MINIMIZEBOX | WS_POPUP | WS_CLIPSIBLINGS |
 CAPTION "Shareaza"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    PUSHBUTTON      "3",IDC_INFO_BUTTON3,132,65,50,14
-    PUSHBUTTON      "2",IDC_INFO_BUTTON2,188,65,50,14
-    PUSHBUTTON      "1",IDC_INFO_BUTTON1,243,65,50,14
+    PUSHBUTTON      "3",IDC_INFO_BUTTON3,101,65,60,16
+    PUSHBUTTON      "2",IDC_INFO_BUTTON2,167,65,60,16
+    PUSHBUTTON      "1",IDC_INFO_BUTTON1,233,65,60,16
     CONTROL         "&Remember my selection next time",IDC_INFO_REMEMBER,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,95,286,10
     LTEXT           "",IDC_INFO_TEXT,38,7,255,58
@@ -1950,7 +1950,7 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 235
         TOPMARGIN, 7
-        BOTTOMMARGIN, 105
+        BOTTOMMARGIN, 114
     END
 
     IDD_NEW_SEARCH, DIALOG
@@ -2033,7 +2033,7 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 285
         TOPMARGIN, 7
-        BOTTOMMARGIN, 155
+        BOTTOMMARGIN, 173
     END
 
     IDD_GRAPH_LIST, DIALOG
@@ -2121,7 +2121,7 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 285
         TOPMARGIN, 7
-        BOTTOMMARGIN, 194
+        BOTTOMMARGIN, 197
     END
 
     IDD_BITZI_DOWNLOAD, DIALOG
@@ -2129,7 +2129,7 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 255
         TOPMARGIN, 7
-        BOTTOMMARGIN, 117
+        BOTTOMMARGIN, 125
     END
 
     IDD_SECURE_RULE, DIALOG
@@ -2145,7 +2145,7 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 210
         TOPMARGIN, 7
-        BOTTOMMARGIN, 183
+        BOTTOMMARGIN, 187
     END
 
     IDD_URL_ACTION, DIALOG
@@ -2221,7 +2221,7 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 245
         TOPMARGIN, 7
-        BOTTOMMARGIN, 147
+        BOTTOMMARGIN, 153
     END
 
     IDD_SETTINGS_SKINS, DIALOG
@@ -2237,7 +2237,7 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 250
         TOPMARGIN, 7
-        BOTTOMMARGIN, 74
+        BOTTOMMARGIN, 79
     END
 
     IDD_LANGUAGE, DIALOG
@@ -2267,9 +2267,9 @@ BEGIN
     IDD_FOLDER_PROPERTIES, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 229
+        RIGHTMARGIN, 230
         TOPMARGIN, 7
-        BOTTOMMARGIN, 191
+        BOTTOMMARGIN, 197
     END
 
     IDD_SETTINGS_MEDIA, DIALOG
@@ -2445,7 +2445,7 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 285
         TOPMARGIN, 7
-        BOTTOMMARGIN, 138
+        BOTTOMMARGIN, 143
     END
 
     IDD_SETTINGS_DONKEY, DIALOG
@@ -2485,7 +2485,7 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 285
         TOPMARGIN, 7
-        BOTTOMMARGIN, 117
+        BOTTOMMARGIN, 119
     END
 
     IDD_FILE_SHARING, DIALOG
@@ -2522,7 +2522,7 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 285
         TOPMARGIN, 7
-        BOTTOMMARGIN, 152
+        BOTTOMMARGIN, 173
     END
 
     IDD_DELETE_FILE, DIALOG
@@ -2608,7 +2608,7 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 179
         TOPMARGIN, 7
-        BOTTOMMARGIN, 180
+        BOTTOMMARGIN, 183
     END
 
     IDD_TORRENT_GENERAL, DIALOG
@@ -2658,7 +2658,7 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 93
         TOPMARGIN, 7
-        BOTTOMMARGIN, 139
+        BOTTOMMARGIN, 142
     END
 
     IDD_DOWNLOAD_ACTIONS, DIALOG
