@@ -1,7 +1,7 @@
 //
 // CtrlTaskPanel.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -367,9 +367,7 @@ void CTaskBox::SetCaption(LPCTSTR pszCaption)
 
 void CTaskBox::SetIcon(HICON hIcon)
 {
-	ASSERT( m_hIcon != hIcon );
-
-	if ( m_hIcon )
+	if ( m_hIcon && m_hIcon != hIcon )
 		DestroyIcon( m_hIcon );
 
 	m_hIcon = hIcon;
