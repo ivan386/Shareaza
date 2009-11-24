@@ -367,7 +367,7 @@ BOOL CLibraryFile::Delete(BOOL bDeleteGhost)
 //////////////////////////////////////////////////////////////////////
 // CLibraryFile metadata access
 
-void CLibraryFile::UpdateMetadata(const CDownload* pDownload)
+void CLibraryFile::UpdateMetadata(CDownload* pDownload)
 {
 	// Disable sharing of incomplete files
 	if ( pDownload->m_bVerify == TRI_FALSE )
@@ -383,23 +383,23 @@ void CLibraryFile::UpdateMetadata(const CDownload* pDownload)
 	}
 
 	// Get metadata of recently downloaded file
-	if ( CXMLElement* pXML = pDownload->GetMetadata() )
+	if ( pDownload->HasMetadata() )
 	{
 		if ( m_pMetadata )
 		{
 			// Update existing
 			BOOL bMetadataAuto = m_bMetadataAuto;
-			if ( MergeMetadata( pXML, FALSE ) )
+			if ( MergeMetadata( pDownload->m_pXML, FALSE ) )
 			{
 				if ( bMetadataAuto )
 					m_bMetadataAuto = TRUE;
 			}
 		}
-		else if ( CXMLElement* pBody = pXML->GetFirstElement() )
+		else if ( CXMLElement* pBody = pDownload->m_pXML->GetFirstElement() )
 		{
 			// Recreate metadata
 			TRACE( _T("Using download XML:%s"), pBody->ToString( FALSE, TRUE ) );
-			m_pSchema = SchemaCache.Get( pXML->GetAttributeValue(
+			m_pSchema = SchemaCache.Get( pDownload->m_pXML->GetAttributeValue(
 				CXMLAttribute::schemaName ) );
 			m_pMetadata = pBody->Clone();
 			m_bMetadataAuto = TRUE;

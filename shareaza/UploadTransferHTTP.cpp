@@ -501,10 +501,10 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 
 		if ( CDownload* pDownload = Downloads.FindByURN( pszURN ) )
 		{
-			if ( pDownload->GetMetadata() )
+			if ( pDownload->HasMetadata() )
 			{
 				m_sName	= pDownload->m_sName;
-				if ( CXMLElement* pMetadata	= pDownload->GetMetadata()->Clone() )
+				if ( CXMLElement* pMetadata	= pDownload->m_pXML->Clone() )
 					return RequestMetadata( pMetadata );
 			}
 		}
@@ -776,7 +776,7 @@ BOOL CUploadTransferHTTP::RequestPartialFile(CDownload* pDownload)
 	ASSERT( m_nFileBase == 0 );
 	
 	m_bTigerTree	= ( m_oTiger && pDownload->GetTigerTree() != NULL );
-	m_bMetadata		= ( pDownload->GetMetadata() != NULL );
+	m_bMetadata		= pDownload->HasMetadata();
 	
 	if ( m_sLocations.GetLength() )
 		pDownload->AddSourceURLs( m_sLocations, TRUE );

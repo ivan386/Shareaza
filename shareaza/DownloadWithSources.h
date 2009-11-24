@@ -50,12 +50,10 @@ public:
 
 class CDownloadWithSources : public CDownloadBase
 {
-// Construction
 protected:
 	CDownloadWithSources();
 	virtual ~CDownloadWithSources();
 	
-// Attributes
 private:
 	CList< CDownloadSource* >	m_pSources;			// Download sources
 	CList< CFailedSource* >		m_pFailedSources;	// Failed source with a timestamp when added
@@ -65,10 +63,10 @@ private:
 	int					m_nHTTPSourceCount;
 	int					m_nBTSourceCount;
 	int					m_nFTPSourceCount;
+
+public:
 	CXMLElement*		m_pXML;
 
-// Operations
-public:
 	CString				GetSourceURLs(CList< CString >* pState, int nMaximum, PROTOCOLID nProtocol, CDownloadSource* pExcept);
 	CString				GetTopFailedSources(int nMaximum, PROTOCOLID nProtocol);
 	DWORD				GetEffectiveSourceCount() const;
@@ -88,38 +86,30 @@ public:
     BOOL				AddSourceBT(const Hashes::BtGuid& oGUID, const IN_ADDR* pAddress, WORD nPort);
 	BOOL				AddSourceURL(LPCTSTR pszURL, BOOL bURN = FALSE, FILETIME* pLastSeen = NULL, int nRedirectionCount = 0, BOOL bFailed = FALSE);
 	int					AddSourceURLs(LPCTSTR pszURLs, BOOL bURN = FALSE, BOOL bFailed = FALSE);
-
 	// Remove source from list, add it to failed sources if bBan == TRUE
 	void				RemoveSource(const CDownloadSource* pSource, BOOL bBan);
 
 	virtual BOOL		OnQueryHits(const CQueryHit* pHits);
 	virtual void		Serialize(CArchive& ar, int nVersion /* DOWNLOAD_SER_VERSION */);
 	int					GetSourceColour();
+	// Get source iterator (first source position)
+	POSITION			GetIterator() const;
+	// Get next source
+	CDownloadSource*	GetNext(POSITION& rPosition) const;
+	// Get source count
+	INT_PTR				GetCount() const;
 
-// Implementation
+	bool				HasMetadata() const;
+
 protected:
 	void				RemoveOverlappingSources(QWORD nOffset, QWORD nLength);
 	BOOL				AddSourceInternal(CDownloadSource* pSource);
 	void				SortSource(CDownloadSource* pSource, BOOL bTop);
 	void				SortSource(CDownloadSource* pSource);
-
 	// Add new source to list, updating counters
 	void				InternalAdd(const CDownloadSource* pSource);
 	// Remove existing source from list, updating counters
 	void				InternalRemove(const CDownloadSource* pSource);
 
-private:
 	void				VoteSource(LPCTSTR pszUrl, bool bPositively);
-
-public:
-	// Get source iterator (first source position)
-	POSITION GetIterator() const;
-
-	// Get next source
-	CDownloadSource* GetNext(POSITION& rPosition) const;
-
-	// Get source count
-	INT_PTR GetCount() const;
-
-	CXMLElement* GetMetadata() const;
 };

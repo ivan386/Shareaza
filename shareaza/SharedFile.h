@@ -97,7 +97,7 @@ public:
 	BOOL			Rebuild();
 	BOOL			Rename(LPCTSTR pszName);
 	BOOL			Delete(BOOL bDeleteGhost = FALSE);
-	void			UpdateMetadata(const CDownload* pDownload);
+	void			UpdateMetadata(CDownload* pDownload);
 	BOOL			SetMetadata(CXMLElement*& pXML, BOOL bMerge = FALSE, BOOL bOverwrite = FALSE);
 	BOOL			MergeMetadata(CXMLElement*& pXML, BOOL bOverwrite);
 	void			ClearMetadata();

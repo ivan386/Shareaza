@@ -97,9 +97,9 @@ INT_PTR CDownloadWithSources::GetCount() const
 	return m_pSources.GetCount();
 }
 
-CXMLElement* CDownloadWithSources::GetMetadata() const
+bool CDownloadWithSources::HasMetadata() const
 {
-	return m_pXML;
+	return ( m_pXML != NULL );
 }
 
 DWORD CDownloadWithSources::GetSourceCount(BOOL bNoPush, BOOL bSane) const
