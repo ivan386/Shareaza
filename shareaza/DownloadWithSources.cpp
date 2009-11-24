@@ -371,7 +371,7 @@ BOOL CDownloadWithSources::AddSourceED2K(DWORD nClientID, WORD nClientPort, DWOR
 	return AddSourceInternal( new CDownloadSource( (CDownload*)this, nClientID, nClientPort, nServerIP, nServerPort, oGUID ) );
 }
 
-BOOL CDownloadWithSources::AddSourceBT(const Hashes::BtGuid& oGUID, IN_ADDR* pAddress, WORD nPort)
+BOOL CDownloadWithSources::AddSourceBT(const Hashes::BtGuid& oGUID, const IN_ADDR* pAddress, WORD nPort)
 {
 	// Unreachable (Push) BT sources should never be added.
 	if ( Network.IsFirewalledAddress( pAddress, Settings.Connection.IgnoreOwnIP ) )
@@ -1104,7 +1104,7 @@ int CDownloadWithSources::GetSourceColour()
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithSources serialize
 
-void CDownloadWithSources::Serialize(CArchive& ar, int nVersion)
+void CDownloadWithSources::Serialize(CArchive& ar, int nVersion /* DOWNLOAD_SER_VERSION */)
 {
 	CDownloadBase::Serialize( ar, nVersion );
 

@@ -60,7 +60,6 @@ CDownloadTransferHTTP::CDownloadTransferHTTP(CDownloadSource* pSource) :
 	m_bTigerFetch( FALSE ),
 	m_bTigerIgnore( FALSE ),
 	m_bMetaFetch( FALSE ),
-	m_bMetaIgnore( FALSE ),
 	m_bGotRange( FALSE ),
 	m_bGotRanges( FALSE ),
 	m_bQueueFlag( FALSE ),
@@ -234,14 +233,14 @@ BOOL CDownloadTransferHTTP::StartNextFragment()
 		
 		return SendRequest();
 	}
-	else if ( ! m_bMetaIgnore && m_sMetadata.GetLength() )
+	else if ( m_pSource && ! m_pSource->m_bMetaIgnore && ! m_sMetadata.IsEmpty() )
 	{
 		theApp.Message( MSG_INFO, IDS_DOWNLOAD_METADATA_REQUEST,
 			(LPCTSTR)m_pDownload->GetDisplayName(), (LPCTSTR)m_sAddress );
-		
-		m_bMetaFetch	= TRUE;
-		m_bMetaIgnore	= TRUE;
-		
+
+		m_bMetaFetch = TRUE;
+		m_pSource->m_bMetaIgnore = TRUE;
+
 		return SendRequest();
 	}
 	else if ( m_pDownload->GetFragment( this ) )
@@ -893,7 +892,8 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 	}
 	else if ( strHeader.CompareNoCase( _T("X-Metadata-Path") ) == 0 )
 	{
-		if ( ! m_bMetaIgnore && Settings.Downloads.Metadata ) m_sMetadata = strValue;
+		if ( Settings.Downloads.Metadata )
+			m_sMetadata = strValue;
 	}
 	else if ( strHeader.CompareNoCase( _T("X-TigerTree-Path") ) == 0 )
 	{

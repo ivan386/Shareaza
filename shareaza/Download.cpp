@@ -670,7 +670,7 @@ BOOL CDownload::Save(BOOL bFlush)
 //////////////////////////////////////////////////////////////////////
 // CDownload serialize
 
-void CDownload::Serialize(CArchive& ar, int nVersion)
+void CDownload::Serialize(CArchive& ar, int nVersion /* DOWNLOAD_SER_VERSION */)
 {
 	ASSERT( ! m_bComplete || m_bSeeding );
 
@@ -735,7 +735,7 @@ void CDownload::Serialize(CArchive& ar, int nVersion)
 	}
 }
 
-void CDownload::SerializeOld(CArchive& ar, int nVersion)
+void CDownload::SerializeOld(CArchive& ar, int nVersion /* DOWNLOAD_SER_VERSION */)
 {
 	ASSERT( ar.IsLoading() );
 

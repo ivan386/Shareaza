@@ -44,12 +44,11 @@ protected:
 	BOOL			m_bRangeFault;
 	BOOL			m_bKeepAlive;
 	BOOL			m_bHashMatch;
-	CString			m_sTigerTree;
+	CString			m_sTigerTree;		// X-TigerTree-Path
 	BOOL			m_bTigerFetch;
 	BOOL			m_bTigerIgnore;
-	CString			m_sMetadata;
+	CString			m_sMetadata;		// X-Metadata-Path
 	BOOL			m_bMetaFetch;
-	BOOL			m_bMetaIgnore;
 	BOOL			m_bGotRange;
 	BOOL			m_bGotRanges;
 	BOOL			m_bQueueFlag;

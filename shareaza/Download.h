@@ -21,7 +21,7 @@
 
 #pragma once
 
-#define DOWNLOAD_SER_VERSION	41
+#define DOWNLOAD_SER_VERSION	42
 // History:
 // 33 - added m_sSearchKeyword to CDownloadBase (CyberBob)
 // 34 - added m_bSeeding and m_sServingFileName to CDownloadWithTorrent (Rolandas)
@@ -32,6 +32,7 @@
 // 39 - added m_bClientExtended to CDownloadSource (Ryo-oh-ki)
 // 40 - added virtual fragmented file (Ryo-oh-ki)
 // 41 - added m_sName to CFragmentedFile (Ryo-oh-ki)
+// 42 - added m_bMetaIgnore to CDownloadSource (Ryo-oh-ki)
 
 #include "DownloadWithExtras.h"
 #include "Settings.h"
@@ -86,14 +87,14 @@ private:
 	DWORD		GetStartTimer() const;
 	void		OnDownloaded();
 	void		OnMoved();
-	void		SerializeOld(CArchive& ar, int nVersion);
+	void		SerializeOld(CArchive& ar, int nVersion /* DOWNLOAD_SER_VERSION */);
 
 // Overrides
 public:
 	virtual bool	IsPaused(bool bRealState = false) const;
 	virtual bool	IsCompleted() const;
 	virtual bool	IsTrying() const;		//Is the download currently trying to download?
-	virtual void	Serialize(CArchive& ar, int nVersion);
+	virtual void	Serialize(CArchive& ar, int nVersion /* DOWNLOAD_SER_VERSION */);
 
 	friend class CDownloadTransfer;		// GetVerifyLength
 	friend class CDownloadWithTorrent;	// m_bComplete

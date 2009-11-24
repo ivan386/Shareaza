@@ -53,68 +53,18 @@ static char THIS_FILE[]=__FILE__;
 // CDownloadSource construction
 
 CDownloadSource::CDownloadSource(const CDownload* pDownload)
-: m_oAvailable( pDownload->m_nSize ), m_oPastFragments( pDownload->m_nSize )
+	: m_oAvailable		( pDownload->m_nSize )
+	, m_oPastFragments	( pDownload->m_nSize )
 {
 	Construct( pDownload );
-}
-
-void CDownloadSource::Construct(const CDownload* pDownload)
-{
-	ASSERT( pDownload != NULL );
-
-	SYSTEMTIME pTime;
-	GetSystemTime( &pTime );
-
-	m_pDownload		= const_cast< CDownload* >( pDownload );
-	m_pTransfer		= NULL;
-	m_bSelected		= FALSE;
-
-	m_nProtocol		= PROTOCOL_NULL;
-	ZeroMemory( &m_pAddress, sizeof( m_pAddress ) );
-	m_nPort			= 0;
-	ZeroMemory( &m_pServerAddress, sizeof( m_pServerAddress ) );
-	m_nServerPort	= 0;
-	
-	m_nIndex		= 0;
-	m_bHashAuth		= FALSE;
-	m_bSHA1			= FALSE;
-	m_bTiger		= FALSE;
-	m_bED2K			= FALSE;
-	m_bBTH			= FALSE;
-	m_bMD5			= FALSE;
-	
-	m_nSpeed		= 0;
-	m_bPushOnly		= FALSE;
-	m_bCloseConn	= FALSE;
-	m_bReadContent	= FALSE;
-
-	ASSERT( SystemTimeToFileTime( &pTime, &m_tLastSeen ) );
-
-	m_nGnutella		= 0;
-	m_bClientExtended=FALSE;
-	
-	m_nSortOrder	= 0xFFFFFFFF;
-	m_nColour		= -1;
-	m_tAttempt		= 0;
-	m_bKeep			= FALSE;
-	m_nFailures		= 0;
-	m_nBusyCount	= 0;
-	m_nRedirectionCount = 0;
-	m_bPreviewRequestSent = FALSE;
-	m_bPreview = FALSE;
-}
-
-CDownloadSource::~CDownloadSource()
-{
-	ASSUME_LOCK( Transfers.m_pSection );
-	ASSERT( m_pTransfer == NULL );
 }
 
 //////////////////////////////////////////////////////////////////////
 // CDownloadSource construction from a query hit
 
 CDownloadSource::CDownloadSource(const CDownload* pDownload, const CQueryHit* pHit)
-: m_oAvailable( pDownload->m_nSize ), m_oPastFragments( pDownload->m_nSize )
+	: m_oAvailable		( pDownload->m_nSize )
+	, m_oPastFragments	( pDownload->m_nSize )
 {
 	Construct( pDownload );
 	
@@ -175,8 +125,10 @@ CDownloadSource::CDownloadSource(const CDownload* pDownload, const CQueryHit* pH
 //////////////////////////////////////////////////////////////////////
 // CDownloadSource construction from eDonkey source transfer
 
-CDownloadSource::CDownloadSource(const CDownload* pDownload, DWORD nClientID, WORD nClientPort, DWORD nServerIP, WORD nServerPort, const Hashes::Guid& oGUID)
-: m_oAvailable( pDownload->m_nSize ), m_oPastFragments( pDownload->m_nSize )
+CDownloadSource::CDownloadSource(const CDownload* pDownload, DWORD nClientID,
+	WORD nClientPort, DWORD nServerIP, WORD nServerPort, const Hashes::Guid& oGUID)
+	: m_oAvailable		( pDownload->m_nSize )
+	, m_oPastFragments	( pDownload->m_nSize )
 {
 	Construct( pDownload );
 	
@@ -193,23 +145,26 @@ CDownloadSource::CDownloadSource(const CDownload* pDownload, DWORD nClientID, WO
 			(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)nClientID ) ), nClientPort,
             (LPCTSTR)m_pDownload->m_oED2K.toString(), m_pDownload->m_nSize );
 	}
-	
-	m_oGUID = oGUID;
-	
+
 	m_bED2K		= TRUE;
+	m_oGUID		= oGUID;
 	m_sServer	= _T("eDonkey2000");
-	
+
 	ResolveURL();
 }
 
 //////////////////////////////////////////////////////////////////////
 // CDownloadSource construction from BitTorrent
 
-CDownloadSource::CDownloadSource(const CDownload* pDownload, const Hashes::BtGuid& oGUID, IN_ADDR* pAddress, WORD nPort)
-: m_oAvailable( pDownload->m_nSize ), m_oPastFragments( pDownload->m_nSize )
+CDownloadSource::CDownloadSource(const CDownload* pDownload,
+	const Hashes::BtGuid& oGUID, const IN_ADDR* pAddress, WORD nPort)
+	: m_oAvailable		( pDownload->m_nSize )
+	, m_oPastFragments	( pDownload->m_nSize )
 {
 	Construct( pDownload );
-	
+
+	ASSERT( pAddress != NULL );
+
 	if ( oGUID )
 	{
 		m_sURL.Format( _T("btc://%s:%i/%s/%s/"),
@@ -225,35 +180,83 @@ CDownloadSource::CDownloadSource(const CDownload* pDownload, const Hashes::BtGui
 	}
 
 	m_bBTH		= TRUE;
-	m_oGUID	= transformGuid( oGUID );
+	m_oGUID		= transformGuid( oGUID );
 	m_sServer	= _T("BitTorrent");
-	
+
 	ResolveURL();
 }
 
 //////////////////////////////////////////////////////////////////////
 // CDownloadSource construction from URL
 
-CDownloadSource::CDownloadSource(const CDownload* pDownload, LPCTSTR pszURL, BOOL /*bSHA1*/, BOOL bHashAuth, FILETIME* pLastSeen, int nRedirectionCount)
-: m_oAvailable( pDownload->m_nSize ), m_oPastFragments( pDownload->m_nSize )
+CDownloadSource::CDownloadSource(const CDownload* pDownload, LPCTSTR pszURL,
+	BOOL /*bSHA1*/, BOOL bHashAuth, FILETIME* pLastSeen, int nRedirectionCount)
+	: m_oAvailable		( pDownload->m_nSize )
+	, m_oPastFragments	( pDownload->m_nSize )
 {
 	Construct( pDownload );
-	
+
 	ASSERT( pszURL != NULL );
-	m_sURL = pszURL;
-	
-	if ( ! ResolveURL() ) return;
-	
+
+	m_sURL			= pszURL;
 	m_bHashAuth		= bHashAuth;
-	
-	if ( pLastSeen != NULL )
+
+	if ( pLastSeen )
 	{
 		FILETIME tNow = m_tLastSeen;
 		(LONGLONG&)tNow += 10000000;
-		if ( CompareFileTime( pLastSeen, &tNow ) <= 0 ) m_tLastSeen = *pLastSeen;
+		if ( CompareFileTime( pLastSeen, &tNow ) <= 0 )
+			m_tLastSeen = *pLastSeen;
 	}
 
 	m_nRedirectionCount = nRedirectionCount;
+
+	ResolveURL();
+}
+
+void CDownloadSource::Construct(const CDownload* pDownload)
+{
+	ASSUME_LOCK( Transfers.m_pSection );
+	ASSERT( pDownload != NULL );
+
+	m_pTransfer				= NULL;
+	m_pDownload				= const_cast< CDownload* >( pDownload );
+	m_bSelected				= FALSE;
+	m_nProtocol				= PROTOCOL_NULL;
+	m_pAddress.s_addr		= 0;
+	m_nPort					= 0;
+	m_pServerAddress.s_addr	= 0;
+	m_nServerPort			= 0;
+	m_nIndex				= 0;
+	m_bHashAuth				= FALSE;
+	m_bSHA1					= FALSE;
+	m_bTiger				= FALSE;
+	m_bED2K					= FALSE;
+	m_bBTH					= FALSE;
+	m_bMD5					= FALSE;
+	m_nSpeed				= 0;
+	m_bPushOnly				= FALSE;
+	m_bCloseConn			= FALSE;
+	m_bReadContent			= FALSE;
+	GetSystemTimeAsFileTime( &m_tLastSeen );
+	m_nGnutella				= 0;
+	m_bClientExtended		= FALSE;
+	m_nSortOrder			= 0xFFFFFFFF;
+	m_nColour				= -1;
+	m_tAttempt				= 0;
+	m_bKeep					= FALSE;
+	m_nFailures				= 0;
+	m_nBusyCount			= 0;
+	m_nRedirectionCount		= 0;
+	m_bPreview				= FALSE;
+	m_bPreviewRequestSent	= FALSE;
+	m_bMetaIgnore			= FALSE;
+}
+
+CDownloadSource::~CDownloadSource()
+{
+	ASSUME_LOCK( Transfers.m_pSection );
+	ASSERT( m_pTransfer == NULL );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -338,6 +341,7 @@ void CDownloadSource::Serialize(CArchive& ar, int nVersion /* DOWNLOAD_SER_VERSI
         SerializeOut2( ar, m_oPastFragments );
 
 		ar << m_bClientExtended;
+		ar << m_bMetaIgnore;
 	}
 	else if ( nVersion >= 21 )
 	{
@@ -388,6 +392,9 @@ void CDownloadSource::Serialize(CArchive& ar, int nVersion /* DOWNLOAD_SER_VERSI
 			ar >> m_bClientExtended;
 		else
 			m_bClientExtended = VendorCache.IsExtended( m_sServer );
+
+		if ( nVersion >= 42 )
+			ar >> m_bMetaIgnore;
 	}
 	else
 	{

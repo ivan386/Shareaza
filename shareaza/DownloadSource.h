@@ -35,7 +35,7 @@ public:
 	CDownloadSource(const CDownload* pDownload);
 	CDownloadSource(const CDownload* pDownload, const CQueryHit* pHit);
 	CDownloadSource(const CDownload* pDownload, DWORD nClientID, WORD nClientPort, DWORD nServerIP, WORD nServerPort, const Hashes::Guid& oGUID);
-    CDownloadSource(const CDownload* pDownload, const Hashes::BtGuid& oGUID, IN_ADDR* pAddress, WORD nPort);
+    CDownloadSource(const CDownload* pDownload, const Hashes::BtGuid& oGUID, const IN_ADDR* pAddress, WORD nPort);
 	CDownloadSource(const CDownload* pDownload, LPCTSTR pszURL, BOOL bSHA1 = FALSE, BOOL bHashAuth = FALSE, FILETIME* pLastSeen = NULL, int nRedirectionCount = 0);
 	~CDownloadSource();
 
@@ -89,10 +89,11 @@ public:
 	BOOL				m_bPreview;				// Does the user allow previews?
 	CString				m_sPreview;				// if empty it has the default /gnutella/preview/v1?urn:xyz format
 	BOOL				m_bPreviewRequestSent;
+	BOOL				m_bMetaIgnore;			// Ignore metadata from this source (for example already got)
 
 public:
 	BOOL		ResolveURL();
-	void		Serialize(CArchive& ar, int nVersion);
+	void		Serialize(CArchive& ar, int nVersion /* DOWNLOAD_SER_VERSION */);
 	BOOL		CanInitiate(BOOL bNetwork, BOOL bEstablished);
 	// Remove source from download, add it to failed sources if bBan == TRUE, and destroy source itself
 	void		Remove(BOOL bCloseTransfer = TRUE, BOOL bBan = FALSE);
