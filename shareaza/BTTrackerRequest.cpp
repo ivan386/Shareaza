@@ -45,10 +45,14 @@ CBTTrackerRequest::CBTTrackerRequest(CDownloadWithTorrent* pDownload, LPCTSTR ps
 {
 	ASSERT( pDownload != NULL );
 	ASSERT( pDownload->IsTorrent() ); 
-		
-	CString strURL;
-	// Create the basic URL
+
 	CString strAddress = pDownload->m_pTorrent.GetTrackerAddress();
+	QWORD nLeft = pDownload->GetVolumeRemaining();
+	if ( nLeft == SIZE_UNKNOWN )
+		nLeft = 0;
+
+	// Create the basic URL (http://wiki.theory.org/BitTorrentSpecification#Tracker_HTTP.2FHTTPS_Protocol)
+	CString strURL;
 	strURL.Format( _T("%s%cinfo_hash=%s&peer_id=%s&port=%i&uploaded=%I64i&downloaded=%I64i&left=%I64i&compact=1"),
 		strAddress.TrimRight( _T('&') ),
 		( ( strAddress.Find( _T('?') ) != -1 ) ? _T('&') : _T('?') ),
@@ -57,8 +61,8 @@ CBTTrackerRequest::CBTTrackerRequest(CDownloadWithTorrent* pDownload, LPCTSTR ps
 		Network.m_pHost.sin_port ? (int)htons( Network.m_pHost.sin_port ) : (int)Settings.Connection.InPort,
 		pDownload->m_nTorrentUploaded,
 		pDownload->m_nTorrentDownloaded,
-		pDownload->GetVolumeRemaining() );
-	
+		nLeft );
+
 	// If an event was specified, add it.
 	if ( pszVerb != NULL )
 	{	
