@@ -1965,20 +1965,25 @@ BOOL CDiscoveryServices::RunServerMet()
 
 	if ( m_hRequest == NULL ) return FALSE;
 
-	DWORD nRemaining = 0;
-	BYTE pBuffer[1024];
+	DWORD nLength = 0, nRemaining = 0;
+	const DWORD nBufferLength = 1024;
+	auto_array< BYTE > pBuffer( new BYTE[ nBufferLength ] );
 	CMemFile pFile;
 
 	while ( InternetQueryDataAvailable( m_hRequest, &nRemaining, 0, 0 ) && nRemaining > 0 )
 	{
+		nLength += nRemaining;
 		while ( nRemaining > 0 )
 		{
-			DWORD nBuffer = min( nRemaining, 1024ul );
-			InternetReadFile( m_hRequest, pBuffer, nBuffer, &nBuffer );
-			pFile.Write( pBuffer, nBuffer );
+			DWORD nBuffer = min( nRemaining, nBufferLength );
+			InternetReadFile( m_hRequest, pBuffer.get(), nBuffer, &nBuffer );
+			pFile.Write( pBuffer.get(), nBuffer );
 			nRemaining -= nBuffer;
 		}
 	}
+
+	if ( ! nLength )
+		return FALSE;
 
 	pFile.Seek( 0, CFile::begin );
 
