@@ -53,7 +53,6 @@ protected:
 	DWORD					m_tLastKeepAlive;
 	DWORD					m_dUtMetadataID;
 	DWORD					m_dUtMetadataSize;
-	CBuffer					m_oBitfield;		// Until have no torrent info
 
 // Operations
 public:

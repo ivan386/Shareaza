@@ -1,7 +1,7 @@
 //
 // DownloadTransferBT.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -18,9 +18,6 @@
 // along with Shareaza; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-
-#if !defined(AFX_DOWNLOADTRANSFERBT_H__80A2A47F_DE35_4DB3_ACF7_8B6BC023AD44__INCLUDED_)
-#define AFX_DOWNLOADTRANSFERBT_H__80A2A47F_DE35_4DB3_ACF7_8B6BC023AD44__INCLUDED_
 
 #pragma once
 
@@ -44,6 +41,8 @@ public:
 	BOOL			m_bInterested;
 public:
 	BYTE*			m_pAvailable;
+	DWORD			m_nAvailable;
+	BOOL			m_bAvailable;
 	Fragments::Queue m_oRequested;
 	DWORD			m_tRunThrottle;
 	DWORD			m_tSourceRequest;
@@ -73,5 +72,3 @@ protected:
 	BOOL	SendRequests();
 	BOOL	SelectFragment(const Fragments::List& oPossible, QWORD& nOffset, QWORD& nLength);
 };
-
-#endif // !defined(AFX_DOWNLOADTRANSFERBT_H__80A2A47F_DE35_4DB3_ACF7_8B6BC023AD44__INCLUDED_)

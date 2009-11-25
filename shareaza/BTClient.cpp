@@ -51,21 +51,24 @@ static char THIS_FILE[]=__FILE__;
 // CBTClient construction
 
 CBTClient::CBTClient()
-	:	m_bExchange			( FALSE )
-	,	m_pUpload			( NULL )
-	,	m_pDownload			( NULL )
-	,	m_pDownloadTransfer	( NULL )
-	,	m_bShake			( FALSE )
-	,	m_bOnline			( FALSE )
-	,	m_bClosing			( FALSE )
-	,	m_dUtMetadataID		( 0 )
-	,	m_tLastKeepAlive	( GetTickCount() )
+	: m_bExchange			( FALSE )
+	, m_bExtended			( FALSE )
+	, m_pUpload				( NULL )
+	, m_pDownload			( NULL )
+	, m_pDownloadTransfer	( NULL )
+	, m_bShake				( FALSE )
+	, m_bOnline				( FALSE )
+	, m_bClosing			( FALSE )
+	, m_tLastKeepAlive		( GetTickCount() )
+	, m_dUtMetadataID		( 0 )
+	, m_dUtMetadataSize		( 0 )
 {
 	m_sUserAgent = _T("BitTorrent");
 	m_mInput.pLimit = m_mOutput.pLimit = &Settings.Bandwidth.Request;
 
 	if ( Settings.General.DebugBTSources )
 		theApp.Message( MSG_DEBUG, L"Adding BT client to collection: %s", m_sAddress );
+
 	BTClients.Add( this );
 }
 
@@ -78,6 +81,7 @@ CBTClient::~CBTClient()
 
 	if ( Settings.General.DebugBTSources )
 		theApp.Message( MSG_DEBUG, L"Removing BT client from collection: %s", m_sAddress );
+
 	BTClients.Remove( this );
 }
 
@@ -1186,8 +1190,7 @@ BOOL CBTClient::OnExtended(CBTPacket* pPacket)
 				QWORD nTotalSize = pRoot->GetNode( "total_size" )->GetInt();
 				if ( m_pDownload->m_pTorrent.LoadInfoPiece( nTotalSize, nPiece, pPacket->m_pBuffer, pPacket->m_nLength ) ) // If full info loaded
 				{
-					if ( m_pDownload->SetTorrent( m_pDownload->m_pTorrent ) )
-						m_pDownload->Resume();
+					 m_pDownload->SetTorrent( m_pDownload->m_pTorrent );
 				}
 				else
 				{
