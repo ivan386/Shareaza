@@ -1,7 +1,7 @@
 ; *** Inno Setup version 5.1.11+ English messages ***
 ;
 ; To download user-contributed translations of this file, go to:
-;   http://www.jrsoftware.org/is3rdparty.php
+;   http://www.jrsoftware.org/files/istrans/
 ;
 ; Note: When translating this text, do not add periods (.) to the end of
 ; messages that didn't have them already, because on those messages Inno
@@ -308,10 +308,38 @@ StatusUninstalling=Uninstalling %1...
 
 NameAndVersion=%1 version %2
 AdditionalIcons=Additional icons:
-CreateDesktopIcon=Display a &desktop icon
-CreateQuickLaunchIcon=Display a &Quick Launch icon
+CreateDesktopIcon=Create a &desktop icon
+CreateQuickLaunchIcon=Create a &Quick Launch icon
 ProgramOnTheWeb=%1 on the Web
 UninstallProgram=Uninstall %1
 LaunchProgram=Launch %1
 AssocFileExtension=&Associate %1 with the %2 file extension
 AssocingFileExtension=Associating %1 with the %2 file extension...
+
+components_plugins=Plugins
+components_skins=Skins
+tasks_languages=Multi-language
+tasks_allusers=All users
+tasks_selectusers=Install %1 for:
+tasks_currentuser=%1 only
+tasks_multisetup=Enable multi-user support
+tasks_firewall=Add an exception to the Windows Firewall
+tasks_upnp=Enable discovery of UPnP devices
+tasks_deleteoldsetup=Delete old installers
+tasks_resetdiscoveryhostcache=Reset Discovery and Hostcache
+run_skinexe=Running skin installation...
+reg_incomingchat=Incoming chat message
+reg_apptitle=Shareaza Ultimate File Sharing
+icons_license=License
+icons_uninstall=Uninstall
+icons_downloads=Downloads
+icons_basicmode=Basic Mode
+icons_tabbedmode=Tabbed Mode
+icons_windowedmode=Windowed Mode
+dialog_shutdown=%1 is currently running. Would you like %1 to be shutdown so the installation can continue?
+dialog_firewall=Setup failed to add Shareaza to the Windows Firewall.%nPlease add Shareaza to the exception list manually.
+dialog_malwaredetected=A malware has been detected on your system at %1, please remove it with a virus/malware scanner before installing Shareaza. Do you want to exit now?
+page_viruswarning_text=When using the internet, you should always ensure you have an up-to-date virus scanner to protect you from trojans, worms, and other malicious programs. You can find list of good virus scanners and other security tips to protect your computer by following this link:
+page_viruswarning_title=Virus Warning
+page_viruswarning_subtitle=Do you have an AntiVirus program installed?
+PathNotExist=Error, the path of the %1 folder doesn't exist

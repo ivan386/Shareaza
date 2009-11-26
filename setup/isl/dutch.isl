@@ -4,7 +4,7 @@
 ;
 ; Maintained by Martijn Laan (mlaan@wintax.nl)
 ;
-; $jrsoftware: issrc/Files/Languages/Dutch.isl,v 1.21 2007/03/06 12:56:38 mlaan Exp $
+; $jrsoftware: issrc/Files/Languages/Dutch.isl,v 1.23 2009/09/25 07:23:54 mlaan Exp $
                                      
 [LangOptions]                
 LanguageName=Nederlands      
@@ -123,7 +123,7 @@ WizardSelectDir=Kies de doelmap
 SelectDirDesc=Waar moet [name] geïnstalleerd worden?
 SelectDirLabel3=Setup zal [name] in de volgende map installeren.
 SelectDirBrowseLabel=Klik op Volgende om door te gaan. Klik op Bladeren om een andere map te kiezen.
-DiskSpaceMBLabel=Er is tenminste [mb] MB vrije schijfruimte vereist.
+DiskSpaceMBLabel=Er is ten minste [mb] MB vrije schijfruimte vereist.
 ToUNCPathname=Setup kan niet installeren naar een UNC-padnaam. Als u wilt installeren naar een netwerk, moet u een netwerkverbinding maken.
 InvalidPath=U moet een volledig pad met stationsletter invoeren; bijvoorbeeld:%nC:\APP%n%nof een UNC pad zoals:%n%n\\server\share
 InvalidDrive=Het geselecteerde station bestaat niet. Kies een ander station.
@@ -181,7 +181,7 @@ ReadyMemoTasks=Extra taken:
 ; *** "Preparing to Install" wizard page
 WizardPreparing=Bezig met het voorbereiden van de installatie
 PreparingDesc=Bezig met het voorbereiden van [name] installatie.
-PreviousInstallNotCompleted=De installatie/verwijdering van een vorig programma is niet voltooid. U moet uw computer opnieuw opstarten om die installatie te voltooien.%n%nStart [name] Setup nogmaals als uw computer opnieuw is opgetart .
+PreviousInstallNotCompleted=De installatie/verwijdering van een vorig programma is niet voltooid. U moet uw computer opnieuw opstarten om die installatie te voltooien.%n%nStart [name] Setup nogmaals als uw computer opnieuw is opgestart.
 CannotContinue=Setup kan niet doorgaan. Klik op annuleren om af te sluiten.
 
 ; *** "Installing" wizard page
@@ -295,3 +295,31 @@ UninstallProgram=Verwijder %1
 LaunchProgram=&Start %1
 AssocFileExtension=&Koppel %1 aan de %2 bestandsextensie
 AssocingFileExtension=Bezig met koppelen van %1 aan de %2 bestandsextensie...
+
+components_plugins=Plugins
+components_skins=Skins
+tasks_languages=Talen
+tasks_allusers=Alle gebruikers
+tasks_selectusers=Installeer %1 voor:
+tasks_currentuser=Alleen %1
+tasks_multisetup=Ondersteuning voor meerdere gebruikers inschakelen
+tasks_firewall=Een uitzondering aan de Windows Firewall toevoegen
+tasks_upnp=Configureer automatisch mijn router
+tasks_deleteoldsetup=Oude installatieprogramma's wissen
+tasks_resetdiscoveryhostcache=Herstel de Discovery- en Hostcachelist
+run_skinexe=Skin installatie uitvoeren...
+reg_incomingchat=Nieuw chat bericht
+reg_apptitle=Shareaza: De Ultieme FileSharer
+icons_license=Gebruiksovereenkomst
+icons_uninstall=Verwijderen
+icons_downloads=Downloads
+icons_basicmode=Normale Stijl
+icons_tabbedmode=Tabblad Stijl
+icons_windowedmode=Venster Stijl
+dialog_shutdown=%1 is momenteel open. Wil je %1 afsluiten zodat de installatie verder kan gaan?
+dialog_firewall=Het installatieprogramma kon Shareaza niet toevoegen aan de Windows Firewall.%nVoeg Shareaza alstublieft manueel toe aan de uitzonderingenlijst.
+dialog_malwaredetected=Er werd malware gevonden op %1, verwijder het alstublieft met een virus/malware scanner vooraleer Shareaza verder te installeren. Wil je nu sluiten?
+page_viruswarning_text=Als u het internet gebruikt moet u een recente virusscanner gebruiken om u te beschermen tegen virussen, wormen en andere kwaadaardige programma's. U kan een lijst van virusscanners en andere veiligheidstips vinden om uw computer the beschermen door deze link te volgen:
+page_viruswarning_title=Virus Waarschuwing
+page_viruswarning_subtitle=Heeft u een antivirus programma geïnstalleerd?
+PathNotExist=Error, the path of the %1 folder doesn't exist

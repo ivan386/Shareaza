@@ -20,6 +20,7 @@ WelcomeFontSize=11
 ;TitleFontSize=29
 ;CopyrightFontName=Arial
 ;CopyrightFontSize=8
+RightToLeft=yes
 
 [Messages]
 
@@ -311,3 +312,31 @@ UninstallProgram=הסר את %1
 LaunchProgram=הפעל %1
 AssocFileExtension=&קשר את %1 עם סיומת הקובץ %2
 AssocingFileExtension=מקשר את %1 עם סיומת הקובץ %2
+
+components_plugins=תוספים
+components_skins=מעטפות
+tasks_languages=שפות
+tasks_allusers=כל המשתמשים
+tasks_selectusers=התקן את %1 עבור
+tasks_currentuser=%1 רק
+tasks_multisetup=אפשר תמיכה למשתמשים מרובים
+tasks_firewall=הוסף כלל לחומת האש לאיפשור שרזה
+tasks_upnp=Enable discovery of UPnP devices
+tasks_deleteoldsetup=מחק התקנות ישנות
+tasks_resetdiscoveryhostcache=Reset Discovery and Hostcache
+run_skinexe=מריץ התקנת מעטפות...
+reg_incomingchat=הודעת צ'אט נכנסת
+reg_apptitle=שיתוף הקבצים האולטימטיבי של שרזה
+icons_license=רשיון
+icons_uninstall=הסר התקנה
+icons_downloads=הורדות
+icons_basicmode=מצב רגיל
+icons_tabbedmode=מצב טאבים
+icons_windowedmode=מצב חלונות
+dialog_shutdown=?כרגע %1 פועל האם את רוצה לסגור את %1 כך שההתקנה תוכל להמשך
+dialog_firewall=ההתקנה נכשלה להוסיף את שרזה אל חומת האש%nאנא הוסף את שרזה לרשימת החריגים בחומת האש באופן ידני
+dialog_malwaredetected=A malware has been detected on your system at %1, please remove it with a virus/malware scanner before installing Shareaza. Do you want to exit now?
+page_viruswarning_text=כשאת/ה משתמש באינטרנט עלייך תמיד לוודא שמותקן אצלך אנטי-וירוס מעודכן להגנה מפני וירוסים/תולעים/רוגלות, לרשימה של אנטי-וירוסים וטיפים בנושא אבטחה פנה לקישור הבא:
+page_viruswarning_title=התראת וירוס
+page_viruswarning_subtitle=?האם יש לך תוכנת אנטי-וירוס מותקנת
+PathNotExist=Error, the path of the %1 folder doesn't exist

@@ -298,7 +298,9 @@ SharedFileNameLabel=Filnamn:
 SharedFileLocationLabel=Plats:
 WizardUninstalling=Avinstallationsstatus
 StatusUninstalling=Avinstallerar %1...
+
 [CustomMessages]
+
 NameAndVersion=%1 version %2
 AdditionalIcons=Återstående ikoner:
 CreateDesktopIcon=Skapa en ikon på skrivbordet
@@ -308,3 +310,31 @@ UninstallProgram=Avinstallera %1
 LaunchProgram=Starta %1
 AssocFileExtension=Associera %1 med %2 filnamnstillägg
 AssocingFileExtension=Associerar %1 med %2 filnamnstillägg...
+
+components_plugins=Insticksprogram
+components_skins=Skinn
+tasks_languages=Språk
+tasks_allusers=Alla användare
+tasks_selectusers=Installera %1 för:
+tasks_currentuser=%1 endast
+tasks_multisetup=Aktivera stöd för flera användare
+tasks_firewall=Lägg till ett undantag till Windows brandvägg
+tasks_upnp=Tillåt upptäckt av UPnP-enheter
+tasks_deleteoldsetup=Radera gamla installationer
+tasks_resetdiscoveryhostcache=Återställ upptäckstjänster och värdcache
+run_skinexe=Kör skinninstallation...
+reg_incomingchat=Inkommande chattmeddelande
+reg_apptitle=Shareaza ultimat fildelning
+icons_license=Licens
+icons_uninstall=Avinstallera
+icons_downloads=Nedladdningar
+icons_basicmode=Normalt läge
+icons_tabbedmode=Tabbläge
+icons_windowedmode=Fönsterläge
+dialog_shutdown=%1 körs för tillfället. Vill du att %1 ska stängas ned så att installationen kan fortsätta?
+dialog_firewall=Installationsprogrammet lyckades inte lägga till Shareaza till brandväggen i Windows .%nLägg till Shareaza till undantagslistan manuellt.
+dialog_malwaredetected=Skadlig programvara har hittats på din dator vid %1, ta bort den med ett antivirusprogram innan du installerar Shareaza. Vill du avbryta nu?
+page_viruswarning_text=När du använder internet ska du alltid försäkra dig om att du har ett uppdaterat antivirusprogram som skyddar dig mot trojaner, maskar och andra skadliga program. Här finns en lista på bra antivirusprogram och andra säkerhetstips för att skydda din dator:
+page_viruswarning_title=Virusvarning
+page_viruswarning_subtitle=Har du ett antivirusprogram installerat?
+PathNotExist=Sökvägen till mappen %1 existerar inte

@@ -3,7 +3,7 @@
 ; Finnish translation by Antti Karttunen
 ; E-mail: antti.karttunen@joensuu.fi
 ; Translation home page: http://cc.joensuu.fi/~ankarttu/innosetup/
-; Last modification date: 2007-02-27
+; Last modification date: 2008-04-23
 
 [LangOptions]
 LanguageName=Suomi
@@ -163,7 +163,7 @@ MustEnterGroupName=Kansiolle pitää antaa nimi.
 GroupNameTooLong=Kansion nimi tai polku on liian pitkä.
 InvalidGroupName=Virheellinen kansion nimi.
 BadGroupName=Kansion nimessä ei saa olla seuraavia merkkejä:%n%n%1
-NoProgramGroupCheck2=&Älä luo kansiota Käynnistä-valikkoon
+NoProgramGroupCheck2=Älä luo k&ansiota Käynnistä-valikkoon
 
 ; *** "Ready to Install" wizard page
 WizardReady=Valmiina asennukseen
@@ -287,10 +287,38 @@ StatusUninstalling=Poistetaan %1...
 
 NameAndVersion=%1 versio %2
 AdditionalIcons=Lisäkuvakkeet:
-CreateDesktopIcon=Luo kuvake &työpöydälle
+CreateDesktopIcon=Lu&o kuvake työpöydälle
 CreateQuickLaunchIcon=Luo kuvake &pikakäynnistyspalkkiin
 ProgramOnTheWeb=%1 Internetissä
 UninstallProgram=Poista %1
-LaunchProgram=Käynnistä %1
+LaunchProgram=&Käynnistä %1
 AssocFileExtension=&Yhdistä %1 tiedostopäätteeseen %2
 AssocingFileExtension=Yhdistetään %1 tiedostopäätteeseen %2 ...
+
+components_plugins=Laajennukset
+components_skins=Ulkoasut
+tasks_languages=Kielet
+tasks_allusers=Kaikille käyttäjille
+tasks_selectusers=Asenna %1 käyttäjille:
+tasks_currentuser=%1 vain
+tasks_multisetup=Asenna kaikille koneen käyttäjille
+tasks_firewall=Lisää poikkeus Windowsin palomuuriin
+tasks_upnp=Enable discovery of UPnP devices
+tasks_deleteoldsetup=Poista vanhat asennusohjelmat
+tasks_resetdiscoveryhostcache=Reset Discovery and Hostcache
+run_skinexe=Käynnissä ulkoasujen asennus...
+reg_incomingchat=Tuleva keskusteluviesti
+reg_apptitle=Shareaza jako-ohjelma
+icons_license=Lisenssi
+icons_uninstall=Poista
+icons_downloads=Lataukset
+icons_basicmode=Normaali Tila
+icons_tabbedmode=Välilehti Tila
+icons_windowedmode=Ikkunoitu Tila
+dialog_shutdown=%1 on tällä hetkellä käynnissä. Haluatko että %1 suljetaan jotta asennus voisi jatkua?
+dialog_firewall=Asentaja epäonnistui lisätessään Shareazaa Windowsiin Firewall.%nOle hyvä ja lisää Shareaza poikkeuslistaan manuaalisesti.
+dialog_malwaredetected=A malware has been detected on your system at %1, please remove it with a virus/malware scanner before installing Shareaza. Do you want to exit now?
+page_viruswarning_text=Kun käytät internetiä, sinun tulee aina varmistaa että sinulla on viimeisimmät päivitykset virusohjelmissasi jotka suojaavat sinua troijalaisilta, madoilta, ja muilta haittaohjelmilta. Löydät hyvän listan hyvistä virusohjelmista ja turvallisuusvinkkejä seuraavista linkeistä:
+page_viruswarning_title=Virus Varoitus
+page_viruswarning_subtitle=Onko sinulla AntiVirus ohjelmaa asennettuna?
+PathNotExist=Error, the path of the %1 folder doesn't exist

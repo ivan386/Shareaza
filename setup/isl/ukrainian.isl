@@ -304,4 +304,3 @@ UninstallProgram=Деінсталювати %1
 LaunchProgram=Запустити %1
 AssocFileExtension=Звязати %1 з файлами, котрі мають розширення %2
 AssocingFileExtension=Звязування %1 з файлами %2
- 

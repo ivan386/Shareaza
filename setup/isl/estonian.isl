@@ -316,7 +316,9 @@ SharedFileNameLabel=Faili nimi:
 SharedFileLocationLabel=Asukoht:
 WizardUninstalling=Kustutamise staatus
 StatusUninstalling=%1 - kustutan
+
 [CustomMessages]
+
 NameAndVersion=%1 versioon %2.
 AdditionalIcons=Täiendavad ikoonid:
 CreateDesktopIcon=Loo &töölaua ikoon
@@ -326,3 +328,31 @@ UninstallProgram=Eemalda %1
 LaunchProgram=Käivita %1
 AssocFileExtension=&Seosta %1 faili %2 laiendiga.
 AssocingFileExtension=Seostan %1 faili %2 laiendiga...
+
+components_plugins=Pluginad
+components_skins=Nahad
+tasks_languages=Keeled
+tasks_allusers=Kõik kasutajad
+tasks_selectusers=Installi %1 jaoks:
+tasks_currentuser=%1 ainult
+tasks_multisetup=Võimalda mitmekasutaja tugi
+tasks_firewall=Lisa erand Windowsi Tulemüüri
+tasks_upnp=Enable discovery of UPnP devices
+tasks_deleteoldsetup=Kustuta vanad installerid
+tasks_resetdiscoveryhostcache=Reset Discovery and Hostcache
+run_skinexe=Käivitan Naha installi...
+reg_incomingchat=Sisse tulev vestlusteade
+reg_apptitle=Shareaza Ülim Failijagamine
+icons_license=Litsents
+icons_uninstall=Uninstalli
+icons_downloads=Tõmbamised
+icons_basicmode=Tavaline Vaade
+icons_tabbedmode=Sakiline Vaade
+icons_windowedmode=Akendega Vaade
+dialog_shutdown=%1 töötab hetkel. Kas tahad  %1 sulgeda, et saaksid installeerimist jätkata?
+dialog_firewall=Installeril ebaõnnestus Shareaza lisamine Windowsi Tulemüüri.%Palun lisa Shareaza käsitsi erandite nimekirja.
+dialog_malwaredetected=A malware has been detected on your system at %1, please remove it with a virus/malware scanner before installing Shareaza. Do you want to exit now?
+page_viruswarning_text=Internetti kasutades peaksid kontrollima, et sul oleks uusim viirusetõrje, et kaitsta ennast troojalaste, usside, viiruste ja teiste kahjulike programmide eest. Sa leiad nimekirja headest viirus skänneritest ja teisi turva nõuandeid oma arvuti kaitseks sellelt lingilt:
+page_viruswarning_title=Viiruse Hoiatus
+page_viruswarning_subtitle=Kas sul on AntiVirus programm installeeeritud?
+PathNotExist=Error, the path of the %1 folder doesn't exist

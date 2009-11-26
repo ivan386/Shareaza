@@ -2,7 +2,7 @@
 ;
 ; Maintained by NARS (nars AT gmx.net)
 ;
-; $jrsoftware: issrc/Files/Languages/Portuguese.isl,v 1.4 2007/02/26 23:46:46 nars Exp $
+; $jrsoftware: issrc/Files/Languages/Portuguese.isl,v 1.5 2008/02/21 22:56:57 nars Exp $
 
 [LangOptions]
 LanguageName=Portugu<00EA>s (Portugal)
@@ -113,7 +113,7 @@ WizardUserInfo=Informações do utilizador
 UserInfoDesc=Introduza as suas informações.
 UserInfoName=Nome do &utilizador:
 UserInfoOrg=&Organização:
-UserInfoSerial=Número de &série:
+UserInfoSerial=&Número de série:
 UserInfoNameRequired=Deve introduzir um nome.
 
 ; *** "Select Destination Location" wizard page
@@ -292,10 +292,38 @@ StatusUninstalling=A desinstalar o %1...
 
 NameAndVersion=%1 versão %2
 AdditionalIcons=Ícones adicionais:
-CreateDesktopIcon=Criar ícone no &Ambiente de Trabalho
-CreateQuickLaunchIcon=Criar ícone na barra de Iniciação &Rápida
+CreateDesktopIcon=Criar ícone no Ambiente de &Trabalho
+CreateQuickLaunchIcon=&Criar ícone na barra de Iniciação Rápida
 ProgramOnTheWeb=%1 na Web
 UninstallProgram=Desinstalar o %1
 LaunchProgram=Executar o %1
-AssocFileExtension=&Associar o %1 aos ficheiros com a extensão %2
+AssocFileExtension=Associa&r o %1 aos ficheiros com a extensão %2
 AssocingFileExtension=A associar o %1 aos ficheiros com a extensão %2...
+
+components_plugins=Plugins
+components_skins=Skins
+tasks_languages=Linguagens
+tasks_allusers=Todos os usuários
+tasks_selectusers=Instalar %1 para:
+tasks_currentuser=somente %1
+tasks_multisetup=Ativar o suporte a vários usuários
+tasks_firewall=Adicionar exceção ao Firewall do Windows
+tasks_upnp=Ativar a descoberta de dispositivos UPnP
+tasks_deleteoldsetup=Apagar os instaladores antigos
+tasks_resetdiscoveryhostcache=Resetar o Cache de Armazenamento e Descoberta
+run_skinexe=Instalando a Skin...
+reg_incomingchat=Mensagem de chat
+reg_apptitle=Shareaza Compartilhamento de Arquivos Incomparável
+icons_license=Licença
+icons_uninstall=Desinstalar
+icons_downloads=Downloads
+icons_basicmode=Modo Normal
+icons_tabbedmode=Modo de Abas
+icons_windowedmode=Modo de Janelas
+dialog_shutdown=O %1 está sendo executado. Você gostaria que o %1 fosse fechado para que a instalação continue?
+dialog_firewall=O Setup falhou em adicionar o Shareaza no Firewall do Windows.%nPor favor adicione o Shareaza a lista de exceções manualmente.
+dialog_malwaredetected=A malware has been detected on your system at %1, please remove it with a virus/malware scanner before installing Shareaza. Do you want to exit now?
+page_viruswarning_text=Quando usando a internet, você deve sempre garantir que você tenha um scanner contra vírus atualizado para proteger você de trojans, worms e outros programas maliciosos. Você pode achar uma lista de bons scanners contra vírus e outras dicas de segurança para proteger o seu computador seguindo este link:
+page_viruswarning_title=Alerta contra Vírus
+page_viruswarning_subtitle=Você tem um programa Anti-Vírus instalado?
+PathNotExist=Error, the path of the %1 folder doesn't exist

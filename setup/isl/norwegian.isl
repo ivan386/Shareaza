@@ -13,7 +13,7 @@
 ; Harald Habberstad, Frode Weum, Eivind Bakkestuen, Morten Johnsen,
 ; Tore Ottinsen, Kristian Hyllestad, Thomas Kelso
 ;
-; $jrsoftware: issrc/Files/Languages/Norwegian.isl,v 1.15 2007/04/23 15:03:35 josander+ Exp $
+; $jrsoftware: issrc/Files/Languages/Norwegian.isl,v 1.15 2007/04/24 09:15:31 mlaan Exp $
 
 [LangOptions]
 LanguageName=Norsk
@@ -310,3 +310,31 @@ UninstallProgram=Avinstaller %1
 LaunchProgram=Kjør %1
 AssocFileExtension=&Koble %1 med filetternavnet %2
 AssocingFileExtension=Kobler %1 med filetternavnet %2...
+
+components_plugins=Plugins
+components_skins=Skins
+tasks_languages=Språk
+tasks_allusers=Alle brukere
+tasks_selectusers=Installer %1 for:
+tasks_currentuser=Kun %1
+tasks_multisetup=Flere brukere
+tasks_firewall=Lag nytt unntak i Windows brannmur
+tasks_upnp=Enable discovery of UPnP devices
+tasks_deleteoldsetup=Slett eldre installasjonsfiler
+tasks_resetdiscoveryhostcache=Reset Discovery and Hostcache
+run_skinexe=Kjører skin installasjon...
+reg_incomingchat=Innkommende melding
+reg_apptitle=Shareaza Ultimate File Sharing
+icons_license=Lisens
+icons_uninstall=Uninstall
+icons_downloads=Downloads
+icons_basicmode=Normalmodus
+icons_tabbedmode=Fanemodus
+icons_windowedmode=Vindumodus
+dialog_shutdown=%1 kjører. Ønsker du at %1 avsluttes slik at installasjonen kan fortsette?
+dialog_firewall=Installasjonen klarte ikke å lage unntak for Shareaza i Windows Brannmuren. %nVennligst legg til shareaza i brannmurens unntak manuelt.
+dialog_malwaredetected=A malware has been detected on your system at %1, please remove it with a virus/malware scanner before installing Shareaza. Do you want to exit now?
+page_viruswarning_text=Når du bruker internett bør du alltid ha et oppdatert antivirus-program, for å beskytte deg fra trojaner, ormer, og annen skadelig programvare. Du kan finne en liste over gode antivirus-prgrammer og andre sikkerhetstips, for å beskytte din datamaskin, ved å følge denne linken:
+page_viruswarning_title=Virusadvarsel
+page_viruswarning_subtitle=Har du et antivirus-program installert?
+PathNotExist=Error, the path of the %1 folder doesn't exist

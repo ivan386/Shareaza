@@ -47,7 +47,6 @@ Compression=lzma/max
 InternalCompressLevel=max
 PrivilegesRequired=poweruser
 ShowLanguageDialog=yes
-ShowUndisplayableLanguages=yes
 LanguageDetectionMethod=locale
 UninstallDisplayIcon={app}\Shareaza.exe
 UninstallDisplayName={#internal_name} {#version}
@@ -904,6 +903,7 @@ End;
 #include "pages.iss"
 
 #expr SaveToFile("builds\Preprocessed.iss")
+
 
 
 

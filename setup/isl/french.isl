@@ -10,9 +10,14 @@
 ;
 ; Maintained by Pierre Yager (pierre@levosgien.net)
 ;
-; Contributors : Frédéric Bonduelle, Francis Pallini
+; Contributors : Frédéric Bonduelle, Francis Pallini, Lumina
 ;
-; $jrsoftware: issrc/Files/Languages/French.isl,v 1.14 2007/02/27 18:22:41 jr Exp $
+; Changes :
+; + Accents on uppercase letters: http://www.academie-francaise.fr/langue/questions.html#accentuation (lumina)
+; + Typography quotes [see ISBN: 978-2-7433-0482-9]: http://wikipedia.org/wiki/Guillemet (lumina)
+; + Binary units (Kio,Mio) [IEC 80000-13:2008]: http://wikipedia.org/wiki/Octet (lumina)
+;
+; $jrsoftware: issrc/Files/Languages/French.isl,v 1.16 2009/04/02 22:22:04 pierrey Exp $
 
 [LangOptions]
 LanguageName=Fran<00E7>ais
@@ -49,7 +54,7 @@ MissingWOW64APIs=La version de Windows que vous utilisez ne dispose pas des fonc
 WinVersionTooLowError=Ce programme requiert la version %2 ou supérieure de %1.
 WinVersionTooHighError=Ce programme ne peut pas être installé sous %1 version %2 ou supérieure.
 AdminPrivilegesRequired=Vous devez disposer des droits d'administration de cet ordinateur pour installer ce programme.
-PowerUserPrivilegesRequired=Vous devez disposer des droits d'administration ou faire partie du groupe "Utilisateurs avec pouvoir" de cet ordinateur pour installer ce programme.
+PowerUserPrivilegesRequired=Vous devez disposer des droits d'administration ou faire partie du groupe « Utilisateurs avec pouvoir » de cet ordinateur pour installer ce programme.
 SetupAppRunningError=L'assistant d'installation a détecté que %1 est actuellement en cours d'exécution.%n%nVeuillez fermer toutes les instances de cette application puis appuyer sur OK pour continuer, ou bien appuyer sur Annuler pour abandonner l'installation.
 UninstallAppRunningError=La procédure de désinstallation a détecté que %1 est actuellement en cours d'exécution.%n%nVeuillez fermer toutes les instances de cette application  puis appuyer sur OK pour continuer, ou bien appuyer sur Annuler pour abandonner la désinstallation.
 
@@ -60,11 +65,11 @@ ErrorTooManyFilesInDir=L'assistant d'installation n'a pas pu créer un fichier da
 ; *** Setup common messages
 ExitSetupTitle=Quitter l'installation
 ExitSetupMessage=L'installation n'est pas terminée. Si vous abandonnez maintenant, le programme ne sera pas installé.%n%nVous devrez relancer cet assistant pour finir l'installation.%n%nVoulez-vous quand même quitter l'assistant d'installation ?
-AboutSetupMenuItem=&A propos...
-AboutSetupTitle=A Propos de l'assistant d'installation
+AboutSetupMenuItem=&À propos...
+AboutSetupTitle=À Propos de l'assistant d'installation
 AboutSetupMessage=%1 version %2%n%3%n%nPage d'accueil de %1 :%n%4
 AboutSetupNote=
-TranslatorNote=French translation maintained by Pierre Yager (pierre@levosgien.net)
+TranslatorNote=Traduction française maintenue par Pierre Yager (pierre@levosgien.net)
 
 ; *** Buttons
 ButtonBack=< &Précédent
@@ -73,13 +78,13 @@ ButtonInstall=&Installer
 ButtonOK=OK
 ButtonCancel=Annuler
 ButtonYes=&Oui
-ButtonYesToAll=Oui pour &Tout
+ButtonYesToAll=Oui pour &tout
 ButtonNo=&Non
-ButtonNoToAll=N&on pour Tout
+ButtonNoToAll=N&on pour tout
 ButtonFinish=&Terminer
 ButtonBrowse=Pa&rcourir...
 ButtonWizardBrowse=Pa&rcourir...
-ButtonNewFolder=Nouveau &Dossier
+ButtonNewFolder=Nouveau &dossier
 
 ; *** "Select Language" dialog messages
 SelectLanguageTitle=Langue de l'assistant d'installation
@@ -131,12 +136,12 @@ WizardSelectDir=Dossier de destination
 SelectDirDesc=Où [name] doit-il être installé ?
 SelectDirLabel3=L'assistant va installer [name] dans le dossier suivant.
 SelectDirBrowseLabel=Pour continuer, appuyez sur Suivant. Si vous souhaitez choisir un dossier différent, appuyez sur Parcourir.
-DiskSpaceMBLabel=Le programme requiert au moins [mb] Mo d'espace disque disponible.
+DiskSpaceMBLabel=Le programme requiert au moins [mb] Mio d'espace disque disponible.
 ToUNCPathname=L'assistant d'installation ne supporte pas les chemins réseau. Si vous souhaitez effectuer cette installation sur un réseau, vous devez d'abord connecter un lecteur réseau.
 InvalidPath=Vous devez saisir un chemin complet avec sa lettre de lecteur ; par exemple :%n%nC:\APP%n%nou un chemin réseau de la forme :%n%n\\serveur\partage
 InvalidDrive=L'unité ou l'emplacement réseau que vous avez sélectionné n'existe pas ou n'est pas accessible. Veuillez choisir une autre destination.
 DiskSpaceWarningTitle=Espace disponible insuffisant
-DiskSpaceWarning=L'assistant a besoin d'au moins %1 ko d'espace disponible pour effectuer l'installation, mais l'unité que vous avez sélectionnée ne dispose que de %2 ko d'espace disponible.%n%nSouhaitez-vous continuer malgré tout ?
+DiskSpaceWarning=L'assistant a besoin d'au moins %1 Kio d'espace disponible pour effectuer l'installation, mais l'unité que vous avez sélectionnée ne dispose que de %2 Kio d'espace disponible.%n%nSouhaitez-vous continuer malgré tout ?
 DirNameTooLong=Le nom ou le chemin du dossier est trop long.
 InvalidDirName=Le nom du dossier est invalide.
 BadDirName32=Le nom du dossier ne doit contenir aucun des caractères suivants :%n%n%1
@@ -155,9 +160,9 @@ CompactInstallation=Installation compacte
 CustomInstallation=Installation personnalisée
 NoUninstallWarningTitle=Composants existants
 NoUninstallWarning=L'assistant d'installation a détecté que les composants suivants sont déjà installés sur votre système :%n%n%1%n%nDésélectionner ces composants ne les désinstallera pas pour autant.%n%nVoulez-vous continuer malgré tout ?
-ComponentSize1=%1 ko
-ComponentSize2=%1 Mo
-ComponentsDiskSpaceMBLabel=Les composants sélectionnés nécessitent au moins [mb] Mo d'espace disponible.
+ComponentSize1=%1 Kio
+ComponentSize2=%1 Mio
+ComponentsDiskSpaceMBLabel=Les composants sélectionnés nécessitent au moins [mb] Mio d'espace disponible.
 
 ; *** "Select Additional Tasks" wizard page
 WizardSelectTasks=Tâches supplémentaires
@@ -292,7 +297,7 @@ ConfirmDeleteSharedFileTitle=Supprimer les fichiers partagés ?
 ConfirmDeleteSharedFile2=Le système indique que le fichier partagé suivant n'est plus utilisé par aucun programme. Souhaitez-vous que la désinstallation supprime ce fichier partagé ?%n%nSi des programmes utilisent encore ce fichier et qu'il est supprimé, ces programmes ne pourront plus fonctionner correctement. Si vous n'êtes pas sûr, choisissez Non. Laisser ce fichier dans votre système ne posera pas de problème.
 SharedFileNameLabel=Nom du fichier :
 SharedFileLocationLabel=Emplacement :
-WizardUninstalling=Etat de la désinstallation
+WizardUninstalling=État de la désinstallation
 StatusUninstalling=Désinstallation de %1...
 
 ; Les messages personnalisés suivants ne sont pas utilisé par l'installation
@@ -310,3 +315,31 @@ UninstallProgram=Désinstaller %1
 LaunchProgram=Exécuter %1
 AssocFileExtension=&Associer %1 avec l'extension de fichier %2
 AssocingFileExtension=Associe %1 avec l'extension de fichier %2...
+
+components_plugins=Plugins
+components_skins=Skins
+tasks_languages=Langues
+tasks_allusers=Tous les utilisateurs
+tasks_selectusers=Installer %1 pour :
+tasks_currentuser=%1 seulement
+tasks_multisetup=Activer le support multi-utilisateurs
+tasks_firewall=Ajouter une exception au Pare-feu Windows
+tasks_upnp=Activer UPnP pour essayer de découvrir les pare-feux/routeurs.
+tasks_deleteoldsetup=Voulez-vous supprimer les anciens fichiers d'installation de Shareaza ?
+tasks_resetdiscoveryhostcache=Remettre à zéro les services de découverte et le tampon pour les hôtes
+run_skinexe=Installation de la skin en cours...
+reg_incomingchat=Réception d'un message chat
+reg_apptitle=Shareaza Ultimate File Sharing
+icons_license=Licence
+icons_uninstall=Désinstaller
+icons_downloads=Téléchargements
+icons_basicmode=Mode simple
+icons_tabbedmode=Mode tabulé
+icons_windowedmode=Mode fenêtré
+dialog_shutdown=%1 est en cours d'exécution. Voulez-vous quitter %1 pour que l'installation puisse se poursuivre ?
+dialog_firewall=L'installation n'a pas pu ajouter Shareaza au Pare-feu Windows.%nVeuillez ajouter Shareaza manuellement à la liste des exceptions.
+dialog_malwaredetected=Un logiciel malveillant a été détecté sur votre système à %1, veuillez l'enlever avec un antivirus avant d'installer Shareaza. Voulez-vous quitter maintenant ?
+page_viruswarning_text=Lorsque vous utilisez internet, vous devriez toujours vous assurer que vous avez un antivirus à jour pour vous protéger des troyens (trojans), vers (worms), et autres programmes malveillants. Vous pouvez trouver une liste de bons antivirus et des conseils de sécurité pour protéger votre ordinateur en suivant ce lien :
+page_viruswarning_title=Avertissement sur les virus
+page_viruswarning_subtitle=Avez-vous un antivirus installé ?
+PathNotExist=Error, the path of the %1 folder doesn't exist

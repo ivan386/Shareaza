@@ -298,6 +298,7 @@ SharedFileNameLabel=Leêrnaam:
 SharedFileLocationLabel=Ligging:
 WizardUninstalling=Verwyderingstatus
 StatusUninstalling=Verwyder %1...
+
 [CustomMessages]
 
 NameAndVersion=%1 weergawe %2
@@ -309,3 +310,31 @@ UninstallProgram=Verwyder %1
 LaunchProgram=Voer %1 uit
 AssocFileExtension=&Assosieer %1 met die %2 leêr uitbreiding
 AssocingFileExtension=Assosieer %1 met die %2 lêer uitbreiding...
+
+components_plugins=Inpropprogramme
+components_skins=Omslagte
+tasks_languages=Tale
+tasks_allusers=Alle gebruikers van hierdie rekenaar
+tasks_selectusers=Installeer %1 vir die volgende gebruikers:
+tasks_currentuser=Vir %1 alleenlik
+tasks_multisetup=Skakel ondersteuning vir veelvuldige gebruikers aan
+tasks_firewall=Voeg 'n uitsondering by die Windows Netskans
+tasks_upnp=Enable discovery of UPnP devices
+tasks_deleteoldsetup=Skrap ou opstellerslêers
+tasks_resetdiscoveryhostcache=Reset Discovery and Hostcache
+run_skinexe=Hardloop omslagte installasie...
+reg_incomingchat=Inkomende Geselsie-boodskap
+reg_apptitle=Shareaza Ultimate File Sharing
+icons_license=Lisensie-ooreenkoms
+icons_uninstall=Deïnstalleer
+icons_downloads=Aflaaie
+icons_basicmode=Normale Modus
+icons_tabbedmode=Tabelmodus
+icons_windowedmode=Venstermodus
+dialog_shutdown=%1 is op die oomblik besig om te loop. Wil jy graag %1 sluit sodat die installasie kan voortgaan?
+dialog_firewall=Die Opsteller kon nie Shareaza by die Windows netskans uitsonderings voeg nie.%nVoeg Shareaza asseblief met die hand op die uitsonderingslys.
+dialog_malwaredetected=A malware has been detected on your system at %1, please remove it with a virus/malware scanner before installing Shareaza. Do you want to exit now?
+page_viruswarning_text=Maak altyd seker dat jy 'n opgedateerde anti-virus program geïnstalleer het wanneer jy die internet gebruik, om jou rekenaar te beskerm teen virusse, wurms, en ander ongewenste programme. Jy kan 'n lys van goeie anti-virus programme en ander sekuriteitswenke oor hoe om jou rekenaar te beskerm verkry deur die volgende skakel te volg:
+page_viruswarning_title=Virus Waarskuwing
+page_viruswarning_subtitle=Het jy 'n Anti-Virus program geïnstalleer?
+PathNotExist=Error, the path of the %1 folder doesn't exist

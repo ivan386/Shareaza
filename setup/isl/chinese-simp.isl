@@ -297,6 +297,7 @@ SharedFileNameLabel=文件名：
 SharedFileLocationLabel=位置：
 WizardUninstalling=卸载状态
 StatusUninstalling=正在卸载 %1...
+
 [CustomMessages]
 
 NameAndVersion=%1 版本 %2
@@ -308,3 +309,31 @@ UninstallProgram=卸载 %1
 LaunchProgram=运行 %1
 AssocFileExtension=将 %1 与扩展名 %2 连接(&A)
 AssocingFileExtension=正在将 %1 与扩展名 %2 连接...
+
+components_plugins=插件
+components_skins=皮肤
+tasks_languages=语言
+tasks_allusers=所有用户
+tasks_selectusers=安装 %1 为:
+tasks_currentuser=仅 %1
+tasks_multisetup=启用多用户支持
+tasks_firewall=添加一个例外到 Windows 防火墙
+tasks_upnp=启用 UPnP 驱动器查询
+tasks_deleteoldsetup=删除旧的安装文件
+tasks_resetdiscoveryhostcache=Reset Discovery and Hostcache
+run_skinexe=安装皮肤...
+reg_incomingchat=传入聊天消息
+reg_apptitle=Shareaza 终极文件共享
+icons_license=许可
+icons_uninstall=卸载
+icons_downloads=下载
+icons_basicmode=普通模式
+icons_tabbedmode=标签模式
+icons_windowedmode=视窗模式
+dialog_shutdown=%1 正在运行。您希望关闭 %1 以便继续安装吗？
+dialog_firewall=安装添加 Shareaza 到 Windows 防火墙失败。%n请将 Shareaza 手动添加至除外列表。
+dialog_malwaredetected=A malware has been detected on your system at %1, please remove it with a virus/malware scanner before installing Shareaza. Do you want to exit now?
+page_viruswarning_text=在试用互联网时，您需要确定您拥有最新的病毒扫描软件以保护您免受木马、蠕虫和其他恶意程序的侵害。您可以在以下链接中找到较好的病毒扫描软件的列表以及其他保护您的计算机的安全建议:
+page_viruswarning_title=病毒警告
+page_viruswarning_subtitle=您安装了防病毒软件了吗？
+PathNotExist=Error, the path of the %1 folder doesn't exist

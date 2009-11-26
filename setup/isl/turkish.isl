@@ -295,6 +295,7 @@ SharedFileNameLabel=Dosya Adý:
 SharedFileLocationLabel=Yol:
 WizardUninstalling=Kaldýrma Durumu
 StatusUninstalling=%1 Kaldýrýlýyor...
+
 [CustomMessages]
 
 NameAndVersion=%1 %2 sürümü
@@ -306,3 +307,31 @@ UninstallProgram=%1 Programýný Kaldýr
 LaunchProgram=%1 Programýný Çalýþtýr
 AssocFileExtension=%2 dosya uzantýlarýný %1 ile iliþkilendir
 AssocingFileExtension=%2 dosya uzantýlarý %1 ile iliþkilendiriliyor...
+
+components_plugins=Eklentiler
+components_skins=Arayüzler
+tasks_languages=Diller
+tasks_allusers=Tüm Kullanýcýlar
+tasks_selectusers=%1 Kuruldu:
+tasks_currentuser=Sadece %1
+tasks_multisetup=Çoklu kullanýcý desteðini etkinleþtir
+tasks_firewall=Windows Güvenlik Duvarýna bir deðiþiklik ekle
+tasks_upnp=UPnP cihazlarin kesfini etkinlestir
+tasks_deleteoldsetup=Eski kurulumlarý sil
+tasks_resetdiscoveryhostcache=Kesif servisleri ile host bellegini sifirla
+run_skinexe=Arayüz kurulumu çalýþýyor...
+reg_incomingchat=Gelen sohbet mesajý
+reg_apptitle=Shareaza En iyi Dosya Paylaþýmý
+icons_license=Lisans
+icons_uninstall=Kurulumu Kaldýr
+icons_downloads=Ýndirmeler
+icons_basicmode=Temel Mod
+icons_tabbedmode=Sekmeli Mod
+icons_windowedmode=Pencereli Mode
+dialog_shutdown=Þuan %1 çalýþýyor.Kurulumun devam edebilmesi için %1'in kapalý olmasýný istiyor musunuz?
+dialog_firewall=Windows güvenlik duvarýna Shareaza kurulumunu eklemek baþarýsýz oldu.%n Lütfen Shareaza'yý el ile istisna listesine ekle
+dialog_malwaredetected=Kötücül bir yazilim %1'de tespit edilmistir, Shareaza'nin kurulumundan önce sözü geçen kötücül yazilimi bir antivirus programi kullanarak sisteminizden silmeniz gerekmektedir. Simdi terk etmek ister misiniz?
+page_viruswarning_text=Ýnternet kullanýyorken, trojanlardan, wormlardan ve diðer kötü niyetli programlardan sizi koruyan güncel bir virüs tarayýcýsýna sahip olduðunuzdan emin olmalýsýnýz. Bu baðlantýyý izleyerek bilgisayarýnýzý koruyan iyi virüs tarayýcýlarýnýn ve diðer güvenlik tiplerinin listesini bulacaksýnýz:
+page_viruswarning_title=Virüs Uyarýsý
+page_viruswarning_subtitle=Bir AntiVirus programý yüklediniz mi?
+PathNotExist=Error, the path of the %1 folder doesn't exist
