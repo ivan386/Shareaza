@@ -56,7 +56,6 @@ CDownloadTransferBT::CDownloadTransferBT(CDownloadSource* pSource, CBTClient* pC
 	, m_tSourceRequest	( GetTickCount() )
 {
 	ASSUME_LOCK( Transfers.m_pSection );
-	ASSERT( m_pDownload->IsTorrent() );
 
 	m_nState			= pClient ? dtsConnecting : dtsNull;
 	m_sUserAgent		= _T("BitTorrent");	
