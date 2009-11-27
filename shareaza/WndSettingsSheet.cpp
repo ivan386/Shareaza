@@ -57,9 +57,8 @@ CSettingsSheet::CSettingsSheet(CWnd* pParent, UINT nCaptionID) :
 	, m_nTopMargin		( 0 )
 	, m_nListWidth		( 120 )
 	, m_nListMargin		( 6 )
-	, m_nButtonHeight	( 20 )
+	, m_nButtonHeight	( 26 )
 {
-
 	if ( nCaptionID ) m_sCaption.LoadString( nCaptionID );
 }
 
@@ -296,16 +295,6 @@ void CSettingsSheet::BuildTree()
 
 void CSettingsSheet::Layout()
 {
-	TEXTMETRIC txtMetric;
-
-	CDC* pDC = GetDC();
-	CFont* pOldFont = pDC->SelectObject( &theApp.m_gdiFont );
-	pDC->GetTextMetrics( &txtMetric );
-	pDC->SelectObject( pOldFont );
-	ReleaseDC( pDC );
-
-	m_nButtonHeight = ( txtMetric.tmHeight + txtMetric.tmExternalLeading ) + 10;
-
 	m_szPages.cx = m_szPages.cy = 0;
 
 	for ( int nPage = 0 ; nPage < GetPageCount() ; nPage++ )
@@ -338,7 +327,7 @@ void CSettingsSheet::Layout()
 
 	m_wndTree.MoveWindow( &rc );
 
-	rc.SetRect( 8, rc.bottom + 8, 76, m_nButtonHeight );
+	rc.SetRect( 8, rc.bottom + 8, 90, m_nButtonHeight );
 	rc.right += rc.left;
 	rc.bottom += rc.top;
 

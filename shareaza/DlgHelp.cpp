@@ -109,7 +109,7 @@ void CHelpDlg::OnSize(UINT nType, int cx, int cy)
 		m_wndBanner.GetClientRect( &rcBanner );
 
 		rcClient.top += rcBanner.Height();
-		rcClient.bottom -= 32;
+		rcClient.bottom -= 40;
 
 		m_wndView.SetWindowPos( NULL, rcClient.left, rcClient.top,
 			rcClient.Width(), rcClient.Height(), SWP_NOZORDER|SWP_SHOWWINDOW );
