@@ -21,6 +21,7 @@
 
 #include "stdafx.h"
 #include "Shareaza.h"
+#include "Settings.h"
 #include "AutocompleteEdit.h"
 
 IMPLEMENT_DYNCREATE(CRegEnum, CComObject)
@@ -230,9 +231,12 @@ BOOL CAutocompleteEdit::Create(DWORD dwStyle, const RECT& rect, CWnd* pParentWnd
 	if ( ! CEdit::Create( dwStyle, rect, pParentWnd, nID ) )
 		return FALSE;
 
-	m_pData = static_cast< CRegEnum* >( CRegEnum::CreateObject() );
-	if ( m_pData )
-		m_pData->AttachTo( GetSafeHwnd(), szSection, szRoot );
+	if ( Settings.Interface.AutoComplete )
+	{
+		m_pData = static_cast< CRegEnum* >( CRegEnum::CreateObject() );
+		if ( m_pData )
+			m_pData->AttachTo( GetSafeHwnd(), szSection, szRoot );
+	}
 
 	return TRUE;
 }

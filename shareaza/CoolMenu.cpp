@@ -72,7 +72,7 @@ BOOL CCoolMenu::IsModernVersion()
 	pVersion.dwOSVersionInfoSize = sizeof(pVersion);
 	GetVersionEx( &pVersion );
 
-	return Settings.General.CoolMenuEnable &&
+	return Settings.Interface.CoolMenuEnable &&
 		( pVersion.dwMajorVersion >= 5 ||
 		( pVersion.dwMajorVersion == 4 && pVersion.dwMinorVersion >= 10 ) );
 }

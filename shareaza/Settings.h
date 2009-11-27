@@ -70,7 +70,6 @@ public:
 		bool		Upgrade;					// Just installed or upgraded
 		DWORD		SmartVersion;				// Settings version
 		bool		Running;
-		bool		CoolMenuEnable;				// Use cool skinned menus
 		bool		DialogScan;					// Set Skin engine to "dialog scan" mode. This produces "C:\Dialog.xml" file with dialog templates and disables dialog translation.
 		CString		LastSettingsPage;			// Last selected Settings dialog page
 		DWORD		LastSettingsIndex;			// Top item index of Advanced Settings list
@@ -93,6 +92,9 @@ public:
 
 	struct sInterface
 	{
+		bool		AutoComplete;				// Use auto-complete feature
+		bool		CoolMenuEnable;				// Use cool skinned menus
+		bool		LowResMode;
 		DWORD		TipDelay;
 		DWORD		TipAlpha;
 		bool		TipSearch;
@@ -101,7 +103,6 @@ public:
 		bool		TipUploads;
 		bool		TipNeighbours;
 		bool		TipMedia;
-		bool		LowResMode;
 	} Interface;
 
 	struct sWindows

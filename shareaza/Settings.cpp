@@ -94,7 +94,6 @@ void CSettings::Load()
 	Add( _T(""), _T("LogLevel"), &General.LogLevel, MSG_INFO, 1, MSG_ERROR, MSG_DEBUG, _T(" level") );
 	Add( _T(""), _T("SearchLog"), &General.SearchLog, true );
 	Add( _T(""), _T("UserPath"), &General.UserPath );
-	Add( _T(""), _T("CoolMenuEnable"), &General.CoolMenuEnable, true );
 	Add( _T(""), _T("DialogScan"), &General.DialogScan, false );
 
 	Add( _T("Settings"), _T("AlwaysOpenURLs"), &General.AlwaysOpenURLs, false );
@@ -127,6 +126,8 @@ void CSettings::Load()
 	Add( _T("VersionCheck"), _T("UpgradeTiger"), &VersionCheck.UpgradeTiger );
 	Add( _T("VersionCheck"), _T("UpgradeVersion"), &VersionCheck.UpgradeVersion );
 
+	Add( _T("Interface"), _T("AutoComplete"), &Interface.AutoComplete, true );
+	Add( _T("Interface"), _T("CoolMenuEnable"), &Interface.CoolMenuEnable, true );
 	Add( _T("Interface"), _T("LowResMode"), &Interface.LowResMode, false );
 	Add( _T("Interface"), _T("TipAlpha"), &Interface.TipAlpha, 230, 1, 0, 255 );
 	Add( _T("Interface"), _T("TipDelay"), &Interface.TipDelay, 600, 1, 100, 5000, _T(" ms") );
