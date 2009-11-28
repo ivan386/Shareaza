@@ -242,47 +242,62 @@ BOOL CTrafficWnd::Serialize(BOOL bSave)
 	try
 	{
 		CArchive ar( &pFile, bSave ? CArchive::store : CArchive::load );	// 4 KB buffer
-		int nVersion = 0;
-
-		if ( ar.IsStoring() )
+		try
 		{
-			nVersion = 0xFFFFFFFF;
-			ar << nVersion;
-			nVersion = 1;
-			ar << nVersion;
+			int nVersion = 0;
 
-			ar << m_nUnique;
-			ar << m_sName;
-
-			GetWindowPlacement( &pPos );
-			ar.Write( &pPos, sizeof(pPos) );
-		}
-		else
-		{
-			ar >> m_nUnique;
-
-			if ( m_nUnique == 0xFFFFFFFF )
+			if ( ar.IsStoring() )
 			{
-				ar >> nVersion;
+				nVersion = 0xFFFFFFFF;
+				ar << nVersion;
+				nVersion = 1;
+				ar << nVersion;
+
+				ar << m_nUnique;
+				ar << m_sName;
+
+				GetWindowPlacement( &pPos );
+				ar.Write( &pPos, sizeof(pPos) );
+			}
+			else
+			{
 				ar >> m_nUnique;
+
+				if ( m_nUnique == 0xFFFFFFFF )
+				{
+					ar >> nVersion;
+					ar >> m_nUnique;
+				}
+
+				if ( nVersion >= 1 ) ar >> m_sName;
+
+				ReadArchive( ar, &pPos, sizeof(pPos) );
+				if ( pPos.showCmd == SW_SHOWNORMAL )
+					SetWindowPlacement( &pPos );
 			}
 
-			if ( nVersion >= 1 ) ar >> m_sName;
+			m_pGraph->Serialize( ar );
 
-			ReadArchive( ar, &pPos, sizeof(pPos) );
-			if ( pPos.showCmd == SW_SHOWNORMAL )
-				SetWindowPlacement( &pPos );
+			ar.Close();
 		}
-
-		m_pGraph->Serialize( ar );
+		catch ( CException* pException )
+		{
+			ar.Abort();
+			pFile.Abort();
+			pException->Delete();
+			return FALSE;
+		}
+		pFile.Close();
 	}
 	catch ( CException* pException )
 	{
+		pFile.Abort();
 		pException->Delete();
 		return FALSE;
 	}
 
-	if ( ! bSave ) SetUpdateRate();
+	if ( ! bSave )
+		SetUpdateRate();
 
 	return TRUE;
 }

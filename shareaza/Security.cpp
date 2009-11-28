@@ -516,15 +516,34 @@ BOOL CSecurity::Save()
 {
 	CQuickLock oLock( m_pSection );
 
-	CFile pFile;
-
 	CString strFile = Settings.General.UserPath + _T("\\Data\\Security.dat");
 
-	if ( pFile.Open( strFile, CFile::modeWrite|CFile::modeCreate ) )
+	CFile pFile;
+	if ( ! pFile.Open( strFile, CFile::modeWrite|CFile::modeCreate ) )
+		return FALSE;
+
+	try
 	{
 		CArchive ar( &pFile, CArchive::store, 131072 );	// 128 KB buffer
-		Serialize( ar );
-		ar.Close();
+		try
+		{
+			Serialize( ar );
+			ar.Close();
+		}
+		catch ( CException* pException )
+		{
+			ar.Abort();
+			pFile.Abort();
+			pException->Delete();
+			return FALSE;
+		}
+		pFile.Close();
+	}
+	catch ( CException* pException )
+	{
+		pFile.Abort();
+		pException->Delete();
+		return FALSE;
 	}
 
 	return TRUE;

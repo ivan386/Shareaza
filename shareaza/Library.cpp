@@ -410,50 +410,58 @@ BOOL CLibrary::Save()
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 
-	FILETIME pFileTime = { 0, 0 };
-	SYSTEMTIME pSystemTime;
 	CString strFile;
-	CFile pFile;
-
 	strFile.Format( _T("%s\\Data\\Library%i.dat"),
 		(LPCTSTR)Settings.General.UserPath, m_nFileSwitch + 1 );
 
 	m_nFileSwitch = ( m_nFileSwitch == 0 ) ? 1 : 0;
 	m_nSaveTime = GetTickCount();
 
-	if ( pFile.Open( strFile, CFile::modeWrite|CFile::modeCreate ) )
+	CFile pFile;
+	if ( ! pFile.Open( strFile, CFile::modeWrite|CFile::modeCreate ) )
 	{
+		theApp.Message( MSG_ERROR, _T("Library save error to: %s"), strFile );
+		return FALSE;
+	}
+
+	try
+	{
+		FILETIME pFileTime = {};
+		pFile.Write( &pFileTime, sizeof( FILETIME ) );
+		pFile.Flush();
+
+		CArchive ar( &pFile, CArchive::store, 262144 );	// 256 KB buffer
 		try
 		{
-			pFile.Write( &pFileTime, sizeof(FILETIME) );
-
-			CArchive ar( &pFile, CArchive::store, 262144 );	// 256 KB buffer
 			Serialize( ar );
 			ar.Close();
-			pFile.Flush();
-
-			GetSystemTime( &pSystemTime );
-			SystemTimeToFileTime( &pSystemTime, &pFileTime );
-			pFile.Seek( 0, 0 );
-			pFile.Write( &pFileTime, sizeof(FILETIME) );
-
-			pFile.Close();
-
-			theApp.Message( MSG_DEBUG, _T("Library successfully saved to: %s"), strFile );
-
-			m_nSaveCookie = m_nUpdateCookie;
-
-			return TRUE;
 		}
 		catch ( CException* pException )
 		{
+			ar.Abort();
+			pFile.Abort();
 			pException->Delete();
+			theApp.Message( MSG_ERROR, _T("Library save error to: %s"), strFile );
+			return FALSE;
 		}
+
+		pFile.Flush();
+		GetSystemTimeAsFileTime( &pFileTime );
+		pFile.Seek( 0, 0 );
+		pFile.Write( &pFileTime, sizeof( FILETIME ) );
+		pFile.Close();
+	}
+	catch ( CException* pException )
+	{
+		pFile.Abort();
+		pException->Delete();
+		theApp.Message( MSG_ERROR, _T("Library save error to: %s"), strFile );
+		return FALSE;
 	}
 
-	theApp.Message( MSG_ERROR, _T("Library save error to: %s"), strFile );
-
-	return FALSE;
+	m_nSaveCookie = m_nUpdateCookie;
+	theApp.Message( MSG_DEBUG, _T("Library successfully saved to: %s"), strFile );
+	return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////

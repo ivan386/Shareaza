@@ -41,7 +41,7 @@ protected:
 // Operations
 public:
 	BOOL			Load();
-	void			Save();
+	BOOL			Save();
 	void			Update();
 protected:
 	void			SetVariables(BYTE nCurrentSettings);

@@ -347,12 +347,25 @@ BOOL CHashDatabase::StoreTiger(DWORD nIndex, CTigerTree* pTree)
 	try
 	{
 		m_pFile.Seek( pIndex->nOffset, 0 );
+
 		CArchive ar( &m_pFile, CArchive::store, 32768 );	// 32 KB buffer
-		Serialize( ar, pTree );
+		try
+		{
+			Serialize( ar, pTree );
+			ar.Close();
+		}
+		catch ( CException* pException )
+		{
+			ar.Abort();
+			pException->Delete();
+			return FALSE;
+		}
+		m_pFile.Flush();
 	}
 	catch ( CException* pException )
 	{
 		pException->Delete();
+		return FALSE;
 	}
 
 	Commit();
@@ -433,12 +446,25 @@ BOOL CHashDatabase::StoreED2K(DWORD nIndex, CED2K* pSet)
 	try
 	{
 		m_pFile.Seek( pIndex->nOffset, 0 );
+
 		CArchive ar( &m_pFile, CArchive::store, 32768 );	// 32 KB buffer
-		Serialize( ar, pSet );
+		try
+		{
+			Serialize( ar, pSet );
+			ar.Close();
+		}
+		catch ( CException* pException )
+		{
+			ar.Abort();
+			pException->Delete();
+			return FALSE;
+		}
+		m_pFile.Flush();
 	}
 	catch ( CException* pException )
 	{
 		pException->Delete();
+		return FALSE;
 	}
 
 	Commit();

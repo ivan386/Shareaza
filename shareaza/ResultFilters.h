@@ -59,7 +59,7 @@ public:
 	void Add(CFilterOptions *pOptions);
 	void Remove(DWORD index);
 	void Load();
-	void Save();
+	BOOL Save();
 	int Search(const CString& strName);
 public:
 	DWORD				m_nFilters; // count of filter options

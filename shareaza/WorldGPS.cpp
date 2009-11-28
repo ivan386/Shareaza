@@ -102,16 +102,31 @@ BOOL CWorldGPS::Load()
 	if ( ! bSuccess ) return FALSE;
 
 	strFile = Settings.General.Path + L"\\Data\\WorldGPS.dat";
-	if ( ! pFile.Open( strFile, CFile::modeWrite|CFile::modeCreate ) ) return FALSE;
+	if ( ! pFile.Open( strFile, CFile::modeWrite|CFile::modeCreate ) )
+		return FALSE;
 
 	try
 	{
-		CArchive ar( &pFile, CArchive::store );
-		Serialize( ar );
+		CArchive ar( &pFile, CArchive::store );	// 4 KB buffer
+		try
+		{
+			Serialize( ar );
+			ar.Close();
+		}
+		catch ( CException* pException )
+		{
+			ar.Abort();
+			pFile.Abort();
+			pException->Delete();
+			return FALSE;
+		}
+		pFile.Close();
 	}
 	catch ( CException* pException )
 	{
+		pFile.Abort();
 		pException->Delete();
+		return FALSE;
 	}
 
 	return TRUE;

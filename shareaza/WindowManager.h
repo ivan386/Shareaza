@@ -52,9 +52,9 @@ public:
 	void		LoadWindowStates();
 	void		SaveWindowStates() const;
 	void		LoadSearchWindows();
-	void		SaveSearchWindows() const;
+	BOOL		SaveSearchWindows() const;
 	void		LoadBrowseHostWindows();
-	void		SaveBrowseHostWindows() const;
+	BOOL		SaveBrowseHostWindows() const;
 	void		OpenNewSearchWindow();
 	void		PostSkinChange();
 	void		PostSkinRemove();

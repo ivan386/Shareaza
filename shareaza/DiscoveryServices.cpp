@@ -457,6 +457,7 @@ BOOL CDiscoveryServices::Save()
 		return FALSE;
 
 	CString strFile = Settings.General.UserPath + _T("\\Data\\Discovery.dat");
+
 	CFile pFile;
 	if ( ! pFile.Open( strFile, CFile::modeWrite | CFile::modeCreate ) )
 		return FALSE;
@@ -464,10 +465,23 @@ BOOL CDiscoveryServices::Save()
 	try
 	{
 		CArchive ar( &pFile, CArchive::store, 16384 );	// 16 KB buffer
-		Serialize( ar );
+		try
+		{
+			Serialize( ar );
+			ar.Close();
+		}
+		catch ( CException* pException )
+		{
+			ar.Abort();
+			pFile.Abort();
+			pException->Delete();
+			return FALSE;
+		}
+		pFile.Close();
 	}
 	catch ( CException* pException )
 	{
+		pFile.Abort();
 		pException->Delete();
 		return FALSE;
 	}

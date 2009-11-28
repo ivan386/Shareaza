@@ -631,28 +631,36 @@ BOOL CDownload::Save(BOOL bFlush)
 		CFile::modeReadWrite|CFile::modeCreate|CFile::osWriteThrough ) )
 		return FALSE;
 
+	CHAR szID[3] = { 0, 0, 0 };
+	try
 	{
+		CArchive ar( &pFile, CArchive::store, 32768 );	// 32 KB buffer
 		try
 		{
-			CArchive ar( &pFile, CArchive::store, 32768 );	// 32 KB buffer
 			Serialize( ar, 0 );
+			ar.Close();
 		}
 		catch ( CException* pException )
 		{
+			ar.Abort();
 			pFile.Abort();
 			pException->Delete();
 			return FALSE;
 		}
+
+		if ( Settings.Downloads.FlushSD || bFlush )
+			pFile.Flush();
+
+		pFile.SeekToBegin();
+		pFile.Read( szID, 3 );
+		pFile.Close();
 	}
-
-	if ( Settings.Downloads.FlushSD || bFlush )
-		pFile.Flush();
-
-	pFile.SeekToBegin();
-
-	CHAR szID[3] = { 0, 0, 0 };
-	pFile.Read( szID, 3 );
-	pFile.Close();
+	catch ( CException* pException )
+	{
+		pFile.Abort();
+		pException->Delete();
+		return FALSE;
+	}
 
 	BOOL bSuccess = FALSE;
 	if ( szID[0] == 'S' && szID[1] == 'D' && szID[2] == 'L' )

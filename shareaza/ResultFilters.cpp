@@ -161,23 +161,41 @@ void CResultFilters::Load()
 	}
 }
 
-void CResultFilters::Save()
+BOOL CResultFilters::Save()
 {
 	CString strFile = Settings.General.UserPath + _T("\\Data\\Filters.dat");
-	CFile f;
-	if (f.Open(strFile, CFile::modeCreate | CFile::modeWrite))
+
+	CFile pFile;
+	if ( ! pFile.Open( strFile, CFile::modeCreate | CFile::modeWrite ) )
+		return FALSE;
+
+	try
 	{
+		CArchive ar( &pFile, CArchive::store );	// 4 KB buffer
 		try
 		{
-			CArchive ar( &f, CArchive::store );	// 4 KB buffer
 			Serialize( ar );
+			ar.Close();
 		}
 		catch ( CException* pException )
 		{
+			ar.Abort();
+			pFile.Abort();
 			pException->Delete();
+			return FALSE;
 		}
+		pFile.Close();
 	}
+	catch ( CException* pException )
+	{
+		pFile.Abort();
+		pException->Delete();
+		return FALSE;
+	}
+
+	return TRUE;
 }
+
 ////////////////////////////////////////////////////
 // FilterOptions
 // The filter settings

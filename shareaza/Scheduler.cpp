@@ -79,19 +79,40 @@ BOOL CScheduler::Load()
 	return TRUE;
 }
 
-void CScheduler::Save()
+BOOL CScheduler::Save()
 {
-	CFile pFile;
 	CString strFile = Settings.General.UserPath + _T("\\Data\\Schedule.dat");
 
-	if ( pFile.Open( strFile, CFile::modeWrite|CFile::modeCreate ) )
+	CFile pFile;
+	if ( ! pFile.Open( strFile, CFile::modeWrite|CFile::modeCreate ) )
+		return FALSE;
+
+	try
 	{
 		CArchive ar( &pFile, CArchive::store );	// 4 KB buffer
-		Serialize( ar );
-		ar.Close();
+		try
+		{
+			Serialize( ar );
+			ar.Close();
+		}
+		catch ( CException* pException )
+		{
+			ar.Abort();
+			pFile.Abort();
+			pException->Delete();
+			return FALSE;
+		}
+		pFile.Close();
+	}
+	catch ( CException* pException )
+	{
+		pFile.Abort();
+		pException->Delete();
+		return FALSE;
 	}
 
 	m_nCurrentHour = 0xFF;	// Reset the current hour so the scheduler updates now.
+	return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////

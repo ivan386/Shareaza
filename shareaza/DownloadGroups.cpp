@@ -259,20 +259,32 @@ BOOL CDownloadGroups::Save(BOOL bForce)
 	DeleteFileEx( strPath + _T(".tmp"), FALSE, FALSE, FALSE );
 
 	CFile pFile;
-	if ( ! pFile.Open( strPath + _T(".tmp"), CFile::modeWrite | CFile::modeCreate ) ) return FALSE;
+	if ( ! pFile.Open( strPath + _T(".tmp"), CFile::modeWrite | CFile::modeCreate ) )
+		return FALSE;
 
 	try
 	{
 		CArchive ar( &pFile, CArchive::store );	// 4 KB buffer
-		Serialize( ar );
+		try
+		{
+			Serialize( ar );
+			ar.Close();
+		}
+		catch ( CException* pException )
+		{
+			ar.Abort();
+			pFile.Abort();
+			pException->Delete();
+			return FALSE;
+		}
+		pFile.Close();
 	}
 	catch ( CException* pException )
 	{
+		pFile.Abort();
 		pException->Delete();
 		return FALSE;
 	}
-
-	pFile.Close();
 
 	DeleteFileEx( strPath, FALSE, FALSE, FALSE );
 	MoveFile( strPath + _T(".tmp"), strPath );

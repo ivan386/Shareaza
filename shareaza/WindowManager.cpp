@@ -480,39 +480,54 @@ void CWindowManager::LoadSearchWindows()
 		Open( RUNTIME_CLASS(CHomeWnd) );
 }
 
-void CWindowManager::SaveSearchWindows() const
+BOOL CWindowManager::SaveSearchWindows() const
 {
 	CString strFile = Settings.General.UserPath + _T("\\Data\\Searches.dat");
 	int nCount = 0;
 
+	CFile pFile;
+	if ( ! pFile.Open( strFile, CFile::modeWrite | CFile::modeCreate ) )
+		return FALSE;
+
 	try
 	{
-		CFile pFile;
-		if ( ! pFile.Open( strFile, CFile::modeWrite | CFile::modeCreate ) )
-			return;
-
 		CArchive ar( &pFile, CArchive::store, 262144 );	// 256 KB buffer
-		for ( POSITION pos = GetIterator() ; pos ; )
+		try
 		{
-			CSearchWnd* pWnd = (CSearchWnd*)GetNext( pos );
-
-			if ( pWnd->IsKindOf( RUNTIME_CLASS(CSearchWnd) ) && pWnd->GetLastSearch() )
+			for ( POSITION pos = GetIterator() ; pos ; )
 			{
-				ar.WriteCount( 1 );
-				pWnd->Serialize( ar );
-				nCount++;
+				CSearchWnd* pWnd = (CSearchWnd*)GetNext( pos );
+				if ( pWnd->IsKindOf( RUNTIME_CLASS(CSearchWnd) ) &&
+					 pWnd->GetLastSearch() )
+				{
+					ar.WriteCount( 1 );
+					pWnd->Serialize( ar );
+					nCount++;
+				}
 			}
+			ar.WriteCount( 0 );
+			ar.Close();
 		}
-
-		ar.WriteCount( 0 );
+		catch ( CException* pException )
+		{
+			ar.Abort();
+			pFile.Abort();
+			pException->Delete();
+			return FALSE;
+		}
+		pFile.Close();
 	}
 	catch ( CException* pException )
 	{
+		pFile.Abort();
 		pException->Delete();
+		return FALSE;
 	}
 
 	if ( ! nCount )
 		DeleteFileEx( strFile, FALSE, FALSE, FALSE );
+
+	return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -544,39 +559,53 @@ void CWindowManager::LoadBrowseHostWindows()
 		Open( RUNTIME_CLASS(CHomeWnd) );
 }
 
-void CWindowManager::SaveBrowseHostWindows() const
+BOOL CWindowManager::SaveBrowseHostWindows() const
 {
 	CString strFile = Settings.General.UserPath + _T("\\Data\\BrowseHosts.dat");
 	int nCount = 0;
 
+	CFile pFile;
+	if ( ! pFile.Open( strFile, CFile::modeWrite | CFile::modeCreate ) )
+		return FALSE;
+
 	try
 	{
-		CFile pFile;
-		if ( ! pFile.Open( strFile, CFile::modeWrite | CFile::modeCreate ) )
-			return;
-
 		CArchive ar( &pFile, CArchive::store, 262144 );	// 256 KB buffer
-		for ( POSITION pos = GetIterator() ; pos ; )
+		try
 		{
-			CBrowseHostWnd* pWnd = (CBrowseHostWnd*) GetNext( pos );
-
-			if ( pWnd->IsKindOf( RUNTIME_CLASS(CBrowseHostWnd) ) )
+			for ( POSITION pos = GetIterator() ; pos ; )
 			{
-				ar.WriteCount( 1 );
-				pWnd->Serialize( ar );
-				nCount++;
+				CBrowseHostWnd* pWnd = (CBrowseHostWnd*) GetNext( pos );
+				if ( pWnd->IsKindOf( RUNTIME_CLASS(CBrowseHostWnd) ) )
+				{
+					ar.WriteCount( 1 );
+					pWnd->Serialize( ar );
+					nCount++;
+				}
 			}
+			ar.WriteCount( 0 );
+			ar.Close();
 		}
-
-		ar.WriteCount( 0 );
+		catch ( CException* pException )
+		{
+			ar.Abort();
+			pFile.Abort();
+			pException->Delete();
+			return FALSE;
+		}
+		pFile.Close();
 	}
 	catch ( CException* pException )
 	{
+		pFile.Abort();
 		pException->Delete();
+		return FALSE;
 	}
 
 	if ( ! nCount )
 		DeleteFileEx( strFile, FALSE, FALSE, FALSE );
+
+	return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////
