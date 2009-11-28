@@ -1,22 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
-<!-- Manifest -->
-<manifest
-	name="Nederlands"
-	author="Jan-Willem Koornwinder (Thurstydog)"
-	updatedBy="ceceboy, Neglacio, RoestVrijStaal"
-	description="Shareaza Default Dutch Skin File"
-	link="http://shareaza.sourceforge.net/"
-	email="Neglacio@live.nl, roestvrijstaal@users.sourceforge.net"
-	version="2.4.0.4"
-	type="Language"
-	language="nl"
-	prompt="Klik hier om Nederlands als taal te kiezen."
-	dir="ltr"
-/>
-<!-- Toolbar Definitions -->
-<toolbars>
+	<!-- Manifest -->
+	<manifest name="Nederlands" author="Jan-Willem Koornwinder (Thurstydog)" updatedBy="ceceboy, Neglacio, RoestVrijStaal" description="Shareaza Default Dutch Skin File" link="http://shareaza.sourceforge.net/" email="Neglacio@live.nl, roestvrijstaal@users.sourceforge.net " version="2.5.0.0" type="Language" language="nl" prompt="Klik hier om Nederlands als taal te kiezen." dir="ltr"/>
+	<!-- Toolbar Definitions -->
+	<toolbars>
 		<!-- MAIN WINDOW -->
 		<toolbar name="CMainWnd.Basic">
 			<button id="ID_NETWORK_CONNECT" text="Verbinden"/>
@@ -547,10 +534,10 @@
 					<item id="ID_HELP_FORUMS" text="Shareaza _forums"/>
 					<item id="ID_HELP_WEB_6" text="Shareaza S_kin Site"/>
 					<!-- 
-					<item id="ID_HELP_UPDATE" text="Latest news"/>
-					<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-					<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
-					-->
+				<item id="ID_HELP_UPDATE" text="Latest news"/>
+				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+				-->
 				</menu>
 				<separator/>
 				<item id="ID_HELP_VERSION_CHECK" text="Check _Version"/>
@@ -744,10 +731,10 @@
 					<item id="ID_HELP_FORUMS" text="Shareaza _forums"/>
 					<item id="ID_HELP_WEB_6" text="Shareaza S_kin Site"/>
 					<!-- 
-					<item id="ID_HELP_UPDATE" text="Latest news"/>
-					<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-					<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
-					-->
+				<item id="ID_HELP_UPDATE" text="Latest news"/>
+				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+				-->
 				</menu>
 				<separator/>
 				<item id="ID_HELP_VERSION_CHECK" text="Check _Version"/>
@@ -898,6 +885,7 @@
 		<!-- SEARCH WINDOW -->
 		<menu name="CSearchWnd.Basic">
 			<item id="ID_SEARCH_DOWNLOAD" text="_Downloaden"/>
+			<item id="ID_SEARCH_COPY" text="_URI kopiëren"/>
 			<separator/>
 			<item id="ID_BROWSE_LAUNCH" text="_Gebruiker bekijken"/>
 			<item id="ID_SEARCH_CHAT" text="_Chatten met gebruiker"/>
@@ -911,7 +899,6 @@
 			</menu>
 			<menu text="_Internetdiensten">
 				<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Ticket bekijken"/>
-				<item id="ID_SEARCH_COPY" text="_URI kopiëren..."/>
 			</menu>
 		</menu>
 		<menu name="CSearchWnd">
@@ -937,6 +924,7 @@
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="Resultaten _filteren..."/>
 			<item id="ID_SEARCH_FILTER_REMOVE" text="Filter _verwijderen"/>
+			<separator/>
 			<item id="ID_SEARCH_CLEAR" text="Resultaten _wissen"/>
 			<separator/>
 			<item id="ID_SEARCH_COLUMNS" text="_Kolommen aanpassen..."/>
@@ -945,6 +933,7 @@
 		<menu name="CBrowseHostWnd.Basic">
 			<item id="ID_SEARCH_DOWNLOAD" text="_Downloaden"/>
 			<item id="ID_SEARCH_DOWNLOADNOW" text="_Nu downloaden"/>
+			<item id="ID_SEARCH_COPY" text="_URI kopiëren"/>
 			<separator/>
 			<item id="ID_SEARCH_CHAT" text="_Chatten met gebruiker"/>
 			<separator/>
@@ -957,7 +946,6 @@
 			</menu>
 			<menu text="_Internetdiensten">
 				<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Ticket bekijken"/>
-				<item id="ID_SEARCH_COPY" text="_URI kopiëren..."/>
 			</menu>
 		</menu>
 		<menu name="CBrowseHostWnd">
@@ -1023,9 +1011,8 @@
 			<item id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="_Afbreken"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_SOURCES" text="Meer bronnen _zoeken"/>
-			<!-- <separator/>
-		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="C_lear Completed"/>
-		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="A_uto Clear"/> -->
+			<separator/>
+			<item id="ID_DOWNLOADS_COPY" text="_URI kopiëren"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_HELP" text="_Help..."/>
 		</menu>
@@ -1156,6 +1143,8 @@
 			<item id="ID_LIBRARY_SHARED_FOLDER" text="_Delen"/>
 			<item id="ID_LIBRARY_REMOVE" text="Ver_wijderen"/>
 			<separator/>
+			<item id="ID_SHELL_MENU" text="Conte_xtmenu"/>
+			<separator/>
 			<item id="ID_LIBRARY_FOLDERS" text="_Bestanden delen..."/>
 		</menu>
 		<menu name="CLibraryTree.Physical">
@@ -1167,6 +1156,8 @@
 			<item id="ID_LIBRARY_SCAN" text="_Scannen"/>
 			<item id="ID_LIBRARY_REBUILD" text="_Herbouwen"/>
 			<item id="ID_LIBRARY_FOLDERS" text="_Bestanden delen..."/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="Conte_xtmenu"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="Bestands_eigenschappen"/>
 		</menu>
@@ -1202,6 +1193,7 @@
 			<separator/>
 			<item id="ID_LIBRARY_SHARED_FILE" text="_Delen"/>
 			<separator/>
+			<item id="ID_LIBRARY_URL" text="_URI kopiëren"/>
 			<item id="ID_LIBRARY_DELETE" text="Ver_wijderen"/>
 			<separator/>
 			<menu text="_Zoeken naar">
@@ -1215,8 +1207,6 @@
 			<menu text="_Internetdiensten">
 				<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Ticket bekijken"/>
 				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Metadata _downloaden"/>
-				<separator/>
-				<item id="ID_LIBRARY_URL" text=""/>
 			</menu>
 			<menu text="_Organiseren">
 				<item id="ID_LIBRARY_RENAME" text="Bestand _hernoemen"/>
@@ -1234,7 +1224,7 @@
 			<separator/>
 			<item id="ID_LIBRARY_SHARED_FILE" text="_Delen"/>
 			<separator/>
-			<item id="ID_LIBRARY_URL" text=""/>
+			<item id="ID_LIBRARY_URL" text="_URI kopiëren"/>
 			<item id="ID_LIBRARY_DELETE" text="Ver_wijderen"/>
 			<separator/>
 			<menu text="_Zoeken naar">
@@ -1272,6 +1262,7 @@
 			<separator/>
 			<item id="ID_LIBRARY_SHARED_FILE" text="_Delen"/>
 			<separator/>
+			<item id="ID_LIBRARY_URL" text="_URI kopiëren"/>
 			<item id="ID_LIBRARY_DELETE" text="Ver_wijderen"/>
 			<separator/>
 			<menu text="_Zoeken naar">
@@ -1285,8 +1276,6 @@
 			<menu text="_Internetdiensten">
 				<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Ticket bekijken"/>
 				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Metadata _downloaden"/>
-				<separator/>
-				<item id="ID_LIBRARY_URL" text=""/>
 			</menu>
 			<menu text="_Organiseren">
 				<item id="ID_LIBRARY_RENAME" text="Bestand _hernoemen"/>
@@ -1298,6 +1287,8 @@
 			<item id="ID_LIBRARY_REBUILD_ANSI" text="_Lokaliseer metadata"/>
 			<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh metadata"/>
 			<separator/>
+			<item id="ID_SHELL_MENU" text="Conte_xtmenu"/>
+			<separator/>
 			<item id="ID_LIBRARY_PROPERTIES" text="Uitgebreid aan_passen..."/>
 		</menu>
 		<menu name="CLibraryFileView.Virtual">
@@ -1306,7 +1297,7 @@
 			<separator/>
 			<item id="ID_LIBRARY_SHARED_FILE" text="_Delen"/>
 			<separator/>
-			<item id="ID_LIBRARY_URL" text=""/>
+			<item id="ID_LIBRARY_URL" text="_URI kopiëren"/>
 			<item id="ID_LIBRARY_DELETE" text="Ver_wijderen"/>
 			<separator/>
 			<menu text="_Zoeken naar">
@@ -1334,6 +1325,8 @@
 			<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh metadata"/>
 			<separator/>
 			<item id="ID_LIBRARY_COLUMNS" text="Kolommen uit_kiezen..."/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="Conte_xtmenu"/>
 			<separator/>
 			<item id="ID_LIBRARY_PROPERTIES" text="Uitgebreid aan_passen..."/>
 		</menu>
@@ -2029,20 +2022,20 @@
 			<text format="b">Downloadgedeelte</text>
 			<newline gap="8"/>
 			<text>Dit is het gedeelte waar de bestanden die nu gedownload worden, worden weergegeven.
-			Je kan de individuele bronnen bekijken door op het + teken te klikken.</text>
+		Je kan de individuele bronnen bekijken door op het + teken te klikken.</text>
 			<newline gap="8"/>
 			<text>Je kunt dit commando ook gebruiken om help informatie te krijgen over een download. Selecteer
-			simpelweg een download en kies dit commando nogmaals.</text>
+		simpelweg een download en kies dit commando nogmaals.</text>
 			<newline gap="16"/>
 			<text>Je kan ook deze commando gebruiken om help informatie voor een specifieke download te krijgen.
-			Selecteer een download en kies dit Help commando opnieuw.</text>
+		Selecteer een download en kies dit Help commando opnieuw.</text>
 		</document>
 		<document name="DownloadHelp.Seeding">
 			<text format="b">Deze Torrent is aan het Seeden</text>
 			<newline gap="8"/>
 			<text>Shareaza heeft deze complete download geverifieerd, en is het actief aan
- 			het verspreiden met andere downloaders via BitTorrent. Verspreid het
-			alstublieft ten miste 100% </text>
+ 		het verspreiden met andere downloaders via BitTorrent. Verspreid het
+		alstublieft ten miste 100%</text>
 		</document>
 		<document name="DownloadHelp.Completed">
 			<text format="b">Download is voltooid</text>
@@ -2060,7 +2053,7 @@
 			<text format="b">Download is gepauzeerd</text>
 			<newline gap="8"/>
 			<text>Je hebt deze download gepauzeerd. Als je het downloaden wilt hervatten, kun
-			je klikken op de knop</text><text format="b">Hervatten</text><text>.</text>
+		je klikken op de knop</text><text format="b">Hervatten</text><text>.</text>
 		</document>
 		<document name="DownloadHelp.DiskFull">
 			<text format="b">Harde schijf is vol</text>
@@ -3607,40 +3600,40 @@
 			<control caption="Gnutella1 instellingen"/>
 		</dialog>
 		<dialog name="CGnutellaSettingsPage" cookie="BuBuCoBuBuCoEdmsEdmsEdmsEdmsEdmsEdmsBuBuBuBuStBuStStStBuStBuStStStBu" caption="Gnutella">
-			<control caption="Gnutella2 netwerk:"/>
 			<control caption="Altijd verbinden met Gnutella2"/>
-			<control caption="Nu verbinden met Gnutella2"/>
-			<control caption="Modus:"/>
+			<control caption="Verbind vandaag met Gnutella2"/>
 			<control caption="Optimaal|Leaf|Hub"/>
-			<control caption="G_2 verbindingen:"/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control caption="Modus:"/>
+			<control caption="Altijd verbinden met Gnutella1"/>
+			<control caption="Verbind vandaag met Gnutella2"/>
 			<control caption="Optimaal|Leaf|Ultrapeer"/>
-			<control caption="G_1 verbindingen:"/>
-			<control caption="Gnutella2 netwerk:"/>
-			<control caption="Modus:"/>
-			<control caption="G_2 Verbindingen:"/>
-			<control caption="UltraPeer naar Leaf:"/>
-			<control caption="Hub naar Leaf:"/>
-			<control caption="Hub naar Hub:"/>
-			<control caption="Peer naar Peer:"/>
-			<control caption="Modus:"/>
-			<control caption="G_1 Verbindingen:"/>
-			<control caption="_Linkcompressie:"/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
 			<control caption="Hub naar Leaf"/>
 			<control caption="Leaf naar Hub"/>
 			<control caption="Hub naar Hub"/>
+			<control caption="Gnutella2 netwerk:"/>
+			<control caption="Modus:"/>
+			<control caption="G_2 Verbindingen:"/>
+			<control caption="Leaf naar Hub:"/>
+			<control caption="Hub naar Leaf:"/>
+			<control caption="Hub naar Hub:"/>
+			<control caption="Gnutella1 Netwerk:"/>
+			<control caption="Modus:"/>
+			<control caption="G_1 Verbindingen:"/>
+			<control caption="Leaf naar Ultrapeer:"/>
+			<control caption="Ultrapeer naar Leaf:"/>
+			<control caption="Peer naar Peer:"/>
+			<control caption="_Linkcompressie:"/>
 		</dialog>
 		<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuBuStEdmsStBuStBu" caption="eDonkey">
 			<control caption="_eDonkey netwerk:"/>
