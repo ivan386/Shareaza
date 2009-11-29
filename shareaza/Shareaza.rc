@@ -949,11 +949,11 @@ STYLE DS_SETFONT | DS_MODALFRAME | WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_S
 CAPTION "Smart Download Preview..."
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    ICON            IDR_DOWNLOADSFRAME,IDC_STATIC,10,7,21,20
+    ICON            IDR_DOWNLOADSFRAME,IDC_STATIC,10,7,20,20
     LTEXT           "Shareaza is creating a preview of the download:",IDC_STATIC,40,10,210,10
     LTEXT           "Some File That I Downloaded.ext",IDC_FILE_NAME,40,20,210,12,SS_ENDELLIPSIS
     CONTROL         "Progress1",IDC_PROGRESS,"msctls_progress32",WS_BORDER,40,35,210,10
-    CTEXT           "(copying downloaded chunks to a new preview file)",IDC_PREVIEW_STATUS,40,48,210,11
+    CTEXT           "(copying downloaded chunks to a new preview file)",IDC_PREVIEW_STATUS,40,48,210,11,SS_WORDELLIPSIS
     PUSHBUTTON      "Cancel",IDCANCEL,190,63,60,16
 END
 

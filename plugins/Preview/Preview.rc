@@ -31,7 +31,7 @@ LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
 
 VS_VERSION_INFO VERSIONINFO
  FILEVERSION 1,0,0,1
- PRODUCTVERSION 1,0,0,1
+ PRODUCTVERSION 2,5,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -47,14 +47,14 @@ BEGIN
         BLOCK "000004b0"
         BEGIN
             VALUE "Comments", "Manages external preview applications for many file formats."
-            VALUE "CompanyName", "TODO: <Company name>"
+            VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Preview Plugin"
-            VALUE "FileVersion", "1, 0, 0, 1"
-            VALUE "InternalName", "Preview.dll"
-            VALUE "LegalCopyright", "TODO: (c) <Company name>.  All rights reserved."
+            VALUE "FileVersion", "2, 5, 0, 0"
+            VALUE "InternalName", "Preview"
+            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2009. All rights reserved."
             VALUE "OriginalFilename", "Preview.dll"
-            VALUE "ProductName", "TODO: <Product name>"
-            VALUE "ProductVersion", "1, 0, 0, 1"
+            VALUE "ProductName", "Shareaza"
+            VALUE "ProductVersion", "2, 5, 0, 0"
         END
     END
     BLOCK "VarFileInfo"
