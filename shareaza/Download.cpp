@@ -108,7 +108,7 @@ void CDownload::Resume()
 	if ( !Network.IsConnected() && !Network.Connect( TRUE ) ) return;
 	if ( ! m_bTempPaused )
 	{
-		if ( ( m_tBegan == 0 ) && ( GetEffectiveSourceCount() < Settings.Downloads.MinSources ) )
+		if ( ! IsTrying() && GetEffectiveSourceCount() < Settings.Downloads.MinSources )
 			FindMoreSources();
 		SetStartTimer();
 		return;
@@ -279,13 +279,13 @@ bool CDownload::IsCompleted() const
 
 bool CDownload::IsBoosted() const
 {
-	return m_bBoosted != 0;
+	return ( m_bBoosted != 0 );
 }
 
 // Is the download currently trying to download?
 bool CDownload::IsTrying() const
 {
-	return  m_tBegan != 0 ;
+	return ( m_tBegan != 0 );
 }
 
 bool CDownload::IsShared() const
@@ -325,14 +325,14 @@ void CDownload::OnRun()
 		}
 		else if ( IsMoving() )
 		{
-			if ( !m_bComplete && !IsTasking() )
+			if ( ! IsCompleted() && ! IsTasking() )
 				OnDownloaded();
 		}
 		else if ( IsTrying() || IsSeeding() )
 		{	//This download is trying to download
 
 			//'Dead download' check- if download appears dead, give up and allow another to start.
-			if ( ( ! m_bComplete ) && ( tNow - GetStartTimer() ) > ( 3 * 60 * 60 * 1000 )  )
+			if ( ! IsCompleted() && ( tNow - GetStartTimer() ) > ( 3 * 60 * 60 * 1000 )  )
 			{	//If it's not complete, and we've been trying for at least 3 hours
 
 				DWORD tHoursToTry = min( ( GetEffectiveSourceCount() + 49u ) / 50u, 9lu ) + Settings.Downloads.StarveGiveUp;
@@ -367,15 +367,16 @@ void CDownload::OnRun()
 				if ( IsSeeding() )
 				{
 					// Mark as collapsed to get correct heights when dragging files
-					if ( !Settings.General.DebugBTSources && m_bExpanded )
+					if ( ! Settings.General.DebugBTSources && m_bExpanded )
 						m_bExpanded = FALSE;
 
 					RunValidation();
+
 					if ( Settings.BitTorrent.AutoSeed )
 					{
-						if ( m_tBegan == 0 )
+						if ( ! IsTrying() )
 						{
-							if ( !Network.IsConnected() )
+							if ( ! Network.IsConnected() )
 								Network.Connect( TRUE );
 
 							m_tBegan = GetTickCount();
@@ -389,7 +390,7 @@ void CDownload::OnRun()
 
 					if ( IsComplete() && IsFileOpen() )
 					{
-						if ( ValidationCanFinish() )
+						if ( IsFullyVerified() )
 							OnDownloaded();
 					}
 					else if ( CheckTorrentRatio() )
@@ -406,7 +407,7 @@ void CDownload::OnRun()
 			if( HasActiveTransfers() )
 				m_bDownloading = true;
 		}
-		else if ( ! m_bComplete && m_bVerify != TRI_TRUE )
+		else if ( ! IsCompleted() && m_bVerify != TRI_TRUE )
 		{
 			//If this download isn't trying to download, see if it can try
 			if ( IsDownloading() )

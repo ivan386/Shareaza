@@ -56,7 +56,6 @@ private:
 // Operations
 public:
 	BOOL		GetNextVerifyRange(QWORD& nOffset, QWORD& nLength, BOOL& bSuccess, int nHash = HASH_NULL) const;
-	BOOL		IsFullyVerified();
 	BOOL		NeedTigerTree() const;
 	BOOL		SetTigerTree(BYTE* pTiger, DWORD nTiger);
 	CTigerTree*	GetTigerTree();
@@ -66,20 +65,19 @@ public:
 	void		ResetVerification();
 	void		ClearVerification();
 	void		RunValidation();
-protected:
 	QWORD		GetVerifyLength(int nHash = HASH_NULL) const;
-	BOOL		ValidationCanFinish() const;
-private:
+
+	virtual CString	GetAvailableRanges() const;
+
+protected:
+	BOOL		IsFullyVerified() const;
+//	BOOL		ValidationCanFinish() const;
 	DWORD		GetValidationCookie() const;
 	BOOL		FindNewValidationBlock(int nHash);
 	void		ContinueValidation();
 	void		FinishValidation();
 	void		SubtractHelper(Fragments::List& ppCorrupted, BYTE* pBlock, QWORD nBlock, QWORD nSize);
 
-// Overrides
-public:
-	virtual CString	GetAvailableRanges() const;
-protected:
 	virtual void	Serialize(CArchive& ar, int nVersion);
 
 	friend class CEDClient; // AddSourceED2K && m_nHashsetBlock && m_pHashsetBlock

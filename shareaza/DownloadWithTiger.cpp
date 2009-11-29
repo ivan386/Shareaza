@@ -168,14 +168,13 @@ BOOL CDownloadWithTiger::GetNextVerifyRange(QWORD& nOffset, QWORD& nLength, BOOL
 	return FALSE;
 }
 
-BOOL CDownloadWithTiger::IsFullyVerified()
+BOOL CDownloadWithTiger::IsFullyVerified() const
 {
 	CQuickLock oLock( m_pTigerSection );
 
-	if ( m_nTorrentBlock > 0 && m_nTorrentSuccess >= m_nTorrentBlock ) return TRUE;
-	if ( m_nTigerBlock > 0 && m_nTigerSuccess >= m_nTigerBlock ) return TRUE;
-	if ( m_nHashsetBlock > 0 && m_nHashsetSuccess >= m_nHashsetBlock ) return TRUE;
-	return FALSE;
+	return  ( m_nTorrentBlock > 0 && m_nTorrentSuccess >= m_nTorrentBlock ) ||
+			( m_nTigerBlock   > 0 && m_nTigerSuccess   >= m_nTigerBlock   ) ||
+			( m_nHashsetBlock > 0 && m_nHashsetSuccess >= m_nHashsetBlock );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -312,7 +311,7 @@ CED2K* CDownloadWithTiger::GetHashset()
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithTiger test if the file can finish
 
-BOOL CDownloadWithTiger::ValidationCanFinish() const
+/*BOOL CDownloadWithTiger::ValidationCanFinish() const
 {
 	CQuickLock oLock( m_pTigerSection );
 
@@ -399,7 +398,7 @@ BOOL CDownloadWithTiger::ValidationCanFinish() const
 	}
 
 	return ! bAvailable;
-}
+}*/
 
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithTiger run validation
