@@ -360,7 +360,7 @@ void CDownload::OnRun()
 			}	//End of 'dead download' check
 
 			// Run the download
-			if ( RunTorrent( tNow ) )
+			if ( ! IsTorrent() || RunTorrent( tNow ) )
 			{
 				RunSearch( tNow );
 
@@ -501,7 +501,7 @@ void CDownload::OnTaskComplete(const CDownloadTask* pTask)
 void CDownload::OnMoved()
 {
 	// We just completed torrent
-	if ( m_nTorrentBlock > 0 && m_nTorrentSuccess >= m_nTorrentBlock )
+	if ( IsTorrent() && IsFullyVerified() )
 	{
 		CloseTorrentUploads();
 		SendCompleted();

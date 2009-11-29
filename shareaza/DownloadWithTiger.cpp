@@ -168,13 +168,80 @@ BOOL CDownloadWithTiger::GetNextVerifyRange(QWORD& nOffset, QWORD& nLength, BOOL
 	return FALSE;
 }
 
-BOOL CDownloadWithTiger::IsFullyVerified() const
+bool CDownloadWithTiger::IsFullyVerified() const
 {
 	CQuickLock oLock( m_pTigerSection );
 
-	return  ( m_nTorrentBlock > 0 && m_nTorrentSuccess >= m_nTorrentBlock ) ||
-			( m_nTigerBlock   > 0 && m_nTigerSuccess   >= m_nTigerBlock   ) ||
-			( m_nHashsetBlock > 0 && m_nHashsetSuccess >= m_nHashsetBlock );
+	// Quick check
+	if ( ( m_nTorrentBlock && m_nTorrentSuccess >= m_nTorrentBlock ) ||
+		 ( m_nTigerBlock   && m_nTigerSuccess   >= m_nTigerBlock   ) ||
+		 ( m_nHashsetBlock && m_nHashsetSuccess >= m_nHashsetBlock ) )
+		 return true;
+
+	if ( ! IsComplete() )
+		// Completed only
+		return false;
+
+	// Full check
+	bool bAvailable = false;
+	Fragments::List oList = inverse( GetEmptyFragmentList() );
+
+	if ( m_pTorrentBlock )
+	{
+		for ( DWORD i = 0 ; i < m_nTorrentBlock; i++ )
+		{
+			if ( m_pTorrentBlock[ i ] == TRI_TRUE )
+			{
+				QWORD nOffset = i * (QWORD)m_nTorrentSize;
+				oList.erase( Fragments::Fragment( nOffset,
+					min( nOffset + m_nTorrentSize, m_nSize ) ) );
+			}
+		}
+		if ( oList.empty() )
+			// No unverified parts left
+			return true;
+
+		bAvailable = true;
+	}
+
+	if ( m_pTigerBlock && Settings.Downloads.VerifyTiger )
+	{
+		for ( DWORD i = 0 ; i < m_nTigerBlock; i++ )
+		{
+			if ( m_pTigerBlock[ i ] == TRI_TRUE )
+			{
+				QWORD nOffset = i * (QWORD)m_nTigerSize;
+				oList.erase( Fragments::Fragment( nOffset,
+					min( nOffset + m_nTigerSize, m_nSize ) ) );
+			}
+		}
+		if ( oList.empty() )
+			// No unverified parts left
+			return true;
+
+		bAvailable = true;
+	}
+
+	if ( m_pHashsetBlock && Settings.Downloads.VerifyED2K )
+	{
+		for ( DWORD i = 0 ; i < m_nHashsetBlock; i++ )
+		{
+			if ( m_pHashsetBlock[ i ] == TRI_TRUE )
+			{
+				QWORD nOffset = i * (QWORD)ED2K_PART_SIZE;
+				oList.erase( Fragments::Fragment( nOffset,
+					min( nOffset + ED2K_PART_SIZE, m_nSize ) ) );
+			}
+		}
+		if ( oList.empty() )
+			// No unverified parts left
+			return true;
+
+		bAvailable = true;
+	}
+
+	// Allow unverified downloads without hashes i.e. pure HTTP, FTP
+	return ! bAvailable;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -307,98 +374,6 @@ CED2K* CDownloadWithTiger::GetHashset()
 
 	return m_pHashset.IsAvailable() ? &m_pHashset : NULL;
 }
-
-//////////////////////////////////////////////////////////////////////
-// CDownloadWithTiger test if the file can finish
-
-/*BOOL CDownloadWithTiger::ValidationCanFinish() const
-{
-	CQuickLock oLock( m_pTigerSection );
-
-	BOOL bAvailable = FALSE;
-
-	if ( m_pTorrentBlock != NULL )
-	{
-		bAvailable = TRUE;
-
-		// Quick check
-		if ( m_nTorrentSuccess >= m_nTorrentBlock )
-			return TRUE;
-
-		// Full check
-		if ( GetFileCount() > 1 )
-		{
-			Fragments::List oList = GetWantedFragmentList();
-			for ( DWORD i = 0 ; i < m_nTorrentBlock; i++ )
-			{
-				if ( m_pTorrentBlock[ i ] == TRI_TRUE )
-				{
-					QWORD nOffset = i * (QWORD)m_nTorrentSize;
-					oList.erase( Fragments::Fragment( nOffset,
-						min( nOffset + m_nTorrentSize, m_nSize ) ) );
-				}
-			}
-			if ( oList.empty() )
-				return TRUE;
-		}
-	}
-
-	if ( m_pTigerBlock != NULL && Settings.Downloads.VerifyTiger )
-	{
-		bAvailable = TRUE;
-
-		// Quick check
-		if ( m_nTigerSuccess >= m_nTigerBlock )
-			return TRUE;
-
-		// Full check
-		if ( GetFileCount() > 1 )
-		{
-			Fragments::List oList = GetWantedFragmentList();
-			for ( DWORD i = 0 ; i < m_nTigerBlock; i++ )
-			{
-				if ( m_pTigerBlock[ i ] == TRI_TRUE )
-				{
-					QWORD nOffset = i * (QWORD)m_nTigerSize;
-					oList.erase( Fragments::Fragment( nOffset,
-						min( nOffset + m_nTigerSize, m_nSize ) ) );
-				}
-			}
-			if ( oList.empty() )
-				return TRUE;
-		}
-	}
-
-	if ( m_pHashsetBlock != NULL && Settings.Downloads.VerifyED2K )
-	{
-		bAvailable = TRUE;
-
-		// Quick check
-		if ( ( m_nSize && m_nSize % ED2K_PART_SIZE == 0 &&
-			m_nHashsetSuccess >= m_nHashsetBlock - 1 ) ||
-			( m_nHashsetSuccess >= m_nHashsetBlock ) )
-			return TRUE;
-
-		// Full check
-		if ( GetFileCount() > 1 )
-		{
-			Fragments::List oList = GetWantedFragmentList();
-			for ( DWORD i = 0 ; i < m_nHashsetBlock; i++ )
-			{
-				if ( m_pHashsetBlock[ i ] == TRI_TRUE )
-				{
-					QWORD nOffset = i * (QWORD)ED2K_PART_SIZE;
-					oList.erase( Fragments::Fragment( nOffset,
-						min( nOffset + ED2K_PART_SIZE, m_nSize ) ) );
-				}
-			}
-			if ( oList.empty() )
-				return TRUE;
-		}
-	}
-
-	return ! bAvailable;
-}*/
 
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithTiger run validation

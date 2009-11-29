@@ -396,10 +396,6 @@ bool CDownloadWithTorrent::RunTorrent(DWORD tNow)
 	if ( ! Settings.BitTorrent.EnableToday )
 		return true;
 
-	// Return if this isn't a torrent
-	if ( !IsTorrent() )
-		return true;
-
 	// Return if disk is full
 	if ( GetFileError() != ERROR_SUCCESS )
 		return false;

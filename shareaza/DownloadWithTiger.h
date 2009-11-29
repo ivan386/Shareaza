@@ -70,8 +70,7 @@ public:
 	virtual CString	GetAvailableRanges() const;
 
 protected:
-	BOOL		IsFullyVerified() const;
-//	BOOL		ValidationCanFinish() const;
+	bool		IsFullyVerified() const;
 	DWORD		GetValidationCookie() const;
 	BOOL		FindNewValidationBlock(int nHash);
 	void		ContinueValidation();
