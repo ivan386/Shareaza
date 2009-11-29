@@ -445,6 +445,18 @@ float CFragmentedFile::GetProgress(DWORD nIndex) const
 			m_oFile[ nIndex ].m_nSize ) * 100.f ) / (float)m_oFile[ nIndex ].m_nSize;
 }
 
+Fragments::List CFragmentedFile::GetFullFragmentList() const
+{
+	CQuickLock oLock( m_pSection );
+
+	Fragments::List oList( m_oFList.limit() );
+	for ( CVirtualFile::const_iterator i = m_oFile.begin(); i != m_oFile.end(); ++i )
+		if ( (*i).m_nPriority != prNotWanted )
+			oList.insert( Fragments::Fragment( (*i).m_nOffset, (*i).m_nOffset + (*i).m_nSize ) );
+
+	return oList;
+}
+
 Fragments::List CFragmentedFile::GetWantedFragmentList() const
 {
 	CQuickLock oLock( m_pSection );

@@ -60,6 +60,7 @@ public:
 	QWORD				EraseRange(QWORD nOffset, QWORD nLength);
 	BOOL				MakeComplete();
 	QWORD				InvalidateFileRange(QWORD nOffset, QWORD nLength);
+	Fragments::List		GetFullFragmentList() const;
 	Fragments::List		GetEmptyFragmentList() const;
 	Fragments::List		GetWantedFragmentList() const;
 	CFragmentedFile*	GetFile();

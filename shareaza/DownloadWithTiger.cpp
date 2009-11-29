@@ -184,7 +184,7 @@ bool CDownloadWithTiger::IsFullyVerified() const
 
 	// Full check
 	bool bAvailable = false;
-	Fragments::List oList = inverse( GetEmptyFragmentList() );
+	Fragments::List oList = GetFullFragmentList();
 
 	if ( m_pTorrentBlock )
 	{

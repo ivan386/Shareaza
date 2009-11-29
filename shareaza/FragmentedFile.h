@@ -261,6 +261,9 @@ public:
 			SIZE_UNKNOWN : m_oFList.length_sum();
 	}
 
+	// Get list of all fragments which must be downloaded
+	Fragments::List GetFullFragmentList() const;
+
 	// Get list of empty fragments
 	inline Fragments::List GetEmptyFragmentList() const
 	{

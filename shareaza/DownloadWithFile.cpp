@@ -57,6 +57,11 @@ BOOL CDownloadWithFile::IsFileOpen() const
 	return m_pFile.get() && m_pFile->IsOpen();
 }
 
+// Get list of all fragments which must be downloaded
+Fragments::List CDownloadWithFile::GetFullFragmentList() const
+{
+	return m_pFile.get() ? m_pFile->GetFullFragmentList() : Fragments::List( 0 );
+}
 
 // Get list of empty fragments
 Fragments::List CDownloadWithFile::GetEmptyFragmentList() const
