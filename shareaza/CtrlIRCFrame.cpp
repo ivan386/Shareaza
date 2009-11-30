@@ -341,14 +341,7 @@ void CIRCFrame::OnDestroy()
 {
 	OnIrcChanCmdSave();
 
-	SendString( _T("QUIT") );
-
-	KillTimer( 9 );
-	KillTimer( 7 );
-
-	m_pChanList.RemoveAll();
-
-	CNetwork::CloseSocket( m_nSocket, false );
+	OnIrcDisconnect();
 
 	CWnd::OnDestroy();
 }
@@ -616,6 +609,7 @@ void CIRCFrame::OnIrcConnect()
 	strCommand += Settings.IRC.RealName;
 	SendString( strCommand );
 
+	m_pWakeup.ResetEvent();
 	WSAEventSelect( m_nSocket, m_pWakeup, FD_READ | FD_CLOSE );
 	m_nTimerVal = 0;
 	OnStatusMessage( _T("Activating Connection..."), ID_COLOR_NOTICE );
@@ -691,27 +685,21 @@ void CIRCFrame::OnIrcChanCmdOpen()
 
 void CIRCFrame::OnIrcChanCmdSave()
 {
-	CString strFile, strPath, strItem;
 	CFile pFile;
-	strFile.Empty();
-	int n_mpChanListIndex;
-	CListCtrl* pChannelList = (CListCtrl*)&(m_wndPanel.m_boxChans.m_wndChanList);
-	strPath = Settings.General.UserPath + _T("\\Data\\ChatChanlist.dat");
+	if ( ! pFile.Open( Settings.General.UserPath + _T("\\Data\\ChatChanlist.dat"),
+		CFile::modeWrite | CFile::modeCreate ) )
+		return;
+
+	CListCtrl* pChannelList = &(m_wndPanel.m_boxChans.m_wndChanList);
 	for ( int nIndex = 0 ; nIndex < pChannelList->GetItemCount() ; nIndex++ )
 	{
-		n_mpChanListIndex = m_pChanList.GetIndexOfDisplay( pChannelList->GetItemText( nIndex, 0 ) );
+		int n_mpChanListIndex = m_pChanList.GetIndexOfDisplay( pChannelList->GetItemText( nIndex, 0 ) );
 		if ( n_mpChanListIndex != -1 && m_pChanList.GetType( m_pChanList.GetDisplayOfIndex( n_mpChanListIndex ) )  )
 		{
-			strItem = m_pChanList.GetNameOfIndex( n_mpChanListIndex );
-			strFile += strItem + _T("\r\n");
+			CT2A pszFile( m_pChanList.GetNameOfIndex( n_mpChanListIndex ) + _T("\r\n") );
+			pFile.Write( (LPCSTR)pszFile, (DWORD)strlen( pszFile ) );
 		}
 	}
-	if ( ! pFile.Open( strPath, CFile::modeWrite|CFile::modeCreate ) ) return;
-
-	CT2A pszFile( (LPCTSTR)strFile );
-
-	pFile.Write( (LPCSTR)pszFile, (DWORD)strlen( pszFile ) );
-	pFile.Close();
 }
 
 void CIRCFrame::OnIrcUserCmdVoice() 
@@ -1054,6 +1042,7 @@ void CIRCFrame::OnTimer(UINT_PTR nIDEvent)
 			auto_array< char > pszData( new char[ 4096 ] );
 			pszData[ 0 ] = '\0';
 			int nRetVal = recv( m_nSocket, pszData.get(), 4095, 0 );
+			int nError = WSAGetLastError();
 			if ( nRetVal > 0 )
 				pszData[ nRetVal ] = '\0';
 			CStringA strTmp = m_sWsaBuffer + pszData.get();
@@ -1061,17 +1050,16 @@ void CIRCFrame::OnTimer(UINT_PTR nIDEvent)
 
 			switch ( nRetVal )
 			{
-			case 0:
+			case 0:	// Connection has been gracefully closed
 				OnStatusMessage( TrimString( UTF8Decode( strTmp ) ), ID_COLOR_NOTICE );
 				OnIrcDisconnect();
 				return;
-			
-			case -1:
-				// Error
+
+			case SOCKET_ERROR:
 				KillTimer( 9 );
-				if ( WSAGetLastError() == WSAETIMEDOUT )
+				if ( nError == WSAETIMEDOUT )
 					OnStatusMessage( _T("QUIT: Connection reset by peer." ), ID_COLOR_NOTICE );
-				else if ( WSAGetLastError() == WSAENOTCONN )
+				else if ( nError == WSAENOTCONN )
 					OnStatusMessage( _T("QUIT: Connection dropped."), ID_COLOR_NOTICE );
 				else 
 					OnStatusMessage( _T("QUIT: Server is busy, please try again in a minute."), ID_COLOR_NOTICE );
