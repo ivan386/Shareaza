@@ -6,7 +6,7 @@
 	<toolbars>
 		<!-- MAIN WINDOW -->
 		<toolbar name="CMainWnd.Basic">
-			<button id="ID_NETWORK_CONNECT" text="Подключиться"/>
+			<button id="ID_NETWORK_CONNECT" text="Соединиться"/>
 			<separator/>
 			<button id="ID_TAB_HOME" text="Домой"/>
 			<button id="ID_TAB_LIBRARY" text="Хранилище"/>
@@ -15,7 +15,7 @@
 			<button id="ID_TAB_TRANSFERS" text="Загрузки"/>
 		</toolbar>
 		<toolbar name="CMainWnd.Tabbed">
-			<button id="ID_TAB_CONNECT" text="Подключиться"/>
+			<button id="ID_TAB_CONNECT" text="Соединиться"/>
 			<separator/>
 			<button id="ID_TAB_HOME" text="Домой"/>
 			<button id="ID_TAB_LIBRARY" text="Хранилище"/>
@@ -26,7 +26,7 @@
 			<button id="ID_TAB_IRC" text="Чат"/>
 		</toolbar>
 		<toolbar name="CMainWnd.Windowed">
-			<button id="ID_NETWORK_CONNECT" text="Подключиться"/>
+			<button id="ID_NETWORK_CONNECT" text="Соединиться"/>
 			<button id="ID_NETWORK_DISCONNECT"/>
 			<separator/>
 			<button id="ID_TAB_HOME"/>
@@ -131,7 +131,7 @@
 			<separator/>
 			<button id="ID_DOWNLOADS_RESUME" text="Продолжить"/>
 			<button id="ID_DOWNLOADS_PAUSE" text="Приостановить"/>
-			<button id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="Отменить загрузку"/>
+			<button id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="Отменить"/>
 			<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Убрать"/>
 			<separator/>
 			<button id="ID_DOWNLOADS_MONITOR" text="Монитор"/>
@@ -146,7 +146,7 @@
 			<separator/>
 			<button id="ID_DOWNLOADS_RESUME" text="Продолжить"/>
 			<button id="ID_DOWNLOADS_PAUSE" text="Приостановить"/>
-			<button id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="Отменить загрузку"/>
+			<button id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="Отменить"/>
 			<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Убрать"/>
 			<separator/>
 			<button id="ID_DOWNLOADS_MONITOR" text="Монитор"/>
@@ -222,7 +222,7 @@
 		</toolbar>
 		<toolbar name="CLibraryFileView.Physical.Basic">
 			<button id="ID_LIBRARY_LAUNCH" text="Открыть"/>
-			<button id="ID_LIBRARY_ENQUEUE" text="Добавить в список"/>
+			<button id="ID_LIBRARY_ENQUEUE" text="Плейлист"/>
 			<separator/>
 			<button id="ID_WEBSERVICES_LIST" text="Сервис"/>
 			<rightAlign/>
@@ -232,7 +232,7 @@
 		</toolbar>
 		<toolbar name="CLibraryFileView.Physical">
 			<button id="ID_LIBRARY_LAUNCH" text="Открыть"/>
-			<button id="ID_LIBRARY_ENQUEUE" text="Добавить в список"/>
+			<button id="ID_LIBRARY_ENQUEUE" text="Плейлист"/>
 			<separator/>
 			<button id="ID_LIBRARY_PROPERTIES" text="Свойства"/>
 			<separator/>
@@ -248,8 +248,8 @@
 		</toolbar>
 		<toolbar name="CLibraryFileView.Virtual.Basic">
 			<button id="ID_LIBRARY_LAUNCH" text="Открыть"/>
-			<button id="ID_LIBRARY_ENQUEUE" text="Добавить в список"/>
-			<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Добавить альбом в список"/>
+			<button id="ID_LIBRARY_ENQUEUE" text="Плейлист"/>
+			<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Играть альбом"/>
 			<separator/>
 			<button id="ID_WEBSERVICES_LIST" text="Сервис"/>
 			<rightAlign/>
@@ -259,8 +259,8 @@
 		</toolbar>
 		<toolbar name="CLibraryFileView.Virtual">
 			<button id="ID_LIBRARY_LAUNCH" text="Открыть"/>
-			<button id="ID_LIBRARY_ENQUEUE" text="Добавить в список"/>
-			<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Добавить альбом в список"/>
+			<button id="ID_LIBRARY_ENQUEUE" text="Плейлист"/>
+			<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Играть альбом"/>
 			<separator/>
 			<button id="ID_LIBRARY_PROPERTIES" text="Свойства"/>
 			<separator/>
@@ -271,7 +271,7 @@
 			<button id="ID_LIBRARY_SEARCH_QUICK" text="Найти"/>
 		</toolbar>
 		<toolbar name="CLibraryCollectionView.Virtual">
-			<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Добавить альбом в список"/>
+			<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Играть альбом"/>
 			<separator/>
 			<button id="ID_LIBRARY_FOLDER_DOWNLOAD" text="Загрузить все файлы"/>
 			<rightAlign/>
@@ -329,7 +329,7 @@
 		</toolbar>
 		<!-- IRC WINDOW -->
 		<toolbar name="CIRCFrame">
-			<button id="ID_IRC_CONNECT" text="Подключиться" tip="Подключиться к IRC"/>
+			<button id="ID_IRC_CONNECT" text="Соединиться" tip="Соединить с IRC"/>
 			<button id="ID_IRC_DISCONNECT" text="Отключиться" tip="Отключиться от IRC"/>
 			<rightAlign/>
 			<button id="ID_IRC_SETTINGS" text="Настройки" tip="Настроить IRC"/>
@@ -346,7 +346,7 @@
 			<button id="ID_NEIGHBOURS_SETTINGS" text="Настройки"/>
 		</toolbar>
 		<toolbar name="CNeighboursWnd">
-			<button id="ID_NETWORK_CONNECT_TO" text="Подключиться..."/>
+			<button id="ID_NETWORK_CONNECT_TO" text="Соединиться..."/>
 			<button id="ID_NEIGHBOURS_DISCONNECT" text="Отключиться"/>
 			<separator/>
 			<button id="ID_BROWSE_LAUNCH" text="Просмотр хоста"/>
@@ -386,12 +386,12 @@
 		</toolbar>
 		<!-- HOST CACHE WINDOW -->
 		<toolbar name="CHostCacheWnd.Basic">
-			<button id="ID_HOSTCACHE_CONNECT" text="Подключиться..."/>
+			<button id="ID_HOSTCACHE_CONNECT" text="Соединиться..."/>
 			<button id="ID_HOSTCACHE_DISCONNECT" text="Отключиться"/>
 			<button id="ID_HOSTCACHE_REMOVE" text="Удалить"/>
 		</toolbar>
 		<toolbar name="CHostCacheWnd">
-			<button id="ID_HOSTCACHE_CONNECT" text="Подключиться..."/>
+			<button id="ID_HOSTCACHE_CONNECT" text="Соединиться..."/>
 			<button id="ID_HOSTCACHE_DISCONNECT" text="Отключиться"/>
 			<button id="ID_HOSTCACHE_REMOVE" text="Удалить"/>
 			<rightAlign/>
@@ -414,7 +414,7 @@
 			<!-- <button id="ID_CHAT_SEND_FILE" text="Send File"/> -->
 			<button id="ID_CHAT_PRIORITY" text="Предоставить приоритет"/>
 			<separator/>
-			<button id="ID_CHAT_CONNECT" text="Подключиться" visible="false"/>
+			<button id="ID_CHAT_CONNECT" text="Соединиться" visible="false"/>
 			<button id="ID_CHAT_DISCONNECT" text="Отключиться"/>
 		</toolbar>
 		<!-- WEBSERVICES -->
@@ -473,12 +473,12 @@
 		<!-- MAIN WINDOW MENU BAR -->
 		<menu name="CMainWnd.Basic" type="bar">
 			<menu text="_Сети">
-				<item id="ID_NETWORK_CONNECT" text="_Подключиться" shortcut="Ctrl+G"/>
+				<item id="ID_NETWORK_CONNECT" text="_Соединить" shortcut="Ctrl+G"/>
 				<separator/>
 				<menu text="Выберите _сеть">
-					<item id="ID_NETWORK_G2" text="Подключиться к _Gnutella2"/>
-					<item id="ID_NETWORK_G1" text="Подключиться к Gnutella_1"/>
-					<item id="ID_NETWORK_ED2K" text="Подключиться к _eDonkey"/>
+					<item id="ID_NETWORK_G2" text="Соединиться с _Gnutella2"/>
+					<item id="ID_NETWORK_G1" text="Соединиться с Gnutella_1"/>
+					<item id="ID_NETWORK_ED2K" text="Соединиться с _eDonkey"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_AUTO_CLOSE" text="Выйти _после пересылок"/>
@@ -547,16 +547,16 @@
 		</menu>
 		<menu name="CMainWnd.Tabbed" type="bar">
 			<menu text="_Сети">
-				<item id="ID_NETWORK_CONNECT" text="_Подключиться" shortcut="Ctrl+G"/>
+				<item id="ID_NETWORK_CONNECT" text="_Соединить" shortcut="Ctrl+G"/>
 				<item id="ID_NETWORK_DISCONNECT" text="_Отключиться"/>
 				<separator/>
 				<menu text="Выберите _сеть">
-					<item id="ID_NETWORK_G2" text="Подключиться к _Gnutella2"/>
-					<item id="ID_NETWORK_G1" text="Подключиться к Gnutella_1"/>
-					<item id="ID_NETWORK_ED2K" text="Подключиться к _eDonkey"/>
+					<item id="ID_NETWORK_G2" text="Соединиться с _Gnutella2"/>
+					<item id="ID_NETWORK_G1" text="Соединиться с Gnutella_1"/>
+					<item id="ID_NETWORK_ED2K" text="Соединиться с _eDonkey"/>
 				</menu>
 				<separator/>
-				<item id="ID_NETWORK_CONNECT_TO" text="Под_ключиться..." shortcut="Ctrl+T"/>
+				<item id="ID_NETWORK_CONNECT_TO" text="Соедини_ться с..." shortcut="Ctrl+T"/>
 				<item id="ID_NETWORK_BROWSE_TO" text="Просмотр _хоста..."/>
 				<separator/>
 				<item id="ID_NETWORK_AUTO_CLOSE" text="Выйти _после пересылок"/>
@@ -651,16 +651,16 @@
 			<menu text="_Сети">
 				<item id="ID_NETWORK_SEARCH" text="Новый _поиск..." shortcut="Ctrl+S"/>
 				<separator/>
-				<item id="ID_NETWORK_CONNECT" text="_Подключиться" shortcut="Ctrl+G"/>
+				<item id="ID_NETWORK_CONNECT" text="_Соединить" shortcut="Ctrl+G"/>
 				<item id="ID_NETWORK_DISCONNECT" text="_Отключиться"/>
 				<separator/>
-				<item id="ID_NETWORK_CONNECT_TO" text="Под_ключиться..." shortcut="Ctrl+T"/>
+				<item id="ID_NETWORK_CONNECT_TO" text="Соедини_ться с..." shortcut="Ctrl+T"/>
 				<item id="ID_NETWORK_BROWSE_TO" text="Просмотр _хоста..."/>
 				<separator/>
 				<menu text="Выберите _сеть">
-					<item id="ID_NETWORK_G2" text="Подключиться к _Gnutella2"/>
-					<item id="ID_NETWORK_G1" text="Подключиться к Gnutella_1"/>
-					<item id="ID_NETWORK_ED2K" text="Подключиться к _eDonkey"/>
+					<item id="ID_NETWORK_G2" text="Соединиться с _Gnutella2"/>
+					<item id="ID_NETWORK_G1" text="Соединиться с Gnutella_1"/>
+					<item id="ID_NETWORK_ED2K" text="Соединиться с _eDonkey"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_AUTO_CLOSE" text="_Закрыть после пересылок"/>
@@ -1008,7 +1008,7 @@
 			<separator/>
 			<item id="ID_DOWNLOADS_RESUME" text="_Продолжить"/>
 			<item id="ID_DOWNLOADS_PAUSE" text="П_риостановить"/>
-			<item id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="_Отменить загрузку"/>
+			<item id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="_Отменить"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_SOURCES" text="_Найти больше источников"/>
 			<separator/>
@@ -1020,12 +1020,12 @@
 			<item id="ID_DOWNLOADS_LAUNCH_COPY" text="_Просмотр"/>
 			<item id="ID_DOWNLOADS_LAUNCH" text="_Открыть"/>
 			<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="_Удаленный просмотр"/>
-			<item id="ID_DOWNLOADS_ENQUEUE" text="_Добавить в список"/>
+			<item id="ID_DOWNLOADS_ENQUEUE" text="_Плейлист"/>
 			<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="П_росмотр оценок"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_RESUME" text="_Продолжить"/>
 			<item id="ID_DOWNLOADS_PAUSE" text="П_риостановить"/>
-			<item id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="_Отменить загрузку"/>
+			<item id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="_Отменить"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_SOURCES" text="_Найти больше источников"/>
 			<separator/>
@@ -1046,7 +1046,7 @@
 			<item id="ID_DOWNLOADS_EDIT" text="_Свойства"/>
 		</menu>
 		<menu name="CDownloadsWnd.Source">
-			<item id="ID_TRANSFERS_CONNECT" text="_Подключиться"/>
+			<item id="ID_TRANSFERS_CONNECT" text="_Соединить"/>
 			<separator/>
 			<item id="ID_BROWSE_LAUNCH" text="Просмотр _хоста"/>
 			<item id="ID_TRANSFERS_CHAT" text="_Чат"/>
@@ -1057,14 +1057,14 @@
 		</menu>
 		<menu name="CDownloadsWnd.Completed.Basic">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Открыть"/>
-			<item id="ID_DOWNLOADS_ENQUEUE" text="_Добавить в список"/>
+			<item id="ID_DOWNLOADS_ENQUEUE" text="_Плейлист"/>
 			<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="У_брать"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_FILE_DELETE" text="_Удалить файл"/>
 		</menu>
 		<menu name="CDownloadsWnd.Completed">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Открыть"/>
-			<item id="ID_DOWNLOADS_ENQUEUE" text="_Добавить в список"/>
+			<item id="ID_DOWNLOADS_ENQUEUE" text="_Плейлист"/>
 			<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="У_брать"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_COPY" text="_Копировать ссылку..."/>
@@ -1162,14 +1162,14 @@
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="_Свойства файла"/>
 		</menu>
 		<menu name="CLibraryTree.Virtual.Basic">
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Добавить _альбом в список"/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Играть _альбом"/>
 			<item id="ID_LIBRARY_FOLDER_DELETE" text="_Удалить"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="_Свойства файла"/>
 			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="Свойства _альбома"/>
 		</menu>
 		<menu name="CLibraryTree.Virtual">
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Добавить _альбом в список"/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Играть _альбом"/>
 			<item id="ID_LIBRARY_FOLDER_DELETE" text="_Удалить"/>
 			<separator/>
 			<item id="ID_LIBRARY_REBUILD" text="_Перестройка"/>
@@ -1189,7 +1189,7 @@
 		</menu>
 		<menu name="CLibraryFileView.Physical.Basic">
 			<item id="ID_LIBRARY_LAUNCH" text="_Открыть"/>
-			<item id="ID_LIBRARY_ENQUEUE" text="_Добавить в список"/>
+			<item id="ID_LIBRARY_ENQUEUE" text="_Плейлист"/>
 			<separator/>
 			<item id="ID_LIBRARY_SHARED_FILE" text="_Общий доступ"/>
 			<separator/>
@@ -1220,7 +1220,7 @@
 		</menu>
 		<menu name="CLibraryFileView.Physical">
 			<item id="ID_LIBRARY_LAUNCH" text="_Открыть"/>
-			<item id="ID_LIBRARY_ENQUEUE" text="_Добавить в список"/>
+			<item id="ID_LIBRARY_ENQUEUE" text="_Плейлист"/>
 			<separator/>
 			<item id="ID_LIBRARY_SHARED_FILE" text="_Общий доступ"/>
 			<separator/>
@@ -1257,8 +1257,8 @@
 		</menu>
 		<menu name="CLibraryFileView.Virtual.Basic">
 			<item id="ID_LIBRARY_LAUNCH" text="_Открыть"/>
-			<item id="ID_LIBRARY_ENQUEUE" text="_Добавить в список"/>
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Добавить _альбом в список"/>
+			<item id="ID_LIBRARY_ENQUEUE" text="_Плейлист"/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Играть _альбом"/>
 			<separator/>
 			<item id="ID_LIBRARY_SHARED_FILE" text="_Общий доступ"/>
 			<separator/>
@@ -1293,7 +1293,7 @@
 		</menu>
 		<menu name="CLibraryFileView.Virtual">
 			<item id="ID_LIBRARY_LAUNCH" text="_Открыть"/>
-			<item id="ID_LIBRARY_ENQUEUE" text="_Добавить в список"/>
+			<item id="ID_LIBRARY_ENQUEUE" text="_Плейлист"/>
 			<separator/>
 			<item id="ID_LIBRARY_SHARED_FILE" text="_Общий доступ"/>
 			<separator/>
@@ -1470,7 +1470,7 @@
 			<item id="ID_NEIGHBOURS_COPY" text="_Копировать ссылку"/>
 			<separator/>
 			<menu text="_Сети">
-				<item id="ID_NETWORK_CONNECT" text="_Подключиться"/>
+				<item id="ID_NETWORK_CONNECT" text="_Соединить"/>
 				<item id="ID_NETWORK_DISCONNECT" text="_Отключиться"/>
 				<separator/>
 				<item id="ID_NETWORK_G2" text="_Gnutella2"/>
@@ -1543,7 +1543,7 @@
 		</menu>
 		<!-- PRIVATE CHAT FRAME -->
 		<menu name="CPrivateChatFrame">
-			<item id="ID_CHAT_CONNECT" text="_Подключиться"/>
+			<item id="ID_CHAT_CONNECT" text="_Соединить"/>
 			<item id="ID_CHAT_DISCONNECT" text="_Отключиться"/>
 			<separator/>
 			<item id="ID_CHAT_BROWSE" text="Просмотр _хоста"/>
@@ -1777,7 +1777,7 @@
 				<para align="center">
 					<text format="b">Нет подключения</text>
 					<newline gap="4"/>
-					<link target="raza:command:ID_NETWORK_CONNECT">Подключиться!</link>
+					<link target="raza:command:ID_NETWORK_CONNECT">Соединиться!</link>
 				</para>
 			</group>
 			<icon group="20" command="ID_NETWORK_G2"/><gap group="20" size="4"/>
@@ -1935,7 +1935,7 @@
 			</group>
 			<group id="2">
 				<newline gap="8" indent="0"/>
-				<text format="b">Местонахождение</text>
+				<text format="b">Место</text>
 				<newline gap="2" indent="8"/>
 				<text id="FullLocation"/>
 			</group>
@@ -2184,7 +2184,7 @@
 			<text format="b">Пустой список eDonkey серверов</text>
 			<newline gap="8"/>
 			<text>В списке eDonkey серверов нет ни одного сервера. Вам необходимо скачать
-		новый список серверов (файл met), чтобы Вы смогли подключиться к eDonkey.</text>
+		новый список серверов (файл met), чтобы Вы смогли соединиться с eDonkey.</text>
 			<newline gap="8"/>
 			<text>Вы можете скачать этот список со страницы опций eDonkey или с окна
 		служб ресурсов. (Нажмите F9, если хотите открыть это окно)</text>
@@ -2626,25 +2626,25 @@
 		<string id="8003" value="Профиль"/>
 		<string id="8004" value="!Добро пожаловать в Shareaza (version) !\n.\nShareaza полностью бесплатная программа.\nПожалуйста используйте её с уважением к законам интеллектуальной собственности.\n."/>
 		<string id="8005" value="(закрытие после загрузок)"/>
-		<string id="8006" value="Вы не подключены.  Щелкните кнопку «Подключиться», чтобы начать работу."/>
+		<string id="8006" value="Вы не подключены.  Щелкните кнопку «Соединиться», чтобы начать работу."/>
 		<string id="8007" value="Нет активных процессов поиска.  Щелкните здесь, чтобы начать поиск файлов."/>
 		<string id="8008" value="Shareaza закончила загрузку новой версии Shareaza (%s).  Хотите ли сейчас обновить?\n\nЕсли выберите «Да», то Shareaza временно окончит работу, пока она будет обновляться."/>
 		<string id="8009" value="Уверены, что хотите удалить шкурку «%s»?  Действие будет необратимое."/>
 		<string id="8010" value="Это предвыпускная версия Shareaza, и период бета тестирования закончился.  Пожалуйста загрузите полную, официальную версию с http://shareaza.sourceforge.net/."/>
-		<string id="8011" value="При смене вида все открытые Вами окна будут закрыты.  Хотите ли переключить сейчас?"/>
+		<string id="8011" value="При смене вида все открытые Вами окна будут закрыты.  Хотите переключить сейчас?"/>
 		<string id="8012" value="Информация о торренте"/>
-		<string id="8013" value="Новых версий Shareaza не обнаружено."/>
+		<string id="8013" value="Новых версий Shareazы не обнаружено."/>
 		<string id="8014" value="Свойства загрузки"/>
-		<string id="8060" value="Узел/режим Ведущего с %lu хостом(ами).  %s в собсвенном хранилище."/>
-		<string id="8061" value="Режим Ведущего с %lu хостом(ами).  %s в собсвенном хранилище."/>
-		<string id="8062" value="Режим узла с %lu хостом(ами).  %s в собсвенном хранилище."/>
-		<string id="8063" value="Подключено. %s в собсвенном хранилище."/>
-		<string id="8064" value="Соединено с %lu хостом(ами).  %s в собсвенном хранилище."/>
+		<string id="8060" value="G1/G2 Хаб соединён с %lu хостами.  %s в хранилище."/>
+		<string id="8061" value="G1 Хаб соединён с %lu хостами.  %s в хранилище."/>
+		<string id="8062" value="G2 Хаб соединён с %lu хостами.  %s в хранилище."/>
+		<string id="8063" value="Подключено. %s в хранилище."/>
+		<string id="8064" value="Соединено с %lu хостами.  %s в хранилище."/>
 		<string id="8065" value="Подключаюсь к сети..."/>
 		<string id="8066" value="Нет соединения с сетью."/>
 		<string id="8067" value="%s-Вх. %s-Исх. [З:%I64i/В:%I64i]"/>
 		<string id="8068" value="[У:%I64i] %s-Вх. %s-Исх. [З:%I64i/В:%I64i]"/>
-		<string id="8069" value="Подключиться"/>
+		<string id="8069" value="Соединиться"/>
 		<string id="8070" value="Подключение…"/>
 		<string id="8071" value="Подключено"/>
 		<string id="8072" value="Отключиться"/>
@@ -2731,7 +2731,7 @@
 		<string id="8294" value="Недавние дополнения"/>
 		<string id="8295" value="Оценить файл"/>
 		<string id="8304" value="Н/Д"/>
-		<string id="8306" value="Местонахождение"/>
+		<string id="8306" value="Место"/>
 		<string id="8307" value="Тип"/>
 		<string id="8308" value="Размер"/>
 		<string id="8309" value="Частичный источник (%.2f%% доступно)"/>
@@ -2965,7 +2965,7 @@
 		<string id="16389" value="Вы уверены, что хотите удалить %i помеченных файлов(а)?\n\nФайлы будут помещены в Ваш мусорный ящик, если он активирован."/>
 		<string id="16390" value="Вы ещё не указали, какой проигрыватель использовать для ставки медиа файлов в очередь воспроизведения (напр., Nullsoft WinAmp).  Хотите ли выбрать его сейчас?\n\nShareaza передаст имя файла вашей выбранной программе вместе с /ADD аргументом."/>
 		<string id="16391" value="Вы не подключены к сети."/>
-		<string id="16392" value="Нажмите кнопку «Подключиться» чтобы начать работу."/>
+		<string id="16392" value="Нажмите кнопку «Соединиться» чтобы начать работу."/>
 		<string id="16393" value="Файл «%s» не прошел проверку хеш-теста и он может быть не тем файлом, который Вы намеревались загрузить.  Уверены, что хотите его открыть?"/>
 		<string id="16394" value="Хотите ли Вы удалить атрибут «потенциально небезопасен» с этого файла?"/>
 		<string id="16395" value="Ваша папка загрузок «%s» не включена в Ваше хранилище.\n\nВключение Вашей папки загрузок в хранилище сделает более легкими организацию и просмотр новых загрузок, и позволит Вам использовать в Shareaza функции для опытных пользователей такие как проверка загрузки и автоматическое обновление.  Помещение загруженных файлов в хранилище не обязывает Вас открывать доступ к ним: Вы сможете указать отдельно для каждого файла открывать ли его или нет.\n\nХотите добавить Вашу папку загрузок в хранилище сейчас?"/>
@@ -3945,7 +3945,7 @@
 			<control caption="Протокол _сети:"/>
 			<control caption="Gnutella1 (авто)|Gnutella2 (авто)|eDonkey"/>
 			<control caption="Подавить _ведущего"/>
-			<control caption="Подключиться"/>
+			<control caption="Соединиться"/>
 			<control caption="Отмена"/>
 		</dialog>
 		<dialog name="CDownloadDlg" cookie="StStStEdBuBuStStBu" caption="Загрузить файл или торрент">
@@ -4029,7 +4029,7 @@
 			<control caption="Закрыть окно по завершению загрузки"/>
 			<control caption="Открыть файл"/>
 			<control caption="Просмотр хранилища"/>
-			<control caption="Отменить загрузку"/>
+			<control caption="Отменить"/>
 			<control caption="Скрыть"/>
 		</dialog>
 		<dialog name="CFileGeneralPage" cookie="StEdEdEdEdStStEdStEdStEdStEdEdEd" caption="Главное">

@@ -55,7 +55,7 @@ msgstr "ltr"
 #: button;id_network_connect button;id_tab_connect button;id_irc_connect
 #: button;id_chat_connect string;8069 cconnecttodlg;control;7
 msgid "Connect"
-msgstr "Подключиться"
+msgstr "Соединиться"
 
 #: button;id_tab_home
 msgid "Home"
@@ -183,7 +183,7 @@ msgstr "Приостановить"
 
 #: button;id_downloads_clear_incomplete cdownloadmonitordlg;control;17
 msgid "Cancel Download"
-msgstr "Отменить загрузку"
+msgstr "Отменить"
 
 #: button;id_downloads_clear_complete
 msgid "Clear Download"
@@ -248,7 +248,7 @@ msgstr "Удалить альбом"
 
 #: button;id_library_enqueue
 msgid "Add to Playlist"
-msgstr "Добавить в список"
+msgstr "Плейлист"
 
 #: button;id_webservices_list
 msgid "Web Services"
@@ -269,7 +269,7 @@ msgstr "Удалить"
 
 #: button;id_library_folder_enqueue
 msgid "Play Album"
-msgstr "Добавить альбом в список"
+msgstr "Играть альбом"
 
 #: button;id_library_folder_download
 msgid "Download All Files"
@@ -334,7 +334,7 @@ msgstr "Сохранить"
 
 #: tip;id_irc_connect
 msgid "Connect to IRC"
-msgstr "Подключиться к IRC"
+msgstr "Соединить с IRC"
 
 #: button;id_irc_disconnect button;id_neighbours_disconnect
 #: button;id_hostcache_disconnect button;id_chat_disconnect string;8072
@@ -367,7 +367,7 @@ msgstr "eDonkey"
 
 #: button;id_network_connect_to button;id_hostcache_connect
 msgid "Connect To"
-msgstr "Подключиться..."
+msgstr "Соединиться..."
 
 #: button;id_security_edit
 msgid "Edit Rule"
@@ -524,7 +524,7 @@ msgstr "_Сети"
 #: cneighbourswnd;59;item;id_network_connect
 #: cprivatechatframe;item;id_chat_connect
 msgid "_Connect"
-msgstr "_Подключиться"
+msgstr "_Соединить"
 
 #: cmainwnd.basic;1;2 cmainwnd.tabbed;9;10 cmainwnd.windowed;18;19
 msgid "Choose _Networks"
@@ -534,19 +534,19 @@ msgstr "Выберите _сеть"
 #: cmainwnd.tabbed;9;10;item;id_network_g2
 #: cmainwnd.windowed;18;19;item;id_network_g2
 msgid "Connect to _Gnutella2"
-msgstr "Подключиться к _Gnutella2"
+msgstr "Соединиться с _Gnutella2"
 
 #: cmainwnd.basic;1;2;item;id_network_g1
 #: cmainwnd.tabbed;9;10;item;id_network_g1
 #: cmainwnd.windowed;18;19;item;id_network_g1
 msgid "Connect to Gnutella_1"
-msgstr "Подключиться к Gnutella_1"
+msgstr "Соединиться с Gnutella_1"
 
 #: cmainwnd.basic;1;2;item;id_network_ed2k
 #: cmainwnd.tabbed;9;10;item;id_network_ed2k
 #: cmainwnd.windowed;18;19;item;id_network_ed2k
 msgid "Connect to _eDonkey"
-msgstr "Подключиться к _eDonkey"
+msgstr "Соединиться с _eDonkey"
 
 #: cmainwnd.basic;1;item;id_network_auto_close
 #: cmainwnd.tabbed;9;item;id_network_auto_close
@@ -815,7 +815,7 @@ msgstr "_Отключиться"
 #: cmainwnd.tabbed;9;item;id_network_connect_to
 #: cmainwnd.windowed;18;item;id_network_connect_to
 msgid "Connect _To..."
-msgstr "Под_ключиться..."
+msgstr "Соедини_ться с..."
 
 #: cmainwnd.tabbed;9;item;id_network_browse_to
 #: cmainwnd.windowed;18;item;id_network_browse_to
@@ -1223,7 +1223,7 @@ msgstr "П_риостановить"
 #: cdownloadswnd.download.basic;item;id_downloads_clear_incomplete
 #: cdownloadswnd.download;item;id_downloads_clear_incomplete
 msgid "_Cancel Download"
-msgstr "_Отменить загрузку"
+msgstr "_Отменить"
 
 #: cdownloadswnd.download.basic;item;id_downloads_sources
 #: cdownloadswnd.download;item;id_downloads_sources
@@ -1250,7 +1250,7 @@ msgstr "_Открыть"
 #: clibraryfileview.virtual.basic;item;id_library_enqueue
 #: clibraryfileview.virtual;item;id_library_enqueue
 msgid "Add to Pla_ylist"
-msgstr "_Добавить в список"
+msgstr "_Плейлист"
 
 #: cdownloadswnd.download;39;item;id_downloads_share
 msgid "_Share File"
@@ -1291,7 +1291,7 @@ msgstr "_Свойства"
 
 #: cdownloadswnd.source;item;id_transfers_connect
 msgid "_Access"
-msgstr "_Подключиться"
+msgstr "_Соединить"
 
 #: cdownloadswnd.source;item;id_transfers_forget
 msgid "_Forget"
@@ -1467,7 +1467,7 @@ msgstr "_Свойства файла"
 #: clibrarytree.virtual;item;id_library_folder_enqueue
 #: clibraryfileview.virtual.basic;item;id_library_folder_enqueue
 msgid "_Play Album"
-msgstr "Добавить _альбом в список"
+msgstr "Играть _альбом"
 
 #: clibrarytree.virtual.basic;item;id_library_folder_delete
 #: clibrarytree.virtual;item;id_library_folder_delete
@@ -2206,7 +2206,7 @@ msgstr "Нет подключения"
 
 #: chomeconnectionbox;link;2
 msgid "Click here to connect"
-msgstr "Подключиться!"
+msgstr "Соединиться!"
 
 #: chomeconnectionbox;text;3
 msgid "Gnutella2:"
@@ -2457,7 +2457,7 @@ msgstr "Имя"
 
 #: cbrowsehostprofile.1;text;2003 string;8306
 msgid "Location"
-msgstr "Местонахождение"
+msgstr "Место"
 
 #: cbrowsehostprofile.1;text;2005
 msgid "Demographic"
@@ -2858,7 +2858,7 @@ msgid ""
 "\t\tup to date server list (met file) to connect to ED2K."
 msgstr ""
 "В списке eDonkey серверов нет ни одного сервера. Вам необходимо скачать\n"
-"\t\tновый список серверов (файл met), чтобы Вы смогли подключиться к eDonkey."
+"\t\tновый список серверов (файл met), чтобы Вы смогли соединиться с eDonkey."
 
 #: generalhelp.donkeyserverlist;text;3
 msgid ""
@@ -4392,7 +4392,7 @@ msgstr "(закрытие после загрузок)"
 
 #: string;8006
 msgid "You're not connected. Click the Connect button to get started."
-msgstr "Вы не подключены.  Щелкните кнопку «Подключиться», чтобы начать работу."
+msgstr "Вы не подключены.  Щелкните кнопку «Соединиться», чтобы начать работу."
 
 #: string;8007
 msgid "There are no active searches. Click here to search for files."
@@ -4418,7 +4418,7 @@ msgstr "Это предвыпускная версия Shareaza, и период
 
 #: string;8011
 msgid "Changing view will close any windows you have open. Would you like to change now?"
-msgstr "При смене вида все открытые Вами окна будут закрыты.  Хотите ли переключить сейчас?"
+msgstr "При смене вида все открытые Вами окна будут закрыты.  Хотите переключить сейчас?"
 
 #: string;8012
 msgid "Torrent Information"
@@ -4426,7 +4426,7 @@ msgstr "Информация о торренте"
 
 #: string;8013
 msgid "No new Shareaza version detected."
-msgstr "Новых версий Shareaza не обнаружено."
+msgstr "Новых версий Shareazы не обнаружено."
 
 #: string;8014 dialog;cdownloadeditpage
 msgid "Download Properties"
@@ -4434,23 +4434,23 @@ msgstr "Свойства загрузки"
 
 #: string;8060
 msgid "Hub/Ultrapeer mode with %lu neighbour(s). %s in local library."
-msgstr "Узел/режим Ведущего с %lu хостом(ами).  %s в собсвенном хранилище."
+msgstr "G1/G2 Хаб соединён с %lu хостами.  %s в хранилище."
 
 #: string;8061
 msgid "Ultrapeer mode with %lu neighbour(s). %s in local library."
-msgstr "Режим Ведущего с %lu хостом(ами).  %s в собсвенном хранилище."
+msgstr "G1 Хаб соединён с %lu хостами.  %s в хранилище."
 
 #: string;8062
 msgid "Hub mode with %lu neighbour(s). %s in local library."
-msgstr "Режим узла с %lu хостом(ами).  %s в собсвенном хранилище."
+msgstr "G2 Хаб соединён с %lu хостами.  %s в хранилище."
 
 #: string;8063
 msgid "Connected. %s in local library."
-msgstr "Подключено. %s в собсвенном хранилище."
+msgstr "Подключено. %s в хранилище."
 
 #: string;8064
 msgid "Connected to %lu neighbour(s). %s in local library."
-msgstr "Соединено с %lu хостом(ами).  %s в собсвенном хранилище."
+msgstr "Соединено с %lu хостами.  %s в хранилище."
 
 #: string;8065
 msgid "Connecting to the network..."
@@ -5754,7 +5754,7 @@ msgstr "Вы не подключены к сети."
 
 #: string;16392
 msgid "Click the Connect button to get started."
-msgstr "Нажмите кнопку «Подключиться» чтобы начать работу."
+msgstr "Нажмите кнопку «Соединиться» чтобы начать работу."
 
 #: string;16393
 msgid "The file \"%s\" failed a hash verification test, and might not be the file you intended to download. Are you sure you want to open it?"
