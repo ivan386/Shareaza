@@ -23,6 +23,8 @@
 
 #include "DownloadWithTorrent.h"
 
+class CDownloadTransfer;
+
 
 class CDownloadWithTiger : public CDownloadWithTorrent
 {
@@ -69,6 +71,20 @@ public:
 
 	virtual CString	GetAvailableRanges() const;
 
+	// Get list of empty fragments we really want to download
+	Fragments::List GetWantedFragmentList() const;
+
+	// Check range against fragments list got from GetWantedFragmentList() call
+	BOOL		AreRangesUseful(const Fragments::List& oAvailable) const;
+	BOOL		IsRangeUseful(QWORD nOffset, QWORD nLength) const;
+
+	// Like IsRangeUseful() but take the amount of useful ranges
+	// relative to the amount of garbage and source speed into account
+	BOOL		IsRangeUsefulEnough(CDownloadTransfer* pTransfer, QWORD nOffset, QWORD nLength) const;
+
+	// Select a fragment for a transfer
+	BOOL		GetFragment(CDownloadTransfer* pTransfer);
+
 protected:
 	bool		IsFullyVerified() const;
 	DWORD		GetValidationCookie() const;
@@ -76,6 +92,13 @@ protected:
 	void		ContinueValidation();
 	void		FinishValidation();
 	void		SubtractHelper(Fragments::List& ppCorrupted, BYTE* pBlock, QWORD nBlock, QWORD nSize);
+
+	// Get list of all fragments which must be downloaded
+	// but rounded to nearest smallest hash block (torrent, tiger or ed2k)
+	Fragments::List GetHashableFragmentList() const;
+
+	// Get a list of possible download fragments
+	Fragments::List GetPossibleFragments(const Fragments::List& oAvailable, Fragments::Fragment& oLargest);
 
 	virtual void	Serialize(CArchive& ar, int nVersion);
 

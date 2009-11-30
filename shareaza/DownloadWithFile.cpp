@@ -52,27 +52,24 @@ CDownloadWithFile::~CDownloadWithFile()
 {
 }
 
+BOOL CDownloadWithFile::IsValid() const
+{
+	return m_pFile.get() && m_pFile->IsValid();
+}
+
 BOOL CDownloadWithFile::IsFileOpen() const
 {
 	return m_pFile.get() && m_pFile->IsOpen();
 }
 
-// Get list of all fragments which must be downloaded
 Fragments::List CDownloadWithFile::GetFullFragmentList() const
 {
 	return m_pFile.get() ? m_pFile->GetFullFragmentList() : Fragments::List( 0 );
 }
 
-// Get list of empty fragments
 Fragments::List CDownloadWithFile::GetEmptyFragmentList() const
 {
 	return m_pFile.get() ? m_pFile->GetEmptyFragmentList() : Fragments::List( 0 );
-}
-
-// Get list of empty fragments we really want to download
-Fragments::List CDownloadWithFile::GetWantedFragmentList() const
-{
-	return m_pFile.get() ? m_pFile->GetWantedFragmentList() : Fragments::List( 0 );
 }
 
 CFragmentedFile* CDownloadWithFile::GetFile()
@@ -404,179 +401,12 @@ CString CDownloadWithFile::GetDisplayName() const
 }
 
 //////////////////////////////////////////////////////////////////////
-// CDownloadWithFile get a list of possible download fragments
-
-Fragments::List CDownloadWithFile::GetPossibleFragments(
-	const Fragments::List& oAvailable, Fragments::Fragment& oLargest)
-{
-	if ( !PrepareFile() ) return Fragments::List( oAvailable.limit() );
-	Fragments::List oPossible( oAvailable );
-
-	if ( oAvailable.empty() )
-	{
-		oPossible = GetWantedFragmentList();
-	}
-	else
-	{
-		Fragments::List tmp( inverse( GetWantedFragmentList() ) );
-		oPossible.erase( tmp.begin(), tmp.end() );
-	}
-
-	if ( oPossible.empty() ) return oPossible;
-
-	oLargest = *oPossible.largest_range();
-
-	for ( CDownloadTransfer* pTransfer = GetFirstTransfer();
-		!oPossible.empty() && pTransfer;
-		pTransfer = pTransfer->m_pDlNext )
-	{
-		pTransfer->SubtractRequested( oPossible );
-	}
-
-	return oPossible;
-}
-
-//////////////////////////////////////////////////////////////////////
-// CDownloadWithFile select a fragment for a transfer
-
-inline DWORD CalcChunkSize(QWORD nSize)
-{
-	if ( nSize <= 268435456 ) return 1024 * 1024; // try to keep chunk size reasonably large
-	DWORD nChunk = DWORD( ( nSize - 1 ) / 256 ), nTemp; // default treeheight of 9
-	while ( nTemp = nChunk & ( nChunk - 1 ) ) nChunk = nTemp;
-	return nChunk * 2;
-}
-
-BOOL CDownloadWithFile::GetFragment(CDownloadTransfer* pTransfer)
-{
-	ASSUME_LOCK( Transfers.m_pSection );
-
-	if ( !PrepareFile() )
-		return NULL;
-
-	Fragments::Fragment oLargest( SIZE_UNKNOWN, SIZE_UNKNOWN );
-
-	Fragments::List oPossible = GetPossibleFragments(
-		pTransfer->GetSource()->m_oAvailable, oLargest );
-
-	if ( oLargest.begin() == SIZE_UNKNOWN )
-	{
-		ASSERT( oPossible.empty() );
-		return FALSE;
-	}
-
-	if ( !oPossible.empty() )
-	{
-		Fragments::List::const_iterator pRandom = oPossible.begin()->begin() == 0
-			? oPossible.begin()
-			: oPossible.random_range();
-
-		pTransfer->m_nOffset = pRandom->begin();
-		pTransfer->m_nLength = pRandom->size();
-
-		return TRUE;
-	}
-	else
-	{
-		CDownloadTransfer* pExisting = NULL;
-
-		for ( CDownloadTransfer* pOther = GetFirstTransfer() ; pOther ; pOther = pOther->m_pDlNext )
-		{
-			if ( pOther->m_bRecvBackwards )
-			{
-				if ( pOther->m_nOffset + pOther->m_nLength - pOther->m_nPosition
-					 != oLargest.end() ) continue;
-			}
-			else
-			{
-				if ( pOther->m_nOffset + pOther->m_nPosition != oLargest.begin() ) continue;
-			}
-
-			pExisting = pOther;
-			break;
-		}
-
-		if ( pExisting == NULL )
-		{
-			pTransfer->m_nOffset = oLargest.begin();
-			pTransfer->m_nLength = oLargest.size();
-			return TRUE;
-		}
-
-		if ( oLargest.size() < 32 ) return FALSE;
-
-		DWORD nOldSpeed	= pExisting->GetAverageSpeed();
-		DWORD nNewSpeed	= pTransfer->GetAverageSpeed();
-		QWORD nLength	= oLargest.size() / 2;
-
-		if ( nOldSpeed > 5 && nNewSpeed > 5 )
-		{
-			nLength = oLargest.size() * nNewSpeed / ( nNewSpeed + nOldSpeed );
-
-			if ( oLargest.size() > 102400 )
-			{
-				nLength = max( nLength, 51200ull );
-				nLength = min( nLength, oLargest.size() - 51200ull );
-			}
-		}
-
-		if ( pExisting->m_bRecvBackwards )
-		{
-			pTransfer->m_nOffset		= oLargest.begin();
-			pTransfer->m_nLength		= nLength;
-			pTransfer->m_bWantBackwards	= FALSE;
-		}
-		else
-		{
-			pTransfer->m_nOffset		= oLargest.end() - nLength;
-			pTransfer->m_nLength		= nLength;
-			pTransfer->m_bWantBackwards	= TRUE;
-		}
-
-		return TRUE;
-	}
-}
-
-//////////////////////////////////////////////////////////////////////
 // CDownloadWithFile check if a byte position is empty
 
 BOOL CDownloadWithFile::IsPositionEmpty(QWORD nOffset)
 {
 	return m_pFile.get() && m_pFile->IsValid() &&
 		m_pFile->IsPositionRemaining( nOffset );
-}
-
-//////////////////////////////////////////////////////////////////////
-// CDownloadWithFile check if a range would "help"
-
-BOOL CDownloadWithFile::AreRangesUseful(const Fragments::List& oAvailable)
-{
-	return m_pFile.get() && m_pFile->IsValid() &&
-		GetWantedFragmentList().overlaps( oAvailable );
-}
-
-BOOL CDownloadWithFile::IsRangeUseful(QWORD nOffset, QWORD nLength)
-{
-	return m_pFile.get() && m_pFile->IsValid() &&
-		GetWantedFragmentList().overlaps( Fragments::Fragment( nOffset, nOffset + nLength ) );
-}
-
-// like IsRangeUseful( ) but take the amount of useful ranges relative to the amount of garbage
-// and source speed into account
-BOOL CDownloadWithFile::IsRangeUsefulEnough(CDownloadTransfer* pTransfer, QWORD nOffset, QWORD nLength)
-{
-	if ( ! m_pFile.get() || ! m_pFile->IsValid() )
-		return FALSE;
-
-	// range is useful if at least byte within the next amount of data transferable within the next 5 seconds
-	// is useful
-	DWORD nLength2 = 5 * pTransfer->GetAverageSpeed();
-	if ( nLength2 < nLength )
-	{
-		if ( !pTransfer->m_bRecvBackwards ) nOffset += nLength - nLength2;
-		nLength = nLength2;
-	}
-	return GetWantedFragmentList().overlaps( Fragments::Fragment( nOffset, nOffset + nLength ) );
 }
 
 //////////////////////////////////////////////////////////////////////

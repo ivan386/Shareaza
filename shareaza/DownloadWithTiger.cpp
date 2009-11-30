@@ -24,6 +24,8 @@
 #include "Settings.h"
 #include "Download.h"
 #include "Downloads.h"
+#include "DownloadTransfer.h"
+#include "DownloadSource.h"
 #include "DownloadWithTiger.h"
 #include "FragmentedFile.h"
 #include "HashDatabase.h"
@@ -44,18 +46,20 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithTiger construction
 
-CDownloadWithTiger::CDownloadWithTiger() :
-	m_pTigerBlock		( NULL )
-,	m_nTigerBlock		( 0ul )
-,	m_nTigerSuccess		( 0ul )
-
-,	m_pHashsetBlock		( NULL )
-,	m_nHashsetBlock		( 0ul )
-,	m_nHashsetSuccess	( 0ul )
-
-,	m_nVerifyCookie		( 0ul )
-,	m_nVerifyHash		( HASH_NULL )
-,	m_nVerifyBlock		( ~0ul )
+CDownloadWithTiger::CDownloadWithTiger()
+	: m_pTigerBlock		( NULL )
+	, m_nTigerBlock		( 0ul )
+	, m_nTigerSize		( 0ul )
+	, m_nTigerSuccess	( 0ul )
+	, m_pHashsetBlock	( NULL )
+	, m_nHashsetBlock	( 0ul )
+	, m_nHashsetSuccess	( 0ul )
+	, m_nVerifyCookie	( 0ul )
+	, m_nVerifyHash		( HASH_NULL )
+	, m_nVerifyBlock	( ~0ul )
+	, m_nVerifyOffset	( 0ul )
+	, m_nVerifyLength	( 0ul )
+	, m_tVerifyLast		( 0ul )
 {
 }
 
@@ -677,6 +681,214 @@ void CDownloadWithTiger::SubtractHelper(Fragments::List& ppCorrupted, BYTE* pBlo
 		}
 
 		nOffset += nSize;
+	}
+}
+
+Fragments::List CDownloadWithTiger::GetHashableFragmentList() const
+{
+	CQuickLock oLock( m_pTigerSection );
+
+	const Fragments::List oList = GetFullFragmentList();
+
+	if ( ! oList.missing() )
+		return oList;
+
+	// Select hash with smallest parts
+	int nHash = HASH_NULL;
+	DWORD nSmallest = 0xffffffff;
+	if ( m_pTorrentBlock )
+	{
+		nHash = HASH_TORRENT;
+		nSmallest = m_nTorrentSize;
+	}
+	if ( m_pTigerBlock && Settings.Downloads.VerifyTiger &&
+		 nSmallest > m_nTigerSize )
+	{
+		nHash = HASH_TIGERTREE;
+		nSmallest = m_nTigerSize;
+	}
+	if ( m_pHashsetBlock && Settings.Downloads.VerifyED2K &&
+		 nSmallest > ED2K_PART_SIZE )
+	{
+		nHash = HASH_ED2K;
+		nSmallest = ED2K_PART_SIZE;
+	}
+
+	if ( nHash == HASH_NULL )
+		// No verify
+		return oList;
+
+	Fragments::List oResultList = oList;
+	for ( Fragments::List::const_iterator i = oList.begin(); i != oList.end(); ++i )
+	{
+		QWORD nStart = ( i->begin() / nSmallest ) * nSmallest;
+		QWORD nEnd   = min( ( ( i->end() - 1 ) / nSmallest + 1 ) * nSmallest, m_nSize );
+		oResultList.insert( Fragments::Fragment( nStart, nEnd ) );
+	}
+
+	return oResultList;
+}
+
+Fragments::List CDownloadWithTiger::GetWantedFragmentList() const
+{
+	CQuickLock oLock( m_pTigerSection );
+
+	const Fragments::List oList = inverse( GetHashableFragmentList() );
+	Fragments::List oEmptyList = GetEmptyFragmentList();
+
+	oEmptyList.erase( oList.begin(), oList.end() );
+
+	return oEmptyList;
+}
+
+BOOL CDownloadWithTiger::AreRangesUseful(const Fragments::List& oAvailable) const
+{
+	return IsValid() && GetWantedFragmentList().overlaps( oAvailable );
+}
+
+BOOL CDownloadWithTiger::IsRangeUseful(QWORD nOffset, QWORD nLength) const
+{
+	return IsValid() && GetWantedFragmentList().overlaps(
+		Fragments::Fragment( nOffset, nOffset + nLength ) );
+}
+
+BOOL CDownloadWithTiger::IsRangeUsefulEnough(CDownloadTransfer* pTransfer, QWORD nOffset, QWORD nLength) const
+{
+	if ( ! IsValid() )
+		return FALSE;
+
+	// range is useful if at least byte within the next amount of
+	// data transferable within the next 5 seconds is useful
+	DWORD nLength2 = 5 * pTransfer->GetAverageSpeed();
+	if ( nLength2 < nLength )
+	{
+		if ( ! pTransfer->m_bRecvBackwards )
+			nOffset += nLength - nLength2;
+		nLength = nLength2;
+	}
+	return GetWantedFragmentList().overlaps(
+		Fragments::Fragment( nOffset, nOffset + nLength ) );
+}
+
+Fragments::List CDownloadWithTiger::GetPossibleFragments(const Fragments::List& oAvailable, Fragments::Fragment& oLargest)
+{
+	if ( ! PrepareFile() )
+		return Fragments::List( oAvailable.limit() );
+
+	Fragments::List oPossible( oAvailable );
+
+	if ( oAvailable.empty() )
+	{
+		oPossible = GetWantedFragmentList();
+	}
+	else
+	{
+		Fragments::List tmp = inverse( GetWantedFragmentList() );
+		oPossible.erase( tmp.begin(), tmp.end() );
+	}
+
+	if ( oPossible.empty() )
+		return oPossible;
+
+	oLargest = *oPossible.largest_range();
+
+	for ( CDownloadTransfer* pTransfer = GetFirstTransfer();
+		! oPossible.empty() && pTransfer; pTransfer = pTransfer->m_pDlNext )
+	{
+		pTransfer->SubtractRequested( oPossible );
+	}
+
+	return oPossible;
+}
+
+BOOL CDownloadWithTiger::GetFragment(CDownloadTransfer* pTransfer)
+{
+	ASSUME_LOCK( Transfers.m_pSection );
+
+	if ( ! PrepareFile() )
+		return NULL;
+
+	Fragments::Fragment oLargest( SIZE_UNKNOWN, SIZE_UNKNOWN );
+
+	Fragments::List oPossible = GetPossibleFragments(
+		pTransfer->GetSource()->m_oAvailable, oLargest );
+
+	if ( oLargest.begin() == SIZE_UNKNOWN )
+	{
+		ASSERT( oPossible.empty() );
+		return FALSE;
+	}
+
+	if ( ! oPossible.empty() )
+	{
+		Fragments::List::const_iterator pRandom = oPossible.begin()->begin() == 0
+			? oPossible.begin()
+			: oPossible.random_range();
+
+		pTransfer->m_nOffset = pRandom->begin();
+		pTransfer->m_nLength = pRandom->size();
+
+		return TRUE;
+	}
+	else
+	{
+		CDownloadTransfer* pExisting = NULL;
+
+		for ( CDownloadTransfer* pOther = GetFirstTransfer() ; pOther ; pOther = pOther->m_pDlNext )
+		{
+			if ( pOther->m_bRecvBackwards )
+			{
+				if ( pOther->m_nOffset + pOther->m_nLength - pOther->m_nPosition
+					 != oLargest.end() ) continue;
+			}
+			else
+			{
+				if ( pOther->m_nOffset + pOther->m_nPosition != oLargest.begin() ) continue;
+			}
+
+			pExisting = pOther;
+			break;
+		}
+
+		if ( pExisting == NULL )
+		{
+			pTransfer->m_nOffset = oLargest.begin();
+			pTransfer->m_nLength = oLargest.size();
+			return TRUE;
+		}
+
+		if ( oLargest.size() < 32 )
+			return FALSE;
+
+		DWORD nOldSpeed	= pExisting->GetAverageSpeed();
+		DWORD nNewSpeed	= pTransfer->GetAverageSpeed();
+		QWORD nLength	= oLargest.size() / 2;
+
+		if ( nOldSpeed > 5 && nNewSpeed > 5 )
+		{
+			nLength = oLargest.size() * nNewSpeed / ( nNewSpeed + nOldSpeed );
+
+			if ( oLargest.size() > 102400 )
+			{
+				nLength = max( nLength, 51200ull );
+				nLength = min( nLength, oLargest.size() - 51200ull );
+			}
+		}
+
+		if ( pExisting->m_bRecvBackwards )
+		{
+			pTransfer->m_nOffset		= oLargest.begin();
+			pTransfer->m_nLength		= nLength;
+			pTransfer->m_bWantBackwards	= FALSE;
+		}
+		else
+		{
+			pTransfer->m_nOffset		= oLargest.end() - nLength;
+			pTransfer->m_nLength		= nLength;
+			pTransfer->m_bWantBackwards	= TRUE;
+		}
+
+		return TRUE;
 	}
 }
 

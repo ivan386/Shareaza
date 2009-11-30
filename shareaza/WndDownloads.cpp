@@ -1311,7 +1311,7 @@ void CDownloadsWnd::OnDownloadsEdit()
 		CDownload* pDownload = Downloads.GetNext( pos );
 
 		if ( pDownload->m_bSelected && ! pDownload->IsMoving() &&
-			( ! pDownload->IsComplete() || pDownload->IsSeeding() ) )
+			( ! pDownload->IsCompleted() || pDownload->IsSeeding() ) )
 		{
 			CDownloadSheet dlg( pDownload );
 			pLock.Unlock();
