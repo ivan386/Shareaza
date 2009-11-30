@@ -467,6 +467,8 @@ void CLibraryMetaPanel::OnLButtonUp(UINT nFlags, CPoint point)
 
 	if ( m_nSelected > 0 && m_rcFolder.PtInRect( point ) )
 	{
+		CQuickLock oLock( Library.m_pSection );
+
 		if ( CLibraryFolder* pFolder = LibraryFolders.GetFolder( m_sFolder ) )
 		{
 			if ( Settings.Library.ShowVirtual )
