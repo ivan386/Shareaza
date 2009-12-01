@@ -1,7 +1,7 @@
 ; Input defines: ConfigurationName (Debug or Release), PlatformName (Win32, x64, etc.)
 
 ; Change from "Yes" to "No" on the next line if you don't compile an alpha build
-#define alpha "Yes"
+#define alpha "No"
 
 #if VER < 0x05010700
   #error Inno Setup version 5.1.7 or higher is needed for this script
@@ -346,11 +346,11 @@ Root: HKCU; Subkey: "Software\Shareaza\TorrentWizard\Folders"; ValueType: string
 Root: HKCU; Subkey: "Software\Shareaza\Shareaza\BitTorrent"; ValueType: string; ValueName: "TorrentCreatorPath"; ValueData: "TorrentWizard.exe" ; Flags: createvalueifdoesntexist uninsdeletekey
 
 ; Turn on default ShareazaOS skin
-Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Skins"; ValueType: dword; ValueName: "ShareazaOS\ShareazaOS.xml"; ValueData: "{ini:{param:SETTINGS|},Skins,ShareazaOS|1}"; Flags: createvalueifdoesntexist uninsdeletekey
+Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Skins"; ValueType: dword; ValueName: "ShareazaOS\ShareazaOS.xml"; ValueData: "1"; Flags: createvalueifdoesntexist uninsdeletevalue
 
-; Turn on thematic skin
-; Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Skins"; ValueType: dword; ValueName: "Halloween\Halloween.xml"; ValueData: "{ini:{param:SETTINGS|},Skins,Halloween|1}"; Flags: createvalueifdoesntexist uninsdeletekey
-; Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Skins"; ValueType: dword; ValueName: "Winter\Winter.xml"; ValueData: "{ini:{param:SETTINGS|},Skins,Winter|1}"; Flags: createvalueifdoesntexist uninsdeletekey
+; Select thematic skin
+Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Skins"; ValueType: dword; ValueName: "Halloween\Halloween.xml"; ValueData: "0"; Flags: deletevalue uninsdeletevalue
+Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Skins"; ValueType: dword; ValueName: "Winter\Winter.xml"; ValueData: "1"; Flags: deletevalue uninsdeletevalue
 
 ; Disable extensions for plugins which make trouble
 ; Since it is image services plugin we need to add extensions required for the first run
@@ -904,6 +904,7 @@ End;
 #include "pages.iss"
 
 #expr SaveToFile("builds\Preprocessed.iss")
+
 
 
 
