@@ -279,18 +279,27 @@ void CCoolTipCtrl::DrawRule(CDC* pDC, POINT* pPoint, BOOL bPos)
 
 BOOL CCoolTipCtrl::WindowFromPointBelongsToOwner(const CPoint& point)
 {
-	CRect rc;
-	GetOwner()->GetWindowRect( &rc );
+	CWnd* pOwner = GetOwner();
+	if ( ! pOwner )
+		return FALSE;
 
-	if ( ! rc.PtInRect( point ) ) return FALSE;
+	CRect rc;
+	pOwner->GetWindowRect( &rc );
+
+	if ( ! rc.PtInRect( point ) )
+		return FALSE;
 
 	CWnd* pWnd = WindowFromPoint( point );
 
 	while ( pWnd )
 	{
-		if ( pWnd == GetOwner() ) return TRUE;
-		if ( m_hAltWnd != NULL && pWnd->GetSafeHwnd() == m_hAltWnd ) return TRUE;
-		if ( !IsWindow( pWnd->m_hWnd ) ) return FALSE;
+		if ( pWnd == pOwner )
+			return TRUE;
+		HWND hWnd = pWnd->GetSafeHwnd();
+		if ( m_hAltWnd && hWnd == m_hAltWnd )
+			return TRUE;
+		if ( ! IsWindow( hWnd ) )
+			return FALSE;
 		pWnd = pWnd->GetParent();
 	}
 
