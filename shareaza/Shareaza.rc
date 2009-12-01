@@ -472,24 +472,24 @@ BEGIN
     LTEXT           "This product includes GeoLite data created by MaxMind, available from http://maxmind.com/",IDC_STATIC,20,120,262,18
 END
 
-IDD_GRAPH_LIST DIALOG  0, 0, 247, 230
+IDD_GRAPH_LIST DIALOGEX 0, 0, 247, 230
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Traffic Graphs"
-FONT 8, "Tahoma"
+FONT 8, "Tahoma", 0, 0, 0x0
 BEGIN
     CONTROL         "List1",IDC_GRAPH_ITEMS,"SysListView32",LVS_LIST | LVS_SHOWSELALWAYS | WS_BORDER | WS_TABSTOP,5,5,180,80
     PUSHBUTTON      "&Add...",IDC_GRAPH_ADD,5,90,50,14
     PUSHBUTTON      "&Edit...",IDC_GRAPH_EDIT,70,90,50,14
     PUSHBUTTON      "&Remove",IDC_GRAPH_REMOVE,135,90,50,14
     GROUPBOX        "&Show:",IDC_STATIC,5,110,180,35
-    CONTROL         "Grid Lines",IDC_GRAPH_GRID,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,125,45,14
-    CONTROL         "Vertical Axis",IDC_GRAPH_AXIS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,70,125,55,14
-    CONTROL         "Legend",IDC_GRAPH_LEGEND,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,135,125,40,14
+    CONTROL         "Grid Lines",IDC_GRAPH_GRID,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,125,49,14
+    CONTROL         "Vertical Axis",IDC_GRAPH_AXIS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,70,125,58,14
+    CONTROL         "Legend",IDC_GRAPH_LEGEND,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,135,125,44,14
     GROUPBOX        "Sampling &Frequency:",IDC_STATIC,5,150,180,35
-    LTEXT           "Period between samples:",IDC_STATIC,15,165,85,12,SS_CENTERIMAGE
+    LTEXT           "Period between samples:",IDC_STATIC,15,165,92,12,SS_CENTERIMAGE
     EDITTEXT        IDC_GRAPH_SPEED,110,165,45,12,ES_AUTOHSCROLL
     CONTROL         "Spin1",IDC_GRAPH_SPEED_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,155,165,8,12
-    LTEXT           "ms",IDC_STATIC,160,165,20,12,SS_CENTERIMAGE
+    LTEXT           "ms",IDC_STATIC,163,165,17,12,SS_CENTERIMAGE
     GROUPBOX        "&Name:",IDC_STATIC,5,190,180,35
     EDITTEXT        IDC_NAME,15,205,160,12,ES_AUTOHSCROLL
     DEFPUSHBUTTON   "OK",IDOK,190,5,50,14
@@ -546,7 +546,7 @@ BEGIN
     COMBOBOX        IDC_WIZARD_DOWNLOAD_SPEED,26,78,75,178,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
     LTEXT           "and the upload speed:",IDC_STATIC,165,64,100,12
     COMBOBOX        IDC_WIZARD_UPLOAD_SPEED,166,78,75,178,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Do you want to automatically setup port-forwarding by using UPnP?",IDC_STATIC,7,98,240,12
+    LTEXT           "Do you want to automatically setup port-forwarding by using UPnP?",IDC_STATIC,7,98,263,12
     COMBOBOX        IDC_WIZARD_UPNP,26,112,75,178,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     LTEXT           "Status:",IDC_CONNECTION_STATUS,9,132,261,8
     CONTROL         "",IDC_CONNECTION_PROGRESS,"msctls_progress32",WS_BORDER,14,143,256,7
@@ -557,13 +557,13 @@ STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Welcome to Shareaza (2/6)"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    LTEXT           "P2P networks are only as good as the people who use them.  All of the content available for download is being shared by another user.",IDC_STATIC,10,10,265,20
-    LTEXT           "You do not have to share content to use Shareaza, however some software will behave differently to users who are not sharing anything.",IDC_STATIC,10,35,265,20
-    LTEXT           "Please indicate which folders, if any, you wish to share.  Simply click the Add button to add a new folder.",IDC_STATIC,10,60,265,20
-    CONTROL         "List1",IDC_SHARE_FOLDERS,"SysListView32",LVS_REPORT | LVS_SHAREIMAGELISTS | LVS_ALIGNLEFT | LVS_NOCOLUMNHEADER | WS_BORDER | WS_TABSTOP,15,85,190,55
+    LTEXT           "P2P networks are only as good as the people who use them.  All of the content available for download is being shared by another user.",IDC_STATIC,10,10,260,27
+    LTEXT           "You do not have to share content to use Shareaza, however some software will behave differently to users who are not sharing anything.",IDC_STATIC,10,37,260,27
+    LTEXT           "Please indicate which folders, if any, you wish to share.  Simply click the Add button to add a new folder.",IDC_STATIC,10,64,260,16
+    CONTROL         "List1",IDC_SHARE_FOLDERS,"SysListView32",LVS_REPORT | LVS_SHAREIMAGELISTS | LVS_ALIGNLEFT | LVS_NOCOLUMNHEADER | WS_BORDER | WS_TABSTOP,15,85,190,52
     PUSHBUTTON      "&Add...",IDC_SHARE_ADD,215,90,45,15
     PUSHBUTTON      "&Remove",IDC_SHARE_REMOVE,215,118,45,15,WS_DISABLED
-    LTEXT           "WARNING: Distributing copyrighted works is an offence in most countries.",IDC_STATIC,10,140,265,15,SS_CENTERIMAGE
+    LTEXT           "WARNING: Distributing copyrighted works is an offence in most countries.",IDC_STATIC,10,141,260,24
 END
 
 IDD_WIZARD_PROFILE DIALOGEX 0, 0, 277, 174
@@ -603,12 +603,12 @@ STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Welcome to Shareaza (5/6)"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    LTEXT           "Shareaza is a general-purpose file-sharing application that can access many P2P networks at the same time.  Here you can select which networks you'd like to access.  Note that you can always select different networks later.",IDC_STATIC,10,10,265,30
+    LTEXT           "Shareaza is a general-purpose file-sharing application that can access many P2P networks at the same time.  Here you can select which networks you'd like to access.  Note that you can always select different networks later.",IDC_STATIC,10,10,260,32
     CONTROL         "Connect to Gnutella2 (Highly Recommended)",IDC_G2_ENABLE,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,10,45,260,10
-    LTEXT           "The Gnutella2 network is Shareaza's premiere network, offering more features and performance than any other P2P net.",IDC_STATIC,25,57,250,18
-    CONTROL         "Connect to eDonkey",IDC_ED2K_ENABLE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,10,79,260,10
-    LTEXT           "The eDonkey network is a popular server-based network.  While not as feature-rich as Gnutella2, eDonkey has an impressive file collection.",IDC_STATIC,25,91,250,18
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,10,46,260,10
+    LTEXT           "The Gnutella2 network is Shareaza's premiere network, offering more features and performance than any other P2P net.",IDC_STATIC,25,59,245,18
+    CONTROL         "Connect to eDonkey",IDC_ED2K_ENABLE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,10,80,260,10
+    LTEXT           "The eDonkey network is a popular server-based network.  While not as feature-rich as Gnutella2, eDonkey has an impressive file collection.",IDC_STATIC,25,92,245,18
     CONTROL         "Connect to Original Gnutella",IDC_G1_ENABLE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,10,113,260,10
     LTEXT           "Although the original Gnutella network is less feature-rich than Gnutella2, and has fewer files than eDonkey, it remains a valuable resource.",IDC_STATIC,25,126,250,18
 END
