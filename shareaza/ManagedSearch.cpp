@@ -71,6 +71,11 @@ CManagedSearch::CManagedSearch(CQuerySearch* pSearch, int nPriority) :
 {
 }
 
+CManagedSearch::~CManagedSearch()
+{
+	Stop();
+}
+
 //////////////////////////////////////////////////////////////////////
 // CManagedSearch serialize
 
@@ -147,11 +152,19 @@ void CManagedSearch::Stop()
 	}
 }
 
+void CManagedSearch::CreateGUID()
+{
+	if ( m_pSearch )
+		Network.CreateID( m_pSearch->m_oGUID );
+}
+
 //////////////////////////////////////////////////////////////////////
 // CManagedSearch execute
 
 BOOL CManagedSearch::Execute()
 {
+	ASSUME_LOCK( SearchManager.m_pSection );
+
 	if ( ! m_bActive || ! m_pSearch ) return FALSE;
 
 	DWORD tTicks	= GetTickCount();
@@ -199,6 +212,8 @@ BOOL CManagedSearch::Execute()
 
 BOOL CManagedSearch::ExecuteNeighbours(DWORD tTicks, DWORD tSecs)
 {
+	ASSUME_LOCK( SearchManager.m_pSection );
+
 	int nCount = 0;
 	for ( POSITION pos = Neighbours.GetIterator() ; pos ; )
 	{
@@ -256,7 +271,7 @@ BOOL CManagedSearch::ExecuteNeighbours(DWORD tTicks, DWORD tSecs)
 				// Request more ed2k results (if appropriate)
 				if ( ( pNeighbour->m_nProtocol == PROTOCOL_ED2K ) && pNeighbour->m_oMoreResultsGUID ) // If it's an ed2k server and has more results
 				{
-					if ( validAndEqual( m_pSearch->m_oGUID, pNeighbour->m_oMoreResultsGUID ) && // and this search is the one with results waiting
+					if ( IsEqualGUID( pNeighbour->m_oMoreResultsGUID ) && // and this search is the one with results waiting
 						( m_tMoreResults + 10000 < tTicks ) )		// and we've waited a little while (to ensure the search is still active)
 					{
 						// Request more results
@@ -366,6 +381,8 @@ BOOL CManagedSearch::ExecuteNeighbours(DWORD tTicks, DWORD tSecs)
 
 BOOL CManagedSearch::ExecuteG2Mesh(DWORD /*tTicks*/, DWORD tSecs)
 {
+	ASSUME_LOCK( SearchManager.m_pSection );
+
 	// Look at all known Gnutella2 hubs, newest first
 
 	CQuickLock oLock( HostCache.Gnutella2.m_pSection );
@@ -583,6 +600,8 @@ BOOL CManagedSearch::ExecuteG2Mesh(DWORD /*tTicks*/, DWORD tSecs)
 
 BOOL CManagedSearch::ExecuteDonkeyMesh(DWORD /*tTicks*/, DWORD tSecs)
 {
+	ASSUME_LOCK( SearchManager.m_pSection );
+
 	CQuickLock oLock( HostCache.eDonkey.m_pSection );
 
 	for ( CHostCacheIterator i = HostCache.eDonkey.Begin() ; i != HostCache.eDonkey.End();	++i )
@@ -602,7 +621,7 @@ BOOL CManagedSearch::ExecuteDonkeyMesh(DWORD /*tTicks*/, DWORD tSecs)
 			DWORD nAddress = pHost->m_pAddress.S_un.S_addr;
 			DWORD tLastQuery;
 
-			// Never requery eDonkey2000 servers
+			// Never re-query eDonkey2000 servers
 
 			if ( m_pNodes.Lookup( nAddress, tLastQuery ) ) continue;
 
@@ -653,10 +672,12 @@ BOOL CManagedSearch::ExecuteDonkeyMesh(DWORD /*tTicks*/, DWORD tSecs)
 }
 
 //////////////////////////////////////////////////////////////////////
-// CManagedSearch host acknowledgement
+// CManagedSearch host acknowledgment
 
 void CManagedSearch::OnHostAcknowledge(DWORD nAddress)
 {
+	ASSUME_LOCK( SearchManager.m_pSection );
+
 	DWORD tSecs = static_cast< DWORD >( time( NULL ) );
 	m_pNodes.SetAt( nAddress, tSecs );
 }
@@ -666,5 +687,5 @@ void CManagedSearch::OnHostAcknowledge(DWORD nAddress)
 
 BOOL CManagedSearch::IsLastED2KSearch()
 {
-	return validAndEqual( m_pSearch->m_oGUID, SearchManager.m_oLastED2KSearch );
+	return IsEqualGUID( SearchManager.m_oLastED2KSearch );
 }

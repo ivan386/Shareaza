@@ -43,15 +43,15 @@ CSearchManager SearchManager;
 // CSearchManager construction
 
 CSearchManager::CSearchManager()
+	: m_tLastTick( 0 )
+	, m_nPriorityClass( 0 )
+	, m_nPriorityCount( 0 )
 {
-	m_tLastTick = 0;
-
-	m_nPriorityClass = 0;
-	m_nPriorityCount = 0;
 }
 
 CSearchManager::~CSearchManager()
 {
+	ASSERT( m_pList.IsEmpty() );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -59,41 +59,34 @@ CSearchManager::~CSearchManager()
 
 void CSearchManager::Add(CManagedSearch* pSearch)
 {
+	ASSUME_LOCK( m_pSection );
+
 	POSITION pos = m_pList.Find( pSearch );
-	if ( pos == NULL ) m_pList.AddHead( pSearch );
+	if ( pos == NULL )
+		m_pList.AddHead( pSearch );
 }
 
 void CSearchManager::Remove(CManagedSearch* pSearch)
 {
+	ASSUME_LOCK( m_pSection );
+
 	POSITION pos = m_pList.Find( pSearch );
-	if ( pos != NULL ) m_pList.RemoveAt( pos );
+	if ( pos != NULL )
+		m_pList.RemoveAt( pos );
 }
 
 //////////////////////////////////////////////////////////////////////
 // CSearchManager list access
 
-POSITION CSearchManager::GetIterator() const
+CManagedSearch* CSearchManager::Find(const Hashes::Guid& oGUID) const
 {
-	return m_pList.GetHeadPosition();
-}
+	ASSUME_LOCK( m_pSection );
 
-CManagedSearch* CSearchManager::GetNext(POSITION& pos) const
-{
-	return m_pList.GetNext( pos );
-}
-
-INT_PTR CSearchManager::GetCount() const
-{
-	return m_pList.GetCount();
-}
-
-CManagedSearch* CSearchManager::Find(const Hashes::Guid& oGUID)
-{
 	for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
 	{
 		CManagedSearch* pManaged = m_pList.GetNext( pos );
-		CQuerySearchPtr pSearch = pManaged->GetSearch();
-		if ( pSearch && validAndEqual( pSearch->m_oGUID, oGUID ) )
+
+		if ( pManaged->IsEqualGUID( oGUID ) )
 			return pManaged;
 	}
 
@@ -117,7 +110,8 @@ void CSearchManager::OnRun()
 		HostCache.Gnutella2.PruneByQueryAck();
 
 	CSingleLock pLock( &m_pSection );
-	if ( ! pLock.Lock( 100 ) ) return;
+	if ( ! pLock.Lock( 100 ) )
+		return;
 
 	static int nPriorityFactor[ 3 ] = { 8, 4, 1 };
 
@@ -129,12 +123,12 @@ void CSearchManager::OnRun()
 
 	for ( int nClass = 0 ; nClass <= CManagedSearch::spMax ; nClass++ )
 	{
-		for ( POSITION pos = GetIterator() ; pos ; )
+		for ( POSITION pos = m_pList.GetHeadPosition(); pos ; )
 		{
 			POSITION posCur = pos;
-			CManagedSearch* pSearch = GetNext( pos );
+			CManagedSearch* pSearch = m_pList.GetNext( pos );
 
-			if ( pSearch->m_nPriority == m_nPriorityClass && pSearch->Execute() )
+			if ( pSearch->GetPriority() == m_nPriorityClass && pSearch->Execute() )
 			{
 				m_pList.RemoveAt( posCur );
 				m_pList.AddTail( pSearch );
@@ -151,12 +145,12 @@ void CSearchManager::OnRun()
 //////////////////////////////////////////////////////////////////////
 // CSearchManager query acknowledgment
 
-BOOL CSearchManager::OnQueryAck(CG2Packet* pPacket, SOCKADDR_IN* pHost, Hashes::Guid& oGUID)
+BOOL CSearchManager::OnQueryAck(CG2Packet* pPacket, const SOCKADDR_IN* pAddress, Hashes::Guid& oGUID)
 {
 	if ( ! pPacket->m_bCompound )
 		AfxThrowUserException();
 
-	DWORD nFromIP = pHost->sin_addr.S_un.S_addr;
+	DWORD nFromIP = pAddress->sin_addr.S_un.S_addr;
 	LONG tAdjust = 0;
 	DWORD tNow = static_cast< DWORD >( time( NULL ) );
 	DWORD nHubs = 0, nLeaves = 0, nSuggestedHubs = 0;
@@ -234,7 +228,7 @@ BOOL CSearchManager::OnQueryAck(CG2Packet* pPacket, SOCKADDR_IN* pHost, Hashes::
 
 	theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH,
 		_T("Processing query acknowledge from %s (time adjust %+d seconds): %d hubs, %d leaves, %d suggested hubs, retry after %d seconds."),
-		(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ), tAdjust,
+		(LPCTSTR)CString( inet_ntoa( pAddress->sin_addr ) ), tAdjust,
 		nHubs, nLeaves, nSuggestedHubs, nRetryAfter );
 	
 	CSingleLock pLock( &m_pSection );
@@ -267,7 +261,7 @@ BOOL CSearchManager::OnQueryAck(CG2Packet* pPacket, SOCKADDR_IN* pHost, Hashes::
 //////////////////////////////////////////////////////////////////////
 // CSearchManager query hits
 
-BOOL CSearchManager::OnQueryHits(CQueryHit* pHits)
+BOOL CSearchManager::OnQueryHits(const CQueryHit* pHits)
 {
 	CSingleLock pLock( &m_pSection );
 	if ( ! pLock.Lock( 100 ) )
@@ -300,10 +294,12 @@ BOOL CSearchManager::OnQueryHits(CQueryHit* pHits)
 WORD CSearchManager::OnQueryStatusRequest(const Hashes::Guid& oGUID)
 {
 	CSingleLock pLock( &m_pSection );
-	if ( ! pLock.Lock( 100 ) ) return 0xFFFF;
-	
-	CManagedSearch* pSearch = Find( oGUID );
-	if ( pSearch == NULL ) return 0xFFFF;
-
-	return (WORD)min( DWORD(0xFFFE), pSearch->m_nHits );
+	if ( pLock.Lock( 100 ) )
+	{
+		if ( CManagedSearch* pSearch = Find( oGUID ) )
+		{
+			return (WORD)min( DWORD(0xFFFE), pSearch->m_nHits );
+		}
+	}
+	return 0xFFFF;
 }

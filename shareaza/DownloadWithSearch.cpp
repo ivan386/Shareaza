@@ -128,7 +128,7 @@ void CDownloadWithSearch::StartManualSearch()
 	
 	PrepareSearch();
 	
-	m_pSearch->m_nPriority = CManagedSearch::spHighest;
+	m_pSearch->SetPriority( CManagedSearch::spHighest );
 	m_pSearch->Start();
 }
 
@@ -142,7 +142,7 @@ void CDownloadWithSearch::StartAutomaticSearch()
 	
 	PrepareSearch();
 	
-	m_pSearch->m_nPriority = CManagedSearch::spLowest;
+	m_pSearch->SetPriority( CManagedSearch::spLowest );
 	m_pSearch->Start();
 }
 

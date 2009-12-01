@@ -464,7 +464,7 @@ void CSearchWnd::OnSearchSearch()
 
 			//Re-activate search window
 			theApp.Message( MSG_DEBUG, _T("Resuming Search") );
-			pManaged->m_bActive = TRUE;
+			pManaged->SetActive( TRUE );
 			m_bWaitMore = FALSE;
 
 			//Resume G2 search
@@ -477,7 +477,7 @@ void CSearchWnd::OnSearchSearch()
 			pManaged->m_tMoreResults = 0;
 
 			if ( ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0x8000 )
-				pManaged->m_nPriority = CManagedSearch::spMedium;
+				pManaged->SetPriority( CManagedSearch::spMedium );
 
 			m_bUpdate = TRUE;
 			UpdateMessages();
@@ -495,8 +495,6 @@ void CSearchWnd::OnSearchSearch()
 		return;
 	}
 
-	auto_ptr< CManagedSearch > pManaged;
-
 	if ( m_pMatches->m_nFiles > 0 )
 	{
 		if ( MsgBox( IDS_SEARCH_CLEAR_PREVIOUS, MB_ICONQUESTION | MB_YESNO, 0,
@@ -509,16 +507,19 @@ void CSearchWnd::OnSearchSearch()
 		}
 	}
 
+	auto_ptr< CManagedSearch > pManaged;
+
 	if ( m_wndPanel.m_bSendSearch )
 	{
+		// Create new search
 		pManaged = m_wndPanel.GetSearch();
-		CQuerySearchPtr pSearch = pManaged->GetSearch();
 
-		if ( m_pMatches->m_nFiles == 0 && pSearch->m_pSchema != NULL )
+		CSchema* pSchema = pManaged->GetSchema();
+		if ( m_pMatches->m_nFiles == 0 && pSchema )
 		{
 			CList< CSchemaMember* > pColumns;
-			CSchemaColumnsDlg::LoadColumns( pSearch->m_pSchema, &pColumns );
-			m_wndList.SelectSchema( pSearch->m_pSchema, &pColumns );
+			CSchemaColumnsDlg::LoadColumns( pSchema, &pColumns );
+			m_wndList.SelectSchema( pSchema, &pColumns );
 		}
 	}
 	else
@@ -528,7 +529,7 @@ void CSearchWnd::OnSearchSearch()
 		pManaged.reset( new CManagedSearch( dlg.GetSearch() ) );
 	}
 
-	Network.CreateID( pManaged->GetSearch()->m_oGUID );
+	pManaged->CreateGUID();
 
 	{
 		CQuickLock oLock( m_pMatches->m_pSection );
@@ -579,7 +580,7 @@ void CSearchWnd::OnSearchStop()
 			// Pause search
 			if ( ! empty() )
 			{
-				m_oSearches.back().m_bActive = FALSE;
+				m_oSearches.back().SetActive( FALSE );
 				m_bWaitMore = TRUE;
 				m_bUpdate = TRUE;
 				return;
@@ -830,11 +831,10 @@ BOOL CSearchWnd::OnQueryHits(const CQueryHit* pHits)
 	{
 		if ( pManaged->m_bReceive )
 		{
-			CQuerySearchPtr pSearch = pManaged->GetSearch();
-			if ( ( pSearch && validAndEqual( pSearch->m_oGUID, pHits->m_oSearchID ) ) ||	// The hits GUID matches the search
+			if ( pManaged->IsEqualGUID( pHits->m_oSearchID ) ||	// The hits GUID matches the search
 				 ( !pHits->m_oSearchID && ( pManaged->IsLastED2KSearch() ) ) )	// The hits have no GUID and the search is the most recent ED2K text search
 			{
-				m_pMatches->AddHits( pHits, pSearch );
+				m_pMatches->AddHits( pHits, pManaged->GetSearch() );
 				m_bUpdate = TRUE;
 
 				SetModified();
@@ -844,7 +844,7 @@ BOOL CSearchWnd::OnQueryHits(const CQueryHit* pHits)
 					if ( !pManaged->m_bAllowG2 ) //If G2 is not active, pause the search now.
 					{
 						m_bWaitMore = TRUE;
-						pManaged->m_bActive = FALSE;
+						pManaged->SetActive( FALSE );
 					}
 					pManaged->m_tLastED2K = 0xFFFFFFFF;
 					theApp.Message( MSG_DEBUG, _T("ED2K Search Reached Maximum Number of Files") );
@@ -853,7 +853,7 @@ BOOL CSearchWnd::OnQueryHits(const CQueryHit* pHits)
 				if ( !m_bWaitMore && ( m_pMatches->m_nGnutellaHits >= m_nMaxResults ) )
 				{
 					m_bWaitMore = TRUE;
-					pManaged->m_bActive = FALSE;
+					pManaged->SetActive( FALSE );
 					theApp.Message( MSG_DEBUG, _T("Gnutella Search Reached Maximum Number of Files") );
 				}
 #endif // LAN_MODE
@@ -877,11 +877,11 @@ void CSearchWnd::OnTimer(UINT_PTR nIDEvent)
 
 		if ( pManaged )
 		{
-			if ( pManaged->m_bActive &&
+			if ( pManaged->IsActive() &&
 				 pManaged->m_nQueryCount > m_nMaxQueryCount )
 			{
 				m_bWaitMore = TRUE;
-				pManaged->m_bActive = FALSE;
+				pManaged->SetActive( FALSE );
 				theApp.Message( MSG_DEBUG, _T("Search Reached Maximum Duration") );
 				m_bUpdate = TRUE;
 			}

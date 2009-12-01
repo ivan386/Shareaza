@@ -1,7 +1,7 @@
 //
 // SearchManager.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_SEARCHMANAGER_H__FE71D8A9_8260_4548_B331_C1BF2D0DFEF0__INCLUDED_)
-#define AFX_SEARCHMANAGER_H__FE71D8A9_8260_4548_B331_C1BF2D0DFEF0__INCLUDED_
-
 #pragma once
 
 class CManagedSearch;
@@ -34,36 +31,35 @@ class CSearchManager
 // Construction
 public:
 	CSearchManager();
-	virtual ~CSearchManager();
+	~CSearchManager();
+
+	typedef CList< CManagedSearch* > CSearchList;
 
 // Attributes
 public:
-	CMutex			m_pSection;
-	Hashes::Guid	m_oLastED2KSearch;
+	mutable CMutexEx	m_pSection;
+	Hashes::Guid		m_oLastED2KSearch;
+
 protected:
-	CList< CManagedSearch* > m_pList;
-	DWORD			m_tLastTick;
-	int				m_nPriorityClass;
-	int				m_nPriorityCount;
+	CSearchList			m_pList;
+	DWORD				m_tLastTick;
+	int					m_nPriorityClass;
+	int					m_nPriorityCount;
 
 // Operations
 public:
-	POSITION		GetIterator() const;
-	CManagedSearch*	GetNext(POSITION& pos) const;
-	INT_PTR			GetCount() const;
-	CManagedSearch*	Find(const Hashes::Guid& oGUID);
 	void			OnRun();
-	BOOL			OnQueryAck(CG2Packet* pPacket, SOCKADDR_IN* pHost, Hashes::Guid& oGUID);
-	BOOL			OnQueryHits(CQueryHit* pHits);
+	BOOL			OnQueryAck(CG2Packet* pPacket, const SOCKADDR_IN* pAddress, Hashes::Guid& oGUID);
+	BOOL			OnQueryHits(const CQueryHit* pHits);
 	WORD			OnQueryStatusRequest(const Hashes::Guid& oGUID);
+
 protected:
 	void			Add(CManagedSearch* pSearch);
 	void			Remove(CManagedSearch* pSearch);
+	CManagedSearch*	Find(const Hashes::Guid& oGUID) const;
 
 	friend class CManagedSearch;
 	friend class CSearchWnd;
 };
 
 extern CSearchManager SearchManager;
-
-#endif // !defined(AFX_SEARCHMANAGER_H__FE71D8A9_8260_4548_B331_C1BF2D0DFEF0__INCLUDED_)
