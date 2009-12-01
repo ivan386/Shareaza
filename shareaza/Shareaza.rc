@@ -313,12 +313,12 @@ BEGIN
     LTEXT           "Speed:",IDC_STATIC,166,87,35,12,SS_CENTERIMAGE
     COMBOBOX        IDC_OUTBOUND_SPEED,206,87,60,80,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
     GROUPBOX        "O&ptions:",IDC_STATIC,7,114,268,62
-    RTEXT           "Can accept incoming connections",IDC_STATIC,14,125,147,12
-    COMBOBOX        IDC_CAN_ACCEPT,166,123,47,52,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
+    RTEXT           "Can accept incoming connections",IDC_STATIC,13,125,161,12
+    COMBOBOX        IDC_CAN_ACCEPT,177,123,47,52,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
     CONTROL         "Ignore private/local IP addresses ",IDC_IGNORE_LOCAL,
-                    "Button",BS_AUTOCHECKBOX | BS_RIGHT | WS_TABSTOP,14,140,161,12,WS_EX_RIGHT
+                    "Button",BS_AUTOCHECKBOX | BS_RIGHT | WS_TABSTOP,15,140,171,12,WS_EX_RIGHT
     CONTROL         "Enable UPnP connection devices setup",IDC_ENABLE_UPNP,
-                    "Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | BS_RIGHT | WS_TABSTOP,14,158,161,10
+                    "Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | BS_RIGHT | WS_TABSTOP,14,158,172,10
     GROUPBOX        "&Timeouts:",IDC_STATIC,7,179,268,34
     LTEXT           "Connection:",IDC_STATIC,21,193,45,12,SS_CENTERIMAGE
     EDITTEXT        IDC_TIMEOUT_CONNECTION,69,193,35,12,ES_AUTOHSCROLL | ES_NUMBER
@@ -395,20 +395,20 @@ BEGIN
     GROUPBOX        "Store Temporary &Incomplete Files Here:",IDC_STATIC,5,45,270,35,WS_GROUP
     EDITTEXT        IDC_INCOMPLETE_FOLDER,16,59,225,12,ES_AUTOHSCROLL | ES_READONLY
     PUSHBUTTON      "",IDC_INCOMPLETE_BROWSE,245,55,23,20
-    GROUPBOX        "&Number of Downloads:",IDC_STATIC,5,86,130,76,WS_GROUP
-    LTEXT           "Maximum Files:",IDC_STATIC,15,102,70,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_MAX_FILES,90,102,36,12,ES_AUTOHSCROLL | ES_NUMBER
-    CONTROL         "Spin1",IDC_MAX_FILES_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,126,102,8,12
-    LTEXT           "Maximum Transfers:",IDC_STATIC,15,121,70,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_MAX_TRANSFERS,90,121,36,12,ES_AUTOHSCROLL | ES_NUMBER
-    CONTROL         "Spin1",IDC_MAX_TRANSFERS_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,126,121,8,12
-    LTEXT           "Transfers per File:",IDC_STATIC,15,140,70,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_MAX_TPF,90,140,36,12,ES_AUTOHSCROLL | ES_NUMBER
-    CONTROL         "Spin1",IDC_MAX_TPF_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,126,140,8,12
-    GROUPBOX        "&Limits:",IDC_STATIC,145,86,130,76,WS_GROUP
-    LTEXT           "Total Download Bandwidth:",IDC_STATIC,155,101,109,8,SS_CENTERIMAGE
+    GROUPBOX        "&Number of Downloads:",IDC_STATIC,5,86,133,76,WS_GROUP
+    LTEXT           "Maximum Files:",IDC_STATIC,15,102,75,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_MAX_FILES,93,102,36,12,ES_AUTOHSCROLL | ES_NUMBER
+    CONTROL         "Spin1",IDC_MAX_FILES_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,129,102,8,12
+    LTEXT           "Maximum Transfers:",IDC_STATIC,15,121,76,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_MAX_TRANSFERS,93,121,36,12,ES_AUTOHSCROLL | ES_NUMBER
+    CONTROL         "Spin1",IDC_MAX_TRANSFERS_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,129,121,8,12
+    LTEXT           "Transfers per File:",IDC_STATIC,15,140,75,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_MAX_TPF,93,140,36,12,ES_AUTOHSCROLL | ES_NUMBER
+    CONTROL         "Spin1",IDC_MAX_TPF_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,129,140,8,12
+    GROUPBOX        "&Limits:",IDC_STATIC,142,86,133,76,WS_GROUP
+    LTEXT           "Total Download Bandwidth:",IDC_STATIC,150,101,125,8,SS_CENTERIMAGE
     COMBOBOX        IDC_DOWNLOADS_BANDWIDTH_LIMIT,204,114,60,68,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Maximum Queue Length:",IDC_STATIC,156,130,108,8,SS_CENTERIMAGE
+    LTEXT           "Maximum Queue Length:",IDC_STATIC,151,130,122,8,SS_CENTERIMAGE
     COMBOBOX        IDC_DOWNLOADS_QUEUE_LIMIT,204,140,60,65,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
     GROUPBOX        "",IDC_STATIC,5,170,270,42,WS_GROUP
     CONTROL         "Only download and upload to networks which are connected.",IDC_REQUIRE_CONNECT,
@@ -888,16 +888,16 @@ STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Community"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    GROUPBOX        "My &Profile:",IDC_STATIC,5,5,270,50
-    LTEXT           "You can use your Gnutella User Profile to share information about yourself, your interests and recommended files and websites with others.",IDC_STATIC,15,20,170,25
+    GROUPBOX        "My &Profile:",IDC_STATIC,5,5,270,63
+    LTEXT           "You can use your Gnutella User Profile to share information about yourself, your interests and recommended files and websites with others.",IDC_STATIC,15,20,170,40
     PUSHBUTTON      "Edit My Profile",IDC_EDIT_PROFILE,195,25,70,15
-    GROUPBOX        "&Chat:",IDC_STATIC,5,60,270,101
+    GROUPBOX        "&Chat:",IDC_STATIC,7,73,270,101
     CONTROL         "Enable peer to peer chat with compatible clients",IDC_CHAT_ENABLE,
-                    "Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,15,75,250,15
+                    "Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,17,88,250,15
     CONTROL         "Enable chat over other protocols (where possible)",IDC_CHAT_ALLNETWORKS,
-                    "Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,15,94,250,15
-    CONTROL         "Filter chat messages for spam",IDC_CHAT_FILTER,"Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,15,113,250,15
-    CONTROL         "Censor profanity in chat",IDC_CHAT_CENSOR,"Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,15,132,250,15
+                    "Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,17,107,250,15
+    CONTROL         "Filter chat messages for spam",IDC_CHAT_FILTER,"Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,17,126,250,15
+    CONTROL         "Censor profanity in chat",IDC_CHAT_CENSOR,"Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,17,145,250,15
 END
 
 IDD_DOWNLOAD_MONITOR DIALOGEX 0, 0, 252, 160
@@ -1213,14 +1213,14 @@ BEGIN
     EDITTEXT        IDC_PROFILE_BIO,5,5,270,150,ES_MULTILINE | ES_AUTOVSCROLL | ES_WANTRETURN | WS_VSCROLL
 END
 
-IDD_PROFILE_FILES DIALOG  0, 0, 282, 159
+IDD_PROFILE_FILES DIALOGEX 0, 0, 282, 159
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Files"
-FONT 8, "Tahoma"
+FONT 8, "Tahoma", 0, 0, 0x0
 BEGIN
     GROUPBOX        "&Favourite Files:",IDC_STATIC,5,5,270,145
-    LTEXT           "Favourite files are recommended to users who browse your profile.  You can create favourite files by adding them to the ""Favourites"" library folder.",IDC_STATIC,15,20,250,20
-    CONTROL         "List1",IDC_FILE_LIST,"SysListView32",LVS_REPORT | LVS_SHAREIMAGELISTS | LVS_ALIGNLEFT | LVS_NOCOLUMNHEADER | WS_BORDER | WS_GROUP | WS_TABSTOP,15,45,250,95
+    LTEXT           "Favourite files are recommended to users who browse your profile.  You can create favourite files by adding them to the ""Favourites"" library folder.",IDC_STATIC,15,20,250,25
+    CONTROL         "List1",IDC_FILE_LIST,"SysListView32",LVS_REPORT | LVS_SHAREIMAGELISTS | LVS_ALIGNLEFT | LVS_NOCOLUMNHEADER | WS_BORDER | WS_GROUP | WS_TABSTOP,15,52,250,88
 END
 
 IDD_PROFILE_CERTIFICATE DIALOGEX 0, 0, 282, 159
@@ -1251,15 +1251,15 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,240,160,45,15
 END
 
-IDD_PROFILE_AVATAR DIALOG  0, 0, 282, 159
+IDD_PROFILE_AVATAR DIALOGEX 0, 0, 282, 159
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Avatar"
-FONT 8, "Tahoma"
+FONT 8, "Tahoma", 0, 0, 0x0
 BEGIN
     GROUPBOX        "&Preview:",IDC_STATIC,5,5,115,105
     CONTROL         "",IDC_PREVIEW,"Static",SS_BLACKFRAME | NOT WS_VISIBLE,20,20,85,79
     GROUPBOX        "&Select:",IDC_STATIC,130,5,145,105
-    LTEXT           "Other users browsing your profile and shared files will see your avatar.  Custom avatars should be 128x128 pixels, and can be in any supported image file on your PC.",IDC_STATIC,140,20,125,55
+    LTEXT           "Other users browsing your profile and shared files will see your avatar.  Custom avatars should be 128x128 pixels, and can be in any supported image file on your PC.",IDC_STATIC,140,20,125,60
     PUSHBUTTON      "&Browse...",IDC_AVATAR_BROWSE,140,85,55,15
     PUSHBUTTON      "&Remove",IDC_AVATAR_REMOVE,210,85,55,15
 END
@@ -1398,14 +1398,14 @@ BEGIN
     RTEXT           "Stop searching after:",IDC_STATIC,15,87,95,12,SS_CENTERIMAGE
     EDITTEXT        IDC_RESULTS,120,87,35,12,ES_AUTOHSCROLL | ES_NUMBER
     CONTROL         "Spin1",IDC_RESULTS_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,156,87,8,12
-    LTEXT           "search results.",IDC_STATIC,165,87,100,12,SS_CENTERIMAGE
+    LTEXT           "search results.",IDC_STATIC,167,87,100,12,SS_CENTERIMAGE
     CONTROL         "Receive and update server list from the connected server",IDC_LEARN_ED2K_SERVERS,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,16,105,251,10
     GROUPBOX        "&Client Link Connections:",IDC_STATIC,5,127,270,37
-    RTEXT           "Connect to no more than:",IDC_STATIC,15,142,95,12,SS_CENTERIMAGE
+    RTEXT           "Connect to no more than:",IDC_STATIC,15,142,102,12,SS_CENTERIMAGE
     EDITTEXT        IDC_LINKS,120,142,35,12,ES_AUTOHSCROLL | ES_NUMBER
     CONTROL         "Spin1",IDC_LINKS_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,156,142,8,12
-    LTEXT           "other eDonkey clients.",IDC_STATIC,165,142,100,12,SS_CENTERIMAGE
+    LTEXT           "other eDonkey clients.",IDC_STATIC,168,142,100,12,SS_CENTERIMAGE
     GROUPBOX        "eDonkey &Tools:",IDC_STATIC,5,167,270,48,WS_GROUP
     LTEXT           "Download eDonkey server list from the web:",IDC_STATIC,15,190,190,15,SS_CENTERIMAGE
     PUSHBUTTON      "Download...",IDC_DISCOVERY_GO,213,190,53,15
@@ -1416,19 +1416,19 @@ STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Networks"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    LTEXT           "Shareaza is a general-purpose file-sharing application that can access many P2P networks at the same time. On this page you can select which networks you want to connect to, and then adjust specific settings for each network.",IDC_STATIC,5,5,270,30
-    GROUPBOX        "Gnutella2 Network:",IDC_STATIC,5,35,270,55,WS_GROUP
-    LTEXT           "The Gnutella2 network is Shareaza's premiere network, offering more features and performance than any other P2P net.  Highly recommended.",IDC_STATIC,15,50,250,18
-    CONTROL         "Connect to Gnutella2 (G2)",IDC_G2_ENABLE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,73,145,10
-    RTEXT           "Configure Gnutella2",IDC_G2_SETUP,165,73,100,10
-    GROUPBOX        "eDonkey Network:",IDC_STATIC,5,95,270,55,WS_GROUP
-    LTEXT           "The eDonkey network is a popular server-based network.  While not as feature-rich as Gnutella2, eDonkey has an impressive file collection.",IDC_STATIC,15,110,250,18
-    CONTROL         "Connect to eDonkey",IDC_ED2K_ENABLE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,132,145,10
-    RTEXT           "Configure eDonkey",IDC_ED2K_SETUP,165,132,100,10
-    GROUPBOX        "Original Gnutella Network:",IDC_STATIC,5,155,270,55,WS_GROUP
-    LTEXT           "Although the original Gnutella network is less feature-rich than Gnutella2, and has fewer files than eDonkey, it remains a valuable resource.",IDC_STATIC,15,170,250,18
-    CONTROL         "Connect to Original Gnutella",IDC_G1_ENABLE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,193,145,10
-    RTEXT           "Configure Gnutella1",IDC_G1_SETUP,165,193,100,10
+    LTEXT           "Shareaza is a general-purpose file-sharing application that can access many P2P networks at the same time. On this page you can select which networks you want to connect to, and then adjust specific settings for each network.",IDC_STATIC,5,5,270,34
+    GROUPBOX        "Gnutella2 Network:",IDC_STATIC,5,39,270,55,WS_GROUP
+    LTEXT           "The Gnutella2 network is Shareaza's premiere network, offering more features and performance than any other P2P net.  Highly recommended.",IDC_STATIC,15,54,250,18
+    CONTROL         "Connect to Gnutella2 (G2)",IDC_G2_ENABLE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,77,145,10
+    RTEXT           "Configure Gnutella2",IDC_G2_SETUP,165,77,100,10
+    GROUPBOX        "eDonkey Network:",IDC_STATIC,5,99,270,55,WS_GROUP
+    LTEXT           "The eDonkey network is a popular server-based network.  While not as feature-rich as Gnutella2, eDonkey has an impressive file collection.",IDC_STATIC,15,114,250,18
+    CONTROL         "Connect to eDonkey",IDC_ED2K_ENABLE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,136,145,10
+    RTEXT           "Configure eDonkey",IDC_ED2K_SETUP,165,136,100,10
+    GROUPBOX        "Original Gnutella Network:",IDC_STATIC,5,159,270,55,WS_GROUP
+    LTEXT           "Although the original Gnutella network is less feature-rich than Gnutella2, and has fewer files than eDonkey, it remains a valuable resource.",IDC_STATIC,15,174,250,18
+    CONTROL         "Connect to Original Gnutella",IDC_G1_ENABLE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,197,145,10
+    RTEXT           "Configure Gnutella1",IDC_G1_SETUP,165,197,100,10
 END
 
 IDD_SETTINGS_PROTOCOLS DIALOGEX 0, 0, 282, 220
@@ -1653,11 +1653,11 @@ STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Remote Access"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    GROUPBOX        "&Guide:",IDC_STATIC,6,6,270,66,WS_GROUP
-    LTEXT           "Shareaza Remote Access allows you to leave Shareaza running on your PC, and control it remotely using a web browser.  You will need to be able to accept incoming connections to use this feature (i.e. properly configured router, etc).",IDC_STATIC,18,24,246,36
-    GROUPBOX        "&Enable:",IDC_STATIC,6,78,270,66,WS_GROUP
+    GROUPBOX        "&Guide:",IDC_STATIC,6,6,270,74,WS_GROUP
+    LTEXT           "Shareaza Remote Access allows you to leave Shareaza running on your PC, and control it remotely using a web browser.  You will need to be able to accept incoming connections to use this feature (i.e. properly configured router, etc).",IDC_STATIC,18,24,246,48
+    GROUPBOX        "&Enable:",IDC_STATIC,6,87,270,57,WS_GROUP
     CONTROL         "Enable Shareaza Remote Access:",IDC_REMOTE_ENABLE,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,18,98,246,12
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,18,103,246,12
     LTEXT           "URL",IDC_REMOTE_URL,18,120,246,10
     GROUPBOX        "&Credentials:",IDC_STATIC,6,150,270,60,WS_GROUP
     LTEXT           "Choose a Username:",IDC_STATIC,18,168,72,12,SS_CENTERIMAGE
@@ -2765,7 +2765,6 @@ IDR_HTML_ABOUT          GZIP                    "Res\\About.htm.gz"
 IDR_HTML_BROWSER        GZIP                    "Res\\Browser.htm.gz"
 IDR_XML_DEFINITIONS     GZIP                    "Res\\Definitions.xml.gz"
 IDR_XML_DEFAULT         GZIP                    "Res\\Default.xml.gz"
-IDR_XML_SCHEMA_MAPS     GZIP                    "Res\\SchemaMappings.xml.gz"
 
 /////////////////////////////////////////////////////////////////////////////
 //
