@@ -361,6 +361,13 @@ Root: HKCU; SubKey: "Software\Microsoft\Internet Explorer\LowRegistry\MediaBar";
 Root: HKCU; SubKey: "Software\Microsoft\Internet Explorer\LowRegistry\BHO Shareaza"; Flags: deletekey
 Root: HKCU; SubKey: "Software\BHO Shareaza"; Flags: deletekey
 
+; Set program default associations
+Root: HKLM; Subkey: "Software\Shareaza\Shareaza\Capabilities"; ValueType: string; ValueName: "ApplicationDescription"; ValueData: "{cm:reg_apptitle}" ; Flags: createvalueifdoesntexist uninsdeletekey
+Root: HKLM; Subkey: "Software\Shareaza\Shareaza\Capabilities\FileAssociations"; ValueType: string; ValueName: ".torrent"; ValueData: "bittorrent"; Flags: createvalueifdoesntexist uninsdeletevalue
+Root: HKLM; Subkey: "Software\Shareaza\Shareaza\Capabilities\FileAssociations"; ValueType: string; ValueName: ".co"; ValueData: "Shareaza.Collection"; Flags: createvalueifdoesntexist uninsdeletevalue
+Root: HKLM; Subkey: "Software\Shareaza\Shareaza\Capabilities\FileAssociations"; ValueType: string; ValueName: ".collection"; ValueData: "Shareaza.Collection"; Flags: createvalueifdoesntexist uninsdeletevalue
+Root: HKLM; Subkey: "Software\RegisteredApplications"; ValueType: string; ValueName: "Shareaza"; ValueData: "Software\Shareaza\Shareaza\Capabilities" ; Flags: createvalueifdoesntexist uninsdeletevalue
+
 [Dirs]
 Name: "{app}\Skins"; Flags: uninsalwaysuninstall; Permissions: users-modify
 
