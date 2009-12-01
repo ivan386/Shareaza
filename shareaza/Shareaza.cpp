@@ -337,7 +337,7 @@ BOOL CShareazaApp::InitInstance()
 	IEProtocol.Create();
 
 	// ***********
-	/*
+	//*
 	// Beta expiry. Remember to re-compile to update the time, and remove this
 	// section for final releases and public betas.
 	COleDateTime tCompileTime;
@@ -353,7 +353,7 @@ BOOL CShareazaApp::InitInstance()
 	}
 	//*/
 
-	/*
+	//*
 	// Alpha warning. Remember to remove this section for final releases and public betas.
 	if ( ! m_ocmdInfo.m_bNoAlphaWarning && m_ocmdInfo.m_bShowSplash )
 	if ( AfxMessageBox(
