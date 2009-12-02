@@ -4615,6 +4615,8 @@
 	<list name="CTorrentFileList">
 		<column from="Filename" to=""/>
 		<column from="Size" to=""/>
+		<column from="Status" to=""/>
+		<column from="Priority" to=""/>
 	</list>
 	<list name="CTorrentTrackerList">
 		<column from="Tracker" to=""/>
