@@ -199,6 +199,12 @@ void CLanguageDlg::OnPaint()
 
 void CLanguageDlg::PaintItem(int nItem, CDC* pDC, CRect* pRect)
 {
+	if ( Settings.General.LanguageRTL ) 
+	{
+		UINT nFlags = pDC->GetTextAlign();
+		pDC->SetTextAlign( nFlags | TA_RTLREADING );
+	}
+
 	pRect->bottom = pRect->top + ITEM_HEIGHT;
 
 	BOOL bHover	= m_nHover == ( nItem + 1 );

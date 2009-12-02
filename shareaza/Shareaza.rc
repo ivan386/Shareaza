@@ -2765,6 +2765,7 @@ IDR_HTML_ABOUT          GZIP                    "Res\\About.htm.gz"
 IDR_HTML_BROWSER        GZIP                    "Res\\Browser.htm.gz"
 IDR_XML_DEFINITIONS     GZIP                    "Res\\Definitions.xml.gz"
 IDR_XML_DEFAULT         GZIP                    "Res\\Default.xml.gz"
+IDR_XML_SCHEMA_MAPS     GZIP                    "Res\\SchemaMappings.xml.gz"
 
 /////////////////////////////////////////////////////////////////////////////
 //
