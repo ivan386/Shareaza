@@ -1201,10 +1201,10 @@
           <part name="_ID_TAB_TRANSFERS.Checked" rect="404,28,111,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	rect="404,28,111,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	rect="404,0,111,29"/>
-          <part name="_ID_TAB_IRC.Up"		rect="515,0,70,29"/>
-          <part name="_ID_TAB_IRC.Checked"	rect="515,28,70,29"/>
-          <part name="_ID_TAB_IRC.Hover" 	rect="515,28,70,29"/>
-          <part name="_ID_TAB_IRC.Down" 	rect="515,0,70,29"/>
+          <part name="_ID_TAB_IRC.Up"		rect="609,0,70,29"/>
+          <part name="_ID_TAB_IRC.Checked"	rect="609,28,70,29"/>
+          <part name="_ID_TAB_IRC.Hover" 	rect="609,28,70,29"/>
+          <part name="_ID_TAB_IRC.Down" 	rect="609,0,70,29"/>
         </parts>
         <anchors>
           <anchor name="Background"		rect="15,0,610,38"/>
@@ -1213,7 +1213,7 @@
           <anchor name="_ID_TAB_MEDIA"		rect="215,2,111,29"/>
           <anchor name="_ID_TAB_SEARCH" 	rect="326,2,93,29"/>
           <anchor name="_ID_TAB_TRANSFERS"	rect="419,2,111,29"/>
-          <anchor name="_ID_TAB_IRC"		rect="540,2,70,29"/>
+          <anchor name="_ID_TAB_IRC"		rect="530,2,70,29"/>
         </anchors>
       </windowSkin>
       <!-- end navbar language for lt -->
