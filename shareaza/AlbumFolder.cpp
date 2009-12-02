@@ -882,9 +882,11 @@ BOOL CAlbumFolder::OrganiseFile(CLibraryFile* pFile)
 
 				size_t nCount = firstPattern.split( sFileName, splitResults, 0 );
 				std::vector<std::wstring> results = splitResults.strings();
-				if ( nCount >= 6 &&
-					 _tcsicmp( _tcsistr( L"season", results[2].c_str() ), L"season" ) == 0 &&
-					 _tcsicmp( _tcsistr( L"episode", results[4].c_str() ), L"episode" ) == 0 )
+				LPCTSTR szSeason = _tcsistr( L"season", results[2].c_str() );
+				LPCTSTR szEpisode = _tcsistr( L"episode", results[4].c_str() );
+				if ( nCount >= 6 && szSeason && szEpisode &&
+					 _tcsicmp( szSeason, L"season" ) == 0 &&
+					 _tcsicmp( szEpisode, L"episode" ) == 0 )
 				{
 					std::vector<std::wstring>::iterator it =
 						std::find( results.begin(), results.end(), results[2] );
