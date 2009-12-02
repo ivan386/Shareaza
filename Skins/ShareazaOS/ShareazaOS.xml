@@ -497,10 +497,10 @@
           <part name="_ID_TAB_TRANSFERS.Checked" rect="442,28,153,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	rect="442,28,153,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	rect="442,0,153,29"/>
-          <part name="_ID_TAB_IRC.Up"		rect="595,0,70,29"/>
-          <part name="_ID_TAB_IRC.Checked"	rect="595,28,70,29"/>
-          <part name="_ID_TAB_IRC.Hover" 	rect="595,28,70,29"/>
-          <part name="_ID_TAB_IRC.Down" 	rect="595,0,70,29"/>
+          <part name="_ID_TAB_IRC.Up"		rect="655,0,70,29"/>
+          <part name="_ID_TAB_IRC.Checked"	rect="655,28,70,29"/>
+          <part name="_ID_TAB_IRC.Hover" 	rect="655,28,70,29"/>
+          <part name="_ID_TAB_IRC.Down" 	rect="655,0,70,29"/>
         </parts>
         <anchors>
           <anchor name="Background"		rect="15,0,690,38"/>
@@ -585,10 +585,10 @@
           <part name="_ID_TAB_TRANSFERS.Checked" rect="442,28,153,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	rect="442,28,153,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	rect="442,0,153,29"/>
-          <part name="_ID_TAB_IRC.Up"		rect="595,0,70,29"/>
-          <part name="_ID_TAB_IRC.Checked"	rect="595,28,70,29"/>
-          <part name="_ID_TAB_IRC.Hover" 	rect="595,28,70,29"/>
-          <part name="_ID_TAB_IRC.Down" 	rect="595,0,70,29"/>
+          <part name="_ID_TAB_IRC.Up"		rect="655,0,70,29"/>
+          <part name="_ID_TAB_IRC.Checked"	rect="655,28,70,29"/>
+          <part name="_ID_TAB_IRC.Hover" 	rect="655,28,70,29"/>
+          <part name="_ID_TAB_IRC.Down" 	rect="655,0,70,29"/>
         </parts>
         <anchors>
           <anchor name="Background"		rect="15,0,690,38"/>
@@ -673,10 +673,10 @@
           <part name="_ID_TAB_TRANSFERS.Checked" rect="442,28,153,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	rect="442,28,153,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	rect="442,0,153,29"/>
-          <part name="_ID_TAB_IRC.Up"		rect="595,0,70,29"/>
-          <part name="_ID_TAB_IRC.Checked"	rect="595,28,70,29"/>
-          <part name="_ID_TAB_IRC.Hover" 	rect="595,28,70,29"/>
-          <part name="_ID_TAB_IRC.Down" 	rect="595,0,70,29"/>
+          <part name="_ID_TAB_IRC.Up"		rect="655,0,70,29"/>
+          <part name="_ID_TAB_IRC.Checked"	rect="655,28,70,29"/>
+          <part name="_ID_TAB_IRC.Hover" 	rect="655,28,70,29"/>
+          <part name="_ID_TAB_IRC.Down" 	rect="655,0,70,29"/>
         </parts>
         <anchors>
           <anchor name="Background"		rect="15,0,690,38"/>
@@ -761,10 +761,10 @@
           <part name="_ID_TAB_TRANSFERS.Checked" rect="464,28,109,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	 rect="464,28,109,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	 rect="464,0,109,29"/>
-          <part name="_ID_TAB_IRC.Up"		 rect="573,0,70,29"/>
-          <part name="_ID_TAB_IRC.Checked"	 rect="573,28,70,29"/>
-          <part name="_ID_TAB_IRC.Hover" 	 rect="573,28,70,29"/>
-          <part name="_ID_TAB_IRC.Down" 	 rect="573,0,70,29"/>
+          <part name="_ID_TAB_IRC.Up"		 rect="680,0,70,29"/>
+          <part name="_ID_TAB_IRC.Checked"	 rect="680,28,70,29"/>
+          <part name="_ID_TAB_IRC.Hover" 	 rect="680,28,70,29"/>
+          <part name="_ID_TAB_IRC.Down" 	 rect="680,0,70,29"/>
         </parts>
         <anchors>
           <anchor name="Background"		rect="15,0,668,38"/>
@@ -849,10 +849,10 @@
           <part name="_ID_TAB_TRANSFERS.Checked" rect="424,28,122,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	rect="424,28,122,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	rect="424,0,122,29"/>
-          <part name="_ID_TAB_IRC.Up"		rect="546,0,70,29"/>
-          <part name="_ID_TAB_IRC.Checked"	rect="546,28,70,29"/>
-          <part name="_ID_TAB_IRC.Hover" 	rect="546,28,70,29"/>
-          <part name="_ID_TAB_IRC.Down" 	rect="546,0,70,29"/>
+          <part name="_ID_TAB_IRC.Up"		rect="645,0,70,29"/>
+          <part name="_ID_TAB_IRC.Checked"	rect="645,28,70,29"/>
+          <part name="_ID_TAB_IRC.Hover" 	rect="645,28,70,29"/>
+          <part name="_ID_TAB_IRC.Down" 	rect="645,0,70,29"/>
         </parts>
         <anchors>
           <anchor name="Background"		rect="15,0,640,38"/>
@@ -937,10 +937,10 @@
           <part name="_ID_TAB_TRANSFERS.Checked" rect="365,28,127,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	rect="365,28,127,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	rect="365,0,127,29"/>
-          <part name="_ID_TAB_IRC.Up"		rect="492,0,70,29"/>
-          <part name="_ID_TAB_IRC.Checked"	rect="492,28,70,29"/>
-          <part name="_ID_TAB_IRC.Hover" 	rect="492,28,70,29"/>
-          <part name="_ID_TAB_IRC.Down" 	rect="492,0,70,29"/>
+          <part name="_ID_TAB_IRC.Up"		rect="564,0,70,29"/>
+          <part name="_ID_TAB_IRC.Checked"	rect="564,28,70,29"/>
+          <part name="_ID_TAB_IRC.Hover" 	rect="564,28,70,29"/>
+          <part name="_ID_TAB_IRC.Down" 	rect="564,0,70,29"/>
         </parts>
         <anchors>
           <anchor name="Background"		rect="15,0,586,38"/>
@@ -1025,10 +1025,10 @@
           <part name="_ID_TAB_TRANSFERS.Checked" rect="502,28,114,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	rect="502,28,114,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	rect="502,0,114,29"/>
-          <part name="_ID_TAB_IRC.Up"		rect="695,0,71,29"/>
-          <part name="_ID_TAB_IRC.Checked"	rect="695,28,71,29"/>
-          <part name="_ID_TAB_IRC.Hover" 	rect="695,28,71,29"/>
-          <part name="_ID_TAB_IRC.Down" 	rect="695,0,71,29"/>
+          <part name="_ID_TAB_IRC.Up"		rect="696,0,71,29"/>
+          <part name="_ID_TAB_IRC.Checked"	rect="696,28,71,29"/>
+          <part name="_ID_TAB_IRC.Hover" 	rect="696,28,71,29"/>
+          <part name="_ID_TAB_IRC.Down" 	rect="696,0,71,29"/>
         </parts>
         <anchors>
           <anchor name="Background"		rect="15,0,711,38"/>
@@ -1113,10 +1113,10 @@
           <part name="_ID_TAB_TRANSFERS.Checked" rect="407,28,143,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	rect="407,28,143,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	rect="407,0,143,29"/>
-          <part name="_ID_TAB_IRC.Up"		rect="550,0,70,29"/>
-          <part name="_ID_TAB_IRC.Checked"	rect="550,28,70,29"/>
-          <part name="_ID_TAB_IRC.Hover" 	rect="550,28,70,29"/>
-          <part name="_ID_TAB_IRC.Down" 	rect="550,0,70,29"/>
+          <part name="_ID_TAB_IRC.Up"		rect="617,0,70,29"/>
+          <part name="_ID_TAB_IRC.Checked"	rect="617,28,70,29"/>
+          <part name="_ID_TAB_IRC.Hover" 	rect="617,28,70,29"/>
+          <part name="_ID_TAB_IRC.Down" 	rect="617,0,70,29"/>
         </parts>
         <anchors>
           <anchor name="Background"		rect="15,0,644,38"/>
@@ -1289,10 +1289,10 @@
           <part name="_ID_TAB_TRANSFERS.Checked" rect="394,28,91,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	rect="394,28,91,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	rect="394,0,91,29"/>
-          <part name="_ID_TAB_IRC.Up"		rect="485,0,70,29"/>
-          <part name="_ID_TAB_IRC.Checked"	rect="485,28,70,29"/>
-          <part name="_ID_TAB_IRC.Hover" 	rect="485,28,70,29"/>
-          <part name="_ID_TAB_IRC.Down" 	rect="485,0,70,29"/>
+          <part name="_ID_TAB_IRC.Up"		rect="543,0,70,29"/>
+          <part name="_ID_TAB_IRC.Checked"	rect="543,28,70,29"/>
+          <part name="_ID_TAB_IRC.Hover" 	rect="543,28,70,29"/>
+          <part name="_ID_TAB_IRC.Down" 	rect="543,0,70,29"/>
         </parts>
         <anchors>
           <anchor name="Background"		rect="15,0,580,38"/>
@@ -1377,10 +1377,10 @@
           <part name="_ID_TAB_TRANSFERS.Checked" rect="422,28,96,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	rect="422,28,96,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	rect="422,0,96,29"/>
-          <part name="_ID_TAB_IRC.Up"		rect="518,0,70,29"/>
-          <part name="_ID_TAB_IRC.Checked"	rect="518,28,70,29"/>
-          <part name="_ID_TAB_IRC.Hover" 	rect="518,28,70,29"/>
-          <part name="_ID_TAB_IRC.Down" 	rect="518,0,70,29"/>
+          <part name="_ID_TAB_IRC.Up"		rect="616,0,70,29"/>
+          <part name="_ID_TAB_IRC.Checked"	rect="616,28,70,29"/>
+          <part name="_ID_TAB_IRC.Hover" 	rect="616,28,70,29"/>
+          <part name="_ID_TAB_IRC.Down" 	rect="616,0,70,29"/>
         </parts>
         <anchors>
           <anchor name="Background"		rect="15,0,612,38"/>
@@ -1465,10 +1465,10 @@
           <part name="_ID_TAB_TRANSFERS.Checked" rect="370,28,156,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	rect="370,28,156,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	rect="370,0,156,29"/>
-          <part name="_ID_TAB_IRC.Up"		rect="526,0,70,29"/>
-          <part name="_ID_TAB_IRC.Checked"	rect="526,28,70,29"/>
-          <part name="_ID_TAB_IRC.Hover" 	rect="526,28,70,29"/>
-          <part name="_ID_TAB_IRC.Down" 	rect="526,0,70,29"/>
+          <part name="_ID_TAB_IRC.Up"		rect="594,0,70,29"/>
+          <part name="_ID_TAB_IRC.Checked"	rect="594,28,70,29"/>
+          <part name="_ID_TAB_IRC.Hover" 	rect="594,28,70,29"/>
+          <part name="_ID_TAB_IRC.Down" 	rect="594,0,70,29"/>
         </parts>
         <anchors>
           <anchor name="Background"		rect="15,0,620,38"/>
@@ -1553,10 +1553,10 @@
           <part name="_ID_TAB_TRANSFERS.Checked" rect="316,28,79,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	rect="316,28,79,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	rect="316,0,79,29"/>
-          <part name="_ID_TAB_IRC.Up"		rect="395,0,70,29"/>
-          <part name="_ID_TAB_IRC.Checked"	rect="395,28,70,29"/>
-          <part name="_ID_TAB_IRC.Hover" 	rect="395,28,70,29"/>
-          <part name="_ID_TAB_IRC.Down" 	rect="395,0,70,29"/>
+          <part name="_ID_TAB_IRC.Up"		rect="467,0,70,29"/>
+          <part name="_ID_TAB_IRC.Checked"	rect="467,28,70,29"/>
+          <part name="_ID_TAB_IRC.Hover" 	rect="467,28,70,29"/>
+          <part name="_ID_TAB_IRC.Down" 	rect="467,0,70,29"/>
         </parts>
         <anchors>
           <anchor name="Background"		rect="15,0,490,38"/>
@@ -1641,10 +1641,10 @@
           <part name="_ID_TAB_TRANSFERS.Checked" rect="323,28,141,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	rect="323,28,141,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	rect="323,0,141,29"/>
-          <part name="_ID_TAB_IRC.Up"		rect="464,0,70,29"/>
-          <part name="_ID_TAB_IRC.Checked"	rect="464,28,70,29"/>
-          <part name="_ID_TAB_IRC.Hover" 	rect="464,28,70,29"/>
-          <part name="_ID_TAB_IRC.Down" 	rect="464,0,70,29"/>
+          <part name="_ID_TAB_IRC.Up"		rect="569,0,70,29"/>
+          <part name="_ID_TAB_IRC.Checked"	rect="569,28,70,29"/>
+          <part name="_ID_TAB_IRC.Hover" 	rect="569,28,70,29"/>
+          <part name="_ID_TAB_IRC.Down" 	rect="569,0,70,29"/>
         </parts>
         <anchors>
           <anchor name="Background"		rect="15,0,558,38"/>
@@ -1729,10 +1729,10 @@
           <part name="_ID_TAB_TRANSFERS.Checked" rect="334,28,107,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	rect="334,28,107,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	rect="334,0,107,29"/>
-          <part name="_ID_TAB_IRC.Up"		rect="441,0,70,29"/>
-          <part name="_ID_TAB_IRC.Checked"	rect="441,28,70,29"/>
-          <part name="_ID_TAB_IRC.Hover" 	rect="441,28,70,29"/>
-          <part name="_ID_TAB_IRC.Down" 	rect="441,0,70,29"/>
+          <part name="_ID_TAB_IRC.Up"		rect="506,0,70,29"/>
+          <part name="_ID_TAB_IRC.Checked"	rect="506,28,70,29"/>
+          <part name="_ID_TAB_IRC.Hover" 	rect="506,28,70,29"/>
+          <part name="_ID_TAB_IRC.Down" 	rect="506,0,70,29"/>
         </parts>
         <anchors>
           <anchor name="Background"		rect="15,0,535,38"/>
@@ -1817,10 +1817,10 @@
           <part name="_ID_TAB_TRANSFERS.Checked" rect="391,28,114,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	rect="391,28,114,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	rect="391,0,114,29"/>
-          <part name="_ID_TAB_IRC.Up"		rect="505,0,70,29"/>
-          <part name="_ID_TAB_IRC.Checked"	rect="505,28,70,29"/>
-          <part name="_ID_TAB_IRC.Hover" 	rect="505,28,70,29"/>
-          <part name="_ID_TAB_IRC.Down" 	rect="505,0,70,29"/>
+          <part name="_ID_TAB_IRC.Up"		rect="603,0,70,29"/>
+          <part name="_ID_TAB_IRC.Checked"	rect="603,28,70,29"/>
+          <part name="_ID_TAB_IRC.Hover" 	rect="603,28,70,29"/>
+          <part name="_ID_TAB_IRC.Down" 	rect="603,0,70,29"/>
         </parts>
         <anchors>
           <anchor name="Background"		rect="15,0,600,38"/>
@@ -1905,10 +1905,10 @@
           <part name="_ID_TAB_TRANSFERS.Checked" rect="441,28,122,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	rect="441,28,122,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	rect="441,0,122,29"/>
-          <part name="_ID_TAB_IRC.Up"		rect="563,0,70,29"/>
-          <part name="_ID_TAB_IRC.Checked"	rect="563,28,70,29"/>
-          <part name="_ID_TAB_IRC.Hover" 	rect="563,28,70,29"/>
-          <part name="_ID_TAB_IRC.Down" 	rect="563,0,70,29"/>
+          <part name="_ID_TAB_IRC.Up"		rect="634,0,70,29"/>
+          <part name="_ID_TAB_IRC.Checked"	rect="634,28,70,29"/>
+          <part name="_ID_TAB_IRC.Hover" 	rect="634,28,70,29"/>
+          <part name="_ID_TAB_IRC.Down" 	rect="634,0,70,29"/>
         </parts>
         <anchors>
           <anchor name="Background"		rect="15,0,658,38"/>
@@ -1993,10 +1993,10 @@
           <part name="_ID_TAB_TRANSFERS.Checked" rect="524,28,116,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	rect="524,28,116,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	rect="524,0,116,29"/>
-          <part name="_ID_TAB_IRC.Up"		rect="640,0,70,29"/>
-          <part name="_ID_TAB_IRC.Checked"	rect="640,28,70,29"/>
-          <part name="_ID_TAB_IRC.Hover" 	rect="640,28,70,29"/>
-          <part name="_ID_TAB_IRC.Down" 	rect="640,0,70,29"/>
+          <part name="_ID_TAB_IRC.Up"		rect="722,0,70,29"/>
+          <part name="_ID_TAB_IRC.Checked"	rect="722,28,70,29"/>
+          <part name="_ID_TAB_IRC.Hover" 	rect="722,28,70,29"/>
+          <part name="_ID_TAB_IRC.Down" 	rect="722,0,70,29"/>
         </parts>
         <anchors>
           <anchor name="Background"		rect="15,0,732,38"/>
@@ -2081,10 +2081,10 @@
           <part name="_ID_TAB_TRANSFERS.Checked" rect="320,28,141,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	rect="320,28,141,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	rect="320,0,141,29"/>
-          <part name="_ID_TAB_IRC.Up"		rect="461,0,70,29"/>
-          <part name="_ID_TAB_IRC.Checked"	rect="461,28,70,29"/>
-          <part name="_ID_TAB_IRC.Hover" 	rect="461,28,70,29"/>
-          <part name="_ID_TAB_IRC.Down" 	rect="461,0,70,29"/>
+          <part name="_ID_TAB_IRC.Up"		rect="558,0,70,29"/>
+          <part name="_ID_TAB_IRC.Checked"	rect="558,28,70,29"/>
+          <part name="_ID_TAB_IRC.Hover" 	rect="558,28,70,29"/>
+          <part name="_ID_TAB_IRC.Down" 	rect="558,0,70,29"/>
         </parts>
         <anchors>
           <anchor name="Background"		rect="15,0,555,38"/>
@@ -2169,10 +2169,10 @@
           <part name="_ID_TAB_TRANSFERS.Checked" rect="374,28,103,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	rect="374,28,103,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	rect="374,0,103,29"/>
-          <part name="_ID_TAB_IRC.Up"		rect="477,0,70,29"/>
-          <part name="_ID_TAB_IRC.Checked"	rect="477,28,70,29"/>
-          <part name="_ID_TAB_IRC.Hover" 	rect="477,28,70,29"/>
-          <part name="_ID_TAB_IRC.Down" 	rect="477,0,70,29"/>
+          <part name="_ID_TAB_IRC.Up"		rect="564,0,70,29"/>
+          <part name="_ID_TAB_IRC.Checked"	rect="564,28,70,29"/>
+          <part name="_ID_TAB_IRC.Hover" 	rect="564,28,70,29"/>
+          <part name="_ID_TAB_IRC.Down" 	rect="564,0,70,29"/>
         </parts>
         <anchors>
           <anchor name="Background"		rect="15,0,572,38"/>
@@ -2257,10 +2257,10 @@
           <part name="_ID_TAB_TRANSFERS.Checked" rect="324,28,81,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	rect="324,28,81,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	rect="324,0,81,29"/>
-          <part name="_ID_TAB_IRC.Up"		rect="405,0,70,29"/>
-          <part name="_ID_TAB_IRC.Checked"	rect="405,28,70,29"/>
-          <part name="_ID_TAB_IRC.Hover" 	rect="405,28,70,29"/>
-          <part name="_ID_TAB_IRC.Down" 	rect="405,0,70,29"/>
+          <part name="_ID_TAB_IRC.Up"		rect="490,0,70,29"/>
+          <part name="_ID_TAB_IRC.Checked"	rect="490,28,70,29"/>
+          <part name="_ID_TAB_IRC.Hover" 	rect="490,28,70,29"/>
+          <part name="_ID_TAB_IRC.Down" 	rect="490,0,70,29"/>
         </parts>
         <anchors>
           <anchor name="Background"		rect="15,0,500,38"/>
@@ -2269,7 +2269,7 @@
           <anchor name="_ID_TAB_MEDIA"		rect="187,2,79,29"/>
           <anchor name="_ID_TAB_SEARCH" 	rect="266,2,73,29"/>
           <anchor name="_ID_TAB_TRANSFERS"	rect="339,2,81,29"/>
-          <anchor name="_ID_TAB_IRC"		rect="520,2,70,29"/>
+          <anchor name="_ID_TAB_IRC"		rect="420,2,70,29"/>
         </anchors>
       </windowSkin>
       <!-- end navbar language for fi -->
@@ -2345,10 +2345,10 @@
           <part name="_ID_TAB_TRANSFERS.Checked" rect="382,28,100,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	rect="382,28,100,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	rect="382,0,100,29"/>
-          <part name="_ID_TAB_IRC.Up"		rect="482,0,70,29"/>
-          <part name="_ID_TAB_IRC.Checked"	rect="482,28,70,29"/>
-          <part name="_ID_TAB_IRC.Hover" 	rect="482,28,70,29"/>
-          <part name="_ID_TAB_IRC.Down" 	rect="482,0,70,29"/>
+          <part name="_ID_TAB_IRC.Up"		rect="575,0,70,29"/>
+          <part name="_ID_TAB_IRC.Checked"	rect="575,28,70,29"/>
+          <part name="_ID_TAB_IRC.Hover" 	rect="575,28,70,29"/>
+          <part name="_ID_TAB_IRC.Down" 	rect="575,0,70,29"/>
         </parts>
         <anchors>
           <anchor name="Background"		rect="15,0,576,38"/>
@@ -2433,10 +2433,10 @@
           <part name="_ID_TAB_TRANSFERS.Checked" rect="361,28,108,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	rect="361,28,108,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	rect="361,0,108,29"/>
-          <part name="_ID_TAB_IRC.Up"		rect="469,0,70,29"/>
-          <part name="_ID_TAB_IRC.Checked"	rect="469,28,70,29"/>
-          <part name="_ID_TAB_IRC.Hover" 	rect="469,28,70,29"/>
-          <part name="_ID_TAB_IRC.Down" 	rect="469,0,70,29"/>
+          <part name="_ID_TAB_IRC.Up"		rect="554,0,70,29"/>
+          <part name="_ID_TAB_IRC.Checked"	rect="554,28,70,29"/>
+          <part name="_ID_TAB_IRC.Hover" 	rect="554,28,70,29"/>
+          <part name="_ID_TAB_IRC.Down" 	rect="554,0,70,29"/>
         </parts>
         <anchors>
           <anchor name="Background"		rect="15,0,564,38"/>
@@ -2533,7 +2533,7 @@
           <anchor name="_ID_TAB_MEDIA"		rect="245,2,80,29"/>
           <anchor name="_ID_TAB_SEARCH"		rect="325,2,80,29"/>
           <anchor name="_ID_TAB_TRANSFERS"	rect="405,2,132,29"/>
-          <anchor name="_ID_TAB_IRC"		rect="536,2,70,29"/>
+          <anchor name="_ID_TAB_IRC"		rect="537,2,70,29"/>
        </anchors>
       </windowSkin>
       <!-- end navbar language for tr -->
@@ -2609,10 +2609,10 @@
           <part name="_ID_TAB_TRANSFERS.Checked" rect="316,28,79,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	rect="316,28,79,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	rect="316,0,79,29"/>
-          <part name="_ID_TAB_IRC.Up"		rect="395,0,70,29"/>
-          <part name="_ID_TAB_IRC.Checked"	rect="395,28,70,29"/>
-          <part name="_ID_TAB_IRC.Hover" 	rect="395,28,70,29"/>
-          <part name="_ID_TAB_IRC.Down" 	rect="395,0,70,29"/>
+          <part name="_ID_TAB_IRC.Up"		rect="467,0,70,29"/>
+          <part name="_ID_TAB_IRC.Checked"	rect="467,28,70,29"/>
+          <part name="_ID_TAB_IRC.Hover" 	rect="467,28,70,29"/>
+          <part name="_ID_TAB_IRC.Down" 	rect="467,0,70,29"/>
         </parts>
         <anchors>
           <anchor name="Background"		rect="0,0,490,38"/>
@@ -2697,10 +2697,10 @@
           <part name="_ID_TAB_TRANSFERS.Checked" rect="316,28,79,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	rect="316,28,79,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	rect="316,0,79,29"/>
-          <part name="_ID_TAB_IRC.Up"		rect="395,0,70,29"/>
-          <part name="_ID_TAB_IRC.Checked"	rect="395,28,70,29"/>
-          <part name="_ID_TAB_IRC.Hover" 	rect="395,28,70,29"/>
-          <part name="_ID_TAB_IRC.Down" 	rect="395,0,70,29"/>
+          <part name="_ID_TAB_IRC.Up"		rect="467,0,70,29"/>
+          <part name="_ID_TAB_IRC.Checked"	rect="467,28,70,29"/>
+          <part name="_ID_TAB_IRC.Hover" 	rect="467,28,70,29"/>
+          <part name="_ID_TAB_IRC.Down" 	rect="467,0,70,29"/>
         </parts>
         <anchors>
           <anchor name="Background"		rect="0,0,490,38"/>
@@ -2785,10 +2785,10 @@
           <part name="_ID_TAB_TRANSFERS.Hover"	rect="414,28,79,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	rect="414,0,79,29"/>
           <part name="_ID_TAB_TRANSFERS.Checked" rect="414,28,79,29"/>
-          <part name="_ID_TAB_IRC.Up"		rect="493,0,70,29"/>
-          <part name="_ID_TAB_IRC.Checked"	rect="493,28,70,29"/>
-          <part name="_ID_TAB_IRC.Hover" 	rect="493,28,70,29"/>
-          <part name="_ID_TAB_IRC.Down" 	rect="493,0,70,29"/>
+          <part name="_ID_TAB_IRC.Up"		rect="604,0,70,29"/>
+          <part name="_ID_TAB_IRC.Checked"	rect="604,28,70,29"/>
+          <part name="_ID_TAB_IRC.Hover" 	rect="604,28,70,29"/>
+          <part name="_ID_TAB_IRC.Down" 	rect="604,0,70,29"/>
         </parts>
         <anchors>
           <anchor name="Background"		rect="0,0,596,38"/>
