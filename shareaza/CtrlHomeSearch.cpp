@@ -1,7 +1,7 @@
 //
 // CtrlHomeSearch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -38,6 +38,9 @@
 #undef THIS_FILE
 static char THIS_FILE[] = __FILE__;
 #endif
+
+#define BUTTON_WIDTH 140
+#define SCHEMA_WIDTH 160
 
 IMPLEMENT_DYNCREATE(CHomeSearchCtrl, CWnd)
 
@@ -91,7 +94,7 @@ int CHomeSearchCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if ( ! m_wndSchema.Create( WS_CHILD|WS_VISIBLE|WS_TABSTOP, rc, this, IDC_SCHEMAS ) )
 		return -1;
 
-	m_wndSchema.SetDroppedWidth( 200 );
+	m_wndSchema.SetDroppedWidth( SCHEMA_WIDTH );
 	LoadString( m_wndSchema.m_sNoSchemaText, IDS_SEARCH_PANEL_AFT );
 	m_wndSchema.Load( Settings.Search.LastSchemaURI );
 
@@ -103,26 +106,23 @@ int CHomeSearchCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	OnSkinChange( CoolInterface.m_crWindow );
 
+	FillHistory();
+
 	return 0;
 }
 
 void CHomeSearchCtrl::OnSkinChange(COLORREF crWindow)
 {
-	CString strCaption;
-
 	m_crWindow = crWindow;
 
-	LoadString( strCaption, IDS_SEARCH_PANEL_START );
-	m_wndSearch.SetWindowText( strCaption );
+	m_wndSearch.SetWindowText( LoadString( IDS_SEARCH_PANEL_START ) );
 	m_wndSearch.SetCoolIcon( ID_SEARCH_SEARCH, FALSE );
 
-	LoadString( strCaption, IDS_SEARCH_PANEL_ADVANCED );
-	m_wndAdvanced.SetWindowText( strCaption + _T('\x2026') );
+	m_wndAdvanced.SetWindowText( LoadString( IDS_SEARCH_PANEL_ADVANCED ) +
+		_T('\x2026') );
 	m_wndAdvanced.SetCoolIcon( ID_SEARCH_DETAILS, FALSE );
 
 	LoadString( m_wndSchema.m_sNoSchemaText, IDS_SEARCH_PANEL_AFT );
-
-	FillHistory();
 
 	m_wndText.SetFont( &CoolInterface.m_fntNormal );
 }
@@ -146,9 +146,8 @@ void CHomeSearchCtrl::FillHistory()
 		m_wndText.SetItemData( nIndex, (DWORD_PTR)pSchema );
 	}
 
-	CString strClear;
-	LoadString( strClear, IDS_SEARCH_PAD_CLEAR_HISTORY );
-	m_wndText.SetItemData( m_wndText.AddString( strClear ), 0 );
+	m_wndText.SetItemData( m_wndText.AddString(
+		LoadString( IDS_SEARCH_PAD_CLEAR_HISTORY ) ), 0 );
 }
 
 void CHomeSearchCtrl::OnSize(UINT nType, int cx, int cy)
@@ -161,19 +160,19 @@ void CHomeSearchCtrl::OnSize(UINT nType, int cx, int cy)
 	rcClient.DeflateRect( 1, 1 );
 
 	rcClient.top += 18;
-	rcItem.SetRect( rcClient.left, rcClient.top, rcClient.right - 104, rcClient.top + 256 );
+	rcItem.SetRect( rcClient.left, rcClient.top, rcClient.right - BUTTON_WIDTH - 16, rcClient.top + 256 );
 	m_wndText.MoveWindow( &rcItem );
 
-	rcItem.SetRect( rcClient.right - 92, rcClient.top - 2, rcClient.right, rcClient.top + 22 );
+	rcItem.SetRect( rcClient.right - BUTTON_WIDTH, rcClient.top - 2, rcClient.right, rcClient.top + 22 );
 	m_wndSearch.MoveWindow( &rcItem );
 
 	rcClient.top += 32;
 
-	rcItem.SetRect( rcClient.right - 104 - 160, rcClient.top, rcClient.right - 104, rcClient.top + 256 );
+	rcItem.SetRect( rcClient.right - BUTTON_WIDTH - 16 - SCHEMA_WIDTH, rcClient.top, rcClient.right - BUTTON_WIDTH - 16, rcClient.top + 256 );
 	rcItem.left = max( rcItem.left, rcClient.left );
 	m_wndSchema.MoveWindow( &rcItem );
 
-	rcItem.SetRect( rcClient.right - 92, rcClient.top, rcClient.right, rcClient.top + 24 );
+	rcItem.SetRect( rcClient.right - BUTTON_WIDTH, rcClient.top, rcClient.right, rcClient.top + 24 );
 	m_wndAdvanced.MoveWindow( &rcItem );
 }
 
@@ -201,7 +200,7 @@ void CHomeSearchCtrl::OnPaint()
 	rcClient.top += 32;
 
 	rcItem.SetRect( rcClient.left, rcClient.top,
-		rcClient.right - 104 - 160 - 8, rcClient.top + 22 );
+		rcClient.right - BUTTON_WIDTH - 16 - SCHEMA_WIDTH - 8, rcClient.top + 22 );
 
 	LoadString( str, IDS_SEARCH_PAD_TYPE );
 	CSize sz = dc.GetTextExtent( str );

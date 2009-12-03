@@ -743,9 +743,9 @@ BEGIN
     LTEXT           "URN:",IDC_URL_URN_TITLE,25,80,35,12
     EDITTEXT        IDC_URL_URN_VALUE,65,80,205,12,ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
     LTEXT           "Please select the action you would like Shareaza to take:",IDC_STATIC,20,98,250,10
-    DEFPUSHBUTTON   "&Download Now",IDC_URL_DOWNLOAD,10,115,65,15,WS_GROUP
-    PUSHBUTTON      "&Search for File",IDC_URL_SEARCH,80,115,65,15
-    PUSHBUTTON      "Cancel",IDCANCEL,215,115,65,15
+    DEFPUSHBUTTON   "&Download Now",IDC_URL_DOWNLOAD,10,114,65,16,WS_GROUP
+    PUSHBUTTON      "&Search for File",IDC_URL_SEARCH,80,114,65,16
+    PUSHBUTTON      "Cancel",IDCANCEL,215,114,65,16
     CONTROL         "&Remember my selection next time",IDC_ALWAYS_OPEN,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,10,135,125,15
     CONTROL         "Open a download &monitor window",IDC_NEW_WINDOW,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,155,135,125,15
@@ -875,12 +875,12 @@ STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | DS_CENTER | WS_POPUP | WS_CAPTION
 CAPTION "Upgrade Alert"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    CONTROL         154,IDC_BANNER,"Static",SS_BITMAP,0,0,293,172
-    LTEXT           "A new version of Shareaza is now available.  Would you like to upgrade?",IDC_MESSAGE,20,40,250,60
-    LTEXT           "If you select Upgrade Now, Shareaza will add the upgrade to your download queue and automatically begin downloading it.",IDC_STATIC,20,105,250,20
-    DEFPUSHBUTTON   "&Upgrade Now",IDOK,10,130,70,15
+    CONTROL         154,IDC_BANNER,"Static",SS_BITMAP,0,0,400,172
+    LTEXT           "A new version of Shareaza is now available.  Would you like to upgrade?",IDC_MESSAGE,20,40,252,60
+    LTEXT           "If you select Upgrade Now, Shareaza will add the upgrade to your download queue and automatically begin downloading it.",IDC_STATIC,20,105,252,20
+    DEFPUSHBUTTON   "&Upgrade Now",IDOK,7,131,70,16
     CONTROL         "Don't check for new versions",IDC_DONT_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,90,130,110,15
-    PUSHBUTTON      "Don't Upgrade",IDCANCEL,210,130,70,15
+    PUSHBUTTON      "Don't Upgrade",IDCANCEL,215,131,70,16
 END
 
 IDD_SETTINGS_COMMUNITY DIALOGEX 0, 0, 282, 220
@@ -1237,18 +1237,18 @@ BEGIN
     PUSHBUTTON      "Generate New",IDC_GUID_CREATE,105,105,70,15
 END
 
-IDD_SHARE_MANAGER DIALOGEX 0, 0, 292, 180
+IDD_SHARE_MANAGER DIALOGEX 0, 0, 292, 186
 STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Shared Folder Manager"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     CONTROL         154,IDC_BANNER,"Static",SS_BITMAP,0,0,293,172
-    LTEXT           "This is a list of folders in your library.  You can add and remove folders using the buttons on the left.  When you add a new folder it is initially shared with other users, however you can unshare it from the Shareaza library if you wish.",IDC_STATIC,5,35,280,34
-    CONTROL         "List1",IDC_SHARE_FOLDERS,"SysListView32",LVS_REPORT | LVS_SHAREIMAGELISTS | LVS_ALIGNLEFT | LVS_NOCOLUMNHEADER | WS_BORDER | WS_TABSTOP,10,72,275,83
-    PUSHBUTTON      "&Add...",IDC_SHARE_ADD,10,160,45,15
-    PUSHBUTTON      "&Remove",IDC_SHARE_REMOVE,60,160,45,15,WS_DISABLED
-    DEFPUSHBUTTON   "OK",IDOK,190,160,45,15
-    PUSHBUTTON      "Cancel",IDCANCEL,240,160,45,15
+    LTEXT           "This is a list of folders in your library.  You can add and remove folders using the buttons on the left.  When you add a new folder it is initially shared with other users, however you can unshare it from the Shareaza library if you wish.",IDC_STATIC,7,35,278,34
+    CONTROL         "List1",IDC_SHARE_FOLDERS,"SysListView32",LVS_REPORT | LVS_SHAREIMAGELISTS | LVS_ALIGNLEFT | LVS_NOCOLUMNHEADER | WS_BORDER | WS_TABSTOP,7,72,278,83
+    PUSHBUTTON      "&Add...",IDC_SHARE_ADD,7,163,60,16
+    PUSHBUTTON      "&Remove",IDC_SHARE_REMOVE,73,163,60,16,WS_DISABLED
+    DEFPUSHBUTTON   "OK",IDOK,158,163,60,16
+    PUSHBUTTON      "Cancel",IDCANCEL,225,163,60,16
 END
 
 IDD_PROFILE_AVATAR DIALOGEX 0, 0, 282, 159
@@ -1609,11 +1609,11 @@ CAPTION "Open Torrent File"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     CONTROL         154,IDC_BANNER,"Static",SS_BITMAP,0,0,292,31
-    LTEXT           "You have opened a BitTorrent torrent file.  Would you like to download its contents, or re-seed it?",IDC_STATIC,7,36,276,18
+    LTEXT           "You have opened a BitTorrent torrent file.  Would you like to download its contents, or re-seed it?",IDC_STATIC,7,36,278,18
     DEFPUSHBUTTON   "Download",IDC_DOWNLOAD,47,61,60,16,WS_GROUP
     PUSHBUTTON      "Seed",IDC_SEED,115,61,60,16
     PUSHBUTTON      "Cancel",IDCANCEL,183,61,60,16
-    LTEXT           "To share complete files using BitTorrent they must first be seeded.  Once this process is complete the Torrent will appear as a new item in your download list.",IDC_STATIC,8,84,276,18
+    LTEXT           "To share complete files using BitTorrent they must first be seeded.  Once this process is complete the Torrent will appear as a new item in your download list.",IDC_STATIC,7,84,278,18
     CONTROL         "",IDC_PROGRESS,"msctls_progress32",WS_BORDER,7,109,276,11
 END
 
@@ -1848,14 +1848,14 @@ FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     EDITTEXT        IDC_TORRENT_TRACKER,100,14,186,12,ES_AUTOHSCROLL
     EDITTEXT        IDC_TORRENT_COMPLETED,100,34,58,12,ES_CENTER | ES_AUTOHSCROLL | ES_READONLY | NOT WS_TABSTOP
-    EDITTEXT        IDC_TORRENT_INCOMPLETE,228,34,58,12,ES_CENTER | ES_AUTOHSCROLL | ES_READONLY | NOT WS_TABSTOP
-    COMBOBOX        IDC_TORRENT_TRACKERMODE,100,53,120,66,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    PUSHBUTTON      "&Refresh",IDC_TORRENT_REFRESH,228,53,58,14
+    EDITTEXT        IDC_TORRENT_INCOMPLETE,226,34,60,12,ES_CENTER | ES_AUTOHSCROLL | ES_READONLY | NOT WS_TABSTOP
+    COMBOBOX        IDC_TORRENT_TRACKERMODE,100,53,118,66,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "&Refresh",IDC_TORRENT_REFRESH,226,51,60,16
     CONTROL         "",IDC_TORRENT_TRACKERS,"SysListView32",LVS_REPORT | LVS_SHAREIMAGELISTS | WS_BORDER | WS_TABSTOP,7,82,286,131
     LTEXT           "Tracker:",IDC_STATIC,14,14,84,12,SS_CENTERIMAGE
     GROUPBOX        "&Current Tracker:",IDC_STATIC,7,3,286,71
     LTEXT           "Completed (Seeds):",IDC_STATIC,14,34,84,12,SS_CENTERIMAGE
-    RTEXT           "Incomplete:",IDC_STATIC,159,34,67,12,SS_CENTERIMAGE
+    RTEXT           "Incomplete:",IDC_STATIC,163,34,60,12,SS_CENTERIMAGE
     LTEXT           "Tracker Mode:",IDC_STATIC,14,54,78,9
 END
 
@@ -2204,6 +2204,8 @@ BEGIN
     BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 285
+        VERTGUIDE, 20
+        VERTGUIDE, 272
         TOPMARGIN, 7
         BOTTOMMARGIN, 147
     END
@@ -2381,7 +2383,7 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 285
         TOPMARGIN, 7
-        BOTTOMMARGIN, 173
+        BOTTOMMARGIN, 179
     END
 
     IDD_PROFILE_AVATAR, DIALOG
@@ -2633,7 +2635,7 @@ BEGIN
         RIGHTMARGIN, 293
         VERTGUIDE, 14
         VERTGUIDE, 100
-        VERTGUIDE, 228
+        VERTGUIDE, 226
         VERTGUIDE, 286
         TOPMARGIN, 7
         BOTTOMMARGIN, 213
@@ -2645,12 +2647,8 @@ BEGIN
     BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 293
-        VERTGUIDE, 14
-        VERTGUIDE, 286
         TOPMARGIN, 7
         BOTTOMMARGIN, 213
-        HORZGUIDE, 14
-        HORZGUIDE, 206
     END
 
     IDD_PLUGIN_EXT_SETUP, DIALOG
