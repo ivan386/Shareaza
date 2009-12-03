@@ -1,7 +1,7 @@
 //
 // NeighboursBase.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -42,18 +42,18 @@ static char THIS_FILE[]=__FILE__;
 // CNeighboursBase construction
 
 CNeighboursBase::CNeighboursBase()
+	: m_nRunCookie    ( 5 ) // Start the run cookie as 5, OnRun will make it 6, 7, 8 and so on
+	, m_nStableCount  ( 0 ) // We don't have any stable connections to remote computers yet
+	, m_nLeafCount    ( 0 ) // We aren't connected to any leaves yet
+	, m_nLeafContent  ( 0 ) // When we do have some leaf connetions, the total size of the files they are sharing will go here
+	, m_nBandwidthIn  ( 0 ) // Start the bandwidth totals at 0
+	, m_nBandwidthOut ( 0 )
 {
-	m_nRunCookie    = 5; // Start the run cookie as 5, OnRun will make it 6, 7, 8 and so on
-	m_nStableCount  = 0; // We don't have any stable connections to remote computers yet
-	m_nLeafCount    = 0; // We aren't connected to any leaves yet
-	m_nLeafContent  = 0; // When we do have some leaf connetions, the total size of the files they are sharing will go here
-	m_nBandwidthIn  = 0; // Start the bandwidth totals at 0
-	m_nBandwidthOut = 0;
 }
 
 CNeighboursBase::~CNeighboursBase()
 {
-	CNeighboursBase::Close();
+	ASSERT( m_pNeighbours.IsEmpty() );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -90,9 +90,9 @@ CNeighbour* CNeighboursBase::Get(const IN_ADDR* pAddress) const
 {
 	ASSUME_LOCK( Network.m_pSection );
 
-	for ( POSITION pos = m_pNeighbours.GetHeadPosition() ; pos ; )
+	for ( POSITION pos = GetIterator() ; pos ; )
 	{
-		CNeighbour* pNeighbour = m_pNeighbours.GetNext( pos );
+		CNeighbour* pNeighbour = GetNext( pos );
 
 		// If this neighbour object has the IP address we are looking for, return it
 		if ( pNeighbour->m_pHost.sin_addr.S_un.S_addr == pAddress->S_un.S_addr )
@@ -110,9 +110,9 @@ CNeighbour* CNeighboursBase::GetNewest(PROTOCOLID nProtocol, int nState, int nNo
 	DWORD tCurrent = GetTickCount();
 	DWORD tMinTime = 0xffffffff;
 	CNeighbour* pMinNeighbour = NULL;
-	for ( POSITION pos = m_pNeighbours.GetHeadPosition() ; pos ; )
+	for ( POSITION pos = GetIterator() ; pos ; )
 	{
-		CNeighbour* pNeighbour = m_pNeighbours.GetNext( pos );
+		CNeighbour* pNeighbour = GetNext( pos );
 		if ( ( nProtocol == PROTOCOL_ANY || nProtocol == pNeighbour->m_nProtocol ) &&
 			 ( nState < 0 || nState == pNeighbour->m_nState ) &&
 			 ( nNodeType < 0 || nNodeType == pNeighbour->m_nNodeType ) )
@@ -140,9 +140,9 @@ DWORD CNeighboursBase::GetCount(PROTOCOLID nProtocol, int nState, int nNodeType)
 	CSingleLock pLock( &Network.m_pSection, FALSE );
 	if ( pLock.Lock( 200 ) )
 	{
-		for ( POSITION pos = m_pNeighbours.GetHeadPosition() ; pos ; )
+		for ( POSITION pos = GetIterator() ; pos ; )
 		{
-			CNeighbour* pNeighbour = m_pNeighbours.GetNext( pos );
+			CNeighbour* pNeighbour = GetNext( pos );
 
 			// If this neighbour has the protocol we are looking for, or nProtocl is negative to count them all
 			if ( nProtocol == PROTOCOL_ANY || nProtocol == pNeighbour->m_nProtocol )
@@ -165,14 +165,14 @@ DWORD CNeighboursBase::GetCount(PROTOCOLID nProtocol, int nState, int nNodeType)
 // NeighbourExists is faster than GetCount, use it if you don't care how many there are, you just want to know if there are any
 // Takes a protocol, like Gnutella, a state, like connecting, and a node connection type, like we are both ultrapeers
 // Determines if there is at least 1 neighbour in the list that matches these criteria
-BOOL CNeighboursBase::NeighbourExists(PROTOCOLID nProtocol, int nState, int nNodeType) const
+/*BOOL CNeighboursBase::NeighbourExists(PROTOCOLID nProtocol, int nState, int nNodeType) const
 {
 	CSingleLock pLock( &Network.m_pSection, FALSE );
 	if ( pLock.Lock( 200 ) )
 	{
-		for ( POSITION pos = m_pNeighbours.GetHeadPosition() ; pos ; )
+		for ( POSITION pos = GetIterator() ; pos ; )
 		{
-			CNeighbour* pNeighbour = m_pNeighbours.GetNext( pos );
+			CNeighbour* pNeighbour = GetNext( pos );
 
 			// If this neighbour has the protocol we are looking for, or nProtocl is negative to count them all
 			if ( nProtocol == PROTOCOL_ANY || nProtocol == pNeighbour->m_nProtocol )
@@ -192,13 +192,14 @@ BOOL CNeighboursBase::NeighbourExists(PROTOCOLID nProtocol, int nState, int nNod
 	}
 	// Not found
 	return FALSE;
-}
+}*/
 
 //////////////////////////////////////////////////////////////////////
 // CNeighboursBase connect
 
 void CNeighboursBase::Connect()
 {
+	ASSUME_LOCK( Network.m_pSection );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -207,9 +208,9 @@ void CNeighboursBase::Connect()
 // Calls Close on all the neighbours in the list, and resets member variables back to 0
 void CNeighboursBase::Close()
 {
-	for ( POSITION pos = m_pNeighbours.GetHeadPosition() ; pos ; )
+	for ( POSITION pos = GetIterator() ; pos ; )
 	{
-		m_pNeighbours.GetNext( pos )->Close();
+		GetNext( pos )->Close();
 	}
 
 	// Reset member variables back to 0
@@ -254,10 +255,10 @@ void CNeighboursBase::OnRun()
 		bUpdated = false;
 
 		// Loop through the neighbours in the list
-		for ( POSITION pos = m_pNeighbours.GetHeadPosition() ; pos ; )
+		for ( POSITION pos = GetIterator() ; pos ; )
 		{
 			// Get the neighbour at this position, and move pos to the next position in the m_pUniques map
-			CNeighbour* pNeighbour = m_pNeighbours.GetNext( pos );
+			CNeighbour* pNeighbour = GetNext( pos );
 
 			// If this neighbour doesn't have the new run cookie count yet, we need to run it
 			if ( pNeighbour->m_nRunCookie != m_nRunCookie )

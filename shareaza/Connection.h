@@ -32,7 +32,7 @@
 class CConnection
 {
 // Construction
-public:
+protected:
 	CConnection(PROTOCOLID nProtocol = PROTOCOL_ANY);
 	CConnection(CConnection& other);
 	virtual ~CConnection();

@@ -45,10 +45,9 @@ static char THIS_FILE[]=__FILE__;
 
 // When the program makes the single global CNeighbours object, this constructor runs to setup the Gnutella part of it
 CNeighboursWithG1::CNeighboursWithG1()
+	: m_pPingRoute ( new CRouteCache() )
+	, m_pPongCache ( new CPongCache() )
 {
-	// Create the ping route and pong caches, and have the CNeighbours object point to them
-	m_pPingRoute = new CRouteCache();
-	m_pPongCache = new CPongCache();
 }
 
 // When the program closes, the single global CNeighbours object is destroyed, and this code cleans up the Gnutella parts
@@ -57,6 +56,38 @@ CNeighboursWithG1::~CNeighboursWithG1()
 	// Delete the ping route and pong cache objects
 	delete m_pPongCache;
 	delete m_pPingRoute;
+}
+
+BOOL CNeighboursWithG1::AddPingRoute(const Hashes::Guid& oGUID, const CG1Neighbour* pNeighbour)
+{
+	ASSUME_LOCK( Network.m_pSection );
+
+	return m_pPingRoute->Add( oGUID, pNeighbour );
+}
+
+CG1Neighbour* CNeighboursWithG1::GetPingRoute(const Hashes::Guid& oGUID) const
+{
+	ASSUME_LOCK( Network.m_pSection );
+
+	CNeighbour* pNeighbour;
+	if ( m_pPingRoute->Lookup( oGUID, &pNeighbour, NULL ) )
+		return static_cast< CG1Neighbour* >( pNeighbour );
+	else
+		return NULL;
+}
+
+CPongItem* CNeighboursWithG1::AddPong(CNeighbour* pNeighbour, IN_ADDR* pAddress, WORD nPort, BYTE nHops, DWORD nFiles, DWORD nVolume)
+{
+	ASSUME_LOCK( Network.m_pSection );
+
+	return m_pPongCache->Add( pNeighbour, pAddress, nPort, nHops, nFiles, nVolume );
+}
+
+CPongItem* CNeighboursWithG1::LookupPong(CNeighbour* pNotFrom, BYTE nHops, CList< CPongItem* >* pIgnore)
+{
+	ASSUME_LOCK( Network.m_pSection );
+
+	return m_pPongCache->Lookup( pNotFrom, nHops, pIgnore );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -104,6 +135,8 @@ void CNeighboursWithG1::Remove(CNeighbour* pNeighbour)
 // Loops through the list of neighbours, pinging those that are running Gnutella software that supports pong caching
 void CNeighboursWithG1::OnG1Ping()
 {
+	ASSUME_LOCK( Network.m_pSection );
+
 	// Clear the old (do) from the pong cache, and make sure that works (do)
 	if ( m_pPongCache->ClearIfOld() )
 	{
@@ -111,8 +144,6 @@ void CNeighboursWithG1::OnG1Ping()
 		DWORD dwNow = GetTickCount(); // The time now
 		Hashes::Guid oGUID;           // A new GUID for the packet (do)
 		Network.CreateID( oGUID );
-
-		CSingleLock pLock( &Network.m_pSection, TRUE );
 
 		// Loop for each neighbour we're connected to
 		for ( POSITION pos = GetIterator() ; pos ; )
@@ -139,11 +170,12 @@ void CNeighboursWithG1::OnG1Ping()
 // Sends the pong to other remote computers we're connected to that need it according to their pong needed arrays
 void CNeighboursWithG1::OnG1Pong(CG1Neighbour* pFrom, IN_ADDR* pAddress, WORD nPort, BYTE nHops, DWORD nFiles, DWORD nVolume)
 {
-	// Add the information from the pong packet to the pong cache (do)
-	CPongItem* pPongCache = m_pPongCache->Add( pFrom, pAddress, nPort, nHops, nFiles, nVolume );
-	if ( pPongCache == NULL ) return; // If Add didn't return a CPongItem, (do)
+	ASSUME_LOCK( Network.m_pSection );
 
-	CSingleLock pLock( &Network.m_pSection, TRUE );
+	// Add the information from the pong packet to the pong cache (do)
+	CPongItem* pPongCache = AddPong( pFrom, pAddress, nPort, nHops, nFiles, nVolume );
+	if ( pPongCache == NULL )
+		return; // If Add didn't return a CPongItem, (do)
 
 	// Loop through each neighbour we're connected to
 	for ( POSITION pos = GetIterator() ; pos ; )

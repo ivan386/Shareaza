@@ -39,10 +39,7 @@ class CQuerySearch;
 // Add methods to broadcast packets and Gnutella queries to all the neighbours in the list
 class CNeighboursWithRouting : public CNeighboursWithED2K // Continue the inheritance column CNeighbours : CNeighboursWithConnect : Routing : ED2K : G2 : G1 : CNeighboursBase
 {
-
-public:
-
-	// Nothing that CNeighboursWithRouting adds to CNeighbours needs to be set up or put away
+protected:
 	CNeighboursWithRouting(); // The constructor and destructor don't do anything
 	virtual ~CNeighboursWithRouting();
 

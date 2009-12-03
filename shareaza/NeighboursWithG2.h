@@ -39,10 +39,7 @@ class CG2Packet;
 // Add methods helpful for Gnutella that need to look at the list of computers we're connected to
 class CNeighboursWithG2 : public CNeighboursWithG1 // Continue the inheritance column CNeighbours : CNeighboursWithConnect : Routing : ED2K : G2 : G1 : CNeighboursBase
 {
-
-public:
-
-	// Nothing that CNeighboursWithG2 adds to CNeighbours needs to be set up or put away
+protected:
 	CNeighboursWithG2(); // The constructor and destructor don't do anything
 	virtual ~CNeighboursWithG2();
 

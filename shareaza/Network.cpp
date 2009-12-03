@@ -528,6 +528,8 @@ WORD CNetwork::RandomPort() const
 
 BOOL CNetwork::PreRun()
 {
+	CQuickLock oLock( m_pSection );
+
 	// Begin network startup
 	theApp.Message( MSG_NOTICE, IDS_NETWORK_STARTUP );
 

@@ -1,7 +1,7 @@
 //
 // Neighbours.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -51,8 +51,6 @@ CNeighbours::CNeighbours()
 // Delete the CNeighbours object
 CNeighbours::~CNeighbours()
 {
-	// Call close on each neighbour in the list, reset member variables to 0, and clear the ping route and pong caches
-	Close();
 }
 
 //////////////////////////////////////////////////////////////////////

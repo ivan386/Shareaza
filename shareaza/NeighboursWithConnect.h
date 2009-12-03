@@ -38,10 +38,7 @@ class CConnection;
 // Determine our hub or leaf role, count connections for each, and make new ones or close them to have the right number
 class CNeighboursWithConnect : public CNeighboursWithRouting // Continue the inheritance column CNeighbours : CNeighboursWithConnect : Routing : ED2K : G2 : G1 : CNeighboursBase
 {
-
-public:
-
-	// Set up and clean up anything CNeighboursWithConnect adds to the CNeighbours class
+protected:
 	CNeighboursWithConnect(); // Zero the tick counts in the m_tPresent array
 	virtual ~CNeighboursWithConnect();
 

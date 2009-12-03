@@ -403,10 +403,12 @@ BOOL CG1Neighbour::SendPing(DWORD dwNow, const Hashes::Guid& oGUID)
 // Always returns true
 BOOL CG1Neighbour::OnPing(CG1Packet* pPacket)
 {
+	CSingleLock pLock( &Network.m_pSection, TRUE );
+
 	Statistics.Current.Gnutella1.PingsReceived++;
 
 	// Add the ping's GUID to the neighbours route cache, and if it returns false
-	if ( ! Neighbours.m_pPingRoute->Add( pPacket->m_oGUID, this ) )
+	if ( ! Neighbours.AddPingRoute( pPacket->m_oGUID, this ) )
 	{
 		// Record this as a dropped packet, but don't report error
 		Statistics.Current.Gnutella1.Dropped++;
@@ -602,7 +604,7 @@ BOOL CG1Neighbour::OnPing(CG1Packet* pPacket)
 		// Respond to the packet with a pong item object (do)
 		CPongItem* pCache = NULL;
 		while (	( m_nPongNeeded[ nHops ] > 0 ) && // While that ratio is positive, and
-				( pCache = Neighbours.m_pPongCache->Lookup( this, nHops, &pIgnore ) ) != NULL ) // Lookup can find this ping
+				( pCache = Neighbours.LookupPong( this, nHops, &pIgnore ) ) != NULL ) // Lookup can find this ping
 		{
 			// Have the pong item prepare a packet, and send it to the remote computer
 			Send( pCache->ToPacket( m_nLastPingHops, m_pLastPingID ) );
@@ -626,6 +628,8 @@ BOOL CG1Neighbour::OnPing(CG1Packet* pPacket)
 // Always returns true
 BOOL CG1Neighbour::OnPong(CG1Packet* pPacket)
 {
+	CSingleLock pLock( &Network.m_pSection, TRUE );
+
 	Statistics.Current.Gnutella1.PongsReceived++;
 
 	// If the pong is too short, or the pong is too long and settings say we should watch that
@@ -696,8 +700,7 @@ BOOL CG1Neighbour::OnPong(CG1Packet* pPacket)
 			if ( pPacket->Hop() ) // Calling Hop makes sure TTL is 2+ and then moves a count from TTL to hops
 			{
 				// Find the CG1Neighbour object that created this pong packet (do)
-				CG1Neighbour* pOrigin = NULL;
-				Neighbours.m_pPingRoute->Lookup( pPacket->m_oGUID, (CNeighbour**)&pOrigin );
+				CG1Neighbour* pOrigin = Neighbours.GetPingRoute( pPacket->m_oGUID );
 
 				// If we're connected to that computer, and it supports GGEP extension blocks
 				if ( pOrigin && pOrigin->m_bGGEP )

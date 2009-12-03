@@ -39,10 +39,7 @@ class CDownload;
 // Add methods helpful for eDonkey2000 that use the list of connected neighbours
 class CNeighboursWithED2K : public CNeighboursWithG2 // Continue the inheritance column CNeighbours : CNeighboursWithConnect : Routing : ED2K : G2 : G1 : CNeighboursBase
 {
-
-public:
-
-	// Set up and clean up anything CNeighboursWithED2K adds to the CNeighbours class
+protected:
 	CNeighboursWithED2K(); // Zero the memory of the sources arrays
 	virtual ~CNeighboursWithED2K();
 

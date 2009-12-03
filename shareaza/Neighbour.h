@@ -67,7 +67,7 @@ class CNeighbour : public CConnection
 {
 
 // Construction
-public:
+protected:
 	CNeighbour(PROTOCOLID nProtocol);
 	CNeighbour(PROTOCOLID nProtocol, CNeighbour* pBase);
 	virtual ~CNeighbour();
