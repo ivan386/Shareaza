@@ -1084,6 +1084,8 @@ LRESULT CMainWnd::OnSkinChanged(WPARAM /*wParam*/, LPARAM /*lParam*/)
 {
 	CWaitCursor pCursor;
 
+	LockWindowUpdate();
+
 	RemoveSkin();
 
 	m_wndMenuBar.SetMenu( NULL );
@@ -1143,6 +1145,8 @@ LRESULT CMainWnd::OnSkinChanged(WPARAM /*wParam*/, LPARAM /*lParam*/)
 	CFilePreviewDlg::OnSkinChange( TRUE );
 
 	Invalidate();
+	UnlockWindowUpdate();
+	UpdateWindow();
 
 	// Update shell icons
 	LibraryFolders.Maintain();
