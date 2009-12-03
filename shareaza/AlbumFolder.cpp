@@ -882,18 +882,23 @@ BOOL CAlbumFolder::OrganiseFile(CLibraryFile* pFile)
 
 				size_t nCount = firstPattern.split( sFileName, splitResults, 0 );
 				std::vector<std::wstring> results = splitResults.strings();
-				LPCTSTR szSeason = _tcsistr( L"season", results[2].c_str() );
-				LPCTSTR szEpisode = _tcsistr( L"episode", results[4].c_str() );
-				if ( nCount >= 6 && szSeason && szEpisode &&
-					 _tcsicmp( szSeason, L"season" ) == 0 &&
-					 _tcsicmp( szEpisode, L"episode" ) == 0 )
+				if ( nCount >= 6 )
 				{
-					std::vector<std::wstring>::iterator it =
-						std::find( results.begin(), results.end(), results[2] );
-					results.erase( it );
-					it = std::find( results.begin(), results.end(), results[3] );
-					results.erase( it );
-					nCount -= 2;
+					LPCTSTR szSeason = _tcsistr( L"season", results[2].c_str() );
+					LPCTSTR szEpisode = _tcsistr( L"episode", results[4].c_str() );
+					if ( szSeason && szEpisode &&
+						_tcsicmp( szSeason, L"season" ) == 0 &&
+						_tcsicmp( szEpisode, L"episode" ) == 0 )
+					{
+						std::vector<std::wstring>::iterator it =
+							std::find( results.begin(), results.end(), results[2] );
+						results.erase( it );
+						it = std::find( results.begin(), results.end(), results[3] );
+						results.erase( it );
+						nCount -= 2;
+					}
+					else
+						nCount = 0;
 				}
 				else
 					nCount = 0;
