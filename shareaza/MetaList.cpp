@@ -139,7 +139,7 @@ void CMetaList::Shuffle()
 //////////////////////////////////////////////////////////////////////
 // CMetaList setup schema
 
-void CMetaList::Setup(CSchema* pSchema, BOOL bClear)
+void CMetaList::Setup(CSchemaPtr pSchema, BOOL bClear)
 {
 	if ( bClear ) 
 		CMetaList::Clear();

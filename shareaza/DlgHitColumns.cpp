@@ -81,7 +81,7 @@ BOOL CSchemaColumnsDlg::OnInitDialog()
 
 void CSchemaColumnsDlg::OnSelChangeSchemas()
 {
-	CSchema* pSchema = m_wndSchemas.GetSelected();
+	CSchemaPtr pSchema = m_wndSchemas.GetSelected();
 
 	m_wndColumns.DeleteAllItems();
 	if ( ! pSchema ) return;
@@ -143,7 +143,7 @@ void CSchemaColumnsDlg::OnOK()
 /////////////////////////////////////////////////////////////////////////////
 // CSchemaColumnsDlg load columns utility
 
-BOOL CSchemaColumnsDlg::LoadColumns(CSchema* pSchema, CList< CSchemaMember* >* pColumns)
+BOOL CSchemaColumnsDlg::LoadColumns(CSchemaPtr pSchema, CList< CSchemaMember* >* pColumns)
 {
 	if ( ! pSchema || ! pColumns ) return FALSE;
 	pColumns->RemoveAll();
@@ -166,7 +166,7 @@ BOOL CSchemaColumnsDlg::LoadColumns(CSchema* pSchema, CList< CSchemaMember* >* p
 /////////////////////////////////////////////////////////////////////////////
 // CSchemaColumnsDlg save columns utility
 
-BOOL CSchemaColumnsDlg::SaveColumns(CSchema* pSchema, CList< CSchemaMember* >* pColumns)
+BOOL CSchemaColumnsDlg::SaveColumns(CSchemaPtr pSchema, CList< CSchemaMember* >* pColumns)
 {
 	if ( ! pSchema || ! pColumns ) return FALSE;
 
@@ -189,7 +189,7 @@ BOOL CSchemaColumnsDlg::SaveColumns(CSchema* pSchema, CList< CSchemaMember* >* p
 /////////////////////////////////////////////////////////////////////////////
 // CSchemaColumnsDlg menu builder utility
 
-CMenu* CSchemaColumnsDlg::BuildColumnMenu(CSchema* pSchema, CList< CSchemaMember* >* pColumns)
+CMenu* CSchemaColumnsDlg::BuildColumnMenu(CSchemaPtr pSchema, CList< CSchemaMember* >* pColumns)
 {
 	if ( ! pSchema ) return NULL;
 
@@ -224,7 +224,7 @@ CMenu* CSchemaColumnsDlg::BuildColumnMenu(CSchema* pSchema, CList< CSchemaMember
 /////////////////////////////////////////////////////////////////////////////
 // CSchemaColumnsDlg column toggle utility
 
-BOOL CSchemaColumnsDlg::ToggleColumnHelper(CSchema* pSchema, CList< CSchemaMember* >* pSource, CList< CSchemaMember* >* pTarget, UINT nToggleID, BOOL bSave)
+BOOL CSchemaColumnsDlg::ToggleColumnHelper(CSchemaPtr pSchema, CList< CSchemaMember* >* pSource, CList< CSchemaMember* >* pTarget, UINT nToggleID, BOOL bSave)
 {
 	if ( ! pSchema ) return FALSE;
 

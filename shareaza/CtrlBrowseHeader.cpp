@@ -131,7 +131,7 @@ int CBrowseHeaderCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
 
-	if ( CSchema* pSchema = SchemaCache.Get( CSchema::uriLibrary ) )
+	if ( CSchemaPtr pSchema = SchemaCache.Get( CSchema::uriLibrary ) )
 	{
 		m_nIcon32 = pSchema->m_nIcon32;
 		m_nIcon48 = pSchema->m_nIcon48;

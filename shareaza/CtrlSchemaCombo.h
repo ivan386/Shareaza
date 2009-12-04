@@ -21,7 +21,7 @@
 
 #pragma once
 
-class CSchema;
+#include "Schema.h"
 
 
 class CSchemaCombo : public CComboBox
@@ -45,12 +45,12 @@ public:
 	void		SetEmptyString(UINT nID);
 	void		Load(LPCTSTR pszSelectURI = NULL, int nType = 0, int nAvailability = 0, BOOL bReset = TRUE);
 	void		Select(LPCTSTR pszURI);
-	void		Select(CSchema* pSchema);
-	CSchema*	GetSelected() const;
+	void		Select(CSchemaPtr pSchema);
+	CSchemaPtr	GetSelected() const;
 	CString		GetSelectedURI() const;
 protected:
 	static LRESULT PASCAL ListWndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
-	int			FindSchema(CSchema* pSchema);
+	int			FindSchema(CSchemaPtr pSchema);
 	BOOL		OnClickItem(int nItem, BOOL bDown);
 
 // Overrides

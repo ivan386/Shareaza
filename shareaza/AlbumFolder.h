@@ -21,10 +21,11 @@
 
 #pragma once
 
+#include "Schema.h"
+
 class CCollectionFile;
 class CLibraryFile;
 class CLibraryList;
-class CSchema;
 class CSchemaMember;
 class CXMLElement;
 
@@ -42,7 +43,7 @@ public:
 	CList< CAlbumFolder* >	m_pFolders;
 	CList< CLibraryFile* >	m_pFiles;
 	CString					m_sSchemaURI;
-	CSchema*				m_pSchema;
+	CSchemaPtr				m_pSchema;
 	CXMLElement*			m_pXML;
 	Hashes::Sha1Hash		m_oCollSHA1;
 	CString					m_sName;

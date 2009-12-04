@@ -178,7 +178,7 @@ int CLibraryDetailView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	CString strSchemaURI = Settings.Library.FilterURI.GetLength() ?
 		Settings.Library.FilterURI : Settings.Library.SchemaURI;
 
-	if ( CSchema* pSchema = SchemaCache.Get( strSchemaURI ) )
+	if ( CSchemaPtr pSchema = SchemaCache.Get( strSchemaURI ) )
 	{
 		CList< CSchemaMember* > pColumns;
 		CSchemaColumnsDlg::LoadColumns( pSchema, &pColumns );
@@ -227,7 +227,7 @@ void CLibraryDetailView::OnDestroy()
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryDetailView schema setup
 
-void CLibraryDetailView::SetViewSchema(CSchema* pSchema, CList< CSchemaMember* >* pColumns, BOOL bSave, BOOL bUpdate)
+void CLibraryDetailView::SetViewSchema(CSchemaPtr pSchema, CList< CSchemaMember* >* pColumns, BOOL bSave, BOOL bUpdate)
 {
 	GET_LIST();
 
@@ -278,7 +278,7 @@ void CLibraryDetailView::Update()
 {
 //	GET_LIST();
 
-	CSchema* pSchema	= SchemaCache.Get( Settings.Library.FilterURI );
+	CSchemaPtr pSchema	= SchemaCache.Get( Settings.Library.FilterURI );
 	DWORD nCookie		= GetFolderCookie();
 	BOOL bGhostFolder	= FALSE;
 
@@ -298,7 +298,7 @@ void CLibraryDetailView::Update()
 
 			if ( strURI.GetLength() && ( m_pSchema == NULL || ! m_pSchema->CheckURI( strURI ) ) )
 			{
-				if ( CSchema* pSchema = SchemaCache.Get( strURI ) )
+				if ( CSchemaPtr pSchema = SchemaCache.Get( strURI ) )
 				{
 					CList< CSchemaMember* > pColumns;
 					CSchemaColumnsDlg::LoadColumns( pSchema, &pColumns );

@@ -122,7 +122,7 @@ void CLibraryThumbView::Update()
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 
-	CSchema* pSchema	= SchemaCache.Get( Settings.Library.FilterURI );
+	CSchemaPtr pSchema	= SchemaCache.Get( Settings.Library.FilterURI );
 	DWORD nCookie		= GetFolderCookie();
 	BOOL bChanged		= FALSE;
 

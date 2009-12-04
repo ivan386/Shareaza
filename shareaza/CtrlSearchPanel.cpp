@@ -300,7 +300,7 @@ void CSearchPanel::ShowStatus(BOOL bStarted, BOOL bSearching, DWORD nFiles, DWOR
 
 void CSearchPanel::OnSchemaChange()
 {
-	CSchema* pSchema = m_boxSearch.m_wndSchemas.GetSelected();
+	CSchemaPtr pSchema = m_boxSearch.m_wndSchemas.GetSelected();
 	
 	m_boxSchema.m_wndSchema.SetSchema( pSchema, TRUE );
 	m_boxSchema.SetSize( pSchema != NULL ? 1 : 0 );
@@ -369,7 +369,7 @@ auto_ptr< CManagedSearch > CSearchPanel::GetSearch()
 		// Keyword search
 		pSearch->m_sSearch = sSearch;
 	}
-	if ( CSchema* pSchema = m_boxSearch.m_wndSchemas.GetSelected() )
+	if ( CSchemaPtr pSchema = m_boxSearch.m_wndSchemas.GetSelected() )
 	{
 		pSearch->m_pSchema	= pSchema;
 		pSearch->m_pXML		= pSchema->Instantiate();

@@ -292,7 +292,7 @@ void CDownloadGroupDlg::OnCbnCloseupSchemas()
 	}
 
 	// Remove old schema filters (preserve custom ones)
-	if ( CSchema* pOldSchema = SchemaCache.Get( m_sOldSchemaURI ) )
+	if ( CSchemaPtr pOldSchema = SchemaCache.Get( m_sOldSchemaURI ) )
 	{
 		for ( LPCTSTR start = pOldSchema->m_sTypeFilter; *start; start++ )
 		{
@@ -311,7 +311,7 @@ void CDownloadGroupDlg::OnCbnCloseupSchemas()
 	}
 
 	// Add new schema filters
-	if ( CSchema* pNewSchema = SchemaCache.Get( m_wndSchemas.GetSelectedURI() ) )
+	if ( CSchemaPtr pNewSchema = SchemaCache.Get( m_wndSchemas.GetSelectedURI() ) )
 	{
 		for ( LPCTSTR start = pNewSchema->m_sTypeFilter; *start; start++ )
 		{

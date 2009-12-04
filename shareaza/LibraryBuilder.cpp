@@ -638,7 +638,7 @@ bool CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile)
 
 int CLibraryBuilder::SubmitMetadata(DWORD nIndex, LPCTSTR pszSchemaURI, CXMLElement*& pXML)
 {
-	CSchema* pSchema = SchemaCache.Get( pszSchemaURI );
+	CSchemaPtr pSchema = SchemaCache.Get( pszSchemaURI );
 
 	if ( pSchema == NULL )
 	{

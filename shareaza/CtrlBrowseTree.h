@@ -21,10 +21,11 @@
 
 #pragma once
 
+#include "Schema.h"
+
 class CBrowseTreeItem;
 class CG2Packet;
 class CXMLElement;
-class CSchema;
 
 
 class CBrowseTreeCtrl : public CWnd
@@ -130,7 +131,7 @@ public:
 	BOOL				m_bBold;
 	int					m_nIcon16;
 public:
-	CSchema*			m_pSchema;
+	CSchemaPtr			m_pSchema;
 	DWORD*				m_pFiles;
 	DWORD				m_nFiles;
 

@@ -935,7 +935,7 @@ void CLibraryFrame::OnTimer(UINT_PTR /*nIDEvent*/)
 
 void CLibraryFrame::OnFilterTypes()
 {
-	if ( CSchema* pSchema = m_wndTreeTypes.GetSelected() )
+	if ( CSchemaPtr pSchema = m_wndTreeTypes.GetSelected() )
 	{
 		Settings.Library.FilterURI = pSchema->GetURI();
 	}

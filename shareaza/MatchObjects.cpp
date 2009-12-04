@@ -962,7 +962,7 @@ BOOL CMatchList::FilterHit(CQueryHit* pHit)
 //////////////////////////////////////////////////////////////////////
 // CMatchList schema selection
 
-void CMatchList::SelectSchema(CSchema* pSchema, CList< CSchemaMember* >* pColumns)
+void CMatchList::SelectSchema(CSchemaPtr pSchema, CList< CSchemaMember* >* pColumns)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 
@@ -2269,9 +2269,9 @@ void CMatchFile::AddHitsToXML(CXMLElement* pXML) const
 	}
 }
 
-CSchema* CMatchFile::GetHitsSchema() const
+CSchemaPtr CMatchFile::GetHitsSchema() const
 {
-	CSchema* pSchema = NULL;
+	CSchemaPtr pSchema = NULL;
 	for ( CQueryHit* pHit = m_pHits ; pHit ; pHit = pHit->m_pNext )
 	{
 		pSchema = SchemaCache.Get( pHit->m_sSchemaURI );
@@ -2280,9 +2280,9 @@ CSchema* CMatchFile::GetHitsSchema() const
 	return pSchema;
 }
 
-CSchema* CMatchFile::AddHitsToMetadata(CMetaList& oMetadata) const
+CSchemaPtr CMatchFile::AddHitsToMetadata(CMetaList& oMetadata) const
 {
-	CSchema* pSchema = GetHitsSchema();
+	CSchemaPtr pSchema = GetHitsSchema();
 	if ( pSchema )
 	{
 		oMetadata.Setup( pSchema );

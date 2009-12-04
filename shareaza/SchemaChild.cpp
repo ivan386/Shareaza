@@ -36,7 +36,7 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CSchemaChild construction
 
-CSchemaChild::CSchemaChild(CSchema* pSchema)
+CSchemaChild::CSchemaChild(CSchemaPtr pSchema)
 {
 	m_pSchema	= pSchema;
 	m_nType		= CSchema::stFile;

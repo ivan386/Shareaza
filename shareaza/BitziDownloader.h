@@ -22,8 +22,8 @@
 #pragma once
 
 #include "ThreadImpl.h"
+#include "Schema.h"
 
-class CSchema;
 class CXMLElement;
 class CBitziDownloadDlg;
 
@@ -70,7 +70,7 @@ protected:
 	BOOL			ExecuteRequest();
 	BOOL			DecodeResponse();
 	CString			LookupValue(LPCTSTR pszPath);
-	CXMLElement*	ImportData(CSchema* pSchema);
+	CXMLElement*	ImportData(CSchemaPtr pSchema);
 	BOOL			SubmitMetaData(CXMLElement* pXML);
 	BOOL			MergeMetaData(CXMLElement* pOutput, CXMLElement* pInput);
 

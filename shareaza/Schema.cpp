@@ -265,7 +265,7 @@ BOOL CSchema::LoadPrimary(CXMLElement* pRoot, CXMLElement* pType)
 	return TRUE;
 }
 
-CXMLElement* CSchema::GetType(CXMLElement* pRoot, LPCTSTR pszName)
+CXMLElement* CSchema::GetType(CXMLElement* pRoot, LPCTSTR pszName) const
 {
 	if ( ! pszName || ! *pszName ) return NULL;
 
@@ -629,7 +629,7 @@ CXMLElement* CSchema::Instantiate(BOOL bNamespace) const
 //////////////////////////////////////////////////////////////////////
 // CSchema validate instance
 
-BOOL CSchema::Validate(CXMLElement* pXML, BOOL bFix)
+BOOL CSchema::Validate(CXMLElement* pXML, BOOL bFix) const
 {
 	if ( pXML == NULL ) return FALSE;
 	

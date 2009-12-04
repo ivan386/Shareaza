@@ -137,7 +137,7 @@ BOOL CLibraryTipCtrl::OnPrepare()
 
 	// Metadata
 
-	CSchema* pSchema = pLibraryFile ? pLibraryFile->m_pSchema : NULL;
+	CSchemaPtr pSchema = pLibraryFile ? pLibraryFile->m_pSchema : NULL;
 	CString str, sData, sFormat;
 
 	m_pMetadata.Clear();

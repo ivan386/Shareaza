@@ -211,7 +211,7 @@ void CMatchCtrl::DestructiveUpdate()
 	m_wndTip.Hide();
 }
 
-void CMatchCtrl::SelectSchema(CSchema* pSchema, CList< CSchemaMember* >* pColumns)
+void CMatchCtrl::SelectSchema(CSchemaPtr pSchema, CList< CSchemaMember* >* pColumns)
 {
 	SaveColumnState();
 	

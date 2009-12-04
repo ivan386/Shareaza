@@ -88,7 +88,7 @@ protected:
 	int					m_nIcon48;
 	int					m_nIcon32;
 	int					m_nRating;
-	CSchema*			m_pSchema;
+	CSchemaPtr			m_pSchema;
 	CMetaPanel			m_pMetadata;
 	CList< Review* >	m_pReviews;
 	CCriticalSection	m_pSection;

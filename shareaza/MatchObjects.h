@@ -19,14 +19,11 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(MATCHOBJECTS_H)
-#define MATCHOBJECTS_H
-
 #pragma once
 
 #include "ShareazaFile.h"
+#include "Schema.h"
 
-class CSchema;
 class CSchemaMember;
 class CQuerySearch;
 class CQueryHit;
@@ -71,7 +68,7 @@ public:
 	DWORD			m_nFilterSources;
 	int				m_nSortColumn;
 	BOOL			m_bSortDir;
-	CSchema*		m_pSchema;
+	CSchemaPtr		m_pSchema;
 	BOOL			m_bNew;
 	CResultFilters*	m_pResultFilters;
 	CMatchFile**	m_pFiles;				// File list
@@ -122,7 +119,7 @@ public:
 	BOOL		ClearSelection();
 	void		Filter();
 	bool		CreateRegExpFilter(CString strPattern, CString& strFilter);
-	void		SelectSchema(CSchema* pSchema, CList< CSchemaMember* >* pColumns);
+	void		SelectSchema(CSchemaPtr pSchema, CList< CSchemaMember* >* pColumns);
 	void		SetSortColumn(int nColumn = -1, BOOL bDirection = FALSE);
 	void		UpdateRange(DWORD nMin = 0, DWORD nMax = 0xFFFFFFFF);
 	void		ClearUpdated();
@@ -243,7 +240,7 @@ public:
 	DWORD		GetTotalHitsSpeed() const;
 
 	// Get first available Hits Schema
-	CSchema*	GetHitsSchema() const;
+	CSchemaPtr	GetHitsSchema() const;
 
 	// Change Hits bogus status
 	void		SetBogus( BOOL bBogus = TRUE );
@@ -293,7 +290,7 @@ public:
 	// Output some data
 	void		AddHitsToDownload(CDownload* pDownload, BOOL bForce = FALSE) const;
 	void		AddHitsToXML(CXMLElement* pXML) const;
-	CSchema*	AddHitsToMetadata(CMetaList& oMetadata) const;
+	CSchemaPtr	AddHitsToMetadata(CMetaList& oMetadata) const;
 	BOOL		AddHitsToPreviewURLs(CList < CString > & oPreviewURLs) const;
 	void		AddHitsToReviews(CList < Review* >& oReviews) const;
 
@@ -307,6 +304,3 @@ protected:
 protected:
 	TRISTATE	m_bExisting;
 };
-
-
-#endif // !defined(MATCHOBJECTS_H)

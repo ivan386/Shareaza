@@ -19,15 +19,11 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_DLGHITCOLUMNS_H__E76FB939_9A9A_4115_8475_EE2B71B87577__INCLUDED_)
-#define AFX_DLGHITCOLUMNS_H__E76FB939_9A9A_4115_8475_EE2B71B87577__INCLUDED_
-
 #pragma once
 
 #include "DlgSkinDialog.h"
 #include "CtrlSchemaCombo.h"
-
-class CSchema;
+#include "Schema.h"
 
 
 class CSchemaColumnsDlg : public CSkinDialog
@@ -46,15 +42,15 @@ public:
 
 // Attributes
 public:
-	CSchema*	m_pSchema;
+	CSchemaPtr	m_pSchema;
 	CList< CSchemaMember* >	m_pColumns;
 
 // Operations
 public:
-	static BOOL		LoadColumns(CSchema* pSchema, CList< CSchemaMember* >* pColumns);
-	static BOOL		SaveColumns(CSchema* pSchema, CList< CSchemaMember* >* pColumns);
-	static CMenu*	BuildColumnMenu(CSchema* pSchema, CList< CSchemaMember* >* pColumns = NULL);
-	static BOOL		ToggleColumnHelper(CSchema* pSchema, CList< CSchemaMember* >* pSource, CList< CSchemaMember* >* pTarget, UINT nToggleID, BOOL bSave = FALSE);
+	static BOOL		LoadColumns(CSchemaPtr pSchema, CList< CSchemaMember* >* pColumns);
+	static BOOL		SaveColumns(CSchemaPtr pSchema, CList< CSchemaMember* >* pColumns);
+	static CMenu*	BuildColumnMenu(CSchemaPtr pSchema, CList< CSchemaMember* >* pColumns = NULL);
+	static BOOL		ToggleColumnHelper(CSchemaPtr pSchema, CList< CSchemaMember* >* pSource, CList< CSchemaMember* >* pTarget, UINT nToggleID, BOOL bSave = FALSE);
 
 // Overrides
 public:
@@ -73,8 +69,3 @@ protected:
 	DECLARE_MESSAGE_MAP()
 
 };
-
-//{{AFX_INSERT_LOCATION}}
-
-#endif // !defined(AFX_DLGHITCOLUMNS_H__E76FB939_9A9A_4115_8475_EE2B71B87577__INCLUDED_)
-

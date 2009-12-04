@@ -47,7 +47,7 @@ public:
 		return m_pSearch && validAndEqual( m_pSearch->m_oGUID, oGUID );
 	}
 
-	inline CSchema* GetSchema() const
+	inline CSchemaPtr GetSchema() const
 	{
 		return m_pSearch ? m_pSearch->m_pSchema : NULL;
 	}

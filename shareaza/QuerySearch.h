@@ -22,9 +22,9 @@
 #pragma once
 
 #include "ShareazaFile.h"
+#include "Schema.h"
 
 class CPacket;
-class CSchema;
 class CXMLElement;
 class CSearchWnd;
 class CG1Packet;
@@ -53,7 +53,7 @@ public:
 	CString				m_sKeywords;	// search keywords (stems, minus words, split asian phrase etc.)
 	CString				m_sPosKeywords;	// Positive keywords ( no minus, no quotes basically for Gnutella1 Query)
 	CString				m_sG2Keywords;	// Query string for G2, containing Positive keywords and Minus Prefixed negative keywords.
-	CSchema*			m_pSchema;		// G1,G2,ED2K: Metadata schema
+	CSchemaPtr			m_pSchema;		// G1,G2,ED2K: Metadata schema
 	CXMLElement*		m_pXML;			// G1,G2,ED2K: Metadata
 	QWORD				m_nMinSize;		// G2,ED2K: Minimal file size
 	QWORD				m_nMaxSize;		// G2,ED2K: Maximal file size

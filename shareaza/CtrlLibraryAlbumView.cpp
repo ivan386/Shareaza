@@ -147,7 +147,7 @@ void CLibraryAlbumView::Update()
 		}
 	}
 	
-	CSchema* pSchema	= SchemaCache.Get( Settings.Library.FilterURI );
+	CSchemaPtr pSchema	= SchemaCache.Get( Settings.Library.FilterURI );
 	DWORD nCookie		= GetFolderCookie();
 	BOOL bChanged		= m_pStyle != m_pStaticStyle;
 	

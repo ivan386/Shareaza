@@ -127,7 +127,7 @@ BOOL CGeneralSettingsPage::OnInitDialog()
 		LVS_EX_FULLROWSELECT|LVS_EX_CHECKBOXES|LVS_EX_LABELTIP, 
 		LVS_EX_FULLROWSELECT|LVS_EX_CHECKBOXES|LVS_EX_LABELTIP );
 	
-	if ( CSchema* pSchema = SchemaCache.Get( CSchema::uriSearchFolder ) )
+	if ( CSchemaPtr pSchema = SchemaCache.Get( CSchema::uriSearchFolder ) )
 	{
 		strTitle = pSchema->m_sTitle;
 		int nColon = strTitle.Find( ':' );

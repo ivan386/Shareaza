@@ -410,11 +410,13 @@ void CLibraryFile::UpdateMetadata(CDownload* pDownload)
 
 BOOL CLibraryFile::SetMetadata(CXMLElement*& pXML, BOOL bMerge, BOOL bOverwrite)
 {
+	ASSUME_LOCK( Library.m_pSection );
+
 	if ( m_pMetadata == NULL && pXML == NULL )
 		// No need
 		return TRUE;
 
-	CSchema* pSchema = NULL;
+	CSchemaPtr pSchema = NULL;
 
 	if ( pXML != NULL )
 	{
@@ -1270,6 +1272,8 @@ STDMETHODIMP CLibraryFile::XLibraryFile::get_Metadata(ISXMLElement FAR* FAR* ppX
 	METHOD_PROLOGUE( CLibraryFile, LibraryFile )
 	*ppXML = NULL;
 
+	CQuickLock oLock( Library.m_pSection );
+
 	if ( pThis->m_pSchema == NULL || pThis->m_pMetadata == NULL ) return S_OK;
 
 	CXMLElement* pXML	= pThis->m_pSchema->Instantiate( TRUE );
@@ -1283,6 +1287,8 @@ STDMETHODIMP CLibraryFile::XLibraryFile::get_Metadata(ISXMLElement FAR* FAR* ppX
 STDMETHODIMP CLibraryFile::XLibraryFile::put_Metadata(ISXMLElement FAR* pXML)
 {
 	METHOD_PROLOGUE( CLibraryFile, LibraryFile )
+
+	CQuickLock oLock( Library.m_pSection );
 
 	if ( CXMLElement* pReal = CXMLCOM::Unwrap( pXML ) )
 	{

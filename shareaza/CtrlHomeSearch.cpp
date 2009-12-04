@@ -142,7 +142,7 @@ void CHomeSearchCtrl::FillHistory()
 		int lf = strValue.Find( _T('\n') );
 		int nIndex = m_wndText.InsertString( i,
 			( lf != -1 ) ? strValue.Left( lf ) : strValue );
-		CSchema* pSchema = ( lf != -1 ) ? SchemaCache.Get( strValue.Mid( lf + 1 ) ) : NULL;
+		CSchemaPtr pSchema = ( lf != -1 ) ? SchemaCache.Get( strValue.Mid( lf + 1 ) ) : NULL;
 		m_wndText.SetItemData( nIndex, (DWORD_PTR)pSchema );
 	}
 
@@ -233,12 +233,12 @@ void CHomeSearchCtrl::OnCloseUpText()
 			theApp.WriteProfileString( _T("Search"), strEntry, NULL );
 		}
 
-		m_wndSchema.Select( (CSchema*)NULL );
+		m_wndSchema.Select( (CSchemaPtr)NULL );
 		FillHistory();
 	}
 	else
 	{
-		m_wndSchema.Select( (CSchema*)m_wndText.GetItemData( nSel ) );
+		m_wndSchema.Select( (CSchemaPtr)m_wndText.GetItemData( nSel ) );
 	}
 }
 
@@ -265,7 +265,7 @@ void CHomeSearchCtrl::Search(bool bAutostart)
 		return;
 	}
 
-	CSchema* pSchema = m_wndSchema.GetSelected();
+	CSchemaPtr pSchema = m_wndSchema.GetSelected();
 	if ( pSchema != NULL ) strURI = pSchema->GetURI();
 
 	Settings.Search.LastSchemaURI = strURI;

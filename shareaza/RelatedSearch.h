@@ -26,7 +26,6 @@
 
 #include "ShareazaFile.h"
 
-class CSchema;
 class CXMLElement;
 class CMatchFile;
 class CLibraryFile;
@@ -42,7 +41,7 @@ public:
 
 // Attributes
 public:
-	CSchema*		m_pSchema;
+	CSchemaPtr		m_pSchema;
 	CXMLElement*	m_pXML;
 	BOOL			m_bXML;
 

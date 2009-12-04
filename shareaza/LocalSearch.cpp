@@ -891,7 +891,7 @@ void CLocalSearch::CreatePacketG2()
 //////////////////////////////////////////////////////////////////////
 // CLocalSearch meta data
 
-void CLocalSearch::AddMetadata(CSchema* pSchema, CXMLElement* pXML, int nIndex)
+void CLocalSearch::AddMetadata(CSchemaPtr pSchema, CXMLElement* pXML, int nIndex)
 {
 	ASSERT( pSchema != NULL );
 	ASSERT( pXML != NULL );
@@ -922,7 +922,7 @@ CString CLocalSearch::GetXMLString(BOOL bNewlines)
 	for ( POSITION pos1 = m_pSchemas.GetStartPosition() ; pos1 ; )
 	{
 		CXMLElement* pGroup;
-		CSchema* pSchema;
+		CSchemaPtr pSchema;
 
 		m_pSchemas.GetNextAssoc( pos1, pSchema, pGroup );
 

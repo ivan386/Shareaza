@@ -77,7 +77,7 @@ int CHitMonitorWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_pMatches->m_sFilter = Settings.Search.MonitorFilter;
 	m_pMatches->Filter();
 
-	if ( CSchema* pSchema = SchemaCache.Get( Settings.Search.MonitorSchemaURI ) )
+	if ( CSchemaPtr pSchema = SchemaCache.Get( Settings.Search.MonitorSchemaURI ) )
 	{
 		CList< CSchemaMember* > pColumns;
 		CSchemaColumnsDlg::LoadColumns( pSchema, &pColumns );

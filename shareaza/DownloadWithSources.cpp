@@ -334,7 +334,7 @@ BOOL CDownloadWithSources::AddSourceHit(const CQueryHit* pHit, BOOL bForce)
 			m_pXML->AddAttribute( CXMLAttribute::schemaName, pHit->m_sSchemaURI );
 			m_pXML->AddElement( pHit->m_pXML->Clone() );
 			
-			if ( CSchema* pSchema = SchemaCache.Get( pHit->m_sSchemaURI ) )
+			if ( CSchemaPtr pSchema = SchemaCache.Get( pHit->m_sSchemaURI ) )
 			{
 				pSchema->Validate( m_pXML, TRUE );
 			}

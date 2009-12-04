@@ -152,13 +152,13 @@ void CNewSearchDlg::OnSize(UINT nType, int cx, int cy)
 
 void CNewSearchDlg::OnSelChangeSchemas()
 {
-	CSchema* pSchema = m_wndSchemas.GetSelected();
+	CSchemaPtr pSchema = m_wndSchemas.GetSelected();
 	m_wndSchema.SetSchema( pSchema, TRUE );
 }
 
 void CNewSearchDlg::OnCloseUpSchemas()
 {
-	CSchema* pSchema = m_wndSchemas.GetSelected();
+	CSchemaPtr pSchema = m_wndSchemas.GetSelected();
 
 	CRect rcWindow;
 	GetWindowRect( &rcWindow );
@@ -208,7 +208,7 @@ void CNewSearchDlg::OnOK()
 
 	m_wndSearch.GetWindowText( m_pSearch->m_sSearch );
 
-	CSchema* pSchema = m_wndSchemas.GetSelected();
+	CSchemaPtr pSchema = m_wndSchemas.GetSelected();
 
 	if ( m_pSearch->m_pXML != NULL ) delete m_pSearch->m_pXML;
 

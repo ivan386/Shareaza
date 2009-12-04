@@ -1268,7 +1268,7 @@ void CQueryHit::ReadExtension(CG1Packet* pPacket)
 	}
 	else if ( nLength && ! m_pXML )
 	{
-		CSchema* pSchema = NULL;
+		CSchemaPtr pSchema = NULL;
 		m_pXML = SchemaCache.Decode( pszData.get(), nLength, pSchema );
 		if ( m_pXML )
 		{
@@ -1422,7 +1422,7 @@ bool CQueryHit::ReadG2Packet(CG2Packet* pPacket, DWORD nLength)
 								m_pXML = pChild->Detach();
 							}
 						}
-						else if ( CSchema* pSchema = SchemaCache.Guess( pXML->GetName() ) )
+						else if ( CSchemaPtr pSchema = SchemaCache.Guess( pXML->GetName() ) )
 						{
 							m_pXML->Delete();
 							m_sSchemaPlural	= pSchema->m_sPlural;
@@ -1754,7 +1754,7 @@ void CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, BOOL bUni
 	if ( strType.GetLength() )
 	{
 		// Determine type
-		CSchema* pSchema = NULL;
+		CSchemaPtr pSchema = NULL;
 
 		if ( ( pSchema = SchemaCache.Get( CSchema::uriAudio ) ) != NULL &&
 			 pSchema->FilterType( strType ) )

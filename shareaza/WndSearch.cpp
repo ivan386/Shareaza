@@ -134,7 +134,7 @@ int CSearchWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		CSchemaColumnsDlg::LoadColumns( pSearch->m_pSchema, &pColumns );
 		m_wndList.SelectSchema( pSearch->m_pSchema, &pColumns );
 	}
-	else if ( CSchema* pSchema = SchemaCache.Get( Settings.Search.BlankSchemaURI ) )
+	else if ( CSchemaPtr pSchema = SchemaCache.Get( Settings.Search.BlankSchemaURI ) )
 	{
 		CList< CSchemaMember* > pColumns;
 		CSchemaColumnsDlg::LoadColumns( pSchema, &pColumns );
@@ -514,7 +514,7 @@ void CSearchWnd::OnSearchSearch()
 		// Create new search
 		pManaged = m_wndPanel.GetSearch();
 
-		CSchema* pSchema = pManaged->GetSchema();
+		CSchemaPtr pSchema = pManaged->GetSchema();
 		if ( m_pMatches->m_nFiles == 0 && pSchema )
 		{
 			CList< CSchemaMember* > pColumns;

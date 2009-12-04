@@ -196,7 +196,7 @@ void CDownloadGroup::SetSchema(LPCTSTR pszURI, BOOL bRemoveOldFilters)
 		// Remove auto filters only
 		if ( bRemoveOldFilters && ! m_pFilters.IsEmpty() )
 		{
-			if ( CSchema* pOldSchema = SchemaCache.Get( m_sSchemaURI ) )
+			if ( CSchemaPtr pOldSchema = SchemaCache.Get( m_sSchemaURI ) )
 			{
 				for ( LPCTSTR start = pOldSchema->m_sTypeFilter; *start; start++ )
 				{
@@ -216,7 +216,7 @@ void CDownloadGroup::SetSchema(LPCTSTR pszURI, BOOL bRemoveOldFilters)
 		m_sSchemaURI = pszURI;
 	}
 
-	if ( CSchema* pSchema = SchemaCache.Get( m_sSchemaURI ) )
+	if ( CSchemaPtr pSchema = SchemaCache.Get( m_sSchemaURI ) )
 	{
 		m_nImage = pSchema->m_nIcon16;
 		if ( pSchema->m_sHeaderTitle.IsEmpty() )
@@ -237,7 +237,7 @@ void CDownloadGroup::SetFolder(LPCTSTR pszFolder)
 
 void CDownloadGroup::SetDefaultFilters()
 {
-	if ( CSchema* pSchema = SchemaCache.Get( m_sSchemaURI ) )
+	if ( CSchemaPtr pSchema = SchemaCache.Get( m_sSchemaURI ) )
 	{
 		for ( LPCTSTR start = pSchema->m_sTypeFilter; *start; start++ )
 		{

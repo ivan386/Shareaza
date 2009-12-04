@@ -19,15 +19,13 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_CTRLSCHEMA_H__98487F51_E425_4B0D_BC82_BCA8A7F5D952__INCLUDED_)
-#define AFX_CTRLSCHEMA_H__98487F51_E425_4B0D_BC82_BCA8A7F5D952__INCLUDED_
-
 #pragma once
 
 #define NO_VALUE		(_T("(~ns~)"))
 #define MULTI_VALUE		(_T("(~mt~)"))
 
-class CSchema;
+#include "Schema.h"
+
 class CXMLElement;
 
 
@@ -44,7 +42,7 @@ public:
 	BOOL			m_bShowBorder;
 
 protected:
-	CSchema*		m_pSchema;
+	CSchemaPtr		m_pSchema;
 	CArray< CWnd* >	m_pControls;
 	CArray< CString >	m_pCaptions;
 	int				m_nScroll;
@@ -53,7 +51,7 @@ protected:
 
 // Operations
 public:
-	void		SetSchema(CSchema* pSchema, BOOL bPromptOnly = FALSE);
+	void		SetSchema(CSchemaPtr pSchema, BOOL bPromptOnly = FALSE);
 	BOOL		UpdateData(CXMLElement* pBase, BOOL bSaveAndValidate);
 	CString		GetSchemaURI() const;
 	void		Disable();
@@ -80,5 +78,3 @@ protected:
 };
 
 #define IDC_METADATA_CONTROL	99
-
-#endif // !defined(AFX_CTRLSCHEMA_H__98487F51_E425_4B0D_BC82_BCA8A7F5D952__INCLUDED_)

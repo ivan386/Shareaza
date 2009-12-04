@@ -131,7 +131,7 @@ void CSchemaCache::Clear()
 	m_pNames.RemoveAll();
 }
 
-CXMLElement* CSchemaCache::Decode(BYTE* szData, DWORD nLength, CSchema*& pSchema)
+CXMLElement* CSchemaCache::Decode(BYTE* szData, DWORD nLength, CSchemaPtr& pSchema)
 {
 	auto_array< BYTE > pTmp;
 	if ( nLength >= 9 && _strnicmp( (LPCSTR)szData, "{deflate}", 9 ) == 0 )

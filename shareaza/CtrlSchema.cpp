@@ -98,7 +98,7 @@ void CSchemaCtrl::OnSize(UINT nType, int cx, int cy)
 /////////////////////////////////////////////////////////////////////////////
 // CSchemaCtrl schema selection
 
-void CSchemaCtrl::SetSchema(CSchema* pSchema, BOOL bPromptOnly)
+void CSchemaCtrl::SetSchema(CSchemaPtr pSchema, BOOL bPromptOnly)
 {
 	CArray< CWnd* > pRemove;
 	pRemove.Append( m_pControls );

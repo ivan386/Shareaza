@@ -33,8 +33,8 @@ public:
 
 // Attributes
 protected:
-	CMap< CString, const CString&, CSchema*, CSchema* > m_pURIs;
-	CMap< CString, const CString&, CSchema*, CSchema* >	m_pNames;
+	CMap< CString, const CString&, CSchemaPtr, CSchemaPtr > m_pURIs;
+	CMap< CString, const CString&, CSchemaPtr, CSchemaPtr >	m_pNames;
 
 // Operations
 public:
@@ -48,31 +48,31 @@ public:
 		return m_pURIs.GetStartPosition();
 	}
 	
-	CSchema* GetNext(POSITION& pos) const
+	CSchemaPtr GetNext(POSITION& pos) const
 	{
-		CSchema* pSchema = NULL;
+		CSchemaPtr pSchema = NULL;
 		CString strURI;
 		m_pURIs.GetNextAssoc( pos, strURI, pSchema );
 		return pSchema;
 	}
 	
-	CSchema* Get(LPCTSTR pszURI) const
+	CSchemaPtr Get(LPCTSTR pszURI) const
 	{
 		if ( ! pszURI || ! *pszURI ) return NULL;
 		CString strURI( pszURI );
 		ToLower( strURI );
 
-		CSchema* pSchema = NULL;
+		CSchemaPtr pSchema = NULL;
 		return ( m_pURIs.Lookup( strURI, pSchema ) ) ? pSchema : NULL;
 	}
 	
-	CSchema* Guess(LPCTSTR pszName) const
+	CSchemaPtr Guess(LPCTSTR pszName) const
 	{
 		if ( ! pszName || ! *pszName ) return NULL;
 		CString strName( pszName );
 		ToLower( strName );
 
-		CSchema* pSchema = NULL;
+		CSchemaPtr pSchema = NULL;
 
 		// A quick hack for Limewire documents schema
 		// ToDo: Remove it when the full schema mapping is ready
@@ -83,7 +83,7 @@ public:
 	}
 
 	// Decode metadata and Schema from text or XML deflated or plain
-	CXMLElement* Decode(BYTE* pszData, DWORD nLength, CSchema*& pSchema);
+	CXMLElement* Decode(BYTE* pszData, DWORD nLength, CSchemaPtr& pSchema);
 	static CXMLElement* AutoDetectSchema(LPCTSTR pszInfo);
 	static CXMLElement* AutoDetectAudio(LPCTSTR pszInfo);
 };
@@ -95,10 +95,10 @@ inline bool CheckURI(const CString& strURI1, LPCTSTR szURI2)
 {
 	if ( strURI1.CompareNoCase( szURI2 ) == 0 )
 		return true;
-	CSchema* pSchema1 = SchemaCache.Get( strURI1 );
+	CSchemaPtr pSchema1 = SchemaCache.Get( strURI1 );
 	if ( pSchema1 && pSchema1->CheckURI( szURI2 ) )
 		return true;
-	CSchema* pSchema2 = SchemaCache.Get( szURI2 );
+	CSchemaPtr pSchema2 = SchemaCache.Get( szURI2 );
 	if ( pSchema2 && pSchema2->CheckURI( strURI1 ) )
 		return true;
 	return false;

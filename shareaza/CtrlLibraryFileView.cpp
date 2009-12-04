@@ -1153,7 +1153,7 @@ void CLibraryFileView::OnShareMonkeySave()
 	CSingleLock pLock( &Library.m_pSection, TRUE );
 
 	CLibraryFile* pFile = GetSelectedFile();
-	CSchema* pSchema = pFile->m_pSchema ? pFile->m_pSchema : pPanelData->GetSchema();
+	CSchemaPtr pSchema = pFile->m_pSchema ? pFile->m_pSchema : pPanelData->GetSchema();
 
 	if ( pSchema )
 	{

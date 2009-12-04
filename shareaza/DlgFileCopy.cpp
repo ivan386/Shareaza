@@ -233,7 +233,7 @@ void CFileCopyDlg::OnRun()
 	while ( IsThreadEnabled() )
 	{
 		CString strName, strPath;
-		CSchema* pSchema = NULL;
+		CSchemaPtr pSchema = NULL;
 		CXMLElement* pMetadata = NULL;
 		BOOL bMetadataAuto = FALSE;
 		int nRating = 0;

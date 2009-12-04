@@ -93,7 +93,7 @@ int CBrowseHostWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CBaseMatchWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
 
-	if ( CSchema* pSchema = SchemaCache.Get( Settings.Search.BlankSchemaURI ) )
+	if ( CSchemaPtr pSchema = SchemaCache.Get( Settings.Search.BlankSchemaURI ) )
 	{
 		CList< CSchemaMember* > pColumns;
 		CSchemaColumnsDlg::LoadColumns( pSchema, &pColumns );

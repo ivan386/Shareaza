@@ -442,7 +442,7 @@ CAlbumFolder* CLibraryFolders::GetAlbumTarget(LPCTSTR pszSchemaURI, LPCTSTR pszM
 {
 	if ( m_pAlbumRoot == NULL ) return NULL;
 
-	CSchema* pSchema = SchemaCache.Get( pszSchemaURI );
+	CSchemaPtr pSchema = SchemaCache.Get( pszSchemaURI );
 	if ( pSchema == NULL ) return NULL;
 
 	CSchemaMember* pMember = pSchema->GetMember( pszMember );

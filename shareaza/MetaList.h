@@ -19,15 +19,12 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_METALIST_H__63101F7C_1387_4218_9B61_753EF0F5EB20__INCLUDED_)
-#define AFX_METALIST_H__63101F7C_1387_4218_9B61_753EF0F5EB20__INCLUDED_
-
 #pragma once
+
+#include "Schema.h"
 
 class CMetaList;
 class CMetaItem;
-class CSchema;
-class CSchemaMember;
 class CXMLElement;
 class CAlbumFolder;
 
@@ -49,7 +46,7 @@ public:
 	CMetaItem*	Find(LPCTSTR pszKey) const;
 	void		Remove(LPCTSTR pszKey);
 	void		Shuffle();
-	void		Setup(CSchema* pSchema, BOOL bClear = TRUE);
+	void		Setup(CSchemaPtr pSchema, BOOL bClear = TRUE);
 	void		Setup(CMetaList* pMetaList);					// For copying data from the external list
 	void		Combine(CXMLElement* pXML);
 	void		Vote();
@@ -130,13 +127,10 @@ public:
 		m_rect.bottom	= y2;
 	}
 
-	inline CString GetDisplayValue()
+	inline CString GetDisplayValue() const
 	{
 		if ( m_bLink && m_sLinkName.GetLength() )
 			return m_sLinkName;
 		return m_sValue;
 	}
 };
-
-
-#endif // !defined(AFX_METALIST_H__63101F7C_1387_4218_9B61_753EF0F5EB20__INCLUDED_)

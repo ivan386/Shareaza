@@ -19,17 +19,14 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_CTRLMATCH_H__7AF5A040_15D1_4BC1_A384_3C27F226F878__INCLUDED_)
-#define AFX_CTRLMATCH_H__7AF5A040_15D1_4BC1_A384_3C27F226F878__INCLUDED_
-
 #pragma once
 
 #include "CtrlMatchTip.h"
+#include "Schema.h"
 
 class CMatchList;
 class CMatchFile;
 class CQueryHit;
-class CSchema;
 
 
 class CMatchCtrl : public CWnd
@@ -47,7 +44,7 @@ public:
 public:
 	CMatchList*		m_pMatches;
 	LPCTSTR			m_sType;
-	CSchema*		m_pSchema;
+	CSchemaPtr		m_pSchema;
 	CList< CSchemaMember* > m_pColumns;
 protected:
 	CHeaderCtrl		m_wndHeader;
@@ -76,7 +73,7 @@ protected:
 public:
 	void	Update();
 	void	DestructiveUpdate();
-	void	SelectSchema(CSchema* pSchema, CList< CSchemaMember* >* pColumns);
+	void	SelectSchema(CSchemaPtr pSchema, CList< CSchemaMember* >* pColumns);
 	void	SetBrowseMode();
 	BOOL	HitTestHeader(const CPoint& point);
 	void	SetSortColumn(int nColumn = -1, BOOL bDirection = FALSE);
@@ -151,5 +148,3 @@ public:
 
 #define IDC_MATCHES			100
 #define IDC_MATCH_HEADER	115
-
-#endif // !defined(AFX_CTRLMATCH_H__7AF5A040_15D1_4BC1_A384_3C27F226F878__INCLUDED_)

@@ -472,7 +472,7 @@ BOOL CAlbumFolder::MetaToFiles(BOOL bAggressive)
 	for ( POSITION pos = GetFileIterator() ; pos ; )
 	{
 		CLibraryFile* pFile	= GetNextFile( pos );
-		CSchema* pSchema	= pFile->m_pSchema;
+		CSchemaPtr pSchema = pFile->m_pSchema;
 
 		if ( pSchema == NULL ) continue;
 

@@ -88,7 +88,7 @@ void CSchemaCombo::Load(LPCTSTR pszSelectURI, int nType, int nAvailability, BOOL
 
 	for ( POSITION pos = SchemaCache.GetIterator() ; pos ; )
 	{
-		CSchema* pSchema = SchemaCache.GetNext( pos );
+		CSchemaPtr pSchema = SchemaCache.GetNext( pos );
 
 		BOOL bSelected = pSchema->CheckURI( pszSelectURI );
 
@@ -123,7 +123,7 @@ void CSchemaCombo::Select(LPCTSTR pszURI)
 {
 	for ( int nItem = 0 ; nItem < GetCount() ; nItem++ )
 	{
-		CSchema* pSchema = (CSchema*)GetItemData( nItem );
+		CSchemaPtr pSchema = (CSchemaPtr)GetItemData( nItem );
 
 		if ( pSchema != NULL && pSchema->CheckURI( pszURI ) )
 		{
@@ -135,11 +135,11 @@ void CSchemaCombo::Select(LPCTSTR pszURI)
 	SetCurSel( 0 );
 }
 
-void CSchemaCombo::Select(CSchema* pSelect)
+void CSchemaCombo::Select(CSchemaPtr pSelect)
 {
 	for ( int nItem = 0 ; nItem < GetCount() ; nItem++ )
 	{
-		CSchema* pSchema = (CSchema*)GetItemData( nItem );
+		CSchemaPtr pSchema = (CSchemaPtr)GetItemData( nItem );
 
 		if ( pSchema == pSelect )
 		{
@@ -151,11 +151,11 @@ void CSchemaCombo::Select(CSchema* pSelect)
 	SetCurSel( 0 );
 }
 
-CSchema* CSchemaCombo::GetSelected() const
+CSchemaPtr CSchemaCombo::GetSelected() const
 {
 	int nSel = GetCurSel();
 	if ( nSel < 0 ) return NULL;
-	return (CSchema*)GetItemData( nSel );
+	return (CSchemaPtr)GetItemData( nSel );
 }
 
 CString CSchemaCombo::GetSelectedURI() const
@@ -163,16 +163,16 @@ CString CSchemaCombo::GetSelectedURI() const
 	CString str;
 	int nSel = GetCurSel();
 	if ( nSel < 0 ) return str;
-	if ( CSchema* pSchema = (CSchema*)GetItemData( nSel ) )
+	if ( CSchemaPtr pSchema = (CSchemaPtr)GetItemData( nSel ) )
 		return pSchema->GetURI();
 	return str;
 }
 
-int CSchemaCombo::FindSchema(CSchema* pSchema)
+int CSchemaCombo::FindSchema(CSchemaPtr pSchema)
 {
 	for ( int nItem = 0 ; nItem < GetCount() ; nItem++ )
 	{
-		if ( (CSchema*)GetItemData( nItem ) == pSchema ) return nItem;
+		if ( (CSchemaPtr)GetItemData( nItem ) == pSchema ) return nItem;
 	}
 
 	return -1;
@@ -223,7 +223,7 @@ void CSchemaCombo::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	dc.SetTextColor( ( lpDrawItemStruct->itemState & ODS_SELECTED )
 		? CoolInterface.m_crHiText : CoolInterface.m_crDropdownText );
 
-	CSchema* pSchema = (CSchema*)lpDrawItemStruct->itemData;
+	CSchemaPtr pSchema = (CSchemaPtr)lpDrawItemStruct->itemData;
 
 	if ( pSchema != NULL )
 	{

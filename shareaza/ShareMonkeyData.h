@@ -26,7 +26,6 @@
 
 class CXMLElement;
 class CLibraryFileView;
-class CSchema;
 
 class CShareMonkeyData :
 	public CMetaPanel,
@@ -46,7 +45,7 @@ protected:
 	HINTERNET			m_hRequest;
 	DWORD				m_nDelay;
 	DWORD				m_nFailures;
-	CSchema*			m_pSchema;
+	CSchemaPtr			m_pSchema;
 	CXMLElement*		m_pXML;
 	CXMLElement*		m_pRazaXML;
 	CLibraryFileView*	m_pFileView;
@@ -70,7 +69,7 @@ public:
 public:
 	BOOL		Start(CLibraryFileView* pView, DWORD nFileIndex);
 	void		Stop();
-	CSchema*	GetSchema() { return m_pSchema; }
+	CSchemaPtr	GetSchema() { return m_pSchema; }
 
 	enum WebRequestType
 	{

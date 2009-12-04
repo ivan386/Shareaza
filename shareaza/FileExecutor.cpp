@@ -117,7 +117,7 @@ void CFileExecutor::DetectFileType(LPCTSTR pszFile, LPCTSTR szType, bool& bVideo
 	if ( GetFileAttributes( pszFile ) & FILE_ATTRIBUTE_DIRECTORY )
 		return;
 
-	CSchema* pSchema;
+	CSchemaPtr pSchema;
 	if ( ( pSchema = SchemaCache.Get( CSchema::uriAudio ) ) != NULL &&
 		pSchema->FilterType( szType ) )
 	{

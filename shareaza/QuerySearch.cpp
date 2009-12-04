@@ -1330,7 +1330,7 @@ BOOL CQuerySearch::MatchMetadataShallow(LPCTSTR pszSchemaURI, CXMLElement* pXML,
 {
 	if ( ! pXML || m_sSearch.IsEmpty() ) return FALSE;
 
-	if ( CSchema* pSchema = SchemaCache.Get( pszSchemaURI ) )
+	if ( CSchemaPtr pSchema = SchemaCache.Get( pszSchemaURI ) )
 	{
 		for ( POSITION pos = pSchema->GetMemberIterator() ; pos ; )
 		{

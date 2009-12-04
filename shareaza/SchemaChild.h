@@ -24,7 +24,8 @@
 
 #pragma once
 
-class CSchema;
+#include "Schema.h"
+
 class CSchemaChildMap;
 class CXMLElement;
 
@@ -33,12 +34,12 @@ class CSchemaChild
 {
 // Construction
 public:
-	CSchemaChild(CSchema* pSchema);
+	CSchemaChild(CSchemaPtr pSchema);
 	virtual ~CSchemaChild();
 
 // Attributes
 public:
-	CSchema*	m_pSchema;
+	CSchemaPtr	m_pSchema;
 	int			m_nType;
 	CString		m_sURI;
 public:

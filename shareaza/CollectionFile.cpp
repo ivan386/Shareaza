@@ -359,7 +359,7 @@ CXMLElement* CCollectionFile::CloneMetadata(CXMLElement* pMetadata)
 	CXMLElement* pCore = pMetadata->GetFirstElement();
 	if ( pCore == NULL ) return NULL;
 
-	if ( CSchema* pSchema = SchemaCache.Get( strURI ) )
+	if ( CSchemaPtr pSchema = SchemaCache.Get( strURI ) )
 	{
 		pMetadata = pSchema->Instantiate();
 	}

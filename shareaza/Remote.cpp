@@ -598,7 +598,7 @@ void CRemote::PageSearch()
 
 		for ( POSITION pos = SchemaCache.GetIterator() ; pos != NULL ; )
 		{
-			CSchema* pSchema = SchemaCache.GetNext( pos );
+			CSchemaPtr pSchema = SchemaCache.GetNext( pos );
 			if ( ! pSchema->m_bPrivate && pSchema->m_nType == CSchema::stFile )
 			{
 				str += _T("<option value=\"") + pSchema->GetURI();

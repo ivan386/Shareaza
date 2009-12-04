@@ -22,10 +22,10 @@
 #pragma once
 
 #include "ShareazaFile.h"
+#include "Schema.h"
 
 class CLibraryFolder;
 class CSharedSource;
-class CSchema;
 class CXMLElement;
 class CQuerySearch;
 class CLibraryDownload;
@@ -57,7 +57,7 @@ public:
 	QWORD			m_nVirtualBase;
 	QWORD			m_nVirtualSize;
 	TRISTATE		m_bVerify;
-	CSchema*		m_pSchema;
+	CSchemaPtr		m_pSchema;
 	CXMLElement*	m_pMetadata;
 	BOOL			m_bMetadataAuto;		// Metadata is auto-generated
 	FILETIME		m_pMetadataTime;		// Metadata time

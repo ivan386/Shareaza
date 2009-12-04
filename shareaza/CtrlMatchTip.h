@@ -28,7 +28,6 @@
 
 class CMatchFile;
 class CQueryHit;
-class CSchema;
 
 
 class CMatchTipCtrl : public CWnd
@@ -66,7 +65,7 @@ protected:
 	COLORREF		m_crStatus;
 	CString			m_sPartial;
 	CString			m_sQueue;
-	CSchema*		m_pSchema;
+	CSchemaPtr		m_pSchema;
 	CMetaList		m_pMetadata;
 	int				m_nKeyWidth;
 	int				m_nRating;

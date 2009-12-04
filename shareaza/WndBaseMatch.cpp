@@ -1099,7 +1099,7 @@ void CBaseMatchWnd::Serialize(CArchive& ar)
 		m_nCacheFiles = 0;
 
 		ar >> strSchema;
-		if ( CSchema* pSchema = SchemaCache.Get( strSchema ) )
+		if ( CSchemaPtr pSchema = SchemaCache.Get( strSchema ) )
 		{
 			CList< CSchemaMember* > pColumns;
 			CSchemaColumnsDlg::LoadColumns( pSchema, &pColumns );

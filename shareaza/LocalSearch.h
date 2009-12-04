@@ -27,7 +27,6 @@ class CNeighbour;
 class CLibraryFile;
 class CAlbumFolder;
 class CLibraryFolder;
-class CSchema;
 class CXMLElement;
 class CBuffer;
 class CDownload;
@@ -55,7 +54,7 @@ protected:
 	BOOL			m_bWrapped;
 protected:
 	CPacket*		m_pPacket;
-	CMap< CSchema*, CSchema*, CXMLElement*, CXMLElement* > m_pSchemas;
+	CMap< CSchemaPtr, CSchemaPtr, CXMLElement*, CXMLElement* > m_pSchemas;
 
 // Operations
 public:
@@ -76,7 +75,7 @@ protected:
 	void		CreatePacket(int nCount);
 	void		CreatePacketG1(int nCount);
 	void		CreatePacketG2();
-	void		AddMetadata(CSchema* pSchema, CXMLElement* pXML, int nIndex);
+	void		AddMetadata(CSchemaPtr pSchema, CXMLElement* pXML, int nIndex);
 	CString		GetXMLString(BOOL bNewlines = TRUE);
 	void		WriteTrailer();
 	void		WriteTrailerG1();
