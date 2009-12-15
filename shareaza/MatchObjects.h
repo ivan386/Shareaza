@@ -194,13 +194,12 @@ public:
 	
 	inline DWORD GetFilteredCount()
 	{
-		if ( ( m_pList->m_bFilterDRM && m_bDRM ) ||
+		return ( ! m_pList || ! m_pBest ||
+			( m_pList->m_bFilterDRM && m_bDRM ) ||
 			( m_pList->m_bFilterSuspicious && m_bSuspicious ) ||
-			( m_nSources < m_pList->m_nFilterSources ) ||
-			( m_pBest == NULL ) ||
-			( m_pList->m_bFilterLocal && GetLibraryStatus() == TRI_FALSE ) ) return 0;
-
-		return m_nFiltered;
+			( m_pList->m_nFilterSources > m_nSources ) ||
+			( m_pList->m_bFilterLocal && GetLibraryStatus() == TRI_FALSE ) ) ?
+			0 : m_nFiltered;
 	}
 	
 	inline DWORD GetItemCount()
