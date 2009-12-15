@@ -875,19 +875,23 @@ BOOL CFragmentedFile::VirtualRead(QWORD nOffset, char* pBuffer, QWORD nBuffer, Q
 	CVirtualFile::const_iterator i = std::find_if( m_oFile.begin(), m_oFile.end(),
 		bind2nd( Greater(), nOffset ) );
 	ASSERT( i != m_oFile.begin() );
-	--i;
+	if ( i != m_oFile.begin() )
+		--i;
 
 	if ( pnRead )
 		*pnRead = 0;
 
 	for ( ; nBuffer; ++i )
 	{
-		if( i == m_oFile.end() )
+		if ( i == m_oFile.end() )
 			// EOF
 			return FALSE;
 		ASSERT( (*i).m_nOffset <= nOffset );
+		if( (*i).m_nOffset > nOffset )
+			// EOF
+			return FALSE;
 		QWORD nPartOffset = ( nOffset - (*i).m_nOffset );
-		if( (*i).m_nSize < nPartOffset )
+		if ( (*i).m_nSize < nPartOffset )
 			// EOF
 			return FALSE;
 		QWORD nPartLength = min( nBuffer, (*i).m_nSize - nPartOffset );
@@ -923,7 +927,8 @@ BOOL CFragmentedFile::VirtualWrite(QWORD nOffset, const char* pBuffer, QWORD nBu
 	CVirtualFile::const_iterator i = std::find_if( m_oFile.begin(), m_oFile.end(),
 		bind2nd( Greater(), nOffset ) );
 	ASSERT( i != m_oFile.begin() );
-	--i;
+	if ( i != m_oFile.begin() )
+		--i;
 
 	if ( pnWritten )
 		*pnWritten = 0;
@@ -931,9 +936,18 @@ BOOL CFragmentedFile::VirtualWrite(QWORD nOffset, const char* pBuffer, QWORD nBu
 	for ( ; nBuffer; ++i )
 	{
 		ASSERT( i != m_oFile.end() );
+		if ( i == m_oFile.end() )
+			// EOF
+			return FALSE;
 		ASSERT( (*i).m_nOffset <= nOffset );
+		if ( (*i).m_nOffset > nOffset )
+			// EOF
+			return FALSE;
 		QWORD nPartOffset = ( nOffset - (*i).m_nOffset );
 		ASSERT( (*i).m_nSize >= nPartOffset );
+		if ( (*i).m_nSize < nPartOffset )
+			// EOF
+			return FALSE;
 		QWORD nPartLength = min( nBuffer, (*i).m_nSize - nPartOffset );
 		if ( ! nPartLength )
 			// Skip zero length files
