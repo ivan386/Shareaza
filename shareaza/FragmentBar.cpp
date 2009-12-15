@@ -54,6 +54,9 @@ void CFragmentBar::DrawFragment(CDC* pDC, CRect* prcBar, QWORD nTotal, QWORD nOf
 	if ( Settings.General.LanguageRTL )
 		nOffset = nTotal - nOffset - nLength;
 
+	if ( nTotal == 0 )
+		return;
+
 	rcArea.left		= prcBar->left + (int)( (float)( prcBar->Width() + 1 ) / (float)nTotal * (float)nOffset );
 	rcArea.right	= prcBar->left + (int)( (float)( prcBar->Width() + 1 ) / (float)nTotal * (float)( nOffset + nLength ) );
 	
@@ -63,7 +66,8 @@ void CFragmentBar::DrawFragment(CDC* pDC, CRect* prcBar, QWORD nTotal, QWORD nOf
 	rcArea.left		= max( rcArea.left, prcBar->left );
 	rcArea.right	= min( rcArea.right, prcBar->right );
 	
-	if ( rcArea.right <= rcArea.left ) return;
+	if ( rcArea.right <= rcArea.left )
+		return;
 	
 	if ( b3D && rcArea.Width() > 2 )
 	{
