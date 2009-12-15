@@ -699,7 +699,7 @@ bool CLibraryBuilderInternals::CopyID3v2Field(CXMLElement* pXML, LPCTSTR pszAttr
 		else if ( nEncoding == 3 )
 		{
 			strValue = UTF8Decode( (LPCSTR)pBuffer + nOffset, nLength - nOffset );
-			nOffset += (DWORD)strlen( (LPCSTR)pBuffer + nOffset ) + 1;
+			nOffset += (DWORD)strnlen( (LPCSTR)pBuffer + nOffset, nLength - nOffset ) + 1;
 		}
 
 		strValue.Trim();
