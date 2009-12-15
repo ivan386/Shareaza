@@ -1156,47 +1156,54 @@ BOOL CBTClient::OnExtended(CBTPacket* pPacket)
 	}
 	else if ( nPacketID == EXTENDED_PACKET_UT_METADATA ) 
 	{ 
-		QWORD nMsgType	= pRoot->GetNode( "msg_type" )->GetInt();
-		QWORD nPiece	= pRoot->GetNode( "piece" )->GetInt();
-
-		if ( nMsgType == UT_METADATA_REQUEST )
+		CBENode* pMsgType = pRoot->GetNode( "msg_type" );
+		CBENode* pPiece = pRoot->GetNode( "piece" );
+		if ( pMsgType && pPiece )
 		{
-			CBENode pRoot2;
-			pRoot2.Add( "piece" )->SetInt( nPiece );
+			QWORD nMsgType	= pMsgType->GetInt();
+			QWORD nPiece	= pPiece->GetInt();
 
-			CBuffer pOutput;
+			if ( nMsgType == UT_METADATA_REQUEST )
+			{
+				CBENode pRoot2;
+				pRoot2.Add( "piece" )->SetInt( nPiece );
 
-			BYTE* pInfoPiece = NULL;
-			DWORD InfoLen = m_pDownload->m_pTorrent.GetInfoPiece( nPiece, pInfoPiece );
-			if ( InfoLen == 0 || m_pDownload->m_pTorrent.m_bPrivate )
-			{
-				pRoot2.Add( "msg_type" )->SetInt( UT_METADATA_REJECT );
-				pRoot2.Encode( &pOutput );
-			}
-			else
-			{
-				pRoot2.Add( "msg_type"		)->SetInt( UT_METADATA_DATA );
-				pRoot2.Add( "total_size"	)->SetInt( m_pDownload->m_pTorrent.GetInfoSize() );
-				pRoot2.Encode( &pOutput );
-				pOutput.Add( pInfoPiece, InfoLen );
-			}
+				CBuffer pOutput;
 
-			SendExtendedPacket( m_dUtMetadataID, &pOutput );
-		}
-		else if ( nMsgType == UT_METADATA_DATA )
-		{
-			if ( ! m_pDownload->m_pTorrent.m_pBlockBTH )
-			{
-				QWORD nTotalSize = pRoot->GetNode( "total_size" )->GetInt();
-				if ( m_pDownload->m_pTorrent.LoadInfoPiece( nTotalSize, nPiece, pPacket->m_pBuffer, pPacket->m_nLength ) ) // If full info loaded
+				BYTE* pInfoPiece = NULL;
+				DWORD InfoLen = m_pDownload->m_pTorrent.GetInfoPiece( nPiece, pInfoPiece );
+				if ( InfoLen == 0 || m_pDownload->m_pTorrent.m_bPrivate )
 				{
-					 m_pDownload->SetTorrent( m_pDownload->m_pTorrent );
+					pRoot2.Add( "msg_type" )->SetInt( UT_METADATA_REJECT );
+					pRoot2.Encode( &pOutput );
 				}
 				else
 				{
-					int nNextPiece = m_pDownload->m_pTorrent.NextInfoPiece();
-					if ( nNextPiece >= 0 && m_dUtMetadataID > 0 )
-						SendInfoRequest( nNextPiece );
+					pRoot2.Add( "msg_type"		)->SetInt( UT_METADATA_DATA );
+					pRoot2.Add( "total_size"	)->SetInt( m_pDownload->m_pTorrent.GetInfoSize() );
+					pRoot2.Encode( &pOutput );
+					pOutput.Add( pInfoPiece, InfoLen );
+				}
+
+				SendExtendedPacket( m_dUtMetadataID, &pOutput );
+			}
+			else if ( nMsgType == UT_METADATA_DATA )
+			{
+				CBENode* pTotalSize = pRoot->GetNode( "total_size" );
+				if ( pTotalSize && ! m_pDownload->m_pTorrent.m_pBlockBTH )
+				{
+					QWORD nTotalSize = pTotalSize->GetInt();
+					if ( m_pDownload->m_pTorrent.LoadInfoPiece( nTotalSize,
+						nPiece, pPacket->m_pBuffer, pPacket->m_nLength ) ) // If full info loaded
+					{
+						 m_pDownload->SetTorrent( m_pDownload->m_pTorrent );
+					}
+					else
+					{
+						int nNextPiece = m_pDownload->m_pTorrent.NextInfoPiece();
+						if ( nNextPiece >= 0 && m_dUtMetadataID > 0 )
+							SendInfoRequest( nNextPiece );
+					}
 				}
 			}
 		}
