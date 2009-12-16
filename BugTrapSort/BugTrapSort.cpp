@@ -16,7 +16,7 @@ typedef CAtlMap< CString, bool > CStringMap;
 CString		g_sConfig;
 CRuleList	g_oRules;
 CString		g_sOutput;
-CString		g_sInputDir;
+CString		g_sInput;
 CStringMap	g_oModules;
 
 #define REPLACE(x) \
@@ -95,10 +95,16 @@ bool ProcessReport(const CString& sInput)
 	if ( sWhat.IsEmpty() ) sWhat = _T("UNKNOWN");
 
 	CString sAddress = GetValue( pRoot, _T("/report/error/address") );
+	sAddress.MakeLower();
+	int adr = sAddress.Find( _T(':') );
+	if ( adr != -1 ) sAddress = sAddress.Mid( adr + 1 );
+
 	CString sModule = PathFindFileName( GetValue( pRoot, _T("/report/error/module") ) );
 	sModule.MakeLower();
 	bool bGood;
-	if ( sModule.IsEmpty() || ( g_oModules.Lookup( sModule, bGood ) && ! bGood ) )
+	if ( sModule.IsEmpty() ||
+		( g_oModules.Lookup( sModule, bGood ) && ! bGood ) ||
+		( g_oModules.Lookup( sModule + _T(":") + sAddress, bGood ) && ! bGood ) )
 	{
 		CString sOrigAddress = sAddress;
 		CString sOrigModule = sModule;
@@ -120,12 +126,18 @@ bool ProcessReport(const CString& sInput)
 					if ( hr == S_OK )
 					{
 						CComQIPtr< IXMLDOMElement > pFrameE( pFrame );
+
 						sAddress = GetValue( pFrameE, _T("address") );
+						sAddress.MakeLower();
+						adr = sAddress.Find( _T(':') );
+						if ( adr != -1 ) sAddress = sAddress.Mid( adr + 1 );
+
 						sModule = PathFindFileName( GetValue( pFrameE, _T("module") ) );
 						if ( ! sModule.IsEmpty() )
 						{
 							sModule.MakeLower();
-							if ( ! g_oModules.Lookup( sModule, bGood ) || bGood )
+							if ( ( ! g_oModules.Lookup( sModule, bGood ) || bGood ) &&
+								 ( ! g_oModules.Lookup( sModule + _T(":") + sAddress, bGood ) || bGood ) )
 								// Неизвестный модуль или подходящий модуль
 								break;
 						}
@@ -140,11 +152,11 @@ bool ProcessReport(const CString& sInput)
 			sAddress = sOrigAddress;
 			sModule = sOrigModule;
 		}
-		if ( sModule.IsEmpty() ) sModule = _T("UNKNOWN");
 	}
-	sAddress.Remove( _T(':') );
 	if ( sAddress.IsEmpty() ) sAddress = _T("UNKNOWN");
+	if ( sModule.IsEmpty() ) sModule = _T("UNKNOWN");
 
+	// Разбор версии
 	int i = 0;
 	CString sVersionNumber = sVersion.Tokenize( _T(" "), i );
 	if ( i == -1 )
@@ -209,6 +221,35 @@ bool ProcessReport(const CString& sInput)
 	return true;
 }
 
+bool Enum(LPCTSTR szInput, CAtlList< CString >& oDirs)
+{
+	bool ret = false;
+	CString sDir = szInput;
+	sDir = sDir.Left( (DWORD)( PathFindFileName( szInput ) - szInput ) );
+
+	WIN32_FIND_DATA wfa = {};
+	HANDLE hFF = FindFirstFile( szInput, &wfa );
+	if ( hFF != INVALID_HANDLE_VALUE )
+	{
+		do 
+		{
+			if ( ( wfa.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY ) != 0 &&
+				*wfa.cFileName != _T('.') )
+			{
+				ret = true;
+
+				if ( ! Enum( sDir + wfa.cFileName + _T("\\*.*"), oDirs ) )
+					oDirs.AddTail( sDir + wfa.cFileName + _T("\\") );
+			}
+		}
+		while ( FindNextFile( hFF, &wfa ) );
+
+		FindClose( hFF );
+	}
+
+	return ret;
+}
+
 int _tmain(int argc, _TCHAR* argv[])
 {
 	if ( argc != 2 )
@@ -225,11 +266,10 @@ int _tmain(int argc, _TCHAR* argv[])
 		g_sOutput.TrimRight( _T("\\") ) += _T("\\");
 
 	GetPrivateProfileString( _T("options"), _T("input"), NULL,
-		g_sInputDir.GetBuffer( 4096 ), 4096, g_sConfig );
-	g_sInputDir.ReleaseBuffer();
-	if ( g_sInputDir.IsEmpty() )
-		g_sInputDir = _T(".");
-	g_sInputDir.TrimRight( _T("\\") ) += _T("\\");
+		g_sInput.GetBuffer( 4096 ), 4096, g_sConfig );
+	g_sInput.ReleaseBuffer();
+	if ( g_sInput.IsEmpty() )
+		g_sInput = _T(".\\*.*");
 
 	// Принять
 	CString sModules;
@@ -285,24 +325,10 @@ int _tmain(int argc, _TCHAR* argv[])
 	pSections.Free();
 
 	CAtlList< CString > oDirs;
-	WIN32_FIND_DATA wfa = {};
-	HANDLE hFF = FindFirstFile( g_sInputDir + _T("Shareaza_*.*"), &wfa );
-	if ( hFF != INVALID_HANDLE_VALUE )
-	{
-		do 
-		{
-			if ( ( wfa.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY ) != 0 )
-			{
-				oDirs.AddTail( g_sInputDir + wfa.cFileName + _T("\\") );
-			}
-		}
-		while ( FindNextFile( hFF, &wfa ) );
-		FindClose( hFF );
-	}
-
+	Enum( g_sInput, oDirs );
 	_tprintf( _T("Processing %d reports from folder %s ...\n"),
-		oDirs.GetCount(), g_sInputDir );
-	
+		oDirs.GetCount(), g_sInput );
+
 	for ( POSITION pos = oDirs.GetHeadPosition(); pos; )
 	{
 		if ( ! ProcessReport( oDirs.GetNext( pos ) ) )
