@@ -16,3 +16,4 @@
 #include <atlbase.h>
 #include <atlstr.h>
 #include <atlcoll.h>
+#include <atltime.h>

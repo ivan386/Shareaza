@@ -26,7 +26,7 @@ CStringMap	g_oModules;
 	x.Replace( _T("{VER_PLATFORM}"), sVersionPlatform ); \
 	x.Replace( _T("{VER_REVISION}"), sVersionRevision ); \
 	x.Replace( _T("{VER_DATE}"), sVersionDate ); \
-	x.Replace( _T("{REPORT}"), sReport ); \
+	x.Replace( _T("{TIMESTAMP}"), sTimestamp ); \
 	x.Replace( _T("{USER}"), sUser ); \
 	x.Replace( _T("{COMPUTER}"), sComputer ); \
 	x.Replace( _T("{CPU}"), sCPU ); \
@@ -51,10 +51,7 @@ CString GetValue(IXMLDOMElement* pRoot, LPCTSTR szXPath)
 
 bool ProcessReport(const CString& sInput)
 {
-	CString sReport = PathFindFileName( sInput );
-	sReport.TrimRight( _T("\\") );
-	sReport = sReport.Right( 13 );
-	_tprintf( _T("Processing %s ...\n"), sReport );
+	_tprintf( _T("Processing %s ...\n"), PathFindFileName( sInput ) );
 
 	CComPtr< IXMLDOMDocument > pFile;
 	HRESULT hr = pFile.CoCreateInstance( CLSID_DOMDocument );
@@ -74,6 +71,11 @@ bool ProcessReport(const CString& sInput)
 	hr = pFile->get_documentElement( &pRoot );
 	if ( hr != S_OK )
 		return false;
+
+	FILETIME fTimestamp;
+	(__int64&)fTimestamp = _tstoi64( GetValue( pRoot, _T("/report/timestamp") ) );
+	CTime tTimeStamp( fTimestamp );
+	CString sTimestamp = tTimeStamp.FormatGmt( _T("%y%m%d-%H%M%S") );
 
 	CString sVersion = GetValue( pRoot, _T("/report/version") );
 
@@ -159,26 +161,25 @@ bool ProcessReport(const CString& sInput)
 	// Разбор версии
 	int i = 0;
 	CString sVersionNumber = sVersion.Tokenize( _T(" "), i );
-	if ( i == -1 )
-		return false;
-	CString sVersionConfig = sVersion.Tokenize( _T(" "), i );
-	if ( i == -1 )
-		return false;
+	if ( i == -1 ) sVersionNumber = _T("UNKNOWN");
+	
+	CString sVersionConfig = ( i == -1 ) ? _T("") : sVersion.Tokenize( _T(" "), i );
+	if ( i == -1 ) sVersionConfig = _T("UNKNOWN");
 	if ( sVersionConfig.CompareNoCase( _T("release") ) == 0 ) sVersionConfig = _T("r");
 	else if ( sVersionConfig.CompareNoCase( _T("debug") ) == 0 ) sVersionConfig = _T("d");
-	CString sVersionPlatform = sVersion.Tokenize( _T(" "), i );
-	if ( i == -1 )
-		return false;
+	
+	CString sVersionPlatform = ( i == -1 ) ? _T("") : sVersion.Tokenize( _T(" "), i );
+	if ( i == -1 ) sVersionPlatform = _T("UNKNOWN");
 	if ( sVersionPlatform.Find( _T("32") ) != -1 ) sVersionPlatform = _T("32");
 	else if ( sVersionPlatform.Find( _T("64") ) != -1 ) sVersionPlatform = _T("64");
-	CString sVersionRevision = sVersion.Tokenize( _T(" "), i );
-	if ( i == -1 )
-		return false;
+	
+	CString sVersionRevision = ( i == -1 ) ? _T("") : sVersion.Tokenize( _T(" "), i );
+	if ( i == -1 ) sVersionRevision = _T("UNKNOWN");
 	sVersionRevision.Trim( _T(" ()") );
 	sVersionRevision.MakeLower();
-	CString sVersionDate = sVersion.Tokenize( _T(" "), i );
-	if ( i == -1 )
-		return false;
+	
+	CString sVersionDate = ( i == -1 ) ? _T("") : sVersion.Tokenize( _T(" "), i );
+	if ( i == -1 ) sVersionDate = _T("UNKNOWN");
 	sVersionDate.Trim( _T(" ()") );
 
 	_tprintf( _T("Version: %ls\n"), sVersion );
@@ -310,16 +311,26 @@ int _tmain(int argc, _TCHAR* argv[])
 			continue;
 
 		CRule r;
+
 		GetPrivateProfileString( szSect, _T("if"), NULL,
 			r.sIf.GetBuffer( 4096 ), 4096, g_sConfig );
 		r.sIf.ReleaseBuffer();
-		GetPrivateProfileString( szSect, _T("is"), NULL,
-			r.sIs.GetBuffer( 4096 ), 4096, g_sConfig );
-		r.sIs.ReleaseBuffer();
+
 		GetPrivateProfileString( szSect, _T("output"), NULL,
 			r.sThen.GetBuffer( 4096 ), 4096, g_sConfig );
 		r.sThen.ReleaseBuffer();
-		g_oRules.AddTail( r );
+
+		CString sIses;
+		GetPrivateProfileString( szSect, _T("is"), NULL,
+			sIses.GetBuffer( 4096 ), 4096, g_sConfig );
+		sIses.ReleaseBuffer();
+		for ( int i = 0; ; )
+		{
+			r.sIs = sIses.Tokenize( _T("|"), i );
+			if ( r.sIs.IsEmpty() || i == -1 )
+				break;
+			g_oRules.AddTail( r );
+		}
 	}
 
 	pSections.Free();
