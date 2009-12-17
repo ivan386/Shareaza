@@ -588,7 +588,7 @@ DWORD CBTInfo::GetInfoSize()
 
 BOOL CBTInfo::CheckInfoData(const CBuffer* pSource)
 {
-	CSHA pBTH;
+	ASSERT( pSource->m_nLength );
 
 	DWORD nBlock = pSource->m_nLength;
 	BYTE *pBuffer = pSource->m_pBuffer;
@@ -620,7 +620,7 @@ BOOL CBTInfo::CheckInfoData(const CBuffer* pSource)
 						{
 							nInfoStart = i + 1;
 							nInfoLen = nBlock - nInfoStart;
-							nDetectInfo=2;
+							nDetectInfo = 2;
 							if ( nInfoLen == 0 ) break;
 						}
 					}
@@ -658,6 +658,8 @@ BOOL CBTInfo::CheckInfoData(const CBuffer* pSource)
 				}
 				nDigitsStart = -1;
 				nLevel -= 1;
+
+				if (nLevel == 0) break; //end of main dictionary
 			}
 			else if ( (((char*)pBuffer)[i]) >= '0' && (((char*)pBuffer)[i]) <= '9' )
 			{
@@ -709,24 +711,21 @@ BOOL CBTInfo::CheckInfoData(const CBuffer* pSource)
 		nDigitsStart = 0;
 	}*/
 
-	if ( bValidTorrent && nDetectInfo >= 2 )
-	{
-		pBTH.Add(&pBuffer[nInfoStart],nInfoLen);
-	}
-
 	Hashes::BtHash oBTH;
 
-	if ( bValidTorrent ) 
+	if ( bValidTorrent && nDetectInfo == 3 )
 	{
+		CSHA pBTH;
+		pBTH.Add( &pBuffer[nInfoStart], nInfoLen );
 		pBTH.Finish();
-		pBTH.GetHash(&oBTH[0]);
+		pBTH.GetHash( &oBTH[0] );
 		bValidTorrent = oBTH.validate();
 	}
+	else
+		bValidTorrent = FALSE;
 
 	if ( bValidTorrent && m_oBTH )
 	{
-		StringType Urn1 = m_oBTH.toUrn();
-		StringType Urn2 = oBTH.toUrn();
 		bValidTorrent = ( oBTH == m_oBTH );
 	}
 
