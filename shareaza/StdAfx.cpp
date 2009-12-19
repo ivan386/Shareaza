@@ -75,28 +75,52 @@ UINT GetBestHashTableSize(UINT nCount)
 		( nCount + nCount / 5 ), std::less< UINT >() );	// + 20%
 }
 
-CStringA UTF8Encode(__in_bcount(nInput) LPCWSTR szInput, __in int nInput)
+CStringA UTF8Encode(__in const CStringW& strInput)
 {
-	int nUTF8 = WideCharToMultiByte( CP_UTF8, 0, szInput, nInput, NULL, 0, NULL, NULL );
-	CStringA sUTF8;
-	if ( nUTF8 > 0 )
-	{
-		WideCharToMultiByte( CP_UTF8, 0, szInput, nInput, sUTF8.GetBuffer( nUTF8 ), nUTF8, NULL, NULL );
-		sUTF8.ReleaseBuffer( nUTF8 );
-	}
-	return sUTF8;
+	return UTF8Encode( strInput, strInput.GetLength() );
 }
 
-CStringW UTF8Decode(__in_bcount(nInput) LPCSTR szInput, __in int nInput)
+CStringA UTF8Encode(__in_bcount(nInput) LPCWSTR psInput, __in int nInput)
 {
-	int nWide = MultiByteToWideChar( CP_UTF8, 0, szInput, nInput, NULL, 0 );
-	CStringW sWide;
-	if ( nWide > 0 )
+	CStringA strUTF8;
+	int nUTF8 = ::WideCharToMultiByte( CP_UTF8, 0, psInput, nInput,
+		strUTF8.GetBuffer( nInput * 4 + 1 ), nInput * 4 + 1, NULL, NULL );
+
+	if ( nUTF8 == 0 && GetLastError() == ERROR_INSUFFICIENT_BUFFER )
 	{
-		MultiByteToWideChar( CP_UTF8, 0, szInput, nInput, sWide.GetBuffer( nWide ), nWide );
-		sWide.ReleaseBuffer( nWide );
+		nUTF8 = ::WideCharToMultiByte( CP_UTF8, 0, psInput, nInput,
+			NULL, 0, NULL, NULL );
+
+		nUTF8 = ::WideCharToMultiByte( CP_UTF8, 0, psInput, nInput,
+			strUTF8.GetBuffer( nUTF8 ), nUTF8, NULL, NULL );
 	}
-	return sWide;
+	strUTF8.ReleaseBuffer( nUTF8 );
+
+	return strUTF8;
+}
+
+CStringW UTF8Decode(__in const CStringA& strInput)
+{
+	return UTF8Decode( strInput, strInput.GetLength() );
+}
+
+CStringW UTF8Decode(__in_bcount(nInput) LPCSTR psInput, __in int nInput)
+{
+	CStringW strWide;
+	int nWide = ::MultiByteToWideChar( CP_UTF8, 0, psInput, nInput,
+		strWide.GetBuffer( nInput + 1 ), nInput + 1 );
+
+	if ( nWide == 0 && GetLastError() == ERROR_INSUFFICIENT_BUFFER )
+	{
+		nWide = ::MultiByteToWideChar( CP_UTF8, 0, psInput, nInput,
+			NULL, 0 );
+
+		nWide = ::MultiByteToWideChar( CP_UTF8, 0, psInput, nInput,
+			strWide.GetBuffer( nWide ), nWide );
+	}
+	strWide.ReleaseBuffer( nWide );
+
+	return strWide;
 }
 
 // Encodes unsafe characters in a string, turning "hello world" into "hello%20world", for instance

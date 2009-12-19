@@ -196,8 +196,9 @@
 
 #include "MinMax.hpp"
 
-#if _MSC_VER >= 1500				// Work-around for VC9 where a (pop) is
-	#pragma warning( pop )			// ifdef'd out in stdio.h
+// Work-around for VC9 where a (pop) is ifdef'd out in stdio.h
+#if _MSC_VER >= 1500 && _MSC_VER < 1600
+	#pragma warning( pop )
 #endif
 
 #pragma warning( pop )				// Restore warnings
@@ -271,8 +272,12 @@ template<> AFX_INLINE UINT AFXAPI HashKey(DWORD_PTR key)
 // Missing constants
 //
 
+#ifndef BIF_NEWDIALOGSTYLE
 #define BIF_NEWDIALOGSTYLE	0x0040
+#endif
+#ifndef OFN_ENABLESIZING
 #define OFN_ENABLESIZING	0x00800000
+#endif
 
 //
 // 64-bit type
@@ -602,18 +607,12 @@ __int64 GetMicroCount();
 UINT GetBestHashTableSize(UINT nCount);
 
 // Encode Unicode text to UTF-8 text
-CStringA UTF8Encode(__in_bcount(nInput) LPCWSTR szInput, __in int nInput);
-inline CStringA UTF8Encode(__in const CStringW& strInput)
-{
-	return UTF8Encode( strInput, strInput.GetLength() );
-}
+CStringA UTF8Encode(__in const CStringW& strInput);
+CStringA UTF8Encode(__in_bcount(nInput) LPCWSTR psInput, __in int nInput);
 
 // Decode UTF-8 text to Unicode text
-CStringW UTF8Decode(__in_bcount(nInput) LPCSTR szInput, __in int nInput);
-inline CStringW UTF8Decode(__in const CStringA& strInput)
-{
-	return UTF8Decode( strInput, strInput.GetLength() );
-}
+CStringW UTF8Decode(__in const CStringA& strInput);
+CStringW UTF8Decode(__in_bcount(nInput) LPCSTR psInput, __in int nInput);
 
 // Encode and decode URL text, and see if a string starts with a tag
 CString URLEncode(LPCTSTR pszInput);                   // Encode "hello world" into "hello%20world"
