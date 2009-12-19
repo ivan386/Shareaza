@@ -92,7 +92,7 @@ protected:
 public:
 	static CQueryHit*	FromG1Packet(CG1Packet* pPacket, int* pnHops = NULL);
 	static CQueryHit*	FromG2Packet(CG2Packet* pPacket, int* pnHops = NULL);
-	static CQueryHit*	FromEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, BOOL bUnicode, const Hashes::Guid& pSearchID = Hashes::Guid()) throw();
+	static CQueryHit*	FromEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, BOOL bUnicode, const Hashes::Guid& pSearchID = Hashes::Guid());
 protected:
 	static BOOL			CheckBogus(CQueryHit* pFirstHit);
 	static CXMLElement*	ReadXML(CG1Packet* pPacket, int nSize);
