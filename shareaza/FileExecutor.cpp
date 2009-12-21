@@ -172,7 +172,8 @@ void CFileExecutor::DetectFileType(LPCTSTR pszFile, LPCTSTR szType, bool& bVideo
 
 TRISTATE CFileExecutor::IsSafeExecute(LPCTSTR szExt, LPCTSTR szFile)
 {
-	BOOL bSafe = ! szExt || IsIn( Settings.Library.SafeExecute, szExt + 1 ) ||
+	BOOL bSafe = ! szExt || ! *szExt ||
+		IsIn( Settings.Library.SafeExecute, szExt + 1 ) ||
 		( theApp.m_pfnAssocIsDangerous && ! theApp.m_pfnAssocIsDangerous( szExt ) );
 
 	if ( ! bSafe && szFile )
