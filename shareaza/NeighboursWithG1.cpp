@@ -109,6 +109,8 @@ void CNeighboursWithG1::Connect()
 // Call Close on each neighbour in the list, reset the member variables here, and clear the ping route and pong caches
 void CNeighboursWithG1::Close()
 {
+	ASSUME_LOCK( Network.m_pSection );
+
 	// Call Close on each neighbour in the list, and reset the member variables of this CNeighbours object back to 0
 	CNeighboursBase::Close();
 

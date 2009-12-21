@@ -1,7 +1,7 @@
 //
 // PongCache.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,6 +22,7 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
+#include "Network.h"
 #include "PongCache.h"
 #include "G1Packet.h"
 
@@ -36,8 +37,8 @@ static char THIS_FILE[]=__FILE__;
 // CPongCache construction
 
 CPongCache::CPongCache()
+	: m_nTime ( 0 )
 {
-	m_nTime = 0;
 }
 
 CPongCache::~CPongCache()
@@ -63,6 +64,8 @@ void CPongCache::Clear()
 
 BOOL CPongCache::ClearIfOld()
 {
+	ASSUME_LOCK( Network.m_pSection );
+
 	if ( GetTickCount() - m_nTime >= Settings.Gnutella1.PongCache )
 	{
 		Clear();
@@ -74,6 +77,8 @@ BOOL CPongCache::ClearIfOld()
 
 void CPongCache::ClearNeighbour(CNeighbour* pNeighbour)
 {
+	ASSUME_LOCK( Network.m_pSection );
+
 	for ( POSITION pos = m_pCache.GetHeadPosition() ; pos ; )
 	{
 		CPongItem* pItem = m_pCache.GetNext( pos );
@@ -92,6 +97,8 @@ void CPongCache::ClearNeighbour(CNeighbour* pNeighbour)
 
 CPongItem* CPongCache::Add(CNeighbour* pNeighbour, IN_ADDR* pAddress, WORD nPort, BYTE nHops, DWORD nFiles, DWORD nVolume)
 {
+	ASSUME_LOCK( Network.m_pSection );
+
 	for ( POSITION pos = m_pCache.GetHeadPosition() ; pos ; )
 	{
 		CPongItem* pItem = m_pCache.GetNext( pos );
@@ -119,6 +126,8 @@ CPongItem* CPongCache::Add(CNeighbour* pNeighbour, IN_ADDR* pAddress, WORD nPort
 
 CPongItem* CPongCache::Lookup(CNeighbour* pNotFrom, BYTE nHops, CList< CPongItem* >* pIgnore)
 {
+	ASSUME_LOCK( Network.m_pSection );
+
 	for ( POSITION pos = m_pCache.GetHeadPosition() ; pos ; )
 	{
 		CPongItem* pItem = m_pCache.GetNext( pos );
@@ -136,6 +145,8 @@ CPongItem* CPongCache::Lookup(CNeighbour* pNotFrom, BYTE nHops, CList< CPongItem
 
 CPongItem* CPongCache::Lookup(CNeighbour* pFrom)
 {
+	ASSUME_LOCK( Network.m_pSection );
+
 	for ( POSITION pos = m_pCache.GetHeadPosition() ; pos ; )
 	{
 		CPongItem* pItem = m_pCache.GetNext( pos );
@@ -150,28 +161,32 @@ CPongItem* CPongCache::Lookup(CNeighbour* pFrom)
 //////////////////////////////////////////////////////////////////////
 // CPongCache list access
 
-POSITION CPongCache::GetIterator() const
+/*POSITION CPongCache::GetIterator() const
 {
+	ASSUME_LOCK( Network.m_pSection );
+
 	return m_pCache.GetHeadPosition();
 }
 
 CPongItem* CPongCache::GetNext(POSITION& pos) const
 {
+	ASSUME_LOCK( Network.m_pSection );
+
 	return m_pCache.GetNext( pos );
-}
+}*/
 
 
 //////////////////////////////////////////////////////////////////////
 // CPongItem construction
 
 CPongItem::CPongItem(CNeighbour* pNeighbour, IN_ADDR* pAddress, WORD nPort, BYTE nHops, DWORD nFiles, DWORD nVolume)
+	: m_pNeighbour	( pNeighbour )
+	, m_pAddress	( *pAddress )
+	, m_nPort		( nPort )
+	, m_nHops		( nHops )
+	, m_nFiles		( nFiles )
+	, m_nVolume		( nVolume )
 {
-	m_pNeighbour	= pNeighbour;
-	m_pAddress		= *pAddress;
-	m_nPort			= nPort;
-	m_nHops			= nHops;
-	m_nFiles		= nFiles;
-	m_nVolume		= nVolume;
 }
 
 CPongItem::~CPongItem()
