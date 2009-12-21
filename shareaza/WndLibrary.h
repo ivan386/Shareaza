@@ -49,7 +49,7 @@ public:
 public:
 	BOOL	Display(CLibraryFile* pFile);
 	BOOL	Display(CAlbumFolder* pFolder);
-	BOOL	OnCollection(LPCTSTR pszPath);
+	BOOL	OnCollection(const CString& sPath);
 public:
 	virtual void OnSkinChange();
 	virtual HRESULT	GetGenericView(IGenericView** ppView);
