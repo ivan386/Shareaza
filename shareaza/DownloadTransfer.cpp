@@ -115,8 +115,8 @@ void CDownloadTransfer::Close(TRISTATE bKeepSource, DWORD nRetryAfter)
 		}
 	}
 
-	ASSERT( m_pDownload != NULL );
-	m_pDownload->RemoveTransfer( this );
+	if ( m_pDownload )
+		m_pDownload->RemoveTransfer( this );
 }
 
 //////////////////////////////////////////////////////////////////////

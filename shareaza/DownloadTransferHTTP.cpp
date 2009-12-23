@@ -1501,7 +1501,7 @@ BOOL CDownloadTransferHTTP::ReadMetadata()
 //////////////////////////////////////////////////////////////////////
 // CDownloadTransferHTTP read tiger tree
 
-BOOL CDownloadTransferHTTP::ReadTiger()
+BOOL CDownloadTransferHTTP::ReadTiger(bool bDropped)
 {
     // It is a fix for very slow DIME uploads, they get dropped while downloading (e.g. LimeWire).
     m_tContent = m_mInput.tLast = GetTickCount();
@@ -1588,8 +1588,8 @@ BOOL CDownloadTransferHTTP::ReadTiger()
     // after reading of DIME message
     // This might be better with returning FALSE because it is not keep alive connection
     // need to disconnect after the business
-    if ( !m_bKeepAlive ) return TRUE;
-
+    if ( bDropped || ! m_bKeepAlive )
+		return TRUE;
 
 	return StartNextFragment();
 }
@@ -1673,9 +1673,10 @@ void CDownloadTransferHTTP::OnDropped()
 		// size of buffer when the connection gets cut. It is important to set it because the DIME decoding 
 		// code check if the content length is equals to size of buffer.
 		m_nLength = m_nContentLength = GetInputLength();
-		ReadTiger();
+		ReadTiger( true );
 		// CDownloadTransfer::Close will resume the closed connection
-        m_pSource->m_bCloseConn = TRUE;
+        if ( m_pSource )
+			m_pSource->m_bCloseConn = TRUE;
 		Close( TRI_TRUE );
     }
 	else if ( m_bBusyFault || m_bQueueFlag )

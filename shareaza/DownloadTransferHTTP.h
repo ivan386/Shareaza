@@ -1,7 +1,7 @@
 //
 // DownloadTransferHTTP.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -18,9 +18,6 @@
 // along with Shareaza; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-
-#if !defined(AFX_DOWNLOADTRANSFERHTTP_H__EE18C980_54B9_40EF_A55B_42FC2AAEA3B0__INCLUDED_)
-#define AFX_DOWNLOADTRANSFERHTTP_H__EE18C980_54B9_40EF_A55B_42FC2AAEA3B0__INCLUDED_
 
 #pragma once
 
@@ -76,26 +73,24 @@ protected:
 public:
 	virtual BOOL	Initiate();
 	BOOL			AcceptPush(CConnection* pConnection);
-	virtual void	Close( TRISTATE bKeepSource, DWORD nRetryAfter = 0 );
+	virtual void	Close(TRISTATE bKeepSource, DWORD nRetryAfter = 0);
 	virtual void	Boost();
 	virtual DWORD	GetAverageSpeed();
 	virtual BOOL	SubtractRequested(Fragments::List& ppFragments);
 	virtual BOOL	OnRun();
+
 protected:
 	BOOL			StartNextFragment();
 	BOOL			SendRequest();
 	BOOL			ReadResponseLine();
 	BOOL			ReadContent();
-	BOOL			ReadTiger();
+	BOOL			ReadTiger(bool bDropped = false);
 	BOOL			ReadMetadata();
 	BOOL			ReadFlush();
-protected:
+
 	virtual BOOL	OnConnected();
 	virtual BOOL	OnRead();
 	virtual void	OnDropped();
 	virtual BOOL	OnHeaderLine(CString& strHeader, CString& strValue);
 	virtual BOOL	OnHeadersComplete();
-
 };
-
-#endif // !defined(AFX_DOWNLOADTRANSFERHTTP_H__EE18C980_54B9_40EF_A55B_42FC2AAEA3B0__INCLUDED_)
