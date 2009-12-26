@@ -232,13 +232,14 @@ void CDownloadMonitorDlg::OnDestroy()
 
 	if ( m_pDownload != NULL )
 	{
-		CSingleLock pLock( &Transfers.m_pSection );
+		CDownload* pDownload = m_pDownload;
+		m_pDownload = NULL;
 
+		CSingleLock pLock( &Transfers.m_pSection );
 		if ( pLock.Lock( 250 ) )
 		{
-			if ( Downloads.Check( m_pDownload ) ) m_pDownload->m_pMonitorWnd = NULL;
-			m_pDownload = NULL;
-			pLock.Unlock();
+			if ( Downloads.Check( pDownload ) )
+				pDownload->m_pMonitorWnd = NULL;
 		}
 	}
 

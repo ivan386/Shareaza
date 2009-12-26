@@ -334,7 +334,7 @@ void CDownloadWithExtras::ShowMonitor(CSingleLock* pLock)
 			return;
 	}
 
-	if ( m_pMonitorWnd == NULL )
+	if ( ! IsMonitorVisible() )
 	{
 		m_pMonitorWnd = new CDownloadMonitorDlg( (CDownload*)this );
 	}
@@ -347,7 +347,8 @@ void CDownloadWithExtras::ShowMonitor(CSingleLock* pLock)
 
 BOOL CDownloadWithExtras::IsMonitorVisible() const
 {
-	return m_pMonitorWnd != NULL;
+	return m_pMonitorWnd && m_pMonitorWnd->m_pDownload &&
+		IsWindow( m_pMonitorWnd->GetSafeHwnd() );
 }
 
 //////////////////////////////////////////////////////////////////////
