@@ -2719,7 +2719,7 @@
 	<string id="16279" value="從主機 %s (%s) 接收下載內容."/>
 	<string id="16280" value="下載主機 %s 忙碌中, 重試於 %i 秒後."/>
 	<string id="16281" value="您確定要清除 &quot;%s&quot;?\n\n一旦下載從下載視窗清除, 稍後將不能繼續它."/>
-	<string id="16282" value="正在放棄從 %s (%s) 下載 &quot;%s&quot; from %s (%s), 因為網路已停用."/>
+	<string id="16282" value="正在放棄從 下載 &quot;%s&quot; from %s (%s), 因為網路已停用."/>
 	<string id="16283" value="此檔案 &quot;%s&quot; 已經正在被下載, 新增來源."/>
 	<string id="16284" value="從 %s 收到一個錯誤的推播連線, 關閉連線."/>
 	<string id="16285" value="收到來自於 %s 的不必要的推播連線."/>
