@@ -140,10 +140,13 @@ void CNeighboursWithED2K::SendDonkeyDownload(CDownload* pDownload)
 // Returns true if we sent the packet, false if we couldn't find the computer
 BOOL CNeighboursWithED2K::PushDonkey(DWORD nClientID, IN_ADDR* pServerAddress, WORD) // Was named nServerPort (do)
 {
-	CSingleLock pLock( &Network.m_pSection, TRUE );
+	CSingleLock oNetworkLock( &Network.m_pSection );
+	if ( !oNetworkLock.Lock( 250 ) )
+		return FALSE;
 
 	// If we don't have a socket listening for incoming connections, leave now
-	if ( ! Network.IsListening() ) return FALSE;
+	if ( !Network.IsListening() )
+		return FALSE;
 
 	// Get the neighbour with the given IP address, and look at it as an eDonkey2000 computer
 	CEDNeighbour* pNeighbour = (CEDNeighbour*)Get( pServerAddress );
