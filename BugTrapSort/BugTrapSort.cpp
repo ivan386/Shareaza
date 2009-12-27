@@ -97,9 +97,8 @@ bool ProcessReport(const CString& sInput)
 	if ( sWhat.IsEmpty() ) sWhat = _T("UNKNOWN");
 
 	CString sAddress = GetValue( pRoot, _T("/report/error/address") );
+	sAddress = sAddress.Right( 4 );
 	sAddress.MakeLower();
-	int adr = sAddress.Find( _T(':') );
-	if ( adr != -1 ) sAddress = sAddress.Mid( adr + 1 );
 
 	CString sModule = PathFindFileName( GetValue( pRoot, _T("/report/error/module") ) );
 	sModule.MakeLower();
@@ -130,9 +129,8 @@ bool ProcessReport(const CString& sInput)
 						CComQIPtr< IXMLDOMElement > pFrameE( pFrame );
 
 						sAddress = GetValue( pFrameE, _T("address") );
+						sAddress = sAddress.Right( 4 );
 						sAddress.MakeLower();
-						adr = sAddress.Find( _T(':') );
-						if ( adr != -1 ) sAddress = sAddress.Mid( adr + 1 );
 
 						sModule = PathFindFileName( GetValue( pFrameE, _T("module") ) );
 						if ( ! sModule.IsEmpty() )
@@ -155,7 +153,6 @@ bool ProcessReport(const CString& sInput)
 			sModule = sOrigModule;
 		}
 	}
-	sAddress = sAddress.Right( 4 );
 	if ( sAddress.IsEmpty() ) sAddress = _T("UNKNOWN");
 	if ( sModule.IsEmpty() ) sModule = _T("UNKNOWN");
 
