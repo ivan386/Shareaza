@@ -155,6 +155,7 @@ bool ProcessReport(const CString& sInput)
 			sModule = sOrigModule;
 		}
 	}
+	sAddress = sAddress.Right( 4 );
 	if ( sAddress.IsEmpty() ) sAddress = _T("UNKNOWN");
 	if ( sModule.IsEmpty() ) sModule = _T("UNKNOWN");
 
@@ -208,8 +209,8 @@ bool ProcessReport(const CString& sInput)
 
 	sOutput.TrimRight( _T("\\") ) += _T("\\");
 
-	ret = SHCreateDirectory( GetDesktopWindow(), sOutput );
-	if ( ret != ERROR_SUCCESS && ret != ERROR_FILE_EXISTS && ret != ERROR_ALREADY_EXISTS )
+	int res = SHCreateDirectory( GetDesktopWindow(), sOutput );
+	if ( res != ERROR_SUCCESS && res != ERROR_FILE_EXISTS && res != ERROR_ALREADY_EXISTS )
 		return false;
 
 	if ( ! CopyFile( sInput + _T("errorlog.xml"), sOutput + _T("errorlog.xml"), FALSE ) )
@@ -283,6 +284,12 @@ int _tmain(int argc, _TCHAR* argv[])
 		if ( sModule.IsEmpty() || i == -1 )
 			break;
 		sModule.MakeLower();
+		bool foo;
+		if ( g_oModules.Lookup( sModule, foo ) )
+		{
+			_tprintf( _T("Duplicate in [options] \"accept\" parameter: %s\n"), sModule );
+			return 1;
+		}
 		g_oModules.SetAt( sModule, true );
 	}
 
@@ -296,6 +303,13 @@ int _tmain(int argc, _TCHAR* argv[])
 		if ( sModule.IsEmpty() || i == -1 )
 			break;
 		sModule.MakeLower();
+
+		bool foo;
+		if ( g_oModules.Lookup( sModule, foo ) )
+		{
+			_tprintf( _T("Duplicate in [options] \"ignore\" parameter: %s\n"), sModule );
+			return 1;
+		}
 		g_oModules.SetAt( sModule, false );
 	}
 

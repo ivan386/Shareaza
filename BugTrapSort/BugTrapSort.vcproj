@@ -118,13 +118,14 @@
 				Optimization="3"
 				InlineFunctionExpansion="2"
 				EnableIntrinsicFunctions="true"
-				FavorSizeOrSpeed="2"
+				FavorSizeOrSpeed="1"
 				OmitFramePointers="true"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
 				ExceptionHandling="0"
 				RuntimeLibrary="0"
+				EnableEnhancedInstructionSet="2"
 				UsePrecompiledHeader="2"
-				WarningLevel="3"
+				WarningLevel="4"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
