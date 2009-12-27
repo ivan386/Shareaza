@@ -324,6 +324,18 @@ STDMETHODIMP CPlayer::SetAspect(
 	return S_OK;
 }
 
+HRESULT SafeRenderFile(IGraphBuilder* pGraph, BSTR sFilename) throw()
+{
+	__try
+	{
+		return pGraph->RenderFile( sFilename, NULL );
+	}
+	__except( EXCEPTION_EXECUTE_HANDLER )
+	{
+		return E_FAIL;
+	}
+}
+
 STDMETHODIMP CPlayer::Open(
 	/* [in] */ BSTR sFilename)
 {
@@ -337,7 +349,7 @@ STDMETHODIMP CPlayer::Open(
 	if ( FAILED( hr ) )
 		return hr;
 
-	hr = m_pGraph->RenderFile( sFilename, NULL );
+	hr = SafeRenderFile( m_pGraph, sFilename );
 	if ( FAILED( hr ) )
 		return hr;
 
