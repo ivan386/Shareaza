@@ -714,14 +714,19 @@ void CCoolBarCtrl::OnUpdateCmdUI(CFrameWnd* pTarget, BOOL bDisableIfNoHndler)
 	if ( m_pSyncObject != NULL )
 	{
 		bLocked = m_pSyncObject->Lock( 200 );
+		if ( !bLocked )
+			return;
 	}
 
 	for ( POSITION pos = m_pItems.GetHeadPosition() ; pos ; )
 	{
 		CCoolBarItem* pItem = m_pItems.GetNext( pos );
 
-		if ( pItem->m_nID == ID_SEPARATOR ) continue;
-		if ( pItem->m_nCtrlID ) continue;
+		if ( pItem->m_nID == ID_SEPARATOR )
+			continue;
+
+		if ( pItem->m_nCtrlID )
+			continue;
 
 		pItem->m_pOther		= this;
 		pItem->m_nIndex		= nIndex++;
@@ -738,9 +743,11 @@ void CCoolBarCtrl::OnUpdateCmdUI(CFrameWnd* pTarget, BOOL bDisableIfNoHndler)
 		bDirty |= pItem->m_bDirty;
 	}
 
-	if ( bLocked ) m_pSyncObject->Unlock();
+	if ( bLocked )
+		m_pSyncObject->Unlock();
 
-	if ( bDirty ) OnUpdated();
+	if ( bDirty )
+		OnUpdated();
 }
 
 void CCoolBarCtrl::OnMouseMove(UINT nFlags, CPoint point)
