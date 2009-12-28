@@ -1834,7 +1834,8 @@ BOOL CDatagrams::OnDiscovery(SOCKADDR_IN* pHost, CG2Packet* /*pPacket*/)
 		{
 			pKHL->WritePacket( G2_PACKET_CACHED_HUB, 18, TRUE );		// 4
 			pKHL->WritePacket( G2_PACKET_VENDOR, 4 );					// 3
-			pKHL->WriteString( VENDOR_CODE );							// 5
+			pKHL->WriteString( VENDOR_CODE, FALSE );					// 4
+			pKHL->WriteByte( 0 );										// 1
 			pKHL->WriteLongLE( Network.m_pHost.sin_addr.S_un.S_addr );	// 4
 			pKHL->WriteShortBE( htons( Network.m_pHost.sin_port ) );	// 2
 			pKHL->WriteLongBE( static_cast< DWORD >( time( NULL ) ) );	// 4
