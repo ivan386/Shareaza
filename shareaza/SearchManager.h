@@ -21,42 +21,37 @@
 
 #pragma once
 
-class CManagedSearch;
+#include "ManagedSearch.h"
+
 class CG2Packet;
 class CQueryHit;
 
 
 class CSearchManager
 {
-// Construction
 public:
 	CSearchManager();
 	~CSearchManager();
 
-	typedef CList< CManagedSearch* > CSearchList;
-
-// Attributes
-public:
 	mutable CMutexEx	m_pSection;
 	Hashes::Guid		m_oLastED2KSearch;
 
-protected:
-	CSearchList			m_pList;
-	DWORD				m_tLastTick;
-	int					m_nPriorityClass;
-	int					m_nPriorityCount;
-
-// Operations
-public:
 	void			OnRun();
 	BOOL			OnQueryAck(CG2Packet* pPacket, const SOCKADDR_IN* pAddress, Hashes::Guid& oGUID);
 	BOOL			OnQueryHits(const CQueryHit* pHits);
 	WORD			OnQueryStatusRequest(const Hashes::Guid& oGUID);
 
 protected:
+	typedef CList< CManagedSearch* > CSearchList;
+
+	CSearchList			m_pList;
+	DWORD				m_tLastTick;
+	int					m_nPriorityClass;
+	int					m_nPriorityCount;
+
 	void			Add(CManagedSearch* pSearch);
 	void			Remove(CManagedSearch* pSearch);
-	CManagedSearch*	Find(const Hashes::Guid& oGUID) const;
+	CSearchPtr		Find(const Hashes::Guid& oGUID) const;
 
 	friend class CManagedSearch;
 	friend class CSearchWnd;

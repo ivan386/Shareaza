@@ -213,7 +213,7 @@ public:
 	void			ShowStatus(BOOL bStarted, BOOL bSearching, DWORD nFiles, DWORD nHits, DWORD nHubs, DWORD nLeaves);
 	void			OnSchemaChange();
 	void			ExecuteSearch();
-	auto_ptr< CManagedSearch > GetSearch();
+	CSearchPtr		GetSearch();
 	void			OnSkinChange();
 	void			Disable();
 	void			Enable();

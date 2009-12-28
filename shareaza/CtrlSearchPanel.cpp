@@ -336,9 +336,9 @@ void CSearchPanel::OnSchemaChange()
 	}
 }
 
-auto_ptr< CManagedSearch > CSearchPanel::GetSearch()
+CSearchPtr CSearchPanel::GetSearch()
 {
-	auto_ptr< CManagedSearch > pManaged( new CManagedSearch() );
+	CSearchPtr pManaged( new CManagedSearch() );
 	CQuerySearchPtr pSearch = pManaged->GetSearch();
 
 	CString sSearch;

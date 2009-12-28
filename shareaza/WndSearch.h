@@ -24,10 +24,9 @@
 #include "WndBaseMatch.h"
 #include "CtrlSearchPanel.h"
 #include "CtrlSearchDetailPanel.h"
-#include "QuerySearch.h"
+#include "ManagedSearch.h"
 #include "MatchObjects.h"
 
-class CManagedSearch;
 
 typedef CLocked< CMatchList*, CMutex* > CLockedMatchList;
 
@@ -59,7 +58,7 @@ public:
 	CQuerySearchPtr	GetLastSearch() const;
 
 protected:
-	typedef boost::ptr_list< CManagedSearch > List;
+	typedef std::list< CSearchPtr > List;
 	typedef List::iterator iterator;
 	typedef List::const_iterator const_iterator;
 	typedef List::reverse_iterator reverse_iterator;

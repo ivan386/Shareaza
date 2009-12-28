@@ -59,7 +59,7 @@ CSearchManager::~CSearchManager()
 
 void CSearchManager::Add(CManagedSearch* pSearch)
 {
-	ASSUME_LOCK( m_pSection );
+	CQuickLock oLock( m_pSection );
 
 	POSITION pos = m_pList.Find( pSearch );
 	if ( pos == NULL )
@@ -68,7 +68,7 @@ void CSearchManager::Add(CManagedSearch* pSearch)
 
 void CSearchManager::Remove(CManagedSearch* pSearch)
 {
-	ASSUME_LOCK( m_pSection );
+	CQuickLock oLock( m_pSection );
 
 	POSITION pos = m_pList.Find( pSearch );
 	if ( pos != NULL )
@@ -78,19 +78,19 @@ void CSearchManager::Remove(CManagedSearch* pSearch)
 //////////////////////////////////////////////////////////////////////
 // CSearchManager list access
 
-CManagedSearch* CSearchManager::Find(const Hashes::Guid& oGUID) const
+CSearchPtr CSearchManager::Find(const Hashes::Guid& oGUID) const
 {
 	ASSUME_LOCK( m_pSection );
 
 	for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
 	{
-		CManagedSearch* pManaged = m_pList.GetNext( pos );
+		CSearchPtr pManaged = m_pList.GetNext( pos );
 
 		if ( pManaged->IsEqualGUID( oGUID ) )
 			return pManaged;
 	}
 
-	return NULL;
+	return CSearchPtr();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -113,7 +113,7 @@ void CSearchManager::OnRun()
 	if ( ! pLock.Lock( 100 ) )
 		return;
 
-	static int nPriorityFactor[ 3 ] = { 8, 4, 1 };
+	const int nPriorityFactor[ 3 ] = { 8, 4, 1 };
 
 	if ( m_nPriorityCount >= nPriorityFactor[ m_nPriorityClass ] )
 	{
@@ -126,7 +126,7 @@ void CSearchManager::OnRun()
 		for ( POSITION pos = m_pList.GetHeadPosition(); pos ; )
 		{
 			POSITION posCur = pos;
-			CManagedSearch* pSearch = m_pList.GetNext( pos );
+			CSearchPtr pSearch = m_pList.GetNext( pos );
 
 			if ( pSearch->GetPriority() == m_nPriorityClass && pSearch->Execute() )
 			{
@@ -232,11 +232,10 @@ BOOL CSearchManager::OnQueryAck(CG2Packet* pPacket, const SOCKADDR_IN* pAddress,
 		nHubs, nLeaves, nSuggestedHubs, nRetryAfter );
 	
 	CSingleLock pLock( &m_pSection );
-
 	if ( pLock.Lock( 100 ) )
 	{
 		// Is it our search?
-		if ( CManagedSearch* pSearch = Find( oGUID ) )
+		if ( CSearchPtr pSearch = Find( oGUID ) )
 		{
 			pSearch->m_nHubs += nHubs;
 			pSearch->m_nLeaves += nLeaves;
@@ -267,8 +266,8 @@ BOOL CSearchManager::OnQueryHits(const CQueryHit* pHits)
 	if ( ! pLock.Lock( 100 ) )
 		return TRUE;
 
-	CManagedSearch* pSearch = Find( pHits->m_oSearchID );
-	if ( pSearch == NULL )
+	CSearchPtr pSearch = Find( pHits->m_oSearchID );
+	if ( ! pSearch )
 		return TRUE;
 
 	pSearch->OnHostAcknowledge( *(DWORD*)&pHits->m_pAddress );
@@ -296,7 +295,7 @@ WORD CSearchManager::OnQueryStatusRequest(const Hashes::Guid& oGUID)
 	CSingleLock pLock( &m_pSection );
 	if ( pLock.Lock( 100 ) )
 	{
-		if ( CManagedSearch* pSearch = Find( oGUID ) )
+		if ( CSearchPtr pSearch = Find( oGUID ) )
 		{
 			return (WORD)min( DWORD(0xFFFE), pSearch->m_nHits );
 		}

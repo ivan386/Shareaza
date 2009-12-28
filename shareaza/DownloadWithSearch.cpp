@@ -1,7 +1,7 @@
 //
 // DownloadWithSearch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -37,21 +37,17 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithSearch construction
 
-CDownloadWithSearch::CDownloadWithSearch() :
-	m_pSearch			( NULL )
-,	m_tSearchTime		( 0 )
-,	m_tSearchCheck		( 0 )
-
-,	m_tLastED2KGlobal	( 0 )
-,	m_tLastED2KLocal	( 0 )
+CDownloadWithSearch::CDownloadWithSearch()
+	:	m_tSearchTime		( 0 )
+	,	m_tSearchCheck		( 0 )
+	,	m_tLastED2KGlobal	( 0 )
+	,	m_tLastED2KLocal	( 0 )
 {
 }
 
 CDownloadWithSearch::~CDownloadWithSearch()
 {
-	if ( m_pSearch ) delete m_pSearch;
 }
-
 
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithSearch Can Find Sources
@@ -130,6 +126,11 @@ void CDownloadWithSearch::StartManualSearch()
 	
 	m_pSearch->SetPriority( CManagedSearch::spHighest );
 	m_pSearch->Start();
+}
+
+BOOL CDownloadWithSearch::IsSearching() const
+{
+	return m_pSearch && m_pSearch->IsActive();
 }
 
 //////////////////////////////////////////////////////////////////////

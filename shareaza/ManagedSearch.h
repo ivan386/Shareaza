@@ -25,13 +25,17 @@
 
 class CPacket;
 class CNeighbour;
+class CManagedSearch;
 
-class CManagedSearch
+
+typedef CComObjectPtr< CManagedSearch > CSearchPtr;
+
+
+class CManagedSearch : public CComObject
 {
-// Construction
 public:
 	CManagedSearch(CQuerySearch* pSearch = NULL, int nPriority = 0);
-	~CManagedSearch();
+	virtual ~CManagedSearch();
 
 	typedef CMap< DWORD, DWORD, DWORD, DWORD > CDwordDwordMap;
 	
@@ -80,7 +84,6 @@ public:
 	BOOL	IsLastED2KSearch();
 	void	CreateGUID();
 
-// Attributes
 	BOOL			m_bAllowG2;
 	BOOL			m_bAllowG1;
 	BOOL			m_bAllowED2K;

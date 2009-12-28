@@ -1,7 +1,7 @@
 //
 // DownloadWithSearch.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_DOWNLOADWITHSEARCH_H__0ED8A270_13B0_47A6_9917_727CBDD82B27__INCLUDED_)
-#define AFX_DOWNLOADWITHSEARCH_H__0ED8A270_13B0_47A6_9917_727CBDD82B27__INCLUDED_
-
 #pragma once
 
 #include "DownloadWithTiger.h"
@@ -32,34 +29,28 @@ class CManagedSearch;
 
 class CDownloadWithSearch : public CDownloadWithTiger
 {
-// Construction
-protected:
-	CDownloadWithSearch();
-	virtual ~CDownloadWithSearch();
-
-// Attributes
-private:
-	CManagedSearch*	m_pSearch;
-	DWORD			m_tSearchTime;		// Timer for manual search
-	DWORD			m_tSearchCheck;		// Limit auto searches
 public:
 	DWORD			m_tLastED2KGlobal;	// Time the last ed2k UDP GetSources was done on this download
 	DWORD			m_tLastED2KLocal;	// Time the last ed2k TCP GetSources was done on this download
 
-// Operations
-public:
-	BOOL			FindSourcesAllowed(DWORD tNow) const;
 	virtual BOOL	FindMoreSources();
-	inline BOOL		IsSearching() const { return m_pSearch != NULL && m_pSearch->IsActive(); };
+	BOOL			IsSearching() const;
+
 protected:
-	void	RunSearch(DWORD tNow);
-	void	StopSearch();
+	CDownloadWithSearch();
+	virtual ~CDownloadWithSearch();
+
+	BOOL			FindSourcesAllowed(DWORD tNow) const;
+	void			RunSearch(DWORD tNow);
+	void			StopSearch();
+
 private:
-	void	StartManualSearch();
-	void	StartAutomaticSearch();
-	BOOL	CanSearch() const;
-	void	PrepareSearch();
+	CSearchPtr		m_pSearch;			// Managed search object
+	DWORD			m_tSearchTime;		// Timer for manual search
+	DWORD			m_tSearchCheck;		// Limit auto searches
 
+	void			StartManualSearch();
+	void			StartAutomaticSearch();
+	BOOL			CanSearch() const;
+	void			PrepareSearch();
 };
-
-#endif // !defined(AFX_DOWNLOADWITHSEARCH_H__0ED8A270_13B0_47A6_9917_727CBDD82B27__INCLUDED_)

@@ -69,6 +69,7 @@ CManagedSearch::CManagedSearch(CQuerySearch* pSearch, int nPriority) :
 	m_nEDClients	( 0 ),
 	m_tExecute		( 0 )
 {
+	m_dwRef = 0;
 }
 
 CManagedSearch::~CManagedSearch()
@@ -122,12 +123,9 @@ void CManagedSearch::Serialize(CArchive& ar)
 
 void CManagedSearch::Start()
 {
-	if ( m_bActive ) return;
+	if ( InterlockedCompareExchange( (LONG*)&m_bActive, TRUE, FALSE ) )
+		return;
 
-	CSingleLock pLock( &SearchManager.m_pSection );
-	if ( !pLock.Lock( 100 ) ) return;
-
-	m_bActive		= TRUE;
 	m_tStarted		= static_cast< DWORD >( time( NULL ) );
 	m_tExecute		= 0;
 	m_tLastED2K		= 0;
@@ -141,13 +139,10 @@ void CManagedSearch::Start()
 
 void CManagedSearch::Stop()
 {
-	CSingleLock pLock( &SearchManager.m_pSection );
-	if ( !pLock.Lock( 100 ) ) return;
-
 	SearchManager.Remove( this );
-	if ( m_bActive )
+
+	if ( InterlockedCompareExchange( (LONG*)&m_bActive, FALSE, TRUE ) )
 	{
-		m_bActive = FALSE;
 		Datagrams.PurgeToken( this );
 	}
 }
