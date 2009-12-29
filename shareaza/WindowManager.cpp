@@ -457,8 +457,6 @@ void CWindowManager::SaveWindowStates() const
 
 void CWindowManager::LoadSearchWindows()
 {
-	CQuickLock pLock( SearchManager.m_pSection );
-
 	CString strFile = Settings.General.UserPath + _T("\\Data\\Searches.dat");
 
 	try
@@ -485,8 +483,6 @@ void CWindowManager::LoadSearchWindows()
 
 BOOL CWindowManager::SaveSearchWindows() const
 {
-	CQuickLock pLock( SearchManager.m_pSection );
-
 	CString strFile = Settings.General.UserPath + _T("\\Data\\Searches.dat");
 	int nCount = 0;
 

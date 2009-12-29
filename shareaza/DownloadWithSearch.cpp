@@ -38,10 +38,11 @@ static char THIS_FILE[]=__FILE__;
 // CDownloadWithSearch construction
 
 CDownloadWithSearch::CDownloadWithSearch()
-	:	m_tSearchTime		( 0 )
-	,	m_tSearchCheck		( 0 )
-	,	m_tLastED2KGlobal	( 0 )
-	,	m_tLastED2KLocal	( 0 )
+	: m_bUpdateSearch	( TRUE )
+	, m_tSearchTime		( 0 )
+	, m_tSearchCheck	( 0 )
+	, m_tLastED2KGlobal	( 0 )
+	, m_tLastED2KLocal	( 0 )
 {
 }
 
@@ -119,11 +120,8 @@ void CDownloadWithSearch::RunSearch(DWORD tNow)
 
 void CDownloadWithSearch::StartManualSearch()
 {
-	CSingleLock pLock( &SearchManager.m_pSection );
-	if ( ! pLock.Lock( 50 ) ) return;
-	
 	PrepareSearch();
-	
+
 	m_pSearch->SetPriority( CManagedSearch::spHighest );
 	m_pSearch->Start();
 }
@@ -138,11 +136,8 @@ BOOL CDownloadWithSearch::IsSearching() const
 
 void CDownloadWithSearch::StartAutomaticSearch()
 {
-	CSingleLock pLock( &SearchManager.m_pSection );
-	if ( ! pLock.Lock( 10 ) ) return;
-	
 	PrepareSearch();
-	
+
 	m_pSearch->SetPriority( CManagedSearch::spLowest );
 	m_pSearch->Start();
 }
@@ -171,12 +166,16 @@ void CDownloadWithSearch::PrepareSearch()
 {
 	if ( ! m_pSearch )
 		m_pSearch = new CManagedSearch();
+	else if ( ! m_bUpdateSearch )
+		// Search not changed
+		return;
+	m_bUpdateSearch = FALSE;
 
 	CQuerySearchPtr pSearch = m_pSearch->GetSearch();
 
 	pSearch->m_bAndG1 = Settings.Gnutella1.EnableToday;
 
-	if ( pSearch->m_sSearch != m_sName )
+	if ( pSearch->m_sSearch.IsEmpty() && ! m_sName.IsEmpty() )
 	{
 		pSearch->m_sKeywords.Empty();
 		pSearch->m_sSearch = m_sName;
@@ -187,10 +186,12 @@ void CDownloadWithSearch::PrepareSearch()
 	{
 		pSearch->m_oSHA1 = m_oSHA1;
 	}
+
 	if ( m_oTiger )
 	{
 		pSearch->m_oTiger = m_oTiger;
 	}
+
 	if ( m_oED2K )
 	{
 		pSearch->m_oED2K = m_oED2K;
@@ -200,17 +201,19 @@ void CDownloadWithSearch::PrepareSearch()
 	{
 		m_pSearch->m_bAllowED2K = FALSE;
 	}
+
 	if ( m_oBTH )
 	{
 		pSearch->m_oBTH = m_oBTH;
 	}
+
 	if ( m_oMD5 )
 	{
 		pSearch->m_oMD5 = m_oMD5;
 	}
 	
 	pSearch->m_bWantURL	= TRUE;
-	pSearch->m_bWantDN	= ( m_sName.GetLength() == 0 );
+	pSearch->m_bWantDN	= m_sName.IsEmpty();
 	pSearch->m_bWantXML	= FALSE;
 	pSearch->m_bWantPFS	= TRUE;
 	pSearch->m_bWantCOM = FALSE;
@@ -233,5 +236,9 @@ void CDownloadWithSearch::PrepareSearch()
 
 void CDownloadWithSearch::StopSearch()
 {
-	if ( IsSearching() ) m_pSearch->Stop();
+	if ( IsSearching() )
+	{
+		m_pSearch->Stop();
+		m_bUpdateSearch = TRUE;
+	}
 }

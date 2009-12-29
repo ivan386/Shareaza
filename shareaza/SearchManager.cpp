@@ -59,18 +59,20 @@ CSearchManager::~CSearchManager()
 
 void CSearchManager::Add(CManagedSearch* pSearch)
 {
-	CQuickLock oLock( m_pSection );
+	ASSUME_LOCK( m_pSection );
 
 	POSITION pos = m_pList.Find( pSearch );
+	ASSERT( pos == NULL );
 	if ( pos == NULL )
 		m_pList.AddHead( pSearch );
 }
 
 void CSearchManager::Remove(CManagedSearch* pSearch)
 {
-	CQuickLock oLock( m_pSection );
+	ASSUME_LOCK( m_pSection );
 
 	POSITION pos = m_pList.Find( pSearch );
+	ASSERT( pos != NULL );
 	if ( pos != NULL )
 		m_pList.RemoveAt( pos );
 }
@@ -128,7 +130,7 @@ void CSearchManager::OnRun()
 			POSITION posCur = pos;
 			CSearchPtr pSearch = m_pList.GetNext( pos );
 
-			if ( pSearch->GetPriority() == m_nPriorityClass && pSearch->Execute() )
+			if ( pSearch->Execute( m_nPriorityClass ) )
 			{
 				m_pList.RemoveAt( posCur );
 				m_pList.AddTail( pSearch );
@@ -231,30 +233,34 @@ BOOL CSearchManager::OnQueryAck(CG2Packet* pPacket, const SOCKADDR_IN* pAddress,
 		(LPCTSTR)CString( inet_ntoa( pAddress->sin_addr ) ), tAdjust,
 		nHubs, nLeaves, nSuggestedHubs, nRetryAfter );
 	
-	CSingleLock pLock( &m_pSection );
-	if ( pLock.Lock( 100 ) )
+	CSingleLock oLock( &m_pSection );
+	if ( ! oLock.Lock( 100 ) )
 	{
-		// Is it our search?
-		if ( CSearchPtr pSearch = Find( oGUID ) )
-		{
-			pSearch->m_nHubs += nHubs;
-			pSearch->m_nLeaves += nLeaves;
-
-			// (technically not required, but..)
-			pSearch->OnHostAcknowledge( nFromIP );
-
-			for ( int nItem = 0 ; nItem < pDone.GetSize() ; nItem++ )
-			{
-				DWORD nAddress = pDone.GetAt( nItem );
-				pSearch->OnHostAcknowledge( nAddress );
-			}
-		}
-		else
-			// Route it!
-			return TRUE;
+		theApp.Message( MSG_DEBUG,
+			_T("Rejecting query ack operation, search manager overloaded.") );
+		return FALSE;
 	}
 
-	return FALSE;
+	// Is it our search?
+	if ( CSearchPtr pSearch = Find( oGUID ) )
+	{
+		pSearch->m_nHubs += nHubs;
+		pSearch->m_nLeaves += nLeaves;
+
+		// (technically not required, but..)
+		pSearch->OnHostAcknowledge( nFromIP );
+
+		for ( int nItem = 0 ; nItem < pDone.GetSize() ; nItem++ )
+		{
+			DWORD nAddress = pDone.GetAt( nItem );
+			pSearch->OnHostAcknowledge( nAddress );
+		}
+
+		return FALSE;
+	}
+
+	// Route it!
+	return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -262,29 +268,35 @@ BOOL CSearchManager::OnQueryAck(CG2Packet* pPacket, const SOCKADDR_IN* pAddress,
 
 BOOL CSearchManager::OnQueryHits(const CQueryHit* pHits)
 {
-	CSingleLock pLock( &m_pSection );
-	if ( ! pLock.Lock( 100 ) )
-		return TRUE;
-
-	CSearchPtr pSearch = Find( pHits->m_oSearchID );
-	if ( ! pSearch )
-		return TRUE;
-
-	pSearch->OnHostAcknowledge( *(DWORD*)&pHits->m_pAddress );
-
-	while ( pHits != NULL )
+	CSingleLock oLock( &m_pSection );
+	if ( ! oLock.Lock( 100 ) )
 	{
-		pSearch->m_nHits ++;
-		if ( pHits->m_nProtocol == PROTOCOL_G1 )
-			pSearch->m_nG1Hits++;
-		else if ( pHits->m_nProtocol == PROTOCOL_G2 )
-			pSearch->m_nG2Hits++;
-		else if ( pHits->m_nProtocol == PROTOCOL_ED2K )
-			pSearch->m_nEDHits++;
-		pHits = pHits->m_pNext;
+		theApp.Message( MSG_DEBUG,
+			_T("Rejecting query hit operation, search manager overloaded.") );
+		return FALSE;
 	}
 
-	return FALSE;
+	if ( CSearchPtr pSearch = Find( pHits->m_oSearchID ) )
+	{
+		pSearch->OnHostAcknowledge( *(DWORD*)&pHits->m_pAddress );
+
+		while ( pHits != NULL )
+		{
+			pSearch->m_nHits ++;
+			if ( pHits->m_nProtocol == PROTOCOL_G1 )
+				pSearch->m_nG1Hits++;
+			else if ( pHits->m_nProtocol == PROTOCOL_G2 )
+				pSearch->m_nG2Hits++;
+			else if ( pHits->m_nProtocol == PROTOCOL_ED2K )
+				pSearch->m_nEDHits++;
+			pHits = pHits->m_pNext;
+		}
+
+		return FALSE;
+	}
+
+	// Route it!
+	return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////

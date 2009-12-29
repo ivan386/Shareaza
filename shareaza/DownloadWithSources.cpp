@@ -247,10 +247,6 @@ BOOL CDownloadWithSources::AddSourceHit(const CQueryHit* pHit, BOOL bForce)
 			if ( m_oSHA1 != pHit->m_oSHA1 ) return FALSE;
 			bHash = TRUE;
 		}
-		// We should check Tiger as well as others. This is because
-		// there exist some hash combinations, even for Shareaza 2.2.0.0 
-		// installer file, i.e. with the same SHA1 but different Tiger (CyberBob).
-
 		if ( m_oTiger && pHit->m_oTiger )
 		{
 			if ( m_oTiger != pHit->m_oTiger ) return FALSE;
@@ -284,7 +280,10 @@ BOOL CDownloadWithSources::AddSourceHit(const CQueryHit* pHit, BOOL bForce)
 		if ( m_nSize != pHit->m_nSize ) return FALSE;
 		if ( m_sName.CompareNoCase( pHit->m_sName ) ) return FALSE;
 	}
-	
+
+	if ( m_nSize != SIZE_UNKNOWN && pHit->m_bSize && m_nSize != pHit->m_nSize )
+		return FALSE;
+
 	if ( !m_oSHA1 && pHit->m_oSHA1 )
 	{
 		m_oSHA1 = pHit->m_oSHA1;
@@ -310,19 +309,15 @@ BOOL CDownloadWithSources::AddSourceHit(const CQueryHit* pHit, BOOL bForce)
 		m_oMD5 = pHit->m_oMD5;
 		bUpdated = TRUE;
 	}
-	
 	if ( m_nSize == SIZE_UNKNOWN && pHit->m_bSize )
 	{
 		m_nSize = pHit->m_nSize;
+		bUpdated = TRUE;
 	}
-	else if ( m_nSize != SIZE_UNKNOWN && pHit->m_bSize && m_nSize != pHit->m_nSize )
-	{
-		return FALSE;
-	}
-
 	if ( m_sName.IsEmpty() && pHit->m_sName.GetLength() )
 	{
 		Rename( pHit->m_sName );
+		bUpdated = TRUE;
 	}
 	
 	if ( Settings.Downloads.Metadata && m_pXML == NULL )
@@ -341,6 +336,9 @@ BOOL CDownloadWithSources::AddSourceHit(const CQueryHit* pHit, BOOL bForce)
 		}
 	}
 
+	if ( bUpdated )
+		((CDownload*)this)->m_bUpdateSearch = TRUE;
+
 	/*
 	if ( pHit->m_nProtocol == PROTOCOL_ED2K )
 	{
@@ -358,7 +356,8 @@ BOOL CDownloadWithSources::AddSourceHit(const CQueryHit* pHit, BOOL bForce)
 		}
 	}
 
-	if ( bUpdated )	QueryHashMaster.Invalidate();
+	if ( bUpdated )
+		QueryHashMaster.Invalidate();
 
 	return TRUE;
 }

@@ -30,6 +30,7 @@ class CManagedSearch;
 class CDownloadWithSearch : public CDownloadWithTiger
 {
 public:
+	BOOL			m_bUpdateSearch;	// Search must be updated
 	DWORD			m_tLastED2KGlobal;	// Time the last ed2k UDP GetSources was done on this download
 	DWORD			m_tLastED2KLocal;	// Time the last ed2k TCP GetSources was done on this download
 

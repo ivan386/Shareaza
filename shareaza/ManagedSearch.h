@@ -56,30 +56,25 @@ public:
 		return m_pSearch ? m_pSearch->m_pSchema : NULL;
 	}
 
-	inline BOOL IsActive() const
+	inline bool IsActive() const
 	{
-		return m_bActive;
+		return ( m_bActive != FALSE );
 	}
 
 	inline void SetActive(BOOL bActive)
 	{
-		m_bActive = bActive;
-	}
-
-	inline int GetPriority() const
-	{
-		return m_nPriority;
+		InterlockedExchange( (LONG*)&m_bActive, bActive );
 	}
 
 	inline void SetPriority(int nPriority)
 	{
-		m_nPriority = nPriority;
+		InterlockedExchange( (LONG*)&m_nPriority, nPriority );
 	}
 
 	void	Serialize(CArchive& ar);
 	void	Start();
 	void	Stop();
-	BOOL	Execute();
+	BOOL	Execute(int nPriorityClass);		// Run search of specified priority class
 	void	OnHostAcknowledge(DWORD nAddress);
 	BOOL	IsLastED2KSearch();
 	void	CreateGUID();
@@ -101,6 +96,7 @@ public:
 
 protected:
 	int				m_nPriority;
+	BOOL			m_bStarted;					// Search started (and managed by SearchManager)
 	BOOL			m_bActive;
 	DWORD			m_tLastG2;					// Time a G2 hub was last searched
 	DWORD			m_nEDServers;				// Number of EDonkey servers searched
@@ -110,7 +106,7 @@ protected:
 	CDwordDwordMap	m_pG1Nodes;					// Pair of IP and last sent packet TTL
 	DWORD			m_tExecute;					// Search execute time (ticks)
 
-	BOOL	ExecuteNeighbours(DWORD tTicks, DWORD tSecs);
-	BOOL	ExecuteG2Mesh(DWORD tTicks, DWORD tSecs);
-	BOOL	ExecuteDonkeyMesh(DWORD tTicks, DWORD tSecs);
+	BOOL	ExecuteNeighbours(const DWORD tTicks, const DWORD tSecs);
+	BOOL	ExecuteG2Mesh(const DWORD tTicks, const DWORD tSecs);
+	BOOL	ExecuteDonkeyMesh(const DWORD tTicks, const DWORD tSecs);
 };
