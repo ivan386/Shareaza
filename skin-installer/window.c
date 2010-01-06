@@ -111,23 +111,12 @@ INT_PTR CALLBACK ExtractProc(HWND hwndDlg, UINT msg, WPARAM wParam, LPARAM lPara
 					EndDialog(hwndDlg, 0);
 					break;
 				case IDC_INSTALL:
-				{
-					TCHAR modDir[MAX_PATH], *tmp;
-					
+				{		
 					EnableWindow(GetDlgItem(hwndDlg,IDOK), FALSE);
-					GetModuleFileName(NULL, modDir, sizeof(modDir));
-					tmp=wcsrchr(modDir, L'\\');
-					if (tmp) *tmp=0;
-					SetCurrentDirectory(modDir);
-					if (!GetInstallDirectory()) {
-					    SendDlgItemMessage(hwndDlg, IDC_PROGRESS, PBM_SETPOS, maxPos, 0);
-					    SetWindowText(GetDlgItem(hwndDlg, IDC_STATUS), L"Could not determine install directory. Please re-install Shareaza");
-					    EnableWindow(GetDlgItem(hwndDlg, IDOK), TRUE);
-					    break;
-					}
+					GetInstallDirectory ();
 					if (!ExtractSkin(szFile, hwndDlg)) { 
 						SendDlgItemMessage(hwndDlg, IDC_PROGRESS, PBM_SETPOS, maxPos, 0);
-						SetWindowText(GetDlgItem(hwndDlg, IDC_STATUS), L"An error occured extracting the skin.  Please try again.");
+						SetWindowText(GetDlgItem(hwndDlg, IDC_STATUS), L"An error occurred extracting the skin.  Please try again.");
 						EnableWindow(GetDlgItem(hwndDlg, IDOK), TRUE);
 						break;
 					}

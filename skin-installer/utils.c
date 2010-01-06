@@ -59,14 +59,16 @@ int SetSkinAsDefault() {
 	wcscat(szXMLNorm, L"\\");
 	wcscat(szXMLNorm, (LPCTSTR)szXML);
 
-	if (ERROR_SUCCESS==RegOpenKeyEx(HKEY_CURRENT_USER, L"Software\\Shareaza\\Shareaza\\Skins", 0, KEY_ALL_ACCESS, &hkey)) {
+	if (ERROR_SUCCESS==RegOpenKeyEx(HKEY_CURRENT_USER, L"Software\\Shareaza\\Shareaza\\Skins", 0, KEY_ALL_ACCESS, &hkey))
+	{
 		int i = 0, needsKey = 1;
 		TCHAR key[256];
-		DWORD keys = sizeof(key);
+		DWORD keys;
 		DWORD dval;
 
-		for(i=0;; i++) {
-			keys = sizeof(key);
+		for ( i = 0;; i++ )
+		{
+			keys = 256;
 			if (RegEnumValue(hkey, i, key, &keys, NULL, NULL, NULL, NULL)!=ERROR_SUCCESS) break;
 			if (!_wcsicmp((LPCTSTR)key, (LPCTSTR)szXMLNorm)) {
 				needsKey = 0;
@@ -139,22 +141,24 @@ static LPCTSTR GetManifestValue(LPCTSTR manifest, LPCTSTR searchKey) {
 	TCHAR* start;
 	size_t len = wcslen(manifest);
 
-	info = (TCHAR*)malloc((len+1)*sizeof(TCHAR));
-	memcpy(info, manifest, len);
+	info = (TCHAR*)malloc( ( len + 1 ) * sizeof( TCHAR ) );
+	memcpy( info, manifest, ( len + 1 ) * sizeof( TCHAR ) );
 	start = info;
 	if ((p = wcsstr(info, L"/>"))!=NULL) {
 		info += 10;
 		*p = '\0';
 		for (p=info;;) {
-			for (;*p!='\0' && (*p==' ' || *p=='\t'); p++);
+			for (;*p!='\0' && (*p==' ' || *p=='\t' || *p=='\r' || *p=='\n'); p++);
 			if (*p == '\0')
 				break;
 			kstart = p;
 			for (;*p!='\0' && *p!='=' && *p!=' ' && *p!='\t'; p++);
 			klen = p-kstart;
 			for (;*p!='\0' && (*p==' ' || *p=='\t'); p++);
-			if (*p == '\0') break;
-			if (*p != '=') continue;
+			if (*p == '\0')
+				break;
+			if (*p != '=')
+				continue;
 			p++;
 			for (;*p!='\0' && (*p==' ' || *p=='\t'); p++);
 			if (*p == '\0') {
@@ -169,7 +173,7 @@ static LPCTSTR GetManifestValue(LPCTSTR manifest, LPCTSTR searchKey) {
 			}
 			else {
 				vstart = p;
-				for (;*p!='\0' && *p!=' ' && *p!='\t'; p++);
+				for (;*p!='\0' && *p!=' ' && *p!='\t' && *p!='\r' && *p!='\n'; p++);
 				vlen = p-vstart;
 			}
 			key = (TCHAR*) malloc((klen+1)*sizeof(TCHAR));
@@ -194,7 +198,7 @@ static LPCTSTR GetManifestValue(LPCTSTR manifest, LPCTSTR searchKey) {
 }
 
 static int CheckManifestForSkin(LPCTSTR pszFile) {
-	TCHAR modDir[MAX_PATH], *tmp, *tt, *val;
+	TCHAR *tt, *val;
 	FILE * pFile;
 	long lSize;
 	char *buffer;
@@ -203,10 +207,7 @@ static int CheckManifestForSkin(LPCTSTR pszFile) {
 	char* p;
 	BOOL bBOM = 0;
 
-	GetModuleFileName( NULL, modDir, sizeof(modDir) );
-	tmp = wcsrchr( modDir, L'\\');
-	if (tmp) *tmp=0;
-	SetCurrentDirectory(modDir);
+	SetCurrentDirectory( skins_dir );
 
 	pFile = _wfopen( pszFile , L"rb");
 	if (pFile == NULL) return 0;

@@ -70,7 +70,7 @@ END
 IDR_MANIFEST RT_MANIFEST
 {
     "<assembly xmlns=""urn:schemas-microsoft-com:asm.v1"" manifestVersion=""1.0"">
-       <assemblyIdentity type=""win32"" name=""Shareaza.ShareazaSkinInstaller"" version=""1.0.12.6""
+       <assemblyIdentity type=""win32"" name=""Shareaza.ShareazaSkinInstaller"" version=""1.0.12.7""
 #ifdef WIN64
 		 processorArchitecture=""amd64""
 #else
@@ -99,7 +99,7 @@ IDR_MANIFEST RT_MANIFEST
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,0,12,6
+ FILEVERSION 1,0,12,7
  PRODUCTVERSION 2,5,1,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
@@ -118,9 +118,9 @@ BEGIN
             VALUE "Comments", "Shareaza Skin Installer"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Skin Installer"
-            VALUE "FileVersion", "1, 0, 12, 6"
+            VALUE "FileVersion", "1, 0, 12, 7"
             VALUE "InternalName", "skin-installer"
-            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2008. All rights reserved."
+            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2010. All rights reserved."
             VALUE "OriginalFilename", "skin.exe"
             VALUE "ProductName", "Shareaza"
             VALUE "ProductVersion", "2, 5, 1, 0"

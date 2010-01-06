@@ -29,29 +29,28 @@ void ExtractSkinFile(LPCTSTR szFile) {
 	//free(szRealFile);
 }
 
-int GetInstallDirectory() {
-    //Registry Variables
-	HKEY hKey;
-    DWORD dwBufLen;
-    LONG lRet;
-    
-    //Get the Shareaza install directory from the registry
-    //Check for "Path hack" first : http://shareazawiki.anenga.com/tiki-index.php?page=FAQ%3AMiscellaneous   
-    lRet = RegOpenKeyEx( HKEY_CURRENT_USER,
-           L"Software\\Shareaza\\Shareaza",
-           0, KEY_QUERY_VALUE, &hKey );
-    if( lRet != ERROR_SUCCESS )
-        return 0;
-     
-    dwBufLen=MAX_PATH;
-    lRet = RegQueryValueEx( hKey, L"Path", NULL, NULL,
-           (LPBYTE) prefix, &dwBufLen);
-    if (dwBufLen > MAX_PATH) {
-        return 0;
-        }
-    RegCloseKey( hKey );
-    wcscat(prefix, L"\\Skins\\");
-    return 1;
+void GetInstallDirectory()
+{
+	DWORD dwBufLen;
+	DWORD dwType;
+	LSTATUS lRet;
+	TCHAR* tmp; 
+
+	// Get the Shareaza install directory from the registry
+	dwBufLen = MAX_PATH;
+	lRet = SHGetValue( HKEY_CURRENT_USER, L"Software\\Shareaza\\Shareaza", L"Path",
+		&dwType, (LPBYTE)skins_dir, &dwBufLen );
+	if ( lRet != ERROR_SUCCESS )
+	{
+		GetModuleFileName( NULL, skins_dir, MAX_PATH );
+		tmp = wcsrchr( skins_dir, L'\\' );
+		if ( tmp )
+			*tmp = 0;
+	}
+
+	wcscat( skins_dir, L"\\Skins\\" );
+
+	SetCurrentDirectory( skins_dir );
 }
 
 int GetSkinFileCount(LPTSTR pszFile) 
@@ -135,8 +134,9 @@ int ValidateSkin(LPTSTR pszFile, HWND hwndDlg) {
 			unzClose(ufile);
 			return 0;
 		}
-		// Only allow .xml and .XML (who would say .Xml anyway?)
-		if (strstr(fn_zip, ".xml") || strstr(fn_zip, ".XML") && !xmlFile) {
+
+		if ( _strcmpi( PathFindExtensionA( fn_zip ), ".xml" ) == 0 && ! xmlFile )
+		{
 			xmlFile = 1;
 			{
 				buf = (char*)malloc(fi.uncompressed_size+1);
@@ -186,7 +186,9 @@ int ValidateSkin(LPTSTR pszFile, HWND hwndDlg) {
 	return 1;
 }
 
-int ExtractSkin(LPTSTR pszFile, HWND hwndDlg) {
+int ExtractSkin(LPTSTR pszFile, HWND hwndDlg)
+{
+	TCHAR prefix[MAX_PATH];		// Full path to installing skin sub-folder inside Skin folder
 	unz_global_info gi;
 	UINT i = 0;
 	int err; /* xmlFile = 0; */
@@ -224,18 +226,20 @@ int ExtractSkin(LPTSTR pszFile, HWND hwndDlg) {
 	err = unzGetGlobalInfo(ufile, &gi);
 	if (err!=UNZ_OK) return 0;
     
-    if (skinType == 0) {
-        wcscat(prefix, szName);
-        //Create Directory for the new skin  
-        if (!MakeDirectory((LPCTSTR)prefix)) {
-    		unzClose(ufile);
+	wcscpy(prefix, skins_dir );
+	if ( skinType == 0 )
+	{
+		wcscat(prefix, szName);
+		//Create Directory for the new skin  
+		if (!MakeDirectory((LPCTSTR)prefix))
+		{
+			unzClose(ufile);
 			return 0;
 		}
 	}
-    else {
-    	wcscat(prefix, L"Languages\\");
-    }
-    
+	else
+		wcscat(prefix, L"Languages\\");
+
 	for (i=0;i<gi.number_entry;i++) {
 		err = unzGetCurrentFileInfo(ufile, &fi, fn_zip, sizeof(fn_zip), NULL, 0, NULL, 0);
 		
@@ -275,15 +279,17 @@ int ExtractSkin(LPTSTR pszFile, HWND hwndDlg) {
 				free(zippedName);
 				return 0;
 			}
+
 			hFile = CreateFile( fn_fs, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, 
 				FILE_ATTRIBUTE_NORMAL | FILE_ATTRIBUTE_ARCHIVE, NULL );
-
-			if (!hFile) {
+			if ( hFile == INVALID_HANDLE_VALUE )
+			{
     			unzCloseCurrentFile(ufile);
     			unzClose(ufile);
 				free(zippedName);
     			return 0;
     		}
+
     		do {
     			err = unzReadCurrentFile(ufile, buf, sizeof(buf));
     			if ( err < 0 ) {
@@ -307,6 +313,7 @@ int ExtractSkin(LPTSTR pszFile, HWND hwndDlg) {
     	}
     	unzCloseCurrentFile(ufile);
 		CloseHandle( hFile );
+		hFile = INVALID_HANDLE_VALUE;
 
    		if ((i+1)<gi.number_entry) {
    			err = unzGoToNextFile(ufile);
