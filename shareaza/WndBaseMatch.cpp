@@ -134,6 +134,7 @@ CBaseMatchWnd::CBaseMatchWnd() :
 	m_nCacheFiles( 0 ),
 	m_tModify( static_cast< DWORD >( time( NULL ) ) )
 {
+	m_pMatches = new CMatchList( this );
 }
 
 CBaseMatchWnd::~CBaseMatchWnd()
@@ -159,8 +160,6 @@ void CBaseMatchWnd::OnSkinChange()
 int CBaseMatchWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CPanelWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
-
-	m_pMatches = new CMatchList( this );
 
 	m_wndList.Create( m_pMatches, this );
 	m_wndList.ModifyStyle( 0, WS_TABSTOP );
