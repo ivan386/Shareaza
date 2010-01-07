@@ -1,7 +1,7 @@
 //
 // WndDownloads.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1363,20 +1363,24 @@ void CDownloadsWnd::OnTransfersConnect()
 		{
 			CDownloadSource* pSource = pDownload->GetNext( posSource );
 
-			if ( pSource->m_bSelected && pSource->IsIdle() )
-			{
-				if ( pSource->m_nProtocol != PROTOCOL_ED2K )
-				{
-					pSource->m_pDownload->Resume();
+			ASSERT( pSource->m_pDownload == pDownload );
 
-					if ( pSource->m_bPushOnly )
-					{
-						pSource->PushRequest();
-					}
-					else if ( CDownloadTransfer* pTransfer = pSource->CreateTransfer() )
-					{
+			// Only create a new Transfer if there isn't already one
+			if ( pSource->m_bSelected && pSource->IsIdle()
+				&& pSource->m_nProtocol != PROTOCOL_ED2K )
+			{
+				if ( pDownload->IsPaused() )
+					pDownload->Resume();
+
+				pDownload->Resume();
+
+				if ( pSource->m_bPushOnly )
+					pSource->PushRequest();
+				else
+				{
+					CDownloadTransfer* pTransfer = pSource->CreateTransfer();
+					if ( pTransfer )
 						pTransfer->Initiate();
-					}
 				}
 			}
 		}
