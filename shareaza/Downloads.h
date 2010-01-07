@@ -1,7 +1,7 @@
 //
 // Downloads.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -76,7 +76,7 @@ public:
 	void		StopTrying(bool bIsTorrent = false);
 
 	int			GetSeedCount() const;
-	DWORD		GetCount(BOOL bActiveOnly = FALSE) const;
+	INT_PTR		GetCount(BOOL bActiveOnly = FALSE) const;
 	DWORD		GetTryingCount(bool bTorrentsOnly = false) const;
 	DWORD		GetConnectingTransferCount() const;
 	BOOL		Check(CDownloadSource* pSource) const;

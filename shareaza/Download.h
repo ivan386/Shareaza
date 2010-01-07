@@ -1,7 +1,7 @@
 //
 // Download.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -35,7 +35,6 @@
 // 42 - added m_bMetaIgnore to CDownloadSource (Ryo-oh-ki)
 
 #include "DownloadWithExtras.h"
-#include "Settings.h"
 
 class CDownload : public CDownloadWithExtras
 {
@@ -70,7 +69,6 @@ public:
 	void		Remove();
 	void		Boost();
 	void		Share(BOOL bShared);
-	void		SetStartTimer();
 	bool		IsStarted() const;		// Has the download actually downloaded anything?
 	bool		IsDownloading() const;	// Is the download receiving data?
 	bool		IsBoosted() const;
@@ -83,6 +81,7 @@ public:
 	BOOL		Enqueue(int nIndex, CSingleLock* pLock);
 	void		OnTaskComplete(const CDownloadTask* pTask);
 private:
+	void		StartTrying();
 	void		StopTrying();
 	DWORD		GetStartTimer() const;
 	void		OnDownloaded();

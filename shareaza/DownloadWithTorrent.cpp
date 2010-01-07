@@ -1,7 +1,7 @@
 //
 // DownloadWithTorrent.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -393,7 +393,7 @@ BOOL CDownloadWithTorrent::SetTorrent(const CBTInfo& oTorrent)
 
 bool CDownloadWithTorrent::RunTorrent(DWORD tNow)
 {
-	if ( ! Settings.BitTorrent.EnableToday )
+	if ( !Network.IsConnected() || !Settings.BitTorrent.EnableToday )
 		return true;
 
 	// Return if disk is full
@@ -426,8 +426,8 @@ bool CDownloadWithTorrent::RunTorrent(DWORD tNow)
 	{
 		// Check if download is active, isn't already waiting for a request
 		// reply and is allowed to try and contact this tracker
-		if ( !IsPaused() && IsTrying() && !m_bTorrentRequested
-			&& tNow > m_tTorrentTracker )
+		if ( !IsPaused() && ( IsTrying() || IsSeeding() )
+			&& !m_bTorrentRequested && tNow > m_tTorrentTracker )
 		{
 			// Get the # of sources that can be connected to
 			nSourcesCount = GetBTSourceCount( TRUE );
@@ -1001,8 +1001,6 @@ BOOL CDownloadWithTorrent::SeedTorrent(CString& sErrorMessage)
 
 	pDownload->MakeComplete();
 	pDownload->ResetVerification();
-
-	SendStarted( Settings.BitTorrent.UploadCount * 4ul );
 
 	return TRUE;
 }

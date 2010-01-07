@@ -1,7 +1,7 @@
 //
 // Download.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -85,18 +85,11 @@ void CDownload::Pause(BOOL bRealPause)
 
 	theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_PAUSED, GetDisplayName() );
 
-	if ( !bRealPause )
-	{
-		StopTrying();
-		m_bTempPaused = TRUE;
-		return;
-	}
-	else
-	{
-		StopTrying();
-		m_bTempPaused = TRUE;
+	StopTrying();
+	m_bTempPaused = TRUE;
+
+	if ( bRealPause )
 		m_bPaused = TRUE;
-	}
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -104,13 +97,13 @@ void CDownload::Pause(BOOL bRealPause)
 
 void CDownload::Resume()
 {
-	if ( m_bComplete ) return;
-	if ( !Network.IsConnected() && !Network.Connect( TRUE ) ) return;
-	if ( ! m_bTempPaused )
+	ASSERT( !IsCompleted() );
+	if ( IsCompleted() )
+		return;
+	
+	if ( !IsPaused() )
 	{
-		if ( ! IsTrying() && GetEffectiveSourceCount() < Settings.Downloads.MinSources )
-			FindMoreSources();
-		SetStartTimer();
+		StartTrying();
 		return;
 	}
 
@@ -134,17 +127,6 @@ void CDownload::Resume()
 	// Try again
 	ClearFileError();
 
-	if ( IsTorrent() )
-	{
-		if ( Downloads.GetTryingCount( true ) < Settings.BitTorrent.DownloadTorrents )
-			SetStartTimer();
-	}
-	else
-	{
-		if ( Downloads.GetTryingCount() < ( Settings.Downloads.MaxFiles + Settings.Downloads.MaxFileSearches ) )
-			SetStartTimer();
-	}
-
 	SetModified();
 }
 
@@ -153,12 +135,10 @@ void CDownload::Resume()
 
 void CDownload::Remove()
 {
+	StopTrying();
 	CloseTorrent();
 	CloseTransfers();
 	AbortTask();
-
-	if ( IsTrying() && !IsSeeding() )
-		Downloads.StopTrying( IsTorrent() );
 
 	theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_REMOVE, (LPCTSTR)GetDisplayName() );
 
@@ -212,11 +192,10 @@ void CDownload::Share(BOOL bShared)
 
 void CDownload::StopTrying()
 {
-	if ( m_bComplete )
+	if ( !IsTrying() || ( IsCompleted() && !IsSeeding() ) )
 		return;
 
-	if ( IsTrying() )
-		Downloads.StopTrying( IsTorrent() );
+	Downloads.StopTrying( IsTorrent() );
 
 	m_tBegan = 0;
 	m_bDownloading = false;
@@ -233,13 +212,20 @@ void CDownload::StopTrying()
 }
 
 //////////////////////////////////////////////////////////////////////
-// CDownload control : SetStartTimer
+// CDownload control : StartTrying
 
-void CDownload::SetStartTimer()
+void CDownload::StartTrying()
 {
+	ASSERT( !IsCompleted() || IsSeeding() );
+	ASSERT( !IsPaused() );
+	if ( IsTrying() || IsPaused() || ( IsCompleted() && !IsSeeding() ) )
+		return;
+
+	if ( !Network.IsConnected() && !Network.Connect( TRUE ) )
+		return;
+
 	Downloads.StartTrying( IsTorrent() );
 	m_tBegan = GetTickCount();
-	SetModified();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -316,7 +302,7 @@ void CDownload::OnRun()
 
 	DWORD tNow = GetTickCount();
 
-	if ( ! m_bTempPaused )
+	if ( !IsPaused() )
 	{
 		if ( GetFileError() != ERROR_SUCCESS  )
 		{
@@ -363,6 +349,7 @@ void CDownload::OnRun()
 			if ( ! IsTorrent() || RunTorrent( tNow ) )
 			{
 				RunSearch( tNow );
+				RunValidation();
 
 				if ( IsSeeding() )
 				{
@@ -370,24 +357,14 @@ void CDownload::OnRun()
 					if ( ! Settings.General.DebugBTSources && m_bExpanded )
 						m_bExpanded = FALSE;
 
-					RunValidation();
-
-					if ( Settings.BitTorrent.AutoSeed )
+					if ( Settings.BitTorrent.AutoSeed
+						&& !Network.IsConnected() )
 					{
-						if ( ! IsTrying() )
-						{
-							if ( ! Network.IsConnected() )
-								Network.Connect( TRUE );
-
-							m_tBegan = GetTickCount();
-						}
+						Network.Connect( TRUE );
 					}
-					SetModified();
 				}
 				else
 				{
-					RunValidation();
-
 					if ( IsComplete() && IsFileOpen() )
 					{
 						if ( IsFullyVerified() )
@@ -398,7 +375,10 @@ void CDownload::OnRun()
 						if ( Network.IsConnected() )
 							StartTransfersIfNeeded( tNow );
 						else
-							m_tBegan = 0;
+						{
+							StopTrying();
+							return;
+						}
 					}
 				}
 			} // if ( RunTorrent( tNow ) )
@@ -409,27 +389,24 @@ void CDownload::OnRun()
 		}
 		else if ( ! IsCompleted() && m_bVerify != TRI_TRUE )
 		{
-			//If this download isn't trying to download, see if it can try
-			if ( IsDownloading() )
-			{	// This download was probably started by a push/etc
-				SetStartTimer();
-			}
 			if ( Network.IsConnected() )
 			{
-				if ( IsTorrent() )
-				{	//Torrents only try when 'ready to go'. (Reduce tracker load)
-					if ( Downloads.GetTryingCount( true ) < Settings.BitTorrent.DownloadTorrents )
-						SetStartTimer();
-				}
-				else
-				{	//We have extra regular downloads 'trying' so when a new slot is ready, a download
-					//has sources and is ready to go.
-					if ( Downloads.GetTryingCount() < ( Settings.Downloads.MaxFiles + Settings.Downloads.MaxFileSearches ) )
-						SetStartTimer();
+				// We have extra regular downloads 'trying' so when a new slot
+				// is ready, a download has sources and is ready to go.
+				if ( Downloads.GetTryingCount() < ( Settings.Downloads.MaxFiles + Settings.Downloads.MaxFileSearches ) )
+				{
+					if ( IsTorrent() )
+					{
+						// Torrents only try when 'ready to go'. (Reduce tracker load)
+						if ( Downloads.GetTryingCount( true ) < Settings.BitTorrent.DownloadTorrents )
+							Resume();
+					}
+					else
+						Resume();
 				}
 			}
 			else
-				m_tBegan = 0;
+				ASSERT( !IsTrying() );
 		}
 	}
 
@@ -503,21 +480,21 @@ void CDownload::OnMoved()
 	// We just completed torrent
 	if ( IsTorrent() && IsFullyVerified() )
 	{
-		CloseTorrentUploads();
+		// Set to FALSE to prevent sending 'stop' announce to tracker
+		m_bTorrentRequested = FALSE;
+		StopTrying();
+
+		// Send 'completed' announce to tracker
 		SendCompleted();
-		if ( IsTrying() )
-			Downloads.StopTrying( IsTorrent() );
+
+		// This torrent is now seeding
 		m_bSeeding = TRUE;
-		m_tBegan = 0;
-		m_bDownloading	= false;
 		m_bTorrentStarted = TRUE;
 		m_bTorrentRequested = TRUE;
-		CloseTransfers();
-		StopSearch();
 	}
 	else if ( IsTorrent() ) // Something wrong (?), since we moved the torrent
 	{
-		// Explicitly set the flag to send stop
+		// Explicitly set to TRUE to send stop announce to tracker
 		m_bTorrentRequested = TRUE;
 		StopTrying();
 	}

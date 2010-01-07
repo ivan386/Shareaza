@@ -1,7 +1,7 @@
 //
 // Downloads.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -162,7 +162,9 @@ CDownload* CDownloads::Add(CQueryHit* pHit, BOOL bAddToHead)
 		theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_ALREADY, (LPCTSTR)pHit->m_sName );
 
 		pDownload->AddSourceHit( pHit );
-		pDownload->Resume();
+
+		if ( pDownload->IsPaused() )
+			pDownload->Resume();
 	}
 	else
 	{
@@ -186,11 +188,8 @@ CDownload* CDownloads::Add(CQueryHit* pHit, BOOL bAddToHead)
 	DownloadGroups.Link( pDownload );
 	Transfers.StartThread();
 
-	if ( bAddToHead || GetTryingCount() < Settings.Downloads.MaxFiles )
-	{
-		pDownload->SetStartTimer();
-	}
-
+	if ( bAddToHead )
+		pDownload->Resume();
 
 	return pDownload;
 }
@@ -218,7 +217,8 @@ CDownload* CDownloads::Add(CMatchFile* pFile, BOOL bAddToHead)
 
 		pFile->AddHitsToDownload( pDownload );
 
-		pDownload->Resume();
+		if ( pDownload->IsPaused() )
+			pDownload->Resume();
 	}
 	else
 	{
@@ -242,17 +242,8 @@ CDownload* CDownloads::Add(CMatchFile* pFile, BOOL bAddToHead)
 	DownloadGroups.Link( pDownload );
 	Transfers.StartThread();
 
-	if ( bAddToHead || GetTryingCount() < Settings.Downloads.MaxFiles )
-	{
-		pDownload->SetStartTimer();
-
-		if ( ( (pDownload->GetEffectiveSourceCount() <= 1 ) ||
-			( ( pDownload->m_oED2K || pDownload->m_oBTH || pDownload->m_oMD5 ) &&
-				! pDownload->m_oSHA1 )) )
-		{
-			pDownload->FindMoreSources();
-		}
-	}
+	if ( bAddToHead )
+		pDownload->Resume();
 
 	return pDownload;
 }
@@ -266,6 +257,7 @@ CDownload* CDownloads::Add(const CShareazaURL& oURL)
 		 oURL.m_nAction != CShareazaURL::uriSource ) return NULL;
 
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
+
 	CDownload* pDownload = NULL;
 	BOOL bNew = TRUE;
 
@@ -363,14 +355,6 @@ CDownload* CDownloads::Add(const CShareazaURL& oURL)
 
 		theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_ADDED,
 			(LPCTSTR)pDownload->GetDisplayName(), pDownload->GetEffectiveSourceCount() );
-
-		if ( ( pDownload->IsTorrent() && GetTryingCount( true ) < Settings.BitTorrent.DownloadTorrents )
-			|| ( !pDownload->IsTorrent() && GetTryingCount() < Settings.Downloads.MaxFiles ) )
-		{
-			pDownload->SetStartTimer();
-			if ( pDownload->GetEffectiveSourceCount() <= 1 )
-				pDownload->FindMoreSources();
-		}
 
 		DownloadGroups.Link( pDownload );
 		Transfers.StartThread();
@@ -483,11 +467,12 @@ int CDownloads::GetActiveTorrentCount() const
 	return nCount;
 }
 
-DWORD CDownloads::GetCount(BOOL bActiveOnly) const
+INT_PTR CDownloads::GetCount(BOOL bActiveOnly) const
 {
-	if ( ! bActiveOnly ) return (DWORD)m_pList.GetCount();
+	if ( !bActiveOnly )
+		return (DWORD)m_pList.GetCount();
 
-	DWORD nCount = 0;
+	INT_PTR nCount = 0;
 
 	CQuickLock pLock( Transfers.m_pSection );
 
