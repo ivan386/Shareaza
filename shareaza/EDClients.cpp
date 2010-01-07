@@ -381,7 +381,7 @@ BOOL CEDClients::OnAccept(CConnection* pConnection)
 	CSingleLock pLock( &Transfers.m_pSection );
 	if ( ! pLock.Lock( 250 ) )
 	{
-		theApp.Message( MSG_DEBUG, _T("Rejecting ed2k connection from %s, network core overloaded."),
+		theApp.Message( MSG_ERROR, _T("Rejecting ED2K connection from %s, network core overloaded."),
 			(LPCTSTR)pConnection->m_sAddress );
 		return FALSE;
 	}
@@ -393,13 +393,13 @@ BOOL CEDClients::OnAccept(CConnection* pConnection)
 		// Even if we're full, we still need to accept connections from clients we have queued, etc
 		if ( ( GetByIP( &pConnection->m_pHost.sin_addr ) == NULL ) || ( IsOverloaded() ) )
 		{
-			theApp.Message( MSG_DEBUG, _T("Rejecting ed2k connection from %s, max client connections reached."),
+			theApp.Message( MSG_ERROR, _T("Rejecting ED2K connection from %s, max client connections reached."),
 				(LPCTSTR)pConnection->m_sAddress );
 			return FALSE;
 		}
 		else
 		{
-			theApp.Message( MSG_DEBUG, _T("Accepting ed2k connection from %s despite client connection limit."),
+			theApp.Message( MSG_DEBUG, _T("Accepting ED2K connection from %s despite client connection limit."),
 				(LPCTSTR)pConnection->m_sAddress );
 		}
 	}

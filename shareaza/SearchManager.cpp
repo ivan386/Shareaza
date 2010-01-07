@@ -236,7 +236,7 @@ BOOL CSearchManager::OnQueryAck(CG2Packet* pPacket, const SOCKADDR_IN* pAddress,
 	CSingleLock oLock( &m_pSection );
 	if ( ! oLock.Lock( 100 ) )
 	{
-		theApp.Message( MSG_DEBUG,
+		theApp.Message( MSG_ERROR | MSG_FACILITY_SEARCH,
 			_T("Rejecting query ack operation, search manager overloaded.") );
 		return FALSE;
 	}
@@ -271,7 +271,7 @@ BOOL CSearchManager::OnQueryHits(const CQueryHit* pHits)
 	CSingleLock oLock( &m_pSection );
 	if ( ! oLock.Lock( 100 ) )
 	{
-		theApp.Message( MSG_DEBUG,
+		theApp.Message( MSG_ERROR | MSG_FACILITY_SEARCH,
 			_T("Rejecting query hit operation, search manager overloaded.") );
 		return FALSE;
 	}

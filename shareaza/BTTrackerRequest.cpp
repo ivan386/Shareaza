@@ -209,7 +209,7 @@ void CBTTrackerRequest::Process(bool bRequest)
 	CSingleLock oLock( &Transfers.m_pSection, FALSE );
 	if ( ! oLock.Lock( 500 ) )
 	{
-		theApp.Message( MSG_DEBUG, _T("[BT] Transfers overloaded.") );
+		theApp.Message( MSG_ERROR, _T("Rejecting BitTorrent tracker request, network core overloaded.") );
 		return;
 	}
 
