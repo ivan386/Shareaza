@@ -534,7 +534,7 @@ BOOL CUploadTransfer::IsFileOpen() const
 BOOL CUploadTransfer::OpenFile()
 {
 	auto_ptr< CFragmentedFile > pFile( new CFragmentedFile );
-	if ( pFile.get() && pFile->Open( m_sPath ) )
+	if ( pFile.get() && pFile->Open( *this, FALSE ) )
 	{
 		AttachFile( pFile );
 		return TRUE;

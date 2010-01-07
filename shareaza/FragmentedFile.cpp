@@ -261,6 +261,11 @@ BOOL CFragmentedFile::Open(const CShareazaFile& oSHFile, BOOL bWrite)
 		// Reopen file
 		strSource = m_oFile.front().m_sPath;
 	}
+	else if ( GetFileAttributes( oSHFile.m_sPath ) != INVALID_FILE_ATTRIBUTES )
+	{
+		// Use specified file path
+		strSource = oSHFile.m_sPath;
+	}
 	else if ( bWrite )
 	{
 		// Generate new filename (inside incomplete folder)
