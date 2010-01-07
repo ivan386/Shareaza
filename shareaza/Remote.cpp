@@ -1076,22 +1076,34 @@ void CRemote::PageDownloads()
 			{
 				CDownloadSource* pSource = pDownload->GetNext( posSource );
 
+				ASSERT( pSource->m_pDownload == pDownload );
+
 				str.Format( _T("%i"), pSource );
-				
+
 				if ( GetKey( _T("modify_id") ) == str )
 				{
 					str = GetKey( _T("modify_action") );
 					ToLower( str );
-					
+
 					if ( str == _T("access") )
 					{
-						pDownload->Resume();
-						if ( pSource->m_bPushOnly )
-							pSource->PushRequest();
-						else if ( pSource->IsIdle() ) // Only create a new Transfer if there isn't already one 
-						{	
-							if ( CDownloadTransfer* pTransfer = pSource->CreateTransfer() )
-								pTransfer->Initiate();
+						// Only create a new Transfer if there isn't already one
+						if ( pSource->IsIdle()
+							&& pSource->m_nProtocol != PROTOCOL_ED2K )
+						{
+							if ( pDownload->IsPaused() )
+								pDownload->Resume();
+
+							pDownload->Resume();
+
+							if ( pSource->m_bPushOnly )
+								pSource->PushRequest();
+							else
+							{
+								CDownloadTransfer* pTransfer = pSource->CreateTransfer();
+								if ( pTransfer )
+									pTransfer->Initiate();
+							}
 						}
 					}
 					else if ( str == _T("forget") )
