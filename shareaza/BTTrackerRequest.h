@@ -1,7 +1,7 @@
 //
 // BTTrackerRequest.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -27,27 +27,29 @@ class CDownloadWithTorrent;
 class CBENode;
 
 
-class CBTTrackerRequest : public boost::noncopyable
+class CBTTrackerRequest
 {
 public:
 	CBTTrackerRequest(CDownloadWithTorrent* pDownload, LPCTSTR pszVerb, DWORD nNumWant, bool bProcess);
-	virtual ~CBTTrackerRequest();
+	~CBTTrackerRequest();
 
     static CString	Escape(const Hashes::BtHash& oBTH);
     static CString	Escape(const Hashes::BtGuid& oGUID);
 
 	void Cancel()
 	{
+		m_bCancel = true;
 		m_pRequest.Cancel();
 	}
 
 protected:
-	CDownloadWithTorrent*	m_pDownload;
-	bool					m_bProcess;
-	CHttpRequest			m_pRequest;
+	CDownloadWithTorrent*	m_pDownload;	// Handle of owner download
+	bool					m_bProcess;		// True if the request return needs to be parsed
+	volatile bool			m_bCancel;		// Ask for early termination
+	CHttpRequest			m_pRequest;		// Request object
 
 	void		Process(bool bRequest);
-	void		Process(CBENode* pRoot);
+	void		Process(const CBENode* pRoot);
 	static UINT	ThreadStart(LPVOID pParam);
 	void		OnRun();
 };

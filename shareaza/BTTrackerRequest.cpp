@@ -1,7 +1,7 @@
 //
 // BTTrackerRequest.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -41,7 +41,8 @@ static char THIS_FILE[] = __FILE__;
 
 CBTTrackerRequest::CBTTrackerRequest(CDownloadWithTorrent* pDownload, LPCTSTR pszVerb, DWORD nNumWant, bool bProcess) :
 	m_pDownload( pDownload ),
-	m_bProcess( bProcess )
+	m_bProcess( bProcess ),
+	m_bCancel( false )
 {
 	ASSERT( pDownload != NULL );
 	ASSERT( pDownload->IsTorrent() ); 
@@ -207,10 +208,11 @@ void CBTTrackerRequest::Process(bool bRequest)
 	CString strError;
 
 	CSingleLock oLock( &Transfers.m_pSection, FALSE );
-	if ( ! oLock.Lock( 500 ) )
+	while ( ! oLock.Lock( 100 ) )
 	{
-		theApp.Message( MSG_ERROR, _T("Rejecting BitTorrent tracker request, network core overloaded.") );
-		return;
+		if ( m_bCancel )
+			// Termination
+			return;
 	}
 
 	// Abort if the download has been paused after the request was sent but
@@ -232,7 +234,7 @@ void CBTTrackerRequest::Process(bool bRequest)
 		return;
 	}
 
-	CBuffer* pBuffer = m_pRequest.GetResponseBuffer();
+	const CBuffer* pBuffer = m_pRequest.GetResponseBuffer();
 
 	if ( pBuffer == NULL )
 	{
@@ -248,7 +250,7 @@ void CBTTrackerRequest::Process(bool bRequest)
 		return;
 	}
 
-	CBENode* pRoot = CBENode::Decode( pBuffer );
+	const CBENode* pRoot = CBENode::Decode( pBuffer );
 
 	if ( pRoot && pRoot->IsType( CBENode::beDict ) )
 	{
@@ -276,12 +278,12 @@ void CBTTrackerRequest::Process(bool bRequest)
 	delete pRoot;
 }
 
-void CBTTrackerRequest::Process(CBENode* pRoot)
+void CBTTrackerRequest::Process(const CBENode* pRoot)
 {
 	CString strError;
 
 	// Check for failure
-	if ( CBENode* pError = pRoot->GetNode( "failure reason" ) )
+	if ( const CBENode* pError = pRoot->GetNode( "failure reason" ) )
 	{
 		CString strErrorFormat;
 		LoadString( strErrorFormat, IDS_BT_TRACK_ERROR );
@@ -291,7 +293,7 @@ void CBTTrackerRequest::Process(CBENode* pRoot)
 	}
 
 	// Get the interval (next tracker contact)
-	CBENode* pInterval = pRoot->GetNode( "interval" );
+	const CBENode* pInterval = pRoot->GetNode( "interval" );
 	if ( ! pInterval->IsType( CBENode::beInt ) )
 	{
 		LoadString( strError, IDS_BT_TRACK_PARSE_ERROR );
@@ -310,28 +312,28 @@ void CBTTrackerRequest::Process(CBENode* pRoot)
 	m_pDownload->m_bTorrentStarted = TRUE;
 
 	// Get list of peers
-	CBENode* pPeers = pRoot->GetNode( "peers" );
+	const CBENode* pPeers = pRoot->GetNode( "peers" );
 	int nCount = 0;
 
 	if ( pPeers->IsType( CBENode::beList ) )
 	{
 		for ( int nPeer = 0 ; nPeer < pPeers->GetCount() ; nPeer++ )
 		{
-			CBENode* pPeer = pPeers->GetNode( nPeer );
+			const CBENode* pPeer = pPeers->GetNode( nPeer );
 			if ( ! pPeer->IsType( CBENode::beDict ) )
 				continue;
 
-			CBENode* pID = pPeer->GetNode( "peer id" );
+			const CBENode* pID = pPeer->GetNode( "peer id" );
 
-			CBENode* pIP = pPeer->GetNode( "ip" );
+			const CBENode* pIP = pPeer->GetNode( "ip" );
 			if ( ! pIP->IsType( CBENode::beString ) )
 				continue;
 
-			CBENode* pPort = pPeer->GetNode( "port" );
+			const CBENode* pPort = pPeer->GetNode( "port" );
 			if ( ! pPort->IsType( CBENode::beInt ) )
 				continue;
 
-			SOCKADDR_IN saPeer;
+			SOCKADDR_IN saPeer = {};
 			if ( ! Network.Resolve( pIP->GetString(), (int)pPort->GetInt(), &saPeer ) )
 				continue;
 
@@ -356,12 +358,12 @@ void CBTTrackerRequest::Process(CBENode* pRoot)
 	{
 		if ( 0 == ( pPeers->m_nValue % 6 ) )
 		{
-			BYTE* pPointer = (BYTE*)pPeers->m_pValue;
+			const BYTE* pPointer = (const BYTE*)pPeers->m_pValue;
 
 			for ( int nPeer = (int)pPeers->m_nValue / 6 ; nPeer > 0 ; nPeer --, pPointer += 6 )
 			{
-				IN_ADDR* pAddress = (IN_ADDR*)pPointer;
-				WORD nPort = *(WORD*)( pPointer + 4 );
+				const IN_ADDR* pAddress = (const IN_ADDR*)pPointer;
+				WORD nPort = *(const WORD*)( pPointer + 4 );
 
 				nCount += m_pDownload->AddSourceBT( Hashes::BtGuid(), pAddress, ntohs( nPort ) );
 			}
