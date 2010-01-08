@@ -360,12 +360,11 @@ BOOL CHostBrowser::SendPush(BOOL bMessage)
 BOOL CHostBrowser::OnPush(const Hashes::Guid& oClientID, CConnection* pConnection)
 {
 	// ED2K connections aren't handled here- they are in ED2KClient
-	if ( m_nProtocol == PROTOCOL_ED2K ) return FALSE;
-
-	if ( m_tPushed == 0 ) return FALSE;
-	if ( IsValid() ) return FALSE;
-
-	if ( !validAndEqual( m_oClientID, oClientID ) ) return FALSE;
+	if ( m_nProtocol == PROTOCOL_ED2K ||
+		 m_tPushed == 0 ||
+		 IsValid() ||
+		 ! pConnection->IsValid() ||
+		 ! validAndEqual( m_oClientID, oClientID ) ) return FALSE;
 
 	AttachTo( pConnection );
 
