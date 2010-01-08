@@ -252,7 +252,8 @@ DWORD CDownloadWithFile::MoveFile(LPCTSTR pszDestination, LPPROGRESS_ROUTINE lpP
 	if ( ! m_pFile.get() )
 		return ERROR_FILE_NOT_FOUND;
 
-	for( DWORD nIndex = 0; nIndex < m_pFile->GetCount(); ++nIndex )
+	const DWORD nCount = m_pFile->GetCount();
+	for( DWORD nIndex = 0; nIndex < nCount; ++nIndex )
 	{
 		DWORD dwError = m_pFile->Move( nIndex, pszDestination, lpProgressRoutine, lpData );
 
@@ -269,33 +270,40 @@ DWORD CDownloadWithFile::MoveFile(LPCTSTR pszDestination, LPPROGRESS_ROUTINE lpP
 		// Save download every move
 		static_cast< CDownload* >( this )->Save();
 
-		CString sPath = m_pFile->GetPath( nIndex );
+		const CString sPath = m_pFile->GetPath( nIndex );
 
 		MarkFileAsDownload( sPath );
 
 		LibraryBuilder.RequestPriority( sPath );
 
+		// TODO: Get hashes for all files of download
+		if ( nCount == 1 )
 		{
-			Hashes::Sha1ManagedHash oSHA1( m_oSHA1 );
-			if ( m_bSHA1Trusted )
-				oSHA1.signalTrusted();
-			Hashes::TigerManagedHash oTiger( m_oTiger );
-			if ( m_bTigerTrusted )
-				oTiger.signalTrusted();
-			Hashes::Ed2kManagedHash oED2K( m_oED2K );
-			if ( m_bED2KTrusted )
-				oED2K.signalTrusted();
-			Hashes::BtManagedHash oBTH( m_oBTH );
-			if ( m_bBTHTrusted )
-				oBTH.signalTrusted();
-			Hashes::Md5ManagedHash oMD5( m_oMD5 );
-			if ( m_bMD5Trusted )
-				oMD5.signalTrusted();
+			// Update with download hashes single-file download only
+			Hashes::Sha1ManagedHash		oSHA1( m_oSHA1 );
+			if ( m_bSHA1Trusted )		oSHA1.signalTrusted();
+			Hashes::TigerManagedHash	oTiger( m_oTiger );
+			if ( m_bTigerTrusted )		oTiger.signalTrusted();
+			Hashes::Ed2kManagedHash		oED2K( m_oED2K );
+			if ( m_bED2KTrusted )		oED2K.signalTrusted();
+			Hashes::BtManagedHash		oBTH( m_oBTH );
+			if ( m_bBTHTrusted )		oBTH.signalTrusted();
+			Hashes::Md5ManagedHash		oMD5( m_oMD5 );
+			if ( m_bMD5Trusted )		oMD5.signalTrusted();
 			LibraryHistory.Add( sPath, oSHA1, oTiger, oED2K, oBTH, oMD5,
 				GetSourceURLs( NULL, 0, PROTOCOL_NULL, NULL ) );
 		}
+		else
+		{
+			Hashes::Sha1ManagedHash		oSHA1;
+			Hashes::TigerManagedHash	oTiger;
+			Hashes::Ed2kManagedHash		oED2K;
+			Hashes::BtManagedHash		oBTH;
+			Hashes::Md5ManagedHash		oMD5;
+			LibraryHistory.Add( sPath, oSHA1, oTiger, oED2K, oBTH, oMD5 );
+		}
 
-		// Early update
+		// Early metadata update
 		CSingleLock oLibraryLock( &Library.m_pSection, FALSE );
 		if ( oLibraryLock.Lock( 100 ) )
 		{
