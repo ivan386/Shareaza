@@ -956,11 +956,11 @@ BOOL CDownloadWithTorrent::SeedTorrent(CString& sErrorMessage)
 
 	GenerateTorrentDownloadID();
 
-	CDownload* pDownload	= static_cast< CDownload* >( this );
-	m_bSeeding	= TRUE;
+	CDownload* pDownload	= static_cast< CDownload* >( this );	// TODO: Fix bad inheritance
+	pDownload->m_bSeeding	= TRUE;
 	pDownload->m_bComplete	= true;
 	pDownload->m_tCompleted	= GetTickCount();
-	pDownload->SetVerifyStatus( TRI_TRUE );
+	pDownload->m_bVerify	= TRI_TRUE;
 
 	memset( m_pTorrentBlock, TRI_TRUE, m_nTorrentBlock );
 	m_nTorrentSuccess = m_nTorrentBlock;

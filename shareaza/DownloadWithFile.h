@@ -1,7 +1,7 @@
 //
 // DownloadWithFile.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -23,6 +23,7 @@
 
 #include "DownloadWithTransfers.h"
 #include "FragmentedFile.h"
+
 
 class CDownloadWithFile : public CDownloadWithTransfers
 {
@@ -90,7 +91,6 @@ protected:
 	BOOL				ReadFile(QWORD nOffset, LPVOID pData, QWORD nLength, QWORD* pnRead = NULL);
 	BOOL				WriteFile(QWORD nOffset, LPCVOID pData, QWORD nLength, QWORD* pnWritten = NULL);
 	void				SerializeFile(CArchive& ar, int nVersion);
-	void				SetVerifyStatus(TRISTATE bVerify);
 	BOOL				OnVerify(LPCTSTR pszPath, BOOL bVerified);
 
 	// Not supported

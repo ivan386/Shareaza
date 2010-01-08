@@ -489,6 +489,7 @@ void CDownload::OnMoved()
 
 		// This torrent is now seeding
 		m_bSeeding = TRUE;
+		m_bVerify = TRI_TRUE;
 		m_bTorrentStarted = TRUE;
 		m_bTorrentRequested = TRUE;
 	}
@@ -763,7 +764,7 @@ void CDownload::ForceComplete()
 {
 	m_bPaused = FALSE;
 	m_bTempPaused = FALSE;
-	SetVerifyStatus( TRI_FALSE );
+	m_bVerify = TRI_FALSE;
 	MakeComplete();
 	StopTrying();
 	Share( FALSE );

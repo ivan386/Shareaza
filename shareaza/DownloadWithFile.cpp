@@ -1,7 +1,7 @@
 //
 // DownloadWithFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -156,7 +156,7 @@ BOOL CDownloadWithFile::OpenFile()
 
 	SetModified();
 
-	CDownload* pThis = static_cast< CDownload* >( this );
+	CDownload* pThis = static_cast< CDownload* >( this );	// TODO: Fix bad inheritance
 	if ( m_pFile.get() )
 	{
 		ClearFileError();
@@ -503,7 +503,8 @@ BOOL CDownloadWithFile::SubmitData(QWORD nOffset, LPBYTE pData, QWORD nLength)
 	SetModified();
 	m_tReceived = GetTickCount();
 
-	if ( static_cast< CDownload* >( this )->IsTorrent() )	// Hack: Only do this for BitTorrent
+	if ( static_cast< CDownload* >( this )->IsTorrent() )	// HACK: Only do this for BitTorrent
+															// TODO: Fix bad inheritance
 	{
 		for ( CDownloadTransfer* pTransfer = GetFirstTransfer() ; pTransfer ; pTransfer = pTransfer->m_pDlNext )
 		{
@@ -687,23 +688,16 @@ void CDownloadWithFile::SerializeFile(CArchive& ar, int nVersion)
 		m_pFile->Serialize( ar, nVersion );
 }
 
-void CDownloadWithFile::SetVerifyStatus(TRISTATE bVerify)
-{
-	m_bVerify = bVerify;
-	SetModified();
-}
-
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithFile verification handler
 
 BOOL CDownloadWithFile::OnVerify(LPCTSTR pszPath, BOOL bVerified)
 {
-	if ( m_bVerify != TRI_UNKNOWN ) return FALSE;
-	if ( m_pFile.get() ) return FALSE;
-
-	if ( ! m_pFile->FindByPath( pszPath ) ) return FALSE;
+	if ( ! m_pFile.get() || ! m_pFile->FindByPath( pszPath ) )
+		return FALSE;
 
 	m_bVerify = bVerified ? TRI_TRUE : TRI_FALSE;
+
 	SetModified();
 
 	return TRUE;
