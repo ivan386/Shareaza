@@ -1,7 +1,7 @@
 //
 // SharedFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1051,19 +1051,19 @@ BOOL CLibraryFile::OnVerifyDownload(
 		{
 			m_bVerify = ( m_oSHA1 == oSHA1 ) ? TRI_TRUE : TRI_FALSE;
 		}
-		if ( (bool)m_oTiger && (bool)oTiger && oTiger.isTrusted() )
+		if ( m_bVerify != TRI_FALSE && (bool)m_oTiger && (bool)oTiger && oTiger.isTrusted() )
 		{
 			m_bVerify = ( m_oTiger == oTiger ) ? TRI_TRUE : TRI_FALSE;
 		}
-		if ( (bool)m_oED2K && (bool)oED2K && oED2K.isTrusted() )
+		if ( m_bVerify != TRI_FALSE && (bool)m_oED2K && (bool)oED2K && oED2K.isTrusted() )
 		{
 			m_bVerify = ( m_oED2K == oED2K ) ? TRI_TRUE : TRI_FALSE;
 		}
-		if ( (bool)m_oMD5 && (bool)oMD5 && oMD5.isTrusted() )
+		if ( m_bVerify != TRI_FALSE && (bool)m_oMD5 && (bool)oMD5 && oMD5.isTrusted() )
 		{
 			m_bVerify = ( m_oMD5 == oMD5 ) ? TRI_TRUE : TRI_FALSE;
 		}
-		if ( (bool)m_oBTH && (bool)oBTH && oBTH.isTrusted() )
+		if ( m_bVerify != TRI_FALSE && (bool)m_oBTH && (bool)oBTH && oBTH.isTrusted() )
 		{
 			m_bVerify = ( m_oBTH == oBTH ) ? TRI_TRUE : TRI_FALSE;
 		}
