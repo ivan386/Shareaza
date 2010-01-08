@@ -95,14 +95,26 @@ void CRegExpDlg::DoIt()
 
 	try
 	{
-		regex::rpattern pat( std::wstring( (LPCTSTR)m_strRegExp ), regex::NOCASE );
-		regex::split_results res;
-		size_t nCount = pat.split( std::wstring( (LPCTSTR)m_strInput ), res, 0 );
+		const std::wstring exp( (LPCTSTR)m_strRegExp );
+		const std::wstring input( (LPCTSTR)m_strInput );
+
+		const regex::rpattern pat( exp, regex::NOCASE, regex::MODE_SAFE );
+
+		regex::match_results res1;
+		regex::rpattern::backref_type matches = pat.match( input, res1 );
+		if ( matches.matched )
+			m_oResult.AddString( _T("Matches.") );
+		else
+			m_oResult.AddString( _T("No matches.") );
+
+		regex::split_results res2;
+		const size_t nCount = pat.split( input, res2, 0 );
 		if ( nCount )
 		{
+			m_oResult.AddString( _T("Splitted strings:") );
 			int n = 1;
-			std::vector< std::wstring > str = res.strings();
-			for ( std::vector< std::wstring >::iterator i = str.begin();
+			const std::vector< std::wstring > str = res2.strings();
+			for ( std::vector< std::wstring >::const_iterator i = str.begin();
 				i != str.end(); ++i, ++n )
 			{
 				CString msg;
@@ -111,11 +123,11 @@ void CRegExpDlg::DoIt()
 			}
 		}
 		else
-			m_oResult.AddString( _T("<No matches>") );
+			m_oResult.AddString( _T("No splitted strings.") );
 	}
 	catch(...)
 	{
-		m_oResult.AddString( _T("<Exception>") );
+		m_oResult.AddString( _T("Bad regular expression.") );
 	}
 
 	AfxGetApp()->WriteProfileString( _T("RegExp"), _T("Input"), m_strInput );
