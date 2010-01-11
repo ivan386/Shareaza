@@ -200,7 +200,7 @@ BOOL CFragmentedFile::Open(LPCTSTR pszFile, QWORD nOffset, QWORD nLength,
 			{
 				nLength = nRealLength;
 			}
-			else if ( ! bWrite && nRealLength != nLength )
+			else if ( ! pFile->IsWritable() && nRealLength != nLength )
 			{
 				// Wrong file
 				pFile->Release();

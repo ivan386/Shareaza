@@ -63,14 +63,19 @@ public:
 	BOOL		Write(QWORD nOffset, LPCVOID pBuffer, QWORD nBuffer, QWORD* pnWritten);
 	BOOL		EnsureWrite();
 
-	inline BOOL	IsOpen() const
+	inline BOOL	IsOpen() const throw()
 	{
 		return ( m_hFile != INVALID_HANDLE_VALUE );
 	}
 
-	inline BOOL	IsExists() const
+	inline BOOL	IsExists() const throw()
 	{
 		return m_bExists;
+	}
+
+	inline BOOL	IsWritable() const throw()
+	{
+		return m_bWrite;
 	}
 
 protected:
