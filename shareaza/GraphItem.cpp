@@ -1,7 +1,7 @@
 //
 // GraphItem.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -75,8 +75,9 @@ void CGraphItem::SetCode(DWORD nCode)
 		Clear();
 	}
 
-	GRAPHITEM* pDesc = GetItemDesc( m_nCode );
-	if ( pDesc ) Skin.LoadString( m_sName, pDesc->m_nStringID );
+	const GRAPHITEM* pDesc = GetItemDesc( m_nCode );
+	if ( pDesc )
+		Skin.LoadString( m_sName, pDesc->m_nStringID );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -216,7 +217,7 @@ void CGraphItem::MakeGradient(COLORREF crBack)
 //////////////////////////////////////////////////////////////////////
 // CGraphItem value retrieval
 
-QWORD CGraphItem::GetValue(DWORD nCode, float nMultiplier)
+QWORD CGraphItem::GetValue(const DWORD nCode, const float nMultiplier)
 {
 	long double nValue = 0;
 
@@ -321,39 +322,35 @@ QWORD CGraphItem::GetValue(DWORD nCode, float nMultiplier)
 	case GRC_GNUTELLA_PINGS:
 		if ( ! Network.m_pSection.Lock( 20 ) ) break;
 		Statistics.Update();
-		if ( Statistics.Last.Gnutella1.PingsSent + Statistics.Last.Gnutella2.PingsSent == 0 )
-			nValue = 100;
-		else
-			nValue = (float)( Statistics.Last.Gnutella1.PingsReceived + Statistics.Last.Gnutella2.PingsReceived ) /
+		if ( Statistics.Last.Gnutella1.PingsSent + Statistics.Last.Gnutella2.PingsSent )
+			nValue = (long double)( Statistics.Last.Gnutella1.PingsReceived + Statistics.Last.Gnutella2.PingsReceived ) /
 					 ( Statistics.Last.Gnutella1.PingsSent + Statistics.Last.Gnutella2.PingsSent ) * 100;
 		Network.m_pSection.Unlock();
 		break;
 	case GRC_GNUTELLA_PONGS:
 		if ( ! Network.m_pSection.Lock( 20 ) ) break;
 		Statistics.Update();
-		if ( Statistics.Last.Gnutella1.PongsSent + Statistics.Last.Gnutella2.PongsSent == 0 )
-			nValue = 100;
-		else
-			nValue = (float)( Statistics.Last.Gnutella1.PongsReceived + Statistics.Last.Gnutella2.PongsReceived ) /
+		if ( Statistics.Last.Gnutella1.PongsSent + Statistics.Last.Gnutella2.PongsSent )
+			nValue = (long double)( Statistics.Last.Gnutella1.PongsReceived + Statistics.Last.Gnutella2.PongsReceived ) /
 					 ( Statistics.Last.Gnutella1.PongsSent + Statistics.Last.Gnutella2.PongsSent ) * 100;
 		Network.m_pSection.Unlock();
 		break;
 	case GRC_CONNECTION_ERRORS:
 		if ( ! Network.m_pSection.Lock( 20 ) ) break;
 		Statistics.Update();
-		nValue = (float)Statistics.Ever.Connections.Errors / 
-			( Statistics.Ever.Connections.Incoming + Statistics.Ever.Connections.Outgoing ) * 100;
+		if ( Statistics.Ever.Connections.Incoming + Statistics.Ever.Connections.Outgoing )
+			nValue = (long double)Statistics.Ever.Connections.Errors / 
+				( Statistics.Ever.Connections.Incoming + Statistics.Ever.Connections.Outgoing ) * 100;
 		Network.m_pSection.Unlock();
 	};
 
-	QWORD result = (QWORD)floor( nValue * nMultiplier );
-	return result;
+	return (QWORD)floor( nValue * nMultiplier );
 }
 
 //////////////////////////////////////////////////////////////////////
 // CGraphItem item names
 
-GRAPHITEM CGraphItem::m_pItemDesc[] =
+const GRAPHITEM CGraphItem::m_pItemDesc[] =
 {
 	{ 0, 0, 0, 0 },
 
@@ -392,7 +389,7 @@ GRAPHITEM CGraphItem::m_pItemDesc[] =
 	{ 0, 0, 0, 0 }
 };
 
-GRAPHITEM* CGraphItem::GetItemDesc(DWORD nCode)
+const GRAPHITEM* CGraphItem::GetItemDesc(const DWORD nCode)
 {
 	if ( ! nCode ) return NULL;
 

@@ -1,7 +1,7 @@
 //
 // GraphItem.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_GRAPHITEM_H__6C5709B5_EB88_4CAB_B61E_74F11AAB9F65__INCLUDED_)
-#define AFX_GRAPHITEM_H__6C5709B5_EB88_4CAB_B61E_74F11AAB9F65__INCLUDED_
-
 #pragma once
 
 typedef struct
@@ -35,30 +32,23 @@ typedef struct
 
 class CGraphItem
 {
-// Construction
 public:
 	CGraphItem(DWORD nCode = 0, float nMultiplier = 1.0f, COLORREF nColour = RGB(255,255,255));
-	virtual ~CGraphItem();
+	~CGraphItem();
 
-// Attributes
-public:
 	DWORD		m_nCode;
 	float		m_nMultiplier;
 	COLORREF	m_nColour;
-public:
 	CString		m_sName;
 	CPen		m_pPen[4];
 	COLORREF	m_cPen[4];
-public:
 	DWORD*		m_pData;
 	DWORD		m_nData;
 	DWORD		m_nLength;
 	DWORD		m_nPosition;
-public:
-	static GRAPHITEM	m_pItemDesc[];
 
-// Operations
-public:
+	const static GRAPHITEM	m_pItemDesc[];
+
 	void		SetCode(DWORD nCode);
 	void		Clear();
 	DWORD		Add(DWORD nValue);
@@ -68,10 +58,9 @@ public:
 	DWORD		Update();
 	void		Serialize(CArchive& ar);
 	void		MakeGradient(COLORREF crBack);
-public:
-	static QWORD		GetValue(DWORD nCode, float nMultiplier = 1.0f);
-	static GRAPHITEM*	GetItemDesc(DWORD nCode);
 
+	static QWORD GetValue(const DWORD nCode, const float nMultiplier = 1.0f);
+	static const GRAPHITEM* GetItemDesc(const DWORD nCode);
 };
 
 #define GRC_TOTAL_BANDWIDTH_IN			1
@@ -106,5 +95,3 @@ public:
 #define GRC_CONNECTION_ERRORS			61
 
 #define GRC_RANDOM						100
-
-#endif // !defined(AFX_GRAPHITEM_H__6C5709B5_EB88_4CAB_B61E_74F11AAB9F65__INCLUDED_)

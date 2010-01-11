@@ -81,7 +81,7 @@ BOOL CGraphItemDlg::OnInitDialog()
 
 	for ( int nItem = 1 ; CGraphItem::m_pItemDesc[ nItem ].m_nCode ; nItem++ )
 	{
-		GRAPHITEM* pItem = &CGraphItem::m_pItemDesc[ nItem ];
+		const GRAPHITEM* pItem = &CGraphItem::m_pItemDesc[ nItem ];
 		CString strItem;
 
 		::Skin.LoadString( strItem, pItem->m_nStringID );

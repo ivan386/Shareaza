@@ -293,8 +293,8 @@ void CLineGraph::PaintGrid(CDC* pDC, CRect* pRect)
 	{
 		for ( POSITION pos = GetItemIterator() ; pos && ! bVolume ; )
 		{
-			CGraphItem* pItem	= GetNextItem( pos );
-			GRAPHITEM* pDesc	= pItem->GetItemDesc( pItem->m_nCode );
+			const CGraphItem* pItem	= GetNextItem( pos );
+			const GRAPHITEM* pDesc	= pItem->GetItemDesc( pItem->m_nCode );
 			if ( pDesc && pDesc->m_nUnits == 1 ) bVolume = TRUE;
 		}
 		pDC->SetTextColor( CoolInterface.m_crTrafficWindowText );
