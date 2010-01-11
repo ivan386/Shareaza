@@ -1,7 +1,7 @@
 //
 // LibraryBuilderInternals.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -83,6 +83,6 @@ private:
 	CString		ReadLineReverse(HANDLE hFile, LPCTSTR pszSeparators = NULL);
 	bool		ReadCollection(DWORD nIndex, LPCTSTR pszPath);
 	bool		ReadCHM(DWORD nIndex, HANDLE hFile, LPCTSTR pszPath);
-	CString		DecodePDFText(CString& strInput);
+	CString		DecodePDFText(CString strInput);
 	bool		ReadTorrent(DWORD nIndex, HANDLE hFile, LPCTSTR pszPath);
 };

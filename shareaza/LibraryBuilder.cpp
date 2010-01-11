@@ -1,7 +1,7 @@
 //
 // LibraryBuilder.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -636,7 +636,7 @@ bool CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile)
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilder metadata submission (threaded)
 
-int CLibraryBuilder::SubmitMetadata(DWORD nIndex, LPCTSTR pszSchemaURI, CXMLElement*& pXML)
+int CLibraryBuilder::SubmitMetadata(DWORD nIndex, LPCTSTR pszSchemaURI, CXMLElement* pXML)
 {
 	CSchemaPtr pSchema = SchemaCache.Get( pszSchemaURI );
 
@@ -646,17 +646,12 @@ int CLibraryBuilder::SubmitMetadata(DWORD nIndex, LPCTSTR pszSchemaURI, CXMLElem
 		return 0;
 	}
 
-	CXMLElement* pBase = pSchema->Instantiate( true );
+	// Validate schema
+	auto_ptr< CXMLElement > pBase( pSchema->Instantiate( true ) );
 	pBase->AddElement( pXML );
-
-	if ( !pSchema->Validate( pBase, true ) )
-	{
-		delete pBase;
+	if ( ! pSchema->Validate( pBase.get(), true ) )
 		return 0;
-	}
-
 	pXML->Detach();
-	delete pBase;
 
 	int nAttributeCount = pXML->GetAttributeCount();
 

@@ -1,7 +1,7 @@
 //
 // LibraryBuilder.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -68,7 +68,7 @@ public:
 	size_t		GetRemaining() const;				// Hashing queue size
 	DWORD		GetProgress() const;				// Hashing file progress (0..100%)
 
-	int			SubmitMetadata(DWORD nIndex, LPCTSTR pszSchemaURI, CXMLElement*& pXML);
+	int			SubmitMetadata(DWORD nIndex, LPCTSTR pszSchemaURI, CXMLElement* pXML);
 	bool		SubmitCorrupted(DWORD nIndex);
 
 	bool		RefreshMetadata(const CString& sPath);
