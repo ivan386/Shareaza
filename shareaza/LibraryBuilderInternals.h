@@ -79,8 +79,7 @@ private:
 	bool		ReadAPE(DWORD nIndex, HANDLE hFile, bool bPreferFooter = false);
 	bool		ReadMPC(DWORD nIndex, HANDLE hFile);
 	bool		ReadPDF(DWORD nIndex, HANDLE hFile, LPCTSTR pszPath);
-	CString		ReadLine(HANDLE hFile, LPCTSTR pszSeparators = NULL);
-	CString		ReadLineReverse(HANDLE hFile, LPCTSTR pszSeparators = NULL);
+	CString		ReadPDFLine(HANDLE hFile, bool bReverse, bool bComplex = false, bool bSplitter = true);
 	bool		ReadCollection(DWORD nIndex, LPCTSTR pszPath);
 	bool		ReadCHM(DWORD nIndex, HANDLE hFile, LPCTSTR pszPath);
 	CString		DecodePDFText(CString strInput);
