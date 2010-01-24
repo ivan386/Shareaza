@@ -1,7 +1,7 @@
 //
 // DownloadTransferBT.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -49,7 +49,6 @@ CDownloadTransferBT::CDownloadTransferBT(CDownloadSource* pSource, CBTClient* pC
 	, m_pClient			( pClient )
 	, m_bChoked			( TRUE )
 	, m_bInterested		( FALSE )
-	, m_pAvailable		( NULL )
 	, m_nAvailable		( 0 )
 	, m_bAvailable		( FALSE )
 	, m_tRunThrottle	( 0 )
@@ -68,8 +67,6 @@ CDownloadTransferBT::~CDownloadTransferBT()
 
 	// This never happens
 	if ( m_pClient ) m_pClient->m_mInput.pLimit = m_pClient->m_mOutput.pLimit = NULL;
-
-	if ( m_pAvailable != NULL ) delete [] m_pAvailable;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -220,7 +217,8 @@ BOOL CDownloadTransferBT::OnRun()
 		ShowInterest();
 		if ( m_nState == dtsTorrent || m_nState == dtsRequesting || m_nState == dtsDownloading )
 		{
-			if ( ! SendRequests() ) return FALSE;
+			if ( !SendFragmentRequests() )
+				return FALSE;
 		}
 	}
 	if ( m_pClient->m_bExchange && tNow - m_tSourceRequest >= Settings.BitTorrent.SourceExchangePeriod * 60000 )
@@ -281,7 +279,7 @@ BOOL CDownloadTransferBT::OnBitfield(CBTPacket* pPacket)
 	
 	m_pSource->m_oAvailable.clear();
 	
-	if ( m_pAvailable != NULL ) delete [] m_pAvailable;
+	delete [] m_pAvailable;
 	m_pAvailable = NULL;
 	
 	if ( nBlockCount == 0 )
@@ -449,13 +447,13 @@ BOOL CDownloadTransferBT::OnUnchoked(CBTPacket* /*pPacket*/)
 	
 	theApp.Message( MSG_DEBUG, _T("Download from %s was Unchoked."), (LPCTSTR)m_sAddress );
 	
-	return SendRequests();
+	return SendFragmentRequests();
 }
 
 //////////////////////////////////////////////////////////////////////
-// CDownloadTransferBT request pipe
+// CDownloadTransferBT fragment request manager
 
-BOOL CDownloadTransferBT::SendRequests()
+bool CDownloadTransferBT::SendFragmentRequests()
 {
 	ASSERT( m_nState == dtsTorrent || m_nState == dtsRequesting || m_nState == dtsDownloading );
 	if ( m_bChoked || ! m_bInterested )
@@ -542,22 +540,6 @@ BOOL CDownloadTransferBT::SendRequests()
 }
 
 //////////////////////////////////////////////////////////////////////
-// CDownloadTransferBT fragment selection
-
-BOOL CDownloadTransferBT::SelectFragment(const Fragments::List& oPossible, QWORD& nOffset, QWORD& nLength)
-{
-	Fragments::Fragment oSelection(
-		selectBlock( oPossible, m_pDownload->m_pTorrent.m_nBlockSize, m_pAvailable ) );
-
-	if ( oSelection.size() == 0 ) return FALSE;
-
-	nOffset = oSelection.begin();
-	nLength = oSelection.size();
-
-	return TRUE;
-}
-
-//////////////////////////////////////////////////////////////////////
 // CDownloadTransferBT multi-source fragment handling
 
 BOOL CDownloadTransferBT::SubtractRequested(Fragments::List& ppFragments)
@@ -568,12 +550,14 @@ BOOL CDownloadTransferBT::SubtractRequested(Fragments::List& ppFragments)
 	return TRUE;
 }
 
-BOOL CDownloadTransferBT::UnrequestRange(QWORD nOffset, QWORD nLength)
+bool CDownloadTransferBT::UnrequestRange(QWORD nOffset, QWORD nLength)
 {
 	if ( m_oRequested.empty() ) 
-		return FALSE;
+		return false;
+
 	ASSERT( m_pDownload->m_pTorrent.m_nBlockSize != 0 );
-	if ( m_pDownload->m_pTorrent.m_nBlockSize == 0 ) return FALSE;
+	if ( m_pDownload->m_pTorrent.m_nBlockSize == 0 )
+		return false;
 
 	Fragments::Queue oUnrequests = extract_range( m_oRequested,
 		Fragments::Fragment( nOffset, nOffset + nLength ) );
@@ -621,7 +605,7 @@ BOOL CDownloadTransferBT::OnPiece(CBTPacket* pPacket)
 	// TODO: SendRequests and ShowInterest could be combined.. SendRequests
 	// is probably going to tell us if we are interested or not
 	ShowInterest();
-	return SendRequests();
+	return SendFragmentRequests();
 }
 
 //////////////////////////////////////////////////////////////////////

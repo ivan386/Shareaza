@@ -1,7 +1,7 @@
 //
 // DownloadTransferBT.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -40,7 +40,6 @@ public:
 	BOOL			m_bChoked;
 	BOOL			m_bInterested;
 public:
-	BYTE*			m_pAvailable;
 	DWORD			m_nAvailable;
 	BOOL			m_bAvailable;
 	Fragments::Queue m_oRequested;
@@ -48,16 +47,6 @@ public:
 	DWORD			m_tSourceRequest;
 
 // Operations
-public:
-	virtual BOOL	Initiate();
-	virtual void	Close(TRISTATE bKeepSource, DWORD nRetryAfter = 0);
-	virtual void	Boost();
-	virtual DWORD	GetMeasuredSpeed();
-	virtual CString	GetStateText(BOOL bLong);
-	virtual BOOL	OnRun();
-	virtual BOOL	OnConnected();
-	virtual BOOL	SubtractRequested(Fragments::List& ppFragments);
-	virtual BOOL	UnrequestRange(QWORD nOffset, QWORD nLength);
 public:
 	BOOL	OnBitfield(CBTPacket* pPacket);
 	BOOL	OnHave(CBTPacket* pPacket);
@@ -69,6 +58,18 @@ public:
 protected:
 	void	Send(CBTPacket* pPacket, BOOL bRelease = TRUE);
 	void	ShowInterest();
-	BOOL	SendRequests();
-	BOOL	SelectFragment(const Fragments::List& oPossible, QWORD& nOffset, QWORD& nLength);
+
+// Overides
+public:
+	virtual BOOL	Initiate();
+	virtual void	Close(TRISTATE bKeepSource, DWORD nRetryAfter = 0);
+	virtual void	Boost();
+	virtual DWORD	GetMeasuredSpeed();
+	virtual CString	GetStateText(BOOL bLong);
+	virtual BOOL	OnRun();
+	virtual BOOL	OnConnected();
+	virtual BOOL	SubtractRequested(Fragments::List& ppFragments);
+	virtual bool	UnrequestRange(QWORD nOffset, QWORD nLength);
+protected:
+	virtual bool	SendFragmentRequests();
 };

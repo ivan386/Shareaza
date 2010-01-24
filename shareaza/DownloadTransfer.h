@@ -1,7 +1,7 @@
 //
 // DownloadTransfer.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -28,12 +28,17 @@ class CDownload;
 class CDownloadSource;
 
 
+typedef std::pair< uint64, uint64 >	blockPair;
+
 class CDownloadTransfer : public CTransfer
 {
+// Construction
 public:
 	CDownloadTransfer(CDownloadSource* pSource, PROTOCOLID nProtocol);
 	virtual ~CDownloadTransfer();
 
+// Attributes
+public:
 	CDownloadTransfer*	m_pDlPrev;
 	CDownloadTransfer*	m_pDlNext;
 
@@ -48,32 +53,40 @@ public:
 	QWORD				m_nPosition;		// Fragment position
 	QWORD				m_nDownloaded;
 
-	BOOL				m_bWantBackwards;
-	BOOL				m_bRecvBackwards;	// Got "Content-Encoding: backwards"
+	bool				m_bWantBackwards;
+	bool				m_bRecvBackwards;	// Got "Content-Encoding: backwards"
+protected:
+	CDownload*					m_pDownload;
+	CDownloadSource*			m_pSource;
+	CTimeAverage< DWORD, 2000 >	m_AverageSpeed;
+	BYTE*				m_pAvailable;
 
+// Operations
+public:
+	void				SetState(int nState);
+	CDownload*			GetDownload() const;	// Get owner download
+	CDownloadSource*	GetSource() const;		// Get associated source
+protected:
+	void				ChunkifyRequest(QWORD* pnOffset, QWORD* pnLength, QWORD nChunk, BOOL bVerifyLock);
+	bool				SelectFragment(const Fragments::List& oPossible, QWORD& nOffset, QWORD& nLength) const;
+private:
+	blockPair			SelectBlock(const Fragments::List& oPossible, const BYTE* pAvailable) const;
+	void				CheckPart(uint64* nPart, uint64 nPartBlock, uint64* nRange, uint64& nRangeBlock, uint64* nBestRange) const;
+	void				CheckRange(uint64* nRange, uint64* nBestRange) const;
+
+// Overides
+public:
 	virtual BOOL	Initiate() = 0;
 	virtual void	Close(TRISTATE bKeepSource, DWORD nRetryAfter = 0);
 	virtual void	Boost();
 	virtual DWORD	GetAverageSpeed();
 	virtual DWORD	GetMeasuredSpeed();
 	virtual BOOL	SubtractRequested(Fragments::List& ppFragments) = 0;
-	virtual BOOL	UnrequestRange(QWORD /*nOffset*/, QWORD /*nLength*/) { return FALSE; }
+	virtual bool	UnrequestRange(QWORD /*nOffset*/, QWORD /*nLength*/);
 	virtual CString	GetStateText(BOOL bLong);
 	virtual BOOL	OnRun();
-	void			SetState(int nState);
-
-	// Get owner download
-	CDownload*		 GetDownload() const;
-
-	// Get associated source
-	CDownloadSource* GetSource() const;
-
 protected:
-	CDownload*					m_pDownload;
-	CDownloadSource*			m_pSource;
-	CTimeAverage< DWORD, 2000 >	m_AverageSpeed;
-
-	void			ChunkifyRequest(QWORD* pnOffset, QWORD* pnLength, QWORD nChunk, BOOL bVerifyLock);
+	virtual bool	SendFragmentRequests() {return false;}/* = 0*/;
 };
 
 enum

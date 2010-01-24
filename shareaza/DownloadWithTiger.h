@@ -1,7 +1,7 @@
 //
 // DownloadWithTiger.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -67,7 +67,7 @@ public:
 	void		ResetVerification();
 	void		ClearVerification();
 	void		RunValidation();
-	QWORD		GetVerifyLength(int nHash = HASH_NULL) const;
+	QWORD		GetVerifyLength(PROTOCOLID nProtocol = PROTOCOL_ANY, int nHash = HASH_NULL) const;
 
 	virtual CString	GetAvailableRanges() const;
 
@@ -85,6 +85,9 @@ public:
 	// Select a fragment for a transfer
 	BOOL		GetFragment(CDownloadTransfer* pTransfer);
 
+	// Get a list of possible download fragments
+	Fragments::List GetPossibleFragments(const Fragments::List& oAvailable, Fragments::Fragment& oLargest);
+
 protected:
 	bool		IsFullyVerified() const;
 	DWORD		GetValidationCookie() const;
@@ -96,9 +99,6 @@ protected:
 	// Get list of all fragments which must be downloaded
 	// but rounded to nearest smallest hash block (torrent, tiger or ed2k)
 	Fragments::List GetHashableFragmentList() const;
-
-	// Get a list of possible download fragments
-	Fragments::List GetPossibleFragments(const Fragments::List& oAvailable, Fragments::Fragment& oLargest);
 
 	virtual void	Serialize(CArchive& ar, int nVersion);
 

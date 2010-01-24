@@ -1,7 +1,7 @@
 //
 // FragmentedFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -457,9 +457,13 @@ Fragments::List CFragmentedFile::GetFullFragmentList() const
 	CQuickLock oLock( m_pSection );
 
 	Fragments::List oList( m_oFList.limit() );
-	for ( CVirtualFile::const_iterator i = m_oFile.begin(); i != m_oFile.end(); ++i )
-		if ( (*i).m_nPriority != prNotWanted )
-			oList.insert( Fragments::Fragment( (*i).m_nOffset, (*i).m_nOffset + (*i).m_nSize ) );
+	CVirtualFile::const_iterator pItr = m_oFile.begin();
+	const CVirtualFile::const_iterator pEnd = m_oFile.end();
+	for ( ; pItr != pEnd ; ++pItr )
+	{
+		if ( (*pItr).m_nPriority != prNotWanted )
+			oList.insert( Fragments::Fragment( (*pItr).m_nOffset, (*pItr).m_nOffset + (*pItr).m_nSize ) );
+	}
 
 	return oList;
 }

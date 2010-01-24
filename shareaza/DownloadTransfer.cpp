@@ -1,7 +1,7 @@
 //
 // DownloadTransfer.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -45,20 +45,21 @@ static char THIS_FILE[]=__FILE__;
 
 CDownloadTransfer::CDownloadTransfer(CDownloadSource* pSource, PROTOCOLID nProtocol)
 	: CTransfer			( nProtocol )
-	, m_pDownload		( pSource->m_pDownload )
 	, m_pDlPrev			( NULL )
 	, m_pDlNext			( NULL )
-	, m_pSource			( pSource )
 	, m_nState			( dtsNull )
-	, m_nQueuePos		( 0 )
-	, m_nQueueLen		( 0 )
-	, m_nBandwidth		( 0 )
-	, m_nDownloaded		( 0 )
-	, m_bWantBackwards	( FALSE )
-	, m_bRecvBackwards	( FALSE )
+	, m_nQueuePos		( 0ul )
+	, m_nQueueLen		( 0ul )
+	, m_nBandwidth		( 0ul )
 	, m_nOffset			( SIZE_UNKNOWN )
-	, m_nLength			( 0 )
-	, m_nPosition		( 0 )
+	, m_nLength			( 0ull )
+	, m_nPosition		( 0ull )
+	, m_nDownloaded		( 0ull )
+	, m_bWantBackwards	( false )
+	, m_bRecvBackwards	( false )
+	, m_pDownload		( pSource->m_pDownload )
+	, m_pSource			( pSource )
+	, m_pAvailable		( NULL )
 {
 	ASSUME_LOCK( Transfers.m_pSection );
 
@@ -68,7 +69,10 @@ CDownloadTransfer::CDownloadTransfer(CDownloadSource* pSource, PROTOCOLID nProto
 CDownloadTransfer::~CDownloadTransfer()
 {
 	ASSUME_LOCK( Transfers.m_pSection );
+
 	ASSERT( m_pSource == NULL );
+
+	delete m_pAvailable;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -310,6 +314,7 @@ void CDownloadTransfer::ChunkifyRequest(QWORD* pnOffset, QWORD* pnLength, QWORD 
 	ASSUME_LOCK( Transfers.m_pSection );
 
 	ASSERT( pnOffset != NULL && pnLength != NULL );
+	ASSERT( m_pDownload->IsRangeUseful(*pnOffset, *pnLength) );
 
 	if ( m_pSource->m_bCloseConn ) return;
 
@@ -350,4 +355,148 @@ void CDownloadTransfer::ChunkifyRequest(QWORD* pnOffset, QWORD* pnLength, QWORD 
 		*pnLength = min( nChunk, *pnOffset + *pnLength - nStart );
 		*pnOffset = nStart;
 	}
+}
+
+//////////////////////////////////////////////////////////////////////
+// CDownloadTransfer fragment selection
+//
+// Selects an available block, either unaligned blocks or if none is available
+// a random aligned block
+
+blockPair CDownloadTransfer::SelectBlock( const Fragments::List& oPossible,
+	const BYTE* pAvailable) const
+{
+	ASSUME_LOCK( Transfers.m_pSection );
+
+	typedef Fragments::List::const_iterator const_iterator;
+
+	if ( oPossible.empty() )
+		return std::make_pair( 0ull, 0ull );
+
+	std::deque< uint64 > oBlocks;
+	uint64 nRangeBlock = 0ull;
+	uint64 nRange[3] = { 0ull, 0ull, 0ull };
+	uint64 nBestRange[3] = { 0ull, 0ull, 0ull };
+
+	const_iterator pItr = oPossible.begin();
+	const const_iterator pEnd = oPossible.end();
+
+	if ( pItr->begin() < Settings.Downloads.ChunkStrap )
+	{
+		return std::make_pair( pItr->begin(),
+			min( pItr->end(), Settings.Downloads.ChunkStrap ) );
+	}
+
+	DWORD nBlockSize = m_pDownload->GetVerifyLength( m_nProtocol );
+	if ( !nBlockSize )
+		return std::make_pair( pItr->begin(), pItr->end() );
+
+	for ( ; pItr != pEnd ; ++pItr )
+	{
+		uint64 nPart[2] = { pItr->begin(), 0ull };
+		uint64 nBlockBegin = nPart[0] / nBlockSize;
+		uint64 nBlockEnd = ( pItr->end() - 1 ) / nBlockSize;
+
+		// The start of a block is complete, but part is missing
+		if ( nPart[0] % nBlockSize
+			&& ( !pAvailable || pAvailable[ nBlockBegin ] ) )
+		{
+			nPart[1] = min( pItr->end(), nBlockSize * ( nBlockBegin + 1 ) );
+			nPart[1] -= nPart[0];
+			CheckPart( nPart, nBlockBegin, nRange, nRangeBlock, nBestRange );
+		}
+
+		// The end of a block is complete, but part is missing
+		if ( ( !nPart[1] || nBlockBegin != nBlockEnd )
+			&& pItr->end() % nBlockSize
+			&& ( !pAvailable || pAvailable[ nBlockEnd ] ) )
+		{
+			nPart[0] = nBlockEnd * nBlockSize;
+			nPart[1] = pItr->end() - nPart[0];
+			CheckPart( nPart, nBlockEnd, nRange, nRangeBlock, nBestRange );
+		}
+
+		// This fragment contains one or more aligned empty blocks
+		if ( !nRange[2] )
+		{
+			for ( ; nBlockBegin <= nBlockEnd; ++nBlockBegin )
+			{
+				if ( !pAvailable || pAvailable[ nBlockBegin ] )
+					oBlocks.push_back( nBlockBegin );
+			}
+		}
+	}
+
+	CheckRange( nRange, nBestRange );
+
+	if ( !nBestRange[2] )
+	{
+		if ( oBlocks.empty() )
+			return std::make_pair( 0ull, 0ull );
+		else
+		{
+			nRange[0] = oBlocks[ GetRandomNum( 0ull, oBlocks.size() - 1ull ) ];
+			nRange[0] *= nBlockSize;
+			return std::make_pair( nRange[0], nRange[0] + nBlockSize );
+		}
+	}
+
+	return std::make_pair( nBestRange[0], nBestRange[0] + nBestRange[1] );
+}
+
+void CDownloadTransfer::CheckPart(uint64* nPart, uint64 nPartBlock,
+	uint64* nRange, uint64& nRangeBlock, uint64* nBestRange) const
+{
+	if ( nPartBlock == nRangeBlock )
+	{
+		if ( nPart[1] < nRange[1] || !nRange[1] )
+		{
+			nRange[0] = nPart[0];
+			nRange[1] = nPart[1];
+		}
+		nRange[2] += nPart[1];
+	}
+	else
+	{
+		CheckRange( nRange, nBestRange );
+		nRange[2] = nRange[1] = nPart[1];
+		nRange[0] = nPart[0];
+		nRangeBlock = nPartBlock;
+	}
+}
+
+void CDownloadTransfer::CheckRange(uint64* nRange, uint64* nBestRange) const
+{
+	if ( nRange[2] < nBestRange[2]
+		|| ( nRange[2] && !nBestRange[2] ) )
+	{
+		nBestRange[0] = nRange[0];
+		nBestRange[1] = nRange[1];
+		nBestRange[2] = nRange[2];
+	}
+}
+
+//////////////////////////////////////////////////////////////////////
+// CDownloadTransfer fragment selector
+
+bool CDownloadTransfer::SelectFragment(const Fragments::List& oPossible, QWORD& nOffset, QWORD& nLength) const
+{
+	ASSUME_LOCK( Transfers.m_pSection );
+
+	Fragments::Fragment oSelection( SelectBlock( oPossible, m_pAvailable ) );
+
+	if ( oSelection.size() == 0 )
+		return false;
+
+	nOffset = oSelection.begin();
+	nLength = oSelection.size();
+
+	return true;
+}
+
+bool CDownloadTransfer::UnrequestRange(QWORD /*nOffset*/, QWORD /*nLength*/)
+{
+	ASSUME_LOCK( Transfers.m_pSection );
+
+	return false;
 }

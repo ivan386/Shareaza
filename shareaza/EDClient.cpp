@@ -1,7 +1,7 @@
 //
 // EDClient.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -404,6 +404,8 @@ void CEDClient::DetachUpload()
 
 BOOL CEDClient::OnRun()
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	// CTransfer::OnRun();
 
 	DWORD tNow = GetTickCount();
@@ -513,6 +515,8 @@ void CEDClient::OnDropped()
 
 void CEDClient::NotifyDropped()
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	m_bSeeking = TRUE;
 	if ( m_pDownload != NULL ) m_pDownload->OnDropped();
 	if ( m_pUpload != NULL ) m_pUpload->OnDropped();

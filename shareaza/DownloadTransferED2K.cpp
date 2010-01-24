@@ -1,7 +1,7 @@
 //
 // DownloadTransferED2K.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -47,32 +47,34 @@ const DWORD BUFFER_SIZE = 8192;
 //////////////////////////////////////////////////////////////////////
 // CDownloadTransferED2K construction
 
-CDownloadTransferED2K::CDownloadTransferED2K(CDownloadSource* pSource) : CDownloadTransfer( pSource, PROTOCOL_ED2K )
+CDownloadTransferED2K::CDownloadTransferED2K(CDownloadSource* pSource)
+	: CDownloadTransfer	( pSource, PROTOCOL_ED2K )
+	, m_pClient			( NULL )
+	, m_bHashset		( false )
+	, m_tRequest		( 0ul )
+	, m_tSources		( 0ul )
+	, m_tRanking		( 0ul )
+	, m_bUDP			( false )
+	, m_pInflatePtr		( NULL )
+	, m_pInflateBuffer	( new CBuffer() )
+	, m_nInflateOffset	( 0ull )
+	, m_nInflateLength	( 0ull )
+	, m_nInflateRead	( 0ull )
+	, m_nInflateWritten	( 0ull )
 {
-	m_pClient		= NULL;
-	m_bHashset		= FALSE;
-	m_tRequest		= 0;
-	m_tSources		= 0;
-	m_tRanking		= 0;
-	m_pAvailable	= NULL;
-	m_bUDP			= FALSE;
-	
-	m_pInflatePtr		= NULL;
-	m_pInflateBuffer	= new CBuffer();
-	
-    ASSERT( m_pDownload->m_oED2K );
+	ASSERT( m_pDownload->m_oED2K );
 }
 
 CDownloadTransferED2K::~CDownloadTransferED2K()
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	// This never happens
 	if ( m_pClient ) m_pClient->m_mInput.pLimit = m_pClient->m_mOutput.pLimit = NULL;
 
 	ClearRequests();
 	delete m_pInflateBuffer;
-	
-	if ( m_pAvailable != NULL ) delete [] m_pAvailable;
-	
+
 	ASSERT( m_pClient == NULL );
 	ASSERT( ! EDClients.IsMyDownload( this ) );
 }
@@ -130,6 +132,8 @@ BOOL CDownloadTransferED2K::Initiate()
 
 void CDownloadTransferED2K::Close(TRISTATE bKeepSource, DWORD nRetryAfter)
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	SetState( dtsNull );
 
 	if ( m_pClient != NULL )
@@ -241,6 +245,8 @@ BOOL CDownloadTransferED2K::OnConnected()
 
 void CDownloadTransferED2K::OnDropped()
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	if ( m_nState == dtsQueued )
 	{
 		theApp.Message( MSG_INFO, IDS_DOWNLOAD_QUEUE_DROP,
@@ -260,7 +266,7 @@ BOOL CDownloadTransferED2K::OnFileReqAnswer(CEDPacket* /*pPacket*/)
 {
 	if ( m_pDownload->m_nSize <= ED2K_PART_SIZE )
 	{
-		if ( m_pAvailable ) delete [] m_pAvailable;
+		delete [] m_pAvailable;
 		m_pAvailable = new BYTE[ 1 ];
 		m_pAvailable[ 0 ] = TRUE;
 		m_pSource->m_oAvailable.insert( m_pSource->m_oAvailable.end(),
@@ -307,7 +313,7 @@ BOOL CDownloadTransferED2K::OnFileStatus(CEDPacket* pPacket)
 	{
         m_pSource->m_oAvailable.clear();
 		
-		if ( m_pAvailable != NULL ) delete [] m_pAvailable;
+		delete [] m_pAvailable;
 		m_pAvailable = new BYTE[ nBlocks ];
 		ZeroMemory( m_pAvailable, nBlocks );
 		
@@ -334,7 +340,7 @@ BOOL CDownloadTransferED2K::OnFileStatus(CEDPacket* pPacket)
 	{
 		m_pSource->m_oAvailable.clear();
 		
-		if ( m_pAvailable != NULL ) delete [] m_pAvailable;
+		delete [] m_pAvailable;
 		m_pAvailable = NULL;
 	}
 	else
@@ -776,17 +782,18 @@ BOOL CDownloadTransferED2K::SendSecondaryRequest()
 //////////////////////////////////////////////////////////////////////
 // CDownloadTransferED2K fragment request manager
 
-BOOL CDownloadTransferED2K::SendFragmentRequests()
+bool CDownloadTransferED2K::SendFragmentRequests()
 {
-	//ASSERT( m_nState == dtsDownloading );
 	ASSERT( m_pClient != NULL );
-	
-	if ( m_nState != dtsDownloading ) return TRUE;
 
-	if ( m_oRequested.size() >= (int)Settings.eDonkey.RequestPipe ) return TRUE;
-	
-	Fragments::List oPossible( m_pDownload->GetWantedFragmentList() );
-	
+	if ( m_nState != dtsDownloading )
+		return TRUE;
+
+	if ( m_oRequested.size() >= (int)Settings.eDonkey.RequestPipe )
+		return TRUE;
+
+	Fragments::List oPossible( m_pDownload->GetEmptyFragmentList() );
+
 	if ( !m_pClient->m_bEmLargeFile && ( m_pDownload->m_nSize & 0xffffffff00000000 ) )
 	{
 		Fragments::Fragment Selected( 0x100000000, m_pDownload->m_nSize - 1 );
@@ -801,7 +808,7 @@ BOOL CDownloadTransferED2K::SendFragmentRequests()
 			pTransfer->SubtractRequested( oPossible );
 		}
 	}
-	
+
 	typedef std::map<QWORD ,Fragments::Fragment> _TRequest;
 	typedef  _TRequest::iterator _TRequestIndex;
 	_TRequest	oRequesting;
@@ -827,9 +834,6 @@ BOOL CDownloadTransferED2K::SendFragmentRequests()
 		}
 	}
 
-	_TRequestIndex iIndex = oRequesting.begin();
-	_TRequestIndex iEnd = oRequesting.end();
-
 	while ( !oRequesting.empty() )
 	{
 		DWORD nCount=0;
@@ -838,7 +842,7 @@ BOOL CDownloadTransferED2K::SendFragmentRequests()
 
 		while ( nCount < 3 && !oRequesting.empty() )
 		{
-			iIndex = oRequesting.begin();
+			_TRequestIndex iIndex = oRequesting.begin();
 			nOffsetBegin[nCount] = QWORD((*iIndex).second.begin());
 			nOffsetEnd[nCount] = QWORD((*iIndex).second.end());
 			bI64Offset |= ( ( ( nOffsetBegin[nCount] & 0xffffffff00000000 ) ) ||
@@ -944,21 +948,6 @@ void CDownloadTransferED2K::ClearRequests()
 		m_pInflatePtr = NULL;
 		m_pInflateBuffer->Clear();
 	}
-}
-
-//////////////////////////////////////////////////////////////////////
-// CDownloadTransferED2K fragment selector
-
-BOOL CDownloadTransferED2K::SelectFragment(const Fragments::List& oPossible, QWORD& nOffset, QWORD& nLength)
-{
-	Fragments::Fragment oSelection( selectBlock( oPossible, ED2K_PART_SIZE, m_pAvailable ) );
-
-	if ( oSelection.size() == 0 ) return FALSE;
-
-	nOffset = oSelection.begin();
-	nLength = oSelection.size();
-
-	return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////

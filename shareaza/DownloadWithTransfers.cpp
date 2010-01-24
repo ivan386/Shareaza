@@ -1,7 +1,7 @@
 //
 // DownloadWithTransfers.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -54,6 +54,8 @@ CDownloadWithTransfers::CDownloadWithTransfers() :
 
 CDownloadWithTransfers::~CDownloadWithTransfers()
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	CloseTransfers();
 }
 
@@ -369,6 +371,8 @@ BOOL CDownloadWithTransfers::StartNewTransfer(DWORD tNow)
 
 void CDownloadWithTransfers::CloseTransfers()
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	bool bBackup = Downloads.m_bClosing;
 	Downloads.m_bClosing = true;
 
@@ -509,6 +513,8 @@ void CDownloadWithTransfers::AddTransfer(CDownloadTransfer* pTransfer)
 
 void CDownloadWithTransfers::RemoveTransfer(CDownloadTransfer* pTransfer)
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	ASSERT( m_nTransferCount > 0 );
 	m_nTransferCount --;
 

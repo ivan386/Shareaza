@@ -1,7 +1,7 @@
 //
 // DownloadWithTiger.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -79,15 +79,18 @@ DWORD CDownloadWithTiger::GetValidationCookie() const
 	return m_nVerifyCookie;
 }
 
-QWORD CDownloadWithTiger::GetVerifyLength(int nHash) const
+QWORD CDownloadWithTiger::GetVerifyLength(PROTOCOLID nProtocol, int nHash) const
 {
 	CQuickLock oLock( m_pTigerSection );
 
 	if ( nHash == HASH_NULL )
 	{
-		if ( m_pTorrentBlock != NULL ) return m_nTorrentSize;
-		else if ( m_pTigerBlock != NULL ) return m_nTigerSize;
-		else if ( m_pHashsetBlock != NULL ) return ED2K_PART_SIZE;
+		if ( nProtocol == PROTOCOL_BT && m_pTorrentBlock )
+			return m_nTorrentSize;
+		else if ( nProtocol == PROTOCOL_ED2K && m_pHashsetBlock )
+			return ED2K_PART_SIZE;
+		else if ( m_pTigerBlock )
+			return m_nTigerSize;
 	}
 	else if ( nHash == HASH_TIGERTREE && m_pTigerBlock != NULL )
 	{
@@ -719,10 +722,12 @@ Fragments::List CDownloadWithTiger::GetHashableFragmentList() const
 		return oList;
 
 	Fragments::List oResultList = oList;
-	for ( Fragments::List::const_iterator i = oList.begin(); i != oList.end(); ++i )
+	Fragments::List::const_iterator pItr = oList.begin();
+	const Fragments::List::const_iterator pEnd = oList.end();
+	for ( ; pItr != pEnd ; ++pItr )
 	{
-		QWORD nStart = ( i->begin() / nSmallest ) * nSmallest;
-		QWORD nEnd   = min( ( ( i->end() - 1 ) / nSmallest + 1 ) * nSmallest, m_nSize );
+		QWORD nStart = ( pItr->begin() / nSmallest ) * nSmallest;
+		QWORD nEnd   = min( ( ( pItr->end() - 1ull ) / nSmallest + 1ull ) * nSmallest, m_nSize );
 		oResultList.insert( Fragments::Fragment( nStart, nEnd ) );
 	}
 
