@@ -508,6 +508,7 @@ BOOL CUploadTransferED2K::ServeRequests()
 			return FALSE;
 		}
 
+		ASSERT( m_sPath.GetLength() );
 		PostMainWndMessage( WM_NOWUPLOADING, 0, (LPARAM)new CString( m_sPath ) );
 
 		if ( ! StartNextRequest() )
