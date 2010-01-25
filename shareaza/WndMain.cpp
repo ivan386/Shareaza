@@ -1,7 +1,7 @@
 //
 // WndMain.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -502,8 +502,12 @@ int CMainWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	}
 
 	// If it is the first run we will connect only in the QuickStart Wizard
-	if ( Settings.Connection.AutoConnect && !Settings.Live.FirstRun )
+	// If Scheduler is enabled let it decide when to connect
+	if ( Settings.Connection.AutoConnect && !Settings.Live.FirstRun
+		&& !Settings.Scheduler.Enable )
+	{
 		PostMessage( WM_COMMAND, ID_NETWORK_CONNECT );
+	}
 
 	Settings.Live.LoadWindowState = TRUE;
 
