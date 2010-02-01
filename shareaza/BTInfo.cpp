@@ -1,7 +1,7 @@
 //
 // BTInfo.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -236,11 +236,12 @@ CBTInfo& CBTInfo::operator=(const CBTInfo& oSource)
 //////////////////////////////////////////////////////////////////////
 // CBTInfo serialize
 
-#define BTINFO_SER_VERSION 9
+#define BTINFO_SER_VERSION 10
 // History:
 // 7 - redesigned tracker list (ryo-oh-ki)
 // 8 - removed m_nFilePriority (ryo-oh-ki)
 // 9 - added m_sName (ryo-oh-ki)
+// 10 - added m_pSource (ivan386)
 
 void CBTInfo::Serialize(CArchive& ar)
 {
@@ -284,6 +285,12 @@ void CBTInfo::Serialize(CArchive& ar)
 		for ( int nTracker = 0 ; nTracker < nTrackers ; nTracker++ )
 		{
 			m_oTrackers[ nTracker ].Serialize( ar, nVersion );
+		}
+
+		ar << m_pSource.m_nLength;
+		if ( m_pSource.m_nLength && CheckInfoData( &m_pSource ) )
+		{
+			ar.Write( m_pSource.m_pBuffer, m_pSource.m_nLength );
 		}
 	}
 	else
@@ -379,6 +386,19 @@ void CBTInfo::Serialize(CArchive& ar)
 					AddTracker( oTracker );
 				}
 			}
+		}
+
+		if ( nVersion >= 10 )
+		{
+			DWORD nLength;
+			ar >> nLength;
+			if ( nLength )
+			{
+				m_pSource.EnsureBuffer( nLength );
+				ar.Read( m_pSource.m_pBuffer, nLength );
+				m_pSource.m_nLength = nLength;
+				VERIFY( CheckInfoData( &m_pSource ) );
+			}		
 		}
 
 		SetTrackerNext();
@@ -588,10 +608,10 @@ DWORD CBTInfo::GetInfoSize()
 
 BOOL CBTInfo::CheckInfoData(const CBuffer* pSource)
 {
-	ASSERT( pSource->m_nLength );
+	ASSERT( pSource && pSource->m_nLength );
 
-	DWORD nBlock = pSource->m_nLength;
-	BYTE *pBuffer = pSource->m_pBuffer;
+	const DWORD nBlock = pSource->m_nLength;
+	const BYTE* pBuffer = pSource->m_pBuffer;
 
 	BOOL bValidTorrent = TRUE;
 	int nDetectInfo = 0;	// 0 - Nothing to do,  1 - DetectStart, 2 - DetectEnd, 3 - Info found
@@ -608,7 +628,7 @@ BOOL CBTInfo::CheckInfoData(const CBuffer* pSource)
 	{
 		nInfoStart = 0;
 		nInfoLen = nBlock;
-		for ( DWORD i=0; i < nBlock; i++ )
+		for ( DWORD i = 0; i < nBlock; i++ )
 		{
 			if ( nSkip > 0 )
 			{
@@ -628,7 +648,7 @@ BOOL CBTInfo::CheckInfoData(const CBuffer* pSource)
 					{
 						nDetectInfo = 0;
 					}
-					nSkip-=1;
+					--nSkip;
 					continue;
 				}
 				else if ( ( nBlock - i ) > nSkip )
