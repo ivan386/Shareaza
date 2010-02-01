@@ -315,10 +315,13 @@ void CBTInfo::Serialize(CArchive& ar)
 		ar >> m_nBlockSize;
 		ar >> m_nBlockCount;
 
-		m_pBlockBTH = new Hashes::BtPureHash[ (DWORD)m_nBlockCount ];
-		for ( DWORD i = 0; i < m_nBlockCount; ++i )
+		if ( m_nBlockCount )
 		{
-			ReadArchive( ar, m_pBlockBTH[ i ].begin(), Hashes::BtPureHash::byteCount );
+			m_pBlockBTH = new Hashes::BtPureHash[ m_nBlockCount ];
+			for ( DWORD i = 0; i < m_nBlockCount; ++i )
+			{
+				ReadArchive( ar, m_pBlockBTH[ i ].begin(), Hashes::BtPureHash::byteCount );
+			}
 		}
 
 		if ( nVersion >= 4 ) ar >> m_nTotalUpload;
