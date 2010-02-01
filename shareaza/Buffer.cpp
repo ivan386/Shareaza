@@ -27,6 +27,7 @@
 #include "Shareaza.h"
 #include "Settings.h"
 #include "Buffer.h"
+#include "Network.h"
 #include "ZLib.h"
 #include "Statistics.h"
 
@@ -395,7 +396,7 @@ const DWORD CBuffer::Receive(const SOCKET hSocket, DWORD nSpeedLimit)
 		char* const pData = reinterpret_cast< char* >( GetDataEnd() );
 
 		// Read the bytes from the socket and record how many are actually read
-		const int nRead = recv( hSocket, pData, static_cast< int >( nLength ), 0 );
+		const int nRead = CNetwork::Recv( hSocket, pData, static_cast< int >( nLength ) );
 
 		// Exit loop if nothing is left or an error occurs
 		if ( nRead <= 0 )
@@ -436,7 +437,7 @@ const DWORD CBuffer::Send(const SOCKET hSocket, DWORD nSpeedLimit)
 		int nLength = static_cast< int >( min( nSpeedLimit, static_cast< DWORD >( INT_MAX ) ) );
 
 		// Send the bytes to the socket and record how many are actually sent
-		nLength = send( hSocket, pData, nLength, 0 );
+		nLength = CNetwork::Send( hSocket, pData, nLength );
 
 		// Exit loop if nothing is left or an error occurs
 		if ( nLength <= 0 )

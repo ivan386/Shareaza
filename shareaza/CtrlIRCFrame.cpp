@@ -1041,7 +1041,7 @@ void CIRCFrame::OnTimer(UINT_PTR nIDEvent)
 		{
 			auto_array< char > pszData( new char[ 4096 ] );
 			pszData[ 0 ] = '\0';
-			int nRetVal = recv( m_nSocket, pszData.get(), 4095, 0 );
+			int nRetVal = CNetwork::Recv( m_nSocket, pszData.get(), 4095 );
 			int nError = WSAGetLastError();
 			if ( nRetVal > 0 )
 				pszData[ nRetVal ] = '\0';
@@ -1103,7 +1103,7 @@ void CIRCFrame::OnTimer(UINT_PTR nIDEvent)
 void CIRCFrame::SendString(const CString& strMessage)
 {
 	CStringA strEncoded = UTF8Encode( strMessage + _T("\r\n") );
-	send( m_nSocket, (LPCSTR)strEncoded, strEncoded.GetLength(), 0 );
+	CNetwork::Send( m_nSocket, (LPCSTR)strEncoded, strEncoded.GetLength() );
 }
 
 /* Displays messages on the client

@@ -247,8 +247,7 @@ BOOL CDatagrams::Send(SOCKADDR_IN* pHost, const CBuffer& pOutput)
 		return FALSE;
 	}
 
-	sendto( m_hSocket, (const char*)pOutput.m_pBuffer, pOutput.m_nLength,
-		0, (SOCKADDR*)pHost, sizeof(SOCKADDR_IN) );
+	CNetwork::SendTo( m_hSocket, (const char*)pOutput.m_pBuffer, pOutput.m_nLength, pHost );
 
 	m_nOutPackets++;
 
@@ -275,8 +274,7 @@ BOOL CDatagrams::Send(SOCKADDR_IN* pHost, CPacket* pPacket, BOOL bRelease, LPVOI
 
 		if ( ntohs( pHost->sin_port ) != 4669 )	// Hack
 		{
-			sendto( m_hSocket, (LPSTR)pBuffer.m_pBuffer, pBuffer.m_nLength, 0,
-				(SOCKADDR*)pHost, sizeof(SOCKADDR_IN) );
+			CNetwork::SendTo( m_hSocket, (LPSTR)pBuffer.m_pBuffer, pBuffer.m_nLength, pHost );
 
 			m_nOutPackets++;
 		}
@@ -292,8 +290,7 @@ BOOL CDatagrams::Send(SOCKADDR_IN* pHost, CPacket* pPacket, BOOL bRelease, LPVOI
 		pPacket->SmartDump( pHost, TRUE, TRUE );
 		if ( bRelease ) pPacket->Release();
 
-		sendto( m_hSocket, (LPSTR)pBuffer.m_pBuffer, pBuffer.m_nLength, 0,
-			(SOCKADDR*)pHost, sizeof(SOCKADDR_IN) );
+		CNetwork::SendTo( m_hSocket, (LPSTR)pBuffer.m_pBuffer, pBuffer.m_nLength, pHost );
 
 		m_nOutPackets++;
 
@@ -494,8 +491,7 @@ BOOL CDatagrams::TryWrite()
 			}
 			else if ( pDG->GetPacket( tNow, &pPacket, &nPacket, m_nInFrags > 0 ) )
 			{
-				sendto( m_hSocket, (LPCSTR)pPacket, nPacket, 0,
-					(SOCKADDR*)&pDG->m_pHost, sizeof(SOCKADDR_IN) );
+				CNetwork::SendTo( m_hSocket, (LPCSTR)pPacket, nPacket, &pDG->m_pHost );
 
 				nLastHost = pDG->m_pHost.sin_addr.S_un.S_addr;
 
@@ -605,9 +601,7 @@ BOOL CDatagrams::TryRead()
 		return FALSE;
 
 	SOCKADDR_IN pFrom = {};
-	int nFromLen = sizeof( pFrom );
-	int nLength	= recvfrom( m_hSocket, (char*)m_pReadBuffer, sizeof( m_pReadBuffer ), 0,
-		(SOCKADDR*)&pFrom, &nFromLen );
+	int nLength	= CNetwork::RecvFrom( m_hSocket, (char*)m_pReadBuffer, sizeof( m_pReadBuffer ), &pFrom );
 
 	if ( nLength < 1 )
 		return FALSE;
@@ -798,8 +792,7 @@ BOOL CDatagrams::OnReceiveSGP(SOCKADDR_IN* pHost, SGP_HEADER* pHeader, DWORD nLe
 		pAck.nPart		= pHeader->nPart;
 		pAck.nCount		= 0;
 
-		sendto( m_hSocket, (LPCSTR)&pAck, sizeof(pAck), 0,
-			(SOCKADDR*)pHost, sizeof(SOCKADDR_IN) );
+		CNetwork::SendTo( m_hSocket, (LPCSTR)&pAck, sizeof(pAck), pHost );
 	}
 
 	BYTE nHash	= BYTE( ( pHost->sin_addr.S_un.S_un_b.s_b1

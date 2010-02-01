@@ -130,9 +130,16 @@ public:
 
 	// Safe way to accept socket
 	static SOCKET AcceptSocket(SOCKET hSocket, SOCKADDR_IN* addr, LPCONDITIONPROC lpfnCondition, DWORD_PTR dwCallbackData = 0);
-
 	// Safe way to close socket
 	static void	CloseSocket(SOCKET& hSocket, const bool bForce);
+	// Safe way to send TCP data
+	static int Send(SOCKET s, const char* buf, int len);
+	// Safe way to send UDP data
+	static int SendTo(SOCKET s, const char* buf, int len, const SOCKADDR_IN* pTo);
+	// Safe way to receive TCP data
+	static int Recv(SOCKET s, char* buf, int len);
+	// Safe way to receive UDP data
+	static int RecvFrom(SOCKET s, char* buf, int len, SOCKADDR_IN* pFrom);
 
 	friend class CHandshakes;
 	friend class CNeighbours;
