@@ -87,8 +87,8 @@ BOOL CDatagramIn::Add(BYTE nPart, LPCVOID pData, DWORD nLength)
 
 	if ( m_pLocked[ nPart - 1 ] == FALSE )
 	{
-		m_pBuffer[ nPart - 1 ]->Add( pData, nLength );
 		m_pLocked[ nPart - 1 ] = TRUE;
+		m_pBuffer[ nPart - 1 ]->Add( pData, nLength );
 
 		if ( --m_nLeft == 0 ) return TRUE;
 	}
