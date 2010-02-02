@@ -228,29 +228,7 @@ typedef CString StringType;
 //! \brief Hash function needed for CMap with const CString& as ARG_KEY.
 template<> AFX_INLINE UINT AFXAPI HashKey(const CString& key)
 {
-	UINT nHash = 0;
-	LPCTSTR pKey = key.GetString();
-	while ( *pKey )
-		nHash = ( nHash << 5 ) + nHash + *pKey++;
-	return nHash;
-}
-//! \brief Hash function needed for CMap with CString& as ARG_KEY.
-template<> AFX_INLINE UINT AFXAPI HashKey(CString& key)
-{
-	return HashKey< const CString& >( key );
-}
-//! \brief Hash function needed for CMap with CString as ARG_KEY.
-template<> AFX_INLINE UINT AFXAPI HashKey(CString key)
-{
-	return HashKey< const CString& >( key );
-}
-//! \brief Hash function needed for CMap with DWORD_PTR as ARG_KEY.
-//!
-//! While the default hash function could be used, this one does not generate
-//! (false) 64 bit warnings.
-template<> AFX_INLINE UINT AFXAPI HashKey(DWORD_PTR key)
-{
-	return static_cast< UINT >( key >> 4 );
+	return HashKey<LPCTSTR>( key );
 }
 
 #include "Hashes.hpp"
