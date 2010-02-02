@@ -1,32 +1,29 @@
-////////////////////////////////////////////////////////////////////////////////
-//                                                                            //
-// Hashes/HashStringConversion.hpp                                            //
-//                                                                            //
-// Copyright (c) Shareaza Development Team, 2005-2007.
-// This file is part of SHAREAZA (shareaza.sourceforge.net).                          //
-//                                                                            //
-// Shareaza is free software; you can redistribute it                         //
-// and/or modify it under the terms of the GNU General Public License         //
-// as published by the Free Software Foundation; either version 2 of          //
-// the License, or (at your option) any later version.                        //
-//                                                                            //
-// Shareaza is distributed in the hope that it will be useful,                //
-// but WITHOUT ANY WARRANTY; without even the implied warranty of             //
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                       //
-// See the GNU General Public License for more details.                       //
-//                                                                            //
-// You should have received a copy of the GNU General Public License          //
-// along with Shareaza; if not, write to the                                  //
-// Free Software Foundation, Inc,                                             //
-// 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA                    //
-//                                                                            //
-////////////////////////////////////////////////////////////////////////////////
+//
+// Hashes/HashStringConversion.hpp
+//
+// Copyright (c) Shareaza Development Team, 2005-2010.
+// This file is part of SHAREAZA (shareaza.sourceforge.net)
+//
+// Shareaza is free software; you can redistribute it
+// and/or modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2 of
+// the License, or (at your option) any later version.
+//
+// Shareaza is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Shareaza; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+//
 
 //! \file       Hashes/HashStringConversion.hpp
 //! \brief      Declares functions for conversion between hashes and strings.
 
-#ifndef HASHES_HASHSTRINGCONVERSION_HPP_INCLUDED
-#define HASHES_HASHSTRINGCONVERSION_HPP_INCLUDED
+#pragma once
+
 
 namespace Hashes
 {
@@ -53,13 +50,13 @@ namespace Hashes
 	};
 
 	//! \brief Encodes a uchar array as guid string without "{}".
-	StringType toGuid(const uchar* hash);
+	CString toGuid(const uchar* hash);
 	//! \brief Encodes a CLSID as guid string with or without "{}".
-	StringType toGuid(REFCLSID hash, bool enclosed = true);
+	CString toGuid(REFCLSID hash, bool enclosed = true);
 	//! \brief Encodes a uchar array of given range as hex string.
-	StringType toBase16(const uchar* hash, size_t byteCount);
+	CString toBase16(const uchar* hash, size_t byteCount);
 	//! \brief Encodes a uchar array of given range as Base32 string.
-	StringType toBase32(const uchar* hash, size_t byteCount);
+	CString toBase32(const uchar* hash, size_t byteCount);
 	//! \brief Reads from a guid encoded string with or without "{}" into a uchar array.
 	bool fromGuid(uchar* hash, const wchar* input);
 	//! \brief Reads from a guid encoded string with or without "{}" into a CLSID.
@@ -78,7 +75,7 @@ namespace Hashes
 	struct HashToString< guidEncoding, byteCount >
 	{
 		BOOST_STATIC_ASSERT( byteCount <= maxByteCount );
-		inline StringType operator()(const uchar* hash) const
+		CString operator()(const uchar* hash) const
 		{
 			return toGuid( hash );
 		}
@@ -90,7 +87,7 @@ namespace Hashes
 	struct HashToString< base16Encoding, byteCount >
 	{
 		BOOST_STATIC_ASSERT( byteCount <= maxByteCount );
-		inline StringType operator()(const uchar* hash) const
+		CString operator()(const uchar* hash) const
 		{
 			return toBase16( hash, byteCount );
 		}
@@ -102,7 +99,7 @@ namespace Hashes
 	struct HashToString< base32Encoding, byteCount >
 	{
 		BOOST_STATIC_ASSERT( byteCount <= maxByteCount );
-		inline StringType operator()(const uchar* hash) const
+		CString operator()(const uchar* hash) const
 		{
 			return toBase32( hash, byteCount );
 		}
@@ -113,7 +110,7 @@ namespace Hashes
 	template<size_t byteCount>
 	struct HashFromString< guidEncoding, byteCount >
 	{
-		inline bool operator()(uchar* hash, const wchar* input) const
+		bool operator()(uchar* hash, const wchar* input) const
 		{
 			return fromGuid( hash, input );
 		}
@@ -124,7 +121,7 @@ namespace Hashes
 	template<size_t byteCount>
 	struct HashFromString< base16Encoding, byteCount >
 	{
-		inline bool operator()(uchar* hash, const wchar* input) const
+		bool operator()(uchar* hash, const wchar* input) const
 		{
 			return fromBase16( hash, input, byteCount );
 		}
@@ -135,12 +132,10 @@ namespace Hashes
 	template<size_t byteCount>
 	struct HashFromString< base32Encoding, byteCount >
 	{
-		inline bool operator()(uchar* hash, const wchar* input) const
+		bool operator()(uchar* hash, const wchar* input) const
 		{
 			return fromBase32( hash, input, byteCount );
 		}
 	};
 
 } // namespace Hashes
-
-#endif // #ifndef HASHES_HASHSTRINGCONVERSION_HPP_INCLUDED

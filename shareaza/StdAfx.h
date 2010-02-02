@@ -223,8 +223,6 @@ using augment::IUnknownImplementation;
 // GeoIP http://geolite.maxmind.com/
 #include "../GeoIP/GeoIP.h"
 
-typedef CString StringType;
-
 //! \brief Hash function needed for CMap with const CString& as ARG_KEY.
 template<> AFX_INLINE UINT AFXAPI HashKey(const CString& key)
 {

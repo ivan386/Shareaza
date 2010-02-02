@@ -1,7 +1,7 @@
 //
 // Hashes/HashStringConversion.cpp
 //
-// Copyright (c) Shareaza Development Team, 2005-2008.
+// Copyright (c) Shareaza Development Team, 2005-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -60,14 +60,14 @@ namespace Hashes
 		return true;
 	}
 
-	StringType toGuid(const uchar* hash)
+	CString toGuid(const uchar* hash)
 	{
 		return toGuid( *reinterpret_cast< const CLSID* >( hash ), false );
 	}
 
-	StringType toGuid(REFCLSID hash, bool enclosed)
+	CString toGuid(REFCLSID hash, bool enclosed)
 	{
-		StringType str;
+		CString str;
 		if ( enclosed )
 			str.Format( _T("{%.8X-%.4X-%.4X-%.2X%.2X-%.2X%.2X%.2X%.2X%.2X%.2X}"),
 			hash.Data1, hash.Data2, hash.Data3,
@@ -124,7 +124,7 @@ namespace Hashes
 		return fromGuid( reinterpret_cast< uchar* >( hash ), input );
 	}
 
-	StringType toBase16(const uchar* hash, size_t byteCount)
+	CString toBase16(const uchar* hash, size_t byteCount)
 	{
 		wchar result[ maxByteCount * 2 + 1 ];
 		for ( size_t i = 0; i < byteCount; ++i )
@@ -162,7 +162,7 @@ namespace Hashes
 		return true;
 	}
 
-	StringType toBase32(const uchar* hash, size_t byteCount)
+	CString toBase32(const uchar* hash, size_t byteCount)
 	{
 		const size_t base32Chars = ( byteCount * CHAR_BIT + 4 ) / 5;
 		wchar result[ ( maxByteCount * CHAR_BIT + 4 ) / 5 + 1 ];

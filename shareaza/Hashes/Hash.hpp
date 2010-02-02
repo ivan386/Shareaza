@@ -1,34 +1,31 @@
-////////////////////////////////////////////////////////////////////////////////
-//                                                                            //
-// Hashes/Hash.hpp                                                            //
-//                                                                            //
-// Copyright (C) 2005 Shareaza Development Team.                              //
-// This file is part of SHAREAZA (shareaza.sourceforge.net).                          //
-//                                                                            //
-// Shareaza is free software; you can redistribute it                         //
-// and/or modify it under the terms of the GNU General Public License         //
-// as published by the Free Software Foundation; either version 2 of          //
-// the License, or (at your option) any later version.                        //
-//                                                                            //
-// Shareaza is distributed in the hope that it will be useful,                //
-// but WITHOUT ANY WARRANTY; without even the implied warranty of             //
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                       //
-// See the GNU General Public License for more details.                       //
-//                                                                            //
-// You should have received a copy of the GNU General Public License          //
-// along with Shareaza; if not, write to the                                  //
-// Free Software Foundation, Inc,                                             //
-// 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA                    //
-//                                                                            //
-////////////////////////////////////////////////////////////////////////////////
+//
+// Hashes/Hash.hpp
+//
+// Copyright (c) Shareaza Development Team, 2005-2010.
+// This file is part of SHAREAZA (shareaza.sourceforge.net)
+//
+// Shareaza is free software; you can redistribute it
+// and/or modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2 of
+// the License, or (at your option) any later version.
+//
+// Shareaza is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Shareaza; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+//
 
 //! \file       Hashes/Hash.hpp
 //! \brief      Defines Hash template.
 
-#ifndef HASHES_HASH_HPP_INCLUDED
-#define HASHES_HASH_HPP_INCLUDED
+#pragma once
 
 #include "HashStringConversion.hpp"
+
 
 namespace Hashes
 {
@@ -117,15 +114,15 @@ namespace Hashes
 		//! cannot be deduced and must be specified explicitly. Returns an empty
 		//! string if the hash is not valid.
 		template<Encoding encoding>
-		StringType toString() const
+		CString toString() const
 		{
 			return isValid()
 					? HashToString< encoding, byteCount >()( &( *this )[ 0 ] )
-					: StringType();
+					: CString();
 		}
 		//! \brief Generates a hash string using the default encoding for
 		//!        this hash type.
-		StringType toString() const
+		CString toString() const
 		{
 			return toString< encoding >();
 		}
@@ -140,17 +137,17 @@ namespace Hashes
 		//!       but the error message does not show the point of
 		//!       instantiation.
 		template<size_t urn>
-		StringType toUrn() const
+		CString toUrn() const
 		{
 			return isValid()
 					? urns[ urn ].signature
 							+ HashToString< encoding, byteCount >()( &( *this )[ 0 ] )
-					: StringType();
+					: CString();
 		}
 		//! \brief Generates a urn string using the default urn prefix.
-		StringType toUrn() const { return toUrn< 0 >(); }
+		CString toUrn() const { return toUrn< 0 >(); }
 		//! \brief Generates a urn string using the default short urn prefix.
-		StringType toShortUrn() const { return toUrn< 1 >(); }
+		CString toShortUrn() const { return toUrn< 1 >(); }
 
 		//! \brief Generates hash from a hash string with the specified
 		//!        encoding.
@@ -217,7 +214,7 @@ namespace Hashes
 		template<typename> class CP, template<typename> class OCP,
 		template<typename> class VP, template<typename> class OVP
 	>
-	inline bool operator==(const Hash< Descriptor, SP, CP, VP >& lhs,
+	bool operator==(const Hash< Descriptor, SP, CP, VP >& lhs,
 			const Hash< Descriptor, OSP, OCP, OVP >& rhs )
 	{
 		return lhs.alignedStorage() == rhs.alignedStorage();
@@ -234,7 +231,7 @@ namespace Hashes
 		template<typename> class CP, template<typename> class OCP,
 		template<typename> class VP, template<typename> class OVP
 	>
-	inline bool operator!=(const Hash< Descriptor, SP, CP, VP >& lhs,
+	bool operator!=(const Hash< Descriptor, SP, CP, VP >& lhs,
 			const Hash< Descriptor, OSP, OCP, OVP >& rhs )
 	{
 		return !( lhs == rhs );
@@ -254,7 +251,7 @@ namespace Hashes
 		template<typename> class CP, template<typename> class OCP,
 		template<typename> class VP, template<typename> class OVP
 	>
-	inline bool operator<(const Hash< Descriptor, SP, CP, VP >& lhs,
+	bool operator<(const Hash< Descriptor, SP, CP, VP >& lhs,
 			const Hash< Descriptor, OSP, OCP, OVP >& rhs )
 	{
 		return lhs.alignedStorage() < rhs.alignedStorage();
@@ -271,7 +268,7 @@ namespace Hashes
 		template<typename> class CP, template<typename> class OCP,
 		template<typename> class VP, template<typename> class OVP
 	>
-	inline bool operator>(const Hash< Descriptor, SP, CP, VP >& lhs,
+	bool operator>(const Hash< Descriptor, SP, CP, VP >& lhs,
 			const Hash< Descriptor, OSP, OCP, OVP >& rhs )
 	{
 		return rhs < lhs;
@@ -288,7 +285,7 @@ namespace Hashes
 		template<typename> class CP, template<typename> class OCP,
 		template<typename> class VP, template<typename> class OVP
 	>
-	inline bool operator>=(const Hash< Descriptor, SP, CP, VP >& lhs,
+	bool operator>=(const Hash< Descriptor, SP, CP, VP >& lhs,
 			const Hash< Descriptor, OSP, OCP, OVP >& rhs )
 	{
 		return !( lhs < rhs );
@@ -305,7 +302,7 @@ namespace Hashes
 		template<typename> class CP, template<typename> class OCP,
 		template<typename> class VP, template<typename> class OVP
 	>
-	inline bool operator<=(const Hash< Descriptor, SP, CP, VP >& lhs,
+	bool operator<=(const Hash< Descriptor, SP, CP, VP >& lhs,
 			const Hash< Descriptor, OSP, OCP, OVP >& rhs )
 	{
 		return !( rhs < lhs );
@@ -323,7 +320,7 @@ namespace Hashes
 		template<typename> class CP, template<typename> class OCP,
 		template<typename> class VP, template<typename> class OVP
 	>
-	inline bool validAndEqual(const Hash< Descriptor, SP, CP, VP >& lhs,
+	bool validAndEqual(const Hash< Descriptor, SP, CP, VP >& lhs,
 			const Hash< Descriptor, OSP, OCP, OVP >& rhs )
 	{
 		return lhs.isValid() && rhs.isValid() && lhs == rhs;
@@ -341,7 +338,7 @@ namespace Hashes
 		template<typename> class CP, template<typename> class OCP,
 		template<typename> class VP, template<typename> class OVP
 	>
-	inline bool validAndUnequal(const Hash< Descriptor, SP, CP, VP >& lhs,
+	bool validAndUnequal(const Hash< Descriptor, SP, CP, VP >& lhs,
 			const Hash< Descriptor, OSP, OCP, OVP >& rhs )
 	{
 		return lhs.isValid() && rhs.isValid() && lhs != rhs;
@@ -351,5 +348,3 @@ namespace Hashes
 	//! \brief This namespace is used to locate all possible Policies for
 	//!        the Hash class template.
 } // namespace Hashes
-
-#endif // #ifndef HASHES_HASH_HPP_INCLUDED
