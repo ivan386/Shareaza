@@ -1,29 +1,25 @@
-////////////////////////////////////////////////////////////////////////////////
-//                                                                            //
-// augment/auto_ptr.hpp                                                       //
-//                                                                            //
-// Copyright (C) 2002-2007 Shareaza Development Team.                         //
-// This file is part of SHAREAZA (shareaza.sourceforge.net).                          //
-//                                                                            //
-// Shareaza is free software; you can redistribute it                         //
-// and/or modify it under the terms of the GNU General Public License         //
-// as published by the Free Software Foundation; either version 2 of          //
-// the License, or (at your option) any later version.                        //
-//                                                                            //
-// Shareaza is distributed in the hope that it will be useful,                //
-// but WITHOUT ANY WARRANTY; without even the implied warranty of             //
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                       //
-// See the GNU General Public License for more details.                       //
-//                                                                            //
-// You should have received a copy of the GNU General Public License          //
-// along with Shareaza; if not, write to the                                  //
-// Free Software Foundation, Inc,                                             //
-// 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA                    //
-//                                                                            //
-////////////////////////////////////////////////////////////////////////////////
+//
+// augment/auto_ptr.hpp
+//
+// Copyright (c) Shareaza Development Team, 2002-2010.
+// This file is part of SHAREAZA (shareaza.sourceforge.net)
+//
+// Shareaza is free software; you can redistribute it
+// and/or modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2 of
+// the License, or (at your option) any later version.
+//
+// Shareaza is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Shareaza; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+//
 
-#ifndef AUGMENT_AUTO_PTR_HPP_INCLUDED
-#define AUGMENT_AUTO_PTR_HPP_INCLUDED
+#pragma once
 
 
 namespace augment
@@ -33,10 +29,10 @@ namespace augment
 	class auto_ptr_ref
 	{
 		template<typename> friend class auto_ptr;
-		explicit auto_ptr_ref(const void** ref, element_type* ptr) throw()
+		explicit auto_ptr_ref(const void** ref, element_type* ptr)
 			: ref_( ref ), ptr_( ptr )
 		{}
-		element_type* release() throw()
+		element_type* release()
 		{
 			*ref_ = NULL;
 			return ptr_;
@@ -49,10 +45,10 @@ namespace augment
 	class auto_ptr_ref< element_type, true >
 	{
 		template<typename> friend class auto_ptr;
-		explicit auto_ptr_ref(const void** ref, element_type*) throw()
+		explicit auto_ptr_ref(const void** ref, element_type*)
 			: ref_( ref )
 		{}
-		element_type* release() throw()
+		element_type* release()
 		{
 			element_type* ptr = const_cast< element_type* >(
 				static_cast< const element_type* >( *ref_ ) );
@@ -73,69 +69,69 @@ namespace augment
 	{
 	public:
 		typedef T element_type;
-		explicit auto_ptr(element_type* ptr = NULL) throw()
+		explicit auto_ptr(element_type* ptr = NULL)
 			: ptr_( ptr )
 		{}
-		auto_ptr(auto_ptr& other) throw()
+		auto_ptr(auto_ptr& other)
 			: ptr_( other.release() )
 		{}
 		template<typename source_element_type>
-		auto_ptr(auto_ptr< source_element_type >& other) throw()
+		auto_ptr(auto_ptr< source_element_type >& other)
 			: ptr_( implicit_cast< element_type* >( other.release() ) )
 		{}
-		auto_ptr(auto_ptr_ref< element_type, false > other) throw()
+		auto_ptr(auto_ptr_ref< element_type, false > other)
 			: ptr_( other.release() )
 		{}
-		auto_ptr(auto_ptr_ref< element_type, true > other) throw()
+		auto_ptr(auto_ptr_ref< element_type, true > other)
 			: ptr_( other.release() )
 		{}
-		~auto_ptr() throw()
+		~auto_ptr()
 		{
 			if ( get() != NULL )
 				boost::checked_delete( get() );
 		};
 
-		auto_ptr& operator=(auto_ptr& other) throw()
+		auto_ptr& operator=(auto_ptr& other)
 		{
 			reset( other.release() );
 			return *this;
 		}
 		template<typename source_element_type>
-		auto_ptr& operator=(auto_ptr< source_element_type >& other) throw()
+		auto_ptr& operator=(auto_ptr< source_element_type >& other)
 		{
 			reset( other.release() );
 			return *this;
 		}
-		auto_ptr& operator=(auto_ptr_ref< element_type, false > other) throw()
+		auto_ptr& operator=(auto_ptr_ref< element_type, false > other)
 		{
 			reset( other.release() );
 			return *this;
 		}
-		auto_ptr& operator=(auto_ptr_ref< element_type, true > other) throw()
+		auto_ptr& operator=(auto_ptr_ref< element_type, true > other)
 		{
 			reset( other.release() );
 			return *this;
 		}
 
-		element_type* get() const throw()
+		element_type* get() const
 		{
 			return const_cast< element_type* >( static_cast< const element_type* >( ptr_ ) );
 		}
-		element_type& operator*() const throw()
+		element_type& operator*() const
 		{
 			return *get();
 		}
-		element_type* operator->() const throw()
+		element_type* operator->() const
 		{
 			return get();
 		}
-		element_type* release() throw()
+		element_type* release()
 		{
 			element_type* ptr = get();
 			ptr_ = NULL;
 			return ptr;
 		}
-		void reset(element_type* ptr = NULL) throw()
+		void reset(element_type* ptr = NULL)
 		{
 			if ( ptr != get() && get() != NULL )
 				boost::checked_delete( get() );
@@ -144,15 +140,13 @@ namespace augment
 
 		template<typename target_element_type>
 		operator auto_ptr_ref< target_element_type,
-				boost::is_same< target_element_type, element_type >::value >() throw()
+			std::tr1::is_same< target_element_type, element_type >::value >()
 		{
 			return auto_ptr_ref< target_element_type,
-				boost::is_same< target_element_type, element_type >::value >( &ptr_, get() );
+				std::tr1::is_same< target_element_type, element_type >::value >( &ptr_, get() );
 		}
 	private:
 		const void* ptr_;
 	};
 
 } // namespace augment
-
-#endif // #ifndef AUGMENT_AUTO_PTR_HPP_INCLUDED

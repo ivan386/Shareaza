@@ -1,7 +1,7 @@
 //
 // StdAfx.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -151,21 +151,23 @@
 // STL
 //
 
-#include <vector>
-#include <list>
-#include <deque>
-#include <queue>
-#include <stack>
-#include <map>
-#include <set>
-#include <string>
-#include <utility>
-#include <functional>
 #include <algorithm>
-#include <memory>
+//#include <array>
+#include <deque>
+#include <functional>
 #include <iterator>
 #include <limits>
+#include <list>
+#include <map>
+#include <memory>
 #include <new>
+#include <queue>
+#include <set>
+#include <stack>
+#include <string>
+//#include <type_traits>
+#include <utility>
+#include <vector>
 
 //
 // Boost
@@ -176,15 +178,19 @@
 	#define BOOST_MEM_FN_ENABLE_STDCALL 1
 #endif
 
-#include <boost/cstdint.hpp>
+#include <boost/tr1/array.hpp>
+#include <boost/tr1/memory.hpp>
+#include <boost/tr1/type_traits.hpp>
+#include <boost/tr1/utility.hpp>
+
 #include <boost/bind.hpp>
-#include <boost/bind/placeholders.hpp>
-#include <boost/type_traits.hpp>
-#include <boost/shared_ptr.hpp>
-#include <boost/utility.hpp>
-#include <boost/array.hpp>
-#include <boost/ptr_container/ptr_list.hpp>
 #include <boost/checked_delete.hpp>
+#include <boost/cstdint.hpp>
+//#include <boost/mpl/min_max.hpp>
+#include <boost/ptr_container/ptr_list.hpp>
+//#include <boost/regex.hpp>
+//#include <boost/regex/mfc.hpp>
+#include <boost/static_assert.hpp>
 
 //
 // Standard headers
@@ -445,7 +451,7 @@ private:
 	CGuarded* operator&() const; // too unsafe
 };
 
-typedef boost::shared_ptr< CCriticalSection > CCriticalSectionPtr;
+typedef std::tr1::shared_ptr< CCriticalSection > CCriticalSectionPtr;
 
 template< typename T, typename L >
 class CLocked
@@ -470,12 +476,12 @@ public:
 		m_oLock->Unlock();
 	}
 	
-	operator T() const throw()
+	operator T() const
 	{
 		return m_oValue;
 	}
 
-	T operator->() const throw()
+	T operator->() const
 	{
 		return m_oValue;
 	}
@@ -564,7 +570,7 @@ private:
 template<>
 struct std::less< CLSID > : public std::binary_function< CLSID, CLSID, bool >
 {
-	inline bool operator()(const CLSID& _Left, const CLSID& _Right) const throw()
+	bool operator()(const CLSID& _Left, const CLSID& _Right) const
 	{
 		return _Left.Data1 < _Right.Data1 || ( _Left.Data1 == _Right.Data1 &&
 			( _Left.Data2 < _Right.Data2 || ( _Left.Data2 == _Right.Data2 &&
@@ -576,7 +582,7 @@ struct std::less< CLSID > : public std::binary_function< CLSID, CLSID, bool >
 template<>
 struct std::less< CString > : public std::binary_function< CString, CString, bool>
 {
-	inline bool operator()(const CString& _Left, const CString& _Right) const throw()
+	bool operator()(const CString& _Left, const CString& _Right) const
 	{
 		return ( _Left.CompareNoCase( _Right ) < 0 );
 	}
@@ -628,10 +634,10 @@ inline BOOL StartsWith(const CString& sInput, LPCTSTR pszText, const int len)
 
 // Compute average of values collected by specified time
 template< class T, DWORD dwMilliseconds >
-class CTimeAverage : boost::noncopyable
+class CTimeAverage : private boost::noncopyable
 {
 public:
-	inline T operator()(T Val)
+	T operator()(T Val)
 	{
 		// Add new value
 		DWORD dwNow = GetTickCount();
@@ -659,7 +665,7 @@ protected:
 };
 
 template< class T >
-inline void SafeRelease(CComPtr< T >& pObj) throw()
+void SafeRelease(CComPtr< T >& pObj)
 {
 	__try
 	{

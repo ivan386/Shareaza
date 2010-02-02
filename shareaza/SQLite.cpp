@@ -1,7 +1,7 @@
 //
 // SQLite.cpp
 //
-// Copyright (c) Shareaza Development Team, 2008.
+// Copyright (c) Shareaza Development Team, 2008-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -63,12 +63,12 @@ CDatabase::~CDatabase()
 {
 }
 
-CDatabase::CSQLiteSharedPtr CDatabase::GetHandle() const throw()
+CDatabase::CSQLiteSharedPtr CDatabase::GetHandle() const
 {
 	return m_db;
 }
 
-CDatabase::operator bool() const throw()
+CDatabase::operator bool() const
 {
 	return m_db;
 }
@@ -126,22 +126,22 @@ CStatement::~CStatement()
 	Finalize();
 }
 
-CStatement::operator bool() const throw()
+CStatement::operator bool() const
 {
 	return ( m_st != NULL );
 }
 
-bool CStatement::IsPending() const throw()
+bool CStatement::IsPending() const
 {
 	return ! m_query.empty();
 }
 
-bool CStatement::IsBusy() const throw()
+bool CStatement::IsBusy() const
 {
 	return m_busy;
 }
 
-int CStatement::GetCount() const throw()
+int CStatement::GetCount() const
 {
 	return sqlite3_data_count( m_st );
 }

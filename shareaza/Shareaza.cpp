@@ -1,7 +1,7 @@
 //
 // Shareaza.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -2621,7 +2621,7 @@ bool LoadGUID(const CString& sFilename, Hashes::Guid& oGUID)
 		{
 			Hashes::Guid oTmpGUID;
 			DWORD dwReaded = 0;
-			bSuccess = ( ReadFile( hFile, oTmpGUID.begin(), oTmpGUID.byteCount,
+			bSuccess = ( ReadFile( hFile, oTmpGUID.data(), oTmpGUID.byteCount,
 				&dwReaded, NULL ) && dwReaded == oTmpGUID.byteCount );
 			if ( bSuccess )
 			{
@@ -2651,7 +2651,7 @@ bool SaveGUID(const CString& sFilename, const Hashes::Guid& oGUID)
 		if ( hFile != INVALID_HANDLE_VALUE )
 		{
 			DWORD dwWritten = 0;
-			bSuccess = ( WriteFile( hFile, oGUID.begin(), oGUID.byteCount,
+			bSuccess = ( WriteFile( hFile, oGUID.data(), oGUID.byteCount,
 				&dwWritten, NULL ) && dwWritten == oGUID.byteCount );
 			CloseHandle( hFile );
 		}

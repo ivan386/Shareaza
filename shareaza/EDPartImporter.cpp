@@ -1,7 +1,7 @@
 //
 // EDPartImporter.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -186,7 +186,7 @@ BOOL CEDPartImporter::ImportFile(LPCTSTR pszPath, LPCTSTR pszFile)
 		return FALSE;
 
 	Hashes::Ed2kHash oED2K;
-	if ( pFile.Read( oED2K.begin(), Hashes::Ed2kHash::byteCount )
+	if ( pFile.Read( oED2K.data(), Hashes::Ed2kHash::byteCount )
 		!= Hashes::Ed2kHash::byteCount )
 		return FALSE;
 	oED2K.validate();

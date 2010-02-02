@@ -1,32 +1,29 @@
-////////////////////////////////////////////////////////////////////////////////
-//                                                                            //
-// Hashes/HashDescriptors.hpp                                                 //
-//                                                                            //
-// Copyright (c) Shareaza Development Team, 2005-2009.                        //
-// This file is part of SHAREAZA (shareaza.sourceforge.net).                  //
-//                                                                            //
-// Shareaza is free software; you can redistribute it                         //
-// and/or modify it under the terms of the GNU General Public License         //
-// as published by the Free Software Foundation; either version 2 of          //
-// the License, or (at your option) any later version.                        //
-//                                                                            //
-// Shareaza is distributed in the hope that it will be useful,                //
-// but WITHOUT ANY WARRANTY; without even the implied warranty of             //
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                       //
-// See the GNU General Public License for more details.                       //
-//                                                                            //
-// You should have received a copy of the GNU General Public License          //
-// along with Shareaza; if not, write to the                                  //
-// Free Software Foundation, Inc,                                             //
-// 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA                    //
-//                                                                            //
-////////////////////////////////////////////////////////////////////////////////
+//
+// Hashes/HashDescriptors.hpp
+//
+// Copyright (c) Shareaza Development Team, 2005-2010.
+// This file is part of SHAREAZA (shareaza.sourceforge.net)
+//
+// Shareaza is free software; you can redistribute it
+// and/or modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2 of
+// the License, or (at your option) any later version.
+//
+// Shareaza is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Shareaza; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+//
 
 //! \file       Hashes/HashDescriptors.hpp
 //! \brief      Defines hash descriptors.
 
-#ifndef HASHES_HASHDESCRIPTORS_HPP_INCLUDED
-#define HASHES_HASHDESCRIPTORS_HPP_INCLUDED
+#pragma once
+
 
 namespace Hashes
 {
@@ -89,8 +86,8 @@ namespace Hashes
 			static const size_t numUrns = 4;
 			static const UrnString urns[ numUrns ];
 			static const Encoding encoding = base32Encoding;
-			typedef boost::array< uchar, byteCount > RawStorage;
-			typedef boost::array< WordType, wordCount > AlignedStorage;
+			typedef std::tr1::array< uchar, byteCount > RawStorage;
+			typedef std::tr1::array< WordType, wordCount > AlignedStorage;
 			static std::vector< AlignedStorage > blackList;
 		};
 
@@ -110,8 +107,8 @@ namespace Hashes
 			static const size_t numUrns = 7;
 			static const UrnString urns[ numUrns ];
 			static const Encoding encoding = base32Encoding;
-			typedef boost::array< uchar, byteCount > RawStorage;
-			typedef boost::array< WordType, wordCount > AlignedStorage;
+			typedef std::tr1::array< uchar, byteCount > RawStorage;
+			typedef std::tr1::array< WordType, wordCount > AlignedStorage;
 			static std::vector< AlignedStorage > blackList;
 		};
 
@@ -133,8 +130,8 @@ namespace Hashes
 			static const size_t numUrns = 4;
 			static const UrnString urns[ numUrns ];
 			static const Encoding encoding = base16Encoding;
-			typedef boost::array< uchar, byteCount > RawStorage;
-			typedef boost::array< WordType, wordCount > AlignedStorage;
+			typedef std::tr1::array< uchar, byteCount > RawStorage;
+			typedef std::tr1::array< WordType, wordCount > AlignedStorage;
 			static std::vector< AlignedStorage > blackList;
 		};
 
@@ -149,8 +146,8 @@ namespace Hashes
 			static const size_t numUrns = 2;
 			static const UrnString urns[ numUrns ];
 			static const Encoding encoding = base16Encoding;
-			typedef boost::array< uchar, byteCount > RawStorage;
-			typedef boost::array< WordType, wordCount > AlignedStorage;
+			typedef std::tr1::array< uchar, byteCount > RawStorage;
+			typedef std::tr1::array< WordType, wordCount > AlignedStorage;
 			static std::vector< AlignedStorage > blackList;
 		};
 
@@ -174,8 +171,8 @@ namespace Hashes
 			static const size_t numUrns = 2;
 			static const UrnString urns[ numUrns ];
 			static const Encoding encoding = base32Encoding;
-			typedef boost::array< uchar, byteCount > RawStorage;
-			typedef boost::array< WordType, wordCount > AlignedStorage;
+			typedef std::tr1::array< uchar, byteCount > RawStorage;
+			typedef std::tr1::array< WordType, wordCount > AlignedStorage;
 			static std::vector< AlignedStorage > blackList;
 		};
 
@@ -194,8 +191,8 @@ namespace Hashes
 			static const size_t byteCount = wordCount * sizeof( WordType );
 			static const Encoding encoding = guidEncoding;
 			static const size_t numUrns = 0;
-			typedef boost::array< uchar, byteCount > RawStorage;
-			typedef boost::array< WordType, wordCount > AlignedStorage;
+			typedef std::tr1::array< uchar, byteCount > RawStorage;
+			typedef std::tr1::array< WordType, wordCount > AlignedStorage;
 			static std::vector< AlignedStorage > blackList;
 		};
 
@@ -214,12 +211,10 @@ namespace Hashes
 			static const size_t byteCount = wordCount * sizeof( WordType );
 			static const Encoding encoding = base16Encoding;
 			static const size_t numUrns = 0;
-			typedef boost::array< uchar, byteCount > RawStorage;
-			typedef boost::array< WordType, wordCount > AlignedStorage;
+			typedef std::tr1::array< uchar, byteCount > RawStorage;
+			typedef std::tr1::array< WordType, wordCount > AlignedStorage;
 			static std::vector< AlignedStorage > blackList;
 		};
 	} // namespace Polcies
 
 } // namespace Hashes
-
-#endif // #ifndef HASHES_HASHDESCRIPTORS_HPP_INCLUDED

@@ -1,26 +1,23 @@
-////////////////////////////////////////////////////////////////////////////////
-//                                                                            //
-// Hashes/Compatibility.hpp                                                   //
-//                                                                            //
-// Copyright (C) 2005 Shareaza Development Team.                              //
-// This file is part of SHAREAZA (shareaza.sourceforge.net).                          //
-//                                                                            //
-// Shareaza is free software; you can redistribute it                         //
-// and/or modify it under the terms of the GNU General Public License         //
-// as published by the Free Software Foundation; either version 2 of          //
-// the License, or (at your option) any later version.                        //
-//                                                                            //
-// Shareaza is distributed in the hope that it will be useful,                //
-// but WITHOUT ANY WARRANTY; without even the implied warranty of             //
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                       //
-// See the GNU General Public License for more details.                       //
-//                                                                            //
-// You should have received a copy of the GNU General Public License          //
-// along with Shareaza; if not, write to the                                  //
-// Free Software Foundation, Inc,                                             //
-// 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA                    //
-//                                                                            //
-////////////////////////////////////////////////////////////////////////////////
+//
+// Hashes/Compatibility.hpp
+//
+// Copyright (c) Shareaza Development Team, 2005-2010.
+// This file is part of SHAREAZA (shareaza.sourceforge.net)
+//
+// Shareaza is free software; you can redistribute it
+// and/or modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2 of
+// the License, or (at your option) any later version.
+//
+// Shareaza is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Shareaza; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+//
 
 //! \file       Hashes/Compatibility.hpp
 //! \brief      Defines functions to interface with legacy and MFC code.
@@ -29,8 +26,8 @@
 //! functions. This should be replaced once a new serialisation method has been
 //! adopted.
 
-#ifndef HASHES_COMPATIBILITY_HPP_INCLUDED
-#define HASHES_COMPATIBILITY_HPP_INCLUDED
+#pragma once
+
 
 namespace Hashes
 {
@@ -42,7 +39,7 @@ namespace Hashes
 		template<typename> class CheckingPolicy,
 		template<typename> class ValidationPolicy
 	>
-	inline void SerializeOut(CArchive& ar, const Hash< Descriptor, StoragePolicy,
+	void SerializeOut(CArchive& ar, const Hash< Descriptor, StoragePolicy,
 			CheckingPolicy, ValidationPolicy >& out);
 
 	template
@@ -51,11 +48,11 @@ namespace Hashes
 		template<typename> class StoragePolicy,
 		template<typename> class CheckingPolicy
 	>
-	inline void SerializeOut(CArchive& ar, const Hash< Descriptor, StoragePolicy,
+	void SerializeOut(CArchive& ar, const Hash< Descriptor, StoragePolicy,
 			CheckingPolicy, Policies::NoValidation >& out)
 	{
 		ASSERT( ar.IsStoring() );
-		ar.Write( out.begin(), out.byteCount );
+		ar.Write( out.data(), out.byteCount );
 	}
 
 	template
@@ -64,13 +61,14 @@ namespace Hashes
 		template<typename> class StoragePolicy,
 		template<typename> class CheckingPolicy
 	>
-	inline void SerializeOut(CArchive& ar, const Hash< Descriptor, StoragePolicy,
+	void SerializeOut(CArchive& ar, const Hash< Descriptor, StoragePolicy,
 			CheckingPolicy, Policies::BasicValidation >& out)
 	{
 		ASSERT( ar.IsStoring() );
 		uint32 bValid = bool( out );
 		ar << bValid;
-		if ( bValid ) ar.Write( out.begin(), out.byteCount );
+		if ( bValid )
+			ar.Write( out.data(), out.byteCount );
 	}
 
 	template
@@ -79,13 +77,14 @@ namespace Hashes
 		template<typename> class StoragePolicy,
 		template<typename> class CheckingPolicy
 	>
-	inline void SerializeOut(CArchive& ar, const Hash< Descriptor, StoragePolicy,
+	void SerializeOut(CArchive& ar, const Hash< Descriptor, StoragePolicy,
 			CheckingPolicy, Policies::ExtendedValidation >& out)
 	{
 		ASSERT( ar.IsStoring() );
 		uint32 bValid = bool( out );
 		ar << bValid;
-		if ( bValid ) ar.Write( out.begin(), out.byteCount );
+		if ( bValid )
+			ar.Write( out.data(), out.byteCount );
 		uint32 bTrusted = out.isTrusted();
 		ar << bTrusted;
 	}
@@ -97,7 +96,7 @@ namespace Hashes
 		template<typename> class CheckingPolicy,
 		template<typename> class ValidationPolicy
 	>
-	inline void SerializeIn(CArchive& ar, Hash< Descriptor, StoragePolicy,
+	void SerializeIn(CArchive& ar, Hash< Descriptor, StoragePolicy,
 			CheckingPolicy, ValidationPolicy >& in, int version);
 
 	template
@@ -106,11 +105,11 @@ namespace Hashes
 		template<typename> class StoragePolicy,
 		template<typename> class CheckingPolicy
 	>
-	inline void SerializeIn(CArchive& ar, Hash< Descriptor, StoragePolicy,
+	void SerializeIn(CArchive& ar, Hash< Descriptor, StoragePolicy,
 			CheckingPolicy, Policies::NoValidation >& in, int /*version*/)
 	{
 		ASSERT( ar.IsLoading() );
-		ReadArchive( ar, in.begin(), in.byteCount );
+		ReadArchive( ar, in.data(), in.byteCount );
 	}
 
 	template
@@ -119,7 +118,7 @@ namespace Hashes
 		template<typename> class StoragePolicy,
 		template<typename> class CheckingPolicy
 	>
-	inline void SerializeIn(CArchive& ar, Hash< Descriptor, StoragePolicy,
+	void SerializeIn(CArchive& ar, Hash< Descriptor, StoragePolicy,
 			CheckingPolicy, Policies::BasicValidation >& in, int /*version*/)
 	{
 		ASSERT( ar.IsLoading() );
@@ -127,7 +126,7 @@ namespace Hashes
 		ar >> bValid;
 		if ( bValid )
 		{
-			ReadArchive( ar, in.begin(), in.byteCount );
+			ReadArchive( ar, in.data(), in.byteCount );
 			in.validate();
 		}
 		else
@@ -142,7 +141,7 @@ namespace Hashes
 		template<typename> class StoragePolicy,
 		template<typename> class CheckingPolicy
 	>
-	inline void SerializeIn(CArchive& ar, Hash< Descriptor, StoragePolicy,
+	void SerializeIn(CArchive& ar, Hash< Descriptor, StoragePolicy,
 			CheckingPolicy, Policies::ExtendedValidation >& in, int version)
 	{
 		ASSERT( ar.IsLoading() );
@@ -150,7 +149,7 @@ namespace Hashes
 		ar >> bValid;
 		if ( bValid )
 		{
-			ReadArchive( ar, in.begin(), in.byteCount );
+			ReadArchive( ar, in.data(), in.byteCount );
 			in.validate();
 		}
 		else
@@ -158,10 +157,10 @@ namespace Hashes
 			in.clear();
 		}
 		uint32 bTrusted = bValid;
-		if ( version >= 31 ) ar >> bTrusted;
-		if ( bTrusted ) in.signalTrusted();
+		if ( version >= 31 )
+			ar >> bTrusted;
+		if ( bTrusted )
+			in.signalTrusted();
 	}
 
 } // namespace Hashes
-
-#endif // #ifndef HASHES_COMPATIBILITY_HPP_INCLUDED

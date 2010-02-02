@@ -1,7 +1,7 @@
 //
 // SQLite.h
 //
-// Copyright (c) Shareaza Development Team, 2008.
+// Copyright (c) Shareaza Development Team, 2008-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -43,15 +43,15 @@ class CStatement;
 class CDatabase;
 
 
-class CDatabase : boost::noncopyable
+class CDatabase : private boost::noncopyable
 {
 public:
 	CDatabase(LPCWSTR szDatabasePath = NULL);
 	virtual ~CDatabase();
 
-	operator bool() const throw();
+	operator bool() const;
 
-	class CSQLitePtr : boost::noncopyable
+	class CSQLitePtr : private boost::noncopyable
 	{
 	public:
 		CSQLitePtr(LPCWSTR szDatabasePath);
@@ -59,9 +59,9 @@ public:
 
 		sqlite3*	m_db;
 	};
-	typedef boost::shared_ptr< CSQLitePtr > CSQLiteSharedPtr;
+	typedef std::tr1::shared_ptr< CSQLitePtr > CSQLiteSharedPtr;
 
-	CSQLiteSharedPtr	GetHandle() const throw();
+	CSQLiteSharedPtr	GetHandle() const;
 	LPCWSTR				GetLastErrorMessage() const;
 	bool				Open(LPCWSTR szDatabasePath);
 	bool				Exec(LPCWSTR szQuery);
@@ -71,26 +71,26 @@ protected:
 };
 
 
-class CStatement : boost::noncopyable
+class CStatement : private boost::noncopyable
 {
 public:
 	CStatement(const CDatabase& db, LPCWSTR szQuery);
 	virtual ~CStatement();
 
-	operator bool() const throw();
+	operator bool() const;
 
 	bool			Step();
 	bool			Prepare();
 	void			Finalize();
 	void			Reset();
 
-	bool			IsPending() const throw();
+	bool			IsPending() const;
 
 	// Return true if latest SQL call failed because of a locked table state
-	bool			IsBusy() const throw();
+	bool			IsBusy() const;
 
 	// Return the number of values in the current row of the result set
-	int				GetCount() const throw();
+	int				GetCount() const;
 
 	// Return column type in the current row of the result set
 	int				GetType(LPCWSTR pszName) const;

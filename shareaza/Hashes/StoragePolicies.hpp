@@ -1,32 +1,29 @@
-////////////////////////////////////////////////////////////////////////////////
-//                                                                            //
-// Hashes/StoragePolicies.hpp                                                 //
-//                                                                            //
-// Copyright (C) 2005 Shareaza Development Team.                              //
-// This file is part of SHAREAZA (shareaza.sourceforge.net).                          //
-//                                                                            //
-// Shareaza is free software; you can redistribute it                         //
-// and/or modify it under the terms of the GNU General Public License         //
-// as published by the Free Software Foundation; either version 2 of          //
-// the License, or (at your option) any later version.                        //
-//                                                                            //
-// Shareaza is distributed in the hope that it will be useful,                //
-// but WITHOUT ANY WARRANTY; without even the implied warranty of             //
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                       //
-// See the GNU General Public License for more details.                       //
-//                                                                            //
-// You should have received a copy of the GNU General Public License          //
-// along with Shareaza; if not, write to the                                  //
-// Free Software Foundation, Inc,                                             //
-// 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA                    //
-//                                                                            //
-////////////////////////////////////////////////////////////////////////////////
+//
+// Hashes/StoragePolicies.hpp
+//
+// Copyright (c) Shareaza Development Team, 2005-2010.
+// This file is part of SHAREAZA (shareaza.sourceforge.net)
+//
+// Shareaza is free software; you can redistribute it
+// and/or modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2 of
+// the License, or (at your option) any later version.
+//
+// Shareaza is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Shareaza; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+//
 
 //! \file       Hashes/StoragePolicies.hpp
 //! \brief      Defines storage policies.
 
-#ifndef HASHES_STORAGEPOLICIES_HPP_INCLUDED
-#define HASHES_STORAGEPOLICIES_HPP_INCLUDED
+#pragma once
+
 
 namespace Hashes
 {
@@ -54,13 +51,19 @@ namespace Hashes
 			//! \brief  Defines an STL style random access const iterator to
 			//!         access the hash content.
 			typedef typename AlignedStorage::const_iterator const_iterator;
+			//! \brief  Defines a TR1 style pointer to
+			//!         access the hash content.
+			typedef typename AlignedStorage::pointer pointer;
+			//! \brief  Defines a TR1 style const pointer to
+			//!         access the hash content.
+			typedef typename AlignedStorage::const_pointer const_pointer;
 
 			// Constructors
 			ZeroInit() : Descriptor(), m_storage() {}
 			ZeroInit(iterator input)
 				: Descriptor()
 			{
-				std::copy( input, input + wordCount, begin() );
+				std::copy( input, input + wordCount, data() );
 			}
 			ZeroInit(const RawStorage& rhs)
 				: Descriptor(), m_storage( rhs )
@@ -76,7 +79,7 @@ namespace Hashes
 				return *this;
 			}
 
-			void clear() { memset( &m_storage[ 0 ], 0, byteCount ); }
+			void clear() { memset( data(), 0, byteCount ); }
 
 			uchar& operator[](size_t index) { return m_storage[ index ]; }
 			const uchar& operator[](size_t index) const
@@ -90,10 +93,12 @@ namespace Hashes
 			AlignedStorage& alignedStorage() { return m_words; }
 			const AlignedStorage& alignedStorage() const { return m_words; }
 
-			iterator       begin()       { return m_words.begin(); }
-			const_iterator begin() const { return m_words.begin(); }
-			iterator       end()         { return m_words.end(); }
-			const_iterator end()   const { return m_words.end(); }
+			iterator		begin()		  { return m_words.begin(); }
+			const_iterator	begin()	const { return m_words.begin(); }
+			iterator		end()		  { return m_words.end(); }
+			const_iterator	end()	const { return m_words.end(); }
+			pointer			data()		  { return m_words.data(); }
+			const_pointer	data()	const { return m_words.data(); }
 
 		private:
 			union
@@ -120,12 +125,14 @@ namespace Hashes
 
 			typedef typename AlignedStorage::iterator iterator;
 			typedef typename AlignedStorage::const_iterator const_iterator;
+			typedef typename AlignedStorage::pointer pointer;
+			typedef typename AlignedStorage::const_pointer const_pointer;
 
 			NoInit() : Descriptor() {}
 			NoInit(iterator input)
 				: Descriptor()
 			{
-				memcpy( begin(), input, byteCount );
+				memcpy( data(), input, byteCount );
 			}
 			NoInit(const RawStorage& rhs)
 				: Descriptor(), m_storage( rhs )
@@ -154,10 +161,12 @@ namespace Hashes
 			AlignedStorage& alignedStorage() { return m_words; }
 			const AlignedStorage& alignedStorage() const { return m_words; }
 
-			iterator       begin()       { return m_words.begin(); }
-			const_iterator begin() const { return m_words.begin(); }
-			iterator       end()         { return m_words.end(); }
-			const_iterator end()   const { return m_words.end(); }
+			iterator		begin()		  { return m_words.begin(); }
+			const_iterator	begin()	const { return m_words.begin(); }
+			iterator		end()		  { return m_words.end(); }
+			const_iterator	end()	const { return m_words.end(); }
+			pointer			data()		  { return m_words.data(); }
+			const_pointer	data()	const { return m_words.data(); }
 
 		private:
 			union
@@ -170,5 +179,3 @@ namespace Hashes
 	} // namespace Policies
 
 } // namespace Hashes
-
-#endif // #ifndef HASHES_STORAGEPOLICIES_HPP_INCLUDED

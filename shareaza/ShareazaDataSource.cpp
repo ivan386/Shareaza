@@ -1,7 +1,7 @@
 //
 // ShareazaDataSource.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,7 +19,7 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "Shareaza.h"
 #include "SharedFile.h"
 #include "SharedFolder.h"
@@ -686,7 +686,7 @@ BOOL CShareazaDataSource::DropToAlbum(IDataObject* pIDataObject, DWORD grfKeySta
 						if ( pFile )
 						{
 							Hashes::Guid oGUID;
-							CopyMemory( oGUID.begin(), p + sizeof( DWORD ), 16 );							
+							CopyMemory( oGUID.data(), p + sizeof( DWORD ), 16 );							
 							CAlbumFolder* pFolder = pRoot->FindFolder( oGUID );
 							if ( pFolder && *pAlbumFolder == *pFolder )
 							{
@@ -1477,7 +1477,7 @@ void CShareazaDataSource::FillBuffer(const CLibraryList* pList, LPTSTR& buf_HDRO
 					if ( bRoot )
 					{
 						*(DWORD*)buf_Files = Item;
-						CopyMemory( buf_Files + sizeof( DWORD ), oGUID.begin(), 16 );
+						CopyMemory( buf_Files + sizeof( DWORD ), oGUID.data(), 16 );
 						buf_Files += 20;
 					}
 				}

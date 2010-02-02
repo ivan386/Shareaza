@@ -1,29 +1,26 @@
-////////////////////////////////////////////////////////////////////////////////
-//                                                                            //
-// augment/IUnknownImplementation.hpp                                         //
-//                                                                            //
-// Copyright (C) 2002-2007 Shareaza Development Team.                         //
-// This file is part of SHAREAZA (shareaza.sourceforge.net).                          //
-//                                                                            //
-// Shareaza is free software; you can redistribute it                         //
-// and/or modify it under the terms of the GNU General Public License         //
-// as published by the Free Software Foundation; either version 2 of          //
-// the License, or (at your option) any later version.                        //
-//                                                                            //
-// Shareaza is distributed in the hope that it will be useful,                //
-// but WITHOUT ANY WARRANTY; without even the implied warranty of             //
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                       //
-// See the GNU General Public License for more details.                       //
-//                                                                            //
-// You should have received a copy of the GNU General Public License          //
-// along with Shareaza; if not, write to the                                  //
-// Free Software Foundation, Inc,                                             //
-// 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA                    //
-//                                                                            //
-////////////////////////////////////////////////////////////////////////////////
+//
+// augment/IUnknownImplementation.hpp
+//
+// Copyright (c) Shareaza Development Team, 2002-2010.
+// This file is part of SHAREAZA (shareaza.sourceforge.net)
+//
+// Shareaza is free software; you can redistribute it
+// and/or modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2 of
+// the License, or (at your option) any later version.
+//
+// Shareaza is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Shareaza; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+//
 
-#ifndef AUGMENT_IUNKNOWNIMPLEMENTATION_HPP_INCLUDED
-#define AUGMENT_IUNKNOWNIMPLEMENTATION_HPP_INCLUDED
+#pragma once
+
 
 namespace augment
 {
@@ -87,16 +84,16 @@ namespace augment
 			typename I7 = NoInterface, typename I8 = NoInterface, typename I9 = NoInterface>
 	class IUnknownImplementation : public InheritAll< I0, I1, I2, I3, I4, I5, I6, I7, I8, I9 >
 	{
-		BOOST_STATIC_ASSERT(( boost::is_convertible< I0*, IUnknown* >::value ));
-		BOOST_STATIC_ASSERT(( boost::is_convertible< I1*, IUnknown* >::value ));
-		BOOST_STATIC_ASSERT(( boost::is_convertible< I2*, IUnknown* >::value ));
-		BOOST_STATIC_ASSERT(( boost::is_convertible< I3*, IUnknown* >::value ));
-		BOOST_STATIC_ASSERT(( boost::is_convertible< I4*, IUnknown* >::value ));
-		BOOST_STATIC_ASSERT(( boost::is_convertible< I5*, IUnknown* >::value ));
-		BOOST_STATIC_ASSERT(( boost::is_convertible< I6*, IUnknown* >::value ));
-		BOOST_STATIC_ASSERT(( boost::is_convertible< I7*, IUnknown* >::value ));
-		BOOST_STATIC_ASSERT(( boost::is_convertible< I8*, IUnknown* >::value ));
-		BOOST_STATIC_ASSERT(( boost::is_convertible< I9*, IUnknown* >::value ));
+		BOOST_STATIC_ASSERT(( std::tr1::is_convertible< I0*, IUnknown* >::value ));
+		BOOST_STATIC_ASSERT(( std::tr1::is_convertible< I1*, IUnknown* >::value ));
+		BOOST_STATIC_ASSERT(( std::tr1::is_convertible< I2*, IUnknown* >::value ));
+		BOOST_STATIC_ASSERT(( std::tr1::is_convertible< I3*, IUnknown* >::value ));
+		BOOST_STATIC_ASSERT(( std::tr1::is_convertible< I4*, IUnknown* >::value ));
+		BOOST_STATIC_ASSERT(( std::tr1::is_convertible< I5*, IUnknown* >::value ));
+		BOOST_STATIC_ASSERT(( std::tr1::is_convertible< I6*, IUnknown* >::value ));
+		BOOST_STATIC_ASSERT(( std::tr1::is_convertible< I7*, IUnknown* >::value ));
+		BOOST_STATIC_ASSERT(( std::tr1::is_convertible< I8*, IUnknown* >::value ));
+		BOOST_STATIC_ASSERT(( std::tr1::is_convertible< I9*, IUnknown* >::value ));
 	protected:
 		IUnknownImplementation()
 			: ref_count_( 0 )
@@ -174,5 +171,3 @@ namespace augment
 	};
 
 } // namespace augment
-
-#endif // #ifndef AUGMENT_IUNKNOWNIMPLEMENTATION_HPP_INCLUDED
