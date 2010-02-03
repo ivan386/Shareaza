@@ -21,11 +21,10 @@
 
 #pragma once
 
-#define VC_EXTRALEAN		// Exclude rarely-used stuff from Windows headers
-#define WINVER 0x0400
-#define _WIN32_WINNT 0x0400
-#define _WIN32_WINDOWS 0x0410
-#define _WIN32_IE 0x0400
+#define NTDDI_VERSION	NTDDI_LONGHORN	// Minimum build target
+#define _WIN32_WINNT	0x0600			// Vista, 2008
+#include <sdkddkver.h>					// Setup versioning for windows SDK/DDK
+#define VC_EXTRALEAN					// Exclude rarely-used stuff from Windows headers
 #define BOOST_USE_WINDOWS_H
 
 #include <afxwin.h>         // MFC core and standard components
@@ -35,7 +34,7 @@
 #include <shlobj.h>			// Shell objects
 #include <shlwapi.h>
 
-#include <boost\type_traits\is_same.hpp>
+#include <boost\tr1\type_traits.hpp>
 #include <boost\checked_delete.hpp>
 #include "..\shareaza\augment\auto_ptr.hpp"
 #include "..\shareaza\augment\auto_array.hpp"
@@ -44,7 +43,11 @@
 
 typedef unsigned __int64 QWORD;
 
+#ifndef BIF_NEWDIALOGSTYLE
 #define BIF_NEWDIALOGSTYLE	0x0040
+#endif
+#ifndef OFN_ENABLESIZING
 #define OFN_ENABLESIZING	0x00800000
+#endif
 
 using namespace augment;
