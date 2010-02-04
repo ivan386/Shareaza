@@ -84,16 +84,16 @@ namespace augment
 			typename I7 = NoInterface, typename I8 = NoInterface, typename I9 = NoInterface>
 	class IUnknownImplementation : public InheritAll< I0, I1, I2, I3, I4, I5, I6, I7, I8, I9 >
 	{
-		BOOST_STATIC_ASSERT(( std::tr1::is_convertible< I0*, IUnknown* >::value ));
-		BOOST_STATIC_ASSERT(( std::tr1::is_convertible< I1*, IUnknown* >::value ));
-		BOOST_STATIC_ASSERT(( std::tr1::is_convertible< I2*, IUnknown* >::value ));
-		BOOST_STATIC_ASSERT(( std::tr1::is_convertible< I3*, IUnknown* >::value ));
-		BOOST_STATIC_ASSERT(( std::tr1::is_convertible< I4*, IUnknown* >::value ));
-		BOOST_STATIC_ASSERT(( std::tr1::is_convertible< I5*, IUnknown* >::value ));
-		BOOST_STATIC_ASSERT(( std::tr1::is_convertible< I6*, IUnknown* >::value ));
-		BOOST_STATIC_ASSERT(( std::tr1::is_convertible< I7*, IUnknown* >::value ));
-		BOOST_STATIC_ASSERT(( std::tr1::is_convertible< I8*, IUnknown* >::value ));
-		BOOST_STATIC_ASSERT(( std::tr1::is_convertible< I9*, IUnknown* >::value ));
+		BOOST_STATIC_ASSERT(( boost::is_convertible< I0*, IUnknown* >::value ));
+		BOOST_STATIC_ASSERT(( boost::is_convertible< I1*, IUnknown* >::value ));
+		BOOST_STATIC_ASSERT(( boost::is_convertible< I2*, IUnknown* >::value ));
+		BOOST_STATIC_ASSERT(( boost::is_convertible< I3*, IUnknown* >::value ));
+		BOOST_STATIC_ASSERT(( boost::is_convertible< I4*, IUnknown* >::value ));
+		BOOST_STATIC_ASSERT(( boost::is_convertible< I5*, IUnknown* >::value ));
+		BOOST_STATIC_ASSERT(( boost::is_convertible< I6*, IUnknown* >::value ));
+		BOOST_STATIC_ASSERT(( boost::is_convertible< I7*, IUnknown* >::value ));
+		BOOST_STATIC_ASSERT(( boost::is_convertible< I8*, IUnknown* >::value ));
+		BOOST_STATIC_ASSERT(( boost::is_convertible< I9*, IUnknown* >::value ));
 	protected:
 		IUnknownImplementation()
 			: ref_count_( 0 )

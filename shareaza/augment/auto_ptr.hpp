@@ -29,10 +29,10 @@ namespace augment
 	class auto_ptr_ref
 	{
 		template<typename> friend class auto_ptr;
-		explicit auto_ptr_ref(const void** ref, element_type* ptr)
+		explicit auto_ptr_ref(const void** ref, element_type* ptr) throw()
 			: ref_( ref ), ptr_( ptr )
 		{}
-		element_type* release()
+		element_type* release() throw()
 		{
 			*ref_ = NULL;
 			return ptr_;
@@ -45,10 +45,10 @@ namespace augment
 	class auto_ptr_ref< element_type, true >
 	{
 		template<typename> friend class auto_ptr;
-		explicit auto_ptr_ref(const void** ref, element_type*)
+		explicit auto_ptr_ref(const void** ref, element_type*) throw()
 			: ref_( ref )
 		{}
-		element_type* release()
+		element_type* release() throw()
 		{
 			element_type* ptr = const_cast< element_type* >(
 				static_cast< const element_type* >( *ref_ ) );
@@ -69,69 +69,69 @@ namespace augment
 	{
 	public:
 		typedef T element_type;
-		explicit auto_ptr(element_type* ptr = NULL)
+		explicit auto_ptr(element_type* ptr = NULL) throw()
 			: ptr_( ptr )
 		{}
-		auto_ptr(auto_ptr& other)
+		auto_ptr(auto_ptr& other) throw()
 			: ptr_( other.release() )
 		{}
 		template<typename source_element_type>
-		auto_ptr(auto_ptr< source_element_type >& other)
+		auto_ptr(auto_ptr< source_element_type >& other) throw()
 			: ptr_( implicit_cast< element_type* >( other.release() ) )
 		{}
-		auto_ptr(auto_ptr_ref< element_type, false > other)
+		auto_ptr(auto_ptr_ref< element_type, false > other) throw()
 			: ptr_( other.release() )
 		{}
-		auto_ptr(auto_ptr_ref< element_type, true > other)
+		auto_ptr(auto_ptr_ref< element_type, true > other) throw()
 			: ptr_( other.release() )
 		{}
-		~auto_ptr()
+		~auto_ptr() throw()
 		{
 			if ( get() != NULL )
 				boost::checked_delete( get() );
 		};
 
-		auto_ptr& operator=(auto_ptr& other)
+		auto_ptr& operator=(auto_ptr& other) throw()
 		{
 			reset( other.release() );
 			return *this;
 		}
 		template<typename source_element_type>
-		auto_ptr& operator=(auto_ptr< source_element_type >& other)
+		auto_ptr& operator=(auto_ptr< source_element_type >& other) throw()
 		{
 			reset( other.release() );
 			return *this;
 		}
-		auto_ptr& operator=(auto_ptr_ref< element_type, false > other)
+		auto_ptr& operator=(auto_ptr_ref< element_type, false > other) throw()
 		{
 			reset( other.release() );
 			return *this;
 		}
-		auto_ptr& operator=(auto_ptr_ref< element_type, true > other)
+		auto_ptr& operator=(auto_ptr_ref< element_type, true > other) throw()
 		{
 			reset( other.release() );
 			return *this;
 		}
 
-		element_type* get() const
+		element_type* get() const throw()
 		{
 			return const_cast< element_type* >( static_cast< const element_type* >( ptr_ ) );
 		}
-		element_type& operator*() const
+		element_type& operator*() const throw()
 		{
 			return *get();
 		}
-		element_type* operator->() const
+		element_type* operator->() const throw()
 		{
 			return get();
 		}
-		element_type* release()
+		element_type* release() throw()
 		{
 			element_type* ptr = get();
 			ptr_ = NULL;
 			return ptr;
 		}
-		void reset(element_type* ptr = NULL)
+		void reset(element_type* ptr = NULL) throw()
 		{
 			if ( ptr != get() && get() != NULL )
 				boost::checked_delete( get() );
@@ -140,10 +140,10 @@ namespace augment
 
 		template<typename target_element_type>
 		operator auto_ptr_ref< target_element_type,
-			std::tr1::is_same< target_element_type, element_type >::value >()
+				boost::is_same< target_element_type, element_type >::value >() throw()
 		{
 			return auto_ptr_ref< target_element_type,
-				std::tr1::is_same< target_element_type, element_type >::value >( &ptr_, get() );
+				boost::is_same< target_element_type, element_type >::value >( &ptr_, get() );
 		}
 	private:
 		const void* ptr_;

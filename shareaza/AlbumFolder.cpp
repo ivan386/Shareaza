@@ -1,7 +1,7 @@
 //
 // AlbumFolder.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -83,7 +83,7 @@ CAlbumFolder::~CAlbumFolder()
 
 void CAlbumFolder::RenewGUID()
 {
-	CoCreateGuid( reinterpret_cast< GUID* > ( m_oGUID.data() ) );
+	CoCreateGuid( reinterpret_cast< GUID* > ( m_oGUID.begin() ) );
 	m_oGUID.validate();
 }
 

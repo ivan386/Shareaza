@@ -34,7 +34,7 @@
 #include <shlobj.h>			// Shell objects
 #include <shlwapi.h>
 
-#include <boost\tr1\type_traits.hpp>
+#include <boost\type_traits\is_same.hpp>
 #include <boost\checked_delete.hpp>
 #include "..\shareaza\augment\auto_ptr.hpp"
 #include "..\shareaza\augment\auto_array.hpp"

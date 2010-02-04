@@ -51,19 +51,13 @@ namespace Hashes
 			//! \brief  Defines an STL style random access const iterator to
 			//!         access the hash content.
 			typedef typename AlignedStorage::const_iterator const_iterator;
-			//! \brief  Defines a TR1 style pointer to
-			//!         access the hash content.
-			typedef typename AlignedStorage::pointer pointer;
-			//! \brief  Defines a TR1 style const pointer to
-			//!         access the hash content.
-			typedef typename AlignedStorage::const_pointer const_pointer;
 
 			// Constructors
 			ZeroInit() : Descriptor(), m_storage() {}
 			ZeroInit(iterator input)
 				: Descriptor()
 			{
-				std::copy( input, input + wordCount, data() );
+				std::copy( input, input + wordCount, begin() );
 			}
 			ZeroInit(const RawStorage& rhs)
 				: Descriptor(), m_storage( rhs )
@@ -79,7 +73,7 @@ namespace Hashes
 				return *this;
 			}
 
-			void clear() { memset( data(), 0, byteCount ); }
+			void clear() { memset( &m_storage[ 0 ], 0, byteCount ); }
 
 			uchar& operator[](size_t index) { return m_storage[ index ]; }
 			const uchar& operator[](size_t index) const
@@ -93,12 +87,10 @@ namespace Hashes
 			AlignedStorage& alignedStorage() { return m_words; }
 			const AlignedStorage& alignedStorage() const { return m_words; }
 
-			iterator		begin()		  { return m_words.begin(); }
-			const_iterator	begin()	const { return m_words.begin(); }
-			iterator		end()		  { return m_words.end(); }
-			const_iterator	end()	const { return m_words.end(); }
-			pointer			data()		  { return m_words.data(); }
-			const_pointer	data()	const { return m_words.data(); }
+			iterator       begin()       { return m_words.begin(); }
+			const_iterator begin() const { return m_words.begin(); }
+			iterator       end()         { return m_words.end(); }
+			const_iterator end()   const { return m_words.end(); }
 
 		private:
 			union
@@ -125,14 +117,12 @@ namespace Hashes
 
 			typedef typename AlignedStorage::iterator iterator;
 			typedef typename AlignedStorage::const_iterator const_iterator;
-			typedef typename AlignedStorage::pointer pointer;
-			typedef typename AlignedStorage::const_pointer const_pointer;
 
 			NoInit() : Descriptor() {}
 			NoInit(iterator input)
 				: Descriptor()
 			{
-				memcpy( data(), input, byteCount );
+				memcpy( begin(), input, byteCount );
 			}
 			NoInit(const RawStorage& rhs)
 				: Descriptor(), m_storage( rhs )
@@ -161,12 +151,10 @@ namespace Hashes
 			AlignedStorage& alignedStorage() { return m_words; }
 			const AlignedStorage& alignedStorage() const { return m_words; }
 
-			iterator		begin()		  { return m_words.begin(); }
-			const_iterator	begin()	const { return m_words.begin(); }
-			iterator		end()		  { return m_words.end(); }
-			const_iterator	end()	const { return m_words.end(); }
-			pointer			data()		  { return m_words.data(); }
-			const_pointer	data()	const { return m_words.data(); }
+			iterator       begin()       { return m_words.begin(); }
+			const_iterator begin() const { return m_words.begin(); }
+			iterator       end()         { return m_words.end(); }
+			const_iterator end()   const { return m_words.end(); }
 
 		private:
 			union

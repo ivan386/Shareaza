@@ -1,7 +1,7 @@
 //
 // WndBaseMatch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -519,9 +519,7 @@ void CBaseMatchWnd::OnSearchChat()
 	{
 		ChatWindows.OpenPrivate( pHit->m_oClientID,
 			&pHit->m_pAddress, pHit->m_nPort, pHit->m_bPush == TRI_TRUE,
-			pHit->m_nProtocol,
-			reinterpret_cast< IN_ADDR* >( pHit->m_oClientID.data() ),
-			(WORD)pHit->m_oClientID.begin()[1] );
+			pHit->m_nProtocol, (IN_ADDR*)pHit->m_oClientID.begin(), (WORD)pHit->m_oClientID.begin()[1] );
 	}
 }
 

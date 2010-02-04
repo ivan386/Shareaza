@@ -50,13 +50,13 @@ namespace Hashes
 	};
 
 	//! \brief Encodes a uchar array as guid string without "{}".
-	CString toGuid(const uchar* hash);
+	StringType toGuid(const uchar* hash);
 	//! \brief Encodes a CLSID as guid string with or without "{}".
-	CString toGuid(REFCLSID hash, bool enclosed = true);
+	StringType toGuid(REFCLSID hash, bool enclosed = true);
 	//! \brief Encodes a uchar array of given range as hex string.
-	CString toBase16(const uchar* hash, size_t byteCount);
+	StringType toBase16(const uchar* hash, size_t byteCount);
 	//! \brief Encodes a uchar array of given range as Base32 string.
-	CString toBase32(const uchar* hash, size_t byteCount);
+	StringType toBase32(const uchar* hash, size_t byteCount);
 	//! \brief Reads from a guid encoded string with or without "{}" into a uchar array.
 	bool fromGuid(uchar* hash, const wchar* input);
 	//! \brief Reads from a guid encoded string with or without "{}" into a CLSID.
@@ -75,7 +75,7 @@ namespace Hashes
 	struct HashToString< guidEncoding, byteCount >
 	{
 		BOOST_STATIC_ASSERT( byteCount <= maxByteCount );
-		CString operator()(const uchar* hash) const
+		inline StringType operator()(const uchar* hash) const
 		{
 			return toGuid( hash );
 		}
@@ -87,7 +87,7 @@ namespace Hashes
 	struct HashToString< base16Encoding, byteCount >
 	{
 		BOOST_STATIC_ASSERT( byteCount <= maxByteCount );
-		CString operator()(const uchar* hash) const
+		inline StringType operator()(const uchar* hash) const
 		{
 			return toBase16( hash, byteCount );
 		}
@@ -99,7 +99,7 @@ namespace Hashes
 	struct HashToString< base32Encoding, byteCount >
 	{
 		BOOST_STATIC_ASSERT( byteCount <= maxByteCount );
-		CString operator()(const uchar* hash) const
+		inline StringType operator()(const uchar* hash) const
 		{
 			return toBase32( hash, byteCount );
 		}
@@ -110,7 +110,7 @@ namespace Hashes
 	template<size_t byteCount>
 	struct HashFromString< guidEncoding, byteCount >
 	{
-		bool operator()(uchar* hash, const wchar* input) const
+		inline bool operator()(uchar* hash, const wchar* input) const
 		{
 			return fromGuid( hash, input );
 		}
@@ -121,7 +121,7 @@ namespace Hashes
 	template<size_t byteCount>
 	struct HashFromString< base16Encoding, byteCount >
 	{
-		bool operator()(uchar* hash, const wchar* input) const
+		inline bool operator()(uchar* hash, const wchar* input) const
 		{
 			return fromBase16( hash, input, byteCount );
 		}
@@ -132,7 +132,7 @@ namespace Hashes
 	template<size_t byteCount>
 	struct HashFromString< base32Encoding, byteCount >
 	{
-		bool operator()(uchar* hash, const wchar* input) const
+		inline bool operator()(uchar* hash, const wchar* input) const
 		{
 			return fromBase32( hash, input, byteCount );
 		}

@@ -114,15 +114,15 @@ namespace Hashes
 		//! cannot be deduced and must be specified explicitly. Returns an empty
 		//! string if the hash is not valid.
 		template<Encoding encoding>
-		CString toString() const
+		StringType toString() const
 		{
 			return isValid()
 					? HashToString< encoding, byteCount >()( &( *this )[ 0 ] )
-					: CString();
+					: StringType();
 		}
 		//! \brief Generates a hash string using the default encoding for
 		//!        this hash type.
-		CString toString() const
+		StringType toString() const
 		{
 			return toString< encoding >();
 		}
@@ -137,17 +137,17 @@ namespace Hashes
 		//!       but the error message does not show the point of
 		//!       instantiation.
 		template<size_t urn>
-		CString toUrn() const
+		StringType toUrn() const
 		{
 			return isValid()
 					? urns[ urn ].signature
 							+ HashToString< encoding, byteCount >()( &( *this )[ 0 ] )
-					: CString();
+					: StringType();
 		}
 		//! \brief Generates a urn string using the default urn prefix.
-		CString toUrn() const { return toUrn< 0 >(); }
+		StringType toUrn() const { return toUrn< 0 >(); }
 		//! \brief Generates a urn string using the default short urn prefix.
-		CString toShortUrn() const { return toUrn< 1 >(); }
+		StringType toShortUrn() const { return toUrn< 1 >(); }
 
 		//! \brief Generates hash from a hash string with the specified
 		//!        encoding.
@@ -214,7 +214,7 @@ namespace Hashes
 		template<typename> class CP, template<typename> class OCP,
 		template<typename> class VP, template<typename> class OVP
 	>
-	bool operator==(const Hash< Descriptor, SP, CP, VP >& lhs,
+	inline bool operator==(const Hash< Descriptor, SP, CP, VP >& lhs,
 			const Hash< Descriptor, OSP, OCP, OVP >& rhs )
 	{
 		return lhs.alignedStorage() == rhs.alignedStorage();
@@ -231,7 +231,7 @@ namespace Hashes
 		template<typename> class CP, template<typename> class OCP,
 		template<typename> class VP, template<typename> class OVP
 	>
-	bool operator!=(const Hash< Descriptor, SP, CP, VP >& lhs,
+	inline bool operator!=(const Hash< Descriptor, SP, CP, VP >& lhs,
 			const Hash< Descriptor, OSP, OCP, OVP >& rhs )
 	{
 		return !( lhs == rhs );
@@ -251,7 +251,7 @@ namespace Hashes
 		template<typename> class CP, template<typename> class OCP,
 		template<typename> class VP, template<typename> class OVP
 	>
-	bool operator<(const Hash< Descriptor, SP, CP, VP >& lhs,
+	inline bool operator<(const Hash< Descriptor, SP, CP, VP >& lhs,
 			const Hash< Descriptor, OSP, OCP, OVP >& rhs )
 	{
 		return lhs.alignedStorage() < rhs.alignedStorage();
@@ -268,7 +268,7 @@ namespace Hashes
 		template<typename> class CP, template<typename> class OCP,
 		template<typename> class VP, template<typename> class OVP
 	>
-	bool operator>(const Hash< Descriptor, SP, CP, VP >& lhs,
+	inline bool operator>(const Hash< Descriptor, SP, CP, VP >& lhs,
 			const Hash< Descriptor, OSP, OCP, OVP >& rhs )
 	{
 		return rhs < lhs;
@@ -285,7 +285,7 @@ namespace Hashes
 		template<typename> class CP, template<typename> class OCP,
 		template<typename> class VP, template<typename> class OVP
 	>
-	bool operator>=(const Hash< Descriptor, SP, CP, VP >& lhs,
+	inline bool operator>=(const Hash< Descriptor, SP, CP, VP >& lhs,
 			const Hash< Descriptor, OSP, OCP, OVP >& rhs )
 	{
 		return !( lhs < rhs );
@@ -302,7 +302,7 @@ namespace Hashes
 		template<typename> class CP, template<typename> class OCP,
 		template<typename> class VP, template<typename> class OVP
 	>
-	bool operator<=(const Hash< Descriptor, SP, CP, VP >& lhs,
+	inline bool operator<=(const Hash< Descriptor, SP, CP, VP >& lhs,
 			const Hash< Descriptor, OSP, OCP, OVP >& rhs )
 	{
 		return !( rhs < lhs );
@@ -320,7 +320,7 @@ namespace Hashes
 		template<typename> class CP, template<typename> class OCP,
 		template<typename> class VP, template<typename> class OVP
 	>
-	bool validAndEqual(const Hash< Descriptor, SP, CP, VP >& lhs,
+	inline bool validAndEqual(const Hash< Descriptor, SP, CP, VP >& lhs,
 			const Hash< Descriptor, OSP, OCP, OVP >& rhs )
 	{
 		return lhs.isValid() && rhs.isValid() && lhs == rhs;
@@ -338,7 +338,7 @@ namespace Hashes
 		template<typename> class CP, template<typename> class OCP,
 		template<typename> class VP, template<typename> class OVP
 	>
-	bool validAndUnequal(const Hash< Descriptor, SP, CP, VP >& lhs,
+	inline bool validAndUnequal(const Hash< Descriptor, SP, CP, VP >& lhs,
 			const Hash< Descriptor, OSP, OCP, OVP >& rhs )
 	{
 		return lhs.isValid() && rhs.isValid() && lhs != rhs;

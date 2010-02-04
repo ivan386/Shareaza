@@ -259,7 +259,7 @@ void CBTInfo::Serialize(CArchive& ar)
 		ar << m_nBlockCount;
 		for ( DWORD i = 0; i < m_nBlockCount; ++i )
 		{
-			ar.Write( m_pBlockBTH[ i ].data(), Hashes::BtPureHash::byteCount );
+			ar.Write( m_pBlockBTH[ i ].begin(), Hashes::BtPureHash::byteCount );
 		}
 
 		ar << m_nTotalUpload;
@@ -287,11 +287,13 @@ void CBTInfo::Serialize(CArchive& ar)
 			m_oTrackers[ nTracker ].Serialize( ar, nVersion );
 		}
 
-		ar << m_pSource.m_nLength;
 		if ( m_pSource.m_nLength && CheckInfoData( &m_pSource ) )
 		{
+			ar << m_pSource.m_nLength;
 			ar.Write( m_pSource.m_pBuffer, m_pSource.m_nLength );
 		}
+		else
+			ar << (DWORD)0;
 	}
 	else
 	{
@@ -320,7 +322,7 @@ void CBTInfo::Serialize(CArchive& ar)
 			m_pBlockBTH = new Hashes::BtPureHash[ m_nBlockCount ];
 			for ( DWORD i = 0; i < m_nBlockCount; ++i )
 			{
-				ReadArchive( ar, m_pBlockBTH[ i ].data(), Hashes::BtPureHash::byteCount );
+				ReadArchive( ar, m_pBlockBTH[ i ].begin(), Hashes::BtPureHash::byteCount );
 			}
 		}
 

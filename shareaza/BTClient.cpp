@@ -1034,7 +1034,7 @@ BOOL CBTClient::OnSourceRequest(CBTPacket* /*pPacket*/)
 			
 			if ( pURL.Parse( pSource->m_sURL ) && pURL.m_oBTC )
 			{
-                pPeer->Add( "peer id" )->SetString( pURL.m_oBTC.data(), Hashes::BtGuid::byteCount );
+                pPeer->Add( "peer id" )->SetString( pURL.m_oBTC.begin(), Hashes::BtGuid::byteCount );
 			}
 			
 			pPeer->Add( "ip" )->SetString( CString( inet_ntoa( pSource->m_pAddress ) ) );

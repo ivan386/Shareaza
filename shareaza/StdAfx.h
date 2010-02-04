@@ -1,7 +1,7 @@
 //
 // StdAfx.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -151,23 +151,21 @@
 // STL
 //
 
-#include <algorithm>
-//#include <array>
+#include <vector>
+#include <list>
 #include <deque>
+#include <queue>
+#include <stack>
+#include <map>
+#include <set>
+#include <string>
+#include <utility>
 #include <functional>
+#include <algorithm>
+#include <memory>
 #include <iterator>
 #include <limits>
-#include <list>
-#include <map>
-#include <memory>
 #include <new>
-#include <queue>
-#include <set>
-#include <stack>
-#include <string>
-//#include <type_traits>
-#include <utility>
-#include <vector>
 
 //
 // Boost
@@ -178,19 +176,15 @@
 	#define BOOST_MEM_FN_ENABLE_STDCALL 1
 #endif
 
-#include <boost/tr1/array.hpp>
-#include <boost/tr1/memory.hpp>
-#include <boost/tr1/type_traits.hpp>
-#include <boost/tr1/utility.hpp>
-
-#include <boost/bind.hpp>
-#include <boost/checked_delete.hpp>
 #include <boost/cstdint.hpp>
-//#include <boost/mpl/min_max.hpp>
+#include <boost/bind.hpp>
+#include <boost/bind/placeholders.hpp>
+#include <boost/type_traits.hpp>
+#include <boost/shared_ptr.hpp>
+#include <boost/utility.hpp>
+#include <boost/array.hpp>
 #include <boost/ptr_container/ptr_list.hpp>
-//#include <boost/regex.hpp>
-//#include <boost/regex/mfc.hpp>
-#include <boost/static_assert.hpp>
+#include <boost/checked_delete.hpp>
 
 //
 // Standard headers
@@ -223,10 +217,34 @@ using augment::IUnknownImplementation;
 // GeoIP http://geolite.maxmind.com/
 #include "../GeoIP/GeoIP.h"
 
+typedef CString StringType;
+
 //! \brief Hash function needed for CMap with const CString& as ARG_KEY.
 template<> AFX_INLINE UINT AFXAPI HashKey(const CString& key)
 {
-	return HashKey<LPCTSTR>( key );
+	UINT nHash = 0;
+	LPCTSTR pKey = key.GetString();
+	while ( *pKey )
+		nHash = ( nHash << 5 ) + nHash + *pKey++;
+	return nHash;
+}
+//! \brief Hash function needed for CMap with CString& as ARG_KEY.
+template<> AFX_INLINE UINT AFXAPI HashKey(CString& key)
+{
+	return HashKey< const CString& >( key );
+}
+//! \brief Hash function needed for CMap with CString as ARG_KEY.
+template<> AFX_INLINE UINT AFXAPI HashKey(CString key)
+{
+	return HashKey< const CString& >( key );
+}
+//! \brief Hash function needed for CMap with DWORD_PTR as ARG_KEY.
+//!
+//! While the default hash function could be used, this one does not generate
+//! (false) 64 bit warnings.
+template<> AFX_INLINE UINT AFXAPI HashKey(DWORD_PTR key)
+{
+	return static_cast< UINT >( key >> 4 );
 }
 
 #include "Hashes.hpp"
@@ -427,7 +445,7 @@ private:
 	CGuarded* operator&() const; // too unsafe
 };
 
-typedef std::tr1::shared_ptr< CCriticalSection > CCriticalSectionPtr;
+typedef boost::shared_ptr< CCriticalSection > CCriticalSectionPtr;
 
 template< typename T, typename L >
 class CLocked
@@ -452,12 +470,12 @@ public:
 		m_oLock->Unlock();
 	}
 	
-	operator T() const
+	operator T() const throw()
 	{
 		return m_oValue;
 	}
 
-	T operator->() const
+	T operator->() const throw()
 	{
 		return m_oValue;
 	}
@@ -546,7 +564,7 @@ private:
 template<>
 struct std::less< CLSID > : public std::binary_function< CLSID, CLSID, bool >
 {
-	bool operator()(const CLSID& _Left, const CLSID& _Right) const
+	inline bool operator()(const CLSID& _Left, const CLSID& _Right) const throw()
 	{
 		return _Left.Data1 < _Right.Data1 || ( _Left.Data1 == _Right.Data1 &&
 			( _Left.Data2 < _Right.Data2 || ( _Left.Data2 == _Right.Data2 &&
@@ -558,7 +576,7 @@ struct std::less< CLSID > : public std::binary_function< CLSID, CLSID, bool >
 template<>
 struct std::less< CString > : public std::binary_function< CString, CString, bool>
 {
-	bool operator()(const CString& _Left, const CString& _Right) const
+	inline bool operator()(const CString& _Left, const CString& _Right) const throw()
 	{
 		return ( _Left.CompareNoCase( _Right ) < 0 );
 	}
@@ -610,10 +628,10 @@ inline BOOL StartsWith(const CString& sInput, LPCTSTR pszText, const int len)
 
 // Compute average of values collected by specified time
 template< class T, DWORD dwMilliseconds >
-class CTimeAverage : private boost::noncopyable
+class CTimeAverage : boost::noncopyable
 {
 public:
-	T operator()(T Val)
+	inline T operator()(T Val)
 	{
 		// Add new value
 		DWORD dwNow = GetTickCount();
@@ -641,7 +659,7 @@ protected:
 };
 
 template< class T >
-void SafeRelease(CComPtr< T >& pObj)
+inline void SafeRelease(CComPtr< T >& pObj) throw()
 {
 	__try
 	{
