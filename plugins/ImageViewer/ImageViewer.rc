@@ -66,7 +66,7 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_AUS
 
 VS_VERSION_INFO VERSIONINFO
  FILEVERSION 1,2,1,8
- PRODUCTVERSION 2,5,1,0
+ PRODUCTVERSION 2,5,2,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -86,10 +86,10 @@ BEGIN
             VALUE "FileDescription", "Shareaza Image Viewer Plugin"
             VALUE "FileVersion", "1, 2, 1, 8"
             VALUE "InternalName", "ImageViewer"
-            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2009. All rights reserved."
+            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2010. All rights reserved."
             VALUE "OriginalFilename", "ImageViewer.dll"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 5, 1, 0"
+            VALUE "ProductVersion", "2, 5, 2, 0"
         END
     END
     BLOCK "VarFileInfo"

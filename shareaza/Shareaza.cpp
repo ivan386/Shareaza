@@ -336,8 +336,7 @@ BOOL CShareazaApp::InitInstance()
 	DDEServer.Create();
 	IEProtocol.Create();
 
-	// ***********
-	//*
+#if ! RELEASE_BUILD
 	// Beta expiry. Remember to re-compile to update the time, and remove this
 	// section for final releases and public betas.
 	COleDateTime tCompileTime;
@@ -351,9 +350,7 @@ BOOL CShareazaApp::InitInstance()
 		L"Please download the full, official release from " WEB_SITE_T L".", MB_ICONQUESTION|MB_OK );
 		//return FALSE;
 	}
-	//*/
 
-	//*
 	// Alpha warning. Remember to remove this section for final releases and public betas.
 	if ( ! m_ocmdInfo.m_bNoAlphaWarning && m_ocmdInfo.m_bShowSplash )
 	if ( AfxMessageBox(
@@ -366,8 +363,7 @@ BOOL CShareazaApp::InitInstance()
 		L"or corrupt system files. Corrupted downloads/files may not be recoverable. "
 		L"Do you wish to continue?", MB_ICONEXCLAMATION|MB_YESNO ) == IDNO )
 		return FALSE;
-	//*/
-	// ***********
+#endif // RELEASE_BUILD
 
 	int nSplashSteps = 18
 		+ ( Settings.Connection.EnableFirewallException ? 1 : 0 )

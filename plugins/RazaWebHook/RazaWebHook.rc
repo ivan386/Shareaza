@@ -31,7 +31,7 @@ LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
 
 VS_VERSION_INFO VERSIONINFO
  FILEVERSION 2,0,0,0
- PRODUCTVERSION 2,5,1,0
+ PRODUCTVERSION 2,5,2,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -51,10 +51,10 @@ BEGIN
             VALUE "FileDescription", "Shareaza Web Download Hook"
             VALUE "FileVersion", "2, 0, 0, 0"
             VALUE "InternalName", "RazaWebHook"
-            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2008-2009. All rights reserved."
+            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2008-2010. All rights reserved."
             VALUE "OriginalFilename", "RazaWebHook.dll"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 5, 1, 0"
+            VALUE "ProductVersion", "2, 5, 2, 0"
         END
     END
     BLOCK "VarFileInfo"

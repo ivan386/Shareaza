@@ -49,7 +49,6 @@
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
 				EnableFunctionLevelLinking="true"
-				EnableEnhancedInstructionSet="1"
 				FloatingPointModel="2"
 				RuntimeTypeInfo="false"
 				DebugInformationFormat="4"
@@ -199,7 +198,6 @@
 				StringPooling="true"
 				ExceptionHandling="0"
 				RuntimeLibrary="0"
-				EnableEnhancedInstructionSet="1"
 				FloatingPointModel="2"
 				RuntimeTypeInfo="false"
 			/>
