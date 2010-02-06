@@ -1,7 +1,7 @@
 //
 // Network.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -85,6 +85,8 @@ protected:
 	};
 	CList< CDelayedHit > m_pDelayedHits;
 
+	// Restore WinINet connection to Internet
+	void		InternetConnect();
 	BOOL		PreRun();
 	void		OnRun();
 	void		PostRun();

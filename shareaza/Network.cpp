@@ -1,7 +1,7 @@
 //
 // Network.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -24,11 +24,8 @@
 #include "Settings.h"
 #include "Network.h"
 #include "Library.h"
-#include "SharedFile.h"
-#include "Security.h"
 #include "Handshakes.h"
 #include "Neighbours.h"
-#include "Neighbour.h"
 #include "Datagrams.h"
 #include "HostCache.h"
 #include "RouteCache.h"
@@ -38,22 +35,17 @@
 #include "Downloads.h"
 #include "Statistics.h"
 #include "DiscoveryServices.h"
-#include "HttpRequest.h"
 #include "UPnPFinder.h"
 
 #include "CrawlSession.h"
 #include "SearchManager.h"
 #include "QueryHashMaster.h"
-#include "QuerySearch.h"
 #include "QueryHit.h"
-#include "Buffer.h"
 #include "G1Packet.h"
 #include "G2Packet.h"
-#include "GGEP.h"
 #include "G1Neighbour.h"
 
 #include "WndMain.h"
-#include "WndChild.h"
 #include "WndSearchMonitor.h"
 #include "WndSearch.h"
 #include "WndHitMonitor.h"
@@ -115,6 +107,18 @@ BOOL CNetwork::IsSelfIP(const IN_ADDR& nAddress) const
 		return TRUE;
 	}
 	return ( m_pHostAddresses.Find( nAddress.s_addr ) != NULL );
+}
+
+void CNetwork::InternetConnect()
+{
+	__try
+	{
+		InternetAttemptConnect( 0 );
+	}
+	__except( EXCEPTION_EXECUTE_HANDLER )
+	{
+		// Something blocked WinAPI (for example application level firewall)
+	}
 }
 
 bool CNetwork::IsAvailable() const
@@ -536,7 +540,7 @@ BOOL CNetwork::PreRun()
 	// Make sure WinINet is connected (IE is not in offline mode)
 	if ( Settings.Connection.ForceConnectedState )
 	{
-		INTERNET_CONNECTED_INFO ici = { 0 };
+		INTERNET_CONNECTED_INFO ici = {};
 		HINTERNET hInternet = InternetOpen( Settings.SmartAgent(), INTERNET_OPEN_TYPE_DIRECT, NULL, NULL, 0 );
 
 		ici.dwConnectedState = INTERNET_STATE_CONNECTED;
@@ -544,7 +548,7 @@ BOOL CNetwork::PreRun()
 		InternetCloseHandle( hInternet );
 	}
 
-	InternetAttemptConnect( 0 );
+	InternetConnect();
 
 	gethostname( m_sHostName.GetBuffer( 255 ), 255 );
 	m_sHostName.ReleaseBuffer();
