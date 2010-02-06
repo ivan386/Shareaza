@@ -21,7 +21,7 @@
 IDR_MANIFEST RT_MANIFEST 
 {
     "<assembly xmlns=""urn:schemas-microsoft-com:asm.v1"" manifestVersion=""1.0"">
-       <assemblyIdentity type=""win32"" name=""Shareaza.Shareaza"" version=""2.5.2.0""
+       <assemblyIdentity type=""win32"" name=""Shareaza.Shareaza"" version=""2.5.2.1""
 #ifdef WIN64
 		 processorArchitecture=""amd64""
 #else
