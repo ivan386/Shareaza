@@ -51,6 +51,6 @@ private:
 	MD5State m_State;
 
 #ifndef HASHLIB_USE_ASM
-	void	Transform(const uint32* data);
+	__forceinline void Transform(const uint32* data);
 #endif
 };

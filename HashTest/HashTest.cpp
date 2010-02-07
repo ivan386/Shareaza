@@ -1,7 +1,7 @@
 //
 // HashTest.cpp
 //
-// Copyright (c) Shareaza Development Team, 2009.
+// Copyright (c) Shareaza Development Team, 2009-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -54,8 +54,8 @@ static InitGetMicroCount initGetMicroCount;
 
 int _tmain(int /*argc*/, _TCHAR* /*argv*/[])
 {
-	const __int64 nCount = 1000;
-	const __int64 nBlock = ( 4 * 1024 ) * 1024;	// 4 MB
+	const __int64 nCount = 100;
+	const __int64 nBlock = 10 * 1024 * 1024;	// 10 MB
 
 #ifdef _WIN64
 	_tprintf( _T("Platform : 64-bit\n") );
@@ -69,53 +69,85 @@ int _tmain(int /*argc*/, _TCHAR* /*argv*/[])
 	_tprintf( _T("Build    : Release\n") );
 #endif
 
-	SetThreadPriority( GetCurrentThread(), THREAD_PRIORITY_HIGHEST );
-
 	SYSTEM_INFO si = {};
 	GetSystemInfo( &si );
 	_tprintf( _T("CPUs     : %u\n"), si.dwNumberOfProcessors );
 
 	LPVOID pBuffer = VirtualAlloc( NULL, nBlock, MEM_COMMIT, PAGE_READWRITE );
 
+	SetThreadPriority( GetCurrentThread(), THREAD_PRIORITY_HIGHEST );
+
 	_tprintf( _T("\n") );
 
 	{
-		_tprintf( _T("MD4  hash: %I64d MB by "), ( nBlock * nCount ) / 1024 / 1024 );
-		__int64 nBegin = GetMicroCount();
-		CMD4 pMD4;
+		ZeroMemory( pBuffer, nBlock );
+		_tprintf( _T("MD4  hash: %I64d MB by "), nBlock / 1024 / 1024 );
+		__int64 nBest = 0, nWorst = 0;
 		for ( int i = 0; i < nCount; ++i )
+		{
+			const __int64 nBegin = GetMicroCount();
+			CMD4 pMD4;
 			pMD4.Add( pBuffer, nBlock );
-		pMD4.Finish();
-		__int64 nTime = GetMicroCount() - nBegin;
-		_tprintf( _T("%5I64d ms, %3I64d MB/s\n"),
-			nTime / 1000, ( nBlock * nCount * 1000000 ) / ( nTime * 1024 * 1024 ) );
+			pMD4.Finish();
+			__int64 nTime = GetMicroCount() - nBegin;
+			if ( i == 0 || nTime < nBest )
+				nBest = nTime;
+			if ( i == 0 || nTime > nWorst )
+				nWorst = nTime;
+		}
+		const __int64 nError = ( 100 * ( nWorst - nBest ) ) / nWorst;
+		const __int64 nSpeed = ( nBlock * 1000000 ) / nBest;
+		_tprintf( _T("%6I64d ms (error %I64d%%), %3I64d MB/s\n"),
+			nBest / 1000, nError, nSpeed / ( 1024 * 1024 ) );
 	}
 
 	{
-		_tprintf( _T("MD5  hash: %I64d MB by "), ( nBlock * nCount ) / 1024 / 1024 );
-		__int64 nBegin = GetMicroCount();
-		CMD5 pMD5;
+		ZeroMemory( pBuffer, nBlock );
+		_tprintf( _T("MD5  hash: %I64d MB by "), nBlock / 1024 / 1024 );
+		__int64 nBest = 0, nWorst = 0;
 		for ( int i = 0; i < nCount; ++i )
+		{
+			const __int64 nBegin = GetMicroCount();
+			CMD5 pMD5;
 			pMD5.Add( pBuffer, nBlock );
-		pMD5.Finish();
-		__int64 nTime = GetMicroCount() - nBegin;
-		_tprintf( _T("%5I64d ms, %3I64d MB/s\n"),
-			nTime / 1000, ( nBlock * nCount * 1000000 ) / ( nTime * 1024 * 1024 ) );
+			pMD5.Finish();
+			__int64 nTime = GetMicroCount() - nBegin;
+			if ( i == 0 || nTime < nBest )
+				nBest = nTime;
+			if ( i == 0 || nTime > nWorst )
+				nWorst = nTime;
+		}
+		const __int64 nError = ( 100 * ( nWorst - nBest ) ) / nWorst;
+		const __int64 nSpeed = ( nBlock * 1000000 ) / nBest;
+		_tprintf( _T("%6I64d ms (error %I64d%%), %3I64d MB/s\n"),
+			nBest / 1000, nError, nSpeed / ( 1024 * 1024 ) );
 	}
 
 	{
-		_tprintf( _T("SHA1 hash: %I64d MB by "), ( nBlock * nCount ) / 1024 / 1024 );
-		__int64 nBegin = GetMicroCount();
-		CSHA pSHA;
+		ZeroMemory( pBuffer, nBlock );
+		_tprintf( _T("SHA1 hash: %I64d MB by "), nBlock / 1024 / 1024 );
+		__int64 nBest = 0, nWorst = 0;
 		for ( int i = 0; i < nCount; ++i )
+		{
+			const __int64 nBegin = GetMicroCount();
+			CSHA pSHA;
 			pSHA.Add( pBuffer, nBlock );
-		pSHA.Finish();
-		__int64 nTime = GetMicroCount() - nBegin;
-		_tprintf( _T("%5I64d ms, %3I64d MB/s\n"),
-			nTime / 1000, ( nBlock * nCount * 1000000 ) / ( nTime * 1024 * 1024 ) );
+			pSHA.Finish();
+			__int64 nTime = GetMicroCount() - nBegin;
+			if ( i == 0 || nTime < nBest )
+				nBest = nTime;
+			if ( i == 0 || nTime > nWorst )
+				nWorst = nTime;
+		}
+		const __int64 nError = ( 100 * ( nWorst - nBest ) ) / nWorst;
+		const __int64 nSpeed = ( nBlock * 1000000 ) / nBest;
+		_tprintf( _T("%6I64d ms (error %I64d%%), %3I64d MB/s\n"),
+			nBest / 1000, nError, nSpeed / ( 1024 * 1024 ) );
 	}
 
-	 VirtualFree( pBuffer, 0, MEM_RELEASE );
+	SetThreadPriority( GetCurrentThread(), THREAD_PRIORITY_NORMAL );
+
+	VirtualFree( pBuffer, 0, MEM_RELEASE );
 
 	_tprintf( _T("\nPress ENTER to exit") );
 	getchar();

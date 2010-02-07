@@ -43,8 +43,8 @@ public:
 #ifndef HASHLIB_USE_ASM
 	struct TransformArray
 	{
-		TransformArray(const uint32* const buffer);
-		uint32 operator[](uint32 index) const
+		__forceinline TransformArray(const uint32* const buffer);
+		__forceinline uint32 operator[](uint32 index) const
 		{
 			return m_buffer[ index ];
 		}
@@ -63,6 +63,6 @@ private:
 	SHA1State m_State;
 
 #ifndef HASHLIB_USE_ASM
-	void	Transform(const TransformArray w);
+	__forceinline void Transform(const TransformArray w);
 #endif
 };

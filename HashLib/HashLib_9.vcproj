@@ -51,6 +51,7 @@
 				ExceptionHandling="0"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
+				BufferSecurityCheck="false"
 				FloatingPointModel="2"
 				RuntimeTypeInfo="false"
 				UsePrecompiledHeader="2"
@@ -128,6 +129,7 @@
 				ExceptionHandling="0"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
+				BufferSecurityCheck="false"
 				FloatingPointModel="2"
 				RuntimeTypeInfo="false"
 				UsePrecompiledHeader="2"
@@ -207,9 +209,11 @@
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;HASHLIB_EXPORTS;_SCL_SECURE_NO_WARNINGS;HASHLIB_USE_ASM"
 				ExceptionHandling="0"
 				RuntimeLibrary="0"
+				BufferSecurityCheck="false"
 				FloatingPointModel="2"
 				RuntimeTypeInfo="false"
 				UsePrecompiledHeader="2"
+				AssemblerOutput="4"
 				WarningLevel="4"
 			/>
 			<Tool
@@ -227,6 +231,7 @@
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
+				SetChecksum="true"
 				BaseAddress="0x29100000"
 				TargetMachine="1"
 			/>
@@ -289,6 +294,7 @@
 				PreprocessorDefinitions="WIN64;NDEBUG;_WINDOWS;_USRDLL;HASHLIB_EXPORTS;_SCL_SECURE_NO_WARNINGS"
 				ExceptionHandling="0"
 				RuntimeLibrary="0"
+				BufferSecurityCheck="false"
 				FloatingPointModel="2"
 				RuntimeTypeInfo="false"
 				UsePrecompiledHeader="2"

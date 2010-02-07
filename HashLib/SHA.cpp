@@ -169,7 +169,7 @@ namespace
 {
 	// ch transformation
 	template< uint32 round >
-	void F(const CSHA::TransformArray& data, uint32& a, uint32& b, uint32 c, uint32 d, uint32 e, uint32& t)
+	__forceinline void F(const CSHA::TransformArray& data, uint32& a, uint32& b, uint32 c, uint32 d, uint32 e, uint32& t)
 	{
 		t = a;
 		a = rotateLeft( a, 5 ) + e + data[ round ] + 0x5a827999 + ( d ^ ( b & ( c ^ d ) ) );
@@ -177,7 +177,7 @@ namespace
 	}
 	// parity transformation
 	template< uint32 round >
-	void G(const CSHA::TransformArray& data, uint32& a, uint32& b, uint32 c, uint32 d, uint32 e, uint32& t)
+	__forceinline void G(const CSHA::TransformArray& data, uint32& a, uint32& b, uint32 c, uint32 d, uint32 e, uint32& t)
 	{
 		t = a;
 		a = rotateLeft( a, 5 ) + e + data[ round + 20 ] + 0x6ed9eba1 + ( b ^ c ^ d );
@@ -185,7 +185,7 @@ namespace
 	}
 	// maj transformation
 	template< uint32 round >
-	void H(const CSHA::TransformArray& data, uint32& a, uint32& b, uint32 c, uint32 d, uint32 e, uint32& t )
+	__forceinline void H(const CSHA::TransformArray& data, uint32& a, uint32& b, uint32 c, uint32 d, uint32 e, uint32& t )
 	{
 		t = a;
 		a = rotateLeft( a, 5 ) + e + data[ round + 40 ] + 0x8f1bbcdc + ( ( c & d ) ^ ( b & ( c ^ d ) ) );
@@ -193,7 +193,7 @@ namespace
 	}
 	// parity transformation
 	template< uint32 round >
-	void I(const CSHA::TransformArray& data, uint32& a, uint32& b, uint32 c, uint32 d, uint32 e, uint32& t )
+	__forceinline void I(const CSHA::TransformArray& data, uint32& a, uint32& b, uint32 c, uint32 d, uint32 e, uint32& t )
 	{
 		t = a;
 		a = rotateLeft( a, 5 ) + e + data[ round + 60 ] + 0xca62c1d6 + ( b ^ c ^ d );
