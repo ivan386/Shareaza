@@ -213,7 +213,6 @@
 				FloatingPointModel="2"
 				RuntimeTypeInfo="false"
 				UsePrecompiledHeader="2"
-				AssemblerOutput="4"
 				WarningLevel="4"
 			/>
 			<Tool
