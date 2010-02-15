@@ -1,7 +1,7 @@
 //
 // HostBrowser.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -181,11 +181,8 @@ void CHostBrowser::Stop(BOOL bCompleted)
 		CTransfer::Close();
 	}
 
-	if ( m_pBuffer )
-	{
-		delete m_pBuffer;
-		m_pBuffer = NULL;
-	}
+	delete m_pBuffer;
+	m_pBuffer = NULL;
 
 	if ( m_pInflate )
 		GetInput()->InflateStreamCleanup( m_pInflate );
@@ -529,6 +526,8 @@ BOOL CHostBrowser::OnHeaderLine(CString& strHeader, CString& strValue)
 
 BOOL CHostBrowser::OnHeadersComplete()
 {
+	CSingleLock pLock( &Transfers.m_pSection, TRUE );
+
 	if ( m_nState == hbsContent )
 		return TRUE;
 
@@ -575,6 +574,8 @@ BOOL CHostBrowser::OnHeadersComplete()
 
 BOOL CHostBrowser::ReadContent()
 {
+	CSingleLock pLock( &Transfers.m_pSection, TRUE );
+
 	if ( m_nProtocol != PROTOCOL_ED2K )
 	{
 		if ( m_nReceived < m_nLength )
@@ -632,6 +633,7 @@ BOOL CHostBrowser::ReadContent()
 
 BOOL CHostBrowser::StreamPacketsG1()
 {
+	ASSUME_LOCK( Transfers.m_pSection );
 	ASSERT ( m_nProtocol == PROTOCOL_G1 );
 
 	BOOL bSuccess = TRUE;
@@ -674,6 +676,7 @@ BOOL CHostBrowser::StreamPacketsG1()
 
 BOOL CHostBrowser::StreamPacketsG2()
 {
+	ASSUME_LOCK( Transfers.m_pSection );
 	ASSERT ( m_nProtocol == PROTOCOL_G2 );
 
 	while ( CG2Packet* pPacket = CG2Packet::ReadBuffer( m_pBuffer ) )
@@ -793,6 +796,7 @@ void CHostBrowser::OnProfilePacket(CG2Packet* pPacket)
 
 BOOL CHostBrowser::StreamHTML()
 {
+	ASSUME_LOCK( Transfers.m_pSection );
 	ASSERT ( m_nProtocol == PROTOCOL_NULL );
 
 	CString strLine;
