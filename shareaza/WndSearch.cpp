@@ -1,7 +1,7 @@
 //
 // WndSearch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -182,6 +182,8 @@ void CSearchWnd::OnDestroy()
 	}
 
 	SaveState( _T("CSearchWnd") );
+
+	OnSearchStop();
 
 	CBaseMatchWnd::OnDestroy();
 }
@@ -660,7 +662,7 @@ CQuerySearchPtr CSearchWnd::GetLastSearch() const
 
 void CSearchWnd::ExecuteSearch()
 {
-	CSingleLock pLock( &m_pMatches->m_pSection );
+	CQuickLock pLock( m_pMatches->m_pSection );
 
 	CSearchPtr pManaged;
 	if ( ! empty() )
@@ -712,7 +714,7 @@ void CSearchWnd::ExecuteSearch()
 
 void CSearchWnd::UpdateMessages()
 {
-	CSingleLock pLock( &m_pMatches->m_pSection );
+	CQuickLock pLock( m_pMatches->m_pSection );
 
 	CSearchPtr pManaged;
 	if ( ! empty() )
@@ -937,7 +939,8 @@ void CSearchWnd::OnTimer(UINT_PTR nIDEvent)
 
 void CSearchWnd::OnSelChangeMatches()
 {
-	CSingleLock pLock( &m_pMatches->m_pSection, TRUE );
+	CQuickLock pLock( m_pMatches->m_pSection );
+
 	m_wndDetails.SetFile( m_pMatches->GetSelectedFile( TRUE ) );
 }
 

@@ -1,7 +1,7 @@
 //
 // SearchManager.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -57,24 +57,34 @@ CSearchManager::~CSearchManager()
 //////////////////////////////////////////////////////////////////////
 // CSearchManager add and remove
 
-void CSearchManager::Add(CManagedSearch* pSearch)
+bool CSearchManager::Add(CManagedSearch* pSearch)
 {
 	ASSUME_LOCK( m_pSection );
 
 	POSITION pos = m_pList.Find( pSearch );
-	ASSERT( pos == NULL );
-	if ( pos == NULL )
-		m_pList.AddHead( pSearch );
+	if ( pos )
+		// Already started
+		return false;
+
+	pSearch->ComAddRef( NULL );
+	m_pList.AddHead( pSearch );
+
+	return true;
 }
 
-void CSearchManager::Remove(CManagedSearch* pSearch)
+bool CSearchManager::Remove(CManagedSearch* pSearch)
 {
 	ASSUME_LOCK( m_pSection );
 
 	POSITION pos = m_pList.Find( pSearch );
-	ASSERT( pos != NULL );
-	if ( pos != NULL )
-		m_pList.RemoveAt( pos );
+	if ( ! pos )
+		// Already stopped
+		return false;
+
+	m_pList.RemoveAt( pos );
+	pSearch->ComRelease( NULL );
+
+	return true;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -128,7 +138,7 @@ void CSearchManager::OnRun()
 		for ( POSITION pos = m_pList.GetHeadPosition(); pos ; )
 		{
 			POSITION posCur = pos;
-			CSearchPtr pSearch = m_pList.GetNext( pos );
+			CManagedSearch* pSearch = m_pList.GetNext( pos );
 
 			if ( pSearch->Execute( m_nPriorityClass ) )
 			{

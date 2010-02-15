@@ -1,7 +1,7 @@
 //
 // ManagedSearch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -52,7 +52,6 @@ CManagedSearch::CManagedSearch(CQuerySearch* pSearch, int nPriority) :
 	m_bAllowG2		( TRUE ),
 	m_bAllowG1		( TRUE ),
 	m_bAllowED2K	( TRUE ),
-	m_bStarted		( FALSE ),
 	m_bActive		( FALSE ),
 	m_bReceive		( TRUE ),
 	m_tStarted		( 0 ),
@@ -75,7 +74,8 @@ CManagedSearch::CManagedSearch(CQuerySearch* pSearch, int nPriority) :
 
 CManagedSearch::~CManagedSearch()
 {
-	Stop();
+	DEBUG_ONLY( CQuickLock( SearchManager.m_pSection ) );
+	ASSERT( SearchManager.m_pList.Find( this ) == NULL );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -130,33 +130,27 @@ void CManagedSearch::Start()
 	if ( InterlockedCompareExchange( (LONG*)&m_bActive, TRUE, FALSE ) )
 		return;
 
-	if ( ! InterlockedCompareExchange( (LONG*)&m_bStarted, TRUE, FALSE ) )
-	{
-		CQuickLock oLock( SearchManager.m_pSection );
+	CQuickLock oLock( SearchManager.m_pSection );
 
+	if ( SearchManager.Add( this ) )
+	{
 		m_tStarted		= static_cast< DWORD >( time( NULL ) );
 		m_tExecute		= 0;
 		m_tLastED2K		= 0;
 		m_tMoreResults	= 0;
 		m_nQueryCount	= 0;
-
 		m_pNodes.RemoveAll();
-
-		SearchManager.Add( this );
 	}
 }
 
 void CManagedSearch::Stop()
 {
-	if ( InterlockedCompareExchange( (LONG*)&m_bStarted, FALSE, TRUE ) )
-	{
-		CQuickLock oLock( SearchManager.m_pSection );
-
-		SearchManager.Remove( this );
-	}
-
 	if ( InterlockedCompareExchange( (LONG*)&m_bActive, FALSE, TRUE ) )
 		Datagrams.PurgeToken( this );
+
+	CQuickLock oLock( SearchManager.m_pSection );
+
+	SearchManager.Remove( this );
 }
 
 void CManagedSearch::CreateGUID()
