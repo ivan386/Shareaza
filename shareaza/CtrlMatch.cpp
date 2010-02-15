@@ -1,7 +1,7 @@
 //
 // CtrlMatch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -557,6 +557,8 @@ BOOL CMatchCtrl::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 
 void CMatchCtrl::ScrollBy(int nDelta)
 {
+	CSingleLock pLock( &m_pMatches->m_pSection, TRUE );
+
 	int nIndex = GetScrollPos( SB_VERT ) + nDelta;
 	nIndex = max( 0, nIndex );
 	ScrollTo( nIndex );
@@ -564,6 +566,8 @@ void CMatchCtrl::ScrollBy(int nDelta)
 
 void CMatchCtrl::ScrollTo(DWORD nIndex)
 {
+	CSingleLock pLock( &m_pMatches->m_pSection, TRUE );
+
 	DWORD nLimit = m_pMatches->m_nItems;
 	if ( nLimit > (DWORD)m_nPageCount ) nLimit -= m_nPageCount;
 	else nLimit = 0;
