@@ -3002,7 +3002,7 @@
 	<string id="17224" value="與eDonkey2000 客戶端 %s 信號交換時發生錯誤."/>
 	<string id="17225" value="與 %s 的 eDonkey2000 客戶端連線已關閉."/>
 	<string id="17226" value="從 %s (id=%x) 收到了一個 錯誤格式的 eDonkey2000 封包."/>
-	<string id="17227" value="來自於 % 的輸入連線是一個 eDonkey2000 客戶端連結."/>
+	<string id="17227" value="來自於 %s 的輸入連線是一個 eDonkey2000 客戶端連結."/>
 	<string id="17228" value="正在送出 &quot;%s&quot; 的 eDonkey2000 hashset 至 %s..."/>
 	<string id="17229" value="與 %s 的 eDonkey2000 client 連線已閒置, 關閉了."/>
 	<string id="17230" value="正在啟始 eDonkey2000 客戶端連線至 %s..."/>
