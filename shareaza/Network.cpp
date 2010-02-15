@@ -391,29 +391,48 @@ BOOL CNetwork::Resolve(LPCTSTR pszHost, int nPort, SOCKADDR_IN* pHost, BOOL bNam
 
 BOOL CNetwork::AsyncResolve(LPCTSTR pszAddress, WORD nPort, PROTOCOLID nProtocol, BYTE nCommand)
 {
-	CSingleLock pLock( &m_pSection );
-	if ( ! pLock.Lock( 250 ) ) return FALSE;
-
-	ResolveStruct* pResolve = new ResolveStruct;
+	auto_ptr< ResolveStruct > pResolve( new ResolveStruct );
 
 	HANDLE hAsync = WSAAsyncGetHostByName( AfxGetMainWnd()->GetSafeHwnd(), WM_WINSOCK,
 		CT2CA(pszAddress), pResolve->m_pBuffer, MAXGETHOSTSTRUCT );
 
-	if ( hAsync != NULL )
-	{
-		pResolve->m_sAddress = new CString( pszAddress );
-		pResolve->m_nProtocol = nProtocol;
-		pResolve->m_nPort = nPort;
-		pResolve->m_nCommand = nCommand;
-
-		m_pLookups.SetAt( hAsync, pResolve );
-		return TRUE;
-	}
-	else
-	{
-		delete pResolve;
+	if ( hAsync == NULL )
 		return FALSE;
+
+	pResolve->m_sAddress = pszAddress;
+	pResolve->m_nProtocol = nProtocol;
+	pResolve->m_nPort = nPort;
+	pResolve->m_nCommand = nCommand;
+
+	CQuickLock pLock( m_pLookupsSection );
+	m_pLookups.SetAt( hAsync, pResolve.release() );
+	return TRUE;
+}
+
+CNetwork::ResolveStruct* CNetwork::GetResolve(HANDLE hAsync)
+{
+	CQuickLock pLock( m_pLookupsSection );
+
+	ResolveStruct* pResolve = NULL;
+	if ( m_pLookups.Lookup( hAsync, pResolve ) )
+		m_pLookups.RemoveKey( hAsync );
+
+	return pResolve;
+}
+
+void CNetwork::ClearResolve()
+{
+	CQuickLock pLock( m_pLookupsSection );
+
+	for ( POSITION pos = m_pLookups.GetStartPosition() ; pos ; )
+	{
+		HANDLE pAsync;
+		ResolveStruct* pResolve;
+		m_pLookups.GetNextAssoc( pos, pAsync, pResolve );
+		WSACancelAsyncRequest( pAsync );
+		delete pResolve;
 	}
+	m_pLookups.RemoveAll();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -650,16 +669,7 @@ void CNetwork::PostRun()
 	NodeRoute->Clear();
 	QueryRoute->Clear();
 
-	for ( POSITION pos = m_pLookups.GetStartPosition() ; pos ; )
-	{
-		HANDLE pAsync;
-		ResolveStruct* pBuffer;
-		m_pLookups.GetNextAssoc( pos, pAsync, pBuffer );
-		WSACancelAsyncRequest( pAsync );
-		delete pBuffer->m_sAddress;
-		delete pBuffer;
-	}
-	m_pLookups.RemoveAll();
+	ClearResolve();
 
 	while ( ! m_pDelayedHits.IsEmpty() )
 	{
@@ -679,12 +689,11 @@ void CNetwork::PostRun()
 
 void CNetwork::OnWinsock(WPARAM wParam, LPARAM lParam)
 {
-	CSingleLock pLock( &m_pSection, TRUE );
+	auto_ptr< ResolveStruct > pResolve( GetResolve( (HANDLE)wParam ) );
+	if ( ! pResolve.get() )
+		return;
 
-	ResolveStruct* pResolve = NULL;
-	if ( ! m_pLookups.Lookup( (HANDLE)wParam, pResolve ) ) return;
-	m_pLookups.RemoveKey( (HANDLE)wParam );
-
+	CQuickLock oLock( m_pSection );
 	CString strAddress;
 	CDiscoveryService* pService;
 
@@ -703,7 +712,7 @@ void CNetwork::OnWinsock(WPARAM wParam, LPARAM lParam)
 			// code to invoke UDPHC/UDPKHL Sender.
 			if ( pResolve->m_nProtocol == PROTOCOL_G1 )
 			{
-				strAddress = L"uhc:" + *(pResolve->m_sAddress);
+				strAddress = L"uhc:" + pResolve->m_sAddress;
 				pService = DiscoveryServices.GetByAddress( strAddress );
 				if ( pService == NULL )
 				{
@@ -720,7 +729,7 @@ void CNetwork::OnWinsock(WPARAM wParam, LPARAM lParam)
 			}
 			else if ( pResolve->m_nProtocol == PROTOCOL_G2 )
 			{
-				strAddress = L"ukhl:" + *(pResolve->m_sAddress);
+				strAddress = L"ukhl:" + pResolve->m_sAddress;
 				pService = DiscoveryServices.GetByAddress( strAddress );
 				if ( pService == NULL )
 				{
@@ -739,7 +748,7 @@ void CNetwork::OnWinsock(WPARAM wParam, LPARAM lParam)
 	}
 	else if ( pResolve->m_nCommand == 0 )
 	{
-		theApp.Message( MSG_ERROR, IDS_NETWORK_RESOLVE_FAIL, LPCTSTR( *pResolve->m_sAddress ) );
+		theApp.Message( MSG_ERROR, IDS_NETWORK_RESOLVE_FAIL, pResolve->m_sAddress );
 	}
 	else
 	{
@@ -747,7 +756,7 @@ void CNetwork::OnWinsock(WPARAM wParam, LPARAM lParam)
 		{
 			if ( pResolve->m_nProtocol == PROTOCOL_G1 )
 			{
-				strAddress = L"uhc:" + *(pResolve->m_sAddress);
+				strAddress = L"uhc:" + pResolve->m_sAddress;
 				pService = DiscoveryServices.GetByAddress( strAddress );
 				if ( pService == NULL )
 				{
@@ -762,7 +771,7 @@ void CNetwork::OnWinsock(WPARAM wParam, LPARAM lParam)
 			}
 			else if ( pResolve->m_nProtocol == PROTOCOL_G2 )
 			{
-				strAddress = L"ukhl:" + *(pResolve->m_sAddress);
+				strAddress = L"ukhl:" + pResolve->m_sAddress;
 				pService = DiscoveryServices.GetByAddress( strAddress );
 				if ( pService == NULL )
 				{
@@ -778,9 +787,6 @@ void CNetwork::OnWinsock(WPARAM wParam, LPARAM lParam)
 		}
 
 	}
-
-	delete pResolve->m_sAddress;
-	delete pResolve;
 }
 
 //////////////////////////////////////////////////////////////////////
