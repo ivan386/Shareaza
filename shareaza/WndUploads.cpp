@@ -270,7 +270,7 @@ BOOL CUploadsWnd::IsSelected(CUploadFile* pFile)
 		{
 			if ( pTransfer->m_pQueue->m_bExpanded == FALSE ) return FALSE;
 
-			if ( pTransfer->m_pQueue->m_pActive.Find( pTransfer ) != NULL )
+			if ( pTransfer->m_pQueue->IsActive( pTransfer ) )
 			{
 				if ( 0 == ( Settings.Uploads.FilterMask & ULF_ACTIVE ) ) return FALSE;
 			}
@@ -334,7 +334,7 @@ void CUploadsWnd::Prepare()
 
 				if ( pTransfer->m_pQueue != NULL )
 				{
-					if ( pTransfer->m_pQueue->m_pActive.Find( pTransfer ) != NULL )
+					if ( pTransfer->m_pQueue->IsActive( pTransfer ) )
 						m_bSelActive = TRUE;
 					else
 						m_bSelQueued = TRUE;

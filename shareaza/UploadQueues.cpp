@@ -1,7 +1,7 @@
 //
 // UploadQueues.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -239,10 +239,10 @@ CUploadQueue* CUploadQueues::SelectQueue(PROTOCOLID nProtocol, LPCTSTR pszName, 
 //////////////////////////////////////////////////////////////////////
 // CUploadQueues counting
 
-int CUploadQueues::GetTotalBandwidthPoints( BOOL ActiveOnly )
+DWORD CUploadQueues::GetTotalBandwidthPoints( BOOL ActiveOnly )
 {
 	CQuickLock oLock( m_pSection );
-	int nCount = 0;
+	DWORD nCount = 0;
 	CUploadQueue *pQptr;
 
 	for ( POSITION pos = GetIterator() ; pos ; )
@@ -267,10 +267,10 @@ int CUploadQueues::GetTotalBandwidthPoints( BOOL ActiveOnly )
 	return nCount;
 }
 
-int CUploadQueues::GetQueueCapacity()
+/*DWORD CUploadQueues::GetQueueCapacity()
 {
 	CQuickLock oLock( m_pSection );
-	int nCount = 0;
+	DWORD nCount = 0;
 
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
@@ -278,12 +278,12 @@ int CUploadQueues::GetQueueCapacity()
 	}
 
 	return nCount;
-}
+}*/
 
-INT_PTR CUploadQueues::GetQueuedCount()
+/*DWORD CUploadQueues::GetQueuedCount()
 {
 	CQuickLock oLock( m_pSection );
-	INT_PTR nCount = 0;
+	DWORD nCount = 0;
 
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
@@ -291,12 +291,12 @@ INT_PTR CUploadQueues::GetQueuedCount()
 	}
 
 	return nCount;
-}
+}*/
 
-INT_PTR CUploadQueues::GetQueueRemaining()
+/*DWORD CUploadQueues::GetQueueRemaining()
 {
 	CQuickLock oLock( m_pSection );
-	INT_PTR nCount = 0;
+	DWORD nCount = 0;
 
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
@@ -304,12 +304,12 @@ INT_PTR CUploadQueues::GetQueueRemaining()
 	}
 
 	return nCount;
-}
+}*/
 
-INT_PTR CUploadQueues::GetTransferCount()
+/*DWORD CUploadQueues::GetTransferCount()
 {
 	CQuickLock oLock( m_pSection );
-	INT_PTR nCount = 0;
+	DWORD nCount = 0;
 
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
@@ -317,7 +317,7 @@ INT_PTR CUploadQueues::GetTransferCount()
 	}
 
 	return nCount;
-}
+}*/
 
 BOOL CUploadQueues::IsTransferAvailable()
 {
@@ -400,7 +400,7 @@ BOOL CUploadQueues::CanUpload(PROTOCOLID nProtocol, CLibraryFile const * const p
 
 		if ( pQueue->CanAccept(	nProtocol, pFile->m_sName, pFile->m_nSize, CUploadQueue::ulqLibrary, pFile->m_sShareTags ) )
 		{	// If this queue will accept this file
-			if ( ( ! bCanQueue ) || ( pQueue->GetQueueRemaining() > 0 ) )
+			if ( ! bCanQueue || ! pQueue->IsFull() )
 			{	// And we don't care if there is space now, or the queue isn't full)
 				return TRUE; // Then this file can be uploaded
 			}

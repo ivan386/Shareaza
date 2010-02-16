@@ -1,7 +1,7 @@
 //
 // DlgQueueProperties.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -232,7 +232,7 @@ BOOL CQueuePropertiesDlg::OnInitDialog()
 	DWORD nLimit = Settings.Bandwidth.Uploads;
 
 	if ( nLimit == 0 || nLimit > nTotal ) nLimit = nTotal;
-	int nOtherPoints = UploadQueues.GetTotalBandwidthPoints( !( m_pQueue->m_nProtocols & (1<<PROTOCOL_ED2K) ) ) - m_pQueue->m_nBandwidthPoints;
+	int nOtherPoints = (int)UploadQueues.GetTotalBandwidthPoints( !( m_pQueue->m_nProtocols & (1<<PROTOCOL_ED2K) ) ) - (int)m_pQueue->m_nBandwidthPoints;
 
 	if ( nOtherPoints < 0 ) nOtherPoints = 0;
 
@@ -331,7 +331,7 @@ void CQueuePropertiesDlg::OnHScroll(UINT /*nSBCode*/, UINT /*nPos*/, CScrollBar*
 
 	if ( nLimit == 0 || nLimit > nTotal ) nLimit = nTotal;
 
-	int nOtherPoints = UploadQueues.GetTotalBandwidthPoints( !( m_pQueue->m_nProtocols & (1<<PROTOCOL_ED2K) ) ) - m_pQueue->m_nBandwidthPoints;
+	int nOtherPoints = (int)UploadQueues.GetTotalBandwidthPoints( !( m_pQueue->m_nProtocols & (1<<PROTOCOL_ED2K) ) ) - (int)m_pQueue->m_nBandwidthPoints;
 	if ( nOtherPoints < 0 ) nOtherPoints = 0;
 
 	int nLocalPoints = m_wndBandwidthSlider.GetPos();
@@ -340,7 +340,7 @@ void CQueuePropertiesDlg::OnHScroll(UINT /*nSBCode*/, UINT /*nPos*/, CScrollBar*
 	DWORD nBandwidth = nLimit * nLocalPoints / max( 1, nTotalPoints );
 
 	CString str;
-	str.Format( _T("%.2f%% (%lu/%lu)"), 100.0 * nBandwidth / nLimit,
+	str.Format( _T("%u%% (%lu/%lu)"), ( 100 * nBandwidth ) / nLimit,
 		nLocalPoints, nTotalPoints );
 
 	m_wndBandwidthPoints.SetWindowText( str );

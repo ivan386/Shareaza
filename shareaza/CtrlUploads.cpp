@@ -1,7 +1,7 @@
 //
 // CtrlUploads.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -570,15 +570,15 @@ POSITION CUploadsCtrl::GetFileIterator(CUploadQueue* pQueue)
 	{
 		if ( Settings.Uploads.FilterMask & ULF_ACTIVE )
 		{
-			if ( pQueue->m_pActive.GetCount() > 0 )
+			if ( pQueue->GetActiveCount() > 0 )
 			{
-				return pQueue->m_pActive.GetHeadPosition();
+				return pQueue->GetActiveIterator();
 			}
 		}
 		
 		if ( Settings.Uploads.FilterMask & ULF_QUEUED )
 		{
-			if ( pQueue->m_pQueued.GetCount() > 0 )
+			if ( pQueue->GetQueuedCount() > 0 )
 			{
 				return (POSITION)1;
 			}
@@ -633,15 +633,15 @@ CUploadFile* CUploadsCtrl::GetNextFile(CUploadQueue* pQueue, POSITION& pos, int*
 		
 		return pReturn;
 	}
-	else if ( (INT_PTR)pos > pQueue->m_pQueued.GetSize() )
+	else if ( (DWORD)pos > pQueue->GetQueuedCount() )
 	{
-		CUploadTransfer* pTransfer = (CUploadTransfer*)pQueue->m_pActive.GetNext( pos );
+		CUploadTransfer* pTransfer = pQueue->GetNextActive( pos );
 		
 		if ( pos == NULL )
 		{
 			if ( Settings.Uploads.FilterMask & ULF_QUEUED )
 			{
-				if ( pQueue->m_pQueued.GetCount() > 0 )
+				if ( pQueue->GetQueuedCount() > 0 )
 				{
 					pos = (POSITION)1;
 				}
@@ -653,11 +653,11 @@ CUploadFile* CUploadsCtrl::GetNextFile(CUploadQueue* pQueue, POSITION& pos, int*
 	}
 	else
 	{
-		INT_PTR nPos = (INT_PTR)pos;
-		CUploadTransfer* pTransfer = pQueue->m_pQueued.GetAt( nPos - 1 );
+		DWORD nPos = (DWORD)pos;
+		CUploadTransfer* pTransfer = pQueue->GetQueuedAt( nPos - 1 );
 		if ( pnPosition != NULL ) *pnPosition = static_cast< int >( nPos );
 		++nPos;
-		if ( nPos > pQueue->m_pQueued.GetSize() ) nPos = 0;
+		if ( nPos > pQueue->GetQueuedCount() ) nPos = 0;
 		pos = (POSITION)nPos;
 		return pTransfer->m_pBaseFile;
 	}
@@ -907,9 +907,9 @@ void CUploadsCtrl::PaintQueue(CDC& dc, const CRect& rcRow, CUploadQueue* pQueue,
 			
 		case UPLOAD_COLUMN_SIZE:
 			if ( pQueue == UploadQueues.m_pTorrentQueue )
-				strText.Format( _T("%i/%i"), pQueue->m_nMinTransfers, pQueue->m_nMaxTransfers ); //No. Clients was loaded into these variables
+				strText.Format( _T("%u/%u"), pQueue->m_nMinTransfers, pQueue->m_nMaxTransfers ); //No. Clients was loaded into these variables
 			else if ( pQueue != UploadQueues.m_pHistoryQueue )
-				strText.Format( _T("%i/%i"), pQueue->GetTransferCount(), pQueue->GetQueuedCount() );
+				strText.Format( _T("%u/%u"), pQueue->GetTransferCount(), pQueue->GetQueuedCount() );
 			break;
 			
 		case UPLOAD_COLUMN_SPEED:
@@ -1352,15 +1352,15 @@ void CUploadsCtrl::OnLButtonDown(UINT nFlags, CPoint point)
 				
 				if ( ! pQueue->m_bExpanded )
 				{
-					for ( POSITION posActive = pQueue->m_pActive.GetHeadPosition() ; posActive ; )
+					for ( POSITION posActive = pQueue->GetActiveIterator() ; posActive ; )
 					{
-						CUploadTransfer* pTransfer = (CUploadTransfer*)pQueue->m_pActive.GetNext( posActive );
+						CUploadTransfer* pTransfer = pQueue->GetNextActive( posActive );
 						if ( pTransfer->m_pBaseFile != NULL ) pTransfer->m_pBaseFile->m_bSelected = FALSE;
 					}
 					
-					for ( int nPos = 0 ; nPos < pQueue->m_pQueued.GetSize() ; nPos ++ )
+					for ( DWORD nPos = 0 ; nPos < pQueue->GetQueuedCount() ; nPos ++ )
 					{
-						CUploadTransfer* pTransfer = (CUploadTransfer*)pQueue->m_pQueued.GetAt( nPos );
+						CUploadTransfer* pTransfer = (CUploadTransfer*)pQueue->GetQueuedAt( nPos );
 						if ( pTransfer->m_pBaseFile != NULL ) pTransfer->m_pBaseFile->m_bSelected = FALSE;
 					}
 				}
@@ -1417,15 +1417,15 @@ void CUploadsCtrl::OnLButtonDblClk(UINT nFlags, CPoint point)
 			
 			if ( ! pQueue->m_bExpanded )
 			{
-				for ( POSITION posActive = pQueue->m_pActive.GetHeadPosition() ; posActive ; )
+				for ( POSITION posActive = pQueue->GetActiveIterator() ; posActive ; )
 				{
-					CUploadTransfer* pTransfer = (CUploadTransfer*)pQueue->m_pActive.GetNext( posActive );
+					CUploadTransfer* pTransfer = pQueue->GetNextActive( posActive );
 					if ( pTransfer->m_pBaseFile != NULL ) pTransfer->m_pBaseFile->m_bSelected = FALSE;
 				}
 				
-				for ( int nPos = 0 ; nPos < pQueue->m_pQueued.GetSize() ; nPos ++ )
+				for ( DWORD nPos = 0 ; nPos < pQueue->GetQueuedCount() ; nPos ++ )
 				{
-					CUploadTransfer* pTransfer = (CUploadTransfer*)pQueue->m_pQueued.GetAt( nPos );
+					CUploadTransfer* pTransfer = (CUploadTransfer*)pQueue->GetQueuedAt( nPos );
 					if ( pTransfer->m_pBaseFile != NULL ) pTransfer->m_pBaseFile->m_bSelected = FALSE;
 				}
 			}

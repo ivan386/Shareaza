@@ -1,7 +1,7 @@
 //
 // PageSettingsUploads.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -196,9 +196,9 @@ void CUploadsSettingsPage::UpdateQueues()
 
 		if ( ( pQueue->m_bEnable ) && ( ! bDonkeyOnlyDisabled ) )
 		{
-			QWORD nBandwidth = nLimit * pQueue->m_nBandwidthPoints / max( 1, UploadQueues.GetTotalBandwidthPoints( TRUE ) );
+			QWORD nBandwidth = nLimit * pQueue->m_nBandwidthPoints / max( 1ul, UploadQueues.GetTotalBandwidthPoints( TRUE ) );
 			pItem->Set( 2, Settings.SmartSpeed( nBandwidth ) + '+' );
-			pItem->Format( 3, _T("%i-%i"), pQueue->m_nMinTransfers, pQueue->m_nMaxTransfers );
+			pItem->Format( 3, _T("%u-%u"), pQueue->m_nMinTransfers, pQueue->m_nMaxTransfers );
 
 			pItem->m_nImage = CoolInterface.ImageForID( ID_VIEW_UPLOADS );
 		}
