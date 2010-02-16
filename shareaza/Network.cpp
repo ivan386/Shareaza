@@ -210,7 +210,7 @@ BOOL CNetwork::IsConnectedTo(const IN_ADDR* pAddress) const
 
 BOOL CNetwork::ReadyToTransfer(DWORD tNow) const
 {
-	if ( !Network.IsConnected() )
+	if ( ! IsConnected() )
 		return FALSE;
 
 	// If a connection isn't needed for transfers, we can start any time
@@ -796,7 +796,7 @@ BOOL CNetwork::GetNodeRoute(const Hashes::Guid& oGUID, CNeighbour** ppNeighbour,
 {
 	if ( validAndEqual( oGUID, Hashes::Guid( MyProfile.oGUID ) ) ) return FALSE;
 
-	if ( Network.NodeRoute->Lookup( oGUID, ppNeighbour, pEndpoint ) ) return TRUE;
+	if ( NodeRoute->Lookup( oGUID, ppNeighbour, pEndpoint ) ) return TRUE;
 	if ( ppNeighbour == NULL ) return FALSE;
 
 	for ( POSITION pos = Neighbours.GetIterator() ; pos ; )
@@ -857,7 +857,7 @@ BOOL CNetwork::RoutePacket(CG2Packet* pPacket)
 
 BOOL CNetwork::SendPush(const Hashes::Guid& oGUID, DWORD nIndex)
 {
-	CSingleLock pLock( &Network.m_pSection );
+	CSingleLock pLock( &m_pSection );
 	if ( ! pLock.Lock( 250 ) ) return TRUE;
 
 	if ( ! IsListening() ) return FALSE;
@@ -972,12 +972,12 @@ BOOL CNetwork::RouteHits(CQueryHit* pHits, CPacket* pPacket)
 	}
 	else if ( pPacket->m_nProtocol == PROTOCOL_G2 )
 	{
-		if ( Network.IsSelfIP( pEndpoint.sin_addr ) ) return FALSE;
+		if ( IsSelfIP( pEndpoint.sin_addr ) ) return FALSE;
 		Datagrams.Send( &pEndpoint, (CG2Packet*)pPacket, FALSE );
 	}
 	else
 	{
-		if ( Network.IsSelfIP( pEndpoint.sin_addr ) ) return FALSE;
+		if ( IsSelfIP( pEndpoint.sin_addr ) ) return FALSE;
 		pPacket = CG2Packet::New( G2_PACKET_HIT_WRAP, (CG1Packet*)pPacket );
 		Datagrams.Send( &pEndpoint, (CG2Packet*)pPacket, TRUE );
 	}
