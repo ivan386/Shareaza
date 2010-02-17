@@ -1,7 +1,7 @@
 //
 // DlgNewSearch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -47,7 +47,7 @@ END_MESSAGE_MAP()
 // CNewSearchDlg dialog
 
 CNewSearchDlg::CNewSearchDlg(CWnd* pParent, CQuerySearch* pSearch, BOOL bLocal, BOOL bAgain)
-	: CSkinDialog( CNewSearchDlg::IDD, pParent )
+	: CSkinDialog( CNewSearchDlg::IDD, pParent, FALSE )
 	, m_pSearch( pSearch ? pSearch : new CQuerySearch() )
 {
 	m_bLocal	= bLocal;
