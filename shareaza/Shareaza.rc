@@ -3836,8 +3836,6 @@ BEGIN
                             "Shareaza has added the collection file ""%s"" to your library."
     IDS_LIBRARY_COLLECTION_CANT_INSTALL 
                             "Shareaza was unable to install the collection file ""%s"" by copying it to the folder ""%s""."
-    IDS_LIBRARY_COLLECTION_DOWNLOAD_FILE 
-                            "Would you like to download this file?\r\n\r\n""%s""\r\n\r\nChoose Cancel to stop any further prompts."
     IDS_LIBRARY_COLLECTION_DOWNLOAD_ALL 
                             "Would you like to download all files in this collection?\r\n\r\nChoose Cancel to stop any further prompts."
     IDS_LIBRARY_COLLECTION_LOCKDOWN 

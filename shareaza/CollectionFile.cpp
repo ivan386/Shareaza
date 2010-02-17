@@ -594,20 +594,17 @@ BOOL CCollectionFile::File::IsDownloading() const
 BOOL CCollectionFile::File::Download()
 {
 	CShareazaURL pURL;
-
-	if ( IsComplete() || IsDownloading() ) return FALSE;
-
 	pURL.m_nAction	= CShareazaURL::uriDownload;
-	pURL.m_oSHA1 = m_oSHA1;
-    pURL.m_oMD5 = m_oMD5;
-	pURL.m_oTiger = m_oTiger;
-	pURL.m_oED2K = m_oED2K;
-	pURL.m_oBTH = m_oBTH;
+	pURL.m_oSHA1	= m_oSHA1;
+    pURL.m_oMD5		= m_oMD5;
+	pURL.m_oTiger	= m_oTiger;
+	pURL.m_oED2K	= m_oED2K;
+	pURL.m_oBTH		= m_oBTH;
 	pURL.m_sName	= m_sName;
 	pURL.m_bSize	= ( m_nSize != SIZE_UNKNOWN );
 	pURL.m_nSize	= m_nSize;
 
-	return Downloads.Add( pURL ) != NULL;
+	return PostMainWndMessage( WM_URL, (WPARAM)new CShareazaURL( pURL ) );
 }
 
 /////////////////////////////////////////////////////////////////////////////

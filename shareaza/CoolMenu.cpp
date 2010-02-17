@@ -618,10 +618,9 @@ void CCoolMenu::RegisterEdge(int nLeft, int nTop, int nLength)
 	m_nEdgeSize	= nLength;
 }
 
-UINT_PTR CCoolMenu::DoExplorerMenu(HWND hwnd, const CStringList& oFiles, POINT point,
+void CCoolMenu::DoExplorerMenu(HWND hwnd, const CStringList& oFiles, POINT point,
 	HMENU hMenu, HMENU hSubMenu, UINT nFlags)
 {
-	UINT_PTR nCmd = 0;
 	CComPtr< IContextMenu > pContextMenu1;
 	CShellList oItemIDListList( oFiles );
 	if ( oItemIDListList.GetMenu( hwnd, (void**)&pContextMenu1 ) )
@@ -638,7 +637,7 @@ UINT_PTR CCoolMenu::DoExplorerMenu(HWND hwnd, const CStringList& oFiles, POINT p
 			hr = pContextMenu1.QueryInterface( &m_pContextMenu3 );
 
 			::SetForegroundWindow( hwnd );
-			nCmd = ::TrackPopupMenu( hMenu, TPM_RETURNCMD | nFlags,
+			UINT_PTR nCmd = ::TrackPopupMenu( hMenu, TPM_RETURNCMD | nFlags,
 				point.x, point.y, 0, hwnd, NULL );
 			::PostMessage( hwnd, WM_NULL, 0, 0 );
 
@@ -653,7 +652,7 @@ UINT_PTR CCoolMenu::DoExplorerMenu(HWND hwnd, const CStringList& oFiles, POINT p
 				ici.nShow = SW_SHOWNORMAL;
 				pContextMenu1->InvokeCommand( (CMINVOKECOMMANDINFO*)&ici );
 			}
-			else if ( ( TPM_RETURNCMD & nFlags ) == 0 )
+			else
 			{
 				// Emulate normal message handling
 				::PostMessage( hwnd, WM_COMMAND, nCmd, 0 );
@@ -669,8 +668,6 @@ UINT_PTR CCoolMenu::DoExplorerMenu(HWND hwnd, const CStringList& oFiles, POINT p
 		// TODO: Find why sometimes raza crashes inside Windows Shell SetSite() function
 		SafeRelease( pContextMenuCache );
 	}
-
-	return nCmd;
 }
 
 //////////////////////////////////////////////////////////////////////

@@ -2034,12 +2034,12 @@ BOOL CSkin::LoadCommandBitmap(CXMLElement* pBase, const CString& strPath)
 //////////////////////////////////////////////////////////////////////
 // CSkin popup menu helper
 
-UINT_PTR CSkin::TrackPopupMenu(LPCTSTR pszMenu, const CPoint& point,
-	UINT nDefaultID, UINT nFlags, const CStringList& oFiles, CWnd* pWnd) const
+void CSkin::TrackPopupMenu(LPCTSTR pszMenu, const CPoint& point,
+	UINT nDefaultID, const CStringList& oFiles, CWnd* pWnd) const
 {
 	CMenu* pPopup = GetMenu( pszMenu );
 	if ( pPopup == NULL )
-		return 0;
+		return;
 
 	if ( nDefaultID != 0 )
 	{
@@ -2055,30 +2055,29 @@ UINT_PTR CSkin::TrackPopupMenu(LPCTSTR pszMenu, const CPoint& point,
 		pInfo.fState = MFS_ENABLED;
 		HMENU hSubMenu = pInfo.hSubMenu = ::CreatePopupMenu();
 		ASSERT( hSubMenu );
-		if( pPopup->SetMenuItemInfo( ID_SHELL_MENU, &pInfo ) )
+		if ( pPopup->SetMenuItemInfo( ID_SHELL_MENU, &pInfo ) )
 		{
-			UINT_PTR nCmd = CoolMenu.DoExplorerMenu( pWnd->GetSafeHwnd(), oFiles,
+			CoolMenu.DoExplorerMenu( pWnd->GetSafeHwnd(), oFiles,
 				point, pPopup->GetSafeHmenu(), pInfo.hSubMenu,
-				TPM_LEFTALIGN | TPM_LEFTBUTTON | TPM_RIGHTBUTTON | nFlags );
+				TPM_LEFTALIGN | TPM_LEFTBUTTON | TPM_RIGHTBUTTON );
 
 			// Change ID_SHELL_MENU back
 			pInfo.hSubMenu = NULL;
 			VERIFY( pPopup->SetMenuItemInfo( ID_SHELL_MENU, &pInfo ) );
 
-			return nCmd;
+			return;
 		}
 		VERIFY( DestroyMenu( hSubMenu ) );
 	}
 
 	__try	// Fix for very strange TrackPopupMenu crash inside GUI
 	{
-		return pPopup->TrackPopupMenu(
-			TPM_LEFTALIGN | TPM_LEFTBUTTON | TPM_RIGHTBUTTON | nFlags,
+		pPopup->TrackPopupMenu(
+			TPM_LEFTALIGN | TPM_LEFTBUTTON | TPM_RIGHTBUTTON,
 			point.x, point.y, pWnd );
 	}
 	__except( EXCEPTION_EXECUTE_HANDLER )
 	{
-		return 0;
 	}
 }
 

@@ -1619,7 +1619,7 @@ void CLibraryTreeView::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 			}
 		}
 		Skin.TrackPopupMenu( _T("CLibraryTree.Physical"), point,
-			ID_LIBRARY_EXPLORE, 0, oFiles );
+			ID_LIBRARY_EXPLORE, oFiles );
 	}
 }
 

@@ -48,7 +48,7 @@ public:
 	void		OnMeasureItem(LPMEASUREITEMSTRUCT lpMeasureItemStruct);
 	void		OnDrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct);
 	LRESULT		OnMenuChar(UINT nChar, UINT nFlags, CMenu* pMenu);
-	UINT_PTR	DoExplorerMenu(HWND hwnd, const CStringList& oFiles, POINT point, HMENU hMenu, HMENU hSubMenu, UINT nFlags);
+	void		DoExplorerMenu(HWND hwnd, const CStringList& oFiles, POINT point, HMENU hMenu, HMENU hSubMenu, UINT nFlags);
 
 protected:
 	CComPtr< IContextMenu >		m_pContextMenuCache;

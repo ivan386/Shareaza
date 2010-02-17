@@ -233,9 +233,10 @@ void CLibraryCollectionView::OnWebContextMenu(NMHDR* pNMHDR, LPARAM* pResult)
 {
 	WVNCONTEXTMENU* pNotify = (WVNCONTEXTMENU*)pNMHDR;
 
+	*pResult = TRUE;
+
 	if ( m_nWebIndex != 0 )
 	{
-		*pResult = TRUE;
 		GetToolTip()->Hide();
 
 		SelClear( FALSE );
@@ -243,13 +244,19 @@ void CLibraryCollectionView::OnWebContextMenu(NMHDR* pNMHDR, LPARAM* pResult)
 
 		CPoint point( pNotify->ptMouse );
 
+		CStringList oFiles;
+		{
+			CQuickLock pLock( Library.m_pSection );
+			StartSelectedFileLoop();
+			for ( CLibraryFile* pFile = GetNextSelectedFile(); pFile; pFile = GetNextSelectedFile() )
+			{
+				oFiles.AddTail( pFile->GetPath() );
+			}
+		}
+
 		CString strName = _T("CLibraryFileView");
 		strName += Settings.Library.ShowVirtual ? _T(".Virtual") : _T(".Physical");
-		UINT_PTR nCmdID = Skin.TrackPopupMenu( strName, point, ID_LIBRARY_LAUNCH, TPM_RETURNCMD );
-
-		if ( nCmdID != 0 ) GetFrame()->SendMessage( WM_COMMAND, nCmdID );
-
-		SelClear( TRUE );
+		Skin.TrackPopupMenu( strName, point, ID_LIBRARY_LAUNCH, oFiles );
 	}
 }
 
@@ -422,28 +429,7 @@ STDMETHODIMP CLibraryCollectionView::External::XView::Download(BSTR sURN, VARIAN
 
 	if ( CCollectionFile::File* pFile = pThis->m_pView->m_pCollection->FindByURN( CString( sURN ) ) )
 	{
-		if ( ! pFile->IsComplete() )
-		{
-			CString strFormat, strMessage;
-			LoadString( strFormat, IDS_LIBRARY_COLLECTION_DOWNLOAD_FILE );
-			strMessage.Format( strFormat, (LPCTSTR)pFile->m_sName );
-
-			INT_PTR nResponse = AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNOCANCEL );
-
-			if ( nResponse == IDYES )
-			{
-				*pbResult = pFile->Download() ? VARIANT_TRUE : VARIANT_FALSE;
-
-				if ( *pbResult == VARIANT_TRUE )
-				{
-					if ( ! Network.IsWellConnected() ) Network.Connect( TRUE );
-				}
-			}
-			else if ( nResponse == IDCANCEL )
-			{
-				pThis->CheckLockdown();
-			}
-		}
+		*pbResult = pFile->Download() ? VARIANT_TRUE : VARIANT_FALSE;
 	}
 
 	return S_OK;

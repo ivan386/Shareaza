@@ -237,7 +237,7 @@ void CLibraryFileView::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 
 	CString strName( m_pszToolBar );
 	strName += Settings.Library.ShowVirtual ? _T(".Virtual") : _T(".Physical");
-	Skin.TrackPopupMenu( strName, point, ID_LIBRARY_LAUNCH, 0, oFiles );
+	Skin.TrackPopupMenu( strName, point, ID_LIBRARY_LAUNCH, oFiles );
 }
 
 void CLibraryFileView::OnMouseMove(UINT nFlags, CPoint point)
