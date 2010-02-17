@@ -1,7 +1,7 @@
 //
 // WndBrowseHost.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -273,14 +273,15 @@ void CBrowseHostWnd::UpdateMessages(BOOL /*bActive*/)
 	LoadString( strCaption, IDR_BROWSEHOSTFRAME );
 	if ( Settings.General.LanguageRTL ) strCaption = _T("\x200F") + strCaption + _T("\x202E");
 	strCaption += _T(" : ");
-	if ( Settings.General.LanguageRTL ) strCaption += _T("\x202A\x200E");
+	if ( Settings.General.LanguageRTL ) strCaption += _T("\x202B");
 
 	if ( m_pBrowser->m_pProfile != NULL && m_pBrowser->m_pProfile->IsValid() )
 	{
-		strOld.Format( _T("%s (%s:%lu)"),
-			(LPCTSTR)m_pBrowser->m_pProfile->GetNick(),
+		strCaption += m_pBrowser->m_pProfile->GetNick();
+		strOld.Format( _T(" (%s:%lu)"),
 			(LPCTSTR)CString( inet_ntoa( m_pBrowser->m_pAddress ) ),
 			m_pBrowser->m_nPort );
+		if ( Settings.General.LanguageRTL ) strCaption += _T("\x200F");
 		strCaption += strOld;
 	}
 	else
@@ -295,8 +296,14 @@ void CBrowseHostWnd::UpdateMessages(BOOL /*bActive*/)
 	{
 		strOld.Format( _T(" [%lu/%lu]"),
 			m_pMatches->m_nFilteredFiles, m_pMatches->m_nFilteredHits );
-		if ( Settings.General.LanguageRTL ) strOld = _T("\x202D") + strOld + _T(" ");
+		if ( Settings.General.LanguageRTL ) strCaption += _T("\x200F");
 		strCaption += strOld;
+	}
+
+	if ( ! m_pBrowser->m_sServer.IsEmpty() )
+	{
+		if ( Settings.General.LanguageRTL ) strCaption += _T("\x200F");
+		strCaption = strCaption + _T(" - ") + m_pBrowser->m_sServer;
 	}
 
 	GetWindowText( strOld );
