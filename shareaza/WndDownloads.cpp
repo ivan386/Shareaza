@@ -976,7 +976,7 @@ void CDownloadsWnd::OnUpdateDownloadsLaunchComplete(CCmdUI* pCmdUI)
 {
 	Prepare();
 	if ( CCoolBarItem* pItem = CCoolBarItem::FromCmdUI( pCmdUI ) )
-		pItem->Show( m_bSelCompleted );
+		pItem->Show( m_bSelCompleted || ! m_bSelStartedAndNotMoving );
 	pCmdUI->Enable( m_bSelCompleted );
 }
 
