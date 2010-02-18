@@ -234,6 +234,17 @@ BOOL CLibraryThumbView::Select(DWORD nObject)
 	return TRUE;
 }
 
+void CLibraryThumbView::SelectAll()
+{
+	CLibraryThumbItem** pList = m_pList;
+	for ( int nItem = 0 ; nItem < m_nCount; nItem++, pList++ )
+	{
+		Select( *pList, TRI_TRUE );
+	}
+
+	Invalidate();
+}
+
 DWORD_PTR CLibraryThumbView::HitTestIndex(const CPoint& point) const
 {
 	CLibraryThumbItem* pThumb = HitTest( point );
@@ -500,7 +511,7 @@ void CLibraryThumbView::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* /*pScroll
 
 BOOL CLibraryThumbView::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 {
-	if ( CLibraryView::OnMouseWheel( nFlags, zDelta, pt ) )
+	if ( CLibraryFileView::OnMouseWheel( nFlags, zDelta, pt ) )
 		return TRUE;
 
 	ScrollBy( zDelta * -CY / WHEEL_DELTA / 2 );

@@ -87,7 +87,7 @@ private:
 	bool empty() const { return m_oList.empty(); }
 	iterator erase(iterator item) { return m_oList.erase( item ); }
 
-	CMutex					m_pSection;
+	mutable CMutex			m_pSection;
 	CSize					m_szBlock;
 	int						m_nColumns;
 	int						m_nRows;
@@ -105,6 +105,7 @@ public:
 	virtual BOOL				CheckAvailable(CLibraryTreeItem* pSel);
 	virtual void				Update();
 	virtual BOOL				Select(DWORD nObject);
+	virtual void				SelectAll();
 	virtual CLibraryListItem	DropHitTest(const CPoint& point);
 	virtual HBITMAP				CreateDragImage(const CPoint& ptMouse, CPoint& ptMiddle);
 private:
@@ -128,6 +129,7 @@ private:
 	void				ScrollBy(int nDelta);
 	void				ScrollTo(int nDelta);
 	iterator			HitTest(const CPoint& point);
+	virtual DWORD_PTR	HitTestIndex(const CPoint& point) const;
 	bool				GetItemRect(iterator pTile, CRect* pRect);
 
 // Overrides

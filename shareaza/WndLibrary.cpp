@@ -157,7 +157,7 @@ void CLibraryWnd::OnSkinChange()
 HRESULT CLibraryWnd::GetGenericView(IGenericView** ppView)
 {
 	if ( m_wndFrame.m_hWnd == NULL ) return S_FALSE;
-	CLibraryList* pList = m_wndFrame.GetViewSelection();
+	CLibraryList* pList = const_cast< CLibraryList* >( m_wndFrame.GetViewSelection() );
 	*ppView = (IGenericView*)pList->GetInterface( IID_IGenericView, TRUE );
 	return S_OK;
 }

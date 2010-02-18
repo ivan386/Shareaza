@@ -258,6 +258,17 @@ BOOL CLibraryAlbumView::Select(DWORD nObject)
 	return TRUE;
 }
 
+void CLibraryAlbumView::SelectAll()
+{
+	CLibraryAlbumTrack** pList = m_pList;
+	for ( int nItem = 0 ; nItem < m_nCount ; nItem++, pList++ )
+	{
+		Select( *pList, TRI_TRUE );
+	}
+
+	Invalidate();
+}
+
 DWORD_PTR CLibraryAlbumView::HitTestIndex(const CPoint& point) const
 {
 	CLibraryAlbumTrack* pTrack = HitTest( point );
@@ -839,6 +850,9 @@ void CLibraryAlbumView::OnRButtonDown(UINT nFlags, CPoint point)
 
 void CLibraryAlbumView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) 
 {
+	BOOL bShift = ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0x8000;
+	BOOL bControl = ( GetAsyncKeyState( VK_CONTROL ) & 0x8000 ) == 0x8000;
+
 	switch ( nChar )
 	{
 	case VK_LEFT:
@@ -862,7 +876,7 @@ void CLibraryAlbumView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		SelectTo( m_nCount );
 		break;
 	default:
-		if ( _istalnum( TCHAR( nChar ) ) )
+		if ( ! bShift && ! bControl && _istalnum( TCHAR( nChar ) ) )
 		{
 			CLibraryAlbumTrack* pStart	= m_pFocus;
 			

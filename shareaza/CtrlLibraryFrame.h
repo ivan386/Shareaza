@@ -70,7 +70,7 @@ public:
 		return m_wndTree.GetFirstSelected();
 	}
 
-	inline CLibraryList* GetViewSelection() const
+	inline const CLibraryList* GetViewSelection() const
 	{
 		return m_pViewSelection;
 	}
@@ -125,7 +125,7 @@ protected:
 	BOOL				m_bUpdating;
 	DWORD				m_nLibraryCookie;
 	DWORD				m_nFolderCookie;
-	CLibraryList*		m_pViewSelection;
+	const CLibraryList*	m_pViewSelection;
 	BOOL				m_bViewSelection;
 	CLibraryList		m_pViewEmpty;
 

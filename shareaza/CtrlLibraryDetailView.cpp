@@ -393,6 +393,20 @@ BOOL CLibraryDetailView::Select(DWORD nObject)
 	return FALSE;
 }
 
+void CLibraryDetailView::SelectAll()
+{
+	GET_LIST();
+
+	SelClear( FALSE );
+
+	for ( DWORD i = 0 ; i < m_nList; i++ )
+	{
+		pList->SetItemState( i, LVIS_SELECTED, LVIS_SELECTED );
+	}
+
+	Invalidate();
+}
+
 void CLibraryDetailView::CacheItem(int nItem)
 {
 	CLibraryFile* pFile = Library.LookupFile( m_pList[ nItem ].nIndex );
@@ -436,7 +450,7 @@ void CLibraryDetailView::CacheItem(int nItem)
 		pText->SetAt( 1, _T("") );
 
 	pText->SetAt( 2, Settings.SmartVolume( pFile->GetSize() ) );
-	if ( pFile->m_pFolder != NULL ) pText->SetAt( 3, pFile->m_pFolder->m_sPath );
+	pText->SetAt( 3, pFile->GetPath() );
 
 	CString str;
 	str.Format( _T("%lu (%lu)"), pFile->m_nHitsToday, pFile->m_nHitsTotal );
@@ -635,12 +649,7 @@ int CLibraryDetailView::ListCompare(LPCVOID pA, LPCVOID pB)
 				nTest = 1;
 			break;
 		case 3:
-			if ( pfA->m_pFolder && pfB->m_pFolder )
-				nTest = _tcsicoll( pfA->m_pFolder->m_sPath, pfB->m_pFolder->m_sPath );
-			else if ( pfB->m_pFolder )
-				nTest = -1;
-			else
-				nTest = 1;
+			nTest = _tcsicoll( pfA->GetPath(), pfB->GetPath() );
 			break;
 		case 4:
 			if ( pfA->m_nHitsTotal == pfB->m_nHitsTotal )

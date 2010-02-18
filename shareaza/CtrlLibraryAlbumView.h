@@ -65,6 +65,7 @@ public:
 public:
 	virtual void		Update();
 	virtual BOOL		Select(DWORD nObject);
+	virtual void		SelectAll();
 	virtual DWORD_PTR 	HitTestIndex(const CPoint& point) const;
 	virtual HBITMAP		CreateDragImage(const CPoint& ptMouse, CPoint& ptMiddle);
 protected:

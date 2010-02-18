@@ -247,8 +247,8 @@ void CLibraryCollectionView::OnWebContextMenu(NMHDR* pNMHDR, LPARAM* pResult)
 		CStringList oFiles;
 		{
 			CQuickLock pLock( Library.m_pSection );
-			StartSelectedFileLoop();
-			for ( CLibraryFile* pFile = GetNextSelectedFile(); pFile; pFile = GetNextSelectedFile() )
+			POSITION posSel = StartSelectedFileLoop();
+			while ( CLibraryFile* pFile = GetNextSelectedFile( posSel ) )
 			{
 				oFiles.AddTail( pFile->GetPath() );
 			}
@@ -385,7 +385,7 @@ STDMETHODIMP CLibraryCollectionView::External::XView::Open(BSTR sURN, VARIANT_BO
 		CSingleLock oLock( &Library.m_pSection, TRUE );
 		if ( CLibraryFile* pFile = LibraryMaps.LookupFileByURN( CString( sURN ), FALSE, TRUE ) )
 		{
-			if ( pFile->m_pFolder )
+			if ( pFile->IsAvailable() )
 			{
 				CString strPath = pFile->GetPath();
 				oLock.Unlock();

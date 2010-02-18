@@ -65,7 +65,7 @@ void CFilePropertiesSheet::Add(CLibraryListItem oObject)
 	m_pList.CheckAndAdd( oObject );
 }
 
-void CFilePropertiesSheet::Add(CLibraryList* pList)
+void CFilePropertiesSheet::Add(const CLibraryList* pList)
 {
 	m_pList.Merge( pList );
 }

@@ -836,12 +836,12 @@ void CLibraryFrame::UpdatePanel(BOOL bForce)
 		return;
 
 	m_bViewSelection = FALSE;
-	m_pViewSelection = m_pView ? &m_pView->m_pSelection : &m_pViewEmpty;
+	m_pViewSelection = m_pView ? m_pView->GetSelection() : &m_pViewEmpty;
 
 	if ( m_bPanelShow )
 	{
 		CLibraryTreeItem* pFolders = m_wndTree.GetFirstSelected();
-		CLibraryList* pFiles = GetViewSelection();
+		const CLibraryList* pFiles = GetViewSelection();
 
 		BOOL bMetaPanelAvailable = ( pFolders != NULL );
 		BOOL bHistoryPanelAvailable = ( LibraryHistory.GetCount() > 0 );

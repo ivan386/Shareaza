@@ -173,7 +173,7 @@ CLibraryFile* CLibraryList::GetNextFile(POSITION& pos)
 //////////////////////////////////////////////////////////////////////
 // CLibraryList list merging
 
-INT_PTR CLibraryList::Merge(CLibraryList* pList)
+INT_PTR CLibraryList::Merge(const CLibraryList* pList)
 {
 	ASSERT( pList != NULL );
 	if ( pList == NULL )

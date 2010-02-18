@@ -65,7 +65,7 @@ protected:
 	CString			m_sThumbnailURL;	// Use this URL to load thumbnail instead
 	CString			m_sThumb;			// Loaded thumbnail file path or URL
 
-	CLibraryList*	GetViewSelection();
+	const CLibraryList*	GetViewSelection() const;
 
 	void	DrawText(CDC* pDC, int nX, int nY, LPCTSTR pszText, RECT* pRect = NULL, int nMaxWidth = -1);
 

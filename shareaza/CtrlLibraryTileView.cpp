@@ -238,6 +238,18 @@ BOOL CLibraryTileView::Select(DWORD /*nObject*/)
 	return FALSE;
 }
 
+void CLibraryTileView::SelectAll()
+{
+	CSingleLock oLock( &m_pSection, TRUE );
+
+	for ( iterator pItem = begin(); pItem != end(); ++pItem )
+	{
+		Select( pItem, TRI_TRUE );
+	}
+
+	Invalidate();
+}
+
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryTileView item list management operations
 /*
@@ -605,11 +617,17 @@ CLibraryTileView::iterator CLibraryTileView::HitTest(const CPoint& point)
 	return end();
 }
 
+DWORD_PTR CLibraryTileView::HitTestIndex(const CPoint& point) const
+{
+	const_iterator pTile = const_cast< CLibraryTileView* >( this )->HitTest( point );
+	return ( pTile != end() ) ? (DWORD_PTR)pTile->m_pFolder : 0;
+}
+
 CLibraryListItem CLibraryTileView::DropHitTest( const CPoint& point )
 {
 	CSingleLock oLock( &m_pSection, TRUE );
 
-	iterator pTile = HitTest( point );
+	const_iterator pTile = HitTest( point );
 	if ( pTile != end() )
 	{
 		return pTile->m_pFolder;

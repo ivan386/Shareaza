@@ -37,6 +37,7 @@ public:
 protected:
 	virtual void			Update();
 	virtual BOOL			Select(DWORD nObject);
+	virtual void			SelectAll();
 	virtual void			CacheSelection();
 	virtual DWORD_PTR		HitTestIndex(const CPoint& point) const;
 	virtual HBITMAP			CreateDragImage(const CPoint& ptMouse, CPoint& ptOffset);
