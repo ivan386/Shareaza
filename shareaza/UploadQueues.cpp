@@ -385,7 +385,7 @@ BOOL CUploadQueues::CanUpload(PROTOCOLID nProtocol, CLibraryFile const * const p
 	if ( pFile->m_nSize == 0 ) return FALSE;
 
 	// Detect Ghosts
-	if ( pFile->IsGhost() ) return FALSE;
+	if ( ! pFile->IsAvailable() ) return FALSE;
 
 	// G1 and G2 both use HTTP transfers, Sharaza doesn't consider them different.
 	if ( ( nProtocol == PROTOCOL_G1 ) || ( nProtocol == PROTOCOL_G2 ) )

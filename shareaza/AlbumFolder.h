@@ -65,7 +65,7 @@ public:
 	CAlbumFolder*	GetNextFolder(POSITION& pos) const;
 	CAlbumFolder*	GetFolder(LPCTSTR pszName) const;
 	CAlbumFolder*	GetFolderByURI(LPCTSTR pszURI) const;
-	INT_PTR			GetFolderCount() const { return m_pFolders.GetCount(); }
+	DWORD			GetFolderCount() const { return (DWORD)m_pFolders.GetCount(); }
 	BOOL			CheckFolder(CAlbumFolder* pFolder, BOOL bRecursive = FALSE) const;
 	CAlbumFolder*	GetTarget(CSchemaMember* pMember, LPCTSTR pszValue) const;
 	CAlbumFolder*	FindCollection(const Hashes::Sha1Hash& oSHA1);
@@ -74,7 +74,7 @@ public:
 	void			AddFile(CLibraryFile* pFile);
 	POSITION		GetFileIterator() const;
 	CLibraryFile*	GetNextFile(POSITION& pos) const;
-	INT_PTR			GetFileCount() const { return m_pFiles.GetCount(); }
+	DWORD			GetFileCount() const { return (DWORD)m_pFiles.GetCount(); }
 	int				GetSharedCount() const;
 	void			RemoveFile(CLibraryFile* pFile);
 	CAlbumFolder*	FindFile(CLibraryFile* pFile);

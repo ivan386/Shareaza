@@ -1,7 +1,7 @@
 //
 // PageSettingsLibrary.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -57,6 +57,7 @@ protected:
 	CIconButtonCtrl	m_wndCollectionPath;
 	CString			m_sCollectionPath;
 	CEditPath		m_wndCollectionFolder;
+	CButton			m_wndRecentClear;
 
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	virtual BOOL OnInitDialog();

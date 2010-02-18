@@ -85,7 +85,7 @@ BOOL CFileGeneralPage::OnInitDialog()
 		CLibraryFile* pFile = GetFile();
 		if ( ! pFile ) return TRUE;
 
-		if ( pFile->m_pFolder != NULL ) m_sPath = pFile->m_pFolder->m_sPath;
+		m_sPath = pFile->GetFolder();
 		m_sSize = Settings.SmartVolume( pFile->GetSize() );
 		m_sType = ShellIcons.GetTypeString( pFile->m_sName );
 		m_sIndex.Format( _T("# %lu"), pFile->m_nIndex );

@@ -309,10 +309,10 @@ CFileList* CLibraryDictionary::Search(
 			{
 				const CLibraryFile* pFile = oWord.m_pList->GetNext( pos );
 
-				if ( bAvailableOnly && pFile->IsGhost() )
+				if ( bAvailableOnly && ! pFile->IsAvailable() )
 					continue;
 
-				if ( !bLocal && !pFile->IsShared() )
+				if ( ! bLocal && ! pFile->IsShared() )
 					continue;
 
 				if ( pFile->m_nSearchCookie == m_nSearchCookie )

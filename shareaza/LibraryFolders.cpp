@@ -513,7 +513,7 @@ CAlbumFolder* CLibraryFolders::CreateAlbumTree()
 	if ( m_pAlbumRoot == NULL )
 		m_pAlbumRoot = new CAlbumFolder( NULL, CSchema::uriLibrary );
 
-	INT_PTR nCount = m_pAlbumRoot->GetFolderCount();
+	DWORD nCount = m_pAlbumRoot->GetFolderCount();
 
 	if ( m_pAlbumRoot->GetFolderByURI( CSchema::uriAllFiles ) == NULL )
 	{
@@ -619,6 +619,39 @@ void CLibraryFolders::Clear()
 
 	delete m_pAlbumRoot;
 	m_pAlbumRoot = new CAlbumFolder( NULL, CSchema::uriLibrary );
+}
+
+void CLibraryFolders::ClearGhosts()
+{
+	ASSUME_LOCK( Library.m_pSection );
+
+	if ( m_pAlbumRoot )
+	{
+		if ( CAlbumFolder* pGhosts = m_pAlbumRoot->GetFolderByURI( CSchema::uriGhostFolder ) )
+		{
+			for ( POSITION pos = pGhosts->GetFileIterator(); pos; )
+			{
+				CLibraryFile* pFile = pGhosts->GetNextFile( pos );
+				ASSERT( ! pFile->IsAvailable() );
+				pFile->Delete( TRUE );
+			}
+		}
+	}
+}
+
+DWORD CLibraryFolders::GetGhostCount() const
+{
+	CQuickLock oLock( Library.m_pSection );
+
+	if ( m_pAlbumRoot )
+	{
+		if ( CAlbumFolder* pGhosts = m_pAlbumRoot->GetFolderByURI( CSchema::uriGhostFolder ) )
+		{
+			return pGhosts->GetFileCount();
+		}
+	}
+
+	return 0;
 }
 
 //////////////////////////////////////////////////////////////////////

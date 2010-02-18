@@ -67,6 +67,10 @@ public:
 	// Remove file from all albums and folders
 	BOOL			OnFileDelete(CLibraryFile* pFile, BOOL bDeleteGhost = FALSE);
 	CAlbumFolder* 	CreateAlbumTree();
+	// Remove all ghost files
+	void			ClearGhosts();
+	// Get total amount of ghost files
+	DWORD			GetGhostCount() const;
 
 // Core
 protected:

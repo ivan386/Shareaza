@@ -1291,7 +1291,7 @@ BOOL CShareazaApp::InternalURI(LPCTSTR pszURI)
 		CSingleLock oLock( &Library.m_pSection, TRUE );
 		if ( CLibraryFile* pFile = Library.LookupFile( nIndex ) )
 		{
-			if ( pFile->m_pFolder )
+			if ( pFile->IsAvailable() )
 			{
 				CString strPath = pFile->GetPath();
 				oLock.Unlock();

@@ -107,8 +107,8 @@ BOOL CLibraryTipCtrl::OnPrepare()
 
 	m_sSize = Settings.SmartVolume( pFile->GetSize() );
 
-	if ( pLibraryFile && pLibraryFile->m_pFolder ) 
-		m_sFolder = pLibraryFile->m_pFolder->m_sPath;
+	if ( pLibraryFile ) 
+		m_sFolder = pLibraryFile->GetFolder();
 	else
 		m_sFolder.Empty(); // Ghost files have no location
 

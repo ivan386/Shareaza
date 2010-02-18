@@ -660,7 +660,7 @@ BOOL CAlbumFolder::OrganiseFile(CLibraryFile* pFile)
 {
 	BOOL bResult = FALSE;
 
-	if ( pFile->IsGhost() )
+	if ( ! pFile->IsAvailable() )
 	{
 		if ( CheckURI( m_sSchemaURI, CSchema::uriGhostFolder ) )
 		{
@@ -1230,4 +1230,6 @@ void CAlbumFolder::Clear()
 
 	if ( m_pCollection != NULL ) delete m_pCollection;
 	m_pCollection = NULL;
+
+	m_nUpdateCookie++;
 }

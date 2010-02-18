@@ -489,7 +489,7 @@ void CLibraryMaps::OnFileAdd(CLibraryFile* pFile)
 		m_pIndexMap.SetAt( pFile->m_nIndex, pFile );
 	}
 
-	if ( ( pFile->m_pFolder != NULL ) && ( ! bSkipStats ) )
+	if ( pFile->IsAvailable() && ! bSkipStats )
 	{
 		m_nVolume += pFile->m_nSize;
 		m_nFiles ++;
@@ -497,7 +497,7 @@ void CLibraryMaps::OnFileAdd(CLibraryFile* pFile)
 
 	m_pNameMap.SetAt( pFile->GetNameLC(), pFile );
 
-	if ( pFile->m_pFolder != NULL )
+	if ( pFile->IsAvailable() )
 	{
 		CString strPath( pFile->GetPath() );
 		ToLower( strPath );
@@ -559,7 +559,7 @@ void CLibraryMaps::OnFileRemove(CLibraryFile* pFile)
 		{
 			m_pIndexMap.RemoveKey( pFile->m_nIndex );
 
-			if ( pOld->m_pFolder != NULL )
+			if ( pOld->IsAvailable() )
 			{
 				m_nFiles --;
 				m_nVolume -= pFile->m_nSize;
@@ -570,7 +570,7 @@ void CLibraryMaps::OnFileRemove(CLibraryFile* pFile)
 	pOld = LookupFileByName( pFile->GetNameLC(), pFile->m_nSize, FALSE, FALSE );
 	if ( pOld == pFile ) m_pNameMap.RemoveKey( pFile->GetNameLC() );
 
-	if ( pFile->m_pFolder != NULL )
+	if ( pFile->IsAvailable() )
 	{
 		CString strPath( pFile->GetPath() );
 		ToLower( strPath );

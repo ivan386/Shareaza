@@ -80,14 +80,17 @@ public:
 	int				m_nIcon16;
 	BOOL			m_bNewFile;
 
+	// Get folder path only
+	CString			GetFolder() const;
+	// Get full path (folder + file name)
 	CString			GetPath() const;
-	virtual CString	GetSearchName() const;
+	CString			GetSearchName() const;
 	bool			IsShared(bool bIgnoreOverride = false) const;
 	void			SetShared(bool bShared, bool bOverride = false);
 	BOOL			CheckFileAttributes(QWORD nSize, BOOL bSharedOnly, BOOL bAvailableOnly) const;
 	inline BOOL		IsSharedOverride() const { return m_bShared != TRI_UNKNOWN; }
-	inline BOOL		IsGhost() const { return m_pFolder == NULL; }
-	inline BOOL		IsAvailable() const { return m_pFolder != NULL; }
+	// Is it a real file (i.e. not a ghost file)?
+	inline bool		IsAvailable() const { return m_pFolder != NULL; }
 	BOOL			IsSchemaURI(LPCTSTR pszURI) const;
 	BOOL			IsRated() const;		// File rated (or commented)
 	BOOL			IsRatedOnly() const;	// File rated but have no metadata

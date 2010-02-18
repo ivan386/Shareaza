@@ -133,7 +133,7 @@ void CFilePropertiesDlg::Update()
 	}
 
 	m_sName = pFile->m_sName;
-	if ( pFile->IsAvailable() ) m_sPath = pFile->m_pFolder->m_sPath;
+	m_sPath = pFile->GetFolder();
 	m_sSize = Settings.SmartVolume( pFile->GetSize() );
 	m_sIndex.Format( _T("# %lu"), pFile->m_nIndex );
 
