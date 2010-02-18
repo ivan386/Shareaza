@@ -75,7 +75,9 @@ public:
 	inline BOOL Draw(CDC* pDC, int nIcon, int nSize, int nX, int nY, COLORREF crBack = CLR_NONE, BOOL bSelected = FALSE) const
 	{
 		return ImageList_DrawEx( GetHandle( nSize ), nIcon, pDC->GetSafeHdc(),
-			nX, nY, nSize, nSize, crBack, CLR_DEFAULT, bSelected ? ILD_SELECTED : ILD_NORMAL );
+			nX, nY, nSize, nSize, crBack,
+			( bSelected ? CoolInterface.m_crHighlight : CLR_NONE ),
+			( bSelected ? ILD_SELECTED : ILD_NORMAL ) );
 	}
 
 // Attributes
