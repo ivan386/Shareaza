@@ -356,12 +356,6 @@ void CDownload::OnRun()
 					// Mark as collapsed to get correct heights when dragging files
 					if ( ! Settings.General.DebugBTSources && m_bExpanded )
 						m_bExpanded = FALSE;
-
-					if ( Settings.BitTorrent.AutoSeed
-						&& !Network.IsConnected() )
-					{
-						Network.Connect( TRUE );
-					}
 				}
 				else
 				{
