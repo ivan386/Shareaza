@@ -1,7 +1,7 @@
 //
 // MatchObjects.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -2553,12 +2553,22 @@ TRISTATE CMatchFile::GetLibraryStatus()
 	CSingleLock pLock( &Library.m_pSection );
 	if (  pLock.Lock( 100 ) )
 	{
-		CLibraryFile* pExisting = NULL;
-		if ( ( m_oSHA1 && ( pExisting = LibraryMaps.LookupFileBySHA1( m_oSHA1 ) ) != NULL ) ||
-			 ( m_oTiger && ( pExisting = LibraryMaps.LookupFileByTiger( m_oTiger ) ) != NULL ) ||
-			 ( m_oED2K && ( pExisting = LibraryMaps.LookupFileByED2K( m_oED2K ) ) != NULL ) ||
-			 ( m_oBTH && ( pExisting = LibraryMaps.LookupFileByBTH( m_oBTH ) ) != NULL ) ||
-			 ( m_oMD5 && ( pExisting = LibraryMaps.LookupFileByMD5( m_oMD5 ) ) != NULL ) )
+		CLibraryFile* pExisting;
+
+		if ( m_oSHA1 )
+			pExisting = LibraryMaps.LookupFileBySHA1( m_oSHA1 );
+		else if ( m_oTiger )
+			pExisting = LibraryMaps.LookupFileByTiger( m_oTiger );
+		else if ( m_oED2K )
+			pExisting = LibraryMaps.LookupFileByED2K( m_oED2K );
+		else if ( m_oMD5 )
+			pExisting = LibraryMaps.LookupFileByMD5( m_oMD5 );
+		else if ( m_oBTH )
+			pExisting = LibraryMaps.LookupFileByBTH( m_oBTH );
+		else
+			pExisting = NULL;
+
+		if ( pExisting )
 		{
 			m_bExisting = pExisting->IsAvailable() ? TRI_FALSE : TRI_TRUE;
 		}
