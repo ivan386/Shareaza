@@ -1,7 +1,7 @@
 //
 // Packet.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -427,24 +427,9 @@ void CPacket::Debug(LPCTSTR pszReason) const
 // Gives this packet and related objects to each window in the tab bar for them to process it
 void CPacket::SmartDump(const SOCKADDR_IN* pAddress, BOOL bUDP, BOOL bOutgoing, DWORD_PTR nNeighbourUnique) const
 {
-	// Get exclusive access to the program's critical section while this method runs
-	CSingleLock pLock( &theApp.m_pSection ); // When the method exits, pLock will go out of scope, be destructed, and release the lock
-	if ( pLock.Lock( 50 ) ) // If we wait more than 1/20th of a second for access, Lock will return false so we can just give up
+	if ( theApp.m_pPacketWnd )
 	{
-		// Get a pointer to the main Shareaza window
-		if ( CMainWnd* pMainWnd = theApp.SafeMainWnd() )
-		{
-			// Get pointers to the window manager, and null a pointer to a packet window
-			CWindowManager* pWindows = &pMainWnd->m_pWindows;
-			CPacketWnd*     pWnd     = NULL;
-
-			// Loop through all the windows, pointing pWnd at each one
-			while ( ( pWnd = (CPacketWnd*)pWindows->Find( RUNTIME_CLASS(CPacketWnd), pWnd ) ) != NULL )
-			{
-				// Give each window this packet to process, along with the related CNeighbour object, IP address, and travel direction
-				pWnd->SmartDump( this, pAddress, bUDP, bOutgoing, nNeighbourUnique );
-			}
-		}
+		theApp.m_pPacketWnd->SmartDump( this, pAddress, bUDP, bOutgoing, nNeighbourUnique );
 	}
 }
 

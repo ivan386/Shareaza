@@ -1,7 +1,7 @@
 //
 // Shareaza.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -29,6 +29,7 @@ class CUPnPFinder;
 class CMainWnd;
 class CSplashDlg;
 class CFontManager;
+class CPacketWnd;
 
 class CShareazaCommandLineInfo : public CCommandLineInfo
 {
@@ -101,6 +102,7 @@ public:
 	DWORD				m_nLastInput;				// Time of last input event (in secs)
 	HHOOK				m_hHookKbd;
 	HHOOK				m_hHookMouse;
+	CPacketWnd*			m_pPacketWnd;				// Packet Window (NULL - not opened)
 
 	// Cryptography Context handle
 	HCRYPTPROV			m_hCryptProv;

@@ -1,7 +1,7 @@
 //
 // Shareaza.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -67,6 +67,7 @@
 
 #include "WndMain.h"
 #include "WndMedia.h"
+#include "WndPacket.h"
 #include "WndSystem.h"
 
 #include "revision.h"		// to update build time
@@ -179,6 +180,7 @@ CShareazaApp::CShareazaApp() :
 ,	m_nLastInput			( 0ul )
 ,	m_hHookKbd				( NULL )
 ,	m_hHookMouse			( NULL )
+,	m_pPacketWnd			( NULL )
 
 ,	m_hCryptProv			( NULL )
 
