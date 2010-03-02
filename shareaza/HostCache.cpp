@@ -1,7 +1,7 @@
 //
 // HostCache.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -215,7 +215,7 @@ int CHostCache::Import(LPCTSTR pszFile, BOOL bFreshOnly)
 void CHostCache::PruneOldHosts()
 {
 	DWORD tNow = static_cast< DWORD >( time( NULL ) );
-	if ( tNow - m_tLastPruneTime > 5 * 60 )
+	if ( tNow - m_tLastPruneTime > 60 )
 	{
 		for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
 		{
@@ -547,41 +547,6 @@ void CHostCacheList::OnSuccess(const IN_ADDR* pAddress, WORD nPort, bool bUpdate
 }
 
 //////////////////////////////////////////////////////////////////////
-// CHostCacheList query acknowledgment prune (G2)
-
-void CHostCacheList::PruneByQueryAck()
-{
-	CQuickLock oLock( m_pSection );
-
-	DWORD tNow = static_cast< DWORD >( time( NULL ) );
-
-	for( CHostCacheMap::iterator i = m_Hosts.begin(); i != m_Hosts.end(); )
-	{
-		bool bRemoved = false;
-		CHostCacheHostPtr pHost = (*i).second;
-		if ( pHost->m_tAck )
-		{
-			if ( tNow - pHost->m_tAck > Settings.Gnutella2.QueryHostDeadline )
-			{
-				pHost->m_tAck = 0;
-				if ( pHost->m_nFailures++ > Settings.Connection.FailureLimit )
-				{
-					m_HostsTime.erase(
-						std::find( m_HostsTime.begin(), m_HostsTime.end(), pHost ) );
-					i = m_Hosts.erase( i );
-					delete pHost;
-					bRemoved = true;
-					m_nCookie++;
-				}
-			}
-		}
-		// Don't increment if host was removed
-		if ( ! bRemoved )
-			++i;
-	}
-}
-
-//////////////////////////////////////////////////////////////////////
 // CHostCacheList prune old hosts
 
 void CHostCacheList::PruneOldHosts()
@@ -594,20 +559,31 @@ void CHostCacheList::PruneOldHosts()
 	{
 		CHostCacheHostPtr pHost = (*i).second;
 
-		float nProbability = .0;
-
-		if ( pHost->m_nProtocol == PROTOCOL_G1 )
-		{
-			// Calculate some kind of probability if we need to prune it
-			float nProbability = (float)pHost->m_nDailyUptime / ( 24 * 60 * 60 );
-			nProbability /= pHost->m_nFailures + 1;
-		}
+		bool bRemove = false;
 
 		// Since we discard hosts after 3 failures, it means that we will remove
 		// hosts with the DU less than 8 hours without no failures when they expire;
 		// hosts with the DU less than 16 hours with 1 failure;
 		// hosts with the DU less than 24 hours with 2 failures;
-		if ( ! pHost->m_bPriority && pHost->IsExpired( tNow ) && nProbability < .333 )
+		if ( ! pHost->m_bPriority && pHost->IsExpired( tNow ) &&
+			( pHost->m_nProtocol != PROTOCOL_G1 ||
+			(float)pHost->m_nDailyUptime /
+			( 24 * 60 * 60 * ( pHost->m_nFailures + 1 ) ) < .333 ) )
+		{
+			bRemove = true;
+		}
+		// Query acknowledgment prune (G2)
+		else if ( pHost->m_nProtocol == PROTOCOL_G2 && pHost->m_tAck &&
+			tNow - pHost->m_tAck > Settings.Gnutella2.QueryHostDeadline )
+		{
+			pHost->m_tAck = 0;
+			if ( pHost->m_nFailures++ > Settings.Connection.FailureLimit )
+			{
+				bRemove = true;
+			}
+		}
+
+		if ( bRemove )
 		{
 			m_HostsTime.erase(
 				std::find( m_HostsTime.begin(), m_HostsTime.end(), pHost ) );
@@ -619,7 +595,6 @@ void CHostCacheList::PruneOldHosts()
 			++i;
 	}
 }
-
 
 //////////////////////////////////////////////////////////////////////
 // Remove several oldest hosts
@@ -1387,9 +1362,6 @@ BOOL CHostCacheHost::CanQuery(DWORD tNow) const
 	{
 		// Must support BT
 		if ( !Network.IsConnected() || !Settings.BitTorrent.EnableToday ) return FALSE;
-
-		// Must not be waiting for an ack
-		if ( 0 != m_tAck ) return FALSE;
 
 		// Get the time if not supplied
 		if ( 0 == tNow ) tNow = static_cast< DWORD >( time( NULL ) );

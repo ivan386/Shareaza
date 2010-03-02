@@ -624,7 +624,7 @@ void CNetwork::OnRun()
 	{
 		while ( IsThreadEnabled() )
 		{
-			HostCache.PruneOldHosts();
+			HostCache.PruneOldHosts();	// Every minute
 
 			Sleep( 50 );
 			Doze( 100 );
@@ -1032,7 +1032,9 @@ void CNetwork::RunQueryHits()
 
 	// Spend here no more than 250 ms at once
 	DWORD nBegin = GetTickCount();
-	CSingleLock oLock( &m_pSection, TRUE );
+	CSingleLock oLock( &m_pSection, FALSE );
+	if ( ! oLock.Lock( 250 ) )
+		return;
 	while ( ! m_pDelayedHits.IsEmpty() && GetTickCount() - nBegin < 250 )
 	{
 		CDelayedHit oQHT = m_pDelayedHits.RemoveHead();

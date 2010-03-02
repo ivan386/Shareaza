@@ -1,7 +1,7 @@
 //
 // Kademlia.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -250,7 +250,6 @@ BOOL CKademlia::OnPacket_KADEMLIA2_BOOTSTRAP_RES(SOCKADDR_IN* pHost, CEDPacket* 
 	pCache->m_nUDPPort = htons( pHost->sin_port );
 	pCache->m_nKADVersion = nVersion;
 	pCache->m_sDescription = oGUID.toString();
-	pCache->m_tAck = 0;
 	pCache->m_tFailure = 0;
 	pCache->m_nFailures = 0;
 	pCache->m_bCheckedLocally = TRUE;

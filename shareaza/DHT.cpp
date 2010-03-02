@@ -1,7 +1,7 @@
 //
 // DHT.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -58,7 +58,6 @@ BOOL CDHT::OnPacket(SOCKADDR_IN* pHost, const CBENode* pRoot)
 	if ( ! pCache )
 		return FALSE;
 	pCache->m_bDHT = TRUE;
-	pCache->m_tAck = 0;
 	pCache->m_tFailure = 0;
 	pCache->m_nFailures = 0;
 	pCache->m_bCheckedLocally = TRUE;

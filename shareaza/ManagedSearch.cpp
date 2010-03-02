@@ -636,8 +636,6 @@ BOOL CManagedSearch::ExecuteDonkeyMesh(const DWORD /*tTicks*/, const DWORD tSecs
 
 		// Record the query time on the host, for all searches
 		pHost->m_tQuery = tSecs;
-		if ( pHost->m_tAck == 0 )
-			pHost->m_tAck = tSecs;
 
 		// Create a packet in the appropriate format
 		if ( CPacket* pPacket = m_pSearch->ToEDPacket( TRUE, pHost->m_nUDPFlags ) )

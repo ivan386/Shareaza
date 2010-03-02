@@ -118,9 +118,6 @@ void CSearchManager::OnRun()
 	// Don't run if we aren't connected
 	if ( ! Network.IsWellConnected() ) return;
 
-	if ( Settings.Gnutella2.EnableToday )
-		HostCache.Gnutella2.PruneByQueryAck();
-
 	CSingleLock pLock( &m_pSection );
 	if ( ! pLock.Lock( 100 ) )
 		return;
