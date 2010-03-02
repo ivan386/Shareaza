@@ -1,7 +1,7 @@
 //
 // FragmentBar.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -57,8 +57,8 @@ void CFragmentBar::DrawFragment(CDC* pDC, CRect* prcBar, QWORD nTotal, QWORD nOf
 	if ( nTotal == 0 )
 		return;
 
-	rcArea.left		= prcBar->left + (int)( (float)( prcBar->Width() + 1 ) / (float)nTotal * (float)nOffset );
-	rcArea.right	= prcBar->left + (int)( (float)( prcBar->Width() + 1 ) / (float)nTotal * (float)( nOffset + nLength ) );
+	rcArea.left		= prcBar->left + ( ( prcBar->Width() + 1 ) * nOffset ) / nTotal;
+	rcArea.right	= prcBar->left + ( ( prcBar->Width() + 1 ) * ( nOffset + nLength ) ) / nTotal;
 	
 	rcArea.top		= prcBar->top;
 	rcArea.bottom	= prcBar->bottom;
