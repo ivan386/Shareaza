@@ -79,6 +79,8 @@ BOOL CCoolMenu::IsModernVersion()
 
 void CCoolMenu::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
 {
+	HRESULT hr;
+
 	if ( bSysMenu )
 		return;
 
@@ -94,7 +96,7 @@ void CCoolMenu::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
 			{
 				// Its shell menu
 				CString strHelp;
-				HRESULT hr = m_pContextMenu2->GetCommandString( mii.wID - ID_SHELL_MENU_MIN,
+				hr = m_pContextMenu2->GetCommandString( mii.wID - ID_SHELL_MENU_MIN,
 					GCS_HELPTEXTW, NULL, (LPSTR)strHelp.GetBuffer( 256 ), 256 );
 				strHelp.ReleaseBuffer();
 				if ( SUCCEEDED( hr ) )
@@ -109,7 +111,7 @@ void CCoolMenu::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
 			if ( mii.wID >= ID_SHELL_MENU_MIN && mii.wID <= ID_SHELL_MENU_MAX )
 			{
 				// Its shell menu
-				m_pContextMenu2->HandleMenuMsg( WM_INITMENUPOPUP,
+				hr = m_pContextMenu2->HandleMenuMsg( WM_INITMENUPOPUP,
 					(WPARAM)pPopupMenu->GetSafeHmenu(),
 					(LPARAM)MAKELONG( nIndex, TRUE ) );
 				return;
@@ -618,17 +620,30 @@ void CCoolMenu::RegisterEdge(int nLeft, int nTop, int nLength)
 	m_nEdgeSize	= nLength;
 }
 
+static HRESULT SafeQueryContextMenu(IContextMenu* pContextMenu, HMENU hmenu, UINT indexMenu, UINT idCmdFirst, UINT idCmdLast, UINT uFlags) throw()
+{
+	__try
+	{
+		return pContextMenu->QueryContextMenu( hmenu, indexMenu, idCmdFirst, idCmdLast, uFlags );
+	}
+	__except( EXCEPTION_EXECUTE_HANDLER )
+	{
+		return E_UNEXPECTED;
+	}
+}
+
 void CCoolMenu::DoExplorerMenu(HWND hwnd, const CStringList& oFiles, POINT point,
 	HMENU hMenu, HMENU hSubMenu, UINT nFlags)
 {
+	HRESULT hr;
+
 	CComPtr< IContextMenu > pContextMenu1;
 	CShellList oItemIDListList( oFiles );
 	if ( oItemIDListList.GetMenu( hwnd, (void**)&pContextMenu1 ) )
 	{
-		HRESULT hr;
 		{
 			CWaitCursor wc;
-			hr = pContextMenu1->QueryContextMenu( hSubMenu, 0,
+			hr = SafeQueryContextMenu( pContextMenu1, hSubMenu, 0,
 				ID_SHELL_MENU_MIN, ID_SHELL_MENU_MAX, CMF_NORMAL | CMF_EXPLORE );
 		}
 		if ( SUCCEEDED( hr ) )
@@ -646,6 +661,7 @@ void CCoolMenu::DoExplorerMenu(HWND hwnd, const CStringList& oFiles, POINT point
 			{
 				CMINVOKECOMMANDINFOEX ici = {};
 				ici.cbSize = sizeof( CMINVOKECOMMANDINFOEX );
+				ici.fMask = CMIC_MASK_ASYNCOK | CMIC_MASK_NOZONECHECKS | CMIC_MASK_FLAG_LOG_USAGE;
 				ici.hwnd = hwnd;
 				ici.lpVerb = reinterpret_cast< LPCSTR >( nCmd - ID_SHELL_MENU_MIN );
 				ici.lpVerbW = reinterpret_cast< LPCWSTR >( nCmd - ID_SHELL_MENU_MIN );
