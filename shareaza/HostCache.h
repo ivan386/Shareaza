@@ -74,12 +74,12 @@ public:
 	BYTE			m_nKADVersion;	// Kademlia version
 
 	CNeighbour*	ConnectTo(BOOL bAutomatic = FALSE);
-	CString		ToString(bool bLong = true) const;	// "10.0.0.1:6346 2002-04-30T08:30Z"
-	bool		IsExpired(DWORD tNow) const;		// Is this host expired?
-	bool		IsThrottled(DWORD tNow) const;		// Is host temporary throttled down?
-	BOOL		CanConnect(DWORD tNow = 0) const;	// Can we connect to this host now?
-	BOOL		CanQuote(DWORD tNow = 0) const;		// Is this a recently seen host?
-	BOOL		CanQuery(DWORD tNow = 0) const;		// Can we UDP query this host? (G2/ed2k)
+	CString		ToString(bool bLong = true) const;			// "10.0.0.1:6346 2002-04-30T08:30Z"
+	bool		IsExpired(const DWORD tNow) const throw();	// Is this host expired?
+	bool		IsThrottled(const DWORD tNow) const throw();// Is host temporary throttled down?
+	bool		CanConnect(const DWORD tNow) const throw();	// Can we connect to this host now?
+	bool		CanQuote(const DWORD tNow) const throw();	// Is this a recently seen host?
+	bool		CanQuery(const DWORD tNow) const throw();	// Can we UDP query this host? (G2/ed2k)
 	void		SetKey(DWORD nKey, const IN_ADDR* pHost = NULL);
 
 	inline DWORD Seen() const throw()
@@ -229,11 +229,12 @@ public:
 
 	inline const CHostCacheHostPtr GetForDHTQuery() const throw()
 	{
+		const DWORD tNow = static_cast< DWORD >( time( NULL ) );
 		for ( CHostCacheIterator it = m_HostsTime.begin();
 			it != m_HostsTime.end(); ++it )
 		{
 			CHostCacheHost* pHost = (*it);
-			if ( pHost->CanQuery() && pHost->m_bDHT && pHost->m_oBtGUID )
+			if ( pHost->CanQuery( tNow ) && pHost->m_bDHT && pHost->m_oBtGUID )
 				return pHost;
 		}
 		return NULL;
@@ -241,11 +242,12 @@ public:
 
 	inline const CHostCacheHostPtr GetOldestForQuery() const throw()
 	{
+		const DWORD tNow = static_cast< DWORD >( time( NULL ) );
 		for ( CHostCacheRIterator it = m_HostsTime.rbegin();
 			it != m_HostsTime.rend(); ++it )
 		{
 			CHostCacheHost* pHost = (*it);
-			if ( pHost->CanQuery() )
+			if ( pHost->CanQuery( tNow ) )
 				return pHost;
 		}
 		return NULL;

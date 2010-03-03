@@ -107,7 +107,7 @@ protected:
 public:
 	BOOL		IsSelfIP(const IN_ADDR& nAddress) const;
 	bool		IsAvailable() const;
-	bool		IsConnected() const;
+	bool		IsConnected() const throw();
 	bool		IsListening() const;
 	bool		IsWellConnected() const;
 	bool		IsStable() const;

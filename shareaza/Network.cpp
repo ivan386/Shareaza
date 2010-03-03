@@ -141,7 +141,7 @@ bool CNetwork::IsAvailable() const
 	return false;
 }
 
-bool CNetwork::IsConnected() const
+bool CNetwork::IsConnected() const throw()
 {
 	return IsThreadAlive();
 }

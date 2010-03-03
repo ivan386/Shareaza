@@ -1240,7 +1240,7 @@ CString CHostCacheHost::ToString(bool bLong) const
 	return str;
 }
 
-bool CHostCacheHost::IsExpired(DWORD tNow) const
+bool CHostCacheHost::IsExpired(const DWORD tNow) const throw()
 {
 	switch ( m_nProtocol )
 	{
@@ -1259,7 +1259,7 @@ bool CHostCacheHost::IsExpired(DWORD tNow) const
 	}
 }
 
-bool CHostCacheHost::IsThrottled(DWORD tNow) const
+bool CHostCacheHost::IsThrottled(const DWORD tNow) const throw()
 {
 	switch ( m_nProtocol )
 	{
@@ -1276,12 +1276,10 @@ bool CHostCacheHost::IsThrottled(DWORD tNow) const
 //////////////////////////////////////////////////////////////////////
 // CHostCacheHost connection test
 
-BOOL CHostCacheHost::CanConnect(DWORD tNow) const
+bool CHostCacheHost::CanConnect(const DWORD tNow) const throw()
 {
 	// Don't connect to self
-	if ( Settings.Connection.IgnoreOwnIP && Network.IsSelfIP( m_pAddress ) ) return FALSE;
-
-	if ( ! tNow ) tNow = static_cast< DWORD >( time( NULL ) );
+	if ( Settings.Connection.IgnoreOwnIP && Network.IsSelfIP( m_pAddress ) ) return false;
 
 	return
 		// Let failed host rest some time...
@@ -1298,10 +1296,8 @@ BOOL CHostCacheHost::CanConnect(DWORD tNow) const
 //////////////////////////////////////////////////////////////////////
 // CHostCacheHost quote test
 
-BOOL CHostCacheHost::CanQuote(DWORD tNow) const
+bool CHostCacheHost::CanQuote(const DWORD tNow) const throw()
 {
-	if ( ! tNow ) tNow = static_cast< DWORD >( time( NULL ) );
-
 	return
 		// A host isn't dead...
 		( m_nFailures == 0 ) &&
@@ -1314,72 +1310,76 @@ BOOL CHostCacheHost::CanQuote(DWORD tNow) const
 // CHostCacheHost query test
 
 // Can we UDP query this host? (G2/ed2k)
-BOOL CHostCacheHost::CanQuery(DWORD tNow) const
+bool CHostCacheHost::CanQuery(const DWORD tNow) const throw()
 {
 	// eDonkey2000 server
-	if ( m_nProtocol == PROTOCOL_ED2K )
+	switch ( m_nProtocol )
 	{
-		// Must support ED2K
-		if ( !Network.IsConnected() || !Settings.eDonkey.EnableToday ) return FALSE;
-		if ( !Settings.eDonkey.ServerWalk ) return FALSE;
-		
-		// Get the time if not supplied
-		if ( 0 == tNow ) tNow = static_cast< DWORD >( time( NULL ) );
-		
-		// Retry After
-		if ( 0 != m_tRetryAfter && tNow < m_tRetryAfter ) return FALSE;
-		
-		// If haven't queried yet, its ok
-		if ( 0 == m_tQuery ) return TRUE;
-		
-		// Don't query too fast
-		return ( tNow - m_tQuery ) >= Settings.eDonkey.QueryServerThrottle;
-	}
-	else if ( m_nProtocol == PROTOCOL_G2 )
-	{
+	case PROTOCOL_G2:
 		// Must support G2
-		if ( !Network.IsConnected() || !Settings.Gnutella2.EnableToday ) return FALSE;
+		if ( ! Settings.Gnutella2.EnableToday ) return false;
 		
 		// Must not be waiting for an ack
-		if ( 0 != m_tAck ) return FALSE;
-		
-		// Get the time if not supplied
-		if ( 0 == tNow ) tNow = static_cast< DWORD >( time( NULL ) );
+		if ( 0 != m_tAck ) return false;
 		
 		// Must be a recently seen (current) host
-		if ( ( tNow - m_tSeen ) > Settings.Gnutella2.HostCurrent ) return FALSE;
+		if ( ( tNow - m_tSeen ) > Settings.Gnutella2.HostCurrent ) return false;
 		
 		// Retry After
-		if ( 0 != m_tRetryAfter && tNow < m_tRetryAfter ) return FALSE;
+		if ( 0 != m_tRetryAfter && tNow < m_tRetryAfter ) return false;
+
+		// Online
+		if ( ! Network.IsConnected() ) return false;
 		
 		// If haven't queried yet, its ok
-		if ( 0 == m_tQuery ) return TRUE;
+		if ( 0 == m_tQuery ) return true;
 		
 		// Don't query too fast
 		return ( tNow - m_tQuery ) >= Settings.Gnutella2.QueryHostThrottle;
-	}
-	else if ( m_nProtocol == PROTOCOL_BT )
-	{
-		// Must support BT
-		if ( !Network.IsConnected() || !Settings.BitTorrent.EnableToday ) return FALSE;
 
-		// Get the time if not supplied
-		if ( 0 == tNow ) tNow = static_cast< DWORD >( time( NULL ) );
+	case PROTOCOL_ED2K:
+		// Must support ED2K
+		if ( ! Settings.eDonkey.EnableToday ) return false;
+
+		if ( ! Settings.eDonkey.ServerWalk ) return false;
+		
+		// Retry After
+		if ( 0 != m_tRetryAfter && tNow < m_tRetryAfter ) return false;
+
+		// Online
+		if ( ! Network.IsConnected() ) return false;
+		
+		// If haven't queried yet, its ok
+		if ( 0 == m_tQuery ) return true;
+		
+		// Don't query too fast
+		return ( tNow - m_tQuery ) >= Settings.eDonkey.QueryServerThrottle;
+
+	case PROTOCOL_BT:
+		// Must support BT
+		if ( ! Settings.BitTorrent.EnableToday ) return false;
 
 		// Retry After
-		if ( 0 != m_tRetryAfter && tNow < m_tRetryAfter ) return FALSE;
+		if ( 0 != m_tRetryAfter && tNow < m_tRetryAfter ) return false;
+
+		// Online
+		if ( ! Network.IsConnected() ) return false;
 
 		// If haven't queried yet, its ok
-		if ( 0 == m_tQuery ) return TRUE;
+		if ( 0 == m_tQuery ) return true;
 
 		// Don't query too fast
 		return ( tNow - m_tQuery ) >= 90u;
-	}	
-	else if ( m_nProtocol == PROTOCOL_KAD )
-	{
-		return TRUE; // TODO: Fix it
+
+	case PROTOCOL_KAD:
+		// Online
+		if ( ! Network.IsConnected() ) return false;
+
+		return true; // TODO: Fix it
+
+	default:
+		return false;
 	}
-	return FALSE;
 }
 
 //////////////////////////////////////////////////////////////////////
