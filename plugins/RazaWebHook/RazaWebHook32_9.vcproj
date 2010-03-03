@@ -79,7 +79,6 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				RegisterOutput="true"
 				IgnoreImportLibrary="true"
 				OutputFile="$(OutDir)\$(ProjectName).dll"
 				ModuleDefinitionFile="RazaWebHook.def"
@@ -168,7 +167,6 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				RegisterOutput="true"
 				IgnoreImportLibrary="true"
 				OutputFile="$(OutDir)\$(ProjectName).dll"
 				ModuleDefinitionFile="RazaWebHook.def"
@@ -260,7 +258,6 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				RegisterOutput="true"
 				IgnoreImportLibrary="true"
 				OutputFile="$(OutDir)\$(ProjectName).dll"
 				LinkIncremental="1"
@@ -355,7 +352,6 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				RegisterOutput="true"
 				IgnoreImportLibrary="true"
 				OutputFile="$(OutDir)\$(ProjectName).dll"
 				LinkIncremental="1"
