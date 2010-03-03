@@ -1,7 +1,7 @@
 //
 // NeighboursBase.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,7 +22,6 @@
 // Keeps a list of CNeighbour objects, with methods to go through them, add and remove them, and count them
 // http://shareazasecurity.be/wiki/index.php?title=Developers.Code.CNeighboursBase
 
-// Copy in the contents of these files here before compiling
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
@@ -31,7 +30,6 @@
 #include "Neighbour.h"
 #include "RouteCache.h"
 
-// If we are compiling in debug mode, replace the text "THIS_FILE" in the code with the name of this file
 #ifdef _DEBUG
 #undef THIS_FILE
 static char THIS_FILE[]=__FILE__;
@@ -49,11 +47,14 @@ CNeighboursBase::CNeighboursBase()
 	, m_nBandwidthIn  ( 0 ) // Start the bandwidth totals at 0
 	, m_nBandwidthOut ( 0 )
 {
+	m_pNeighbours.InitHashTable( GetBestHashTableSize( 300 ) );
+	m_pIndex.InitHashTable( GetBestHashTableSize( 300 ) );
 }
 
 CNeighboursBase::~CNeighboursBase()
 {
 	ASSERT( m_pNeighbours.IsEmpty() );
+	ASSERT( m_pIndex.IsEmpty() );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -63,14 +64,17 @@ POSITION CNeighboursBase::GetIterator() const
 {
 	ASSUME_LOCK( Network.m_pSection );
 
-	return m_pNeighbours.GetHeadPosition();
+	return m_pNeighbours.GetStartPosition();
 }
 
 CNeighbour* CNeighboursBase::GetNext(POSITION& pos) const
 {
 	ASSUME_LOCK( Network.m_pSection );
 
-	return m_pNeighbours.GetNext( pos );
+	IN_ADDR nAddress;
+	CNeighbour* pNeighbour;
+	m_pNeighbours.GetNextAssoc( pos, nAddress, pNeighbour );
+	return pNeighbour;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -80,8 +84,9 @@ CNeighbour* CNeighboursBase::Get(DWORD_PTR nUnique) const
 {
 	ASSUME_LOCK( Network.m_pSection );
 
-	if ( POSITION pos = m_pNeighbours.Find( (CNeighbour*)nUnique ) )
-		return m_pNeighbours.GetAt( pos );
+	CNeighbour* pNeighbour;
+	if ( m_pIndex.Lookup( nUnique, pNeighbour ) )
+		return pNeighbour;
 
 	return NULL;
 }
@@ -90,14 +95,9 @@ CNeighbour* CNeighboursBase::Get(const IN_ADDR* pAddress) const
 {
 	ASSUME_LOCK( Network.m_pSection );
 
-	for ( POSITION pos = GetIterator() ; pos ; )
-	{
-		CNeighbour* pNeighbour = GetNext( pos );
-
-		// If this neighbour object has the IP address we are looking for, return it
-		if ( pNeighbour->m_pHost.sin_addr.S_un.S_addr == pAddress->S_un.S_addr )
-			return pNeighbour;
-	}
+	CNeighbour* pNeighbour;
+	if ( m_pNeighbours.Lookup( *pAddress, pNeighbour ) )
+		return pNeighbour;
 
 	return NULL;
 }
@@ -311,15 +311,13 @@ void CNeighboursBase::OnRun()
 void CNeighboursBase::Add(CNeighbour* pNeighbour)
 {
 	ASSUME_LOCK( Network.m_pSection );
+	ASSERT( pNeighbour->m_pHost.sin_addr.s_addr != INADDR_ANY );
+	ASSERT( pNeighbour->m_pHost.sin_addr.s_addr != INADDR_NONE );
+	ASSERT( Get( &pNeighbour->m_pHost.sin_addr ) == NULL );
+	ASSERT( Get( (DWORD_PTR)pNeighbour ) == NULL );
 
-	if ( POSITION pos = m_pNeighbours.Find( pNeighbour ) )
-	{
-		// Dup?
-	}
-	else
-	{
-		m_pNeighbours.AddTail( pNeighbour );
-	}
+	m_pNeighbours.SetAt( pNeighbour->m_pHost.sin_addr, pNeighbour );
+	m_pIndex.SetAt( (DWORD_PTR)pNeighbour, pNeighbour );
 }
 
 // Takes a pointer to a neighbour object
@@ -333,8 +331,6 @@ void CNeighboursBase::Remove(CNeighbour* pNeighbour)
 	Network.NodeRoute->Remove( pNeighbour );
 
 	// Remove the neighbour object from the map
-	if ( POSITION pos = m_pNeighbours.Find( pNeighbour ) )
-	{
-		m_pNeighbours.RemoveAt( pos );
-	}
+	VERIFY( m_pNeighbours.RemoveKey( pNeighbour->m_pHost.sin_addr ) );
+	VERIFY( m_pIndex.RemoveKey( (DWORD_PTR)pNeighbour ) );
 }

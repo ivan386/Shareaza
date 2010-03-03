@@ -251,6 +251,16 @@ template<> AFX_INLINE UINT AFXAPI HashKey(DWORD_PTR key)
 	return static_cast< UINT >( key >> 4 );
 }
 
+template<> AFX_INLINE BOOL AFXAPI CompareElements(const IN_ADDR* pElement1, const IN_ADDR* pElement2)
+{
+	return pElement1->s_addr == pElement2->s_addr;
+}
+
+template<> AFX_INLINE UINT AFXAPI HashKey(const IN_ADDR& key)
+{
+	return key.s_addr;
+}
+
 #include "Hashes.hpp"
 
 #undef IDC_HAND		// Defined in Windows.h->WinUser.h and in Resource.h

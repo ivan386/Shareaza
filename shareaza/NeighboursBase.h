@@ -1,7 +1,7 @@
 //
 // NeighboursBase.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -63,7 +63,11 @@ public:
 	}
 
 private:
-	CList< CNeighbour* > m_pNeighbours;	// The list of remote computers we are connected to
+	typedef CMap< IN_ADDR, const IN_ADDR&, CNeighbour*, CNeighbour*& > CAMap;
+	typedef CMap< DWORD_PTR, const DWORD_PTR&, CNeighbour*, CNeighbour*& > CNMap;
+
+	CAMap	m_pNeighbours;	// The list of remote computers we are connected to
+	CNMap	m_pIndex;		// Additional index
 	DWORD	m_nRunCookie;	// OnRun uses this to run each neighbour once even if GetNext returns the same one more than once in the loop
 	DWORD	m_nStableCount;	// The number of connections we have older than 1.5 seconds and finished with the handshake
 	DWORD	m_nLeafCount;	// The number of connections we have that are down to leaf nodes below us
