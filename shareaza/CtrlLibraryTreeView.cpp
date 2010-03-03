@@ -1,7 +1,7 @@
 //
 // CtrlLibraryTreeView.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1807,7 +1807,9 @@ void CLibraryTreeView::OnUpdateLibraryFolderEnqueue(CCmdUI* pCmdUI)
 
 	for ( CLibraryTreeItem* pItem = m_pSelFirst ; pItem ; pItem = pItem->m_pSelNext )
 	{
-		if ( LibraryFolders.CheckAlbum( pItem->m_pVirtual ) && pItem->m_pVirtual->GetFileCount() > 0 )
+		if ( LibraryFolders.CheckAlbum( pItem->m_pVirtual ) &&
+			 pItem->m_pVirtual->GetFileCount() > 0 &&
+			 ! CheckURI( pItem->m_pVirtual->m_sSchemaURI, CSchema::uriGhostFolder ) )
 		{
 			pCmdUI->Enable( TRUE );
 			return;

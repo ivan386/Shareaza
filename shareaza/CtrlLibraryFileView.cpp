@@ -1,7 +1,7 @@
 //
 // CtrlLibraryFileView.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -325,10 +325,7 @@ void CLibraryFileView::OnLibraryEnqueue()
 void CLibraryFileView::OnUpdateLibraryURL(CCmdUI* pCmdUI)
 {
 	CString strMessage;
-	if ( m_bGhostFolder )
-		pCmdUI->Enable( FALSE );
-	else
-		pCmdUI->Enable( GetSelectedCount() > 0 );
+	pCmdUI->Enable( GetSelectedCount() > 0 );
 	GetSelectedCount() > 1 ? LoadString( strMessage, IDS_LIBRARY_EXPORTURIS ) : LoadString( strMessage, IDS_LIBRARY_COPYURI );
 	pCmdUI->SetText( strMessage );
 }
@@ -486,10 +483,7 @@ void CLibraryFileView::OnLibraryDelete()
 
 void CLibraryFileView::OnUpdateLibraryBitziWeb(CCmdUI* pCmdUI)
 {
-	if ( m_bGhostFolder )
-		pCmdUI->Enable( FALSE );
-	else
-		pCmdUI->Enable( GetSelectedCount() == 1 && Settings.WebServices.BitziWebSubmit.GetLength() );
+	pCmdUI->Enable( GetSelectedCount() == 1 && Settings.WebServices.BitziWebSubmit.GetLength() );
 }
 
 void CLibraryFileView::OnLibraryBitziWeb()
@@ -677,7 +671,7 @@ void CLibraryFileView::OnLibraryProperties()
 	CFilePropertiesSheet dlg;
 
 	POSITION posSel = StartSelectedFileLoop();
-	while ( CLibraryFile* pFile = GetNextSelectedFile( posSel ) )
+	while ( CLibraryFile* pFile = GetNextSelectedFile( posSel, FALSE, FALSE ) )
 	{
 		dlg.Add( pFile );
 //		oFiles.AddTail( pFile->GetPath() );
@@ -941,7 +935,7 @@ void CLibraryFileView::CheckDynamicBar()
 	CSingleLock pLock( &Library.m_pSection, TRUE );
 	CLibraryFile* pFile = GetSelectedFile();
 
-	if ( pFile == NULL ) // Ghost file
+	if ( pFile == NULL || ! pFile->IsAvailable() ) // Ghost file
 	{
 		pFrame->SetDynamicBar( NULL );
 		m_bRequestingService = FALSE;
