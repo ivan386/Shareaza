@@ -2624,7 +2624,9 @@ void CMainWnd::OnHelpFaq()
 void CMainWnd::OnHelpConnectiontest()
 {
 	CString strWebSite;
-	strWebSite.Format( _T("%shelp/test/?port=%d&lang=%s&Version=%s"), WEB_SITE_T, Settings.Connection.InPort, Settings.General.Language, theApp.m_sVersion );
+	strWebSite.Format( _T("%shelp/test/?port=%d&lang=%s&Version=%s"),
+		WEB_SITE_T, Settings.Connection.InPort,
+		(LPCTSTR)Settings.General.Language, (LPCTSTR)theApp.m_sVersion );
 	ShellExecute( GetSafeHwnd(), _T("open"), strWebSite,
 		NULL, NULL, SW_SHOWNORMAL );
 }

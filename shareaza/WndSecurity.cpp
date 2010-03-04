@@ -491,7 +491,7 @@ void CSecurityWnd::OnSecurityExport()
 	}
 	else
 	{
-		CXMLElement* pXML = new CXMLElement( NULL, _T("security") );
+		auto_ptr< CXMLElement > pXML( new CXMLElement( NULL, _T("security") ) );
 
 		pXML->AddAttribute( _T("xmlns"), CSecurity::xmlns );
 
@@ -508,12 +508,9 @@ void CSecurityWnd::OnSecurityExport()
 		strText = pXML->ToString( TRUE, TRUE );
 
 		int nBytes = WideCharToMultiByte( CP_ACP, 0, strText, strText.GetLength(), NULL, 0, NULL, NULL );
-		LPSTR pBytes = new CHAR[nBytes];
-		WideCharToMultiByte( CP_ACP, 0, strText, strText.GetLength(), pBytes, nBytes, NULL, NULL );
-		pFile.Write( pBytes, nBytes );
-		delete [] pBytes;
-		
-		delete pXML;
+		auto_ptr< CHAR > pBytes( new CHAR[ nBytes ] );
+		WideCharToMultiByte( CP_ACP, 0, strText, strText.GetLength(), pBytes.get(), nBytes, NULL, NULL );
+		pFile.Write( pBytes.get(), nBytes );
 	}
 
 	pFile.Close();

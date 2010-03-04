@@ -792,7 +792,7 @@ BOOL CDownloadTransferFTP::SendCommand(LPCTSTR /*args*/)
 
 	case ftpRETR_REST:
 		// Restarting from offset position
-		strLine.Format( _T("REST %d"), m_nOffset );
+		strLine.Format( _T("REST %I64u"), m_nOffset );
 		break;
 
 	case ftpRETR:

@@ -183,8 +183,9 @@ bool CShareazaFile::SplitStringToURLs(LPCTSTR pszURLs, CMapStringToFILETIME& oUr
 		if ( nPos > 6 && strURL.GetLength() > nPos + 1 &&
 			strURL.GetAt( nPos + 1 ) != '/' )
 		{
-			int nPort = 0;
-			_stscanf( strURL.Mid( nPos + 1 ), _T("%i"), &nPort );
+			int nPort;
+			if ( _stscanf( strURL.Mid( nPos + 1 ), _T("%i"), &nPort ) != 1 )
+				nPort = 0;
 			DWORD nAddress = inet_addr( CT2CA( strURL.Left( nPos ) ) );
 			if ( nPort > 0 && nPort <= USHRT_MAX && nAddress != INADDR_NONE &&
 				! Network.IsFirewalledAddress( (IN_ADDR*)&nAddress, TRUE ) &&

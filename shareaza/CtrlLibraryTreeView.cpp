@@ -935,8 +935,8 @@ CLibraryTreeItem* CLibraryTreeView::HitTest(CRect& rcClient, CPoint& pt, CLibrar
 
 		for ( CLibraryTreeItem::iterator pChild = pItem->begin(); pChild != pItem->end(); ++pChild )
 		{
-			CLibraryTreeItem* pItem = HitTest( rcClient, pt, &*pChild, point, pRect );
-			if ( pItem ) return pItem;
+			if ( CLibraryTreeItem* pHitItem = HitTest( rcClient, pt, &*pChild, point, pRect ) )
+				return pHitItem;
 			if ( pt.y >= rcClient.bottom + ITEM_HEIGHT ) break;
 		}
 

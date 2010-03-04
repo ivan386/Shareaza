@@ -200,10 +200,10 @@ void CUploadTipCtrl::OnPaint(CDC* pDC)
 	LoadString( strOf, IDS_GENERAL_OF );
 
 	strSpeed.Format( _T("%s %s %s (%s)"),
-		Settings.SmartSpeed( pUpload->GetMeasuredSpeed() ),
-		strOf,
-		Settings.SmartSpeed( pUpload->m_nBandwidth ),
-		Settings.SmartSpeed( pUpload->GetMaxSpeed() ) );
+		(LPCTSTR)Settings.SmartSpeed( pUpload->GetMeasuredSpeed() ),
+		(LPCTSTR)strOf,
+		(LPCTSTR)Settings.SmartSpeed( pUpload->m_nBandwidth ),
+		(LPCTSTR)Settings.SmartSpeed( pUpload->GetMaxSpeed() ) );
 
 	int nQueue = UploadQueues.GetPosition( pUpload, FALSE );
 	if ( m_pUploadFile != pUpload->m_pBaseFile || pUpload->m_nState == upsNull )
@@ -216,20 +216,20 @@ void CUploadTipCtrl::OnPaint(CDC* pDC)
 		{
 			LoadString( strText, IDS_TIP_NEXT );
 			strStatus.Format( _T("%s: %s"),
-				(LPCTSTR)pUpload->m_pQueue->m_sName, strText );
+				(LPCTSTR)pUpload->m_pQueue->m_sName, (LPCTSTR)strText );
 		}
 		else
 		{
 			LoadString( strText, IDS_TIP_ACTIVE );
 			strStatus.Format( _T("%s: %s"),
-				(LPCTSTR)pUpload->m_pQueue->m_sName, strText );
+				(LPCTSTR)pUpload->m_pQueue->m_sName, (LPCTSTR)strText );
 		}
 	}
 	else if ( nQueue > 0 )
 	{
 		strStatus.Format( _T("%s: %i %s %i"),
 			(LPCTSTR)pUpload->m_pQueue->m_sName,
-			nQueue, strOf, pUpload->m_pQueue->GetQueuedCount() );
+			nQueue, (LPCTSTR)strOf, pUpload->m_pQueue->GetQueuedCount() );
 	}
 	else
 	{

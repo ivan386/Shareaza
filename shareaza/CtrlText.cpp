@@ -366,11 +366,15 @@ void CTextCtrl::CopyText() const
 
 		CT2W pszWide( (LPCTSTR)str );
 		DWORD nSize = ( lstrlenW(pszWide) + 1 ) * sizeof(WCHAR);
-		HANDLE hMem = GlobalAlloc( GMEM_MOVEABLE|GMEM_DDESHARE, nSize );
-		LPVOID pMem = GlobalLock( hMem );
-		CopyMemory( pMem, pszWide, nSize );
-		GlobalUnlock( hMem );
-		SetClipboardData( CF_UNICODETEXT, hMem );
+		if ( HANDLE hMem = GlobalAlloc( GMEM_MOVEABLE|GMEM_DDESHARE, nSize ) )
+		{
+			if ( LPVOID pMem = GlobalLock( hMem ) )
+			{
+				CopyMemory( pMem, pszWide, nSize );
+				GlobalUnlock( hMem );
+				SetClipboardData( CF_UNICODETEXT, hMem );
+			}
+		}
 
 		CloseClipboard();
 	}

@@ -205,12 +205,12 @@ BOOL CLibraryWnd::OnCollection(const CString& sPath)
 			}
 
 			oLock.Lock();
-			if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( strTarget, FALSE, TRUE ) )
+			if ( CLibraryFile* pTargetFile = LibraryMaps.LookupFileByPath( strTarget, FALSE, TRUE ) )
 			{	//Collection is already in the collection folder
 
 				//Re-mount the collection
-				LibraryFolders.MountCollection( pFile->m_oSHA1, &pCollection );
-				pFolder = LibraryFolders.GetCollection( pFile->m_oSHA1 );
+				LibraryFolders.MountCollection( pTargetFile->m_oSHA1, &pCollection );
+				pFolder = LibraryFolders.GetCollection( pTargetFile->m_oSHA1 );
 			}
 			else
 			{	//Collection is not already in collection folder
@@ -228,9 +228,9 @@ BOOL CLibraryWnd::OnCollection(const CString& sPath)
 						pLibFolder->Scan();
 					}
 
-					if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( strTarget, FALSE, TRUE ) )
+					if ( CLibraryFile* pTargetFile1 = LibraryMaps.LookupFileByPath( strTarget, FALSE, TRUE ) )
 					{
-						pFolder = LibraryFolders.GetCollection( pFile->m_oSHA1 );
+						pFolder = LibraryFolders.GetCollection( pTargetFile1->m_oSHA1 );
 					}
 				}
 				else
@@ -248,11 +248,11 @@ BOOL CLibraryWnd::OnCollection(const CString& sPath)
 						AfxMessageBox( strMessage, MB_ICONINFORMATION );
 
 						oLock.Lock();
-						if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( strTarget, FALSE, TRUE ) )
+						if ( CLibraryFile* pTargetFile1 = LibraryMaps.LookupFileByPath( strTarget, FALSE, TRUE ) )
 						{	//Collection was already there.
 							//Re-mount the collection
-							LibraryFolders.MountCollection( pFile->m_oSHA1, &pCollection );
-							pFolder = LibraryFolders.GetCollection( pFile->m_oSHA1 );
+							LibraryFolders.MountCollection( pTargetFile1->m_oSHA1, &pCollection );
+							pFolder = LibraryFolders.GetCollection( pTargetFile1->m_oSHA1 );
 						}
 						else
 						{	//File of this name exists in the folder, but does not appear in the

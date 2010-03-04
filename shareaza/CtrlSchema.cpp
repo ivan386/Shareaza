@@ -122,9 +122,9 @@ void CSchemaCtrl::SetSchema(CSchemaPtr pSchema, BOOL bPromptOnly)
 		return;
 	}
 
-	for ( POSITION pos = pSchema->GetMemberIterator() ; pos ; )
+	for ( POSITION posSchema = pSchema->GetMemberIterator() ; posSchema ; )
 	{
-		CSchemaMember* pMember = pSchema->GetNextMember( pos );
+		CSchemaMember* pMember = pSchema->GetNextMember( posSchema );
 		
 		if ( bPromptOnly && ! pMember->m_bPrompt || pMember->m_bHidden ) continue;
 		
@@ -138,9 +138,9 @@ void CSchemaCtrl::SetSchema(CSchemaPtr pSchema, BOOL bPromptOnly)
 			pCombo->Create( WS_CHILD|WS_VISIBLE|WS_BORDER|WS_TABSTOP|CBS_DROPDOWN|
 				CBS_AUTOHSCROLL|WS_VSCROLL,	rc, this, IDC_METADATA_CONTROL );
 			
-			for ( POSITION pos = pMember->GetItemIterator() ; pos ; )
+			for ( POSITION posMember = pMember->GetItemIterator() ; posMember ; )
 			{
-				CString strSelection = pMember->GetNextItem( pos );
+				CString strSelection = pMember->GetNextItem( posMember );
 				pCombo->AddString( strSelection );
 			}
 			

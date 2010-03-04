@@ -285,7 +285,8 @@ void CDeleteFileDlg::OnDrawItem(int /*nIDCtl*/, LPDRAWITEMSTRUCT lpDrawItemStruc
 			( lpDrawItemStruct->itemState & ODS_SELECTED ) || bDisabled );
 	}
 
-	if ( ( lpDrawItemStruct->itemState & ODS_SELECTED ) == 0 )
+	if ( ( lpDrawItemStruct->itemState & ODS_SELECTED ) == 0 &&
+		nRating >= 0 && nRating <= 6 )
 	{
 		static COLORREF crRating[7] =
 		{

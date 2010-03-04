@@ -398,10 +398,10 @@ BOOL CMatchCtrl::LoadColumnState()
 	
 	for ( int nColumns = 0 ; m_wndHeader.GetItem( nColumns, &pItem ) ; nColumns++ )
 	{
-		if ( strWidths.GetLength() < 4 || strOrdering.GetLength() < 2 ) return FALSE;
-		
-		_stscanf( strWidths.Left( 4 ), _T("%x"), &pItem.cxy );
-		_stscanf( strOrdering.Left( 2 ), _T("%x"), &pItem.iOrder );
+		if ( strWidths.GetLength() < 4 || strOrdering.GetLength() < 2 ||
+			_stscanf( strWidths.Left( 4 ), _T("%x"), &pItem.cxy ) != 1 ||
+			_stscanf( strOrdering.Left( 2 ), _T("%x"), &pItem.iOrder ) != 1 )
+			return FALSE;
 		
 		strWidths = strWidths.Mid( 4 );
 		strOrdering = strOrdering.Mid( 2 );
@@ -937,9 +937,9 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 					strTemp = ppHit->m_sNick;
 
 					if ( ppHit->GetSources() > 1 )
-						_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), _T("%s+%u"), strTemp, ppHit->GetSources() - 1 );
+						_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), _T("%s+%u"), (LPCTSTR)strTemp, ppHit->GetSources() - 1 );
 					else
-						_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), _T("%s"), strTemp );
+						_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), _T("%s"), (LPCTSTR)strTemp );
 					szBuffer[ sizeof( szBuffer ) / sizeof( TCHAR ) - 1 ] = 0;
 				}
 				else if ( ( ppHit->m_nProtocol == PROTOCOL_ED2K ) && ( ppHit->m_bPush == TRI_TRUE ) )
@@ -948,9 +948,9 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 					strTemp.Format( _T("(%s)"), (LPCTSTR)CString( inet_ntoa( (IN_ADDR&)*ppHit->m_oClientID.begin() ) ) );
 
 					if ( ppHit->GetSources() > 1 )
-						_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), _T("%s+%u"), strTemp, ppHit->GetSources() - 1 );
+						_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), _T("%s+%u"), (LPCTSTR)strTemp, ppHit->GetSources() - 1 );
 					else
-						_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), _T("%s"), strTemp );
+						_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), _T("%s"), (LPCTSTR)strTemp );
 					szBuffer[ sizeof( szBuffer ) / sizeof( TCHAR ) - 1 ] = 0;
 				}
 				else if ( ppHit->m_pAddress.S_un.S_addr )
@@ -973,7 +973,7 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 					{
 						CString strSource, strText;
 						LoadSourcesString( strSource, pFile->m_nSources );
-						strText.Format( _T("(%u %s)"), pFile->m_nSources, strSource );
+						strText.Format( _T("(%u %s)"), pFile->m_nSources, (LPCTSTR)strSource );
 						_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), strText, pFile->m_nSources );
 						szBuffer[ sizeof( szBuffer ) / sizeof( TCHAR ) - 1 ] = 0;
 					}
@@ -989,7 +989,7 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 			{
 				CString strSource, strText;
 				LoadSourcesString( strSource, pFile->m_nSources );
-				strText.Format( _T("(%u %s)"), pFile->m_nSources, strSource );
+				strText.Format( _T("(%u %s)"), pFile->m_nSources, (LPCTSTR)strSource );
 				_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), strText, pFile->m_nSources );
 				szBuffer[ sizeof( szBuffer ) / sizeof( TCHAR ) - 1 ] = 0;
 			}

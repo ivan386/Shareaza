@@ -138,7 +138,6 @@ BOOL CLibraryTipCtrl::OnPrepare()
 	// Metadata
 
 	CSchemaPtr pSchema = pLibraryFile ? pLibraryFile->m_pSchema : NULL;
-	CString str, sData, sFormat;
 
 	m_pMetadata.Clear();
 
@@ -153,7 +152,7 @@ BOOL CLibraryTipCtrl::OnPrepare()
 
 	if ( pLibraryFile )
 	{
-		CString sFormat = LoadString( IDS_TIP_TODAYTOTAL );
+		CString sData, sFormat = LoadString( IDS_TIP_TODAYTOTAL );
 		sData.Format( sFormat, pLibraryFile->m_nHitsToday, pLibraryFile->m_nHitsTotal );
 		m_pMetadata.Add( LoadString( IDS_TIP_HITS ), sData );
 		sData.Format( sFormat, pLibraryFile->m_nUploadsToday, pLibraryFile->m_nUploadsTotal );

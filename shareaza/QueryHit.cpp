@@ -1637,7 +1637,7 @@ void CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, BOOL bUni
 		}
 		else if ( ( pTag.m_nKey == ED2K_FT_BITRATE ) )
 		{	//Bitrate- new style
-			strBitrate.Format( _T("%lu"), pTag.m_nValue );
+			strBitrate.Format( _T("%I64u"), pTag.m_nValue );
 		}
 		else if  ( ( pTag.m_nKey == ED2K_FT_CODEC ) )
 		{	//Codec - new style
@@ -1694,7 +1694,7 @@ void CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, BOOL bUni
 				  ( pTag.m_nType == ED2K_TAG_INT ) &&
 				  ( pTag.m_sKey == _T("bitrate") ) )
 		{	//Bitrate- old style			
-			strBitrate.Format( _T("%lu"), pTag.m_nValue );
+			strBitrate.Format( _T("%I64u"), pTag.m_nValue );
 		}
 		else if ( ( pTag.m_nKey == 0 ) &&
 				  ( pTag.m_nType == ED2K_TAG_STRING ) &&

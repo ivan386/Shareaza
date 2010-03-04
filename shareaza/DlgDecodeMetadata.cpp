@@ -111,9 +111,9 @@ void CDecodeMetadataDlg::OnOK()
 	// close dialog and perform decoding in background
 	CSkinDialog::OnOK();
 
-	for ( POSITION pos = m_pFiles.GetHeadPosition() ; pos ; )
+	for ( POSITION posFiles = m_pFiles.GetHeadPosition() ; posFiles ; )
 	{
-		DWORD nIndex = m_pFiles.GetNext( pos );
+		DWORD nIndex = m_pFiles.GetNext( posFiles );
 		
 		CXMLElement* pXML;
 		CLibraryFile* pFile;
@@ -129,9 +129,9 @@ void CDecodeMetadataDlg::OnOK()
 			pXML = pFile->m_pMetadata->Clone();
 		}
 
-		for ( POSITION pos = pXML->GetAttributeIterator() ; pos ; )
+		for ( POSITION posXML = pXML->GetAttributeIterator() ; posXML ; )
 		{
-			CXMLAttribute* pAttribute = pXML->GetNextAttribute( pos );
+			CXMLAttribute* pAttribute = pXML->GetNextAttribute( posXML );
 
 			CString strAttribute = pAttribute->GetValue();
 			GetEncodedText( strAttribute, m_nMethod );

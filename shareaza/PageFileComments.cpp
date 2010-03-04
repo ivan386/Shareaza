@@ -156,7 +156,8 @@ void CFileCommentsPage::OnDrawItem(int /*nIDCtl*/, LPDRAWITEMSTRUCT lpDrawItemSt
 			( lpDrawItemStruct->itemState & ODS_SELECTED ) );
 	}
 
-	if ( ( lpDrawItemStruct->itemState & ODS_SELECTED ) == 0 )
+	if ( ( lpDrawItemStruct->itemState & ODS_SELECTED ) == 0 &&
+		nRating >= 0 && nRating <= 6 )
 	{
 		static COLORREF crRating[7] =
 		{

@@ -323,7 +323,7 @@ void CLibraryFolderCtrl::OnLButtonDown(UINT nFlags, CPoint point)
 	}
 	else if ( ( nFlags & MK_SHIFT ) && m_bMultiSelect )
 	{
-		HTREEITEM hItem = HitTest( point );
+		hItem = HitTest( point );
 
 		if ( ! m_hFirstSelected ) m_hFirstSelected = GetFirstSelectedItem();
 

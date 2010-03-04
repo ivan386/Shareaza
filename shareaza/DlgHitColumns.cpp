@@ -71,9 +71,9 @@ BOOL CSchemaColumnsDlg::OnInitDialog()
 
 	for ( int nMember = 0 ; nMember < m_wndColumns.GetItemCount() ; nMember++ )
 	{
-		BOOL bChecked = m_pColumns.Find(
+		bool bChecked = m_pColumns.Find(
 			reinterpret_cast< CSchemaMember* >( m_wndColumns.GetItemData( nMember ) ) ) != NULL;
-		m_wndColumns.SetItemState( nMember, INDEXTOSTATEIMAGEMASK( bChecked + 1 ), LVIS_STATEIMAGEMASK );
+		m_wndColumns.SetItemState( nMember, INDEXTOSTATEIMAGEMASK( bChecked ? 1 : 0 ), LVIS_STATEIMAGEMASK );
 	}
 
 	return TRUE;

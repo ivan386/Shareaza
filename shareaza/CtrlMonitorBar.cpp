@@ -248,7 +248,7 @@ void CMonitorBarCtrl::PaintHistory(CDC* pDC, CRect* prc)
 			DWORD nRate = max( Settings.Connection.InSpeed, Settings.Connection.OutSpeed );
 			nRate = nRate * Settings.Live.BandwidthScale / 100;
 			str.Format( _T("%s (%i%%)"),
-				Settings.SmartSpeed( nRate, Kilobits ),
+				(LPCTSTR)Settings.SmartSpeed( nRate, Kilobits ),
 				Settings.Live.BandwidthScale );
 		}
 
@@ -363,7 +363,6 @@ void CMonitorBarCtrl::OnLButtonDown(UINT nFlags, CPoint point)
 	{
 		MSG* pMsg = &AfxGetThreadState()->m_msgCur;
 		CRect rcTrack( &m_rcTrack );
-		CPoint point;
 
 		ClientToScreen( &rcTrack );
 		ClipCursor( &rcTrack );
@@ -384,10 +383,11 @@ void CMonitorBarCtrl::OnLButtonDown(UINT nFlags, CPoint point)
 				break;
 			}
 
-			GetCursorPos( &point );
-			ScreenToClient( &point );
+			CPoint pt;
+			GetCursorPos( &pt );
+			ScreenToClient( &pt );
 
-			int nPosition = (DWORD)( 110.0f * (float)( point.x - rcTrack.left ) / (float)rcTrack.Width() );
+			int nPosition = (DWORD)( 110.0f * (float)( pt.x - rcTrack.left ) / (float)rcTrack.Width() );
 			if ( nPosition < 0 ) nPosition = 0;
 			else if ( nPosition >= 105 ) nPosition = 101;
 			else if ( nPosition >= 100 ) nPosition = 100;

@@ -201,7 +201,8 @@ public:\
 		METHOD_PROLOGUE( class_name, DropTarget ) \
 		DumpIDataObject( pDataObj ); \
 		m_pDataObj = pDataObj; \
-		m_spdth.CoCreateInstance( CLSID_DragDropHelper ); \
+		HRESULT hr = m_spdth.CoCreateInstance( CLSID_DragDropHelper ); \
+		if ( FAILED( hr ) ) return hr; \
 		POINT point = { ptl.x, ptl.y }; \
 		if ( ! pThis->OnDrop( m_pDataObj, grfKeyState, point, pdwEffect, FALSE ) ) \
 			*pdwEffect = DROPEFFECT_NONE; \
@@ -214,7 +215,7 @@ public:\
 		POINT point = { ptl.x, ptl.y }; \
 		if ( ! pThis->OnDrop( m_pDataObj, grfKeyState, point, pdwEffect, FALSE ) ) \
 			*pdwEffect = DROPEFFECT_NONE; \
-		if (m_spdth) m_spdth->DragOver( &point, *pdwEffect ); \
+		if ( m_spdth ) m_spdth->DragOver( &point, *pdwEffect ); \
 		return S_OK; \
 	} \
 	STDMETHODIMP class_name::XDropTarget::DragLeave() \

@@ -213,10 +213,10 @@ BOOL CUploadsCtrl::LoadColumnState()
 	
 	for ( int nColumns = 0 ; m_wndHeader.GetItem( nColumns, &pItem ) ; nColumns++ )
 	{
-		if ( strWidths.GetLength() < 4 || strOrdering.GetLength() < 2 ) return FALSE;
-		
-		_stscanf( strWidths.Left( 4 ), _T("%x"), &pItem.cxy );
-		_stscanf( strOrdering.Left( 2 ), _T("%x"), &pItem.iOrder );
+		if ( strWidths.GetLength() < 4 || strOrdering.GetLength() < 2 ||
+			_stscanf( strWidths.Left( 4 ), _T("%x"), &pItem.cxy ) != 1 ||
+			_stscanf( strOrdering.Left( 2 ), _T("%x"), &pItem.iOrder ) != 1 )
+			return FALSE;
 		
 		strWidths = strWidths.Mid( 4 );
 		strOrdering = strOrdering.Mid( 2 );
@@ -1067,7 +1067,7 @@ void CUploadsCtrl::PaintFile(CDC& dc, const CRect& rcRow, CUploadQueue* /*pQueue
 			{
 				CString strQ;
 				LoadString( strQ, IDS_STATUS_Q );
-				strText.Format( _T("%s %i"), strQ, nPosition );
+				strText.Format( _T("%s %i"), (LPCTSTR)strQ, nPosition );
 			}
 			else
 			{
@@ -1117,23 +1117,23 @@ void CUploadsCtrl::PaintFile(CDC& dc, const CRect& rcRow, CUploadQueue* /*pQueue
 		}
 		
 		int nWidth		= dc.GetTextExtent( strText ).cx;
-		int nPosition	= 0;
+		int nPos	= 0;
 		
 		switch ( pColumn.fmt & LVCFMT_JUSTIFYMASK )
 		{
 		default:
-			nPosition = ( rcCell.left + 4 );
+			nPos = ( rcCell.left + 4 );
 			break;
 		case LVCFMT_CENTER:
-			nPosition = ( ( rcCell.left + rcCell.right ) / 2 ) - ( nWidth / 2 );
+			nPos = ( ( rcCell.left + rcCell.right ) / 2 ) - ( nWidth / 2 );
 			break;
 		case LVCFMT_RIGHT:
-			nPosition = ( rcCell.right - 4 - nWidth );
+			nPos = ( rcCell.right - 4 - nWidth );
 			break;
 		}
 		
 		dc.SetBkColor( crBack );
-		dc.ExtTextOut( nPosition, rcCell.top + 2, ETO_CLIPPED|ETO_OPAQUE,
+		dc.ExtTextOut( nPos, rcCell.top + 2, ETO_CLIPPED|ETO_OPAQUE,
 			&rcCell, strText, NULL );
 	}
 	

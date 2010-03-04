@@ -290,12 +290,12 @@ void CDownloadMonitorDlg::OnTimer(UINT_PTR /*nIDEvent*/)
 		if ( Settings.General.LanguageRTL )
 		{
 			strText.Format( _T("%s %s %.2f%% : Shareaza"),
-				(LPCTSTR)m_pDownload->m_sName, strOf, m_pDownload->GetProgress() );
+				(LPCTSTR)m_pDownload->m_sName, (LPCTSTR)strOf, m_pDownload->GetProgress() );
 		}
 		else
 		{
 			strText.Format( _T("%.2f%% %s %s : Shareaza"),
-				m_pDownload->GetProgress(), strOf, (LPCTSTR)m_pDownload->m_sName );
+				m_pDownload->GetProgress(), (LPCTSTR)strOf, (LPCTSTR)m_pDownload->m_sName );
 		}
 	}
 	else
@@ -413,7 +413,7 @@ void CDownloadMonitorDlg::OnTimer(UINT_PTR /*nIDEvent*/)
 		strText = Settings.SmartSpeed( m_pDownload->GetAverageSpeed() );
 		Update( &m_wndSpeed, strText );
 
-		strText.Format( _T("%i %s %i"), nTransferCount, strOf, nSourceCount );
+		strText.Format( _T("%i %s %i"), nTransferCount, (LPCTSTR)strOf, nSourceCount );
 		if ( Settings.General.LanguageRTL ) strText = _T("\x202B") + strText;
 		Update( &m_wndSources, strText );
 	}
@@ -442,16 +442,16 @@ void CDownloadMonitorDlg::OnTimer(UINT_PTR /*nIDEvent*/)
 		{
 			strText.Format( _T("(%.2f%%) %s %s %s"),
 				m_pDownload->GetProgress(),
-				Settings.SmartVolume( m_pDownload->m_nSize ),
-				strOf,
-				Settings.SmartVolume( m_pDownload->GetVolumeComplete() ) );
+				(LPCTSTR)Settings.SmartVolume( m_pDownload->m_nSize ),
+				(LPCTSTR)strOf,
+				(LPCTSTR)Settings.SmartVolume( m_pDownload->GetVolumeComplete() ) );
 		}
 		else
 		{
 			strText.Format( _T("%s %s %s (%.2f%%)"),
-				Settings.SmartVolume( m_pDownload->GetVolumeComplete() ),
-				strOf,
-				Settings.SmartVolume( m_pDownload->m_nSize ),
+				(LPCTSTR)Settings.SmartVolume( m_pDownload->GetVolumeComplete() ),
+				(LPCTSTR)strOf,
+				(LPCTSTR)Settings.SmartVolume( m_pDownload->m_nSize ),
 				m_pDownload->GetProgress() );
 		}
 		Update( &m_wndVolume, strText );

@@ -652,7 +652,7 @@ void CMediaFrame::PaintStatus(CDC& dc, CRect& rcBar)
 	if ( CMetaItem* pItem = m_pMetadata.GetFirst() )
 	{
 		dc.SelectObject( &m_pFontKey );
-		CString str = Settings.General.LanguageRTL ? ':' + pItem->m_sKey : pItem->m_sKey + ':';
+		str				= Settings.General.LanguageRTL ? ':' + pItem->m_sKey : pItem->m_sKey + ':';
 		sz				= dc.GetTextExtent( str );
 		rcPart.left		= rcBar.left + 20;
 		rcPart.right	= rcPart.left + sz.cx + 8;
@@ -745,7 +745,7 @@ BOOL CMediaFrame::PaintStatusMicro(CDC& dc, CRect& rcBar)
 
 	if ( CMetaItem* pItem = m_pMetadata.GetFirst() )
 	{
-		CString str = Settings.General.LanguageRTL ? ':' + pItem->m_sKey : pItem->m_sKey + ':';
+		str				= Settings.General.LanguageRTL ? ':' + pItem->m_sKey : pItem->m_sKey + ':';
 		sz				= pMemDC->GetTextExtent( str );
 		rcPart.left		= rcStatus.left;
 		rcPart.right	= rcPart.left + sz.cx + 2;

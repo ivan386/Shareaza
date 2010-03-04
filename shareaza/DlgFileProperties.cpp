@@ -109,7 +109,6 @@ BOOL CFilePropertiesDlg::OnInitDialog()
 
 	if ( ! Settings.LoadWindow( _T("CFilePropertiesDlg"), this ) )
 	{
-		CRect rc;
 		GetWindowRect( &rc );
 		rc.bottom++;
 		MoveWindow( &rc );

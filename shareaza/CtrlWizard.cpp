@@ -446,9 +446,9 @@ BOOL CWizardCtrl::MakeControls(CXMLElement* pBase, std::vector< CLibraryFile* > 
 
 	if ( pTemplate ) 
 	{
-		for ( POSITION pos = pTemplate->GetElementIterator() ; pos ; )
+		for ( POSITION posTemplate = pTemplate->GetElementIterator() ; posTemplate ; )
 		{
-			CXMLElement* pLangGroup = pTemplate->GetNextElement( pos );
+			CXMLElement* pLangGroup = pTemplate->GetNextElement( posTemplate );
 			CString strLang = pLangGroup->GetAttributeValue( _T("language") );
 
 			// Collect only english and language specific data
@@ -460,9 +460,9 @@ BOOL CWizardCtrl::MakeControls(CXMLElement* pBase, std::vector< CLibraryFile* > 
 				if ( strLang != "en" ) Clear();
 
 				int nItemCount = 0;
-				for ( POSITION pos = pLangGroup->GetElementIterator() ; pos ; )
+				for ( POSITION posLangGroup = pLangGroup->GetElementIterator() ; posLangGroup ; )
 				{
-					CXMLElement* pItem = pLangGroup->GetNextElement( pos );
+					CXMLElement* pItem = pLangGroup->GetNextElement( posLangGroup );
 					if ( pItem->IsNamed( _T("item") ) )
 					{
 						CString strType = pItem->GetAttributeValue( _T("type") );
@@ -687,7 +687,7 @@ BOOL CWizardCtrl::PrepareDoc(CLibraryFile* pFile, LPCTSTR pszTemplate)
 			}
 			else
 			{
-				strOld.Format( _T("$meta:%s$"), str );
+				strOld.Format( _T("$meta:%s$"), (LPCTSTR)str );
 				ReplaceNoCase( strDoc, strOld, strReplace );
 			}
 		}
@@ -703,7 +703,7 @@ BOOL CWizardCtrl::PrepareDoc(CLibraryFile* pFile, LPCTSTR pszTemplate)
 
 	if ( pFile->m_nSize )
 	{
-		strSize.Format( _T("%d"), pFile->m_nSize ); // bytes
+		strSize.Format( _T("%I64u"), pFile->m_nSize ); // bytes
 		ReplaceNoCase( strDoc, _T("$meta:sizebytes$"), strSize );
 	}
 
@@ -846,19 +846,9 @@ BOOL CWizardCtrl::OnCommand(WPARAM wParam, LPARAM lParam)
 		{
 			// find default color
 			int r, g, b;
-			int nLen = pEdit->GetWindowTextLength();
-			LPTSTR pszSource = new TCHAR[ nLen + 1 ]; 
-			CHAR* pszDest = new CHAR[ nLen + 1 ];
-
-			pEdit->GetWindowText( pszSource, nLen + 1 );
-			for ( unsigned int nLen = 0; nLen < _tcslen( pszSource ); nLen++ )
-				pszDest[nLen] = (CHAR) pszSource[nLen];
-			
-			COLORREF crColor = sscanf( pszDest, "#%2x%2x%2x", &r, &g, &b ) != 3 ? 
-								RGB(0, 0, 0) : RGB(r, g, b);
-
-			delete [] pszSource;
-			delete [] pszDest;
+			pEdit->GetWindowText( str );
+			COLORREF crColor = _stscanf( str, _T("#%2x%2x%2x"), &r, &g, &b ) != 3 ? 
+				RGB(0, 0, 0) : RGB(r, g, b);
 
 			CColorDialog dlg( crColor, CC_ANYCOLOR|CC_FULLOPEN|CC_RGBINIT, this );
 			if ( dlg.DoModal() == IDOK )

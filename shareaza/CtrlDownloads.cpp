@@ -242,10 +242,10 @@ BOOL CDownloadsCtrl::LoadColumnState()
 
 	for ( int nColumns = 0 ; m_wndHeader.GetItem( nColumns, &pItem ) ; nColumns++ )
 	{
-		if ( strWidths.GetLength() < 4 || strOrdering.GetLength() < 2 ) return FALSE;
-
-		_stscanf( strWidths.Left( 4 ), _T("%x"), &pItem.cxy );
-		_stscanf( strOrdering.Left( 2 ), _T("%x"), &pItem.iOrder );
+		if ( strWidths.GetLength() < 4 || strOrdering.GetLength() < 2 ||
+			_stscanf( strWidths.Left( 4 ), _T("%x"), &pItem.cxy ) != 1 ||
+			_stscanf( strOrdering.Left( 2 ), _T("%x"), &pItem.iOrder ) != 1 )
+			return FALSE;
 
 		strWidths = strWidths.Mid( 4 );
 		strOrdering = strOrdering.Mid( 2 );
@@ -415,13 +415,12 @@ void CDownloadsCtrl::SelectAll(CDownload* /*pDownload*/, CDownloadSource* /*pSou
 		CDownload* pDownload = Downloads.GetNext( pos );
 
 		// If a download is selected, select all downloads
-		if ( pDownload != NULL && pDownload->m_bSelected )
+		if ( pDownload->m_bSelected )
 		{
 			for ( POSITION pos2 = Downloads.GetIterator() ; pos2 != NULL ; )
 			{
-				CDownload* pDownload = Downloads.GetNext( pos2 );
-
-				if ( pDownload != NULL ) pDownload->m_bSelected = TRUE;
+				if ( CDownload* pSelectedDownload = Downloads.GetNext( pos2 ) )
+					pSelectedDownload->m_bSelected = TRUE;
 			}
 
 			bSelected = TRUE;
@@ -1159,12 +1158,12 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 			else if ( nSources == nTotalSources )
 			{
 				LoadSourcesString( strSource,  nSources );
-				strText.Format( _T("(%i %s)"), nSources, strSource );
+				strText.Format( _T("(%i %s)"), nSources, (LPCTSTR)strSource );
 			}
 			else
 			{
 				LoadSourcesString( strSource,  nTotalSources, true );
-				strText.Format( _T("(%i/%i %s)"), nSources, nTotalSources, strSource );
+				strText.Format( _T("(%i/%i %s)"), nSources, nTotalSources, (LPCTSTR)strSource );
 			}
 			break;
 		case DOWNLOAD_COLUMN_DOWNLOADED:
@@ -1298,7 +1297,7 @@ void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownlo
 			{
 				strText.Format( _T("%lu@%s:%u"),
 					pSource->m_pAddress.S_un.S_addr,
-					CString( inet_ntoa( pSource->m_pServerAddress ) ),
+					(LPCTSTR)CString( inet_ntoa( pSource->m_pServerAddress ) ),
 					pSource->m_nServerPort );
 			}
 
@@ -1306,7 +1305,7 @@ void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownlo
 			else if ( ! pSource->IsIdle() )
 			{
 				strText.Format( _T("%s:%u"),
-					pSource->GetAddress(),
+					(LPCTSTR)pSource->GetAddress(),
 					ntohs( pSource->GetPort() ) );
 			}
 
@@ -1314,7 +1313,7 @@ void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownlo
 			else
 			{
 				strText.Format( _T("%s:%u"),
-					CString( inet_ntoa( pSource->m_pAddress ) ),
+					(LPCTSTR)CString( inet_ntoa( pSource->m_pAddress ) ),
 					pSource->m_nPort );
 			}
 
@@ -1973,9 +1972,9 @@ void CDownloadsCtrl::OnLButtonDown(UINT nFlags, CPoint point)
 				{
 					for ( POSITION posSource = pDownload->GetIterator(); posSource ; )
 					{
-						CDownloadSource* pSource = pDownload->GetNext( posSource );
+						CDownloadSource* pDownloadSource = pDownload->GetNext( posSource );
 
-						pSource->m_bSelected = FALSE;
+						pDownloadSource->m_bSelected = FALSE;
 					}
 				}
 				
@@ -2051,9 +2050,9 @@ void CDownloadsCtrl::OnLButtonDblClk(UINT nFlags, CPoint point)
 				{
 					for ( POSITION posSource = pDownload->GetIterator(); posSource ; )
 					{
-						CDownloadSource* pSource = pDownload->GetNext( posSource );
+						CDownloadSource* pDownloadSource = pDownload->GetNext( posSource );
 
-						pSource->m_bSelected = FALSE;
+						pDownloadSource->m_bSelected = FALSE;
 					}
 				}
 				
