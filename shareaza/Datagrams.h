@@ -1,7 +1,7 @@
 //
 // Datagrams.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -165,7 +165,7 @@ protected:
 	BOOL	OnKHL(SOCKADDR_IN* pHost, CG2Packet* pPacket);
 	BOOL	OnKHLA(SOCKADDR_IN* pHost, CG2Packet* pPacket);
 	BOOL	OnKHLR(SOCKADDR_IN* pHost, CG2Packet* pPacket);
-
+	BOOL	OnVendor(SOCKADDR_IN* pHost, CG1Packet* pPacket);
 };
 
 extern CDatagrams Datagrams;

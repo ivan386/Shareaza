@@ -1,7 +1,7 @@
 //
 // Datagrams.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -996,13 +996,18 @@ BOOL CDatagrams::OnPacket(SOCKADDR_IN* pHost, CG1Packet* pPacket)
 
 	switch ( pPacket->m_nType )
 	{
-		case G1_PACKET_PING:
-			return OnPing( pHost, pPacket );
-		case G1_PACKET_PONG:
-			return OnPong( pHost, pPacket );
-		default:
-			pPacket->Debug( CString( _T("Received unexpected UDP packet from ") ) + 
-				CString( inet_ntoa( pHost->sin_addr ) ) );
+	case G1_PACKET_PING:
+		return OnPing( pHost, pPacket );
+	case G1_PACKET_PONG:
+		return OnPong( pHost, pPacket );
+	case G1_PACKET_VENDOR:
+		return OnVendor( pHost, pPacket );
+	default:
+		CString tmp;
+		tmp.Format( _T("Received unexpected UDP packet from %s:%u"),
+			(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ),
+			htons( pHost->sin_port ) );
+		pPacket->Debug( tmp );
 	}
 
 	return TRUE;
@@ -1064,8 +1069,11 @@ BOOL CDatagrams::OnPacket(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 	case G2_PACKET_KHL:
 		return OnKHL( pHost, pPacket );
 	default:
-		pPacket->Debug( CString( _T("Received unexpected UDP packet from ") ) + 
-			CString( inet_ntoa( pHost->sin_addr ) ) );
+		CString tmp;
+		tmp.Format( _T("Received unexpected UDP packet from %s:%u"),
+			(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ),
+			htons( pHost->sin_port ) );
+		pPacket->Debug( tmp );
 	}
 
 	return TRUE;
@@ -2049,6 +2057,38 @@ BOOL CDatagrams::OnKHLR(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 	pKHLA->WriteLongLE( pHost->sin_addr.S_un.S_addr );	// 4
 
 	Send( pHost, pKHLA );
+
+	return TRUE;
+}
+
+BOOL CDatagrams::OnVendor(SOCKADDR_IN* pHost, CG1Packet* pPacket)
+{
+	// If the packet payload is smaller than 8 bytes, or settings don't allow vendor messages
+	if ( pPacket->m_nLength < 8 || ! Settings.Gnutella1.VendorMsg )
+	{
+		Statistics.Current.Gnutella1.Dropped++;
+		return TRUE;
+	}
+
+	// Read the vendor, function, and version numbers from the packet payload
+	DWORD nVendor  = pPacket->ReadLongBE();  // 4 bytes, vendor code in ASCII characters, like "RAZA" (do)
+	WORD nFunction = pPacket->ReadShortLE(); // 2 bytes, function (do)
+	WORD nVersion  = pPacket->ReadShortLE(); // 2 bytes, version (do)
+
+	if ( nVendor == 'LIME' )
+	{
+		if ( nFunction == 23 && nVersion == 2 )
+		{
+			// TODO: HEAD ping
+			return TRUE;
+		}
+	}
+
+	CString tmp;
+	tmp.Format( _T("Received vendor packet from %s:%u Function: %u Version: %u"),
+		(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ), htons( pHost->sin_port ),
+		nFunction, nVersion );
+	pPacket->Debug( tmp );
 
 	return TRUE;
 }
