@@ -1,7 +1,7 @@
 //
 // Connection.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -57,6 +57,8 @@ public:
 protected:
 	// Class that looks like CBuffer* but with syncronization
 	typedef CLocked< CBuffer*, CCriticalSectionPtr > CLockedBuffer;
+
+	void LogOutgoing();
 
 private:
 	CCriticalSectionPtr	m_pInputSection;

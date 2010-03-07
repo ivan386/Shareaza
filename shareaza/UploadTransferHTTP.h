@@ -1,7 +1,7 @@
 //
 // UploadTransferHTTP.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_UPLOADTRANSFERHTTP_H__FFC5B664_6827_41EC_87E2_033318A36E0A__INCLUDED_)
-#define AFX_UPLOADTRANSFERHTTP_H__FFC5B664_6827_41EC_87E2_033318A36E0A__INCLUDED_
-
 #pragma once
 
 #include "UploadTransfer.h"
@@ -35,12 +32,14 @@ class CED2K;
 
 class CUploadTransferHTTP : public CUploadTransfer
 {
-// Construction
 public:
 	CUploadTransferHTTP();
 	virtual ~CUploadTransferHTTP();
 
-// Attributes
+	inline BOOL		IsBackwards() const { return m_bBackwards; }
+
+	virtual void	AttachTo(CConnection* pConnection);
+
 protected:
 	CString		m_sRequest;
 	DWORD		m_tRequest;
@@ -60,16 +59,11 @@ protected:
 	// 3 - Mixed G1/G2
 	int			m_nGnutella;
 	int			m_nReaskMultiplier; //Last re-ask time multiplier used
-protected:
 	BOOL		m_bTigerTree;
 	BOOL		m_bMetadata;
 	CString		m_sLocations;
 	CString		m_sRanges;
 
-// Operations
-public:
-	virtual void	AttachTo(CConnection* pConnection);
-protected:
 	BOOL	ReadRequest();
 	BOOL	RequestSharedFile(CLibraryFile* pFile, CSingleLock& oLibraryLock);
 	BOOL	RequestPartialFile(CDownload* pFile);
@@ -78,7 +72,7 @@ protected:
 	BOOL	RequestMetadata(CXMLElement* pMetadata);
 	BOOL	RequestPreview(CLibraryFile* pFile, CSingleLock& oLibraryLock);
 	BOOL	RequestHostBrowse();
-protected:
+
 	BOOL	IsNetworkDisabled();
 	BOOL	QueueRequest();
 	BOOL	OpenFileSendHeaders();
@@ -87,16 +81,11 @@ protected:
 	void	OnCompleted();
 	void	SendResponse(UINT nResourceID, BOOL bFileHeaders = FALSE);
 	void	GetNeighbourList(CString& strOutput);
-protected:
+
 	virtual BOOL	OnRun();
 	virtual void	OnDropped();
 	virtual BOOL	OnRead();
 	virtual BOOL	OnWrite();
 	virtual BOOL	OnHeaderLine(CString& strHeader, CString& strValue);
 	virtual BOOL	OnHeadersComplete();
-
-public:
-	inline BOOL IsBackwards() const { return m_bBackwards; }
 };
-
-#endif // !defined(AFX_UPLOADTRANSFERHTTP_H__FFC5B664_6827_41EC_87E2_033318A36E0A__INCLUDED_)

@@ -1,7 +1,7 @@
 //
 // DownloadTransferHTTP.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -462,14 +462,7 @@ BOOL CDownloadTransferHTTP::SendRequest()
 		}
 	}
 
-	{
-		CLockedBuffer pOutput( GetOutput() );
-		if ( pOutput->m_nLength )
-		{
-			CStringA msg( (const char*)pOutput->m_pBuffer, pOutput->m_nLength );
-			theApp.Message( MSG_DEBUG | MSG_FACILITY_OUTGOING, _T("%s << DOWNLOAD REQUEST: %s"), (LPCTSTR)m_sAddress, (LPCTSTR)CA2T( msg ) );
-		}
-	}
+	LogOutgoing();
 	
 	Write( _P("\r\n") );
 	
