@@ -3184,7 +3184,9 @@ class independent_group_base : public match_group_base<IterT>
         // be modified by the lookahead.
         if( m_extent.second )
         {
-            prgbr = static_cast<backref_tag<IterT>*>( alloca( m_extent.second * sizeof( backref_tag<IterT> ) ) );
+            prgbr = static_cast<backref_tag<IterT>*>( malloc( m_extent.second * sizeof( backref_tag<IterT> ) ) );
+			if ( ! prgbr )
+				return false;
             std::uninitialized_copy(
                 param.m_prgbackrefs + m_extent.first,
                 param.m_prgbackrefs + m_extent.first + m_extent.second,
@@ -3479,7 +3481,9 @@ class lookbehind_assertion : public independent_group_base<IterT>
         // be modified by the lookbehind.
         if( this->m_extent.second )
         {
-            prgbr = static_cast<backref_tag<IterT>*>( alloca( this->m_extent.second * sizeof( backref_tag<IterT> ) ) );
+            prgbr = static_cast<backref_tag<IterT>*>( malloc( this->m_extent.second * sizeof( backref_tag<IterT> ) ) );
+			if ( ! prgbr )
+				return false;
             std::uninitialized_copy(
                 param.m_prgbackrefs + this->m_extent.first,
                 param.m_prgbackrefs + this->m_extent.first + this->m_extent.second,
@@ -4426,7 +4430,9 @@ class match_recurse : public sub_expr<IterT>
             return this->recursive_match_next_( param, icur, CStringsT() );
 
         // copy the backref vector onto the stack
-        IterT * prgci = static_cast<IterT*>( alloca( param.m_cbackrefs * sizeof( IterT ) ) );
+        IterT * prgci = static_cast<IterT*>( malloc( param.m_cbackrefs * sizeof( IterT ) ) );
+		if ( ! prgci )
+			return false;
         save_backrefs<IterT>( param.m_prgbackrefs, param.m_prgbackrefs + param.m_cbackrefs, prgci );
 
         // Recurse.
