@@ -182,7 +182,6 @@ namespace Hashes
 		template<Encoding encoding>
 		bool fromUrn(const wchar* input)
 		{
-			ASSERT( input );
 			size_t inputLen = _tcslen( input );
 			for ( size_t i = 0; i < numUrns; ++i )
 			{

@@ -525,7 +525,6 @@ public:
 	inline void Delete(CPacket* pPacket)
 	{
 		// Make sure the pointer points to a packet, and that packet doesn't still have a reference count
-		ASSERT( pPacket != NULL );
 		ASSERT( pPacket->m_nReference == 0 );
 
 		// Make sure this is the only thread accessing this CPacketPool object at this time

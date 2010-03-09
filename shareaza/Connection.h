@@ -113,7 +113,6 @@ public:
 	{
 		CQuickLock oOutputLock( *m_pOutputSection );
 
-		ASSERT( m_pOutput );
 		return m_pOutput->m_nLength;
 	}
 
@@ -121,7 +120,6 @@ public:
 	{
 		CQuickLock oOutputLock( *m_pInputSection );
 
-		ASSERT( m_pInput );
 		return m_pInput->m_nLength;
 	}
 
@@ -129,7 +127,6 @@ public:
 	{
 		CQuickLock oOutputLock( *m_pOutputSection );
 
-		ASSERT( m_pOutput );
 		m_pOutput->AddReversed( pData, nLength );
 	}
 
@@ -137,7 +134,6 @@ public:
 	{
 		CQuickLock oOutputLock( *m_pOutputSection );
 
-		ASSERT( m_pOutput );
 		m_pOutput->Add( pData, nLength );
 	}
 
@@ -145,7 +141,6 @@ public:
 	{
 		CQuickLock oOutputLock( *m_pOutputSection );
 
-		ASSERT( m_pOutput );
 		m_pOutput->Print( strData, nCodePage );
 	}
 
@@ -153,7 +148,6 @@ public:
 	{
 		CQuickLock oOutputLock( *m_pOutputSection );
 
-		ASSERT( m_pOutput );
 		return m_pOutput->AddBuffer( pBuffer );
 	}
 
@@ -161,7 +155,6 @@ public:
 	{
 		CQuickLock oOutputLock( *m_pOutputSection );
 
-		ASSERT( m_pOutput );
 		CBuffer pBuffer;
 		pPacket->ToBuffer( &pBuffer );
 		Write( &pBuffer );
@@ -179,7 +172,6 @@ public:
 	{
 		CQuickLock oOutputLock( *m_pOutputSection );
 
-		ASSERT( m_pOutput );
 		m_pOutput->Add( oHash );
 	}
 
@@ -195,7 +187,6 @@ public:
 	{
 		CQuickLock oInputLock( *m_pInputSection );
 
-		ASSERT( m_pInput );
 		m_pInput->Read( oHash );
 	}
 
@@ -203,7 +194,6 @@ public:
 	{
 		CQuickLock oInputLock( *m_pInputSection );
 
-		ASSERT( m_pInput );
 		return m_pInput->ReadLine( strData, bPeek, nCodePage );
 	}
 
@@ -211,7 +201,6 @@ public:
 	{
 		CQuickLock oInputLock( *m_pInputSection );
 
-		ASSERT( m_pInput );
 		return m_pInput->Remove( nLength );
 	}
 
@@ -219,7 +208,6 @@ public:
 	{
 		CQuickLock oInputLock( *m_pInputSection );
 
-		ASSERT( m_pInput );
 		m_pInput->Prefix( pszText, nLength );
 	}
 
@@ -227,7 +215,6 @@ public:
 	{
 		CQuickLock oInputLock( *m_pInputSection );
 
-		ASSERT( m_pInput );
 		return m_pInput->m_pBuffer[ nPos ];
 	}
 
@@ -235,7 +222,6 @@ public:
 	{
 		CQuickLock oInputLock( *m_pInputSection );
 
-		ASSERT( m_pInput );
 		return m_pInput->StartsWith( pszString, nLength, FALSE );
 	}
 

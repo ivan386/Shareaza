@@ -68,9 +68,12 @@ BOOL CSettingsPage::LoadDefaultCaption()
 	DLGTEMPLATE* pData;
 	LPWORD pWord;
 
-	if ( ! pTemplate.Load( m_lpszTemplateName ) ) return FALSE;
+	if ( ! pTemplate.Load( m_lpszTemplateName ) )
+		return FALSE;
 
 	pData = (DLGTEMPLATE*)GlobalLock( pTemplate.m_hTemplate );
+	if ( ! pData )
+		return FALSE;
 
 	if ( ((DLGTEMPLATEEX*)pData)->signature == 0xFFFF )
 	{
@@ -114,8 +117,12 @@ BOOL CSettingsPage::Create(CRect& rcPage, CWnd* pSheetWnd)
 	CDialogTemplate pTemplate;
 	LPDLGTEMPLATE pData;
 
-	if ( ! pTemplate.Load( m_lpszTemplateName ) ) return FALSE;
+	if ( ! pTemplate.Load( m_lpszTemplateName ) )
+		return FALSE;
+
 	pData = (LPDLGTEMPLATE)GlobalLock( pTemplate.m_hTemplate );
+	if ( ! pData )
+		return FALSE;
 
 	DWORD dwExStyle = Settings.General.LanguageRTL ? WS_EX_RTLREADING|WS_EX_RIGHT|WS_EX_LEFTSCROLLBAR|WS_EX_LAYOUTRTL : 
 		WS_EX_LTRREADING|WS_EX_LEFT|WS_EX_RIGHTSCROLLBAR;

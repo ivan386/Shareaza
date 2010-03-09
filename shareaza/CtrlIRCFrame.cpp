@@ -1607,8 +1607,8 @@ void CIRCFrame::ActivateMessageByID(CIRCNewMessage& oNewMessage, int nMessageTyp
 				nTZBias = tzi.Bias;
 			CString strReply;
 			strReply.Format( _T("/NOTICE %s :\x01TIME %s %+.2d%.2d\x01"),
-				m_pWords.GetAt( 0 ),
-				time.Format( _T("%Y-%m-%d %H:%M:%S") ),
+				(LPCTSTR)m_pWords.GetAt( 0 ),
+				(LPCTSTR)time.Format( _T("%Y-%m-%d %H:%M:%S") ),
 				- nTZBias / 60, nTZBias % 60 );
 			OnLocalText( strReply );
 			oNewMessage.Add( _T("* ") + m_pWords.GetAt( 0 ) + _T(" just TIMEed you."), m_sStatus, ID_COLOR_SERVERMSG );
@@ -1618,7 +1618,9 @@ void CIRCFrame::ActivateMessageByID(CIRCNewMessage& oNewMessage, int nMessageTyp
 		{
 			CString strReply;
 			strReply.Format( _T("/NOTICE %s :\x01VERSION %s:%s:Microsoft Windows %u.%u\x01"),
-				m_pWords.GetAt( 0 ), _T(CLIENT_NAME), theApp.m_sVersionLong, theApp.m_nWindowsVersion, theApp.m_nWindowsVersionMinor );
+				(LPCTSTR)m_pWords.GetAt( 0 ), _T(CLIENT_NAME),
+				(LPCTSTR)theApp.m_sVersionLong,
+				theApp.m_nWindowsVersion, theApp.m_nWindowsVersionMinor );
 			OnLocalText( strReply );
 			oNewMessage.Add( _T("* ") + m_pWords.GetAt( 0 ) + _T(" just VERSIONed you."), m_sStatus, ID_COLOR_SERVERMSG );
 			return;
@@ -2586,17 +2588,17 @@ void CIRCTabCtrl::DrawTabItem(HDC dc, int nItem, const RECT& rcItem, UINT flags)
 	BOOL bSel = flags & paintSelected;
 
 	RECT rc = rcItem;
-	rc.bottom -= bSel ? 1 : 2;
+	rc.bottom -= ( bSel ? 1 : 2 );
 	rc.left += 6;	// Text & icon.
-	rc.top += 2 + bSel ? 1 : 3;
+	rc.top += 2 + ( bSel ? 1 : 3 );
 
 	int oldMode = SetBkMode( dc, TRANSPARENT );
 	HIMAGELIST imageList = (HIMAGELIST)TabCtrl_GetImageList( m_hWnd );
 	if ( imageList && item.iImage >= 0 )
 	{
 		ImageList_Draw( imageList, item.iImage, dc,
-			rc.left + bSel ? 2 : 0,
-			rc.top + bSel ? 0 : -2, ILD_TRANSPARENT );
+			rc.left + ( bSel ? 2 : 0 ),
+			rc.top + ( bSel ? 0 : -2 ), ILD_TRANSPARENT );
 		rc.left += 19;
 	}
 	else
