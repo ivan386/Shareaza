@@ -1,7 +1,7 @@
 //
 // NeighboursWithConnect.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -197,11 +197,14 @@ CNeighbour* CNeighboursWithConnect::ConnectTo(
 // Returns a pointer to the CShakeNeighbour object
 CNeighbour* CNeighboursWithConnect::OnAccept(CConnection* pConnection)
 {
-	// Get this thread exclusive access to the network (do) while this method runs
-	CSingleLock pLock( &Network.m_pSection ); // When control leaves the method, pLock will go out of scope and release access
-	if ( ! pLock.Lock( 250 ) ) return NULL;   // If more than a quarter second passes here waiting for access, give up and leave now
+	CSingleLock pLock( &Network.m_pSection );
+	if ( ! pLock.Lock( 250 ) )
+		return NULL;
 
-	// Make a new CShakeNeighbour object, have it pickup this incoming connection, and return a pointer to it
+	if ( Neighbours.Get( &pConnection->m_pHost.sin_addr ) != NULL )
+		// Duplicate connection
+		return NULL;
+
 	CShakeNeighbour* pNeighbour = new CShakeNeighbour();
 	pNeighbour->AttachTo( pConnection );
 	return pNeighbour;
