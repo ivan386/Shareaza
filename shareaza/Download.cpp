@@ -291,6 +291,107 @@ bool CDownload::IsShared() const
 	return false;
 }
 
+CString CDownload::GetDownloadStatus() const
+{
+	CString strText;
+	int nSources = GetEffectiveSourceCount();
+
+	if ( IsCompleted() )
+	{
+		if ( IsSeeding() )
+		{
+			if ( m_bTorrentTrackerError )
+				LoadString( strText, IDS_STATUS_TRACKERDOWN );
+			else
+				LoadString( strText, IDS_STATUS_SEEDING );
+		}
+		else
+			LoadString( strText, IDS_STATUS_COMPLETED );
+	}
+	else if ( IsPaused() )
+	{
+		if ( GetFileError() != ERROR_SUCCESS )
+			if ( IsMoving() )
+				LoadString( strText, IDS_STATUS_CANTMOVE );
+			else
+				LoadString( strText, IDS_STATUS_FILEERROR );
+		else
+			LoadString( strText, IDS_STATUS_PAUSED );
+	}
+	else if ( IsMoving() )
+		LoadString( strText, IDS_STATUS_MOVING );
+	else if ( IsStarted() && GetProgress() == 100.0f )
+		LoadString( strText, IDS_STATUS_VERIFYING );
+	else if ( IsDownloading() )
+	{
+		DWORD nTime = GetTimeRemaining();
+	
+		if ( nTime == 0xFFFFFFFF )
+			LoadString( strText, IDS_STATUS_ACTIVE );
+		else
+		{
+			if ( nTime > 86400 )
+				strText.Format( _T("%i:%.2i:%.2i:%.2i"), nTime / 86400, ( nTime / 3600 ) % 24, ( nTime / 60 ) % 60, nTime % 60 );
+			else
+				strText.Format( _T("%i:%.2i:%.2i"), nTime / 3600, ( nTime / 60 ) % 60, nTime % 60 );
+		}
+	}
+	else if ( ! IsTrying() )
+		LoadString( strText, IDS_STATUS_QUEUED );
+	else if ( IsDownloading() )
+		LoadString( strText, IDS_STATUS_DOWNLOADING );
+	else if ( nSources > 0 )
+		LoadString( strText, IDS_STATUS_PENDING );
+	else if ( IsTorrent() )
+	{
+		if ( GetTaskType() == dtaskAllocate )
+			LoadString( strText, IDS_STATUS_CREATING );
+		else if ( m_bTorrentTrackerError )
+			LoadString( strText, IDS_STATUS_TRACKERDOWN );
+		else
+			LoadString( strText, IDS_STATUS_TORRENT );
+	}
+	else
+		LoadString( strText, IDS_STATUS_QUEUED );
+
+	return strText;
+}
+
+int CDownload::GetClientStatus() const
+{
+	return IsCompleted() ? -1 : (int)GetEffectiveSourceCount();
+}
+
+CString CDownload::GetDownloadSources() const
+{
+	int nTotalSources = GetSourceCount();
+	int nSources = GetEffectiveSourceCount();
+
+	CString strText;
+	if ( IsCompleted() )
+	{
+		if ( m_bVerify == TRI_TRUE )
+			LoadString( strText, IDS_STATUS_VERIFIED );
+		else if ( m_bVerify == TRI_FALSE )
+			LoadString( strText, IDS_STATUS_UNVERIFIED );
+	}
+	else if ( nTotalSources == 0 )
+		LoadString( strText, IDS_STATUS_NOSOURCES );
+	else if ( nSources == nTotalSources )
+	{
+		CString strSource;
+		LoadSourcesString( strSource,  nSources );
+		strText.Format( _T("(%i %s)"), nSources, (LPCTSTR)strSource );
+	}
+	else
+	{
+		CString strSource;
+		LoadSourcesString( strSource,  nTotalSources, true );
+		strText.Format( _T("(%i/%i %s)"), nSources, nTotalSources, (LPCTSTR)strSource );
+	}
+	return strText;
+}
+
 //////////////////////////////////////////////////////////////////////
 // CDownload run handler
 

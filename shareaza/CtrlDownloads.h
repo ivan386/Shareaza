@@ -1,7 +1,7 @@
 //
 // CtrlDownloads.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -57,8 +57,6 @@ protected:
 	BOOL		GetAt(int nSelect, CDownload** ppDownload, CDownloadSource** ppSource);
 	BOOL		GetRect(CDownload* pSelect, RECT* prcItem);
 	void		MoveSelected(int nDelta);
-	CString		GetDownloadStatus(CDownload *pDownload);
-	int			GetClientStatus(CDownload *pDownload);
 	void		PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDownload, BOOL bFocus, BOOL bDrop);
 	void		PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownload, CDownloadSource* pSource, BOOL bFocus);
 	void		OnBeginDrag(CPoint ptAction);

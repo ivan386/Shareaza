@@ -73,6 +73,9 @@ public:
 	bool		IsDownloading() const;	// Is the download receiving data?
 	bool		IsBoosted() const;
 	bool		IsShared() const;
+	CString		GetDownloadStatus() const;
+	int			GetClientStatus() const;
+	CString		GetDownloadSources() const;
 	BOOL		Load(LPCTSTR pszPath);
 	BOOL		Save(BOOL bFlush = FALSE);
 	void		OnRun();

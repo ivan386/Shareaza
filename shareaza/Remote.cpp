@@ -870,18 +870,22 @@ void CRemote::PageDownloads()
 	{
 		CDownloadGroup* pGroup = DownloadGroups.GetNext( posGroup );
 		
-		str.Format( _T("%i"), pGroup );
-		Add( _T("group_id"), str );
+		CString group_id;
+		group_id.Format( _T("%p"), pGroup );
+		Add( _T("group_id"), group_id );
 		
 		if ( bExclusive )
 		{
-			pGroup->m_bRemoteSelected = ( GetKey( _T("group_exclusive") ) == str );
+			pGroup->m_bRemoteSelected = ( GetKey( _T("group_exclusive") ) == group_id );
 		}
 		else
 		{
-			if ( bReveal ) pGroup->m_bRemoteSelected = TRUE;
-			else if ( GetKey( _T("group_select") ) == str ) pGroup->m_bRemoteSelected = TRUE;
-			else if ( GetKey( _T("group_deselect") ) == str ) pGroup->m_bRemoteSelected = FALSE;
+			if ( bReveal )
+				pGroup->m_bRemoteSelected = TRUE;
+			else if ( GetKey( _T("group_select") ) == group_id )
+				pGroup->m_bRemoteSelected = TRUE;
+			else if ( GetKey( _T("group_deselect") ) == group_id )
+				pGroup->m_bRemoteSelected = FALSE;
 		}
 		
 		Add( _T("group_caption"), pGroup->m_sName );
@@ -910,36 +914,39 @@ void CRemote::PageDownloads()
 	for ( POSITION posDownload = Downloads.GetIterator() ; posDownload != NULL ; )
 	{
 		CDownload* pDownload = Downloads.GetNext( posDownload );
-		str.Format( _T("%i"), pDownload );
+
+		CString download_id;
+		download_id.Format( _T("%p"), pDownload );
 		
-		if ( GetKey( _T("modify_id") ) == str )
+		if ( GetKey( _T("modify_id") ) == download_id )
 		{
-			CString str( GetKey( _T("modify_action") ) );
-			ToLower( str );
+			CString action = GetKey( _T("modify_action") );
+			action.MakeLower();
 			
-			if ( str == _T("expand") && CDownloadsCtrl::IsExpandable( pDownload ) )
+			if ( action == _T("expand") && CDownloadsCtrl::IsExpandable( pDownload ) )
 			{
 				pDownload->m_bExpanded = TRUE;
 			}
-			else if ( str == _T("collapse") && CDownloadsCtrl::IsExpandable( pDownload ) )
+			else if ( action == _T("collapse") && CDownloadsCtrl::IsExpandable( pDownload ) )
 			{
 				pDownload->m_bExpanded = FALSE;
 			}
-			else if ( str == _T("resume") )
+			else if ( action == _T("resume") )
 			{
 				pDownload->Resume();
 			}
-			else if ( str == _T("pause") )
+			else if ( action == _T("pause") )
 			{
-				if ( ! pDownload->IsPaused() && ! pDownload->IsTasking() ) pDownload->Pause();
+				if ( ! pDownload->IsPaused() && ! pDownload->IsTasking() )
+					pDownload->Pause();
 			}
-			else if ( str == _T("cancel") )
+			else if ( action == _T("cancel") )
 			{
 				if ( ! pDownload->IsTasking() )
 					pDownload->Remove();
 				continue;
 			}
-			else if ( str == _T("clear") )
+			else if ( action == _T("clear") )
 			{
 				if ( pDownload->IsCompleted() && ! pDownload->IsPreviewVisible() )
 				{
@@ -948,11 +955,10 @@ void CRemote::PageDownloads()
 				}
 			}
 			// roo_koo_too improvement
-			else if ( str == _T("more_sources"))
+			else if ( action == _T("more_sources"))
 			{ 
 				pDownload->FindMoreSources();
 			}
-			str.Format( _T("%i"), pDownload );
 		}
 		
 		if ( CDownloadsCtrl::IsFiltered( pDownload ) ) continue;
@@ -968,14 +974,10 @@ void CRemote::PageDownloads()
 		
 		if ( pGroup == NULL ) continue;
 		
-		CString strStatus1, strStatus2;
-		int nSources		= pDownload->GetEffectiveSourceCount();
-		int nTotalSources	= pDownload->GetSourceCount();
-
-		Add( _T("download_id"), str );
+		Add( _T("download_id"), download_id );
 		Add( _T("download_filename"), pDownload->GetDisplayName() );
-		LoadString( strStatus1, IDS_STATUS_UNKNOWN );
-		Add( _T("download_size"), pDownload->m_nSize == SIZE_UNKNOWN ? strStatus1 : Settings.SmartVolume( pDownload->m_nSize ) );
+		Add( _T("download_size"), ( pDownload->m_nSize == SIZE_UNKNOWN ) ?
+			LoadString( IDS_STATUS_UNKNOWN ) : Settings.SmartVolume( pDownload->m_nSize ) );
 		int nProgress = int( pDownload->GetProgress() );
 		str.Format( _T("%i"), nProgress );
 		Add( _T("download_percent"), str );
@@ -987,80 +989,18 @@ void CRemote::PageDownloads()
 			if ( pDownload->m_bExpanded ) Add( _T("download_is_expanded"), _T("true") );
 			else Add( _T("download_is_collapsed"), _T("true") );
 		}
+
 		if ( pDownload->IsCompleted() )
 		{
-			LoadString( strStatus1, IDS_STATUS_SEEDING );
-			LoadString( strStatus2, IDS_STATUS_COMPLETED );
-			str = pDownload->IsSeeding() ? strStatus1 : strStatus2;
 			Add( _T("download_is_complete"), _T("true") );
-		}
-		else if ( pDownload->IsMoving() )
-		{
-			LoadString( str, IDS_STATUS_MOVING );
 		}
 		else if ( pDownload->IsPaused() )
 		{
 			Add( _T("download_is_paused"), _T("true") );
-			if ( pDownload->GetFileError() != ERROR_SUCCESS )
-			{
-				LoadString( strStatus1, IDS_STATUS_CANTMOVE );
-				LoadString( strStatus2, IDS_STATUS_FILEERROR );
-				str = ( pDownload->IsCompleted() ) ? strStatus1 : strStatus2;
-			}
-			else
-				LoadString( str, IDS_STATUS_PAUSED );
 		}
-		else if ( pDownload->IsStarted() && pDownload->GetProgress() == 100.0f )
-			LoadString( str, IDS_STATUS_VERIFYING );
-		else if ( pDownload->IsDownloading() )
-		{
-			DWORD tNow = pDownload->GetTimeRemaining();
-			if ( tNow == 0xFFFFFFFF )
-				LoadString( str, IDS_STATUS_ACTIVE );
-			else
-			{
-				if ( tNow > 86400 )
-					str.Format( _T("%i:%.2i:%.2i:%.2i"), tNow / 86400, ( tNow / 3600 ) % 24, ( tNow / 60 ) % 60, tNow % 60 );
-				else
-					str.Format( _T("%i:%.2i:%.2i"), tNow / 3600, ( tNow / 60 ) % 60, tNow % 60 );
-			}
-		}
-		else if ( nSources > 0 && !pDownload->IsDownloading() )
-			LoadString( str, IDS_STATUS_PENDING );
-		else if ( pDownload->IsTorrent() )
-		{
-			if ( pDownload->GetTaskType() == dtaskAllocate )
-				LoadString( str, IDS_STATUS_CREATING );
-			else if ( pDownload->m_bTorrentTrackerError )
-				LoadString( str, IDS_STATUS_TRACKERDOWN );
-			else
-				LoadString( str, IDS_STATUS_TORRENT );
-		}
-		else
-			LoadString( str, IDS_STATUS_SEARCHING );
-		Add( _T("download_status"), str );
-		if ( pDownload->IsCompleted() )
-		{
-			if ( pDownload->m_bVerify == TRI_TRUE )
-				LoadString( str, IDS_STATUS_VERIFIED );
-			else if ( pDownload->m_bVerify == TRI_FALSE )
-				LoadString( str, IDS_STATUS_UNVERIFIED );
-		}
-		else if ( nTotalSources == 0 )
-			LoadString( str, IDS_STATUS_NOSOURCES );
-		else if ( nSources == nTotalSources )
-		{
-			CString strSources;
-			LoadSourcesString( strSources, nSources );
-			str.Format( _T("(%i %s)"), nSources, strSources );
-		}
-		else
-		{
-			CString strSources;
-			LoadSourcesString( strSources, nTotalSources, true );
-			str.Format( _T("(%i/%i %s)"), nSources, nTotalSources, strSources );
-		}
-		Add( _T("download_sources"), str );
+
+		Add( _T("download_status"), pDownload->GetDownloadStatus() );
+		Add( _T("download_sources"), pDownload->GetDownloadSources() );
 		Output( _T("downloadsDownload") );
 		
 		if ( pDownload->m_bExpanded && CDownloadsCtrl::IsExpandable( pDownload ) )
@@ -1071,14 +1011,15 @@ void CRemote::PageDownloads()
 
 				ASSERT( pSource->m_pDownload == pDownload );
 
-				str.Format( _T("%i"), pSource );
+				CString source_id;
+				source_id.Format( _T("%p"), pSource );
 
-				if ( GetKey( _T("modify_id") ) == str )
+				if ( GetKey( _T("modify_id") ) == source_id )
 				{
-					str = GetKey( _T("modify_action") );
-					ToLower( str );
+					CString modify_action = GetKey( _T("modify_action") );
+					modify_action.MakeLower();
 
-					if ( str == _T("access") )
+					if ( modify_action == _T("access") )
 					{
 						// Only create a new Transfer if there isn't already one
 						if ( pSource->IsIdle()
@@ -1099,18 +1040,16 @@ void CRemote::PageDownloads()
 							}
 						}
 					}
-					else if ( str == _T("forget") )
+					else if ( modify_action == _T("forget") )
 					{
 						pSource->Remove( TRUE, TRUE );
 						continue;
 					}
-					
-					str.Format( _T("%i"), pSource );
 				}
 				
 				if ( Settings.Downloads.ShowSources || pSource->IsConnected() )
 				{
-					Add( _T("source_id"), str );
+					Add( _T("source_id"), source_id );
 					Add( _T("source_agent"), pSource->m_sServer );
 					Add( _T("source_nick"), pSource->m_sNick );
 					
@@ -1136,8 +1075,9 @@ void CRemote::PageDownloads()
 							if ( pSource->m_tAttempt >= tNow )
 							{
 								tNow = ( pSource->m_tAttempt - tNow ) / 1000;
-								str.Format( _T("%.2u:%.2u"), tNow / 60, tNow % 60 );
-								Add( _T("source_status"), str );
+								CString source_status;
+								source_status.Format( _T("%.2u:%.2u"), tNow / 60, tNow % 60 );
+								Add( _T("source_status"), source_status );
 							}
 						}
 					}
@@ -1178,33 +1118,36 @@ void CRemote::PageUploads()
 	CSingleLock pLock( &UploadQueues.m_pSection, FALSE );
 	if ( ! pLock.Lock( 1000 ) )
 		return;
-
-	CString str;
 	
 	Prepare();
-	str.Format( _T("%i"), GetRandomNum( 0i32, _I32_MAX ) );
-	Add( _T("random"), str );
+
+	CString random;
+	random.Format( _T("%i"), GetRandomNum( 0i32, _I32_MAX ) );
+	Add( _T("random"), random );
+
 	Output( _T("uploadsHeader") );
 	
 	for ( POSITION posQueue = CUploadsCtrl::GetQueueIterator() ; posQueue != NULL ; )
 	{
 		CUploadQueue* pQueue = CUploadsCtrl::GetNextQueue( posQueue );
 		
-		str.Format( _T("%i"), pQueue );
+		CString queue_id;
+		queue_id.Format( _T("%p"), pQueue );
 		
-		if ( GetKey( _T("queue_expand") ) == str ) pQueue->m_bExpanded = TRUE;
-		else if ( GetKey( _T("queue_collapse") ) == str ) pQueue->m_bExpanded = FALSE;
+		if ( GetKey( _T("queue_expand") ) == queue_id ) pQueue->m_bExpanded = TRUE;
+		else if ( GetKey( _T("queue_collapse") ) == queue_id ) pQueue->m_bExpanded = FALSE;
 		
 		POSITION posFile = CUploadsCtrl::GetFileIterator( pQueue );
 		if ( posFile == NULL ) continue;
 		
 		Prepare();
-		Add( _T("queue_id"), str );
+		Add( _T("queue_id"), queue_id );
 		Add( _T("queue_caption"), pQueue->m_sName );
 		if ( pQueue->m_bExpanded ) Add( _T("queue_expanded"), _T("true") );
 		
 		if ( pQueue != UploadQueues.m_pTorrentQueue && pQueue != UploadQueues.m_pHistoryQueue )
 		{
+			CString str;
 			str.Format( _T("%i"), pQueue->GetTransferCount() );
 			Add( _T("queue_transfers"), str );
 			str.Format( _T("%i"), pQueue->GetQueuedCount() );
@@ -1223,15 +1166,16 @@ void CRemote::PageUploads()
 				if ( pFile == NULL ) continue;
 				CUploadTransfer* pTransfer = pFile->GetActive();
 				
-				str.Format( _T("%i"), pFile );
+				CString file_id;
+				file_id.Format( _T("%p"), pFile );
 				
-				if ( GetKey( _T("drop") ) == str )
+				if ( GetKey( _T("drop") ) == file_id )
 				{
 					pFile->Remove();
 					continue;
 				}
 				
-				Add( _T("file_id"), str );
+				Add( _T("file_id"), file_id );
 				Add( _T("file_filename"), pFile->m_sName );
 				Add( _T("file_size"), Settings.SmartVolume( pFile->m_nSize ) );
 				
@@ -1243,6 +1187,7 @@ void CRemote::PageUploads()
 					Add( _T("file_agent"), pTransfer->m_sUserAgent );
 				}
 				
+				CString str;
 				if ( pTransfer == NULL || pTransfer->m_nState == upsNull )
 				{
 					LoadString( str, IDS_STATUS_COMPLETED );
@@ -1265,7 +1210,7 @@ void CRemote::PageUploads()
 				else if ( nPosition > 0 )
 				{
 					LoadString( str, IDS_STATUS_Q );
-					str.Format( _T("%s %i"), str, nPosition );
+					str.Format( _T("%s %i"), (LPCTSTR)str, nPosition );
 				}
 				else
 				{
@@ -1366,9 +1311,13 @@ void CRemote::PageNetworkNetwork(int nID, bool* pbConnect, LPCTSTR pszName)
 		Add( _T("row_agent"), pNeighbour->m_sUserAgent );
 		str.Format( _T("%i -/- %i"), pNeighbour->m_nInputCount, pNeighbour->m_nOutputCount );
 		Add( _T("row_packets"), str );
-		str.Format( _T("%s -/- %s"), Settings.SmartSpeed( pNeighbour->m_mInput.nMeasure ), Settings.SmartSpeed( pNeighbour->m_mOutput.nMeasure ) );
+		str.Format( _T("%s -/- %s"),
+			(LPCTSTR)Settings.SmartSpeed( pNeighbour->m_mInput.nMeasure ),
+			(LPCTSTR)Settings.SmartSpeed( pNeighbour->m_mOutput.nMeasure ) );
 		Add( _T("row_bandwidth"), str );
-		str.Format( _T("%s -/- %s"), Settings.SmartVolume( pNeighbour->m_mInput.nTotal ), Settings.SmartVolume( pNeighbour->m_mOutput.nTotal ) );
+		str.Format( _T("%s -/- %s"),
+			(LPCTSTR)Settings.SmartVolume( pNeighbour->m_mInput.nTotal ),
+			(LPCTSTR)Settings.SmartVolume( pNeighbour->m_mOutput.nTotal ) );
 		Add( _T("row_total"), str );
 		
 		switch ( pNeighbour->m_nState )
