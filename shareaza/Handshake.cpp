@@ -1,7 +1,7 @@
 //
 // Handshake.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -319,17 +319,22 @@ BOOL CHandshake::OnAcceptPush()
 		return FALSE;
 	}
 
-	// Read the 16 hexidecimal digits of the GUID, copying it into pGUID
+	// Read the 16 hexadecimal digits of the GUID, copying it into pGUID
 	for ( int nByte = 0 ; nByte < 16 ; nByte++ )
 	{
 		int nValue;
-		_stscanf( strLine.Mid( 10 + nByte * 2, 2 ), _T("%X"), &nValue );
+		if ( _stscanf( strLine.Mid( 10 + nByte * 2, 2 ), _T("%X"), &nValue ) != 1 )
+		{
+			theApp.Message( MSG_ERROR, IDS_DOWNLOAD_BAD_PUSH, (LPCTSTR)CString( inet_ntoa( m_pHost.sin_addr ) ) );
+			return FALSE;
+		}
 		oGUID[ nByte ] = (BYTE)nValue;
 	}
 	oGUID.validate();
 
-	// If a child window recongizes the GUID, accept the push
-	if ( OnPush( oGUID ) ) return TRUE;
+	// If a child window recognizes the GUID, accept the push
+	if ( OnPush( oGUID ) )
+		return TRUE;
 
 	// Record the fact that we got a push we knew nothing about, and return false to not accept it
 	theApp.Message( MSG_ERROR, IDS_DOWNLOAD_UNKNOWN_PUSH, (LPCTSTR)CString( inet_ntoa( m_pHost.sin_addr ) ), _T("Gnutella2") );
@@ -382,19 +387,21 @@ BOOL CHandshake::OnAcceptGive()
 	for ( int nByte = 0 ; nByte < 16 ; nByte++ )
 	{
 		// Convert one set of characters like "00" or "ff" into that byte in pClientID
-		_stscanf( strClient.Mid( nByte * 2, 2 ), _T("%X"), &nPos );
+		if ( _stscanf( strClient.Mid( nByte * 2, 2 ), _T("%X"), &nPos ) != 1 )
+		{
+			theApp.Message( MSG_ERROR, IDS_DOWNLOAD_BAD_PUSH, (LPCTSTR)CString( inet_ntoa( m_pHost.sin_addr ) ) );
+			return FALSE;
+		}
 		oClientID[ nByte ] = (BYTE)nPos;
 	}
 	oClientID.validate();
 
 	// If a child window recognizes this guid, return true
-	if ( OnPush( oClientID ) ) return TRUE;
-
-	// If the file name is longer than 256 characters, change it to the text "Invalid Filename"
-	if ( strFile.GetLength() > 256 ) strFile = _T("Invalid Filename");
+	if ( OnPush( oClientID ) )
+		return TRUE;
 
 	// Log this unexpected push, and return false
-	theApp.Message( MSG_ERROR, IDS_DOWNLOAD_UNKNOWN_PUSH, (LPCTSTR)CString( inet_ntoa( m_pHost.sin_addr ) ), (LPCTSTR)strFile );
+	theApp.Message( MSG_ERROR, IDS_DOWNLOAD_UNKNOWN_PUSH, (LPCTSTR)CString( inet_ntoa( m_pHost.sin_addr ) ) );
 	return FALSE;
 }
 
