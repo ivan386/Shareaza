@@ -2,8 +2,8 @@
 //                                                                            //
 // Hashes/ValidationPolicies.hpp                                              //
 //                                                                            //
-// Copyright (C) 2005 Shareaza Development Team.                              //
-// This file is part of SHAREAZA (shareaza.sourceforge.net).                          //
+// Copyright (C) 2005-2010 Shareaza Development Team.                         //
+// This file is part of SHAREAZA (shareaza.sourceforge.net).                  //
 //                                                                            //
 // Shareaza is free software; you can redistribute it                         //
 // and/or modify it under the terms of the GNU General Public License         //
@@ -186,21 +186,24 @@ namespace Hashes
 				BasicValidation< CheckingPolicy >::clear();
 				m_trusted = false;
 			}
-			//! \brief Overides \a validate() in order to clear the trusted
+			//! \brief Overrides \a validate() in order to clear the trusted
 			//!        flag if validation fails.
 			bool validate()
 			{
 				if ( BasicValidation< CheckingPolicy >::validate() )
 					return true;
-				return m_trusted = false;
+				m_trusted = false;
+				return false;
 			}
 
 			//! \brief Sets trusted flag, provided the Hash is valid.
 			//!        Returns the valid state of the hash.
 			bool signalTrusted()
 			{
-				if ( !isValid() ) return false;
-				return m_trusted = true;
+				if ( ! isValid() )
+					return false;
+				m_trusted = true;
+				return true;
 			}
 			//! \brief Clears the trusted flag.
 			void signalUntrusted()

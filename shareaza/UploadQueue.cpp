@@ -84,7 +84,7 @@ CUploadQueue::~CUploadQueue()
 
 CString CUploadQueue::GetCriteriaString() const
 {
-	CString str1, str2;
+	CString str1;
 	
 	if ( m_nProtocols != 0 )
 	{
@@ -103,28 +103,24 @@ CString CUploadQueue::GetCriteriaString() const
 	if ( m_nMinSize > 0 )
 	{
 		if ( str1.GetLength() ) str1 += _T(", ");
-		str2.Format( _T(">=%s"), Settings.SmartVolume( m_nMinSize ) );
-		str1 += str2;
+		str1 = str1 + _T(">=") + Settings.SmartVolume( m_nMinSize );
 	}
 	
 	if ( m_nMaxSize < ~0ull )
 	{
 		if ( str1.GetLength() ) str1 += _T(", ");
-		str2.Format( _T("<=%s"), Settings.SmartVolume( m_nMaxSize ) );
-		str1 += str2;
+		str1 = str1 + _T("<=") + Settings.SmartVolume( m_nMaxSize );
 	}
 	
 	if ( m_nFileStateFlag == ulqPartial )
 	{
 		if ( str1.GetLength() ) str1 += _T(", ");
-		LoadString( str2, IDS_UPLOAD_QUEUE_PARTIAL );
-		str1 += str2;
+		str1 += LoadString(IDS_UPLOAD_QUEUE_PARTIAL );
 	}
 	else if ( m_nFileStateFlag == ulqLibrary )
 	{
 		if ( str1.GetLength() ) str1 += _T(", ");
-		LoadString( str2, IDS_UPLOAD_QUEUE_LIBRARY );
-		str1 += str2;
+		str1 += LoadString( IDS_UPLOAD_QUEUE_LIBRARY );
 	}
 	
 	// ADD: Release states

@@ -1,7 +1,7 @@
 //
 // EDPacket.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -124,8 +124,8 @@ void CEDPacket::WriteFile(const CShareazaFile* pShareazaFile, QWORD nSize,
 	Write( pShareazaFile->m_oED2K );
 
 	// Send client ID + port
-	DWORD nClientID = 0;
-	WORD nClientPort = 0;
+	DWORD nClientID;
+	WORD nClientPort;
 	if ( pServer )
 	{
 		// If we have a 'new' ed2k server
@@ -152,7 +152,7 @@ void CEDPacket::WriteFile(const CShareazaFile* pShareazaFile, QWORD nSize,
 	}
 	else
 	{
-		nClientID = pClient->GetID();
+		nClientID = pClient ? pClient->GetID() : 0;
 		nClientPort = ntohs( Network.m_pHost.sin_port );
 	}
 	WriteLongLE( nClientID );

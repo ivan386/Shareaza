@@ -1,7 +1,7 @@
 //
 // FileExecutor.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -432,7 +432,7 @@ BOOL CFileExecutor::Enqueue(LPCTSTR pszFile, BOOL /*bSkipSecurityCheck*/, LPCTST
 		}
 		if ( ! strParam.IsEmpty() )
 		{
-			HINSTANCE hResult = ShellExecute( AfxGetMainWnd()->GetSafeHwnd(), NULL,
+			hResult = ShellExecute( AfxGetMainWnd()->GetSafeHwnd(), NULL,
 				strCommand, strParam, NULL, SW_SHOWNORMAL );
 			if ( hResult > (HINSTANCE)32 )
 				return TRUE;

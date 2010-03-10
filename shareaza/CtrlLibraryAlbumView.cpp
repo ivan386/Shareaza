@@ -1,7 +1,7 @@
 //
 // CtrlLibraryAlbumView.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -203,10 +203,10 @@ void CLibraryAlbumView::Update()
 			if ( m_nCount == m_nBuffer )
 			{
 				m_nBuffer += 64;
-				CLibraryAlbumTrack** pList = new CLibraryAlbumTrack*[ m_nBuffer ];
-				if ( m_nCount ) CopyMemory( pList, m_pList, m_nCount * sizeof( CLibraryAlbumTrack* ) );
-				if ( m_pList ) delete [] m_pList;
-				m_pList = pList;
+				CLibraryAlbumTrack** pNewList = new CLibraryAlbumTrack*[ m_nBuffer ];
+				if ( m_nCount ) CopyMemory( pNewList, m_pList, m_nCount * sizeof( CLibraryAlbumTrack* ) );
+				delete [] m_pList;
+				m_pList = pNewList;
 			}
 			
 			m_pList[ m_nCount++ ] = pTrack;

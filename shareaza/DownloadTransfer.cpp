@@ -204,18 +204,18 @@ CString CDownloadTransfer::GetStateText(BOOL bLong)
 		LoadString( strOf, IDS_GENERAL_OF );
 		if ( ! bLong )
 		{
-			str.Format( m_nQueueLen ? _T("%s %i %s %i") : _T("%s #%i"),
-				strQ, m_nQueuePos, strOf, m_nQueueLen );
+			str.Format( ( m_nQueueLen ? _T("%s %i %s %i") : _T("%s #%i") ),
+				(LPCTSTR)strQ, m_nQueuePos, (LPCTSTR)strOf, m_nQueueLen );
 		}
 		else if ( m_sQueueName.GetLength() )
 		{
-			str.Format( _T("%s: %s: %i %s %i"), strQueued,
-				(LPCTSTR)m_sQueueName, m_nQueuePos, strOf, m_nQueueLen );
+			str.Format( _T("%s: %s: %i %s %i"), (LPCTSTR)strQueued,
+				(LPCTSTR)m_sQueueName, m_nQueuePos, (LPCTSTR)strOf, m_nQueueLen );
 		}
 		else
 		{
-			str.Format( m_nQueueLen ? _T("%s: %i %s %i") : _T("%s: #%i"), strQueued,
-				m_nQueuePos, strOf, m_nQueueLen );
+			str.Format( ( m_nQueueLen ? _T("%s: %i %s %i") : _T("%s: #%i") ),
+				(LPCTSTR)strQueued, m_nQueuePos, (LPCTSTR)strOf, m_nQueueLen );
 		}
 		break;
 	default:

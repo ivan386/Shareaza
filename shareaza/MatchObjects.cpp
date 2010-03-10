@@ -402,7 +402,7 @@ void CMatchList::AddHits(const CQueryHit* pHits, const CQuerySearch* pFilter)
 
 CMatchFile* CMatchList::FindFileAndAddHit(CQueryHit* pHit, const findType nFindFlag, FILESTATS* Stats)
 {
-	CMatchFile** pMap = NULL;
+	CMatchFile** pMap;
 
 	switch( nFindFlag )
 	{
@@ -424,6 +424,8 @@ CMatchFile* CMatchList::FindFileAndAddHit(CQueryHit* pHit, const findType nFindF
 	case fSize:
 		pMap = m_pSizeMap + (DWORD)( pHit->m_nSize & 0xFF );
 		break;
+	default:
+		return NULL;
 	}
 
 	for ( CMatchFile* pSeek = *pMap ; pSeek ; )
@@ -733,7 +735,7 @@ bool CMatchList::CreateRegExpFilter(CString strPattern, CString& strFilter)
 						for ( ; itWord != itWordEnd ; itWord++ )
 						{
 							strNewPattern.AppendFormat( L"%s\\s*",
-								CString( itWord->first, int(itWord->second) ) );
+								(LPCTSTR)CString( itWord->first, int(itWord->second) ) );
 						}
 						bReplaced = true;
 					}
@@ -751,7 +753,7 @@ bool CMatchList::CreateRegExpFilter(CString strPattern, CString& strFilter)
 							if ( nWord == nNumber )
 							{
 								strNewPattern.AppendFormat( L"%s\\s*",
-									CString( itWord->first, int(itWord->second) ) );
+									(LPCTSTR)CString( itWord->first, int(itWord->second) ) );
 								bReplaced = true;
 								break;
 							}
