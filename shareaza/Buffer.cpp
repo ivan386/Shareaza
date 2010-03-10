@@ -1,7 +1,7 @@
 //
 // Buffer.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -192,6 +192,13 @@ bool CBuffer::EnsureBuffer(const size_t nLength)
 			// Reallocate it to make it half as big
 			m_nBuffer = 0x40000;
 			m_pBuffer = (BYTE*)realloc( m_pBuffer, m_nBuffer ); // This may move the block, returning a different pointer
+			if ( ! m_pBuffer )
+			{
+				// Out of memory
+				m_nLength = 0;
+				m_nBuffer = 0;
+				return false;
+			}
 		}
 		return true;
 	}
@@ -204,14 +211,16 @@ bool CBuffer::EnsureBuffer(const size_t nLength)
 
 	// Reallocate the memory block to this size
 	m_pBuffer = (BYTE*)realloc( m_pBuffer, m_nBuffer ); // May return a different pointer
+	if ( ! m_pBuffer ) 
+	{
+		// Out of memory
+		m_nLength = 0;
+		m_nBuffer = 0;
+		return false;
+	}
 
 	// Memory allocation succeeded, new buffer created
-	if ( m_pBuffer ) return true;
-
-	// Out of memory
-	m_nLength = 0;
-	m_nBuffer = 0;
-	return false;
+	return true;
 }
 
 // Convert Unicode text to ASCII and add it to the buffer

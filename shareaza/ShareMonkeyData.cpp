@@ -1,7 +1,7 @@
 //
 // ShareMonkeyData.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -204,8 +204,9 @@ BOOL CShareMonkeyData::BuildRequest()
 	{
 		// storeMatch/<session_id>/<contributor_id>/<file_id>/<product_id>/COUNTRY
 		CString str;
-		str.Format( L"storeMatch/%s/%s/0/%s/%s", m_sSessionID, Settings.WebServices.ShareMonkeyCid,
-					m_sProductID, m_sCountry );
+		str.Format( L"storeMatch/%s/%s/0/%s/%s", (LPCTSTR)m_sSessionID,
+			(LPCTSTR)Settings.WebServices.ShareMonkeyCid,
+			(LPCTSTR)m_sProductID, (LPCTSTR)m_sCountry );
 		m_sURL += str;
 	}
 	else if ( m_nRequestType == stComparison )
@@ -377,6 +378,8 @@ BOOL CShareMonkeyData::ExecuteRequest()
 	while ( InternetQueryDataAvailable( m_hRequest, &nRemaining, 0, 0 ) && nRemaining > 0 )
 	{
 		pResponse = (LPBYTE)realloc( pResponse, nResponse + nRemaining );
+		if ( ! pResponse )
+			return FALSE;
 		InternetReadFile( m_hRequest, pResponse + nResponse, nRemaining, &nRemaining );
 		nResponse += nRemaining;
 	}
@@ -617,7 +620,8 @@ BOOL CShareMonkeyData::ImportData(CXMLElement* pRoot)
 		if ( pLink )
 		{
 			CString strLink;
-			strLink.Format( L"%s|%s", pLink->GetValue(), strValue );
+			strLink.Format( L"%s|%s",
+				(LPCTSTR)pLink->GetValue(), (LPCTSTR)strValue );
 
 			while ( Find( strName ) )
 				strName += '\x00A0';
