@@ -15,7 +15,7 @@
 		version="1.40"
 		type="Skin"/>
     <fonts> 
-      <font name="Panel.Caption" face="Arial" size="12" weight="plain"/>
+      <font name="Panel.Caption" face="Arial" size="12" weight="normal"/>
       <font name="Panel.Caption" language="ja" face="MS UI Gothic" size="12" weight="normal"/>
       <font name="Panel.Caption" language="chs" face="Tahoma" size="12" weight="bold"/>
     </fonts>

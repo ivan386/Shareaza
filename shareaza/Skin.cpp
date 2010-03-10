@@ -1,7 +1,7 @@
 //
 // Skin.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -737,8 +737,11 @@ BOOL CSkin::LoadNavBar(CXMLElement* pBase)
 	CString strValue = pBase->GetAttributeValue( _T("offset") );
 	if ( strValue.GetLength() )
 	{
-		_stscanf( strValue, _T("%i,%i"),
-			&m_rcNavBarOffset.left, &m_rcNavBarOffset.top );
+		if ( _stscanf( strValue, _T("%i,%i"),
+			&m_rcNavBarOffset.left, &m_rcNavBarOffset.top ) != 2 )
+		{
+			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [offset] attribute in [navbar] element"), pBase->ToString() );
+		}
 	}
 
 	strValue = pBase->GetAttributeValue( _T("mode") );
@@ -760,26 +763,20 @@ BOOL CSkin::LoadNavBar(CXMLElement* pBase)
 
 BOOL CSkin::CreateToolBar(LPCTSTR pszName, CCoolBarCtrl* pBar)
 {
-	if ( pszName == NULL ) return FALSE;
+	if ( pszName == NULL )
+		return FALSE;
 
-	if (pBar->m_hWnd)
-	for ( CWnd* pChild = pBar->GetWindow( GW_CHILD ) ; pChild ; pChild = pChild->GetNextWindow() )
+	if ( pBar->m_hWnd )
 	{
-		pChild->ShowWindow( SW_HIDE );
+		for ( CWnd* pChild = pBar->GetWindow( GW_CHILD ) ; pChild ; pChild = pChild->GetNextWindow() )
+		{
+			pChild->ShowWindow( SW_HIDE );
+		}
 	}
 
-	CString strPath = pszName;
-	strPath += _T(".Toolbar");
+	CString strName = pszName;
 
-	if ( m_pWatermarks.Lookup( strPath, strPath ) )
-	{
-		HBITMAP hBitmap = LoadBitmap( strPath );
-		pBar->SetWatermark( hBitmap );
-	}
-	else
-	{
-		pBar->SetWatermark( NULL );
-	}
+	pBar->SetWatermark( GetWatermark( strName + _T(".Toolbar") ) );
 
 	pBar->Clear();
 
@@ -788,22 +785,18 @@ BOOL CSkin::CreateToolBar(LPCTSTR pszName, CCoolBarCtrl* pBar)
 		Settings.General.GUIMode == GUI_BASIC );
 	LPCTSTR* pszModeSuffix = m_pszModeSuffix[ Settings.General.GUIMode ];
 	CCoolBarCtrl* pBase = NULL;
-	CString strName( pszName );
-
 	for ( int nModeTry = 0 ; nModeTry < 3 && pszModeSuffix[ nModeTry ] ; nModeTry++ )
 	{
-		if ( m_pToolbars.Lookup( strName + pszModeSuffix[ nModeTry ], pBase ) ) break;
+		if ( m_pToolbars.Lookup( strName + pszModeSuffix[ nModeTry ], pBase ) )
+			break;
 	}
 
-	if ( pBase != NULL )
-	{
-		pBar->Copy( pBase );
-		return TRUE;
-	}
-	else
-	{
+	if ( pBase == NULL )
 		return FALSE;
-	}
+
+	pBar->Copy( pBase );
+
+	return TRUE;
 }
 
 CCoolBarCtrl* CSkin::GetToolBar(LPCTSTR pszName) const
@@ -873,11 +866,15 @@ BOOL CSkin::CreateToolBar(CXMLElement* pBase)
 
 				if ( strTemp.GetLength() == 6 )
 				{
-					int nRed, nGreen, nBlue;
-					_stscanf( strTemp.Mid( 0, 2 ), _T("%x"), &nRed );
-					_stscanf( strTemp.Mid( 2, 2 ), _T("%x"), &nGreen );
-					_stscanf( strTemp.Mid( 4, 2 ), _T("%x"), &nBlue );
-					pItem->m_crText = RGB( nRed, nGreen, nBlue );
+					int nRed = 0, nGreen = 0, nBlue = 0;
+					if ( _stscanf( strTemp.Mid( 0, 2 ), _T("%x"), &nRed ) == 1 &&
+						 _stscanf( strTemp.Mid( 2, 2 ), _T("%x"), &nGreen ) == 1 &&
+						 _stscanf( strTemp.Mid( 4, 2 ), _T("%x"), &nBlue ) == 1 )
+					{
+						pItem->m_crText = RGB( nRed, nGreen, nBlue );
+					}
+					else
+						theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [colour] attribute in [button] element"), pXML->ToString() );
 				}
 
 				strTemp = pXML->GetAttributeValue( L"tip" );
@@ -901,22 +898,21 @@ BOOL CSkin::CreateToolBar(CXMLElement* pBase)
 		}
 		else if ( pXML->IsNamed( _T("control") ) )
 		{
-			UINT nWidth, nHeight = 0;
+			UINT nWidth = 0, nHeight = 0;
 			CString strTemp;
 
 			UINT nID = LookupCommandID( pXML );
 			if ( nID )
 			{
-				strTemp = pXML->GetAttributeValue( _T("width") );
-				CCoolBarItem* pItem = NULL;
+				CString strWidth = pXML->GetAttributeValue( _T("width") );
+				if ( strWidth.GetLength() && _stscanf( strWidth, _T("%lu"), &nWidth ) != 1 )
+					theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [width] attribute in [control] element"), pXML->ToString() );
+				
+				CString strHeight = pXML->GetAttributeValue( _T("height") );
+				if ( strHeight.GetLength() && _stscanf( strHeight, _T("%lu"), &nHeight ) != 1 )
+					theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [height] attribute in [control] element"), pXML->ToString() );
 
-				if ( _stscanf( strTemp, _T("%lu"), &nWidth ) == 1 )
-				{
-					strTemp = pXML->GetAttributeValue( _T("height") );
-					_stscanf( strTemp, _T("%lu"), &nHeight );
-					pItem = pBar->Add( nID, nWidth, nHeight );
-				}
-
+				CCoolBarItem* pItem = nWidth ? pBar->Add( nID, nWidth, nHeight ) : NULL;
 				if ( pItem )
 				{
 					strTemp = pXML->GetAttributeValue( L"checked", L"false" );
@@ -995,7 +991,12 @@ CXMLElement* CSkin::GetDocument(LPCTSTR pszName)
 HBITMAP CSkin::GetWatermark(LPCTSTR pszName)
 {
 	CString strPath;
-	if ( m_pWatermarks.Lookup( pszName, strPath ) ) return LoadBitmap( strPath );
+	if ( m_pWatermarks.Lookup( pszName, strPath ) )
+	{
+		if ( HBITMAP hBitmap = LoadBitmap( strPath ) )
+			return hBitmap;
+		theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Failed to load watermark"), CString( pszName ) + _T(". File: ") + strPath );
+	}
 	return NULL;
 }
 
@@ -1212,9 +1213,9 @@ BOOL CSkin::Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID, CToolTipCtrl*
 		strCaption.Replace( _T("\n"), _T("{n}") );
 		strCaption.Replace( _T("\r"), _T("") );
 		strCaption.Replace( _T("&"), _T("_") );
-		CString strTemp;
-		CXMLNode::ValueToString( strCaption, strTemp );
-		strCaption = strTemp;
+		CString strTempCaption;
+		CXMLNode::ValueToString( strCaption, strTempCaption );
+		strCaption = strTempCaption;
 		nBytes = WideCharToMultiByte( CP_ACP, 0, strCaption, strCaption.GetLength(), NULL, 0, NULL, NULL );
 		pBytes = new CHAR[nBytes];
 		WideCharToMultiByte( CP_ACP, 0, strCaption, strCaption.GetLength(), pBytes, nBytes, NULL, NULL );
@@ -1676,16 +1677,9 @@ BOOL CSkin::LoadColourScheme(CXMLElement* pBase)
 			{
 				if ( strValue.GetLength() == 6 )
 				{
-					int nRed, nGreen, nBlue;
-
-					_stscanf( strValue.Mid( 0, 2 ), _T("%x"), &nRed );
-					_stscanf( strValue.Mid( 2, 2 ), _T("%x"), &nGreen );
-					_stscanf( strValue.Mid( 4, 2 ), _T("%x"), &nBlue );
-
 					if ( strName.Find( _T("system.") ) >= 0 )
 					{
 						bSystem = TRUE;
-
 						if ( ! bNonBase && strName.Find( _T(".base.") ) < 0 )
 						{
 							bNonBase = TRUE;
@@ -1693,7 +1687,15 @@ BOOL CSkin::LoadColourScheme(CXMLElement* pBase)
 						}
 					}
 
-					*pColour = RGB( nRed, nGreen, nBlue );
+					int nRed = 0, nGreen = 0, nBlue = 0;
+					if ( _stscanf( strValue.Mid( 0, 2 ), _T("%x"), &nRed ) == 1 &&
+						 _stscanf( strValue.Mid( 2, 2 ), _T("%x"), &nGreen ) == 1 &&
+						 _stscanf( strValue.Mid( 4, 2 ), _T("%x"), &nBlue ) == 1 )
+					{
+						*pColour = RGB( nRed, nGreen, nBlue );
+					}
+					else
+						theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [value] attribute in [colour] element"), pXML->ToString() );
 				}
 				else if ( strValue.GetLength() == 0 )
 				{
@@ -1733,16 +1735,23 @@ BOOL CSkin::LoadResourceMap(CXMLElement* pBase)
 			 pXML->IsNamed( L"control" ) ||
 			 pXML->IsNamed( L"resource" ) )
 		{
-			CString strTemp = pXML->GetAttributeValue( _T("code") );
+			CString strCode = pXML->GetAttributeValue( _T("code") );
 			UINT nID;
-
-			if ( _stscanf( strTemp, _T("%lu"), &nID ) != 1 )
+			if ( _stscanf( strCode, _T("%lu"), &nID ) != 1 )
+			{
+				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [code] attribute in resource map element"), pXML->ToString() );
 				return FALSE;
-
-			CoolInterface.NameCommand( nID, pXML->GetAttributeValue( _T("id") ) );
+			}
+			CString strID = pXML->GetAttributeValue( _T("id") );
+			if ( strID.IsEmpty() )
+			{
+				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Missed [id] attribute in resource map element"), pXML->ToString() );
+				return FALSE;
+			}
+			CoolInterface.NameCommand( nID, strID );
 		}
 		else
-			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [...Map] element"), pXML->ToString() );
+			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in resource map"), pXML->ToString() );
 	}
 
 	return TRUE;
@@ -1759,15 +1768,16 @@ BOOL CSkin::LoadFonts(CXMLElement* pBase, const CString& strPath)
 
 		if ( pXML->IsNamed( _T("font") ) )
 		{
-			CString strName		= pXML->GetAttributeValue( _T("name") );
 			CString strLanguage	= pXML->GetAttributeValue( _T("language") );
-			CString strFace		= pXML->GetAttributeValue( _T("face") );
-			CString strSize		= pXML->GetAttributeValue( _T("size") );
-			CString strWeight	= pXML->GetAttributeValue( _T("weight") );
 
 			if ( ( Settings.General.Language.CompareNoCase( strLanguage ) == 0 ) ||
 				 strLanguage.IsEmpty() )
 			{
+				CString strName		= pXML->GetAttributeValue( _T("name") );
+				CString strFace		= pXML->GetAttributeValue( _T("face") );
+				CString strSize		= pXML->GetAttributeValue( _T("size") );
+				CString strWeight	= pXML->GetAttributeValue( _T("weight") );
+
 				CFont* pFont = NULL;
 
 				if ( strName.CompareNoCase( _T("system.plain") ) == 0 )
@@ -1807,46 +1817,53 @@ BOOL CSkin::LoadFonts(CXMLElement* pBase, const CString& strPath)
 
 				if ( strWeight.CompareNoCase( _T("bold") ) == 0 )
 					strWeight = _T("700");
-				else if ( strWeight.IsEmpty() )
+				else if ( strWeight.IsEmpty() || strWeight.CompareNoCase( _T("normal") ) == 0 )
 					strWeight = _T("400");
 
 				int nFontSize = Settings.Fonts.FontSize, nFontWeight = FW_NORMAL;
 
-				_stscanf( strSize, _T("%i"), &nFontSize );
-				_stscanf( strWeight, _T("%i"), &nFontWeight );
+				if ( strSize.GetLength() && _stscanf( strSize, _T("%i"), &nFontSize ) != 1 )
+					theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [size] attribute in [font] element"), pXML->ToString() );
 
-				pFont->CreateFont( -nFontSize, 0, 0, 0, nFontWeight, FALSE, FALSE, FALSE,
+				if ( strWeight.GetLength() && _stscanf( strWeight, _T("%i"), &nFontWeight ) != 1 )
+					theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [weight] attribute in [font] element"), pXML->ToString() );
+
+				if ( ! pFont->CreateFont( -nFontSize, 0, 0, 0, nFontWeight, FALSE, FALSE, FALSE,
 					DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
 					theApp.m_nFontQuality,
-					DEFAULT_PITCH|FF_DONTCARE, strFace );
+					DEFAULT_PITCH|FF_DONTCARE, strFace ) )
+					theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Failed to create font"), pXML->ToString() );
 
 				if ( strName.CompareNoCase( _T("system.plain") ) == 0 )
 				{
 					pFont = &CoolInterface.m_fntUnder;
 					if ( pFont->m_hObject ) pFont->DeleteObject();
 
-					pFont->CreateFont( -nFontSize, 0, 0, 0, nFontWeight, FALSE, TRUE, FALSE,
+					if ( ! pFont->CreateFont( -nFontSize, 0, 0, 0, nFontWeight, FALSE, TRUE, FALSE,
 							DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
 							theApp.m_nFontQuality,
-							DEFAULT_PITCH|FF_DONTCARE, strFace );
+							DEFAULT_PITCH|FF_DONTCARE, strFace ) )
+						theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Failed to create font (underline)"), pXML->ToString() );
 
 					pFont = &CoolInterface.m_fntItalic;
 					if ( pFont->m_hObject ) pFont->DeleteObject();
 
-					pFont->CreateFont( -nFontSize, 0, 0, 0, nFontWeight, TRUE, FALSE, FALSE,
+					if ( ! pFont->CreateFont( -nFontSize, 0, 0, 0, nFontWeight, TRUE, FALSE, FALSE,
 							DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
 							theApp.m_nFontQuality,
-							DEFAULT_PITCH|FF_DONTCARE, strFace );
+							DEFAULT_PITCH|FF_DONTCARE, strFace ) )
+						theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Failed to create font (italic)"), pXML->ToString() );
 				}
 				else if ( strName.CompareNoCase( _T("system.bold") ) == 0 )
 				{
 					pFont = &CoolInterface.m_fntBoldItalic;
 					if ( pFont->m_hObject ) pFont->DeleteObject();
 
-					pFont->CreateFont( -nFontSize, 0, 0, 0, nFontWeight, TRUE, FALSE, FALSE,
+					if ( ! pFont->CreateFont( -nFontSize, 0, 0, 0, nFontWeight, TRUE, FALSE, FALSE,
 							DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
 							theApp.m_nFontQuality,
-							DEFAULT_PITCH|FF_DONTCARE, strFace );
+							DEFAULT_PITCH|FF_DONTCARE, strFace ) )
+						theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Failed to create font (bold italic)"), pXML->ToString() );
 				}
 			}
 		}
@@ -1854,9 +1871,7 @@ BOOL CSkin::LoadFonts(CXMLElement* pBase, const CString& strPath)
 		{
 			CString strFile = strPath + pXML->GetAttributeValue( _T("path") );
 
-			BOOL bSuccess = AddFontResourceEx( strFile, FR_PRIVATE, NULL );
-
-			if ( bSuccess )
+			if ( AddFontResourceEx( strFile, FR_PRIVATE, NULL ) )
 				m_pFontPaths.AddTail( strFile );
 			else
 				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Failed to import font"), pXML->ToString() );
@@ -1875,7 +1890,7 @@ CString	CSkin::GetImagePath(UINT nImageID) const
 {
 	CString strPath;
 	if ( ! m_pImages.Lookup( nImageID, strPath ) )
-		strPath.Format( _T("\"%s\",-%u"), theApp.m_strBinaryPath, nImageID );
+		strPath.Format( _T("\"%s\",-%u"), (LPCTSTR)theApp.m_strBinaryPath, nImageID );
 	return strPath;
 }
 
@@ -1913,9 +1928,10 @@ BOOL CSkin::LoadCommandIcon(CXMLElement* pXML, const CString& strPath)
 		pXML->GetAttributeValue( _T("path") );
 
 	UINT nIconID = LookupCommandID( pXML, _T("res") );
-	HINSTANCE hInstance( NULL );
+	HINSTANCE hInstance = NULL;
 	if ( nIconID )
-		_stscanf( strPath, _T("%p"), &hInstance );
+		if ( strPath.GetLength() && _stscanf( strPath, _T("%p"), &hInstance ) != 1 )
+			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad instance in [icon] element"), pXML->ToString() );
 
 	UINT nID = LookupCommandID( pXML );
 	if ( nID == 0 )
@@ -1991,9 +2007,9 @@ BOOL CSkin::LoadCommandBitmap(CXMLElement* pBase, const CString& strPath)
 	// If nID is 0 then we don't want to include it in strFile because
 	// strFile must be a file system path rather than a resource path.
 	if ( nID )
-		strFile.Format( _T("%s%lu%s"), strPath, nID, pBase->GetAttributeValue( _T("path") ) );
+		strFile.Format( _T("%s%lu%s"), (LPCTSTR)strPath, nID, (LPCTSTR)pBase->GetAttributeValue( _T("path") ) );
 	else
-		strFile.Format( _T("%s%s"), strPath, pBase->GetAttributeValue( _T("path") ) );
+		strFile.Format( _T("%s%s"), (LPCTSTR)strPath, (LPCTSTR)pBase->GetAttributeValue( _T("path") ) );
 
 	CString strMask = pBase->GetAttributeValue( _T("mask"), _T("00FF00") );
 	COLORREF crMask;

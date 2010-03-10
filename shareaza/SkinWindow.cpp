@@ -1,7 +1,7 @@
 //
 // SkinWindow.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -271,16 +271,19 @@ BOOL CSkinWindow::Parse(CXMLElement* pBase, const CString& strPath)
 
 			CString strFont = pGroup->GetAttributeValue( _T("fontFace") );
 			CString strSize = pGroup->GetAttributeValue( _T("fontSize") );
-			CString strBold = pGroup->GetAttributeValue( _T("fontWeight") );
+			CString strWeight = pGroup->GetAttributeValue( _T("fontWeight") );
 
-			if ( strBold.CompareNoCase( _T("bold") ) == 0 )
-				strBold = _T("700");
-			else if ( strBold.CompareNoCase( _T("normal") ) == 0 )
-				strBold = _T("400");
+			if ( strWeight.IsEmpty() || strWeight.CompareNoCase( _T("bold") ) == 0 )
+				strWeight = _T("700");
+			else if ( strWeight.CompareNoCase( _T("normal") ) == 0 )
+				strWeight = _T("400");
 
-			int nFontSize = 13, nFontWeight = FW_BOLD;
-			_stscanf( strSize, _T("%i"), &nFontSize );
-			_stscanf( strBold, _T("%i"), &nFontWeight );
+			int nFontSize = Settings.Fonts.FontSize + 2, nFontWeight = FW_BOLD;
+			if ( strSize.GetLength() && _stscanf( strSize, _T("%i"), &nFontSize ) != 1 )
+				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [fontSize] attribute in [caption] element"), pGroup->ToString() );
+
+			if ( strWeight.GetLength() && _stscanf( strWeight, _T("%i"), &nFontWeight ) != 1 )
+				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [fontWeight] attribute in [caption] element"), pGroup->ToString() );
 
 			LOGFONT lf = {};
 			lf.lfHeight			= nFontSize;
@@ -302,7 +305,6 @@ BOOL CSkinWindow::Parse(CXMLElement* pBase, const CString& strPath)
 				lf.lfHeight = -lf.lfHeight;
 				m_fnCaption.CreateFontIndirect( &lf );
 			}
-
 
 			str = pGroup->GetAttributeValue( _T("color") );
 			ParseColour( str, m_crCaptionText );
@@ -423,10 +425,13 @@ BOOL CSkinWindow::Parse(CXMLElement* pBase, const CString& strPath)
 		}
 		else if ( pGroup->IsNamed( _T("minimumSize") ) )
 		{
-			CString str = pGroup->GetAttributeValue( _T("width") );
-			_stscanf( str, _T("%i"), &m_szMinSize.cx );
-			str = pGroup->GetAttributeValue( _T("height") );
-			_stscanf( str, _T("%i"), &m_szMinSize.cy );
+			CString strWidth = pGroup->GetAttributeValue( _T("width") );
+			if ( strWidth.GetLength() && _stscanf( strWidth, _T("%i"), &m_szMinSize.cx ) != 1 )
+				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [width] attribute in [minimumSize] element"), pGroup->ToString() );
+
+			CString strHeight = pGroup->GetAttributeValue( _T("height") );
+			if ( strHeight.GetLength() && _stscanf( strHeight, _T("%i"), &m_szMinSize.cy ) != 1 )
+				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [height] attribute in [minimumSize] element"), pGroup->ToString() );
 		}
 		else
 			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [windowSkin] element"), pGroup->ToString() );
@@ -1369,9 +1374,13 @@ void CSkinWindow::SelectRegion(CWnd* pWnd)
 		else if ( strType.CompareNoCase( _T("roundRect") ) == 0 )
 		{
 			int nWidth, nHeight;
-			_stscanf( pXML->GetAttributeValue( _T("size") ), _T("%i,%i"), &nWidth, &nHeight );
-			hPart = CreateRoundRectRgn( rcPart.left, rcPart.top, rcPart.right, rcPart.bottom,
-				nWidth, nHeight );
+			if ( _stscanf( pXML->GetAttributeValue( _T("size") ), _T("%i,%i"), &nWidth, &nHeight ) == 2 )
+			{
+				hPart = CreateRoundRectRgn( rcPart.left, rcPart.top, rcPart.right, rcPart.bottom,
+					nWidth, nHeight );
+			}
+			else
+				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [size] attribute in [roundRect] element"), pXML->ToString() );
 		}
 		else
 		{
