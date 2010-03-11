@@ -60,8 +60,8 @@ CBTClient::CBTClient()
 	, m_bOnline				( FALSE )
 	, m_bClosing			( FALSE )
 	, m_tLastKeepAlive		( GetTickCount() )
-	, m_dUtMetadataID		( 0 )
-	, m_dUtMetadataSize		( 0 )
+	, m_nUtMetadataID		( 0 )
+	, m_nUtMetadataSize		( 0 )
 {
 	m_sUserAgent = _T("BitTorrent");
 	m_mInput.pLimit = m_mOutput.pLimit = &Settings.Bandwidth.Request;
@@ -1097,8 +1097,9 @@ void CBTClient::SendExtendedHandshake()
 {
 	CBENode pRoot;
 
-	pRoot.Add( "m" )->Add( "ut_metadata" )->SetInt( EXTENDED_PACKET_UT_METADATA );
-	if ( m_pDownload->IsTorrent() && ! m_pDownload->m_pTorrent.m_bPrivate )
+	pRoot.Add( "m" )->Add( "ut_metadata" )->SetInt( EXTENDED_PACKET_UT_METADATA	);
+	if ( m_pDownload->IsTorrent() && ! m_pDownload->m_pTorrent.m_bPrivate &&
+		 m_pDownload->m_pTorrent.GetInfoSize() > 0 )
 	{
 		pRoot.Add( "metadata_size" )->SetInt( m_pDownload->m_pTorrent.GetInfoSize() );
 	}
@@ -1128,19 +1129,22 @@ BOOL CBTClient::OnExtended(CBTPacket* pPacket)
 	CBuffer pInput;
 	pInput.Add( &pPacket->m_pBuffer[ pPacket->m_nPosition ], pPacket->GetRemaining() );
 
-	CBENode* pRoot = CBENode::Decode( &pInput );
+	DWORD nReaden = 0;
+	CBENode* pRoot = CBENode::Decode( &pInput, &nReaden );
 	if ( pRoot == NULL )
 		return TRUE;
 
 	if ( nPacketID == EXTENDED_PACKET_HANDSHAKE )
 	{
+		theApp.Message( MSG_DEBUG,
+			_T("[BT] EXTENDED PACKET HANDSHAKE: %s"), (LPCTSTR)pRoot->Encode() );
+
 		if ( CBENode* pMetadata = pRoot->GetNode( "m" ) )
 		{
-			CBENode* pUtMetadata = pMetadata->GetNode( "ut_metadata" );
-			if ( ! m_dUtMetadataID && pUtMetadata )
+			if ( CBENode* pUtMetadata = pMetadata->GetNode( "ut_metadata" ) )
 			{
-				m_dUtMetadataID = pUtMetadata->GetInt();
-				if ( m_dUtMetadataID > 0 && ! m_pDownload->m_pTorrent.m_pBlockBTH ) // Send first info request
+				m_nUtMetadataID = pUtMetadata->GetInt();
+				if ( m_nUtMetadataID > 0 && ! m_pDownload->m_pTorrent.m_pBlockBTH ) // Send first info request
 				{
 					int nNextPiece = m_pDownload->m_pTorrent.NextInfoPiece();
 					if ( nNextPiece >= 0 )
@@ -1148,9 +1152,9 @@ BOOL CBTClient::OnExtended(CBTPacket* pPacket)
 				}
 			}
 			
-			if ( CBENode* pUtMetadataSize = pMetadata->GetNode( "metadata_size" ) )
+			if ( CBENode* pUtMetadataSize = pRoot->GetNode( "metadata_size" ) )
 			{
-				m_dUtMetadataSize = pUtMetadata->GetInt();
+				m_nUtMetadataSize = pUtMetadataSize->GetInt();
 			}
 		}
 	}
@@ -1185,23 +1189,31 @@ BOOL CBTClient::OnExtended(CBTPacket* pPacket)
 					pOutput.Add( pInfoPiece, InfoLen );
 				}
 
-				SendExtendedPacket( m_dUtMetadataID, &pOutput );
+				SendExtendedPacket( m_nUtMetadataID, &pOutput );
 			}
 			else if ( nMsgType == UT_METADATA_DATA )
 			{
 				CBENode* pTotalSize = pRoot->GetNode( "total_size" );
-				if ( pTotalSize && ! m_pDownload->m_pTorrent.m_pBlockBTH )
+				if (pTotalSize)
 				{
 					QWORD nTotalSize = pTotalSize->GetInt();
-					if ( m_pDownload->m_pTorrent.LoadInfoPiece( nTotalSize,
-						nPiece, pPacket->m_pBuffer, pPacket->m_nLength ) ) // If full info loaded
+					ASSERT( !(m_nUtMetadataSize > 0 && m_nUtMetadataSize != nTotalSize) );
+					if ( !m_nUtMetadataSize )
+						m_nUtMetadataSize = nTotalSize;
+				}
+
+				if ( m_nUtMetadataSize && ! m_pDownload->m_pTorrent.m_pBlockBTH )
+				{
+					
+					if ( m_pDownload->m_pTorrent.LoadInfoPiece( pInput.m_nLength - nReaden,
+						 m_nUtMetadataSize, nPiece, pPacket->m_pBuffer, pPacket->m_nLength ) ) // If full info loaded
 					{
 						 m_pDownload->SetTorrent( m_pDownload->m_pTorrent );
 					}
 					else
 					{
 						int nNextPiece = m_pDownload->m_pTorrent.NextInfoPiece();
-						if ( nNextPiece >= 0 && m_dUtMetadataID > 0 )
+						if ( nNextPiece >= 0 && m_nUtMetadataID > 0 )
 							SendInfoRequest( nNextPiece );
 					}
 				}
@@ -1220,7 +1232,7 @@ BOOL CBTClient::OnExtended(CBTPacket* pPacket)
 
 void CBTClient::SendInfoRequest(QWORD nPiece)
 {
-	ASSERT( m_dUtMetadataID );
+	ASSERT( m_nUtMetadataID );
 
 	CBENode pRoot;
 	pRoot.Add( "msg_type"	)->SetInt( UT_METADATA_REQUEST ); //Request
@@ -1229,5 +1241,5 @@ void CBTClient::SendInfoRequest(QWORD nPiece)
 	CBuffer pOutput;
 	pRoot.Encode( &pOutput );
 
-	SendExtendedPacket( m_dUtMetadataID, &pOutput );
+	SendExtendedPacket( m_nUtMetadataID, &pOutput );
 }

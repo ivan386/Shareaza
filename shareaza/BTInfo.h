@@ -1,7 +1,7 @@
 //
 // BTInfo.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -130,11 +130,11 @@ private:
 public:
 	void		Serialize(CArchive& ar);
 
-	BOOL		LoadInfoPiece(DWORD nInfoSize, DWORD nInfoPiece, BYTE *pPacketBuffer, DWORD nPacketLength);
+	BOOL		LoadInfoPiece(DWORD nPieceSize, DWORD nInfoSize, DWORD nInfoPiece, BYTE *pPacketBuffer, DWORD nPacketLength);
 	int			NextInfoPiece();
 	DWORD		GetInfoPiece(DWORD nPiece, BYTE *pInfoPiece);
 	DWORD		GetInfoSize();
-	BOOL		CheckInfoData(const CBuffer* pSource);
+	BOOL		CheckInfoData();
 	BOOL		LoadTorrentFile(LPCTSTR pszFile);
 	BOOL		LoadTorrentBuffer(const CBuffer* pBuffer);
 	BOOL		LoadTorrentTree(const CBENode* pRoot);
