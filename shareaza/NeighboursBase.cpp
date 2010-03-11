@@ -64,16 +64,16 @@ POSITION CNeighboursBase::GetIterator() const
 {
 	ASSUME_LOCK( Network.m_pSection );
 
-	return m_pNeighbours.GetStartPosition();
+	return m_pIndex.GetStartPosition();
 }
 
 CNeighbour* CNeighboursBase::GetNext(POSITION& pos) const
 {
 	ASSUME_LOCK( Network.m_pSection );
 
-	IN_ADDR nAddress;
-	CNeighbour* pNeighbour;
-	m_pNeighbours.GetNextAssoc( pos, nAddress, pNeighbour );
+	DWORD_PTR nKey = 0;
+	CNeighbour* pNeighbour = NULL;
+	m_pIndex.GetNextAssoc( pos, nKey, pNeighbour );
 	return pNeighbour;
 }
 
@@ -135,26 +135,25 @@ CNeighbour* CNeighboursBase::GetNewest(PROTOCOLID nProtocol, int nState, int nNo
 // Counts the number of neighbours in the list that match these criteria, pass -1 to count them all
 DWORD CNeighboursBase::GetCount(PROTOCOLID nProtocol, int nState, int nNodeType) const
 {
-	DWORD nCount = 0;
-
 	CSingleLock pLock( &Network.m_pSection, FALSE );
-	if ( pLock.Lock( 200 ) )
-	{
-		for ( POSITION pos = GetIterator() ; pos ; )
-		{
-			CNeighbour* pNeighbour = GetNext( pos );
+	if ( ! pLock.Lock( 200 ) )
+		return 0;
 
-			// If this neighbour has the protocol we are looking for, or nProtocl is negative to count them all
-			if ( nProtocol == PROTOCOL_ANY || nProtocol == pNeighbour->m_nProtocol )
+	DWORD nCount = 0;
+	for ( POSITION pos = GetIterator() ; pos ; )
+	{
+		const CNeighbour* pNeighbour = GetNext( pos );
+
+		// If this neighbour has the protocol we are looking for, or nProtocl is negative to count them all
+		if ( nProtocol == PROTOCOL_ANY || nProtocol == pNeighbour->m_nProtocol )
+		{
+			// If this neighbour is currently in the state we are looking for, or nState is negative to count them all
+			if ( nState < 0 || nState == pNeighbour->m_nState )
 			{
-				// If this neighbour is currently in the state we are looking for, or nState is negative to count them all
-				if ( nState < 0 || nState == pNeighbour->m_nState )
+				// If this neighbour is in the ultra or leaf role we are looking for, or nNodeType is null to count them all
+				if ( nNodeType < 0 || nNodeType == pNeighbour->m_nNodeType )
 				{
-					// If this neighbour is in the ultra or leaf role we are looking for, or nNodeType is null to count them all
-					if ( nNodeType < 0 || nNodeType == pNeighbour->m_nNodeType )
-					{
-						nCount++;
-					}
+					nCount++;
 				}
 			}
 		}
