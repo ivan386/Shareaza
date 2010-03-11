@@ -281,6 +281,7 @@ END_MESSAGE_MAP()
 CMainWnd::CMainWnd() :
 	m_bTrayHide ( FALSE ),
 	m_bTrayIcon ( FALSE ),
+	m_bTrayUpdate( TRUE ),
 	m_bTimer ( FALSE ),
 	m_pSkin ( NULL ),
 	m_pURLDialog ( NULL ),
@@ -288,7 +289,9 @@ CMainWnd::CMainWnd() :
 	m_nAlpha ( 255 )
 {
 	ZeroMemory( &m_pTray, sizeof( NOTIFYICONDATA ) );
-	m_pTray.cbSize = sizeof( NOTIFYICONDATA );
+	m_pTray.cbSize				= sizeof( NOTIFYICONDATA );
+	m_pTray.uCallbackMessage	= WM_TRAY;
+	m_pTray.uVersion			= NOTIFYICON_VERSION; // NOTIFYICON_VERSION_4;
 
 	theApp.m_pMainWnd = this;
 
@@ -512,10 +515,6 @@ int CMainWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	Settings.Live.LoadWindowState = TRUE;
 
 	// Go
-
-	m_bTrayHide	= FALSE;
-	m_bTrayIcon	= FALSE;
-	m_bTimer	= FALSE;
 
 	SetTimer( 1, 1000, NULL );
 
@@ -830,13 +829,12 @@ void CMainWnd::OnTimer(UINT_PTR nIDEvent)
 		// Delete existing tray icon (if any), windows can't create a new icon with same uID
 		Shell_NotifyIcon( NIM_DELETE, &m_pTray );
 
-		m_pTray.uID					= 0;
-		m_pTray.uFlags				= NIF_ICON | NIF_MESSAGE | NIF_TIP;
-		m_pTray.uCallbackMessage	= WM_TRAY;
-		m_pTray.uVersion			= NOTIFYICON_VERSION_4;
+		m_pTray.uFlags = NIF_ICON | NIF_MESSAGE | NIF_TIP;
 		_tcsncpy( m_pTray.szTip, Settings.SmartAgent(), _countof( m_pTray.szTip ) );
 
+		m_bTrayUpdate = TRUE;
 		m_bTrayIcon = Shell_NotifyIcon( NIM_ADD, &m_pTray );
+		Shell_NotifyIcon( NIM_SETVERSION, &m_pTray );
 	}
 	else if ( m_bTrayIcon && ! bNeedTrayIcon )
 	{
@@ -927,53 +925,64 @@ void CMainWnd::OpenFromTray(int nShowCmd)
 
 LRESULT CMainWnd::OnTray(WPARAM /*wParam*/, LPARAM lParam)
 {
-	if ( LOWORD(lParam) == WM_LBUTTONDBLCLK )
+	switch ( LOWORD( lParam ) )
 	{
+	case WM_MOUSEMOVE:
+		m_bTrayUpdate = TRUE;
+		break;
+
+	case WM_LBUTTONDBLCLK:
 		if ( m_bTrayHide )
 			OpenFromTray();
 		else
 			CloseToTray();
-	}
-	else if ( LOWORD(lParam) == WM_RBUTTONDOWN )
-	{
-		UINT nFlags = TPM_RIGHTBUTTON;
-		CPoint pt;
-		CRect rc;
+		break;
 
-		GetCursorPos( &pt );
-		SystemParametersInfo( SPI_GETWORKAREA, 0, &rc, 0 );
-
-		nFlags |= TPM_CENTERALIGN;
-
-		if ( pt.y > GetSystemMetrics( SM_CYSCREEN ) / 2 )
-		{
-			pt.y = rc.bottom;
-			nFlags |= TPM_TOPALIGN;
-		}
-		else
-		{
-			pt.y = rc.top;
-			nFlags |= TPM_BOTTOMALIGN;
-		}
-
-		SetForegroundWindow();
-
-		CMenu* pMenu = Skin.GetMenu( _T("CMainWnd.Tray") );
-		if ( pMenu == NULL ) return 0;
-
-		MENUITEMINFO pInfo;
-		pInfo.cbSize	= sizeof(pInfo);
-		pInfo.fMask		= MIIM_STATE;
-		GetMenuItemInfo( pMenu->GetSafeHmenu(), ID_TRAY_OPEN, FALSE, &pInfo );
-		pInfo.fState	|= MFS_DEFAULT;
-		SetMenuItemInfo( pMenu->GetSafeHmenu(), ID_TRAY_OPEN, FALSE, &pInfo );
-
-		pMenu->TrackPopupMenu( nFlags, pt.x, pt.y, this, NULL );
-
-		PostMessage( WM_NULL );
+	case WM_RBUTTONDOWN:
+		OpenTrayMenu();
+		break;
 	}
 
 	return 0;
+}
+
+void CMainWnd::OpenTrayMenu()
+{
+	CPoint pt;
+	CRect rc;
+
+	GetCursorPos( &pt );
+	SystemParametersInfo( SPI_GETWORKAREA, 0, &rc, 0 );
+
+	UINT nFlags = TPM_CENTERALIGN | TPM_RIGHTBUTTON;
+
+	if ( pt.y > GetSystemMetrics( SM_CYSCREEN ) / 2 )
+	{
+		nFlags |= TPM_TOPALIGN;
+	}
+	else
+	{
+		nFlags |= TPM_BOTTOMALIGN;
+	}
+
+	SetForegroundWindow();
+
+	CMenu* pMenu = Skin.GetMenu( _T("CMainWnd.Tray") );
+	if ( pMenu == NULL )
+		return;
+
+	MENUITEMINFO pInfo = {};
+	pInfo.cbSize	= sizeof(pInfo);
+	pInfo.fMask		= MIIM_STATE;
+	GetMenuItemInfo( pMenu->GetSafeHmenu(), ID_TRAY_OPEN, FALSE, &pInfo );
+	pInfo.fState	|= MFS_DEFAULT;
+	SetMenuItemInfo( pMenu->GetSafeHmenu(), ID_TRAY_OPEN, FALSE, &pInfo );
+
+	pMenu->TrackPopupMenu( nFlags, pt.x, pt.y, this, NULL );
+
+	PostMessage( WM_NULL );
+
+	Shell_NotifyIcon( NIM_SETFOCUS, &m_pTray );
 }
 
 void CMainWnd::OnTrayOpen()
@@ -1360,105 +1369,101 @@ void CMainWnd::GetMessageString(UINT nID, CString& rMessage) const
 
 void CMainWnd::UpdateMessages()
 {
-	CString strFormat, strMessage, strOld;
+	// StatusBar
+	{
+		CString strMessage;
 
-	if ( Network.IsWellConnected() )
-	{	//If you have neighbours, you are connected
 		QWORD nLocalVolume;
 		LibraryMaps.GetStatistics( NULL, &nLocalVolume );
 
-		if ( Settings.General.GUIMode == GUI_BASIC )
-		{	//In the basic GUI, don't bother with mode details or neighbour count.
-			strMessage.Format( IDS_STATUS_BAR_CONNECTED_SIMPLE, Settings.SmartVolume( nLocalVolume, KiloBytes ) );
-		}
-		else
-		{	//Display node type and number of neighbours
-			if (  Neighbours.IsG2Hub() )
+		if ( Network.IsWellConnected() )
+		{
+			// If you have neighbours, you are connected
+			if ( Settings.General.GUIMode == GUI_BASIC )
 			{
-				if (  Neighbours.IsG1Ultrapeer() )
-					LoadString( strFormat, IDS_STATUS_BAR_CONNECTED_HUB_UP );
-				else
-					LoadString( strFormat, IDS_STATUS_BAR_CONNECTED_HUB );
+				// In the basic GUI, don't bother with mode details or neighbour count.
+				strMessage.Format( LoadString( IDS_STATUS_BAR_CONNECTED_SIMPLE ),
+					Settings.SmartVolume( nLocalVolume, KiloBytes ) );
 			}
 			else
 			{
-				if (  Neighbours.IsG1Ultrapeer() )
-					LoadString( strFormat, IDS_STATUS_BAR_CONNECTED_UP );
-				else
-					LoadString( strFormat, IDS_STATUS_BAR_CONNECTED );
+				// Display node type and number of neighbours
+				strMessage.Format( LoadString( Neighbours.IsG2Hub() ?
+					( Neighbours.IsG1Ultrapeer() ? IDS_STATUS_BAR_CONNECTED_HUB_UP : IDS_STATUS_BAR_CONNECTED_HUB ) :
+					( Neighbours.IsG1Ultrapeer() ? IDS_STATUS_BAR_CONNECTED_UP : IDS_STATUS_BAR_CONNECTED ) ),
+					Neighbours.GetStableCount(), Settings.SmartVolume( nLocalVolume, KiloBytes ) );
 			}
-			strMessage.Format( strFormat, Neighbours.GetStableCount(), Settings.SmartVolume( nLocalVolume, KiloBytes ) );
 		}
-	}
-	else if ( Network.IsConnected() )
-	{	// If G1, G2, eDonkey are disabled and only BitTorrent is enabled say connected
-		if( !Settings.Gnutella1.EnableToday && !Settings.Gnutella2.EnableToday && !Settings.eDonkey.EnableToday )
+		else if ( Network.IsConnected() )
 		{
-			LoadString( strFormat, IDS_STATUS_BAR_CONNECTED_SIMPLE );
+			// If G1, G2, eDonkey are disabled and only BitTorrent is enabled say connected
+			if( ! Settings.Gnutella1.EnableToday &&
+				! Settings.Gnutella2.EnableToday &&
+				! Settings.eDonkey.EnableToday )
+			{
+				strMessage.Format( LoadString( IDS_STATUS_BAR_CONNECTED_SIMPLE ),
+					Settings.SmartVolume( nLocalVolume, KiloBytes ) );
+			}
+			else
+				// Trying to connect
+				LoadString( strMessage, IDS_STATUS_BAR_CONNECTING );
 		}
-		else	//Trying to connect
-			LoadString( strMessage, IDS_STATUS_BAR_CONNECTING );
-	}
-	else
-	{	//Idle
-		LoadString( strMessage, IDS_STATUS_BAR_DISCONNECTED );
+		else
+			// Idle
+			LoadString( strMessage, IDS_STATUS_BAR_DISCONNECTED );
+
+		if ( Settings.VersionCheck.Quote.GetLength() )
+		{
+			strMessage += _T("  ");
+			strMessage += Settings.VersionCheck.Quote;
+		}
+
+		if ( m_nIDLastMessage == AFX_IDS_IDLEMESSAGE )
+		{
+			CString strOld;
+			m_wndStatusBar.GetWindowText( strOld );
+			if ( strOld != strMessage )
+				m_wndStatusBar.SetWindowText( strMessage );
+		}
+
+		m_sMsgStatus = strMessage;
 	}
 
-	if ( Settings.VersionCheck.Quote.GetLength() )
+	// StatusBar pane 1
 	{
-		strMessage += _T("  ");
-		strMessage += Settings.VersionCheck.Quote;
+		CString strStatusbar;
+		strStatusbar.Format( LoadString( IDS_STATUS_BAR_BANDWIDTH ),
+			Settings.SmartSpeed( CGraphItem::GetValue( GRC_TOTAL_BANDWIDTH_IN ), bits ),
+			Settings.SmartSpeed( CGraphItem::GetValue( GRC_TOTAL_BANDWIDTH_OUT ), bits ),
+			CGraphItem::GetValue( GRC_DOWNLOADS_TRANSFERS ),
+			CGraphItem::GetValue( GRC_UPLOADS_TRANSFERS ) );
+
+		CString strOld;
+		m_wndStatusBar.GetPaneText( 1, strOld );
+		if ( strOld != strStatusbar )
+			m_wndStatusBar.SetPaneText( 1, strStatusbar );
 	}
 
-	if ( m_nIDLastMessage == AFX_IDS_IDLEMESSAGE )
+	// Tray
+	if ( m_bTrayIcon && m_bTrayUpdate )
 	{
-		m_wndStatusBar.GetWindowText( strOld );
-		if ( strOld != strMessage ) m_wndStatusBar.SetWindowText( strMessage );
-	}
+		m_bTrayUpdate = FALSE;
 
-	m_sMsgStatus = strMessage;
-
-	strMessage.Format( IDS_STATUS_BAR_BANDWIDTH,
-		Settings.SmartSpeed( CGraphItem::GetValue( GRC_TOTAL_BANDWIDTH_IN ), bits ),
-		Settings.SmartSpeed( CGraphItem::GetValue( GRC_TOTAL_BANDWIDTH_OUT ), bits ),
-		CGraphItem::GetValue( GRC_DOWNLOADS_TRANSFERS ),
-		CGraphItem::GetValue( GRC_UPLOADS_TRANSFERS ) );
-
-	m_wndStatusBar.GetPaneText( 1, strOld );
-	if ( strOld != strMessage ) m_wndStatusBar.SetPaneText( 1, strMessage );
-
-	if ( m_bTrayIcon )
-	{
-		strMessage.Format( IDS_TRAY_TIP,
+		CString strTip;
+		strTip.Format( LoadString( IDS_TRAY_TIP ),
 			CGraphItem::GetValue( GRC_GNUTELLA_CONNECTIONS ),
 			Settings.SmartSpeed( CGraphItem::GetValue( GRC_TOTAL_BANDWIDTH_IN ), bits ),
 			Settings.SmartSpeed( CGraphItem::GetValue( GRC_TOTAL_BANDWIDTH_OUT ), bits ),
 			CGraphItem::GetValue( GRC_DOWNLOADS_TRANSFERS ),
 			CGraphItem::GetValue( GRC_UPLOADS_TRANSFERS ) );
 
-		if ( strMessage != m_pTray.szTip )
+		if ( strTip != m_pTray.szTip )
 		{
 			m_pTray.uFlags = NIF_TIP;
-			_tcsncpy( m_pTray.szTip, strMessage, _countof( m_pTray.szTip ) );
+			_tcsncpy( m_pTray.szTip, strTip, _countof( m_pTray.szTip ) );
 			m_bTrayIcon = Shell_NotifyIcon( NIM_MODIFY, &m_pTray );
 		}
 	}
-
-	LoadString( strMessage, IDR_MAINFRAME );
-
-	if ( Settings.Live.AutoClose )
-	{
-		LoadString( strOld, IDS_CLOSING_AFTER );
-		strMessage += strOld;
-	}
-
-	if ( _tcsistr( strMessage, _T(CLIENT_NAME) ) == NULL )
-	{
-		strMessage = _T(CLIENT_NAME) _T(" ") + strMessage;
-	}
-
-	GetWindowText( strOld );
-	if ( strOld != strMessage ) SetWindowText( strMessage );
 }
 
 // This function runs some basic checks that everything is okay- disks, directories, local network is
@@ -1790,23 +1795,19 @@ void CMainWnd::OnNetworkED2K()
 
 void CMainWnd::OnUpdateNetworkAutoClose(CCmdUI* pCmdUI)
 {
-	pCmdUI->Enable( Settings.Connection.RequireForTransfers &&
-					( Settings.Live.AutoClose || ( Transfers.GetActiveCount() > 0 ) )
-				  );
-	pCmdUI->SetCheck( Settings.Connection.RequireForTransfers && Settings.Live.AutoClose );
+	pCmdUI->Enable( Settings.Live.AutoClose || Transfers.GetActiveCount() > 0 );
+	pCmdUI->SetCheck( Settings.Live.AutoClose );
 }
 
 void CMainWnd::OnNetworkAutoClose()
 {
 	if ( Settings.Live.AutoClose )
 	{
-		Settings.Live.AutoClose = FALSE;
+		Settings.Live.AutoClose = false;
 	}
 	else
 	{
-		Network.Disconnect();
 		Settings.Live.AutoClose = ( Transfers.GetActiveCount() > 0 );
-
 		if ( Settings.Live.AutoClose )
 		{
 			if ( ! m_bTrayHide ) CloseToTray();
@@ -1816,6 +1817,11 @@ void CMainWnd::OnNetworkAutoClose()
 			PostMessage( WM_CLOSE );
 		}
 	}
+
+	CString strCaption = LoadString( IDR_MAINFRAME );
+	if ( Settings.Live.AutoClose )
+		strCaption += LoadString( IDS_CLOSING_AFTER );
+	SetWindowText( strCaption );
 }
 
 void CMainWnd::OnNetworkExit()

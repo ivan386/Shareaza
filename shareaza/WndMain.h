@@ -51,6 +51,9 @@ public:
 	// Open main window from tray
 	void		OpenFromTray(int nShowCmd = SW_SHOW);
 
+	// Open context menu in the tray
+	void		OpenTrayMenu();
+
 	// Hide application to tray
 	void		CloseToTray();
 
@@ -81,6 +84,7 @@ protected:
 
 	BOOL				m_bTrayHide;			// Is main window hidden to tray?
 	BOOL				m_bTrayIcon;			// Is tray icon available?
+	BOOL				m_bTrayUpdate;			// Is tray data need to be updated?
 	NOTIFYICONDATA		m_pTray;				// Tray icon data
 	BOOL				m_bTimer;
 	CString				m_sMsgStatus;

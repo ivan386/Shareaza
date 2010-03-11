@@ -238,8 +238,6 @@ BOOL CNetwork::Connect(BOOL bAutoConnect)
 
 	CSingleLock pLock( &m_pSection, TRUE );
 
-	Settings.Live.AutoClose = FALSE;
-
 	if ( bAutoConnect )
 	{
 		m_bAutoConnect = TRUE;
