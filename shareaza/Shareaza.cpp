@@ -347,10 +347,10 @@ BOOL CShareazaApp::InitInstance()
 	COleDateTimeSpan tTimeOut( 7, 0, 0, 0);			// Daily builds
 	if ( ( tCompileTime + tTimeOut )  < tCurrent )
 	{
-		AfxMessageBox(
-		L"This is a pre-release version of Shareaza, and the beta testing period has ended.  "
-		L"Please download the full, official release from " WEB_SITE_T L".", MB_ICONQUESTION|MB_OK );
-		//return FALSE;
+		if ( AfxMessageBox(
+			L"This is a pre-release version of Shareaza, and the beta testing period has ended.  "
+			L"Please download the full, official release from " WEB_SITE_T L".", MB_ICONQUESTION|MB_OK ) != IDOK )
+			return FALSE;
 	}
 
 	// Alpha warning. Remember to remove this section for final releases and public betas.
@@ -1104,8 +1104,21 @@ void CShareazaApp::Message(WORD nType, LPCTSTR pszFormat, ...)
 
 void CShareazaApp::PrintMessage(WORD nType, const CString& strLog)
 {
-	if ( Settings.General.DebugLog )
-		LogMessage( strLog );
+	/*if ( Settings.General.DebugLog )
+	{
+		// Default: "%APPDATA%\Shareaza\Shareaza.txt"
+		if ( INT_PTR nFile = BT_OpenLogFile( NULL, BTLF_STREAM ) )
+		{
+			if ( Settings.General.MaxDebugLogSize )
+				VERIFY( BT_SetLogSizeInBytes( nFile, Settings.General.MaxDebugLogSize ) );
+			VERIFY( BT_SetLogLevel( nFile, BTLL_VERBOSE ) );
+			VERIFY( BT_SetLogFlags( nFile, BTLF_SHOWLOGLEVEL |
+				( Settings.General.ShowTimestamp ? BTLF_SHOWTIMESTAMP : 0 ) ) );
+			VERIFY( BT_AppLogEntry( nFile,
+				(BUGTRAP_LOGLEVEL)( nType & MSG_SEVERITY_MASK + 1 ), strLog ) );
+			VERIFY( BT_CloseLogFile( nFile ) );
+		}
+	}*/
 
 	CQuickLock pLock( m_csMessage );
 
@@ -1114,11 +1127,9 @@ void CShareazaApp::PrintMessage(WORD nType, const CString& strLog)
 		delete m_oMessages.RemoveHead();
 
 	m_oMessages.AddTail( new CLogMessage( nType, strLog ) );
-}
 
-void CShareazaApp::LogMessage(const CString& strLog)
-{
-	CQuickLock pLock( m_csMessage );
+	if ( ! Settings.General.DebugLog )
+		return;
 
 	CFile pFile;
 	if ( pFile.Open( Settings.General.UserPath + _T("\\Data\\Shareaza.log"), CFile::modeReadWrite ) )

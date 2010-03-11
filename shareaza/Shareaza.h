@@ -151,8 +151,8 @@ public:
 	void				ShowStartupText();
 	void				Message(WORD nType, UINT nID, ...);
 	void				Message(WORD nType, LPCTSTR pszFormat, ...);
+	// Log to file and to system window
 	void				PrintMessage(WORD nType, const CString& strLog);
-	void				LogMessage(const CString& strLog);
 
 	void				SplashStep(LPCTSTR pszMessage = NULL, int nMax = 0, bool bClosing = false);
 
