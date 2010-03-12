@@ -2478,6 +2478,9 @@
 	<tip id="ID_MEDIA_STOP" message="Stop playing the media file." tip="Stop"/>
 	<tip id="ID_MEDIA_VIS" message="Select an audio visualisation plugin..."/>
 	<tip id="ID_MEDIA_ZOOM" message="Adjust video zoom and aspect ratio settings."/>
+	<tip id="IDC_MEDIA_POSITION" value="Seek to a position in the media file." tip="Seek"/>
+	<tip id="IDC_MEDIA_SPEED" value="Adjust the speed of the media file." tip="Speed"/>
+	<tip id="IDC_MEDIA_VOLUME" value="Adjust the audio volume." tip="Volume"/>
 	<tip id="ID_MONITOR_CLOSE" message="Close the monitor window."/>
 	<tip id="ID_NEIGHBOURS_CHAT" message="Open a chat session with the selected user."/>
 	<tip id="ID_NEIGHBOURS_COPY" message="Copy a URI to access the selected host."/>
