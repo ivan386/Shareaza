@@ -199,6 +199,8 @@ BOOL CLibraryFileView::PreTranslateMessage(MSG* pMsg)
 
 void CLibraryFileView::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 {
+	GetToolTip()->Hide();
+
 	CStringList oFiles;
 	{
 		CQuickLock pLock( Library.m_pSection );
@@ -248,6 +250,8 @@ void CLibraryFileView::OnUpdateLibraryLaunch(CCmdUI* pCmdUI)
 
 void CLibraryFileView::OnLibraryLaunch()
 {
+	GetToolTip()->Hide();
+
 	CMap< CString, const CString&, bool, bool > oFileList;
 
 	{
