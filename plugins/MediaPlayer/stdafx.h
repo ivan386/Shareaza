@@ -1,7 +1,7 @@
 //
 // stdafx.h
 //
-// Copyright (c) Nikolay Raspopov, 2009.
+// Copyright (c) Nikolay Raspopov, 2009-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it

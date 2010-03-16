@@ -12,68 +12,36 @@
 #include "StdAfx.h"
 #include "Resource.h"
 #include "ImageViewer.h"
-#include "ImageViewerPlugin.h"
 
-CComModule _Module;
-
-// The ATL object map lists each COM object in this DLL
-
-BEGIN_OBJECT_MAP(ObjectMap)
-	OBJECT_ENTRY(CLSID_ImageViewerPlugin, CImageViewerPlugin)
-END_OBJECT_MAP()
-
-
-/////////////////////////////////////////////////////////////////////////////
-// DLL Entry Point
-
-extern "C"
-BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID /*lpReserved*/)
+class CModule : public CAtlDllModuleT< CModule >
 {
-	if ( dwReason == DLL_PROCESS_ATTACH )
-	{
-		_Module.Init( ObjectMap, hInstance );
-		DisableThreadLibraryCalls( hInstance );
-		// Don't forget to call the above, otherwise there will be a performance penalty when
-		// Shareaza creates and destroys threads, which we don't want.
-	}
-	else if ( dwReason == DLL_PROCESS_DETACH )
-	{
-		_Module.Term();
-	}
+public :
+	DECLARE_LIBID( LIBID_ImageViewerLib )
+};
 
-	return TRUE;
+CModule _AtlModule;
+
+extern "C" BOOL WINAPI DllMain(HINSTANCE /*hInstance*/, DWORD dwReason, LPVOID lpReserved)
+{
+	return _AtlModule.DllMain( dwReason, lpReserved ); 
 }
-
-/////////////////////////////////////////////////////////////////////////////
-// Used to determine whether the DLL can be unloaded by OLE
 
 STDAPI DllCanUnloadNow(void)
 {
-	return ( _Module.GetLockCount() == 0 ) ? S_OK : S_FALSE;
+	return _AtlModule.DllCanUnloadNow();
 }
-
-/////////////////////////////////////////////////////////////////////////////
-// Returns a class factory to create an object of the requested type
 
 STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, LPVOID* ppv)
 {
-	return _Module.GetClassObject( rclsid, riid, ppv );
+	return _AtlModule.DllGetClassObject( rclsid, riid, ppv );
 }
-
-/////////////////////////////////////////////////////////////////////////////
-// DllRegisterServer - Adds entries to the system registry
 
 STDAPI DllRegisterServer(void)
 {
-	// Pass FALSE as the argument here, as we don't want to register a type library.
-	return _Module.RegisterServer( TRUE );
+	return _AtlModule.DllRegisterServer();
 }
-
-/////////////////////////////////////////////////////////////////////////////
-// DllUnregisterServer - Removes entries from the system registry
 
 STDAPI DllUnregisterServer(void)
 {
-	_Module.UnregisterServer();
-	return S_OK;
+	return _AtlModule.DllUnregisterServer();
 }

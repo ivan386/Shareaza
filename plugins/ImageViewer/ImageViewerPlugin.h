@@ -6,18 +6,20 @@
 // This file is part of Shareaza (www.shareaza.com), original author Michael Stokes. 
 //
 
-#ifndef __ImageViewerPLUGIN_H_
-#define __ImageViewerPLUGIN_H_
+#pragma once
 
 #include "Resource.h"
+#include "ImageViewer.h"
 
 class CImageWindow;
 
 
 class ATL_NO_VTABLE CImageViewerPlugin : 
-	public CComObjectRootEx<CComSingleThreadModel>,
-	public CComCoClass<CImageViewerPlugin, &CLSID_ImageViewerPlugin>,
-	public IGeneralPlugin, public IExecutePlugin, public ICommandPlugin
+	public CComObjectRootEx< CComSingleThreadModel >,
+	public CComCoClass< CImageViewerPlugin, &CLSID_ImageViewerPlugin >,
+	public IGeneralPlugin,
+	public IExecutePlugin,
+	public ICommandPlugin
 {
 // Construction
 public:
@@ -82,4 +84,4 @@ protected:
 
 };
 
-#endif //__ImageViewerPLUGIN_H_
+OBJECT_ENTRY_AUTO(__uuidof(ImageViewerPlugin), CImageViewerPlugin)

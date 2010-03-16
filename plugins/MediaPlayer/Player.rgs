@@ -15,11 +15,8 @@ HKCR
 		{
 			ProgID = s 'Shareaza.MediaPlayer.1'
 			VersionIndependentProgID = s 'Shareaza.MediaPlayer'
+			LocalServer32 = s '%MODULE%'
 			ForceRemove 'Programmable'
-			InprocServer32 = s '%MODULE%'
-			{
-				val ThreadingModel = s 'Both'
-			}
 			val AppID = s '%APPID%'
 			'TypeLib' = s '{4E7B260F-E3A4-42DD-89D8-E0372158626E}'
 		}

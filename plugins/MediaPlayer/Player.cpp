@@ -110,8 +110,7 @@ void Dump(IGraphBuilder* pGraph)
 
 // CPlayerWindow
 
-CPlayerWindow::CPlayerWindow() :
-	m_hLogo( NULL )
+CPlayerWindow::CPlayerWindow()
 {
 }
 
@@ -129,19 +128,6 @@ LRESULT CPlayerWindow::OnPaint(UINT /*nMsg*/, WPARAM /*wParam*/, LPARAM /*lParam
 	HDC hDC = GetWindowDC();
 	
 	FillRect( hDC, &rc, (HBRUSH)GetStockObject( BLACK_BRUSH ) );
-
-	if ( m_hLogo )
-	{
-		BITMAP bm = {};
-		GetObject( m_hLogo, sizeof( BITMAP ), &bm );
-		HDC hMemDC = CreateCompatibleDC( hDC );
-		HBITMAP hOldDitmap = (HBITMAP)SelectObject( hMemDC, m_hLogo );
-		BitBlt( hDC, ( rc.right - rc.left - bm.bmWidth ) / 2,
-			( rc.bottom - rc.top - bm.bmHeight ) / 2,
-			bm.bmWidth, bm.bmHeight, hMemDC, 0, 0, SRCCOPY );
-		SelectObject( hMemDC, hOldDitmap );
-		DeleteDC( hMemDC );
-	}
 
 	ReleaseDC( hDC );
 
@@ -161,6 +147,7 @@ CPlayer::CPlayer()
 	, m_dAspect( 0.0 )
 	, m_dVolume( 0.0 )
 	, m_dSpeed( 0.0 )
+	, m_nVisSize( 0 )
 {
 }
 
@@ -175,7 +162,7 @@ void CPlayer::FinalRelease()
 }
 
 STDMETHODIMP CPlayer::Create(
-	/* [in] */ HWND hWnd)
+	/* [in] */ LONG_PTR hWnd)
 {
 	if ( ! hWnd )
 		return E_INVALIDARG;
@@ -196,19 +183,26 @@ STDMETHODIMP CPlayer::Destroy(void)
 }
 
 STDMETHODIMP CPlayer::Reposition(
-	/* [in] */ RECT *prcWnd)
+	/* [in] */ long Left,
+	/* [in] */ long Top,
+	/* [in] */ long Width,
+	/* [in] */ long Height)
 {
-	if ( ! prcWnd )
-		return E_POINTER;
-
-	m_rcWindow = *prcWnd;
+	m_rcWindow.left = Left;
+	m_rcWindow.top = Top;
+	m_rcWindow.right = Left + Width;
+	m_rcWindow.bottom = Top + Height;
 
 	if ( m_bAudioOnly )
-		m_wndPlayer.SetWindowPos( NULL, &m_rcWindow, SWP_NOZORDER );
+	{
+		if ( m_wndPlayer.m_hWnd )
+			m_wndPlayer.SetWindowPos( NULL, &m_rcWindow,
+				SWP_ASYNCWINDOWPOS | SWP_NOZORDER );
+	}
 	else
 	{	
 		if ( ! m_pGraph )
-			return E_INVALIDARG;
+			return S_OK;
 
 		CComQIPtr< IVideoWindow > pWindow( m_pGraph );
 		if ( ! pWindow )
@@ -219,14 +213,6 @@ STDMETHODIMP CPlayer::Reposition(
 	}
 
 	AdjustVideoPosAndZoom();
-
-	return S_OK;
-}
-
-STDMETHODIMP CPlayer::SetLogoBitmap(
-	/* [in] */ HBITMAP hLogo)
-{
-	m_wndPlayer.m_hLogo = hLogo;
 
 	return S_OK;
 }
@@ -359,21 +345,23 @@ STDMETHODIMP CPlayer::Open(
 
 	//Dump( m_pGraph );
 
-	if ( m_bAudioOnly )
+	/*if ( m_bAudioOnly )
 	{
 		if ( ! m_wndPlayer.m_hWnd )
 		{
-			m_wndPlayer.Create( m_hwndOwner, &m_rcWindow, NULL, WS_CHILD | WS_VISIBLE |
-				WS_CLIPSIBLINGS | WS_CLIPCHILDREN );
+			m_wndPlayer.Create( (HWND)m_hwndOwner, &m_rcWindow,
+				_T("MediaPlayer Window"),
+				WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN,
+				WS_EX_TOPMOST );
 		}
 	}
-	else
+	else*/
 	{
 		hr = pWindow->put_WindowStyle( WS_CHILD | WS_VISIBLE |
 			WS_CLIPSIBLINGS | WS_CLIPCHILDREN );
 		hr = pWindow->put_WindowStyleEx( WS_EX_TOPMOST );
-		hr = pWindow->put_Owner( (OAHWND)m_hwndOwner );
-		hr = pWindow->put_MessageDrain( (OAHWND)m_hwndOwner );
+		hr = pWindow->put_Owner( m_hwndOwner );
+		hr = pWindow->put_MessageDrain( m_hwndOwner );
 	}
 
 	return S_OK;
@@ -403,7 +391,9 @@ STDMETHODIMP CPlayer::Play(void)
 
 	if ( m_bAudioOnly )
 	{
-		m_wndPlayer.SetWindowPos( NULL, &m_rcWindow, SWP_NOZORDER | SWP_SHOWWINDOW );
+		if ( m_wndPlayer.m_hWnd )
+			m_wndPlayer.SetWindowPos( NULL, &m_rcWindow,
+				SWP_ASYNCWINDOWPOS | SWP_NOZORDER | SWP_SHOWWINDOW );
 	}
 	else
 	{
@@ -454,7 +444,10 @@ STDMETHODIMP CPlayer::Stop(void)
 		return E_INVALIDARG;
 
 	if ( m_bAudioOnly )
-		m_wndPlayer.ShowWindow( SW_HIDE );
+	{
+		if ( m_wndPlayer.m_hWnd )
+			m_wndPlayer.ShowWindow( SW_HIDE );
+	}
 	else
 	{
 		CComQIPtr< IVideoWindow > pWindow( m_pGraph );
@@ -599,15 +592,17 @@ STDMETHODIMP CPlayer::GetPlugin(
 	if ( ! ppPlugin )
 		return E_POINTER;
 
-	*ppPlugin = NULL;
+	*ppPlugin = m_pAudioVisPlugin;
 
-	return E_NOTIMPL;
+	return S_OK;
 }
 
 STDMETHODIMP CPlayer::SetPlugin(
 	/* [in] */ IAudioVisPlugin *pPlugin)
 {
-	return E_NOTIMPL;
+	m_pAudioVisPlugin = pPlugin;
+
+	return S_OK;
 }
 
 STDMETHODIMP CPlayer::GetPluginSize(
@@ -616,13 +611,36 @@ STDMETHODIMP CPlayer::GetPluginSize(
 	if ( ! pnSize )
 		return E_POINTER;
 
-	return E_NOTIMPL;
+	*pnSize = m_nVisSize;
+
+	return S_OK;
 }
 
 STDMETHODIMP CPlayer::SetPluginSize(
 	/* [in] */ LONG nSize)
 {
-	return E_NOTIMPL;
+	m_nVisSize = nSize;
+
+	return S_OK;
+}
+
+STDMETHODIMP CPlayer::IsWindowVisible(
+	/* [out] */ VARIANT_BOOL* pbVisible )
+{
+	if ( ! pbVisible )
+		return E_POINTER;
+
+	if ( m_bAudioOnly )
+	{
+		if ( m_wndPlayer.m_hWnd && m_wndPlayer.IsWindowVisible() )
+			*pbVisible = VARIANT_TRUE;
+		else
+			*pbVisible = VARIANT_FALSE;
+	}
+	else
+		*pbVisible = VARIANT_TRUE;
+
+	return S_OK;
 }
 
 HRESULT CPlayer::AdjustVideoPosAndZoom()

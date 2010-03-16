@@ -23,7 +23,6 @@
 //
 
 #include "StdAfx.h"
-#include "ImageViewer.h"
 #include "ImageViewerPlugin.h"
 #include "ImageWindow.h"
 
@@ -37,7 +36,7 @@ CImageViewerPlugin::CImageViewerPlugin()
 	m_pWindow	= NULL;
 	
 	// Load the "move / grab" cursor from the DLL's resources
-	m_hcMove	= LoadCursor( _Module.GetResourceInstance(), MAKEINTRESOURCE(IDC_GRABMOVE) );
+	m_hcMove	= LoadCursor( _AtlBaseModule.GetResourceInstance(), MAKEINTRESOURCE(IDC_GRABMOVE) );
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -88,7 +87,7 @@ HRESULT STDMETHODCALLTYPE CImageViewerPlugin::Configure()
 	
 	// Here we simply load a string from the string table and display it in a MessageBox
 	TCHAR szMessage[1024];
-	LoadString( _Module.GetResourceInstance(), IDS_ABOUT, szMessage, 1024 );
+	LoadString( _AtlBaseModule.GetResourceInstance(), IDS_ABOUT, szMessage, 1024 );
 	MessageBox( GetActiveWindow(), szMessage, _T("Image Viewer Plugin"), MB_ICONINFORMATION );
 	
 	return S_OK;
@@ -249,7 +248,7 @@ HRESULT STDMETHODCALLTYPE CImageViewerPlugin::InsertCommands()
 	// The best choice is often to include the XML as a resource in your DLL, which is what we have
 	// done here.  IUserInterface::AddFromResource allows you to load a skin XML resource directly!
 	
-	m_pInterface->AddFromResource( _Module.GetResourceInstance(), IDR_SKIN );
+	m_pInterface->AddFromResource( _AtlBaseModule.GetResourceInstance(), IDR_SKIN );
 	
 	// Note that the resource type should be 23 decimal.  See the Skin.xml file for further detail.
 	

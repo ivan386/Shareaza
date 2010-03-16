@@ -130,7 +130,7 @@ BOOL CImageWindow::Create(CImageViewerPlugin* pPlugin, LPCTSTR pszFile)
 	else
 	{
 		// No icon, load a default from our resources
-		m_hIcon = (HICON)LoadImage( _Module.GetResourceInstance(),
+		m_hIcon = (HICON)LoadImage( _AtlBaseModule.GetResourceInstance(),
 			MAKEINTRESOURCE(IDI_IMAGE), IMAGE_ICON, 16, 16, 0 );
 	}
 	

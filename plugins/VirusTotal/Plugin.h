@@ -1,8 +1,27 @@
+//
 // Plugin.h : Declaration of the CPlugin
+//
+// Copyright (c) Nikolay Raspopov, 2009-2010.
+// This file is part of SHAREAZA (shareaza.sourceforge.net)
+//
+// Shareaza is free software; you can redistribute it
+// and/or modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2 of
+// the License, or (at your option) any later version.
+//
+// Shareaza is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Shareaza; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+//
 
 #pragma once
 
-#include "VirusTotal_h.h"
+#include "VirusTotal.h"
 
 #if defined(_WIN32_WCE) && !defined(_CE_DCOM) && !defined(_CE_ALLOW_SINGLE_THREADED_OBJECTS_IN_MTA)
 #error "Single-threaded COM objects are not properly supported on Windows CE platform, such as the Windows Mobile platforms that do not include full DCOM support. Define _CE_ALLOW_SINGLE_THREADED_OBJECTS_IN_MTA to force ATL to support creating single-thread COM object's and allow use of it's single-threaded COM object implementations. The threading model in your rgs file was set to 'Free' as that is the only threading model supported in non DCOM Windows CE platforms."

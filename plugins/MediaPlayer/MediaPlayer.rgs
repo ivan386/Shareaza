@@ -3,7 +3,7 @@ HKCR
 	NoRemove AppID
 	{
 		'%APPID%' = s 'MediaPlayer'
-		'MediaPlayer.dll'
+		'MediaPlayer.exe'
 		{
 			val AppID = s '%APPID%'
 		}

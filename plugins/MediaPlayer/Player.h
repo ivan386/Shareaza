@@ -21,7 +21,7 @@
 
 #pragma once
 
-#include "MediaPlayer_h.h"
+#include "MediaPlayer.h"
 
 // CPlayerWindow
 
@@ -30,8 +30,6 @@ class CPlayerWindow :
 {
 public:
 	CPlayerWindow();
-
-	HBITMAP	m_hLogo;
 
 	BEGIN_MSG_MAP(CPlayerWindow)
 		MESSAGE_HANDLER(WM_PAINT,OnPaint)
@@ -67,25 +65,28 @@ protected:
 	// Adjusts video position and zoom according to aspect ratio, zoom level and zoom type
 	HRESULT AdjustVideoPosAndZoom(void);
 
-	BOOLEAN				m_bAudioOnly;
-	HWND				m_hwndOwner;
-	CPlayerWindow		m_wndPlayer;
-	RECT				m_rcWindow;
+	BOOLEAN						m_bAudioOnly;
+	OAHWND						m_hwndOwner;
+	CPlayerWindow				m_wndPlayer;
+	RECT						m_rcWindow;
 	CComPtr< IGraphBuilder >	m_pGraph;
-	MediaZoom			m_nZoom;	// Last set zoom
-	DOUBLE				m_dAspect;	// Last set aspect ratio
-	DOUBLE				m_dVolume;	// Last set volume level
-	DOUBLE				m_dSpeed;	// Last set speed
+	MediaZoom					m_nZoom;			// Last set zoom
+	DOUBLE						m_dAspect;			// Last set aspect ratio
+	DOUBLE						m_dVolume;			// Last set volume level
+	DOUBLE						m_dSpeed;			// Last set speed
+	LONG						m_nVisSize;			// (not used)
+	CComPtr< IAudioVisPlugin >	m_pAudioVisPlugin;	// (not used)
 
 // IMediaPlayer
 public:
 	STDMETHOD(Create)(
-		/* [in] */ HWND hWnd);
+		/* [in] */ LONG_PTR hWnd);
 	STDMETHOD(Destroy)(void);
 	STDMETHOD(Reposition)(
-		/* [in] */ RECT *prcWnd);
-	STDMETHOD(SetLogoBitmap)(
-		/* [in] */ HBITMAP hLogo);
+		/* [in] */ long Left,
+		/* [in] */ long Top,
+		/* [in] */ long Width,
+		/* [in] */ long Height);
 	STDMETHOD(GetVolume)(
 		/* [out] */ DOUBLE *pnVolume);
 	STDMETHOD(SetVolume)(
@@ -124,6 +125,8 @@ public:
 		/* [out] */ LONG *pnSize);
 	STDMETHOD(SetPluginSize)(
 		/* [in] */ LONG nSize);
+	STDMETHOD(IsWindowVisible)(
+		/* [out] */ VARIANT_BOOL* pbVisible );
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(MediaPlayer), CPlayer)

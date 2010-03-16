@@ -21,7 +21,7 @@
 
 #include "stdafx.h"
 #include "resource.h"
-#include "Preview_i.h"
+#include "Preview.h"
 #include "dllmain.h"
 
 // Used to determine whether the DLL can be unloaded by OLE

@@ -22,8 +22,6 @@
 //
 
 #include "stdafx.h"
-#include "Globals.h"
-#include <olectl.h>    //needed for OleCreatePictureIndirect
 
 ////////////////////////////////////////////////////////////////////
 // Core PropertySet Functions

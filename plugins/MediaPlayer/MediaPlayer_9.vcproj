@@ -23,7 +23,7 @@
 			Name="Debug|Win32"
 			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
-			ConfigurationType="2"
+			ConfigurationType="1"
 			UseOfATL="1"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="1"
@@ -45,15 +45,17 @@
 				PreprocessorDefinitions="_DEBUG"
 				AdditionalIncludeDirectories="..\..\shareaza"
 				TargetEnvironment="1"
+				TypeLibraryName="$(IntDir)/$(InputName).tlb"
+				HeaderFileName="$(InputName).h"
 				DLLDataFileName=""
+				InterfaceIdentifierFileName="$(InputName)_i.c"
 				ProxyFileName=""
-				ValidateParameters="true"
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories=""
-				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL"
+				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
 				FloatingPointModel="2"
@@ -75,11 +77,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				RegisterOutput="true"
 				IgnoreImportLibrary="true"
 				AdditionalDependencies="Strmiids.lib"
 				LinkIncremental="2"
-				ModuleDefinitionFile="MediaPlayer.def"
+				ModuleDefinitionFile=""
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				TargetMachine="1"
@@ -104,6 +105,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				Description="Registration..."
+				CommandLine="&quot;$(TargetPath)&quot; /RegServer"
 			/>
 		</Configuration>
 		<Configuration
@@ -132,14 +135,17 @@
 				PreprocessorDefinitions="_DEBUG"
 				AdditionalIncludeDirectories="..\..\shareaza"
 				TargetEnvironment="3"
+				TypeLibraryName="$(IntDir)/$(InputName).tlb"
+				HeaderFileName="$(InputName).h"
 				DLLDataFileName=""
+				InterfaceIdentifierFileName="$(InputName)_i.c"
 				ProxyFileName=""
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories=""
-				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL"
+				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
 				FloatingPointModel="2"
@@ -219,7 +225,10 @@
 				PreprocessorDefinitions="NDEBUG"
 				AdditionalIncludeDirectories="..\..\shareaza"
 				TargetEnvironment="1"
+				TypeLibraryName="$(IntDir)/$(InputName).tlb"
+				HeaderFileName="$(InputName).h"
 				DLLDataFileName=""
+				InterfaceIdentifierFileName="$(InputName)_i.c"
 				ProxyFileName=""
 				ValidateParameters="true"
 			/>
@@ -231,7 +240,7 @@
 				FavorSizeOrSpeed="2"
 				OmitFramePointers="true"
 				AdditionalIncludeDirectories=""
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL"
+				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
 				StringPooling="true"
 				RuntimeLibrary="0"
 				FloatingPointModel="2"
@@ -312,7 +321,10 @@
 				PreprocessorDefinitions="NDEBUG"
 				AdditionalIncludeDirectories="..\..\shareaza"
 				TargetEnvironment="3"
+				TypeLibraryName="$(IntDir)/$(InputName).tlb"
+				HeaderFileName="$(InputName).h"
 				DLLDataFileName=""
+				InterfaceIdentifierFileName="$(InputName)_i.c"
 				ProxyFileName=""
 			/>
 			<Tool
@@ -323,7 +335,7 @@
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="true"
 				AdditionalIncludeDirectories=""
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL"
+				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
 				StringPooling="true"
 				RuntimeLibrary="0"
 				FloatingPointModel="2"
@@ -402,31 +414,8 @@
 					>
 					<Tool
 						Name="VCMIDLTool"
-						InterfaceIdentifierFileName="$(InputName)_i.c"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					>
-					<Tool
-						Name="VCMIDLTool"
-						InterfaceIdentifierFileName="$(InputName)_i.c"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCMIDLTool"
-						InterfaceIdentifierFileName="$(InputName)_i.c"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
-					>
-					<Tool
-						Name="VCMIDLTool"
-						InterfaceIdentifierFileName="$(InputName)_i.c"
+						DLLDataFileName="$(InputName)_data.c"
+						ProxyFileName="$(InputName)_p.c"
 					/>
 				</FileConfiguration>
 			</File>
@@ -442,39 +431,8 @@
 					>
 					<Tool
 						Name="VCMIDLTool"
-						TypeLibraryName="$(IntDir)/$(InputName).tlb"
-						HeaderFileName="$(InputName).h"
-						InterfaceIdentifierFileName="$(InputName)_i.c"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					>
-					<Tool
-						Name="VCMIDLTool"
-						TypeLibraryName="$(IntDir)/$(InputName).tlb"
-						HeaderFileName="$(InputName).h"
-						InterfaceIdentifierFileName="$(InputName)_i.c"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCMIDLTool"
-						TypeLibraryName="$(IntDir)/$(InputName).tlb"
-						HeaderFileName="$(InputName).h"
-						InterfaceIdentifierFileName="$(InputName)_i.c"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
-					>
-					<Tool
-						Name="VCMIDLTool"
-						TypeLibraryName="$(IntDir)/$(InputName).tlb"
-						HeaderFileName="$(InputName).h"
-						InterfaceIdentifierFileName="$(InputName)_i.c"
+						DLLDataFileName="$(InputName)_data.c"
+						ProxyFileName="$(InputName)_p.c"
 					/>
 				</FileConfiguration>
 			</File>
@@ -561,6 +519,7 @@
 		</Filter>
 		<Filter
 			Name="Generated Files"
+			SourceControlFiles="false"
 			>
 			<File
 				RelativePath=".\MediaPlayer_h.h"
@@ -568,46 +527,6 @@
 			</File>
 			<File
 				RelativePath=".\MediaPlayer_i.c"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\Shareaza.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Shareaza_i.c"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"

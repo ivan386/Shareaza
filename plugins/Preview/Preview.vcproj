@@ -46,11 +46,10 @@
 				MkTypLibCompatible="false"
 				TargetEnvironment="1"
 				GenerateStublessProxies="true"
-				TypeLibraryName="$(IntDir)/Preview.tlb"
-				HeaderFileName="Preview_i.h"
+				TypeLibraryName="$(IntDir)/$(InputName).tlb"
+				HeaderFileName="$(InputName).h"
 				DLLDataFileName=""
-				InterfaceIdentifierFileName="Preview_i.c"
-				ProxyFileName="Preview_p.c"
+				InterfaceIdentifierFileName="$(InputName)_i.c"
 				ValidateParameters="true"
 			/>
 			<Tool
@@ -136,11 +135,10 @@
 				MkTypLibCompatible="false"
 				TargetEnvironment="3"
 				GenerateStublessProxies="true"
-				TypeLibraryName="$(IntDir)/Preview.tlb"
-				HeaderFileName="Preview_i.h"
+				TypeLibraryName="$(IntDir)/$(InputName).tlb"
+				HeaderFileName="$(InputName).h"
 				DLLDataFileName=""
-				InterfaceIdentifierFileName="Preview_i.c"
-				ProxyFileName="Preview_p.c"
+				InterfaceIdentifierFileName="$(InputName)_i.c"
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
@@ -226,11 +224,10 @@
 				MkTypLibCompatible="false"
 				TargetEnvironment="1"
 				GenerateStublessProxies="true"
-				TypeLibraryName="$(IntDir)/Preview.tlb"
-				HeaderFileName="Preview_i.h"
+				TypeLibraryName="$(IntDir)/$(InputName).tlb"
+				HeaderFileName="$(InputName).h"
 				DLLDataFileName=""
-				InterfaceIdentifierFileName="Preview_i.c"
-				ProxyFileName="Preview_p.c"
+				InterfaceIdentifierFileName="$(InputName)_i.c"
 				ValidateParameters="true"
 			/>
 			<Tool
@@ -322,11 +319,10 @@
 				MkTypLibCompatible="false"
 				TargetEnvironment="3"
 				GenerateStublessProxies="true"
-				TypeLibraryName="$(IntDir)/Preview.tlb"
-				HeaderFileName="Preview_i.h"
+				TypeLibraryName="$(IntDir)/$(InputName).tlb"
+				HeaderFileName="$(InputName).h"
 				DLLDataFileName=""
-				InterfaceIdentifierFileName="Preview_i.c"
-				ProxyFileName="Preview_p.c"
+				InterfaceIdentifierFileName="$(InputName)_i.c"
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
@@ -462,9 +458,6 @@
 					>
 					<Tool
 						Name="VCMIDLTool"
-						TypeLibraryName="$(IntDir)/$(InputName).tlb"
-						HeaderFileName="$(InputName).h"
-						InterfaceIdentifierFileName="$(InputName)_i.c"
 						ProxyFileName=""
 					/>
 				</FileConfiguration>
@@ -473,9 +466,6 @@
 					>
 					<Tool
 						Name="VCMIDLTool"
-						TypeLibraryName="$(IntDir)/$(InputName).tlb"
-						HeaderFileName="$(InputName).h"
-						InterfaceIdentifierFileName="$(InputName)_i.c"
 						ProxyFileName=""
 					/>
 				</FileConfiguration>
@@ -484,9 +474,6 @@
 					>
 					<Tool
 						Name="VCMIDLTool"
-						TypeLibraryName="$(IntDir)/$(InputName).tlb"
-						HeaderFileName="$(InputName).h"
-						InterfaceIdentifierFileName="$(InputName)_i.c"
 						ProxyFileName=""
 					/>
 				</FileConfiguration>
@@ -495,9 +482,6 @@
 					>
 					<Tool
 						Name="VCMIDLTool"
-						TypeLibraryName="$(IntDir)/$(InputName).tlb"
-						HeaderFileName="$(InputName).h"
-						InterfaceIdentifierFileName="$(InputName)_i.c"
 						ProxyFileName=""
 					/>
 				</FileConfiguration>
@@ -604,7 +588,6 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"
-						CompileAsManaged="0"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -613,7 +596,6 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"
-						CompileAsManaged="0"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -622,7 +604,6 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"
-						CompileAsManaged="0"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -631,53 +612,12 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"
-						CompileAsManaged="0"
 					/>
 				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\Preview_i.h"
 				>
-			</File>
-			<File
-				RelativePath=".\Shareaza.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Shareaza_i.c"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-					/>
-				</FileConfiguration>
 			</File>
 		</Filter>
 	</Files>

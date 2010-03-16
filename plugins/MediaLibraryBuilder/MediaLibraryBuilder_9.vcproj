@@ -45,6 +45,7 @@
 				PreprocessorDefinitions="_DEBUG"
 				AdditionalIncludeDirectories="..\..\shareaza"
 				TargetEnvironment="1"
+				TypeLibraryName="$(IntDir)/$(InputName).tlb"
 				HeaderFileName="$(InputName).h"
 				DLLDataFileName=""
 				InterfaceIdentifierFileName="$(InputName)_i.c"
@@ -139,6 +140,7 @@
 				PreprocessorDefinitions="_DEBUG"
 				AdditionalIncludeDirectories="..\..\shareaza"
 				TargetEnvironment="3"
+				TypeLibraryName="$(IntDir)/$(InputName).tlb"
 				HeaderFileName="$(InputName).h"
 				DLLDataFileName=""
 				InterfaceIdentifierFileName="$(InputName)_i.c"
@@ -232,6 +234,7 @@
 				PreprocessorDefinitions="NDEBUG"
 				AdditionalIncludeDirectories="..\..\shareaza"
 				TargetEnvironment="1"
+				TypeLibraryName="$(IntDir)/$(InputName).tlb"
 				HeaderFileName="$(InputName).h"
 				DLLDataFileName=""
 				InterfaceIdentifierFileName="$(InputName)_i.c"
@@ -335,6 +338,7 @@
 				PreprocessorDefinitions="NDEBUG"
 				AdditionalIncludeDirectories="..\..\shareaza"
 				TargetEnvironment="3"
+				TypeLibraryName="$(IntDir)/$(InputName).tlb"
 				HeaderFileName="$(InputName).h"
 				DLLDataFileName=""
 				InterfaceIdentifierFileName="$(InputName)_i.c"
@@ -471,42 +475,6 @@
 			<File
 				RelativePath="..\..\shareaza\Shareaza.idl"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCMIDLTool"
-						TypeLibraryName="$(IntDir)/ShareazaOM.tlb"
-						HeaderFileName="ShareazaOM.h"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					>
-					<Tool
-						Name="VCMIDLTool"
-						TypeLibraryName="$(IntDir)/ShareazaOM.tlb"
-						HeaderFileName="ShareazaOM.h"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCMIDLTool"
-						TypeLibraryName="$(IntDir)/ShareazaOM.tlb"
-						HeaderFileName="ShareazaOM.h"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
-					>
-					<Tool
-						Name="VCMIDLTool"
-						TypeLibraryName="$(IntDir)/ShareazaOM.tlb"
-						HeaderFileName="ShareazaOM.h"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\stdafx.cpp"
@@ -559,10 +527,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Shareaza.h"
-				>
-			</File>
-			<File
 				RelativePath=".\stdafx.h"
 				>
 			</File>
@@ -593,6 +557,10 @@
 			Name="Generated Files"
 			SourceControlFiles="false"
 			>
+			<File
+				RelativePath=".\MediaLibraryBuilder.h"
+				>
+			</File>
 			<File
 				RelativePath=".\MediaLibraryBuilder_i.c"
 				>

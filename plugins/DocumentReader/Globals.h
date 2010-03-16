@@ -22,8 +22,6 @@
 //
 
 #pragma once
-#include <windows.h>
-#include <ole2.h>
 
 #pragma warning(disable: 4100) // unreferenced formal parameter (in OLE this is common)
 #pragma warning(disable: 4103) // pragma pack
@@ -159,28 +157,6 @@ private:
     BOOL         m_fNewItem;            // Is item added to list after load?
     BOOL         m_fRemovedItem;        // Is item marked for delete?
     CDocProperty* m_pNextItem;			// Items are linked in single link list (stores previous item)
-};
-
-////////////////////////////////////////////////////////////////////
-// CDocumentClassFactory - OleReader Class Factory
-//
-class CDocumentClassFactory : public IClassFactory
-{
-public:
-    CDocumentClassFactory(): m_cRef(0){}
-    ~CDocumentClassFactory(void){}
-
- // IUnknown Implementation
-    STDMETHODIMP         QueryInterface(REFIID riid, void ** ppv);
-    STDMETHODIMP_(ULONG) AddRef(void);
-    STDMETHODIMP_(ULONG) Release(void);
-
- // IClassFactory Implementation
-    STDMETHODIMP  CreateInstance(LPUNKNOWN punk, REFIID riid, void** ppv);
-    STDMETHODIMP  LockServer(BOOL fLock);
-
-private:
-    ULONG          m_cRef;          // Reference count
 };
 
 ////////////////////////////////////////////////////////////////////////
