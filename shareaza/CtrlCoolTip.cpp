@@ -189,7 +189,7 @@ void CCoolTipCtrl::ShowImpl(bool bChanged)
 	}
 
 	SetWindowPos( &wndTop, rc.left, rc.top, rc.Width(), rc.Height(),
-		SWP_SHOWWINDOW|SWP_NOACTIVATE );
+		SWP_ASYNCWINDOWPOS | SWP_SHOWWINDOW | SWP_NOACTIVATE );
 	UpdateWindow();
 
 	if ( ! m_bTimer )
@@ -280,7 +280,7 @@ void CCoolTipCtrl::DrawRule(CDC* pDC, POINT* pPoint, BOOL bPos)
 BOOL CCoolTipCtrl::WindowFromPointBelongsToOwner(const CPoint& point)
 {
 	CWnd* pOwner = GetOwner();
-	if ( ! pOwner )
+	if ( ! pOwner || ! IsWindow( pOwner->GetSafeHwnd() ) )
 		return FALSE;
 
 	CRect rc;
