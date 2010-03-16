@@ -280,10 +280,10 @@ library Shareaza
 	[ uuid(59978299-C8AC-4818-83F4-C382BB611D5C), oleautomation, pointer_default(unique) ]
 	interface IMediaPlayer : stdole.IUnknown
 	{
-		HRESULT Create( [in] HWND hWnd );
+		HRESULT Create( [in] LONG_PTR hWnd );
 		HRESULT Destroy();
-		HRESULT Reposition( [in] RECT* prcWnd );
-		HRESULT SetLogoBitmap( [in] HBITMAP hLogo );
+		HRESULT Reposition( [in] long Left, [in] long Top, [in] long Width, [in] long Height );
+		HRESULT IsWindowVisible( [out] VARIANT_BOOL* pbVisible );
 
 		HRESULT GetVolume( [out] DOUBLE* pnVolume );
 		HRESULT SetVolume( [in] DOUBLE nVolume );

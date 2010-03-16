@@ -77,7 +77,6 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				IgnoreImportLibrary="true"
 				AdditionalDependencies="Strmiids.lib"
 				LinkIncremental="2"
 				ModuleDefinitionFile=""
@@ -113,7 +112,7 @@
 			Name="Debug|x64"
 			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
-			ConfigurationType="2"
+			ConfigurationType="1"
 			UseOfATL="1"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="1"
@@ -167,11 +166,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				RegisterOutput="true"
-				IgnoreImportLibrary="true"
 				AdditionalDependencies="Strmiids.lib"
 				LinkIncremental="2"
-				ModuleDefinitionFile="MediaPlayer.def"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				TargetMachine="17"
@@ -202,7 +198,7 @@
 			Name="Release|Win32"
 			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
-			ConfigurationType="2"
+			ConfigurationType="1"
 			UseOfATL="1"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="1"
@@ -261,11 +257,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				RegisterOutput="true"
-				IgnoreImportLibrary="true"
 				AdditionalDependencies="Strmiids.lib"
 				LinkIncremental="1"
-				ModuleDefinitionFile="MediaPlayer.def"
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
@@ -298,7 +291,7 @@
 			Name="Release|x64"
 			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
-			ConfigurationType="2"
+			ConfigurationType="1"
 			UseOfATL="1"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="1"
@@ -356,11 +349,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				RegisterOutput="true"
-				IgnoreImportLibrary="true"
 				AdditionalDependencies="Strmiids.lib"
 				LinkIncremental="1"
-				ModuleDefinitionFile="MediaPlayer.def"
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"

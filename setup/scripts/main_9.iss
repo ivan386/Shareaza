@@ -130,7 +130,7 @@ Source: "plugins\GFLLibraryBuilder\{#PlatformName}\{#ConfigurationName}\GFLLibra
 Source: "plugins\ImageViewer\{#PlatformName}\{#ConfigurationName}\ImageViewer.dll";                 DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
 Source: "plugins\MediaImageServices\{#PlatformName}\{#ConfigurationName}\MediaImageServices.exe";   DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 Source: "plugins\MediaLibraryBuilder\{#PlatformName}\{#ConfigurationName}\MediaLibraryBuilder.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
-Source: "plugins\MediaPlayer\{#PlatformName}\{#ConfigurationName}\MediaPlayer.dll";                 DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "plugins\MediaPlayer\{#PlatformName}\{#ConfigurationName}\MediaPlayer.exe";                 DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 Source: "plugins\Preview\{#PlatformName}\{#ConfigurationName}\Preview.dll";                         DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
 Source: "plugins\RARBuilder\{#PlatformName}\{#ConfigurationName}\RARBuilder.dll";                   DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
 #if PlatformName == "Win32"
@@ -235,6 +235,7 @@ SetupAppTitle=Setup - {#internal_name}
 [Run]
 ; Register EXE servers
 Filename: "{app}\MediaImageServices.exe"; Parameters: "/RegServer"; WorkingDir: "{app}"
+Filename: "{app}\MediaPlayer.exe";        Parameters: "/RegServer"; WorkingDir: "{app}"
 Filename: "{app}\WindowsThumbnail.exe";   Parameters: "/RegServer"; WorkingDir: "{app}"
 
 ; Run the skin installer at end of installation
@@ -246,6 +247,8 @@ Filename: "{app}\Shareaza.exe"; Description: "{cm:LaunchProgram,Shareaza}"; Work
 [UninstallRun]
 ; Unregister EXE servers
 Filename: "{app}\MediaImageServices.exe"; Parameters: "/UnRegServer"; WorkingDir: "{app}"
+Filename: "{app}\MediaPlayer.exe";        Parameters: "/UnRegServer"; WorkingDir: "{app}"
+Filename: "{app}\WindowsThumbnail.exe";   Parameters: "/UnRegServer"; WorkingDir: "{app}"
 
 ; Run the skin installer at start of uninstallation and make sure it only runs once
 Filename: "{app}\skin.exe"; Parameters: "/uninstallsilent"; WorkingDir: "{app}"; StatusMsg: "{cm:run_skinexe}"; RunOnceId: "uninstallskinexe"
@@ -383,6 +386,7 @@ Type: files; Name: "{app}\*.pdb"
 Type: files; Name: "{app}\zlib*.dll"
 Type: files; Name: "{app}\RazaWebHook.dll"
 Type: files; Name: "{app}\MediaImageServices.dll"
+Type: files; Name: "{app}\MediaPlayer.dll"
 Type: files; Name: "{app}\libgfl*.dll"
 Type: files; Name: "{app}\Skins\skin.exe"
 Type: files; Name: "{app}\Schemas\VendorCache.xsd"
