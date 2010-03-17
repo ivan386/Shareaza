@@ -1284,7 +1284,8 @@ void CMediaFrame::OnMediaPlay()
 				return;
 			}
 		}
-		UpdateState();
+		if ( ! UpdateState() )
+			return;
 	}
 
 	UpdateNowPlaying();
@@ -1313,7 +1314,9 @@ void CMediaFrame::OnMediaPause()
 		}
 	}
 
-	UpdateState();
+	if ( ! UpdateState() )
+		return;
+
 	if ( ! m_bScreenSaverEnabled )
 		EnableScreenSaver();
 
@@ -1734,9 +1737,8 @@ BOOL CMediaFrame::Prepare()
 		return FALSE;
 
 	OnSize( SIZE_INTERNAL, 0, 0 );
-	UpdateState();
 
-	return TRUE;
+	return UpdateState();
 }
 
 BOOL CMediaFrame::PrepareVis()
@@ -1806,10 +1808,7 @@ BOOL CMediaFrame::OpenFile(LPCTSTR pszFile)
 	}
 
 	if ( m_sFile == pszFile )
-	{
-		UpdateState();
-		return TRUE;
-	}
+		return UpdateState();
 
 	CWaitCursor pCursor;
 	m_sFile = pszFile;
@@ -1824,7 +1823,9 @@ BOOL CMediaFrame::OpenFile(LPCTSTR pszFile)
 		return FALSE;
 	}
 
-	UpdateState();
+	if ( ! UpdateState() )
+		return FALSE;
+
 	pCursor.Restore();
 	m_tMetadata = GetTickCount();
 
@@ -1976,7 +1977,7 @@ void CMediaFrame::AspectTo(double nAspect)
 	}
 }
 
-void CMediaFrame::UpdateState()
+BOOL CMediaFrame::UpdateState()
 {
 	HRESULT hr;
 
@@ -1988,7 +1989,7 @@ void CMediaFrame::UpdateState()
 		if ( FAILED( hr ) )
 		{
 			Cleanup( TRUE );
-			return;
+			return FALSE;
 		}
 	}
 	if ( m_pPlayer && m_nState >= smsOpen )
@@ -1998,7 +1999,7 @@ void CMediaFrame::UpdateState()
 		if ( FAILED( hr ) )
 		{
 			Cleanup( TRUE );
-			return;
+			return FALSE;
 		}
 		int nLength = (int)( m_nLength / TIME_FACTOR );
 
@@ -2007,7 +2008,7 @@ void CMediaFrame::UpdateState()
 		if ( FAILED( hr ) )
 		{
 			Cleanup( TRUE );
-			return;
+			return FALSE;
 		}
 		int nPosition = (int)( m_nPosition / TIME_FACTOR );
 
@@ -2020,7 +2021,7 @@ void CMediaFrame::UpdateState()
 		if ( FAILED( hr ) )
 		{
 			Cleanup( TRUE );
-			return;
+			return FALSE;
 		}
 		m_wndSpeed.SetPos( (int)( nSpeed * 100 ) );
 		m_wndSpeed.EnableWindow( TRUE );
@@ -2032,7 +2033,7 @@ void CMediaFrame::UpdateState()
 			if ( FAILED( hr ) )
 			{
 				Cleanup( TRUE );
-				return;
+				return FALSE;
 			}
 		}
 
@@ -2057,6 +2058,8 @@ void CMediaFrame::UpdateState()
 	{
 		InvalidateRect( &m_rcStatus );
 	}
+
+	return TRUE;
 }
 
 void CMediaFrame::OnNewCurrent(NMHDR* /*pNotify*/, LRESULT* pResult)
@@ -2105,7 +2108,7 @@ void CMediaFrame::OnNewCurrent(NMHDR* /*pNotify*/, LRESULT* pResult)
 			}
 		}
 
-		if ( bPlayIt && ! bCorrupted )
+		if ( m_pPlayer && bPlayIt && ! bCorrupted )
 		{
 			hr = m_pPlayer->Play();
 			if ( FAILED( hr ) )

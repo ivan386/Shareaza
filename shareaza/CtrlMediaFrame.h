@@ -132,7 +132,7 @@ protected:
 	void	Cleanup(BOOL bUnexpected = FALSE);
 	void	ZoomTo(MediaZoom nZoom);
 	void	AspectTo(double nAspect);
-	void	UpdateState();
+	BOOL	UpdateState();
 	void	DisableScreenSaver();
 	void	EnableScreenSaver();
 	HRESULT PluginPlay(BSTR bsFileName);
