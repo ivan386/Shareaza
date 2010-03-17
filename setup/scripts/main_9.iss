@@ -100,10 +100,10 @@ Source: "setup\builds\SaveSettings.bat";    DestDir: "{app}"; DestName: "SaveSet
 Source: "setup\builds\RestoreSettings.bat"; DestDir: "{app}"; DestName: "RestoreSettings.bat"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist
 
 ; ZLib
-Source: "zlib\{#PlatformName}\Release\zlibwapi.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "zlib\{#PlatformName}\{#ConfigurationName}\zlibwapi.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 
 ; BugTrap
-Source: "BugTrap\{#PlatformName}\Release\BugTrap.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "BugTrap\{#PlatformName}\{#ConfigurationName}\BugTrap.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 #if PlatformName == "Win32"
 Source: "BugTrap\dbghelp.dll";     DestDir: "{app}"; DestName: "dbghelp.dll"; Flags: overwritereadonly restartreplace uninsneveruninstall sortfilesbyextension
 #elif PlatformName == "x64"
@@ -114,7 +114,7 @@ Source: "BugTrap\dbghelp-x64.dll"; DestDir: "{app}"; DestName: "dbghelp.dll"; Fl
 Source: "HashLib\{#PlatformName}\{#ConfigurationName}\HashLib.dll"; DestDir: "{app}"; DestName: "HashLib.dll"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 
 ; SQLite
-Source: "sqlite3\{#PlatformName}\Release\sqlite3.dll"; DestDir: "{app}"; DestName: "sqlite3.dll"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "sqlite3\{#PlatformName}\{#ConfigurationName}\sqlite3.dll"; DestDir: "{app}"; DestName: "sqlite3.dll"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 
 ; GeoIP
 Source: "GeoIP\{#PlatformName}\{#ConfigurationName}\GeoIP.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
