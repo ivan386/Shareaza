@@ -1,7 +1,7 @@
 //
 // Player.h : Declaration of the CPlayer
 //
-// Copyright (c) Nikolay Raspopov, 2009.
+// Copyright (c) Nikolay Raspopov, 2009-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -23,6 +23,8 @@
 
 #include "MediaPlayer.h"
 
+#ifndef _WMP
+
 // CPlayerWindow
 
 class CPlayerWindow : 
@@ -40,23 +42,25 @@ public:
 	LRESULT OnPaint(UINT nMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
 };
 
+#endif // _WMP
+
 // CPlayer
 
 class ATL_NO_VTABLE CPlayer :
-	public CComObjectRootEx<CComMultiThreadModel>,
-	public CComCoClass<CPlayer, &CLSID_MediaPlayer>,
+	public CComObjectRootEx< CComMultiThreadModel >,
+	public CComCoClass< CPlayer, &CLSID_MediaPlayer >,
 	public IMediaPlayer
 {
 public:
 	CPlayer();
 
-DECLARE_REGISTRY_RESOURCEID(IDR_PLAYER)
+	DECLARE_REGISTRY_RESOURCEID(IDR_PLAYER)
 
-BEGIN_COM_MAP(CPlayer)
-	COM_INTERFACE_ENTRY(IMediaPlayer)
-END_COM_MAP()
+	BEGIN_COM_MAP(CPlayer)
+		COM_INTERFACE_ENTRY(IMediaPlayer)
+	END_COM_MAP()
 
-DECLARE_PROTECT_FINAL_CONSTRUCT()
+	DECLARE_PROTECT_FINAL_CONSTRUCT()
 
 	HRESULT FinalConstruct();
 	void FinalRelease();
@@ -65,11 +69,16 @@ protected:
 	// Adjusts video position and zoom according to aspect ratio, zoom level and zoom type
 	HRESULT AdjustVideoPosAndZoom(void);
 
+#ifdef _WMP
+	CAxWindow					m_wndPlayer;		// ActiveX host window class
+	CComQIPtr< IWMPPlayer2 >	m_pPlayer;			// Pointer to IWMPPlayer interface
+#else
+	CComPtr< IGraphBuilder >	m_pPlayer;
 	BOOLEAN						m_bAudioOnly;
-	OAHWND						m_hwndOwner;
 	CPlayerWindow				m_wndPlayer;
+#endif
+	OAHWND						m_hwndOwner;
 	RECT						m_rcWindow;
-	CComPtr< IGraphBuilder >	m_pGraph;
 	MediaZoom					m_nZoom;			// Last set zoom
 	DOUBLE						m_dAspect;			// Last set aspect ratio
 	DOUBLE						m_dVolume;			// Last set volume level

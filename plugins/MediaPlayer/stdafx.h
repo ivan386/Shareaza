@@ -21,13 +21,20 @@
 
 #pragma once
 
+#define _WMP	// Define it to use Windows Media Player object otherwise DirectShow will be used
+
 #ifndef STRICT
 #define STRICT
 #endif
 
 #include "targetver.h"
 
-#define _ATL_FREE_THREADED
+#ifdef _WMP
+	#define _ATL_APARTMENT_THREADED
+#else
+	#define _ATL_FREE_THREADED
+#endif
+
 #define _ATL_NO_AUTOMATIC_NAMESPACE
 #define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS
 #define _ATL_CSTRING_NO_CRT
@@ -41,6 +48,10 @@
 #include <atltypes.h>
 #include <atlwin.h>
 
-#include <dshow.h>
+#ifdef _WMP
+	#include <wmp.h>
+#else
+	#include <dshow.h>
+#endif // _WMP
 
 using namespace ATL;
