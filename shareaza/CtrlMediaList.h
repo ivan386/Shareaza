@@ -1,7 +1,7 @@
 //
 // CtrlMediaList.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_CTRLMEDIALIST_H__342211C4_F17F_451C_97C7_1BBE4BF2969F__INCLUDED_)
-#define AFX_CTRLMEDIALIST_H__342211C4_F17F_451C_97C7_1BBE4BF2969F__INCLUDED_
-
 #pragma once
 
 #include "CtrlLibraryTip.h"
@@ -29,31 +26,21 @@
 
 class CMediaListCtrl : public CListCtrl
 {
-// Construction
+	DECLARE_DYNAMIC(CMediaListCtrl)
+
 public:
 	CMediaListCtrl();
 	virtual ~CMediaListCtrl();
 
-	DECLARE_DYNAMIC(CMediaListCtrl)
 
-// Attributes
-protected:
-	CImageList*	m_pDragImage;
-	int			m_nDragDrop;
-	BOOL		m_bCreateDragImage;
-protected:
-	CLibraryTipCtrl	m_wndTip;
+	virtual BOOL Create(CWnd* pParentWnd, UINT nID);
 
-// Operations
-protected:
-	int		Add(LPCTSTR pszPath, int nItem = -1);
-	void	Remove(int nItem);
-public:
 	BOOL	Open(LPCTSTR pszFile);
 	BOOL	Enqueue(LPCTSTR pszFile, BOOL bStart = TRUE);
 	int		RecursiveEnqueue(LPCTSTR pszPath);
 	void	Remove(LPCTSTR pszFile);
 	BOOL	LoadTextList(LPCTSTR pszFile);
+	BOOL	SaveTextList(LPCTSTR pszFile);
 	int		GetCount();
 	void	Clear();
 	int		GetCurrent();
@@ -62,19 +49,18 @@ public:
 	void	Reset(BOOL bNext = TRUE);
 	CString	GetPath(int nItem);
 	void	OnSkinChange();
-private:
+
+protected:
+	CImageList*		m_pDragImage;
+	int				m_nDragDrop;
+	BOOL			m_bCreateDragImage;
+	CLibraryTipCtrl	m_wndTip;
+
+	int		Add(LPCTSTR pszPath, int nItem = -1);
+	void	Remove(int nItem);
 	BOOL	AreSelectedFilesInLibrary();
 	void	ShowFilePropertiesDlg(int nPage = 0 );
-// Overrides
-public:
-	//{{AFX_VIRTUAL(CMediaListCtrl)
-	public:
-	virtual BOOL Create(CWnd* pParentWnd, UINT nID);
-	//}}AFX_VIRTUAL
 
-// Implementation
-protected:
-	//{{AFX_MSG(CMediaListCtrl)
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
@@ -111,13 +97,8 @@ protected:
 	afx_msg void OnUpdateMediaCollection(CCmdUI* pCmdUI);
 	afx_msg void OnMediaCollection();
 	afx_msg void OnMediaAddFolder();
-	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()
 };
 
-//{{AFX_INSERT_LOCATION}}
-
 #define MLN_NEWCURRENT	101
-
-#endif // !defined(AFX_CTRLMEDIALIST_H__342211C4_F17F_451C_97C7_1BBE4BF2969F__INCLUDED_)

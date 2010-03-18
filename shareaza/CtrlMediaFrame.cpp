@@ -229,6 +229,9 @@ int CMediaFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_pIcons.Create( 16, 16, ILC_COLOR16|ILC_MASK, 3, 0 );
 	m_pIcons.Add( &bmIcons, RGB( 0, 255, 0 ) );
 
+	m_wndList.LoadTextList(
+		Settings.General.UserPath + _T("\\Data\\Default.m3u") );
+
 	UpdateState();
 
 	SetTimer( 1, 200, NULL );
@@ -238,6 +241,9 @@ int CMediaFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 void CMediaFrame::OnDestroy()
 {
+	m_wndList.SaveTextList(
+		Settings.General.UserPath + _T("\\Data\\Default.m3u") );
+
 	Settings.MediaPlayer.ListVisible	= m_bListVisible != FALSE;
 	Settings.MediaPlayer.ListSize		= m_nListSize;
 	Settings.MediaPlayer.StatusVisible	= m_bStatusVisible != FALSE;
@@ -545,7 +551,7 @@ void CMediaFrame::OnPaint()
 		CRect rcBar(	rcClient.right - m_nListSize - SPLIT_SIZE,
 						rcClient.top,
 						rcClient.right - m_nListSize,
-						rcClient.bottom );
+						rcClient.bottom - TOOLBAR_HEIGHT );
 
 		dc.FillSolidRect( rcBar.left, rcBar.top, 1, rcBar.Height(), CoolInterface.m_crResizebarEdge );
 		dc.FillSolidRect( rcBar.left + 1, rcBar.top, 1, rcBar.Height(), CoolInterface.m_crResizebarHighlight );
@@ -841,7 +847,7 @@ BOOL CMediaFrame::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 					rcClient.top,
 					Settings.General.LanguageRTL ? rcClient.left + m_nListSize + SPLIT_SIZE :
 					rcClient.right - m_nListSize,
-					rcClient.bottom );
+					rcClient.bottom - TOOLBAR_HEIGHT );
 
 		if ( rc.PtInRect( point ) )
 		{
