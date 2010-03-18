@@ -391,21 +391,25 @@ STDMETHODIMP CPlayer::SetAspect(
 	return S_OK;
 }
 
-#ifndef _WMP
-
-HRESULT SafeRenderFile(IGraphBuilder* pGraph, BSTR sFilename) throw()
+#ifdef _WMP
+static STDMETHODIMP SafeRenderFile(IWMPPlayer2* pPlayer, BSTR sFilename) throw()
+#else
+static STDMETHODIMP SafeRenderFile(IGraphBuilder* pPlayer, BSTR sFilename) throw()
+#endif
 {
 	__try
 	{
-		return pGraph->RenderFile( sFilename, NULL );
+#ifdef _WMP
+		return pPlayer->put_URL( sFilename );
+#else
+		return pPlayer->RenderFile( sFilename, NULL );
+#endif
 	}
 	__except( EXCEPTION_EXECUTE_HANDLER )
 	{
 		return E_FAIL;
 	}
 }
-
-#endif
 
 STDMETHODIMP CPlayer::Open(
 	/* [in] */ BSTR sFilename)
@@ -449,22 +453,28 @@ STDMETHODIMP CPlayer::Open(
 	if ( ! m_pPlayer )
 		return E_NOINTERFACE;
 
+	hr = m_pPlayer->put_uiMode( CComBSTR( _T("none") ) );
+	hr = m_pPlayer->put_enableContextMenu( VARIANT_FALSE );
+	hr = m_pPlayer->put_enabled( VARIANT_FALSE );
+	hr = m_pPlayer->put_fullScreen( VARIANT_FALSE );
+
 	CComPtr< IWMPSettings > pSettings;
 	hr = m_pPlayer->get_settings( &pSettings );
 	if ( FAILED( hr ) )
 		return hr;
 
 	hr = pSettings->put_autoStart( VARIANT_FALSE );
+	hr = pSettings->put_balance( 0 );
 	hr = pSettings->put_enableErrorDialogs( VARIANT_FALSE );
 	hr = pSettings->put_invokeURLs( VARIANT_FALSE );
+	hr = pSettings->put_mute( VARIANT_FALSE );
 	hr = pSettings->put_playCount( 1 );
+	hr = pSettings->setMode( CComBSTR( _T("autoRewind") ), VARIANT_FALSE );
+	hr = pSettings->setMode( CComBSTR( _T("loop") ), VARIANT_FALSE );
+	hr = pSettings->setMode( CComBSTR( _T("showFrame") ), VARIANT_TRUE );
+	hr = pSettings->setMode( CComBSTR( _T("shuffle") ), VARIANT_FALSE );
 
-	hr = m_pPlayer->put_uiMode( CComBSTR( _T("none") ) );
-	hr = m_pPlayer->put_enableContextMenu( VARIANT_FALSE );
-	hr = m_pPlayer->put_enabled( VARIANT_FALSE );
-	hr = m_pPlayer->put_fullScreen( VARIANT_FALSE );
-
-	hr = m_pPlayer->put_URL( sFilename );
+	hr = SafeRenderFile( m_pPlayer, sFilename );
 	if ( FAILED( hr ) )
 		return hr;
 
@@ -631,7 +641,7 @@ STDMETHODIMP CPlayer::Pause(void)
 STDMETHODIMP CPlayer::Stop(void)
 {
 	HRESULT hr;
-
+	
 	if ( ! m_pPlayer )
 		return E_INVALIDARG;
 
@@ -700,22 +710,22 @@ STDMETHODIMP CPlayer::GetState(
 
 	switch ( state )
 	{
-	case wmppsStopped:
+	case wmppsReady:			// Opened
+	case wmppsTransitioning:	// Starting play
 	case wmppsMediaEnded:
-	case wmppsTransitioning:
 	case wmppsReconnecting:
   		*pnState = smsOpen;
 		break;
-	case wmppsPaused:
-		*pnState = smsPaused;
-		break;
-	case wmppsPlaying:
+	case wmppsStopped:
+	case wmppsPlaying:			// Playing
 	case wmppsWaiting:
 	case wmppsScanForward:
 	case wmppsScanReverse:
 	case wmppsBuffering:
-	case wmppsReady:
 		*pnState = smsPlaying;
+		break;
+	case wmppsPaused:			// Paused
+		*pnState = smsPaused;
 		break;
 	}
 
