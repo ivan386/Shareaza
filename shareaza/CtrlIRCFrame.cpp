@@ -1,7 +1,7 @@
 //
 // CtrlIRCFrame.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -33,6 +33,7 @@
 #include "WndMain.h"
 #include "DlgIrcInput.h"
 #include "GProfile.h"
+#include "Plugins.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -984,6 +985,9 @@ void CIRCFrame::OnLocalText(LPCTSTR pszText)
 			else strSend = strMessage;
 		
 			strSend = "PRIVMSG " + strTabTitle + " :" + strSend;
+
+			// Notify chat plugins about new local message
+			Plugins.OnChatMessage( strTabTitle, TRUE, m_sNickname, strTabTitle, pszText );
 		}
 	}
 	
@@ -1471,6 +1475,9 @@ void CIRCFrame::ActivateMessageByID(CIRCNewMessage& oNewMessage, int nMessageTyp
 			}
 
 			oNewMessage.Add( strSender + GetStringAfterParsedItem( 7 ), m_pWords.GetAt( 0 ), ID_COLOR_TEXT );
+		
+			// Notify chat plugins about new remote message
+			Plugins.OnChatMessage( GetTabText( nTab ), FALSE, m_pWords.GetAt( 0 ), m_sNickname, strText );
 			return;
 		}
 		case ID_MESSAGE_USER_AWAY:
@@ -1545,7 +1552,11 @@ void CIRCFrame::ActivateMessageByID(CIRCNewMessage& oNewMessage, int nMessageTyp
 			if ( m_nTab != m_wndTab.GetCurSel() )
 				m_wndTab.SetTabColor( m_nTab, Settings.IRC.Colors[ ID_COLOR_NEWMSG ] );
 			CString strSender = _T("<") + m_pWords.GetAt( 0 ) + _T("> ");
-			oNewMessage.Add( strSender + GetStringAfterParsedItem( 7 ), m_pWords.GetAt( 6 ), ID_COLOR_TEXT );
+			CString strText = GetStringAfterParsedItem( 7 );
+			oNewMessage.Add( strSender + strText, m_pWords.GetAt( 6 ), ID_COLOR_TEXT );
+			
+			// Notify chat plugins about new remote message
+			Plugins.OnChatMessage( GetTabText( m_nTab ), FALSE, m_pWords.GetAt( 0 ), m_sNickname, strText );
 			return;
 		}
 		case ID_MESSAGE_CHANNEL_ME:

@@ -160,6 +160,21 @@ library Shareaza
 	};
 
 	//
+	// Chat Plugin
+	//
+
+	[ uuid(8065EF37-F0EA-4898-BBBD-D37798DE83CB), oleautomation ]
+	interface IChatPlugin : stdole.IUnknown
+	{
+		HRESULT OnChatMessage(
+			[in] BSTR sChatID,				// Unique conversation ID (for example "ip:port" for Gnutella/eMule chat)
+			[in] VARIANT_BOOL bOutgoing,	// VARIANT_TRUE - message sent by us, VARIANT_FALSE - message received from remote host
+			[in] BSTR sFrom,				// if bOutgoing == VARIANT_TRUE then it's our nick else it's remote user nick
+			[in] BSTR sTo,					// if bOutgoing == VARIANT_TRUE then it's remote user nick else it's our nick
+			[in] BSTR sMessage );			// Message text
+	};
+
+	//
 	// Window Plugin
 	//
 

@@ -1,7 +1,7 @@
 //
 // CtrlPrivateChatFrame.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -29,6 +29,7 @@
 #include "CtrlPrivateChatFrame.h"
 #include "WndBrowseHost.h"
 #include "CoolInterface.h"
+#include "Plugins.h"
 #include "Skin.h"
 #include "Security.h"
 #include "Settings.h"
@@ -169,29 +170,36 @@ void CPrivateChatFrame::OnProfileReceived()
 void CPrivateChatFrame::OnRemoteMessage(BOOL bAction, LPCTSTR pszText)
 {
 	// Check message spam filter (if enabled)
-	if ( !MessageFilter.IsFiltered( pszText ) )
+	if ( MessageFilter.IsFiltered( pszText ) )
+		return;
+
+	DWORD nIdle = (DWORD)time( NULL ) - theApp.m_nLastInput;
+
+	if ( nIdle > Settings.Community.AwayMessageIdleTime )
 	{
-		DWORD nIdle = (DWORD)time( NULL ) - theApp.m_nLastInput;
+		CString strTime;
+		if ( nIdle > 86400 )
+			strTime.Format( _T("%i:%.2i:%.2i:%.2i"), nIdle / 86400, ( nIdle / 3600 ) % 24, ( nIdle / 60 ) % 60, nIdle % 60 );
+		else
+			strTime.Format( _T("%i:%.2i:%.2i"), nIdle / 3600, ( nIdle / 60 ) % 60, nIdle % 60 );
 
-		if ( nIdle > Settings.Community.AwayMessageIdleTime )
-		{
-			CString strTime;
-			if ( nIdle > 86400 )
-				strTime.Format( _T("%i:%.2i:%.2i:%.2i"), nIdle / 86400, ( nIdle / 3600 ) % 24, ( nIdle / 60 ) % 60, nIdle % 60 );
-			else
-				strTime.Format( _T("%i:%.2i:%.2i"), nIdle / 3600, ( nIdle / 60 ) % 60, nIdle % 60 );
-
-			m_pSession->SendAwayMessage( strTime );
-		}
-
-		// Adult filter (if enabled)
-		if ( AdultFilter.IsChatFiltered( pszText ) )
-			AdultFilter.Censor( (TCHAR*)pszText );
-
-		AddText( FALSE, bAction, m_sNick, pszText );
-		SetAlert();
-		PostMessage( WM_TIMER, 4 );
+		m_pSession->SendAwayMessage( strTime );
 	}
+
+	// Adult filter (if enabled)
+	if ( AdultFilter.IsChatFiltered( pszText ) )
+		AdultFilter.Censor( (TCHAR*)pszText );
+
+	// Notify chat plugins about new remote message
+	CString sChatID;
+	sChatID.Format( _T("%s:%hu"),
+		(LPCTSTR)CString( inet_ntoa( m_pSession->m_pHost.sin_addr ) ),
+		ntohs( m_pSession->m_pHost.sin_port ) );
+	Plugins.OnChatMessage( sChatID, FALSE, m_sNick, MyProfile.GetNick(), pszText );
+
+	AddText( FALSE, bAction, m_sNick, pszText );
+	SetAlert();
+	PostMessage( WM_TIMER, 4 );
 }
 
 void CPrivateChatFrame::OnLocalMessage(bool bAction, LPCTSTR pszText)
@@ -216,7 +224,14 @@ void CPrivateChatFrame::OnLocalMessage(bool bAction, LPCTSTR pszText)
 	if ( AdultFilter.IsChatFiltered( pszText ) )
 		AdultFilter.Censor( (TCHAR*)pszText );
 
-	AddText( TRUE, bAction, MyProfile.GetNick().Left( 255 ), pszText );
+	// Notify chat plugins about new local message
+	CString sChatID;
+	sChatID.Format( _T("%s:%hu"),
+		(LPCTSTR)CString( inet_ntoa( m_pSession->m_pHost.sin_addr ) ),
+		ntohs( m_pSession->m_pHost.sin_port ) );
+	Plugins.OnChatMessage( sChatID, TRUE, MyProfile.GetNick(), m_sNick, pszText );
+
+	AddText( TRUE, bAction, MyProfile.GetNick(), pszText );
 	m_pSession->SendPrivateMessage( bAction, pszText );
 }
 
