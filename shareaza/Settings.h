@@ -238,7 +238,7 @@ public:
 		CString		VisCLSID;
 		CString		VisPath;
 		DWORD		VisSize;
-		CString		ServicePath;
+		string_set	ServicePath;				// Keeps track of 3 different player	i.e. "*kmplayer.exe|**wmplayer.exe*|***vlc.exe" begining astrix shows the order and tailing shows selected 
 		bool		ShortPaths;					// Some players differently handle unicode paths but they can launch files using 8.3 paths
 	} MediaPlayer;
 
@@ -327,7 +327,7 @@ public:
 
 	struct sGnutella
 	{
-		DWORD		ConnectFactor;				// Number of hosts we simultaneously tries when connecting to single hub
+		DWORD		ConnectFactor;				// Number of hosts we simultaneously try when connecting to single hub
 		bool		DeflateHub2Hub;
 		bool		DeflateLeaf2Hub;
 		bool		DeflateHub2Leaf;
@@ -569,13 +569,18 @@ public:
 	struct sScheduler
 	{
 		bool		Enable;						// Enable the scheduler
-		DWORD		LimitedBandwidth;			// % of bandwidth to use in limited mode
+		//DWORD		LimitedBandwidth;			// % of bandwidth to use in limited mode
 		bool		LimitedNetworks;			// Only connect to G2/BT when limited
-		bool		AllowHub;					// Allow hub mode while scheduler is active
+		//bool		AllowHub;					// Allow hub mode while scheduler is active
+		//DWORD		LimitedBandwidthDown;		// % of bandwidth to use in limited mode
+		//DWORD		LimitedBandwidthUp;			// % of bandwidth to use in limited mode
+		//bool		ToggleBandwidth;			// Toggle Bandwidth Independently
+		bool		ShutdownRights;				// Do we have rights to shutdown the system
 	} Scheduler;
 
 	struct sIRC
 	{
+		
 		COLORREF		Colors[11];
 		bool			Show;
 		bool			FloodEnable;

@@ -192,6 +192,7 @@ protected:
 	afx_msg void OnHelpUpdate();
 	afx_msg void OnHelpRouter();
 	afx_msg void OnHelpSecurity();
+	afx_msg void OnHelpScheduler();
 	afx_msg void OnHelpCodec();
 	afx_msg void OnHelpTorrent();
 	afx_msg void OnUpdateViewTraffic(CCmdUI* pCmdUI);
@@ -209,6 +210,8 @@ protected:
 	afx_msg void OnOpenDownloadsFolder();
 	afx_msg void OnUpdateViewSecurity(CCmdUI* pCmdUI);
 	afx_msg void OnViewSecurity();
+	afx_msg void OnUpdateViewScheduler(CCmdUI* pCmdUI);
+	afx_msg void OnViewScheduler();
 	afx_msg void OnUpdateWindowCascade(CCmdUI* pCmdUI);
 	afx_msg void OnUpdateWindowTileHorz(CCmdUI* pCmdUI);
 	afx_msg void OnUpdateWindowTileVert(CCmdUI* pCmdUI);

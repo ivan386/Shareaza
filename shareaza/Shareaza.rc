@@ -60,7 +60,6 @@ END
 
 #endif    // APSTUDIO_INVOKED
 
-
 /////////////////////////////////////////////////////////////////////////////
 //
 // Icon
@@ -87,6 +86,9 @@ IDR_SECURITYFRAME       ICON                    "Res\\Security.ico"
 IDR_DISCOVERYFRAME      ICON                    "Res\\Discovery.ico"
 IDI_WEB_URL             ICON                    "Res\\WebURL.ico"
 IDR_BROWSEHOSTFRAME     ICON                    "Res\\Computer.ico"
+IDR_SCHEDULERFRAME      ICON                    "Res\\Scheduler.ico"
+IDI_X                   ICON                    "Res\\X.ico"
+IDI_EXCLAMATIONMARK     ICON                    "Res\\Exclamation.ico"
 IDR_HOMEFRAME           ICON                    "Res\\Home.ico"
 IDI_DOWNLOAD_MONITOR    ICON                    "Res\\DownloadMonitor.ico"
 IDI_SKIN                ICON                    "Res\\Skin.ico"
@@ -182,7 +184,6 @@ BEGIN
     END
 END
 
-
 /////////////////////////////////////////////////////////////////////////////
 //
 // Bitmap
@@ -203,8 +204,6 @@ IDB_NAVBAR_IMAGE        BITMAP                  "Res\\Navbar.bmp"
 IDB_NAVBAR_ALPHA        BITMAP                  "Res\\NavbarAlpha.bmp"
 IDB_REMOTE_SKIN         BITMAP                  "Res\\RemoteWnd.bmp"
 IDB_PANEL_MARK          BITMAP                  "Res\\PanelMark.bmp"
-IDB_SCHEDULER_HEADER    BITMAP                  "Res\\Scheduler.bmp"
-IDB_SCHEDULER_TIMESLICES BITMAP                  "Res\\TimeSlices.bmp"
 IDB_NAVBAR_IMAGE_RTL    BITMAP                  "Res\\NavbarRTL.bmp"
 IDB_NAVBAR_ALPHA_RTL    BITMAP                  "Res\\NavbarAlphaRTL.bmp"
 IDB_MUSICBRAINZ_LOGO    BITMAP                  "Res\\MusicBrainz.bmp"
@@ -217,6 +216,50 @@ IDB_BOX_MARK            BITMAP                  "Res\\BoxMark.bmp"
 //
 // Dialog
 //
+
+IDD_SCHEDULE_TASK DIALOGEX 0, 0, 260, 345
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Schedule Item"
+FONT 8, "Tahoma", 400, 0, 0x0
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,66,316,50,14,WS_GROUP
+    PUSHBUTTON      "Cancel",IDCANCEL,134,316,50,14
+    LTEXT           "Please select a date:",IDC_STATIC,14,44,68,8
+    LTEXT           "Please select a time:",IDC_STATIC,172,44,66,8
+    CONTROL         "Only once",IDC_ONLYONCE,"Button",BS_AUTORADIOBUTTON,84,26,48,10
+    CONTROL         "On specific day(s) of week",IDC_EVERYDAY,"Button",BS_AUTORADIOBUTTON,146,26,101,10
+    LTEXT           "Run this event:",IDC_STATIC,15,25,50,8
+    CONTROL         "",IDC_DATE,"SysDateTimePick32",DTS_RIGHTALIGN | DTS_LONGDATEFORMAT | WS_TABSTOP,15,59,131,15
+    COMBOBOX        IDC_EVENTTYPE,14,150,151,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Select the event type:",IDC_STATIC,14,134,73,8
+    CONTROL         "",IDC_TIME,"SysDateTimePick32",DTS_RIGHTALIGN | DTS_UPDOWN | WS_TABSTOP | 0x8,170,58,63,15
+    CONTROL         "Make this event active",IDC_ACTIVE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,20,291,88,10
+    CONTROL         " &Toggle bandwidth independently",IDC_SCHEDULER_TOGGLE_BANDWIDTH,
+                    "Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,15,215,142,15,WS_EX_TRANSPARENT
+    EDITTEXT        IDC_DESCRIPTION,18,264,189,14,ES_AUTOHSCROLL
+    LTEXT           "Description: (optional)",IDC_STATIC,18,248,72,8
+    EDITTEXT        IDC_SCHEDULER_LIMITED,14,172,36,12,ES_AUTOHSCROLL | ES_NUMBER
+    CONTROL         "",IDC_SCHEDULER_LIMITED_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,42,172,11,12
+    EDITTEXT        IDC_SCHEDULER_LIMITED_DOWN,14,187,36,12,ES_AUTOHSCROLL | ES_NUMBER
+    CONTROL         "",IDC_SCHEDULER_LIMITED_SPIN_DOWN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,42,187,11,12
+    EDITTEXT        IDC_SCHEDULER_LIMITED_UP,14,202,36,12,ES_AUTOHSCROLL | ES_NUMBER
+    CONTROL         "",IDC_SCHEDULER_LIMITED_SPIN_UP,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,42,202,11,12
+    CONTROL         " &Limit network to Gnutella2",IDC_SCHEDULER_LIMITED_NETWORKS,
+                    "Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,15,230,142,15,WS_EX_TRANSPARENT
+    LTEXT           "% of &bandwidth under limit",IDC_STATIC_LIMITED,56,175,87,8
+    LTEXT           "% of &download under limit",IDC_STATIC_LIMITED_DOWN,56,190,87,8
+    LTEXT           "% of &upload under limit",IDC_STATIC_LIMITED_UP,56,205,87,8
+    GROUPBOX        "Scheduler",IDC_STATIC,7,7,245,331
+    GROUPBOX        "Days Of Week",IDC_DAYOFWEEK_GBOX,15,84,215,40
+    CONTROL         "Sunday",IDC_CHECK_SUN,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,21,96,39,10
+    CONTROL         "Thursday",IDC_CHECK_THU,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,21,109,47,10
+    CONTROL         "Monday",IDC_CHECK_MON,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,75,96,39,10
+    CONTROL         " Friday",IDC_CHECK_FRI,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,75,109,39,10
+    CONTROL         "Tuesday",IDC_CHECK_TUES,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,125,96,39,10
+    CONTROL         "Saturday",IDC_CHECK_SAT,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,125,109,39,10
+    CONTROL         "Wednesday",IDC_CHECK_WED,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,172,96,54,10
+    PUSHBUTTON      "All",IDC_BUTTON_ALLDAYS,172,109,47,11
+END
 
 IDD_CONNECT_TO DIALOGEX 0, 0, 242, 120
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
@@ -1700,34 +1743,6 @@ BEGIN
     EDITTEXT        IDC_TORRENT_DEFAULTTRACKER,83,197,184,12,ES_AUTOHSCROLL
 END
 
-IDD_SETTINGS_SCHEDULER DIALOGEX 0, 0, 282, 220
-STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
-CAPTION "Scheduler"
-FONT 8, "Tahoma", 0, 0, 0x1
-BEGIN
-    GROUPBOX        "&Options:",IDC_STATIC,3,156,154,58
-    CONTROL         " &Enable scheduler",IDC_SCHEDULER_ENABLE,"Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,10,165,144,15,WS_EX_TRANSPARENT
-    EDITTEXT        IDC_SCHEDULER_LIMITED,10,182,29,12,ES_AUTOHSCROLL | ES_NUMBER
-    CONTROL         "",IDC_SCHEDULER_LIMITED_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,27,181,11,12
-    CONTROL         "&Connect to only G2 when limited",IDC_SCHEDULER_LIMITED_NETWORKS,
-                    "Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,10,196,142,15,WS_EX_TRANSPARENT
-    GROUPBOX        "Key:",IDC_STATIC,3,105,154,49
-    RTEXT           "Sun",IDC_STATIC,0,26,21,8,0,WS_EX_TRANSPARENT
-    RTEXT           "Mon",IDC_STATIC,0,36,21,8,0,WS_EX_TRANSPARENT
-    RTEXT           "Tue",IDC_STATIC,0,46,21,8,0,WS_EX_TRANSPARENT
-    RTEXT           "Wed",IDC_STATIC,0,56,21,8,0,WS_EX_TRANSPARENT
-    RTEXT           "Thu",IDC_STATIC,0,66,21,8,0,WS_EX_TRANSPARENT
-    RTEXT           "Fri",IDC_STATIC,0,76,21,8,0,WS_EX_TRANSPARENT
-    RTEXT           "Sat",IDC_STATIC,0,86,21,8,0,WS_EX_TRANSPARENT
-    LTEXT           "Do not connect",IDC_STATIC,36,115,116,8,0,WS_EX_TRANSPARENT
-    LTEXT           "Limited connection",IDC_STATIC,36,128,116,8,0,WS_EX_TRANSPARENT
-    LTEXT           "Connect at full speed",IDC_STORE_VIEWS,36,140,116,8,0,WS_EX_TRANSPARENT
-    LTEXT           "% of &bandwidth when limited",IDC_STATIC,40,182,114,12,SS_CENTERIMAGE,WS_EX_TRANSPARENT
-    EDITTEXT        IDC_SCHEDULER_DISPLAY,35,96,187,11,ES_AUTOHSCROLL | ES_READONLY | WS_DISABLED | NOT WS_BORDER | NOT WS_TABSTOP,WS_EX_TRANSPARENT
-    GROUPBOX        "Help",IDC_STATIC,159,105,118,108,0,WS_EX_RIGHT
-    LTEXT           "The scheduler is designed to allow you to set times when Shareaza will connect and download files. \n\n\nNote: If you have Shareaza open while the scheduler is active, you may see it changing settings- This is normal!",IDC_STATIC,167,113,101,93
-END
-
 IDD_FILTER_SAVE_AS DIALOGEX 0, 0, 205, 46
 STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Save filter as"
@@ -2737,6 +2752,7 @@ BEGIN
     VK_F10,         ID_VIEW_TRAFFIC,        VIRTKEY, NOINVERT
     VK_F11,         ID_VIEW_SYSTEM,         VIRTKEY, NOINVERT
     VK_F11,         ID_VIEW_NEIGHBOURS,     VIRTKEY, CONTROL, NOINVERT
+    VK_F11,         ID_VIEW_SCHEDULER,      VIRTKEY, SHIFT, CONTROL, NOINVERT
     VK_F12,         ID_TAB_IRC,             VIRTKEY, NOINVERT
     VK_UP,          ID_LIBRARY_PARENT,      VIRTKEY, CONTROL, NOINVERT
     "Z",            ID_TOOLS_RESKIN,        VIRTKEY, SHIFT, CONTROL, NOINVERT
@@ -3220,6 +3236,14 @@ BEGIN
     IDS_PRIORITY_HIGH       "High"
     IDS_SKIN_ERROR          "Skin load error: %s. Element: %s"
     IDS_SKIN_LOAD           "Loading skin: %s"
+    IDS_SCHEDULER_REMOVEALL_CONFIRM 
+                            "Are you sure you want to remove all scheduled tasks? This cannot be undone."
+    ID_HELP_SCHEDULER       "Schedule tasks to be done in the future."
+    IDS_SCHEDULER_TIME_PASSED 
+                            "Scheduled time has already passed. \n\nPlease select a time in the future."
+    IDS_SCHEDULER_BANDWIDTH_FULLSPEED "Bandwidth: Full Speed"
+    IDS_SCHEDULER_BANDWIDTH_REDUCEDSPEED "Bandwidth: Reduced Speed"
+    IDS_SCHEDULER_BANDWIDTH_STOP "Bandwidth: Stop"
 END
 
 STRINGTABLE 
@@ -4541,6 +4565,12 @@ BEGIN
     ID_SYSTEM_VERBOSE_NOTICE "Display notices and above."
     ID_SYSTEM_VERBOSE_INFO  "Display infos and above."
     ID_SYSTEM_VERBOSE_DEBUG "Display all."
+    ID_VIEW_SCHEDULER       "Show or hide SCHEDULER window."
+    ID_SCHEDULER_EDIT       "Edit the selected task..."
+    ID_SCHEDULER_REMOVE     "Removes selected task(s) from the list."
+    ID_SCHEDULER_ACTIVATE   "Activates selected task(s) from the list."
+    ID_SCHEDULER_DEACTIVATE "Deactivates selected tasks."
+    ID_SCHEDULER_ADD        "Adds a new task to scheduler list."
 END
 
 STRINGTABLE 
@@ -4806,6 +4836,11 @@ END
 
 STRINGTABLE 
 BEGIN
+    IDR_SCHEDULERFRAME      "Scheduler"
+END
+
+STRINGTABLE 
+BEGIN
     ID_WEBSERVICES_LIST     "Choose the web service to get more information about the selected file."
     ID_WEBSERVICES_SHAREMONKEY 
                             "Search for the file infomation using ShareMonkey service."
@@ -4854,6 +4889,25 @@ END
 STRINGTABLE 
 BEGIN
     IDC_IMPORT_DOWNLOADS    "Import eMule partial downloads..."
+END
+
+STRINGTABLE 
+BEGIN
+    ID_SCHEDULER_REMOVE_ALL "Removes all scheduled tasks."
+    IDS_SCHEDULER_SYSTEM_EXIT "System: Exit Shareaza"
+    IDS_SCHEDULER_SYSTEM_DIALUP_DC "System: Disconnect Dial-up Connection"
+    IDS_SCHEDULER_SYSTEM_TURNOFF "System: Turn Off the Computer"
+    IDS_SCHEDULER_SELECTTASK "Please select a task."
+    IDS_SCHEDULER_TASK_SPECIFICDAYS "Specific day(s) of week"
+    IDS_SCHEDULER_TASK_ACTIVE "Active"
+    IDS_SCHEDULER_TASK_INACTIVE "Inactive"
+    IDS_SCHEDULER_TASK_DONE "Done"
+    IDS_SCHEDULER_TASK_WAITING "Waiting..."
+    IDS_SCHEDULER_NOTASK    "No Tasks Currently Scheduled"
+    ID_SCHEDULER_IMPORT     "Imports scheduled tasks from a file..."
+    ID_SCHEDULER_EXPORT     "Exports scheduled tasks to a file..."
+    IDS_SCHEDULER_TASK_DONETODAY "Done Today"
+    IDS_SCHEDULER_SELECTADAY "You should select at least one day of week."
 END
 
 #endif    // English (Australia) resources

@@ -38,6 +38,7 @@
 		<button id="ID_VIEW_MEDIA"/>
 		<button id="ID_TAB_IRC"/>
 		<button id="ID_VIEW_SECURITY"/>
+		<button id="ID_VIEW_SCHEDULER"/>
 		<button id="ID_VIEW_HOSTS"/>
 		<button id="ID_VIEW_DISCOVERY"/>
 		<button id="ID_VIEW_TRAFFIC"/>
@@ -359,6 +360,7 @@
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Settings"/>
 	</toolbar>
+  <!-- SECURITY WINDOW -->
 	<toolbar name="CSecurityWnd">
 		<button id="ID_SECURITY_EDIT" text="Edit Rule"/>
 		<separator/>
@@ -372,6 +374,21 @@
 		<button id="ID_SECURITY_IMPORT" text="Import List"/>
 		<button id="ID_SECURITY_EXPORT" text="Export List"/>
 	</toolbar>
+  <!-- SCHEDULER WINDOW -->
+  <toolbar name="CSchedulerWnd">
+    <button id="ID_SCHEDULER_EDIT" text="Edit Task"/>
+    <separator/>
+    <button id="ID_SCHEDULER_ACTIVATE" text="Activate"/>
+    <button id="ID_SCHEDULER_DEACTIVATE" text="Deactivate"/>
+    <separator/>
+    <button id="ID_SCHEDULER_ADD" text="Add Task"/>
+    <button id="ID_SCHEDULER_REMOVE" text="Remove Task"/>
+    <separator/>
+    <button id="ID_SCHEDULER_REMOVE_ALL" text="Remove All"/>
+    <rightAlign/>
+    <button id="ID_SCHEDULER_IMPORT" text="Import List"/>
+    <button id="ID_SCHEDULER_EXPORT" text="Export List"/>
+  </toolbar>
 	<!-- HIT MONITOR WINDOW -->
 	<toolbar name="CHitMonitorWnd">
 		<button id="ID_SEARCH_DOWNLOAD" text="Download"/>
@@ -500,6 +517,7 @@
 				<item id="ID_VIEW_SECURITY" text="Se_curity"/>
 				<item id="ID_VIEW_HOSTS" text="H_ost Cache"/>
 				<item id="ID_VIEW_DISCOVERY" text="Disco_very"/>
+				<item id="ID_VIEW_SCHEDULER" text="Sch_eduler"/>
 			</menu>
 			<separator/>
 			<item id="ID_VIEW_BASIC" text="_Basic Mode"/>
@@ -573,6 +591,7 @@
 			<separator/>
 			<item id="ID_VIEW_SECURITY" text="Se_curity"/>
 			<item id="ID_VIEW_HOSTS" text="H_ost Cache"/>
+			<item id="ID_VIEW_SCHEDULER" text="Sch_eduler"/>
 			<separator/>
 			<menu text="A_dvanced">
 				<item id="ID_VIEW_SYSTEM" text="S_ystem" shortcut="F11"/>
@@ -587,6 +606,7 @@
 				<item id="ID_VIEW_HOSTS" text="H_ost Cache" shortcut="F8"/>
 				<item id="ID_VIEW_DISCOVERY" text="Disco_very" shortcut="F9"/>
 				<item id="ID_VIEW_TRAFFIC" text="_Graph" shortcut="F10"/>
+				<item id="ID_VIEW_SCHEDULER" text="Sch_eduler" shortcut="Ctrl+Shift+F11"/>
 				<separator/>
 				<item id="ID_VIEW_PACKETS" text="_Packet Dump" shortcut="Ctrl+F1"/>
 				<item id="ID_VIEW_SEARCH_MONITOR" text="Se_arch Monitor" shortcut="Ctrl+F2"/>
@@ -679,6 +699,7 @@
 			<item id="ID_VIEW_HOSTS" text="H_ost Cache" shortcut="F8"/>
 			<item id="ID_VIEW_DISCOVERY" text="Disco_very" shortcut="F9"/>
 			<item id="ID_VIEW_TRAFFIC" text="_Graph" shortcut="F10"/>
+			<item id="ID_VIEW_SCHEDULER" text="Sch_eduler" shortcut="Ctrl+Shift+F11"/>
 			<separator/>
 			<item id="ID_VIEW_PACKETS" text="_Packet Dump" shortcut="Ctrl+F1"/>
 			<item id="ID_VIEW_SEARCH_MONITOR" text="Se_arch Monitor" shortcut="Ctrl+F2"/>
@@ -755,6 +776,7 @@
 			<item id="ID_VIEW_UPLOADS" text="_Uploads"/>
 			<item id="ID_VIEW_SECURITY" text="_Security"/>
 			<item id="ID_VIEW_HOSTS" text="_Host Cache"/>
+			<item id="ID_VIEW_SCHEDULER" text="Sch_eduler"/>
 		</menu>
 	</menu>
 	<menu name="CMainWnd.View.Tabbed">
@@ -770,6 +792,7 @@
 		<item id="ID_VIEW_HOSTS" text="_Host Cache"/>
 		<item id="ID_VIEW_DISCOVERY" text="Disco_very"/>
 		<item id="ID_VIEW_TRAFFIC" text="_Graph"/>
+		<item id="ID_VIEW_SCHEDULER" text="Sch_eduler"/>
 		<separator/>
 		<item id="ID_VIEW_PACKETS" text="_Packet Dump"/>
 		<item id="ID_VIEW_SEARCH_MONITOR" text="Se_arch Monitor"/>
@@ -789,6 +812,7 @@
 		<item id="ID_VIEW_HOSTS" text="_Host Cache"/>
 		<item id="ID_VIEW_DISCOVERY" text="Disco_very"/>
 		<item id="ID_VIEW_TRAFFIC" text="_Graph"/>
+		<item id="ID_VIEW_SCHEDULER" text="Sch_eduler"/>
 		<separator/>
 		<item id="ID_VIEW_PACKETS" text="_Packet Dump"/>
 		<item id="ID_VIEW_SEARCH_MONITOR" text="Se_arch Monitor"/>
@@ -824,6 +848,7 @@
 			<item id="ID_VIEW_UPLOADS" text="_Uploads"/>
 			<item id="ID_VIEW_SECURITY" text="_Security"/>
 			<item id="ID_VIEW_HOSTS" text="_Host Cache"/>
+			<item id="ID_VIEW_SCHEDULER" text="Sch_eduler"/>
 		</menu>
 	</menu>
 	<menu name="CHomeWnd.Tabbed">
@@ -839,6 +864,7 @@
 		<item id="ID_VIEW_HOSTS" text="_Host Cache"/>
 		<item id="ID_VIEW_DISCOVERY" text="Disco_very"/>
 		<item id="ID_VIEW_TRAFFIC" text="_Graph"/>
+		<item id="ID_VIEW_SCHEDULER" text="Sch_eduler"/>
 		<separator/>
 		<item id="ID_VIEW_PACKETS" text="_Packet Dump"/>
 		<item id="ID_VIEW_SEARCH_MONITOR" text="Se_arch Monitor"/>
@@ -1509,7 +1535,23 @@
 		</menu>
 		<separator/>
 		<item id="ID_SECURITY_EDIT" text="_Properties"/>
+ 
 	</menu>
+ <!-- SCHEDULER WINDOW -->
+	 <menu name="CSchedulerWnd">
+		<item id="ID_SCHEDULER_ADD" text="_Add Scheduled Task"/>
+		<separator/>
+		<item id="ID_SCHEDULER_ACTIVATE" text="A_ctivate"/>
+		<item id="ID_SCHEDULER_DEACTIVATE" text="_Deactivate"/>
+		<separator/>
+		<item id="ID_SCHEDULER_REMOVE" text="R_emove"/>
+		<item id="ID_SCHEDULER_EDIT" text="_Edit"/>
+    <separator/>
+    <item id="ID_SCHEDULER_REMOVE_ALL" text="Remove Al_l"/>
+   <separator/>
+   <item id="ID_SCHEDULER_IMPORT" text="_Import..."/>
+   <item id="ID_SCHEDULER_EXPORT" text="E_xport..."/>
+  </menu>
 	<!-- DISCOVERY SERVICES WINDOW -->
 	<menu name="CDiscoveryWnd">
 		<item id="ID_DISCOVERY_QUERY" text="_Query Now"/>
@@ -1899,10 +1941,6 @@
 		<link target="raza:page:CRemoteSettingsPage" format="b">Remote:</link>
 		<gap size="4"/>
 		<text>Set up the ability to control Shareaza remotely through a web browser.</text>
-		<newline gap="10"/>
-		<link target="raza:page:CSchedulerSettingsPage" format="b">Scheduler:</link>
-		<gap size="4"/>
-		<text>Limit download connections based on a periodic schedule.</text>
 	</document>
 	<!-- Browse User Profile -->
 	<document name="CBrowseHostProfile.1">
@@ -2484,8 +2522,8 @@
 		<image id="ID_TRANSFERS_FORGET"/>
 		<image id="ID_DOWNLOADS_FILE_DELETE"/>
 		<image id="ID_DOWNLOADS_RATE" id1="ID_MEDIA_RATE"/>
-		<image id="ID_DOWNLOADS_MOVE_UP" id1="ID_CHAT_PRIORITY"/>
-		<image id="ID_DOWNLOADS_MOVE_DOWN"/>
+		<image id="ID_DOWNLOADS_MOVE_UP" id1="ID_CHAT_PRIORITY" id2="ID_SECURITY_MOVE_UP"/>
+		<image id="ID_DOWNLOADS_MOVE_DOWN" id1="ID_SECURITY_MOVE_DOWN"/>
 		<image id="ID_LIBRARY_ENQUEUE" id1="ID_SHAREMONKEY_BUY"/>
 		<image id="ID_LIBRARY_URL" id1="ID_SHAREMONKEY_COMPARE"/>
 		<image id="ID_LIBRARY_RENAME"/>
@@ -2507,8 +2545,8 @@
 		<image id="ID_TRAFFIC_SETUP"/>
 		<image id="ID_TRAFFIC_CLEAR"/>
 		<image id="ID_TRAFFIC_WINDOW"/>
-		<image id="ID_SECURITY_EDIT"/>
-		<image id="ID_SECURITY_REMOVE"/>
+		<image id="ID_SECURITY_EDIT" id1="ID_SCHEDULER_EDIT"/>
+		<image id="ID_SECURITY_REMOVE" id1="ID_SCHEDULER_REMOVE"/>
 		<image id="ID_SECURITY_ADD"/>
 		<image id="ID_SECURITY_BAN"/>
 		<image id="ID_DISCOVERY_QUERY"/>
@@ -2526,6 +2564,7 @@
 		<image id="ID_VIEW_UPLOADS" id1="ID_CHAT_SEND_FILE"/>
 		<image id="ID_VIEW_LIBRARY" id1="ID_TAB_LIBRARY" id2="ID_LIBRARY_FOLDERS"/>
 		<image id="ID_VIEW_SECURITY"/>
+		<image id="ID_VIEW_SCHEDULER" id1="ID_SCHEDULER_ADD"/>
 		<image id="ID_VIEW_HOSTS"/>
 		<image id="ID_VIEW_DISCOVERY" id1="ID_LIBRARY_REBUILD"/>
 		<image id="ID_VIEW_TRAFFIC"/>
@@ -2556,8 +2595,8 @@
 		<image id="ID_MEDIA_PREVIOUS" id1="ID_SHAREMONKEY_PREVIOUS"/>
 		<image id="ID_MEDIA_NEXT" id1="ID_SHAREMONKEY_NEXT"/>
 		<image id="ID_MEDIA_PAUSE"/>
-		<image id="ID_MEDIA_OPEN" id1="ID_SECURITY_IMPORT" id2="ID_LIBRARY_UNLINK"/>
-		<image id="ID_MEDIA_SAVE" id1="ID_SECURITY_EXPORT"/>
+		<image id="ID_MEDIA_OPEN" id1="ID_SECURITY_IMPORT" id2="ID_LIBRARY_UNLINK" id3="ID_SCHEDULER_IMPORT"/>
+		<image id="ID_MEDIA_SAVE" id1="ID_SECURITY_EXPORT" id2="ID_SCHEDULER_EXPORT"/>
 		<image id="ID_MEDIA_ZOOM"/>
 		<image id="ID_MEDIA_FULLSCREEN"/>
 		<image id="ID_MEDIA_ADD"/>
@@ -2571,7 +2610,8 @@
 		<image id="ID_CHAT_EMOTICONS"/>
 		<image id="ID_LIBRARY_VIEW_ALBUM" id1="ID_MUSICBRAINZ_ALBUMS"/>
 		<image id="ID_LIBRARY_VIEW_COLLECTION" id1="ID_LIBRARY_EXPORT_COLLECTION" id2="ID_MEDIA_EXPORT_COLLECTION"/>
-	</bitmap>
+    <image id="ID_SCHEDULER_REMOVE_ALL"/>
+  </bitmap>
 	<bitmap id="IDB_CHILDFRAME">
 		<image id="ID_CHILD_MAXIMISE"/>
 		<image id="ID_CHILD_RESTORE"/>

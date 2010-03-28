@@ -243,7 +243,7 @@ void CSettings::Load()
 	Add( _T("MediaPlayer"), _T("Mpeg1PreviewCLSID"), &MediaPlayer.Mpeg1PreviewCLSID, _T("{9AA8DF47-B8FE-47da-AB1A-2DAA0DA0B646}") );
 	Add( _T("MediaPlayer"), _T("Random"), &MediaPlayer.Random, false );
 	Add( _T("MediaPlayer"), _T("Repeat"), &MediaPlayer.Repeat, false );
-	Add( _T("MediaPlayer"), _T("ServicePath"), &MediaPlayer.ServicePath );
+	Add( _T("MediaPlayer"), _T("ServicePath"), &MediaPlayer.ServicePath,_T(""));
 	Add( _T("MediaPlayer"), _T("ShortPaths"), &MediaPlayer.ShortPaths, false );
 	Add( _T("MediaPlayer"), _T("StatusVisible"), &MediaPlayer.StatusVisible, true );
 	Add( _T("MediaPlayer"), _T("VisCLSID"), &MediaPlayer.VisCLSID, _T("{591A5CFF-3172-4020-A067-238542DDE9C2}") );
@@ -549,11 +549,6 @@ void CSettings::Load()
 	Add( _T("Remote"), _T("Enable"), &Remote.Enable, false );
 	Add( _T("Remote"), _T("Password"), &Remote.Password );
 	Add( _T("Remote"), _T("Username"), &Remote.Username );
-
-	Add( _T("Scheduler"), _T("AllowHub"), &Scheduler.AllowHub, true );
-	Add( _T("Scheduler"), _T("Enable"), &Scheduler.Enable, false );
-	Add( _T("Scheduler"), _T("LimitedBandwidth"), &Scheduler.LimitedBandwidth, 50, 1, 0, 100, _T(" %") );
-	Add( _T("Scheduler"), _T("LimitedNetworks"), &Scheduler.LimitedNetworks, true );
 
 	Add( _T("Experimental"), _T("EnableDIPPSupport"), &Experimental.EnableDIPPSupport, false );
 	Add( _T("Experimental"), _T("TestBTPartials"), &Experimental.TestBTPartials, false );

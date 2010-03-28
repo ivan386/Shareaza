@@ -44,7 +44,8 @@ public:
 	CButton		m_wndAdd;
 	CComboBox	m_wndList;
 	CComboBox	m_wndServices;
-	CString		m_sServicePath;
+	CString		m_sServicePath[3];
+	int			m_nSelected;
 	CString		m_sType;
 	BOOL		m_bEnablePlay;
 	BOOL		m_bEnableEnqueue;

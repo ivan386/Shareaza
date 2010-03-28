@@ -80,7 +80,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="winmm.lib version.lib ws2_32.lib wininet.lib Iphlpapi.lib msi.lib powrprof.lib"
+				AdditionalDependencies="rasapi32.lib winmm.lib version.lib ws2_32.lib wininet.lib Iphlpapi.lib msi.lib powrprof.lib"
 				GenerateManifest="false"
 				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
@@ -145,6 +145,10 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Wall"
 				Optimization="0"
+				InlineFunctionExpansion="2"
+				EnableIntrinsicFunctions="true"
+				FavorSizeOrSpeed="2"
+				OmitFramePointers="true"
 				AdditionalIncludeDirectories="..\zlib"
 				PreprocessorDefinitions="_DEBUG;WIN64;_WINDOWS;_SHAREAZA;ZLIB_WINAPI;ZLIB_DLL;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS"
 				BasicRuntimeChecks="3"
@@ -269,7 +273,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="winmm.lib version.lib ws2_32.lib wininet.lib Iphlpapi.lib msi.lib powrprof.lib"
+				AdditionalDependencies="rasapi32.lib winmm.lib version.lib ws2_32.lib wininet.lib Iphlpapi.lib msi.lib powrprof.lib"
 				LinkIncremental="1"
 				GenerateManifest="false"
 				IgnoreDefaultLibraryNames=""
@@ -1587,6 +1591,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\DlgScheduleTask.cpp"
+					>
+				</File>
+				<File
 					RelativePath="DlgSecureRule.cpp"
 					>
 				</File>
@@ -1712,6 +1720,10 @@
 				</File>
 				<File
 					RelativePath="WndPlugin.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\WndScheduler.cpp"
 					>
 				</File>
 				<File
@@ -1992,10 +2004,6 @@
 				</File>
 				<File
 					RelativePath="PageSettingsRich.cpp"
-					>
-				</File>
-				<File
-					RelativePath="PageSettingsScheduler.cpp"
 					>
 				</File>
 				<File
@@ -3276,6 +3284,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\DlgScheduleTask.h"
+					>
+				</File>
+				<File
 					RelativePath="DlgSecureRule.h"
 					>
 				</File>
@@ -3528,10 +3540,6 @@
 					>
 				</File>
 				<File
-					RelativePath="PageSettingsScheduler.h"
-					>
-				</File>
-				<File
 					RelativePath="PageSettingsSkins.h"
 					>
 				</File>
@@ -3663,6 +3671,10 @@
 			</File>
 			<File
 				RelativePath="Res\About.htm.gz"
+				>
+			</File>
+			<File
+				RelativePath=".\Res\Bad.ico"
 				>
 			</File>
 			<File
@@ -3934,6 +3946,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Res\Exclamation.ico"
+				>
+			</File>
+			<File
 				RelativePath="Res\Executable.ico"
 				>
 			</File>
@@ -4162,6 +4178,10 @@
 				>
 			</File>
 			<File
+				RelativePath="Res\Scheduler.ico"
+				>
+			</File>
+			<File
 				RelativePath="Res\SchemaMappings.xml"
 				>
 				<FileConfiguration
@@ -4331,6 +4351,10 @@
 			</File>
 			<File
 				RelativePath="Res\World.ico"
+				>
+			</File>
+			<File
+				RelativePath="Res\X.ico"
 				>
 			</File>
 		</Filter>

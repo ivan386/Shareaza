@@ -411,7 +411,7 @@ BOOL CShareazaApp::InitInstance()
 	SplashStep( L"Discovery Services" );
 		DiscoveryServices.Load();
 	SplashStep( L"Scheduler" );
-		Schedule.Load();
+		Scheduler.Load();
 	SplashStep( L"Rich Documents" );
 		Emoticons.Load();
 		Flags.Load();
@@ -910,17 +910,9 @@ void CShareazaApp::InitResources()
 	if ( GlobalMemoryStatusEx( &pMemory ) )
 		m_nPhysicalMemory = pMemory.ullTotalPhys;
 
-	long nResult = ERROR_SUCCESS;
-	CString strProcKey;
-	while ( nResult == ERROR_SUCCESS )
-	{
-		HKEY hKey;
-		// These keyes are populated during startup, so it's safe to check them
-		strProcKey.Format( L"Hardware\\Description\\System\\CentralProcessor\\%i", ++m_nLogicalProcessors );
-		if ( RegOpenKeyEx( HKEY_LOCAL_MACHINE, strProcKey, 0, KEY_QUERY_VALUE, &hKey ) != ERROR_SUCCESS )
-			break;
-		RegCloseKey( hKey );
-	}
+	SYSTEM_INFO gSysInfo;
+	GetSystemInfo(&gSysInfo);
+	m_nLogicalProcessors = gSysInfo.dwNumberOfProcessors;
 
 	CryptAcquireContext( &m_hCryptProv, NULL, NULL, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT );
 
@@ -2968,3 +2960,4 @@ CString& CLowerCaseTable::operator()(CString& strSource) const
 
 	return strSource;
 }
+

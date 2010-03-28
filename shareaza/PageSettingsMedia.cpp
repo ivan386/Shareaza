@@ -99,6 +99,7 @@ BOOL CMediaSettingsPage::OnInitDialog()
 
 	m_bEnablePlay		= Settings.MediaPlayer.EnablePlay;
 	m_bEnableEnqueue	= Settings.MediaPlayer.EnableEnqueue;
+	m_nSelected			= 3;	//Shareaza Media Player
 
 	for ( string_set::const_iterator i = Settings.MediaPlayer.FileTypes.begin() ;
 		i != Settings.MediaPlayer.FileTypes.end(); i++ )
@@ -107,22 +108,40 @@ BOOL CMediaSettingsPage::OnInitDialog()
 	}
 	
 	CString str;
-	LoadString( str, IDS_MEDIA_SMPLAYER );
-	m_wndServices.AddString( str );
 	LoadString( str, IDS_GENERAL_CUSTOM );
 	str.Insert( 0, '(' );
 	str.Append( _T("\x2026)") );
 	m_wndServices.AddString( str );
+	LoadString( str, IDS_MEDIA_SMPLAYER );
+	m_wndServices.AddString( str );
+	int nCount =0;
+	for(string_set::const_reverse_iterator i = Settings.MediaPlayer.ServicePath.rbegin() ;i != Settings.MediaPlayer.ServicePath.rend(); ++i)
+	{
+		
+		m_sServicePath[nCount] = *i;
+		int nBackSlash = m_sServicePath[nCount].ReverseFind( '\\' );
+		str = m_sServicePath[nCount].Mid( nBackSlash + 1 );
+		int nAstrix= str.ReverseFind( '*' );
+		
+		if(nAstrix != -1)	//Selected player
+		{
+			m_nSelected	= nCount;
+			str.Remove('*');
+	
+		}
 
-	if ( Settings.MediaPlayer.ServicePath.IsEmpty() )
-		m_wndServices.SetCurSel( 0 );
+		m_wndServices.InsertString( 2+nCount, str );
+		m_sServicePath[nCount].Remove('*');
+		nCount++;
+	}
+
+	
+
+	if ( m_nSelected == 3 )
+		m_wndServices.SetCurSel( 1 );
 	else
 	{
-		m_sServicePath = Settings.MediaPlayer.ServicePath;
-		int nBackSlash = m_sServicePath.ReverseFind( '\\' );
-		str = m_sServicePath.Mid( nBackSlash + 1 );
-		m_wndServices.InsertString( 0, str );
-		m_wndServices.SetCurSel( 0 );
+		m_wndServices.SetCurSel( m_nSelected + 2 );
 		GetDlgItem( IDC_MEDIA_PLAY )->EnableWindow( FALSE );
 		GetDlgItem( IDC_MEDIA_ENQUEUE )->EnableWindow( FALSE );
 		GetDlgItem( IDC_MEDIA_VIS )->EnableWindow( FALSE );
@@ -189,11 +208,19 @@ void CMediaSettingsPage::OnOK()
 
 	Settings.MediaPlayer.EnablePlay		= m_bEnablePlay != FALSE;
 	Settings.MediaPlayer.EnableEnqueue	= m_bEnableEnqueue != FALSE;
-	Settings.MediaPlayer.ServicePath	= m_sServicePath;
-
+	
+	
+	Settings.MediaPlayer.ServicePath.clear();
+	CString str = "*";
+	for(int i = 0; i < 3 && !m_sServicePath[i].IsEmpty(); ++i)
+	{
+		if(i == m_nSelected) m_sServicePath[i]+="*";
+		Settings.MediaPlayer.ServicePath.insert( str + m_sServicePath[i]);
+		str+="*";
+	}
 	CString strRegData;
 
-	if ( m_sServicePath.IsEmpty() )
+	if ( m_nSelected == 3 )		// Shareaza Media Player is selected
 		Settings.MediaPlayer.ShortPaths = FALSE;
 	else
 	{	
@@ -247,7 +274,7 @@ void CMediaSettingsPage::OnOK()
 
 void CMediaSettingsPage::OnSelChangeMediaService()
 {
-	int nCustomIndex = ( m_wndServices.GetCount() == 2 ) ? 1 : 2;
+	const int nCustomIndex = 0;
 	int nSelected = m_wndServices.GetCurSel();
 
 	if ( nSelected == nCustomIndex )
@@ -261,11 +288,47 @@ void CMediaSettingsPage::OnSelChangeMediaService()
 			return;
 		}
 		
-		// Delete old file name first
-		if ( nCustomIndex == 2 ) m_wndServices.DeleteString( 0 );
-		m_wndServices.InsertString( 0, dlg.GetFileName() );
-		m_wndServices.SetCurSel( 0 );
-		m_sServicePath = dlg.GetPathName();
+		// List only keeps 5 items
+		if ( m_wndServices.GetCount() == 5 )
+		{
+			m_wndServices.DeleteString( 4 );	//FIFO
+			m_wndServices.InsertString( 2, dlg.GetFileName() );
+			m_wndServices.SetCurSel( 2 );
+			
+			m_sServicePath[2] = m_sServicePath[1];
+			m_sServicePath[1] = m_sServicePath[0];
+			m_sServicePath[0] = dlg.GetPathName();
+			m_nSelected = 0;
+			
+
+		}
+		else
+		{
+			m_wndServices.InsertString( 2, dlg.GetFileName() );
+			m_wndServices.SetCurSel( 2 );
+			int i = 0 ;
+			//while( !m_sServicePath[i].IsEmpty() ) ++i;
+			if( m_sServicePath[0].IsEmpty() ) m_sServicePath[0] = dlg.GetPathName();
+			else
+			{
+				if( m_sServicePath[1].IsEmpty() )
+				{
+					m_sServicePath[1] = m_sServicePath[0];
+					m_sServicePath[0] = dlg.GetPathName();
+				}
+				else
+				{
+					m_sServicePath[2] = m_sServicePath[1];
+					m_sServicePath[1] = m_sServicePath[0];
+					m_sServicePath[0] = dlg.GetPathName();
+					
+				}
+
+			}
+			
+			m_nSelected = i;
+
+		}	
 
 		m_bEnablePlay = m_bEnableEnqueue = FALSE;
 		UpdateData( FALSE );
@@ -273,17 +336,26 @@ void CMediaSettingsPage::OnSelChangeMediaService()
 		GetDlgItem( IDC_MEDIA_PLAY )->EnableWindow( FALSE );
 		GetDlgItem( IDC_MEDIA_ENQUEUE )->EnableWindow( FALSE );
 		GetDlgItem( IDC_MEDIA_VIS )->EnableWindow( FALSE );
-	}
-	else if ( nSelected == 1 )
-	{
-		if ( nCustomIndex == 2 ) m_wndServices.DeleteString( 0 );
-		m_sServicePath.Empty();
 
+	}
+	else if ( nSelected == 1 ) //Shareaza Media Player selected
+	{
+		m_nSelected = 3;
 		m_bEnablePlay = m_bEnableEnqueue = TRUE;
 		UpdateData( FALSE );
 
 		GetDlgItem( IDC_MEDIA_PLAY )->EnableWindow( TRUE );
 		GetDlgItem( IDC_MEDIA_ENQUEUE )->EnableWindow( TRUE );
 		GetDlgItem( IDC_MEDIA_VIS )->EnableWindow( TRUE );
+	}
+	else	//Not Shareaza, not custom
+	{
+		m_nSelected = nSelected - 2;
+		m_bEnablePlay = m_bEnableEnqueue = FALSE;
+		UpdateData( FALSE );
+		
+		GetDlgItem( IDC_MEDIA_PLAY )->EnableWindow( FALSE );
+		GetDlgItem( IDC_MEDIA_ENQUEUE )->EnableWindow( FALSE );
+		GetDlgItem( IDC_MEDIA_VIS )->EnableWindow( FALSE );
 	}
 }

@@ -36,6 +36,7 @@
 #include "ShakeNeighbour.h"
 #include "EDNeighbour.h"
 #include "Neighbours.h"
+#include "Scheduler.h"
 
 // If we are compiling in debug mode, replace the text "THIS_FILE" in the code with the name of this file
 #ifdef _DEBUG
@@ -398,61 +399,13 @@ DWORD CNeighboursWithConnect::IsG2HubCapable(BOOL bIgnoreTime, BOOL bDebug)
 			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("OK: datagram stable") );
 		}
 
-		// The scheduler is enabled in settings, and it says we can't be a hub
-		if ( Settings.Scheduler.Enable && ! Settings.Scheduler.AllowHub )
-		{
-			// Record this is why we can't be a hub, and return no
-			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: scheduler active") );
-			return FALSE;
-
-		} // The scheduler is off, or it's on and it's OK with us being a hub
-		else
-		{
-			// Make a note we passed this test, and keep going
-			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("OK: scheduler OK") );
-		}
-
 		// Report that we meet the minimum requirements to be a hub
 		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("YES: hub capable by test") );
 	}
 
 	// If we've made it this far, change the rating number from 0 to 1
-	nRating = 1; // The higher it is, the better a hub we can be
+	nRating = 1 + CalculateSystemPerformanceScore(bDebug); // The higher it is, the better a hub we can be
 
-	// Now, evaluate how good a hub we are likely to be, starting out with a point for lots of memory
-	if ( theApp.m_nPhysicalMemory > 600 * 1024 * 1024 ) // The computer here has more than 600 MB of memory
-	{
-		nRating++;
-		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("More than 600 MB RAM") );
-	}
-
-	// Our Internet connection allows fast downloads
-	if ( Settings.Connection.InSpeed > 1000 ) // More than 1 Mbps inbound (do)
-	{
-		nRating++;
-		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("More than 1 Mb/s in") );
-	}
-
-	// Our Internet connection allows fast uploads
-	if ( Settings.Connection.OutSpeed > 1000 ) // More than 1 Mbps outbound (do)
-	{
-		nRating++;
-		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("More than 1 Mb/s out") );
-	}
-
-	// We'll be a better Gnutella2 hub if the program isn't connected to the other networks
-	if ( ! Settings.eDonkey.EnableToday ) // Not connected to eDonkey2000
-	{
-		nRating++;
-		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("eDonkey not enabled") );
-	}
-
-	// The user has never used BitTorrent, so that won't be taking up any bandwidth
-	if ( ! Settings.BitTorrent.AdvancedInterfaceSet )
-	{
-		nRating++;
-		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("BT is not in use") );
-	}
 
 	// The program is not connected to the Gnutella network
 	if ( ! Settings.Gnutella1.EnableToday )
@@ -461,27 +414,7 @@ DWORD CNeighboursWithConnect::IsG2HubCapable(BOOL bIgnoreTime, BOOL bDebug)
 		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("G1 not enabled") );
 	}
 
-	// If the program has been connected (do) for more than 8 hours, give it another point
-	if ( Network.GetStableTime() > 28800 ) // 28800 seconds is 8 hours
-	{
-		nRating++;
-		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("Stable for 8 hours") );
-	}
 
-	// If the scheduler isn't enabled, award another point
-	if ( !Settings.Scheduler.Enable )
-	{
-		nRating++;
-	}
-
-	// ToDo: Find out more about the computer to award more rating points
-	// Scheduler: If the scheduler is going to shut down the program and the computer at any time, this isn't a good choice for a hub
-	// Scheduler: If the scheduler is going to shut us down in the next few hours, we shouldn't become a hub at all
-	// CPU: Add a CPU check, award a point if this computer has a fast processor
-	// Router: Some routers can't handle the 100+ socket connections a hub maintains, check for a router and lower the score
-	// File transfer: Check how many files are shared and the file transfer in both directions, the perfect hub isn't sharing or doing any file transfer at all
-
-	// If debug mode is enabled, display the hub rating in the system window log (do)
 	if ( bDebug )
 	{
 		CString strRating;
@@ -633,44 +566,17 @@ DWORD CNeighboursWithConnect::IsG1UltrapeerCapable(BOOL bIgnoreTime, BOOL bDebug
 		{
 			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("OK: datagram stable") );
 		}
-
-		// The scheduler is enabled in settings, and it says we can't be an ultrapeer
-		if ( Settings.Scheduler.Enable && !Settings.Scheduler.AllowHub )
-		{
-			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: scheduler active") );
-			return FALSE;
-
-		} // The scheduler is off, or it's on and it's OK with us being an ultrapeer
-		else
-		{
-			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("OK: scheduler OK") );
-		}
-
 		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("YES: ultrapeer capable by test") );
 	}
 
 	// If we've made it this far, change the rating number from 0 to 1
-	nRating = 1; // The higher it is, the better an ultrapeer we can be
+	// The higher it is, the better an ultrapeer we can be
+	nRating = 1 + CalculateSystemPerformanceScore(bDebug); 
 
-	// Now, evaluate how good an ultrapeer we are likely to be, starting out with a point for lots of memory
-	if ( theApp.m_nPhysicalMemory > 600 * 1024 * 1024 ) // The computer here has more than 600 MB of memory
+	if ( ! Settings.Gnutella2.EnableToday )
 	{
 		nRating++;
-		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("More than 600 MB RAM") );
-	}
-
-	// Our Internet connection allows fast downloads
-	if ( Settings.Connection.InSpeed > 1000 ) // More than 1 Mbps inbound (do)
-	{
-		nRating++;
-		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("More than 1 Mb/s in") );
-	}
-
-	// Our Internet connection allows fast uploads
-	if ( Settings.Connection.OutSpeed > 1000 ) // More than 1 Mbps outbound (do)
-	{
-		nRating++;
-		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("More than 1 Mb/s out") );
+		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("G2 not enabled") );
 	}
 
 	// We'll be a better Gnutella ultrapeer if the program isn't connected to the other networks
@@ -686,33 +592,6 @@ DWORD CNeighboursWithConnect::IsG1UltrapeerCapable(BOOL bIgnoreTime, BOOL bDebug
 		nRating++;
 		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("BT is not in use") );
 	}
-
-	// The program is not connected to the Gnutella2 network
-	if ( !Settings.Gnutella2.EnableToday )
-	{
-		nRating++;
-		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("G2 not enabled") );
-	}
-
-	// If the program has been connected (do) for more than 8 hours, give it another point
-	if ( Network.GetStableTime() > 28800 ) // 28800 seconds is 8 hours
-	{
-		nRating++;
-		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("Stable for 8 hours") );
-	}
-
-	// If the scheduler isn't enabled, award another point
-	if ( !Settings.Scheduler.Enable )
-	{
-		nRating++;
-	}
-
-	// ToDo: Find out more about the computer to award more rating points
-	// Scheduler: If the scheduler is going to shut down the program and the computer at any time, this isn't a good choice for an ultrapeer
-	// Scheduler: If the scheduler is going to shut us down in the next few hours, we shouldn't become an ultrapeer
-	// CPU: Add a CPU check, award a point if this computer has a fast processor
-	// Router: Some routers can't handle the 100+ socket connections an ultrapeer maintains, check for a router and lower the score
-	// File transfer: Check how many files are shared and the file transfer in both directions, the perfect ultrapeer isn't sharing or doing any file transfer at all
 
 	// If debug mode is enabled, display the ultrapeer rating in the system window log (do)
 	if ( bDebug )
@@ -1313,4 +1192,60 @@ void CNeighboursWithConnect::Maintain()
 			if ( pNewest != NULL ) pNewest->Close(); // Close the connection
 		}
 	}
+}
+
+DWORD CNeighboursWithConnect::CalculateSystemPerformanceScore(BOOL bDebug)
+{
+	DWORD nRating = 0;
+	
+	if ( theApp.m_nPhysicalMemory > 600 * 1024 * 1024 ) // The computer here has more than 600 MB of memory
+	{
+		nRating++;
+		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("More than 600 MB RAM") );
+	}
+
+	// Our Internet connection allows fast downloads
+	if ( Settings.Connection.InSpeed > 1000 ) // More than 1 Mbps inbound (do)
+	{
+		nRating++;
+		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("More than 1 Mb/s in") );
+	}
+
+	// Our Internet connection allows fast uploads
+	if ( Settings.Connection.OutSpeed > 1000 ) // More than 1 Mbps outbound (do)
+	{
+		nRating++;
+		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("More than 1 Mb/s out") );
+	}
+
+	// If the program has been connected (do) for more than 8 hours, give it another point
+	if ( Network.GetStableTime() > 28800 ) // 28800 seconds is 8 hours
+	{
+		nRating++;
+		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("Stable for 8 hours") );
+	}
+
+	// If the scheduler isn't enabled, award another point
+	if ( !Settings.Scheduler.Enable )
+	{
+		nRating++;
+	}
+	else if( Scheduler.GetHoursTo(BANDWIDTH_STOP|SYSTEM_DISCONNECT|SYSTEM_EXIT|SYSTEM_SHUTDOWN ) > 4)
+	{
+		nRating++;
+		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("Scheduler won't shutdown or disconnect in the next 4 hours") );
+	}
+
+	//Having more CPUs has significant effect on performance
+	nRating += theApp.m_nLogicalProcessors - 1;
+	if ( bDebug && theApp.m_nLogicalProcessors> 0)
+		theApp.Message( MSG_DEBUG, _T("Multi-processor") );
+
+	
+	// ToDo: Find out more about the computer to award more rating points
+	// CPU: Add a CPU check, award a point if this computer has a fast processor
+	// Router: Some routers can't handle the 100+ socket connections an ultrapeer maintains, check for a router and lower the score
+	// File transfer: Check how many files are shared and the file transfer in both directions, the perfect ultrapeer isn't sharing or doing any file transfer at all
+
+	return nRating;
 }

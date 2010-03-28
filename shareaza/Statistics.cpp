@@ -43,7 +43,8 @@ CStatistics::CStatistics()
 	ZeroMemory( &Ever, sizeof(Ever) );
 	ZeroMemory( &Current, sizeof(Current) );
 
-	m_tUpdate = m_tSeconds = 0;
+	//m_tUpdate = 0;
+	m_tSeconds = 0;
 }
 
 CStatistics::~CStatistics()
@@ -56,9 +57,6 @@ CStatistics::~CStatistics()
 void CStatistics::Update()
 {
 	DWORD tNow = GetTickCount();
-
-	if ( tNow - m_tUpdate < 100 ) return;
-	m_tUpdate = tNow;
 
 	if ( tNow - m_tSeconds >= 1000 )
 	{

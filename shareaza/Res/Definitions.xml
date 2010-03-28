@@ -38,6 +38,8 @@
 	<resource code="159" id="IDB_CHILDFRAME"/>
 	<resource code="159" id="WINDOW_CHILD"/>
 	<resource code="160" id="IDI_BROWSE"/>
+	<resource code="170" id="ID_SCHEDULER_IMPORT"/>
+	<resource code="171" id="ID_SCHEDULER_EXPORT"/>
 	<resource code="181" id="IDI_EXECUTABLE"/>
 	<resource code="183" id="IDI_POINTER_ARROW"/>
 	<resource code="191" id="IDI_FILE"/>
@@ -49,6 +51,7 @@
 	<resource code="252" id="IDI_FIREWALLED"/>
 	<resource code="253" id="IDI_GRANTED"/>
 	<resource code="263" id="IDR_BITTORRENT_ICON"/>
+  <resource code="271" id="WINDOW_SCHEDULER"/>
 	<resource code="281" id="IDI_UPDOWN_ARROW"/>
 	<resource code="301" id="IDI_PLUS"/>
 	<resource code="302" id="IDI_MINUS"/>
@@ -69,6 +72,7 @@
 	<resource code="322" id="IDI_RATING_FAKE"/>
 	<resource code="323" id="IDI_RATING_AVERAGE"/>
 	<resource code="324" id="IDI_RATING_GOOD"/>
+	<resource code="339" id="ID_SCHEDULER_REMOVE_ALL"/>
 	<resource code="994" id="WINDOW_IRC"/>
 	<resource code="999" id="IDB_IRCICONS"/>
 	<resource code="1006" id="IDI_COMPUTER"/>
@@ -448,6 +452,13 @@
 	<resource code="33319" id="ImageViewer_ActualSize"/>
 	<resource code="33320" id="ImageViewer_Refresh"/>
 	<resource code="33321" id="ImageViewer_Close"/>
+	<resource code="57650" id="ID_WINDOW_CASCADE"/>
+	<resource code="33322" id="ID_VIEW_SCHEDULER"/>
+	<resource code="33323" id="ID_SCHEDULER_EDIT"/>
+	<resource code="33324" id="ID_SCHEDULER_REMOVE"/>
+	<resource code="33325" id="ID_SCHEDULER_ACTIVATE"/>
+	<resource code="33326" id="ID_SCHEDULER_DEACTIVATE"/>
+	<resource code="33327" id="ID_SCHEDULER_ADD"/>
 	<resource code="57650" id="ID_WINDOW_CASCADE"/>
 	<resource code="57651" id="ID_WINDOW_TILE_HORZ"/>
 	<resource code="57652" id="ID_WINDOW_TILE_VERT"/>
