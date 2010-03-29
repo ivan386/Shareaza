@@ -36,7 +36,6 @@
 #include "Scheduler.h"
 #include "XML.h"
 #include "Network.h"
-#include "Scheduler.h"
 #include "Ras.h"
 #include "Reason.h"
 
