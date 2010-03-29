@@ -279,7 +279,7 @@ void CSchedulerWnd::OnSize(UINT nType, int cx, int cy)
 	m_wndList.SetWindowPos( NULL, 0, 0, cx, cy - 28, SWP_NOZORDER );
 }
 
-void CSchedulerWnd::OnTimer(UINT nIDEvent) 
+void CSchedulerWnd::OnTimer(UINT_PTR nIDEvent) 
 {
 	if ( ( nIDEvent == 1 ) && ( IsPartiallyVisible() ) )
 	{
