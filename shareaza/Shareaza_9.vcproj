@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="Shareaza"
 	ProjectGUID="{F9C719B3-35FB-427D-A795-91105DFECAAF}"
 	RootNamespace="Shareaza"
@@ -148,6 +148,7 @@
 				AdditionalIncludeDirectories="..\zlib"
 				PreprocessorDefinitions="_DEBUG;WIN64;_WINDOWS;_SHAREAZA;ZLIB_WINAPI;ZLIB_DLL;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS"
 				BasicRuntimeChecks="3"
+				SmallerTypeCheck="true"
 				RuntimeLibrary="1"
 				FloatingPointModel="2"
 				DefaultCharIsUnsigned="true"
@@ -172,7 +173,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="winmm.lib version.lib ws2_32.lib wininet.lib Iphlpapi.lib msi.lib powrprof.lib"
+				AdditionalDependencies="rasapi32.lib winmm.lib version.lib ws2_32.lib wininet.lib Iphlpapi.lib msi.lib powrprof.lib"
 				GenerateManifest="false"
 				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
@@ -371,7 +372,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="winmm.lib version.lib ws2_32.lib wininet.lib Iphlpapi.lib msi.lib powrprof.lib"
+				AdditionalDependencies="rasapi32.lib winmm.lib version.lib ws2_32.lib wininet.lib Iphlpapi.lib msi.lib powrprof.lib"
 				LinkIncremental="1"
 				GenerateManifest="false"
 				IgnoreDefaultLibraryNames=""
@@ -1587,7 +1588,7 @@
 					>
 				</File>
 				<File
-					RelativePath=".\DlgScheduleTask.cpp"
+					RelativePath="DlgScheduleTask.cpp"
 					>
 				</File>
 				<File
@@ -1719,7 +1720,7 @@
 					>
 				</File>
 				<File
-					RelativePath=".\WndScheduler.cpp"
+					RelativePath="WndScheduler.cpp"
 					>
 				</File>
 				<File
@@ -3280,7 +3281,7 @@
 					>
 				</File>
 				<File
-					RelativePath=".\DlgScheduleTask.h"
+					RelativePath="DlgScheduleTask.h"
 					>
 				</File>
 				<File
@@ -3670,10 +3671,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Res\Bad.ico"
-				>
-			</File>
-			<File
 				RelativePath="Res\BadRange.htm"
 				>
 			</File>
@@ -3942,7 +3939,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Res\Exclamation.ico"
+				RelativePath="Res\Exclamation.ico"
 				>
 			</File>
 			<File

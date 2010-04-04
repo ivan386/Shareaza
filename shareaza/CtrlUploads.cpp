@@ -633,7 +633,7 @@ CUploadFile* CUploadsCtrl::GetNextFile(CUploadQueue* pQueue, POSITION& pos, int*
 		
 		return pReturn;
 	}
-	else if ( (DWORD)pos > pQueue->GetQueuedCount() )
+	else if ( (UINT_PTR)pos > pQueue->GetQueuedCount() )
 	{
 		CUploadTransfer* pTransfer = pQueue->GetNextActive( pos );
 		
@@ -653,7 +653,7 @@ CUploadFile* CUploadsCtrl::GetNextFile(CUploadQueue* pQueue, POSITION& pos, int*
 	}
 	else
 	{
-		DWORD nPos = (DWORD)pos;
+		UINT_PTR nPos = (UINT_PTR)pos;
 		CUploadTransfer* pTransfer = pQueue->GetQueuedAt( nPos - 1 );
 		if ( pnPosition != NULL ) *pnPosition = static_cast< int >( nPos );
 		++nPos;

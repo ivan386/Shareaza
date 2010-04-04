@@ -48,16 +48,16 @@ END_MESSAGE_MAP()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// CSecureRuleDlg dialog
+// CScheduleTaskDlg dialog
 
 CScheduleTaskDlg::CScheduleTaskDlg(CWnd* pParent, CScheduleTask* pSchTask) : CSkinDialog(CScheduleTaskDlg::IDD, pParent)
 {
-
 	//{{AFX_DATA_INIT(CScheduleTaskDlg)
 
 	//}}AFX_DATA_INIT
 	m_pScheduleTask = pSchTask;
-	if(m_pScheduleTask) m_bNew = FALSE;
+	if(m_pScheduleTask) m_bNew = false;
+	else m_bNew = true;
 
 }
 
@@ -111,7 +111,7 @@ void CScheduleTaskDlg::DoDataExchange(CDataExchange* pDX)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// CSecureRuleDlg message handlers
+// CScheduleTaskDlg message handlers
 
 BOOL CScheduleTaskDlg::OnInitDialog() 
 {
@@ -510,3 +510,5 @@ void CScheduleTaskDlg::OnBnClickedButtonAllDays()
 	m_wndChkDayFri.SetCheck( true );
 	m_wndChkDaySat.SetCheck( true );
 }
+
+ 	  	 
