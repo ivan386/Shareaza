@@ -60,6 +60,7 @@ END
 
 #endif    // APSTUDIO_INVOKED
 
+
 /////////////////////////////////////////////////////////////////////////////
 //
 // Icon
@@ -184,6 +185,7 @@ BEGIN
     END
 END
 
+
 /////////////////////////////////////////////////////////////////////////////
 //
 // Bitmap
@@ -217,48 +219,47 @@ IDB_BOX_MARK            BITMAP                  "Res\\BoxMark.bmp"
 // Dialog
 //
 
-IDD_SCHEDULE_TASK DIALOGEX 0, 0, 260, 345
+IDD_SCHEDULE_TASK DIALOGEX 0, 0, 260, 329
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Schedule Item"
 FONT 8, "Tahoma", 400, 0, 0x0
 BEGIN
-    DEFPUSHBUTTON   "OK",IDOK,66,316,50,14,WS_GROUP
-    PUSHBUTTON      "Cancel",IDCANCEL,134,316,50,14
-    LTEXT           "Please select a date:",IDC_STATIC,14,44,68,8
-    LTEXT           "Please select a time:",IDC_STATIC,172,44,66,8
-    CONTROL         "Only once",IDC_ONLYONCE,"Button",BS_AUTORADIOBUTTON,84,26,48,10
-    CONTROL         "On specific day(s) of week",IDC_EVERYDAY,"Button",BS_AUTORADIOBUTTON,146,26,101,10
-    LTEXT           "Run this event:",IDC_STATIC,15,25,50,8
-    CONTROL         "",IDC_DATE,"SysDateTimePick32",DTS_RIGHTALIGN | DTS_LONGDATEFORMAT | WS_TABSTOP,15,59,131,15
-    COMBOBOX        IDC_EVENTTYPE,14,150,151,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Select the event type:",IDC_STATIC,14,134,73,8
-    CONTROL         "",IDC_TIME,"SysDateTimePick32",DTS_RIGHTALIGN | DTS_UPDOWN | WS_TABSTOP | 0x8,170,58,63,15
-    CONTROL         "Make this event active",IDC_ACTIVE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,20,291,88,10
-    CONTROL         " &Toggle bandwidth independently",IDC_SCHEDULER_TOGGLE_BANDWIDTH,
-                    "Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,15,215,142,15,WS_EX_TRANSPARENT
-    EDITTEXT        IDC_DESCRIPTION,18,264,189,14,ES_AUTOHSCROLL
-    LTEXT           "Description: (optional)",IDC_STATIC,18,248,72,8
-    EDITTEXT        IDC_SCHEDULER_LIMITED,14,172,36,12,ES_AUTOHSCROLL | ES_NUMBER
+    DEFPUSHBUTTON   "OK",IDOK,66,307,60,16,WS_GROUP
+    PUSHBUTTON      "Cancel",IDCANCEL,133,307,60,16
+    CONTROL         "Only once",IDC_ONLYONCE,"Button",BS_AUTORADIOBUTTON,18,23,80,10
+    CONTROL         "On specific day(s) of week",IDC_EVERYDAY,"Button",BS_AUTORADIOBUTTON,128,23,121,10
+    CONTROL         "",IDC_DATE,"SysDateTimePick32",DTS_RIGHTALIGN | DTS_LONGDATEFORMAT | WS_TABSTOP,7,59,132,15
+    CONTROL         "",IDC_TIME,"SysDateTimePick32",DTS_RIGHTALIGN | DTS_UPDOWN | WS_TABSTOP | 0x8,171,59,80,15
+    CONTROL         "Sunday",IDC_CHECK_SUN,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,21,96,39,10
+    CONTROL         "Monday",IDC_CHECK_MON,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,75,96,39,10
+    CONTROL         "Tuesday",IDC_CHECK_TUES,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,129,96,39,10
+    CONTROL         "Wednesday",IDC_CHECK_WED,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,183,96,54,10
+    CONTROL         "Thursday",IDC_CHECK_THU,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,21,109,47,10
+    CONTROL         " Friday",IDC_CHECK_FRI,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,75,109,39,10
+    CONTROL         "Saturday",IDC_CHECK_SAT,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,129,109,39,10
+    PUSHBUTTON      "All",IDC_BUTTON_ALLDAYS,183,109,60,11
+    COMBOBOX        IDC_EVENTTYPE,7,150,151,80,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_SCHEDULER_LIMITED,7,172,36,12,ES_AUTOHSCROLL | ES_NUMBER
     CONTROL         "",IDC_SCHEDULER_LIMITED_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,42,172,11,12
-    EDITTEXT        IDC_SCHEDULER_LIMITED_DOWN,14,187,36,12,ES_AUTOHSCROLL | ES_NUMBER
+    EDITTEXT        IDC_SCHEDULER_LIMITED_DOWN,7,187,36,12,ES_AUTOHSCROLL | ES_NUMBER
     CONTROL         "",IDC_SCHEDULER_LIMITED_SPIN_DOWN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,42,187,11,12
-    EDITTEXT        IDC_SCHEDULER_LIMITED_UP,14,202,36,12,ES_AUTOHSCROLL | ES_NUMBER
+    EDITTEXT        IDC_SCHEDULER_LIMITED_UP,7,202,36,12,ES_AUTOHSCROLL | ES_NUMBER
     CONTROL         "",IDC_SCHEDULER_LIMITED_SPIN_UP,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,42,202,11,12
+    CONTROL         " &Toggle bandwidth independently",IDC_SCHEDULER_TOGGLE_BANDWIDTH,
+                    "Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,15,217,142,15,WS_EX_TRANSPARENT
     CONTROL         " &Limit network to Gnutella2",IDC_SCHEDULER_LIMITED_NETWORKS,
                     "Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,15,230,142,15,WS_EX_TRANSPARENT
+    EDITTEXT        IDC_DESCRIPTION,7,262,245,14,ES_AUTOHSCROLL
+    CONTROL         "Make this event active",IDC_ACTIVE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,284,88,10
+    LTEXT           "Please select a date:",IDC_STATIC,7,47,132,8
+    LTEXT           "Please select a time:",IDC_STATIC,173,47,78,8
+    LTEXT           "Select the event type:",IDC_STATIC,7,138,243,8
+    LTEXT           "Description: (optional)",IDC_STATIC,7,250,245,8
     LTEXT           "% of &bandwidth under limit",IDC_STATIC_LIMITED,56,175,87,8
     LTEXT           "% of &download under limit",IDC_STATIC_LIMITED_DOWN,56,190,87,8
     LTEXT           "% of &upload under limit",IDC_STATIC_LIMITED_UP,56,205,87,8
-    GROUPBOX        "Scheduler",IDC_STATIC,7,7,245,331
-    GROUPBOX        "Days Of Week",IDC_DAYOFWEEK_GBOX,15,84,215,40
-    CONTROL         "Sunday",IDC_CHECK_SUN,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,21,96,39,10
-    CONTROL         "Thursday",IDC_CHECK_THU,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,21,109,47,10
-    CONTROL         "Monday",IDC_CHECK_MON,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,75,96,39,10
-    CONTROL         " Friday",IDC_CHECK_FRI,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,75,109,39,10
-    CONTROL         "Tuesday",IDC_CHECK_TUES,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,125,96,39,10
-    CONTROL         "Saturday",IDC_CHECK_SAT,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,125,109,39,10
-    CONTROL         "Wednesday",IDC_CHECK_WED,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,172,96,54,10
-    PUSHBUTTON      "All",IDC_BUTTON_ALLDAYS,172,109,47,11
+    GROUPBOX        "Days Of Week",IDC_DAYOFWEEK_GBOX,7,81,244,47
+    GROUPBOX        "Run this event",IDC_STATIC,7,8,244,33
 END
 
 IDD_CONNECT_TO DIALOGEX 0, 0, 242, 120
@@ -4668,9 +4669,13 @@ BEGIN
     ID_MEDIA_SELECT         "Select and play this file."
     ID_MEDIA_ADD            "Add a media file to the playlist..."
     ID_MEDIA_REMOVE         "Remove the selected media file from the playlist."
-	IDC_MEDIA_POSITION      "Seek to a position in the media file.\nSeek"
-	IDC_MEDIA_SPEED         "Adjust the speed of the media file.\nSpeed"
-	IDC_MEDIA_VOLUME        "Adjust the audio volume.\nVolume"
+END
+
+STRINGTABLE 
+BEGIN
+    IDC_MEDIA_POSITION      "Seek to a position in the media file.\nSeek"
+    IDC_MEDIA_SPEED         "Adjust the speed of the media file.\nSpeed"
+    IDC_MEDIA_VOLUME        "Adjust the audio volume.\nVolume"
 END
 
 STRINGTABLE 
@@ -4894,6 +4899,10 @@ END
 STRINGTABLE 
 BEGIN
     ID_SCHEDULER_REMOVE_ALL "Removes all scheduled tasks."
+END
+
+STRINGTABLE 
+BEGIN
     IDS_SCHEDULER_SYSTEM_EXIT "System: Exit Shareaza"
     IDS_SCHEDULER_SYSTEM_DIALUP_DC "System: Disconnect Dial-up Connection"
     IDS_SCHEDULER_SYSTEM_TURNOFF "System: Turn Off the Computer"
