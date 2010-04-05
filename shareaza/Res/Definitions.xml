@@ -459,7 +459,6 @@
 	<resource code="33325" id="ID_SCHEDULER_ACTIVATE"/>
 	<resource code="33326" id="ID_SCHEDULER_DEACTIVATE"/>
 	<resource code="33327" id="ID_SCHEDULER_ADD"/>
-	<resource code="57650" id="ID_WINDOW_CASCADE"/>
 	<resource code="57651" id="ID_WINDOW_TILE_HORZ"/>
 	<resource code="57652" id="ID_WINDOW_TILE_VERT"/>
 </resourceMap>
