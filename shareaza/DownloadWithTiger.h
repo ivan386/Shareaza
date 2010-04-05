@@ -55,6 +55,9 @@ private:
 
 	mutable CCriticalSection	m_pTigerSection;
 
+	mutable QWORD				m_nWFLCookie;		// Wanted fragment list cookie
+	mutable Fragments::List		m_oWFLCache;		// Wanted fragment list cache
+
 // Operations
 public:
 	BOOL		GetNextVerifyRange(QWORD& nOffset, QWORD& nLength, BOOL& bSuccess, int nHash = HASH_NULL) const;
