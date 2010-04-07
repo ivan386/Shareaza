@@ -97,7 +97,6 @@ void CDownload::Pause(BOOL bRealPause)
 
 void CDownload::Resume()
 {
-	ASSERT( !IsCompleted() );
 	if ( IsCompleted() )
 		return;
 	
