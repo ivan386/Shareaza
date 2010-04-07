@@ -1,7 +1,7 @@
 //
 // CtrlUploadTip.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -80,7 +80,7 @@ BOOL CUploadTipCtrl::OnPrepare()
 
 void CUploadTipCtrl::OnShow()
 {
-	if ( m_pGraph ) delete m_pGraph;
+	delete m_pGraph;
 
 	m_pGraph	= CreateLineGraph();
 	m_pItem		= new CGraphItem( 0, 1.0f, RGB( 0xFF, 0, 0 ) );
@@ -90,7 +90,7 @@ void CUploadTipCtrl::OnShow()
 
 void CUploadTipCtrl::OnHide()
 {
-	if ( m_pGraph ) delete m_pGraph;
+	delete m_pGraph;
 	m_pGraph = NULL;
 	m_pItem = NULL;
 }
@@ -259,7 +259,8 @@ void CUploadTipCtrl::OnPaint(CDC* pDC)
 	CRect rc( pt.x, pt.y, m_sz.cx, pt.y + 40 );
 	pDC->Draw3dRect( &rc, CoolInterface.m_crTipBorder, CoolInterface.m_crTipBorder );
 	rc.DeflateRect( 1, 1 );
-	m_pGraph->BufferedPaint( pDC, &rc );
+	if ( m_pGraph)
+		m_pGraph->BufferedPaint( pDC, &rc );
 	rc.InflateRect( 1, 1 );
 	pDC->ExcludeClipRect( &rc );
 	pt.y += 40;
