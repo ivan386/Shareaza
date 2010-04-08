@@ -148,7 +148,6 @@
 				AdditionalIncludeDirectories="..\zlib"
 				PreprocessorDefinitions="_DEBUG;WIN64;_WINDOWS;_SHAREAZA;ZLIB_WINAPI;ZLIB_DLL;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS"
 				BasicRuntimeChecks="3"
-				SmallerTypeCheck="true"
 				RuntimeLibrary="1"
 				FloatingPointModel="2"
 				DefaultCharIsUnsigned="true"
