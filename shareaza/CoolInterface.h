@@ -1,7 +1,7 @@
 //
 // CoolInterface.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -25,12 +25,12 @@
 
 #include "Skin.h"
 
-class CCoolInterface
+class ATL_NO_VTABLE CCoolInterface
 {
 // Construction
 public:
 	CCoolInterface();
-	virtual ~CCoolInterface();
+	~CCoolInterface();
 
 public:
 	CFont		m_fntNormal;		// system.plain
@@ -189,13 +189,12 @@ public:
 	void		SetIcon(HICON hIcon, BOOL bMirrored, BOOL bBigIcon, CWnd* pWnd);
 	//	BOOL	AddImagesFromToolbar(UINT nIDToolBar, COLORREF crBack = RGB(0,255,0));
 	int			GetImageCount(int nImageListType = LVSIL_SMALL);
-	BOOL		Add(CSkin* pSkin, CXMLElement* pBase, HBITMAP hbmImage, COLORREF crMask, int nImageListType = LVSIL_SMALL);
+	BOOL		Add(CXMLElement* pBase, HBITMAP hbmImage, COLORREF crMask, int nImageListType = LVSIL_SMALL);
 	CImageList*	SetImageListTo(CListCtrl& pWnd, int nImageListType = LVSIL_SMALL);
 	BOOL		Draw(CDC* pDC, int nImage, POINT pt, UINT nStyle = ILD_NORMAL, int nImageListType = LVSIL_SMALL) const;
 	BOOL		DrawEx(CDC* pDC, int nImage, POINT pt, SIZE sz = CSize( 16, 16 ), COLORREF clrBk = CLR_NONE, COLORREF clrFg = CLR_DEFAULT, UINT nStyle = ILD_NORMAL, int nImageListType = LVSIL_SMALL) const;
 	BOOL		Draw(CDC* pDC, UINT nID, int nSize, int nX, int nY, COLORREF crBack = CLR_NONE, BOOL bSelected = FALSE, BOOL bExclude = TRUE) const;
 	CDC*		GetBuffer(CDC& dcScreen, const CSize& szItem);
-	BOOL		DrawWatermark(CDC* pDC, CRect* pRect, CBitmap* pMark, int nOffX = 0, int nOffY = 0);
 	void		DrawThumbnail(CDC* pDC, const CRect& rcThumb, BOOL bWaiting, BOOL bSelected,
 					CBitmap& bmThumb, int nIcon48 = -1, int nIcon32 = -1,
 					const CString& strLabel = CString());
@@ -203,6 +202,7 @@ public:
 	void		CalculateColours(BOOL bCustom = FALSE);
 	void		OnSysColourChange();
 
+	static BOOL	DrawWatermark(CDC* pDC, CRect* pRect, CBitmap* pMark, int nOffX = 0, int nOffY = 0);
 	static COLORREF	CalculateColour(COLORREF crFore, COLORREF crBack, int nAlpha);
 	static BOOL	EnableTheme(CWnd* pWnd, BOOL bEnable = TRUE);
 
@@ -211,6 +211,7 @@ protected:
 	typedef CMap< CString, const CString&, UINT, UINT > CStringUINTMap;
 	typedef CMap< HICON, HICON, HWND, HWND > CHICONHWNDMap;
 
+	mutable CCriticalSection m_pSection;
 	CStringUINTMap	m_pNameMap;
 	CUINTintMap		m_pImageMap16;		// Small images (LVSIL_SMALL)
 	CImageList		m_pImages16;		// Small images (LVSIL_SMALL)

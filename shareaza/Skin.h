@@ -1,7 +1,7 @@
 //
 // Skin.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -28,12 +28,12 @@ class CXMLElement;
 class CSkinWindow;
 
 
-class CSkin
+class ATL_NO_VTABLE CSkin
 {
 // Construction
 public:
 	CSkin();
-	virtual ~CSkin();
+	~CSkin();
 
 // Operations
 public:
@@ -43,10 +43,12 @@ public:
 	BOOL	LoadFromResource(HINSTANCE hInstance, UINT nResourceID);
 	BOOL	LoadFromString(const CString& strXML, const CString& strPath);
 	BOOL	LoadFromXML(CXMLElement* pXML, const CString& strPath);
-	BOOL	SelectCaption(CWnd* pWnd, int nIndex);
-	BOOL	SelectCaption(CString& strCaption, int nIndex);
-	void	DrawWrappedText(CDC* pDC, CRect* pBox, LPCTSTR pszText, CPoint ptStart, BOOL bExclude = TRUE);
+	static BOOL	SelectCaption(CWnd* pWnd, int nIndex);
+	static BOOL	SelectCaption(CString& strCaption, int nIndex);
+	static void	DrawWrappedText(CDC* pDC, CRect* pBox, LPCTSTR pszText, CPoint ptStart, BOOL bExclude = TRUE);
+	static int GetTextFlowChange(LPCTSTR pszText, BOOL* bIsRTL);
 protected:
+	mutable CCriticalSection m_pSection;
 	void	ApplyRecursive(LPCTSTR pszPath);
 	void	CreateDefault();
 	void	CreateDefaultColors();
@@ -56,9 +58,8 @@ protected:
 public:
 	void	AddString(const CString& strString, UINT nStringID);
 	BOOL	LoadString(CString& str, UINT nStringID) const;
-	BOOL	LoadControlTip(CString& str, UINT nCtrlID);
-	int		GetTextFlowChange(LPCTSTR pszText, BOOL* bIsRTL);
 protected:
+	BOOL	LoadControlTip(CString& str, UINT nCtrlID);
 	BOOL	LoadStrings(CXMLElement* pBase);
 	BOOL	LoadControlTips(CXMLElement* pBase);
 	CMap<UINT, UINT, CString, const CString&>	m_pStrings;
@@ -146,10 +147,10 @@ protected:
 
 // Other
 public:
-	UINT	LookupCommandID(CXMLElement* pXML, LPCTSTR pszName = _T("id")) const;
 	CString	GetImagePath(UINT nImageID) const;
 protected:
 	CMap< UINT, const UINT&, CString, const CString& > m_pImages;
+	static UINT LookupCommandID(CXMLElement* pXML, LPCTSTR pszName = _T("id"));
 	BOOL	LoadResourceMap(CXMLElement* pBase);
 	BOOL	LoadCommandImages(CXMLElement* pBase, const CString& strPath);
 	BOOL	LoadCommandIcon(CXMLElement* pXML, const CString& strPath);

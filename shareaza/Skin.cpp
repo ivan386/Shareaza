@@ -72,6 +72,8 @@ CSkin::~CSkin()
 
 void CSkin::Apply()
 {
+	CQuickLock oLock( m_pSection );
+
 	Clear();
 
 	Settings.General.Language = _T("en");
@@ -184,6 +186,8 @@ void CSkin::CreateDefaultColors()
 
 void CSkin::Clear()
 {
+	CQuickLock oLock( m_pSection );
+
 	CString strName;
 	POSITION pos;
 
@@ -367,6 +371,8 @@ BOOL CSkin::LoadFromString(const CString& strXML, const CString& strPath)
 
 BOOL CSkin::LoadFromXML(CXMLElement* pXML, const CString& strPath)
 {
+	CQuickLock oLock( m_pSection );
+
 	if ( ! pXML->IsNamed( _T("skin") ) )
 	{
 		theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown [skin] element"), pXML->ToString() );
@@ -471,6 +477,8 @@ BOOL CSkin::LoadFromXML(CXMLElement* pXML, const CString& strPath)
 
 void CSkin::AddString(const CString& strString, UINT nStringID)
 {
+	CQuickLock oLock( m_pSection );
+
 	m_pStrings.SetAt( nStringID, strString );
 }
 
@@ -479,6 +487,8 @@ BOOL CSkin::LoadString(CString& str, UINT nStringID) const
 	if ( nStringID < 10 )
 		// Popup menus
 		return FALSE;
+
+	CQuickLock oLock( m_pSection );
 
 	if ( m_pStrings.Lookup( nStringID, str ) ||
 		( IS_INTRESOURCE( nStringID ) && str.LoadString( nStringID ) ) )
@@ -586,6 +596,8 @@ BOOL CSkin::LoadControlTips(CXMLElement* pBase)
 
 CMenu* CSkin::GetMenu(LPCTSTR pszName) const
 {
+	CQuickLock oLock( m_pSection );
+
 	ASSERT( Settings.General.GUIMode == GUI_WINDOWED ||
 		Settings.General.GUIMode == GUI_TABBED ||
 		Settings.General.GUIMode == GUI_BASIC );
@@ -670,6 +682,8 @@ BOOL CSkin::LoadMenu(CXMLElement* pXML)
 
 CMenu* CSkin::CreatePopupMenu(LPCTSTR pszName)
 {
+	CQuickLock oLock( m_pSection );
+
 	CMenu* pMenu = new CMenu();
 	if ( pMenu )
 	{
@@ -763,6 +777,8 @@ BOOL CSkin::LoadNavBar(CXMLElement* pBase)
 
 BOOL CSkin::CreateToolBar(LPCTSTR pszName, CCoolBarCtrl* pBar)
 {
+	CQuickLock oLock( m_pSection );
+
 	if ( pszName == NULL )
 		return FALSE;
 
@@ -801,6 +817,8 @@ BOOL CSkin::CreateToolBar(LPCTSTR pszName, CCoolBarCtrl* pBar)
 
 CCoolBarCtrl* CSkin::GetToolBar(LPCTSTR pszName) const
 {
+	CQuickLock oLock( m_pSection );
+
 	ASSERT( Settings.General.GUIMode == GUI_WINDOWED ||
 		Settings.General.GUIMode == GUI_TABBED ||
 		Settings.General.GUIMode == GUI_BASIC );
@@ -838,6 +856,8 @@ BOOL CSkin::LoadToolbars(CXMLElement* pBase)
 
 CCoolBarCtrl* CSkin::CreateToolBar(LPCTSTR pszName)
 {
+	CQuickLock oLock( m_pSection );
+
 	CCoolBarCtrl* pBar = new CCoolBarCtrl();
 	if ( pBar )
 	{
@@ -978,6 +998,8 @@ BOOL CSkin::LoadDocuments(CXMLElement* pBase)
 
 CXMLElement* CSkin::GetDocument(LPCTSTR pszName)
 {
+	CQuickLock oLock( m_pSection );
+
 	CXMLElement* pXML = NULL;
 
 	if ( m_pDocuments.Lookup( pszName, pXML ) ) return pXML;
@@ -990,6 +1012,8 @@ CXMLElement* CSkin::GetDocument(LPCTSTR pszName)
 
 HBITMAP CSkin::GetWatermark(LPCTSTR pszName)
 {
+	CQuickLock oLock( m_pSection );
+
 	CString strPath;
 	if ( m_pWatermarks.Lookup( pszName, strPath ) )
 	{
@@ -1003,9 +1027,11 @@ HBITMAP CSkin::GetWatermark(LPCTSTR pszName)
 BOOL CSkin::GetWatermark(CBitmap* pBitmap, LPCTSTR pszName)
 {
 	ASSERT( pBitmap != NULL );
-	if ( pBitmap->m_hObject != NULL ) pBitmap->DeleteObject();
+	if ( pBitmap->m_hObject != NULL )
+		pBitmap->DeleteObject();
 	HBITMAP hBitmap = GetWatermark( pszName );
-	if ( hBitmap != NULL ) pBitmap->Attach( hBitmap );
+	if ( hBitmap != NULL )
+		pBitmap->Attach( hBitmap );
 	return ( hBitmap != NULL );
 }
 
@@ -1040,6 +1066,8 @@ BOOL CSkin::LoadWatermarks(CXMLElement* pSub, const CString& strPath)
 
 BOOL CSkin::Translate(LPCTSTR pszName, CHeaderCtrl* pCtrl)
 {
+	CQuickLock oLock( m_pSection );
+
 	CString strEdit;
 
 	if ( ! m_pLists.Lookup( pszName, strEdit ) ) return FALSE;
@@ -1079,6 +1107,8 @@ BOOL CSkin::Translate(LPCTSTR pszName, CHeaderCtrl* pCtrl)
 
 CString CSkin::GetHeaderTranslation(LPCTSTR pszClassName, LPCTSTR pszHeaderName)
 {
+	CQuickLock oLock( m_pSection );
+
 	CString strEdit;
 	if ( ! m_pLists.Lookup( pszClassName, strEdit ) )
 		return CString( pszHeaderName );
@@ -1142,6 +1172,8 @@ BOOL CSkin::LoadListColumns(CXMLElement* pBase)
 
 BOOL CSkin::Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID, CToolTipCtrl* pWndTooltips)
 {
+	CQuickLock oLock( m_pSection );
+
 	if ( nIconID )
 	{
 		CoolInterface.SetIcon( nIconID, FALSE, FALSE, pDialog );
@@ -1372,6 +1404,8 @@ BOOL CSkin::Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID, CToolTipCtrl*
 
 CString CSkin::GetDialogCaption(LPCTSTR pszName)
 {
+	CQuickLock oLock( m_pSection );
+
 	CXMLElement* pBase = NULL;
 	CString strCaption;
 
@@ -1411,6 +1445,8 @@ BOOL CSkin::LoadDialogs(CXMLElement* pBase)
 
 CSkinWindow* CSkin::GetWindowSkin(LPCTSTR pszWindow, LPCTSTR pszAppend)
 {
+	CQuickLock oLock( m_pSection );
+
 	CString strWindow;
 	strWindow.Format( _T("|%s%s|"), pszWindow, pszAppend ? pszAppend : _T("") );
 
@@ -1717,7 +1753,7 @@ BOOL CSkin::LoadColourScheme(CXMLElement* pBase)
 //////////////////////////////////////////////////////////////////////
 // CSkin command lookup helper
 
-UINT CSkin::LookupCommandID(CXMLElement* pXML, LPCTSTR pszName) const
+UINT CSkin::LookupCommandID(CXMLElement* pXML, LPCTSTR pszName)
 {
 	return CoolInterface.NameToID( pXML->GetAttributeValue( pszName ) );
 }
@@ -1888,6 +1924,8 @@ BOOL CSkin::LoadFonts(CXMLElement* pBase, const CString& strPath)
 
 CString	CSkin::GetImagePath(UINT nImageID) const
 {
+	CQuickLock oLock( m_pSection );
+
 	CString strPath;
 	if ( ! m_pImages.Lookup( nImageID, strPath ) )
 		strPath.Format( _T("\"%s\",-%u"), (LPCTSTR)theApp.m_strBinaryPath, nImageID );
@@ -2036,7 +2074,7 @@ BOOL CSkin::LoadCommandBitmap(CXMLElement* pBase, const CString& strPath)
 	if ( Settings.General.LanguageRTL )
 		hBitmap = CreateMirroredBitmap( hBitmap );
 
-	BOOL bResult = CoolInterface.Add( this, pBase, hBitmap, crMask );
+	BOOL bResult = CoolInterface.Add( pBase, hBitmap, crMask );
 	DeleteObject( hBitmap );
 	if ( ! bResult )
 	{
