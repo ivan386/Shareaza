@@ -1,7 +1,7 @@
 //
 // LibraryHistory.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -27,11 +27,11 @@ class CLibraryRecent;
 class CLibraryFile;
 
 
-class CLibraryHistory
+class ATL_NO_VTABLE CLibraryHistory
 {
 public:
 	CLibraryHistory();
-	virtual ~CLibraryHistory();
+	~CLibraryHistory();
 
 	struct sTorrentDetails
 	{
@@ -48,7 +48,7 @@ public:
 
 	POSITION		GetIterator() const;
 	CLibraryRecent*	GetNext(POSITION& pos) const;
-	INT_PTR			GetCount() const { return m_pList.GetCount(); }
+	INT_PTR			GetCount() const;
 	void			Clear();
 
 	BOOL			Check(CLibraryRecent* pRecent, int nScope = 0) const;

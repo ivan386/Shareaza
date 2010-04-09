@@ -101,6 +101,8 @@ BOOL CLibrarySettingsPage::OnInitDialog()
 {
 	CSettingsPage::OnInitDialog();
 
+	CQuickLock oLock( Library.m_pSection );
+
 	m_bStoreViews		= Settings.Library.StoreViews;
 	m_bWatchFolders		= Settings.Library.WatchFolders;
 	m_bBrowseFiles		= Settings.Community.ServeFiles;

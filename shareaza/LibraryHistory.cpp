@@ -1,7 +1,7 @@
 //
 // LibraryHistory.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -58,7 +58,7 @@ CLibraryHistory::CLibraryHistory()
 
 CLibraryHistory::~CLibraryHistory()
 {
-	Clear();
+	ASSERT( m_pList.IsEmpty() );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -66,12 +66,23 @@ CLibraryHistory::~CLibraryHistory()
 
 POSITION CLibraryHistory::GetIterator() const
 {
+	ASSUME_LOCK( Library.m_pSection );
+
 	return m_pList.GetHeadPosition();
 }
 
 CLibraryRecent* CLibraryHistory::GetNext(POSITION& pos) const
 {
+	ASSUME_LOCK( Library.m_pSection );
+
 	return m_pList.GetNext( pos );
+}
+
+INT_PTR CLibraryHistory::GetCount() const
+{
+	ASSUME_LOCK( Library.m_pSection );
+
+	return m_pList.GetCount();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -79,6 +90,8 @@ CLibraryRecent* CLibraryHistory::GetNext(POSITION& pos) const
 
 void CLibraryHistory::Clear()
 {
+	ASSUME_LOCK( Library.m_pSection );
+
 	for ( POSITION pos = GetIterator() ; pos ; )
 		delete GetNext( pos );
 	m_pList.RemoveAll();
@@ -89,7 +102,7 @@ void CLibraryHistory::Clear()
 
 BOOL CLibraryHistory::Check(CLibraryRecent* pRecent, int nScope) const
 {
-	CSingleLock pLock( &Library.m_pSection, TRUE );
+	ASSUME_LOCK( Library.m_pSection );
 
 	if ( nScope == 0 )
 		return ( m_pList.Find( pRecent ) != NULL );
@@ -177,6 +190,8 @@ void CLibraryHistory::Submit(CLibraryFile* pFile)
 
 void CLibraryHistory::Prune()
 {
+	ASSUME_LOCK( Library.m_pSection );
+
 	FILETIME tNow;
 	GetSystemTimeAsFileTime( &tNow );
 
@@ -225,7 +240,7 @@ void CLibraryHistory::OnFileDelete(CLibraryFile* pFile)
 
 void CLibraryHistory::Serialize(CArchive& ar, int nVersion)
 {
-	CSingleLock pLock( &Library.m_pSection, TRUE );
+	ASSUME_LOCK( Library.m_pSection );
 
 	if ( nVersion < 7 ) return;
 
