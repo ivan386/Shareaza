@@ -305,7 +305,6 @@ BOOL CFragmentedFile::Open(const CBTInfo& oInfo, const BOOL bWrite,
 	CString sUniqueName = oInfo.GetFilename();
 	int nCount = 0;
 	CVirtualFile::const_iterator pItr = m_oFile.begin();
-	bool bReopen = ! m_oFile.empty();
 	QWORD nOffset = 0;
 
 	for ( POSITION pos = oInfo.m_pFiles.GetHeadPosition() ; pos ; ++nCount )
@@ -314,7 +313,7 @@ BOOL CFragmentedFile::Open(const CBTInfo& oInfo, const BOOL bWrite,
 		ASSERT( pBTFile->m_nSize != SIZE_UNKNOWN );
 
 		CString strSource;
-		if ( bReopen )
+		if ( pItr != m_oFile.end() )
 		{
 			// Reopen file
 			strSource = (*pItr).m_sPath;
