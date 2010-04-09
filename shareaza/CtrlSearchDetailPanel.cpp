@@ -565,7 +565,7 @@ BOOL CSearchDetailPanel::RequestPreview()
 void CSearchDetailPanel::CancelPreview()
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
 	m_bRunPreview = FALSE;
 	m_pPreviewURLs.RemoveAll();
 	
@@ -580,7 +580,11 @@ void CSearchDetailPanel::CancelPreview()
 		m_bIsPreviewing = FALSE;
 		Invalidate();
 	}
-	
+
+	if ( m_pRequest.IsPending() && ! m_pRequest.IsThreadEnabled() )
+		// Already asked for stop
+		return;
+
 	m_pRequest.Cancel();
 }
 
