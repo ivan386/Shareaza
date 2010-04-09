@@ -1,7 +1,7 @@
 //
 // DlgDonkeyServers.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -32,38 +32,26 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 BEGIN_MESSAGE_MAP(CDonkeyServersDlg, CSkinDialog)
-	//{{AFX_MSG_MAP(CDonkeyServersDlg)
 	ON_EN_CHANGE(IDC_URL, OnChangeURL)
 	ON_WM_TIMER()
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
-
 
 /////////////////////////////////////////////////////////////////////////////
 // CDonkeyServersDlg dialog
 
-CDonkeyServersDlg::CDonkeyServersDlg(CWnd* pParent) : CSkinDialog(CDonkeyServersDlg::IDD, pParent)
+CDonkeyServersDlg::CDonkeyServersDlg(CWnd* pParent) :
+	CSkinDialog(CDonkeyServersDlg::IDD, pParent)
 {
-	//{{AFX_DATA_INIT(CDonkeyServersDlg)
-	m_sURL = _T("");
-	//}}AFX_DATA_INIT
-	m_hInternet = NULL;
-}
-
-CDonkeyServersDlg::~CDonkeyServersDlg()
-{
-	ASSERT( m_hInternet == NULL );
 }
 
 void CDonkeyServersDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CSkinDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CDonkeyServersDlg)
+
 	DDX_Control(pDX, IDC_URL, m_wndURL);
 	DDX_Control(pDX, IDOK, m_wndOK);
 	DDX_Control(pDX, IDC_PROGRESS, m_wndProgress);
 	DDX_Text(pDX, IDC_URL, m_sURL);
-	//}}AFX_DATA_MAP
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -76,11 +64,12 @@ BOOL CDonkeyServersDlg::OnInitDialog()
 	SkinMe( _T("CDonkeyServersDlg") );
 
 	m_sURL = Settings.eDonkey.ServerListURL;
-	UpdateData( FALSE );
 
 	m_wndOK.EnableWindow( m_sURL.Find( _T("http://") ) == 0 );
 	m_wndProgress.SetRange( 0, 100 );
 	m_wndProgress.SetPos( 0 );
+
+	UpdateData( FALSE );
 
 	return TRUE;
 }
@@ -88,6 +77,7 @@ BOOL CDonkeyServersDlg::OnInitDialog()
 void CDonkeyServersDlg::OnChangeURL()
 {
 	UpdateData();
+
 	m_wndOK.EnableWindow( m_sURL.Find( _T("http://") ) == 0 );
 }
 
@@ -95,90 +85,67 @@ void CDonkeyServersDlg::OnOK()
 {
 	UpdateData();
 
-	if ( m_sURL.Find( _T("http://") ) != 0 ) return;
+	if ( m_sURL.Find( _T("http://") ) != 0 )
+		return;
+
+	if ( ! m_pRequest.SetURL( m_sURL ) )
+		return;
+
+	if ( ! m_pRequest.Execute( true ) )
+		return;
 
 	Settings.eDonkey.ServerListURL = m_sURL;
 
-	CString strAgent = Settings.SmartAgent();
-	m_hInternet = InternetOpen( strAgent, INTERNET_OPEN_TYPE_PRECONFIG, NULL, NULL, 0 );
-	if ( m_hInternet == NULL ) return;
-
-	BeginThread( "DlgDonkeyServices" );
-
 	m_wndOK.EnableWindow( FALSE );
 	m_wndURL.EnableWindow( FALSE );
+
+	SetTimer( 1, 250, NULL );
 }
 
 void CDonkeyServersDlg::OnCancel()
 {
-	OnTimer( 2 );
+	KillTimer( 1 );
+
+	m_pRequest.Cancel();
+
 	CSkinDialog::OnCancel();
 }
 
 void CDonkeyServersDlg::OnTimer(UINT_PTR nIDEvent)
 {
-	if ( m_hInternet != NULL )
+	CSkinDialog::OnTimer( nIDEvent );
+
+	if ( m_pRequest.IsPending() )
 	{
-		InternetCloseHandle( m_hInternet );
-		m_hInternet = NULL;
+		int n = m_wndProgress.GetPos();
+		if ( ++n >= 100 )
+			n = 0;
+		m_wndProgress.SetPos( n );
 	}
-
-	CloseThread();
-
-	if ( nIDEvent == 1 ) EndDialog( IDOK );
-}
-
-/////////////////////////////////////////////////////////////////////////////
-// CDonkeyServersDlg thread
-
-void CDonkeyServersDlg::OnRun()
-{
-	BOOL bSuccess = FALSE;
-	if ( m_hInternet )
+	else
 	{
-		HINTERNET hRequest = InternetOpenUrl( m_hInternet, m_sURL, NULL, 0,
-			INTERNET_FLAG_RELOAD|INTERNET_FLAG_DONT_CACHE, 0 );
-		if ( hRequest )
+		KillTimer( 1 );
+
+		if ( m_pRequest.GetStatusSuccess() )
 		{
-			DWORD nLength = 0, nlLength = 4;
-			DWORD nRemaining = 0;
-			if ( HttpQueryInfo( hRequest, HTTP_QUERY_CONTENT_LENGTH|HTTP_QUERY_FLAG_NUMBER,
-				&nLength, &nlLength, NULL ) )
-			{
-				m_wndProgress.PostMessage( PBM_SETRANGE32, 0, nLength );
+			const CBuffer* pBuffer = m_pRequest.GetResponseBuffer();
 
-				CMemFile pFile;
-				const DWORD nBufferLength = 1024;
-				auto_array< BYTE > pBuffer( new BYTE[ nBufferLength ] );
-				nLength = 0;
-				while ( InternetQueryDataAvailable( hRequest, &nRemaining, 0, 0 ) && nRemaining > 0 )
-				{
-					nLength += nRemaining;
-					m_wndProgress.PostMessage( PBM_SETPOS, nLength );
+			CMemFile pFile;
+			pFile.Write( pBuffer->m_pBuffer, pBuffer->m_nLength );
+			pFile.Seek( 0, CFile::begin );
 
-					while ( nRemaining > 0 )
-					{
-						DWORD nBuffer = min( nRemaining, nBufferLength );
-						InternetReadFile( hRequest, pBuffer.get(), nBuffer, &nBuffer );
-						pFile.Write( pBuffer.get(), nBuffer );
-						nRemaining -= nBuffer;
-					}
-				}
-
-				if ( nLength )
-				{
-					pFile.Seek( 0, CFile::begin );
-					bSuccess = HostCache.ImportMET( &pFile );
-					if ( bSuccess )
-						HostCache.Save();
-				}
-			}
-
-			InternetCloseHandle( m_hInternet );
-			m_hInternet = NULL;
+			if ( HostCache.ImportMET( &pFile ) )
+				HostCache.Save();
 		}
+		else
+		{
+			CString strError;
+			strError.Format( LoadString( IDS_DOWNLOAD_DROPPED ), m_sURL );
+			AfxMessageBox( strError, MB_OK | MB_ICONEXCLAMATION );
+		}
+
+		EndDialog( IDOK );
 	}
 
-	PostMessage( WM_TIMER, bSuccess ? 1 : 0 );
+	UpdateWindow();
 }
-

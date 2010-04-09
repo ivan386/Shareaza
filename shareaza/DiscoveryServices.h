@@ -1,7 +1,7 @@
 //
 // DiscoveryServices.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -21,7 +21,7 @@
 
 #pragma once
 
-#include "ThreadImpl.h"
+#include "HttpRequest.h"
 
 
 // TODO: Remove Network locks
@@ -95,8 +95,7 @@ public:
 
 protected:
 	CList< CDiscoveryService* > m_pList;
-	HINTERNET			m_hInternet;
-	HINTERNET			m_hRequest;
+	CHttpRequest		m_pRequest;
 	CDiscoveryService*	m_pWebCache;
 	Mode				m_nWebCache;
 	CDiscoveryService*	m_pSubmit;
@@ -139,7 +138,6 @@ protected:
 	CDiscoveryService*  GetRandomService(PROTOCOLID nProtocol);
 	CDiscoveryService*	GetRandomWebCache(PROTOCOLID nProtocol, BOOL bWorkingOnly, CDiscoveryService* pExclude = NULL, BOOL bForUpdate = FALSE);
 	BOOL				RequestWebCache(CDiscoveryService* pService, Mode nMode, PROTOCOLID nProtocol);
-	void				StopWebRequest();
 	void				OnRun();
 	BOOL				RunWebCacheGet(BOOL bCache);
 	BOOL				RunWebCacheUpdate();

@@ -152,6 +152,8 @@ public:
 	static int Recv(SOCKET s, char* buf, int len);
 	// Safe way to receive UDP data
 	static int RecvFrom(SOCKET s, char* buf, int len, SOCKADDR_IN* pFrom);
+	// Safe way to call InternetOpenUrl
+	static HINTERNET InternetOpenUrl(HINTERNET hInternet, LPCWSTR lpszUrl, LPCWSTR lpszHeaders, DWORD dwHeadersLength, DWORD dwFlags);
 
 	friend class CHandshakes;
 	friend class CNeighbours;

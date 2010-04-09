@@ -263,13 +263,11 @@ void CHttpRequest::OnRun()
 	m_hInternet = InternetOpen( m_sUserAgent, INTERNET_OPEN_TYPE_DIRECT, NULL, NULL, 0 );
 	if ( m_hInternet )
 	{
-		HINTERNET hURL = InternetOpenUrl( m_hInternet, m_sURL, m_sRequestHeaders,
-			m_sRequestHeaders.GetLength(),
-			INTERNET_FLAG_KEEP_CONNECTION |
-			INTERNET_FLAG_RELOAD |
-			INTERNET_FLAG_PRAGMA_NOCACHE |
-			( m_bUseCookie ? 0 : INTERNET_FLAG_NO_COOKIES ) |
-			INTERNET_FLAG_NO_CACHE_WRITE, NULL );
+		HINTERNET hURL = CNetwork::InternetOpenUrl( m_hInternet, m_sURL,
+			m_sRequestHeaders, m_sRequestHeaders.GetLength(),
+			INTERNET_FLAG_KEEP_CONNECTION | INTERNET_FLAG_RELOAD |
+			INTERNET_FLAG_PRAGMA_NOCACHE | INTERNET_FLAG_NO_CACHE_WRITE |
+			( m_bUseCookie ? 0 : INTERNET_FLAG_NO_COOKIES ) );
 		if ( hURL )
 		{
 			DWORD nLength = 255;
