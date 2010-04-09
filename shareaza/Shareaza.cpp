@@ -2656,8 +2656,6 @@ bool SaveGUID(const CString& sFilename, const Hashes::Guid& oGUID)
 				&dwWritten, NULL ) && dwWritten == oGUID.byteCount );
 			CloseHandle( hFile );
 		}
-		else
-			TRACE( "SaveGUID() : CreateFile \"%s\" error %d\n", sFilename, GetLastError() );
 
 		if ( bChanged )
 			SetFileAttributes( sFilename, dwOrigAttr );

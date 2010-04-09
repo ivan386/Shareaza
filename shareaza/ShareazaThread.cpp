@@ -191,39 +191,46 @@ HANDLE BeginThread(LPCSTR pszName, AFX_THREADPROC pfnThreadProc,
 
 void CloseThread(HANDLE* phThread, DWORD dwTimeout)
 {
-	if ( *phThread )
+	__try
 	{
-		__try
+		if ( *phThread )
 		{
-			::SetThreadPriority( *phThread, THREAD_PRIORITY_NORMAL );
-
-			while( *phThread )
+			__try
 			{
-				SafeMessageLoop();
+				::SetThreadPriority( *phThread, THREAD_PRIORITY_NORMAL );
 
-				DWORD res = MsgWaitForMultipleObjects( 1, phThread,
-					FALSE, dwTimeout, QS_ALLINPUT | QS_ALLPOSTMESSAGE );
-				if ( res == WAIT_OBJECT_0 + 1 )
-					// Handle messages
-					continue;
-				else if ( res != WAIT_TIMEOUT )
-					// Handle signaled state or errors
-					break;
-				else
+				while( *phThread )
 				{
-					// Timeout
-					CRazaThread::Terminate( *phThread );
-					break;
+					SafeMessageLoop();
+
+					DWORD res = MsgWaitForMultipleObjects( 1, phThread,
+						FALSE, dwTimeout, QS_ALLINPUT | QS_ALLPOSTMESSAGE );
+					if ( res == WAIT_OBJECT_0 + 1 )
+						// Handle messages
+						continue;
+					else if ( res != WAIT_TIMEOUT )
+						// Handle signaled state or errors
+						break;
+					else
+					{
+						// Timeout
+						CRazaThread::Terminate( *phThread );
+						break;
+					}
 				}
 			}
-		}
-		__except( EXCEPTION_EXECUTE_HANDLER )
-		{
-			// Thread already ended
-		}
+			__except( EXCEPTION_EXECUTE_HANDLER )
+			{
+				// Thread already ended
+			}
 
-		CRazaThread::Remove( *phThread );
+			CRazaThread::Remove( *phThread );
 
-		*phThread = NULL;
+			*phThread = NULL;
+		}
+	}
+	__except( EXCEPTION_EXECUTE_HANDLER )
+	{
+		// Deleted thread handler
 	}
 }
