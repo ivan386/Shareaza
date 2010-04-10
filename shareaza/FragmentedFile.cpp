@@ -303,27 +303,26 @@ BOOL CFragmentedFile::Open(const CBTInfo& oInfo, const BOOL bWrite,
 	CString& strErrorMessage)
 {
 	CString sUniqueName = oInfo.GetFilename();
-	int nCount = 0;
-	CVirtualFile::const_iterator pItr = m_oFile.begin();
+	int i = 0;
+	const int nCount = m_oFile.size();
 	QWORD nOffset = 0;
 
-	for ( POSITION pos = oInfo.m_pFiles.GetHeadPosition() ; pos ; ++nCount )
+	for ( POSITION pos = oInfo.m_pFiles.GetHeadPosition() ; pos ; ++i )
 	{
 		CBTInfo::CBTFile* pBTFile = oInfo.m_pFiles.GetNext( pos );
 		ASSERT( pBTFile->m_nSize != SIZE_UNKNOWN );
 
 		CString strSource;
-		if ( pItr != m_oFile.end() )
+		if ( i < nCount )
 		{
 			// Reopen file
-			strSource = (*pItr).m_sPath;
-			++pItr;
+			strSource = m_oFile[ i ].m_sPath;
 		}
 		else if ( bWrite )
 		{
 			// Generate new filename (inside incomplete folder)
 			strSource.Format( _T("%s\\%s_%d.partial"),
-				Settings.Downloads.IncompletePath, sUniqueName, nCount );
+				Settings.Downloads.IncompletePath, sUniqueName, i );
 		}
 		else
 		{
