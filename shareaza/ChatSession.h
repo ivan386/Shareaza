@@ -1,7 +1,7 @@
 //
 // ChatSession.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_CHATSESSION_H__F75BAA22_513A_4569_9BFB_90A053662CDB__INCLUDED_)
-#define AFX_CHATSESSION_H__F75BAA22_513A_4569_9BFB_90A053662CDB__INCLUDED_
-
 #pragma once
 
 #include "Connection.h"
@@ -36,63 +33,57 @@ class CPrivateChatFrame;
 
 class CChatSession : public CConnection
 {
-// Construction
 public:
 	CChatSession(CChatFrame* pFrame = NULL);
 	virtual ~CChatSession();
 
-// Attributes
-public:
 	Hashes::Guid	m_oGUID;
-public:
 	int				m_nState;
-	BOOL			m_bOld;
 	BOOL			m_bMustPush;
-	DWORD			m_tPushed;
 	CString			m_sUserNick;
-	CGProfile*		m_pProfile;
 	BOOL			m_bUnicode;		// ED2K Client in UTF-8 format
 	DWORD			m_nClientID;	// ED2K Client ID (if appropriate)
 	SOCKADDR_IN		m_pServer;		// ED2K server (If appropriate)
-public:
-	CPrivateChatFrame*	m_pWndPrivate;
-	CWnd*				m_pWndPublic;
 
-// Operations
-public:
+	virtual void	AttachTo(CConnection* pConnection);
+	virtual void	Close();
+
 	void			Setup(const Hashes::Guid& oGUID, SOCKADDR_IN* pHost, BOOL bMustPush);
 	BOOL			Connect();
 	TRISTATE		GetConnectedState() const;
 	void			OnED2KMessage(CEDPacket* pPacket);
-	virtual void	AttachTo(CConnection* pConnection);
 	BOOL			SendPush(BOOL bAutomatic);
 	BOOL			OnPush(const Hashes::Guid& oGUID, CConnection* pConnection);
-	virtual void	Close();
-public:
-	void		Print(LPCTSTR pszString, size_t nLength);
-	void		Send(CG2Packet* pPacket, BOOL bRelease = TRUE);
-	bool		SendPrivateMessage(bool bAction, const CString& strText);
-	bool		SendAwayMessage(const CString& strText);
-	void		StatusMessage(int nFlags, UINT nID, ...);
-	void		OnOpenWindow();
-	void		OnCloseWindow();
+	bool			SendPrivateMessage(bool bAction, const CString& strText);
+	void			StatusMessage(int nFlags, UINT nID, ...);
+	void			OnOpenWindow();
+	void			OnCloseWindow();
+
 protected:
+	BOOL				m_bOld;
+	DWORD				m_tPushed;
+	CGProfile*			m_pProfile;
+	CPrivateChatFrame*	m_pWndPrivate;
+	CWnd*				m_pWndPublic;
+
 	virtual BOOL	OnRun();
 	virtual BOOL	OnConnected();
 	virtual BOOL	OnRead();
 	virtual void	OnDropped();
 	virtual BOOL	OnHeaderLine(CString& strHeader, CString& strValue);
 	virtual BOOL	OnHeadersComplete();
-protected:
+
 	BOOL	ReadHandshake();
 	BOOL	ReadPacketsED2K();
 	BOOL	SendPacketsED2K();
 	BOOL	ReadText();
 	BOOL	ReadPackets();
 	void	PostOpenWindow();
-protected:
-
+	void	Send(CG2Packet* pPacket, BOOL bRelease = TRUE);
 	BOOL	SendChatMessage(CEDPacket* pPacket);
+	void	Print(LPCTSTR pszString, size_t nLength);
+	void	MakeActive();
+
 	BOOL	OnChatMessage(CEDPacket* pPacket);
 	BOOL	OnEstablished();
 	BOOL	OnText(const CString& str);
@@ -100,9 +91,8 @@ protected:
 	BOOL	OnProfileChallenge(CG2Packet* pPacket);
 	BOOL	OnProfileDelivery(CG2Packet* pPacket);
 	BOOL	OnChatRequest(CG2Packet* pPacket);
-	bool	OnChatAnswer(CG2Packet* pPacket);
-	bool	OnChatMessage(CG2Packet* pPacket);
-
+	BOOL	OnChatAnswer(CG2Packet* pPacket);
+	BOOL	OnChatMessage(CG2Packet* pPacket);
 };
 
 enum
@@ -110,5 +100,3 @@ enum
 	cssNull, cssConnecting, cssRequest1, cssHeaders1, cssRequest2, cssHeaders2,
 	cssRequest3, cssHeaders3, cssHandshake, cssActive, cssAway
 };
-
-#endif // !defined(AFX_CHATSESSION_H__F75BAA22_513A_4569_9BFB_90A053662CDB__INCLUDED_)

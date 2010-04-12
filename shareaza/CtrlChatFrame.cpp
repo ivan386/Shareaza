@@ -1,7 +1,7 @@
 //
 // CtrlChatFrame.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -67,7 +67,6 @@ BEGIN_MESSAGE_MAP(CChatFrame, CWnd)
 END_MESSAGE_MAP()
 
 #define EDIT_HISTORY	256
-#define NEWLINE_FORMAT	_T("2")
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -338,9 +337,24 @@ void CChatFrame::InsertText(LPCTSTR pszToken)
 
 /////////////////////////////////////////////////////////////////////////////
 // CChatFrame text view controller
+	
+void CChatFrame::AddTimestamp()
+{
+	if ( Settings.Community.Timestamp )
+	{
+		CTime tNow = CTime::GetCurrentTime();
+		CString str;
+		str.Format( _T("[%.2i:%.2i:%.2i] "),
+			tNow.GetHour(), tNow.GetMinute(), tNow.GetSecond() );
+		m_pContent.Add( retText, str, NULL, retfColour )->m_cColour =
+			CoolInterface.m_crChatNull;
+	}
+}
 
 void CChatFrame::AddText(LPCTSTR pszText)
 {
+	AddTimestamp();
+
 	m_pContent.Add( retText, pszText );
 	m_pContent.Add( retNewline, NEWLINE_FORMAT );
 	m_wndView.InvalidateIfModified();
@@ -348,18 +362,10 @@ void CChatFrame::AddText(LPCTSTR pszText)
 
 void CChatFrame::AddText(BOOL bSelf, BOOL bAction, LPCTSTR pszNick, LPCTSTR pszBody)
 {
+	AddTimestamp();
+
 	CString str;
-
-	if ( Settings.Community.Timestamp )
-	{
-		CTime tNow = CTime::GetCurrentTime();
-
-		str.Format( _T("[%.2i:%.2i] "),
-			tNow.GetHour(), tNow.GetMinute() );
-		m_pContent.Add( retText, str, NULL, retfColour )->m_cColour = CoolInterface.m_crChatNull;
-	}
-
-	str.Format( bAction ? _T("* %s ") : _T("%s: "), pszNick );
+	str.Format( bAction ? _T("* %s ") : _T("<%s> "), pszNick );
 	m_pContent.Add( retText, str, NULL, retfBold | retfColour )->m_cColour
 		= ( bSelf ? CoolInterface.m_crChatOut : CoolInterface.m_crChatIn );
 
@@ -374,6 +380,7 @@ void CChatFrame::AddText(BOOL bSelf, BOOL bAction, LPCTSTR pszNick, LPCTSTR pszB
 
 void CChatFrame::OnStatusMessage(int nFlags, LPCTSTR pszText)
 {
+	AddTimestamp();
 	m_pContent.Add( retText, pszText, NULL, retfColour )->m_cColour
 		= nFlags == 1 ? CoolInterface.m_crChatOut : CoolInterface.m_crChatNull;
 	m_pContent.Add( retNewline, NEWLINE_FORMAT );

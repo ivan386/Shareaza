@@ -152,18 +152,36 @@ void CPrivateChatFrame::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 
 void CPrivateChatFrame::OnProfileReceived()
 {
-	CString str;
-
-	LoadString( str, IDS_CHAT_PROFILE_ACCEPTED );
-	m_pContent.Add( retText, str, NULL, retfColour )->m_cColour = CoolInterface.m_crChatNull ;
-
 	m_sNick = m_pSession->m_sUserNick;
-	m_pContent.Add( retLink, m_sNick, _T("raza:command:ID_CHAT_BROWSE") );
 
-	SetWindowText( _T("Chat : ") + m_sNick );
+	AddTimestamp();
+
+	m_pContent.Add( retText, LoadString( IDS_CHAT_PROFILE_ACCEPTED ), NULL, retfColour )->m_cColour = CoolInterface.m_crChatNull ;
+	m_pContent.Add( retLink, m_sNick, _T("raza:command:ID_CHAT_BROWSE") );
+	m_pContent.Add( retNewline, NEWLINE_FORMAT );
+	m_wndView.InvalidateIfModified();
+
+	CString strCaption;
+	LoadString( strCaption, IDR_CHATFRAME );
+	if ( Settings.General.LanguageRTL ) strCaption = _T("\x200F") + strCaption + _T("\x202E");
+	strCaption += _T(" : ");
+	if ( Settings.General.LanguageRTL ) strCaption += _T("\x202B");
+	strCaption += m_sNick;
+	CString strAddress;
+	strAddress.Format( _T(" (%s:%lu)"),
+		(LPCTSTR)CString( inet_ntoa( m_pSession->m_pHost.sin_addr ) ),
+		ntohs( m_pSession->m_pHost.sin_port ) );
+	if ( Settings.General.LanguageRTL ) strCaption += _T("\x200F");
+	strCaption += strAddress;
+	if ( ! m_pSession->m_sUserAgent.IsEmpty() )
+	{
+		if ( Settings.General.LanguageRTL ) strCaption += _T("\x200F");
+		strCaption = strCaption + _T(" - ") + m_pSession->m_sUserAgent;
+	}
+
+	SetWindowText( strCaption );
 	GetParent()->PostMessage( WM_TIMER, 2 );
 
-	AddText( _T(".") );
 	SetAlert();
 }
 
@@ -179,11 +197,13 @@ void CPrivateChatFrame::OnRemoteMessage(BOOL bAction, LPCTSTR pszText)
 	{
 		CString strTime;
 		if ( nIdle > 86400 )
-			strTime.Format( _T("%i:%.2i:%.2i:%.2i"), nIdle / 86400, ( nIdle / 3600 ) % 24, ( nIdle / 60 ) % 60, nIdle % 60 );
+			strTime.Format( _T("%u:%.2u:%.2u:%.2u"), nIdle / 86400, ( nIdle / 3600 ) % 24, ( nIdle / 60 ) % 60, nIdle % 60 );
 		else
-			strTime.Format( _T("%i:%.2i:%.2i"), nIdle / 3600, ( nIdle / 60 ) % 60, nIdle % 60 );
+			strTime.Format( _T("%u:%.2u:%.2u"), nIdle / 3600, ( nIdle / 60 ) % 60, nIdle % 60 );
 
-		m_pSession->SendAwayMessage( strTime );
+		CString strMessage;
+		strMessage.Format( IDS_CHAT_PRIVATE_AWAY, _T(""), strTime );
+		m_pSession->SendPrivateMessage( true, strMessage );
 	}
 
 	// Adult filter (if enabled)
