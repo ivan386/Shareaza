@@ -1,7 +1,7 @@
 //
 // CtrlIRCPanel.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -287,10 +287,11 @@ int CIRCChannelsBox::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	CRect rc( 0, 0, 0, 0 );
 
 	m_wndChanList.Create( WS_CHILD | WS_VSCROLL | WS_TABSTOP | WS_GROUP | WS_VISIBLE |
-		LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_REPORT |
-		LVS_NOCOLUMNHEADER | LVS_SORTASCENDING | LVS_NOLABELWRAP,
-		rc, this, IDC_IRC_CHANNELS );
+		LVS_SINGLESEL | LVS_REPORT | LVS_NOCOLUMNHEADER | LVS_SORTASCENDING |
+		LVS_NOLABELWRAP | WS_CLIPSIBLINGS, rc, this, IDC_IRC_CHANNELS );
 	m_wndChanList.ModifyStyleEx( 0, WS_EX_CLIENTEDGE );
+	m_wndChanList.SetExtendedStyle( m_wndChanList.GetExtendedStyle() |
+		LVS_EX_FULLROWSELECT );
 	m_wndChanList.InsertColumn( 0, _T("Channels"), LVCFMT_LEFT, 1 );
 	m_wndChanList.InsertColumn( 1, _T("UserCount"), LVCFMT_RIGHT, -1 );
 

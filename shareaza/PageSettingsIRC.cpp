@@ -1,7 +1,7 @@
 //
 // PageSettingsIRC.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -245,34 +245,11 @@ void CIRCSettingsPage::OnOK()
 	Settings.IRC.Updated	 = TRUE;
 	Settings.IRC.ScreenFont	 = m_sScreenFont;
 	UpdateData( FALSE );
-	CWnd* pWnd = CWnd::FindWindow( _T("CIRCFrame"), NULL );
-	if ( pWnd ) pWnd->RedrawWindow( 0, 0, RDW_INTERNALPAINT|RDW_UPDATENOW|RDW_ALLCHILDREN );
-	CSettingsPage::OnOK();
-}
-
-BOOL CIRCSettingsPage::OnApply()
-{
-	Settings.IRC.Show		 = m_bShow == TRUE;
-	Settings.IRC.FloodEnable = m_bFloodEnable == TRUE;
-	Settings.IRC.FloodLimit	 = m_sFloodLimit;
-
-	CString strNick = MyProfile.GetNick();
-	if ( m_sNick.IsEmpty() && strNick.GetLength() )
-		m_sNick = Settings.IRC.Nick = strNick;
-	else
-		Settings.IRC.Nick = m_sNick;
-
-	Settings.IRC.Alternate	 = m_sAlternate;
-	Settings.IRC.ServerName	 = m_sServerName;
-	Settings.IRC.ServerPort	 = m_sServerPort;
-	Settings.IRC.RealName	 = m_sRealName;
-	Settings.IRC.UserName	 = m_sUserName;
-	Settings.IRC.Timestamp	 = m_bTimestamp == TRUE;
-	Settings.IRC.Updated	 = TRUE;
-	Settings.IRC.ScreenFont	 = m_sScreenFont;
-	UpdateData( FALSE );
+	
 	m_wndFonts.Invalidate();
-	CWnd* pWnd = (CWnd*)CIRCFrame::g_pIrcFrame;
-	if ( pWnd ) pWnd->RedrawWindow( 0, 0, RDW_INTERNALPAINT|RDW_UPDATENOW|RDW_ALLCHILDREN );
-	return CSettingsPage::OnApply();
+
+	if ( CWnd* pWnd = (CWnd*)CIRCFrame::g_pIrcFrame )
+		pWnd->RedrawWindow( 0, 0, RDW_INTERNALPAINT|RDW_UPDATENOW|RDW_ALLCHILDREN );
+
+	CSettingsPage::OnOK();
 }

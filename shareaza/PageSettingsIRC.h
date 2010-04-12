@@ -1,7 +1,7 @@
 //
 // PageSettingsIRC.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -20,9 +20,6 @@
 //
 // Author: peer_l_@hotmail.com
 //
-
-#if !defined(AFX_PAGESETTINGSIRC__INCLUDED_)
-#define AFX_PAGESETTINGSIRC__INCLUDED_
 
 #pragma once
 
@@ -67,7 +64,6 @@ protected:
 
 public:
 	virtual void OnOK();
-	virtual BOOL OnApply();
 
 // Implementation
 protected:
@@ -81,8 +77,6 @@ protected:
 	DECLARE_MESSAGE_MAP()
 };
 
-#endif // !defined(AFX_PAGESETTINGSIRC__INCLUDED_)
- 
 #define	ID_COLOR_SERVERMSG				2
 #define	ID_COLOR_TOPIC					3
 #define	ID_COLOR_CHANNELACTION			4
