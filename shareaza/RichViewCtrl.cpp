@@ -1,7 +1,7 @@
 //
 // RichViewCtrl.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -951,7 +951,7 @@ void CRichViewCtrl::CopySelection()
 	// the following block is required for IRC functionality
 	{
 		CString strTemp;
-		for ( int nPos = 1; nPos < str.GetLength(); nPos++ )
+		for ( int nPos = 0; nPos < str.GetLength(); nPos++ )
 		{
 			TCHAR ñ = str.GetAt( nPos );
 			if ( ñ != _T('\x200D') )	// Zero Width Joiner
