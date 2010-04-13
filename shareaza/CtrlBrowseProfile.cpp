@@ -1,7 +1,7 @@
 //
 // CtrlBrowseProfile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -365,7 +365,7 @@ void CBrowseProfileCtrl::OnHeadPacket(CG2Packet* pPacket)
 		}
 		else if ( nType == G2_PACKET_BODY )
 		{
-			if ( m_imgHead.LoadFromMemory( strFile,
+			if ( m_imgHead.LoadFromMemory( PathFindExtension( strFile ),
 				 (LPCVOID)( pPacket->m_pBuffer + pPacket->m_nPosition ), nLength ) &&
 				 m_imgHead.EnsureRGB( CoolInterface.m_crWindow ) &&
 				 m_imgHead.Resample( 128, 128 ) )
