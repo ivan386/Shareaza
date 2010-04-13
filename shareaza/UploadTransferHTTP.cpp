@@ -1738,6 +1738,13 @@ BOOL CUploadTransferHTTP::RequestHostBrowse()
 				pAvatar->Release();
 			}
 		}
+
+		if ( Settings.Community.ChatEnable )
+		{
+			CG2Packet* pChat = CG2Packet::New( G2_PACKET_PEER_CHAT );
+			pChat->ToBuffer( &pBuffer );
+			pChat->Release();
+		}
 	}
 	
 	Write( _P("HTTP/1.1 200 OK\r\n") );

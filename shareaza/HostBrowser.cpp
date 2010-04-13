@@ -80,7 +80,7 @@ CHostBrowser::~CHostBrowser()
 {
 	Stop();
 
-	if ( m_pProfile ) delete m_pProfile;
+	delete m_pProfile;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -150,7 +150,7 @@ BOOL CHostBrowser::Browse()
 	m_nState	= hbsConnecting;
 	m_nHits		= 0;
 
-	if ( m_pProfile != NULL ) delete m_pProfile;
+	delete m_pProfile;
 	m_pProfile = NULL;
 
 	return TRUE;
@@ -411,6 +411,8 @@ void CHostBrowser::SendRequest()
 			htons( m_pHost.sin_port ) );
 		Write( strHeader );
 
+		LogOutgoing();
+
 		OnWrite();
 
 		m_nProtocol	= PROTOCOL_ANY;
@@ -438,6 +440,8 @@ BOOL CHostBrowser::ReadResponseLine()
 
 	if ( ! Read( strLine ) ) return TRUE;
 	if ( strLine.IsEmpty() ) return TRUE;
+
+	theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING, _T("%s >> %s"), (LPCTSTR)m_sAddress, (LPCTSTR)strLine );
 
 	if ( strLine.GetLength() > HTTP_HEADER_MAX_LINE ) strLine = _T("#LINE_TOO_LONG#");
 
@@ -727,36 +731,54 @@ BOOL CHostBrowser::OnPacket(CG1Packet* pPacket)
 
 BOOL CHostBrowser::OnPacket(CG2Packet* pPacket)
 {
-	if ( pPacket->IsType( G2_PACKET_HIT ) )
+	switch( pPacket->m_nType )
 	{
-		CQueryHit* pHits = CQueryHit::FromG2Packet( pPacket );
-
-		if ( pHits == NULL )
+	case G2_PACKET_HIT:
+		if ( CQueryHit* pHits = CQueryHit::FromG2Packet( pPacket ) )
+			OnQueryHits( pHits );
+		else
 		{
 			theApp.Message( MSG_ERROR, IDS_BROWSE_PACKET_ERROR, m_sAddress );
 			return FALSE;
 		}
+		break;
 
-		OnQueryHits( pHits );
-	}
-	else if ( pPacket->IsType( G2_PACKET_PHYSICAL_FOLDER ) )
-	{
-		if ( m_pNotify != NULL ) m_pNotify->OnPhysicalTree( pPacket );
-	}
-	else if ( pPacket->IsType( G2_PACKET_VIRTUAL_FOLDER ) )
-	{
-		if ( m_pNotify != NULL ) m_pNotify->OnVirtualTree( pPacket );
-	}
-	else if ( pPacket->IsType( G2_PACKET_PROFILE_DELIVERY ) )
-	{
+	case G2_PACKET_PHYSICAL_FOLDER:
+		if ( m_pNotify != NULL )
+			m_pNotify->OnPhysicalTree( pPacket );
+		break;
+
+	case G2_PACKET_VIRTUAL_FOLDER:
+		if ( m_pNotify != NULL )
+			m_pNotify->OnVirtualTree( pPacket );
+		break;
+
+	case G2_PACKET_PROFILE_DELIVERY:
 		OnProfilePacket( pPacket );
-
 		if ( m_pProfile && m_pNotify )
 			m_pNotify->OnProfileReceived();
-	}
-	else if ( pPacket->IsType( G2_PACKET_PROFILE_AVATAR ) )
-	{
-		if ( m_pNotify != NULL ) m_pNotify->OnHeadPacket( pPacket );
+		break;
+
+	case G2_PACKET_PROFILE_AVATAR:
+		if ( m_pNotify != NULL )
+			m_pNotify->OnHeadPacket( pPacket );
+		break;
+
+	case G2_PACKET_PEER_CHAT:
+		if ( ! m_bCanChat )
+		{
+			m_bCanChat = TRUE;
+			if ( m_pNotify )
+				m_pNotify->OnProfileReceived();
+		}
+		break;
+
+	default:
+		CString tmp;
+		tmp.Format( _T("Received unexpected Browse packet from %s:%u"),
+			(LPCTSTR)CString( inet_ntoa( m_pHost.sin_addr ) ),
+			htons( m_pHost.sin_port ) );
+		pPacket->Debug( tmp );
 	}
 
 	return TRUE;
@@ -925,7 +947,7 @@ void CHostBrowser::Serialize(CArchive& ar)
 		m_pVendor = VendorCache.LookupByName( m_sServer );
 
 		ar >> bProfilePresent;
-		if ( m_pProfile ) delete m_pProfile;
+		delete m_pProfile;
 		m_pProfile = new CGProfile();
 	}
 	if ( m_pProfile && bProfilePresent )
