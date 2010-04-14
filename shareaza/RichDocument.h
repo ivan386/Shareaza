@@ -1,7 +1,7 @@
 //
 // RichDocument.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -60,11 +60,11 @@ public:
 	void			SetModified();
 	void			Clear();
 	BOOL			LoadXML(CXMLElement* pBase, CMap< CString, const CString&, CRichElement*, CRichElement* >* pMap = NULL, int nGroup = 0);
+	void			CreateFonts(const LOGFONT* lpLogFont = NULL, const LOGFONT* lpHeading = NULL);
 
 protected:
 	CList< CRichElement* >	m_pElements;
 
-	void			CreateFonts(const LOGFONT* lpLogFont = NULL, const LOGFONT* lpHeading = NULL);
 	BOOL			LoadXMLStyles(CXMLElement* pParent);
 	BOOL			LoadXMLColour(CXMLElement* pXML, LPCTSTR pszName, COLORREF* pColour);
 };

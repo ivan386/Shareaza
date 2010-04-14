@@ -1599,6 +1599,7 @@
 		<menu text="Actions">
 			<item id="ID_IRC_TIME" text="_Time"/>
 			<item id="ID_IRC_VERSION" text="_Version"/>
+			<item id="ID_IRC_BROWSE" text="_Browse"/>
 		</menu>
 		<separator/>
 		<menu text="Control">
@@ -2480,10 +2481,10 @@
 		<!-- ID_SHAREMONKEY_SAVE_OPTION is not used but required to display the check box -->
 		<image id="ID_CHECKMARK" id1="ID_SHAREMONKEY_SAVE_OPTION"/>
 		<image id="ID_NETWORK_SEARCH" id1="ID_TAB_SEARCH"/>
-		<image id="ID_NETWORK_CONNECT" id1="ID_TAB_CONNECT" id2="ID_CHAT_CONNECT"/>
-		<image id="ID_NETWORK_DISCONNECT" id1="ID_CHAT_DISCONNECT"/>
+		<image id="ID_NETWORK_CONNECT" id1="ID_TAB_CONNECT" id2="ID_CHAT_CONNECT" id3="ID_IRC_CONNECT"/>
+		<image id="ID_NETWORK_DISCONNECT" id1="ID_CHAT_DISCONNECT" id2="ID_IRC_DISCONNECT"/>
 		<image id="ID_NETWORK_CONNECT_TO"/>
-		<image id="ID_NETWORK_BROWSE_TO"/>
+		<image id="ID_NETWORK_BROWSE_TO" id1="ID_IRC_BROWSE"/>
 		<image id="ID_WINDOW_CASCADE"/>
 		<image id="ID_WINDOW_TILE_HORZ"/>
 		<image id="ID_WINDOW_TILE_VERT"/>
@@ -2599,8 +2600,8 @@
 		<image id="ID_MEDIA_SAVE" id1="ID_SECURITY_EXPORT" id2="ID_SCHEDULER_EXPORT"/>
 		<image id="ID_MEDIA_ZOOM"/>
 		<image id="ID_MEDIA_FULLSCREEN"/>
-		<image id="ID_MEDIA_ADD"/>
-		<image id="ID_MEDIA_REMOVE"/>
+		<image id="ID_MEDIA_ADD" id1="ID_IRC_ADD"/>
+		<image id="ID_MEDIA_REMOVE" id1="ID_IRC_REMOVE"/>
 		<image id="ID_MEDIA_RANDOM"/>
 		<image id="ID_MEDIA_VIS"/>
 		<!-- Back to Messy -->
@@ -2616,7 +2617,7 @@
 		<image id="ID_CHILD_MAXIMISE"/>
 		<image id="ID_CHILD_RESTORE"/>
 		<image id="ID_CHILD_MINIMISE"/>
-		<image id="ID_CHILD_CLOSE" id1="ID_NETWORK_EXIT"/>
+		<image id="ID_CHILD_CLOSE" id1="ID_NETWORK_EXIT" id2="ID_IRC_CLOSETAB"/>
 	</bitmap>
 	<bitmap id="IDB_MEDIA_STATES">
 		<image id="ID_MEDIA_STATE_STOP"/>
@@ -2639,21 +2640,21 @@
 		<image id="ID_IRC_UNIGNORE"/>
 		<image id="ID_IRC_TIME"/>
 		<image id="ID_TAB_IRC"/>
-		<image id="ID_IRC_REMOVE"/>
+		<image id=""/>
 		<image id="ID_IRC_QUERY"/>
 		<image id="ID_IRC_OP"/>
 		<image id="ID_IRC_KICKWHY"/>
 		<image id="ID_IRC_KICK"/>
-		<image id="ID_IRC_CLOSETAB"/>
-		<image id="ID_IRC_CONNECT"/>
+		<image id=""/>
+		<image id=""/>
 		<image id="ID_IRC_IGNORE"/>
-		<image id="ID_IRC_DISCONNECT"/>
+		<image id=""/>
 		<image id="ID_IRC_DEVOICE"/>
 		<image id="ID_IRC_DEOP"/>
 		<image id="ID_IRC_BANKICKWHY"/>
 		<image id="ID_IRC_BANKICK"/>
 		<image id="ID_IRC_BAN"/>
-		<image id="ID_IRC_ADD"/>
+		<image id=""/>
 		<image id="ID_IRC_VERSION"/>
 		<image id="ID_IRC_UNBAN"/>
 	</bitmap>

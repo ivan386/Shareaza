@@ -1935,6 +1935,7 @@
 #define ID_IRC_CLOSETAB                 33227
 #define ID_IRC_SETTINGS                 33228
 #define ID_TAB_IRC                      33229
+#define ID_IRC_BROWSE                   33230
 #define ID_WEBSERVICES_LIST             33300
 #define ID_WEBSERVICES_SHAREMONKEY      33301
 #define ID_SHAREMONKEY_DOWNLOAD         33302
@@ -1970,7 +1971,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        340
-#define _APS_NEXT_COMMAND_VALUE         33324
+#define _APS_NEXT_COMMAND_VALUE         33328
 #define _APS_NEXT_CONTROL_VALUE         1600
 #define _APS_NEXT_SYMED_VALUE           104
 #endif

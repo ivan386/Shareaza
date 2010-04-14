@@ -430,6 +430,7 @@
 	<resource code="33227" id="ID_IRC_CLOSETAB"/>
 	<resource code="33228" id="ID_IRC_SETTINGS"/>
 	<resource code="33229" id="ID_TAB_IRC"/>
+	<resource code="33230" id="ID_IRC_BROWSE"/>
 	<resource code="33300" id="ID_WEBSERVICES_LIST"/>
 	<resource code="33301" id="ID_WEBSERVICES_SHAREMONKEY"/>
 	<resource code="33302" id="ID_SHAREMONKEY_DOWNLOAD"/>

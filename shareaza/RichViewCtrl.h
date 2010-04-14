@@ -1,7 +1,7 @@
 //
 // RichViewCtrl.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -18,9 +18,6 @@
 // along with Shareaza; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-
-#if !defined(AFX_RICHVIEWCTRL_H__EB7BD9A6_8F32_48F1_ACAA_3503B8A61769__INCLUDED_)
-#define AFX_RICHVIEWCTRL_H__EB7BD9A6_8F32_48F1_ACAA_3503B8A61769__INCLUDED_
 
 #pragma once
 
@@ -77,16 +74,17 @@ public:
 	BOOL			IsModified() const;
 	void			InvalidateIfModified();
 	int				FullHeightMove(int nX, int nY, int nWidth, BOOL bShow = FALSE);
-	BOOL			GetElementRect(CRichElement* pElement, RECT* prc);
+	BOOL			GetElementRect(CRichElement* pElement, RECT* prc) const;
+	CString			GetWordFromPoint(CPoint& point, LPCTSTR szTokens) const;
 protected:
 	void			ClearFragments();
 	void			Layout(CDC* pDC, CRect* pRect);
 	void			WrapLineHelper(CList< CRichFragment* >& pLine, CPoint& pt, int& nLineHeight, int nWidth, int nAlign);
-	CRichFragment*	PointToFrag(CPoint& pt);
-	RICHPOSITION	PointToPosition(CPoint& pt);
-	CPoint			PositionToPoint(RICHPOSITION& pt);
+	CRichFragment*	PointToFrag(CPoint& pt) const;
+	RICHPOSITION	PointToPosition(CPoint& pt) const;
+	CPoint			PositionToPoint(RICHPOSITION& pt) const;
 	void			UpdateSelection();
-	void			CopySelection();
+	void			CopySelection() const;
 protected:
 	virtual void	OnLayoutComplete() {};
 	virtual void	OnPaintBegin(CDC* /*pDC*/) {};
@@ -120,7 +118,6 @@ protected:
 	DECLARE_MESSAGE_MAP()
 
 	friend class CRichFragment;
-	friend class CIRCFrame;
 };
 
 typedef struct
@@ -132,7 +129,3 @@ typedef struct
 #define RVN_CLICK		100
 #define RVN_DBLCLICK	101
 #define RVN_SETCURSOR	102
-
-//{{AFX_INSERT_LOCATION}}
-
-#endif // !defined(AFX_RICHVIEWCTRL_H__EB7BD9A6_8F32_48F1_ACAA_3503B8A61769__INCLUDED_)

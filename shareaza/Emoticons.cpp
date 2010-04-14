@@ -1,7 +1,7 @@
 //
 // Emoticons.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -398,11 +398,10 @@ BOOL CEmoticons::LoadTrillian(LPCTSTR pszFile)
 //////////////////////////////////////////////////////////////////////
 // CEmoticons rich text formatting
 
-void CEmoticons::FormatText(CRichDocument* pDocument, LPCTSTR pszBody, BOOL bNewlines)
+void CEmoticons::FormatText(CRichDocument* pDocument, LPCTSTR pszBody, BOOL bNewlines, COLORREF cr)
 {
 	static LPCTSTR pszURLs[] = { _T("\r\n"), _T("http://"), _T("https://"), _T("ftp://"), _T("mailto:"), _T("aim:"), _T("magnet:?"), _T("gnutella:"), _T("gnet:"), _T("raza:"), _T("shareaza:"), _T("gwc:"), _T("uhc:"), _T("ukhl:"), _T("gnutella1:"), _T("gnutella2:"), _T("mp2p:"), _T("ed2k://"), _T("sig2dat:"), _T("www."), NULL };
 	BOOL bBold = FALSE, bItalic = FALSE, bUnderline = FALSE;
-	COLORREF cr = 0;
 	CString str;
 
 	while ( *pszBody )

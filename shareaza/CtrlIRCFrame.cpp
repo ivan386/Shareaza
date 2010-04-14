@@ -22,6 +22,7 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
+#include "ShareazaURL.h"
 #include "Network.h"
 #include "Skin.h"
 #include "RichElement.h"
@@ -34,6 +35,7 @@
 #include "DlgIrcInput.h"
 #include "GProfile.h"
 #include "Plugins.h"
+#include "Emoticons.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -68,6 +70,8 @@ BEGIN_MESSAGE_MAP(CIRCFrame, CWnd)
 	ON_UPDATE_COMMAND_UI(ID_IRC_TIME, OnUpdateIrcUserCmd)
 	ON_COMMAND(ID_IRC_VERSION, OnIrcUserCmdVersion)
 	ON_UPDATE_COMMAND_UI(ID_IRC_VERSION, OnUpdateIrcUserCmd)
+	ON_COMMAND(ID_IRC_BROWSE, OnIrcUserCmdBrowse)
+	ON_UPDATE_COMMAND_UI(ID_IRC_BROWSE, OnUpdateIrcUserCmd)
 	ON_COMMAND(ID_IRC_WHOIS, OnIrcUserCmdWhois)
 	ON_UPDATE_COMMAND_UI(ID_IRC_WHOIS, OnUpdateIrcUserCmd)
 	ON_COMMAND(ID_IRC_IGNORE, OnIrcUserCmdIgnore)
@@ -107,6 +111,7 @@ END_MESSAGE_MAP()
 #define SIZE_BARSLIDE	1983
 #define NEWLINE_FORMAT	_T("2")
 #define DEST_PORT		6667
+#define HISTORY_SIZE	20
 
 CIRCFrame* CIRCFrame::g_pIrcFrame = NULL;
 
@@ -164,14 +169,20 @@ int CIRCFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if ( ! m_wndPanel.Create( this ) )
 		return -1;
 
+	m_gdiImageList.Create( 16, 16, ILC_COLOR32|ILC_MASK, 1, 1 ) ||
+	m_gdiImageList.Create( 16, 16, ILC_COLOR24|ILC_MASK, 1, 1 ) ||
+	m_gdiImageList.Create( 16, 16, ILC_COLOR16|ILC_MASK, 1, 1 );
+	AddIcon( IDI_TICK, m_gdiImageList );
+
 	CRect rectDefault;
 	SetOwner( GetParent() );
 
-	m_wndTab.Create( WS_CHILD | WS_VISIBLE | TCS_FLATBUTTONS | TCS_HOTTRACK | TCS_OWNERDRAWFIXED, 
+	m_wndTab.Create( WS_CHILD | WS_VISIBLE | TCS_HOTTRACK,
 		rectDefault, this, IDC_CHAT_TABS );
+	m_wndTab.SetImageList( &m_gdiImageList );
 
 	FillChanList();
-	m_wndView.Create( WS_CHILD|WS_VISIBLE, rectDefault, this, IDC_CHAT_TEXT );
+	m_wndView.Create( WS_CHILD | WS_VISIBLE, rectDefault, this, IDC_CHAT_TEXT );
 
 	m_pContent.m_crBackground = Settings.IRC.Colors[ ID_COLOR_CHATBACK ];
 	m_wndView.SetDocument( &m_pContent );
@@ -194,7 +205,28 @@ int CIRCFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	SetFonts();
 
+	// Create "Status" tab
+	LoadString( m_sStatus, IDS_TIP_STATUS );
+	m_sStatus.Remove( ':' );
+	AddTab( m_sStatus, ID_KIND_CLIENT );
+
+	// Welcome message
+	StatusMessage( LoadString( IDS_IRC_PANEL_TITLE ), ID_COLOR_TEXT );
+	StatusMessage( LoadString( IDS_IRC_PANEL_SUBTITLE ), ID_COLOR_TEXT );
+
+	// Reload saved channels
+	OnIrcChanCmdOpen();
+
 	return 0;
+}
+
+void CIRCFrame::ClearCountChanList()
+{
+	CListCtrl& wndChanList = m_wndPanel.m_boxChans.m_wndChanList;
+	for ( int i = 0 ; i < wndChanList.GetItemCount() ; ++i )
+	{
+		wndChanList.SetItemText( i, 1, _T("") );
+	}
 }
 
 // if strUserCount = 0 it will increase the current number
@@ -205,15 +237,15 @@ void CIRCFrame::FillCountChanList(const CString& strUserCount, const CString& st
 	CString strCurrentChannel, strList, strUsers, strDisplay;
 	BOOL bFound = FALSE;
 	int nCount = _tstoi( strUserCount ), nList, nIndex, nCountWnd;
-	CListCtrl* pChannelList = (CListCtrl*)&(m_wndPanel.m_boxChans.m_wndChanList);
+	CListCtrl& wndChanList = m_wndPanel.m_boxChans.m_wndChanList;
 	nIndex = m_pChanList.GetIndexOfName( strChannelName );
 	if ( nIndex == -1 )
 		return;
 
 	strDisplay = m_pChanList.GetDisplayOfIndex( nIndex );
-	for ( nList = 0 ; nList < pChannelList->GetItemCount() ; nList++ )
+	for ( nList = 0 ; nList < wndChanList.GetItemCount() ; nList++ )
 	{
-		strList = pChannelList->GetItemText( nList, 0 );
+		strList = wndChanList.GetItemText( nList, 0 );
 		if ( strDisplay.CompareNoCase( strList ) == 0 )
 		{
 			bFound = TRUE;
@@ -221,7 +253,7 @@ void CIRCFrame::FillCountChanList(const CString& strUserCount, const CString& st
 		}
 	}
 	if ( bFound ) 
-		strList = pChannelList->GetItemText( nList, 1 );
+		strList = wndChanList.GetItemText( nList, 1 );
 	else
 		strList = strUserCount;
 
@@ -236,8 +268,8 @@ void CIRCFrame::FillCountChanList(const CString& strUserCount, const CString& st
 	CString strCount;
 	strCount.Format( _T("%d"), nCountWnd );
 	if ( ! bFound ) 
-		nList = pChannelList->InsertItem( pChannelList->GetItemCount() , strDisplay );
-	pChannelList->SetItemText( nList, 1, strCount );
+		nList = wndChanList.InsertItem( wndChanList.GetItemCount() , strDisplay );
+	wndChanList.SetItemText( nList, 1, strCount );
 }
 
 void CIRCFrame::FillChanList()
@@ -272,69 +304,20 @@ void CIRCFrame::FillChanList()
 
 void CIRCFrame::SetFonts()
 {
+	// Main window font
+	LOGFONT lfDefault = {};
+	CoolInterface.m_fntRichDefault.GetLogFont( &lfDefault );
+	_tcsncpy( lfDefault.lfFaceName, Settings.IRC.ScreenFont, LF_FACESIZE );
+	m_pContent.CreateFonts( &lfDefault );
+
+	// Edit box font
 	m_fntEdit.DeleteObject();
-	m_pContent.m_fntNormal.DeleteObject();
-
-	TEXTMETRIC txtMetric;
-	int nHeight = 10;
-
 	m_fntEdit.CreateFont( -13, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, theApp.m_nFontQuality,
 		DEFAULT_PITCH|FF_DONTCARE, Settings.Fonts.DefaultFont );
-
-	// Find optimal font size values for the starting point
-	// Code adjusted for the majority of fonts for different languages
-	CDC* pDC = GetDC();
-	
-	LOGFONT lf = {};
-	lf.lfCharSet = DEFAULT_CHARSET;
-	lf.lfQuality = theApp.m_nFontQuality;
-	lstrcpy( lf.lfFaceName, Settings.IRC.ScreenFont );
-
-	CFont pFont;
-	pFont.CreateFontIndirect( &lf );
-	pDC->SelectObject( pFont );
-	pDC->GetTextMetrics( &txtMetric );
-
-	// 19, 16 and 13 are Tahoma font measurements
-	if ( txtMetric.tmInternalLeading )
-	{
-		if ( ( txtMetric.tmPitchAndFamily & TMPF_VECTOR ) &&
-			 ( txtMetric.tmPitchAndFamily & TMPF_TRUETYPE ) || txtMetric.tmCharSet < 2 )
-		{
-			int nMainChar = txtMetric.tmAscent - txtMetric.tmInternalLeading;
-			float nPercentage = (float)nMainChar / (float)txtMetric.tmAscent;
-			if ( nPercentage < 0.45 )
-			{
-				nMainChar = txtMetric.tmInternalLeading;
-				nPercentage = 1 - nPercentage;
-			}
-			if ( nPercentage < 0.55 )
-				nHeight =  (int)( 10.0f * 19.0f / txtMetric.tmAscent + 0.5 );
-			else if ( nPercentage > 0.85 )
-				nHeight =  (int)( 10.0f * 19.0f / txtMetric.tmHeight + 0.44 );
-			else if ( nPercentage > 0.69 )
-				nHeight =  (int)( 10.0f * 13.0f / (float)nMainChar + 0.1 );
-			else
-				nHeight =  (int)( 10.0f * 13.0f / ( 16.0f / txtMetric.tmAscent * nMainChar ) + 0.5 );
-		}
-		else nHeight = 10;
-	}
-	else
-	{
-		if ( txtMetric.tmPitchAndFamily & TMPF_FIXED_PITCH )
-			nHeight =  (int)( 10.0 * 16.0 / txtMetric.tmAscent + 0.5 );
-		else
-			nHeight = 11;
-	}
-	nHeight = -MulDiv( nHeight, GetDeviceCaps( pDC->m_hDC, LOGPIXELSY ), 72 );
-
-	ReleaseDC( pDC );
-
-	m_pContent.m_fntNormal.CreateFont( nHeight, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
-		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, theApp.m_nFontQuality,
-		DEFAULT_PITCH|FF_DONTCARE, Settings.IRC.ScreenFont );
 	m_wndEdit.SetFont( &m_fntEdit, TRUE );
+
+	// Tab font
 	m_wndTab.SetFont( &theApp.m_gdiFont, TRUE );
 }
 
@@ -382,7 +365,6 @@ void CIRCFrame::OnSize(UINT nType, int cx, int cy)
 	m_wndPanel.SetWindowPos( NULL, 0, 0, PANEL_WIDTH, rc.Height(), SWP_NOZORDER );
 
 	rc.bottom -= TOOLBAR_HEIGHT;
-	rc.top    += IRCHEADER_HEIGHT;
 	rc.left   += PANEL_WIDTH;
 	m_wndMainBar.SetWindowPos( NULL, rc.left, rc.bottom, rc.Width(),
 		TOOLBAR_HEIGHT, SWP_NOZORDER|SWP_SHOWWINDOW );
@@ -413,29 +395,6 @@ void CIRCFrame::OnPaint()
 	dc.SetBkMode( TRANSPARENT );
 
 	CRect rcComponent;
-
-	rcComponent.right = rcClient.right;
-	rcComponent.left = rcClient.left + PANEL_WIDTH;
-	rcComponent.top = rcClient.top;
-	rcComponent.bottom = rcComponent.top + IRCHEADER_HEIGHT;
-	PaintHeader( rcComponent, dc );
-	rcComponent.DeflateRect( 14, 0 );
-	CoolInterface.DrawEx( &dc, m_nHeaderIcon,
-		CPoint( rcComponent.left + 4, rcComponent.top + 4 ), CSize( 48, 48 ),
-		CLR_NONE, CLR_NONE, ILD_NORMAL, LVSIL_BIG );
-	rcComponent.DeflateRect( 44, 0 );
-	rcComponent.DeflateRect( 10, 12 );
-
-	CString pszTitle;
-	LoadString( pszTitle, IDS_IRC_PANEL_TITLE );
-	CString pszSubtitle;
-	LoadString( pszSubtitle, IDS_IRC_PANEL_SUBTITLE );
-	dc.SelectObject( &CoolInterface.m_fntCaption );
-	DrawText( &dc, rcComponent.left, rcComponent.top, pszTitle );
-	rcComponent.DeflateRect( 0, 14 );
-	dc.SelectObject( &CoolInterface.m_fntNormal );
-	DrawText( &dc, rcComponent.left, rcComponent.top, pszSubtitle );
-
 	rcComponent.right = rcClient.right;
 	rcComponent.left = rcClient.left + PANEL_WIDTH;
 	rcComponent.top = rcClient.bottom - TOOLBAR_HEIGHT - EDITBOX_HEIGHT - 
@@ -533,61 +492,50 @@ void CIRCFrame::OnContextMenu(CWnd* pWnd, CPoint point)
 
 void CIRCFrame::OnIrcConnect() 
 {
-	m_sDestinationIP = Settings.IRC.ServerName;
-	m_sDestinationPort = Settings.IRC.ServerPort;
-	WORD nPort = (WORD)_tstoi( (LPCTSTR)m_sDestinationPort );
+	if ( m_bConnected )
+		// Already Connected
+		return;
+
 	m_sWsaBuffer.Empty();
 
-	struct sockaddr_in dest_addr = {};   // will hold the destination addr
-    dest_addr.sin_family = AF_INET;      // host byte order
-	dest_addr.sin_port	= (u_short)ntohs( nPort ); // Copy the port number into the m_pHost structure
-	m_nSocket = socket( AF_INET, SOCK_STREAM, IPPROTO_TCP ) ; // do some error checking!
-	if ( m_nSocket == INVALID_SOCKET )
-	{
-		OnStatusMessage( _T("Error: Cannot open a socket."), ID_COLOR_NOTICE );
-	 	return;
-	}
+	m_sDestinationIP = Settings.IRC.ServerName;
+	m_sDestinationPort = Settings.IRC.ServerPort;
+
+	CString strMessage;
+	strMessage.Format( LoadString( IDS_CHAT_CONNECTING_TO ), m_sDestinationIP );
+	StatusMessage( strMessage, ID_COLOR_TEXT );
 	
 	struct hostent* host = gethostbyname( (LPCSTR)CT2A( m_sDestinationIP ) );
-	if ( host == NULL ) return;
+	if ( host == NULL )
+	{
+		// Unknown host
+		strMessage.Format( LoadString( IDS_CHAT_CANT_CONNECT ), m_sDestinationIP );
+		StatusMessage( strMessage );
+		return;
+	}
 
-	memcpy( &( dest_addr.sin_addr.s_addr ), host->h_addr, sizeof(int) );
-    memset( &( dest_addr.sin_zero ), '\0', 8 );  // zero the rest of the struct
+	SOCKADDR_IN dest_addr = {};
+    dest_addr.sin_family = AF_INET;
+	dest_addr.sin_port	= (u_short)ntohs( (WORD)_tstoi( (LPCTSTR)m_sDestinationPort ) );
+	dest_addr.sin_addr.s_addr = *(ULONG*)host->h_addr;
+
+	m_nSocket = socket( AF_INET, SOCK_STREAM, IPPROTO_TCP );
 
 	int RetVal = WSAConnect(
 		m_nSocket, 					// Our socket
-		(struct sockaddr *)&dest_addr,		// The remote IP address and port number
-		sizeof(struct sockaddr),		// How many bytes the function can read
+		(SOCKADDR*)&dest_addr,		// The remote IP address and port number
+		sizeof(SOCKADDR_IN),		// How many bytes the function can read
 		NULL, NULL, NULL, NULL );	// No advanced features
-
-	if ( RetVal == -1 ) return;
-	m_sWsaBuffer.Empty();
-	LoadString( m_sStatus, IDS_TIP_STATUS );
-	m_sStatus.Remove( ':' );
-	AddTab( m_sStatus, ID_KIND_CLIENT );
-	m_nBufferCount = 1;
-	if  ( RetVal == -1 )
+	if ( RetVal == SOCKET_ERROR )
 	{
-		int nError = WSAGetLastError();
-		int nTargetWindow = IsTabExist( m_sStatus );
-		if ( nTargetWindow == -1 ) return;
-		if ( nError == WSAETIMEDOUT )
-		{
-			OnStatusMessage( _T("QUIT: Connection reset by peer."), ID_COLOR_NOTICE );
-			m_pIrcBuffer[ nTargetWindow ].Add( char(ID_COLOR_NOTICE) + _T("QUIT: Connection reset by peer.") );
-		}
-		else if ( nError == WSAENOTCONN )
-		{
-			OnStatusMessage( _T("QUIT: Connection dropped."), ID_COLOR_NOTICE );
-			m_pIrcBuffer[ nTargetWindow ].Add( char(ID_COLOR_NOTICE) + _T("QUIT: Connection dropped.") );
-		}
-		else 
-		{
-			OnStatusMessage( _T("QUIT: Connection closed."), ID_COLOR_NOTICE );
-			m_pIrcBuffer[ nTargetWindow ].Add( char(ID_COLOR_NOTICE) + _T("QUIT: Connection closed.") );
-		}
-	 	return;
+		strMessage.Format( LoadString( IDS_CHAT_CANT_CONNECT ), m_sDestinationIP );
+		StatusMessage( strMessage );
+		CNetwork::CloseSocket( m_nSocket, false );
+		return;
 	}
+
+	StatusMessage( LoadString( IDS_CHAT_CONNECTED ), ID_COLOR_TEXT );
+
 	m_sNickname	= Settings.IRC.Nick;
 	if ( m_sNickname.IsEmpty() ) 
 	{
@@ -601,26 +549,21 @@ void CIRCFrame::OnIrcConnect()
 			Settings.IRC.Nick = m_sNickname = strNick;
 		}
 	}
- 	CString strCommand = "NICK " + m_sNickname;
-	SendString( strCommand );
-	strCommand =  _T("USER ");
-	strCommand += Settings.IRC.UserName + " ";
-	strCommand += "razaUserHost ";
-	strCommand += "razaUserServ :";
-	strCommand += Settings.IRC.RealName;
-	SendString( strCommand );
+
+	SendString( _T("NICK ") + m_sNickname );
+
+	SendString( _T("USER ") + Settings.IRC.UserName + " " +
+		"razaUserHost " + "razaUserServ :" + Settings.IRC.RealName );
 
 	m_pWakeup.ResetEvent();
 	WSAEventSelect( m_nSocket, m_pWakeup, FD_READ | FD_CLOSE );
 	m_nTimerVal = 0;
-	OnStatusMessage( _T("Activating Connection..."), ID_COLOR_NOTICE );
 	m_nMsgsInSec = 0;
 	m_bConnected = TRUE;
 	m_bFloodProtectionRunning = FALSE;
 
 	SetTimer( 9, m_nUpdateFrequency, NULL );
 	SetTimer( 7, m_nUpdateChanListFreq, NULL );
-	m_pLastLineBuffer->RemoveAll();
 }
 
 void CIRCFrame::OnUpdateIrcConnect(CCmdUI* pCmdUI)
@@ -677,9 +620,9 @@ void CIRCFrame::OnIrcChanCmdOpen()
 
 		if ( strItem.GetLength() && strItem.GetAt( 0 ) == _T('#') )
 		{
+			CListCtrl& wndChanList = m_wndPanel.m_boxChans.m_wndChanList;
 			m_pChanList.AddChannel( strItem.Mid( 1 ), strItem, TRUE );
-			m_wndPanel.m_boxChans.m_wndChanList.InsertItem( m_wndPanel.m_boxChans.m_wndChanList.GetItemCount(),
-				strItem.Mid( 1 ) );
+			wndChanList.InsertItem( wndChanList.GetItemCount(), strItem.Mid( 1 ) );
 		}
 	}
 }
@@ -691,10 +634,10 @@ void CIRCFrame::OnIrcChanCmdSave()
 		CFile::modeWrite | CFile::modeCreate ) )
 		return;
 
-	CListCtrl* pChannelList = &(m_wndPanel.m_boxChans.m_wndChanList);
-	for ( int nIndex = 0 ; nIndex < pChannelList->GetItemCount() ; nIndex++ )
+	CListCtrl& wndChanList = m_wndPanel.m_boxChans.m_wndChanList;
+	for ( int nIndex = 0 ; nIndex < wndChanList.GetItemCount() ; nIndex++ )
 	{
-		int n_mpChanListIndex = m_pChanList.GetIndexOfDisplay( pChannelList->GetItemText( nIndex, 0 ) );
+		int n_mpChanListIndex = m_pChanList.GetIndexOfDisplay( wndChanList.GetItemText( nIndex, 0 ) );
 		if ( n_mpChanListIndex != -1 && m_pChanList.GetType( m_pChanList.GetDisplayOfIndex( n_mpChanListIndex ) )  )
 		{
 			CT2A pszFile( m_pChanList.GetNameOfIndex( n_mpChanListIndex ) + _T("\r\n") );
@@ -791,6 +734,13 @@ void CIRCFrame::OnIrcUserCmdVersion()
 	OnLocalText( "/PRIVMSG " + RemoveModeOfNick( strText ) + _T(" :\x01VERSION\x01") );
 }
 
+void CIRCFrame::OnIrcUserCmdBrowse() 
+{
+	CString strText = GetSelectedUser();
+	if ( strText.IsEmpty() ) return;
+	OnLocalText( "/PRIVMSG " + RemoveModeOfNick( strText ) + _T(" :\x01USERINFO\x01") );
+}
+
 void CIRCFrame::OnIrcUserCmdTime() 
 {
 	CString strText = GetSelectedUser();
@@ -802,14 +752,14 @@ void CIRCFrame::OnIrcCloseTab()
 {
 	int nTab = m_wndTab.GetCurSel(), nOldTab( nTab );
 
-	ClearUserList();
-	m_pContent.Clear();
-
 	CString strChannelName = GetTabText( nTab );
 	FillCountChanList( "-1", strChannelName );
 	if ( strChannelName == m_sStatus )
 		return;
 
+	ClearUserList();
+
+	m_pContent.Clear();
 	m_wndTab.DeleteItem( nTab );
 	m_pIrcBuffer[ nTab ].RemoveAll();
 	m_pIrcUsersBuffer[ nTab ].RemoveAll();
@@ -840,10 +790,10 @@ void CIRCFrame::OnUpdateIrcCloseTab(CCmdUI* pCmdUI)
 
 void CIRCFrame::OnIrcDisconnect() 
 {
+	ClearCountChanList();
 	ClearUserList();
-	m_wndPanel.m_boxChans.m_wndChanList.DeleteAllItems();
 
-	OnStatusMessage( _T("Disconnected."), ID_COLOR_NOTICE );
+	StatusMessage( LoadString( IDS_CHAT_CLOSED ), ID_COLOR_TEXT );
 
 	SendString( _T("QUIT") );
 
@@ -852,16 +802,16 @@ void CIRCFrame::OnIrcDisconnect()
 	KillTimer( 9 );
 	KillTimer( 7 );
 
-	m_wndTab.DeleteAllItems();
-
-	for ( int nChannel = 0 ; nChannel < MAX_CHANNELS ; nChannel++ )
+	// Delete all tabs except "Status"
+	for ( int nChannel = 1 ; nChannel < MAX_CHANNELS ; nChannel++ )
 	{
+		m_wndTab.DeleteItem( nChannel );
 		m_pIrcBuffer[ nChannel ].RemoveAll();
 		m_nCurrentPosLineBuffer[ nChannel ] = -1;
 		m_pIrcUsersBuffer[ nChannel ].RemoveAll();
 		m_pLastLineBuffer[ nChannel ].RemoveAll();
 	}
-	m_nBufferCount = 0;
+	m_nBufferCount = 1;
 
 	m_bConnected = FALSE;
 }
@@ -894,6 +844,13 @@ CString CIRCFrame::GetTabText(int nTabIndex) const
  */
 void CIRCFrame::OnLocalText(LPCTSTR pszText)
 {
+	if ( ! m_bConnected )
+	{
+		StatusMessage( LoadString( IDS_CHAT_NOT_CONNECTED_1 ) );
+		OnIrcConnect();
+		return;
+	}
+
 	CString strMessage = pszText;	// the line as typed, shared between Send and Disp.
 	CString strSend; //text		// the line sent to the server
 	CString strDisp; //line		// the line displayed on the client
@@ -933,9 +890,9 @@ void CIRCFrame::OnLocalText(LPCTSTR pszText)
 	// Add timestamp if enabled
 	if ( Settings.IRC.Timestamp )
 	{
-		CTime pNow = CTime::GetCurrentTime();
+		CTime tNow = CTime::GetCurrentTime();
 		strDisp.Format( _T("[%.2i:%.2i:%.2i] "),
-			pNow.GetHour(), pNow.GetMinute(), pNow.GetSecond() );
+			tNow.GetHour(), tNow.GetMinute(), tNow.GetSecond() );
 	}
 		
 	// Formatting
@@ -959,14 +916,12 @@ void CIRCFrame::OnLocalText(LPCTSTR pszText)
 	{
 		strSend = strMessage.Mid( 1 );
 	}
-	else {
+	else
+	{
 		// Not a command but in the status window?
 		if ( strTabTitle.Compare( m_sStatus ) == 0 )
 		{
-			//TODO:
-			//OnNewMessage( _T(":localhost 400 " + m_sNickname + " You are not currently in a channel") );
-			OnNewMessage( _T(":localhost 400 You are currently not in a channel") );
-			return;
+			StatusMessage( _T("You are currently not in a channel.") );
 		}
 		else
 		{
@@ -1001,10 +956,10 @@ void CIRCFrame::OnTimer(UINT_PTR nIDEvent)
 	// Refresh channel list
 	if ( nIDEvent == 7 )
 	{
-		CListCtrl* pChannelList = (CListCtrl*)&(m_wndPanel.m_boxChans.m_wndChanList);
-		for ( int nList = 0 ; nList < pChannelList->GetItemCount() ; nList++ )
-			if ( !pChannelList->GetItemText( nList, 1 ).IsEmpty() )
-				pChannelList->SetItemText( nList, 1, _T("0") );
+		CListCtrl& wndChanList = m_wndPanel.m_boxChans.m_wndChanList;
+		for ( int nList = 0 ; nList < wndChanList.GetItemCount() ; nList++ )
+			if ( ! wndChanList.GetItemText( nList, 1 ).IsEmpty() )
+				wndChanList.SetItemText( nList, 1, _T("0") );
 		OnLocalText( _T("/list #shareaza*") );
 		return;
 	}
@@ -1014,7 +969,7 @@ void CIRCFrame::OnTimer(UINT_PTR nIDEvent)
 		m_bFloodProtectionRunning = FALSE;
 		int nTargetWindow = IsTabExist( m_sStatus ) ; 
 		if ( m_wndTab.GetCurSel() == nTargetWindow ) 
-			OnStatusMessage( _T("Stopped flood protection."), ID_COLOR_SERVERMSG );
+			StatusMessage( _T("Stopped flood protection."), ID_COLOR_SERVERMSG );
 		m_pIrcBuffer[ nTargetWindow ].Add( char(ID_COLOR_SERVERMSG) + _T("Stopped flood protection.") );
 		KillTimer( 8 );
 		m_nTimerVal = 0;
@@ -1036,7 +991,7 @@ void CIRCFrame::OnTimer(UINT_PTR nIDEvent)
 				int nTargetWindow = IsTabExist( m_sStatus );
 				if ( m_wndTab.GetCurSel() != nTargetWindow ) 
 					m_pIrcBuffer[ m_wndTab.GetCurSel() ].Add( char(ID_COLOR_SERVERMSG ) + _T("Starting flood protection...") );
-				OnStatusMessage( _T("Starting flood protection..."), ID_COLOR_SERVERMSG );
+				StatusMessage( _T("Starting flood protection..."), ID_COLOR_SERVERMSG );
 			}
 			m_nMsgsInSec = 0;
 		}
@@ -1046,7 +1001,6 @@ void CIRCFrame::OnTimer(UINT_PTR nIDEvent)
 			auto_array< char > pszData( new char[ 4096 ] );
 			pszData[ 0 ] = '\0';
 			int nRetVal = CNetwork::Recv( m_nSocket, pszData.get(), 4095 );
-			int nError = WSAGetLastError();
 			if ( nRetVal > 0 )
 				pszData[ nRetVal ] = '\0';
 			CStringA strTmp = m_sWsaBuffer + pszData.get();
@@ -1055,18 +1009,15 @@ void CIRCFrame::OnTimer(UINT_PTR nIDEvent)
 			switch ( nRetVal )
 			{
 			case 0:	// Connection has been gracefully closed
-				OnStatusMessage( TrimString( UTF8Decode( strTmp ) ), ID_COLOR_NOTICE );
+				StatusMessage( TrimString( UTF8Decode( strTmp ) ), ID_COLOR_SERVERMSG );
 				OnIrcDisconnect();
 				return;
 
 			case SOCKET_ERROR:
 				KillTimer( 9 );
-				if ( nError == WSAETIMEDOUT )
-					OnStatusMessage( _T("QUIT: Connection reset by peer." ), ID_COLOR_NOTICE );
-				else if ( nError == WSAENOTCONN )
-					OnStatusMessage( _T("QUIT: Connection dropped."), ID_COLOR_NOTICE );
-				else 
-					OnStatusMessage( _T("QUIT: Server is busy, please try again in a minute."), ID_COLOR_NOTICE );
+				StatusMessage( LoadString( IDS_CHAT_DROPPED ) );
+				if ( ! strTmp.IsEmpty() )
+					StatusMessage( TrimString( UTF8Decode( strTmp ) ), ID_COLOR_SERVERMSG );
 				OnIrcDisconnect();
 				return;
 			}
@@ -1110,18 +1061,37 @@ void CIRCFrame::SendString(const CString& strMessage)
 	CNetwork::Send( m_nSocket, (LPCSTR)strEncoded, strEncoded.GetLength() );
 }
 
-/* Displays messages on the client
- */
+void CIRCFrame::StatusMessage(LPCTSTR pszText, int nFlags)
+{
+	if ( ! *pszText )
+		return;
+
+	if ( Settings.IRC.Timestamp )
+	{
+		CString strMessage;
+		CTime tNow = CTime::GetCurrentTime();
+		strMessage.Format( _T("[%.2i:%.2i:%.2i] %s"),
+			tNow.GetHour(), tNow.GetMinute(), tNow.GetSecond(), pszText );
+		OnStatusMessage( strMessage, nFlags );
+		m_pIrcBuffer[ 0 ].Add( char( nFlags ) + strMessage );
+	}
+	else
+	{
+		OnStatusMessage( pszText, nFlags );
+		m_pIrcBuffer[ 0 ].Add( char( nFlags ) + pszText );
+	}
+}
+
 void CIRCFrame::OnStatusMessage(LPCTSTR pszText, int nFlags)
 {
-	CString strMessage = pszText; //The 
+	CString strMessage = pszText;
 	COLORREF cRGB = Settings.IRC.Colors[ nFlags ];
-	int nIndex = strMessage.Find( _T("\x03") ); //Find a color code indicator (Ctrl+K)
-	int nSize;
+
 	// While there are color codes, remove them.
+	int nIndex = strMessage.Find( _T("\x03") ); // Find a color code indicator (Ctrl+K)
 	while ( nIndex != -1 )
 	{
-		nSize = 1;
+		int nSize = 1;
 		// If character (nIndex+1) is a digit nSize = 2
 		if ( ( (int)( strMessage.GetAt( nIndex + 1 ) ) - 48 ) > -1 && 
 			 ( (int)( strMessage.GetAt( nIndex + 1 ) ) - 48 < 10 ) )
@@ -1150,99 +1120,9 @@ void CIRCFrame::OnStatusMessage(LPCTSTR pszText, int nFlags)
 	for ( nIndex = 1 ; nIndex < 32 ; nIndex++ )
 		strMessage.Remove( char(nIndex) );
 
-	// Fit the text into the window -- The UI libraries handle this automatically?
-	/*
-	CRect rectView;
-	m_wndView.GetWindowRect( &rectView );
-	int nViewSize = int( rectView.Width() / 14 * 1.84 );
-	int nCurrentChar, nOldChar = 0, nCurrentLength, nCheckLength;
-	CString strMsgTemp, strCurrentWord;
-	CStringArray pWordDivide;
-	BOOL bStartedSplit = FALSE;
-
-	// Divide the line into individual words
-	nCurrentChar = strMessage.Find( ' ', nOldChar );
-	strMessage.Trim();
-	while ( nCurrentChar != -1 )
-	{
-		pWordDivide.Add( strMessage.Mid( nOldChar, nCurrentChar - nOldChar ) );
-		nOldChar = nCurrentChar + 1;
-		nCurrentChar = strMessage.Find( ' ', nOldChar );
-	}
-	pWordDivide.Add( strMessage.Mid( nOldChar ) );
-
-	nCurrentLength = 0;
-	strMsgTemp.Empty();
-
-	for ( int nWord = 0 ; nWord < pWordDivide.GetCount() ; nWord++ )
-	{
-		strCurrentWord = pWordDivide.GetAt( nWord ).SpanExcluding( _T("\r\n") );
-		nCurrentLength += strCurrentWord.GetLength();
-		if ( nCurrentLength > nViewSize )
-		{
-			nCurrentLength = strMsgTemp.GetLength();
-			nCheckLength = nCurrentLength + int( strCurrentWord.GetLength() * 0.3 );
-			nOldChar = 0;
-			nCurrentChar = 0;
-			if ( strCurrentWord.GetLength() > nViewSize && bStartedSplit == TRUE )
-			{
-				bStartedSplit = FALSE;
-				while ( nViewSize < strCurrentWord.GetLength() - nOldChar )
-				{
-					strMsgTemp += strCurrentWord.Mid( nOldChar, nViewSize );
-					nOldChar += nViewSize;
-					strMsgTemp = m_pszLineJoiner + strMsgTemp;
-					m_pContent.Add( retText, strMsgTemp.GetBuffer(), NULL, retfColour )->m_cColour = cRGB;
-					m_pContent.Add( retNewline, NEWLINE_FORMAT );
-					strMsgTemp.Empty();
-				}
-				strMsgTemp = m_pszLineJoiner + strCurrentWord.Mid( nOldChar );
-				nCurrentLength = strMsgTemp.GetLength();
-			}
-			else if  ( nCheckLength <= nViewSize )
-			{
-				strMsgTemp += strCurrentWord.Left( nViewSize - nCurrentLength );
-				m_pContent.Add( retText, strMsgTemp.GetBuffer(), NULL, retfColour )->m_cColour = cRGB;
-				m_pContent.Add( retNewline, NEWLINE_FORMAT );
-				strMsgTemp.Empty();
-				pWordDivide.SetAt( nWord, m_pszLineJoiner + strCurrentWord.Mid( nViewSize - nCurrentLength ) );
-				nWord--;
-				nCurrentLength = 0;
-				bStartedSplit = TRUE;
-				// Add chars up to 30% and the rest to the next line.
-			}
-			else if ( nCheckLength > nViewSize ) // Move to the next line.
-			{
-				m_pContent.Add( retText, strMsgTemp.GetBuffer(), NULL, retfColour )->m_cColour = cRGB;
-				m_pContent.Add( retNewline, NEWLINE_FORMAT );
-				nWord--;
-				nCurrentLength = 0;
-				strMsgTemp.Empty();
-				bStartedSplit = TRUE;
-			}
-		}
-		else
-		{
-			strMsgTemp += pWordDivide.GetAt( nWord ) + " ";
-		}
-	}
-	// Display here what left.
-	pWordDivide.RemoveAll();
-	strMsgTemp.Trim();
-
-	if ( !strMsgTemp.IsEmpty() )
-	{
-		m_pContent.Add( retText, strMsgTemp.GetBuffer(), NULL, retfColour )->m_cColour = cRGB ;
-		m_pContent.Add( retNewline, NEWLINE_FORMAT );
-	}
-	*/
-	
-	
-	m_pContent.Add( retText, strMessage.GetBuffer(), NULL, retfColour )->m_cColour = cRGB;
+	//Emoticons.FormatText( &m_pContent, strMessage, FALSE, cRGB );
+	m_pContent.Add( retText, strMessage, NULL, retfColour )->m_cColour = cRGB;
 	m_pContent.Add( retNewline, NEWLINE_FORMAT );
-	/*
-	m_pIrcBuffer[ IsTabExist( m_sStatus ) ].Add( char(ID_COLOR_SERVERMSG) + strMessage );
-	*/
 	m_wndView.InvalidateIfModified();
 }
 
@@ -1274,15 +1154,15 @@ BOOL CIRCFrame::PreTranslateMessage(MSG* pMsg)
 	}
 	if ( pMsg->message == WM_KEYDOWN )
 	{
-		if ( pMsg->wParam == VK_UP && m_bConnected )
+		if ( pMsg->wParam == VK_UP )
 		{
 			int nTab = m_wndTab.GetCurSel();
 			if ( m_nCurrentPosLineBuffer[ nTab ] + 1 > m_pLastLineBuffer[ nTab ].GetCount() - 1 ) return TRUE;
-			if ( m_nCurrentPosLineBuffer[ nTab ] < 10 ) m_nCurrentPosLineBuffer[ nTab ]++;
+			if ( m_nCurrentPosLineBuffer[ nTab ] < HISTORY_SIZE ) m_nCurrentPosLineBuffer[ nTab ]++;
 			m_wndEdit.SetWindowText( m_pLastLineBuffer[ nTab ].GetAt( m_nCurrentPosLineBuffer[ nTab ] ) );
 			return TRUE;
 		}
-		if ( pMsg->wParam == VK_DOWN && m_bConnected )
+		else if ( pMsg->wParam == VK_DOWN )
 		{
 			int nTab = m_wndTab.GetCurSel();
 			if ( m_nCurrentPosLineBuffer[ nTab ] - 1 > m_pLastLineBuffer[ nTab ].GetCount() - 1 ) return TRUE;
@@ -1294,7 +1174,7 @@ BOOL CIRCFrame::PreTranslateMessage(MSG* pMsg)
 			m_wndEdit.SetWindowText( strBufferText );
 			return TRUE;
 		}
-		if ( pMsg->wParam == VK_RETURN )
+		else if ( pMsg->wParam == VK_RETURN )
 		{
 			if ( m_wndEdit.GetLineCount() > m_nLocalLinesLimit ) 
 			{
@@ -1310,9 +1190,9 @@ BOOL CIRCFrame::PreTranslateMessage(MSG* pMsg)
 			}
 			int nTab = m_wndTab.GetCurSel();
 			if ( nTab == -1 ) return TRUE;
-			m_pLastLineBuffer[ nTab ].Add( m_sCurrent );
-			if ( m_pLastLineBuffer[ nTab ].GetCount() > 10 )
-				m_pLastLineBuffer[ nTab ].RemoveAt( 0 );
+			m_pLastLineBuffer[ nTab ].InsertAt( 0, m_sCurrent );
+			if ( m_pLastLineBuffer[ nTab ].GetCount() > HISTORY_SIZE )
+				m_pLastLineBuffer[ nTab ].RemoveAt( HISTORY_SIZE );
 			m_nCurrentPosLineBuffer[ nTab ] = -1;
 			OnLocalText( m_sCurrent );
 			
@@ -1325,11 +1205,12 @@ BOOL CIRCFrame::PreTranslateMessage(MSG* pMsg)
 	{
 		if ( pMsg->wParam == IDC_IRC_CHANNELS )
 		{
-			int nItem = m_wndPanel.m_boxChans.m_wndChanList.GetNextItem( -1, LVNI_SELECTED );
+			CListCtrl& wndChanList = m_wndPanel.m_boxChans.m_wndChanList;
+			int nItem = wndChanList.GetNextItem( -1, LVNI_SELECTED );
 			if ( nItem == -1 ) return TRUE;
-			CString strItem = m_wndPanel.m_boxChans.m_wndChanList.GetItemText( nItem, 0 );
+			CString strItem = wndChanList.GetItemText( nItem, 0 );
 			if ( m_pChanList.GetType( strItem  ) )
-				m_wndPanel.m_boxChans.m_wndChanList.DeleteItem( nItem );
+				wndChanList.DeleteItem( nItem );
 			OnIrcChanCmdSave();
 			return TRUE;
 		}
@@ -1352,10 +1233,11 @@ BOOL CIRCFrame::PreTranslateMessage(MSG* pMsg)
 
 void CIRCFrame::ChanListDblClick()
 {
-	int nItem = m_wndPanel.m_boxChans.m_wndChanList.GetNextItem( -1, LVNI_SELECTED );
+	CListCtrl& wndChanList = m_wndPanel.m_boxChans.m_wndChanList;
+	int nItem = wndChanList.GetNextItem( -1, LVNI_SELECTED );
 	if ( nItem >= 0 )
 	{
-		CString strDisplay = m_wndPanel.m_boxChans.m_wndChanList.GetItemText( nItem, 0 );
+		CString strDisplay = wndChanList.GetItemText( nItem, 0 );
 		int nIndex = m_pChanList.GetIndexOfDisplay( strDisplay );
 		if ( nIndex >= 0 )
 		{
@@ -1364,7 +1246,13 @@ void CIRCFrame::ChanListDblClick()
 			if ( nTab < 0 )
 			{
 				// Join it
-				SendString( _T("JOIN ") + strChannelName );
+				if ( m_bConnected )
+					SendString( _T("JOIN ") + strChannelName );
+				else
+				{
+					StatusMessage( LoadString( IDS_CHAT_NOT_CONNECTED_1 ) );
+					OnIrcConnect();
+				}
 			}
 			else
 			{
@@ -1388,20 +1276,19 @@ BOOL CIRCFrame::OnNewMessage(const CString& strMessage)
 	{
 		int nColorID = oNewMessage.m_pMessages[ nMessage ].nColorID;
 		int nTargetWindow = IsTabExist( oNewMessage.m_pMessages[ nMessage ].sTargetName );
-		if ( nTargetWindow != -1 ) 
+		if ( nTargetWindow != -1 &&
+			! oNewMessage.m_pMessages[ nMessage ].sMessage.IsEmpty() ) 
 		{
 			CString strLine;
 			if ( Settings.IRC.Timestamp )
 			{
-				CTime pNow = CTime::GetCurrentTime();
+				CTime tNow = CTime::GetCurrentTime();
 				strLine.Format( _T("[%.2i:%.2i:%.2i] "),
-					pNow.GetHour(), pNow.GetMinute(), pNow.GetSecond() );
+					tNow.GetHour(), tNow.GetMinute(), tNow.GetSecond() );
 			}
 			strLine += oNewMessage.m_pMessages[ nMessage ].sMessage;
-
 			if ( m_wndTab.GetCurSel() == nTargetWindow )
 				OnStatusMessage( strLine, nColorID );
-
 			m_pIrcBuffer[ nTargetWindow ].Add( char( nColorID ) + strLine );
 		}
 	}
@@ -1409,6 +1296,14 @@ BOOL CIRCFrame::OnNewMessage(const CString& strMessage)
 	return TRUE;
 }
 
+void CIRCFrame::HighlightTab(int nTab, BOOL bHighlight)
+{
+	TCITEM it = {};
+	it.mask = TCIF_IMAGE;
+	it.iImage = bHighlight ? 0 : -1;
+	m_wndTab.SetItem( nTab, &it );
+	// m_wndTab.SetTabColor( nTab, bHighlight ? Settings.IRC.Colors[ ID_COLOR_NEWMSG ] : RGB(0, 0, 0) );
+}
 
 void CIRCFrame::ActivateMessageByID(CIRCNewMessage& oNewMessage, int nMessageType)
 {
@@ -1418,7 +1313,7 @@ void CIRCFrame::ActivateMessageByID(CIRCNewMessage& oNewMessage, int nMessageTyp
 		{
 			int nTab = IsTabExist( m_sStatus );
 			if ( nTab != -1 && nTab != m_wndTab.GetCurSel() )
-				m_wndTab.SetTabColor( nTab, Settings.IRC.Colors[ ID_COLOR_NEWMSG ] );
+				HighlightTab( nTab );
 			oNewMessage.Add( GetStringAfterParsedItem( 0 ), m_sStatus, ID_COLOR_SERVERMSG );
 			return;
 		}
@@ -1426,7 +1321,7 @@ void CIRCFrame::ActivateMessageByID(CIRCNewMessage& oNewMessage, int nMessageTyp
 		{
 			int nTab = IsTabExist( m_sStatus );
 			if ( nTab != -1 && nTab != m_wndTab.GetCurSel() )
-				m_wndTab.SetTabColor( nTab, Settings.IRC.Colors[ ID_COLOR_NEWMSG ] );
+				HighlightTab( nTab );
 			oNewMessage.Add( GetStringAfterParsedItem( 3 ), m_sStatus, ID_COLOR_SERVERMSG );
 			return;
 		}
@@ -1434,7 +1329,7 @@ void CIRCFrame::ActivateMessageByID(CIRCNewMessage& oNewMessage, int nMessageTyp
 		{
 			int nTab = IsTabExist( m_sStatus );
 			if ( nTab != -1 && nTab != m_wndTab.GetCurSel() )
-				m_wndTab.SetTabColor( nTab, Settings.IRC.Colors[ ID_COLOR_NEWMSG ] );
+				HighlightTab( nTab );
 			oNewMessage.Add( GetStringAfterParsedItem( 3 ), m_sStatus, ID_COLOR_SERVERERROR );
 			return;
 		}
@@ -1446,7 +1341,6 @@ void CIRCFrame::ActivateMessageByID(CIRCNewMessage& oNewMessage, int nMessageTyp
 		{
 			m_sNickname = m_pWords.GetAt( 2 );
 			oNewMessage.Add( _T("Connection Established!"), m_sStatus, ID_COLOR_NOTICE );
-			OnIrcChanCmdOpen();
 			OnLocalText( _T("/list #shareaza*") );
 			return;
 		}
@@ -1464,7 +1358,7 @@ void CIRCFrame::ActivateMessageByID(CIRCNewMessage& oNewMessage, int nMessageTyp
 			if ( nTab == -1 )
 				nTab = IsTabExist( m_pWords.GetAt( 0 ) );
 			if ( nTab != m_wndTab.GetCurSel() )
-				m_wndTab.SetTabColor( nTab, Settings.IRC.Colors[ ID_COLOR_NEWMSG ] );
+				HighlightTab( nTab );
 			CString strSender = _T("<") + m_pWords.GetAt( 0 ) + _T("> ");
 			CString strText = GetStringAfterParsedItem( 7 );
 
@@ -1482,7 +1376,9 @@ void CIRCFrame::ActivateMessageByID(CIRCNewMessage& oNewMessage, int nMessageTyp
 		}
 		case ID_MESSAGE_USER_AWAY:
 		{
-			CString strSender = _T("* ") + m_pWords.GetAt( 3 ) + _T(" is away: ") + GetStringAfterParsedItem( 4 );
+			CString strSender;
+			strSender.Format( LoadString( IDS_CHAT_PRIVATE_AWAY ), (LPCTSTR)m_pWords.GetAt( 3 ), (LPCTSTR)GetStringAfterParsedItem( 4 ) );
+			strSender = _T("* ") + strSender;
 			oNewMessage.Add( strSender, GetTabText( m_wndTab.GetCurSel() ), ID_COLOR_SERVERMSG );
 			return;
 		}
@@ -1534,7 +1430,7 @@ void CIRCFrame::ActivateMessageByID(CIRCNewMessage& oNewMessage, int nMessageTyp
 		{
 			int nTab = AddTab( m_pWords.GetAt( 0 ), ID_KIND_PRIVATEMSG );
 			if ( nTab != m_wndTab.GetCurSel() )
-				m_wndTab.SetTabColor( nTab, Settings.IRC.Colors[ ID_COLOR_NEWMSG ] );
+				HighlightTab( nTab );
 			CString strSender = _T("* ") + m_pWords.GetAt( 0 ) + _T(" ");
 			oNewMessage.Add( strSender + GetStringAfterParsedItem( 8 ), m_pWords.GetAt( 0 ), ID_COLOR_ME );
 			return;
@@ -1550,7 +1446,7 @@ void CIRCFrame::ActivateMessageByID(CIRCNewMessage& oNewMessage, int nMessageTyp
 			int m_nTab = IsTabExist( m_pWords.GetAt( 6 ) );
 			if ( m_nTab == -1 ) return;
 			if ( m_nTab != m_wndTab.GetCurSel() )
-				m_wndTab.SetTabColor( m_nTab, Settings.IRC.Colors[ ID_COLOR_NEWMSG ] );
+				HighlightTab( m_nTab );
 			CString strSender = _T("<") + m_pWords.GetAt( 0 ) + _T("> ");
 			CString strText = GetStringAfterParsedItem( 7 );
 			oNewMessage.Add( strSender + strText, m_pWords.GetAt( 6 ), ID_COLOR_TEXT );
@@ -1564,7 +1460,7 @@ void CIRCFrame::ActivateMessageByID(CIRCNewMessage& oNewMessage, int nMessageTyp
 			int m_nTab = IsTabExist( m_pWords.GetAt( 6 ) );
 			if ( m_nTab == -1 ) return;
 			if ( m_nTab != m_wndTab.GetCurSel() )
-				m_wndTab.SetTabColor( m_nTab, Settings.IRC.Colors[ ID_COLOR_NEWMSG ] );
+				HighlightTab( m_nTab );
 			CString strSender = _T("* ") + m_pWords.GetAt( 0 ) + _T(" ");
 			oNewMessage.Add( strSender + GetStringAfterParsedItem( 8 ), m_pWords.GetAt( 6 ), ID_COLOR_ME );
 			return;
@@ -1634,6 +1530,18 @@ void CIRCFrame::ActivateMessageByID(CIRCNewMessage& oNewMessage, int nMessageTyp
 				theApp.m_nWindowsVersion, theApp.m_nWindowsVersionMinor );
 			OnLocalText( strReply );
 			oNewMessage.Add( _T("* ") + m_pWords.GetAt( 0 ) + _T(" just VERSIONed you."), m_sStatus, ID_COLOR_SERVERMSG );
+			return;
+		}
+		case ID_MESSAGE_USER_CTCPBROWSE:
+		{
+			if ( Settings.Community.ServeFiles )
+			{
+				CString strReply;
+				strReply.Format( _T("/NOTICE %s :\x01USERINFO :You can browse me by double-clicking on shareaza:browse:%s:%u\x01"),
+					(LPCTSTR)m_pWords.GetAt( 0 ), (LPCTSTR)CString( inet_ntoa( Network.m_pHost.sin_addr ) ), htons( Network.m_pHost.sin_port ) );
+				OnLocalText( strReply );
+				oNewMessage.Add( _T("* ") + m_pWords.GetAt( 0 ) + _T(" just USERINFOed you."), m_sStatus, ID_COLOR_SERVERMSG );
+			}
 			return;
 		}
 		case ID_MESSAGE_SERVER_NOTICE:
@@ -2026,8 +1934,10 @@ int CIRCFrame::ParseMessageID()
 			{
 				if( m_pWords.GetAt( 6 ).CompareNoCase( m_sNickname ) == 0 )
 				{
-					if ( str.Compare(_T("version")) == 0 )
+					if ( str == _T("version") )
 						nMessageType = ID_MESSAGE_USER_CTCPVERSION;
+					else if ( str == _T("userinfo") )
+						nMessageType = ID_MESSAGE_USER_CTCPBROWSE;
 					else if ( str == "time" )
 						nMessageType = ID_MESSAGE_USER_CTCPTIME;
 					else if ( str == "action" || str == "actio" )
@@ -2199,7 +2109,7 @@ void CIRCFrame::TabClick()
 	ClearUserList();
 	CString str;
 	int nTab = m_wndTab.GetCurSel(), nMode;
-	m_wndTab.SetTabColor( nTab, RGB(0, 0, 0) );
+	HighlightTab( nTab, FALSE );
 	for ( int nUser = 0 ; nUser < m_pIrcUsersBuffer[ nTab ].GetCount() ; nUser++ )
 	{
 		str = m_pIrcUsersBuffer[ nTab ].GetAt( nUser );
@@ -2219,7 +2129,7 @@ int CIRCFrame::AddTab(CString strTabName, int nKindOfTab)
 {
 	if ( m_wndTab.GetItemCount() + 1 == MAX_CHANNELS )
 	{
-		OnStatusMessage( _T("You have exceeded the maximum number of opened channels"), ID_COLOR_NOTICE );
+		StatusMessage( _T("You have exceeded the maximum number of opened channels.") );
 		return -1;
 	}
 
@@ -2234,7 +2144,7 @@ int CIRCFrame::AddTab(CString strTabName, int nKindOfTab)
 	m_pIrcBuffer[ m_nBufferCount ].Add( char( nKindOfTab ) );
 	m_nCurrentPosLineBuffer[ m_nBufferCount ] = -1;
 	m_nBufferCount++;
-	m_wndTab.SetTabColor( nNewTab, RGB(0, 0, 0) );
+	HighlightTab( nNewTab, FALSE );
 	return nNewTab;
 }
 
@@ -2243,17 +2153,17 @@ int CIRCFrame::AddTab(CString strTabName, int nKindOfTab)
 void CIRCFrame::OnRichCursorMove(NMHDR* /* pNMHDR */, LRESULT* pResult)
 {
 	AFX_NOTIFY* pNotify = (AFX_NOTIFY*)pResult;
+
 	CString strText = GetTextFromRichPoint();
-	if ( strText.IsEmpty() ) return;
-	int nIndex = IsUserInList( strText );
-	if ( nIndex != -1 ||
-		strText.Left( 1 )   == _T("#") ||
-		strText.Left( 7 )   == _T("http://") ||
-		strText.Left( 4 )   == _T("www.") ||
-		strText.Left( 7 )   == _T("magnet:") ||
-		strText.Left( 4 )   == _T("ed2k:") ||
-		strText.Mid( 1, 7 ) == _T("http://") ||
-		strText.Mid( 1, 4 ) == _T("www.") )
+	if ( strText.IsEmpty() )
+		return;
+
+	CShareazaURL oURL;
+	if ( IsUserInList( strText ) != -1 ||				// User name
+		strText.GetAt( 0 ) == _T('#') ||				// IRC channel
+		( strText.GetLength() > 8 &&					// Common web address
+		_tcsncicmp( strText, _T("www."), 4 ) == 0 ) ||
+		oURL.Parse( strText, FALSE ) )					// URL
 	{
 		pNotify->pResult = (LRESULT*)theApp.LoadCursor( IDC_HAND );
 	}
@@ -2265,43 +2175,33 @@ void CIRCFrame::OnRichCursorMove(NMHDR* /* pNMHDR */, LRESULT* pResult)
 
 void CIRCFrame::OnRichDblClk(NMHDR* /* pNMHDR */, LRESULT* pResult)
 {
+	*pResult = 0;
+
 	CString strText = GetTextFromRichPoint();
-	if ( strText.IsEmpty() ) return;
-	int nIndex = IsUserInList( strText );
-	if ( nIndex != -1 ) 
+	if ( strText.IsEmpty() )
+		return;
+
+	CShareazaURL oURL;
+	if ( IsUserInList( strText ) != -1 )				// User name
 	{
 		UserListDblClick();
 	}
-	else if ( strText.Left( 1 ) == _T("#") ) 
+	else if ( strText.GetAt( 0 ) == _T('#') )			// IRC channel
 	{
-		CString strJoinChan = _T("JOIN ") + strText;
-		SendString( strJoinChan );
+		SendString( _T("JOIN ") + strText );
 	}
-	else if ( strText.Left( 7 )   == _T("http://") ||
-			  strText.Left( 4 )   == _T("www.") ||
-			  strText.Mid( 1, 7 ) == _T("http://") ||
-			  strText.Mid( 1, 4 ) == _T("www.") )	
+	else if ( strText.GetLength() > 8 &&				// Common web address
+		_tcsncicmp( strText, _T("www."), 4 ) == 0 )
 	{
-		if ( strText.Mid( 1, 7 ) == _T("http://") ||
-			 strText.Mid( 1, 4 ) == _T("www.") )
-			strText = strText.Mid( 1 );
-		if ( strText.Right( 1 ) == _T(")") )
-			strText = strText.Mid( 0, strText.GetLength() - 1 );
-		theApp.InternalURI(	strText );
+		ShellExecute( GetSafeHwnd(), _T("open"), _T("http://") + strText, NULL, NULL, SW_SHOWNORMAL );
 	}
-	else if ( strText.Left( 7 )   == _T("magnet:") ||
-			  strText.Left( 4 )   == _T("ed2k:") ||
-			  strText.Mid( 1, 7 ) == _T("magnet:") ||
-			  strText.Mid( 1, 4 ) == _T("ed2k:") )
+	else if ( oURL.Parse( strText, FALSE ) )			// URL
 	{
-		if ( strText.Mid( 1, 7 ) == _T("magnet:") ||
-			 strText.Mid( 1, 4 ) == _T("ed2k:") )
-			strText = strText.Mid( 1 );
-		if ( strText.Right( 1 ) == _T(")") )
-			strText = strText.Mid( 0, strText.GetLength() - 1 );
-		theApp.InternalURI(	strText );
+		if ( oURL.m_nAction == CShareazaURL::uriDownload && ! oURL.IsHashed() )
+			ShellExecute( GetSafeHwnd(), _T("open"), oURL.m_sURL, NULL, NULL, SW_SHOWNORMAL );
+		else
+			PostMainWndMessage( WM_URL, (WPARAM)new CShareazaURL( oURL ) );
 	}
-	*pResult = 0;
 }
 
 void CIRCFrame::OnRichClk(NMHDR* /* pNMHDR */, LRESULT* pResult)
@@ -2329,18 +2229,19 @@ void CIRCFrame::OnSettings()
 
 int CIRCFrame::FindInList(CString strName, int nList, int nTab)
 {
+	CListCtrl& wndChanList = m_wndPanel.m_boxChans.m_wndChanList;
 	strName = RemoveModeOfNick( strName );
 
 	INT_PTR nListCount = 0;
 	if ( nList == 0 ) nListCount = GetUserCount();
-	if ( nList == 1 ) nListCount = m_wndPanel.m_boxChans.m_wndChanList.GetItemCount();
+	if ( nList == 1 ) nListCount = wndChanList.GetItemCount();
 	if ( nList == 2 ) nListCount = m_pIrcUsersBuffer[ nTab ].GetCount();
 
 	for ( int nItem = 0 ; nItem < nListCount ; nItem++ )
 	{
 		CString strNick;
 		if ( nList == 0 ) strNick = GetUser( nItem );
-		if ( nList == 1 ) strNick = m_wndPanel.m_boxChans.m_wndChanList.GetItemText( nItem, 1 );
+		if ( nList == 1 ) strNick = wndChanList.GetItemText( nItem, 1 );
 		if ( nList == 2 ) strNick = m_pIrcUsersBuffer[ nTab ].GetAt( nItem ).Mid( 1 );
 
 		if ( RemoveModeOfNick( strNick ).CompareNoCase( strName ) == 0 ) 
@@ -2350,68 +2251,11 @@ int CIRCFrame::FindInList(CString strName, int nList, int nTab)
 	return -1;
 }
 
-CString CIRCFrame::GetTextFromRichPoint()
+CString CIRCFrame::GetTextFromRichPoint() const
 {
-	CRect rc, rc2;
 	CPoint point;
 	GetCursorPos( &point );
-	m_wndView.GetWindowRect ( &rc2 );
-	ScreenToClient( &rc2 );
-	rc.left = point.x ;
-	rc.top = point.y ;
-	ScreenToClient( &rc );
-	point.x = rc.left - rc2.left;
-	point.y = rc.top - rc2.top;
-	RICHPOSITION rp = m_wndView.PointToPosition( point );
-
-	if ( rp.nFragment != -1 )
-	{
-		CRichFragment* pFragment = (CRichFragment*)m_wndView.m_pFragments.GetAt( rp.nFragment );
-		CString strText = pFragment->m_pElement->m_sText;
-		if ( rp.nOffset == 0 ) rp.nOffset++;
-		CString strTemp = strText.Mid( 0, rp.nOffset );
-		if ( strText.IsEmpty() ) return "";
-		if ( strText.Mid( rp.nOffset, 1 ) == " " ) return "";
-		int nLength  = strText.GetLength();
-		int nStart   = strTemp.ReverseFind( ' ' );
-		int nEnd     = strText.Find( ' ', rp.nOffset );
-		INT_PTR nFragCnt = m_wndView.m_pFragments.GetCount();
-		strTemp = strTemp.Mid( nStart == -1 ? 0 : nStart + 1 );
-		if ( nEnd == -1 ) 
-			strTemp += strText.Mid( rp.nOffset );
-		else
-			strTemp += strText.Mid( rp.nOffset, nEnd - rp.nOffset );
-		int nFrag = rp.nFragment - 1;
-		while ( nStart == -1 && nFrag != -1 ) 
-		{
-			if ( strTemp[ 0 ] != _T('\x200D') ) break;
-			pFragment = (CRichFragment*)m_wndView.m_pFragments.GetAt( nFrag );
-			strText = pFragment->m_pElement->m_sText;
-			if ( strText.IsEmpty() ) break;
-			strTemp = strTemp.Mid( 1 );
-			nStart  = strText.ReverseFind( ' ' );
-			strTemp = strText.Mid( nStart == -1 ? 0 : nStart + 1 ) + strTemp;
-			nFrag--;
-		}
-		nFrag = rp.nFragment + 1;
-		while ( ( nEnd == -1 || nEnd == nLength - 1 ) && nFragCnt != nFrag ) 
-		{
-			pFragment = (CRichFragment*)m_wndView.m_pFragments.GetAt( nFrag );
-			strText = pFragment->m_pElement->m_sText;
-			if ( strText.IsEmpty() ) break;
-			if ( strText[ 0 ] != _T('\x200D') ) break;
-			strText = strText.Mid( 1 );
-			nEnd  = strText.Find( ' ' );
-			strTemp += strText.Mid( nEnd == -1 ? 0 : nEnd );
-			nFrag++;
-		}
-		if ( strTemp.GetLength() < 1 ) return "";
-		if ( ( strTemp.Left( 1 ) == "<" && strTemp.Right( 1 ) == ">" ) ||
-			 ( strTemp.Left( 1 ) == "-" && strTemp.Right( 1 ) == "-" ) )
-			strTemp = strTemp.Mid( 1, strTemp.GetLength() - 2 );
-		return strTemp;
-	}
-	return "";
+	return m_wndView.GetWordFromPoint( point, _T(" \r\n\t <>[](){}`\'\"!,;*") );
 }
 
 void CIRCFrame::UserListDblClick()
@@ -2448,271 +2292,6 @@ int CIRCFrame::IsUserInList(CString strUser) const
 	return -1;
 }
 
-BEGIN_MESSAGE_MAP(CIRCTabCtrl, CTabCtrl)
-	ON_WM_CREATE()
-//	ON_WM_ERASEBKGND()
-END_MESSAGE_MAP()
-
-CIRCTabCtrl::CIRCTabCtrl()
-	: m_hTheme( NULL )
-{
-}
-
-CIRCTabCtrl::~CIRCTabCtrl()
-{
-	if ( m_hTheme && theApp.m_pfnCloseThemeData )
-		theApp.m_pfnCloseThemeData( m_hTheme );
-}
-
-int CIRCTabCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
-{
-	if ( CTabCtrl::OnCreate( lpCreateStruct ) == -1 )
-		return -1;
-
-	if ( theApp.m_pfnOpenThemeData )
-		m_hTheme = theApp.m_pfnOpenThemeData( m_hWnd, L"Tab" );
-
-	return 0;
-}
-
-/*
-BOOL CIRCTabCtrl::OnEraseBkgnd(CDC* pDC)
-{
-	CRect rect;
-	COLORREF m_cBorder = Settings.IRC.Colors[ ID_COLOR_TABS ];
-	CBrush cbr = m_cBorder;
-	pDC->GetWindow()->GetWindowRect( &rect );
-	pDC->GetWindow()->ScreenToClient( &rect );
-	pDC->SetBkMode( OPAQUE );
-	pDC->SetBkColor( m_cBorder );
-	pDC->FillRect( &rect, &cbr );
-	return TRUE;
-}
-*/
-
-HRESULT CIRCTabCtrl::DrawThemesPart(HDC dc, int nPartID, int nStateID, LPRECT prcBox)
-{
-	HRESULT hr = E_FAIL;
-	if ( m_hTheme != NULL &&
-		 theApp.m_pfnIsThemeActive && theApp.m_pfnIsThemeActive() &&
-		 theApp.m_pfnDrawThemeBackground )
-	{
-		hr = theApp.m_pfnDrawThemeBackground( m_hTheme, dc, nPartID, nStateID, prcBox, NULL );
-	}
-	return hr;
-}
-
-void CIRCTabCtrl::DrawXPTabItem(HDC dc, int nItem, const RECT& rcItem, UINT flags)
-{
-	if ( m_hTheme == NULL ||
-		 theApp.m_pfnIsThemeActive == NULL || ! theApp.m_pfnIsThemeActive() ||
-		 theApp.m_pfnDrawThemeBackground == NULL )
-	{
-		COLORREF m_cBack = CoolInterface.m_crBackNormal;
-		COLORREF m_cBorder = CoolInterface.m_crSysBtnFace;
-		COLORREF m_cShadow = CoolInterface.m_crSys3DShadow;
-		CBrush cback = m_cBack;
-		CBrush cbr = m_cBorder;
-		CBrush cbsh = m_cShadow;
-		int oldMode = SetBkMode( dc, OPAQUE );
-		SetBkColor( dc, m_cBorder );
-		RECT rc = rcItem;
-		FillRect( dc, &rc, (HBRUSH)cback.m_hObject );
-		rc.left += 2;
-		rc.top += 2;
-		FillRect( dc, &rc, (HBRUSH)cbsh.m_hObject );
-		rc.right -= 2;
-		FillRect( dc, &rc, (HBRUSH)cbr.m_hObject );
-		SetTextColor( dc, GetTabColor( nItem ) );
-
-		TC_ITEM tci = { TCIF_TEXT | TCIF_IMAGE };
-		TCHAR pszBuffer[ 128 + 4 ] = {};
-		tci.pszText = pszBuffer;
-		tci.cchTextMax = 127;
-		if ( !TabCtrl_GetItem( m_hWnd, nItem, &tci ) ) return;
-		HFONT oldFont = (HFONT)SelectObject( dc, (HFONT)SendMessage( WM_GETFONT, 0, 0 ) );
-		DrawText( dc, pszBuffer, (int)_tcslen( pszBuffer ), &rc, DT_SINGLELINE | DT_VCENTER | DT_CENTER );
-		SelectObject( dc, oldFont );
-		SetBkMode( dc, oldMode );
-		return;
-	}
-
-	BOOL bBody		= flags & paintBody;
-	BOOL bSel		= flags & paintSelected;
-	BOOL bHot		= flags & paintHotTrack;
-
-	int nWidth = rcItem.right - rcItem.left;
-	INT nHeight = rcItem.bottom - rcItem.top;
-
-	// Draw the background
-	HDC dcMem = CreateCompatibleDC( dc );
-	HBITMAP bmpMem = CreateCompatibleBitmap( dc, nWidth, nHeight );
-	ASSERT( dcMem != NULL );
-	ASSERT( bmpMem != NULL );
-
-	HBITMAP oldBmp = (HBITMAP)SelectObject( dcMem, bmpMem );
-	RECT rcMem;
-	SetRect( &rcMem, 0, 0, nWidth, nHeight );
-
-	if ( bSel ) rcMem.bottom += 1;
-
-	// TABP_PANE = 9, 0, "TAB"
-	// TABP_TABITEM = 1, TIS_SELECTED = 3 : TIS_HOT = 2 : TIS_NORMAL = 1, "TAB"
-	if ( bBody )
-		DrawThemesPart( dcMem, 9, 0, &rcMem );
-	else
-		DrawThemesPart( dcMem, 1, bSel ? 3 : ( bHot ? 2 : 1 ), &rcMem );
-
-	BITMAPINFO bmiOut = {};
-	BITMAPINFOHEADER& bmihOut = bmiOut.bmiHeader;
-	bmihOut.biSize = sizeof( BITMAPINFOHEADER );
-	bmihOut.biCompression = BI_RGB;
-	bmihOut.biPlanes = 1;
-	bmihOut.biBitCount = 24;
-	bmihOut.biWidth = nWidth;
-	bmihOut.biHeight = nHeight;
-
-	if ( nItem >= 0 )
-	{
-		if ( bSel )
-			rcMem.bottom -= 1;
-		DrawTabItem( dcMem, nItem, rcMem, flags );
-	}
-
-	// Blit image to the screen.
-	BitBlt( dc, rcItem.left, rcItem.top, nWidth, nHeight, dcMem, 0, 0, SRCCOPY );
-	SelectObject( dcMem, oldBmp );
-
-	DeleteObject( bmpMem );
-	DeleteDC( dcMem );
-}
-
-void CIRCTabCtrl::DrawTabItem(HDC dc, int nItem, const RECT& rcItem, UINT flags)
-{
-	TCHAR pszBuffer[ 128 + 4 ] = {};
-
-	TC_ITEM item = { TCIF_TEXT | TCIF_IMAGE };
-	item.pszText = pszBuffer;
-	item.cchTextMax = 127;
-	TabCtrl_GetItem( m_hWnd, nItem, &item );
-
-	BOOL bSel = flags & paintSelected;
-
-	RECT rc = rcItem;
-	rc.bottom -= ( bSel ? 1 : 2 );
-	rc.left += 6;	// Text & icon.
-	rc.top += 2 + ( bSel ? 1 : 3 );
-
-	int oldMode = SetBkMode( dc, TRANSPARENT );
-	HIMAGELIST imageList = (HIMAGELIST)TabCtrl_GetImageList( m_hWnd );
-	if ( imageList && item.iImage >= 0 )
-	{
-		ImageList_Draw( imageList, item.iImage, dc,
-			rc.left + ( bSel ? 2 : 0 ),
-			rc.top + ( bSel ? 0 : -2 ), ILD_TRANSPARENT );
-		rc.left += 19;
-	}
-	else
-		OffsetRect( &rc, -2, 2 );
-
-	int nLen = (int)_tcslen( pszBuffer );
-	if ( nLen > 0 )
-	{
-		HFONT oldFont = (HFONT)SelectObject( dc, (HFONT)SendMessage( WM_GETFONT, 0, 0 ) );
-		rc.right -= 3;
-		RECT r;
-		SetRect( &r, 0, 0, rc.right - rc.left, 20 );
-
-		SetTextColor( dc, GetTabColor( nItem ) );
-		DrawText( dc, pszBuffer, nLen, &r, DT_CALCRECT | DT_SINGLELINE | DT_MODIFYSTRING | DT_END_ELLIPSIS );
-
-		DrawText( dc, pszBuffer, nLen, &rc, DT_NOPREFIX | DT_CENTER );
-		SelectObject( dc, oldFont );
-	}
-	SetBkMode( dc, oldMode );
-}
-
-void CIRCTabCtrl::SetTabColor(int nItem, COLORREF cRGB)
-{
-	TC_ITEM tci = { TCIF_PARAM };
-	tci.lParam = cRGB;
-	SetItem( nItem, &tci );
-	RedrawWindow();
-}
-
-COLORREF CIRCTabCtrl::GetTabColor(int nItem)
-{
-	TC_ITEM tci = { TCIF_PARAM };
-	GetItem( nItem, &tci );
-	return tci.lParam;
-}
-
-BOOL CIRCTabCtrl::PreTranslateMessage(MSG* pMsg)
-{
-	if ( pMsg->message == WM_THEMECHANGED )
-	{
-		if ( m_hTheme && theApp.m_pfnCloseThemeData )
-			theApp.m_pfnCloseThemeData( m_hTheme );
-
-		if ( theApp.m_pfnOpenThemeData )
-			m_hTheme = theApp.m_pfnOpenThemeData( m_hWnd, L"Tab" );
-
-		return TRUE;
-	}
-
-	return CTabCtrl::PreTranslateMessage(pMsg);
-}
-
-LRESULT CIRCTabCtrl::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
-{
-	if ( message == WM_PAINT )
-	{
-		PAINTSTRUCT ps = {};
-		if ( CDC* pDC = BeginPaint( &ps ) ) 
-		{
-			DrawTabControl( pDC );
-		}
-		EndPaint( &ps );
-		return 0;
-	} 
-
-	return CTabCtrl::WindowProc(message, wParam, lParam);
-}
-
-void CIRCTabCtrl::DrawTabControl(CDC* pDC)
-{
-	// Paint the tab body.
-	RECT rcPage, rcItem, rcClient;
-	GetClientRect( &rcClient );
-	rcPage = rcClient;
-	TabCtrl_AdjustRect( m_hWnd, FALSE, &rcPage );
-	rcClient.top = rcPage.top - 2;
-
-	DrawXPTabItem( pDC->m_hDC, -1, rcClient, paintBody );
-
-	int tabCount = TabCtrl_GetItemCount( m_hWnd );
-	if( tabCount == 0 ) return;
-
-	// Now paint inactive tabs.
-	TCHITTESTINFO hti = {};
-	GetCursorPos( &hti.pt );
-	ScreenToClient( &hti.pt );
-	int nHot = TabCtrl_HitTest( m_hWnd, &hti );
-	int nSel = TabCtrl_GetCurSel( m_hWnd );
-
-	for ( int nTab = 0; nTab < tabCount; nTab++ )
-	{
-		if ( nTab == nSel ) continue;
-		TabCtrl_GetItemRect( m_hWnd, nTab, &rcItem );
-		DrawXPTabItem( pDC->m_hDC, nTab, rcItem, nTab == nHot ? paintHotTrack : paintNone );
-	}
-
-	// Now paint the active selected tab.
-	TabCtrl_GetItemRect( m_hWnd, nSel, &rcItem );
-	InflateRect( &rcItem, 2, 2 );
-	rcItem.bottom -= 1;
-	DrawXPTabItem( pDC->m_hDC, nSel, rcItem, paintSelected );
-}
 
 CIRCChannelList::CIRCChannelList()
 	: m_nCountUserDefined( 0 )
