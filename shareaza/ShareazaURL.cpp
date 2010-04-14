@@ -1,7 +1,7 @@
 //
 // ShareazaURL.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -41,66 +41,52 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CShareazaURL construction
 
-CShareazaURL::CShareazaURL()
-{
-	m_pTorrent = NULL;
-	Clear();
-}
-
 CShareazaURL::CShareazaURL(LPCTSTR pszURL)
+	: m_nProtocol		( PROTOCOL_NULL )
+	, m_nAction			( uriNull )
+	, m_pTorrent		( NULL )
+	, m_pAddress		(  )
+	, m_nPort			( 0 )
+	, m_pServerAddress	(  )
+	, m_nServerPort		( 0 )
+	, m_bSize			( FALSE )
 {
-	m_pTorrent = NULL;
-	Clear();
 	if ( pszURL != NULL ) Parse( pszURL );
 }
 
 CShareazaURL::CShareazaURL(CBTInfo* pTorrent)
+	: CShareazaFile( static_cast< const CShareazaFile& >( *pTorrent ) )
+	, m_nProtocol		( PROTOCOL_NULL )
+	, m_nAction			( uriDownload )
+	, m_pTorrent		( pTorrent )
+	, m_pAddress		(  )
+	, m_nPort			( 0 )
+	, m_pServerAddress	(  )
+	, m_nServerPort		( 0 )
+	, m_bSize			( TRUE )
 {
-	m_pTorrent = NULL;
-	Clear();
-	m_nAction	= uriDownload;
-	m_pTorrent	= pTorrent;
-	m_oMD5		= pTorrent->m_oMD5;
-	m_oBTH		= pTorrent->m_oBTH;
-	m_oSHA1     = pTorrent->m_oSHA1;
-	m_oED2K		= pTorrent->m_oED2K;
-	m_oTiger	= pTorrent->m_oTiger;
-	m_sName		= pTorrent->m_sName;
-	m_bSize		= TRUE;
-	m_nSize		= pTorrent->m_nSize;
 }
 
 CShareazaURL::CShareazaURL(const CShareazaURL& pURL)
+	: CShareazaFile( static_cast< const CShareazaFile& >( pURL ) )
+	, m_nProtocol		( pURL.m_nProtocol )
+	, m_nAction			( pURL.m_nAction )
+	, m_pTorrent		( pURL.m_pTorrent )
+	, m_sAddress		( pURL.m_sAddress )
+	, m_pAddress		( pURL.m_pAddress )
+	, m_nPort			( pURL.m_nPort )
+	, m_pServerAddress	( pURL.m_pServerAddress )
+	, m_nServerPort		( pURL.m_nServerPort )
+	, m_bSize			( pURL.m_bSize )
+	, m_sLogin			( pURL.m_sLogin )
+	, m_sPassword		( pURL.m_sPassword )
+	, m_oBTC			( pURL.m_oBTC )
 {
-	// CShareazaFile
-	m_sName					= pURL.m_sName;
-	m_nSize					= pURL.m_nSize;
-	m_oSHA1					= pURL.m_oSHA1;
-	m_oTiger				= pURL.m_oTiger;
-	m_oED2K					= pURL.m_oED2K;
-	m_oBTH					= pURL.m_oBTH;
-	m_oMD5					= pURL.m_oMD5;
-	m_sPath					= pURL.m_sPath;
-	m_sURL					= pURL.m_sURL;
-
-	// CShareazaURL
-	m_nProtocol				= pURL.m_nProtocol;
-	m_nAction				= pURL.m_nAction;
-	m_pTorrent				= pURL.m_pTorrent;
-	m_sAddress				= pURL.m_sAddress;
-	m_pAddress.s_addr		= pURL.m_pAddress.s_addr;
-	m_nPort					= pURL.m_nPort;
-	m_pServerAddress.s_addr	= pURL.m_pServerAddress.s_addr;
-	m_nServerPort			= pURL.m_nServerPort;
-	m_bSize					= pURL.m_bSize;
-	m_sLogin				= pURL.m_sLogin;
-	m_sPassword				= pURL.m_sPassword;
-	m_oBTC					= pURL.m_oBTC;
 }
 
 CShareazaURL::~CShareazaURL()
 {
-	Clear();
+	delete m_pTorrent;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -122,11 +108,11 @@ void CShareazaURL::Clear()
 	// CShareazaURL
 	m_nProtocol				= PROTOCOL_NULL;
 	m_nAction				= uriNull;
-	if ( m_pTorrent ) delete m_pTorrent;
+	delete m_pTorrent;
 	m_pTorrent				= NULL;
 	m_sAddress.Empty();
 	m_pAddress.s_addr		= 0;
-	m_nPort					= 0; // GNUTELLA_DEFAULT_PORT
+	m_nPort					= 0;
 	m_pServerAddress.s_addr = 0;
 	m_nServerPort			= 0;
 	m_bSize					= FALSE;
