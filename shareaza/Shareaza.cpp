@@ -2573,7 +2573,8 @@ bool ResourceRequest(const CString& strPath, CBuffer& pResponse, CString& sHeade
 bool MarkFileAsDownload(const CString& sFilename)
 {
 	LPCTSTR pszExt = PathFindExtension( (LPCTSTR)sFilename );
-	if ( pszExt == NULL ) return false;
+	if ( !pszExt )
+		return false;
 
 	bool bSuccess = false;
 
@@ -2591,15 +2592,34 @@ bool MarkFileAsDownload(const CString& sFilename)
 		if ( dwOrigAttr != INVALID_FILE_ATTRIBUTES && ( dwOrigAttr & FILE_ATTRIBUTE_READONLY ) )
 			bChanged = SetFileAttributes( sFilename, dwOrigAttr & ~FILE_ATTRIBUTE_READONLY );
 
-		HANDLE hFile = CreateFile( sFilename + _T(":Zone.Identifier"),
-			GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
-			NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL );
-		if ( hFile != INVALID_HANDLE_VALUE )
+		HANDLE hStream = CreateFile( sFilename + _T(":Zone.Identifier"),
+			GENERIC_WRITE,
+			FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, NULL,
+			OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
+
+		if ( hStream == INVALID_HANDLE_VALUE )
+		{
+			HANDLE hFile = CreateFile( sFilename, GENERIC_WRITE,
+				FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, NULL,
+				OPEN_EXISTING,
+				FILE_ATTRIBUTE_NORMAL | FILE_FLAG_BACKUP_SEMANTICS, NULL );
+
+			if ( hFile != INVALID_HANDLE_VALUE )
+			{
+				hStream = CreateFile( sFilename + _T(":Zone.Identifier"),
+					GENERIC_WRITE,
+					FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
+					NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL );
+				CloseHandle( hFile );
+			}
+		}
+
+		if ( hStream != INVALID_HANDLE_VALUE )
 		{
 			DWORD dwWritten = 0;
-			bSuccess = ( WriteFile( hFile, "[ZoneTransfer]\r\nZoneID=3\r\n", 26,
+			bSuccess = ( WriteFile( hStream, "[ZoneTransfer]\r\nZoneID=3\r\n", 26,
 				&dwWritten, NULL ) && dwWritten == 26 );
-			CloseHandle( hFile );
+			CloseHandle( hStream );
 		}
 		else
 			TRACE( "MarkFileAsDownload() : CreateFile \"%s\" error %d\n", sFilename, GetLastError() );
@@ -2622,7 +2642,7 @@ bool LoadGUID(const CString& sFilename, Hashes::Guid& oGUID)
 		{
 			Hashes::Guid oTmpGUID;
 			DWORD dwReaded = 0;
-			bSuccess = ( ReadFile( hFile, oTmpGUID.begin(), oTmpGUID.byteCount,
+			bSuccess = ( ReadFile( hFile, &*oTmpGUID.begin(), oTmpGUID.byteCount,
 				&dwReaded, NULL ) && dwReaded == oTmpGUID.byteCount );
 			if ( bSuccess )
 			{
@@ -2646,15 +2666,34 @@ bool SaveGUID(const CString& sFilename, const Hashes::Guid& oGUID)
 		if ( dwOrigAttr != 0xffffffff && ( dwOrigAttr & FILE_ATTRIBUTE_READONLY ) )
 			bChanged = SetFileAttributes( sFilename, dwOrigAttr & ~FILE_ATTRIBUTE_READONLY );
 
-		HANDLE hFile = CreateFile( sFilename + _T(":Shareaza.GUID"),
-			GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
-			NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL );
-		if ( hFile != INVALID_HANDLE_VALUE )
+		HANDLE hStream = CreateFile( sFilename + _T(":Shareaza.GUID"),
+			GENERIC_WRITE,
+			FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, NULL,
+			OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
+
+		if ( hStream == INVALID_HANDLE_VALUE )
+		{
+			HANDLE hFile = CreateFile( sFilename, GENERIC_WRITE,
+				FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, NULL,
+				OPEN_EXISTING,
+				FILE_ATTRIBUTE_NORMAL | FILE_FLAG_BACKUP_SEMANTICS, NULL );
+
+			if ( hFile != INVALID_HANDLE_VALUE )
+			{
+				hStream = CreateFile( sFilename + _T(":Shareaza.GUID"),
+					GENERIC_WRITE,
+					FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
+					NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL );
+				CloseHandle( hFile );
+			}
+		}
+
+		if ( hStream != INVALID_HANDLE_VALUE )
 		{
 			DWORD dwWritten = 0;
-			bSuccess = ( WriteFile( hFile, oGUID.begin(), oGUID.byteCount,
+			bSuccess = ( WriteFile( hStream, &*oGUID.begin(), oGUID.byteCount,
 				&dwWritten, NULL ) && dwWritten == oGUID.byteCount );
-			CloseHandle( hFile );
+			CloseHandle( hStream );
 		}
 
 		if ( bChanged )
