@@ -1,7 +1,7 @@
 //
 // AlbumFolder.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -332,13 +332,7 @@ void CAlbumFolder::OnFileDelete(CLibraryFile* pFile, BOOL bDeleteGhost)
 		return;
 	}
 
-	if ( POSITION pos = m_pFiles.Find( pFile ) )
-	{
-		m_pFiles.RemoveAt( pos );
-		m_nUpdateCookie++;
-		Library.Update();
-		Delete( TRUE );
-	}
+	RemoveFile( pFile );
 }
 
 CAlbumFolder* CAlbumFolder::FindFile(CLibraryFile* pFile)

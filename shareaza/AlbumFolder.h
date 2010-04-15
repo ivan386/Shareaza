@@ -1,7 +1,7 @@
 //
 // AlbumFolder.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -30,7 +30,7 @@ class CSchemaMember;
 class CXMLElement;
 
 
-class CAlbumFolder : boost::noncopyable
+class CAlbumFolder : private boost::noncopyable
 {
 // Construction
 public:
