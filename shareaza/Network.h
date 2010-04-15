@@ -54,6 +54,7 @@ public:
 	CMutexEx		m_pSection;
 	SOCKADDR_IN		m_pHost;				// Structure (Windows Sockets) which holds address of the local machine
 	BOOL			m_bAutoConnect;
+	volatile bool	m_bConnected;			// Network has finished initialising and is connected
 	DWORD			m_tStartedConnecting;	// The time Shareaza started trying to connect
 	DWORD			m_tLastConnect;			// The last time a neighbour connection attempt was made
 	DWORD			m_tLastED2KServerHop;	// The last time the ed2k server was changed
@@ -94,9 +95,9 @@ protected:
 	void		ClearResolve();
 
 	// Restore WinINet connection to Internet
-	void		InternetConnect();
+	bool		InternetConnect();
 
-	BOOL		PreRun();
+	bool		PreRun();
 	void		OnRun();
 	void		PostRun();
 
@@ -107,7 +108,7 @@ protected:
 public:
 	BOOL		IsSelfIP(const IN_ADDR& nAddress) const;
 	bool		IsAvailable() const;
-	bool		IsConnected() const throw();
+	bool		IsConnected() const;
 	bool		IsListening() const;
 	bool		IsWellConnected() const;
 	bool		IsStable() const;

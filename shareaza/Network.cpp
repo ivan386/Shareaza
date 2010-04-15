@@ -67,6 +67,7 @@ CNetwork::CNetwork() :
 	QueryRoute				( new CRouteCache() ),
 	QueryKeys				( new CQueryKeys() ),
 	m_bAutoConnect			( FALSE ),
+	m_bConnected			( false ),
 	m_tStartedConnecting	( 0 ),
 	m_tLastConnect			( 0 ),
 	m_tLastED2KServerHop	( 0 ),
@@ -109,16 +110,18 @@ BOOL CNetwork::IsSelfIP(const IN_ADDR& nAddress) const
 	return ( m_pHostAddresses.Find( nAddress.s_addr ) != NULL );
 }
 
-void CNetwork::InternetConnect()
+bool CNetwork::InternetConnect()
 {
 	__try
 	{
-		InternetAttemptConnect( 0 );
+		return ( InternetAttemptConnect( 0 ) == ERROR_SUCCESS );
 	}
 	__except( EXCEPTION_EXECUTE_HANDLER )
 	{
 		// Something blocked WinAPI (for example application level firewall)
 	}
+
+	return false;
 }
 
 bool CNetwork::IsAvailable() const
@@ -141,9 +144,9 @@ bool CNetwork::IsAvailable() const
 	return false;
 }
 
-bool CNetwork::IsConnected() const throw()
+bool CNetwork::IsConnected() const
 {
-	return IsThreadAlive();
+	return m_bConnected;
 }
 
 bool CNetwork::IsListening() const
@@ -210,7 +213,7 @@ BOOL CNetwork::IsConnectedTo(const IN_ADDR* pAddress) const
 
 BOOL CNetwork::ReadyToTransfer(DWORD tNow) const
 {
-	if ( ! IsConnected() )
+	if ( !IsConnected() )
 		return FALSE;
 
 	// If a connection isn't needed for transfers, we can start any time
@@ -260,14 +263,14 @@ void CNetwork::Disconnect()
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 
-	if ( ! IsConnected() ) return;
+	if ( !IsConnected() )
+		return;
 
 	theApp.Message( MSG_INFO, _T("") );
 	theApp.Message( MSG_NOTICE, IDS_NETWORK_DISCONNECTING );
 
 	m_bAutoConnect			= FALSE;
 	m_tStartedConnecting	= 0;
-
 
 	pLock.Unlock();
 
@@ -547,7 +550,7 @@ WORD CNetwork::RandomPort() const
 //////////////////////////////////////////////////////////////////////
 // CNetwork thread run
 
-BOOL CNetwork::PreRun()
+bool CNetwork::PreRun()
 {
 	CQuickLock oLock( m_pSection );
 
@@ -565,7 +568,13 @@ BOOL CNetwork::PreRun()
 		InternetCloseHandle( hInternet );
 	}
 
-	InternetConnect();
+	if ( !InternetConnect() )
+	{
+		theApp.Message( MSG_ERROR, _T("Internet connection attempt failed.") );
+		return false;
+	}
+
+	m_bConnected = true;
 
 	gethostname( m_sHostName.GetBuffer( 255 ), 255 );
 	m_sHostName.ReleaseBuffer();
@@ -599,7 +608,7 @@ BOOL CNetwork::PreRun()
 	if ( ! Handshakes.Listen() || ! Datagrams.Listen() )
 	{
 		theApp.Message( MSG_ERROR, _T("The connection process is failed.") );
-		return FALSE;
+		return false;
 	}
 
 	Neighbours.Connect();
@@ -613,7 +622,7 @@ BOOL CNetwork::PreRun()
 	// It will check if it is needed inside the function
 	DiscoveryServices.Execute( TRUE, PROTOCOL_NULL, FALSE );
 
-	return TRUE;
+	return true;
 }
 
 void CNetwork::OnRun()
@@ -658,6 +667,8 @@ void CNetwork::PostRun()
 {
 	CQuickLock oLock( m_pSection );
 
+	m_bConnected = false;
+
 	Neighbours.Close();
 	Handshakes.Disconnect();
 
@@ -691,7 +702,8 @@ void CNetwork::OnWinsock(WPARAM wParam, LPARAM lParam)
 	if ( ! pResolve.get() )
 		return;
 
-	CQuickLock oLock( m_pSection );
+	CQuickLock oNetworkLock( m_pSection );
+
 	CString strAddress;
 	CDiscoveryService* pService;
 
