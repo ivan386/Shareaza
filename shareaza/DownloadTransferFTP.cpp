@@ -1,7 +1,7 @@
 //
 // DownloadTransferFTP.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -206,8 +206,11 @@ BOOL CDownloadTransferFTP::OnConnected()
 
 BOOL CDownloadTransferFTP::StartNextFragment()
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	ASSERT( this != NULL );
-	if ( this == NULL ) return FALSE;
+	if ( this == NULL )
+		return FALSE;
 
 	m_nOffset			= SIZE_UNKNOWN;
 	m_nPosition			= 0;
@@ -247,8 +250,8 @@ BOOL CDownloadTransferFTP::StartNextFragment()
 	}
 	else
 	{
-		if ( m_pSource != NULL )
-			m_pSource->SetAvailableRanges( NULL );		
+		if ( m_pSource )
+			m_pSource->SetAvailableRanges( NULL );
 		theApp.Message( MSG_INFO, IDS_DOWNLOAD_FRAGMENT_END, (LPCTSTR)m_sAddress );
 		Close();
 		return FALSE;

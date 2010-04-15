@@ -784,13 +784,15 @@ BOOL CDownloadTransferED2K::SendSecondaryRequest()
 
 bool CDownloadTransferED2K::SendFragmentRequests()
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	ASSERT( m_pClient != NULL );
 
 	if ( m_nState != dtsDownloading )
-		return TRUE;
+		return true;
 
 	if ( m_oRequested.size() >= (int)Settings.eDonkey.RequestPipe )
-		return TRUE;
+		return true;
 
 	Fragments::List oPossible( m_pDownload->GetEmptyFragmentList() );
 
@@ -810,13 +812,13 @@ bool CDownloadTransferED2K::SendFragmentRequests()
 	}
 
 	typedef std::map<QWORD ,Fragments::Fragment> _TRequest;
-	typedef  _TRequest::iterator _TRequestIndex;
-	_TRequest	oRequesting;
+	typedef _TRequest::iterator _TRequestIndex;
+	_TRequest oRequesting;
 	while ( m_oRequested.size() < (int)Settings.eDonkey.RequestPipe )
 	{
 		QWORD nOffset, nLength;
 
-		if ( SelectFragment( oPossible, nOffset, nLength ) )
+		if ( SelectFragment( oPossible, nOffset, nLength, m_pDownload->m_bTorrentEndgame ) )
 		{
 			ChunkifyRequest( &nOffset, &nLength, Settings.eDonkey.RequestSize, FALSE );
 
@@ -911,30 +913,31 @@ bool CDownloadTransferED2K::SendFragmentRequests()
 			theApp.Message( (WORD)nType, IDS_DOWNLOAD_FRAGMENT_REQUEST,
 				nOffsetBegin[nCount], nOffsetEnd[nCount],
 				(LPCTSTR)m_pDownload->GetDisplayName(), (LPCTSTR)m_sAddress );
-		} 
+		}
 	}
 
 	// If there are no more possible chunks to request, and endgame is available but not active
 	if ( oPossible.empty() && Settings.eDonkey.Endgame && ! m_pDownload->m_bTorrentEndgame )
 	{
 		// And the file is at least 100MB, with less than 1MB to go
-		if ( ( m_pDownload->GetVolumeComplete() > 100*1024*1024 ) && 
+		if ( ( m_pDownload->GetVolumeComplete() > 100*1024*1024 ) &&
 			 ( m_pDownload->GetVolumeRemaining() <  1*1024*1024 ) )
 		{
 			// Then activate endgame
-			m_pDownload->m_bTorrentEndgame = TRUE;
+			m_pDownload->m_bTorrentEndgame = true;
 			theApp.Message( MSG_DEBUG, _T("Activating endgame for ed2k transfer %s"), m_pDownload->m_sName );
 		}
 	}
 
-	if ( !m_oRequested.empty() ) return TRUE;
-	
+	if ( !m_oRequested.empty() )
+		return true;
+
 	Send( CEDPacket::New( ED2K_C2C_QUEUERELEASE ) );
-	
+
 	theApp.Message( MSG_INFO, IDS_DOWNLOAD_FRAGMENT_END, (LPCTSTR)m_sAddress );
 	Close( TRI_TRUE );
-	
-	return FALSE;
+
+	return false;
 }
 
 void CDownloadTransferED2K::ClearRequests()

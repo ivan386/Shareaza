@@ -53,7 +53,7 @@ CDownloadWithTorrent::CDownloadWithTorrent() :
 ,	m_tTorrentTracker		( 0 )
 ,	m_nTorrentUploaded		( 0 )
 ,	m_nTorrentDownloaded	( 0 )
-,	m_bTorrentEndgame		( FALSE )
+,	m_bTorrentEndgame		( false )
 ,	m_bTorrentTrackerError	( FALSE )
 
 ,	m_pTorrentBlock			( NULL )

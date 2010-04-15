@@ -452,12 +452,17 @@ BOOL CDownloadTransferBT::OnUnchoked(CBTPacket* /*pPacket*/)
 
 bool CDownloadTransferBT::SendFragmentRequests()
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	ASSERT( m_nState == dtsTorrent || m_nState == dtsRequesting || m_nState == dtsDownloading );
 	if ( m_bChoked || ! m_bInterested )
 	{
-		if ( m_oRequested.empty() ) SetState( dtsTorrent );
-		return TRUE;
+		if ( m_oRequested.empty() )
+			SetState( dtsTorrent );
+
+		return true;
 	}
+
 	if ( m_oRequested.size() >= (int)Settings.BitTorrent.RequestPipe )
 	{
 		if ( m_nState != dtsDownloading ) 
@@ -465,14 +470,17 @@ bool CDownloadTransferBT::SendFragmentRequests()
 			theApp.Message( MSG_DEBUG, L"Too many requests per host, staying in the requested state" );
 			SetState( dtsRequesting );
 		}
-		return TRUE;
+
+		return true;
 	}
+
 	QWORD nBlockSize = m_pDownload->m_pTorrent.m_nBlockSize;
 	ASSERT( nBlockSize != 0 );
-	if ( nBlockSize == 0 ) return TRUE;
-	
+	if ( !nBlockSize )
+		return true;
+
 	Fragments::List oPossible( m_pDownload->GetWantedFragmentList() );
-	
+
 	if ( ! m_pDownload->m_bTorrentEndgame )
 	{
 		for ( CDownloadTransfer* pTransfer = m_pDownload->GetFirstTransfer() ; pTransfer && !oPossible.empty() ; pTransfer = pTransfer->m_pDlNext )
@@ -480,22 +488,24 @@ bool CDownloadTransferBT::SendFragmentRequests()
 			pTransfer->SubtractRequested( oPossible );
 		}
 	}
+
 	while ( m_oRequested.size() < (int)Settings.BitTorrent.RequestPipe )
 	{
 		QWORD nOffset, nLength;
-		if ( SelectFragment( oPossible, nOffset, nLength ) )
+		if ( SelectFragment( oPossible, nOffset, nLength, m_pDownload->m_bTorrentEndgame ) )
 		{
 			ChunkifyRequest( &nOffset, &nLength, Settings.BitTorrent.RequestSize, FALSE );
-			
+
 			Fragments::Fragment Selected( nOffset, nOffset + nLength );
 			oPossible.erase( Selected );
-			
+
 			m_oRequested.push_back( Selected );
-			
+
 			if ( m_nDownloaded == 0 || ( nOffset % nBlockSize ) == 0 )
 				theApp.Message( MSG_INFO, IDS_DOWNLOAD_FRAGMENT_REQUEST,
 					nOffset, nOffset + nLength - 1,
 					(LPCTSTR)m_pDownload->GetDisplayName(), (LPCTSTR)m_sAddress );
+
 #ifdef _DEBUG
 			DWORD ndBlock1 = (DWORD)( nOffset / nBlockSize );
 			DWORD ndBlock2 = (DWORD)( ( nOffset + nLength - 1 ) / nBlockSize );
@@ -503,6 +513,7 @@ bool CDownloadTransferBT::SendFragmentRequests()
 			ASSERT( ndBlock1 == ndBlock2 );
 			ASSERT( nLength <= nBlockSize );
 #endif
+
 			CBTPacket* pPacket = CBTPacket::New( BT_PACKET_REQUEST );
 			pPacket->WriteLongBE( (DWORD)( nOffset / nBlockSize ) );
 			pPacket->WriteLongBE( (DWORD)( nOffset % nBlockSize ) );
@@ -514,6 +525,7 @@ bool CDownloadTransferBT::SendFragmentRequests()
 			break;
 		}
 	}
+
 	// If there are no more possible chunks to request, and endgame is available but not active
 	if ( oPossible.empty() && Settings.BitTorrent.Endgame && ! m_pDownload->m_bTorrentEndgame )
 	{
@@ -521,19 +533,21 @@ bool CDownloadTransferBT::SendFragmentRequests()
 		if ( m_pDownload->GetProgress() > 95.0f )
 		{
 			// Then activate endgame
-			m_pDownload->m_bTorrentEndgame = TRUE;
+			m_pDownload->m_bTorrentEndgame = true;
 			theApp.Message( MSG_DEBUG, _T("Torrent EndGame mode activated for %s"), m_pDownload->m_sName );
 		}
 	}
-	
+
 	if ( !m_oRequested.empty() && m_nState != dtsDownloading )
 	{
 		theApp.Message( MSG_DEBUG, L"Request for piece sent, switching to the requested state" );
 		SetState( dtsRequesting );
 	}
+
 	if ( m_oRequested.empty() ) 
 		SetState( dtsTorrent );
-	return TRUE;
+
+	return true;
 }
 
 //////////////////////////////////////////////////////////////////////

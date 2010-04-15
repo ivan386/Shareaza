@@ -81,7 +81,7 @@ DWORD CDownloadWithTiger::GetValidationCookie() const
 	return m_nVerifyCookie;
 }
 
-QWORD CDownloadWithTiger::GetVerifyLength(PROTOCOLID nProtocol, int nHash) const
+DWORD CDownloadWithTiger::GetVerifyLength(PROTOCOLID nProtocol, int nHash) const
 {
 	CQuickLock oLock( m_pTigerSection );
 

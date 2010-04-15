@@ -1,7 +1,7 @@
 //
 // DownloadWithTorrent.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -51,7 +51,7 @@ public:
 	CString		m_sTorrentTrackerError;
 	Hashes::BtGuid m_pPeerID;
 	CString		m_sKey;
-	BOOL		m_bTorrentEndgame;
+	bool		m_bTorrentEndgame;
 protected:
 	BOOL		m_bSeeding;
 	DWORD		m_nTorrentBlock;

@@ -28,7 +28,7 @@ class CDownload;
 class CDownloadSource;
 
 
-typedef std::pair< uint64, uint64 >	blockPair;
+typedef std::pair< QWORD, QWORD >	blockPair;
 
 class CDownloadTransfer : public CTransfer
 {
@@ -67,12 +67,12 @@ public:
 	CDownload*			GetDownload() const;	// Get owner download
 	CDownloadSource*	GetSource() const;		// Get associated source
 protected:
-	void				ChunkifyRequest(QWORD* pnOffset, QWORD* pnLength, QWORD nChunk, BOOL bVerifyLock);
-	bool				SelectFragment(const Fragments::List& oPossible, QWORD& nOffset, QWORD& nLength) const;
+	void				ChunkifyRequest(QWORD* pnOffset, QWORD* pnLength, DWORD nChunk, BOOL bVerifyLock);
+	bool				SelectFragment(const Fragments::List& oPossible, QWORD& nOffset, QWORD& nLength, bool bEndGame = false) const;
 private:
-	blockPair			SelectBlock(const Fragments::List& oPossible, const BYTE* pAvailable) const;
-	void				CheckPart(uint64* nPart, uint64 nPartBlock, uint64* nRange, uint64& nRangeBlock, uint64* nBestRange) const;
-	void				CheckRange(uint64* nRange, uint64* nBestRange) const;
+	blockPair			SelectBlock(const Fragments::List& oPossible, const BYTE* pAvailable, bool bEndGame) const;
+	void				CheckPart(QWORD* nPart, DWORD nPartBlock, QWORD* nRange, DWORD& nRangeBlock, QWORD* nBestRange) const;
+	void				CheckRange(QWORD* nRange, QWORD* nBestRange) const;
 
 // Overides
 public:
