@@ -29,4 +29,4 @@ copy /b /y "..\BugTrap\%1\%2\BugTrap.dll" "%1\%2\"
 if "%1" == "x64"   copy /b /y "..\BugTrap\dbghelp-x64.dll" "%1\%2\dbghelp.dll"
 if "%1" == "Win32" copy /b /y "..\BugTrap\dbghelp.dll"     "%1\%2\dbghelp.dll"
 
-cscript.exe //nologo revision.js
+cscript.exe //E:jscript //nologo revision.js
