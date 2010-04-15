@@ -877,7 +877,8 @@ void CDownloadsCtrl::OnPaint()
 		m_bShowSearching = !m_bShowSearching;
 	}
 
-	if ( Settings.General.LanguageRTL ) dc.SetTextAlign( TA_RTLREADING );
+	if ( Settings.General.LanguageRTL )
+		dc.SetTextAlign( TA_RTLREADING );
 
 	GetClientRect( &rcClient );
 	rcClient.top += HEADER_HEIGHT;
@@ -892,26 +893,31 @@ void CDownloadsCtrl::OnPaint()
 	CFont* pfOld	= (CFont*)dc.SelectObject( &CoolInterface.m_fntNormal );
 	BOOL bFocus		= ( GetFocus() == this );
 
-	for ( POSITION posDownload = Downloads.GetIterator() ; posDownload && rcItem.top < rcClient.bottom ; )
+	for ( POSITION posDownload = Downloads.GetIterator() ; posDownload ; )
 	{
 		CDownload* pDownload = Downloads.GetNext( posDownload );
 
-		if ( m_nGroupCookie != 0 && m_nGroupCookie != pDownload->m_nGroupCookie ) continue;
-		if ( IsFiltered( pDownload ) ) continue;
+		if ( rcItem.top > rcClient.bottom )
+			break;
+
+		if ( m_nGroupCookie != 0 && m_nGroupCookie != pDownload->m_nGroupCookie )
+			continue;
+
+		if ( IsFiltered( pDownload ) )
+			continue;
 
 		if ( nScroll > 0 )
-		{
-			nScroll --;
-		}
+			--nScroll;
 		else
 		{
 			PaintDownload( dc, rcItem, pDownload, bFocus && ( m_nFocus == nIndex ), m_pDragDrop == pDownload );
 			rcItem.OffsetRect( 0, ITEM_HEIGHT );
 		}
 
-		nIndex ++;
+		++nIndex;
 
-		if ( !pDownload->m_bExpanded || ( pDownload->IsSeeding() && !Settings.General.DebugBTSources ) ) continue;
+		if ( !pDownload->m_bExpanded || ( pDownload->IsSeeding() && !Settings.General.DebugBTSources ) )
+			continue;
 
 		if ( Settings.Downloads.ShowSources )
 		{
@@ -929,28 +935,31 @@ void CDownloadsCtrl::OnPaint()
 		{
 			CDownloadSource* pSource = pDownload->GetNext( posSource );
 
+			if ( rcItem.top > rcClient.bottom )
+				break;
+
 			if ( Settings.Downloads.ShowSources || pSource->IsConnected() )
 			{
 				if ( nScroll > 0 )
-				{
-					nScroll --;
-				}
+					--nScroll;
 				else
 				{
 					PaintSource( dc, rcItem, pDownload, pSource, bFocus && ( m_nFocus == nIndex ) );
 					rcItem.OffsetRect( 0, ITEM_HEIGHT );
 				}
 
-				nIndex ++;
+				++nIndex;
 			}
 		}
 	}
 
 	dc.SelectObject( pfOld );
 
-	rcClient.top = rcItem.top;
-	if ( rcClient.top < rcClient.bottom )
+	if ( rcItem.top < rcClient.bottom )
+	{
+		rcClient.top = rcItem.top;
 		dc.FillSolidRect( &rcClient, CoolInterface.m_crWindow );
+	}
 }
 
 void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDownload, BOOL bFocus, BOOL bDrop)
