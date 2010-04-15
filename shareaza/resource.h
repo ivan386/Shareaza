@@ -240,7 +240,6 @@
 #define ID_SCHEDULER_MOVE_UP            337
 #define ID_SCHEDULER_MOVE_DOWN          338
 #define ID_SCHEDULER_REMOVE_ALL         339
-#define IDD_DIALOG1                     339
 #define IDR_CHANSFRAME                  991
 #define IDD_DOWNLOAD_ACTIONS            993
 #define IDR_IRCFRAME                    994
@@ -846,7 +845,6 @@
 #define IDC_SCHEDULER_TOGGLE_BANDWIDTH  1583
 #define IDC_SUB_EVENT                   1584
 #define IDC_PROGRESS_SUB_EVENT          1585
-#define IDC_RADIO1                      1590
 #define IDC_DAYOFWEEK_GBOX              1591
 #define IDC_CHECK_SUN                   1592
 #define IDC_CHECK_THU                   1593
