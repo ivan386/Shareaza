@@ -303,8 +303,8 @@ BOOL CFragmentedFile::Open(const CBTInfo& oInfo, const BOOL bWrite,
 	CString& strErrorMessage)
 {
 	CString sUniqueName = oInfo.GetFilename();
-	int i = 0;
-	const int nCount = m_oFile.size();
+	size_t i = 0;
+	const size_t nCount = m_oFile.size();
 	QWORD nOffset = 0;
 
 	for ( POSITION pos = oInfo.m_pFiles.GetHeadPosition() ; pos ; ++i )
