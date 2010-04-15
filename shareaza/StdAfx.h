@@ -226,29 +226,7 @@ typedef CString StringType;
 //! \brief Hash function needed for CMap with const CString& as ARG_KEY.
 template<> AFX_INLINE UINT AFXAPI HashKey(const CString& key)
 {
-	UINT nHash = 0;
-	LPCTSTR pKey = key.GetString();
-	while ( *pKey )
-		nHash = ( nHash << 5 ) + nHash + *pKey++;
-	return nHash;
-}
-//! \brief Hash function needed for CMap with CString& as ARG_KEY.
-template<> AFX_INLINE UINT AFXAPI HashKey(CString& key)
-{
-	return HashKey< const CString& >( key );
-}
-//! \brief Hash function needed for CMap with CString as ARG_KEY.
-template<> AFX_INLINE UINT AFXAPI HashKey(CString key)
-{
-	return HashKey< const CString& >( key );
-}
-//! \brief Hash function needed for CMap with DWORD_PTR as ARG_KEY.
-//!
-//! While the default hash function could be used, this one does not generate
-//! (false) 64 bit warnings.
-template<> AFX_INLINE UINT AFXAPI HashKey(DWORD_PTR key)
-{
-	return static_cast< UINT >( key >> 4 );
+	return HashKey< LPCTSTR >( key );
 }
 
 template<> AFX_INLINE BOOL AFXAPI CompareElements(const IN_ADDR* pElement1, const IN_ADDR* pElement2)
@@ -283,21 +261,11 @@ template<> AFX_INLINE UINT AFXAPI HashKey(const IN_ADDR& key)
 #endif
 
 //
-// Missing constants
-//
-
-#ifndef BIF_NEWDIALOGSTYLE
-#define BIF_NEWDIALOGSTYLE	0x0040
-#endif
-#ifndef OFN_ENABLESIZING
-#define OFN_ENABLESIZING	0x00800000
-#endif
-
-//
 // 64-bit type
 //
 
-typedef unsigned __int64 QWORD;
+typedef uint64 QWORD;
+const QWORD SIZE_UNKNOWN = ~0ull;
 
 #define	MAKEDWORD(a,b)	((DWORD) (((a)) | ((DWORD) ((b))) << 16))
 #define	MAKEQWORD(a,b)	((QWORD) (((a)) | ((QWORD) ((b))) << 32))
@@ -351,8 +319,6 @@ typedef struct _ICONDIR
 } ICONDIR, *LPICONDIR;
 
 #pragma pack( pop )
-
-const uint64 SIZE_UNKNOWN = ~0ull;
 
 //
 // Protocol IDs
