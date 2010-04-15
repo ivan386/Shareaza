@@ -428,9 +428,9 @@ CString CDownloadWithFile::GetAvailableRanges() const
 		return strRanges;
 
 	Fragments::List oAvailable( inverse( GetEmptyFragmentList() ) );
-
-	for ( Fragments::List::const_iterator pFragment = oAvailable.begin();
-		pFragment != oAvailable.end(); ++pFragment )
+	Fragments::List::const_iterator pItr = oAvailable.begin();
+	const Fragments::List::const_iterator pEnd = oAvailable.end();
+	for ( ; pItr != pEnd ; ++pItr )
 	{
 		if ( strRanges.IsEmpty() )
 		{
@@ -441,11 +441,11 @@ CString CDownloadWithFile::GetAvailableRanges() const
 			strRanges += ',';
 		}
 
-		strRange.Format( _T("%I64i-%I64i"), pFragment->begin(), pFragment->end() - 1 );
+		strRange.Format( _T("%I64i-%I64i"), pItr->begin(), pItr->end() - 1 );
 		strRanges += strRange;
 
+		// Prevent too long line
 		if ( strRanges.GetLength() > HTTP_HEADER_MAX_LINE - 256 )
-			// Prevent too long line
 			break;
 	}
 

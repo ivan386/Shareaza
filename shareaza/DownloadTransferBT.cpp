@@ -376,25 +376,24 @@ BOOL CDownloadTransferBT::OnHave(CBTPacket* pPacket)
 void CDownloadTransferBT::ShowInterest()
 {
 	BOOL bInterested = FALSE;
-	
+
 	// TODO: Use an algorithm similar to CDownloadWithTiger::FindNext.., rather
 	// than relying on that algorithm to complete verifications here.
-	
-	if ( m_pAvailable == NULL )
-	{
-		// Never interested if we don't know what they have
-		// bInterested = m_pDownload->GetVolumeRemaining() != 0;
-	}
-	else if ( QWORD nBlockSize = m_pDownload->m_pTorrent.m_nBlockSize )
-	{
-		Fragments::List oList( m_pDownload->GetWantedFragmentList() );
-		for ( Fragments::List::const_iterator pFragment = oList.begin();
-			!bInterested && pFragment != oList.end(); ++pFragment )
-		{
-			DWORD nBlock = DWORD( pFragment->begin() / nBlockSize );
 
-			for ( DWORD nEnd = DWORD( ( pFragment->end() - 1 ) / nBlockSize );
-				nBlock <= nEnd; ++nBlock )
+	// We can only be interested if we know what they have
+	if ( m_pAvailable )
+	{
+		DWORD nBlockSize = m_pDownload->m_pTorrent.m_nBlockSize;
+		ASSERT( nBlockSize );
+
+		Fragments::List oList( m_pDownload->GetWantedFragmentList() );
+		Fragments::List::const_iterator pItr = oList.begin();
+		const Fragments::List::const_iterator pEnd = oList.end();
+		for ( ; !bInterested && pItr != pEnd ; ++pItr )
+		{
+			DWORD nBlock = DWORD( pItr->begin() / nBlockSize );
+			DWORD nEnd = DWORD( ( pItr->end() - 1 ) / nBlockSize );
+			for ( ; nBlock <= nEnd ; ++nBlock )
 			{
 				if ( m_pAvailable[ nBlock ] )
 				{
@@ -404,16 +403,14 @@ void CDownloadTransferBT::ShowInterest()
 			}
 		}
 	}
-	
+
 	if ( bInterested != m_bInterested )
 	{
 		m_bInterested = bInterested;
 		Send( CBTPacket::New( bInterested ? BT_PACKET_INTERESTED : BT_PACKET_NOT_INTERESTED ) );
-		
+
 		if ( ! bInterested )
-		{
-            m_oRequested.clear();
-		}
+			m_oRequested.clear();
 	}
 }
 

@@ -432,6 +432,7 @@ BOOL CDownloadWithTiger::FindNewValidationBlock(int nHash)
 		nBlockCount	= m_nTigerBlock;
 		nBlockSize	= m_nTigerSize;
 		break;
+
 	case HASH_ED2K:
 		if ( ! Settings.Downloads.VerifyED2K )
 			return FALSE;
@@ -439,11 +440,13 @@ BOOL CDownloadWithTiger::FindNewValidationBlock(int nHash)
 		nBlockCount	= m_nHashsetBlock;
 		nBlockSize	= ED2K_PART_SIZE;
 		break;
+
 	case HASH_TORRENT:
 		pBlockPtr	= m_pTorrentBlock;
 		nBlockCount	= m_nTorrentBlock;
 		nBlockSize	= m_nTorrentSize;
 		break;
+
 	default:
 		return FALSE;
 	}
@@ -481,15 +484,16 @@ BOOL CDownloadWithTiger::FindNewValidationBlock(int nHash)
 		QWORD nPrevious = 0;
 
 		Fragments::List oList( GetEmptyFragmentList() );
-		for ( Fragments::List::const_iterator pFragment = oList.begin();
-			pFragment != oList.end(); ++pFragment )
+		Fragments::List::const_iterator pItr = oList.begin();
+		const Fragments::List::const_iterator pEnd = oList.end();
+		for ( ; pItr != pEnd ; ++pItr )
 		{
-			if ( pFragment->begin() - nPrevious >= nBlockSize )
+			if ( pItr->begin() - nPrevious >= nBlockSize )
 			{
-				DWORD nBlock = (DWORD)( ( nPrevious + nBlockSize - 1 ) / nBlockSize );
-				nPrevious = nBlockSize * (QWORD)nBlock + nBlockSize;
+				DWORD nBlock = DWORD( ( nPrevious + nBlockSize - 1ull ) / nBlockSize );
+				nPrevious = nBlockSize * nBlock + nBlockSize;
 
-				QWORD nFragmentBegin = pFragment->begin();
+				QWORD nFragmentBegin = pItr->begin();
 				for ( ; nPrevious <= nFragmentBegin ; nBlock ++, nPrevious += nBlockSize )
 				{
 					if ( static_cast< TRISTATE >( pBlockPtr[ nBlock ] ) == TRI_UNKNOWN )
@@ -504,10 +508,11 @@ BOOL CDownloadWithTiger::FindNewValidationBlock(int nHash)
 					}
 				}
 
-				if ( nTarget != 0xFFFFFFFF ) break;
+				if ( nTarget != 0xFFFFFFFF )
+					break;
 			}
 
-			nPrevious = pFragment->end();
+			nPrevious = pItr->end();
 		}
 
 		if ( m_nSize > nPrevious && nTarget == 0xFFFFFFFF )
@@ -530,7 +535,8 @@ BOOL CDownloadWithTiger::FindNewValidationBlock(int nHash)
 			}
 		}
 
-		if ( nTarget == 0xFFFFFFFF ) nTarget = nRetry;
+		if ( nTarget == 0xFFFFFFFF )
+			nTarget = nRetry;
 	}
 
 	if ( nTarget == 0xFFFFFFFF )
@@ -657,11 +663,12 @@ void CDownloadWithTiger::FinishValidation()
 		if ( m_pTorrentBlock != NULL )
 			SubtractHelper( oCorrupted, m_pTorrentBlock, m_nTorrentBlock, m_nTorrentSize );
 
-		for ( Fragments::List::const_iterator pRange = oCorrupted.begin();
-			pRange != oCorrupted.end(); ++pRange )
+		Fragments::List::const_iterator pItr = oCorrupted.begin();
+		const Fragments::List::const_iterator pEnd = oCorrupted.end();
+		for ( ; pItr != pEnd ; ++pItr )
 		{
-			InvalidateFileRange( pRange->begin(), pRange->size() );
-			RemoveOverlappingSources( pRange->begin(), pRange->size() );
+			InvalidateFileRange( pItr->begin(), pItr->size() );
+			RemoveOverlappingSources( pItr->begin(), pItr->size() );
 		}
 
 	}

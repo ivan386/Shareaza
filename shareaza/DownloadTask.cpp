@@ -1,7 +1,7 @@
 //
 // DownloadTask.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -331,10 +331,12 @@ void CDownloadTask::RunMerge()
 	Fragments::List oList( m_pDownload->GetEmptyFragmentList() );
 	if ( ! m_oMergeGaps.empty() )
 	{
-		for ( Fragments::List::const_iterator i = m_oMergeGaps.begin();
-			i != m_oMergeGaps.end(); ++i )
-			oList.erase( *i );
+		Fragments::List::const_iterator pItr = m_oMergeGaps.begin();
+		const Fragments::List::const_iterator pEnd = m_oMergeGaps.end();
+		for ( ; pItr != pEnd ; ++pItr )
+			oList.erase( *pItr );
 	}
+
 	if ( ! oList.size() )
 	{
 		// No available fragments
@@ -371,23 +373,29 @@ void CDownloadTask::RunMerge()
 
 	// Read missing file fragments from selected file
 	auto_array< BYTE > Buf( new BYTE [nBufferLength] );
-	for ( Fragments::List::const_iterator pFragment = oList.begin();
-		pFragment != oList.end() && m_pEvent == NULL; ++pFragment )
+	Fragments::List::const_iterator pItr = oList.begin();
+	const Fragments::List::const_iterator pEnd = oList.end();
+	for ( ; !m_pEvent && pItr != pEnd ; ++pItr )
 	{
-		QWORD qwLength = pFragment->end() - pFragment->begin();
-		QWORD qwOffset = pFragment->begin();
+		QWORD qwLength = pItr->end() - pItr->begin();
+		QWORD qwOffset = pItr->begin();
 
+		// Check for overlapped fragments
 		if ( qwOffset + qwLength <= qwSourceOffset ||
 			 qwSourceOffset + qwSourceLength <= qwOffset )
-			 // No overlapped fragments
-			 continue;
+		{
+			continue;
+		}
 
 		// Calculate overlapped range end offset
 		QWORD qwEnd = min( qwOffset + qwLength, qwSourceOffset + qwSourceLength );
+
 		// Calculate overlapped range start offset
 		qwOffset = max( qwOffset, qwSourceOffset );
+
 		// Calculate overlapped range length
 		qwLength = qwEnd - qwOffset;
+
 		// Calculate file offset if any
 		QWORD qwFileOffset = ( qwOffset > qwSourceOffset ) ? qwOffset - qwSourceOffset : 0;
 
