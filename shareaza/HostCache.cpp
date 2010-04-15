@@ -561,17 +561,12 @@ void CHostCacheList::PruneOldHosts()
 
 		bool bRemove = false;
 
-		// Since we discard hosts after 3 failures, it means that we will remove
-		// hosts with the DU less than 8 hours without no failures when they expire;
-		// hosts with the DU less than 16 hours with 1 failure;
-		// hosts with the DU less than 24 hours with 2 failures;
-		if ( ! pHost->m_bPriority && pHost->IsExpired( tNow ) &&
-			( pHost->m_nProtocol != PROTOCOL_G1 ||
-			(float)pHost->m_nDailyUptime /
-			( 24 * 60 * 60 * ( pHost->m_nFailures + 1 ) ) < .333 ) )
+		if ( !pHost->m_bPriority && ( pHost->IsExpired( tNow )
+			|| pHost->m_nFailures > Settings.Connection.FailureLimit ) )
 		{
 			bRemove = true;
 		}
+
 		// Query acknowledgment prune (G2)
 		else if ( pHost->m_nProtocol == PROTOCOL_G2 && pHost->m_tAck &&
 			tNow - pHost->m_tAck > Settings.Gnutella2.QueryHostDeadline )
@@ -1220,7 +1215,7 @@ CNeighbour* CHostCacheHost::ConnectTo(BOOL bAutomatic)
 //////////////////////////////////////////////////////////////////////
 // CHostCacheHost string
 
-CString CHostCacheHost::ToString(bool bLong) const
+CString CHostCacheHost::ToString(const bool bLong) const
 {
 	CString str;
 	if ( bLong )
@@ -1240,7 +1235,7 @@ CString CHostCacheHost::ToString(bool bLong) const
 	return str;
 }
 
-bool CHostCacheHost::IsExpired(const DWORD tNow) const throw()
+bool CHostCacheHost::IsExpired(const DWORD tNow) const
 {
 	switch ( m_nProtocol )
 	{
@@ -1259,7 +1254,7 @@ bool CHostCacheHost::IsExpired(const DWORD tNow) const throw()
 	}
 }
 
-bool CHostCacheHost::IsThrottled(const DWORD tNow) const throw()
+bool CHostCacheHost::IsThrottled(const DWORD tNow) const
 {
 	switch ( m_nProtocol )
 	{
@@ -1276,7 +1271,7 @@ bool CHostCacheHost::IsThrottled(const DWORD tNow) const throw()
 //////////////////////////////////////////////////////////////////////
 // CHostCacheHost connection test
 
-bool CHostCacheHost::CanConnect(const DWORD tNow) const throw()
+bool CHostCacheHost::CanConnect(const DWORD tNow) const
 {
 	// Don't connect to self
 	if ( Settings.Connection.IgnoreOwnIP && Network.IsSelfIP( m_pAddress ) ) return false;
@@ -1296,7 +1291,7 @@ bool CHostCacheHost::CanConnect(const DWORD tNow) const throw()
 //////////////////////////////////////////////////////////////////////
 // CHostCacheHost quote test
 
-bool CHostCacheHost::CanQuote(const DWORD tNow) const throw()
+bool CHostCacheHost::CanQuote(const DWORD tNow) const
 {
 	return
 		// A host isn't dead...
@@ -1310,7 +1305,7 @@ bool CHostCacheHost::CanQuote(const DWORD tNow) const throw()
 // CHostCacheHost query test
 
 // Can we UDP query this host? (G2/ed2k)
-bool CHostCacheHost::CanQuery(const DWORD tNow) const throw()
+bool CHostCacheHost::CanQuery(const DWORD tNow) const
 {
 	// eDonkey2000 server
 	switch ( m_nProtocol )
@@ -1385,7 +1380,7 @@ bool CHostCacheHost::CanQuery(const DWORD tNow) const throw()
 //////////////////////////////////////////////////////////////////////
 // CHostCacheHost query key submission
 
-void CHostCacheHost::SetKey(DWORD nKey, const IN_ADDR* pHost)
+void CHostCacheHost::SetKey(const DWORD nKey, const IN_ADDR* pHost)
 {
 	if ( nKey )
 	{

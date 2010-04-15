@@ -74,12 +74,12 @@ public:
 	BYTE			m_nKADVersion;	// Kademlia version
 
 	CNeighbour*	ConnectTo(BOOL bAutomatic = FALSE);
-	CString		ToString(bool bLong = true) const;			// "10.0.0.1:6346 2002-04-30T08:30Z"
-	bool		IsExpired(const DWORD tNow) const throw();	// Is this host expired?
-	bool		IsThrottled(const DWORD tNow) const throw();// Is host temporary throttled down?
-	bool		CanConnect(const DWORD tNow) const throw();	// Can we connect to this host now?
-	bool		CanQuote(const DWORD tNow) const throw();	// Is this a recently seen host?
-	bool		CanQuery(const DWORD tNow) const throw();	// Can we UDP query this host? (G2/ed2k)
+	CString		ToString(bool bLong = true) const;	// "10.0.0.1:6346 2002-04-30T08:30Z"
+	bool		IsExpired(DWORD tNow) const;		// Is this host expired?
+	bool		IsThrottled(DWORD tNow) const;		// Is host temporary throttled down?
+	bool		CanConnect(DWORD tNow) const;		// Can we connect to this host now?
+	bool		CanQuote(DWORD tNow) const;			// Is this a recently seen host?
+	bool		CanQuery(DWORD tNow) const;			// Can we UDP query this host? (G2/ed2k)
 	void		SetKey(DWORD nKey, const IN_ADDR* pHost = NULL);
 
 	inline DWORD Seen() const throw()
@@ -90,7 +90,7 @@ public:
 protected:
 	DWORD		m_tSeen;
 
-	// Return: true - if tSeen cnaged, false - otherwise.
+	// Return: true - if tSeen changed, false - otherwise.
 	bool		Update(WORD nPort, DWORD tSeen = 0, LPCTSTR pszVendor = NULL, DWORD nUptime = 0, DWORD nCurrentLeaves = 0, DWORD nLeafLimit = 0);
 	void		Serialize(CArchive& ar, int nVersion);
 
