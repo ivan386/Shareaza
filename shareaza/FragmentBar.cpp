@@ -47,33 +47,35 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CFragmentBar fragment
 
-void CFragmentBar::DrawFragment(CDC* pDC, CRect* prcBar, QWORD nTotal, QWORD nOffset, QWORD nLength, COLORREF crFill, BOOL b3D)
+void CFragmentBar::DrawFragment(CDC* pDC, CRect* prcBar, QWORD nTotal, QWORD nOffset, QWORD nLength, COLORREF crFill, bool b3D)
 {
-	CRect rcArea;
-	
-	if ( Settings.General.LanguageRTL )
-		nOffset = nTotal - nOffset - nLength;
-
 	if ( nTotal == 0 )
 		return;
 
-	rcArea.left		= prcBar->left + ( ( prcBar->Width() + 1 ) * nOffset ) / nTotal;
-	rcArea.right	= prcBar->left + ( ( prcBar->Width() + 1 ) * ( nOffset + nLength ) ) / nTotal;
-	
+	ASSERT( nLength != SIZE_UNKNOWN );
+
+	if ( Settings.General.LanguageRTL )
+		nOffset = nTotal - nOffset - nLength;
+
+	CRect rcArea;
+
+	rcArea.left		= prcBar->left + LONG( ( prcBar->Width() + 1 ) * nOffset / nTotal );
+	rcArea.right	= prcBar->left + LONG( ( prcBar->Width() + 1 ) * ( nOffset + nLength ) / nTotal );
+
 	rcArea.top		= prcBar->top;
 	rcArea.bottom	= prcBar->bottom;
-	
+
 	rcArea.left		= max( rcArea.left, prcBar->left );
 	rcArea.right	= min( rcArea.right, prcBar->right );
-	
+
 	if ( rcArea.right <= rcArea.left )
 		return;
-	
+
 	if ( b3D && rcArea.Width() > 2 )
 	{
 		pDC->Draw3dRect( &rcArea,	CCoolInterface::CalculateColour( crFill, RGB(255,255,255), 75 ),
 									CCoolInterface::CalculateColour( crFill, RGB(0,0,0), 75 ) );
-		
+
 		rcArea.DeflateRect( 1, 1 );
 		pDC->FillSolidRect( &rcArea, crFill );
 		rcArea.InflateRect( 1, 1 );
@@ -82,16 +84,17 @@ void CFragmentBar::DrawFragment(CDC* pDC, CRect* prcBar, QWORD nTotal, QWORD nOf
 	{
 		pDC->FillSolidRect( &rcArea, crFill );
 	}
-	
+
 	pDC->ExcludeClipRect( &rcArea );
 }
 
 //////////////////////////////////////////////////////////////////////
 // CFragmentBar state bar
 
-void CFragmentBar::DrawStateBar(CDC* pDC, CRect* prcBar, QWORD nTotal, QWORD nOffset, QWORD nLength, COLORREF crFill, BOOL bTop)
+void CFragmentBar::DrawStateBar(CDC* pDC, CRect* prcBar, QWORD nTotal, QWORD nOffset, QWORD nLength, COLORREF crFill, bool bTop)
 {
-	CRect rcArea;
+	ASSERT( nLength != SIZE_UNKNOWN );
+
 	// Investigate why nLength is greater than nTotal !!! 
 	if ( nLength > nTotal - nOffset )
 		nLength = nTotal - nOffset;
@@ -99,11 +102,14 @@ void CFragmentBar::DrawStateBar(CDC* pDC, CRect* prcBar, QWORD nTotal, QWORD nOf
 	if ( Settings.General.LanguageRTL )
 		nOffset = nTotal - nOffset - nLength;
 
-	rcArea.left		= prcBar->left + (int)( (float)( prcBar->Width() + 1 ) / (float)nTotal * (float)nOffset );
-	rcArea.right	= prcBar->left + (int)( (float)( prcBar->Width() + 1 ) / (float)nTotal * (float)( nOffset + nLength ) );
+	CRect rcArea;
+
+	rcArea.left		= prcBar->left + LONG( ( prcBar->Width() + 1 ) * nOffset / nTotal );
+	rcArea.right	= prcBar->left + LONG( ( prcBar->Width() + 1 ) * ( nOffset + nLength ) / nTotal );
+
 	rcArea.left		= max( rcArea.left, prcBar->left );
 	rcArea.right	= min( rcArea.right, prcBar->right );
-	
+
 	if ( bTop )
 	{
 		rcArea.top		= prcBar->top;
@@ -114,15 +120,16 @@ void CFragmentBar::DrawStateBar(CDC* pDC, CRect* prcBar, QWORD nTotal, QWORD nOf
 		rcArea.top		= max( ( prcBar->top + prcBar->bottom ) / 2, prcBar->bottom - 3 ) + 1;
 		rcArea.bottom	= prcBar->bottom;
 	}
-	
-	if ( rcArea.right <= rcArea.left ) return;
-	
+
+	if ( rcArea.right <= rcArea.left )
+		return;
+
 	if ( rcArea.Width() > 2 )
 	{
 		rcArea.DeflateRect( 1, 0 );
 		pDC->FillSolidRect( &rcArea, crFill );
 		rcArea.InflateRect( 1, 0 );
-		
+
 		pDC->FillSolidRect( rcArea.left, rcArea.top, 1, rcArea.Height(),
 			CCoolInterface::CalculateColour( crFill, RGB(255,255,255), 100 ) );
 		pDC->FillSolidRect( rcArea.right - 1, rcArea.top, 1, rcArea.Height(),
@@ -132,7 +139,7 @@ void CFragmentBar::DrawStateBar(CDC* pDC, CRect* prcBar, QWORD nTotal, QWORD nOf
 	{
 		pDC->FillSolidRect( &rcArea, crFill );
 	}
-	
+
 	if ( bTop )
 	{
 		pDC->FillSolidRect( rcArea.left, rcArea.bottom, rcArea.Width(), 1,
@@ -145,7 +152,7 @@ void CFragmentBar::DrawStateBar(CDC* pDC, CRect* prcBar, QWORD nTotal, QWORD nOf
 		pDC->FillSolidRect( rcArea.left, rcArea.top, rcArea.Width(), 1,
 			CCoolInterface::CalculateColour( crFill, RGB(255,255,255), 100 ) );
 	}
-	
+
 	pDC->ExcludeClipRect( &rcArea );
 }
 
@@ -160,7 +167,7 @@ void CFragmentBar::DrawDownload(CDC* pDC, CRect* prcBar, CDownload* pDownload, C
 	if ( Settings.Downloads.ShowPercent && pDownload->IsStarted() )
 	{
 		DrawStateBar( pDC, prcBar, pDownload->m_nSize, 0, pDownload->GetVolumeComplete(),
-			RGB( 0, 255, 0 ), TRUE );
+			RGB( 0, 255, 0 ), true );
 	}
 
 	for ( nvOffset = 0 ; pDownload->GetNextVerifyRange( nvOffset, nvLength, bvSuccess ) ; )
@@ -176,7 +183,7 @@ void CFragmentBar::DrawDownload(CDC* pDC, CRect* prcBar, CDownload* pDownload, C
 	for ( ; pItr != pEnd ; ++pItr )
 	{
 		DrawFragment( pDC, prcBar, pDownload->m_nSize, pItr->begin(),
-			pItr->size(), crNatural, FALSE );
+			pItr->size(), crNatural, false );
 	}
 
 	for ( POSITION posSource = pDownload->GetIterator(); posSource ; )
@@ -192,12 +199,12 @@ void CFragmentBar::DrawDownload(CDC* pDC, CRect* prcBar, CDownload* pDownload, C
 
 void CFragmentBar::DrawDownloadSimple(CDC* pDC, CRect* prcBar, CDownload* pDownload, COLORREF crNatural)
 {
-	pDC->FillSolidRect( prcBar, crNatural );		
-		
+	pDC->FillSolidRect( prcBar, crNatural );
+
 	if ( pDownload->IsStarted() )
 	{
 		DrawFragment( pDC, prcBar, pDownload->m_nSize,0, pDownload->GetVolumeComplete(), 
-			CoolInterface.m_crFragmentComplete, FALSE );
+			CoolInterface.m_crFragmentComplete, false );
 	}
 }
 
@@ -207,7 +214,7 @@ void CFragmentBar::DrawDownloadSimple(CDC* pDC, CRect* prcBar, CDownload* pDownl
 void CFragmentBar::DrawUpload(CDC* pDC, CRect* prcBar, CUploadFile* pFile, COLORREF crNatural)
 {
 	CUploadTransfer* pUpload = pFile->GetActive();
-	if ( pUpload == NULL )
+	if ( !pUpload )
 		return;
 
 	Fragments::List::const_iterator pItr = pFile->m_oFragments.begin();
@@ -215,30 +222,30 @@ void CFragmentBar::DrawUpload(CDC* pDC, CRect* prcBar, CUploadFile* pFile, COLOR
 	for ( ; pItr != pEnd ; ++pItr  )
 	{
 		DrawFragment( pDC, prcBar, pFile->m_nSize, pItr->begin(), pItr->size(),
-			CoolInterface.m_crFragmentComplete, TRUE );
+			CoolInterface.m_crFragmentComplete, true );
 	}
 
-	if ( pFile == pUpload->m_pBaseFile )
+	if ( pFile == pUpload->m_pBaseFile && pUpload->m_nLength != SIZE_UNKNOWN )
 	{
 		if ( pUpload->m_nProtocol == PROTOCOL_HTTP && ((CUploadTransferHTTP*)pUpload)->IsBackwards() )
 		{
 			DrawFragment( pDC, prcBar, pFile->m_nSize,
 				pUpload->m_nOffset + pUpload->m_nLength - pUpload->m_nPosition,
-				pUpload->m_nPosition, CoolInterface.m_crFragmentComplete, TRUE );
+				pUpload->m_nPosition, CoolInterface.m_crFragmentComplete, true );
 
 			DrawFragment( pDC, prcBar, pFile->m_nSize,
 				pUpload->m_nOffset,
-				pUpload->m_nLength - pUpload->m_nPosition, crNatural, FALSE );
+				pUpload->m_nLength - pUpload->m_nPosition, crNatural, false );
 		}
 		else
 		{
 			DrawFragment( pDC, prcBar, pFile->m_nSize,
 				pUpload->m_nOffset, pUpload->m_nPosition,
-				CoolInterface.m_crFragmentComplete, TRUE );
+				CoolInterface.m_crFragmentComplete, true );
 
 			DrawFragment( pDC, prcBar, pFile->m_nSize,
 				pUpload->m_nOffset + pUpload->m_nPosition,
-				pUpload->m_nLength - pUpload->m_nPosition, crNatural, FALSE );
+				pUpload->m_nLength - pUpload->m_nPosition, crNatural, false );
 		}
 	}
 

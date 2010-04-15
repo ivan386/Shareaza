@@ -983,7 +983,7 @@ void CDownloadSource::Draw(CDC* pDC, CRect* prcBar, COLORREF crNatural)
 		{
 			CFragmentBar::DrawStateBar( pDC, prcBar, m_pDownload->m_nSize,
 				m_pTransfer->m_nOffset, m_pTransfer->m_nLength,
-				CoolInterface.m_crFragmentRequest, TRUE );
+				CoolInterface.m_crFragmentRequest, true );
 		}
 
 		switch( GetTransferProtocol() )
@@ -997,7 +997,7 @@ void CDownloadSource::Draw(CDC* pDC, CRect* prcBar, COLORREF crNatural)
 			for ( ; pItr != pEnd ; ++pItr )
 			{
 				CFragmentBar::DrawStateBar( pDC, prcBar, m_pDownload->m_nSize,
-					pItr->begin(), pItr->size(), CoolInterface.m_crFragmentRequest, TRUE );
+					pItr->begin(), pItr->size(), CoolInterface.m_crFragmentRequest, true );
 			}
 			break;
 		}
@@ -1011,7 +1011,7 @@ void CDownloadSource::Draw(CDC* pDC, CRect* prcBar, COLORREF crNatural)
 			for ( ; pItr != pEnd ; ++pItr )
 			{
 				CFragmentBar::DrawStateBar( pDC, prcBar, m_pDownload->m_nSize,
-					pItr->begin(), pItr->size(), CoolInterface.m_crFragmentRequest, TRUE );
+					pItr->begin(), pItr->size(), CoolInterface.m_crFragmentRequest, true );
 			}
 			break;
 		}
@@ -1031,7 +1031,7 @@ void CDownloadSource::Draw(CDC* pDC, CRect* prcBar, COLORREF crNatural)
 		for ( ; pItr != pEnd; ++pItr )
 		{
 			CFragmentBar::DrawFragment( pDC, prcBar, m_pDownload->m_nSize,
-				pItr->begin(), pItr->size(), crNatural, FALSE );
+				pItr->begin(), pItr->size(), crNatural, false );
 		}
 
 		pDC->FillSolidRect( prcBar, CoolInterface.m_crWindow );
@@ -1079,13 +1079,13 @@ void CDownloadSource::Draw(CDC* pDC, CRect* prcBar)
 			{
 				CFragmentBar::DrawFragment( pDC, prcBar, m_pDownload->m_nSize,
 					m_pTransfer->m_nOffset + m_pTransfer->m_nLength - m_pTransfer->m_nPosition,
-					m_pTransfer->m_nPosition, crTransfer, TRUE );
+					m_pTransfer->m_nPosition, crTransfer, true );
 			}
 			else
 			{
 				CFragmentBar::DrawFragment( pDC, prcBar, m_pDownload->m_nSize,
 					m_pTransfer->m_nOffset,
-					m_pTransfer->m_nPosition, crTransfer, TRUE );
+					m_pTransfer->m_nPosition, crTransfer, true );
 			}
 		}
 	}
@@ -1095,6 +1095,6 @@ void CDownloadSource::Draw(CDC* pDC, CRect* prcBar)
 	for ( ; pItr != pEnd ; ++pItr )
 	{
 		CFragmentBar::DrawFragment( pDC, prcBar, m_pDownload->m_nSize,
-			pItr->begin(), pItr->size(), crTransfer, TRUE );
+			pItr->begin(), pItr->size(), crTransfer, true );
 	}
 }

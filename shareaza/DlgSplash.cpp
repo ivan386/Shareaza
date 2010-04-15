@@ -1,7 +1,7 @@
 //
 // DlgSplash.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -207,7 +207,7 @@ void CSplashDlg::DoPaint(CDC* pDC)
 		nOffset = 0;
 
 	CFragmentBar::DrawFragment( &m_dcBuffer2, &rc, m_nMax, nOffset, min( m_nPos, m_nMax ),
-		RGB( 0x20, 0xB0, 0x20 ), TRUE );
+		RGB( 0x20, 0xB0, 0x20 ), true );
 	m_dcBuffer2.SelectClipRgn( NULL );
 
 	pDC->BitBlt( 0, 0, SPLASH_WIDTH, SPLASH_HEIGHT, &m_dcBuffer2, 0, 0, SRCCOPY );

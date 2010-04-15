@@ -1,7 +1,7 @@
 //
 // CtrlHomePanel.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -396,12 +396,12 @@ void CHomeDownloadsBox::OnPaint()
 {
 	CRect rcClient, rcIcon, rcText;
 	CPaintDC dc( this );
-	
+
 	GetClientRect( &rcClient );
 	m_wndView.GetClientRect( &rcIcon );
 	rcClient.bottom -= rcIcon.Height();
 	rcClient.top += 6;
-	
+
 	rcIcon.SetRect( 4, rcClient.top, 4 + 20, rcClient.top + 16 );
 	rcText.SetRect( rcIcon.right, rcIcon.top, rcClient.right - 4, rcIcon.bottom );
 	rcIcon.DeflateRect( 0, 2 );
@@ -409,15 +409,15 @@ void CHomeDownloadsBox::OnPaint()
 	dc.SetBkMode( OPAQUE );
 	dc.SetBkColor( CoolInterface.m_crRichdocBack );
 	dc.SetTextColor( CoolInterface.m_crTextLink );
-	
+
 	CFont* pOldFont = (CFont*)dc.SelectObject( &m_pFont );
-	
+
 	COLORREF crAlt[3] = { RGB( 0, 153, 255 ), RGB( 190, 0, 0 ), RGB( 0, 153, 0 ) };
-	
+
 	for ( int nItem = 0 ; nItem < m_pList.GetSize() ; nItem++ )
 	{
 		Item* pItem = m_pList.GetAt( nItem );
-		
+
 		if ( pItem->m_nComplete == 0 || pItem->m_nSize == SIZE_UNKNOWN )
 		{
 			CRect rc( rcIcon.left, rcIcon.top, rcIcon.left + 16, rcIcon.top + 16 );
@@ -430,14 +430,14 @@ void CHomeDownloadsBox::OnPaint()
 			COLORREF cr = pItem->m_bPaused ? CoolInterface.m_crNetworkNull : crAlt[ nItem % 3 ];
 			dc.Draw3dRect( &rcIcon, CoolInterface.m_crFragmentBorder, CoolInterface.m_crFragmentBorder );
 			rcIcon.DeflateRect( 1, 1 );
-			CFragmentBar::DrawFragment( &dc, &rcIcon, pItem->m_nSize, 0, pItem->m_nComplete, cr, TRUE );
+			CFragmentBar::DrawFragment( &dc, &rcIcon, pItem->m_nSize, 0, pItem->m_nComplete, cr, true );
 			dc.FillSolidRect( &rcIcon, CoolInterface.m_crWindow );
 			rcIcon.InflateRect( 1, 1 );
 			dc.ExcludeClipRect( &rcIcon );
 		}
-		
+
 		CString str = pItem->m_sText;
-		
+
 		if ( dc.GetTextExtent( str ).cx > rcText.Width() - 8 )
 		{
 			while ( str.GetLength() && dc.GetTextExtent( str + _T('\x2026') ).cx > rcText.Width() - 8 )
@@ -446,18 +446,17 @@ void CHomeDownloadsBox::OnPaint()
 			}
 			str += _T('\x2026');
 		}
-		
+
 		dc.SetTextColor( m_pHover == pItem ? CoolInterface.m_crTextLinkHot : CoolInterface.m_crTextLink );
 		dc.ExtTextOut( rcText.left + 4, rcText.top + 2, ETO_CLIPPED|ETO_OPAQUE,
 			&rcText, str, NULL );
-		
+
 		dc.ExcludeClipRect( &rcText );
-		
+
 		rcIcon.OffsetRect( 0, 18 );
 		rcText.OffsetRect( 0, 18 );
 	}
 
-	
 	rcClient.top = 0;
 	dc.FillSolidRect( &rcClient, CoolInterface.m_crWindow );
 	dc.SelectObject( pOldFont );
