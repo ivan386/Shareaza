@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="Windows-1252"?>
+<?xml version="1.0" encoding="windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9,00"
@@ -24,7 +24,6 @@
 			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
 			ConfigurationType="2"
-			UseOfMFC="0"
 			UseOfATL="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="1"
@@ -34,9 +33,6 @@
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
-				Description="Registering ActiveX Control..."
-				CommandLine="regsvr32 /s /c &quot;$(TargetPath)&quot;&#x0D;&#x0A;echo regsvr32 exec. time &gt; &quot;$(OutDir)\regsvr32.trg&quot;&#x0D;&#x0A;"
-				Outputs="$(OutDir)\regsvr32.trg"
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -48,7 +44,6 @@
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_DEBUG"
 				AdditionalIncludeDirectories="..\..\shareaza"
-				TargetEnvironment="1"
 				TypeLibraryName="$(IntDir)/$(InputName).tlb"
 				HeaderFileName="$(InputName).h"
 				DLLDataFileName=""
@@ -75,7 +70,6 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_DEBUG"
-				Culture="3081"
 				AdditionalIncludeDirectories="$(OutDir)"
 			/>
 			<Tool
@@ -85,7 +79,8 @@
 				Name="VCLinkerTool"
 				IgnoreImportLibrary="true"
 				LinkIncremental="2"
-				ModuleDefinitionFile="ImageViewer.def"
+				IgnoreDefaultLibraryNames=""
+				ModuleDefinitionFile="$(ProjectName).def"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				BaseAddress="0x22100000"
@@ -112,6 +107,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				Description="Performing registration"
+				CommandLine="regsvr32 /s /c &quot;$(TargetPath)&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -119,7 +116,6 @@
 			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
 			ConfigurationType="2"
-			UseOfMFC="0"
 			UseOfATL="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="1"
@@ -129,9 +125,6 @@
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
-				Description="Registering ActiveX Control..."
-				CommandLine="regsvr32 /s /c &quot;$(TargetPath)&quot;&#x0D;&#x0A;echo regsvr32 exec. time &gt; &quot;$(OutDir)\regsvr32.trg&quot;&#x0D;&#x0A;"
-				Outputs="$(OutDir)\regsvr32.trg"
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -169,7 +162,6 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_DEBUG"
-				Culture="3081"
 				AdditionalIncludeDirectories="$(OutDir)"
 			/>
 			<Tool
@@ -179,7 +171,8 @@
 				Name="VCLinkerTool"
 				IgnoreImportLibrary="true"
 				LinkIncremental="2"
-				ModuleDefinitionFile="ImageViewer.def"
+				IgnoreDefaultLibraryNames=""
+				ModuleDefinitionFile="$(ProjectName).def"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				TargetMachine="17"
@@ -205,6 +198,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				Description="Performing registration"
+				CommandLine="regsvr32 /s /c &quot;$(TargetPath)&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -212,7 +207,6 @@
 			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
 			ConfigurationType="2"
-			UseOfMFC="0"
 			UseOfATL="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="1"
@@ -223,9 +217,6 @@
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
-				Description="Registering ActiveX Control..."
-				CommandLine="regsvr32 /s /c &quot;$(TargetPath)&quot;&#x0D;&#x0A;echo regsvr32 exec. time &gt; &quot;$(OutDir)\regsvr32.trg&quot;&#x0D;&#x0A;"
-				Outputs="$(OutDir)\regsvr32.trg"
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -237,8 +228,6 @@
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="NDEBUG"
 				AdditionalIncludeDirectories="..\..\shareaza"
-				SuppressStartupBanner="true"
-				TargetEnvironment="1"
 				TypeLibraryName="$(IntDir)/$(InputName).tlb"
 				HeaderFileName="$(InputName).h"
 				DLLDataFileName=""
@@ -256,8 +245,6 @@
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL"
 				StringPooling="true"
 				RuntimeLibrary="0"
-				BufferSecurityCheck="true"
-				EnableFunctionLevelLinking="false"
 				FloatingPointModel="2"
 				RuntimeTypeInfo="false"
 				UsePrecompiledHeader="2"
@@ -269,7 +256,6 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="NDEBUG"
-				Culture="3081"
 				AdditionalIncludeDirectories="$(OutDir)"
 			/>
 			<Tool
@@ -280,8 +266,8 @@
 				IgnoreImportLibrary="true"
 				LinkIncremental="1"
 				IgnoreDefaultLibraryNames=""
-				ModuleDefinitionFile="ImageViewer.def"
-				ProgramDatabaseFile=".\ReleaseUMinSize/ImageViewer.pdb"
+				ModuleDefinitionFile="$(ProjectName).def"
+				GenerateDebugInformation="false"
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
@@ -310,6 +296,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				Description="Performing registration"
+				CommandLine="regsvr32 /s /c &quot;$(TargetPath)&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -317,7 +305,6 @@
 			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
 			ConfigurationType="2"
-			UseOfMFC="0"
 			UseOfATL="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="1"
@@ -328,9 +315,6 @@
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
-				Description="Registering ActiveX Control..."
-				CommandLine="regsvr32 /s /c &quot;$(TargetPath)&quot;&#x0D;&#x0A;echo regsvr32 exec. time &gt; &quot;$(OutDir)\regsvr32.trg&quot;&#x0D;&#x0A;"
-				Outputs="$(OutDir)\regsvr32.trg"
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -342,7 +326,6 @@
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="NDEBUG"
 				AdditionalIncludeDirectories="..\..\shareaza"
-				SuppressStartupBanner="true"
 				TargetEnvironment="3"
 				TypeLibraryName="$(IntDir)/$(InputName).tlb"
 				HeaderFileName="$(InputName).h"
@@ -362,8 +345,6 @@
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL"
 				StringPooling="true"
 				RuntimeLibrary="0"
-				BufferSecurityCheck="true"
-				EnableFunctionLevelLinking="false"
 				FloatingPointModel="2"
 				RuntimeTypeInfo="false"
 				UsePrecompiledHeader="2"
@@ -375,7 +356,6 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="NDEBUG"
-				Culture="3081"
 				AdditionalIncludeDirectories="$(OutDir)"
 			/>
 			<Tool
@@ -386,8 +366,8 @@
 				IgnoreImportLibrary="true"
 				LinkIncremental="1"
 				IgnoreDefaultLibraryNames=""
-				ModuleDefinitionFile="ImageViewer.def"
-				ProgramDatabaseFile=".\ReleaseUMinSize/ImageViewer.pdb"
+				ModuleDefinitionFile="$(ProjectName).def"
+				GenerateDebugInformation="false"
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
@@ -415,6 +395,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				Description="Performing registration"
+				CommandLine="copy &quot;unrar64.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;regsvr32 /s /c &quot;$(TargetPath)&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>
@@ -423,34 +405,34 @@
 	<Files>
 		<Filter
 			Name="Source Files"
-			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
+			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			>
 			<File
-				RelativePath="Image.cpp"
+				RelativePath=".\Image.cpp"
 				>
 			</File>
 			<File
-				RelativePath="ImageViewer.cpp"
+				RelativePath=".\ImageViewer.cpp"
 				>
 			</File>
 			<File
-				RelativePath="ImageViewer.def"
+				RelativePath=".\ImageViewer.def"
 				>
 			</File>
 			<File
-				RelativePath="ImageViewer.idl"
+				RelativePath=".\ImageViewer.idl"
 				>
 			</File>
 			<File
-				RelativePath="ImageViewer.rc"
+				RelativePath=".\ImageViewer.rc"
 				>
 			</File>
 			<File
-				RelativePath="ImageViewerPlugin.cpp"
+				RelativePath=".\ImageViewerPlugin.cpp"
 				>
 			</File>
 			<File
-				RelativePath="ImageWindow.cpp"
+				RelativePath=".\ImageWindow.cpp"
 				>
 			</File>
 			<File
@@ -458,7 +440,7 @@
 				>
 			</File>
 			<File
-				RelativePath="StdAfx.cpp"
+				RelativePath=".\StdAfx.cpp"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -466,7 +448,6 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="1"
-						PrecompiledHeaderFile="$(IntDir)/$(TargetName).pch"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -475,7 +456,6 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="1"
-						PrecompiledHeaderFile="$(IntDir)/$(TargetName).pch"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -484,7 +464,6 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="1"
-						PrecompiledHeaderFile="$(IntDir)/$(TargetName).pch"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -493,42 +472,41 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="1"
-						PrecompiledHeaderFile="$(IntDir)/$(TargetName).pch"
 					/>
 				</FileConfiguration>
 			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
-			Filter="h;hpp;hxx;hm;inl"
+			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			>
 			<File
-				RelativePath="Image.h"
+				RelativePath=".\Image.h"
 				>
 			</File>
 			<File
-				RelativePath="ImageViewerPlugin.h"
+				RelativePath=".\ImageViewerPlugin.h"
 				>
 			</File>
 			<File
-				RelativePath="ImageWindow.h"
+				RelativePath=".\ImageWindow.h"
 				>
 			</File>
 			<File
-				RelativePath="Resource.h"
+				RelativePath=".\Resource.h"
 				>
 			</File>
 			<File
-				RelativePath="StdAfx.h"
+				RelativePath=".\StdAfx.h"
 				>
 			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"
-			Filter="ico;cur;bmp;dlg;rc2;rct;bin;cnt;rtf;gif;jpg;jpeg;jpe"
+			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
 			>
 			<File
-				RelativePath="Commands.bmp"
+				RelativePath=".\Commands.bmp"
 				>
 			</File>
 			<File
@@ -540,11 +518,11 @@
 				>
 			</File>
 			<File
-				RelativePath="ImageViewer.rgs"
+				RelativePath=".\ImageViewer.rgs"
 				>
 			</File>
 			<File
-				RelativePath="Skin.xml"
+				RelativePath=".\Skin.xml"
 				>
 			</File>
 		</Filter>
