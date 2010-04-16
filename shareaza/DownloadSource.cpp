@@ -977,14 +977,13 @@ void CDownloadSource::Close()
 
 void CDownloadSource::Draw(CDC* pDC, CRect* prcBar, COLORREF crNatural)
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	if ( ! IsIdle() )
 	{
-		if ( m_pTransfer->m_nLength < SIZE_UNKNOWN )
-		{
-			CFragmentBar::DrawStateBar( pDC, prcBar, m_pDownload->m_nSize,
-				m_pTransfer->m_nOffset, m_pTransfer->m_nLength,
-				CoolInterface.m_crFragmentRequest, true );
-		}
+		CFragmentBar::DrawStateBar( pDC, prcBar, m_pDownload->m_nSize,
+			m_pTransfer->m_nOffset, m_pTransfer->m_nLength,
+			CoolInterface.m_crFragmentRequest, true );
 
 		switch( GetTransferProtocol() )
 		{
@@ -1072,8 +1071,7 @@ void CDownloadSource::Draw(CDC* pDC, CRect* prcBar)
 
 	if ( ! IsIdle() )
 	{
-		if ( GetState() == dtsDownloading &&
-			 m_pTransfer->m_nOffset < SIZE_UNKNOWN )
+		if ( GetState() == dtsDownloading )
 		{
 			if ( m_pTransfer->m_bRecvBackwards )
 			{

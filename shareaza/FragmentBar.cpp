@@ -49,10 +49,13 @@ static char THIS_FILE[]=__FILE__;
 
 void CFragmentBar::DrawFragment(CDC* pDC, CRect* prcBar, QWORD nTotal, QWORD nOffset, QWORD nLength, COLORREF crFill, bool b3D)
 {
-	if ( nTotal == 0 )
+	if ( nTotal == 0 || nLength == 0 )
 		return;
 
-	ASSERT( nLength != SIZE_UNKNOWN );
+	if ( nTotal == SIZE_UNKNOWN || nOffset == SIZE_UNKNOWN || nLength == SIZE_UNKNOWN )
+		return;
+
+	ASSERT( nLength <= nTotal - nOffset );
 
 	if ( Settings.General.LanguageRTL )
 		nOffset = nTotal - nOffset - nLength;
@@ -93,11 +96,13 @@ void CFragmentBar::DrawFragment(CDC* pDC, CRect* prcBar, QWORD nTotal, QWORD nOf
 
 void CFragmentBar::DrawStateBar(CDC* pDC, CRect* prcBar, QWORD nTotal, QWORD nOffset, QWORD nLength, COLORREF crFill, bool bTop)
 {
-	ASSERT( nLength != SIZE_UNKNOWN );
+	if ( nTotal == 0 || nLength == 0 )
+		return;
 
-	// Investigate why nLength is greater than nTotal !!! 
-	if ( nLength > nTotal - nOffset )
-		nLength = nTotal - nOffset;
+	if ( nTotal == SIZE_UNKNOWN || nOffset == SIZE_UNKNOWN || nLength == SIZE_UNKNOWN )
+		return;
+
+	ASSERT( nLength <= nTotal - nOffset );
 
 	if ( Settings.General.LanguageRTL )
 		nOffset = nTotal - nOffset - nLength;
@@ -164,7 +169,7 @@ void CFragmentBar::DrawDownload(CDC* pDC, CRect* prcBar, CDownload* pDownload, C
 	QWORD nvOffset, nvLength;
 	BOOL bvSuccess;
 
-	if ( Settings.Downloads.ShowPercent && pDownload->IsStarted() )
+	if ( Settings.Downloads.ShowPercent )
 	{
 		DrawStateBar( pDC, prcBar, pDownload->m_nSize, 0, pDownload->GetVolumeComplete(),
 			RGB( 0, 255, 0 ), true );
@@ -201,11 +206,8 @@ void CFragmentBar::DrawDownloadSimple(CDC* pDC, CRect* prcBar, CDownload* pDownl
 {
 	pDC->FillSolidRect( prcBar, crNatural );
 
-	if ( pDownload->IsStarted() )
-	{
-		DrawFragment( pDC, prcBar, pDownload->m_nSize,0, pDownload->GetVolumeComplete(), 
-			CoolInterface.m_crFragmentComplete, false );
-	}
+	DrawFragment( pDC, prcBar, pDownload->m_nSize,0, pDownload->GetVolumeComplete(), 
+		CoolInterface.m_crFragmentComplete, false );
 }
 
 //////////////////////////////////////////////////////////////////////

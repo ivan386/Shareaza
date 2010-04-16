@@ -112,16 +112,23 @@ DWORD CDownloadWithTiger::GetVerifyLength(PROTOCOLID nProtocol, int nHash) const
 
 BOOL CDownloadWithTiger::GetNextVerifyRange(QWORD& nOffset, QWORD& nLength, BOOL& bSuccess, int nHash) const
 {
+	ASSUME_LOCK( Transfers.m_pSection );
 	CQuickLock oLock( m_pTigerSection );
 
-	if ( nOffset >= m_nSize ) return FALSE;
-	if ( m_pTigerBlock == NULL && m_pHashsetBlock == NULL && m_pTorrentBlock == NULL ) return FALSE;
+	if ( nOffset >= m_nSize )
+		return FALSE;
+
+	if ( !m_pTigerBlock && !m_pHashsetBlock && !m_pTorrentBlock )
+		return FALSE;
 
 	if ( nHash == HASH_NULL )
 	{
-		if ( m_pTorrentBlock != NULL ) nHash = HASH_TORRENT;
-		else if ( m_pTigerBlock != NULL ) nHash = HASH_TIGERTREE;
-		else if ( m_pHashsetBlock != NULL ) nHash = HASH_ED2K;
+		if ( m_pTorrentBlock )
+			nHash = HASH_TORRENT;
+		else if ( m_pTigerBlock )
+			nHash = HASH_TIGERTREE;
+		else if ( m_pHashsetBlock )
+			nHash = HASH_ED2K;
 	}
 
 	QWORD nBlockCount, nBlockSize;
@@ -130,28 +137,38 @@ BOOL CDownloadWithTiger::GetNextVerifyRange(QWORD& nOffset, QWORD& nLength, BOOL
 	switch ( nHash )
 	{
 	case HASH_TIGERTREE:
-		if ( m_pTigerBlock == NULL ) return FALSE;
+		if ( !m_pTigerBlock )
+			return FALSE;
+
 		pBlockPtr	= m_pTigerBlock;
 		nBlockCount	= m_nTigerBlock;
 		nBlockSize	= m_nTigerSize;
 		break;
+
 	case HASH_ED2K:
-		if ( m_pHashsetBlock == NULL ) return FALSE;
+		if ( !m_pHashsetBlock )
+			return FALSE;
+
 		pBlockPtr	= m_pHashsetBlock;
 		nBlockCount	= m_nHashsetBlock;
 		nBlockSize	= ED2K_PART_SIZE;
 		break;
+
 	case HASH_TORRENT:
-		if ( m_pTorrentBlock == NULL ) return FALSE;
+		if ( !m_pTorrentBlock )
+			return FALSE;
+
 		pBlockPtr	= m_pTorrentBlock;
 		nBlockCount	= m_nTorrentBlock;
 		nBlockSize	= m_nTorrentSize;
 		break;
+
 	default:
 		return FALSE;
 	}
 
-	if ( nBlockSize == 0 ) return FALSE;
+	if ( nBlockSize == 0 )
+		return FALSE;
 
 	for ( QWORD nBlock = nOffset / nBlockSize ; nBlock < nBlockCount ; nBlock++ )
 	{
@@ -166,9 +183,14 @@ BOOL CDownloadWithTiger::GetNextVerifyRange(QWORD& nOffset, QWORD& nLength, BOOL
 
 			for ( ; nBlock < nBlockCount ; nBlock++ )
 			{
-				if ( nBase != pBlockPtr[ nBlock ] ) break;
+				if ( nBase != pBlockPtr[ nBlock ] )
+					break;
+
 				nLength += nBlockSize;
 			}
+
+			if ( nBlock == nBlockCount )
+				nLength = m_nSize - nOffset;
 
 			return TRUE;
 		}
