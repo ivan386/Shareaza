@@ -29,6 +29,81 @@
 #define new DEBUG_NEW
 #endif
 
+// SetUnhandledExceptionFilter
+
+typedef PTOP_LEVEL_EXCEPTION_FILTER (WINAPI *PFSetUnhandledExceptionFilter)(PTOP_LEVEL_EXCEPTION_FILTER pTopLevelExceptionFilter);
+
+typedef CMIT< PFSetUnhandledExceptionFilter > CModuleImportTable;
+
+template <>
+inline PFSetUnhandledExceptionFilter CModuleImportTable::GetOriginalProcAddress(void) const
+{
+	const PFSetUnhandledExceptionFilter* ppEntry = m_mapModuleEntries.Lookup(g_hInstance);
+	return (ppEntry != NULL ? *ppEntry : &SetUnhandledExceptionFilter);
+}
+
+static PTOP_LEVEL_EXCEPTION_FILTER WINAPI DummySetUnhandledExceptionFilter(PTOP_LEVEL_EXCEPTION_FILTER pTopLevelExceptionFilter);
+
+// UnhandledExceptionFilter
+
+/*typedef LONG (WINAPI *PFUnhandledExceptionFilter)(PEXCEPTION_POINTERS ExceptionInfo);
+
+typedef CMIT< PFUnhandledExceptionFilter > CMITFilter;
+
+template <>
+inline PFUnhandledExceptionFilter CMITFilter::GetOriginalProcAddress(void) const
+{
+	const PFUnhandledExceptionFilter* ppEntry = m_mapModuleEntries.Lookup(g_hInstance);
+	return (ppEntry != NULL ? *ppEntry : &UnhandledExceptionFilter);
+}
+
+static LONG WINAPI DummyUnhandledExceptionFilter(PEXCEPTION_POINTERS ExceptionInfo);*/
+
+// LoadLibrary
+
+typedef HMODULE (WINAPI *PFLoadLibraryW)(LPCWSTR lpLibFileName);
+
+typedef CMIT< PFLoadLibraryW > CMITLoadLibrary;
+
+template <>
+inline PFLoadLibraryW CMITLoadLibrary::GetOriginalProcAddress(void) const
+{
+	const PFLoadLibraryW* ppEntry = m_mapModuleEntries.Lookup(g_hInstance);
+	return (ppEntry != NULL ? *ppEntry : &LoadLibraryW);
+}
+
+static HMODULE WINAPI DummyLoadLibraryW(LPCWSTR lpLibFileName);
+
+// LoadLibraryEx
+
+typedef HMODULE (WINAPI *PFLoadLibraryExW)(LPCWSTR lpLibFileName, HANDLE hFile, DWORD dwFlags);
+
+typedef CMIT< PFLoadLibraryExW > CMITLoadLibraryEx;
+
+template <>
+inline PFLoadLibraryExW CMITLoadLibraryEx::GetOriginalProcAddress(void) const
+{
+	const PFLoadLibraryExW* ppEntry = m_mapModuleEntries.Lookup(g_hInstance);
+	return (ppEntry != NULL ? *ppEntry : &LoadLibraryExW);
+}
+
+static HMODULE WINAPI DummyLoadLibraryExW(LPCWSTR lpLibFileName, HANDLE hFile, DWORD dwFlags);
+
+// CreateThread
+
+/*typedef HANDLE (WINAPI *PFCreateThread)(LPSECURITY_ATTRIBUTES lpThreadAttributes, SIZE_T dwStackSize, LPTHREAD_START_ROUTINE lpStartAddress, LPVOID lpParameter, DWORD dwCreationFlags, LPDWORD lpThreadId);
+
+typedef CMIT< PFCreateThread > CMITCreateThread;
+
+template <>
+inline PFCreateThread CMITCreateThread::GetOriginalProcAddress(void) const
+{
+	const PFCreateThread* ppEntry = m_mapModuleEntries.Lookup(g_hInstance);
+	return (ppEntry != NULL ? *ppEntry : &CreateThread);
+}
+
+static HANDLE WINAPI DummyCreateThread(LPSECURITY_ATTRIBUTES lpThreadAttributes, SIZE_T dwStackSize, LPTHREAD_START_ROUTINE lpStartAddress, LPVOID lpParameter, DWORD dwCreationFlags, LPDWORD lpThreadId);*/
+
 /// Critical section used for synchronizing log files management.
 static CRITICAL_SECTION g_csMutualLogAccess;
 /// Critical section used for synchronizing output to the console.
@@ -48,7 +123,10 @@ static CArray<CLogFile*, CDynamicTraits<CLogFile*> > g_arrLogFiles;
 /// Old filter of unhandled exception.
 static PTOP_LEVEL_EXCEPTION_FILTER g_pfnOldExceptionFilter = NULL;
 /// Table of modules that import SetUnhandledExceptionFilter() function.
-static CModuleImportTable g_ModuleImportTable;
+static CModuleImportTable	g_ModuleImportTable( &DummySetUnhandledExceptionFilter, "SetUnhandledExceptionFilter" );
+static CMITLoadLibrary		g_LoadLibrary( &DummyLoadLibraryW, "LoadLibraryW" );
+static CMITLoadLibraryEx	g_LoadLibraryEx( &DummyLoadLibraryExW, "LoadLibraryExW" );
+//static CMITCreateThread		g_CreateThread( &DummyCreateThread, "CreateThread" );
 
 #if defined _CRTDBG_MAP_ALLOC && defined _DEBUG
 /// Global memory state object. Tracks memory leaks.
@@ -236,6 +314,9 @@ static void FreeGlobalData(void)
 	g_strSecondIntroMesage.Free();
 	// Free module import table.
 	g_ModuleImportTable.Clear();
+	g_LoadLibrary.Clear();
+	g_LoadLibraryEx.Clear();
+	//g_CreateThread.Clear();
 }
 
 /**
@@ -1541,7 +1622,12 @@ static inline void OverrideSUEF(HMODULE hModule)
 		g_ModuleImportTable.Override(hModule);
 #else
 	if (g_dwFlags & BTF_INTERCEPTSUEF)
+	{
 		g_ModuleImportTable.Override(hModule);
+		g_LoadLibrary.Override(hModule);
+		g_LoadLibraryEx.Override(hModule);
+		//g_CreateThread.Override(hModule);
+	}
 #endif
 }
 
@@ -1556,6 +1642,9 @@ static inline void RestoreSUEF(HMODULE hModule)
 		g_ModuleImportTable.Restore(hModule);
 #else
 	g_ModuleImportTable.Restore(hModule);
+	g_LoadLibrary.Restore(hModule);
+	g_LoadLibraryEx.Restore(hModule);
+	//g_CreateThread.Restore(hModule);
 #endif
 }
 
@@ -1567,6 +1656,9 @@ static inline void RestoreSUEF(HMODULE hModule)
 static void inline InterceptSUEF(HMODULE hModule, BOOL bOverride)
 {
 	g_ModuleImportTable.Intercept(hModule, bOverride);
+	g_LoadLibrary.Intercept(hModule, bOverride);
+	g_LoadLibraryEx.Intercept(hModule, bOverride);
+	//g_CreateThread.Intercept(hModule, bOverride);
 }
 
 /**
@@ -2238,3 +2330,64 @@ extern "C" BUGTRAP_API BOOL APIENTRY BT_SendSnapshotEx(PEXCEPTION_POINTERS pExce
 	g_pExceptionPointers = NULL;
 	return bResult;
 }
+
+static PTOP_LEVEL_EXCEPTION_FILTER WINAPI DummySetUnhandledExceptionFilter(PTOP_LEVEL_EXCEPTION_FILTER /*pTopLevelExceptionFilter*/)
+{
+	return NULL;
+}
+
+static HMODULE WINAPI DummyLoadLibraryW(LPCWSTR lpLibFileName)
+{
+	HMODULE hModule = g_LoadLibrary.GetOriginalProcAddress()( lpLibFileName );
+	if ( hModule )
+	{
+		OverrideSUEF( hModule );
+	}
+	return hModule;
+}
+
+static HMODULE WINAPI DummyLoadLibraryExW(LPCWSTR lpLibFileName, HANDLE hFile, DWORD dwFlags)
+{
+	HMODULE hModule = g_LoadLibraryEx.GetOriginalProcAddress()( lpLibFileName, hFile, dwFlags );
+	if ( hModule )
+	{
+		OverrideSUEF( hModule );
+	}
+	return hModule;
+}
+
+/*typedef struct
+{
+	LPTHREAD_START_ROUTINE lpStartAddress;
+	LPVOID lpParameter;
+} ThreadData;
+
+static DWORD WINAPI BugTrapThread(LPVOID lpParameter)
+{
+	__try
+	{
+		BT_SetTerminate();
+		ThreadData Data = *(ThreadData*)lpParameter;
+		delete (ThreadData*)lpParameter;
+		return Data.lpStartAddress( Data.lpParameter );
+	}
+	__except(BT_SehFilter(GetExceptionInformation()))
+	{
+		return (DWORD)-1;
+	}
+}
+
+static HANDLE WINAPI DummyCreateThread(LPSECURITY_ATTRIBUTES lpThreadAttributes, SIZE_T dwStackSize, LPTHREAD_START_ROUTINE lpStartAddress, LPVOID lpParameter, DWORD dwCreationFlags, LPDWORD lpThreadId)
+{
+	ThreadData* pData = new ThreadData;
+	if ( ! pData )
+		return NULL;
+
+	pData->lpStartAddress = lpStartAddress;
+	pData->lpParameter = lpParameter;
+
+	DWORD id;
+	HANDLE hThread = g_CreateThread.GetOriginalProcAddress()( lpThreadAttributes, dwStackSize, BugTrapThread, (LPVOID)pData, dwCreationFlags, &id );
+	if ( lpThreadId ) *lpThreadId = id;
+	return hThread;
+}*/

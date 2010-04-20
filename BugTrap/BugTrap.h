@@ -808,7 +808,7 @@ BUGTRAP_API void CDECL BT_CallNetFilter(void);
  * unhandled C++ exception.
  */
 #if defined __cplusplus && defined _INC_EH
- #define BT_SetTerminate() set_terminate(BT_CallCppFilter)
+#define BT_SetTerminate() { set_terminate(BT_CallCppFilter); set_unexpected(BT_CallCppFilter); }
 #else
  #define BT_SetTerminate()
 #endif // __cplusplus && _INC_EH
