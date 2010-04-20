@@ -181,7 +181,7 @@ protected:
 
 	// ILibraryBuilderPlugin Methods
 public:
-	STDMETHOD(Process)(HANDLE hFile, BSTR sFile, ISXMLElement* pXML);
+	STDMETHOD(Process)(BSTR sFile, ISXMLElement* pXML);
 
 	// IImageServicePlugin Methods
 public:

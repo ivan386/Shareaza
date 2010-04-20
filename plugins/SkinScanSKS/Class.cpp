@@ -55,7 +55,6 @@ protected:
 };
 
 STDMETHODIMP CSkinScanSKS::Process (
-	/* [in] */ HANDLE /* hFile */,
 	/* [in] */ BSTR sFile,
 	/* [in] */ ISXMLElement* pXML)
 {

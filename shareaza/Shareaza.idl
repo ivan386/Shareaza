@@ -1,7 +1,7 @@
 //
 // Shareaza.idl
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -212,7 +212,11 @@ library Shareaza
 	[ uuid(32496CEA-3B51-4f2f-9CE7-73D6AC942C34), oleautomation ]
 	interface ILibraryBuilderPlugin : stdole.IUnknown
 	{
-		HRESULT Process( [in] HANDLE hFile, [in] BSTR sFile, [in] ISXMLElement* pXML );
+		// Extract metadata from file and return:
+		//	S_x - Use metadata returned in second parameter;
+		//	E_UNEXPECTED - Mark file as corrupted;
+		//	E_x - Other errors.
+		HRESULT Process( [in] BSTR sFile, [in] ISXMLElement* pXML );
 	};
 
 	//

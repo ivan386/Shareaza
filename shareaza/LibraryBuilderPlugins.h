@@ -1,7 +1,7 @@
 //
 // LibraryBuilderPlugins.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,24 +22,20 @@
 #pragma once
 
 
-class CLibraryBuilderPlugins : private boost::noncopyable
+class CLibraryBuilderPlugins
 {
-// Construction
 public:
 	CLibraryBuilderPlugins();
-	virtual ~CLibraryBuilderPlugins()=0;
 
-// Attributes
+	bool	ExtractPluginMetadata(DWORD nIndex, const CString& strPath);
+	void	CleanupPlugins();
+
 private:
 	typedef CMap< CString, LPCTSTR, ILibraryBuilderPlugin*, ILibraryBuilderPlugin* > CPluginMap;
 
 	CCriticalSection	m_pSection;
 	CPluginMap			m_pMap;
 
+	static HRESULT SafeProcess(ILibraryBuilderPlugin* pPlugin, BSTR szPath, ISXMLElement* pElement);
 	ILibraryBuilderPlugin* LoadPlugin(LPCTSTR pszType);
-
-// Operations
-public:
-	bool	ExtractPluginMetadata(DWORD nIndex, const CString& strPath, HANDLE hFile);
-	void	CleanupPlugins();
 };

@@ -41,7 +41,7 @@ CRatDVDPlugin::~CRatDVDPlugin()
 
 // ILibraryBuilderPlugin Methods
 
-STDMETHODIMP CRatDVDPlugin::Process(HANDLE hFile, BSTR sFile, ISXMLElement* pXML)
+STDMETHODIMP CRatDVDPlugin::Process(BSTR sFile, ISXMLElement* pXML)
 {
 	ODS(_T("CRatDVDPlugin::Process\n"));
 
@@ -59,7 +59,15 @@ STDMETHODIMP CRatDVDPlugin::Process(HANDLE hFile, BSTR sFile, ISXMLElement* pXML
 		return E_UNEXPECTED;
 	}
 
-	hr = ProcessRatDVD( hFile, pXML );
+	HANDLE hFile = CreateFile( sFile, GENERIC_READ,
+		 FILE_SHARE_READ | FILE_SHARE_DELETE, NULL,
+		 OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL | FILE_FLAG_SEQUENTIAL_SCAN, NULL );
+	if ( hFile != INVALID_HANDLE_VALUE )
+	{
+		hr = ProcessRatDVD( hFile, pXML );
+
+		CloseHandle( hFile );
+	}
 
 	DllRelease();
 	LeaveCritical();

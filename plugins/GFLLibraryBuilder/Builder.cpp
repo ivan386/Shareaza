@@ -33,7 +33,6 @@ void CBuilder::FinalRelease () throw()
 }
 
 STDMETHODIMP CBuilder::Process (
-	/* [in] */ HANDLE /* hFile */,
 	/* [in] */ BSTR sFile,
 	/* [in] */ ISXMLElement* pXML)
 {

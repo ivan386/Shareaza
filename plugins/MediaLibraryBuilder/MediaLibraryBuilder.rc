@@ -27,7 +27,7 @@ LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,0,0,11
+ FILEVERSION 1,1,0,0
  PRODUCTVERSION 2,5,2,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
@@ -36,7 +36,7 @@ VS_VERSION_INFO VERSIONINFO
  FILEFLAGS 0x0L
 #endif
  FILEOS 0x4L
- FILETYPE 0x2L
+ FILETYPE 0x1L
  FILESUBTYPE 0x0L
 BEGIN
     BLOCK "StringFileInfo"
@@ -46,10 +46,10 @@ BEGIN
             VALUE "Comments", "Extract metadata from video files of many formats."
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Media Library Builder Plugin"
-            VALUE "FileVersion", "1, 0, 0, 11"
+            VALUE "FileVersion", "1, 1, 0, 0"
             VALUE "InternalName", "MediaLibraryBuilder"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2005-2010. All rights reserved."
-            VALUE "OriginalFilename", "MediaLibraryBuilder.dll"
+            VALUE "OriginalFilename", "MediaLibraryBuilder.exe"
             VALUE "ProductName", "Shareaza"
             VALUE "ProductVersion", "2, 5, 2, 0"
         END

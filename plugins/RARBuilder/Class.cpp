@@ -53,7 +53,6 @@ protected:
 };
 
 STDMETHODIMP CRARBuilder::Process (
-	/* [in] */ HANDLE /* hFile */,
 	/* [in] */ BSTR sFile,
 	/* [in] */ ISXMLElement* pXML)
 {

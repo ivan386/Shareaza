@@ -56,7 +56,6 @@ DECLARE_GET_CONTROLLING_UNKNOWN()
 // ILibraryBuilderPlugin
 public:
 	STDMETHOD(Process)(
-		/* [in] */ HANDLE hFile,
 		/* [in] */ BSTR sFile,
 		/* [in] */ ISXMLElement* pXML);
 };

@@ -1,8 +1,8 @@
 //
 // Builder.h : Declaration of the CBuilder
 //
-// Copyright (c) Nikolay Raspopov, 2005.
-// This file is part of SHAREAZA (www.shareaza.com)
+// Copyright (c) Nikolay Raspopov, 2005-2010.
+// This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
 // and/or modify it under the terms of the GNU General Public License
@@ -43,7 +43,6 @@ END_COM_MAP()
 // ILibraryBuilderPlugin
 public:
 	STDMETHOD(Process)(
-		/* [in] */ HANDLE hFile,
 		/* [in] */ BSTR sFile,
 		/* [in] */ ISXMLElement* pXML);
 private:

@@ -160,7 +160,6 @@ protected:
 };
 
 STDMETHODIMP C7ZipBuilder::Process (
-	/* [in] */ HANDLE /* hFile */,
 	/* [in] */ BSTR sFile,
 	/* [in] */ ISXMLElement* pXML)
 {

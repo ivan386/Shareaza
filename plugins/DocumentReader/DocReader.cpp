@@ -56,7 +56,7 @@ CDocReader::~CDocReader()
 
 // ILibraryBuilderPlugin Methods
 
-STDMETHODIMP CDocReader::Process(HANDLE hFile, BSTR sFile, ISXMLElement* pXML)
+STDMETHODIMP CDocReader::Process(BSTR sFile, ISXMLElement* pXML)
 {
 	ODS(_T("CDocReader::Process\n"));
 

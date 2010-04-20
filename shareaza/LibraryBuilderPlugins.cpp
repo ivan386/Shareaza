@@ -1,7 +1,7 @@
 //
 // LibraryBuilderPlugins.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -40,62 +40,68 @@ CLibraryBuilderPlugins::CLibraryBuilderPlugins()
 {
 }
 
-CLibraryBuilderPlugins::~CLibraryBuilderPlugins()
+HRESULT CLibraryBuilderPlugins::SafeProcess(ILibraryBuilderPlugin* pPlugin, BSTR szPath, ISXMLElement* pElement)
 {
+	__try
+	{
+		return pPlugin->Process( szPath, pElement );
+	}
+	__except( EXCEPTION_EXECUTE_HANDLER )
+	{
+		return E_FAIL;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilderPlugins extract
 
-bool CLibraryBuilderPlugins::ExtractPluginMetadata(DWORD nIndex, const CString& strPath, HANDLE hFile)
+bool CLibraryBuilderPlugins::ExtractPluginMetadata(DWORD nIndex, const CString& strPath)
 {
-	CString strType;
+	CString strType = PathFindExtension( strPath );
+	strType.MakeLower();
 
-	int nExtPos = strPath.ReverseFind( '.' );
-	if ( nExtPos != -1 )
-		strType = strPath.Mid( nExtPos );
-
-	ToLower( strType );
-
-	CComQIPtr< ILibraryBuilderPlugin > pPlugin( LoadPlugin( strType ) );
-	if ( !pPlugin )
-		return false;
-
-	CXMLElement* pXML	= new CXMLElement();
-	ISXMLElement* ppXML	= (ISXMLElement*)CXMLCOM::Wrap( pXML, IID_ISXMLElement );
-
-	BSTR bsFile = strPath.AllocSysString();
-
-	HRESULT hResult = pPlugin->Process( hFile, bsFile, ppXML );
-
-	SysFreeString( bsFile );
-
-	ppXML->Release();
-
-	bool bSuccess = false;
-
-	if ( SUCCEEDED( hResult ) )
+	for ( int i = 0; i < 2; ++i )
 	{
-		if ( CXMLElement* pOuter = pXML->GetFirstElement() )
-		{
-			CXMLElement* pInner		= pOuter->GetFirstElement();
-			CString strSchemaURI	= pOuter->GetAttributeValue( CXMLAttribute::schemaName );
+		CComQIPtr< ILibraryBuilderPlugin > pPlugin( LoadPlugin( strType ) );
+		if ( ! pPlugin )
+			break;
 
-			if ( pInner && strSchemaURI.GetLength() )
+		auto_ptr< CXMLElement > pXML( new CXMLElement() );
+		HRESULT hr = SafeProcess( pPlugin, CComBSTR( strPath ),
+			CComPtr< ISXMLElement >( (ISXMLElement*)CXMLCOM::Wrap(
+			pXML.get(), IID_ISXMLElement ) ) );
+		if ( SUCCEEDED( hr ) )
+		{
+			if ( CXMLElement* pOuter = pXML->GetFirstElement() )
 			{
-				pInner = pInner->Detach();
-				bSuccess = LibraryBuilder.SubmitMetadata( nIndex, strSchemaURI, pInner ) != 0;
+				CXMLElement* pInner		= pOuter->GetFirstElement();
+				CString strSchemaURI	= pOuter->GetAttributeValue( CXMLAttribute::schemaName );
+
+				if ( pInner && strSchemaURI.GetLength() )
+				{
+					pInner = pInner->Detach();
+					return LibraryBuilder.SubmitMetadata( nIndex, strSchemaURI, pInner ) != 0;
+				}
 			}
 		}
-	}
-	else if ( hResult == E_UNEXPECTED )
-	{
-		bSuccess = LibraryBuilder.SubmitCorrupted( nIndex );
+		else if ( hr == E_UNEXPECTED )
+		{
+			return LibraryBuilder.SubmitCorrupted( nIndex );
+		}
+		else if ( hr == MAKE_HRESULT( SEVERITY_ERROR, FACILITY_WIN32, RPC_S_SERVER_UNAVAILABLE ) )
+		{
+			CQuickLock oLock( m_pSection );
+
+			m_pMap.RemoveKey( strType );
+
+			// Try again
+			continue;
+		}
+
+		break;
 	}
 
-	delete pXML;
-
-	return bSuccess;
+	return false;
 }
 
 //////////////////////////////////////////////////////////////////////

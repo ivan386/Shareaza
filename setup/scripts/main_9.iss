@@ -129,7 +129,7 @@ Source: "plugins\GFLImageServices\{#PlatformName}\{#ConfigurationName}\libgfl290
 Source: "plugins\GFLLibraryBuilder\{#PlatformName}\{#ConfigurationName}\GFLLibraryBuilder.dll";     DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
 Source: "plugins\ImageViewer\{#PlatformName}\{#ConfigurationName}\ImageViewer.dll";                 DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
 Source: "plugins\MediaImageServices\{#PlatformName}\{#ConfigurationName}\MediaImageServices.exe";   DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-Source: "plugins\MediaLibraryBuilder\{#PlatformName}\{#ConfigurationName}\MediaLibraryBuilder.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "plugins\MediaLibraryBuilder\{#PlatformName}\{#ConfigurationName}\MediaLibraryBuilder.exe"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 Source: "plugins\MediaPlayer\{#PlatformName}\{#ConfigurationName}\MediaPlayer.exe";                 DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 Source: "plugins\Preview\{#PlatformName}\{#ConfigurationName}\Preview.dll";                         DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
 Source: "plugins\RARBuilder\{#PlatformName}\{#ConfigurationName}\RARBuilder.dll";                   DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
@@ -176,10 +176,10 @@ Source: "Skins\Shareaza2\*";  DestDir: "{app}\Skins\Shareaza2";  Flags: ignoreve
 Source: "Skins\ShareazaOS\*"; DestDir: "{app}\Skins\ShareazaOS"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
 
 ; Thematic skins
-; Source: "Skins\Halloween\*"; DestDir: "{app}\Skins\Halloween"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
-; Source: "Skins\Winter\*";    DestDir: "{app}\Skins\Winter";    Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
-; Source: "Skins\Valentine\*"; DestDir: "{app}\Skins\Valentine"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
-Source: "Skins\St. Patrick's Day\*"; DestDir: "{app}\Skins\St. Patrick's Day"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
+; Source: "Skins\Halloween\*";         DestDir: "{app}\Skins\Halloween";         Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
+; Source: "Skins\Winter\*";            DestDir: "{app}\Skins\Winter";            Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
+; Source: "Skins\Valentine\*";         DestDir: "{app}\Skins\Valentine";         Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
+; Source: "Skins\St. Patrick's Day\*"; DestDir: "{app}\Skins\St. Patrick's Day"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
 
 ; Templates
 Source: "Templates\*"; DestDir: "{app}\Templates"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
@@ -235,9 +235,10 @@ SetupAppTitle=Setup - {#internal_name}
 
 [Run]
 ; Register EXE servers
-Filename: "{app}\MediaImageServices.exe"; Parameters: "/RegServer"; WorkingDir: "{app}"
-Filename: "{app}\MediaPlayer.exe";        Parameters: "/RegServer"; WorkingDir: "{app}"
-Filename: "{app}\WindowsThumbnail.exe";   Parameters: "/RegServer"; WorkingDir: "{app}"
+Filename: "{app}\MediaImageServices.exe";  Parameters: "/RegServer"; WorkingDir: "{app}"
+Filename: "{app}\MediaLibraryBuilder.exe"; Parameters: "/RegServer"; WorkingDir: "{app}"
+Filename: "{app}\MediaPlayer.exe";         Parameters: "/RegServer"; WorkingDir: "{app}"
+Filename: "{app}\WindowsThumbnail.exe";    Parameters: "/RegServer"; WorkingDir: "{app}"
 
 ; Run the skin installer at end of installation
 Filename: "{app}\skin.exe"; Parameters: "/installsilent"; WorkingDir: "{app}"; StatusMsg: "{cm:run_skinexe}"
@@ -247,9 +248,10 @@ Filename: "{app}\Shareaza.exe"; Description: "{cm:LaunchProgram,Shareaza}"; Work
 
 [UninstallRun]
 ; Unregister EXE servers
-Filename: "{app}\MediaImageServices.exe"; Parameters: "/UnRegServer"; WorkingDir: "{app}"
-Filename: "{app}\MediaPlayer.exe";        Parameters: "/UnRegServer"; WorkingDir: "{app}"
-Filename: "{app}\WindowsThumbnail.exe";   Parameters: "/UnRegServer"; WorkingDir: "{app}"
+Filename: "{app}\MediaImageServices.exe";  Parameters: "/UnRegServer"; WorkingDir: "{app}"
+Filename: "{app}\MediaLibraryBuilder.exe"; Parameters: "/UnRegServer"; WorkingDir: "{app}"
+Filename: "{app}\MediaPlayer.exe";         Parameters: "/UnRegServer"; WorkingDir: "{app}"
+Filename: "{app}\WindowsThumbnail.exe";    Parameters: "/UnRegServer"; WorkingDir: "{app}"
 
 ; Run the skin installer at start of uninstallation and make sure it only runs once
 Filename: "{app}\skin.exe"; Parameters: "/uninstallsilent"; WorkingDir: "{app}"; StatusMsg: "{cm:run_skinexe}"; RunOnceId: "uninstallskinexe"
@@ -354,10 +356,10 @@ Root: HKCU; Subkey: "Software\Shareaza\Shareaza\BitTorrent"; ValueType: string; 
 Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Skins"; ValueType: dword; ValueName: "ShareazaOS\ShareazaOS.xml"; ValueData: "1"; Flags: createvalueifdoesntexist uninsdeletevalue
 
 ; Select thematic skin
-Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Skins"; ValueType: dword; ValueName: "Halloween\Halloween.xml"; ValueData: "0"; Flags: deletevalue uninsdeletevalue
-Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Skins"; ValueType: dword; ValueName: "Winter\Winter.xml";       ValueData: "0"; Flags: deletevalue uninsdeletevalue
-Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Skins"; ValueType: dword; ValueName: "Valentine\Valentine.xml"; ValueData: "0"; Flags: deletevalue uninsdeletevalue
-Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Skins"; ValueType: dword; ValueName: "St. Patrick's Day\St. Patrick's Day.xml"; ValueData: "1"; Flags: deletevalue uninsdeletevalue
+Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Skins"; ValueType: dword; ValueName: "Halloween\Halloween.xml";                 ValueData: "0"; Flags: deletevalue uninsdeletevalue
+Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Skins"; ValueType: dword; ValueName: "Winter\Winter.xml";                       ValueData: "0"; Flags: deletevalue uninsdeletevalue
+Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Skins"; ValueType: dword; ValueName: "Valentine\Valentine.xml";                 ValueData: "0"; Flags: deletevalue uninsdeletevalue
+Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Skins"; ValueType: dword; ValueName: "St. Patrick's Day\St. Patrick's Day.xml"; ValueData: "0"; Flags: deletevalue uninsdeletevalue
 
 ; Disable extensions for plugins which make trouble
 ; Since it is image services plugin we need to add extensions required for the first run
@@ -388,6 +390,7 @@ Type: files; Name: "{app}\*.pdb"
 Type: files; Name: "{app}\zlib*.dll"
 Type: files; Name: "{app}\RazaWebHook.dll"
 Type: files; Name: "{app}\MediaImageServices.dll"
+Type: files; Name: "{app}\MediaLibraryBuilder.dll"
 Type: files; Name: "{app}\MediaPlayer.dll"
 Type: files; Name: "{app}\libgfl*.dll"
 Type: files; Name: "{app}\Skins\skin.exe"

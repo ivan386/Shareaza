@@ -84,7 +84,6 @@
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				SubSystem="2"
-				BaseAddress="0x1af60000"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -274,7 +273,6 @@
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				SetChecksum="true"
-				BaseAddress="0x1af60000"
 				TargetMachine="1"
 			/>
 			<Tool

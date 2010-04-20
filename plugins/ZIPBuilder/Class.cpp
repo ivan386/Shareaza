@@ -59,7 +59,6 @@ protected:
 };
 
 STDMETHODIMP CZIPBuilder::Process (
-	/* [in] */ HANDLE /* hFile */,
 	/* [in] */ BSTR sFile,
 	/* [in] */ ISXMLElement* pXML)
 {

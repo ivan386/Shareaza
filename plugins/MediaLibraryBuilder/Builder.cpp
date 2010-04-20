@@ -21,10 +21,8 @@
 
 #include "stdafx.h"
 #include "Builder.h"
-#include <strsafe.h>
 
 STDMETHODIMP CBuilder::Process (
-	/* [in] */ HANDLE /* hFile */,
 	/* [in] */ BSTR sFile,
 	/* [in] */ ISXMLElement* pXML)
 {
@@ -180,7 +178,7 @@ HRESULT CBuilder::SafeProcess(BSTR sFile, ISXMLElement* pXML)
 						LPWSTR clsid = NULL;
 						if (SUCCEEDED (StringFromCLSID (mt.subtype, &clsid)))
 						{
-							ATLTRACE( _T("Video format: %s\n"), clsid);
+							ATLTRACE( "Video format: %s\n", CW2A( clsid ) );
 							CoTaskMemFree (clsid);
 						}
 #endif // _DEBUG
@@ -232,13 +230,13 @@ HRESULT CBuilder::SafeProcess(BSTR sFile, ISXMLElement* pXML)
 				return S_OK;
 			}
 			else
-				ATLTRACE( _T("Cannot get streams: 0x%08x\n"), hr);
+				ATLTRACE( "Cannot get streams: 0x%08x\n", hr);
 		}
 		else
-			ATLTRACE( _T("Cannot open file: 0x%08x\n"), hr);
+			ATLTRACE( "Cannot open file: 0x%08x\n", hr);
 	}
 	else
-		ATLTRACE( _T("Cannot instantiate MediaDet object: 0x%08x\n"), hr);
+		ATLTRACE( "Cannot instantiate MediaDet object: 0x%08x\n", hr);
 
 	return hr;
 }

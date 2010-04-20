@@ -36,7 +36,6 @@ void CSWFBuilder::FinalRelease () throw()
 }
 
 STDMETHODIMP CSWFBuilder::Process (
-	/* [in] */ HANDLE /* hFile */,
 	/* [in] */ BSTR /* sFile */,
 	/* [in] */ ISXMLElement* pXML)
 {

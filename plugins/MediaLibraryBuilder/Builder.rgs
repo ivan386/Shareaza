@@ -15,10 +15,8 @@ HKCR
 		{
 			ProgID = s 'MediaLibraryBuilder.Builder.1'
 			VersionIndependentProgID = s 'MediaLibraryBuilder.Builder'
-			InprocServer32 = s '%MODULE%'
-			{
-				val ThreadingModel = s 'Both'
-			}
+			LocalServer32 = s '%MODULE%'
+			ForceRemove 'Programmable'
 			val AppID = s '%APPID%'
 			'TypeLib' = s '{6B3F5CE8-238C-4285-BE4B-EF7A9F71D1C2}'
 		}

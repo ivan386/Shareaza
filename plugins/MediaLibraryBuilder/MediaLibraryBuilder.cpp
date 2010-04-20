@@ -1,8 +1,8 @@
 //
-// MediaLibraryBuilder.cpp : Implementation of DLL Exports.
+// MediaLibraryBuilder.cpp : Implementation.
 //
-// Copyright (c) Nikolay Raspopov, 2005.
-// This file is part of SHAREAZA (www.shareaza.com)
+// Copyright (c) Nikolay Raspopov, 2005-2010.
+// This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
 // and/or modify it under the terms of the GNU General Public License
@@ -20,10 +20,9 @@
 //
 
 #include "stdafx.h"
-#include "resource.h"
 #include "MediaLibraryBuilder.h"
 
-class CMediaLibraryBuilderModule : public CAtlDllModuleT< CMediaLibraryBuilderModule >
+class CMediaLibraryBuilderModule : public CAtlExeModuleT< CMediaLibraryBuilderModule >
 {
 public :
 	DECLARE_LIBID(LIBID_MediaLibraryBuilderLib)
@@ -32,27 +31,10 @@ public :
 
 CMediaLibraryBuilderModule _AtlModule;
 
-extern "C" BOOL WINAPI DllMain(HINSTANCE /*hInstance*/, DWORD dwReason, LPVOID lpReserved)
+extern "C" int WINAPI _tWinMain(HINSTANCE /*hInstance*/, HINSTANCE /*hPrevInstance*/, LPTSTR /*lpCmdLine*/, int nShowCmd)
 {
-    return _AtlModule.DllMain(dwReason, lpReserved); 
-}
+	SetErrorMode( SEM_NOGPFAULTERRORBOX | SEM_NOOPENFILEERRORBOX |
+		SEM_NOALIGNMENTFAULTEXCEPT | SEM_FAILCRITICALERRORS );
 
-STDAPI DllCanUnloadNow(void)
-{
-    return _AtlModule.DllCanUnloadNow();
-}
-
-STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, LPVOID* ppv)
-{
-    return _AtlModule.DllGetClassObject(rclsid, riid, ppv);
-}
-
-STDAPI DllRegisterServer(void)
-{
-    return _AtlModule.DllRegisterServer();
-}
-
-STDAPI DllUnregisterServer(void)
-{
-	return _AtlModule.DllUnregisterServer();
+	return _AtlModule.WinMain( nShowCmd );
 }

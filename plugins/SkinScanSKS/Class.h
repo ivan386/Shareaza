@@ -43,7 +43,6 @@ END_COM_MAP()
 // ILibraryBuilderPlugin
 public:
 	STDMETHOD(Process)(
-		/* [in] */ HANDLE hFile,
 		/* [in] */ BSTR sFile,
 		/* [in] */ ISXMLElement* pXML);
 
