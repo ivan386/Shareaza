@@ -381,11 +381,10 @@ void CDownloadTransferBT::ShowInterest()
 	// than relying on that algorithm to complete verifications here.
 
 	// We can only be interested if we know what they have
-	if ( m_pAvailable )
-	{
-		DWORD nBlockSize = m_pDownload->m_pTorrent.m_nBlockSize;
-		ASSERT( nBlockSize );
+	DWORD nBlockSize = m_pDownload->m_pTorrent.m_nBlockSize;
 
+	if ( m_pAvailable && nBlockSize )
+	{
 		Fragments::List oList( m_pDownload->GetWantedFragmentList() );
 		Fragments::List::const_iterator pItr = oList.begin();
 		const Fragments::List::const_iterator pEnd = oList.end();
@@ -650,9 +649,6 @@ BOOL CDownloadTransferBT::OnSourceResponse(CBTPacket* pPacket)
 		}
 		else
 		{
-			CBENode* pID = pPeer->GetNode( "peer id" );
-            if ( ! pID->IsType( CBENode::beString ) || pID->m_nValue != Hashes::BtGuid::byteCount ) continue;
-			
 			CBENode* pIP = pPeer->GetNode( "ip" );
 			if ( ! pIP->IsType( CBENode::beString ) ) continue;
 			
@@ -666,10 +662,19 @@ BOOL CDownloadTransferBT::OnSourceResponse(CBTPacket* pPacket)
 				(LPCTSTR)m_sAddress,
 				(LPCTSTR)CString( inet_ntoa( saPeer.sin_addr ) ), htons( saPeer.sin_port ) );
 			
-			Hashes::BtGuid tmp( *static_cast< const Hashes::BtGuid::RawStorage* >(
-				pID->m_pValue ) );
-			nCount += m_pDownload->AddSourceBT( tmp,
-				&saPeer.sin_addr, htons( saPeer.sin_port ) );
+			CBENode* pID = pPeer->GetNode( "peer id" );
+			if ( ! pID->IsType( CBENode::beString ) || pID->m_nValue != Hashes::BtGuid::byteCount )
+			{
+				nCount += m_pDownload->AddSourceBT( Hashes::BtGuid(),
+					&saPeer.sin_addr, htons( saPeer.sin_port ) );
+			}
+			else
+			{
+				Hashes::BtGuid tmp( *static_cast< const Hashes::BtGuid::RawStorage* >(
+					pID->m_pValue ) );
+				nCount += m_pDownload->AddSourceBT( tmp,
+					&saPeer.sin_addr, htons( saPeer.sin_port ) );
+			}
 		}
 	}
 	
