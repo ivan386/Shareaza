@@ -71,7 +71,7 @@ protected:
 	bool				SelectFragment(const Fragments::List& oPossible, QWORD& nOffset, QWORD& nLength, bool bEndGame = false) const;
 private:
 	blockPair			SelectBlock(const Fragments::List& oPossible, const BYTE* pAvailable, bool bEndGame) const;
-	void				CheckPart(QWORD* nPart, DWORD nPartBlock, QWORD* nRange, DWORD& nRangeBlock, QWORD* nBestRange) const;
+	void				CheckPart(QWORD* nPart, QWORD nPartBlock, QWORD* nRange, QWORD& nRangeBlock, QWORD* nBestRange) const;
 	void				CheckRange(QWORD* nRange, QWORD* nBestRange) const;
 
 // Overides

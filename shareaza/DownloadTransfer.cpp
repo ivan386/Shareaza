@@ -398,21 +398,21 @@ blockPair CDownloadTransfer::SelectBlock(const Fragments::List& oPossible,
 		return std::make_pair( pItr->begin(), pItr->end() );
 
 	std::vector< QWORD > oBlocks;
-	DWORD nRangeBlock = 0ul;
+	QWORD nRangeBlock = 0ull;
 	QWORD nRange[3] = { 0ull, 0ull, 0ull };
 	QWORD nBestRange[3] = { 0ull, 0ull, 0ull };
 
 	for ( ; pItr != pEnd ; ++pItr )
 	{
 		QWORD nPart[2] = { pItr->begin(), 0ull };
-		DWORD nBlockBegin = DWORD( nPart[0] / nBlockSize );
-		DWORD nBlockEnd = DWORD( ( pItr->end() - 1 ) / nBlockSize );
+		QWORD nBlockBegin = nPart[0] / nBlockSize;
+		QWORD nBlockEnd = ( pItr->end() - 1ull ) / nBlockSize;
 
 		// The start of a block is complete, but part is missing
 		if ( nPart[0] % nBlockSize
 			&& ( !pAvailable || pAvailable[ nBlockBegin ] ) )
 		{
-			nPart[1] = min( pItr->end(), nBlockSize * ( nBlockBegin + 1 ) );
+			nPart[1] = min( pItr->end(), nBlockSize * ( nBlockBegin + 1ull ) );
 			nPart[1] -= nPart[0];
 			CheckPart( nPart, nBlockBegin, nRange, nRangeBlock, nBestRange );
 		}
@@ -454,8 +454,8 @@ blockPair CDownloadTransfer::SelectBlock(const Fragments::List& oPossible,
 	return std::make_pair( nBestRange[0], nBestRange[1] );
 }
 
-void CDownloadTransfer::CheckPart(QWORD* nPart, DWORD nPartBlock,
-	QWORD* nRange, DWORD& nRangeBlock, QWORD* nBestRange) const
+void CDownloadTransfer::CheckPart(QWORD* nPart, QWORD nPartBlock,
+	QWORD* nRange, QWORD& nRangeBlock, QWORD* nBestRange) const
 {
 	if ( nPartBlock == nRangeBlock )
 	{
