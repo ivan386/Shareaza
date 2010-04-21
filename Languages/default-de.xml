@@ -3336,9 +3336,9 @@
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <!-- Don't edit dialogs manualy! Use DialogScan feature instead -->
 <dialogs>
-	<dialog name="CGeneralSettingsGroup" cookie="" caption="Allgemein">
+	<dialog name="CGeneralSettingsGroup" cookie="Af" caption="Allgemein">
 	</dialog>
-	<dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="Einstellungen">
+	<dialog name="CSettingSheet" cookie="SyBuBuBu" caption="Einstellungen">
 		<control/>
 		<control caption="OK"/>
 		<control caption="Abbrechen"/>
@@ -3479,7 +3479,7 @@
 		<control caption="_Remove"/>
 		<control caption="Das Downloadmanager-Plugin wird nur für die hier aufgeführten Dateitypen benutzt. Andere Dateitypen werden vom Webbrowser verwaltet. Shareaza muss gestartet sein, um Downloads abzufangen."/>
 	</dialog>
-	<dialog name="CInternetSettingsGroup" cookie="" caption="Internet">
+	<dialog name="CInternetSettingsGroup" cookie="Af" caption="Internet">
 	</dialog>
 	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="Verbindung">
 		<control caption="_Inbound-Adresse:"/>
@@ -3859,7 +3859,7 @@
 		<control caption="Shareaza starten, wenn Windows gestartet wird"/>
 		<control caption="Genießen Sie Shareaza!"/>
 	</dialog>
-	<dialog name="CProfileManagerDlg" cookie="SyBuBuBu#3" caption="Mein Profil bearbeiten">
+	<dialog name="CProfileManagerDlg" cookie="SyBuBuBu" caption="Mein Profil bearbeiten">
 		<control/>
 		<control caption="OK"/>
 		<control caption="Abbrechen"/>

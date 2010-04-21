@@ -3311,9 +3311,9 @@
 </strings>
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <dialogs>
-	<dialog name="CGeneralSettingsGroup" cookie="" caption="Ogólne">
+	<dialog name="CGeneralSettingsGroup" cookie="Af" caption="Ogólne">
 	</dialog>
-	<dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="Ustawienia Shareazy">
+	<dialog name="CSettingSheet" cookie="SyBuBuBu" caption="Ustawienia Shareazy">
 		<control/>
 		<control caption="OK"/>
 		<control caption="Anuluj"/>
@@ -3454,7 +3454,7 @@
 		<control caption="Usuń"/>
 		<control caption="Wtyczka menadżera pobierań będzie podejmować próbę pobrania pliku jedynie z rozszerzeniem wymienionymi tutaj. Inne rodzaje plików będą obsługiwane przez Twoją przeglądarkę internetową. Shareaza musi być uruchomina, aby mogła zarządzać pobieraniem."/>
 	</dialog>
-	<dialog name="CInternetSettingsGroup" cookie="" caption="Internet">
+	<dialog name="CInternetSettingsGroup" cookie="Af" caption="Internet">
 	</dialog>
 	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="Połączenie">
 		<control caption="Adres wejściowy (przychodzący):"/>
@@ -3839,7 +3839,7 @@
 		<control caption="Uruchom Shareazę razem z uruchomieniem Windows"/>
 		<control caption="Miłej zabawy z Shareazą!"/>
 	</dialog>
-	<dialog name="CProfileManagerDlg" cookie="SyBuBuBu#3" caption="Edycja Profilu">
+	<dialog name="CProfileManagerDlg" cookie="SyBuBuBu" caption="Edycja Profilu">
 		<control/>
 		<control caption="OK"/>
 		<control caption="Anuluj"/>

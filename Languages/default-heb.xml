@@ -3313,9 +3313,9 @@ PDF
 </strings>
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <dialogs>
-	<dialog name="CGeneralSettingsGroup" cookie="" caption="כללי">
+	<dialog name="CGeneralSettingsGroup" cookie="Af" caption="כללי">
 	</dialog>
-	<dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="הגדרות שרזה">
+	<dialog name="CSettingSheet" cookie="SyBuBuBu" caption="הגדרות שרזה">
 		<control/>
 		<control caption="אישור"/>
 		<control caption="ביטול"/>
@@ -3456,7 +3456,7 @@ PDF
 		<control caption="הסר"/>
 		<control caption="תוסף מנהל ההורדות אך ורק ינסה להוריד את הקבצים המופיעים ברשימה להלן. סוגים אחרים של קבצים יטופלו על ידי הדפדפן. שרזה חייבת להיות מופעלת בכדי לנהל את ההורדות."/>
 	</dialog>
-	<dialog name="CInternetSettingsGroup" caption="אינטרנט">
+	<dialog name="CInternetSettingsGroup" cookie="Af" caption="אינטרנט">
 	</dialog>
 	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="חיבור">
 		<control caption=":כתובת נכנסת"/>
@@ -3836,7 +3836,7 @@ PDF
 		<control caption="הפעל את שרזה עם אתחול חלונות"/>
 		<control caption="!אנו מקווים שתהנה להשתמש בשרזה"/>
 	</dialog>
-	<dialog name="CProfileManagerDlg" cookie="SyBuBuBu#3" caption="ערוך את הפרופיל שלי">
+	<dialog name="CProfileManagerDlg" cookie="SyBuBuBu" caption="ערוך את הפרופיל שלי">
 		<control/>
 		<control caption="אישור"/>
 		<control caption="ביטול"/>

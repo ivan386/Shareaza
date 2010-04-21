@@ -3343,13 +3343,16 @@
 	<string id="20242" value="Try Again"/>
 	<string id="20243" value="Continue"/>
 	<string id="20244" value="&amp;Remember my selection next time"/>
+	<string id="32825" value="Open my folder of completed Downloads"/>
+	<string id="32773" value="Check for new version"/>
+	<string id="61215" value="Activate this window"/>
 </strings>
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <!-- Don't edit dialogs manualy! Use DialogScan feature instead -->
 <dialogs>
-	<dialog name="CGeneralSettingsGroup" cookie="" caption="General">
+	<dialog name="CGeneralSettingsGroup" cookie="Af" caption="General">
 	</dialog>
-	<dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="Shareaza Settings">
+	<dialog name="CSettingSheet" cookie="SyBuBuBu" caption="Shareaza Settings">
 		<control/>
 		<control caption="OK"/>
 		<control caption="Cancel"/>
@@ -3490,7 +3493,7 @@
 		<control caption="_Remove"/>
 		<control caption="The download manager plugin will only attempt to download file types listed here.  Other file types will be handled by your web browser.  Shareaza must be running to manage downloads."/>
 	</dialog>
-	<dialog name="CInternetSettingsGroup" cookie="" caption="Internet">
+	<dialog name="CInternetSettingsGroup" cookie="Af" caption="Internet">
 	</dialog>
 	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="Connection">
 		<control caption="_Inbound Address:"/>
@@ -3870,7 +3873,7 @@
 		<control caption="Start Shareaza every time Windows starts"/>
 		<control caption="Enjoy using Shareaza!"/>
 	</dialog>
-	<dialog name="CProfileManagerDlg" cookie="SyBuBuBu#3" caption="Edit My Profile">
+	<dialog name="CProfileManagerDlg" cookie="SyBuBuBu" caption="Edit My Profile">
 		<control/>
 		<control caption="OK"/>
 		<control caption="Cancel"/>

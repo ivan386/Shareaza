@@ -22,17 +22,18 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
+#include "Buffer.h"
 #include "CoolInterface.h"
 #include "CoolMenu.h"
 #include "CtrlCoolBar.h"
+#include "ImageFile.h"
+#include "ImageServices.h"
+#include "Plugins.h"
 #include "Skin.h"
 #include "SkinWindow.h"
-#include "ImageServices.h"
-#include "ImageFile.h"
-#include "Plugins.h"
-#include "XML.h"
 #include "WndChild.h"
-#include "Buffer.h"
+#include "WndSettingsPage.h"
+#include "XML.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -1208,6 +1209,10 @@ BOOL CSkin::Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID, CToolTipCtrl*
 			pWnd->GetNextWindow() == NULL )
 			break;
 
+		// Skip settings pages
+		if ( pWnd->IsKindOf( RUNTIME_CLASS( CSettingsPage ) ) )
+			continue;
+
 		strCaption += szClass;
 	}
 
@@ -1335,7 +1340,7 @@ BOOL CSkin::Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID, CToolTipCtrl*
 
 	if ( strCaption != pBase->GetAttributeValue( _T("cookie") ) )
 	{
-		theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Invalid [cookie] attribute in [dialog] element"), pBase->ToString() );
+		theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Invalid [cookie] attribute in [dialog] element. Real cookie: ") + strCaption, pBase->ToString() );
 		return FALSE;
 	}
 
@@ -1376,21 +1381,19 @@ BOOL CSkin::Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID, CToolTipCtrl*
 				}
 				else
 				{
-					CStringArray pItems;
-					CString strTemp;
-					int nNum;
+					CComboBox* pCombo = (CComboBox*)pWnd;
+					int nNum = pCombo->GetCount();
 
+					CStringArray pItems;
 					Split( strCaption, _T('|'), pItems, TRUE );
-					CComboBox* pCombo = (CComboBox*) pWnd;
-					nNum = pCombo->GetCount();
+
 					if ( nNum == pItems.GetSize() )
 					{
-						for ( int nCount = 0; nCount < nNum; nCount++ )
-						{
-							pCombo->DeleteString( 0 );
-							strTemp = pItems.GetAt( nCount );
-							pCombo->AddString( (LPCTSTR) strTemp );
-						}
+						int nCurSel = pCombo->GetCurSel();
+						pCombo->ResetContent();
+						for ( int i = 0; i < nNum; ++i )
+							pCombo->AddString( pItems.GetAt( i ) );
+						pCombo->SetCurSel( nCurSel );
 					}
 				}
 			}
@@ -1798,6 +1801,8 @@ BOOL CSkin::LoadResourceMap(CXMLElement* pBase)
 
 BOOL CSkin::LoadFonts(CXMLElement* pBase, const CString& strPath)
 {
+	bool bRichDefault = false, bRichHeading = false;
+
 	for ( POSITION pos = pBase->GetElementIterator() ; pos ; )
 	{
 		CXMLElement* pXML = pBase->GetNextElement( pos );
@@ -1834,10 +1839,12 @@ BOOL CSkin::LoadFonts(CXMLElement* pBase, const CString& strPath)
 				}
 				else if ( strName.CompareNoCase( _T("rich.default") ) == 0 )
 				{
+					bRichDefault = true;
 					pFont = &CoolInterface.m_fntRichDefault;
 				}
 				else if ( strName.CompareNoCase( _T("rich.heading") ) == 0 )
 				{
+					bRichHeading = true;
 					pFont = &CoolInterface.m_fntRichHeading;
 				}
 				else
@@ -1914,6 +1921,30 @@ BOOL CSkin::LoadFonts(CXMLElement* pBase, const CString& strPath)
 		}
 		else
 			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [fonts] element"), pXML->ToString() );
+	}
+
+	// Create Rich Default font based on Normal font if absent
+	if ( ! bRichDefault )
+	{
+		LOGFONT lfDefault = {};
+		CoolInterface.m_fntNormal.GetLogFont( &lfDefault );
+		lfDefault.lfHeight -= 1;
+		lfDefault.lfWeight += 300;
+		if ( CoolInterface.m_fntRichDefault.m_hObject )
+			CoolInterface.m_fntRichDefault.DeleteObject();
+		CoolInterface.m_fntRichDefault.CreateFontIndirect( &lfDefault );
+	}
+
+	// Create Rich Heading font based on Rich Default font if absent
+	if ( ! bRichHeading )
+	{
+		LOGFONT lfDefault = {};
+		CoolInterface.m_fntRichDefault.GetLogFont( &lfDefault );
+		lfDefault.lfHeight -= 5;
+		lfDefault.lfWeight += 100;
+		if ( CoolInterface.m_fntRichHeading.m_hObject )
+			CoolInterface.m_fntRichHeading.DeleteObject();
+		CoolInterface.m_fntRichHeading.CreateFontIndirect( &lfDefault );
 	}
 
 	return TRUE;

@@ -3193,9 +3193,9 @@
 </strings>
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <dialogs>
-	<dialog name="CGeneralSettingsGroup" cookie="" caption="Hlavní">
+	<dialog name="CGeneralSettingsGroup" cookie="Af" caption="Hlavní">
 	</dialog>
-	<dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="Nastavení Shareazy">
+	<dialog name="CSettingSheet" cookie="SyBuBuBu" caption="Nastavení Shareazy">
 		<control/>
 		<control caption="OK"/>
 		<control caption="Zrušit"/>
@@ -3300,7 +3300,7 @@
 		<control caption="Odst_ranit"/>
 		<control caption="Plugin správce stahování se bude pokoušet stahovat jen soubory ze seznamu vlevo. Ostatní typy souborů budou stahovány webovým prohlížečem. Správce stahování je aktivní pouze pokud je Shareaza spuštěna."/>
 	</dialog>
-	<dialog name="CInternetSettingsGroup" caption="Internet">
+	<dialog name="CInternetSettingsGroup" cookie="Af" caption="Internet">
 	</dialog>
 	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="Připojení">
 		<control caption="Příchozí _adresa:"/>
@@ -3680,7 +3680,7 @@
 		<control caption="Při startu Windows vždy spustit Shareazu"/>
 		<control caption="Užijte si Shareazu!"/>
 	</dialog>
-	<dialog name="CProfileManagerDlg" cookie="SyBuBuBu#3" caption="Upravit vlastní profil">
+	<dialog name="CProfileManagerDlg" cookie="SyBuBuBu" caption="Upravit vlastní profil">
 		<control/>
 		<control caption="OK"/>
 		<control caption="Zrušit"/>

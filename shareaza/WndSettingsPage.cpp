@@ -1,7 +1,7 @@
 //
 // WndSettingsPage.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -36,8 +36,6 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNAMIC(CSettingsPage, CDialog)
 
 BEGIN_MESSAGE_MAP(CSettingsPage, CDialog)
-	//{{AFX_MSG_MAP(CSettingsPage)
-	//}}AFX_MSG_MAP
 	ON_WM_ERASEBKGND()
 	ON_WM_CTLCOLOR()
 END_MESSAGE_MAP()
@@ -46,13 +44,14 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CSettingsPage construction
 
-CSettingsPage::CSettingsPage(UINT nIDTemplate, LPCTSTR pszCaption) : CDialog( nIDTemplate )
+CSettingsPage::CSettingsPage(UINT nIDTemplate, LPCTSTR pszName)
+	: CDialog( nIDTemplate )
 {
-	//{{AFX_DATA_INIT(CSettingsPage)
-	//}}AFX_DATA_INIT
+	if ( pszName )
+		m_sName = pszName;
 
-	if ( pszCaption != NULL ) m_sCaption = pszCaption;
-	else if ( m_lpszTemplateName != NULL ) LoadDefaultCaption();
+	if ( m_lpszTemplateName )
+		LoadDefaultCaption();
 }
 
 CSettingsPage::~CSettingsPage()
@@ -159,22 +158,32 @@ CSettingsPage* CSettingsPage::GetPage(CRuntimeClass* pClass) const
 BOOL CSettingsPage::OnInitDialog()
 {
 	CDialog::OnInitDialog();
+
 	m_wndToolTip.Create( this );
 	m_wndToolTip.Activate( TRUE );
 	m_wndToolTip.SetMaxTipWidth( 200 );
-	// Show the tooltip for 20 seconds
-	m_wndToolTip.SetDelayTime( TTDT_AUTOPOP, 20 * 1000 );
-
-	Skin.Apply( NULL, this, 0, &m_wndToolTip );
+	m_wndToolTip.SetDelayTime( TTDT_AUTOPOP, 20 * 1000 );	// Show the tooltip for 20 seconds
 
 	return TRUE;
+}
+
+void CSettingsPage::OnSkinChange()
+{
+	if ( ! IsWindow( GetSafeHwnd() ) )
+		// Not created yet page
+		return;
+
+	if ( m_sName.IsEmpty() )
+		m_sName = GetRuntimeClass()->m_lpszClassName;
+
+	SetWindowText( m_sCaption );
+
+	Skin.Apply( m_sName, this, 0, &m_wndToolTip );
 }
 
 void CSettingsPage::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange( pDX );
-	//{{AFX_DATA_MAP(CSettingsPage)
-	//}}AFX_DATA_MAP
 }
 
 void CSettingsPage::SetModified(BOOL bChanged)
@@ -267,7 +276,7 @@ BOOL CSettingsPage::PreTranslateMessage(MSG* pMsg)
 /////////////////////////////////////////////////////////////////////////////
 // CEditPath
 
-IMPLEMENT_DYNCREATE(CEditPath, CEdit)
+IMPLEMENT_DYNAMIC(CEditPath, CEdit)
 
 BEGIN_MESSAGE_MAP(CEditPath, CEdit)
 	ON_WM_LBUTTONDBLCLK()

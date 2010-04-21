@@ -1,7 +1,7 @@
 //
 // DlgSettingsManager.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -92,16 +92,14 @@ void CSettingsManagerDlg::OnSkinChange(BOOL bSet)
 	if ( bSet )
 	{
 		m_pThis->SkinMe( _T("CSettingSheet"), IDR_MAINFRAME );
+
 		for ( INT_PTR i = 0; i < m_pThis->GetPageCount(); ++i )
 		{
 			CSettingsPage* pPage = m_pThis->GetPage( i );
-			if ( IsWindow( pPage->GetSafeHwnd() ) )
-			{
-				Skin.Apply( NULL, pPage, 0, &pPage->m_wndToolTip );
 
-				// TODO: Fix CRichSettingsPage skinning.
-			}
+			pPage->OnSkinChange();
 		}
+
 		m_pThis->Invalidate();
 	}
 	else
@@ -208,7 +206,7 @@ BOOL CSettingsManagerDlg::OnInitDialog()
 
 	m_bmHeader.LoadBitmap( IDB_WIZARD );
 
-	SkinMe( _T("CSettingSheet"), IDR_MAINFRAME, TRUE );
+	SkinMe( _T("CSettingSheet"), IDR_MAINFRAME );
 
 	return TRUE;
 }

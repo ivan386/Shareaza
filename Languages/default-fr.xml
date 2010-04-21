@@ -3311,9 +3311,9 @@
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <!-- Don't edit dialogs manualy! Use DialogScan feature instead -->
 <dialogs>
-	<dialog name="CGeneralSettingsGroup" cookie="" caption="General">
+	<dialog name="CGeneralSettingsGroup" cookie="Af" caption="General">
 	</dialog>
-	<dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="Réglages Shareaza"><!--This can be is ignored or removed. Also there is some business unique to win98 I think. Try changing cookie to SyBuBuBu#3 if you're on that os. -->
+	<dialog name="CSettingSheet" cookie="SyBuBuBu" caption="Réglages Shareaza"><!--This can be is ignored or removed. Also there is some business unique to win98 I think. Try changing cookie to SyBuBuBu#3 if you're on that os. -->
 		<control/>
 		<control caption="Valider"/>
 		<control caption="Annuler"/>
@@ -3454,7 +3454,7 @@
 		<control caption="Enleve_r"/>
 		<control caption="Le gestionnaire de téléchargement ne téléchargera que les fichiers dont le type est dans cette liste. Les autres types de fichier seront gérés par votre navigateur Web. Shareaza doit être lancé pour que cette gestion soit active."/>
 	</dialog>
-	<dialog name="CInternetSettingsGroup" caption="Internet">
+	<dialog name="CInternetSettingsGroup" cookie="Af" caption="Internet">
 	</dialog>
 	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="Connexion">
 		<control caption="Adresse _entrante&#160;:"/>
@@ -3834,7 +3834,7 @@
 		<control caption="Lancer Shareaza au démarrage de &#171;&#160;Windows&#160;&#187;"/>
 		<control caption="Vous pouvez maintenant apprécier Shareaza&#160;!"/>
 	</dialog>
-	<dialog name="CProfileManagerDlg" cookie="SyBuBuBu#3" caption="Éditer mon profil">
+	<dialog name="CProfileManagerDlg" cookie="SyBuBuBu" caption="Éditer mon profil">
 		<control/>
 		<control caption="Valider"/>
 		<control caption="Annuler"/>

@@ -3315,9 +3315,9 @@
 	<!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 	<!-- Don't edit dialogs manualy! Use DialogScan feature instead -->
 	<dialogs>
-		<dialog name="CGeneralSettingsGroup" cookie="" caption="常规">
+		<dialog name="CGeneralSettingsGroup" cookie="Af" caption="常规">
 		</dialog>
-		<dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="Shareaza 设置">
+		<dialog name="CSettingSheet" cookie="SyBuBuBu" caption="Shareaza 设置">
 			<control/>
 			<control caption="确定"/>
 			<control caption="取消"/>
@@ -3458,7 +3458,7 @@
 			<control caption="移除(_R)"/>
 			<control caption="下载管理器插件只尝试下载下列文件类型。其他文件类型将由您的网页浏览器处理。Shareaza 只有运行时才能处理这些类型的下载。"/>
 		</dialog>
-		<dialog name="CInternetSettingsGroup" cookie="" caption="互联">
+		<dialog name="CInternetSettingsGroup" cookie="Af" caption="互联">
 		</dialog>
 		<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="连接">
 			<control caption="传入地址(_I):"/>
@@ -3838,7 +3838,7 @@
 			<control caption="每次系统启动后运行 Shareaza"/>
 			<control caption="尽情使用 Shareaza 吧！"/>
 		</dialog>
-		<dialog name="CProfileManagerDlg" cookie="SyBuBuBu#3" caption="编辑个人资料">
+		<dialog name="CProfileManagerDlg" cookie="SyBuBuBu" caption="编辑个人资料">
 			<control/>
 			<control caption="确定"/>
 			<control caption="取消"/>

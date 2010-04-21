@@ -3333,8 +3333,8 @@
   <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
   <!-- Don't edit dialogs manualy! Use DialogScan feature instead -->
   <dialogs>
-    <dialog name="CGeneralSettingsGroup" cookie="" caption="عام"></dialog>
-    <dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="إعدادات شير-أزا">
+    <dialog name="CGeneralSettingsGroup" cookie="Af" caption="عام"></dialog>
+    <dialog name="CSettingSheet" cookie="SyBuBuBu" caption="إعدادات شير-أزا">
       <control />
       <control caption="حسنا" />
       <control caption="إلغاء الأمر" />
@@ -3475,7 +3475,7 @@
       <control caption="_إزالة" />
       <control caption="وظيفة مدير التحميل الإضافية ستحاول فقط تحميل أنواع الملفات المدرجة هنا . أما أنواع الملفات الأخرى فستعالج بواسطة متصفحك . يجب أن يكون &quot;شير-أزا&quot; شغال لإدارة التحميلات" />
     </dialog>
-    <dialog name="CInternetSettingsGroup" caption="انترنت"></dialog>
+    <dialog name="CInternetSettingsGroup" cookie="Af" caption="انترنت"></dialog>
     <dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="الإتصال">
       <control caption="_:عنوان الوارد" />
       <control caption=":العنوان" />
@@ -3854,7 +3854,7 @@
       <control caption="عند تشغيل نظام تشغيل الويندوز Shareaza بداء تشغيل" />
       <control caption=" Shareaza تمتع بإستعمال" />
     </dialog>
-    <dialog name="CProfileManagerDlg" cookie="SyBuBuBu#3" caption="تحرير ملفي الخاص">
+    <dialog name="CProfileManagerDlg" cookie="SyBuBuBu" caption="تحرير ملفي الخاص">
       <control />
       <control caption="حسنا" />
       <control caption="إلغاء الأمر" />

@@ -3291,9 +3291,9 @@
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <!-- Don't edit dialogs manualy! Use DialogScan feature instead -->
 <dialogs>
-	<dialog name="CGeneralSettingsGroup" cookie="" caption="Algemeen">
+	<dialog name="CGeneralSettingsGroup" cookie="Af" caption="Algemeen">
 	</dialog>
-	<dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="Shareaza Verstellings">
+	<dialog name="CSettingSheet" cookie="SyBuBuBu" caption="Shareaza Verstellings">
 		<control/>
 		<control caption="OK"/>
 		<control caption="Kanselleer"/>
@@ -3434,7 +3434,7 @@
 		<control caption="V_erwyder"/>
 		<control caption="Die aflaai-hanteerder inpropprogram sal net lêertipes probeer aflaai wat hier gelys is.  Ander lêertipes sal hanteer word deur jou webblaaier.  Shareaza moet oop wees om aflaaie te hanteer."/>
 	</dialog>
-	<dialog name="CInternetSettingsGroup" caption="Internet">
+	<dialog name="CInternetSettingsGroup" cookie="Af" caption="Internet">
 	</dialog>
 	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="Konneksie">
 		<control caption="_Inkomende Adres:"/>
@@ -3814,7 +3814,7 @@
 		<control caption="Begin Shareaza elke keer as Windows begin"/>
 		<control caption="Geniet Shareaza!"/>
 	</dialog>
-	<dialog name="CProfileManagerDlg" cookie="SyBuBuBu#3" caption="Verander My Profiel">
+	<dialog name="CProfileManagerDlg" cookie="SyBuBuBu" caption="Verander My Profiel">
 		<control/>
 		<control caption="OK"/>
 		<control caption="Kanselleer"/>

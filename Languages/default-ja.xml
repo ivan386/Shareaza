@@ -3175,10 +3175,10 @@
 </strings>
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <dialogs>
-	<dialog name="CGeneralSettingsGroup" cookie="" caption="一般">
+	<dialog name="CGeneralSettingsGroup" cookie="Af" caption="一般">
 	</dialog>
 
-	<dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="Shareaza設定">
+	<dialog name="CSettingSheet" cookie="SyBuBuBu" caption="Shareaza設定">
 		<control/>
 		<control caption="OK"/>
 		<control caption="キャンセル"/>
@@ -3289,7 +3289,7 @@
 		<control caption="ダウンロードマネージャプラグインはここにリストされた種類のファイルだけをダウンロードします。他のファイルタイプのダウンロードにはウェブブラウザが使用されることになります。ダウンロードを処理するためにはShareazaを起動していなければなりません"/>
 	</dialog>
 
-	<dialog name="CInternetSettingsGroup" caption="インターネット">
+	<dialog name="CInternetSettingsGroup" cookie="Af" caption="インターネット">
 	</dialog>
 
 	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="接続">
@@ -3693,7 +3693,7 @@
 		<control caption="それでは素敵なShareazaライフを楽しんで下さい!"/>
 	</dialog>
 
-	<dialog name="CProfileManagerDlg" cookie="SyBuBuBu#3" caption="プロフィールを編集">
+	<dialog name="CProfileManagerDlg" cookie="SyBuBuBu" caption="プロフィールを編集">
 		<control/>
 		<control caption="OK"/>
 		<control caption="キャンセル"/>

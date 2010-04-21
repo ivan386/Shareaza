@@ -581,7 +581,7 @@
 			<item id="ID_LIBRARY_FOLDERS" text="Utdelade _filer…" />
 			<item id="ID_TOOLS_DOWNLOAD" text="_Ladda ned fil/Torrent…" />
 			<item id="IDC_IMPORT_DOWNLOADS" text="_Importera oavslutade eMule nedladdningar"/>
-			<item id="ID_OPEN_DOWNLOADS_FOLDER" text="_ppna mappen med avslutade nedladdninagar"/>
+			<item id="ID_OPEN_DOWNLOADS_FOLDER" text="_Öppna mappen med avslutade nedladdninagar"/>
 			<separator/>
 			<item id="ID_TOOLS_SKIN" text="Välj _skinn…" />
 			<item id="ID_TOOLS_LANGUAGE" text="Välj ett s_pråk…" />
@@ -3247,9 +3247,9 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 </strings>
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <dialogs>
-	<dialog name="CGeneralSettingsGroup" cookie="" caption="Generellt">
+	<dialog name="CGeneralSettingsGroup" cookie="Af" caption="Generellt">
 	</dialog>
-	<dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="Inställningar för Shareaza">
+	<dialog name="CSettingSheet" cookie="SyBuBuBu" caption="Inställningar för Shareaza">
 		<control/>
 		<control caption="OK"/>
 		<control caption="Avbryt" />
@@ -3390,7 +3390,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="_Radera" />
 		<control caption="Insticksprogrammet för nedladdningshantering kommer endast att försöka att ladda ned filtyper som visas här. Andra filtyper kommer att hanteras av din webbläsare. Shareaza måste vara startad för att hantera nedladdningar." />
 	</dialog>
-	<dialog name="CInternetSettingsGroup" caption="Internet">
+	<dialog name="CInternetSettingsGroup" cookie="Af" caption="Internet">
 	</dialog>
 	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="Anslutning">
 		<control caption="_Ingående adress:" />
@@ -3770,7 +3770,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="Starta Shareaza när Windows startas" />
 		<control caption="Ha kul med Shareaza!" />
 	</dialog>
-	<dialog name="CProfileManagerDlg" cookie="SyBuBuBu#3" caption="Redigera min profil">
+	<dialog name="CProfileManagerDlg" cookie="SyBuBuBu" caption="Redigera min profil">
 		<control/>
 		<control caption="OK"/>
 		<control caption="Avbryt" />

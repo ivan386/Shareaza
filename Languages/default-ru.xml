@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
 	<!-- Manifest -->
-	<manifest name="Русский" author="dAbserver" updatedBy="Rolandas Rudomanskis, ryo-oh-ki" description="Shareaza Russian Skin File" link="http://shareaza.sourceforge.net/" email="ryo-oh-ki@narod.ru" version="2.5.0.0" type="Language" language="ru" prompt="Щелкните здесь для смены языка на Русский." dir="ltr"/>
+	<manifest name="Русский" author="dAbserver" updatedBy="Rolandas Rudomanskis, ryo-oh-ki" description="Shareaza Russian Skin File" link="http://shareaza.sourceforge.net/" email="ryo-oh-ki@narod.ru" version="2.5.2.0" type="Language" language="ru" prompt="Щелкните здесь для смены языка на Русский." dir="ltr"/>
 	<!-- Toolbar Definitions -->
 	<toolbars>
 		<!-- MAIN WINDOW -->
@@ -1898,7 +1898,7 @@
 			<text format="b">Добро пожаловать в менеджер установок Shareaza</text>
 			<newline gap="16"/>
 			<text>Менеджер установок Shareaza опытным пользователям позволит полностью настроить
-			работу Shareaza.  Установки в секции</text>
+			работу Shareaza.  Установки в секции </text>
 			<text format="b">Интернет</text>
 			<text>контролируют взаимодействие Shareaza с другими узлами в пределах распределенного соединения равноправных узлов.</text>
 			<newline gap="16" indent="16"/>
@@ -2457,6 +2457,9 @@
 		<tip id="ID_MEDIA_STOP" message="Остановить воспроизведение медиа файла." tip="Стоп"/>
 		<tip id="ID_MEDIA_VIS" message="Выбрать модуль аудио визуализации..."/>
 		<tip id="ID_MEDIA_ZOOM" message="Регулировка видео масштаба и пропорций."/>
+		<tip id="IDC_MEDIA_POSITION" value="Seek to a position in the media file." tip="Поиск"/>
+		<tip id="IDC_MEDIA_SPEED" value="Adjust the speed of the media file." tip="Скорость"/>
+		<tip id="IDC_MEDIA_VOLUME" value="Adjust the audio volume." tip="Громкость"/>
 		<tip id="ID_MONITOR_CLOSE" message="Закрыть окно монитора."/>
 		<tip id="ID_NEIGHBOURS_CHAT" message="Открыть чат сессию с помеченным пользователем."/>
 		<tip id="ID_NEIGHBOURS_COPY" message="Копировать ссылку доступа к помеченному хосту."/>
@@ -2978,7 +2981,6 @@
 		<string id="16402" value="Shareaza получила файл коллекции:\n\n\n\n«%s»\n\n\n\nЭтот файл не является правильным файлом коллекции."/>
 		<string id="16403" value="Shareaza добавила файл коллекции «%s» в Ваше хранилище."/>
 		<string id="16404" value="Shareaza не смогла инсталлировать файл коллекции «%s», копируя его в папку «%s»."/>
-		<string id="16405" value="Хотите ли Вы загрузить этот файл?\n\n\n\n«%s»\n\n\n\nВыберите «Cancel», чтобы не тревожить об этом позже."/>
 		<string id="16406" value="Хотите ли Вы загрузить все файлы из этой коллекции?\n\n\n\nВыберите «Cancel», чтобы не тревожить об этом позже."/>
 		<string id="16407" value="Хотите ли Вы, чтобы Вас не спрашивали подверждений о дальнейших загрузках из этой коллекции?"/>
 		<string id="16408" value="&amp;Копировать ссылку"/>
@@ -3320,13 +3322,16 @@
 		<string id="20242" value="Повторить снова"/>
 		<string id="20243" value="Продолжить"/>
 		<string id="20244" value="&amp;Запомнить мой выбор на будущее"/>
+		<string id="32825" value="Открыть папку с завершёнными загрузками"/>
+		<string id="32773" value="Проверить новую версию"/>
+		<string id="61215" value="Переключиться на это окно"/>
 	</strings>
 	<!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 	<!-- Don't edit dialogs manualy! Use DialogScan feature instead -->
 	<dialogs>
-		<dialog name="CGeneralSettingsGroup" cookie="" caption="Главное">
+		<dialog name="CGeneralSettingsGroup" cookie="Af" caption="Главное">
 		</dialog>
-		<dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="Установки Shareaza">
+		<dialog name="CSettingSheet" cookie="SyBuBuBu" caption="Установки Shareaza">
 			<control/>
 			<control caption="OK"/>
 			<control caption="Отмена"/>
@@ -3347,7 +3352,7 @@
 			<control caption="Раскрывать дерево источн. поиска"/>
 			<control caption="При загрузке перейти к пересылкам"/>
 			<control caption="Скрыть панель поиска начав поиск"/>
-			<control caption="Фильтровать содерж. для взрослых"/>
+			<control caption="Фильтровать поиск для взрослых"/>
 			<control caption="Показывать _подсказки для:"/>
 			<control/>
 			<control caption="Задерж.(мс):"/>
@@ -3418,10 +3423,10 @@
 		</dialog>
 		<dialog name="CIRCSettingsPage" cookie="BuBuBuEdStBuStCoBuBuStBuStBuStBuStBuStBuStBuStEdStEdStEdStEdStEdStEd" caption="Чат">
 			<control caption="Настройки _чата:"/>
-			<control caption="Show chat  integration"/>
-			<control caption="Flood protection:"/>
+			<control caption="Показать интеграцию чата"/>
+			<control caption="Защита от флуда:"/>
 			<control/>
-			<control caption="lines per second"/>
+			<control caption="строк в секунду"/>
 			<control caption="Метки времени"/>
 			<control caption="Шрифт:"/>
 			<control/>
@@ -3467,7 +3472,7 @@
 			<control caption="_Удалить"/>
 			<control caption="Модуль менеджера загрузок предложит загрузить только указанные здесь типы файлов.  Остальные типы файлов будут обработанны вашим обозревателем.  Shareaza должна быть запущена для перехвата загрузок."/>
 		</dialog>
-		<dialog name="CInternetSettingsGroup" cookie="" caption="Интернет">
+		<dialog name="CInternetSettingsGroup" cookie="Af" caption="Интернет">
 		</dialog>
 		<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="Подключения">
 			<control caption="Адрес для входящего потока:"/>
@@ -3847,7 +3852,7 @@
 			<control caption="Запускать Shareaza при каждом запуске Windows"/>
 			<control caption="Наслаждайтесь использованием Shareaza!"/>
 		</dialog>
-		<dialog name="CProfileManagerDlg" cookie="SyBuBuBu#3" caption="Профиль">
+		<dialog name="CProfileManagerDlg" cookie="SyBuBuBu" caption="Профиль">
 			<control/>
 			<control caption="OK"/>
 			<control caption="Отмена"/>
@@ -3955,8 +3960,8 @@
 			<control/>
 			<control caption="Загрузить"/>
 			<control caption="Отмена"/>
-			<control caption="Shareaza может загружать файлы из веба (HTTP), и автоматически искать и загружать файлы по P2P ссылкам (Magnet, Gnutella, eDonkey, mP2P)."/>
-			<control caption="Shareaza может загружать и BitTorrent файлы. Torrent представляет собой xyz.torrent файл или HTTP ссылку на '.torrent' файл.  Для загрузки HTTP Torrent ссылки введите её выше.  Если у Вас уже есть '.torrent' файл, нажмите кнопку"/>
+			<control caption="Shareaza может загружать файлы через HTTP, и автоматически искать и загружать файлы по P2P ссылкам (Magnet, Gnutella, eDonkey, mP2P)."/>
+			<control caption="Shareaza умеет загружать через BitTorrent. Torrent - это .torrent-файл или HTTP ссылка на .torrent-файл.  Для загрузки HTTP .torrent-ссылки вставьте её выше. А если есть .torrent-файл, нажмите кнопку «Открыть Torrent»:"/>
 			<control caption="Открыть _Torrent..."/>
 		</dialog>
 		<dialog name="CNewSearchDlg" cookie="EdCoBuBu" caption="Новый поиск|Искать снова|Поиск в хранилище">
@@ -4371,7 +4376,7 @@
 		</dialog>
 		<dialog name="CTorrentSeedDlg" cookie="StStBuBuBuStms" caption="Открыть торрент">
 			<control/>
-			<control caption="Вы открыли торрент..."/>
+			<control caption="Вы открыли торрент. Хотите загржать его или раздавать?"/>
 			<control caption="Загрузить"/>
 			<control caption="Раздать"/>
 			<control caption="Отмена"/>
@@ -4384,7 +4389,7 @@
 			<control/>
 			<control/>
 			<control/>
-			<control caption=" Когда необходимо| Когда соотношение выше 100%| Только когда запрашивают| Никогда"/>
+			<control caption=" По необходимости| При рейте более 100%| При запросе| Никогда"/>
 			<control/>
 			<control caption="_Информация о торренте:"/>
 			<control caption="Название:"/>
@@ -4403,13 +4408,13 @@
 			<control/>
 			<control/>
 			<control/>
-			<control caption="Отключен|Один трекер|Мульти-трекер|Мульти-трекер (заблокир.)"/>
+			<control caption="Отключен|Одиночный|Мульти-трекер|Мульти-трекер (заблок.)"/>
 			<control caption="_Обновить"/>
 			<control/>
 			<control caption="Трекер:"/>
-			<control caption="_Активный трекер:"/>
-			<control caption="_Сидеры (раздача):"/>
-			<control caption="_Личеры (загрузка):"/>
+			<control caption="_Текущий трекер:"/>
+			<control caption="Полные (сиды):"/>
+			<control caption="Неполные:"/>
 			<control caption="Режим трекера:"/>
 		</dialog>
 		<dialog name="CDownloadGroupDlg" cookie="BuBuEdCoBuCoBuBuEdBuBuBuBuBuBu" caption="Свойства группы загрузки">
@@ -4440,10 +4445,10 @@
 		</dialog>
 		<dialog name="CUpgradeDlg" cookie="StStStBuBuBu" caption="Предупреждение об обновлении">
 			<control/>
-			<control caption="Уже появилась новая версия Shareaza. Хотите ли Вы обновить?"/>
-			<control caption="Если Вы будете обновлять Сейчас, Shareaza добавит обновление в очередь Вашего списка загрузок и автоматически начнет его загрузку."/>
+			<control caption="Появилась новая версия Shareaza. Хотите ли обновиться?"/>
+			<control caption="Если вы нажмёте Обновить Сейчас, Shareaza добавит обновление в очередь списка загрузок и автоматически начнет загрузку."/>
 			<control caption="_Обновить сейчас"/>
-			<control caption="Не проверять новых версий"/>
+			<control caption="Не проверять новые версии"/>
 			<control caption="Не обновлять"/>
 		</dialog>
 		<dialog name="CDownloadReviewDlg" cookie="StBuSyEd" caption="Оценки закрузки">
@@ -4594,6 +4599,8 @@
 		<list name="CTorrentFileList">
 			<column from="Filename" to="Файл"/>
 			<column from="Size" to="Размер"/>
+			<column from="Status" to="Статус"/>
+			<column from="Priority" to="Приоритет"/>
 		</list>
 		<list name="CTorrentTrackerList">
 			<column from="Tracker" to="Трекер"/>

@@ -3087,9 +3087,9 @@
 </strings>
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <dialogs>
-	<dialog name="CGeneralSettingsGroup" cookie="" caption="Generelt">
+	<dialog name="CGeneralSettingsGroup" cookie="Af" caption="Generelt">
 	</dialog>
-	<dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="Innstillinger">
+	<dialog name="CSettingSheet" cookie="SyBuBuBu" caption="Innstillinger">
 		<control/>
 		<control caption="OK"/>
 		<control caption="Avbryt"/>
@@ -3194,7 +3194,7 @@
 		<control caption="_Fjern"/>
 		<control caption="Nedlastingsguiden vil bare laste ned filer i denne listen. Andre filer vil bli åpnet i din internettleser. Shareaza må være i gang for å kunne ta imot nedlastinger."/>
 	</dialog>
-	<dialog name="CInternetSettingsGroup" caption="Internett">
+	<dialog name="CInternetSettingsGroup" cookie="Af" caption="Internett">
 	</dialog>
 	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="Forbindelse">
 		<control caption="_Inngående adresse:"/>
@@ -3574,7 +3574,7 @@
 		<control caption="Start Shareaza når Windows starter"/>
 		<control caption="Kos deg med Shareaza!"/>
 	</dialog>
-	<dialog name="CProfileManagerDlg" cookie="SyBuBuBu#3" caption="Endre min profil">
+	<dialog name="CProfileManagerDlg" cookie="SyBuBuBu" caption="Endre min profil">
 		<control/>
 		<control caption="OK"/>
 		<control caption="Avbryt"/>

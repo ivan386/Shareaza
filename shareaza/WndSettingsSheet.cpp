@@ -1,7 +1,7 @@
 //
 // WndSettingsSheet.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -346,7 +346,12 @@ BOOL CSettingsSheet::CreatePage(CSettingsPage* pPage)
 	rc.right	= rc.left + m_szPages.cx;
 	rc.bottom	= rc.top  + m_szPages.cy;
 
-	return pPage->Create( rc, this );
+	if ( ! pPage->Create( rc, this ) )
+		return FALSE;
+
+	pPage->OnSkinChange();
+
+	return TRUE;
 }
 
 void CSettingsSheet::OnTreeExpanding(NMHDR* /*pNotify*/, LRESULT *pResult)

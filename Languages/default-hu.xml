@@ -3265,9 +3265,9 @@
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <!-- Don't edit dialogs manualy! Use DialogScan feature instead -->
 <dialogs>
-	<dialog name="CGeneralSettingsGroup" cookie="" caption="Általános">
+	<dialog name="CGeneralSettingsGroup" cookie="Af" caption="Általános">
 	</dialog>
-	<dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="Shareaza beállítások">
+	<dialog name="CSettingSheet" cookie="SyBuBuBu" caption="Shareaza beállítások">
 		<control/>
 		<control caption="OK"/>
 		<control caption="Mégse"/>
@@ -3408,7 +3408,7 @@
 		<control caption="_Eltávolít"/>
 		<control caption="A program csak az itt feltüntetett fájltípusokat fogja letölteni. Más típusokat a böngésző kezeli. A használatához a Shareazának futnia kell a háttérben."/>
 	</dialog>
-	<dialog name="CInternetSettingsGroup" caption="Internet">
+	<dialog name="CInternetSettingsGroup" cookie="Af" caption="Internet">
 	</dialog>
 	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="Kapcsolat">
 		<control caption="_Bejövő cím"/>
@@ -3788,7 +3788,7 @@
 		<control caption="A Windows indításával együtt indítja a Shareazát"/>
 		<control caption="Használja a Shareazát! :D"/>
 	</dialog>
-	<dialog name="CProfileManagerDlg" cookie="SyBuBuBu#3" caption="Saját adatlap szerkesztése">
+	<dialog name="CProfileManagerDlg" cookie="SyBuBuBu" caption="Saját adatlap szerkesztése">
 		<control/>
 		<control caption="OK"/>
 		<control caption="Mégse"/>

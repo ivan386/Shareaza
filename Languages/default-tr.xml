@@ -3291,9 +3291,9 @@
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <!-- Don't edit dialogs manualy! Use DialogScan feature instead -->
 <dialogs>
-	<dialog name="CGeneralSettingsGroup" cookie="" caption="Genel">
+	<dialog name="CGeneralSettingsGroup" cookie="Af" caption="Genel">
 	</dialog>
-	<dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="Shareaza Ayarları">
+	<dialog name="CSettingSheet" cookie="SyBuBuBu" caption="Shareaza Ayarları">
 		<control/>
 		<control caption="Tamam"/>
 		<control caption="İptal"/>
@@ -3434,7 +3434,7 @@
 		<control caption="_Kaldır"/>
 		<control caption="İndirme yönetim eklentisi sadece listelenen dosya türlerini indirmeye çalışacak.  Diğer dosya türleri web tarayıcınız tarafından yönetilecek. Shareaza indirme yönetimi çalışıyor olmalı."/>
 	</dialog>
-	<dialog name="CInternetSettingsGroup" cookie="" caption="İnternet">
+	<dialog name="CInternetSettingsGroup" cookie="Af" caption="İnternet">
 	</dialog>
 	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="Bağlantı">
 		<control caption="_Gelen Adres:"/>
@@ -3814,7 +3814,7 @@
 		<control caption="Windows her açıldığında Shareaza'yı başlat"/>
 		<control caption="Shareaza'yı kullanmak zevklidir!"/>
 	</dialog>
-	<dialog name="CProfileManagerDlg" cookie="SyBuBuBu#3" caption="Profilimi Düzenle">
+	<dialog name="CProfileManagerDlg" cookie="SyBuBuBu" caption="Profilimi Düzenle">
 		<control/>
 		<control caption="Tamam"/>
 		<control caption="İptal"/>

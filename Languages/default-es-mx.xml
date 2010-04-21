@@ -3220,10 +3220,10 @@
 
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <dialogs>
-	<dialog name="CGeneralSettingsGroup" cookie="" caption="General">
+	<dialog name="CGeneralSettingsGroup" cookie="Af" caption="General">
 	</dialog>
 
-	<dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="Configuración de Shareaza">
+	<dialog name="CSettingSheet" cookie="SyBuBuBu" caption="Configuración de Shareaza">
 		<control/>
 		<control caption="Aceptar"/>
 		<control caption="Cancelar"/>
@@ -3334,7 +3334,7 @@
 		<control caption="El manejador de descargas solo funcionara con los siguientes tipos de archivos.  Los demás serán manejados por tu navegador.  Shareaza tiene que estar corriendo, para que el manejador de descargas funcione correctamente."/>
 	</dialog>
 
-	<dialog name="CInternetSettingsGroup" caption="Internet">
+	<dialog name="CInternetSettingsGroup" cookie="Af" caption="Internet">
 	</dialog>
 
 	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuStEdmsStEdms" caption="Conexión">
@@ -3738,7 +3738,7 @@
 		<control caption="Shareaza usa la tecnología más avanzada de intercambio de archivos. ¡Disfrútelo!."/>
 	</dialog>
 
-	<dialog name="CProfileManagerDlg" cookie="SyBuBuBu#3" caption="Editar Mi Perfil">
+	<dialog name="CProfileManagerDlg" cookie="SyBuBuBu" caption="Editar Mi Perfil">
 		<control/>
 		<control caption="Aceptar"/>
 		<control caption="Cancelar"/>

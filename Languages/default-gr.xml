@@ -3319,9 +3319,9 @@
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <!-- Don't edit dialogs manualy! Use DialogScan feature instead -->
 <dialogs>
-	<dialog name="CGeneralSettingsGroup" cookie="" caption="Γενικά">
+	<dialog name="CGeneralSettingsGroup" cookie="Af" caption="Γενικά">
 	</dialog>
-	<dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="Ρυθμίσεις Shareaza">
+	<dialog name="CSettingSheet" cookie="SyBuBuBu" caption="Ρυθμίσεις Shareaza">
 		<control/>
 		<control caption="OK"/>
 		<control caption="Άκυρο"/>
@@ -3462,7 +3462,7 @@
 		<control caption="_Αφαίρεση"/>
 		<control caption="Το πρόσθετο (plugin) διαχείρισης λήψεων θα επιχειρεί να λάβει τύπους αρχείων αυτής της λίστας. Ο χειρισμός των υπόλοιπων τύπων παραμένει στο πρόγραμμα περιήγησής σας. Για να διαχειρίζεται τις λήψεις, το Shareaza πρέπει να είναι ανοιγμένο!"/>
 	</dialog>
-	<dialog name="CInternetSettingsGroup" caption="Διαδίκτυο">
+	<dialog name="CInternetSettingsGroup" cookie="Af" caption="Διαδίκτυο">
 	</dialog>
 	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="Σύνδεση">
 		<control caption="Ει_σερχόμενη Διεύθυνση:"/>
@@ -3842,7 +3842,7 @@
 		<control caption="Εκκίνηση του Shareaza σε κάθε έναρξη των Windows"/>
 		<control caption="Απολαύστε το Shareaza!"/>
 	</dialog>
-	<dialog name="CProfileManagerDlg" cookie="SyBuBuBu#3" caption="Επεξεργασία Προφίλ">
+	<dialog name="CProfileManagerDlg" cookie="SyBuBuBu" caption="Επεξεργασία Προφίλ">
 		<control/>
 		<control caption="OK"/>
 		<control caption="Άκυρο"/>

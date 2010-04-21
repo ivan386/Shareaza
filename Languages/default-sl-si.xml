@@ -3186,10 +3186,10 @@
 
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <dialogs>
-	<dialog name="CGeneralSettingsGroup" cookie="" caption="Splošno">
+	<dialog name="CGeneralSettingsGroup" cookie="Af" caption="Splošno">
 	</dialog>
 
-	<dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="Shareaza nastavitve">
+	<dialog name="CSettingSheet" cookie="SyBuBuBu" caption="Shareaza nastavitve">
 		<control/>
 		<control caption="V redu"/>
 		<control caption="Prekliči"/>
@@ -3297,7 +3297,7 @@
 		<control caption="Vtičnik za prenosni upravljalec bo poskušal prenesti samo naslednje datotečne vrste. Druge datotečne vrste bo prevzel spletni brskalnik. Za takšno upravljanje prenosov mora biti Shareaza obvezno zagnana."/>
 	</dialog>
 
-	<dialog name="CInternetSettingsGroup" caption="Medmrežje">
+	<dialog name="CInternetSettingsGroup" cookie="Af" caption="Medmrežje">
 	</dialog>
 
 	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="Povezava">
@@ -3700,7 +3700,7 @@
 		<control caption="Obilo užitkov ob uporabi Shareaze!"/>
 	</dialog>
 
-	<dialog name="CProfileManagerDlg" cookie="SyBuBuBu#3" caption="Uredi moj profil">
+	<dialog name="CProfileManagerDlg" cookie="SyBuBuBu" caption="Uredi moj profil">
 		<control/>
 		<control caption="V redu"/>
 		<control caption="Prekliči"/>

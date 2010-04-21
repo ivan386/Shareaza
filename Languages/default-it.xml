@@ -3350,9 +3350,9 @@
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <!-- Don't edit dialogs manualy! Use DialogScan feature instead -->
 <dialogs>
-	<dialog name="CGeneralSettingsGroup" cookie="" caption="Generale">
+	<dialog name="CGeneralSettingsGroup" cookie="Af" caption="Generale">
 	</dialog>
-	<dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="Opzioni di Shareaza">
+	<dialog name="CSettingSheet" cookie="SyBuBuBu" caption="Opzioni di Shareaza">
 		<control/>
 		<control caption="OK"/>
 		<control caption="Annulla"/>
@@ -3493,7 +3493,7 @@
 		<control caption="_Rimuovi"/>
 		<control caption="Il plugin gestore dei download scaricherà solo i tipi di file elencati qui. Altri tipi di file saranno gestiti dal tuo browser. Shareaza deve essere in esecuzione per gestire i download."/>
 	</dialog>
-	<dialog name="CInternetSettingsGroup" cookie="" caption="Internet">
+	<dialog name="CInternetSettingsGroup" cookie="Af" caption="Internet">
 	</dialog>
 	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="Connessione">
 		<control caption="Indirizzi in _entrata:"/>
@@ -3873,7 +3873,7 @@
 		<control caption="Esegui Shareaza all'avvio di Windows"/>
 		<control caption="Buon divertimento con Shareaza!"/>
 	</dialog>
-	<dialog name="CProfileManagerDlg" cookie="SyBuBuBu#3" caption="Modifica profilo">
+	<dialog name="CProfileManagerDlg" cookie="SyBuBuBu" caption="Modifica profilo">
 		<control/>
 		<control caption="OK"/>
 		<control caption="Annulla"/>

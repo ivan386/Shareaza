@@ -3341,9 +3341,9 @@
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <!-- Don't edit dialogs manualy! Use DialogScan feature instead -->
 <dialogs>
-	<dialog name="CGeneralSettingsGroup" cookie="" caption="Përgjithësi">
+	<dialog name="CGeneralSettingsGroup" cookie="Af" caption="Përgjithësi">
 	</dialog>
-	<dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="Vendosjet e Shareaza-s">
+	<dialog name="CSettingSheet" cookie="SyBuBuBu" caption="Vendosjet e Shareaza-s">
 		<control/>
 		<control caption="OK"/>
 		<control caption="Anulo"/>
@@ -3484,7 +3484,7 @@
 		<control caption="_Fshije"/>
 		<control caption="Spina e menaxherit shkarkues do të orvatet të shkarkojë vetëm llojet e skedave në listë. Llojet e tjera do të trajtohen nga shfletuesi yt i rrjetit. Shareaza duhet të veprojë për të menaxhuar shkarkesat."/>
 	</dialog>
-	<dialog name="CInternetSettingsGroup" cookie="" caption="Internet">
+	<dialog name="CInternetSettingsGroup" cookie="Af" caption="Internet">
 	</dialog>
 	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="Lidhje">
 		<control caption="Adresa _Hyrëse:"/>
@@ -3864,7 +3864,7 @@
 		<control caption="Hape Shareaza-n sa herë nis Windows-i"/>
 		<control caption="Kënaqu me Shareaza-n!"/>
 	</dialog>
-	<dialog name="CProfileManagerDlg" cookie="SyBuBuBu#3" caption="Editoni Profilin">
+	<dialog name="CProfileManagerDlg" cookie="SyBuBuBu" caption="Editoni Profilin">
 		<control/>
 		<control caption="OK"/>
 		<control caption="Anulo"/>

@@ -3201,10 +3201,10 @@
 
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <dialogs>
-	<dialog name="CGeneralSettingsGroup" cookie="" caption="General">
+	<dialog name="CGeneralSettingsGroup" cookie="Af" caption="General">
 	</dialog>
 
-	<dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="Shareaza Seaded">
+	<dialog name="CSettingSheet" cookie="SyBuBuBu" caption="Shareaza Seaded">
 		<control/>
 		<control caption="OK"/>
 		<control caption="Tühista"/>
@@ -3316,7 +3316,7 @@
 		<control caption="Allalaadimishalduri plugin proovib tõmmata ainult nimekirjas olevaid faile.  Teisi failitüüpe käsitleb sinu weebibrauser.  Shareaza peab allalaadimiste haldamiseks töötama."/>
 	</dialog>
 
-	<dialog name="CInternetSettingsGroup" caption="Internet"/>
+	<dialog name="CInternetSettingsGroup" cookie="Af" caption="Internet"/>
 
 	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuStEdmsStEdms" caption="Ühendused">
 		<control caption="_Sissetulevad Aadressid:"/>
@@ -3716,7 +3716,7 @@
 		<control caption="Alusta Shareaza nautimist!"/>
 	</dialog>
 
-	<dialog name="CProfileManagerDlg" cookie="SyBuBuBu#3" caption="Muuda Minu Profiili">
+	<dialog name="CProfileManagerDlg" cookie="SyBuBuBu" caption="Muuda Minu Profiili">
 		<control/>
 		<control caption="OK"/>
 		<control caption="Tühista"/>

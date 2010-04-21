@@ -3345,9 +3345,9 @@
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <!-- Don't edit dialogs manualy! Use DialogScan feature instead -->
 <dialogs>
-	<dialog name="CGeneralSettingsGroup" cookie="" caption="General">
+	<dialog name="CGeneralSettingsGroup" cookie="Af" caption="General">
 	</dialog>
-	<dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="Configuració de Shareaza">
+	<dialog name="CSettingSheet" cookie="SyBuBuBu" caption="Configuració de Shareaza">
 		<control/>
 		<control caption="Accepta"/>
 		<control caption="Cancel·la"/>
@@ -3488,7 +3488,7 @@
 		<control caption="_Treu"/>
 		<control caption="El controlador de descàrregues sols funcionarà amb els següents tipus d'arxius.  Els demés seran controlats pel teu navegador.  Shareaza ha d'estar executant-se per a que el controlador de descàrregues funcioni correctament."/>
 	</dialog>
-	<dialog name="CInternetSettingsGroup" cookie="" caption="Internet">
+	<dialog name="CInternetSettingsGroup" cookie="Af" caption="Internet">
 	</dialog>
 	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="Connexió">
 		<control caption="_Adreça d'entrada:"/>
@@ -3868,7 +3868,7 @@
 		<control caption="Inicia Shareaza junt amb Windows"/>
 		<control caption="Shareaza usa la tecnologia més avançada d'intercanvi d'arxius. ¡Gaudeix!."/>
 	</dialog>
-	<dialog name="CProfileManagerDlg" cookie="SyBuBuBu#3" caption="Edita el meu perfil">
+	<dialog name="CProfileManagerDlg" cookie="SyBuBuBu" caption="Edita el meu perfil">
 		<control/>
 		<control caption="Accepta"/>
 		<control caption="Cancel·la"/>

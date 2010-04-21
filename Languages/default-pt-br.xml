@@ -3256,9 +3256,9 @@ pasta dos arquivos baixados a sua biblioteca agora?"/>
 	<!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 	<!-- Don't edit dialogs manualy! Use DialogScan feature instead -->
 	<dialogs>
-		<dialog name="CGeneralSettingsGroup" cookie="" caption="Geral">
+		<dialog name="CGeneralSettingsGroup" cookie="Af" caption="Geral">
 		</dialog>
-		<dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="Configurações do Shareaza">
+		<dialog name="CSettingSheet" cookie="SyBuBuBu" caption="Configurações do Shareaza">
 			<control/>
 			<control caption="OK"/>
 			<control caption="Cancelar"/>
@@ -3399,7 +3399,7 @@ pasta dos arquivos baixados a sua biblioteca agora?"/>
 			<control caption="_Remover"/>
 			<control caption="O Plugin gerenciador de download só tentará baixar os tipos de arquivos listados aqui. Outros tipos serão manejados pelo seu navegador. O Shareaza deve estar aberto para gerenciar os downloads."/>
 		</dialog>
-		<dialog name="CInternetSettingsGroup" cookie="" caption="Internet">
+		<dialog name="CInternetSettingsGroup" cookie="Af" caption="Internet">
 		</dialog>
 		<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="Conexão">
 			<control caption="_Endereço de Entrada:"/>
@@ -3779,7 +3779,7 @@ pasta dos arquivos baixados a sua biblioteca agora?"/>
 			<control caption="Iniciar o Shareaza toda vez que o Windows iniciar"/>
 			<control caption="Divirta-se usando o Shareaza!"/>
 		</dialog>
-		<dialog name="CProfileManagerDlg" cookie="SyBuBuBu#3" caption="Editar o Meu Perfil">
+		<dialog name="CProfileManagerDlg" cookie="SyBuBuBu" caption="Editar o Meu Perfil">
 			<control/>
 			<control caption="OK"/>
 			<control caption="Cancelar"/>

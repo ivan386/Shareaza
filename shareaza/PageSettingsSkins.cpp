@@ -1,7 +1,7 @@
 //
 // PageSettingsSkins.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -330,15 +330,13 @@ void CSkinsSettingsPage::OnItemChangedSkins(NMHDR* /*pNMHDR*/, LRESULT* pResult)
 //	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
 	*pResult = 0;
 
-	int nItem = m_wndList.GetNextItem( -1, LVNI_SELECTED );
-	if ( nItem == m_nSelected ) return;
-	m_nSelected = nItem;
+	m_nSelected = m_wndList.GetNextItem( -1, LVNI_SELECTED );
 
-	if ( nItem >= 0 )
+	if ( m_nSelected >= 0 )
 	{
-		m_wndName.SetWindowText( m_wndList.GetItemText( nItem, 0 ) );
-		m_wndAuthor.SetWindowText( m_wndList.GetItemText( nItem, 1 ) );
-		m_wndDesc.SetWindowText( m_wndList.GetItemText( nItem, 6 ) );
+		m_wndName.SetWindowText( m_wndList.GetItemText( m_nSelected, 0 ) );
+		m_wndAuthor.SetWindowText( m_wndList.GetItemText( m_nSelected, 1 ) );
+		m_wndDesc.SetWindowText( m_wndList.GetItemText( m_nSelected, 6 ) );
 		m_wndDelete.EnableWindow( TRUE );
 	}
 	else

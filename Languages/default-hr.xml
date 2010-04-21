@@ -3173,10 +3173,10 @@
 
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <dialogs>
-	<dialog name="CGeneralSettingsGroup" cookie="" caption="Općenito">
+	<dialog name="CGeneralSettingsGroup" cookie="Af" caption="Općenito">
 	</dialog>
 
-	<dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="Shareazine Postavke">
+	<dialog name="CSettingSheet" cookie="SyBuBuBu" caption="Shareazine Postavke">
 		<control/>
 		<control caption="OK"/>
 		<control caption="Odustani"/>
@@ -3285,7 +3285,7 @@
 		<control caption="Upravitelj Skidanja plugin skida samo datoteke onih prsta koje su na listi.Ostale tipove otvara Vaš internet preglednik.Shareaza mora biti pokrenuta da bi Upravitelj Skidanja radio."/>
 	</dialog>
 
-	<dialog name="CInternetSettingsGroup" caption="Internet">
+	<dialog name="CInternetSettingsGroup" cookie="Af" caption="Internet">
 	</dialog>
 
 	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuStEdmsStEdms" caption="Veza">
@@ -3687,7 +3687,7 @@
 		<control caption="Uživajte koristeći Shareazu!"/>
 	</dialog>
 
-	<dialog name="CProfileManagerDlg" cookie="SyBuBuBu#3" caption="Promjena Moga Profila">
+	<dialog name="CProfileManagerDlg" cookie="SyBuBuBu" caption="Promjena Moga Profila">
 		<control/>
 		<control caption="OK"/>
 		<control caption="Odustani"/>
