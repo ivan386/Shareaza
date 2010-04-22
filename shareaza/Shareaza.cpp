@@ -173,7 +173,6 @@ CShareazaApp::CShareazaApp() :
 ,	m_nWindowsVersion		( 0ul )
 ,	m_nWindowsVersionMinor	( 0ul )
 ,	m_nPhysicalMemory		( 0ull )
-,	m_nLogicalProcessors	( -1 )
 ,	m_bMenuWasVisible		( FALSE )
 ,	m_bUPnPPortsForwarded	( TRI_UNKNOWN )
 ,	m_bUPnPDeviceConnected	( TRI_UNKNOWN )
@@ -209,6 +208,7 @@ CShareazaApp::CShareazaApp() :
 ,	m_hLibGFL				( NULL )
 
 ,	m_dlgSplash				( NULL )
+,	m_SysInfo				()
 {
 	ZeroMemory( m_nVersion, sizeof( m_nVersion ) );
 	ZeroMemory( m_pBTVersion, sizeof( m_pBTVersion ) );
@@ -724,6 +724,8 @@ BOOL CShareazaApp::OpenURL(LPCTSTR lpszFileName, BOOL bDoIt, BOOL bSilent)
 
 void CShareazaApp::InitResources()
 {
+	GetSystemInfo( &m_SysInfo );
+
 	// Set Build Date
 	COleDateTime tCompileTime;
 	tCompileTime.ParseDateTime( _T(__DATE__), LOCALE_NOUSEROVERRIDE, 1033 );
@@ -910,10 +912,6 @@ void CShareazaApp::InitResources()
 	if ( GlobalMemoryStatusEx( &pMemory ) )
 		m_nPhysicalMemory = pMemory.ullTotalPhys;
 
-	SYSTEM_INFO gSysInfo;
-	GetSystemInfo(&gSysInfo);
-	m_nLogicalProcessors = gSysInfo.dwNumberOfProcessors;
-
 	CryptAcquireContext( &m_hCryptProv, NULL, NULL, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT );
 
 	srand( GetTickCount() );
@@ -1019,7 +1017,8 @@ void CShareazaApp::ShowStartupText()
 	CString strBody;
 	LoadString( strBody, IDS_SYSTEM_MESSAGE );
 
-	strBody.Replace( _T("(version)"), (LPCTSTR)(theApp.m_sVersion + _T(" (") + theApp.m_sBuildDate + _T(")")) );
+	strBody.Replace( _T("(version)"),
+		(LPCTSTR)(theApp.m_sVersion + _T(" (") + theApp.m_sBuildDate + _T(")")) );
 
 	for ( strBody += '\n' ; strBody.GetLength() ; )
 	{
@@ -1037,6 +1036,32 @@ void CShareazaApp::ShowStartupText()
 		else
 			PrintMessage( MSG_INFO, strLine );
 	}
+
+	CString strCPU;
+	strCPU.Format( _T("\n%u x CPU. Features:"), m_SysInfo.dwNumberOfProcessors );
+	if ( Machine::SupportsMMX() )
+		strCPU += _T(" MMX");
+	if ( Machine::SupportsSSE() )
+		strCPU += _T(" SSE");
+	if ( Machine::SupportsSSE2() )
+		strCPU += _T(" SSE2");
+	if ( Machine::SupportsSSE3() )
+		strCPU += _T(" SSE3");
+	if ( Machine::SupportsSSSE3() )
+		strCPU += _T(" SSSE3");
+	if ( Machine::SupportsSSE41() )
+		strCPU += _T(" SSE4.1");
+	if ( Machine::SupportsSSE42() )
+		strCPU += _T(" SSE4.2");
+	if ( Machine::SupportsSSE4A() )
+		strCPU += _T(" SSE4A");
+	if ( Machine::SupportsSSE5() )
+		strCPU += _T(" SSE5");
+	if ( Machine::Supports3DNOW() )
+		strCPU += _T(" 3DNow");
+	if ( Machine::Supports3DNOWEXT() )
+		strCPU += _T(" 3DNowExt");
+	PrintMessage( MSG_INFO, strCPU );
 }
 
 void CShareazaApp::Message(WORD nType, UINT nID, ...)
@@ -1397,9 +1422,6 @@ BOOL CShareazaApp::InternalURI(LPCTSTR pszURI)
 
 /////////////////////////////////////////////////////////////////////////////
 // Runtime class lookup
-
-void AFXAPI AfxLockGlobals(int nLockType);
-void AFXAPI AfxUnlockGlobals(int nLockType);
 
 CRuntimeClass* AfxClassForName(LPCTSTR pszClass)
 {
@@ -2511,7 +2533,7 @@ bool ResourceRequest(const CString& strPath, CBuffer& pResponse, CString& sHeade
 								( pSource + sizeof( ICONDIR ) );
 
 							// Find all subicons
-							for ( WORD i = 0; i < piDir->idCount; i++ )
+							for ( WORD j = 0; j < piDir->idCount; j++ )
 							{
 								// pResponse.m_pBuffer may be changed
 								ICONDIRENTRY* piEntry = (ICONDIRENTRY*)
@@ -2519,7 +2541,7 @@ bool ResourceRequest(const CString& strPath, CBuffer& pResponse, CString& sHeade
 
 								// Load subicon
 								HRSRC hResIcon = FindResource( hModule, MAKEINTRESOURCE(
-									piDirEntry[ i ].nID ), RT_ICON );
+									piDirEntry[ j ].nID ), RT_ICON );
 								if ( hResIcon )
 								{
 									DWORD nSizeIcon = SizeofResource( hModule, hResIcon );
@@ -2529,14 +2551,14 @@ bool ResourceRequest(const CString& strPath, CBuffer& pResponse, CString& sHeade
 										BITMAPINFOHEADER* piImage = (BITMAPINFOHEADER*)LockResource( hMemoryIcon );
 
 										// Fill subicon header
-										piEntry[ i ].bWidth = piDirEntry[ i ].bWidth;
-										piEntry[ i ].bHeight = piDirEntry[ i ].bHeight;
-										piEntry[ i ].wPlanes = piDirEntry[ i ].wPlanes;
-										piEntry[ i ].bColorCount = piDirEntry[ i ].bColorCount;
-										piEntry[ i ].bReserved = 0;
-										piEntry[ i ].wBitCount = piDirEntry[ i ].wBitCount;
-										piEntry[ i ].dwBytesInRes = nSizeIcon;
-										piEntry[ i ].dwImageOffset = dwTotalSize;
+										piEntry[ j ].bWidth = piDirEntry[ j ].bWidth;
+										piEntry[ j ].bHeight = piDirEntry[ j ].bHeight;
+										piEntry[ j ].wPlanes = piDirEntry[ j ].wPlanes;
+										piEntry[ j ].bColorCount = piDirEntry[ j ].bColorCount;
+										piEntry[ j ].bReserved = 0;
+										piEntry[ j ].wBitCount = piDirEntry[ j ].wBitCount;
+										piEntry[ j ].dwBytesInRes = nSizeIcon;
+										piEntry[ j ].dwImageOffset = dwTotalSize;
 
 										// Save subicon
 										pResponse.EnsureBuffer( dwTotalSize + nSizeIcon );
@@ -2622,7 +2644,7 @@ bool MarkFileAsDownload(const CString& sFilename)
 			CloseHandle( hStream );
 		}
 		else
-			TRACE( "MarkFileAsDownload() : CreateFile \"%s\" error %d\n", sFilename, GetLastError() );
+			TRACE( "MarkFileAsDownload() : CreateFile \"%s\" error %d\n", (LPCSTR)CT2A( sFilename ), GetLastError() );
 
 		if ( bChanged )
 			SetFileAttributes( sFilename, dwOrigAttr );
@@ -2965,11 +2987,11 @@ CLowerCaseTable::CLowerCaseTable()
 
 TCHAR CLowerCaseTable::operator()(TCHAR cLookup) const
 {
-	if ( cLookup >= 0 && cLookup <= 127 )
+	if ( cLookup <= 127 )
 	{
 		// A..Z -> a..z
 		if ( cLookup >= _T('A') && cLookup <= _T('Z') )
-			return cLookup + 32;
+			return (TCHAR)( cLookup + 32 );
 		else
 			return cLookup;
 	}
@@ -2981,14 +3003,14 @@ CString& CLowerCaseTable::operator()(CString& strSource) const
 {
 	const int nLength = strSource.GetLength();
 	LPTSTR str = strSource.GetBuffer();
-	for ( register int i = 0; i < nLength; ++i, ++str )
+	for ( int i = 0; i < nLength; ++i, ++str )
 	{
-		register TCHAR cLookup = *str;
-		if ( cLookup >= 0 && cLookup <= 127 )
+		TCHAR cLookup = *str;
+		if ( cLookup <= 127 )
 		{
 			// A..Z -> a..z
 			if ( cLookup >= _T('A') && cLookup <= _T('Z') )
-				*str = cLookup + 32;
+				*str = (TCHAR)( cLookup + 32 );
 		}
 		else
 			*str = cTable[ cLookup ];

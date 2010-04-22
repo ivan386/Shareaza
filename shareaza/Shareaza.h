@@ -93,7 +93,6 @@ public:
 	DWORD				m_nWindowsVersion;			// Windows version
 	DWORD				m_nWindowsVersionMinor;		// Windows minor version
 	QWORD				m_nPhysicalMemory;			// Physical RAM installed
-	int					m_nLogicalProcessors;		// Multi-CPUs, multi-cores or HT modules
 	BOOL				m_bMenuWasVisible;			// For the menus in media player window
 	CAutoPtr< CUPnPFinder > m_pUPnPFinder;
 	TRISTATE			m_bUPnPPortsForwarded;		// UPnP values are assigned when the discovery is complete
@@ -103,6 +102,7 @@ public:
 	HHOOK				m_hHookKbd;
 	HHOOK				m_hHookMouse;
 	CPacketWnd*			m_pPacketWnd;				// Packet Window (NULL - not opened)
+	SYSTEM_INFO			m_SysInfo;					// System Information
 
 	// Cryptography Context handle
 	HCRYPTPROV			m_hCryptProv;
@@ -202,6 +202,10 @@ protected:
 	void				FreeCountry();		// Free GeoIP resources
 
 	DECLARE_MESSAGE_MAP()
+
+private:
+	CShareazaApp(const CShareazaApp&);
+	CShareazaApp& operator=(const CShareazaApp&);
 };
 
 extern CShareazaApp theApp;

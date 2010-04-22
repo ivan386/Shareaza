@@ -1237,8 +1237,8 @@ DWORD CNeighboursWithConnect::CalculateSystemPerformanceScore(BOOL bDebug)
 	}
 
 	//Having more CPUs has significant effect on performance
-	nRating += theApp.m_nLogicalProcessors - 1;
-	if ( bDebug && theApp.m_nLogicalProcessors> 0)
+	nRating += theApp.m_SysInfo.dwNumberOfProcessors - 1;
+	if ( bDebug && theApp.m_SysInfo.dwNumberOfProcessors > 0 )
 		theApp.Message( MSG_DEBUG, _T("Multi-processor") );
 
 	

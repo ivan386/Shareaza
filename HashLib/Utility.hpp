@@ -80,27 +80,103 @@ namespace Machine
 	//! \brief Specifies the natural byte ordering of the target machine.
 	//! \todo detect endianess during compilation.
 	const Endianess endianess = littleEndian; // x86
-#ifndef _WIN64
-	inline uint64 cpuFlags()
+
+	inline bool SupportsMMX()
 	{
-		__asm
-		{
-			mov   eax, 1
-			cpuid
-			mov   eax, edx
-			mov   edx, ecx
-		}
+		int CPUInfo[ 4 ] = {};
+		__cpuid( CPUInfo, 1 );
+		return ( CPUInfo[ 3 ] & 0x00800000 ) != 0;
 	}
 
-	inline bool SupportsMMX() { return ( cpuFlags() & 0x00800000 ) != 0; }
-	inline bool SupportsSSE() { return ( cpuFlags() & 0x02000000 ) != 0; }
-	inline bool SupportsSSE2() { return ( cpuFlags() & 0x04000000 ) != 0; }
-	inline bool SupportsSSE3() { return ( cpuFlags() & 0x100000000 ) != 0; }
-#elif defined _WIN64
-	inline bool SupportsMMX() { return false; }
-	inline bool SupportsSSE() { return true; }
-	inline bool SupportsSSE2() { return true; }
-#endif
+	inline bool SupportsSSE()
+	{
+		int CPUInfo[ 4 ] = {};
+		__cpuid( CPUInfo, 1 );
+		return ( CPUInfo[ 3 ] & 0x02000000 ) != 0;
+	}
+
+	inline bool SupportsSSE2()
+	{
+		int CPUInfo[ 4 ] = {};
+		__cpuid( CPUInfo, 1 );
+		return ( CPUInfo[ 3 ] & 0x04000000 ) != 0;
+	}
+
+	inline bool SupportsSSE3()
+	{
+		int CPUInfo[ 4 ] = {};
+		__cpuid( CPUInfo, 1 );
+		return ( CPUInfo[ 2 ] & 0x00000001 ) != 0;
+	}
+
+	inline bool SupportsSSSE3()
+	{
+		int CPUInfo[ 4 ] = {};
+		__cpuid( CPUInfo, 1 );
+		return ( CPUInfo[ 2 ] & 0x00000200 ) != 0;
+	}
+
+	inline bool SupportsSSE41()
+	{
+		int CPUInfo[ 4 ] = {};
+		__cpuid( CPUInfo, 1 );
+		return ( CPUInfo[ 2 ] & 0x00080000 ) != 0;
+	}
+
+	inline bool SupportsSSE42()
+	{
+		int CPUInfo[ 4 ] = {};
+		__cpuid( CPUInfo, 1 );
+		return ( CPUInfo[ 2 ] & 0x00100000 ) != 0;
+	}
+
+	inline bool SupportsSSE4A()
+	{
+		int CPUInfo[ 4 ] = {};
+		__cpuid( CPUInfo, 0x80000000 );
+		if ( CPUInfo[ 0 ] >= 0x80000001 )
+		{
+			__cpuid( CPUInfo, 0x80000001 );
+			return ( CPUInfo[ 2 ] & 0x00000040 ) != 0;
+		}
+		return false;
+	}
+
+	inline bool SupportsSSE5()
+	{
+		int CPUInfo[ 4 ] = {};
+		__cpuid( CPUInfo, 0x80000000 );
+		if ( CPUInfo[ 0 ] >= 0x80000001 )
+		{
+			__cpuid( CPUInfo, 0x80000001 );
+			return ( CPUInfo[ 2 ] & 0x00000800 ) != 0;
+		}
+		return false;
+	}
+
+	inline bool Supports3DNOW()
+	{
+		int CPUInfo[ 4 ] = {};
+		__cpuid( CPUInfo, 0x80000000 );
+		if ( CPUInfo[ 0 ] >= 0x80000001 )
+		{
+			__cpuid( CPUInfo, 0x80000001 );
+			return ( CPUInfo[ 3 ] & 0x80000000 ) != 0;
+		}
+		return false;
+	}
+
+	inline bool Supports3DNOWEXT()
+	{
+		int CPUInfo[ 4 ] = {};
+		__cpuid( CPUInfo, 0x80000000 );
+		if ( CPUInfo[ 0 ] >= 0x80000001 )
+		{
+			__cpuid( CPUInfo, 0x80000001 );
+			return ( CPUInfo[ 3 ] & 0x40000000 ) != 0;
+		}
+		return false;
+	}
 }
 
 //! \brief generic function to swap the byte ordering of a given type
