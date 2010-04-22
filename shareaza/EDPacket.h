@@ -305,16 +305,18 @@ inline void CEDPacket::CEDPacketPool::FreePoolImpl(CPacket* pPacket)
 #define ED2K_SERVER_UDP_TCPOBFUSCATION	0x00000400
 
 
-class CEDTag : boost::noncopyable
+class CEDTag
 {
 // Construction
 public:
 	explicit CEDTag();
+	explicit CEDTag(const CEDTag&);
 	explicit CEDTag(BYTE nKey, const Hashes::Ed2kHash& oHash);
 	explicit CEDTag(BYTE nKey, QWORD nValue);
 	explicit CEDTag(BYTE nKey, LPCTSTR pszValue);
 	explicit CEDTag(LPCTSTR pszKey, QWORD nValue);
 	explicit CEDTag(LPCTSTR pszKey, LPCTSTR pszValue);
+	CEDTag& operator=(const CEDTag& t);
 
 // Attributes
 public:

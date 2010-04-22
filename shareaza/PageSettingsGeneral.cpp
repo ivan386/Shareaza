@@ -206,7 +206,6 @@ void CGeneralSettingsPage::OnOK()
 	CSettingsPage::OnOK();
 }
 
-
 void CGeneralSettingsPage::OnDropdownCloseMode()
 {
 	RecalcDropWidth( &m_wndCloseMode );

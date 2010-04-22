@@ -129,6 +129,9 @@ private:
 	BOOL		LoadFromTimePair();
 	void		SerializeCompound(CArchive& ar);
 	void		PurgePreviews();
+
+	CDownloads(const CDownloads&);
+	CDownloads& operator=(const CDownloads&);
 };
 
 extern CDownloads Downloads;

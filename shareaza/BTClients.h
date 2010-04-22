@@ -25,7 +25,7 @@ class CConnection;
 class CBTClient;
 
 
-class CBTClients : private boost::noncopyable
+class CBTClients
 {
 // Construction
 public:
@@ -47,6 +47,10 @@ protected:
 	void		Remove(CBTClient* pClient);
 
 	friend class CBTClient;
+
+private:
+	CBTClients(const CBTClients&);
+	CBTClients& operator=(const CBTClients&);
 };
 
 extern CBTClients BTClients;

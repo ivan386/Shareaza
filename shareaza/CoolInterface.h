@@ -226,6 +226,10 @@ protected:
 	CHICONHWNDMap	m_pWindowIcons;
 
 	BOOL			ConfirmImageList();
+
+private:
+	CCoolInterface(const CCoolInterface&);
+	CCoolInterface& operator=(const CCoolInterface&);
 };
 
 extern CCoolInterface CoolInterface;

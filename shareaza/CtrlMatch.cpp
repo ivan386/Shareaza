@@ -722,7 +722,6 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 	int nNameLen	= static_cast< int >( pszType ? pszType - pszName : _tcslen( pszName ) );
 	
 	BOOL bSelected	= pHit ? pHit->m_bSelected : pFile->m_bSelected;
-	BOOL bGrayed	= FALSE;
 	COLORREF crWnd	= CoolInterface.m_crWindow;
 
 	COLORREF crText	= bSelected ? CoolInterface.m_crHiText : CoolInterface.m_crText ;
@@ -777,7 +776,6 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 	{
 		// Greyed Out if Unstable (or Brown if also Ghostrated)
 		crText = pFile->GetLibraryStatus() == TRI_TRUE ? CoolInterface.m_crSearchGhostrated : CoolInterface.m_crSearchNull;
-		bGrayed = TRUE;
 	}
 	
 	dc.SetBkMode( OPAQUE );

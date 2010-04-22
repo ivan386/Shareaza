@@ -60,7 +60,7 @@ public:
 private:
 	static FinderPointer CreateFinderInstance() throw();
 
-	struct FindDevice : std::unary_function< DevicePointer, bool >
+	struct FindDevice : public std::unary_function< DevicePointer, bool >
 	{
 		FindDevice(const CComBSTR& udn) : m_udn( udn ) {}
 		result_type operator()(argument_type device) const

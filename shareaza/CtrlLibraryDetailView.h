@@ -107,7 +107,7 @@ class CLibraryListView : public CLibraryDetailView
 {
 public:
 	CLibraryListView() : CLibraryDetailView( ID_LIBRARY_VIEW_LIST ) {}
-	DECLARE_DYNCREATE(CLibraryListView);
+	DECLARE_DYNCREATE(CLibraryListView)
 };
 
 
@@ -115,7 +115,7 @@ class CLibraryIconView : public CLibraryDetailView
 {
 public:
 	CLibraryIconView() : CLibraryDetailView( ID_LIBRARY_VIEW_ICON ) {}
-	DECLARE_DYNCREATE(CLibraryIconView);
+	DECLARE_DYNCREATE(CLibraryIconView)
 };
 
 

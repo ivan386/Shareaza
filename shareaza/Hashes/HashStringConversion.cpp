@@ -50,11 +50,11 @@ namespace Hashes
 			return false;
 		c = *psz;
 		if ( c >= '0' && c <= '9' )
-			*pOut |= ( c - '0' );
+			*pOut |= uchar( c - '0' );
 		else if ( c >= 'A' && c <= 'F' )
-			*pOut |= ( c - 'A' + 10 );
+			*pOut |= uchar( c - 'A' + 10 );
 		else if ( c >= 'a' && c <= 'f' )
-			*pOut |= ( c - 'a' + 10 );
+			*pOut |= uchar( c - 'a' + 10 );
 		else
 			return false;
 		return true;

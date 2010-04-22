@@ -19,33 +19,28 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_FLAGS_H__0D66330C_DB37_4BFF_B2D8_02065ED19D08__INCLUDED_)
-#define AFX_FLAGS_H__0D66330C_DB37_4BFF_B2D8_02065ED19D08__INCLUDED_
-
 #pragma once
 
 class CImageFile;
 
 class CFlags
 {
-// Construction
 public:
 	CFlags();
 	virtual ~CFlags();
 
-// Attributes
-public:
 	CImageList			m_pImage;
 
-// Operations
-public:
 	BOOL	Load();
 	void	Clear();
 	int		GetFlagIndex(CString sCountry);
+
 protected:
 	void	AddFlag(CImageFile* pImage, CRect* pRect, COLORREF crBack);
+
+private:
+	CFlags(const CFlags&);
+	CFlags& operator=(const CFlags&);
 };
 
 extern CFlags Flags;
-
-#endif // !defined(AFX_FLAGS_H__0D66330C_DB37_4BFF_B2D8_02065ED19D08__INCLUDED_)

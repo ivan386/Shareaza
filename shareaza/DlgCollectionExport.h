@@ -98,4 +98,5 @@ protected:
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
 	//}}AFX_MSG
 };
+
 #define IDC_WIZARD		99

@@ -1359,7 +1359,6 @@ BOOL CDownloadTransferHTTP::ReadContent()
 							Close( TRI_FALSE );
 							return FALSE;
 						}
-						break;
 					}
 				}
 				bBreak = TRUE;

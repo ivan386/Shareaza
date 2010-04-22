@@ -31,7 +31,7 @@ enum
 
 class CSettingsItem;
 
-class CSettings : private boost::noncopyable
+class CSettings
 {
 // Construction
 public:
@@ -808,7 +808,7 @@ public:
 
 	const CString	SmartSpeed(QWORD nVolume, int nVolumeUnits = Bytes, bool bTruncate = false) const;	// Convert speeds into formatted strings
 	const CString	SmartVolume(QWORD nVolume, int nVolumeUnits = Bytes, bool bTruncate = false) const;	// Convert sizes into formatted strings
-	const QWORD	ParseVolume(const CString& strVolume, int nReturnUnits = Bytes) const;					// Convert size string into desired units
+	QWORD	ParseVolume(const CString& strVolume, int nReturnUnits = Bytes) const;					// Convert size string into desired units
 	DWORD	GetOutgoingBandwidth() const;																// Returns available outgoing bandwidth in KB/s
 	BOOL	CheckStartup();
 	void	SetStartup(BOOL bStartup);
@@ -852,6 +852,10 @@ protected:
 public:
 	// CSettings configurable user agent (Client Name + Version)
 	CString SmartAgent() const throw() { return theApp.m_sSmartAgent; }
+
+private:
+	CSettings(const CSettings&);
+	CSettings& operator=(const CSettings&);
 };
 
 extern CSettings Settings;

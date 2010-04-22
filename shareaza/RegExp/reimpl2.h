@@ -178,7 +178,7 @@ struct pool_impl
         unsigned char m_data[ 1 ];
     };
 #if !defined(_MSC_VER) | 1200 < _MSC_VER
-    struct pool_data : char_allocator_type
+    struct pool_data : public char_allocator_type
     {
         pool_data( size_t default_size, char_allocator_type const & alloc )
             : char_allocator_type( alloc )

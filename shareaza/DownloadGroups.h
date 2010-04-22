@@ -90,6 +90,10 @@ public:
 	{
 		m_nBaseCookie ++;
 	}
+
+private:
+	CDownloadGroups(const CDownloadGroups&);
+	CDownloadGroups& operator=(const CDownloadGroups&);
 };
 
 extern CDownloadGroups DownloadGroups;

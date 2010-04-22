@@ -349,5 +349,4 @@ BOOL CLibraryWnd::OnCollection(LPCTSTR pszPath)
 
 	if ( pFolder != NULL ) Display( pFolder );
 	return ( pFolder != NULL );
-}
-*/
+}*/

@@ -332,7 +332,7 @@ CWebCtrl::DocSite::DocSite(CWebCtrl* pCtrl, COleControlContainer* pContainer) : 
 /////////////////////////////////////////////////////////////////////////////
 // CWebCtrl::DocSite IDocHostUIHandler
 
-IMPLEMENT_UNKNOWN(CWebCtrl::DocSite, DocHostUIHandler);
+IMPLEMENT_UNKNOWN(CWebCtrl::DocSite, DocHostUIHandler)
 
 STDMETHODIMP CWebCtrl::DocSite::XDocHostUIHandler::GetExternal(LPDISPATCH *lppDispatch)
 {
@@ -462,7 +462,7 @@ STDMETHODIMP CWebCtrl::DocSite::XDocHostUIHandler::FilterDataObject(LPDATAOBJECT
 /////////////////////////////////////////////////////////////////////////////
 // CWebCtrl::DocSite IDocHostShowUI
 
-IMPLEMENT_UNKNOWN(CWebCtrl::DocSite, DocHostShowUI);
+IMPLEMENT_UNKNOWN(CWebCtrl::DocSite, DocHostShowUI)
 
 STDMETHODIMP CWebCtrl::DocSite::XDocHostShowUI::ShowHelp(HWND /*hwnd*/, LPOLESTR /*pszHelpFile*/, UINT /*uCommand*/, DWORD /*dwData*/, POINT /*ptMouse*/, IDispatch* /*pDispatchObjectHit*/)
 {
@@ -481,7 +481,7 @@ STDMETHODIMP CWebCtrl::DocSite::XDocHostShowUI::ShowMessage(HWND /*hwnd*/, LPOLE
 /////////////////////////////////////////////////////////////////////////////
 // CWebCtrl::DocSite IServiceProvider
 
-IMPLEMENT_UNKNOWN(CWebCtrl::DocSite, ServiceProvider);
+IMPLEMENT_UNKNOWN(CWebCtrl::DocSite, ServiceProvider)
 
 STDMETHODIMP CWebCtrl::DocSite::XServiceProvider::QueryService(REFGUID guidService, REFIID riid, void **ppv)
 {
@@ -509,7 +509,7 @@ STDMETHODIMP CWebCtrl::DocSite::XServiceProvider::QueryService(REFGUID guidServi
 /////////////////////////////////////////////////////////////////////////////
 // CWebCtrl::DocSite IInternetSecurityManager
 
-IMPLEMENT_UNKNOWN(CWebCtrl::DocSite, InternetSecurityManager);
+IMPLEMENT_UNKNOWN(CWebCtrl::DocSite, InternetSecurityManager)
 
 STDMETHODIMP CWebCtrl::DocSite::XInternetSecurityManager::GetSecurityId(LPCWSTR /*pwszUrl*/, BYTE* /*pbSecurityId*/, DWORD* /*pcbSecurityId*/, DWORD_PTR /*dwReserved*/)
 {

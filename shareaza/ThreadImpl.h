@@ -54,6 +54,9 @@ private:
 		return 0;
 	}
 
+	CThreadImpl(const CThreadImpl&);
+	CThreadImpl& operator=(const CThreadImpl&);
+
 protected:
 	virtual void OnRun() = 0;
 

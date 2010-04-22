@@ -876,8 +876,8 @@ BOOL CG2Neighbour::ParseKHLPacket(CG2Packet* pPacket, SOCKADDR_IN* pHost)
 				DWORD nAddress = 0, nKey = 0, tSeen = tNow;
 				WORD nPort = 0, nLeafs = 0, nLeafLimit = 0;
 				CString strVendor;
-				Hashes::Guid oNodeID;
-				DWORD nFileCount = 0, nFileVolume = 0;
+				//Hashes::Guid oNodeID;
+				//DWORD nFileCount = 0, nFileVolume = 0;
 
 				if ( bCompound || nType == G2_PACKET_NEIGHBOUR_HUB )
 				{
@@ -909,17 +909,17 @@ BOOL CG2Neighbour::ParseKHLPacket(CG2Packet* pPacket, SOCKADDR_IN* pHost)
 							if ( nInner >= 4 )
 								nLeafLimit = pPacket->ReadShortBE();
 						}
-						else if ( nInnerType == G2_PACKET_NODE_GUID && nInner >= 16 )
-						{
-							// Used by Morpheus
-							pPacket->Read( oNodeID );
-						}
-						else if ( nInnerType == G2_PACKET_LIBRARY_STATUS && nInner >= 8 )
-						{
-							// Used by Morpheus
-							nFileCount	= pPacket->ReadLongBE();
-							nFileVolume	= pPacket->ReadLongBE();
-						}
+						//else if ( nInnerType == G2_PACKET_NODE_GUID && nInner >= 16 )
+						//{
+						//	// Used by Morpheus
+						//	pPacket->Read( oNodeID );
+						//}
+						//else if ( nInnerType == G2_PACKET_LIBRARY_STATUS && nInner >= 8 )
+						//{
+						//	// Used by Morpheus
+						//	nFileCount	= pPacket->ReadLongBE();
+						//	nFileVolume	= pPacket->ReadLongBE();
+						//}
 						else
 							bInvalid = TRUE;
 

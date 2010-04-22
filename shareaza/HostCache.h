@@ -103,6 +103,10 @@ protected:
 	}
 
 	friend class CHostCacheList;
+
+private:
+	CHostCacheHost(const CHostCacheHost&);
+	CHostCacheHost& operator=(const CHostCacheHost&);
 };
 
 typedef CHostCacheHost* CHostCacheHostPtr;
@@ -186,12 +190,12 @@ public:
 		return m_HostsTime.rend();
 	}
 
-	inline const CHostCacheHostPtr GetNewest() const throw()
+	inline CHostCacheHostPtr GetNewest() const throw()
 	{
 		return IsEmpty() ? NULL : *Begin();
 	}
 
-	inline const CHostCacheHostPtr GetOldest() const throw()
+	inline CHostCacheHostPtr GetOldest() const throw()
 	{
 		return IsEmpty() ? NULL : *( End()-- );
 	}
@@ -227,7 +231,7 @@ public:
 			std::bind2nd( good_host(), bCountUncheckedLocally ) );
 	}
 
-	inline const CHostCacheHostPtr GetForDHTQuery() const throw()
+	inline CHostCacheHostPtr GetForDHTQuery() const throw()
 	{
 		const DWORD tNow = static_cast< DWORD >( time( NULL ) );
 		for ( CHostCacheIterator it = m_HostsTime.begin();
@@ -240,7 +244,7 @@ public:
 		return NULL;
 	}
 
-	inline const CHostCacheHostPtr GetOldestForQuery() const throw()
+	inline CHostCacheHostPtr GetOldestForQuery() const throw()
 	{
 		const DWORD tNow = static_cast< DWORD >( time( NULL ) );
 		for ( CHostCacheRIterator it = m_HostsTime.rbegin();

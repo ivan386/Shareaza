@@ -97,7 +97,7 @@ BOOL CIRCWnd::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pH
 	return CPanelWnd::OnCmdMsg( nID, nCode, pExtra, pHandlerInfo );
 }
 
-LRESULT CIRCWnd::OnIdleUpdateCmdUI(WPARAM wParam, LPARAM lParam)
+LRESULT CIRCWnd::OnIdleUpdateCmdUI(WPARAM /*wParam*/, LPARAM /*lParam*/)
 {
 	if ( m_wndFrame.m_hWnd != NULL && m_wndFrame.GetParent() != this )
 	{
@@ -105,7 +105,7 @@ LRESULT CIRCWnd::OnIdleUpdateCmdUI(WPARAM wParam, LPARAM lParam)
 	}
 
 	CPanelWnd::OnIdleUpdateCmdUI();
-	wParam = 0;	lParam = 0;
+
 	return 0;
 }
 

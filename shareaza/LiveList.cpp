@@ -933,26 +933,23 @@ void CLiveListCtrl::OnLvnGetdispinfoA(NMHDR *pNMHDR, LRESULT *pResult)
 	*pResult = 0;
 }
 
-void CLiveListCtrl::OnLvnOdfinditemW(NMHDR *pNMHDR, LRESULT *pResult)
+void CLiveListCtrl::OnLvnOdfinditemW(NMHDR * /*pNMHDR*/, LRESULT *pResult)
 {
-	LPNMLVFINDITEM pFindInfo = reinterpret_cast<LPNMLVFINDITEM>(pNMHDR);
-	UNUSED_ALWAYS( pFindInfo );
+	//LPNMLVFINDITEM pFindInfo = reinterpret_cast<LPNMLVFINDITEM>(pNMHDR);
 
 	*pResult = 0;
 }
 
-void CLiveListCtrl::OnLvnOdfinditemA(NMHDR *pNMHDR, LRESULT *pResult)
+void CLiveListCtrl::OnLvnOdfinditemA(NMHDR * /*pNMHDR*/, LRESULT *pResult)
 {
-	LPNMLVFINDITEM pFindInfo = reinterpret_cast<LPNMLVFINDITEM>(pNMHDR);
-	UNUSED_ALWAYS( pFindInfo );
+	//LPNMLVFINDITEM pFindInfo = reinterpret_cast<LPNMLVFINDITEM>(pNMHDR);
 
 	*pResult = 0;
 }
 
-void CLiveListCtrl::OnLvnOdcachehint(NMHDR *pNMHDR, LRESULT *pResult)
+void CLiveListCtrl::OnLvnOdcachehint(NMHDR * /*pNMHDR*/, LRESULT *pResult)
 {
-	LPNMLVCACHEHINT pCacheHint = reinterpret_cast<LPNMLVCACHEHINT>(pNMHDR);
-	UNUSED_ALWAYS( pCacheHint );
+	//LPNMLVCACHEHINT pCacheHint = reinterpret_cast<LPNMLVCACHEHINT>(pNMHDR);
 
 	*pResult = 0;
 }

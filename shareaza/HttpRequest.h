@@ -26,8 +26,7 @@
 class CBuffer;
 
 
-class CHttpRequest :
-	public CThreadImpl
+class CHttpRequest : public CThreadImpl
 {
 // Constructions
 public:
@@ -76,4 +75,8 @@ protected:
 	bool		m_bUseCookie;
 
 	void		OnRun();
+
+private:
+	CHttpRequest(const CHttpRequest&);
+	CHttpRequest& operator=(const CHttpRequest&);
 };

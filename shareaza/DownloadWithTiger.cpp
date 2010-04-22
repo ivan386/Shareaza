@@ -512,7 +512,7 @@ BOOL CDownloadWithTiger::FindNewValidationBlock(int nHash)
 		{
 			if ( pItr->begin() - nPrevious >= nBlockSize )
 			{
-				DWORD nBlock = DWORD( ( nPrevious + nBlockSize - 1ull ) / nBlockSize );
+				QWORD nBlock = ( nPrevious + nBlockSize - 1ull ) / nBlockSize;
 				nPrevious = nBlockSize * nBlock + nBlockSize;
 
 				QWORD nFragmentBegin = pItr->begin();
@@ -520,13 +520,13 @@ BOOL CDownloadWithTiger::FindNewValidationBlock(int nHash)
 				{
 					if ( static_cast< TRISTATE >( pBlockPtr[ nBlock ] ) == TRI_UNKNOWN )
 					{
-						nTarget = nBlock;
+						nTarget = (DWORD)nBlock;
 						break;
 					}
 					else if ( static_cast< TRISTATE >( pBlockPtr[ nBlock ] ) == TRI_FALSE &&
 						nRetry == 0xFFFFFFFF )
 					{
-						nRetry = nBlock;
+						nRetry = (DWORD)nBlock;
 					}
 				}
 
@@ -539,20 +539,20 @@ BOOL CDownloadWithTiger::FindNewValidationBlock(int nHash)
 
 		if ( m_nSize > nPrevious && nTarget == 0xFFFFFFFF )
 		{
-			DWORD nBlock = (DWORD)( ( nPrevious + nBlockSize - 1 ) / nBlockSize );
-			nPrevious = nBlockSize * (QWORD)nBlock;
+			QWORD nBlock = ( nPrevious + nBlockSize - 1 ) / nBlockSize;
+			nPrevious = nBlockSize * nBlock;
 
 			for ( ; nPrevious < m_nSize ; nBlock ++, nPrevious += nBlockSize )
 			{
 				if ( static_cast< TRISTATE >( pBlockPtr[ nBlock ] ) == TRI_UNKNOWN )
 				{
-					nTarget = nBlock;
+					nTarget = (DWORD)nBlock;
 					break;
 				}
 				else if ( static_cast< TRISTATE >( pBlockPtr[ nBlock ] ) == TRI_FALSE &&
 					nRetry == 0xFFFFFFFF )
 				{
-					nRetry = nBlock;
+					nRetry = (DWORD)nBlock;
 				}
 			}
 		}
@@ -597,7 +597,7 @@ void CDownloadWithTiger::ContinueValidation()
 
 	for ( int nRound = IsComplete() ? 10 : 2 ; nRound > 0 && m_nVerifyLength > 0 ; nRound-- )
 	{
-		DWORD nChunk = (DWORD)min( m_nVerifyLength, 256 * 1024ull );
+		QWORD nChunk = min( m_nVerifyLength, 256 * 1024ull );
 
 		if ( ! ReadFile( m_nVerifyOffset, pChunk.get(), nChunk ) )
 			break;

@@ -60,6 +60,10 @@ protected:
 	static CCriticalSection	m_ThreadMapSection;	// Guarding of m_ThreadMap
 	static CThreadMap		m_ThreadMap;		// Map of running threads
 	AFX_THREADPROC			m_pfnThreadProcExt;
+
+private:
+	CRazaThread(const CRazaThread&);
+	CRazaThread& operator=(const CRazaThread&);
 };
 
 void SetThreadName(DWORD dwThreadID, LPCSTR szThreadName);

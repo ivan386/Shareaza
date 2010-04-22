@@ -70,9 +70,9 @@ static const UINT primes[] =
 
 UINT GetBestHashTableSize(UINT nCount)
 {
-	return * std::lower_bound( primes,
-		primes + ( sizeof( primes ) / sizeof( primes[ 0 ] ) - 1 ),
-		( nCount + nCount / 5 ), std::less< UINT >() );	// + 20%
+	const UINT* last  = primes + ( sizeof( primes ) / sizeof( primes[ 0 ] ) - 1 );
+	const UINT value  = ( nCount + nCount / 5 );
+	return * std::lower_bound( primes, last, value, std::less< UINT >() );	// + 20%
 }
 
 CStringA UTF8Encode(__in const CStringW& strInput)

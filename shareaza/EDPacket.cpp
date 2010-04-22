@@ -430,6 +430,16 @@ CEDTag::CEDTag() :
 {
 }
 
+CEDTag::CEDTag(const CEDTag& t)
+	: m_nType( t.m_nType )
+	, m_sKey( t.m_sKey )
+	, m_nKey( t.m_nKey )
+	, m_sValue( t.m_sValue )
+	, m_nValue( t.m_nValue )
+	, m_oValue( t.m_oValue )
+{
+}
+
 CEDTag::CEDTag(BYTE nKey, const Hashes::Ed2kHash& oHash) :
 	m_nType ( ED2K_TAG_HASH ),
 	m_nKey	( nKey ),
@@ -465,6 +475,17 @@ CEDTag::CEDTag(LPCTSTR pszKey, LPCTSTR pszValue) :
 	m_nKey	( 0 ),
 	m_sValue( pszValue )
 {
+}
+
+CEDTag& CEDTag::operator=(const CEDTag& t)
+{
+	m_nType = t.m_nType;
+	m_sKey = t.m_sKey;
+	m_nKey = t.m_nKey;
+	m_sValue = t.m_sValue;
+	m_nValue = t.m_nValue;
+	m_oValue = t.m_oValue;
+	return *this;
 }
 
 //////////////////////////////////////////////////////////////////////

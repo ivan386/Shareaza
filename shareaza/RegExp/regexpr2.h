@@ -373,7 +373,7 @@ template
 struct basic_match_results
 {
     // const_iterator is deprecated. Use iterator_type instead.
-    REGEX_DEPRECATED typedef IterT                                const_iterator;
+    typedef REGEX_DEPRECATED IterT                                const_iterator;
     typedef IterT                                                 iterator_type;
     typedef backref_tag<IterT>                                    backref_type;
     typedef typename detail::rebind<AllocT, backref_type>::type   allocator_type;
@@ -424,7 +424,7 @@ template< typename CharT, typename AllocT = std::allocator<CharT> >
 struct basic_match_results_c : public basic_match_results<CharT const *, AllocT>
 {
     typedef basic_match_results<CharT const *, AllocT> base;
-    REGEX_DEPRECATED typedef typename base::const_iterator const_iterator;
+    typedef REGEX_DEPRECATED typename base::const_iterator const_iterator;
     typedef typename base::iterator_type  iterator_type;
     typedef typename base::backref_type   backref_type;
     typedef typename base::allocator_type allocator_type;

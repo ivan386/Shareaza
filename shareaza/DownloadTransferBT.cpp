@@ -381,7 +381,7 @@ void CDownloadTransferBT::ShowInterest()
 	// than relying on that algorithm to complete verifications here.
 
 	// We can only be interested if we know what they have
-	DWORD nBlockSize = m_pDownload->m_pTorrent.m_nBlockSize;
+	QWORD nBlockSize = m_pDownload->m_pTorrent.m_nBlockSize;
 
 	if ( m_pAvailable && nBlockSize )
 	{
@@ -390,8 +390,8 @@ void CDownloadTransferBT::ShowInterest()
 		const Fragments::List::const_iterator pEnd = oList.end();
 		for ( ; !bInterested && pItr != pEnd ; ++pItr )
 		{
-			DWORD nBlock = DWORD( pItr->begin() / nBlockSize );
-			DWORD nEnd = DWORD( ( pItr->end() - 1 ) / nBlockSize );
+			QWORD nBlock = pItr->begin() / nBlockSize;
+			QWORD nEnd = ( pItr->end() - 1 ) / nBlockSize;
 			for ( ; nBlock <= nEnd ; ++nBlock )
 			{
 				if ( m_pAvailable[ nBlock ] )

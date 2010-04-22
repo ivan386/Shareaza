@@ -1705,7 +1705,7 @@ void CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, BOOL bUni
 		else
 		{
 			/*
-			//*** Debug check. Remove this when it's working
+			// Debug check. Remove this when it's working
 			CString s;
 			s.Format ( _T("Tag: %u sTag: %s Type: %u"), pTag.m_nKey, pTag.m_sKey, pTag.m_nType );
 			theApp.Message( MSG_NOTICE, s );

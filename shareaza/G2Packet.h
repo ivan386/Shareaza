@@ -41,7 +41,7 @@ typedef QWORD G2_PACKET;
 #define	MAKE_G2_PACKET(a,b,c,d,e,f,g,h) \
 	MAKEQWORD(	MAKEDWORD(MAKEWORD(((a)),((b))),MAKEWORD(((c)),((d)))), \
 				MAKEDWORD(MAKEWORD(((e)),((f))),MAKEWORD(((g)),((h)))) \
-	);
+	)
 
 
 #define G2_PACKET_LEN(p,len) \

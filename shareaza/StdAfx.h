@@ -361,17 +361,20 @@ inline PROTOCOLID& operator++(PROTOCOLID& arg)
 	arg = PROTOCOLID( arg + 1 );
 	return arg;
 }
+
 inline PROTOCOLID& operator--(PROTOCOLID& arg)
 {
 	ASSERT( arg > PROTOCOL_ANY );
 	arg = PROTOCOLID( arg - 1 );
 	return arg;
 }
+
 inline CArchive& operator<<(CArchive& ar, const PROTOCOLID& rhs)
 {
 	int value = rhs;
 	return ar << value;
-};
+}
+
 inline CArchive& operator>>(CArchive& ar, PROTOCOLID& rhs)
 {
 	int value;
@@ -382,7 +385,7 @@ inline CArchive& operator>>(CArchive& ar, PROTOCOLID& rhs)
 		? PROTOCOLID( value )
 		: PROTOCOL_NULL;
 	return ar;
-};
+}
 
 
 class CQuickLock
@@ -422,7 +425,9 @@ public:
 private:
 	mutable CCriticalSection m_oSection;
 	T m_oValue;
+
 	CGuarded* operator&() const; // too unsafe
+	CGuarded& operator=(const CGuarded&);
 };
 
 typedef boost::shared_ptr< CCriticalSection > CCriticalSectionPtr;
@@ -517,6 +522,10 @@ private:
 
 		volatile LONG m_nThreadId;		// Owner thread
 		volatile LONG m_nEnterCount;	// Re-enter counter
+
+	private:
+		CMutexEx(const CMutexEx&);
+		CMutexEx& operator=(const CMutexEx&);
 	};
 
 #else	// _DEBUG
@@ -608,9 +617,13 @@ inline BOOL StartsWith(const CString& sInput, LPCTSTR pszText, const int len)
 
 // Compute average of values collected by specified time
 template< class T, DWORD dwMilliseconds >
-class CTimeAverage : boost::noncopyable
+class CTimeAverage
 {
 public:
+	CTimeAverage()
+	{
+	}
+
 	inline T operator()(T Val)
 	{
 		// Add new value
@@ -636,6 +649,11 @@ protected:
 	typedef std::pair< T, DWORD > CAveragePair;
 	typedef std::list< CAveragePair > CAverageList;
 	CAverageList m_Data;
+
+private:
+	CTimeAverage(const CTimeAverage&);
+	CTimeAverage* operator&() const;
+	CTimeAverage& operator=(const CTimeAverage&);
 };
 
 template< class T >

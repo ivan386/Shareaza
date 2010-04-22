@@ -374,7 +374,7 @@ BOOL CBuffer::StartsWith(LPCSTR pszString, const size_t nLength, const BOOL bRem
 // Takes a handle to a socket
 // Reads in data from the socket, moving it into the buffer
 // Returns the number of bytes we got
-const DWORD CBuffer::Receive(const SOCKET hSocket, DWORD nSpeedLimit)
+DWORD CBuffer::Receive(const SOCKET hSocket, DWORD nSpeedLimit)
 {
 	// Start the total at 0
 	DWORD nTotal = 0ul;
@@ -428,7 +428,7 @@ const DWORD CBuffer::Receive(const SOCKET hSocket, DWORD nSpeedLimit)
 
 // Send the data from the buffer to the socket
 // Returns the #bytes sent
-const DWORD CBuffer::Send(const SOCKET hSocket, DWORD nSpeedLimit)
+DWORD CBuffer::Send(const SOCKET hSocket, DWORD nSpeedLimit)
 {
 	// Adjust limit if there isn't enough data to send
 	nSpeedLimit = static_cast< DWORD >( min( nSpeedLimit, m_nLength ) );
@@ -643,7 +643,7 @@ BOOL CBuffer::Ungzip()
 // Side Effect: This function allocates a new z_stream structure that gets
 // cleaned up when the stream is finished. Call InflateStreamCleanup() to close
 // the stream and delete the z_stream structure before the stream has finished.
-const bool CBuffer::InflateStreamTo( CBuffer& oBuffer, z_streamp& pStream )
+bool CBuffer::InflateStreamTo( CBuffer& oBuffer, z_streamp& pStream )
 {
 	// Report success if there was nothing to decompress
 	if ( !m_nLength )

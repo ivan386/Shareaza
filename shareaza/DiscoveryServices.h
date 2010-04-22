@@ -81,8 +81,7 @@ protected:
 	friend class CDiscoveryServices;	
 };
 
-class CDiscoveryServices :
-	public CThreadImpl
+class CDiscoveryServices : public CThreadImpl
 {
 public:
 	CDiscoveryServices();
@@ -148,6 +147,10 @@ protected:
 	void				MergeURLs();
 
 	friend class CDiscoveryService;
+
+private:
+	CDiscoveryServices(const CDiscoveryServices&);
+	CDiscoveryServices& operator=(const CDiscoveryServices&);
 };
 
 extern CDiscoveryServices DiscoveryServices;

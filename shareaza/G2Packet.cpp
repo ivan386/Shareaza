@@ -384,20 +384,10 @@ void CG2Packet::WriteString(LPCSTR pszString, BOOL bNull)
 
 int CG2Packet::GetStringLen(LPCTSTR pszString) const
 {
-	if ( *pszString == 0 ) return 0;
+	if ( *pszString == 0 )
+		return 0;
 
-	LPCTSTR pszScan = pszString;
-	BOOL bPlain = TRUE;
-
-    int nLength = 0;
-	for ( ; *pszScan ; nLength++ )
-	{
-		if ( ( *pszScan++ ) & 0x80 ) bPlain = FALSE;
-	}
-
-	nLength = WideCharToMultiByte( CP_UTF8, 0, pszString, nLength, NULL, 0, NULL, NULL );
-
-	return nLength;
+	return WideCharToMultiByte( CP_UTF8, 0, pszString, -1, NULL, 0, NULL, NULL );
 }
 
 //////////////////////////////////////////////////////////////////////

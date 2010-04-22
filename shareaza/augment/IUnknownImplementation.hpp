@@ -25,57 +25,57 @@
 namespace augment
 {
 
-	struct NoInterface : IUnknown {};
+	struct NoInterface : public IUnknown {};
 
 	template<typename I0, typename I1, typename I2, typename I3, typename I4,
 			typename I5, typename I6, typename I7, typename I8, typename I9>
 	struct InheritAll
-		: I0, I1, I2, I3, I4, I5, I6, I7, I8, I9
+		: public I0, public I1, public I2, public I3, public I4, public I5, public I6, public I7, public I8, public I9
 	{};
 	template<typename I0, typename I1, typename I2, typename I3, typename I4,
 			typename I5, typename I6, typename I7, typename I8>
 	struct InheritAll< I0, I1, I2, I3, I4, I5, I6, I7, I8, NoInterface >
-		: I0, I1, I2, I3, I4, I5, I6, I7, I8
+		: public I0, public I1, public I2, public I3, public I4, public I5, public I6, public I7, public I8
 	{};
 	template<typename I0, typename I1, typename I2, typename I3, typename I4,
 			typename I5, typename I6, typename I7>
 	struct InheritAll< I0, I1, I2, I3, I4, I5, I6, I7, NoInterface, NoInterface >
-		: I0, I1, I2, I3, I4, I5, I6, I7
+		: public I0, public I1, public I2, public I3, public I4, public I5, public I6, public I7
 	{};
 	template<typename I0, typename I1, typename I2, typename I3, typename I4,
 			typename I5, typename I6>
 	struct InheritAll< I0, I1, I2, I3, I4, I5, I6, NoInterface, NoInterface, NoInterface >
-		: I0, I1, I2, I3, I4, I5, I6
+		: public I0, public I1, public I2, public I3, public I4, public I5, public I6
 	{};
 	template<typename I0, typename I1, typename I2, typename I3, typename I4,
 			typename I5>
 	struct InheritAll< I0, I1, I2, I3, I4, I5, NoInterface, NoInterface, NoInterface, NoInterface >
-		: I0, I1, I2, I3, I4, I5
+		: public I0, public I1, public I2, public I3, public I4, public I5
 	{};
 	template<typename I0, typename I1, typename I2, typename I3, typename I4>
 	struct InheritAll< I0, I1, I2, I3, I4,
 			NoInterface, NoInterface, NoInterface, NoInterface, NoInterface >
-		: I0, I1, I2, I3, I4
+		: public I0, public I1, public I2, public I3, public I4
 	{};
 	template<typename I0, typename I1, typename I2, typename I3>
 	struct InheritAll< I0, I1, I2, I3, NoInterface,
 			NoInterface, NoInterface, NoInterface, NoInterface, NoInterface >
-		: I0, I1, I2, I3
+		: public I0, public I1, public I2, public I3
 	{};
 	template<typename I0, typename I1, typename I2>
 	struct InheritAll< I0, I1, I2, NoInterface, NoInterface,
 			NoInterface, NoInterface, NoInterface, NoInterface, NoInterface >
-		: I0, I1, I2
+		: public I0, public I1, public I2
 	{};
 	template<typename I0, typename I1>
 	struct InheritAll< I0, I1, NoInterface, NoInterface, NoInterface,
 			NoInterface, NoInterface, NoInterface, NoInterface, NoInterface >
-		: I0, I1
+		: public I0, public I1
 	{};
 	template<typename I0>
 	struct InheritAll< I0, NoInterface, NoInterface, NoInterface, NoInterface,
 			NoInterface, NoInterface, NoInterface, NoInterface, NoInterface >
-		: I0
+		: public I0
 	{};
 
 	template<typename I0 = NoInterface,

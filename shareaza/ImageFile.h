@@ -22,7 +22,7 @@
 #pragma once
 
 
-class CImageFile : boost::noncopyable
+class CImageFile
 {
 // Construction
 public:
@@ -88,4 +88,8 @@ protected:
 	void	Clear();
 	BOOL	MonoToRGB();
 	BOOL	AlphaToRGB(COLORREF crBack);
+
+private:
+	CImageFile(const CImageFile&);
+	CImageFile& operator=(CImageFile&);
 };

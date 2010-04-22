@@ -152,7 +152,7 @@ enum REGEX_FLAGS
     FIRSTBACKREFS = 0x0040, // only meaningful when used with GLOBAL
     ALLBACKREFS   = 0x0080, // only meaningful when used with GLOBAL
     NORMALIZE     = 0x0100, // Preprocess patterns: "\\n" => "\n", etc.
-    EXTENDED      = 0x0200, // ignore whitespace in pattern
+    EXTENDED      = 0x0200  // ignore whitespace in pattern
 };
 
 // For backwards compatibility
@@ -459,7 +459,7 @@ protected:
     }
     static TOKEN look_up( wchar_t ch, TOKEN const rg[] )
     {
-        return UCHAR_MAX < ch ? NO_TOKEN : rg[ static_cast<unsigned char>( ch ) ];
+        return UCHAR_MAX < ch ? NO_TOKEN : rg[ (unsigned char)ch ];
     }
 };
 

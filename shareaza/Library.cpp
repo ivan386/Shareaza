@@ -360,8 +360,8 @@ BOOL CLibrary::Load()
 			( ( CompareFileTime( &pFileTime1, &pFileTime2 ) >= 0 ) ? &pFile1 : &pFile2 ) :
 			( bFile1 ? &pFile1 : &pFile2 );
 
-		CArchive ar( pNewest, CArchive::load, 262144 );	// 256 KB buffer
-		if ( ! SafeSerialize( ar ) )
+		CArchive ar1( pNewest, CArchive::load, 262144 );	// 256 KB buffer
+		if ( ! SafeSerialize( ar1 ) )
 		{
 			if ( pNewest == &pFile1 && bFile2 )
 				pNewest = &pFile2;
@@ -372,8 +372,8 @@ BOOL CLibrary::Load()
 
 			if ( pNewest != NULL )
 			{
-				CArchive ar( pNewest, CArchive::load, 262144 );	// 256 KB buffer
-				SafeSerialize( ar );
+				CArchive ar2( pNewest, CArchive::load, 262144 );	// 256 KB buffer
+				SafeSerialize( ar2 );
 			}
 		}
 	}
