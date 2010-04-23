@@ -594,14 +594,14 @@ int CBTInfo::NextInfoPiece()
 	return -1;
 }
 
-DWORD CBTInfo::GetInfoPiece(DWORD nPiece, BYTE *pInfoPiece)
+DWORD CBTInfo::GetInfoPiece(DWORD nPiece, BYTE **pInfoPiece)
 {
 	DWORD nPiceStart = MAX_PIECE_SIZE * nPiece;
 	if ( m_nInfoSize && m_nInfoStart &&
 		m_pSource.m_nLength - m_nInfoStart > m_nInfoSize &&
 		nPiceStart < m_nInfoSize )
 	{
-		pInfoPiece = &m_pSource.m_pBuffer[ m_nInfoStart + nPiceStart ];
+		*pInfoPiece = &m_pSource.m_pBuffer[ m_nInfoStart + nPiceStart ];
 		DWORD nPiceSize = m_nInfoSize - nPiceStart;
 		return nPiceSize > MAX_PIECE_SIZE ? MAX_PIECE_SIZE : nPiceSize;
 	}

@@ -1175,7 +1175,7 @@ BOOL CBTClient::OnExtended(CBTPacket* pPacket)
 				CBuffer pOutput;
 
 				BYTE* pInfoPiece = NULL;
-				DWORD InfoLen = m_pDownload->m_pTorrent.GetInfoPiece( nPiece, pInfoPiece );
+				DWORD InfoLen = m_pDownload->m_pTorrent.GetInfoPiece( nPiece, &pInfoPiece );
 				if ( InfoLen == 0 || m_pDownload->m_pTorrent.m_bPrivate )
 				{
 					pRoot2.Add( "msg_type" )->SetInt( UT_METADATA_REJECT );
