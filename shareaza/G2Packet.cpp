@@ -387,7 +387,9 @@ int CG2Packet::GetStringLen(LPCTSTR pszString) const
 	if ( *pszString == 0 )
 		return 0;
 
-	return WideCharToMultiByte( CP_UTF8, 0, pszString, -1, NULL, 0, NULL, NULL );
+	int nLength = WideCharToMultiByte( CP_UTF8, 0, pszString, -1, NULL, 0, NULL, NULL );
+
+	return ( nLength > 0 ) ? ( nLength - 1 ) : 0;
 }
 
 //////////////////////////////////////////////////////////////////////
