@@ -301,9 +301,13 @@ BOOL CBitziDownloader::ExecuteRequest()
 
 	while ( InternetQueryDataAvailable( m_hRequest, &nRemaining, 0, 0 ) && nRemaining > 0 )
 	{
-		pResponse = (LPBYTE)realloc( pResponse, nResponse + nRemaining );
-		if ( ! pResponse )
+		BYTE* pNewResponse = (BYTE*)realloc( pResponse, nResponse + nRemaining );
+		if ( ! pNewResponse )
+		{
+			free( pResponse );
 			return FALSE;
+		}
+		pResponse = pNewResponse;
 		InternetReadFile( m_hRequest, pResponse + nResponse, nRemaining, &nRemaining );
 		nResponse += nRemaining;
 	}
