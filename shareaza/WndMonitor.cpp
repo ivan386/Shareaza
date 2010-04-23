@@ -1094,7 +1094,6 @@ void CRemoteWnd::CmdButton::Execute(CFrameWnd* pTarget)
 
 void CRemoteWnd::CmdButton::Paint(CDC* pdcWindow, CRect& rcWindow, CSkinWindow* pSkin, CmdButton* pHover, CmdButton* pDown)
 {
-	ASSERT( pSkin != NULL );
 	pSkin->GetAnchor( m_sName, m_rc );
 
 	if ( ! m_bVisible )

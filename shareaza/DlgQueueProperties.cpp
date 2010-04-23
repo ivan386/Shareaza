@@ -228,10 +228,6 @@ BOOL CQueuePropertiesDlg::OnInitDialog()
 
 	m_bReward		= m_pQueue->m_bRewardUploaders;
 
-	DWORD nTotal = Settings.Connection.OutSpeed * 1024 / 8;
-	DWORD nLimit = Settings.Bandwidth.Uploads;
-
-	if ( nLimit == 0 || nLimit > nTotal ) nLimit = nTotal;
 	int nOtherPoints = (int)UploadQueues.GetTotalBandwidthPoints( !( m_pQueue->m_nProtocols & (1<<PROTOCOL_ED2K) ) ) - (int)m_pQueue->m_nBandwidthPoints;
 
 	if ( nOtherPoints < 0 ) nOtherPoints = 0;

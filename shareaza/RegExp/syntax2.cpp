@@ -87,7 +87,7 @@ REGEX_SELECTANY TOKEN const perl_syntax_base::s_rgescape[ UCHAR_MAX + 1 ] =
 namespace detail
 {
 
-REGEX_SELECTANY extern posix_charset_type const g_rgposix_charsets[] =
+extern REGEX_SELECTANY posix_charset_type const g_rgposix_charsets[] =
 {
     { "[:alnum:]",    9 },
     { "[:^alnum:]",  10 },
@@ -115,7 +115,7 @@ REGEX_SELECTANY extern posix_charset_type const g_rgposix_charsets[] =
     { "[:^xdigit:]", 11 }
 };
 
-REGEX_SELECTANY extern size_t const g_cposix_charsets = ARRAYSIZE( g_rgposix_charsets );
+extern REGEX_SELECTANY size_t const g_cposix_charsets = ARRAYSIZE( g_rgposix_charsets );
 
 } // namespace detail
 

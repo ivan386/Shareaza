@@ -11,13 +11,7 @@
 			Name="Debug|Win32">
 			<Tool
 				Name="CppCmplrTool"
-				InterproceduralOptimization="2"
-				OptimizeForWindowsApplication="true"
-				FlushDenormalResultsToZero="true"
-				FloatingPointSpeculation="0"
-				GenerateAlternateCodePaths="1"
-				UseProcessorExtensions="1"
-				Parallelization="true"/>
+				DisableSpecificDiagnostics="383,444,522,654,981,1125,1252,1418,1595,1899,2259,2266,2267,2268,2270,2271,2273"/>
 		</Configuration>
 	</Configurations>
 	<Files/>

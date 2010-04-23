@@ -183,9 +183,6 @@ void CPacketWnd::OnSkinChange()
 
 void CPacketWnd::SmartDump(const CPacket* pPacket, const SOCKADDR_IN* pAddress, BOOL bUDP, BOOL bOutgoing, DWORD_PTR nNeighbourUnique)
 {
-	ASSERT( pPacket );
-	ASSERT( pAddress );
-
 	if ( m_bPaused || m_hWnd == NULL ) return;
 
 	if ( nNeighbourUnique )

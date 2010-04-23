@@ -30,8 +30,8 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 IMPLEMENT_DYNCREATE(CComObject, CCmdTarget)
-IMPLEMENT_OLETYPELIB(CComObject, LIBID_Shareaza, 1, 0);
 
+IMPLEMENT_OLETYPELIB(CComObject, LIBID_Shareaza, 1, 0)
 
 /////////////////////////////////////////////////////////////////////////////
 // CComObject construction

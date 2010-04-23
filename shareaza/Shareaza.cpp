@@ -1307,12 +1307,6 @@ BOOL CShareazaApp::InternalURI(LPCTSTR pszURI)
 			pMainWnd->PostMessage( WM_COMMAND, nCmdID );
 		}
 	}
-	else if ( strURI.Find( _T("raza:windowptr:") ) == 0 )
-	{
-		CChildWnd* pChild = NULL;
-		_stscanf( (LPCTSTR)strURI + 15, _T("%lu"), &pChild );
-		if ( pMainWnd->m_pWindows.Check( pChild ) ) pChild->MDIActivate();
-	}
 	else if ( strURI.Find( _T("raza:launch:") ) == 0 )
 	{
 		DWORD nIndex = 0;

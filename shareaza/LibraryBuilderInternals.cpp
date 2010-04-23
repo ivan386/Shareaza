@@ -2696,8 +2696,8 @@ bool CLibraryBuilderInternals::ReadAVI(DWORD nIndex, HANDLE hFile)
 					DWORD nDataLength = 0;
 					ReadDwordOrBreak( hFile, nDataLength, nRead )
 
-					CStringA strData;
-					ReadFile( hFile, (BYTE*)strData.GetBufferSetLength( nDataLength ), nDataLength, &nRead, NULL );
+					auto_array< CHAR > strData( new CHAR[ nDataLength ] );
+					ReadFile( hFile, (BYTE*)strData.get(), nDataLength, &nRead, NULL );
 					if ( nRead != nDataLength )
 						break;
 					switch ( nID )
@@ -2705,28 +2705,28 @@ bool CLibraryBuilderInternals::ReadAVI(DWORD nIndex, HANDLE hFile)
 					case FCC('IARL'): // Archival Location
 						break;
 					case FCC('IART'): // Artist
-						pXML->AddAttribute( L"artist", CString( strData ) );
+						pXML->AddAttribute( L"artist", CString( strData.get() ) );
 						break;
 					case FCC('IAS1'): // Language, not documented (?)
 					case FCC('ILNG'):
-						pXML->AddAttribute( L"language", CString( strData ) );
+						pXML->AddAttribute( L"language", CString( strData.get() ) );
 						break;
 					case FCC('ICMS'): // Commissioned
 						break;
 					case FCC('ICMT'): // Comments
-						pXML->AddAttribute( L"comments", CString( strData ) );
+						pXML->AddAttribute( L"comments", CString( strData.get() ) );
 						break;
 					case FCC('ICOP'): // Copyright
-						pXML->AddAttribute( L"copyright", CString( strData ) );
+						pXML->AddAttribute( L"copyright", CString( strData.get() ) );
 						break;
 					case FCC('IDIT'): // ???
 					case FCC('ICRD'): // Creation date. List dates in year-month-day format,
 									  // padding one-digit months and days with a zero on the left;
 									  // for example, 1553-05-03 for May 3, 1553.
-						pXML->AddAttribute( L"releaseDate", CString( strData ) );
+						pXML->AddAttribute( L"releaseDate", CString( strData.get() ) );
 						break;
 					case FCC('ICRP'): // Cropped, for e.g. "lower-right corner"
-						pXML->AddAttribute( L"qualityNotes", CString( strData ) );
+						pXML->AddAttribute( L"qualityNotes", CString( strData.get() ) );
 						break;
 					case FCC('IDIM'): // Dimensions, for example, 8.5 in h, 11 in w.
 						break;
@@ -2735,37 +2735,37 @@ bool CLibraryBuilderInternals::ReadAVI(DWORD nIndex, HANDLE hFile)
 					case FCC('IENG'): // Engineer
 						break;
 					case FCC('IGNR'): // Genre
-						pXML->AddAttribute( L"genre", CString( strData ) );
+						pXML->AddAttribute( L"genre", CString( strData.get() ) );
 						break;
 					case FCC('IKEY'): // Keywords
-						pXML->AddAttribute( L"keywords", CString( strData ) );
+						pXML->AddAttribute( L"keywords", CString( strData.get() ) );
 						break;
 					case FCC('ILGT'): // Lightness
 						break;
 					case FCC('IMED'): // Medium
 						break;
 					case FCC('INAM'): // Name
-						pXML->AddAttribute( L"title", CString( strData ) );
+						pXML->AddAttribute( L"title", CString( strData.get() ) );
 						break;
 					case FCC('IPLT'): // Palette Setting
 						break;
 					case FCC('IPRD'): // Product
-						pXML->AddAttribute( L"type", CString( strData ) );
+						pXML->AddAttribute( L"type", CString( strData.get() ) );
 						break;
 					case FCC('ISBJ'): // Subject
-						pXML->AddAttribute( L"description", CString( strData ) );
+						pXML->AddAttribute( L"description", CString( strData.get() ) );
 						break;
 					case FCC('ISFT'): // Software
 						break;
 					case FCC('ISHP'): // Sharpness
 						break;
 					case FCC('ISRC'): // Source
-						pXML->AddAttribute( L"source", CString( strData ) );
+						pXML->AddAttribute( L"source", CString( strData.get() ) );
 						break;
 					case FCC('ISRF'): // Source Form
 						break;
 					case FCC('ITCH'): // Technician
-						pXML->AddAttribute( L"releasegroup", CString( strData ) );
+						pXML->AddAttribute( L"releasegroup", CString( strData.get() ) );
 						break;
 					}
 

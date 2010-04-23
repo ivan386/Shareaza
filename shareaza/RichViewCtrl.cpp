@@ -959,9 +959,9 @@ void CRichViewCtrl::CopySelection() const
 		CString strTemp;
 		for ( int nPos = 0; nPos < str.GetLength(); nPos++ )
 		{
-			TCHAR ñ = str.GetAt( nPos );
-			if ( ñ != _T('\x200D') )	// Zero Width Joiner
-				strTemp += ñ;
+			TCHAR ch = str.GetAt( nPos );
+			if ( ch != _T('\x200D') )	// Zero Width Joiner
+				strTemp += ch;
 			else
 				nPos += 2;
 		}

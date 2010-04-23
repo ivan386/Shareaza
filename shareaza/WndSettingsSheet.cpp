@@ -59,7 +59,8 @@ CSettingsSheet::CSettingsSheet(CWnd* pParent, UINT nCaptionID) :
 	, m_nListMargin		( 6 )
 	, m_nButtonHeight	( 26 )
 {
-	if ( nCaptionID ) m_sCaption.LoadString( nCaptionID );
+	if ( nCaptionID )
+		LoadString( m_sCaption, nCaptionID );
 }
 
 CSettingsSheet::~CSettingsSheet()
