@@ -670,10 +670,11 @@ BOOL CShareazaApp::OpenTorrent(LPCTSTR lpszFileName, BOOL bDoIt)
 		return TRUE;
 
 	// Open torrent
-	auto_array< TCHAR > pszPath( new TCHAR[ lstrlen( lpszFileName ) + 1 ] );
+	const size_t nLen = _tcslen( lpszFileName ) + 1;
+	auto_array< TCHAR > pszPath( new TCHAR[ nLen ] );
 	if ( pszPath.get() )
 	{
-		lstrcpy( pszPath.get(), lpszFileName );
+		_tcscpy_s( pszPath.get(), nLen, lpszFileName );
 		if ( PostMainWndMessage( WM_TORRENT, (WPARAM)pszPath.release() ) )
 			return TRUE;
 	}
@@ -686,10 +687,11 @@ BOOL CShareazaApp::OpenCollection(LPCTSTR lpszFileName, BOOL bDoIt)
 	if ( ! bDoIt )
 		return TRUE;
 
-	auto_array< TCHAR > pszPath( new TCHAR[ lstrlen( lpszFileName ) + 1 ] );
+	const size_t nLen = _tcslen( lpszFileName ) + 1;
+	auto_array< TCHAR > pszPath( new TCHAR[ nLen ] );
 	if ( pszPath.get() )
 	{
-		lstrcpy( pszPath.get(), lpszFileName );
+		_tcscpy_s( pszPath.get(), nLen, lpszFileName );
 		if ( PostMainWndMessage( WM_COLLECTION, (WPARAM)pszPath.release() ) )
 			return TRUE;
 	}
@@ -1618,17 +1620,11 @@ DWORD TimeFromString(LPCTSTR pszTime)
 	if ( _stscanf( psz, _T("%i"), &nTemp ) != 1 ) return 0;
 	pTime.tm_min = nTemp;
 
-	time_t tGMT = mktime( &pTime );
-	// check for invalid dates
-	if (tGMT == -1)
-	{
-		theApp.Message( MSG_ERROR, _T("Invalid Date/Time"), pszTime );
-		return 0;
-	}
-	struct tm* pGM = gmtime( &tGMT );
-	time_t tSub = mktime( pGM );
-
-	if (tSub == -1)
+	time_t tGMT = mktime( &pTime ), tSub;
+	tm pGM = {};
+	if ( tGMT == -1 ||
+		gmtime_s( &pGM, &tGMT ) != 0 ||
+		( tSub = mktime( &pGM ) ) == -1 )
 	{
 		theApp.Message( MSG_ERROR, _T("Invalid Date/Time"), pszTime );
 		return 0;
@@ -1639,13 +1635,14 @@ DWORD TimeFromString(LPCTSTR pszTime)
 
 CString TimeToString(time_t tVal)
 {
-	tm* pTime = gmtime( &tVal );
+	tm time = {};
 	CString str;
-
-	str.Format( _T("%.4i-%.2i-%.2iT%.2i:%.2iZ"),
-		pTime->tm_year + 1900, pTime->tm_mon + 1, pTime->tm_mday,
-		pTime->tm_hour, pTime->tm_min );
-
+	if ( gmtime_s( &time, &tVal ) == 0 )
+	{
+		str.Format( _T("%.4i-%.2i-%.2iT%.2i:%.2iZ"),
+			time.tm_year + 1900, time.tm_mon + 1, time.tm_mday,
+			time.tm_hour, time.tm_min );
+	}
 	return str;
 }
 
@@ -2240,7 +2237,7 @@ CString SafeFilename(const CString& sOriginalName, bool bPath)
 	int nNameLen = strName.GetLength();
 	for ( int nChar = 0; nChar < nNameLen; ++nChar )
 	{
-		nChar = StrCSpn( ((LPCTSTR)strName) + nChar,
+		nChar = _tcscspn( ((LPCTSTR)strName) + nChar,
 			bPath ? _T("/:*?\"<>|") : _T("\\/:*?\"<>|") ) + nChar;
 		if ( nChar < 0 || nChar >= nNameLen )
 			break;
@@ -2800,7 +2797,7 @@ CString BrowseForFolder(LPCTSTR szTitle, LPCTSTR szInitialPath, HWND hWnd)
 	if ( ! szInitialPath || ! *szInitialPath )
 	{
 		if ( ! *szDefaultPath )
-			lstrcpyn( szDefaultPath, (LPCTSTR)theApp.GetDocumentsFolder(), MAX_PATH );
+			_tcsncpy_s( szDefaultPath, MAX_PATH, (LPCTSTR)theApp.GetDocumentsFolder(), MAX_PATH - 1 );
 		szInitialPath = szDefaultPath;
 	}
 
@@ -2827,7 +2824,7 @@ CString BrowseForFolder(LPCTSTR szTitle, LPCTSTR szInitialPath, HWND hWnd)
 		return CString();
 
 	// Save last used folder
-	lstrcpyn( szDefaultPath, szPath, MAX_PATH );
+	_tcsncpy_s( szDefaultPath, MAX_PATH, szPath, MAX_PATH - 1 );
 
 	return CString( szPath );
 }

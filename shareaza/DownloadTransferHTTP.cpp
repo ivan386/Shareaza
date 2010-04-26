@@ -1328,7 +1328,7 @@ BOOL CDownloadTransferHTTP::ReadContent()
 					}
 					if ( i < pInput->m_nLength - 1 )
 					{
-						if ( sscanf( (LPCSTR)pInput->m_pBuffer, "%I64x",
+						if ( sscanf_s( (LPCSTR)pInput->m_pBuffer, "%I64x",
 							&m_nChunkLength ) == 1 )
 						{
 							if ( m_nChunkLength == 0 )

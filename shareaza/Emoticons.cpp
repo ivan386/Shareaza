@@ -315,16 +315,16 @@ void CEmoticons::BuildTokens()
 		nLength += m_pIndex.GetAt( nIndex ).GetLength() + 1;
 	}
 
-	ASSERT( m_pTokens == NULL );
-	LPTSTR pszOut = m_pTokens = new TCHAR[ nLength ];
+	delete [] m_pTokens;
+	m_pTokens = new TCHAR[ nLength ];
 
+	DWORD nStart = 0;
 	for ( int nIndex = 0 ; nIndex < m_pIndex.GetSize() ; nIndex++ )
 	{
-		_tcscpy( pszOut, m_pIndex.GetAt( nIndex ) );
-		pszOut += m_pIndex.GetAt( nIndex ).GetLength() + 1;
+		_tcscpy_s( &m_pTokens[ nStart ], nLength - nStart, m_pIndex.GetAt( nIndex ) );
+		nStart += m_pIndex.GetAt( nIndex ).GetLength() + 1;
 	}
-
-	*pszOut++ = 0;
+	m_pTokens[ nStart ] = 0;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -520,7 +520,7 @@ void CEmoticons::FormatText(CRichDocument* pDocument, LPCTSTR pszBody, BOOL bNew
 		}
 		else if ( _tcsnicmp( pszBody, _T("[c:#"), 4 ) == 0 && _tcslen( pszBody ) >= 4 + 6 + 1 )
 		{
-			_tcsncpy( str.GetBuffer( 6 ), pszBody + 4, 6 );
+			_tcsncpy_s( str.GetBuffer( 7 ), 7, pszBody + 4, 6 );
 			str.ReleaseBuffer( 6 );
 			int nRed = 0, nGreen = 0, nBlue = 0;
 			_stscanf( str.Mid( 0, 2 ), _T("%x"), &nRed );

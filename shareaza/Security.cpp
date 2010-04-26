@@ -1122,7 +1122,7 @@ void CSecureRule::SetContentWords(const CString& strContent)
 		delete [] m_pContent;
 		m_nContentLength = strContent.GetLength() + 2;
 		LPTSTR pszContent = new TCHAR[ m_nContentLength ];
-		_tcscpy( pszContent, strContent );
+		_tcscpy_s( pszContent, m_nContentLength, strContent );
 		m_pContent = pszContent;
 		pszContent += strContent.GetLength();
 		*pszContent++ = 0;

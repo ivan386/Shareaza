@@ -867,33 +867,33 @@ UINT CLiveListCtrl::GetItemOverlayMask(int nItem) const
 
 void CLiveListCtrl::OnLvnGetdispinfoW(NMHDR *pNMHDR, LRESULT *pResult)
 {
-	NMLVDISPINFO *pDispInfo = reinterpret_cast<NMLVDISPINFO*>(pNMHDR);
+	LVITEM& pDispInfo = reinterpret_cast<NMLVDISPINFO*>(pNMHDR)->item;
 
-	ASSERT( pDispInfo->item.iItem >= 0 && pDispInfo->item.iItem < (int)m_pIndex.size() );
+	ASSERT( pDispInfo.iItem >= 0 && pDispInfo.iItem < (int)m_pIndex.size() );
 
-	CLiveItemPtr pItem = m_pIndex[ pDispInfo->item.iItem ];
+	CLiveItemPtr pItem = m_pIndex[ pDispInfo.iItem ];
 
-	if ( pDispInfo->item.mask & LVIF_TEXT )
+	if ( pDispInfo.mask & LVIF_TEXT )
 	{
-		lstrcpynW( (LPWSTR)pDispInfo->item.pszText,
-			CT2CW( pItem->m_pColumn[ pDispInfo->item.iSubItem ] ),
-			pDispInfo->item.cchTextMax );
+		wcsncpy_s( (LPWSTR)pDispInfo.pszText, pDispInfo.cchTextMax,
+			CT2CW( pItem->m_pColumn[ pDispInfo.iSubItem ] ),
+			pDispInfo.cchTextMax - 1 );
 	}
 
-	if ( pDispInfo->item.mask & LVIF_IMAGE ) 
+	if ( pDispInfo.mask & LVIF_IMAGE ) 
 	{
-		pDispInfo->item.iImage = pItem->m_nImage;
+		pDispInfo.iImage = pItem->m_nImage;
 	}
 
-	if ( pDispInfo->item.mask & LVIF_STATE ) 
+	if ( pDispInfo.mask & LVIF_STATE ) 
 	{
-		pDispInfo->item.state = INDEXTOOVERLAYMASK( pItem->m_nMaskOverlay ) |
+		pDispInfo.state = INDEXTOOVERLAYMASK( pItem->m_nMaskOverlay ) |
 			INDEXTOSTATEIMAGEMASK( pItem->m_nMaskState );
 	}
 
-	if ( pDispInfo->item.mask & LVFI_PARAM ) 
+	if ( pDispInfo.mask & LVFI_PARAM ) 
 	{
-		pDispInfo->item.lParam = pItem->m_nParam;
+		pDispInfo.lParam = pItem->m_nParam;
 	}
 
 	*pResult = 0;
@@ -901,33 +901,33 @@ void CLiveListCtrl::OnLvnGetdispinfoW(NMHDR *pNMHDR, LRESULT *pResult)
 
 void CLiveListCtrl::OnLvnGetdispinfoA(NMHDR *pNMHDR, LRESULT *pResult)
 {
-	NMLVDISPINFO *pDispInfo = reinterpret_cast<NMLVDISPINFO*>(pNMHDR);
+	LVITEM& pDispInfo = reinterpret_cast<NMLVDISPINFO*>(pNMHDR)->item;
 
-	ASSERT( pDispInfo->item.iItem >= 0 && pDispInfo->item.iItem < (int)m_pIndex.size() );
+	ASSERT( pDispInfo.iItem >= 0 && pDispInfo.iItem < (int)m_pIndex.size() );
 
-	CLiveItemPtr pItem = m_pIndex[ pDispInfo->item.iItem ];
+	CLiveItemPtr pItem = m_pIndex[ pDispInfo.iItem ];
 
-	if ( pDispInfo->item.mask & LVIF_TEXT )
+	if ( pDispInfo.mask & LVIF_TEXT )
 	{
-		lstrcpynA( (LPSTR)pDispInfo->item.pszText,
-			(LPCSTR)CT2A( pItem->m_pColumn[ pDispInfo->item.iSubItem ] ),
-			pDispInfo->item.cchTextMax );
+		strncpy_s( (LPSTR)pDispInfo.pszText, pDispInfo.cchTextMax,
+			(LPCSTR)CT2A( pItem->m_pColumn[ pDispInfo.iSubItem ] ),
+			pDispInfo.cchTextMax - 1 );
 	}
 
-	if ( pDispInfo->item.mask & LVIF_IMAGE ) 
+	if ( pDispInfo.mask & LVIF_IMAGE ) 
 	{
-		pDispInfo->item.iImage = pItem->m_nImage;
+		pDispInfo.iImage = pItem->m_nImage;
 	}
 
-	if ( pDispInfo->item.mask & LVIF_STATE ) 
+	if ( pDispInfo.mask & LVIF_STATE ) 
 	{
-		pDispInfo->item.state = INDEXTOOVERLAYMASK( pItem->m_nMaskOverlay ) |
+		pDispInfo.state = INDEXTOOVERLAYMASK( pItem->m_nMaskOverlay ) |
 			INDEXTOSTATEIMAGEMASK( pItem->m_nMaskState );
 	}
 
-	if ( pDispInfo->item.mask & LVFI_PARAM ) 
+	if ( pDispInfo.mask & LVFI_PARAM ) 
 	{
-		pDispInfo->item.lParam = pItem->m_nParam;
+		pDispInfo.lParam = pItem->m_nParam;
 	}
 
 	*pResult = 0;

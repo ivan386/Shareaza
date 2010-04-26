@@ -1776,7 +1776,7 @@ void CQuerySearch::SlideKeywords(CString& strPhrase)
 
 	while ( _tcslen( pszPhrase ) )
 	{
-		_tcsncpy( pszToken, pszPhrase, 2 );
+		_tcsncpy_s( pszToken, 3, pszPhrase, 2 );
 		pszToken[ 2 ] = 0;
 		if ( IsKanji( pszToken[ 0 ] ) ||
 			 IsKatakana( pszToken[ 0 ] ) ||

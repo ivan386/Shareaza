@@ -106,7 +106,7 @@ BOOL CXMLNode::ParseIdentifier(LPCTSTR& pszBase, CString& strIdentifier)
 		return FALSE;
 
 	pszBase += nParse;
-	_tcsncpy( strIdentifier.GetBuffer( nIdentifier ), pszBase, nIdentifier );
+	_tcsncpy_s( strIdentifier.GetBuffer( nIdentifier + 1 ), nIdentifier + 1, pszBase, nIdentifier );
 	strIdentifier.ReleaseBuffer( nIdentifier );
 	pszBase += nIdentifier;
 

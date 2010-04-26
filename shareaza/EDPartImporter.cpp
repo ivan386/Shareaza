@@ -400,7 +400,7 @@ void CEDPartImporter::Message(UINT nMessageID, ...)
 
 	LoadString( strFormat, nMessageID );
 	va_start( pArgs, nMessageID );
-	_vsntprintf( szBuffer.get(), nBufferLength - 8, strFormat, pArgs );
+	_vsntprintf_s( szBuffer.get(), nBufferLength, nBufferLength - 8, strFormat, pArgs );
 	_tcscat( szBuffer.get(), _T("\r\n") );
 	va_end( pArgs );
 

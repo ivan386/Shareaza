@@ -786,7 +786,7 @@ BOOL CDatagrams::OnReceiveSGP(SOCKADDR_IN* pHost, SGP_HEADER* pHeader, DWORD nLe
 	{
 		SGP_HEADER pAck;
 
-		strncpy( pAck.szTag, SGP_TAG_2, 3 );
+		memcpy( pAck.szTag, SGP_TAG_2, 3 );
 		pAck.nFlags		= 0;
 		pAck.nSequence	= pHeader->nSequence;
 		pAck.nPart		= pHeader->nPart;

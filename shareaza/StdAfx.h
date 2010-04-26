@@ -66,9 +66,9 @@
 #pragma warning ( disable : 4710 )	// (Level 4)	'function' : function not inlined
 #pragma warning ( disable : 4820 )	// (Level 4)	'bytes' bytes padding added after construct 'member_name'
 
-#define _SCL_SECURE_NO_DEPRECATE
-#define _CRT_SECURE_NO_DEPRECATE
-#define _CRT_NON_CONFORMING_SWPRINTFS
+#define _SCL_SECURE_NO_WARNINGS		// For RegExp only
+#define _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES 1
+#define _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES_COUNT 1
 
 #endif
 
@@ -480,16 +480,16 @@ private:
 	#define ASSUME_LOCK(lock) \
 	if ( (lock).m_nEnterCount < 1 || (lock).m_nThreadId != (LONG)GetCurrentThreadId() ) { \
 		static char BUF[1024] = {}; \
-		lstrcpyA(BUF,THIS_FILE); \
-		lstrcatA(BUF,"\n\nThis code must be protected by " #lock "!"); \
+		strcpy_s(BUF,1024,THIS_FILE); \
+		strcat_s(BUF,1024,"\n\nThis code must be protected by " #lock "!"); \
 		if ( ::AfxAssertFailedLine(BUF, __LINE__) ) AfxDebugBreak(); }
 
 	// Assume we already entered to this lock only once
 	#define ASSUME_SINGLE_LOCK(lock) \
 	if ( (lock).m_nEnterCount != 1 || (lock).m_nThreadId != (LONG)GetCurrentThreadId() ) { \
 		static char BUF[1024] = {}; \
-		lstrcpyA(BUF,THIS_FILE); \
-		lstrcatA(BUF,"\n\nThis code must be protected by " #lock "!"); \
+		strcpy_s(BUF,1024,THIS_FILE); \
+		strcat_s(BUF,1024,"\n\nThis code must be protected by " #lock "!"); \
 		if ( ::AfxAssertFailedLine(BUF, __LINE__) ) AfxDebugBreak(); }
 
 	class CMutexEx : public CMutex
@@ -709,3 +709,6 @@ INT_PTR MsgBox(LPCTSTR lpszText, UINT nType = MB_OK, UINT nIDHelp = 0, DWORD* pn
 INT_PTR MsgBox(UINT nIDPrompt, UINT nType = MB_OK, UINT nIDHelp = 0, DWORD* pnDefault = NULL);
 #undef AfxMessageBox
 #define AfxMessageBox MsgBox
+
+#undef  _stscanf
+#define _stscanf _stscanf_s	// Don't forget that %s, %c and [ requires buffer size parameter.

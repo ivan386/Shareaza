@@ -673,7 +673,7 @@ BOOL CUploadTransferED2K::DispatchNextChunk()
 		pHeader->nProtocol	= ED2K_PROTOCOL_EMULE;
 		pHeader->nType		= ED2K_C2C_SENDINGPART_I64;
 		pHeader->nLength	= 1 + Hashes::Ed2kHash::byteCount + 16 + (DWORD)nChunk;
-		std::copy( &m_oED2K[ 0 ], &m_oED2K[ 0 ] + Hashes::Ed2kHash::byteCount, &pHeader->pMD4[ 0 ] );
+		std::copy( &m_oED2K[ 0 ], &m_oED2K[ 0 ] + Hashes::Ed2kHash::byteCount, pHeader->pMD4.elems );
 		pHeader->nOffset1	= (QWORD)m_nOffset + m_nPosition;
 		pHeader->nOffset2	= (QWORD)m_nOffset + m_nPosition + nChunk;
 
@@ -697,7 +697,7 @@ BOOL CUploadTransferED2K::DispatchNextChunk()
 		pHeader->nProtocol	= ED2K_PROTOCOL_EDONKEY;
 		pHeader->nType		= ED2K_C2C_SENDINGPART;
 		pHeader->nLength	= 1 + Hashes::Ed2kHash::byteCount + 8 + (DWORD)nChunk;
-		std::copy( &m_oED2K[ 0 ], &m_oED2K[ 0 ] + Hashes::Ed2kHash::byteCount, &pHeader->pMD4[ 0 ] );
+		std::copy( &m_oED2K[ 0 ], &m_oED2K[ 0 ] + Hashes::Ed2kHash::byteCount, pHeader->pMD4.elems );
 		pHeader->nOffset1	= (DWORD)( m_nOffset + m_nPosition );
 		pHeader->nOffset2	= (DWORD)( m_nOffset + m_nPosition + nChunk );
 

@@ -123,7 +123,7 @@ STDMETHODIMP CApplication::XApplication::CheckVersion(BSTR sVersion)
 
 	int nDesired[4];
 
-	if ( swscanf( sVersion, L"%i.%i.%i.%i", &nDesired[3], &nDesired[2],
+	if ( swscanf_s( sVersion, L"%i.%i.%i.%i", &nDesired[3], &nDesired[2],
 		&nDesired[1], &nDesired[0] ) != 4 ) return E_INVALIDARG;
 
 	// NOTE: Assumes each version component is 8 bit

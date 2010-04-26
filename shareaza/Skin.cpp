@@ -2194,7 +2194,7 @@ int CSkin::GetTextFlowChange(LPCTSTR pszText, BOOL* bIsRTL)
 			WORD* nCharType = new WORD[ nLen + 1 ];
 
 			TCHAR* pszTestWord = new TCHAR[ nLen + 1 ];
-			_tcsncpy( pszTestWord, pszWord, nLen );
+			_tcsncpy_s( pszTestWord, nLen + 1, pszWord, nLen );
 			pszTestWord[ nLen ] = 0;
 
 			GetStringTypeEx( LOCALE_NEUTRAL, CT_CTYPE2, pszTestWord, nLen + 1, (LPWORD)nCharType );
@@ -2267,7 +2267,7 @@ void CSkin::DrawWrappedText(CDC* pDC, CRect* pBox, LPCTSTR pszText, CPoint ptSta
 	{
 		// Get the source string to draw and truncate initial string to pass it recursively
 		pszSource = new TCHAR[ nTestStart + 1 ];
-		_tcsncpy( pszSource, pszText, nTestStart );
+		_tcsncpy_s( pszSource, nTestStart + 1, pszText, nTestStart );
 		pszSource[ nTestStart ] = 0;
 		if ( !bNormalFlow )
 		{
@@ -2284,7 +2284,7 @@ void CSkin::DrawWrappedText(CDC* pDC, CRect* pBox, LPCTSTR pszText, CPoint ptSta
 				str = _T(" ") + str;
 				str = str.Left( nTestStart );
 			}
-			_tcsncpy( pszSource, str.GetBuffer( nTestStart ), nTestStart );
+			_tcsncpy_s( pszSource, nTestStart + 1, str.GetBuffer( nTestStart ), nTestStart );
 		}
 		nLenFull = static_cast< unsigned short >( nTestStart );
 		pszText += nTestStart;

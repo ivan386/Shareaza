@@ -80,7 +80,7 @@ static LPCTSTR GetFORMATLIST(UINT id)
 			return FORMATLIST [i].name;
 	}
 	if ( ! GetClipboardFormatName( id, buf, _countof( buf ) ) )
-		wsprintf( buf, _T("0x%x"), id );
+		_stprintf_s( buf, _countof( buf ), _T("0x%x"), id );
 	return buf;
 }
 
@@ -585,7 +585,7 @@ BOOL CShareazaDataSource::DropToFolder(IDataObject* pIDataObject, DWORD grfKeySt
 			int nPath2Length = bFolder ? lstrlen( pAFOP->sFrom.GetData() ) :
 				( szPath2 - pAFOP->sFrom.GetData() - 1 );
 			if ( nPath1Length == nPath2Length &&
-				! StrCmpNI( pszDest, pAFOP->sFrom.GetData(), nPath1Length ) )
+				_tcsncicmp( pszDest, pAFOP->sFrom.GetData(), nPath1Length ) == 0 )
 				// source == destination
 				return TRUE;
 		}
@@ -1470,7 +1470,7 @@ void CShareazaDataSource::FillBuffer(const CLibraryList* pList, LPTSTR& buf_HDRO
 					int len = pFile->GetPath().GetLength();
 					if ( len )
 					{
-						lstrcpy( buf_HDROP, pFile->GetPath() );
+						_tcscpy_s( buf_HDROP, len + 1, pFile->GetPath() );
 						buf_HDROP += len + 1;
 					}
 
@@ -1509,7 +1509,7 @@ void CShareazaDataSource::FillBuffer(const CLibraryList* pList, LPTSTR& buf_HDRO
 					int len = pFolder->m_sPath.GetLength();
 					if ( len )
 					{
-						lstrcpy( buf_HDROP, pFolder->m_sPath );
+						_tcscpy_s( buf_HDROP, len + 1, pFolder->m_sPath );
 						buf_HDROP += len + 1;
 					}
 				}
@@ -1550,7 +1550,7 @@ void CShareazaDataSource::FillBuffer(const CLibraryTreeItem* pSelFirst, LPTSTR& 
 				int len = pItem->m_pPhysical->m_sPath.GetLength();
 				if ( len )
 				{
-					lstrcpy( buf_HDROP, pItem->m_pPhysical->m_sPath );
+					_tcscpy_s( buf_HDROP, len + 1, pItem->m_pPhysical->m_sPath );
 					buf_HDROP += len + 1;
 				}
 			}

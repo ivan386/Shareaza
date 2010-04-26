@@ -315,7 +315,7 @@ CAdvancedSettingsPage::EditItem::EditItem(CSettings::Item* pItem) :
 	m_nOriginalValue( pItem->m_pDword ? *pItem->m_pDword : 0 ),
 	m_bOriginalValue( pItem->m_pBool ? *pItem->m_pBool : false ),
 	m_sName(  ( ! *pItem->m_szSection ||				// Settings.Name -> General.Name
-		! lstrcmp( pItem->m_szSection, L"Settings" ) )	// .Name -> General.Name
+		! lstrcmpi( pItem->m_szSection, L"Settings" ) )	// .Name -> General.Name
 		? L"General" : pItem->m_szSection )
 {
 	m_sName += L".";

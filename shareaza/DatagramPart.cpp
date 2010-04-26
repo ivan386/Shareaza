@@ -71,7 +71,7 @@ void CDatagramOut::Create(SOCKADDR_IN* pHost, CG2Packet* pPacket, WORD nSequence
 
 	SGP_HEADER pHeader;
 
-	strncpy( pHeader.szTag, SGP_TAG_2, 3 );
+	memcpy( pHeader.szTag, SGP_TAG_2, 3 );
 	pHeader.nFlags = m_bCompressed ? SGP_DEFLATE : 0;
 	m_bAck = bAck;
 	if ( bAck ) pHeader.nFlags |= SGP_ACKNOWLEDGE;

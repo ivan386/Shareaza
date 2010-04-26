@@ -167,10 +167,10 @@ BOOL CHandshake::OnConnected()
 
 	// Compose the GIV string, which is like "GIV index:guid/" with two newlines at the end (do)
 	CString strGIV;
-	strGIV.Format( // MFC's CString::Format is like sprintf, "%.2X" formats a byte into 2 hexidecimal characters like "ff"
+	strGIV.Format(
 		_T("GIV %u:%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X%.2X/\n\n"),
-		m_nIndex,											// Our index on the Gnutella network (do)
-		int( oID[0] ),  int( oID[1] ),  int( oID[2] ),  int( oID[3] ),		// Our GUID
+		m_nIndex,
+		int( oID[0] ),  int( oID[1] ),  int( oID[2] ),  int( oID[3] ),
 		int( oID[4] ),  int( oID[5] ),  int( oID[6] ),  int( oID[7] ),
 		int( oID[8] ),  int( oID[9] ),  int( oID[10] ), int( oID[11] ),
 		int( oID[12] ), int( oID[13] ), int( oID[14] ), int( oID[15] ) );

@@ -1044,7 +1044,7 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 						pszText = szBuffer;
 
 						// Save to cache
-						lstrcpy( szBufferCache, szBuffer );
+						_tcscpy( szBufferCache, szBuffer );
 						memcpy( &stCache, &st, sizeof( SYSTEMTIME ) ); 
 					}
 				}

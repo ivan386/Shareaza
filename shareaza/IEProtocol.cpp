@@ -334,7 +334,7 @@ STDMETHODIMP CIEProtocolRequest::XInternetProtocolInfo::ParseUrl(LPCWSTR pwzUrl,
 	case PARSE_SECURITY_DOMAIN:
 		*pcchResult = lstrlen( _T(WEB_SITE) ) + 1;
 		if ( cchResult < *pcchResult || pwzResult == NULL ) return S_FALSE;
-		lstrcpy( pwzResult, _T(WEB_SITE) );
+		_tcscpy_s( pwzResult, cchResult, _T(WEB_SITE) );
 		return S_OK;
 	default:
 		return INET_E_DEFAULT_ACTION;
