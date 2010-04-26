@@ -144,7 +144,7 @@ BOOL CImageServices::LoadFromMemory(CImageFile* pFile, LPCTSTR pszType, LPCVOID 
 				{
 					bSuccess = PostLoad( pFile, &pParams, pArray );
 				}
-				else if ( hr == MAKE_HRESULT( SEVERITY_ERROR, FACILITY_WIN32, RPC_S_SERVER_UNAVAILABLE ) )
+				else if ( SERVERLOST( hr ) )
 				{
 					// Plugin died
 					ReloadService( oCLSID );
@@ -210,7 +210,7 @@ BOOL CImageServices::LoadFromFileHelper(const CLSID& oCLSID, IImageServicePlugin
 	{
 		bSuccess = PostLoad( pFile, &pParams, pArray );
 	}
-	else if ( hr == MAKE_HRESULT( SEVERITY_ERROR, FACILITY_WIN32, RPC_S_SERVER_UNAVAILABLE ) )
+	else if ( SERVERLOST( hr ) )
 	{
 		// Plugin died
 		ReloadService( oCLSID );

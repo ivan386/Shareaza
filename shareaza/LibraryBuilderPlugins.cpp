@@ -88,7 +88,7 @@ bool CLibraryBuilderPlugins::ExtractPluginMetadata(DWORD nIndex, const CString& 
 		{
 			return LibraryBuilder.SubmitCorrupted( nIndex );
 		}
-		else if ( hr == MAKE_HRESULT( SEVERITY_ERROR, FACILITY_WIN32, RPC_S_SERVER_UNAVAILABLE ) )
+		else if ( SERVERLOST( hr ) )
 		{
 			CQuickLock oLock( m_pSection );
 

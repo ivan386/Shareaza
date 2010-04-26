@@ -712,3 +712,5 @@ INT_PTR MsgBox(UINT nIDPrompt, UINT nType = MB_OK, UINT nIDHelp = 0, DWORD* pnDe
 
 #undef  _stscanf
 #define _stscanf _stscanf_s	// Don't forget that %s, %c and [ requires buffer size parameter.
+
+#define SERVERLOST(hr) (((hr)==MAKE_HRESULT(SEVERITY_ERROR,FACILITY_WIN32,RPC_S_SERVER_UNAVAILABLE))||((hr)==CO_E_OBJNOTCONNECTED)||((hr)==RPC_E_INVALID_OBJECT))
