@@ -1149,7 +1149,7 @@ void CQueryHit::ReadGGEP(CG1Packet* pPacket)
 			}
 			else if ( pItemPos->IsNamed( GGEP_HEADER_URN ) )
 			{
-				CString strURN( "urn:" + pItemPos->ToString() );
+				CString strURN( _T("urn:") + pItemPos->ToString() );
 				if (      oSHA1.fromUrn(  strURN ) );	// Got SHA1
 				else if ( oTiger.fromUrn( strURN ) );	// Got Tiger
 				else if ( oED2K.fromUrn(  strURN ) );	// Got ED2K

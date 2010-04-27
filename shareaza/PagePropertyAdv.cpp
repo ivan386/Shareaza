@@ -195,7 +195,7 @@ BOOL CPropertySheetAdv::OnInitDialog()
 
 void CPropertySheetAdv::SetTabTitle(CPropertyPage* pPage, CString& strTitle)
 {
-	CString strClass = pPage->GetRuntimeClass()->m_lpszClassName;
+	CString strClass( pPage->GetRuntimeClass()->m_lpszClassName );
 	CString strTabLabel = Skin.GetDialogCaption( strClass );
 	if ( ! strTabLabel.IsEmpty() )
 		strTitle = strTabLabel;

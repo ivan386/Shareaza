@@ -309,15 +309,15 @@ STDMETHODIMP CLibraryCollectionView::External::XView::Detect(BSTR sURN, BSTR *ps
 
 	if ( pThis->m_bLockdown )
 	{
-		CString( _T("Lockdown") ).SetSysString( psState );
+		*psState = CComBSTR( _T("Lockdown") ).Detach();
 	}
 	else if ( pThis->m_pView->m_pCollection->FindByURN( CString( sURN ) ) == NULL )
 	{
-		CString( _T("NotInCollection") ).SetSysString( psState );
+		*psState = CComBSTR( _T("NotInCollection") ).Detach();
 	}
 	else if ( LibraryMaps.LookupFileByURN( CString( sURN ), FALSE, TRUE ) )
 	{
-		CString( _T("Complete") ).SetSysString( psState );
+		*psState = CComBSTR( _T("Complete") ).Detach();
 	}
 	else
 	{
@@ -327,11 +327,11 @@ STDMETHODIMP CLibraryCollectionView::External::XView::Detect(BSTR sURN, BSTR *ps
 		{
 			CString str;
 			str.Format( _T("%.2f%%"), pDownload->GetProgress() );
-			str.SetSysString( psState );
+			*psState = CComBSTR( str ).Detach();
 		}
 		else
 		{
-			CString().SetSysString( psState );
+			*psState = CComBSTR( _T("") ).Detach();
 		}
 	}
 

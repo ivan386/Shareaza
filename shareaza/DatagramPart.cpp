@@ -106,8 +106,6 @@ void CDatagramOut::Create(SOCKADDR_IN* pHost, CG2Packet* pPacket, WORD nSequence
 
 BOOL CDatagramOut::GetPacket(DWORD tNow, BYTE** ppPacket, DWORD* pnPacket, BOOL bResend)
 {
-	ASSERT( m_pBuffer != NULL );
-
     int nPart = 0;
 	for ( ; nPart < m_nCount ; nPart++ )
 	{

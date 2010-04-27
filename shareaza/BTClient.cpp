@@ -817,10 +817,8 @@ void CBTClient::DetermineUserAgent()
 
 BOOL CBTClient::OnOnline()
 {
-	if ( m_bClosing ) return FALSE;
-	ASSERT( m_bOnline );
-	ASSERT( m_pDownload != NULL );
-	ASSERT( m_pUpload != NULL );
+	if ( m_bClosing )
+		return FALSE;
 	
 	theApp.Message( MSG_INFO, IDS_BT_CLIENT_ONLINE, (LPCTSTR)m_sAddress,
 		(LPCTSTR)m_pDownload->GetDisplayName() );

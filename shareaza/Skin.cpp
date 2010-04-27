@@ -1483,7 +1483,7 @@ CSkinWindow* CSkin::GetWindowSkin(CWnd* pWnd)
 	for ( CRuntimeClass* pClass = pWnd->GetRuntimeClass() ; pClass ; pClass = pClass->m_pBaseClass )
 	#endif
 	{
-		CA2T sClassName( pClass->m_lpszClassName );
+		CString sClassName( pClass->m_lpszClassName );
 
 		if ( bPanel )
 		{

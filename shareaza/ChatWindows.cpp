@@ -182,8 +182,6 @@ CPrivateChatFrame* CChatWindows::OpenPrivate(const Hashes::Guid& oGUID, SOCKADDR
 {
 	CPrivateChatFrame* pFrame = NULL;
 
-	ASSERT ( pHost != NULL );
-
 	if ( ( nProtocol == PROTOCOL_BT ) || ( nProtocol == PROTOCOL_FTP ) )
 		return NULL;
 

@@ -112,7 +112,7 @@ STDMETHODIMP CApplication::XApplication::get_Version(BSTR FAR* psVersion)
 {
 	METHOD_PROLOGUE( CApplication, Application )
 	if ( psVersion == NULL ) return E_INVALIDARG;
-	theApp.m_sVersion.SetSysString( psVersion );
+	*psVersion = CComBSTR( theApp.m_sVersion ).Detach();
 	return S_OK;
 }
 

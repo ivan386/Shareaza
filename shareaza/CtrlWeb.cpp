@@ -115,9 +115,7 @@ HRESULT CWebCtrl::Navigate(LPCTSTR lpszURL, DWORD dwFlags, LPCTSTR lpszTargetFra
 {
 	if ( m_pBrowser == NULL ) return E_UNEXPECTED;
 
-	CString strURL( lpszURL );
-	CComBSTR bstrURL;
-	bstrURL.Attach( strURL.AllocSysString() );
+	CComBSTR bstrURL( lpszURL );
 
 	COleSafeArray vPostData;
 	if ( lpvPostData != NULL )

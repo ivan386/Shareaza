@@ -491,7 +491,7 @@ STDMETHODIMP CFilePreviewDlg::XDownloadPreviewSite::GetSuggestedFilename(BSTR FA
 {
 	METHOD_PROLOGUE( CFilePreviewDlg, DownloadPreviewSite )
 
-	pThis->m_sTargetName.SetSysString( psFile );
+	*psFile = CComBSTR( pThis->m_sTargetName ).Detach();
 
 	return S_OK;
 }

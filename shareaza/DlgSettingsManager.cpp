@@ -191,7 +191,7 @@ void CSettingsManagerDlg::AddGroup(CSettingsPage* pPage)
 	}
 	else
 	{
-		CString strName = pPage->GetRuntimeClass()->m_lpszClassName;
+		CString strName( pPage->GetRuntimeClass()->m_lpszClassName );
 		CString strCaption = Skin.GetDialogCaption( strName );
 		CSettingsSheet::AddGroup( pPage, strCaption.GetLength() ? (LPCTSTR)strCaption : NULL );
 	}

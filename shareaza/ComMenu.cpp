@@ -184,7 +184,7 @@ STDMETHODIMP CComMenu::XSMenu::get_Text(BSTR FAR* psText)
 	GetMenuString( pThis->m_hParent, pThis->m_nPosition,
 		str.GetBuffer( 256 ), 256, MF_BYPOSITION );
 	str.ReleaseBuffer();
-	str.SetSysString( psText );
+	*psText = CComBSTR( str ).Detach();
 
 	return S_OK;
 }

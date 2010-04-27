@@ -883,14 +883,14 @@ STDMETHODIMP CLibraryFolder::XLibraryFolder::get_Parent(ILibraryFolder FAR* FAR*
 STDMETHODIMP CLibraryFolder::XLibraryFolder::get_Path(BSTR FAR* psPath)
 {
 	METHOD_PROLOGUE( CLibraryFolder, LibraryFolder )
-	pThis->m_sPath.SetSysString( psPath );
+	*psPath = CComBSTR( pThis->m_sPath ).Detach();
 	return S_OK;
 }
 
 STDMETHODIMP CLibraryFolder::XLibraryFolder::get_Name(BSTR FAR* psPath)
 {
 	METHOD_PROLOGUE( CLibraryFolder, LibraryFolder )
-	pThis->m_sName.SetSysString( psPath );
+	*psPath = CComBSTR( pThis->m_sName ).Detach();
 	return S_OK;
 }
 

@@ -197,7 +197,7 @@ BOOL CChildWnd::LoadState(LPCTSTR pszName, BOOL bDefaultMaximise)
 	{
 		if ( m_bTabMode )
 		{
-			CA2T sClassName( GetRuntimeClass()->m_lpszClassName );
+			CString sClassName( GetRuntimeClass()->m_lpszClassName );
 			CString strName( pszName ? pszName : (LPCTSTR)sClassName );
 			m_nGroupSize = (float)theApp.GetProfileInt( _T("Windows"), strName + _T(".Splitter"), 500 ) / 1000;
 		}

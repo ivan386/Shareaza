@@ -68,8 +68,6 @@ void CBTClients::Clear()
 
 BOOL CBTClients::OnAccept(CConnection* pConnection)
 {
-	ASSERT( pConnection != NULL );
-
 	if ( ! Network.IsConnected() || ( Settings.Connection.RequireForTransfers && ! Settings.BitTorrent.EnableToday ) )
 	{
 		theApp.Message( MSG_ERROR, IDS_BT_CLIENT_DROP_CONNECTED,

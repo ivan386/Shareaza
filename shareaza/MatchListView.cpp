@@ -117,7 +117,7 @@ IMPLEMENT_DISPATCH(CMatchListView, GenericView)
 STDMETHODIMP CMatchListView::XGenericView::get_Name(BSTR FAR* psName)
 {
 	METHOD_PROLOGUE( CMatchListView, GenericView )
-	pThis->m_sName.SetSysString( psName );
+	*psName = CComBSTR( pThis->m_sName ).Detach();
 	return S_OK;
 }
 

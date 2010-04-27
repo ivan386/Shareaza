@@ -225,7 +225,7 @@ STDMETHODIMP CComToolbar::XSToolbarItem::get_Text(BSTR FAR* psText)
 {
 	METHOD_PROLOGUE( CComToolbar, SToolbarItem )
 	if ( pThis->m_pItem == NULL ) return E_UNEXPECTED;
-	pThis->m_pItem->m_sText.SetSysString( psText );
+	*psText = CComBSTR( pThis->m_pItem->m_sText ).Detach();
 	return S_OK;
 }
 

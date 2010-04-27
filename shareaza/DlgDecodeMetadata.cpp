@@ -155,7 +155,7 @@ void CDecodeMetadataDlg::OnOK()
 void CDecodeMetadataDlg::GetEncodedText(CString& strText, int nMethod) const
 {
 	int nLength = strText.GetLength();
-	LPTSTR pszSource = strText.GetBuffer( nLength );
+	LPCTSTR pszSource = strText.GetBuffer( nLength );
 	LPTSTR pszOutput = NULL;
 	int nWide = 0;
 
@@ -167,7 +167,7 @@ void CDecodeMetadataDlg::GetEncodedText(CString& strText, int nMethod) const
 		auto_array< CHAR > pszDest( new CHAR[ nLength + 1 ] );
 
 		{
-			const TCHAR* source = pszSource;
+			LPCTSTR source = pszSource;
 			CHAR* dest = pszDest.get();
 			while ( *dest++ = static_cast< CHAR >( *source ), *source++ );
 		}
@@ -178,7 +178,7 @@ void CDecodeMetadataDlg::GetEncodedText(CString& strText, int nMethod) const
 	}
 	else
 	{
-		CStringA source = pszSource;
+		CStringA source( pszSource );
 
 		nWide = MultiByteToWideChar( nCodePage, 0, source, nLength, NULL, 0 );
 		pszOutput = strText.GetBuffer( nWide + 1 );

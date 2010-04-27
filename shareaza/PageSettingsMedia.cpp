@@ -209,14 +209,13 @@ void CMediaSettingsPage::OnOK()
 	Settings.MediaPlayer.EnablePlay		= m_bEnablePlay != FALSE;
 	Settings.MediaPlayer.EnableEnqueue	= m_bEnableEnqueue != FALSE;
 	
-	
 	Settings.MediaPlayer.ServicePath.clear();
-	CString str = "*";
-	for(int i = 0; i < 3 && !m_sServicePath[i].IsEmpty(); ++i)
+	CString str = _T("*");
+	for(int i = 0; i < 3 && !m_sServicePath[i].IsEmpty(); ++i )
 	{
-		if(i == m_nSelected) m_sServicePath[i]+="*";
-		Settings.MediaPlayer.ServicePath.insert( str + m_sServicePath[i]);
-		str+="*";
+		if(i == m_nSelected) m_sServicePath[i] += _T("*");
+		Settings.MediaPlayer.ServicePath.insert( str + m_sServicePath[i] );
+		str += _T("*");
 	}
 	CString strRegData;
 
@@ -247,7 +246,7 @@ void CMediaSettingsPage::OnOK()
 		CSettingsPage* pPage = pSheet->GetPage( nPage );
 		if ( pPage )
 		{
-			CString strClass = pPage->GetRuntimeClass()->m_lpszClassName;
+			CString strClass( pPage->GetRuntimeClass()->m_lpszClassName );
 			if ( strClass == _T("CPluginsSettingsPage") )
 			{
 				CPluginsSettingsPage* pPluginPage = static_cast< CPluginsSettingsPage* >( pPage );

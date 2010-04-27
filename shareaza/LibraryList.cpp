@@ -196,10 +196,7 @@ IMPLEMENT_DISPATCH(CLibraryList, GenericView)
 STDMETHODIMP CLibraryList::XGenericView::get_Name(BSTR FAR* psName)
 {
 	METHOD_PROLOGUE( CLibraryList, GenericView )
-
-	CString strName( _T("CLibraryFileView") );
-	strName.SetSysString( psName );
-
+	*psName = CComBSTR( _T("CLibraryFileView") ).Detach();
 	return S_OK;
 }
 

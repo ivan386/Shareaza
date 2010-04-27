@@ -171,8 +171,7 @@ BOOL CRegEnum::AttachTo(HWND hWnd, LPCTSTR szSection, LPCTSTR szRoot)
 
 void CRegEnum::AddString(const CString& rString) const
 {
-	int lf = rString.Find( _T('\n') );
-	CString sKeyString( ( lf != -1 )? rString.Left( lf ) : rString );
+	CString sKeyString = rString.SpanExcluding( _T("\n") );
 	if ( sKeyString.IsEmpty() )
 		return;
 
@@ -185,8 +184,8 @@ void CRegEnum::AddString(const CString& rString) const
 		CString strValue( AfxGetApp()->GetProfileString( m_sect, strEntry ) );
 		if ( strValue.IsEmpty() )
 			break;
-		int lf = strValue.Find( _T('\n') );
-		if ( sKeyString .CompareNoCase( ( lf != -1 ) ? strValue.Left( lf ) : strValue ) )
+		CString strShortValue = strValue.SpanExcluding( _T("\n") );
+		if ( sKeyString.CompareNoCase( strShortValue ) )
 			oList.AddTail( strValue );
 	}
 

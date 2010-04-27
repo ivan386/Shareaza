@@ -165,8 +165,9 @@ STDMETHODIMP CXMLCOM::XXMLNode::get_Name(BSTR FAR* psName)
 {
 	METHOD_PROLOGUE( CXMLCOM, XMLNode )
 	if ( psName == NULL ) return E_INVALIDARG;
+	*psName = NULL;
 	if ( ! pThis->m_pNode ) return E_UNEXPECTED;
-	pThis->m_pNode->GetName().SetSysString( psName );
+	*psName = CComBSTR( pThis->m_pNode->GetName() ).Detach();
 	return S_OK;
 }
 
@@ -183,8 +184,9 @@ STDMETHODIMP CXMLCOM::XXMLNode::get_Value(BSTR FAR* psValue)
 {
 	METHOD_PROLOGUE( CXMLCOM, XMLNode )
 	if ( psValue == NULL ) return E_INVALIDARG;
+	*psValue = NULL;
 	if ( ! pThis->m_pNode ) return E_UNEXPECTED;
-	pThis->m_pNode->GetValue().SetSysString( psValue );
+	*psValue = CComBSTR( pThis->m_pNode->GetValue() ).Detach();
 	return S_OK;
 }
 
@@ -273,8 +275,9 @@ STDMETHODIMP CXMLCOM::XXMLElement::get_Name(BSTR FAR* psName)
 {
 	METHOD_PROLOGUE( CXMLCOM, XMLElement )
 	if ( psName == NULL ) return E_INVALIDARG;
+	*psName = NULL;
 	if ( ! pThis->m_pNode ) return E_UNEXPECTED;
-	pThis->m_pNode->GetName().SetSysString( psName );
+	*psName = CComBSTR( pThis->m_pNode->GetName() ).Detach();
 	return S_OK;
 }
 
@@ -291,8 +294,9 @@ STDMETHODIMP CXMLCOM::XXMLElement::get_Value(BSTR FAR* psValue)
 {
 	METHOD_PROLOGUE( CXMLCOM, XMLElement )
 	if ( psValue == NULL ) return E_INVALIDARG;
+	*psValue = NULL;
 	if ( ! pThis->m_pNode ) return E_UNEXPECTED;
-	pThis->m_pNode->GetValue().SetSysString( psValue );
+	*psValue = CComBSTR( pThis->m_pNode->GetValue() ).Detach();
 	return S_OK;
 }
 
@@ -362,8 +366,9 @@ STDMETHODIMP CXMLCOM::XXMLElement::ToString(BSTR FAR* psValue)
 {
 	METHOD_PROLOGUE( CXMLCOM, XMLElement )
 	if ( psValue == NULL ) return E_INVALIDARG;
+	*psValue = NULL;
 	if ( ! pThis->m_pNode ) return E_UNEXPECTED;
-	((CXMLElement*)pThis->m_pNode)->ToString().SetSysString( psValue );
+	*psValue = CComBSTR( ((CXMLElement*)pThis->m_pNode)->ToString() ).Detach();
 	return S_OK;
 }
 
@@ -371,8 +376,9 @@ STDMETHODIMP CXMLCOM::XXMLElement::ToStringEx(VARIANT_BOOL bHeader, VARIANT_BOOL
 {
 	METHOD_PROLOGUE( CXMLCOM, XMLElement )
 	if ( psValue == NULL ) return E_INVALIDARG;
+	*psValue = NULL;
 	if ( ! pThis->m_pNode ) return E_UNEXPECTED;
-	((CXMLElement*)pThis->m_pNode)->ToString( (BOOL)bHeader, (BOOL)bNewlines ).SetSysString( psValue );
+	*psValue = CComBSTR( ((CXMLElement*)pThis->m_pNode)->ToString( (BOOL)bHeader, (BOOL)bNewlines ) ).Detach();
 	return S_OK;
 }
 
@@ -390,8 +396,9 @@ STDMETHODIMP CXMLCOM::XXMLElement::GetWords(BSTR FAR* psWords)
 {
 	METHOD_PROLOGUE( CXMLCOM, XMLElement )
 	if ( psWords == NULL ) return E_INVALIDARG;
+	*psWords = NULL;
 	if ( ! pThis->m_pNode ) return E_UNEXPECTED;
-	((CXMLElement*)pThis->m_pNode)->GetRecursiveWords().SetSysString( psWords );
+	*psWords = CComBSTR( ((CXMLElement*)pThis->m_pNode)->GetRecursiveWords() ).Detach();
 	return S_OK;
 }
 
@@ -454,8 +461,9 @@ STDMETHODIMP CXMLCOM::XXMLAttribute::get_Name(BSTR FAR* psName)
 {
 	METHOD_PROLOGUE( CXMLCOM, XMLAttribute )
 	if ( psName == NULL ) return E_INVALIDARG;
+	*psName = NULL;
 	if ( ! pThis->m_pNode ) return E_UNEXPECTED;
-	pThis->m_pNode->GetName().SetSysString( psName );
+	*psName = CComBSTR( pThis->m_pNode->GetName() ).Detach();
 	return S_OK;
 }
 
@@ -472,8 +480,9 @@ STDMETHODIMP CXMLCOM::XXMLAttribute::get_Value(BSTR FAR* psValue)
 {
 	METHOD_PROLOGUE( CXMLCOM, XMLAttribute )
 	if ( psValue == NULL ) return E_INVALIDARG;
+	*psValue = NULL;
 	if ( ! pThis->m_pNode ) return E_UNEXPECTED;
-	pThis->m_pNode->GetValue().SetSysString( psValue );
+	*psValue = CComBSTR( pThis->m_pNode->GetValue() ).Detach();
 	return S_OK;
 }
 
@@ -738,7 +747,8 @@ STDMETHODIMP CXMLCOMCol::XXMLAttributes::get_ByName(BSTR sName, ISXMLAttribute F
 STDMETHODIMP CXMLCOMCol::XXMLAttributes::get_Get(BSTR sName, BSTR FAR* psValue)
 {
 	METHOD_PROLOGUE( CXMLCOMCol, XMLAttributes )
-	pThis->m_pElement->GetAttributeValue( CString( sName ) ).SetSysString( psValue );
+	*psValue = CComBSTR( pThis->m_pElement->GetAttributeValue(
+		CString( sName ) ) ).Detach();
 	return S_OK;
 }
 

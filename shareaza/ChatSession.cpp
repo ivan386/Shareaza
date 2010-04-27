@@ -770,7 +770,6 @@ BOOL CChatSession::OnText(const CString& str)
 void CChatSession::Send(CG2Packet* pPacket, BOOL bRelease)
 {
 	ASSERT( m_nProtocol == PROTOCOL_G2 );
-	ASSERT( pPacket != NULL );
 	ASSERT( m_nState >= cssHandshake );
 
 	Write( pPacket );
@@ -946,11 +945,11 @@ BOOL CChatSession::OnProfileDelivery(CG2Packet* pPacket)
 	{
 		m_pWndPrivate->OnProfileReceived();
 
-		CG2Packet* pPacket = CG2Packet::New( G2_PACKET_CHAT_REQUEST, TRUE );
-		pPacket->WritePacket( G2_PACKET_USER_GUID, 16 );
-		pPacket->Write( m_oGUID );
+		CG2Packet* pReqPacket = CG2Packet::New( G2_PACKET_CHAT_REQUEST, TRUE );
+		pReqPacket->WritePacket( G2_PACKET_USER_GUID, 16 );
+		pReqPacket->Write( m_oGUID );
 
-		Send( pPacket, TRUE );
+		Send( pReqPacket, TRUE );
 	}
 
 	return TRUE;

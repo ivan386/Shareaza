@@ -642,7 +642,7 @@ void CMatchCtrl::OnPaint()
 	
 	CFont* pOldFont = (CFont*)dc.SelectObject( &CoolInterface.m_fntNormal );
 	
-	m_nTrailWidth = dc.GetTextExtent( _T('\x2026') ).cx;
+	m_nTrailWidth = dc.GetTextExtent( _T("\x2026") ).cx;
 	
 	rcItem.SetRect( rcClient.left, rcClient.top, rcClient.right, 0 );
 	rcItem.top -= m_nHitIndex * ITEM_HEIGHT;

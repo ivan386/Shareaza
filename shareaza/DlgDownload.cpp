@@ -112,7 +112,7 @@ void CDownloadDlg::OnTorrentFile()
 {
 	UpdateData();
 
-	CFileDialog dlg( TRUE, _T("torrent"), ( Settings.Downloads.TorrentPath + "\\." ) , OFN_HIDEREADONLY,
+	CFileDialog dlg( TRUE, _T("torrent"), ( Settings.Downloads.TorrentPath + _T("\\.") ) , OFN_HIDEREADONLY,
 		_T("Torrent Files|*.torrent|All Files|*.*||"), this );
 
 	if ( dlg.DoModal() != IDOK ) return;

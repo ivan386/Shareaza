@@ -2364,7 +2364,7 @@ void CMainWnd::OnToolsLanguage()
 
 void CMainWnd::OnToolsSeedTorrent()
 {
-	CFileDialog dlgFile( TRUE, _T("torrent"), ( Settings.Downloads.TorrentPath + "\\." ) , OFN_HIDEREADONLY,
+	CFileDialog dlgFile( TRUE, _T("torrent"), ( Settings.Downloads.TorrentPath + _T("\\.") ) , OFN_HIDEREADONLY,
 		_T("Torrent Files|*.torrent|All Files|*.*||"), this );
 
 	if ( dlgFile.DoModal() != IDOK ) return;

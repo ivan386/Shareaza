@@ -552,8 +552,8 @@ void CIRCFrame::OnIrcConnect()
 
 	SendString( _T("NICK ") + m_sNickname );
 
-	SendString( _T("USER ") + Settings.IRC.UserName + " " +
-		"razaUserHost " + "razaUserServ :" + Settings.IRC.RealName );
+	SendString( _T("USER ") + Settings.IRC.UserName + _T(" ") +
+		_T("razaUserHost ") + _T("razaUserServ :") + Settings.IRC.RealName );
 
 	m_pWakeup.ResetEvent();
 	WSAEventSelect( m_nSocket, m_pWakeup, FD_READ | FD_CLOSE );
@@ -582,21 +582,21 @@ void CIRCFrame::OnIrcUserCmdWhois()
 {
 	CString strText = GetSelectedUser();
 	if ( strText.IsEmpty() ) return;
-	OnLocalText( "/whois " + RemoveModeOfNick( strText ) );
+	OnLocalText( _T("/whois ") + RemoveModeOfNick( strText ) );
 }
 
 void CIRCFrame::OnIrcUserCmdOp() 
 {
 	CString strText = GetSelectedUser();
 	if ( strText.IsEmpty() ) return;
-	OnLocalText( "/mode " + GetTabText() + " +o " + RemoveModeOfNick( strText ) );
+	OnLocalText( _T("/mode ") + GetTabText() + _T(" +o ") + RemoveModeOfNick( strText ) );
 }
 
 void CIRCFrame::OnIrcUserCmdDeop() 
 {
 	CString strText = GetSelectedUser();
 	if ( strText.IsEmpty() ) return;
-	OnLocalText( "/mode " + GetTabText() + " -o " + RemoveModeOfNick( strText ) );
+	OnLocalText( _T("/mode ") + GetTabText() + _T(" -o ") + RemoveModeOfNick( strText ) );
 }
 
 void CIRCFrame::OnIrcChanCmdOpen()
@@ -650,7 +650,7 @@ void CIRCFrame::OnIrcUserCmdVoice()
 {
 	CString strText = GetSelectedUser();
 	if ( strText.IsEmpty() ) return;
-	OnLocalText( "/mode " + GetTabText() + " +v " + RemoveModeOfNick( strText ) );
+	OnLocalText( _T("/mode ") + GetTabText() + _T(" +v ") + RemoveModeOfNick( strText ) );
 }
 
 void CIRCFrame::OnIrcShowSettings()
@@ -662,21 +662,21 @@ void CIRCFrame::OnIrcUserCmdBan()
 {
 	CString strText = GetSelectedUser();
 	if ( strText.IsEmpty() ) return;
-	OnLocalText( "/mode " + GetTabText() + " +b " + RemoveModeOfNick( strText ) );
+	OnLocalText( _T("/mode ") + GetTabText() + _T(" +b ") + RemoveModeOfNick( strText ) );
 }
 
 void CIRCFrame::OnIrcUserCmdUnban() 
 {
 	CString strText = GetSelectedUser();
 	if ( strText.IsEmpty() ) return;
-	OnLocalText( "/mode " + GetTabText() + " -b " + RemoveModeOfNick( strText ) );
+	OnLocalText( _T("/mode ") + GetTabText() + _T(" -b ") + RemoveModeOfNick( strText ) );
 }
 
 void CIRCFrame::OnIrcUserCmdKick() 
 {
 	CString strText = GetSelectedUser();
 	if ( strText.IsEmpty() ) return;
-	OnLocalText( "/kick " + GetTabText() + " " + RemoveModeOfNick( strText ) );
+	OnLocalText( _T("/kick ") + GetTabText() + _T(" ") + RemoveModeOfNick( strText ) );
 }
 
 void CIRCFrame::OnIrcUserCmdKickWhy() 
@@ -685,15 +685,15 @@ void CIRCFrame::OnIrcUserCmdKickWhy()
 	if ( strText.IsEmpty() ) return;
 	CIrcInputDlg dlg( this, 1, TRUE );	// 1 = select the second caption
 	if ( dlg.DoModal() != IDOK ) return;
-	OnLocalText( "/kick " + GetTabText() + " " + RemoveModeOfNick( strText ) + " " + dlg.m_sAnswer );
+	OnLocalText( _T("/kick ") + GetTabText() + _T(" ") + RemoveModeOfNick( strText ) + _T(" ") + dlg.m_sAnswer );
 }
 
 void CIRCFrame::OnIrcUserCmdBanKick() 
 {
 	CString strText = GetSelectedUser();
 	if ( strText.IsEmpty() ) return;
-	OnLocalText( "/mode " + GetTabText() + " +b " + RemoveModeOfNick( strText ) );
-	OnLocalText( "/kick " + GetTabText() + " " + RemoveModeOfNick( strText ) );
+	OnLocalText( _T("/mode ") + GetTabText() + _T(" +b ") + RemoveModeOfNick( strText ) );
+	OnLocalText( _T("/kick ") + GetTabText() + _T(" ") + RemoveModeOfNick( strText ) );
 }
 
 void CIRCFrame::OnIrcUserCmdBanKickWhy() 
@@ -702,50 +702,50 @@ void CIRCFrame::OnIrcUserCmdBanKickWhy()
 	if ( strText.IsEmpty() ) return;
 	CIrcInputDlg dlg( this, 1, FALSE );	// 1 = select the second caption
 	if ( dlg.DoModal() != IDOK ) return;
-	OnLocalText( "/mode " + GetTabText() + " +b " + RemoveModeOfNick( strText ) );
-	OnLocalText( "/kick " + GetTabText() + " " + RemoveModeOfNick( strText ) + " " + dlg.m_sAnswer );
+	OnLocalText( _T("/mode ") + GetTabText() + _T(" +b ") + RemoveModeOfNick( strText ) );
+	OnLocalText( _T("/kick ") + GetTabText() + _T(" ") + RemoveModeOfNick( strText ) + _T(" ") + dlg.m_sAnswer );
 }
 
 void CIRCFrame::OnIrcUserCmdDevoice() 
 {
 	CString strText = GetSelectedUser();
 	if ( strText.IsEmpty() ) return;
-	OnLocalText( "/mode " + GetTabText() + " -v " + RemoveModeOfNick( strText ) );
+	OnLocalText( _T("/mode ") + GetTabText() + _T(" -v ") + RemoveModeOfNick( strText ) );
 }
 
 void CIRCFrame::OnIrcUserCmdIgnore() 
 {
 	CString strText = GetSelectedUser();
 	if ( strText.IsEmpty() ) return;
-	OnLocalText( "/SILENCE +" + RemoveModeOfNick( strText ) );
+	OnLocalText( _T("/SILENCE +") + RemoveModeOfNick( strText ) );
 }
 
 void CIRCFrame::OnIrcUserCmdUnignore() 
 {
 	CString strText = GetSelectedUser();
 	if ( strText.IsEmpty() ) return;
-	OnLocalText( "/SILENCE -" + RemoveModeOfNick( strText ) );
+	OnLocalText( _T("/SILENCE -") + RemoveModeOfNick( strText ) );
 }
 
 void CIRCFrame::OnIrcUserCmdVersion() 
 {
 	CString strText = GetSelectedUser();
 	if ( strText.IsEmpty() ) return;
-	OnLocalText( "/PRIVMSG " + RemoveModeOfNick( strText ) + _T(" :\x01VERSION\x01") );
+	OnLocalText( _T("/PRIVMSG ") + RemoveModeOfNick( strText ) + _T(" :\x01VERSION\x01") );
 }
 
 void CIRCFrame::OnIrcUserCmdBrowse() 
 {
 	CString strText = GetSelectedUser();
 	if ( strText.IsEmpty() ) return;
-	OnLocalText( "/PRIVMSG " + RemoveModeOfNick( strText ) + _T(" :\x01USERINFO\x01") );
+	OnLocalText( _T("/PRIVMSG ") + RemoveModeOfNick( strText ) + _T(" :\x01USERINFO\x01") );
 }
 
 void CIRCFrame::OnIrcUserCmdTime() 
 {
 	CString strText = GetSelectedUser();
 	if ( strText.IsEmpty() ) return;
-	OnLocalText( "/PRIVMSG " + RemoveModeOfNick( strText ) + _T(" :\x01TIME\x01") );
+	OnLocalText( _T("/PRIVMSG ") + RemoveModeOfNick( strText ) + _T(" :\x01TIME\x01") );
 }
 
 void CIRCFrame::OnIrcCloseTab() 
@@ -753,7 +753,7 @@ void CIRCFrame::OnIrcCloseTab()
 	int nTab = m_wndTab.GetCurSel(), nOldTab( nTab );
 
 	CString strChannelName = GetTabText( nTab );
-	FillCountChanList( "-1", strChannelName );
+	FillCountChanList( _T("-1"), strChannelName );
 	if ( strChannelName == m_sStatus )
 		return;
 
@@ -769,8 +769,8 @@ void CIRCFrame::OnIrcCloseTab()
 		m_pIrcBuffer[ nTab ].Append( m_pIrcBuffer[ nTab + 1 ] );
 		m_pIrcUsersBuffer[ nTab ].Append( m_pIrcUsersBuffer[ nTab + 1 ] );
 	}
-	if ( strChannelName.Left( 1 ) == "#" )
-		SendString( "PART " + strChannelName );
+	if ( strChannelName.Left( 1 ) == _T("#") )
+		SendString( _T("PART ") + strChannelName );
 
 	m_nBufferCount--;
 
@@ -867,16 +867,16 @@ void CIRCFrame::OnLocalText(LPCTSTR pszText)
 	if ( strMessage.GetLength() > 2 )
 	{
 		if ( strMessage.Left( 3 ).CompareNoCase( _T("/j ") ) == 0 )
-			strMessage = "/JOIN" + strMessage.Mid( 2 );
+			strMessage = _T("/JOIN") + strMessage.Mid( 2 );
 	}
 	if ( strMessage.GetLength() > 3 ) 
 	{
 		if ( strMessage.Left( 4 ).CompareNoCase( _T("/bs ") ) == 0 )
-			strMessage = "/BOTSERV" + strMessage.Mid( 3 );
+			strMessage = _T("/BOTSERV") + strMessage.Mid( 3 );
 		else if ( strMessage.Left( 4 ).CompareNoCase( _T("/ns ") ) == 0 ) 
-			strMessage = "/NICKSERV" + strMessage.Mid( 3 );
+			strMessage = _T("/NICKSERV") + strMessage.Mid( 3 );
 		else if ( strMessage.Left( 4 ).CompareNoCase( _T("/cs ") ) == 0 ) 
-			strMessage = "/CHANSERV" + strMessage.Mid( 3 );
+			strMessage = _T("/CHANSERV") + strMessage.Mid( 3 );
 		else if ( strMessage.Left( 4 ).CompareNoCase( _T("/me ") ) == 0 )
 		{
 			isActionMsg = TRUE;
@@ -898,11 +898,11 @@ void CIRCFrame::OnLocalText(LPCTSTR pszText)
 	// Formatting
 	if ( isActionMsg )
 	{
-		strDisp = strDisp + "* " + m_sNickname + " " + strMessage;
+		strDisp = strDisp + _T("* ") + m_sNickname + _T(" ") + strMessage;
 	}
 	else if( strMessage.Left( 1 ).Compare( _T("/") ) != 0 ) 
 	{
-		strDisp = strDisp + "<" + m_sNickname + "> " + strMessage;
+		strDisp = strDisp + _T("<") + m_sNickname + _T("> ") + strMessage;
 	}
 	//else It's a command, the server will send feedback
 
@@ -932,14 +932,14 @@ void CIRCFrame::OnLocalText(LPCTSTR pszText)
 			
 			if ( isActionMsg ) 
 			{
-				strSend = "\x01";
+				strSend = _T("\x01");
 				strSend += _T("ACTION ");
 				strSend += strMessage;
-				strSend += "\x01";
+				strSend += _T("\x01");
 			}
 			else strSend = strMessage;
 		
-			strSend = "PRIVMSG " + strTabTitle + " :" + strSend;
+			strSend = _T("PRIVMSG ") + strTabTitle + _T(" :") + strSend;
 
 			// Notify chat plugins about new local message
 			Plugins.OnChatMessage( strTabTitle, TRUE, m_sNickname, strTabTitle, pszText );
@@ -1222,7 +1222,7 @@ BOOL CIRCFrame::PreTranslateMessage(MSG* pMsg)
 			CString strChan;
 			strChan = m_wndPanel.m_boxChans.m_sPassedChannel;
 			m_wndPanel.m_boxChans.m_sPassedChannel.Empty();
-			m_pChanList.AddChannel( strChan, "#" + strChan, TRUE );
+			m_pChanList.AddChannel( strChan, _T("#") + strChan, TRUE );
 			OnIrcChanCmdSave();
 			return TRUE;
 		}
@@ -1639,7 +1639,7 @@ void CIRCFrame::ActivateMessageByID(CIRCNewMessage& oNewMessage, int nMessageTyp
 			m_pContent.Clear();
 			
 			// ???
-			FillCountChanList( "-1", channelName );
+			FillCountChanList( _T("-1"), channelName );
 			// Remove the tab
 			m_wndTab.DeleteItem( nTab );
 			// Delete the contents of the tab
@@ -2115,7 +2115,7 @@ void CIRCFrame::TabClick()
 		str = m_pIrcUsersBuffer[ nTab ].GetAt( nUser );
 		nMode = int( str.GetAt( 0 ) ) - 48;
 		if ( nMode == 0 ) str = str.Mid( 1 );
-		if ( nMode == 2 || nMode == 3 || nMode == 6 || nMode == 7 ) str = "@" + str.Mid( 1 );
+		if ( nMode == 2 || nMode == 3 || nMode == 6 || nMode == 7 ) str = _T("@") + str.Mid( 1 );
 		if ( nMode == 1 ) str = _T("+") + str.Mid( 1 );
 		if ( nMode == 4 || nMode == 5 ) str = _T("%") + str.Mid( 1 );
 		AddUser( str );
@@ -2141,7 +2141,7 @@ int CIRCFrame::AddTab(CString strTabName, int nKindOfTab)
 		m_nBufferCount, strTabName, NULL, NULL );
 	m_pIrcBuffer[ m_nBufferCount ].RemoveAll();
 	m_pIrcUsersBuffer[ m_nBufferCount ].RemoveAll();
-	m_pIrcBuffer[ m_nBufferCount ].Add( char( nKindOfTab ) );
+	m_pIrcBuffer[ m_nBufferCount ].Add( CString( (char)nKindOfTab ) );
 	m_nCurrentPosLineBuffer[ m_nBufferCount ] = -1;
 	m_nBufferCount++;
 	HighlightTab( nNewTab, FALSE );

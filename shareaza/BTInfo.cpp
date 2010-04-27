@@ -941,11 +941,11 @@ BOOL CBTInfo::LoadTorrentTree(const CBENode* pRoot)
 	}
 
 	// Details on file (or files).
-	if ( CBENode* pLength = pInfo->GetNode( "length" ) )
+	if ( CBENode* pSingleLength = pInfo->GetNode( "length" ) )
 	{
-		if ( ! pLength->IsType( CBENode::beInt ) )
+		if ( ! pSingleLength->IsType( CBENode::beInt ) )
 			return FALSE;
-		m_nSize = pLength->GetInt();
+		m_nSize = pSingleLength->GetInt();
 		if ( ! m_nSize )
 			return FALSE;
 
@@ -1024,18 +1024,18 @@ BOOL CBTInfo::LoadTorrentTree(const CBENode* pRoot)
 			if ( ! pPath ) return FALSE;
 			if ( ! pPath->IsType( CBENode::beList ) ) return FALSE;
 
-			CBENode* pPart = pPath->GetNode( 0 );
-			if ( pPart && pPart->IsType( CBENode::beString ) )
+			CBENode* pPathPart = pPath->GetNode( 0 );
+			if ( pPathPart && pPathPart->IsType( CBENode::beString ) )
 			{
 				if ( ! IsValid( strPath ) )
 				{
 					// Get the path
-					strPath = pPart->GetString();
+					strPath = pPathPart->GetString();
 				}
 				else
 				{
 					// Check the path matches the .utf path
-					CString strCheck =  pPart->GetString();
+					CString strCheck =  pPathPart->GetString();
 					if ( strPath != strCheck )
 						m_bEncodingError = TRUE;
 					// Switch back to the UTF-8 path
@@ -1266,9 +1266,9 @@ void CBTInfo::AddToTest(LPCVOID pInput, DWORD nLength)
 BOOL CBTInfo::FinishBlockTest(DWORD nBlock)
 {
 	ASSERT( IsAvailable() );
-	ASSERT( m_pBlockBTH != NULL );
 
-	if ( nBlock >= m_nBlockCount ) return FALSE;
+	if ( m_pBlockBTH == NULL || nBlock >= m_nBlockCount )
+		 return FALSE;
 
 	Hashes::BtHash oBTH;
 	m_pTestSHA1.Finish();

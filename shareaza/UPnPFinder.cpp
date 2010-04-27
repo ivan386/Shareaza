@@ -931,7 +931,7 @@ INT_PTR CUPnPFinder::CreateVarFromString(const CString& strArgs, VARIANT*** pppV
 		if ( strType == _T("VT_BSTR") )
 		{
 			(*pppVars)[ nArg ]->vt = VT_BSTR;
-			(*pppVars)[ nArg ]->bstrVal = strValue.AllocSysString();
+			(*pppVars)[ nArg ]->bstrVal = CComBSTR( strValue ).Detach();
 		}
 		else if ( strType == _T("VT_UI2") )
 		{
@@ -1227,7 +1227,7 @@ CString translateUPnPResult(HRESULT hr)
 	messages[ UPNP_E_EVENT_SUBSCRIPTION_FAILED ] =  "Event Subscription Failed";
 	messages[ E_FAIL ] =                            "Generic failure";
 
-	return messages[ hr ].c_str();
+	return CString( messages[ hr ].c_str() );
 }
 
 HRESULT UPnPMessage(HRESULT hr)

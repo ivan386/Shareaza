@@ -92,7 +92,7 @@ BOOL CAlbumTipCtrl::OnPrepare()
 		if ( Settings.General.LanguageRTL )
 			m_sType = _T("\x202A") + m_sType + _T(" \x200E") + strText;
 		else
-			m_sType += " " + strText;
+			m_sType += _T(" ") + strText;
 
 		m_nIcon48	= m_pAlbumFolder->m_pSchema->m_nIcon48;
 		m_nIcon32	= m_pAlbumFolder->m_pSchema->m_nIcon32;

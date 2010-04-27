@@ -217,14 +217,14 @@ IMPLEMENT_DISPATCH(CShareazaFile, ShareazaFile)
 STDMETHODIMP CShareazaFile::XShareazaFile::get_Path(BSTR FAR* psPath)
 {
 	METHOD_PROLOGUE( CShareazaFile, ShareazaFile )
-	pThis->m_sPath.SetSysString( psPath );
+	*psPath = CComBSTR( pThis->m_sPath ).Detach();
 	return S_OK;
 }
 
 STDMETHODIMP CShareazaFile::XShareazaFile::get_Name(BSTR FAR* psName)
 {
 	METHOD_PROLOGUE( CShareazaFile, ShareazaFile )
-	pThis->m_sName.SetSysString( psName );
+	*psName = CComBSTR( pThis->m_sName ).Detach();
 	return S_OK;
 }
 
@@ -242,16 +242,19 @@ STDMETHODIMP CShareazaFile::XShareazaFile::get_URN(BSTR sURN, BSTR FAR* psURN)
 	if ( ! psURN )
 		return E_POINTER;
 
-	CString strURN( sURN );
+	*psURN = NULL;
+
+	CString strURN = sURN;
+	CComBSTR bstrURN;
 
 	if ( strURN.IsEmpty() )
 	{
 		if ( pThis->m_oTiger && pThis->m_oSHA1 )
-			strURN = _T("urn:bitprint");
+			bstrURN = _T("urn:bitprint");
 		else if ( pThis->m_oTiger )
-			strURN = _T("urn:tree:tiger/");
+			bstrURN = _T("urn:tree:tiger/");
 		else if ( pThis->m_oSHA1 )
-			strURN = _T("urn:sha1");
+			bstrURN = _T("urn:sha1");
 		else
 			return E_FAIL;
 	}
@@ -259,41 +262,41 @@ STDMETHODIMP CShareazaFile::XShareazaFile::get_URN(BSTR sURN, BSTR FAR* psURN)
 	if ( strURN.CompareNoCase( _T("urn:bitprint") ) == 0 )
 	{
 		if ( !pThis->m_oSHA1 || ! pThis->m_oTiger ) return E_FAIL;
-		strURN	= _T("urn:bitprint:")
+		bstrURN	= _T("urn:bitprint:")
 				+ pThis->m_oSHA1.toString() + '.'
 				+ pThis->m_oTiger.toString();
 	}
 	else if ( strURN.CompareNoCase( _T("urn:sha1") ) == 0 )
 	{
 		if ( !pThis->m_oSHA1 ) return E_FAIL;
-		strURN = pThis->m_oSHA1.toUrn();
+		bstrURN = pThis->m_oSHA1.toUrn();
 	}
 	else if ( strURN.CompareNoCase( _T("urn:tree:tiger/") ) == 0 )
 	{
 		if ( ! pThis->m_oTiger ) return E_FAIL;
-		strURN = pThis->m_oTiger.toUrn();
+		bstrURN = pThis->m_oTiger.toUrn();
 	}
 	else if ( strURN.CompareNoCase( _T("urn:md5") ) == 0 )
 	{
 		if ( ! pThis->m_oMD5 ) return E_FAIL;
-		strURN = pThis->m_oMD5.toUrn();
+		bstrURN = pThis->m_oMD5.toUrn();
 	}
 	else if ( strURN.CompareNoCase( _T("urn:ed2k") ) == 0 )
 	{
 		if ( ! pThis->m_oED2K ) return E_FAIL;
-		strURN = pThis->m_oED2K.toUrn();
+		bstrURN = pThis->m_oED2K.toUrn();
 	}
 	else if ( strURN.CompareNoCase( _T("urn:btih") ) == 0 )
 	{
 		if ( ! pThis->m_oBTH ) return E_FAIL;
-		strURN = pThis->m_oBTH.toUrn();
+		bstrURN = pThis->m_oBTH.toUrn();
 	}
 	else
 	{
 		return E_FAIL;
 	}
 
-	strURN.SetSysString( psURN );
+	*psURN = bstrURN.Detach();
 
 	return S_OK;
 }
@@ -305,7 +308,10 @@ STDMETHODIMP CShareazaFile::XShareazaFile::get_Hash(URN_TYPE nType, ENCODING nEn
 	if ( ! psURN )
 		return E_POINTER;
 
-	CString strURN;
+	*psURN = NULL;
+
+	CComBSTR bstrURN;
+
 	switch( nType )
 	{
 	case URN_SHA1:
@@ -314,13 +320,13 @@ STDMETHODIMP CShareazaFile::XShareazaFile::get_Hash(URN_TYPE nType, ENCODING nEn
 			switch( nEncoding )
 			{
 			case ENCODING_GUID:
-				strURN = pThis->m_oSHA1.toString< Hashes::guidEncoding >();
+				bstrURN = pThis->m_oSHA1.toString< Hashes::guidEncoding >();
 				break;
 			case ENCODING_BASE16:
-				strURN = pThis->m_oSHA1.toString< Hashes::base16Encoding >();
+				bstrURN = pThis->m_oSHA1.toString< Hashes::base16Encoding >();
 				break;
 			case ENCODING_BASE32:
-				strURN = pThis->m_oSHA1.toString< Hashes::base32Encoding >();
+				bstrURN = pThis->m_oSHA1.toString< Hashes::base32Encoding >();
 				break;
 			default:
 				return E_INVALIDARG;
@@ -334,13 +340,13 @@ STDMETHODIMP CShareazaFile::XShareazaFile::get_Hash(URN_TYPE nType, ENCODING nEn
 			switch( nEncoding )
 			{
 			case ENCODING_GUID:
-				strURN = pThis->m_oTiger.toString< Hashes::guidEncoding >();
+				bstrURN = pThis->m_oTiger.toString< Hashes::guidEncoding >();
 				break;
 			case ENCODING_BASE16:
-				strURN = pThis->m_oTiger.toString< Hashes::base16Encoding >();
+				bstrURN = pThis->m_oTiger.toString< Hashes::base16Encoding >();
 				break;
 			case ENCODING_BASE32:
-				strURN = pThis->m_oTiger.toString< Hashes::base32Encoding >();
+				bstrURN = pThis->m_oTiger.toString< Hashes::base32Encoding >();
 				break;
 			default:
 				return E_INVALIDARG;
@@ -354,13 +360,13 @@ STDMETHODIMP CShareazaFile::XShareazaFile::get_Hash(URN_TYPE nType, ENCODING nEn
 			switch( nEncoding )
 			{
 			case ENCODING_GUID:
-				strURN = pThis->m_oED2K.toString< Hashes::guidEncoding >();
+				bstrURN = pThis->m_oED2K.toString< Hashes::guidEncoding >();
 				break;
 			case ENCODING_BASE16:
-				strURN = pThis->m_oED2K.toString< Hashes::base16Encoding >();
+				bstrURN = pThis->m_oED2K.toString< Hashes::base16Encoding >();
 				break;
 			case ENCODING_BASE32:
-				strURN = pThis->m_oED2K.toString< Hashes::base32Encoding >();
+				bstrURN = pThis->m_oED2K.toString< Hashes::base32Encoding >();
 				break;
 			default:
 				return E_INVALIDARG;
@@ -374,13 +380,13 @@ STDMETHODIMP CShareazaFile::XShareazaFile::get_Hash(URN_TYPE nType, ENCODING nEn
 			switch( nEncoding )
 			{
 			case ENCODING_GUID:
-				strURN = pThis->m_oMD5.toString< Hashes::guidEncoding >();
+				bstrURN = pThis->m_oMD5.toString< Hashes::guidEncoding >();
 				break;
 			case ENCODING_BASE16:
-				strURN = pThis->m_oMD5.toString< Hashes::base16Encoding >();
+				bstrURN = pThis->m_oMD5.toString< Hashes::base16Encoding >();
 				break;
 			case ENCODING_BASE32:
-				strURN = pThis->m_oMD5.toString< Hashes::base32Encoding >();
+				bstrURN = pThis->m_oMD5.toString< Hashes::base32Encoding >();
 				break;
 			default:
 				return E_INVALIDARG;
@@ -394,13 +400,13 @@ STDMETHODIMP CShareazaFile::XShareazaFile::get_Hash(URN_TYPE nType, ENCODING nEn
 			switch( nEncoding )
 			{
 			case ENCODING_GUID:
-				strURN = pThis->m_oBTH.toString< Hashes::guidEncoding >();
+				bstrURN = pThis->m_oBTH.toString< Hashes::guidEncoding >();
 				break;
 			case ENCODING_BASE16:
-				strURN = pThis->m_oBTH.toString< Hashes::base16Encoding >();
+				bstrURN = pThis->m_oBTH.toString< Hashes::base16Encoding >();
 				break;
 			case ENCODING_BASE32:
-				strURN = pThis->m_oBTH.toString< Hashes::base32Encoding >();
+				bstrURN = pThis->m_oBTH.toString< Hashes::base32Encoding >();
 				break;
 			default:
 				return E_INVALIDARG;
@@ -412,7 +418,7 @@ STDMETHODIMP CShareazaFile::XShareazaFile::get_Hash(URN_TYPE nType, ENCODING nEn
 		return E_INVALIDARG;
 	}
 
-	strURN.SetSysString( psURN );
+	*psURN = bstrURN.Detach();
 
 	return S_OK;
 }
@@ -420,6 +426,6 @@ STDMETHODIMP CShareazaFile::XShareazaFile::get_Hash(URN_TYPE nType, ENCODING nEn
 STDMETHODIMP CShareazaFile::XShareazaFile::get_URL(BSTR FAR* psURL)
 {
 	METHOD_PROLOGUE( CShareazaFile, ShareazaFile )
-	pThis->m_sURL.SetSysString( psURL );
+	*psURL = CComBSTR( pThis->m_sURL ).Detach();
 	return S_OK;
 }

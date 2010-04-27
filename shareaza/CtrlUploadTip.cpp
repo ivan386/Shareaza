@@ -101,7 +101,8 @@ void CUploadTipCtrl::OnCalcSize(CDC* pDC)
 	CUploadTransfer* pUpload = m_pUploadFile->GetActive();
 
 	if ( pUpload->m_sNick.GetLength() > 0 )
-		m_sAddress = pUpload->m_sNick + _T(" (") + inet_ntoa( pUpload->m_pHost.sin_addr ) + ')';
+		m_sAddress = pUpload->m_sNick + _T(" (") +
+			CString( inet_ntoa( pUpload->m_pHost.sin_addr ) ) + _T(")");
 	else
 		m_sAddress = inet_ntoa( pUpload->m_pHost.sin_addr );
 

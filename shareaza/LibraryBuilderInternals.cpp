@@ -804,8 +804,14 @@ bool CLibraryBuilderInternals::ScanMP3Frame(CXMLElement* pXML, HANDLE hFile, DWO
 		{ 0, 0, 0, 0 }
 	};
 
-	static int nChannelTable[4]		= { 2, 2, 2, 1 };
-	static CString strSoundType[4]	= { "Stereo", "Joint Stereo", "Dual Channel", "Single Channel" };
+	static const int nChannelTable[4]	= { 2, 2, 2, 1 };
+	static const CString strSoundType[4]= 
+	{
+		_T("Stereo"),
+		_T("Joint Stereo"),
+		_T("Dual Channel"),
+		_T("Single Channel")
+	};
 
 	BYTE nLayer					= 0;
 	bool bVariable				= false;
@@ -2453,17 +2459,17 @@ bool CLibraryBuilderInternals::ReadAPE(DWORD nIndex, HANDLE hFile, bool bPreferF
 	if ( bHasDiscField )
 	{
 		if ( bHasTotalDiscsField )
-			pXML->AddAttribute( L"disc", strDiscField + "/" + strTotalDiscsField );
+			pXML->AddAttribute( _T("disc"), strDiscField + _T("/") + strTotalDiscsField );
 		else
-			pXML->AddAttribute( L"disc", strDiscField );
+			pXML->AddAttribute( _T("disc"), strDiscField );
 	}
 
 	if ( bHasTrackField == true )
 	{
 		if ( bHasTotalTracksField )
-			pXML->AddAttribute( L"track", strTrackField + "/" + strTotalTracksField );
+			pXML->AddAttribute( _T("track"), strTrackField + _T("/") + strTotalTracksField );
 		else
-			pXML->AddAttribute( L"track", strTrackField );
+			pXML->AddAttribute( _T("track"), strTrackField );
 	}
 
 	if ( nFileSize < sizeof(APE_HEADER) )

@@ -221,6 +221,7 @@ void CFilterSearchDlg::UpdateFields()
 
 	UpdateData(FALSE);
 }
+
 //update the filter selection combo-box with filter list items
 void CFilterSearchDlg::UpdateList()
 {
@@ -229,7 +230,7 @@ void CFilterSearchDlg::UpdateList()
 	for ( DWORD i = 0; i < m_pResultFilters->m_nFilters; i++ )
 	{
 		if ( i == m_pResultFilters->m_nDefault )
-			m_Filters.AddString( m_pResultFilters->m_pFilters[i]->m_sName + " *" );
+			m_Filters.AddString( m_pResultFilters->m_pFilters[i]->m_sName + _T(" *") );
 		else
 			m_Filters.AddString( m_pResultFilters->m_pFilters[i]->m_sName );
 

@@ -313,9 +313,6 @@ void CBENode::GetBth(Hashes::BtHash& oBTH) const
 void CBENode::Encode(CBuffer* pBuffer) const
 {
 	CHAR szBuffer[64];
-
-	ASSERT( this != NULL );
-	ASSERT( pBuffer != NULL );
 	CString str;
 
 	if ( m_nType == beString )
@@ -408,7 +405,7 @@ const CString CBENode::Encode() const
 			{
 				if ( n )
 					sOutput += _T(", ");
-				sTmp.Format( _T("\"%s\" = "), (LPCTSTR)CA2T( (LPCSTR)pNode[ 1 ] ) );
+				sTmp.Format( _T("\"%s\" = "), CString( (LPCSTR)pNode[ 1 ] ) );
 				sOutput += sTmp;
 				sOutput += (*pNode)->Encode();
 			}
@@ -426,8 +423,6 @@ const CString CBENode::Encode() const
 
 CBENode* CBENode::Decode(const CBuffer* pBuffer, DWORD *pnReaden)
 {
-	ASSERT( pBuffer != NULL );
-
 	try
 	{
 		auto_ptr< CBENode > pNode( new CBENode() );
@@ -459,7 +454,6 @@ CBENode* CBENode::Decode(const CBuffer* pBuffer, DWORD *pnReaden)
 void CBENode::Decode(LPBYTE& pInput, DWORD& nInput, DWORD nSize)
 {
 	ASSERT( m_nType == beNull );
-	ASSERT( pInput != NULL );
 
 	if ( nInput < 1 )
 		AfxThrowUserException();

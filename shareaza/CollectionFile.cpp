@@ -196,10 +196,10 @@ BOOL CCollectionFile::LoadShareaza(LPCTSTR pszFile)
 
 	for ( POSITION pos = pContents->GetElementIterator() ; pos ; )
 	{
-		auto_ptr< File > pFile( new File( this ) );
-		if ( pFile.get() && pFile->Parse( pContents->GetNextElement( pos ) ) )
+		auto_ptr< File > pNewFile( new File( this ) );
+		if ( pNewFile.get() && pNewFile->Parse( pContents->GetNextElement( pos ) ) )
 		{
-			m_pFiles.AddTail( pFile.release() );
+			m_pFiles.AddTail( pNewFile.release() );
 		}
 		else
 		{
@@ -373,23 +373,27 @@ CXMLElement* CCollectionFile::CloneMetadata(CXMLElement* pMetadata)
 	pMetadata->AddElement( pCore );
 
 	CString strName = pMetadata->GetName();
-	if ( _tcsnicmp( strName, _T("s:"), 2 ) == 0 ) pMetadata->SetName( strName.Mid( 2 ) );
+	if ( _tcsnicmp( strName, _T("s:"), 2 ) == 0 )
+		pMetadata->SetName( strName.Mid( 2 ) );
 
 	strName = pCore->GetName();
-	if ( _tcsnicmp( strName, _T("s:"), 2 ) == 0 ) pCore->SetName( strName.Mid( 2 ) );
+	if ( _tcsnicmp( strName, _T("s:"), 2 ) == 0 )
+		pCore->SetName( strName.Mid( 2 ) );
 
 	for ( POSITION pos = pCore->GetElementIterator() ; pos ; )
 	{
 		CXMLNode* pNode = pCore->GetNextElement( pos );
-		CString strName = pNode->GetName();
-		if ( _tcsnicmp( strName, _T("s:"), 2 ) == 0 ) pNode->SetName( strName.Mid( 2 ) );
+		CString strNodeName = pNode->GetName();
+		if ( _tcsnicmp( strNodeName, _T("s:"), 2 ) == 0 )
+			pNode->SetName( strNodeName.Mid( 2 ) );
 	}
 
 	for ( POSITION pos = pCore->GetAttributeIterator() ; pos ; )
 	{
 		CXMLNode* pNode = pCore->GetNextAttribute( pos );
-		CString strName = pNode->GetName();
-		if ( _tcsnicmp( strName, _T("s:"), 2 ) == 0 ) pNode->SetName( strName.Mid( 2 ) );
+		CString strNodeName = pNode->GetName();
+		if ( _tcsnicmp( strNodeName, _T("s:"), 2 ) == 0 )
+			pNode->SetName( strNodeName.Mid( 2 ) );
 	}
 
 	return pMetadata;
@@ -411,8 +415,8 @@ void CCollectionFile::Render(CString& strBuffer) const
 		_T(".url  { text-align: left; }\n")
 		_T(".size { width: 100px; text-align: right; }\n")
 		_T("</style>\n</head>\n<body>\n<h1>%s</h1>\n<table>\n"),
-		GetTitle(),
-		GetTitle() );
+		(LPCTSTR)GetTitle(),
+		(LPCTSTR)GetTitle() );
 
 	DWORD i = 1;
 	for ( POSITION pos = GetFileIterator(); pos; )
@@ -427,7 +431,7 @@ void CCollectionFile::Render(CString& strBuffer) const
 			i++,
 			(LPCTSTR)URLEncode( pFile->m_sName ), pFile->m_nSize, (LPCTSTR)pFile->m_oED2K.toString(),
 			(LPCTSTR)URLEncode( pFile->m_sName ), pFile->m_nSize, (LPCTSTR)pFile->m_oED2K.toString(),
-			pFile->m_sName,
+			(LPCTSTR)pFile->m_sName,
 			pFile->m_nSize );
 		strBuffer += strTemp;
 	}
@@ -612,8 +616,6 @@ BOOL CCollectionFile::File::Download()
 
 BOOL CCollectionFile::File::ApplyMetadata(CLibraryFile* pShared)
 {
-	ASSERT( pShared != NULL );
-
 	if ( m_pMetadata == NULL )
 		return FALSE;
 

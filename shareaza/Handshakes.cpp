@@ -218,7 +218,7 @@ BOOL CHandshakes::PushTo(IN_ADDR* pAddress, WORD nPort, DWORD nIndex)
 		if ( ! Uploads.AllowMoreTo( pAddress ) )
 		{
 			// Report that we're too busy to do the push, and leave now
-			CString strAddress = inet_ntoa( *pAddress );
+			CString strAddress( inet_ntoa( *pAddress ) );
 			theApp.Message( MSG_ERROR, IDS_UPLOAD_PUSH_BUSY, (LPCTSTR)strAddress );
 			return FALSE;
 		}
@@ -432,7 +432,7 @@ int CALLBACK CHandshakes::AcceptCheck(IN LPWSABUF lpCallerId,
 	if ( Security.IsDenied( &pHost->sin_addr ) )
 	{
 		// Record we are rejecting this connection because it is on the watch list, and tell WSAAccept to not connect
-		CString strHost = inet_ntoa( pHost->sin_addr );
+		CString strHost( inet_ntoa( pHost->sin_addr ) );
 		theApp.Message( MSG_ERROR, IDS_NETWORK_SECURITY_DENIED, (LPCTSTR)strHost );
 		return CF_REJECT;
 	}

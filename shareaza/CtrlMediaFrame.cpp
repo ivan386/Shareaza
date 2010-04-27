@@ -1773,9 +1773,7 @@ BOOL CMediaFrame::PrepareVis()
 
 				if ( SUCCEEDED(hr) && pWrap != NULL )
 				{
-					BSTR bsPath = Settings.MediaPlayer.VisPath.AllocSysString();
-					hr = pWrap->Load( bsPath, 0 );
-					SysFreeString( bsPath );
+					hr = pWrap->Load( CComBSTR( Settings.MediaPlayer.VisPath ), 0 );
 					pWrap->Release();
 				}
 

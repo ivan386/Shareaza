@@ -50,8 +50,6 @@ CBTPacket::~CBTPacket()
 
 void CBTPacket::ToBuffer(CBuffer* pBuffer) const
 {
-	ASSERT( pBuffer != NULL );
-
 	if ( m_nType == BT_PACKET_KEEPALIVE )
 	{
 		DWORD nZero = 0;
@@ -71,8 +69,6 @@ void CBTPacket::ToBuffer(CBuffer* pBuffer) const
 
 CBTPacket* CBTPacket::ReadBuffer(CBuffer* pBuffer)
 {
-	ASSERT( pBuffer != NULL );
-
 	DWORD nLength = (DWORD) - 1;
 	bool bKeepAlive = false;
 	bool bValid = true;

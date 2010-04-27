@@ -850,8 +850,8 @@ void CLibraryDetailView::OnEndLabelEditA(NMHDR* pNotify, LRESULT* pResult)
 		if ( CLibraryFile* pFile = Library.LookupFile( m_pList[ ((LV_DISPINFO*) pNotify)->item.iItem ].nIndex ) )
 		{
 			m_pList[ ((LV_DISPINFO*) pNotify)->item.iItem ].nState &= ~LDVI_SELECTED;
-			CString strName = (LPCSTR)((LV_DISPINFO*) pNotify)->item.pszText;
-			LPCTSTR pszType = _tcsrchr( pFile->m_sName, '.' );
+			CString strName( (LPCSTR)((LV_DISPINFO*) pNotify)->item.pszText );
+			LPCTSTR pszType = _tcsrchr( pFile->m_sName, _T('.') );
 			if ( pszType ) strName += pszType;
 			*pResult = pFile->Rename( strName );
 			Library.Update( true );
@@ -902,7 +902,7 @@ void CLibraryDetailView::OnFindItemW(NMHDR* pNotify, LRESULT* pResult)
 
 void CLibraryDetailView::OnFindItemA(NMHDR* pNotify, LRESULT* pResult)
 {
-	CA2T pszFind( (LPCSTR)((NMLVFINDITEM*) pNotify)->lvfi.psz );
+	CString sFind( (LPCSTR)((NMLVFINDITEM*) pNotify)->lvfi.psz );
 
 	GET_LIST();
 	CQuickLock oLock( Library.m_pSection );
@@ -915,7 +915,7 @@ void CLibraryDetailView::OnFindItemA(NMHDR* pNotify, LRESULT* pResult)
 			{
 				if ( ((NMLVFINDITEM*) pNotify)->lvfi.flags & LVFI_STRING )
 				{
-					if ( _tcsnicmp( (LPCTSTR)pszFind, pFile->m_sName, _tcslen( (LPCTSTR)pszFind ) ) == 0 )
+					if ( _tcsnicmp( sFind, pFile->m_sName, sFind.GetLength() ) == 0 )
 					{
 						*pResult = nItem;
 						return;

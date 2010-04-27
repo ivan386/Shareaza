@@ -76,7 +76,7 @@ protected:
 				CLockedBuffer pInput( GetInput() );
 				if ( pInput->m_nLength > 0 )
 				{
-					m_sData.Append( (LPCTSTR)CA2T( (char*) pInput->m_pBuffer ),
+					m_sData.Append( CString( (char*) pInput->m_pBuffer ),
 						pInput->m_nLength );
 					pInput->Clear();
 				}

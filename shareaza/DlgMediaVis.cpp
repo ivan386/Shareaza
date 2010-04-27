@@ -285,10 +285,8 @@ void CMediaVisDlg::OnSetup()
 		hr = pPlugin->QueryInterface( IID_IWrappedPluginControl, (void**)&pWrap );
 		if ( SUCCEEDED(hr) && pWrap != NULL )
 		{
-			BSTR bsPath = strPath.AllocSysString();
-			pWrap->Load( bsPath, 0 );
+			pWrap->Load( CComBSTR( strPath ), 0 );
 			pWrap->Release();
-			SysFreeString( bsPath );
 		}
 	}
 

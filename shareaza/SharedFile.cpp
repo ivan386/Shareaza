@@ -1217,7 +1217,7 @@ STDMETHODIMP CLibraryFile::XLibraryFile::get_Folder(ILibraryFolder FAR* FAR* ppF
 STDMETHODIMP CLibraryFile::XLibraryFile::get_Path(BSTR FAR* psPath)
 {
 	METHOD_PROLOGUE( CLibraryFile, LibraryFile )
-	pThis->GetPath().SetSysString( psPath );
+	*psPath = CComBSTR( pThis->GetPath() ).Detach();
 	return S_OK;
 }
 
