@@ -78,6 +78,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				RegisterOutput="true"
+				PerUserRedirection="true"
 				IgnoreImportLibrary="true"
 				LinkIncremental="2"
 				ModuleDefinitionFile="VirusTotal.def"
@@ -166,6 +167,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				RegisterOutput="true"
+				PerUserRedirection="true"
 				IgnoreImportLibrary="true"
 				LinkIncremental="2"
 				ModuleDefinitionFile="VirusTotal.def"
@@ -257,6 +259,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				RegisterOutput="true"
+				PerUserRedirection="true"
 				IgnoreImportLibrary="true"
 				LinkIncremental="1"
 				ModuleDefinitionFile="VirusTotal.def"
@@ -350,6 +353,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				RegisterOutput="true"
+				PerUserRedirection="true"
 				IgnoreImportLibrary="true"
 				LinkIncremental="1"
 				ModuleDefinitionFile="VirusTotal.def"

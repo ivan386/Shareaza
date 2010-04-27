@@ -18,7 +18,10 @@ TCHAR* szXML;
 TCHAR skins_dir[MAX_PATH];
 BOOL  bRunningOnNT;
 
-int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPWSTR cmdParam, int cmdShow) {
+int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPWSTR cmdParam, int cmdShow)
+{
+	int rtn = 0;
+
 	InitCommonControls();
 
 	// globals
@@ -33,9 +36,9 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPWSTR cmdParam, int c
 	if (wcslen(cmdParam)==0)
 		MessageBox(NULL,L"Shareaza Skin Installer " VERSION L"\n\nDouble-click on a Shareaza Skin File to use the Shareaza Skin Installer.",L"Shareaza Skin Installer",MB_OK | MB_ICONINFORMATION);
 	else if (!_wcsicmp(cmdParam, L"/install") || !_wcsicmp(cmdParam, L"/installsilent"))
-		CreateSkinKeys();
+		rtn = CreateSkinKeys();
 	else if (!_wcsicmp(cmdParam, L"/uninstall") || !_wcsicmp(cmdParam, L"/uninstallsilent"))
-		DeleteSkinKeys();
+		rtn = DeleteSkinKeys();
 	else
 		ExtractSkinFile(cmdParam);
 
@@ -45,5 +48,6 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPWSTR cmdParam, int c
 	if (szAuthor) free(szAuthor);
 	if (szUpdates) free(szUpdates);
 	if (szXML) free(szXML);
-	return 0;
+
+	return rtn;
 }

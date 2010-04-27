@@ -81,6 +81,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				RegisterOutput="true"
+				PerUserRedirection="true"
 				IgnoreImportLibrary="true"
 				LinkIncremental="2"
 				ModuleDefinitionFile="RatDVDReader.def"
@@ -110,8 +112,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Performing registration"
-				CommandLine="regsvr32 /s /c &quot;$(TargetPath)&quot;"
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
@@ -175,6 +176,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				RegisterOutput="true"
+				PerUserRedirection="true"
 				IgnoreImportLibrary="true"
 				LinkIncremental="2"
 				ModuleDefinitionFile="RatDVDReader.def"
@@ -203,8 +206,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Performing registration"
-				CommandLine="regsvr32 /s /c &quot;$(TargetPath)&quot;"
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
@@ -271,6 +273,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				RegisterOutput="true"
+				PerUserRedirection="true"
 				IgnoreImportLibrary="true"
 				LinkIncremental="1"
 				IgnoreDefaultLibraryNames=""
@@ -303,8 +307,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Performing registration"
-				CommandLine="regsvr32 /s /c &quot;$(TargetPath)&quot;"
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
@@ -371,6 +374,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				RegisterOutput="true"
+				PerUserRedirection="true"
 				IgnoreImportLibrary="true"
 				LinkIncremental="1"
 				IgnoreDefaultLibraryNames=""
@@ -402,8 +407,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Performing registration"
-				CommandLine="regsvr32 /s /c &quot;$(TargetPath)&quot;"
+				CommandLine=""
 			/>
 		</Configuration>
 	</Configurations>

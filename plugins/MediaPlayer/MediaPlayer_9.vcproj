@@ -104,8 +104,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Registration..."
-				CommandLine="&quot;$(TargetPath)&quot; /RegServer"
+				Description="Per User Registration..."
+				CommandLine="&quot;$(TargetPath)&quot; /RegServerPerUser"
 			/>
 		</Configuration>
 		<Configuration
@@ -192,6 +192,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				Description="Per User Registration..."
+				CommandLine="&quot;$(TargetPath)&quot; /RegServerPerUser"
 			/>
 		</Configuration>
 		<Configuration
@@ -285,6 +287,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				Description="Per User Registration..."
+				CommandLine="&quot;$(TargetPath)&quot; /RegServerPerUser"
 			/>
 		</Configuration>
 		<Configuration
@@ -377,6 +381,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				Description="Per User Registration..."
+				CommandLine="&quot;$(TargetPath)&quot; /RegServerPerUser"
 			/>
 		</Configuration>
 	</Configurations>

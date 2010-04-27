@@ -40,15 +40,13 @@ STDAPI DllUnregisterServer(void)
 STDAPI DllInstall(BOOL bInstall, LPCWSTR pszCmdLine)
 {
 	HRESULT hr = E_FAIL;
-	static const wchar_t szUserSwitch[] = _T("user");
+	static const wchar_t szUserSwitch[] = L"user";
 
 	if (pszCmdLine != NULL)
 	{
 		if (_wcsnicmp(pszCmdLine, szUserSwitch, _countof(szUserSwitch)) == 0)
 		{
-#if _MFC_VER > 0x0800
 			AtlSetPerUserRegistration(true);
-#endif
 		}
 	}
 

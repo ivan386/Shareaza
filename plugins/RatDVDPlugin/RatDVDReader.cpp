@@ -99,6 +99,35 @@ STDAPI DllUnregisterServer(void)
 	return hr;
 }
 
+STDAPI DllInstall(BOOL bInstall, LPCWSTR pszCmdLine)
+{
+	HRESULT hr = E_FAIL;
+	static const wchar_t szUserSwitch[] = L"user";
+
+	if (pszCmdLine != NULL)
+	{
+		if (_wcsnicmp(pszCmdLine, szUserSwitch, _countof(szUserSwitch)) == 0)
+		{
+			AtlSetPerUserRegistration(true);
+		}
+	}
+
+	if (bInstall)
+	{
+		hr = DllRegisterServer();
+		if (FAILED(hr))
+		{
+			DllUnregisterServer();
+		}
+	}
+	else
+	{
+		hr = DllUnregisterServer();
+	}
+
+	return hr;
+}
+
 HRESULT CRatDVDReaderModule::DllGetClassObject(REFCLSID rclsid, REFIID /*riid*/, LPVOID* ppv)
 {
 	ODS(_T("CRatDVDReaderModule::DllGetClassObject\n"));

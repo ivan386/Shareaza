@@ -77,6 +77,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				RegisterOutput="true"
+				PerUserRedirection="true"
 				IgnoreImportLibrary="true"
 				LinkIncremental="2"
 				IgnoreDefaultLibraryNames=""
@@ -107,8 +109,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Performing registration"
-				CommandLine="regsvr32 /s /c &quot;$(TargetPath)&quot;&#x0D;&#x0A;"
+				Description=""
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
@@ -169,6 +171,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				RegisterOutput="true"
+				PerUserRedirection="true"
 				IgnoreImportLibrary="true"
 				LinkIncremental="2"
 				IgnoreDefaultLibraryNames=""
@@ -198,8 +202,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Performing registration"
-				CommandLine="regsvr32 /s /c &quot;$(TargetPath)&quot;&#x0D;&#x0A;"
+				Description=""
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
@@ -263,6 +267,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				RegisterOutput="true"
+				PerUserRedirection="true"
 				IgnoreImportLibrary="true"
 				LinkIncremental="1"
 				IgnoreDefaultLibraryNames=""
@@ -296,8 +302,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Performing registration"
-				CommandLine="regsvr32 /s /c &quot;$(TargetPath)&quot;&#x0D;&#x0A;"
+				Description=""
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
@@ -363,6 +369,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				RegisterOutput="true"
+				PerUserRedirection="true"
 				IgnoreImportLibrary="true"
 				LinkIncremental="1"
 				IgnoreDefaultLibraryNames=""
@@ -395,8 +403,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Performing registration"
-				CommandLine="regsvr32 /s /c &quot;$(TargetPath)&quot;&#x0D;&#x0A;"
+				Description=""
+				CommandLine=""
 			/>
 		</Configuration>
 	</Configurations>

@@ -214,6 +214,8 @@ CShareazaApp::CShareazaApp() :
 	ZeroMemory( m_pBTVersion, sizeof( m_pBTVersion ) );
 	m_nUPnPExternalAddress.s_addr = INADDR_NONE;
 
+	AfxSetPerUserRegistration( TRUE );
+
 // BugTrap http://www.intellesoft.net/
 	BT_SetAppName( _T(CLIENT_NAME) );
 	BT_SetFlags( BTF_INTERCEPTSUEF | BTF_SHOWADVANCEDUI | BTF_DESCRIBEERROR |

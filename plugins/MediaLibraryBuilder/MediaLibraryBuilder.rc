@@ -31,9 +31,9 @@ VS_VERSION_INFO VERSIONINFO
  PRODUCTVERSION 2,5,2,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
- FILEFLAGS 0x1L
+ FILEFLAGS 0x21L
 #else
- FILEFLAGS 0x0L
+ FILEFLAGS 0x20L
 #endif
  FILEOS 0x4L
  FILETYPE 0x1L
@@ -52,6 +52,7 @@ BEGIN
             VALUE "OriginalFilename", "MediaLibraryBuilder.exe"
             VALUE "ProductName", "Shareaza"
             VALUE "ProductVersion", "2, 5, 2, 0"
+            VALUE "SpecialBuild", "plugin"
         END
     END
     BLOCK "VarFileInfo"

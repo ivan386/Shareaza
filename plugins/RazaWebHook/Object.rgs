@@ -22,6 +22,12 @@ HKCR
 			}
 			val AppID = s '%APPID%'
 			'TypeLib' = s '{3403F6D8-9584-4231-A988-2B4E96527962}'
+			'Implemented Categories'
+			{
+				'{7DD95801-9882-11CF-9FA9-00AA006C42C4}'
+				'{7DD95802-9882-11CF-9FA9-00AA006C42C4}'
+				'{0DE86A58-2BAA-11CF-A229-00AA003D7352}'
+			}
 		}
 	}
 }

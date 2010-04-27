@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="windows-1252"?>
+<?xml version="1.0" encoding="windows-1251"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9,00"
@@ -30,6 +30,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				Description="Pre-Building..."
+				CommandLine="copy &quot;unrar.dll&quot; &quot;$(TargetDir)&quot; /b /y"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -78,6 +80,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				RegisterOutput="true"
+				PerUserRedirection="true"
 				IgnoreImportLibrary="true"
 				LinkIncremental="2"
 				IgnoreDefaultLibraryNames=""
@@ -108,8 +112,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Performing registration"
-				CommandLine="copy &quot;unrar.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;regsvr32 /s /c &quot;$(TargetPath)&quot;&#x0D;&#x0A;"
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
@@ -123,6 +126,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				Description="Pre-Building..."
+				CommandLine="copy &quot;unrar64.dll&quot; &quot;$(TargetDir)&quot; /b /y"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -171,6 +176,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				RegisterOutput="true"
+				PerUserRedirection="true"
 				IgnoreImportLibrary="true"
 				LinkIncremental="2"
 				IgnoreDefaultLibraryNames=""
@@ -200,8 +207,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Performing registration"
-				CommandLine="copy &quot;unrar64.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;regsvr32 /s /c &quot;$(TargetPath)&quot;&#x0D;&#x0A;"
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
@@ -216,6 +222,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				Description="Pre-Building..."
+				CommandLine="copy &quot;unrar.dll&quot; &quot;$(TargetDir)&quot; /b /y"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -266,6 +274,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				RegisterOutput="true"
+				PerUserRedirection="true"
 				IgnoreImportLibrary="true"
 				LinkIncremental="1"
 				IgnoreDefaultLibraryNames=""
@@ -299,8 +309,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Performing registration"
-				CommandLine="copy &quot;unrar.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;regsvr32 /s /c &quot;$(TargetPath)&quot;&#x0D;&#x0A;"
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
@@ -315,6 +324,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				Description="Pre-Building..."
+				CommandLine="copy &quot;unrar64.dll&quot; &quot;$(TargetDir)&quot; /b /y"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -367,6 +378,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				RegisterOutput="true"
+				PerUserRedirection="true"
 				IgnoreImportLibrary="true"
 				LinkIncremental="1"
 				IgnoreDefaultLibraryNames=""
@@ -399,8 +412,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Performing registration"
-				CommandLine="copy &quot;unrar64.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;regsvr32 /s /c &quot;$(TargetPath)&quot;&#x0D;&#x0A;"
+				CommandLine=""
 			/>
 		</Configuration>
 	</Configurations>

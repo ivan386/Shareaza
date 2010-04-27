@@ -169,6 +169,35 @@ STDAPI DllUnregisterServer(void)
 	return hr;
 }
 
+STDAPI DllInstall(BOOL bInstall, LPCWSTR pszCmdLine)
+{
+	HRESULT hr = E_FAIL;
+	static const wchar_t szUserSwitch[] = L"user";
+
+	if (pszCmdLine != NULL)
+	{
+		if (_wcsnicmp(pszCmdLine, szUserSwitch, _countof(szUserSwitch)) == 0)
+		{
+			AtlSetPerUserRegistration(true);
+		}
+	}
+
+	if (bInstall)
+	{
+		hr = DllRegisterServer();
+		if (FAILED(hr))
+		{
+			DllUnregisterServer();
+		}
+	}
+	else
+	{
+		hr = DllUnregisterServer();
+	}
+
+	return hr;
+}
+
 HRESULT SAFEgflLoadBitmap (const char * filename, GFL_BITMAP **bitmap, const GFL_LOAD_PARAMS *params, GFL_FILE_INFORMATION *info) throw ()
 {
 	HRESULT hr = E_FAIL;

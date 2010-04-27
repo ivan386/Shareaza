@@ -30,6 +30,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				Description="Pre-Building..."
+				CommandLine="xcopy &quot;..\LibGFL\$(ConfigurationName)$(PlatformName)\*.dll&quot; &quot;$(TargetDir)&quot; /y"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -80,6 +82,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				RegisterOutput="true"
+				PerUserRedirection="true"
 				IgnoreImportLibrary="true"
 				AdditionalDependencies="libgfl.lib"
 				LinkIncremental="2"
@@ -111,8 +115,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Performing registration"
-				CommandLine="xcopy &quot;..\LibGFL\$(ConfigurationName)$(PlatformName)\*.dll&quot; &quot;$(TargetDir)&quot; /y&#x0D;&#x0A;regsvr32 /s /c &quot;$(TargetPath)&quot;&#x0D;&#x0A;"
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
@@ -126,6 +129,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				Description="Pre-Building..."
+				CommandLine="xcopy &quot;..\LibGFL\$(ConfigurationName)$(PlatformName)\*.dll&quot; &quot;$(TargetDir)&quot; /y"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -175,6 +180,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				RegisterOutput="true"
+				PerUserRedirection="true"
 				IgnoreImportLibrary="true"
 				AdditionalDependencies="libgfl.lib"
 				LinkIncremental="2"
@@ -205,8 +212,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Performing registration"
-				CommandLine="xcopy &quot;..\LibGFL\$(ConfigurationName)$(PlatformName)\*.dll&quot; &quot;$(TargetDir)&quot; /y&#x0D;&#x0A;regsvr32 /s /c &quot;$(TargetPath)&quot;&#x0D;&#x0A;"
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
@@ -221,6 +227,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				Description="Pre-Building..."
+				CommandLine="xcopy &quot;..\LibGFL\$(ConfigurationName)$(PlatformName)\*.dll&quot; &quot;$(TargetDir)&quot; /y"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -275,6 +283,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				RegisterOutput="true"
+				PerUserRedirection="true"
 				IgnoreImportLibrary="true"
 				AdditionalDependencies="libgfl.lib"
 				LinkIncremental="1"
@@ -309,8 +319,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Performing registration"
-				CommandLine="xcopy &quot;..\LibGFL\$(ConfigurationName)$(PlatformName)\*.dll&quot; &quot;$(TargetDir)&quot; /y&#x0D;&#x0A;regsvr32 /s /c &quot;$(TargetPath)&quot;&#x0D;&#x0A;"
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
@@ -325,6 +334,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				Description="Pre-Building..."
+				CommandLine="xcopy &quot;..\LibGFL\$(ConfigurationName)$(PlatformName)\*.dll&quot; &quot;$(TargetDir)&quot; /y"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -380,6 +391,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				RegisterOutput="true"
+				PerUserRedirection="true"
 				IgnoreImportLibrary="true"
 				AdditionalDependencies="libgfl.lib"
 				LinkIncremental="1"
@@ -413,8 +426,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Performing registration"
-				CommandLine="xcopy &quot;..\LibGFL\$(ConfigurationName)$(PlatformName)\*.dll&quot; &quot;$(TargetDir)&quot; /y&#x0D;&#x0A;regsvr32 /s /c &quot;$(TargetPath)&quot;&#x0D;&#x0A;"
+				CommandLine=""
 			/>
 		</Configuration>
 	</Configurations>

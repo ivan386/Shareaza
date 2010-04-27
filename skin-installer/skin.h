@@ -44,8 +44,8 @@ int ExtractSkin(LPTSTR pszFile, HWND hwndDlg);
 LPCTSTR GetUnicodeString(char* pszString);
 
 // registry.c
-void CreateSkinKeys();
-void DeleteSkinKeys();
+LSTATUS CreateSkinKeys();
+LSTATUS DeleteSkinKeys();
 
 // utils.c
 void LoadManifestInfo(char *buf);

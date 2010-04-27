@@ -79,6 +79,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				RegisterOutput="true"
+				PerUserRedirection="true"
 				IgnoreImportLibrary="true"
 				LinkIncremental="2"
 				ModuleDefinitionFile=".\Preview.def"
@@ -167,6 +168,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				RegisterOutput="true"
+				PerUserRedirection="true"
 				IgnoreImportLibrary="true"
 				LinkIncremental="2"
 				ModuleDefinitionFile=".\Preview.def"
@@ -261,6 +263,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				RegisterOutput="true"
+				PerUserRedirection="true"
 				IgnoreImportLibrary="true"
 				ModuleDefinitionFile=".\Preview.def"
 				SubSystem="2"
@@ -351,6 +354,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				RegisterOutput="true"
+				PerUserRedirection="true"
 				IgnoreImportLibrary="true"
 				ModuleDefinitionFile=".\Preview.def"
 				SubSystem="2"

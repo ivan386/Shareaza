@@ -54,38 +54,64 @@ void CPlugins::Register()
 	CList< HINSTANCE > oModules; // Cache
 
 	CFileFind finder;
-	BOOL bWorking = finder.FindFile( Settings.General.Path + _T("\\*.dll") );
+	BOOL bWorking = finder.FindFile( Settings.General.Path + _T("\\*.*") );
 	while ( bWorking )
 	{
 		bWorking = finder.FindNextFile();
-		CString sDllPath = finder.GetFilePath().MakeLower();
+		CString sName = finder.GetFileName();
+		CString sPath = finder.GetFilePath();
+		CString sExt = PathFindExtension( sName );
 
-		if ( HINSTANCE hDll = LoadLibrary( sDllPath ) )
+		if ( sExt.CompareNoCase( _T(".dll") ) == 0 )
 		{
-			HRESULT hr = S_FALSE;
+			if ( HINSTANCE hDll = LoadLibrary( sPath ) )
+			{
+				HRESULT hr = S_FALSE;
 
-			HRESULT (WINAPI *pfnDllInstall)(BOOL bInstall, LPCWSTR pszCmdLine);
-			(FARPROC&)pfnDllInstall = GetProcAddress( hDll, "DllInstall" );
-			if ( pfnDllInstall )
-			{
-				hr = pfnDllInstall( TRUE, L"user" );
-			}
-			else
-			{
-				HRESULT (WINAPI *pfnDllRegisterServer)(void);
-				(FARPROC&)pfnDllRegisterServer = GetProcAddress( hDll, "DllRegisterServer" );
-				if ( pfnDllRegisterServer )
+				HRESULT (WINAPI *pfnDllInstall)(BOOL bInstall, LPCWSTR pszCmdLine);
+				(FARPROC&)pfnDllInstall = GetProcAddress( hDll, "DllInstall" );
+				if ( pfnDllInstall )
 				{
-					hr = pfnDllRegisterServer();
+					hr = pfnDllInstall( TRUE, L"user" );
+				}
+				else
+				{
+					HRESULT (WINAPI *pfnDllRegisterServer)(void);
+					(FARPROC&)pfnDllRegisterServer = GetProcAddress( hDll, "DllRegisterServer" );
+					if ( pfnDllRegisterServer )
+					{
+						hr = pfnDllRegisterServer();
+					}
+				}
+
+				if ( hr == S_OK )
+					theApp.Message( MSG_NOTICE, _T("Registered plugin: %s"), sName );
+				else if ( FAILED( hr ) )
+					theApp.Message( MSG_ERROR, _T("Failed to register plugin: %s : 0x%08x"), sName, hr );
+
+				oModules.AddTail( hDll );
+			}
+		}
+		else if ( sExt.CompareNoCase( _T(".exe") ) == 0 )
+		{
+			DWORD dwSize = GetFileVersionInfoSize( sPath, &dwSize );
+			auto_array< BYTE > pBuffer( new BYTE[ dwSize ] );
+			if ( GetFileVersionInfo( sPath, NULL, dwSize, pBuffer.get() ) )
+			{
+				LPCWSTR pValue = NULL;
+				if ( VerQueryValue( pBuffer.get(),
+					L"\\StringFileInfo\\000004b0\\SpecialBuild", 
+					(void**)&pValue, (UINT*)&dwSize ) &&
+					pValue && dwSize &&
+					_wcsicmp( pValue, _T("plugin") ) == 0 )
+				{
+					if ( (DWORD_PTR)ShellExecute( NULL, NULL, sPath,
+						_T("/RegServerPerUser"), NULL, SW_HIDE ) > 32 )
+						theApp.Message( MSG_NOTICE, _T("Registered plugin: %s"), sName );
+					else
+						theApp.Message( MSG_ERROR, _T("Failed to register plugin: %s : 0x%08x"), sName, GetLastError() );
 				}
 			}
-
-			if ( hr == S_OK )
-				theApp.Message( MSG_NOTICE, _T("Registered plugin: %s"), sDllPath );
-			else if ( FAILED( hr ) )
-				theApp.Message( MSG_ERROR, _T("Failed to register plugin: %s : 0x%08x"), sDllPath, hr );
-
-			oModules.AddTail( hDll );
 		}
 	}
 
