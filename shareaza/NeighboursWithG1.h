@@ -1,7 +1,7 @@
 //
 // NeighboursWithG1.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -25,15 +25,15 @@
 #pragma once
 
 #include "NeighboursBase.h"
+#include "RouteCache.h"
+#include "PongCache.h"
+
 
 class CNeighbour;
 class CG1Neighbour;
-class CRouteCache;
-class CPongCache;
-class CPongItem;
 
 // Add the ping route and pong caches to the CNeighbours object
-class CNeighboursWithG1 : public CNeighboursBase // Continue the inheritance column CNeighbours : CNeighboursWithConnect : Routing : ED2K : G2 : G1 : CNeighboursBase
+class CNeighboursWithG1 : public CNeighboursBase
 {
 protected:
 	CNeighboursWithG1();          // Setup the ping route and pong caches
@@ -45,8 +45,8 @@ protected:
 
 private:
 	// The ping route and pong caches
-	CRouteCache* m_pPingRoute;
-	CPongCache*  m_pPongCache;
+	CRouteCache m_oPingRoute;
+	CPongCache  m_oPongCache;
 
 public:
 	// Relay ping and pong packets to other neighbours
@@ -54,7 +54,7 @@ public:
 	void OnG1Pong(CG1Neighbour* pFrom, IN_ADDR* pAddress, WORD nPort, BYTE nHops, DWORD nFiles, DWORD nVolume);
 
 	BOOL AddPingRoute(const Hashes::Guid& oGUID, const CG1Neighbour* pNeighbour);
-	CG1Neighbour* GetPingRoute(const Hashes::Guid& oGUID) const;
+	CG1Neighbour* GetPingRoute(const Hashes::Guid& oGUID);
 
 	CPongItem*	AddPong(CNeighbour* pNeighbour, IN_ADDR* pAddress, WORD nPort, BYTE nHops, DWORD nFiles, DWORD nVolume);
 	CPongItem*	LookupPong(CNeighbour* pNotFrom, BYTE nHops, CList< CPongItem* >* pIgnore);

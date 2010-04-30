@@ -330,6 +330,16 @@ void CNeighboursBase::Remove(CNeighbour* pNeighbour)
 	Network.NodeRoute->Remove( pNeighbour );
 
 	// Remove the neighbour object from the map
-	VERIFY( m_pNeighbours.RemoveKey( pNeighbour->m_pHost.sin_addr ) );
+	for ( POSITION pos = m_pNeighbours.GetStartPosition(); pos; )
+	{
+		CNeighbour* pCurNeighbour = NULL;
+		IN_ADDR nCurAddress = {};
+		m_pNeighbours.GetNextAssoc( pos, nCurAddress, pCurNeighbour );
+		if ( pNeighbour == pCurNeighbour )
+		{
+			VERIFY( m_pNeighbours.RemoveKey( nCurAddress ) );
+			break;
+		}
+	}
 	VERIFY( m_pIndex.RemoveKey( (DWORD_PTR)pNeighbour ) );
 }

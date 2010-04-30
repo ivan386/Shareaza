@@ -1,7 +1,7 @@
 //
 // NeighboursWithG1.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,7 +22,6 @@
 // Adds the ping route and pong caches to the CNeighbours object, and methods to route Gnutella ping and pong packets
 // http://shareazasecurity.be/wiki/index.php?title=Developers.Code.CNeighboursWithG1
 
-// Copy in the contents of these files here before compiling
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
@@ -30,10 +29,7 @@
 #include "Network.h"
 #include "NeighboursWithG1.h"
 #include "G1Neighbour.h"
-#include "RouteCache.h"
-#include "PongCache.h"
 
-// If we are compiling in debug mode, replace the text "THIS_FILE" in the code with the name of this file
 #ifdef _DEBUG
 #undef THIS_FILE
 static char THIS_FILE[]=__FILE__;
@@ -43,34 +39,27 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CNeighboursWithG1 construction
 
-// When the program makes the single global CNeighbours object, this constructor runs to setup the Gnutella part of it
 CNeighboursWithG1::CNeighboursWithG1()
-	: m_pPingRoute ( new CRouteCache() )
-	, m_pPongCache ( new CPongCache() )
 {
 }
 
-// When the program closes, the single global CNeighbours object is destroyed, and this code cleans up the Gnutella parts
 CNeighboursWithG1::~CNeighboursWithG1()
 {
-	// Delete the ping route and pong cache objects
-	delete m_pPongCache;
-	delete m_pPingRoute;
 }
 
 BOOL CNeighboursWithG1::AddPingRoute(const Hashes::Guid& oGUID, const CG1Neighbour* pNeighbour)
 {
 	ASSUME_LOCK( Network.m_pSection );
 
-	return m_pPingRoute->Add( oGUID, pNeighbour );
+	return m_oPingRoute.Add( oGUID, pNeighbour );
 }
 
-CG1Neighbour* CNeighboursWithG1::GetPingRoute(const Hashes::Guid& oGUID) const
+CG1Neighbour* CNeighboursWithG1::GetPingRoute(const Hashes::Guid& oGUID)
 {
 	ASSUME_LOCK( Network.m_pSection );
 
 	CNeighbour* pNeighbour;
-	if ( m_pPingRoute->Lookup( oGUID, &pNeighbour, NULL ) )
+	if ( m_oPingRoute.Lookup( oGUID, &pNeighbour, NULL ) )
 		return static_cast< CG1Neighbour* >( pNeighbour );
 	else
 		return NULL;
@@ -80,14 +69,14 @@ CPongItem* CNeighboursWithG1::AddPong(CNeighbour* pNeighbour, IN_ADDR* pAddress,
 {
 	ASSUME_LOCK( Network.m_pSection );
 
-	return m_pPongCache->Add( pNeighbour, pAddress, nPort, nHops, nFiles, nVolume );
+	return m_oPongCache.Add( pNeighbour, pAddress, nPort, nHops, nFiles, nVolume );
 }
 
 CPongItem* CNeighboursWithG1::LookupPong(CNeighbour* pNotFrom, BYTE nHops, CList< CPongItem* >* pIgnore)
 {
 	ASSUME_LOCK( Network.m_pSection );
 
-	return m_pPongCache->Lookup( pNotFrom, nHops, pIgnore );
+	return m_oPongCache.Lookup( pNotFrom, nHops, pIgnore );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -100,7 +89,7 @@ void CNeighboursWithG1::Connect()
 	CNeighboursBase::Connect();
 
 	// Tell the route cache object to set its duration from the program settings
-	m_pPingRoute->SetDuration( Settings.Gnutella.RouteCache );
+	m_oPingRoute.SetDuration( Settings.Gnutella.RouteCache );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -115,8 +104,8 @@ void CNeighboursWithG1::Close()
 	CNeighboursBase::Close();
 
 	// Clear the ping route and pong caches
-	m_pPingRoute->Clear();
-	m_pPongCache->Clear();
+	m_oPingRoute.Clear();
+	m_oPongCache.Clear();
 }
 
 // Takes a neighbour object
@@ -124,7 +113,7 @@ void CNeighboursWithG1::Close()
 void CNeighboursWithG1::Remove(CNeighbour* pNeighbour)
 {
 	// Remove this neighbour from the ping route cache
-	m_pPingRoute->Remove( pNeighbour );
+	m_oPingRoute.Remove( pNeighbour );
 
 	// Remove the neighbour from the list
 	CNeighboursBase::Remove( pNeighbour ); // Also tells the network object to remove the neighbour
@@ -140,7 +129,7 @@ void CNeighboursWithG1::OnG1Ping()
 	ASSUME_LOCK( Network.m_pSection );
 
 	// Clear the old (do) from the pong cache, and make sure that works (do)
-	if ( m_pPongCache->ClearIfOld() )
+	if ( m_oPongCache.ClearIfOld() )
 	{
 		// Prepare data for a new packet we might send
 		DWORD dwNow = GetTickCount(); // The time now
