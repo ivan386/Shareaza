@@ -1710,6 +1710,15 @@ void CMainWnd::OnNetworkG2()
 
 	if ( Settings.Gnutella2.EnableToday )
 	{
+		if ( ! Settings.Gnutella2.EnableAlways )
+		{
+			CString strMessage;
+			LoadString( strMessage, IDS_NETWORK_ALWAYS );
+			if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) == IDYES )
+			{
+				Settings.Gnutella2.EnableAlways = true;
+			}
+		}
 		if( !Network.IsConnected() )
 			Network.Connect( TRUE );
 		else
@@ -1734,14 +1743,12 @@ void CMainWnd::OnNetworkG1()
 
 	if ( Settings.Gnutella1.EnableToday )
 	{
-		if ( Settings.Scheduler.Enable &&
-			 ( !Settings.Gnutella1.EnableAlways || Settings.Scheduler.LimitedNetworks ) )
+		if ( ! Settings.Gnutella1.EnableAlways )
 		{
 			CString strMessage;
-			LoadString( strMessage, IDS_NETWORK_UNLIMIT );
+			LoadString( strMessage, IDS_NETWORK_ALWAYS );
 			if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) == IDYES )
 			{
-				Settings.Scheduler.LimitedNetworks = false;
 				Settings.Gnutella1.EnableAlways = true;
 			}
 		}
@@ -1771,14 +1778,12 @@ void CMainWnd::OnNetworkED2K()
 
 	if ( Settings.eDonkey.EnableToday )
 	{
-		if ( Settings.Scheduler.Enable &&
-			( !Settings.eDonkey.EnableAlways || Settings.Scheduler.LimitedNetworks ) )
+		if ( ! Settings.eDonkey.EnableAlways )
 		{
 			CString strMessage;
-			LoadString( strMessage, IDS_NETWORK_UNLIMIT );
+			LoadString( strMessage, IDS_NETWORK_ALWAYS );
 			if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) == IDYES )
 			{
-				Settings.Scheduler.LimitedNetworks = false;
 				Settings.eDonkey.EnableAlways = true;
 			}
 		}

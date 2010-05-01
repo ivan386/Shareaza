@@ -56,7 +56,6 @@ BOOL CScheduler::Load()
 		theApp.Message( MSG_ERROR, _T("Failed to open SchTasks.dat") );
 		return FALSE;
 	}
-
 	try
 	{
 		CArchive ar( &pFile, CArchive::load );	// 4 KB buffer
@@ -71,7 +70,6 @@ BOOL CScheduler::Load()
 
 	pFile.Close();
 
-	Settings.Scheduler.ShutdownRights = SetShutdownRights() != 0;
 	return TRUE;
 }
 
@@ -141,7 +139,7 @@ void CScheduler::Serialize(CArchive& ar)
 		ar >> nVersion;
 
 		// Read the number of tasks to load
-		for (int nNumTasks =ar.ReadCount(); nNumTasks > 0; nNumTasks--)
+		for (int nNumTasks = ar.ReadCount(); nNumTasks > 0; nNumTasks--)
 		{
 			// Create a new instance of each task
 			CScheduleTask *pSchTask = new CScheduleTask();
@@ -190,7 +188,7 @@ void CScheduleTask::Serialize(CArchive& ar, int nVersion)
 {
 	if ( ar.IsStoring() )
 	{
-		if( nVersion == 1)
+		if( nVersion == 1 )
 		{
 			// Store all task variables
 			ar << m_bSpecificDays;
@@ -207,7 +205,6 @@ void CScheduleTask::Serialize(CArchive& ar, int nVersion)
 			ar << m_nDays;
 			ar.Write( &m_pGUID, sizeof(GUID) );
 		}
-
 	}
 	else
 	{
@@ -228,7 +225,6 @@ void CScheduleTask::Serialize(CArchive& ar, int nVersion)
 			ar >> m_nDays;
 			ReadArchive( ar, &m_pGUID, sizeof(GUID) );
 		}
-
 	}
 }
 /////////////////////////////////////////////////////////////////////
@@ -457,28 +453,7 @@ CScheduler::~CScheduler()
 }
 
 //////////////////////////////////////////////////////////////////////
-// CScheduler task list access
-
-POSITION CScheduler::GetIterator() const
-{
-	return m_pScheduleTasks.GetHeadPosition();
-}
-
-CScheduleTask* CScheduler::GetNext(POSITION& pos) const
-{
-	return m_pScheduleTasks.GetNext( pos );
-}
-
-int CScheduler::GetCount() const
-{
-	return m_pScheduleTasks.GetCount();
-}
-
-//Checks to see if pSchTask exists in the main list
-bool CScheduler::Check(CScheduleTask* pSchTask) const
-{
-	return pSchTask != NULL && GetGUID( pSchTask->m_pGUID ) != NULL;
-}
+//GUID
 
 CScheduleTask* CScheduler::GetGUID(const GUID& pGUID) const
 {
@@ -540,11 +515,10 @@ void CScheduler::CheckSchedule()
 	//m_tLastCheckTicks = 0;
 	bool bSchedulerIsEnabled = false;
 	CTime tNow = CTime::GetCurrentTime();
-	
+
 	//Enable it to test GetHoursTo()
 	//int nHoursToDisconnect = Scheduler.GetHoursTo(BANDWIDTH_STOP|SYSTEM_DISCONNECT|SYSTEM_EXIT|SYSTEM_SHUTDOWN );
 	//theApp.Message( MSG_DEBUG, _T("Calculated time to disconnect is %i hours."), nHoursToDisconnect );
-
 
 	CQuickLock oLock(m_pSection);
 	for ( POSITION pos = GetIterator() ; pos ; )
@@ -572,8 +546,8 @@ void CScheduler::CheckSchedule()
 				if( IsScheduledTimePassed(pSchTask)	)
 				{	//It is scheduled for a specific date and time ("Only Once"). Checking for date
 					if( (!pSchTask->m_bSpecificDays && ScheduleFromToday(pSchTask) == 0 )  || 
-					//Or, it is scheduled for specific days of week. Checking for day
-					(pSchTask->m_bSpecificDays &&  ((1 << (tNow.GetDayOfWeek() - 1)) & pSchTask->m_nDays)))
+						//Or, it is scheduled for specific days of week. Checking for day
+						(pSchTask->m_bSpecificDays &&  ((1 << (tNow.GetDayOfWeek() - 1)) & pSchTask->m_nDays)))
 					{
 						//static_cast<int>(pow(2.0f, tNow.GetDayOfWeek() - 1)
 						//It will also mark it as executed
@@ -593,11 +567,8 @@ void CScheduler::CheckSchedule()
 		}
 	}
 
-	//m_tLastCheckTicks = tNow.GetTime();
-
 	//Scheduler is enable when an active task is scheduled
 	Settings.Scheduler.Enable = bSchedulerIsEnabled;
-
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -612,6 +583,9 @@ void CScheduler::ExecuteScheduledTask(CScheduleTask *pSchTask)
 	case BANDWIDTH_FULL_SPEED:  // Set the bandwidth to full speed
 		theApp.Message( MSG_DEBUG, _T("Scheduler - Bandwidth: Full Speed") );
 		Settings.Live.BandwidthScale = 100;
+		Settings.Bandwidth.Downloads = 0;
+		Settings.Bandwidth.Uploads = ( ( ( Settings.Connection.OutSpeed *
+			( 100 - Settings.Uploads.FreeBandwidthFactor ) ) / 100 ) / 8 ) * 1024;
 		Settings.Gnutella2.EnableToday	= TRUE;
 		Settings.Gnutella1.EnableToday	= Settings.Gnutella1.EnableAlways;
 		Settings.eDonkey.EnableToday	= Settings.eDonkey.EnableAlways;
@@ -620,15 +594,20 @@ void CScheduler::ExecuteScheduledTask(CScheduleTask *pSchTask)
 	case BANDWIDTH_REDUCED_SPEED:  // Set the bandwidth to limited speed
 		theApp.Message( MSG_DEBUG, _T("Scheduler - Bandwidth: Limited Speed") );
 
-		Settings.Scheduler.LimitedNetworks	= pSchTask->m_bLimitedNetworks != 0;
 		if (!pSchTask->m_bToggleBandwidth)
 		{
 			Settings.Live.BandwidthScale = pSchTask->m_nLimit;
+			Settings.Bandwidth.Uploads = ( ( ( Settings.Connection.OutSpeed *
+				( 100 - Settings.Uploads.FreeBandwidthFactor ) ) / 100 ) / 8 ) * 1024;
+			Settings.Bandwidth.Downloads = 0;
 		}
 		else
 		{
-			Settings.Bandwidth.Downloads = ( (Settings.Bandwidth.Downloads * pSchTask->m_nLimitDown)/100 );
-			Settings.Bandwidth.Uploads = ( (Settings.Bandwidth.Uploads * pSchTask->m_nLimitUp)/100 );
+			Settings.Live.BandwidthScale = 100;
+			Settings.Bandwidth.Downloads = ( ( ( Settings.Connection.InSpeed * 1024) / 8) *
+				pSchTask->m_nLimitDown ) / 100;
+			Settings.Bandwidth.Uploads = ( ( ( Settings.Connection.OutSpeed * 1024) / 8) *
+				pSchTask->m_nLimitUp ) / 100;
 		}
 		Settings.Gnutella2.EnableToday	= TRUE;
 		Settings.Gnutella1.EnableToday	= pSchTask->m_bLimitedNetworks ? FALSE :Settings.Gnutella1.EnableAlways;
@@ -661,7 +640,7 @@ void CScheduler::ExecuteScheduledTask(CScheduleTask *pSchTask)
 		theApp.Message( MSG_DEBUG, _T("Scheduler - System: Shut Down the Computer") );
 
 		// If we dont have shutdown rights
-		if (!Settings.Scheduler.ShutdownRights) 
+		if (!SetShutdownRights()) 
 		{
 			theApp.Message( MSG_DEBUG, _T("Insufficient rights to shut down the system") );
 			return;
@@ -677,7 +656,6 @@ void CScheduler::ExecuteScheduledTask(CScheduleTask *pSchTask)
 		theApp.Message( MSG_ERROR, _T("Invalid task in scheduler") );
 		break;
 	}
-
 }
 
 // Disconnect a dial-up connection
@@ -752,7 +730,7 @@ bool  CScheduler::SetShutdownRights()
 	LookupPrivilegeValue(NULL, SE_SHUTDOWN_NAME, 
 		&tkp.Privileges[0].Luid); 
 
-	tkp.PrivilegeCount = 1;  // one privilege to set    
+	tkp.PrivilegeCount = 1;  // One privilege to set    
 	tkp.Privileges[0].Attributes = SE_PRIVILEGE_ENABLED; 
 
 	// Get the shutdown privilege for this process. 
@@ -813,7 +791,7 @@ int  CScheduler::ScheduleFromToday(CScheduleTask* pSchTask) const
 
 }
 
-//Calculates the different between current hour and shutdown hour today
+//Calculates the different between current hour and shutdown hour
 //Caller must first check to see if scheduler is enabled or not
 LONGLONG CScheduler::GetHoursTo(unsigned int nTaskCombination)
 {
@@ -843,9 +821,9 @@ LONGLONG CScheduler::GetHoursTo(unsigned int nTaskCombination)
 			{
 				tToTasks = pSchTask->m_tScheduleDateTime - tNow;
 			}
-				
-			if( (tToTasks.GetTotalHours() < nHoursToTasks) ) 
-					nHoursToTasks = tToTasks.GetTotalHours();
+
+			if( tToTasks.GetTotalHours() < nHoursToTasks ) 
+				nHoursToTasks = tToTasks.GetTotalHours();
 		}
 	}
 
@@ -949,7 +927,6 @@ BOOL CScheduler::Import(LPCTSTR pszFile)
 		bResult = FromXML( pXML );
 		delete pXML;
 	}
-
 
 	return bResult;
 }

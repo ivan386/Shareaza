@@ -69,6 +69,7 @@ END
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
 IDR_MAINFRAME           ICON                    "Res\\Shareaza.ico"
+IDI_NOTASK              ICON                    "Res\\Warning.ico"
 IDR_SYSTEMFRAME         ICON                    "Res\\System.ico"
 IDR_NEIGHBOURSFRAME     ICON                    "Res\\Neighbours.ico"
 IDR_PACKETFRAME         ICON                    "Res\\Packets.ico"
@@ -88,8 +89,6 @@ IDR_DISCOVERYFRAME      ICON                    "Res\\Discovery.ico"
 IDI_WEB_URL             ICON                    "Res\\WebURL.ico"
 IDR_BROWSEHOSTFRAME     ICON                    "Res\\Computer.ico"
 IDR_SCHEDULERFRAME      ICON                    "Res\\Scheduler.ico"
-IDI_X                   ICON                    "Res\\X.ico"
-IDI_EXCLAMATIONMARK     ICON                    "Res\\Exclamation.ico"
 IDR_HOMEFRAME           ICON                    "Res\\Home.ico"
 IDI_DOWNLOAD_MONITOR    ICON                    "Res\\DownloadMonitor.ico"
 IDI_SKIN                ICON                    "Res\\Skin.ico"
@@ -131,7 +130,7 @@ IDI_PLUS_HOVER          ICON                    "Res\\PlusHover.ico"
 IDI_MINUS_HOVER         ICON                    "Res\\MinusHover.ico"
 IDI_TICK                ICON                    "Res\\Tick.ico"
 IDI_BUSY                ICON                    "Res\\Busy.ico"
-IDI_UNSTABLE            ICON                    "Res\\Unstable.ico"
+IDI_UNSTABLE            ICON                    "Res\\Warning.ico"
 IDI_FOLDER_CLOSED       ICON                    "Res\\FolderClosed.ico"
 IDI_FOLDER_OPEN         ICON                    "Res\\FolderOpen.ico"
 IDI_LOCKED              ICON                    "Res\\Locked.ico"
@@ -226,18 +225,18 @@ FONT 8, "Tahoma", 400, 0, 0x0
 BEGIN
     DEFPUSHBUTTON   "OK",IDOK,66,307,60,16,WS_GROUP
     PUSHBUTTON      "Cancel",IDCANCEL,133,307,60,16
-    CONTROL         "Only once",IDC_ONLYONCE,"Button",BS_AUTORADIOBUTTON,18,23,80,10
-    CONTROL         "On specific day(s) of week",IDC_EVERYDAY,"Button",BS_AUTORADIOBUTTON,128,23,121,10
+    CONTROL         "Only once",IDC_ONLYONCE,"Button",BS_AUTORADIOBUTTON,14,23,105,10
+    CONTROL         "On specific day(s) of week",IDC_EVERYDAY,"Button",BS_AUTORADIOBUTTON,124,23,122,10
     CONTROL         "",IDC_DATE,"SysDateTimePick32",DTS_RIGHTALIGN | DTS_LONGDATEFORMAT | WS_TABSTOP,7,59,132,15
     CONTROL         "",IDC_TIME,"SysDateTimePick32",DTS_RIGHTALIGN | DTS_UPDOWN | WS_TABSTOP | 0x8,171,59,80,15
-    CONTROL         "Sunday",IDC_CHECK_SUN,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,21,96,39,10
-    CONTROL         "Monday",IDC_CHECK_MON,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,75,96,39,10
-    CONTROL         "Tuesday",IDC_CHECK_TUES,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,129,96,39,10
-    CONTROL         "Wednesday",IDC_CHECK_WED,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,183,96,54,10
-    CONTROL         "Thursday",IDC_CHECK_THU,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,21,109,47,10
-    CONTROL         " Friday",IDC_CHECK_FRI,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,75,109,39,10
-    CONTROL         "Saturday",IDC_CHECK_SAT,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,129,109,39,10
-    PUSHBUTTON      "All",IDC_BUTTON_ALLDAYS,183,109,60,11
+    CONTROL         "Sunday",IDC_CHECK_SUN,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,96,56,10
+    CONTROL         "Monday",IDC_CHECK_MON,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,72,96,56,10
+    CONTROL         "Tuesday",IDC_CHECK_TUES,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,130,96,56,10
+    CONTROL         "Wednesday",IDC_CHECK_WED,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,189,96,56,10
+    CONTROL         "Thursday",IDC_CHECK_THU,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,109,56,10
+    CONTROL         " Friday",IDC_CHECK_FRI,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,72,109,56,10
+    CONTROL         "Saturday",IDC_CHECK_SAT,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,130,109,56,10
+    PUSHBUTTON      "All",IDC_BUTTON_ALLDAYS,189,109,56,11
     COMBOBOX        IDC_EVENTTYPE,7,150,151,80,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     EDITTEXT        IDC_SCHEDULER_LIMITED,7,172,36,12,ES_AUTOHSCROLL | ES_NUMBER
     CONTROL         "",IDC_SCHEDULER_LIMITED_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,42,172,11,12
@@ -250,14 +249,14 @@ BEGIN
     CONTROL         " &Limit network to Gnutella2",IDC_SCHEDULER_LIMITED_NETWORKS,
                     "Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,15,230,142,15,WS_EX_TRANSPARENT
     EDITTEXT        IDC_DESCRIPTION,7,262,245,14,ES_AUTOHSCROLL
-    CONTROL         "Make this event active",IDC_ACTIVE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,284,88,10
+    CONTROL         "Make this event active",IDC_ACTIVE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,284,245,10
     LTEXT           "Please select a date:",IDC_STATIC,7,47,132,8
-    LTEXT           "Please select a time:",IDC_STATIC,173,47,78,8
+    LTEXT           "Please select a time:",IDC_STATIC,171,47,80,8
     LTEXT           "Select the event type:",IDC_STATIC,7,138,243,8
     LTEXT           "Description: (optional)",IDC_STATIC,7,250,245,8
-    LTEXT           "% of &bandwidth under limit",IDC_STATIC_LIMITED,56,175,87,8
-    LTEXT           "% of &download under limit",IDC_STATIC_LIMITED_DOWN,56,190,87,8
-    LTEXT           "% of &upload under limit",IDC_STATIC_LIMITED_UP,56,205,87,8
+    LTEXT           "% of &bandwidth under limit",IDC_STATIC_LIMITED,56,175,195,8
+    LTEXT           "% of &download under limit",IDC_STATIC_LIMITED_DOWN,56,190,195,8
+    LTEXT           "% of &upload under limit",IDC_STATIC_LIMITED_UP,56,205,195,8
     GROUPBOX        "Days Of Week",IDC_DAYOFWEEK_GBOX,7,81,244,47
     GROUPBOX        "Run this event",IDC_STATIC,7,8,244,33
 END
@@ -3241,7 +3240,7 @@ BEGIN
                             "Are you sure you want to remove all scheduled tasks? This cannot be undone."
     ID_HELP_SCHEDULER       "Schedule tasks to be done in the future."
     IDS_SCHEDULER_TIME_PASSED 
-                            "Scheduled time has already passed. \n\nPlease select a time in the future."
+                            "Scheduled time has already passed.\n\nPlease select a time in the future."
     IDS_SCHEDULER_BANDWIDTH_FULLSPEED "Bandwidth: Full Speed"
     IDS_SCHEDULER_BANDWIDTH_REDUCEDSPEED "Bandwidth: Reduced Speed"
     IDS_SCHEDULER_BANDWIDTH_STOP "Bandwidth: Stop"
@@ -3542,7 +3541,7 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_NETWORK_UNLIMIT     "You are running the Scheduler in 'G2 only' mode. Would you like to turn this mode off, so that all active networks remain connected?"
+    IDS_NETWORK_ALWAYS      "Would you like to always connect to this network?"
     IDS_NETWORK_SEARCH_SENT "Sending query for ""%s"" to %s."
     IDS_NETWORK_FORCE_HUB   "Forcing your PC into hub mode may have adverse effects on performance and the P2P network. It is generally better to allow Shareaza to decide whether or not hub mode should be used.\n\nHub mode does NOT produce better search results, or have any other advantages for you.\n\nDo you really want to do this, despite these disadvantages?"
     IDS_NETWORK_DISABLE_G1  "Disabling support for Gnutella-1 protocols may limit your search results, and if you are acting as a hub it may also impact upon the results of other users.  Are you sure you want to do this?"

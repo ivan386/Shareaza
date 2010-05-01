@@ -235,11 +235,11 @@
 #define IDI_RATING_FAKE                 322
 #define IDI_RATING_AVERAGE              323
 #define IDI_RATING_GOOD                 324
-#define IDI_X                           335
 #define IDI_EXCLAMATIONMARK             336
 #define ID_SCHEDULER_MOVE_UP            337
 #define ID_SCHEDULER_MOVE_DOWN          338
 #define ID_SCHEDULER_REMOVE_ALL         339
+#define IDI_NOTASK                      341
 #define IDR_CHANSFRAME                  991
 #define IDD_DOWNLOAD_ACTIONS            993
 #define IDR_IRCFRAME                    994
@@ -1033,6 +1033,7 @@
 #define IDS_NETWORK_SECURITY_BLOCKED    16078
 #define IDS_NETWORK_DISCONNECT_CONFIRM  16079
 #define IDS_NETWORK_UNLIMIT             16080
+#define IDS_NETWORK_ALWAYS              16080
 #define IDS_NETWORK_SEARCH_SENT         16081
 #define IDS_NETWORK_FORCE_HUB           16083
 #define IDS_NETWORK_DISABLE_G1          16084
@@ -1968,7 +1969,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        340
+#define _APS_NEXT_RESOURCE_VALUE        342
 #define _APS_NEXT_COMMAND_VALUE         33328
 #define _APS_NEXT_CONTROL_VALUE         1600
 #define _APS_NEXT_SYMED_VALUE           104

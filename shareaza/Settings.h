@@ -569,13 +569,6 @@ public:
 	struct sScheduler
 	{
 		bool		Enable;						// Enable the scheduler
-		//DWORD		LimitedBandwidth;			// % of bandwidth to use in limited mode
-		bool		LimitedNetworks;			// Only connect to G2/BT when limited
-		//bool		AllowHub;					// Allow hub mode while scheduler is active
-		//DWORD		LimitedBandwidthDown;		// % of bandwidth to use in limited mode
-		//DWORD		LimitedBandwidthUp;			// % of bandwidth to use in limited mode
-		//bool		ToggleBandwidth;			// Toggle Bandwidth Independently
-		bool		ShutdownRights;				// Do we have rights to shutdown the system
 	} Scheduler;
 
 	struct sIRC

@@ -3088,6 +3088,10 @@
 					>
 				</File>
 				<File
+					RelativePath="WndScheduler.h"
+					>
+				</File>
+				<File
 					RelativePath="WndSearch.h"
 					>
 				</File>
@@ -3938,10 +3942,6 @@
 				>
 			</File>
 			<File
-				RelativePath="Res\Exclamation.ico"
-				>
-			</File>
-			<File
 				RelativePath="Res\Executable.ico"
 				>
 			</File>
@@ -4306,15 +4306,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Res\ToolsWizard.ico"
+				RelativePath="Res\ToolsWizard.ico"
 				>
 			</File>
 			<File
 				RelativePath="Res\Traffic.ico"
-				>
-			</File>
-			<File
-				RelativePath="Res\Unstable.ico"
 				>
 			</File>
 			<File
@@ -4327,6 +4323,10 @@
 			</File>
 			<File
 				RelativePath="Res\users.ico"
+				>
+			</File>
+			<File
+				RelativePath="Res\Warning.ico"
 				>
 			</File>
 			<File
@@ -4343,10 +4343,6 @@
 			</File>
 			<File
 				RelativePath="Res\World.ico"
-				>
-			</File>
-			<File
-				RelativePath="Res\X.ico"
 				>
 			</File>
 		</Filter>

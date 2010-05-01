@@ -38,6 +38,7 @@
 			<button id="ID_VIEW_MEDIA"/>
 			<button id="ID_TAB_IRC"/>
 			<button id="ID_VIEW_SECURITY"/>
+			<button id="ID_VIEW_SCHEDULER"/>
 			<button id="ID_VIEW_HOSTS"/>
 			<button id="ID_VIEW_DISCOVERY"/>
 			<button id="ID_VIEW_TRAFFIC"/>
@@ -359,6 +360,7 @@
 			<separator/>
 			<button id="ID_NEIGHBOURS_SETTINGS" text="Настройки"/>
 		</toolbar>
+		<!-- SECURITY WINDOW -->
 		<toolbar name="CSecurityWnd">
 			<button id="ID_SECURITY_EDIT" text="Редактировать правило"/>
 			<separator/>
@@ -371,6 +373,21 @@
 			<button id="ID_SECURITY_RESET" text="Сброс"/>
 			<button id="ID_SECURITY_IMPORT" text="Импорт"/>
 			<button id="ID_SECURITY_EXPORT" text="Экспорт"/>
+		</toolbar>
+		<!-- SCHEDULER WINDOW -->
+		<toolbar name="CSchedulerWnd">
+			<button id="ID_SCHEDULER_EDIT" text="Изменить задачу"/>
+			<separator/>
+			<button id="ID_SCHEDULER_ACTIVATE" text="Включить"/>
+			<button id="ID_SCHEDULER_DEACTIVATE" text="Выключить"/>
+			<separator/>
+			<button id="ID_SCHEDULER_ADD" text="Добавить задачу"/>
+			<button id="ID_SCHEDULER_REMOVE" text="Удалить"/>
+			<separator/>
+			<button id="ID_SCHEDULER_REMOVE_ALL" text="Удалить Всё"/>
+			<rightAlign/>
+			<button id="ID_SCHEDULER_IMPORT" text="Импорт"/>
+			<button id="ID_SCHEDULER_EXPORT" text="Экспорт"/>
 		</toolbar>
 		<!-- HIT MONITOR WINDOW -->
 		<toolbar name="CHitMonitorWnd">
@@ -500,6 +517,7 @@
 					<item id="ID_VIEW_SECURITY" text="_Безопасность"/>
 					<item id="ID_VIEW_HOSTS" text="_Кэш хостов"/>
 					<item id="ID_VIEW_DISCOVERY" text="_Ресурсы подключений"/>
+					<item id="ID_VIEW_SCHEDULER" text="Пла_нировщик"/>
 				</menu>
 				<separator/>
 				<item id="ID_VIEW_BASIC" text="Об_ычный режим"/>
@@ -573,6 +591,7 @@
 				<separator/>
 				<item id="ID_VIEW_SECURITY" text="_Безопасность"/>
 				<item id="ID_VIEW_HOSTS" text="_Кэш хостов"/>
+				<item id="ID_VIEW_SCHEDULER" text="Пла_нировщик"/>
 				<separator/>
 				<menu text="_Опытным">
 					<item id="ID_VIEW_SYSTEM" text="Си_стема" shortcut="F11"/>
@@ -587,6 +606,7 @@
 					<item id="ID_VIEW_HOSTS" text="_Кэш хостов" shortcut="F8"/>
 					<item id="ID_VIEW_DISCOVERY" text="_Ресурсы подключений" shortcut="F9"/>
 					<item id="ID_VIEW_TRAFFIC" text="_График" shortcut="F10"/>
+					<item id="ID_VIEW_SCHEDULER" text="Пла_нировщик" shortcut="Ctrl+Shift+F11"/>
 					<separator/>
 					<item id="ID_VIEW_PACKETS" text="Дамп _пакетов" shortcut="Ctrl+F1"/>
 					<item id="ID_VIEW_SEARCH_MONITOR" text="_Монитор поиска" shortcut="Ctrl+F2"/>
@@ -679,6 +699,7 @@
 				<item id="ID_VIEW_HOSTS" text="_Кэш хостов" shortcut="F8"/>
 				<item id="ID_VIEW_DISCOVERY" text="_Ресурсы подключений" shortcut="F9"/>
 				<item id="ID_VIEW_TRAFFIC" text="_График" shortcut="F10"/>
+				<item id="ID_VIEW_SCHEDULER" text="Пла_нировщик" shortcut="Ctrl+Shift+F11"/>
 				<separator/>
 				<item id="ID_VIEW_PACKETS" text="Дамп _пакетов" shortcut="Ctrl+F1"/>
 				<item id="ID_VIEW_SEARCH_MONITOR" text="_Монитор поиска" shortcut="Ctrl+F2"/>
@@ -755,6 +776,7 @@
 				<item id="ID_VIEW_UPLOADS" text="_Раздачи"/>
 				<item id="ID_VIEW_SECURITY" text="_Безопасность"/>
 				<item id="ID_VIEW_HOSTS" text="_Кэш хостов"/>
+				<item id="ID_VIEW_SCHEDULER" text="Пла_нировщик"/>
 			</menu>
 		</menu>
 		<menu name="CMainWnd.View.Tabbed">
@@ -770,6 +792,7 @@
 			<item id="ID_VIEW_HOSTS" text="_Кэш хостов"/>
 			<item id="ID_VIEW_DISCOVERY" text="_Ресурсы подключений"/>
 			<item id="ID_VIEW_TRAFFIC" text="_График"/>
+			<item id="ID_VIEW_SCHEDULER" text="Пла_нировщик"/>
 			<separator/>
 			<item id="ID_VIEW_PACKETS" text="Дамп _пакетов"/>
 			<item id="ID_VIEW_SEARCH_MONITOR" text="_Монитор поиска"/>
@@ -789,6 +812,7 @@
 			<item id="ID_VIEW_HOSTS" text="_Кэш хостов"/>
 			<item id="ID_VIEW_DISCOVERY" text="_Ресурсы подключений"/>
 			<item id="ID_VIEW_TRAFFIC" text="_График"/>
+			<item id="ID_VIEW_SCHEDULER" text="Пла_нировщик"/>
 			<separator/>
 			<item id="ID_VIEW_PACKETS" text="Дамп _пакетов"/>
 			<item id="ID_VIEW_SEARCH_MONITOR" text="_Монитор поиска"/>
@@ -841,6 +865,7 @@
 				<item id="ID_VIEW_UPLOADS" text="_Раздачи"/>
 				<item id="ID_VIEW_SECURITY" text="_Безопасность"/>
 				<item id="ID_VIEW_HOSTS" text="_Кэш хостов"/>
+				<item id="ID_VIEW_SCHEDULER" text="Пла_нировщик"/>
 			</menu>
 		</menu>
 		<menu name="CHomeWnd.Tabbed">
@@ -856,6 +881,7 @@
 			<item id="ID_VIEW_HOSTS" text="_Кэш хостов"/>
 			<item id="ID_VIEW_DISCOVERY" text="_Ресурсы подключений"/>
 			<item id="ID_VIEW_TRAFFIC" text="_График"/>
+			<item id="ID_VIEW_SCHEDULER" text="Пла_нировщик"/>
 			<separator/>
 			<item id="ID_VIEW_PACKETS" text="Дамп _пакетов"/>
 			<item id="ID_VIEW_SEARCH_MONITOR" text="_Монитор поиска"/>
@@ -1525,6 +1551,21 @@
 			<separator/>
 			<item id="ID_SECURITY_EDIT" text="_Свойства"/>
 		</menu>
+		<!-- SCHEDULER WINDOW -->
+		<menu name="CSchedulerWnd">
+			<item id="ID_SCHEDULER_ADD" text="Доб_авить задачу"/>
+			<separator/>
+			<item id="ID_SCHEDULER_ACTIVATE" text="_Включить"/>
+			<item id="ID_SCHEDULER_DEACTIVATE" text="В_ыключить"/>
+			<separator/>
+			<item id="ID_SCHEDULER_REMOVE" text="_Удалить"/>
+			<item id="ID_SCHEDULER_EDIT" text="_Изменить"/>
+			<separator/>
+			<item id="ID_SCHEDULER_REMOVE_ALL" text="_Удалить всё"/>
+			<separator/>
+			<item id="ID_SCHEDULER_IMPORT" text="_Импорт..."/>
+			<item id="ID_SCHEDULER_EXPORT" text="_Экспорт..."/>
+		</menu>
 		<!-- DISCOVERY SERVICES WINDOW -->
 		<menu name="CDiscoveryWnd">
 			<item id="ID_DISCOVERY_QUERY" text="_Опросить сейчас"/>
@@ -1917,10 +1958,6 @@
 			<link target="raza:page:CRemoteSettingsPage" format="b">Удаленное управление:</link>
 			<gap size="4"/>
 			<text>Включите поддержку удаленного управления, чтобы контроллировать Shareaza при помощи веб браузера.</text>
-			<newline gap="10"/>
-			<link target="raza:page:CSchedulerSettingsPage" format="b">Расписание:</link>
-			<gap size="4"/>
-			<text>Составте расписание для ограничения загрузок по времени.</text>
 		</document>
 		<!-- Browse User Profile -->
 		<document name="CBrowseHostProfile.1">
@@ -2614,6 +2651,24 @@
 		<string id="WINDOW_SEARCHPAD" value="Поиск"/>
 		<string id="WINDOW_HELP" value="Shareaza помощь"/>
 		<string id="WINDOW_IRC" value="Чат Shareaza"/>
+		<string id="WINDOW_SCHEDULER" value="Планировщик"/>
+		<string id="154" value="Уверены, что хотите удалить все задачи планировщика?  Действие будет необратимое."/>
+		<string id="156" value="Время задачи уже прошло.\n\nПожалуйста задайте время в будущем."/>
+		<string id="157" value="Скорость: Полная"/>
+		<string id="158" value="Скорость: Уменьшена"/>
+		<string id="159" value="Скорость: Остановка"/>
+		<string id="160" value="Система: Выход из Shareaza"/>
+		<string id="161" value="Система: Отключить интернет"/>
+		<string id="162" value="Система: Выключить компьютер"/>
+		<string id="163" value="Выберите задачу:"/>
+		<string id="164" value="Заданные дни недели"/>
+		<string id="165" value="Активный"/>
+		<string id="166" value="Неактивный"/>
+		<string id="167" value="Готово"/>
+		<string id="168" value="Ждите..."/>
+		<string id="169" value="Нет задач для Планировщика"/>
+		<string id="172" value="Готово сегодня"/>
+		<string id="173" value="Вы должны выбрать по карйней мере один из дней недели."/>
 		<string id="7000" value="Вы уверены, что хотите удалить этот фильтр?"/>
 		<string id="7001" value="&amp;Схемы"/>
 		<string id="7002" value="Разные значения"/>
@@ -3563,27 +3618,42 @@
 			<control caption="Введите пароль:"/>
 			<control/>
 		</dialog>
-		<dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEdBuSt" caption="Планировщик">
-			<control caption="_Опции:"/>
-			<control caption="_Включить планировщик"/>
+		<dialog name="CScheduleTaskDlg" cookie="BuBuBuBuSySyBuBuBuBuBuBuBuBuCoEdmsEdmsEdmsBuBuEdBuStStStStStStStBuBu" caption="Запланировать">
+			<control caption="OK"/>
+			<control caption="Отмена"/>
+			<control caption="Один раз"/>
+			<control caption="По заданным дням недели"/>
 			<control/>
 			<control/>
-			<control caption="_При лимите разрешить только G2"/>
-			<control caption="Ключ:"/>
-			<control caption="Вс"/>
-			<control caption="Пн"/>
-			<control caption="Вт"/>
-			<control caption="Ср"/>
-			<control caption="Чт"/>
-			<control caption="Пт"/>
-			<control caption="Сб"/>
-			<control caption="Не соединяться"/>
-			<control caption="Лимитированное соединение"/>
-			<control caption="Соедин. с полной скоростью"/>
-			<control caption="% скорости при лимите"/>
+			<control caption="Воскресенье"/>
+			<control caption="Понедельник"/>
+			<control caption="Вторник"/>
+			<control caption="Среда"/>
+			<control caption="Четверг"/>
+			<control caption="Пятница"/>
+			<control caption="Суббота"/>
+			<control caption="Все"/>
 			<control/>
-			<control caption="Справка"/>
-			<control caption="Планировщик создан для того, чтобы позволить Вам установить, когда Shareaza должна соединиться и начать загрузку файлов.{n}Замечание: Если Вы открыли Shareaza во время работы планировщика, Вы можете заметить, что установки меняются - это нормально!"/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control caption="_Управлять скростью независимо"/>
+			<control caption="_Использовать только Gnutella2"/>
+			<control/>
+			<control caption="Включить эту задачу"/>
+			<control caption="Выберите дату:"/>
+			<control caption="Выберите время:"/>
+			<control caption="Выберите тип:"/>
+			<control caption="Описание: (необязательно)"/>
+			<control caption="% _общей скорости при лимите"/>
+			<control caption="% скорости _загрузки при лимите"/>
+			<control caption="% скорости _раздачи при лимите"/>
+			<control caption="Дни недели"/>
+			<control caption="Выполнить задачу"/>
+			<control/>
 		</dialog>
 		<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Сети">
 			<control caption="Shareaza - многоцелевая программа обмена файлами, с доступом ко многим P2P сетям одновременно. Здесь Вы можете выбрать, какие сети Вы хотите использовать, и затем определить настройки для каждой."/>

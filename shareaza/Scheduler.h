@@ -24,7 +24,7 @@ class CXMLElement;
 
 
 #define SCHEDULER_SER_VERSION	1
-//History: m_nDay is added
+
 
 //TODO: Add new tasks here
 enum ScheduleTask
@@ -61,17 +61,17 @@ public:
 public:
 	unsigned int	m_nDays;		//Will have a combination of DayOfWeek
 	unsigned int	m_nAction;		//Will have one of ScheduleTask values plus 0 as invalid state indicator
-	bool		m_bSpecificDays;		//Task is scheduled for everyday or just today
-	CString		m_sDescription;		//Optional task description
-	CTime		m_tScheduleDateTime;//Time the task is scheduled for
-	bool		m_bActive;			//Task should be executed or not
-	bool		m_bExecuted;		//Task is executed or not
-	bool		m_bToggleBandwidth;	//Up/Down bandwidth are limited seperately or not
-	bool		m_bLimitedNetworks;	//Network is limited to G2 or not (in SCHEDULE_LIMITED_SPEED)
-	int			m_nLimit;			//Bandwidth limit when m_bToggleBandwidth is FALSE
-	int			m_nLimitDown;		//Down stream bandwidth limit when m_bToggleBandwidth is TRUE
-	int			m_nLimitUp;			//Up stream bandwidth limit when m_bToggleBandwidth is TRUE
-	GUID		m_pGUID;			//GUID for each scheduled item
+	bool			m_bSpecificDays;	//Task is scheduled for everyday or just today
+	CString			m_sDescription;		//Optional task description
+	CTime			m_tScheduleDateTime;//Time the task is scheduled for
+	bool			m_bActive;			//Task should be executed or not
+	bool			m_bExecuted;		//Task is executed or not
+	bool			m_bToggleBandwidth;	//Up/Down bandwidth are limited seperately or not
+	bool			m_bLimitedNetworks;	//Network is limited to G2 or not (in SCHEDULE_LIMITED_SPEED)
+	int				m_nLimit;			//Bandwidth limit when m_bToggleBandwidth is FALSE
+	int				m_nLimitDown;		//Down stream bandwidth limit when m_bToggleBandwidth is TRUE
+	int				m_nLimitUp;			//Up stream bandwidth limit when m_bToggleBandwidth is TRUE
+	GUID			m_pGUID;			//GUID for each scheduled item
 
 // Operations
 public:
@@ -100,18 +100,32 @@ public:
 
 protected:
 	CList< CScheduleTask* >			m_pScheduleTasks;
-	//DWORD							m_tLastCheckTicks;
 
 
 // Operations
 public:
 
 	//To iterate through m_pScheduleItems
-	POSITION		GetIterator() const;
-	CScheduleTask*	GetNext(POSITION& pos) const;
-	int				GetCount() const;
+	inline POSITION	GetIterator() const
+	{
+		return m_pScheduleTasks.GetHeadPosition();
+	}
+
+	inline CScheduleTask*	GetNext(POSITION& pos) const
+	{
+		return m_pScheduleTasks.GetNext( pos );
+	}
+
+	inline int		GetCount() const
+	{
+		return m_pScheduleTasks.GetCount();
+	}
+
 	//Checks to see pItem exists in m_pScheduleItems or not, by comparing GUID values
-	bool			Check(CScheduleTask* pItem) const;
+	bool			Check(CScheduleTask* pSchTask) const
+	{
+		return pSchTask != NULL && GetGUID( pSchTask->m_pGUID ) != NULL;
+	}
 	
 	//It is called regularly by timers to see if any scheduled item should be executed
 	//This method also sets Settings.Scheduler.Enable to indiate globally if any item 

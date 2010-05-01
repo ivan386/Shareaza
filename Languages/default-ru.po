@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2010-04-21 13:04+0000\n"
+"POT-Creation-Date: 2010-05-01 08:24+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -393,13 +393,37 @@ msgstr "Вниз"
 msgid "Reset List"
 msgstr "Сброс"
 
-#: button;id_security_import
+#: button;id_security_import button;id_scheduler_import
 msgid "Import List"
 msgstr "Импорт"
 
-#: button;id_security_export
+#: button;id_security_export button;id_scheduler_export
 msgid "Export List"
 msgstr "Экспорт"
+
+#: button;id_scheduler_edit
+msgid "Edit Task"
+msgstr "Изменить задачу"
+
+#: button;id_scheduler_activate
+msgid "Activate"
+msgstr "Включить"
+
+#: button;id_scheduler_deactivate
+msgid "Deactivate"
+msgstr "Выключить"
+
+#: button;id_scheduler_add
+msgid "Add Task"
+msgstr "Добавить задачу"
+
+#: button;id_scheduler_remove
+msgid "Remove Task"
+msgstr "Удалить"
+
+#: button;id_scheduler_remove_all
+msgid "Remove All"
+msgstr "Удалить Всё"
 
 #: button;id_hitmonitor_search
 msgid "Requery"
@@ -670,6 +694,18 @@ msgstr "_Кэш хостов"
 #: chomewnd.tabbed;item;id_view_discovery
 msgid "Disco_very"
 msgstr "_Ресурсы подключений"
+
+#: cmainwnd.basic;3;4;item;id_view_scheduler
+#: cmainwnd.tabbed;11;item;id_view_scheduler
+#: cmainwnd.tabbed;11;12;item;id_view_scheduler
+#: cmainwnd.windowed;20;item;id_view_scheduler
+#: cmainwnd.view.basic;26;item;id_view_scheduler
+#: cmainwnd.view.tabbed;item;id_view_scheduler
+#: cmainwnd.view.windowed;item;id_view_scheduler
+#: chomewnd.basic;27;item;id_view_scheduler
+#: chomewnd.tabbed;item;id_view_scheduler
+msgid "Sch_eduler"
+msgstr "Пла_нировщик"
 
 #: cmainwnd.basic;3;item;id_view_basic cmainwnd.windowed;20;item;id_view_basic
 msgid "_Basic Mode"
@@ -1427,6 +1463,7 @@ msgstr "_Общий доступ"
 #: clibrarytree.physical.basic;item;id_library_remove
 #: clibrarytree.physical;item;id_library_remove
 #: cmedialist;item;id_media_remove csecuritywnd;item;id_security_remove
+#: cschedulerwnd;item;id_scheduler_remove
 #: cdiscoverywnd;item;id_discovery_remove clibrarysettingspage;control;19
 #: clibrarysettingspage;control;23 cmediasettingspage;control;8
 #: cwebsettingspage;control;12 cwizardsharepage;control;6
@@ -1811,11 +1848,11 @@ msgstr "_Добавить правило..."
 msgid "Rese_t"
 msgstr "С_брос"
 
-#: csecuritywnd;item;id_security_import
+#: csecuritywnd;item;id_security_import cschedulerwnd;item;id_scheduler_import
 msgid "_Import..."
 msgstr "_Импорт..."
 
-#: csecuritywnd;item;id_security_export
+#: csecuritywnd;item;id_security_export cschedulerwnd;item;id_scheduler_export
 msgid "E_xport..."
 msgstr "_Экспорт..."
 
@@ -1830,6 +1867,26 @@ msgstr "Принимать"
 #: csecuritywnd;61;item;id_security_policy_deny
 msgid "_Deny"
 msgstr "Отказать"
+
+#: cschedulerwnd;item;id_scheduler_add
+msgid "_Add Scheduled Task"
+msgstr "Доб_авить задачу"
+
+#: cschedulerwnd;item;id_scheduler_activate
+msgid "A_ctivate"
+msgstr "_Включить"
+
+#: cschedulerwnd;item;id_scheduler_deactivate
+msgid "_Deactivate"
+msgstr "В_ыключить"
+
+#: cschedulerwnd;item;id_scheduler_edit
+msgid "_Edit"
+msgstr "_Изменить"
+
+#: cschedulerwnd;item;id_scheduler_remove_all
+msgid "Remove Al_l"
+msgstr "_Удалить всё"
 
 #: cdiscoverywnd;item;id_discovery_query
 msgid "_Query Now"
@@ -2438,14 +2495,6 @@ msgstr "Удаленное управление:"
 #: cinternetsettingsgroup;text;12
 msgid "Set up the ability to control Shareaza remotely through a web browser."
 msgstr "Включите поддержку удаленного управления, чтобы контроллировать Shareaza при помощи веб браузера."
-
-#: cinternetsettingsgroup;link;13
-msgid "Scheduler:"
-msgstr "Расписание:"
-
-#: cinternetsettingsgroup;text;14
-msgid "Limit download connections based on a periodic schedule."
-msgstr "Составте расписание для ограничения загрузок по времени."
 
 #: cbrowsehostprofile.1;heading;2000
 msgid "'s Profile"
@@ -4328,6 +4377,84 @@ msgstr "Shareaza помощь"
 msgid "Shareaza Chat"
 msgstr "Чат Shareaza"
 
+#: string;window_scheduler
+msgid "Scheduler"
+msgstr "Планировщик"
+
+#: string;154
+msgid "Are you sure you want to remove all scheduled tasks? This cannot be undone."
+msgstr "Уверены, что хотите удалить все задачи планировщика?  Действие будет необратимое."
+
+#: string;156
+msgid ""
+"Scheduled time has already passed.\\n"
+"\\n"
+"Please select a time in the future."
+msgstr ""
+"Время задачи уже прошло.\\n"
+"\\n"
+"Пожалуйста задайте время в будущем."
+
+#: string;157
+msgid "Bandwidth: Full Speed"
+msgstr "Скорость: Полная"
+
+#: string;158
+msgid "Bandwidth: Reduced Speed"
+msgstr "Скорость: Уменьшена"
+
+#: string;159
+msgid "Bandwidth: Stop"
+msgstr "Скорость: Остановка"
+
+#: string;160
+msgid "System: Exit Shareaza"
+msgstr "Система: Выход из Shareaza"
+
+#: string;161
+msgid "System: Disconnect Dial-up Connection"
+msgstr "Система: Отключить интернет"
+
+#: string;162
+msgid "System: Turn Off the Computer"
+msgstr "Система: Выключить компьютер"
+
+#: string;163
+msgid "Please select a task."
+msgstr "Выберите задачу:"
+
+#: string;164
+msgid "Specific day(s) of week"
+msgstr "Заданные дни недели"
+
+#: string;165 string;8325 string;20118
+msgid "Active"
+msgstr "Активный"
+
+#: string;166 string;8324
+msgid "Inactive"
+msgstr "Неактивный"
+
+#: string;167
+msgid "Done"
+msgstr "Готово"
+
+#: string;168
+msgid "Waiting..."
+msgstr "Ждите..."
+
+#: string;169
+msgid "No Tasks Currently Scheduled"
+msgstr "Нет задач для Планировщика"
+
+#: string;172
+msgid "Done Today"
+msgstr "Готово сегодня"
+
+#: string;173
+msgid "You should select at least one day of week."
+msgstr "Вы должны выбрать по карйней мере один из дней недели."
+
 #: string;7000
 msgid "Are you sure you want to delete this filter ?"
 msgstr "Вы уверены, что хотите удалить этот фильтр?"
@@ -4855,14 +4982,6 @@ msgstr "Ссылка:"
 #: string;8323
 msgid "User Agent:"
 msgstr "Клиент:"
-
-#: string;8324
-msgid "Inactive"
-msgstr "Неактивный"
-
-#: string;8325 string;20118
-msgid "Active"
-msgstr "Активный"
 
 #: string;8326
 msgid "Next in Line"
@@ -7014,7 +7133,7 @@ msgstr "&Далее"
 msgid "Finish"
 msgstr "Закончить"
 
-#: string;20013 cfolderpropertiesdlg;control;5
+#: string;20013 cscheduletaskdlg;control;14 cfolderpropertiesdlg;control;5
 msgid "All"
 msgstr "Все"
 
@@ -7146,23 +7265,23 @@ msgstr "Оч."
 msgid "sources (e.g. 3/10 sources)"
 msgstr "источников"
 
-#: string;20200
+#: string;20200 cscheduletaskdlg;control;7
 msgid "Sunday"
 msgstr "Воскресенье"
 
-#: string;20201
+#: string;20201 cscheduletaskdlg;control;8
 msgid "Monday"
 msgstr "Понедельник"
 
-#: string;20202
+#: string;20202 cscheduletaskdlg;control;9
 msgid "Tuesday"
 msgstr "Вторник"
 
-#: string;20203
+#: string;20203 cscheduletaskdlg;control;10
 msgid "Wednesday"
 msgstr "Среда"
 
-#: string;20204
+#: string;20204 cscheduletaskdlg;control;11
 msgid "Thursday"
 msgstr "Четверг"
 
@@ -7170,7 +7289,7 @@ msgstr "Четверг"
 msgid "Friday"
 msgstr "Пятница"
 
-#: string;20206
+#: string;20206 cscheduletaskdlg;control;13
 msgid "Saturday"
 msgstr "Суббота"
 
@@ -7234,33 +7353,34 @@ msgstr "Артист"
 msgid "Rating"
 msgstr "Оценка"
 
-#: string;20237 csettingsheet;control;2 cqueuepropertiesdlg;control;37
-#: cprofilemanagerdlg;control;2 csavefilterasdlg;control;2
-#: cdiscoveryservicedlg;control;5 cfilecopydlg;control;4
-#: cfolderpropertiesdlg;control;7 cgraphlistdlg;control;16
-#: cgraphitemdlg;control;1 cschemacolumnsdlg;control;3
-#: csecureruledlg;control;33 csharemanagerdlg;control;6 cpromotedlg;control;8
-#: cexistingfiledlg;control;9 cclosemodedlg;control;6
-#: cdonkeyserversdlg;control;5 cdownloadgroupdlg;control;1
-#: cmediavisdlg;control;6 cdownloadreviewdlg;control;2
-#: cdecodemetadatadlg;control;8 circinputdlg;control;2
+#: string;20237 csettingsheet;control;2 cscheduletaskdlg;control;1
+#: cqueuepropertiesdlg;control;37 cprofilemanagerdlg;control;2
+#: csavefilterasdlg;control;2 cdiscoveryservicedlg;control;5
+#: cfilecopydlg;control;4 cfolderpropertiesdlg;control;7
+#: cgraphlistdlg;control;16 cgraphitemdlg;control;1
+#: cschemacolumnsdlg;control;3 csecureruledlg;control;33
+#: csharemanagerdlg;control;6 cpromotedlg;control;8 cexistingfiledlg;control;9
+#: cclosemodedlg;control;6 cdonkeyserversdlg;control;5
+#: cdownloadgroupdlg;control;1 cmediavisdlg;control;6
+#: cdownloadreviewdlg;control;2 cdecodemetadatadlg;control;8
+#: circinputdlg;control;2
 msgid "OK"
 msgstr "OK"
 
-#: string;20238 csettingsheet;control;3 cqueuepropertiesdlg;control;38
-#: cprofilemanagerdlg;control;3 cconnecttodlg;control;8 cdownloaddlg;control;6
-#: cnewsearchdlg;control;4 cfiltersearchdlg;control;30
-#: csavefilterasdlg;control;3 cdiscoveryservicedlg;control;6
-#: cfilecopydlg;control;5 cfolderpropertiesdlg;control;8
-#: cgraphlistdlg;control;17 cgraphitemdlg;control;2
-#: cschemacolumnsdlg;control;4 csecureruledlg;control;34
-#: csharemanagerdlg;control;7 curlcopydlg;control;7 curlexportdlg;control;11
-#: curlactiondlg;control;12 cbitzidownloaddlg;control;4
-#: cfilepreviewdlg;control;6 cexistingfiledlg;control;10
-#: cclosemodedlg;control;7 cdonkeyserversdlg;control;6
-#: cdeletefiledlg;control;5 ctorrentseeddlg;control;5
-#: cdownloadgroupdlg;control;2 cmediavisdlg;control;7
-#: cdecodemetadatadlg;control;9 circinputdlg;control;3
+#: string;20238 csettingsheet;control;3 cscheduletaskdlg;control;2
+#: cqueuepropertiesdlg;control;38 cprofilemanagerdlg;control;3
+#: cconnecttodlg;control;8 cdownloaddlg;control;6 cnewsearchdlg;control;4
+#: cfiltersearchdlg;control;30 csavefilterasdlg;control;3
+#: cdiscoveryservicedlg;control;6 cfilecopydlg;control;5
+#: cfolderpropertiesdlg;control;8 cgraphlistdlg;control;17
+#: cgraphitemdlg;control;2 cschemacolumnsdlg;control;4
+#: csecureruledlg;control;34 csharemanagerdlg;control;7 curlcopydlg;control;7
+#: curlexportdlg;control;11 curlactiondlg;control;12
+#: cbitzidownloaddlg;control;4 cfilepreviewdlg;control;6
+#: cexistingfiledlg;control;10 cclosemodedlg;control;7
+#: cdonkeyserversdlg;control;6 cdeletefiledlg;control;5
+#: ctorrentseeddlg;control;5 cdownloadgroupdlg;control;2
+#: cmediavisdlg;control;7 cdecodemetadatadlg;control;9 circinputdlg;control;3
 msgid "Cancel"
 msgstr "Отмена"
 
@@ -7393,8 +7513,7 @@ msgid "Normal|Minimise to Tray"
 msgstr "Обычное действие|Отправить в трей"
 
 #: clibrarysettingspage;control;1 cmediasettingspage;control;1
-#: cuploadssettingspage;control;1 cschedulersettingspage;control;1
-#: csecureruledlg;control;22
+#: cuploadssettingspage;control;1 csecureruledlg;control;22
 msgid "_Options:"
 msgstr "_Опции:"
 
@@ -7824,73 +7943,69 @@ msgstr "Введите имя:"
 msgid "Choose a Password:"
 msgstr "Введите пароль:"
 
-#: dialog;cschedulersettingspage
-msgid "Scheduler"
-msgstr "Планировщик"
+#: dialog;cscheduletaskdlg
+msgid "Schedule Item"
+msgstr "Запланировать"
 
-#: cschedulersettingspage;control;2
-msgid " _Enable scheduler"
-msgstr "_Включить планировщик"
+#: cscheduletaskdlg;control;3
+msgid "Only once"
+msgstr "Один раз"
 
-#: cschedulersettingspage;control;5
-msgid "_Connect to only G2 when limited"
-msgstr "_При лимите разрешить только G2"
+#: cscheduletaskdlg;control;4
+msgid "On specific day(s) of week"
+msgstr "По заданным дням недели"
 
-#: cschedulersettingspage;control;6
-msgid "Key:"
-msgstr "Ключ:"
+#: cscheduletaskdlg;control;12
+msgid " Friday"
+msgstr "Пятница"
 
-#: cschedulersettingspage;control;7
-msgid "Sun"
-msgstr "Вс"
+#: cscheduletaskdlg;control;22
+msgid " _Toggle bandwidth independently"
+msgstr "_Управлять скростью независимо"
 
-#: cschedulersettingspage;control;8
-msgid "Mon"
-msgstr "Пн"
+#: cscheduletaskdlg;control;23
+msgid " _Limit network to Gnutella2"
+msgstr "_Использовать только Gnutella2"
 
-#: cschedulersettingspage;control;9
-msgid "Tue"
-msgstr "Вт"
+#: cscheduletaskdlg;control;25
+msgid "Make this event active"
+msgstr "Включить эту задачу"
 
-#: cschedulersettingspage;control;10
-msgid "Wed"
-msgstr "Ср"
+#: cscheduletaskdlg;control;26
+msgid "Please select a date:"
+msgstr "Выберите дату:"
 
-#: cschedulersettingspage;control;11
-msgid "Thu"
-msgstr "Чт"
+#: cscheduletaskdlg;control;27
+msgid "Please select a time:"
+msgstr "Выберите время:"
 
-#: cschedulersettingspage;control;12
-msgid "Fri"
-msgstr "Пт"
+#: cscheduletaskdlg;control;28
+msgid "Select the event type:"
+msgstr "Выберите тип:"
 
-#: cschedulersettingspage;control;13
-msgid "Sat"
-msgstr "Сб"
+#: cscheduletaskdlg;control;29
+msgid "Description: (optional)"
+msgstr "Описание: (необязательно)"
 
-#: cschedulersettingspage;control;14
-msgid "Do not connect"
-msgstr "Не соединяться"
+#: cscheduletaskdlg;control;30
+msgid "% of _bandwidth under limit"
+msgstr "% _общей скорости при лимите"
 
-#: cschedulersettingspage;control;15
-msgid "Limited connection"
-msgstr "Лимитированное соединение"
+#: cscheduletaskdlg;control;31
+msgid "% of _download under limit"
+msgstr "% скорости _загрузки при лимите"
 
-#: cschedulersettingspage;control;16
-msgid "Connect at full speed"
-msgstr "Соедин. с полной скоростью"
+#: cscheduletaskdlg;control;32
+msgid "% of _upload under limit"
+msgstr "% скорости _раздачи при лимите"
 
-#: cschedulersettingspage;control;17
-msgid "% of _bandwidth when limited"
-msgstr "% скорости при лимите"
+#: cscheduletaskdlg;control;33
+msgid "Days Of Week"
+msgstr "Дни недели"
 
-#: cschedulersettingspage;control;19
-msgid "Help"
-msgstr "Справка"
-
-#: cschedulersettingspage;control;20
-msgid "The scheduler is designed to allow you to set times when Shareaza will connect and download files. {n}{n}{n}Note: If you have Shareaza open while the scheduler is active, you may see it changing settings- This is normal!"
-msgstr "Планировщик создан для того, чтобы позволить Вам установить, когда Shareaza должна соединиться и начать загрузку файлов.{n}Замечание: Если Вы открыли Shareaza во время работы планировщика, Вы можете заметить, что установки меняются - это нормально!"
+#: cscheduletaskdlg;control;34
+msgid "Run this event"
+msgstr "Выполнить задачу"
 
 #: dialog;cnetworkssettingspage
 msgid "Networks"
@@ -9849,6 +9964,48 @@ msgstr "Пользователь"
 msgid "Comments"
 msgstr "Комментарии"
 
+#~ msgid "Scheduler:"
+#~ msgstr "Расписание:"
+#~ msgid "Limit download connections based on a periodic schedule."
+#~ msgstr "Составте расписание для ограничения загрузок по времени."
+#~ msgid " _Enable scheduler"
+#~ msgstr "_Включить планировщик"
+#~ msgid "_Connect to only G2 when limited"
+#~ msgstr "_При лимите разрешить только G2"
+#~ msgid "Key:"
+#~ msgstr "Ключ:"
+#~ msgid "Sun"
+#~ msgstr "Вс"
+#~ msgid "Mon"
+#~ msgstr "Пн"
+#~ msgid "Tue"
+#~ msgstr "Вт"
+#~ msgid "Wed"
+#~ msgstr "Ср"
+#~ msgid "Thu"
+#~ msgstr "Чт"
+#~ msgid "Fri"
+#~ msgstr "Пт"
+#~ msgid "Sat"
+#~ msgstr "Сб"
+#~ msgid "Do not connect"
+#~ msgstr "Не соединяться"
+#~ msgid "Limited connection"
+#~ msgstr "Лимитированное соединение"
+#~ msgid "Connect at full speed"
+#~ msgstr "Соедин. с полной скоростью"
+#~ msgid "Help"
+#~ msgstr "Справка"
+#~ msgid ""
+#~ "The scheduler is designed to allow you to set times when Shareaza will "
+#~ "connect and download files. {n}{n}{n}Note: If you have Shareaza open "
+#~ "while the scheduler is active, you may see it changing settings- This is "
+#~ "normal!"
+#~ msgstr ""
+#~ "Планировщик создан для того, чтобы позволить Вам установить, когда "
+#~ "Shareaza должна соединиться и начать загрузку файлов.{n}Замечание: Если "
+#~ "Вы открыли Shareaza во время работы планировщика, Вы можете заметить, что "
+#~ "установки меняются - это нормально!"
 #~ msgid ""
 #~ "Would you like to download this file?\\n\\n\"%s\"\\n\\nChoose Cancel to "
 #~ "stop any further prompts."
