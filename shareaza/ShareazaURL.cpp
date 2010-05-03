@@ -1216,7 +1216,7 @@ void CShareazaURL::Register(BOOL bOnStartup)
 		UnregisterShellType( _T("Classes"), _T("mp2p") );
 	}
 
-	if ( ( ! bOnStartup ) || ( ! Settings.Live.FirstRun ) )
+	if ( ! bOnStartup && ! Settings.Live.FirstRun )
 	{
 		if ( Settings.Web.Torrent )
 		{
