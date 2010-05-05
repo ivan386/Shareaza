@@ -259,7 +259,7 @@ void CSettings::Load()
 	Add( _T("Web"), _T("Magnet"), &Web.Magnet, true );
 	Add( _T("Web"), _T("Foxy"), &Web.Foxy, true );
 	Add( _T("Web"), _T("Piolet"), &Web.Piolet, true );
-	Add( _T("Web"), _T("Torrent"), &Web.Torrent, ( CRegistry::GetString( _T("Software\\Classes\\.torrent"), NULL, NULL, NULL ).GetLength() < 4 ) );
+	Add( _T("Web"), _T("Torrent"), &Web.Torrent, true );
 
 	Add( _T("Connection"), _T("AutoConnect"), &Connection.AutoConnect, true );
 	Add( _T("Connection"), _T("ConnectThrottle"), &Connection.ConnectThrottle, 250, 1, 0, 5000, _T(" ms") );
