@@ -86,7 +86,6 @@ BOOL CMapiSession::Logon(void)
 
 	// First try to acquire a new MAPI session using the supplied settings using the MAPILogon() function
 	m_ulLastError = m_pfnMAPILogon(0, NULL, NULL, 0, 0, &m_hSession);
-	_ASSERTE(m_ulLastError == SUCCESS_SUCCESS);
 	return (m_ulLastError == SUCCESS_SUCCESS);
 }
 
@@ -130,7 +129,6 @@ BOOL CMapiSession::Logon(PCTSTR pszProfileName, PCTSTR pszPassword, BOOL bNewSes
 
 	// First try to acquire a new MAPI session using the supplied settings using the MAPILogon() function
 	m_ulLastError = m_pfnMAPILogon(0, (PSTR)pszProfileName2, (PSTR)pszPassword2, flags, 0, &m_hSession);
-	_ASSERTE(m_ulLastError == SUCCESS_SUCCESS);
 	return (m_ulLastError == SUCCESS_SUCCESS);
 }
 
@@ -154,7 +152,6 @@ BOOL CMapiSession::Logon(HWND hwndParent, BOOL bNewSession)
 
 	// First try to acquire a new MAPI session using the supplied settings using the MAPILogon() function
 	m_ulLastError = m_pfnMAPILogon((ULONG)hwndParent, NULL, NULL, flags, 0, &m_hSession);
-	_ASSERTE(m_ulLastError == SUCCESS_SUCCESS);
 	return (m_ulLastError == SUCCESS_SUCCESS);
 }
 
@@ -170,7 +167,6 @@ BOOL CMapiSession::Logoff(void)
 	{
 		// Call the MAPILogoff() function
 		m_ulLastError = m_pfnMAPILogoff(m_hSession, 0, 0, 0);
-		_ASSERTE(m_ulLastError == SUCCESS_SUCCESS);
 		m_hSession = NULL;
 	}
 
@@ -196,7 +192,6 @@ BOOL CMapiSession::Resolve(const CStrHolder& strName, lpMapiRecipDesc& lpRecip)
 #endif
 
 	m_ulLastError = m_pfnMAPIResolveName(m_hSession, 0, (PSTR)pszName, 0, 0, &lpRecip);
-	_ASSERTE(m_ulLastError == SUCCESS_SUCCESS);
 	return (m_ulLastError == SUCCESS_SUCCESS);
 }
 
@@ -211,7 +206,6 @@ BOOL CMapiSession::FreeBuffer(PVOID pBuffer)
 	if (pBuffer == NULL)
 		return TRUE;
 	m_ulLastError = m_pfnMAPIFreeBuffer(pBuffer);
-	_ASSERTE(m_ulLastError == SUCCESS_SUCCESS);
 	return (m_ulLastError == SUCCESS_SUCCESS);
 }
 
@@ -499,7 +493,6 @@ BOOL CMapiSession::Send(const CMapiMessage& rMessage, BOOL bShowMessageEditor, H
 
 	// Do the actual send using MAPISendMail()
 	m_ulLastError = m_pfnMAPISendMail(m_hSession, (ULONG)hwndParent, &mapiMessage, flags, 0);
-	_ASSERTE(m_ulLastError == SUCCESS_SUCCESS);
 
 	// Tidy up the attachments
 	if (nNumAttachments)
