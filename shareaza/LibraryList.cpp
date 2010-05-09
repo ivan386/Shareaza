@@ -126,7 +126,7 @@ bool CLibraryListItem::operator == (const CLibraryListItem& val) const
 			// Same object or...
 			return ( pAlbumFolder == val.pAlbumFolder ) ||
 				// Same parent album and same album name
-				( ( pAlbumFolder->m_pParent == val.pAlbumFolder->m_pParent ) &&
+				( ( pAlbumFolder->GetParent() == val.pAlbumFolder->GetParent() ) &&
 				( pAlbumFolder->m_sName == val.pAlbumFolder->m_sName ) );
 		
 		case CLibraryListItem::LibraryFolder:

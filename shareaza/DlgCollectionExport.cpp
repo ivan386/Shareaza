@@ -366,7 +366,7 @@ void CCollectionExportDlg::OnOK()
 
 	CSingleLock pLock( &Library.m_pSection, TRUE );
 
-	if ( m_pFolder && ! m_pFolder->m_pFiles.IsEmpty() )
+	if ( m_pFolder && m_pFolder->GetFileCount() )
 	{
 		CXMLElement* pXML = CreateXML( TRUE );
 		CString strXML = pXML->ToString( TRUE, TRUE );

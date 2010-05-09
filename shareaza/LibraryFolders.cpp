@@ -618,7 +618,7 @@ void CLibraryFolders::Clear()
 	m_pFolders.RemoveAll();
 
 	delete m_pAlbumRoot;
-	m_pAlbumRoot = new CAlbumFolder( NULL, CSchema::uriLibrary );
+	m_pAlbumRoot = NULL;
 }
 
 void CLibraryFolders::ClearGhosts()

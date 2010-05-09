@@ -90,8 +90,22 @@ void CAlbumFolder::RenewGUID()
 //////////////////////////////////////////////////////////////////////
 // CAlbumFolder folder list
 
+void CAlbumFolder::AddFolder(CAlbumFolder* pFolder)
+{
+	ASSUME_LOCK( Library.m_pSection );
+
+	// Change album GUID to avoid duplicates
+	pFolder->RenewGUID();
+
+	m_pFolders.AddTail( pFolder );
+
+	m_nUpdateCookie++;
+}
+
 CAlbumFolder* CAlbumFolder::AddFolder(LPCTSTR pszSchemaURI, LPCTSTR pszName, BOOL bAutoDelete)
 {
+	ASSUME_LOCK( Library.m_pSection );
+
 	if ( pszSchemaURI == NULL && m_pSchema != NULL )
 	{
 		pszSchemaURI = m_pSchema->GetContainedURI( CSchema::stFolder );
@@ -103,17 +117,37 @@ CAlbumFolder* CAlbumFolder::AddFolder(LPCTSTR pszSchemaURI, LPCTSTR pszName, BOO
 
 	m_pFolders.AddTail( pFolder );
 
+	m_nUpdateCookie++;
+
 	return pFolder;
+}
+
+DWORD CAlbumFolder::GetFolderCount() const
+{
+	ASSUME_LOCK( Library.m_pSection );
+
+	return (DWORD)m_pFolders.GetCount();
 }
 
 POSITION CAlbumFolder::GetFolderIterator() const
 {
+	ASSUME_LOCK( Library.m_pSection );
+
 	return m_pFolders.GetHeadPosition();
 }
 
 CAlbumFolder* CAlbumFolder::GetNextFolder(POSITION& pos) const
 {
+	ASSUME_LOCK( Library.m_pSection );
+
 	return m_pFolders.GetNext( pos );
+}
+
+CAlbumFolder* CAlbumFolder::GetParent() const
+{
+	ASSUME_LOCK( Library.m_pSection );
+
+	return m_pParent;
 }
 
 CAlbumFolder* CAlbumFolder::GetFolder(LPCTSTR pszName) const
@@ -283,6 +317,13 @@ CLibraryFile* CAlbumFolder::GetNextFile(POSITION& pos) const
 	ASSUME_LOCK( Library.m_pSection );
 
 	return m_pFiles.GetNext( pos );
+}
+
+DWORD CAlbumFolder::GetFileCount() const
+{
+	ASSUME_LOCK( Library.m_pSection );
+
+	return (DWORD)m_pFiles.GetCount();
 }
 
 int CAlbumFolder::GetSharedCount() const
@@ -1191,7 +1232,9 @@ void CAlbumFolder::Serialize(CArchive& ar, int nVersion)
 
 			if ( CLibraryFile* pFile = Library.LookupFile( nIndex ) )
 			{
-				m_pFiles.AddTail( pFile );
+				POSITION pos = m_pFiles.Find( pFile );
+				if ( pos == NULL )
+					m_pFiles.AddTail( pFile );
 				if ( pCollection != NULL )
 					pFile->m_nCollIndex = pCollection->m_nIndex;
 			}
@@ -1209,6 +1252,8 @@ bool CAlbumFolder::operator==(const CAlbumFolder& val) const
 
 void CAlbumFolder::Clear()
 {
+	ASSUME_LOCK( Library.m_pSection );
+
 	for ( POSITION pos = GetFolderIterator() ; pos ; )
 	{
 		delete GetNextFolder( pos );

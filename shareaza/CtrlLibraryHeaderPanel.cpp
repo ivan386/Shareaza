@@ -84,7 +84,7 @@ int CLibraryHeaderPanel::Update()
 	m_sTitle	= pFolder->m_pSchema->m_sHeaderTitle;
 	m_sSubtitle	= pFolder->m_pSchema->m_sHeaderSubtitle;
 
-	if ( pFolder->m_pParent == NULL )
+	if ( pFolder->GetParent() == NULL )
 	{
 		QWORD nTotalVolume;
 		DWORD nTotalFiles;
@@ -125,7 +125,7 @@ int CLibraryHeaderPanel::Update()
 
 	int nHeight = static_cast< int >( m_pMetadata.GetCount() * 12 + 8 );
 
-	if ( pFolder->m_pParent != NULL )
+	if ( pFolder->GetParent() )
 	{
 		nHeight = max( 64, nHeight );
 	}

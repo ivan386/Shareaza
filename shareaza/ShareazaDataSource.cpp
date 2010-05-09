@@ -760,20 +760,15 @@ BOOL CShareazaDataSource::DropToAlbum(IDataObject* pIDataObject, DWORD grfKeySta
 									// Delete old album (by GUID)
 									if ( CAlbumFolder* pRealFodler = pRoot->FindFolder( pFolder->m_oGUID ) )
 									{
-										if ( pRealFodler->m_pParent )
-											pRealFodler->m_pParent->OnFolderDelete( pRealFodler );
+										if ( pRealFodler->GetParent() )
+											pRealFodler->GetParent()->OnFolderDelete( pRealFodler );
 										else
 											pRoot->OnFolderDelete( pRealFodler );
 									}
 								}
 
-								// Change album GUID to avoid duplicates
-								pFolder->RenewGUID();
-
 								// Add new album
-								pAlbumFolder->m_pFolders.AddTail( pFolder );
-
-								pAlbumFolder->m_nUpdateCookie++;
+								pAlbumFolder->AddFolder( pFolder );
 
 								// Keep album
 								pFolder = NULL;								

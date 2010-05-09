@@ -1487,9 +1487,9 @@ BOOL CLibraryTreeView::Update(CAlbumFolder* pFolder, CLibraryTreeItem* pItem, CL
 
 	if ( nSelectCookie && pItem->m_bSelected )
 	{
-		for ( POSITION pos = pFolder->m_pFiles.GetHeadPosition() ; pos ; )
+		for ( POSITION pos = pFolder->GetFileIterator() ; pos ; )
 		{
-			CLibraryFile* pFile = (CLibraryFile*)pFolder->m_pFiles.GetNext( pos );
+			CLibraryFile* pFile = pFolder->GetNextFile( pos );
 			pFile->m_nSelectCookie = nSelectCookie;
 		}
 
@@ -1803,7 +1803,8 @@ void CLibraryTreeView::OnLibraryAdd()
 void CLibraryTreeView::OnUpdateLibraryFolderEnqueue(CCmdUI* pCmdUI)
 {
 	CSingleLock oLock( &Library.m_pSection );
-	if ( !oLock.Lock( 50 ) ) return;
+	if ( ! oLock.Lock( 250 ) )
+		return;
 
 	for ( CLibraryTreeItem* pItem = m_pSelFirst ; pItem ; pItem = pItem->m_pSelNext )
 	{
@@ -2011,6 +2012,10 @@ void CLibraryTreeView::OnLibraryFolderFileProperties()
 
 void CLibraryTreeView::OnUpdateLibraryExportCollection(CCmdUI *pCmdUI)
 {
+	CSingleLock oLock( &Library.m_pSection );
+	if ( ! oLock.Lock( 250 ) )
+		return;
+
 	BOOL bAllowExport = TRUE;
 
 	// Allow max 200 files to be parse and do not export from Ghost or Collection folder

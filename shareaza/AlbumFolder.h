@@ -30,7 +30,7 @@ class CSchemaMember;
 class CXMLElement;
 
 
-class CAlbumFolder : private boost::noncopyable
+class CAlbumFolder
 {
 // Construction
 public:
@@ -39,9 +39,6 @@ public:
 
 // Attributes
 public:
-	CAlbumFolder*			m_pParent;
-	CList< CAlbumFolder* >	m_pFolders;
-	CList< CLibraryFile* >	m_pFiles;
 	CString					m_sSchemaURI;
 	CSchemaPtr				m_pSchema;
 	CXMLElement*			m_pXML;
@@ -56,16 +53,24 @@ public:
 	Hashes::Guid			m_oGUID;
 
 private:
+	CAlbumFolder*			m_pParent;
+	CList< CAlbumFolder* >	m_pFolders;
+	CList< CLibraryFile* >	m_pFiles;
 	CCollectionFile*		m_pCollection;
+
+	CAlbumFolder(const CAlbumFolder&);
+	CAlbumFolder& operator=(const CAlbumFolder&);
 
 // Operations
 public:
+	void			AddFolder(CAlbumFolder* pFolder);
 	CAlbumFolder*	AddFolder(LPCTSTR pszSchemaURI = NULL, LPCTSTR pszName = NULL, BOOL bAutoDelete = FALSE);
 	POSITION		GetFolderIterator() const;
 	CAlbumFolder*	GetNextFolder(POSITION& pos) const;
+	CAlbumFolder*	GetParent() const;
 	CAlbumFolder*	GetFolder(LPCTSTR pszName) const;
 	CAlbumFolder*	GetFolderByURI(LPCTSTR pszURI) const;
-	DWORD			GetFolderCount() const { return (DWORD)m_pFolders.GetCount(); }
+	DWORD			GetFolderCount() const;
 	BOOL			CheckFolder(CAlbumFolder* pFolder, BOOL bRecursive = FALSE) const;
 	CAlbumFolder*	GetTarget(CSchemaMember* pMember, LPCTSTR pszValue) const;
 	CAlbumFolder*	FindCollection(const Hashes::Sha1Hash& oSHA1);
@@ -74,7 +79,7 @@ public:
 	void			AddFile(CLibraryFile* pFile);
 	POSITION		GetFileIterator() const;
 	CLibraryFile*	GetNextFile(POSITION& pos) const;
-	DWORD			GetFileCount() const { return (DWORD)m_pFiles.GetCount(); }
+	DWORD			GetFileCount() const;
 	int				GetSharedCount() const;
 	void			RemoveFile(CLibraryFile* pFile);
 	CAlbumFolder*	FindFile(CLibraryFile* pFile);
