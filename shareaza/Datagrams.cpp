@@ -1023,7 +1023,7 @@ BOOL CDatagrams::OnPacket(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 	m_nInPackets++;
 
 	// Is it neigbour's packet or stranger's packet?
-	CNeighbour* pNeighbour = Neighbours.Get( &( pHost->sin_addr ) );
+	CNeighbour* pNeighbour = Neighbours.Get( pHost->sin_addr );
 //	CG1Neighbour* pNeighbour1 = static_cast< CG1Neighbour* >
 //		( ( pNeighbour && pNeighbour->m_nProtocol == PROTOCOL_G1 ) ? pNeighbour : NULL );
 	CG2Neighbour* pNeighbour2 = static_cast< CG2Neighbour* >
@@ -1540,7 +1540,8 @@ BOOL CDatagrams::OnQueryKeyAnswer(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 		return FALSE;
 	}
 
-	DWORD nKey = 0, nAddress = 0;
+	DWORD nKey = 0;
+	IN_ADDR nAddress = {};
 
 	G2_PACKET nType;
 	DWORD nLength;
@@ -1555,7 +1556,7 @@ BOOL CDatagrams::OnQueryKeyAnswer(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 		}
 		else if ( nType == G2_PACKET_SEND_ADDRESS && nLength >= 4 )
 		{
-			nAddress = pPacket->ReadLongLE();
+			nAddress.s_addr = pPacket->ReadLongLE();
 		}
 
 		pPacket->m_nPosition = nOffset;
@@ -1572,9 +1573,9 @@ BOOL CDatagrams::OnQueryKeyAnswer(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 		if ( pCache != NULL ) pCache->SetKey( nKey );
 	}
 
-	if ( nAddress != 0 && ! Network.IsSelfIP( *(IN_ADDR*)&nAddress ) )
+	if ( nAddress.s_addr != 0 && ! Network.IsSelfIP( nAddress ) )
 	{
-		if ( CNeighbour* pNeighbour = Neighbours.Get( (IN_ADDR*)&nAddress ) )
+		if ( CNeighbour* pNeighbour = Neighbours.Get( nAddress ) )
 		{
 			BYTE* pOut = pPacket->WriteGetPointer( 11, 0 );
 
@@ -2028,7 +2029,7 @@ BOOL CDatagrams::OnKHLR(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 			CHostCacheHost* pCachedHost = (*i);
 
 			if ( pCachedHost->CanQuote( tNow ) &&
-				Neighbours.Get( &pCachedHost->m_pAddress ) == NULL &&
+				Neighbours.Get( pCachedHost->m_pAddress ) == NULL &&
 				! Network.IsSelfIP( pCachedHost->m_pAddress ) )
 			{
 

@@ -800,7 +800,7 @@ CG2Packet* CG2Neighbour::CreateKHLPacket(CG2Neighbour* pOwner)
 		CHostCacheHost* pHost = (*i);
 
 		if (	pHost->CanQuote( tNow ) &&
-				Neighbours.Get( &pHost->m_pAddress ) == NULL &&
+				Neighbours.Get( pHost->m_pAddress ) == NULL &&
 				! Network.IsSelfIP( pHost->m_pAddress ) )
 		{
 			int nLength = 10;
@@ -853,8 +853,7 @@ BOOL CG2Neighbour::OnKHL(CG2Packet* pPacket)
 BOOL CG2Neighbour::ParseKHLPacket(CG2Packet* pPacket, SOCKADDR_IN* pHost)
 {
 	BOOL bInvalid = FALSE;
-	CG2Neighbour* pOwner = static_cast< CG2Neighbour* >(
-		Neighbours.Get( &pHost->sin_addr ) );
+	CG2Neighbour* pOwner = static_cast< CG2Neighbour* >( Neighbours.Get( pHost->sin_addr ) );
 
 	if ( pPacket->m_bCompound )
 	{

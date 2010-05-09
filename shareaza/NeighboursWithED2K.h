@@ -53,7 +53,7 @@ public:
 	void SendDonkeyDownload(CDownload* pDownload); // Tell all the connected eDonkey2000 computers about pDownload
 
 	// Send eDonkey2000 packets
-	BOOL PushDonkey(DWORD nClientID, IN_ADDR* pServerAddress, WORD nServerPort); // Send a callback request packet
+	BOOL PushDonkey(DWORD nClientID, const IN_ADDR& pServerAddress, WORD nServerPort); // Send a callback request packet
     BOOL FindDonkeySources(const Hashes::Ed2kHash& oED2K, IN_ADDR* pServerAddress, WORD nServerPort);
 
 // Classes that inherit from this one can get to protected members, but unrelated classes can't

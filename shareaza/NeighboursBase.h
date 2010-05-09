@@ -45,7 +45,7 @@ public:
 	POSITION    GetIterator()          const;	// Call GetIterator to get the POSITION value
 	CNeighbour* GetNext(POSITION& pos) const;	// Give the POSITION to GetNext to get the neighbour beneath it and move to the next one
 	CNeighbour* Get(DWORD_PTR nUnique) const;	// Lookup a neighbour by its unique number, like 2, 3, 4, and so on
-	CNeighbour* Get(const IN_ADDR* pAddress) const;	// Lookup a neighbour by the remote computer's IP address
+	CNeighbour* Get(const IN_ADDR& pAddress) const;	// Lookup a neighbour by the remote computer's IP address
 	CNeighbour* GetNewest(PROTOCOLID nProtocol, int nState, int nNodeType) const;	// Finds the newest neighbour object
 
 	// Count how many computers we are connected to, specifying various filtering characteristics

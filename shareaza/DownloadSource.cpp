@@ -833,7 +833,7 @@ BOOL CDownloadSource::PushRequest()
 			return TRUE;
 		}
 		
-		if ( Neighbours.PushDonkey( m_pAddress.S_un.S_addr, &m_pServerAddress, m_nServerPort ) )
+		if ( Neighbours.PushDonkey( m_pAddress.S_un.S_addr, m_pServerAddress, m_nServerPort ) )
 		{
 			theApp.Message( MSG_INFO, IDS_DOWNLOAD_PUSH_SENT, (LPCTSTR)m_pDownload->m_sName );
 			m_tAttempt = GetTickCount() + Settings.Downloads.PushTimeout;

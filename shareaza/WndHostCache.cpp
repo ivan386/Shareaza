@@ -397,7 +397,7 @@ void CHostCacheWnd::OnUpdateHostCacheDisconnect(CCmdUI* pCmdUI)
 			int nItem = m_wndList.GetNextSelectedItem( pos );
 			if ( CHostCacheHost* pHost = GetItem( nItem ) )
 			{
-				CNeighbour* pNeighbour = Neighbours.Get( &pHost->m_pAddress );
+				CNeighbour* pNeighbour = Neighbours.Get( pHost->m_pAddress );
 				if ( pNeighbour )
 				{
 					pCmdUI->Enable( TRUE );
@@ -429,7 +429,7 @@ void CHostCacheWnd::OnHostCacheDisconnect()
 			int nItem = m_wndList.GetNextSelectedItem( pos );
 			if ( CHostCacheHost* pHost = GetItem( nItem ) )
 			{
-				CNeighbour* pNeighbour = Neighbours.Get( &pHost->m_pAddress );
+				CNeighbour* pNeighbour = Neighbours.Get( pHost->m_pAddress );
 				if ( pNeighbour )
 					pNeighbour->Close();
 			}

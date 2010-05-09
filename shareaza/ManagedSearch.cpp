@@ -401,7 +401,7 @@ BOOL CManagedSearch::ExecuteG2Mesh(const DWORD /*tTicks*/, const DWORD tSecs)
 		ASSERT( pHost->m_nProtocol == PROTOCOL_G2 );
 
 		// If this host is a neighbour, don't UDP to it
-		if ( Neighbours.Get( &pHost->m_pAddress ) )
+		if ( Neighbours.Get( pHost->m_pAddress ) )
 			continue;
 
 		// If this host can't be queried now, don't query it
@@ -431,7 +431,7 @@ BOOL CManagedSearch::ExecuteG2Mesh(const DWORD /*tTicks*/, const DWORD tSecs)
 			// Make sure we have a query key via one of our neighbours,
 			// and ensure we have queried this neighbour
 
-			if ( CNeighbour* pNeighbour = Neighbours.Get( (IN_ADDR*)&pHost->m_nKeyHost ) )
+			if ( CNeighbour* pNeighbour = Neighbours.Get( *(IN_ADDR*)&pHost->m_nKeyHost ) )
 			{
 				DWORD nTemp;
 				if ( m_pNodes.Lookup( pHost->m_nKeyHost, nTemp ) )
@@ -619,7 +619,7 @@ BOOL CManagedSearch::ExecuteDonkeyMesh(const DWORD /*tTicks*/, const DWORD tSecs
 		ASSERT( pHost->m_nProtocol == PROTOCOL_ED2K );
 
 		// If this host is a neighbour, don't UDP to it
-		if ( Neighbours.Get( &pHost->m_pAddress ) )
+		if ( Neighbours.Get( pHost->m_pAddress ) )
 			continue;
 
 		// Make sure this host can be queried (now)

@@ -205,7 +205,7 @@ CPrivateChatFrame* CChatWindows::OpenPrivate(const Hashes::Guid& oGUID, SOCKADDR
 			// can't (shouldn't) contact them. (It places a heavy load on the ed2k servers)
 			CSingleLock pLock1( &Network.m_pSection );
 			if ( ! pLock1.Lock( 250 ) ) return NULL;
-			if ( Neighbours.Get( &pServer->sin_addr ) == NULL ) return NULL;
+			if ( Neighbours.Get( pServer->sin_addr ) == NULL ) return NULL;
 			pLock1.Unlock();
 		}
 

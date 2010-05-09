@@ -207,7 +207,7 @@ BOOL CNetwork::IsConnectedTo(const IN_ADDR* pAddress) const
 {
 	return IsSelfIP( *pAddress ) ||
 		Handshakes.IsConnectedTo( pAddress ) ||
-		Neighbours.Get( pAddress ) ||
+		Neighbours.Get( *pAddress ) ||
 		Transfers.IsConnectedTo( pAddress );
 }
 
@@ -715,7 +715,7 @@ void CNetwork::OnWinsock(WPARAM wParam, LPARAM lParam)
 		}
 		else if ( pResolve->m_nCommand == 1 || pResolve->m_nCommand == 2 )
 		{
-			Neighbours.ConnectTo( (IN_ADDR*)pResolve->m_pHost.h_addr, pResolve->m_nPort, pResolve->m_nProtocol, FALSE, pResolve->m_nCommand );
+			Neighbours.ConnectTo( *(IN_ADDR*)pResolve->m_pHost.h_addr, pResolve->m_nPort, pResolve->m_nProtocol, FALSE, pResolve->m_nCommand );
 		}
 		else if ( pResolve->m_nCommand == 3 )
 		{

@@ -138,7 +138,7 @@ void CNeighboursWithED2K::SendDonkeyDownload(CDownload* pDownload)
 // Takes a client ID (do), the IP address of an eDonkey2000 computer we're connected to, nServerPort unused (do)
 // Finds the computer we're connected to with that IP address, and sends it a call back request with the client ID
 // Returns true if we sent the packet, false if we couldn't find the computer
-BOOL CNeighboursWithED2K::PushDonkey(DWORD nClientID, IN_ADDR* pServerAddress, WORD) // Was named nServerPort (do)
+BOOL CNeighboursWithED2K::PushDonkey(DWORD nClientID, const IN_ADDR& pServerAddress, WORD) // Was named nServerPort (do)
 {
 	CSingleLock oNetworkLock( &Network.m_pSection );
 	if ( !oNetworkLock.Lock( 250 ) )
@@ -149,7 +149,7 @@ BOOL CNeighboursWithED2K::PushDonkey(DWORD nClientID, IN_ADDR* pServerAddress, W
 		return FALSE;
 
 	// Get the neighbour with the given IP address, and look at it as an eDonkey2000 computer
-	CEDNeighbour* pNeighbour = (CEDNeighbour*)Get( pServerAddress );
+	CEDNeighbour* pNeighbour = static_cast< CEDNeighbour* >( Get( pServerAddress ) );
 
 	// If we found it, and it really is running eDonkey2000
 	if ( ( pNeighbour != NULL ) && ( pNeighbour->m_nProtocol == PROTOCOL_ED2K ) && ( ! CEDPacket::IsLowID( pNeighbour->m_nClientID ) ) )

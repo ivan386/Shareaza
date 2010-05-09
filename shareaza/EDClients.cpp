@@ -669,7 +669,7 @@ void CEDClients::RunGlobalStatsRequests(DWORD tNow)
 				if ( ! pLock.Lock( 100 ) ) continue;
 
 				// Don't ask current neighbours for stats
-				if ( ! Neighbours.Get( &pHost->m_pAddress ) )
+				if ( ! Neighbours.Get( pHost->m_pAddress ) )
 				{
 					// Send a request for stats to this server
 					if ( pHost->m_sName.GetLength() )

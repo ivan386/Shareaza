@@ -1196,7 +1196,7 @@ CNeighbour* CHostCacheHost::ConnectTo(BOOL bAutomatic)
 	case PROTOCOL_G1:
 	case PROTOCOL_G2:
 	case PROTOCOL_ED2K:
-		return Neighbours.ConnectTo( &m_pAddress, m_nPort, m_nProtocol, bAutomatic );
+		return Neighbours.ConnectTo( m_pAddress, m_nPort, m_nProtocol, bAutomatic );
 	case PROTOCOL_KAD:
 		{
 			SOCKADDR_IN pHost = { 0 };

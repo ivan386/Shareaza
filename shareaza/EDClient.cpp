@@ -200,7 +200,7 @@ BOOL CEDClient::Connect()
 
 	if ( CEDPacket::IsLowID( m_nClientID ) )
 	{
-		if ( !Neighbours.PushDonkey( m_nClientID, &m_pServer.sin_addr, htons( m_pServer.sin_port ) ) )
+		if ( !Neighbours.PushDonkey( m_nClientID, m_pServer.sin_addr, htons( m_pServer.sin_port ) ) )
 			return FALSE;
 
 		m_tConnected = GetTickCount();
