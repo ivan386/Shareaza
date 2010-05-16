@@ -1,7 +1,7 @@
 //
 // CtrlLibraryMetaPanel.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -493,6 +493,8 @@ void CLibraryMetaPanel::OnLButtonUp(UINT nFlags, CPoint point)
 	}
 	else if ( CMetaItem* pItem = m_pMetadata->HitTest( point, TRUE ) )
 	{
+		CQuickLock oLock( Library.m_pSection );
+
 		if ( CAlbumFolder* pFolder = pItem->GetLinkTarget() )
 		{
 			CLibraryFrame* pFrame = (CLibraryFrame*)GetOwner();

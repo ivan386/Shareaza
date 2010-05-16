@@ -1,7 +1,7 @@
 //
 // MetaPanel.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -253,6 +253,8 @@ BOOL CMetaPanel::OnClick(const CPoint& point)
 {
 	if ( CMetaItem* pItem = HitTest( point, TRUE ) )
 	{
+		CQuickLock oLock( Library.m_pSection );
+
 		if ( CAlbumFolder* pFolder = pItem->GetLinkTarget() )
 		{
 			CMainWnd* pMainWnd = (CMainWnd*)AfxGetMainWnd();

@@ -1,7 +1,7 @@
 //
 // MetaList.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -454,7 +454,9 @@ BOOL CMetaItem::CreateLink()
 	
 	if ( m_pMember->m_sLinkURI.IsEmpty() ) return FALSE;
 	if ( m_pMember->m_sLinkName.IsEmpty() ) return FALSE;
-	
+
+	CQuickLock oLock( Library.m_pSection );
+
 	m_bLink = LibraryFolders.GetAlbumTarget(	m_pMember->m_sLinkURI,
 												m_pMember->m_sLinkName,
 												m_sValue ) != NULL;

@@ -1,7 +1,7 @@
 //
 // LibraryFolders.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -440,6 +440,8 @@ BOOL CLibraryFolders::CheckAlbum(CAlbumFolder* pFolder) const
 
 CAlbumFolder* CLibraryFolders::GetAlbumTarget(LPCTSTR pszSchemaURI, LPCTSTR pszMember, LPCTSTR pszValue) const
 {
+	ASSUME_LOCK( Library.m_pSection );
+
 	if ( m_pAlbumRoot == NULL ) return NULL;
 
 	CSchemaPtr pSchema = SchemaCache.Get( pszSchemaURI );
