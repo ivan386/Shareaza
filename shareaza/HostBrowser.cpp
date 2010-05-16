@@ -65,7 +65,7 @@ CHostBrowser::CHostBrowser(CBrowseHostWnd* pNotify, PROTOCOLID nProtocol, IN_ADD
 ,	m_bDeflate		( FALSE )
 ,	m_nLength		( ~0ul )
 ,	m_nReceived		( 0ul )
-,	m_pBuffer		( NULL )
+,	m_pBuffer		( new CBuffer() )
 ,	m_pInflate		( NULL )
 {
 	if ( pAddress )
@@ -81,6 +81,7 @@ CHostBrowser::~CHostBrowser()
 	Stop();
 
 	delete m_pProfile;
+	delete m_pBuffer;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -180,9 +181,6 @@ void CHostBrowser::Stop(BOOL bCompleted)
 	{
 		CTransfer::Close();
 	}
-
-	delete m_pBuffer;
-	m_pBuffer = NULL;
 
 	if ( m_pInflate )
 		GetInput()->InflateStreamCleanup( m_pInflate );
@@ -544,7 +542,7 @@ BOOL CHostBrowser::OnHeadersComplete()
 
 	m_nState		= hbsContent;
 	m_nReceived		= 0ul;
-	m_pBuffer		= new CBuffer();
+	m_pBuffer->Clear();
 	m_mInput.tLast	= GetTickCount();
 
 	switch ( m_nProtocol )
@@ -600,7 +598,6 @@ BOOL CHostBrowser::ReadContent()
 			}
 			else
 			{
-				ASSERT( m_pBuffer );
 				m_pBuffer->AddBuffer( pInput, nVolume );
 			}
 		}
