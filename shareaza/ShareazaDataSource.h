@@ -157,8 +157,8 @@ protected:
 	static void FillBuffer(const CLibraryList* pList, LPTSTR& buf_HDROP, CArchive& buf_Archive, LPBYTE& buf_Files, CString& buf_Text, BOOL bRoot, const Hashes::Guid& oGUID);
 	static void FillBuffer(const CLibraryTreeItem* pSelFirst, LPTSTR& buf_HDROP, CArchive& buf_Archive, LPBYTE& buf_Files, CString& buf_Text, BOOL bRoot, const Hashes::Guid& oGUID);
 
-	DECLARE_MESSAGE_MAP()
 	DECLARE_OLECREATE(CShareazaDataSource)
+
 	DECLARE_INTERFACE_MAP()
 };
 

@@ -56,7 +56,12 @@ library Shareaza
 		xmlNode, xmlElement, xmlAttribute
 	} SXMLNodeType;
 
-	[ uuid(A0F89545-DAD8-4441-9DF4-BCB106B12234), dual, oleautomation ]
+	[
+		object,
+		uuid(A0F89545-DAD8-4441-9DF4-BCB106B12234),
+		dual,
+		oleautomation
+	]
 	interface ISXMLNode : IDispatch
 	{
 		[id(1),propget] HRESULT Parent( [out,retval] ISXMLElement** ppParent );
@@ -74,7 +79,12 @@ library Shareaza
 
 	};
 
-	[ uuid(5198A470-F9EE-49eb-948C-F8176610A8B2), dual, oleautomation ]
+	[
+		object,
+		uuid(5198A470-F9EE-49eb-948C-F8176610A8B2),
+		dual,
+		oleautomation
+	]
 	interface ISXMLElement : ISXMLNode
 	{
 		[id(20),propget] HRESULT Elements( [out,retval] ISXMLElements** ppElements );
@@ -88,14 +98,24 @@ library Shareaza
 		[id(35)] HRESULT GetWords( [out,retval] BSTR* psWords );
 	};
 
-	[ uuid(6D4598A7-26A1-4990-BA60-DE0E212AF93C), dual, oleautomation ]
+	[
+		object,
+		uuid(6D4598A7-26A1-4990-BA60-DE0E212AF93C),
+		dual,
+		oleautomation
+	]
 	interface ISXMLAttribute : ISXMLNode
 	{
 		[id(30)] HRESULT Detach();
 		[id(31)] HRESULT Clone( [out,retval] ISXMLAttribute** ppClone );
 	};
 
-	[ uuid(10BF271C-85A3-4ad4-8930-CC0E3CEEADA4), dual, oleautomation ]
+	[
+		object,
+		uuid(10BF271C-85A3-4ad4-8930-CC0E3CEEADA4),
+		dual,
+		oleautomation
+	]
 	interface ISXMLElements : IDispatch
 	{
 		[id(-4),propget,restricted] HRESULT _NewEnum( [out,retval] IUnknown** ppEnum );
@@ -108,7 +128,12 @@ library Shareaza
 		[id(6),propget] HRESULT ByName( [in] BSTR sName, [out,retval] ISXMLElement** ppElement );
 	};
 
-	[ uuid(8E03E1BF-CCC0-4616-9C0D-8204A83BAEB4), dual, oleautomation ]
+	[
+		object,
+		uuid(8E03E1BF-CCC0-4616-9C0D-8204A83BAEB4),
+		dual,
+		oleautomation
+	]
 	interface ISXMLAttributes : IDispatch
 	{
 		[id(-4),propget,restricted] HRESULT _NewEnum( [out,retval] IUnknown** ppEnum );
@@ -209,7 +234,11 @@ library Shareaza
 	// LibraryBuilder Plugin
 	//
 
-	[ uuid(32496CEA-3B51-4f2f-9CE7-73D6AC942C34), oleautomation ]
+	[
+		object,
+		uuid(32496CEA-3B51-4f2f-9CE7-73D6AC942C34),
+		oleautomation
+	]
 	interface ILibraryBuilderPlugin : stdole.IUnknown
 	{
 		// Extract metadata from file and return:

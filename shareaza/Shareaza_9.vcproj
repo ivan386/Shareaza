@@ -45,6 +45,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_DEBUG"
+				GenerateStublessProxies="true"
 				HeaderFileName="ShareazaOM.h"
 				InterfaceIdentifierFileName="Shareaza_i.c"
 			/>
@@ -138,6 +139,7 @@
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_DEBUG"
 				TargetEnvironment="3"
+				GenerateStublessProxies="true"
 				HeaderFileName="ShareazaOM.h"
 				InterfaceIdentifierFileName="Shareaza_i.c"
 			/>
@@ -231,6 +233,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="NDEBUG"
+				GenerateStublessProxies="true"
 				HeaderFileName="ShareazaOM.h"
 				InterfaceIdentifierFileName="Shareaza_i.c"
 			/>
@@ -333,6 +336,7 @@
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="NDEBUG"
 				TargetEnvironment="3"
+				GenerateStublessProxies="true"
 				HeaderFileName="ShareazaOM.h"
 				InterfaceIdentifierFileName="Shareaza_i.c"
 			/>

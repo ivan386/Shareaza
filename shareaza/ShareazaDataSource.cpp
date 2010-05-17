@@ -1079,9 +1079,6 @@ HRESULT CShareazaDataSource::AddRefStgMedium(STGMEDIUM *pstgmIn, STGMEDIUM *pstg
 	return hr;
 }
 
-BEGIN_MESSAGE_MAP(CShareazaDataSource, CComObject)
-END_MESSAGE_MAP()
-
 BEGIN_INTERFACE_MAP(CShareazaDataSource, CComObject)
 	INTERFACE_PART(CShareazaDataSource, IID_IDropSource, DropSource)
 	INTERFACE_PART(CShareazaDataSource, IID_IDataObject, DataObject)

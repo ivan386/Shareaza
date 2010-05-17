@@ -48,7 +48,7 @@ HRESULT CLibraryBuilderPlugins::SafeProcess(ILibraryBuilderPlugin* pPlugin, BSTR
 	}
 	__except( EXCEPTION_EXECUTE_HANDLER )
 	{
-		return E_FAIL;
+		return RPC_E_SERVERFAULT;
 	}
 }
 
@@ -67,9 +67,10 @@ bool CLibraryBuilderPlugins::ExtractPluginMetadata(DWORD nIndex, const CString& 
 			break;
 
 		auto_ptr< CXMLElement > pXML( new CXMLElement() );
-		HRESULT hr = SafeProcess( pPlugin, CComBSTR( strPath ),
-			CComPtr< ISXMLElement >( (ISXMLElement*)CXMLCOM::Wrap(
-			pXML.get(), IID_ISXMLElement ) ) );
+		CComPtr< ISXMLElement > pISXMLElement;
+		pISXMLElement.Attach(
+			(ISXMLElement*)CXMLCOM::Wrap( pXML.get(), IID_ISXMLElement ) );
+		HRESULT hr = SafeProcess( pPlugin, CComBSTR( strPath ), pISXMLElement );
 		if ( SUCCEEDED( hr ) )
 		{
 			if ( CXMLElement* pOuter = pXML->GetFirstElement() )
@@ -93,6 +94,8 @@ bool CLibraryBuilderPlugins::ExtractPluginMetadata(DWORD nIndex, const CString& 
 			CQuickLock oLock( m_pSection );
 
 			m_pMap.RemoveKey( strType );
+
+			pPlugin.Release();
 
 			// Try again
 			continue;
