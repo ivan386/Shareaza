@@ -263,10 +263,10 @@ END
 
 IDD_CONNECT_TO DIALOGEX 0, 0, 242, 120
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Connect To|Browse Host"
+CAPTION "Connect To|Browse User|Chat to User"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    GROUPBOX        "Initiate a new connection to host or server:|Browse this host:",IDC_CONNECT_PROMPT,5,5,230,40
+    GROUPBOX        "Initiate a new connection to host or server:|Browse this user:|Chat to this user:",IDC_CONNECT_PROMPT,5,5,230,40
     COMBOBOX        IDC_CONNECT_HOST,15,20,170,140,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
     EDITTEXT        IDC_CONNECT_PORT,190,20,35,12,ES_CENTER | ES_AUTOHSCROLL | ES_NUMBER
     GROUPBOX        "Network &Protocol:",IDC_CONNECT_ADVANCED,5,50,230,39
@@ -4597,6 +4597,7 @@ BEGIN
     ID_WINDOW_TABBAR        "Show or hide the window tab bar."
     ID_WINDOW_MONITOR       "Show or hide the bandwidth monitor."
     ID_NETWORK_BROWSE_TO    "Browse a user, showing their profile and shared files..."
+    ID_NETWORK_CHAT_TO      "Open a chat session with a user..."
     ID_TOOLS_SKIN           "Choose a different skin for Shareaza to use..."
     ID_LIBRARY_HASH_PRIORITY "Boost the speed of file scanning and hashing."
     ID_DOWNLOADS_FILE_DELETE "Delete the selected completed file(s)."

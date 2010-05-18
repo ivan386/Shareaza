@@ -588,7 +588,8 @@
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_CONNECT_TO" text="Connect _To..." shortcut="Ctrl+T"/>
-			<item id="ID_NETWORK_BROWSE_TO" text="_Browse Host..."/>
+			<item id="ID_NETWORK_BROWSE_TO" text="_Browse User..."/>
+			<item id="ID_NETWORK_CHAT_TO" text="Chat to _User..."/>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="Exit _After Transfers"/>
 			<item id="ID_NETWORK_EXIT" text="E_xit"/>
@@ -688,7 +689,8 @@
 			<item id="ID_NETWORK_DISCONNECT" text="_Disconnect"/>
 			<separator/>
 			<item id="ID_NETWORK_CONNECT_TO" text="Connect _To..." shortcut="Ctrl+T"/>
-			<item id="ID_NETWORK_BROWSE_TO" text="_Browse Host..."/>
+			<item id="ID_NETWORK_BROWSE_TO" text="_Browse User..."/>
+			<item id="ID_NETWORK_CHAT_TO" text="Chat to _User..."/>
 			<separator/>
 			<menu text="Choose _Networks">
 				<item id="ID_NETWORK_G2" text="Connect to _Gnutella2"/>
@@ -1637,6 +1639,7 @@
 		<menu text="Actions">
 			<item id="ID_IRC_TIME" text="_Time"/>
 			<item id="ID_IRC_VERSION" text="_Version"/>
+			<item id="ID_IRC_BROWSE" text="_Browse"/>
 		</menu>
 		<separator/>
 		<menu text="Control">
@@ -2528,6 +2531,7 @@
 	<tip id="ID_NEIGHBOURS_VIEW_OUTGOING" message="Open a new Packet Dump window monitoring outgoing traffic to this neighbour."/>
 	<tip id="ID_NETWORK_AUTO_CLOSE" message="Automatically close Shareaza when transfers have completed."/>
 	<tip id="ID_NETWORK_BROWSE_TO" message="Browse a user, showing their profile and shared files..."/>
+	<tip id="ID_NETWORK_CHAT_TO" message="Open a chat session with a user..."/>
 	<tip id="ID_NETWORK_CONNECT" message="Connect to selected networks."/>
 	<tip id="ID_NETWORK_CONNECT_TO" message="Manually connect to a host..."/>
 	<tip id="ID_NETWORK_DISCONNECT" message="Disconnect from all networks, this will also stop all downloads and uploads."/>
@@ -4034,8 +4038,8 @@
 	</dialog>
 	<dialog name="CLanguageDlg" cookie="" caption="Select Language">
 	</dialog>
-	<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Connect To|Browse Host">
-		<control caption="Initiate a new connection to host or server:|Browse this host:"/>
+	<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Connect To|Browse User|Chat to User">
+		<control caption="Initiate a new connection to host or server:|Browse this user:|Chat to this user:"/>
 		<control/>
 		<control/>
 		<control caption="Network _Protocol:"/>

@@ -41,6 +41,7 @@
 #include "ShareazaURL.h"
 #include "ChatCore.h"
 #include "ChatSession.h"
+#include "ChatWindows.h"
 #include "Statistics.h"
 #include "BTInfo.h"
 #include "Skin.h"
@@ -231,6 +232,7 @@ BEGIN_MESSAGE_MAP(CMainWnd, CMDIFrameWnd)
 	ON_UPDATE_COMMAND_UI(ID_WINDOW_MONITOR, OnUpdateWindowMonitor)
 	ON_COMMAND(ID_WINDOW_MONITOR, OnWindowMonitor)
 	ON_COMMAND(ID_NETWORK_BROWSE_TO, OnNetworkBrowseTo)
+	ON_COMMAND(ID_NETWORK_CHAT_TO, OnNetworkChatTo)
 	ON_COMMAND(ID_TOOLS_SKIN, OnToolsSkin)
 	ON_COMMAND(ID_TOOLS_LANGUAGE, OnToolsLanguage)
 	ON_COMMAND(ID_TOOLS_SEEDTORRENT, OnToolsSeedTorrent)
@@ -1672,21 +1674,36 @@ void CMainWnd::OnUpdateNetworkConnectTo(CCmdUI* pCmdUI)
 
 void CMainWnd::OnNetworkConnectTo()
 {
-	CConnectToDlg dlg;
-	if ( dlg.DoModal() != IDOK ) return;
+	CConnectToDlg dlg( this, CConnectToDlg::Connect );
+	if ( dlg.DoModal() != IDOK )
+		return;
+
 	Network.ConnectTo( dlg.m_sHost, dlg.m_nPort, PROTOCOLID( dlg.m_nProtocol + 1 ), dlg.m_bNoUltraPeer );
 }
 
 void CMainWnd::OnNetworkBrowseTo()
 {
-	CConnectToDlg dlg( NULL, TRUE );
-	if ( dlg.DoModal() != IDOK ) return;
+	CConnectToDlg dlg( this, CConnectToDlg::Browse );
+	if ( dlg.DoModal() != IDOK )
+		return;
 
-	SOCKADDR_IN pAddress;
-
+	SOCKADDR_IN pAddress = {};
 	if ( Network.Resolve( dlg.m_sHost, dlg.m_nPort, &pAddress ) )
 	{
 		new CBrowseHostWnd( PROTOCOLID( dlg.m_nProtocol + 1 ), &pAddress );
+	}
+}
+
+void CMainWnd::OnNetworkChatTo()
+{
+	CConnectToDlg dlg( this, CConnectToDlg::Chat );
+	if ( dlg.DoModal() != IDOK )
+		return;
+
+	SOCKADDR_IN pAddress = {};
+	if ( Network.Resolve( dlg.m_sHost, dlg.m_nPort, &pAddress ) )
+	{
+		ChatWindows.OpenPrivate( Hashes::Guid(), &pAddress, FALSE, PROTOCOLID( dlg.m_nProtocol + 1 ) );
 	}
 }
 

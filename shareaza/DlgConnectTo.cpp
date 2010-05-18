@@ -1,7 +1,7 @@
 //
 // DlgConnectTo.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -39,6 +39,8 @@ typedef struct {
 
 const LPCTSTR CONNECT_SECTION = _T("ConnectTo");
 
+IMPLEMENT_DYNAMIC(CConnectToDlg, CSkinDialog)
+
 BEGIN_MESSAGE_MAP(CConnectToDlg, CSkinDialog)
 	ON_WM_MEASUREITEM()
 	ON_WM_DRAWITEM()
@@ -47,16 +49,15 @@ BEGIN_MESSAGE_MAP(CConnectToDlg, CSkinDialog)
 	ON_CBN_SELCHANGE(IDC_CONNECT_PROTOCOL, OnCbnSelchangeConnectProtocol)
 END_MESSAGE_MAP()
 
-
 /////////////////////////////////////////////////////////////////////////////
 // CConnectToDlg dialog
 
-CConnectToDlg::CConnectToDlg(CWnd* pParent, BOOL bBrowseHost) :
-	CSkinDialog		( CConnectToDlg::IDD, pParent )
-,	m_bNoUltraPeer	( FALSE )
-,	m_nPort			( GNUTELLA_DEFAULT_PORT )
-,	m_nProtocol		( 1 )							// G2 Protocol
-,	m_bBrowseHost	( bBrowseHost )
+CConnectToDlg::CConnectToDlg(CWnd* pParent, Type nType)
+	: CSkinDialog	( CConnectToDlg::IDD, pParent )
+	, m_bNoUltraPeer( FALSE )
+	, m_nPort		( GNUTELLA_DEFAULT_PORT )
+	, m_nProtocol	( 1 )							// G2 Protocol
+	, m_nType		( nType )
 {
 }
 
@@ -82,10 +83,13 @@ BOOL CConnectToDlg::OnInitDialog()
 {
 	CSkinDialog::OnInitDialog();
 
-	SkinMe( _T("CConnectToDlg"), m_bBrowseHost ? ID_NETWORK_BROWSE_TO : ID_NETWORK_CONNECT_TO );
+	SkinMe( _T("CConnectToDlg"),
+		( ( m_nType == Connect ) ? ID_NETWORK_CONNECT_TO : 
+		( ( m_nType == Browse ) ? ID_NETWORK_BROWSE_TO :
+		ID_NETWORK_CHAT_TO ) ) );
 
-	SelectCaption( this, m_bBrowseHost );
-	SelectCaption( &m_wndPrompt, m_bBrowseHost );
+	SelectCaption( this, (int)m_nType );
+	SelectCaption( &m_wndPrompt, (int)m_nType );
 
 	// Load default images
 	CBitmap bmImages;
@@ -109,8 +113,8 @@ BOOL CConnectToDlg::OnInitDialog()
 		}
 	}
 
-	m_wndAdvanced.ShowWindow( m_bBrowseHost ? SW_HIDE : SW_SHOW );
-	m_wndUltrapeer.ShowWindow( m_bBrowseHost ? SW_HIDE : SW_SHOW );
+	m_wndAdvanced.ShowWindow( ( m_nType != Connect ) ? SW_HIDE : SW_SHOW );
+	m_wndUltrapeer.ShowWindow( ( m_nType != Connect ) ? SW_HIDE : SW_SHOW );
 	m_wndUltrapeer.EnableWindow( FALSE );
 
 	int nItem, nCount = theApp.GetProfileInt( CONNECT_SECTION, _T("Count"), 0 );

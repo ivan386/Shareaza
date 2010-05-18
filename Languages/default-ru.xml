@@ -576,6 +576,7 @@
 				<separator/>
 				<item id="ID_NETWORK_CONNECT_TO" text="Соедини_ться с..." shortcut="Ctrl+T"/>
 				<item id="ID_NETWORK_BROWSE_TO" text="Просмотр _хоста..."/>
+				<item id="ID_NETWORK_CHAT_TO" text="_Чат с хостом..."/>
 				<separator/>
 				<item id="ID_NETWORK_AUTO_CLOSE" text="Выйти _после пересылок"/>
 				<item id="ID_NETWORK_EXIT" text="В_ыход"/>
@@ -676,6 +677,7 @@
 				<separator/>
 				<item id="ID_NETWORK_CONNECT_TO" text="Соедини_ться с..." shortcut="Ctrl+T"/>
 				<item id="ID_NETWORK_BROWSE_TO" text="Просмотр _хоста..."/>
+				<item id="ID_NETWORK_CHAT_TO" text="_Чат с хостом..."/>
 				<separator/>
 				<menu text="Выберите _сеть">
 					<item id="ID_NETWORK_G2" text="Соединиться с _Gnutella2"/>
@@ -1622,6 +1624,7 @@
 			<menu text="Действия">
 				<item id="ID_IRC_TIME" text="_Время"/>
 				<item id="ID_IRC_VERSION" text="_Версия"/>
+				<item id="ID_IRC_BROWSE" text="_Просмотр"/>
 			</menu>
 			<separator/>
 			<menu text="Управление">
@@ -2507,6 +2510,7 @@
 		<tip id="ID_NEIGHBOURS_VIEW_OUTGOING" message="Открыть новое окно Дампа Пакетов для мониторинга исходящего трафика от этого хоста."/>
 		<tip id="ID_NETWORK_AUTO_CLOSE" message="Автоматически выходить из Shareaza по окончанию пересылок."/>
 		<tip id="ID_NETWORK_BROWSE_TO" message="Просмотр профиля и файлов пользователя..."/>
+		<tip id="ID_NETWORK_CHAT_TO" message="Открыть чат сессию с хостом..."/>
 		<tip id="ID_NETWORK_CONNECT" message="Соединиться с выбранными сетями."/>
 		<tip id="ID_NETWORK_CONNECT_TO" message="Вручную присоединиться к хосту..."/>
 		<tip id="ID_NETWORK_DISCONNECT" message="Отсоединиться от сетей. Это также остановит все загрузки и раздачи."/>
@@ -4013,8 +4017,8 @@
 		</dialog>
 		<dialog name="CLanguageDlg" cookie="" caption="Выберите язык программы">
 		</dialog>
-		<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Соединиться с|Просмотр хоста">
-			<control caption="Инициализировать новое соединене с хостом или сервером:|Просмотр этого хоста:"/>
+		<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Соединиться с|Просмотр хоста|Чат с хостом">
+			<control caption="Инициировать новое соединение с хостом:|Просмотр этого хоста:|Чат с этим хостом:"/>
 			<control/>
 			<control/>
 			<control caption="Протокол _сети:"/>

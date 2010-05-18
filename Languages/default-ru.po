@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2010-05-01 08:24+0000\n"
+"POT-Creation-Date: 2010-05-18 09:04+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -855,8 +855,13 @@ msgstr "Соедини_ться с..."
 
 #: cmainwnd.tabbed;9;item;id_network_browse_to
 #: cmainwnd.windowed;18;item;id_network_browse_to
-msgid "_Browse Host..."
+msgid "_Browse User..."
 msgstr "Просмотр _хоста..."
+
+#: cmainwnd.tabbed;9;item;id_network_chat_to
+#: cmainwnd.windowed;18;item;id_network_chat_to
+msgid "Chat to _User..."
+msgstr "_Чат с хостом..."
 
 #: cmainwnd.tabbed;11;item;id_tab_transfers
 #: cmainwnd.view.tabbed;item;id_tab_transfers
@@ -1984,6 +1989,10 @@ msgstr "_Время"
 #: circuserlist;63;item;id_irc_version
 msgid "_Version"
 msgstr "_Версия"
+
+#: circuserlist;63;item;id_irc_browse
+msgid "_Browse"
+msgstr "_Просмотр"
 
 #: circuserlist;64
 msgid "Control"
@@ -3884,6 +3893,10 @@ msgstr "Автоматически выходить из Shareaza по окон�
 #: message;id_network_browse_to
 msgid "Browse a user, showing their profile and shared files..."
 msgstr "Просмотр профиля и файлов пользователя..."
+
+#: message;id_network_chat_to
+msgid "Open a chat session with a user..."
+msgstr "Открыть чат сессию с хостом..."
 
 #: message;id_network_connect
 msgid "Connect to selected networks."
@@ -8821,12 +8834,12 @@ msgid "Select Language"
 msgstr "Выберите язык программы"
 
 #: dialog;cconnecttodlg
-msgid "Connect To|Browse Host"
-msgstr "Соединиться с|Просмотр хоста"
+msgid "Connect To|Browse User|Chat to User"
+msgstr "Соединиться с|Просмотр хоста|Чат с хостом"
 
 #: cconnecttodlg;control;1
-msgid "Initiate a new connection to host or server:|Browse this host:"
-msgstr "Инициализировать новое соединене с хостом или сервером:|Просмотр этого хоста:"
+msgid "Initiate a new connection to host or server:|Browse this user:|Chat to this user:"
+msgstr "Инициировать новое соединение с хостом:|Просмотр этого хоста:|Чат с этим хостом:"
 
 #: cconnecttodlg;control;4
 msgid "Network _Protocol:"
@@ -9964,6 +9977,8 @@ msgstr "Пользователь"
 msgid "Comments"
 msgstr "Комментарии"
 
+#~ msgid "_Browse Host..."
+#~ msgstr "Просмотр _хоста..."
 #~ msgid "Scheduler:"
 #~ msgstr "Расписание:"
 #~ msgid "Limit download connections based on a periodic schedule."

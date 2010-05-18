@@ -241,6 +241,7 @@
 	<resource code="32963" id="ID_WINDOW_MONITOR"/>
 	<resource code="32964" id="ID_NETWORK_BROWSE_TO"/>
 	<resource code="32965" id="ID_TOOLS_SKIN"/>
+	<resource code="32966" id="ID_NETWORK_CHAT_TO"/>
 	<resource code="32967" id="ID_LIBRARY_HASH_PRIORITY"/>
 	<resource code="32968" id="ID_DOWNLOADS_FILE_DELETE"/>
 	<resource code="32970" id="ID_LIBRARY_RENAME"/>

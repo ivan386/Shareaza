@@ -360,7 +360,7 @@
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Settings"/>
 	</toolbar>
-  <!-- SECURITY WINDOW -->
+	<!-- SECURITY WINDOW -->
 	<toolbar name="CSecurityWnd">
 		<button id="ID_SECURITY_EDIT" text="Edit Rule"/>
 		<separator/>
@@ -374,21 +374,21 @@
 		<button id="ID_SECURITY_IMPORT" text="Import List"/>
 		<button id="ID_SECURITY_EXPORT" text="Export List"/>
 	</toolbar>
-  <!-- SCHEDULER WINDOW -->
-  <toolbar name="CSchedulerWnd">
-    <button id="ID_SCHEDULER_EDIT" text="Edit Task"/>
-    <separator/>
-    <button id="ID_SCHEDULER_ACTIVATE" text="Activate"/>
-    <button id="ID_SCHEDULER_DEACTIVATE" text="Deactivate"/>
-    <separator/>
-    <button id="ID_SCHEDULER_ADD" text="Add Task"/>
-    <button id="ID_SCHEDULER_REMOVE" text="Remove Task"/>
-    <separator/>
-    <button id="ID_SCHEDULER_REMOVE_ALL" text="Remove All"/>
-    <rightAlign/>
-    <button id="ID_SCHEDULER_IMPORT" text="Import List"/>
-    <button id="ID_SCHEDULER_EXPORT" text="Export List"/>
-  </toolbar>
+	<!-- SCHEDULER WINDOW -->
+	<toolbar name="CSchedulerWnd">
+		<button id="ID_SCHEDULER_EDIT" text="Edit Task"/>
+		<separator/>
+		<button id="ID_SCHEDULER_ACTIVATE" text="Activate"/>
+		<button id="ID_SCHEDULER_DEACTIVATE" text="Deactivate"/>
+		<separator/>
+		<button id="ID_SCHEDULER_ADD" text="Add Task"/>
+		<button id="ID_SCHEDULER_REMOVE" text="Remove Task"/>
+		<separator/>
+		<button id="ID_SCHEDULER_REMOVE_ALL" text="Remove All"/>
+		<rightAlign/>
+		<button id="ID_SCHEDULER_IMPORT" text="Import List"/>
+		<button id="ID_SCHEDULER_EXPORT" text="Export List"/>
+	</toolbar>
 	<!-- HIT MONITOR WINDOW -->
 	<toolbar name="CHitMonitorWnd">
 		<button id="ID_SEARCH_DOWNLOAD" text="Download"/>
@@ -575,7 +575,8 @@
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_CONNECT_TO" text="Connect _To..." shortcut="Ctrl+T"/>
-			<item id="ID_NETWORK_BROWSE_TO" text="_Browse Host..."/>
+			<item id="ID_NETWORK_BROWSE_TO" text="_Browse User..."/>
+			<item id="ID_NETWORK_CHAT_TO" text="Chat to _User..."/>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="Exit _After Transfers"/>
 			<item id="ID_NETWORK_EXIT" text="E_xit"/>
@@ -675,7 +676,8 @@
 			<item id="ID_NETWORK_DISCONNECT" text="_Disconnect"/>
 			<separator/>
 			<item id="ID_NETWORK_CONNECT_TO" text="Connect _To..." shortcut="Ctrl+T"/>
-			<item id="ID_NETWORK_BROWSE_TO" text="_Browse Host..."/>
+			<item id="ID_NETWORK_BROWSE_TO" text="_Browse User..."/>
+			<item id="ID_NETWORK_CHAT_TO" text="Chat to _User..."/>
 			<separator/>
 			<menu text="Choose _Networks">
 				<item id="ID_NETWORK_G2" text="Connect to _Gnutella2"/>
@@ -1535,10 +1537,9 @@
 		</menu>
 		<separator/>
 		<item id="ID_SECURITY_EDIT" text="_Properties"/>
- 
 	</menu>
- <!-- SCHEDULER WINDOW -->
-	 <menu name="CSchedulerWnd">
+	<!-- SCHEDULER WINDOW -->
+	<menu name="CSchedulerWnd">
 		<item id="ID_SCHEDULER_ADD" text="_Add Scheduled Task"/>
 		<separator/>
 		<item id="ID_SCHEDULER_ACTIVATE" text="A_ctivate"/>
@@ -1546,12 +1547,12 @@
 		<separator/>
 		<item id="ID_SCHEDULER_REMOVE" text="R_emove"/>
 		<item id="ID_SCHEDULER_EDIT" text="_Edit"/>
-    <separator/>
-    <item id="ID_SCHEDULER_REMOVE_ALL" text="Remove Al_l"/>
-   <separator/>
-   <item id="ID_SCHEDULER_IMPORT" text="_Import..."/>
-   <item id="ID_SCHEDULER_EXPORT" text="E_xport..."/>
-  </menu>
+		<separator/>
+		<item id="ID_SCHEDULER_REMOVE_ALL" text="Remove Al_l"/>
+		<separator/>
+		<item id="ID_SCHEDULER_IMPORT" text="_Import..."/>
+		<item id="ID_SCHEDULER_EXPORT" text="E_xport..."/>
+	</menu>
 	<!-- DISCOVERY SERVICES WINDOW -->
 	<menu name="CDiscoveryWnd">
 		<item id="ID_DISCOVERY_QUERY" text="_Query Now"/>
@@ -1623,7 +1624,6 @@
 		<item id="ID_WEBSERVICES_SHAREMONKEY" text="_ShareMonkey"/>
 	</menu>
 </menus>
-
 <!-- Watermarks -->
 <watermarks>
 	<watermark target="CHomeViewCtrl.Header1" path="257.PNG"/>
@@ -2491,7 +2491,7 @@
 		<image id="ID_SYSTEM_CLEAR"/>
 		<image id="ID_NEIGHBOURS_DISCONNECT"/>
 		<image id="ID_NEIGHBOURS_COPY"/>
-		<image id="ID_NEIGHBOURS_CHAT"/>
+		<image id="ID_NEIGHBOURS_CHAT" id1="ID_NETWORK_CHAT_TO"/>
 		<image id="ID_NEIGHBOURS_VIEW_ALL"/>
 		<image id="ID_HOSTCACHE_CONNECT"/>
 		<image id="ID_HOSTCACHE_DISCONNECT"/>

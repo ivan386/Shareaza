@@ -1,7 +1,7 @@
 //
 // WndMain.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -240,6 +240,7 @@ protected:
 	afx_msg void OnUpdateWindowMonitor(CCmdUI* pCmdUI);
 	afx_msg void OnWindowMonitor();
 	afx_msg void OnNetworkBrowseTo();
+	afx_msg void OnNetworkChatTo();
 	afx_msg void OnNcLButtonDblClk(UINT nHitTest, CPoint point);
 	afx_msg void OnToolsSkin();
 	afx_msg void OnGetMinMaxInfo(MINMAXINFO FAR* lpMMI);

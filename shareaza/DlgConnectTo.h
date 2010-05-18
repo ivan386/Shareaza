@@ -1,7 +1,7 @@
 //
 // DlgConnectTo.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_DLGCONNECTTO_H__08D02B14_977A_4C9C_AEAE_8FBBE0E868B8__INCLUDED_)
-#define AFX_DLGCONNECTTO_H__08D02B14_977A_4C9C_AEAE_8FBBE0E868B8__INCLUDED_
-
 #pragma once
 
 #include "DlgSkinDialog.h"
@@ -29,8 +26,12 @@
 
 class CConnectToDlg : public CSkinDialog
 {
+	DECLARE_DYNAMIC(CConnectToDlg)
+
 public:
-	CConnectToDlg(CWnd* pParent = NULL, BOOL bBrowseHost = FALSE);
+	enum Type { Connect = 0, Browse = 1, Chat = 2 };
+
+	CConnectToDlg(CWnd* pParent = NULL, Type nType = Connect);
 
 	enum { IDD = IDD_CONNECT_TO };
 	CButton		m_wndAdvanced;
@@ -46,7 +47,7 @@ public:
 
 protected:
 	CImageList	m_pImages;
-	BOOL		m_bBrowseHost;
+	Type		m_nType;
 
 	void		LoadItem(int nItem);
 	BOOL		UpdateItems();
@@ -64,7 +65,3 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 };
-
-//{{AFX_INSERT_LOCATION}}
-
-#endif // !defined(AFX_DLGCONNECTTO_H__08D02B14_977A_4C9C_AEAE_8FBBE0E868B8__INCLUDED_)

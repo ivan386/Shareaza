@@ -1745,6 +1745,7 @@
 #define ID_WINDOW_MONITOR               32963
 #define ID_NETWORK_BROWSE_TO            32964
 #define ID_TOOLS_SKIN                   32965
+#define ID_NETWORK_CHAT_TO              32966
 #define ID_LIBRARY_HASH_PRIORITY        32967
 #define ID_DOWNLOADS_FILE_DELETE        32968
 #define ID_LIBRARY_RENAME               32970
