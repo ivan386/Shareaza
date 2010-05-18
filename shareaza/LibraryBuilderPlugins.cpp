@@ -62,7 +62,7 @@ bool CLibraryBuilderPlugins::ExtractPluginMetadata(DWORD nIndex, const CString& 
 
 	for ( int i = 0; i < 2; ++i )
 	{
-		CComQIPtr< ILibraryBuilderPlugin > pPlugin( LoadPlugin( strType ) );
+		CComPtr< ILibraryBuilderPlugin > pPlugin( LoadPlugin( strType ) );
 		if ( ! pPlugin )
 			break;
 
@@ -116,11 +116,10 @@ void CLibraryBuilderPlugins::CleanupPlugins()
 
 	for ( POSITION pos = m_pMap.GetStartPosition() ; pos ; )
 	{
-		ILibraryBuilderPlugin* pPlugin = NULL;
 		CString strType;
-		m_pMap.GetNextAssoc( pos, strType, pPlugin );
-		if ( pPlugin )
-			pPlugin->Release();
+		CPluginPtr* pGITPlugin = NULL;
+		m_pMap.GetNextAssoc( pos, strType, pGITPlugin );
+		delete pGITPlugin;
 	}
 
 	m_pMap.RemoveAll();
@@ -131,24 +130,41 @@ void CLibraryBuilderPlugins::CleanupPlugins()
 
 ILibraryBuilderPlugin* CLibraryBuilderPlugins::LoadPlugin(LPCTSTR pszType)
 {
+	HRESULT hr;
+	CPluginPtr* pGITPlugin = NULL;
+	CComPtr< ILibraryBuilderPlugin > pPlugin;
+
 	CQuickLock oLock( m_pSection );
 
-	ILibraryBuilderPlugin* pPlugin = NULL;
-	if ( m_pMap.Lookup( pszType, pPlugin ) )
-		return pPlugin;
+	if ( m_pMap.Lookup( pszType, pGITPlugin ) )
+	{
+		hr = pGITPlugin->CopyTo( &pPlugin );
+		return SUCCEEDED( hr ) ? pPlugin.Detach() : NULL;
+	}
 
 	CLSID pCLSID;
-	if ( !Plugins.LookupCLSID( _T("LibraryBuilder"), pszType, pCLSID ) )
+	if ( ! Plugins.LookupCLSID( _T("LibraryBuilder"), pszType, pCLSID ) )
 	{
 		m_pMap.SetAt( pszType, NULL );
 		return NULL;
 	}
 
-	HRESULT hr = CoCreateInstance( pCLSID, NULL, CLSCTX_ALL,
-		IID_ILibraryBuilderPlugin, (void**)&pPlugin );
+	hr = pPlugin.CoCreateInstance( pCLSID );
+	if ( FAILED( hr ) )
+	{
+		m_pMap.SetAt( pszType, NULL );
+		return NULL;
+	}
 
-	if ( SUCCEEDED( hr ) )
-		m_pMap.SetAt( pszType, pPlugin );
+	pGITPlugin = new CPluginPtr;
+	if ( ! pGITPlugin )
+		return NULL;
 
-	return pPlugin;
+	hr = pGITPlugin->Attach( pPlugin );
+	if ( FAILED( hr ) )
+		return NULL;
+
+	m_pMap.SetAt( pszType, pGITPlugin );
+
+	return pPlugin.Detach();
 }

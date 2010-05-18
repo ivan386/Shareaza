@@ -31,7 +31,8 @@ public:
 	void	CleanupPlugins();
 
 private:
-	typedef CMap< CString, LPCTSTR, ILibraryBuilderPlugin*, ILibraryBuilderPlugin* > CPluginMap;
+	typedef CComGITPtr< ILibraryBuilderPlugin > CPluginPtr;
+	typedef CMap< CString, const CString&, CPluginPtr*, CPluginPtr* > CPluginMap;
 
 	CCriticalSection	m_pSection;
 	CPluginMap			m_pMap;
