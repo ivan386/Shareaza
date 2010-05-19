@@ -1581,6 +1581,7 @@
 #define IDS_GENERAL_TRYAGAIN            20242
 #define IDS_GENERAL_CONTINUE            20243
 #define IDS_INFO_REMEMBER               20244
+#define IDS_NEW_FOLDER					20245
 #define ID_HELP_ABOUT                   32772
 #define ID_HELP_VERSION_CHECK           32773
 #define ID_CHECKMARK                    32774

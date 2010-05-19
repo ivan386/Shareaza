@@ -43,13 +43,17 @@ static char THIS_FILE[]=__FILE__;
 // CAlbumFolder construction
 
 CAlbumFolder::CAlbumFolder(CAlbumFolder* pParent, LPCTSTR pszSchemaURI, LPCTSTR pszName, BOOL bAutoDelete)
+	: m_sSchemaURI		( pszSchemaURI )
+	, m_pSchema			( SchemaCache.Get( pszSchemaURI ) )
+	, m_pXML			( NULL )
+	, m_bExpanded		( pParent == NULL || pParent->m_pParent == NULL )
+	, m_bAutoDelete		( bAutoDelete )
+	, m_nUpdateCookie	( 0 )
+	, m_nSelectCookie	( 0 )
+	, m_nListCookie		( 0 )
+	, m_pParent			( pParent )
+	, m_pCollection		( NULL )
 {
-	m_pParent = pParent;
-
-	m_sSchemaURI	= pszSchemaURI ? pszSchemaURI : NULL;
-	m_pSchema		= pszSchemaURI ? SchemaCache.Get( pszSchemaURI ) : NULL;
-	m_pXML			= NULL;
-
 	if ( pszName > (LPCTSTR)1 )
 	{
 		m_sName = pszName;
@@ -62,16 +66,8 @@ CAlbumFolder::CAlbumFolder(CAlbumFolder* pParent, LPCTSTR pszSchemaURI, LPCTSTR 
 			if ( nColon >= 0 ) m_sName = m_pSchema->m_sTitle.Mid( nColon + 1 ).Trim();
 		}
 
-		if ( m_sName.IsEmpty() ) m_sName = _T("New Folder");
+		if ( m_sName.IsEmpty() ) m_sName = LoadString( IDS_NEW_FOLDER );
 	}
-
-	m_bExpanded		= pParent == NULL || pParent->m_pParent == NULL;
-	m_bAutoDelete	= bAutoDelete;
-
-	m_nUpdateCookie	= 0;
-	m_nSelectCookie	= 0;
-	m_nListCookie	= 0;
-	m_pCollection	= NULL;
 
 	RenewGUID();
 }
@@ -93,6 +89,12 @@ void CAlbumFolder::RenewGUID()
 void CAlbumFolder::AddFolder(CAlbumFolder* pFolder)
 {
 	ASSUME_LOCK( Library.m_pSection );
+
+	ASSERT( pFolder->m_pParent == this );
+
+	if ( m_pFolders.Find( pFolder ) )
+		// Already added
+		return;
 
 	// Change album GUID to avoid duplicates
 	pFolder->RenewGUID();
@@ -256,18 +258,16 @@ bool CAlbumFolder::OnFolderDelete(CAlbumFolder* pFolder)
 {
 	ASSUME_LOCK( Library.m_pSection );
 
-	// Find by pointer (direct)
-	POSITION pos = m_pFolders.Find( pFolder );
-	if ( pos == NULL )
-	{
-		return false;
-	}
-	m_pFolders.RemoveAt( pos );
-
 	ASSERT( pFolder->m_pParent == this );
-	ASSERT( ! LibraryFolders.CheckAlbum( pFolder ) ) ;
-
 	pFolder->m_pParent = NULL;
+
+	// Find by pointer (direct)
+	if ( POSITION pos = m_pFolders.Find( pFolder ) )
+		m_pFolders.RemoveAt( pos );
+	else
+		return false;
+
+	ASSERT( ! LibraryFolders.CheckAlbum( pFolder ) ) ;
 
 	Library.Update();
 	m_nUpdateCookie++;
@@ -440,6 +440,7 @@ void CAlbumFolder::Delete(BOOL bIfEmpty)
 	}
 
 	m_pParent->OnFolderDelete( this );
+
 	delete this;
 }
 
@@ -1262,10 +1263,10 @@ void CAlbumFolder::Clear()
 	m_pFolders.RemoveAll();
 	m_pFiles.RemoveAll();
 
-	if ( m_pXML != NULL ) delete m_pXML;
+	delete m_pXML;
 	m_pXML = NULL;
 
-	if ( m_pCollection != NULL ) delete m_pCollection;
+	delete m_pCollection;
 	m_pCollection = NULL;
 
 	m_nUpdateCookie++;

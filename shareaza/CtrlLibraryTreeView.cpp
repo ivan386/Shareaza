@@ -1915,7 +1915,7 @@ void CLibraryTreeView::OnLibraryFolderNew()
 
 		if ( m_pSelFirst ) pFolder = m_pSelFirst->m_pVirtual;
 
-		pFolder = pFolder->AddFolder( NULL, _T("New Folder") );
+		pFolder = pFolder->AddFolder( NULL, LoadString( IDS_NEW_FOLDER ) );
 
 		if ( m_pSelFirst ) Expand( m_pSelFirst, TRI_TRUE, FALSE );
 

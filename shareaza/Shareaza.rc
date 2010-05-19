@@ -3267,6 +3267,7 @@ BEGIN
     IDS_GENERAL_TRYAGAIN    "Try Again"
     IDS_GENERAL_CONTINUE    "Continue"
     IDS_INFO_REMEMBER       "&Remember my selection next time"
+    IDS_NEW_FOLDER          "New Folder"
 END
 
 STRINGTABLE 
@@ -4597,8 +4598,8 @@ BEGIN
     ID_WINDOW_TABBAR        "Show or hide the window tab bar."
     ID_WINDOW_MONITOR       "Show or hide the bandwidth monitor."
     ID_NETWORK_BROWSE_TO    "Browse a user, showing their profile and shared files..."
-    ID_NETWORK_CHAT_TO      "Open a chat session with a user..."
     ID_TOOLS_SKIN           "Choose a different skin for Shareaza to use..."
+    ID_NETWORK_CHAT_TO      "Open a chat session with a user..."
     ID_LIBRARY_HASH_PRIORITY "Boost the speed of file scanning and hashing."
     ID_DOWNLOADS_FILE_DELETE "Delete the selected completed file(s)."
     ID_LIBRARY_RENAME       "Rename the selected file in-place."
