@@ -130,7 +130,6 @@ void CLibraryBuilderPlugins::CleanupPlugins()
 
 ILibraryBuilderPlugin* CLibraryBuilderPlugins::LoadPlugin(LPCTSTR pszType)
 {
-	HRESULT hr;
 	CPluginPtr* pGITPlugin = NULL;
 	CComPtr< ILibraryBuilderPlugin > pPlugin;
 
@@ -138,8 +137,8 @@ ILibraryBuilderPlugin* CLibraryBuilderPlugins::LoadPlugin(LPCTSTR pszType)
 
 	if ( m_pMap.Lookup( pszType, pGITPlugin ) )
 	{
-		hr = pGITPlugin->CopyTo( &pPlugin );
-		return SUCCEEDED( hr ) ? pPlugin.Detach() : NULL;
+		return ( pGITPlugin && SUCCEEDED( pGITPlugin->CopyTo( &pPlugin ) ) ) ?
+			pPlugin.Detach() : NULL;
 	}
 
 	CLSID pCLSID;
@@ -149,8 +148,7 @@ ILibraryBuilderPlugin* CLibraryBuilderPlugins::LoadPlugin(LPCTSTR pszType)
 		return NULL;
 	}
 
-	hr = pPlugin.CoCreateInstance( pCLSID );
-	if ( FAILED( hr ) )
+	if ( FAILED( pPlugin.CoCreateInstance( pCLSID ) ) )
 	{
 		m_pMap.SetAt( pszType, NULL );
 		return NULL;
@@ -160,8 +158,7 @@ ILibraryBuilderPlugin* CLibraryBuilderPlugins::LoadPlugin(LPCTSTR pszType)
 	if ( ! pGITPlugin )
 		return NULL;
 
-	hr = pGITPlugin->Attach( pPlugin );
-	if ( FAILED( hr ) )
+	if ( FAILED( pGITPlugin->Attach( pPlugin ) ) )
 		return NULL;
 
 	m_pMap.SetAt( pszType, pGITPlugin );
