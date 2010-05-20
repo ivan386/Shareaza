@@ -36,10 +36,6 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilderPlugins construction
 
-CLibraryBuilderPlugins::CLibraryBuilderPlugins()
-{
-}
-
 HRESULT CLibraryBuilderPlugins::SafeProcess(ILibraryBuilderPlugin* pPlugin, BSTR szPath, ISXMLElement* pElement)
 {
 	__try
@@ -91,9 +87,7 @@ bool CLibraryBuilderPlugins::ExtractPluginMetadata(DWORD nIndex, const CString& 
 		}
 		else if ( SERVERLOST( hr ) )
 		{
-			CQuickLock oLock( m_pSection );
-
-			m_pMap.RemoveKey( strType );
+			Plugins.ReloadPlugin( _T("LibraryBuilder"), strType );
 
 			pPlugin.Release();
 
@@ -108,60 +102,12 @@ bool CLibraryBuilderPlugins::ExtractPluginMetadata(DWORD nIndex, const CString& 
 }
 
 //////////////////////////////////////////////////////////////////////
-// CLibraryBuilderPlugins cleanup
-
-void CLibraryBuilderPlugins::CleanupPlugins()
-{
-	CQuickLock oLock( m_pSection );
-
-	for ( POSITION pos = m_pMap.GetStartPosition() ; pos ; )
-	{
-		CString strType;
-		CPluginPtr* pGITPlugin = NULL;
-		m_pMap.GetNextAssoc( pos, strType, pGITPlugin );
-		delete pGITPlugin;
-	}
-
-	m_pMap.RemoveAll();
-}
-
-//////////////////////////////////////////////////////////////////////
 // CLibraryBuilderPlugins load plugin
 
 ILibraryBuilderPlugin* CLibraryBuilderPlugins::LoadPlugin(LPCTSTR pszType)
 {
-	CPluginPtr* pGITPlugin = NULL;
-	CComPtr< ILibraryBuilderPlugin > pPlugin;
-
-	CQuickLock oLock( m_pSection );
-
-	if ( m_pMap.Lookup( pszType, pGITPlugin ) )
-	{
-		return ( pGITPlugin && SUCCEEDED( pGITPlugin->CopyTo( &pPlugin ) ) ) ?
-			pPlugin.Detach() : NULL;
-	}
-
-	CLSID pCLSID;
-	if ( ! Plugins.LookupCLSID( _T("LibraryBuilder"), pszType, pCLSID ) )
-	{
-		m_pMap.SetAt( pszType, NULL );
-		return NULL;
-	}
-
-	if ( FAILED( pPlugin.CoCreateInstance( pCLSID ) ) )
-	{
-		m_pMap.SetAt( pszType, NULL );
-		return NULL;
-	}
-
-	pGITPlugin = new CPluginPtr;
-	if ( ! pGITPlugin )
-		return NULL;
-
-	if ( FAILED( pGITPlugin->Attach( pPlugin ) ) )
-		return NULL;
-
-	m_pMap.SetAt( pszType, pGITPlugin );
+	CComQIPtr< ILibraryBuilderPlugin > pPlugin(
+		Plugins.GetPlugin( _T("LibraryBuilder"), pszType ) );
 
 	return pPlugin.Detach();
 }

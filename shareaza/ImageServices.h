@@ -1,7 +1,7 @@
 //
 // ImageServices.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -21,49 +21,29 @@
 
 #pragma once
 
-#include "ThreadImpl.h"
-
 class CImageFile;
 
 
-class CImageServices : public CComObject, public CThreadImpl
+class CImageServices : public CComObject
 {
 	DECLARE_DYNCREATE(CImageServices)
 
 public:
-	CImageServices();
-	virtual ~CImageServices();
-
-	void		Clear();
 	static BOOL	IsFileViewable(LPCTSTR pszPath);
-	BOOL		LoadFromMemory(CImageFile* pFile, LPCTSTR pszType, LPCVOID pData, DWORD nLength, BOOL bScanOnly = FALSE, BOOL bPartialOk = FALSE);
-	BOOL		LoadFromFile(CImageFile* pFile, LPCTSTR szFilename, BOOL bScanOnly = FALSE, BOOL bPartialOk = FALSE);
-	BOOL		SaveToMemory(CImageFile* pFile, LPCTSTR pszType, int nQuality, LPBYTE* ppBuffer, DWORD* pnLength);
-	BOOL		SaveToFile(CImageFile* pFile, LPCTSTR szFilename, int nQuality, DWORD* pnLength = NULL);
+	static BOOL	LoadFromMemory(CImageFile* pFile, LPCTSTR pszType, LPCVOID pData, DWORD nLength, BOOL bScanOnly = FALSE, BOOL bPartialOk = FALSE);
+	static BOOL	LoadFromFile(CImageFile* pFile, LPCTSTR szFilename, BOOL bScanOnly = FALSE, BOOL bPartialOk = FALSE);
+	static BOOL	SaveToMemory(CImageFile* pFile, LPCTSTR pszType, int nQuality, LPBYTE* ppBuffer, DWORD* pnLength);
+	static BOOL	SaveToFile(CImageFile* pFile, LPCTSTR szFilename, int nQuality, DWORD* pnLength = NULL);
 
 protected:
-	typedef std::map< CLSID, DWORD > services_map;
 	typedef std::list< std::pair< CLSID, CAdapt< CComPtr< IImageServicePlugin > > > > service_list;
 
-	services_map	m_services;
-	CMutex			m_pSection;
-	CLSID			m_inCLSID;		// [in] Create interface
-	CEvent			m_pReady;		// Ready event
-
-	BOOL		LoadFromFileHelper(const CLSID& oCLSID, IImageServicePlugin* pService, CImageFile* pFile, LPCTSTR szFilename, BOOL bScanOnly, BOOL bPartialOk);
-	BOOL		PostLoad(CImageFile* pFile, const IMAGESERVICEDATA* pParams, SAFEARRAY* pArray);
-	static SAFEARRAY* ImageToArray(CImageFile* pFile);
-
 	// Get universal plugins
-	bool		LookupUniversalPlugins(service_list& oList);
+	static BOOL	LookupUniversalPlugins(service_list& oList);
 
-	// Get plugin interface (and cache it)
-	static bool	GetService(const CLSID& oCLSID, IImageServicePlugin** pIImageServicePlugin);
-
-	// (Re)Load plugin in plugin cache
-	static bool	ReloadService(const CLSID& oCLSID);
-
-	virtual void OnRun();
+	static BOOL	LoadFromFileHelper(IImageServicePlugin* pService, CImageFile* pFile, LPCTSTR szFilename, BOOL bScanOnly, BOOL bPartialOk);
+	static BOOL	PostLoad(CImageFile* pFile, const IMAGESERVICEDATA* pParams, SAFEARRAY* pArray);
+	static SAFEARRAY* ImageToArray(CImageFile* pFile);
 
 // IImageServicePlugin
 	BEGIN_INTERFACE_PART(ImageService, IImageServicePlugin)

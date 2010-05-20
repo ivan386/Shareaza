@@ -62,7 +62,6 @@ CFilePreviewDlg::CFilePreviewDlg(CDownloadWithExtras* pDownload, DWORD nIndex, C
 	, m_pDownload	( pDownload )
 	, m_sSourceName	( pDownload->GetPath( nIndex ) )
 	, m_sDisplayName( pDownload->GetName( nIndex ) )
-	, m_pPlugin		( NULL )
 	, m_nRange		( 0 )
 	, m_nPosition	( 0 )
 	, m_nScaled		( 0 )
@@ -279,7 +278,7 @@ void CFilePreviewDlg::OnClose()
 
 		Exit();
 
-		if ( m_pPlugin != NULL )
+		if ( m_pPlugin )
 			m_pPlugin->Cancel();
 	}
 	else
@@ -328,17 +327,15 @@ void CFilePreviewDlg::OnRun()
 
 BOOL CFilePreviewDlg::RunPlugin()
 {
+	HRESULT hr;
+
 	CSingleLock oLock( &m_pSection, TRUE );
 
 	CString strType = PathFindExtension( m_sTargetName );
 	strType.MakeLower();
 
-	CLSID pCLSID;
-	if ( ! Plugins.LookupCLSID( _T("DownloadPreview"), strType, pCLSID ) )
-		return FALSE;
-
-	HRESULT hr = m_pPlugin.CoCreateInstance( pCLSID );
-	if ( FAILED( hr ) )
+	m_pPlugin = Plugins.GetPlugin( _T("DownloadPreview"), strType );
+	if ( ! m_pPlugin )
 		return FALSE;
 
 	hr = m_pPlugin->SetSite( &m_xDownloadPreviewSite );

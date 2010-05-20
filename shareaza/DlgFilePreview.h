@@ -62,7 +62,7 @@ protected:
 	CStatic					m_wndStatus;
 	CStatic					m_wndName;
 	CString					m_sExecute;
-	CComPtr< IDownloadPreviewPlugin2 >	m_pPlugin;
+	CComQIPtr< IDownloadPreviewPlugin2 >	m_pPlugin;
 	static CCriticalSection	m_pSection;
 	static CPreviewList		m_pWindows;
 

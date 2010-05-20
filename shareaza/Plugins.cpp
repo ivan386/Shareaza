@@ -35,18 +35,13 @@ static char THIS_FILE[]=__FILE__;
 
 CPlugins Plugins;
 
-
 //////////////////////////////////////////////////////////////////////
 // CPlugins construction
 
 CPlugins::CPlugins() :
 	m_nCommandID( ID_PLUGIN_FIRST )
 {
-}
-
-CPlugins::~CPlugins()
-{
-	Clear();
+	ZeroMemory( &m_inCLSID, sizeof( m_inCLSID ) );
 }
 
 void CPlugins::Register()
@@ -124,8 +119,7 @@ void CPlugins::Register()
 
 void CPlugins::Enumerate()
 {
-	HUSKEY hKey;
-
+	HUSKEY hKey = NULL;
 	if ( SHRegOpenUSKey( _T(REGISTRY_KEY) _T("\\Plugins\\General"),
 		KEY_READ, NULL, &hKey, FALSE ) != ERROR_SUCCESS ) return;
 
@@ -154,10 +148,15 @@ void CPlugins::Enumerate()
 
 		if ( pCLSID == GUID_NULL ) continue;
 
-		CPlugin* pPlugin = new CPlugin( pCLSID, szName );
-		m_pList.AddTail( pPlugin );
+		if ( CPlugin* pPlugin = new CPlugin( pCLSID, szName ) )
+		{
+			CQuickLock oLock( m_pSection );
 
-		pPlugin->StartIfEnabled();
+			m_pList.AddTail( pPlugin );
+
+			if ( LookupEnable( pCLSID ) )
+				pPlugin->Start();
+		}
 	}
 
 	SHRegCloseUSKey( hKey );
@@ -168,11 +167,14 @@ void CPlugins::Enumerate()
 
 void CPlugins::Clear()
 {
+	CloseThread();
+
+	CQuickLock oLock( m_pSection );
+
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		delete GetNext( pos );
 	}
-
 	m_pList.RemoveAll();
 }
 
@@ -243,6 +245,137 @@ BOOL CPlugins::LookupEnable(REFCLSID pCLSID, LPCTSTR pszExt) const
 	if ( nChecked == 0 ) return FALSE;
 
 	return TRUE;
+}
+
+IUnknown* CPlugins::GetPlugin(LPCTSTR pszGroup, LPCTSTR pszType)
+{
+	HRESULT hr;
+
+	CLSID pCLSID;
+	if ( ! LookupCLSID( pszGroup, pszType, pCLSID ) )
+		// Disabled
+		return NULL;
+
+	for ( int i = 0; ; ++i )
+	{
+		{
+			CQuickLock oLock( m_pSection );
+
+			CComPtr< IUnknown > pPlugin;
+			CPluginPtr* pGITPlugin = NULL;
+			if ( m_pCache.Lookup( pCLSID, pGITPlugin ) )
+			{
+				if ( ! pGITPlugin )
+					return NULL;
+
+				if ( SUCCEEDED( hr = pGITPlugin->m_pGIT.CopyTo( &pPlugin ) ) )
+					return pPlugin.Detach();
+			
+				TRACE( _T("Invalid plugin \"%s\"-\"%s\" %s\n"), pszGroup, pszType, (LPCTSTR)Hashes::toGuid( pCLSID ) );
+			}
+
+			if ( i == 1 )
+				break;
+
+			m_inCLSID = pCLSID;
+
+			// Create new one
+			if ( ! BeginThread( "PluginCache" ) )
+				// Something really bad
+				break;
+		}
+
+		Wakeup();									// Start process
+		WaitForSingleObject( m_pReady, INFINITE );	// Wait for result
+	}
+
+	return NULL;
+}
+
+BOOL CPlugins::ReloadPlugin(LPCTSTR pszGroup, LPCTSTR pszType)
+{
+	CLSID pCLSID;
+	if ( ! LookupCLSID( pszGroup, pszType, pCLSID ) )
+		// Disabled
+		return FALSE;
+
+	{
+		CQuickLock oLock( m_pSection );
+
+		m_inCLSID = pCLSID;
+
+		// Create new one
+		if ( ! BeginThread( "PluginCache" ) )
+			// Something really bad
+			return FALSE;
+	}
+
+	Wakeup();									// Start process
+	WaitForSingleObject( m_pReady, INFINITE );	// Wait for result
+
+	return TRUE;
+}
+
+void CPlugins::OnRun()
+{
+	HRESULT hr;
+
+	while( IsThreadEnabled() )
+	{
+		Doze();
+
+		if ( ! IsThreadEnabled() )
+			break;
+
+		CQuickLock oLock( m_pSection );
+
+		// Revoke interface
+		CPluginPtr* pGITPlugin = NULL;
+		if ( m_pCache.Lookup( m_inCLSID, pGITPlugin ) )
+		{
+			delete pGITPlugin;
+
+			TRACE( _T("Dropped plugin %s\n"), (LPCTSTR)Hashes::toGuid( m_inCLSID ) );
+		}
+
+		m_pCache.SetAt( m_inCLSID, NULL );
+
+		HINSTANCE hRes = AfxGetResourceHandle();
+
+		pGITPlugin = new CPluginPtr;
+		if ( pGITPlugin )
+		{
+			// Create plugin
+			if ( SUCCEEDED( hr = pGITPlugin->m_pIUnknown.CoCreateInstance( m_inCLSID ) ) &&
+				 // Add plugin interface to GIT
+				 SUCCEEDED( hr = pGITPlugin->m_pGIT.Attach( pGITPlugin->m_pIUnknown ) ) )
+			{
+				m_pCache.SetAt( m_inCLSID, pGITPlugin );
+
+				TRACE( _T("Created plugin %s\n"), (LPCTSTR)Hashes::toGuid( m_inCLSID ) );
+			}
+			else
+				delete pGITPlugin;
+		}
+
+		AfxSetResourceHandle( hRes );
+
+		ZeroMemory( &m_inCLSID, sizeof( m_inCLSID ) );
+
+		m_pReady.SetEvent();
+	}
+
+	CQuickLock oLock( m_pSection );
+
+	// Revoke all interfaces
+	for ( POSITION pos = m_pCache.GetStartPosition() ; pos ; )
+	{
+		CLSID pCLSID;
+		CPluginPtr* pGITPlugin = NULL;
+		m_pCache.GetNextAssoc( pos, pCLSID, pGITPlugin );
+		delete pGITPlugin;
+	}
+	m_pCache.RemoveAll();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -443,18 +576,6 @@ BOOL CPlugins::OnChatMessage(LPCTSTR pszChatID, BOOL bOutgoing, LPCTSTR pszFrom,
 	return TRUE;
 }
 
-CPlugin* CPlugins::Find(REFCLSID pCLSID) const
-{
-	for ( POSITION pos = GetIterator() ; pos ; )
-	{
-		CPlugin* pPlugin = GetNext( pos );
-		if ( pPlugin->m_pCLSID == pCLSID )
-			return pPlugin;
-	}
-
-	return NULL;
-}
-
 //////////////////////////////////////////////////////////////////////
 // CPlugin construction
 
@@ -512,14 +633,6 @@ void CPlugin::Stop()
 	m_pExecute.Release();
 	m_pCommand.Release();
 	m_pPlugin.Release();
-}
-
-BOOL CPlugin::StartIfEnabled()
-{
-	if ( Plugins.LookupEnable( m_pCLSID ) )
-		return Start();
-	else
-		return FALSE;
 }
 
 //////////////////////////////////////////////////////////////////////

@@ -1106,7 +1106,7 @@ void CMediaFrame::OnHScroll(UINT nSBCode, UINT /* nPos */, CScrollBar* pScrollBa
 		}
 	}
 
-	if ( m_pPlayer == NULL )
+	if ( ! m_pPlayer )
 		return;
 
 	MediaState nState = smsNull;
@@ -1611,8 +1611,10 @@ BOOL CMediaFrame::SetVolume(float nVolume)
 			return FALSE;
 		}
 	}
+
 	OnTimer( 1 );
-	return ( m_pPlayer != NULL );
+
+	return TRUE;
 }
 
 void CMediaFrame::OffsetVolume(int nVolumeOffset)
@@ -1692,6 +1694,8 @@ void CMediaFrame::OffsetPosition(int nPositionOffset)
 
 BOOL CMediaFrame::Prepare()
 {
+	HRESULT hr;
+
 	m_bThumbPlay = FALSE;
 
 	if ( m_pPlayer )
@@ -1701,17 +1705,9 @@ BOOL CMediaFrame::Prepare()
 		return FALSE;
 
 	CWaitCursor pCursor;
-	CLSID pCLSID;
-	HRESULT hr = E_FAIL;
 
-	if ( Plugins.LookupCLSID( _T("MediaPlayer"), _T("Default"), pCLSID ) )
-	{
-		HINSTANCE hRes = AfxGetResourceHandle();
-		hr = m_pPlayer.CoCreateInstance( pCLSID );
-		AfxSetResourceHandle( hRes );
-	}
-
-	if ( FAILED( hr ) )
+	m_pPlayer = Plugins.GetPlugin( _T("MediaPlayer"), _T("Default") );
+	if ( ! m_pPlayer )
 		return FALSE;
 
 	ModifyStyleEx( WS_EX_LAYOUTRTL, 0, 0 );
@@ -1751,7 +1747,7 @@ BOOL CMediaFrame::PrepareVis()
 {
 	HRESULT hr;
 
-	if ( m_pPlayer == NULL ) return FALSE;
+	if ( ! m_pPlayer ) return FALSE;
 
 	IAudioVisPlugin* pPlugin = NULL;
 	CLSID pCLSID;

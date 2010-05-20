@@ -64,16 +64,16 @@ public:
 
 	inline MediaState GetState() const
 	{
-		return m_pPlayer != NULL ? m_nState : smsNull;
+		return m_pPlayer ? m_nState : smsNull;
 	}
 
 	inline BOOL CMediaFrame::IsPlaying() const
 	{
-		return m_pPlayer != NULL && m_nState == smsPlaying;
+		return m_pPlayer && m_nState == smsPlaying;
 	}
 
 protected:
-	CComPtr< IMediaPlayer >	m_pPlayer;
+	CComQIPtr< IMediaPlayer >	m_pPlayer;
 	MediaState		m_nState;
 	LONGLONG		m_nLength;
 	LONGLONG		m_nPosition;

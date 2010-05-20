@@ -546,8 +546,6 @@ int CShareazaApp::ExitInstance()
 
 		SplashStep();
 
-		LibraryBuilder.CleanupPlugins();
-		ImageServices.Clear();
 		Plugins.Clear();
 	}
 

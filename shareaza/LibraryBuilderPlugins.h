@@ -25,18 +25,9 @@
 class CLibraryBuilderPlugins
 {
 public:
-	CLibraryBuilderPlugins();
-
-	bool	ExtractPluginMetadata(DWORD nIndex, const CString& strPath);
-	void	CleanupPlugins();
+	static bool	ExtractPluginMetadata(DWORD nIndex, const CString& strPath);
 
 private:
-	typedef CComGITPtr< ILibraryBuilderPlugin > CPluginPtr;
-	typedef CMap< CString, const CString&, CPluginPtr*, CPluginPtr* > CPluginMap;
-
-	CCriticalSection	m_pSection;
-	CPluginMap			m_pMap;
-
 	static HRESULT SafeProcess(ILibraryBuilderPlugin* pPlugin, BSTR szPath, ISXMLElement* pElement);
-	ILibraryBuilderPlugin* LoadPlugin(LPCTSTR pszType);
+	static ILibraryBuilderPlugin* LoadPlugin(LPCTSTR pszType);
 };
