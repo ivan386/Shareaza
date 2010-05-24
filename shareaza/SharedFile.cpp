@@ -24,6 +24,7 @@
 #include "Settings.h"
 #include "SharedFile.h"
 #include "SharedFolder.h"
+#include "AlbumFolder.h"
 #include "Library.h"
 #include "LibraryBuilder.h"
 #include "LibraryDictionary.h"
@@ -111,14 +112,19 @@ CLibraryFile::CLibraryFile(CLibraryFolder* pFolder, LPCTSTR pszName) :
 
 CLibraryFile::~CLibraryFile()
 {
+	ASSERT_VALID( this );
+
 	Library.RemoveFile( this );
 
-	if ( m_pMetadata != NULL ) delete m_pMetadata;
+	delete m_pMetadata;
 
 	for ( POSITION pos = m_pSources.GetHeadPosition() ; pos ; )
 	{
 		delete m_pSources.GetNext( pos );
 	}
+
+	ASSERT( Library.LookupFile( m_nIndex ) == NULL );
+	ASSERT( ! Library.GetAlbumRoot() || ! Library.GetAlbumRoot()->FindFile( this ) );
 }
 
 //////////////////////////////////////////////////////////////////////

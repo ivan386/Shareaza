@@ -129,9 +129,10 @@ void CLibrary::RemoveFile(CLibraryFile* pFile)
 {
 	LibraryMaps.OnFileRemove( pFile );
 
+	LibraryBuilder.Remove( pFile );
+
 	if ( pFile->m_nIndex )
 	{
-		LibraryBuilder.Remove( pFile );
 		LibraryDictionary.RemoveFile( *pFile );
 	}
 }

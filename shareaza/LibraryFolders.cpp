@@ -615,12 +615,12 @@ void CLibraryFolders::Clear()
 {
 	ASSUME_LOCK( Library.m_pSection );
 
+	delete m_pAlbumRoot;
+	m_pAlbumRoot = NULL;
+
 	for ( POSITION pos = GetFolderIterator() ; pos ; )
 		delete GetNextFolder( pos );
 	m_pFolders.RemoveAll();
-
-	delete m_pAlbumRoot;
-	m_pAlbumRoot = NULL;
 }
 
 void CLibraryFolders::ClearGhosts()

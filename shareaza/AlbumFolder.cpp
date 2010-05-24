@@ -282,6 +282,8 @@ void CAlbumFolder::AddFile(CLibraryFile* pFile)
 {
 	ASSUME_LOCK( Library.m_pSection );
 
+	ASSERT_VALID( pFile );
+
 	if ( pFile == NULL ) return;
 
 	POSITION pos = m_pFiles.Find( pFile );
