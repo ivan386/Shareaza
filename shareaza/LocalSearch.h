@@ -1,7 +1,7 @@
 //
 // LocalSearch.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -41,7 +41,7 @@ public:
 	CLocalSearch(CQuerySearch* pSearch, CNeighbour* pNeighbour, BOOL bWrapped = FALSE);
 	CLocalSearch(CQuerySearch* pSearch, SOCKADDR_IN* pEndpoint);
 	CLocalSearch(CQuerySearch* pSearch, CBuffer* pBuffer, PROTOCOLID nProtocol = PROTOCOL_G1);
-	virtual ~CLocalSearch();
+	~CLocalSearch();
 
 // Attributes
 protected:
@@ -59,12 +59,14 @@ protected:
 // Operations
 public:
 	// Search library and downloads (-1 - use default limit, 0 - no limit)
-	INT_PTR		Execute(INT_PTR nMaximum = -1);
+	bool		Execute(int nMaximum = -1, bool bPartial = true, bool bShared = true);
 	void		WriteVirtualTree();
+	const CQuerySearch* GetSearch() const{ return m_pSearch; }
+
 protected:
-	INT_PTR		ExecuteSharedFiles(INT_PTR nMaximum);
-	INT_PTR		ExecutePartialFiles(INT_PTR nMaximum);
-	template< typename T > INT_PTR SendHits(const CList< const T * >& oFiles);
+	bool		ExecuteSharedFiles(int nMaximum, int& nHits);
+	bool		ExecutePartialFiles(int nMaximum, int& nHits);
+	template< typename T > void SendHits(const CList< const T * >& oFiles);
 	template< typename T > void AddHit(const T * pHit, int nIndex);
 	void		AddHitG1(CLibraryFile const * const pFile, int nIndex);
 	void		AddHitG2(CLibraryFile const * const pFile, int nIndex);
@@ -72,13 +74,13 @@ protected:
 	inline bool	IsValidForHitG1(CLibraryFile const * const pFile) const;
 	inline bool	IsValidForHitG2(CLibraryFile const * const pFile) const;
 protected:
-	void		CreatePacket(int nCount);
-	void		CreatePacketG1(int nCount);
+	void		CreatePacket();
+	void		CreatePacketG1();
 	void		CreatePacketG2();
 	void		AddMetadata(CSchemaPtr pSchema, CXMLElement* pXML, int nIndex);
 	CString		GetXMLString(BOOL bNewlines = TRUE);
-	void		WriteTrailer();
-	void		WriteTrailerG1();
+	void		WriteTrailer(int nHits);
+	void		WriteTrailerG1(int nHits);
 	void		WriteTrailerG2();
 	void		DispatchPacket();
 	void		DestroyPacket();

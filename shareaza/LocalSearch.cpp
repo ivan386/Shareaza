@@ -1,7 +1,7 @@
 //
 // LocalSearch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -78,7 +78,6 @@ CLocalSearch::CLocalSearch(CQuerySearch* pSearch, CNeighbour* pNeighbour, BOOL b
 	m_bWrapped		( bWrapped ),
 	m_pPacket		( NULL )
 {
-
 }
 
 CLocalSearch::CLocalSearch(CQuerySearch* pSearch, SOCKADDR_IN* pEndpoint) :
@@ -155,8 +154,10 @@ bool CLocalSearch::IsValidForHitG2(CLibraryFile const * const pFile) const
 //////////////////////////////////////////////////////////////////////
 // CLocalSearch execute
 
-INT_PTR CLocalSearch::Execute(INT_PTR nMaximum)
+bool CLocalSearch::Execute(int nMaximum, bool bPartial, bool bShared)
 {
+	ASSERT( bPartial || bShared );
+
 	if ( nMaximum < 0 )
 		nMaximum = Settings.Gnutella.MaxHits;
 
@@ -169,32 +170,40 @@ INT_PTR CLocalSearch::Execute(INT_PTR nMaximum)
 		Network.CreateID( m_oGUID );
 	}
 
-	INT_PTR nHits = ExecutePartialFiles( nMaximum );
+	int nHits = 0;
+	if ( bPartial )
+	{
+		if ( ! ExecutePartialFiles( nMaximum, nHits ) )
+			return false;
+	}
 
 	if ( ! nMaximum || nHits < nMaximum )
 	{
-		nHits += ExecuteSharedFiles( nMaximum ? nMaximum - nHits : 0 );
+		if ( bShared )
+		{
+			if ( ! ExecuteSharedFiles( nMaximum, nHits ) )
+				return false;
+		}
 	}
 
 	ASSERT( ! nMaximum || nHits <= nMaximum );
 
-	return nHits;
+	return true;
 }
 
 //////////////////////////////////////////////////////////////////////
 // CLocalSearch execute partial files
 
-INT_PTR CLocalSearch::ExecutePartialFiles(INT_PTR nMaximum)
+bool CLocalSearch::ExecutePartialFiles(int nMaximum, int& nHits)
 {
 	CSingleLock pLock( &Transfers.m_pSection );
 	if ( ! pLock.Lock( 250 ) )
-		return 0;
+		return false;
 
 	if ( ! m_pSearch || ! m_pSearch->m_bWantPFS || m_nProtocol != PROTOCOL_G2 )
 		// Browse request, or no partials requested, or non Gnutella 2 request
-		return 0;
+		return true;
 
-	INT_PTR nHits = 0;
 	CList< const CDownload* > oFilesInPacket;
 
 	for ( POSITION pos = Downloads.GetIterator() ;
@@ -205,44 +214,34 @@ INT_PTR CLocalSearch::ExecutePartialFiles(INT_PTR nMaximum)
 		if ( IsValidForHit( pDownload ) )
 		{
 			oFilesInPacket.AddTail( pDownload );
-
-			if ( ( Settings.Gnutella.HitsPerPacket &&
-				(DWORD)oFilesInPacket.GetCount() >= Settings.Gnutella.HitsPerPacket ) ||
-				( m_pPacket && m_pPacket->m_nLength >= MAX_QUERY_PACKET_SIZE ) )
-			{
-				// Packet full, send it
-				nHits += SendHits( oFilesInPacket );
-
-				oFilesInPacket.RemoveAll();
-			}
 		}
 	}
 
-	// Send rest of files
-	nHits += SendHits( oFilesInPacket );
+	SendHits( oFilesInPacket );
 
-	return nHits;
+	nHits += oFilesInPacket.GetCount();
+
+	return true;
 }
 
 //////////////////////////////////////////////////////////////////////
 // CLocalSearch execute shared files
 
-INT_PTR CLocalSearch::ExecuteSharedFiles(INT_PTR nMaximum)
+bool CLocalSearch::ExecuteSharedFiles(int nMaximum, int& nHits)
 {
 	CSingleLock oLock( &Library.m_pSection );
-	if ( ! oLock.Lock( 1000 ) )
-		return 0;
+	if ( ! oLock.Lock( 250 ) )
+		return false;
 
-	CFileList* pFiles = Library.Search(
-		m_pSearch, static_cast< int >( nMaximum ), FALSE,
+	auto_ptr< CFileList > pFiles( Library.Search(
+		m_pSearch, nMaximum, FALSE,
 		// Ghost files only for G2
-		m_nProtocol != PROTOCOL_G2 );
+		m_nProtocol != PROTOCOL_G2 ) );
 
-	if ( pFiles == NULL )
+	if ( ! pFiles.get() )
 		// No files found
-		return 0;
+		return true;
 
-	INT_PTR nHits = 0;
 	CFileList oFilesInPacket;
 
 	for ( POSITION pos = pFiles->GetHeadPosition() ;
@@ -250,50 +249,46 @@ INT_PTR CLocalSearch::ExecuteSharedFiles(INT_PTR nMaximum)
 	{
 		const CLibraryFile* pFile = pFiles->GetNext( pos );
 
-		// Select valid files
 		if ( IsValidForHit( pFile ) )
 		{
 			oFilesInPacket.AddTail( pFile );
-
-			if ( ( Settings.Gnutella.HitsPerPacket &&
-				(DWORD)oFilesInPacket.GetCount() >= Settings.Gnutella.HitsPerPacket ) ||
-				( m_pPacket && m_pPacket->m_nLength >= MAX_QUERY_PACKET_SIZE ) )
-			{
-				// Packet full, send it
-				nHits += SendHits( oFilesInPacket );
-
-				oFilesInPacket.RemoveAll();
-			}
 		}
 	}
 
-	// Send rest of files
-	nHits += SendHits( oFilesInPacket );
+	SendHits( oFilesInPacket );
 
-	delete pFiles;
+	nHits += oFilesInPacket.GetCount();
 
-	return nHits;
+	return true;
 }
 
 template< typename T >
-INT_PTR CLocalSearch::SendHits(const CList< const T * >& oFiles)
+void CLocalSearch::SendHits(const CList< const T * >& oFiles)
 {
-	INT_PTR nHits = oFiles.GetCount();
-	if ( nHits )
+	int nHits = 0;
+	for ( POSITION pos = oFiles.GetHeadPosition(); pos; )
 	{
-		CreatePacket( (int)nHits );
+		if ( ! m_pPacket )
+			CreatePacket();
 
-		int nHitIndex = 0;
-		for ( POSITION pos = oFiles.GetHeadPosition(); pos; )
+		AddHit( oFiles.GetNext( pos ), nHits ++ );
+
+		// Send full packet
+		if ( ( Settings.Gnutella.HitsPerPacket && (DWORD)nHits >= Settings.Gnutella.HitsPerPacket ) ||
+			 ( m_pPacket->m_nLength >= MAX_QUERY_PACKET_SIZE ) )
 		{
-			AddHit( oFiles.GetNext( pos ), nHitIndex++ );
+			WriteTrailer( nHits );
+			DispatchPacket();
+			nHits = 0;
 		}
 
-		WriteTrailer();
+	}
 
+	if ( nHits )
+	{
+		WriteTrailer( nHits );
 		DispatchPacket();
 	}
-	return nHits;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -776,24 +771,24 @@ void CLocalSearch::AddHit< CDownload >(const CDownload* pDownload, int /*nIndex*
 //////////////////////////////////////////////////////////////////////
 // CLocalSearch create packet
 
-void CLocalSearch::CreatePacket(int nCount)
+void CLocalSearch::CreatePacket()
 {
 	ASSERT( m_pPacket == NULL );
 
 	if ( m_nProtocol == PROTOCOL_G1 )
-		CreatePacketG1( nCount );
+		CreatePacketG1();
 	else
 		CreatePacketG2();
 
 	if ( m_pSchemas.GetCount() ) GetXMLString();
 }
 
-void CLocalSearch::CreatePacketG1(int nCount)
+void CLocalSearch::CreatePacketG1()
 {
 	m_pPacket = CG1Packet::New( G1_PACKET_HIT,
 		( m_pSearch ? m_pSearch->m_nTTL : Settings.Gnutella1.SearchTTL ), m_oGUID );
 
-	m_pPacket->WriteByte( BYTE( nCount ) );
+	m_pPacket->WriteByte( 0 ); // Hit count will be set latter
 	m_pPacket->WriteShortLE( htons( Network.m_pHost.sin_port ) );
 	m_pPacket->WriteLongLE( Network.m_pHost.sin_addr.S_un.S_addr );
 
@@ -946,19 +941,21 @@ CString CLocalSearch::GetXMLString(BOOL bNewlines)
 //////////////////////////////////////////////////////////////////////
 // CLocalSearch core trailer
 
-void CLocalSearch::WriteTrailer()
+void CLocalSearch::WriteTrailer(int nHits)
 {
 	ASSERT( m_pPacket != NULL );
 
 	if ( m_nProtocol == PROTOCOL_G1 )
-		WriteTrailerG1();
+		WriteTrailerG1( nHits );
 	else
 		WriteTrailerG2();
 }
 
-void CLocalSearch::WriteTrailerG1()
+void CLocalSearch::WriteTrailerG1(int nHits)
 {
 	CG1Packet* pPacket = static_cast< CG1Packet* >( m_pPacket );
+
+	*(BYTE*)pPacket->m_pBuffer = (BYTE)nHits;	// Correct the number of files sent
 
 	pPacket->WriteString( _T( VENDOR_CODE ), FALSE );
 
@@ -1080,10 +1077,6 @@ void CLocalSearch::DispatchPacket()
 	{
 		if ( m_bWrapped )
 		{
-			// ****Debug
-			theApp.Message( MSG_INFO | MSG_FACILITY_SEARCH, _T("CLocalSearch::DispatchPacket() Wrapped query hit created") );
-			// ****
-
 			CG2Packet* pG2 = CG2Packet::New( G2_PACKET_HIT_WRAP, (CG1Packet*)m_pPacket );
 			m_pPacket->Release();
 			m_pPacket = pG2;
@@ -1097,7 +1090,7 @@ void CLocalSearch::DispatchPacket()
 		Datagrams.Send( m_pEndpoint, static_cast< CG2Packet* >( m_pPacket ), FALSE );
 	}
 
-	if ( m_pBuffer != NULL )
+	if ( m_pPacket && m_pBuffer )
 	{
 		m_pPacket->ToBuffer( m_pBuffer );
 	}
@@ -1107,7 +1100,7 @@ void CLocalSearch::DispatchPacket()
 
 void CLocalSearch::DestroyPacket()
 {
-	if ( m_pPacket != NULL )
+	if ( m_pPacket )
 	{
 		m_pPacket->Release();
 		m_pPacket = NULL;

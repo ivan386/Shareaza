@@ -25,6 +25,7 @@
 
 class CNeighbour;
 class CBuffer;
+class CLocalSearch;
 class CPacket;
 class CG2Packet;
 class CRouteCache;
@@ -78,15 +79,69 @@ protected:
 	CResolveMap			m_pLookups;
 	CCriticalSection	m_pLookupsSection;
 
-	class CDelayedHit
+	class CJob
 	{
 	public:
-		CDelayedHit(CQueryHit* pHits = NULL, DWORD nStage = 0) : m_pHits( pHits ), m_nStage( nStage ) {}
-		CDelayedHit(const CDelayedHit& oQHS) : m_pHits( oQHS.m_pHits ), m_nStage( oQHS.m_nStage ) {}
-		CQueryHit*	m_pHits;
-		DWORD		m_nStage;
+		enum JobType { Null, Hit, Search };
+
+		CJob(JobType nType = Null, void* pData = NULL, int nStage = 0)
+			: m_nType( nType )
+			, m_pData( pData )
+			, m_nStage( nStage )
+		{
+		}
+
+		CJob(const CJob& oJob)
+			: m_nType( oJob.m_nType )
+			, m_pData( oJob.m_pData )
+			, m_nStage( oJob.m_nStage )
+		{
+		}
+
+		CJob& operator=(const CJob& oJob)
+		{
+			m_nType = oJob.m_nType;
+			m_pData = oJob.m_pData;
+			m_nStage = oJob.m_nStage;
+			return *this;
+		}
+
+		void Next()
+		{
+			++ m_nStage;
+		}
+
+		JobType GetType() const
+		{
+			return m_nType;
+		}
+
+		void* GetData() const
+		{
+			return m_pData;
+		}
+
+		int GetStage() const
+		{
+			return m_nStage;
+		}
+
+	protected:
+		JobType	m_nType;
+		void*	m_pData;
+		int		m_nStage;
 	};
-	CList< CDelayedHit > m_pDelayedHits;
+	CList< CJob > m_oJobs;
+
+	// Process asynchronous jobs (hits, searches, etc.)
+	void		RunJobs();
+	void		ClearJobs();
+
+	// Handle and destroy query searches
+	bool		ProcessQuerySearch(CNetwork::CJob& oJob);
+
+	// Handle and destroy query hits
+	bool		ProcessQueryHits(CNetwork::CJob& oJob);
 
 	// Get asynchronously resolved host
 	ResolveStruct* GetResolve(HANDLE hAsync);
@@ -100,9 +155,6 @@ protected:
 	bool		PreRun();
 	void		OnRun();
 	void		PostRun();
-
-	// Handle and destroy query hits
-	void		RunQueryHits();
 
 // Operations
 public:
@@ -134,9 +186,13 @@ public:
 	BOOL		SendPush(const Hashes::Guid& oGUID, DWORD nIndex = 0);
 	BOOL		RouteHits(CQueryHit* pHits, CPacket* pPacket);
 	void		OnWinsock(WPARAM wParam, LPARAM lParam);
-	void		OnQuerySearch(const CQuerySearch* pSearch);
+
+	// Add query search to queue
+	void		OnQuerySearch(CLocalSearch* pSearch);
+
 	// Add query hit to queue
 	void		OnQueryHits(CQueryHit* pHits);
+
 public:
 	void		UDPHostCache(IN_ADDR* pAddress, WORD nPort);
 	void		UDPKnownHubCache(IN_ADDR* pAddress, WORD nPort);

@@ -24,6 +24,7 @@
 #include "Settings.h"
 #include "Network.h"
 #include "Library.h"
+#include "LocalSearch.h"
 #include "Handshakes.h"
 #include "Neighbours.h"
 #include "Datagrams.h"
@@ -656,7 +657,7 @@ void CNetwork::OnRun()
 
 			Neighbours.OnRun();
 
-			RunQueryHits();
+			RunJobs();
 		}
 	}
 
@@ -680,10 +681,7 @@ void CNetwork::PostRun()
 
 	ClearResolve();
 
-	while ( ! m_pDelayedHits.IsEmpty() )
-	{
-		m_pDelayedHits.RemoveHead().m_pHits->Delete();
-	}
+	ClearJobs();
 
 	m_pHostAddresses.RemoveAll();
 
@@ -1003,41 +1001,28 @@ BOOL CNetwork::RouteHits(CQueryHit* pHits, CPacket* pPacket)
 //////////////////////////////////////////////////////////////////////
 // CNetwork common handler functions
 
-void CNetwork::OnQuerySearch(const CQuerySearch* pSearch)
+void CNetwork::OnQuerySearch(CLocalSearch* pSearch)
 {
-	// Send searches to monitor window
-	CSingleLock pLock( &theApp.m_pSection );
-	if ( pLock.Lock( 250 ) )
-	{
-		if ( CMainWnd* pMainWnd = theApp.SafeMainWnd() )
-		{
-			CWindowManager* pWindows	= &pMainWnd->m_pWindows;
-			CRuntimeClass* pClass		= RUNTIME_CLASS(CSearchMonitorWnd);
-			CChildWnd* pChildWnd		= NULL;
+	CQuickLock oLock( m_pSection );
 
-			while ( ( pChildWnd = pWindows->Find( pClass, pChildWnd ) ) != NULL )
-			{
-				pChildWnd->OnQuerySearch( pSearch );
-			}
-		}
+	// TODO: Add overload protection code
 
-		pLock.Unlock();
-	}
+	m_oJobs.AddTail( CJob( CJob::Search, pSearch ) );
 }
 
 void CNetwork::OnQueryHits(CQueryHit* pHits)
 {
-	CSingleLock oLock( &m_pSection, TRUE );
+	CQuickLock oLock( m_pSection );
 
 	// TODO: Add overload protection code
 
-	m_pDelayedHits.AddTail( CDelayedHit( pHits, 0 ) );
+	m_oJobs.AddTail( CJob( CJob::Hit, pHits ) );
 }
 
-void CNetwork::RunQueryHits()
+void CNetwork::RunJobs()
 {
 	// Quick check to avoid locking
-	if ( m_pDelayedHits.IsEmpty() )
+	if ( m_oJobs.IsEmpty() )
 		return;
 
 	// Spend here no more than 250 ms at once
@@ -1045,31 +1030,143 @@ void CNetwork::RunQueryHits()
 	CSingleLock oLock( &m_pSection, FALSE );
 	if ( ! oLock.Lock( 250 ) )
 		return;
-	while ( ! m_pDelayedHits.IsEmpty() && GetTickCount() - nBegin < 250 )
+	while ( ! m_oJobs.IsEmpty() && GetTickCount() - nBegin < 250 )
 	{
-		CDelayedHit oQHT = m_pDelayedHits.RemoveHead();
+		CJob oJob = m_oJobs.RemoveHead();
+
 		oLock.Unlock();
 
-		switch( oQHT.m_nStage )
+		bool bKeep = false;
+		switch ( oJob.GetType() )
 		{
-		case 0:
-			// Update downloads
-			if ( Downloads.OnQueryHits( oQHT.m_pHits ) )
-			{
-				oQHT.m_nStage++;
-			}
+		case CJob::Hit:
+			bKeep = ProcessQueryHits( oJob );
 			break;
 
-		case 1:
-			// Update library files alternate sources
-			if ( Library.OnQueryHits( oQHT.m_pHits ) )
-			{
-				oQHT.m_nStage++;
-			}
+		case CJob::Search:
+			bKeep = ProcessQuerySearch( oJob );
 			break;
 
-		case 2:
-			// Send hits to search windows
+		default:
+			ASSERT( FALSE );
+		}
+
+		oLock.Lock();
+
+		if ( bKeep )
+		{
+			// Go to next iteration
+			m_oJobs.AddTail( oJob );
+		}
+	}
+}
+
+void CNetwork::ClearJobs()
+{
+	CQuickLock oLock( m_pSection );
+
+	while ( ! m_oJobs.IsEmpty() )
+	{
+		CJob oJob = m_oJobs.RemoveHead();
+
+		switch ( oJob.GetType() )
+		{
+		case CJob::Search:
+			delete (CLocalSearch*)oJob.GetData();
+			break;
+
+		case CJob::Hit:
+			((CQueryHit*)oJob.GetData())->Delete();
+			break;
+
+		default:
+			ASSERT( FALSE );
+		}
+	}
+}
+
+bool CNetwork::ProcessQuerySearch(CNetwork::CJob& oJob)
+{
+	CLocalSearch* pSearch = (CLocalSearch*)oJob.GetData();
+
+	switch( oJob.GetStage() )
+	{
+	case 0:
+		// Send searches to monitor window
+		{
+			CSingleLock oAppLock( &theApp.m_pSection );
+			if ( oAppLock.Lock( 250 ) )
+			{
+				if ( CMainWnd* pMainWnd = theApp.SafeMainWnd() )
+				{
+					CRuntimeClass* pClass = RUNTIME_CLASS(CSearchMonitorWnd);
+					CChildWnd* pChildWnd = NULL;
+					while ( ( pChildWnd = pMainWnd->m_pWindows.Find( pClass, pChildWnd ) ) != NULL )
+					{
+						pChildWnd->OnQuerySearch( pSearch->GetSearch() );
+					}
+				}
+
+				oAppLock.Unlock();
+
+				oJob.Next();
+			}
+		}
+		break;
+
+	case 1:
+		// Downloads search
+		if ( pSearch->Execute( -1, true, false ) )
+		{
+			oJob.Next();
+		}
+		break;
+
+	case 2:
+		// Library search
+		if ( pSearch->Execute( -1, false, true ) )
+		{
+			oJob.Next();
+		}
+		break;
+	}
+
+	if ( oJob.GetStage() == 3 )
+	{
+		// Clean-up
+		delete pSearch;
+
+		return false;
+	}
+
+	return true;
+}
+
+bool CNetwork::ProcessQueryHits(CNetwork::CJob& oJob)
+{
+	CQueryHit* pHits = (CQueryHit*)oJob.GetData();
+
+	switch( oJob.GetStage() )
+	{
+	case 0:
+		// Update downloads
+		if ( Downloads.OnQueryHits( pHits ) )
+		{
+			oJob.Next();
+		}
+		break;
+
+	case 1:
+		// Update library files alternate sources
+		if ( Library.OnQueryHits( pHits ) )
+		{
+			oJob.Next();
+		}
+		break;
+
+	case 2:
+		// Send hits to search windows
+		{
 			CSingleLock oAppLock( &theApp.m_pSection );
 			if ( oAppLock.Lock( 250 ) )
 			{
@@ -1077,13 +1174,13 @@ void CNetwork::RunQueryHits()
 				{
 					// Update search window(s)
 					BOOL bHandled = FALSE;
-					CChildWnd* pMonitorWnd		= NULL;
-					CChildWnd* pChildWnd		= NULL;
+					CChildWnd* pMonitorWnd = NULL;
+					CChildWnd* pChildWnd = NULL;
 					while ( ( pChildWnd = pMainWnd->m_pWindows.Find( NULL, pChildWnd ) ) != NULL )
 					{
 						if ( pChildWnd->IsKindOf( RUNTIME_CLASS( CSearchWnd ) ) )
 						{
-							if ( pChildWnd->OnQueryHits( oQHT.m_pHits ) )
+							if ( pChildWnd->OnQueryHits( pHits ) )
 								bHandled = TRUE;
 						}
 						else if ( pChildWnd->IsKindOf( RUNTIME_CLASS( CHitMonitorWnd ) ) )
@@ -1094,26 +1191,25 @@ void CNetwork::RunQueryHits()
 
 					// Drop rest to hit window
 					if ( ! bHandled && pMonitorWnd )
-						pMonitorWnd->OnQueryHits( oQHT.m_pHits );
+						pMonitorWnd->OnQueryHits( pHits );
 				}
 				oAppLock.Unlock();
 
-				oQHT.m_nStage++;
+				oJob.Next();
 			}
 		}
-
-		if ( oQHT.m_nStage == 3 )
-		{
-			// Clean-up
-			oQHT.m_pHits->Delete();
-		}
-		else
-		{
-			// Go to next stage
-			oLock.Lock();
-			m_pDelayedHits.AddTail( oQHT );
-		}
+		break;
 	}
+
+	if ( oJob.GetStage() == 3 )
+	{
+		// Clean-up
+		pHits->Delete();
+
+		return false;
+	}
+
+	return true;
 }
 
 void CNetwork::UDPHostCache(IN_ADDR* pAddress, WORD nPort)

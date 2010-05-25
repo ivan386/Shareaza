@@ -1,7 +1,7 @@
 //
 // G1Neighbour.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1330,9 +1330,6 @@ BOOL CG1Neighbour::OnQuery(CG1Packet* pPacket)
 		return TRUE; // Stay connected to the remote computer
 	}
 
-	// Create a new CLocalSearch object, giving the constructor the CQuerySearch object, and the packet it was made from
-	CLocalSearch pLocalSearch( pSearch, this );
-
 	// If this connection isn't up to a hub above us, check the TTL and if that's ok, move 1 from TTL to hops
 	if ( m_nNodeType != ntHub && pPacket->Hop() )
 	{
@@ -1341,11 +1338,7 @@ BOOL CG1Neighbour::OnQuery(CG1Packet* pPacket)
 	}
 
 	// Give the CQuerySearch object to the Network object (do)
-	Network.OnQuerySearch( pSearch );
-
-	// If the CQuerySearch object doesn't detect a firewall, or we're listening, do a local search (do)
-	if ( ! pSearch->m_bFirewall || Network.IsListening() )
-		pLocalSearch.Execute();
+	Network.OnQuerySearch( new CLocalSearch( pSearch, this ) );
 
 	// Delete the local object, and record another Gnutella query packet processed
 	Statistics.Current.Gnutella1.Queries++;

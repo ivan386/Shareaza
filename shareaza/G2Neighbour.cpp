@@ -1,7 +1,7 @@
 //
 // G2Neighbour.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1218,13 +1218,10 @@ BOOL CG2Neighbour::OnQuery(CG2Packet* pPacket)
 		Neighbours.RouteQuery( pSearch, pPacket, this, m_nNodeType == ntLeaf );
 	}
 
-	Network.OnQuerySearch( pSearch );
-
 	if ( pSearch->m_bUDP && /* !Network.IsFirewalled() && */
 		 pSearch->m_pEndpoint.sin_addr.S_un.S_addr != m_pHost.sin_addr.S_un.S_addr )
 	{
-		CLocalSearch pLocal( pSearch, &pSearch->m_pEndpoint );
-		pLocal.Execute();
+		Network.OnQuerySearch( new CLocalSearch( pSearch, &pSearch->m_pEndpoint ) );
 	}
 	else
 	{
@@ -1237,12 +1234,12 @@ BOOL CG2Neighbour::OnQuery(CG2Packet* pPacket)
 			pLocal.Execute();
 		}
 		*/
-		CLocalSearch pLocal( pSearch, this, FALSE );
-		pLocal.Execute();
+		Network.OnQuerySearch( new CLocalSearch( pSearch, this, FALSE ) );
 	}
 
 	if ( m_nNodeType == ntLeaf )
-		Send( Neighbours.CreateQueryWeb( pSearch->m_oGUID, this ), TRUE, FALSE );
+		// Ack with hub list
+		Send( Neighbours.CreateQueryWeb( pSearch->m_oGUID, true, this ), TRUE, FALSE );
 
 	Statistics.Current.Gnutella2.Queries++;
 
