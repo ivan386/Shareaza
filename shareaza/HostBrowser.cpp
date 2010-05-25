@@ -401,9 +401,16 @@ void CHostBrowser::SendRequest()
 			Write( _P("\r\n") );
 		}
 
-		Write( _P("Accept: text/html, application/x-gnutella-packets, application/x-gnutella2\r\n"
-							 "Accept-Encoding: deflate\r\n"
-							 "Connection: close\r\n") );
+		Write( _P("Accept: text/html") );
+		if ( m_nProtocol == PROTOCOL_G1 || m_nProtocol == PROTOCOL_G2 )
+			Write( _P(", application/x-gnutella-packets") );
+		if ( m_nProtocol == PROTOCOL_G2 )
+			Write( _P(", application/x-gnutella2") );
+		Write( _P("\r\n") );
+
+		Write( _P("Accept-Encoding: deflate\r\n") );
+
+		Write( _P("Connection: close\r\n") );
 
 		strHeader.Format( _T("Host: %s:%lu\r\n\r\n"), m_sAddress,
 			htons( m_pHost.sin_port ) );
