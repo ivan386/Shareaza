@@ -332,7 +332,7 @@ void CSettings::Load()
 	Add( _T("Gnutella"), _T("DeflateHub2Hub"), &Gnutella.DeflateHub2Hub, true );
 	Add( _T("Gnutella"), _T("DeflateHub2Leaf"), &Gnutella.DeflateHub2Leaf, true );
 	Add( _T("Gnutella"), _T("DeflateLeaf2Hub"), &Gnutella.DeflateLeaf2Hub, false );
-	Add( _T("Gnutella"), _T("HitsPerPacket"), &Gnutella.HitsPerPacket, 64, 1, 0, 1024, _T(" files") );
+	Add( _T("Gnutella"), _T("HitsPerPacket"), &Gnutella.HitsPerPacket, 64, 1, 0, 255, _T(" files") );
 	Add( _T("Gnutella"), _T("HostCacheSize"), &Gnutella.HostCacheSize, 1024, 1, 32, 16384, _T(" hosts") );
 	Add( _T("Gnutella"), _T("HostCacheView"), &Gnutella.HostCacheView, PROTOCOL_ED2K );
 	Add( _T("Gnutella"), _T("MaxHits"), &Gnutella.MaxHits, 64, 1, 0, 4096, _T(" files") );
