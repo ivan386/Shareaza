@@ -132,20 +132,20 @@ bool CLibraryBuilder::Add(CLibraryFile* pFile)
 
 void CLibraryBuilder::Remove(DWORD nIndex)
 {
-	ASSERT( nIndex );
-
-	CQuickLock oLock( m_pSection );
-	CFileInfoList::iterator i = std::find( m_pFiles.begin(), m_pFiles.end(), nIndex );
-	if ( i != m_pFiles.end() )
+	if ( nIndex )
 	{
-		m_pFiles.erase( i );
+		CQuickLock oLock( m_pSection );
+
+		CFileInfoList::iterator i = std::find( m_pFiles.begin(), m_pFiles.end(), nIndex );
+		if ( i != m_pFiles.end() )
+		{
+			m_pFiles.erase( i );
+		}
 	}
 }
 
 void CLibraryBuilder::Remove(CLibraryFile* pFile)
 {
-	ASSERT( pFile );
-
 	// Remove file from queue
 	Remove( pFile->m_nIndex );
 
@@ -161,18 +161,17 @@ void CLibraryBuilder::Remove(CLibraryFile* pFile)
 
 void CLibraryBuilder::Remove(LPCTSTR szPath)
 {
-	ASSERT( szPath );
-
 	DWORD nIndex = 0;
+
 	if ( GetRemaining() )
 	{
 		CQuickLock oLibraryLock( Library.m_pSection );
-		CLibraryFile* pFile = LibraryMaps.LookupFileByPath( szPath );
-		if ( pFile )
+
+		if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( szPath ) )
 			nIndex = pFile->m_nIndex;
 	}
-	if ( nIndex )
-		Remove( nIndex );
+
+	Remove( nIndex );
 
 	// Remove currently hashing file
 	if ( ! GetCurrent().CompareNoCase( szPath ) && ! m_bSkip )
