@@ -558,6 +558,9 @@ bool CNetwork::PreRun()
 	// Begin network startup
 	theApp.Message( MSG_NOTICE, IDS_NETWORK_STARTUP );
 
+	// Act like server application
+	SetThreadExecutionState( ES_SYSTEM_REQUIRED | ES_CONTINUOUS );
+
 	// Make sure WinINet is connected (IE is not in offline mode)
 	if ( Settings.Connection.ForceConnectedState )
 	{
@@ -686,6 +689,9 @@ void CNetwork::PostRun()
 	m_pHostAddresses.RemoveAll();
 
 	DiscoveryServices.Stop();
+
+	// Act like regular application
+	SetThreadExecutionState( ES_CONTINUOUS );
 
 	theApp.Message( MSG_NOTICE, IDS_NETWORK_DISCONNECTED );
 	theApp.Message( MSG_NOTICE, _T("") );
