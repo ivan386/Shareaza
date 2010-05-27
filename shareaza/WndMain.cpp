@@ -280,7 +280,8 @@ BEGIN_MESSAGE_MAP(CMainWnd, CMDIFrameWnd)
 	ON_WM_MENUCHAR()
 	ON_MESSAGE(WM_SANITY_CHECK, &CMainWnd::OnSanityCheck)
 	ON_MESSAGE(WM_NOWUPLOADING, &CMainWnd::OnNowUploading)
-END_MESSAGE_MAP()
+	ON_WM_POWERBROADCAST()
+	END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CMainWnd construction
@@ -511,11 +512,13 @@ int CMainWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		PostMessage( WM_COMMAND, ID_HELP_PROMOTE );
 	}
 
-	Scheduler.CheckSchedule();	//Now we are sure main window is valid
+	Scheduler.CheckSchedule();	// Now we are sure main window is valid
+
 	// If it is the first run we will connect only in the QuickStart Wizard
 	// If Scheduler is enabled let it decide when to connect
-	if ( Settings.Connection.AutoConnect && !Settings.Live.FirstRun
-		&& !Settings.Scheduler.Enable )
+	if (  Settings.Connection.AutoConnect &&
+		! Settings.Live.FirstRun &&
+		! Settings.Scheduler.Enable )
 	{
 		PostMessage( WM_COMMAND, ID_NETWORK_CONNECT );
 	}
@@ -2974,4 +2977,34 @@ void CMainWnd::ShowTrayPopup(LPCTSTR szText, LPCTSTR szTitle, DWORD dwIcon, UINT
 
 	m_pTray.szInfo[ 0 ] = _T('\0');
 	m_pTray.szInfoTitle[ 0 ] = _T('\0');
+}
+
+UINT CMainWnd::OnPowerBroadcast(UINT nPowerEvent, UINT nEventData)
+{
+	static bool bWasConnected = false;
+
+	switch ( nPowerEvent )
+	{
+	case PBT_APMSUSPEND:
+		if ( Network.IsConnected() )
+		{
+			bWasConnected = true;
+
+			Network.Disconnect();
+		}
+		break;
+
+	case PBT_APMRESUMEAUTOMATIC:
+		if ( bWasConnected || Network.IsConnected() )
+		{
+			bWasConnected = false;
+
+			Network.Disconnect();
+
+			PostMessage( WM_COMMAND, ID_NETWORK_CONNECT );
+		}
+		break;
+	}
+
+	return CMDIFrameWnd::OnPowerBroadcast( nPowerEvent, nEventData );
 }
