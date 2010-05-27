@@ -364,7 +364,6 @@ BOOL CSkinWindow::Parse(CXMLElement* pBase, const CString& strPath)
 			{
 				strFile = strPath + strFile;
 				hBitmap = CImageFile::LoadBitmapFromFile( strFile );
-			
 			}
 			else if ( strRes.GetLength() > 0 )
 			{
@@ -374,6 +373,7 @@ BOOL CSkinWindow::Parse(CXMLElement* pBase, const CString& strPath)
 					theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown [res] attribute in [image] element"), pGroup->ToString() );
 					return FALSE;
 				}
+
 				if ( nResID == IDB_NAVBAR_IMAGE && Settings.General.LanguageRTL )
 					 nResID = IDB_NAVBAR_IMAGE_RTL;
 				else if ( nResID == IDB_NAVBAR_ALPHA && Settings.General.LanguageRTL )
@@ -382,8 +382,8 @@ BOOL CSkinWindow::Parse(CXMLElement* pBase, const CString& strPath)
 					 nResID = IDB_NAVBAR_IMAGE;
 				else if ( nResID == IDB_NAVBAR_ALPHA_RTL && ! Settings.General.LanguageRTL )
 					 nResID = IDB_NAVBAR_ALPHA;
-				hBitmap = (HBITMAP)LoadImage( AfxGetInstanceHandle(),
-					MAKEINTRESOURCE(nResID), IMAGE_BITMAP, 0, 0, 0 );
+
+				hBitmap = CImageFile::LoadBitmapFromResource( nResID );
 			}
 
 			if ( hBitmap == NULL )

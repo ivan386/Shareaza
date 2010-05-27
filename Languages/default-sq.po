@@ -2,12 +2,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2010-05-19 14:38+0000\n"
+"POT-Creation-Date: 2010-05-27 12:52+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Besmir Godole\n"
 "Language-Team: Shareaza Development Team\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-Language: Shqip\n"
@@ -52,7 +52,8 @@ msgstr "Kliko këtu që të zgjedhësh shqipen si gjuhë tipike."
 msgid "(translation language direction: ltr or rtl)"
 msgstr "ltr"
 
-#: button;id_network_connect button;id_tab_connect button;id_irc_connect button;id_chat_connect string;8069 cconnecttodlg;control;7
+#: button;id_network_connect button;id_tab_connect button;id_irc_connect
+#: button;id_chat_connect string;8069 cconnecttodlg;control;7
 msgid "Connect"
 msgstr "Lidhu"
 
@@ -68,11 +69,13 @@ msgstr "Librari"
 msgid "Media Player"
 msgstr "MediaLuajtës"
 
-#: button;id_tab_search string;window_search string;window_searchpad string;8144 string;8156 cnewsearchdlg;control;3 column;search
+#: button;id_tab_search string;window_search string;window_searchpad
+#: string;8144 string;8156 cnewsearchdlg;control;3 column;search
 msgid "Search"
 msgstr "Kërko"
 
-#: button;id_tab_transfers string;window_downloads dialog;cdownloadssettingspage
+#: button;id_tab_transfers string;window_downloads
+#: dialog;cdownloadssettingspage
 msgid "Downloads"
 msgstr "Shkarkim"
 
@@ -88,7 +91,7 @@ msgstr "Chat"
 msgid "New Search"
 msgstr "Kërkim i Ri"
 
-#: button;id_search_download cdownloaddlg;control;5 ctorrentseeddlg;control;3
+#: button;id_search_download cdownloaddlg;control;4 ctorrentseeddlg;control;2
 msgid "Download"
 msgstr "Shkarko"
 
@@ -104,11 +107,15 @@ msgstr "Trego Kërkimin"
 msgid "Show Details"
 msgstr "Trego Detaje"
 
-#: csearchwnd.panel.basic;label-text;1 csearchwnd.panel;label-text;1 csearchwnd.full;label-text;1 cbrowsehostwnd.basic;label-text;1 cbrowsehostwnd;label-text;1 chitmonitorwnd;label-text;1
+#: csearchwnd.panel.basic;label-text;1 csearchwnd.panel;label-text;1
+#: csearchwnd.full;label-text;1 cbrowsehostwnd.basic;label-text;1
+#: cbrowsehostwnd;label-text;1 chitmonitorwnd;label-text;1
 msgid "Filter:"
 msgstr "Filtër:"
 
-#: csearchwnd.panel.basic;label-tip;1 csearchwnd.panel;label-tip;1 csearchwnd.full;label-tip;1 cbrowsehostwnd.basic;label-tip;1 cbrowsehostwnd;label-tip;1 chitmonitorwnd;label-tip;1
+#: csearchwnd.panel.basic;label-tip;1 csearchwnd.panel;label-tip;1
+#: csearchwnd.full;label-tip;1 cbrowsehostwnd.basic;label-tip;1
+#: cbrowsehostwnd;label-tip;1 chitmonitorwnd;label-tip;1
 msgid "Type some words to filter the results with"
 msgstr "Shkruani disa fjalë për filtrimin e rezultateve"
 
@@ -140,7 +147,8 @@ msgstr "Dosje"
 msgid "Organiser"
 msgstr "Organizuesi"
 
-#: button;id_search_chat button;id_uploads_chat button;id_neighbours_chat cbrowsehostprofile.2;link;4
+#: button;id_search_chat button;id_uploads_chat button;id_neighbours_chat
+#: cbrowsehostprofile.2;link;4
 msgid "Chat to User"
 msgstr "Bisedo me Përdoruesin"
 
@@ -152,7 +160,8 @@ msgstr "Ndalo"
 msgid "Refresh"
 msgstr "Rifresko"
 
-#: button;id_downloads_launch_complete button;id_uploads_launch button;id_library_launch
+#: button;id_downloads_launch_complete button;id_uploads_launch
+#: button;id_library_launch
 msgid "Open or Play"
 msgstr "Hape ose Luaje"
 
@@ -196,7 +205,8 @@ msgstr "Pastro të Përfunduarit"
 msgid "Properties"
 msgstr "Veti"
 
-#: button;id_downloads_filter_menu button;id_uploads_filter_menu cfiltersearchdlg;control;29
+#: button;id_downloads_filter_menu button;id_uploads_filter_menu
+#: cfiltersearchdlg;control;29
 msgid "Filter"
 msgstr "Filtër"
 
@@ -252,7 +262,8 @@ msgstr "Lëvize"
 msgid "Copy"
 msgstr "Kopjo"
 
-#: button;id_library_delete cskinssettingspage;control;9 cdeletefiledlg;control;3
+#: button;id_library_delete cskinssettingspage;control;9
+#: cdeletefiledlg;control;3
 msgid "Delete"
 msgstr "Fshije"
 
@@ -304,7 +315,8 @@ msgstr "Tjetër"
 msgid "Playlist"
 msgstr "Lista"
 
-#: cmediaframe;label-text;2 string;8321 cconnectionsettingspage;control;4 cconnectionsettingspage;control;13
+#: cmediaframe;label-text;2 string;8321 cconnectionsettingspage;control;4
+#: cconnectionsettingspage;control;13
 msgid "Speed:"
 msgstr "Shpejtësi:"
 
@@ -324,7 +336,8 @@ msgstr "Ruaj"
 msgid "Connect to IRC"
 msgstr "Lidhu te IRC"
 
-#: button;id_irc_disconnect button;id_neighbours_disconnect button;id_hostcache_disconnect button;id_chat_disconnect string;8072
+#: button;id_irc_disconnect button;id_neighbours_disconnect
+#: button;id_hostcache_disconnect button;id_chat_disconnect string;8072
 msgid "Disconnect"
 msgstr "Shkëputu"
 
@@ -500,7 +513,8 @@ msgstr "Masa Akuale"
 msgid "Best Fit"
 msgstr "Masa Perfekte"
 
-#: button;imageviewer_close string;20001 cfolderscandlg;control;7 cdonkeyimportdlg;control;6 cwarningsdlg;control;8 chelpdlg;control;2
+#: button;imageviewer_close string;20001 cfolderscandlg;control;7
+#: cdonkeyimportdlg;control;5 cwarningsdlg;control;7 chelpdlg;control;1
 msgid "Close"
 msgstr "Mbylle"
 
@@ -508,7 +522,9 @@ msgstr "Mbylle"
 msgid "_Close Window"
 msgstr "_Mbylle Dritaren"
 
-#: child;item;id_child_maximise cmainwnd.windowed;22;item;id_window_cascade cmediaframe.basic;53;item;id_media_fullscreen cmediaframe;56;item;id_media_fullscreen
+#: child;item;id_child_maximise cmainwnd.windowed;22;item;id_window_cascade
+#: cmediaframe.basic;53;item;id_media_fullscreen
+#: cmediaframe;56;item;id_media_fullscreen
 msgid "_Full Screen"
 msgstr "_Ekran i Plotë"
 
@@ -520,11 +536,17 @@ msgstr "_Rivendose"
 msgid "_Minimise"
 msgstr "_Minimizo"
 
-#: cmainwnd.basic;1 cmainwnd.tabbed;9 cmainwnd.tabbed;11;item;id_tab_network cmainwnd.windowed;18 cmainwnd.view.tabbed;item;id_tab_network chomewnd.tabbed;item;id_tab_network
+#: cmainwnd.basic;1 cmainwnd.tabbed;9 cmainwnd.tabbed;11;item;id_tab_network
+#: cmainwnd.windowed;18 cmainwnd.view.tabbed;item;id_tab_network
+#: chomewnd.tabbed;item;id_tab_network
 msgid "_Network"
 msgstr "_Rrjet"
 
-#: cmainwnd.basic;1;item;id_network_connect cmainwnd.tabbed;9;item;id_network_connect cmainwnd.windowed;18;item;id_network_connect cneighbourswnd;59;item;id_network_connect cprivatechatframe;item;id_chat_connect
+#: cmainwnd.basic;1;item;id_network_connect
+#: cmainwnd.tabbed;9;item;id_network_connect
+#: cmainwnd.windowed;18;item;id_network_connect
+#: cneighbourswnd;59;item;id_network_connect
+#: cprivatechatframe;item;id_chat_connect
 msgid "_Connect"
 msgstr "_Lidhu"
 
@@ -532,23 +554,35 @@ msgstr "_Lidhu"
 msgid "Choose _Networks"
 msgstr "Zgjidh _Rrjetet"
 
-#: cmainwnd.basic;1;2;item;id_network_g2 cmainwnd.tabbed;9;10;item;id_network_g2 cmainwnd.windowed;18;19;item;id_network_g2
+#: cmainwnd.basic;1;2;item;id_network_g2
+#: cmainwnd.tabbed;9;10;item;id_network_g2
+#: cmainwnd.windowed;18;19;item;id_network_g2
 msgid "Connect to _Gnutella2"
 msgstr "Lidhu te _Gnutella2"
 
-#: cmainwnd.basic;1;2;item;id_network_g1 cmainwnd.tabbed;9;10;item;id_network_g1 cmainwnd.windowed;18;19;item;id_network_g1
+#: cmainwnd.basic;1;2;item;id_network_g1
+#: cmainwnd.tabbed;9;10;item;id_network_g1
+#: cmainwnd.windowed;18;19;item;id_network_g1
 msgid "Connect to Gnutella_1"
 msgstr "Lidhu te Gnutella_1"
 
-#: cmainwnd.basic;1;2;item;id_network_ed2k cmainwnd.tabbed;9;10;item;id_network_ed2k cmainwnd.windowed;18;19;item;id_network_ed2k
+#: cmainwnd.basic;1;2;item;id_network_ed2k
+#: cmainwnd.tabbed;9;10;item;id_network_ed2k
+#: cmainwnd.windowed;18;19;item;id_network_ed2k
 msgid "Connect to _eDonkey"
 msgstr "Lidhu te _eDonkey"
 
-#: cmainwnd.basic;1;item;id_network_auto_close cmainwnd.tabbed;9;item;id_network_auto_close cmainwnd.tray;item;id_network_auto_close cremotewnd;item;id_network_auto_close
+#: cmainwnd.basic;1;item;id_network_auto_close
+#: cmainwnd.tabbed;9;item;id_network_auto_close
+#: cmainwnd.tray;item;id_network_auto_close
+#: cremotewnd;item;id_network_auto_close
 msgid "Exit _After Transfers"
 msgstr "Dil _Pas Transferimit"
 
-#: cmainwnd.basic;1;item;id_network_exit cmainwnd.tabbed;9;item;id_network_exit cmainwnd.windowed;18;item;id_network_exit cmainwnd.tray;item;id_network_exit cremotewnd;item;id_network_exit
+#: cmainwnd.basic;1;item;id_network_exit
+#: cmainwnd.tabbed;9;item;id_network_exit
+#: cmainwnd.windowed;18;item;id_network_exit
+#: cmainwnd.tray;item;id_network_exit cremotewnd;item;id_network_exit
 msgid "E_xit"
 msgstr "D_alje"
 
@@ -556,23 +590,45 @@ msgstr "D_alje"
 msgid "_View"
 msgstr "_Pamje"
 
-#: cmainwnd.basic;3;item;id_tab_home cmainwnd.tabbed;11;item;id_tab_home cmainwnd.view.basic;item;id_tab_home cmainwnd.view.tabbed;item;id_tab_home chomewnd.basic;item;id_tab_home chomewnd.tabbed;item;id_tab_home
+#: cmainwnd.basic;3;item;id_tab_home cmainwnd.tabbed;11;item;id_tab_home
+#: cmainwnd.view.basic;item;id_tab_home cmainwnd.view.tabbed;item;id_tab_home
+#: chomewnd.basic;item;id_tab_home chomewnd.tabbed;item;id_tab_home
 msgid "_Home"
 msgstr "_Shtëpi"
 
-#: cmainwnd.basic;3;item;id_tab_library cmainwnd.tabbed;11;item;id_tab_library cmainwnd.tabbed;11;12;item;id_view_library cmainwnd.windowed;20;item;id_view_library cmainwnd.view.basic;item;id_tab_library cmainwnd.view.tabbed;item;id_tab_library cmainwnd.view.windowed;item;id_view_library chomewnd.basic;item;id_tab_library chomewnd.tabbed;item;id_tab_library
+#: cmainwnd.basic;3;item;id_tab_library cmainwnd.tabbed;11;item;id_tab_library
+#: cmainwnd.tabbed;11;12;item;id_view_library
+#: cmainwnd.windowed;20;item;id_view_library
+#: cmainwnd.view.basic;item;id_tab_library
+#: cmainwnd.view.tabbed;item;id_tab_library
+#: cmainwnd.view.windowed;item;id_view_library
+#: chomewnd.basic;item;id_tab_library chomewnd.tabbed;item;id_tab_library
 msgid "_Library"
 msgstr "_Librari"
 
-#: cmainwnd.basic;3;item;id_tab_media cmainwnd.tabbed;11;item;id_tab_media cmainwnd.tabbed;11;12;item;id_view_media cmainwnd.windowed;20;item;id_view_media cmainwnd.view.basic;item;id_tab_media cmainwnd.view.tabbed;item;id_tab_media cmainwnd.view.windowed;item;id_view_media chomewnd.basic;item;id_tab_media chomewnd.tabbed;item;id_tab_media
+#: cmainwnd.basic;3;item;id_tab_media cmainwnd.tabbed;11;item;id_tab_media
+#: cmainwnd.tabbed;11;12;item;id_view_media
+#: cmainwnd.windowed;20;item;id_view_media
+#: cmainwnd.view.basic;item;id_tab_media
+#: cmainwnd.view.tabbed;item;id_tab_media
+#: cmainwnd.view.windowed;item;id_view_media chomewnd.basic;item;id_tab_media
+#: chomewnd.tabbed;item;id_tab_media
 msgid "_Media Player"
 msgstr "_MediaLuajtës"
 
-#: cmainwnd.basic;3;item;id_tab_search cmainwnd.tabbed;11;item;id_tab_search cmainwnd.view.basic;item;id_tab_search cmainwnd.view.tabbed;item;id_tab_search chomewnd.basic;item;id_tab_search chomewnd.tabbed;item;id_tab_search
+#: cmainwnd.basic;3;item;id_tab_search cmainwnd.tabbed;11;item;id_tab_search
+#: cmainwnd.view.basic;item;id_tab_search
+#: cmainwnd.view.tabbed;item;id_tab_search chomewnd.basic;item;id_tab_search
+#: chomewnd.tabbed;item;id_tab_search
 msgid "_Search"
 msgstr "_Kërkim"
 
-#: cmainwnd.basic;3;item;id_tab_transfers cmainwnd.tabbed;11;12;item;id_view_downloads cmainwnd.windowed;20;item;id_view_downloads cmainwnd.view.basic;item;id_tab_transfers cmainwnd.view.windowed;item;id_view_downloads chomewnd.basic;item;id_tab_transfers
+#: cmainwnd.basic;3;item;id_tab_transfers
+#: cmainwnd.tabbed;11;12;item;id_view_downloads
+#: cmainwnd.windowed;20;item;id_view_downloads
+#: cmainwnd.view.basic;item;id_tab_transfers
+#: cmainwnd.view.windowed;item;id_view_downloads
+#: chomewnd.basic;item;id_tab_transfers
 msgid "_Downloads"
 msgstr "_Shkarkim"
 
@@ -580,35 +636,74 @@ msgstr "_Shkarkim"
 msgid "_Remote"
 msgstr "_Pult"
 
-#: cmainwnd.basic;3;item;id_tab_irc cmainwnd.tabbed;11;item;id_tab_irc cmainwnd.view.tabbed;item;id_tab_irc chomewnd.tabbed;item;id_tab_irc
+#: cmainwnd.basic;3;item;id_tab_irc cmainwnd.tabbed;11;item;id_tab_irc
+#: cmainwnd.view.tabbed;item;id_tab_irc chomewnd.tabbed;item;id_tab_irc
 msgid "_Chat"
 msgstr "_Chat"
 
-#: cmainwnd.basic;3;4 cmainwnd.tabbed;11;12 cmainwnd.view.basic;26 chomewnd.basic;27 cdownloadswnd.download;39
+#: cmainwnd.basic;3;4 cmainwnd.tabbed;11;12 cmainwnd.view.basic;26
+#: chomewnd.basic;27 cdownloadswnd.download;39
 msgid "_Advanced"
 msgstr "_Avancuar"
 
-#: cmainwnd.basic;3;4;item;id_view_neighbours cmainwnd.tabbed;11;12;item;id_view_neighbours cmainwnd.windowed;20;item;id_view_neighbours cmainwnd.view.basic;26;item;id_view_neighbours cmainwnd.view.windowed;item;id_view_neighbours chomewnd.basic;27;item;id_view_neighbours
+#: cmainwnd.basic;3;4;item;id_view_neighbours
+#: cmainwnd.tabbed;11;12;item;id_view_neighbours
+#: cmainwnd.windowed;20;item;id_view_neighbours
+#: cmainwnd.view.basic;26;item;id_view_neighbours
+#: cmainwnd.view.windowed;item;id_view_neighbours
+#: chomewnd.basic;27;item;id_view_neighbours
 msgid "_Neighbours"
 msgstr "_Fqinj"
 
-#: cmainwnd.basic;3;4;item;id_view_uploads cmainwnd.tabbed;11;12;item;id_view_uploads cmainwnd.windowed;20;item;id_view_uploads cmainwnd.view.basic;26;item;id_view_uploads cmainwnd.view.windowed;item;id_view_uploads chomewnd.basic;27;item;id_view_uploads
+#: cmainwnd.basic;3;4;item;id_view_uploads
+#: cmainwnd.tabbed;11;12;item;id_view_uploads
+#: cmainwnd.windowed;20;item;id_view_uploads
+#: cmainwnd.view.basic;26;item;id_view_uploads
+#: cmainwnd.view.windowed;item;id_view_uploads
+#: chomewnd.basic;27;item;id_view_uploads
 msgid "_Uploads"
 msgstr "_Ngarkim"
 
-#: cmainwnd.basic;3;4;item;id_view_security cmainwnd.tabbed;11;item;id_view_security cmainwnd.tabbed;11;12;item;id_view_security cmainwnd.windowed;20;item;id_view_security cmainwnd.view.basic;26;item;id_view_security cmainwnd.view.tabbed;item;id_view_security cmainwnd.view.windowed;item;id_view_security chomewnd.basic;27;item;id_view_security chomewnd.tabbed;item;id_view_security
+#: cmainwnd.basic;3;4;item;id_view_security
+#: cmainwnd.tabbed;11;item;id_view_security
+#: cmainwnd.tabbed;11;12;item;id_view_security
+#: cmainwnd.windowed;20;item;id_view_security
+#: cmainwnd.view.basic;26;item;id_view_security
+#: cmainwnd.view.tabbed;item;id_view_security
+#: cmainwnd.view.windowed;item;id_view_security
+#: chomewnd.basic;27;item;id_view_security
+#: chomewnd.tabbed;item;id_view_security
 msgid "Se_curity"
 msgstr "Si_guri"
 
-#: cmainwnd.basic;3;4;item;id_view_hosts cmainwnd.tabbed;11;item;id_view_hosts cmainwnd.tabbed;11;12;item;id_view_hosts cmainwnd.windowed;20;item;id_view_hosts cmainwnd.view.basic;26;item;id_view_hosts cmainwnd.view.tabbed;item;id_view_hosts cmainwnd.view.windowed;item;id_view_hosts chomewnd.basic;27;item;id_view_hosts chomewnd.tabbed;item;id_view_hosts
+#: cmainwnd.basic;3;4;item;id_view_hosts cmainwnd.tabbed;11;item;id_view_hosts
+#: cmainwnd.tabbed;11;12;item;id_view_hosts
+#: cmainwnd.windowed;20;item;id_view_hosts
+#: cmainwnd.view.basic;26;item;id_view_hosts
+#: cmainwnd.view.tabbed;item;id_view_hosts
+#: cmainwnd.view.windowed;item;id_view_hosts
+#: chomewnd.basic;27;item;id_view_hosts chomewnd.tabbed;item;id_view_hosts
 msgid "H_ost Cache"
 msgstr "Depo H_osti"
 
-#: cmainwnd.basic;3;4;item;id_view_discovery cmainwnd.tabbed;11;12;item;id_view_discovery cmainwnd.windowed;20;item;id_view_discovery cmainwnd.view.tabbed;item;id_view_discovery cmainwnd.view.windowed;item;id_view_discovery chomewnd.tabbed;item;id_view_discovery
+#: cmainwnd.basic;3;4;item;id_view_discovery
+#: cmainwnd.tabbed;11;12;item;id_view_discovery
+#: cmainwnd.windowed;20;item;id_view_discovery
+#: cmainwnd.view.tabbed;item;id_view_discovery
+#: cmainwnd.view.windowed;item;id_view_discovery
+#: chomewnd.tabbed;item;id_view_discovery
 msgid "Disco_very"
 msgstr "Zbu_lim"
 
-#: cmainwnd.basic;3;4;item;id_view_scheduler cmainwnd.tabbed;11;item;id_view_scheduler cmainwnd.tabbed;11;12;item;id_view_scheduler cmainwnd.windowed;20;item;id_view_scheduler cmainwnd.view.basic;26;item;id_view_scheduler cmainwnd.view.tabbed;item;id_view_scheduler cmainwnd.view.windowed;item;id_view_scheduler chomewnd.basic;27;item;id_view_scheduler chomewnd.tabbed;item;id_view_scheduler
+#: cmainwnd.basic;3;4;item;id_view_scheduler
+#: cmainwnd.tabbed;11;item;id_view_scheduler
+#: cmainwnd.tabbed;11;12;item;id_view_scheduler
+#: cmainwnd.windowed;20;item;id_view_scheduler
+#: cmainwnd.view.basic;26;item;id_view_scheduler
+#: cmainwnd.view.tabbed;item;id_view_scheduler
+#: cmainwnd.view.windowed;item;id_view_scheduler
+#: chomewnd.basic;27;item;id_view_scheduler
+#: chomewnd.tabbed;item;id_view_scheduler
 msgid "Sch_eduler"
 msgstr ""
 
@@ -624,31 +719,46 @@ msgstr "Mënyrë e _Avancuar"
 msgid "_Tools"
 msgstr "_Mjete"
 
-#: cmainwnd.basic;5;item;id_library_folders cmainwnd.tabbed;13;item;id_library_folders cmainwnd.windowed;21;item;id_library_folders clibrarytree.physical.basic;item;id_library_folders clibrarytree.physical;item;id_library_folders
+#: cmainwnd.basic;5;item;id_library_folders
+#: cmainwnd.tabbed;13;item;id_library_folders
+#: cmainwnd.windowed;21;item;id_library_folders
+#: clibrarytree.physical.basic;item;id_library_folders
+#: clibrarytree.physical;item;id_library_folders
 msgid "Share _Files..."
 msgstr "_Skedat e Shpërndara..."
 
-#: cmainwnd.basic;5;item;id_tools_download cmainwnd.tabbed;13;item;id_tools_download cmainwnd.windowed;21;item;id_tools_download
+#: cmainwnd.basic;5;item;id_tools_download
+#: cmainwnd.tabbed;13;item;id_tools_download
+#: cmainwnd.windowed;21;item;id_tools_download
 msgid "_Download File/Torrent..."
 msgstr "Shkarko _Skedë/Torrent..."
 
-#: cmainwnd.basic;5;item;id_tools_skin cmainwnd.tabbed;13;item;id_tools_skin cmainwnd.windowed;21;item;id_tools_skin
+#: cmainwnd.basic;5;item;id_tools_skin cmainwnd.tabbed;13;item;id_tools_skin
+#: cmainwnd.windowed;21;item;id_tools_skin
 msgid "Choose a S_kin..."
 msgstr "Zgjidhe L_ëvoren..."
 
-#: cmainwnd.basic;5;item;id_tools_language cmainwnd.tabbed;13;item;id_tools_language cmainwnd.windowed;21;item;id_tools_language
+#: cmainwnd.basic;5;item;id_tools_language
+#: cmainwnd.tabbed;13;item;id_tools_language
+#: cmainwnd.windowed;21;item;id_tools_language
 msgid "Choose a _Language..."
 msgstr "Zgjidhe _Gjuhën..."
 
-#: cmainwnd.basic;5;item;id_tools_profile cmainwnd.tabbed;13;item;id_tools_profile cmainwnd.windowed;21;item;id_tools_profile
+#: cmainwnd.basic;5;item;id_tools_profile
+#: cmainwnd.tabbed;13;item;id_tools_profile
+#: cmainwnd.windowed;21;item;id_tools_profile
 msgid "Edit My _Profile..."
 msgstr "Edito _Profilin Tim..."
 
-#: cmainwnd.basic;5;item;id_tools_wizard cmainwnd.tabbed;13;item;id_tools_wizard cmainwnd.windowed;21;item;id_tools_wizard
+#: cmainwnd.basic;5;item;id_tools_wizard
+#: cmainwnd.tabbed;13;item;id_tools_wizard
+#: cmainwnd.windowed;21;item;id_tools_wizard
 msgid "QuickStart _Wizard..."
 msgstr "_Udhërrëfyesi i Shpejtë..."
 
-#: cmainwnd.basic;5;item;id_tools_settings cmainwnd.tabbed;13;item;id_tools_settings cmainwnd.windowed;21;item;id_tools_settings
+#: cmainwnd.basic;5;item;id_tools_settings
+#: cmainwnd.tabbed;13;item;id_tools_settings
+#: cmainwnd.windowed;21;item;id_tools_settings
 msgid "_Shareaza Settings..."
 msgstr "Vendosjet e _Shareaza-s..."
 
@@ -656,11 +766,13 @@ msgstr "Vendosjet e _Shareaza-s..."
 msgid "_Help"
 msgstr "_Ndihmë"
 
-#: cmainwnd.basic;6;item;id_help_faq cmainwnd.tabbed;15;item;id_help_faq cmainwnd.windowed;23;item;id_help_faq
+#: cmainwnd.basic;6;item;id_help_faq cmainwnd.tabbed;15;item;id_help_faq
+#: cmainwnd.windowed;23;item;id_help_faq
 msgid "Shareaza _FAQ"
 msgstr "_PBSH për Shareaza-n"
 
-#: cmainwnd.basic;6;item;id_help_test cmainwnd.tabbed;15;item;id_help_test cmainwnd.windowed;23;item;id_help_test
+#: cmainwnd.basic;6;item;id_help_test cmainwnd.tabbed;15;item;id_help_test
+#: cmainwnd.windowed;23;item;id_help_test
 msgid "_Connection Test"
 msgstr "_Testi i Lidhjes"
 
@@ -668,19 +780,27 @@ msgstr "_Testi i Lidhjes"
 msgid "_Guides"
 msgstr "_Guida"
 
-#: cmainwnd.basic;6;7;item;id_help_guide cmainwnd.tabbed;15;16;item;id_help_guide cmainwnd.windowed;23;24;item;id_help_guide
+#: cmainwnd.basic;6;7;item;id_help_guide
+#: cmainwnd.tabbed;15;16;item;id_help_guide
+#: cmainwnd.windowed;23;24;item;id_help_guide
 msgid "Shareaza _Users Guide"
 msgstr "Guida e _Përdoruesit"
 
-#: cmainwnd.basic;6;7;item;id_help_router cmainwnd.tabbed;15;16;item;id_help_router cmainwnd.windowed;23;24;item;id_help_router
+#: cmainwnd.basic;6;7;item;id_help_router
+#: cmainwnd.tabbed;15;16;item;id_help_router
+#: cmainwnd.windowed;23;24;item;id_help_router
 msgid "_Router Help"
 msgstr "Ndihmë për _Ruterin"
 
-#: cmainwnd.basic;6;7;item;id_help_security cmainwnd.tabbed;15;16;item;id_help_security cmainwnd.windowed;23;24;item;id_help_security
+#: cmainwnd.basic;6;7;item;id_help_security
+#: cmainwnd.tabbed;15;16;item;id_help_security
+#: cmainwnd.windowed;23;24;item;id_help_security
 msgid "_Security Help"
 msgstr "Ndihmë për _Sigurinë"
 
-#: cmainwnd.basic;6;7;item;id_help_codec cmainwnd.tabbed;15;16;item;id_help_codec cmainwnd.windowed;23;24;item;id_help_codec
+#: cmainwnd.basic;6;7;item;id_help_codec
+#: cmainwnd.tabbed;15;16;item;id_help_codec
+#: cmainwnd.windowed;23;24;item;id_help_codec
 msgid "_Codec Help"
 msgstr "Ndihmë për _Kodekun"
 
@@ -688,47 +808,70 @@ msgstr "Ndihmë për _Kodekun"
 msgid "_Websites"
 msgstr "_Troje rrjeti"
 
-#: cmainwnd.basic;6;8;item;id_help_homepage cmainwnd.tabbed;15;17;item;id_help_homepage cmainwnd.windowed;23;25;item;id_help_homepage
+#: cmainwnd.basic;6;8;item;id_help_homepage
+#: cmainwnd.tabbed;15;17;item;id_help_homepage
+#: cmainwnd.windowed;23;25;item;id_help_homepage
 msgid "_Shareaza site"
 msgstr "Trualli i _Shareaza-s"
 
-#: cmainwnd.basic;6;8;item;id_help_forums cmainwnd.tabbed;15;17;item;id_help_forums cmainwnd.windowed;23;25;item;id_help_forums
+#: cmainwnd.basic;6;8;item;id_help_forums
+#: cmainwnd.tabbed;15;17;item;id_help_forums
+#: cmainwnd.windowed;23;25;item;id_help_forums
 msgid "Shareaza _Forums"
 msgstr "_Forumet e Shareaza-s"
 
-#: cmainwnd.basic;6;8;item;id_help_web_6 cmainwnd.tabbed;15;17;item;id_help_web_6 cmainwnd.windowed;23;25;item;id_help_web_6
+#: cmainwnd.basic;6;8;item;id_help_web_6
+#: cmainwnd.tabbed;15;17;item;id_help_web_6
+#: cmainwnd.windowed;23;25;item;id_help_web_6
 msgid "Shareaza S_kin Site"
 msgstr "Trualli për L_ëvoret e Shareaza-s"
 
-#: cmainwnd.basic;6;item;id_help_version_check cmainwnd.tabbed;15;item;id_help_version_check cmainwnd.windowed;23;item;id_help_version_check
+#: cmainwnd.basic;6;item;id_help_version_check
+#: cmainwnd.tabbed;15;item;id_help_version_check
+#: cmainwnd.windowed;23;item;id_help_version_check
 msgid "Check for new _version"
 msgstr "Verifiko _versionin e ri"
 
-#: cmainwnd.basic;6;item;id_help_about cmainwnd.tabbed;15;item;id_help_about cmainwnd.windowed;23;item;id_help_about
+#: cmainwnd.basic;6;item;id_help_about cmainwnd.tabbed;15;item;id_help_about
+#: cmainwnd.windowed;23;item;id_help_about
 msgid "_About Shareaza..."
 msgstr "_Për Shareaza..."
 
-#: cmainwnd.tabbed;9;item;id_network_disconnect cmainwnd.windowed;18;item;id_network_disconnect chostcachewnd;item;id_hostcache_disconnect cdownloadswnd.source;item;id_transfers_disconnect cneighbourswnd.basic;item;id_neighbours_disconnect cneighbourswnd;item;id_neighbours_disconnect cneighbourswnd;59;item;id_network_disconnect cprivatechatframe;item;id_chat_disconnect
+#: cmainwnd.tabbed;9;item;id_network_disconnect
+#: cmainwnd.windowed;18;item;id_network_disconnect
+#: chostcachewnd;item;id_hostcache_disconnect
+#: cdownloadswnd.source;item;id_transfers_disconnect
+#: cneighbourswnd.basic;item;id_neighbours_disconnect
+#: cneighbourswnd;item;id_neighbours_disconnect
+#: cneighbourswnd;59;item;id_network_disconnect
+#: cprivatechatframe;item;id_chat_disconnect
 msgid "_Disconnect"
 msgstr "_Shkëputu"
 
-#: cmainwnd.tabbed;9;item;id_network_connect_to cmainwnd.windowed;18;item;id_network_connect_to
+#: cmainwnd.tabbed;9;item;id_network_connect_to
+#: cmainwnd.windowed;18;item;id_network_connect_to
 msgid "Connect _To..."
 msgstr "Lidhu _Te..."
 
-#: cmainwnd.tabbed;9;item;id_network_browse_to cmainwnd.windowed;18;item;id_network_browse_to
+#: cmainwnd.tabbed;9;item;id_network_browse_to
+#: cmainwnd.windowed;18;item;id_network_browse_to
 msgid "_Browse User..."
 msgstr "_Shfleto Hostin..."
 
-#: cmainwnd.tabbed;9;item;id_network_chat_to cmainwnd.windowed;18;item;id_network_chat_to
+#: cmainwnd.tabbed;9;item;id_network_chat_to
+#: cmainwnd.windowed;18;item;id_network_chat_to
 msgid "Chat to _User..."
 msgstr ""
 
-#: cmainwnd.tabbed;11;item;id_tab_transfers cmainwnd.view.tabbed;item;id_tab_transfers chomewnd.tabbed;item;id_tab_transfers
+#: cmainwnd.tabbed;11;item;id_tab_transfers
+#: cmainwnd.view.tabbed;item;id_tab_transfers
+#: chomewnd.tabbed;item;id_tab_transfers
 msgid "_Transfers"
 msgstr "_Transferim"
 
-#: cmainwnd.tabbed;11;12;item;id_view_system cmainwnd.windowed;20;item;id_view_system cmainwnd.view.windowed;item;id_view_system
+#: cmainwnd.tabbed;11;12;item;id_view_system
+#: cmainwnd.windowed;20;item;id_view_system
+#: cmainwnd.view.windowed;item;id_view_system
 msgid "S_ystem"
 msgstr "S_istem"
 
@@ -736,19 +879,35 @@ msgstr "S_istem"
 msgid "IR_C"
 msgstr "IR_C"
 
-#: cmainwnd.tabbed;11;12;item;id_view_traffic cmainwnd.windowed;20;item;id_view_traffic cmainwnd.view.tabbed;item;id_view_traffic cmainwnd.view.windowed;item;id_view_traffic chomewnd.tabbed;item;id_view_traffic
+#: cmainwnd.tabbed;11;12;item;id_view_traffic
+#: cmainwnd.windowed;20;item;id_view_traffic
+#: cmainwnd.view.tabbed;item;id_view_traffic
+#: cmainwnd.view.windowed;item;id_view_traffic
+#: chomewnd.tabbed;item;id_view_traffic
 msgid "_Graph"
 msgstr "_Grafikë"
 
-#: cmainwnd.tabbed;11;12;item;id_view_packets cmainwnd.windowed;20;item;id_view_packets cmainwnd.view.tabbed;item;id_view_packets cmainwnd.view.windowed;item;id_view_packets chomewnd.tabbed;item;id_view_packets
+#: cmainwnd.tabbed;11;12;item;id_view_packets
+#: cmainwnd.windowed;20;item;id_view_packets
+#: cmainwnd.view.tabbed;item;id_view_packets
+#: cmainwnd.view.windowed;item;id_view_packets
+#: chomewnd.tabbed;item;id_view_packets
 msgid "_Packet Dump"
 msgstr "_Paketa"
 
-#: cmainwnd.tabbed;11;12;item;id_view_search_monitor cmainwnd.windowed;20;item;id_view_search_monitor cmainwnd.view.tabbed;item;id_view_search_monitor cmainwnd.view.windowed;item;id_view_search_monitor chomewnd.tabbed;item;id_view_search_monitor
+#: cmainwnd.tabbed;11;12;item;id_view_search_monitor
+#: cmainwnd.windowed;20;item;id_view_search_monitor
+#: cmainwnd.view.tabbed;item;id_view_search_monitor
+#: cmainwnd.view.windowed;item;id_view_search_monitor
+#: chomewnd.tabbed;item;id_view_search_monitor
 msgid "Se_arch Monitor"
 msgstr "Monitori i Kër_kimit"
 
-#: cmainwnd.tabbed;11;12;item;id_view_results_monitor cmainwnd.windowed;20;item;id_view_results_monitor cmainwnd.view.tabbed;item;id_view_results_monitor cmainwnd.view.windowed;item;id_view_results_monitor chomewnd.tabbed;item;id_view_results_monitor
+#: cmainwnd.tabbed;11;12;item;id_view_results_monitor
+#: cmainwnd.windowed;20;item;id_view_results_monitor
+#: cmainwnd.view.tabbed;item;id_view_results_monitor
+#: cmainwnd.view.windowed;item;id_view_results_monitor
+#: chomewnd.tabbed;item;id_view_results_monitor
 msgid "H_it Monitor"
 msgstr "Monitori i H_iteve"
 
@@ -756,19 +915,23 @@ msgstr "Monitori i H_iteve"
 msgid "N_ormal Mode"
 msgstr "Mënyrë N_ormale"
 
-#: cmainwnd.tabbed;11;item;id_view_tabbed cmainwnd.windowed;20;item;id_view_tabbed
+#: cmainwnd.tabbed;11;item;id_view_tabbed
+#: cmainwnd.windowed;20;item;id_view_tabbed
 msgid "T_abbed Mode"
 msgstr "Mënyrë me F_usha"
 
-#: cmainwnd.tabbed;11;item;id_view_windowed cmainwnd.windowed;20;item;id_view_windowed
+#: cmainwnd.tabbed;11;item;id_view_windowed
+#: cmainwnd.windowed;20;item;id_view_windowed
 msgid "_Windowed Mode"
 msgstr "Mënyrë me _Dritare"
 
-#: cmainwnd.tabbed;13;item;idc_import_downloads cmainwnd.windowed;21;item;idc_import_downloads
+#: cmainwnd.tabbed;13;item;idc_import_downloads
+#: cmainwnd.windowed;21;item;idc_import_downloads
 msgid "_Import eMule partial downloads..."
 msgstr "_Importo Shkarkesat e Pjesshme nga eMule..."
 
-#: cmainwnd.tabbed;13;item;id_open_downloads_folder cmainwnd.windowed;21;item;id_open_downloads_folder
+#: cmainwnd.tabbed;13;item;id_open_downloads_folder
+#: cmainwnd.windowed;21;item;id_open_downloads_folder
 msgid "_Open my folder of completed Downloads"
 msgstr "_Hap Dosjen me Shkarkesat e Përfunduara"
 
@@ -776,27 +939,34 @@ msgstr "_Hap Dosjen me Shkarkesat e Përfunduara"
 msgid "_Window"
 msgstr "_Dritare"
 
-#: cmainwnd.tabbed;14;item;id_window_navbar cmainwnd.windowed;22;item;id_window_navbar
+#: cmainwnd.tabbed;14;item;id_window_navbar
+#: cmainwnd.windowed;22;item;id_window_navbar
 msgid "Show _Navigation Bar"
 msgstr "Trego Brezin e _Lundrimit"
 
-#: cmainwnd.tabbed;14;item;id_window_toolbar cmainwnd.windowed;22;item;id_window_toolbar
+#: cmainwnd.tabbed;14;item;id_window_toolbar
+#: cmainwnd.windowed;22;item;id_window_toolbar
 msgid "Show _Tool Bar"
 msgstr "Trego Brezin e _Mjeteve"
 
-#: cmainwnd.tabbed;14;item;id_window_tabbar cmainwnd.windowed;22;item;id_window_tabbar
+#: cmainwnd.tabbed;14;item;id_window_tabbar
+#: cmainwnd.windowed;22;item;id_window_tabbar
 msgid "Show Tab _Bar"
 msgstr "Trego _Brezin e Fushës"
 
-#: cmainwnd.tabbed;14;item;id_window_monitor cmainwnd.windowed;22;item;id_window_monitor
+#: cmainwnd.tabbed;14;item;id_window_monitor
+#: cmainwnd.windowed;22;item;id_window_monitor
 msgid "Show _Monitor"
 msgstr "Trego _Monitorin"
 
-#: cmainwnd.tabbed;14;item;id_window_remote cmainwnd.windowed;22;item;id_window_remote
+#: cmainwnd.tabbed;14;item;id_window_remote
+#: cmainwnd.windowed;22;item;id_window_remote
 msgid "Show _Remote"
 msgstr "Trego _Pultin"
 
-#: cmainwnd.windowed;18;item;id_network_search cmainwnd.view.windowed;item;id_network_search cmainwnd.tray;item;id_network_search cremotewnd;item;id_network_search
+#: cmainwnd.windowed;18;item;id_network_search
+#: cmainwnd.view.windowed;item;id_network_search
+#: cmainwnd.tray;item;id_network_search cremotewnd;item;id_network_search
 msgid "New _Search..."
 msgstr "_Kërkim i Ri..."
 
@@ -848,7 +1018,9 @@ msgstr "Kolona _Tjetër"
 msgid "_Connect Now"
 msgstr "_Lidhu Tani"
 
-#: chostcachewnd;item;id_neighbours_copy cneighbourswnd.basic;item;id_neighbours_copy cneighbourswnd;item;id_neighbours_copy
+#: chostcachewnd;item;id_neighbours_copy
+#: cneighbourswnd.basic;item;id_neighbours_copy
+#: cneighbourswnd;item;id_neighbours_copy
 msgid "Copy _URI"
 msgstr "Kopjo _URIn"
 
@@ -896,67 +1068,153 @@ msgstr "_Importo skedën MET..."
 msgid "Download MET..."
 msgstr "Shkarko MET..."
 
-#: csearchwnd.basic;item;id_search_download csearchwnd;item;id_search_download cbrowsehostwnd.basic;item;id_search_download cbrowsehostwnd;item;id_search_download chitmonitorwnd;item;id_search_download
+#: csearchwnd.basic;item;id_search_download csearchwnd;item;id_search_download
+#: cbrowsehostwnd.basic;item;id_search_download
+#: cbrowsehostwnd;item;id_search_download
+#: chitmonitorwnd;item;id_search_download
 msgid "_Download"
 msgstr "_Shkarko"
 
-#: csearchwnd.basic;item;id_search_copy csearchwnd;item;id_search_copy cbrowsehostwnd.basic;item;id_search_copy cbrowsehostwnd;item;id_search_copy chitmonitorwnd;item;id_search_copy cdownloadswnd.download.basic;item;id_downloads_copy cdownloadswnd.download;39;item;id_downloads_copy cdownloadswnd.source;item;id_downloads_copy cdownloadswnd.completed;item;id_downloads_copy clibraryfileview.physical.basic;item;id_library_url clibraryfileview.physical;item;id_library_url clibraryfileview.virtual.basic;item;id_library_url clibraryfileview.virtual;item;id_library_url
+#: csearchwnd.basic;item;id_search_copy csearchwnd;item;id_search_copy
+#: cbrowsehostwnd.basic;item;id_search_copy cbrowsehostwnd;item;id_search_copy
+#: chitmonitorwnd;item;id_search_copy
+#: cdownloadswnd.download.basic;item;id_downloads_copy
+#: cdownloadswnd.download;39;item;id_downloads_copy
+#: cdownloadswnd.source;item;id_downloads_copy
+#: cdownloadswnd.completed;item;id_downloads_copy
+#: clibraryfileview.physical.basic;item;id_library_url
+#: clibraryfileview.physical;item;id_library_url
+#: clibraryfileview.virtual.basic;item;id_library_url
+#: clibraryfileview.virtual;item;id_library_url
 msgid "Copy _URI..."
 msgstr "Kopjo _URIn"
 
-#: csearchwnd.basic;item;id_browse_launch csearchwnd;item;id_browse_launch chitmonitorwnd;item;id_browse_launch cdownloadswnd.source;item;id_browse_launch cuploadswnd.upload.basic;item;id_browse_launch cuploadswnd.upload;item;id_browse_launch cneighbourswnd.basic;item;id_browse_launch cneighbourswnd;item;id_browse_launch csearchmonitorwnd;item;id_browse_launch cprivatechatframe;item;id_chat_browse
+#: csearchwnd.basic;item;id_browse_launch csearchwnd;item;id_browse_launch
+#: chitmonitorwnd;item;id_browse_launch
+#: cdownloadswnd.source;item;id_browse_launch
+#: cuploadswnd.upload.basic;item;id_browse_launch
+#: cuploadswnd.upload;item;id_browse_launch
+#: cneighbourswnd.basic;item;id_browse_launch
+#: cneighbourswnd;item;id_browse_launch
+#: csearchmonitorwnd;item;id_browse_launch
+#: cprivatechatframe;item;id_chat_browse
 msgid "_Browse User"
 msgstr "_Shfleto Përdoruesin"
 
-#: csearchwnd.basic;item;id_search_chat csearchwnd;item;id_search_chat cbrowsehostwnd.basic;item;id_search_chat cbrowsehostwnd;item;id_search_chat chitmonitorwnd;item;id_search_chat cdownloadswnd.source;item;id_transfers_chat cuploadswnd.upload.basic;item;id_uploads_chat cuploadswnd.upload;item;id_uploads_chat cneighbourswnd.basic;item;id_neighbours_chat cneighbourswnd;item;id_neighbours_chat
+#: csearchwnd.basic;item;id_search_chat csearchwnd;item;id_search_chat
+#: cbrowsehostwnd.basic;item;id_search_chat cbrowsehostwnd;item;id_search_chat
+#: chitmonitorwnd;item;id_search_chat
+#: cdownloadswnd.source;item;id_transfers_chat
+#: cuploadswnd.upload.basic;item;id_uploads_chat
+#: cuploadswnd.upload;item;id_uploads_chat
+#: cneighbourswnd.basic;item;id_neighbours_chat
+#: cneighbourswnd;item;id_neighbours_chat
 msgid "_Chat to User"
 msgstr "_Bisedo me Përdoruesin"
 
-#: csearchwnd.basic;29 csearchwnd;31 cbrowsehostwnd.basic;33 cbrowsehostwnd;35 chitmonitorwnd;37 clibraryfileview.physical.basic;40 clibraryfileview.physical;43 clibraryfileview.virtual.basic;46 clibraryfileview.virtual;49
+#: csearchwnd.basic;29 csearchwnd;31 cbrowsehostwnd.basic;33 cbrowsehostwnd;35
+#: chitmonitorwnd;37 clibraryfileview.physical.basic;40
+#: clibraryfileview.physical;43 clibraryfileview.virtual.basic;46
+#: clibraryfileview.virtual;49
 msgid "_Search For"
 msgstr "_Kërko Për"
 
-#: csearchwnd.basic;29;item;id_search_for_similar csearchwnd;31;item;id_search_for_similar cbrowsehostwnd.basic;33;item;id_search_for_similar cbrowsehostwnd;35;item;id_search_for_similar chitmonitorwnd;37;item;id_search_for_similar clibraryfileview.physical.basic;40;item;id_search_for_similar clibraryfileview.physical;43;item;id_search_for_similar clibraryfileview.virtual.basic;46;item;id_search_for_similar clibraryfileview.virtual;49;item;id_search_for_similar
+#: csearchwnd.basic;29;item;id_search_for_similar
+#: csearchwnd;31;item;id_search_for_similar
+#: cbrowsehostwnd.basic;33;item;id_search_for_similar
+#: cbrowsehostwnd;35;item;id_search_for_similar
+#: chitmonitorwnd;37;item;id_search_for_similar
+#: clibraryfileview.physical.basic;40;item;id_search_for_similar
+#: clibraryfileview.physical;43;item;id_search_for_similar
+#: clibraryfileview.virtual.basic;46;item;id_search_for_similar
+#: clibraryfileview.virtual;49;item;id_search_for_similar
 msgid "_Similar Files"
 msgstr "Skeda _Njësoj"
 
-#: csearchwnd.basic;29;item;id_search_for_artist csearchwnd;31;item;id_search_for_artist cbrowsehostwnd.basic;33;item;id_search_for_artist cbrowsehostwnd;35;item;id_search_for_artist chitmonitorwnd;37;item;id_search_for_artist clibraryfileview.physical.basic;40;item;id_search_for_artist clibraryfileview.physical;43;item;id_search_for_artist clibraryfileview.virtual.basic;46;item;id_search_for_artist clibraryfileview.virtual;49;item;id_search_for_artist
+#: csearchwnd.basic;29;item;id_search_for_artist
+#: csearchwnd;31;item;id_search_for_artist
+#: cbrowsehostwnd.basic;33;item;id_search_for_artist
+#: cbrowsehostwnd;35;item;id_search_for_artist
+#: chitmonitorwnd;37;item;id_search_for_artist
+#: clibraryfileview.physical.basic;40;item;id_search_for_artist
+#: clibraryfileview.physical;43;item;id_search_for_artist
+#: clibraryfileview.virtual.basic;46;item;id_search_for_artist
+#: clibraryfileview.virtual;49;item;id_search_for_artist
 msgid "_Music by the same Artist"
 msgstr "_Muzikë nga ky Artist"
 
-#: csearchwnd.basic;29;item;id_search_for_album csearchwnd;31;item;id_search_for_album cbrowsehostwnd.basic;33;item;id_search_for_album cbrowsehostwnd;35;item;id_search_for_album chitmonitorwnd;37;item;id_search_for_album clibraryfileview.physical.basic;40;item;id_search_for_album clibraryfileview.physical;43;item;id_search_for_album clibraryfileview.virtual.basic;46;item;id_search_for_album clibraryfileview.virtual;49;item;id_search_for_album
+#: csearchwnd.basic;29;item;id_search_for_album
+#: csearchwnd;31;item;id_search_for_album
+#: cbrowsehostwnd.basic;33;item;id_search_for_album
+#: cbrowsehostwnd;35;item;id_search_for_album
+#: chitmonitorwnd;37;item;id_search_for_album
+#: clibraryfileview.physical.basic;40;item;id_search_for_album
+#: clibraryfileview.physical;43;item;id_search_for_album
+#: clibraryfileview.virtual.basic;46;item;id_search_for_album
+#: clibraryfileview.virtual;49;item;id_search_for_album
 msgid "Music in the same _Album"
 msgstr "Muzikë në këtë _Album"
 
-#: csearchwnd.basic;29;item;id_search_for_series csearchwnd;31;item;id_search_for_series cbrowsehostwnd.basic;33;item;id_search_for_series cbrowsehostwnd;35;item;id_search_for_series chitmonitorwnd;37;item;id_search_for_series clibraryfileview.physical.basic;40;item;id_search_for_series clibraryfileview.physical;43;item;id_search_for_series clibraryfileview.virtual.basic;46;item;id_search_for_series clibraryfileview.virtual;49;item;id_search_for_series
+#: csearchwnd.basic;29;item;id_search_for_series
+#: csearchwnd;31;item;id_search_for_series
+#: cbrowsehostwnd.basic;33;item;id_search_for_series
+#: cbrowsehostwnd;35;item;id_search_for_series
+#: chitmonitorwnd;37;item;id_search_for_series
+#: clibraryfileview.physical.basic;40;item;id_search_for_series
+#: clibraryfileview.physical;43;item;id_search_for_series
+#: clibraryfileview.virtual.basic;46;item;id_search_for_series
+#: clibraryfileview.virtual;49;item;id_search_for_series
 msgid "_Episodes in the same Series"
 msgstr "_Episode në këtë Serial"
 
-#: csearchwnd.basic;30 csearchwnd;32 cbrowsehostwnd.basic;34 cbrowsehostwnd;36 chitmonitorwnd;38 clibraryfileview.physical.basic;41 clibraryfileview.physical;44 clibraryfileview.virtual.basic;47 clibraryfileview.virtual;50
+#: csearchwnd.basic;30 csearchwnd;32 cbrowsehostwnd.basic;34 cbrowsehostwnd;36
+#: chitmonitorwnd;38 clibraryfileview.physical.basic;41
+#: clibraryfileview.physical;44 clibraryfileview.virtual.basic;47
+#: clibraryfileview.virtual;50
 msgid "_Web Services"
 msgstr "Shërbime _Rrjeti"
 
-#: csearchwnd.basic;30;item;id_library_bitzi_web csearchwnd;32;item;id_library_bitzi_web cbrowsehostwnd.basic;34;item;id_library_bitzi_web cbrowsehostwnd;36;item;id_library_bitzi_web chitmonitorwnd;38;item;id_library_bitzi_web clibraryfileview.physical.basic;41;item;id_library_bitzi_web clibraryfileview.physical;44;item;id_library_bitzi_web clibraryfileview.virtual.basic;47;item;id_library_bitzi_web clibraryfileview.virtual;50;item;id_library_bitzi_web
+#: csearchwnd.basic;30;item;id_library_bitzi_web
+#: csearchwnd;32;item;id_library_bitzi_web
+#: cbrowsehostwnd.basic;34;item;id_library_bitzi_web
+#: cbrowsehostwnd;36;item;id_library_bitzi_web
+#: chitmonitorwnd;38;item;id_library_bitzi_web
+#: clibraryfileview.physical.basic;41;item;id_library_bitzi_web
+#: clibraryfileview.physical;44;item;id_library_bitzi_web
+#: clibraryfileview.virtual.basic;47;item;id_library_bitzi_web
+#: clibraryfileview.virtual;50;item;id_library_bitzi_web
 msgid "View _Bitzi Ticket"
 msgstr "Shiko Biletën _Bitzi"
 
-#: csearchwnd;item;id_search_downloadnow cbrowsehostwnd.basic;item;id_search_downloadnow cbrowsehostwnd;item;id_search_downloadnow
+#: csearchwnd;item;id_search_downloadnow
+#: cbrowsehostwnd.basic;item;id_search_downloadnow
+#: cbrowsehostwnd;item;id_search_downloadnow
 msgid "Download _Now"
 msgstr "Shkarkoje _Tani"
 
-#: csearchwnd;item;id_security_ban cuploadswnd.upload;item;id_security_ban cneighbourswnd;item;id_security_ban csearchmonitorwnd;item;id_security_ban
+#: csearchwnd;item;id_security_ban cuploadswnd.upload;item;id_security_ban
+#: cneighbourswnd;item;id_security_ban csearchmonitorwnd;item;id_security_ban
 msgid "_Ban User"
 msgstr "_Dëboje Përdoruesin"
 
-#: csearchwnd;31;item;id_search_for_this cbrowsehostwnd;35;item;id_search_for_this chitmonitorwnd;37;item;id_search_for_this clibraryfileview.physical.basic;40;item;id_search_for_this clibraryfileview.physical;43;item;id_search_for_this clibraryfileview.virtual.basic;46;item;id_search_for_this clibraryfileview.virtual;49;item;id_search_for_this
+#: csearchwnd;31;item;id_search_for_this
+#: cbrowsehostwnd;35;item;id_search_for_this
+#: chitmonitorwnd;37;item;id_search_for_this
+#: clibraryfileview.physical.basic;40;item;id_search_for_this
+#: clibraryfileview.physical;43;item;id_search_for_this
+#: clibraryfileview.virtual.basic;46;item;id_search_for_this
+#: clibraryfileview.virtual;49;item;id_search_for_this
 msgid "_This File"
 msgstr "_Këtë Skedë"
 
-#: csearchwnd;item;id_search_filter cbrowsehostwnd;item;id_search_filter chitmonitorwnd;item;id_search_filter
+#: csearchwnd;item;id_search_filter cbrowsehostwnd;item;id_search_filter
+#: chitmonitorwnd;item;id_search_filter
 msgid "_Filter Results..."
 msgstr "_Filtro Rezultatet..."
 
-#: csearchwnd;item;id_search_filter_remove cbrowsehostwnd;item;id_search_filter_remove chitmonitorwnd;item;id_search_filter_remove
+#: csearchwnd;item;id_search_filter_remove
+#: cbrowsehostwnd;item;id_search_filter_remove
+#: chitmonitorwnd;item;id_search_filter_remove
 msgid "_Remove Filter"
 msgstr "_Fshije Filtrin"
 
@@ -964,11 +1222,13 @@ msgstr "_Fshije Filtrin"
 msgid "C_lear Results"
 msgstr "P_astro Rezultatet"
 
-#: csearchwnd;item;id_search_columns cbrowsehostwnd;item;id_search_columns chitmonitorwnd;item;id_search_columns
+#: csearchwnd;item;id_search_columns cbrowsehostwnd;item;id_search_columns
+#: chitmonitorwnd;item;id_search_columns
 msgid "Edit C_olumns..."
 msgstr "Edito K_olonat..."
 
-#: chitmonitorwnd;item;id_hitmonitor_pause csearchmonitorwnd;item;id_searchmonitor_pause
+#: chitmonitorwnd;item;id_hitmonitor_pause
+#: csearchmonitorwnd;item;id_searchmonitor_pause
 msgid "_Pause Display"
 msgstr "_Pusho Shfaqjen"
 
@@ -976,35 +1236,46 @@ msgstr "_Pusho Shfaqjen"
 msgid "C_lear Display"
 msgstr "P_astro Shfaqjen"
 
-#: cdownloadswnd.download.basic;item;id_downloads_launch_copy cdownloadswnd.download;item;id_downloads_launch_copy
+#: cdownloadswnd.download.basic;item;id_downloads_launch_copy
+#: cdownloadswnd.download;item;id_downloads_launch_copy
 msgid "Previe_w File"
 msgstr "Parashik_o Skedën"
 
-#: cdownloadswnd.download.basic;item;id_downloads_remote_preview cdownloadswnd.download;item;id_downloads_remote_preview
+#: cdownloadswnd.download.basic;item;id_downloads_remote_preview
+#: cdownloadswnd.download;item;id_downloads_remote_preview
 msgid "R_emote Preview"
 msgstr "Parashiko në L_argësi"
 
-#: cdownloadswnd.download.basic;item;id_downloads_view_reviews cdownloadswnd.download;item;id_downloads_view_reviews
+#: cdownloadswnd.download.basic;item;id_downloads_view_reviews
+#: cdownloadswnd.download;item;id_downloads_view_reviews
 msgid "_View Reviews"
 msgstr "_Shiko Vlerësimet"
 
-#: cdownloadswnd.download.basic;item;id_downloads_resume cdownloadswnd.download;item;id_downloads_resume
+#: cdownloadswnd.download.basic;item;id_downloads_resume
+#: cdownloadswnd.download;item;id_downloads_resume
 msgid "_Resume Download"
 msgstr "_Rimerre Shkarkimin"
 
-#: cdownloadswnd.download.basic;item;id_downloads_pause cdownloadswnd.download;item;id_downloads_pause
+#: cdownloadswnd.download.basic;item;id_downloads_pause
+#: cdownloadswnd.download;item;id_downloads_pause
 msgid "P_ause Download"
 msgstr "P_usho Shkarkimin"
 
-#: cdownloadswnd.download.basic;item;id_downloads_clear_incomplete cdownloadswnd.download;item;id_downloads_clear_incomplete
+#: cdownloadswnd.download.basic;item;id_downloads_clear_incomplete
+#: cdownloadswnd.download;item;id_downloads_clear_incomplete
 msgid "_Cancel Download"
 msgstr "_Anulo Shkarkimin"
 
-#: cdownloadswnd.download.basic;item;id_downloads_sources cdownloadswnd.download;item;id_downloads_sources
+#: cdownloadswnd.download.basic;item;id_downloads_sources
+#: cdownloadswnd.download;item;id_downloads_sources
 msgid "_Find More Sources"
 msgstr "_Gjej Burime Shtesë"
 
-#: cdownloadswnd.download.basic;item;id_downloads_help cdownloadswnd.download;item;id_downloads_help cdownloadswnd.seeding;item;id_downloads_help cdownloadswnd.nothing;item;id_downloads_help cuploadswnd.nothing;item;id_uploads_help
+#: cdownloadswnd.download.basic;item;id_downloads_help
+#: cdownloadswnd.download;item;id_downloads_help
+#: cdownloadswnd.seeding;item;id_downloads_help
+#: cdownloadswnd.nothing;item;id_downloads_help
+#: cuploadswnd.nothing;item;id_uploads_help
 msgid "_Help..."
 msgstr "_Ndihmë..."
 
@@ -1012,7 +1283,13 @@ msgstr "_Ndihmë..."
 msgid "Prev_iew Partial File"
 msgstr "Paras_hikon Skedën e Pjesshme"
 
-#: cdownloadswnd.download;item;id_downloads_enqueue cdownloadswnd.completed.basic;item;id_downloads_enqueue cdownloadswnd.completed;item;id_downloads_enqueue clibraryfileview.physical.basic;item;id_library_enqueue clibraryfileview.physical;item;id_library_enqueue clibraryfileview.virtual.basic;item;id_library_enqueue clibraryfileview.virtual;item;id_library_enqueue
+#: cdownloadswnd.download;item;id_downloads_enqueue
+#: cdownloadswnd.completed.basic;item;id_downloads_enqueue
+#: cdownloadswnd.completed;item;id_downloads_enqueue
+#: clibraryfileview.physical.basic;item;id_library_enqueue
+#: clibraryfileview.physical;item;id_library_enqueue
+#: clibraryfileview.virtual.basic;item;id_library_enqueue
+#: clibraryfileview.virtual;item;id_library_enqueue
 msgid "Add to Pla_ylist"
 msgstr "Shtoje te _Lista"
 
@@ -1028,11 +1305,13 @@ msgstr "_Shto Burim..."
 msgid "Monitor _Window"
 msgstr "Dritare e _Monitorit"
 
-#: cdownloadswnd.download;39;item;id_downloads_move_up csecuritywnd;item;id_security_move_up
+#: cdownloadswnd.download;39;item;id_downloads_move_up
+#: csecuritywnd;item;id_security_move_up
 msgid "Move _Up"
 msgstr "Lëvize _Sipër"
 
-#: cdownloadswnd.download;39;item;id_downloads_move_down csecuritywnd;item;id_security_move_down
+#: cdownloadswnd.download;39;item;id_downloads_move_down
+#: csecuritywnd;item;id_security_move_down
 msgid "Move _Down"
 msgstr "Lëvize _Poshtë"
 
@@ -1040,7 +1319,14 @@ msgstr "Lëvize _Poshtë"
 msgid "_Ignore Bandwidth Limit"
 msgstr "_Përbuze Kufirin e Gjerësisë së Bandës"
 
-#: cdownloadswnd.download;item;id_downloads_edit cdownloadtabbar;item;id_download_group_properties clibrarytileview;item;id_library_album_properties clibraryfileview.physical.basic;item;id_library_properties clibraryfileview.physical;item;id_library_properties clibraryfileview.virtual.basic;item;id_library_properties clibraryfileview.virtual;item;id_library_properties csecuritywnd;item;id_security_edit cdiscoverywnd;item;id_discovery_edit
+#: cdownloadswnd.download;item;id_downloads_edit
+#: cdownloadtabbar;item;id_download_group_properties
+#: clibrarytileview;item;id_library_album_properties
+#: clibraryfileview.physical.basic;item;id_library_properties
+#: clibraryfileview.physical;item;id_library_properties
+#: clibraryfileview.virtual.basic;item;id_library_properties
+#: clibraryfileview.virtual;item;id_library_properties
+#: csecuritywnd;item;id_security_edit cdiscoverywnd;item;id_discovery_edit
 msgid "_Properties"
 msgstr "_Veti"
 
@@ -1052,19 +1338,29 @@ msgstr "_Aksesi"
 msgid "_Forget"
 msgstr "_Harroje"
 
-#: cdownloadswnd.completed.basic;item;id_downloads_launch_complete cdownloadswnd.completed;item;id_downloads_launch_complete cdownloadswnd.seeding;item;id_downloads_launch_complete clibraryfileview.physical.basic;item;id_library_launch clibraryfileview.physical;item;id_library_launch clibraryfileview.virtual.basic;item;id_library_launch clibraryfileview.virtual;item;id_library_launch
+#: cdownloadswnd.completed.basic;item;id_downloads_launch_complete
+#: cdownloadswnd.completed;item;id_downloads_launch_complete
+#: cdownloadswnd.seeding;item;id_downloads_launch_complete
+#: clibraryfileview.physical.basic;item;id_library_launch
+#: clibraryfileview.physical;item;id_library_launch
+#: clibraryfileview.virtual.basic;item;id_library_launch
+#: clibraryfileview.virtual;item;id_library_launch
 msgid "_Open or Play"
 msgstr "_Hape ose Luaje"
 
-#: cdownloadswnd.completed.basic;item;id_downloads_clear_complete cdownloadswnd.completed;item;id_downloads_clear_complete cuploadswnd.upload;item;id_uploads_clear ctrafficwnd;item;id_traffic_clear
+#: cdownloadswnd.completed.basic;item;id_downloads_clear_complete
+#: cdownloadswnd.completed;item;id_downloads_clear_complete
+#: cuploadswnd.upload;item;id_uploads_clear ctrafficwnd;item;id_traffic_clear
 msgid "_Clear"
 msgstr "_Pastro"
 
-#: cdownloadswnd.completed.basic;item;id_downloads_file_delete cdownloadswnd.completed;item;id_downloads_file_delete
+#: cdownloadswnd.completed.basic;item;id_downloads_file_delete
+#: cdownloadswnd.completed;item;id_downloads_file_delete
 msgid "_Delete File"
 msgstr "_Fshije Skedën"
 
-#: cdownloadswnd.completed;item;id_downloads_rate cmedialist;item;id_media_rate
+#: cdownloadswnd.completed;item;id_downloads_rate
+#: cmedialist;item;id_media_rate
 msgid "_Rate File..."
 msgstr "_Vlerëso Skedën..."
 
@@ -1072,15 +1368,20 @@ msgstr "_Vlerëso Skedën..."
 msgid "_Stop Seeding"
 msgstr "_Ndale Mbjelljen"
 
-#: cdownloadswnd.seeding;item;id_downloads_edit cmedialist;item;id_media_properties
+#: cdownloadswnd.seeding;item;id_downloads_edit
+#: cmedialist;item;id_media_properties
 msgid "_Properties..."
 msgstr "_Veti..."
 
-#: cdownloadswnd.nothing;item;id_downloads_clear_completed cuploadswnd.queue;item;id_uploads_clear_completed cuploadswnd.nothing;item;id_uploads_clear_completed
+#: cdownloadswnd.nothing;item;id_downloads_clear_completed
+#: cuploadswnd.queue;item;id_uploads_clear_completed
+#: cuploadswnd.nothing;item;id_uploads_clear_completed
 msgid "C_lear Completed"
 msgstr "P_astro të Përfunduarit"
 
-#: cdownloadswnd.nothing;item;id_downloads_auto_clear cuploadswnd.queue;item;id_uploads_auto_clear cuploadswnd.nothing;item;id_uploads_auto_clear
+#: cdownloadswnd.nothing;item;id_downloads_auto_clear
+#: cuploadswnd.queue;item;id_uploads_auto_clear
+#: cuploadswnd.nothing;item;id_uploads_auto_clear
 msgid "Aut_o Clear"
 msgstr "Auto_pastro"
 
@@ -1104,15 +1405,18 @@ msgstr "Grup i _Ri..."
 msgid "Remove _Group"
 msgstr "Fshije _Grupin"
 
-#: cdownloadtabbar;item;id_download_group_show cdownloadswnd.filter;item;id_download_group_show
+#: cdownloadtabbar;item;id_download_group_show
+#: cdownloadswnd.filter;item;id_download_group_show
 msgid "_Show Groups"
 msgstr "_Trego Grupe"
 
-#: cdownloadswnd.filter;item;id_downloads_filter_all cuploadswnd.filter;item;id_uploads_filter_all
+#: cdownloadswnd.filter;item;id_downloads_filter_all
+#: cuploadswnd.filter;item;id_uploads_filter_all
 msgid "Show _All"
 msgstr "Trego _Gjithçka"
 
-#: cdownloadswnd.filter;item;id_downloads_filter_active cuploadswnd.filter;item;id_uploads_filter_active
+#: cdownloadswnd.filter;item;id_downloads_filter_active
+#: cuploadswnd.filter;item;id_uploads_filter_active
 msgid "Show A_ctive"
 msgstr "Trego A_ktivët"
 
@@ -1152,15 +1456,33 @@ msgstr "Trego _BitTorrent"
 msgid "Show _History"
 msgstr "Trego _Historinë"
 
-#: clibrarytree.physical.basic;item;id_library_shared_folder clibrarytree.physical;item;id_library_shared_folder clibraryfileview.physical.basic;item;id_library_shared_file clibraryfileview.physical;item;id_library_shared_file clibraryfileview.virtual.basic;item;id_library_shared_file clibraryfileview.virtual;item;id_library_shared_file
+#: clibrarytree.physical.basic;item;id_library_shared_folder
+#: clibrarytree.physical;item;id_library_shared_folder
+#: clibraryfileview.physical.basic;item;id_library_shared_file
+#: clibraryfileview.physical;item;id_library_shared_file
+#: clibraryfileview.virtual.basic;item;id_library_shared_file
+#: clibraryfileview.virtual;item;id_library_shared_file
 msgid "_Shared"
 msgstr "_Shpërndahet"
 
-#: clibrarytree.physical.basic;item;id_library_remove clibrarytree.physical;item;id_library_remove cmedialist;item;id_media_remove csecuritywnd;item;id_security_remove cschedulerwnd;item;id_scheduler_remove cdiscoverywnd;item;id_discovery_remove clibrarysettingspage;control;19 clibrarysettingspage;control;23 cmediasettingspage;control;8 cwebsettingspage;control;12 cwizardsharepage;control;6 cavatarprofilepage;control;6 cfilesourcespage;control;6 cgraphlistdlg;control;4 cgraphitemdlg;control;12 csharemanagerdlg;control;5 cdownloadgroupdlg;control;8
+#: clibrarytree.physical.basic;item;id_library_remove
+#: clibrarytree.physical;item;id_library_remove
+#: cmedialist;item;id_media_remove csecuritywnd;item;id_security_remove
+#: cschedulerwnd;item;id_scheduler_remove
+#: cdiscoverywnd;item;id_discovery_remove clibrarysettingspage;control;19
+#: clibrarysettingspage;control;23 cmediasettingspage;control;8
+#: cwebsettingspage;control;12 cwizardsharepage;control;6
+#: cavatarprofilepage;control;6 cfilesourcespage;control;6
+#: cgraphlistdlg;control;4 cgraphitemdlg;control;12 csharemanagerdlg;control;4
+#: cdownloadgroupdlg;control;8
 msgid "_Remove"
 msgstr "_Fshije"
 
-#: clibrarytree.physical.basic;item;id_shell_menu clibrarytree.physical;item;id_shell_menu clibraryfileview.physical;item;id_shell_menu clibraryfileview.virtual.basic;item;id_shell_menu clibraryfileview.virtual;item;id_shell_menu
+#: clibrarytree.physical.basic;item;id_shell_menu
+#: clibrarytree.physical;item;id_shell_menu
+#: clibraryfileview.physical;item;id_shell_menu
+#: clibraryfileview.virtual.basic;item;id_shell_menu
+#: clibraryfileview.virtual;item;id_shell_menu
 msgid "S_hell menu"
 msgstr "Meny b_azë"
 
@@ -1172,27 +1494,41 @@ msgstr "_Eksploro"
 msgid "S_can"
 msgstr "S_kano"
 
-#: clibrarytree.physical;item;id_library_rebuild clibrarytree.virtual;item;id_library_rebuild
+#: clibrarytree.physical;item;id_library_rebuild
+#: clibrarytree.virtual;item;id_library_rebuild
 msgid "Re_build"
 msgstr "Ri_ndërto"
 
-#: clibrarytree.physical;item;id_library_folder_file_properties clibrarytree.virtual.basic;item;id_library_folder_file_properties clibrarytree.virtual;item;id_library_folder_file_properties
+#: clibrarytree.physical;item;id_library_folder_file_properties
+#: clibrarytree.virtual.basic;item;id_library_folder_file_properties
+#: clibrarytree.virtual;item;id_library_folder_file_properties
 msgid "File _Properties"
 msgstr "_Vetitë e Skedës"
 
-#: clibrarytree.virtual.basic;item;id_library_folder_enqueue clibrarytree.virtual;item;id_library_folder_enqueue clibraryfileview.virtual.basic;item;id_library_folder_enqueue
+#: clibrarytree.virtual.basic;item;id_library_folder_enqueue
+#: clibrarytree.virtual;item;id_library_folder_enqueue
+#: clibraryfileview.virtual.basic;item;id_library_folder_enqueue
 msgid "_Play Album"
 msgstr "_Luaj Albumin"
 
-#: clibrarytree.virtual.basic;item;id_library_folder_delete clibrarytree.virtual;item;id_library_folder_delete clibrarytileview;item;id_library_album_delete clibraryfileview.physical.basic;item;id_library_delete clibraryfileview.physical;item;id_library_delete clibraryfileview.virtual.basic;item;id_library_delete clibraryfileview.virtual;item;id_library_delete cuploadssettingspage;control;21 cfiltersearchdlg;control;28
+#: clibrarytree.virtual.basic;item;id_library_folder_delete
+#: clibrarytree.virtual;item;id_library_folder_delete
+#: clibrarytileview;item;id_library_album_delete
+#: clibraryfileview.physical.basic;item;id_library_delete
+#: clibraryfileview.physical;item;id_library_delete
+#: clibraryfileview.virtual.basic;item;id_library_delete
+#: clibraryfileview.virtual;item;id_library_delete
+#: cuploadssettingspage;control;21 cfiltersearchdlg;control;28
 msgid "_Delete"
 msgstr "_Fshije"
 
-#: clibrarytree.virtual.basic;item;id_library_folder_properties clibrarytree.virtual;item;id_library_folder_properties
+#: clibrarytree.virtual.basic;item;id_library_folder_properties
+#: clibrarytree.virtual;item;id_library_folder_properties
 msgid "_Album Properties"
 msgstr "Vetitë e _Albumit"
 
-#: clibrarytree.virtual;item;id_library_export_collection cmedialist;item;id_media_export_collection
+#: clibrarytree.virtual;item;id_library_export_collection
+#: cmedialist;item;id_media_export_collection
 msgid "_Export Collection..."
 msgstr "_Eksporto Koleksionin..."
 
@@ -1204,47 +1540,70 @@ msgstr "Dosje e _Re..."
 msgid "_Open"
 msgstr "_Hape"
 
-#: clibraryfileview.physical.basic;41;item;id_library_bitzi_download clibraryfileview.physical;44;item;id_library_bitzi_download clibraryfileview.virtual.basic;47;item;id_library_bitzi_download clibraryfileview.virtual;50;item;id_library_bitzi_download
+#: clibraryfileview.physical.basic;41;item;id_library_bitzi_download
+#: clibraryfileview.physical;44;item;id_library_bitzi_download
+#: clibraryfileview.virtual.basic;47;item;id_library_bitzi_download
+#: clibraryfileview.virtual;50;item;id_library_bitzi_download
 msgid "_Download Metadata"
 msgstr "_Shkarko Metadata"
 
-#: clibraryfileview.physical.basic;42 clibraryfileview.physical;45 clibraryfileview.virtual.basic;48 clibraryfileview.virtual;51
+#: clibraryfileview.physical.basic;42 clibraryfileview.physical;45
+#: clibraryfileview.virtual.basic;48 clibraryfileview.virtual;51
 msgid "O_rganise"
 msgstr "O_rganizo"
 
-#: clibraryfileview.physical.basic;42;item;id_library_rename clibraryfileview.physical;45;item;id_library_rename clibraryfileview.virtual.basic;48;item;id_library_rename clibraryfileview.virtual;51;item;id_library_rename
+#: clibraryfileview.physical.basic;42;item;id_library_rename
+#: clibraryfileview.physical;45;item;id_library_rename
+#: clibraryfileview.virtual.basic;48;item;id_library_rename
+#: clibraryfileview.virtual;51;item;id_library_rename
 msgid "_Rename File"
 msgstr "_Riemërto Skedën"
 
-#: clibraryfileview.physical.basic;42;item;id_library_move clibraryfileview.physical;45;item;id_library_move clibraryfileview.virtual.basic;48;item;id_library_move clibraryfileview.virtual;51;item;id_library_move
+#: clibraryfileview.physical.basic;42;item;id_library_move
+#: clibraryfileview.physical;45;item;id_library_move
+#: clibraryfileview.virtual.basic;48;item;id_library_move
+#: clibraryfileview.virtual;51;item;id_library_move
 msgid "_Move Files..."
 msgstr "_Lëviz Skeda..."
 
-#: clibraryfileview.physical.basic;42;item;id_library_copy clibraryfileview.physical;45;item;id_library_copy clibraryfileview.virtual.basic;48;item;id_library_copy clibraryfileview.virtual;51;item;id_library_copy
+#: clibraryfileview.physical.basic;42;item;id_library_copy
+#: clibraryfileview.physical;45;item;id_library_copy
+#: clibraryfileview.virtual.basic;48;item;id_library_copy
+#: clibraryfileview.virtual;51;item;id_library_copy
 msgid "_Copy Files..."
 msgstr "_Kopjo Skeda..."
 
-#: clibraryfileview.physical.basic;item;id_library_rebuild_ansi clibraryfileview.physical;item;id_library_rebuild_ansi clibraryfileview.virtual.basic;item;id_library_rebuild_ansi clibraryfileview.virtual;item;id_library_rebuild_ansi
+#: clibraryfileview.physical.basic;item;id_library_rebuild_ansi
+#: clibraryfileview.physical;item;id_library_rebuild_ansi
+#: clibraryfileview.virtual.basic;item;id_library_rebuild_ansi
+#: clibraryfileview.virtual;item;id_library_rebuild_ansi
 msgid "_Localise Metadata"
 msgstr "_Lokalizo Metadata"
 
-#: clibraryfileview.physical.basic;item;id_library_refresh_metadata clibraryfileview.physical;item;id_library_refresh_metadata clibraryfileview.virtual.basic;item;id_library_refresh_metadata clibraryfileview.virtual;item;id_library_refresh_metadata
+#: clibraryfileview.physical.basic;item;id_library_refresh_metadata
+#: clibraryfileview.physical;item;id_library_refresh_metadata
+#: clibraryfileview.virtual.basic;item;id_library_refresh_metadata
+#: clibraryfileview.virtual;item;id_library_refresh_metadata
 msgid "_Refresh Metadata"
 msgstr "_Rifresko Metadata"
 
-#: clibraryfileview.physical;44;item;id_library_createtorrent clibraryfileview.virtual;50;item;id_library_createtorrent
+#: clibraryfileview.physical;44;item;id_library_createtorrent
+#: clibraryfileview.virtual;50;item;id_library_createtorrent
 msgid "Create ._torrent File"
 msgstr "Krijo Skedë _.torrent"
 
-#: clibraryfileview.physical;item;id_library_columns clibraryfileview.virtual;item;id_library_columns
+#: clibraryfileview.physical;item;id_library_columns
+#: clibraryfileview.virtual;item;id_library_columns
 msgid "Choose _Columns..."
 msgstr "Zgjidh _Kolonat..."
 
-#: clibraryfileview.virtual.basic;48;item;id_library_unlink clibraryfileview.virtual;51;item;id_library_unlink
+#: clibraryfileview.virtual.basic;48;item;id_library_unlink
+#: clibraryfileview.virtual;51;item;id_library_unlink
 msgid "Remove _Files"
 msgstr "Fshiji _Skedat"
 
-#: cmediaframe.basic;item;id_media_play cmediaframe;item;id_media_play cmedialist;item;id_media_select
+#: cmediaframe.basic;item;id_media_play cmediaframe;item;id_media_play
+#: cmedialist;item;id_media_select
 msgid "_Play"
 msgstr "_Luaj"
 
@@ -1264,7 +1623,8 @@ msgstr "_Hap Skedë Mediatike..."
 msgid "Play_list"
 msgstr "Lis_ta"
 
-#: cmediaframe.basic;52;item;id_media_previous cmediaframe;55;item;id_media_previous
+#: cmediaframe.basic;52;item;id_media_previous
+#: cmediaframe;55;item;id_media_previous
 msgid "Pre_vious"
 msgstr "Kal_uar"
 
@@ -1272,15 +1632,20 @@ msgstr "Kal_uar"
 msgid "_Next"
 msgstr "_Tjetër"
 
-#: cmediaframe.basic;52;item;id_media_random cmediaframe;55;item;id_media_random
+#: cmediaframe.basic;52;item;id_media_random
+#: cmediaframe;55;item;id_media_random
 msgid "_Random"
 msgstr "_Rastësi"
 
-#: cmediaframe.basic;52;item;id_media_repeat cmediaframe;55;item;id_media_repeat
+#: cmediaframe.basic;52;item;id_media_repeat
+#: cmediaframe;55;item;id_media_repeat
 msgid "R_epeat"
 msgstr "P_ërsërite"
 
-#: cmediaframe.basic;52;item;id_media_playlist cmediaframe.basic;54;item;id_media_playlist cmediaframe;55;item;id_media_playlist cmediaframe;57;item;id_media_playlist cmedialist;item;id_media_playlist
+#: cmediaframe.basic;52;item;id_media_playlist
+#: cmediaframe.basic;54;item;id_media_playlist
+#: cmediaframe;55;item;id_media_playlist cmediaframe;57;item;id_media_playlist
+#: cmedialist;item;id_media_playlist
 msgid "Show _Playlist"
 msgstr "Trego _Listën"
 
@@ -1288,35 +1653,51 @@ msgstr "Trego _Listën"
 msgid "Video Si_ze"
 msgstr "Ma_sa e Videos"
 
-#: cmediaframe.basic;53;item;id_media_size_one cmediaframe;56;item;id_media_size_one cmediaframe.zoom;item;id_media_size_one
+#: cmediaframe.basic;53;item;id_media_size_one
+#: cmediaframe;56;item;id_media_size_one
+#: cmediaframe.zoom;item;id_media_size_one
 msgid "_Original Size"
 msgstr "Masa _Origjinale"
 
-#: cmediaframe.basic;53;item;id_media_size_two cmediaframe;56;item;id_media_size_two cmediaframe.zoom;item;id_media_size_two
+#: cmediaframe.basic;53;item;id_media_size_two
+#: cmediaframe;56;item;id_media_size_two
+#: cmediaframe.zoom;item;id_media_size_two
 msgid "_Double Size"
 msgstr "Masa _Dyfishe"
 
-#: cmediaframe.basic;53;item;id_media_size_three cmediaframe;56;item;id_media_size_three cmediaframe.zoom;item;id_media_size_three
+#: cmediaframe.basic;53;item;id_media_size_three
+#: cmediaframe;56;item;id_media_size_three
+#: cmediaframe.zoom;item;id_media_size_three
 msgid "_Triple Size"
 msgstr "Masa _Trefishe"
 
-#: cmediaframe.basic;53;item;id_media_size_fill cmediaframe;56;item;id_media_size_fill cmediaframe.zoom;item;id_media_size_fill
+#: cmediaframe.basic;53;item;id_media_size_fill
+#: cmediaframe;56;item;id_media_size_fill
+#: cmediaframe.zoom;item;id_media_size_fill
 msgid "_Largest"
 msgstr "_Më e Madhe"
 
-#: cmediaframe.basic;53;item;id_media_size_distort cmediaframe;56;item;id_media_size_distort cmediaframe.zoom;item;id_media_size_distort
+#: cmediaframe.basic;53;item;id_media_size_distort
+#: cmediaframe;56;item;id_media_size_distort
+#: cmediaframe.zoom;item;id_media_size_distort
 msgid "_Fill Window"
 msgstr "_Mbushe Dritaren"
 
-#: cmediaframe.basic;53;item;id_media_aspect_default cmediaframe;56;item;id_media_aspect_default cmediaframe.zoom;item;id_media_aspect_default
+#: cmediaframe.basic;53;item;id_media_aspect_default
+#: cmediaframe;56;item;id_media_aspect_default
+#: cmediaframe.zoom;item;id_media_aspect_default
 msgid "Default _Aspect"
 msgstr "_Aspekt Tipik"
 
-#: cmediaframe.basic;53;item;id_media_aspect_4_3 cmediaframe;56;item;id_media_aspect_4_3 cmediaframe.zoom;item;id_media_aspect_4_3
+#: cmediaframe.basic;53;item;id_media_aspect_4_3
+#: cmediaframe;56;item;id_media_aspect_4_3
+#: cmediaframe.zoom;item;id_media_aspect_4_3
 msgid "_4:3 Ratio (TV)"
 msgstr "Raport _4:3 (TV)"
 
-#: cmediaframe.basic;53;item;id_media_aspect_16_9 cmediaframe;56;item;id_media_aspect_16_9 cmediaframe.zoom;item;id_media_aspect_16_9
+#: cmediaframe.basic;53;item;id_media_aspect_16_9
+#: cmediaframe;56;item;id_media_aspect_16_9
+#: cmediaframe.zoom;item;id_media_aspect_16_9
 msgid "_16:9 (Film)"
 msgstr "Raport _16:9 (Film)"
 
@@ -1328,11 +1709,13 @@ msgstr "Vendos_je"
 msgid "Choose _Visualisation..."
 msgstr "Zgjidhe _Vegimin..."
 
-#: cmediaframe.basic;54;item;id_media_status cmediaframe;57;item;id_media_status
+#: cmediaframe.basic;54;item;id_media_status
+#: cmediaframe;57;item;id_media_status
 msgid "Show _Status Line"
 msgstr "Trego Vijën e _Statusit"
 
-#: cmediaframe.basic;54;item;id_media_settings cmediaframe;57;item;id_media_settings
+#: cmediaframe.basic;54;item;id_media_settings
+#: cmediaframe;57;item;id_media_settings
 msgid "_Media Settings..."
 msgstr "Vendosjet e _Medias..."
 
@@ -1392,15 +1775,17 @@ msgstr "_Info"
 msgid "_Debug"
 msgstr "_Debug"
 
-#: csystemwnd;item;id_system_timestamp cprivatechatframe;item;id_chat_timestamp
+#: csystemwnd;item;id_system_timestamp
+#: cprivatechatframe;item;id_chat_timestamp
 msgid "Timestam_p"
 msgstr "Me Dat_ë"
 
-#: csystemwnd;item;id_system_copy curlexportdlg;control;8
+#: csystemwnd;item;id_system_copy curlexportdlg;control;7
 msgid "_Copy"
 msgstr "_Kopjo"
 
-#: csystemwnd;item;id_system_clear csearchmonitorwnd;item;id_searchmonitor_clear
+#: csystemwnd;item;id_system_clear
+#: csearchmonitorwnd;item;id_searchmonitor_clear
 msgid "Clear _Buffer"
 msgstr "Pastro _Zbutësin"
 
@@ -1580,7 +1965,8 @@ msgstr "Masa _Aktuale"
 msgid "_Refresh"
 msgstr "_Rifresko"
 
-#: imageviewer_context;item;imageviewer_close circtabrclick;item;id_irc_closetab
+#: imageviewer_context;item;imageviewer_close
+#: circtabrclick;item;id_irc_closetab
 msgid "_Close"
 msgstr "_Mbylle"
 
@@ -1717,8 +2103,12 @@ msgid "W A R N I N G   -   Y O U   A R E   F I R E W A L L E D"
 msgstr "K U J D E S   -   J E   P A S   N J Ë   F A J R U O L L I"
 
 #: chomeviewctrl;text;5001
-msgid "Shareaza has detected that you are behind a NAT router or firewall,\n\t\t\tand are unable to receive connections from the Internet.  "
-msgstr "Shareaza dikton se ndodhesh pas një ruteri NAT ose fajruolli\n\t\t\t  dhe nuk mund të marrësh lidhje nga Interneti.  "
+msgid ""
+"Shareaza has detected that you are behind a NAT router or firewall,\n"
+"\t\t\tand are unable to receive connections from the Internet.  "
+msgstr ""
+"Shareaza dikton se ndodhesh pas një ruteri NAT ose fajruolli\n"
+"\t\t\t  dhe nuk mund të marrësh lidhje nga Interneti.  "
 
 #: chomeviewctrl;text;5002
 msgid "This may cause poor download and search performance."
@@ -1733,8 +2123,12 @@ msgid "W A R N I N G   -   Y O U R   T C P   P O R T   I S   F I R E W A L
 msgstr "K U J D E S   -   P O R T I   T C P   B L L O K O H E T   N G A   F A J R U O L L I"
 
 #: chomeviewctrl;text;6001
-msgid "Shareaza has detected that you are behind a NAT router or firewall,\n\t\t\tand are unable to receive TCP connections from the Internet.  "
-msgstr "Shareaza dikton se ndodhesh pas një ruteri NAT ose fajruolli\n\t\t\t  dhe nuk mund të marrësh lidhje TCP nga Interneti.  "
+msgid ""
+"Shareaza has detected that you are behind a NAT router or firewall,\n"
+"\t\t\tand are unable to receive TCP connections from the Internet.  "
+msgstr ""
+"Shareaza dikton se ndodhesh pas një ruteri NAT ose fajruolli\n"
+"\t\t\t  dhe nuk mund të marrësh lidhje TCP nga Interneti.  "
 
 #: chomeviewctrl;text;6002
 msgid "This may cause poor download performance."
@@ -1745,8 +2139,12 @@ msgid "W A R N I N G   -   Y O U R   U D P   P O R T   I S   F I R E W A L
 msgstr "K U J D E S   -   P O R T I   U D P   B L L O K O H E T   N G A   F A J R U O L L I"
 
 #: chomeviewctrl;text;7001
-msgid "Shareaza has detected that you are behind a NAT router or firewall,\n\t\t\tand are unable to receive UDP messages from the Internet.  "
-msgstr "Shareaza dikton se ndodhesh pas një ruteri NAT ose fajruolli\n\t\t\t  dhe nuk mund të marrësh lidhje UDP nga Interneti. "
+msgid ""
+"Shareaza has detected that you are behind a NAT router or firewall,\n"
+"\t\t\tand are unable to receive UDP messages from the Internet.  "
+msgstr ""
+"Shareaza dikton se ndodhesh pas një ruteri NAT ose fajruolli\n"
+"\t\t\t  dhe nuk mund të marrësh lidhje UDP nga Interneti. "
 
 #: chomeviewctrl;text;7002
 msgid "This may cause poor search performance."
@@ -1880,15 +2278,18 @@ msgstr "Kliko këtu që të lidhesh"
 msgid "Gnutella2:"
 msgstr "Gnutella2:"
 
-#: chomeconnectionbox;text;4 chomeconnectionbox;text;10 chomeconnectionbox;text;16
+#: chomeconnectionbox;text;4 chomeconnectionbox;text;10
+#: chomeconnectionbox;text;16
 msgid "Disconnected"
 msgstr "I shkëputur"
 
-#: chomeconnectionbox;text;5 chomeconnectionbox;text;11 chomeconnectionbox;text;17 string;8070
+#: chomeconnectionbox;text;5 chomeconnectionbox;text;11
+#: chomeconnectionbox;text;17 string;8070
 msgid "Connecting..."
 msgstr "Lidhje..."
 
-#: chomeconnectionbox;text;6 chomeconnectionbox;text;12 chomeconnectionbox;text;18 string;8071
+#: chomeconnectionbox;text;6 chomeconnectionbox;text;12
+#: chomeconnectionbox;text;18 string;8071
 msgid "Connected"
 msgstr "I lidhur"
 
@@ -1928,7 +2329,8 @@ msgstr "orë dhe"
 msgid "minutes."
 msgstr "minuta."
 
-#: document;chomeuploadsbox string;window_uploads string;8317 dialog;cuploadssettingspage column;uploads
+#: document;chomeuploadsbox string;window_uploads string;8317
+#: dialog;cuploadssettingspage column;uploads
 msgid "Uploads"
 msgstr "Ngarkesa"
 
@@ -1984,7 +2386,9 @@ msgstr "Mbill torrent tjetër"
 msgid "Seed a torrent"
 msgstr "Mbill një torrent"
 
-#: document;cgeneralsettingsgroup cgeneralsettingsgroup;text;3 dialog;cgeneralsettingsgroup dialog;cgeneralsettingspage dialog;cfilegeneralpage
+#: document;cgeneralsettingsgroup cgeneralsettingsgroup;text;3
+#: dialog;cgeneralsettingsgroup dialog;cgeneralsettingspage
+#: dialog;cfilegeneralpage
 msgid "General"
 msgstr "Përgjithësi"
 
@@ -1993,8 +2397,12 @@ msgid "Welcome to Shareaza's Settings Manager"
 msgstr "Mirë se erdhe te Menaxheri i Vendosjeve të Shareaza-s"
 
 #: cgeneralsettingsgroup;text;2
-msgid "The Shareaza Settings Manager allows advanced users to completely customise how\n\t\t\tShareaza works. The settings in the"
-msgstr "Menaxheri i Vendosjeve të Shareaza-s i lejon përdoruesit e avancuar që të porositin tërësisht mënyrën si\n\t\t\tfunksionon Shareaza. Vendosjet te seksioni"
+msgid ""
+"The Shareaza Settings Manager allows advanced users to completely customise how\n"
+"\t\t\tShareaza works. The settings in the"
+msgstr ""
+"Menaxheri i Vendosjeve të Shareaza-s i lejon përdoruesit e avancuar që të porositin tërësisht mënyrën si\n"
+"\t\t\tfunksionon Shareaza. Vendosjet te seksioni"
 
 #: cgeneralsettingsgroup;text;4
 msgid "section relate to the user experience."
@@ -2048,13 +2456,18 @@ msgstr "Integrimi në Rrjet:"
 msgid "Integrate Shareaza with your web browser to accept peer-to-peer links and download content."
 msgstr "Integron Shareaza-n me shfletuesin e rrjetit që të pranojë linket pikë-më-pikë dhe të shkarkojë përmbajtje."
 
-#: document;cinternetsettingsgroup cinternetsettingsgroup;text;3 dialog;cinternetsettingsgroup
+#: document;cinternetsettingsgroup cinternetsettingsgroup;text;3
+#: dialog;cinternetsettingsgroup
 msgid "Internet"
 msgstr "Interneti"
 
 #: cinternetsettingsgroup;text;2
-msgid "The Shareaza Settings Manager allows advanced users to completely customise \n\t\t\thow Shareaza works. The settings in the"
-msgstr "Menaxheri i Vendosjeve të Shareaza-s i lejon përdoruesit e avancuar që të porositin tërësisht mënyrën si\n\t\t\tfunksionon Shareaza.  Vendosjet te seksioni"
+msgid ""
+"The Shareaza Settings Manager allows advanced users to completely customise \n"
+"\t\t\thow Shareaza works. The settings in the"
+msgstr ""
+"Menaxheri i Vendosjeve të Shareaza-s i lejon përdoruesit e avancuar që të porositin tërësisht mënyrën si\n"
+"\t\t\tfunksionon Shareaza.  Vendosjet te seksioni"
 
 #: cinternetsettingsgroup;text;4
 msgid "section control how Shareaza interacts with other nodes within distributed peer-to-peer networks."
@@ -2149,48 +2562,76 @@ msgid "Downloads Area"
 msgstr "Zona e Shkarkesave"
 
 #: downloadhelp.select;text;2
-msgid "This is where files currently being downloaded are displayed. You can view\n\t\tindividual sources by expanding each file with the small + on the left."
-msgstr "Këtu shfaqen skedat që janë aktualisht në shkarkim. Mund t'i shikosh\n\t\tburimet individuale duke e zgjeruar çdo skedë me + e vogël anash."
+msgid ""
+"This is where files currently being downloaded are displayed. You can view\n"
+"\t\tindividual sources by expanding each file with the small + on the left."
+msgstr ""
+"Këtu shfaqen skedat që janë aktualisht në shkarkim. Mund t'i shikosh\n"
+"\t\tburimet individuale duke e zgjeruar çdo skedë me + e vogël anash."
 
 #: downloadhelp.select;text;3
-msgid "Drag'n'Drop downloads higher in the list for priority, or onto Download Group \n\t\ttabs for better organisation (in Power Mode)."
-msgstr "Kapi e hidhi shkarkesat që janë më lart në listë për parësi, ose te fushat e Grupit\n\t\ttë Shkarkimit për organizim më të mirë (te Mënyra e Avancuar)."
+msgid ""
+"Drag'n'Drop downloads higher in the list for priority, or onto Download Group \n"
+"\t\ttabs for better organisation (in Power Mode)."
+msgstr ""
+"Kapi e hidhi shkarkesat që janë më lart në listë për parësi, ose te fushat e Grupit\n"
+"\t\ttë Shkarkimit për organizim më të mirë (te Mënyra e Avancuar)."
 
 #: downloadhelp.select;text;4
-msgid "You can also use this command to get help information on a specific download.\n\t\tSimply select a download and choose this Help command again."
-msgstr "Këtë komandë mund ta përdorësh edhe për të marrë informacion ndihmës për një\n\t\tshkarkesë të caktuar. Thjesht zgjidhe një shkarkesë dhe pastaj komandën Ndihmë."
+msgid ""
+"You can also use this command to get help information on a specific download.\n"
+"\t\tSimply select a download and choose this Help command again."
+msgstr ""
+"Këtë komandë mund ta përdorësh edhe për të marrë informacion ndihmës për një\n"
+"\t\tshkarkesë të caktuar. Thjesht zgjidhe një shkarkesë dhe pastaj komandën Ndihmë."
 
 #: downloadhelp.seeding;text;1
 msgid "This Torrent is Seeding"
 msgstr "Ky Torrent Mbillet"
 
 #: downloadhelp.seeding;text;2
-msgid "Shareaza has verified this complete download, and is actively sharing it\n\t\twith other downloaders through BitTorrent. Please share at least 100%."
-msgstr "Shareaza ka verifikuar këtë shkarkesë të plotë, dhe po e ndan atë tërë kohën\n\t\tme shkarkues të tjerë përmes BitTorrent-it. Të lutem shpërndaje të paktën 100%."
+msgid ""
+"Shareaza has verified this complete download, and is actively sharing it\n"
+"\t\twith other downloaders through BitTorrent. Please share at least 100%."
+msgstr ""
+"Shareaza ka verifikuar këtë shkarkesë të plotë, dhe po e ndan atë tërë kohën\n"
+"\t\tme shkarkues të tjerë përmes BitTorrent-it. Të lutem shpërndaje të paktën 100%."
 
 #: downloadhelp.completed;text;1
 msgid "This Download has Completed"
 msgstr "Kjo Shkarkesë Përfundon"
 
 #: downloadhelp.completed;text;2
-msgid "Shareaza has finished downloading this file, and has verified that it\n\t\tis 100% correct. It has also moved the file to your downloads folder."
-msgstr "Shareaza e përfundoi shkarkimin e kësaj skede dhe verifikoi se ajo\n\t\tështë 100% korrekte. Skeda gjithashtu ka lëvizur në dosjen e shkarkesave tuaja."
+msgid ""
+"Shareaza has finished downloading this file, and has verified that it\n"
+"\t\tis 100% correct. It has also moved the file to your downloads folder."
+msgstr ""
+"Shareaza e përfundoi shkarkimin e kësaj skede dhe verifikoi se ajo\n"
+"\t\tështë 100% korrekte. Skeda gjithashtu ka lëvizur në dosjen e shkarkesave tuaja."
 
 #: downloadhelp.moving;text;1
 msgid "This Download is Moving"
 msgstr "Kjo Shkarkesë Lëvizet"
 
 #: downloadhelp.moving;text;2
-msgid "Shareaza has finished downloading this file, and has verified that\n\t\tit is correct. It is currently being moved and/or unpacked to your downloads folder."
-msgstr "Shareaza e përfundoi shkarkimin e kësaj skede dhe verifikoi se ajo\n\t\tështë korrekte. Ajo po lëvizet dhe/ose shpaketohet në dosjen e shkarkesave tuaja."
+msgid ""
+"Shareaza has finished downloading this file, and has verified that\n"
+"\t\tit is correct. It is currently being moved and/or unpacked to your downloads folder."
+msgstr ""
+"Shareaza e përfundoi shkarkimin e kësaj skede dhe verifikoi se ajo\n"
+"\t\tështë korrekte. Ajo po lëvizet dhe/ose shpaketohet në dosjen e shkarkesave tuaja."
 
 #: downloadhelp.paused;text;1
 msgid "This Download is Paused"
 msgstr "Kjo Shkarkesë Pushon"
 
 #: downloadhelp.paused;text;2
-msgid "You have paused this download. If you want it to resume downloading, you\n\t\tcan click the '"
-msgstr "Shkarkesa pushno. Nëse do ta rimarrësh shkarkimin, mund\n\t\ttë klikosh komandën '"
+msgid ""
+"You have paused this download. If you want it to resume downloading, you\n"
+"\t\tcan click the '"
+msgstr ""
+"Shkarkesa pushno. Nëse do ta rimarrësh shkarkimin, mund\n"
+"\t\ttë klikosh komandën '"
 
 #: downloadhelp.paused;text;4
 msgid "' command."
@@ -2201,88 +2642,168 @@ msgid "The Disk is Full"
 msgstr "Disku Është Plot"
 
 #: downloadhelp.diskfull;text;2
-msgid "Shareaza has paused this download automatically because the hard disk\n\t\tappears to be full, or the download file cannot be written to. If you wish\n\t\tto continue downloading, please free some space on your hard disk and/or check\n\t\tto make sure the incomplete file folder is accessible, and then resume the\n\t\tdownload."
-msgstr "Shareaza e pushoi automatikisht këtë shkarkesë sepse disku i ngurtë\n\t\tduket se është plot ose skeda në shkarkim nuk mund të shkruhet. Nëse dëshiron\n\t\ttë vijosh me shkarkimin, të lutem liro pak hapësirën në disk dhe/ose sigurohu\n\t\tqë dosja e skedës së paplotë të jetë e hapshme, pastaj rimerre\n\t\tshkarkimin."
+msgid ""
+"Shareaza has paused this download automatically because the hard disk\n"
+"\t\tappears to be full, or the download file cannot be written to. If you wish\n"
+"\t\tto continue downloading, please free some space on your hard disk and/or check\n"
+"\t\tto make sure the incomplete file folder is accessible, and then resume the\n"
+"\t\tdownload."
+msgstr ""
+"Shareaza e pushoi automatikisht këtë shkarkesë sepse disku i ngurtë\n"
+"\t\tduket se është plot ose skeda në shkarkim nuk mund të shkruhet. Nëse dëshiron\n"
+"\t\ttë vijosh me shkarkimin, të lutem liro pak hapësirën në disk dhe/ose sigurohu\n"
+"\t\tqë dosja e skedës së paplotë të jetë e hapshme, pastaj rimerre\n"
+"\t\tshkarkimin."
 
 #: downloadhelp.verifying;text;1
 msgid "This Download is Verifying"
 msgstr "Kjo Shkarkesë Verifikohet"
 
 #: downloadhelp.verifying;text;2
-msgid "This download has finished, and Shareaza is now checking it to ensure\n\t\tthat it is exactly the same as the original file. If any damaged parts are\n\t\tfound, Shareaza will repair them automatically."
-msgstr "Kjo shkarkesë ka përfunduar dhe tani Shareaza e verifikon atë për t'u siguruar\n\t\tqë të jetë pikërisht e njëjtë me skedën origjinale. Nëse gjendet ndonjë pjesë e\n\t\tdëmtuar, Shareaza do e riparojë automatikisht."
+msgid ""
+"This download has finished, and Shareaza is now checking it to ensure\n"
+"\t\tthat it is exactly the same as the original file. If any damaged parts are\n"
+"\t\tfound, Shareaza will repair them automatically."
+msgstr ""
+"Kjo shkarkesë ka përfunduar dhe tani Shareaza e verifikon atë për t'u siguruar\n"
+"\t\tqë të jetë pikërisht e njëjtë me skedën origjinale. Nëse gjendet ndonjë pjesë e\n"
+"\t\tdëmtuar, Shareaza do e riparojë automatikisht."
 
 #: downloadhelp.downloading;text;1
 msgid "This Download is Active!"
 msgstr "Kjo Shkarkesë është Aktive!"
 
 #: downloadhelp.downloading;text;2
-msgid "This download is currently in progress. If it is downloading too slowly,\n\t\tyou could try searching the network for more sources with the '"
-msgstr "Kjo shkarkesë është aktualisht në progres. Nëse shkarkohet shumë ngadalë,\n\t\tmund të provosh të kërkosh rrjetin për më shumë burime me komandën '"
+msgid ""
+"This download is currently in progress. If it is downloading too slowly,\n"
+"\t\tyou could try searching the network for more sources with the '"
+msgstr ""
+"Kjo shkarkesë është aktualisht në progres. Nëse shkarkohet shumë ngadalë,\n"
+"\t\tmund të provosh të kërkosh rrjetin për më shumë burime me komandën '"
 
 #: downloadhelp.downloading;text;3 downloadhelp.searching;text;3
 msgid "Find More Sources"
 msgstr "Gjej më Shumë Burime"
 
 #: downloadhelp.downloading;text;4
-msgid "' command. If the speed does not \n\t\timprove it may be due to limited upload speeds of the users you are downloading \n\t\tfrom. Download speed usually increases over time."
-msgstr "'. Nëse shpejtësia nuk përmirësohet,\n\t\tshkaku mund të jetë shpejtësia e kufizuar e ngarkimit për përdoruesit nga të cilët po\n\t\tshkarkon. Shpejtësia e shkarkimit zakonisht rritet me kohë."
+msgid ""
+"' command. If the speed does not \n"
+"\t\timprove it may be due to limited upload speeds of the users you are downloading \n"
+"\t\tfrom. Download speed usually increases over time."
+msgstr ""
+"'. Nëse shpejtësia nuk përmirësohet,\n"
+"\t\tshkaku mund të jetë shpejtësia e kufizuar e ngarkimit për përdoruesit nga të cilët po\n"
+"\t\tshkarkon. Shpejtësia e shkarkimit zakonisht rritet me kohë."
 
 #: downloadhelp.pending;text;1
 msgid "This Download is Pending"
 msgstr "Kjo Shkarkesë Varet"
 
 #: downloadhelp.pending;text;2
-msgid "This download is waiting for someone to start uploading.\n\t\tShareaza is ready to start downloading this file, but no-one is sending it at\n\t\tthe moment. You are probably waiting in other user's queues, and the download\n\t\tmay start transferring at any time. You can examine the individual sources to \n\t\tsee each queue you are waiting in. If you are sharing files yourself, it may\n\t\timprove the chances of a download transfer starting quickly."
-msgstr "Kjo shkarkesë pret që dikush të nisë ngarkimin.\n\t\tShareaza është gati ta nisë shkarkimin e kësaj skede, por për momentin askush nuk po\n\t\te mbjell atë në. Mbase pret radhën e ndonjërit prej përdoruesve të tjerë, dhe shkarkimi\n\t\tmund të nisë në çdo kohë. Mund të ekzaminosh burimet individuale për të parë \n\t\tsecilën radhë ku po pret. Nëse shpërndan skeda, shanset që transferimi i\n\t\tshkarkesës të nisë më shpejt mund të rriten."
+msgid ""
+"This download is waiting for someone to start uploading.\n"
+"\t\tShareaza is ready to start downloading this file, but no-one is sending it at\n"
+"\t\tthe moment. You are probably waiting in other user's queues, and the download\n"
+"\t\tmay start transferring at any time. You can examine the individual sources to \n"
+"\t\tsee each queue you are waiting in. If you are sharing files yourself, it may\n"
+"\t\timprove the chances of a download transfer starting quickly."
+msgstr ""
+"Kjo shkarkesë pret që dikush të nisë ngarkimin.\n"
+"\t\tShareaza është gati ta nisë shkarkimin e kësaj skede, por për momentin askush nuk po\n"
+"\t\te mbjell atë në. Mbase pret radhën e ndonjërit prej përdoruesve të tjerë, dhe shkarkimi\n"
+"\t\tmund të nisë në çdo kohë. Mund të ekzaminosh burimet individuale për të parë \n"
+"\t\tsecilën radhë ku po pret. Nëse shpërndan skeda, shanset që transferimi i\n"
+"\t\tshkarkesës të nisë më shpejt mund të rriten."
 
 #: downloadhelp.queued;text;1
 msgid "This Download is Queued"
 msgstr "Kjo Shkarkesë Vendoshet në Pritje"
 
 #: downloadhelp.queued;text;2
-msgid "This download is waiting for some of your other downloads to complete.\n\t\tYour download settings limit the number of downloads which may be active at\n\t\tany given time, to ensure that each download gets a good share of the available\n\t\tbandwidth. You can change these settings via Tools, Shareaza Settings.\n\t\tAlternatively, you may manually start this download with the resume command."
-msgstr "Kjo shkarkesë pret që disa nga shkarkesat e tjera të përfundojnë.\n\t\tVendosjet e shkarkimit e kufizojnë numrin e shkarkesave që mund të jenë aktive\n\t\tnë një kohë të dhënë, për t'u siguruar që secila shkarkesë të marrë një masë të mirë\n\t\ttë shtrirjes së vlefshme të bandës.  Këto vendosje mund t'i ndryshosh te Mjete, Vendosjet e Shareaza-s.\n\t\tSi alternativë, këtë shkarkesë mund ta nisësh edhe me dorë sipas komandës 'Rimerre'."
+msgid ""
+"This download is waiting for some of your other downloads to complete.\n"
+"\t\tYour download settings limit the number of downloads which may be active at\n"
+"\t\tany given time, to ensure that each download gets a good share of the available\n"
+"\t\tbandwidth. You can change these settings via Tools, Shareaza Settings.\n"
+"\t\tAlternatively, you may manually start this download with the resume command."
+msgstr ""
+"Kjo shkarkesë pret që disa nga shkarkesat e tjera të përfundojnë.\n"
+"\t\tVendosjet e shkarkimit e kufizojnë numrin e shkarkesave që mund të jenë aktive\n"
+"\t\tnë një kohë të dhënë, për t'u siguruar që secila shkarkesë të marrë një masë të mirë\n"
+"\t\ttë shtrirjes së vlefshme të bandës.  Këto vendosje mund t'i ndryshosh te Mjete, Vendosjet e Shareaza-s.\n"
+"\t\tSi alternativë, këtë shkarkesë mund ta nisësh edhe me dorë sipas komandës 'Rimerre'."
 
 #: downloadhelp.searching;text;1
 msgid "This Download is Searching"
 msgstr "Kjo Shkarkesë Kërkon"
 
 #: downloadhelp.searching;text;2
-msgid "There are no known sources for this download, so Shareaza is searching\n\t\tall connected P2P networks for new sources. Once sources are found, the\n\t\tdownload will start automatically. Shareaza searches for sources automatically,\n\t\thowever you can speed up the process using the"
-msgstr "Për këtë shkarkesë ka burime të njohura, ndaj edhe Shareaza kërkon në\n\t\ttërë rrjet e lidhura P2P për burime të reja.  Sapo burimet të gjenden, shkarkimi\n\t\tdo të nisë automatikisht.  Shareaza kërkon automatikisht për burime, gjithsesi\n\t\tmund ta shpejtosh procesin duke përdorur komandën"
+msgid ""
+"There are no known sources for this download, so Shareaza is searching\n"
+"\t\tall connected P2P networks for new sources. Once sources are found, the\n"
+"\t\tdownload will start automatically. Shareaza searches for sources automatically,\n"
+"\t\thowever you can speed up the process using the"
+msgstr ""
+"Për këtë shkarkesë ka burime të njohura, ndaj edhe Shareaza kërkon në\n"
+"\t\ttërë rrjet e lidhura P2P për burime të reja.  Sapo burimet të gjenden, shkarkimi\n"
+"\t\tdo të nisë automatikisht.  Shareaza kërkon automatikisht për burime, gjithsesi\n"
+"\t\tmund ta shpejtosh procesin duke përdorur komandën"
 
 #: downloadhelp.searching;text;4
 msgid "command."
 msgstr "."
 
 #: downloadhelp.searching;text;5
-msgid "Unfortunately in many cases there may be no users online who have the\n\t\tfile you are looking for. The only course of action here is to wait for\n\t\tsomeone to come online, or cancel it and try to find a similar file which is\n\t\tmore widely available."
-msgstr "Për fat të keq, në linjë mund të mos ketë përdorues për skedën\n\t\tqë kërkon.  I vetmi rend veprimi në këtë rast është të presësh që\n\t\tdikush të vijë në linjë ose ta anulosh atë dhe të provosh të gjesh një skedë\n\t\ttë ngjashme më të vlefshme."
+msgid ""
+"Unfortunately in many cases there may be no users online who have the\n"
+"\t\tfile you are looking for. The only course of action here is to wait for\n"
+"\t\tsomeone to come online, or cancel it and try to find a similar file which is\n"
+"\t\tmore widely available."
+msgstr ""
+"Për fat të keq, në linjë mund të mos ketë përdorues për skedën\n"
+"\t\tqë kërkon.  I vetmi rend veprimi në këtë rast është të presësh që\n"
+"\t\tdikush të vijë në linjë ose ta anulosh atë dhe të provosh të gjesh një skedë\n"
+"\t\ttë ngjashme më të vlefshme."
 
 #: downloadhelp.creating;text;1
 msgid "This Download is Creating"
 msgstr "Kjo Shkarkesë Krijon"
 
 #: downloadhelp.creating;text;2
-msgid "Shareaza is pre-allocating a file in which to store this download, to\n\t\tsave time later."
-msgstr "Shareaza paracakton një skedë ku të depozitojë shkarkesën, që ta ruajë\n\t\tkohën për më vonë."
+msgid ""
+"Shareaza is pre-allocating a file in which to store this download, to\n"
+"\t\tsave time later."
+msgstr ""
+"Shareaza paracakton një skedë ku të depozitojë shkarkesën, që ta ruajë\n"
+"\t\tkohën për më vonë."
 
 #: downloadhelp.tracker;text;1
 msgid "BitTorrent Tracker Down"
 msgstr "Gjurmuesi BitTorrent Bie"
 
 #: downloadhelp.tracker;text;2
-msgid "The BitTorrent tracker server for this download appears to be\n\t\tdown or malfunctioning. Shareaza is unable to contact it to receive\n\t\ta list of peers."
-msgstr "Serveri gjurmues BitTorrent për këtë shkarkesë duket se është prishur ose\n\t\tpo keqfunksionon.  Shareaza nuk mund të kontaktojë me të për të marrë\n\t\tlistën e pikave."
+msgid ""
+"The BitTorrent tracker server for this download appears to be\n"
+"\t\tdown or malfunctioning. Shareaza is unable to contact it to receive\n"
+"\t\ta list of peers."
+msgstr ""
+"Serveri gjurmues BitTorrent për këtë shkarkesë duket se është prishur ose\n"
+"\t\tpo keqfunksionon.  Shareaza nuk mund të kontaktojë me të për të marrë\n"
+"\t\tlistën e pikave."
 
 #: uploadhelp;text;1
 msgid "Uploads Area"
 msgstr "Zona e Ngarkesave"
 
 #: uploadhelp;text;2
-msgid "This is where queues and uploads are displayed. You can expand each queue\n\t\twith the small + on the left, and filter what is displayed with the button on the\n\t\tright of the window's toolbar."
-msgstr "Këtu shfaqen radhët dhe ngarkesat. Çdo radhë mund të zgjerohet me\n\t\t+ e vogël majtas, dhe mund ta filtrosh atë që shfaqet me butonin në të\n\t\tdjathtë të shufrës së dritares."
+msgid ""
+"This is where queues and uploads are displayed. You can expand each queue\n"
+"\t\twith the small + on the left, and filter what is displayed with the button on the\n"
+"\t\tright of the window's toolbar."
+msgstr ""
+"Këtu shfaqen radhët dhe ngarkesat. Çdo radhë mund të zgjerohet me\n"
+"\t\t+ e vogël majtas, dhe mund ta filtrosh atë që shfaqet me butonin në të\n"
+"\t\tdjathtë të shufrës së dritares."
 
 #: generalhelp.diskspace;text;1
 msgid "Disk Space is Low"
@@ -2293,8 +2814,14 @@ msgid "The amount of free space on one or more drives used by Shareaza is low."
 msgstr "Hapësira e lirë në një ose disa prej disqeve që përdoren nga Shareaza është e ulët."
 
 #: generalhelp.diskspace;text;3
-msgid "You should always attempt to keep a reasonable amount of disk space free. Programs \n\t\tcan become unstable if the drives become full, and temporary files may be lost. You should \n\t\trun a disk clean-up, delete unwanted files, or uninstall software you no longer need."
-msgstr "Mundohu gjithmonë që të mbash një hapësirë të lirë të mjaftueshme për diskun. Programet\n\t\tmund të bëhen të paqëndrueshme nëse disqet janë plot, kurse skedat kohëshkurtër mund të humbasin. Duhet të\n\t\thapësh një disk-pastrues, të fshish skedat e panevojshme ose të çinstalosh softuerët që nuk nevojiten më."
+msgid ""
+"You should always attempt to keep a reasonable amount of disk space free. Programs \n"
+"\t\tcan become unstable if the drives become full, and temporary files may be lost. You should \n"
+"\t\trun a disk clean-up, delete unwanted files, or uninstall software you no longer need."
+msgstr ""
+"Mundohu gjithmonë që të mbash një hapësirë të lirë të mjaftueshme për diskun. Programet\n"
+"\t\tmund të bëhen të paqëndrueshme nëse disqet janë plot, kurse skedat kohëshkurtër mund të humbasin. Duhet të\n"
+"\t\thapësh një disk-pastrues, të fshish skedat e panevojshme ose të çinstalosh softuerët që nuk nevojiten më."
 
 #: generalhelp.diskwritefail;text;1
 msgid "A Required Directory is Non-writable"
@@ -2305,8 +2832,14 @@ msgid "A disk or directory Shareaza needs cannot be written to."
 msgstr "Te disku ose direktoria që nevojitet nga Shareaza nuk mund të shkruhet."
 
 #: generalhelp.diskwritefail;text;3
-msgid "A network drive may have been disconnected, or you may not have write permission \n\t\tto a selected directory. Please check directories and permissions, or change the\n\t\ttemporary files location."
-msgstr "Një disk në rrjet mund të jetë shkëputur, ose mbase nuk ke të drejta shkrimi te \n\t\tdirektoria e zgjedhur. Të lutem zgjidhe direktorinë dhe të drejtat ose ndrysho vendin\n\t\te skedave kohëshkurtër."
+msgid ""
+"A network drive may have been disconnected, or you may not have write permission \n"
+"\t\tto a selected directory. Please check directories and permissions, or change the\n"
+"\t\ttemporary files location."
+msgstr ""
+"Një disk në rrjet mund të jetë shkëputur, ose mbase nuk ke të drejta shkrimi te \n"
+"\t\tdirektoria e zgjedhur. Të lutem zgjidhe direktorinë dhe të drejtat ose ndrysho vendin\n"
+"\t\te skedave kohëshkurtër."
 
 #: generalhelp.connectionfail;text;1
 msgid "Internet Connection Has Been Lost"
@@ -2317,8 +2850,12 @@ msgid "Windows reports that there is no internet connection is available."
 msgstr "Windows raporton se nuk je i lidhur në Internet."
 
 #: generalhelp.connectionfail;text;3
-msgid "It is likely that a modem or router has dropped, meaning the internet cannot\n\t\tbe accessed. You may need to manually re-connect or reset your connection."
-msgstr "Mbase modemi ose ruteri janë prishur, që do të thotë se nuk mund\n\t\ttë hysh në Internet. Ndreqe vetë ose rivendos lidhjen."
+msgid ""
+"It is likely that a modem or router has dropped, meaning the internet cannot\n"
+"\t\tbe accessed. You may need to manually re-connect or reset your connection."
+msgstr ""
+"Mbase modemi ose ruteri janë prishur, që do të thotë se nuk mund\n"
+"\t\ttë hysh në Internet. Ndreqe vetë ose rivendos lidhjen."
 
 #: generalhelp.connectionfail;text;4
 msgid "Shareaza has ceased connection attempts to avoid losing all cached hosts."
@@ -2329,8 +2866,14 @@ msgid "Adult content filter enabled"
 msgstr "Aktivizohet Filtri i përmbajtjeve për të rritur"
 
 #: generalhelp.adultfilter;text;2
-msgid "Please note that (as with any automated filter) it may not be 100% effective at\n\t\tscreening content. It is designed simply to filter out excess unwanted results, rather than \n\t\tas a 100% safe block."
-msgstr "Të lutem vëre se (si me çdo filtër automatik) mund të mos jetë 100% efektiv në\n\t\tekranizimin e përmbajtjes. Ai është ndërtuar thjesht për të filtruar rezultatet e tepërta \n\t\ttë padëshiruara, jo të veprojë si një bllokues me siguri 100%."
+msgid ""
+"Please note that (as with any automated filter) it may not be 100% effective at\n"
+"\t\tscreening content. It is designed simply to filter out excess unwanted results, rather than \n"
+"\t\tas a 100% safe block."
+msgstr ""
+"Të lutem vëre se (si me çdo filtër automatik) mund të mos jetë 100% efektiv në\n"
+"\t\tekranizimin e përmbajtjes. Ai është ndërtuar thjesht për të filtruar rezultatet e tepërta \n"
+"\t\ttë padëshiruara, jo të veprojë si një bllokues me siguri 100%."
 
 #: generalhelp.adultfilter;text;3
 msgid "Children's Internet use (including P2P file sharing) should always be under parental supervision."
@@ -2341,12 +2884,22 @@ msgid "This torrent appears to have an encoding error"
 msgstr "Ky torrent duket se ka gabime në kodim"
 
 #: generalhelp.badtorrentencoding;text;2
-msgid "Windows has reported a translation fault while decoding text in this torrent. It is\n\t\tpossible that the torrent is corrupt, or just incorrectly encoded. The torrent may\n\t\tstill download properly, although some file names could be incorrect."
-msgstr "Windows raporton një gabim përkthimi gjatë dekodimit të tekstit në këtë torrent. Ka mundësi\n\t\tqë torrenti të jetë i korruptuar ose thjesht i koduar jokorrektësisht. Torrenti mundet ende\n\t\ttë shkarkohet siç duhet, edhe pse disa emra skedash mund të mos jenë korrekte."
+msgid ""
+"Windows has reported a translation fault while decoding text in this torrent. It is\n"
+"\t\tpossible that the torrent is corrupt, or just incorrectly encoded. The torrent may\n"
+"\t\tstill download properly, although some file names could be incorrect."
+msgstr ""
+"Windows raporton një gabim përkthimi gjatë dekodimit të tekstit në këtë torrent. Ka mundësi\n"
+"\t\tqë torrenti të jetë i korruptuar ose thjesht i koduar jokorrektësisht. Torrenti mundet ende\n"
+"\t\ttë shkarkohet siç duhet, edhe pse disa emra skedash mund të mos jenë korrekte."
 
 #: generalhelp.badtorrentencoding;text;3
-msgid "Most torrent creation programs should allow you to repair this torrent, which\n\t\twill ensure it works properly in all BitTorrent applications."
-msgstr "Shumica e programeve për krijimin e torrenteve lejojnë riparimin e këtij torrenti, i cili\n\t\tdo të sigurojë që të punojë siç duhet në tërë aplikimet BitTorrent."
+msgid ""
+"Most torrent creation programs should allow you to repair this torrent, which\n"
+"\t\twill ensure it works properly in all BitTorrent applications."
+msgstr ""
+"Shumica e programeve për krijimin e torrenteve lejojnë riparimin e këtij torrenti, i cili\n"
+"\t\tdo të sigurojë që të punojë siç duhet në tërë aplikimet BitTorrent."
 
 #: generalhelp.badtorrentencoding;link;4
 msgid "Click here for additional help"
@@ -2361,60 +2914,121 @@ msgid "Your eDonkey server list is empty"
 msgstr "Lista e serverit eDonkey është bosh"
 
 #: generalhelp.donkeyserverlist;text;2
-msgid "There are no servers in your eDonkey server list. You need to download an\n\t\tup to date server list (met file) to connect to ED2K."
-msgstr "Në listën e serverit eDonkey nuk ka servera. Për t'u lidhur te ED2K,\n\t\tduhet të shkarkosh një listë serverash të ridatuar (skedë met)."
+msgid ""
+"There are no servers in your eDonkey server list. You need to download an\n"
+"\t\tup to date server list (met file) to connect to ED2K."
+msgstr ""
+"Në listën e serverit eDonkey nuk ka servera. Për t'u lidhur te ED2K,\n"
+"\t\tduhet të shkarkosh një listë serverash të ridatuar (skedë met)."
 
 #: generalhelp.donkeyserverlist;text;3
-msgid "You can download a server list from the ed2k setting page, or the discovery\n\t\tservices window. (Press F9 to open the discovery services window)"
-msgstr "Listën e serverave mund ta shkarkosh nga faqja e vendosjeve ed2k ose në dritaren\n\t\tpër zbulimin e shërbimeve. (Shtype F9 që të hapësh dritaren për zbulimin e shërbimeve)"
+msgid ""
+"You can download a server list from the ed2k setting page, or the discovery\n"
+"\t\tservices window. (Press F9 to open the discovery services window)"
+msgstr ""
+"Listën e serverave mund ta shkarkosh nga faqja e vendosjeve ed2k ose në dritaren\n"
+"\t\tpër zbulimin e shërbimeve. (Shtype F9 që të hapësh dritaren për zbulimin e shërbimeve)"
 
 #: generalhelp.uploadwarning;text;1
 msgid "Limiting uploads may slow downloads"
 msgstr "Kufizimi i ngarkesave mund të ngadalësojë shkarkimin"
 
 #: generalhelp.uploadwarning;text;2
-msgid "Several networks Shareaza connects to enforce ratios, limit uploads to\n\t\tclients that do not share, or simply preference uploading to known sharers."
-msgstr "Shumë nga rrjetet ku Shareaza lidhet detyorjnë raporte, kufij ngarkese te\n\t\tklientë që nuk shpërndajnë, ose thjesht parapëlqejnë ngarkim tek shpërndarësit e njohur."
+msgid ""
+"Several networks Shareaza connects to enforce ratios, limit uploads to\n"
+"\t\tclients that do not share, or simply preference uploading to known sharers."
+msgstr ""
+"Shumë nga rrjetet ku Shareaza lidhet detyorjnë raporte, kufij ngarkese te\n"
+"\t\tklientë që nuk shpërndajnë, ose thjesht parapëlqejnë ngarkim tek shpërndarësit e njohur."
 
 #: generalhelp.uploadwarning;text;3
-msgid "Fortunately, broadband DSL connections are like a two-lane highway: you have\n\t\tseparate allocations for upload and download. If your client is properly configured, \n\t\tyou should be able to upload at a good rate while retaining full download capacity."
-msgstr "Për fat të mirë, lidhjet me bandë të gjerë DSL janë si një rrugë me dy korsi: ka caktime\n\t\ttë ndryshme për ngarkimin dhe shkarkimin. Nëse klienti yt është konfiguruar siç duhet, \n\t\tdo të jesh i aftë të ngarkosh me një raport të mirë, ndërkohë që mban kapacitet të plotë shkarkues."
+msgid ""
+"Fortunately, broadband DSL connections are like a two-lane highway: you have\n"
+"\t\tseparate allocations for upload and download. If your client is properly configured, \n"
+"\t\tyou should be able to upload at a good rate while retaining full download capacity."
+msgstr ""
+"Për fat të mirë, lidhjet me bandë të gjerë DSL janë si një rrugë me dy korsi: ka caktime\n"
+"\t\ttë ndryshme për ngarkimin dhe shkarkimin. Nëse klienti yt është konfiguruar siç duhet, \n"
+"\t\tdo të jesh i aftë të ngarkosh me një raport të mirë, ndërkohë që mban kapacitet të plotë shkarkues."
 
 #: generalhelp.uploadwarning;text;4
-msgid "By default, your upload limit is set to about 85% of available upstream bandwidth,\n\t\twhile downloads are unlimited. That configuration should give you the fastest possible \n\t\tdownloads that are available."
-msgstr "Normalisht, kufiri i shkarkimit vendoset rreth 85% nga shtrirja e bandës së mbirrymës së vlefshme,\n\t\tkurse shkarkesat janë pa kufij. Ky konfigurim do japë shkarkimin më të shpejtë \n\t\ttë mundshëm."
+msgid ""
+"By default, your upload limit is set to about 85% of available upstream bandwidth,\n"
+"\t\twhile downloads are unlimited. That configuration should give you the fastest possible \n"
+"\t\tdownloads that are available."
+msgstr ""
+"Normalisht, kufiri i shkarkimit vendoset rreth 85% nga shtrirja e bandës së mbirrymës së vlefshme,\n"
+"\t\tkurse shkarkesat janë pa kufij. Ky konfigurim do japë shkarkimin më të shpejtë \n"
+"\t\ttë mundshëm."
 
-#: searchhelp.badsearch1;text;1 searchhelp.badsearch2;text;1 searchhelp.badsearch3;text;1
+#: searchhelp.badsearch1;text;1 searchhelp.badsearch2;text;1
+#: searchhelp.badsearch3;text;1
 msgid "Please re-phrase the search"
 msgstr "Të lutem rishkruaj kërkimin"
 
 #: searchhelp.badsearch1;text;2
-msgid "This search is poorly formatted, and may not function correctly. \n\t\tSearches should include several terms where possible, and should specify a schema \n\t\t(file type). Furthermore, searches must not be limited to numbers or negative\n\t\tterms only, and you should avoid overly general queries."
-msgstr "Kërkimi nuk është i formatuar mirë, ndaj mund të mos funksionojë si duhet.\n\t\tKërkimi duhet të përfshijë terma të ndryshëm, atje ku mundet, dhe duhet të caktojë një skemë\n\t\t(tip skede). Për më tepër, ai nuk duhet të kufizohet vetëm në numrat a termat\n\t\tnegativë, pra nevojitet që të shmangësh hetimet mjaft të përgjithshme."
+msgid ""
+"This search is poorly formatted, and may not function correctly. \n"
+"\t\tSearches should include several terms where possible, and should specify a schema \n"
+"\t\t(file type). Furthermore, searches must not be limited to numbers or negative\n"
+"\t\tterms only, and you should avoid overly general queries."
+msgstr ""
+"Kërkimi nuk është i formatuar mirë, ndaj mund të mos funksionojë si duhet.\n"
+"\t\tKërkimi duhet të përfshijë terma të ndryshëm, atje ku mundet, dhe duhet të caktojë një skemë\n"
+"\t\t(tip skede). Për më tepër, ai nuk duhet të kufizohet vetëm në numrat a termat\n"
+"\t\tnegativë, pra nevojitet që të shmangësh hetimet mjaft të përgjithshme."
 
 #: searchhelp.badsearch1;text;3
-msgid "Most clients on the network will ignore a search for all MP3 files, for example, \n\t\tbecause it is not specific enough, and would generate too many results."
-msgstr "Shumë nga klientët në rrjet, për shembull, do e përbuznin kërkimin për një skedë MP3: \n\t\tnuk është aq i mirëpërcaktuar dhe gjeneron shumë rezultate."
+msgid ""
+"Most clients on the network will ignore a search for all MP3 files, for example, \n"
+"\t\tbecause it is not specific enough, and would generate too many results."
+msgstr ""
+"Shumë nga klientët në rrjet, për shembull, do e përbuznin kërkimin për një skedë MP3: \n"
+"\t\tnuk është aq i mirëpërcaktuar dhe gjeneron shumë rezultate."
 
 #: searchhelp.badsearch2;text;2
-msgid "This search does not contain enough terms to function properly. All searches need\n\t\ta minimum number of valid, alphabetic characters to be able to start."
-msgstr "Kërkimi nuk i përmban termat e mjaftueshëm për të funksionuar si duhet. Për të nisur, tërë kërkimet\n\t\tnevojitet të kenë një minimum numrash me shkronja alfabetike me vlerë."
+msgid ""
+"This search does not contain enough terms to function properly. All searches need\n"
+"\t\ta minimum number of valid, alphabetic characters to be able to start."
+msgstr ""
+"Kërkimi nuk i përmban termat e mjaftueshëm për të funksionuar si duhet. Për të nisur, tërë kërkimet\n"
+"\t\tnevojitet të kenë një minimum numrash me shkronja alfabetike me vlerë."
 
 #: searchhelp.badsearch2;text;3
-msgid "While common file extensions (and numbers) can be searched for, you must enter\n\t\tother terms as well when creating the search. Punctuation and wildcards are not used \n\t\tin searches, just the text you enter."
-msgstr "Ndonëse mund të kërkosh shtojca të zakonshme të skedave (edhe numra), gjatë krijimit \n\t\ttë një kërkimi duhet të shkruash\n\t\tedhe terma të tjerë. Pikësimi dhe thonjëzat nuk përdoren, vetëm teksti që shkruan."
+msgid ""
+"While common file extensions (and numbers) can be searched for, you must enter\n"
+"\t\tother terms as well when creating the search. Punctuation and wildcards are not used \n"
+"\t\tin searches, just the text you enter."
+msgstr ""
+"Ndonëse mund të kërkosh shtojca të zakonshme të skedave (edhe numra), gjatë krijimit \n"
+"\t\ttë një kërkimi duhet të shkruash\n"
+"\t\tedhe terma të tjerë. Pikësimi dhe thonjëzat nuk përdoren, vetëm teksti që shkruan."
 
 #: searchhelp.badsearch3;text;2
-msgid "This search seems to contain only common file extensions, or no searchable\n\t\twords."
-msgstr "Me sa duket, kërkimi përmban vetëm shtojcën e zakonshme të skedës ose fjalë që\n\t\tnuk kërkohen."
+msgid ""
+"This search seems to contain only common file extensions, or no searchable\n"
+"\t\twords."
+msgstr ""
+"Me sa duket, kërkimi përmban vetëm shtojcën e zakonshme të skedës ose fjalë që\n"
+"\t\tnuk kërkohen."
 
 #: searchhelp.badsearch3;text;3
-msgid "If you are having trouble creating searches, keep in mind that it's quite similar\n\t\tto a web search. Specific terms or phrases are best- Unique names, titles and\n\t\tkeywords."
-msgstr "Nëse ke probleme me krijimin e kërkimeve, mbaj mend se është mjaft i ngjashëm\n\t\tme kërkimin në rrjet. Termat ose frazat e mirëpërcaktuara janë emrat unikë, titujt dhe\n\t\tfjalët kyçe."
+msgid ""
+"If you are having trouble creating searches, keep in mind that it's quite similar\n"
+"\t\tto a web search. Specific terms or phrases are best- Unique names, titles and\n"
+"\t\tkeywords."
+msgstr ""
+"Nëse ke probleme me krijimin e kërkimeve, mbaj mend se është mjaft i ngjashëm\n"
+"\t\tme kërkimin në rrjet. Termat ose frazat e mirëpërcaktuara janë emrat unikë, titujt dhe\n"
+"\t\tfjalët kyçe."
 
 #: searchhelp.badsearch3;text;4
-msgid "General terms cannot be searched for efficiently and may result in poor\n\t\tsearch performance, as well as high bandwidth use during searches."
-msgstr "Termat e përgjithshëm nuk kërkohen me efektshmëri, ndaj edhe rezultatet mund të jenë të\n\t\tdobëta, sikurse përdorimi i lartë i shtrirjes së bandës."
+msgid ""
+"General terms cannot be searched for efficiently and may result in poor\n"
+"\t\tsearch performance, as well as high bandwidth use during searches."
+msgstr ""
+"Termat e përgjithshëm nuk kërkohen me efektshmëri, ndaj edhe rezultatet mund të jenë të\n"
+"\t\tdobëta, sikurse përdorimi i lartë i shtrirjes së bandës."
 
 #: searchhelp.badsearch3;text;5
 msgid "Further help is available on the Shareaza web site."
@@ -2425,12 +3039,22 @@ msgid "This search cannot be started"
 msgstr "Ky kërkim nuk mund të nisë"
 
 #: searchhelp.adultsearch;text;2
-msgid "The specified search would probably return a large number of results with adult \n\t\tcontent, and this has been turned off in the settings. You should either re-phrase the \n\t\tsearch, or disable the filter."
-msgstr "Kërkimi i përcaktuar ka mundësi që të kthejë një numër të madh rezultatesh me përmbajtje\n\t\tpër të rritur, dhe kjo gjë është çaktivizuar te vendosjet. Duhet ose të riformulosh\n\t\tkërkesën, ose të çaktivizosh filtrin."
+msgid ""
+"The specified search would probably return a large number of results with adult \n"
+"\t\tcontent, and this has been turned off in the settings. You should either re-phrase the \n"
+"\t\tsearch, or disable the filter."
+msgstr ""
+"Kërkimi i përcaktuar ka mundësi që të kthejë një numër të madh rezultatesh me përmbajtje\n"
+"\t\tpër të rritur, dhe kjo gjë është çaktivizuar te vendosjet. Duhet ose të riformulosh\n"
+"\t\tkërkesën, ose të çaktivizosh filtrin."
 
 #: searchhelp.adultsearch;text;3
-msgid "To disable the filter, go into Tools > Settings > General and uncheck the\n\t\tadult content filter."
-msgstr "Për të çaktivizuar filtrin, shko te Mjete > Vendosje > Përgjithësi, dhe mos e zgjidh\n\t\tfiltrin e përmbajtjes për të rritur."
+msgid ""
+"To disable the filter, go into Tools > Settings > General and uncheck the\n"
+"\t\tadult content filter."
+msgstr ""
+"Për të çaktivizuar filtrin, shko te Mjete > Vendosje > Përgjithësi, dhe mos e zgjidh\n"
+"\t\tfiltrin e përmbajtjes për të rritur."
 
 #: sharehelp.alreadyshared;text;1
 msgid "Already Shared"
@@ -2445,24 +3069,42 @@ msgid "This folder should not be shared"
 msgstr "Kjo dosje nuk duhet shpërndarë"
 
 #: sharehelp.badshare;text;2
-msgid "This folder is (or contains) a system folder. Sharing this folder is not\n\t\trecommended, since most of the files in it are of no use to other people."
-msgstr "Kjo dosje është (ose përmban) një dosje sistemi. Shpërndarja e kësaj dosjeje\n\t\tnuk rekomandohet, derisa shumica e skedave në të nuk përdoren nga të tjerë."
+msgid ""
+"This folder is (or contains) a system folder. Sharing this folder is not\n"
+"\t\trecommended, since most of the files in it are of no use to other people."
+msgstr ""
+"Kjo dosje është (ose përmban) një dosje sistemi. Shpërndarja e kësaj dosjeje\n"
+"\t\tnuk rekomandohet, derisa shumica e skedave në të nuk përdoren nga të tjerë."
 
 #: sharehelp.badshare;text;3
-msgid "Folders such as the Windows directory, Program Files, and similar folders\n\t\tdo not usually contain files suitable for sharing. Any files of interest would be in\n\t\tsub-folders located"
-msgstr "Dosjet si direktoria Windows, Program Files dhe dosje të ngjashme,\n\t\tzakonisht nuk përmbajnë skeda të përshtatshme për shpërndarje. Çdo skedë me interes do të ndodhej\n\t\tnë nëndosje, lokalizuar"
+msgid ""
+"Folders such as the Windows directory, Program Files, and similar folders\n"
+"\t\tdo not usually contain files suitable for sharing. Any files of interest would be in\n"
+"\t\tsub-folders located"
+msgstr ""
+"Dosjet si direktoria Windows, Program Files dhe dosje të ngjashme,\n"
+"\t\tzakonisht nuk përmbajnë skeda të përshtatshme për shpërndarje. Çdo skedë me interes do të ndodhej\n"
+"\t\tnë nëndosje, lokalizuar"
 
 #: sharehelp.badshare;text;4
 msgid "inside"
 msgstr "brenda"
 
 #: sharehelp.badshare;text;5
-msgid "these folders.\n\t\tPlease share those instead."
-msgstr "këtyre dosjeve.\n\t\tTë lutem shpërdaji më mirë."
+msgid ""
+"these folders.\n"
+"\t\tPlease share those instead."
+msgstr ""
+"këtyre dosjeve.\n"
+"\t\tTë lutem shpërdaji më mirë."
 
 #: sharehelp.badshare;text;6
-msgid "The Shareaza 'incomplete' folder should also not be shared through the\n\t\tlibrary, since attempting to hash downloads in progress may impact on performance."
-msgstr "Dosja e 'paplotë' në Shareaza gjithashtu nuk duhet shpërndarë përmes\n\t\tlibrarisë, derisa orvatja për grirjen e shkarkesave në progres mund të prekë efektshmërinë."
+msgid ""
+"The Shareaza 'incomplete' folder should also not be shared through the\n"
+"\t\tlibrary, since attempting to hash downloads in progress may impact on performance."
+msgstr ""
+"Dosja e 'paplotë' në Shareaza gjithashtu nuk duhet shpërndarë përmes\n"
+"\t\tlibrarisë, derisa orvatja për grirjen e shkarkesave në progres mund të prekë efektshmërinë."
 
 #: message;id_browse_files
 msgid "View the user's shared files"
@@ -2784,7 +3426,8 @@ msgstr "Verifikon për lajmet dhe ridatimet."
 msgid "Run the connection test."
 msgstr "Vepron testin e lidhjes."
 
-#: message;id_help_web_1 message;id_help_web_2 message;id_help_web_3 message;id_help_web_4 message;id_help_web_5 message;id_help_web_6
+#: message;id_help_web_1 message;id_help_web_2 message;id_help_web_3
+#: message;id_help_web_4 message;id_help_web_5 message;id_help_web_6
 msgid "Visit this website"
 msgstr "Viziton truallin"
 
@@ -3220,7 +3863,8 @@ msgstr ""
 msgid "Close the monitor window."
 msgstr "Mbyll dritaren e monitorit."
 
-#: message;id_neighbours_chat message;id_search_chat message;id_transfers_chat message;id_uploads_chat
+#: message;id_neighbours_chat message;id_search_chat message;id_transfers_chat
+#: message;id_uploads_chat
 msgid "Open a chat session with the selected user."
 msgstr "Hap një sesion chat-i me përdoruesin e zgjedhur."
 
@@ -5520,7 +6164,8 @@ msgstr "D&alje"
 msgid "year old"
 msgstr "vjeç"
 
-#: string;16811 cconnectionsettingspage;control;3 cconnectionsettingspage;control;12
+#: string;16811 cconnectionsettingspage;control;3
+#: cconnectionsettingspage;control;12
 msgid "Automatic"
 msgstr "Automatike"
 
@@ -6280,7 +6925,7 @@ msgstr "Ndryshimi i drejtimit të ndërfaqes kërkon rinisje. \\nShareaza-n duhe
 msgid "No"
 msgstr "Jo"
 
-#: string;20006 cdonkeyimportdlg;control;3
+#: string;20006 cdonkeyimportdlg;control;2
 msgid "Yes"
 msgstr "Po"
 
@@ -6528,11 +7173,34 @@ msgstr "Artisti"
 msgid "Rating"
 msgstr "Vlerësimi"
 
-#: string;20237 csettingsheet;control;2 cscheduletaskdlg;control;1 cqueuepropertiesdlg;control;37 cprofilemanagerdlg;control;2 csavefilterasdlg;control;2 cdiscoveryservicedlg;control;5 cfilecopydlg;control;4 cfolderpropertiesdlg;control;7 cgraphlistdlg;control;16 cgraphitemdlg;control;1 cschemacolumnsdlg;control;3 csecureruledlg;control;33 csharemanagerdlg;control;6 cpromotedlg;control;8 cexistingfiledlg;control;9 cclosemodedlg;control;6 cdonkeyserversdlg;control;5 cdownloadgroupdlg;control;1 cmediavisdlg;control;6 cdownloadreviewdlg;control;2 cdecodemetadatadlg;control;8 circinputdlg;control;2
+#: string;20237 csettingsheet;control;2 cscheduletaskdlg;control;1
+#: cqueuepropertiesdlg;control;37 cprofilemanagerdlg;control;2
+#: csavefilterasdlg;control;2 cdiscoveryservicedlg;control;5
+#: cfilecopydlg;control;4 cfolderpropertiesdlg;control;7
+#: cgraphlistdlg;control;16 cgraphitemdlg;control;1
+#: cschemacolumnsdlg;control;3 csecureruledlg;control;33
+#: csharemanagerdlg;control;5 cpromotedlg;control;7 cexistingfiledlg;control;8
+#: cclosemodedlg;control;5 cdonkeyserversdlg;control;4
+#: cdownloadgroupdlg;control;1 cmediavisdlg;control;5
+#: cdownloadreviewdlg;control;1 cdecodemetadatadlg;control;8
+#: circinputdlg;control;2
 msgid "OK"
 msgstr "OK"
 
-#: string;20238 csettingsheet;control;3 cscheduletaskdlg;control;2 cqueuepropertiesdlg;control;38 cprofilemanagerdlg;control;3 cconnecttodlg;control;8 cdownloaddlg;control;6 cnewsearchdlg;control;4 cfiltersearchdlg;control;30 csavefilterasdlg;control;3 cdiscoveryservicedlg;control;6 cfilecopydlg;control;5 cfolderpropertiesdlg;control;8 cgraphlistdlg;control;17 cgraphitemdlg;control;2 cschemacolumnsdlg;control;4 csecureruledlg;control;34 csharemanagerdlg;control;7 curlcopydlg;control;7 curlexportdlg;control;11 curlactiondlg;control;12 cbitzidownloaddlg;control;4 cfilepreviewdlg;control;6 cexistingfiledlg;control;10 cclosemodedlg;control;7 cdonkeyserversdlg;control;6 cdeletefiledlg;control;5 ctorrentseeddlg;control;5 cdownloadgroupdlg;control;2 cmediavisdlg;control;7 cdecodemetadatadlg;control;9 circinputdlg;control;3
+#: string;20238 csettingsheet;control;3 cscheduletaskdlg;control;2
+#: cqueuepropertiesdlg;control;38 cprofilemanagerdlg;control;3
+#: cconnecttodlg;control;8 cdownloaddlg;control;5 cnewsearchdlg;control;4
+#: cfiltersearchdlg;control;30 csavefilterasdlg;control;3
+#: cdiscoveryservicedlg;control;6 cfilecopydlg;control;5
+#: cfolderpropertiesdlg;control;8 cgraphlistdlg;control;17
+#: cgraphitemdlg;control;2 cschemacolumnsdlg;control;4
+#: csecureruledlg;control;34 csharemanagerdlg;control;6 curlcopydlg;control;6
+#: curlexportdlg;control;10 curlactiondlg;control;11
+#: cbitzidownloaddlg;control;4 cfilepreviewdlg;control;6
+#: cexistingfiledlg;control;9 cclosemodedlg;control;6
+#: cdonkeyserversdlg;control;5 cdeletefiledlg;control;5
+#: ctorrentseeddlg;control;4 cdownloadgroupdlg;control;2
+#: cmediavisdlg;control;6 cdecodemetadatadlg;control;9 circinputdlg;control;3
 msgid "Cancel"
 msgstr "Anulo"
 
@@ -6668,7 +7336,8 @@ msgstr "Kur klikoj minimizo:"
 msgid "Normal|Minimise to Tray"
 msgstr "Normale|Minimizim në Brez"
 
-#: clibrarysettingspage;control;1 cmediasettingspage;control;1 cuploadssettingspage;control;1 csecureruledlg;control;22
+#: clibrarysettingspage;control;1 cmediasettingspage;control;1
+#: cuploadssettingspage;control;1 csecureruledlg;control;22
 msgid "_Options:"
 msgstr "_Mundësi:"
 
@@ -6716,7 +7385,9 @@ msgstr "Pastro Historinë Tani"
 msgid "_Safe to Open:"
 msgstr "_Hap pa Rrezik:"
 
-#: clibrarysettingspage;control;18 clibrarysettingspage;control;22 cmediasettingspage;control;7 cwebsettingspage;control;11 cfilesourcespage;control;5 cdownloadgroupdlg;control;7
+#: clibrarysettingspage;control;18 clibrarysettingspage;control;22
+#: cmediasettingspage;control;7 cwebsettingspage;control;11
+#: cfilesourcespage;control;5 cdownloadgroupdlg;control;7
 msgid "_Add"
 msgstr "_Shto"
 
@@ -7424,11 +8095,17 @@ msgstr "Eksploruesi i Protokollit Arkitekturor të Zakontë i Shareaza-s:"
 msgid "Skin Information:"
 msgstr "Informacioni i Veshjes:"
 
-#: cskinssettingspage;control;3 cpluginssettingspage;control;3 ccollectionexportdlg;control;4 ctorrentgeneralpage;control;9
+#: cskinssettingspage;control;3 cpluginssettingspage;control;3
+#: ccollectionexportdlg;control;4 ctorrentgeneralpage;control;9
 msgid "Name:"
 msgstr "Emri:"
 
-#: cskinssettingspage;control;4 cskinssettingspage;control;6 cpluginssettingspage;control;4 cfolderscandlg;control;2 cdownloadmonitordlg;control;2 cdownloadmonitordlg;control;7 cdownloadmonitordlg;control;9 cdownloadmonitordlg;control;11 cdownloadmonitordlg;control;13 ccollectionexportdlg;control;5 ccollectionexportdlg;control;7
+#: cskinssettingspage;control;4 cskinssettingspage;control;6
+#: cpluginssettingspage;control;4 cfolderscandlg;control;2
+#: cdownloadmonitordlg;control;2 cdownloadmonitordlg;control;7
+#: cdownloadmonitordlg;control;9 cdownloadmonitordlg;control;11
+#: cdownloadmonitordlg;control;13 ccollectionexportdlg;control;5
+#: ccollectionexportdlg;control;7
 msgid "..."
 msgstr "..."
 
@@ -7436,7 +8113,8 @@ msgstr "..."
 msgid "Author:"
 msgstr "Autori:"
 
-#: cskinssettingspage;control;7 cpluginssettingspage;control;5 cadvancedsettingspage;control;7 ccollectionexportdlg;control;8
+#: cskinssettingspage;control;7 cpluginssettingspage;control;5
+#: cadvancedsettingspage;control;7 ccollectionexportdlg;control;8
 msgid "Description:"
 msgstr "Përshkrimi:"
 
@@ -7456,7 +8134,7 @@ msgstr "Spina"
 msgid "Plugin Information:"
 msgstr "Informacioni i Spinës:"
 
-#: cpluginssettingspage;control;7 cmediavisdlg;control;5
+#: cpluginssettingspage;control;7 cmediavisdlg;control;4
 msgid "_Setup..."
 msgstr "_Ndërto..."
 
@@ -7476,7 +8154,8 @@ msgstr "Vlera:"
 msgid "Upload Queue Properties"
 msgstr "Vetitë e Ngarkesës në Radhë"
 
-#: cqueuepropertiesdlg;control;1 cgraphlistdlg;control;14 cdownloadgroupdlg;control;12
+#: cqueuepropertiesdlg;control;1 cgraphlistdlg;control;14
+#: cdownloadgroupdlg;control;12
 msgid "_Name:"
 msgstr "_Emri:"
 
@@ -7632,7 +8311,8 @@ msgstr "Për të përdorur Shareaza-n nuk duhet patjetër të shpërndahet përm
 msgid "Please indicate which folders, if any, you wish to share.  Simply click the Add button to add a new folder."
 msgstr "Të lutem trego cilat dosje, nëse ke, dëshiron të shpërndash. Që të shtosh një dosje të re, thjesht kliko butonin Shto."
 
-#: cwizardsharepage;control;5 cgraphlistdlg;control;2 csharemanagerdlg;control;4
+#: cwizardsharepage;control;5 cgraphlistdlg;control;2
+#: csharemanagerdlg;control;3
 msgid "_Add..."
 msgstr "_Shto..."
 
@@ -7740,11 +8420,11 @@ msgstr "Rrjeti Gnutella2 është rrjeti parësor i Shareaza-s, i cili ofron më 
 msgid "Import eDonkey Downloads"
 msgstr "Importoni Shkarkesa nga eDonkey"
 
-#: cdonkeyimportdlg;control;2
+#: cdonkeyimportdlg;control;1
 msgid "Shareaza has detected that you have another eDonkey program installed on your computer.  Would you like to import any unfinished downloads into Shareaza?"
 msgstr "Shareaza dikton se në kompjuter është instaluar një program eDonkey. Do që çdo shkarkim i papërfunduar të importohet te Shareaza?"
 
-#: cdonkeyimportdlg;control;4
+#: cdonkeyimportdlg;control;3
 msgid "No|Cancel"
 msgstr "Jo|Anulo"
 
@@ -7988,19 +8668,19 @@ msgstr "_Shtype Ultrapikën"
 msgid "Download File or Torrent"
 msgstr "Shkarkoni Skedë ose Torrent"
 
-#: cdownloaddlg;control;3
+#: cdownloaddlg;control;2
 msgid "Downloading any file with Shareaza is easy.  Simply type or paste the URL or URI describing the file into the box below and press Enter."
 msgstr "Shkarkimi i skedave me Shareaza është mjaft i lehtë. Thjesht shkruaj ose ngjit më poshtë një URL/URI që përshkruan skedën dhe shtyp Enter."
 
-#: cdownloaddlg;control;7
+#: cdownloaddlg;control;6
 msgid "Shareaza can download files from the web (HTTP), and automatically search and download P2P links (Magnet, Gnutella, eDonkey, mP2P)."
 msgstr "Shareaza mund të shkarkojë skeda nga rrjeti (HTTP) si edhe të kërkojë e shkarkojë automatikisht nga linket P2P (Magnet, Gnutella, eDonkey, mP2P)."
 
-#: cdownloaddlg;control;8
+#: cdownloaddlg;control;7
 msgid "Shareaza can also download BitTorrent files.  A torrent can be described by a .torrent file, or a HTTP link to the .torrent file.  To download a torrent HTTP link, paste it in the box above.  If you already have a .torrent file, click Open Torrent:"
 msgstr "Shareaza mund të shkarkojë edhe skedat e BitTorrent. Torrenti përshkruhet nga një skedë .torrent ose një link HTTP i skedës .torrent. Për të shkarkuar torrent nga një link HTTP, vendose atë më sipër. Nëse ke një skedë .torrent, kliko Hap Torrent."
 
-#: cdownloaddlg;control;9
+#: cdownloaddlg;control;8
 msgid "Open _Torrent..."
 msgstr "Hap _Torrent..."
 
@@ -8380,7 +9060,7 @@ msgstr "m"
 msgid "Shared Folder Manager"
 msgstr "Menaxheri i Dosjeve të Shpërndara"
 
-#: csharemanagerdlg;control;2
+#: csharemanagerdlg;control;1
 msgid "This is a list of folders in your library.  You can add and remove folders using the buttons on the left.  When you add a new folder it is initially shared with other users, however you can unshare it from the Shareaza library if you wish."
 msgstr "Kjo është lista me dosje në librarinë tënde. Dosjet mund të shtohen dhe hiqen duke përdorur butonat majtas. Kur shtohet një dosje e re, në fillim ajo shpërndahet me përdoruesit e tjerë; gjithsesi, kjo mund të çaktivizohet në librarinë e Shareaza-s."
 
@@ -8388,11 +9068,11 @@ msgstr "Kjo është lista me dosje në librarinë tënde. Dosjet mund të shtohe
 msgid "Copy URI"
 msgstr "Kopjoni URIn"
 
-#: curlcopydlg;control;2
+#: curlcopydlg;control;1
 msgid "You can copy a URI for the selected item in a variety of different formats.  Please choose the format you wish to use by clicking one of the URIs below:"
 msgstr "Mund të kopjosh një URI për njësinë e zgjedhur në një mori formatesh të ndryshme. Të lutem zgjidhe formatin që dëshiron të përdorësh duke klikuar një nga URI-t më poshtë:"
 
-#: curlcopydlg;control;6
+#: curlcopydlg;control;5
 msgid "Include _myself as a fixed source in the URL"
 msgstr "Përfshije _vetveten si një burim i ngulitur në URL"
 
@@ -8400,27 +9080,27 @@ msgstr "Përfshije _vetveten si një burim i ngulitur në URL"
 msgid "Export URIs"
 msgstr "Eksportoni URIn"
 
-#: curlexportdlg;control;2
+#: curlexportdlg;control;1
 msgid "You have selected %lu files to export as Shareaza-powered URI references.  Please select the format for the URIs, and click Save:"
 msgstr "Zgjodhe %lu skeda për të eksportuar si referenca URI me fuqi në Shareaza. Të lutem zgjidhe formatin për URI-t, dhe kliko Ruaje:"
 
-#: curlexportdlg;control;4
+#: curlexportdlg;control;3
 msgid "Insert Token:"
 msgstr "Fusni Dallimin:"
 
-#: curlexportdlg;control;5
+#: curlexportdlg;control;4
 msgid "Tiger Root|SHA1|MD5|ED2K (CMD4)|BitTorrent|Filename|Filename (URI)|Base Filename|File Extension|File Size|File Size (bytes)|Folder Path|Local Host|Local Port|Link|Link (URI)"
 msgstr "Tiger Root|SHA1|MD5|ED2K (CMD4)|BitTorrent|Emri i skedës|Emri i skedës (URI)|Emri bazë i skedës|Shtojca e skedës|Masa e skedës|Masa e skedës (bajte)|Shtegu i dosjes|Hosti Lokal|Porti Lokal|Link|Link (URI)"
 
-#: curlexportdlg;control;6
+#: curlexportdlg;control;5
 msgid "Select preset:"
 msgstr "Zgjidhe paravendosjen:"
 
-#: curlexportdlg;control;7
+#: curlexportdlg;control;6
 msgid "Magnet|eDonkey|Magnet HTML|eDonkey HTML"
 msgstr "Magnet|eDonkey|Magnet HTML|eDonkey HTML"
 
-#: curlexportdlg;control;9
+#: curlexportdlg;control;8
 msgid "_Save..."
 msgstr "Ruaje..."
 
@@ -8428,39 +9108,39 @@ msgstr "Ruaje..."
 msgid "Shareaza URI Manager"
 msgstr "Menaxheri i URIve te Shareaza"
 
-#: curlactiondlg;control;2
+#: curlactiondlg;control;1
 msgid "You have clicked on a Shareaza-powered URI which links to the following content on the network:"
 msgstr "Klikuat një URI me fuqi në Shareaza, i cili lidhet në rrjet me këtë përmbajtje:"
 
-#: curlactiondlg;control;3
+#: curlactiondlg;control;2
 msgid "You have clicked on a Shareaza-powered URL which will connect you to the following host or server:"
 msgstr "Klikuat një URL me fuqi në Shareaza, e cila do të lidhet te hosti ose serveri më poshtë:"
 
-#: curlactiondlg;control;4
+#: curlactiondlg;control;3
 msgid "You have clicked on a Shareaza-powered URI which will allow you to browse the shared files available on the following host:"
 msgstr "Klikuat një URI me fuqi në Shareaza, i cili do lejojë të shfletoni skedat me vlerë të shpërndara në hostin më poshtë:"
 
-#: curlactiondlg;control;9
+#: curlactiondlg;control;8
 msgid "Please select the action you would like Shareaza to take:"
 msgstr "Të lutem zgjidhe si të veprojë Shareaza:"
 
-#: curlactiondlg;control;10
+#: curlactiondlg;control;9
 msgid "_Download Now"
 msgstr "_Shkarko Tani"
 
-#: curlactiondlg;control;11
+#: curlactiondlg;control;10
 msgid "_Search for File"
 msgstr "_Kërko Skedën"
 
-#: curlactiondlg;control;13
+#: curlactiondlg;control;12
 msgid "_Remember my selection next time"
 msgstr "_Mbaje mend këtë zgjedhjen"
 
-#: curlactiondlg;control;14
+#: curlactiondlg;control;13
 msgid "Open a download _monitor window"
 msgstr "_Monitoro shkarkimin"
 
-#: curlactiondlg;control;15
+#: curlactiondlg;control;14
 msgid "You have clicked on a Shareaza-powered URI which will add the following Discovery Service to your Discovery Services cache."
 msgstr "Ke klikuar në një URI me fuqi në Shareaza i cili do e shtojë Shërbimin Zbulues të mëposhtëm në depon tënde për Shërbimin Zbulues."
 
@@ -8492,27 +9172,27 @@ msgstr "(kopjim i thelave te shkarkuara te një skedë e re parashikuese)"
 msgid "Shareaza Respects its Users"
 msgstr "Shareaza Respekton Përdoruesit e saj"
 
-#: cwarningsdlg;control;2
+#: cwarningsdlg;control;1
 msgid "Did you know Shareaza is a 100% free product?"
 msgstr "A e dinit që Shareaza është një produkt 100% falas?"
 
-#: cwarningsdlg;control;3
+#: cwarningsdlg;control;2
 msgid "Shareaza does NOT contain ANY \"spyware\", \"adware\" or other bundled software. It does NOT display any advertisements or \"popups\", ever.{n}{n}If you ever see advertising or \"popups\" while using Shareaza, be assured that they are NOT coming from this program."
 msgstr "Shareaza NUK përmban ASNJË \"spiunues\", \"reklamues\" apo ndonjë softuer tjetër të paketuar. Reklamat ose \"kërcyeset\" NUK shfaqen kurrë.{n}{n}Nëse gjatë përdorimit vëreni ndonjë reklamë ose \"kërcyese\", të jeni të sigurt se ato NUK janë të programit."
 
-#: cwarningsdlg;control;4
+#: cwarningsdlg;control;3
 msgid "Unfortunately a lot of other software does come with undesirable adware or spyware, so if you see something suspicious you may wish to check your PC with an advertising or spyware removal program."
 msgstr "Për fat të keq, shumë nga softuerët e tjerë bartin reklamuesa apo spiunuesa të padëshirueshëm, ndaj nëse keni dyshime verifikoni PC-në tuaj me një program që heq reklamuesat e spiunuesat."
 
-#: cwarningsdlg;control;5
+#: cwarningsdlg;control;4
 msgid "You should not have had to pay any money to obtain Shareaza. Shareaza can be freely downloaded by anyone from http://shareaza.sourceforge.net/. If you paid someone money for Shareaza, you should demand a full refund immediately."
 msgstr "Për Shareaza-n nuk duhet të paguani! Shareaza mund të shkarkohet lirisht nga kushdo në http://shareaza.sourceforge.net/. Nëse keni paguar për të, duhet të kërkoni menjëherë një kthim të plotë parash."
 
-#: cwarningsdlg;control;6
+#: cwarningsdlg;control;5
 msgid "Shareaza respects its users!"
 msgstr "Shareaza respekton përdoruesit e saj!"
 
-#: cwarningsdlg;control;7 cpromotedlg;control;7
+#: cwarningsdlg;control;6 cpromotedlg;control;6
 msgid "http://shareaza.sourceforge.net/"
 msgstr "http://shareaza.sourceforge.net/"
 
@@ -8520,23 +9200,23 @@ msgstr "http://shareaza.sourceforge.net/"
 msgid "Spread the Word"
 msgstr "Ngrini Zërin"
 
-#: cpromotedlg;control;2
+#: cpromotedlg;control;1
 msgid "Help Us Spread the Word"
 msgstr "Na ndihmoni të Ngremë Zërin"
 
-#: cpromotedlg;control;3
+#: cpromotedlg;control;2
 msgid "We hope you have enjoyed using Shareaza so far. We believe it is the best file sharing application around."
 msgstr "Shpresojmë që deri tani të jeni kënaqur duke përdorur Shareaza-n. Ne besojmë se ky është aplikimi skedë-shpërndarës më i mirë përqark."
 
-#: cpromotedlg;control;4
+#: cpromotedlg;control;3
 msgid "Unfortunately, a lot of file sharers don't know what they're missing!"
 msgstr "Për fat të keq, shumë nga shpërdarësit e skedave nuk e dinë sa shumë u nevojitet!"
 
-#: cpromotedlg;control;5
+#: cpromotedlg;control;4
 msgid "If you know someone who would like Shareaza, whether they're a new user or someone still putting up with an inferior product, why not let them know there is a better alternative?"
 msgstr "Nëse njihni ndokënd që mund t'i pëlqente Shareaza, qoftë një përdorues i ri apo dikush që vendos të marrë një produkt me çmim të ulët, pse të mos i tregoni se ka një alternativë më të mirë?"
 
-#: cpromotedlg;control;6
+#: cpromotedlg;control;5
 msgid "Chances are they'll be grateful you rescued them!"
 msgstr "Ka shanse t'ju jenë mirënjohës që i shpëtuat!"
 
@@ -8544,27 +9224,27 @@ msgstr "Ka shanse t'ju jenë mirënjohës që i shpëtuat!"
 msgid "Existing File"
 msgstr "Skedë Ekzistuese"
 
-#: cexistingfiledlg;control;5
+#: cexistingfiledlg;control;4
 msgid "You already have this file in your file library. What would you like to do?"
 msgstr "Kjo skedë ndodhet që më parë në librarinë tënde të skedave. Çfarë mendon të bësh?"
 
-#: cexistingfiledlg;control;6
+#: cexistingfiledlg;control;5
 msgid "Show me the file in my library"
 msgstr "Më trego skedën në librarinë time"
 
-#: cexistingfiledlg;control;7
+#: cexistingfiledlg;control;6
 msgid "Download the file again"
 msgstr "Shkarko skedën përsëri"
 
-#: cexistingfiledlg;control;8
+#: cexistingfiledlg;control;7
 msgid "Don't download this file"
 msgstr "Mos e shkarko skedën"
 
-#: cexistingfiledlg;control;11
+#: cexistingfiledlg;control;10
 msgid "You have downloaded and deleted this file before. What would you like to do?"
 msgstr "Këtë skedë e ke shkarkuar dhe e ke fshirë më parë. Çfarë mendon të bësh?"
 
-#: cexistingfiledlg;control;12
+#: cexistingfiledlg;control;11
 msgid "Warning!!! Duplicate files detected. Some malicious software may infect your Library. Make sure that you downloaded this file or placed it manually. Otherwise, shutdown Shareaza and scan your computer with an antivirus program."
 msgstr "Kujdes!!! Diktohet një skedë dyfishe. Një softuer keqbërës mund të infektojë Librarinë tënde. Sigurohu që këtë skedë e ke shkarkuar dhe vendosur vetë. Përndryshe, mbylle Shareaza-n dhe skano kompjuterin me një antivirus."
 
@@ -8572,19 +9252,19 @@ msgstr "Kujdes!!! Diktohet një skedë dyfishe. Një softuer keqbërës mund të
 msgid "Close Button"
 msgstr "Butoni i Mbylljes"
 
-#: cclosemodedlg;control;2
+#: cclosemodedlg;control;1
 msgid "This is the first time you have clicked Shareaza's close button. Please choose what action you would like Shareaza to take when clicking the close button from now on:"
 msgstr "Kjo është hera e parë që klikon butonin e mbylljes në Shareaza. Të lutem zgjidhe si të sillet Shareaza kur e bën këtë tani e tutje:"
 
-#: cclosemodedlg;control;3
+#: cclosemodedlg;control;2
 msgid "Minimise to the tray area"
 msgstr "Minimizohu në brez"
 
-#: cclosemodedlg;control;4
+#: cclosemodedlg;control;3
 msgid "Shut down Shareaza immediately"
 msgstr "Fike Shareaza-n menjëherë"
 
-#: cclosemodedlg;control;5
+#: cclosemodedlg;control;4
 msgid "Shut down Shareaza after any downloads and uploads finish"
 msgstr "Fike Shareaza-n kur çdo shkarkim/ngarkim të përfundojë"
 
@@ -8592,7 +9272,7 @@ msgstr "Fike Shareaza-n kur çdo shkarkim/ngarkim të përfundojë"
 msgid "Download Server.met File"
 msgstr "Shkarkoni Skedën Server.met"
 
-#: cdonkeyserversdlg;control;2
+#: cdonkeyserversdlg;control;1
 msgid "You can download an eDonkey server.met file from the web to refresh your local list of servers."
 msgstr "Skeda server.met e eDonkey mund të shkarkohet nga ky rrjet për të rifreskuar listën lokale me servera."
 
@@ -8736,15 +9416,15 @@ msgstr "te"
 msgid "Open Torrent File"
 msgstr "Hapeni Skedën Torrent"
 
-#: ctorrentseeddlg;control;2
+#: ctorrentseeddlg;control;1
 msgid "You have opened a BitTorrent torrent file.  Would you like to download its contents, or re-seed it?"
 msgstr "Ke hapur një skedë torrent në BitTorrent. Do i shkarkosh përmbajtjet e saj, apo do e rimbjellësh?"
 
-#: ctorrentseeddlg;control;4
+#: ctorrentseeddlg;control;3
 msgid "Seed"
 msgstr "Mbille"
 
-#: ctorrentseeddlg;control;6
+#: ctorrentseeddlg;control;5
 msgid "To share complete files using BitTorrent they must first be seeded.  Once this process is complete the Torrent will appear as a new item in your download list."
 msgstr "Për të shpërndarë skeda të plota me BitTorrent ato në fillim duhet të mbillen. Sapo ky proces të përfundojë Torrent-i do të shfaqet si një njësi e re në listën tënde të shkarkimeve."
 
@@ -8832,11 +9512,11 @@ msgstr "_Lloji i skedës:"
 msgid "Select Visualisation"
 msgstr "Zgjidheni Vegimin"
 
-#: cmediavisdlg;control;2
+#: cmediavisdlg;control;1
 msgid "Select an audio visualisation from the list:"
 msgstr "Zgjidhe një vegim zanor nga lista:"
 
-#: cmediavisdlg;control;4
+#: cmediavisdlg;control;3
 msgid "Footer Display|Full Size Display|Large Display|Medium Display|Small Display"
 msgstr "Shfaqe në Fund|Shfaqe me Masë të Plotë|Shfaqe të Madh|Shfaqe të Mesëm|Shfaqe të Vogël"
 
@@ -8844,23 +9524,23 @@ msgstr "Shfaqe në Fund|Shfaqe me Masë të Plotë|Shfaqe të Madh|Shfaqe të Me
 msgid "Upgrade Alert"
 msgstr "Alarmi i Përmirësimit"
 
-#: cupgradedlg;control;2
+#: cupgradedlg;control;1
 msgid "A new version of Shareaza is now available. Would you like to upgrade?"
 msgstr "Për Shareaza-n ka dalë një version i ri. Do e përmirësoni?"
 
-#: cupgradedlg;control;3
+#: cupgradedlg;control;2
 msgid "If you select Upgrade Now, Shareaza will add the upgrade to your download queue and automatically begin downloading it."
 msgstr "Nëse zgjidhet Përmirëso Tani, Shareaza do e shtojë përmirësimin në radhën tuaj të punëve për shkarkim dhe do nisë ta shkarkojë atë automatikisht."
 
-#: cupgradedlg;control;4
+#: cupgradedlg;control;3
 msgid "_Upgrade Now"
 msgstr "_Përmirëso Tani"
 
-#: cupgradedlg;control;5
+#: cupgradedlg;control;4
 msgid "Don't check for new versions"
 msgstr "Mos verifiko versionet e reja"
 
-#: cupgradedlg;control;6
+#: cupgradedlg;control;5
 msgid "Don't Upgrade"
 msgstr "Mos Përmirëso"
 

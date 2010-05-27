@@ -2,12 +2,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2010-05-19 14:37+0000\n"
+"POT-Creation-Date: 2010-05-27 12:52+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Janza\n"
 "Language-Team: Shareaza Development Team\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-Language: Eesti\n"
@@ -52,7 +52,8 @@ msgstr "Klikka siia, et valida Eesti keel."
 msgid "(translation language direction: ltr or rtl)"
 msgstr ""
 
-#: button;id_network_connect button;id_tab_connect button;id_irc_connect button;id_chat_connect string;8069 cconnecttodlg;control;7
+#: button;id_network_connect button;id_tab_connect button;id_irc_connect
+#: button;id_chat_connect string;8069 cconnecttodlg;control;7
 msgid "Connect"
 msgstr "Ühenda"
 
@@ -68,11 +69,13 @@ msgstr "Raamatukogu"
 msgid "Media Player"
 msgstr "Meedia"
 
-#: button;id_tab_search string;window_search string;window_searchpad string;8144 string;8156 cnewsearchdlg;control;3 column;search
+#: button;id_tab_search string;window_search string;window_searchpad
+#: string;8144 string;8156 cnewsearchdlg;control;3 column;search
 msgid "Search"
 msgstr "Otsing"
 
-#: button;id_tab_transfers string;window_downloads dialog;cdownloadssettingspage
+#: button;id_tab_transfers string;window_downloads
+#: dialog;cdownloadssettingspage
 msgid "Downloads"
 msgstr "Ülekanded"
 
@@ -88,7 +91,7 @@ msgstr "Vestlus"
 msgid "New Search"
 msgstr "Uus otsing"
 
-#: button;id_search_download cdownloaddlg;control;5 ctorrentseeddlg;control;3
+#: button;id_search_download cdownloaddlg;control;4 ctorrentseeddlg;control;2
 msgid "Download"
 msgstr "Tõmba"
 
@@ -104,11 +107,15 @@ msgstr "Näita otsingut"
 msgid "Show Details"
 msgstr "Näita detailselt"
 
-#: csearchwnd.panel.basic;label-text;1 csearchwnd.panel;label-text;1 csearchwnd.full;label-text;1 cbrowsehostwnd.basic;label-text;1 cbrowsehostwnd;label-text;1 chitmonitorwnd;label-text;1
+#: csearchwnd.panel.basic;label-text;1 csearchwnd.panel;label-text;1
+#: csearchwnd.full;label-text;1 cbrowsehostwnd.basic;label-text;1
+#: cbrowsehostwnd;label-text;1 chitmonitorwnd;label-text;1
 msgid "Filter:"
 msgstr "Filter:"
 
-#: csearchwnd.panel.basic;label-tip;1 csearchwnd.panel;label-tip;1 csearchwnd.full;label-tip;1 cbrowsehostwnd.basic;label-tip;1 cbrowsehostwnd;label-tip;1 chitmonitorwnd;label-tip;1
+#: csearchwnd.panel.basic;label-tip;1 csearchwnd.panel;label-tip;1
+#: csearchwnd.full;label-tip;1 cbrowsehostwnd.basic;label-tip;1
+#: cbrowsehostwnd;label-tip;1 chitmonitorwnd;label-tip;1
 msgid "Type some words to filter the results with"
 msgstr "Trüki märksõnad"
 
@@ -140,7 +147,8 @@ msgstr "Kaustad"
 msgid "Organiser"
 msgstr "Organiseeria"
 
-#: button;id_search_chat button;id_uploads_chat button;id_neighbours_chat cbrowsehostprofile.2;link;4
+#: button;id_search_chat button;id_uploads_chat button;id_neighbours_chat
+#: cbrowsehostprofile.2;link;4
 msgid "Chat to User"
 msgstr "Vestle kasutajaga"
 
@@ -152,7 +160,8 @@ msgstr "Stop"
 msgid "Refresh"
 msgstr "Värskenda"
 
-#: button;id_downloads_launch_complete button;id_uploads_launch button;id_library_launch
+#: button;id_downloads_launch_complete button;id_uploads_launch
+#: button;id_library_launch
 msgid "Open or Play"
 msgstr "Ava"
 
@@ -196,7 +205,8 @@ msgstr "Puhasta Valmis"
 msgid "Properties"
 msgstr "Info"
 
-#: button;id_downloads_filter_menu button;id_uploads_filter_menu cfiltersearchdlg;control;29
+#: button;id_downloads_filter_menu button;id_uploads_filter_menu
+#: cfiltersearchdlg;control;29
 msgid "Filter"
 msgstr "Filter"
 
@@ -252,7 +262,8 @@ msgstr "Liiguta"
 msgid "Copy"
 msgstr "Kopeeri"
 
-#: button;id_library_delete cskinssettingspage;control;9 cdeletefiledlg;control;3
+#: button;id_library_delete cskinssettingspage;control;9
+#: cdeletefiledlg;control;3
 msgid "Delete"
 msgstr "Kustuta"
 
@@ -304,7 +315,8 @@ msgstr "Järgmine"
 msgid "Playlist"
 msgstr "Playlist"
 
-#: cmediaframe;label-text;2 string;8321 cconnectionsettingspage;control;4 cconnectionsettingspage;control;13
+#: cmediaframe;label-text;2 string;8321 cconnectionsettingspage;control;4
+#: cconnectionsettingspage;control;13
 msgid "Speed:"
 msgstr "Kiirus:"
 
@@ -324,7 +336,8 @@ msgstr "Salvesta"
 msgid "Connect to IRC"
 msgstr ""
 
-#: button;id_irc_disconnect button;id_neighbours_disconnect button;id_hostcache_disconnect button;id_chat_disconnect string;8072
+#: button;id_irc_disconnect button;id_neighbours_disconnect
+#: button;id_hostcache_disconnect button;id_chat_disconnect string;8072
 msgid "Disconnect"
 msgstr "Katkesta ühendus"
 
@@ -500,7 +513,8 @@ msgstr ""
 msgid "Best Fit"
 msgstr ""
 
-#: button;imageviewer_close string;20001 cfolderscandlg;control;7 cdonkeyimportdlg;control;6 cwarningsdlg;control;8 chelpdlg;control;2
+#: button;imageviewer_close string;20001 cfolderscandlg;control;7
+#: cdonkeyimportdlg;control;5 cwarningsdlg;control;7 chelpdlg;control;1
 msgid "Close"
 msgstr "Sule"
 
@@ -508,7 +522,9 @@ msgstr "Sule"
 msgid "_Close Window"
 msgstr "_Close Window"
 
-#: child;item;id_child_maximise cmainwnd.windowed;22;item;id_window_cascade cmediaframe.basic;53;item;id_media_fullscreen cmediaframe;56;item;id_media_fullscreen
+#: child;item;id_child_maximise cmainwnd.windowed;22;item;id_window_cascade
+#: cmediaframe.basic;53;item;id_media_fullscreen
+#: cmediaframe;56;item;id_media_fullscreen
 msgid "_Full Screen"
 msgstr "_Full Screen"
 
@@ -520,11 +536,17 @@ msgstr "_Restore"
 msgid "_Minimise"
 msgstr "_Minimise"
 
-#: cmainwnd.basic;1 cmainwnd.tabbed;9 cmainwnd.tabbed;11;item;id_tab_network cmainwnd.windowed;18 cmainwnd.view.tabbed;item;id_tab_network chomewnd.tabbed;item;id_tab_network
+#: cmainwnd.basic;1 cmainwnd.tabbed;9 cmainwnd.tabbed;11;item;id_tab_network
+#: cmainwnd.windowed;18 cmainwnd.view.tabbed;item;id_tab_network
+#: chomewnd.tabbed;item;id_tab_network
 msgid "_Network"
 msgstr "_Võrk"
 
-#: cmainwnd.basic;1;item;id_network_connect cmainwnd.tabbed;9;item;id_network_connect cmainwnd.windowed;18;item;id_network_connect cneighbourswnd;59;item;id_network_connect cprivatechatframe;item;id_chat_connect
+#: cmainwnd.basic;1;item;id_network_connect
+#: cmainwnd.tabbed;9;item;id_network_connect
+#: cmainwnd.windowed;18;item;id_network_connect
+#: cneighbourswnd;59;item;id_network_connect
+#: cprivatechatframe;item;id_chat_connect
 msgid "_Connect"
 msgstr "_Ühenda"
 
@@ -532,23 +554,35 @@ msgstr "_Ühenda"
 msgid "Choose _Networks"
 msgstr "Vali _Võrk"
 
-#: cmainwnd.basic;1;2;item;id_network_g2 cmainwnd.tabbed;9;10;item;id_network_g2 cmainwnd.windowed;18;19;item;id_network_g2
+#: cmainwnd.basic;1;2;item;id_network_g2
+#: cmainwnd.tabbed;9;10;item;id_network_g2
+#: cmainwnd.windowed;18;19;item;id_network_g2
 msgid "Connect to _Gnutella2"
 msgstr "Ühenda _Gnutella2"
 
-#: cmainwnd.basic;1;2;item;id_network_g1 cmainwnd.tabbed;9;10;item;id_network_g1 cmainwnd.windowed;18;19;item;id_network_g1
+#: cmainwnd.basic;1;2;item;id_network_g1
+#: cmainwnd.tabbed;9;10;item;id_network_g1
+#: cmainwnd.windowed;18;19;item;id_network_g1
 msgid "Connect to Gnutella_1"
 msgstr "Ühenda Gnutella_1"
 
-#: cmainwnd.basic;1;2;item;id_network_ed2k cmainwnd.tabbed;9;10;item;id_network_ed2k cmainwnd.windowed;18;19;item;id_network_ed2k
+#: cmainwnd.basic;1;2;item;id_network_ed2k
+#: cmainwnd.tabbed;9;10;item;id_network_ed2k
+#: cmainwnd.windowed;18;19;item;id_network_ed2k
 msgid "Connect to _eDonkey"
 msgstr "Ühenda _eDonkey2000"
 
-#: cmainwnd.basic;1;item;id_network_auto_close cmainwnd.tabbed;9;item;id_network_auto_close cmainwnd.tray;item;id_network_auto_close cremotewnd;item;id_network_auto_close
+#: cmainwnd.basic;1;item;id_network_auto_close
+#: cmainwnd.tabbed;9;item;id_network_auto_close
+#: cmainwnd.tray;item;id_network_auto_close
+#: cremotewnd;item;id_network_auto_close
 msgid "Exit _After Transfers"
 msgstr "Välju _Ülekande lõpus"
 
-#: cmainwnd.basic;1;item;id_network_exit cmainwnd.tabbed;9;item;id_network_exit cmainwnd.windowed;18;item;id_network_exit cmainwnd.tray;item;id_network_exit cremotewnd;item;id_network_exit
+#: cmainwnd.basic;1;item;id_network_exit
+#: cmainwnd.tabbed;9;item;id_network_exit
+#: cmainwnd.windowed;18;item;id_network_exit
+#: cmainwnd.tray;item;id_network_exit cremotewnd;item;id_network_exit
 msgid "E_xit"
 msgstr "V_älju"
 
@@ -556,23 +590,45 @@ msgstr "V_älju"
 msgid "_View"
 msgstr "_Vaated"
 
-#: cmainwnd.basic;3;item;id_tab_home cmainwnd.tabbed;11;item;id_tab_home cmainwnd.view.basic;item;id_tab_home cmainwnd.view.tabbed;item;id_tab_home chomewnd.basic;item;id_tab_home chomewnd.tabbed;item;id_tab_home
+#: cmainwnd.basic;3;item;id_tab_home cmainwnd.tabbed;11;item;id_tab_home
+#: cmainwnd.view.basic;item;id_tab_home cmainwnd.view.tabbed;item;id_tab_home
+#: chomewnd.basic;item;id_tab_home chomewnd.tabbed;item;id_tab_home
 msgid "_Home"
 msgstr "_Kodu"
 
-#: cmainwnd.basic;3;item;id_tab_library cmainwnd.tabbed;11;item;id_tab_library cmainwnd.tabbed;11;12;item;id_view_library cmainwnd.windowed;20;item;id_view_library cmainwnd.view.basic;item;id_tab_library cmainwnd.view.tabbed;item;id_tab_library cmainwnd.view.windowed;item;id_view_library chomewnd.basic;item;id_tab_library chomewnd.tabbed;item;id_tab_library
+#: cmainwnd.basic;3;item;id_tab_library cmainwnd.tabbed;11;item;id_tab_library
+#: cmainwnd.tabbed;11;12;item;id_view_library
+#: cmainwnd.windowed;20;item;id_view_library
+#: cmainwnd.view.basic;item;id_tab_library
+#: cmainwnd.view.tabbed;item;id_tab_library
+#: cmainwnd.view.windowed;item;id_view_library
+#: chomewnd.basic;item;id_tab_library chomewnd.tabbed;item;id_tab_library
 msgid "_Library"
 msgstr "_Raamatukogu"
 
-#: cmainwnd.basic;3;item;id_tab_media cmainwnd.tabbed;11;item;id_tab_media cmainwnd.tabbed;11;12;item;id_view_media cmainwnd.windowed;20;item;id_view_media cmainwnd.view.basic;item;id_tab_media cmainwnd.view.tabbed;item;id_tab_media cmainwnd.view.windowed;item;id_view_media chomewnd.basic;item;id_tab_media chomewnd.tabbed;item;id_tab_media
+#: cmainwnd.basic;3;item;id_tab_media cmainwnd.tabbed;11;item;id_tab_media
+#: cmainwnd.tabbed;11;12;item;id_view_media
+#: cmainwnd.windowed;20;item;id_view_media
+#: cmainwnd.view.basic;item;id_tab_media
+#: cmainwnd.view.tabbed;item;id_tab_media
+#: cmainwnd.view.windowed;item;id_view_media chomewnd.basic;item;id_tab_media
+#: chomewnd.tabbed;item;id_tab_media
 msgid "_Media Player"
 msgstr "_Meedia"
 
-#: cmainwnd.basic;3;item;id_tab_search cmainwnd.tabbed;11;item;id_tab_search cmainwnd.view.basic;item;id_tab_search cmainwnd.view.tabbed;item;id_tab_search chomewnd.basic;item;id_tab_search chomewnd.tabbed;item;id_tab_search
+#: cmainwnd.basic;3;item;id_tab_search cmainwnd.tabbed;11;item;id_tab_search
+#: cmainwnd.view.basic;item;id_tab_search
+#: cmainwnd.view.tabbed;item;id_tab_search chomewnd.basic;item;id_tab_search
+#: chomewnd.tabbed;item;id_tab_search
 msgid "_Search"
 msgstr "_Otsing"
 
-#: cmainwnd.basic;3;item;id_tab_transfers cmainwnd.tabbed;11;12;item;id_view_downloads cmainwnd.windowed;20;item;id_view_downloads cmainwnd.view.basic;item;id_tab_transfers cmainwnd.view.windowed;item;id_view_downloads chomewnd.basic;item;id_tab_transfers
+#: cmainwnd.basic;3;item;id_tab_transfers
+#: cmainwnd.tabbed;11;12;item;id_view_downloads
+#: cmainwnd.windowed;20;item;id_view_downloads
+#: cmainwnd.view.basic;item;id_tab_transfers
+#: cmainwnd.view.windowed;item;id_view_downloads
+#: chomewnd.basic;item;id_tab_transfers
 msgid "_Downloads"
 msgstr "_Ülekanded"
 
@@ -580,35 +636,74 @@ msgstr "_Ülekanded"
 msgid "_Remote"
 msgstr "Näita _Pulti"
 
-#: cmainwnd.basic;3;item;id_tab_irc cmainwnd.tabbed;11;item;id_tab_irc cmainwnd.view.tabbed;item;id_tab_irc chomewnd.tabbed;item;id_tab_irc
+#: cmainwnd.basic;3;item;id_tab_irc cmainwnd.tabbed;11;item;id_tab_irc
+#: cmainwnd.view.tabbed;item;id_tab_irc chomewnd.tabbed;item;id_tab_irc
 msgid "_Chat"
 msgstr ""
 
-#: cmainwnd.basic;3;4 cmainwnd.tabbed;11;12 cmainwnd.view.basic;26 chomewnd.basic;27 cdownloadswnd.download;39
+#: cmainwnd.basic;3;4 cmainwnd.tabbed;11;12 cmainwnd.view.basic;26
+#: chomewnd.basic;27 cdownloadswnd.download;39
 msgid "_Advanced"
 msgstr "_Edasi"
 
-#: cmainwnd.basic;3;4;item;id_view_neighbours cmainwnd.tabbed;11;12;item;id_view_neighbours cmainwnd.windowed;20;item;id_view_neighbours cmainwnd.view.basic;26;item;id_view_neighbours cmainwnd.view.windowed;item;id_view_neighbours chomewnd.basic;27;item;id_view_neighbours
+#: cmainwnd.basic;3;4;item;id_view_neighbours
+#: cmainwnd.tabbed;11;12;item;id_view_neighbours
+#: cmainwnd.windowed;20;item;id_view_neighbours
+#: cmainwnd.view.basic;26;item;id_view_neighbours
+#: cmainwnd.view.windowed;item;id_view_neighbours
+#: chomewnd.basic;27;item;id_view_neighbours
 msgid "_Neighbours"
 msgstr "_Naabrid"
 
-#: cmainwnd.basic;3;4;item;id_view_uploads cmainwnd.tabbed;11;12;item;id_view_uploads cmainwnd.windowed;20;item;id_view_uploads cmainwnd.view.basic;26;item;id_view_uploads cmainwnd.view.windowed;item;id_view_uploads chomewnd.basic;27;item;id_view_uploads
+#: cmainwnd.basic;3;4;item;id_view_uploads
+#: cmainwnd.tabbed;11;12;item;id_view_uploads
+#: cmainwnd.windowed;20;item;id_view_uploads
+#: cmainwnd.view.basic;26;item;id_view_uploads
+#: cmainwnd.view.windowed;item;id_view_uploads
+#: chomewnd.basic;27;item;id_view_uploads
 msgid "_Uploads"
 msgstr "_Üleslaadimised"
 
-#: cmainwnd.basic;3;4;item;id_view_security cmainwnd.tabbed;11;item;id_view_security cmainwnd.tabbed;11;12;item;id_view_security cmainwnd.windowed;20;item;id_view_security cmainwnd.view.basic;26;item;id_view_security cmainwnd.view.tabbed;item;id_view_security cmainwnd.view.windowed;item;id_view_security chomewnd.basic;27;item;id_view_security chomewnd.tabbed;item;id_view_security
+#: cmainwnd.basic;3;4;item;id_view_security
+#: cmainwnd.tabbed;11;item;id_view_security
+#: cmainwnd.tabbed;11;12;item;id_view_security
+#: cmainwnd.windowed;20;item;id_view_security
+#: cmainwnd.view.basic;26;item;id_view_security
+#: cmainwnd.view.tabbed;item;id_view_security
+#: cmainwnd.view.windowed;item;id_view_security
+#: chomewnd.basic;27;item;id_view_security
+#: chomewnd.tabbed;item;id_view_security
 msgid "Se_curity"
 msgstr "Tu_rvalisus"
 
-#: cmainwnd.basic;3;4;item;id_view_hosts cmainwnd.tabbed;11;item;id_view_hosts cmainwnd.tabbed;11;12;item;id_view_hosts cmainwnd.windowed;20;item;id_view_hosts cmainwnd.view.basic;26;item;id_view_hosts cmainwnd.view.tabbed;item;id_view_hosts cmainwnd.view.windowed;item;id_view_hosts chomewnd.basic;27;item;id_view_hosts chomewnd.tabbed;item;id_view_hosts
+#: cmainwnd.basic;3;4;item;id_view_hosts cmainwnd.tabbed;11;item;id_view_hosts
+#: cmainwnd.tabbed;11;12;item;id_view_hosts
+#: cmainwnd.windowed;20;item;id_view_hosts
+#: cmainwnd.view.basic;26;item;id_view_hosts
+#: cmainwnd.view.tabbed;item;id_view_hosts
+#: cmainwnd.view.windowed;item;id_view_hosts
+#: chomewnd.basic;27;item;id_view_hosts chomewnd.tabbed;item;id_view_hosts
 msgid "H_ost Cache"
 msgstr "V_õõrustajad"
 
-#: cmainwnd.basic;3;4;item;id_view_discovery cmainwnd.tabbed;11;12;item;id_view_discovery cmainwnd.windowed;20;item;id_view_discovery cmainwnd.view.tabbed;item;id_view_discovery cmainwnd.view.windowed;item;id_view_discovery chomewnd.tabbed;item;id_view_discovery
+#: cmainwnd.basic;3;4;item;id_view_discovery
+#: cmainwnd.tabbed;11;12;item;id_view_discovery
+#: cmainwnd.windowed;20;item;id_view_discovery
+#: cmainwnd.view.tabbed;item;id_view_discovery
+#: cmainwnd.view.windowed;item;id_view_discovery
+#: chomewnd.tabbed;item;id_view_discovery
 msgid "Disco_very"
 msgstr "Serve_rid"
 
-#: cmainwnd.basic;3;4;item;id_view_scheduler cmainwnd.tabbed;11;item;id_view_scheduler cmainwnd.tabbed;11;12;item;id_view_scheduler cmainwnd.windowed;20;item;id_view_scheduler cmainwnd.view.basic;26;item;id_view_scheduler cmainwnd.view.tabbed;item;id_view_scheduler cmainwnd.view.windowed;item;id_view_scheduler chomewnd.basic;27;item;id_view_scheduler chomewnd.tabbed;item;id_view_scheduler
+#: cmainwnd.basic;3;4;item;id_view_scheduler
+#: cmainwnd.tabbed;11;item;id_view_scheduler
+#: cmainwnd.tabbed;11;12;item;id_view_scheduler
+#: cmainwnd.windowed;20;item;id_view_scheduler
+#: cmainwnd.view.basic;26;item;id_view_scheduler
+#: cmainwnd.view.tabbed;item;id_view_scheduler
+#: cmainwnd.view.windowed;item;id_view_scheduler
+#: chomewnd.basic;27;item;id_view_scheduler
+#: chomewnd.tabbed;item;id_view_scheduler
 msgid "Sch_eduler"
 msgstr ""
 
@@ -624,31 +719,46 @@ msgstr "_Navigatsiooni vaade"
 msgid "_Tools"
 msgstr "_Tööriistad"
 
-#: cmainwnd.basic;5;item;id_library_folders cmainwnd.tabbed;13;item;id_library_folders cmainwnd.windowed;21;item;id_library_folders clibrarytree.physical.basic;item;id_library_folders clibrarytree.physical;item;id_library_folders
+#: cmainwnd.basic;5;item;id_library_folders
+#: cmainwnd.tabbed;13;item;id_library_folders
+#: cmainwnd.windowed;21;item;id_library_folders
+#: clibrarytree.physical.basic;item;id_library_folders
+#: clibrarytree.physical;item;id_library_folders
 msgid "Share _Files..."
 msgstr "Jaga _Faile..."
 
-#: cmainwnd.basic;5;item;id_tools_download cmainwnd.tabbed;13;item;id_tools_download cmainwnd.windowed;21;item;id_tools_download
+#: cmainwnd.basic;5;item;id_tools_download
+#: cmainwnd.tabbed;13;item;id_tools_download
+#: cmainwnd.windowed;21;item;id_tools_download
 msgid "_Download File/Torrent..."
 msgstr "_Tõmba Fail/Torrent..."
 
-#: cmainwnd.basic;5;item;id_tools_skin cmainwnd.tabbed;13;item;id_tools_skin cmainwnd.windowed;21;item;id_tools_skin
+#: cmainwnd.basic;5;item;id_tools_skin cmainwnd.tabbed;13;item;id_tools_skin
+#: cmainwnd.windowed;21;item;id_tools_skin
 msgid "Choose a S_kin..."
 msgstr "Vali _Nahk..."
 
-#: cmainwnd.basic;5;item;id_tools_language cmainwnd.tabbed;13;item;id_tools_language cmainwnd.windowed;21;item;id_tools_language
+#: cmainwnd.basic;5;item;id_tools_language
+#: cmainwnd.tabbed;13;item;id_tools_language
+#: cmainwnd.windowed;21;item;id_tools_language
 msgid "Choose a _Language..."
 msgstr "Vali Kee_l..."
 
-#: cmainwnd.basic;5;item;id_tools_profile cmainwnd.tabbed;13;item;id_tools_profile cmainwnd.windowed;21;item;id_tools_profile
+#: cmainwnd.basic;5;item;id_tools_profile
+#: cmainwnd.tabbed;13;item;id_tools_profile
+#: cmainwnd.windowed;21;item;id_tools_profile
 msgid "Edit My _Profile..."
 msgstr "Muuda Pr_ofiili..."
 
-#: cmainwnd.basic;5;item;id_tools_wizard cmainwnd.tabbed;13;item;id_tools_wizard cmainwnd.windowed;21;item;id_tools_wizard
+#: cmainwnd.basic;5;item;id_tools_wizard
+#: cmainwnd.tabbed;13;item;id_tools_wizard
+#: cmainwnd.windowed;21;item;id_tools_wizard
 msgid "QuickStart _Wizard..."
 msgstr "Alguse A_biline..."
 
-#: cmainwnd.basic;5;item;id_tools_settings cmainwnd.tabbed;13;item;id_tools_settings cmainwnd.windowed;21;item;id_tools_settings
+#: cmainwnd.basic;5;item;id_tools_settings
+#: cmainwnd.tabbed;13;item;id_tools_settings
+#: cmainwnd.windowed;21;item;id_tools_settings
 msgid "_Shareaza Settings..."
 msgstr "_Shareaza Seaded..."
 
@@ -656,11 +766,13 @@ msgstr "_Shareaza Seaded..."
 msgid "_Help"
 msgstr "_Abi"
 
-#: cmainwnd.basic;6;item;id_help_faq cmainwnd.tabbed;15;item;id_help_faq cmainwnd.windowed;23;item;id_help_faq
+#: cmainwnd.basic;6;item;id_help_faq cmainwnd.tabbed;15;item;id_help_faq
+#: cmainwnd.windowed;23;item;id_help_faq
 msgid "Shareaza _FAQ"
 msgstr "Shareaza _KKK"
 
-#: cmainwnd.basic;6;item;id_help_test cmainwnd.tabbed;15;item;id_help_test cmainwnd.windowed;23;item;id_help_test
+#: cmainwnd.basic;6;item;id_help_test cmainwnd.tabbed;15;item;id_help_test
+#: cmainwnd.windowed;23;item;id_help_test
 msgid "_Connection Test"
 msgstr ""
 
@@ -668,19 +780,27 @@ msgstr ""
 msgid "_Guides"
 msgstr "_Õpetused"
 
-#: cmainwnd.basic;6;7;item;id_help_guide cmainwnd.tabbed;15;16;item;id_help_guide cmainwnd.windowed;23;24;item;id_help_guide
+#: cmainwnd.basic;6;7;item;id_help_guide
+#: cmainwnd.tabbed;15;16;item;id_help_guide
+#: cmainwnd.windowed;23;24;item;id_help_guide
 msgid "Shareaza _Users Guide"
 msgstr "Shareaza _Kasutusõpetus"
 
-#: cmainwnd.basic;6;7;item;id_help_router cmainwnd.tabbed;15;16;item;id_help_router cmainwnd.windowed;23;24;item;id_help_router
+#: cmainwnd.basic;6;7;item;id_help_router
+#: cmainwnd.tabbed;15;16;item;id_help_router
+#: cmainwnd.windowed;23;24;item;id_help_router
 msgid "_Router Help"
 msgstr "_Ruuteri abi"
 
-#: cmainwnd.basic;6;7;item;id_help_security cmainwnd.tabbed;15;16;item;id_help_security cmainwnd.windowed;23;24;item;id_help_security
+#: cmainwnd.basic;6;7;item;id_help_security
+#: cmainwnd.tabbed;15;16;item;id_help_security
+#: cmainwnd.windowed;23;24;item;id_help_security
 msgid "_Security Help"
 msgstr "_Turvalisuse abi"
 
-#: cmainwnd.basic;6;7;item;id_help_codec cmainwnd.tabbed;15;16;item;id_help_codec cmainwnd.windowed;23;24;item;id_help_codec
+#: cmainwnd.basic;6;7;item;id_help_codec
+#: cmainwnd.tabbed;15;16;item;id_help_codec
+#: cmainwnd.windowed;23;24;item;id_help_codec
 msgid "_Codec Help"
 msgstr "_Koodekite abi"
 
@@ -688,47 +808,70 @@ msgstr "_Koodekite abi"
 msgid "_Websites"
 msgstr "_Weebilehed"
 
-#: cmainwnd.basic;6;8;item;id_help_homepage cmainwnd.tabbed;15;17;item;id_help_homepage cmainwnd.windowed;23;25;item;id_help_homepage
+#: cmainwnd.basic;6;8;item;id_help_homepage
+#: cmainwnd.tabbed;15;17;item;id_help_homepage
+#: cmainwnd.windowed;23;25;item;id_help_homepage
 msgid "_Shareaza site"
 msgstr "_Shareaza site"
 
-#: cmainwnd.basic;6;8;item;id_help_forums cmainwnd.tabbed;15;17;item;id_help_forums cmainwnd.windowed;23;25;item;id_help_forums
+#: cmainwnd.basic;6;8;item;id_help_forums
+#: cmainwnd.tabbed;15;17;item;id_help_forums
+#: cmainwnd.windowed;23;25;item;id_help_forums
 msgid "Shareaza _Forums"
 msgstr "Shareaza _Forums"
 
-#: cmainwnd.basic;6;8;item;id_help_web_6 cmainwnd.tabbed;15;17;item;id_help_web_6 cmainwnd.windowed;23;25;item;id_help_web_6
+#: cmainwnd.basic;6;8;item;id_help_web_6
+#: cmainwnd.tabbed;15;17;item;id_help_web_6
+#: cmainwnd.windowed;23;25;item;id_help_web_6
 msgid "Shareaza S_kin Site"
 msgstr "Shareaza S_kin Site"
 
-#: cmainwnd.basic;6;item;id_help_version_check cmainwnd.tabbed;15;item;id_help_version_check cmainwnd.windowed;23;item;id_help_version_check
+#: cmainwnd.basic;6;item;id_help_version_check
+#: cmainwnd.tabbed;15;item;id_help_version_check
+#: cmainwnd.windowed;23;item;id_help_version_check
 msgid "Check for new _version"
 msgstr "Version Check"
 
-#: cmainwnd.basic;6;item;id_help_about cmainwnd.tabbed;15;item;id_help_about cmainwnd.windowed;23;item;id_help_about
+#: cmainwnd.basic;6;item;id_help_about cmainwnd.tabbed;15;item;id_help_about
+#: cmainwnd.windowed;23;item;id_help_about
 msgid "_About Shareaza..."
 msgstr "_Shareazast..."
 
-#: cmainwnd.tabbed;9;item;id_network_disconnect cmainwnd.windowed;18;item;id_network_disconnect chostcachewnd;item;id_hostcache_disconnect cdownloadswnd.source;item;id_transfers_disconnect cneighbourswnd.basic;item;id_neighbours_disconnect cneighbourswnd;item;id_neighbours_disconnect cneighbourswnd;59;item;id_network_disconnect cprivatechatframe;item;id_chat_disconnect
+#: cmainwnd.tabbed;9;item;id_network_disconnect
+#: cmainwnd.windowed;18;item;id_network_disconnect
+#: chostcachewnd;item;id_hostcache_disconnect
+#: cdownloadswnd.source;item;id_transfers_disconnect
+#: cneighbourswnd.basic;item;id_neighbours_disconnect
+#: cneighbourswnd;item;id_neighbours_disconnect
+#: cneighbourswnd;59;item;id_network_disconnect
+#: cprivatechatframe;item;id_chat_disconnect
 msgid "_Disconnect"
 msgstr "_Katkesta ühendus"
 
-#: cmainwnd.tabbed;9;item;id_network_connect_to cmainwnd.windowed;18;item;id_network_connect_to
+#: cmainwnd.tabbed;9;item;id_network_connect_to
+#: cmainwnd.windowed;18;item;id_network_connect_to
 msgid "Connect _To..."
 msgstr "Ühenda _Aadressil..."
 
-#: cmainwnd.tabbed;9;item;id_network_browse_to cmainwnd.windowed;18;item;id_network_browse_to
+#: cmainwnd.tabbed;9;item;id_network_browse_to
+#: cmainwnd.windowed;18;item;id_network_browse_to
 msgid "_Browse User..."
 msgstr "_Sirvi Võõrustajat..."
 
-#: cmainwnd.tabbed;9;item;id_network_chat_to cmainwnd.windowed;18;item;id_network_chat_to
+#: cmainwnd.tabbed;9;item;id_network_chat_to
+#: cmainwnd.windowed;18;item;id_network_chat_to
 msgid "Chat to _User..."
 msgstr ""
 
-#: cmainwnd.tabbed;11;item;id_tab_transfers cmainwnd.view.tabbed;item;id_tab_transfers chomewnd.tabbed;item;id_tab_transfers
+#: cmainwnd.tabbed;11;item;id_tab_transfers
+#: cmainwnd.view.tabbed;item;id_tab_transfers
+#: chomewnd.tabbed;item;id_tab_transfers
 msgid "_Transfers"
 msgstr "_Ülekanded"
 
-#: cmainwnd.tabbed;11;12;item;id_view_system cmainwnd.windowed;20;item;id_view_system cmainwnd.view.windowed;item;id_view_system
+#: cmainwnd.tabbed;11;12;item;id_view_system
+#: cmainwnd.windowed;20;item;id_view_system
+#: cmainwnd.view.windowed;item;id_view_system
 msgid "S_ystem"
 msgstr "S_üsteem"
 
@@ -736,19 +879,35 @@ msgstr "S_üsteem"
 msgid "IR_C"
 msgstr ""
 
-#: cmainwnd.tabbed;11;12;item;id_view_traffic cmainwnd.windowed;20;item;id_view_traffic cmainwnd.view.tabbed;item;id_view_traffic cmainwnd.view.windowed;item;id_view_traffic chomewnd.tabbed;item;id_view_traffic
+#: cmainwnd.tabbed;11;12;item;id_view_traffic
+#: cmainwnd.windowed;20;item;id_view_traffic
+#: cmainwnd.view.tabbed;item;id_view_traffic
+#: cmainwnd.view.windowed;item;id_view_traffic
+#: chomewnd.tabbed;item;id_view_traffic
 msgid "_Graph"
 msgstr "_Graafika"
 
-#: cmainwnd.tabbed;11;12;item;id_view_packets cmainwnd.windowed;20;item;id_view_packets cmainwnd.view.tabbed;item;id_view_packets cmainwnd.view.windowed;item;id_view_packets chomewnd.tabbed;item;id_view_packets
+#: cmainwnd.tabbed;11;12;item;id_view_packets
+#: cmainwnd.windowed;20;item;id_view_packets
+#: cmainwnd.view.tabbed;item;id_view_packets
+#: cmainwnd.view.windowed;item;id_view_packets
+#: chomewnd.tabbed;item;id_view_packets
 msgid "_Packet Dump"
 msgstr "_Pakettide liikuvus"
 
-#: cmainwnd.tabbed;11;12;item;id_view_search_monitor cmainwnd.windowed;20;item;id_view_search_monitor cmainwnd.view.tabbed;item;id_view_search_monitor cmainwnd.view.windowed;item;id_view_search_monitor chomewnd.tabbed;item;id_view_search_monitor
+#: cmainwnd.tabbed;11;12;item;id_view_search_monitor
+#: cmainwnd.windowed;20;item;id_view_search_monitor
+#: cmainwnd.view.tabbed;item;id_view_search_monitor
+#: cmainwnd.view.windowed;item;id_view_search_monitor
+#: chomewnd.tabbed;item;id_view_search_monitor
 msgid "Se_arch Monitor"
 msgstr "Otsin_gud"
 
-#: cmainwnd.tabbed;11;12;item;id_view_results_monitor cmainwnd.windowed;20;item;id_view_results_monitor cmainwnd.view.tabbed;item;id_view_results_monitor cmainwnd.view.windowed;item;id_view_results_monitor chomewnd.tabbed;item;id_view_results_monitor
+#: cmainwnd.tabbed;11;12;item;id_view_results_monitor
+#: cmainwnd.windowed;20;item;id_view_results_monitor
+#: cmainwnd.view.tabbed;item;id_view_results_monitor
+#: cmainwnd.view.windowed;item;id_view_results_monitor
+#: chomewnd.tabbed;item;id_view_results_monitor
 msgid "H_it Monitor"
 msgstr "T_õmbamised"
 
@@ -756,19 +915,23 @@ msgstr "T_õmbamised"
 msgid "N_ormal Mode"
 msgstr "_Tavaline vaade"
 
-#: cmainwnd.tabbed;11;item;id_view_tabbed cmainwnd.windowed;20;item;id_view_tabbed
+#: cmainwnd.tabbed;11;item;id_view_tabbed
+#: cmainwnd.windowed;20;item;id_view_tabbed
 msgid "T_abbed Mode"
 msgstr "_Navigatsiooni vaade"
 
-#: cmainwnd.tabbed;11;item;id_view_windowed cmainwnd.windowed;20;item;id_view_windowed
+#: cmainwnd.tabbed;11;item;id_view_windowed
+#: cmainwnd.windowed;20;item;id_view_windowed
 msgid "_Windowed Mode"
 msgstr "_Akende vaade"
 
-#: cmainwnd.tabbed;13;item;idc_import_downloads cmainwnd.windowed;21;item;idc_import_downloads
+#: cmainwnd.tabbed;13;item;idc_import_downloads
+#: cmainwnd.windowed;21;item;idc_import_downloads
 msgid "_Import eMule partial downloads..."
 msgstr ""
 
-#: cmainwnd.tabbed;13;item;id_open_downloads_folder cmainwnd.windowed;21;item;id_open_downloads_folder
+#: cmainwnd.tabbed;13;item;id_open_downloads_folder
+#: cmainwnd.windowed;21;item;id_open_downloads_folder
 msgid "_Open my folder of completed Downloads"
 msgstr ""
 
@@ -776,27 +939,34 @@ msgstr ""
 msgid "_Window"
 msgstr "_Aknad"
 
-#: cmainwnd.tabbed;14;item;id_window_navbar cmainwnd.windowed;22;item;id_window_navbar
+#: cmainwnd.tabbed;14;item;id_window_navbar
+#: cmainwnd.windowed;22;item;id_window_navbar
 msgid "Show _Navigation Bar"
 msgstr "Näita _Navigatiooniriba"
 
-#: cmainwnd.tabbed;14;item;id_window_toolbar cmainwnd.windowed;22;item;id_window_toolbar
+#: cmainwnd.tabbed;14;item;id_window_toolbar
+#: cmainwnd.windowed;22;item;id_window_toolbar
 msgid "Show _Tool Bar"
 msgstr "Näita _Tööriistariba"
 
-#: cmainwnd.tabbed;14;item;id_window_tabbar cmainwnd.windowed;22;item;id_window_tabbar
+#: cmainwnd.tabbed;14;item;id_window_tabbar
+#: cmainwnd.windowed;22;item;id_window_tabbar
 msgid "Show Tab _Bar"
 msgstr "Näita Akende_riba"
 
-#: cmainwnd.tabbed;14;item;id_window_monitor cmainwnd.windowed;22;item;id_window_monitor
+#: cmainwnd.tabbed;14;item;id_window_monitor
+#: cmainwnd.windowed;22;item;id_window_monitor
 msgid "Show _Monitor"
 msgstr "Näita _Monitori"
 
-#: cmainwnd.tabbed;14;item;id_window_remote cmainwnd.windowed;22;item;id_window_remote
+#: cmainwnd.tabbed;14;item;id_window_remote
+#: cmainwnd.windowed;22;item;id_window_remote
 msgid "Show _Remote"
 msgstr "Näita _Pulti"
 
-#: cmainwnd.windowed;18;item;id_network_search cmainwnd.view.windowed;item;id_network_search cmainwnd.tray;item;id_network_search cremotewnd;item;id_network_search
+#: cmainwnd.windowed;18;item;id_network_search
+#: cmainwnd.view.windowed;item;id_network_search
+#: cmainwnd.tray;item;id_network_search cremotewnd;item;id_network_search
 msgid "New _Search..."
 msgstr "Uus _Otsing..."
 
@@ -848,7 +1018,9 @@ msgstr "_Järgmine"
 msgid "_Connect Now"
 msgstr "_Ühenda Nüüd"
 
-#: chostcachewnd;item;id_neighbours_copy cneighbourswnd.basic;item;id_neighbours_copy cneighbourswnd;item;id_neighbours_copy
+#: chostcachewnd;item;id_neighbours_copy
+#: cneighbourswnd.basic;item;id_neighbours_copy
+#: cneighbourswnd;item;id_neighbours_copy
 msgid "Copy _URI"
 msgstr "Kopeeri _URI"
 
@@ -896,67 +1068,153 @@ msgstr "_Impordi MET Fail..."
 msgid "Download MET..."
 msgstr "Tõmba MET..."
 
-#: csearchwnd.basic;item;id_search_download csearchwnd;item;id_search_download cbrowsehostwnd.basic;item;id_search_download cbrowsehostwnd;item;id_search_download chitmonitorwnd;item;id_search_download
+#: csearchwnd.basic;item;id_search_download csearchwnd;item;id_search_download
+#: cbrowsehostwnd.basic;item;id_search_download
+#: cbrowsehostwnd;item;id_search_download
+#: chitmonitorwnd;item;id_search_download
 msgid "_Download"
 msgstr "_Tõmba"
 
-#: csearchwnd.basic;item;id_search_copy csearchwnd;item;id_search_copy cbrowsehostwnd.basic;item;id_search_copy cbrowsehostwnd;item;id_search_copy chitmonitorwnd;item;id_search_copy cdownloadswnd.download.basic;item;id_downloads_copy cdownloadswnd.download;39;item;id_downloads_copy cdownloadswnd.source;item;id_downloads_copy cdownloadswnd.completed;item;id_downloads_copy clibraryfileview.physical.basic;item;id_library_url clibraryfileview.physical;item;id_library_url clibraryfileview.virtual.basic;item;id_library_url clibraryfileview.virtual;item;id_library_url
+#: csearchwnd.basic;item;id_search_copy csearchwnd;item;id_search_copy
+#: cbrowsehostwnd.basic;item;id_search_copy cbrowsehostwnd;item;id_search_copy
+#: chitmonitorwnd;item;id_search_copy
+#: cdownloadswnd.download.basic;item;id_downloads_copy
+#: cdownloadswnd.download;39;item;id_downloads_copy
+#: cdownloadswnd.source;item;id_downloads_copy
+#: cdownloadswnd.completed;item;id_downloads_copy
+#: clibraryfileview.physical.basic;item;id_library_url
+#: clibraryfileview.physical;item;id_library_url
+#: clibraryfileview.virtual.basic;item;id_library_url
+#: clibraryfileview.virtual;item;id_library_url
 msgid "Copy _URI..."
 msgstr "Kopeeri _URI"
 
-#: csearchwnd.basic;item;id_browse_launch csearchwnd;item;id_browse_launch chitmonitorwnd;item;id_browse_launch cdownloadswnd.source;item;id_browse_launch cuploadswnd.upload.basic;item;id_browse_launch cuploadswnd.upload;item;id_browse_launch cneighbourswnd.basic;item;id_browse_launch cneighbourswnd;item;id_browse_launch csearchmonitorwnd;item;id_browse_launch cprivatechatframe;item;id_chat_browse
+#: csearchwnd.basic;item;id_browse_launch csearchwnd;item;id_browse_launch
+#: chitmonitorwnd;item;id_browse_launch
+#: cdownloadswnd.source;item;id_browse_launch
+#: cuploadswnd.upload.basic;item;id_browse_launch
+#: cuploadswnd.upload;item;id_browse_launch
+#: cneighbourswnd.basic;item;id_browse_launch
+#: cneighbourswnd;item;id_browse_launch
+#: csearchmonitorwnd;item;id_browse_launch
+#: cprivatechatframe;item;id_chat_browse
 msgid "_Browse User"
 msgstr "_Sirvi Kasutajat"
 
-#: csearchwnd.basic;item;id_search_chat csearchwnd;item;id_search_chat cbrowsehostwnd.basic;item;id_search_chat cbrowsehostwnd;item;id_search_chat chitmonitorwnd;item;id_search_chat cdownloadswnd.source;item;id_transfers_chat cuploadswnd.upload.basic;item;id_uploads_chat cuploadswnd.upload;item;id_uploads_chat cneighbourswnd.basic;item;id_neighbours_chat cneighbourswnd;item;id_neighbours_chat
+#: csearchwnd.basic;item;id_search_chat csearchwnd;item;id_search_chat
+#: cbrowsehostwnd.basic;item;id_search_chat cbrowsehostwnd;item;id_search_chat
+#: chitmonitorwnd;item;id_search_chat
+#: cdownloadswnd.source;item;id_transfers_chat
+#: cuploadswnd.upload.basic;item;id_uploads_chat
+#: cuploadswnd.upload;item;id_uploads_chat
+#: cneighbourswnd.basic;item;id_neighbours_chat
+#: cneighbourswnd;item;id_neighbours_chat
 msgid "_Chat to User"
 msgstr "_Vestle Kasutajaga"
 
-#: csearchwnd.basic;29 csearchwnd;31 cbrowsehostwnd.basic;33 cbrowsehostwnd;35 chitmonitorwnd;37 clibraryfileview.physical.basic;40 clibraryfileview.physical;43 clibraryfileview.virtual.basic;46 clibraryfileview.virtual;49
+#: csearchwnd.basic;29 csearchwnd;31 cbrowsehostwnd.basic;33 cbrowsehostwnd;35
+#: chitmonitorwnd;37 clibraryfileview.physical.basic;40
+#: clibraryfileview.physical;43 clibraryfileview.virtual.basic;46
+#: clibraryfileview.virtual;49
 msgid "_Search For"
 msgstr "_Otsi Lisaks"
 
-#: csearchwnd.basic;29;item;id_search_for_similar csearchwnd;31;item;id_search_for_similar cbrowsehostwnd.basic;33;item;id_search_for_similar cbrowsehostwnd;35;item;id_search_for_similar chitmonitorwnd;37;item;id_search_for_similar clibraryfileview.physical.basic;40;item;id_search_for_similar clibraryfileview.physical;43;item;id_search_for_similar clibraryfileview.virtual.basic;46;item;id_search_for_similar clibraryfileview.virtual;49;item;id_search_for_similar
+#: csearchwnd.basic;29;item;id_search_for_similar
+#: csearchwnd;31;item;id_search_for_similar
+#: cbrowsehostwnd.basic;33;item;id_search_for_similar
+#: cbrowsehostwnd;35;item;id_search_for_similar
+#: chitmonitorwnd;37;item;id_search_for_similar
+#: clibraryfileview.physical.basic;40;item;id_search_for_similar
+#: clibraryfileview.physical;43;item;id_search_for_similar
+#: clibraryfileview.virtual.basic;46;item;id_search_for_similar
+#: clibraryfileview.virtual;49;item;id_search_for_similar
 msgid "_Similar Files"
 msgstr "Sarnaseid Faile"
 
-#: csearchwnd.basic;29;item;id_search_for_artist csearchwnd;31;item;id_search_for_artist cbrowsehostwnd.basic;33;item;id_search_for_artist cbrowsehostwnd;35;item;id_search_for_artist chitmonitorwnd;37;item;id_search_for_artist clibraryfileview.physical.basic;40;item;id_search_for_artist clibraryfileview.physical;43;item;id_search_for_artist clibraryfileview.virtual.basic;46;item;id_search_for_artist clibraryfileview.virtual;49;item;id_search_for_artist
+#: csearchwnd.basic;29;item;id_search_for_artist
+#: csearchwnd;31;item;id_search_for_artist
+#: cbrowsehostwnd.basic;33;item;id_search_for_artist
+#: cbrowsehostwnd;35;item;id_search_for_artist
+#: chitmonitorwnd;37;item;id_search_for_artist
+#: clibraryfileview.physical.basic;40;item;id_search_for_artist
+#: clibraryfileview.physical;43;item;id_search_for_artist
+#: clibraryfileview.virtual.basic;46;item;id_search_for_artist
+#: clibraryfileview.virtual;49;item;id_search_for_artist
 msgid "_Music by the same Artist"
 msgstr "Samalt Artistilt"
 
-#: csearchwnd.basic;29;item;id_search_for_album csearchwnd;31;item;id_search_for_album cbrowsehostwnd.basic;33;item;id_search_for_album cbrowsehostwnd;35;item;id_search_for_album chitmonitorwnd;37;item;id_search_for_album clibraryfileview.physical.basic;40;item;id_search_for_album clibraryfileview.physical;43;item;id_search_for_album clibraryfileview.virtual.basic;46;item;id_search_for_album clibraryfileview.virtual;49;item;id_search_for_album
+#: csearchwnd.basic;29;item;id_search_for_album
+#: csearchwnd;31;item;id_search_for_album
+#: cbrowsehostwnd.basic;33;item;id_search_for_album
+#: cbrowsehostwnd;35;item;id_search_for_album
+#: chitmonitorwnd;37;item;id_search_for_album
+#: clibraryfileview.physical.basic;40;item;id_search_for_album
+#: clibraryfileview.physical;43;item;id_search_for_album
+#: clibraryfileview.virtual.basic;46;item;id_search_for_album
+#: clibraryfileview.virtual;49;item;id_search_for_album
 msgid "Music in the same _Album"
 msgstr "Samalt Albumilt"
 
-#: csearchwnd.basic;29;item;id_search_for_series csearchwnd;31;item;id_search_for_series cbrowsehostwnd.basic;33;item;id_search_for_series cbrowsehostwnd;35;item;id_search_for_series chitmonitorwnd;37;item;id_search_for_series clibraryfileview.physical.basic;40;item;id_search_for_series clibraryfileview.physical;43;item;id_search_for_series clibraryfileview.virtual.basic;46;item;id_search_for_series clibraryfileview.virtual;49;item;id_search_for_series
+#: csearchwnd.basic;29;item;id_search_for_series
+#: csearchwnd;31;item;id_search_for_series
+#: cbrowsehostwnd.basic;33;item;id_search_for_series
+#: cbrowsehostwnd;35;item;id_search_for_series
+#: chitmonitorwnd;37;item;id_search_for_series
+#: clibraryfileview.physical.basic;40;item;id_search_for_series
+#: clibraryfileview.physical;43;item;id_search_for_series
+#: clibraryfileview.virtual.basic;46;item;id_search_for_series
+#: clibraryfileview.virtual;49;item;id_search_for_series
 msgid "_Episodes in the same Series"
 msgstr "Sama Seriaali Osasid"
 
-#: csearchwnd.basic;30 csearchwnd;32 cbrowsehostwnd.basic;34 cbrowsehostwnd;36 chitmonitorwnd;38 clibraryfileview.physical.basic;41 clibraryfileview.physical;44 clibraryfileview.virtual.basic;47 clibraryfileview.virtual;50
+#: csearchwnd.basic;30 csearchwnd;32 cbrowsehostwnd.basic;34 cbrowsehostwnd;36
+#: chitmonitorwnd;38 clibraryfileview.physical.basic;41
+#: clibraryfileview.physical;44 clibraryfileview.virtual.basic;47
+#: clibraryfileview.virtual;50
 msgid "_Web Services"
 msgstr "_Weebiteenused"
 
-#: csearchwnd.basic;30;item;id_library_bitzi_web csearchwnd;32;item;id_library_bitzi_web cbrowsehostwnd.basic;34;item;id_library_bitzi_web cbrowsehostwnd;36;item;id_library_bitzi_web chitmonitorwnd;38;item;id_library_bitzi_web clibraryfileview.physical.basic;41;item;id_library_bitzi_web clibraryfileview.physical;44;item;id_library_bitzi_web clibraryfileview.virtual.basic;47;item;id_library_bitzi_web clibraryfileview.virtual;50;item;id_library_bitzi_web
+#: csearchwnd.basic;30;item;id_library_bitzi_web
+#: csearchwnd;32;item;id_library_bitzi_web
+#: cbrowsehostwnd.basic;34;item;id_library_bitzi_web
+#: cbrowsehostwnd;36;item;id_library_bitzi_web
+#: chitmonitorwnd;38;item;id_library_bitzi_web
+#: clibraryfileview.physical.basic;41;item;id_library_bitzi_web
+#: clibraryfileview.physical;44;item;id_library_bitzi_web
+#: clibraryfileview.virtual.basic;47;item;id_library_bitzi_web
+#: clibraryfileview.virtual;50;item;id_library_bitzi_web
 msgid "View _Bitzi Ticket"
 msgstr "Vaata _Bitzist"
 
-#: csearchwnd;item;id_search_downloadnow cbrowsehostwnd.basic;item;id_search_downloadnow cbrowsehostwnd;item;id_search_downloadnow
+#: csearchwnd;item;id_search_downloadnow
+#: cbrowsehostwnd.basic;item;id_search_downloadnow
+#: cbrowsehostwnd;item;id_search_downloadnow
 msgid "Download _Now"
 msgstr "Tõmba Kohe"
 
-#: csearchwnd;item;id_security_ban cuploadswnd.upload;item;id_security_ban cneighbourswnd;item;id_security_ban csearchmonitorwnd;item;id_security_ban
+#: csearchwnd;item;id_security_ban cuploadswnd.upload;item;id_security_ban
+#: cneighbourswnd;item;id_security_ban csearchmonitorwnd;item;id_security_ban
 msgid "_Ban User"
 msgstr "_Keela Kasutaja"
 
-#: csearchwnd;31;item;id_search_for_this cbrowsehostwnd;35;item;id_search_for_this chitmonitorwnd;37;item;id_search_for_this clibraryfileview.physical.basic;40;item;id_search_for_this clibraryfileview.physical;43;item;id_search_for_this clibraryfileview.virtual.basic;46;item;id_search_for_this clibraryfileview.virtual;49;item;id_search_for_this
+#: csearchwnd;31;item;id_search_for_this
+#: cbrowsehostwnd;35;item;id_search_for_this
+#: chitmonitorwnd;37;item;id_search_for_this
+#: clibraryfileview.physical.basic;40;item;id_search_for_this
+#: clibraryfileview.physical;43;item;id_search_for_this
+#: clibraryfileview.virtual.basic;46;item;id_search_for_this
+#: clibraryfileview.virtual;49;item;id_search_for_this
 msgid "_This File"
 msgstr "Seda Faili"
 
-#: csearchwnd;item;id_search_filter cbrowsehostwnd;item;id_search_filter chitmonitorwnd;item;id_search_filter
+#: csearchwnd;item;id_search_filter cbrowsehostwnd;item;id_search_filter
+#: chitmonitorwnd;item;id_search_filter
 msgid "_Filter Results..."
 msgstr "_Filtreeri tulemusi..."
 
-#: csearchwnd;item;id_search_filter_remove cbrowsehostwnd;item;id_search_filter_remove chitmonitorwnd;item;id_search_filter_remove
+#: csearchwnd;item;id_search_filter_remove
+#: cbrowsehostwnd;item;id_search_filter_remove
+#: chitmonitorwnd;item;id_search_filter_remove
 msgid "_Remove Filter"
 msgstr "_Eemalda Filter"
 
@@ -964,11 +1222,13 @@ msgstr "_Eemalda Filter"
 msgid "C_lear Results"
 msgstr "P_uhasta Tulemused"
 
-#: csearchwnd;item;id_search_columns cbrowsehostwnd;item;id_search_columns chitmonitorwnd;item;id_search_columns
+#: csearchwnd;item;id_search_columns cbrowsehostwnd;item;id_search_columns
+#: chitmonitorwnd;item;id_search_columns
 msgid "Edit C_olumns..."
 msgstr "Muuda _Seadeid..."
 
-#: chitmonitorwnd;item;id_hitmonitor_pause csearchmonitorwnd;item;id_searchmonitor_pause
+#: chitmonitorwnd;item;id_hitmonitor_pause
+#: csearchmonitorwnd;item;id_searchmonitor_pause
 msgid "_Pause Display"
 msgstr "_Peata Jälgimine"
 
@@ -976,35 +1236,46 @@ msgstr "_Peata Jälgimine"
 msgid "C_lear Display"
 msgstr "P_uhasta"
 
-#: cdownloadswnd.download.basic;item;id_downloads_launch_copy cdownloadswnd.download;item;id_downloads_launch_copy
+#: cdownloadswnd.download.basic;item;id_downloads_launch_copy
+#: cdownloadswnd.download;item;id_downloads_launch_copy
 msgid "Previe_w File"
 msgstr ""
 
-#: cdownloadswnd.download.basic;item;id_downloads_remote_preview cdownloadswnd.download;item;id_downloads_remote_preview
+#: cdownloadswnd.download.basic;item;id_downloads_remote_preview
+#: cdownloadswnd.download;item;id_downloads_remote_preview
 msgid "R_emote Preview"
 msgstr "R_emote Preview"
 
-#: cdownloadswnd.download.basic;item;id_downloads_view_reviews cdownloadswnd.download;item;id_downloads_view_reviews
+#: cdownloadswnd.download.basic;item;id_downloads_view_reviews
+#: cdownloadswnd.download;item;id_downloads_view_reviews
 msgid "_View Reviews"
 msgstr "_Arvamused"
 
-#: cdownloadswnd.download.basic;item;id_downloads_resume cdownloadswnd.download;item;id_downloads_resume
+#: cdownloadswnd.download.basic;item;id_downloads_resume
+#: cdownloadswnd.download;item;id_downloads_resume
 msgid "_Resume Download"
 msgstr "_Jätka"
 
-#: cdownloadswnd.download.basic;item;id_downloads_pause cdownloadswnd.download;item;id_downloads_pause
+#: cdownloadswnd.download.basic;item;id_downloads_pause
+#: cdownloadswnd.download;item;id_downloads_pause
 msgid "P_ause Download"
 msgstr "Pa_us"
 
-#: cdownloadswnd.download.basic;item;id_downloads_clear_incomplete cdownloadswnd.download;item;id_downloads_clear_incomplete
+#: cdownloadswnd.download.basic;item;id_downloads_clear_incomplete
+#: cdownloadswnd.download;item;id_downloads_clear_incomplete
 msgid "_Cancel Download"
 msgstr "_Peata"
 
-#: cdownloadswnd.download.basic;item;id_downloads_sources cdownloadswnd.download;item;id_downloads_sources
+#: cdownloadswnd.download.basic;item;id_downloads_sources
+#: cdownloadswnd.download;item;id_downloads_sources
 msgid "_Find More Sources"
 msgstr "_Leia Rohkem Kasutajaid"
 
-#: cdownloadswnd.download.basic;item;id_downloads_help cdownloadswnd.download;item;id_downloads_help cdownloadswnd.seeding;item;id_downloads_help cdownloadswnd.nothing;item;id_downloads_help cuploadswnd.nothing;item;id_uploads_help
+#: cdownloadswnd.download.basic;item;id_downloads_help
+#: cdownloadswnd.download;item;id_downloads_help
+#: cdownloadswnd.seeding;item;id_downloads_help
+#: cdownloadswnd.nothing;item;id_downloads_help
+#: cuploadswnd.nothing;item;id_uploads_help
 msgid "_Help..."
 msgstr "_Abi..."
 
@@ -1012,7 +1283,13 @@ msgstr "_Abi..."
 msgid "Prev_iew Partial File"
 msgstr "_Eelvaade"
 
-#: cdownloadswnd.download;item;id_downloads_enqueue cdownloadswnd.completed.basic;item;id_downloads_enqueue cdownloadswnd.completed;item;id_downloads_enqueue clibraryfileview.physical.basic;item;id_library_enqueue clibraryfileview.physical;item;id_library_enqueue clibraryfileview.virtual.basic;item;id_library_enqueue clibraryfileview.virtual;item;id_library_enqueue
+#: cdownloadswnd.download;item;id_downloads_enqueue
+#: cdownloadswnd.completed.basic;item;id_downloads_enqueue
+#: cdownloadswnd.completed;item;id_downloads_enqueue
+#: clibraryfileview.physical.basic;item;id_library_enqueue
+#: clibraryfileview.physical;item;id_library_enqueue
+#: clibraryfileview.virtual.basic;item;id_library_enqueue
+#: clibraryfileview.virtual;item;id_library_enqueue
 msgid "Add to Pla_ylist"
 msgstr "Lisa Pla_ylisti"
 
@@ -1028,11 +1305,13 @@ msgstr "_Lisa Allikas..."
 msgid "Monitor _Window"
 msgstr "J_älgimisaken"
 
-#: cdownloadswnd.download;39;item;id_downloads_move_up csecuritywnd;item;id_security_move_up
+#: cdownloadswnd.download;39;item;id_downloads_move_up
+#: csecuritywnd;item;id_security_move_up
 msgid "Move _Up"
 msgstr "Liigu _Üles"
 
-#: cdownloadswnd.download;39;item;id_downloads_move_down csecuritywnd;item;id_security_move_down
+#: cdownloadswnd.download;39;item;id_downloads_move_down
+#: csecuritywnd;item;id_security_move_down
 msgid "Move _Down"
 msgstr "Lii_gu Alla"
 
@@ -1040,7 +1319,14 @@ msgstr "Lii_gu Alla"
 msgid "_Ignore Bandwidth Limit"
 msgstr "_Eira Piiranguid"
 
-#: cdownloadswnd.download;item;id_downloads_edit cdownloadtabbar;item;id_download_group_properties clibrarytileview;item;id_library_album_properties clibraryfileview.physical.basic;item;id_library_properties clibraryfileview.physical;item;id_library_properties clibraryfileview.virtual.basic;item;id_library_properties clibraryfileview.virtual;item;id_library_properties csecuritywnd;item;id_security_edit cdiscoverywnd;item;id_discovery_edit
+#: cdownloadswnd.download;item;id_downloads_edit
+#: cdownloadtabbar;item;id_download_group_properties
+#: clibrarytileview;item;id_library_album_properties
+#: clibraryfileview.physical.basic;item;id_library_properties
+#: clibraryfileview.physical;item;id_library_properties
+#: clibraryfileview.virtual.basic;item;id_library_properties
+#: clibraryfileview.virtual;item;id_library_properties
+#: csecuritywnd;item;id_security_edit cdiscoverywnd;item;id_discovery_edit
 msgid "_Properties"
 msgstr "_Muuda Omadusi..."
 
@@ -1052,19 +1338,29 @@ msgstr "_Ligipääs"
 msgid "_Forget"
 msgstr "_Tühista"
 
-#: cdownloadswnd.completed.basic;item;id_downloads_launch_complete cdownloadswnd.completed;item;id_downloads_launch_complete cdownloadswnd.seeding;item;id_downloads_launch_complete clibraryfileview.physical.basic;item;id_library_launch clibraryfileview.physical;item;id_library_launch clibraryfileview.virtual.basic;item;id_library_launch clibraryfileview.virtual;item;id_library_launch
+#: cdownloadswnd.completed.basic;item;id_downloads_launch_complete
+#: cdownloadswnd.completed;item;id_downloads_launch_complete
+#: cdownloadswnd.seeding;item;id_downloads_launch_complete
+#: clibraryfileview.physical.basic;item;id_library_launch
+#: clibraryfileview.physical;item;id_library_launch
+#: clibraryfileview.virtual.basic;item;id_library_launch
+#: clibraryfileview.virtual;item;id_library_launch
 msgid "_Open or Play"
 msgstr "_Ava"
 
-#: cdownloadswnd.completed.basic;item;id_downloads_clear_complete cdownloadswnd.completed;item;id_downloads_clear_complete cuploadswnd.upload;item;id_uploads_clear ctrafficwnd;item;id_traffic_clear
+#: cdownloadswnd.completed.basic;item;id_downloads_clear_complete
+#: cdownloadswnd.completed;item;id_downloads_clear_complete
+#: cuploadswnd.upload;item;id_uploads_clear ctrafficwnd;item;id_traffic_clear
 msgid "_Clear"
 msgstr "P_uhasta"
 
-#: cdownloadswnd.completed.basic;item;id_downloads_file_delete cdownloadswnd.completed;item;id_downloads_file_delete
+#: cdownloadswnd.completed.basic;item;id_downloads_file_delete
+#: cdownloadswnd.completed;item;id_downloads_file_delete
 msgid "_Delete File"
 msgstr "_Kustuta Fail"
 
-#: cdownloadswnd.completed;item;id_downloads_rate cmedialist;item;id_media_rate
+#: cdownloadswnd.completed;item;id_downloads_rate
+#: cmedialist;item;id_media_rate
 msgid "_Rate File..."
 msgstr "_Hinda Fail..."
 
@@ -1072,15 +1368,20 @@ msgstr "_Hinda Fail..."
 msgid "_Stop Seeding"
 msgstr "_Lõpeta Jagamine"
 
-#: cdownloadswnd.seeding;item;id_downloads_edit cmedialist;item;id_media_properties
+#: cdownloadswnd.seeding;item;id_downloads_edit
+#: cmedialist;item;id_media_properties
 msgid "_Properties..."
 msgstr "_Info..."
 
-#: cdownloadswnd.nothing;item;id_downloads_clear_completed cuploadswnd.queue;item;id_uploads_clear_completed cuploadswnd.nothing;item;id_uploads_clear_completed
+#: cdownloadswnd.nothing;item;id_downloads_clear_completed
+#: cuploadswnd.queue;item;id_uploads_clear_completed
+#: cuploadswnd.nothing;item;id_uploads_clear_completed
 msgid "C_lear Completed"
 msgstr "P_uhasta Valmis"
 
-#: cdownloadswnd.nothing;item;id_downloads_auto_clear cuploadswnd.queue;item;id_uploads_auto_clear cuploadswnd.nothing;item;id_uploads_auto_clear
+#: cdownloadswnd.nothing;item;id_downloads_auto_clear
+#: cuploadswnd.queue;item;id_uploads_auto_clear
+#: cuploadswnd.nothing;item;id_uploads_auto_clear
 msgid "Aut_o Clear"
 msgstr "Aut_o Puhastus"
 
@@ -1104,15 +1405,18 @@ msgstr "_Uus Grupp..."
 msgid "Remove _Group"
 msgstr "Eemalda _Grupp"
 
-#: cdownloadtabbar;item;id_download_group_show cdownloadswnd.filter;item;id_download_group_show
+#: cdownloadtabbar;item;id_download_group_show
+#: cdownloadswnd.filter;item;id_download_group_show
 msgid "_Show Groups"
 msgstr "_Näita Gruppe"
 
-#: cdownloadswnd.filter;item;id_downloads_filter_all cuploadswnd.filter;item;id_uploads_filter_all
+#: cdownloadswnd.filter;item;id_downloads_filter_all
+#: cuploadswnd.filter;item;id_uploads_filter_all
 msgid "Show _All"
 msgstr "Näita _Kõik"
 
-#: cdownloadswnd.filter;item;id_downloads_filter_active cuploadswnd.filter;item;id_uploads_filter_active
+#: cdownloadswnd.filter;item;id_downloads_filter_active
+#: cuploadswnd.filter;item;id_uploads_filter_active
 msgid "Show A_ctive"
 msgstr "Näita A_ktiivsed"
 
@@ -1152,15 +1456,33 @@ msgstr "Näita BitTorrent"
 msgid "Show _History"
 msgstr "Näita Ajalugu"
 
-#: clibrarytree.physical.basic;item;id_library_shared_folder clibrarytree.physical;item;id_library_shared_folder clibraryfileview.physical.basic;item;id_library_shared_file clibraryfileview.physical;item;id_library_shared_file clibraryfileview.virtual.basic;item;id_library_shared_file clibraryfileview.virtual;item;id_library_shared_file
+#: clibrarytree.physical.basic;item;id_library_shared_folder
+#: clibrarytree.physical;item;id_library_shared_folder
+#: clibraryfileview.physical.basic;item;id_library_shared_file
+#: clibraryfileview.physical;item;id_library_shared_file
+#: clibraryfileview.virtual.basic;item;id_library_shared_file
+#: clibraryfileview.virtual;item;id_library_shared_file
 msgid "_Shared"
 msgstr "_Jagatud"
 
-#: clibrarytree.physical.basic;item;id_library_remove clibrarytree.physical;item;id_library_remove cmedialist;item;id_media_remove csecuritywnd;item;id_security_remove cschedulerwnd;item;id_scheduler_remove cdiscoverywnd;item;id_discovery_remove clibrarysettingspage;control;19 clibrarysettingspage;control;23 cmediasettingspage;control;8 cwebsettingspage;control;12 cwizardsharepage;control;6 cavatarprofilepage;control;6 cfilesourcespage;control;6 cgraphlistdlg;control;4 cgraphitemdlg;control;12 csharemanagerdlg;control;5 cdownloadgroupdlg;control;8
+#: clibrarytree.physical.basic;item;id_library_remove
+#: clibrarytree.physical;item;id_library_remove
+#: cmedialist;item;id_media_remove csecuritywnd;item;id_security_remove
+#: cschedulerwnd;item;id_scheduler_remove
+#: cdiscoverywnd;item;id_discovery_remove clibrarysettingspage;control;19
+#: clibrarysettingspage;control;23 cmediasettingspage;control;8
+#: cwebsettingspage;control;12 cwizardsharepage;control;6
+#: cavatarprofilepage;control;6 cfilesourcespage;control;6
+#: cgraphlistdlg;control;4 cgraphitemdlg;control;12 csharemanagerdlg;control;4
+#: cdownloadgroupdlg;control;8
 msgid "_Remove"
 msgstr "_Eemalda"
 
-#: clibrarytree.physical.basic;item;id_shell_menu clibrarytree.physical;item;id_shell_menu clibraryfileview.physical;item;id_shell_menu clibraryfileview.virtual.basic;item;id_shell_menu clibraryfileview.virtual;item;id_shell_menu
+#: clibrarytree.physical.basic;item;id_shell_menu
+#: clibrarytree.physical;item;id_shell_menu
+#: clibraryfileview.physical;item;id_shell_menu
+#: clibraryfileview.virtual.basic;item;id_shell_menu
+#: clibraryfileview.virtual;item;id_shell_menu
 msgid "S_hell menu"
 msgstr "S_hell menu"
 
@@ -1172,27 +1494,41 @@ msgstr "_Vaata Faile"
 msgid "S_can"
 msgstr "S_känni"
 
-#: clibrarytree.physical;item;id_library_rebuild clibrarytree.virtual;item;id_library_rebuild
+#: clibrarytree.physical;item;id_library_rebuild
+#: clibrarytree.virtual;item;id_library_rebuild
 msgid "Re_build"
 msgstr "_Taasloo sisu"
 
-#: clibrarytree.physical;item;id_library_folder_file_properties clibrarytree.virtual.basic;item;id_library_folder_file_properties clibrarytree.virtual;item;id_library_folder_file_properties
+#: clibrarytree.physical;item;id_library_folder_file_properties
+#: clibrarytree.virtual.basic;item;id_library_folder_file_properties
+#: clibrarytree.virtual;item;id_library_folder_file_properties
 msgid "File _Properties"
 msgstr "Faili _Omadused"
 
-#: clibrarytree.virtual.basic;item;id_library_folder_enqueue clibrarytree.virtual;item;id_library_folder_enqueue clibraryfileview.virtual.basic;item;id_library_folder_enqueue
+#: clibrarytree.virtual.basic;item;id_library_folder_enqueue
+#: clibrarytree.virtual;item;id_library_folder_enqueue
+#: clibraryfileview.virtual.basic;item;id_library_folder_enqueue
 msgid "_Play Album"
 msgstr "_Mängi Albumit"
 
-#: clibrarytree.virtual.basic;item;id_library_folder_delete clibrarytree.virtual;item;id_library_folder_delete clibrarytileview;item;id_library_album_delete clibraryfileview.physical.basic;item;id_library_delete clibraryfileview.physical;item;id_library_delete clibraryfileview.virtual.basic;item;id_library_delete clibraryfileview.virtual;item;id_library_delete cuploadssettingspage;control;21 cfiltersearchdlg;control;28
+#: clibrarytree.virtual.basic;item;id_library_folder_delete
+#: clibrarytree.virtual;item;id_library_folder_delete
+#: clibrarytileview;item;id_library_album_delete
+#: clibraryfileview.physical.basic;item;id_library_delete
+#: clibraryfileview.physical;item;id_library_delete
+#: clibraryfileview.virtual.basic;item;id_library_delete
+#: clibraryfileview.virtual;item;id_library_delete
+#: cuploadssettingspage;control;21 cfiltersearchdlg;control;28
 msgid "_Delete"
 msgstr "_Kustuta"
 
-#: clibrarytree.virtual.basic;item;id_library_folder_properties clibrarytree.virtual;item;id_library_folder_properties
+#: clibrarytree.virtual.basic;item;id_library_folder_properties
+#: clibrarytree.virtual;item;id_library_folder_properties
 msgid "_Album Properties"
 msgstr "_Albumi Omadused"
 
-#: clibrarytree.virtual;item;id_library_export_collection cmedialist;item;id_media_export_collection
+#: clibrarytree.virtual;item;id_library_export_collection
+#: cmedialist;item;id_media_export_collection
 msgid "_Export Collection..."
 msgstr "_Ekspordi Kollektsioon..."
 
@@ -1204,47 +1540,70 @@ msgstr "_Uus Kaust..."
 msgid "_Open"
 msgstr "_Ava"
 
-#: clibraryfileview.physical.basic;41;item;id_library_bitzi_download clibraryfileview.physical;44;item;id_library_bitzi_download clibraryfileview.virtual.basic;47;item;id_library_bitzi_download clibraryfileview.virtual;50;item;id_library_bitzi_download
+#: clibraryfileview.physical.basic;41;item;id_library_bitzi_download
+#: clibraryfileview.physical;44;item;id_library_bitzi_download
+#: clibraryfileview.virtual.basic;47;item;id_library_bitzi_download
+#: clibraryfileview.virtual;50;item;id_library_bitzi_download
 msgid "_Download Metadata"
 msgstr "_Tõmba Andmebaas"
 
-#: clibraryfileview.physical.basic;42 clibraryfileview.physical;45 clibraryfileview.virtual.basic;48 clibraryfileview.virtual;51
+#: clibraryfileview.physical.basic;42 clibraryfileview.physical;45
+#: clibraryfileview.virtual.basic;48 clibraryfileview.virtual;51
 msgid "O_rganise"
 msgstr "Ko_rrasta"
 
-#: clibraryfileview.physical.basic;42;item;id_library_rename clibraryfileview.physical;45;item;id_library_rename clibraryfileview.virtual.basic;48;item;id_library_rename clibraryfileview.virtual;51;item;id_library_rename
+#: clibraryfileview.physical.basic;42;item;id_library_rename
+#: clibraryfileview.physical;45;item;id_library_rename
+#: clibraryfileview.virtual.basic;48;item;id_library_rename
+#: clibraryfileview.virtual;51;item;id_library_rename
 msgid "_Rename File"
 msgstr "_Nimeta Ümber"
 
-#: clibraryfileview.physical.basic;42;item;id_library_move clibraryfileview.physical;45;item;id_library_move clibraryfileview.virtual.basic;48;item;id_library_move clibraryfileview.virtual;51;item;id_library_move
+#: clibraryfileview.physical.basic;42;item;id_library_move
+#: clibraryfileview.physical;45;item;id_library_move
+#: clibraryfileview.virtual.basic;48;item;id_library_move
+#: clibraryfileview.virtual;51;item;id_library_move
 msgid "_Move Files..."
 msgstr "_Liiguta Faili..."
 
-#: clibraryfileview.physical.basic;42;item;id_library_copy clibraryfileview.physical;45;item;id_library_copy clibraryfileview.virtual.basic;48;item;id_library_copy clibraryfileview.virtual;51;item;id_library_copy
+#: clibraryfileview.physical.basic;42;item;id_library_copy
+#: clibraryfileview.physical;45;item;id_library_copy
+#: clibraryfileview.virtual.basic;48;item;id_library_copy
+#: clibraryfileview.virtual;51;item;id_library_copy
 msgid "_Copy Files..."
 msgstr "_Kopeeri Fail..."
 
-#: clibraryfileview.physical.basic;item;id_library_rebuild_ansi clibraryfileview.physical;item;id_library_rebuild_ansi clibraryfileview.virtual.basic;item;id_library_rebuild_ansi clibraryfileview.virtual;item;id_library_rebuild_ansi
+#: clibraryfileview.physical.basic;item;id_library_rebuild_ansi
+#: clibraryfileview.physical;item;id_library_rebuild_ansi
+#: clibraryfileview.virtual.basic;item;id_library_rebuild_ansi
+#: clibraryfileview.virtual;item;id_library_rebuild_ansi
 msgid "_Localise Metadata"
 msgstr "_Kohanda Andmebaas"
 
-#: clibraryfileview.physical.basic;item;id_library_refresh_metadata clibraryfileview.physical;item;id_library_refresh_metadata clibraryfileview.virtual.basic;item;id_library_refresh_metadata clibraryfileview.virtual;item;id_library_refresh_metadata
+#: clibraryfileview.physical.basic;item;id_library_refresh_metadata
+#: clibraryfileview.physical;item;id_library_refresh_metadata
+#: clibraryfileview.virtual.basic;item;id_library_refresh_metadata
+#: clibraryfileview.virtual;item;id_library_refresh_metadata
 msgid "_Refresh Metadata"
 msgstr "_Refresh Metadata"
 
-#: clibraryfileview.physical;44;item;id_library_createtorrent clibraryfileview.virtual;50;item;id_library_createtorrent
+#: clibraryfileview.physical;44;item;id_library_createtorrent
+#: clibraryfileview.virtual;50;item;id_library_createtorrent
 msgid "Create ._torrent File"
 msgstr "Loo .torrent Fail"
 
-#: clibraryfileview.physical;item;id_library_columns clibraryfileview.virtual;item;id_library_columns
+#: clibraryfileview.physical;item;id_library_columns
+#: clibraryfileview.virtual;item;id_library_columns
 msgid "Choose _Columns..."
 msgstr "Seadista _Veerg..."
 
-#: clibraryfileview.virtual.basic;48;item;id_library_unlink clibraryfileview.virtual;51;item;id_library_unlink
+#: clibraryfileview.virtual.basic;48;item;id_library_unlink
+#: clibraryfileview.virtual;51;item;id_library_unlink
 msgid "Remove _Files"
 msgstr "Eemalda _Failid"
 
-#: cmediaframe.basic;item;id_media_play cmediaframe;item;id_media_play cmedialist;item;id_media_select
+#: cmediaframe.basic;item;id_media_play cmediaframe;item;id_media_play
+#: cmedialist;item;id_media_select
 msgid "_Play"
 msgstr "_Mängi"
 
@@ -1264,7 +1623,8 @@ msgstr "_Ava Meedia Fail..."
 msgid "Play_list"
 msgstr "Playlist"
 
-#: cmediaframe.basic;52;item;id_media_previous cmediaframe;55;item;id_media_previous
+#: cmediaframe.basic;52;item;id_media_previous
+#: cmediaframe;55;item;id_media_previous
 msgid "Pre_vious"
 msgstr "E_elmine"
 
@@ -1272,15 +1632,20 @@ msgstr "E_elmine"
 msgid "_Next"
 msgstr "_Järgmine"
 
-#: cmediaframe.basic;52;item;id_media_random cmediaframe;55;item;id_media_random
+#: cmediaframe.basic;52;item;id_media_random
+#: cmediaframe;55;item;id_media_random
 msgid "_Random"
 msgstr "Ju_huslik"
 
-#: cmediaframe.basic;52;item;id_media_repeat cmediaframe;55;item;id_media_repeat
+#: cmediaframe.basic;52;item;id_media_repeat
+#: cmediaframe;55;item;id_media_repeat
 msgid "R_epeat"
 msgstr "_Korda"
 
-#: cmediaframe.basic;52;item;id_media_playlist cmediaframe.basic;54;item;id_media_playlist cmediaframe;55;item;id_media_playlist cmediaframe;57;item;id_media_playlist cmedialist;item;id_media_playlist
+#: cmediaframe.basic;52;item;id_media_playlist
+#: cmediaframe.basic;54;item;id_media_playlist
+#: cmediaframe;55;item;id_media_playlist cmediaframe;57;item;id_media_playlist
+#: cmedialist;item;id_media_playlist
 msgid "Show _Playlist"
 msgstr "Näita _Playlisti"
 
@@ -1288,35 +1653,51 @@ msgstr "Näita _Playlisti"
 msgid "Video Si_ze"
 msgstr "Pildi Suu_rus"
 
-#: cmediaframe.basic;53;item;id_media_size_one cmediaframe;56;item;id_media_size_one cmediaframe.zoom;item;id_media_size_one
+#: cmediaframe.basic;53;item;id_media_size_one
+#: cmediaframe;56;item;id_media_size_one
+#: cmediaframe.zoom;item;id_media_size_one
 msgid "_Original Size"
 msgstr "_Normaalne Suurus"
 
-#: cmediaframe.basic;53;item;id_media_size_two cmediaframe;56;item;id_media_size_two cmediaframe.zoom;item;id_media_size_two
+#: cmediaframe.basic;53;item;id_media_size_two
+#: cmediaframe;56;item;id_media_size_two
+#: cmediaframe.zoom;item;id_media_size_two
 msgid "_Double Size"
 msgstr "_Topelt Suurus"
 
-#: cmediaframe.basic;53;item;id_media_size_three cmediaframe;56;item;id_media_size_three cmediaframe.zoom;item;id_media_size_three
+#: cmediaframe.basic;53;item;id_media_size_three
+#: cmediaframe;56;item;id_media_size_three
+#: cmediaframe.zoom;item;id_media_size_three
 msgid "_Triple Size"
 msgstr "_Kolmekordne Suurus"
 
-#: cmediaframe.basic;53;item;id_media_size_fill cmediaframe;56;item;id_media_size_fill cmediaframe.zoom;item;id_media_size_fill
+#: cmediaframe.basic;53;item;id_media_size_fill
+#: cmediaframe;56;item;id_media_size_fill
+#: cmediaframe.zoom;item;id_media_size_fill
 msgid "_Largest"
 msgstr "_Suurim"
 
-#: cmediaframe.basic;53;item;id_media_size_distort cmediaframe;56;item;id_media_size_distort cmediaframe.zoom;item;id_media_size_distort
+#: cmediaframe.basic;53;item;id_media_size_distort
+#: cmediaframe;56;item;id_media_size_distort
+#: cmediaframe.zoom;item;id_media_size_distort
 msgid "_Fill Window"
 msgstr "T_äida Aken"
 
-#: cmediaframe.basic;53;item;id_media_aspect_default cmediaframe;56;item;id_media_aspect_default cmediaframe.zoom;item;id_media_aspect_default
+#: cmediaframe.basic;53;item;id_media_aspect_default
+#: cmediaframe;56;item;id_media_aspect_default
+#: cmediaframe.zoom;item;id_media_aspect_default
 msgid "Default _Aspect"
 msgstr "Kuv_asuhe"
 
-#: cmediaframe.basic;53;item;id_media_aspect_4_3 cmediaframe;56;item;id_media_aspect_4_3 cmediaframe.zoom;item;id_media_aspect_4_3
+#: cmediaframe.basic;53;item;id_media_aspect_4_3
+#: cmediaframe;56;item;id_media_aspect_4_3
+#: cmediaframe.zoom;item;id_media_aspect_4_3
 msgid "_4:3 Ratio (TV)"
 msgstr "_4:3 (TV)"
 
-#: cmediaframe.basic;53;item;id_media_aspect_16_9 cmediaframe;56;item;id_media_aspect_16_9 cmediaframe.zoom;item;id_media_aspect_16_9
+#: cmediaframe.basic;53;item;id_media_aspect_16_9
+#: cmediaframe;56;item;id_media_aspect_16_9
+#: cmediaframe.zoom;item;id_media_aspect_16_9
 msgid "_16:9 (Film)"
 msgstr "_16:9 (Film)"
 
@@ -1328,11 +1709,13 @@ msgstr "Seaded"
 msgid "Choose _Visualisation..."
 msgstr "Vali _Välimus..."
 
-#: cmediaframe.basic;54;item;id_media_status cmediaframe;57;item;id_media_status
+#: cmediaframe.basic;54;item;id_media_status
+#: cmediaframe;57;item;id_media_status
 msgid "Show _Status Line"
 msgstr "Näita _Olekuriba"
 
-#: cmediaframe.basic;54;item;id_media_settings cmediaframe;57;item;id_media_settings
+#: cmediaframe.basic;54;item;id_media_settings
+#: cmediaframe;57;item;id_media_settings
 msgid "_Media Settings..."
 msgstr "_Meedia Seaded..."
 
@@ -1392,15 +1775,17 @@ msgstr ""
 msgid "_Debug"
 msgstr ""
 
-#: csystemwnd;item;id_system_timestamp cprivatechatframe;item;id_chat_timestamp
+#: csystemwnd;item;id_system_timestamp
+#: cprivatechatframe;item;id_chat_timestamp
 msgid "Timestam_p"
 msgstr "Ajastu_s"
 
-#: csystemwnd;item;id_system_copy curlexportdlg;control;8
+#: csystemwnd;item;id_system_copy curlexportdlg;control;7
 msgid "_Copy"
 msgstr "_Kopeeri"
 
-#: csystemwnd;item;id_system_clear csearchmonitorwnd;item;id_searchmonitor_clear
+#: csystemwnd;item;id_system_clear
+#: csearchmonitorwnd;item;id_searchmonitor_clear
 msgid "Clear _Buffer"
 msgstr "Puhasta _Puhver"
 
@@ -1580,7 +1965,8 @@ msgstr ""
 msgid "_Refresh"
 msgstr ""
 
-#: imageviewer_context;item;imageviewer_close circtabrclick;item;id_irc_closetab
+#: imageviewer_context;item;imageviewer_close
+#: circtabrclick;item;id_irc_closetab
 msgid "_Close"
 msgstr ""
 
@@ -1717,7 +2103,9 @@ msgid "W A R N I N G   -   Y O U   A R E   F I R E W A L L E D"
 msgstr "K O H A N D A   S H A R E A Z A T"
 
 #: chomeviewctrl;text;5001
-msgid "Shareaza has detected that you are behind a NAT router or firewall,\n\t\t\tand are unable to receive connections from the Internet.  "
+msgid ""
+"Shareaza has detected that you are behind a NAT router or firewall,\n"
+"\t\t\tand are unable to receive connections from the Internet.  "
 msgstr ""
 
 #: chomeviewctrl;text;5002
@@ -1733,7 +2121,9 @@ msgid "W A R N I N G   -   Y O U R   T C P   P O R T   I S   F I R E W A L
 msgstr "M I N U   T Õ M B A M I S E D"
 
 #: chomeviewctrl;text;6001
-msgid "Shareaza has detected that you are behind a NAT router or firewall,\n\t\t\tand are unable to receive TCP connections from the Internet.  "
+msgid ""
+"Shareaza has detected that you are behind a NAT router or firewall,\n"
+"\t\t\tand are unable to receive TCP connections from the Internet.  "
 msgstr "To open the folder with your downloads"
 
 #: chomeviewctrl;text;6002
@@ -1745,7 +2135,9 @@ msgid "W A R N I N G   -   Y O U R   U D P   P O R T   I S   F I R E W A L
 msgstr "K A U G T Ö Ö   O N   L U B A T U D"
 
 #: chomeviewctrl;text;7001
-msgid "Shareaza has detected that you are behind a NAT router or firewall,\n\t\t\tand are unable to receive UDP messages from the Internet.  "
+msgid ""
+"Shareaza has detected that you are behind a NAT router or firewall,\n"
+"\t\t\tand are unable to receive UDP messages from the Internet.  "
 msgstr "Shareaza Kaugtöö on lubatud. Kontrolli Shareazat, kasutades oma browserit:"
 
 #: chomeviewctrl;text;7002
@@ -1880,15 +2272,18 @@ msgstr "Kliki siia, et ühendada"
 msgid "Gnutella2:"
 msgstr "Gnutella2:"
 
-#: chomeconnectionbox;text;4 chomeconnectionbox;text;10 chomeconnectionbox;text;16
+#: chomeconnectionbox;text;4 chomeconnectionbox;text;10
+#: chomeconnectionbox;text;16
 msgid "Disconnected"
 msgstr "Ühenduseta"
 
-#: chomeconnectionbox;text;5 chomeconnectionbox;text;11 chomeconnectionbox;text;17 string;8070
+#: chomeconnectionbox;text;5 chomeconnectionbox;text;11
+#: chomeconnectionbox;text;17 string;8070
 msgid "Connecting..."
 msgstr "Ühendan..."
 
-#: chomeconnectionbox;text;6 chomeconnectionbox;text;12 chomeconnectionbox;text;18 string;8071
+#: chomeconnectionbox;text;6 chomeconnectionbox;text;12
+#: chomeconnectionbox;text;18 string;8071
 msgid "Connected"
 msgstr "Ühendatud"
 
@@ -1928,7 +2323,8 @@ msgstr "minutit."
 msgid "minutes."
 msgstr ""
 
-#: document;chomeuploadsbox string;window_uploads string;8317 dialog;cuploadssettingspage column;uploads
+#: document;chomeuploadsbox string;window_uploads string;8317
+#: dialog;cuploadssettingspage column;uploads
 msgid "Uploads"
 msgstr "Üleslaadimised"
 
@@ -1984,7 +2380,9 @@ msgstr "Jaga teist torrentit"
 msgid "Seed a torrent"
 msgstr "Jaga torrent faile"
 
-#: document;cgeneralsettingsgroup cgeneralsettingsgroup;text;3 dialog;cgeneralsettingsgroup dialog;cgeneralsettingspage dialog;cfilegeneralpage
+#: document;cgeneralsettingsgroup cgeneralsettingsgroup;text;3
+#: dialog;cgeneralsettingsgroup dialog;cgeneralsettingspage
+#: dialog;cfilegeneralpage
 msgid "General"
 msgstr "Üldist"
 
@@ -1993,8 +2391,12 @@ msgid "Welcome to Shareaza's Settings Manager"
 msgstr "Teretulemast Shareaza seadmehaldurisse"
 
 #: cgeneralsettingsgroup;text;2
-msgid "The Shareaza Settings Manager allows advanced users to completely customise how\n\t\t\tShareaza works. The settings in the"
-msgstr "Shareaza Seadehaldur lubab edasijõudnud kasutajal täielikult kohandada\n\t\t\tShareaza töötamist.  Seaded"
+msgid ""
+"The Shareaza Settings Manager allows advanced users to completely customise how\n"
+"\t\t\tShareaza works. The settings in the"
+msgstr ""
+"Shareaza Seadehaldur lubab edasijõudnud kasutajal täielikult kohandada\n"
+"\t\t\tShareaza töötamist.  Seaded"
 
 #: cgeneralsettingsgroup;text;4
 msgid "section relate to the user experience."
@@ -2048,17 +2450,24 @@ msgstr ""
 msgid "Integrate Shareaza with your web browser to accept peer-to-peer links and download content."
 msgstr ""
 
-#: document;cinternetsettingsgroup cinternetsettingsgroup;text;3 dialog;cinternetsettingsgroup
+#: document;cinternetsettingsgroup cinternetsettingsgroup;text;3
+#: dialog;cinternetsettingsgroup
 msgid "Internet"
 msgstr "Internet"
 
 #: cinternetsettingsgroup;text;2
-msgid "The Shareaza Settings Manager allows advanced users to completely customise \n\t\t\thow Shareaza works. The settings in the"
-msgstr "Shareaza Seadehaldur lubab edasijõudnud kasutajal täielikult kohandada\n\t\t\tShareaza töötamist.  Seaded"
+msgid ""
+"The Shareaza Settings Manager allows advanced users to completely customise \n"
+"\t\t\thow Shareaza works. The settings in the"
+msgstr ""
+"Shareaza Seadehaldur lubab edasijõudnud kasutajal täielikult kohandada\n"
+"\t\t\tShareaza töötamist.  Seaded"
 
 #: cinternetsettingsgroup;text;4
 msgid "section control how Shareaza interacts with other nodes within distributed peer-to-peer networks."
-msgstr "osas, kontrollib kuidas Shareaza suhtleb teiste serveritega  peer-to-peer\n\t\t\tvõrgus."
+msgstr ""
+"osas, kontrollib kuidas Shareaza suhtleb teiste serveritega  peer-to-peer\n"
+"\t\t\tvõrgus."
 
 #: cinternetsettingsgroup;link;5 cconnectionsettingspage;control;21
 msgid "Connection:"
@@ -2149,15 +2558,25 @@ msgid "Downloads Area"
 msgstr "Allalaadimised"
 
 #: downloadhelp.select;text;2
-msgid "This is where files currently being downloaded are displayed. You can view\n\t\tindividual sources by expanding each file with the small + on the left."
-msgstr "Siin kuvatakse hetkel allalaaditavad failid. Sa saad vaadata\n\t\tiga faili allikaid, vajutades vasakul oleval väikesel + märgil."
+msgid ""
+"This is where files currently being downloaded are displayed. You can view\n"
+"\t\tindividual sources by expanding each file with the small + on the left."
+msgstr ""
+"Siin kuvatakse hetkel allalaaditavad failid. Sa saad vaadata\n"
+"\t\tiga faili allikaid, vajutades vasakul oleval väikesel + märgil."
 
 #: downloadhelp.select;text;3
-msgid "Drag'n'Drop downloads higher in the list for priority, or onto Download Group \n\t\ttabs for better organisation (in Power Mode)."
-msgstr "Sa saad seda käsku kasutada ka iga laadimise kohta eraldi.\n\t\tLihtsalt vali laadimine ja vali sama käsklus uuesti."
+msgid ""
+"Drag'n'Drop downloads higher in the list for priority, or onto Download Group \n"
+"\t\ttabs for better organisation (in Power Mode)."
+msgstr ""
+"Sa saad seda käsku kasutada ka iga laadimise kohta eraldi.\n"
+"\t\tLihtsalt vali laadimine ja vali sama käsklus uuesti."
 
 #: downloadhelp.select;text;4
-msgid "You can also use this command to get help information on a specific download.\n\t\tSimply select a download and choose this Help command again."
+msgid ""
+"You can also use this command to get help information on a specific download.\n"
+"\t\tSimply select a download and choose this Help command again."
 msgstr ""
 
 #: downloadhelp.seeding;text;1
@@ -2165,7 +2584,9 @@ msgid "This Torrent is Seeding"
 msgstr ""
 
 #: downloadhelp.seeding;text;2
-msgid "Shareaza has verified this complete download, and is actively sharing it\n\t\twith other downloaders through BitTorrent. Please share at least 100%."
+msgid ""
+"Shareaza has verified this complete download, and is actively sharing it\n"
+"\t\twith other downloaders through BitTorrent. Please share at least 100%."
 msgstr ""
 
 #: downloadhelp.completed;text;1
@@ -2173,24 +2594,36 @@ msgid "This Download has Completed"
 msgstr "See laadimine on lõpetatud"
 
 #: downloadhelp.completed;text;2
-msgid "Shareaza has finished downloading this file, and has verified that it\n\t\tis 100% correct. It has also moved the file to your downloads folder."
-msgstr "Shareaza on lõpetanud selle faili allalaadimise ja on kinnitanud, et\n\t\tsee on 100% korras.  See on samuti viidud Sinu Allalaaditud failide kausta."
+msgid ""
+"Shareaza has finished downloading this file, and has verified that it\n"
+"\t\tis 100% correct. It has also moved the file to your downloads folder."
+msgstr ""
+"Shareaza on lõpetanud selle faili allalaadimise ja on kinnitanud, et\n"
+"\t\tsee on 100% korras.  See on samuti viidud Sinu Allalaaditud failide kausta."
 
 #: downloadhelp.moving;text;1
 msgid "This Download is Moving"
 msgstr "Seda Faili viiakse Failide kausta"
 
 #: downloadhelp.moving;text;2
-msgid "Shareaza has finished downloading this file, and has verified that\n\t\tit is correct. It is currently being moved and/or unpacked to your downloads folder."
-msgstr "Shareaza on lõpetanud selle faili allalaadimise ja on kinnitanud, et see on\n\t\tkorralik.  Seda parajasti viiakse ja/või pakitakse lahti sinu Allalaaditud failide kausta."
+msgid ""
+"Shareaza has finished downloading this file, and has verified that\n"
+"\t\tit is correct. It is currently being moved and/or unpacked to your downloads folder."
+msgstr ""
+"Shareaza on lõpetanud selle faili allalaadimise ja on kinnitanud, et see on\n"
+"\t\tkorralik.  Seda parajasti viiakse ja/või pakitakse lahti sinu Allalaaditud failide kausta."
 
 #: downloadhelp.paused;text;1
 msgid "This Download is Paused"
 msgstr "See allalaadimine on peataud"
 
 #: downloadhelp.paused;text;2
-msgid "You have paused this download. If you want it to resume downloading, you\n\t\tcan click the '"
-msgstr "Sa oled selle allalaadimise peatanud.  Kui tahad allalaadimist jätkata, siis\n\t\tkliki '"
+msgid ""
+"You have paused this download. If you want it to resume downloading, you\n"
+"\t\tcan click the '"
+msgstr ""
+"Sa oled selle allalaadimise peatanud.  Kui tahad allalaadimist jätkata, siis\n"
+"\t\tkliki '"
 
 #: downloadhelp.paused;text;4
 msgid "' command."
@@ -2201,88 +2634,166 @@ msgid "The Disk is Full"
 msgstr "Ketas on täis"
 
 #: downloadhelp.diskfull;text;2
-msgid "Shareaza has paused this download automatically because the hard disk\n\t\tappears to be full, or the download file cannot be written to. If you wish\n\t\tto continue downloading, please free some space on your hard disk and/or check\n\t\tto make sure the incomplete file folder is accessible, and then resume the\n\t\tdownload."
-msgstr "Shareaza on peatanud automaatselt allalaadimise, sest kõvaketas tundub täis olevat,\n\t\tvõi faili ei ole võimalik sellele kirjutada.  Kui sa soovid allalaadimist jätkata, palun\n\t\ttee kõvakettale vaba ruumi juurde, ja/või kontrolli, et poolikute failide kaust on\n\t\tligipääsetav ja jätka allalaadimist."
+msgid ""
+"Shareaza has paused this download automatically because the hard disk\n"
+"\t\tappears to be full, or the download file cannot be written to. If you wish\n"
+"\t\tto continue downloading, please free some space on your hard disk and/or check\n"
+"\t\tto make sure the incomplete file folder is accessible, and then resume the\n"
+"\t\tdownload."
+msgstr ""
+"Shareaza on peatanud automaatselt allalaadimise, sest kõvaketas tundub täis olevat,\n"
+"\t\tvõi faili ei ole võimalik sellele kirjutada.  Kui sa soovid allalaadimist jätkata, palun\n"
+"\t\ttee kõvakettale vaba ruumi juurde, ja/või kontrolli, et poolikute failide kaust on\n"
+"\t\tligipääsetav ja jätka allalaadimist."
 
 #: downloadhelp.verifying;text;1
 msgid "This Download is Verifying"
 msgstr "Seda allalaadimist kinnitatakse"
 
 #: downloadhelp.verifying;text;2
-msgid "This download has finished, and Shareaza is now checking it to ensure\n\t\tthat it is exactly the same as the original file. If any damaged parts are\n\t\tfound, Shareaza will repair them automatically."
-msgstr "See allalaadimine on lõpetatud ja Shareaza kontrollib nüüd, et\n\t\tfail vastaks originaalile.  Kui leitakse kahjustatud osasid, siis\n\t\tShareaza üritab need ise parandada."
+msgid ""
+"This download has finished, and Shareaza is now checking it to ensure\n"
+"\t\tthat it is exactly the same as the original file. If any damaged parts are\n"
+"\t\tfound, Shareaza will repair them automatically."
+msgstr ""
+"See allalaadimine on lõpetatud ja Shareaza kontrollib nüüd, et\n"
+"\t\tfail vastaks originaalile.  Kui leitakse kahjustatud osasid, siis\n"
+"\t\tShareaza üritab need ise parandada."
 
 #: downloadhelp.downloading;text;1
 msgid "This Download is Active!"
 msgstr "See allalaadimine on Aktiivne!"
 
 #: downloadhelp.downloading;text;2
-msgid "This download is currently in progress. If it is downloading too slowly,\n\t\tyou could try searching the network for more sources with the '"
-msgstr "Sea allalaadimist parajasti töödeldakse.  Kui ta tõmbab liiga aeglaselt,\n\t\tproovi otsida lisa allikaid '"
+msgid ""
+"This download is currently in progress. If it is downloading too slowly,\n"
+"\t\tyou could try searching the network for more sources with the '"
+msgstr ""
+"Sea allalaadimist parajasti töödeldakse.  Kui ta tõmbab liiga aeglaselt,\n"
+"\t\tproovi otsida lisa allikaid '"
 
 #: downloadhelp.downloading;text;3 downloadhelp.searching;text;3
 msgid "Find More Sources"
 msgstr "Leia Rohkem Kasutajaid"
 
 #: downloadhelp.downloading;text;4
-msgid "' command. If the speed does not \n\t\timprove it may be due to limited upload speeds of the users you are downloading \n\t\tfrom. Download speed usually increases over time."
-msgstr "' käsuga. Kui kiirus ei parane\n\t\tvõib see olla põhjustatud üleslaadimis kiiruse piirangust, mille on määranud faili\n\t\tkautaja, kellelt faili tõmbad.  Tavaliselt kiirused ajapikku tõusevad."
+msgid ""
+"' command. If the speed does not \n"
+"\t\timprove it may be due to limited upload speeds of the users you are downloading \n"
+"\t\tfrom. Download speed usually increases over time."
+msgstr ""
+"' käsuga. Kui kiirus ei parane\n"
+"\t\tvõib see olla põhjustatud üleslaadimis kiiruse piirangust, mille on määranud faili\n"
+"\t\tkautaja, kellelt faili tõmbad.  Tavaliselt kiirused ajapikku tõusevad."
 
 #: downloadhelp.pending;text;1
 msgid "This Download is Pending"
 msgstr "See allalaadimine on Ootel"
 
 #: downloadhelp.pending;text;2
-msgid "This download is waiting for someone to start uploading.\n\t\tShareaza is ready to start downloading this file, but no-one is sending it at\n\t\tthe moment. You are probably waiting in other user's queues, and the download\n\t\tmay start transferring at any time. You can examine the individual sources to \n\t\tsee each queue you are waiting in. If you are sharing files yourself, it may\n\t\timprove the chances of a download transfer starting quickly."
-msgstr "See fail ootab, et keegi hakkaks seda jagama.\n\t\tShareaza on valmis faili allalaadima, aga momendil ei jaga seda keegi.\n\t\tTõenäoliselt ootad sa järjekorras ja allalaadimine võib iga hetk alata.\n\t\tSa saad uurida iga allika järjekordi eraldi ja mitmes sa järjekorras oled.\n\t\tKui sa ise ka faile jagad, võib see kiirendada allalaadimist."
+msgid ""
+"This download is waiting for someone to start uploading.\n"
+"\t\tShareaza is ready to start downloading this file, but no-one is sending it at\n"
+"\t\tthe moment. You are probably waiting in other user's queues, and the download\n"
+"\t\tmay start transferring at any time. You can examine the individual sources to \n"
+"\t\tsee each queue you are waiting in. If you are sharing files yourself, it may\n"
+"\t\timprove the chances of a download transfer starting quickly."
+msgstr ""
+"See fail ootab, et keegi hakkaks seda jagama.\n"
+"\t\tShareaza on valmis faili allalaadima, aga momendil ei jaga seda keegi.\n"
+"\t\tTõenäoliselt ootad sa järjekorras ja allalaadimine võib iga hetk alata.\n"
+"\t\tSa saad uurida iga allika järjekordi eraldi ja mitmes sa järjekorras oled.\n"
+"\t\tKui sa ise ka faile jagad, võib see kiirendada allalaadimist."
 
 #: downloadhelp.queued;text;1
 msgid "This Download is Queued"
 msgstr "See allalaadimine on järjekorras"
 
 #: downloadhelp.queued;text;2
-msgid "This download is waiting for some of your other downloads to complete.\n\t\tYour download settings limit the number of downloads which may be active at\n\t\tany given time, to ensure that each download gets a good share of the available\n\t\tbandwidth. You can change these settings via Tools, Shareaza Settings.\n\t\tAlternatively, you may manually start this download with the resume command."
-msgstr "See allalaadimine ootab, et mõni teine sinu allalaadimine lõpetaks.\n\t\tSinu allalaadimise seaded piiravad korraga allalaaditavate failide arvu,\n\t\tet kindlustada igale failile parim võimalik allalaadimiskiirus. Sa saad\n\t\tmuuta neid seadeid - Tööriistad, Shareaza seaded. Sa võid ka ise alustada\n\t\tallalaadimist kasutades \"Jätka\" käsklust."
+msgid ""
+"This download is waiting for some of your other downloads to complete.\n"
+"\t\tYour download settings limit the number of downloads which may be active at\n"
+"\t\tany given time, to ensure that each download gets a good share of the available\n"
+"\t\tbandwidth. You can change these settings via Tools, Shareaza Settings.\n"
+"\t\tAlternatively, you may manually start this download with the resume command."
+msgstr ""
+"See allalaadimine ootab, et mõni teine sinu allalaadimine lõpetaks.\n"
+"\t\tSinu allalaadimise seaded piiravad korraga allalaaditavate failide arvu,\n"
+"\t\tet kindlustada igale failile parim võimalik allalaadimiskiirus. Sa saad\n"
+"\t\tmuuta neid seadeid - Tööriistad, Shareaza seaded. Sa võid ka ise alustada\n"
+"\t\tallalaadimist kasutades \"Jätka\" käsklust."
 
 #: downloadhelp.searching;text;1
 msgid "This Download is Searching"
 msgstr "See allalaadimine otsib"
 
 #: downloadhelp.searching;text;2
-msgid "There are no known sources for this download, so Shareaza is searching\n\t\tall connected P2P networks for new sources. Once sources are found, the\n\t\tdownload will start automatically. Shareaza searches for sources automatically,\n\t\thowever you can speed up the process using the"
-msgstr "Sellele allalaadimisele ei ole hetkel ühtegi allikat ja Shareaza otsib\n\t\tkõigist P2P võrkudest uusi allikaid.  Kui allikas on leitud algalab\n\t\tallalaadimine automaatselt.  Shareaza otsib allikaid automaatselt, aga\n\t\tsa saad protsessi kiirendada, kasutades"
+msgid ""
+"There are no known sources for this download, so Shareaza is searching\n"
+"\t\tall connected P2P networks for new sources. Once sources are found, the\n"
+"\t\tdownload will start automatically. Shareaza searches for sources automatically,\n"
+"\t\thowever you can speed up the process using the"
+msgstr ""
+"Sellele allalaadimisele ei ole hetkel ühtegi allikat ja Shareaza otsib\n"
+"\t\tkõigist P2P võrkudest uusi allikaid.  Kui allikas on leitud algalab\n"
+"\t\tallalaadimine automaatselt.  Shareaza otsib allikaid automaatselt, aga\n"
+"\t\tsa saad protsessi kiirendada, kasutades"
 
 #: downloadhelp.searching;text;4
 msgid "command."
 msgstr "käsklust."
 
 #: downloadhelp.searching;text;5
-msgid "Unfortunately in many cases there may be no users online who have the\n\t\tfile you are looking for. The only course of action here is to wait for\n\t\tsomeone to come online, or cancel it and try to find a similar file which is\n\t\tmore widely available."
-msgstr "Mõnikord kahjuks ei ole ühtegi selle faili kasutajat võrgus.\n\t\tSellisel juhul on ainuke võimalus oodata, etkeegi selle faili kasutaja tuleb\n\t\tvõrku, või tühistada allalaadimine ja leida sarnane fail, millel on rohkem\n\t\tkasutajaid."
+msgid ""
+"Unfortunately in many cases there may be no users online who have the\n"
+"\t\tfile you are looking for. The only course of action here is to wait for\n"
+"\t\tsomeone to come online, or cancel it and try to find a similar file which is\n"
+"\t\tmore widely available."
+msgstr ""
+"Mõnikord kahjuks ei ole ühtegi selle faili kasutajat võrgus.\n"
+"\t\tSellisel juhul on ainuke võimalus oodata, etkeegi selle faili kasutaja tuleb\n"
+"\t\tvõrku, või tühistada allalaadimine ja leida sarnane fail, millel on rohkem\n"
+"\t\tkasutajaid."
 
 #: downloadhelp.creating;text;1
 msgid "This Download is Creating"
 msgstr "Seda allalaadimist Kirjutatakse"
 
 #: downloadhelp.creating;text;2
-msgid "Shareaza is pre-allocating a file in which to store this download, to\n\t\tsave time later."
-msgstr "Shareaza paigutab faili hilisemaks salvestuseks\n\t\tringi."
+msgid ""
+"Shareaza is pre-allocating a file in which to store this download, to\n"
+"\t\tsave time later."
+msgstr ""
+"Shareaza paigutab faili hilisemaks salvestuseks\n"
+"\t\tringi."
 
 #: downloadhelp.tracker;text;1
 msgid "BitTorrent Tracker Down"
 msgstr "BitTorrenti Jälitus ei vasta"
 
 #: downloadhelp.tracker;text;2
-msgid "The BitTorrent tracker server for this download appears to be\n\t\tdown or malfunctioning. Shareaza is unable to contact it to receive\n\t\ta list of peers."
-msgstr "BitTorrenti server selle allalaadimiseks tundub olevat maas\n\t\tvõi ei vasta.  Shareazal ei ole võimalik saada selle faili\n\t\tjagajate kohta infot."
+msgid ""
+"The BitTorrent tracker server for this download appears to be\n"
+"\t\tdown or malfunctioning. Shareaza is unable to contact it to receive\n"
+"\t\ta list of peers."
+msgstr ""
+"BitTorrenti server selle allalaadimiseks tundub olevat maas\n"
+"\t\tvõi ei vasta.  Shareazal ei ole võimalik saada selle faili\n"
+"\t\tjagajate kohta infot."
 
 #: uploadhelp;text;1
 msgid "Uploads Area"
 msgstr "Üleslaadimine"
 
 #: uploadhelp;text;2
-msgid "This is where queues and uploads are displayed. You can expand each queue\n\t\twith the small + on the left, and filter what is displayed with the button on the\n\t\tright of the window's toolbar."
-msgstr "Siin kuvatakse üleslaadimised ja järjekorrad. Sa saad igat järjekrda laiendada\n\t\tvasakul olevast + märgist, ja filtreerida kuvatavat infot, all paremas nurgas\n\t\tasuvast nupust."
+msgid ""
+"This is where queues and uploads are displayed. You can expand each queue\n"
+"\t\twith the small + on the left, and filter what is displayed with the button on the\n"
+"\t\tright of the window's toolbar."
+msgstr ""
+"Siin kuvatakse üleslaadimised ja järjekorrad. Sa saad igat järjekrda laiendada\n"
+"\t\tvasakul olevast + märgist, ja filtreerida kuvatavat infot, all paremas nurgas\n"
+"\t\tasuvast nupust."
 
 #: generalhelp.diskspace;text;1
 msgid "Disk Space is Low"
@@ -2293,8 +2804,14 @@ msgid "The amount of free space on one or more drives used by Shareaza is low."
 msgstr "Ühe või rohkema Shareaza poolt kasutatava ketta maht on liiga väike."
 
 #: generalhelp.diskspace;text;3
-msgid "You should always attempt to keep a reasonable amount of disk space free. Programs \n\t\tcan become unstable if the drives become full, and temporary files may be lost. You should \n\t\trun a disk clean-up, delete unwanted files, or uninstall software you no longer need."
-msgstr "Sul peaks alati olema piisavalt palju vaba kettaruumi. Programmid võivad muutuda\n\t\tebastabiilseks, kui ketas hakkab täis saama ajutised failid võivad kaduma minna. Sa peaks\n\t\ttegema ketta puhastust, kustutama mittevajalikud failid või kustutama mittevajalikud programmid."
+msgid ""
+"You should always attempt to keep a reasonable amount of disk space free. Programs \n"
+"\t\tcan become unstable if the drives become full, and temporary files may be lost. You should \n"
+"\t\trun a disk clean-up, delete unwanted files, or uninstall software you no longer need."
+msgstr ""
+"Sul peaks alati olema piisavalt palju vaba kettaruumi. Programmid võivad muutuda\n"
+"\t\tebastabiilseks, kui ketas hakkab täis saama ajutised failid võivad kaduma minna. Sa peaks\n"
+"\t\ttegema ketta puhastust, kustutama mittevajalikud failid või kustutama mittevajalikud programmid."
 
 #: generalhelp.diskwritefail;text;1
 msgid "A Required Directory is Non-writable"
@@ -2305,8 +2822,14 @@ msgid "A disk or directory Shareaza needs cannot be written to."
 msgstr "Ketas või kaust, mida Shareaza vajab ei ole ligipääsetav."
 
 #: generalhelp.diskwritefail;text;3
-msgid "A network drive may have been disconnected, or you may not have write permission \n\t\tto a selected directory. Please check directories and permissions, or change the\n\t\ttemporary files location."
-msgstr "Võrguketas võib olla lahti ühendatud, või ei ole sul kirjutusõigusi valitud\n\t\tkaustas. Kontrolli kausata ja õigusi, või muuda ajutiste failide\n\t\tasukohta."
+msgid ""
+"A network drive may have been disconnected, or you may not have write permission \n"
+"\t\tto a selected directory. Please check directories and permissions, or change the\n"
+"\t\ttemporary files location."
+msgstr ""
+"Võrguketas võib olla lahti ühendatud, või ei ole sul kirjutusõigusi valitud\n"
+"\t\tkaustas. Kontrolli kausata ja õigusi, või muuda ajutiste failide\n"
+"\t\tasukohta."
 
 #: generalhelp.connectionfail;text;1
 msgid "Internet Connection Has Been Lost"
@@ -2317,8 +2840,12 @@ msgid "Windows reports that there is no internet connection is available."
 msgstr "Windowsi teatel ei ole hetkel internetiühendust."
 
 #: generalhelp.connectionfail;text;3
-msgid "It is likely that a modem or router has dropped, meaning the internet cannot\n\t\tbe accessed. You may need to manually re-connect or reset your connection."
-msgstr "Tõenäoliselt on modem or ruuter ühenduse katkestanud, tähendab, etinternetti\n\t\tpuudub juurdepääs. Sa pead käsitsi looma uue ühenduse või taaskäivitama süsteemi."
+msgid ""
+"It is likely that a modem or router has dropped, meaning the internet cannot\n"
+"\t\tbe accessed. You may need to manually re-connect or reset your connection."
+msgstr ""
+"Tõenäoliselt on modem or ruuter ühenduse katkestanud, tähendab, etinternetti\n"
+"\t\tpuudub juurdepääs. Sa pead käsitsi looma uue ühenduse või taaskäivitama süsteemi."
 
 #: generalhelp.connectionfail;text;4
 msgid "Shareaza has ceased connection attempts to avoid losing all cached hosts."
@@ -2329,8 +2856,13 @@ msgid "Adult content filter enabled"
 msgstr "Täiskasvanu filter"
 
 #: generalhelp.adultfilter;text;2
-msgid "Please note that (as with any automated filter) it may not be 100% effective at\n\t\tscreening content. It is designed simply to filter out excess unwanted results, rather than \n\t\tas a 100% safe block."
-msgstr "Tähelepanu (nagu kõik automaatsed filtrid) ei pruugi see olla 100% efektiivne.\n\t\tSee on mõeldud pigem üleliigse välja sorteerimiseks, mitte niivõrd, 100% tõkkeks"
+msgid ""
+"Please note that (as with any automated filter) it may not be 100% effective at\n"
+"\t\tscreening content. It is designed simply to filter out excess unwanted results, rather than \n"
+"\t\tas a 100% safe block."
+msgstr ""
+"Tähelepanu (nagu kõik automaatsed filtrid) ei pruugi see olla 100% efektiivne.\n"
+"\t\tSee on mõeldud pigem üleliigse välja sorteerimiseks, mitte niivõrd, 100% tõkkeks"
 
 #: generalhelp.adultfilter;text;3
 msgid "Children's Internet use (including P2P file sharing) should always be under parental supervision."
@@ -2341,12 +2873,22 @@ msgid "This torrent appears to have an encoding error"
 msgstr "Sellel torrentil paistavad olema kodeerimisvead"
 
 #: generalhelp.badtorrentencoding;text;2
-msgid "Windows has reported a translation fault while decoding text in this torrent. It is\n\t\tpossible that the torrent is corrupt, or just incorrectly encoded. The torrent may\n\t\tstill download properly, although some file names could be incorrect."
-msgstr "Windows teatel on selle torentil vigane kodeering. On võimalik, et torrent\n\t\ton vigane, või lihtsalt valesti kodeeritud. Torrent võib õigesti allalaaditud\n\t\tolla aga nimes võivad erinevused olla."
+msgid ""
+"Windows has reported a translation fault while decoding text in this torrent. It is\n"
+"\t\tpossible that the torrent is corrupt, or just incorrectly encoded. The torrent may\n"
+"\t\tstill download properly, although some file names could be incorrect."
+msgstr ""
+"Windows teatel on selle torentil vigane kodeering. On võimalik, et torrent\n"
+"\t\ton vigane, või lihtsalt valesti kodeeritud. Torrent võib õigesti allalaaditud\n"
+"\t\tolla aga nimes võivad erinevused olla."
 
 #: generalhelp.badtorrentencoding;text;3
-msgid "Most torrent creation programs should allow you to repair this torrent, which\n\t\twill ensure it works properly in all BitTorrent applications."
-msgstr "Enamus torrentitegemise programme peaksid olema suutelised seda torrentit\n\t\tparandama, et kõik BitTorrenti programmid oleksid suutelised seda lugema."
+msgid ""
+"Most torrent creation programs should allow you to repair this torrent, which\n"
+"\t\twill ensure it works properly in all BitTorrent applications."
+msgstr ""
+"Enamus torrentitegemise programme peaksid olema suutelised seda torrentit\n"
+"\t\tparandama, et kõik BitTorrenti programmid oleksid suutelised seda lugema."
 
 #: generalhelp.badtorrentencoding;link;4
 msgid "Click here for additional help"
@@ -2361,60 +2903,119 @@ msgid "Your eDonkey server list is empty"
 msgstr "Sinu eDonkey serveri nimekiri on tühi"
 
 #: generalhelp.donkeyserverlist;text;2
-msgid "There are no servers in your eDonkey server list. You need to download an\n\t\tup to date server list (met file) to connect to ED2K."
-msgstr "Sinu eDonkey2000 serveri nimekirjas ei ole ühtegi serverit. Sa pead tõmbama uuendatud\n\t\tserveri nimekirja (met faili), et ühendada ED2K võrku."
+msgid ""
+"There are no servers in your eDonkey server list. You need to download an\n"
+"\t\tup to date server list (met file) to connect to ED2K."
+msgstr ""
+"Sinu eDonkey2000 serveri nimekirjas ei ole ühtegi serverit. Sa pead tõmbama uuendatud\n"
+"\t\tserveri nimekirja (met faili), et ühendada ED2K võrku."
 
 #: generalhelp.donkeyserverlist;text;3
-msgid "You can download a server list from the ed2k setting page, or the discovery\n\t\tservices window. (Press F9 to open the discovery services window)"
-msgstr "Sa saad tõmmata serveri nimekirja ed2k seadete lehelt, või serverite aknas.\n\t\t(Vajuta F9-t, et avada serverite aken)"
+msgid ""
+"You can download a server list from the ed2k setting page, or the discovery\n"
+"\t\tservices window. (Press F9 to open the discovery services window)"
+msgstr ""
+"Sa saad tõmmata serveri nimekirja ed2k seadete lehelt, või serverite aknas.\n"
+"\t\t(Vajuta F9-t, et avada serverite aken)"
 
 #: generalhelp.uploadwarning;text;1
 msgid "Limiting uploads may slow downloads"
 msgstr "Piiratud üleslaadimine võib langetada allalaadimiskiirust"
 
 #: generalhelp.uploadwarning;text;2
-msgid "Several networks Shareaza connects to enforce ratios, limit uploads to\n\t\tclients that do not share, or simply preference uploading to known sharers."
-msgstr "Mitmed võrgud kuhu Shareaza ühendub, et kindlustada liikluse suhet, piiravad\n\t\tüleslaadimisi klientidele kes ei jaga, või lihtsalt ei anna allalaadimis õigusi."
+msgid ""
+"Several networks Shareaza connects to enforce ratios, limit uploads to\n"
+"\t\tclients that do not share, or simply preference uploading to known sharers."
+msgstr ""
+"Mitmed võrgud kuhu Shareaza ühendub, et kindlustada liikluse suhet, piiravad\n"
+"\t\tüleslaadimisi klientidele kes ei jaga, või lihtsalt ei anna allalaadimis õigusi."
 
 #: generalhelp.uploadwarning;text;3
-msgid "Fortunately, broadband DSL connections are like a two-lane highway: you have\n\t\tseparate allocations for upload and download. If your client is properly configured, \n\t\tyou should be able to upload at a good rate while retaining full download capacity."
-msgstr "Õnneks, püsiühendusega DSL ühendused on nagu kahesuunalised kiirteed: siin on\n\t\teraldi kanalid allalaadimiseks ja üleslaadimiseks. Kui klient on õigesti seadistatud,\n\t\tsaad head tulemused nii alla- kui üleslaadimisel."
+msgid ""
+"Fortunately, broadband DSL connections are like a two-lane highway: you have\n"
+"\t\tseparate allocations for upload and download. If your client is properly configured, \n"
+"\t\tyou should be able to upload at a good rate while retaining full download capacity."
+msgstr ""
+"Õnneks, püsiühendusega DSL ühendused on nagu kahesuunalised kiirteed: siin on\n"
+"\t\teraldi kanalid allalaadimiseks ja üleslaadimiseks. Kui klient on õigesti seadistatud,\n"
+"\t\tsaad head tulemused nii alla- kui üleslaadimisel."
 
 #: generalhelp.uploadwarning;text;4
-msgid "By default, your upload limit is set to about 85% of available upstream bandwidth,\n\t\twhile downloads are unlimited. That configuration should give you the fastest possible \n\t\tdownloads that are available."
-msgstr "Vaikimisi on sinu üleslaadimise piirang seatud 85% võimalikust ülesalaadimisest,\n\t\tsamas allalaadimine on piiramatu. Selline konfiguratsioon peaks andma kiireima võimaliku\n\t\tallalaadimis kiiruse."
+msgid ""
+"By default, your upload limit is set to about 85% of available upstream bandwidth,\n"
+"\t\twhile downloads are unlimited. That configuration should give you the fastest possible \n"
+"\t\tdownloads that are available."
+msgstr ""
+"Vaikimisi on sinu üleslaadimise piirang seatud 85% võimalikust ülesalaadimisest,\n"
+"\t\tsamas allalaadimine on piiramatu. Selline konfiguratsioon peaks andma kiireima võimaliku\n"
+"\t\tallalaadimis kiiruse."
 
-#: searchhelp.badsearch1;text;1 searchhelp.badsearch2;text;1 searchhelp.badsearch3;text;1
+#: searchhelp.badsearch1;text;1 searchhelp.badsearch2;text;1
+#: searchhelp.badsearch3;text;1
 msgid "Please re-phrase the search"
 msgstr "Palun sõnasta otsingusõna ümber"
 
 #: searchhelp.badsearch1;text;2
-msgid "This search is poorly formatted, and may not function correctly. \n\t\tSearches should include several terms where possible, and should specify a schema \n\t\t(file type). Furthermore, searches must not be limited to numbers or negative\n\t\tterms only, and you should avoid overly general queries."
-msgstr "See otsing on halvasti sõnastatud ja ei pruugi anda korralikku vastet.\n\t\tOtsinud peaksid sisaldama võimlikult palju vihjeid ja peaks täpsustama teemat\n\t\t(faili tüüp). Veelgi enam, otsinguid ei peaks piirama arvuliselt ega nimeliselt\n\t\tja samas peaks vältima liiga üldsõnalisi otsinguid."
+msgid ""
+"This search is poorly formatted, and may not function correctly. \n"
+"\t\tSearches should include several terms where possible, and should specify a schema \n"
+"\t\t(file type). Furthermore, searches must not be limited to numbers or negative\n"
+"\t\tterms only, and you should avoid overly general queries."
+msgstr ""
+"See otsing on halvasti sõnastatud ja ei pruugi anda korralikku vastet.\n"
+"\t\tOtsinud peaksid sisaldama võimlikult palju vihjeid ja peaks täpsustama teemat\n"
+"\t\t(faili tüüp). Veelgi enam, otsinguid ei peaks piirama arvuliselt ega nimeliselt\n"
+"\t\tja samas peaks vältima liiga üldsõnalisi otsinguid."
 
 #: searchhelp.badsearch1;text;3
-msgid "Most clients on the network will ignore a search for all MP3 files, for example, \n\t\tbecause it is not specific enough, and would generate too many results."
-msgstr "Enamus kliente eirab liiga üldsõnalisi otsinguid, näiteks MP3, sest see\n\t\tei ole piisavalt täpne, ja võib anda liiga palju vastuseid."
+msgid ""
+"Most clients on the network will ignore a search for all MP3 files, for example, \n"
+"\t\tbecause it is not specific enough, and would generate too many results."
+msgstr ""
+"Enamus kliente eirab liiga üldsõnalisi otsinguid, näiteks MP3, sest see\n"
+"\t\tei ole piisavalt täpne, ja võib anda liiga palju vastuseid."
 
 #: searchhelp.badsearch2;text;2
-msgid "This search does not contain enough terms to function properly. All searches need\n\t\ta minimum number of valid, alphabetic characters to be able to start."
-msgstr "Otsing ei sisalda piisavalt märksõnu, et anda korralikku vastust. Kõik otsingud\n\t\tvajavad minimaalset arvu sümboleid et, alustada."
+msgid ""
+"This search does not contain enough terms to function properly. All searches need\n"
+"\t\ta minimum number of valid, alphabetic characters to be able to start."
+msgstr ""
+"Otsing ei sisalda piisavalt märksõnu, et anda korralikku vastust. Kõik otsingud\n"
+"\t\tvajavad minimaalset arvu sümboleid et, alustada."
 
 #: searchhelp.badsearch2;text;3
-msgid "While common file extensions (and numbers) can be searched for, you must enter\n\t\tother terms as well when creating the search. Punctuation and wildcards are not used \n\t\tin searches, just the text you enter."
-msgstr "Kuigi on võimalik otsida levinud faililaiendeid (ja numbreid), siiski peab\n\t\tsisestama ka teisi märksõnu, et otsida. Otsingus ei kasutata kirjavahemärke, sisestatakse\n\t\tainult tekst."
+msgid ""
+"While common file extensions (and numbers) can be searched for, you must enter\n"
+"\t\tother terms as well when creating the search. Punctuation and wildcards are not used \n"
+"\t\tin searches, just the text you enter."
+msgstr ""
+"Kuigi on võimalik otsida levinud faililaiendeid (ja numbreid), siiski peab\n"
+"\t\tsisestama ka teisi märksõnu, et otsida. Otsingus ei kasutata kirjavahemärke, sisestatakse\n"
+"\t\tainult tekst."
 
 #: searchhelp.badsearch3;text;2
-msgid "This search seems to contain only common file extensions, or no searchable\n\t\twords."
+msgid ""
+"This search seems to contain only common file extensions, or no searchable\n"
+"\t\twords."
 msgstr "Otsing sisaldab ainult faililaindit, või mitteotsitavat sõna."
 
 #: searchhelp.badsearch3;text;3
-msgid "If you are having trouble creating searches, keep in mind that it's quite similar\n\t\tto a web search. Specific terms or phrases are best- Unique names, titles and\n\t\tkeywords."
-msgstr "Kui sul on otsinguga raskusi, siis pea meeles, et see on sarnane\n\t\tweebiotsingule. Parimad on täpsed terminid ja sõnad- ainulaadsed sõnad, pealkirjad\n\t\tja võtmesõnad."
+msgid ""
+"If you are having trouble creating searches, keep in mind that it's quite similar\n"
+"\t\tto a web search. Specific terms or phrases are best- Unique names, titles and\n"
+"\t\tkeywords."
+msgstr ""
+"Kui sul on otsinguga raskusi, siis pea meeles, et see on sarnane\n"
+"\t\tweebiotsingule. Parimad on täpsed terminid ja sõnad- ainulaadsed sõnad, pealkirjad\n"
+"\t\tja võtmesõnad."
 
 #: searchhelp.badsearch3;text;4
-msgid "General terms cannot be searched for efficiently and may result in poor\n\t\tsearch performance, as well as high bandwidth use during searches."
-msgstr "Liiga üldsõnalisi termineid ei saa eriti efektiivselt otsida ja liiga palju vastuseid\n\t\tlangetavad otsingu kvaliteeti, samuti ka liiga suur ressursikasutus."
+msgid ""
+"General terms cannot be searched for efficiently and may result in poor\n"
+"\t\tsearch performance, as well as high bandwidth use during searches."
+msgstr ""
+"Liiga üldsõnalisi termineid ei saa eriti efektiivselt otsida ja liiga palju vastuseid\n"
+"\t\tlangetavad otsingu kvaliteeti, samuti ka liiga suur ressursikasutus."
 
 #: searchhelp.badsearch3;text;5
 msgid "Further help is available on the Shareaza web site."
@@ -2425,12 +3026,22 @@ msgid "This search cannot be started"
 msgstr "Otsingut ei saa teha"
 
 #: searchhelp.adultsearch;text;2
-msgid "The specified search would probably return a large number of results with adult \n\t\tcontent, and this has been turned off in the settings. You should either re-phrase the \n\t\tsearch, or disable the filter."
-msgstr "Antud otsing annab liiga palju täiskasvanutele orienteeritud vastuseid ja see\n\t\ton seadetest keelatud toiming. Sa peaksid kas otsingu ümbersõnastama või\n\t\tfiltri välja lülitama."
+msgid ""
+"The specified search would probably return a large number of results with adult \n"
+"\t\tcontent, and this has been turned off in the settings. You should either re-phrase the \n"
+"\t\tsearch, or disable the filter."
+msgstr ""
+"Antud otsing annab liiga palju täiskasvanutele orienteeritud vastuseid ja see\n"
+"\t\ton seadetest keelatud toiming. Sa peaksid kas otsingu ümbersõnastama või\n"
+"\t\tfiltri välja lülitama."
 
 #: searchhelp.adultsearch;text;3
-msgid "To disable the filter, go into Tools > Settings > General and uncheck the\n\t\tadult content filter."
-msgstr "Et filtrit välja lülitada, mine Tööriistad - Seaded - Üldiselt ja võta linnuke\n\t\ttäiskasvanu filtri eest."
+msgid ""
+"To disable the filter, go into Tools > Settings > General and uncheck the\n"
+"\t\tadult content filter."
+msgstr ""
+"Et filtrit välja lülitada, mine Tööriistad - Seaded - Üldiselt ja võta linnuke\n"
+"\t\ttäiskasvanu filtri eest."
 
 #: sharehelp.alreadyshared;text;1
 msgid "Already Shared"
@@ -2445,24 +3056,40 @@ msgid "This folder should not be shared"
 msgstr "Seda kausta ei tohiks jagada"
 
 #: sharehelp.badshare;text;2
-msgid "This folder is (or contains) a system folder. Sharing this folder is not\n\t\trecommended, since most of the files in it are of no use to other people."
-msgstr "See kaust on (või sisaldab) süsteemi kaust. Selle kausta jagamine ei ole\n\t\tsoovitatav, kuna enamus failitest pole teistele mingit kasu."
+msgid ""
+"This folder is (or contains) a system folder. Sharing this folder is not\n"
+"\t\trecommended, since most of the files in it are of no use to other people."
+msgstr ""
+"See kaust on (või sisaldab) süsteemi kaust. Selle kausta jagamine ei ole\n"
+"\t\tsoovitatav, kuna enamus failitest pole teistele mingit kasu."
 
 #: sharehelp.badshare;text;3
-msgid "Folders such as the Windows directory, Program Files, and similar folders\n\t\tdo not usually contain files suitable for sharing. Any files of interest would be in\n\t\tsub-folders located"
-msgstr "Kaustad nagu Windowsi kaustad, Program Files, ja teised sarnased kaustad\n\t\tei sisalda tavaliselt jagamiseks sobivaid faile. Failid, mida võiks jagada ja mis\n\t\tasuvad"
+msgid ""
+"Folders such as the Windows directory, Program Files, and similar folders\n"
+"\t\tdo not usually contain files suitable for sharing. Any files of interest would be in\n"
+"\t\tsub-folders located"
+msgstr ""
+"Kaustad nagu Windowsi kaustad, Program Files, ja teised sarnased kaustad\n"
+"\t\tei sisalda tavaliselt jagamiseks sobivaid faile. Failid, mida võiks jagada ja mis\n"
+"\t\tasuvad"
 
 #: sharehelp.badshare;text;4
 msgid "inside"
 msgstr "nende"
 
 #: sharehelp.badshare;text;5
-msgid "these folders.\n\t\tPlease share those instead."
+msgid ""
+"these folders.\n"
+"\t\tPlease share those instead."
 msgstr "alamkaustades. Jagage siis alamkauste."
 
 #: sharehelp.badshare;text;6
-msgid "The Shareaza 'incomplete' folder should also not be shared through the\n\t\tlibrary, since attempting to hash downloads in progress may impact on performance."
-msgstr "Shareaza 'poolikute' kausta ei peaks samuti jagama läbi raamatukogu, kuna\n\t\tnende hashimine võib need rikkuda."
+msgid ""
+"The Shareaza 'incomplete' folder should also not be shared through the\n"
+"\t\tlibrary, since attempting to hash downloads in progress may impact on performance."
+msgstr ""
+"Shareaza 'poolikute' kausta ei peaks samuti jagama läbi raamatukogu, kuna\n"
+"\t\tnende hashimine võib need rikkuda."
 
 #: message;id_browse_files
 msgid "View the user's shared files"
@@ -2784,7 +3411,8 @@ msgstr "Kontrolli uuendusi."
 msgid "Run the connection test."
 msgstr ""
 
-#: message;id_help_web_1 message;id_help_web_2 message;id_help_web_3 message;id_help_web_4 message;id_help_web_5 message;id_help_web_6
+#: message;id_help_web_1 message;id_help_web_2 message;id_help_web_3
+#: message;id_help_web_4 message;id_help_web_5 message;id_help_web_6
 msgid "Visit this website"
 msgstr "Mine kodulehele"
 
@@ -3220,7 +3848,8 @@ msgstr ""
 msgid "Close the monitor window."
 msgstr "Sulge jälgimise aken."
 
-#: message;id_neighbours_chat message;id_search_chat message;id_transfers_chat message;id_uploads_chat
+#: message;id_neighbours_chat message;id_search_chat message;id_transfers_chat
+#: message;id_uploads_chat
 msgid "Open a chat session with the selected user."
 msgstr "Ava vestluse aken valitud kasutajaga."
 
@@ -5520,7 +6149,8 @@ msgstr "V&älju"
 msgid "year old"
 msgstr "aastat vana"
 
-#: string;16811 cconnectionsettingspage;control;3 cconnectionsettingspage;control;12
+#: string;16811 cconnectionsettingspage;control;3
+#: cconnectionsettingspage;control;12
 msgid "Automatic"
 msgstr "Automaatne"
 
@@ -6280,7 +6910,7 @@ msgstr "Kasutajaliidese suundade muutmine nõuab taaskäivitust. \\nSa pead Shar
 msgid "No"
 msgstr "Ei"
 
-#: string;20006 cdonkeyimportdlg;control;3
+#: string;20006 cdonkeyimportdlg;control;2
 msgid "Yes"
 msgstr "Jah"
 
@@ -6528,11 +7158,34 @@ msgstr ""
 msgid "Rating"
 msgstr "Reiting"
 
-#: string;20237 csettingsheet;control;2 cscheduletaskdlg;control;1 cqueuepropertiesdlg;control;37 cprofilemanagerdlg;control;2 csavefilterasdlg;control;2 cdiscoveryservicedlg;control;5 cfilecopydlg;control;4 cfolderpropertiesdlg;control;7 cgraphlistdlg;control;16 cgraphitemdlg;control;1 cschemacolumnsdlg;control;3 csecureruledlg;control;33 csharemanagerdlg;control;6 cpromotedlg;control;8 cexistingfiledlg;control;9 cclosemodedlg;control;6 cdonkeyserversdlg;control;5 cdownloadgroupdlg;control;1 cmediavisdlg;control;6 cdownloadreviewdlg;control;2 cdecodemetadatadlg;control;8 circinputdlg;control;2
+#: string;20237 csettingsheet;control;2 cscheduletaskdlg;control;1
+#: cqueuepropertiesdlg;control;37 cprofilemanagerdlg;control;2
+#: csavefilterasdlg;control;2 cdiscoveryservicedlg;control;5
+#: cfilecopydlg;control;4 cfolderpropertiesdlg;control;7
+#: cgraphlistdlg;control;16 cgraphitemdlg;control;1
+#: cschemacolumnsdlg;control;3 csecureruledlg;control;33
+#: csharemanagerdlg;control;5 cpromotedlg;control;7 cexistingfiledlg;control;8
+#: cclosemodedlg;control;5 cdonkeyserversdlg;control;4
+#: cdownloadgroupdlg;control;1 cmediavisdlg;control;5
+#: cdownloadreviewdlg;control;1 cdecodemetadatadlg;control;8
+#: circinputdlg;control;2
 msgid "OK"
 msgstr "OK"
 
-#: string;20238 csettingsheet;control;3 cscheduletaskdlg;control;2 cqueuepropertiesdlg;control;38 cprofilemanagerdlg;control;3 cconnecttodlg;control;8 cdownloaddlg;control;6 cnewsearchdlg;control;4 cfiltersearchdlg;control;30 csavefilterasdlg;control;3 cdiscoveryservicedlg;control;6 cfilecopydlg;control;5 cfolderpropertiesdlg;control;8 cgraphlistdlg;control;17 cgraphitemdlg;control;2 cschemacolumnsdlg;control;4 csecureruledlg;control;34 csharemanagerdlg;control;7 curlcopydlg;control;7 curlexportdlg;control;11 curlactiondlg;control;12 cbitzidownloaddlg;control;4 cfilepreviewdlg;control;6 cexistingfiledlg;control;10 cclosemodedlg;control;7 cdonkeyserversdlg;control;6 cdeletefiledlg;control;5 ctorrentseeddlg;control;5 cdownloadgroupdlg;control;2 cmediavisdlg;control;7 cdecodemetadatadlg;control;9 circinputdlg;control;3
+#: string;20238 csettingsheet;control;3 cscheduletaskdlg;control;2
+#: cqueuepropertiesdlg;control;38 cprofilemanagerdlg;control;3
+#: cconnecttodlg;control;8 cdownloaddlg;control;5 cnewsearchdlg;control;4
+#: cfiltersearchdlg;control;30 csavefilterasdlg;control;3
+#: cdiscoveryservicedlg;control;6 cfilecopydlg;control;5
+#: cfolderpropertiesdlg;control;8 cgraphlistdlg;control;17
+#: cgraphitemdlg;control;2 cschemacolumnsdlg;control;4
+#: csecureruledlg;control;34 csharemanagerdlg;control;6 curlcopydlg;control;6
+#: curlexportdlg;control;10 curlactiondlg;control;11
+#: cbitzidownloaddlg;control;4 cfilepreviewdlg;control;6
+#: cexistingfiledlg;control;9 cclosemodedlg;control;6
+#: cdonkeyserversdlg;control;5 cdeletefiledlg;control;5
+#: ctorrentseeddlg;control;4 cdownloadgroupdlg;control;2
+#: cmediavisdlg;control;6 cdecodemetadatadlg;control;9 circinputdlg;control;3
 msgid "Cancel"
 msgstr "Tühista"
 
@@ -6668,7 +7321,8 @@ msgstr "Kui klikin minimeeri:"
 msgid "Normal|Minimise to Tray"
 msgstr "Tavaline|Vähenda Tööriistaribale"
 
-#: clibrarysettingspage;control;1 cmediasettingspage;control;1 cuploadssettingspage;control;1 csecureruledlg;control;22
+#: clibrarysettingspage;control;1 cmediasettingspage;control;1
+#: cuploadssettingspage;control;1 csecureruledlg;control;22
 msgid "_Options:"
 msgstr "_Seaded:"
 
@@ -6716,7 +7370,9 @@ msgstr "Puhasta Kohe Ajalugu"
 msgid "_Safe to Open:"
 msgstr "_Ohutu Avada:"
 
-#: clibrarysettingspage;control;18 clibrarysettingspage;control;22 cmediasettingspage;control;7 cwebsettingspage;control;11 cfilesourcespage;control;5 cdownloadgroupdlg;control;7
+#: clibrarysettingspage;control;18 clibrarysettingspage;control;22
+#: cmediasettingspage;control;7 cwebsettingspage;control;11
+#: cfilesourcespage;control;5 cdownloadgroupdlg;control;7
 msgid "_Add"
 msgstr "_Lisa"
 
@@ -7424,11 +8080,17 @@ msgstr "Shareaza Üldehituse Protokollide Teave:"
 msgid "Skin Information:"
 msgstr "Naha Teave:"
 
-#: cskinssettingspage;control;3 cpluginssettingspage;control;3 ccollectionexportdlg;control;4 ctorrentgeneralpage;control;9
+#: cskinssettingspage;control;3 cpluginssettingspage;control;3
+#: ccollectionexportdlg;control;4 ctorrentgeneralpage;control;9
 msgid "Name:"
 msgstr "Nimi:"
 
-#: cskinssettingspage;control;4 cskinssettingspage;control;6 cpluginssettingspage;control;4 cfolderscandlg;control;2 cdownloadmonitordlg;control;2 cdownloadmonitordlg;control;7 cdownloadmonitordlg;control;9 cdownloadmonitordlg;control;11 cdownloadmonitordlg;control;13 ccollectionexportdlg;control;5 ccollectionexportdlg;control;7
+#: cskinssettingspage;control;4 cskinssettingspage;control;6
+#: cpluginssettingspage;control;4 cfolderscandlg;control;2
+#: cdownloadmonitordlg;control;2 cdownloadmonitordlg;control;7
+#: cdownloadmonitordlg;control;9 cdownloadmonitordlg;control;11
+#: cdownloadmonitordlg;control;13 ccollectionexportdlg;control;5
+#: ccollectionexportdlg;control;7
 msgid "..."
 msgstr "..."
 
@@ -7436,7 +8098,8 @@ msgstr "..."
 msgid "Author:"
 msgstr "Autor:"
 
-#: cskinssettingspage;control;7 cpluginssettingspage;control;5 cadvancedsettingspage;control;7 ccollectionexportdlg;control;8
+#: cskinssettingspage;control;7 cpluginssettingspage;control;5
+#: cadvancedsettingspage;control;7 ccollectionexportdlg;control;8
 msgid "Description:"
 msgstr "Kirjeldus:"
 
@@ -7456,7 +8119,7 @@ msgstr "Lisad"
 msgid "Plugin Information:"
 msgstr "Plugina teave:"
 
-#: cpluginssettingspage;control;7 cmediavisdlg;control;5
+#: cpluginssettingspage;control;7 cmediavisdlg;control;4
 msgid "_Setup..."
 msgstr "_Seade..."
 
@@ -7476,7 +8139,8 @@ msgstr "Seadete Omadused:"
 msgid "Upload Queue Properties"
 msgstr "Üleslaadimisjärjekorra Omadused"
 
-#: cqueuepropertiesdlg;control;1 cgraphlistdlg;control;14 cdownloadgroupdlg;control;12
+#: cqueuepropertiesdlg;control;1 cgraphlistdlg;control;14
+#: cdownloadgroupdlg;control;12
 msgid "_Name:"
 msgstr "_Nimi:"
 
@@ -7632,7 +8296,8 @@ msgstr "Sa ei pea Shareaza kasutamiseks faile jagama, aga mõni progremm käitub
 msgid "Please indicate which folders, if any, you wish to share.  Simply click the Add button to add a new folder."
 msgstr "Palun näita, milliseid kaustu jagada.  Kliki Lisa nuppu, et lisada uus kaust."
 
-#: cwizardsharepage;control;5 cgraphlistdlg;control;2 csharemanagerdlg;control;4
+#: cwizardsharepage;control;5 cgraphlistdlg;control;2
+#: csharemanagerdlg;control;3
 msgid "_Add..."
 msgstr "_Lisa..."
 
@@ -7740,11 +8405,11 @@ msgstr "Gnutella2 võrk on Shareaza's peamine töö võrk, pakkudes rohkem võim
 msgid "Import eDonkey Downloads"
 msgstr "Impordi eDonkey2000 Allalaadimised"
 
-#: cdonkeyimportdlg;control;2
+#: cdonkeyimportdlg;control;1
 msgid "Shareaza has detected that you have another eDonkey program installed on your computer.  Would you like to import any unfinished downloads into Shareaza?"
 msgstr "Shareaza on avastanud sinu arvutis teise eDonkey2000 programmi.  Kas tahad selle programmi poolikud allalaadimised Shareazasse tuua?"
 
-#: cdonkeyimportdlg;control;4
+#: cdonkeyimportdlg;control;3
 msgid "No|Cancel"
 msgstr "Ei|Tühista"
 
@@ -7988,19 +8653,19 @@ msgstr "_Vaigista Ultrapeer"
 msgid "Download File or Torrent"
 msgstr "Tõmba Fail või Torrent"
 
-#: cdownloaddlg;control;3
+#: cdownloaddlg;control;2
 msgid "Downloading any file with Shareaza is easy.  Simply type or paste the URL or URI describing the file into the box below and press Enter."
 msgstr "Failide allalaadimine Shareazaga on lihtne.  Lihtsalt trüki või kleebi faili URL või URI all asuvasse kasti ja vajuta Enter oma klaviatuuril."
 
-#: cdownloaddlg;control;7
+#: cdownloaddlg;control;6
 msgid "Shareaza can download files from the web (HTTP), and automatically search and download P2P links (Magnet, Gnutella, eDonkey, mP2P)."
 msgstr "Shareaza suudab tõmmata faile weebist (HTTP), automaatselt otsida ja tõmmata P2P linke (Magnet, Gnutella, eDonkey2000, mP2P)."
 
-#: cdownloaddlg;control;8
+#: cdownloaddlg;control;7
 msgid "Shareaza can also download BitTorrent files.  A torrent can be described by a .torrent file, or a HTTP link to the .torrent file.  To download a torrent HTTP link, paste it in the box above.  If you already have a .torrent file, click Open Torrent:"
 msgstr "Shareaza tõmbab samuti ka BitTorrenti faile. Torrenti saab kirjeldada kui xyz.torrent faili, või HTTP linki .torrent failile.  Et tõmmata torrenti HTTP lingilt, kleebi see üleval olevasse kasti.  Kui sul juba on .torrent fail, kliki Ava Torrent:"
 
-#: cdownloaddlg;control;9
+#: cdownloaddlg;control;8
 msgid "Open _Torrent..."
 msgstr "Ava _Torrent..."
 
@@ -8380,7 +9045,7 @@ msgstr "OK"
 msgid "Shared Folder Manager"
 msgstr "Jagatud Kausta Haldur"
 
-#: csharemanagerdlg;control;2
+#: csharemanagerdlg;control;1
 msgid "This is a list of folders in your library.  You can add and remove folders using the buttons on the left.  When you add a new folder it is initially shared with other users, however you can unshare it from the Shareaza library if you wish."
 msgstr "See on nimekiri sinu Raamautukogus olevatest kaustadest.  Sa võid vasakul asuvatest nuppudest lisada või kustutada kaustu .  Kui lisad uue kausta siis seda jagatakse automaatselt teistega, aga sa saad selle soovi korral ka keelata, Shareaza Raamatukogust."
 
@@ -8388,11 +9053,11 @@ msgstr "See on nimekiri sinu Raamautukogus olevatest kaustadest.  Sa võid vasak
 msgid "Copy URI"
 msgstr "Kopeeri URI"
 
-#: curlcopydlg;control;2
+#: curlcopydlg;control;1
 msgid "You can copy a URI for the selected item in a variety of different formats.  Please choose the format you wish to use by clicking one of the URIs below:"
 msgstr "Kopeeri valitud faili URI, erinevates formaatides.  Palun vali formaat, klikkides allpool oleval URI-l:"
 
-#: curlcopydlg;control;6
+#: curlcopydlg;control;5
 msgid "Include _myself as a fixed source in the URL"
 msgstr "Lisa _mind URL-i püsiallikana"
 
@@ -8400,27 +9065,27 @@ msgstr "Lisa _mind URL-i püsiallikana"
 msgid "Export URIs"
 msgstr "Ekspordi URI"
 
-#: curlexportdlg;control;2
+#: curlexportdlg;control;1
 msgid "You have selected %lu files to export as Shareaza-powered URI references.  Please select the format for the URIs, and click Save:"
 msgstr "Sa oled valinud %lu faili, eksportimiseks Shareaza URI soovitustesse.  Palun valie URI jaoks formaat ja kliki Salvesta:"
 
-#: curlexportdlg;control;4
+#: curlexportdlg;control;3
 msgid "Insert Token:"
 msgstr "Sisesta Märk:"
 
-#: curlexportdlg;control;5
+#: curlexportdlg;control;4
 msgid "Tiger Root|SHA1|MD5|ED2K (CMD4)|BitTorrent|Filename|Filename (URI)|Base Filename|File Extension|File Size|File Size (bytes)|Folder Path|Local Host|Local Port|Link|Link (URI)"
 msgstr "Tiger Root|SHA1|MD5|ED2K (CMD4)|Failinimi|Failinimi (URI)|Algne failinimi|Faililaiend|Faili Suurus|Faili Suurus(baitides)|Kausta asukoht|Kohalik Server|Kohalik Port"
 
-#: curlexportdlg;control;6
+#: curlexportdlg;control;5
 msgid "Select preset:"
 msgstr "Vali eelasetus:"
 
-#: curlexportdlg;control;7
+#: curlexportdlg;control;6
 msgid "Magnet|eDonkey|Magnet HTML|eDonkey HTML"
 msgstr ""
 
-#: curlexportdlg;control;9
+#: curlexportdlg;control;8
 msgid "_Save..."
 msgstr "Salvesta..."
 
@@ -8428,39 +9093,39 @@ msgstr "Salvesta..."
 msgid "Shareaza URI Manager"
 msgstr "Shareaza URI Haldur"
 
-#: curlactiondlg;control;2
+#: curlactiondlg;control;1
 msgid "You have clicked on a Shareaza-powered URI which links to the following content on the network:"
 msgstr "Sa oled klikkinud Shareaza poolt koostatud URI-l, mis viitab Võrgus järgnevale sisule:"
 
-#: curlactiondlg;control;3
+#: curlactiondlg;control;2
 msgid "You have clicked on a Shareaza-powered URL which will connect you to the following host or server:"
 msgstr "Sa oled klikkinud Shareaza poolt koostatud URI-l, mis ühendab sind järgneva serveriga:"
 
-#: curlactiondlg;control;4
+#: curlactiondlg;control;3
 msgid "You have clicked on a Shareaza-powered URI which will allow you to browse the shared files available on the following host:"
 msgstr "Sa oled klikkinud Shareaza poolt koostatud URI-l, mis laseb sul kasutaja poolt jagatavaid faile sirvida:"
 
-#: curlactiondlg;control;9
+#: curlactiondlg;control;8
 msgid "Please select the action you would like Shareaza to take:"
 msgstr "Palun vali, mida Shareaza peaks tegema:"
 
-#: curlactiondlg;control;10
+#: curlactiondlg;control;9
 msgid "_Download Now"
 msgstr "_Tõmba kohe"
 
-#: curlactiondlg;control;11
+#: curlactiondlg;control;10
 msgid "_Search for File"
 msgstr "_Otsi Faili"
 
-#: curlactiondlg;control;13
+#: curlactiondlg;control;12
 msgid "_Remember my selection next time"
 msgstr "_Pea minu valik meeles"
 
-#: curlactiondlg;control;14
+#: curlactiondlg;control;13
 msgid "Open a download _monitor window"
 msgstr "Ava allalaadimise _jälgimise aken"
 
-#: curlactiondlg;control;15
+#: curlactiondlg;control;14
 msgid "You have clicked on a Shareaza-powered URI which will add the following Discovery Service to your Discovery Services cache."
 msgstr "Sa oled klikkinud Shareaza poolt koostatud URI-l, mis lisab järgmised Serverid sinu Serverite mälusse."
 
@@ -8492,27 +9157,27 @@ msgstr "(kopeerin alalaadimise osasid eelvaatesse)"
 msgid "Shareaza Respects its Users"
 msgstr "Shareaza Austab Oma Kasutajaid"
 
-#: cwarningsdlg;control;2
+#: cwarningsdlg;control;1
 msgid "Did you know Shareaza is a 100% free product?"
 msgstr "Kas teadsid, et Shareaza on 100% vabavara?"
 
-#: cwarningsdlg;control;3
+#: cwarningsdlg;control;2
 msgid "Shareaza does NOT contain ANY \"spyware\", \"adware\" or other bundled software. It does NOT display any advertisements or \"popups\", ever.{n}{n}If you ever see advertising or \"popups\" while using Shareaza, be assured that they are NOT coming from this program."
 msgstr "Shareaza ei sisalda \"spyware\", \"adware\" ega mõnda muud lisaprogramme. Ta kuva mingeid reklaame ega   \"hüpikaknaid\", mitte kunagi.{n}{n}Kui peaksid reklaami nägema \"hüpikaknaid\" kasutades Shareazat, võid kindel olla, et need ei tule sellest programmist."
 
-#: cwarningsdlg;control;4
+#: cwarningsdlg;control;3
 msgid "Unfortunately a lot of other software does come with undesirable adware or spyware, so if you see something suspicious you may wish to check your PC with an advertising or spyware removal program."
 msgstr "Kahjuks paljud teised programmid tulevad koos adware'i või spyware'iga, nii et kui näed midagi kahtlast siis peaksid oma arvutit kontrollima spyware eemaldus programmiga (nt.ad-aware)."
 
-#: cwarningsdlg;control;5
+#: cwarningsdlg;control;4
 msgid "You should not have had to pay any money to obtain Shareaza. Shareaza can be freely downloaded by anyone from http://shareaza.sourceforge.net/. If you paid someone money for Shareaza, you should demand a full refund immediately."
 msgstr "Sa ei pea maksma raha Shareaza omandamise eest.  Shareaza on vabalt saadaval kodulehel http://shareaza.sourceforge.net/.  Kui sa oled oma programmi eest maksnud siis peaksid koheselt raha tagasi nõudma."
 
-#: cwarningsdlg;control;6
+#: cwarningsdlg;control;5
 msgid "Shareaza respects its users!"
 msgstr "Shareaza austab oma kasutajaid!"
 
-#: cwarningsdlg;control;7 cpromotedlg;control;7
+#: cwarningsdlg;control;6 cpromotedlg;control;6
 msgid "http://shareaza.sourceforge.net/"
 msgstr "http://shareaza.sourceforge.net/"
 
@@ -8520,23 +9185,23 @@ msgstr "http://shareaza.sourceforge.net/"
 msgid "Spread the Word"
 msgstr "Levita"
 
-#: cpromotedlg;control;2
+#: cpromotedlg;control;1
 msgid "Help Us Spread the Word"
 msgstr "Aita meil Shareazat levitada"
 
-#: cpromotedlg;control;3
+#: cpromotedlg;control;2
 msgid "We hope you have enjoyed using Shareaza so far. We believe it is the best file sharing application around."
 msgstr "Loodetavasti on Shareaza sulle meeldinud.  Meie usume, et see on parim failijagamis programm, mis saadaval."
 
-#: cpromotedlg;control;4
+#: cpromotedlg;control;3
 msgid "Unfortunately, a lot of file sharers don't know what they're missing!"
 msgstr "Kahjuks paljud jagajad ei tea millest nad ilma jäävad!"
 
-#: cpromotedlg;control;5
+#: cpromotedlg;control;4
 msgid "If you know someone who would like Shareaza, whether they're a new user or someone still putting up with an inferior product, why not let them know there is a better alternative?"
 msgstr "Kui sa tead kedagi kellele Shareaza võiks meeldida, siis anna talle sellest teada."
 
-#: cpromotedlg;control;6
+#: cpromotedlg;control;5
 msgid "Chances are they'll be grateful you rescued them!"
 msgstr "Tõenäoliselt on nad sulle tänulikud!"
 
@@ -8544,27 +9209,27 @@ msgstr "Tõenäoliselt on nad sulle tänulikud!"
 msgid "Existing File"
 msgstr "Olemasolev Fail"
 
-#: cexistingfiledlg;control;5
+#: cexistingfiledlg;control;4
 msgid "You already have this file in your file library. What would you like to do?"
 msgstr "See fail on sul juba Raamatukogus olemas.  Mida sa soovid teha?"
 
-#: cexistingfiledlg;control;6
+#: cexistingfiledlg;control;5
 msgid "Show me the file in my library"
 msgstr "Näita seda faili Raamatukogus"
 
-#: cexistingfiledlg;control;7
+#: cexistingfiledlg;control;6
 msgid "Download the file again"
 msgstr "Tõmba see fail uuesti"
 
-#: cexistingfiledlg;control;8
+#: cexistingfiledlg;control;7
 msgid "Don't download this file"
 msgstr "Ära tõmba seda faili"
 
-#: cexistingfiledlg;control;11
+#: cexistingfiledlg;control;10
 msgid "You have downloaded and deleted this file before. What would you like to do?"
 msgstr "Sa oled varem selle faili juba tõmmanud ja siis kustutanud.  Mida sa soovid edasi teha?"
 
-#: cexistingfiledlg;control;12
+#: cexistingfiledlg;control;11
 msgid "Warning!!! Duplicate files detected. Some malicious software may infect your Library. Make sure that you downloaded this file or placed it manually. Otherwise, shutdown Shareaza and scan your computer with an antivirus program."
 msgstr ""
 
@@ -8572,19 +9237,19 @@ msgstr ""
 msgid "Close Button"
 msgstr "Sule Nupp"
 
-#: cclosemodedlg;control;2
+#: cclosemodedlg;control;1
 msgid "This is the first time you have clicked Shareaza's close button. Please choose what action you would like Shareaza to take when clicking the close button from now on:"
 msgstr "See on esimene kord kui oled Shareaza sule nuppu klikkinud.  Palun vali, mida Shareaza peaks tegema:"
 
-#: cclosemodedlg;control;3
+#: cclosemodedlg;control;2
 msgid "Minimise to the tray area"
 msgstr "Minimeeri tööriistaribale"
 
-#: cclosemodedlg;control;4
+#: cclosemodedlg;control;3
 msgid "Shut down Shareaza immediately"
 msgstr "Sulge Shareaza kohe"
 
-#: cclosemodedlg;control;5
+#: cclosemodedlg;control;4
 msgid "Shut down Shareaza after any downloads and uploads finish"
 msgstr "Sulge Shareaza pärast alla- või üleslaadimiste lõppu"
 
@@ -8592,7 +9257,7 @@ msgstr "Sulge Shareaza pärast alla- või üleslaadimiste lõppu"
 msgid "Download Server.met File"
 msgstr "Tõmba Server.met Fail"
 
-#: cdonkeyserversdlg;control;2
+#: cdonkeyserversdlg;control;1
 msgid "You can download an eDonkey server.met file from the web to refresh your local list of servers."
 msgstr "Tõmba weebist eDonkey2000 server.met fail, et värskendada oma kohalikke serverite nimekirja."
 
@@ -8736,15 +9401,15 @@ msgstr ""
 msgid "Open Torrent File"
 msgstr "Ava Torrent Fail"
 
-#: ctorrentseeddlg;control;2
+#: ctorrentseeddlg;control;1
 msgid "You have opened a BitTorrent torrent file.  Would you like to download its contents, or re-seed it?"
 msgstr "Oled avanud BitTorrenti torrenti.  Kas soovid selle alla laadida, või edasi jagada?"
 
-#: ctorrentseeddlg;control;4
+#: ctorrentseeddlg;control;3
 msgid "Seed"
 msgstr "Jaga"
 
-#: ctorrentseeddlg;control;6
+#: ctorrentseeddlg;control;5
 msgid "To share complete files using BitTorrent they must first be seeded.  Once this process is complete the Torrent will appear as a new item in your download list."
 msgstr "Et jagada faile kasutades BitTorrentit, peavad nad olema jagatud.  Kui see on tehtud siis ilmub Torrent uue failina sinu allalaadimiste nimekirja"
 
@@ -8832,11 +9497,11 @@ msgstr "Faili _tüüp:"
 msgid "Select Visualisation"
 msgstr "Vali Visualisation"
 
-#: cmediavisdlg;control;2
+#: cmediavisdlg;control;1
 msgid "Select an audio visualisation from the list:"
 msgstr "Vali nimekirjast visualisation :"
 
-#: cmediavisdlg;control;4
+#: cmediavisdlg;control;3
 msgid "Footer Display|Full Size Display|Large Display|Medium Display|Small Display"
 msgstr "Jaluse Vaade|Täida Ekraan|Suur|Keskmine Suurus|Väike Suurus"
 
@@ -8844,23 +9509,23 @@ msgstr "Jaluse Vaade|Täida Ekraan|Suur|Keskmine Suurus|Väike Suurus"
 msgid "Upgrade Alert"
 msgstr "Uuenduse Teade"
 
-#: cupgradedlg;control;2
+#: cupgradedlg;control;1
 msgid "A new version of Shareaza is now available. Would you like to upgrade?"
 msgstr "Uus Shareaza versioon on saadaval.  Kas soovid uuendada?"
 
-#: cupgradedlg;control;3
+#: cupgradedlg;control;2
 msgid "If you select Upgrade Now, Shareaza will add the upgrade to your download queue and automatically begin downloading it."
 msgstr "Kui sa valid Uuenda Kohe, lisab Shareaza uuenduse sinu allalaadimiste järjekorda ja alustab ise selle tõmbamist."
 
-#: cupgradedlg;control;4
+#: cupgradedlg;control;3
 msgid "_Upgrade Now"
 msgstr "_Uuenda Kohe"
 
-#: cupgradedlg;control;5
+#: cupgradedlg;control;4
 msgid "Don't check for new versions"
 msgstr "Ära kontrolli uut versiooni"
 
-#: cupgradedlg;control;6
+#: cupgradedlg;control;5
 msgid "Don't Upgrade"
 msgstr "Ära uuenda"
 

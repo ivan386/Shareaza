@@ -1,7 +1,7 @@
 //
 // DlgLanguage.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -23,6 +23,7 @@
 #include "Shareaza.h"
 #include "Settings.h"
 #include "CoolInterface.h"
+#include "SkinWindow.h"
 #include "DlgLanguage.h"
 #include "XML.h"
 
@@ -76,7 +77,7 @@ BOOL CLanguageDlg::OnInitDialog()
 
 	CWaitCursor pCursor;
 
-	//SkinMe( _T("CLanguageDlg"), ID_TOOLS_LANGUAGE );
+	SkinMe( _T("CLanguageDlg"), ID_TOOLS_LANGUAGE );
 
 	m_hArrow	= theApp.LoadStandardCursor( IDC_ARROW );
 	m_hHand		= theApp.LoadCursor( IDC_HAND );
@@ -106,7 +107,7 @@ BOOL CLanguageDlg::OnInitDialog()
 	m_nDown		= 0;
 	m_bKeyMode	= FALSE;
 
-	CRect rc( 0, 0, ITEM_WIDTH * 3 + GetSystemMetrics( SM_CXVSCROLL ), BANNER_CY );
+	CRect rc( 0, 0, ITEM_WIDTH * 3/* + GetSystemMetrics( SM_CXVSCROLL )*/, GetBannerHeight() );
 
 	m_nRows = 10;
 
@@ -120,9 +121,9 @@ BOOL CLanguageDlg::OnInitDialog()
 	pScroll.nPage	= m_nRows + 1;
 	SetScrollInfo( SB_VERT, &pScroll, TRUE );
 
-	//if ( m_pSkin )
-	//	m_pSkin->CalcWindowRect( &rc );
-	//else
+	if ( m_pSkin )
+		m_pSkin->CalcWindowRect( &rc );
+	else
 		CalcWindowRect( &rc, adjustBorder );
 
 	rc.OffsetRect(	GetSystemMetrics( SM_CXSCREEN ) / 2 -  rc.Width() / 2 - rc.left,
@@ -156,7 +157,7 @@ void CLanguageDlg::OnPaint()
 	GetClientRect( &rc );
 	GetClientRect( &rcDlg );
 
-	rc.top += BANNER_CY;
+	rc.top += GetBannerHeight();
 	rc.right = rc.left + ITEM_WIDTH;
 	CFont* pOldFont = (CFont*)dc.SelectObject( &m_fntNormal );
 
@@ -331,7 +332,7 @@ void CLanguageDlg::OnMouseMove(UINT nFlags, CPoint point)
 	int nScroll = GetScrollPos( SB_VERT );
 
 	GetClientRect( &rc );
-	rc.top += BANNER_CY;
+	rc.top += GetBannerHeight();
 
 	if ( rc.PtInRect( point ) )
 	{
@@ -363,7 +364,7 @@ BOOL CLanguageDlg::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 		GetCursorPos( &pt );
 		ScreenToClient( &pt );
 
-		SetCursor( pt.y > BANNER_CY && m_nHover - 2 < m_pGUIDirs.GetSize() ? m_hHand : m_hArrow );
+		SetCursor( pt.y > GetBannerHeight() && m_nHover - 2 < m_pGUIDirs.GetSize() ? m_hHand : m_hArrow );
 		return TRUE;
 	}
 

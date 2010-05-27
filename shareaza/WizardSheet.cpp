@@ -1,7 +1,7 @@
 //
 // WizardSheet.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -155,7 +155,7 @@ BOOL CWizardSheet::OnInitDialog()
 	// ATL_IDC_STATIC1?
 	if ( GetDlgItem( 0x3026 ) ) GetDlgItem( 0x3026 )->ShowWindow( SW_HIDE );
 
-	m_bmHeader.LoadBitmap( IDB_WIZARD );
+	m_bmHeader.Attach( Skin.GetWatermark( _T("Banner") ) );
 
 	return TRUE;
 }

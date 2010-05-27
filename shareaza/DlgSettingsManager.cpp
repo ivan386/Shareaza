@@ -24,7 +24,6 @@
 #include "Settings.h"
 #include "Skin.h"
 #include "DlgSettingsManager.h"
-
 #include "PageSettingsRich.h"
 #include "PageSettingsGeneral.h"
 #include "PageSettingsLibrary.h"
@@ -50,19 +49,18 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
+IMPLEMENT_DYNAMIC(CSettingsManagerDlg, CSettingsSheet)
+
 BEGIN_MESSAGE_MAP(CSettingsManagerDlg, CSettingsSheet)
-	//{{AFX_MSG_MAP(CSettingsManagerDlg)
-	//}}AFX_MSG_MAP
 	ON_COMMAND(IDRETRY, OnApply)
 END_MESSAGE_MAP()
-
 
 /////////////////////////////////////////////////////////////////////////////
 // CSettingsManagerDlg dialog
 
-CSettingsManagerDlg::CSettingsManagerDlg(CWnd* pParent) : CSettingsSheet( pParent, IDS_SETTINGS )
+CSettingsManagerDlg::CSettingsManagerDlg(CWnd* pParent)
+	: CSettingsSheet( pParent, IDS_SETTINGS )
 {
-	m_nTopMargin = 52;
 }
 
 void CSettingsManagerDlg::DoDataExchange(CDataExchange* pDX)
@@ -204,39 +202,9 @@ BOOL CSettingsManagerDlg::OnInitDialog()
 {
 	CSettingsSheet::OnInitDialog();
 
-	m_bmHeader.LoadBitmap( IDB_WIZARD );
-
 	SkinMe( _T("CSettingSheet"), IDR_MAINFRAME );
 
 	return TRUE;
-}
-
-void CSettingsManagerDlg::DoPaint(CDC& dc)
-{
-	CRect rc;
-	GetClientRect( &rc );
-
-	BITMAP pInfo;
-	m_bmHeader.GetBitmap( &pInfo );
-
-	CDC mdc;
-	mdc.CreateCompatibleDC( &dc );
-	CBitmap* pOldBitmap = (CBitmap*)mdc.SelectObject( &m_bmHeader );
-	dc.BitBlt( 0, 0, pInfo.bmWidth, pInfo.bmHeight, &mdc, 0, 0, SRCCOPY );
-	mdc.SelectObject( pOldBitmap );
-	mdc.DeleteDC();
-
-	/*
-	dc.FillSolidRect( 438, 0, rc.right - 438, 48, RGB( 0xBE, 0, 0 ) );
-
-	dc.Draw3dRect( 438, 48, rc.right - 437, 2,
-		RGB( 169, 0, 0 ), RGB( 110, 59, 59 ) );
-
-	dc.Draw3dRect( 0, 50, rc.Width() + 1, 1,
-		RGB( 128, 128, 128 ), RGB( 128, 128, 128 ) );
-	*/
-
-	CSettingsSheet::DoPaint( dc );
 }
 
 void CSettingsManagerDlg::OnOK()

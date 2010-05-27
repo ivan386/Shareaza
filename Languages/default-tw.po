@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2010-02-15 11:20+0000\n"
+"POT-Creation-Date: 2010-05-27 12:52+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -91,7 +91,7 @@ msgstr "IRC"
 msgid "New Search"
 msgstr "新的搜尋"
 
-#: button;id_search_download cdownloaddlg;control;5 ctorrentseeddlg;control;3
+#: button;id_search_download cdownloaddlg;control;4 ctorrentseeddlg;control;2
 msgid "Download"
 msgstr "下載"
 
@@ -393,13 +393,41 @@ msgstr ""
 msgid "Reset List"
 msgstr ""
 
-#: button;id_security_import
+#: button;id_security_import button;id_scheduler_import
 msgid "Import List"
 msgstr ""
 
-#: button;id_security_export
+#: button;id_security_export button;id_scheduler_export
 msgid "Export List"
 msgstr ""
+
+#: button;id_scheduler_edit
+msgid "Edit Task"
+msgstr ""
+
+#: button;id_scheduler_activate
+#, fuzzy
+msgid "Activate"
+msgstr "活動中"
+
+#: button;id_scheduler_deactivate
+#, fuzzy
+msgid "Deactivate"
+msgstr "不在活躍中"
+
+#: button;id_scheduler_add
+msgid "Add Task"
+msgstr ""
+
+#: button;id_scheduler_remove
+#, fuzzy
+msgid "Remove Task"
+msgstr "移除 >"
+
+#: button;id_scheduler_remove_all
+#, fuzzy
+msgid "Remove All"
+msgstr "移除 >"
 
 #: button;id_hitmonitor_search
 msgid "Requery"
@@ -490,7 +518,7 @@ msgid "Best Fit"
 msgstr "最佳适合"
 
 #: button;imageviewer_close string;20001 cfolderscandlg;control;7
-#: cdonkeyimportdlg;control;6 cwarningsdlg;control;8 chelpdlg;control;2
+#: cdonkeyimportdlg;control;5 cwarningsdlg;control;7 chelpdlg;control;1
 msgid "Close"
 msgstr "关闭"
 
@@ -671,6 +699,19 @@ msgstr "主機快取"
 msgid "Disco_very"
 msgstr "揭示"
 
+#: cmainwnd.basic;3;4;item;id_view_scheduler
+#: cmainwnd.tabbed;11;item;id_view_scheduler
+#: cmainwnd.tabbed;11;12;item;id_view_scheduler
+#: cmainwnd.windowed;20;item;id_view_scheduler
+#: cmainwnd.view.basic;26;item;id_view_scheduler
+#: cmainwnd.view.tabbed;item;id_view_scheduler
+#: cmainwnd.view.windowed;item;id_view_scheduler
+#: chomewnd.basic;27;item;id_view_scheduler
+#: chomewnd.tabbed;item;id_view_scheduler
+#, fuzzy
+msgid "Sch_eduler"
+msgstr "預定表"
+
 #: cmainwnd.basic;3;item;id_view_basic cmainwnd.windowed;20;item;id_view_basic
 msgid "_Basic Mode"
 msgstr "標準模式"
@@ -819,8 +860,15 @@ msgstr "連線至..."
 
 #: cmainwnd.tabbed;9;item;id_network_browse_to
 #: cmainwnd.windowed;18;item;id_network_browse_to
-msgid "_Browse Host..."
-msgstr "瀏覽主機..."
+#, fuzzy
+msgid "_Browse User..."
+msgstr "瀏覽使用者"
+
+#: cmainwnd.tabbed;9;item;id_network_chat_to
+#: cmainwnd.windowed;18;item;id_network_chat_to
+#, fuzzy
+msgid "Chat to _User..."
+msgstr "與使用者聊天"
 
 #: cmainwnd.tabbed;11;item;id_tab_transfers
 #: cmainwnd.view.tabbed;item;id_tab_transfers
@@ -1427,11 +1475,12 @@ msgstr "分享的"
 #: clibrarytree.physical.basic;item;id_library_remove
 #: clibrarytree.physical;item;id_library_remove
 #: cmedialist;item;id_media_remove csecuritywnd;item;id_security_remove
+#: cschedulerwnd;item;id_scheduler_remove
 #: cdiscoverywnd;item;id_discovery_remove clibrarysettingspage;control;19
 #: clibrarysettingspage;control;23 cmediasettingspage;control;8
 #: cwebsettingspage;control;12 cwizardsharepage;control;6
 #: cavatarprofilepage;control;6 cfilesourcespage;control;6
-#: cgraphlistdlg;control;4 cgraphitemdlg;control;12 csharemanagerdlg;control;5
+#: cgraphlistdlg;control;4 cgraphitemdlg;control;12 csharemanagerdlg;control;4
 #: cdownloadgroupdlg;control;8
 msgid "_Remove"
 msgstr "移除"
@@ -1738,7 +1787,7 @@ msgstr ""
 msgid "Timestam_p"
 msgstr "時間郵戳"
 
-#: csystemwnd;item;id_system_copy curlexportdlg;control;8
+#: csystemwnd;item;id_system_copy curlexportdlg;control;7
 msgid "_Copy"
 msgstr "複製"
 
@@ -1811,11 +1860,11 @@ msgstr "新增規則..."
 msgid "Rese_t"
 msgstr "重設"
 
-#: csecuritywnd;item;id_security_import
+#: csecuritywnd;item;id_security_import cschedulerwnd;item;id_scheduler_import
 msgid "_Import..."
 msgstr "匯入..."
 
-#: csecuritywnd;item;id_security_export
+#: csecuritywnd;item;id_security_export cschedulerwnd;item;id_scheduler_export
 msgid "E_xport..."
 msgstr "匯出..."
 
@@ -1830,6 +1879,30 @@ msgstr "接受"
 #: csecuritywnd;61;item;id_security_policy_deny
 msgid "_Deny"
 msgstr "拒絕"
+
+#: cschedulerwnd;item;id_scheduler_add
+msgid "_Add Scheduled Task"
+msgstr ""
+
+#: cschedulerwnd;item;id_scheduler_activate
+#, fuzzy
+msgid "A_ctivate"
+msgstr "活動中"
+
+#: cschedulerwnd;item;id_scheduler_deactivate
+#, fuzzy
+msgid "_Deactivate"
+msgstr "不在活躍中"
+
+#: cschedulerwnd;item;id_scheduler_edit
+#, fuzzy
+msgid "_Edit"
+msgstr "編輯:"
+
+#: cschedulerwnd;item;id_scheduler_remove_all
+#, fuzzy
+msgid "Remove Al_l"
+msgstr "移除擋案"
 
 #: cdiscoverywnd;item;id_discovery_query
 msgid "_Query Now"
@@ -1927,6 +2000,11 @@ msgstr ""
 #: circuserlist;63;item;id_irc_version
 msgid "_Version"
 msgstr ""
+
+#: circuserlist;63;item;id_irc_browse
+#, fuzzy
+msgid "_Browse"
+msgstr "瀏覽"
 
 #: circuserlist;64
 msgid "Control"
@@ -2432,14 +2510,6 @@ msgstr "遙控:"
 #: cinternetsettingsgroup;text;12
 msgid "Set up the ability to control Shareaza remotely through a web browser."
 msgstr "有關經由瀏覽器遠端操控 Shareaza 的設定."
-
-#: cinternetsettingsgroup;link;13
-msgid "Scheduler:"
-msgstr "Scheduler:"
-
-#: cinternetsettingsgroup;text;14
-msgid "Limit download connections based on a periodic schedule."
-msgstr "Limit download connections based on a periodic schedule."
 
 #: cbrowsehostprofile.1;heading;2000
 msgid "'s Profile"
@@ -3684,6 +3754,20 @@ msgstr "選擇一個音訊視覺效果外掛..."
 msgid "Adjust video zoom and aspect ratio settings."
 msgstr "調整視訊縮放與比例設定."
 
+#: tip;idc_media_position
+#, fuzzy
+msgid "Seek"
+msgstr "跳躍:"
+
+#: tip;idc_media_speed column;speed
+msgid "Speed"
+msgstr "速度"
+
+#: tip;idc_media_volume
+#, fuzzy
+msgid "Volume"
+msgstr "音量:"
+
 #: message;id_monitor_close
 msgid "Close the monitor window."
 msgstr "關閉監控視窗."
@@ -3724,6 +3808,11 @@ msgstr "在傳輸完成後自動關閉 Shareaza."
 #: message;id_network_browse_to
 msgid "Browse a user, showing their profile and shared files..."
 msgstr "瀏覽一位使用者, 顯示他們的個人檔案與分享的檔案..."
+
+#: message;id_network_chat_to
+#, fuzzy
+msgid "Open a chat session with a user..."
+msgstr "與選擇的使用者開啟聊天會期."
 
 #: message;id_network_connect
 msgid "Connect to selected networks."
@@ -4217,6 +4306,86 @@ msgstr "Shareaza 說明"
 msgid "Shareaza Chat"
 msgstr ""
 
+#: string;window_scheduler
+msgid "Scheduler"
+msgstr "預定表"
+
+#: string;154
+#, fuzzy
+msgid "Are you sure you want to remove all scheduled tasks? This cannot be undone."
+msgstr "您確定要刪除 \"%s\" 外觀嗎?  這個動作將不能回復."
+
+#: string;156
+msgid "Scheduled time has already passed.\\n\\nPlease select a time in the future."
+msgstr ""
+
+#: string;157
+#, fuzzy
+msgid "Bandwidth: Full Speed"
+msgstr "頻寬:"
+
+#: string;158
+msgid "Bandwidth: Reduced Speed"
+msgstr ""
+
+#: string;159
+#, fuzzy
+msgid "Bandwidth: Stop"
+msgstr "頻寬:"
+
+#: string;160
+#, fuzzy
+msgid "System: Exit Shareaza"
+msgstr "離開 Shareaza"
+
+#: string;161
+msgid "System: Disconnect Dial-up Connection"
+msgstr ""
+
+#: string;162
+msgid "System: Turn Off the Computer"
+msgstr ""
+
+#: string;163
+#, fuzzy
+msgid "Please select a task."
+msgstr "請選擇使用者介面:"
+
+#: string;164
+msgid "Specific day(s) of week"
+msgstr ""
+
+#: string;165 string;8325 string;20118
+msgid "Active"
+msgstr "活動中"
+
+#: string;166 string;8324
+msgid "Inactive"
+msgstr "不在活躍中"
+
+#: string;167
+#, fuzzy
+msgid "Done"
+msgstr "無"
+
+#: string;168
+#, fuzzy
+msgid "Waiting..."
+msgstr "評分"
+
+#: string;169
+msgid "No Tasks Currently Scheduled"
+msgstr ""
+
+#: string;172
+#, fuzzy
+msgid "Done Today"
+msgstr "星期一"
+
+#: string;173
+msgid "You should select at least one day of week."
+msgstr ""
+
 #: string;7000
 msgid "Are you sure you want to delete this filter ?"
 msgstr "您要刪除這個過濾嗎?"
@@ -4250,12 +4419,8 @@ msgid "This template does not have any customizations."
 msgstr "這個樣版沒有任何可自訂部分."
 
 #: string;7102
-msgid ""
-"Are you sure you want to delete the \"%s\" template?\\n"
-"This cannot be undone."
-msgstr ""
-"您確定要刪除樣版 \"%s\" ?\\n"
-" 此動作不能回復."
+msgid "Are you sure you want to delete the \"%s\" template?\\nThis cannot be undone."
+msgstr "您確定要刪除樣版 \"%s\" ?\\n 此動作不能回復."
 
 #: string;8000 dialog;csettingsheet
 msgid "Shareaza Settings"
@@ -4274,18 +4439,8 @@ msgid "Edit My Profile"
 msgstr "編輯我的個人檔案"
 
 #: string;8004
-msgid ""
-"!Welcome to Shareaza (version) !\\n"
-".\\n"
-"Shareaza is completely free software.\\n"
-"Please use it responsibly and respect intellectual property law.\\n"
-"."
-msgstr ""
-"!歡迎使用 Shareaza (版本) !\\n"
-".\\n"
-"Shareaza 是完全免費的軟體.\\n"
-"請有責任地使用, 並尊重智慧財產權.\\n"
-"."
+msgid "!Welcome to Shareaza (version) !\\n.\\nShareaza is completely free software.\\nPlease use it responsibly and respect intellectual property law.\\n."
+msgstr "!歡迎使用 Shareaza (版本) !\\n.\\nShareaza 是完全免費的軟體.\\n請有責任地使用, 並尊重智慧財產權.\\n."
 
 #: string;8005
 msgid "(closing after transfers)"
@@ -4300,14 +4455,8 @@ msgid "There are no active searches. Click here to search for files."
 msgstr "目前沒有活躍中的搜尋.  點選這裡搜尋檔案."
 
 #: string;8008
-msgid ""
-"Shareaza has finished downloading the next Shareaza version (%s). Would you like to upgrade now?\\n"
-"\\n"
-"If you select Yes, Shareaza will close temporarily while the upgrade is installed."
-msgstr ""
-"Shareaza 已經完成下載最新的Shareaza 版本(%s).  您要立刻升級嗎?\\n"
-"\\n"
-"如果您選擇Yes, 在安裝升級版時會暫時關閉 Shareaza."
+msgid "Shareaza has finished downloading the next Shareaza version (%s). Would you like to upgrade now?\\n\\nIf you select Yes, Shareaza will close temporarily while the upgrade is installed."
+msgstr "Shareaza 已經完成下載最新的Shareaza 版本(%s).  您要立刻升級嗎?\\n\\n如果您選擇Yes, 在安裝升級版時會暫時關閉 Shareaza."
 
 #: string;8009
 msgid "Are you sure you want to delete the \"%s\" skin? This cannot be undone."
@@ -4745,14 +4894,6 @@ msgstr "URL:"
 msgid "User Agent:"
 msgstr "使用者代理:"
 
-#: string;8324
-msgid "Inactive"
-msgstr "不在活躍中"
-
-#: string;8325 string;20118
-msgid "Active"
-msgstr "活動中"
-
 #: string;8326
 msgid "Next in Line"
 msgstr "下一位"
@@ -4886,18 +5027,8 @@ msgid "Sending query for \"%s\" to %s."
 msgstr "正在傳送 \"%s\" 的詢問至 %s."
 
 #: string;16083
-msgid ""
-"Forcing your PC into hub mode may have adverse effects on performance and the P2P network. It is generally better to allow Shareaza to decide whether or not hub mode should be used.\\n"
-"\\n"
-"Hub mode does NOT produce better search results, or have any other advantages for you.\\n"
-"\\n"
-"Do you really want to do this, despite these disadvantages?"
-msgstr ""
-"強迫您的電腦進入結點模式可能對 P2P 網路與效能有害. 讓Shareaza 自行決定是否進入結點模式為上上之策.\\n"
-"\\n"
-" 結點模式不會產生更好的搜尋結果, 或是給您任何優勢.\\n"
-"\\n"
-"您要不顧這些不利的條件, 繼續此動作嗎?"
+msgid "Forcing your PC into hub mode may have adverse effects on performance and the P2P network. It is generally better to allow Shareaza to decide whether or not hub mode should be used.\\n\\nHub mode does NOT produce better search results, or have any other advantages for you.\\n\\nDo you really want to do this, despite these disadvantages?"
+msgstr "強迫您的電腦進入結點模式可能對 P2P 網路與效能有害. 讓Shareaza 自行決定是否進入結點模式為上上之策.\\n\\n 結點模式不會產生更好的搜尋結果, 或是給您任何優勢.\\n\\n您要不顧這些不利的條件, 繼續此動作嗎?"
 
 #: string;16084
 msgid "Disabling support for Gnutella-1 protocols may limit your search results, and if you are acting as a hub it may also impact upon the results of other users. Are you sure you want to do this?"
@@ -5196,14 +5327,8 @@ msgid "Download host %s is busy, retrying in %i seconds."
 msgstr "下載主機 %s 忙碌中, 重試於 %i 秒後."
 
 #: string;16281
-msgid ""
-"Are you sure you want to clear \"%s\"?\\n"
-"\\n"
-"Once a download has been cleared from the Downloads window, it cannot be resumed later."
-msgstr ""
-"您確定要清除 \"%s\"?\\n"
-"\\n"
-"一旦下載從下載視窗清除, 稍後將不能繼續它."
+msgid "Are you sure you want to clear \"%s\"?\\n\\nOnce a download has been cleared from the Downloads window, it cannot be resumed later."
+msgstr "您確定要清除 \"%s\"?\\n\\n一旦下載從下載視窗清除, 稍後將不能繼續它."
 
 #: string;16282
 msgid "Aborting download of \"%s\" from %s (%s), network disabled."
@@ -5594,14 +5719,8 @@ msgid "Library Files"
 msgstr ""
 
 #: string;16384
-msgid ""
-"Are you sure you want to launch the file \"%s\" ?\\n"
-"\\n"
-"Some files can be harmful to your computer. Ensure you know what the file is before launching it."
-msgstr ""
-"您確定要執行檔案: \"%s\" ?\\n"
-"\\n"
-" 有些檔案可能對您的檔案造成損害.  執行本檔案前請確定其內容為何."
+msgid "Are you sure you want to launch the file \"%s\" ?\\n\\nSome files can be harmful to your computer. Ensure you know what the file is before launching it."
+msgstr "您確定要執行檔案: \"%s\" ?\\n\\n 有些檔案可能對您的檔案造成損害.  執行本檔案前請確定其內容為何."
 
 #: string;16385
 msgid "You are about to modify the metadata of %i files, are you sure you want to continue?"
@@ -5616,38 +5735,16 @@ msgid "The file \"%s\" has not yet been hashed. Please wait for the file to be h
 msgstr "這個檔案 \"%s\" 尚未切細.  請等到檔案完成切細後,再試一次."
 
 #: string;16388
-msgid ""
-"This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n"
-"\\n"
-"Shareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database. If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n"
-"\\n"
-"Would you like to proceed?"
-msgstr ""
-"This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n"
-"\\n"
-"Shareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database.  If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n"
-"\\n"
-"Would you like to proceed?"
+msgid "This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n\\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database. If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n\\nWould you like to proceed?"
+msgstr "This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n\\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database.  If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n\\nWould you like to proceed?"
 
 #: string;16389
-msgid ""
-"Are you sure you want to permanently delete the %i selected file(s) ?\\n"
-"\\n"
-"The files will be moved to your \"recycle bin\" if it is enabled."
-msgstr ""
-"您要永久刪除%i 個選擇的檔案嗎?\\n"
-"\\n"
-"這些檔案將移至 \"資訊回收筒\", 如果您有啟用它的話."
+msgid "Are you sure you want to permanently delete the %i selected file(s) ?\\n\\nThe files will be moved to your \"recycle bin\" if it is enabled."
+msgstr "您要永久刪除%i 個選擇的檔案嗎?\\n\\n這些檔案將移至 \"資訊回收筒\", 如果您有啟用它的話."
 
 #: string;16390
-msgid ""
-"You have not yet selected a media player to enqueue files with, such as Nullsoft Winamp. Would you like to select one now?\\n"
-"\\n"
-"Shareaza will pass the name of the file to your selected program with the \"/ADD\" argument."
-msgstr ""
-"您還沒有選擇一個與檔案產生關聯的多媒體播放程式, 像是 Nullsoft WinAmp. 您現在要選擇嗎?\\n"
-"\\n"
-"Shareaza will pass the name of the file to your selected program with the \"/ADD\" argument."
+msgid "You have not yet selected a media player to enqueue files with, such as Nullsoft Winamp. Would you like to select one now?\\n\\nShareaza will pass the name of the file to your selected program with the \"/ADD\" argument."
+msgstr "您還沒有選擇一個與檔案產生關聯的多媒體播放程式, 像是 Nullsoft WinAmp. 您現在要選擇嗎?\\n\\nShareaza will pass the name of the file to your selected program with the \"/ADD\" argument."
 
 #: string;16391
 msgid "You're not connected to the network."
@@ -5666,88 +5763,36 @@ msgid "Would you like to remove the \"potentially unsafe\" attribute from this f
 msgstr "您要將\"潛在不安全的\"屬性從這個檔案移除嗎?"
 
 #: string;16395
-msgid ""
-"Your downloaded files folder \"%s\" is not yet in your library.\\n"
-"\\n"
-"Including your downloaded files folder in your library makes it easier to view and organise new downloads, and lets you take advantage of advanced Shareaza features such as download verification and automatic upgrading. Placing downloaded files in your library does not necessarily require you to share them: you can choose whether or not to share files independently.\\n"
-"\\n"
-"Would you like to add your downloaded files folder to your library now?"
-msgstr ""
-"您的已下載檔案資料夾 \"%s\" 不在您的收藏裡.\\n"
-"\\n"
-"將您的已下載檔案資料夾放入收藏允許您更簡單地檢視與整理新的下載; 您還可以利用進階的Shareaza 功能, 像是下載檔驗證與自動更新.  將已下載檔放在您的收藏裡不代表一定要分享他們: 您可以為每個檔案選擇是否要分享.\\n"
-"\\n"
-"您現在要新增已下載檔資料夾至您的收藏嗎?"
+msgid "Your downloaded files folder \"%s\" is not yet in your library.\\n\\nIncluding your downloaded files folder in your library makes it easier to view and organise new downloads, and lets you take advantage of advanced Shareaza features such as download verification and automatic upgrading. Placing downloaded files in your library does not necessarily require you to share them: you can choose whether or not to share files independently.\\n\\nWould you like to add your downloaded files folder to your library now?"
+msgstr "您的已下載檔案資料夾 \"%s\" 不在您的收藏裡.\\n\\n將您的已下載檔案資料夾放入收藏允許您更簡單地檢視與整理新的下載; 您還可以利用進階的Shareaza 功能, 像是下載檔驗證與自動更新.  將已下載檔放在您的收藏裡不代表一定要分享他們: 您可以為每個檔案選擇是否要分享.\\n\\n您現在要新增已下載檔資料夾至您的收藏嗎?"
 
 #: string;16396
 msgid "Your downloads folder has been added to your library. Would you like to share it too?"
 msgstr "您的下載資料夾已經加入至您的收藏. 您也要分享它嗎?"
 
 #: string;16397
-msgid ""
-"Are you sure you want to delete the %i selected album folder(s) ?\\n"
-"\\n"
-"Note that this action does not delete the files within the album folders, only the folders themselves."
-msgstr ""
-"您確定要刪除 %i 選擇的專輯資料夾嗎?\\n"
-"\\n"
-"請留意這個動作不會刪除專輯資料夾內的檔案, 只會刪除資料夾本身."
+msgid "Are you sure you want to delete the %i selected album folder(s) ?\\n\\nNote that this action does not delete the files within the album folders, only the folders themselves."
+msgstr "您確定要刪除 %i 選擇的專輯資料夾嗎?\\n\\n請留意這個動作不會刪除專輯資料夾內的檔案, 只會刪除資料夾本身."
 
 #: string;16398
-msgid ""
-"Shareaza could not rename:\\n"
-"\\n"
-"%s\\n"
-"to\\n"
-"%s"
-msgstr ""
-"Shareaza 無法重新命名檔案 \\n"
-"\\n"
-"%s\\n"
-"to\\n"
-"%s"
+msgid "Shareaza could not rename:\\n\\n%s\\nto\\n%s"
+msgstr "Shareaza 無法重新命名檔案 \\n\\n%s\\nto\\n%s"
 
 #: string;16399
-msgid ""
-"Shareaza could not delete the file:\\n"
-"\\n"
-"%s"
-msgstr ""
-"Shareaza 無法刪除檔案 \\n"
-"\\n"
-"%s"
+msgid "Shareaza could not delete the file:\\n\\n%s"
+msgstr "Shareaza 無法刪除檔案 \\n\\n%s"
 
 #: string;16400
-msgid ""
-"Target file exists:\\n"
-"\\n"
-"%s\\n"
-"\\n"
-"Would you like to overwrite it?"
-msgstr ""
-"目標檔案已經存在:\\n"
-"\\n"
-"%s\\n"
-"\\n"
-".您要覆寫它嗎?"
+msgid "Target file exists:\\n\\n%s\\n\\nWould you like to overwrite it?"
+msgstr "目標檔案已經存在:\\n\\n%s\\n\\n.您要覆寫它嗎?"
 
 #: string;16401
 msgid "Show All File Types"
 msgstr "顯示所有的檔案類型"
 
 #: string;16402
-msgid ""
-"Shareaza received a collection file:\\n"
-"\\n"
-"\"%s\"\\n"
-"\\n"
-"This file does not appear to be a valid collection file."
-msgstr ""
-"Shareaza 接收到組檔:\\n"
-"\\n"
-"\"%s\"\\n"
-"\\n"
-"這個檔案看起來不是有效的組檔."
+msgid "Shareaza received a collection file:\\n\\n\"%s\"\\n\\nThis file does not appear to be a valid collection file."
+msgstr "Shareaza 接收到組檔:\\n\\n\"%s\"\\n\\n這個檔案看起來不是有效的組檔."
 
 #: string;16403
 msgid "Shareaza has added the collection file \"%s\" to your library."
@@ -5757,29 +5802,9 @@ msgstr "Shareaza 已加入組檔 \"%s\" 至您的收藏."
 msgid "Shareaza was unable to install the collection file \"%s\" by copying it to the folder \"%s\"."
 msgstr "Shareaza 無法經由複製到資料夾 \"%s\"以安裝組檔 \"%s\"."
 
-#: string;16405
-msgid ""
-"Would you like to download this file?\\n"
-"\\n"
-"\"%s\"\\n"
-"\\n"
-"Choose Cancel to stop any further prompts."
-msgstr ""
-"您要下載這個檔案嗎?\\n"
-"\\n"
-"\"%s\"\\n"
-"\\n"
-"選擇取消以停止進一步的提示."
-
 #: string;16406
-msgid ""
-"Would you like to download all files in this collection?\\n"
-"\\n"
-"Choose Cancel to stop any further prompts."
-msgstr ""
-"您要下載這個組檔裡所有的檔案嗎?\\n"
-"\\n"
-"選擇取消以停止進一步的提示."
+msgid "Would you like to download all files in this collection?\\n\\nChoose Cancel to stop any further prompts."
+msgstr "您要下載這個組檔裡所有的檔案嗎?\\n\\n選擇取消以停止進一步的提示."
 
 #: string;16407
 msgid "Would you like to prevent this collection from prompting you to download anything else?"
@@ -5794,26 +5819,12 @@ msgid "Export &URIs..."
 msgstr "匯出 &URIs..."
 
 #: string;16410
-msgid ""
-"A subfolder of the selected folder \"%s\" is already part of your library.\\n"
-"Adding this folder will cause re-hashing of some files.\\n"
-"\\n"
-"Do you want to continue ?"
-msgstr ""
-"選擇的資料夾的次資料夾 \"%s\" 已經是您的收藏的一部份了.\\n"
-"新增這個資料夾會引起某些檔案被重新切細.\\n"
-"\\n"
-"您要繼續嗎?"
+msgid "A subfolder of the selected folder \"%s\" is already part of your library.\\nAdding this folder will cause re-hashing of some files.\\n\\nDo you want to continue ?"
+msgstr "選擇的資料夾的次資料夾 \"%s\" 已經是您的收藏的一部份了.\\n新增這個資料夾會引起某些檔案被重新切細.\\n\\n您要繼續嗎?"
 
 #: string;16411
-msgid ""
-"Unable to move the file %s. The file may be in use by another application.\\n"
-"\\n"
-"Do you wish to try to copy this file instead?"
-msgstr ""
-"無法移動檔案 %s. 另一個程式可能在使用它.\\n"
-"\\n"
-"您要以複製這個檔案的方式替代嗎?"
+msgid "Unable to move the file %s. The file may be in use by another application.\\n\\nDo you wish to try to copy this file instead?"
+msgstr "無法移動檔案 %s. 另一個程式可能在使用它.\\n\\n您要以複製這個檔案的方式替代嗎?"
 
 #: string;16412
 msgid "Ghost File"
@@ -6040,42 +6051,20 @@ msgid "You have not specified any folders to share. Are you sure?"
 msgstr "您還沒有具體指定任何要分享的資料夾. 您確定要這樣做嗎?"
 
 #: string;16803
-msgid ""
-"The folder you are sharing is already shared as part of another shared folder:\\n"
-"\\n"
-"%s"
-msgstr ""
-"您在分享的資料夾已經是另一個分享資料夾的一部份:\\n"
-"\\n"
-"%s"
+msgid "The folder you are sharing is already shared as part of another shared folder:\\n\\n%s"
+msgstr "您在分享的資料夾已經是另一個分享資料夾的一部份:\\n\\n%s"
 
 #: string;16804
 msgid "You haven't entered a screen name in your user profile."
 msgstr "您還沒有在您的個人檔案裡輸入一個代號."
 
 #: string;16805
-msgid ""
-"You haven't entered your location in your user profile.\\n"
-"\\n"
-"It's a good idea to enter your location so that other users can see which country you are from. Note that entering a location does not reveal any compromising information.\\n"
-"\\n"
-"Are you sure you want to continue without entering your location?"
-msgstr ""
-"您還沒有在你的個人檔案裡輸入地點.\\n"
-"\\n"
-"輸入地點是個好點子, 因為其他人可得知你來自於哪個國家. 輸入地點並不會洩露任何資料.\\n"
-"\\n"
-"您確定要繼續下一步而不輸入地點嗎?"
+msgid "You haven't entered your location in your user profile.\\n\\nIt's a good idea to enter your location so that other users can see which country you are from. Note that entering a location does not reveal any compromising information.\\n\\nAre you sure you want to continue without entering your location?"
+msgstr "您還沒有在你的個人檔案裡輸入地點.\\n\\n輸入地點是個好點子, 因為其他人可得知你來自於哪個國家. 輸入地點並不會洩露任何資料.\\n\\n您確定要繼續下一步而不輸入地點嗎?"
 
 #: string;16806
-msgid ""
-"Shareaza was unable to set up port-forwarding on your NAT router or firewall.\\n"
-"\\n"
-"Please configure your network to forward TCP and UDP ports %i to your local PC."
-msgstr ""
-"您已經示意要自行設定防火牆或是NAT 路由器的連接埠轉送(Port-Forwarding).\\n"
-"\\n"
-"請設定您的網路以轉送TCP 與 UDP 連接埠到 %i 您的本機電腦."
+msgid "Shareaza was unable to set up port-forwarding on your NAT router or firewall.\\n\\nPlease configure your network to forward TCP and UDP ports %i to your local PC."
+msgstr "您已經示意要自行設定防火牆或是NAT 路由器的連接埠轉送(Port-Forwarding).\\n\\n請設定您的網路以轉送TCP 與 UDP 連接埠到 %i 您的本機電腦."
 
 #: string;16807
 msgid "Please type the bandwidth limit you wish to set in the form \"123 kb/s\" for kilobits per second, or \"123 KB/s\" for kilobytes per second."
@@ -6111,26 +6100,16 @@ msgid "Please wait: Updating eDonkey server list..."
 msgstr ""
 
 #: string;16815
-msgid ""
-"UPnP Device Host Service is not running. This service is required to perform the setup.\\n"
-"You need to set the startup type of the service to automatic."
+msgid "UPnP Device Host Service is not running. This service is required to perform the setup.\\nYou need to set the startup type of the service to automatic."
 msgstr ""
 
 #: string;16816
-msgid ""
-"The eDonkey network uses large queues with long wait times. By limiting the maximum queue position you will accept so strictly, you may have trouble getting downloads to begin.\\n"
-"Are you sure you want to limit what queue positions you will accept?"
-msgstr ""
-"eDonkey 網路實施漫長的排隊長度與很長的等待時間. 如果您限制您能接受的排隊隊伍的長度, 您可能無法開始下載.\\n"
-"您確定要限制您能夠接受的排隊隊伍的長度嗎?"
+msgid "The eDonkey network uses large queues with long wait times. By limiting the maximum queue position you will accept so strictly, you may have trouble getting downloads to begin.\\nAre you sure you want to limit what queue positions you will accept?"
+msgstr "eDonkey 網路實施漫長的排隊長度與很長的等待時間. 如果您限制您能接受的排隊隊伍的長度, 您可能無法開始下載.\\n您確定要限制您能夠接受的排隊隊伍的長度嗎?"
 
 #: string;16817
-msgid ""
-"Windows doesn't support paths longer than 256 characters.\\n"
-"Please select a folder with a shorter path."
-msgstr ""
-"視窗系統不支援大於256 個字母的檔案路徑.\\n"
-"請選擇檔案路徑較小的資料夾."
+msgid "Windows doesn't support paths longer than 256 characters.\\nPlease select a folder with a shorter path."
+msgstr "視窗系統不支援大於256 個字母的檔案路徑.\\n請選擇檔案路徑較小的資料夾."
 
 #: string;16818
 msgid "The complete and incomplete folders should not be the same"
@@ -6361,14 +6340,8 @@ msgid "Cannot send message, a connection has not been established yet."
 msgstr "無法送出訊息, 連線尚未建立."
 
 #: string;17042
-msgid ""
-"You have not yet filled in your user profile. You must provide a profile before you can chat with other users.\\n"
-"\\n"
-"Would you like to fill in your profile now?"
-msgstr ""
-"您還沒有輸入個人檔案的資料. 您必須提供個人檔案才能與其他人聊天.\\n"
-"\\n"
-"您現在要輸入個人檔案嗎?"
+msgid "You have not yet filled in your user profile. You must provide a profile before you can chat with other users.\\n\\nWould you like to fill in your profile now?"
+msgstr "您還沒有輸入個人檔案的資料. 您必須提供個人檔案才能與其他人聊天.\\n\\n您現在要輸入個人檔案嗎?"
 
 #: string;17043
 msgid "Granted upload priority to host %s."
@@ -6687,14 +6660,8 @@ msgid "Established BitTorrent coupling with %s, handshaking..."
 msgstr "已建立與 %s 的BitTorrent 耦合, 信號交換中..."
 
 #: string;17488
-msgid ""
-"You have changed the tracker URL for this torrent. Are you sure you want to save this change?\\n"
-"\\n"
-"An invalid tracker URL may prevent further downloading."
-msgstr ""
-"您已經更改了這個 torrent 的伺服器(Tracker) 的URL. 您確定要儲存這個更動嗎?\\n"
-"\\n"
-"An 無效的伺服器(Tracker) URL 可能妨礙下載其餘的部分."
+msgid "You have changed the tracker URL for this torrent. Are you sure you want to save this change?\\n\\nAn invalid tracker URL may prevent further downloading."
+msgstr "您已經更改了這個 torrent 的伺服器(Tracker) 的URL. 您確定要儲存這個更動嗎?\\n\\nAn 無效的伺服器(Tracker) URL 可能妨礙下載其餘的部分."
 
 #: string;17489
 msgid "BitTorrent coupling with %s is extended protocol, identified \"%s\"."
@@ -6869,18 +6836,14 @@ msgid "of (e.g. 1 of 10)"
 msgstr "之"
 
 #: string;20003
-msgid ""
-"Changing interface direction requires restart. \\n"
-"You will need to start Shareaza manually. Exit now?"
-msgstr ""
-"改變介面顯示方向需要重新啟動 Shareaza. \\n"
-"您必須要手動啟動. 現在要離開嗎?"
+msgid "Changing interface direction requires restart. \\nYou will need to start Shareaza manually. Exit now?"
+msgstr "改變介面顯示方向需要重新啟動 Shareaza. \\n您必須要手動啟動. 現在要離開嗎?"
 
 #: string;20005
 msgid "No"
 msgstr "不行"
 
-#: string;20006 cdonkeyimportdlg;control;3
+#: string;20006 cdonkeyimportdlg;control;2
 msgid "Yes"
 msgstr "可以"
 
@@ -6908,7 +6871,7 @@ msgstr "&前进"
 msgid "Finish"
 msgstr ""
 
-#: string;20013 cfolderpropertiesdlg;control;5
+#: string;20013 cscheduletaskdlg;control;14 cfolderpropertiesdlg;control;5
 msgid "All"
 msgstr "所有的"
 
@@ -7040,23 +7003,23 @@ msgstr "Q"
 msgid "sources (e.g. 3/10 sources)"
 msgstr ""
 
-#: string;20200
+#: string;20200 cscheduletaskdlg;control;7
 msgid "Sunday"
 msgstr "星期日"
 
-#: string;20201
+#: string;20201 cscheduletaskdlg;control;8
 msgid "Monday"
 msgstr "星期一"
 
-#: string;20202
+#: string;20202 cscheduletaskdlg;control;9
 msgid "Tuesday"
 msgstr "星期二"
 
-#: string;20203
+#: string;20203 cscheduletaskdlg;control;10
 msgid "Wednesday"
 msgstr "星期三"
 
-#: string;20204
+#: string;20204 cscheduletaskdlg;control;11
 msgid "Thursday"
 msgstr "星期四"
 
@@ -7064,7 +7027,7 @@ msgstr "星期四"
 msgid "Friday"
 msgstr "星期五"
 
-#: string;20206
+#: string;20206 cscheduletaskdlg;control;13
 msgid "Saturday"
 msgstr "星期六"
 
@@ -7128,33 +7091,34 @@ msgstr ""
 msgid "Rating"
 msgstr "評分"
 
-#: string;20237 csettingsheet;control;2 cqueuepropertiesdlg;control;37
-#: cprofilemanagerdlg;control;2 csavefilterasdlg;control;2
-#: cdiscoveryservicedlg;control;5 cfilecopydlg;control;4
-#: cfolderpropertiesdlg;control;7 cgraphlistdlg;control;16
-#: cgraphitemdlg;control;1 cschemacolumnsdlg;control;3
-#: csecureruledlg;control;33 csharemanagerdlg;control;6 cpromotedlg;control;8
-#: cexistingfiledlg;control;9 cclosemodedlg;control;6
-#: cdonkeyserversdlg;control;5 cdownloadgroupdlg;control;1
-#: cmediavisdlg;control;6 cdownloadreviewdlg;control;2
-#: cdecodemetadatadlg;control;8 circinputdlg;control;2
+#: string;20237 csettingsheet;control;2 cscheduletaskdlg;control;1
+#: cqueuepropertiesdlg;control;37 cprofilemanagerdlg;control;2
+#: csavefilterasdlg;control;2 cdiscoveryservicedlg;control;5
+#: cfilecopydlg;control;4 cfolderpropertiesdlg;control;7
+#: cgraphlistdlg;control;16 cgraphitemdlg;control;1
+#: cschemacolumnsdlg;control;3 csecureruledlg;control;33
+#: csharemanagerdlg;control;5 cpromotedlg;control;7 cexistingfiledlg;control;8
+#: cclosemodedlg;control;5 cdonkeyserversdlg;control;4
+#: cdownloadgroupdlg;control;1 cmediavisdlg;control;5
+#: cdownloadreviewdlg;control;1 cdecodemetadatadlg;control;8
+#: circinputdlg;control;2
 msgid "OK"
 msgstr "確定"
 
-#: string;20238 csettingsheet;control;3 cqueuepropertiesdlg;control;38
-#: cprofilemanagerdlg;control;3 cconnecttodlg;control;8 cdownloaddlg;control;6
-#: cnewsearchdlg;control;4 cfiltersearchdlg;control;30
-#: csavefilterasdlg;control;3 cdiscoveryservicedlg;control;6
-#: cfilecopydlg;control;5 cfolderpropertiesdlg;control;8
-#: cgraphlistdlg;control;17 cgraphitemdlg;control;2
-#: cschemacolumnsdlg;control;4 csecureruledlg;control;34
-#: csharemanagerdlg;control;7 curlcopydlg;control;7 curlexportdlg;control;11
-#: curlactiondlg;control;12 cbitzidownloaddlg;control;4
-#: cfilepreviewdlg;control;6 cexistingfiledlg;control;10
-#: cclosemodedlg;control;7 cdonkeyserversdlg;control;6
-#: cdeletefiledlg;control;5 ctorrentseeddlg;control;5
-#: cdownloadgroupdlg;control;2 cmediavisdlg;control;7
-#: cdecodemetadatadlg;control;9 circinputdlg;control;3
+#: string;20238 csettingsheet;control;3 cscheduletaskdlg;control;2
+#: cqueuepropertiesdlg;control;38 cprofilemanagerdlg;control;3
+#: cconnecttodlg;control;8 cdownloaddlg;control;5 cnewsearchdlg;control;4
+#: cfiltersearchdlg;control;30 csavefilterasdlg;control;3
+#: cdiscoveryservicedlg;control;6 cfilecopydlg;control;5
+#: cfolderpropertiesdlg;control;8 cgraphlistdlg;control;17
+#: cgraphitemdlg;control;2 cschemacolumnsdlg;control;4
+#: csecureruledlg;control;34 csharemanagerdlg;control;6 curlcopydlg;control;6
+#: curlexportdlg;control;10 curlactiondlg;control;11
+#: cbitzidownloaddlg;control;4 cfilepreviewdlg;control;6
+#: cexistingfiledlg;control;9 cclosemodedlg;control;6
+#: cdonkeyserversdlg;control;5 cdeletefiledlg;control;5
+#: ctorrentseeddlg;control;4 cdownloadgroupdlg;control;2
+#: cmediavisdlg;control;6 cdecodemetadatadlg;control;9 circinputdlg;control;3
 msgid "Cancel"
 msgstr "取消"
 
@@ -7180,6 +7144,24 @@ msgstr ""
 
 #: string;20244
 msgid "&Remember my selection next time"
+msgstr ""
+
+#: string;20245
+#, fuzzy
+msgid "New Folder"
+msgstr "新增資料夾..."
+
+#: string;32825
+msgid "Open my folder of completed Downloads"
+msgstr ""
+
+#: string;32773
+#, fuzzy
+msgid "Check for new version"
+msgstr "最新消息"
+
+#: string;61215
+msgid "Activate this window"
 msgstr ""
 
 #: csettingsheet;control;4 cprofilemanagerdlg;control;4
@@ -7275,8 +7257,7 @@ msgid "Normal|Minimise to Tray"
 msgstr "標準|最小化至系統列"
 
 #: clibrarysettingspage;control;1 cmediasettingspage;control;1
-#: cuploadssettingspage;control;1 cschedulersettingspage;control;1
-#: csecureruledlg;control;22
+#: cuploadssettingspage;control;1 csecureruledlg;control;22
 msgid "_Options:"
 msgstr "選項:"
 
@@ -7706,73 +7687,79 @@ msgstr "選擇一個使用者名稱:"
 msgid "Choose a Password:"
 msgstr "選擇一個密碼:"
 
-#: dialog;cschedulersettingspage
-msgid "Scheduler"
+#: dialog;cscheduletaskdlg
+#, fuzzy
+msgid "Schedule Item"
 msgstr "預定表"
 
-#: cschedulersettingspage;control;2
-msgid " _Enable scheduler"
-msgstr "啟用預定表"
+#: cscheduletaskdlg;control;3
+msgid "Only once"
+msgstr ""
 
-#: cschedulersettingspage;control;5
-msgid "_Connect to only G2 when limited"
-msgstr "只要在受到限制時才連線至 G2"
+#: cscheduletaskdlg;control;4
+msgid "On specific day(s) of week"
+msgstr ""
 
-#: cschedulersettingspage;control;6
-msgid "Key:"
-msgstr "Key:"
+#: cscheduletaskdlg;control;12
+#, fuzzy
+msgid " Friday"
+msgstr "星期五"
 
-#: cschedulersettingspage;control;7
-msgid "Sun"
-msgstr "日"
+#: cscheduletaskdlg;control;22
+msgid " _Toggle bandwidth independently"
+msgstr ""
 
-#: cschedulersettingspage;control;8
-msgid "Mon"
-msgstr "一"
+#: cscheduletaskdlg;control;23
+#, fuzzy
+msgid " _Limit network to Gnutella2"
+msgstr "連線至 Gnutella2"
 
-#: cschedulersettingspage;control;9
-msgid "Tue"
-msgstr "二"
+#: cscheduletaskdlg;control;25
+msgid "Make this event active"
+msgstr ""
 
-#: cschedulersettingspage;control;10
-msgid "Wed"
-msgstr "三"
+#: cscheduletaskdlg;control;26
+#, fuzzy
+msgid "Please select a date:"
+msgstr "請選擇使用者介面:"
 
-#: cschedulersettingspage;control;11
-msgid "Thu"
-msgstr "四"
+#: cscheduletaskdlg;control;27
+#, fuzzy
+msgid "Please select a time:"
+msgstr "請選擇使用者介面:"
 
-#: cschedulersettingspage;control;12
-msgid "Fri"
-msgstr "五"
+#: cscheduletaskdlg;control;28
+#, fuzzy
+msgid "Select the event type:"
+msgstr "選擇 preset:"
 
-#: cschedulersettingspage;control;13
-msgid "Sat"
-msgstr "六"
+#: cscheduletaskdlg;control;29
+#, fuzzy
+msgid "Description: (optional)"
+msgstr "敘述:"
 
-#: cschedulersettingspage;control;14
-msgid "Do not connect"
-msgstr "不要連線"
-
-#: cschedulersettingspage;control;15
-msgid "Limited connection"
-msgstr "限制的連線"
-
-#: cschedulersettingspage;control;16
-msgid "Connect at full speed"
-msgstr "以全速連線"
-
-#: cschedulersettingspage;control;17
-msgid "% of _bandwidth when limited"
+#: cscheduletaskdlg;control;30
+#, fuzzy
+msgid "% of _bandwidth under limit"
 msgstr "在限制之下 幾 % 的頻寬"
 
-#: cschedulersettingspage;control;19
-msgid "Help"
-msgstr "說明"
+#: cscheduletaskdlg;control;31
+#, fuzzy
+msgid "% of _download under limit"
+msgstr "在限制之下 幾 % 的頻寬"
 
-#: cschedulersettingspage;control;20
-msgid "The scheduler is designed to allow you to set times when Shareaza will connect and download files. {n}{n}{n}Note: If you have Shareaza open while the scheduler is active, you may see it changing settings- This is normal!"
-msgstr "您可以使用預定表設定Shareaza什麼時候應該連線下載檔案. {n}{n}{n}注意: 在 Shareaza 運作時, 如果預定表正在執行它的工作, 您會發覺設定被更改. 此為正常現象!"
+#: cscheduletaskdlg;control;32
+#, fuzzy
+msgid "% of _upload under limit"
+msgstr "在限制之下 幾 % 的頻寬"
+
+#: cscheduletaskdlg;control;33
+msgid "Days Of Week"
+msgstr ""
+
+#: cscheduletaskdlg;control;34
+msgid "Run this event"
+msgstr ""
 
 #: dialog;cnetworkssettingspage
 msgid "Networks"
@@ -8077,7 +8064,7 @@ msgstr "外掛"
 msgid "Plugin Information:"
 msgstr "外掛資訊:"
 
-#: cpluginssettingspage;control;7 cmediavisdlg;control;5
+#: cpluginssettingspage;control;7 cmediavisdlg;control;4
 msgid "_Setup..."
 msgstr "設定..."
 
@@ -8255,7 +8242,7 @@ msgid "Please indicate which folders, if any, you wish to share.  Simply click t
 msgstr "如果您想要分享您的資料夾(如果有的話), 請指示. 按下新增鈕即可新增資料夾."
 
 #: cwizardsharepage;control;5 cgraphlistdlg;control;2
-#: csharemanagerdlg;control;4
+#: csharemanagerdlg;control;3
 msgid "_Add..."
 msgstr "新增..."
 
@@ -8363,11 +8350,11 @@ msgstr " Gnutella2 網路是 Shareaza 首次推出的網路, 比其他P2P 網路
 msgid "Import eDonkey Downloads"
 msgstr "匯入eDonkey2000 下載檔"
 
-#: cdonkeyimportdlg;control;2
+#: cdonkeyimportdlg;control;1
 msgid "Shareaza has detected that you have another eDonkey program installed on your computer.  Would you like to import any unfinished downloads into Shareaza?"
 msgstr "Shareaza 偵測到您的電腦已經安裝了另一件 eDonkey2000 的程式. 您要將任何尚未下載完成的檔案匯入 Shareaza 嗎??"
 
-#: cdonkeyimportdlg;control;4
+#: cdonkeyimportdlg;control;3
 msgid "No|Cancel"
 msgstr "不要|取消"
 
@@ -8588,11 +8575,13 @@ msgid "Select Language"
 msgstr "選擇語言"
 
 #: dialog;cconnecttodlg
-msgid "Connect To|Browse Host"
+#, fuzzy
+msgid "Connect To|Browse User|Chat to User"
 msgstr "連線至|瀏覽主機"
 
 #: cconnecttodlg;control;1
-msgid "Initiate a new connection to host or server:|Browse this host:"
+#, fuzzy
+msgid "Initiate a new connection to host or server:|Browse this user:|Chat to this user:"
 msgstr "起始新連線至主機或伺服器:|瀏覽這個主機:"
 
 #: cconnecttodlg;control;4
@@ -8611,19 +8600,19 @@ msgstr "封鎖超級用戶"
 msgid "Download File or Torrent"
 msgstr "下載檔案或 Torrent"
 
-#: cdownloaddlg;control;3
+#: cdownloaddlg;control;2
 msgid "Downloading any file with Shareaza is easy.  Simply type or paste the URL or URI describing the file into the box below and press Enter."
 msgstr "使用 Shareaza 下載檔案很簡單. 只要在下方的框框鍵入或是貼上 指向檔案的 URL/URI ,然後按 Enter."
 
-#: cdownloaddlg;control;7
+#: cdownloaddlg;control;6
 msgid "Shareaza can download files from the web (HTTP), and automatically search and download P2P links (Magnet, Gnutella, eDonkey, mP2P)."
 msgstr "Shareaza 可以由網際網路(HTTP)下載檔案, 以及自動搜尋與下載 P2P 連結 (Magnet, Gnutella, eDonkey2000, mP2P)."
 
-#: cdownloaddlg;control;8
+#: cdownloaddlg;control;7
 msgid "Shareaza can also download BitTorrent files.  A torrent can be described by a .torrent file, or a HTTP link to the .torrent file.  To download a torrent HTTP link, paste it in the box above.  If you already have a .torrent file, click Open Torrent:"
 msgstr "Shareaza 也可以下載 BitTorrent 檔案.  xyz.torrent 檔 敘述了一個 torrent 的樣子;  或是連接到 .torrent 檔的 HTTP 超連結.  想要下載一個 torrent HTTP 連結, 就將它貼在上方的框框.  如果您手上已經有一個 .torrent 檔, 點選 開啟 Torrent:"
 
-#: cdownloaddlg;control;9
+#: cdownloaddlg;control;8
 msgid "Open _Torrent..."
 msgstr "開啟 Torrent..."
 
@@ -9003,7 +8992,7 @@ msgstr "分"
 msgid "Shared Folder Manager"
 msgstr "分享的資料夾管理員"
 
-#: csharemanagerdlg;control;2
+#: csharemanagerdlg;control;1
 msgid "This is a list of folders in your library.  You can add and remove folders using the buttons on the left.  When you add a new folder it is initially shared with other users, however you can unshare it from the Shareaza library if you wish."
 msgstr "這是您的收藏的資料夾清單. 您可以使用左方按鈕新增或移除資料夾 .  任何一個新增的資料夾將預設為開放給其他使用者分享, 不過您可以在 Shareaza 收藏停止分享."
 
@@ -9011,11 +9000,11 @@ msgstr "這是您的收藏的資料夾清單. 您可以使用左方按鈕新增�
 msgid "Copy URI"
 msgstr "複製 URI"
 
-#: curlcopydlg;control;2
+#: curlcopydlg;control;1
 msgid "You can copy a URI for the selected item in a variety of different formats.  Please choose the format you wish to use by clicking one of the URIs below:"
 msgstr "您可以為選擇的項目使用不同的格式複製 URL.  請點選以下其中一個 URI 決定您要使用的格式:"
 
-#: curlcopydlg;control;6
+#: curlcopydlg;control;5
 msgid "Include _myself as a fixed source in the URL"
 msgstr "請把我當做這個URL的固定來源之一"
 
@@ -9023,27 +9012,27 @@ msgstr "請把我當做這個URL的固定來源之一"
 msgid "Export URIs"
 msgstr "匯出 URI"
 
-#: curlexportdlg;control;2
+#: curlexportdlg;control;1
 msgid "You have selected %lu files to export as Shareaza-powered URI references.  Please select the format for the URIs, and click Save:"
 msgstr "您已經選擇將 %lu 檔案匯出至 Shareaza 驅動的 URI references.  請選擇 URI 的格式, 然後按下儲存:"
 
-#: curlexportdlg;control;4
+#: curlexportdlg;control;3
 msgid "Insert Token:"
 msgstr "放入 Token:"
 
-#: curlexportdlg;control;5
+#: curlexportdlg;control;4
 msgid "Tiger Root|SHA1|MD5|ED2K (CMD4)|BitTorrent|Filename|Filename (URI)|Base Filename|File Extension|File Size|File Size (bytes)|Folder Path|Local Host|Local Port|Link|Link (URI)"
 msgstr "Tiger Root|SHA1|MD5|ED2K (CMD4)|檔案名稱|檔案名稱 (URI)|Base Filename|File Extension|檔案大小|檔案大小 (位元組)|資料夾路徑|本地主機|本地連接埠"
 
-#: curlexportdlg;control;6
+#: curlexportdlg;control;5
 msgid "Select preset:"
 msgstr "選擇 preset:"
 
-#: curlexportdlg;control;7
+#: curlexportdlg;control;6
 msgid "Magnet|eDonkey|Magnet HTML|eDonkey HTML"
 msgstr ""
 
-#: curlexportdlg;control;9
+#: curlexportdlg;control;8
 msgid "_Save..."
 msgstr "儲存..."
 
@@ -9051,39 +9040,39 @@ msgstr "儲存..."
 msgid "Shareaza URI Manager"
 msgstr "Shareaza URI 管理員"
 
-#: curlactiondlg;control;2
+#: curlactiondlg;control;1
 msgid "You have clicked on a Shareaza-powered URI which links to the following content on the network:"
 msgstr "您點選了由 Shareaza 驅動的 URI, 讓您連結到以下的這個網路上的內容:"
 
-#: curlactiondlg;control;3
+#: curlactiondlg;control;2
 msgid "You have clicked on a Shareaza-powered URL which will connect you to the following host or server:"
 msgstr "您點選了由 Shareaza 驅動的 URL, 將讓您連線至以下的主機或伺服器:"
 
-#: curlactiondlg;control;4
+#: curlactiondlg;control;3
 msgid "You have clicked on a Shareaza-powered URI which will allow you to browse the shared files available on the following host:"
 msgstr "您點選了由 Shareaza 驅動的 URL, 將讓你瀏覽以下的主機的分享檔案:"
 
-#: curlactiondlg;control;9
+#: curlactiondlg;control;8
 msgid "Please select the action you would like Shareaza to take:"
 msgstr "請選擇您要 Shareaza 進行的動作:"
 
-#: curlactiondlg;control;10
+#: curlactiondlg;control;9
 msgid "_Download Now"
 msgstr "立刻下載"
 
-#: curlactiondlg;control;11
+#: curlactiondlg;control;10
 msgid "_Search for File"
 msgstr "尋找檔案"
 
-#: curlactiondlg;control;13
+#: curlactiondlg;control;12
 msgid "_Remember my selection next time"
 msgstr "下次記住我的選擇"
 
-#: curlactiondlg;control;14
+#: curlactiondlg;control;13
 msgid "Open a download _monitor window"
 msgstr "開啟一個下載監控視窗"
 
-#: curlactiondlg;control;15
+#: curlactiondlg;control;14
 msgid "You have clicked on a Shareaza-powered URI which will add the following Discovery Service to your Discovery Services cache."
 msgstr "您點選了由 Shareaza 驅動的 URI, 將會新增以下的揭示服務至您的揭示服務快取."
 
@@ -9115,27 +9104,27 @@ msgstr "(正在複製已下載的區塊(chunk) 至新的預覽檔)"
 msgid "Shareaza Respects its Users"
 msgstr "Shareaza 尊重使用者"
 
-#: cwarningsdlg;control;2
+#: cwarningsdlg;control;1
 msgid "Did you know Shareaza is a 100% free product?"
 msgstr "您知道 Shareaza 是完全免費的產品嗎?"
 
-#: cwarningsdlg;control;3
+#: cwarningsdlg;control;2
 msgid "Shareaza does NOT contain ANY \"spyware\", \"adware\" or other bundled software. It does NOT display any advertisements or \"popups\", ever.{n}{n}If you ever see advertising or \"popups\" while using Shareaza, be assured that they are NOT coming from this program."
 msgstr "Shareaza 沒有包含任何 \"間碟軟體\", \"廣告軟體\" 或是其他 bundled 軟體. It does NOT display any advertisements or \"popups\", ever.{n}{n}If you ever see advertising or \"popups\" while using Shareaza, be assured that they are NOT coming from this program."
 
-#: cwarningsdlg;control;4
+#: cwarningsdlg;control;3
 msgid "Unfortunately a lot of other software does come with undesirable adware or spyware, so if you see something suspicious you may wish to check your PC with an advertising or spyware removal program."
 msgstr "不幸地, 很多軟體包含討人厭的廣告軟體或是間諜軟體; 因此, 如果您查覺任何可疑的活動, 您可能想要使用反廣告/反間諜軟體."
 
-#: cwarningsdlg;control;5
+#: cwarningsdlg;control;4
 msgid "You should not have had to pay any money to obtain Shareaza. Shareaza can be freely downloaded by anyone from http://shareaza.sourceforge.net/. If you paid someone money for Shareaza, you should demand a full refund immediately."
 msgstr "您不應該付錢取得 Shareaza. 任何人都可以從 http://shareaza.sourceforge.net/ 免費下載. 如果您付費取得Shareaza, 請立刻要求全額退費."
 
-#: cwarningsdlg;control;6
+#: cwarningsdlg;control;5
 msgid "Shareaza respects its users!"
 msgstr "Shareaza 尊重它的使用者!"
 
-#: cwarningsdlg;control;7 cpromotedlg;control;7
+#: cwarningsdlg;control;6 cpromotedlg;control;6
 msgid "http://shareaza.sourceforge.net/"
 msgstr "http://shareaza.sourceforge.net/"
 
@@ -9143,23 +9132,23 @@ msgstr "http://shareaza.sourceforge.net/"
 msgid "Spread the Word"
 msgstr "散佈消息"
 
-#: cpromotedlg;control;2
+#: cpromotedlg;control;1
 msgid "Help Us Spread the Word"
 msgstr "請幫我們散佈消息"
 
-#: cpromotedlg;control;3
+#: cpromotedlg;control;2
 msgid "We hope you have enjoyed using Shareaza so far. We believe it is the best file sharing application around."
 msgstr "我們希望各位享受使用 Shareaza 的樂趣. 我們深信這是目前為止最好的檔案分享軟體."
 
-#: cpromotedlg;control;4
+#: cpromotedlg;control;3
 msgid "Unfortunately, a lot of file sharers don't know what they're missing!"
 msgstr "天不從人願, 眾多檔案分享者不知道他們遺漏了什麼好東西!"
 
-#: cpromotedlg;control;5
+#: cpromotedlg;control;4
 msgid "If you know someone who would like Shareaza, whether they're a new user or someone still putting up with an inferior product, why not let them know there is a better alternative?"
 msgstr "如果你知道某個人可能愛上 Shareaza, 不論是新手或是某個仍舊為了不良的軟體苦惱, 為什麼不讓他們知道有更好的替代品呢?"
 
-#: cpromotedlg;control;6
+#: cpromotedlg;control;5
 msgid "Chances are they'll be grateful you rescued them!"
 msgstr "他們可能感激你幫了他們一個大忙!"
 
@@ -9167,27 +9156,27 @@ msgstr "他們可能感激你幫了他們一個大忙!"
 msgid "Existing File"
 msgstr "現存的檔案"
 
-#: cexistingfiledlg;control;5
+#: cexistingfiledlg;control;4
 msgid "You already have this file in your file library. What would you like to do?"
 msgstr "你的檔案收藏已經有這個檔案了. 您的決定是?"
 
-#: cexistingfiledlg;control;6
+#: cexistingfiledlg;control;5
 msgid "Show me the file in my library"
 msgstr "在我的收藏顯示這個檔案"
 
-#: cexistingfiledlg;control;7
+#: cexistingfiledlg;control;6
 msgid "Download the file again"
 msgstr "再次下載這個檔案"
 
-#: cexistingfiledlg;control;8
+#: cexistingfiledlg;control;7
 msgid "Don't download this file"
 msgstr "不要下載這個檔案"
 
-#: cexistingfiledlg;control;11
+#: cexistingfiledlg;control;10
 msgid "You have downloaded and deleted this file before. What would you like to do?"
 msgstr "您曾經下載過並且刪除這個檔案.  請問你要如何處理?"
 
-#: cexistingfiledlg;control;12
+#: cexistingfiledlg;control;11
 msgid "Warning!!! Duplicate files detected. Some malicious software may infect your Library. Make sure that you downloaded this file or placed it manually. Otherwise, shutdown Shareaza and scan your computer with an antivirus program."
 msgstr "警告！检测到重复文件.一些恶意软件可能感染您的收藏.请确认您是手动下载或存放此文件.否则，请关闭 Shareaza 并用杀毒软件扫描您的电脑."
 
@@ -9195,19 +9184,19 @@ msgstr "警告！检测到重复文件.一些恶意软件可能感染您的收�
 msgid "Close Button"
 msgstr "關閉鈕"
 
-#: cclosemodedlg;control;2
+#: cclosemodedlg;control;1
 msgid "This is the first time you have clicked Shareaza's close button. Please choose what action you would like Shareaza to take when clicking the close button from now on:"
 msgstr "本次是您第一次點選 Shareaza 的關閉鈕. 從現在開始, 請問您點選關閉鈕後, 想要做什麼動作:"
 
-#: cclosemodedlg;control;3
+#: cclosemodedlg;control;2
 msgid "Minimise to the tray area"
 msgstr "最小化至系統列"
 
-#: cclosemodedlg;control;4
+#: cclosemodedlg;control;3
 msgid "Shut down Shareaza immediately"
 msgstr "立刻關閉 Shareaza"
 
-#: cclosemodedlg;control;5
+#: cclosemodedlg;control;4
 msgid "Shut down Shareaza after any downloads and uploads finish"
 msgstr "在上傳與下載完成後關閉 Shareaza"
 
@@ -9215,7 +9204,7 @@ msgstr "在上傳與下載完成後關閉 Shareaza"
 msgid "Download Server.met File"
 msgstr "下載 Server.met 檔"
 
-#: cdonkeyserversdlg;control;2
+#: cdonkeyserversdlg;control;1
 msgid "You can download an eDonkey server.met file from the web to refresh your local list of servers."
 msgstr "您可從網際網路下載 eDonkey2000 server.met 檔以更新您本地的伺服器清單."
 
@@ -9359,15 +9348,15 @@ msgstr ""
 msgid "Open Torrent File"
 msgstr "開啟 Torrent 檔"
 
-#: ctorrentseeddlg;control;2
+#: ctorrentseeddlg;control;1
 msgid "You have opened a BitTorrent torrent file.  Would you like to download its contents, or re-seed it?"
 msgstr "您開啟了一個 BitTorrent 的 torrent 檔. 您要下載它的內容或是重新做種?"
 
-#: ctorrentseeddlg;control;4
+#: ctorrentseeddlg;control;3
 msgid "Seed"
 msgstr "做種"
 
-#: ctorrentseeddlg;control;6
+#: ctorrentseeddlg;control;5
 msgid "To share complete files using BitTorrent they must first be seeded.  Once this process is complete the Torrent will appear as a new item in your download list."
 msgstr "欲使用 BitTorrent 分享完整的檔案, 必須先做種. 完成這個程序後, 在下載清單中, Torrent 將成為新項目."
 
@@ -9455,11 +9444,11 @@ msgstr "任何檔案類型:"
 msgid "Select Visualisation"
 msgstr "選擇視覺效果"
 
-#: cmediavisdlg;control;2
+#: cmediavisdlg;control;1
 msgid "Select an audio visualisation from the list:"
 msgstr "由清單選擇音訊視覺效果:"
 
-#: cmediavisdlg;control;4
+#: cmediavisdlg;control;3
 msgid "Footer Display|Full Size Display|Large Display|Medium Display|Small Display"
 msgstr "腳注顯示|完全顯示|大型顯示|中等顯示|小型顯示"
 
@@ -9467,23 +9456,23 @@ msgstr "腳注顯示|完全顯示|大型顯示|中等顯示|小型顯示"
 msgid "Upgrade Alert"
 msgstr "升級通知"
 
-#: cupgradedlg;control;2
+#: cupgradedlg;control;1
 msgid "A new version of Shareaza is now available. Would you like to upgrade?"
 msgstr "Shareaza 有新版本了. 您要升級嗎?"
 
-#: cupgradedlg;control;3
+#: cupgradedlg;control;2
 msgid "If you select Upgrade Now, Shareaza will add the upgrade to your download queue and automatically begin downloading it."
 msgstr "如果您現在選擇立刻升級, Shareaza 將新增更新檔至您的下載等待隊伍並自動開始下載."
 
-#: cupgradedlg;control;4
+#: cupgradedlg;control;3
 msgid "_Upgrade Now"
 msgstr "立刻升級"
 
-#: cupgradedlg;control;5
+#: cupgradedlg;control;4
 msgid "Don't check for new versions"
 msgstr "不要檢查新版本"
 
-#: cupgradedlg;control;6
+#: cupgradedlg;control;5
 msgid "Don't Upgrade"
 msgstr "不升級"
 
@@ -9534,10 +9523,6 @@ msgstr "已下載檔"
 #: column;progress
 msgid "Progress"
 msgstr "進度"
-
-#: column;speed
-msgid "Speed"
-msgstr "速度"
 
 #: column;status
 msgid "Status"
@@ -9735,3 +9720,59 @@ msgstr "用戶"
 msgid "Comments"
 msgstr "意見"
 
+#~ msgid "_Browse Host..."
+#~ msgstr "瀏覽主機..."
+
+#~ msgid "Scheduler:"
+#~ msgstr "Scheduler:"
+
+#~ msgid "Limit download connections based on a periodic schedule."
+#~ msgstr "Limit download connections based on a periodic schedule."
+
+#~ msgid "Would you like to download this file?\\n\\n\"%s\"\\n\\nChoose Cancel to stop any further prompts."
+#~ msgstr "您要下載這個檔案嗎?\\n\\n\"%s\"\\n\\n選擇取消以停止進一步的提示."
+
+#~ msgid " _Enable scheduler"
+#~ msgstr "啟用預定表"
+
+#~ msgid "_Connect to only G2 when limited"
+#~ msgstr "只要在受到限制時才連線至 G2"
+
+#~ msgid "Key:"
+#~ msgstr "Key:"
+
+#~ msgid "Sun"
+#~ msgstr "日"
+
+#~ msgid "Mon"
+#~ msgstr "一"
+
+#~ msgid "Tue"
+#~ msgstr "二"
+
+#~ msgid "Wed"
+#~ msgstr "三"
+
+#~ msgid "Thu"
+#~ msgstr "四"
+
+#~ msgid "Fri"
+#~ msgstr "五"
+
+#~ msgid "Sat"
+#~ msgstr "六"
+
+#~ msgid "Do not connect"
+#~ msgstr "不要連線"
+
+#~ msgid "Limited connection"
+#~ msgstr "限制的連線"
+
+#~ msgid "Connect at full speed"
+#~ msgstr "以全速連線"
+
+#~ msgid "Help"
+#~ msgstr "說明"
+
+#~ msgid "The scheduler is designed to allow you to set times when Shareaza will connect and download files. {n}{n}{n}Note: If you have Shareaza open while the scheduler is active, you may see it changing settings- This is normal!"
+#~ msgstr "您可以使用預定表設定Shareaza什麼時候應該連線下載檔案. {n}{n}{n}注意: 在 Shareaza 運作時, 如果預定表正在執行它的工作, 您會發覺設定被更改. 此為正常現象!"

@@ -1,7 +1,7 @@
 //
 // DlgSettingsManager.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_DLGSETTINGSMANAGER_H__7E76D5DE_A0EA_4CA6_B05B_8F4470E2CF03__INCLUDED_)
-#define AFX_DLGSETTINGSMANAGER_H__7E76D5DE_A0EA_4CA6_B05B_8F4470E2CF03__INCLUDED_
-
 #pragma once
 
 #include "WndSettingsSheet.h"
@@ -29,47 +26,25 @@
 
 class CSettingsManagerDlg : public CSettingsSheet
 {
-// Construction
+	DECLARE_DYNAMIC(CSettingsManagerDlg)
+
 public:
 	CSettingsManagerDlg(CWnd* pParent = NULL);
 
-// Dialog Data
-public:
-	//{{AFX_DATA(CSettingsManagerDlg)
-	//}}AFX_DATA
-	//{{AFX_VIRTUAL(CSettingsManagerDlg)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);
-	//}}AFX_VIRTUAL
-
-	CBitmap	m_bmHeader;
-
-// Static Run
-public:
 	static BOOL Run(LPCTSTR pszWindow = NULL);
 	static void OnSkinChange(BOOL bSet);
 	static CSettingsManagerDlg* m_pThis;
 
-// Operations
-public:
 	INT_PTR	DoModal(LPCTSTR pszWindow = NULL);
-protected:
-	void			AddPage(CSettingsPage* pPage);
-	void			AddGroup(CSettingsPage* pPage);
-	virtual void	DoPaint(CDC& dc);
 
-// Implementation
 protected:
-	//{{AFX_MSG(CSettingsManagerDlg)
+	void AddPage(CSettingsPage* pPage);
+	void AddGroup(CSettingsPage* pPage);
+
+	virtual void DoDataExchange(CDataExchange* pDX);
 	virtual BOOL OnInitDialog();
-	//}}AFX_MSG
 	virtual void OnOK();
 	virtual void OnApply();
 
 	DECLARE_MESSAGE_MAP()
-
 };
-
-//{{AFX_INSERT_LOCATION}}
-
-#endif // !defined(AFX_DLGSETTINGSMANAGER_H__7E76D5DE_A0EA_4CA6_B05B_8F4470E2CF03__INCLUDED_)

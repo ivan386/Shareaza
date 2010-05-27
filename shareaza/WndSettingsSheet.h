@@ -1,7 +1,7 @@
 //
 // WndSettingsSheet.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -29,12 +29,14 @@ class CSettingsPage;
 
 class CSettingsSheet : public CSkinDialog
 {
-// Construction
+	DECLARE_DYNAMIC(CSettingsSheet)
+
 public:
 	CSettingsSheet(CWnd* pParent = NULL, UINT nCaptionID = 0);
 	virtual ~CSettingsSheet();
 
-	DECLARE_DYNAMIC(CSettingsSheet)
+
+	virtual BOOL SkinMe(LPCTSTR pszSkin = NULL, UINT nIcon = 0, BOOL bLanguage = TRUE);
 
 // Attributes
 protected:
@@ -51,10 +53,9 @@ protected:
 protected:
 	DLGTEMPLATE*	m_pTemplate;
 	CString			m_sCaption;
-	int				m_nLeftMargin;
-	int				m_nTopMargin;
 	int				m_nListWidth;
 	int				m_nListMargin;
+	int				m_nButtonWidth;
 	int				m_nButtonHeight;
 
 // Operations
@@ -74,7 +75,6 @@ public:
 	INT_PTR			DoModal();
 protected:
 	void			BuildTree();
-	void			Layout();
 	BOOL			CreatePage(CSettingsPage* pPage);
 	virtual void	DoPaint(CDC& dc);
 

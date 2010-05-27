@@ -13,6 +13,7 @@
 #define IDC_MEDIA_POSITION              117
 #define IDC_MEDIA_SPEED                 118
 #define IDC_MEDIA_VOLUME                119
+#define IDS_COMMANDLINE                 120
 #define IDB_MENUBAR                     127
 #define IDR_MAINFRAME                   128
 #define IDR_SYSTEMFRAME                 129
@@ -60,7 +61,7 @@
 #define IDS_SKIN_ERROR                  152
 #define IDD_WIZARD_CONNECTION           153
 #define IDS_SKIN_LOAD                   153
-#define IDB_WIZARD                      154
+#define IDB_BANNER                      154
 #define IDD_WIZARD_SHARING              154
 #define IDS_SCHEDULER_REMOVEALL_CONFIRM 154
 #define IDD_WIZARD_FINISHED             155
@@ -1581,7 +1582,7 @@
 #define IDS_GENERAL_TRYAGAIN            20242
 #define IDS_GENERAL_CONTINUE            20243
 #define IDS_INFO_REMEMBER               20244
-#define IDS_NEW_FOLDER					20245
+#define IDS_NEW_FOLDER                  20245
 #define ID_HELP_ABOUT                   32772
 #define ID_HELP_VERSION_CHECK           32773
 #define ID_CHECKMARK                    32774

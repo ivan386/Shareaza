@@ -2,12 +2,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2010-05-19 14:38+0000\n"
+"POT-Creation-Date: 2010-05-27 12:52+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ワン公(DukeDog) and CyberBob\n"
 "Language-Team: Shareaza Development Team\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-Language: 日本語\n"
@@ -52,7 +52,8 @@ msgstr "アプリケーションで日本語を使用したい場合はここを
 msgid "(translation language direction: ltr or rtl)"
 msgstr ""
 
-#: button;id_network_connect button;id_tab_connect button;id_irc_connect button;id_chat_connect string;8069 cconnecttodlg;control;7
+#: button;id_network_connect button;id_tab_connect button;id_irc_connect
+#: button;id_chat_connect string;8069 cconnecttodlg;control;7
 msgid "Connect"
 msgstr "接続"
 
@@ -68,11 +69,13 @@ msgstr "ライブラリ"
 msgid "Media Player"
 msgstr "メディア"
 
-#: button;id_tab_search string;window_search string;window_searchpad string;8144 string;8156 cnewsearchdlg;control;3 column;search
+#: button;id_tab_search string;window_search string;window_searchpad
+#: string;8144 string;8156 cnewsearchdlg;control;3 column;search
 msgid "Search"
 msgstr "検索"
 
-#: button;id_tab_transfers string;window_downloads dialog;cdownloadssettingspage
+#: button;id_tab_transfers string;window_downloads
+#: dialog;cdownloadssettingspage
 msgid "Downloads"
 msgstr "転送"
 
@@ -88,7 +91,7 @@ msgstr "IRC"
 msgid "New Search"
 msgstr "新規検索"
 
-#: button;id_search_download cdownloaddlg;control;5 ctorrentseeddlg;control;3
+#: button;id_search_download cdownloaddlg;control;4 ctorrentseeddlg;control;2
 msgid "Download"
 msgstr "ダウンロード"
 
@@ -104,11 +107,15 @@ msgstr "検索パネルを表示"
 msgid "Show Details"
 msgstr "詳細を表示"
 
-#: csearchwnd.panel.basic;label-text;1 csearchwnd.panel;label-text;1 csearchwnd.full;label-text;1 cbrowsehostwnd.basic;label-text;1 cbrowsehostwnd;label-text;1 chitmonitorwnd;label-text;1
+#: csearchwnd.panel.basic;label-text;1 csearchwnd.panel;label-text;1
+#: csearchwnd.full;label-text;1 cbrowsehostwnd.basic;label-text;1
+#: cbrowsehostwnd;label-text;1 chitmonitorwnd;label-text;1
 msgid "Filter:"
 msgstr "フィルタ:"
 
-#: csearchwnd.panel.basic;label-tip;1 csearchwnd.panel;label-tip;1 csearchwnd.full;label-tip;1 cbrowsehostwnd.basic;label-tip;1 cbrowsehostwnd;label-tip;1 chitmonitorwnd;label-tip;1
+#: csearchwnd.panel.basic;label-tip;1 csearchwnd.panel;label-tip;1
+#: csearchwnd.full;label-tip;1 cbrowsehostwnd.basic;label-tip;1
+#: cbrowsehostwnd;label-tip;1 chitmonitorwnd;label-tip;1
 msgid "Type some words to filter the results with"
 msgstr "検索結果をフィルタリングしたい場合はここにフィルタ文字列を入力して下さい"
 
@@ -140,7 +147,8 @@ msgstr "物理フォルダ"
 msgid "Organiser"
 msgstr "仮想フォルダ"
 
-#: button;id_search_chat button;id_uploads_chat button;id_neighbours_chat cbrowsehostprofile.2;link;4
+#: button;id_search_chat button;id_uploads_chat button;id_neighbours_chat
+#: cbrowsehostprofile.2;link;4
 msgid "Chat to User"
 msgstr "チャット"
 
@@ -152,7 +160,8 @@ msgstr "停止"
 msgid "Refresh"
 msgstr "更新"
 
-#: button;id_downloads_launch_complete button;id_uploads_launch button;id_library_launch
+#: button;id_downloads_launch_complete button;id_uploads_launch
+#: button;id_library_launch
 msgid "Open or Play"
 msgstr "開く・再生"
 
@@ -196,7 +205,8 @@ msgstr "完了済みをクリア"
 msgid "Properties"
 msgstr "情報"
 
-#: button;id_downloads_filter_menu button;id_uploads_filter_menu cfiltersearchdlg;control;29
+#: button;id_downloads_filter_menu button;id_uploads_filter_menu
+#: cfiltersearchdlg;control;29
 msgid "Filter"
 msgstr "フィルタ"
 
@@ -252,7 +262,8 @@ msgstr "移動"
 msgid "Copy"
 msgstr "コピー"
 
-#: button;id_library_delete cskinssettingspage;control;9 cdeletefiledlg;control;3
+#: button;id_library_delete cskinssettingspage;control;9
+#: cdeletefiledlg;control;3
 msgid "Delete"
 msgstr "削除"
 
@@ -304,7 +315,8 @@ msgstr "次へ"
 msgid "Playlist"
 msgstr "再生リスト"
 
-#: cmediaframe;label-text;2 string;8321 cconnectionsettingspage;control;4 cconnectionsettingspage;control;13
+#: cmediaframe;label-text;2 string;8321 cconnectionsettingspage;control;4
+#: cconnectionsettingspage;control;13
 msgid "Speed:"
 msgstr "スピード:"
 
@@ -324,7 +336,8 @@ msgstr "保存"
 msgid "Connect to IRC"
 msgstr ""
 
-#: button;id_irc_disconnect button;id_neighbours_disconnect button;id_hostcache_disconnect button;id_chat_disconnect string;8072
+#: button;id_irc_disconnect button;id_neighbours_disconnect
+#: button;id_hostcache_disconnect button;id_chat_disconnect string;8072
 msgid "Disconnect"
 msgstr "切断"
 
@@ -500,7 +513,8 @@ msgstr "原寸大"
 msgid "Best Fit"
 msgstr "自動拡大/縮小"
 
-#: button;imageviewer_close string;20001 cfolderscandlg;control;7 cdonkeyimportdlg;control;6 cwarningsdlg;control;8 chelpdlg;control;2
+#: button;imageviewer_close string;20001 cfolderscandlg;control;7
+#: cdonkeyimportdlg;control;5 cwarningsdlg;control;7 chelpdlg;control;1
 msgid "Close"
 msgstr "閉じる"
 
@@ -508,7 +522,9 @@ msgstr "閉じる"
 msgid "_Close Window"
 msgstr "ウィンドウを閉じる(_C)"
 
-#: child;item;id_child_maximise cmainwnd.windowed;22;item;id_window_cascade cmediaframe.basic;53;item;id_media_fullscreen cmediaframe;56;item;id_media_fullscreen
+#: child;item;id_child_maximise cmainwnd.windowed;22;item;id_window_cascade
+#: cmediaframe.basic;53;item;id_media_fullscreen
+#: cmediaframe;56;item;id_media_fullscreen
 msgid "_Full Screen"
 msgstr "全画面(_F)"
 
@@ -520,11 +536,17 @@ msgstr "元に戻す(_R)"
 msgid "_Minimise"
 msgstr "最小化(_M)"
 
-#: cmainwnd.basic;1 cmainwnd.tabbed;9 cmainwnd.tabbed;11;item;id_tab_network cmainwnd.windowed;18 cmainwnd.view.tabbed;item;id_tab_network chomewnd.tabbed;item;id_tab_network
+#: cmainwnd.basic;1 cmainwnd.tabbed;9 cmainwnd.tabbed;11;item;id_tab_network
+#: cmainwnd.windowed;18 cmainwnd.view.tabbed;item;id_tab_network
+#: chomewnd.tabbed;item;id_tab_network
 msgid "_Network"
 msgstr "ネットワーク(_N)"
 
-#: cmainwnd.basic;1;item;id_network_connect cmainwnd.tabbed;9;item;id_network_connect cmainwnd.windowed;18;item;id_network_connect cneighbourswnd;59;item;id_network_connect cprivatechatframe;item;id_chat_connect
+#: cmainwnd.basic;1;item;id_network_connect
+#: cmainwnd.tabbed;9;item;id_network_connect
+#: cmainwnd.windowed;18;item;id_network_connect
+#: cneighbourswnd;59;item;id_network_connect
+#: cprivatechatframe;item;id_chat_connect
 msgid "_Connect"
 msgstr "接続(_C)"
 
@@ -532,23 +554,35 @@ msgstr "接続(_C)"
 msgid "Choose _Networks"
 msgstr "ネットワーク選択(_N)"
 
-#: cmainwnd.basic;1;2;item;id_network_g2 cmainwnd.tabbed;9;10;item;id_network_g2 cmainwnd.windowed;18;19;item;id_network_g2
+#: cmainwnd.basic;1;2;item;id_network_g2
+#: cmainwnd.tabbed;9;10;item;id_network_g2
+#: cmainwnd.windowed;18;19;item;id_network_g2
 msgid "Connect to _Gnutella2"
 msgstr "Gnutella2へ接続(_G)"
 
-#: cmainwnd.basic;1;2;item;id_network_g1 cmainwnd.tabbed;9;10;item;id_network_g1 cmainwnd.windowed;18;19;item;id_network_g1
+#: cmainwnd.basic;1;2;item;id_network_g1
+#: cmainwnd.tabbed;9;10;item;id_network_g1
+#: cmainwnd.windowed;18;19;item;id_network_g1
 msgid "Connect to Gnutella_1"
 msgstr "Gnutella1へ接続(_1)"
 
-#: cmainwnd.basic;1;2;item;id_network_ed2k cmainwnd.tabbed;9;10;item;id_network_ed2k cmainwnd.windowed;18;19;item;id_network_ed2k
+#: cmainwnd.basic;1;2;item;id_network_ed2k
+#: cmainwnd.tabbed;9;10;item;id_network_ed2k
+#: cmainwnd.windowed;18;19;item;id_network_ed2k
 msgid "Connect to _eDonkey"
 msgstr "eDonkey2000へ接続(_E)"
 
-#: cmainwnd.basic;1;item;id_network_auto_close cmainwnd.tabbed;9;item;id_network_auto_close cmainwnd.tray;item;id_network_auto_close cremotewnd;item;id_network_auto_close
+#: cmainwnd.basic;1;item;id_network_auto_close
+#: cmainwnd.tabbed;9;item;id_network_auto_close
+#: cmainwnd.tray;item;id_network_auto_close
+#: cremotewnd;item;id_network_auto_close
 msgid "Exit _After Transfers"
 msgstr "転送後に終了(_A)"
 
-#: cmainwnd.basic;1;item;id_network_exit cmainwnd.tabbed;9;item;id_network_exit cmainwnd.windowed;18;item;id_network_exit cmainwnd.tray;item;id_network_exit cremotewnd;item;id_network_exit
+#: cmainwnd.basic;1;item;id_network_exit
+#: cmainwnd.tabbed;9;item;id_network_exit
+#: cmainwnd.windowed;18;item;id_network_exit
+#: cmainwnd.tray;item;id_network_exit cremotewnd;item;id_network_exit
 msgid "E_xit"
 msgstr "終了(_X)"
 
@@ -556,23 +590,45 @@ msgstr "終了(_X)"
 msgid "_View"
 msgstr "表示(_V)"
 
-#: cmainwnd.basic;3;item;id_tab_home cmainwnd.tabbed;11;item;id_tab_home cmainwnd.view.basic;item;id_tab_home cmainwnd.view.tabbed;item;id_tab_home chomewnd.basic;item;id_tab_home chomewnd.tabbed;item;id_tab_home
+#: cmainwnd.basic;3;item;id_tab_home cmainwnd.tabbed;11;item;id_tab_home
+#: cmainwnd.view.basic;item;id_tab_home cmainwnd.view.tabbed;item;id_tab_home
+#: chomewnd.basic;item;id_tab_home chomewnd.tabbed;item;id_tab_home
 msgid "_Home"
 msgstr "ホーム(_H)"
 
-#: cmainwnd.basic;3;item;id_tab_library cmainwnd.tabbed;11;item;id_tab_library cmainwnd.tabbed;11;12;item;id_view_library cmainwnd.windowed;20;item;id_view_library cmainwnd.view.basic;item;id_tab_library cmainwnd.view.tabbed;item;id_tab_library cmainwnd.view.windowed;item;id_view_library chomewnd.basic;item;id_tab_library chomewnd.tabbed;item;id_tab_library
+#: cmainwnd.basic;3;item;id_tab_library cmainwnd.tabbed;11;item;id_tab_library
+#: cmainwnd.tabbed;11;12;item;id_view_library
+#: cmainwnd.windowed;20;item;id_view_library
+#: cmainwnd.view.basic;item;id_tab_library
+#: cmainwnd.view.tabbed;item;id_tab_library
+#: cmainwnd.view.windowed;item;id_view_library
+#: chomewnd.basic;item;id_tab_library chomewnd.tabbed;item;id_tab_library
 msgid "_Library"
 msgstr "ライブラリ(_L)"
 
-#: cmainwnd.basic;3;item;id_tab_media cmainwnd.tabbed;11;item;id_tab_media cmainwnd.tabbed;11;12;item;id_view_media cmainwnd.windowed;20;item;id_view_media cmainwnd.view.basic;item;id_tab_media cmainwnd.view.tabbed;item;id_tab_media cmainwnd.view.windowed;item;id_view_media chomewnd.basic;item;id_tab_media chomewnd.tabbed;item;id_tab_media
+#: cmainwnd.basic;3;item;id_tab_media cmainwnd.tabbed;11;item;id_tab_media
+#: cmainwnd.tabbed;11;12;item;id_view_media
+#: cmainwnd.windowed;20;item;id_view_media
+#: cmainwnd.view.basic;item;id_tab_media
+#: cmainwnd.view.tabbed;item;id_tab_media
+#: cmainwnd.view.windowed;item;id_view_media chomewnd.basic;item;id_tab_media
+#: chomewnd.tabbed;item;id_tab_media
 msgid "_Media Player"
 msgstr "メディアプレーヤー(_M)"
 
-#: cmainwnd.basic;3;item;id_tab_search cmainwnd.tabbed;11;item;id_tab_search cmainwnd.view.basic;item;id_tab_search cmainwnd.view.tabbed;item;id_tab_search chomewnd.basic;item;id_tab_search chomewnd.tabbed;item;id_tab_search
+#: cmainwnd.basic;3;item;id_tab_search cmainwnd.tabbed;11;item;id_tab_search
+#: cmainwnd.view.basic;item;id_tab_search
+#: cmainwnd.view.tabbed;item;id_tab_search chomewnd.basic;item;id_tab_search
+#: chomewnd.tabbed;item;id_tab_search
 msgid "_Search"
 msgstr "検索(_S)"
 
-#: cmainwnd.basic;3;item;id_tab_transfers cmainwnd.tabbed;11;12;item;id_view_downloads cmainwnd.windowed;20;item;id_view_downloads cmainwnd.view.basic;item;id_tab_transfers cmainwnd.view.windowed;item;id_view_downloads chomewnd.basic;item;id_tab_transfers
+#: cmainwnd.basic;3;item;id_tab_transfers
+#: cmainwnd.tabbed;11;12;item;id_view_downloads
+#: cmainwnd.windowed;20;item;id_view_downloads
+#: cmainwnd.view.basic;item;id_tab_transfers
+#: cmainwnd.view.windowed;item;id_view_downloads
+#: chomewnd.basic;item;id_tab_transfers
 msgid "_Downloads"
 msgstr "ダウンロード(_D)"
 
@@ -580,35 +636,74 @@ msgstr "ダウンロード(_D)"
 msgid "_Remote"
 msgstr "リモート(_R)"
 
-#: cmainwnd.basic;3;item;id_tab_irc cmainwnd.tabbed;11;item;id_tab_irc cmainwnd.view.tabbed;item;id_tab_irc chomewnd.tabbed;item;id_tab_irc
+#: cmainwnd.basic;3;item;id_tab_irc cmainwnd.tabbed;11;item;id_tab_irc
+#: cmainwnd.view.tabbed;item;id_tab_irc chomewnd.tabbed;item;id_tab_irc
 msgid "_Chat"
 msgstr ""
 
-#: cmainwnd.basic;3;4 cmainwnd.tabbed;11;12 cmainwnd.view.basic;26 chomewnd.basic;27 cdownloadswnd.download;39
+#: cmainwnd.basic;3;4 cmainwnd.tabbed;11;12 cmainwnd.view.basic;26
+#: chomewnd.basic;27 cdownloadswnd.download;39
 msgid "_Advanced"
 msgstr "高度(_A)"
 
-#: cmainwnd.basic;3;4;item;id_view_neighbours cmainwnd.tabbed;11;12;item;id_view_neighbours cmainwnd.windowed;20;item;id_view_neighbours cmainwnd.view.basic;26;item;id_view_neighbours cmainwnd.view.windowed;item;id_view_neighbours chomewnd.basic;27;item;id_view_neighbours
+#: cmainwnd.basic;3;4;item;id_view_neighbours
+#: cmainwnd.tabbed;11;12;item;id_view_neighbours
+#: cmainwnd.windowed;20;item;id_view_neighbours
+#: cmainwnd.view.basic;26;item;id_view_neighbours
+#: cmainwnd.view.windowed;item;id_view_neighbours
+#: chomewnd.basic;27;item;id_view_neighbours
 msgid "_Neighbours"
 msgstr "近隣(_N)"
 
-#: cmainwnd.basic;3;4;item;id_view_uploads cmainwnd.tabbed;11;12;item;id_view_uploads cmainwnd.windowed;20;item;id_view_uploads cmainwnd.view.basic;26;item;id_view_uploads cmainwnd.view.windowed;item;id_view_uploads chomewnd.basic;27;item;id_view_uploads
+#: cmainwnd.basic;3;4;item;id_view_uploads
+#: cmainwnd.tabbed;11;12;item;id_view_uploads
+#: cmainwnd.windowed;20;item;id_view_uploads
+#: cmainwnd.view.basic;26;item;id_view_uploads
+#: cmainwnd.view.windowed;item;id_view_uploads
+#: chomewnd.basic;27;item;id_view_uploads
 msgid "_Uploads"
 msgstr "アップロード(_U)"
 
-#: cmainwnd.basic;3;4;item;id_view_security cmainwnd.tabbed;11;item;id_view_security cmainwnd.tabbed;11;12;item;id_view_security cmainwnd.windowed;20;item;id_view_security cmainwnd.view.basic;26;item;id_view_security cmainwnd.view.tabbed;item;id_view_security cmainwnd.view.windowed;item;id_view_security chomewnd.basic;27;item;id_view_security chomewnd.tabbed;item;id_view_security
+#: cmainwnd.basic;3;4;item;id_view_security
+#: cmainwnd.tabbed;11;item;id_view_security
+#: cmainwnd.tabbed;11;12;item;id_view_security
+#: cmainwnd.windowed;20;item;id_view_security
+#: cmainwnd.view.basic;26;item;id_view_security
+#: cmainwnd.view.tabbed;item;id_view_security
+#: cmainwnd.view.windowed;item;id_view_security
+#: chomewnd.basic;27;item;id_view_security
+#: chomewnd.tabbed;item;id_view_security
 msgid "Se_curity"
 msgstr "セキュリティ(_C)"
 
-#: cmainwnd.basic;3;4;item;id_view_hosts cmainwnd.tabbed;11;item;id_view_hosts cmainwnd.tabbed;11;12;item;id_view_hosts cmainwnd.windowed;20;item;id_view_hosts cmainwnd.view.basic;26;item;id_view_hosts cmainwnd.view.tabbed;item;id_view_hosts cmainwnd.view.windowed;item;id_view_hosts chomewnd.basic;27;item;id_view_hosts chomewnd.tabbed;item;id_view_hosts
+#: cmainwnd.basic;3;4;item;id_view_hosts cmainwnd.tabbed;11;item;id_view_hosts
+#: cmainwnd.tabbed;11;12;item;id_view_hosts
+#: cmainwnd.windowed;20;item;id_view_hosts
+#: cmainwnd.view.basic;26;item;id_view_hosts
+#: cmainwnd.view.tabbed;item;id_view_hosts
+#: cmainwnd.view.windowed;item;id_view_hosts
+#: chomewnd.basic;27;item;id_view_hosts chomewnd.tabbed;item;id_view_hosts
 msgid "H_ost Cache"
 msgstr "ホストキャッシュ(_O)"
 
-#: cmainwnd.basic;3;4;item;id_view_discovery cmainwnd.tabbed;11;12;item;id_view_discovery cmainwnd.windowed;20;item;id_view_discovery cmainwnd.view.tabbed;item;id_view_discovery cmainwnd.view.windowed;item;id_view_discovery chomewnd.tabbed;item;id_view_discovery
+#: cmainwnd.basic;3;4;item;id_view_discovery
+#: cmainwnd.tabbed;11;12;item;id_view_discovery
+#: cmainwnd.windowed;20;item;id_view_discovery
+#: cmainwnd.view.tabbed;item;id_view_discovery
+#: cmainwnd.view.windowed;item;id_view_discovery
+#: chomewnd.tabbed;item;id_view_discovery
 msgid "Disco_very"
 msgstr "ディスカバリ(_V)"
 
-#: cmainwnd.basic;3;4;item;id_view_scheduler cmainwnd.tabbed;11;item;id_view_scheduler cmainwnd.tabbed;11;12;item;id_view_scheduler cmainwnd.windowed;20;item;id_view_scheduler cmainwnd.view.basic;26;item;id_view_scheduler cmainwnd.view.tabbed;item;id_view_scheduler cmainwnd.view.windowed;item;id_view_scheduler chomewnd.basic;27;item;id_view_scheduler chomewnd.tabbed;item;id_view_scheduler
+#: cmainwnd.basic;3;4;item;id_view_scheduler
+#: cmainwnd.tabbed;11;item;id_view_scheduler
+#: cmainwnd.tabbed;11;12;item;id_view_scheduler
+#: cmainwnd.windowed;20;item;id_view_scheduler
+#: cmainwnd.view.basic;26;item;id_view_scheduler
+#: cmainwnd.view.tabbed;item;id_view_scheduler
+#: cmainwnd.view.windowed;item;id_view_scheduler
+#: chomewnd.basic;27;item;id_view_scheduler
+#: chomewnd.tabbed;item;id_view_scheduler
 msgid "Sch_eduler"
 msgstr ""
 
@@ -624,31 +719,46 @@ msgstr "玄人モード(_P)"
 msgid "_Tools"
 msgstr "ツール(_T)"
 
-#: cmainwnd.basic;5;item;id_library_folders cmainwnd.tabbed;13;item;id_library_folders cmainwnd.windowed;21;item;id_library_folders clibrarytree.physical.basic;item;id_library_folders clibrarytree.physical;item;id_library_folders
+#: cmainwnd.basic;5;item;id_library_folders
+#: cmainwnd.tabbed;13;item;id_library_folders
+#: cmainwnd.windowed;21;item;id_library_folders
+#: clibrarytree.physical.basic;item;id_library_folders
+#: clibrarytree.physical;item;id_library_folders
 msgid "Share _Files..."
 msgstr "共有ファイル(_F)..."
 
-#: cmainwnd.basic;5;item;id_tools_download cmainwnd.tabbed;13;item;id_tools_download cmainwnd.windowed;21;item;id_tools_download
+#: cmainwnd.basic;5;item;id_tools_download
+#: cmainwnd.tabbed;13;item;id_tools_download
+#: cmainwnd.windowed;21;item;id_tools_download
 msgid "_Download File/Torrent..."
 msgstr "ダウンロード/Torrent(_D)..."
 
-#: cmainwnd.basic;5;item;id_tools_skin cmainwnd.tabbed;13;item;id_tools_skin cmainwnd.windowed;21;item;id_tools_skin
+#: cmainwnd.basic;5;item;id_tools_skin cmainwnd.tabbed;13;item;id_tools_skin
+#: cmainwnd.windowed;21;item;id_tools_skin
 msgid "Choose a S_kin..."
 msgstr "スキンを選択(_K)..."
 
-#: cmainwnd.basic;5;item;id_tools_language cmainwnd.tabbed;13;item;id_tools_language cmainwnd.windowed;21;item;id_tools_language
+#: cmainwnd.basic;5;item;id_tools_language
+#: cmainwnd.tabbed;13;item;id_tools_language
+#: cmainwnd.windowed;21;item;id_tools_language
 msgid "Choose a _Language..."
 msgstr "言語を選択(_L)..."
 
-#: cmainwnd.basic;5;item;id_tools_profile cmainwnd.tabbed;13;item;id_tools_profile cmainwnd.windowed;21;item;id_tools_profile
+#: cmainwnd.basic;5;item;id_tools_profile
+#: cmainwnd.tabbed;13;item;id_tools_profile
+#: cmainwnd.windowed;21;item;id_tools_profile
 msgid "Edit My _Profile..."
 msgstr "プロフィールを編集(_P)..."
 
-#: cmainwnd.basic;5;item;id_tools_wizard cmainwnd.tabbed;13;item;id_tools_wizard cmainwnd.windowed;21;item;id_tools_wizard
+#: cmainwnd.basic;5;item;id_tools_wizard
+#: cmainwnd.tabbed;13;item;id_tools_wizard
+#: cmainwnd.windowed;21;item;id_tools_wizard
 msgid "QuickStart _Wizard..."
 msgstr "クイックスタートウィザード(_W)..."
 
-#: cmainwnd.basic;5;item;id_tools_settings cmainwnd.tabbed;13;item;id_tools_settings cmainwnd.windowed;21;item;id_tools_settings
+#: cmainwnd.basic;5;item;id_tools_settings
+#: cmainwnd.tabbed;13;item;id_tools_settings
+#: cmainwnd.windowed;21;item;id_tools_settings
 msgid "_Shareaza Settings..."
 msgstr "Shareaza設定(_S)..."
 
@@ -656,11 +766,13 @@ msgstr "Shareaza設定(_S)..."
 msgid "_Help"
 msgstr "ヘルプ(_H)"
 
-#: cmainwnd.basic;6;item;id_help_faq cmainwnd.tabbed;15;item;id_help_faq cmainwnd.windowed;23;item;id_help_faq
+#: cmainwnd.basic;6;item;id_help_faq cmainwnd.tabbed;15;item;id_help_faq
+#: cmainwnd.windowed;23;item;id_help_faq
 msgid "Shareaza _FAQ"
 msgstr "Shareaza FAQ(_F)"
 
-#: cmainwnd.basic;6;item;id_help_test cmainwnd.tabbed;15;item;id_help_test cmainwnd.windowed;23;item;id_help_test
+#: cmainwnd.basic;6;item;id_help_test cmainwnd.tabbed;15;item;id_help_test
+#: cmainwnd.windowed;23;item;id_help_test
 msgid "_Connection Test"
 msgstr "_Connection Test"
 
@@ -668,19 +780,27 @@ msgstr "_Connection Test"
 msgid "_Guides"
 msgstr "ガイド(_G)"
 
-#: cmainwnd.basic;6;7;item;id_help_guide cmainwnd.tabbed;15;16;item;id_help_guide cmainwnd.windowed;23;24;item;id_help_guide
+#: cmainwnd.basic;6;7;item;id_help_guide
+#: cmainwnd.tabbed;15;16;item;id_help_guide
+#: cmainwnd.windowed;23;24;item;id_help_guide
 msgid "Shareaza _Users Guide"
 msgstr "Shareazaユーザーズガイド(_U)"
 
-#: cmainwnd.basic;6;7;item;id_help_router cmainwnd.tabbed;15;16;item;id_help_router cmainwnd.windowed;23;24;item;id_help_router
+#: cmainwnd.basic;6;7;item;id_help_router
+#: cmainwnd.tabbed;15;16;item;id_help_router
+#: cmainwnd.windowed;23;24;item;id_help_router
 msgid "_Router Help"
 msgstr "ルーター ヘルプ(_R)"
 
-#: cmainwnd.basic;6;7;item;id_help_security cmainwnd.tabbed;15;16;item;id_help_security cmainwnd.windowed;23;24;item;id_help_security
+#: cmainwnd.basic;6;7;item;id_help_security
+#: cmainwnd.tabbed;15;16;item;id_help_security
+#: cmainwnd.windowed;23;24;item;id_help_security
 msgid "_Security Help"
 msgstr "セキュリティ ヘルプ(_S)"
 
-#: cmainwnd.basic;6;7;item;id_help_codec cmainwnd.tabbed;15;16;item;id_help_codec cmainwnd.windowed;23;24;item;id_help_codec
+#: cmainwnd.basic;6;7;item;id_help_codec
+#: cmainwnd.tabbed;15;16;item;id_help_codec
+#: cmainwnd.windowed;23;24;item;id_help_codec
 msgid "_Codec Help"
 msgstr "コーデック ヘルプ(_C)"
 
@@ -688,47 +808,70 @@ msgstr "コーデック ヘルプ(_C)"
 msgid "_Websites"
 msgstr "ウェブサイト(_W)"
 
-#: cmainwnd.basic;6;8;item;id_help_homepage cmainwnd.tabbed;15;17;item;id_help_homepage cmainwnd.windowed;23;25;item;id_help_homepage
+#: cmainwnd.basic;6;8;item;id_help_homepage
+#: cmainwnd.tabbed;15;17;item;id_help_homepage
+#: cmainwnd.windowed;23;25;item;id_help_homepage
 msgid "_Shareaza site"
 msgstr "Shareaza site(_S)"
 
-#: cmainwnd.basic;6;8;item;id_help_forums cmainwnd.tabbed;15;17;item;id_help_forums cmainwnd.windowed;23;25;item;id_help_forums
+#: cmainwnd.basic;6;8;item;id_help_forums
+#: cmainwnd.tabbed;15;17;item;id_help_forums
+#: cmainwnd.windowed;23;25;item;id_help_forums
 msgid "Shareaza _Forums"
 msgstr "Shareazaフォーラム(_F)"
 
-#: cmainwnd.basic;6;8;item;id_help_web_6 cmainwnd.tabbed;15;17;item;id_help_web_6 cmainwnd.windowed;23;25;item;id_help_web_6
+#: cmainwnd.basic;6;8;item;id_help_web_6
+#: cmainwnd.tabbed;15;17;item;id_help_web_6
+#: cmainwnd.windowed;23;25;item;id_help_web_6
 msgid "Shareaza S_kin Site"
 msgstr "Shareaza S_kin Site"
 
-#: cmainwnd.basic;6;item;id_help_version_check cmainwnd.tabbed;15;item;id_help_version_check cmainwnd.windowed;23;item;id_help_version_check
+#: cmainwnd.basic;6;item;id_help_version_check
+#: cmainwnd.tabbed;15;item;id_help_version_check
+#: cmainwnd.windowed;23;item;id_help_version_check
 msgid "Check for new _version"
 msgstr "最新ニュース"
 
-#: cmainwnd.basic;6;item;id_help_about cmainwnd.tabbed;15;item;id_help_about cmainwnd.windowed;23;item;id_help_about
+#: cmainwnd.basic;6;item;id_help_about cmainwnd.tabbed;15;item;id_help_about
+#: cmainwnd.windowed;23;item;id_help_about
 msgid "_About Shareaza..."
 msgstr "Shareazaについて(_A)..."
 
-#: cmainwnd.tabbed;9;item;id_network_disconnect cmainwnd.windowed;18;item;id_network_disconnect chostcachewnd;item;id_hostcache_disconnect cdownloadswnd.source;item;id_transfers_disconnect cneighbourswnd.basic;item;id_neighbours_disconnect cneighbourswnd;item;id_neighbours_disconnect cneighbourswnd;59;item;id_network_disconnect cprivatechatframe;item;id_chat_disconnect
+#: cmainwnd.tabbed;9;item;id_network_disconnect
+#: cmainwnd.windowed;18;item;id_network_disconnect
+#: chostcachewnd;item;id_hostcache_disconnect
+#: cdownloadswnd.source;item;id_transfers_disconnect
+#: cneighbourswnd.basic;item;id_neighbours_disconnect
+#: cneighbourswnd;item;id_neighbours_disconnect
+#: cneighbourswnd;59;item;id_network_disconnect
+#: cprivatechatframe;item;id_chat_disconnect
 msgid "_Disconnect"
 msgstr "切断(_D)"
 
-#: cmainwnd.tabbed;9;item;id_network_connect_to cmainwnd.windowed;18;item;id_network_connect_to
+#: cmainwnd.tabbed;9;item;id_network_connect_to
+#: cmainwnd.windowed;18;item;id_network_connect_to
 msgid "Connect _To..."
 msgstr "接続先(_T)..."
 
-#: cmainwnd.tabbed;9;item;id_network_browse_to cmainwnd.windowed;18;item;id_network_browse_to
+#: cmainwnd.tabbed;9;item;id_network_browse_to
+#: cmainwnd.windowed;18;item;id_network_browse_to
 msgid "_Browse User..."
 msgstr "ホストを参照(_B)..."
 
-#: cmainwnd.tabbed;9;item;id_network_chat_to cmainwnd.windowed;18;item;id_network_chat_to
+#: cmainwnd.tabbed;9;item;id_network_chat_to
+#: cmainwnd.windowed;18;item;id_network_chat_to
 msgid "Chat to _User..."
 msgstr ""
 
-#: cmainwnd.tabbed;11;item;id_tab_transfers cmainwnd.view.tabbed;item;id_tab_transfers chomewnd.tabbed;item;id_tab_transfers
+#: cmainwnd.tabbed;11;item;id_tab_transfers
+#: cmainwnd.view.tabbed;item;id_tab_transfers
+#: chomewnd.tabbed;item;id_tab_transfers
 msgid "_Transfers"
 msgstr "転送(_T)"
 
-#: cmainwnd.tabbed;11;12;item;id_view_system cmainwnd.windowed;20;item;id_view_system cmainwnd.view.windowed;item;id_view_system
+#: cmainwnd.tabbed;11;12;item;id_view_system
+#: cmainwnd.windowed;20;item;id_view_system
+#: cmainwnd.view.windowed;item;id_view_system
 msgid "S_ystem"
 msgstr "システム(_Y)"
 
@@ -736,19 +879,35 @@ msgstr "システム(_Y)"
 msgid "IR_C"
 msgstr ""
 
-#: cmainwnd.tabbed;11;12;item;id_view_traffic cmainwnd.windowed;20;item;id_view_traffic cmainwnd.view.tabbed;item;id_view_traffic cmainwnd.view.windowed;item;id_view_traffic chomewnd.tabbed;item;id_view_traffic
+#: cmainwnd.tabbed;11;12;item;id_view_traffic
+#: cmainwnd.windowed;20;item;id_view_traffic
+#: cmainwnd.view.tabbed;item;id_view_traffic
+#: cmainwnd.view.windowed;item;id_view_traffic
+#: chomewnd.tabbed;item;id_view_traffic
 msgid "_Graph"
 msgstr "グラフ(_G)"
 
-#: cmainwnd.tabbed;11;12;item;id_view_packets cmainwnd.windowed;20;item;id_view_packets cmainwnd.view.tabbed;item;id_view_packets cmainwnd.view.windowed;item;id_view_packets chomewnd.tabbed;item;id_view_packets
+#: cmainwnd.tabbed;11;12;item;id_view_packets
+#: cmainwnd.windowed;20;item;id_view_packets
+#: cmainwnd.view.tabbed;item;id_view_packets
+#: cmainwnd.view.windowed;item;id_view_packets
+#: chomewnd.tabbed;item;id_view_packets
 msgid "_Packet Dump"
 msgstr "パケットダンプ(_P)"
 
-#: cmainwnd.tabbed;11;12;item;id_view_search_monitor cmainwnd.windowed;20;item;id_view_search_monitor cmainwnd.view.tabbed;item;id_view_search_monitor cmainwnd.view.windowed;item;id_view_search_monitor chomewnd.tabbed;item;id_view_search_monitor
+#: cmainwnd.tabbed;11;12;item;id_view_search_monitor
+#: cmainwnd.windowed;20;item;id_view_search_monitor
+#: cmainwnd.view.tabbed;item;id_view_search_monitor
+#: cmainwnd.view.windowed;item;id_view_search_monitor
+#: chomewnd.tabbed;item;id_view_search_monitor
 msgid "Se_arch Monitor"
 msgstr "検索モニタ(_A)"
 
-#: cmainwnd.tabbed;11;12;item;id_view_results_monitor cmainwnd.windowed;20;item;id_view_results_monitor cmainwnd.view.tabbed;item;id_view_results_monitor cmainwnd.view.windowed;item;id_view_results_monitor chomewnd.tabbed;item;id_view_results_monitor
+#: cmainwnd.tabbed;11;12;item;id_view_results_monitor
+#: cmainwnd.windowed;20;item;id_view_results_monitor
+#: cmainwnd.view.tabbed;item;id_view_results_monitor
+#: cmainwnd.view.windowed;item;id_view_results_monitor
+#: chomewnd.tabbed;item;id_view_results_monitor
 msgid "H_it Monitor"
 msgstr "ヒットモニタ(_I)"
 
@@ -756,19 +915,23 @@ msgstr "ヒットモニタ(_I)"
 msgid "N_ormal Mode"
 msgstr "標準モード(_O)"
 
-#: cmainwnd.tabbed;11;item;id_view_tabbed cmainwnd.windowed;20;item;id_view_tabbed
+#: cmainwnd.tabbed;11;item;id_view_tabbed
+#: cmainwnd.windowed;20;item;id_view_tabbed
 msgid "T_abbed Mode"
 msgstr "タブモード(_A)"
 
-#: cmainwnd.tabbed;11;item;id_view_windowed cmainwnd.windowed;20;item;id_view_windowed
+#: cmainwnd.tabbed;11;item;id_view_windowed
+#: cmainwnd.windowed;20;item;id_view_windowed
 msgid "_Windowed Mode"
 msgstr "ウィンドウモード(_W)"
 
-#: cmainwnd.tabbed;13;item;idc_import_downloads cmainwnd.windowed;21;item;idc_import_downloads
+#: cmainwnd.tabbed;13;item;idc_import_downloads
+#: cmainwnd.windowed;21;item;idc_import_downloads
 msgid "_Import eMule partial downloads..."
 msgstr "_Import eMule partial downloads..."
 
-#: cmainwnd.tabbed;13;item;id_open_downloads_folder cmainwnd.windowed;21;item;id_open_downloads_folder
+#: cmainwnd.tabbed;13;item;id_open_downloads_folder
+#: cmainwnd.windowed;21;item;id_open_downloads_folder
 msgid "_Open my folder of completed Downloads"
 msgstr "_Open my folder of completed Downloads"
 
@@ -776,27 +939,34 @@ msgstr "_Open my folder of completed Downloads"
 msgid "_Window"
 msgstr "ウィンドウ(_W)"
 
-#: cmainwnd.tabbed;14;item;id_window_navbar cmainwnd.windowed;22;item;id_window_navbar
+#: cmainwnd.tabbed;14;item;id_window_navbar
+#: cmainwnd.windowed;22;item;id_window_navbar
 msgid "Show _Navigation Bar"
 msgstr "ナビゲーションバーを表示(_N)"
 
-#: cmainwnd.tabbed;14;item;id_window_toolbar cmainwnd.windowed;22;item;id_window_toolbar
+#: cmainwnd.tabbed;14;item;id_window_toolbar
+#: cmainwnd.windowed;22;item;id_window_toolbar
 msgid "Show _Tool Bar"
 msgstr "ツールバーを表示(_T)"
 
-#: cmainwnd.tabbed;14;item;id_window_tabbar cmainwnd.windowed;22;item;id_window_tabbar
+#: cmainwnd.tabbed;14;item;id_window_tabbar
+#: cmainwnd.windowed;22;item;id_window_tabbar
 msgid "Show Tab _Bar"
 msgstr "タブバーを表示(_B)"
 
-#: cmainwnd.tabbed;14;item;id_window_monitor cmainwnd.windowed;22;item;id_window_monitor
+#: cmainwnd.tabbed;14;item;id_window_monitor
+#: cmainwnd.windowed;22;item;id_window_monitor
 msgid "Show _Monitor"
 msgstr "モニタを表示(_M)"
 
-#: cmainwnd.tabbed;14;item;id_window_remote cmainwnd.windowed;22;item;id_window_remote
+#: cmainwnd.tabbed;14;item;id_window_remote
+#: cmainwnd.windowed;22;item;id_window_remote
 msgid "Show _Remote"
 msgstr "リモートを表示(_R)"
 
-#: cmainwnd.windowed;18;item;id_network_search cmainwnd.view.windowed;item;id_network_search cmainwnd.tray;item;id_network_search cremotewnd;item;id_network_search
+#: cmainwnd.windowed;18;item;id_network_search
+#: cmainwnd.view.windowed;item;id_network_search
+#: cmainwnd.tray;item;id_network_search cremotewnd;item;id_network_search
 msgid "New _Search..."
 msgstr "新規検索(_S)..."
 
@@ -848,7 +1018,9 @@ msgstr "次のトラック(_N)"
 msgid "_Connect Now"
 msgstr "すぐに接続(_C)"
 
-#: chostcachewnd;item;id_neighbours_copy cneighbourswnd.basic;item;id_neighbours_copy cneighbourswnd;item;id_neighbours_copy
+#: chostcachewnd;item;id_neighbours_copy
+#: cneighbourswnd.basic;item;id_neighbours_copy
+#: cneighbourswnd;item;id_neighbours_copy
 msgid "Copy _URI"
 msgstr "Copy _URI"
 
@@ -896,67 +1068,153 @@ msgstr "METファイルをインポート(_I)..."
 msgid "Download MET..."
 msgstr "METをダウンロード..."
 
-#: csearchwnd.basic;item;id_search_download csearchwnd;item;id_search_download cbrowsehostwnd.basic;item;id_search_download cbrowsehostwnd;item;id_search_download chitmonitorwnd;item;id_search_download
+#: csearchwnd.basic;item;id_search_download csearchwnd;item;id_search_download
+#: cbrowsehostwnd.basic;item;id_search_download
+#: cbrowsehostwnd;item;id_search_download
+#: chitmonitorwnd;item;id_search_download
 msgid "_Download"
 msgstr "ダウンロード(_D)"
 
-#: csearchwnd.basic;item;id_search_copy csearchwnd;item;id_search_copy cbrowsehostwnd.basic;item;id_search_copy cbrowsehostwnd;item;id_search_copy chitmonitorwnd;item;id_search_copy cdownloadswnd.download.basic;item;id_downloads_copy cdownloadswnd.download;39;item;id_downloads_copy cdownloadswnd.source;item;id_downloads_copy cdownloadswnd.completed;item;id_downloads_copy clibraryfileview.physical.basic;item;id_library_url clibraryfileview.physical;item;id_library_url clibraryfileview.virtual.basic;item;id_library_url clibraryfileview.virtual;item;id_library_url
+#: csearchwnd.basic;item;id_search_copy csearchwnd;item;id_search_copy
+#: cbrowsehostwnd.basic;item;id_search_copy cbrowsehostwnd;item;id_search_copy
+#: chitmonitorwnd;item;id_search_copy
+#: cdownloadswnd.download.basic;item;id_downloads_copy
+#: cdownloadswnd.download;39;item;id_downloads_copy
+#: cdownloadswnd.source;item;id_downloads_copy
+#: cdownloadswnd.completed;item;id_downloads_copy
+#: clibraryfileview.physical.basic;item;id_library_url
+#: clibraryfileview.physical;item;id_library_url
+#: clibraryfileview.virtual.basic;item;id_library_url
+#: clibraryfileview.virtual;item;id_library_url
 msgid "Copy _URI..."
 msgstr "URIをコピー(_U)"
 
-#: csearchwnd.basic;item;id_browse_launch csearchwnd;item;id_browse_launch chitmonitorwnd;item;id_browse_launch cdownloadswnd.source;item;id_browse_launch cuploadswnd.upload.basic;item;id_browse_launch cuploadswnd.upload;item;id_browse_launch cneighbourswnd.basic;item;id_browse_launch cneighbourswnd;item;id_browse_launch csearchmonitorwnd;item;id_browse_launch cprivatechatframe;item;id_chat_browse
+#: csearchwnd.basic;item;id_browse_launch csearchwnd;item;id_browse_launch
+#: chitmonitorwnd;item;id_browse_launch
+#: cdownloadswnd.source;item;id_browse_launch
+#: cuploadswnd.upload.basic;item;id_browse_launch
+#: cuploadswnd.upload;item;id_browse_launch
+#: cneighbourswnd.basic;item;id_browse_launch
+#: cneighbourswnd;item;id_browse_launch
+#: csearchmonitorwnd;item;id_browse_launch
+#: cprivatechatframe;item;id_chat_browse
 msgid "_Browse User"
 msgstr "参照(_B)"
 
-#: csearchwnd.basic;item;id_search_chat csearchwnd;item;id_search_chat cbrowsehostwnd.basic;item;id_search_chat cbrowsehostwnd;item;id_search_chat chitmonitorwnd;item;id_search_chat cdownloadswnd.source;item;id_transfers_chat cuploadswnd.upload.basic;item;id_uploads_chat cuploadswnd.upload;item;id_uploads_chat cneighbourswnd.basic;item;id_neighbours_chat cneighbourswnd;item;id_neighbours_chat
+#: csearchwnd.basic;item;id_search_chat csearchwnd;item;id_search_chat
+#: cbrowsehostwnd.basic;item;id_search_chat cbrowsehostwnd;item;id_search_chat
+#: chitmonitorwnd;item;id_search_chat
+#: cdownloadswnd.source;item;id_transfers_chat
+#: cuploadswnd.upload.basic;item;id_uploads_chat
+#: cuploadswnd.upload;item;id_uploads_chat
+#: cneighbourswnd.basic;item;id_neighbours_chat
+#: cneighbourswnd;item;id_neighbours_chat
 msgid "_Chat to User"
 msgstr "チャット(_C)"
 
-#: csearchwnd.basic;29 csearchwnd;31 cbrowsehostwnd.basic;33 cbrowsehostwnd;35 chitmonitorwnd;37 clibraryfileview.physical.basic;40 clibraryfileview.physical;43 clibraryfileview.virtual.basic;46 clibraryfileview.virtual;49
+#: csearchwnd.basic;29 csearchwnd;31 cbrowsehostwnd.basic;33 cbrowsehostwnd;35
+#: chitmonitorwnd;37 clibraryfileview.physical.basic;40
+#: clibraryfileview.physical;43 clibraryfileview.virtual.basic;46
+#: clibraryfileview.virtual;49
 msgid "_Search For"
 msgstr "検索対象(_S)"
 
-#: csearchwnd.basic;29;item;id_search_for_similar csearchwnd;31;item;id_search_for_similar cbrowsehostwnd.basic;33;item;id_search_for_similar cbrowsehostwnd;35;item;id_search_for_similar chitmonitorwnd;37;item;id_search_for_similar clibraryfileview.physical.basic;40;item;id_search_for_similar clibraryfileview.physical;43;item;id_search_for_similar clibraryfileview.virtual.basic;46;item;id_search_for_similar clibraryfileview.virtual;49;item;id_search_for_similar
+#: csearchwnd.basic;29;item;id_search_for_similar
+#: csearchwnd;31;item;id_search_for_similar
+#: cbrowsehostwnd.basic;33;item;id_search_for_similar
+#: cbrowsehostwnd;35;item;id_search_for_similar
+#: chitmonitorwnd;37;item;id_search_for_similar
+#: clibraryfileview.physical.basic;40;item;id_search_for_similar
+#: clibraryfileview.physical;43;item;id_search_for_similar
+#: clibraryfileview.virtual.basic;46;item;id_search_for_similar
+#: clibraryfileview.virtual;49;item;id_search_for_similar
 msgid "_Similar Files"
 msgstr "似たファイル"
 
-#: csearchwnd.basic;29;item;id_search_for_artist csearchwnd;31;item;id_search_for_artist cbrowsehostwnd.basic;33;item;id_search_for_artist cbrowsehostwnd;35;item;id_search_for_artist chitmonitorwnd;37;item;id_search_for_artist clibraryfileview.physical.basic;40;item;id_search_for_artist clibraryfileview.physical;43;item;id_search_for_artist clibraryfileview.virtual.basic;46;item;id_search_for_artist clibraryfileview.virtual;49;item;id_search_for_artist
+#: csearchwnd.basic;29;item;id_search_for_artist
+#: csearchwnd;31;item;id_search_for_artist
+#: cbrowsehostwnd.basic;33;item;id_search_for_artist
+#: cbrowsehostwnd;35;item;id_search_for_artist
+#: chitmonitorwnd;37;item;id_search_for_artist
+#: clibraryfileview.physical.basic;40;item;id_search_for_artist
+#: clibraryfileview.physical;43;item;id_search_for_artist
+#: clibraryfileview.virtual.basic;46;item;id_search_for_artist
+#: clibraryfileview.virtual;49;item;id_search_for_artist
 msgid "_Music by the same Artist"
 msgstr "同じアーティストの曲"
 
-#: csearchwnd.basic;29;item;id_search_for_album csearchwnd;31;item;id_search_for_album cbrowsehostwnd.basic;33;item;id_search_for_album cbrowsehostwnd;35;item;id_search_for_album chitmonitorwnd;37;item;id_search_for_album clibraryfileview.physical.basic;40;item;id_search_for_album clibraryfileview.physical;43;item;id_search_for_album clibraryfileview.virtual.basic;46;item;id_search_for_album clibraryfileview.virtual;49;item;id_search_for_album
+#: csearchwnd.basic;29;item;id_search_for_album
+#: csearchwnd;31;item;id_search_for_album
+#: cbrowsehostwnd.basic;33;item;id_search_for_album
+#: cbrowsehostwnd;35;item;id_search_for_album
+#: chitmonitorwnd;37;item;id_search_for_album
+#: clibraryfileview.physical.basic;40;item;id_search_for_album
+#: clibraryfileview.physical;43;item;id_search_for_album
+#: clibraryfileview.virtual.basic;46;item;id_search_for_album
+#: clibraryfileview.virtual;49;item;id_search_for_album
 msgid "Music in the same _Album"
 msgstr "同じアルバムの曲"
 
-#: csearchwnd.basic;29;item;id_search_for_series csearchwnd;31;item;id_search_for_series cbrowsehostwnd.basic;33;item;id_search_for_series cbrowsehostwnd;35;item;id_search_for_series chitmonitorwnd;37;item;id_search_for_series clibraryfileview.physical.basic;40;item;id_search_for_series clibraryfileview.physical;43;item;id_search_for_series clibraryfileview.virtual.basic;46;item;id_search_for_series clibraryfileview.virtual;49;item;id_search_for_series
+#: csearchwnd.basic;29;item;id_search_for_series
+#: csearchwnd;31;item;id_search_for_series
+#: cbrowsehostwnd.basic;33;item;id_search_for_series
+#: cbrowsehostwnd;35;item;id_search_for_series
+#: chitmonitorwnd;37;item;id_search_for_series
+#: clibraryfileview.physical.basic;40;item;id_search_for_series
+#: clibraryfileview.physical;43;item;id_search_for_series
+#: clibraryfileview.virtual.basic;46;item;id_search_for_series
+#: clibraryfileview.virtual;49;item;id_search_for_series
 msgid "_Episodes in the same Series"
 msgstr "同じシリーズのエピソード"
 
-#: csearchwnd.basic;30 csearchwnd;32 cbrowsehostwnd.basic;34 cbrowsehostwnd;36 chitmonitorwnd;38 clibraryfileview.physical.basic;41 clibraryfileview.physical;44 clibraryfileview.virtual.basic;47 clibraryfileview.virtual;50
+#: csearchwnd.basic;30 csearchwnd;32 cbrowsehostwnd.basic;34 cbrowsehostwnd;36
+#: chitmonitorwnd;38 clibraryfileview.physical.basic;41
+#: clibraryfileview.physical;44 clibraryfileview.virtual.basic;47
+#: clibraryfileview.virtual;50
 msgid "_Web Services"
 msgstr "ウェブサービス(_W)"
 
-#: csearchwnd.basic;30;item;id_library_bitzi_web csearchwnd;32;item;id_library_bitzi_web cbrowsehostwnd.basic;34;item;id_library_bitzi_web cbrowsehostwnd;36;item;id_library_bitzi_web chitmonitorwnd;38;item;id_library_bitzi_web clibraryfileview.physical.basic;41;item;id_library_bitzi_web clibraryfileview.physical;44;item;id_library_bitzi_web clibraryfileview.virtual.basic;47;item;id_library_bitzi_web clibraryfileview.virtual;50;item;id_library_bitzi_web
+#: csearchwnd.basic;30;item;id_library_bitzi_web
+#: csearchwnd;32;item;id_library_bitzi_web
+#: cbrowsehostwnd.basic;34;item;id_library_bitzi_web
+#: cbrowsehostwnd;36;item;id_library_bitzi_web
+#: chitmonitorwnd;38;item;id_library_bitzi_web
+#: clibraryfileview.physical.basic;41;item;id_library_bitzi_web
+#: clibraryfileview.physical;44;item;id_library_bitzi_web
+#: clibraryfileview.virtual.basic;47;item;id_library_bitzi_web
+#: clibraryfileview.virtual;50;item;id_library_bitzi_web
 msgid "View _Bitzi Ticket"
 msgstr "Bitzi Ticketを表示(_B)"
 
-#: csearchwnd;item;id_search_downloadnow cbrowsehostwnd.basic;item;id_search_downloadnow cbrowsehostwnd;item;id_search_downloadnow
+#: csearchwnd;item;id_search_downloadnow
+#: cbrowsehostwnd.basic;item;id_search_downloadnow
+#: cbrowsehostwnd;item;id_search_downloadnow
 msgid "Download _Now"
 msgstr "今すぐダウンロード"
 
-#: csearchwnd;item;id_security_ban cuploadswnd.upload;item;id_security_ban cneighbourswnd;item;id_security_ban csearchmonitorwnd;item;id_security_ban
+#: csearchwnd;item;id_security_ban cuploadswnd.upload;item;id_security_ban
+#: cneighbourswnd;item;id_security_ban csearchmonitorwnd;item;id_security_ban
 msgid "_Ban User"
 msgstr "BANする(_B)"
 
-#: csearchwnd;31;item;id_search_for_this cbrowsehostwnd;35;item;id_search_for_this chitmonitorwnd;37;item;id_search_for_this clibraryfileview.physical.basic;40;item;id_search_for_this clibraryfileview.physical;43;item;id_search_for_this clibraryfileview.virtual.basic;46;item;id_search_for_this clibraryfileview.virtual;49;item;id_search_for_this
+#: csearchwnd;31;item;id_search_for_this
+#: cbrowsehostwnd;35;item;id_search_for_this
+#: chitmonitorwnd;37;item;id_search_for_this
+#: clibraryfileview.physical.basic;40;item;id_search_for_this
+#: clibraryfileview.physical;43;item;id_search_for_this
+#: clibraryfileview.virtual.basic;46;item;id_search_for_this
+#: clibraryfileview.virtual;49;item;id_search_for_this
 msgid "_This File"
 msgstr "このファイル"
 
-#: csearchwnd;item;id_search_filter cbrowsehostwnd;item;id_search_filter chitmonitorwnd;item;id_search_filter
+#: csearchwnd;item;id_search_filter cbrowsehostwnd;item;id_search_filter
+#: chitmonitorwnd;item;id_search_filter
 msgid "_Filter Results..."
 msgstr "フィルタ結果(_F)..."
 
-#: csearchwnd;item;id_search_filter_remove cbrowsehostwnd;item;id_search_filter_remove chitmonitorwnd;item;id_search_filter_remove
+#: csearchwnd;item;id_search_filter_remove
+#: cbrowsehostwnd;item;id_search_filter_remove
+#: chitmonitorwnd;item;id_search_filter_remove
 msgid "_Remove Filter"
 msgstr "フィルタを削除(_R)"
 
@@ -964,11 +1222,13 @@ msgstr "フィルタを削除(_R)"
 msgid "C_lear Results"
 msgstr "結果をクリア(_L)"
 
-#: csearchwnd;item;id_search_columns cbrowsehostwnd;item;id_search_columns chitmonitorwnd;item;id_search_columns
+#: csearchwnd;item;id_search_columns cbrowsehostwnd;item;id_search_columns
+#: chitmonitorwnd;item;id_search_columns
 msgid "Edit C_olumns..."
 msgstr "カラムを編集(_O)..."
 
-#: chitmonitorwnd;item;id_hitmonitor_pause csearchmonitorwnd;item;id_searchmonitor_pause
+#: chitmonitorwnd;item;id_hitmonitor_pause
+#: csearchmonitorwnd;item;id_searchmonitor_pause
 msgid "_Pause Display"
 msgstr "表示を一時停止(_P)"
 
@@ -976,35 +1236,46 @@ msgstr "表示を一時停止(_P)"
 msgid "C_lear Display"
 msgstr "表示をクリア(_L)"
 
-#: cdownloadswnd.download.basic;item;id_downloads_launch_copy cdownloadswnd.download;item;id_downloads_launch_copy
+#: cdownloadswnd.download.basic;item;id_downloads_launch_copy
+#: cdownloadswnd.download;item;id_downloads_launch_copy
 msgid "Previe_w File"
 msgstr ""
 
-#: cdownloadswnd.download.basic;item;id_downloads_remote_preview cdownloadswnd.download;item;id_downloads_remote_preview
+#: cdownloadswnd.download.basic;item;id_downloads_remote_preview
+#: cdownloadswnd.download;item;id_downloads_remote_preview
 msgid "R_emote Preview"
 msgstr "リモートプレビュー(_R)"
 
-#: cdownloadswnd.download.basic;item;id_downloads_view_reviews cdownloadswnd.download;item;id_downloads_view_reviews
+#: cdownloadswnd.download.basic;item;id_downloads_view_reviews
+#: cdownloadswnd.download;item;id_downloads_view_reviews
 msgid "_View Reviews"
 msgstr "レビューを表示(_V)"
 
-#: cdownloadswnd.download.basic;item;id_downloads_resume cdownloadswnd.download;item;id_downloads_resume
+#: cdownloadswnd.download.basic;item;id_downloads_resume
+#: cdownloadswnd.download;item;id_downloads_resume
 msgid "_Resume Download"
 msgstr "再開(_R)"
 
-#: cdownloadswnd.download.basic;item;id_downloads_pause cdownloadswnd.download;item;id_downloads_pause
+#: cdownloadswnd.download.basic;item;id_downloads_pause
+#: cdownloadswnd.download;item;id_downloads_pause
 msgid "P_ause Download"
 msgstr "一時停止(_A)"
 
-#: cdownloadswnd.download.basic;item;id_downloads_clear_incomplete cdownloadswnd.download;item;id_downloads_clear_incomplete
+#: cdownloadswnd.download.basic;item;id_downloads_clear_incomplete
+#: cdownloadswnd.download;item;id_downloads_clear_incomplete
 msgid "_Cancel Download"
 msgstr "キャンセル(_C)"
 
-#: cdownloadswnd.download.basic;item;id_downloads_sources cdownloadswnd.download;item;id_downloads_sources
+#: cdownloadswnd.download.basic;item;id_downloads_sources
+#: cdownloadswnd.download;item;id_downloads_sources
 msgid "_Find More Sources"
 msgstr "追加ソースを検索(_F)"
 
-#: cdownloadswnd.download.basic;item;id_downloads_help cdownloadswnd.download;item;id_downloads_help cdownloadswnd.seeding;item;id_downloads_help cdownloadswnd.nothing;item;id_downloads_help cuploadswnd.nothing;item;id_uploads_help
+#: cdownloadswnd.download.basic;item;id_downloads_help
+#: cdownloadswnd.download;item;id_downloads_help
+#: cdownloadswnd.seeding;item;id_downloads_help
+#: cdownloadswnd.nothing;item;id_downloads_help
+#: cuploadswnd.nothing;item;id_uploads_help
 msgid "_Help..."
 msgstr "ヘルプ(_H)..."
 
@@ -1012,7 +1283,13 @@ msgstr "ヘルプ(_H)..."
 msgid "Prev_iew Partial File"
 msgstr "プレビュー(_P)"
 
-#: cdownloadswnd.download;item;id_downloads_enqueue cdownloadswnd.completed.basic;item;id_downloads_enqueue cdownloadswnd.completed;item;id_downloads_enqueue clibraryfileview.physical.basic;item;id_library_enqueue clibraryfileview.physical;item;id_library_enqueue clibraryfileview.virtual.basic;item;id_library_enqueue clibraryfileview.virtual;item;id_library_enqueue
+#: cdownloadswnd.download;item;id_downloads_enqueue
+#: cdownloadswnd.completed.basic;item;id_downloads_enqueue
+#: cdownloadswnd.completed;item;id_downloads_enqueue
+#: clibraryfileview.physical.basic;item;id_library_enqueue
+#: clibraryfileview.physical;item;id_library_enqueue
+#: clibraryfileview.virtual.basic;item;id_library_enqueue
+#: clibraryfileview.virtual;item;id_library_enqueue
 msgid "Add to Pla_ylist"
 msgstr "再生リストに追加(_Y)"
 
@@ -1028,11 +1305,13 @@ msgstr "ソースを追加(_A)..."
 msgid "Monitor _Window"
 msgstr "モニタウィンドウ(_W)"
 
-#: cdownloadswnd.download;39;item;id_downloads_move_up csecuritywnd;item;id_security_move_up
+#: cdownloadswnd.download;39;item;id_downloads_move_up
+#: csecuritywnd;item;id_security_move_up
 msgid "Move _Up"
 msgstr "上に移動(_U)"
 
-#: cdownloadswnd.download;39;item;id_downloads_move_down csecuritywnd;item;id_security_move_down
+#: cdownloadswnd.download;39;item;id_downloads_move_down
+#: csecuritywnd;item;id_security_move_down
 msgid "Move _Down"
 msgstr "下に移動(_D)"
 
@@ -1040,7 +1319,14 @@ msgstr "下に移動(_D)"
 msgid "_Ignore Bandwidth Limit"
 msgstr "帯域制限を無視(_I)"
 
-#: cdownloadswnd.download;item;id_downloads_edit cdownloadtabbar;item;id_download_group_properties clibrarytileview;item;id_library_album_properties clibraryfileview.physical.basic;item;id_library_properties clibraryfileview.physical;item;id_library_properties clibraryfileview.virtual.basic;item;id_library_properties clibraryfileview.virtual;item;id_library_properties csecuritywnd;item;id_security_edit cdiscoverywnd;item;id_discovery_edit
+#: cdownloadswnd.download;item;id_downloads_edit
+#: cdownloadtabbar;item;id_download_group_properties
+#: clibrarytileview;item;id_library_album_properties
+#: clibraryfileview.physical.basic;item;id_library_properties
+#: clibraryfileview.physical;item;id_library_properties
+#: clibraryfileview.virtual.basic;item;id_library_properties
+#: clibraryfileview.virtual;item;id_library_properties
+#: csecuritywnd;item;id_security_edit cdiscoverywnd;item;id_discovery_edit
 msgid "_Properties"
 msgstr "高度な編集(_E)..."
 
@@ -1052,19 +1338,29 @@ msgstr "アクセス(_A)"
 msgid "_Forget"
 msgstr "忘却する(_F)"
 
-#: cdownloadswnd.completed.basic;item;id_downloads_launch_complete cdownloadswnd.completed;item;id_downloads_launch_complete cdownloadswnd.seeding;item;id_downloads_launch_complete clibraryfileview.physical.basic;item;id_library_launch clibraryfileview.physical;item;id_library_launch clibraryfileview.virtual.basic;item;id_library_launch clibraryfileview.virtual;item;id_library_launch
+#: cdownloadswnd.completed.basic;item;id_downloads_launch_complete
+#: cdownloadswnd.completed;item;id_downloads_launch_complete
+#: cdownloadswnd.seeding;item;id_downloads_launch_complete
+#: clibraryfileview.physical.basic;item;id_library_launch
+#: clibraryfileview.physical;item;id_library_launch
+#: clibraryfileview.virtual.basic;item;id_library_launch
+#: clibraryfileview.virtual;item;id_library_launch
 msgid "_Open or Play"
 msgstr "開く・再生(_O)"
 
-#: cdownloadswnd.completed.basic;item;id_downloads_clear_complete cdownloadswnd.completed;item;id_downloads_clear_complete cuploadswnd.upload;item;id_uploads_clear ctrafficwnd;item;id_traffic_clear
+#: cdownloadswnd.completed.basic;item;id_downloads_clear_complete
+#: cdownloadswnd.completed;item;id_downloads_clear_complete
+#: cuploadswnd.upload;item;id_uploads_clear ctrafficwnd;item;id_traffic_clear
 msgid "_Clear"
 msgstr "クリア(_C)"
 
-#: cdownloadswnd.completed.basic;item;id_downloads_file_delete cdownloadswnd.completed;item;id_downloads_file_delete
+#: cdownloadswnd.completed.basic;item;id_downloads_file_delete
+#: cdownloadswnd.completed;item;id_downloads_file_delete
 msgid "_Delete File"
 msgstr "削除(_D)"
 
-#: cdownloadswnd.completed;item;id_downloads_rate cmedialist;item;id_media_rate
+#: cdownloadswnd.completed;item;id_downloads_rate
+#: cmedialist;item;id_media_rate
 msgid "_Rate File..."
 msgstr "ファイルを評価(_R)..."
 
@@ -1072,15 +1368,20 @@ msgstr "ファイルを評価(_R)..."
 msgid "_Stop Seeding"
 msgstr "シード停止(_S)"
 
-#: cdownloadswnd.seeding;item;id_downloads_edit cmedialist;item;id_media_properties
+#: cdownloadswnd.seeding;item;id_downloads_edit
+#: cmedialist;item;id_media_properties
 msgid "_Properties..."
 msgstr "Torrent情報(_I)..."
 
-#: cdownloadswnd.nothing;item;id_downloads_clear_completed cuploadswnd.queue;item;id_uploads_clear_completed cuploadswnd.nothing;item;id_uploads_clear_completed
+#: cdownloadswnd.nothing;item;id_downloads_clear_completed
+#: cuploadswnd.queue;item;id_uploads_clear_completed
+#: cuploadswnd.nothing;item;id_uploads_clear_completed
 msgid "C_lear Completed"
 msgstr "完了済みをクリア(_L)"
 
-#: cdownloadswnd.nothing;item;id_downloads_auto_clear cuploadswnd.queue;item;id_uploads_auto_clear cuploadswnd.nothing;item;id_uploads_auto_clear
+#: cdownloadswnd.nothing;item;id_downloads_auto_clear
+#: cuploadswnd.queue;item;id_uploads_auto_clear
+#: cuploadswnd.nothing;item;id_uploads_auto_clear
 msgid "Aut_o Clear"
 msgstr "自動クリア処理(_O)"
 
@@ -1104,15 +1405,18 @@ msgstr "新規グループ(_N)..."
 msgid "Remove _Group"
 msgstr "グループ削除(_G)"
 
-#: cdownloadtabbar;item;id_download_group_show cdownloadswnd.filter;item;id_download_group_show
+#: cdownloadtabbar;item;id_download_group_show
+#: cdownloadswnd.filter;item;id_download_group_show
 msgid "_Show Groups"
 msgstr "グループ表示(_S)"
 
-#: cdownloadswnd.filter;item;id_downloads_filter_all cuploadswnd.filter;item;id_uploads_filter_all
+#: cdownloadswnd.filter;item;id_downloads_filter_all
+#: cuploadswnd.filter;item;id_uploads_filter_all
 msgid "Show _All"
 msgstr "全て表示(_A)"
 
-#: cdownloadswnd.filter;item;id_downloads_filter_active cuploadswnd.filter;item;id_uploads_filter_active
+#: cdownloadswnd.filter;item;id_downloads_filter_active
+#: cuploadswnd.filter;item;id_uploads_filter_active
 msgid "Show A_ctive"
 msgstr "アクティブを表示(_C)"
 
@@ -1152,15 +1456,33 @@ msgstr "BitTorrentを表示"
 msgid "Show _History"
 msgstr "履歴を表示"
 
-#: clibrarytree.physical.basic;item;id_library_shared_folder clibrarytree.physical;item;id_library_shared_folder clibraryfileview.physical.basic;item;id_library_shared_file clibraryfileview.physical;item;id_library_shared_file clibraryfileview.virtual.basic;item;id_library_shared_file clibraryfileview.virtual;item;id_library_shared_file
+#: clibrarytree.physical.basic;item;id_library_shared_folder
+#: clibrarytree.physical;item;id_library_shared_folder
+#: clibraryfileview.physical.basic;item;id_library_shared_file
+#: clibraryfileview.physical;item;id_library_shared_file
+#: clibraryfileview.virtual.basic;item;id_library_shared_file
+#: clibraryfileview.virtual;item;id_library_shared_file
 msgid "_Shared"
 msgstr "共有(_S)"
 
-#: clibrarytree.physical.basic;item;id_library_remove clibrarytree.physical;item;id_library_remove cmedialist;item;id_media_remove csecuritywnd;item;id_security_remove cschedulerwnd;item;id_scheduler_remove cdiscoverywnd;item;id_discovery_remove clibrarysettingspage;control;19 clibrarysettingspage;control;23 cmediasettingspage;control;8 cwebsettingspage;control;12 cwizardsharepage;control;6 cavatarprofilepage;control;6 cfilesourcespage;control;6 cgraphlistdlg;control;4 cgraphitemdlg;control;12 csharemanagerdlg;control;5 cdownloadgroupdlg;control;8
+#: clibrarytree.physical.basic;item;id_library_remove
+#: clibrarytree.physical;item;id_library_remove
+#: cmedialist;item;id_media_remove csecuritywnd;item;id_security_remove
+#: cschedulerwnd;item;id_scheduler_remove
+#: cdiscoverywnd;item;id_discovery_remove clibrarysettingspage;control;19
+#: clibrarysettingspage;control;23 cmediasettingspage;control;8
+#: cwebsettingspage;control;12 cwizardsharepage;control;6
+#: cavatarprofilepage;control;6 cfilesourcespage;control;6
+#: cgraphlistdlg;control;4 cgraphitemdlg;control;12 csharemanagerdlg;control;4
+#: cdownloadgroupdlg;control;8
 msgid "_Remove"
 msgstr "削除(_R)"
 
-#: clibrarytree.physical.basic;item;id_shell_menu clibrarytree.physical;item;id_shell_menu clibraryfileview.physical;item;id_shell_menu clibraryfileview.virtual.basic;item;id_shell_menu clibraryfileview.virtual;item;id_shell_menu
+#: clibrarytree.physical.basic;item;id_shell_menu
+#: clibrarytree.physical;item;id_shell_menu
+#: clibraryfileview.physical;item;id_shell_menu
+#: clibraryfileview.virtual.basic;item;id_shell_menu
+#: clibraryfileview.virtual;item;id_shell_menu
 msgid "S_hell menu"
 msgstr "S_hell menu"
 
@@ -1172,27 +1494,41 @@ msgstr "エクスプローラ(_E)"
 msgid "S_can"
 msgstr "スキャン(_C)"
 
-#: clibrarytree.physical;item;id_library_rebuild clibrarytree.virtual;item;id_library_rebuild
+#: clibrarytree.physical;item;id_library_rebuild
+#: clibrarytree.virtual;item;id_library_rebuild
 msgid "Re_build"
 msgstr "再構成(_B)"
 
-#: clibrarytree.physical;item;id_library_folder_file_properties clibrarytree.virtual.basic;item;id_library_folder_file_properties clibrarytree.virtual;item;id_library_folder_file_properties
+#: clibrarytree.physical;item;id_library_folder_file_properties
+#: clibrarytree.virtual.basic;item;id_library_folder_file_properties
+#: clibrarytree.virtual;item;id_library_folder_file_properties
 msgid "File _Properties"
 msgstr "ファイルプロパティ(_P)"
 
-#: clibrarytree.virtual.basic;item;id_library_folder_enqueue clibrarytree.virtual;item;id_library_folder_enqueue clibraryfileview.virtual.basic;item;id_library_folder_enqueue
+#: clibrarytree.virtual.basic;item;id_library_folder_enqueue
+#: clibrarytree.virtual;item;id_library_folder_enqueue
+#: clibraryfileview.virtual.basic;item;id_library_folder_enqueue
 msgid "_Play Album"
 msgstr "アルバムを再生(_P)"
 
-#: clibrarytree.virtual.basic;item;id_library_folder_delete clibrarytree.virtual;item;id_library_folder_delete clibrarytileview;item;id_library_album_delete clibraryfileview.physical.basic;item;id_library_delete clibraryfileview.physical;item;id_library_delete clibraryfileview.virtual.basic;item;id_library_delete clibraryfileview.virtual;item;id_library_delete cuploadssettingspage;control;21 cfiltersearchdlg;control;28
+#: clibrarytree.virtual.basic;item;id_library_folder_delete
+#: clibrarytree.virtual;item;id_library_folder_delete
+#: clibrarytileview;item;id_library_album_delete
+#: clibraryfileview.physical.basic;item;id_library_delete
+#: clibraryfileview.physical;item;id_library_delete
+#: clibraryfileview.virtual.basic;item;id_library_delete
+#: clibraryfileview.virtual;item;id_library_delete
+#: cuploadssettingspage;control;21 cfiltersearchdlg;control;28
 msgid "_Delete"
 msgstr "削除(_D)"
 
-#: clibrarytree.virtual.basic;item;id_library_folder_properties clibrarytree.virtual;item;id_library_folder_properties
+#: clibrarytree.virtual.basic;item;id_library_folder_properties
+#: clibrarytree.virtual;item;id_library_folder_properties
 msgid "_Album Properties"
 msgstr "アルバムプロパティ(_A)"
 
-#: clibrarytree.virtual;item;id_library_export_collection cmedialist;item;id_media_export_collection
+#: clibrarytree.virtual;item;id_library_export_collection
+#: cmedialist;item;id_media_export_collection
 msgid "_Export Collection..."
 msgstr "コレクションをエクスポート(_E)..."
 
@@ -1204,47 +1540,70 @@ msgstr "新規フォルダ(_N)..."
 msgid "_Open"
 msgstr "開く(_O)"
 
-#: clibraryfileview.physical.basic;41;item;id_library_bitzi_download clibraryfileview.physical;44;item;id_library_bitzi_download clibraryfileview.virtual.basic;47;item;id_library_bitzi_download clibraryfileview.virtual;50;item;id_library_bitzi_download
+#: clibraryfileview.physical.basic;41;item;id_library_bitzi_download
+#: clibraryfileview.physical;44;item;id_library_bitzi_download
+#: clibraryfileview.virtual.basic;47;item;id_library_bitzi_download
+#: clibraryfileview.virtual;50;item;id_library_bitzi_download
 msgid "_Download Metadata"
 msgstr "メタデータをダウンロード(_D)"
 
-#: clibraryfileview.physical.basic;42 clibraryfileview.physical;45 clibraryfileview.virtual.basic;48 clibraryfileview.virtual;51
+#: clibraryfileview.physical.basic;42 clibraryfileview.physical;45
+#: clibraryfileview.virtual.basic;48 clibraryfileview.virtual;51
 msgid "O_rganise"
 msgstr "構成(_R)"
 
-#: clibraryfileview.physical.basic;42;item;id_library_rename clibraryfileview.physical;45;item;id_library_rename clibraryfileview.virtual.basic;48;item;id_library_rename clibraryfileview.virtual;51;item;id_library_rename
+#: clibraryfileview.physical.basic;42;item;id_library_rename
+#: clibraryfileview.physical;45;item;id_library_rename
+#: clibraryfileview.virtual.basic;48;item;id_library_rename
+#: clibraryfileview.virtual;51;item;id_library_rename
 msgid "_Rename File"
 msgstr "ファイル名変更(_R)"
 
-#: clibraryfileview.physical.basic;42;item;id_library_move clibraryfileview.physical;45;item;id_library_move clibraryfileview.virtual.basic;48;item;id_library_move clibraryfileview.virtual;51;item;id_library_move
+#: clibraryfileview.physical.basic;42;item;id_library_move
+#: clibraryfileview.physical;45;item;id_library_move
+#: clibraryfileview.virtual.basic;48;item;id_library_move
+#: clibraryfileview.virtual;51;item;id_library_move
 msgid "_Move Files..."
 msgstr "ファイルを移動(_M)..."
 
-#: clibraryfileview.physical.basic;42;item;id_library_copy clibraryfileview.physical;45;item;id_library_copy clibraryfileview.virtual.basic;48;item;id_library_copy clibraryfileview.virtual;51;item;id_library_copy
+#: clibraryfileview.physical.basic;42;item;id_library_copy
+#: clibraryfileview.physical;45;item;id_library_copy
+#: clibraryfileview.virtual.basic;48;item;id_library_copy
+#: clibraryfileview.virtual;51;item;id_library_copy
 msgid "_Copy Files..."
 msgstr "ファイルをコピー(_C)..."
 
-#: clibraryfileview.physical.basic;item;id_library_rebuild_ansi clibraryfileview.physical;item;id_library_rebuild_ansi clibraryfileview.virtual.basic;item;id_library_rebuild_ansi clibraryfileview.virtual;item;id_library_rebuild_ansi
+#: clibraryfileview.physical.basic;item;id_library_rebuild_ansi
+#: clibraryfileview.physical;item;id_library_rebuild_ansi
+#: clibraryfileview.virtual.basic;item;id_library_rebuild_ansi
+#: clibraryfileview.virtual;item;id_library_rebuild_ansi
 msgid "_Localise Metadata"
 msgstr "メタデータをローカライズ(_L)"
 
-#: clibraryfileview.physical.basic;item;id_library_refresh_metadata clibraryfileview.physical;item;id_library_refresh_metadata clibraryfileview.virtual.basic;item;id_library_refresh_metadata clibraryfileview.virtual;item;id_library_refresh_metadata
+#: clibraryfileview.physical.basic;item;id_library_refresh_metadata
+#: clibraryfileview.physical;item;id_library_refresh_metadata
+#: clibraryfileview.virtual.basic;item;id_library_refresh_metadata
+#: clibraryfileview.virtual;item;id_library_refresh_metadata
 msgid "_Refresh Metadata"
 msgstr "_Refresh Metadata"
 
-#: clibraryfileview.physical;44;item;id_library_createtorrent clibraryfileview.virtual;50;item;id_library_createtorrent
+#: clibraryfileview.physical;44;item;id_library_createtorrent
+#: clibraryfileview.virtual;50;item;id_library_createtorrent
 msgid "Create ._torrent File"
 msgstr ".torrentファイルを作成"
 
-#: clibraryfileview.physical;item;id_library_columns clibraryfileview.virtual;item;id_library_columns
+#: clibraryfileview.physical;item;id_library_columns
+#: clibraryfileview.virtual;item;id_library_columns
 msgid "Choose _Columns..."
 msgstr "カラム選択(_C)..."
 
-#: clibraryfileview.virtual.basic;48;item;id_library_unlink clibraryfileview.virtual;51;item;id_library_unlink
+#: clibraryfileview.virtual.basic;48;item;id_library_unlink
+#: clibraryfileview.virtual;51;item;id_library_unlink
 msgid "Remove _Files"
 msgstr "ファイルを削除(_F)"
 
-#: cmediaframe.basic;item;id_media_play cmediaframe;item;id_media_play cmedialist;item;id_media_select
+#: cmediaframe.basic;item;id_media_play cmediaframe;item;id_media_play
+#: cmedialist;item;id_media_select
 msgid "_Play"
 msgstr "再生(_P)"
 
@@ -1264,7 +1623,8 @@ msgstr "メディアファイルを開く(_O)..."
 msgid "Play_list"
 msgstr "再生リスト"
 
-#: cmediaframe.basic;52;item;id_media_previous cmediaframe;55;item;id_media_previous
+#: cmediaframe.basic;52;item;id_media_previous
+#: cmediaframe;55;item;id_media_previous
 msgid "Pre_vious"
 msgstr "前へ(_V)"
 
@@ -1272,15 +1632,20 @@ msgstr "前へ(_V)"
 msgid "_Next"
 msgstr "次へ(_N)"
 
-#: cmediaframe.basic;52;item;id_media_random cmediaframe;55;item;id_media_random
+#: cmediaframe.basic;52;item;id_media_random
+#: cmediaframe;55;item;id_media_random
 msgid "_Random"
 msgstr "ランダム(_R)"
 
-#: cmediaframe.basic;52;item;id_media_repeat cmediaframe;55;item;id_media_repeat
+#: cmediaframe.basic;52;item;id_media_repeat
+#: cmediaframe;55;item;id_media_repeat
 msgid "R_epeat"
 msgstr "繰り返し(_E)"
 
-#: cmediaframe.basic;52;item;id_media_playlist cmediaframe.basic;54;item;id_media_playlist cmediaframe;55;item;id_media_playlist cmediaframe;57;item;id_media_playlist cmedialist;item;id_media_playlist
+#: cmediaframe.basic;52;item;id_media_playlist
+#: cmediaframe.basic;54;item;id_media_playlist
+#: cmediaframe;55;item;id_media_playlist cmediaframe;57;item;id_media_playlist
+#: cmedialist;item;id_media_playlist
 msgid "Show _Playlist"
 msgstr "再生リストを表示(_P)"
 
@@ -1288,35 +1653,51 @@ msgstr "再生リストを表示(_P)"
 msgid "Video Si_ze"
 msgstr "ビデオサイズ(_Z)"
 
-#: cmediaframe.basic;53;item;id_media_size_one cmediaframe;56;item;id_media_size_one cmediaframe.zoom;item;id_media_size_one
+#: cmediaframe.basic;53;item;id_media_size_one
+#: cmediaframe;56;item;id_media_size_one
+#: cmediaframe.zoom;item;id_media_size_one
 msgid "_Original Size"
 msgstr "元のサイズ(_O)"
 
-#: cmediaframe.basic;53;item;id_media_size_two cmediaframe;56;item;id_media_size_two cmediaframe.zoom;item;id_media_size_two
+#: cmediaframe.basic;53;item;id_media_size_two
+#: cmediaframe;56;item;id_media_size_two
+#: cmediaframe.zoom;item;id_media_size_two
 msgid "_Double Size"
 msgstr "ダブルサイズ(_D)"
 
-#: cmediaframe.basic;53;item;id_media_size_three cmediaframe;56;item;id_media_size_three cmediaframe.zoom;item;id_media_size_three
+#: cmediaframe.basic;53;item;id_media_size_three
+#: cmediaframe;56;item;id_media_size_three
+#: cmediaframe.zoom;item;id_media_size_three
 msgid "_Triple Size"
 msgstr "トリプルサイズ(_T)"
 
-#: cmediaframe.basic;53;item;id_media_size_fill cmediaframe;56;item;id_media_size_fill cmediaframe.zoom;item;id_media_size_fill
+#: cmediaframe.basic;53;item;id_media_size_fill
+#: cmediaframe;56;item;id_media_size_fill
+#: cmediaframe.zoom;item;id_media_size_fill
 msgid "_Largest"
 msgstr "最大(_L)"
 
-#: cmediaframe.basic;53;item;id_media_size_distort cmediaframe;56;item;id_media_size_distort cmediaframe.zoom;item;id_media_size_distort
+#: cmediaframe.basic;53;item;id_media_size_distort
+#: cmediaframe;56;item;id_media_size_distort
+#: cmediaframe.zoom;item;id_media_size_distort
 msgid "_Fill Window"
 msgstr "ウィンドウに合わせる(_F)"
 
-#: cmediaframe.basic;53;item;id_media_aspect_default cmediaframe;56;item;id_media_aspect_default cmediaframe.zoom;item;id_media_aspect_default
+#: cmediaframe.basic;53;item;id_media_aspect_default
+#: cmediaframe;56;item;id_media_aspect_default
+#: cmediaframe.zoom;item;id_media_aspect_default
 msgid "Default _Aspect"
 msgstr "デフォルトアスペクト比(_A)"
 
-#: cmediaframe.basic;53;item;id_media_aspect_4_3 cmediaframe;56;item;id_media_aspect_4_3 cmediaframe.zoom;item;id_media_aspect_4_3
+#: cmediaframe.basic;53;item;id_media_aspect_4_3
+#: cmediaframe;56;item;id_media_aspect_4_3
+#: cmediaframe.zoom;item;id_media_aspect_4_3
 msgid "_4:3 Ratio (TV)"
 msgstr "4:3 [TV] (_4)"
 
-#: cmediaframe.basic;53;item;id_media_aspect_16_9 cmediaframe;56;item;id_media_aspect_16_9 cmediaframe.zoom;item;id_media_aspect_16_9
+#: cmediaframe.basic;53;item;id_media_aspect_16_9
+#: cmediaframe;56;item;id_media_aspect_16_9
+#: cmediaframe.zoom;item;id_media_aspect_16_9
 msgid "_16:9 (Film)"
 msgstr "16:9 [映画] (_1)"
 
@@ -1328,11 +1709,13 @@ msgstr "設定"
 msgid "Choose _Visualisation..."
 msgstr "視覚効果を選択(_V)..."
 
-#: cmediaframe.basic;54;item;id_media_status cmediaframe;57;item;id_media_status
+#: cmediaframe.basic;54;item;id_media_status
+#: cmediaframe;57;item;id_media_status
 msgid "Show _Status Line"
 msgstr "ステータスラインを表示(_S)"
 
-#: cmediaframe.basic;54;item;id_media_settings cmediaframe;57;item;id_media_settings
+#: cmediaframe.basic;54;item;id_media_settings
+#: cmediaframe;57;item;id_media_settings
 msgid "_Media Settings..."
 msgstr "メディア設定(_M)..."
 
@@ -1392,15 +1775,17 @@ msgstr ""
 msgid "_Debug"
 msgstr ""
 
-#: csystemwnd;item;id_system_timestamp cprivatechatframe;item;id_chat_timestamp
+#: csystemwnd;item;id_system_timestamp
+#: cprivatechatframe;item;id_chat_timestamp
 msgid "Timestam_p"
 msgstr "タイムスタンプ(_P)"
 
-#: csystemwnd;item;id_system_copy curlexportdlg;control;8
+#: csystemwnd;item;id_system_copy curlexportdlg;control;7
 msgid "_Copy"
 msgstr "_Copy"
 
-#: csystemwnd;item;id_system_clear csearchmonitorwnd;item;id_searchmonitor_clear
+#: csystemwnd;item;id_system_clear
+#: csearchmonitorwnd;item;id_searchmonitor_clear
 msgid "Clear _Buffer"
 msgstr "バッファをクリア(_B)"
 
@@ -1580,7 +1965,8 @@ msgstr "原寸大(_A)"
 msgid "_Refresh"
 msgstr "更新(_R)"
 
-#: imageviewer_context;item;imageviewer_close circtabrclick;item;id_irc_closetab
+#: imageviewer_context;item;imageviewer_close
+#: circtabrclick;item;id_irc_closetab
 msgid "_Close"
 msgstr "閉じる(_C)"
 
@@ -1717,8 +2103,12 @@ msgid "W A R N I N G   -   Y O U   A R E   F I R E W A L L E D"
 msgstr "警 告   -   あ な た は フ ァ イ アー ウ ォ ー ル の 中 に い ま す"
 
 #: chomeviewctrl;text;5001
-msgid "Shareaza has detected that you are behind a NAT router or firewall,\n\t\t\tand are unable to receive connections from the Internet.  "
-msgstr "ShareazaはあなたがNATまたはファイアーウォールの背後に隠れていて、\n\t\t\t  インターネットからの接続を受け付けることができないことを検出しました。 "
+msgid ""
+"Shareaza has detected that you are behind a NAT router or firewall,\n"
+"\t\t\tand are unable to receive connections from the Internet.  "
+msgstr ""
+"ShareazaはあなたがNATまたはファイアーウォールの背後に隠れていて、\n"
+"\t\t\t  インターネットからの接続を受け付けることができないことを検出しました。 "
 
 #: chomeviewctrl;text;5002
 msgid "This may cause poor download and search performance."
@@ -1733,8 +2123,12 @@ msgid "W A R N I N G   -   Y O U R   T C P   P O R T   I S   F I R E W A L
 msgstr "警 告   -   あ な た の Ｔ Ｃ Ｐ ポ ー ト は フ ァ イ アー ウ ォ ー ル に よ っ て 遮 断 さ れ て い ま す"
 
 #: chomeviewctrl;text;6001
-msgid "Shareaza has detected that you are behind a NAT router or firewall,\n\t\t\tand are unable to receive TCP connections from the Internet.  "
-msgstr "ShareazaはあなたがNATまたはファイアーウォールの背後に隠れていて、\n\t\t\t  インターネットからの接続を受け付けることができないことを検出しました。 "
+msgid ""
+"Shareaza has detected that you are behind a NAT router or firewall,\n"
+"\t\t\tand are unable to receive TCP connections from the Internet.  "
+msgstr ""
+"ShareazaはあなたがNATまたはファイアーウォールの背後に隠れていて、\n"
+"\t\t\t  インターネットからの接続を受け付けることができないことを検出しました。 "
 
 #: chomeviewctrl;text;6002
 msgid "This may cause poor download performance."
@@ -1745,8 +2139,12 @@ msgid "W A R N I N G   -   Y O U R   U D P   P O R T   I S   F I R E W A L
 msgstr "警 告   -   あ な た の Ｕ Ｄ Ｐ ポ ー ト は フ ァ イ アー ウ ォ ー ル に よ っ て 遮 断 さ れ て い ま す"
 
 #: chomeviewctrl;text;7001
-msgid "Shareaza has detected that you are behind a NAT router or firewall,\n\t\t\tand are unable to receive UDP messages from the Internet.  "
-msgstr "ShareazaはあなたがNATまたはファイアーウォールの背後に隠れていて、\n\t\t\t  インターネットからのメッセージを受け付けることができないことを検出しました。 "
+msgid ""
+"Shareaza has detected that you are behind a NAT router or firewall,\n"
+"\t\t\tand are unable to receive UDP messages from the Internet.  "
+msgstr ""
+"ShareazaはあなたがNATまたはファイアーウォールの背後に隠れていて、\n"
+"\t\t\t  インターネットからのメッセージを受け付けることができないことを検出しました。 "
 
 #: chomeviewctrl;text;7002
 msgid "This may cause poor search performance."
@@ -1880,15 +2278,18 @@ msgstr "ここをクリックして接続を開始します"
 msgid "Gnutella2:"
 msgstr "Gnutella2:"
 
-#: chomeconnectionbox;text;4 chomeconnectionbox;text;10 chomeconnectionbox;text;16
+#: chomeconnectionbox;text;4 chomeconnectionbox;text;10
+#: chomeconnectionbox;text;16
 msgid "Disconnected"
 msgstr "切断"
 
-#: chomeconnectionbox;text;5 chomeconnectionbox;text;11 chomeconnectionbox;text;17 string;8070
+#: chomeconnectionbox;text;5 chomeconnectionbox;text;11
+#: chomeconnectionbox;text;17 string;8070
 msgid "Connecting..."
 msgstr "接続中..."
 
-#: chomeconnectionbox;text;6 chomeconnectionbox;text;12 chomeconnectionbox;text;18 string;8071
+#: chomeconnectionbox;text;6 chomeconnectionbox;text;12
+#: chomeconnectionbox;text;18 string;8071
 msgid "Connected"
 msgstr "接続済"
 
@@ -1928,7 +2329,8 @@ msgstr "分"
 msgid "minutes."
 msgstr ""
 
-#: document;chomeuploadsbox string;window_uploads string;8317 dialog;cuploadssettingspage column;uploads
+#: document;chomeuploadsbox string;window_uploads string;8317
+#: dialog;cuploadssettingspage column;uploads
 msgid "Uploads"
 msgstr "アップロード"
 
@@ -1984,7 +2386,9 @@ msgstr "別Torrentをシードする"
 msgid "Seed a torrent"
 msgstr "Torrentをシードする"
 
-#: document;cgeneralsettingsgroup cgeneralsettingsgroup;text;3 dialog;cgeneralsettingsgroup dialog;cgeneralsettingspage dialog;cfilegeneralpage
+#: document;cgeneralsettingsgroup cgeneralsettingsgroup;text;3
+#: dialog;cgeneralsettingsgroup dialog;cgeneralsettingspage
+#: dialog;cfilegeneralpage
 msgid "General"
 msgstr "一般"
 
@@ -1993,8 +2397,12 @@ msgid "Welcome to Shareaza's Settings Manager"
 msgstr "Shareaza設定マネージャへようこそ"
 
 #: cgeneralsettingsgroup;text;2
-msgid "The Shareaza Settings Manager allows advanced users to completely customise how\n\t\t\tShareaza works. The settings in the"
-msgstr "Shareaza設定マネージャでは熟練したユーザがShareazaの挙動を思い通りに\n\t\t\tカスタマイズすることが出来ます。"
+msgid ""
+"The Shareaza Settings Manager allows advanced users to completely customise how\n"
+"\t\t\tShareaza works. The settings in the"
+msgstr ""
+"Shareaza設定マネージャでは熟練したユーザがShareazaの挙動を思い通りに\n"
+"\t\t\tカスタマイズすることが出来ます。"
 
 #: cgeneralsettingsgroup;text;4
 msgid "section relate to the user experience."
@@ -2048,13 +2456,18 @@ msgstr ""
 msgid "Integrate Shareaza with your web browser to accept peer-to-peer links and download content."
 msgstr ""
 
-#: document;cinternetsettingsgroup cinternetsettingsgroup;text;3 dialog;cinternetsettingsgroup
+#: document;cinternetsettingsgroup cinternetsettingsgroup;text;3
+#: dialog;cinternetsettingsgroup
 msgid "Internet"
 msgstr "インターネット"
 
 #: cinternetsettingsgroup;text;2
-msgid "The Shareaza Settings Manager allows advanced users to completely customise \n\t\t\thow Shareaza works. The settings in the"
-msgstr "Shareaza設定マネージャでは熟練したユーザがShareazaの挙動を思い通りに\n\t\t\tカスタマイズすることが出来ます。"
+msgid ""
+"The Shareaza Settings Manager allows advanced users to completely customise \n"
+"\t\t\thow Shareaza works. The settings in the"
+msgstr ""
+"Shareaza設定マネージャでは熟練したユーザがShareazaの挙動を思い通りに\n"
+"\t\t\tカスタマイズすることが出来ます。"
 
 #: cinternetsettingsgroup;text;4
 msgid "section control how Shareaza interacts with other nodes within distributed peer-to-peer networks."
@@ -2149,15 +2562,25 @@ msgid "Downloads Area"
 msgstr "ダウンロード領域"
 
 #: downloadhelp.select;text;2
-msgid "This is where files currently being downloaded are displayed. You can view\n\t\tindividual sources by expanding each file with the small + on the left."
-msgstr "ここは現在ダウンロード中のファイルが表示されるところです。左側にある+マークを\n\t\tクリックすることで、それぞれのファイルのソースを確認することができます。"
+msgid ""
+"This is where files currently being downloaded are displayed. You can view\n"
+"\t\tindividual sources by expanding each file with the small + on the left."
+msgstr ""
+"ここは現在ダウンロード中のファイルが表示されるところです。左側にある+マークを\n"
+"\t\tクリックすることで、それぞれのファイルのソースを確認することができます。"
 
 #: downloadhelp.select;text;3
-msgid "Drag'n'Drop downloads higher in the list for priority, or onto Download Group \n\t\ttabs for better organisation (in Power Mode)."
-msgstr "ダウンロードに関するヘルプ情報を得る為にこのコマンドを使用することが出来ます。\n\t\tダウンロードを選択した後で再びこのコマンドを実行して下さい。"
+msgid ""
+"Drag'n'Drop downloads higher in the list for priority, or onto Download Group \n"
+"\t\ttabs for better organisation (in Power Mode)."
+msgstr ""
+"ダウンロードに関するヘルプ情報を得る為にこのコマンドを使用することが出来ます。\n"
+"\t\tダウンロードを選択した後で再びこのコマンドを実行して下さい。"
 
 #: downloadhelp.select;text;4
-msgid "You can also use this command to get help information on a specific download.\n\t\tSimply select a download and choose this Help command again."
+msgid ""
+"You can also use this command to get help information on a specific download.\n"
+"\t\tSimply select a download and choose this Help command again."
 msgstr ""
 
 #: downloadhelp.seeding;text;1
@@ -2165,7 +2588,9 @@ msgid "This Torrent is Seeding"
 msgstr ""
 
 #: downloadhelp.seeding;text;2
-msgid "Shareaza has verified this complete download, and is actively sharing it\n\t\twith other downloaders through BitTorrent. Please share at least 100%."
+msgid ""
+"Shareaza has verified this complete download, and is actively sharing it\n"
+"\t\twith other downloaders through BitTorrent. Please share at least 100%."
 msgstr ""
 
 #: downloadhelp.completed;text;1
@@ -2173,24 +2598,36 @@ msgid "This Download has Completed"
 msgstr "このダウンロードは完了しました"
 
 #: downloadhelp.completed;text;2
-msgid "Shareaza has finished downloading this file, and has verified that it\n\t\tis 100% correct. It has also moved the file to your downloads folder."
-msgstr "Shareazaはこのファイルのダウンロードを終了し、それが100%正常なもので\n\t\tあることを確認しました。ファイルはダウンロードフォルダに移動しています。"
+msgid ""
+"Shareaza has finished downloading this file, and has verified that it\n"
+"\t\tis 100% correct. It has also moved the file to your downloads folder."
+msgstr ""
+"Shareazaはこのファイルのダウンロードを終了し、それが100%正常なもので\n"
+"\t\tあることを確認しました。ファイルはダウンロードフォルダに移動しています。"
 
 #: downloadhelp.moving;text;1
 msgid "This Download is Moving"
 msgstr "このダウンロードは移動中です"
 
 #: downloadhelp.moving;text;2
-msgid "Shareaza has finished downloading this file, and has verified that\n\t\tit is correct. It is currently being moved and/or unpacked to your downloads folder."
-msgstr "Shareazaはこのファイルのダウンロードを終了し、それが正常なものである\n\t\tことを確認しました。現在このファイルはダウンロードフォルダに移動/解凍中です。"
+msgid ""
+"Shareaza has finished downloading this file, and has verified that\n"
+"\t\tit is correct. It is currently being moved and/or unpacked to your downloads folder."
+msgstr ""
+"Shareazaはこのファイルのダウンロードを終了し、それが正常なものである\n"
+"\t\tことを確認しました。現在このファイルはダウンロードフォルダに移動/解凍中です。"
 
 #: downloadhelp.paused;text;1
 msgid "This Download is Paused"
 msgstr "このダウンロードは一時停止しています"
 
 #: downloadhelp.paused;text;2
-msgid "You have paused this download. If you want it to resume downloading, you\n\t\tcan click the '"
-msgstr "このダウンロードを一時停止しています。もし再びダウンロードを再開したい\n\t\t場合は'"
+msgid ""
+"You have paused this download. If you want it to resume downloading, you\n"
+"\t\tcan click the '"
+msgstr ""
+"このダウンロードを一時停止しています。もし再びダウンロードを再開したい\n"
+"\t\t場合は'"
 
 #: downloadhelp.paused;text;4
 msgid "' command."
@@ -2201,88 +2638,168 @@ msgid "The Disk is Full"
 msgstr "ディスクの空き容量が足りません"
 
 #: downloadhelp.diskfull;text;2
-msgid "Shareaza has paused this download automatically because the hard disk\n\t\tappears to be full, or the download file cannot be written to. If you wish\n\t\tto continue downloading, please free some space on your hard disk and/or check\n\t\tto make sure the incomplete file folder is accessible, and then resume the\n\t\tdownload."
-msgstr "ハードディスクに空き容量がないか、ファイルに書き込めなかった為Shareaza\n\t\tは自動的にダウンロードを中止しました。ダウンロードを続けたいのであれば、ハード\n\t\tディスク上の適当なファイルを削除して十分な空き容量を確保するか、未完了ファイル\n\t\tが確実にアクセス可能になるように設定してからダウンロードを再開して下さい。"
+msgid ""
+"Shareaza has paused this download automatically because the hard disk\n"
+"\t\tappears to be full, or the download file cannot be written to. If you wish\n"
+"\t\tto continue downloading, please free some space on your hard disk and/or check\n"
+"\t\tto make sure the incomplete file folder is accessible, and then resume the\n"
+"\t\tdownload."
+msgstr ""
+"ハードディスクに空き容量がないか、ファイルに書き込めなかった為Shareaza\n"
+"\t\tは自動的にダウンロードを中止しました。ダウンロードを続けたいのであれば、ハード\n"
+"\t\tディスク上の適当なファイルを削除して十分な空き容量を確保するか、未完了ファイル\n"
+"\t\tが確実にアクセス可能になるように設定してからダウンロードを再開して下さい。"
 
 #: downloadhelp.verifying;text;1
 msgid "This Download is Verifying"
 msgstr "このダウンロードは検査中です"
 
 #: downloadhelp.verifying;text;2
-msgid "This download has finished, and Shareaza is now checking it to ensure\n\t\tthat it is exactly the same as the original file. If any damaged parts are\n\t\tfound, Shareaza will repair them automatically."
-msgstr "このダウンロードは終了しました。Shareazaは現在そのファイルをチェックして\n\t\tオリジナルのファイルと同一のものであるか検査しています。何らかの破損部分を発見\n\t\tした場合、Shareazaは自動的にそれを修復します。"
+msgid ""
+"This download has finished, and Shareaza is now checking it to ensure\n"
+"\t\tthat it is exactly the same as the original file. If any damaged parts are\n"
+"\t\tfound, Shareaza will repair them automatically."
+msgstr ""
+"このダウンロードは終了しました。Shareazaは現在そのファイルをチェックして\n"
+"\t\tオリジナルのファイルと同一のものであるか検査しています。何らかの破損部分を発見\n"
+"\t\tした場合、Shareazaは自動的にそれを修復します。"
 
 #: downloadhelp.downloading;text;1
 msgid "This Download is Active!"
 msgstr "このダウンロードはアクティブです!"
 
 #: downloadhelp.downloading;text;2
-msgid "This download is currently in progress. If it is downloading too slowly,\n\t\tyou could try searching the network for more sources with the '"
-msgstr "このダウンロードは現在進行中です。\n\t\tもしそのダウンロードが遅すぎる場合は'"
+msgid ""
+"This download is currently in progress. If it is downloading too slowly,\n"
+"\t\tyou could try searching the network for more sources with the '"
+msgstr ""
+"このダウンロードは現在進行中です。\n"
+"\t\tもしそのダウンロードが遅すぎる場合は'"
 
 #: downloadhelp.downloading;text;3 downloadhelp.searching;text;3
 msgid "Find More Sources"
 msgstr "追加ソースを検索"
 
 #: downloadhelp.downloading;text;4
-msgid "' command. If the speed does not \n\t\timprove it may be due to limited upload speeds of the users you are downloading \n\t\tfrom. Download speed usually increases over time."
-msgstr "'コマンドでネットワーク内に更に多くの\n\t\tソースがないか検索してみて下さい。それでも速度が改善されない場合はダウンロード\n\t\tしているユーザがアップロード速度を絞っているのかも知れません。"
+msgid ""
+"' command. If the speed does not \n"
+"\t\timprove it may be due to limited upload speeds of the users you are downloading \n"
+"\t\tfrom. Download speed usually increases over time."
+msgstr ""
+"'コマンドでネットワーク内に更に多くの\n"
+"\t\tソースがないか検索してみて下さい。それでも速度が改善されない場合はダウンロード\n"
+"\t\tしているユーザがアップロード速度を絞っているのかも知れません。"
 
 #: downloadhelp.pending;text;1
 msgid "This Download is Pending"
 msgstr "このダウンロードは保留中です"
 
 #: downloadhelp.pending;text;2
-msgid "This download is waiting for someone to start uploading.\n\t\tShareaza is ready to start downloading this file, but no-one is sending it at\n\t\tthe moment. You are probably waiting in other user's queues, and the download\n\t\tmay start transferring at any time. You can examine the individual sources to \n\t\tsee each queue you are waiting in. If you are sharing files yourself, it may\n\t\timprove the chances of a download transfer starting quickly."
-msgstr "このダウンロードはアップロードが始まるのを待機しています。\n\t\tShareazaはこのファイルをダウンロードする準備が出来ていますが、現状では誰も\n\t\tデータを送信していません。恐らくキュー内で順番待ちをしていて、適時ダウンロードが\n\t\t開始されるでしょう。順番待ちしているキューを確認するにはここのソースを参照して下さい。\n\t\tあなた自身も何らかのファイルを共有しているなら、ダウンロードの転送が開始される機会が\n\t\t増える可能性があります。"
+msgid ""
+"This download is waiting for someone to start uploading.\n"
+"\t\tShareaza is ready to start downloading this file, but no-one is sending it at\n"
+"\t\tthe moment. You are probably waiting in other user's queues, and the download\n"
+"\t\tmay start transferring at any time. You can examine the individual sources to \n"
+"\t\tsee each queue you are waiting in. If you are sharing files yourself, it may\n"
+"\t\timprove the chances of a download transfer starting quickly."
+msgstr ""
+"このダウンロードはアップロードが始まるのを待機しています。\n"
+"\t\tShareazaはこのファイルをダウンロードする準備が出来ていますが、現状では誰も\n"
+"\t\tデータを送信していません。恐らくキュー内で順番待ちをしていて、適時ダウンロードが\n"
+"\t\t開始されるでしょう。順番待ちしているキューを確認するにはここのソースを参照して下さい。\n"
+"\t\tあなた自身も何らかのファイルを共有しているなら、ダウンロードの転送が開始される機会が\n"
+"\t\t増える可能性があります。"
 
 #: downloadhelp.queued;text;1
 msgid "This Download is Queued"
 msgstr "このダウンロードはキュー(順番待ち)状態です"
 
 #: downloadhelp.queued;text;2
-msgid "This download is waiting for some of your other downloads to complete.\n\t\tYour download settings limit the number of downloads which may be active at\n\t\tany given time, to ensure that each download gets a good share of the available\n\t\tbandwidth. You can change these settings via Tools, Shareaza Settings.\n\t\tAlternatively, you may manually start this download with the resume command."
-msgstr "このダウンロードは現在進行中の他のダウンロードが完了するのを待機しています。\n\t\tダウンロード設定によっては、それぞれのダウンロードがよりよい帯域を得ることを保証する\n\t\t為に、随時アクティブなダウンロード数が制限される可能性があります。\n\t\tShareaza設定のツールを利用してこれらの設定を変更することが出来ます。\n\t\t或いは再開コマンドでこのダウンロードを手動で開始することも出来ます。"
+msgid ""
+"This download is waiting for some of your other downloads to complete.\n"
+"\t\tYour download settings limit the number of downloads which may be active at\n"
+"\t\tany given time, to ensure that each download gets a good share of the available\n"
+"\t\tbandwidth. You can change these settings via Tools, Shareaza Settings.\n"
+"\t\tAlternatively, you may manually start this download with the resume command."
+msgstr ""
+"このダウンロードは現在進行中の他のダウンロードが完了するのを待機しています。\n"
+"\t\tダウンロード設定によっては、それぞれのダウンロードがよりよい帯域を得ることを保証する\n"
+"\t\t為に、随時アクティブなダウンロード数が制限される可能性があります。\n"
+"\t\tShareaza設定のツールを利用してこれらの設定を変更することが出来ます。\n"
+"\t\t或いは再開コマンドでこのダウンロードを手動で開始することも出来ます。"
 
 #: downloadhelp.searching;text;1
 msgid "This Download is Searching"
 msgstr "このダウンロードは検索中です"
 
 #: downloadhelp.searching;text;2
-msgid "There are no known sources for this download, so Shareaza is searching\n\t\tall connected P2P networks for new sources. Once sources are found, the\n\t\tdownload will start automatically. Shareaza searches for sources automatically,\n\t\thowever you can speed up the process using the"
-msgstr "このダウンロード用の既知のソースが見つからない為、Shareazaは新しいソースを\n\t\t得る為に接続している全てのP2Pネットワークを検索しています。ソースを見つけることが\n\t\t出来ればダウンロードは自動的に再開されます。Shareazaは自動的にソースを検索しますが、"
+msgid ""
+"There are no known sources for this download, so Shareaza is searching\n"
+"\t\tall connected P2P networks for new sources. Once sources are found, the\n"
+"\t\tdownload will start automatically. Shareaza searches for sources automatically,\n"
+"\t\thowever you can speed up the process using the"
+msgstr ""
+"このダウンロード用の既知のソースが見つからない為、Shareazaは新しいソースを\n"
+"\t\t得る為に接続している全てのP2Pネットワークを検索しています。ソースを見つけることが\n"
+"\t\t出来ればダウンロードは自動的に再開されます。Shareazaは自動的にソースを検索しますが、"
 
 #: downloadhelp.searching;text;4
 msgid "command."
-msgstr "コマンドを使用することで\n\t\tそのプロセスを迅速にすることが出来ます。"
+msgstr ""
+"コマンドを使用することで\n"
+"\t\tそのプロセスを迅速にすることが出来ます。"
 
 #: downloadhelp.searching;text;5
-msgid "Unfortunately in many cases there may be no users online who have the\n\t\tfile you are looking for. The only course of action here is to wait for\n\t\tsomeone to come online, or cancel it and try to find a similar file which is\n\t\tmore widely available."
-msgstr "しかしながら、多くの場合探しているファイルを所有するユーザがオンライン上に\n\t\tいないことが多いでしょう。このような場合に行える唯一のやり方は、誰かがそのファイルを\n\t\t共有してオンラインになるのを待つか、よりダウンロード可能なユーザが多い、似たような\n\t\tファイルを探すことしかありません。"
+msgid ""
+"Unfortunately in many cases there may be no users online who have the\n"
+"\t\tfile you are looking for. The only course of action here is to wait for\n"
+"\t\tsomeone to come online, or cancel it and try to find a similar file which is\n"
+"\t\tmore widely available."
+msgstr ""
+"しかしながら、多くの場合探しているファイルを所有するユーザがオンライン上に\n"
+"\t\tいないことが多いでしょう。このような場合に行える唯一のやり方は、誰かがそのファイルを\n"
+"\t\t共有してオンラインになるのを待つか、よりダウンロード可能なユーザが多い、似たような\n"
+"\t\tファイルを探すことしかありません。"
 
 #: downloadhelp.creating;text;1
 msgid "This Download is Creating"
 msgstr "このダウンロードは作成中です"
 
 #: downloadhelp.creating;text;2
-msgid "Shareaza is pre-allocating a file in which to store this download, to\n\t\tsave time later."
-msgstr "Shareazaは時間を節約する為に、このダウンロードを格納するためのファイル領域を\n\t\t事前割り当てしています。"
+msgid ""
+"Shareaza is pre-allocating a file in which to store this download, to\n"
+"\t\tsave time later."
+msgstr ""
+"Shareazaは時間を節約する為に、このダウンロードを格納するためのファイル領域を\n"
+"\t\t事前割り当てしています。"
 
 #: downloadhelp.tracker;text;1
 msgid "BitTorrent Tracker Down"
 msgstr "BitTorrentトラッカーがダウンしています"
 
 #: downloadhelp.tracker;text;2
-msgid "The BitTorrent tracker server for this download appears to be\n\t\tdown or malfunctioning. Shareaza is unable to contact it to receive\n\t\ta list of peers."
-msgstr "このダウンロード用のBitTorrentトラッカーサーバがダウンしているか、誤動作\n\t\tしている可能性があります。Shareazaはダウンロード中のピアのリストを受信する為に\n\t\tBitTorrentトラッカーと接続することが出来ません。"
+msgid ""
+"The BitTorrent tracker server for this download appears to be\n"
+"\t\tdown or malfunctioning. Shareaza is unable to contact it to receive\n"
+"\t\ta list of peers."
+msgstr ""
+"このダウンロード用のBitTorrentトラッカーサーバがダウンしているか、誤動作\n"
+"\t\tしている可能性があります。Shareazaはダウンロード中のピアのリストを受信する為に\n"
+"\t\tBitTorrentトラッカーと接続することが出来ません。"
 
 #: uploadhelp;text;1
 msgid "Uploads Area"
 msgstr "アップロード領域"
 
 #: uploadhelp;text;2
-msgid "This is where queues and uploads are displayed. You can expand each queue\n\t\twith the small + on the left, and filter what is displayed with the button on the\n\t\tright of the window's toolbar."
-msgstr "ここはキュー(順番待ち)とアップロードが表示されるところです。左側にある+マークを\n\t\tクリックすることでそれぞれのキューを確認したり、ウィンドウツールバー上の右側にあるボタンで\n\t\tフィルタリングしたり出来ます。"
+msgid ""
+"This is where queues and uploads are displayed. You can expand each queue\n"
+"\t\twith the small + on the left, and filter what is displayed with the button on the\n"
+"\t\tright of the window's toolbar."
+msgstr ""
+"ここはキュー(順番待ち)とアップロードが表示されるところです。左側にある+マークを\n"
+"\t\tクリックすることでそれぞれのキューを確認したり、ウィンドウツールバー上の右側にあるボタンで\n"
+"\t\tフィルタリングしたり出来ます。"
 
 #: generalhelp.diskspace;text;1
 msgid "Disk Space is Low"
@@ -2293,8 +2810,14 @@ msgid "The amount of free space on one or more drives used by Shareaza is low."
 msgstr "Shareazaが使用するディスクの残り容量が少なくなっています。"
 
 #: generalhelp.diskspace;text;3
-msgid "You should always attempt to keep a reasonable amount of disk space free. Programs \n\t\tcan become unstable if the drives become full, and temporary files may be lost. You should \n\t\trun a disk clean-up, delete unwanted files, or uninstall software you no longer need."
-msgstr "ダウンロードに十分なディスク容量を常時確保しておくべきです。ドライブが一杯になれば\n\t\tプログラムが不安定になり、一時ファイルが失われる可能性があります。ディスククリーンアップを行ったり、\n\t\t不必要なファイルの削除や使用しないソフトウェアをアンインストールする等して空き容量を確保して下さい。"
+msgid ""
+"You should always attempt to keep a reasonable amount of disk space free. Programs \n"
+"\t\tcan become unstable if the drives become full, and temporary files may be lost. You should \n"
+"\t\trun a disk clean-up, delete unwanted files, or uninstall software you no longer need."
+msgstr ""
+"ダウンロードに十分なディスク容量を常時確保しておくべきです。ドライブが一杯になれば\n"
+"\t\tプログラムが不安定になり、一時ファイルが失われる可能性があります。ディスククリーンアップを行ったり、\n"
+"\t\t不必要なファイルの削除や使用しないソフトウェアをアンインストールする等して空き容量を確保して下さい。"
 
 #: generalhelp.diskwritefail;text;1
 msgid "A Required Directory is Non-writable"
@@ -2305,8 +2828,13 @@ msgid "A disk or directory Shareaza needs cannot be written to."
 msgstr "Shareazaが指定されたディスク又はディレクトリに書き込むことが出来ませんでした。"
 
 #: generalhelp.diskwritefail;text;3
-msgid "A network drive may have been disconnected, or you may not have write permission \n\t\tto a selected directory. Please check directories and permissions, or change the\n\t\ttemporary files location."
-msgstr "ネットワークドライブが切断されていたり、指定されたディレクトリが読み込み専用になっている\n\t\t可能性があります。ディレクトリのパーミッションを確認するか、一時ファイルの保存場所を変更して下さい。"
+msgid ""
+"A network drive may have been disconnected, or you may not have write permission \n"
+"\t\tto a selected directory. Please check directories and permissions, or change the\n"
+"\t\ttemporary files location."
+msgstr ""
+"ネットワークドライブが切断されていたり、指定されたディレクトリが読み込み専用になっている\n"
+"\t\t可能性があります。ディレクトリのパーミッションを確認するか、一時ファイルの保存場所を変更して下さい。"
 
 #: generalhelp.connectionfail;text;1
 msgid "Internet Connection Has Been Lost"
@@ -2317,8 +2845,12 @@ msgid "Windows reports that there is no internet connection is available."
 msgstr "Windowsから利用可能なインターネット接続が無いという報告を受けました。"
 
 #: generalhelp.connectionfail;text;3
-msgid "It is likely that a modem or router has dropped, meaning the internet cannot\n\t\tbe accessed. You may need to manually re-connect or reset your connection."
-msgstr "考えられる原因はルータやモデムが落ちていてインターネットにアクセスできないことです。\n\t\t手動で再接続するか、接続をリセットする必要があります。"
+msgid ""
+"It is likely that a modem or router has dropped, meaning the internet cannot\n"
+"\t\tbe accessed. You may need to manually re-connect or reset your connection."
+msgstr ""
+"考えられる原因はルータやモデムが落ちていてインターネットにアクセスできないことです。\n"
+"\t\t手動で再接続するか、接続をリセットする必要があります。"
 
 #: generalhelp.connectionfail;text;4
 msgid "Shareaza has ceased connection attempts to avoid losing all cached hosts."
@@ -2329,8 +2861,14 @@ msgid "Adult content filter enabled"
 msgstr "18禁フィルタが有効になっています"
 
 #: generalhelp.adultfilter;text;2
-msgid "Please note that (as with any automated filter) it may not be 100% effective at\n\t\tscreening content. It is designed simply to filter out excess unwanted results, rather than \n\t\tas a 100% safe block."
-msgstr "(他の全ての自動フィルタと同じように)このフィルタはアダルトな内容を100%フィルタリングする\n\t\tとは限りません。100%安全にブロックするというよりも、むしろ単に必要でない検索結果をフィルタに\n\t\tかけるように設計されています。"
+msgid ""
+"Please note that (as with any automated filter) it may not be 100% effective at\n"
+"\t\tscreening content. It is designed simply to filter out excess unwanted results, rather than \n"
+"\t\tas a 100% safe block."
+msgstr ""
+"(他の全ての自動フィルタと同じように)このフィルタはアダルトな内容を100%フィルタリングする\n"
+"\t\tとは限りません。100%安全にブロックするというよりも、むしろ単に必要でない検索結果をフィルタに\n"
+"\t\tかけるように設計されています。"
 
 #: generalhelp.adultfilter;text;3
 msgid "Children's Internet use (including P2P file sharing) should always be under parental supervision."
@@ -2341,12 +2879,22 @@ msgid "This torrent appears to have an encoding error"
 msgstr "このTorrentにはエンコードエラーが存在します"
 
 #: generalhelp.badtorrentencoding;text;2
-msgid "Windows has reported a translation fault while decoding text in this torrent. It is\n\t\tpossible that the torrent is corrupt, or just incorrectly encoded. The torrent may\n\t\tstill download properly, although some file names could be incorrect."
-msgstr "WindowsがこのTorrent内のテキストのデコード中にトランスレーションを失敗しました。\n\t\t考えられる原因はTorrentが破損しているか、正常にエンコードされていないことです。\n\t\tファイル名は正常でないものの、Torrentは適切にダウンロードされる可能性があります。"
+msgid ""
+"Windows has reported a translation fault while decoding text in this torrent. It is\n"
+"\t\tpossible that the torrent is corrupt, or just incorrectly encoded. The torrent may\n"
+"\t\tstill download properly, although some file names could be incorrect."
+msgstr ""
+"WindowsがこのTorrent内のテキストのデコード中にトランスレーションを失敗しました。\n"
+"\t\t考えられる原因はTorrentが破損しているか、正常にエンコードされていないことです。\n"
+"\t\tファイル名は正常でないものの、Torrentは適切にダウンロードされる可能性があります。"
 
 #: generalhelp.badtorrentencoding;text;3
-msgid "Most torrent creation programs should allow you to repair this torrent, which\n\t\twill ensure it works properly in all BitTorrent applications."
-msgstr "全てのBitTorrentアプリケーションで適切に動作するのを確実にするには、\n\t\tTorrent生成アプリケーションでこのTorrentを修復するべきです。"
+msgid ""
+"Most torrent creation programs should allow you to repair this torrent, which\n"
+"\t\twill ensure it works properly in all BitTorrent applications."
+msgstr ""
+"全てのBitTorrentアプリケーションで適切に動作するのを確実にするには、\n"
+"\t\tTorrent生成アプリケーションでこのTorrentを修復するべきです。"
 
 #: generalhelp.badtorrentencoding;link;4
 msgid "Click here for additional help"
@@ -2361,60 +2909,116 @@ msgid "Your eDonkey server list is empty"
 msgstr "eDonkeyサーバーリストが空です"
 
 #: generalhelp.donkeyserverlist;text;2
-msgid "There are no servers in your eDonkey server list. You need to download an\n\t\tup to date server list (met file) to connect to ED2K."
-msgstr "eDonkey2000サーバーリスト内にサーバーがありません。eD2Kに接続するには最新の\n\t\tサーバーリスト(metファイル)をダウンロードする必要があります。"
+msgid ""
+"There are no servers in your eDonkey server list. You need to download an\n"
+"\t\tup to date server list (met file) to connect to ED2K."
+msgstr ""
+"eDonkey2000サーバーリスト内にサーバーがありません。eD2Kに接続するには最新の\n"
+"\t\tサーバーリスト(metファイル)をダウンロードする必要があります。"
 
 #: generalhelp.donkeyserverlist;text;3
-msgid "You can download a server list from the ed2k setting page, or the discovery\n\t\tservices window. (Press F9 to open the discovery services window)"
-msgstr "eD2K設定ページかディスカバリサービスウィンドウでサーバーリストをダウンロードすることが出来ます。\n\t\t(F9を押せばディスカバリサービスウィンドウを開けます)"
+msgid ""
+"You can download a server list from the ed2k setting page, or the discovery\n"
+"\t\tservices window. (Press F9 to open the discovery services window)"
+msgstr ""
+"eD2K設定ページかディスカバリサービスウィンドウでサーバーリストをダウンロードすることが出来ます。\n"
+"\t\t(F9を押せばディスカバリサービスウィンドウを開けます)"
 
 #: generalhelp.uploadwarning;text;1
 msgid "Limiting uploads may slow downloads"
 msgstr "アップロードを制限すればダウンロード速度が遅くなる可能性があります"
 
 #: generalhelp.uploadwarning;text;2
-msgid "Several networks Shareaza connects to enforce ratios, limit uploads to\n\t\tclients that do not share, or simply preference uploading to known sharers."
-msgstr "Shareazaが接続するネットワークの中には、共有していないクライアントへのアップロードを制限したり、\n\t\t過去にアップロードしてくれたクライアントを優先する機能が存在します。"
+msgid ""
+"Several networks Shareaza connects to enforce ratios, limit uploads to\n"
+"\t\tclients that do not share, or simply preference uploading to known sharers."
+msgstr ""
+"Shareazaが接続するネットワークの中には、共有していないクライアントへのアップロードを制限したり、\n"
+"\t\t過去にアップロードしてくれたクライアントを優先する機能が存在します。"
 
 #: generalhelp.uploadwarning;text;3
-msgid "Fortunately, broadband DSL connections are like a two-lane highway: you have\n\t\tseparate allocations for upload and download. If your client is properly configured, \n\t\tyou should be able to upload at a good rate while retaining full download capacity."
-msgstr "ブロードバンドのDSL接続は2車線の高速道路に似ていて、アップロード用とダウンロード用で別々に\n\t\t帯域を割り当てることができます。クライアントが適切に設定されていれば、完全なダウンロード速度を確保しつつ、\n\t\tより良いアップロード速度が得られます。"
+msgid ""
+"Fortunately, broadband DSL connections are like a two-lane highway: you have\n"
+"\t\tseparate allocations for upload and download. If your client is properly configured, \n"
+"\t\tyou should be able to upload at a good rate while retaining full download capacity."
+msgstr ""
+"ブロードバンドのDSL接続は2車線の高速道路に似ていて、アップロード用とダウンロード用で別々に\n"
+"\t\t帯域を割り当てることができます。クライアントが適切に設定されていれば、完全なダウンロード速度を確保しつつ、\n"
+"\t\tより良いアップロード速度が得られます。"
 
 #: generalhelp.uploadwarning;text;4
-msgid "By default, your upload limit is set to about 85% of available upstream bandwidth,\n\t\twhile downloads are unlimited. That configuration should give you the fastest possible \n\t\tdownloads that are available."
-msgstr "デフォルトではダウンロードは無制限で、アップロード速度は利用可能なアップロード帯域の85%に設定されています。\n\t\tこの設定で可能な限り高速なダウンロード速度を得ることができるでしょう。"
+msgid ""
+"By default, your upload limit is set to about 85% of available upstream bandwidth,\n"
+"\t\twhile downloads are unlimited. That configuration should give you the fastest possible \n"
+"\t\tdownloads that are available."
+msgstr ""
+"デフォルトではダウンロードは無制限で、アップロード速度は利用可能なアップロード帯域の85%に設定されています。\n"
+"\t\tこの設定で可能な限り高速なダウンロード速度を得ることができるでしょう。"
 
-#: searchhelp.badsearch1;text;1 searchhelp.badsearch2;text;1 searchhelp.badsearch3;text;1
+#: searchhelp.badsearch1;text;1 searchhelp.badsearch2;text;1
+#: searchhelp.badsearch3;text;1
 msgid "Please re-phrase the search"
 msgstr "別の検索文字列を入力して下さい"
 
 #: searchhelp.badsearch1;text;2
-msgid "This search is poorly formatted, and may not function correctly. \n\t\tSearches should include several terms where possible, and should specify a schema \n\t\t(file type). Furthermore, searches must not be limited to numbers or negative\n\t\tterms only, and you should avoid overly general queries."
-msgstr "この検索文字列は不十分で、正しく検索できない可能性があります。\n\t\t検索キーワードは可能であれば複数入力し、ファイルの種類を指定しておくべきです。\n\t\tさらに、キーワードは数字は否定キーワードのみであってはなりません。そして非常に\n\t\t一般的なキーワードを避けるべきです。"
+msgid ""
+"This search is poorly formatted, and may not function correctly. \n"
+"\t\tSearches should include several terms where possible, and should specify a schema \n"
+"\t\t(file type). Furthermore, searches must not be limited to numbers or negative\n"
+"\t\tterms only, and you should avoid overly general queries."
+msgstr ""
+"この検索文字列は不十分で、正しく検索できない可能性があります。\n"
+"\t\t検索キーワードは可能であれば複数入力し、ファイルの種類を指定しておくべきです。\n"
+"\t\tさらに、キーワードは数字は否定キーワードのみであってはなりません。そして非常に\n"
+"\t\t一般的なキーワードを避けるべきです。"
 
 #: searchhelp.badsearch1;text;3
-msgid "Most clients on the network will ignore a search for all MP3 files, for example, \n\t\tbecause it is not specific enough, and would generate too many results."
-msgstr "例えば、非常に多くの検索結果が発生するため、ネットワーク上の殆どのクライアントは\n\t\tMP3ファイルを全て検索するような検索指定を無視します。"
+msgid ""
+"Most clients on the network will ignore a search for all MP3 files, for example, \n"
+"\t\tbecause it is not specific enough, and would generate too many results."
+msgstr ""
+"例えば、非常に多くの検索結果が発生するため、ネットワーク上の殆どのクライアントは\n"
+"\t\tMP3ファイルを全て検索するような検索指定を無視します。"
 
 #: searchhelp.badsearch2;text;2
-msgid "This search does not contain enough terms to function properly. All searches need\n\t\ta minimum number of valid, alphabetic characters to be able to start."
-msgstr "この検索文字列には適切に検索が行われるだけのキーワードが含まれていません。\n\t\t検索を開始することが出来る最低文字数が必要になります。"
+msgid ""
+"This search does not contain enough terms to function properly. All searches need\n"
+"\t\ta minimum number of valid, alphabetic characters to be able to start."
+msgstr ""
+"この検索文字列には適切に検索が行われるだけのキーワードが含まれていません。\n"
+"\t\t検索を開始することが出来る最低文字数が必要になります。"
 
 #: searchhelp.badsearch2;text;3
-msgid "While common file extensions (and numbers) can be searched for, you must enter\n\t\tother terms as well when creating the search. Punctuation and wildcards are not used \n\t\tin searches, just the text you enter."
-msgstr "検索時には一般的なファイル拡張子(と数字)だけでなく、他の検索キーワードも\n\t\t入力しなければなりません。句読点とワイルドカードは検索文字列内では使用されません。"
+msgid ""
+"While common file extensions (and numbers) can be searched for, you must enter\n"
+"\t\tother terms as well when creating the search. Punctuation and wildcards are not used \n"
+"\t\tin searches, just the text you enter."
+msgstr ""
+"検索時には一般的なファイル拡張子(と数字)だけでなく、他の検索キーワードも\n"
+"\t\t入力しなければなりません。句読点とワイルドカードは検索文字列内では使用されません。"
 
 #: searchhelp.badsearch3;text;2
-msgid "This search seems to contain only common file extensions, or no searchable\n\t\twords."
+msgid ""
+"This search seems to contain only common file extensions, or no searchable\n"
+"\t\twords."
 msgstr "この検索文字列は一般的なファイル拡張子だけしか指定されていない可能性があります。"
 
 #: searchhelp.badsearch3;text;3
-msgid "If you are having trouble creating searches, keep in mind that it's quite similar\n\t\tto a web search. Specific terms or phrases are best- Unique names, titles and\n\t\tkeywords."
-msgstr "検索キーワードの指定に何か問題がありましたら、それがウェブ検索と全く同じであることを\n\t\t思い出してください。あなたが欲しいファイルを特定できるような単語やフレーズを指定して下さい。"
+msgid ""
+"If you are having trouble creating searches, keep in mind that it's quite similar\n"
+"\t\tto a web search. Specific terms or phrases are best- Unique names, titles and\n"
+"\t\tkeywords."
+msgstr ""
+"検索キーワードの指定に何か問題がありましたら、それがウェブ検索と全く同じであることを\n"
+"\t\t思い出してください。あなたが欲しいファイルを特定できるような単語やフレーズを指定して下さい。"
 
 #: searchhelp.badsearch3;text;4
-msgid "General terms cannot be searched for efficiently and may result in poor\n\t\tsearch performance, as well as high bandwidth use during searches."
-msgstr "一般的すぎるキーワードは効果的に検索できず、検索効率も悪くなり、検索時に大きな\n\t\t帯域幅を使用することになります。"
+msgid ""
+"General terms cannot be searched for efficiently and may result in poor\n"
+"\t\tsearch performance, as well as high bandwidth use during searches."
+msgstr ""
+"一般的すぎるキーワードは効果的に検索できず、検索効率も悪くなり、検索時に大きな\n"
+"\t\t帯域幅を使用することになります。"
 
 #: searchhelp.badsearch3;text;5
 msgid "Further help is available on the Shareaza web site."
@@ -2425,12 +3029,21 @@ msgid "This search cannot be started"
 msgstr "この検索は出来ません"
 
 #: searchhelp.adultsearch;text;2
-msgid "The specified search would probably return a large number of results with adult \n\t\tcontent, and this has been turned off in the settings. You should either re-phrase the \n\t\tsearch, or disable the filter."
-msgstr "指定された検索は成人向けの内容を含む検索結果になる可能性があるため、設定により\n\t\tキャンセルされました。別の検索文字列を指定するか、フィルタを無効にして下さい。"
+msgid ""
+"The specified search would probably return a large number of results with adult \n"
+"\t\tcontent, and this has been turned off in the settings. You should either re-phrase the \n"
+"\t\tsearch, or disable the filter."
+msgstr ""
+"指定された検索は成人向けの内容を含む検索結果になる可能性があるため、設定により\n"
+"\t\tキャンセルされました。別の検索文字列を指定するか、フィルタを無効にして下さい。"
 
 #: searchhelp.adultsearch;text;3
-msgid "To disable the filter, go into Tools > Settings > General and uncheck the\n\t\tadult content filter."
-msgstr "フィルタを無効にするにはツール → > Shareaza設定 > → 一般で18禁フィルタの\n\t\tチェックを外して下さい。"
+msgid ""
+"To disable the filter, go into Tools > Settings > General and uncheck the\n"
+"\t\tadult content filter."
+msgstr ""
+"フィルタを無効にするにはツール → > Shareaza設定 > → 一般で18禁フィルタの\n"
+"\t\tチェックを外して下さい。"
 
 #: sharehelp.alreadyshared;text;1
 msgid "Already Shared"
@@ -2445,24 +3058,42 @@ msgid "This folder should not be shared"
 msgstr "このフォルダは共有すべきではありません"
 
 #: sharehelp.badshare;text;2
-msgid "This folder is (or contains) a system folder. Sharing this folder is not\n\t\trecommended, since most of the files in it are of no use to other people."
-msgstr "このフォルダ(又はこのフォルダに含まれるフォルダ)はシステムフォルダです。\n\t\t他の殆どの人にとってそれらに含まれるファイルの大部分が無駄である為、 このフォルダを共有すべきではありません。"
+msgid ""
+"This folder is (or contains) a system folder. Sharing this folder is not\n"
+"\t\trecommended, since most of the files in it are of no use to other people."
+msgstr ""
+"このフォルダ(又はこのフォルダに含まれるフォルダ)はシステムフォルダです。\n"
+"\t\t他の殆どの人にとってそれらに含まれるファイルの大部分が無駄である為、 このフォルダを共有すべきではありません。"
 
 #: sharehelp.badshare;text;3
-msgid "Folders such as the Windows directory, Program Files, and similar folders\n\t\tdo not usually contain files suitable for sharing. Any files of interest would be in\n\t\tsub-folders located"
-msgstr "WindowsディレクトリやProgram Filesディレクトリ、そしてそれと同じようなシステムフォルダは共有するのに\n\t\t適当なファイルを含んでいません。\n\t\t恐らく共有に値するような全てのファイルは、これらのフォルダの"
+msgid ""
+"Folders such as the Windows directory, Program Files, and similar folders\n"
+"\t\tdo not usually contain files suitable for sharing. Any files of interest would be in\n"
+"\t\tsub-folders located"
+msgstr ""
+"WindowsディレクトリやProgram Filesディレクトリ、そしてそれと同じようなシステムフォルダは共有するのに\n"
+"\t\t適当なファイルを含んでいません。\n"
+"\t\t恐らく共有に値するような全てのファイルは、これらのフォルダの"
 
 #: sharehelp.badshare;text;4
 msgid "inside"
 msgstr "内部に"
 
 #: sharehelp.badshare;text;5
-msgid "these folders.\n\t\tPlease share those instead."
-msgstr "位置するサブフォルダに存在するはずです。\n\t\t替わりにそれらを共有するようにして下さい。"
+msgid ""
+"these folders.\n"
+"\t\tPlease share those instead."
+msgstr ""
+"位置するサブフォルダに存在するはずです。\n"
+"\t\t替わりにそれらを共有するようにして下さい。"
 
 #: sharehelp.badshare;text;6
-msgid "The Shareaza 'incomplete' folder should also not be shared through the\n\t\tlibrary, since attempting to hash downloads in progress may impact on performance."
-msgstr "進行中のダウンロードをハッシュしようとしてパフォーマンスに重大な影響を与える可能性があるため、\n\t\tShareazaの\"incomplete\"フォルダもまたライブラリを通して共有すべきではありません。"
+msgid ""
+"The Shareaza 'incomplete' folder should also not be shared through the\n"
+"\t\tlibrary, since attempting to hash downloads in progress may impact on performance."
+msgstr ""
+"進行中のダウンロードをハッシュしようとしてパフォーマンスに重大な影響を与える可能性があるため、\n"
+"\t\tShareazaの\"incomplete\"フォルダもまたライブラリを通して共有すべきではありません。"
 
 #: message;id_browse_files
 msgid "View the user's shared files"
@@ -2784,7 +3415,8 @@ msgstr "ニュースと更新をチェックします"
 msgid "Run the connection test."
 msgstr ""
 
-#: message;id_help_web_1 message;id_help_web_2 message;id_help_web_3 message;id_help_web_4 message;id_help_web_5 message;id_help_web_6
+#: message;id_help_web_1 message;id_help_web_2 message;id_help_web_3
+#: message;id_help_web_4 message;id_help_web_5 message;id_help_web_6
 msgid "Visit this website"
 msgstr "このウェブサイトを訪問します"
 
@@ -3220,7 +3852,8 @@ msgstr ""
 msgid "Close the monitor window."
 msgstr "モニタウィンドウを閉じます"
 
-#: message;id_neighbours_chat message;id_search_chat message;id_transfers_chat message;id_uploads_chat
+#: message;id_neighbours_chat message;id_search_chat message;id_transfers_chat
+#: message;id_uploads_chat
 msgid "Open a chat session with the selected user."
 msgstr "選択したユーザとのチャットを開始します"
 
@@ -5520,7 +6153,8 @@ msgstr "終了(&X)"
 msgid "year old"
 msgstr "歳"
 
-#: string;16811 cconnectionsettingspage;control;3 cconnectionsettingspage;control;12
+#: string;16811 cconnectionsettingspage;control;3
+#: cconnectionsettingspage;control;12
 msgid "Automatic"
 msgstr "自動"
 
@@ -6280,7 +6914,7 @@ msgstr "インターフェースの変更を適用するにはShareazaの再起�
 msgid "No"
 msgstr "いいえ"
 
-#: string;20006 cdonkeyimportdlg;control;3
+#: string;20006 cdonkeyimportdlg;control;2
 msgid "Yes"
 msgstr "はい"
 
@@ -6528,11 +7162,34 @@ msgstr ""
 msgid "Rating"
 msgstr "評価"
 
-#: string;20237 csettingsheet;control;2 cscheduletaskdlg;control;1 cqueuepropertiesdlg;control;37 cprofilemanagerdlg;control;2 csavefilterasdlg;control;2 cdiscoveryservicedlg;control;5 cfilecopydlg;control;4 cfolderpropertiesdlg;control;7 cgraphlistdlg;control;16 cgraphitemdlg;control;1 cschemacolumnsdlg;control;3 csecureruledlg;control;33 csharemanagerdlg;control;6 cpromotedlg;control;8 cexistingfiledlg;control;9 cclosemodedlg;control;6 cdonkeyserversdlg;control;5 cdownloadgroupdlg;control;1 cmediavisdlg;control;6 cdownloadreviewdlg;control;2 cdecodemetadatadlg;control;8 circinputdlg;control;2
+#: string;20237 csettingsheet;control;2 cscheduletaskdlg;control;1
+#: cqueuepropertiesdlg;control;37 cprofilemanagerdlg;control;2
+#: csavefilterasdlg;control;2 cdiscoveryservicedlg;control;5
+#: cfilecopydlg;control;4 cfolderpropertiesdlg;control;7
+#: cgraphlistdlg;control;16 cgraphitemdlg;control;1
+#: cschemacolumnsdlg;control;3 csecureruledlg;control;33
+#: csharemanagerdlg;control;5 cpromotedlg;control;7 cexistingfiledlg;control;8
+#: cclosemodedlg;control;5 cdonkeyserversdlg;control;4
+#: cdownloadgroupdlg;control;1 cmediavisdlg;control;5
+#: cdownloadreviewdlg;control;1 cdecodemetadatadlg;control;8
+#: circinputdlg;control;2
 msgid "OK"
 msgstr "OK"
 
-#: string;20238 csettingsheet;control;3 cscheduletaskdlg;control;2 cqueuepropertiesdlg;control;38 cprofilemanagerdlg;control;3 cconnecttodlg;control;8 cdownloaddlg;control;6 cnewsearchdlg;control;4 cfiltersearchdlg;control;30 csavefilterasdlg;control;3 cdiscoveryservicedlg;control;6 cfilecopydlg;control;5 cfolderpropertiesdlg;control;8 cgraphlistdlg;control;17 cgraphitemdlg;control;2 cschemacolumnsdlg;control;4 csecureruledlg;control;34 csharemanagerdlg;control;7 curlcopydlg;control;7 curlexportdlg;control;11 curlactiondlg;control;12 cbitzidownloaddlg;control;4 cfilepreviewdlg;control;6 cexistingfiledlg;control;10 cclosemodedlg;control;7 cdonkeyserversdlg;control;6 cdeletefiledlg;control;5 ctorrentseeddlg;control;5 cdownloadgroupdlg;control;2 cmediavisdlg;control;7 cdecodemetadatadlg;control;9 circinputdlg;control;3
+#: string;20238 csettingsheet;control;3 cscheduletaskdlg;control;2
+#: cqueuepropertiesdlg;control;38 cprofilemanagerdlg;control;3
+#: cconnecttodlg;control;8 cdownloaddlg;control;5 cnewsearchdlg;control;4
+#: cfiltersearchdlg;control;30 csavefilterasdlg;control;3
+#: cdiscoveryservicedlg;control;6 cfilecopydlg;control;5
+#: cfolderpropertiesdlg;control;8 cgraphlistdlg;control;17
+#: cgraphitemdlg;control;2 cschemacolumnsdlg;control;4
+#: csecureruledlg;control;34 csharemanagerdlg;control;6 curlcopydlg;control;6
+#: curlexportdlg;control;10 curlactiondlg;control;11
+#: cbitzidownloaddlg;control;4 cfilepreviewdlg;control;6
+#: cexistingfiledlg;control;9 cclosemodedlg;control;6
+#: cdonkeyserversdlg;control;5 cdeletefiledlg;control;5
+#: ctorrentseeddlg;control;4 cdownloadgroupdlg;control;2
+#: cmediavisdlg;control;6 cdecodemetadatadlg;control;9 circinputdlg;control;3
 msgid "Cancel"
 msgstr "キャンセル"
 
@@ -6668,7 +7325,8 @@ msgstr "最小化をクリックした時:"
 msgid "Normal|Minimise to Tray"
 msgstr "通常|タスクトレイに最小化"
 
-#: clibrarysettingspage;control;1 cmediasettingspage;control;1 cuploadssettingspage;control;1 csecureruledlg;control;22
+#: clibrarysettingspage;control;1 cmediasettingspage;control;1
+#: cuploadssettingspage;control;1 csecureruledlg;control;22
 msgid "_Options:"
 msgstr "オプション(_O):"
 
@@ -6716,7 +7374,9 @@ msgstr "履歴をクリア"
 msgid "_Safe to Open:"
 msgstr "安全な拡張子(_S):"
 
-#: clibrarysettingspage;control;18 clibrarysettingspage;control;22 cmediasettingspage;control;7 cwebsettingspage;control;11 cfilesourcespage;control;5 cdownloadgroupdlg;control;7
+#: clibrarysettingspage;control;18 clibrarysettingspage;control;22
+#: cmediasettingspage;control;7 cwebsettingspage;control;11
+#: cfilesourcespage;control;5 cdownloadgroupdlg;control;7
 msgid "_Add"
 msgstr "追加(_A)"
 
@@ -7424,11 +8084,17 @@ msgstr "Shareaza一般プロトコル構造エクスプローラ:"
 msgid "Skin Information:"
 msgstr "スキン情報:"
 
-#: cskinssettingspage;control;3 cpluginssettingspage;control;3 ccollectionexportdlg;control;4 ctorrentgeneralpage;control;9
+#: cskinssettingspage;control;3 cpluginssettingspage;control;3
+#: ccollectionexportdlg;control;4 ctorrentgeneralpage;control;9
 msgid "Name:"
 msgstr "名前:"
 
-#: cskinssettingspage;control;4 cskinssettingspage;control;6 cpluginssettingspage;control;4 cfolderscandlg;control;2 cdownloadmonitordlg;control;2 cdownloadmonitordlg;control;7 cdownloadmonitordlg;control;9 cdownloadmonitordlg;control;11 cdownloadmonitordlg;control;13 ccollectionexportdlg;control;5 ccollectionexportdlg;control;7
+#: cskinssettingspage;control;4 cskinssettingspage;control;6
+#: cpluginssettingspage;control;4 cfolderscandlg;control;2
+#: cdownloadmonitordlg;control;2 cdownloadmonitordlg;control;7
+#: cdownloadmonitordlg;control;9 cdownloadmonitordlg;control;11
+#: cdownloadmonitordlg;control;13 ccollectionexportdlg;control;5
+#: ccollectionexportdlg;control;7
 msgid "..."
 msgstr "..."
 
@@ -7436,7 +8102,8 @@ msgstr "..."
 msgid "Author:"
 msgstr "作者:"
 
-#: cskinssettingspage;control;7 cpluginssettingspage;control;5 cadvancedsettingspage;control;7 ccollectionexportdlg;control;8
+#: cskinssettingspage;control;7 cpluginssettingspage;control;5
+#: cadvancedsettingspage;control;7 ccollectionexportdlg;control;8
 msgid "Description:"
 msgstr "説明:"
 
@@ -7456,7 +8123,7 @@ msgstr "プラグイン"
 msgid "Plugin Information:"
 msgstr "プラグイン情報:"
 
-#: cpluginssettingspage;control;7 cmediavisdlg;control;5
+#: cpluginssettingspage;control;7 cmediavisdlg;control;4
 msgid "_Setup..."
 msgstr "設定(_S)..."
 
@@ -7476,7 +8143,8 @@ msgstr "値:"
 msgid "Upload Queue Properties"
 msgstr "アップロードキュープロパティ"
 
-#: cqueuepropertiesdlg;control;1 cgraphlistdlg;control;14 cdownloadgroupdlg;control;12
+#: cqueuepropertiesdlg;control;1 cgraphlistdlg;control;14
+#: cdownloadgroupdlg;control;12
 msgid "_Name:"
 msgstr "名前(_N):"
 
@@ -7632,7 +8300,8 @@ msgstr "Shareazaを使用時に必ずしもファイルを共有する必要は�
 msgid "Please indicate which folders, if any, you wish to share.  Simply click the Add button to add a new folder."
 msgstr "共有する場合はそのフォルダを指定して下さい。 やり方は単に追加ボタンをクリックして共有するフォルダを選択するだけです。"
 
-#: cwizardsharepage;control;5 cgraphlistdlg;control;2 csharemanagerdlg;control;4
+#: cwizardsharepage;control;5 cgraphlistdlg;control;2
+#: csharemanagerdlg;control;3
 msgid "_Add..."
 msgstr "追加(_A)..."
 
@@ -7740,11 +8409,11 @@ msgstr "Gnutella2ネットワークは他のどんなP2Pネットワークより
 msgid "Import eDonkey Downloads"
 msgstr "eDonkey2000ダウンロードのインポート"
 
-#: cdonkeyimportdlg;control;2
+#: cdonkeyimportdlg;control;1
 msgid "Shareaza has detected that you have another eDonkey program installed on your computer.  Would you like to import any unfinished downloads into Shareaza?"
 msgstr "Shareazaはあなたのコンピュータ内に別のeDonkey2000互換プログラムがインストールされていることを検出しました。 未完了のファイルをShareazaにインポートしますか?"
 
-#: cdonkeyimportdlg;control;4
+#: cdonkeyimportdlg;control;3
 msgid "No|Cancel"
 msgstr "いいえ|キャンセル"
 
@@ -7988,19 +8657,19 @@ msgstr "ウルトラピア圧縮(_U)"
 msgid "Download File or Torrent"
 msgstr "ファイル・Torrentダウンロード"
 
-#: cdownloaddlg;control;3
+#: cdownloaddlg;control;2
 msgid "Downloading any file with Shareaza is easy.  Simply type or paste the URL or URI describing the file into the box below and press Enter."
 msgstr "Shareazaではどんなファイルをダウンロードするのも簡単です。ファイルへのURLかURIを入力するか、貼り付けてEnterキーを押して下さい"
 
-#: cdownloaddlg;control;7
+#: cdownloaddlg;control;6
 msgid "Shareaza can download files from the web (HTTP), and automatically search and download P2P links (Magnet, Gnutella, eDonkey, mP2P)."
 msgstr "Shareazaはウェブ(HTTP)からファイルをダウンロードすることができ、P2Pリンク(Magnet, Gnutella, eDonkey2000, mP2P)で自動的に検索・ダウンロードできます"
 
-#: cdownloaddlg;control;8
+#: cdownloaddlg;control;7
 msgid "Shareaza can also download BitTorrent files.  A torrent can be described by a .torrent file, or a HTTP link to the .torrent file.  To download a torrent HTTP link, paste it in the box above.  If you already have a .torrent file, click Open Torrent:"
 msgstr "ShareazaはBitTorrentファイルのダウンロードもできます。 torrentは拡張子.torrentファイルへのHTTPリンクで記述されています。 torrentのHTTPリンクをダウンロードするには上のボックスにそれを貼り付けます。.torrentファイルがある場合はそれを開いて下さい:"
 
-#: cdownloaddlg;control;9
+#: cdownloaddlg;control;8
 msgid "Open _Torrent..."
 msgstr "Torrentを開く(_T)..."
 
@@ -8380,7 +9049,7 @@ msgstr "分"
 msgid "Shared Folder Manager"
 msgstr "共有フォルダ管理"
 
-#: csharemanagerdlg;control;2
+#: csharemanagerdlg;control;1
 msgid "This is a list of folders in your library.  You can add and remove folders using the buttons on the left.  When you add a new folder it is initially shared with other users, however you can unshare it from the Shareaza library if you wish."
 msgstr "これはライブラリ内のフォルダリストです。 左側のボタンを使用することでフォルダの追加・削除ができます。 新規フォルダ追加時にはデフォルトで共有する設定になりますが、必要であればShareazaライブラリでそれを非共有にすることも出来ます。"
 
@@ -8388,11 +9057,11 @@ msgstr "これはライブラリ内のフォルダリストです。 左側の�
 msgid "Copy URI"
 msgstr "URIをコピー"
 
-#: curlcopydlg;control;2
+#: curlcopydlg;control;1
 msgid "You can copy a URI for the selected item in a variety of different formats.  Please choose the format you wish to use by clicking one of the URIs below:"
 msgstr "選択したファイル用にそれぞれ異なる形式のURIをコピーすることが出来ます。 以下の中から使用したい形式のURIを選択して下さい:"
 
-#: curlcopydlg;control;6
+#: curlcopydlg;control;5
 msgid "Include _myself as a fixed source in the URL"
 msgstr "固定ソースとしてURLに自分自身を含める(_M)"
 
@@ -8400,27 +9069,27 @@ msgstr "固定ソースとしてURLに自分自身を含める(_M)"
 msgid "Export URIs"
 msgstr "URIのエクスポート"
 
-#: curlexportdlg;control;2
+#: curlexportdlg;control;1
 msgid "You have selected %lu files to export as Shareaza-powered URI references.  Please select the format for the URIs, and click Save:"
 msgstr "選択した %lu ファイルをShareazaのURI参照としてエクスポートします。 URIの形式を選択し、保存をクリックして下さい:"
 
-#: curlexportdlg;control;4
+#: curlexportdlg;control;3
 msgid "Insert Token:"
 msgstr "トークン挿入:"
 
-#: curlexportdlg;control;5
+#: curlexportdlg;control;4
 msgid "Tiger Root|SHA1|MD5|ED2K (CMD4)|BitTorrent|Filename|Filename (URI)|Base Filename|File Extension|File Size|File Size (bytes)|Folder Path|Local Host|Local Port|Link|Link (URI)"
 msgstr "Tiger Root|SHA1|MD5|ED2K (CMD4)|ファイル名|ファイル名(URI)|基本ファイル名|ファイル拡張子|ファイルサイズ|ファイルサイズ(バイト)|フォルダパス|ローカルホスト|ローカルポート"
 
-#: curlexportdlg;control;6
+#: curlexportdlg;control;5
 msgid "Select preset:"
 msgstr "プリセット選択:"
 
-#: curlexportdlg;control;7
+#: curlexportdlg;control;6
 msgid "Magnet|eDonkey|Magnet HTML|eDonkey HTML"
 msgstr "Magnet|eDonkey|Magnet HTML|eDonkey HTML"
 
-#: curlexportdlg;control;9
+#: curlexportdlg;control;8
 msgid "_Save..."
 msgstr "保存..."
 
@@ -8428,39 +9097,39 @@ msgstr "保存..."
 msgid "Shareaza URI Manager"
 msgstr "Shareaza URIマネージャ"
 
-#: curlactiondlg;control;2
+#: curlactiondlg;control;1
 msgid "You have clicked on a Shareaza-powered URI which links to the following content on the network:"
 msgstr "ネットワーク上にある以下の内容へのリンクであるURIをクリックしました:"
 
-#: curlactiondlg;control;3
+#: curlactiondlg;control;2
 msgid "You have clicked on a Shareaza-powered URL which will connect you to the following host or server:"
 msgstr "以下のホストかサーバに接続するURIをクリックしました:"
 
-#: curlactiondlg;control;4
+#: curlactiondlg;control;3
 msgid "You have clicked on a Shareaza-powered URI which will allow you to browse the shared files available on the following host:"
 msgstr "以下のホストで利用可能な共有ファイルを参照するURIをクリックしました:"
 
-#: curlactiondlg;control;9
+#: curlactiondlg;control;8
 msgid "Please select the action you would like Shareaza to take:"
 msgstr "Shareazaに行わせる処理を選択して下さい:"
 
-#: curlactiondlg;control;10
+#: curlactiondlg;control;9
 msgid "_Download Now"
 msgstr "ダウンロード(_D)"
 
-#: curlactiondlg;control;11
+#: curlactiondlg;control;10
 msgid "_Search for File"
 msgstr "ファイルを検索(_S)"
 
-#: curlactiondlg;control;13
+#: curlactiondlg;control;12
 msgid "_Remember my selection next time"
 msgstr "この選択を記憶(_R)"
 
-#: curlactiondlg;control;14
+#: curlactiondlg;control;13
 msgid "Open a download _monitor window"
 msgstr "ﾀﾞｳﾝﾛｰﾄﾞﾓﾆﾀｳｨﾝﾄﾞｳを開く(_M)"
 
-#: curlactiondlg;control;15
+#: curlactiondlg;control;14
 msgid "You have clicked on a Shareaza-powered URI which will add the following Discovery Service to your Discovery Services cache."
 msgstr "ディスカバリサービスキャッシュに以下のディスカバリサービスを加えるURIをクリックしました:"
 
@@ -8492,27 +9161,27 @@ msgstr "(新規プレビューファイルにダウンロードしたチャン�
 msgid "Shareaza Respects its Users"
 msgstr "Shareazaはユーザーをリスペクトしています"
 
-#: cwarningsdlg;control;2
+#: cwarningsdlg;control;1
 msgid "Did you know Shareaza is a 100% free product?"
 msgstr "Shareazaが100%フリーな製品であることを知っていますか?"
 
-#: cwarningsdlg;control;3
+#: cwarningsdlg;control;2
 msgid "Shareaza does NOT contain ANY \"spyware\", \"adware\" or other bundled software. It does NOT display any advertisements or \"popups\", ever.{n}{n}If you ever see advertising or \"popups\" while using Shareaza, be assured that they are NOT coming from this program."
 msgstr "Shareazaはどのような種類の \"スパイウェア\"や\"アドウェア\" も含んでいませんし、 どんな広告・ \"ポップアップ\" も表示されません。{n}{n}もしShareazaを使用中に広告や\"ポップアップ\"が表示されたとしても、 それはこのプログラムが原因ではありませんので安心して下さい。"
 
-#: cwarningsdlg;control;4
+#: cwarningsdlg;control;3
 msgid "Unfortunately a lot of other software does come with undesirable adware or spyware, so if you see something suspicious you may wish to check your PC with an advertising or spyware removal program."
 msgstr "残念ながら他の多くのソフトウェアは望まれていないアドウェアやスパイウェアを含んでいることがあります。 もし疑わしいものを発見したら、スパイウェア削除プログラムであなたのマシンをチェックした方が良いでしょう"
 
-#: cwarningsdlg;control;5
+#: cwarningsdlg;control;4
 msgid "You should not have had to pay any money to obtain Shareaza. Shareaza can be freely downloaded by anyone from http://shareaza.sourceforge.net/. If you paid someone money for Shareaza, you should demand a full refund immediately."
 msgstr "Shareazaを取得するには一銭もかかりません。 Shareazaは誰でもhttp://shareaza.sourceforge.net/からダウンロードすることができます。 もしあなたがShareazaの為に誰かにお金を支払っていたら、今すぐ全額払い戻しを請求して下さい。"
 
-#: cwarningsdlg;control;6
+#: cwarningsdlg;control;5
 msgid "Shareaza respects its users!"
 msgstr "Shareazaはそのユーザを尊敬しています!"
 
-#: cwarningsdlg;control;7 cpromotedlg;control;7
+#: cwarningsdlg;control;6 cpromotedlg;control;6
 msgid "http://shareaza.sourceforge.net/"
 msgstr "http://shareaza.sourceforge.net/"
 
@@ -8520,23 +9189,23 @@ msgstr "http://shareaza.sourceforge.net/"
 msgid "Spread the Word"
 msgstr "言葉を世界へ"
 
-#: cpromotedlg;control;2
+#: cpromotedlg;control;1
 msgid "Help Us Spread the Word"
 msgstr "Shareazaという言葉を広めるお手伝いをして下さい"
 
-#: cpromotedlg;control;3
+#: cpromotedlg;control;2
 msgid "We hope you have enjoyed using Shareaza so far. We believe it is the best file sharing application around."
 msgstr "我々はあなたがShareazaを楽しんで使用してくれることを願っています。 我々はこれが最良のファイル共有アプリケーションであると信じています"
 
-#: cpromotedlg;control;4
+#: cpromotedlg;control;3
 msgid "Unfortunately, a lot of file sharers don't know what they're missing!"
 msgstr "残念ながら、多くのファイル共有者はShareazaの存在を知りません!"
 
-#: cpromotedlg;control;5
+#: cpromotedlg;control;4
 msgid "If you know someone who would like Shareaza, whether they're a new user or someone still putting up with an inferior product, why not let them know there is a better alternative?"
 msgstr "Shareazaの新しいユーザーになってくれるかどうかに関係なく、 出来の悪いファイル共有ソフトを使用していている人でShareazaを気に入ってくれそうな人がいれば、 Shareazaの存在を教えてあげてくれませんか?"
 
-#: cpromotedlg;control;6
+#: cpromotedlg;control;5
 msgid "Chances are they'll be grateful you rescued them!"
 msgstr "きっとその人はあなたに感謝することになるでしょう!"
 
@@ -8544,27 +9213,27 @@ msgstr "きっとその人はあなたに感謝することになるでしょう
 msgid "Existing File"
 msgstr "既存ファイル"
 
-#: cexistingfiledlg;control;5
+#: cexistingfiledlg;control;4
 msgid "You already have this file in your file library. What would you like to do?"
 msgstr "ライブラリ内に既に同じファイルが存在します。どうしますか?"
 
-#: cexistingfiledlg;control;6
+#: cexistingfiledlg;control;5
 msgid "Show me the file in my library"
 msgstr "ライブラリ内のファイルを表示する"
 
-#: cexistingfiledlg;control;7
+#: cexistingfiledlg;control;6
 msgid "Download the file again"
 msgstr "ファイルのダウンロードをやり直す"
 
-#: cexistingfiledlg;control;8
+#: cexistingfiledlg;control;7
 msgid "Don't download this file"
 msgstr "このファイルをダウンロードしない"
 
-#: cexistingfiledlg;control;11
+#: cexistingfiledlg;control;10
 msgid "You have downloaded and deleted this file before. What would you like to do?"
 msgstr "あなたは以前このファイルをダウンロードして、削除したことがあります。どうしますか?"
 
-#: cexistingfiledlg;control;12
+#: cexistingfiledlg;control;11
 msgid "Warning!!! Duplicate files detected. Some malicious software may infect your Library. Make sure that you downloaded this file or placed it manually. Otherwise, shutdown Shareaza and scan your computer with an antivirus program."
 msgstr "警告!!! ファイルのコピーが検出されました。 いくつかの悪意のあるソフトウェアがあなたのライブラリを汚染させる可能性があります。 あなたがこのファイルをダウンロードしたか手動でライブラリに追加したかどうかを必ず確認して下さい。 もし記憶に無ければ直ちにShareazaを終了させ、コンピュータをアンチウイルスプログラムでスキャンして下さい。"
 
@@ -8572,19 +9241,19 @@ msgstr "警告!!! ファイルのコピーが検出されました。 いくつ�
 msgid "Close Button"
 msgstr "終了ボタン"
 
-#: cclosemodedlg;control;2
+#: cclosemodedlg;control;1
 msgid "This is the first time you have clicked Shareaza's close button. Please choose what action you would like Shareaza to take when clicking the close button from now on:"
 msgstr "初めてShareazaの終了ボタンをクリックしました。 次回から終了ボタンをクリックした時にShareazaがどういう挙動をするかを選択して下さい:"
 
-#: cclosemodedlg;control;3
+#: cclosemodedlg;control;2
 msgid "Minimise to the tray area"
 msgstr "タスクトレイに最小化する"
 
-#: cclosemodedlg;control;4
+#: cclosemodedlg;control;3
 msgid "Shut down Shareaza immediately"
 msgstr "即座にShareazaを終了する"
 
-#: cclosemodedlg;control;5
+#: cclosemodedlg;control;4
 msgid "Shut down Shareaza after any downloads and uploads finish"
 msgstr "全てのダウンロードとアップロードが完了すればShareazaを終了する"
 
@@ -8592,7 +9261,7 @@ msgstr "全てのダウンロードとアップロードが完了すればSharea
 msgid "Download Server.met File"
 msgstr "Server.metファイルのダウンロード"
 
-#: cdonkeyserversdlg;control;2
+#: cdonkeyserversdlg;control;1
 msgid "You can download an eDonkey server.met file from the web to refresh your local list of servers."
 msgstr "ローカルサーバリストを更新する為にウェブからeDonkey2000 server.metファイルをダウンロードします"
 
@@ -8736,15 +9405,15 @@ msgstr ""
 msgid "Open Torrent File"
 msgstr "Torrentファイルを開く"
 
-#: ctorrentseeddlg;control;2
+#: ctorrentseeddlg;control;1
 msgid "You have opened a BitTorrent torrent file.  Would you like to download its contents, or re-seed it?"
 msgstr "BitTorrentファイルを開きました。 その内容をダウンロード、又は再シードしますか??"
 
-#: ctorrentseeddlg;control;4
+#: ctorrentseeddlg;control;3
 msgid "Seed"
 msgstr "シード"
 
-#: ctorrentseeddlg;control;6
+#: ctorrentseeddlg;control;5
 msgid "To share complete files using BitTorrent they must first be seeded.  Once this process is complete the Torrent will appear as a new item in your download list."
 msgstr "BitTorrentを使用して完全なファイルを共有するには、先ず始めにシード作業を行う必要があります。 一旦この作業が完了すれば、Torrentがダウンロードリスト内に新しいアイテムとして表示されます。"
 
@@ -8832,11 +9501,11 @@ msgstr "全てのファイルタイプ(_T):"
 msgid "Select Visualisation"
 msgstr "視覚効果を選択"
 
-#: cmediavisdlg;control;2
+#: cmediavisdlg;control;1
 msgid "Select an audio visualisation from the list:"
 msgstr "リストからオーディオ視覚効果を選択して下さい:"
 
-#: cmediavisdlg;control;4
+#: cmediavisdlg;control;3
 msgid "Footer Display|Full Size Display|Large Display|Medium Display|Small Display"
 msgstr "フッタ表示|フルサイズ表示|大きな表示|通常表示|小さな表示"
 
@@ -8844,23 +9513,23 @@ msgstr "フッタ表示|フルサイズ表示|大きな表示|通常表示|小�
 msgid "Upgrade Alert"
 msgstr "アップグレード警告"
 
-#: cupgradedlg;control;2
+#: cupgradedlg;control;1
 msgid "A new version of Shareaza is now available. Would you like to upgrade?"
 msgstr "新しいバージョンのShareazaが利用可能になりました。 アップグレードしますか?"
 
-#: cupgradedlg;control;3
+#: cupgradedlg;control;2
 msgid "If you select Upgrade Now, Shareaza will add the upgrade to your download queue and automatically begin downloading it."
 msgstr "「今すぐアップグレード」を選択した場合、Shareazaはダウンロードキューにアップグレードプログラムを追加し、自動的にダウンロードします。"
 
-#: cupgradedlg;control;4
+#: cupgradedlg;control;3
 msgid "_Upgrade Now"
 msgstr "今すぐアップグレード"
 
-#: cupgradedlg;control;5
+#: cupgradedlg;control;4
 msgid "Don't check for new versions"
 msgstr "新バージョンをチェックしない"
 
-#: cupgradedlg;control;6
+#: cupgradedlg;control;5
 msgid "Don't Upgrade"
 msgstr "アップグレードしない"
 

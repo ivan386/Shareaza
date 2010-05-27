@@ -2,12 +2,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2010-05-19 14:38+0000\n"
+"POT-Creation-Date: 2010-05-27 12:52+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Brov, michalg17, Xzbeat, Oce, TAmb\n"
 "Language-Team: Shareaza Development Team\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-Language: Polski\n"
@@ -52,7 +52,8 @@ msgstr "Kliknij tutaj, aby wybrać język polski."
 msgid "(translation language direction: ltr or rtl)"
 msgstr ""
 
-#: button;id_network_connect button;id_tab_connect button;id_irc_connect button;id_chat_connect string;8069 cconnecttodlg;control;7
+#: button;id_network_connect button;id_tab_connect button;id_irc_connect
+#: button;id_chat_connect string;8069 cconnecttodlg;control;7
 msgid "Connect"
 msgstr "Połącz"
 
@@ -68,11 +69,13 @@ msgstr "Biblioteka"
 msgid "Media Player"
 msgstr "Media"
 
-#: button;id_tab_search string;window_search string;window_searchpad string;8144 string;8156 cnewsearchdlg;control;3 column;search
+#: button;id_tab_search string;window_search string;window_searchpad
+#: string;8144 string;8156 cnewsearchdlg;control;3 column;search
 msgid "Search"
 msgstr "Szukaj"
 
-#: button;id_tab_transfers string;window_downloads dialog;cdownloadssettingspage
+#: button;id_tab_transfers string;window_downloads
+#: dialog;cdownloadssettingspage
 msgid "Downloads"
 msgstr "Pobierania"
 
@@ -88,7 +91,7 @@ msgstr "Czat"
 msgid "New Search"
 msgstr "Nowe Szukanie"
 
-#: button;id_search_download cdownloaddlg;control;5 ctorrentseeddlg;control;3
+#: button;id_search_download cdownloaddlg;control;4 ctorrentseeddlg;control;2
 msgid "Download"
 msgstr "Pobierz"
 
@@ -104,11 +107,15 @@ msgstr "Panel wyszukiwania"
 msgid "Show Details"
 msgstr "Pokaż szczegóły"
 
-#: csearchwnd.panel.basic;label-text;1 csearchwnd.panel;label-text;1 csearchwnd.full;label-text;1 cbrowsehostwnd.basic;label-text;1 cbrowsehostwnd;label-text;1 chitmonitorwnd;label-text;1
+#: csearchwnd.panel.basic;label-text;1 csearchwnd.panel;label-text;1
+#: csearchwnd.full;label-text;1 cbrowsehostwnd.basic;label-text;1
+#: cbrowsehostwnd;label-text;1 chitmonitorwnd;label-text;1
 msgid "Filter:"
 msgstr "Filtr:"
 
-#: csearchwnd.panel.basic;label-tip;1 csearchwnd.panel;label-tip;1 csearchwnd.full;label-tip;1 cbrowsehostwnd.basic;label-tip;1 cbrowsehostwnd;label-tip;1 chitmonitorwnd;label-tip;1
+#: csearchwnd.panel.basic;label-tip;1 csearchwnd.panel;label-tip;1
+#: csearchwnd.full;label-tip;1 cbrowsehostwnd.basic;label-tip;1
+#: cbrowsehostwnd;label-tip;1 chitmonitorwnd;label-tip;1
 msgid "Type some words to filter the results with"
 msgstr "Wpisz kilka słów, aby przefiltrować wg. nich wyniki."
 
@@ -140,7 +147,8 @@ msgstr "Foldery"
 msgid "Organiser"
 msgstr "Organizator"
 
-#: button;id_search_chat button;id_uploads_chat button;id_neighbours_chat cbrowsehostprofile.2;link;4
+#: button;id_search_chat button;id_uploads_chat button;id_neighbours_chat
+#: cbrowsehostprofile.2;link;4
 msgid "Chat to User"
 msgstr "Czat z użytkownikiem"
 
@@ -152,7 +160,8 @@ msgstr "Stop"
 msgid "Refresh"
 msgstr "Odśwież"
 
-#: button;id_downloads_launch_complete button;id_uploads_launch button;id_library_launch
+#: button;id_downloads_launch_complete button;id_uploads_launch
+#: button;id_library_launch
 msgid "Open or Play"
 msgstr "Otwórz lub odtwarzaj"
 
@@ -196,7 +205,8 @@ msgstr "Wyczyść zakończone"
 msgid "Properties"
 msgstr "Właściwości"
 
-#: button;id_downloads_filter_menu button;id_uploads_filter_menu cfiltersearchdlg;control;29
+#: button;id_downloads_filter_menu button;id_uploads_filter_menu
+#: cfiltersearchdlg;control;29
 msgid "Filter"
 msgstr "Filtr"
 
@@ -252,7 +262,8 @@ msgstr "Przenieś"
 msgid "Copy"
 msgstr "Skopiuj"
 
-#: button;id_library_delete cskinssettingspage;control;9 cdeletefiledlg;control;3
+#: button;id_library_delete cskinssettingspage;control;9
+#: cdeletefiledlg;control;3
 msgid "Delete"
 msgstr "Usuń"
 
@@ -304,7 +315,8 @@ msgstr "Następny"
 msgid "Playlist"
 msgstr "Lista odtwarzania"
 
-#: cmediaframe;label-text;2 string;8321 cconnectionsettingspage;control;4 cconnectionsettingspage;control;13
+#: cmediaframe;label-text;2 string;8321 cconnectionsettingspage;control;4
+#: cconnectionsettingspage;control;13
 msgid "Speed:"
 msgstr "Szybkość:"
 
@@ -324,7 +336,8 @@ msgstr "Zapisz"
 msgid "Connect to IRC"
 msgstr "Połącz z IRC"
 
-#: button;id_irc_disconnect button;id_neighbours_disconnect button;id_hostcache_disconnect button;id_chat_disconnect string;8072
+#: button;id_irc_disconnect button;id_neighbours_disconnect
+#: button;id_hostcache_disconnect button;id_chat_disconnect string;8072
 msgid "Disconnect"
 msgstr "Rozłącz"
 
@@ -500,7 +513,8 @@ msgstr "Rzeczywista wielkość"
 msgid "Best Fit"
 msgstr "Najlepsze dopasowanie"
 
-#: button;imageviewer_close string;20001 cfolderscandlg;control;7 cdonkeyimportdlg;control;6 cwarningsdlg;control;8 chelpdlg;control;2
+#: button;imageviewer_close string;20001 cfolderscandlg;control;7
+#: cdonkeyimportdlg;control;5 cwarningsdlg;control;7 chelpdlg;control;1
 msgid "Close"
 msgstr "Zamknij"
 
@@ -508,7 +522,9 @@ msgstr "Zamknij"
 msgid "_Close Window"
 msgstr "_Close Window"
 
-#: child;item;id_child_maximise cmainwnd.windowed;22;item;id_window_cascade cmediaframe.basic;53;item;id_media_fullscreen cmediaframe;56;item;id_media_fullscreen
+#: child;item;id_child_maximise cmainwnd.windowed;22;item;id_window_cascade
+#: cmediaframe.basic;53;item;id_media_fullscreen
+#: cmediaframe;56;item;id_media_fullscreen
 msgid "_Full Screen"
 msgstr "_Full Screen"
 
@@ -520,11 +536,17 @@ msgstr "_Restore"
 msgid "_Minimise"
 msgstr "_Minimise"
 
-#: cmainwnd.basic;1 cmainwnd.tabbed;9 cmainwnd.tabbed;11;item;id_tab_network cmainwnd.windowed;18 cmainwnd.view.tabbed;item;id_tab_network chomewnd.tabbed;item;id_tab_network
+#: cmainwnd.basic;1 cmainwnd.tabbed;9 cmainwnd.tabbed;11;item;id_tab_network
+#: cmainwnd.windowed;18 cmainwnd.view.tabbed;item;id_tab_network
+#: chomewnd.tabbed;item;id_tab_network
 msgid "_Network"
 msgstr "Sieć"
 
-#: cmainwnd.basic;1;item;id_network_connect cmainwnd.tabbed;9;item;id_network_connect cmainwnd.windowed;18;item;id_network_connect cneighbourswnd;59;item;id_network_connect cprivatechatframe;item;id_chat_connect
+#: cmainwnd.basic;1;item;id_network_connect
+#: cmainwnd.tabbed;9;item;id_network_connect
+#: cmainwnd.windowed;18;item;id_network_connect
+#: cneighbourswnd;59;item;id_network_connect
+#: cprivatechatframe;item;id_chat_connect
 msgid "_Connect"
 msgstr "Połącz"
 
@@ -532,23 +554,35 @@ msgstr "Połącz"
 msgid "Choose _Networks"
 msgstr "Wybierz sieci"
 
-#: cmainwnd.basic;1;2;item;id_network_g2 cmainwnd.tabbed;9;10;item;id_network_g2 cmainwnd.windowed;18;19;item;id_network_g2
+#: cmainwnd.basic;1;2;item;id_network_g2
+#: cmainwnd.tabbed;9;10;item;id_network_g2
+#: cmainwnd.windowed;18;19;item;id_network_g2
 msgid "Connect to _Gnutella2"
 msgstr "Połącz z Gnutella_2"
 
-#: cmainwnd.basic;1;2;item;id_network_g1 cmainwnd.tabbed;9;10;item;id_network_g1 cmainwnd.windowed;18;19;item;id_network_g1
+#: cmainwnd.basic;1;2;item;id_network_g1
+#: cmainwnd.tabbed;9;10;item;id_network_g1
+#: cmainwnd.windowed;18;19;item;id_network_g1
 msgid "Connect to Gnutella_1"
 msgstr "Połącz z Gnutella_1"
 
-#: cmainwnd.basic;1;2;item;id_network_ed2k cmainwnd.tabbed;9;10;item;id_network_ed2k cmainwnd.windowed;18;19;item;id_network_ed2k
+#: cmainwnd.basic;1;2;item;id_network_ed2k
+#: cmainwnd.tabbed;9;10;item;id_network_ed2k
+#: cmainwnd.windowed;18;19;item;id_network_ed2k
 msgid "Connect to _eDonkey"
 msgstr "Połącz z _eDonkey"
 
-#: cmainwnd.basic;1;item;id_network_auto_close cmainwnd.tabbed;9;item;id_network_auto_close cmainwnd.tray;item;id_network_auto_close cremotewnd;item;id_network_auto_close
+#: cmainwnd.basic;1;item;id_network_auto_close
+#: cmainwnd.tabbed;9;item;id_network_auto_close
+#: cmainwnd.tray;item;id_network_auto_close
+#: cremotewnd;item;id_network_auto_close
 msgid "Exit _After Transfers"
 msgstr "Zamknij po zakończeniu pobrań(?)"
 
-#: cmainwnd.basic;1;item;id_network_exit cmainwnd.tabbed;9;item;id_network_exit cmainwnd.windowed;18;item;id_network_exit cmainwnd.tray;item;id_network_exit cremotewnd;item;id_network_exit
+#: cmainwnd.basic;1;item;id_network_exit
+#: cmainwnd.tabbed;9;item;id_network_exit
+#: cmainwnd.windowed;18;item;id_network_exit
+#: cmainwnd.tray;item;id_network_exit cremotewnd;item;id_network_exit
 msgid "E_xit"
 msgstr "Zakończ"
 
@@ -556,23 +590,45 @@ msgstr "Zakończ"
 msgid "_View"
 msgstr "Widok"
 
-#: cmainwnd.basic;3;item;id_tab_home cmainwnd.tabbed;11;item;id_tab_home cmainwnd.view.basic;item;id_tab_home cmainwnd.view.tabbed;item;id_tab_home chomewnd.basic;item;id_tab_home chomewnd.tabbed;item;id_tab_home
+#: cmainwnd.basic;3;item;id_tab_home cmainwnd.tabbed;11;item;id_tab_home
+#: cmainwnd.view.basic;item;id_tab_home cmainwnd.view.tabbed;item;id_tab_home
+#: chomewnd.basic;item;id_tab_home chomewnd.tabbed;item;id_tab_home
 msgid "_Home"
 msgstr "Home"
 
-#: cmainwnd.basic;3;item;id_tab_library cmainwnd.tabbed;11;item;id_tab_library cmainwnd.tabbed;11;12;item;id_view_library cmainwnd.windowed;20;item;id_view_library cmainwnd.view.basic;item;id_tab_library cmainwnd.view.tabbed;item;id_tab_library cmainwnd.view.windowed;item;id_view_library chomewnd.basic;item;id_tab_library chomewnd.tabbed;item;id_tab_library
+#: cmainwnd.basic;3;item;id_tab_library cmainwnd.tabbed;11;item;id_tab_library
+#: cmainwnd.tabbed;11;12;item;id_view_library
+#: cmainwnd.windowed;20;item;id_view_library
+#: cmainwnd.view.basic;item;id_tab_library
+#: cmainwnd.view.tabbed;item;id_tab_library
+#: cmainwnd.view.windowed;item;id_view_library
+#: chomewnd.basic;item;id_tab_library chomewnd.tabbed;item;id_tab_library
 msgid "_Library"
 msgstr " Biblioteka"
 
-#: cmainwnd.basic;3;item;id_tab_media cmainwnd.tabbed;11;item;id_tab_media cmainwnd.tabbed;11;12;item;id_view_media cmainwnd.windowed;20;item;id_view_media cmainwnd.view.basic;item;id_tab_media cmainwnd.view.tabbed;item;id_tab_media cmainwnd.view.windowed;item;id_view_media chomewnd.basic;item;id_tab_media chomewnd.tabbed;item;id_tab_media
+#: cmainwnd.basic;3;item;id_tab_media cmainwnd.tabbed;11;item;id_tab_media
+#: cmainwnd.tabbed;11;12;item;id_view_media
+#: cmainwnd.windowed;20;item;id_view_media
+#: cmainwnd.view.basic;item;id_tab_media
+#: cmainwnd.view.tabbed;item;id_tab_media
+#: cmainwnd.view.windowed;item;id_view_media chomewnd.basic;item;id_tab_media
+#: chomewnd.tabbed;item;id_tab_media
 msgid "_Media Player"
 msgstr "Odtwarzacz"
 
-#: cmainwnd.basic;3;item;id_tab_search cmainwnd.tabbed;11;item;id_tab_search cmainwnd.view.basic;item;id_tab_search cmainwnd.view.tabbed;item;id_tab_search chomewnd.basic;item;id_tab_search chomewnd.tabbed;item;id_tab_search
+#: cmainwnd.basic;3;item;id_tab_search cmainwnd.tabbed;11;item;id_tab_search
+#: cmainwnd.view.basic;item;id_tab_search
+#: cmainwnd.view.tabbed;item;id_tab_search chomewnd.basic;item;id_tab_search
+#: chomewnd.tabbed;item;id_tab_search
 msgid "_Search"
 msgstr "Szukaj"
 
-#: cmainwnd.basic;3;item;id_tab_transfers cmainwnd.tabbed;11;12;item;id_view_downloads cmainwnd.windowed;20;item;id_view_downloads cmainwnd.view.basic;item;id_tab_transfers cmainwnd.view.windowed;item;id_view_downloads chomewnd.basic;item;id_tab_transfers
+#: cmainwnd.basic;3;item;id_tab_transfers
+#: cmainwnd.tabbed;11;12;item;id_view_downloads
+#: cmainwnd.windowed;20;item;id_view_downloads
+#: cmainwnd.view.basic;item;id_tab_transfers
+#: cmainwnd.view.windowed;item;id_view_downloads
+#: chomewnd.basic;item;id_tab_transfers
 msgid "_Downloads"
 msgstr "Pobierania"
 
@@ -580,35 +636,74 @@ msgstr "Pobierania"
 msgid "_Remote"
 msgstr "Pokaż Remote"
 
-#: cmainwnd.basic;3;item;id_tab_irc cmainwnd.tabbed;11;item;id_tab_irc cmainwnd.view.tabbed;item;id_tab_irc chomewnd.tabbed;item;id_tab_irc
+#: cmainwnd.basic;3;item;id_tab_irc cmainwnd.tabbed;11;item;id_tab_irc
+#: cmainwnd.view.tabbed;item;id_tab_irc chomewnd.tabbed;item;id_tab_irc
 msgid "_Chat"
 msgstr "_Czat"
 
-#: cmainwnd.basic;3;4 cmainwnd.tabbed;11;12 cmainwnd.view.basic;26 chomewnd.basic;27 cdownloadswnd.download;39
+#: cmainwnd.basic;3;4 cmainwnd.tabbed;11;12 cmainwnd.view.basic;26
+#: chomewnd.basic;27 cdownloadswnd.download;39
 msgid "_Advanced"
 msgstr "_Zaawansowane"
 
-#: cmainwnd.basic;3;4;item;id_view_neighbours cmainwnd.tabbed;11;12;item;id_view_neighbours cmainwnd.windowed;20;item;id_view_neighbours cmainwnd.view.basic;26;item;id_view_neighbours cmainwnd.view.windowed;item;id_view_neighbours chomewnd.basic;27;item;id_view_neighbours
+#: cmainwnd.basic;3;4;item;id_view_neighbours
+#: cmainwnd.tabbed;11;12;item;id_view_neighbours
+#: cmainwnd.windowed;20;item;id_view_neighbours
+#: cmainwnd.view.basic;26;item;id_view_neighbours
+#: cmainwnd.view.windowed;item;id_view_neighbours
+#: chomewnd.basic;27;item;id_view_neighbours
 msgid "_Neighbours"
 msgstr "Sieć"
 
-#: cmainwnd.basic;3;4;item;id_view_uploads cmainwnd.tabbed;11;12;item;id_view_uploads cmainwnd.windowed;20;item;id_view_uploads cmainwnd.view.basic;26;item;id_view_uploads cmainwnd.view.windowed;item;id_view_uploads chomewnd.basic;27;item;id_view_uploads
+#: cmainwnd.basic;3;4;item;id_view_uploads
+#: cmainwnd.tabbed;11;12;item;id_view_uploads
+#: cmainwnd.windowed;20;item;id_view_uploads
+#: cmainwnd.view.basic;26;item;id_view_uploads
+#: cmainwnd.view.windowed;item;id_view_uploads
+#: chomewnd.basic;27;item;id_view_uploads
 msgid "_Uploads"
 msgstr "Wysyłania"
 
-#: cmainwnd.basic;3;4;item;id_view_security cmainwnd.tabbed;11;item;id_view_security cmainwnd.tabbed;11;12;item;id_view_security cmainwnd.windowed;20;item;id_view_security cmainwnd.view.basic;26;item;id_view_security cmainwnd.view.tabbed;item;id_view_security cmainwnd.view.windowed;item;id_view_security chomewnd.basic;27;item;id_view_security chomewnd.tabbed;item;id_view_security
+#: cmainwnd.basic;3;4;item;id_view_security
+#: cmainwnd.tabbed;11;item;id_view_security
+#: cmainwnd.tabbed;11;12;item;id_view_security
+#: cmainwnd.windowed;20;item;id_view_security
+#: cmainwnd.view.basic;26;item;id_view_security
+#: cmainwnd.view.tabbed;item;id_view_security
+#: cmainwnd.view.windowed;item;id_view_security
+#: chomewnd.basic;27;item;id_view_security
+#: chomewnd.tabbed;item;id_view_security
 msgid "Se_curity"
 msgstr "Bezpieczeństwo"
 
-#: cmainwnd.basic;3;4;item;id_view_hosts cmainwnd.tabbed;11;item;id_view_hosts cmainwnd.tabbed;11;12;item;id_view_hosts cmainwnd.windowed;20;item;id_view_hosts cmainwnd.view.basic;26;item;id_view_hosts cmainwnd.view.tabbed;item;id_view_hosts cmainwnd.view.windowed;item;id_view_hosts chomewnd.basic;27;item;id_view_hosts chomewnd.tabbed;item;id_view_hosts
+#: cmainwnd.basic;3;4;item;id_view_hosts cmainwnd.tabbed;11;item;id_view_hosts
+#: cmainwnd.tabbed;11;12;item;id_view_hosts
+#: cmainwnd.windowed;20;item;id_view_hosts
+#: cmainwnd.view.basic;26;item;id_view_hosts
+#: cmainwnd.view.tabbed;item;id_view_hosts
+#: cmainwnd.view.windowed;item;id_view_hosts
+#: chomewnd.basic;27;item;id_view_hosts chomewnd.tabbed;item;id_view_hosts
 msgid "H_ost Cache"
 msgstr "Cache hostów"
 
-#: cmainwnd.basic;3;4;item;id_view_discovery cmainwnd.tabbed;11;12;item;id_view_discovery cmainwnd.windowed;20;item;id_view_discovery cmainwnd.view.tabbed;item;id_view_discovery cmainwnd.view.windowed;item;id_view_discovery chomewnd.tabbed;item;id_view_discovery
+#: cmainwnd.basic;3;4;item;id_view_discovery
+#: cmainwnd.tabbed;11;12;item;id_view_discovery
+#: cmainwnd.windowed;20;item;id_view_discovery
+#: cmainwnd.view.tabbed;item;id_view_discovery
+#: cmainwnd.view.windowed;item;id_view_discovery
+#: chomewnd.tabbed;item;id_view_discovery
 msgid "Disco_very"
 msgstr "Discovery"
 
-#: cmainwnd.basic;3;4;item;id_view_scheduler cmainwnd.tabbed;11;item;id_view_scheduler cmainwnd.tabbed;11;12;item;id_view_scheduler cmainwnd.windowed;20;item;id_view_scheduler cmainwnd.view.basic;26;item;id_view_scheduler cmainwnd.view.tabbed;item;id_view_scheduler cmainwnd.view.windowed;item;id_view_scheduler chomewnd.basic;27;item;id_view_scheduler chomewnd.tabbed;item;id_view_scheduler
+#: cmainwnd.basic;3;4;item;id_view_scheduler
+#: cmainwnd.tabbed;11;item;id_view_scheduler
+#: cmainwnd.tabbed;11;12;item;id_view_scheduler
+#: cmainwnd.windowed;20;item;id_view_scheduler
+#: cmainwnd.view.basic;26;item;id_view_scheduler
+#: cmainwnd.view.tabbed;item;id_view_scheduler
+#: cmainwnd.view.windowed;item;id_view_scheduler
+#: chomewnd.basic;27;item;id_view_scheduler
+#: chomewnd.tabbed;item;id_view_scheduler
 msgid "Sch_eduler"
 msgstr ""
 
@@ -624,31 +719,46 @@ msgstr "Tryb zaawansowany"
 msgid "_Tools"
 msgstr "Narzędzia"
 
-#: cmainwnd.basic;5;item;id_library_folders cmainwnd.tabbed;13;item;id_library_folders cmainwnd.windowed;21;item;id_library_folders clibrarytree.physical.basic;item;id_library_folders clibrarytree.physical;item;id_library_folders
+#: cmainwnd.basic;5;item;id_library_folders
+#: cmainwnd.tabbed;13;item;id_library_folders
+#: cmainwnd.windowed;21;item;id_library_folders
+#: clibrarytree.physical.basic;item;id_library_folders
+#: clibrarytree.physical;item;id_library_folders
 msgid "Share _Files..."
 msgstr "Udostępnij pliki..."
 
-#: cmainwnd.basic;5;item;id_tools_download cmainwnd.tabbed;13;item;id_tools_download cmainwnd.windowed;21;item;id_tools_download
+#: cmainwnd.basic;5;item;id_tools_download
+#: cmainwnd.tabbed;13;item;id_tools_download
+#: cmainwnd.windowed;21;item;id_tools_download
 msgid "_Download File/Torrent..."
 msgstr "Pobierz plik/Torrent..."
 
-#: cmainwnd.basic;5;item;id_tools_skin cmainwnd.tabbed;13;item;id_tools_skin cmainwnd.windowed;21;item;id_tools_skin
+#: cmainwnd.basic;5;item;id_tools_skin cmainwnd.tabbed;13;item;id_tools_skin
+#: cmainwnd.windowed;21;item;id_tools_skin
 msgid "Choose a S_kin..."
 msgstr "Wybierz skórkę..."
 
-#: cmainwnd.basic;5;item;id_tools_language cmainwnd.tabbed;13;item;id_tools_language cmainwnd.windowed;21;item;id_tools_language
+#: cmainwnd.basic;5;item;id_tools_language
+#: cmainwnd.tabbed;13;item;id_tools_language
+#: cmainwnd.windowed;21;item;id_tools_language
 msgid "Choose a _Language..."
 msgstr "Wybierz język..."
 
-#: cmainwnd.basic;5;item;id_tools_profile cmainwnd.tabbed;13;item;id_tools_profile cmainwnd.windowed;21;item;id_tools_profile
+#: cmainwnd.basic;5;item;id_tools_profile
+#: cmainwnd.tabbed;13;item;id_tools_profile
+#: cmainwnd.windowed;21;item;id_tools_profile
 msgid "Edit My _Profile..."
 msgstr "Edytuj mój profil..."
 
-#: cmainwnd.basic;5;item;id_tools_wizard cmainwnd.tabbed;13;item;id_tools_wizard cmainwnd.windowed;21;item;id_tools_wizard
+#: cmainwnd.basic;5;item;id_tools_wizard
+#: cmainwnd.tabbed;13;item;id_tools_wizard
+#: cmainwnd.windowed;21;item;id_tools_wizard
 msgid "QuickStart _Wizard..."
 msgstr "Kreator Szybkiego Startu..."
 
-#: cmainwnd.basic;5;item;id_tools_settings cmainwnd.tabbed;13;item;id_tools_settings cmainwnd.windowed;21;item;id_tools_settings
+#: cmainwnd.basic;5;item;id_tools_settings
+#: cmainwnd.tabbed;13;item;id_tools_settings
+#: cmainwnd.windowed;21;item;id_tools_settings
 msgid "_Shareaza Settings..."
 msgstr "Ustawienia Shareazy..."
 
@@ -656,11 +766,13 @@ msgstr "Ustawienia Shareazy..."
 msgid "_Help"
 msgstr "Pomoc"
 
-#: cmainwnd.basic;6;item;id_help_faq cmainwnd.tabbed;15;item;id_help_faq cmainwnd.windowed;23;item;id_help_faq
+#: cmainwnd.basic;6;item;id_help_faq cmainwnd.tabbed;15;item;id_help_faq
+#: cmainwnd.windowed;23;item;id_help_faq
 msgid "Shareaza _FAQ"
 msgstr "FAQ"
 
-#: cmainwnd.basic;6;item;id_help_test cmainwnd.tabbed;15;item;id_help_test cmainwnd.windowed;23;item;id_help_test
+#: cmainwnd.basic;6;item;id_help_test cmainwnd.tabbed;15;item;id_help_test
+#: cmainwnd.windowed;23;item;id_help_test
 msgid "_Connection Test"
 msgstr "_Test połączenia"
 
@@ -668,19 +780,27 @@ msgstr "_Test połączenia"
 msgid "_Guides"
 msgstr "Przewodniki"
 
-#: cmainwnd.basic;6;7;item;id_help_guide cmainwnd.tabbed;15;16;item;id_help_guide cmainwnd.windowed;23;24;item;id_help_guide
+#: cmainwnd.basic;6;7;item;id_help_guide
+#: cmainwnd.tabbed;15;16;item;id_help_guide
+#: cmainwnd.windowed;23;24;item;id_help_guide
 msgid "Shareaza _Users Guide"
 msgstr "Przewodnik użytkownika Shareazy"
 
-#: cmainwnd.basic;6;7;item;id_help_router cmainwnd.tabbed;15;16;item;id_help_router cmainwnd.windowed;23;24;item;id_help_router
+#: cmainwnd.basic;6;7;item;id_help_router
+#: cmainwnd.tabbed;15;16;item;id_help_router
+#: cmainwnd.windowed;23;24;item;id_help_router
 msgid "_Router Help"
 msgstr "Pomoc dla routera"
 
-#: cmainwnd.basic;6;7;item;id_help_security cmainwnd.tabbed;15;16;item;id_help_security cmainwnd.windowed;23;24;item;id_help_security
+#: cmainwnd.basic;6;7;item;id_help_security
+#: cmainwnd.tabbed;15;16;item;id_help_security
+#: cmainwnd.windowed;23;24;item;id_help_security
 msgid "_Security Help"
 msgstr "Pomoc dot. bezpieczeństwa (Security Help)"
 
-#: cmainwnd.basic;6;7;item;id_help_codec cmainwnd.tabbed;15;16;item;id_help_codec cmainwnd.windowed;23;24;item;id_help_codec
+#: cmainwnd.basic;6;7;item;id_help_codec
+#: cmainwnd.tabbed;15;16;item;id_help_codec
+#: cmainwnd.windowed;23;24;item;id_help_codec
 msgid "_Codec Help"
 msgstr "Pomoc dot. kodeków (Codec Help)"
 
@@ -688,47 +808,70 @@ msgstr "Pomoc dot. kodeków (Codec Help)"
 msgid "_Websites"
 msgstr "Strony www"
 
-#: cmainwnd.basic;6;8;item;id_help_homepage cmainwnd.tabbed;15;17;item;id_help_homepage cmainwnd.windowed;23;25;item;id_help_homepage
+#: cmainwnd.basic;6;8;item;id_help_homepage
+#: cmainwnd.tabbed;15;17;item;id_help_homepage
+#: cmainwnd.windowed;23;25;item;id_help_homepage
 msgid "_Shareaza site"
 msgstr "Shareaza site"
 
-#: cmainwnd.basic;6;8;item;id_help_forums cmainwnd.tabbed;15;17;item;id_help_forums cmainwnd.windowed;23;25;item;id_help_forums
+#: cmainwnd.basic;6;8;item;id_help_forums
+#: cmainwnd.tabbed;15;17;item;id_help_forums
+#: cmainwnd.windowed;23;25;item;id_help_forums
 msgid "Shareaza _Forums"
 msgstr "Forum Shareazy"
 
-#: cmainwnd.basic;6;8;item;id_help_web_6 cmainwnd.tabbed;15;17;item;id_help_web_6 cmainwnd.windowed;23;25;item;id_help_web_6
+#: cmainwnd.basic;6;8;item;id_help_web_6
+#: cmainwnd.tabbed;15;17;item;id_help_web_6
+#: cmainwnd.windowed;23;25;item;id_help_web_6
 msgid "Shareaza S_kin Site"
 msgstr "Shareaza S_kin Site"
 
-#: cmainwnd.basic;6;item;id_help_version_check cmainwnd.tabbed;15;item;id_help_version_check cmainwnd.windowed;23;item;id_help_version_check
+#: cmainwnd.basic;6;item;id_help_version_check
+#: cmainwnd.tabbed;15;item;id_help_version_check
+#: cmainwnd.windowed;23;item;id_help_version_check
 msgid "Check for new _version"
 msgstr "Sprawdź, czy jest nowa wersja?"
 
-#: cmainwnd.basic;6;item;id_help_about cmainwnd.tabbed;15;item;id_help_about cmainwnd.windowed;23;item;id_help_about
+#: cmainwnd.basic;6;item;id_help_about cmainwnd.tabbed;15;item;id_help_about
+#: cmainwnd.windowed;23;item;id_help_about
 msgid "_About Shareaza..."
 msgstr "_O programie Shareaza..."
 
-#: cmainwnd.tabbed;9;item;id_network_disconnect cmainwnd.windowed;18;item;id_network_disconnect chostcachewnd;item;id_hostcache_disconnect cdownloadswnd.source;item;id_transfers_disconnect cneighbourswnd.basic;item;id_neighbours_disconnect cneighbourswnd;item;id_neighbours_disconnect cneighbourswnd;59;item;id_network_disconnect cprivatechatframe;item;id_chat_disconnect
+#: cmainwnd.tabbed;9;item;id_network_disconnect
+#: cmainwnd.windowed;18;item;id_network_disconnect
+#: chostcachewnd;item;id_hostcache_disconnect
+#: cdownloadswnd.source;item;id_transfers_disconnect
+#: cneighbourswnd.basic;item;id_neighbours_disconnect
+#: cneighbourswnd;item;id_neighbours_disconnect
+#: cneighbourswnd;59;item;id_network_disconnect
+#: cprivatechatframe;item;id_chat_disconnect
 msgid "_Disconnect"
 msgstr "Rozłącz"
 
-#: cmainwnd.tabbed;9;item;id_network_connect_to cmainwnd.windowed;18;item;id_network_connect_to
+#: cmainwnd.tabbed;9;item;id_network_connect_to
+#: cmainwnd.windowed;18;item;id_network_connect_to
 msgid "Connect _To..."
 msgstr "Połącz z..."
 
-#: cmainwnd.tabbed;9;item;id_network_browse_to cmainwnd.windowed;18;item;id_network_browse_to
+#: cmainwnd.tabbed;9;item;id_network_browse_to
+#: cmainwnd.windowed;18;item;id_network_browse_to
 msgid "_Browse User..."
 msgstr "Przeglądaj hosta..."
 
-#: cmainwnd.tabbed;9;item;id_network_chat_to cmainwnd.windowed;18;item;id_network_chat_to
+#: cmainwnd.tabbed;9;item;id_network_chat_to
+#: cmainwnd.windowed;18;item;id_network_chat_to
 msgid "Chat to _User..."
 msgstr ""
 
-#: cmainwnd.tabbed;11;item;id_tab_transfers cmainwnd.view.tabbed;item;id_tab_transfers chomewnd.tabbed;item;id_tab_transfers
+#: cmainwnd.tabbed;11;item;id_tab_transfers
+#: cmainwnd.view.tabbed;item;id_tab_transfers
+#: chomewnd.tabbed;item;id_tab_transfers
 msgid "_Transfers"
 msgstr "Transfery"
 
-#: cmainwnd.tabbed;11;12;item;id_view_system cmainwnd.windowed;20;item;id_view_system cmainwnd.view.windowed;item;id_view_system
+#: cmainwnd.tabbed;11;12;item;id_view_system
+#: cmainwnd.windowed;20;item;id_view_system
+#: cmainwnd.view.windowed;item;id_view_system
 msgid "S_ystem"
 msgstr "System"
 
@@ -736,19 +879,35 @@ msgstr "System"
 msgid "IR_C"
 msgstr ""
 
-#: cmainwnd.tabbed;11;12;item;id_view_traffic cmainwnd.windowed;20;item;id_view_traffic cmainwnd.view.tabbed;item;id_view_traffic cmainwnd.view.windowed;item;id_view_traffic chomewnd.tabbed;item;id_view_traffic
+#: cmainwnd.tabbed;11;12;item;id_view_traffic
+#: cmainwnd.windowed;20;item;id_view_traffic
+#: cmainwnd.view.tabbed;item;id_view_traffic
+#: cmainwnd.view.windowed;item;id_view_traffic
+#: chomewnd.tabbed;item;id_view_traffic
 msgid "_Graph"
 msgstr "Wykres"
 
-#: cmainwnd.tabbed;11;12;item;id_view_packets cmainwnd.windowed;20;item;id_view_packets cmainwnd.view.tabbed;item;id_view_packets cmainwnd.view.windowed;item;id_view_packets chomewnd.tabbed;item;id_view_packets
+#: cmainwnd.tabbed;11;12;item;id_view_packets
+#: cmainwnd.windowed;20;item;id_view_packets
+#: cmainwnd.view.tabbed;item;id_view_packets
+#: cmainwnd.view.windowed;item;id_view_packets
+#: chomewnd.tabbed;item;id_view_packets
 msgid "_Packet Dump"
 msgstr "Zrzut pakietów"
 
-#: cmainwnd.tabbed;11;12;item;id_view_search_monitor cmainwnd.windowed;20;item;id_view_search_monitor cmainwnd.view.tabbed;item;id_view_search_monitor cmainwnd.view.windowed;item;id_view_search_monitor chomewnd.tabbed;item;id_view_search_monitor
+#: cmainwnd.tabbed;11;12;item;id_view_search_monitor
+#: cmainwnd.windowed;20;item;id_view_search_monitor
+#: cmainwnd.view.tabbed;item;id_view_search_monitor
+#: cmainwnd.view.windowed;item;id_view_search_monitor
+#: chomewnd.tabbed;item;id_view_search_monitor
 msgid "Se_arch Monitor"
 msgstr "Monitor Szukania"
 
-#: cmainwnd.tabbed;11;12;item;id_view_results_monitor cmainwnd.windowed;20;item;id_view_results_monitor cmainwnd.view.tabbed;item;id_view_results_monitor cmainwnd.view.windowed;item;id_view_results_monitor chomewnd.tabbed;item;id_view_results_monitor
+#: cmainwnd.tabbed;11;12;item;id_view_results_monitor
+#: cmainwnd.windowed;20;item;id_view_results_monitor
+#: cmainwnd.view.tabbed;item;id_view_results_monitor
+#: cmainwnd.view.windowed;item;id_view_results_monitor
+#: chomewnd.tabbed;item;id_view_results_monitor
 msgid "H_it Monitor"
 msgstr "Monitor Trafień"
 
@@ -756,19 +915,23 @@ msgstr "Monitor Trafień"
 msgid "N_ormal Mode"
 msgstr "Tryb normalny"
 
-#: cmainwnd.tabbed;11;item;id_view_tabbed cmainwnd.windowed;20;item;id_view_tabbed
+#: cmainwnd.tabbed;11;item;id_view_tabbed
+#: cmainwnd.windowed;20;item;id_view_tabbed
 msgid "T_abbed Mode"
 msgstr "Tryb zaawansowany"
 
-#: cmainwnd.tabbed;11;item;id_view_windowed cmainwnd.windowed;20;item;id_view_windowed
+#: cmainwnd.tabbed;11;item;id_view_windowed
+#: cmainwnd.windowed;20;item;id_view_windowed
 msgid "_Windowed Mode"
 msgstr "Tryb okienkowy"
 
-#: cmainwnd.tabbed;13;item;idc_import_downloads cmainwnd.windowed;21;item;idc_import_downloads
+#: cmainwnd.tabbed;13;item;idc_import_downloads
+#: cmainwnd.windowed;21;item;idc_import_downloads
 msgid "_Import eMule partial downloads..."
 msgstr "_Importuj częsciowe pobrania eMule..."
 
-#: cmainwnd.tabbed;13;item;id_open_downloads_folder cmainwnd.windowed;21;item;id_open_downloads_folder
+#: cmainwnd.tabbed;13;item;id_open_downloads_folder
+#: cmainwnd.windowed;21;item;id_open_downloads_folder
 msgid "_Open my folder of completed Downloads"
 msgstr "_Otwórz mój katalog zakonczonych pobrań (Dowloads)"
 
@@ -776,27 +939,34 @@ msgstr "_Otwórz mój katalog zakonczonych pobrań (Dowloads)"
 msgid "_Window"
 msgstr "Okno"
 
-#: cmainwnd.tabbed;14;item;id_window_navbar cmainwnd.windowed;22;item;id_window_navbar
+#: cmainwnd.tabbed;14;item;id_window_navbar
+#: cmainwnd.windowed;22;item;id_window_navbar
 msgid "Show _Navigation Bar"
 msgstr "Pokaż pasek nawigacyjny"
 
-#: cmainwnd.tabbed;14;item;id_window_toolbar cmainwnd.windowed;22;item;id_window_toolbar
+#: cmainwnd.tabbed;14;item;id_window_toolbar
+#: cmainwnd.windowed;22;item;id_window_toolbar
 msgid "Show _Tool Bar"
 msgstr "Pokaż pasek narzędzi"
 
-#: cmainwnd.tabbed;14;item;id_window_tabbar cmainwnd.windowed;22;item;id_window_tabbar
+#: cmainwnd.tabbed;14;item;id_window_tabbar
+#: cmainwnd.windowed;22;item;id_window_tabbar
 msgid "Show Tab _Bar"
 msgstr "Pokaż pasek zakładek"
 
-#: cmainwnd.tabbed;14;item;id_window_monitor cmainwnd.windowed;22;item;id_window_monitor
+#: cmainwnd.tabbed;14;item;id_window_monitor
+#: cmainwnd.windowed;22;item;id_window_monitor
 msgid "Show _Monitor"
 msgstr "Pokaż monitor"
 
-#: cmainwnd.tabbed;14;item;id_window_remote cmainwnd.windowed;22;item;id_window_remote
+#: cmainwnd.tabbed;14;item;id_window_remote
+#: cmainwnd.windowed;22;item;id_window_remote
 msgid "Show _Remote"
 msgstr "Pokaż zdalne sterowanie (Remote)"
 
-#: cmainwnd.windowed;18;item;id_network_search cmainwnd.view.windowed;item;id_network_search cmainwnd.tray;item;id_network_search cremotewnd;item;id_network_search
+#: cmainwnd.windowed;18;item;id_network_search
+#: cmainwnd.view.windowed;item;id_network_search
+#: cmainwnd.tray;item;id_network_search cremotewnd;item;id_network_search
 msgid "New _Search..."
 msgstr "Szukaj"
 
@@ -848,7 +1018,9 @@ msgstr "Następny utwór"
 msgid "_Connect Now"
 msgstr "Połącz teraz"
 
-#: chostcachewnd;item;id_neighbours_copy cneighbourswnd.basic;item;id_neighbours_copy cneighbourswnd;item;id_neighbours_copy
+#: chostcachewnd;item;id_neighbours_copy
+#: cneighbourswnd.basic;item;id_neighbours_copy
+#: cneighbourswnd;item;id_neighbours_copy
 msgid "Copy _URI"
 msgstr "Kopiuj _URI"
 
@@ -896,67 +1068,153 @@ msgstr "Importuj plik MET..."
 msgid "Download MET..."
 msgstr "Pobierz MET..."
 
-#: csearchwnd.basic;item;id_search_download csearchwnd;item;id_search_download cbrowsehostwnd.basic;item;id_search_download cbrowsehostwnd;item;id_search_download chitmonitorwnd;item;id_search_download
+#: csearchwnd.basic;item;id_search_download csearchwnd;item;id_search_download
+#: cbrowsehostwnd.basic;item;id_search_download
+#: cbrowsehostwnd;item;id_search_download
+#: chitmonitorwnd;item;id_search_download
 msgid "_Download"
 msgstr "Pobierz"
 
-#: csearchwnd.basic;item;id_search_copy csearchwnd;item;id_search_copy cbrowsehostwnd.basic;item;id_search_copy cbrowsehostwnd;item;id_search_copy chitmonitorwnd;item;id_search_copy cdownloadswnd.download.basic;item;id_downloads_copy cdownloadswnd.download;39;item;id_downloads_copy cdownloadswnd.source;item;id_downloads_copy cdownloadswnd.completed;item;id_downloads_copy clibraryfileview.physical.basic;item;id_library_url clibraryfileview.physical;item;id_library_url clibraryfileview.virtual.basic;item;id_library_url clibraryfileview.virtual;item;id_library_url
+#: csearchwnd.basic;item;id_search_copy csearchwnd;item;id_search_copy
+#: cbrowsehostwnd.basic;item;id_search_copy cbrowsehostwnd;item;id_search_copy
+#: chitmonitorwnd;item;id_search_copy
+#: cdownloadswnd.download.basic;item;id_downloads_copy
+#: cdownloadswnd.download;39;item;id_downloads_copy
+#: cdownloadswnd.source;item;id_downloads_copy
+#: cdownloadswnd.completed;item;id_downloads_copy
+#: clibraryfileview.physical.basic;item;id_library_url
+#: clibraryfileview.physical;item;id_library_url
+#: clibraryfileview.virtual.basic;item;id_library_url
+#: clibraryfileview.virtual;item;id_library_url
 msgid "Copy _URI..."
 msgstr "Kopiuj _URI"
 
-#: csearchwnd.basic;item;id_browse_launch csearchwnd;item;id_browse_launch chitmonitorwnd;item;id_browse_launch cdownloadswnd.source;item;id_browse_launch cuploadswnd.upload.basic;item;id_browse_launch cuploadswnd.upload;item;id_browse_launch cneighbourswnd.basic;item;id_browse_launch cneighbourswnd;item;id_browse_launch csearchmonitorwnd;item;id_browse_launch cprivatechatframe;item;id_chat_browse
+#: csearchwnd.basic;item;id_browse_launch csearchwnd;item;id_browse_launch
+#: chitmonitorwnd;item;id_browse_launch
+#: cdownloadswnd.source;item;id_browse_launch
+#: cuploadswnd.upload.basic;item;id_browse_launch
+#: cuploadswnd.upload;item;id_browse_launch
+#: cneighbourswnd.basic;item;id_browse_launch
+#: cneighbourswnd;item;id_browse_launch
+#: csearchmonitorwnd;item;id_browse_launch
+#: cprivatechatframe;item;id_chat_browse
 msgid "_Browse User"
 msgstr "Przeglądaj użytkownika"
 
-#: csearchwnd.basic;item;id_search_chat csearchwnd;item;id_search_chat cbrowsehostwnd.basic;item;id_search_chat cbrowsehostwnd;item;id_search_chat chitmonitorwnd;item;id_search_chat cdownloadswnd.source;item;id_transfers_chat cuploadswnd.upload.basic;item;id_uploads_chat cuploadswnd.upload;item;id_uploads_chat cneighbourswnd.basic;item;id_neighbours_chat cneighbourswnd;item;id_neighbours_chat
+#: csearchwnd.basic;item;id_search_chat csearchwnd;item;id_search_chat
+#: cbrowsehostwnd.basic;item;id_search_chat cbrowsehostwnd;item;id_search_chat
+#: chitmonitorwnd;item;id_search_chat
+#: cdownloadswnd.source;item;id_transfers_chat
+#: cuploadswnd.upload.basic;item;id_uploads_chat
+#: cuploadswnd.upload;item;id_uploads_chat
+#: cneighbourswnd.basic;item;id_neighbours_chat
+#: cneighbourswnd;item;id_neighbours_chat
 msgid "_Chat to User"
 msgstr "Czat z użytkownikiem"
 
-#: csearchwnd.basic;29 csearchwnd;31 cbrowsehostwnd.basic;33 cbrowsehostwnd;35 chitmonitorwnd;37 clibraryfileview.physical.basic;40 clibraryfileview.physical;43 clibraryfileview.virtual.basic;46 clibraryfileview.virtual;49
+#: csearchwnd.basic;29 csearchwnd;31 cbrowsehostwnd.basic;33 cbrowsehostwnd;35
+#: chitmonitorwnd;37 clibraryfileview.physical.basic;40
+#: clibraryfileview.physical;43 clibraryfileview.virtual.basic;46
+#: clibraryfileview.virtual;49
 msgid "_Search For"
 msgstr "Szukaj"
 
-#: csearchwnd.basic;29;item;id_search_for_similar csearchwnd;31;item;id_search_for_similar cbrowsehostwnd.basic;33;item;id_search_for_similar cbrowsehostwnd;35;item;id_search_for_similar chitmonitorwnd;37;item;id_search_for_similar clibraryfileview.physical.basic;40;item;id_search_for_similar clibraryfileview.physical;43;item;id_search_for_similar clibraryfileview.virtual.basic;46;item;id_search_for_similar clibraryfileview.virtual;49;item;id_search_for_similar
+#: csearchwnd.basic;29;item;id_search_for_similar
+#: csearchwnd;31;item;id_search_for_similar
+#: cbrowsehostwnd.basic;33;item;id_search_for_similar
+#: cbrowsehostwnd;35;item;id_search_for_similar
+#: chitmonitorwnd;37;item;id_search_for_similar
+#: clibraryfileview.physical.basic;40;item;id_search_for_similar
+#: clibraryfileview.physical;43;item;id_search_for_similar
+#: clibraryfileview.virtual.basic;46;item;id_search_for_similar
+#: clibraryfileview.virtual;49;item;id_search_for_similar
 msgid "_Similar Files"
 msgstr "Podobnych plików"
 
-#: csearchwnd.basic;29;item;id_search_for_artist csearchwnd;31;item;id_search_for_artist cbrowsehostwnd.basic;33;item;id_search_for_artist cbrowsehostwnd;35;item;id_search_for_artist chitmonitorwnd;37;item;id_search_for_artist clibraryfileview.physical.basic;40;item;id_search_for_artist clibraryfileview.physical;43;item;id_search_for_artist clibraryfileview.virtual.basic;46;item;id_search_for_artist clibraryfileview.virtual;49;item;id_search_for_artist
+#: csearchwnd.basic;29;item;id_search_for_artist
+#: csearchwnd;31;item;id_search_for_artist
+#: cbrowsehostwnd.basic;33;item;id_search_for_artist
+#: cbrowsehostwnd;35;item;id_search_for_artist
+#: chitmonitorwnd;37;item;id_search_for_artist
+#: clibraryfileview.physical.basic;40;item;id_search_for_artist
+#: clibraryfileview.physical;43;item;id_search_for_artist
+#: clibraryfileview.virtual.basic;46;item;id_search_for_artist
+#: clibraryfileview.virtual;49;item;id_search_for_artist
 msgid "_Music by the same Artist"
 msgstr "Muzyka tego samego wykonawcy"
 
-#: csearchwnd.basic;29;item;id_search_for_album csearchwnd;31;item;id_search_for_album cbrowsehostwnd.basic;33;item;id_search_for_album cbrowsehostwnd;35;item;id_search_for_album chitmonitorwnd;37;item;id_search_for_album clibraryfileview.physical.basic;40;item;id_search_for_album clibraryfileview.physical;43;item;id_search_for_album clibraryfileview.virtual.basic;46;item;id_search_for_album clibraryfileview.virtual;49;item;id_search_for_album
+#: csearchwnd.basic;29;item;id_search_for_album
+#: csearchwnd;31;item;id_search_for_album
+#: cbrowsehostwnd.basic;33;item;id_search_for_album
+#: cbrowsehostwnd;35;item;id_search_for_album
+#: chitmonitorwnd;37;item;id_search_for_album
+#: clibraryfileview.physical.basic;40;item;id_search_for_album
+#: clibraryfileview.physical;43;item;id_search_for_album
+#: clibraryfileview.virtual.basic;46;item;id_search_for_album
+#: clibraryfileview.virtual;49;item;id_search_for_album
 msgid "Music in the same _Album"
 msgstr "Muzyka z tego samego albumu"
 
-#: csearchwnd.basic;29;item;id_search_for_series csearchwnd;31;item;id_search_for_series cbrowsehostwnd.basic;33;item;id_search_for_series cbrowsehostwnd;35;item;id_search_for_series chitmonitorwnd;37;item;id_search_for_series clibraryfileview.physical.basic;40;item;id_search_for_series clibraryfileview.physical;43;item;id_search_for_series clibraryfileview.virtual.basic;46;item;id_search_for_series clibraryfileview.virtual;49;item;id_search_for_series
+#: csearchwnd.basic;29;item;id_search_for_series
+#: csearchwnd;31;item;id_search_for_series
+#: cbrowsehostwnd.basic;33;item;id_search_for_series
+#: cbrowsehostwnd;35;item;id_search_for_series
+#: chitmonitorwnd;37;item;id_search_for_series
+#: clibraryfileview.physical.basic;40;item;id_search_for_series
+#: clibraryfileview.physical;43;item;id_search_for_series
+#: clibraryfileview.virtual.basic;46;item;id_search_for_series
+#: clibraryfileview.virtual;49;item;id_search_for_series
 msgid "_Episodes in the same Series"
 msgstr "Odcinki tego samego serialu"
 
-#: csearchwnd.basic;30 csearchwnd;32 cbrowsehostwnd.basic;34 cbrowsehostwnd;36 chitmonitorwnd;38 clibraryfileview.physical.basic;41 clibraryfileview.physical;44 clibraryfileview.virtual.basic;47 clibraryfileview.virtual;50
+#: csearchwnd.basic;30 csearchwnd;32 cbrowsehostwnd.basic;34 cbrowsehostwnd;36
+#: chitmonitorwnd;38 clibraryfileview.physical.basic;41
+#: clibraryfileview.physical;44 clibraryfileview.virtual.basic;47
+#: clibraryfileview.virtual;50
 msgid "_Web Services"
 msgstr "Usługi Web"
 
-#: csearchwnd.basic;30;item;id_library_bitzi_web csearchwnd;32;item;id_library_bitzi_web cbrowsehostwnd.basic;34;item;id_library_bitzi_web cbrowsehostwnd;36;item;id_library_bitzi_web chitmonitorwnd;38;item;id_library_bitzi_web clibraryfileview.physical.basic;41;item;id_library_bitzi_web clibraryfileview.physical;44;item;id_library_bitzi_web clibraryfileview.virtual.basic;47;item;id_library_bitzi_web clibraryfileview.virtual;50;item;id_library_bitzi_web
+#: csearchwnd.basic;30;item;id_library_bitzi_web
+#: csearchwnd;32;item;id_library_bitzi_web
+#: cbrowsehostwnd.basic;34;item;id_library_bitzi_web
+#: cbrowsehostwnd;36;item;id_library_bitzi_web
+#: chitmonitorwnd;38;item;id_library_bitzi_web
+#: clibraryfileview.physical.basic;41;item;id_library_bitzi_web
+#: clibraryfileview.physical;44;item;id_library_bitzi_web
+#: clibraryfileview.virtual.basic;47;item;id_library_bitzi_web
+#: clibraryfileview.virtual;50;item;id_library_bitzi_web
 msgid "View _Bitzi Ticket"
 msgstr "Widok Bitzi Ticket"
 
-#: csearchwnd;item;id_search_downloadnow cbrowsehostwnd.basic;item;id_search_downloadnow cbrowsehostwnd;item;id_search_downloadnow
+#: csearchwnd;item;id_search_downloadnow
+#: cbrowsehostwnd.basic;item;id_search_downloadnow
+#: cbrowsehostwnd;item;id_search_downloadnow
 msgid "Download _Now"
 msgstr "Pobierz teraz"
 
-#: csearchwnd;item;id_security_ban cuploadswnd.upload;item;id_security_ban cneighbourswnd;item;id_security_ban csearchmonitorwnd;item;id_security_ban
+#: csearchwnd;item;id_security_ban cuploadswnd.upload;item;id_security_ban
+#: cneighbourswnd;item;id_security_ban csearchmonitorwnd;item;id_security_ban
 msgid "_Ban User"
 msgstr "Banuj użytkownika"
 
-#: csearchwnd;31;item;id_search_for_this cbrowsehostwnd;35;item;id_search_for_this chitmonitorwnd;37;item;id_search_for_this clibraryfileview.physical.basic;40;item;id_search_for_this clibraryfileview.physical;43;item;id_search_for_this clibraryfileview.virtual.basic;46;item;id_search_for_this clibraryfileview.virtual;49;item;id_search_for_this
+#: csearchwnd;31;item;id_search_for_this
+#: cbrowsehostwnd;35;item;id_search_for_this
+#: chitmonitorwnd;37;item;id_search_for_this
+#: clibraryfileview.physical.basic;40;item;id_search_for_this
+#: clibraryfileview.physical;43;item;id_search_for_this
+#: clibraryfileview.virtual.basic;46;item;id_search_for_this
+#: clibraryfileview.virtual;49;item;id_search_for_this
 msgid "_This File"
 msgstr "Tego pliku"
 
-#: csearchwnd;item;id_search_filter cbrowsehostwnd;item;id_search_filter chitmonitorwnd;item;id_search_filter
+#: csearchwnd;item;id_search_filter cbrowsehostwnd;item;id_search_filter
+#: chitmonitorwnd;item;id_search_filter
 msgid "_Filter Results..."
 msgstr "Filtruj wyniki..."
 
-#: csearchwnd;item;id_search_filter_remove cbrowsehostwnd;item;id_search_filter_remove chitmonitorwnd;item;id_search_filter_remove
+#: csearchwnd;item;id_search_filter_remove
+#: cbrowsehostwnd;item;id_search_filter_remove
+#: chitmonitorwnd;item;id_search_filter_remove
 msgid "_Remove Filter"
 msgstr "Usuń filtr"
 
@@ -964,11 +1222,13 @@ msgstr "Usuń filtr"
 msgid "C_lear Results"
 msgstr "Wyczyść wyniki"
 
-#: csearchwnd;item;id_search_columns cbrowsehostwnd;item;id_search_columns chitmonitorwnd;item;id_search_columns
+#: csearchwnd;item;id_search_columns cbrowsehostwnd;item;id_search_columns
+#: chitmonitorwnd;item;id_search_columns
 msgid "Edit C_olumns..."
 msgstr "Edytuj kolumny..."
 
-#: chitmonitorwnd;item;id_hitmonitor_pause csearchmonitorwnd;item;id_searchmonitor_pause
+#: chitmonitorwnd;item;id_hitmonitor_pause
+#: csearchmonitorwnd;item;id_searchmonitor_pause
 msgid "_Pause Display"
 msgstr "Wstrzymaj wyświetlanie"
 
@@ -976,35 +1236,46 @@ msgstr "Wstrzymaj wyświetlanie"
 msgid "C_lear Display"
 msgstr "Wyczyść wyświetlone"
 
-#: cdownloadswnd.download.basic;item;id_downloads_launch_copy cdownloadswnd.download;item;id_downloads_launch_copy
+#: cdownloadswnd.download.basic;item;id_downloads_launch_copy
+#: cdownloadswnd.download;item;id_downloads_launch_copy
 msgid "Previe_w File"
 msgstr ""
 
-#: cdownloadswnd.download.basic;item;id_downloads_remote_preview cdownloadswnd.download;item;id_downloads_remote_preview
+#: cdownloadswnd.download.basic;item;id_downloads_remote_preview
+#: cdownloadswnd.download;item;id_downloads_remote_preview
 msgid "R_emote Preview"
 msgstr "Zdalny podgląd"
 
-#: cdownloadswnd.download.basic;item;id_downloads_view_reviews cdownloadswnd.download;item;id_downloads_view_reviews
+#: cdownloadswnd.download.basic;item;id_downloads_view_reviews
+#: cdownloadswnd.download;item;id_downloads_view_reviews
 msgid "_View Reviews"
 msgstr "Widok podglądów"
 
-#: cdownloadswnd.download.basic;item;id_downloads_resume cdownloadswnd.download;item;id_downloads_resume
+#: cdownloadswnd.download.basic;item;id_downloads_resume
+#: cdownloadswnd.download;item;id_downloads_resume
 msgid "_Resume Download"
 msgstr "Wznów"
 
-#: cdownloadswnd.download.basic;item;id_downloads_pause cdownloadswnd.download;item;id_downloads_pause
+#: cdownloadswnd.download.basic;item;id_downloads_pause
+#: cdownloadswnd.download;item;id_downloads_pause
 msgid "P_ause Download"
 msgstr "Pauza"
 
-#: cdownloadswnd.download.basic;item;id_downloads_clear_incomplete cdownloadswnd.download;item;id_downloads_clear_incomplete
+#: cdownloadswnd.download.basic;item;id_downloads_clear_incomplete
+#: cdownloadswnd.download;item;id_downloads_clear_incomplete
 msgid "_Cancel Download"
 msgstr "Anuluj"
 
-#: cdownloadswnd.download.basic;item;id_downloads_sources cdownloadswnd.download;item;id_downloads_sources
+#: cdownloadswnd.download.basic;item;id_downloads_sources
+#: cdownloadswnd.download;item;id_downloads_sources
 msgid "_Find More Sources"
 msgstr "Znajdź więcej źródeł"
 
-#: cdownloadswnd.download.basic;item;id_downloads_help cdownloadswnd.download;item;id_downloads_help cdownloadswnd.seeding;item;id_downloads_help cdownloadswnd.nothing;item;id_downloads_help cuploadswnd.nothing;item;id_uploads_help
+#: cdownloadswnd.download.basic;item;id_downloads_help
+#: cdownloadswnd.download;item;id_downloads_help
+#: cdownloadswnd.seeding;item;id_downloads_help
+#: cdownloadswnd.nothing;item;id_downloads_help
+#: cuploadswnd.nothing;item;id_uploads_help
 msgid "_Help..."
 msgstr "Pomoc..."
 
@@ -1012,7 +1283,13 @@ msgstr "Pomoc..."
 msgid "Prev_iew Partial File"
 msgstr "Podgląd"
 
-#: cdownloadswnd.download;item;id_downloads_enqueue cdownloadswnd.completed.basic;item;id_downloads_enqueue cdownloadswnd.completed;item;id_downloads_enqueue clibraryfileview.physical.basic;item;id_library_enqueue clibraryfileview.physical;item;id_library_enqueue clibraryfileview.virtual.basic;item;id_library_enqueue clibraryfileview.virtual;item;id_library_enqueue
+#: cdownloadswnd.download;item;id_downloads_enqueue
+#: cdownloadswnd.completed.basic;item;id_downloads_enqueue
+#: cdownloadswnd.completed;item;id_downloads_enqueue
+#: clibraryfileview.physical.basic;item;id_library_enqueue
+#: clibraryfileview.physical;item;id_library_enqueue
+#: clibraryfileview.virtual.basic;item;id_library_enqueue
+#: clibraryfileview.virtual;item;id_library_enqueue
 msgid "Add to Pla_ylist"
 msgstr "Dodaj do listy odtwarzania"
 
@@ -1028,11 +1305,13 @@ msgstr "Dodaj źródło..."
 msgid "Monitor _Window"
 msgstr "Okno monitora"
 
-#: cdownloadswnd.download;39;item;id_downloads_move_up csecuritywnd;item;id_security_move_up
+#: cdownloadswnd.download;39;item;id_downloads_move_up
+#: csecuritywnd;item;id_security_move_up
 msgid "Move _Up"
 msgstr "Przenieś w górę"
 
-#: cdownloadswnd.download;39;item;id_downloads_move_down csecuritywnd;item;id_security_move_down
+#: cdownloadswnd.download;39;item;id_downloads_move_down
+#: csecuritywnd;item;id_security_move_down
 msgid "Move _Down"
 msgstr "Przenieś w dół"
 
@@ -1040,7 +1319,14 @@ msgstr "Przenieś w dół"
 msgid "_Ignore Bandwidth Limit"
 msgstr "Ignoruj limit szerokości pasma"
 
-#: cdownloadswnd.download;item;id_downloads_edit cdownloadtabbar;item;id_download_group_properties clibrarytileview;item;id_library_album_properties clibraryfileview.physical.basic;item;id_library_properties clibraryfileview.physical;item;id_library_properties clibraryfileview.virtual.basic;item;id_library_properties clibraryfileview.virtual;item;id_library_properties csecuritywnd;item;id_security_edit cdiscoverywnd;item;id_discovery_edit
+#: cdownloadswnd.download;item;id_downloads_edit
+#: cdownloadtabbar;item;id_download_group_properties
+#: clibrarytileview;item;id_library_album_properties
+#: clibraryfileview.physical.basic;item;id_library_properties
+#: clibraryfileview.physical;item;id_library_properties
+#: clibraryfileview.virtual.basic;item;id_library_properties
+#: clibraryfileview.virtual;item;id_library_properties
+#: csecuritywnd;item;id_security_edit cdiscoverywnd;item;id_discovery_edit
 msgid "_Properties"
 msgstr "Zaawansowana edycja... (właściwości?)"
 
@@ -1052,19 +1338,29 @@ msgstr "Przejmij (dostęp)"
 msgid "_Forget"
 msgstr "Zapomnij"
 
-#: cdownloadswnd.completed.basic;item;id_downloads_launch_complete cdownloadswnd.completed;item;id_downloads_launch_complete cdownloadswnd.seeding;item;id_downloads_launch_complete clibraryfileview.physical.basic;item;id_library_launch clibraryfileview.physical;item;id_library_launch clibraryfileview.virtual.basic;item;id_library_launch clibraryfileview.virtual;item;id_library_launch
+#: cdownloadswnd.completed.basic;item;id_downloads_launch_complete
+#: cdownloadswnd.completed;item;id_downloads_launch_complete
+#: cdownloadswnd.seeding;item;id_downloads_launch_complete
+#: clibraryfileview.physical.basic;item;id_library_launch
+#: clibraryfileview.physical;item;id_library_launch
+#: clibraryfileview.virtual.basic;item;id_library_launch
+#: clibraryfileview.virtual;item;id_library_launch
 msgid "_Open or Play"
 msgstr "Otwórz lub odtwarzaj"
 
-#: cdownloadswnd.completed.basic;item;id_downloads_clear_complete cdownloadswnd.completed;item;id_downloads_clear_complete cuploadswnd.upload;item;id_uploads_clear ctrafficwnd;item;id_traffic_clear
+#: cdownloadswnd.completed.basic;item;id_downloads_clear_complete
+#: cdownloadswnd.completed;item;id_downloads_clear_complete
+#: cuploadswnd.upload;item;id_uploads_clear ctrafficwnd;item;id_traffic_clear
 msgid "_Clear"
 msgstr "Wyczyść"
 
-#: cdownloadswnd.completed.basic;item;id_downloads_file_delete cdownloadswnd.completed;item;id_downloads_file_delete
+#: cdownloadswnd.completed.basic;item;id_downloads_file_delete
+#: cdownloadswnd.completed;item;id_downloads_file_delete
 msgid "_Delete File"
 msgstr "Usuń plik"
 
-#: cdownloadswnd.completed;item;id_downloads_rate cmedialist;item;id_media_rate
+#: cdownloadswnd.completed;item;id_downloads_rate
+#: cmedialist;item;id_media_rate
 msgid "_Rate File..."
 msgstr "Oceń plik"
 
@@ -1072,15 +1368,20 @@ msgstr "Oceń plik"
 msgid "_Stop Seeding"
 msgstr "Zakończ seed'owanie (udostępnianie)"
 
-#: cdownloadswnd.seeding;item;id_downloads_edit cmedialist;item;id_media_properties
+#: cdownloadswnd.seeding;item;id_downloads_edit
+#: cmedialist;item;id_media_properties
 msgid "_Properties..."
 msgstr "Właściwości, Torrent Info..."
 
-#: cdownloadswnd.nothing;item;id_downloads_clear_completed cuploadswnd.queue;item;id_uploads_clear_completed cuploadswnd.nothing;item;id_uploads_clear_completed
+#: cdownloadswnd.nothing;item;id_downloads_clear_completed
+#: cuploadswnd.queue;item;id_uploads_clear_completed
+#: cuploadswnd.nothing;item;id_uploads_clear_completed
 msgid "C_lear Completed"
 msgstr "Wyczyść zakończone"
 
-#: cdownloadswnd.nothing;item;id_downloads_auto_clear cuploadswnd.queue;item;id_uploads_auto_clear cuploadswnd.nothing;item;id_uploads_auto_clear
+#: cdownloadswnd.nothing;item;id_downloads_auto_clear
+#: cuploadswnd.queue;item;id_uploads_auto_clear
+#: cuploadswnd.nothing;item;id_uploads_auto_clear
 msgid "Aut_o Clear"
 msgstr "Autoczyszczenie"
 
@@ -1104,15 +1405,18 @@ msgstr "Nowa grupa..."
 msgid "Remove _Group"
 msgstr "Usuń grupę"
 
-#: cdownloadtabbar;item;id_download_group_show cdownloadswnd.filter;item;id_download_group_show
+#: cdownloadtabbar;item;id_download_group_show
+#: cdownloadswnd.filter;item;id_download_group_show
 msgid "_Show Groups"
 msgstr "Pokaż grupy"
 
-#: cdownloadswnd.filter;item;id_downloads_filter_all cuploadswnd.filter;item;id_uploads_filter_all
+#: cdownloadswnd.filter;item;id_downloads_filter_all
+#: cuploadswnd.filter;item;id_uploads_filter_all
 msgid "Show _All"
 msgstr "Pokaż wszystkie"
 
-#: cdownloadswnd.filter;item;id_downloads_filter_active cuploadswnd.filter;item;id_uploads_filter_active
+#: cdownloadswnd.filter;item;id_downloads_filter_active
+#: cuploadswnd.filter;item;id_uploads_filter_active
 msgid "Show A_ctive"
 msgstr "Pokaż aktywne"
 
@@ -1152,15 +1456,33 @@ msgstr "Pokaż BitTorrent"
 msgid "Show _History"
 msgstr "Pokaż Historię"
 
-#: clibrarytree.physical.basic;item;id_library_shared_folder clibrarytree.physical;item;id_library_shared_folder clibraryfileview.physical.basic;item;id_library_shared_file clibraryfileview.physical;item;id_library_shared_file clibraryfileview.virtual.basic;item;id_library_shared_file clibraryfileview.virtual;item;id_library_shared_file
+#: clibrarytree.physical.basic;item;id_library_shared_folder
+#: clibrarytree.physical;item;id_library_shared_folder
+#: clibraryfileview.physical.basic;item;id_library_shared_file
+#: clibraryfileview.physical;item;id_library_shared_file
+#: clibraryfileview.virtual.basic;item;id_library_shared_file
+#: clibraryfileview.virtual;item;id_library_shared_file
 msgid "_Shared"
 msgstr "Udostępnione"
 
-#: clibrarytree.physical.basic;item;id_library_remove clibrarytree.physical;item;id_library_remove cmedialist;item;id_media_remove csecuritywnd;item;id_security_remove cschedulerwnd;item;id_scheduler_remove cdiscoverywnd;item;id_discovery_remove clibrarysettingspage;control;19 clibrarysettingspage;control;23 cmediasettingspage;control;8 cwebsettingspage;control;12 cwizardsharepage;control;6 cavatarprofilepage;control;6 cfilesourcespage;control;6 cgraphlistdlg;control;4 cgraphitemdlg;control;12 csharemanagerdlg;control;5 cdownloadgroupdlg;control;8
+#: clibrarytree.physical.basic;item;id_library_remove
+#: clibrarytree.physical;item;id_library_remove
+#: cmedialist;item;id_media_remove csecuritywnd;item;id_security_remove
+#: cschedulerwnd;item;id_scheduler_remove
+#: cdiscoverywnd;item;id_discovery_remove clibrarysettingspage;control;19
+#: clibrarysettingspage;control;23 cmediasettingspage;control;8
+#: cwebsettingspage;control;12 cwizardsharepage;control;6
+#: cavatarprofilepage;control;6 cfilesourcespage;control;6
+#: cgraphlistdlg;control;4 cgraphitemdlg;control;12 csharemanagerdlg;control;4
+#: cdownloadgroupdlg;control;8
 msgid "_Remove"
 msgstr "Usuń"
 
-#: clibrarytree.physical.basic;item;id_shell_menu clibrarytree.physical;item;id_shell_menu clibraryfileview.physical;item;id_shell_menu clibraryfileview.virtual.basic;item;id_shell_menu clibraryfileview.virtual;item;id_shell_menu
+#: clibrarytree.physical.basic;item;id_shell_menu
+#: clibrarytree.physical;item;id_shell_menu
+#: clibraryfileview.physical;item;id_shell_menu
+#: clibraryfileview.virtual.basic;item;id_shell_menu
+#: clibraryfileview.virtual;item;id_shell_menu
 msgid "S_hell menu"
 msgstr "menu interpretera poleceń (Shella)"
 
@@ -1172,27 +1494,41 @@ msgstr "Przeglądaj"
 msgid "S_can"
 msgstr "Skanuj"
 
-#: clibrarytree.physical;item;id_library_rebuild clibrarytree.virtual;item;id_library_rebuild
+#: clibrarytree.physical;item;id_library_rebuild
+#: clibrarytree.virtual;item;id_library_rebuild
 msgid "Re_build"
 msgstr "Odbuduj ponownie"
 
-#: clibrarytree.physical;item;id_library_folder_file_properties clibrarytree.virtual.basic;item;id_library_folder_file_properties clibrarytree.virtual;item;id_library_folder_file_properties
+#: clibrarytree.physical;item;id_library_folder_file_properties
+#: clibrarytree.virtual.basic;item;id_library_folder_file_properties
+#: clibrarytree.virtual;item;id_library_folder_file_properties
 msgid "File _Properties"
 msgstr "Właściwości pliku"
 
-#: clibrarytree.virtual.basic;item;id_library_folder_enqueue clibrarytree.virtual;item;id_library_folder_enqueue clibraryfileview.virtual.basic;item;id_library_folder_enqueue
+#: clibrarytree.virtual.basic;item;id_library_folder_enqueue
+#: clibrarytree.virtual;item;id_library_folder_enqueue
+#: clibraryfileview.virtual.basic;item;id_library_folder_enqueue
 msgid "_Play Album"
 msgstr "Odtwarzaj album"
 
-#: clibrarytree.virtual.basic;item;id_library_folder_delete clibrarytree.virtual;item;id_library_folder_delete clibrarytileview;item;id_library_album_delete clibraryfileview.physical.basic;item;id_library_delete clibraryfileview.physical;item;id_library_delete clibraryfileview.virtual.basic;item;id_library_delete clibraryfileview.virtual;item;id_library_delete cuploadssettingspage;control;21 cfiltersearchdlg;control;28
+#: clibrarytree.virtual.basic;item;id_library_folder_delete
+#: clibrarytree.virtual;item;id_library_folder_delete
+#: clibrarytileview;item;id_library_album_delete
+#: clibraryfileview.physical.basic;item;id_library_delete
+#: clibraryfileview.physical;item;id_library_delete
+#: clibraryfileview.virtual.basic;item;id_library_delete
+#: clibraryfileview.virtual;item;id_library_delete
+#: cuploadssettingspage;control;21 cfiltersearchdlg;control;28
 msgid "_Delete"
 msgstr "Usuń"
 
-#: clibrarytree.virtual.basic;item;id_library_folder_properties clibrarytree.virtual;item;id_library_folder_properties
+#: clibrarytree.virtual.basic;item;id_library_folder_properties
+#: clibrarytree.virtual;item;id_library_folder_properties
 msgid "_Album Properties"
 msgstr "Właściwości albumu"
 
-#: clibrarytree.virtual;item;id_library_export_collection cmedialist;item;id_media_export_collection
+#: clibrarytree.virtual;item;id_library_export_collection
+#: cmedialist;item;id_media_export_collection
 msgid "_Export Collection..."
 msgstr "Eksportuj kolekcję..."
 
@@ -1204,47 +1540,70 @@ msgstr "Nowy folder..."
 msgid "_Open"
 msgstr "Otwórz"
 
-#: clibraryfileview.physical.basic;41;item;id_library_bitzi_download clibraryfileview.physical;44;item;id_library_bitzi_download clibraryfileview.virtual.basic;47;item;id_library_bitzi_download clibraryfileview.virtual;50;item;id_library_bitzi_download
+#: clibraryfileview.physical.basic;41;item;id_library_bitzi_download
+#: clibraryfileview.physical;44;item;id_library_bitzi_download
+#: clibraryfileview.virtual.basic;47;item;id_library_bitzi_download
+#: clibraryfileview.virtual;50;item;id_library_bitzi_download
 msgid "_Download Metadata"
 msgstr "Pobierz Metadane"
 
-#: clibraryfileview.physical.basic;42 clibraryfileview.physical;45 clibraryfileview.virtual.basic;48 clibraryfileview.virtual;51
+#: clibraryfileview.physical.basic;42 clibraryfileview.physical;45
+#: clibraryfileview.virtual.basic;48 clibraryfileview.virtual;51
 msgid "O_rganise"
 msgstr "Organizuj"
 
-#: clibraryfileview.physical.basic;42;item;id_library_rename clibraryfileview.physical;45;item;id_library_rename clibraryfileview.virtual.basic;48;item;id_library_rename clibraryfileview.virtual;51;item;id_library_rename
+#: clibraryfileview.physical.basic;42;item;id_library_rename
+#: clibraryfileview.physical;45;item;id_library_rename
+#: clibraryfileview.virtual.basic;48;item;id_library_rename
+#: clibraryfileview.virtual;51;item;id_library_rename
 msgid "_Rename File"
 msgstr "Zmień nazwę pliku"
 
-#: clibraryfileview.physical.basic;42;item;id_library_move clibraryfileview.physical;45;item;id_library_move clibraryfileview.virtual.basic;48;item;id_library_move clibraryfileview.virtual;51;item;id_library_move
+#: clibraryfileview.physical.basic;42;item;id_library_move
+#: clibraryfileview.physical;45;item;id_library_move
+#: clibraryfileview.virtual.basic;48;item;id_library_move
+#: clibraryfileview.virtual;51;item;id_library_move
 msgid "_Move Files..."
 msgstr "Przenieś pliki..."
 
-#: clibraryfileview.physical.basic;42;item;id_library_copy clibraryfileview.physical;45;item;id_library_copy clibraryfileview.virtual.basic;48;item;id_library_copy clibraryfileview.virtual;51;item;id_library_copy
+#: clibraryfileview.physical.basic;42;item;id_library_copy
+#: clibraryfileview.physical;45;item;id_library_copy
+#: clibraryfileview.virtual.basic;48;item;id_library_copy
+#: clibraryfileview.virtual;51;item;id_library_copy
 msgid "_Copy Files..."
 msgstr "Kopiuj pliki..."
 
-#: clibraryfileview.physical.basic;item;id_library_rebuild_ansi clibraryfileview.physical;item;id_library_rebuild_ansi clibraryfileview.virtual.basic;item;id_library_rebuild_ansi clibraryfileview.virtual;item;id_library_rebuild_ansi
+#: clibraryfileview.physical.basic;item;id_library_rebuild_ansi
+#: clibraryfileview.physical;item;id_library_rebuild_ansi
+#: clibraryfileview.virtual.basic;item;id_library_rebuild_ansi
+#: clibraryfileview.virtual;item;id_library_rebuild_ansi
 msgid "_Localise Metadata"
 msgstr "Lokalizuj Metadane"
 
-#: clibraryfileview.physical.basic;item;id_library_refresh_metadata clibraryfileview.physical;item;id_library_refresh_metadata clibraryfileview.virtual.basic;item;id_library_refresh_metadata clibraryfileview.virtual;item;id_library_refresh_metadata
+#: clibraryfileview.physical.basic;item;id_library_refresh_metadata
+#: clibraryfileview.physical;item;id_library_refresh_metadata
+#: clibraryfileview.virtual.basic;item;id_library_refresh_metadata
+#: clibraryfileview.virtual;item;id_library_refresh_metadata
 msgid "_Refresh Metadata"
 msgstr "Odśwież Metadane"
 
-#: clibraryfileview.physical;44;item;id_library_createtorrent clibraryfileview.virtual;50;item;id_library_createtorrent
+#: clibraryfileview.physical;44;item;id_library_createtorrent
+#: clibraryfileview.virtual;50;item;id_library_createtorrent
 msgid "Create ._torrent File"
 msgstr "Stwórz plik .torrent"
 
-#: clibraryfileview.physical;item;id_library_columns clibraryfileview.virtual;item;id_library_columns
+#: clibraryfileview.physical;item;id_library_columns
+#: clibraryfileview.virtual;item;id_library_columns
 msgid "Choose _Columns..."
 msgstr "Wybierz kolumny..."
 
-#: clibraryfileview.virtual.basic;48;item;id_library_unlink clibraryfileview.virtual;51;item;id_library_unlink
+#: clibraryfileview.virtual.basic;48;item;id_library_unlink
+#: clibraryfileview.virtual;51;item;id_library_unlink
 msgid "Remove _Files"
 msgstr "Usuń pliki"
 
-#: cmediaframe.basic;item;id_media_play cmediaframe;item;id_media_play cmedialist;item;id_media_select
+#: cmediaframe.basic;item;id_media_play cmediaframe;item;id_media_play
+#: cmedialist;item;id_media_select
 msgid "_Play"
 msgstr "Odtwarzaj"
 
@@ -1264,7 +1623,8 @@ msgstr "Otwórz plik..."
 msgid "Play_list"
 msgstr "Lista odtwarzania"
 
-#: cmediaframe.basic;52;item;id_media_previous cmediaframe;55;item;id_media_previous
+#: cmediaframe.basic;52;item;id_media_previous
+#: cmediaframe;55;item;id_media_previous
 msgid "Pre_vious"
 msgstr "Poprzedni"
 
@@ -1272,15 +1632,20 @@ msgstr "Poprzedni"
 msgid "_Next"
 msgstr "Następny"
 
-#: cmediaframe.basic;52;item;id_media_random cmediaframe;55;item;id_media_random
+#: cmediaframe.basic;52;item;id_media_random
+#: cmediaframe;55;item;id_media_random
 msgid "_Random"
 msgstr "Losowo"
 
-#: cmediaframe.basic;52;item;id_media_repeat cmediaframe;55;item;id_media_repeat
+#: cmediaframe.basic;52;item;id_media_repeat
+#: cmediaframe;55;item;id_media_repeat
 msgid "R_epeat"
 msgstr "Powtarzaj"
 
-#: cmediaframe.basic;52;item;id_media_playlist cmediaframe.basic;54;item;id_media_playlist cmediaframe;55;item;id_media_playlist cmediaframe;57;item;id_media_playlist cmedialist;item;id_media_playlist
+#: cmediaframe.basic;52;item;id_media_playlist
+#: cmediaframe.basic;54;item;id_media_playlist
+#: cmediaframe;55;item;id_media_playlist cmediaframe;57;item;id_media_playlist
+#: cmedialist;item;id_media_playlist
 msgid "Show _Playlist"
 msgstr "Pokaż listę odtwarzania"
 
@@ -1288,35 +1653,51 @@ msgstr "Pokaż listę odtwarzania"
 msgid "Video Si_ze"
 msgstr "Wielkość wideo"
 
-#: cmediaframe.basic;53;item;id_media_size_one cmediaframe;56;item;id_media_size_one cmediaframe.zoom;item;id_media_size_one
+#: cmediaframe.basic;53;item;id_media_size_one
+#: cmediaframe;56;item;id_media_size_one
+#: cmediaframe.zoom;item;id_media_size_one
 msgid "_Original Size"
 msgstr "Oryginalna wielkość"
 
-#: cmediaframe.basic;53;item;id_media_size_two cmediaframe;56;item;id_media_size_two cmediaframe.zoom;item;id_media_size_two
+#: cmediaframe.basic;53;item;id_media_size_two
+#: cmediaframe;56;item;id_media_size_two
+#: cmediaframe.zoom;item;id_media_size_two
 msgid "_Double Size"
 msgstr "Podwójna wielkość"
 
-#: cmediaframe.basic;53;item;id_media_size_three cmediaframe;56;item;id_media_size_three cmediaframe.zoom;item;id_media_size_three
+#: cmediaframe.basic;53;item;id_media_size_three
+#: cmediaframe;56;item;id_media_size_three
+#: cmediaframe.zoom;item;id_media_size_three
 msgid "_Triple Size"
 msgstr "Potrójna wielkość"
 
-#: cmediaframe.basic;53;item;id_media_size_fill cmediaframe;56;item;id_media_size_fill cmediaframe.zoom;item;id_media_size_fill
+#: cmediaframe.basic;53;item;id_media_size_fill
+#: cmediaframe;56;item;id_media_size_fill
+#: cmediaframe.zoom;item;id_media_size_fill
 msgid "_Largest"
 msgstr "Największa"
 
-#: cmediaframe.basic;53;item;id_media_size_distort cmediaframe;56;item;id_media_size_distort cmediaframe.zoom;item;id_media_size_distort
+#: cmediaframe.basic;53;item;id_media_size_distort
+#: cmediaframe;56;item;id_media_size_distort
+#: cmediaframe.zoom;item;id_media_size_distort
 msgid "_Fill Window"
 msgstr "Całe okno"
 
-#: cmediaframe.basic;53;item;id_media_aspect_default cmediaframe;56;item;id_media_aspect_default cmediaframe.zoom;item;id_media_aspect_default
+#: cmediaframe.basic;53;item;id_media_aspect_default
+#: cmediaframe;56;item;id_media_aspect_default
+#: cmediaframe.zoom;item;id_media_aspect_default
 msgid "Default _Aspect"
 msgstr "Domyślny wygląd (proporcje)"
 
-#: cmediaframe.basic;53;item;id_media_aspect_4_3 cmediaframe;56;item;id_media_aspect_4_3 cmediaframe.zoom;item;id_media_aspect_4_3
+#: cmediaframe.basic;53;item;id_media_aspect_4_3
+#: cmediaframe;56;item;id_media_aspect_4_3
+#: cmediaframe.zoom;item;id_media_aspect_4_3
 msgid "_4:3 Ratio (TV)"
 msgstr "Proporcje 4:3 (TV)"
 
-#: cmediaframe.basic;53;item;id_media_aspect_16_9 cmediaframe;56;item;id_media_aspect_16_9 cmediaframe.zoom;item;id_media_aspect_16_9
+#: cmediaframe.basic;53;item;id_media_aspect_16_9
+#: cmediaframe;56;item;id_media_aspect_16_9
+#: cmediaframe.zoom;item;id_media_aspect_16_9
 msgid "_16:9 (Film)"
 msgstr "Proporcje 16:9 (Film)"
 
@@ -1328,11 +1709,13 @@ msgstr "Ustawienia"
 msgid "Choose _Visualisation..."
 msgstr "Wybierz wizualizację..."
 
-#: cmediaframe.basic;54;item;id_media_status cmediaframe;57;item;id_media_status
+#: cmediaframe.basic;54;item;id_media_status
+#: cmediaframe;57;item;id_media_status
 msgid "Show _Status Line"
 msgstr "Pokaż pasek statusu"
 
-#: cmediaframe.basic;54;item;id_media_settings cmediaframe;57;item;id_media_settings
+#: cmediaframe.basic;54;item;id_media_settings
+#: cmediaframe;57;item;id_media_settings
 msgid "_Media Settings..."
 msgstr "Ustawienia mediów..."
 
@@ -1392,15 +1775,17 @@ msgstr "Informacja"
 msgid "_Debug"
 msgstr "_Debug"
 
-#: csystemwnd;item;id_system_timestamp cprivatechatframe;item;id_chat_timestamp
+#: csystemwnd;item;id_system_timestamp
+#: cprivatechatframe;item;id_chat_timestamp
 msgid "Timestam_p"
 msgstr "Znacznik czasu"
 
-#: csystemwnd;item;id_system_copy curlexportdlg;control;8
+#: csystemwnd;item;id_system_copy curlexportdlg;control;7
 msgid "_Copy"
 msgstr "Kopiuj"
 
-#: csystemwnd;item;id_system_clear csearchmonitorwnd;item;id_searchmonitor_clear
+#: csystemwnd;item;id_system_clear
+#: csearchmonitorwnd;item;id_searchmonitor_clear
 msgid "Clear _Buffer"
 msgstr "Wyczyść bufor"
 
@@ -1580,7 +1965,8 @@ msgstr "Wielkość rzeczywista"
 msgid "_Refresh"
 msgstr "Odśwież"
 
-#: imageviewer_context;item;imageviewer_close circtabrclick;item;id_irc_closetab
+#: imageviewer_context;item;imageviewer_close
+#: circtabrclick;item;id_irc_closetab
 msgid "_Close"
 msgstr "Zamknij"
 
@@ -1717,8 +2103,12 @@ msgid "W A R N I N G   -   Y O U   A R E   F I R E W A L L E D"
 msgstr "U W A G A   -   J E S T E Ś   Z A B L O K O W A N Y   F I R E W A L L E M"
 
 #: chomeviewctrl;text;5001
-msgid "Shareaza has detected that you are behind a NAT router or firewall,\n\t\t\tand are unable to receive connections from the Internet.  "
-msgstr "Shareaza wykryła, że jesteś za NATem lub firewallem\n\t\t\t  i nie możesz odbierać połączeń z Internetu.  "
+msgid ""
+"Shareaza has detected that you are behind a NAT router or firewall,\n"
+"\t\t\tand are unable to receive connections from the Internet.  "
+msgstr ""
+"Shareaza wykryła, że jesteś za NATem lub firewallem\n"
+"\t\t\t  i nie możesz odbierać połączeń z Internetu.  "
 
 #: chomeviewctrl;text;5002
 msgid "This may cause poor download and search performance."
@@ -1733,8 +2123,12 @@ msgid "W A R N I N G   -   Y O U R   T C P   P O R T   I S   F I R E W A L
 msgstr "U W A G A   -   T W Ó J   P O R T   T C P   J E S T   Z A   F I R E W A L L E M"
 
 #: chomeviewctrl;text;6001
-msgid "Shareaza has detected that you are behind a NAT router or firewall,\n\t\t\tand are unable to receive TCP connections from the Internet.  "
-msgstr "Shareaza wykryła, że jesteś za routerem NAT lub firewallem,\n\t\t\ti nie jesteś w stanie odbierać połączeń TCP z Internetu.  "
+msgid ""
+"Shareaza has detected that you are behind a NAT router or firewall,\n"
+"\t\t\tand are unable to receive TCP connections from the Internet.  "
+msgstr ""
+"Shareaza wykryła, że jesteś za routerem NAT lub firewallem,\n"
+"\t\t\ti nie jesteś w stanie odbierać połączeń TCP z Internetu.  "
 
 #: chomeviewctrl;text;6002
 msgid "This may cause poor download performance."
@@ -1745,8 +2139,12 @@ msgid "W A R N I N G   -   Y O U R   U D P   P O R T   I S   F I R E W A L
 msgstr "U W A G A   -   T W Ó J   P O R T   U D P   J E S T   Z A   F I R E W A L E M"
 
 #: chomeviewctrl;text;7001
-msgid "Shareaza has detected that you are behind a NAT router or firewall,\n\t\t\tand are unable to receive UDP messages from the Internet.  "
-msgstr "Shareaza wykryła, że jesteś za routerem NAT lub firewallem,\n\t\t\ti nie jesteś w stanie odbierać wiadomości UDP z Internetu.  "
+msgid ""
+"Shareaza has detected that you are behind a NAT router or firewall,\n"
+"\t\t\tand are unable to receive UDP messages from the Internet.  "
+msgstr ""
+"Shareaza wykryła, że jesteś za routerem NAT lub firewallem,\n"
+"\t\t\ti nie jesteś w stanie odbierać wiadomości UDP z Internetu.  "
 
 #: chomeviewctrl;text;7002
 msgid "This may cause poor search performance."
@@ -1880,15 +2278,18 @@ msgstr "Kliknij tutaj, aby się połączyć"
 msgid "Gnutella2:"
 msgstr "Gnutella2:"
 
-#: chomeconnectionbox;text;4 chomeconnectionbox;text;10 chomeconnectionbox;text;16
+#: chomeconnectionbox;text;4 chomeconnectionbox;text;10
+#: chomeconnectionbox;text;16
 msgid "Disconnected"
 msgstr "Rozłączony"
 
-#: chomeconnectionbox;text;5 chomeconnectionbox;text;11 chomeconnectionbox;text;17 string;8070
+#: chomeconnectionbox;text;5 chomeconnectionbox;text;11
+#: chomeconnectionbox;text;17 string;8070
 msgid "Connecting..."
 msgstr "Łączenie..."
 
-#: chomeconnectionbox;text;6 chomeconnectionbox;text;12 chomeconnectionbox;text;18 string;8071
+#: chomeconnectionbox;text;6 chomeconnectionbox;text;12
+#: chomeconnectionbox;text;18 string;8071
 msgid "Connected"
 msgstr "Połączony"
 
@@ -1928,7 +2329,8 @@ msgstr "minut(y)."
 msgid "minutes."
 msgstr ""
 
-#: document;chomeuploadsbox string;window_uploads string;8317 dialog;cuploadssettingspage column;uploads
+#: document;chomeuploadsbox string;window_uploads string;8317
+#: dialog;cuploadssettingspage column;uploads
 msgid "Uploads"
 msgstr "Wysyłania"
 
@@ -1984,7 +2386,9 @@ msgstr "Seeduj inny torrent"
 msgid "Seed a torrent"
 msgstr "Seeduj torrent"
 
-#: document;cgeneralsettingsgroup cgeneralsettingsgroup;text;3 dialog;cgeneralsettingsgroup dialog;cgeneralsettingspage dialog;cfilegeneralpage
+#: document;cgeneralsettingsgroup cgeneralsettingsgroup;text;3
+#: dialog;cgeneralsettingsgroup dialog;cgeneralsettingspage
+#: dialog;cfilegeneralpage
 msgid "General"
 msgstr "Ogólne"
 
@@ -1993,8 +2397,12 @@ msgid "Welcome to Shareaza's Settings Manager"
 msgstr "Witaj w Menedżerze ustawień Shareazy"
 
 #: cgeneralsettingsgroup;text;2
-msgid "The Shareaza Settings Manager allows advanced users to completely customise how\n\t\t\tShareaza works. The settings in the"
-msgstr "Menedżer ustawień Shareazy pozwala zaawansowanym użytkownikom całkowicie dostosować\n\t\t\tsposób działania Shareazy. Konkretne ustawienia w sekcji"
+msgid ""
+"The Shareaza Settings Manager allows advanced users to completely customise how\n"
+"\t\t\tShareaza works. The settings in the"
+msgstr ""
+"Menedżer ustawień Shareazy pozwala zaawansowanym użytkownikom całkowicie dostosować\n"
+"\t\t\tsposób działania Shareazy. Konkretne ustawienia w sekcji"
 
 #: cgeneralsettingsgroup;text;4
 msgid "section relate to the user experience."
@@ -2048,13 +2456,18 @@ msgstr "Integracja Web:"
 msgid "Integrate Shareaza with your web browser to accept peer-to-peer links and download content."
 msgstr "Zintegruj Shareazę z Twoją przegladarką internetową (web'ową) aby akceptowała linki peer-to-peer i pobierała kontent internetowy(?)."
 
-#: document;cinternetsettingsgroup cinternetsettingsgroup;text;3 dialog;cinternetsettingsgroup
+#: document;cinternetsettingsgroup cinternetsettingsgroup;text;3
+#: dialog;cinternetsettingsgroup
 msgid "Internet"
 msgstr "Internet"
 
 #: cinternetsettingsgroup;text;2
-msgid "The Shareaza Settings Manager allows advanced users to completely customise \n\t\t\thow Shareaza works. The settings in the"
-msgstr "Menedżer Ustawień Shareazy pozwala zaawansowanym użytkownikom całkowicie dostosować \n\t\t\tsposób działania Shareazy. Ustawienia w sekcji"
+msgid ""
+"The Shareaza Settings Manager allows advanced users to completely customise \n"
+"\t\t\thow Shareaza works. The settings in the"
+msgstr ""
+"Menedżer Ustawień Shareazy pozwala zaawansowanym użytkownikom całkowicie dostosować \n"
+"\t\t\tsposób działania Shareazy. Ustawienia w sekcji"
 
 #: cinternetsettingsgroup;text;4
 msgid "section control how Shareaza interacts with other nodes within distributed peer-to-peer networks."
@@ -2149,15 +2562,25 @@ msgid "Downloads Area"
 msgstr "Obszar pobierań"
 
 #: downloadhelp.select;text;2
-msgid "This is where files currently being downloaded are displayed. You can view\n\t\tindividual sources by expanding each file with the small + on the left."
-msgstr "To jest miejsce, gdzie pobierane pliki są wyświetlane. Możesz zobaczyć szczegółowo pojedyncze źródła przez\n\t\tnaciśnięcie małego plusika po lewej stronie pliku."
+msgid ""
+"This is where files currently being downloaded are displayed. You can view\n"
+"\t\tindividual sources by expanding each file with the small + on the left."
+msgstr ""
+"To jest miejsce, gdzie pobierane pliki są wyświetlane. Możesz zobaczyć szczegółowo pojedyncze źródła przez\n"
+"\t\tnaciśnięcie małego plusika po lewej stronie pliku."
 
 #: downloadhelp.select;text;3
-msgid "Drag'n'Drop downloads higher in the list for priority, or onto Download Group \n\t\ttabs for better organisation (in Power Mode)."
-msgstr "Możesz też użyć tego polecenia, aby uzyskać pomoc na temat konkretnego pobierania.\n\t\tPo prostu zaznacz pobieranie i ponownie wybierz tą komendę."
+msgid ""
+"Drag'n'Drop downloads higher in the list for priority, or onto Download Group \n"
+"\t\ttabs for better organisation (in Power Mode)."
+msgstr ""
+"Możesz też użyć tego polecenia, aby uzyskać pomoc na temat konkretnego pobierania.\n"
+"\t\tPo prostu zaznacz pobieranie i ponownie wybierz tą komendę."
 
 #: downloadhelp.select;text;4
-msgid "You can also use this command to get help information on a specific download.\n\t\tSimply select a download and choose this Help command again."
+msgid ""
+"You can also use this command to get help information on a specific download.\n"
+"\t\tSimply select a download and choose this Help command again."
 msgstr ""
 
 #: downloadhelp.seeding;text;1
@@ -2165,7 +2588,9 @@ msgid "This Torrent is Seeding"
 msgstr ""
 
 #: downloadhelp.seeding;text;2
-msgid "Shareaza has verified this complete download, and is actively sharing it\n\t\twith other downloaders through BitTorrent. Please share at least 100%."
+msgid ""
+"Shareaza has verified this complete download, and is actively sharing it\n"
+"\t\twith other downloaders through BitTorrent. Please share at least 100%."
 msgstr ""
 
 #: downloadhelp.completed;text;1
@@ -2173,24 +2598,36 @@ msgid "This Download has Completed"
 msgstr "To pobieranie zostało zakończone"
 
 #: downloadhelp.completed;text;2
-msgid "Shareaza has finished downloading this file, and has verified that it\n\t\tis 100% correct. It has also moved the file to your downloads folder."
-msgstr "Shareaza skończyła pobieranie tego pliku i zweryfikowała, że jest w 100% poprawny.\n\t\tPrzeniosła także ten plik do Twojego folderu pobierań."
+msgid ""
+"Shareaza has finished downloading this file, and has verified that it\n"
+"\t\tis 100% correct. It has also moved the file to your downloads folder."
+msgstr ""
+"Shareaza skończyła pobieranie tego pliku i zweryfikowała, że jest w 100% poprawny.\n"
+"\t\tPrzeniosła także ten plik do Twojego folderu pobierań."
 
 #: downloadhelp.moving;text;1
 msgid "This Download is Moving"
 msgstr "To pobieranie jest w trakcie przenoszenia"
 
 #: downloadhelp.moving;text;2
-msgid "Shareaza has finished downloading this file, and has verified that\n\t\tit is correct. It is currently being moved and/or unpacked to your downloads folder."
-msgstr "Shareaza skończyła pobieranie tego pliku i zweryfikowała, że jest w 100% poprawny.\n\t\tTen plik jest obecnie przenoszony i/lub rozpakowywany do Twojego folderu pobierań."
+msgid ""
+"Shareaza has finished downloading this file, and has verified that\n"
+"\t\tit is correct. It is currently being moved and/or unpacked to your downloads folder."
+msgstr ""
+"Shareaza skończyła pobieranie tego pliku i zweryfikowała, że jest w 100% poprawny.\n"
+"\t\tTen plik jest obecnie przenoszony i/lub rozpakowywany do Twojego folderu pobierań."
 
 #: downloadhelp.paused;text;1
 msgid "This Download is Paused"
 msgstr "To pobieranie jest wstrzymane"
 
 #: downloadhelp.paused;text;2
-msgid "You have paused this download. If you want it to resume downloading, you\n\t\tcan click the '"
-msgstr "Wstrzymałeś to pobieranie. Jeżeli chcesz wznowić to pobieranie,\n\t\tmożesz wybrać polecenie '"
+msgid ""
+"You have paused this download. If you want it to resume downloading, you\n"
+"\t\tcan click the '"
+msgstr ""
+"Wstrzymałeś to pobieranie. Jeżeli chcesz wznowić to pobieranie,\n"
+"\t\tmożesz wybrać polecenie '"
 
 #: downloadhelp.paused;text;4
 msgid "' command."
@@ -2201,88 +2638,164 @@ msgid "The Disk is Full"
 msgstr "Dysk jest pełny"
 
 #: downloadhelp.diskfull;text;2
-msgid "Shareaza has paused this download automatically because the hard disk\n\t\tappears to be full, or the download file cannot be written to. If you wish\n\t\tto continue downloading, please free some space on your hard disk and/or check\n\t\tto make sure the incomplete file folder is accessible, and then resume the\n\t\tdownload."
-msgstr "Shareaza automatycznie wstrzymała to pobieranie, ponieważ\n\t\tdysk jest pełny, lub pobierany plik nie może być na nim zapisany. Jeżeli\n\t\tchcesz kontynuować pobieranie, zwolnij trochę miejsca na dysku i/lub upewnij się\n\t\tże folder tymczasowy (Incomplete) jest dostępny i wtedy wznów pobieranie."
+msgid ""
+"Shareaza has paused this download automatically because the hard disk\n"
+"\t\tappears to be full, or the download file cannot be written to. If you wish\n"
+"\t\tto continue downloading, please free some space on your hard disk and/or check\n"
+"\t\tto make sure the incomplete file folder is accessible, and then resume the\n"
+"\t\tdownload."
+msgstr ""
+"Shareaza automatycznie wstrzymała to pobieranie, ponieważ\n"
+"\t\tdysk jest pełny, lub pobierany plik nie może być na nim zapisany. Jeżeli\n"
+"\t\tchcesz kontynuować pobieranie, zwolnij trochę miejsca na dysku i/lub upewnij się\n"
+"\t\tże folder tymczasowy (Incomplete) jest dostępny i wtedy wznów pobieranie."
 
 #: downloadhelp.verifying;text;1
 msgid "This Download is Verifying"
 msgstr "To pobieranie jest w trakcie weryfikacji"
 
 #: downloadhelp.verifying;text;2
-msgid "This download has finished, and Shareaza is now checking it to ensure\n\t\tthat it is exactly the same as the original file. If any damaged parts are\n\t\tfound, Shareaza will repair them automatically."
-msgstr "To pobieranie zostało zakończone i teraz Shareaza sprawdza je,\n\t\taby upewnić się, że jest dokładnie identyczne z oryginalnym plikiem.\n\t\tJeżeli zostały znalezione jakieś uszkodzone części, to Shareaza automatycznie je naprawi."
+msgid ""
+"This download has finished, and Shareaza is now checking it to ensure\n"
+"\t\tthat it is exactly the same as the original file. If any damaged parts are\n"
+"\t\tfound, Shareaza will repair them automatically."
+msgstr ""
+"To pobieranie zostało zakończone i teraz Shareaza sprawdza je,\n"
+"\t\taby upewnić się, że jest dokładnie identyczne z oryginalnym plikiem.\n"
+"\t\tJeżeli zostały znalezione jakieś uszkodzone części, to Shareaza automatycznie je naprawi."
 
 #: downloadhelp.downloading;text;1
 msgid "This Download is Active!"
 msgstr "To pobieranie jest aktywne!"
 
 #: downloadhelp.downloading;text;2
-msgid "This download is currently in progress. If it is downloading too slowly,\n\t\tyou could try searching the network for more sources with the '"
-msgstr "To pobieranie jest obecnie w toku. Jeżeli pobiera się za wolno, możesz spróbować przeszukać sieć w celu znalezienia\n\t\twięcej źródeł komendą'"
+msgid ""
+"This download is currently in progress. If it is downloading too slowly,\n"
+"\t\tyou could try searching the network for more sources with the '"
+msgstr ""
+"To pobieranie jest obecnie w toku. Jeżeli pobiera się za wolno, możesz spróbować przeszukać sieć w celu znalezienia\n"
+"\t\twięcej źródeł komendą'"
 
 #: downloadhelp.downloading;text;3 downloadhelp.searching;text;3
 msgid "Find More Sources"
 msgstr "Znajdź Więcej Źródeł"
 
 #: downloadhelp.downloading;text;4
-msgid "' command. If the speed does not \n\t\timprove it may be due to limited upload speeds of the users you are downloading \n\t\tfrom. Download speed usually increases over time."
-msgstr "'. Jeżeli prędkość się nie poprawiła, przyczyną może być ograniczenie prędkości wysyłania\n\t\tu użytkownika, od którego pobierasz. Prędkość pobierania zwykle zwiększa się w miarę upływu czasu."
+msgid ""
+"' command. If the speed does not \n"
+"\t\timprove it may be due to limited upload speeds of the users you are downloading \n"
+"\t\tfrom. Download speed usually increases over time."
+msgstr ""
+"'. Jeżeli prędkość się nie poprawiła, przyczyną może być ograniczenie prędkości wysyłania\n"
+"\t\tu użytkownika, od którego pobierasz. Prędkość pobierania zwykle zwiększa się w miarę upływu czasu."
 
 #: downloadhelp.pending;text;1
 msgid "This Download is Pending"
 msgstr "To pobieranie oczekuje (na wysyłające źródło)"
 
 #: downloadhelp.pending;text;2
-msgid "This download is waiting for someone to start uploading.\n\t\tShareaza is ready to start downloading this file, but no-one is sending it at\n\t\tthe moment. You are probably waiting in other user's queues, and the download\n\t\tmay start transferring at any time. You can examine the individual sources to \n\t\tsee each queue you are waiting in. If you are sharing files yourself, it may\n\t\timprove the chances of a download transfer starting quickly."
-msgstr "To pobieranie czeka na kogoś, kto zacznie wysyłać.\n\t\tShareaza jest gotowa do rozpoczęcia pobierania tego pliku, ale nikt go na razie nie wysyła.\n\t\tPrawdopodobnie czekasz w kolejce u jakiegoś użytkownika i pobieranie może zacząć się przesyłać w każdej chwili.\n\t\tMożesz przeanalizować poszczególne źródła, aby zobaczyć wszystkie kolejki w których oczekujesz.\n\t\tJeżeli sam udostępniasz jakieś pliki, to może to zwiększyć szanse na szybkie rozpoczęcie pobierania."
+msgid ""
+"This download is waiting for someone to start uploading.\n"
+"\t\tShareaza is ready to start downloading this file, but no-one is sending it at\n"
+"\t\tthe moment. You are probably waiting in other user's queues, and the download\n"
+"\t\tmay start transferring at any time. You can examine the individual sources to \n"
+"\t\tsee each queue you are waiting in. If you are sharing files yourself, it may\n"
+"\t\timprove the chances of a download transfer starting quickly."
+msgstr ""
+"To pobieranie czeka na kogoś, kto zacznie wysyłać.\n"
+"\t\tShareaza jest gotowa do rozpoczęcia pobierania tego pliku, ale nikt go na razie nie wysyła.\n"
+"\t\tPrawdopodobnie czekasz w kolejce u jakiegoś użytkownika i pobieranie może zacząć się przesyłać w każdej chwili.\n"
+"\t\tMożesz przeanalizować poszczególne źródła, aby zobaczyć wszystkie kolejki w których oczekujesz.\n"
+"\t\tJeżeli sam udostępniasz jakieś pliki, to może to zwiększyć szanse na szybkie rozpoczęcie pobierania."
 
 #: downloadhelp.queued;text;1
 msgid "This Download is Queued"
 msgstr "To pobieranie jest zakolejkowane"
 
 #: downloadhelp.queued;text;2
-msgid "This download is waiting for some of your other downloads to complete.\n\t\tYour download settings limit the number of downloads which may be active at\n\t\tany given time, to ensure that each download gets a good share of the available\n\t\tbandwidth. You can change these settings via Tools, Shareaza Settings.\n\t\tAlternatively, you may manually start this download with the resume command."
-msgstr "To pobieranie czeka aż jakieś z Twoich pozostałych pobierań zostanie zakończone.\n\t\tTwoje ustawienia pobierania ograniczają liczbę pobierań, które mogą być aktywne w danym czasie,\n\t\taby zapewnić, że każde pobieranie dostanie sporą część z dostępnej szerokości pasma Twojego łącza.\n\t\tMożesz zmienić te ustawienia poprzez Narzędzia, Ustawienia Shareazy.\n\t\tAlternatywnie, możesz ręcznie rozpocząć to pobieranie za pomocą komendy wznów."
+msgid ""
+"This download is waiting for some of your other downloads to complete.\n"
+"\t\tYour download settings limit the number of downloads which may be active at\n"
+"\t\tany given time, to ensure that each download gets a good share of the available\n"
+"\t\tbandwidth. You can change these settings via Tools, Shareaza Settings.\n"
+"\t\tAlternatively, you may manually start this download with the resume command."
+msgstr ""
+"To pobieranie czeka aż jakieś z Twoich pozostałych pobierań zostanie zakończone.\n"
+"\t\tTwoje ustawienia pobierania ograniczają liczbę pobierań, które mogą być aktywne w danym czasie,\n"
+"\t\taby zapewnić, że każde pobieranie dostanie sporą część z dostępnej szerokości pasma Twojego łącza.\n"
+"\t\tMożesz zmienić te ustawienia poprzez Narzędzia, Ustawienia Shareazy.\n"
+"\t\tAlternatywnie, możesz ręcznie rozpocząć to pobieranie za pomocą komendy wznów."
 
 #: downloadhelp.searching;text;1
 msgid "This Download is Searching"
 msgstr "To pobieranie jest w trakcie szukania (nie ma źródeł)"
 
 #: downloadhelp.searching;text;2
-msgid "There are no known sources for this download, so Shareaza is searching\n\t\tall connected P2P networks for new sources. Once sources are found, the\n\t\tdownload will start automatically. Shareaza searches for sources automatically,\n\t\thowever you can speed up the process using the"
-msgstr "Nie ma żadnych znanych źródeł dla tego pobierania, więc Shareaza szuka nowych źródeł\n\t\twe wszystkich podłączonych sieciach P2P. Gdy tylko znajdą się źródła, pobieranie\n\t\tzostanie automatycznie rozpoczęte. Shareaza szuka źródeł automatycznie,\n\t\t jednak możesz przyśpieszyć ten proces komendą"
+msgid ""
+"There are no known sources for this download, so Shareaza is searching\n"
+"\t\tall connected P2P networks for new sources. Once sources are found, the\n"
+"\t\tdownload will start automatically. Shareaza searches for sources automatically,\n"
+"\t\thowever you can speed up the process using the"
+msgstr ""
+"Nie ma żadnych znanych źródeł dla tego pobierania, więc Shareaza szuka nowych źródeł\n"
+"\t\twe wszystkich podłączonych sieciach P2P. Gdy tylko znajdą się źródła, pobieranie\n"
+"\t\tzostanie automatycznie rozpoczęte. Shareaza szuka źródeł automatycznie,\n"
+"\t\t jednak możesz przyśpieszyć ten proces komendą"
 
 #: downloadhelp.searching;text;4
 msgid "command."
 msgstr "."
 
 #: downloadhelp.searching;text;5
-msgid "Unfortunately in many cases there may be no users online who have the\n\t\tfile you are looking for. The only course of action here is to wait for\n\t\tsomeone to come online, or cancel it and try to find a similar file which is\n\t\tmore widely available."
-msgstr "Niestety w wielu przypadkach może brakować połączonych z siecią użytkowników, \n\t\tktórzy mają plik, którego szukasz. Jedynym wyściem jest czekać aż ktoś, kto go ma\n\t\t pojawi się on-line albo anulować to pobieranie i spróbować znaleźć podobny plik,\n\t\t który będzie miał więcej źródeł, zatem będzie powszechniej dostępny."
+msgid ""
+"Unfortunately in many cases there may be no users online who have the\n"
+"\t\tfile you are looking for. The only course of action here is to wait for\n"
+"\t\tsomeone to come online, or cancel it and try to find a similar file which is\n"
+"\t\tmore widely available."
+msgstr ""
+"Niestety w wielu przypadkach może brakować połączonych z siecią użytkowników, \n"
+"\t\tktórzy mają plik, którego szukasz. Jedynym wyściem jest czekać aż ktoś, kto go ma\n"
+"\t\t pojawi się on-line albo anulować to pobieranie i spróbować znaleźć podobny plik,\n"
+"\t\t który będzie miał więcej źródeł, zatem będzie powszechniej dostępny."
 
 #: downloadhelp.creating;text;1
 msgid "This Download is Creating"
 msgstr "To pobieranie jest tworzone"
 
 #: downloadhelp.creating;text;2
-msgid "Shareaza is pre-allocating a file in which to store this download, to\n\t\tsave time later."
-msgstr "Shareaza prealokuje plik w którym będzie przechowywane to pobieranie, aby \n\t\t zaoszczędzić czas później."
+msgid ""
+"Shareaza is pre-allocating a file in which to store this download, to\n"
+"\t\tsave time later."
+msgstr ""
+"Shareaza prealokuje plik w którym będzie przechowywane to pobieranie, aby \n"
+"\t\t zaoszczędzić czas później."
 
 #: downloadhelp.tracker;text;1
 msgid "BitTorrent Tracker Down"
 msgstr "Tracker BitTorrentu jest niedostępny"
 
 #: downloadhelp.tracker;text;2
-msgid "The BitTorrent tracker server for this download appears to be\n\t\tdown or malfunctioning. Shareaza is unable to contact it to receive\n\t\ta list of peers."
-msgstr "Serwer Trackera BitTorrentu dla tego pobierania wydaje się być niedostępny lub\n\t\tnie działa prawidłowo. Shareaza nie jest w stanie połączyć się aby otrzymać\n\t\tlistę peer'ów (tj. użytkowników-źródeł pobierających ten sam plik i udostępniajacych posiadane jego fragmenty)."
+msgid ""
+"The BitTorrent tracker server for this download appears to be\n"
+"\t\tdown or malfunctioning. Shareaza is unable to contact it to receive\n"
+"\t\ta list of peers."
+msgstr ""
+"Serwer Trackera BitTorrentu dla tego pobierania wydaje się być niedostępny lub\n"
+"\t\tnie działa prawidłowo. Shareaza nie jest w stanie połączyć się aby otrzymać\n"
+"\t\tlistę peer'ów (tj. użytkowników-źródeł pobierających ten sam plik i udostępniajacych posiadane jego fragmenty)."
 
 #: uploadhelp;text;1
 msgid "Uploads Area"
 msgstr "Obszar wysyłań"
 
 #: uploadhelp;text;2
-msgid "This is where queues and uploads are displayed. You can expand each queue\n\t\twith the small + on the left, and filter what is displayed with the button on the\n\t\tright of the window's toolbar."
-msgstr "To jest miejsce, gdzie są wyświetlane kolejki i wysyłania. Możesz rozszerzyć każdą kolejkę małym plusikiem po lewej\n\t\ti filtrować to co jest wyświetlane przyciskiem po prawej paska nrzędzi okna (?) (w prawym dolnym rogu okna) ."
+msgid ""
+"This is where queues and uploads are displayed. You can expand each queue\n"
+"\t\twith the small + on the left, and filter what is displayed with the button on the\n"
+"\t\tright of the window's toolbar."
+msgstr ""
+"To jest miejsce, gdzie są wyświetlane kolejki i wysyłania. Możesz rozszerzyć każdą kolejkę małym plusikiem po lewej\n"
+"\t\ti filtrować to co jest wyświetlane przyciskiem po prawej paska nrzędzi okna (?) (w prawym dolnym rogu okna) ."
 
 #: generalhelp.diskspace;text;1
 msgid "Disk Space is Low"
@@ -2293,8 +2806,13 @@ msgid "The amount of free space on one or more drives used by Shareaza is low."
 msgstr "Ilość wolnego miejsca na dysku (lub dyskach) używanym przez Shareazę jest mała."
 
 #: generalhelp.diskspace;text;3
-msgid "You should always attempt to keep a reasonable amount of disk space free. Programs \n\t\tcan become unstable if the drives become full, and temporary files may be lost. You should \n\t\trun a disk clean-up, delete unwanted files, or uninstall software you no longer need."
-msgstr "Zawsze powinieneś starać się utrzymywać rozsądną ilość wolnego miejsca na dysku. Gdy dysk będzie pełny, programy mogą być niestabilne,\n\t\ta pliki tymczasowe utracone. Powinieneś używać czyszczenia dysku, usuwać niechciane pliki oraz programy których nie będą już potrzebne."
+msgid ""
+"You should always attempt to keep a reasonable amount of disk space free. Programs \n"
+"\t\tcan become unstable if the drives become full, and temporary files may be lost. You should \n"
+"\t\trun a disk clean-up, delete unwanted files, or uninstall software you no longer need."
+msgstr ""
+"Zawsze powinieneś starać się utrzymywać rozsądną ilość wolnego miejsca na dysku. Gdy dysk będzie pełny, programy mogą być niestabilne,\n"
+"\t\ta pliki tymczasowe utracone. Powinieneś używać czyszczenia dysku, usuwać niechciane pliki oraz programy których nie będą już potrzebne."
 
 #: generalhelp.diskwritefail;text;1
 msgid "A Required Directory is Non-writable"
@@ -2305,8 +2823,14 @@ msgid "A disk or directory Shareaza needs cannot be written to."
 msgstr "Nie można zapisywać na dysku lub w folderze, którego potrzebuje Shareaza."
 
 #: generalhelp.diskwritefail;text;3
-msgid "A network drive may have been disconnected, or you may not have write permission \n\t\tto a selected directory. Please check directories and permissions, or change the\n\t\ttemporary files location."
-msgstr "Dysk sieciowy mógł zostać odłączony, lub nie masz uprawnień do zapisu\n\t\twe wskazanym folderze. Sprawdź foldery i pozwolenia lub\n\t\t zmień lokalizację folderu plików tymczasowych."
+msgid ""
+"A network drive may have been disconnected, or you may not have write permission \n"
+"\t\tto a selected directory. Please check directories and permissions, or change the\n"
+"\t\ttemporary files location."
+msgstr ""
+"Dysk sieciowy mógł zostać odłączony, lub nie masz uprawnień do zapisu\n"
+"\t\twe wskazanym folderze. Sprawdź foldery i pozwolenia lub\n"
+"\t\t zmień lokalizację folderu plików tymczasowych."
 
 #: generalhelp.connectionfail;text;1
 msgid "Internet Connection Has Been Lost"
@@ -2317,8 +2841,12 @@ msgid "Windows reports that there is no internet connection is available."
 msgstr "Windows raportuje, że żadne połączenie z Internetem nie jest dostępne."
 
 #: generalhelp.connectionfail;text;3
-msgid "It is likely that a modem or router has dropped, meaning the internet cannot\n\t\tbe accessed. You may need to manually re-connect or reset your connection."
-msgstr "Prawdopodobnie modem lub router się zawiesił, co oznacza że nie ma dostępu do Internetu.\n\t\tMożesz potrzebować ręcznego ponownego połącznia albo zresetowania Twojego połączenia."
+msgid ""
+"It is likely that a modem or router has dropped, meaning the internet cannot\n"
+"\t\tbe accessed. You may need to manually re-connect or reset your connection."
+msgstr ""
+"Prawdopodobnie modem lub router się zawiesił, co oznacza że nie ma dostępu do Internetu.\n"
+"\t\tMożesz potrzebować ręcznego ponownego połącznia albo zresetowania Twojego połączenia."
 
 #: generalhelp.connectionfail;text;4
 msgid "Shareaza has ceased connection attempts to avoid losing all cached hosts."
@@ -2329,8 +2857,14 @@ msgid "Adult content filter enabled"
 msgstr "Filtr treści dla dorosłych włączony"
 
 #: generalhelp.adultfilter;text;2
-msgid "Please note that (as with any automated filter) it may not be 100% effective at\n\t\tscreening content. It is designed simply to filter out excess unwanted results, rather than \n\t\tas a 100% safe block."
-msgstr "Zauważ, że (jak każdy automatyczny filtr) może on nie być w 100% efektywny w lustrowaniu kontentu.\n\t\tZostał po prostu zaprojektowany raczej aby odfiltrować nadmiar niechcianych wyników,\n\t\t a nie jako w 100% bezpieczna blokada."
+msgid ""
+"Please note that (as with any automated filter) it may not be 100% effective at\n"
+"\t\tscreening content. It is designed simply to filter out excess unwanted results, rather than \n"
+"\t\tas a 100% safe block."
+msgstr ""
+"Zauważ, że (jak każdy automatyczny filtr) może on nie być w 100% efektywny w lustrowaniu kontentu.\n"
+"\t\tZostał po prostu zaprojektowany raczej aby odfiltrować nadmiar niechcianych wyników,\n"
+"\t\t a nie jako w 100% bezpieczna blokada."
 
 #: generalhelp.adultfilter;text;3
 msgid "Children's Internet use (including P2P file sharing) should always be under parental supervision."
@@ -2341,12 +2875,22 @@ msgid "This torrent appears to have an encoding error"
 msgstr "Ten torrent wydaje się mieć błąd kodowania"
 
 #: generalhelp.badtorrentencoding;text;2
-msgid "Windows has reported a translation fault while decoding text in this torrent. It is\n\t\tpossible that the torrent is corrupt, or just incorrectly encoded. The torrent may\n\t\tstill download properly, although some file names could be incorrect."
-msgstr "Windows zgłosił błąd translacji podczas dekodowania tekstu w tym torrencie.\n\t\tJest możliwe, że torrent jest uszkodzony, lub po prostu źle zakodowany. Pomimo to ten torrent może pobierać poprawnie,\n\t\tchociaż nazwy niektórych plików mogą być niepoprawne."
+msgid ""
+"Windows has reported a translation fault while decoding text in this torrent. It is\n"
+"\t\tpossible that the torrent is corrupt, or just incorrectly encoded. The torrent may\n"
+"\t\tstill download properly, although some file names could be incorrect."
+msgstr ""
+"Windows zgłosił błąd translacji podczas dekodowania tekstu w tym torrencie.\n"
+"\t\tJest możliwe, że torrent jest uszkodzony, lub po prostu źle zakodowany. Pomimo to ten torrent może pobierać poprawnie,\n"
+"\t\tchociaż nazwy niektórych plików mogą być niepoprawne."
 
 #: generalhelp.badtorrentencoding;text;3
-msgid "Most torrent creation programs should allow you to repair this torrent, which\n\t\twill ensure it works properly in all BitTorrent applications."
-msgstr "Większość programów do tworzenia torrentów powinna umożliwić Ci naprawienie tego torrentu, \n\t\tco zapewni jego prawidłowe działanie we wszystkich aplikacjach BitTorrentowych."
+msgid ""
+"Most torrent creation programs should allow you to repair this torrent, which\n"
+"\t\twill ensure it works properly in all BitTorrent applications."
+msgstr ""
+"Większość programów do tworzenia torrentów powinna umożliwić Ci naprawienie tego torrentu, \n"
+"\t\tco zapewni jego prawidłowe działanie we wszystkich aplikacjach BitTorrentowych."
 
 #: generalhelp.badtorrentencoding;link;4
 msgid "Click here for additional help"
@@ -2361,60 +2905,124 @@ msgid "Your eDonkey server list is empty"
 msgstr "Twoja lista serwerów eDonkey jest pusta"
 
 #: generalhelp.donkeyserverlist;text;2
-msgid "There are no servers in your eDonkey server list. You need to download an\n\t\tup to date server list (met file) to connect to ED2K."
-msgstr "Nie ma żadnych serwerów eDonkey na Twojej liście.\n\t\tMusisz pobrać jakąś aktualną listę serwerów (plik .MET), aby móc się włączyć do ED2K."
+msgid ""
+"There are no servers in your eDonkey server list. You need to download an\n"
+"\t\tup to date server list (met file) to connect to ED2K."
+msgstr ""
+"Nie ma żadnych serwerów eDonkey na Twojej liście.\n"
+"\t\tMusisz pobrać jakąś aktualną listę serwerów (plik .MET), aby móc się włączyć do ED2K."
 
 #: generalhelp.donkeyserverlist;text;3
-msgid "You can download a server list from the ed2k setting page, or the discovery\n\t\tservices window. (Press F9 to open the discovery services window)"
-msgstr "Możesz pobrać listę serwerów ze strony ustawień ed2k,\n\t\tlub z okna serwisów discovery. (Naciśnij F9 aby otworzyć okno serwisów discovery)"
+msgid ""
+"You can download a server list from the ed2k setting page, or the discovery\n"
+"\t\tservices window. (Press F9 to open the discovery services window)"
+msgstr ""
+"Możesz pobrać listę serwerów ze strony ustawień ed2k,\n"
+"\t\tlub z okna serwisów discovery. (Naciśnij F9 aby otworzyć okno serwisów discovery)"
 
 #: generalhelp.uploadwarning;text;1
 msgid "Limiting uploads may slow downloads"
 msgstr "Ogranicznie wysyłań może spowalniać pobierania"
 
 #: generalhelp.uploadwarning;text;2
-msgid "Several networks Shareaza connects to enforce ratios, limit uploads to\n\t\tclients that do not share, or simply preference uploading to known sharers."
-msgstr "Kilka sieci z którymi łączy się Shareaza aby wymusić proporcje\n\t\tograniczają wysyłania do klientów którzy się nie współdzielą (udostępniają),\n\t\tlub po prostu udzielają pierwszeństwa wysyłaniu do znanych im współdzielących (udostępniających)."
+msgid ""
+"Several networks Shareaza connects to enforce ratios, limit uploads to\n"
+"\t\tclients that do not share, or simply preference uploading to known sharers."
+msgstr ""
+"Kilka sieci z którymi łączy się Shareaza aby wymusić proporcje\n"
+"\t\tograniczają wysyłania do klientów którzy się nie współdzielą (udostępniają),\n"
+"\t\tlub po prostu udzielają pierwszeństwa wysyłaniu do znanych im współdzielących (udostępniających)."
 
 #: generalhelp.uploadwarning;text;3
-msgid "Fortunately, broadband DSL connections are like a two-lane highway: you have\n\t\tseparate allocations for upload and download. If your client is properly configured, \n\t\tyou should be able to upload at a good rate while retaining full download capacity."
-msgstr "Na szczęście, szerokopasmowe połączenia DSL są jak dwu pasmowa\n\t\tautostrada: masz osobne alokacje miejsca dla wysyłań i pobierań.\n\t\tJeżeli Twój klient jest dobrze skonfigurowany, powinieneś być w stanie \n\t\twysyłać z dobrą prędkością jedocześnie zachowując pełne możliwości pobierania z maksymalną prędkością."
+msgid ""
+"Fortunately, broadband DSL connections are like a two-lane highway: you have\n"
+"\t\tseparate allocations for upload and download. If your client is properly configured, \n"
+"\t\tyou should be able to upload at a good rate while retaining full download capacity."
+msgstr ""
+"Na szczęście, szerokopasmowe połączenia DSL są jak dwu pasmowa\n"
+"\t\tautostrada: masz osobne alokacje miejsca dla wysyłań i pobierań.\n"
+"\t\tJeżeli Twój klient jest dobrze skonfigurowany, powinieneś być w stanie \n"
+"\t\twysyłać z dobrą prędkością jedocześnie zachowując pełne możliwości pobierania z maksymalną prędkością."
 
 #: generalhelp.uploadwarning;text;4
-msgid "By default, your upload limit is set to about 85% of available upstream bandwidth,\n\t\twhile downloads are unlimited. That configuration should give you the fastest possible \n\t\tdownloads that are available."
-msgstr "Domyślnie, Twój limit wysyłań jest ustawiony na około 85% dostępnej szerokości pasma stumienia wysyłania danego łącza,\n\t\tpodczas gdy pobierania są nieograniczone. Ta konfiguracja powinna zapewnić ci\n\t\tnajszybsze możliwe pobierania jakie są możliwe."
+msgid ""
+"By default, your upload limit is set to about 85% of available upstream bandwidth,\n"
+"\t\twhile downloads are unlimited. That configuration should give you the fastest possible \n"
+"\t\tdownloads that are available."
+msgstr ""
+"Domyślnie, Twój limit wysyłań jest ustawiony na około 85% dostępnej szerokości pasma stumienia wysyłania danego łącza,\n"
+"\t\tpodczas gdy pobierania są nieograniczone. Ta konfiguracja powinna zapewnić ci\n"
+"\t\tnajszybsze możliwe pobierania jakie są możliwe."
 
-#: searchhelp.badsearch1;text;1 searchhelp.badsearch2;text;1 searchhelp.badsearch3;text;1
+#: searchhelp.badsearch1;text;1 searchhelp.badsearch2;text;1
+#: searchhelp.badsearch3;text;1
 msgid "Please re-phrase the search"
 msgstr "Proszę sformułuj inaczej frazę do wyszukania"
 
 #: searchhelp.badsearch1;text;2
-msgid "This search is poorly formatted, and may not function correctly. \n\t\tSearches should include several terms where possible, and should specify a schema \n\t\t(file type). Furthermore, searches must not be limited to numbers or negative\n\t\tterms only, and you should avoid overly general queries."
-msgstr "To wyszukiwanie jest kiepsko sformułowane i może nie zadziałać prawidłowo.\n\t\tWyszukiwania powinny, gdy to możliwe, zawierać kilka warunków (określeń) i powinny precyzować wzorzec wyszukiwania\n\t\t(rodzaj pliku). Ponadto, wyszukiwania nie mogą być ograniczone jedynie do liczb lub jedynie do\n\t\t warunków wykluczjących (np. tylko niechcianych fraz), należy także unikać zbyt ogólnych zapytań."
+msgid ""
+"This search is poorly formatted, and may not function correctly. \n"
+"\t\tSearches should include several terms where possible, and should specify a schema \n"
+"\t\t(file type). Furthermore, searches must not be limited to numbers or negative\n"
+"\t\tterms only, and you should avoid overly general queries."
+msgstr ""
+"To wyszukiwanie jest kiepsko sformułowane i może nie zadziałać prawidłowo.\n"
+"\t\tWyszukiwania powinny, gdy to możliwe, zawierać kilka warunków (określeń) i powinny precyzować wzorzec wyszukiwania\n"
+"\t\t(rodzaj pliku). Ponadto, wyszukiwania nie mogą być ograniczone jedynie do liczb lub jedynie do\n"
+"\t\t warunków wykluczjących (np. tylko niechcianych fraz), należy także unikać zbyt ogólnych zapytań."
 
 #: searchhelp.badsearch1;text;3
-msgid "Most clients on the network will ignore a search for all MP3 files, for example, \n\t\tbecause it is not specific enough, and would generate too many results."
-msgstr "Przykładowo: większość klientów w sieci zignoruje wyszukiwanie wszystkich plików MP3,\n\t\tponieważ będzie ono nie wystarczająco prezyzyjne i wygenerowałyby zbyt dużo wyników."
+msgid ""
+"Most clients on the network will ignore a search for all MP3 files, for example, \n"
+"\t\tbecause it is not specific enough, and would generate too many results."
+msgstr ""
+"Przykładowo: większość klientów w sieci zignoruje wyszukiwanie wszystkich plików MP3,\n"
+"\t\tponieważ będzie ono nie wystarczająco prezyzyjne i wygenerowałyby zbyt dużo wyników."
 
 #: searchhelp.badsearch2;text;2
-msgid "This search does not contain enough terms to function properly. All searches need\n\t\ta minimum number of valid, alphabetic characters to be able to start."
-msgstr "To wyszukiwanie nie zawiera warunków wystarczających do poprawnego funkcjonowania. \n\t\tWszystkie wyszukiwania potrzebują minimalnej liczby prawidłowych znaków alfabetu,\n\t\taby mogły zostać rozpoczęte."
+msgid ""
+"This search does not contain enough terms to function properly. All searches need\n"
+"\t\ta minimum number of valid, alphabetic characters to be able to start."
+msgstr ""
+"To wyszukiwanie nie zawiera warunków wystarczających do poprawnego funkcjonowania. \n"
+"\t\tWszystkie wyszukiwania potrzebują minimalnej liczby prawidłowych znaków alfabetu,\n"
+"\t\taby mogły zostać rozpoczęte."
 
 #: searchhelp.badsearch2;text;3
-msgid "While common file extensions (and numbers) can be searched for, you must enter\n\t\tother terms as well when creating the search. Punctuation and wildcards are not used \n\t\tin searches, just the text you enter."
-msgstr "Jeżeli chcesz wyszukiwać pliki z popularnymi rozszerzeniami (i liczbami) musisz\n\t\t wprowadzić do tworzonego wyszukiwania również inne warunki (frazy). Znaki interpunkcyjne \n\t\ti wieloznaczniki (np: *,?,... itp.) nie są brane pod uwagę podczas wyszukiwania, a jedynie wprowadzony tekst."
+msgid ""
+"While common file extensions (and numbers) can be searched for, you must enter\n"
+"\t\tother terms as well when creating the search. Punctuation and wildcards are not used \n"
+"\t\tin searches, just the text you enter."
+msgstr ""
+"Jeżeli chcesz wyszukiwać pliki z popularnymi rozszerzeniami (i liczbami) musisz\n"
+"\t\t wprowadzić do tworzonego wyszukiwania również inne warunki (frazy). Znaki interpunkcyjne \n"
+"\t\ti wieloznaczniki (np: *,?,... itp.) nie są brane pod uwagę podczas wyszukiwania, a jedynie wprowadzony tekst."
 
 #: searchhelp.badsearch3;text;2
-msgid "This search seems to contain only common file extensions, or no searchable\n\t\twords."
-msgstr "Wydaje się, że to wyszukiwanie zawiera tylko powszechne rozszerzenia plików, lub niewyszukiwalne\n\t\t słowa."
+msgid ""
+"This search seems to contain only common file extensions, or no searchable\n"
+"\t\twords."
+msgstr ""
+"Wydaje się, że to wyszukiwanie zawiera tylko powszechne rozszerzenia plików, lub niewyszukiwalne\n"
+"\t\t słowa."
 
 #: searchhelp.badsearch3;text;3
-msgid "If you are having trouble creating searches, keep in mind that it's quite similar\n\t\tto a web search. Specific terms or phrases are best- Unique names, titles and\n\t\tkeywords."
-msgstr "Jeżeli masz problem z ułożeniem wyszukiwania, pamiętaj, że to jest całkiem podobne\n\t\t do wyszukiwania stron www, tak jak np. w Google. Wyraźnie określone warunki lub frazy\n\t\t są najlepsze - unikalne nazwy, tytuły i słowa kluczowe."
+msgid ""
+"If you are having trouble creating searches, keep in mind that it's quite similar\n"
+"\t\tto a web search. Specific terms or phrases are best- Unique names, titles and\n"
+"\t\tkeywords."
+msgstr ""
+"Jeżeli masz problem z ułożeniem wyszukiwania, pamiętaj, że to jest całkiem podobne\n"
+"\t\t do wyszukiwania stron www, tak jak np. w Google. Wyraźnie określone warunki lub frazy\n"
+"\t\t są najlepsze - unikalne nazwy, tytuły i słowa kluczowe."
 
 #: searchhelp.badsearch3;text;4
-msgid "General terms cannot be searched for efficiently and may result in poor\n\t\tsearch performance, as well as high bandwidth use during searches."
-msgstr "Ogólnie określonych warunków nie da się wyszukać efektywnie. Powodują\n\t\t kiepskie działanie, jak również duże obciążenie pasma łącza podczas takich wyszukiwań."
+msgid ""
+"General terms cannot be searched for efficiently and may result in poor\n"
+"\t\tsearch performance, as well as high bandwidth use during searches."
+msgstr ""
+"Ogólnie określonych warunków nie da się wyszukać efektywnie. Powodują\n"
+"\t\t kiepskie działanie, jak również duże obciążenie pasma łącza podczas takich wyszukiwań."
 
 #: searchhelp.badsearch3;text;5
 msgid "Further help is available on the Shareaza web site."
@@ -2425,12 +3033,22 @@ msgid "This search cannot be started"
 msgstr "To wyszukiwanie nie może być rozpoczęte."
 
 #: searchhelp.adultsearch;text;2
-msgid "The specified search would probably return a large number of results with adult \n\t\tcontent, and this has been turned off in the settings. You should either re-phrase the \n\t\tsearch, or disable the filter."
-msgstr "Tak określone wyszukiwanie prawdopodobnie zwróciłoby wielką ilość wyników z zawartością dla dorosłych,\n\t\ta to zostało wyłączone w ustawieniach. Powinieneś albo inaczej sformułować wyszukiwanie, \n\t\t albo wyłączyć filtr blokujący kontent dla dorosłych."
+msgid ""
+"The specified search would probably return a large number of results with adult \n"
+"\t\tcontent, and this has been turned off in the settings. You should either re-phrase the \n"
+"\t\tsearch, or disable the filter."
+msgstr ""
+"Tak określone wyszukiwanie prawdopodobnie zwróciłoby wielką ilość wyników z zawartością dla dorosłych,\n"
+"\t\ta to zostało wyłączone w ustawieniach. Powinieneś albo inaczej sformułować wyszukiwanie, \n"
+"\t\t albo wyłączyć filtr blokujący kontent dla dorosłych."
 
 #: searchhelp.adultsearch;text;3
-msgid "To disable the filter, go into Tools > Settings > General and uncheck the\n\t\tadult content filter."
-msgstr "Aby wyłączyć ten filtr,\n\t\twejdź do Narzędzia > Ustawienia > Ogólne i odznacz \"Filtruj zawartość dla dorosłych z wyszukiwań\"."
+msgid ""
+"To disable the filter, go into Tools > Settings > General and uncheck the\n"
+"\t\tadult content filter."
+msgstr ""
+"Aby wyłączyć ten filtr,\n"
+"\t\twejdź do Narzędzia > Ustawienia > Ogólne i odznacz \"Filtruj zawartość dla dorosłych z wyszukiwań\"."
 
 #: sharehelp.alreadyshared;text;1
 msgid "Already Shared"
@@ -2438,31 +3056,52 @@ msgstr "Już udostępnione"
 
 #: sharehelp.alreadyshared;text;2
 msgid "The folder you have selected is already being shared as part of an existing share."
-msgstr "Folder który wybrałeś jest już udostępniony\n\t\tjako część (zawartość) innego udostępnionego folderu."
+msgstr ""
+"Folder który wybrałeś jest już udostępniony\n"
+"\t\tjako część (zawartość) innego udostępnionego folderu."
 
 #: sharehelp.badshare;text;1
 msgid "This folder should not be shared"
 msgstr "Ten folder nie powinien być udostępniony"
 
 #: sharehelp.badshare;text;2
-msgid "This folder is (or contains) a system folder. Sharing this folder is not\n\t\trecommended, since most of the files in it are of no use to other people."
-msgstr "Ten folder to jest (lub zawiera) folder systemowy.\n\t\tUdostępniane tego folderu nie jest zalecane,\n\t\tponieważ większość ze znajdujących się w nim plików jest nieprzydatna dla innych ludzi."
+msgid ""
+"This folder is (or contains) a system folder. Sharing this folder is not\n"
+"\t\trecommended, since most of the files in it are of no use to other people."
+msgstr ""
+"Ten folder to jest (lub zawiera) folder systemowy.\n"
+"\t\tUdostępniane tego folderu nie jest zalecane,\n"
+"\t\tponieważ większość ze znajdujących się w nim plików jest nieprzydatna dla innych ludzi."
 
 #: sharehelp.badshare;text;3
-msgid "Folders such as the Windows directory, Program Files, and similar folders\n\t\tdo not usually contain files suitable for sharing. Any files of interest would be in\n\t\tsub-folders located"
-msgstr "Foldery takie jak folder Windows, Program Files i im podobne foldery\n\t\t nie zawierają zwykle plików nadajacych się do udostępniania. Jakieś pliki warte zainteresowania\n\t\t byłyby w podfolderach, które się znajdują"
+msgid ""
+"Folders such as the Windows directory, Program Files, and similar folders\n"
+"\t\tdo not usually contain files suitable for sharing. Any files of interest would be in\n"
+"\t\tsub-folders located"
+msgstr ""
+"Foldery takie jak folder Windows, Program Files i im podobne foldery\n"
+"\t\t nie zawierają zwykle plików nadajacych się do udostępniania. Jakieś pliki warte zainteresowania\n"
+"\t\t byłyby w podfolderach, które się znajdują"
 
 #: sharehelp.badshare;text;4
 msgid "inside"
 msgstr "wewnątrz"
 
 #: sharehelp.badshare;text;5
-msgid "these folders.\n\t\tPlease share those instead."
-msgstr "tych folderów\n\t\t. Udostępniaj tamte zamiast tych."
+msgid ""
+"these folders.\n"
+"\t\tPlease share those instead."
+msgstr ""
+"tych folderów\n"
+"\t\t. Udostępniaj tamte zamiast tych."
 
 #: sharehelp.badshare;text;6
-msgid "The Shareaza 'incomplete' folder should also not be shared through the\n\t\tlibrary, since attempting to hash downloads in progress may impact on performance."
-msgstr "Folder plików tymczasowych Shareazy ('Incomplete') też nie powinien być udostępniany poprzez bibliotekę (zasoby),\n\t\tponieważ próby hashowania plików jeszcze w trakcie ich pobierania może uderzyć w wydajności całego komputera."
+msgid ""
+"The Shareaza 'incomplete' folder should also not be shared through the\n"
+"\t\tlibrary, since attempting to hash downloads in progress may impact on performance."
+msgstr ""
+"Folder plików tymczasowych Shareazy ('Incomplete') też nie powinien być udostępniany poprzez bibliotekę (zasoby),\n"
+"\t\tponieważ próby hashowania plików jeszcze w trakcie ich pobierania może uderzyć w wydajności całego komputera."
 
 #: message;id_browse_files
 msgid "View the user's shared files"
@@ -2784,7 +3423,8 @@ msgstr "Sprawdź nowości i aktualizacje."
 msgid "Run the connection test."
 msgstr "Uruchom test połączenia internetowego."
 
-#: message;id_help_web_1 message;id_help_web_2 message;id_help_web_3 message;id_help_web_4 message;id_help_web_5 message;id_help_web_6
+#: message;id_help_web_1 message;id_help_web_2 message;id_help_web_3
+#: message;id_help_web_4 message;id_help_web_5 message;id_help_web_6
 msgid "Visit this website"
 msgstr "Odwiedź tę stronę"
 
@@ -3220,7 +3860,8 @@ msgstr ""
 msgid "Close the monitor window."
 msgstr "Zamknij okno monitora."
 
-#: message;id_neighbours_chat message;id_search_chat message;id_transfers_chat message;id_uploads_chat
+#: message;id_neighbours_chat message;id_search_chat message;id_transfers_chat
+#: message;id_uploads_chat
 msgid "Open a chat session with the selected user."
 msgstr "Otwórz sesję czatu z wybranym użytkownikiem."
 
@@ -5520,7 +6161,8 @@ msgstr "W&yjście"
 msgid "year old"
 msgstr "lat"
 
-#: string;16811 cconnectionsettingspage;control;3 cconnectionsettingspage;control;12
+#: string;16811 cconnectionsettingspage;control;3
+#: cconnectionsettingspage;control;12
 msgid "Automatic"
 msgstr "Automatycznie"
 
@@ -6280,7 +6922,7 @@ msgstr "Changing interface direction requires restart. \\nYou will need to start
 msgid "No"
 msgstr "Nie"
 
-#: string;20006 cdonkeyimportdlg;control;3
+#: string;20006 cdonkeyimportdlg;control;2
 msgid "Yes"
 msgstr "Tak"
 
@@ -6528,11 +7170,34 @@ msgstr "Wykonawca"
 msgid "Rating"
 msgstr "Ocena"
 
-#: string;20237 csettingsheet;control;2 cscheduletaskdlg;control;1 cqueuepropertiesdlg;control;37 cprofilemanagerdlg;control;2 csavefilterasdlg;control;2 cdiscoveryservicedlg;control;5 cfilecopydlg;control;4 cfolderpropertiesdlg;control;7 cgraphlistdlg;control;16 cgraphitemdlg;control;1 cschemacolumnsdlg;control;3 csecureruledlg;control;33 csharemanagerdlg;control;6 cpromotedlg;control;8 cexistingfiledlg;control;9 cclosemodedlg;control;6 cdonkeyserversdlg;control;5 cdownloadgroupdlg;control;1 cmediavisdlg;control;6 cdownloadreviewdlg;control;2 cdecodemetadatadlg;control;8 circinputdlg;control;2
+#: string;20237 csettingsheet;control;2 cscheduletaskdlg;control;1
+#: cqueuepropertiesdlg;control;37 cprofilemanagerdlg;control;2
+#: csavefilterasdlg;control;2 cdiscoveryservicedlg;control;5
+#: cfilecopydlg;control;4 cfolderpropertiesdlg;control;7
+#: cgraphlistdlg;control;16 cgraphitemdlg;control;1
+#: cschemacolumnsdlg;control;3 csecureruledlg;control;33
+#: csharemanagerdlg;control;5 cpromotedlg;control;7 cexistingfiledlg;control;8
+#: cclosemodedlg;control;5 cdonkeyserversdlg;control;4
+#: cdownloadgroupdlg;control;1 cmediavisdlg;control;5
+#: cdownloadreviewdlg;control;1 cdecodemetadatadlg;control;8
+#: circinputdlg;control;2
 msgid "OK"
 msgstr "OK"
 
-#: string;20238 csettingsheet;control;3 cscheduletaskdlg;control;2 cqueuepropertiesdlg;control;38 cprofilemanagerdlg;control;3 cconnecttodlg;control;8 cdownloaddlg;control;6 cnewsearchdlg;control;4 cfiltersearchdlg;control;30 csavefilterasdlg;control;3 cdiscoveryservicedlg;control;6 cfilecopydlg;control;5 cfolderpropertiesdlg;control;8 cgraphlistdlg;control;17 cgraphitemdlg;control;2 cschemacolumnsdlg;control;4 csecureruledlg;control;34 csharemanagerdlg;control;7 curlcopydlg;control;7 curlexportdlg;control;11 curlactiondlg;control;12 cbitzidownloaddlg;control;4 cfilepreviewdlg;control;6 cexistingfiledlg;control;10 cclosemodedlg;control;7 cdonkeyserversdlg;control;6 cdeletefiledlg;control;5 ctorrentseeddlg;control;5 cdownloadgroupdlg;control;2 cmediavisdlg;control;7 cdecodemetadatadlg;control;9 circinputdlg;control;3
+#: string;20238 csettingsheet;control;3 cscheduletaskdlg;control;2
+#: cqueuepropertiesdlg;control;38 cprofilemanagerdlg;control;3
+#: cconnecttodlg;control;8 cdownloaddlg;control;5 cnewsearchdlg;control;4
+#: cfiltersearchdlg;control;30 csavefilterasdlg;control;3
+#: cdiscoveryservicedlg;control;6 cfilecopydlg;control;5
+#: cfolderpropertiesdlg;control;8 cgraphlistdlg;control;17
+#: cgraphitemdlg;control;2 cschemacolumnsdlg;control;4
+#: csecureruledlg;control;34 csharemanagerdlg;control;6 curlcopydlg;control;6
+#: curlexportdlg;control;10 curlactiondlg;control;11
+#: cbitzidownloaddlg;control;4 cfilepreviewdlg;control;6
+#: cexistingfiledlg;control;9 cclosemodedlg;control;6
+#: cdonkeyserversdlg;control;5 cdeletefiledlg;control;5
+#: ctorrentseeddlg;control;4 cdownloadgroupdlg;control;2
+#: cmediavisdlg;control;6 cdecodemetadatadlg;control;9 circinputdlg;control;3
 msgid "Cancel"
 msgstr "Anuluj"
 
@@ -6668,7 +7333,8 @@ msgstr "Kiedy kliknę minimalizuj:"
 msgid "Normal|Minimise to Tray"
 msgstr "Normalnie|Minimalizuj do zasobnika"
 
-#: clibrarysettingspage;control;1 cmediasettingspage;control;1 cuploadssettingspage;control;1 csecureruledlg;control;22
+#: clibrarysettingspage;control;1 cmediasettingspage;control;1
+#: cuploadssettingspage;control;1 csecureruledlg;control;22
 msgid "_Options:"
 msgstr "Opcje:"
 
@@ -6716,7 +7382,9 @@ msgstr "Wyczyść historię teraz"
 msgid "_Safe to Open:"
 msgstr "Bezpieczne do otwarcia:"
 
-#: clibrarysettingspage;control;18 clibrarysettingspage;control;22 cmediasettingspage;control;7 cwebsettingspage;control;11 cfilesourcespage;control;5 cdownloadgroupdlg;control;7
+#: clibrarysettingspage;control;18 clibrarysettingspage;control;22
+#: cmediasettingspage;control;7 cwebsettingspage;control;11
+#: cfilesourcespage;control;5 cdownloadgroupdlg;control;7
 msgid "_Add"
 msgstr "Dodaj"
 
@@ -7424,11 +8092,17 @@ msgstr "Przeglądarka Protokołu Wspólnej Architektury Shareazy:"
 msgid "Skin Information:"
 msgstr "Informacje o skórce:"
 
-#: cskinssettingspage;control;3 cpluginssettingspage;control;3 ccollectionexportdlg;control;4 ctorrentgeneralpage;control;9
+#: cskinssettingspage;control;3 cpluginssettingspage;control;3
+#: ccollectionexportdlg;control;4 ctorrentgeneralpage;control;9
 msgid "Name:"
 msgstr "Nazwa:"
 
-#: cskinssettingspage;control;4 cskinssettingspage;control;6 cpluginssettingspage;control;4 cfolderscandlg;control;2 cdownloadmonitordlg;control;2 cdownloadmonitordlg;control;7 cdownloadmonitordlg;control;9 cdownloadmonitordlg;control;11 cdownloadmonitordlg;control;13 ccollectionexportdlg;control;5 ccollectionexportdlg;control;7
+#: cskinssettingspage;control;4 cskinssettingspage;control;6
+#: cpluginssettingspage;control;4 cfolderscandlg;control;2
+#: cdownloadmonitordlg;control;2 cdownloadmonitordlg;control;7
+#: cdownloadmonitordlg;control;9 cdownloadmonitordlg;control;11
+#: cdownloadmonitordlg;control;13 ccollectionexportdlg;control;5
+#: ccollectionexportdlg;control;7
 msgid "..."
 msgstr "..."
 
@@ -7436,7 +8110,8 @@ msgstr "..."
 msgid "Author:"
 msgstr "Autor:"
 
-#: cskinssettingspage;control;7 cpluginssettingspage;control;5 cadvancedsettingspage;control;7 ccollectionexportdlg;control;8
+#: cskinssettingspage;control;7 cpluginssettingspage;control;5
+#: cadvancedsettingspage;control;7 ccollectionexportdlg;control;8
 msgid "Description:"
 msgstr "Opis:"
 
@@ -7456,7 +8131,7 @@ msgstr "Wtyczki"
 msgid "Plugin Information:"
 msgstr "Informacje o wtyczce:"
 
-#: cpluginssettingspage;control;7 cmediavisdlg;control;5
+#: cpluginssettingspage;control;7 cmediavisdlg;control;4
 msgid "_Setup..."
 msgstr "Ustaw..."
 
@@ -7476,7 +8151,8 @@ msgstr "Wartość:"
 msgid "Upload Queue Properties"
 msgstr "Właściwości kolejki wysyłań"
 
-#: cqueuepropertiesdlg;control;1 cgraphlistdlg;control;14 cdownloadgroupdlg;control;12
+#: cqueuepropertiesdlg;control;1 cgraphlistdlg;control;14
+#: cdownloadgroupdlg;control;12
 msgid "_Name:"
 msgstr "Nazwa:"
 
@@ -7632,7 +8308,8 @@ msgstr "Nie musisz udostępniać żadnej zawartości (tzw. kontentu), aby używa
 msgid "Please indicate which folders, if any, you wish to share.  Simply click the Add button to add a new folder."
 msgstr "Proszę wybierz, które foldery (jeśli są takie) chcesz udostępnić. Po prostu kliknij przycisk Dodaj, aby dodać nowy folder."
 
-#: cwizardsharepage;control;5 cgraphlistdlg;control;2 csharemanagerdlg;control;4
+#: cwizardsharepage;control;5 cgraphlistdlg;control;2
+#: csharemanagerdlg;control;3
 msgid "_Add..."
 msgstr "Dodaj..."
 
@@ -7740,11 +8417,11 @@ msgstr "Gnutella2 jest sztandarową siecią Shareazy, oferuje więcej możliwoś
 msgid "Import eDonkey Downloads"
 msgstr "Importuj pobierania z eDonkey"
 
-#: cdonkeyimportdlg;control;2
+#: cdonkeyimportdlg;control;1
 msgid "Shareaza has detected that you have another eDonkey program installed on your computer.  Would you like to import any unfinished downloads into Shareaza?"
 msgstr "Shareaza wykryła, że masz zainstalowany na swoim komputerze inny program korzystający z sieci eDonkey. Czy chciałbyś zaimportować niedokończone pobierania do Shareazy?"
 
-#: cdonkeyimportdlg;control;4
+#: cdonkeyimportdlg;control;3
 msgid "No|Cancel"
 msgstr "Nie|Anuluj"
 
@@ -7988,19 +8665,19 @@ msgstr "Stłum Ultrapeer'a"
 msgid "Download File or Torrent"
 msgstr "Pobierz plik lub torrent"
 
-#: cdownloaddlg;control;3
+#: cdownloaddlg;control;2
 msgid "Downloading any file with Shareaza is easy.  Simply type or paste the URL or URI describing the file into the box below and press Enter."
 msgstr "Pobieranie dowolnego pliku Shareazą jest łatwe. Po prostu wpisz lub wklej URL lub URI opisujące ten plik w miejsce poniżej i wciśnij Enter."
 
-#: cdownloaddlg;control;7
+#: cdownloaddlg;control;6
 msgid "Shareaza can download files from the web (HTTP), and automatically search and download P2P links (Magnet, Gnutella, eDonkey, mP2P)."
 msgstr "Shareaza może pobierać pliki z Internetu (HTTP) oraz automatycznie szukać i pobierać linki P2P (Magnet, Gnutella, eDonkey, mP2P)."
 
-#: cdownloaddlg;control;8
+#: cdownloaddlg;control;7
 msgid "Shareaza can also download BitTorrent files.  A torrent can be described by a .torrent file, or a HTTP link to the .torrent file.  To download a torrent HTTP link, paste it in the box above.  If you already have a .torrent file, click Open Torrent:"
 msgstr "Shareaza może także pobierać pliki BitTorrentowe. Torrent może być opisany jak jakiś plik .torrent, lub jako link HTTP do pliku .torrent. Aby pobrać link HTTP do torrentu, wklej go do miejsca powyżej. Jeżeli już masz plik .torrent, kliknij Otwórz Torrent:"
 
-#: cdownloaddlg;control;9
+#: cdownloaddlg;control;8
 msgid "Open _Torrent..."
 msgstr "Otwórz Torrent..."
 
@@ -8380,7 +9057,7 @@ msgstr "m"
 msgid "Shared Folder Manager"
 msgstr "Menadżer udostępnionych folderów"
 
-#: csharemanagerdlg;control;2
+#: csharemanagerdlg;control;1
 msgid "This is a list of folders in your library.  You can add and remove folders using the buttons on the left.  When you add a new folder it is initially shared with other users, however you can unshare it from the Shareaza library if you wish."
 msgstr "To jest lista folderów w Twojej bibliotece (zasobach). Możesz dodawać i usuwać foldery używając przycisków po lewej. Gdy dodasz nowy folder początkowo jest on udostępniany innym użytkownikom, jednak możesz przestać go udostępniać z biblioteki zasobów Shareazy jeśli zechcesz."
 
@@ -8388,11 +9065,11 @@ msgstr "To jest lista folderów w Twojej bibliotece (zasobach). Możesz dodawać
 msgid "Copy URI"
 msgstr "Kopiuj URI"
 
-#: curlcopydlg;control;2
+#: curlcopydlg;control;1
 msgid "You can copy a URI for the selected item in a variety of different formats.  Please choose the format you wish to use by clicking one of the URIs below:"
 msgstr "Możesz skopiować URI zaznaczonego pliku w wielu różnych formatach. Proszę, wybierz format który chcesz użyć klikając na jedno URI-ów poniżej:"
 
-#: curlcopydlg;control;6
+#: curlcopydlg;control;5
 msgid "Include _myself as a fixed source in the URL"
 msgstr "Umieść mnie jako stałe źródło w URL"
 
@@ -8400,27 +9077,27 @@ msgstr "Umieść mnie jako stałe źródło w URL"
 msgid "Export URIs"
 msgstr "Exportuj URI-e"
 
-#: curlexportdlg;control;2
+#: curlexportdlg;control;1
 msgid "You have selected %lu files to export as Shareaza-powered URI references.  Please select the format for the URIs, and click Save:"
 msgstr "Wybrałeś %lu plików do wyeksportowania jako odsyłacz Shareaza-powered URI. Proszę wybrać format dla URI-ów i kliknąć Zapisz:"
 
-#: curlexportdlg;control;4
+#: curlexportdlg;control;3
 msgid "Insert Token:"
 msgstr "Wstaw Token:"
 
-#: curlexportdlg;control;5
+#: curlexportdlg;control;4
 msgid "Tiger Root|SHA1|MD5|ED2K (CMD4)|BitTorrent|Filename|Filename (URI)|Base Filename|File Extension|File Size|File Size (bytes)|Folder Path|Local Host|Local Port|Link|Link (URI)"
 msgstr "Tiger Root|SHA1|MD5|ED2K (CMD4)|BitTorrent|Nazwa pliku|Nazwa pliku (URI)|Bazowa nazwa pliku|Rozszerzenie pliku|Rozmiar pliku|Rozmiar pliku (w bajtach)|Ścieżka folderu|Lokalny Host|Lokalny Port|Link|Link (URI)"
 
-#: curlexportdlg;control;6
+#: curlexportdlg;control;5
 msgid "Select preset:"
 msgstr "Wybierz preset:"
 
-#: curlexportdlg;control;7
+#: curlexportdlg;control;6
 msgid "Magnet|eDonkey|Magnet HTML|eDonkey HTML"
 msgstr "Magnet|eDonkey|Magnet HTML|eDonkey HTML"
 
-#: curlexportdlg;control;9
+#: curlexportdlg;control;8
 msgid "_Save..."
 msgstr "Zapisz..."
 
@@ -8428,39 +9105,39 @@ msgstr "Zapisz..."
 msgid "Shareaza URI Manager"
 msgstr "Menedżer URI Shareazy"
 
-#: curlactiondlg;control;2
+#: curlactiondlg;control;1
 msgid "You have clicked on a Shareaza-powered URI which links to the following content on the network:"
 msgstr "Kliknąłeś na Shareaza-powered URI, który wskazuje (linkuje) następującą zawartość (kontent) w sieci:"
 
-#: curlactiondlg;control;3
+#: curlactiondlg;control;2
 msgid "You have clicked on a Shareaza-powered URL which will connect you to the following host or server:"
 msgstr "Kliknąłeś na Shareaza-powered URL, który połączy Cię z następującym hostem or serverem:"
 
-#: curlactiondlg;control;4
+#: curlactiondlg;control;3
 msgid "You have clicked on a Shareaza-powered URI which will allow you to browse the shared files available on the following host:"
 msgstr "Kliknąłeś na Shareaza-powered URI, który umożliwi Ci przeglądanie udostepnionych plików znajdujących się na następującym hoście:"
 
-#: curlactiondlg;control;9
+#: curlactiondlg;control;8
 msgid "Please select the action you would like Shareaza to take:"
 msgstr "Wybierz akcje, którą ma wykonać Shareaza:"
 
-#: curlactiondlg;control;10
+#: curlactiondlg;control;9
 msgid "_Download Now"
 msgstr "Pobierz teraz"
 
-#: curlactiondlg;control;11
+#: curlactiondlg;control;10
 msgid "_Search for File"
 msgstr "Szukaj tego pliku"
 
-#: curlactiondlg;control;13
+#: curlactiondlg;control;12
 msgid "_Remember my selection next time"
 msgstr "Zapamiętaj mój wybór"
 
-#: curlactiondlg;control;14
+#: curlactiondlg;control;13
 msgid "Open a download _monitor window"
 msgstr "Otwórz okno monitora pobierań"
 
-#: curlactiondlg;control;15
+#: curlactiondlg;control;14
 msgid "You have clicked on a Shareaza-powered URI which will add the following Discovery Service to your Discovery Services cache."
 msgstr "Kliknąłeś na Shareaza-powered URI które doda następujący serwis Discovery do twojego cache'u serwisów Discovery."
 
@@ -8492,27 +9169,27 @@ msgstr "(kopiowanie pobranych części do nowego pliku podglądu)"
 msgid "Shareaza Respects its Users"
 msgstr "Shareaza szanuje swoich Użytkowników"
 
-#: cwarningsdlg;control;2
+#: cwarningsdlg;control;1
 msgid "Did you know Shareaza is a 100% free product?"
 msgstr "Czy wiesz, że Shareaza jest w 100% DARMOWTM produktem?"
 
-#: cwarningsdlg;control;3
+#: cwarningsdlg;control;2
 msgid "Shareaza does NOT contain ANY \"spyware\", \"adware\" or other bundled software. It does NOT display any advertisements or \"popups\", ever.{n}{n}If you ever see advertising or \"popups\" while using Shareaza, be assured that they are NOT coming from this program."
 msgstr "Shareaza NIE zawiera ŻADNEGO \"spyware'u\", \"adware'u\" ani innego wmuszanego software'u. Shareaza NIE wyświetla ŻADNYCH reklam ani \"wyskakujących okieniek popup'ów\", nigdy.{n}{n}Jeśli kiedykolwiek widziałeś reklamę lub \"wyskakujace okienka - popupy\" podczas używania Shareazy, bądź pewien, że one NIE pochodzą z tego programu tj. Shareazy."
 
-#: cwarningsdlg;control;4
+#: cwarningsdlg;control;3
 msgid "Unfortunately a lot of other software does come with undesirable adware or spyware, so if you see something suspicious you may wish to check your PC with an advertising or spyware removal program."
 msgstr "Niestety wiele innych programów przychodzi z nieporządanym adwarem or spywarem, zatem jeśli widzisz coś podejrzanego you may wish to sprawdzić swój komputer oprogramowaniem likwidującym reklamy i szpiegów."
 
-#: cwarningsdlg;control;5
+#: cwarningsdlg;control;4
 msgid "You should not have had to pay any money to obtain Shareaza. Shareaza can be freely downloaded by anyone from http://shareaza.sourceforge.net/. If you paid someone money for Shareaza, you should demand a full refund immediately."
 msgstr "Nie wolno zmuszać Cię do płacenia jakichkolwiek pieniędzy za otrzymanie Shareazy. Kazdy zawsze może darmowowo pobrać Shareazę ze strony http://shareaza.sourceforge.net/. Jeśli zapłaciłeś komuś pieniądze za Shareazę, powinieneś żądać natychmiastowego zwrotu tych nienależnych temu komuś pieniędzy, aż do skutku."
 
-#: cwarningsdlg;control;6
+#: cwarningsdlg;control;5
 msgid "Shareaza respects its users!"
 msgstr "Shareaza szanuje swoich użytkowników!"
 
-#: cwarningsdlg;control;7 cpromotedlg;control;7
+#: cwarningsdlg;control;6 cpromotedlg;control;6
 msgid "http://shareaza.sourceforge.net/"
 msgstr "http://shareaza.sourceforge.net/"
 
@@ -8520,23 +9197,23 @@ msgstr "http://shareaza.sourceforge.net/"
 msgid "Spread the Word"
 msgstr "Spread the Word"
 
-#: cpromotedlg;control;2
+#: cpromotedlg;control;1
 msgid "Help Us Spread the Word"
 msgstr "Pomóż nam Spread the Word"
 
-#: cpromotedlg;control;3
+#: cpromotedlg;control;2
 msgid "We hope you have enjoyed using Shareaza so far. We believe it is the best file sharing application around."
 msgstr "Mamy nadzieję, żę jak dotąd jesteś zadowolony z używania Shareazy. Wierzymy, że jest to najlepsza aplikacja do wymiany plików na rynku."
 
-#: cpromotedlg;control;4
+#: cpromotedlg;control;3
 msgid "Unfortunately, a lot of file sharers don't know what they're missing!"
 msgstr "Niestety, wielu wymieniających pliki nie wie co traci!"
 
-#: cpromotedlg;control;5
+#: cpromotedlg;control;4
 msgid "If you know someone who would like Shareaza, whether they're a new user or someone still putting up with an inferior product, why not let them know there is a better alternative?"
 msgstr "Jeśli znasz kogoś kto chciałby Shareazę, whether they're a new user or someone still putting up with an inferior product, dlaczego by nie powiadomić ich, że jest lepsza alternatywa?"
 
-#: cpromotedlg;control;6
+#: cpromotedlg;control;5
 msgid "Chances are they'll be grateful you rescued them!"
 msgstr "Są szanse, że będą Ci wdzięczni za poratowanie!"
 
@@ -8544,27 +9221,27 @@ msgstr "Są szanse, że będą Ci wdzięczni za poratowanie!"
 msgid "Existing File"
 msgstr "Plik istnieje"
 
-#: cexistingfiledlg;control;5
+#: cexistingfiledlg;control;4
 msgid "You already have this file in your file library. What would you like to do?"
 msgstr "Masz już ten plik w bibliotece.  Co chciałbyś zrobić?"
 
-#: cexistingfiledlg;control;6
+#: cexistingfiledlg;control;5
 msgid "Show me the file in my library"
 msgstr "Pokaż mi pliki w mojej bibliotece"
 
-#: cexistingfiledlg;control;7
+#: cexistingfiledlg;control;6
 msgid "Download the file again"
 msgstr "Ściągnij plik jeszcze raz"
 
-#: cexistingfiledlg;control;8
+#: cexistingfiledlg;control;7
 msgid "Don't download this file"
 msgstr "Nie ściągaj tego pliku"
 
-#: cexistingfiledlg;control;11
+#: cexistingfiledlg;control;10
 msgid "You have downloaded and deleted this file before. What would you like to do?"
 msgstr "Już sciągnąłeś ten plik, ale go usunąłeś. Co chciałbyś zrobić?"
 
-#: cexistingfiledlg;control;12
+#: cexistingfiledlg;control;11
 msgid "Warning!!! Duplicate files detected. Some malicious software may infect your Library. Make sure that you downloaded this file or placed it manually. Otherwise, shutdown Shareaza and scan your computer with an antivirus program."
 msgstr "Ostrzeżenie! Wykryto zduplikowane pliki. Jakiś złośliwy software mógł zainfekować Twoją Bibliotekę. Upewnij się, że to Ty pobrałeś ten plik lub umieściłeś go ręcznie. W kazdym innym wypadku, zamknij Shareazę i przeskanuj swój komputer programem antywirusowym!"
 
@@ -8572,19 +9249,19 @@ msgstr "Ostrzeżenie! Wykryto zduplikowane pliki. Jakiś złośliwy software mó
 msgid "Close Button"
 msgstr "Przycisk Zamknij"
 
-#: cclosemodedlg;control;2
+#: cclosemodedlg;control;1
 msgid "This is the first time you have clicked Shareaza's close button. Please choose what action you would like Shareaza to take when clicking the close button from now on:"
 msgstr "Po raz pierwszy kliknąłeś przycisk zamykający Shareazę. Proszę wybierz, co odtąd Shareaza ma zrobić gdy klikniesz ten przycisk:"
 
-#: cclosemodedlg;control;3
+#: cclosemodedlg;control;2
 msgid "Minimise to the tray area"
 msgstr "Zminimalizuj do zasobnika systemowego na pasku"
 
-#: cclosemodedlg;control;4
+#: cclosemodedlg;control;3
 msgid "Shut down Shareaza immediately"
 msgstr "Natychmiast zamknij Shareazę"
 
-#: cclosemodedlg;control;5
+#: cclosemodedlg;control;4
 msgid "Shut down Shareaza after any downloads and uploads finish"
 msgstr "Zamknij Shareazę po zakończeniu pobierania"
 
@@ -8592,7 +9269,7 @@ msgstr "Zamknij Shareazę po zakończeniu pobierania"
 msgid "Download Server.met File"
 msgstr "Download Server.met File"
 
-#: cdonkeyserversdlg;control;2
+#: cdonkeyserversdlg;control;1
 msgid "You can download an eDonkey server.met file from the web to refresh your local list of servers."
 msgstr "Możesz pobrać plik server.met eDonkeya z sieci web aby odświeżyć swoją lokalną liste serwerów eD2k."
 
@@ -8736,15 +9413,15 @@ msgstr ""
 msgid "Open Torrent File"
 msgstr "Otwórz plik Torrent"
 
-#: ctorrentseeddlg;control;2
+#: ctorrentseeddlg;control;1
 msgid "You have opened a BitTorrent torrent file.  Would you like to download its contents, or re-seed it?"
 msgstr "Otwarłeś BitTorentowy plik torrent. Czy chciałbyś pobrać jego zawartość, czy też re-seedować go?"
 
-#: ctorrentseeddlg;control;4
+#: ctorrentseeddlg;control;3
 msgid "Seed"
 msgstr "Seeduj"
 
-#: ctorrentseeddlg;control;6
+#: ctorrentseeddlg;control;5
 msgid "To share complete files using BitTorrent they must first be seeded.  Once this process is complete the Torrent will appear as a new item in your download list."
 msgstr "Aby udostępniać kompletne pliki poprzez BitTorrent musisz je najpierw seedować (zasadzić). Gdy ten proces zostanie zakończony, Torrent pojawi się jako nowa pozycja w Twojej liście pobierań."
 
@@ -8832,11 +9509,11 @@ msgstr "Rodzaj pliku:"
 msgid "Select Visualisation"
 msgstr "Wybierz wizualizację"
 
-#: cmediavisdlg;control;2
+#: cmediavisdlg;control;1
 msgid "Select an audio visualisation from the list:"
 msgstr "Wybierz z listy wizualizację audio:"
 
-#: cmediavisdlg;control;4
+#: cmediavisdlg;control;3
 msgid "Footer Display|Full Size Display|Large Display|Medium Display|Small Display"
 msgstr "Footer Display|Full Size Display|Large Display|Medium Display|Small Display"
 
@@ -8844,23 +9521,23 @@ msgstr "Footer Display|Full Size Display|Large Display|Medium Display|Small Disp
 msgid "Upgrade Alert"
 msgstr "Alert aktualizacji"
 
-#: cupgradedlg;control;2
+#: cupgradedlg;control;1
 msgid "A new version of Shareaza is now available. Would you like to upgrade?"
 msgstr "Nowa wersj shareazy jest dostępna. Czy chciałbyś aktualizować?"
 
-#: cupgradedlg;control;3
+#: cupgradedlg;control;2
 msgid "If you select Upgrade Now, Shareaza will add the upgrade to your download queue and automatically begin downloading it."
 msgstr "Jeśli wybierzesz Aktualizuj teraz to Shareaza doda aktualizacje do Twojej kolejki pobierania i automatycznie zacznie ją pobierać."
 
-#: cupgradedlg;control;4
+#: cupgradedlg;control;3
 msgid "_Upgrade Now"
 msgstr "Aktualizuj teraz"
 
-#: cupgradedlg;control;5
+#: cupgradedlg;control;4
 msgid "Don't check for new versions"
 msgstr "Nie sprawdzaj czy są nowe wersje"
 
-#: cupgradedlg;control;6
+#: cupgradedlg;control;5
 msgid "Don't Upgrade"
 msgstr "Nie aktualizuj"
 

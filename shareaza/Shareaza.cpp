@@ -238,36 +238,22 @@ BOOL CShareazaApp::InitInstance()
 
 	SetRegistryKey( _T(CLIENT_NAME) );
 
-	InitResources();			// Loads theApp settings.
-
-	BT_SetAppVersion( m_sVersionLong );
-
-	Settings.Load();			// Loads settings. Depends on InitResources()
-	InitFonts();				// Loads default fonts. Depends on Settings.Load()
-	CoolInterface.Load();		// Loads colors and fonts. Depends on InitFonts()
-
-	AfxOleInit();
+	AfxOleInit();				// Initializes OLE support for the application.
 //	m_pFontManager = new CFontManager();
 //	AfxEnableControlContainer( m_pFontManager );
 	AfxEnableControlContainer();
 
-	LoadStdProfileSettings();
-	EnableShellOpen();
-//	RegisterShellFileTypes();
+	InitResources();			// Loads theApp settings.
+	LoadStdProfileSettings();	// Load MRU file list and last preview state.
+	EnableShellOpen();			// Enable open data files when user double-click the files from within the Windows File Manager.
+	Settings.Load();			// Loads settings. Depends on InitResources().
+	InitFonts();				// Loads default fonts. Depends on Settings.Load().
+	Skin.CreateDefault();		// Loads colors and fonts. Depends on InitFonts().
 
 	ParseCommandLine( m_ocmdInfo );
 	if ( m_ocmdInfo.m_bHelp )
 	{
-		AfxMessageBox( _T("Command-line options:\n")
-			_T("-tray\t\tDisable startup splash screen and send application to tray\n")
-			_T("-nosplash\t\tDisable startup splash screen\n")
-			_T("-nowarn\t\tDisable alpha (daily builds) version warning dialog\n")
-			_T("-basic\t\tStart application in Basic interface mode\n")
-			_T("-tabbed\t\tStart application in Tabbed interface mode\n")
-			_T("-windowed\tStart application in Windowed interface mode\n")
-			_T("-regserver\tRegister application internal components\n")
-			_T("-unregserver\tUn-register application internal components\n"),
-			MB_ICONINFORMATION | MB_OK );
+		AfxMessageBox( IDS_COMMANDLINE, MB_ICONINFORMATION | MB_OK );
 		return FALSE;
 	}
 	if ( m_ocmdInfo.m_nShellCommand == CCommandLineInfo::AppUnregister )
@@ -287,6 +273,7 @@ BOOL CShareazaApp::InitInstance()
 	{
 		ProcessShellCommand( m_ocmdInfo );
 	}
+
 	AfxOleRegisterTypeLib( AfxGetInstanceHandle(), _tlid );
 	COleTemplateServer::RegisterAll();
 	COleObjectFactory::UpdateRegistryAll( TRUE );
@@ -542,12 +529,12 @@ int CShareazaApp::ExitInstance()
 		Downloads.Clear( true );
 		Library.Clear();
 		CoolMenu.Clear();
-		Skin.Clear();
 
 		SplashStep();
-
-		Plugins.Clear();
 	}
+
+	Skin.Clear();
+	Plugins.Clear();
 
 	WSACleanup();
 
@@ -726,8 +713,6 @@ BOOL CShareazaApp::OpenURL(LPCTSTR lpszFileName, BOOL bDoIt, BOOL bSilent)
 
 void CShareazaApp::InitResources()
 {
-	GetSystemInfo( &m_SysInfo );
-
 	// Set Build Date
 	COleDateTime tCompileTime;
 	tCompileTime.ParseDateTime( _T(__DATE__), LOCALE_NOUSEROVERRIDE, 1033 );
@@ -780,6 +765,8 @@ void CShareazaApp::InitResources()
 #endif		
 		_T(" (r") _T(__REVISION__) _T(" ") + m_sBuildDate + _T(")");
 
+	BT_SetAppVersion( m_sVersionLong );
+
 	m_sSmartAgent = _T( CLIENT_NAME ) _T(" ");
 	m_sSmartAgent += m_sVersion;
 
@@ -789,9 +776,9 @@ void CShareazaApp::InitResources()
 	m_pBTVersion[ 3 ] = (BYTE)m_nVersion[ 1 ];
 
 	// Determine the version of Windows
-	OSVERSIONINFOEX pVersion = {};
-	pVersion.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
+	OSVERSIONINFOEX pVersion = { sizeof( OSVERSIONINFOEX ) };
 	GetVersionEx( (OSVERSIONINFO*)&pVersion );
+	GetSystemInfo( &m_SysInfo );
 
 	// Determine if it's a server
 	m_bIsServer = pVersion.wProductType != VER_NT_WORKSTATION;

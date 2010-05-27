@@ -1,7 +1,7 @@
 //
 // DlgProfileManager.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_DLGPROFILEMANAGER_H__0F4D4873_886C_4D77_8979_A8F546643384__INCLUDED_)
-#define AFX_DLGPROFILEMANAGER_H__0F4D4873_886C_4D77_8979_A8F546643384__INCLUDED_
-
 #pragma once
 
 #include "WndSettingsSheet.h"
@@ -29,42 +26,22 @@
 
 class CProfileManagerDlg : public CSettingsSheet
 {
-// Construction
-public:
-	CProfileManagerDlg(CWnd* pParent = NULL);
-	virtual ~CProfileManagerDlg();
-
 	DECLARE_DYNAMIC(CProfileManagerDlg)
 
-// Attributes
-protected:
-	CBitmap	m_bmHeader;
-
-// Operations
 public:
-	static BOOL		Run(LPCTSTR pszWindow = NULL);
-	INT_PTR			DoModal(LPCTSTR pszWindow = NULL);
-protected:
-	void			AddPage(CSettingsPage* pPage);
-	void			AddGroup(CSettingsPage* pPage);
-	virtual void	DoPaint(CDC& dc);
+	CProfileManagerDlg(CWnd* pParent = NULL);
 
-// Overrides
-public:
-	//{{AFX_VIRTUAL(CProfileManagerDlg)
-	//}}AFX_VIRTUAL
+	static BOOL Run(LPCTSTR pszWindow = NULL);
 
-// Implementation
+	INT_PTR DoModal(LPCTSTR pszWindow = NULL);
+
 protected:
-	//{{AFX_MSG(CProfileManagerDlg)
+	void AddPage(CSettingsPage* pPage);
+	void AddGroup(CSettingsPage* pPage);
+
 	virtual BOOL OnInitDialog();
-	//}}AFX_MSG
 	virtual void OnOK();
 	virtual void OnApply();
 
 	DECLARE_MESSAGE_MAP()
 };
-
-//{{AFX_INSERT_LOCATION}}
-
-#endif // !defined(AFX_DLGPROFILEMANAGER_H__0F4D4873_886C_4D77_8979_A8F546643384__INCLUDED_)

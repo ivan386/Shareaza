@@ -1626,8 +1626,10 @@
 </menus>
 <!-- Watermarks -->
 <watermarks>
-	<watermark target="CHomeViewCtrl.Header1" path="257.PNG"/>
-	<watermark target="CHomeViewCtrl.Header2" path="258.PNG"/>
+	<watermark target="CHomeViewCtrl.Header1" path="257"/>
+	<watermark target="CHomeViewCtrl.Header2" path="258"/>
+	<watermark target="Banner" path="154"/>
+	<watermark target="LargeLogo" path="196"/>
 </watermarks>
 <!-- Documents -->
 <documents>

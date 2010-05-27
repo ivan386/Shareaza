@@ -38,6 +38,7 @@
 			<button id="ID_VIEW_MEDIA"/>
 			<button id="ID_TAB_IRC"/>
 			<button id="ID_VIEW_SECURITY"/>
+			<button id="ID_VIEW_SCHEDULER"/>
 			<button id="ID_VIEW_HOSTS"/>
 			<button id="ID_VIEW_DISCOVERY"/>
 			<button id="ID_VIEW_TRAFFIC"/>
@@ -359,6 +360,7 @@
 			<separator/>
 			<button id="ID_NEIGHBOURS_SETTINGS" text="Settings"/>
 		</toolbar>
+		<!-- SECURITY WINDOW -->
 		<toolbar name="CSecurityWnd">
 			<button id="ID_SECURITY_EDIT" text="Wijzig Regel"/>
 			<separator/>
@@ -371,6 +373,21 @@
 			<button id="ID_SECURITY_RESET" text="Lijst Herinitialiseren"/>
 			<button id="ID_SECURITY_IMPORT" text="Lijst Importeren"/>
 			<button id="ID_SECURITY_EXPORT" text="Lijst Exporteren"/>
+		</toolbar>
+		<!-- SCHEDULER WINDOW -->
+		<toolbar name="CSchedulerWnd">
+			<button id="ID_SCHEDULER_EDIT" text="Edit Task"/>
+			<separator/>
+			<button id="ID_SCHEDULER_ACTIVATE" text="Actief"/>
+			<button id="ID_SCHEDULER_DEACTIVATE" text="Werkeloos"/>
+			<separator/>
+			<button id="ID_SCHEDULER_ADD" text="Add Task"/>
+			<button id="ID_SCHEDULER_REMOVE" text="Verwijder &gt;"/>
+			<separator/>
+			<button id="ID_SCHEDULER_REMOVE_ALL" text="Verwijder &gt;"/>
+			<rightAlign/>
+			<button id="ID_SCHEDULER_IMPORT" text="Lijst Importeren"/>
+			<button id="ID_SCHEDULER_EXPORT" text="Lijst Exporteren"/>
 		</toolbar>
 		<!-- HIT MONITOR WINDOW -->
 		<toolbar name="CHitMonitorWnd">
@@ -500,6 +517,7 @@
 					<item id="ID_VIEW_SECURITY" text="Beveili_ging"/>
 					<item id="ID_VIEW_HOSTS" text="Gastheer C_ache"/>
 					<item id="ID_VIEW_DISCOVERY" text="Disco_very"/>
+					<item id="ID_VIEW_SCHEDULER" text="Planner"/>
 				</menu>
 				<separator/>
 				<item id="ID_VIEW_BASIC" text="Normale _stijl"/>
@@ -557,7 +575,8 @@
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_CONNECT_TO" text="Verbinden _met..." shortcut="Ctrl+T"/>
-				<item id="ID_NETWORK_BROWSE_TO" text="Gastheer be_kijken..."/>
+				<item id="ID_NETWORK_BROWSE_TO" text="_Gebruiker bekijken"/>
+				<item id="ID_NETWORK_CHAT_TO" text="Chatten"/>
 				<separator/>
 				<item id="ID_NETWORK_AUTO_CLOSE" text="Afsluiten na ver_keer"/>
 				<item id="ID_NETWORK_EXIT" text="_Afsluiten"/>
@@ -573,6 +592,7 @@
 				<separator/>
 				<item id="ID_VIEW_SECURITY" text="Beveili_ging"/>
 				<item id="ID_VIEW_HOSTS" text="Gastheer C_ache"/>
+				<item id="ID_VIEW_SCHEDULER" text="Planner"/>
 				<separator/>
 				<menu text="Uitg_ebreid">
 					<item id="ID_VIEW_SYSTEM" text="S_ysteem" shortcut="F11"/>
@@ -587,6 +607,7 @@
 					<item id="ID_VIEW_HOSTS" text="Gastheer C_ache" shortcut="F8"/>
 					<item id="ID_VIEW_DISCOVERY" text="Disco_very" shortcut="F9"/>
 					<item id="ID_VIEW_TRAFFIC" text="_Grafiek" shortcut="F10"/>
+					<item id="ID_VIEW_SCHEDULER" text="Planner" shortcut="Ctrl+Shift+F11"/>
 					<separator/>
 					<item id="ID_VIEW_PACKETS" text="_Pakket dump" shortcut="Ctrl+F1"/>
 					<item id="ID_VIEW_SEARCH_MONITOR" text="Zoekmonito_r" shortcut="Ctrl+F2"/>
@@ -655,7 +676,8 @@
 				<item id="ID_NETWORK_DISCONNECT" text="Verbinding ver_breken"/>
 				<separator/>
 				<item id="ID_NETWORK_CONNECT_TO" text="Verbinden _met..." shortcut="Ctrl+T"/>
-				<item id="ID_NETWORK_BROWSE_TO" text="Gastheer be_kijken..."/>
+				<item id="ID_NETWORK_BROWSE_TO" text="_Gebruiker bekijken"/>
+				<item id="ID_NETWORK_CHAT_TO" text="Chatten"/>
 				<separator/>
 				<menu text="_Netwerken Kiezen">
 					<item id="ID_NETWORK_G2" text="Verbinden met _Gnutella2"/>
@@ -679,6 +701,7 @@
 				<item id="ID_VIEW_HOSTS" text="Gastheer C_ache" shortcut="F8"/>
 				<item id="ID_VIEW_DISCOVERY" text="Disco_very" shortcut="F9"/>
 				<item id="ID_VIEW_TRAFFIC" text="_Grafiek" shortcut="F10"/>
+				<item id="ID_VIEW_SCHEDULER" text="Planner" shortcut="Ctrl+Shift+F11"/>
 				<separator/>
 				<item id="ID_VIEW_PACKETS" text="_Pakket dump" shortcut="Ctrl+F1"/>
 				<item id="ID_VIEW_SEARCH_MONITOR" text="Zoekmonito_r" shortcut="Ctrl+F2"/>
@@ -755,6 +778,7 @@
 				<item id="ID_VIEW_UPLOADS" text="_Uploads"/>
 				<item id="ID_VIEW_SECURITY" text="Beveili_ging"/>
 				<item id="ID_VIEW_HOSTS" text="Gastheer C_ache"/>
+				<item id="ID_VIEW_SCHEDULER" text="Planner"/>
 			</menu>
 		</menu>
 		<menu name="CMainWnd.View.Tabbed">
@@ -770,6 +794,7 @@
 			<item id="ID_VIEW_HOSTS" text="Gastheer C_ache"/>
 			<item id="ID_VIEW_DISCOVERY" text="Disco_very"/>
 			<item id="ID_VIEW_TRAFFIC" text="_Grafiek"/>
+			<item id="ID_VIEW_SCHEDULER" text="Planner"/>
 			<separator/>
 			<item id="ID_VIEW_PACKETS" text="_Pakket dump"/>
 			<item id="ID_VIEW_SEARCH_MONITOR" text="Zoekmonito_r"/>
@@ -789,6 +814,7 @@
 			<item id="ID_VIEW_HOSTS" text="Gastheer C_ache"/>
 			<item id="ID_VIEW_DISCOVERY" text="Disco_very"/>
 			<item id="ID_VIEW_TRAFFIC" text="_Grafiek"/>
+			<item id="ID_VIEW_SCHEDULER" text="Planner"/>
 			<separator/>
 			<item id="ID_VIEW_PACKETS" text="_Pakket dump"/>
 			<item id="ID_VIEW_SEARCH_MONITOR" text="Zoekmonito_r"/>
@@ -841,6 +867,7 @@
 				<item id="ID_VIEW_UPLOADS" text="_Uploads"/>
 				<item id="ID_VIEW_SECURITY" text="Beveili_ging"/>
 				<item id="ID_VIEW_HOSTS" text="Gastheer C_ache"/>
+				<item id="ID_VIEW_SCHEDULER" text="Planner"/>
 			</menu>
 		</menu>
 		<menu name="CHomeWnd.Tabbed">
@@ -856,6 +883,7 @@
 			<item id="ID_VIEW_HOSTS" text="Gastheer C_ache"/>
 			<item id="ID_VIEW_DISCOVERY" text="Disco_very"/>
 			<item id="ID_VIEW_TRAFFIC" text="_Grafiek"/>
+			<item id="ID_VIEW_SCHEDULER" text="Planner"/>
 			<separator/>
 			<item id="ID_VIEW_PACKETS" text="_Pakket dump"/>
 			<item id="ID_VIEW_SEARCH_MONITOR" text="Zoekmonito_r"/>
@@ -1525,6 +1553,21 @@
 			<separator/>
 			<item id="ID_SECURITY_EDIT" text="Uitgebreid aan_passen..."/>
 		</menu>
+		<!-- SCHEDULER WINDOW -->
+		<menu name="CSchedulerWnd">
+			<item id="ID_SCHEDULER_ADD" text="_Add Scheduled Task"/>
+			<separator/>
+			<item id="ID_SCHEDULER_ACTIVATE" text="Actief"/>
+			<item id="ID_SCHEDULER_DEACTIVATE" text="Werkeloos"/>
+			<separator/>
+			<item id="ID_SCHEDULER_REMOVE" text="Ver_wijderen"/>
+			<item id="ID_SCHEDULER_EDIT" text="_Aanpassen:"/>
+			<separator/>
+			<item id="ID_SCHEDULER_REMOVE_ALL" text="_Bestanden verwijderen"/>
+			<separator/>
+			<item id="ID_SCHEDULER_IMPORT" text="_Importeren..."/>
+			<item id="ID_SCHEDULER_EXPORT" text="E_xporteren..."/>
+		</menu>
 		<!-- DISCOVERY SERVICES WINDOW -->
 		<menu name="CDiscoveryWnd">
 			<item id="ID_DISCOVERY_QUERY" text="Nu _opvragen"/>
@@ -1581,6 +1624,7 @@
 			<menu text="Control">
 				<item id="ID_IRC_TIME" text="_Tijd"/>
 				<item id="ID_IRC_VERSION" text="_Versie"/>
+				<item id="ID_IRC_BROWSE" text="Bekijken"/>
 			</menu>
 			<separator/>
 			<menu text="Controle">
@@ -1917,10 +1961,6 @@
 			<link target="raza:page:CRemoteSettingsPage" format="b">Web Interface:</link>
 			<gap size="4"/>
 			<text>Mogelijk maken om Shareaza op je PC te laten draaien, en het op afstand te bedienen via een browser.</text>
-			<newline gap="10"/>
-			<link target="raza:page:CSchedulerSettingsPage" format="b">Scheduler:</link>
-			<gap size="4"/>
-			<text>Limit download connections based on a periodic schedule.</text>
 		</document>
 		<!-- Browse User Profile -->
 		<document name="CBrowseHostProfile.1">
@@ -2461,6 +2501,9 @@
 		<tip id="ID_MEDIA_STOP" message="Stoppen het afspelen van het huidige mediabestand." tip="Stoppen"/>
 		<tip id="ID_MEDIA_VIS" message="Kies een visualisatieplugin voor audio..."/>
 		<tip id="ID_MEDIA_ZOOM" message="De zoom en de breedte-hoogte verhouding van de video aanpassen."/>
+		<tip id="IDC_MEDIA_POSITION" value="Seek to a position in the media file." tip="Zoeken:"/>
+		<tip id="IDC_MEDIA_SPEED" value="Adjust the speed of the media file." tip="Snelheid"/>
+		<tip id="IDC_MEDIA_VOLUME" value="Adjust the audio volume." tip="Volume:"/>
 		<tip id="ID_MONITOR_CLOSE" message="Sluit de monitor."/>
 		<tip id="ID_NEIGHBOURS_CHAT" message="Open een chatsessie met de geselecteerde gebruiker."/>
 		<tip id="ID_NEIGHBOURS_COPY" message="Kopiëer een URI om toegang te verkrijgen tot de geselecteerde gastheer."/>
@@ -2471,6 +2514,7 @@
 		<tip id="ID_NEIGHBOURS_VIEW_OUTGOING" message="Een nieuw pakket dump venster openen om uitgaand verkeer naar deze bron te controleren."/>
 		<tip id="ID_NETWORK_AUTO_CLOSE" message="Shareaza automatisch afsluiten als het dataverkeer afgerond is."/>
 		<tip id="ID_NETWORK_BROWSE_TO" message="Doorzoek een gebruiker, om zijn profiel en gedeelde bestanden te bekijken..."/>
+		<tip id="ID_NETWORK_CHAT_TO" message="Open een chatsessie met de geselecteerde gebruiker."/>
 		<tip id="ID_NETWORK_CONNECT" message="Verbinden met het netwerk."/>
 		<tip id="ID_NETWORK_CONNECT_TO" message="Zelf verbinding maken met een gastheer..."/>
 		<tip id="ID_NETWORK_DISCONNECT" message="De verbinding met het netwerk verbreken."/>
@@ -2615,6 +2659,24 @@
 		<string id="WINDOW_SEARCHPAD" value="Zoeken"/>
 		<string id="WINDOW_HELP" value="Shareaza help"/>
 		<string id="WINDOW_IRC" value="Shareaza Chat"/>
+		<string id="WINDOW_SCHEDULER" value="Planner"/>
+		<string id="154" value="Weet je zeker dat je de skin &quot;%s&quot; wilt verwijderen? Dit kan niet ongedaan worden gemaakt."/>
+		<string id="156" value="Scheduled time has already passed.\n\nPlease select a time in the future."/>
+		<string id="157" value="_Bandbreedte:"/>
+		<string id="158" value="Bandwidth: Reduced Speed"/>
+		<string id="159" value="_Bandbreedte:"/>
+		<string id="160" value="Shareaza afsluiten."/>
+		<string id="161" value="System: Disconnect Dial-up Connection"/>
+		<string id="162" value="System: Turn Off the Computer"/>
+		<string id="163" value="Selecteer alsjeblieft de gebruikersomgeving:"/>
+		<string id="164" value="Specific day(s) of week"/>
+		<string id="165" value="Actief"/>
+		<string id="166" value="Werkeloos"/>
+		<string id="167" value="Geen"/>
+		<string id="168" value="Beoordeling"/>
+		<string id="169" value="No Tasks Currently Scheduled"/>
+		<string id="172" value="Maandag"/>
+		<string id="173" value="You should select at least one day of week."/>
 		<string id="7000" value="weet je zeker dat je dit filter wilt verwijderen?"/>
 		<string id="7001" value="&amp;Schemas"/>
 		<string id="7002" value="Meerdere Waardes"/>
@@ -2982,7 +3044,6 @@
 		<string id="16402" value="Shareaza heeft een collectiebestand ontvangen:\r\n\r\n&quot;%s&quot;\r\n\r\nDit bestand is waarschijnlijk geen geldig collectiebestand."/>
 		<string id="16403" value="Shareaza heeft het collectiebestand &quot;%s&quot; toegevoegd aan je bibliotheek."/>
 		<string id="16404" value="Shareaza heeft het collectiebestand &quot;%s&quot; niet kunnen installeren door het te kopi#235;ren naar de map &quot;%s&quot;."/>
-		<string id="16405" value="Wil je dit bestand downloaden?\r\n\r\n&quot;%s&quot;\r\n\r\nKies Annuleren om andere meldingen te voorkomen."/>
 		<string id="16406" value="Wil je alle bestanden in deze collectie downloaden?\r\n\r\nKies Annuleren om andere meldingen te voorkomen."/>
 		<string id="16407" value="Wil je voorkomen dat je nog een keer wordt gevraagd om iets van deze collectie te downloaden?"/>
 		<string id="16408" value="Kopieër &amp;URI"/>
@@ -3324,6 +3385,10 @@
 		<string id="20242" value="Opnieuw Proberen"/>
 		<string id="20243" value="Doorgaan"/>
 		<string id="20244" value="&amp;Herinner mijn selectie de volgende keer"/>
+		<string id="20245" value="_Nieuwe map..."/>
+		<string id="32825" value="_Open mijn map met complete downloads"/>
+		<string id="32773" value="Check _Version"/>
+		<string id="61215" value="Activate this window"/>
 	</strings>
 	<!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 	<!-- Don't edit dialogs manualy! Use DialogScan feature instead -->
@@ -3335,7 +3400,6 @@
 			<control caption="OK"/>
 			<control caption="Annuleren"/>
 			<control caption="Toepassen"/>
-			<control/>
 		</dialog>
 		<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="Algemeen">
 			<control caption="_Algemeen:"/>
@@ -3562,27 +3626,42 @@
 			<control caption="Kies een wachtwoord:"/>
 			<control/>
 		</dialog>
-		<dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEdBuSt" caption="Planner">
-			<control caption="_Opties:"/>
-			<control caption="_Activeer planner"/>
+		<dialog name="CScheduleTaskDlg" cookie="BuBuBuBuSySyBuBuBuBuBuBuBuBuCoEdmsEdmsEdmsBuBuEdBuStStStStStStStBuBu" caption="Planner">
+			<control caption="OK"/>
+			<control caption="Annuleren"/>
+			<control caption="Only once"/>
+			<control caption="On specific day(s) of week"/>
 			<control/>
 			<control/>
-			<control caption="_Verbind alleen met G2 indien gelimiteerd."/>
-			<control caption="Legenda:"/>
-			<control caption="Zon "/>
-			<control caption="Maa "/>
-			<control caption="Din "/>
-			<control caption="Woe "/>
-			<control caption="Don "/>
-			<control caption="Vri "/>
-			<control caption="Zat "/>
-			<control caption="Niet verbinden"/>
-			<control caption="Beperk verbinding"/>
-			<control caption="Verbinding op volle snelheid"/>
+			<control caption="Zondag"/>
+			<control caption="Maandag"/>
+			<control caption="Dinsdag"/>
+			<control caption="Woensdag"/>
+			<control caption="Donderdag"/>
+			<control caption="Vrijdag"/>
+			<control caption="Zaterdag"/>
+			<control caption="Alles"/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control caption=" _Toggle bandwidth independently"/>
+			<control caption="Verbinden met _Gnutella2"/>
+			<control/>
+			<control caption="Make this event active"/>
+			<control caption="Selecteer alsjeblieft de gebruikersomgeving:"/>
+			<control caption="Selecteer alsjeblieft de gebruikersomgeving:"/>
+			<control caption="Selecteer voorinstelling:"/>
+			<control caption="Beschrijving:"/>
 			<control caption="% van _bandbreedte indien beperkt"/>
+			<control caption="% van _bandbreedte indien beperkt"/>
+			<control caption="% van _bandbreedte indien beperkt"/>
+			<control caption="Days Of Week"/>
+			<control caption="Run this event"/>
 			<control/>
-			<control caption="Help"/>
-			<control caption="De planner is ontworpen om in te kunnen stellen wanneer Shareaza verbindt en bestanden downloadt.{n}{n}{n}Opmerking: Als Shareaza geopend is terwijl de planner ingesteld is, kan je instellingen zien veranderen. Dit is normaal!-"/>
 		</dialog>
 		<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Netwerken">
 			<control caption="Shareaza kan met meerdere P2P netwerken tegelijkertijd verbinden. Je kunt hier selecteren met welke P2P netwerken je verbinding wilt maken en vervolgens voor elk netwerk de specifieke instellingen aanpassen."/>
@@ -3834,8 +3913,7 @@
 			<control caption="Verbinden met het originele Gnutella"/>
 			<control caption="Is minder rijk aan eigenschappen dan Gnutella2 en heeft minder bestanden dan eDonkey, maar toch blijft dit een waardevolle bron."/>
 		</dialog>
-		<dialog name="CDonkeyImportDlg" cookie="StStBuBuEdBu" caption="eDonkey downloads importeren">
-			<control/>
+		<dialog name="CDonkeyImportDlg" cookie="StBuBuEdBu" caption="eDonkey downloads importeren">
 			<control caption="Shareaza heeft ontdekt dat je een ander eDonkey programma op deze computer hebt geïnstalleerd. Wil je de niet afgeronde downloads importeren naar Shareaza?"/>
 			<control caption="Ja"/>
 			<control caption="Nee|Annuleren"/>
@@ -3952,8 +4030,7 @@
 			<control caption="Verbinden"/>
 			<control caption="Annuleren"/>
 		</dialog>
-		<dialog name="CDownloadDlg" cookie="StStStEdBuBuStStBu" caption="Bestand/torrent downloaden">
-			<control/>
+		<dialog name="CDownloadDlg" cookie="StStEdBuBuStStBu" caption="Bestand/torrent downloaden">
 			<control/>
 			<control caption="Het downloaden van bestanden met Shareaza is gemakkelijk. Simpelweg de desbetreffende URL of URI in het veld hieronder intypen of plakken."/>
 			<control/>
@@ -4007,14 +4084,13 @@
 			<control caption="Annuleren"/>
 			<control caption="Geef een filternaam:"/>
 		</dialog>
-		<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBuSt" caption="Discovery service">
+		<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBu" caption="Discovery service">
 			<control caption="Service_adres:"/>
 			<control/>
 			<control caption="Discovery service type:"/>
 			<control caption="Gnutella Bootstrap|GWebCache|Server.met URL|Blocked"/>
 			<control caption="OK"/>
 			<control caption="Annuleren"/>
-			<control/>
 		</dialog>
 		<dialog name="CDownloadMonitorDlg" cookie="StStStStStStStStStStStStStBuBuBuBuBu" caption="Download: Shareaza">
 			<control caption="Shareaza is aan het downloaden:"/>
@@ -4182,8 +4258,7 @@
 			<control caption="OK"/>
 			<control caption="Annuleren"/>
 		</dialog>
-		<dialog name="CShareManagerDlg" cookie="StStSyBuBuBuBu" caption="Vrijgegeven mappen beheerder">
-			<control/>
+		<dialog name="CShareManagerDlg" cookie="StSyBuBuBuBu" caption="Vrijgegeven mappen beheerder">
 			<control caption="Dit is een lijst met mappen uit je bibliotheek. Je kunt mappen toevoegen en verwijderen met de knoppen linksonder. Een nieuw toegevoegde map wordt automatisch gedeeld met andere gebruikers. In de bibliotheek kun je de vrijgave echter altijd uitschakelen."/>
 			<control/>
 			<control caption="_Toevoegen"/>
@@ -4191,8 +4266,7 @@
 			<control caption="OK"/>
 			<control caption="Annuleren"/>
 		</dialog>
-		<dialog name="CURLCopyDlg" cookie="StStStStStBuBu" caption="URI kopiëren">
-			<control/>
+		<dialog name="CURLCopyDlg" cookie="StStStStBuBu" caption="URI kopiëren">
 			<control caption="Je kunt in verschillende formaten een URI kopiëren van het geselecteerde bestand. Selecteer het formaat naar keuze door te klikken op één van de URI's hieronder:"/>
 			<control/>
 			<control/>
@@ -4200,8 +4274,7 @@
 			<control caption="Voeg _mijzelf toe als een vaste bron"/>
 			<control caption="Annuleren"/>
 		</dialog>
-		<dialog name="CURLExportDlg" cookie="StStEdStCoStCoBuBumsBu" caption="Exporteer URIs">
-			<control/>
+		<dialog name="CURLExportDlg" cookie="StEdStCoStCoBuBumsBu" caption="Exporteer URIs">
 			<control caption="Je hebt %lu bestanden geselecteerd om te exporteren als Shareaza-powered URI referencies. Selecteer alsjeblieft het formaat voor de URIs, en klik op Opslaan:"/>
 			<control/>
 			<control caption="Importeer:"/>
@@ -4213,8 +4286,7 @@
 			<control/>
 			<control caption="Annuleren"/>
 		</dialog>
-		<dialog name="CURLActionDlg" cookie="StStStStStEdStEdStBuBuBuBuBuSt" caption="Shareaza URI beheerder">
-			<control/>
+		<dialog name="CURLActionDlg" cookie="StStStStEdStEdStBuBuBuBuBuSt" caption="Shareaza URI beheerder">
 			<control caption="Je hebt geklikt op een Shareaza-gestuurde URI die gekoppeld is aan de volgende inhoud op het netwerk:"/>
 			<control caption="Je hebt geklikt op een Shareaza-gestuurde URI die je zal verbinden met de volgende gastheer of server:"/>
 			<control caption="Je hebt geklikt op een Shareaza-gestuurde URI die je zal toestaan om de beschikbare vrijgegeven bestanden te bekijken op de volgende gastheer:"/>
@@ -4246,8 +4318,7 @@
 			<control caption="(gedownloade blokken worden gekopiëerd naar een nieuw voorvertoningsbestand)"/>
 			<control caption="Annuleren"/>
 		</dialog>
-		<dialog name="CWarningsDlg" cookie="StStStStStStStBu" caption="Shareaza respecteert zijn gebruikers">
-			<control/>
+		<dialog name="CWarningsDlg" cookie="StStStStStStBu" caption="Shareaza respecteert zijn gebruikers">
 			<control caption="Wist je al dat Shareaza een 100% gratis product is?"/>
 			<control caption="Shareaza bevat GEEN ENKELE &quot;spyware&quot;, &quot;adware&quot; of andere verpakte/verborgen software. Het laat GEEN advertenties of &quot;popups&quot; zien, niets daarvan.{n}{n}Als je ooit een advertentie of &quot;popup&quot; krijgt tijdens het gebruiken van Shareaza, kun je er gegarandeerd vanuit gaan dat ze NIET afkomstig zijn van dit programma."/>
 			<control caption="Helaas komt een heleboel andere software met ongewenste adware of spyware, dus als je iets verdachts ziet doe je er goed aan om je PC na te kijken met een programma dat reclame of spyware verwijdert."/>
@@ -4256,8 +4327,7 @@
 			<control caption="http://shareaza.sourceforge.net/"/>
 			<control caption="Sluiten"/>
 		</dialog>
-		<dialog name="CPromoteDlg" cookie="StStStStStStStBu" caption="Verspreid het nieuws">
-			<control/>
+		<dialog name="CPromoteDlg" cookie="StStStStStStBu" caption="Verspreid het nieuws">
 			<control caption="Help ons het nieuws te verspreiden"/>
 			<control caption="Wij hopen dat je tot nu toe veel plezier beleeft hebt aan Shareaza. Volgens ons is het het beste programma ter wereld voor het uitwisselen van bestanden."/>
 			<control caption="Helaas weten een heleboel mensen niet wat ze missen!"/>
@@ -4266,8 +4336,7 @@
 			<control caption="http://shareaza.sourceforge.net/"/>
 			<control caption="OK"/>
 		</dialog>
-		<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuStSt" caption="Bestaand bestand downloaden">
-			<control/>
+		<dialog name="CExistingFileDlg" cookie="StStStStBuBuBuBuBuStSt" caption="Bestaand bestand downloaden">
 			<control/>
 			<control/>
 			<control/>
@@ -4280,8 +4349,7 @@
 			<control caption="Je hebt dit bestand al een keer gedownload en verwijderd. Wat wil je doen?"/>
 			<control caption="Waarschuwing!!! Dubbele bestanden gevonden. Sommige malifide software heeft misschien je Bibliotheek gewijzigd. Wees zeker dat je dit bestand werkelijk hebt. Anders, sluit Shareaza en scan je computer met beveilingssoftware."/>
 		</dialog>
-		<dialog name="CCloseModeDlg" cookie="StStBuBuBuBuBu" caption="Afsluiten knop">
-			<control/>
+		<dialog name="CCloseModeDlg" cookie="StBuBuBuBuBu" caption="Afsluiten knop">
 			<control caption="Dit is de eerste keer dat je op de afsluiten knop van Shareaza gedrukt hebt. Selecteer alsjeblieft welke handeling Shareaza vanaf nu zou moeten uitvoeren wanneer op de afsluiten knop gedrukt wordt:"/>
 			<control caption="Verkleinen naar de systeembalk"/>
 			<control caption="Shareaza onmiddellijk afsluiten"/>
@@ -4289,16 +4357,14 @@
 			<control caption="OK"/>
 			<control caption="Annuleren"/>
 		</dialog>
-		<dialog name="CDonkeyServersDlg" cookie="StStEdmsBuBu" caption="Server.met bestand downloaden">
-			<control/>
+		<dialog name="CDonkeyServersDlg" cookie="StEdmsBuBu" caption="Server.met bestand downloaden">
 			<control caption="Je kunt een eDonkey Server.met bestand downloaden van het internet om je lokale lijst met servers te verversen."/>
 			<control/>
 			<control/>
 			<control caption="OK"/>
 			<control caption="Annuleren"/>
 		</dialog>
-		<dialog name="CHelpDlg" cookie="StBuAf" caption="Shareaza help">
-			<control/>
+		<dialog name="CHelpDlg" cookie="BuAf" caption="Shareaza help">
 			<control caption="Sluiten"/>
 			<control/>
 		</dialog>
@@ -4373,8 +4439,7 @@
 			<control caption="naar"/>
 			<control caption="WAARSCHUWING: Dit dialoogvenster voorziet geadvanceerde download wijzigingsfuncties voor professionele gebruikers welke indien incorrect ingesteld kunnen en mogelijk zullen leiden tot corruptie van dowloads."/>
 		</dialog>
-		<dialog name="CTorrentSeedDlg" cookie="StStBuBuBuStms" caption="Torrentbestand openen">
-			<control/>
+		<dialog name="CTorrentSeedDlg" cookie="StBuBuBuStms" caption="Torrentbestand openen">
 			<control caption="Je hebt een BitTorrent bestand geopend. Wil je de inhoud ervan downloaden of het opnieuw uitzaaien?"/>
 			<control caption="Downloaden"/>
 			<control caption="Uitzaaien"/>
@@ -4433,8 +4498,7 @@
 			<control caption="_Map voor de voltooide bestanden:"/>
 			<control caption="_Bestandstype (schema):"/>
 		</dialog>
-		<dialog name="CMediaVisDlg" cookie="StBuSyCoBuBuBu" caption="Visualisatie selecteren">
-			<control/>
+		<dialog name="CMediaVisDlg" cookie="BuSyCoBuBuBu" caption="Visualisatie selecteren">
 			<control caption="Selecteer een audiovisualisatie uit de lijst:"/>
 			<control/>
 			<control caption="Voetnoot scherm|Volledig groot scherm|Groot scherm|Middelgroot scherm|Klein scherm"/>
@@ -4442,16 +4506,14 @@
 			<control caption="OK"/>
 			<control caption="Annuleren"/>
 		</dialog>
-		<dialog name="CUpgradeDlg" cookie="StStStBuBuBu" caption="Upgrade waarschuwing">
-			<control/>
+		<dialog name="CUpgradeDlg" cookie="StStBuBuBu" caption="Upgrade waarschuwing">
 			<control caption="Er is een nieuwe versie van Shareaza verkrijgbaar. Wil je upgraden?"/>
 			<control caption="Wanneer je &quot;Nu upgraden&quot; selecteert, zal Shareaza de upgrade toevoegen aan je downloadlijst en zal het automatisch worden gedownload."/>
 			<control caption="Nu _upgraden"/>
 			<control caption="Niet controleren op nieuwe versies"/>
 			<control caption="Niet upgraden"/>
 		</dialog>
-		<dialog name="CDownloadReviewDlg" cookie="StBuSyEd" caption="Downloadcommentaar">
-			<control/>
+		<dialog name="CDownloadReviewDlg" cookie="BuSyEd" caption="Downloadcommentaar">
 			<control caption="OK"/>
 			<control/>
 			<control/>
@@ -4598,6 +4660,8 @@
 		<list name="CTorrentFileList">
 			<column from="Filename" to="Bestandsnaam"/>
 			<column from="Size" to="Groot"/>
+			<column from="Status" to="Status"/>
+			<column from="Priority" to="Voorrang geven"/>
 		</list>
 		<list name="CTorrentTrackerList">
 			<column from="Tracker" to="Tracker"/>

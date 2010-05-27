@@ -1,7 +1,7 @@
 //
 // CtrlMediaFrame.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,12 +22,10 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
-#include "ImageFile.h"
 #include "Plugins.h"
 #include "Library.h"
 #include "SharedFile.h"
 #include "Registry.h"
-
 #include "Skin.h"
 #include "CtrlMediaFrame.h"
 #include "DlgSettingsManager.h"
@@ -522,7 +520,7 @@ void CMediaFrame::OnPaint()
 
 	if ( m_bmLogo.m_hObject == NULL)
 	{
-		m_bmLogo.m_hObject = CImageFile::LoadBitmapFromResource( IDR_LARGE_LOGO, RT_JPEG );
+		m_bmLogo.m_hObject = Skin.GetWatermark( _T("LargeLogo") );
 //		if ( m_pPlayer && m_bmLogo.m_hObject )
 //			m_pPlayer->SetLogoBitmap( m_bmLogo );
 	}

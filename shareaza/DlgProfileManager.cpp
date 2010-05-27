@@ -1,7 +1,7 @@
 //
 // DlgProfileManager.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -24,7 +24,6 @@
 #include "Settings.h"
 #include "GProfile.h"
 #include "Skin.h"
-
 #include "DlgProfileManager.h"
 #include "PageProfileIdentity.h"
 #include "PageProfileContact.h"
@@ -45,8 +44,6 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNAMIC(CProfileManagerDlg, CSettingsSheet)
 
 BEGIN_MESSAGE_MAP(CProfileManagerDlg, CSettingsSheet)
-	//{{AFX_MSG_MAP(CProfileManagerDlg)
-	//}}AFX_MSG_MAP
 	ON_COMMAND(IDRETRY, OnApply)
 END_MESSAGE_MAP()
 
@@ -54,12 +51,8 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CProfileManagerDlg construction
 
-CProfileManagerDlg::CProfileManagerDlg(CWnd* pParent) : CSettingsSheet( pParent, IDS_USER_PROFILE )
-{
-	m_nTopMargin = 52;
-}
-
-CProfileManagerDlg::~CProfileManagerDlg()
+CProfileManagerDlg::CProfileManagerDlg(CWnd* pParent)
+	: CSettingsSheet( pParent, IDS_USER_PROFILE )
 {
 }
 
@@ -128,29 +121,9 @@ BOOL CProfileManagerDlg::OnInitDialog()
 {
 	CSettingsSheet::OnInitDialog();
 
-	m_bmHeader.LoadBitmap( IDB_WIZARD );
-
 	SkinMe( NULL, IDR_MAINFRAME );
 
 	return TRUE;
-}
-
-void CProfileManagerDlg::DoPaint(CDC& dc)
-{
-	CRect rc;
-	GetClientRect( &rc );
-
-	BITMAP pInfo;
-	m_bmHeader.GetBitmap( &pInfo );
-
-	CDC mdc;
-	mdc.CreateCompatibleDC( &dc );
-	CBitmap* pOldBitmap = (CBitmap*)mdc.SelectObject( &m_bmHeader );
-	dc.BitBlt( 0, 0, pInfo.bmWidth, pInfo.bmHeight, &mdc, 0, 0, SRCCOPY );
-	mdc.SelectObject( pOldBitmap );
-	mdc.DeleteDC();
-
-	CSettingsSheet::DoPaint( dc );
 }
 
 void CProfileManagerDlg::OnOK()

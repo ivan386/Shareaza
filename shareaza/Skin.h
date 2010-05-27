@@ -28,15 +28,13 @@ class CXMLElement;
 class CSkinWindow;
 
 
-class ATL_NO_VTABLE CSkin
+class CSkin
 {
-// Construction
 public:
 	CSkin();
 	~CSkin();
 
-// Operations
-public:
+	void	CreateDefault();
 	void	Apply();
 	void	Clear();
 	BOOL	LoadFromFile(LPCTSTR pszFile);
@@ -47,10 +45,10 @@ public:
 	static BOOL	SelectCaption(CString& strCaption, int nIndex);
 	static void	DrawWrappedText(CDC* pDC, CRect* pBox, LPCTSTR pszText, CPoint ptStart, BOOL bExclude = TRUE);
 	static int GetTextFlowChange(LPCTSTR pszText, BOOL* bIsRTL);
+
 protected:
 	mutable CCriticalSection m_pSection;
 	void	ApplyRecursive(LPCTSTR pszPath);
-	void	CreateDefault();
 	void	CreateDefaultColors();
 	HBITMAP	LoadBitmap(const CString& strName);
 

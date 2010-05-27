@@ -38,6 +38,7 @@
 			<button id="ID_VIEW_MEDIA"/>
 			<button id="ID_TAB_IRC"/>
 			<button id="ID_VIEW_SECURITY"/>
+			<button id="ID_VIEW_SCHEDULER"/>
 			<button id="ID_VIEW_HOSTS"/>
 			<button id="ID_VIEW_DISCOVERY"/>
 			<button id="ID_VIEW_TRAFFIC"/>
@@ -359,6 +360,7 @@
 			<separator/>
 			<button id="ID_NEIGHBOURS_SETTINGS" text="Configurações"/>
 		</toolbar>
+		<!-- SECURITY WINDOW -->
 		<toolbar name="CSecurityWnd">
 			<button id="ID_SECURITY_EDIT" text="Editar Regra"/>
 			<separator/>
@@ -371,6 +373,21 @@
 			<button id="ID_SECURITY_RESET" text="Resetar a Lista"/>
 			<button id="ID_SECURITY_IMPORT" text="Importar a Lista"/>
 			<button id="ID_SECURITY_EXPORT" text="Exportar a Lista"/>
+		</toolbar>
+		<!-- SCHEDULER WINDOW -->
+		<toolbar name="CSchedulerWnd">
+			<button id="ID_SCHEDULER_EDIT" text="Edit Task"/>
+			<separator/>
+			<button id="ID_SCHEDULER_ACTIVATE" text="Ativ(o)a"/>
+			<button id="ID_SCHEDULER_DEACTIVATE" text="Inativ(o)a"/>
+			<separator/>
+			<button id="ID_SCHEDULER_ADD" text="Add Task"/>
+			<button id="ID_SCHEDULER_REMOVE" text="Remover &gt;"/>
+			<separator/>
+			<button id="ID_SCHEDULER_REMOVE_ALL" text="Remover &gt;"/>
+			<rightAlign/>
+			<button id="ID_SCHEDULER_IMPORT" text="Importar a Lista"/>
+			<button id="ID_SCHEDULER_EXPORT" text="Exportar a Lista"/>
 		</toolbar>
 		<!-- HIT MONITOR WINDOW -->
 		<toolbar name="CHitMonitorWnd">
@@ -500,6 +517,7 @@
 					<item id="ID_VIEW_SECURITY" text="Se_gurança"/>
 					<item id="ID_VIEW_HOSTS" text="C_ache dos Hosts"/>
 					<item id="ID_VIEW_DISCOVERY" text="Desco_brimento"/>
+					<item id="ID_VIEW_SCHEDULER" text="Agenda"/>
 				</menu>
 				<separator/>
 				<item id="ID_VIEW_BASIC" text="_Modo Básico"/>
@@ -557,7 +575,8 @@
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_CONNECT_TO" text="Conectar _na..." shortcut="Ctrl+T"/>
-				<item id="ID_NETWORK_BROWSE_TO" text="_Navegar Usuário..."/>
+				<item id="ID_NETWORK_BROWSE_TO" text="_Navegar Usuário"/>
+				<item id="ID_NETWORK_CHAT_TO" text="Conversar"/>
 				<separator/>
 				<item id="ID_NETWORK_AUTO_CLOSE" text="Sair _Após as Transferências"/>
 				<item id="ID_NETWORK_EXIT" text="S_air"/>
@@ -573,6 +592,7 @@
 				<separator/>
 				<item id="ID_VIEW_SECURITY" text="Se_gurança"/>
 				<item id="ID_VIEW_HOSTS" text="C_ache dos Hosts"/>
+				<item id="ID_VIEW_SCHEDULER" text="Agenda"/>
 				<separator/>
 				<menu text="_Avançado">
 					<item id="ID_VIEW_SYSTEM" text="S_istema" shortcut="F11"/>
@@ -587,6 +607,7 @@
 					<item id="ID_VIEW_HOSTS" text="C_ache dos Hosts" shortcut="F8"/>
 					<item id="ID_VIEW_DISCOVERY" text="Desco_brimento" shortcut="F9"/>
 					<item id="ID_VIEW_TRAFFIC" text="_Gráfico" shortcut="F10"/>
+					<item id="ID_VIEW_SCHEDULER" text="Agenda" shortcut="Ctrl+Shift+F11"/>
 					<separator/>
 					<item id="ID_VIEW_PACKETS" text="_Pacotes Perdidos" shortcut="Ctrl+F1"/>
 					<item id="ID_VIEW_SEARCH_MONITOR" text="Mo_nitor das Buscas" shortcut="Ctrl+F2"/>
@@ -655,7 +676,8 @@
 				<item id="ID_NETWORK_DISCONNECT" text="_Desconectar"/>
 				<separator/>
 				<item id="ID_NETWORK_CONNECT_TO" text="Conectar _na..." shortcut="Ctrl+T"/>
-				<item id="ID_NETWORK_BROWSE_TO" text="_Navegar Usuário..."/>
+				<item id="ID_NETWORK_BROWSE_TO" text="_Navegar Usuário"/>
+				<item id="ID_NETWORK_CHAT_TO" text="Conversar"/>
 				<separator/>
 				<menu text="Escolha as _Redes">
 					<item id="ID_NETWORK_G2" text="Conectar na _Gnutella2"/>
@@ -679,6 +701,7 @@
 				<item id="ID_VIEW_HOSTS" text="C_ache dos Hosts" shortcut="F8"/>
 				<item id="ID_VIEW_DISCOVERY" text="Desco_brimento" shortcut="F9"/>
 				<item id="ID_VIEW_TRAFFIC" text="_Gráfico" shortcut="F10"/>
+				<item id="ID_VIEW_SCHEDULER" text="Agenda" shortcut="Ctrl+Shift+F11"/>
 				<separator/>
 				<item id="ID_VIEW_PACKETS" text="_Pacotes Perdidos" shortcut="Ctrl+F1"/>
 				<item id="ID_VIEW_SEARCH_MONITOR" text="Mo_nitor das Buscas" shortcut="Ctrl+F2"/>
@@ -755,6 +778,7 @@
 				<item id="ID_VIEW_UPLOADS" text="_Uploads"/>
 				<item id="ID_VIEW_SECURITY" text="Se_gurança"/>
 				<item id="ID_VIEW_HOSTS" text="C_ache dos Hosts"/>
+				<item id="ID_VIEW_SCHEDULER" text="Agenda"/>
 			</menu>
 		</menu>
 		<menu name="CMainWnd.View.Tabbed">
@@ -770,6 +794,7 @@
 			<item id="ID_VIEW_HOSTS" text="C_ache dos Hosts"/>
 			<item id="ID_VIEW_DISCOVERY" text="Desco_brimento"/>
 			<item id="ID_VIEW_TRAFFIC" text="_Gráfico"/>
+			<item id="ID_VIEW_SCHEDULER" text="Agenda"/>
 			<separator/>
 			<item id="ID_VIEW_PACKETS" text="_Pacotes Perdidos"/>
 			<item id="ID_VIEW_SEARCH_MONITOR" text="Mo_nitor das Buscas"/>
@@ -789,6 +814,7 @@
 			<item id="ID_VIEW_HOSTS" text="C_ache dos Hosts"/>
 			<item id="ID_VIEW_DISCOVERY" text="Desco_brimento"/>
 			<item id="ID_VIEW_TRAFFIC" text="_Gráfico"/>
+			<item id="ID_VIEW_SCHEDULER" text="Agenda"/>
 			<separator/>
 			<item id="ID_VIEW_PACKETS" text="_Pacotes Perdidos"/>
 			<item id="ID_VIEW_SEARCH_MONITOR" text="Mo_nitor das Buscas"/>
@@ -841,6 +867,7 @@
 				<item id="ID_VIEW_UPLOADS" text="_Uploads"/>
 				<item id="ID_VIEW_SECURITY" text="Se_gurança"/>
 				<item id="ID_VIEW_HOSTS" text="C_ache dos Hosts"/>
+				<item id="ID_VIEW_SCHEDULER" text="Agenda"/>
 			</menu>
 		</menu>
 		<menu name="CHomeWnd.Tabbed">
@@ -856,6 +883,7 @@
 			<item id="ID_VIEW_HOSTS" text="C_ache dos Hosts"/>
 			<item id="ID_VIEW_DISCOVERY" text="Desco_brimento"/>
 			<item id="ID_VIEW_TRAFFIC" text="_Gráfico"/>
+			<item id="ID_VIEW_SCHEDULER" text="Agenda"/>
 			<separator/>
 			<item id="ID_VIEW_PACKETS" text="_Pacotes Perdidos"/>
 			<item id="ID_VIEW_SEARCH_MONITOR" text="Mo_nitor das Buscas"/>
@@ -1525,6 +1553,21 @@
 			<separator/>
 			<item id="ID_SECURITY_EDIT" text="_Propriedades"/>
 		</menu>
+		<!-- SCHEDULER WINDOW -->
+		<menu name="CSchedulerWnd">
+			<item id="ID_SCHEDULER_ADD" text="_Add Scheduled Task"/>
+			<separator/>
+			<item id="ID_SCHEDULER_ACTIVATE" text="Ativ(o)a"/>
+			<item id="ID_SCHEDULER_DEACTIVATE" text="Inativ(o)a"/>
+			<separator/>
+			<item id="ID_SCHEDULER_REMOVE" text="_Remover"/>
+			<item id="ID_SCHEDULER_EDIT" text="_Editar:"/>
+			<separator/>
+			<item id="ID_SCHEDULER_REMOVE_ALL" text="Remover _Arquivos"/>
+			<separator/>
+			<item id="ID_SCHEDULER_IMPORT" text="_Importar..."/>
+			<item id="ID_SCHEDULER_EXPORT" text="E_xportar..."/>
+		</menu>
 		<!-- DISCOVERY SERVICES WINDOW -->
 		<menu name="CDiscoveryWnd">
 			<item id="ID_DISCOVERY_QUERY" text="_Inquirir Agora"/>
@@ -1581,6 +1624,7 @@
 			<menu text="Ações">
 				<item id="ID_IRC_TIME" text="_Hora"/>
 				<item id="ID_IRC_VERSION" text="_Versão"/>
+				<item id="ID_IRC_BROWSE" text="Navegar"/>
 			</menu>
 			<separator/>
 			<menu text="Controle">
@@ -1912,10 +1956,6 @@
 			<link target="raza:page:CRemoteSettingsPage" format="b">Remoto:</link>
 			<gap size="4"/>
 			<text>Configurar a habilidade de controlar o Shareaza remotamente através de um navegador da web.</text>
-			<newline gap="10"/>
-			<link target="raza:page:CSchedulerSettingsPage" format="b">Agenda:</link>
-			<gap size="4"/>
-			<text>Limitar as conexões de download baseado numa agenda periódica.</text>
 		</document>
 		<!-- Browse User Profile -->
 		<document name="CBrowseHostProfile.1">
@@ -2385,6 +2425,9 @@
 		<tip id="ID_MEDIA_STOP" message="Parar de tocar o arquivo de mídia." tip="Parar"/>
 		<tip id="ID_MEDIA_VIS" message="Selecionar um plugin de visualização de áudio..."/>
 		<tip id="ID_MEDIA_ZOOM" message="Ajustar o zoom do vídeo e as configurações do ratio."/>
+		<tip id="IDC_MEDIA_POSITION" value="Seek to a position in the media file." tip="Procurar:"/>
+		<tip id="IDC_MEDIA_SPEED" value="Adjust the speed of the media file." tip="Velocidade"/>
+		<tip id="IDC_MEDIA_VOLUME" value="Adjust the audio volume." tip="Vol:"/>
 		<tip id="ID_MONITOR_CLOSE" message="Fechar a janela do monitor."/>
 		<tip id="ID_NEIGHBOURS_CHAT" message="Abrir uma sessão de chat com o usuário selecionado."/>
 		<tip id="ID_NEIGHBOURS_COPY" message="Copiar uma URI apara acessar o host selecionado."/>
@@ -2395,6 +2438,7 @@
 		<tip id="ID_NEIGHBOURS_VIEW_OUTGOING" message="Abrir uma nova janela de Lixo de Pacotes monitorando os pacotes saindo deste vizinho."/>
 		<tip id="ID_NETWORK_AUTO_CLOSE" message="Fechar automaticamente o Shareaza quando as transferência forem completadas."/>
 		<tip id="ID_NETWORK_BROWSE_TO" message="Navegar um usuário, mostrando seu perfil e arquivos compartilhados..."/>
+		<tip id="ID_NETWORK_CHAT_TO" message="Abrir uma sessão de chat com o usuário selecionado."/>
 		<tip id="ID_NETWORK_CONNECT" message="Conectar nas redes selecionadas."/>
 		<tip id="ID_NETWORK_CONNECT_TO" message="Conectar manualmente a um host..."/>
 		<tip id="ID_NETWORK_DISCONNECT" message="Desconectar de todas as redes, isto parará também todos os downloads e uploads."/>
@@ -2539,6 +2583,24 @@
 		<string id="WINDOW_SEARCHPAD" value="Procurar"/>
 		<string id="WINDOW_HELP" value="Ajuda do Shareaza"/>
 		<string id="WINDOW_IRC" value="Chat do Shareaza"/>
+		<string id="WINDOW_SCHEDULER" value="Agenda"/>
+		<string id="154" value="Você tem certeza que você quer apagar a &quot;%s&quot; skin? Isto não pode ser desfeito."/>
+		<string id="156" value="Scheduled time has already passed.\n\nPlease select a time in the future."/>
+		<string id="157" value="_Banda:"/>
+		<string id="158" value="Bandwidth: Reduced Speed"/>
+		<string id="159" value="_Banda:"/>
+		<string id="160" value="Sair do Shareaza"/>
+		<string id="161" value="System: Disconnect Dial-up Connection"/>
+		<string id="162" value="System: Turn Off the Computer"/>
+		<string id="163" value="Por favor selecione a interface do usuário:"/>
+		<string id="164" value="Specific day(s) of week"/>
+		<string id="165" value="Ativ(o)a"/>
+		<string id="166" value="Inativ(o)a"/>
+		<string id="167" value="Nenhuma"/>
+		<string id="168" value="Classificação"/>
+		<string id="169" value="No Tasks Currently Scheduled"/>
+		<string id="172" value="Segunda"/>
+		<string id="173" value="You should select at least one day of week."/>
 		<string id="7000" value="Você tem certeza que você quer apagar este filtro?"/>
 		<string id="7001" value="&amp;Schemas"/>
 		<string id="7002" value="Valores Múltiplos"/>
@@ -2910,7 +2972,6 @@ pasta dos arquivos baixados a sua biblioteca agora?"/>
 		<string id="16402" value="O Shareaza recebeu um arquivo de coleção:\n\n&quot;%s&quot;\n\n Este arquivo não parece ser um arquivo de coleção válido."/>
 		<string id="16403" value="O Shareaza adicionou o arquivo de coleção &quot;%s&quot; a sua biblioteca."/>
 		<string id="16404" value="O Shareaza foi incapaz de instalar o arquivo de coleção &quot;%s&quot; copiando-o para a pasta &quot;%s&quot;."/>
-		<string id="16405" value="Você gostaria de baixar este arquivo?\n\n&quot;%s&quot;\n\nEscolha Cancelar para parar quaisquer outros avisos."/>
 		<string id="16406" value="Você gostaria de baixar todos os arquivos nesta coleção?\n\nEscolha Cancelar para parar quaisquer outros avisos."/>
 		<string id="16407" value="Você gostaria de impedir essa coleção de avisar você para baixar mais alguma coisa?"/>
 		<string id="16408" value="Copiar &amp;URI"/>
@@ -3252,6 +3313,10 @@ pasta dos arquivos baixados a sua biblioteca agora?"/>
 		<string id="20242" value="Tentar de Novo"/>
 		<string id="20243" value="Continuar"/>
 		<string id="20244" value="&amp;Lembrar da minha seleção da próxima vez"/>
+		<string id="20245" value="_Nova Pasta..."/>
+		<string id="32825" value="_Abrir a minha pasta de Downloads completados"/>
+		<string id="32773" value="Procurar nova _versão"/>
+		<string id="61215" value="Activate this window"/>
 	</strings>
 	<!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 	<!-- Don't edit dialogs manualy! Use DialogScan feature instead -->
@@ -3263,7 +3328,6 @@ pasta dos arquivos baixados a sua biblioteca agora?"/>
 			<control caption="OK"/>
 			<control caption="Cancelar"/>
 			<control caption="Aplicar"/>
-			<control/>
 		</dialog>
 		<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="Geral">
 			<control caption="_Geral:"/>
@@ -3490,27 +3554,42 @@ pasta dos arquivos baixados a sua biblioteca agora?"/>
 			<control caption="Escolha uma Senha:"/>
 			<control/>
 		</dialog>
-		<dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEdBuSt" caption="Agenda">
-			<control caption="_Opções:"/>
-			<control caption=" _Ativar a agenda"/>
+		<dialog name="CScheduleTaskDlg" cookie="BuBuBuBuSySyBuBuBuBuBuBuBuBuCoEdmsEdmsEdmsBuBuEdBuStStStStStStStBuBu" caption="Agenda">
+			<control caption="OK"/>
+			<control caption="Cancelar"/>
+			<control caption="Only once"/>
+			<control caption="On specific day(s) of week"/>
 			<control/>
 			<control/>
-			<control caption="_Conectar na G2 só quando limitado"/>
-			<control caption="Chave:"/>
-			<control caption="Dom"/>
-			<control caption="Seg"/>
-			<control caption="Ter"/>
-			<control caption="Qua"/>
-			<control caption="Qui"/>
-			<control caption="Sex"/>
-			<control caption="Sab"/>
-			<control caption="Não conectar"/>
-			<control caption="Conexão limitada"/>
-			<control caption="Conectar na velocidade máxima"/>
+			<control caption="Domingo"/>
+			<control caption="Segunda"/>
+			<control caption="Terça"/>
+			<control caption="Quarta"/>
+			<control caption="Quinta"/>
+			<control caption="Sexta"/>
+			<control caption="Sábado"/>
+			<control caption="Todos"/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control caption=" _Toggle bandwidth independently"/>
+			<control caption="Conectar na _Gnutella2"/>
+			<control/>
+			<control caption="Make this event active"/>
+			<control caption="Por favor selecione a interface do usuário:"/>
+			<control caption="Por favor selecione a interface do usuário:"/>
+			<control caption="Selecionar a config salva:"/>
+			<control caption="Descrição:"/>
 			<control caption="% da _banda sob o limite"/>
+			<control caption="% da _banda sob o limite"/>
+			<control caption="% da _banda sob o limite"/>
+			<control caption="Days Of Week"/>
+			<control caption="Run this event"/>
 			<control/>
-			<control caption="Ajuda"/>
-			<control caption="A agenda é designada para permitir a você definir os horários quando o Shareaza conectará e baixará arquivos. {n}{n}{n}Nota: Se você tem o Shareaza aberto enquanto a agenda está ativa, você pode vê-lo mudando as configurações - Isto é normal!"/>
 		</dialog>
 		<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Redes">
 			<control caption="Shareaza é uma aplicação de compartilhamento de arquivos de propósito geral que pode acessar várias redes P2P ao mesmo tempo. Nesta página você seleciona a quais redes P2P você quer conectar, e ajustar opções específicas pra cada rede."/>
@@ -3762,8 +3841,7 @@ pasta dos arquivos baixados a sua biblioteca agora?"/>
 			<control caption="Conectar na Gnutella Original"/>
 			<control caption="Embora a rede Gnutella original é menos rica em funções que a Gnutella 2 e tenha menos arquivos que a eDonkey, ela é um recurso valioso."/>
 		</dialog>
-		<dialog name="CDonkeyImportDlg" cookie="StStBuBuEdBu" caption="Importar Downloads do eDonkey">
-			<control/>
+		<dialog name="CDonkeyImportDlg" cookie="StBuBuEdBu" caption="Importar Downloads do eDonkey">
 			<control caption="O Shareaza detectou que você tem outro programa para o eDonkey instalado no seu computador. Você gostaria de importar quaisquer downloads inacabados pro Shareaza?"/>
 			<control caption="Sim"/>
 			<control caption="Não|Cancelar"/>
@@ -3880,8 +3958,7 @@ pasta dos arquivos baixados a sua biblioteca agora?"/>
 			<control caption="Conectar"/>
 			<control caption="Cancelar"/>
 		</dialog>
-		<dialog name="CDownloadDlg" cookie="StStStEdBuBuStStBu" caption="Baixar Arquivo ou Torrent">
-			<control/>
+		<dialog name="CDownloadDlg" cookie="StStEdBuBuStStBu" caption="Baixar Arquivo ou Torrent">
 			<control/>
 			<control caption="Baixar qualquer arquivo com o Shareaza é fácil.  Simplesmente digite ou cole a URL ou URI descrevendo o arquivo na caixa abaixo e pressione Enter."/>
 			<control/>
@@ -3935,14 +4012,13 @@ pasta dos arquivos baixados a sua biblioteca agora?"/>
 			<control caption="Cancelar"/>
 			<control caption="Salvar o filtro atual como"/>
 		</dialog>
-		<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBuSt" caption="Serviço de Descobrimento">
+		<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBu" caption="Serviço de Descobrimento">
 			<control caption="Endereço do _Serviço:"/>
 			<control/>
 			<control caption="Tipo de Serviço de Descobrimento:"/>
 			<control caption="Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|Bloqueado"/>
 			<control caption="OK"/>
 			<control caption="Cancelar"/>
-			<control/>
 		</dialog>
 		<dialog name="CDownloadMonitorDlg" cookie="StStStStStStStStStStStStStBuBuBuBuBu" caption="Download : Shareaza">
 			<control caption="O Shareaza está baixando:"/>
@@ -4110,8 +4186,7 @@ pasta dos arquivos baixados a sua biblioteca agora?"/>
 			<control caption="OK"/>
 			<control caption="Cancelar"/>
 		</dialog>
-		<dialog name="CShareManagerDlg" cookie="StStSyBuBuBuBu" caption="Gerenciador de Pasta Compartilhada">
-			<control/>
+		<dialog name="CShareManagerDlg" cookie="StSyBuBuBuBu" caption="Gerenciador de Pasta Compartilhada">
 			<control caption="Esta é uma lista de pastas na sua biblioteca. Você pode adicionar e remover pastas usando os botões a esquerda. Qdo você adiciona uma nova pasta ela é compartilhada com outros usuários, mas você pode descompartilhá-la se você desejar."/>
 			<control/>
 			<control caption="_Adicionar..."/>
@@ -4119,8 +4194,7 @@ pasta dos arquivos baixados a sua biblioteca agora?"/>
 			<control caption="OK"/>
 			<control caption="Cancelar"/>
 		</dialog>
-		<dialog name="CURLCopyDlg" cookie="StStStStStBuBu" caption="Copiar URI">
-			<control/>
+		<dialog name="CURLCopyDlg" cookie="StStStStBuBu" caption="Copiar URI">
 			<control caption="Você pode copiar a URI para o item selecionado em uma variedade de diversos formatos. Por favor escolha o formato que você deseja clicando em uma das URIs abaixo:"/>
 			<control/>
 			<control/>
@@ -4128,8 +4202,7 @@ pasta dos arquivos baixados a sua biblioteca agora?"/>
 			<control caption="Incluir _eu mesmo como uma fonte fixa na URL"/>
 			<control caption="Cancelar"/>
 		</dialog>
-		<dialog name="CURLExportDlg" cookie="StStEdStCoStCoBuBumsBu" caption="Exportar URIs">
-			<control/>
+		<dialog name="CURLExportDlg" cookie="StEdStCoStCoBuBumsBu" caption="Exportar URIs">
 			<control caption="Você selecionou %lu arquivos para exportar como referências URI feitas pelo Shareaza.  Por favor selecione o formato para as URIs e clique em Salvar:"/>
 			<control/>
 			<control caption="Inserir Token:"/>
@@ -4141,8 +4214,7 @@ pasta dos arquivos baixados a sua biblioteca agora?"/>
 			<control/>
 			<control caption="Cancelar"/>
 		</dialog>
-		<dialog name="CURLActionDlg" cookie="StStStStStEdStEdStBuBuBuBuBuSt" caption="Gerenciador das URIs do Shareaza">
-			<control/>
+		<dialog name="CURLActionDlg" cookie="StStStStEdStEdStBuBuBuBuBuSt" caption="Gerenciador das URIs do Shareaza">
 			<control caption="Você clicou num link URI o qual leva ao seguinte conteúdo na rede:"/>
 			<control caption="Você clicou num link URI o qual conectará você ao seguinte host ou servidor:"/>
 			<control caption="Você clicou num link URI o qual permitirá a você navegar os arquivos compartilhados disponíveis do seguinte host:"/>
@@ -4174,8 +4246,7 @@ pasta dos arquivos baixados a sua biblioteca agora?"/>
 			<control caption="(copiando pedaços do download para um novo arquivo de prévia)"/>
 			<control caption="Cancelar"/>
 		</dialog>
-		<dialog name="CWarningsDlg" cookie="StStStStStStStBu" caption="O Shareaza Respeita seus Usuários">
-			<control/>
+		<dialog name="CWarningsDlg" cookie="StStStStStStBu" caption="O Shareaza Respeita seus Usuários">
 			<control caption="Você sabia que o Shareaza é um produto 100% gratuito?"/>
 			<control caption="O Shareaza NÃO CONTÉM nenhum &quot;spyware&quot;, &quot;adware&quot; ou outro programa junto com o Shareaza. NÃO exibe NENHUMA propaganda ou &quot;popups&quot;, jamais.{n}{n}Se você ver uma propaganda ou um &quot;popups&quot; enquanto usando o Shareaza, esteja assegurado de que eles NÃO estão vindo deste programa."/>
 			<control caption="Infelizmente muito outros programas vem com adwares indesejáveis ou spywares, então se você ver algo suspeito você pode desejar verificar o seu PC com um programa de remoção de spywares e propagandas."/>
@@ -4184,8 +4255,7 @@ pasta dos arquivos baixados a sua biblioteca agora?"/>
 			<control caption="http://shareaza.sourceforge.net/"/>
 			<control caption="Fechar"/>
 		</dialog>
-		<dialog name="CPromoteDlg" cookie="StStStStStStStBu" caption="Promova o Shareaza">
-			<control/>
+		<dialog name="CPromoteDlg" cookie="StStStStStStBu" caption="Promova o Shareaza">
 			<control caption="Ajude-nos a promover o Shareaza"/>
 			<control caption="Nós esperamos que você tenha gostado de usar o Shareaza até agora. Nós acreditamos que seja o melhor aplicativo para compartilhar."/>
 			<control caption="Infelizmente, muitos que compartilham arquivos não sabem o que eles estão perdendo!"/>
@@ -4194,8 +4264,7 @@ pasta dos arquivos baixados a sua biblioteca agora?"/>
 			<control caption="http://shareaza.sourceforge.net/"/>
 			<control caption="OK"/>
 		</dialog>
-		<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuStSt" caption="Arquivo Existente">
-			<control/>
+		<dialog name="CExistingFileDlg" cookie="StStStStBuBuBuBuBuStSt" caption="Arquivo Existente">
 			<control/>
 			<control/>
 			<control/>
@@ -4208,8 +4277,7 @@ pasta dos arquivos baixados a sua biblioteca agora?"/>
 			<control caption="Você já baixou e deletou este arquivo antes. O que você gostaria de fazer?"/>
 			<control caption="Aviso!!! Arquivos duplicados detectados. Algum software malicioso pode ter infectado sua biblioteca. Tenha certeza de que você baixou este arquivo ou colocou-o manualmente. De outro modo, feche o Shareaza e scaneie o seu computador com um programa anti-vírus."/>
 		</dialog>
-		<dialog name="CCloseModeDlg" cookie="StStBuBuBuBuBu" caption="Botão Fechar">
-			<control/>
+		<dialog name="CCloseModeDlg" cookie="StBuBuBuBuBu" caption="Botão Fechar">
 			<control caption="Esta é a primeira vez que você clicou no botão de fechar do Shareaza. Por favor escolha qual ação que você gostaria que o Shareaza tomasse quando clicar no botão fechar de agora em diante:"/>
 			<control caption="Minimizar para a área do tray"/>
 			<control caption="Fechar o Shareaza imediatamente"/>
@@ -4217,16 +4285,14 @@ pasta dos arquivos baixados a sua biblioteca agora?"/>
 			<control caption="OK"/>
 			<control caption="Cancelar"/>
 		</dialog>
-		<dialog name="CDonkeyServersDlg" cookie="StStEdmsBuBu" caption="Baixar Arquivo Server.met">
-			<control/>
+		<dialog name="CDonkeyServersDlg" cookie="StEdmsBuBu" caption="Baixar Arquivo Server.met">
 			<control caption="Você pode baixar um Server.met do eDonkey para atualizar a sua lista local de servidores."/>
 			<control/>
 			<control/>
 			<control caption="OK"/>
 			<control caption="Cancelar"/>
 		</dialog>
-		<dialog name="CHelpDlg" cookie="StBuAf" caption="Ajuda do Shareaza">
-			<control/>
+		<dialog name="CHelpDlg" cookie="BuAf" caption="Ajuda do Shareaza">
 			<control caption="Fechar"/>
 			<control/>
 		</dialog>
@@ -4301,8 +4367,7 @@ pasta dos arquivos baixados a sua biblioteca agora?"/>
 			<control caption="até"/>
 			<control caption="AVISO: Este diálogo fornece funções de edição avançada dos downloads para usuário power a qual se usada incorretamente pode e provavelmente causará corrupção."/>
 		</dialog>
-		<dialog name="CTorrentSeedDlg" cookie="StStBuBuBuStms" caption="Abrir o Arquivo Torrent">
-			<control/>
+		<dialog name="CTorrentSeedDlg" cookie="StBuBuBuStms" caption="Abrir o Arquivo Torrent">
 			<control caption="Você abriu um arquivo Torrent do BitTorrent. Você gostaria de baixar o seu conteúdo ou fazer o seed novamente?"/>
 			<control caption="Baixar"/>
 			<control caption="Fazer Seed"/>
@@ -4361,8 +4426,7 @@ pasta dos arquivos baixados a sua biblioteca agora?"/>
 			<control caption="_Pasta dos Arquivos Completados:"/>
 			<control caption="_Tipo de arquivo:"/>
 		</dialog>
-		<dialog name="CMediaVisDlg" cookie="StBuSyCoBuBuBu" caption="Selecionar Visualização">
-			<control/>
+		<dialog name="CMediaVisDlg" cookie="BuSyCoBuBuBu" caption="Selecionar Visualização">
 			<control caption="Selecionar uma visualização de áudio da lista:"/>
 			<control/>
 			<control caption="Exibir no Rodapé|Exibir com Tamanho Completo|Exibir Grande|Exibir Médio|Exibir Pequeno"/>
@@ -4370,16 +4434,14 @@ pasta dos arquivos baixados a sua biblioteca agora?"/>
 			<control caption="OK"/>
 			<control caption="Cancelar"/>
 		</dialog>
-		<dialog name="CUpgradeDlg" cookie="StStStBuBuBu" caption="Alerta sobre Atualização">
-			<control/>
+		<dialog name="CUpgradeDlg" cookie="StStBuBuBu" caption="Alerta sobre Atualização">
 			<control caption="Uma nova versão do Shareaza está disponível agora. Você gostaria de atualizar?"/>
 			<control caption="Se você selecionar Atualizar Agora, o Shareaza adicionará a atualização a sua fila de downloads e automaticamente começa a baixá-lo."/>
 			<control caption="_Atualizar Agora"/>
 			<control caption="Não procurar novas versões"/>
 			<control caption="Não Atualizar"/>
 		</dialog>
-		<dialog name="CDownloadReviewDlg" cookie="StBuSyEd" caption="Análises dos Downloads">
-			<control/>
+		<dialog name="CDownloadReviewDlg" cookie="BuSyEd" caption="Análises dos Downloads">
 			<control caption="OK"/>
 			<control/>
 			<control/>
@@ -4526,6 +4588,8 @@ pasta dos arquivos baixados a sua biblioteca agora?"/>
 		<list name="CTorrentFileList">
 			<column from="Filename" to="Nome do Arquivo"/>
 			<column from="Size" to="Tamanho"/>
+			<column from="Status" to="Status"/>
+			<column from="Priority" to="Garantir Prioridade"/>
 		</list>
 		<list name="CTorrentTrackerList">
 			<column from="Tracker" to="Tracker"/>

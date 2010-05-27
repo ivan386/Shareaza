@@ -48,15 +48,14 @@ END_MESSAGE_MAP()
 // CSettingsSheet construction
 
 CSettingsSheet::CSettingsSheet(CWnd* pParent, UINT nCaptionID) :
-	CSkinDialog( 0, pParent, FALSE )
+	CSkinDialog( 0, pParent )
 	, m_pPage			( NULL )
 	, m_pFirst			( NULL )
 	, m_pTemplate		( NULL )
 	, m_bModified		( FALSE )
-	, m_nLeftMargin		( 0 )
-	, m_nTopMargin		( 0 )
 	, m_nListWidth		( 120 )
 	, m_nListMargin		( 6 )
+	, m_nButtonWidth	( 90 )
 	, m_nButtonHeight	( 26 )
 {
 	if ( nCaptionID )
@@ -135,26 +134,39 @@ CSettingsPage* CSettingsSheet::GetActivePage() const
 
 BOOL CSettingsSheet::SetActivePage(CSettingsPage* pPage)
 {
-	if ( pPage == NULL || pPage == m_pPage ) return FALSE;
-
-	ASSERT_KINDOF(CSettingsPage, pPage);
-
 	if ( m_hWnd == NULL )
 	{
 		m_pFirst = pPage;
 		return TRUE;
 	}
 
-	if ( m_pPage != NULL )
+	if ( m_pPage )
 	{
-		if ( ! m_pPage->OnKillActive() ) return FALSE;
+		if ( ! m_pPage->OnKillActive() )
+			return FALSE;
 		m_pPage->ShowWindow( SW_HIDE );
+		m_pPage = NULL;
 	}
 
-	if ( pPage->m_hWnd == NULL && ! CreatePage( pPage ) ) return FALSE;
-	if ( ! pPage->OnSetActive() ) return FALSE;
+	if ( pPage )
+	{
+		if ( pPage->m_hWnd == NULL && ! CreatePage( pPage ) )
+			return FALSE;
+		if ( ! pPage->OnSetActive() )
+			return FALSE;
+	}
 
 	m_pPage = pPage;
+
+	if ( ! pPage )
+		return FALSE;
+
+	CRect rc( 0, GetBannerHeight(), 0, 0 );
+	rc.left		+= m_nListWidth + m_nListMargin;
+	rc.right	= rc.left + m_szPages.cx;
+	rc.bottom	= rc.top  + m_szPages.cy;
+	m_pPage->MoveWindow( rc );
+
 	m_pPage->ShowWindow( SW_SHOW );
 
 	CString strCaption;
@@ -262,9 +274,6 @@ BOOL CSettingsSheet::OnInitDialog()
 	m_wndApply.Create( _T("Apply"), WS_CHILD|WS_TABSTOP|WS_VISIBLE, rect, this, IDRETRY );
 	m_wndApply.SetFont( &theApp.m_gdiFont );
 
-	Layout();
-	CenterWindow();
-
 	if ( m_pFirst == NULL ) m_pFirst = GetPage( INT_PTR(0) );
 	SetActivePage( m_pFirst );
 
@@ -294,8 +303,10 @@ void CSettingsSheet::BuildTree()
 	}
 }
 
-void CSettingsSheet::Layout()
+BOOL CSettingsSheet::SkinMe(LPCTSTR pszSkin, UINT nIcon, BOOL bLanguage)
 {
+	EnableBanner( FALSE );
+
 	m_szPages.cx = m_szPages.cy = 0;
 
 	for ( int nPage = 0 ; nPage < GetPageCount() ; nPage++ )
@@ -314,34 +325,43 @@ void CSettingsSheet::Layout()
 		}
 	}
 
-	CRect rc( 0, 0, m_szPages.cx, m_szPages.cy );
-	rc.right += m_nListWidth + m_nListMargin;
-	rc.right += m_nLeftMargin;
-	rc.bottom += m_nTopMargin + m_nButtonHeight + 16;
+	CRect rcWindow(
+		0,
+		0,
+		m_szPages.cx + m_nListWidth + m_nListMargin,
+		m_szPages.cy + + m_nButtonHeight + 8 + 8 + 2 );
+	CalcWindowRect( &rcWindow );
+	SetWindowPos( &wndTop, 0, 0, rcWindow.Width(), rcWindow.Height(),
+		SWP_NOMOVE|SWP_NOZORDER );
 
-	CalcWindowRect( &rc );
-	SetWindowPos( &wndTop, 0, 0, rc.Width(), rc.Height(), SWP_NOMOVE|SWP_NOZORDER );
+	CRect rcTree(
+		0,
+		2,
+		m_nListWidth,
+		2 + m_szPages.cy );
+	m_wndTree.MoveWindow( &rcTree );
 
-	rc.SetRect( m_nLeftMargin, m_nTopMargin, 0, 0 );
-	rc.right	= rc.left + m_nListWidth;
-	rc.bottom	= rc.top  + m_szPages.cy;
+	CRect rcButton(
+		8,
+		2 + m_szPages.cy + 8,
+		8 + m_nButtonWidth,
+		2 + m_szPages.cy + 8 + m_nButtonHeight );
+	m_wndOK.MoveWindow( &rcButton );
+	rcButton.OffsetRect( rcButton.Width() + 8, 0 );
+	m_wndCancel.MoveWindow( &rcButton );
+	rcButton.OffsetRect( rcButton.Width() + 8, 0 );
+	m_wndApply.MoveWindow( &rcButton );
 
-	m_wndTree.MoveWindow( &rc );
+	CenterWindow();
 
-	rc.SetRect( 8, rc.bottom + 8, 90, m_nButtonHeight );
-	rc.right += rc.left;
-	rc.bottom += rc.top;
+	SetActivePage( m_pPage ? m_pPage : m_pFirst );
 
-	m_wndOK.MoveWindow( &rc );
-	rc.OffsetRect( rc.Width() + 8, 0 );
-	m_wndCancel.MoveWindow( &rc );
-	rc.OffsetRect( rc.Width() + 8, 0 );
-	m_wndApply.MoveWindow( &rc );
+	return CSkinDialog::SkinMe( pszSkin, nIcon, bLanguage );
 }
 
 BOOL CSettingsSheet::CreatePage(CSettingsPage* pPage)
 {
-	CRect rc( m_nLeftMargin, m_nTopMargin, 0, 0 );
+	CRect rc( 0, GetBannerHeight() + 2, 0, 0 );
 
 	rc.left		+= m_nListWidth + m_nListMargin;
 	rc.right	= rc.left + m_szPages.cx;
@@ -379,7 +399,7 @@ void CSettingsSheet::OnPaint()
 
 void CSettingsSheet::DoPaint(CDC& dc)
 {
-	CRect rc( m_nLeftMargin, m_nTopMargin - 1, 0, 0 );
+	CRect rc( 0, GetBannerHeight() + 1, 0, 0 );
 
 	rc.left		+= m_nListWidth;
 	rc.right	= rc.left + m_nListMargin;

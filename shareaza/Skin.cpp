@@ -57,10 +57,6 @@ CSkin::CSkin()
 	m_pWatermarks.InitHashTable( 31 );
 	m_pLists.InitHashTable( 31 );
 	m_pDialogs.InitHashTable( 127 );
-
-	CreateDefaultColors();
-
-	m_brDialog.CreateSolidBrush( m_crDialog );
 }
 
 CSkin::~CSkin()
@@ -81,9 +77,13 @@ void CSkin::Apply()
 
 	CreateDefault();
 
+	Plugins.RegisterCommands();
+	Plugins.InsertCommands();
+
 	ApplyRecursive( L"Languages\\" );
 	ApplyRecursive( NULL );
 
+	if ( m_brDialog.m_hObject != NULL ) m_brDialog.DeleteObject();
 	m_brDialog.CreateSolidBrush( m_crDialog );
 
 	if ( HBITMAP hPanelMark = GetWatermark( _T("CPanelWnd.Caption") ) )
@@ -108,6 +108,8 @@ void CSkin::Apply()
 
 void CSkin::CreateDefault()
 {
+	CQuickLock oLock( m_pSection );
+
 	CreateDefaultColors();
 
 	CoolInterface.CreateFonts();
@@ -115,9 +117,7 @@ void CSkin::CreateDefault()
 	m_rcNavBarOffset = CRect( 0, 0, 0, 0 );
 
 	// Command Icons
-
-	HICON hIcon = theApp.LoadIcon( IDI_CHECKMARK );
-	if ( hIcon )
+	if ( HICON hIcon = theApp.LoadIcon( IDI_CHECKMARK ) )
 	{
 		if ( Settings.General.LanguageRTL ) hIcon = CreateMirroredIcon( hIcon );
 		CoolInterface.AddIcon( ID_CHECKMARK, hIcon );
@@ -125,7 +125,6 @@ void CSkin::CreateDefault()
 	}
 
 	// Load Definitions
-
 	LoadFromResource( NULL, IDR_XML_DEFINITIONS );
 	LoadFromResource( NULL, IDR_XML_DEFAULT );
 
@@ -139,9 +138,6 @@ void CSkin::CreateDefault()
 	CoolInterface.CopyIcon( ID_HELP_FAQ, ID_HELP_WEB_4 );
 	CoolInterface.CopyIcon( ID_HELP_FAQ, ID_HELP_WEB_5 );
 	CoolInterface.CopyIcon( ID_HELP_FAQ, ID_HELP_WEB_6 );
-
-	Plugins.RegisterCommands();
-	Plugins.InsertCommands();
 }
 
 void CSkin::CreateDefaultColors()
@@ -152,6 +148,9 @@ void CSkin::CreateDefaultColors()
 
 	m_crDialog					= CoolInterface.CalculateColour(
 		GetSysColor( COLOR_BTNFACE ), GetSysColor( COLOR_WINDOW ), 200 );
+
+	if ( m_brDialog.m_hObject != NULL ) m_brDialog.DeleteObject();
+	m_brDialog.CreateSolidBrush( m_crDialog );
 
 	m_crPanelBack				= RGB( 60, 60, 60 );
 	m_crPanelText				= RGB( 255, 255, 255 );
@@ -1016,10 +1015,11 @@ HBITMAP CSkin::GetWatermark(LPCTSTR pszName)
 	CQuickLock oLock( m_pSection );
 
 	CString strPath;
-	if ( m_pWatermarks.Lookup( pszName, strPath ) )
+	if ( m_pWatermarks.Lookup( pszName, strPath ) && strPath.GetLength() )
 	{
 		if ( HBITMAP hBitmap = LoadBitmap( strPath ) )
 			return hBitmap;
+
 		theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Failed to load watermark"), CString( pszName ) + _T(". File: ") + strPath );
 	}
 	return NULL;
@@ -1047,13 +1047,14 @@ BOOL CSkin::LoadWatermarks(CXMLElement* pSub, const CString& strPath)
 			CString strName	= pMark->GetAttributeValue( _T("target") );
 			CString strFile	= pMark->GetAttributeValue( _T("path") );
 
-			if ( strName.GetLength() && strFile.GetLength() )
+			if ( strName.GetLength() )
 			{
-				strFile = strPath + strFile;
+				if ( strFile.GetLength() )
+					strFile = strPath + strFile;
 				m_pWatermarks.SetAt( strName, strFile );
 			}
 			else
-				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Missed [target] and/or [path] attributes in [watermark] element"), pMark->ToString() );
+				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Missed [target] attribute in [watermark] element"), pMark->ToString() );
 		}
 		else
 			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [watermarks] element"), pMark->ToString() );
@@ -1205,9 +1206,8 @@ BOOL CSkin::Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID, CToolTipCtrl*
 
 		// Skip added banner
 		if ( _tcsnicmp( szClass, _T("St"), 3 ) == 0 &&
-			IDC_BANNER == pWnd->GetDlgCtrlID() &&
-			pWnd->GetNextWindow() == NULL )
-			break;
+			IDC_BANNER == pWnd->GetDlgCtrlID() )
+			continue;
 
 		// Skip settings pages
 		if ( pWnd->IsKindOf( RUNTIME_CLASS( CSettingsPage ) ) )
@@ -1270,9 +1270,8 @@ BOOL CSkin::Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID, CToolTipCtrl*
 
 			// Skip added banner
 			if ( _tcsnicmp( szClass, _T("St"), 3 ) == 0 &&
-				IDC_BANNER == pWnd->GetDlgCtrlID() &&
-				pWnd->GetNextWindow() == NULL )
-				break;
+				IDC_BANNER == pWnd->GetDlgCtrlID() )
+				continue;
 
 			if ( _tcsistr( szClass, _T("Static") ) ||
 				 _tcsistr( szClass, _T("Button") ) )
@@ -1355,6 +1354,15 @@ BOOL CSkin::Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID, CToolTipCtrl*
 
 		TCHAR szClass[3] = { 0, 0, 0 };
 		GetClassName( pWnd->GetSafeHwnd(), szClass, 3 );
+
+		// Skip added banner
+		if ( _tcsnicmp( szClass, _T("St"), 3 ) == 0 &&
+			IDC_BANNER == pWnd->GetDlgCtrlID() )
+		{
+			pWnd = pWnd->GetNextWindow();
+			if ( ! pWnd )
+				break;
+		}
 
 		// Needed for some controls like Schema combo box
 		if ( Settings.General.LanguageRTL && (CString)szClass != "Ed" )
@@ -2393,9 +2401,7 @@ HBITMAP CSkin::LoadBitmap(const CString& strName)
 		if ( _stscanf( (LPCTSTR)strName + nPos + 1, _T("%lu"), &nID ) != 1 )
 			return NULL;
 
-		nPos = strName.ReverseFind( '.' );
-		return CImageFile::LoadBitmapFromResource( nID,
-			( nPos < 0 ? RT_BITMAP : ( (LPCTSTR)strName + nPos + 1 ) ), hInstance );
+		return CImageFile::LoadBitmapFromResource( nID, hInstance );
 	}
 }
 

@@ -1,10 +1,5 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
-<fonts>
-	<font name="System.Plain" face="Tahoma" size="11" />
-	<font name="System.Bold" face="Tahoma" size="11" weight="bold" />
-	<font name="Panel.Caption" face="Tahoma" size="11" />
-</fonts>
 	<!-- Manifest -->
 	<manifest name="简体中文" author="STC" updatedBy="John" description="Shareaza 简体中文语言文件" link="http://www.p2pnet.cn/shareaza" email="ShareazaSTC(at)gmail(dot)com" version="2.5.1.0" type="Language" language="chs" prompt="单击这里显示简体中文" dir="ltr"/>
 	<!-- Toolbar Definitions -->
@@ -43,6 +38,7 @@
 			<button id="ID_VIEW_MEDIA"/>
 			<button id="ID_TAB_IRC"/>
 			<button id="ID_VIEW_SECURITY"/>
+			<button id="ID_VIEW_SCHEDULER"/>
 			<button id="ID_VIEW_HOSTS"/>
 			<button id="ID_VIEW_DISCOVERY"/>
 			<button id="ID_VIEW_TRAFFIC"/>
@@ -364,6 +360,7 @@
 			<separator/>
 			<button id="ID_NEIGHBOURS_SETTINGS" text="设置"/>
 		</toolbar>
+		<!-- SECURITY WINDOW -->
 		<toolbar name="CSecurityWnd">
 			<button id="ID_SECURITY_EDIT" text="编辑规则"/>
 			<separator/>
@@ -376,6 +373,21 @@
 			<button id="ID_SECURITY_RESET" text="重置列表"/>
 			<button id="ID_SECURITY_IMPORT" text="导入列表"/>
 			<button id="ID_SECURITY_EXPORT" text="导出列表"/>
+		</toolbar>
+		<!-- SCHEDULER WINDOW -->
+		<toolbar name="CSchedulerWnd">
+			<button id="ID_SCHEDULER_EDIT" text="Edit Task"/>
+			<separator/>
+			<button id="ID_SCHEDULER_ACTIVATE" text="Activate"/>
+			<button id="ID_SCHEDULER_DEACTIVATE" text="Deactivate"/>
+			<separator/>
+			<button id="ID_SCHEDULER_ADD" text="Add Task"/>
+			<button id="ID_SCHEDULER_REMOVE" text="Remove Task"/>
+			<separator/>
+			<button id="ID_SCHEDULER_REMOVE_ALL" text="Remove All"/>
+			<rightAlign/>
+			<button id="ID_SCHEDULER_IMPORT" text="导入列表"/>
+			<button id="ID_SCHEDULER_EXPORT" text="导出列表"/>
 		</toolbar>
 		<!-- HIT MONITOR WINDOW -->
 		<toolbar name="CHitMonitorWnd">
@@ -505,6 +517,7 @@
 					<item id="ID_VIEW_SECURITY" text="安全(_C)"/>
 					<item id="ID_VIEW_HOSTS" text="主机缓存(_O)"/>
 					<item id="ID_VIEW_DISCOVERY" text="发现服务(_V)"/>
+					<item id="ID_VIEW_SCHEDULER" text="Sch_eduler"/>
 				</menu>
 				<separator/>
 				<item id="ID_VIEW_BASIC" text="普通模式(_N)"/>
@@ -563,6 +576,7 @@
 				<separator/>
 				<item id="ID_NETWORK_CONNECT_TO" text="连接到(_T)..." shortcut="Ctrl+T"/>
 				<item id="ID_NETWORK_BROWSE_TO" text="浏览主机(_B)..."/>
+				<item id="ID_NETWORK_CHAT_TO" text="Chat to _User..."/>
 				<separator/>
 				<item id="ID_NETWORK_AUTO_CLOSE" text="传送后退出(_A)"/>
 				<item id="ID_NETWORK_EXIT" text="退出(_X)"/>
@@ -578,6 +592,7 @@
 				<separator/>
 				<item id="ID_VIEW_SECURITY" text="安全(_C)"/>
 				<item id="ID_VIEW_HOSTS" text="主机缓存(_O)"/>
+				<item id="ID_VIEW_SCHEDULER" text="Sch_eduler"/>
 				<separator/>
 				<menu text="高级(_A)">
 					<item id="ID_VIEW_SYSTEM" text="系统(_Y)" shortcut="F11"/>
@@ -592,6 +607,7 @@
 					<item id="ID_VIEW_HOSTS" text="主机缓存(_O)" shortcut="F8"/>
 					<item id="ID_VIEW_DISCOVERY" text="发现服务(_V)" shortcut="F9"/>
 					<item id="ID_VIEW_TRAFFIC" text="图表(_G)" shortcut="F10"/>
+					<item id="ID_VIEW_SCHEDULER" text="Sch_eduler" shortcut="Ctrl+Shift+F11"/>
 					<separator/>
 					<item id="ID_VIEW_PACKETS" text="数据包转储(_P)" shortcut="Ctrl+F1"/>
 					<item id="ID_VIEW_SEARCH_MONITOR" text="搜索监视器(_A)" shortcut="Ctrl+F2"/>
@@ -661,6 +677,7 @@
 				<separator/>
 				<item id="ID_NETWORK_CONNECT_TO" text="连接到(_T)..." shortcut="Ctrl+T"/>
 				<item id="ID_NETWORK_BROWSE_TO" text="浏览主机(_B)..."/>
+				<item id="ID_NETWORK_CHAT_TO" text="Chat to _User..."/>
 				<separator/>
 				<menu text="选择网络(_N)">
 					<item id="ID_NETWORK_G2" text="连接到 Gnutella2(_G)"/>
@@ -684,6 +701,7 @@
 				<item id="ID_VIEW_HOSTS" text="主机缓存(_O)" shortcut="F8"/>
 				<item id="ID_VIEW_DISCOVERY" text="发现服务(_V)" shortcut="F9"/>
 				<item id="ID_VIEW_TRAFFIC" text="图表(_G)" shortcut="F10"/>
+				<item id="ID_VIEW_SCHEDULER" text="Sch_eduler" shortcut="Ctrl+Shift+F11"/>
 				<separator/>
 				<item id="ID_VIEW_PACKETS" text="数据包转储(_P)" shortcut="Ctrl+F1"/>
 				<item id="ID_VIEW_SEARCH_MONITOR" text="搜索监视器(_A)" shortcut="Ctrl+F2"/>
@@ -760,6 +778,7 @@
 				<item id="ID_VIEW_UPLOADS" text="上传(_U)"/>
 				<item id="ID_VIEW_SECURITY" text="安全(_C)"/>
 				<item id="ID_VIEW_HOSTS" text="主机缓存(_O)"/>
+				<item id="ID_VIEW_SCHEDULER" text="Sch_eduler"/>
 			</menu>
 		</menu>
 		<menu name="CMainWnd.View.Tabbed">
@@ -775,6 +794,7 @@
 			<item id="ID_VIEW_HOSTS" text="主机缓存(_O)"/>
 			<item id="ID_VIEW_DISCOVERY" text="发现服务(_V)"/>
 			<item id="ID_VIEW_TRAFFIC" text="图表(_G)"/>
+			<item id="ID_VIEW_SCHEDULER" text="Sch_eduler"/>
 			<separator/>
 			<item id="ID_VIEW_PACKETS" text="数据包转储(_P)"/>
 			<item id="ID_VIEW_SEARCH_MONITOR" text="搜索监视器(_A)"/>
@@ -794,6 +814,7 @@
 			<item id="ID_VIEW_HOSTS" text="主机缓存(_O)"/>
 			<item id="ID_VIEW_DISCOVERY" text="发现服务(_V)"/>
 			<item id="ID_VIEW_TRAFFIC" text="图表(_G)"/>
+			<item id="ID_VIEW_SCHEDULER" text="Sch_eduler"/>
 			<separator/>
 			<item id="ID_VIEW_PACKETS" text="数据包转储(_P)"/>
 			<item id="ID_VIEW_SEARCH_MONITOR" text="搜索监视器(_A)"/>
@@ -846,6 +867,7 @@
 				<item id="ID_VIEW_UPLOADS" text="上传(_U)"/>
 				<item id="ID_VIEW_SECURITY" text="安全(_C)"/>
 				<item id="ID_VIEW_HOSTS" text="主机缓存(_O)"/>
+				<item id="ID_VIEW_SCHEDULER" text="Sch_eduler"/>
 			</menu>
 		</menu>
 		<menu name="CHomeWnd.Tabbed">
@@ -861,6 +883,7 @@
 			<item id="ID_VIEW_HOSTS" text="主机缓存(_O)"/>
 			<item id="ID_VIEW_DISCOVERY" text="发现服务(_V)"/>
 			<item id="ID_VIEW_TRAFFIC" text="图表(_G)"/>
+			<item id="ID_VIEW_SCHEDULER" text="Sch_eduler"/>
 			<separator/>
 			<item id="ID_VIEW_PACKETS" text="数据包转储(_P)"/>
 			<item id="ID_VIEW_SEARCH_MONITOR" text="搜索监视器(_A)"/>
@@ -1530,6 +1553,21 @@
 			<separator/>
 			<item id="ID_SECURITY_EDIT" text="属性(_P)"/>
 		</menu>
+		<!-- SCHEDULER WINDOW -->
+		<menu name="CSchedulerWnd">
+			<item id="ID_SCHEDULER_ADD" text="_Add Scheduled Task"/>
+			<separator/>
+			<item id="ID_SCHEDULER_ACTIVATE" text="A_ctivate"/>
+			<item id="ID_SCHEDULER_DEACTIVATE" text="_Deactivate"/>
+			<separator/>
+			<item id="ID_SCHEDULER_REMOVE" text="移除(_R)"/>
+			<item id="ID_SCHEDULER_EDIT" text="_Edit"/>
+			<separator/>
+			<item id="ID_SCHEDULER_REMOVE_ALL" text="Remove Al_l"/>
+			<separator/>
+			<item id="ID_SCHEDULER_IMPORT" text="导入(_I)..."/>
+			<item id="ID_SCHEDULER_EXPORT" text="导出(_E)..."/>
+		</menu>
 		<!-- DISCOVERY SERVICES WINDOW -->
 		<menu name="CDiscoveryWnd">
 			<item id="ID_DISCOVERY_QUERY" text="查询(_Q)"/>
@@ -1586,6 +1624,7 @@
 			<menu text="Actions">
 				<item id="ID_IRC_TIME" text="时间(_T)"/>
 				<item id="ID_IRC_VERSION" text="版本(_V)"/>
+				<item id="ID_IRC_BROWSE" text="_Browse"/>
 			</menu>
 			<separator/>
 			<menu text="Control">
@@ -1919,10 +1958,6 @@
 			<link target="raza:page:CRemoteSettingsPage" format="b">远程:</link>
 			<gap size="4"/>
 			<text>设置通过网页浏览器远程控制 Shareaza 的功能。</text>
-			<newline gap="10"/>
-			<link target="raza:page:CSchedulerSettingsPage" format="b">任务计划:</link>
-			<gap size="4"/>
-			<text>基于定期计划的下载连接限制。</text>
 		</document>
 		<!-- Browse User Profile -->
 		<document name="CBrowseHostProfile.1">
@@ -2459,6 +2494,7 @@
 		<tip id="ID_NEIGHBOURS_VIEW_OUTGOING" message="打开此邻居的传出通讯数据包转储监视器。"/>
 		<tip id="ID_NETWORK_AUTO_CLOSE" message="传送完毕后自动关闭 Shareaza。"/>
 		<tip id="ID_NETWORK_BROWSE_TO" message="浏览到用户，显示其个人资料和共享文件..."/>
+		<tip id="ID_NETWORK_CHAT_TO" message="Open a chat session with a user..."/>
 		<tip id="ID_NETWORK_CONNECT" message="连接到网络。"/>
 		<tip id="ID_NETWORK_CONNECT_TO" message="手动连接到主机..."/>
 		<tip id="ID_NETWORK_DISCONNECT" message="从网络断开。"/>
@@ -2603,6 +2639,24 @@
 		<string id="WINDOW_SEARCHPAD" value="搜索"/>
 		<string id="WINDOW_HELP" value="Shareaza 帮助"/>
 		<string id="WINDOW_IRC" value="Shareaza 聊天"/>
+		<string id="WINDOW_SCHEDULER" value="Scheduler"/>
+		<string id="154" value="Are you sure you want to remove all scheduled tasks? This cannot be undone."/>
+		<string id="156" value="Scheduled time has already passed.\n\nPlease select a time in the future."/>
+		<string id="157" value="Bandwidth: Full Speed"/>
+		<string id="158" value="Bandwidth: Reduced Speed"/>
+		<string id="159" value="Bandwidth: Stop"/>
+		<string id="160" value="System: Exit Shareaza"/>
+		<string id="161" value="System: Disconnect Dial-up Connection"/>
+		<string id="162" value="System: Turn Off the Computer"/>
+		<string id="163" value="Please select a task."/>
+		<string id="164" value="Specific day(s) of week"/>
+		<string id="165" value="活动"/>
+		<string id="166" value="停止"/>
+		<string id="167" value="Done"/>
+		<string id="168" value="Waiting..."/>
+		<string id="169" value="No Tasks Currently Scheduled"/>
+		<string id="172" value="Done Today"/>
+		<string id="173" value="You should select at least one day of week."/>
 		<string id="7000" value="您确定要删除此过滤吗？"/>
 		<string id="7001" value="构架(&amp;S)"/>
 		<string id="7002" value="多重数值"/>
@@ -3311,6 +3365,10 @@
 		<string id="20242" value="再试一次"/>
 		<string id="20243" value="继续"/>
 		<string id="20244" value="&amp;记住我的选择"/>
+		<string id="20245" value="New Folder"/>
+		<string id="32825" value="Open my folder of completed Downloads"/>
+		<string id="32773" value="Check for new version"/>
+		<string id="61215" value="Activate this window"/>
 	</strings>
 	<!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 	<!-- Don't edit dialogs manualy! Use DialogScan feature instead -->
@@ -3322,7 +3380,6 @@
 			<control caption="确定"/>
 			<control caption="取消"/>
 			<control caption="应用"/>
-			<control/>
 		</dialog>
 		<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="常规">
 			<control caption="用户界面(_U):"/>
@@ -3549,27 +3606,42 @@
 			<control caption="选择一个密码:"/>
 			<control/>
 		</dialog>
-		<dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEdBuSt" caption="计划">
-			<control caption="选项(_O):"/>
-			<control caption="启用计划(_E)"/>
+		<dialog name="CScheduleTaskDlg" cookie="BuBuBuBuSySyBuBuBuBuBuBuBuBuCoEdmsEdmsEdmsBuBuEdBuStStStStStStStBuBu" caption="Schedule Item">
+			<control caption="确定"/>
+			<control caption="取消"/>
+			<control caption="Only once"/>
+			<control caption="On specific day(s) of week"/>
 			<control/>
 			<control/>
-			<control caption="仅在受到限制时连接到 G2(_C)"/>
-			<control caption="关键词:"/>
-			<control caption="周日"/>
-			<control caption="周一"/>
-			<control caption="周二"/>
-			<control caption="周三"/>
-			<control caption="周四"/>
-			<control caption="周五"/>
-			<control caption="周六"/>
-			<control caption="不要连接"/>
-			<control caption="限制连接"/>
-			<control caption="全速连接"/>
-			<control caption="% 带宽受到限制(_B)"/>
+			<control caption="星期天"/>
+			<control caption="星期一"/>
+			<control caption="星期二"/>
+			<control caption="星期三"/>
+			<control caption="星期四"/>
+			<control caption=" Friday"/>
+			<control caption="星期六"/>
+			<control caption="所有"/>
 			<control/>
-			<control caption="帮助"/>
-			<control caption="计划功能可以用来让您制定 Shareaza 连接和下载文件的时间。{n}{n}{n}注意: 如果您在计划功能激活的状态下打开 Shareaza，您会发现它正在改变设置 - 这是正常的！"/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control caption=" _Toggle bandwidth independently"/>
+			<control caption=" _Limit network to Gnutella2"/>
+			<control/>
+			<control caption="Make this event active"/>
+			<control caption="Please select a date:"/>
+			<control caption="Please select a time:"/>
+			<control caption="Select the event type:"/>
+			<control caption="Description: (optional)"/>
+			<control caption="% of _bandwidth under limit"/>
+			<control caption="% of _download under limit"/>
+			<control caption="% of _upload under limit"/>
+			<control caption="Days Of Week"/>
+			<control caption="Run this event"/>
+			<control/>
 		</dialog>
 		<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="网络">
 			<control caption="Shareaza 是能够同时连接多个 P2P 网络的多用途的文件共享软件。在此您可以选择想要连接的网络，并且调整针对每个网络的设置。"/>
@@ -3821,8 +3893,7 @@
 			<control caption="连接到原始 Gnutella"/>
 			<control caption="尽管原始 Gnutella 网络比 Gnutella2 特性少，但依旧保留了可观的资源。"/>
 		</dialog>
-		<dialog name="CDonkeyImportDlg" cookie="StStBuBuEdBu" caption="导入 edonkey 下载">
-			<control/>
+		<dialog name="CDonkeyImportDlg" cookie="StBuBuEdBu" caption="导入 edonkey 下载">
 			<control caption="Shareaza 发现您的电脑上安装了 edonkey 程序。您想要导入未完成的下载到 Shareaza 吗？"/>
 			<control caption="是"/>
 			<control caption="否|取消"/>
@@ -3939,8 +4010,7 @@
 			<control caption="连接"/>
 			<control caption="取消"/>
 		</dialog>
-		<dialog name="CDownloadDlg" cookie="StStStEdBuBuStStBu" caption="下载文件或 Torrent">
-			<control/>
+		<dialog name="CDownloadDlg" cookie="StStEdBuBuStStBu" caption="下载文件或 Torrent">
 			<control/>
 			<control caption="使用 Shareaza 下载任何文件都很容易。只需要输入或粘贴链接地址或者 URI 描述到以下的方框中，然后按下回车。"/>
 			<control/>
@@ -3994,14 +4064,13 @@
 			<control caption="取消"/>
 			<control caption="保存当前过滤为"/>
 		</dialog>
-		<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBuSt" caption="探索服务">
+		<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBu" caption="探索服务">
 			<control caption="服务地址(_A):"/>
 			<control/>
 			<control caption="探索服务类型:"/>
 			<control caption="Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met 链接|阻挡"/>
 			<control caption="确定"/>
 			<control caption="取消"/>
-			<control/>
 		</dialog>
 		<dialog name="CDownloadMonitorDlg" cookie="StStStStStStStStStStStStStBuBuBuBuBu" caption="下载 : Shareaza">
 			<control caption="Shareaza 正在下载:"/>
@@ -4169,8 +4238,7 @@
 			<control caption="确定"/>
 			<control caption="取消"/>
 		</dialog>
-		<dialog name="CShareManagerDlg" cookie="StStSyBuBuBuBu" caption="共享文件夹管理器">
-			<control/>
+		<dialog name="CShareManagerDlg" cookie="StSyBuBuBuBu" caption="共享文件夹管理器">
 			<control caption="此列表显示了您收藏中的所有文件夹。您可以使用右边的按钮进行添加和移除。新添加的文件夹最初是共享给其他用户的，但是您可以在 Shareaza 收藏中取消共享。"/>
 			<control/>
 			<control caption="添加(_A)..."/>
@@ -4178,8 +4246,7 @@
 			<control caption="确定"/>
 			<control caption="取消"/>
 		</dialog>
-		<dialog name="CURLCopyDlg" cookie="StStStStStBuBu" caption="复制 URI">
-			<control/>
+		<dialog name="CURLCopyDlg" cookie="StStStStBuBu" caption="复制 URI">
 			<control caption="您可以用多种不同的格式为选定的项目复制 URI。请通过点击下列某一 URI 选择您希望使用的格式:"/>
 			<control/>
 			<control/>
@@ -4187,8 +4254,7 @@
 			<control caption="将自己作为固定的资源包含在链接中(_M)"/>
 			<control caption="取消"/>
 		</dialog>
-		<dialog name="CURLExportDlg" cookie="StStEdStCoStCoBuBumsBu" caption="导出 URI">
-			<control/>
+		<dialog name="CURLExportDlg" cookie="StEdStCoStCoBuBumsBu" caption="导出 URI">
 			<control caption="您已经选择 %lu 个文件作为 Shareaza 支持的 URI 导出。请为这些 URI 选择格式，并单击保存:"/>
 			<control/>
 			<control caption="插入标记:"/>
@@ -4200,8 +4266,7 @@
 			<control/>
 			<control caption="取消"/>
 		</dialog>
-		<dialog name="CURLActionDlg" cookie="StStStStStEdStEdStBuBuBuBuBuSt" caption="Shareaza URI 管理器">
-			<control/>
+		<dialog name="CURLActionDlg" cookie="StStStStEdStEdStBuBuBuBuBuSt" caption="Shareaza URI 管理器">
 			<control caption="您点击的 Shareaza URI 链接到以下的网络:"/>
 			<control caption="您点击的 Shareaza 链接将会连接您到以下主机或服务器:"/>
 			<control caption="您点击的 Shareaza URI 允许您浏览以下可用主机的共享文件:"/>
@@ -4233,8 +4298,7 @@
 			<control caption="(复制下载区块到新的预览文件)"/>
 			<control caption="取消"/>
 		</dialog>
-		<dialog name="CWarningsDlg" cookie="StStStStStStStBu" caption="Shareaza 以用户至上">
-			<control/>
+		<dialog name="CWarningsDlg" cookie="StStStStStStBu" caption="Shareaza 以用户至上">
 			<control caption="您知道 Shareaza 是 100% 免费的软件吗？"/>
 			<control caption="Shareaza 不包含任何 &quot;间谍软件&quot;，&quot;广告软件&quot;，或者其他任何绑定的软件。它也不会显示任何广告或者 &quot;弹出窗口&quot;，{n}{n}如果使用 Shareaza 时，您看到任何&quot;弹出窗口&quot;，请确定它们不是来自此程序。"/>
 			<control caption="不幸的是多数同类软件都隐藏着广告软件或间谍软件，如果您对看到的现象产生怀疑，您可以使用特定的软件检查并且移除广告和间谍软件。"/>
@@ -4243,8 +4307,7 @@
 			<control caption="http://shareaza.sourceforge.net/"/>
 			<control caption="关闭"/>
 		</dialog>
-		<dialog name="CPromoteDlg" cookie="StStStStStStStBu" caption="宣传">
-			<control/>
+		<dialog name="CPromoteDlg" cookie="StStStStStStBu" caption="宣传">
 			<control caption="帮助我们传播"/>
 			<control caption="希望您乐于意使用 Shareaza 。我们坚信它是文件共享软件中的佼佼者。"/>
 			<control caption="遗憾的是，多数文件共享用户还不知道他们错过了什么！"/>
@@ -4253,8 +4316,7 @@
 			<control caption="http://shareaza.sourceforge.net/"/>
 			<control caption="确定"/>
 		</dialog>
-		<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuStSt" caption="文件已存在">
-			<control/>
+		<dialog name="CExistingFileDlg" cookie="StStStStBuBuBuBuBuStSt" caption="文件已存在">
 			<control/>
 			<control/>
 			<control/>
@@ -4267,8 +4329,7 @@
 			<control caption="您曾经下载并且删除此文件。您打算怎么做？"/>
 			<control caption="警告！！！检测到重复文件。一些恶意软件可能感染您的收藏。请确认您是手动下载或存放此文件。否则，请关闭 Shareaza 并用杀毒软件扫描您的电脑。"/>
 		</dialog>
-		<dialog name="CCloseModeDlg" cookie="StStBuBuBuBuBu" caption="关闭按钮">
-			<control/>
+		<dialog name="CCloseModeDlg" cookie="StBuBuBuBuBu" caption="关闭按钮">
 			<control caption="这是您第一次点击 Shareaza 的关闭按钮。请选择以后点击关闭按钮时要完成的操作:"/>
 			<control caption="最小化到系统托盘"/>
 			<control caption="立即关闭 Shareaza"/>
@@ -4276,16 +4337,14 @@
 			<control caption="确定"/>
 			<control caption="取消"/>
 		</dialog>
-		<dialog name="CDonkeyServersDlg" cookie="StStEdmsBuBu" caption="下载 Server.met 文件">
-			<control/>
+		<dialog name="CDonkeyServersDlg" cookie="StEdmsBuBu" caption="下载 Server.met 文件">
 			<control caption="您能从网络上下载 edonkey server.met 文件来刷新您的本地服务器列表。"/>
 			<control/>
 			<control/>
 			<control caption="确定"/>
 			<control caption="取消"/>
 		</dialog>
-		<dialog name="CHelpDlg" cookie="StBuAf" caption="Shareaza 帮助">
-			<control/>
+		<dialog name="CHelpDlg" cookie="BuAf" caption="Shareaza 帮助">
 			<control caption="关闭"/>
 			<control/>
 		</dialog>
@@ -4360,8 +4419,7 @@
 			<control caption="到"/>
 			<control caption="警告: 此对话框为高级用户提供下载编辑功能，如果使用不当可能会使软件停止工作。"/>
 		</dialog>
-		<dialog name="CTorrentSeedDlg" cookie="StStBuBuBuStms" caption="打开 Torrent 文件">
-			<control/>
+		<dialog name="CTorrentSeedDlg" cookie="StBuBuBuStms" caption="打开 Torrent 文件">
 			<control caption="您已经打开了一个 BitTorrent Torrent 文件。您希望下载它的内容，还是重新做种？"/>
 			<control caption="下载"/>
 			<control caption="做种"/>
@@ -4420,8 +4478,7 @@
 			<control caption="已完成文件文件夹(_F):"/>
 			<control caption="文件类型(_T):"/>
 		</dialog>
-		<dialog name="CMediaVisDlg" cookie="StBuSyCoBuBuBu" caption="选择可视化效果">
-			<control/>
+		<dialog name="CMediaVisDlg" cookie="BuSyCoBuBuBu" caption="选择可视化效果">
 			<control caption="从此列表中选择一个音频可视化效果:"/>
 			<control/>
 			<control caption="页脚显示|完全显示|放大显示|中等显示|缩小显示"/>
@@ -4429,16 +4486,14 @@
 			<control caption="确定"/>
 			<control caption="取消"/>
 		</dialog>
-		<dialog name="CUpgradeDlg" cookie="StStStBuBuBu" caption="升级通告">
-			<control/>
+		<dialog name="CUpgradeDlg" cookie="StStBuBuBu" caption="升级通告">
 			<control caption="现在已存在一个新的 Shareaza 版本。您要升级吗？"/>
 			<control caption="如果您选择立即升级，Shareaza 将把此更新添加到您的下载队列中并自动下载。"/>
 			<control caption="立即升级(_U)"/>
 			<control caption="不要检测新版本"/>
 			<control caption="不要升级"/>
 		</dialog>
-		<dialog name="CDownloadReviewDlg" cookie="StBuSyEd" caption="下载评价">
-			<control/>
+		<dialog name="CDownloadReviewDlg" cookie="BuSyEd" caption="下载评价">
 			<control caption="确定"/>
 			<control/>
 			<control/>

@@ -3396,7 +3396,6 @@
 			<control caption="OK"/>
 			<control caption="Отмена"/>
 			<control caption="Применить"/>
-			<control/>
 		</dialog>
 		<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="Главное">
 			<control caption="_Основное:"/>
@@ -3910,8 +3909,7 @@
 			<control caption="Соединяться с оригинальной Gnutella"/>
 			<control caption="Хотя оригинальная Gnutella менее богата возможностями чем Gnutella2, всё равно это ценный ресурс."/>
 		</dialog>
-		<dialog name="CDonkeyImportDlg" cookie="StStBuBuEdBu" caption="Импорт eDonkey Загрузок">
-			<control/>
+		<dialog name="CDonkeyImportDlg" cookie="StBuBuEdBu" caption="Импорт eDonkey Загрузок">
 			<control caption="Shareaza обнаружила, что у Вас установлена другая eDonkey программа. Хотели бы Вы импортировать любые незаконченные загрузки в Shareaza?"/>
 			<control caption="Да"/>
 			<control caption="Нет"/>
@@ -4028,8 +4026,7 @@
 			<control caption="Соединиться"/>
 			<control caption="Отмена"/>
 		</dialog>
-		<dialog name="CDownloadDlg" cookie="StStStEdBuBuStStBu" caption="Загрузить файл или торрент">
-			<control/>
+		<dialog name="CDownloadDlg" cookie="StStEdBuBuStStBu" caption="Загрузить файл или торрент">
 			<control/>
 			<control caption="С Shareaza загрузить любой файл легко! Просто введите или вставьте ссылку HTTP или P2P ссылку в окно ниже и нажмите «Загрузить»."/>
 			<control/>
@@ -4083,14 +4080,13 @@
 			<control caption="Отмена"/>
 			<control caption="Сохранить текущий фильтр как"/>
 		</dialog>
-		<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBuSt" caption="Ресурс соединений">
+		<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBu" caption="Ресурс соединений">
 			<control caption="Адрес службы:"/>
 			<control/>
 			<control caption="Тип ресурса соединений:"/>
 			<control caption="Gnutella Bootstrap|GWebCache|Server.met ссылка|Блокировано"/>
 			<control caption="OK"/>
 			<control caption="Отмена"/>
-			<control/>
 		</dialog>
 		<dialog name="CDownloadMonitorDlg" cookie="StStStStStStStStStStStStStBuBuBuBuBu" caption="Загрузка : Shareaza">
 			<control caption="Shareaza загружает:"/>
@@ -4258,8 +4254,7 @@
 			<control caption="OK"/>
 			<control caption="Отмена"/>
 		</dialog>
-		<dialog name="CShareManagerDlg" cookie="StStSyBuBuBuBu" caption="Общий доступ">
-			<control/>
+		<dialog name="CShareManagerDlg" cookie="StSyBuBuBuBu" caption="Общий доступ">
 			<control caption="Это список папок Вашего хранилища.  Можно добавлять или удалять папки кнопками слева.  Когда Вы добавляете новую папку, она становиться доступной для всех, но Вы можете изменить это позже из самого хранилища."/>
 			<control/>
 			<control caption="_Внести..."/>
@@ -4267,8 +4262,7 @@
 			<control caption="OK"/>
 			<control caption="Отмена"/>
 		</dialog>
-		<dialog name="CURLCopyDlg" cookie="StStStStStBuBu" caption="Копировать ссылку">
-			<control/>
+		<dialog name="CURLCopyDlg" cookie="StStStStBuBu" caption="Копировать ссылку">
 			<control caption="Вы можете скопировать ссылку на объект в различных форматах.  Выберите нужный формат щелкнув на одну из ссылок ниже:"/>
 			<control/>
 			<control/>
@@ -4276,8 +4270,7 @@
 			<control caption="Включить _меня как фиксиров. источник"/>
 			<control caption="Отмена"/>
 		</dialog>
-		<dialog name="CURLExportDlg" cookie="StStEdStCoStCoBuBumsBu" caption="Экспорт ссылок">
-			<control/>
+		<dialog name="CURLExportDlg" cookie="StEdStCoStCoBuBumsBu" caption="Экспорт ссылок">
 			<control caption="Вы выбрали %lu файл(а/ов) для экспорта как Shareaza-поддерживаемые ссылки.  Выберите формат ссылок и нажмите «Сохранить»:"/>
 			<control/>
 			<control caption="Вставить:"/>
@@ -4289,8 +4282,7 @@
 			<control/>
 			<control caption="Отмена"/>
 		</dialog>
-		<dialog name="CURLActionDlg" cookie="StStStStStEdStEdStBuBuBuBuBuSt" caption="Менеджер ссылок Shareaza">
-			<control/>
+		<dialog name="CURLActionDlg" cookie="StStStStEdStEdStBuBuBuBuBuSt" caption="Менеджер ссылок Shareaza">
 			<control caption="Вы щёлкнули по Shareaza-поддерживаемой ссылке, которая ведет к содержимому файла в сети:"/>
 			<control caption="Вы щёлкнули по Shareaza-поддерживаемой ссылке, которая свяжет Вас со следующим хостом или сервером:"/>
 			<control caption="Вы щёлкнули по Shareaza-поддерживаемой ссылке, которая позволит Вам просмотреть разделяемые файлы на следующем хосте:"/>
@@ -4322,8 +4314,7 @@
 			<control caption="(копируются загруженные части в новый файл)"/>
 			<control caption="Отмена"/>
 		</dialog>
-		<dialog name="CWarningsDlg" cookie="StStStStStStStBu" caption="Shareaza уважает своих пользователей">
-			<control/>
+		<dialog name="CWarningsDlg" cookie="StStStStStStBu" caption="Shareaza уважает своих пользователей">
 			<control caption="Знаете ли Вы, что Shareaza на 100% бесплатный продукт?"/>
 			<control caption="Shareaza не содержит никаких «шпионов», «навесок» или других рекламных программ. Она никогда не показывает никаких баннеров или «всплывающих окон».{n}Если Вы видели рекламу или «всплывающие окна» используя Shareaza, будьте уверенны  - они к вам попали НЕ с Shareaza."/>
 			<control caption="К сожалению много других программ идет со «шпионами» и «навесками», если Вы заметили что-то подобное - проверьте Вашу систему с помощью специальных программ для удаления шпионов и навесков."/>
@@ -4332,8 +4323,7 @@
 			<control caption="http://shareaza.sourceforge.net/"/>
 			<control caption="Закрыть"/>
 		</dialog>
-		<dialog name="CPromoteDlg" cookie="StStStStStStStBu" caption="Распространение">
-			<control/>
+		<dialog name="CPromoteDlg" cookie="StStStStStStBu" caption="Распространение">
 			<control caption="Помогите нам стать популярнее"/>
 			<control caption="Мы надеемся что вам нравиться пользоваться Shareaza.  Мы верим, что это лучшая P2P программа среди подобных."/>
 			<control caption="К сожалению многие пользователи P2P не знают что они пропускают!"/>
@@ -4342,8 +4332,7 @@
 			<control caption="http://shareaza.sourceforge.net/"/>
 			<control caption="OK"/>
 		</dialog>
-		<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuStSt" caption="Загрузка имеющегося файла">
-			<control/>
+		<dialog name="CExistingFileDlg" cookie="StStStStBuBuBuBuBuStSt" caption="Загрузка имеющегося файла">
 			<control/>
 			<control/>
 			<control/>
@@ -4356,8 +4345,7 @@
 			<control caption="Вы уже загружали этот файл и удалили его.  Что бы Вы хотели сделать?"/>
 			<control caption="Внимание!!! Найденны дубликаты. Злоумышленные программы могут заразить Ваше хранилище. Проверьте, что это Вы загрузили или поместили этот файл. Иначе, закройте Shareaza и просканируйте Ваш компьютер."/>
 		</dialog>
-		<dialog name="CCloseModeDlg" cookie="StStBuBuBuBuBu" caption="Кнопка «Закрыть»">
-			<control/>
+		<dialog name="CCloseModeDlg" cookie="StBuBuBuBuBu" caption="Кнопка «Закрыть»">
 			<control caption="Это - первый раз, когда Вы щелкнули кнопку «Закрыть» Shareaza.  Выберите, какое действие Shareaza должна выполнять когда Вы её щелкаете:"/>
 			<control caption="Сворачивать в трей"/>
 			<control caption="Закрывать Shareaza сразу"/>
@@ -4365,16 +4353,14 @@
 			<control caption="OK"/>
 			<control caption="Отмена"/>
 		</dialog>
-		<dialog name="CDonkeyServersDlg" cookie="StStEdmsBuBu" caption="Загрузить Server.met файл">
-			<control/>
+		<dialog name="CDonkeyServersDlg" cookie="StEdmsBuBu" caption="Загрузить Server.met файл">
 			<control caption="Вы можете загрузить eDonkey server.met файл из веба, чтобы обновить Ваш список серверов."/>
 			<control/>
 			<control/>
 			<control caption="OK"/>
 			<control caption="Отмена"/>
 		</dialog>
-		<dialog name="CHelpDlg" cookie="StBuAf" caption="Shareaza помощь">
-			<control/>
+		<dialog name="CHelpDlg" cookie="BuAf" caption="Shareaza помощь">
 			<control caption="Закрыть"/>
 			<control/>
 		</dialog>
@@ -4449,8 +4435,7 @@
 			<control caption="по"/>
 			<control caption="ВНИМАНИЕ: Этот диалог для ОПЫТНЫХ пользователей и дает опции, которые при неправильном использовании могут разрушить загрузку."/>
 		</dialog>
-		<dialog name="CTorrentSeedDlg" cookie="StStBuBuBuStms" caption="Открыть торрент">
-			<control/>
+		<dialog name="CTorrentSeedDlg" cookie="StBuBuBuStms" caption="Открыть торрент">
 			<control caption="Вы открыли торрент. Хотите загржать его или раздавать?"/>
 			<control caption="Загрузить"/>
 			<control caption="Раздать"/>
@@ -4509,8 +4494,7 @@
 			<control caption="_Папка завершенных файлов:"/>
 			<control caption="_тип файла:"/>
 		</dialog>
-		<dialog name="CMediaVisDlg" cookie="StBuSyCoBuBuBu" caption="Выбор визуализации">
-			<control/>
+		<dialog name="CMediaVisDlg" cookie="BuSyCoBuBuBu" caption="Выбор визуализации">
 			<control caption="Выберите аудио визуализацию из списка:"/>
 			<control/>
 			<control caption="Внизу изображения|Полный экран|Большой экран|Средний экран|Маленький экран"/>
@@ -4518,16 +4502,14 @@
 			<control caption="OK"/>
 			<control caption="Отмена"/>
 		</dialog>
-		<dialog name="CUpgradeDlg" cookie="StStStBuBuBu" caption="Предупреждение об обновлении">
-			<control/>
+		<dialog name="CUpgradeDlg" cookie="StStBuBuBu" caption="Предупреждение об обновлении">
 			<control caption="Появилась новая версия Shareaza. Хотите ли обновиться?"/>
 			<control caption="Если вы нажмёте Обновить Сейчас, Shareaza добавит обновление в очередь списка загрузок и автоматически начнет загрузку."/>
 			<control caption="_Обновить сейчас"/>
 			<control caption="Не проверять новые версии"/>
 			<control caption="Не обновлять"/>
 		</dialog>
-		<dialog name="CDownloadReviewDlg" cookie="StBuSyEd" caption="Оценки закрузки">
-			<control/>
+		<dialog name="CDownloadReviewDlg" cookie="BuSyEd" caption="Оценки закрузки">
 			<control caption="OK"/>
 			<control/>
 			<control/>

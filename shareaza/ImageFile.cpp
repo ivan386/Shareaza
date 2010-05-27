@@ -1,7 +1,7 @@
 //
 // ImageFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -650,4 +650,33 @@ BOOL CImageFile::SwapRGB()
 	}
 
 	return TRUE;
+}
+
+HBITMAP CImageFile::LoadBitmapFromFile(LPCTSTR pszFile)
+{
+	if ( _tcsicmp( PathFindExtension( pszFile ), _T(".bmp") ) == 0 )
+		return (HBITMAP)LoadImage( NULL, pszFile, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE );
+
+	CImageFile pFile;
+	return ( pFile.LoadFromFile( pszFile, FALSE, FALSE ) && pFile.EnsureRGB() ) ?
+		pFile.CreateBitmap() : NULL;
+}
+
+HBITMAP CImageFile::LoadBitmapFromResource(UINT nResourceID, HINSTANCE hInstance)
+{
+	HBITMAP hBitmap = (HBITMAP)LoadImage( hInstance,
+		MAKEINTRESOURCE( nResourceID ), IMAGE_BITMAP, 0, 0, 0 );
+	if ( ! hBitmap )
+	{
+		CImageFile pFile;
+		hBitmap = ( pFile.LoadFromResource( hInstance, nResourceID, RT_PNG ) &&
+			pFile.EnsureRGB() ) ? pFile.CreateBitmap() : NULL;
+	}
+	if ( ! hBitmap )
+	{
+		CImageFile pFile;
+		hBitmap = ( pFile.LoadFromResource( hInstance, nResourceID, RT_JPEG ) &&
+			pFile.EnsureRGB() ) ? pFile.CreateBitmap() : NULL;
+	}
+	return hBitmap;
 }

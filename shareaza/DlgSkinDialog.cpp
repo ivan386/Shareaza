@@ -1,7 +1,7 @@
 //
 // DlgSkinDialog.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -72,8 +72,76 @@ void CSkinDialog::DoDataExchange(CDataExchange* pDX)
 /////////////////////////////////////////////////////////////////////////////
 // CSkinDialog operations
 
+void CSkinDialog::EnableBanner(BOOL bEnable)
+{
+	if ( ! bEnable && m_oBanner.m_hWnd )
+	{
+		int nBannerHeight = GetBannerHeight();
+
+		// Remove banner
+		m_oBanner.DestroyWindow();
+
+		// Move all controls up
+		for ( CWnd* pChild = GetWindow( GW_CHILD ); pChild;
+			pChild = pChild->GetNextWindow() )
+		{
+			CRect rc;
+			pChild->GetWindowRect( &rc );
+			ScreenToClient( &rc );
+			rc.MoveToY( rc.top - nBannerHeight );
+			pChild->MoveWindow( &rc );
+		}
+
+		// Resize window
+		CRect rcWindow;
+		GetWindowRect( &rcWindow );
+		SetWindowPos( NULL, 0, 0, rcWindow.Width(), rcWindow.Height() - nBannerHeight,
+			SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOZORDER );
+	}
+	else if ( bEnable && ! m_oBanner.m_hWnd )
+	{	
+		HBITMAP hBitmap = Skin.GetWatermark( _T("Banner") );
+		if ( hBitmap )
+		{
+			BITMAP bm = {};
+			GetObject( hBitmap, sizeof( BITMAP ), &bm );
+
+			// Resize window
+			CRect rcWindow;
+			GetWindowRect( &rcWindow );
+			SetWindowPos( NULL, 0, 0, rcWindow.Width(), rcWindow.Height() + bm.bmHeight,
+				SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOZORDER );
+
+			// Move all controls down
+			for ( CWnd* pChild = GetWindow( GW_CHILD ); pChild;
+				pChild = pChild->GetNextWindow() )
+			{
+				CRect rc;
+				pChild->GetWindowRect( &rc );
+				ScreenToClient( &rc );
+				rc.MoveToY( rc.top + bm.bmHeight );
+				pChild->MoveWindow( &rc );
+			}
+
+			// Add banner
+			CRect rcBanner;
+			GetClientRect( &rcBanner );
+			rcBanner.right = rcBanner.left + bm.bmWidth;
+			rcBanner.bottom = rcBanner.top + bm.bmHeight;
+			VERIFY( m_oBanner.Create( NULL, WS_CHILD | WS_VISIBLE | SS_BITMAP |
+				SS_REALSIZEIMAGE, rcBanner, this, IDC_BANNER ) );
+			m_oBanner.SetBitmap( hBitmap );
+		}
+	}
+}
+
 BOOL CSkinDialog::SkinMe(LPCTSTR pszSkin, UINT nIcon, BOOL bLanguage)
 {
+	if ( m_bAutoBanner )
+	{
+		EnableBanner( TRUE );
+	}
+
 	BOOL bSuccess = FALSE;
 	CString strSkin;
 	CRect rc;
@@ -198,12 +266,15 @@ void CSkinDialog::OnSize(UINT nType, int cx, int cy)
 	CStatic* pBanner = (CStatic*)GetDlgItem( IDC_BANNER );
 	if ( pBanner && Settings.General.LanguageRTL )
 	{
+		BITMAP bm = {};
+		GetObject( pBanner->GetBitmap(), sizeof( BITMAP ), &bm );
+
 		// Adjust banner width
 		CRect rcBanner;
 		GetClientRect( &rcBanner );
-		rcBanner.left -= BANNER_CX - rcBanner.Width();
-		rcBanner.right = rcBanner.left + BANNER_CX;
-		rcBanner.bottom = rcBanner.top + BANNER_CY;
+		rcBanner.left -= bm.bmWidth - rcBanner.Width();
+		rcBanner.right = rcBanner.left + bm.bmWidth;
+		rcBanner.bottom = rcBanner.top + bm.bmHeight;
 		pBanner->MoveWindow( &rcBanner );
 		pBanner->ModifyStyle( SS_CENTERIMAGE, SS_REALSIZEIMAGE );
 	}
@@ -232,10 +303,16 @@ LRESULT CSkinDialog::OnSetText(WPARAM /*wParam*/, LPARAM /*lParam*/)
 
 BOOL CSkinDialog::OnEraseBkgnd(CDC* pDC)
 {
-	if ( ! theApp.m_bClosing && m_pSkin && m_pSkin->OnEraseBkgnd( this, pDC ) ) return TRUE;
+	if ( ! theApp.m_bClosing && m_pSkin && m_pSkin->OnEraseBkgnd( this, pDC ) )
+		return TRUE;
 
 	CRect rc;
 	GetClientRect( &rc );
+	rc.bottom = GetBannerHeight();
+	pDC->FillSolidRect( &rc, RGB( 0, 0, 0 ) );
+
+	GetClientRect( &rc );
+	rc.top = GetBannerHeight();
 	pDC->FillSolidRect( &rc, Skin.m_crDialog );
 
 	return TRUE;
@@ -293,38 +370,6 @@ int CSkinDialog::OnCreate(LPCREATESTRUCT lpCreateStruct)
 BOOL CSkinDialog::OnInitDialog()
 {
 	CDialog::OnInitDialog();
-
-	CStatic* pBanner = (CStatic*)GetDlgItem( IDC_BANNER );
-
-	if ( ! pBanner && m_bAutoBanner )
-	{
-		// Resize window
-		CRect rcWindow;
-		GetWindowRect( &rcWindow );
-		SetWindowPos( NULL, 0, 0, rcWindow.Width(), rcWindow.Height() + BANNER_CY,
-			SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOZORDER );
-
-		// Move all controls down
-		for ( CWnd* pChild = GetWindow( GW_CHILD ); pChild;
-			pChild = pChild->GetNextWindow() )
-		{
-			CRect rc;
-			pChild->GetWindowRect( &rc );
-			ScreenToClient( &rc );
-			rc.MoveToY( rc.top + BANNER_CY );
-			pChild->MoveWindow( &rc );
-		}
-
-		// Add banner
-		CRect rcBanner;
-		GetClientRect( &rcBanner );
-		rcBanner.right = rcBanner.left + BANNER_CX;
-		rcBanner.bottom = rcBanner.top + BANNER_CY;
-		VERIFY( m_oBanner.Create( NULL, WS_CHILD | WS_VISIBLE | SS_BITMAP |
-			SS_REALSIZEIMAGE, rcBanner, this, IDC_BANNER ) );
-		m_oBanner.SetBitmap( (HBITMAP)LoadImage( AfxGetResourceHandle(),
-			MAKEINTRESOURCE( IDB_WIZARD ), IMAGE_BITMAP, BANNER_CX, BANNER_CY, 0 ) );
-	}
 
 	return TRUE;
 }

@@ -100,7 +100,6 @@
 			/>
 			<Tool
 				Name="VCBscMakeTool"
-				OutputFile=""
 			/>
 			<Tool
 				Name="VCFxCopTool"
@@ -4058,7 +4057,7 @@
 				>
 			</File>
 			<File
-				RelativePath="Res\MenuBar.bmp"
+				RelativePath=".\Res\MenuBar.png"
 				>
 			</File>
 			<File
@@ -4082,19 +4081,19 @@
 				>
 			</File>
 			<File
-				RelativePath="Res\Navbar.bmp"
+				RelativePath=".\Res\Navbar.png"
 				>
 			</File>
 			<File
-				RelativePath="Res\NavbarAlpha.bmp"
+				RelativePath=".\Res\NavbarAlpha.png"
 				>
 			</File>
 			<File
-				RelativePath="Res\NavbarAlphaRTL.bmp"
+				RelativePath=".\Res\NavbarAlphaRTL.png"
 				>
 			</File>
 			<File
-				RelativePath="Res\NavbarRTL.bmp"
+				RelativePath=".\Res\NavbarRTL.png"
 				>
 			</File>
 			<File
@@ -4154,7 +4153,7 @@
 				>
 			</File>
 			<File
-				RelativePath="Res\RemoteWnd.bmp"
+				RelativePath=".\Res\RemoteWnd.png"
 				>
 			</File>
 			<File
@@ -4338,7 +4337,7 @@
 				>
 			</File>
 			<File
-				RelativePath="Res\Wizard.bmp"
+				RelativePath=".\Res\Wizard.png"
 				>
 			</File>
 			<File
