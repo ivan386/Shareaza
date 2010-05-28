@@ -280,7 +280,7 @@ IDR_MAINFRAME           ICON                    "res\\TorrentWizard.ico"
 // Bitmap
 //
 
-IDB_WIZARD              BITMAP                  "..\\Shareaza\\Res\\Wizard.bmp"
+IDB_WIZARD              BITMAP                  "res\\Wizard.bmp"
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
