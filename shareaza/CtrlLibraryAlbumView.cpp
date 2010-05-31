@@ -1031,7 +1031,7 @@ BOOL CLibraryAlbumTrack::Update(CLibraryFile* pFile)
 	
 	m_nCookie	= pFile->m_nUpdateCookie;
 	m_bShared	= bShared;
-	m_nShell	= ShellIcons.Get( pFile->m_sName, 16 );
+	m_nShell	= ShellIcons.Get( pFile->GetPath(), 16 );
 	m_nRating	= pFile->m_nRating;
 	m_bComments	= pFile->m_sComments.GetLength() > 0;
 	m_nTrack	= 0;
@@ -1120,9 +1120,7 @@ void CLibraryAlbumTrack::Paint(CLibraryAlbumView* pView, CDC* pDC, const CRect& 
 	CRect rcTemp( rcLine.left, rcLine.top, rcLine.left + 22, rcLine.bottom );
 	rcLine.left += 22;
 	
-	pDC->SetBkColor( crBack1 );
-	if ( nCount >= 0 ) PaintText( pDC, rcTemp, 0, 100, NULL );
-	if ( m_bSelected ) pDC->SetBkColor( crBack2 );
+	pDC->SetBkColor( m_bSelected ? crBack2 : crBack1 );
 	
 	ShellIcons.Draw( pDC, m_nShell, 16, rcTemp.left + 3,
 		( rcTemp.top + rcTemp.bottom ) / 2 - 8, CLR_NONE, m_bSelected );
