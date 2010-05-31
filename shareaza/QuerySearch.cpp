@@ -1,7 +1,7 @@
 //
 // QuerySearch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -949,7 +949,8 @@ BOOL CQuerySearch::ReadG2Packet(CG2Packet* pPacket, SOCKADDR_IN* pEndpoint)
 		else if ( nType == G2_PACKET_URN )
 		{
 			CString strURN = pPacket->ReadString( nLength );
-			if ( strURN.GetLength() + 1 >= (int)nLength ) return FALSE;
+			if ( strURN.GetLength() + 1 >= (int)nLength )
+				return FALSE;
 			nLength -= strURN.GetLength() + 1;
 
 			if ( nLength >= 20 && strURN == _T("sha1") )
@@ -1031,9 +1032,13 @@ BOOL CQuerySearch::ReadG2Packet(CG2Packet* pPacket, SOCKADDR_IN* pEndpoint)
 		pPacket->m_nPosition = nOffset;
 	}
 
-	if ( pPacket->GetRemaining() < 16 ) return FALSE;
+	if ( pPacket->GetRemaining() < 16 )
+		return FALSE;
 
 	pPacket->Read( m_oGUID );
+
+	if ( ! m_oGUID )
+		return FALSE;
 
 	return CheckValid( true );
 }
