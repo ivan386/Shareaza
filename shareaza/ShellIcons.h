@@ -1,7 +1,7 @@
 //
 // ShellIcons.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -21,15 +21,12 @@
 
 #pragma once
 
-#include "CoolInterface.h"
-
 
 class CShellIcons
 {
 // Construction
 public:
 	CShellIcons();
-	virtual ~CShellIcons();
 
 // Operations
 public:
@@ -39,55 +36,20 @@ public:
 	HICON	ExtractIcon(int nIndex, int nSize);
 	BOOL	Lookup(LPCTSTR pszType, HICON* phSmallIcon, HICON* phLargeIcon, CString* psName, CString* psMIME, HICON* phHugeIcon = NULL);
 	CString	GetTypeString(LPCTSTR pszFile);
+	void	AttachTo(CListCtrl* const pList, int nSize) const;
+	void	AttachTo(CTreeCtrl* const pTree) const;
+	BOOL	Draw(CDC* pDC, int nIcon, int nSize, int nX, int nY, COLORREF crBack = CLR_NONE, BOOL bSelected = FALSE) const;
 
-// Inlines
-public:
-	inline CImageList* GetObject(int nSize) const
-	{
-		switch ( nSize )
-		{
-		case 16:
-			return (CImageList*)&m_i16;
-		case 32:
-			return (CImageList*)&m_i32;
-		case 48:
-			return (CImageList*)&m_i48;
-		default:
-			return NULL;
-		}
-	}
-
-	inline HIMAGELIST GetHandle(int nSize) const
-	{
-		switch ( nSize )
-		{
-		case 16:
-			return m_i16.GetSafeHandle();
-		case 32:
-			return m_i32.GetSafeHandle();
-		case 48:
-			return m_i48.GetSafeHandle();
-		default:
-			return NULL;
-		}
-	}
-
-	inline BOOL Draw(CDC* pDC, int nIcon, int nSize, int nX, int nY, COLORREF crBack = CLR_NONE, BOOL bSelected = FALSE) const
-	{
-		return ImageList_DrawEx( GetHandle( nSize ), nIcon, pDC->GetSafeHdc(),
-			nX, nY, nSize, nSize, crBack,
-			( bSelected ? CoolInterface.m_crHighlight : CLR_NONE ),
-			( bSelected ? ILD_SELECTED : ILD_NORMAL ) );
-	}
-
-// Attributes
-protected:
+private:
 	CImageList		m_i16;
 	CImageList		m_i32;
 	CImageList		m_i48;
 	CMap< CString, const CString&, int, int > m_m16;
 	CMap< CString, const CString&, int, int > m_m32;
 	CMap< CString, const CString&, int, int > m_m48;
+
+	CShellIcons(const CShellIcons&);
+	CShellIcons& operator=(const CShellIcons&);
 };
 
 extern CShellIcons ShellIcons;

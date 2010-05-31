@@ -1,7 +1,7 @@
 //
 // PageTorrentGeneral.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -90,7 +90,7 @@ BOOL CTorrentFilesPage::OnInitDialog()
 	CRect rc;
 	m_wndFiles.GetClientRect( &rc );
 	rc.right -= GetSystemMetrics( SM_CXVSCROLL );
-	m_wndFiles.SetImageList( ShellIcons.GetObject( 16 ), LVSIL_SMALL );
+	ShellIcons.AttachTo( &m_wndFiles, 16 );
 	m_wndFiles.InsertColumn( 0, _T("Filename"), LVCFMT_LEFT, rc.right - 70 - 60
 		- ( bCompleted ? 0 : 60 ), -1 );
 	m_wndFiles.InsertColumn( 1, _T("Size"), LVCFMT_RIGHT, 70, 0 );

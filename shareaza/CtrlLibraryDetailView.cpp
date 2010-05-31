@@ -1,7 +1,7 @@
 //
 // CtrlLibraryDetailView.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -156,18 +156,18 @@ int CLibraryDetailView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		pList->InsertColumn( 4, _T("Hits"), LVCFMT_CENTER, 70, 3 );
 		pList->InsertColumn( 5, _T("Uploads"), LVCFMT_CENTER, 70, 4 );
 		pList->InsertColumn( 6, _T("Modified"), LVCFMT_CENTER, 0, 5 );
-		pList->SetImageList( ShellIcons.GetObject( 16 ), LVSIL_SMALL );
+		ShellIcons.AttachTo( pList, 16 );
 
 		CHeaderCtrl* pHeader = (CHeaderCtrl*)GetWindow( GW_CHILD );
 		if ( pHeader ) Skin.Translate( _T("CLibraryWnd"), pHeader );
 	}
 	else if ( m_nStyle != LVS_ICON )
 	{
-		pList->SetImageList( ShellIcons.GetObject( 16 ), LVSIL_SMALL );
+		ShellIcons.AttachTo( pList, 16 );
 	}
 	else
 	{
-		pList->SetImageList( ShellIcons.GetObject( 32 ), LVSIL_NORMAL );
+		ShellIcons.AttachTo( pList, 32 );
 	}
 
 	pList->SetCallbackMask( LVIS_SELECTED | LVIS_FOCUSED );
@@ -427,14 +427,14 @@ void CLibraryDetailView::CacheItem(int nItem)
 
 	if ( m_nStyle == LVS_ICON )
 	{
-		pItem->nIcon = ShellIcons.Get( pFile->m_sName, 32 );
+		pItem->nIcon = ShellIcons.Get( pFile->GetPath(), 32 );
 	}
 	else
 	{
 		if ( pFile->m_nIcon16 >= 0 )
 			pItem->nIcon = pFile->m_nIcon16;
 		else
-			pItem->nIcon = pFile->m_nIcon16 = ShellIcons.Get( pFile->m_sName, 16 );
+			pItem->nIcon = pFile->m_nIcon16 = ShellIcons.Get( pFile->GetPath(), 16 );
 	}
 
 	pItem->nState &= LDVI_SELECTED;

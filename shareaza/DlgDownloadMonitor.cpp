@@ -1,7 +1,7 @@
 //
 // DlgDownloadMonitor.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -183,22 +183,8 @@ BOOL CDownloadMonitorDlg::OnInitDialog()
 	if ( Downloads.Check( m_pDownload ) )
 	{
 		m_sName = m_pDownload->m_sName;
-		CString strType = m_sName;
-
-		int nPeriod = strType.ReverseFind( '.' );
-
-		if ( nPeriod > 0 )
-		{
-			strType = strType.Mid( nPeriod );
-			HICON hIcon;
-
-			if ( ShellIcons.Lookup( strType, NULL, &hIcon, NULL, NULL ) )
-			{
-				if ( Settings.General.LanguageRTL ) hIcon = CreateMirroredIcon( hIcon );
-				m_wndIcon.SetIcon( hIcon );
-			}
-		}
-
+		m_wndIcon.SetIcon( ShellIcons.ExtractIcon(
+			ShellIcons.Get( m_sName, 32 ), 32 ) );
 		m_wndFile.SetWindowText( m_sName );
 	}
 

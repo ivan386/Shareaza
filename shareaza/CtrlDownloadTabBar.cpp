@@ -1,7 +1,7 @@
 //
 // CtrlDownloadTabBar.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -823,41 +823,9 @@ void CDownloadTabBar::TabItem::Paint(CDownloadTabBar* pBar, CDC* pDC, CRect* pRe
 
 	CPoint ptImage( rc.left + 2, rc.top + 1 );
 
-	if ( m_bSelected )
-	{
-		ImageList_DrawEx( ShellIcons.GetHandle( 16 ), m_nImage, pDC->GetSafeHdc(),
-			ptImage.x, ptImage.y, 0, 0, crBack, CLR_NONE, ILD_NORMAL );
-		pDC->ExcludeClipRect( ptImage.x, ptImage.y, ptImage.x + 16, ptImage.y + 16 );
-	}
-	else if ( bHot )
-	{
-		ptImage.Offset( -1, -1 );
-
-		if ( crBack != CLR_NONE )
-		{
-			pDC->FillSolidRect( ptImage.x, ptImage.y, 18, 2, crBack );
-			pDC->FillSolidRect( ptImage.x, ptImage.y + 2, 2, 16, crBack );
-		}
-
-		ptImage.Offset( 2, 2 );
-		pDC->SetTextColor( CoolInterface.m_crShadow );
-		ImageList_DrawEx( ShellIcons.GetHandle( 16 ), m_nImage, pDC->GetSafeHdc(),
-			ptImage.x, ptImage.y, 0, 0, crBack, CLR_NONE, ILD_MASK );
-
-		ptImage.Offset( -2, -2 );
-		ImageList_DrawEx( ShellIcons.GetHandle( 16 ), m_nImage, pDC->GetSafeHdc(),
-			ptImage.x, ptImage.y, 0, 0, CLR_NONE, CLR_NONE, ILD_NORMAL );
-
-		pDC->ExcludeClipRect( ptImage.x, ptImage.y, ptImage.x + 18, ptImage.y + 18 );
-
-		ptImage.Offset( 1, 1 );
-	}
-	else
-	{
-		ImageList_DrawEx( ShellIcons.GetHandle( 16 ), m_nImage, pDC->GetSafeHdc(),
-			ptImage.x, ptImage.y, 0, 0, crBack, CoolInterface.m_crShadow, ILD_BLEND50 );
-		pDC->ExcludeClipRect( ptImage.x, ptImage.y, ptImage.x + 16, ptImage.y + 16 );
-	}
+	ShellIcons.Draw( pDC, m_nImage, 16, ptImage.x, ptImage.y, crBack,
+		! m_bSelected && ! bHot );
+	pDC->ExcludeClipRect( ptImage.x, ptImage.y, ptImage.x + 16, ptImage.y + 16 );
 
 	rc.left += 20;
 

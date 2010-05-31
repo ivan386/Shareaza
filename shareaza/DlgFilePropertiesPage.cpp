@@ -1,7 +1,7 @@
 //
 // DlgFilePropertiesPage.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -105,7 +105,7 @@ BOOL CFilePropertiesPage::OnInitDialog()
 			}
 			pNameWnd->SetWindowText( pFile->m_sName );
 		}
-		m_nIcon = ShellIcons.Get( pFile->m_sName, 48 );
+		m_nIcon = ShellIcons.Get( pFile->GetPath(), 48 );
 
 		oLock.Unlock();
 	}
@@ -131,7 +131,6 @@ BOOL CFilePropertiesPage::OnInitDialog()
 				pNameWnd->SetWindowText( strMessage );
 
 			}
-			m_nIcon = SHI_EXECUTABLE;
 		}
 	}
 

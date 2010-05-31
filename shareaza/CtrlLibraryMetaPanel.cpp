@@ -116,8 +116,8 @@ void CLibraryMetaPanel::Update()
 		m_sFolder	= pFirst->GetFolder();
 		m_sSize		= Settings.SmartVolume( pFirst->GetSize() );
 		m_sType		= ShellIcons.GetTypeString( m_sName );
-		m_nIcon32	= ShellIcons.Get( m_sName, 32 );
-		m_nIcon48	= ShellIcons.Get( m_sName, 48 );
+		m_nIcon32	= ShellIcons.Get( pFirst->GetPath(), 32 );
+		m_nIcon48	= ShellIcons.Get( pFirst->GetPath(), 48 );
 		m_nRating	= pFirst->m_nRating;
 	}
 	else if ( m_nSelected > 1 )
@@ -128,8 +128,8 @@ void CLibraryMetaPanel::Update()
 		QWORD nSize = 0;
 
 		m_sFolder	= pFirst->GetFolder();
-		m_nIcon32	= ShellIcons.Get( pFirst->m_sName, 32 );
-		m_nIcon48	= ShellIcons.Get( pFirst->m_sName, 48 );
+		m_nIcon32	= ShellIcons.Get( pFirst->GetPath(), 32 );
+		m_nIcon48	= ShellIcons.Get( pFirst->GetPath(), 48 );
 		m_nRating	= 0;
 
 		for ( POSITION pos = pSel->GetHeadPosition() ; pos ; )
@@ -144,9 +144,9 @@ void CLibraryMetaPanel::Update()
 				LoadString( m_sFolder, IDS_LIBPANEL_MULTIPLE_FOLDERS );
 			}
 
-			int nIcon = ShellIcons.Get( pFile->m_sName, 48 );
+			int nIcon = ShellIcons.Get( pFile->GetPath(), 48 );
 			if ( nIcon != m_nIcon48 ) m_nIcon48 = -1;
-			nIcon = ShellIcons.Get( pFile->m_sName, 32 );
+			nIcon = ShellIcons.Get( pFile->GetPath(), 32 );
 			if ( nIcon != m_nIcon32 ) m_nIcon32 = -1;
 		}
 

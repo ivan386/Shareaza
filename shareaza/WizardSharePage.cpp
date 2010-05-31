@@ -1,7 +1,7 @@
 //
 // WizardSharePage.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -85,7 +85,7 @@ BOOL CWizardSharePage::OnInitDialog()
 	CRect rc;
 	m_wndList.GetClientRect( &rc );
 	m_wndList.InsertColumn( 0, _T("Folder"), LVCFMT_LEFT, rc.Width() - GetSystemMetrics( SM_CXVSCROLL ) );
-	m_wndList.SetImageList( ShellIcons.GetObject( 16 ), LVSIL_SMALL );
+	ShellIcons.AttachTo( &m_wndList, 16 );
 	m_wndList.EnableToolTips( TRUE );
 	m_wndList.SendMessage( LVM_SETEXTENDEDLISTVIEWSTYLE,
 		LVS_EX_FULLROWSELECT|LVS_EX_LABELTIP,

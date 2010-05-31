@@ -1014,8 +1014,8 @@ void CUploadsCtrl::PaintFile(CDC& dc, const CRect& rcRow, CUploadQueue* /*pQueue
 			dc.FillSolidRect( rcCell.left, rcCell.top, 24, rcCell.Height(), crLeftAligned );
 			rcCell.left += 24;
 			dc.FillSolidRect( rcCell.left, rcCell.bottom - 1, 16, 1, crLeftAligned );
-			ImageList_DrawEx( ShellIcons.GetHandle( 16 ), ShellIcons.Get( pFile->m_sName, 16 ), dc.GetSafeHdc(),
-					rcCell.left, rcCell.top, 16, 16, crBack, CLR_DEFAULT, pFile->m_bSelected ? ILD_SELECTED : ILD_NORMAL );
+			ShellIcons.Draw( &dc, ShellIcons.Get( pFile->m_sPath, 16 ), 16,
+				rcCell.left, rcCell.top, crBack, pFile->m_bSelected );
 			rcCell.left += 16;
 			dc.FillSolidRect( rcCell.left, rcCell.top, 1, rcCell.Height(), crLeftAligned );
 			rcCell.left += 1;

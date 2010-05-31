@@ -678,7 +678,7 @@ void CHomeLibraryBox::Update()
 			pItem->m_pRecent	= pRecent;
 			pItem->m_nIndex		= pRecent->m_pFile->m_nIndex;
 			pItem->m_sText		= pRecent->m_pFile->m_sName;
-			pItem->m_nIcon16	= ShellIcons.Get( pItem->m_sText, 16 );
+			pItem->m_nIcon16	= ShellIcons.Get( pRecent->m_pFile->GetPath(), 16 );
 			
 			m_pList.InsertAt( nCount, pItem );
 			bChanged = TRUE;

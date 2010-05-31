@@ -1,7 +1,7 @@
 //
 // DlgBitziDownload.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -74,7 +74,7 @@ BOOL CBitziDownloadDlg::OnInitDialog()
 
 	if ( Settings.General.LanguageRTL ) m_wndProgress.ModifyStyleEx( WS_EX_LAYOUTRTL, 0, 0 );
 	m_wndProgress.SetRange( 0, short( m_pDownloader.GetFileCount() * 2 ) );
-	m_wndFiles.SetImageList( ShellIcons.GetObject( 16 ), LVSIL_SMALL );
+	ShellIcons.AttachTo( &m_wndFiles, 16 );
 	m_wndFiles.InsertColumn( 0, _T("Filename"), LVCFMT_LEFT, 190, -1 );
 	m_wndFiles.InsertColumn( 1, _T("Status"), LVCFMT_LEFT, 100, 0 );
 

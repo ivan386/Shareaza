@@ -1,7 +1,7 @@
 //
 // DlgFolderProperties.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -208,15 +208,13 @@ void CFolderPropertiesDlg::OnPaint()
 		{
 			if ( pSchema->m_nIcon48 >= 0 )
 			{
-				ImageList_DrawEx( ShellIcons.GetHandle( 48 ), pSchema->m_nIcon48,
-					dc.GetSafeHdc(), pt.x, pt.y, 48, 48, crBack, CLR_NONE, ILD_NORMAL );
+				ShellIcons.Draw( &dc, pSchema->m_nIcon48, 48, pt.x, pt.y, crBack );
 				dc.ExcludeClipRect( pt.x, pt.y, pt.x + 48, pt.y + 48 );
 			}
 			else
 			{
 				pt.x += 8; pt.y += 8;
-				ImageList_DrawEx( ShellIcons.GetHandle( 32 ), pSchema->m_nIcon32,
-					dc.GetSafeHdc(), pt.x, pt.y, 32, 32, crBack, CLR_NONE, ILD_NORMAL );
+				ShellIcons.Draw( &dc, pSchema->m_nIcon32, 32, pt.x, pt.y, crBack );
 				dc.ExcludeClipRect( pt.x, pt.y, pt.x + 32, pt.y + 32 );
 			}
 		}

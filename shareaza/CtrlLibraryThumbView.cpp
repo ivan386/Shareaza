@@ -1,7 +1,7 @@
 //
 // CtrlLibraryThumbView.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -937,7 +937,7 @@ CLibraryThumbItem::CLibraryThumbItem(CLibraryFile* pFile)
 	m_bShared	= pFile->IsShared();
 	m_bSelected	= FALSE;
 	m_nThumb	= thumbWaiting;
-	m_nShell	= ShellIcons.Get( m_sText, 48 );
+	m_nShell	= ShellIcons.Get( pFile->GetPath(), 48 );
 }
 
 CLibraryThumbItem::~CLibraryThumbItem()

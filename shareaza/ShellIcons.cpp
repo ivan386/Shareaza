@@ -1,7 +1,7 @@
 //
 // ShellIcons.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -20,8 +20,8 @@
 //
 
 #include "StdAfx.h"
-#include "Shareaza.h"
 #include "Settings.h"
+#include "CoolInterface.h"
 #include "ShellIcons.h"
 
 #ifdef _DEBUG
@@ -43,10 +43,6 @@ CShellIcons::CShellIcons()
 	m_m48.InitHashTable( 31 );
 }
 
-CShellIcons::~CShellIcons()
-{
-}
-
 //////////////////////////////////////////////////////////////////////
 // CShellIcons clear
 
@@ -60,9 +56,17 @@ void CShellIcons::Clear()
 	if ( m_i32.m_hImageList ) m_i32.DeleteImageList();
 	if ( m_i48.m_hImageList ) m_i48.DeleteImageList();
 
-	m_i16.Create( 16, 16, ILC_COLOR32|ILC_MASK, 0, 16 );
-	m_i32.Create( 32, 32, ILC_COLOR32|ILC_MASK, 0, 16 );
-	m_i48.Create( 48, 48, ILC_COLOR32|ILC_MASK, 0, 16 );
+	m_i16.Create( 16, 16, ILC_COLOR32|ILC_MASK, 0, 16 ) ||
+	m_i16.Create( 16, 16, ILC_COLOR24|ILC_MASK, 0, 16 ) ||
+	m_i16.Create( 16, 16, ILC_COLOR16|ILC_MASK, 0, 16 );
+
+	m_i32.Create( 32, 32, ILC_COLOR32|ILC_MASK, 0, 16 ) ||
+	m_i32.Create( 32, 32, ILC_COLOR24|ILC_MASK, 0, 16 ) ||
+	m_i32.Create( 32, 32, ILC_COLOR16|ILC_MASK, 0, 16 );
+
+	m_i48.Create( 48, 48, ILC_COLOR32|ILC_MASK, 0, 16 ) ||
+	m_i48.Create( 48, 48, ILC_COLOR24|ILC_MASK, 0, 16 ) ||
+	m_i48.Create( 48, 48, ILC_COLOR16|ILC_MASK, 0, 16 );
 
 	// SHI_FILE = 0
 	VERIFY( AddIcon( CoolInterface.ExtractIcon( IDI_FILE, FALSE, LVSIL_SMALL) , m_i16 ) == SHI_FILE );
@@ -97,13 +101,13 @@ void CShellIcons::Clear()
 //	m_i32.SetOverlayImage( SHI_LOCKED, SHI_O_LOCKED );
 //	m_i48.SetOverlayImage( SHI_LOCKED, SHI_O_LOCKED );
 
-	m_m16.SetAt(_T(".exe"), SHI_EXECUTABLE);
-	m_m32.SetAt(_T(".exe"), SHI_EXECUTABLE);
-	m_m48.SetAt(_T(".exe"), SHI_EXECUTABLE);
+	Get( _T(".exe"), 16 );
+	Get( _T(".exe"), 32 );
+	Get( _T(".exe"), 48 );
 
-	m_m16.SetAt(_T(".com"), SHI_EXECUTABLE);
-	m_m32.SetAt(_T(".com"), SHI_EXECUTABLE);
-	m_m48.SetAt(_T(".com"), SHI_EXECUTABLE);
+	Get( _T(".com"), 16 );
+	Get( _T(".com"), 32 );
+	Get( _T(".com"), 48 );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -111,14 +115,22 @@ void CShellIcons::Clear()
 
 int CShellIcons::Get(LPCTSTR pszFile, int nSize)
 {
-	LPCTSTR pszType = _tcsrchr( pszFile, '.' );
-	if ( pszType == NULL )
-		return SHI_FILE;
-	
-	if ( m_i16.m_hImageList == NULL ) Clear();
+	if ( m_i16.m_hImageList == NULL )
+		Clear();
 
-	CString strType( pszType );
-	ToLower( strType );
+	CString strType = PathFindExtension( pszFile );
+	if ( strType.IsEmpty() )
+		// No extension
+		return SHI_FILE;
+	strType.MakeLower();
+
+	CString strFilename;
+	LPCTSTR pszFilename = PathFindFileName( pszFile );
+	if ( pszFilename != pszFile && ( strType == _T(".exe") ) )
+	{
+		strFilename = pszFilename;
+		strFilename.MakeLower();
+	}
 
 	HICON hIcon = NULL;
 	int nIndex = SHI_FILE;
@@ -127,37 +139,75 @@ int CShellIcons::Get(LPCTSTR pszFile, int nSize)
 	switch ( nSize )
 	{
 	case 16:
-		if ( m_m16.Lookup( strType, nIndex ) ) return nIndex;
-		Lookup( pszType, &hIcon, NULL, NULL, NULL );
+		if ( strFilename.IsEmpty() )
+		{
+			if ( m_m16.Lookup( strType, nIndex ) ) return nIndex;
+			Lookup( strType, &hIcon, NULL, NULL, NULL );
+		}
+		else
+		{
+			if ( m_m16.Lookup( strFilename, nIndex ) ) return nIndex;
+		}
 		if ( ! hIcon && SHGetFileInfo( pszFile, FILE_ATTRIBUTE_NORMAL, &sfi, sizeof( SHFILEINFO ),
-			SHGFI_USEFILEATTRIBUTES | SHGFI_ICON | SHGFI_SMALLICON ) )
+			( strFilename.IsEmpty() ? SHGFI_USEFILEATTRIBUTES : 0 ) | SHGFI_ICON | SHGFI_SMALLICON ) )
 		{
 			hIcon = Settings.General.LanguageRTL ? CreateMirroredIcon( sfi.hIcon ) : sfi.hIcon;
 		}
-		nIndex = hIcon ? m_i16.Add( hIcon ) : 0;
-		m_m16.SetAt( strType, nIndex );
+		else if ( ! strFilename.IsEmpty() )
+		{
+			Lookup( strType, &hIcon, NULL, NULL, NULL );
+		}
+		nIndex = hIcon ? m_i16.Add( hIcon ) : SHI_FILE;
+		m_m16.SetAt( ( strFilename.IsEmpty() ? strType : strFilename ), nIndex );
+		TRACE( _T("Got 16x16 icon %d for %s\n"), nIndex, ( strFilename.IsEmpty() ? strType : strFilename ) );
 		break;
+
 	case 32:
-		if ( m_m32.Lookup( strType, nIndex ) ) return nIndex;
-		Lookup( pszType, NULL, &hIcon, NULL, NULL );
+		if ( strFilename.IsEmpty() )
+		{
+			if ( m_m32.Lookup( strType, nIndex ) ) return nIndex;
+			Lookup( strType, NULL, &hIcon, NULL, NULL );
+		}
+		else
+		{
+			if ( m_m32.Lookup( strFilename, nIndex ) ) return nIndex;
+		}
 		if ( ! hIcon && SHGetFileInfo( pszFile, FILE_ATTRIBUTE_NORMAL, &sfi, sizeof( SHFILEINFO ),
-			SHGFI_USEFILEATTRIBUTES | SHGFI_ICON ) )
+			( strFilename.IsEmpty() ? SHGFI_USEFILEATTRIBUTES : 0 ) | SHGFI_ICON ) )
 		{
 			hIcon = Settings.General.LanguageRTL ? CreateMirroredIcon( sfi.hIcon ) : sfi.hIcon;
 		}
-		nIndex = hIcon ? m_i32.Add( hIcon ) : 0;
-		m_m32.SetAt( strType, nIndex );
+		else if ( ! strFilename.IsEmpty() )
+		{
+			Lookup( strType, NULL, &hIcon, NULL, NULL );
+		}
+		nIndex = hIcon ? m_i32.Add( hIcon ) : SHI_FILE;
+		m_m32.SetAt( ( strFilename.IsEmpty() ? strType : strFilename ), nIndex );
+		TRACE( _T("Got 32x32 icon %d for %s\n"), nIndex, ( strFilename.IsEmpty() ? strType : strFilename ) );
 		break;
+
 	case 48:
-		if ( m_m48.Lookup( strType, nIndex ) ) return nIndex;
-		Lookup( pszType, NULL, NULL, NULL, NULL, &hIcon );
+		if ( strFilename.IsEmpty() )
+		{
+			if ( m_m48.Lookup( strType, nIndex ) ) return nIndex;
+			Lookup( strType, NULL, NULL, NULL, NULL, &hIcon );
+		}
+		else
+		{
+			if ( m_m48.Lookup( strFilename, nIndex ) ) return nIndex;
+		}
 		if ( ! hIcon && SHGetFileInfo( pszFile, FILE_ATTRIBUTE_NORMAL, &sfi, sizeof( SHFILEINFO ),
-			SHGFI_USEFILEATTRIBUTES | SHGFI_ICON | SHGFI_LARGEICON ) )
+			( strFilename.IsEmpty() ? SHGFI_USEFILEATTRIBUTES : 0 ) | SHGFI_ICON | SHGFI_LARGEICON ) )
 		{
 			hIcon = Settings.General.LanguageRTL ? CreateMirroredIcon( sfi.hIcon ) : sfi.hIcon;
 		}
-		nIndex = hIcon ? m_i48.Add( hIcon ) : 0;
-		m_m48.SetAt( strType, nIndex );
+		else if ( ! strFilename.IsEmpty() )
+		{
+			Lookup( strType, NULL, NULL, NULL, NULL, &hIcon );
+		}
+		nIndex = hIcon ? m_i48.Add( hIcon ) : SHI_FILE;
+		m_m48.SetAt( ( strFilename.IsEmpty() ? strType : strFilename ), nIndex );
+		TRACE( _T("Got 48x48 icon %d for %s\n"), nIndex, ( strFilename.IsEmpty() ? strType : strFilename ) );
 		break;
 	}
 	
@@ -248,6 +298,7 @@ BOOL CShellIcons::Lookup(LPCTSTR pszType, HICON* phSmallIcon, HICON* phLargeIcon
 
 	if ( phSmallIcon ) *phSmallIcon = NULL;
 	if ( phLargeIcon ) *phLargeIcon = NULL;
+	if ( phHugeIcon ) *phHugeIcon = NULL;
 	if ( psName ) *psName = pszType + 1;
 	if ( psMIME ) psMIME->Empty();
 
@@ -353,4 +404,46 @@ BOOL CShellIcons::Lookup(LPCTSTR pszType, HICON* phSmallIcon, HICON* phLargeIcon
 	}
 
 	return TRUE;
+}
+
+//////////////////////////////////////////////////////////////////////
+// CShellIcons attach image list to controls
+
+void CShellIcons::AttachTo(CListCtrl* const pList, int nSize) const
+{
+	if ( nSize == 16 )
+		pList->SetImageList( const_cast< CImageList* >( &m_i16 ), LVSIL_SMALL );
+	else if ( nSize == 32 )
+		pList->SetImageList( const_cast< CImageList* >( &m_i32 ), LVSIL_NORMAL );
+}
+
+void CShellIcons::AttachTo(CTreeCtrl* const pTree) const
+{
+	pTree->SetImageList( const_cast< CImageList* >( &m_i16 ), LVSIL_NORMAL );
+}
+
+//////////////////////////////////////////////////////////////////////
+// CShellIcons draw icon
+
+BOOL CShellIcons::Draw(CDC* pDC, int nIcon, int nSize, int nX, int nY, COLORREF crBack, BOOL bSelected) const
+{
+	HIMAGELIST hImages;
+	switch ( nSize )
+	{
+	case 16:
+		hImages = m_i16.GetSafeHandle();
+		break;
+	case 32:
+		hImages = m_i32.GetSafeHandle();
+		break;
+	case 48:
+		hImages = m_i48.GetSafeHandle();
+		break;
+	default:
+		return FALSE;
+	}
+	return ImageList_DrawEx( hImages, nIcon, pDC->GetSafeHdc(),
+		nX, nY, nSize, nSize, crBack,
+		( bSelected ? CoolInterface.m_crHighlight : CLR_NONE ),
+		( bSelected ? ILD_SELECTED : ILD_NORMAL ) );
 }

@@ -1,7 +1,7 @@
 //
 // CtrlLibraryHeaderBar.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -152,9 +152,7 @@ void CLibraryHeaderBar::PaintHeader(CDC* pDC, CRect& rcBar, BOOL bTransparent)
 	{
 		if ( m_nImage )
 		{
-			ImageList_DrawEx( ShellIcons.GetHandle( 16 ), m_nImage, pDC->GetSafeHdc(),
-				rcBar.left + 4, nMiddle - 8, 16, 16, CLR_NONE, CLR_NONE,
-				ILD_NORMAL );
+			ShellIcons.Draw( pDC, m_nImage, 16, rcBar.left + 4, nMiddle - 8 );
 		}
 
 		pDC->SetBkMode( TRANSPARENT );
@@ -167,9 +165,7 @@ void CLibraryHeaderBar::PaintHeader(CDC* pDC, CRect& rcBar, BOOL bTransparent)
 
 		if ( m_nImage )
 		{
-			ImageList_DrawEx( ShellIcons.GetHandle( 16 ), m_nImage, pDC->GetSafeHdc(),
-				rcBar.left + 4, nMiddle - 8, 16, 16, CoolInterface.m_crMidtone, CLR_NONE,
-				ILD_NORMAL );
+			ShellIcons.Draw( pDC, m_nImage, 16, rcBar.left + 4, nMiddle - 8, CoolInterface.m_crMidtone );
 
 			pDC->ExcludeClipRect( rcBar.left + 4, nMiddle - 8, rcBar.left + 20, nMiddle + 8 );
 		}

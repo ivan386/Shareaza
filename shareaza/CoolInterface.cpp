@@ -463,10 +463,8 @@ void CCoolInterface::DrawThumbnail(CDC* pDC, const CRect& rcThumb,
 			int x = rcFrame.left + ( rcFrame.Width() - 2 - size ) / 2;
 			int y = rcFrame.top + ( rcFrame.Height() - 2 - size ) / 2;
 
-			ImageList_DrawEx( ShellIcons.GetHandle( size ),
-				( ( nIcon48 >= 0 ) ? nIcon48 : nIcon32 ), pDC->GetSafeHdc(),
-				x, y, size, size, ( bWaiting ? m_crWindow : m_crBackNormal ),
-				CLR_NONE, ILD_NORMAL );
+			ShellIcons.Draw( pDC, ( ( nIcon48 >= 0 ) ? nIcon48 : nIcon32 ),
+				size, x, y, ( bWaiting ? m_crWindow : m_crBackNormal ), bSelected );
 
 			pDC->ExcludeClipRect( x, y, x + size, y + size );
 		}

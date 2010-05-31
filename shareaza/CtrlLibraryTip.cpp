@@ -1,7 +1,7 @@
 //
 // CtrlLibraryTip.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -115,7 +115,7 @@ BOOL CLibraryTipCtrl::OnPrepare()
 	// Type information and icons
 
 	m_sType = ShellIcons.GetTypeString( m_sName );
-	m_nIcon = ShellIcons.Get( m_sName, 48 );
+	m_nIcon = ShellIcons.Get( ( m_sPath.IsEmpty() ? m_sName : m_sPath ), 48 );
 
 	// URN
 	if ( Settings.General.GUIMode != GUI_BASIC )

@@ -1,7 +1,7 @@
 //
 // CtrlSharedFolder.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -290,7 +290,7 @@ int CLibraryFolderCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CTreeCtrl::OnCreate( lpCreateStruct ) == -1 ) return -1;
 
-	SetImageList( ShellIcons.GetObject( 16 ), TVSIL_NORMAL );
+	ShellIcons.AttachTo( this );
 
 	m_hRoot				= GetRootItem();
 	m_hFirstSelected	= NULL;

@@ -1,7 +1,7 @@
 //
 // CtrlLibraryHistoryPanel.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -23,6 +23,7 @@
 #include "Settings.h"
 #include "Library.h"
 #include "LibraryHistory.h"
+#include "CoolInterface.h"
 #include "ShellIcons.h"
 #include "CtrlLibraryFrame.h"
 #include "CtrlLibraryHistoryPanel.h"
@@ -103,7 +104,7 @@ void CLibraryHistoryPanel::Update()
 			pItem->m_pRecent	= pRecent;
 			pItem->m_nIndex		= pRecent->m_pFile->m_nIndex;
 			pItem->m_sText		= pRecent->m_pFile->m_sName;
-			pItem->m_nIcon16	= ShellIcons.Get( pItem->m_sText, 16 );
+			pItem->m_nIcon16	= ShellIcons.Get( pRecent->m_pFile->GetPath(), 16 );
 			
 			FileTimeToSystemTime( &pRecent->m_tAdded, &pItem->m_pTime );
 			SystemTimeToTzSpecificLocalTime( NULL, &pItem->m_pTime, &pItem->m_pTime );

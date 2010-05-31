@@ -1,7 +1,7 @@
 //
 // CtrlDownloadTip.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -276,8 +276,8 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 
 	DrawRule( pDC, &pt );
 
-	ImageList_DrawEx( ShellIcons.GetHandle( 32 ), m_nIcon, pDC->GetSafeHdc(),
-		pt.x, pt.y, 32, 32, CoolInterface.m_crTipBack, CLR_NONE, ILD_NORMAL );
+	ShellIcons.Draw( pDC, m_nIcon, 32, pt.x, pt.y, CoolInterface.m_crTipBack );
+
 	pDC->ExcludeClipRect( pt.x, pt.y, pt.x + 32, pt.y + 32 );
 
 	pt.y += 2;
@@ -616,7 +616,7 @@ void CDownloadTipCtrl::PrepareFileInfo(CShareazaFile* pDownload)
 		CString strName, strMime;
 
 		ShellIcons.Lookup( strType, NULL, NULL, &strName, &strMime );
-		m_nIcon = ShellIcons.Get( strType, 32 );
+		m_nIcon = ShellIcons.Get( m_sName, 32 );
 
 		if ( strName.GetLength() )
 		{
