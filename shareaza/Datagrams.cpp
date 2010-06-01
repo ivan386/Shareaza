@@ -1360,7 +1360,7 @@ BOOL CDatagrams::OnQuery(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 
 	Neighbours.RouteQuery( pSearch, pPacket, NULL, TRUE );
 
-	Network.OnQuerySearch( new CLocalSearch( pSearch, &pSearch->m_pEndpoint ) );
+	Network.OnQuerySearch( new CLocalSearch( pSearch ) );
 	
 	// Ack with hub list
 	Send( &pSearch->m_pEndpoint, Neighbours.CreateQueryWeb( pSearch->m_oGUID, true ), TRUE );

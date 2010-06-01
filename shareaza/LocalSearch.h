@@ -38,23 +38,19 @@ class CLocalSearch
 {
 // Construction
 public:
-	CLocalSearch(CQuerySearch* pSearch, CNeighbour* pNeighbour, BOOL bWrapped = FALSE);
-	CLocalSearch(CQuerySearch* pSearch, SOCKADDR_IN* pEndpoint);
-	CLocalSearch(CQuerySearch* pSearch, CBuffer* pBuffer, PROTOCOLID nProtocol = PROTOCOL_G1);
-	~CLocalSearch();
+	CLocalSearch(CQuerySearch* pSearch, const CNeighbour* pNeighbour);
+	CLocalSearch(CQuerySearch* pSearch);
+	CLocalSearch(CQuerySearch* pSearch, CBuffer* pBuffer, PROTOCOLID nProtocol);
 
 // Attributes
 protected:
 	CQuerySearchPtr	m_pSearch;
-	CNeighbour*		m_pNeighbour;
-	SOCKADDR_IN*	m_pEndpoint;
-	CBuffer*		m_pBuffer;
+	SOCKADDR_IN		m_pEndpoint;	// Endpoint or neighbour address
+	CBuffer*		m_pBuffer;		// Save packets to this buffer or...
+	BOOL			m_bUDP;			// ...send them via UDP or TCP
 	Hashes::Guid	m_oGUID;
 	PROTOCOLID		m_nProtocol;
-	BOOL			m_bWrapped;
-protected:
-	CPacket*		m_pPacket;
-	CMap< CSchemaPtr, CSchemaPtr, CXMLElement*, CXMLElement* > m_pSchemas;
+	typedef CMap< CSchemaPtr, CSchemaPtr, CXMLElement*, CXMLElement* > CSchemaMap;
 
 // Operations
 public:
@@ -67,25 +63,23 @@ protected:
 	bool		ExecuteSharedFiles(int nMaximum, int& nHits);
 	bool		ExecutePartialFiles(int nMaximum, int& nHits);
 	template< typename T > void SendHits(const CList< const T * >& oFiles);
-	template< typename T > void AddHit(const T * pHit, int nIndex);
-	void		AddHitG1(CLibraryFile const * const pFile, int nIndex);
-	void		AddHitG2(CLibraryFile const * const pFile, int nIndex);
+	template< typename T > void AddHit(CPacket* pPacket, CSchemaMap& pSchemas, const T * pHit, int nIndex);
+	void		AddHitG1(CG1Packet* pPacket, CSchemaMap& pSchemas, CLibraryFile const * const pFile, int nIndex);
+	void		AddHitG2(CG2Packet* pPacket, CSchemaMap& pSchemas, CLibraryFile const * const pFile, int nIndex);
+	void		AddHitG1(CG1Packet* pPacket, CSchemaMap& pSchemas, CDownload const * const pDownload, int nIndex);
+	void		AddHitG2(CG2Packet* pPacket, CSchemaMap& pSchemas, CDownload const * const pDownload, int nIndex);
 	template< typename T > bool IsValidForHit(const T * pHit) const;
 	inline bool	IsValidForHitG1(CLibraryFile const * const pFile) const;
 	inline bool	IsValidForHitG2(CLibraryFile const * const pFile) const;
 protected:
-	void		CreatePacket();
-	void		CreatePacketG1();
-	void		CreatePacketG2();
-	void		AddMetadata(CSchemaPtr pSchema, CXMLElement* pXML, int nIndex);
-	CString		GetXMLString(BOOL bNewlines = TRUE);
-	void		WriteTrailer(int nHits);
-	void		WriteTrailerG1(int nHits);
-	void		WriteTrailerG2();
-	void		DispatchPacket();
-	void		DestroyPacket();
+	CPacket*	CreatePacket();
+	CG1Packet*	CreatePacketG1();
+	CG2Packet*	CreatePacketG2();
+	void		WriteTrailer(CPacket* pPacket, CSchemaMap& pSchemas, int nHits);
+	void		WriteTrailerG1(CG1Packet* pPacket, CSchemaMap& pSchemas, int nHits);
+	void		WriteTrailerG2(CG2Packet* pPacket, CSchemaMap& pSchemas, int nHits);
+	void		DispatchPacket(CPacket* pPacket);
 	CG2Packet*	AlbumToPacket(CAlbumFolder* pFolder);
 	CG2Packet*	FoldersToPacket();
 	CG2Packet*	FolderToPacket(CLibraryFolder* pFolder);
-
 };
