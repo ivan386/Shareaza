@@ -527,10 +527,15 @@ void CDownload::OnDownloaded()
 	ASSERT( m_bComplete == false );
 
 	theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_COMPLETED, GetDisplayName() );
+
 	m_tCompleted = GetTickCount();
 	m_bDownloading = false;
 
+	StopSearch();
+
 	CloseTransfers();
+
+	ClearSources();
 
 	// AppendMetadata();
 
@@ -540,8 +545,6 @@ void CDownload::OnDownloaded()
 	}
 
 	CDownloadTask::Copy( this );
-
-	SetModified();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -597,8 +600,6 @@ void CDownload::OnMoved()
 	}
 	else
 		StopTrying();
-
-	ClearSources();
 
 	ASSERT( ! m_sPath.IsEmpty() );
 	DeleteFileEx( m_sPath + _T(".png"), FALSE, FALSE, TRUE );

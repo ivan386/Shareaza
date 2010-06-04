@@ -1359,6 +1359,9 @@ void CDownloadsWnd::OnTransfersConnect()
 	{
 		CDownload* pDownload = Downloads.GetNext( pos );
 
+		if ( pDownload->IsMoving() )
+			continue;
+
 		for ( POSITION posSource = pDownload->GetIterator(); posSource ; )
 		{
 			CDownloadSource* pSource = pDownload->GetNext( posSource );
