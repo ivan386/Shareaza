@@ -389,11 +389,11 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="BENode.cpp"
+				RelativePath="..\shareaza\BENode.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\Buffer.cpp"
+				RelativePath="..\shareaza\Buffer.cpp"
 				>
 			</File>
 			<File
@@ -487,11 +487,11 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="BENode.h"
+				RelativePath="..\shareaza\BENode.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Buffer.h"
+				RelativePath="..\shareaza\Buffer.h"
 				>
 			</File>
 			<File

@@ -22,30 +22,30 @@
 // CBuffer holds some memory, and takes care of allocating and freeing it itself
 // http://shareazasecurity.be/wiki/index.php?title=Developers.Code.CBuffer
 
-// Copy in the contents of these files here before compiling
 #include "StdAfx.h"
-#include "Shareaza.h"
-#include "Settings.h"
 #include "Buffer.h"
-#include "Network.h"
-#include "ZLib.h"
-#include "Statistics.h"
 
-// If we are compiling in debug mode, replace the text "THIS_FILE" in the code with the name of this file
+#ifdef ZLIB_H
+	#include "ZLib.h"
+#endif // ZLIB_H
+
 #ifdef _DEBUG
 #undef THIS_FILE
 static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
-// Define memory sizes to use in these methods
 #define BLOCK_SIZE  1024       // Change the allocated size of the buffer in 1 KB sized blocks
 #define BLOCK_MASK  0xFFFFFC00 // Aids in rounding to the next biggest KB of size
+
+#ifdef _WINSOCKAPI_
+static int Send(SOCKET s, const char* buf, int len) throw();
+static int Recv(SOCKET s, char* buf, int len) throw();
+#endif // _WINSOCKAPI_
 
 ///////////////////////////////////////////////////////////////////////////////
 // CBuffer construction
 
-// Makes a new blank CBuffer object with no memory block allocated yet
 CBuffer::CBuffer() :
 	m_pNext		( NULL )	// This object isn't in a list yet
 ,	m_pBuffer	( NULL )	// No memory block has been allocated for this object yet
@@ -54,20 +54,17 @@ CBuffer::CBuffer() :
 {
 }
 
-// Delete this CBuffer object
-// Frees the memory taken up by the buffer
 CBuffer::~CBuffer()
 {
 	// If the member variable points to some memory, free it
 	if ( m_pBuffer ) free( m_pBuffer );
-	m_pBuffer = NULL;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 // CBuffer add
 
 // Add data to the buffer
-void CBuffer::Add(const void* pData, const size_t nLength)
+void CBuffer::Add(const void* pData, const size_t nLength) throw()
 {
 	// If the text is blank, don't do anything
 	if ( pData == NULL ) return;
@@ -114,7 +111,7 @@ void CBuffer::Insert(const DWORD nOffset, const void * pData, const size_t nLeng
 
 // Takes a number of bytes
 // Removes this number from the start of the buffer, shifting the memory after it to the start
-inline void CBuffer::Remove(const size_t nLength)
+void CBuffer::Remove(const size_t nLength) throw()
 {
 	if ( nLength >= m_nLength )
 	{
@@ -176,7 +173,7 @@ void CBuffer::AddReversed(const void *pData, const size_t nLength)
 
 // Takes a number of new bytes we're about to add to this buffer
 // Makes sure the buffer will be big enough to hold them, allocating more memory if necessary
-bool CBuffer::EnsureBuffer(const size_t nLength)
+bool CBuffer::EnsureBuffer(const size_t nLength) throw()
 {
 	// Limit buffer size to a signed int. This is the most that can be sent/received from a socket in one call.
 	if ( nLength > 0xffffffff - m_nBuffer ) return false;
@@ -282,7 +279,7 @@ CString CBuffer::ReadString(const size_t nBytes, const UINT nCodePage)
 ///////////////////////////////////////////////////////////////////////////////
 // CBuffer read helper
 
-BOOL CBuffer::Read(void* pData, const size_t nLength)
+BOOL CBuffer::Read(void* pData, const size_t nLength) throw()
 {
 	if ( nLength > m_nLength )
 		return FALSE;
@@ -365,10 +362,12 @@ BOOL CBuffer::StartsWith(LPCSTR pszString, const size_t nLength, const BOOL bRem
 ///////////////////////////////////////////////////////////////////////////////
 // CBuffer socket receive
 
+#ifdef _WINSOCKAPI_
+
 // Takes a handle to a socket
 // Reads in data from the socket, moving it into the buffer
 // Returns the number of bytes we got
-DWORD CBuffer::Receive(const SOCKET hSocket, DWORD nSpeedLimit)
+DWORD CBuffer::Receive(SOCKET hSocket, DWORD nSpeedLimit)
 {
 	// Start the total at 0
 	DWORD nTotal = 0ul;
@@ -399,7 +398,7 @@ DWORD CBuffer::Receive(const SOCKET hSocket, DWORD nSpeedLimit)
 		char* const pData = reinterpret_cast< char* >( GetDataEnd() );
 
 		// Read the bytes from the socket and record how many are actually read
-		const int nRead = CNetwork::Recv( hSocket, pData, static_cast< int >( nLength ) );
+		const int nRead = ::Recv( hSocket, pData, static_cast< int >( nLength ) );
 
 		// Exit loop if nothing is left or an error occurs
 		if ( nRead <= 0 )
@@ -410,11 +409,20 @@ DWORD CBuffer::Receive(const SOCKET hSocket, DWORD nSpeedLimit)
 		nSpeedLimit	-= nRead;	// Adjust the limit
 	}
 
-	// Add the total to the statistics
-	Statistics.Current.Bandwidth.Incoming += nTotal;
-
 	// Return the total #bytes read
 	return nTotal;
+}
+
+static int Recv(SOCKET s, char* buf, int len) throw()
+{
+	__try	// Fix against stupid firewalls like (iS3 Anti-Spyware or Norman Virus Control)
+	{
+		return recv( s, buf, len, 0 );
+	}
+	__except( EXCEPTION_EXECUTE_HANDLER )
+	{
+		return -1;
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -422,13 +430,13 @@ DWORD CBuffer::Receive(const SOCKET hSocket, DWORD nSpeedLimit)
 
 // Send the data from the buffer to the socket
 // Returns the #bytes sent
-DWORD CBuffer::Send(const SOCKET hSocket, DWORD nSpeedLimit)
+DWORD CBuffer::Send(SOCKET hSocket, DWORD nSpeedLimit)
 {
 	// Adjust limit if there isn't enough data to send
 	nSpeedLimit = static_cast< DWORD >( min( nSpeedLimit, m_nLength ) );
 
 	// Point to the data to write
-	const char* pData = reinterpret_cast< char* >( GetDataStart() );
+	const char* pData = reinterpret_cast< char* >( m_pBuffer );
 
 	// Start the total at 0
 	DWORD nTotal = 0ul;
@@ -440,7 +448,7 @@ DWORD CBuffer::Send(const SOCKET hSocket, DWORD nSpeedLimit)
 		int nLength = static_cast< int >( min( nSpeedLimit, static_cast< DWORD >( INT_MAX ) ) );
 
 		// Send the bytes to the socket and record how many are actually sent
-		nLength = CNetwork::Send( hSocket, pData, nLength );
+		nLength = ::Send( hSocket, pData, nLength );
 
 		// Exit loop if nothing is left or an error occurs
 		if ( nLength <= 0 )
@@ -454,15 +462,28 @@ DWORD CBuffer::Send(const SOCKET hSocket, DWORD nSpeedLimit)
 	// Remove sent bytes from the buffer
 	Remove( nTotal );
 
-	// Add the total to statistics
-	Statistics.Current.Bandwidth.Outgoing += nTotal;
-
 	// Return the total #bytes sent
 	return nTotal;
 }
 
+static int Send(SOCKET s, const char* buf, int len) throw()
+{
+	__try	// Fix against stupid firewalls like (iS3 Anti-Spyware or Norman Virus Control)
+	{
+		return send( s, buf, len, 0 );
+	}
+	__except( EXCEPTION_EXECUTE_HANDLER )
+	{
+		return -1;
+	}
+}
+
+#endif // _WINSOCKAPI_
+
 //////////////////////////////////////////////////////////////////////
 // CBuffer deflate and inflate compression
+
+#ifdef ZLIB_H
 
 // Takes an option to avoid compressing a small buffer and to make sure compressing didn't actually make it bigger
 // Compresses the data in this buffer in place
@@ -678,7 +699,7 @@ bool CBuffer::InflateStreamTo( CBuffer& oBuffer, z_streamp& pStream )
 			break;
 
 		// Tell the z_stream structure where to work
-		pStream->next_in   = GetDataStart();		// Decompress the data from here
+		pStream->next_in   = m_pBuffer;				// Decompress the data from here
 		pStream->next_out  = oBuffer.GetDataEnd();	// Write decompressed data here
 		pStream->avail_out = nLength;				// There is this much room to
 													// decompress data to
@@ -734,6 +755,8 @@ void CBuffer::InflateStreamCleanup( z_streamp& pStream ) const
 	delete pStream;			// Delete the z_stream structure
 	pStream = NULL;			// Null the pointer
 }
+
+#endif // ZLIB_H
 
 //////////////////////////////////////////////////////////////////////
 // CBuffer reverse buffer

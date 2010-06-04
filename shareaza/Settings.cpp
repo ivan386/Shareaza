@@ -466,7 +466,6 @@ void CSettings::Load()
 	Add( _T("BitTorrent"), _T("SourceExchangePeriod"), &BitTorrent.SourceExchangePeriod, 10, 1, 1, 60*5, _T(" m") );
 	Add( _T("BitTorrent"), _T("TorrentCodePage"), &BitTorrent.TorrentCodePage, 0, 1, 0, 9999999 );
 	Add( _T("BitTorrent"), _T("TorrentCreatorPath"), &BitTorrent.TorrentCreatorPath, _T("TorrentWizard.exe") );
-	Add( _T("BitTorrent"), _T("TorrentExtraKeys"), &BitTorrent.TorrentExtraKeys, true );
 	Add( _T("BitTorrent"), _T("TrackerKey"), &BitTorrent.TrackerKey, true );
 	Add( _T("BitTorrent"), _T("UploadCount"), &BitTorrent.UploadCount, 4, 1, 2, 16 );
 

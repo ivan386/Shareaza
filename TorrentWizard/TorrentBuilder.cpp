@@ -1,7 +1,7 @@
 //
 // TorrentBuilder.cpp
 //
-// Copyright (c) Shareaza Development Team, 2007.
+// Copyright (c) Shareaza Development Team, 2007-2010.
 // This file is part of Shareaza Torrent Wizard (shareaza.sourceforge.net).
 //
 // Shareaza Torrent Wizard is free software; you can redistribute it
@@ -22,8 +22,6 @@
 #include "StdAfx.h"
 #include "TorrentWizard.h"
 #include "TorrentBuilder.h"
-#include "Buffer.h"
-#include "BENode.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW

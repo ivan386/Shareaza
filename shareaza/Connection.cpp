@@ -468,6 +468,9 @@ BOOL CConnection::OnRead()
 	// Read from the socket and record the # bytes read
 	DWORD nTotal = m_pInput->Receive( m_hSocket, nLimit );
 
+	// Add the total to the statistics
+	Statistics.Current.Bandwidth.Incoming += nTotal;
+
 	// If some bytes were read, add # bytes to bandwidth meter
 	if ( nTotal ) m_mInput.Add( nTotal, tNow );
 
@@ -503,6 +506,9 @@ BOOL CConnection::OnWrite()
 
 	// Read from the socket and record the # bytes sent
 	DWORD nTotal = m_pOutput->Send( m_hSocket, nLimit );
+
+	// Add the total to statistics
+	Statistics.Current.Bandwidth.Outgoing += nTotal;
 
 	// If some bytes were sent, add # bytes to bandwidth meter
 	if ( nTotal ) m_mOutput.Add( nTotal, tNow );

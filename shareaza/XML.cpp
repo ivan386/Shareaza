@@ -20,7 +20,6 @@
 //
 
 #include "StdAfx.h"
-#include "Shareaza.h"
 #include "XML.h"
 
 #ifdef DEBUG_NEW
@@ -41,7 +40,7 @@ CXMLNode::CXMLNode(CXMLElement* pParent, LPCTSTR pszName) :
 	if ( pszName )
 	{
 		m_sName = pszName;
-		ToLower( m_sName );
+		m_sName.MakeLower();
 	}
 }
 
@@ -372,9 +371,7 @@ CXMLElement* CXMLElement::Clone(CXMLElement* pParent) const
 	{
 		CXMLAttribute* pAttribute = GetNextAttribute( pos )->Clone( pClone );
 		CString strName( pAttribute->m_sName );
-
-		// Convert to lowercase with CLowerCaseTable
-		ToLower( strName );
+		strName.MakeLower();
 
 		// Delete the old attribute if one exists
 		CXMLAttribute* pExisting;
@@ -564,9 +561,7 @@ BOOL CXMLElement::ParseString(LPCTSTR& strXML)
 		if ( pAttribute->ParseString( strXML ) )
 		{
 			CString strName( pAttribute->m_sName );
-
-			// Convert to lowercase with CLowerCaseTable
-			ToLower( strName );
+			strName.MakeLower();
 
 			// Delete the old attribute if one exists
 			CXMLAttribute* pExisting;
@@ -889,9 +884,7 @@ void CXMLElement::Serialize(CArchive& ar)
 			}
 
 			CString strName( pAttribute->m_sName );
-
-			// Convert to lowercase with CLowerCaseTable
-			ToLower( strName );
+			strName.MakeLower();
 
 			// Delete the old attribute if one exists
 			CXMLAttribute* pExisting;
@@ -935,9 +928,7 @@ CXMLAttribute* CXMLElement::AddAttribute(LPCTSTR pszName, LPCTSTR pszValue)
 	{
 		pAttribute = new CXMLAttribute( this, pszName );
 		CString strName( pszName );
-
-		// Convert to lowercase with CLowerCaseTable
-		ToLower( strName );
+		strName.MakeLower();
 
 		// Delete the old attribute if one exists
 		CXMLAttribute* pExisting;
@@ -956,9 +947,7 @@ CXMLAttribute* CXMLElement::AddAttribute(CXMLAttribute* pAttribute)
 {
 	if ( pAttribute->m_pParent ) return NULL;
 	CString strName( pAttribute->m_sName );
-
-	// Convert to lowercase with CLowerCaseTable
-	ToLower( strName );
+	strName.MakeLower();
 
 	// Delete the old attribute if one exists
 	CXMLAttribute* pExisting;

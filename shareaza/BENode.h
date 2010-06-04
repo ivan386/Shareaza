@@ -39,6 +39,8 @@ public:
 	QWORD		m_nPosition;
 	QWORD		m_nSize;
 
+	static UINT	m_nDefaultCP;	// User codepage for string decoding
+
 	enum { beNull, beString, beInt, beList, beDict };
 
 // Operations
@@ -47,7 +49,7 @@ public:
 	CBENode*	Add(const LPBYTE pKey, size_t nKey);
 	CBENode*	GetNode(LPCSTR pszKey) const;
 	CBENode*	GetNode(const LPBYTE pKey, int nKey) const;
-	void		GetBth(Hashes::BtHash& oBTH) const;
+	CSHA		GetSHA1() const;
 	CString		GetStringFromSubNode(LPCSTR pszKey, UINT nEncoding, bool& pEncodingError) const;
 	CString		GetStringFromSubNode(int nItem, UINT nEncoding, bool& pEncodingError) const;
 	void		Encode(CBuffer* pBuffer) const;
@@ -56,7 +58,6 @@ public:
 private:
 	void		Decode(LPBYTE& pInput, DWORD& nInput, DWORD nSize);
 	static int	DecodeLen(LPBYTE& pInput, DWORD& nInput);
-
 
 // Inline
 public:
@@ -82,6 +83,7 @@ public:
 	CString GetString() const;
 
 	// If a torrent is badly encoded, you can try forcing a code page.
+	// Trying codepages: nCodePage, m_nDefaultCP, OEM, ANSI, as-is
 	CString DecodeString(UINT nCodePage) const;
 
 	// Check if a string is a valid path/file name.

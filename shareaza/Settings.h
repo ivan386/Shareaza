@@ -456,7 +456,6 @@ public:
 		CString		DefaultTracker;
 		DWORD		DefaultTrackerPeriod;		// Delay between tracker contact attempts if one is not specified by tracker
 		DWORD		TorrentCodePage;			// The code page to assume for a .torrent file if it isn't UTF-8
-		bool		TorrentExtraKeys;			// Check for '.utf8' keys if there is an encoding error
 		DWORD		LinkTimeout;
 		DWORD		LinkPing;
 		DWORD		RequestPipe;

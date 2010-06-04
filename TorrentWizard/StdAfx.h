@@ -1,7 +1,7 @@
 //
 // StdAfx.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of Shareaza Torrent Wizard (shareaza.sourceforge.net).
 //
 // Shareaza Torrent Wizard is free software; you can redistribute it
@@ -40,14 +40,16 @@
 #include "..\shareaza\augment\auto_array.hpp"
 
 #include "..\HashLib\HashLib.h"
+#include "..\Shareaza\Buffer.h"
+#include "..\Shareaza\BENode.h"
 
 typedef unsigned __int64 QWORD;
 
 #ifndef BIF_NEWDIALOGSTYLE
-#define BIF_NEWDIALOGSTYLE	0x0040
+	#define BIF_NEWDIALOGSTYLE	0x0040
 #endif
 #ifndef OFN_ENABLESIZING
-#define OFN_ENABLESIZING	0x00800000
+	#define OFN_ENABLESIZING	0x00800000
 #endif
 
 using namespace augment;

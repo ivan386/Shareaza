@@ -1,7 +1,7 @@
 //
 // Buffer.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -24,15 +24,19 @@
 
 #pragma once
 
+// Produces two arguments divided by comma, where first argument is a string itself
+// and second argument is a string length without null terminator
+#define _P(x)	(x),((sizeof(x))/sizeof((x)[0])-1)
+#define _PT(x)	_P(_T(x))
+
+
 // A buffer of memory that takes care of allocating and freeing itself, and has methods for compression and encoding
 class CBuffer
 {
 public:
-	// Make a new CBuffer object, and delete one
-	CBuffer();			// Construct a CBuffer object
-	virtual ~CBuffer();	// The virtual keyword indicates a class that inherits from this one may override this
+	CBuffer();
+	~CBuffer();
 
-	// Memory pointers and byte counts
 	CBuffer*	m_pNext;	// A pointer to the next CBuffer object, letting them be linked together in a list
 	BYTE*		m_pBuffer;	// The block of allocated memory
 	DWORD		m_nLength;	// The #bytes written into the block
@@ -45,16 +49,17 @@ private:
 
 // Accessors
 public:
-	DWORD GetBufferSize() const { return m_nBuffer; }	// Return the total size of the buffer
-	BYTE* GetDataStart() const { return m_pBuffer; }	// Return a pointer to the start of the data in the buffer
+	inline DWORD GetBufferSize() const { return m_nBuffer; }// Return the total size of the buffer
+	inline BYTE* GetData() const { return m_pBuffer; }		// Return a pointer to the start of the data in the buffer
+	inline DWORD GetCount() const { return m_nLength; }		// Return the filled size of the buffer
 
 // Operations
 public:
-	void	Add(const void* pData, const size_t nLength);							// Add data to the end of the buffer
+	void	Add(const void* pData, const size_t nLength) throw();					// Add data to the end of the buffer
 	void	Insert(const DWORD nOffset, const void* pData, const size_t nLength);	// Insert the data into the buffer
-	void	Remove(const size_t nLength);											// Removes data from the start of the buffer
+	void	Remove(const size_t nLength) throw();									// Removes data from the start of the buffer
 	DWORD	AddBuffer(CBuffer* pBuffer, const size_t nLength);						// Copy all or part of the data in another CBuffer object into this one
-	bool	EnsureBuffer(const size_t nLength);										// Tell the buffer to prepare to recieve this number of additional bytes
+	bool	EnsureBuffer(const size_t nLength) throw();								// Tell the buffer to prepare to recieve this number of additional bytes
 	void	AddReversed(const void* pData, const size_t nLength);					// Add data to this buffer, but with the bytes in reverse order
 
 	// Convert Unicode text to ASCII and add it to the buffer
@@ -67,32 +72,25 @@ public:
 
 	// Read the data in the buffer as text
 	CString ReadString(const size_t nBytes, const UINT nCodePage = CP_ACP);          // Reads nBytes of ASCII characters as a string
-	template
-		<
-		typename Descriptor,
-		template< typename > class StoragePolicy,
-		template< typename > class CheckingPolicy,
-		template< typename > class ValidationPolicy
-		>
-	inline void Read(Hashes::Hash< Descriptor, StoragePolicy,
-		CheckingPolicy, ValidationPolicy >& oHash) throw()
-	{
-		Read( &oHash[ 0 ], oHash.byteCount );
-	}
-	BOOL	Read(void* pData, const size_t nLength);
+
+	BOOL	Read(void* pData, const size_t nLength) throw();
 	BOOL    ReadLine(CString& strLine, BOOL bPeek = FALSE, UINT nCodePage = CP_ACP); // Reads until "\r\n"
 	BOOL    StartsWith(LPCSTR pszString, const size_t nLength, const BOOL bRemove = FALSE) throw();// Returns true if the buffer starts with this text
 
 	// Use the buffer with a socket
+#ifdef _WINSOCKAPI_
 	DWORD	Receive(SOCKET hSocket, DWORD nSpeedLimit = ~0ul);	// Move incoming data from the socket to this buffer
 	DWORD	Send(SOCKET hSocket, DWORD nSpeedLimit = ~0ul);		// Send the contents of this buffer to the computer on the far end of the socket
+#endif // _WINSOCKAPI_
 
 	// Use the buffer with the ZLib compression library
+#ifdef ZLIB_H
 	BOOL	Deflate(BOOL bIfSmaller = FALSE);						// Compress the data in this buffer
 	BOOL	Inflate();												// Decompress the data in this buffer in place
 	bool	InflateStreamTo(CBuffer& oBuffer, z_streamp& pStream);	// Decompress the data in this buffer into another buffer
 	void	InflateStreamCleanup(z_streamp& pStream) const;			// Stop stream decompression and cleanup
 	BOOL	Ungzip();												// Delete the gzip header and then remove the compression
+#endif // ZLIB_H
 
 	// Read and write a DIME message in the buffer
 	void	WriteDIME(DWORD nFlags, LPCSTR pszID, size_t nIDLength, LPCSTR pszType, size_t nTypeLength, LPCVOID pBody, size_t nBody);
@@ -100,25 +98,14 @@ public:
 
 // Inlines
 public:
-	// Add a Hash to the buffer
-	template
-	<
-		typename Descriptor,
-		template< typename > class StoragePolicy,
-		template< typename > class CheckingPolicy,
-		template< typename > class ValidationPolicy
-	>
-	void	Add(Hashes::Hash< Descriptor, StoragePolicy, CheckingPolicy, ValidationPolicy >& oHash)
-	{
-		Add( &oHash[ 0 ], oHash.byteCount );
-	}
-
 	// Clears the memory from the buffer
-	void	Clear() { m_nLength = 0; }
+	inline void	Clear() throw()
+	{
+		m_nLength = 0;
+	}
 
 	// Copy all or part of the data in another CBuffer object into this one
 	DWORD	AddBuffer(CBuffer* pBuffer) { return AddBuffer( pBuffer, pBuffer->m_nLength ); }
-
 
 	// Add ASCII text to the buffer
 	void	Print(const LPCSTR pszText, const size_t nLength) { Add( (void*)pszText, nLength ); }

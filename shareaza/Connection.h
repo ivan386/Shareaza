@@ -172,7 +172,7 @@ public:
 	{
 		CQuickLock oOutputLock( *m_pOutputSection );
 
-		m_pOutput->Add( oHash );
+		m_pOutput->Add( &oHash[ 0 ], oHash.byteCount );
 	}
 
 	template
@@ -187,7 +187,7 @@ public:
 	{
 		CQuickLock oInputLock( *m_pInputSection );
 
-		m_pInput->Read( oHash );
+		m_pInput->Read( &oHash[ 0 ], oHash.byteCount );
 	}
 
 	inline BOOL Read(CString& strData, BOOL bPeek = FALSE, UINT nCodePage = CP_ACP) throw()
