@@ -64,7 +64,7 @@ public:
 	}
 
 	// Show message in the tray
-	void		ShowTrayPopup(LPCTSTR szText, LPCTSTR szTitle = _T( CLIENT_NAME ), DWORD dwIcon = NIIF_INFO, UINT uTimeout = 15 /* seconds */);
+	void		ShowTrayPopup(LPCTSTR szText, LPCTSTR szTitle = NULL, DWORD dwIcon = NIIF_INFO, UINT uTimeout = 15 /* seconds */);
 
 	// Update tab and navigation bars
 	void		OnUpdateCmdUI();
@@ -82,6 +82,7 @@ protected:
 	CRemoteWnd			m_wndRemoteWnd;
 	CHashProgressBar	m_wndHashProgressBar;
 
+	BOOL				m_bTrayNotify;			// Is temporary notification balloon present?
 	BOOL				m_bTrayHide;			// Is main window hidden to tray?
 	BOOL				m_bTrayIcon;			// Is tray icon available?
 	BOOL				m_bTrayUpdate;			// Is tray data need to be updated?
@@ -105,6 +106,9 @@ protected:
 
 	// Remove skin from window (primarily for shutdown)
 	void		RemoveSkin();
+
+	void		AddTray();
+	void		DeleteTray();
 
 	virtual BOOL Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, LPCTSTR lpszMenuName, DWORD dwExStyle, CCreateContext* pContext);
 	virtual BOOL OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext);

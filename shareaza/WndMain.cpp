@@ -287,6 +287,7 @@ BEGIN_MESSAGE_MAP(CMainWnd, CMDIFrameWnd)
 // CMainWnd construction
 
 CMainWnd::CMainWnd() :
+	m_bTrayNotify ( FALSE ),
 	m_bTrayHide ( FALSE ),
 	m_bTrayIcon ( FALSE ),
 	m_bTrayUpdate( TRUE ),
@@ -563,11 +564,7 @@ void CMainWnd::OnClose()
 	KillTimer( 1 );
 	KillTimer( 2 );
 
-	if ( m_bTrayIcon )
-	{
-		Shell_NotifyIcon( NIM_DELETE, &m_pTray );
-		m_bTrayIcon = FALSE;
-	}
+	DeleteTray();
 
 	SaveState();
 
@@ -834,25 +831,15 @@ void CMainWnd::OnTimer(UINT_PTR nIDEvent)
 	m_wndHashProgressBar.Run();
 
 	// Switch tray icon
-
-	BOOL bNeedTrayIcon = m_bTrayHide || Settings.General.TrayMinimise || Settings.General.CloseMode == 2;
-
-	if ( bNeedTrayIcon && ! m_bTrayIcon )
+	if ( m_bTrayHide ||
+		Settings.General.TrayMinimise ||
+		Settings.General.CloseMode == 2 )
 	{
-		// Delete existing tray icon (if any), windows can't create a new icon with same uID
-		Shell_NotifyIcon( NIM_DELETE, &m_pTray );
-
-		m_pTray.uFlags = NIF_ICON | NIF_MESSAGE | NIF_TIP;
-		_tcsncpy( m_pTray.szTip, Settings.SmartAgent(), _countof( m_pTray.szTip ) );
-
-		m_bTrayUpdate = TRUE;
-		m_bTrayIcon = Shell_NotifyIcon( NIM_ADD, &m_pTray );
-		Shell_NotifyIcon( NIM_SETVERSION, &m_pTray );
+		AddTray();
 	}
-	else if ( m_bTrayIcon && ! bNeedTrayIcon )
+	else if ( ! m_bTrayNotify )
 	{
-		Shell_NotifyIcon( NIM_DELETE, &m_pTray );
-		m_bTrayIcon = FALSE;
+		DeleteTray();
 	}
 
 	// Menu Bar
@@ -913,6 +900,32 @@ void CMainWnd::OnGetMinMaxInfo(MINMAXINFO FAR* lpMMI)
 /////////////////////////////////////////////////////////////////////////////
 // CMainWnd tray functionality
 
+void CMainWnd::AddTray()
+{
+	if ( ! m_bTrayIcon )
+	{
+		// Delete existing tray icon (if any), windows can't create a new icon with same uID
+		Shell_NotifyIcon( NIM_DELETE, &m_pTray );
+
+		m_pTray.uFlags = NIF_ICON | NIF_MESSAGE | NIF_TIP;
+		_tcsncpy( m_pTray.szTip, Settings.SmartAgent(), _countof( m_pTray.szTip ) );
+
+		m_bTrayUpdate = TRUE;
+		m_bTrayIcon = Shell_NotifyIcon( NIM_ADD, &m_pTray );
+		Shell_NotifyIcon( NIM_SETVERSION, &m_pTray );
+	}
+}
+
+void CMainWnd::DeleteTray()
+{
+	if ( m_bTrayIcon )
+	{
+		Shell_NotifyIcon( NIM_DELETE, &m_pTray );
+		m_bTrayIcon = FALSE;
+		m_bTrayNotify = FALSE;
+	}
+}
+
 void CMainWnd::CloseToTray()
 {
 	if ( m_bTrayHide ) return;
@@ -948,6 +961,12 @@ LRESULT CMainWnd::OnTray(WPARAM /*wParam*/, LPARAM lParam)
 
 	case WM_RBUTTONDOWN:
 		OpenTrayMenu();
+		break;
+
+	case NIN_BALLOONHIDE:
+	case NIN_BALLOONTIMEOUT:
+	case NIN_BALLOONUSERCLICK:
+		m_bTrayNotify = FALSE;
 		break;
 	}
 
@@ -2945,7 +2964,13 @@ BOOL CMainWnd::OnDrop(IDataObject* pDataObj, DWORD /* grfKeyState */, POINT /* p
 
 void CMainWnd::ShowTrayPopup(LPCTSTR szText, LPCTSTR szTitle, DWORD dwIcon, UINT uTimeout)
 {
+	// Show temporary notify icon
+	m_bTrayNotify = TRUE;
+
+	AddTray();
+
 	if ( ! m_bTrayIcon )
+		// Tray error
 		return;
 
 	m_pTray.uFlags = NIF_INFO;
@@ -2967,10 +2992,9 @@ void CMainWnd::ShowTrayPopup(LPCTSTR szText, LPCTSTR szTitle, DWORD dwIcon, UINT
 	if ( szTitle )
 		_tcsncpy( m_pTray.szInfoTitle, szTitle, _countof( m_pTray.szInfoTitle ) );
 	else
-		m_pTray.szInfoTitle[ 0 ] = _T('\0');
+		_tcscpy( m_pTray.szInfoTitle, _T(CLIENT_NAME) );
 
-	m_pTray.dwInfoFlags = dwIcon;
-
+	m_pTray.dwInfoFlags = dwIcon | ( theApp.m_bIsVistaOrNewer ? NIIF_LARGE_ICON : 0 );
 	m_pTray.uTimeout = uTimeout * 1000;   // convert time to ms
 
 	m_bTrayIcon = Shell_NotifyIcon( NIM_MODIFY, &m_pTray );

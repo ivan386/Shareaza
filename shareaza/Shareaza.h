@@ -368,7 +368,7 @@ inline __int64 GetRandomNum<__int64>(const __int64& min, const __int64& max)
 }
 
 // Log severity (log level)
-#define MSG_SEVERITY_MASK		0x00ff
+#define MSG_SEVERITY_MASK		0x000f
 #define MSG_ERROR				0x0000
 #define MSG_WARNING				0x0001
 #define MSG_NOTICE				0x0002
@@ -381,6 +381,9 @@ inline __int64 GetRandomNum<__int64>(const __int64& min, const __int64& max)
 #define MSG_FACILITY_SEARCH		0x0100
 #define MSG_FACILITY_INCOMING	0x0200
 #define MSG_FACILITY_OUTGOING	0x0300
+
+// Log options
+#define MSG_TRAY				0x0010		// Show message in tray also
 
 #define WM_WINSOCK			(WM_APP+101)	// Winsock messages proxy to Network object ( used by WSAAsyncGetHostByName() function )
 #define WM_VERSIONCHECK		(WM_APP+102)	// Version check ( WAPARM: VERSION_CHECK nCode, LPARAM: unused )

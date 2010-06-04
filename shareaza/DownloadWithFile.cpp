@@ -262,7 +262,7 @@ DWORD CDownloadWithFile::MoveFile(LPCTSTR pszDestination, LPPROGRESS_ROUTINE lpP
 			CString strMessage;
 			strMessage.Format( IDS_DOWNLOAD_CANT_MOVE,
 				GetDisplayName(), pszDestination );
-			theApp.Message( MSG_ERROR, _T("%s %s"),
+			theApp.Message( MSG_ERROR | MSG_TRAY, _T("%s %s"),
 				strMessage, GetErrorString( dwError ) );
 			return dwError;
 		}
