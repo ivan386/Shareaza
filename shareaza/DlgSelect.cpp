@@ -56,15 +56,35 @@ BOOL CSelectDialog::OnInitDialog()
 
 	SkinMe( _T("CSelectDialog"), IDR_MAINFRAME );
 
+	m_ListCtrl.SetExtendedUI();
+
+	int dx = m_ListCtrl.GetHorizontalExtent();
+	CDC* pDC = m_ListCtrl.GetDC();
+	CFont* pFont = m_ListCtrl.GetFont();
+	CFont* pOldFont = pDC->SelectObject( pFont );
+	CSize sz;
+	TEXTMETRIC tm = {};
+	pDC->GetTextMetrics( &tm );
 	int select = 0;
 	for ( POSITION pos = m_List.GetHeadPosition(); pos; )
 	{
 		CItem it = m_List.GetNext( pos );
-		int index = m_ListCtrl.AddString( it.m_sItem );	// TODO: Add string reduction to combobox size
+		int index = m_ListCtrl.AddString( it.m_sItem );
 		m_ListCtrl.SetItemData( index, it.m_nData );
 		if ( it.m_nData == m_nData )
 			select = index;
+		sz = pDC->GetTextExtent( it.m_sItem );
+		sz.cx += tm.tmAveCharWidth;
+		if ( sz.cx > dx )
+			dx = sz.cx;
 	}
+	pDC->SelectObject( pOldFont );
+	m_ListCtrl.ReleaseDC( pDC );
+
+	dx += GetSystemMetrics( SM_CXVSCROLL ) + 2 * GetSystemMetrics( SM_CXEDGE );
+	m_ListCtrl.SetHorizontalExtent( dx );
+	m_ListCtrl.SetDroppedWidth( dx );
+
 	m_ListCtrl.SetCurSel( select );
 
 	return FALSE;
