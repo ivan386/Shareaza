@@ -202,7 +202,7 @@ void CPrivateChatFrame::OnRemoteMessage(BOOL bAction, LPCTSTR pszText)
 			strTime.Format( _T("%u:%.2u:%.2u"), nIdle / 3600, ( nIdle / 60 ) % 60, nIdle % 60 );
 
 		CString strMessage;
-		strMessage.Format( IDS_CHAT_PRIVATE_AWAY, _T(""), strTime );
+		strMessage.Format( LoadString( IDS_CHAT_PRIVATE_AWAY ), _T(""), strTime );
 		m_pSession->SendPrivateMessage( true, strMessage );
 	}
 
