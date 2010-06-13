@@ -1,7 +1,7 @@
 ; Input defines: ConfigurationName (Debug or Release), PlatformName (Win32, x64, etc.)
 
 ; Change from "Yes" to "No" on the next line if you don't compile an alpha build
-#define alpha "No"
+#define alpha "Yes"
 
 #if VER < 0x05010700
   #error Inno Setup version 5.1.7 or higher is needed for this script
