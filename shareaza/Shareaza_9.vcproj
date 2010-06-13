@@ -248,7 +248,6 @@
 				PreprocessorDefinitions="NDEBUG;WIN32;_WINDOWS;_SHAREAZA;SHAREAZA_USE_ASM;ZLIB_WINAPI;ZLIB_DLL"
 				StringPooling="true"
 				RuntimeLibrary="0"
-				EnableEnhancedInstructionSet="2"
 				FloatingPointModel="2"
 				DefaultCharIsUnsigned="true"
 				RuntimeTypeInfo="false"
