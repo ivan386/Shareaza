@@ -813,10 +813,15 @@ BOOL CShareazaURL::ParseDonkey(LPCTSTR pszURL)
 
 	if ( _tcsnicmp( pszURL, _T("|file|"), 6 ) == 0 )
 	{
+		// ed2k://|file|Shareaza1600.exe|789544|3fb626ed1a9f4cb9921107f510148370|/
+		// ed2k://|file|Shareaza_2.1.0.0.exe|3304944|A63D221505E99043B7E7308C67F81986|h=XY5VGKFVGJFYWMOAR5XS44YCEPXSL2JZ|/|sources,1.2.3.4:5555|/
+
 		return ParseDonkeyFile( pszURL + 6 );
 	}
 	else if ( _tcsnicmp( pszURL, _T("|server|"), 8 ) == 0 )
 	{
+		// ed2k://|server|1.2.3.4|4661|/
+
 		return ParseDonkeyServer( pszURL + 8 );
 	}
 	else if ( _tcsnicmp( pszURL, _T("|meturl|"), 8 ) == 0 )
@@ -826,6 +831,25 @@ BOOL CShareazaURL::ParseDonkey(LPCTSTR pszURL)
 	else if ( _tcsnicmp( pszURL, _T("|serverlist|"), 12 ) == 0 )
 	{
 		return ParseDiscovery( pszURL + 12, CDiscoveryService::dsServerMet );
+	}
+	else if ( _tcsnicmp( pszURL, _T("|search|"), 8 ) == 0 )
+	{
+		// ed2k://|search|Shareaza|/
+
+		CString sURL( pszURL + 8 );
+
+		int nSep = sURL.Find( _T('|') );
+		if ( nSep <= 0 )
+			return FALSE;
+
+		m_sName = URLDecode( sURL.Mid( 0, nSep ) ).Trim();
+
+		if ( m_sName.IsEmpty() )
+			return FALSE;
+
+		m_nAction = uriSearch;
+
+		return TRUE;
 	}
 	else
 	{
@@ -936,9 +960,6 @@ BOOL CShareazaURL::ParseDonkeyFile(LPCTSTR pszURL)
 	return TRUE;
 }
 
-// ed2k://|file|Shareaza1600.exe|789544|3fb626ed1a9f4cb9921107f510148370|/
-// ed2k://|file|Shareaza_2.1.0.0.exe|3304944|A63D221505E99043B7E7308C67F81986|h=XY5VGKFVGJFYWMOAR5XS44YCEPXSL2JZ|/|sources,1.2.3.4:5555|/
-
 //////////////////////////////////////////////////////////////////////
 // CShareazaURL parse eDonkey2000 server URL
 
@@ -961,8 +982,6 @@ BOOL CShareazaURL::ParseDonkeyServer(LPCTSTR pszURL)
 	return TRUE;
 }
 
-// ed2k://|server|1.2.3.4|4661|/
-
 //////////////////////////////////////////////////////////////////////
 // CShareazaURL parse "mp2p:" URLs
 
@@ -972,10 +991,14 @@ BOOL CShareazaURL::ParsePiolet(LPCTSTR pszURL)
 
 	if ( _tcsnicmp( pszURL, _T("file|"), 5 ) == 0 )
 	{
+		// mp2p://file|Shareaza1600.exe|789544|3fb626ed1a9f4cb9921107f510148370/
+
 		return ParsePioletFile( pszURL + 5 );
 	}
 	else if ( _tcsnicmp( pszURL, _T("|file|"), 6 ) == 0 )
 	{
+		// mp2p://|file|Shareaza1600.exe|789544|3fb626ed1a9f4cb9921107f510148370/
+
 		return ParsePioletFile( pszURL + 6 );
 	}
 	else
@@ -1016,8 +1039,6 @@ BOOL CShareazaURL::ParsePioletFile(LPCTSTR pszURL)
 
 	return TRUE;
 }
-
-// mp2p://file|Shareaza1600.exe|789544|3fb626ed1a9f4cb9921107f510148370/
 
 //////////////////////////////////////////////////////////////////////
 // CShareazaURL parse discovery service URL
