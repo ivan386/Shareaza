@@ -251,7 +251,7 @@ BOOL CFragmentedFile::Open(LPCTSTR pszFile, QWORD nOffset, QWORD nLength,
 	return pFile && ( m_nFileError == ERROR_SUCCESS );
 }
 
-BOOL CFragmentedFile::Open(const CShareazaFile& oSHFile, BOOL bWrite)
+BOOL CFragmentedFile::Open(CShareazaFile& oSHFile, BOOL bWrite)
 {
 	CString sUniqueName = oSHFile.GetFilename();
 
@@ -280,6 +280,11 @@ BOOL CFragmentedFile::Open(const CShareazaFile& oSHFile, BOOL bWrite)
 		{
 			strSource = pFile->GetPath();
 		}
+	}
+
+	if ( oSHFile.m_sPath.IsEmpty() )
+	{
+		oSHFile.m_sPath = strSource;
 	}
 
 	if ( ! Open( strSource, 0, oSHFile.m_nSize, bWrite, oSHFile.m_sName ) )

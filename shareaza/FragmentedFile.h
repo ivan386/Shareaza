@@ -160,7 +160,7 @@ public:
 	BOOL	Open(LPCTSTR pszFile, QWORD nOffset = 0, QWORD nLength = SIZE_UNKNOWN,
 		BOOL bWrite = FALSE, LPCTSTR pszName = NULL, int nPriority = prNormal );
 	// Open file from disk or create file inside incomplete folder from library by hash
-	BOOL	Open(const CShareazaFile& oSHFile, BOOL bWrite);
+	BOOL	Open(CShareazaFile& oSHFile, BOOL bWrite);
 	// Open file from disk or create file inside incomplete folder file(s) from .torrent
 	BOOL	Open(const CBTInfo& oInfo, BOOL bWrite, CString& sErrorMessage);
 	ULONG	AddRef();
