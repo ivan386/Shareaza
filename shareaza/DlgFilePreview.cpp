@@ -281,10 +281,8 @@ void CFilePreviewDlg::OnClose()
 		if ( m_pPlugin )
 			m_pPlugin->Cancel();
 	}
-	else
-	{
-		DestroyWindow();
-	}
+
+	DestroyWindow();
 }
 
 void CFilePreviewDlg::OnDestroy()
