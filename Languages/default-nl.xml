@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
 	<!-- Manifest -->
-	<manifest name="Nederlands" author="Jan-Willem Koornwinder (Thurstydog)" updatedBy="ceceboy, Neglacio, RoestVrijStaal" description="Shareaza Default Dutch Skin File" link="http://shareaza.sourceforge.net/" email="Neglacio@live.nl, roestvrijstaal@users.sourceforge.net " version="2.5.0.0" type="Language" language="nl" prompt="Klik hier om Nederlands als taal te kiezen." dir="ltr"/>
+	<manifest name="Nederlands" author="Jan-Willem Koornwinder (Thurstydog)" updatedBy="ceceboy, Neglacio, RoestVrijStaal" description="Shareaza Default Dutch Skin File" link="http://shareaza.sourceforge.net/" email="Neglacio@live.nl, roestvrijstaal@users.sourceforge.net " version="2.5.3.0" type="Language" language="nl" prompt="Klik hier om Nederlands als taal te kiezen." dir="ltr"/>
 	<!-- Toolbar Definitions -->
 	<toolbars>
 		<!-- MAIN WINDOW -->
@@ -330,10 +330,10 @@
 		</toolbar>
 		<!-- IRC WINDOW -->
 		<toolbar name="CIRCFrame">
-			<button id="ID_IRC_CONNECT" text="Verbinden" tip="Connect to IRC"/>
-			<button id="ID_IRC_DISCONNECT" text="Disconnect" tip="Disconnect from IRC"/>
+			<button id="ID_IRC_CONNECT" text="Verbinden" tip="Verbinden met IRC"/>
+			<button id="ID_IRC_DISCONNECT" text="Verbreek Verbinding" tip="Verbinding verbreken met IRC"/>
 			<rightAlign/>
-			<button id="ID_IRC_SETTINGS" text="Settings" tip="Configure IRC Settings"/>
+			<button id="ID_IRC_SETTINGS" text="Instellingen" tip="IRC Instellingen Configureren"/>
 		</toolbar>
 		<!-- NEIGHBOURS WINDOW -->
 		<toolbar name="CNeighboursWnd.Basic">
@@ -344,11 +344,11 @@
 			<button id="ID_NETWORK_G1" text="Gnutella1"/>
 			<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 			<separator/>
-			<button id="ID_NEIGHBOURS_SETTINGS" text="Settings"/>
+			<button id="ID_NEIGHBOURS_SETTINGS" text="Instellingen"/>
 		</toolbar>
 		<toolbar name="CNeighboursWnd">
 			<button id="ID_NETWORK_CONNECT_TO" text="Verbinden met..."/>
-			<button id="ID_NEIGHBOURS_DISCONNECT" text="Disconnect"/>
+			<button id="ID_NEIGHBOURS_DISCONNECT" text="Verbreek Verbinding"/>
 			<separator/>
 			<button id="ID_BROWSE_LAUNCH" text="Gebruiker bekijken"/>
 			<button id="ID_NEIGHBOURS_CHAT" text="Chatten"/>
@@ -358,7 +358,7 @@
 			<button id="ID_NETWORK_G1" text="Gnutella1"/>
 			<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 			<separator/>
-			<button id="ID_NEIGHBOURS_SETTINGS" text="Settings"/>
+			<button id="ID_NEIGHBOURS_SETTINGS" text="Instellingen"/>
 		</toolbar>
 		<!-- SECURITY WINDOW -->
 		<toolbar name="CSecurityWnd">
@@ -376,15 +376,15 @@
 		</toolbar>
 		<!-- SCHEDULER WINDOW -->
 		<toolbar name="CSchedulerWnd">
-			<button id="ID_SCHEDULER_EDIT" text="Edit Task"/>
+			<button id="ID_SCHEDULER_EDIT" text="Taak Bewerken"/>
 			<separator/>
 			<button id="ID_SCHEDULER_ACTIVATE" text="Actief"/>
-			<button id="ID_SCHEDULER_DEACTIVATE" text="Werkeloos"/>
+			<button id="ID_SCHEDULER_DEACTIVATE" text="Deactiveren"/>
 			<separator/>
-			<button id="ID_SCHEDULER_ADD" text="Add Task"/>
-			<button id="ID_SCHEDULER_REMOVE" text="Verwijder &gt;"/>
+			<button id="ID_SCHEDULER_ADD" text="Taak Toevoegen"/>
+			<button id="ID_SCHEDULER_REMOVE" text="Verwijder Taak"/>
 			<separator/>
-			<button id="ID_SCHEDULER_REMOVE_ALL" text="Verwijder &gt;"/>
+			<button id="ID_SCHEDULER_REMOVE_ALL" text="Verwijder Alles"/>
 			<rightAlign/>
 			<button id="ID_SCHEDULER_IMPORT" text="Lijst Importeren"/>
 			<button id="ID_SCHEDULER_EXPORT" text="Lijst Exporteren"/>
@@ -404,12 +404,12 @@
 		<!-- HOST CACHE WINDOW -->
 		<toolbar name="CHostCacheWnd.Basic">
 			<button id="ID_HOSTCACHE_CONNECT" text="Verbinden met..."/>
-			<button id="ID_HOSTCACHE_DISCONNECT" text="Disconnect"/>
+			<button id="ID_HOSTCACHE_DISCONNECT" text="Verbreek Verbinding"/>
 			<button id="ID_HOSTCACHE_REMOVE" text="Verwijderen"/>
 		</toolbar>
 		<toolbar name="CHostCacheWnd">
 			<button id="ID_HOSTCACHE_CONNECT" text="Verbinden met..."/>
-			<button id="ID_HOSTCACHE_DISCONNECT" text="Disconnect"/>
+			<button id="ID_HOSTCACHE_DISCONNECT" text="Verbreek Verbinding"/>
 			<button id="ID_HOSTCACHE_REMOVE" text="Verwijderen"/>
 			<rightAlign/>
 			<button id="ID_HOSTCACHE_G2_HORIZON" text="G2 Cluster"/>
@@ -432,7 +432,7 @@
 			<button id="ID_CHAT_PRIORITY" text="Voorrang geven"/>
 			<separator/>
 			<button id="ID_CHAT_CONNECT" text="Verbinden" visible="false"/>
-			<button id="ID_CHAT_DISCONNECT" text="Disconnect"/>
+			<button id="ID_CHAT_DISCONNECT" text="Verbreek Verbinding"/>
 		</toolbar>
 		<!-- WEBSERVICES -->
 		<toolbar name="WebServices.ShareMonkey">
@@ -517,7 +517,7 @@
 					<item id="ID_VIEW_SECURITY" text="Beveili_ging"/>
 					<item id="ID_VIEW_HOSTS" text="Gastheer C_ache"/>
 					<item id="ID_VIEW_DISCOVERY" text="Disco_very"/>
-					<item id="ID_VIEW_SCHEDULER" text="Planner"/>
+					<item id="ID_VIEW_SCHEDULER" text="Pla_nner"/>
 				</menu>
 				<separator/>
 				<item id="ID_VIEW_BASIC" text="Normale _stijl"/>
@@ -575,8 +575,8 @@
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_CONNECT_TO" text="Verbinden _met..." shortcut="Ctrl+T"/>
-				<item id="ID_NETWORK_BROWSE_TO" text="_Gebruiker bekijken"/>
-				<item id="ID_NETWORK_CHAT_TO" text="Chatten"/>
+				<item id="ID_NETWORK_BROWSE_TO" text="_Gebruiker Bekijken..."/>
+				<item id="ID_NETWORK_CHAT_TO" text="Chatten met _Gebruiker..."/>
 				<separator/>
 				<item id="ID_NETWORK_AUTO_CLOSE" text="Afsluiten na ver_keer"/>
 				<item id="ID_NETWORK_EXIT" text="_Afsluiten"/>
@@ -592,7 +592,7 @@
 				<separator/>
 				<item id="ID_VIEW_SECURITY" text="Beveili_ging"/>
 				<item id="ID_VIEW_HOSTS" text="Gastheer C_ache"/>
-				<item id="ID_VIEW_SCHEDULER" text="Planner"/>
+				<item id="ID_VIEW_SCHEDULER" text="Pla_nner"/>
 				<separator/>
 				<menu text="Uitg_ebreid">
 					<item id="ID_VIEW_SYSTEM" text="S_ysteem" shortcut="F11"/>
@@ -607,7 +607,7 @@
 					<item id="ID_VIEW_HOSTS" text="Gastheer C_ache" shortcut="F8"/>
 					<item id="ID_VIEW_DISCOVERY" text="Disco_very" shortcut="F9"/>
 					<item id="ID_VIEW_TRAFFIC" text="_Grafiek" shortcut="F10"/>
-					<item id="ID_VIEW_SCHEDULER" text="Planner" shortcut="Ctrl+Shift+F11"/>
+					<item id="ID_VIEW_SCHEDULER" text="Pla_nner" shortcut="Ctrl+Shift+F11"/>
 					<separator/>
 					<item id="ID_VIEW_PACKETS" text="_Pakket dump" shortcut="Ctrl+F1"/>
 					<item id="ID_VIEW_SEARCH_MONITOR" text="Zoekmonito_r" shortcut="Ctrl+F2"/>
@@ -676,8 +676,8 @@
 				<item id="ID_NETWORK_DISCONNECT" text="Verbinding ver_breken"/>
 				<separator/>
 				<item id="ID_NETWORK_CONNECT_TO" text="Verbinden _met..." shortcut="Ctrl+T"/>
-				<item id="ID_NETWORK_BROWSE_TO" text="_Gebruiker bekijken"/>
-				<item id="ID_NETWORK_CHAT_TO" text="Chatten"/>
+				<item id="ID_NETWORK_BROWSE_TO" text="_Gebruiker Bekijken..."/>
+				<item id="ID_NETWORK_CHAT_TO" text="Chatten met _Gebruiker..."/>
 				<separator/>
 				<menu text="_Netwerken Kiezen">
 					<item id="ID_NETWORK_G2" text="Verbinden met _Gnutella2"/>
@@ -701,7 +701,7 @@
 				<item id="ID_VIEW_HOSTS" text="Gastheer C_ache" shortcut="F8"/>
 				<item id="ID_VIEW_DISCOVERY" text="Disco_very" shortcut="F9"/>
 				<item id="ID_VIEW_TRAFFIC" text="_Grafiek" shortcut="F10"/>
-				<item id="ID_VIEW_SCHEDULER" text="Planner" shortcut="Ctrl+Shift+F11"/>
+				<item id="ID_VIEW_SCHEDULER" text="Pla_nner" shortcut="Ctrl+Shift+F11"/>
 				<separator/>
 				<item id="ID_VIEW_PACKETS" text="_Pakket dump" shortcut="Ctrl+F1"/>
 				<item id="ID_VIEW_SEARCH_MONITOR" text="Zoekmonito_r" shortcut="Ctrl+F2"/>
@@ -778,7 +778,7 @@
 				<item id="ID_VIEW_UPLOADS" text="_Uploads"/>
 				<item id="ID_VIEW_SECURITY" text="Beveili_ging"/>
 				<item id="ID_VIEW_HOSTS" text="Gastheer C_ache"/>
-				<item id="ID_VIEW_SCHEDULER" text="Planner"/>
+				<item id="ID_VIEW_SCHEDULER" text="Pla_nner"/>
 			</menu>
 		</menu>
 		<menu name="CMainWnd.View.Tabbed">
@@ -794,7 +794,7 @@
 			<item id="ID_VIEW_HOSTS" text="Gastheer C_ache"/>
 			<item id="ID_VIEW_DISCOVERY" text="Disco_very"/>
 			<item id="ID_VIEW_TRAFFIC" text="_Grafiek"/>
-			<item id="ID_VIEW_SCHEDULER" text="Planner"/>
+			<item id="ID_VIEW_SCHEDULER" text="Pla_nner"/>
 			<separator/>
 			<item id="ID_VIEW_PACKETS" text="_Pakket dump"/>
 			<item id="ID_VIEW_SEARCH_MONITOR" text="Zoekmonito_r"/>
@@ -814,7 +814,7 @@
 			<item id="ID_VIEW_HOSTS" text="Gastheer C_ache"/>
 			<item id="ID_VIEW_DISCOVERY" text="Disco_very"/>
 			<item id="ID_VIEW_TRAFFIC" text="_Grafiek"/>
-			<item id="ID_VIEW_SCHEDULER" text="Planner"/>
+			<item id="ID_VIEW_SCHEDULER" text="Pla_nner"/>
 			<separator/>
 			<item id="ID_VIEW_PACKETS" text="_Pakket dump"/>
 			<item id="ID_VIEW_SEARCH_MONITOR" text="Zoekmonito_r"/>
@@ -867,7 +867,7 @@
 				<item id="ID_VIEW_UPLOADS" text="_Uploads"/>
 				<item id="ID_VIEW_SECURITY" text="Beveili_ging"/>
 				<item id="ID_VIEW_HOSTS" text="Gastheer C_ache"/>
-				<item id="ID_VIEW_SCHEDULER" text="Planner"/>
+				<item id="ID_VIEW_SCHEDULER" text="Pla_nner"/>
 			</menu>
 		</menu>
 		<menu name="CHomeWnd.Tabbed">
@@ -883,7 +883,7 @@
 			<item id="ID_VIEW_HOSTS" text="Gastheer C_ache"/>
 			<item id="ID_VIEW_DISCOVERY" text="Disco_very"/>
 			<item id="ID_VIEW_TRAFFIC" text="_Grafiek"/>
-			<item id="ID_VIEW_SCHEDULER" text="Planner"/>
+			<item id="ID_VIEW_SCHEDULER" text="Pla_nner"/>
 			<separator/>
 			<item id="ID_VIEW_PACKETS" text="_Pakket dump"/>
 			<item id="ID_VIEW_SEARCH_MONITOR" text="Zoekmonito_r"/>
@@ -1071,7 +1071,7 @@
 			</menu>
 			<item id="ID_DOWNLOADS_HELP" text="_Help..."/>
 			<separator/>
-			<item id="ID_DOWNLOADS_EDIT" text="Uitgebreid aan_passen..."/>
+			<item id="ID_DOWNLOADS_EDIT" text="_Geadvanceerde Eigenschappen"/>
 		</menu>
 		<menu name="CDownloadsWnd.Source">
 			<item id="ID_TRANSFERS_CONNECT" text="_Starten"/>
@@ -1122,7 +1122,7 @@
 			<separator/>
 			<item id="ID_DOWNLOAD_GROUP_SHOW" text="Groepen _tonen"/>
 			<separator/>
-			<item id="ID_DOWNLOAD_GROUP_PROPERTIES" text="Uitgebreid aan_passen..."/>
+			<item id="ID_DOWNLOAD_GROUP_PROPERTIES" text="_Geadvanceerde Eigenschappen"/>
 		</menu>
 		<menu name="CDownloadsWnd.Filter">
 			<item id="ID_DOWNLOADS_FILTER_ALL" text="_Alles tonen"/>
@@ -1213,7 +1213,7 @@
 			<item id="ID_LIBRARY_ALBUM_OPEN" text="_Openen"/>
 			<item id="ID_LIBRARY_ALBUM_DELETE" text="Ver_wijderen"/>
 			<separator/>
-			<item id="ID_LIBRARY_ALBUM_PROPERTIES" text="Uitgebreid aan_passen..."/>
+			<item id="ID_LIBRARY_ALBUM_PROPERTIES" text="_Geadvanceerde Eigenschappen"/>
 		</menu>
 		<menu name="CLibraryFileView.Physical.Basic">
 			<item id="ID_LIBRARY_LAUNCH" text="_Openen of afspelen"/>
@@ -1244,7 +1244,7 @@
 			<item id="ID_LIBRARY_REBUILD_ANSI" text="_Lokaliseer metadata"/>
 			<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh metadata"/>
 			<separator/>
-			<item id="ID_LIBRARY_PROPERTIES" text="Uitgebreid aan_passen..."/>
+			<item id="ID_LIBRARY_PROPERTIES" text="_Geadvanceerde Eigenschappen"/>
 		</menu>
 		<menu name="CLibraryFileView.Physical">
 			<item id="ID_LIBRARY_LAUNCH" text="_Openen of afspelen"/>
@@ -1281,7 +1281,7 @@
 			<separator/>
 			<item id="ID_SHELL_MENU" text="Conte_xtmenu"/>
 			<separator/>
-			<item id="ID_LIBRARY_PROPERTIES" text="Uitgebreid aan_passen..."/>
+			<item id="ID_LIBRARY_PROPERTIES" text="_Geadvanceerde Eigenschappen"/>
 		</menu>
 		<menu name="CLibraryFileView.Virtual.Basic">
 			<item id="ID_LIBRARY_LAUNCH" text="_Openen of afspelen"/>
@@ -1317,7 +1317,7 @@
 			<separator/>
 			<item id="ID_SHELL_MENU" text="Conte_xtmenu"/>
 			<separator/>
-			<item id="ID_LIBRARY_PROPERTIES" text="Uitgebreid aan_passen..."/>
+			<item id="ID_LIBRARY_PROPERTIES" text="_Geadvanceerde Eigenschappen"/>
 		</menu>
 		<menu name="CLibraryFileView.Virtual">
 			<item id="ID_LIBRARY_LAUNCH" text="_Openen of afspelen"/>
@@ -1356,7 +1356,7 @@
 			<separator/>
 			<item id="ID_SHELL_MENU" text="Conte_xtmenu"/>
 			<separator/>
-			<item id="ID_LIBRARY_PROPERTIES" text="Uitgebreid aan_passen..."/>
+			<item id="ID_LIBRARY_PROPERTIES" text="_Geadvanceerde Eigenschappen"/>
 		</menu>
 		<!-- MEDIA WINDOW -->
 		<menu name="CMediaFrame.Basic">
@@ -1551,19 +1551,19 @@
 				<item id="ID_SECURITY_POLICY_DENY" text="_Weigeren"/>
 			</menu>
 			<separator/>
-			<item id="ID_SECURITY_EDIT" text="Uitgebreid aan_passen..."/>
+			<item id="ID_SECURITY_EDIT" text="_Geadvanceerde Eigenschappen"/>
 		</menu>
 		<!-- SCHEDULER WINDOW -->
 		<menu name="CSchedulerWnd">
-			<item id="ID_SCHEDULER_ADD" text="_Add Scheduled Task"/>
+			<item id="ID_SCHEDULER_ADD" text="_Voeg Geplande Taak toe"/>
 			<separator/>
-			<item id="ID_SCHEDULER_ACTIVATE" text="Actief"/>
-			<item id="ID_SCHEDULER_DEACTIVATE" text="Werkeloos"/>
+			<item id="ID_SCHEDULER_ACTIVATE" text="A_ctiveer"/>
+			<item id="ID_SCHEDULER_DEACTIVATE" text="_Deactiveer"/>
 			<separator/>
 			<item id="ID_SCHEDULER_REMOVE" text="Ver_wijderen"/>
-			<item id="ID_SCHEDULER_EDIT" text="_Aanpassen:"/>
+			<item id="ID_SCHEDULER_EDIT" text="_Aanpassen"/>
 			<separator/>
-			<item id="ID_SCHEDULER_REMOVE_ALL" text="_Bestanden verwijderen"/>
+			<item id="ID_SCHEDULER_REMOVE_ALL" text="Verwijder Alle_s"/>
 			<separator/>
 			<item id="ID_SCHEDULER_IMPORT" text="_Importeren..."/>
 			<item id="ID_SCHEDULER_EXPORT" text="E_xporteren..."/>
@@ -1582,7 +1582,7 @@
 			<separator/>
 			<item id="ID_DISCOVERY_ADD" text="Service _toevoegen..."/>
 			<separator/>
-			<item id="ID_DISCOVERY_EDIT" text="Uitgebreid aan_passen..."/>
+			<item id="ID_DISCOVERY_EDIT" text="_Geadvanceerde Eigenschappen"/>
 		</menu>
 		<!-- PRIVATE CHAT FRAME -->
 		<menu name="CPrivateChatFrame">
@@ -1624,7 +1624,7 @@
 			<menu text="Control">
 				<item id="ID_IRC_TIME" text="_Tijd"/>
 				<item id="ID_IRC_VERSION" text="_Versie"/>
-				<item id="ID_IRC_BROWSE" text="Bekijken"/>
+				<item id="ID_IRC_BROWSE" text="_Bekijken"/>
 			</menu>
 			<separator/>
 			<menu text="Controle">
@@ -2362,7 +2362,7 @@
 		<tip id="ID_DOWNLOADS_CLEAR_INCOMPLETE" message="Beëindig de geselecteerde onvolledige downloads."/>
 		<tip id="ID_DOWNLOADS_CLEAR_PAUSED" message="De gepauzeerde downloads wissen."/>
 		<tip id="ID_DOWNLOADS_COPY" message="Kopieër het URI voor het geselecteerde bestand."/>
-		<tip id="ID_DOWNLOADS_EDIT" message="Toon het uitgebreid aanpassen venster..."/>
+		<tip id="ID_DOWNLOADS_EDIT" message="Toon de geadvanceerde download eigenschappen..."/>
 		<tip id="ID_DOWNLOADS_ENQUEUE" message="Voeg de geselecteerde downloads toe aan je afspeellijst."/>
 		<tip id="ID_DOWNLOADS_FILE_DELETE" message="Verwijder de geselecteerde voltooide bestanden."/>
 		<tip id="ID_DOWNLOADS_FILTER_ACTIVE" message="Laat alle actieve downloads zien."/>
@@ -2501,9 +2501,9 @@
 		<tip id="ID_MEDIA_STOP" message="Stoppen het afspelen van het huidige mediabestand." tip="Stoppen"/>
 		<tip id="ID_MEDIA_VIS" message="Kies een visualisatieplugin voor audio..."/>
 		<tip id="ID_MEDIA_ZOOM" message="De zoom en de breedte-hoogte verhouding van de video aanpassen."/>
-		<tip id="IDC_MEDIA_POSITION" value="Seek to a position in the media file." tip="Zoeken:"/>
+		<tip id="IDC_MEDIA_POSITION" value="Seek to a position in the media file." tip="Zoeken"/>
 		<tip id="IDC_MEDIA_SPEED" value="Adjust the speed of the media file." tip="Snelheid"/>
-		<tip id="IDC_MEDIA_VOLUME" value="Adjust the audio volume." tip="Volume:"/>
+		<tip id="IDC_MEDIA_VOLUME" value="Adjust the audio volume." tip="Volume"/>
 		<tip id="ID_MONITOR_CLOSE" message="Sluit de monitor."/>
 		<tip id="ID_NEIGHBOURS_CHAT" message="Open een chatsessie met de geselecteerde gebruiker."/>
 		<tip id="ID_NEIGHBOURS_COPY" message="Kopiëer een URI om toegang te verkrijgen tot de geselecteerde gastheer."/>
@@ -2514,7 +2514,7 @@
 		<tip id="ID_NEIGHBOURS_VIEW_OUTGOING" message="Een nieuw pakket dump venster openen om uitgaand verkeer naar deze bron te controleren."/>
 		<tip id="ID_NETWORK_AUTO_CLOSE" message="Shareaza automatisch afsluiten als het dataverkeer afgerond is."/>
 		<tip id="ID_NETWORK_BROWSE_TO" message="Doorzoek een gebruiker, om zijn profiel en gedeelde bestanden te bekijken..."/>
-		<tip id="ID_NETWORK_CHAT_TO" message="Open een chatsessie met de geselecteerde gebruiker."/>
+		<tip id="ID_NETWORK_CHAT_TO" message="Open een chatsessie met een gebruiker..."/>
 		<tip id="ID_NETWORK_CONNECT" message="Verbinden met het netwerk."/>
 		<tip id="ID_NETWORK_CONNECT_TO" message="Zelf verbinding maken met een gastheer..."/>
 		<tip id="ID_NETWORK_DISCONNECT" message="De verbinding met het netwerk verbreken."/>
@@ -2660,23 +2660,23 @@
 		<string id="WINDOW_HELP" value="Shareaza help"/>
 		<string id="WINDOW_IRC" value="Shareaza Chat"/>
 		<string id="WINDOW_SCHEDULER" value="Planner"/>
-		<string id="154" value="Weet je zeker dat je de skin &quot;%s&quot; wilt verwijderen? Dit kan niet ongedaan worden gemaakt."/>
-		<string id="156" value="Scheduled time has already passed.\n\nPlease select a time in the future."/>
-		<string id="157" value="_Bandbreedte:"/>
-		<string id="158" value="Bandwidth: Reduced Speed"/>
-		<string id="159" value="_Bandbreedte:"/>
-		<string id="160" value="Shareaza afsluiten."/>
-		<string id="161" value="System: Disconnect Dial-up Connection"/>
-		<string id="162" value="System: Turn Off the Computer"/>
-		<string id="163" value="Selecteer alsjeblieft de gebruikersomgeving:"/>
-		<string id="164" value="Specific day(s) of week"/>
+		<string id="154" value="Weet je zeker dat je alle geplande taken wilt verwijderen? Dit kan niet ongedaan worden gemaakt."/>
+		<string id="156" value="Geplande tijd is voorbij.\n\nSelecteer alstublieft een tijd in de toekomst."/>
+		<string id="157" value="Bandbreedte: Volledige Snelheid"/>
+		<string id="158" value="Bandbreedte: Gereduceerde Snelheid"/>
+		<string id="159" value="Bandbreedte: Stop"/>
+		<string id="160" value="Systeem: Shareaza Afsluiten"/>
+		<string id="161" value="Systeem: Verbreek Dial-up Verbinding"/>
+		<string id="162" value="Systeem: De Computer Uitzetten"/>
+		<string id="163" value="Selecteer alsjeblieft een taak."/>
+		<string id="164" value="Specifieke dag(en) van de week"/>
 		<string id="165" value="Actief"/>
 		<string id="166" value="Werkeloos"/>
-		<string id="167" value="Geen"/>
-		<string id="168" value="Beoordeling"/>
-		<string id="169" value="No Tasks Currently Scheduled"/>
-		<string id="172" value="Maandag"/>
-		<string id="173" value="You should select at least one day of week."/>
+		<string id="167" value="Gedaan"/>
+		<string id="168" value="Wachten..."/>
+		<string id="169" value="Er Zijn Momenteel Geen Taken Gepland"/>
+		<string id="172" value="Vandaag Gedaan"/>
+		<string id="173" value="Je moet ten minste een dag van de week selecteren."/>
 		<string id="7000" value="weet je zeker dat je dit filter wilt verwijderen?"/>
 		<string id="7001" value="&amp;Schemas"/>
 		<string id="7002" value="Meerdere Waardes"/>
@@ -2713,7 +2713,7 @@
 		<string id="8069" value="Verbinden"/>
 		<string id="8070" value="Verbinding maken..."/>
 		<string id="8071" value="Verbonden"/>
-		<string id="8072" value="Disconnect"/>
+		<string id="8072" value="Verbreek Verbinding"/>
 		<string id="8096" value="Dit gedeelte laat meer informatie zien over de geselecteerde bestanden."/>
 		<string id="8097" value="Er is één bron beschikbaar (%s).  "/>
 		<string id="8098" value="Er zijn %i bronnen beschikbaar (%s).  "/>
@@ -2752,7 +2752,7 @@
 		<string id="8156" value="Zoeken"/>
 		<string id="8157" value="Resultaten"/>
 		<string id="8158" value="Wissen"/>
-		<string id="8159" value="Uitgebreid"/>
+		<string id="8159" value="Geadvanceerd"/>
 		<string id="8160" value="Een verbinding wordt aangemaakt met gastheer..."/>
 		<string id="8161" value="Een pushaanvraag is verstuurd, aan het wachten op verbinding..."/>
 		<string id="8162" value="Verbonden, het bekijken is aangevraagd..."/>
@@ -3385,10 +3385,10 @@
 		<string id="20242" value="Opnieuw Proberen"/>
 		<string id="20243" value="Doorgaan"/>
 		<string id="20244" value="&amp;Herinner mijn selectie de volgende keer"/>
-		<string id="20245" value="_Nieuwe map..."/>
-		<string id="32825" value="_Open mijn map met complete downloads"/>
-		<string id="32773" value="Check _Version"/>
-		<string id="61215" value="Activate this window"/>
+		<string id="20245" value="Nieuwe Map"/>
+		<string id="32825" value="Open mijn map met complete downloads"/>
+		<string id="32773" value="Controleer op een nieuwe versie"/>
+		<string id="61215" value="Activeer dit venster"/>
 	</strings>
 	<!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 	<!-- Don't edit dialogs manualy! Use DialogScan feature instead -->
@@ -3626,11 +3626,11 @@
 			<control caption="Kies een wachtwoord:"/>
 			<control/>
 		</dialog>
-		<dialog name="CScheduleTaskDlg" cookie="BuBuBuBuSySyBuBuBuBuBuBuBuBuCoEdmsEdmsEdmsBuBuEdBuStStStStStStStBuBu" caption="Planner">
+		<dialog name="CScheduleTaskDlg" cookie="BuBuBuBuSySyBuBuBuBuBuBuBuBuCoEdmsEdmsEdmsBuBuEdBuStStStStStStStBuBu" caption="Plan Item">
 			<control caption="OK"/>
 			<control caption="Annuleren"/>
-			<control caption="Only once"/>
-			<control caption="On specific day(s) of week"/>
+			<control caption="Alleen één keer"/>
+			<control caption="Op specifieke dag(en) van de week"/>
 			<control/>
 			<control/>
 			<control caption="Zondag"/>
@@ -3638,7 +3638,7 @@
 			<control caption="Dinsdag"/>
 			<control caption="Woensdag"/>
 			<control caption="Donderdag"/>
-			<control caption="Vrijdag"/>
+			<control caption=" Vrijdag"/>
 			<control caption="Zaterdag"/>
 			<control caption="Alles"/>
 			<control/>
@@ -3648,19 +3648,19 @@
 			<control/>
 			<control/>
 			<control/>
-			<control caption=" _Toggle bandwidth independently"/>
-			<control caption="Verbinden met _Gnutella2"/>
+			<control caption="_In- of uitschakelen bandbreedte onafhankelijk"/>
+			<control caption="_Limiteer tot het Gnutella2-netwerk"/>
 			<control/>
-			<control caption="Make this event active"/>
-			<control caption="Selecteer alsjeblieft de gebruikersomgeving:"/>
-			<control caption="Selecteer alsjeblieft de gebruikersomgeving:"/>
-			<control caption="Selecteer voorinstelling:"/>
-			<control caption="Beschrijving:"/>
+			<control caption="Maak deze gebeurtenis actief"/>
+			<control caption="Selecteer alsjeblieft een datum:"/>
+			<control caption="Selecteer alsjeblieft een tijd:"/>
+			<control caption="Selecteer de gebeurtenis type:"/>
+			<control caption="Beschrijving: (optioneel)"/>
 			<control caption="% van _bandbreedte indien beperkt"/>
-			<control caption="% van _bandbreedte indien beperkt"/>
-			<control caption="% van _bandbreedte indien beperkt"/>
-			<control caption="Days Of Week"/>
-			<control caption="Run this event"/>
+			<control caption="% van _download indien beperkt"/>
+			<control caption="% van _upload indien beperkt"/>
+			<control caption="Dagen Van De Week"/>
+			<control caption="Draai deze gebeurtenis"/>
 			<control/>
 		</dialog>
 		<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Netwerken">
@@ -3683,7 +3683,7 @@
 			<control caption="Verbind vandaag met Gnutella2"/>
 			<control caption="Optimaal|Leaf|Hub"/>
 			<control caption="Altijd verbinden met Gnutella1"/>
-			<control caption="Verbind vandaag met Gnutella2"/>
+			<control caption="Verbind vandaag met Gnutella1"/>
 			<control caption="Optimaal|Leaf|Ultrapeer"/>
 			<control/>
 			<control/>
@@ -3716,7 +3716,7 @@
 		</dialog>
 		<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuBuStEdmsStBuStBu" caption="eDonkey">
 			<control caption="_eDonkey netwerk:"/>
-			<control caption="Altijd verbinden"/>
+			<control caption="Altijd verbinden met eDonkey"/>
 			<control caption="Nu verbinden met eDonkey"/>
 			<control caption="_Server instellingen:"/>
 			<control caption="Zoek bekende verre servers in de servercache:"/>
@@ -3744,7 +3744,7 @@
 			<control/>
 			<control/>
 			<control caption="cliënt verbindingen"/>
-			<control caption=" Wis gedownloade torrents        Wanneer deze deelverhouding is bereikt"/>
+			<control caption="Wis gedownloade torrents     Wanneer deze deelverhouding is bereikt:"/>
 			<control/>
 			<control/>
 			<control caption="%"/>
@@ -3787,7 +3787,7 @@
 			<control caption="_Instellingen..."/>
 			<control caption="Meer..."/>
 		</dialog>
-		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEd" caption="Uitgebreid">
+		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEd" caption="Geadvanceerd">
 			<control/>
 			<control/>
 			<control/>
@@ -4020,8 +4020,8 @@
 		</dialog>
 		<dialog name="CLanguageDlg" cookie="" caption="Een taal kiezen...">
 		</dialog>
-		<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Verbinden met|Gastheer bekijken">
-			<control caption="Een nieuwe verbinding met deze gastheer of server aanmaken:|Deze gastheer bekijken:"/>
+		<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Verbinden met|Gastheer bekijken|Chat met Gebruiker">
+			<control caption="Een nieuwe verbinding met deze gastheer of server aanmaken:|Deze gastheer bekijken:|Chatten met deze gebruiker:"/>
 			<control/>
 			<control/>
 			<control caption="Netwerk_protocol:"/>
@@ -4661,7 +4661,7 @@
 			<column from="Filename" to="Bestandsnaam"/>
 			<column from="Size" to="Groot"/>
 			<column from="Status" to="Status"/>
-			<column from="Priority" to="Voorrang geven"/>
+			<column from="Priority" to="Prioriteit"/>
 		</list>
 		<list name="CTorrentTrackerList">
 			<column from="Tracker" to="Tracker"/>
