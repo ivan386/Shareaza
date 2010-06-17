@@ -174,6 +174,7 @@ Source: "Skins\CleanBlue\*";  DestDir: "{app}\Skins\CleanBlue";  Flags: ignoreve
 Source: "Skins\Corona\*";     DestDir: "{app}\Skins\Corona";     Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
 Source: "Skins\Shareaza2\*";  DestDir: "{app}\Skins\Shareaza2";  Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
 Source: "Skins\ShareazaOS\*"; DestDir: "{app}\Skins\ShareazaOS"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
+Source: "Skins\No Banner\*"; DestDir:  "{app}\Skins\No Banner";  Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
 
 ; Thematic skins
 ; Source: "Skins\Halloween\*";         DestDir: "{app}\Skins\Halloween";         Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
@@ -235,6 +236,7 @@ SetupAppTitle=Setup - {#internal_name}
 
 [Run]
 ; Register EXE servers
+Filename: "{app}\Shareaza.exe";            Parameters: "/RegServer"; WorkingDir: "{app}"
 Filename: "{app}\MediaImageServices.exe";  Parameters: "/RegServer"; WorkingDir: "{app}"
 Filename: "{app}\MediaLibraryBuilder.exe"; Parameters: "/RegServer"; WorkingDir: "{app}"
 Filename: "{app}\MediaPlayer.exe";         Parameters: "/RegServer"; WorkingDir: "{app}"
@@ -252,6 +254,7 @@ Filename: "{app}\MediaImageServices.exe";  Parameters: "/UnRegServer"; WorkingDi
 Filename: "{app}\MediaLibraryBuilder.exe"; Parameters: "/UnRegServer"; WorkingDir: "{app}"
 Filename: "{app}\MediaPlayer.exe";         Parameters: "/UnRegServer"; WorkingDir: "{app}"
 Filename: "{app}\WindowsThumbnail.exe";    Parameters: "/UnRegServer"; WorkingDir: "{app}"
+Filename: "{app}\Shareaza.exe";            Parameters: "/UnRegServer"; WorkingDir: "{app}"
 
 ; Run the skin installer at start of uninstallation and make sure it only runs once
 Filename: "{app}\skin.exe"; Parameters: "/uninstallsilent"; WorkingDir: "{app}"; StatusMsg: "{cm:run_skinexe}"; RunOnceId: "uninstallskinexe"

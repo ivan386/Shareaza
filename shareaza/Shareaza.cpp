@@ -88,6 +88,24 @@ const LPCTSTR RT_GZIP = _T("GZIP");
 /////////////////////////////////////////////////////////////////////////////
 // CShareazaCommandLineInfo
 
+class CShareazaCommandLineInfo : public CCommandLineInfo
+{
+public:
+	CShareazaCommandLineInfo();
+
+	virtual void ParseParam(const TCHAR* pszParam, BOOL bFlag, BOOL bLast);
+
+	BOOL m_bTray;
+	BOOL m_bNoSplash;
+	BOOL m_bNoAlphaWarning;
+	INT  m_nGUIMode;
+	BOOL m_bHelp;
+
+private:
+	CShareazaCommandLineInfo(const CShareazaCommandLineInfo&);
+	CShareazaCommandLineInfo& operator=(const CShareazaCommandLineInfo&);
+};
+
 CShareazaCommandLineInfo::CShareazaCommandLineInfo() :
 	m_bTray( FALSE ),
 	m_bNoSplash( FALSE ),
@@ -214,8 +232,6 @@ CShareazaApp::CShareazaApp() :
 	ZeroMemory( m_pBTVersion, sizeof( m_pBTVersion ) );
 	m_nUPnPExternalAddress.s_addr = INADDR_NONE;
 
-	AfxSetPerUserRegistration( TRUE );
-
 // BugTrap http://www.intellesoft.net/
 	BT_SetAppName( _T(CLIENT_NAME) );
 	BT_SetFlags( BTF_INTERCEPTSUEF | BTF_SHOWADVANCEDUI | BTF_DESCRIBEERROR |
@@ -238,47 +254,21 @@ BOOL CShareazaApp::InitInstance()
 
 	SetRegistryKey( _T(CLIENT_NAME) );
 
-	AfxOleInit();				// Initializes OLE support for the application.
+	AfxOleInit();									// Initializes OLE support for the application.
 //	m_pFontManager = new CFontManager();
-//	AfxEnableControlContainer( m_pFontManager );
-	AfxEnableControlContainer();
+	AfxEnableControlContainer( /*m_pFontManager*/); // Enable support for containment of OLE controls.
+	InitResources();								// Loads theApp settings.
 
-	InitResources();			// Loads theApp settings.
-	LoadStdProfileSettings();	// Load MRU file list and last preview state.
-	EnableShellOpen();			// Enable open data files when user double-click the files from within the Windows File Manager.
-	Settings.Load();			// Loads settings. Depends on InitResources().
-	InitFonts();				// Loads default fonts. Depends on Settings.Load().
-	Skin.CreateDefault();		// Loads colors and fonts. Depends on InitFonts().
+	CShareazaCommandLineInfo cmdInfo;
+	ParseCommandLine( cmdInfo );
+	AfxSetPerUserRegistration( cmdInfo.m_bRegisterPerUser || ! IsRunAsAdmin() );
+	if ( cmdInfo.m_nShellCommand == CCommandLineInfo::AppUnregister ||
+		 cmdInfo.m_nShellCommand == CCommandLineInfo::AppRegister )
+	{
+		cmdInfo.m_bRunEmbedded = TRUE; // Suppress dialog
 
-	ParseCommandLine( m_ocmdInfo );
-	if ( m_ocmdInfo.m_bHelp )
-	{
-		AfxMessageBox( IDS_COMMANDLINE, MB_ICONINFORMATION | MB_OK );
-		return FALSE;
-	}
-	if ( m_ocmdInfo.m_nShellCommand == CCommandLineInfo::AppUnregister )
-	{
-		// Do not call this ->
-		// ProcessShellCommand( m_ocmdInfo );
-		// ... else all INI settings will be deleted (by design)
+		ProcessShellCommand( cmdInfo );
 
-		// Do not call this ->
-		// AfxOleUnregisterTypeLib( _tlid, _wVerMajor, _wVerMinor );
-		// COleTemplateServer::UnregisterAll();
-		// COleObjectFactory::UpdateRegistryAll( FALSE );
-		// ... else OLE interface settings may be deleted (bug in MFC?)
-		return FALSE;
-	}
-	if ( m_ocmdInfo.m_nShellCommand == CCommandLineInfo::AppRegister )
-	{
-		ProcessShellCommand( m_ocmdInfo );
-	}
-
-	AfxOleRegisterTypeLib( AfxGetInstanceHandle(), _tlid );
-	COleTemplateServer::RegisterAll();
-	COleObjectFactory::UpdateRegistryAll( TRUE );
-	if ( m_ocmdInfo.m_nShellCommand == CCommandLineInfo::AppRegister )
-	{
 		return FALSE;
 	}
 
@@ -314,6 +304,20 @@ BOOL CShareazaApp::InitInstance()
 		return FALSE;
 	}
 
+	Register();					// Re-register Shareaza Type Library
+
+	LoadStdProfileSettings();	// Load MRU file list and last preview state.
+	EnableShellOpen();			// Enable open data files when user double-click the files from within the Windows File Manager.
+	Settings.Load();			// Loads settings. Depends on InitResources().
+	InitFonts();				// Loads default fonts. Depends on Settings.Load().
+	Skin.CreateDefault();		// Loads colors and fonts. Depends on InitFonts().
+
+	if ( cmdInfo.m_bHelp )
+	{
+		AfxMessageBox( IDS_COMMANDLINE, MB_ICONINFORMATION | MB_OK );
+		return FALSE;
+	}
+
 	m_bInteractive = true;
 
 	if ( m_pRegisterApplicationRestart )
@@ -343,7 +347,7 @@ BOOL CShareazaApp::InitInstance()
 	}
 
 	// Alpha warning. Remember to remove this section for final releases and public betas.
-	if ( ! m_ocmdInfo.m_bNoAlphaWarning && m_ocmdInfo.m_bShowSplash )
+	if ( ! cmdInfo.m_bNoAlphaWarning && cmdInfo.m_bShowSplash )
 	if ( AfxMessageBox(
 		L"WARNING: This is an ALPHA TEST version of Shareaza.\n\n"
 		L"It is NOT FOR GENERAL USE, and is only for testing specific features in a controlled "
@@ -360,7 +364,7 @@ BOOL CShareazaApp::InitInstance()
 		+ ( Settings.Connection.EnableFirewallException ? 1 : 0 )
 		+ ( ( Settings.Connection.EnableUPnP && ! Settings.Live.FirstRun ) ? 1 : 0 );
 
-	SplashStep( L"Winsock", ( ( m_ocmdInfo.m_bNoSplash || ! m_ocmdInfo.m_bShowSplash ) ? 0 : nSplashSteps ), false );
+	SplashStep( L"Winsock", ( ( cmdInfo.m_bNoSplash || ! cmdInfo.m_bShowSplash ) ? 0 : nSplashSteps ), false );
 	WSADATA wsaData;
 	for ( int i = 1; i <= 2; i++ )
 	{
@@ -370,8 +374,8 @@ BOOL CShareazaApp::InitInstance()
 		WSACleanup();
 	}
 
-	if ( m_ocmdInfo.m_nGUIMode != -1 )
-		Settings.General.GUIMode = m_ocmdInfo.m_nGUIMode;
+	if ( cmdInfo.m_nGUIMode != -1 )
+		Settings.General.GUIMode = cmdInfo.m_nGUIMode;
 
 	if ( Settings.General.GUIMode != GUI_WINDOWED && Settings.General.GUIMode != GUI_TABBED && Settings.General.GUIMode != GUI_BASIC )
 		Settings.General.GUIMode = GUI_BASIC;
@@ -380,7 +384,7 @@ BOOL CShareazaApp::InitInstance()
 		PurgeDeletes();
 		CThumbCache::InitDatabase();
 	SplashStep( L"P2P URIs" );
-		CShareazaURL::Register( TRUE );
+		CShareazaURL::Register( TRUE, TRUE );
 	SplashStep( L"Shell Icons" );
 		ShellIcons.Clear();
 	SplashStep( L"Metadata Schemas" );
@@ -428,10 +432,10 @@ BOOL CShareazaApp::InitInstance()
 	}
 
 	SplashStep( L"GUI" );
-		if ( m_ocmdInfo.m_bTray ) WriteProfileInt( _T("Windows"), _T("CMainWnd.ShowCmd"), 0 );
+		if ( cmdInfo.m_bTray ) WriteProfileInt( _T("Windows"), _T("CMainWnd.ShowCmd"), 0 );
 		new CMainWnd();
 		CoolMenu.EnableHook();
-		if ( m_ocmdInfo.m_bTray )
+		if ( cmdInfo.m_bTray )
 		{
 			((CMainWnd*)m_pMainWnd)->CloseToTray();
 		}
@@ -456,7 +460,7 @@ BOOL CShareazaApp::InitInstance()
 
 	m_bLive = true;
 
-	ProcessShellCommand( m_ocmdInfo );
+	ProcessShellCommand( cmdInfo );
 
 //	afxMemDF = allocMemDF | delayFreeMemDF | checkAlwaysMemDF;
 
@@ -572,30 +576,31 @@ int CShareazaApp::ExitInstance()
 	return CWinApp::ExitInstance();
 }
 
-void CShareazaApp::SplashStep(LPCTSTR pszMessage, int nMax, bool bClosing)
-{
-	if ( ! pszMessage )
-	{
-		if ( m_dlgSplash )
-		{
-			m_dlgSplash->Hide();
-			m_dlgSplash = NULL;
-		}
-	}
-	else if ( ! m_dlgSplash && nMax )
-	{
-		m_dlgSplash = new CSplashDlg( nMax, bClosing );
-		m_dlgSplash->Step( pszMessage );
-	}
-	else if ( m_dlgSplash && ! nMax )
-		m_dlgSplash->Step( pszMessage );
-
-	TRACE( _T("Step: %s\n"), pszMessage ? pszMessage : _T("Done") );
-}
-
 void CShareazaApp::WinHelp(DWORD /*dwData*/, UINT /*nCmd*/)
 {
 	// Suppress F1
+}
+
+BOOL CShareazaApp::Register()
+{
+	AfxOleRegisterTypeLib( AfxGetInstanceHandle(), _tlid );
+	COleObjectFactory::UpdateRegistryAll( TRUE );
+
+	return CWinApp::Register();
+}
+
+BOOL CShareazaApp::Unregister()
+{
+	CShareazaURL::Register( FALSE, TRUE );
+
+	COleObjectFactory::UpdateRegistryAll( FALSE );
+	COleObjectFactory::UpdateRegistryAll( FALSE );
+	COleObjectFactory::UpdateRegistryAll( FALSE );
+	AfxOleUnregisterTypeLib( _tlid );
+	AfxOleUnregisterTypeLib( _tlid );
+	AfxOleUnregisterTypeLib( _tlid );
+
+	return TRUE; // Don't call CWinApp::Unregister(), it removes Shareaza settings
 }
 
 CDocument* CShareazaApp::OpenDocumentFile(LPCTSTR lpszFileName)
@@ -1053,6 +1058,27 @@ void CShareazaApp::ShowStartupText()
 	PrintMessage( MSG_INFO, strCPU );
 }
 
+void CShareazaApp::SplashStep(LPCTSTR pszMessage, int nMax, bool bClosing)
+{
+	if ( ! pszMessage )
+	{
+		if ( m_dlgSplash )
+		{
+			m_dlgSplash->Hide();
+			m_dlgSplash = NULL;
+		}
+	}
+	else if ( ! m_dlgSplash && nMax )
+	{
+		m_dlgSplash = new CSplashDlg( nMax, bClosing );
+		m_dlgSplash->Step( pszMessage );
+	}
+	else if ( m_dlgSplash && ! nMax )
+		m_dlgSplash->Step( pszMessage );
+
+	TRACE( _T("Step: %s\n"), pszMessage ? pszMessage : _T("Done") );
+}
+
 void CShareazaApp::Message(WORD nType, UINT nID, ...)
 {
 	// Check if logging this type of message is enabled
@@ -1401,6 +1427,27 @@ BOOL CShareazaApp::InternalURI(LPCTSTR pszURI)
 		return FALSE;
 
 	return TRUE;
+}
+
+BOOL IsRunAsAdmin()
+{
+	PSID pAdministratorsGroup = NULL;
+	SID_IDENTIFIER_AUTHORITY NtAuthority = SECURITY_NT_AUTHORITY;
+	if ( ! AllocateAndInitializeSid( &NtAuthority, 2, SECURITY_BUILTIN_DOMAIN_RID,
+		DOMAIN_ALIAS_RID_ADMINS, 0, 0, 0, 0, 0, 0, &pAdministratorsGroup ) )
+	{
+		return FALSE;
+	}
+
+	BOOL bIsRunAsAdmin = FALSE;
+	if ( ! CheckTokenMembership( NULL, pAdministratorsGroup, &bIsRunAsAdmin ) )
+	{
+		FreeSid( pAdministratorsGroup );
+		return FALSE;
+	}
+
+	FreeSid( pAdministratorsGroup );
+    return bIsRunAsAdmin;
 }
 
 /////////////////////////////////////////////////////////////////////////////

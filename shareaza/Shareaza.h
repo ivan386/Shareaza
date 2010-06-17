@@ -31,24 +31,6 @@ class CSplashDlg;
 class CFontManager;
 class CPacketWnd;
 
-class CShareazaCommandLineInfo : public CCommandLineInfo
-{
-public:
-	CShareazaCommandLineInfo();
-
-	virtual void ParseParam(const TCHAR* pszParam, BOOL bFlag, BOOL bLast);
-
-	BOOL m_bTray;
-	BOOL m_bNoSplash;
-	BOOL m_bNoAlphaWarning;
-	INT  m_nGUIMode;
-	BOOL m_bHelp;
-
-private:
-	CShareazaCommandLineInfo(const CShareazaCommandLineInfo&);
-	CShareazaCommandLineInfo& operator=(const CShareazaCommandLineInfo&);
-};
-
 class __declspec(novtable) CLogMessage
 {
 public:
@@ -188,12 +170,13 @@ public:
 	void				OnRename(LPCTSTR strSource, LPCTSTR pszTarget = (LPCTSTR)1);
 
 protected:
-	CSplashDlg*					m_dlgSplash;
-	CShareazaCommandLineInfo	m_ocmdInfo;
+	CSplashDlg*			m_dlgSplash;
 
 	virtual BOOL		InitInstance();
 	virtual int			ExitInstance();
 	virtual void		WinHelp(DWORD dwData, UINT nCmd = HELP_CONTEXT);
+	virtual BOOL		Register();
+	virtual BOOL		Unregister();
 
 	void				InitResources();	// Initialize Shareaza version, system info, load DLLs, etc.
 	void				InitFonts();		// Create default fonts
@@ -213,6 +196,9 @@ extern CShareazaApp theApp;
 //
 // Utility Functions
 //
+
+// Detect Administrative privileges
+BOOL IsRunAsAdmin();
 
 // Post message to main window in safe way
 BOOL PostMainWndMessage(UINT Msg, WPARAM wParam = NULL, LPARAM lParam = NULL);

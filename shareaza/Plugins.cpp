@@ -48,6 +48,8 @@ void CPlugins::Register()
 {
 	CList< HINSTANCE > oModules; // Cache
 
+	LPCTSTR szParam = AfxGetPerUserRegistration() ? _T("/RegServerPerUser") : _T("/RegServer");
+
 	CFileFind finder;
 	BOOL bWorking = finder.FindFile( Settings.General.Path + _T("\\*.*") );
 	while ( bWorking )
@@ -65,18 +67,17 @@ void CPlugins::Register()
 
 				HRESULT (WINAPI *pfnDllInstall)(BOOL bInstall, LPCWSTR pszCmdLine);
 				(FARPROC&)pfnDllInstall = GetProcAddress( hDll, "DllInstall" );
-				if ( pfnDllInstall )
+
+				HRESULT (WINAPI *pfnDllRegisterServer)(void);
+				(FARPROC&)pfnDllRegisterServer = GetProcAddress( hDll, "DllRegisterServer" );
+
+				if ( pfnDllInstall && AfxGetPerUserRegistration() )
 				{
 					hr = pfnDllInstall( TRUE, L"user" );
 				}
-				else
+				else if ( pfnDllRegisterServer )
 				{
-					HRESULT (WINAPI *pfnDllRegisterServer)(void);
-					(FARPROC&)pfnDllRegisterServer = GetProcAddress( hDll, "DllRegisterServer" );
-					if ( pfnDllRegisterServer )
-					{
-						hr = pfnDllRegisterServer();
-					}
+					hr = pfnDllRegisterServer();
 				}
 
 				if ( hr == S_OK )
@@ -95,13 +96,12 @@ void CPlugins::Register()
 			{
 				LPCWSTR pValue = NULL;
 				if ( VerQueryValue( pBuffer.get(),
-					L"\\StringFileInfo\\000004b0\\SpecialBuild", 
+					_T("\\StringFileInfo\\000004b0\\SpecialBuild"),
 					(void**)&pValue, (UINT*)&dwSize ) &&
 					pValue && dwSize &&
 					_wcsicmp( pValue, _T("plugin") ) == 0 )
 				{
-					if ( (DWORD_PTR)ShellExecute( NULL, NULL, sPath,
-						_T("/RegServerPerUser"), NULL, SW_HIDE ) > 32 )
+					if ( (DWORD_PTR)ShellExecute( NULL, NULL, sPath, szParam, NULL, SW_HIDE ) > 32 )
 						theApp.Message( MSG_NOTICE, _T("Registered plugin: %s"), sName );
 					else
 						theApp.Message( MSG_ERROR, _T("Failed to register plugin: %s : 0x%08x"), sName, GetLastError() );
