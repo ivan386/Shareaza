@@ -1,7 +1,7 @@
 //
 // ShareazaDataSource.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -348,12 +348,16 @@ HRESULT CShareazaDataSource::DoDragDrop(const CLibraryTreeItem* pList, HBITMAP p
 template < typename T >
 HRESULT CShareazaDataSource::DoDragDropHelper(const T* pList, HBITMAP pImage, const Hashes::Guid& oGUID, const CPoint& ptOffset)
 {
-	ASSERT_VALID( pList );
+	HRESULT hr;
 
 	// Create drag-n-drop data object
+	CShareazaDataSource* pSrc = new CShareazaDataSource;
+	if ( ! pSrc )
+		return E_OUTOFMEMORY;
 	CComPtr< IDataObject > pIDataObject;
-	HRESULT hr = pIDataObject.CoCreateInstance( CLSID_ShareazaDataSource );
-	if ( SUCCEEDED( hr ) )
+	pIDataObject.Attach( 
+		 static_cast< IDataObject* >( pSrc->GetInterface( IID_IDataObject ) ) );
+	if ( pIDataObject )
 	{
 		// Set raza flag to detect self drag-n-drop
 		hr = Add( pIDataObject );

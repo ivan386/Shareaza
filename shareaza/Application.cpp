@@ -1,7 +1,7 @@
 //
 // Application.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -79,20 +79,35 @@ CApplication::~CApplication()
 
 HRESULT CApplication::GetApp(IApplication** ppIApplication) throw()
 {
-	return CoCreateInstance( CLSID_ShareazaApplication, NULL, CLSCTX_ALL,
-		IID_IApplication, (void**)ppIApplication );
+	if ( ! ppIApplication )
+		return E_POINTER;
+	CApplication* pApp = new CApplication;
+	if ( ! pApp )
+		return E_OUTOFMEMORY;
+	*ppIApplication = static_cast< IApplication* >( pApp->GetInterface( IID_IApplication ) );
+	return *ppIApplication ? S_OK : E_NOINTERFACE;
 }
 
 HRESULT CApplication::GetUI(IUserInterface** ppIUserInterface) throw()
 {
-	return CoCreateInstance( CLSID_ShareazaApplication, NULL, CLSCTX_ALL,
-		IID_IUserInterface, (void**)ppIUserInterface );
+	if ( ! ppIUserInterface )
+		return E_POINTER;
+	CApplication* pApp = new CApplication;
+	if ( ! pApp )
+		return E_OUTOFMEMORY;
+	*ppIUserInterface = static_cast< IUserInterface* >( pApp->GetInterface( IID_IUserInterface ) );
+	return *ppIUserInterface ? S_OK : E_NOINTERFACE;
 }
 
 HRESULT CApplication::GetSettings(ISettings** ppISettings) throw()
 {
-	return CoCreateInstance( CLSID_ShareazaApplication, NULL, CLSCTX_ALL,
-		IID_ISettings, (void**)ppISettings );
+	if ( ! ppISettings )
+		return E_POINTER;
+	CApplication* pApp = new CApplication;
+	if ( ! pApp )
+		return E_OUTOFMEMORY;
+	*ppISettings = static_cast< ISettings* >( pApp->GetInterface( IID_ISettings ) );
+	return *ppISettings ? S_OK : E_NOINTERFACE;
 }
 
 /////////////////////////////////////////////////////////////////////////////
