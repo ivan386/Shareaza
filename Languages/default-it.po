@@ -5424,7 +5424,7 @@ msgstr "Richiesta GIV malformattata %s ricevuta, chiusura della connessione."
 
 #: string;16285
 msgid "Received an unnecessary push connection from %s."
-msgstr "GIV sconosciuto da %s per il file \"%s\" ricevuto, chiusura della connessione."
+msgstr "Richiesta GIV sconosciuto da %s ricevuto, chiusura della connessione."
 
 #: string;16286
 msgid "Host %s is pushing download \"%s\", accepting."
@@ -9785,3 +9785,4 @@ msgstr "Utente"
 #: column;comments
 msgid "Comments"
 msgstr "Commenti"
+

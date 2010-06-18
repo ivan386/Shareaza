@@ -2929,7 +2929,7 @@
 		<string id="16282" value="Desideri eseguire il file scaricato &quot;%s&quot;?\n\nAlcuni file possono essere pericolosi per il tuo computer. Assicurati sulla natura del file prima di eseguirlo."/>
 		<string id="16283" value="Il file &quot;%s&quot; si sta già scaricando, verrà aggiunto alle fonti."/>
 		<string id="16284" value="Richiesta GIV malformattata %s ricevuta, chiusura della connessione."/>
-		<string id="16285" value="GIV sconosciuto da %s per il file &quot;%s&quot; ricevuto, chiusura della connessione."/>
+		<string id="16285" value="Richiesta GIV sconosciuto da %s ricevuto, chiusura della connessione."/>
 		<string id="16286" value="L'host %s sta effettuado il push per il download &quot;%s&quot;, accettato."/>
 		<string id="16287" value="Ulteriori fonti per il download &quot;%s&quot; non trovate perchè non c'è connessione con la rete."/>
 		<string id="16288" value="Richiesta di ulteriori fonti per il download &quot;%s&quot; su %i connessione(i) effettuata..."/>
