@@ -584,7 +584,6 @@ public:
 		CString			ServerName;
 		CString			ServerPort;
 		CString			FloodLimit;
-		bool			Updated;
 		CString			ScreenFont;
 	} IRC;
 

@@ -223,7 +223,6 @@ void CIRCSettingsPage::OnBnClickedIrcColorBg()
 	UpdateData( FALSE );
 }
 
-
 void CIRCSettingsPage::OnOK()
 {
 	Settings.IRC.Show		 = m_bShow == TRUE;
@@ -242,14 +241,15 @@ void CIRCSettingsPage::OnOK()
 	Settings.IRC.RealName	 = m_sRealName;
 	Settings.IRC.UserName	 = m_sUserName;
 	Settings.IRC.Timestamp	 = m_bTimestamp == TRUE;
-	Settings.IRC.Updated	 = TRUE;
 	Settings.IRC.ScreenFont	 = m_sScreenFont;
 	UpdateData( FALSE );
 	
 	m_wndFonts.Invalidate();
 
-	if ( CWnd* pWnd = (CWnd*)CIRCFrame::g_pIrcFrame )
-		pWnd->RedrawWindow( 0, 0, RDW_INTERNALPAINT|RDW_UPDATENOW|RDW_ALLCHILDREN );
+	if ( CIRCFrame::g_pIrcFrame )
+	{
+		CIRCFrame::g_pIrcFrame->OnSkinChange();
+	}
 
 	CSettingsPage::OnOK();
 }

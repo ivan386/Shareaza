@@ -565,18 +565,17 @@ void CSettings::Load()
 	Add( _T("IRC"), _T("Colors[8]"), &IRC.Colors[8], RGB(0,0,0) );
 	Add( _T("IRC"), _T("Colors[9]"), &IRC.Colors[9], RGB(200,30,30) );
 	Add( _T("IRC"), _T("Colors[10]"), &IRC.Colors[10], RGB(200,130,230) );
-	Add( _T("IRC"), _T("Show"), &IRC.Show, TRUE );
-	Add( _T("IRC"), _T("FloodEnable"), &IRC.FloodEnable, TRUE );
+	Add( _T("IRC"), _T("Show"), &IRC.Show, true );
+	Add( _T("IRC"), _T("FloodEnable"), &IRC.FloodEnable, true );
 	Add( _T("IRC"), _T("Nick"), &IRC.Nick );
 	Add( _T("IRC"), _T("Alternate"), &IRC.Alternate );
 	Add( _T("IRC"), _T("ServerName"), &IRC.ServerName, _T("shareaza.p2pchat.net") );
 	Add( _T("IRC"), _T("ServerPort"), &IRC.ServerPort, _T("6667") );
 	Add( _T("IRC"), _T("FloodLimit"), &IRC.FloodLimit, _T("24") );
-	Add( _T("IRC"), _T("Timestamp"), &IRC.Timestamp, FALSE );
+	Add( _T("IRC"), _T("Timestamp"), &IRC.Timestamp, true );
 	Add( _T("IRC"), _T("UserName"), &IRC.UserName, _T("razaIRC") );
 	Add( _T("IRC"), _T("RealName"), &IRC.RealName, _T("razaIRC") );
 	Add( _T("IRC"), _T("ScreenFont"), &IRC.ScreenFont );
-	Add( _T("IRC"), _T("Updated"), &IRC.Updated, FALSE );
 
 	// Load settings
 	for ( POSITION pos = m_pItems.GetHeadPosition() ; pos ; )

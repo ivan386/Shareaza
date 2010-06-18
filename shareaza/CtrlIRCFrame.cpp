@@ -345,6 +345,14 @@ void CIRCFrame::OnSkinChange()
 		m_bmWatermark.LoadBitmap( IDB_BANNER_MARK );
 
 	m_nHeaderIcon = CoolInterface.ExtractIconID( IDR_IRCFRAME, FALSE, LVSIL_BIG );
+
+	m_pContent.m_crBackground = Settings.IRC.Colors[ ID_COLOR_CHATBACK ];
+
+	SetFonts();
+
+	m_wndView.SetDocument( &m_pContent );
+
+	TabClick();
 }
 
 void CIRCFrame::OnUpdateCmdUI()
@@ -386,11 +394,7 @@ void CIRCFrame::OnPaint()
 	CPaintDC dc( this );
 	CRect rcClient;
 	GetClientRect( &rcClient );
-	if ( Settings.IRC.Updated )
-	{
-		Settings.IRC.Updated = FALSE;
-		OnSettings();
-	}
+
 	dc.SetTextColor( Skin.m_crBannerText );
 	dc.SetBkMode( TRANSPARENT );
 
@@ -970,7 +974,7 @@ void CIRCFrame::OnTimer(UINT_PTR nIDEvent)
 		int nTargetWindow = IsTabExist( m_sStatus ) ; 
 		if ( m_wndTab.GetCurSel() == nTargetWindow ) 
 			StatusMessage( _T("Stopped flood protection."), ID_COLOR_SERVERMSG );
-		m_pIrcBuffer[ nTargetWindow ].Add( char(ID_COLOR_SERVERMSG) + _T("Stopped flood protection.") );
+		m_pIrcBuffer[ nTargetWindow ].Add( char(ID_COLOR_SERVERMSG) + CString( _T("Stopped flood protection.") ) );
 		KillTimer( 8 );
 		m_nTimerVal = 0;
 		return;
@@ -990,7 +994,7 @@ void CIRCFrame::OnTimer(UINT_PTR nIDEvent)
 				m_bFloodProtectionRunning = TRUE;
 				int nTargetWindow = IsTabExist( m_sStatus );
 				if ( m_wndTab.GetCurSel() != nTargetWindow ) 
-					m_pIrcBuffer[ m_wndTab.GetCurSel() ].Add( char(ID_COLOR_SERVERMSG ) + _T("Starting flood protection...") );
+					m_pIrcBuffer[ m_wndTab.GetCurSel() ].Add( char(ID_COLOR_SERVERMSG ) + CString( _T("Starting flood protection...") ) );
 				StatusMessage( _T("Starting flood protection..."), ID_COLOR_SERVERMSG );
 			}
 			m_nMsgsInSec = 0;
@@ -1078,7 +1082,7 @@ void CIRCFrame::StatusMessage(LPCTSTR pszText, int nFlags)
 	else
 	{
 		OnStatusMessage( pszText, nFlags );
-		m_pIrcBuffer[ 0 ].Add( char( nFlags ) + pszText );
+		m_pIrcBuffer[ 0 ].Add( char( nFlags ) + CString( pszText ) );
 	}
 }
 
@@ -2105,8 +2109,11 @@ void CIRCFrame::SortUserList()
 void CIRCFrame::TabClick()
 {
 	m_pContent.Clear();
+
 	m_wndView.InvalidateIfModified();
+
 	ClearUserList();
+
 	CString str;
 	int nTab = m_wndTab.GetCurSel(), nMode;
 	HighlightTab( nTab, FALSE );
@@ -2121,8 +2128,10 @@ void CIRCFrame::TabClick()
 		AddUser( str );
 	}
 	LoadBufferForWindow( nTab );
+
 	SortUserList();
-	this->RedrawWindow();
+
+	RedrawWindow();
 }
 
 int CIRCFrame::AddTab(CString strTabName, int nKindOfTab)
@@ -2215,14 +2224,6 @@ void CIRCFrame::OnRichClk(NMHDR* /* pNMHDR */, LRESULT* pResult)
 		m_wndPanel.m_boxUsers.m_wndUserList.PostMessage( WM_LBUTTONUP );
 	}
 	*pResult = 0;
-}
-
-void CIRCFrame::OnSettings()
-{
-	m_pContent.m_crBackground = Settings.IRC.Colors[ ID_COLOR_CHATBACK ];
-	SetFonts();
-	m_wndView.SetDocument( &m_pContent );
-	TabClick();
 }
 
 // Operations
