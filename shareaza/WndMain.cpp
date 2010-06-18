@@ -2964,6 +2964,9 @@ BOOL CMainWnd::OnDrop(IDataObject* pDataObj, DWORD /* grfKeyState */, POINT /* p
 
 void CMainWnd::ShowTrayPopup(LPCTSTR szText, LPCTSTR szTitle, DWORD dwIcon, UINT uTimeout)
 {
+	if ( ! szText )
+		return;
+
 	// Show temporary notify icon
 	m_bTrayNotify = TRUE;
 
