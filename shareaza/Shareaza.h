@@ -400,6 +400,7 @@ inline __int64 GetRandomNum<__int64>(const __int64& min, const __int64& max)
 
 // Client's name
 #define CLIENT_NAME			"Shareaza"
+#define CLIENT_NAME_T		_T( CLIENT_NAME )
 
 #define REGISTRY_KEY		"Software\\Shareaza\\Shareaza"
 

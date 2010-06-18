@@ -163,13 +163,7 @@ void CShareazaCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag, BOO
 // CShareazaApp
 
 BEGIN_MESSAGE_MAP(CShareazaApp, CWinApp)
-	//{{AFX_MSG_MAP(CShareazaApp)
-	//}}AFX_MSG
 END_MESSAGE_MAP()
-
-// {E3481FE3-E062-4E1C-A23A-62A6D13CBFB8}
-const GUID CDECL BASED_CODE _tlid =
-	{ 0xE3481FE3, 0xE062, 0x4E1C, { 0xA2, 0x3A, 0x62, 0xA6, 0xD1, 0x3C, 0xBF, 0xB8 } };
 
 CShareazaApp theApp;
 
@@ -272,7 +266,7 @@ BOOL CShareazaApp::InitInstance()
 		return FALSE;
 	}
 
-	m_pMutex = CreateMutex( NULL, FALSE, _T("Global\\Shareaza") );
+	m_pMutex = CreateMutex( NULL, FALSE, _T("Global\\") _T(CLIENT_NAME) );
 	if ( m_pMutex != NULL )
 	{
 		if ( GetLastError() == ERROR_ALREADY_EXISTS )
@@ -341,22 +335,22 @@ BOOL CShareazaApp::InitInstance()
 	if ( ( tCompileTime + tTimeOut )  < tCurrent )
 	{
 		if ( AfxMessageBox(
-			L"This is a pre-release version of Shareaza, and the beta testing period has ended.  "
-			L"Please download the full, official release from " WEB_SITE_T L".", MB_ICONQUESTION|MB_OK ) != IDOK )
+			_T("This is a pre-release version of ") CLIENT_NAME_T _T(", and the beta testing period has ended.  ")
+			_T("Please download the full, official release from ") WEB_SITE_T _T("."), MB_ICONQUESTION|MB_OK ) != IDOK )
 			return FALSE;
 	}
 
 	// Alpha warning. Remember to remove this section for final releases and public betas.
 	if ( ! cmdInfo.m_bNoAlphaWarning && cmdInfo.m_bShowSplash )
 	if ( AfxMessageBox(
-		L"WARNING: This is an ALPHA TEST version of Shareaza.\n\n"
-		L"It is NOT FOR GENERAL USE, and is only for testing specific features in a controlled "
-		L"environment. It will frequently stop running, or display debug information to assist testing.\n\n"
-		L"If you wish to actually use this software, you should download "
-		L"the current stable release from " WEB_SITE_T L"\n"
-		L"If you continue past this point, you may experience system instability, lose downloads, "
-		L"or corrupt system files. Corrupted downloads/files may not be recoverable. "
-		L"Do you wish to continue?", MB_ICONEXCLAMATION|MB_YESNO ) == IDNO )
+		_T("WARNING: This is an ALPHA TEST version of ") CLIENT_NAME_T _T(".\n\n")
+		_T("It is NOT FOR GENERAL USE, and is only for testing specific features in a controlled ")
+		_T("environment. It will frequently stop running, or display debug information to assist testing.\n\n")
+		_T("If you wish to actually use this software, you should download ")
+		_T("the current stable release from ") WEB_SITE_T _T("\n")
+		_T("If you continue past this point, you may experience system instability, lose downloads, ")
+		_T("or corrupt system files. Corrupted downloads/files may not be recoverable. ")
+		_T("Do you wish to continue?"), MB_ICONEXCLAMATION|MB_YESNO ) == IDNO )
 		return FALSE;
 #endif // RELEASE_BUILD
 
@@ -380,7 +374,7 @@ BOOL CShareazaApp::InitInstance()
 	if ( Settings.General.GUIMode != GUI_WINDOWED && Settings.General.GUIMode != GUI_TABBED && Settings.General.GUIMode != GUI_BASIC )
 		Settings.General.GUIMode = GUI_BASIC;
 
-	SplashStep( L"Shareaza Database" );
+	SplashStep( L"Database" );
 		PurgeDeletes();
 		CThumbCache::InitDatabase();
 	SplashStep( L"P2P URIs" );
@@ -583,8 +577,8 @@ void CShareazaApp::WinHelp(DWORD /*dwData*/, UINT /*nCmd*/)
 
 BOOL CShareazaApp::Register()
 {
-	AfxOleRegisterTypeLib( AfxGetInstanceHandle(), _tlid );
-	COleObjectFactory::UpdateRegistryAll( TRUE );
+	COleObjectFactory::UpdateRegistryAll();
+	AfxOleRegisterTypeLib( AfxGetInstanceHandle(), LIBID_Shareaza );
 
 	return CWinApp::Register();
 }
@@ -593,12 +587,12 @@ BOOL CShareazaApp::Unregister()
 {
 	CShareazaURL::Register( FALSE, TRUE );
 
+	AfxOleUnregisterTypeLib( LIBID_Shareaza );
+	AfxOleUnregisterTypeLib( LIBID_Shareaza );
+	AfxOleUnregisterTypeLib( LIBID_Shareaza );
 	COleObjectFactory::UpdateRegistryAll( FALSE );
 	COleObjectFactory::UpdateRegistryAll( FALSE );
 	COleObjectFactory::UpdateRegistryAll( FALSE );
-	AfxOleUnregisterTypeLib( _tlid );
-	AfxOleUnregisterTypeLib( _tlid );
-	AfxOleUnregisterTypeLib( _tlid );
 
 	return TRUE; // Don't call CWinApp::Unregister(), it removes Shareaza settings
 }
@@ -1164,7 +1158,7 @@ void CShareazaApp::PrintMessage(WORD nType, const CString& strLog)
 		return;
 
 	CFile pFile;
-	if ( pFile.Open( Settings.General.UserPath + _T("\\Data\\Shareaza.log"), CFile::modeReadWrite ) )
+	if ( pFile.Open( Settings.General.UserPath + _T("\\Data\\") CLIENT_NAME_T _T(".log"), CFile::modeReadWrite ) )
 	{
 		pFile.Seek( 0, CFile::end ); // go to the end of the file to add entires.
 
@@ -1175,11 +1169,11 @@ void CShareazaApp::PrintMessage(WORD nType, const CString& strLog)
 			pFile.Close();
 
 			// Rotate the logs
-			MoveFileEx( CString( _T("\\\\?\\") ) + Settings.General.UserPath + _T("\\Data\\Shareaza.log"),
-				CString( _T("\\\\?\\") ) + Settings.General.UserPath + _T("\\Data\\Shareaza.old.log"),
+			MoveFileEx( CString( _T("\\\\?\\") ) + Settings.General.UserPath + _T("\\Data\\") CLIENT_NAME_T _T(".log"),
+				CString( _T("\\\\?\\") ) + Settings.General.UserPath + _T("\\Data\\") CLIENT_NAME_T _T(".old.log"),
 				MOVEFILE_REPLACE_EXISTING | MOVEFILE_WRITE_THROUGH );
 			// Start a new log
-			if ( ! pFile.Open( Settings.General.UserPath + _T("\\Data\\Shareaza.log"),
+			if ( ! pFile.Open( Settings.General.UserPath + _T("\\Data\\") CLIENT_NAME_T _T(".log"),
 				CFile::modeWrite|CFile::modeCreate ) ) return;
 			// Unicode marker
 			WORD nByteOrder = 0xFEFF;
@@ -1188,7 +1182,7 @@ void CShareazaApp::PrintMessage(WORD nType, const CString& strLog)
 	}
 	else
 	{
-		if ( ! pFile.Open( Settings.General.UserPath + _T("\\Data\\Shareaza.log"),
+		if ( ! pFile.Open( Settings.General.UserPath + _T("\\Data\\") CLIENT_NAME_T _T(".log"),
 			CFile::modeWrite|CFile::modeCreate ) ) return;
 		// Unicode marker
 		WORD nByteOrder = 0xFEFF;
@@ -2144,7 +2138,7 @@ CString CShareazaApp::GetDownloadsFolder() const
 	}
 
 	// Winx2K/XP or legacy way
-	sDownloads = GetDocumentsFolder() + _T("\\Shareaza Downloads");
+	sDownloads = GetDocumentsFolder() + _T("\\") CLIENT_NAME_T _T(" Downloads");
 
 	return sDownloads;
 }
@@ -2682,7 +2676,7 @@ bool LoadGUID(const CString& sFilename, Hashes::Guid& oGUID)
 	bool bSuccess = false;
 	if ( Settings.Library.UseFolderGUID )
 	{
-		HANDLE hFile = CreateFile( sFilename + _T(":Shareaza.GUID"),
+		HANDLE hFile = CreateFile( sFilename + _T(":") CLIENT_NAME_T _T(".GUID"),
 			GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
 			NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
 		if ( hFile != INVALID_HANDLE_VALUE )
@@ -2713,7 +2707,7 @@ bool SaveGUID(const CString& sFilename, const Hashes::Guid& oGUID)
 		if ( dwOrigAttr != 0xffffffff && ( dwOrigAttr & FILE_ATTRIBUTE_READONLY ) )
 			bChanged = SetFileAttributes( sFilename, dwOrigAttr & ~FILE_ATTRIBUTE_READONLY );
 
-		HANDLE hStream = CreateFile( sFilename + _T(":Shareaza.GUID"),
+		HANDLE hStream = CreateFile( sFilename + _T(":") CLIENT_NAME_T _T(".GUID"),
 			GENERIC_WRITE,
 			FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, NULL,
 			OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
@@ -2727,7 +2721,7 @@ bool SaveGUID(const CString& sFilename, const Hashes::Guid& oGUID)
 
 			if ( hFile != INVALID_HANDLE_VALUE )
 			{
-				hStream = CreateFile( sFilename + _T(":Shareaza.GUID"),
+				hStream = CreateFile( sFilename + _T(":") CLIENT_NAME_T _T(".GUID"),
 					GENERIC_WRITE,
 					FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
 					NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL );
