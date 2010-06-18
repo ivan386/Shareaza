@@ -14,6 +14,7 @@
 #define IDC_MEDIA_SPEED                 118
 #define IDC_MEDIA_VOLUME                119
 #define IDS_COMMANDLINE                 120
+#define IDS_SCHEMA_LOAD_ERROR           121
 #define IDB_MENUBAR                     127
 #define IDR_MAINFRAME                   128
 #define IDR_SYSTEMFRAME                 129

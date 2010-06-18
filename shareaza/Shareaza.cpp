@@ -382,7 +382,11 @@ BOOL CShareazaApp::InitInstance()
 	SplashStep( L"Shell Icons" );
 		ShellIcons.Clear();
 	SplashStep( L"Metadata Schemas" );
-		SchemaCache.Load();
+		if ( SchemaCache.Load() < 46 )
+		{
+			AfxMessageBox( IDS_SCHEMA_LOAD_ERROR, MB_ICONHAND | MB_OK );
+			return FALSE;
+		}
 	SplashStep( L"Vendor Data" );
 		VendorCache.Load();
 	SplashStep( L"Profile" );

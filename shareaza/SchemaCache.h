@@ -38,7 +38,7 @@ protected:
 
 // Operations
 public:
-	BOOL		Load();
+	int			Load();
 	void		Clear();
 
 // Inlines
@@ -86,6 +86,10 @@ public:
 	CXMLElement* Decode(BYTE* pszData, DWORD nLength, CSchemaPtr& pSchema);
 	static CXMLElement* AutoDetectSchema(LPCTSTR pszInfo);
 	static CXMLElement* AutoDetectAudio(LPCTSTR pszInfo);
+
+private:
+	CSchemaCache(const CSchemaCache&);
+	CSchemaCache& operator=(const CSchemaCache&);
 };
 
 extern CSchemaCache	SchemaCache;

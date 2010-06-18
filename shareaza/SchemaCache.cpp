@@ -56,22 +56,21 @@ CSchemaCache::~CSchemaCache()
 
 int CSchemaCache::Load()
 {
-	WIN32_FIND_DATA pFind;
-	CString strPath;
-	HANDLE hSearch;
-	int nCount;
-
 #ifdef _DEBUG
 	__int64 nStartTotal = GetMicroCount();
 #endif
 
 	Clear();
 
+	CString strPath;
 	strPath.Format( _T("%s\\Schemas\\*.xsd"), (LPCTSTR)Settings.General.Path );
-	hSearch = FindFirstFile( strPath, &pFind );
-	if ( hSearch == INVALID_HANDLE_VALUE ) return 0;
-	nCount = 0;
 
+	WIN32_FIND_DATA pFind = {};
+	HANDLE hSearch = FindFirstFile( strPath, &pFind );
+	if ( hSearch == INVALID_HANDLE_VALUE )
+		return 0;
+
+	int nCount = 0;
 	do
 	{
 #ifdef _DEBUG
@@ -91,6 +90,8 @@ int CSchemaCache::Load()
 			strName.MakeLower();
 
 			m_pNames.SetAt( strName, pSchema );
+
+			++nCount;
 		}
 		else
 		{
