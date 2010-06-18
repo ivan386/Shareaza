@@ -1,7 +1,7 @@
 //
 // Settings.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -164,7 +164,7 @@ void CSettings::Load()
 	Add( _T("Library"), _T("PreferAPETags"), &Library.PreferAPETags, true );
 	Add( _T("Library"), _T("PrivateTypes"), &Library.PrivateTypes, _T("|vbs|js|jc!|fb!|bc!|!ut|dbx|part|partial|pst|reget|getright|pif|lnk|sd|url|wab|m4p|infodb|racestats|chk|tmp|temp|ini|inf|log|old|manifest|met|bak|$$$|---|~~~|###|__incomplete___|") );
 	Add( _T("Library"), _T("QueryRouteSize"), &Library.QueryRouteSize, 20, 1, 8, 24 );
-	Add( _T("Library"), _T("SafeExecute"), &Library.SafeExecute, _T("|3gp|7z|aac|ace|ape|avi|bmp|co|collection|flv|gif|iso|jpg|jpeg|lit|mid|mov|m1v|m2v|m3u|m4a|mkv|mp2|mp3|mp4|mpa|mpe|mpg|mpeg|ogg|ogm|pdf|png|qt|rar|rm|sks|tar|tgz|torrent|txt|wav|wma|wmv|zip|") );
+	Add( _T("Library"), _T("SafeExecute"), &Library.SafeExecute, _T("") );
 	Add( _T("Library"), _T("ScanAPE"), &Library.ScanAPE, true );
 	Add( _T("Library"), _T("ScanASF"), &Library.ScanASF, true );
 	Add( _T("Library"), _T("ScanAVI"), &Library.ScanAVI, true );
@@ -235,7 +235,7 @@ void CSettings::Load()
 	Add( _T("MediaPlayer"), _T("AviPreviewCLSID"), &MediaPlayer.AviPreviewCLSID, _T("{394011F0-6D5C-42a3-96C6-24B9AD6B010C}") );
 	Add( _T("MediaPlayer"), _T("EnableEnqueue"), &MediaPlayer.EnableEnqueue, true );
 	Add( _T("MediaPlayer"), _T("EnablePlay"), &MediaPlayer.EnablePlay, true );
-	Add( _T("MediaPlayer"), _T("FileTypes"), &MediaPlayer.FileTypes, _T("|asx|wax|m3u|wvx|wmx|asf|wav|snd|au|aif|aifc|aiff|wma|mp3|cda|mid|rmi|midi|avi|mpeg|mpg|m1v|mp2|mpa|mpe|wmv|") );
+	Add( _T("MediaPlayer"), _T("FileTypes"), &MediaPlayer.FileTypes, _T("") );
 	Add( _T("MediaPlayer"), _T("ListSize"), &MediaPlayer.ListSize, 240 );
 	Add( _T("MediaPlayer"), _T("ListVisible"), &MediaPlayer.ListVisible, true );
 	Add( _T("MediaPlayer"), _T("MediaServicesCLSID"), &MediaPlayer.MediaServicesCLSID, _T("{3DC28AA6-A597-4E03-96DF-ADA19155B0BE}") );

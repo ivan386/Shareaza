@@ -1,7 +1,7 @@
 //
 // Settings.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -808,6 +808,9 @@ public:
 
 	void	OnChangeConnectionSpeed();
 
+	static void LoadSet(string_set* pSet, LPCTSTR pszString);
+	static CString SaveSet(const string_set* pSet);
+
 protected:
 	inline void Add(const LPCTSTR szSection, const LPCTSTR szName, bool* const pBool, const bool bDefault, const bool bHidden = false) throw()
 	{
@@ -835,9 +838,6 @@ protected:
 	}
 
 	void	SmartUpgrade();
-
-	static void LoadSet(string_set* pSet, LPCTSTR pszString);
-	static CString SaveSet(const string_set* pSet);
 
 // Inlines
 public:

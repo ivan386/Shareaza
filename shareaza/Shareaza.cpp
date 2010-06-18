@@ -387,6 +387,41 @@ BOOL CShareazaApp::InitInstance()
 			AfxMessageBox( IDS_SCHEMA_LOAD_ERROR, MB_ICONHAND | MB_OK );
 			return FALSE;
 		}
+		if ( ! Settings.MediaPlayer.FileTypes.size() )
+		{
+			CString sTypeFilter;
+			static const LPCTSTR szTypes[] =
+			{
+				CSchema::uriAudio,
+				CSchema::uriVideo,
+				NULL
+			};
+			for ( int i = 0; szTypes[ i ]; ++ i )
+				if ( CSchemaPtr pSchema = SchemaCache.Get( szTypes[ i ] ) )
+					sTypeFilter += pSchema->m_sTypeFilter;
+			sTypeFilter.Replace( _T("|."), _T("|") );
+			CSettings::LoadSet( &Settings.MediaPlayer.FileTypes, sTypeFilter );
+		}
+		if ( ! Settings.Library.SafeExecute.size() )
+		{
+			CString sTypeFilter;
+			static const LPCTSTR szTypes[] =
+			{
+				CSchema::uriArchive,
+				CSchema::uriAudio,
+				CSchema::uriVideo,
+				CSchema::uriBook,
+				CSchema::uriCollection,
+				CSchema::uriImage,
+				CSchema::uriBitTorrent,
+				NULL
+			};
+			for ( int i = 0; szTypes[ i ]; ++ i )
+				if ( CSchemaPtr pSchema = SchemaCache.Get( szTypes[ i ] ) )
+					sTypeFilter += pSchema->m_sTypeFilter;
+			sTypeFilter.Replace( _T("|."), _T("|") );
+			CSettings::LoadSet( &Settings.Library.SafeExecute, sTypeFilter );
+		}
 	SplashStep( L"Vendor Data" );
 		VendorCache.Load();
 	SplashStep( L"Profile" );

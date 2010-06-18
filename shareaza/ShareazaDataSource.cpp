@@ -348,7 +348,7 @@ HRESULT CShareazaDataSource::DoDragDrop(const CLibraryTreeItem* pList, HBITMAP p
 template < typename T >
 HRESULT CShareazaDataSource::DoDragDropHelper(const T* pList, HBITMAP pImage, const Hashes::Guid& oGUID, const CPoint& ptOffset)
 {
-	HRESULT hr;
+	HRESULT hr = E_FAIL;
 
 	// Create drag-n-drop data object
 	CShareazaDataSource* pSrc = new CShareazaDataSource;
