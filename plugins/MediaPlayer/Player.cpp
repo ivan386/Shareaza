@@ -206,7 +206,7 @@ STDMETHODIMP CPlayer::Reposition(
 
 #ifdef _WMP
 
-	if ( m_wndPlayer.m_hWnd )
+	if ( m_wndPlayer.IsWindow() )
 		m_wndPlayer.SetWindowPos( NULL, &m_rcWindow,
 			SWP_ASYNCWINDOWPOS | SWP_NOZORDER | SWP_NOACTIVATE );
 
@@ -214,7 +214,7 @@ STDMETHODIMP CPlayer::Reposition(
 
 	if ( m_bAudioOnly )
 	{
-		if ( m_wndPlayer.m_hWnd )
+		if ( m_wndPlayer.IsWindow() )
 			m_wndPlayer.SetWindowPos( NULL, &m_rcWindow,
 				SWP_ASYNCWINDOWPOS | SWP_NOZORDER | SWP_NOACTIVATE );
 	}
@@ -426,7 +426,7 @@ STDMETHODIMP CPlayer::Open(
 
 	AtlAxWinInit();
 
-	if ( ! m_wndPlayer.m_hWnd )
+	if ( ! m_wndPlayer.IsWindow() )
 	{
 		if ( ! m_wndPlayer.Create( (HWND)m_hwndOwner, m_rcWindow, NULL,
 			WS_CHILD | WS_DISABLED | WS_CLIPSIBLINGS | WS_CLIPCHILDREN,
@@ -496,7 +496,7 @@ STDMETHODIMP CPlayer::Open(
 
 	if ( m_bAudioOnly )
 	{
-		if ( ! m_wndPlayer.m_hWnd )
+		if ( ! m_wndPlayer.IsWindow() )
 		{
 			m_wndPlayer.Create( (HWND)m_hwndOwner, m_rcWindow, NULL,
 				WS_CHILD | WS_VISIBLE | WS_DISABLED | WS_CLIPSIBLINGS |
@@ -536,7 +536,7 @@ STDMETHODIMP CPlayer::Close(void)
 
 #endif
 
-	if ( m_wndPlayer.m_hWnd )
+	if ( m_wndPlayer.IsWindow() )
 		m_wndPlayer.DestroyWindow();
 
 	m_pPlayer.Release();
@@ -562,14 +562,14 @@ STDMETHODIMP CPlayer::Play(void)
 		return hr;
 
 	hr = pControls->play();
-	if ( FAILED( hr ) )
-		return hr;
+	if ( hr != S_OK )
+		return E_FAIL;
 
 #else
 
 	if ( m_bAudioOnly )
 	{
-		if ( m_wndPlayer.m_hWnd )
+		if ( m_wndPlayer.IsWindow() )
 			m_wndPlayer.SetWindowPos( NULL, &m_rcWindow,
 				SWP_ASYNCWINDOWPOS | SWP_NOZORDER | SWP_SHOWWINDOW );
 	}
@@ -647,7 +647,7 @@ STDMETHODIMP CPlayer::Stop(void)
 
 #ifdef _WMP
 
-	if ( m_wndPlayer.m_hWnd )
+	if ( m_wndPlayer.IsWindow() )
 		m_wndPlayer.ShowWindow( SW_HIDE );
 
 	CComPtr< IWMPControls > pControls;
@@ -663,7 +663,7 @@ STDMETHODIMP CPlayer::Stop(void)
 
 	if ( m_bAudioOnly )
 	{
-		if ( m_wndPlayer.m_hWnd )
+		if ( m_wndPlayer.IsWindow() )
 			m_wndPlayer.ShowWindow( SW_HIDE );
 	}
 	else
@@ -999,7 +999,7 @@ STDMETHODIMP CPlayer::IsWindowVisible(
 
 #ifdef _WMP
 
-	if ( m_wndPlayer.m_hWnd && m_wndPlayer.IsWindowVisible() )
+	if ( m_wndPlayer.IsWindow() && m_wndPlayer.IsWindowVisible() )
 		*pbVisible = VARIANT_TRUE;
 	else
 		*pbVisible = VARIANT_FALSE;
@@ -1008,7 +1008,7 @@ STDMETHODIMP CPlayer::IsWindowVisible(
 
 	if ( m_bAudioOnly )
 	{
-		if ( m_wndPlayer.m_hWnd && m_wndPlayer.IsWindowVisible() )
+		if ( m_wndPlayer.IsWindow() && m_wndPlayer.IsWindowVisible() )
 			*pbVisible = VARIANT_TRUE;
 		else
 			*pbVisible = VARIANT_FALSE;
@@ -1066,7 +1066,7 @@ HRESULT CPlayer::AdjustVideoPosAndZoom()
 	if ( m_dAspect > 0 )
 	{
 		// Stretch video to match aspect ratio
-		if ( (double)VideoWidth / VideoHeight > m_dAspect )
+		if ( (double)VideoWidth > m_dAspect * VideoHeight )
 		{
 			VideoHeight = (long)(VideoWidth / m_dAspect);
 		}
@@ -1081,7 +1081,7 @@ HRESULT CPlayer::AdjustVideoPosAndZoom()
 		VideoWidth *= m_nZoom;
 		VideoHeight *= m_nZoom;
 	}
-	else if ( m_nZoom == smzFill )
+	else if ( m_nZoom == smzFill && VideoHeight && WindowHeight )
 	{
 		double VideoAspect = m_dAspect > 0 ? m_dAspect : (double)VideoWidth / VideoHeight;
 		double WindowAspect = (double)WindowWidth / WindowHeight;
