@@ -101,13 +101,13 @@ void CShellIcons::Clear()
 //	m_i32.SetOverlayImage( SHI_LOCKED, SHI_O_LOCKED );
 //	m_i48.SetOverlayImage( SHI_LOCKED, SHI_O_LOCKED );
 
-	Get( _T(".exe"), 16 );
-	Get( _T(".exe"), 32 );
-	Get( _T(".exe"), 48 );
+	m_m16.SetAt( _T(".exe"), SHI_EXECUTABLE );
+	m_m32.SetAt( _T(".exe"), SHI_EXECUTABLE );
+	m_m48.SetAt( _T(".exe"), SHI_EXECUTABLE );
 
-	Get( _T(".com"), 16 );
-	Get( _T(".com"), 32 );
-	Get( _T(".com"), 48 );
+	m_m16.SetAt( _T(".com"), SHI_EXECUTABLE );
+	m_m32.SetAt( _T(".com"), SHI_EXECUTABLE );
+	m_m48.SetAt( _T(".com"), SHI_EXECUTABLE );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -117,6 +117,30 @@ int CShellIcons::Get(LPCTSTR pszFile, int nSize)
 {
 	if ( m_i16.m_hImageList == NULL )
 		Clear();
+
+	CImageList* pImage;
+	CIconMap* pIndex;
+	switch ( nSize )
+	{
+	case 16:
+		pImage = &m_i16;
+		pIndex = &m_m16;
+		break;
+
+	case 32:
+		pImage = &m_i32;
+		pIndex = &m_m32;
+		break;
+
+	case 48:
+		pImage = &m_i48;
+		pIndex = &m_m48;
+		break;
+
+	default:
+		ASSERT( FALSE );
+		return SHI_FILE;
+	}
 
 	CString strType = PathFindExtension( pszFile );
 	if ( strType.IsEmpty() )
@@ -135,86 +159,68 @@ int CShellIcons::Get(LPCTSTR pszFile, int nSize)
 	HICON hIcon = NULL;
 	int nIndex = SHI_FILE;
 
-	SHFILEINFO sfi = { 0 };
-	switch ( nSize )
+	if ( strFilename.IsEmpty() )
 	{
-	case 16:
-		if ( strFilename.IsEmpty() )
-		{
-			if ( m_m16.Lookup( strType, nIndex ) ) return nIndex;
-			Lookup( strType, &hIcon, NULL, NULL, NULL );
-		}
-		else
-		{
-			if ( m_m16.Lookup( strFilename, nIndex ) ) return nIndex;
-		}
-		if ( ! hIcon && SHGetFileInfo( pszFile, FILE_ATTRIBUTE_NORMAL, &sfi, sizeof( SHFILEINFO ),
-			( strFilename.IsEmpty() ? SHGFI_USEFILEATTRIBUTES : 0 ) | SHGFI_ICON | SHGFI_SMALLICON ) )
-		{
-			hIcon = Settings.General.LanguageRTL ? CreateMirroredIcon( sfi.hIcon ) : sfi.hIcon;
-		}
-		else if ( ! strFilename.IsEmpty() )
-		{
-			Lookup( strType, &hIcon, NULL, NULL, NULL );
-		}
-		nIndex = hIcon ? m_i16.Add( hIcon ) : SHI_FILE;
-		m_m16.SetAt( ( strFilename.IsEmpty() ? strType : strFilename ), nIndex );
-		TRACE( _T("Got 16x16 icon %d for %s\n"), nIndex, ( strFilename.IsEmpty() ? strType : strFilename ) );
-		break;
+		if ( pIndex->Lookup( strType, nIndex ) )
+			return nIndex;
 
-	case 32:
-		if ( strFilename.IsEmpty() )
-		{
-			if ( m_m32.Lookup( strType, nIndex ) ) return nIndex;
-			Lookup( strType, NULL, &hIcon, NULL, NULL );
-		}
-		else
-		{
-			if ( m_m32.Lookup( strFilename, nIndex ) ) return nIndex;
-		}
-		if ( ! hIcon && SHGetFileInfo( pszFile, FILE_ATTRIBUTE_NORMAL, &sfi, sizeof( SHFILEINFO ),
-			( strFilename.IsEmpty() ? SHGFI_USEFILEATTRIBUTES : 0 ) | SHGFI_ICON ) )
-		{
-			hIcon = Settings.General.LanguageRTL ? CreateMirroredIcon( sfi.hIcon ) : sfi.hIcon;
-		}
-		else if ( ! strFilename.IsEmpty() )
-		{
-			Lookup( strType, NULL, &hIcon, NULL, NULL );
-		}
-		nIndex = hIcon ? m_i32.Add( hIcon ) : SHI_FILE;
-		m_m32.SetAt( ( strFilename.IsEmpty() ? strType : strFilename ), nIndex );
-		TRACE( _T("Got 32x32 icon %d for %s\n"), nIndex, ( strFilename.IsEmpty() ? strType : strFilename ) );
-		break;
-
-	case 48:
-		if ( strFilename.IsEmpty() )
-		{
-			if ( m_m48.Lookup( strType, nIndex ) ) return nIndex;
-			Lookup( strType, NULL, NULL, NULL, NULL, &hIcon );
-		}
-		else
-		{
-			if ( m_m48.Lookup( strFilename, nIndex ) ) return nIndex;
-		}
-		if ( ! hIcon && SHGetFileInfo( pszFile, FILE_ATTRIBUTE_NORMAL, &sfi, sizeof( SHFILEINFO ),
-			( strFilename.IsEmpty() ? SHGFI_USEFILEATTRIBUTES : 0 ) | SHGFI_ICON | SHGFI_LARGEICON ) )
-		{
-			hIcon = Settings.General.LanguageRTL ? CreateMirroredIcon( sfi.hIcon ) : sfi.hIcon;
-		}
-		else if ( ! strFilename.IsEmpty() )
-		{
-			Lookup( strType, NULL, NULL, NULL, NULL, &hIcon );
-		}
-		nIndex = hIcon ? m_i48.Add( hIcon ) : SHI_FILE;
-		m_m48.SetAt( ( strFilename.IsEmpty() ? strType : strFilename ), nIndex );
-		TRACE( _T("Got 48x48 icon %d for %s\n"), nIndex, ( strFilename.IsEmpty() ? strType : strFilename ) );
-		break;
+		Lookup( strType,
+			( ( nSize == 16 ) ? &hIcon : NULL ),
+			( ( nSize == 32 ) ? &hIcon : NULL ), NULL, NULL,
+			( ( nSize == 48 ) ? &hIcon : NULL ) );
 	}
-	
-	if ( hIcon ) DestroyIcon( hIcon );
+	else
+	{
+		if ( pIndex->Lookup( strFilename, nIndex ) )
+			return nIndex;
+	}
+
+	if ( ! hIcon && ! strFilename.IsEmpty() )
+	{
+		LoadIcon( pszFile,
+				( ( nSize == 16 ) ? &hIcon : NULL ),
+				( ( nSize == 32 ) ? &hIcon : NULL ),
+				( ( nSize == 48 ) ? &hIcon : NULL ) );
+
+		if ( hIcon && Settings.General.LanguageRTL )
+			hIcon = CreateMirroredIcon( hIcon );
+	}
+
+	if ( ! hIcon && ! strFilename.IsEmpty() )
+	{
+		if ( pIndex->Lookup( strType, nIndex ) )
+		{
+			pIndex->SetAt( strFilename, nIndex );
+			return nIndex;
+		}
+
+		Lookup( strType,
+			( ( nSize == 16 ) ? &hIcon : NULL ),
+			( ( nSize == 32 ) ? &hIcon : NULL ), NULL, NULL,
+			( ( nSize == 48 ) ? &hIcon : NULL ) );
+	}
+
+	SHFILEINFO sfi = {};
+	if ( ! hIcon &&
+		SHGetFileInfo( pszFile, 0, &sfi, sizeof( SHFILEINFO ),
+			( strFilename.IsEmpty() ? SHGFI_USEFILEATTRIBUTES : 0 ) |
+			SHGFI_ICON | ( ( nSize == 16 ) ? SHGFI_SMALLICON : SHGFI_LARGEICON ) ) )
+	{
+		hIcon = Settings.General.LanguageRTL ? CreateMirroredIcon( sfi.hIcon ) : sfi.hIcon;
+	}
+
+	nIndex = hIcon ? pImage->Add( hIcon ) : SHI_FILE;
+	pIndex->SetAt( ( strFilename.IsEmpty() ? strType : strFilename ), nIndex );
+
+	if ( hIcon )
+		DestroyIcon( hIcon );
+
+	TRACE( _T("Got %dx%d icon %d for %s\n"),
+		nSize, nSize, nIndex, ( strFilename.IsEmpty() ? strType : strFilename ) );
 
 	return nIndex;
 }
+
 
 //////////////////////////////////////////////////////////////////////
 // CShellIcons add icon

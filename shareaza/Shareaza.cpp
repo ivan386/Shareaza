@@ -1791,7 +1791,7 @@ void RecalcDropWidth(CComboBox* pWnd)
 	pWnd->SetDroppedWidth( nWidth );
 }
 
-BOOL LoadIcon(LPCTSTR szFilename, HICON* phSmallIcon, HICON* phLargeIcon, HICON* phHugeIcon)
+BOOL LoadIcon(LPCTSTR szFilename, HICON* phSmallIcon, HICON* phLargeIcon, HICON* phHugeIcon, int nIcon)
 {
 	CString strIcon( szFilename );
 
@@ -1803,12 +1803,12 @@ BOOL LoadIcon(LPCTSTR szFilename, HICON* phSmallIcon, HICON* phLargeIcon, HICON*
 		*phHugeIcon = NULL;
 
 	int nIndex = strIcon.ReverseFind( _T(',') );
-	int nIcon = 0;
 	if ( nIndex != -1 )
 	{
-		if ( _stscanf( strIcon.Mid( nIndex + 1 ), _T("%i"), &nIcon ) != 1 )
-			return FALSE;
-		strIcon = strIcon.Left( nIndex );
+		if ( _stscanf( strIcon.Mid( nIndex + 1 ), _T("%i"), &nIcon ) == 1 )
+		{
+			strIcon = strIcon.Left( nIndex );
+		}
 	}
 	else
 		nIndex = 0;

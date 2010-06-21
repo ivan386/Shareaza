@@ -219,7 +219,7 @@ CString	TimeToString(FILETIME* pTime);
 
 void	RecalcDropWidth(CComboBox* pWnd);
 // Load 16x16, 32x32, 48x48 icons from .ico, .exe, .dll files
-BOOL LoadIcon(LPCTSTR szFilename, HICON* phSmallIcon, HICON* phLargeIcon, HICON* phHugeIcon);
+BOOL LoadIcon(LPCTSTR szFilename, HICON* phSmallIcon, HICON* phLargeIcon, HICON* phHugeIcon, int nIcon = 0);
 // Load 16x16 icon from module pointed by its CLSID
 HICON LoadCLSIDIcon(LPCTSTR szCLSID);
 // Load and add icon to CImageList, mirrored if needed

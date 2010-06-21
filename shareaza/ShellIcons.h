@@ -41,12 +41,14 @@ public:
 	BOOL	Draw(CDC* pDC, int nIcon, int nSize, int nX, int nY, COLORREF crBack = CLR_NONE, BOOL bSelected = FALSE) const;
 
 private:
+	typedef CMap< CString, const CString&, int, int > CIconMap;
+
 	CImageList		m_i16;
 	CImageList		m_i32;
 	CImageList		m_i48;
-	CMap< CString, const CString&, int, int > m_m16;
-	CMap< CString, const CString&, int, int > m_m32;
-	CMap< CString, const CString&, int, int > m_m48;
+	CIconMap		m_m16;
+	CIconMap		m_m32;
+	CIconMap		m_m48;
 
 	CShellIcons(const CShellIcons&);
 	CShellIcons& operator=(const CShellIcons&);
