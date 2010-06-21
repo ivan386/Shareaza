@@ -49,6 +49,21 @@ CString GetValue(IXMLDOMElement* pRoot, LPCTSTR szXPath)
 	return (LPCWSTR)bstrVersion;
 }
 
+CString GetTime(IXMLDOMElement* pRoot, LPCTSTR szNode, LPCTSTR szFormat)
+{
+	try 
+    {
+		FILETIME fTimestamp;
+		(__int64&)fTimestamp = _tstoi64( GetValue( pRoot, szNode ) );
+		CTime tTimeStamp( fTimestamp );
+		return tTimeStamp.FormatGmt( szFormat );
+	} 
+    catch( ... )
+    {
+    }
+	return CString();
+}
+
 bool ProcessReport(const CString& sInput)
 {
 	_tprintf( _T("Processing %s ...\n"), PathFindFileName( sInput ) );
@@ -72,10 +87,8 @@ bool ProcessReport(const CString& sInput)
 	if ( hr != S_OK )
 		return false;
 
-	FILETIME fTimestamp;
-	(__int64&)fTimestamp = _tstoi64( GetValue( pRoot, _T("/report/timestamp") ) );
-	CTime tTimeStamp( fTimestamp );
-	CString sTimestamp = tTimeStamp.FormatGmt( _T("%y%m%d-%H%M%S") );
+	CString sTimestamp = GetTime( pRoot, _T("/report/timestamp"), _T("%y%m%d-%H%M%S") );
+	if ( sTimestamp.IsEmpty() ) sTimestamp = _T("UNKNOWN");
 
 	CString sVersion = GetValue( pRoot, _T("/report/version") );
 
