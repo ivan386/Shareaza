@@ -2002,7 +2002,7 @@ BOOL CMediaFrame::UpdateState()
 		int nLength = (int)( m_nLength / TIME_FACTOR );
 
 		m_nPosition = 0;
-		hr = m_pPlayer->GetPosition( &m_nPosition );
+		hr = m_pPlayer ? m_pPlayer->GetPosition( &m_nPosition ) : E_FAIL;
 		if ( FAILED( hr ) )
 		{
 			Cleanup( TRUE );
@@ -2015,7 +2015,7 @@ BOOL CMediaFrame::UpdateState()
 		m_wndPosition.SetPos( (int)nPosition );
 
 		double nSpeed = 1.0f;
-		hr = m_pPlayer->GetSpeed( &nSpeed );
+		hr = m_pPlayer ? m_pPlayer->GetSpeed( &nSpeed ) : E_FAIL;
 		if ( FAILED( hr ) )
 		{
 			Cleanup( TRUE );
@@ -2027,7 +2027,7 @@ BOOL CMediaFrame::UpdateState()
 		if ( ! m_bMute )
 		{
 			Settings.MediaPlayer.Volume = 1.0f;
-			hr = m_pPlayer->GetVolume( &Settings.MediaPlayer.Volume );
+			hr = m_pPlayer ? m_pPlayer->GetVolume( &Settings.MediaPlayer.Volume ) : E_FAIL;
 			if ( FAILED( hr ) )
 			{
 				Cleanup( TRUE );
