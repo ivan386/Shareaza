@@ -858,7 +858,7 @@ BOOL CUploadTransferHTTP::QueueRequest()
 	}
 
 
-	if ( Uploads.CanUploadFileTo( &m_pHost.sin_addr, m_oSHA1 ) )	//if ( Uploads.AllowMoreTo( &m_pHost.sin_addr ) )
+	if ( Uploads.CanUploadFileTo( &m_pHost.sin_addr, this ) )	//if ( Uploads.AllowMoreTo( &m_pHost.sin_addr ) )
 	{
 		if ( ( nPosition = UploadQueues.GetPosition( this, TRUE ) ) >= 0 )
 		{

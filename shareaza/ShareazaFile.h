@@ -64,7 +64,13 @@ public:
 	// Split string of URLs delimited by commas to URL list
 	bool SplitStringToURLs(LPCTSTR pszURLs, CMapStringToFILETIME& oUrls) const;
 
-	// Is some of hashes present?
+	// Are files sufficient equal?
+	bool operator==(const CShareazaFile& pFile) const;
+
+	// Are files sufficient unequal? (i.e. has diffrent sizes or hashes)
+	bool operator!=(const CShareazaFile& pFile) const;
+
+	// Are some of hashes present?
 	inline bool IsHashed() const throw()
 	{
 		return m_oSHA1 || m_oTiger || m_oED2K || m_oBTH || m_oMD5;

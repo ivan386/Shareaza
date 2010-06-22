@@ -1,7 +1,7 @@
 //
 // ShareazaFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -29,6 +29,28 @@
 static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
+
+inline bool validAndEqual(QWORD nLeft, QWORD nRight)
+{
+	return ( nLeft != SIZE_UNKNOWN && nRight != SIZE_UNKNOWN && nLeft == nRight );
+}
+
+inline bool validAndUnequal(QWORD nLeft, QWORD nRight)
+{
+	return ( nLeft != SIZE_UNKNOWN && nRight != SIZE_UNKNOWN && nLeft != nRight );
+}
+
+inline bool validAndEqual(const CString& sLeft, const CString& sRight)
+{
+	return ( sLeft.GetLength() && sRight.GetLength() && ! sLeft.CompareNoCase( sRight ) );
+}
+
+inline bool validAndUnequal(const CString& sLeft, const CString& sRight)
+{
+	return ( sLeft.GetLength() && sRight.GetLength() && sLeft.CompareNoCase( sRight ) );
+}
+
+// CShareazaFile
 
 IMPLEMENT_DYNAMIC(CShareazaFile, CComObject)
 
@@ -68,6 +90,66 @@ CShareazaFile& CShareazaFile::operator=(const CShareazaFile& pFile)
 	m_sPath = pFile.m_sPath;
 	m_sURL = pFile.m_sURL;
 	return *this;
+}
+
+bool CShareazaFile::operator==(const CShareazaFile& pFile) const
+{
+	if ( this == &pFile )
+	{
+		// Same object
+		return true;
+	}
+
+	if ( validAndUnequal( m_nSize,  pFile.m_nSize  ) ||
+		 validAndUnequal( m_oSHA1,  pFile.m_oSHA1  ) ||
+		 validAndUnequal( m_oTiger, pFile.m_oTiger ) ||
+		 validAndUnequal( m_oED2K,  pFile.m_oED2K  ) ||
+		 validAndUnequal( m_oMD5,   pFile.m_oMD5   ) )
+	{
+		// Different sizes or hashes (excluding BitTorrent)
+		return false;
+	}
+
+	if ( validAndEqual( m_oSHA1,  pFile.m_oSHA1  ) ||
+		 validAndEqual( m_oTiger, pFile.m_oTiger ) ||
+		 validAndEqual( m_oED2K,  pFile.m_oED2K  ) ||
+		 validAndEqual( m_oMD5,   pFile.m_oMD5   ) )
+	{
+		// Same hash (excluding BitTorrent)
+		return true;
+	}
+
+	if ( validAndEqual( m_oBTH,  pFile.m_oBTH  ) &&
+		 validAndEqual( m_sName, pFile.m_sName ) )
+	{
+		// Same name and BitTorrent hash
+		return true;
+	}
+
+	// Insufficient data
+	return false;
+}
+
+bool CShareazaFile::operator!=(const CShareazaFile& pFile) const
+{
+	if ( this == &pFile )
+	{
+		// Same object
+		return false;
+	}
+
+	if ( validAndUnequal( m_nSize,  pFile.m_nSize  ) ||
+		 validAndUnequal( m_oSHA1,  pFile.m_oSHA1  ) ||
+		 validAndUnequal( m_oTiger, pFile.m_oTiger ) ||
+		 validAndUnequal( m_oED2K,  pFile.m_oED2K  ) ||
+		 validAndUnequal( m_oMD5,   pFile.m_oMD5   ) )
+	{
+		// Different sizes or hashes (excluding BitTorrent)
+		return true;
+	}
+
+	// Insufficient data
+	return false;
 }
 
 CString CShareazaFile::GetURL(const IN_ADDR& nAddress, WORD nPort) const

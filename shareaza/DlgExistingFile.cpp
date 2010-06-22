@@ -1,7 +1,7 @@
 //
 // DlgExistingFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -107,8 +107,7 @@ CExistingFileDlg::Action CExistingFileDlg::CheckExisting(const CShareazaFile* pF
 /////////////////////////////////////////////////////////////////////////////
 // CExistingFileDlg dialog
 
-CExistingFileDlg::CExistingFileDlg(CLibraryFile* pFile, CWnd* pParent,
-	 bool bDuplicateSearch)
+CExistingFileDlg::CExistingFileDlg(const CLibraryFile* pFile, CWnd* pParent, bool bDuplicateSearch)
 :	CSkinDialog( CExistingFileDlg::IDD, pParent )
 ,	m_nAction( 0 )
 {

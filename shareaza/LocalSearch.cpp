@@ -105,9 +105,7 @@ bool CLocalSearch::IsValidForHit< CDownload >(const CDownload* pDownload) const
 		// download active and ...
 		( pDownload->IsTorrent() || pDownload->IsStarted() ) &&
 		// download matches
-		m_pSearch->Match( pDownload->GetSearchName(), pDownload->m_nSize, NULL,
-			NULL, pDownload->m_oSHA1, pDownload->m_oTiger, pDownload->m_oED2K,
-			pDownload->m_oBTH, pDownload->m_oMD5 );
+		m_pSearch->Match( pDownload->GetSearchName(), NULL, NULL, pDownload );
 }
 
 template<>

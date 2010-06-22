@@ -342,20 +342,19 @@ CFileList* CLibraryDictionary::Search(
 		if ( pHit->m_nSearchWords < nLowerBound )
 			continue;
 
-		if ( pSearch->Match( pHit->GetSearchName(), pHit->m_nSize,
+		if ( pSearch->Match( pHit->GetSearchName(),
 			pHit->m_pSchema ? (LPCTSTR)pHit->m_pSchema->GetURI() : NULL,
-			pHit->m_pMetadata, pHit->m_oSHA1, pHit->m_oTiger, pHit->m_oED2K,
-			pHit->m_oBTH, pHit->m_oMD5 ) )
+			pHit->m_pMetadata, pHit ) )
 		{
-			if ( !pHits )
+			if ( ! pHits )
 				pHits = new CFileList;
 
 			pHits->AddTail( pHit );
 
-			if ( !bLocal )
+			if ( ! bLocal )
 			{
-				++pHit->m_nHitsToday;
-				++pHit->m_nHitsTotal;
+				pHit->m_nHitsToday ++;
+				pHit->m_nHitsTotal ++;
 			}
 
 			if ( pHit->m_nCollIndex )

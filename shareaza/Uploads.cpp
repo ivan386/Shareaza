@@ -1,7 +1,7 @@
 //
 // Uploads.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -182,13 +182,13 @@ BOOL CUploads::AllowMoreTo(IN_ADDR* pAddress) const
 	return ( nCount <= Settings.Uploads.MaxPerHost );
 }
 
-BOOL CUploads::CanUploadFileTo(IN_ADDR* pAddress, const Hashes::Sha1Hash& oSHA1) const
+BOOL CUploads::CanUploadFileTo(IN_ADDR* pAddress, const CShareazaFile* pFile) const
 {
 	DWORD nCount = 0;
 
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
-		CUploadTransfer* pUpload = GetNext( pos );
+		const CUploadTransfer* pUpload = GetNext( pos );
 
 		if ( pUpload->m_nState == upsUploading ||
 			 pUpload->m_nState == upsQueued )
@@ -198,7 +198,7 @@ BOOL CUploads::CanUploadFileTo(IN_ADDR* pAddress, const Hashes::Sha1Hash& oSHA1)
 				nCount++;
 
 				// If we're already uploading this file to this client
-				if ( ( pUpload->m_oSHA1 ) && ( oSHA1 ) && validAndEqual( pUpload->m_oSHA1, oSHA1 ) )
+				if ( *pUpload == *pFile )
 					return FALSE;
 			}
 		}

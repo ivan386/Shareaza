@@ -1,7 +1,7 @@
 //
 // DlgExistingFile.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -33,7 +33,7 @@ class CExistingFileDlg : public CSkinDialog
 	DECLARE_DYNAMIC(CExistingFileDlg)
 
 public:
-	CExistingFileDlg(CLibraryFile* pFile, CWnd* pParent = NULL, bool bDuplicateSearch = false);
+	CExistingFileDlg(const CLibraryFile* pFile, CWnd* pParent = NULL, bool bDuplicateSearch = false);
 
 	enum { IDD = IDD_EXISTING_FILE };
 	enum Action { ShowInLibrary, Download, DontDownload, Cancel };

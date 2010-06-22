@@ -124,7 +124,6 @@ CLibraryFile::~CLibraryFile()
 	}
 
 	ASSERT( Library.LookupFile( m_nIndex ) == NULL );
-	ASSERT( ! Library.GetAlbumRoot() || ! Library.GetAlbumRoot()->FindFile( this ) );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -627,7 +626,7 @@ CSharedSource* CLibraryFile::AddAlternateSource(LPCTSTR pszURL, FILETIME* tSeen)
 	if ( Network.IsFirewalledAddress( &pURL.m_pAddress, TRUE ) ||
 		 Network.IsReserved( (IN_ADDR*)&pURL.m_pAddress ) ) return NULL;
 
-	if ( validAndUnequal( pURL.m_oSHA1, m_oSHA1 ) ) return NULL;
+	if ( pURL != *this ) return NULL;
 
 	for ( POSITION pos = m_pSources.GetHeadPosition() ; pos ; )
 	{

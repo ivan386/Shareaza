@@ -247,12 +247,7 @@ void CMatchList::AddHits(const CQueryHit* pHits, const CQuerySearch* pFilter)
 				pHit->m_bExactMatch = TRUE;
 
 			pHit->m_bMatched = pFilter->Match(
-				pHit->m_sName, pHit->m_nSize, pHit->m_sSchemaURI, pHit->m_pXML,
-				pHit->m_oSHA1,
-				pHit->m_oTiger,
-				pHit->m_oED2K,
-				pHit->m_oBTH,
-				pHit->m_oMD5);
+				pHit->m_sName, pHit->m_sSchemaURI, pHit->m_pXML, pHit );
 
 			// ToDo: Change to pHit->m_bMatched when we will be able to get folder name
 			// from hits. Raza sends hits if folder name matches the search keywords too.

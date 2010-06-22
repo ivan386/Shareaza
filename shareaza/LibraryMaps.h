@@ -45,6 +45,7 @@ public:
 	CLibraryFile*	LookupFileByPath(LPCTSTR pszPath, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE) const;
 	CLibraryFile*	LookupFileByURN(LPCTSTR pszURN, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE) const;
 	CLibraryFile*	LookupFileByHash(const CShareazaFile* pFilter, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE) const;
+	CFileList*		LookupFilesByHash(const CShareazaFile* pFilter, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE, int nMaximum = 1) const;
 	CLibraryFile*	LookupFileBySHA1(const Hashes::Sha1Hash& oSHA1, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE) const;
 	CLibraryFile*	LookupFileByTiger(const Hashes::TigerHash& oTiger, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE) const;
 	CLibraryFile*	LookupFileByED2K(const Hashes::Ed2kHash& oED2K, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE) const;
