@@ -49,7 +49,7 @@ public:
 
 // Attributes
 public:
-	CMutexEx		m_pSection;
+	mutable CMutexEx	m_pSection;
 
 protected:
 	volatile LONG	m_nUpdateCookie;		// Library cookie (ms)
@@ -91,14 +91,14 @@ public:
 
 // File and Folder Operations
 public:
-	void			CheckDuplicates(LPCTSTR pszMD5Hash);
+	void			CheckDuplicates(LPCTSTR pszMD5Hash) const;
 	CLibraryFile*	LookupFile(DWORD_PTR nIndex, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE) const;
 	CAlbumFolder*	GetAlbumRoot();
 	void			AddFile(CLibraryFile* pFile);
 	void			RemoveFile(CLibraryFile* pFile);
 
 protected:
-	void			CheckDuplicates(CLibraryFile* pFile, bool bForce = false);
+	void			CheckDuplicates(const CLibraryFile* pFile, bool bForce = false) const;
 
 // General Operations
 public:

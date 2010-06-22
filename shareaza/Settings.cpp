@@ -160,6 +160,7 @@ void CSettings::Load()
 	Add( _T("Library"), _T("LowPriorityHashing"), &Library.LowPriorityHashing, 2, 1, 1, 100, _T(" MB/s") );
 	Add( _T("Library"), _T("MarkFileAsDownload"), &Library.MarkFileAsDownload, true );
 	Add( _T("Library"), _T("MaxMaliciousFileSize"), &Library.MaxMaliciousFileSize, Kilo, 1, Kilo, 5*Kilo, _T(" B") );
+	Add( _T("Library"), _T("MaliciousTypes"), &Library.MaliciousTypes, _T("|exe|com|zip|rar|ace|7z|cab|lzh|tar|tgz|bz2|wmv|") );
 	Add( _T("Library"), _T("PanelSize"), &Library.PanelSize, 120, 1, 0, 1024, _T(" px") );
 	Add( _T("Library"), _T("PreferAPETags"), &Library.PreferAPETags, true );
 	Add( _T("Library"), _T("PrivateTypes"), &Library.PrivateTypes, _T("|vbs|js|jc!|fb!|bc!|!ut|dbx|part|partial|pst|reget|getright|pif|lnk|sd|url|wab|m4p|infodb|racestats|chk|tmp|temp|ini|inf|log|old|manifest|met|bak|$$$|---|~~~|###|__incomplete___|") );

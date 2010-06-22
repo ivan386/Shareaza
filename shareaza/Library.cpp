@@ -137,24 +137,26 @@ void CLibrary::RemoveFile(CLibraryFile* pFile)
 	}
 }
 
-void CLibrary::CheckDuplicates(CLibraryFile* pFile, bool bForce)
+void CLibrary::CheckDuplicates(const CLibraryFile* pFile, bool bForce) const
 {
 	long nCount = 0;
 
 	// malicious software are usually small, we won't search duplicates
-	if ( pFile->m_nSize / 1024 > Settings.Library.MaxMaliciousFileSize ) return;
+	if ( pFile->m_nSize < 32 ||
+		 pFile->m_nSize > Settings.Library.MaxMaliciousFileSize * 1024 )
+		 return;
 
-	int nDot = pFile->m_sName.ReverseFind( '.' );
-
-	if ( nDot == -1 ) return;
-	if ( _tcsistr( _T("|exe|com|zip|rar|ace|7z|cab|lzh|tar|tgz|bz2|wmv|"),
-		pFile->m_sName.Mid( nDot + 1 ) ) == NULL ) return;
+	LPCTSTR pszExt = _tcsrchr( pFile->m_sName, _T('.') );
+	if ( ! pszExt )
+		return;
+	if ( ! IsIn( Settings.Library.MaliciousTypes, ++pszExt ) )
+		return;
 
 	for ( POSITION pos = LibraryMaps.GetFileIterator() ; pos ; )
 	{
-		CLibraryFile* pExisting = LibraryMaps.GetNextFile( pos );
+		const CLibraryFile* pExisting = LibraryMaps.GetNextFile( pos );
 
-		if ( validAndEqual( pFile->m_oMD5, pExisting->m_oMD5 ) )
+		if ( *pFile == *pExisting )
 			nCount++;
 	}
 
@@ -199,10 +201,11 @@ void CLibrary::CheckDuplicates(CLibraryFile* pFile, bool bForce)
 		}
 		Settings.Live.MaliciousWarning = FALSE;
 	}
-	else Settings.Live.LastDuplicateHash.Empty();
+	else
+		Settings.Live.LastDuplicateHash.Empty();
 }
 
-void CLibrary::CheckDuplicates(LPCTSTR pszMD5Hash)
+void CLibrary::CheckDuplicates(LPCTSTR pszMD5Hash) const
 {
 	Hashes::Md5Hash oMD5;
 	oMD5.fromString( pszMD5Hash );
@@ -210,9 +213,10 @@ void CLibrary::CheckDuplicates(LPCTSTR pszMD5Hash)
 	if ( oMD5 )
 	{
 		CSingleLock oLock( &m_pSection );
-		if ( !oLock.Lock( 50 ) ) return;
-		CLibraryFile* pFile = LibraryMaps.LookupFileByMD5( oMD5, FALSE, TRUE );
-		if ( pFile )
+		if ( ! oLock.Lock( 250 ) )
+			return;
+
+		if ( CLibraryFile* pFile = LibraryMaps.LookupFileByMD5( oMD5, FALSE, TRUE ) )
 		{
 			CheckDuplicates( pFile, true );
 		}
