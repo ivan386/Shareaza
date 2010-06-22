@@ -346,6 +346,8 @@ BOOL CFilePreviewDlg::RunPlugin()
 
 	oLock.Lock();
 
+	m_pPlugin->SetSite( NULL );
+
 	m_pPlugin.Release();
 
 	return SUCCEEDED( hr );
