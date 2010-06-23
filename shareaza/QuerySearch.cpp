@@ -1229,10 +1229,14 @@ BOOL CQuerySearch::Match(LPCTSTR pszFilename, LPCTSTR pszSchemaURI, CXMLElement*
 {
 	if ( pFile->m_nSize == SIZE_UNKNOWN ||
 		 pFile->m_nSize < m_nMinSize ||
-		 pFile->m_nSize > m_nMaxSize ||
-		 *this != *pFile )
+		 pFile->m_nSize > m_nMaxSize )
 	{
 		return FALSE;
+	}
+
+	if ( *this == *pFile )
+	{
+		return TRUE;
 	}
 
 	if ( pszSchemaURI && *pszSchemaURI && pXML )
