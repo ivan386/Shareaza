@@ -557,7 +557,7 @@ void CScheduler::CheckSchedule()
 						//Smart way for deactivating task if it is "Only Once"
 						pSchTask->m_bActive = pSchTask->m_bSpecificDays;
 						//Setting the date of task to last execution for further checks
-						pSchTask->m_tScheduleDateTime = tNow;
+						pSchTask->m_tScheduleDateTime = CTime(tNow.GetYear(), tNow.GetMonth(),tNow.GetDay(), pSchTask->m_tScheduleDateTime.GetHour(), pSchTask->m_tScheduleDateTime.GetMinute(), pSchTask->m_tScheduleDateTime.GetSecond());
 					}
 				}
 			}
