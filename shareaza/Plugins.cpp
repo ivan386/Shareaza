@@ -178,15 +178,40 @@ void CPlugins::Clear()
 	m_pList.RemoveAll();
 }
 
+void CPlugins::UnloadPlugin(REFCLSID pCLSID)
+{
+	CQuickLock oLock( m_pSection );
+
+	// Delete from cache
+	CPluginPtr* pGITPlugin = NULL;
+	if ( m_pCache.Lookup( pCLSID, pGITPlugin ) )
+	{
+		m_pCache.RemoveKey( pCLSID );
+		delete pGITPlugin;
+	}
+
+	// Delete from generic plugins list
+	for ( POSITION pos = GetIterator() ; pos ; )
+	{
+		POSITION posOrig = pos;
+		CPlugin* pPlugin = GetNext( pos );
+		if ( pPlugin->m_pCLSID == pCLSID )
+		{
+			m_pList.RemoveAt( posOrig );
+			delete pPlugin;
+		}
+	}
+}
+
 //////////////////////////////////////////////////////////////////////
 // CPlugins CLSID helpers
 
-BOOL CPlugins::LookupCLSID(LPCTSTR pszGroup, LPCTSTR pszKey, CLSID& pCLSID) const
+BOOL CPlugins::LookupCLSID(LPCTSTR pszGroup, LPCTSTR pszKey, REFCLSID pCLSID) const
 {
 	CString strCLSID = theApp.GetProfileString(
 		CString( _T("Plugins\\") ) + pszGroup, pszKey, _T("") );
 	return ! strCLSID.IsEmpty() &&
-		Hashes::fromGuid( strCLSID, &pCLSID ) &&
+		Hashes::fromGuid( strCLSID, (CLSID*)&pCLSID ) &&
 		LookupEnable( pCLSID, pszKey );
 }
 

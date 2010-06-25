@@ -39,7 +39,7 @@ public:
 
 	void		Enumerate();
 	void		Clear();
-	BOOL		LookupCLSID(LPCTSTR pszGroup, LPCTSTR pszKey, CLSID& pCLSID) const;
+	BOOL		LookupCLSID(LPCTSTR pszGroup, LPCTSTR pszKey, REFCLSID pCLSID) const;
 	BOOL		LookupEnable(REFCLSID pCLSID, LPCTSTR pszExt = NULL) const;
 
 	// Load non-generic plugin and save it to cache
@@ -47,6 +47,9 @@ public:
 
 	// Reload non-generic plugin within cache
 	BOOL		ReloadPlugin(LPCTSTR pszGroup, LPCTSTR pszType);
+
+	// Unload plugin (from cache and generic plugin list)
+	void		UnloadPlugin(REFCLSID pCLSID);
 
 	// Retrieve next free command ID
 	UINT		GetCommandID();

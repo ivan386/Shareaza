@@ -1926,6 +1926,12 @@ void CMediaFrame::Cleanup(BOOL bUnexpected)
 		AfxSetResourceHandle( hRes );
 	}
 
+	CLSID pCLSID;
+	if ( Plugins.LookupCLSID( _T("MediaPlayer"), _T("Default"), pCLSID ) )
+	{
+		Plugins.UnloadPlugin( pCLSID );
+	}
+
 	m_nState = smsNull;
 	m_pMetadata.Clear();
 	m_bNoLogo = VARIANT_FALSE;

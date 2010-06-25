@@ -521,23 +521,29 @@ STDMETHODIMP CPlayer::Open(
 
 STDMETHODIMP CPlayer::Close(void)
 {
-	if ( ! m_pPlayer )
-		// Already closed
-		return S_OK;
-
 	Stop();
 
 #ifdef _WMP
 
+	// Detach Windows Media Player control
+	CComPtr< IAxWinHostWindow > pHost;
+	if ( SUCCEEDED( m_wndPlayer.QueryHost( &pHost ) ) )
+	{
+		pHost->AttachControl( NULL, NULL );
+		pHost.Release();
+	}
 
 #else
 
-	m_pPlayer->Abort();
+	if ( m_pPlayer )
+		m_pPlayer->Abort();
 
 #endif
 
+	// Destroy window
 	if ( m_wndPlayer.IsWindow() )
 		m_wndPlayer.DestroyWindow();
+	m_wndPlayer.m_hWnd = NULL;
 
 	m_pPlayer.Release();
 
