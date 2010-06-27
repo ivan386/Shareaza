@@ -297,7 +297,8 @@ void CDownloadMonitorDlg::OnTimer(UINT_PTR /*nIDEvent*/)
 		if ( _tcsncmp( m_pTray.szTip, strText, _countof( m_pTray.szTip ) - 1 ) )
 		{
 			m_pTray.uFlags = NIF_TIP;
-			_tcsncpy( m_pTray.szTip, strText, _countof( m_pTray.szTip ) );
+			_tcsncpy( m_pTray.szTip, strText, _countof( m_pTray.szTip ) - 1 );
+			m_pTray.szTip[ _countof( m_pTray.szTip ) - 1 ] = _T('\0');
 
 			Shell_NotifyIcon( NIM_MODIFY, &m_pTray );
 		}
@@ -583,7 +584,8 @@ void CDownloadMonitorDlg::OnSysCommand(UINT nID, LPARAM lParam)
 			m_pTray.uFlags				= NIF_ICON | NIF_MESSAGE | NIF_TIP;
 			m_pTray.uCallbackMessage	= WM_TRAY;
 			m_pTray.hIcon				= CoolInterface.ExtractIcon( IDI_DOWNLOAD_MONITOR, FALSE );
-			_tcsncpy( m_pTray.szTip, Settings.SmartAgent(), _countof( m_pTray.szTip ) );
+			_tcsncpy( m_pTray.szTip, Settings.SmartAgent(), _countof( m_pTray.szTip ) - 1 );
+			m_pTray.szTip[ _countof( m_pTray.szTip ) - 1 ] = _T('\0');
 			Shell_NotifyIcon( NIM_ADD, &m_pTray );
 			ShowWindow( SW_HIDE );
 			m_bTray = TRUE;

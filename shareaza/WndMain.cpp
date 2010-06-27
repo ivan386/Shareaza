@@ -908,7 +908,8 @@ void CMainWnd::AddTray()
 		Shell_NotifyIcon( NIM_DELETE, &m_pTray );
 
 		m_pTray.uFlags = NIF_ICON | NIF_MESSAGE | NIF_TIP;
-		_tcsncpy( m_pTray.szTip, Settings.SmartAgent(), _countof( m_pTray.szTip ) );
+		_tcsncpy( m_pTray.szTip, Settings.SmartAgent(), _countof( m_pTray.szTip ) - 1 );
+		m_pTray.szTip[ _countof( m_pTray.szTip ) - 1 ] = _T('\0');
 
 		m_bTrayUpdate = TRUE;
 		m_bTrayIcon = Shell_NotifyIcon( NIM_ADD, &m_pTray );
@@ -1487,7 +1488,8 @@ void CMainWnd::UpdateMessages()
 		if ( strTip != m_pTray.szTip )
 		{
 			m_pTray.uFlags = NIF_TIP;
-			_tcsncpy( m_pTray.szTip, strTip, _countof( m_pTray.szTip ) );
+			_tcsncpy( m_pTray.szTip, strTip, _countof( m_pTray.szTip ) - 1 );
+			m_pTray.szTip[ _countof( m_pTray.szTip ) - 1 ] = _T('\0');
 			m_bTrayIcon = Shell_NotifyIcon( NIM_MODIFY, &m_pTray );
 		}
 	}
@@ -2978,10 +2980,10 @@ void CMainWnd::ShowTrayPopup(LPCTSTR szText, LPCTSTR szTitle, DWORD dwIcon, UINT
 
 	m_pTray.uFlags = NIF_INFO;
 
-	_tcsncpy( m_pTray.szInfo, szText, _countof( m_pTray.szInfo ) );
-	if ( lstrlen( szText ) > _countof( m_pTray.szInfo ) - 1 )
+	_tcsncpy( m_pTray.szInfo, szText, _countof( m_pTray.szInfo ) - 1 );
+	m_pTray.szInfo[ _countof( m_pTray.szInfo ) - 1 ] = _T('\0');
+	if ( lstrlen( szText ) >= _countof( m_pTray.szInfo ) - 1 )
 	{
-		m_pTray.szInfo[ _countof( m_pTray.szInfo ) - 1 ] = _T('\0');
 		if ( szText[ _countof( m_pTray.szInfo ) - 1 ] != _T(' ') )
 		{
 			if ( LPTSTR pWordEnd = _tcsrchr( m_pTray.szInfo, _T(' ') ) )
@@ -2993,7 +2995,10 @@ void CMainWnd::ShowTrayPopup(LPCTSTR szText, LPCTSTR szTitle, DWORD dwIcon, UINT
 	}
 
 	if ( szTitle )
-		_tcsncpy( m_pTray.szInfoTitle, szTitle, _countof( m_pTray.szInfoTitle ) );
+	{
+		_tcsncpy( m_pTray.szInfoTitle, szTitle, _countof( m_pTray.szInfoTitle ) - 1 );
+		m_pTray.szInfoTitle[ _countof( m_pTray.szInfoTitle ) - 1 ] = _T('\0');
+	}
 	else
 		_tcscpy( m_pTray.szInfoTitle, _T(CLIENT_NAME) );
 
