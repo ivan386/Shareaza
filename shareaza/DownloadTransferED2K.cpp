@@ -1017,14 +1017,13 @@ BOOL CDownloadTransferED2K::RunQueued(DWORD tNow)
 
 void CDownloadTransferED2K::SetQueueRank(int nRank)
 {
-	SetState( dtsQueued );
-
 	m_tRequest	= m_tRanking = GetTickCount();
 	m_nQueuePos	= nRank;
 	m_bUDP		= FALSE;
-	
+
+	SetState( dtsQueued );
 	ClearRequests();
-	
+
 	theApp.Message( MSG_INFO, IDS_DOWNLOAD_QUEUED,
 		(LPCTSTR)m_sAddress, m_nQueuePos, m_nQueueLen, _T("eDonkey2000") );
 }
