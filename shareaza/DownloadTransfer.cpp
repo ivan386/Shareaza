@@ -390,12 +390,12 @@ blockPair CDownloadTransfer::SelectBlock(const Fragments::List& oPossible,
 	if ( pItr->begin() < Settings.Downloads.ChunkStrap )
 	{
 		return std::make_pair( pItr->begin(),
-			min( pItr->end(), Settings.Downloads.ChunkStrap ) );
+			min( pItr->end() - pItr->begin(), Settings.Downloads.ChunkStrap ) );
 	}
 
 	DWORD nBlockSize = m_pDownload->GetVerifyLength( m_nProtocol );
 	if ( !nBlockSize )
-		return std::make_pair( pItr->begin(), pItr->end() );
+		return std::make_pair( pItr->begin(), pItr->end() - pItr->begin() );
 
 	std::vector< QWORD > oBlocks;
 	QWORD nRangeBlock = 0ull;
