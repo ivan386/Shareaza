@@ -259,42 +259,28 @@ BOOL CDownloadsCtrl::LoadColumnState()
 //////////////////////////////////////////////////////////////////////////////
 // CDownloadsCtrl item helpers
 
-BOOL CDownloadsCtrl::IsFiltered(CDownload* pDownload)
+bool CDownloadsCtrl::IsFiltered(const CDownload* pDownload)
 {
-	DWORD nFilterMask = Settings.Downloads.FilterMask;
-	if ( Settings.General.GUIMode == GUI_BASIC ) nFilterMask = 0xFFFFFFFF;
+	ASSUME_LOCK( Transfers.m_pSection );
 
-	if ( pDownload->IsMoving() )
-	{
+	if ( Settings.General.GUIMode == GUI_BASIC )
+		return false;
+
+	if ( pDownload->IsCompleted() )
+		return false;
+
+	DWORD nFilterMask = Settings.Downloads.FilterMask;
+
+	if ( pDownload->IsDownloading() || pDownload->IsMoving() )
 		return ( ( nFilterMask & DLF_ACTIVE ) == 0 );
-	}
-	else if ( pDownload->IsPaused() )
-	{
+
+	if ( pDownload->IsPaused() )
 		return ( ( nFilterMask & DLF_PAUSED ) == 0 );
-	}
-	else if ( pDownload->IsDownloading() )
-	{
-		return ( ( nFilterMask & DLF_ACTIVE ) == 0 );
-	}
-	else if ( pDownload->GetEffectiveSourceCount() > 0 )
-	{
-		if ( pDownload->IsDownloading() )
-		{
-			return ( ( nFilterMask & DLF_ACTIVE ) == 0 );
-		}
-		else
-		{
-			return ( ( nFilterMask & DLF_QUEUED ) == 0 );
-		}
-	}
-	else if ( pDownload->m_nSize == SIZE_UNKNOWN )
-	{
-		return ( ( nFilterMask & DLF_SOURCES ) == 0 );
-	}
-	else
-	{
-		return ( ( nFilterMask & DLF_SOURCES ) == 0 );
-	}
+
+	if ( pDownload->GetEffectiveSourceCount() > 0 )
+		return ( ( nFilterMask & DLF_QUEUED ) == 0 );
+
+	return ( ( nFilterMask & DLF_SOURCES ) == 0 );
 }
 
 BOOL CDownloadsCtrl::IsExpandable(CDownload* pDownload)
@@ -531,8 +517,11 @@ BOOL CDownloadsCtrl::HitTest(const CPoint& point, CDownload** ppDownload, CDownl
 	{
 		CDownload* pDownload = Downloads.GetNext( posDownload );
 
-		if ( m_nGroupCookie != 0 && m_nGroupCookie != pDownload->m_nGroupCookie ) continue;
-		if ( IsFiltered( pDownload ) ) continue;
+		if ( m_nGroupCookie != 0 && m_nGroupCookie != pDownload->m_nGroupCookie )
+			continue;
+
+		if ( IsFiltered( pDownload ) )
+			continue;
 
 		if ( nScroll > 0 )
 		{
@@ -609,8 +598,11 @@ BOOL CDownloadsCtrl::GetAt(int nSelect, CDownload** ppDownload, CDownloadSource*
 	{
 		CDownload* pDownload = Downloads.GetNext( posDownload );
 
-		if ( m_nGroupCookie != 0 && m_nGroupCookie != pDownload->m_nGroupCookie ) continue;
-		if ( IsFiltered( pDownload ) ) continue;
+		if ( m_nGroupCookie != 0 && m_nGroupCookie != pDownload->m_nGroupCookie )
+			continue;
+
+		if ( IsFiltered( pDownload ) )
+			continue;
 
 		if ( nIndex++ == nSelect )
 		{
@@ -658,8 +650,11 @@ BOOL CDownloadsCtrl::GetRect(CDownload* pSelect, RECT* prcItem)
 	{
 		CDownload* pDownload = Downloads.GetNext( posDownload );
 
-		if ( m_nGroupCookie != 0 && m_nGroupCookie != pDownload->m_nGroupCookie ) continue;
-		if ( IsFiltered( pDownload ) ) continue;
+		if ( m_nGroupCookie != 0 && m_nGroupCookie != pDownload->m_nGroupCookie )
+			continue;
+
+		if ( IsFiltered( pDownload ) )
+			continue;
 
 		if ( pDownload == pSelect )
 		{
