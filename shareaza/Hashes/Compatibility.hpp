@@ -39,7 +39,7 @@ namespace Hashes
 		template<typename> class CheckingPolicy,
 		template<typename> class ValidationPolicy
 	>
-	inline void SerializeOut(CArchive& ar, const Hash< Descriptor, StoragePolicy,
+	void SerializeOut(CArchive& ar, const Hash< Descriptor, StoragePolicy,
 			CheckingPolicy, ValidationPolicy >& out);
 
 	template
@@ -48,11 +48,11 @@ namespace Hashes
 		template<typename> class StoragePolicy,
 		template<typename> class CheckingPolicy
 	>
-	inline void SerializeOut(CArchive& ar, const Hash< Descriptor, StoragePolicy,
+	void SerializeOut(CArchive& ar, const Hash< Descriptor, StoragePolicy,
 			CheckingPolicy, Policies::NoValidation >& out)
 	{
 		ASSERT( ar.IsStoring() );
-		ar.Write( out.begin(), out.byteCount );
+		ar.Write( &*out.begin(), out.byteCount );
 	}
 
 	template
@@ -61,13 +61,14 @@ namespace Hashes
 		template<typename> class StoragePolicy,
 		template<typename> class CheckingPolicy
 	>
-	inline void SerializeOut(CArchive& ar, const Hash< Descriptor, StoragePolicy,
+	void SerializeOut(CArchive& ar, const Hash< Descriptor, StoragePolicy,
 			CheckingPolicy, Policies::BasicValidation >& out)
 	{
 		ASSERT( ar.IsStoring() );
 		uint32 bValid = bool( out );
 		ar << bValid;
-		if ( bValid ) ar.Write( out.begin(), out.byteCount );
+		if ( bValid )
+			ar.Write( &*out.begin(), out.byteCount );
 	}
 
 	template
@@ -76,13 +77,15 @@ namespace Hashes
 		template<typename> class StoragePolicy,
 		template<typename> class CheckingPolicy
 	>
-	inline void SerializeOut(CArchive& ar, const Hash< Descriptor, StoragePolicy,
+	void SerializeOut(CArchive& ar, const Hash< Descriptor, StoragePolicy,
 			CheckingPolicy, Policies::ExtendedValidation >& out)
 	{
 		ASSERT( ar.IsStoring() );
 		uint32 bValid = bool( out );
 		ar << bValid;
-		if ( bValid ) ar.Write( out.begin(), out.byteCount );
+		if ( bValid )
+			ar.Write( &*out.begin(), out.byteCount );
+
 		uint32 bTrusted = out.isTrusted();
 		ar << bTrusted;
 	}
@@ -94,7 +97,7 @@ namespace Hashes
 		template<typename> class CheckingPolicy,
 		template<typename> class ValidationPolicy
 	>
-	inline void SerializeIn(CArchive& ar, Hash< Descriptor, StoragePolicy,
+	void SerializeIn(CArchive& ar, Hash< Descriptor, StoragePolicy,
 			CheckingPolicy, ValidationPolicy >& in, int version);
 
 	template
@@ -103,11 +106,11 @@ namespace Hashes
 		template<typename> class StoragePolicy,
 		template<typename> class CheckingPolicy
 	>
-	inline void SerializeIn(CArchive& ar, Hash< Descriptor, StoragePolicy,
+	void SerializeIn(CArchive& ar, Hash< Descriptor, StoragePolicy,
 			CheckingPolicy, Policies::NoValidation >& in, int /*version*/)
 	{
 		ASSERT( ar.IsLoading() );
-		ReadArchive( ar, in.begin(), in.byteCount );
+		ReadArchive( ar, &*in.begin(), in.byteCount );
 	}
 
 	template
@@ -116,7 +119,7 @@ namespace Hashes
 		template<typename> class StoragePolicy,
 		template<typename> class CheckingPolicy
 	>
-	inline void SerializeIn(CArchive& ar, Hash< Descriptor, StoragePolicy,
+	void SerializeIn(CArchive& ar, Hash< Descriptor, StoragePolicy,
 			CheckingPolicy, Policies::BasicValidation >& in, int /*version*/)
 	{
 		ASSERT( ar.IsLoading() );
@@ -124,7 +127,7 @@ namespace Hashes
 		ar >> bValid;
 		if ( bValid )
 		{
-			ReadArchive( ar, in.begin(), in.byteCount );
+			ReadArchive( ar, &*in.begin(), in.byteCount );
 			in.validate();
 		}
 		else
@@ -139,7 +142,7 @@ namespace Hashes
 		template<typename> class StoragePolicy,
 		template<typename> class CheckingPolicy
 	>
-	inline void SerializeIn(CArchive& ar, Hash< Descriptor, StoragePolicy,
+	void SerializeIn(CArchive& ar, Hash< Descriptor, StoragePolicy,
 			CheckingPolicy, Policies::ExtendedValidation >& in, int version)
 	{
 		ASSERT( ar.IsLoading() );
@@ -147,7 +150,7 @@ namespace Hashes
 		ar >> bValid;
 		if ( bValid )
 		{
-			ReadArchive( ar, in.begin(), in.byteCount );
+			ReadArchive( ar, &*in.begin(), in.byteCount );
 			in.validate();
 		}
 		else
@@ -155,8 +158,11 @@ namespace Hashes
 			in.clear();
 		}
 		uint32 bTrusted = bValid;
-		if ( version >= 31 ) ar >> bTrusted;
-		if ( bTrusted ) in.signalTrusted();
+		if ( version >= 31 )
+			ar >> bTrusted;
+
+		if ( bTrusted )
+			in.signalTrusted();
 	}
 
 } // namespace Hashes

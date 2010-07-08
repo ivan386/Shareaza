@@ -19,7 +19,7 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "Shareaza.h"
 #include "SharedFile.h"
 #include "SharedFolder.h"
@@ -111,10 +111,10 @@ void DumpIDataObject(IDataObject* pIDataObject)
 class __declspec(novtable) CStgMedium : public STGMEDIUM
 {
 public:
-	inline CStgMedium() throw() : STGMEDIUM()
+	CStgMedium() : STGMEDIUM()
 	{
 	}
-	inline ~CStgMedium() throw()
+	~CStgMedium()
 	{
 		ReleaseStgMedium( static_cast< STGMEDIUM* >( this ) );
 	}
@@ -690,7 +690,7 @@ BOOL CShareazaDataSource::DropToAlbum(IDataObject* pIDataObject, DWORD grfKeySta
 						if ( pFile )
 						{
 							Hashes::Guid oGUID;
-							CopyMemory( oGUID.begin(), p + sizeof( DWORD ), 16 );							
+							CopyMemory( &*oGUID.begin(), p + sizeof( DWORD ), 16 );							
 							CAlbumFolder* pFolder = pRoot->FindFolder( oGUID );
 							if ( pFolder && *pAlbumFolder == *pFolder )
 							{
@@ -1473,7 +1473,7 @@ void CShareazaDataSource::FillBuffer(const CLibraryList* pList, LPTSTR& buf_HDRO
 					if ( bRoot )
 					{
 						*(DWORD*)buf_Files = Item;
-						CopyMemory( buf_Files + sizeof( DWORD ), oGUID.begin(), 16 );
+						CopyMemory( buf_Files + sizeof( DWORD ), &*oGUID.begin(), 16 );
 						buf_Files += 20;
 					}
 				}

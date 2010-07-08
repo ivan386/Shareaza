@@ -79,7 +79,7 @@ CAlbumFolder::~CAlbumFolder()
 
 void CAlbumFolder::RenewGUID()
 {
-	CoCreateGuid( reinterpret_cast< GUID* > ( m_oGUID.begin() ) );
+	CoCreateGuid( reinterpret_cast< GUID* > ( &*m_oGUID.begin() ) );
 	m_oGUID.validate();
 }
 

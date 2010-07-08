@@ -262,15 +262,14 @@ void CBTInfo::Serialize(CArchive& ar)
 		ar << nVersion;
 
 		SerializeOut( ar, m_oBTH );
-		if ( !m_oBTH ) return;
+		if ( !m_oBTH )
+			return;
 
 		ar << m_nSize;
 		ar << m_nBlockSize;
 		ar << m_nBlockCount;
 		for ( DWORD i = 0; i < m_nBlockCount; ++i )
-		{
-			ar.Write( m_pBlockBTH[ i ].begin(), Hashes::BtPureHash::byteCount );
-		}
+			ar.Write( &*m_pBlockBTH[ i ].begin(), m_pBlockBTH->byteCount );
 
 		ar << m_nTotalUpload;
 		ar << m_nTotalDownload;
@@ -293,9 +292,7 @@ void CBTInfo::Serialize(CArchive& ar)
 		int nTrackers = (int)m_oTrackers.GetCount();
 		ar.WriteCount( nTrackers );
 		for ( int nTracker = 0 ; nTracker < nTrackers ; nTracker++ )
-		{
 			m_oTrackers[ nTracker ].Serialize( ar, nVersion );
-		}
 
 		if ( m_pSource.m_nLength && m_nInfoSize )
 		{
@@ -310,10 +307,12 @@ void CBTInfo::Serialize(CArchive& ar)
 	else
 	{
 		ar >> nVersion;
-		if ( nVersion < 1 ) AfxThrowUserException();
+		if ( nVersion < 1 )
+			AfxThrowUserException();
 
 		SerializeIn( ar, m_oBTH, nVersion );
-		if ( !m_oBTH ) return;
+		if ( !m_oBTH )
+			return;
 
 		if ( nVersion >= 2 )
 		{
@@ -333,13 +332,14 @@ void CBTInfo::Serialize(CArchive& ar)
 		{
 			m_pBlockBTH = new Hashes::BtPureHash[ m_nBlockCount ];
 			for ( DWORD i = 0; i < m_nBlockCount; ++i )
-			{
-				ReadArchive( ar, m_pBlockBTH[ i ].begin(), Hashes::BtPureHash::byteCount );
-			}
+				ReadArchive( ar, &*m_pBlockBTH[ i ].begin(), m_pBlockBTH->byteCount );
 		}
 
-		if ( nVersion >= 4 ) ar >> m_nTotalUpload;
-		if ( nVersion >= 6 ) ar >> m_nTotalDownload;
+		if ( nVersion >= 4 )
+			ar >> m_nTotalUpload;
+
+		if ( nVersion >= 6 )
+			ar >> m_nTotalDownload;
 
 		ar >> m_sName;
 
@@ -351,7 +351,8 @@ void CBTInfo::Serialize(CArchive& ar)
 			ar >> m_sCreatedBy;
 		}
 
-		if ( nVersion >= 5 ) ar >> m_bPrivate;
+		if ( nVersion >= 5 )
+			ar >> m_bPrivate;
 
 		int nFiles = (int)ar.ReadCount();
 		QWORD nOffset = 0;
@@ -423,7 +424,7 @@ void CBTInfo::Serialize(CArchive& ar)
 				{
 					VERIFY( CheckInfoData() );
 				}
-			}		
+			}
 		}
 
 		SetTrackerNext();

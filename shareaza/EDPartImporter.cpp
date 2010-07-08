@@ -1,7 +1,7 @@
 //
 // EDPartImporter.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -178,6 +178,7 @@ BOOL CEDPartImporter::ImportFile(LPCTSTR pszPath, LPCTSTR pszFile)
 	BYTE nMagic;
 	if ( pFile.Read( &nMagic, 1 ) != 1 )
 		return FALSE;
+
 	if ( nMagic != 0xE0 )
 		return FALSE;
 
@@ -186,9 +187,12 @@ BOOL CEDPartImporter::ImportFile(LPCTSTR pszPath, LPCTSTR pszFile)
 		return FALSE;
 
 	Hashes::Ed2kHash oED2K;
-	if ( pFile.Read( oED2K.begin(), Hashes::Ed2kHash::byteCount )
-		!= Hashes::Ed2kHash::byteCount )
+	if ( pFile.Read( &*oED2K.begin(), oED2K.byteCount )
+		!= oED2K.byteCount )
+	{
 		return FALSE;
+	}
+
 	oED2K.validate();
 
 	WORD nParts;
@@ -196,7 +200,7 @@ BOOL CEDPartImporter::ImportFile(LPCTSTR pszPath, LPCTSTR pszFile)
 		return FALSE;
 
 	{
-		CSingleLock pLock( &Transfers.m_pSection, TRUE );
+		CQuickLock oTransfersLock( Transfers.m_pSection );
 
 		if ( Downloads.FindByED2K( oED2K ) )
 		{
@@ -298,10 +302,13 @@ BOOL CEDPartImporter::ImportFile(LPCTSTR pszPath, LPCTSTR pszFile)
 		QWORD nStart, nStop;
 		if ( ! pGapStart.Lookup( nPart, nStart ) )
 			return FALSE;
+
 		if ( nStart >= nSize )
 			return FALSE;
+
 		if ( ! pGapStop.Lookup( nPart, nStop ) )
 			return FALSE;
+
 		if ( nStop > nSize || nStop <= nStart )
 			return FALSE;
 
@@ -328,6 +335,7 @@ BOOL CEDPartImporter::ImportFile(LPCTSTR pszPath, LPCTSTR pszFile)
 	CFileStatus pStatus;
 	if ( ! pData.GetStatus( pStatus ) )
 		return FALSE;
+
 	pData.Close();
 
 	struct tm ptmTemp = {};
@@ -339,7 +347,7 @@ BOOL CEDPartImporter::ImportFile(LPCTSTR pszPath, LPCTSTR pszFile)
 
 	Message( IDS_ED2K_EPI_COPY_FINISHED );
 
-	CSingleLock pLock( &Transfers.m_pSection, TRUE );
+	CQuickLock oTransfersLock( Transfers.m_pSection );
 
 	CDownload* pDownload = Downloads.Add();
 	if ( ! pDownload )

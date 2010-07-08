@@ -1,7 +1,7 @@
 //
 // UploadTransferED2K.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -188,7 +188,9 @@ BOOL CUploadTransferED2K::OnRun()
 BOOL CUploadTransferED2K::OnRunEx(DWORD tNow)
 {
 	// Limit per-source packet rate
-	if ( tNow - m_tLastRun < Settings.eDonkey.SourceThrottle ) return FALSE;
+	if ( tNow - m_tLastRun < Settings.eDonkey.SourceThrottle )
+		return FALSE;
+
 	m_tLastRun = tNow;
 
 	if ( m_nState == upsQueued )
@@ -196,23 +198,31 @@ BOOL CUploadTransferED2K::OnRunEx(DWORD tNow)
 		if ( m_pClient->IsOnline() == FALSE && tNow > m_tRequest &&
 			 tNow - m_tRequest >= Settings.eDonkey.DequeueTime * 1000 )
 		{
-			theApp.Message( MSG_ERROR, IDS_UPLOAD_QUEUE_TIMEOUT, (LPCTSTR)m_sAddress );
+			theApp.Message( MSG_NOTICE, IDS_UPLOAD_QUEUE_TIMEOUT,
+				(LPCTSTR)m_sAddress );
+
 			Close();
 			return FALSE;
 		}
 		else
 		{
 			DWORD nCheckThrottle;	// Throttle for how often ED2K clients have queue rank checked
-			if ( m_nRanking <= 2 ) nCheckThrottle = 2 * 1000;
-			else if ( m_nRanking < 10 ) nCheckThrottle = 15 * 1000;
-			else if ( m_nRanking < 50 ) nCheckThrottle = 1 * 60 * 1000;
-			else if ( m_nRanking < 200 ) nCheckThrottle = 4 * 60 * 1000;
-			else nCheckThrottle = 8 * 60 * 1000;
+			if ( m_nRanking <= 2 )
+				nCheckThrottle = 2 * 1000;
+			else if ( m_nRanking < 10 )
+				nCheckThrottle = 15 * 1000;
+			else if ( m_nRanking < 50 )
+				nCheckThrottle = 1 * 60 * 1000;
+			else if ( m_nRanking < 200 )
+				nCheckThrottle = 4 * 60 * 1000;
+			else
+				nCheckThrottle = 8 * 60 * 1000;
 
 			if ( tNow > m_tRankingCheck && tNow - m_tRankingCheck >= nCheckThrottle )
 			{
 				// Check the queue rank. Start upload or send rank update if required.
-				if ( ! CheckRanking() ) return FALSE;
+				if ( !CheckRanking() )
+					return FALSE;
 			}
 		}
 	}
@@ -224,7 +234,9 @@ BOOL CUploadTransferED2K::OnRunEx(DWORD tNow)
 		if ( tNow > m_pClient->m_mOutput.tLast &&
 			 tNow - m_pClient->m_mOutput.tLast > Settings.Connection.TimeoutTraffic * 3 )
 		{
-			theApp.Message( MSG_ERROR, IDS_UPLOAD_TRAFFIC_TIMEOUT, (LPCTSTR)m_sAddress );
+			theApp.Message( MSG_NOTICE, IDS_UPLOAD_TRAFFIC_TIMEOUT,
+				(LPCTSTR)m_sAddress );
+
 			Close();
 			return FALSE;
 		}
@@ -233,7 +245,9 @@ BOOL CUploadTransferED2K::OnRunEx(DWORD tNow)
 	{
 		if ( tNow > m_tRequest && tNow - m_tRequest > Settings.Connection.TimeoutHandshake )
 		{
-			theApp.Message( MSG_ERROR, IDS_UPLOAD_REQUEST_TIMEOUT, (LPCTSTR)m_sAddress );
+			theApp.Message( MSG_NOTICE, IDS_UPLOAD_REQUEST_TIMEOUT,
+				(LPCTSTR)m_sAddress );
+
 			Close();
 			return FALSE;
 		}
@@ -453,8 +467,11 @@ BOOL CUploadTransferED2K::ServeRequests()
 	if ( m_nState != upsUploading && m_nState != upsRequest )
 		return TRUE;
 
-	if ( m_pClient == NULL || ! m_pClient->IsOutputExist() ) return TRUE;
-	if ( m_pClient->GetOutputLength() > Settings.eDonkey.FrameSize ) return TRUE;
+	if ( !m_pClient || !m_pClient->IsOutputExist() )
+		return TRUE;
+
+	if ( m_pClient->GetOutputLength() > Settings.eDonkey.FrameSize )
+		return TRUE;
 
 	ASSERT( m_pBaseFile != NULL );
 
@@ -672,8 +689,8 @@ BOOL CUploadTransferED2K::DispatchNextChunk()
 
 		pHeader->nProtocol	= ED2K_PROTOCOL_EMULE;
 		pHeader->nType		= ED2K_C2C_SENDINGPART_I64;
-		pHeader->nLength	= 1 + Hashes::Ed2kHash::byteCount + 16 + (DWORD)nChunk;
-		std::copy( &m_oED2K[ 0 ], &m_oED2K[ 0 ] + Hashes::Ed2kHash::byteCount, pHeader->pMD4.elems );
+		pHeader->nLength	= 1 + m_oED2K.byteCount + 16 + (DWORD)nChunk;
+		std::copy( &*m_oED2K.begin(), &*m_oED2K.begin() + m_oED2K.byteCount, &*pHeader->pMD4.begin() );
 		pHeader->nOffset1	= (QWORD)m_nOffset + m_nPosition;
 		pHeader->nOffset2	= (QWORD)m_nOffset + m_nPosition + nChunk;
 
@@ -696,8 +713,8 @@ BOOL CUploadTransferED2K::DispatchNextChunk()
 
 		pHeader->nProtocol	= ED2K_PROTOCOL_EDONKEY;
 		pHeader->nType		= ED2K_C2C_SENDINGPART;
-		pHeader->nLength	= 1 + Hashes::Ed2kHash::byteCount + 8 + (DWORD)nChunk;
-		std::copy( &m_oED2K[ 0 ], &m_oED2K[ 0 ] + Hashes::Ed2kHash::byteCount, pHeader->pMD4.elems );
+		pHeader->nLength	= 1 + m_oED2K.byteCount + 8 + (DWORD)nChunk;
+		std::copy( &*m_oED2K.begin(), &*m_oED2K.begin() + m_oED2K.byteCount, &*pHeader->pMD4.begin() );
 		pHeader->nOffset1	= (DWORD)( m_nOffset + m_nPosition );
 		pHeader->nOffset2	= (DWORD)( m_nOffset + m_nPosition + nChunk );
 
