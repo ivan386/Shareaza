@@ -690,7 +690,7 @@ BOOL CShareazaDataSource::DropToAlbum(IDataObject* pIDataObject, DWORD grfKeySta
 						if ( pFile )
 						{
 							Hashes::Guid oGUID;
-							CopyMemory( &*oGUID.begin(), p + sizeof( DWORD ), 16 );							
+							CopyMemory( &*oGUID.begin(), p + sizeof( DWORD ), 16 );
 							CAlbumFolder* pFolder = pRoot->FindFolder( oGUID );
 							if ( pFolder && *pAlbumFolder == *pFolder )
 							{
