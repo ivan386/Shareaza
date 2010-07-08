@@ -34,7 +34,7 @@ class CPacketWnd;
 class __declspec(novtable) CLogMessage
 {
 public:
-	inline CLogMessage(WORD nType, const CString& strLog) :
+	CLogMessage(WORD nType, const CString& strLog) :
 		m_strLog( strLog ),
 		m_nType( nType )
 	{
@@ -235,7 +235,7 @@ LRESULT CALLBACK KbdHook(int nCode, WPARAM wParam, LPARAM lParam);
 LRESULT CALLBACK MouseHook(int nCode, WPARAM wParam, LPARAM lParam);
 
 // Generate safe file name for file system (bPath == true - allow path i.e. "\" symbol)
-CString SafeFilename(const CString& sOriginalName, bool bPath = false);
+CString SafeFilename(CString strName, bool bPath = false);
 
 // Create directory. If one or more of the intermediate folders do not exist, they are created as well.
 BOOL CreateDirectory(LPCTSTR szPath);
@@ -289,7 +289,7 @@ typedef enum
 
 struct CompareNums
 {
-	inline bool operator()(WORD lhs, WORD rhs) const
+	bool operator()(WORD lhs, WORD rhs) const
 	{
 		return lhs > rhs;
 	}
@@ -330,28 +330,16 @@ inline T GetRandomNum(const T& min, const T& max)
 }
 
 template <>
-inline __int8 GetRandomNum<__int8>(const __int8& min, const __int8& max)
-{
-	return (__int8)GetRandomNum<unsigned __int8>( min, max );
-}
+__int8 GetRandomNum<__int8>(const __int8& min, const __int8& max);
 
 template <>
-inline __int16 GetRandomNum<__int16>(const __int16& min, const __int16& max)
-{
-	return (__int16)GetRandomNum<unsigned __int16>( min, max );
-}
+__int16 GetRandomNum<__int16>(const __int16& min, const __int16& max);
 
 template <>
-inline __int32 GetRandomNum<__int32>(const __int32& min, const __int32& max)
-{
-	return (__int32)GetRandomNum<unsigned __int32>( min, max );
-}
+__int32 GetRandomNum<__int32>(const __int32& min, const __int32& max);
 
 template <>
-inline __int64 GetRandomNum<__int64>(const __int64& min, const __int64& max)
-{
-	return (__int64)GetRandomNum<unsigned __int64>( min, max );
-}
+__int64 GetRandomNum<__int64>(const __int64& min, const __int64& max);
 
 // Log severity (log level)
 #define MSG_SEVERITY_MASK		0x000f

@@ -2293,21 +2293,20 @@ void CShareazaApp::OnRename(LPCTSTR pszSource, LPCTSTR pszTarget)
 	}
 }
 
-CString SafeFilename(const CString& sOriginalName, bool bPath)
+CString SafeFilename(CString strName, bool bPath)
 {
-	CString strName = sOriginalName;
-
 	// Restore spaces
 	strName.Replace( _T("%20"), _T(" ") );
 
 	// Replace incompatible symbols
-	int nNameLen = strName.GetLength();
-	for ( int nChar = 0; nChar < nNameLen; ++nChar )
+	for ( ;; )
 	{
-		nChar = _tcscspn( ((LPCTSTR)strName) + nChar,
-			bPath ? _T("/:*?\"<>|") : _T("\\/:*?\"<>|") ) + nChar;
-		if ( nChar < 0 || nChar >= nNameLen )
+		int nChar = strName.FindOneOf(
+			bPath ? _T("/:*?\"<>|") : _T("\\/:*?\"<>|") );
+
+		if ( nChar == -1 )
 			break;
+
 		strName.SetAt( nChar, _T('_') );
 	}
 
@@ -3078,3 +3077,26 @@ CString& CLowerCaseTable::operator()(CString& strSource) const
 	return strSource;
 }
 
+template <>
+__int8 GetRandomNum<__int8>(const __int8& min, const __int8& max)
+{
+	return (__int8)GetRandomNum<unsigned __int8>( min, max );
+}
+
+template <>
+__int16 GetRandomNum<__int16>(const __int16& min, const __int16& max)
+{
+	return (__int16)GetRandomNum<unsigned __int16>( min, max );
+}
+
+template <>
+__int32 GetRandomNum<__int32>(const __int32& min, const __int32& max)
+{
+	return (__int32)GetRandomNum<unsigned __int32>( min, max );
+}
+
+template <>
+__int64 GetRandomNum<__int64>(const __int64& min, const __int64& max)
+{
+	return (__int64)GetRandomNum<unsigned __int64>( min, max );
+}
