@@ -806,10 +806,15 @@ void CEDClient::SendHello(BYTE nType)
 	CEDPacket* pPacket = CEDPacket::New( nType );
 
 	if ( nType == ED2K_C2C_HELLO )
-		// Size of user hash (legacy)
+	{
+		// Size of user hash
 		pPacket->WriteByte( 0x10 );
+	}
 
-	CEDNeighbour* pServer = Neighbours.GetDonkeyServer();
+	CEDNeighbour* pServer = NULL;
+	CSingleLock oNetworkLock( &Network.m_pSection );
+	if ( oNetworkLock.Lock( 250 ) )
+		pServer = Neighbours.GetDonkeyServer();
 
 	// Write user GUID
 	Hashes::Guid oGUID = MyProfile.oGUID;
@@ -818,8 +823,8 @@ void CEDClient::SendHello(BYTE nType)
 	pPacket->Write( oGUID );
 
 	// Write client ID
-	pPacket->WriteLongLE( pServer ? pServer->m_nClientID : Network.m_pHost.sin_addr.S_un.S_addr );
-	
+	pPacket->WriteLongLE( pServer ? pServer->m_nClientID : Network.m_pHost.sin_addr.s_addr );
+
 	// Write port number
 	pPacket->WriteShortLE( htons( Network.m_pHost.sin_port ) );
 
@@ -867,15 +872,15 @@ void CEDClient::SendHello(BYTE nType)
 					   ( ( theApp.m_nVersion[3] & 0x7F )       ) );
 	CEDTag( ED2K_CT_SOFTWAREVERSION, nVersion ).Write( pPacket );
 
-	if ( pServer != NULL )
+	if ( pServer )
 	{
-		pPacket->WriteLongLE( pServer->m_pHost.sin_addr.S_un.S_addr );
+		pPacket->WriteLongLE( pServer->m_pHost.sin_addr.s_addr );
 		pPacket->WriteShortLE( htons( pServer->m_pHost.sin_port ) );
 	}
 	else
 	{
-		pPacket->WriteLongLE( 0 );
-		pPacket->WriteShortLE( 0 );
+		pPacket->WriteLongLE( 0ul );
+		pPacket->WriteShortLE( 0ul );
 	}
 
 	Send( pPacket );
