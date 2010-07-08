@@ -54,6 +54,7 @@ public:
 	BOOL				IsPositionEmpty(QWORD nOffset);
 	BOOL				ClipUploadRange(QWORD nOffset, QWORD& nLength) const;
 	BOOL				GetRandomRange(QWORD& nOffset, QWORD& nLength) const;
+	bool				GetAvailableRanges( CString& strRanges ) const;
 	BOOL				SubmitData(QWORD nOffset, LPBYTE pData, QWORD nLength);
 	QWORD				EraseRange(QWORD nOffset, QWORD nLength);
 	BOOL				MakeComplete();
@@ -98,6 +99,5 @@ protected:
 //	BOOL				AppendMetadataID3v1(HANDLE hFile, CXMLElement* pXML);
 
 protected:
-	virtual CString	GetAvailableRanges() const;
 	virtual void	Serialize(CArchive& ar, int nVersion);
 };

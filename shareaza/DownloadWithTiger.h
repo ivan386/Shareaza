@@ -72,8 +72,6 @@ public:
 	void		RunValidation();
 	DWORD		GetVerifyLength(PROTOCOLID nProtocol = PROTOCOL_ANY, int nHash = HASH_NULL) const;
 
-	virtual CString	GetAvailableRanges() const;
-
 	// Get list of empty fragments we really want to download
 	Fragments::List GetWantedFragmentList() const;
 

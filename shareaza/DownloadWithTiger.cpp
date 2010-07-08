@@ -933,42 +933,6 @@ BOOL CDownloadWithTiger::GetFragment(CDownloadTransfer* pTransfer)
 }
 
 //////////////////////////////////////////////////////////////////////
-// CDownloadWithTiger available ranges override
-
-CString CDownloadWithTiger::GetAvailableRanges() const
-{
-	CQuickLock oLock( m_pTigerSection );
-
-	CString strRanges, strRange;
-	QWORD nOffset, nLength;
-	BOOL bSuccess;
-
-	for ( nOffset = 0 ; GetNextVerifyRange( nOffset, nLength, bSuccess ) ; )
-	{
-		if ( bSuccess )
-		{
-			if ( strRanges.IsEmpty() )
-				strRanges = _T("bytes ");
-			else
-				strRanges += ',';
-
-			strRange.Format( _T("%I64i-%I64i"), nOffset, nOffset + nLength - 1 );
-			strRanges += strRange;
-
-			if ( strRanges.GetLength() > HTTP_HEADER_MAX_LINE - 256 )
-				// Prevent too long line
-				break;
-		}
-
-		nOffset += nLength;
-	}
-
-	if ( strRanges.IsEmpty() ) strRanges = CDownloadWithTorrent::GetAvailableRanges();
-
-	return strRanges;
-}
-
-//////////////////////////////////////////////////////////////////////
 // CDownloadWithTiger clear data
 
 void CDownloadWithTiger::ResetVerification()

@@ -420,36 +420,31 @@ BOOL CDownloadWithFile::IsPositionEmpty(QWORD nOffset)
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithFile get a string of available ranges
 
-CString CDownloadWithFile::GetAvailableRanges() const
+bool CDownloadWithFile::GetAvailableRanges(CString& strRanges) const
 {
-	CString strRange, strRanges;
+	strRanges.Empty();
 
-	if ( ! m_pFile.get() || ! m_pFile->IsValid() )
-		return strRanges;
+	if ( !m_pFile.get() || !m_pFile->IsValid() )
+		return false;
 
 	Fragments::List oAvailable( inverse( GetEmptyFragmentList() ) );
+	if ( oAvailable.empty() )
+		return false;
+
+	CString strRange;
+	strRanges = _T("bytes ");
 	Fragments::List::const_iterator pItr = oAvailable.begin();
 	const Fragments::List::const_iterator pEnd = oAvailable.end();
-	for ( ; pItr != pEnd ; ++pItr )
+	for ( ; pItr != pEnd && strRanges.GetLength() < HTTP_HEADER_MAX_LINE - 256
+		; ++pItr )
 	{
-		if ( strRanges.IsEmpty() )
-		{
-			strRanges = _T("bytes ");
-		}
-		else
-		{
-			strRanges += ',';
-		}
-
-		strRange.Format( _T("%I64i-%I64i"), pItr->begin(), pItr->end() - 1 );
+		strRange.Format( _T("%I64i-%I64i,"), pItr->begin(), pItr->end() - 1 );
 		strRanges += strRange;
-
-		// Prevent too long line
-		if ( strRanges.GetLength() > HTTP_HEADER_MAX_LINE - 256 )
-			break;
 	}
 
-	return strRanges;
+	strRanges.TrimRight( _T(',') );
+
+	return true;
 }
 
 //////////////////////////////////////////////////////////////////////

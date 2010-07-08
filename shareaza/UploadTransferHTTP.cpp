@@ -64,12 +64,23 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CUploadTransferHTTP construction
 
-CUploadTransferHTTP::CUploadTransferHTTP() : CUploadTransfer( PROTOCOL_HTTP )
+CUploadTransferHTTP::CUploadTransferHTTP() :
+	CUploadTransfer		( PROTOCOL_HTTP )
+,	m_tRequest			( 0ul )
+,	m_bHead				( FALSE )
+,	m_bConnectHdr		( FALSE )
+,	m_bKeepAlive		( TRUE )
+,	m_bHostBrowse		( FALSE )
+,	m_bDeflate			( FALSE )
+,	m_bBackwards		( FALSE )
+,	m_bRange			( FALSE )
+,	m_bQueueMe			( FALSE )
+,	m_bNotShareaza		( FALSE )
+,	m_nGnutella			( 0 )
+,	m_nReaskMultiplier	( 1 )
+,	m_bTigerTree		( FALSE )
+,	m_bMetadata			( FALSE )
 {
-	m_bKeepAlive		= TRUE;
-	m_nGnutella			= 0;
-	m_nReaskMultiplier	= 1;
-	m_bNotShareaza		= FALSE;
 }
 
 CUploadTransferHTTP::~CUploadTransferHTTP()
@@ -765,40 +776,40 @@ BOOL CUploadTransferHTTP::RequestPartialFile(CDownload* pDownload)
 {
 	ASSERT( pDownload != NULL );
 	ASSERT( pDownload->IsStarted() );
-	
+
 	if ( ! RequestPartial( pDownload ) )
 	{
 		SendResponse( IDR_HTML_HASHMISMATCH );
-		theApp.Message( MSG_ERROR, IDS_UPLOAD_HASH_MISMATCH, (LPCTSTR)m_sAddress, (LPCTSTR)m_sName );
+		theApp.Message( MSG_WARNING, IDS_UPLOAD_HASH_MISMATCH,
+			(LPCTSTR)m_sAddress, (LPCTSTR)m_sName );
 		return TRUE;
 	}
-	
+
 	ASSERT( m_nFileBase == 0 );
-	
+
 	m_bTigerTree	= ( m_oTiger && pDownload->GetTigerTree() != NULL );
 	m_bMetadata		= pDownload->HasMetadata();
-	
+
 	if ( m_sLocations.GetLength() )
 		pDownload->AddSourceURLs( m_sLocations, TRUE );
 
-	if ( Settings.Library.SourceMesh ) 
+	if ( Settings.Library.SourceMesh )
+	{
 		m_sLocations = pDownload->GetSourceURLs( &m_pSourcesSent, 15,
 			( m_nGnutella < 2 ) ? PROTOCOL_G1 : PROTOCOL_HTTP, NULL );
-	
-	m_sRanges = pDownload->GetAvailableRanges();
-	
+	}
+
+	pDownload->GetAvailableRanges( m_sRanges );
+
 	if ( m_bRange && m_nOffset == 0 && m_nLength == SIZE_UNKNOWN )
-	{
 		pDownload->GetRandomRange( m_nOffset, m_nLength );
-	}
-	
-	if ( m_nLength == SIZE_UNKNOWN ) m_nLength = m_nSize - m_nOffset;
-	
+
+	if ( m_nLength == SIZE_UNKNOWN )
+		m_nLength = m_nSize - m_nOffset;
+
 	if ( pDownload->ClipUploadRange( m_nOffset, m_nLength ) )
-	{
 		return QueueRequest();
-	}
-	
+
 	if ( pDownload->IsMoving() )
 	{
 		if ( GetTickCount() - pDownload->m_tCompleted < 60 * 60 * 1000 ) // 1 hour
@@ -809,7 +820,8 @@ BOOL CUploadTransferHTTP::RequestPartialFile(CDownload* pDownload)
 		else
 		{
 			SendResponse( IDR_HTML_FILENOTFOUND );
-			theApp.Message( MSG_ERROR, IDS_UPLOAD_FILENOTFOUND, (LPCTSTR)m_sAddress, (LPCTSTR)m_sName );
+			theApp.Message( MSG_INFO, IDS_UPLOAD_FILENOTFOUND,
+				(LPCTSTR)m_sAddress, (LPCTSTR)m_sName );
 			return TRUE;
 		}
 	}
@@ -821,17 +833,18 @@ BOOL CUploadTransferHTTP::RequestPartialFile(CDownload* pDownload)
 	{
 		Write( _P("HTTP/1.1 416 Requested Range Unavailable\r\n") );
 	}
-	
+
 	SendDefaultHeaders();
 	SendFileHeaders();
-	
+
 	Write( _P("Content-Length: 0\r\n") );
 	Write( _P("\r\n") );
-	
+
 	StartSending( upsResponse );
-	
-	theApp.Message( MSG_INFO, IDS_UPLOAD_BAD_RANGE, (LPCTSTR)m_sAddress, (LPCTSTR)m_sName );
-	
+
+	theApp.Message( MSG_INFO, IDS_UPLOAD_BAD_RANGE, (LPCTSTR)m_sAddress,
+		(LPCTSTR)m_sName );
+
 	return TRUE;
 }
 
