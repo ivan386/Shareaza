@@ -64,51 +64,52 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CEDClient construction
 
-CEDClient::CEDClient()
-{
-	m_pEdPrev		= NULL;
-	m_pEdNext		= NULL;
+CEDClient::CEDClient() :
+	m_pEdPrev				( NULL )
+,	m_pEdNext				( NULL )
 
-	m_nClientID		= 0;
-	m_nUDP			= 0;
+,	m_nClientID				( 0ul )
+,	m_nUDP					( 0u )
 
 	// Client ID and version
-	m_bEmule		= FALSE;
-	m_nEmVersion	= 0;
-	m_nEmCompatible	= 0;
-	m_nSoftwareVersion=0;
+,	m_nVersion				( 0 )
+,	m_bEmule				( FALSE )
+,	m_nEmVersion			( 0 )
+,	m_nEmCompatible			( 0 )
+,	m_nSoftwareVersion		( 0ul )
 
 	// Client capabilities
-	m_bEmAICH		= FALSE;		// Not supported
-	m_bEmUnicode	= FALSE;
-	m_bEmUDPVersion	= 0;
-	m_bEmDeflate	= FALSE;
-	m_bEmSecureID	= FALSE;		// Not supported
-	m_bEmSources	= FALSE;
-	m_bEmRequest	= FALSE;
-	m_bEmComments	= FALSE;
-	m_bEmPeerCache	= FALSE;		// Not supported
-	m_bEmBrowse		= FALSE;
-	m_bEmMultiPacket= FALSE;		// Not supported
-	m_bEmPreview	= FALSE;
-	m_bEmLargeFile	= FALSE;		// LargeFile support
+,	m_bEmAICH				( FALSE )		// Not supported
+,	m_bEmUnicode			( FALSE )
+,	m_bEmUDPVersion			( FALSE )
+,	m_bEmDeflate			( FALSE )
+,	m_bEmSecureID			( FALSE )		// Not supported
+,	m_bEmSources			( FALSE )
+,	m_bEmRequest			( FALSE )
+,	m_bEmComments			( FALSE )
+,	m_bEmPeerCache			( FALSE )		// Not supported
+,	m_bEmBrowse				( FALSE )
+,	m_bEmMultiPacket		( FALSE )		// Not supported
+,	m_bEmPreview			( FALSE )
+,	m_bEmLargeFile			( FALSE )		// LargeFile support
 
 	// Misc stuff
-	m_bLogin		= FALSE;
+,	m_bLogin				( FALSE )
+,	m_nUpSize				( 0ull )
 
-	m_pDownload		= NULL;
-	m_pUpload		= NULL;
-	m_bSeeking		= FALSE;
-	m_bCallbackRequested = false;
-	m_nRunExCookie	= 0;
+,	m_pDownload				( NULL )
+,	m_pUpload				( NULL )
+,	m_bCallbackRequested	( false )
+,	m_bSeeking				( FALSE )
+,	m_nRunExCookie			( 0ull )
 
-	m_bOpenChat		= FALSE;
-	m_bCommentSent	= FALSE;
+,	m_bOpenChat				( FALSE )
+,	m_bCommentSent			( FALSE )
 
+,	m_nDirsWaiting			( 0ul )
+{
 	m_mInput.pLimit		= &Settings.Bandwidth.Request;
 	m_mOutput.pLimit	= &Settings.Bandwidth.Request;
-
-	m_nDirsWaiting = 0;
 
 	EDClients.Add( this );
 }

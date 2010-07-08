@@ -49,16 +49,16 @@ CEDClients EDClients;
 //////////////////////////////////////////////////////////////////////
 // CEDClients construction
 
-CEDClients::CEDClients()
+CEDClients::CEDClients() :
+	m_pFirst			( NULL )
+,	m_pLast				( NULL )
+,	m_nCount			( 0 )
+,	m_tLastRun			( 0ul )
+,	m_tLastMaxClients	( 0ul )
+,	m_tLastServerStats	( 0ul )
+,	m_nLastServerKey	( 0ul )
+,	m_bAllServersDone	( FALSE )
 {
-	m_pFirst			= NULL;
-	m_pLast				= NULL;
-	m_nCount			= 0;
-	m_tLastRun			= 0;
-	m_tLastMaxClients	= 0;
-	m_tLastServerStats	= 0;
-	m_nLastServerKey	= 0;
-	m_bAllServersDone	= FALSE;
 }
 
 CEDClients::~CEDClients()
