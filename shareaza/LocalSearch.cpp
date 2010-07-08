@@ -62,10 +62,6 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
-// Limit query answer packet size since Gnutella 1/2 drops packets
-// large than Settings.Gnutella.MaximumPacket
-#define MAX_QUERY_PACKET_SIZE 16384 // (bytes)
-
 //////////////////////////////////////////////////////////////////////
 // CLocalSearch construction
 
@@ -141,7 +137,7 @@ bool CLocalSearch::IsValidForHitG2(CLibraryFile const * const pFile) const
 //////////////////////////////////////////////////////////////////////
 // CLocalSearch execute
 
-bool CLocalSearch::Execute(int nMaximum, bool bPartial, bool bShared)
+bool CLocalSearch::Execute(INT_PTR nMaximum, bool bPartial, bool bShared)
 {
 	ASSERT( bPartial || bShared );
 
@@ -157,7 +153,7 @@ bool CLocalSearch::Execute(int nMaximum, bool bPartial, bool bShared)
 		Network.CreateID( m_oGUID );
 	}
 
-	int nHits = 0;
+	INT_PTR nHits = 0;
 	if ( bPartial )
 	{
 		if ( ! ExecutePartialFiles( nMaximum, nHits ) )
@@ -181,7 +177,7 @@ bool CLocalSearch::Execute(int nMaximum, bool bPartial, bool bShared)
 //////////////////////////////////////////////////////////////////////
 // CLocalSearch execute partial files
 
-bool CLocalSearch::ExecutePartialFiles(int nMaximum, int& nHits)
+bool CLocalSearch::ExecutePartialFiles(INT_PTR nMaximum, INT_PTR& nHits)
 {
 	CSingleLock pLock( &Transfers.m_pSection );
 	if ( ! pLock.Lock( 250 ) )
@@ -214,7 +210,7 @@ bool CLocalSearch::ExecutePartialFiles(int nMaximum, int& nHits)
 //////////////////////////////////////////////////////////////////////
 // CLocalSearch execute shared files
 
-bool CLocalSearch::ExecuteSharedFiles(int nMaximum, int& nHits)
+bool CLocalSearch::ExecuteSharedFiles(INT_PTR nMaximum, INT_PTR& nHits)
 {
 	CSingleLock oLock( &Library.m_pSection );
 	if ( ! oLock.Lock( 250 ) )
@@ -255,7 +251,7 @@ void CLocalSearch::SendHits(const CList< const T * >& oFiles)
 	CPacket* pPacket = NULL;
 	CSchemaMap pSchemas;
 
-	int nHits = 0;
+	BYTE nHits = 0;
 	for ( POSITION pos = oFiles.GetHeadPosition(); pos; )
 	{
 		if ( ! pPacket )
@@ -264,15 +260,15 @@ void CLocalSearch::SendHits(const CList< const T * >& oFiles)
 		AddHit( pPacket, pSchemas, oFiles.GetNext( pos ), nHits ++ );
 
 		// Send full packet
-		if ( ( Settings.Gnutella.HitsPerPacket && (DWORD)nHits >= Settings.Gnutella.HitsPerPacket ) ||
-			 ( pPacket->m_nLength >= MAX_QUERY_PACKET_SIZE ) )
+		if ( ( Settings.Gnutella.HitsPerPacket && nHits >= Settings.Gnutella.HitsPerPacket )
+			|| nHits >= MAX_QUERY_PACKET_HITCOUNT
+			|| pPacket->m_nLength >= MAX_QUERY_PACKET_SIZE )
 		{
 			WriteTrailer( pPacket, pSchemas, nHits );
 			DispatchPacket( pPacket );
 			pPacket = NULL;
 			nHits = 0;
 		}
-
 	}
 
 	if ( nHits )
@@ -900,7 +896,7 @@ CG2Packet* CLocalSearch::CreatePacketG2()
 //////////////////////////////////////////////////////////////////////
 // CLocalSearch core trailer
 
-void CLocalSearch::WriteTrailer(CPacket* pPacket, CSchemaMap& pSchemas, int nHits)
+void CLocalSearch::WriteTrailer(CPacket* pPacket, CSchemaMap& pSchemas, BYTE nHits)
 {
 	ASSERT( pPacket != NULL );
 
@@ -910,9 +906,9 @@ void CLocalSearch::WriteTrailer(CPacket* pPacket, CSchemaMap& pSchemas, int nHit
 		WriteTrailerG2( static_cast< CG2Packet* >( pPacket ), pSchemas, nHits );
 }
 
-void CLocalSearch::WriteTrailerG1(CG1Packet* pPacket, CSchemaMap& pSchemas, int nHits)
+void CLocalSearch::WriteTrailerG1(CG1Packet* pPacket, CSchemaMap& pSchemas, BYTE nHits)
 {
-	*(BYTE*)pPacket->m_pBuffer = (BYTE)nHits;	// Correct the number of files sent
+	*pPacket->m_pBuffer = nHits;	// Correct the number of files sent
 
 	pPacket->WriteString( _T( VENDOR_CODE ), FALSE );
 
@@ -1013,7 +1009,7 @@ void CLocalSearch::WriteTrailerG1(CG1Packet* pPacket, CSchemaMap& pSchemas, int 
 #endif // _DEBUG
 }
 
-void CLocalSearch::WriteTrailerG2(CG2Packet* pPacket, CSchemaMap& /*pSchemas*/, int /*nHits*/)
+void CLocalSearch::WriteTrailerG2(CG2Packet* pPacket, CSchemaMap& /*pSchemas*/, BYTE /*nHits*/)
 {
 	pPacket->WriteByte( 0 );	// End of packet
 	pPacket->WriteByte( 0 );	// nHops

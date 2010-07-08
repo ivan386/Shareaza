@@ -55,13 +55,13 @@ protected:
 // Operations
 public:
 	// Search library and downloads (-1 - use default limit, 0 - no limit)
-	bool		Execute(int nMaximum = -1, bool bPartial = true, bool bShared = true);
+	bool		Execute(INT_PTR nMaximum = -1, bool bPartial = true, bool bShared = true);
 	void		WriteVirtualTree();
 	const CQuerySearch* GetSearch() const{ return m_pSearch; }
 
 protected:
-	bool		ExecuteSharedFiles(int nMaximum, int& nHits);
-	bool		ExecutePartialFiles(int nMaximum, int& nHits);
+	bool		ExecuteSharedFiles(INT_PTR nMaximum, INT_PTR& nHits);
+	bool		ExecutePartialFiles(INT_PTR nMaximum, INT_PTR& nHits);
 	template< typename T > void SendHits(const CList< const T * >& oFiles);
 	template< typename T > void AddHit(CPacket* pPacket, CSchemaMap& pSchemas, const T * pHit, int nIndex);
 	void		AddHitG1(CG1Packet* pPacket, CSchemaMap& pSchemas, CLibraryFile const * const pFile, int nIndex);
@@ -69,17 +69,23 @@ protected:
 	void		AddHitG1(CG1Packet* pPacket, CSchemaMap& pSchemas, CDownload const * const pDownload, int nIndex);
 	void		AddHitG2(CG2Packet* pPacket, CSchemaMap& pSchemas, CDownload const * const pDownload, int nIndex);
 	template< typename T > bool IsValidForHit(const T * pHit) const;
-	inline bool	IsValidForHitG1(CLibraryFile const * const pFile) const;
-	inline bool	IsValidForHitG2(CLibraryFile const * const pFile) const;
+	bool		IsValidForHitG1(CLibraryFile const * const pFile) const;
+	bool		IsValidForHitG2(CLibraryFile const * const pFile) const;
 protected:
 	CPacket*	CreatePacket();
 	CG1Packet*	CreatePacketG1();
 	CG2Packet*	CreatePacketG2();
-	void		WriteTrailer(CPacket* pPacket, CSchemaMap& pSchemas, int nHits);
-	void		WriteTrailerG1(CG1Packet* pPacket, CSchemaMap& pSchemas, int nHits);
-	void		WriteTrailerG2(CG2Packet* pPacket, CSchemaMap& pSchemas, int nHits);
+	void		WriteTrailer(CPacket* pPacket, CSchemaMap& pSchemas, BYTE nHits);
+	void		WriteTrailerG1(CG1Packet* pPacket, CSchemaMap& pSchemas, BYTE nHits);
+	void		WriteTrailerG2(CG2Packet* pPacket, CSchemaMap& pSchemas, BYTE nHits);
 	void		DispatchPacket(CPacket* pPacket);
 	CG2Packet*	AlbumToPacket(CAlbumFolder* pFolder);
 	CG2Packet*	FoldersToPacket();
 	CG2Packet*	FolderToPacket(CLibraryFolder* pFolder);
+
+private:
+	// Limit query answer packet size since Gnutella 1/2 drops packets
+	// large than Settings.Gnutella.MaximumPacket
+	static const DWORD	MAX_QUERY_PACKET_SIZE		= 16384; // (bytes)
+	static const BYTE	MAX_QUERY_PACKET_HITCOUNT	= (BYTE)~0;
 };
