@@ -1,7 +1,7 @@
 //
 // DownloadWithSources.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -133,23 +133,29 @@ DWORD CDownloadWithSources::GetSourceCount(BOOL bNoPush, BOOL bSane) const
 
 DWORD CDownloadWithSources::GetEffectiveSourceCount() const
 {
-	bool bIsG1Allowed = Settings.Gnutella1.EnableToday  || ! Settings.Connection.RequireForTransfers;
-	bool bIsG2Allowed = Settings.Gnutella2.EnableToday  || ! Settings.Connection.RequireForTransfers;
-	bool bIsEdAllowed = Settings.eDonkey.EnableToday    || ! Settings.Connection.RequireForTransfers;
-	bool bIsBtAllowed = Settings.BitTorrent.EnableToday || ! Settings.Connection.RequireForTransfers;
+	bool bIsG1Allowed = Settings.Gnutella1.EnableToday  | ~Settings.Connection.RequireForTransfers;
+	bool bIsG2Allowed = Settings.Gnutella2.EnableToday  | ~Settings.Connection.RequireForTransfers;
+	bool bIsEdAllowed = Settings.eDonkey.EnableToday    | ~Settings.Connection.RequireForTransfers;
+	bool bIsBtAllowed = Settings.BitTorrent.EnableToday | ~Settings.Connection.RequireForTransfers;
 
-	DWORD nResult = 0;
+	DWORD nResult = m_nFTPSourceCount;
+
 	if ( bIsG1Allowed )
 		nResult += m_nG1SourceCount;
+
 	if ( bIsG2Allowed )
 		nResult += m_nG2SourceCount;
+
+	if ( bIsG1Allowed | bIsG2Allowed )
+		nResult += m_nHTTPSourceCount;
+
 	if ( bIsEdAllowed )
 		nResult += m_nEdSourceCount;
-	if ( bIsG1Allowed || bIsG2Allowed )
-		nResult += m_nHTTPSourceCount;
+
 	if ( bIsBtAllowed )
 		nResult += m_nBTSourceCount;
-	return nResult + m_nFTPSourceCount;
+
+	return nResult;
 }
 
 DWORD CDownloadWithSources::GetBTSourceCount(BOOL bNoPush) const
