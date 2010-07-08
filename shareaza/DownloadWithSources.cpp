@@ -133,10 +133,10 @@ DWORD CDownloadWithSources::GetSourceCount(BOOL bNoPush, BOOL bSane) const
 
 DWORD CDownloadWithSources::GetEffectiveSourceCount() const
 {
-	bool bIsG1Allowed = Settings.Gnutella1.EnableToday  | ~Settings.Connection.RequireForTransfers;
-	bool bIsG2Allowed = Settings.Gnutella2.EnableToday  | ~Settings.Connection.RequireForTransfers;
-	bool bIsEdAllowed = Settings.eDonkey.EnableToday    | ~Settings.Connection.RequireForTransfers;
-	bool bIsBtAllowed = Settings.BitTorrent.EnableToday | ~Settings.Connection.RequireForTransfers;
+	bool bIsG1Allowed = Settings.Gnutella1.EnableToday  || ! Settings.Connection.RequireForTransfers;
+	bool bIsG2Allowed = Settings.Gnutella2.EnableToday  || ! Settings.Connection.RequireForTransfers;
+	bool bIsEdAllowed = Settings.eDonkey.EnableToday    || ! Settings.Connection.RequireForTransfers;
+	bool bIsBtAllowed = Settings.BitTorrent.EnableToday || ! Settings.Connection.RequireForTransfers;
 
 	DWORD nResult = m_nFTPSourceCount;
 
