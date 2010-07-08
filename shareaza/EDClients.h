@@ -33,9 +33,14 @@ class CEDClients
 public:
 	CEDClients();
 	virtual ~CEDClients();
+private:
+	CEDClients(const CEDClients&);				// Declaration only
+	CEDClients& operator=(const CEDClients&);	// Declaration only
 
 // Attributes
-protected:
+public:
+	mutable CMutex	m_pSection;	// EDClients Guard
+private:
 	CEDClient*		m_pFirst;
 	CEDClient*		m_pLast;
 	int				m_nCount;
@@ -45,7 +50,6 @@ protected:
 	in_addr			m_pLastServer;
 	DWORD			m_nLastServerKey;
 	BOOL			m_bAllServersDone;
-	mutable CMutex	m_pSection;	// EDClients Guard
 
 // Operations
 public:

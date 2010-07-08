@@ -29,6 +29,7 @@
 #include "EDPacket.h"
 #include "GProfile.h"
 #include "Neighbours.h"
+#include "EDClient.h"
 #include "EDClients.h"
 #include "HostBrowser.h"
 #include "Transfers.h"
@@ -89,7 +90,7 @@ CHostBrowser::~CHostBrowser()
 
 BOOL CHostBrowser::Browse()
 {
-	CSingleLock pLock( &Transfers.m_pSection, TRUE );
+	CQuickLock oTransfersLock( Transfers.m_pSection );
 
 	m_sAddress = inet_ntoa( m_pAddress );
 
@@ -99,38 +100,46 @@ BOOL CHostBrowser::Browse()
 	{
 		m_pVendor = VendorCache.Lookup( _T("ED2K") );
 
+		// Lock this object until we are finished with it
+		CQuickLock oCEDClientsLock( EDClients.m_pSection );
+
 		SOCKADDR_IN* pServer = NULL; // TODO: Add push connections
 		CEDClient* pClient = EDClients.Connect( m_pAddress.s_addr, m_nPort,
-			( pServer ? &pServer->sin_addr : NULL ), ( pServer ? pServer->sin_port : 0 ),
-			m_oClientID );
+			( pServer ? &pServer->sin_addr : NULL ),
+			( pServer ? pServer->sin_port : 0 ), m_oClientID );
 
 		if ( pClient && pClient->m_bConnected )
 		{
 			// Send browse request
-			if ( CEDPacket* pPacket = CEDPacket::New( ED2K_C2C_ASKSHAREDDIRS ) )
-			{
+			CEDPacket* pPacket = CEDPacket::New( ED2K_C2C_ASKSHAREDDIRS );
+			if ( pPacket )
 				pClient->Send( pPacket );
-			}
 		}
 		else if ( ! pClient || ! pClient->Connect() )
 		{
-			theApp.Message( MSG_ERROR, IDS_BROWSE_CANT_CONNECT_TO, m_sAddress );
+			theApp.Message( MSG_NOTICE, IDS_BROWSE_CANT_CONNECT_TO,
+				(LPCTSTR)m_sAddress );
+
 			return FALSE;
 		}
 	}
 	else
 	{
-		if ( IsValid() ) return FALSE;
+		if ( IsValid() )
+			return FALSE;
 
 		if ( m_bMustPush )
 		{
 			if ( SendPush( FALSE ) )
 			{
-				theApp.Message( MSG_NOTICE, IDS_BROWSE_PUSHED_TO, m_sAddress );
+				theApp.Message( MSG_INFO, IDS_BROWSE_PUSHED_TO,
+					(LPCTSTR)m_sAddress );
 			}
 			else
 			{
-				theApp.Message( MSG_ERROR, IDS_BROWSE_CANT_PUSH_TO, m_sAddress );
+				theApp.Message( MSG_NOTICE, IDS_BROWSE_CANT_PUSH_TO,
+					(LPCTSTR)m_sAddress );
+
 				return FALSE;
 			}
 		}
@@ -138,11 +147,14 @@ BOOL CHostBrowser::Browse()
 		{
 			if ( ConnectTo( &m_pAddress, m_nPort ) )
 			{
-				theApp.Message( MSG_NOTICE, IDS_BROWSE_CONNECTING_TO, m_sAddress );
+				theApp.Message( MSG_INFO, IDS_BROWSE_CONNECTING_TO,
+					(LPCTSTR)m_sAddress );
 			}
 			else
 			{
-				theApp.Message( MSG_ERROR, IDS_BROWSE_CANT_CONNECT_TO, m_sAddress );
+				theApp.Message( MSG_NOTICE, IDS_BROWSE_CANT_CONNECT_TO,
+					(LPCTSTR)m_sAddress );
+
 				return FALSE;
 			}
 		}
