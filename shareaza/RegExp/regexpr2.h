@@ -341,7 +341,7 @@ public:
 //{
     // indexing into the backref vector is faster if the backref_tag struct
     // has a size that is a power of 2.
-    //static static_assert<32==sizeof(backref_tag<char*>)> const check_backref_size;
+    //static s_assert<32==sizeof(backref_tag<char*>)> const check_backref_size;
 //}
 
 // --------------------------------------------------------------------------
@@ -872,7 +872,7 @@ public:
     {
         // If your compile breaks here, it is because OtherT is not
         // convertible to type IterT. Check the declaration of your rpattern object.
-        detail::static_assert< detail::is_convertible<OtherT,IterT>::value > const iterator_types_are_not_convertible;
+        detail::s_assert< detail::is_convertible<OtherT,IterT>::value > const iterator_types_are_not_convertible;
         ( void ) iterator_types_are_not_convertible;
 
         if( detail::matcher_helper<IterT>::_do_match( *this, results, ibegin, iend, false ) )
@@ -894,7 +894,7 @@ public:
     {
         // If your compile breaks here, it is because CharT* is not
         // convertible to type IterT. Check the declaration of your rpattern object.
-        detail::static_assert< detail::is_convertible<CharT*,IterT>::value > const iterator_types_are_not_convertible;
+        detail::s_assert< detail::is_convertible<CharT*,IterT>::value > const iterator_types_are_not_convertible;
         ( void ) iterator_types_are_not_convertible;
 
         if( detail::matcher_helper<IterT>::_do_match_c( *this, results, szbegin ) )
@@ -919,7 +919,7 @@ public:
         // If your compile breaks here, it is because iter_type is not
         // convertible to type IterT. Check the declaration of your rpattern object.
         typedef typename std::basic_string<CharT, TraitsT, AllocT>::const_iterator iter_type;
-        detail::static_assert< detail::is_convertible<iter_type,IterT>::value > const iterator_types_are_not_convertible;
+        detail::s_assert< detail::is_convertible<iter_type,IterT>::value > const iterator_types_are_not_convertible;
         ( void ) iterator_types_are_not_convertible;
 
         IterT ibegin = str.begin(), iend = str.begin();
@@ -938,7 +938,7 @@ public:
     {
         // If your compile breaks here, it is because OtherT is not
         // convertible to type IterT. Check the declaration of your rpattern object.
-        detail::static_assert< detail::is_convertible<OtherT,IterT>::value > const iterator_types_are_not_convertible;
+        detail::s_assert< detail::is_convertible<OtherT,IterT>::value > const iterator_types_are_not_convertible;
         ( void ) iterator_types_are_not_convertible;
 
         return detail::matcher_helper<IterT>::_do_count( *this, ibegin, iend, false );
@@ -949,7 +949,7 @@ public:
     {
         // If your compile breaks here, it is because CharT* is not
         // convertible to type IterT. Check the declaration of your rpattern object.
-        detail::static_assert< detail::is_convertible<CharT*,IterT>::value > const iterator_types_are_not_convertible;
+        detail::s_assert< detail::is_convertible<CharT*,IterT>::value > const iterator_types_are_not_convertible;
         ( void ) iterator_types_are_not_convertible;
 
         return detail::matcher_helper<IterT>::_do_count( *this, szbegin, (CharT*)0, true );
@@ -966,7 +966,7 @@ public:
         // If your compile breaks here, it is because iter_type is not
         // convertible to type IterT. Check the declaration of your rpattern object.
         typedef typename std::basic_string<CharT, TraitsT, AllocT>::const_iterator iter_type;
-        detail::static_assert< detail::is_convertible<iter_type,IterT>::value > const iterator_types_are_not_convertible;
+        detail::s_assert< detail::is_convertible<iter_type,IterT>::value > const iterator_types_are_not_convertible;
         ( void ) iterator_types_are_not_convertible;
 
         IterT ibegin = str.begin(), iend = str.begin();
@@ -991,7 +991,7 @@ public:
     {
         // If your compile breaks here, it is because OtherT is not
         // convertible to type IterT. Check the declaration of your rpattern object.
-        detail::static_assert< detail::is_convertible<OtherT,IterT>::value > const iterator_types_are_not_convertible;
+        detail::s_assert< detail::is_convertible<OtherT,IterT>::value > const iterator_types_are_not_convertible;
         ( void ) iterator_types_are_not_convertible;
 
         return detail::matcher_helper<IterT>::_do_split( *this, results, ibegin, iend, limit, false );
@@ -1007,7 +1007,7 @@ public:
     {
         // If your compile breaks here, it is because Iter2 is not
         // convertible to type IterT. Check the declaration of your rpattern object.
-        detail::static_assert< detail::is_convertible<Char1T*,IterT>::value > const iterator_types_are_not_convertible;
+        detail::s_assert< detail::is_convertible<Char1T*,IterT>::value > const iterator_types_are_not_convertible;
         ( void ) iterator_types_are_not_convertible;
 
         // If your compile breaks here, it's because the string you passed in doesn't have
@@ -1032,7 +1032,7 @@ public:
         // If your compile breaks here, it is because iter_type is not
         // convertible to type IterT. Check the declaration of your rpattern object.
         typedef typename std::basic_string<CharT, TraitsT, AllocT>::const_iterator iter_type;
-        detail::static_assert< detail::is_convertible<iter_type,IterT>::value > const iterator_types_are_not_convertible;
+        detail::s_assert< detail::is_convertible<iter_type,IterT>::value > const iterator_types_are_not_convertible;
         ( void ) iterator_types_are_not_convertible;
 
         IterT ibegin = str.begin(), iend = str.begin();
@@ -1058,7 +1058,7 @@ public:
         // If your compile breaks here, it is because iter_type is not
         // convertible to type IterT. Check the declaration of your rpattern object.
         typedef typename std::basic_string<CharT, TraitsT, AllocT>::const_iterator iter_type;
-        detail::static_assert< detail::is_convertible<iter_type,IterT>::value > const iterator_types_are_not_convertible;
+        detail::s_assert< detail::is_convertible<iter_type,IterT>::value > const iterator_types_are_not_convertible;
         ( void ) iterator_types_are_not_convertible;
 
         return detail::matcher_helper<IterT>::_do_subst( *this, str, results, pos, len );
