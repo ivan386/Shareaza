@@ -3,7 +3,7 @@
 //
 // This software is released into the public domain. You are free to
 // redistribute and modify without any restrictions.
-// This file is part of Shareaza (www.shareaza.com), original author Michael Stokes. 
+// This file is part of SHAREAZA (shareaza.sourceforge.net), original author Michael Stokes. 
 //
 
 #if !defined(AFX_IMAGE_H__7C2E1D58_91A7_4C3B_A9FA_34A5768C82DC__INCLUDED_)

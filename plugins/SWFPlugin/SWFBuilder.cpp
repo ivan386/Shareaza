@@ -2,7 +2,7 @@
 // SWFBuilder.cpp : Implementation of CSWFBuilder
 //
 // Copyright (c) Nikolay Raspopov, 2005.
-// This file is part of SHAREAZA (www.shareaza.com)
+// This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // GFL Library, GFL SDK and XnView
 // Copyright (c) 1991-2004 Pierre-E Gougelet
