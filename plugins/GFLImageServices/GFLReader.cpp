@@ -1,8 +1,8 @@
 //
 // GFLReader.cpp : Implementation of CGFLReader
 //
-// Copyright (c) Nikolay Raspopov, 2005.
-// This file is part of SHAREAZA (www.shareaza.com)
+// Copyright (c) Nikolay Raspopov, 2005-2010.
+// This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // GFL Library, GFL SDK and XnView
 // Copyright (c) 1991-2004 Pierre-E Gougelet
@@ -64,7 +64,7 @@ STDMETHODIMP CGFLReader::LoadFromFile (
 	/* [in,out] */ IMAGESERVICEDATA* pParams,
 	/* [out] */ SAFEARRAY** ppImage )
 {
-	ATLTRACE( _T("LoadFromFile (\"%s\", 0x%08x, 0x%08x)\n"), CW2T( sFile ), pParams, ppImage );
+	ATLTRACE( "LoadFromFile (\"%s\", 0x%08x, 0x%08x)\n", CW2A( sFile ), pParams, ppImage );
 
 	if (!pParams || !ppImage) {
 		ATLTRACE (L"LoadFromFile error: E_POINTER\n");
@@ -104,7 +104,7 @@ STDMETHODIMP CGFLReader::LoadFromFile (
 				GFL_LOAD_FORCE_COLOR_MODEL;
 			prm.ColorModel = (inf.ComponentsPerPixel == 4) ? GFL_RGBA : GFL_RGB;
 			prm.FormatIndex = inf.FormatIndex;
-			hr = SAFEgflLoadBitmap ( wcslen(pszPath) ? pszPath : CW2A (sFile), &hGflBitmap, &prm, &inf);
+			hr = SAFEgflLoadBitmap ( CW2A( *pszPath ? pszPath : (LPCWSTR)sFile ), &hGflBitmap, &prm, &inf);
 
 			if (SUCCEEDED (hr))
 				hr = BitmapToSafeArray (ppImage, pParams, hGflBitmap);
