@@ -177,8 +177,15 @@ STDAPI ConvertToUnicodeEx(LPCSTR pszMbcsString, DWORD cbMbcsLen, LPWSTR pwszUnic
 STDAPI ConvertToMBCSEx(LPCWSTR pwszUnicodeString, DWORD cbUniLen, LPSTR pszMbcsString, DWORD cbMbcsLen, WORD wCodePage);
 STDAPI_(LPWSTR) ConvertToCoTaskMemStr(BSTR bstrString);
 STDAPI_(LPSTR)  ConvertToMBCS(LPCWSTR pwszUnicodeString, WORD wCodePage);
-STDAPI_(BSTR)   ConvertToBSTR(LPCSTR pszAnsiString, WORD wCodePage);
+STDAPI_(BSTR)   ConvertAToBSTR(LPCSTR pszAnsiString, WORD wCodePage);
+STDAPI_(BSTR)   ConvertWToBSTR(LPCWSTR pszAnsiString, WORD wCodePage);
 STDAPI_(UINT)   CompareStrings(LPCWSTR pwsz1, LPCWSTR pwsz2);
+
+#ifdef _UNICODE
+	#define ConvertToBSTR ConvertWToBSTR
+#else
+	#define ConvertToBSTR ConvertAToBSTR
+#endif
 
 ////////////////////////////////////////////////////////////////////////
 // Unicode Win32 API wrappers (handles Unicode/ANSI convert for Win98/ME)

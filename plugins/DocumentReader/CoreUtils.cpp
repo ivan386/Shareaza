@@ -198,7 +198,7 @@ STDAPI ReadProperty(IPropertyStorage* pPropStg, PROPSPEC spc, WORD wCodePage, VA
 
 	    case VT_LPSTR:
 		    pvtResult->vt = VT_BSTR;
-            pvtResult->bstrVal = ConvertToBSTR(vtProperty.pszVal, wCodePage);
+            pvtResult->bstrVal = ConvertAToBSTR(vtProperty.pszVal, wCodePage);
 		    break;
 
 	    case VT_FILETIME:
@@ -722,7 +722,18 @@ STDAPI_(LPSTR) ConvertToMBCS(LPCWSTR pwszUnicodeString, WORD wCodePage)
 ////////////////////////////////////////////////////////////////////////
 // ConvertToBSTR 
 //
-STDAPI_(BSTR) ConvertToBSTR(LPCSTR pszAnsiString, WORD wCodePage)
+STDAPI_(BSTR) ConvertWToBSTR(LPCWSTR pszAnsiString, WORD wCodePage)
+{
+	BSTR bstr = NULL;
+
+	CHECK_NULL_RETURN(pszAnsiString, NULL);
+
+	bstr = SysAllocString(pszAnsiString);
+
+	return bstr;
+}
+
+STDAPI_(BSTR) ConvertAToBSTR(LPCSTR pszAnsiString, WORD wCodePage)
 {
 	BSTR bstr = NULL;
 	UINT cblen, cbnew;
@@ -730,8 +741,8 @@ STDAPI_(BSTR) ConvertToBSTR(LPCSTR pszAnsiString, WORD wCodePage)
 
 	CHECK_NULL_RETURN(pszAnsiString, NULL);
 
-	cblen = lstrlen(pszAnsiString);
-	if ((cblen > 0) && (*pszAnsiString != '\0'))
+	cblen = lstrlenA(pszAnsiString);
+	if ((cblen > 0) && (*pszAnsiString != _T('\0')))
 	{
 		cbnew = ((cblen + 1) * sizeof(WCHAR));
 		pwsz = (LPWSTR)MemAlloc(cbnew);
@@ -806,9 +817,9 @@ STDAPI_(UINT) CompareStrings(LPCWSTR pwsz1, LPCWSTR pwsz2)
 	else
 	{
 	 // If we are on Win9x, we don't have much of choice (thunk the call)...
-		LPTSTR psz1 = ConvertToMBCS(pwsz1, CP_ACP);
-		LPTSTR psz2 = ConvertToMBCS(pwsz2, CP_ACP);
-		iret = CompareString(lcid, NORM_IGNORECASE,	psz1, -1, psz2, -1);
+		LPSTR psz1 = ConvertToMBCS(pwsz1, CP_ACP);
+		LPSTR psz2 = ConvertToMBCS(pwsz2, CP_ACP);
+		iret = CompareStringA(lcid, NORM_IGNORECASE,	psz1, -1, psz2, -1);
 		CoTaskMemFree(psz2);
 		CoTaskMemFree(psz1);
 	}
@@ -837,7 +848,7 @@ STDAPI_(BOOL) FFindQualifiedFileName(LPCWSTR pwszFile, LPWSTR pwszPath, ULONG *p
 	}
 	else
 	{
-        TCHAR szBuffer[MAX_PATH];
+		CHAR szBuffer[MAX_PATH] = {};
 		LPSTR lpszFilePart = NULL;
 
 		LPSTR szFile = ConvertToMBCS(pwszFile, CP_ACP);
@@ -848,7 +859,7 @@ STDAPI_(BOOL) FFindQualifiedFileName(LPCWSTR pwszFile, LPWSTR pwszPath, ULONG *p
         if ( ( 0 == dwRet || dwRet > MAX_PATH ) ) return FALSE;
 
         if ( pcPathIdx ) *pcPathIdx = (ULONG)( (ULONG_PTR)lpszFilePart - (ULONG_PTR)&szBuffer );
-        if ( FAILED(ConvertToUnicodeEx( szBuffer, lstrlen(szBuffer), pwszPath, MAX_PATH, (WORD)GetACP() )) )
+        if ( FAILED(ConvertToUnicodeEx( szBuffer, lstrlenA(szBuffer), pwszPath, MAX_PATH, (WORD)GetACP() )) )
             return FALSE;
 	}
 
@@ -947,7 +958,7 @@ STDAPI_(BOOL) FGetIconForFile(LPCWSTR pwszFile, HICON *pico)
     }
     else
 	{
-		LPTSTR psz;
+		LPSTR psz;
         if (s_pfnExtractAssociatedIconA == NULL)
         {
             s_pfnExtractAssociatedIconA = (PFN_ExtractAssociatedIconA)GetProcAddress(s_hShell32, "ExtractAssociatedIconA");
@@ -957,7 +968,7 @@ STDAPI_(BOOL) FGetIconForFile(LPCWSTR pwszFile, HICON *pico)
         psz = ConvertToMBCS(pwszFile, CP_ACP);
         if (psz)
         {
-            idx = (WORD)lstrlen(psz);
+            idx = (WORD)lstrlenA(psz);
             memcpy((BYTE*)rgBuffer, (BYTE*)psz, idx); idx = 0;
             *pico = s_pfnExtractAssociatedIconA(DllModuleHandle(), (LPSTR)rgBuffer, &idx);
 		    CoTaskMemFree(psz);
