@@ -152,7 +152,7 @@ library Shareaza
 	//
 
 	[ uuid(D1B5D3A4-B890-470a-A3FF-9700F3C2A063), oleautomation ]
-	interface IGeneralPlugin : stdole.IUnknown
+	interface IGeneralPlugin : IUnknown
 	{
 		HRESULT SetApplication( [in] IApplication* pApplication );
 		HRESULT QueryCapabilities( [out] DWORD* pnCaps );
@@ -165,7 +165,7 @@ library Shareaza
 	//
 
 	[ uuid(CB25DAED-D745-45db-994E-32639D2888A9), oleautomation ]
-	interface ICommandPlugin : stdole.IUnknown
+	interface ICommandPlugin : IUnknown
 	{
 		HRESULT RegisterCommands();
 		HRESULT InsertCommands();
@@ -178,7 +178,7 @@ library Shareaza
 	//
 
 	[ uuid(8E878640-37B5-44a3-A37C-FC3BF1CCF6B6), oleautomation ]
-	interface IExecutePlugin : stdole.IUnknown
+	interface IExecutePlugin : IUnknown
 	{
 		HRESULT OnExecute( [in] BSTR sFilePath );
 		HRESULT OnEnqueue( [in] BSTR sFilePath );
@@ -189,7 +189,7 @@ library Shareaza
 	//
 
 	[ uuid(8065EF37-F0EA-4898-BBBD-D37798DE83CB), oleautomation ]
-	interface IChatPlugin : stdole.IUnknown
+	interface IChatPlugin : IUnknown
 	{
 		HRESULT OnChatMessage(
 			[in] BSTR sChatID,				// Unique conversation ID (for example "ip:port" for Gnutella/eMule chat)
@@ -206,7 +206,7 @@ library Shareaza
 	interface ISToolbar;
 
 	[ uuid(ADDB77AE-3483-4a15-B391-AE31563BD7E3), oleautomation ]
-	interface IPluginWindow : stdole.IUnknown
+	interface IPluginWindow : IUnknown
 	{
 		HRESULT ListenForSingleMessage( [in] UINT nMessage );
 		HRESULT ListenForMultipleMessages( [in] SAFEARRAY(UINT) pMessages );
@@ -222,7 +222,7 @@ library Shareaza
 	};
 
 	[ uuid(C6631461-2654-4572-BB3C-54F52F0FF1B9), oleautomation ]
-	interface IPluginWindowOwner : stdole.IUnknown
+	interface IPluginWindowOwner : IUnknown
 	{
 		HRESULT OnTranslate( [in] MSG* pMessage );
 		HRESULT OnMessage( [in] UINT nMessage, [in] WPARAM wParam, [in] LPARAM lParam, [out] LRESULT* plResult );
@@ -239,7 +239,7 @@ library Shareaza
 		uuid(32496CEA-3B51-4f2f-9CE7-73D6AC942C34),
 		oleautomation
 	]
-	interface ILibraryBuilderPlugin : stdole.IUnknown
+	interface ILibraryBuilderPlugin : IUnknown
 	{
 		// Extract metadata from file and return:
 		//	S_x - Use metadata returned in second parameter;
@@ -270,7 +270,7 @@ library Shareaza
 	} IMAGESERVICEFLAGS;
 
 	[ uuid(AB0A7BF2-94C0-4daa-8256-2BB6C3648050), oleautomation ]
-	interface IImageServicePlugin : stdole.IUnknown
+	interface IImageServicePlugin : IUnknown
 	{
 		HRESULT LoadFromFile( [in] BSTR sFile, [in,out] IMAGESERVICEDATA* pParams, [out] SAFEARRAY(BYTE)* ppImage );
 		HRESULT LoadFromMemory( [in] BSTR sType, [in] SAFEARRAY(BYTE) pMemory, [in,out] IMAGESERVICEDATA* pParams, [out] SAFEARRAY(BYTE)* ppImage );
@@ -283,7 +283,7 @@ library Shareaza
 	//
 
 	[ uuid(52A97CBD-2B99-45e8-B6F9-41E9CD583960), oleautomation ]
-	interface IDownloadPreviewSite : stdole.IUnknown
+	interface IDownloadPreviewSite : IUnknown
 	{
 		HRESULT GetSuggestedFilename( [out,retval] BSTR* psFile );
 		HRESULT GetAvailableRanges( [out,retval] SAFEARRAY(DWORD)* pArray );
@@ -295,7 +295,7 @@ library Shareaza
 	};
 
 	[ uuid(1182FCD9-9F14-4e4a-BD05-432422B5BFAF), oleautomation ]
-	interface IDownloadPreviewPlugin : stdole.IUnknown
+	interface IDownloadPreviewPlugin : IUnknown
 	{
 		HRESULT SetSite( [in] IDownloadPreviewSite* pSite );
 		[ helpstring("deprecated") ] HRESULT Preview( [in] HANDLE hFile, [in] BSTR sTarget );
@@ -326,7 +326,7 @@ library Shareaza
 	} MediaZoom;
 
 	[ uuid(59978299-C8AC-4818-83F4-C382BB611D5C), oleautomation, pointer_default(unique) ]
-	interface IMediaPlayer : stdole.IUnknown
+	interface IMediaPlayer : IUnknown
 	{
 		HRESULT Create( [in] LONG_PTR hWnd );
 		HRESULT Destroy();
@@ -372,7 +372,7 @@ library Shareaza
 	} SHAREAZAVISCHUNK;
 
 	[ uuid(E788D125-4D41-4a35-A436-D1A1FD0C8EC9), oleautomation ]
-	interface IAudioVisPlugin : stdole.IUnknown
+	interface IAudioVisPlugin : IUnknown
 	{
 		HRESULT Configure();
 		HRESULT Create( [in] HWND hWnd );
@@ -387,7 +387,7 @@ library Shareaza
 	};
 
 	[ uuid(71045028-F95C-4c03-AB09-6D906DBFC731), oleautomation ]
-	interface IWrappedPluginControl : stdole.IUnknown
+	interface IWrappedPluginControl : IUnknown
 	{
 		HRESULT Load( [in] BSTR sDLL, [in] LONG nIndex );
 		HRESULT Unload();
