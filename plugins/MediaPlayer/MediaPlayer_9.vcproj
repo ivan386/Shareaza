@@ -518,7 +518,7 @@
 			SourceControlFiles="false"
 			>
 			<File
-				RelativePath=".\MediaPlayer_h.h"
+				RelativePath=".\MediaPlayer.h"
 				>
 			</File>
 			<File

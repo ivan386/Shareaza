@@ -67,7 +67,7 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MediaPlayer_h.h">
+    <ClInclude Include="MediaPlayer.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -584,6 +584,10 @@
 			SourceControlFiles="false"
 			>
 			<File
+				RelativePath=".\Preview.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Preview_i.c"
 				>
 				<FileConfiguration
@@ -618,10 +622,6 @@
 						UsePrecompiledHeader="0"
 					/>
 				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\Preview_i.h"
-				>
 			</File>
 		</Filter>
 	</Files>

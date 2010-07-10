@@ -79,7 +79,7 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Preview_i.h">
+    <ClInclude Include="Preview.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>
