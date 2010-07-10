@@ -744,7 +744,7 @@ struct basic_charset
                     chlow = prg->second;
                 }
                 if( WCHAR_MAX != chlow )
-                    m_ranges.push_front( range_type( wchar_t( chlow+1 ), WCHAR_MAX ) );
+                    m_ranges.push_front( range_type( wchar_t( chlow+1 ), wchar_t( WCHAR_MAX ) ) );
             }
             else
             {
