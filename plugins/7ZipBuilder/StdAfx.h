@@ -3,8 +3,8 @@
 // or project specific include files that are used frequently,
 // but are changed infrequently
 //
-// Copyright (c) Shareaza Development Team, 2007.
-// This file is part of SHAREAZA (www.shareaza.com)
+// Copyright (c) Shareaza Development Team, 2007-2010.
+// This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
 // and/or modify it under the terms of the GNU General Public License
@@ -25,10 +25,6 @@
 
 #define _CRT_SECURE_NO_DEPRECATE
 #define STRICT
-#define WINVER 0x0400
-#define _WIN32_WINNT 0x0400
-#define _WIN32_WINDOWS 0x0410
-#define _WIN32_IE 0x0400
 #define _WIN32_DCOM
 #define _ATL_FREE_THREADED
 #define _ATL_NO_AUTOMATIC_NAMESPACE
