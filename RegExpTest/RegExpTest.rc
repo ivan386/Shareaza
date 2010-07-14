@@ -31,7 +31,7 @@ LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDR_MAINFRAME           ICON                    "res\\RegExp.ico"
+IDR_MAINFRAME           ICON                    "res\\RegExpTest.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -41,7 +41,7 @@ IDR_MAINFRAME           ICON                    "res\\RegExp.ico"
 IDD_REGEXP_DIALOG DIALOGEX 0, 0, 320, 200
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_MINIMIZEBOX | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_APPWINDOW
-CAPTION "RegExp"
+CAPTION "RegExp Test"
 FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     DEFPUSHBUTTON   "OK",IDOK,186,177,60,16
@@ -61,8 +61,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,0,0,1
- PRODUCTVERSION 2,4,0,0
+ FILEVERSION 1,0,0,2
+ PRODUCTVERSION 2,5,3,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -78,13 +78,13 @@ BEGIN
         BLOCK "000004b0"
         BEGIN
             VALUE "CompanyName", "Shareaza Development Team"
-            VALUE "FileDescription", "RegExp Demo"
-            VALUE "FileVersion", "1, 0, 0, 1"
-            VALUE "InternalName", "RegExp"
+            VALUE "FileDescription", "RegExpTest"
+            VALUE "FileVersion", "1, 0, 0, 2"
+            VALUE "InternalName", "RegExpTest"
             VALUE "LegalCopyright", "Shareaza Development Team"
-            VALUE "OriginalFilename", "RegExp.exe"
-            VALUE "ProductName", "RegExp Demo"
-            VALUE "ProductVersion", "2, 4, 0, 0"
+            VALUE "OriginalFilename", "RegExpTest.exe"
+            VALUE "ProductName", "RegExpTest"
+            VALUE "ProductVersion", "2, 5, 3, 0"
         END
     END
     BLOCK "VarFileInfo"
@@ -155,7 +155,7 @@ BEGIN
     "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
     "LANGUAGE 9, 1\r\n"
     "#pragma code_page(1252)\r\n"
-    "#include ""res\\RegExp.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""res\\RegExpTest.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
     "#include ""afxres.rc""     // Standard components\r\n"
     "#endif\r\n"
     "\0"
@@ -181,7 +181,7 @@ END
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
 LANGUAGE 9, 1
 #pragma code_page(1252)
-#include "res\RegExp.rc2"  // non-Microsoft Visual C++ edited resources
+#include "res\RegExpTest.rc2"  // non-Microsoft Visual C++ edited resources
 #include "afxres.rc"     // Standard components
 #endif
 

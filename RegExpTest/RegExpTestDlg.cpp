@@ -2,10 +2,8 @@
 //
 
 #include "stdafx.h"
-#include "RegExp.h"
-#include "RegExpDlg.h"
-
-#include "regexpr2.h"
+#include "RegExpTest.h"
+#include "RegExpTestDlg.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -42,7 +40,7 @@ BOOL CRegExpDlg::OnInitDialog()
 	SetIcon(m_hIcon, TRUE);			// Set big icon
 	SetIcon(m_hIcon, FALSE);		// Set small icon
 
-	DoIt();
+	DoItSafe();
 
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
@@ -79,20 +77,16 @@ HCURSOR CRegExpDlg::OnQueryDragIcon()
 
 void CRegExpDlg::OnEnChangeRegexp()
 {
-	DoIt();
+	DoItSafe();
 }
 
 void CRegExpDlg::OnEnChangeInput()
 {
-	DoIt();
+	DoItSafe();
 }
 
 void CRegExpDlg::DoIt()
 {
-	UpdateData();
-
-	m_oResult.ResetContent();
-
 	try
 	{
 		const std::wstring exp( (LPCTSTR)m_strRegExp );
@@ -108,7 +102,7 @@ void CRegExpDlg::DoIt()
 			m_oResult.AddString( _T("No matches.") );
 
 		regex::split_results res2;
-		const size_t nCount = pat.split( input, res2, 0 );
+		const size_t nCount = pat.split( input, res2 );
 		if ( nCount )
 		{
 			m_oResult.AddString( _T("Splitted strings:") );
@@ -127,7 +121,23 @@ void CRegExpDlg::DoIt()
 	}
 	catch(...)
 	{
-		m_oResult.AddString( _T("Bad regular expression.") );
+		m_oResult.AddString( _T("C++ exception. Bad regular expression.") );
+	}
+}
+
+void CRegExpDlg::DoItSafe()
+{
+	UpdateData();
+
+	m_oResult.ResetContent();
+
+	__try
+	{
+		DoIt();
+	}
+	__except( EXCEPTION_EXECUTE_HANDLER )
+	{
+		m_oResult.AddString( _T("Unhandled exception!") );
 	}
 
 	AfxGetApp()->WriteProfileString( _T("RegExp"), _T("Input"), m_strInput );

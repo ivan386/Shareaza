@@ -1,12 +1,11 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
-// Used by RegExp.rc
+// Used by RegExpTest.rc
 //
 #define IDD_REGEXP_DIALOG               102
 #define IDR_MAINFRAME                   128
 #define IDC_INPUT                       1000
 #define IDC_REGEXP                      1001
-#define IDC_LIST1                       1002
 #define IDC_RESULT                      1002
 
 // Next default values for new objects

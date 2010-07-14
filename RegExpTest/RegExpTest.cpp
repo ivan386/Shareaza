@@ -1,9 +1,9 @@
-// RegExp.cpp : Defines the class behaviors for the application.
+// RegExpTest.cpp : Defines the class behaviors for the application.
 //
 
 #include "stdafx.h"
-#include "RegExp.h"
-#include "RegExpDlg.h"
+#include "RegExpTest.h"
+#include "RegExpTestDlg.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW

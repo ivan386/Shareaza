@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9,00"
-	Name="RegExp"
+	Name="RegExpTest"
 	ProjectGUID="{A7621AB9-764B-4D68-A5C9-F267C3F36BB7}"
-	RootNamespace="RegExp"
+	RootNamespace="RegExpTest"
 	Keyword="MFCProj"
 	TargetFrameworkVersion="196613"
 	>
@@ -45,6 +45,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
+				AdditionalIncludeDirectories="../shareaza/RegExp/"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_SCL_SECURE_NO_WARNINGS"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
@@ -129,6 +130,7 @@
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="true"
+				AdditionalIncludeDirectories="../shareaza/RegExp/"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_SCL_SECURE_NO_WARNINGS"
 				RuntimeLibrary="0"
 				RuntimeTypeInfo="false"
@@ -187,15 +189,15 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\RegExp.cpp"
+				RelativePath="..\Shareaza\RegExp\regexpr2.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\RegExpDlg.cpp"
+				RelativePath=".\RegExpTest.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\regexpr2.cpp"
+				RelativePath=".\RegExpTestDlg.cpp"
 				>
 			</File>
 			<File
@@ -219,7 +221,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\syntax2.cpp"
+				RelativePath="..\Shareaza\RegExp\syntax2.cpp"
 				>
 			</File>
 		</Filter>
@@ -229,19 +231,19 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\RegExp.h"
+				RelativePath="..\Shareaza\RegExp\regexpr2.h"
 				>
 			</File>
 			<File
-				RelativePath=".\RegExpDlg.h"
+				RelativePath=".\RegExpTest.h"
 				>
 			</File>
 			<File
-				RelativePath=".\regexpr2.h"
+				RelativePath=".\RegExpTestDlg.h"
 				>
 			</File>
 			<File
-				RelativePath=".\reimpl2.h"
+				RelativePath="..\Shareaza\RegExp\reimpl2.h"
 				>
 			</File>
 			<File
@@ -249,7 +251,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\restack.h"
+				RelativePath="..\Shareaza\RegExp\restack.h"
 				>
 			</File>
 			<File
@@ -257,7 +259,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\syntax2.h"
+				RelativePath="..\Shareaza\RegExp\syntax2.h"
 				>
 			</File>
 			<File
@@ -271,15 +273,15 @@
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
 			<File
-				RelativePath=".\res\RegExp.ico"
+				RelativePath=".\res\RegExpTest.ico"
 				>
 			</File>
 			<File
-				RelativePath=".\RegExp.rc"
+				RelativePath=".\RegExpTest.rc"
 				>
 			</File>
 			<File
-				RelativePath=".\res\RegExp.rc2"
+				RelativePath=".\res\RegExpTest.rc2"
 				>
 			</File>
 		</Filter>
@@ -287,7 +289,7 @@
 	<Globals>
 		<Global
 			Name="RESOURCE_FILE"
-			Value="RegExp.rc"
+			Value="RegExpTest.rc"
 		/>
 	</Globals>
 </VisualStudioProject>

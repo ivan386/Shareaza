@@ -2,7 +2,6 @@
 //
 
 #pragma once
-#include "afxwin.h"
 
 class CRegExpDlg : public CDialog
 {
@@ -18,6 +17,7 @@ protected:
 	CListBox m_oResult;
 
 	void DoIt();
+	void DoItSafe();
 
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV support
 	virtual BOOL OnInitDialog();

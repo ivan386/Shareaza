@@ -41,3 +41,5 @@
 #endif
 
 #include <algorithm>
+
+#include "regexpr2.h"
