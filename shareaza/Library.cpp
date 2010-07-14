@@ -270,16 +270,18 @@ CFileList* CLibrary::Search(const CQuerySearch* pSearch, int nMaximum, bool bLoc
 
 void CLibrary::Clear()
 {
-	LibraryBuilder.StopThread();
-
-	CloseThread();
-
 	CSingleLock pLock( &m_pSection, TRUE );
 
 	LibraryHistory.Clear();
 	LibraryDictionary.Clear();
 	LibraryFolders.Clear();
 	LibraryMaps.Clear();
+}
+
+void CLibrary::StopThread()
+{
+	Exit();
+	Wakeup();
 }
 
 //////////////////////////////////////////////////////////////////////

@@ -576,7 +576,10 @@ void CMainWnd::OnClose()
 		+ ( Settings.Connection.DeleteFirewallException ? 1 : 0 )
 		+ ( theApp.m_pUPnPFinder ? 1 : 0 )
 		+ ( theApp.m_bLive ? 1 : 0 );
-	theApp.SplashStep( L"Closing Server Processes", nSplashSteps, true );
+	theApp.SplashStep( L"Closing GUI", nSplashSteps, true );
+
+	LibraryBuilder.StopThread();
+	Library.StopThread();
 
 	m_pWindows.SaveSearchWindows();
 	m_pWindows.SaveBrowseHostWindows();
@@ -587,7 +590,6 @@ void CMainWnd::OnClose()
 
 	Network.Disconnect();
 	Transfers.StopThread();
-	Library.StopThread();
 	ChatCore.StopThread();
 
 	if ( m_wndRemoteWnd.IsVisible() ) m_wndRemoteWnd.DestroyWindow();

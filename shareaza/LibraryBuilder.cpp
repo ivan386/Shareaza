@@ -98,7 +98,6 @@ CLibraryBuilder::CLibraryBuilder() :
 
 CLibraryBuilder::~CLibraryBuilder()
 {
-	StopThread();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -121,7 +120,8 @@ bool CLibraryBuilder::Add(CLibraryFile* pFile)
 			{
 				m_pFiles.push_back( pFile->m_nIndex );
 
-				StartThread();
+				BeginThread( "LibraryBuilder", m_bPriority ?
+					THREAD_PRIORITY_BELOW_NORMAL : THREAD_PRIORITY_IDLE );
 
 				return true;
 			}
@@ -345,20 +345,10 @@ DWORD CLibraryBuilder::GetNextFileToHash(CString& sPath)
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilder thread control
 
-void CLibraryBuilder::StartThread()
-{
-	CQuickLock pLock( m_pSection );
-
-	if ( ! m_pFiles.empty() )
-	{
-		BeginThread( "LibraryBuilder", m_bPriority ?
-			THREAD_PRIORITY_BELOW_NORMAL : THREAD_PRIORITY_IDLE );
-	}
-}
-
 void CLibraryBuilder::StopThread()
 {
-	CloseThread();
+	Exit();
+	Wakeup();
 }
 
 //////////////////////////////////////////////////////////////////////

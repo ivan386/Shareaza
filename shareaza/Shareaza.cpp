@@ -518,7 +518,8 @@ int CShareazaApp::ExitInstance()
 		Network.Disconnect();
 
 		SplashStep( L"Stopping Library Tasks" );
-		Library.StopThread();
+		LibraryBuilder.CloseThread();
+		Library.CloseThread();
 
 		SplashStep( L"Stopping Transfers" );
 		Transfers.StopThread();

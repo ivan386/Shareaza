@@ -59,7 +59,6 @@ public:
 	void		Remove(CLibraryFile* pFile);		// Remove file from list
 	void		RequestPriority(LPCTSTR pszPath);	// Place file to the begin of list
 	void		Skip(DWORD nIndex);					// Move file to the end of list
-	void		StartThread();
 	void		StopThread();
 	void		BoostPriority(bool bPriority);
 	bool		GetBoostPriority() const;
