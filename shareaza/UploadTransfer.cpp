@@ -462,6 +462,11 @@ BOOL CUploadTransfer::RequestPartial(CDownload* pFile)
 	m_bFilePartial = TRUE;
 	m_sFileTags.Empty();
 
+	// Try to get existing file object from download
+	auto_ptr< CFragmentedFile > pDownloadFile( pFile->GetFile() );
+	if ( pDownloadFile.get() )
+		AttachFile( pDownloadFile );
+
 	if ( m_oSHA1 && !pFile->m_oSHA1 )
 	{
 		pFile->m_oSHA1 = m_oSHA1;
