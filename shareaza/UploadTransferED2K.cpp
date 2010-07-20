@@ -682,15 +682,18 @@ BOOL CUploadTransferED2K::DispatchNextChunk()
 
 		ED2K_PART_HEADER_I64* pHeader = (ED2K_PART_HEADER_I64*)( pBuffer.m_pBuffer + pBuffer.m_nLength );
 
-		if ( ! ReadFile( m_nFileBase + m_nOffset + m_nPosition, &pHeader[1], nChunk, &nChunk ) ) return FALSE;
+		if ( ! ReadFile( m_nFileBase + m_nOffset + m_nPosition, &pHeader[1], nChunk, &nChunk ) )
+			return FALSE;
+
 		// SetFilePointer( hFile, m_nFileBase + m_nOffset + m_nPosition, NULL, FILE_BEGIN );
 		// ReadFile( hFile, &pHeader[1], nChunk, &nChunk, NULL );
-		if ( nChunk == 0 ) return FALSE;
+		if ( nChunk == 0 )
+			return FALSE;
 
 		pHeader->nProtocol	= ED2K_PROTOCOL_EMULE;
 		pHeader->nType		= ED2K_C2C_SENDINGPART_I64;
 		pHeader->nLength	= 1 + m_oED2K.byteCount + 16 + (DWORD)nChunk;
-		std::copy( &*m_oED2K.begin(), &*m_oED2K.begin() + m_oED2K.byteCount, &*pHeader->pMD4.begin() );
+		CopyMemory( &*pHeader->pMD4.begin(), &*m_oED2K.begin(), m_oED2K.byteCount );
 		pHeader->nOffset1	= (QWORD)m_nOffset + m_nPosition;
 		pHeader->nOffset2	= (QWORD)m_nOffset + m_nPosition + nChunk;
 
@@ -706,15 +709,18 @@ BOOL CUploadTransferED2K::DispatchNextChunk()
 
 		ED2K_PART_HEADER* pHeader = (ED2K_PART_HEADER*)( pBuffer.m_pBuffer + pBuffer.m_nLength );
 
-		if ( ! ReadFile( m_nFileBase + m_nOffset + m_nPosition, &pHeader[1], nChunk, &nChunk ) ) return FALSE;
+		if ( ! ReadFile( m_nFileBase + m_nOffset + m_nPosition, &pHeader[1], nChunk, &nChunk ) )
+			return FALSE;
+
 		// SetFilePointer( hFile, m_nFileBase + m_nOffset + m_nPosition, NULL, FILE_BEGIN );
 		// ReadFile( hFile, &pHeader[1], nChunk, &nChunk, NULL );
-		if ( nChunk == 0 ) return FALSE;
+		if ( nChunk == 0 )
+			return FALSE;
 
 		pHeader->nProtocol	= ED2K_PROTOCOL_EDONKEY;
 		pHeader->nType		= ED2K_C2C_SENDINGPART;
 		pHeader->nLength	= 1 + m_oED2K.byteCount + 8 + (DWORD)nChunk;
-		std::copy( &*m_oED2K.begin(), &*m_oED2K.begin() + m_oED2K.byteCount, &*pHeader->pMD4.begin() );
+		CopyMemory( &*pHeader->pMD4.begin(), &*m_oED2K.begin(), m_oED2K.byteCount );
 		pHeader->nOffset1	= (DWORD)( m_nOffset + m_nPosition );
 		pHeader->nOffset2	= (DWORD)( m_nOffset + m_nPosition + nChunk );
 
