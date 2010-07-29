@@ -569,6 +569,7 @@ public:
 	struct sScheduler
 	{
 		bool		Enable;						// Enable the scheduler
+		bool		ForceShutdown;
 	} Scheduler;
 
 	struct sIRC
