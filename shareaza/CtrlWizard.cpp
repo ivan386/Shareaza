@@ -1,7 +1,7 @@
 //
 // CtrlWizard.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -30,11 +30,8 @@
 #include "Skin.h"
 #include "CoolInterface.h"
 #include "CtrlIconButton.h"
-
 #include "Transfer.h" 
 #include "CtrlWizard.h"
-
-#include "RegExp\regexpr2.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -773,14 +770,15 @@ BOOL CWizardCtrl::PrepareDoc(CLibraryFile* pFile, LPCTSTR pszTemplate)
 	ReplaceNoCase( strDoc, _T("$meta:number$"), strReplace );
 
 	// Replace all "$meta:xxx$" which were left in the file to "N/A"
-	using namespace regex;
-	const rpattern regExpPattern( _T("\\$meta:.*\\$"), _T("N/A"), 
-		NOCASE|GLOBAL|MULTILINE|NOBACKREFS, MODE_SAFE );
-	subst_results results;
-	std::wstring strTemp( strDoc, strDoc.GetLength() );
-
-	regExpPattern.substitute( strTemp, results );
-	strDoc.SetString( strTemp.c_str(), static_cast< int >( strTemp.size() ) );
+	while ( LPCTSTR szStart = StrStrI( strDoc, _T("$meta:") ) )
+	{
+		if ( LPCTSTR szEnd = StrChr( szStart + 6, _T('$') ) )
+		{
+			strDoc.Replace( CString( szStart, szEnd - szStart + 1 ), _T("N/A") );
+		}
+		else
+			break;
+	}
 
 	m_pFileDocs.Add( strDoc );
 	return TRUE;
