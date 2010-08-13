@@ -2411,53 +2411,67 @@ void DeleteFiles(CStringList& pList)
 BOOL DeleteFileEx(LPCTSTR szFileName, BOOL bShared, BOOL bToRecycleBin, BOOL bEnableDelayed)
 {
 	// Should be double zeroed long path
+	BOOL bLong;
 	DWORD len = GetLongPathName( szFileName, NULL, 0 );
 	if ( len )
 	{
-		auto_array< TCHAR > szPath( new TCHAR[ len + 1 ] );
-		GetLongPathName( szFileName, szPath.get(), len );
-		szPath[ len ] = 0;
-
-		DWORD dwAttr = GetFileAttributes( szPath.get() );
-		if ( ( dwAttr != INVALID_FILE_ATTRIBUTES ) &&		// Filename exist
-			( dwAttr & FILE_ATTRIBUTE_DIRECTORY ) == 0 )	// Not a folder
-		{
-			if ( bShared )
-			{
-				// Stop uploads
-				theApp.OnRename( szPath.get(), NULL );
-			}
-
-			if ( bToRecycleBin )
-			{
-				SHFILEOPSTRUCT sfo = {};
-				sfo.hwnd = GetDesktopWindow();
-				sfo.wFunc = FO_DELETE;
-				sfo.pFrom = szPath.get();
-				sfo.fFlags = FOF_ALLOWUNDO | FOF_FILESONLY | FOF_NORECURSION | FOF_NO_UI;
-				SHFileOperation( &sfo );
-			}
-			else
-				DeleteFile( szPath.get() );
-
-			dwAttr = GetFileAttributes( szPath.get() );
-			if ( dwAttr != INVALID_FILE_ATTRIBUTES )
-			{
-				// File still exist
-				if ( bEnableDelayed )
-				{
-					// Set delayed deletion
-					CString sJob;
-					sJob.Format( _T("%d%d"), bShared, bToRecycleBin );
-					theApp.WriteProfileString( _T("Delete"), szPath.get(), sJob );
-				}
-				return FALSE;
-			}
-		}
-
-		// Cancel delayed deletion (if any)
-		theApp.WriteProfileString( _T("Delete"), szPath.get(), NULL );
+		bLong = TRUE;
 	}
+	else
+	{
+		len = lstrlen( szFileName );
+		bLong = FALSE;
+	}
+	auto_array< TCHAR > szPath( new TCHAR[ len + 1 ] );
+	if ( bLong )
+	{
+		GetLongPathName( szFileName, szPath.get(), len );
+	}
+	else
+	{
+		lstrcpy( szPath.get(), szFileName );
+	}
+	szPath[ len ] = 0;
+
+	if ( bShared )
+	{
+		// Stop uploads
+		theApp.OnRename( szPath.get(), NULL );
+	}
+
+	DWORD dwAttr = GetFileAttributes( szPath.get() );
+	if ( ( dwAttr != INVALID_FILE_ATTRIBUTES ) &&		// Filename exist
+		( dwAttr & FILE_ATTRIBUTE_DIRECTORY ) == 0 )	// Not a folder
+	{
+		if ( bToRecycleBin )
+		{
+			SHFILEOPSTRUCT sfo = {};
+			sfo.hwnd = GetDesktopWindow();
+			sfo.wFunc = FO_DELETE;
+			sfo.pFrom = szPath.get();
+			sfo.fFlags = FOF_ALLOWUNDO | FOF_FILESONLY | FOF_NORECURSION | FOF_NO_UI;
+			SHFileOperation( &sfo );
+		}
+		else
+			DeleteFile( szPath.get() );
+
+		dwAttr = GetFileAttributes( szPath.get() );
+		if ( dwAttr != INVALID_FILE_ATTRIBUTES )
+		{
+			// File still exist
+			if ( bEnableDelayed )
+			{
+				// Set delayed deletion
+				CString sJob;
+				sJob.Format( _T("%d%d"), bShared, bToRecycleBin );
+				theApp.WriteProfileString( _T("Delete"), szPath.get(), sJob );
+			}
+			return FALSE;
+		}
+	}
+
+	// Cancel delayed deletion (if any)
+	theApp.WriteProfileString( _T("Delete"), szPath.get(), NULL );
 
 	return TRUE;
 }
