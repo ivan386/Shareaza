@@ -635,55 +635,56 @@ static HRESULT SafeQueryContextMenu(IContextMenu* pContextMenu, HMENU hmenu, UIN
 void CCoolMenu::DoExplorerMenu(HWND hwnd, const CStringList& oFiles, POINT point,
 	HMENU hMenu, HMENU hSubMenu, UINT nFlags)
 {
-	HRESULT hr;
-
+	HRESULT hr = S_OK;
 	CComPtr< IContextMenu > pContextMenu1;
 	CShellList oItemIDListList( oFiles );
-	if ( oItemIDListList.GetMenu( hwnd, (void**)&pContextMenu1 ) )
+	oItemIDListList.GetMenu( hwnd, (void**)&pContextMenu1 );
+	if ( pContextMenu1 )
 	{
-		{
-			CWaitCursor wc;
-			hr = SafeQueryContextMenu( pContextMenu1, hSubMenu, 0,
-				ID_SHELL_MENU_MIN, ID_SHELL_MENU_MAX, CMF_NORMAL | CMF_EXPLORE );
-		}
-		if ( SUCCEEDED( hr ) )
+		CWaitCursor wc;
+		hr = SafeQueryContextMenu( pContextMenu1, hSubMenu, 0,
+			ID_SHELL_MENU_MIN, ID_SHELL_MENU_MAX, CMF_NORMAL | CMF_EXPLORE );
+	}
+	if ( SUCCEEDED( hr ) )
+	{
+		if ( pContextMenu1 )
 		{
 			hr = pContextMenu1.QueryInterface( &m_pContextMenu2 );
 			hr = pContextMenu1.QueryInterface( &m_pContextMenu3 );
-
-			::SetForegroundWindow( hwnd );
-			UINT_PTR nCmd = ::TrackPopupMenu( hMenu, TPM_RETURNCMD | nFlags,
-				point.x, point.y, 0, hwnd, NULL );
-			::PostMessage( hwnd, WM_NULL, 0, 0 );
-
-			// If a command was selected from the shell menu, execute it.
-			if ( nCmd >= ID_SHELL_MENU_MIN && nCmd <= ID_SHELL_MENU_MAX )
-			{
-				CMINVOKECOMMANDINFOEX ici = {};
-				ici.cbSize = sizeof( CMINVOKECOMMANDINFOEX );
-				ici.fMask = CMIC_MASK_ASYNCOK | CMIC_MASK_NOZONECHECKS | CMIC_MASK_FLAG_LOG_USAGE;
-				ici.hwnd = hwnd;
-				ici.lpVerb = reinterpret_cast< LPCSTR >( nCmd - ID_SHELL_MENU_MIN );
-				ici.lpVerbW = reinterpret_cast< LPCWSTR >( nCmd - ID_SHELL_MENU_MIN );
-				ici.nShow = SW_SHOWNORMAL;
-				pContextMenu1->InvokeCommand( (CMINVOKECOMMANDINFO*)&ici );
-			}
-			else
-			{
-				// Emulate normal message handling
-				::PostMessage( hwnd, WM_COMMAND, nCmd, 0 );
-			}
-
-			m_pContextMenu3.Release();
-			m_pContextMenu2.Release();
 		}
-		CComPtr< IContextMenu > pContextMenuCache;
-		pContextMenuCache = m_pContextMenuCache;
-		m_pContextMenuCache = pContextMenu1;
 
-		// TODO: Find why sometimes raza crashes inside Windows Shell SetSite() function
-		SafeRelease( pContextMenuCache );
+		::SetForegroundWindow( hwnd );
+		UINT_PTR nCmd = ::TrackPopupMenu( hMenu, TPM_RETURNCMD | nFlags,
+			point.x, point.y, 0, hwnd, NULL );
+		::PostMessage( hwnd, WM_NULL, 0, 0 );
+
+		// If a command was selected from the shell menu, execute it.
+		if ( pContextMenu1 && nCmd >= ID_SHELL_MENU_MIN && nCmd <= ID_SHELL_MENU_MAX )
+		{
+			CMINVOKECOMMANDINFOEX ici = {};
+			ici.cbSize = sizeof( CMINVOKECOMMANDINFOEX );
+			ici.fMask = CMIC_MASK_ASYNCOK | CMIC_MASK_NOZONECHECKS | CMIC_MASK_FLAG_LOG_USAGE;
+			ici.hwnd = hwnd;
+			ici.lpVerb = reinterpret_cast< LPCSTR >( nCmd - ID_SHELL_MENU_MIN );
+			ici.lpVerbW = reinterpret_cast< LPCWSTR >( nCmd - ID_SHELL_MENU_MIN );
+			ici.nShow = SW_SHOWNORMAL;
+			pContextMenu1->InvokeCommand( (CMINVOKECOMMANDINFO*)&ici );
+		}
+		else
+		{
+			// Emulate normal message handling
+			::PostMessage( hwnd, WM_COMMAND, nCmd, 0 );
+		}
+
+		m_pContextMenu3.Release();
+		m_pContextMenu2.Release();
 	}
+	CComPtr< IContextMenu > pContextMenuCache;
+	pContextMenuCache = m_pContextMenuCache;
+	m_pContextMenuCache = pContextMenu1;
+
+	// TODO: Find why sometimes raza crashes inside Windows Shell SetSite() function
+	SafeRelease( pContextMenuCache );
 }
 
 //////////////////////////////////////////////////////////////////////
