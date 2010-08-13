@@ -690,7 +690,7 @@ CCollectionFile* CAlbumFolder::GetCollection()
 }
 
 //////////////////////////////////////////////////////////////////////
-// CAlbumFolder organising
+// CAlbumFolder organizing
 
 BOOL CAlbumFolder::OrganiseFile(CLibraryFile* pFile)
 {
@@ -903,77 +903,83 @@ BOOL CAlbumFolder::OrganiseFile(CLibraryFile* pFile)
 		CXMLNode::UniformString( strSeries );
 		if ( strSeries.IsEmpty() )
 		{
-			using namespace regex;
-			try
+			CString sFileName = (LPCTSTR)pFile->m_sName;
+			CXMLNode::UniformString( sFileName );
+
+			std::vector<std::wstring> results;
+			
+			LPTSTR szResults = NULL;
+			size_t nCount = RegExp::Split( _T("(.*)(\\bse?a?s?o?n?)\\s*([0-9]+)\\s*(ep?i?s?o?d?e?)\\s*([0-9]+)[^0-9]+"),
+				sFileName, &szResults );
+			LPCTSTR p = szResults;
+			for ( size_t i = 0; i < nCount; ++i )
 			{
-				const rpattern firstPattern( L"(.*)(\\bse?a?s?o?n?)\\s*([0-9]+)\\s*(ep?i?s?o?d?e?)\\s*([0-9]+)[^0-9]+",
-											 NOCASE, MODE_SAFE );
-				const rpattern secondPattern( L"(.*[^0-9]+\\b)([0-9]+)\\s*[xX]\\s*([0-9]+)[^0-9]+", NOFLAGS, MODE_SAFE );
+				results.push_back( p );
+				p += lstrlen( p ) + 1;
+			}
+			GlobalFree( szResults );
 
-				split_results splitResults;
-
-				CString strNormalizedFileName = (LPCTSTR)pFile->m_sName;
-				CXMLNode::UniformString( strNormalizedFileName );
-				std::wstring sFileName( strNormalizedFileName );
-
-				size_t nCount = firstPattern.split( sFileName, splitResults, 0 );
-				std::vector<std::wstring> results = splitResults.strings();
-				if ( nCount >= 6 )
+			if ( nCount >= 6 )
+			{
+				LPCTSTR szSeason = _tcsistr( L"season", results[2].c_str() );
+				LPCTSTR szEpisode = _tcsistr( L"episode", results[4].c_str() );
+				if ( szSeason && szEpisode &&
+					_tcsicmp( szSeason, L"season" ) == 0 &&
+					_tcsicmp( szEpisode, L"episode" ) == 0 )
 				{
-					LPCTSTR szSeason = _tcsistr( L"season", results[2].c_str() );
-					LPCTSTR szEpisode = _tcsistr( L"episode", results[4].c_str() );
-					if ( szSeason && szEpisode &&
-						_tcsicmp( szSeason, L"season" ) == 0 &&
-						_tcsicmp( szEpisode, L"episode" ) == 0 )
-					{
-						std::vector<std::wstring>::iterator it =
-							std::find( results.begin(), results.end(), results[2] );
-						results.erase( it );
-						it = std::find( results.begin(), results.end(), results[3] );
-						results.erase( it );
-						nCount -= 2;
-					}
-					else
-						nCount = 0;
+					std::vector<std::wstring>::iterator it =
+						std::find( results.begin(), results.end(), results[2].c_str() );
+					results.erase( it );
+					it = std::find( results.begin(), results.end(), results[3].c_str() );
+					results.erase( it );
+					nCount -= 2;
 				}
 				else
 					nCount = 0;
+			}
+			else
+				nCount = 0;
 
-				if ( nCount < 4 && Settings.Library.SmartSeriesDetection )
+			if ( nCount < 4 && Settings.Library.SmartSeriesDetection )
+			{
+				nCount = RegExp::Split( _T("(.*[^0-9]+\\b)([0-9]+)\\s*[xX]\\s*([0-9]+)[^0-9]+"),
+					sFileName, &szResults );
+				LPCTSTR p = szResults;
+				for ( size_t i = 0; i < nCount; ++i )
 				{
-					nCount = secondPattern.split( sFileName, splitResults, 0 );
-					results = splitResults.strings();
+					results.push_back( p );
+					p += lstrlen( p ) + 1;
 				}
+				GlobalFree( szResults );
+			}
 
-				if ( nCount >= 4 )
-				{
-					CString strTemp( results[1].c_str() );
-					strTemp.TrimRight( L"- " );
+			if ( nCount >= 4 )
+			{
+				CString strTemp( results[1].c_str() );
+				strTemp.TrimRight( L"- " );
 
-					if ( strTemp.IsEmpty() )
-						return FALSE;
-
-					pFile->m_pMetadata->AddAttribute( _T("series"), strTemp );
-					strSeries = strTemp;
-
-					CXMLAttribute* pAttribute = pFile->m_pMetadata->GetAttribute( _T("seriesnumber") );
-					if ( pAttribute == NULL )
-					{
-						pFile->m_pMetadata->AddAttribute( _T("seriesnumber"), results[2].c_str() );
-					}
-
-					pAttribute = pFile->m_pMetadata->GetAttribute( _T("episodenumber") );
-					if ( pAttribute == NULL )
-					{
-						pFile->m_pMetadata->AddAttribute( _T("episodenumber"), results[3].c_str() );
-					}
-				}
-				else
-				{
+				if ( strTemp.IsEmpty() )
 					return FALSE;
+
+				pFile->m_pMetadata->AddAttribute( _T("series"), strTemp );
+				strSeries = strTemp;
+
+				CXMLAttribute* pAttribute = pFile->m_pMetadata->GetAttribute( _T("seriesnumber") );
+				if ( pAttribute == NULL )
+				{
+					pFile->m_pMetadata->AddAttribute( _T("seriesnumber"), results[2].c_str() );
+				}
+
+				pAttribute = pFile->m_pMetadata->GetAttribute( _T("episodenumber") );
+				if ( pAttribute == NULL )
+				{
+					pFile->m_pMetadata->AddAttribute( _T("episodenumber"), results[3].c_str() );
 				}
 			}
-			catch (...)	{ return FALSE; };
+			else
+			{
+				return FALSE;
+			}
 		}
 
 		for ( POSITION pos = GetFolderIterator() ; pos ; )

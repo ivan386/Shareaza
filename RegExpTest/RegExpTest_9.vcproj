@@ -94,6 +94,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="copy /b /y &quot;..\RegExp\$(OutDir)\RegExp.dll&quot; &quot;$(TargetDir)&quot;"
 			/>
 		</Configuration>
 		<Configuration
@@ -177,6 +178,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="copy /b /y &quot;..\RegExp\$(OutDir)\RegExp.dll&quot; &quot;$(TargetDir)&quot;"
 			/>
 		</Configuration>
 	</Configurations>
@@ -188,10 +190,6 @@
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
-			<File
-				RelativePath="..\Shareaza\RegExp\regexpr2.cpp"
-				>
-			</File>
 			<File
 				RelativePath=".\RegExpTest.cpp"
 				>
@@ -220,20 +218,12 @@
 					/>
 				</FileConfiguration>
 			</File>
-			<File
-				RelativePath="..\Shareaza\RegExp\syntax2.cpp"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
-			<File
-				RelativePath="..\Shareaza\RegExp\regexpr2.h"
-				>
-			</File>
 			<File
 				RelativePath=".\RegExpTest.h"
 				>
@@ -243,23 +233,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\Shareaza\RegExp\reimpl2.h"
-				>
-			</File>
-			<File
 				RelativePath=".\Resource.h"
 				>
 			</File>
 			<File
-				RelativePath="..\Shareaza\RegExp\restack.h"
-				>
-			</File>
-			<File
 				RelativePath=".\stdafx.h"
-				>
-			</File>
-			<File
-				RelativePath="..\Shareaza\RegExp\syntax2.h"
 				>
 			</File>
 			<File

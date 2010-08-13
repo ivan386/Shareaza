@@ -7,6 +7,8 @@
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
 #endif
 
 CRegExpDlg::CRegExpDlg(CWnd* pParent /*=NULL*/)
@@ -89,32 +91,28 @@ void CRegExpDlg::DoIt()
 {
 	try
 	{
-		const std::wstring exp( (LPCTSTR)m_strRegExp );
-		const std::wstring input( (LPCTSTR)m_strInput );
+		CString msg;
 
-		const regex::rpattern pat( exp, regex::NOCASE, regex::MODE_SAFE );
-
-		regex::match_results res1;
-		regex::rpattern::backref_type matches = pat.match( input, res1 );
-		if ( matches.matched )
+		if ( RegExp::Match( m_strRegExp, m_strInput ) )
 			m_oResult.AddString( _T("Matches.") );
 		else
 			m_oResult.AddString( _T("No matches.") );
 
-		regex::split_results res2;
-		const size_t nCount = pat.split( input, res2 );
+		LPTSTR szResult = NULL;
+		size_t nCount = RegExp::Split( m_strRegExp, m_strInput, &szResult );
 		if ( nCount )
 		{
-			m_oResult.AddString( _T("Splitted strings:") );
-			int n = 1;
-			const std::vector< std::wstring > str = res2.strings();
-			for ( std::vector< std::wstring >::const_iterator i = str.begin();
-				i != str.end(); ++i, ++n )
+			msg.Format( _T("Splitted on %u strings:"), nCount );
+			m_oResult.AddString( msg );
+
+			LPCTSTR p = szResult;
+			for ( size_t i = 0; i < nCount; ++i, p += lstrlen( p ) + 1 )
 			{
-				CString msg;
-				msg.Format( _T("%d. %s"), n, (*i).c_str() );
+				msg.Format( _T("%u. \"%s\""), i, p );
 				m_oResult.AddString( msg );
 			}
+
+			GlobalFree( szResult );
 		}
 		else
 			m_oResult.AddString( _T("No splitted strings.") );

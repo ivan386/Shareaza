@@ -200,8 +200,6 @@
 
 #include <zlib.h>
 
-#include "RegExp/regexpr2.h"
-
 #include "MinMax.hpp"
 
 // Work-around for VC9 where a (pop) is ifdef'd out in stdio.h
@@ -224,6 +222,8 @@ using augment::IUnknownImplementation;
 
 // GeoIP http://geolite.maxmind.com/
 #include "../GeoIP/GeoIP.h"
+
+#include "../RegExp/RegExp.h"
 
 typedef CString StringType;
 

@@ -17,6 +17,8 @@ copy /b /y "..\zlib\%1\%2\zlibwapi.dll" "%1\%2\"
 
 copy /b /y "..\HashLib\%1\%2\HashLib.dll" "%1\%2\"
 
+copy /b /y "..\RegExp\%1\%2\RegExp.dll" "%1\%2\"
+
 copy /b /y "..\GeoIP\%1\%2\GeoIP.dll" "%1\%2\"
 copy /b /y "..\GeoIP\GeoIP.dat" "%1\%2\"
 

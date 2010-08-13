@@ -37,7 +37,6 @@
 #include "Transfers.h"
 #include "XML.h"
 #include "Download.h"
-
 #include "CtrlMatch.h"
 #include "LiveList.h"
 #include "ResultFilters.h"
@@ -903,20 +902,8 @@ BOOL CMatchList::FilterHit(CQueryHit* pHit)
 
 	if ( m_bRegExp && m_pszRegexPattern )
 	{
-		using namespace regex;
-		try
-		{
-			const rpattern regExpPattern( (LPCTSTR)m_pszRegexPattern, NOCASE, MODE_SAFE );
-			match_results results;
-			std::wstring strTemp( pHit->m_sName, pHit->m_sName.GetLength() );
-			rpattern::backref_type matches = regExpPattern.match( strTemp, results );
-			if ( matches.matched )
-				return FALSE;
-		}
-		catch (...)
-		{
-			theApp.Message( MSG_DEBUG, L"Invalid regexp filter: \"%s\". Ignoring.", (LPCTSTR)m_pszRegexPattern );
-		}
+		if ( RegExp::Match( m_pszRegexPattern, pHit->m_sName ) )
+			return FALSE;
 	}
 
 	if ( ( m_bFilterBusy && pHit->m_bBusy == TRI_TRUE ) ||

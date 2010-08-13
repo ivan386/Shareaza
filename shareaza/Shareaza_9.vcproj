@@ -2034,18 +2034,6 @@
 					>
 				</File>
 			</Filter>
-			<Filter
-				Name="RegExp"
-				>
-				<File
-					RelativePath="RegExp\regexpr2.cpp"
-					>
-				</File>
-				<File
-					RelativePath="RegExp\syntax2.cpp"
-					>
-				</File>
-			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -3606,26 +3594,6 @@
 						>
 					</File>
 				</Filter>
-			</Filter>
-			<Filter
-				Name="RegExp"
-				>
-				<File
-					RelativePath="RegExp\regexpr2.h"
-					>
-				</File>
-				<File
-					RelativePath="RegExp\reimpl2.h"
-					>
-				</File>
-				<File
-					RelativePath="RegExp\restack.h"
-					>
-				</File>
-				<File
-					RelativePath="RegExp\syntax2.h"
-					>
-				</File>
 			</Filter>
 		</Filter>
 		<Filter

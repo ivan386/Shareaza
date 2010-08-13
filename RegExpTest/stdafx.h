@@ -40,6 +40,4 @@
 #endif
 #endif
 
-#include <algorithm>
-
-#include "regexpr2.h"
+#include "..\regexp\regexp.h"

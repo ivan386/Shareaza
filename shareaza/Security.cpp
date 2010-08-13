@@ -1092,18 +1092,7 @@ BOOL CSecureRule::Match(CQuerySearch::const_iterator itStart,
 
 		if ( strFilter.GetLength() )
 		{
-			try
-			{
-				regex::rpattern regExpPattern( (LPCTSTR)strFilter,
-					regex::NOCASE, regex::MODE_SAFE );
-				regex::match_results results;
-				regex::rpattern::backref_type matches = regExpPattern.match(
-					std::wstring( pszContent ), results );
-				return ( matches.matched ? TRUE : FALSE );
-			}
-			catch (...)
-			{
-			}
+			return RegExp::Match( strFilter, pszContent );
 		}
 
 		theApp.Message( MSG_DEBUG, L"Invalid RegExp filter: \"%s\". Ignoring.", m_pContent );
