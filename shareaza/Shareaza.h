@@ -153,9 +153,9 @@ public:
 	static BOOL			OpenInternetShortcut(LPCTSTR lpszFileName, BOOL bDoIt);
 	// Open .torrent file
 	static BOOL			OpenTorrent(LPCTSTR lpszFileName, BOOL bDoIt);
-	// Open .co, .collection or .emulecollection file
+	// Open Shareaza, eMule or DC++ collection file
 	static BOOL			OpenCollection(LPCTSTR lpszFileName, BOOL bDoIt);
-	// Open url
+	// Open URL
 	static BOOL			OpenURL(LPCTSTR lpszFileName, BOOL bDoIt, BOOL bSilent = FALSE);
 
 	CString				GetWindowsFolder() const;

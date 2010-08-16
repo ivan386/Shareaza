@@ -180,7 +180,8 @@ bool CLibraryBuilderInternals::ExtractMetadata(DWORD nIndex, const CString& strP
 	}
 	else if ( strType == _T(".co") ||
 		strType == _T(".collection") ||
-		strType == _T(".emulecollection") )
+		strType == _T(".emulecollection") ||
+		strType == _T(".bz2") )
 	{
 		return ReadCollection( nIndex, strPath );
 	}

@@ -61,6 +61,7 @@ public:
 	DWORD	AddBuffer(CBuffer* pBuffer, const size_t nLength);						// Copy all or part of the data in another CBuffer object into this one
 	bool	EnsureBuffer(const size_t nLength) throw();								// Tell the buffer to prepare to recieve this number of additional bytes
 	void	AddReversed(const void* pData, const size_t nLength);					// Add data to this buffer, but with the bytes in reverse order
+	void	Attach(CBuffer* pBuffer);												// Get ownership of another CBuffer object data
 
 	// Convert Unicode text to ASCII and add it to the buffer
 	void	Print(const LPCWSTR pszText, const size_t nLength, const UINT nCodePage = CP_ACP);
@@ -91,6 +92,11 @@ public:
 	void	InflateStreamCleanup(z_streamp& pStream) const;			// Stop stream decompression and cleanup
 	BOOL	Ungzip();												// Delete the gzip header and then remove the compression
 #endif // ZLIB_H
+
+	// Use the buffer with the BZLib compression library
+#ifdef _BZLIB_H
+	BOOL	UnBZip();												// Uncompress buffer in-place using BZLib
+#endif // _BZLIB_H
 
 	// Read and write a DIME message in the buffer
 	void	WriteDIME(DWORD nFlags, LPCSTR pszID, size_t nIDLength, LPCSTR pszType, size_t nTypeLength, LPCVOID pBody, size_t nBody);

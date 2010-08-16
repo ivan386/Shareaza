@@ -646,22 +646,24 @@ CDocument* CShareazaApp::OpenDocumentFile(LPCTSTR lpszFileName)
 
 BOOL CShareazaApp::Open(LPCTSTR lpszFileName, BOOL bDoIt)
 {
-	int nLength = lstrlen( lpszFileName );
-	if ( nLength > 8 && ! lstrcmpi( lpszFileName + nLength - 8, _T(".torrent") ) )
+	int nLength = _tcslen( lpszFileName );
+	if (      nLength > 8  && ! _tcsicmp( lpszFileName + nLength - 8,  _T(".torrent") ) )
 		return OpenTorrent( lpszFileName, bDoIt );
-	else if ( nLength > 3 && ! lstrcmpi( lpszFileName + nLength - 3, _T(".co") ) )
+	else if ( nLength > 3  && ! _tcsicmp( lpszFileName + nLength - 3,  _T(".co") ) )
 		return OpenCollection( lpszFileName, bDoIt );
-	else if ( nLength > 11 && ! lstrcmpi( lpszFileName + nLength - 11, _T(".collection") ) )
+	else if ( nLength > 11 && ! _tcsicmp( lpszFileName + nLength - 11, _T(".collection") ) )
 		return OpenCollection( lpszFileName, bDoIt );
-	else if ( nLength > 16 && ! lstrcmpi( lpszFileName + nLength - 16, _T(".emulecollection") ) )
+	else if ( nLength > 16 && ! _tcsicmp( lpszFileName + nLength - 16, _T(".emulecollection") ) )
 		return OpenCollection( lpszFileName, bDoIt );
-	else if ( nLength > 4 && ! lstrcmpi( lpszFileName + nLength - 4, _T(".url") ) )
+	else if ( nLength > 8  && ! _tcsicmp( lpszFileName + nLength - 8,  _T(".xml.bz2") ) )
+		return OpenCollection( lpszFileName, bDoIt );
+	else if ( nLength > 4  && ! _tcsicmp( lpszFileName + nLength - 4,  _T(".url") ) )
 		return OpenInternetShortcut( lpszFileName, bDoIt );
-	else if ( nLength > 4 && ! lstrcmpi( lpszFileName + nLength - 4, _T(".met") ) )
+	else if ( nLength > 4  && ! _tcsicmp( lpszFileName + nLength - 4,  _T(".met") ) )
 		return OpenMET( lpszFileName, bDoIt );
-	else if ( nLength > 4 && ! lstrcmpi( lpszFileName + nLength - 4, _T(".dat") ) )
+	else if ( nLength > 4  && ! _tcsicmp( lpszFileName + nLength - 4,  _T(".dat") ) )
 		return OpenMET( lpszFileName, bDoIt );
-	else if ( nLength > 4 && ! lstrcmpi( lpszFileName + nLength - 4, _T(".lnk") ) )
+	else if ( nLength > 4  && ! _tcsicmp( lpszFileName + nLength - 4,  _T(".lnk") ) )
 		return OpenShellShortcut( lpszFileName, bDoIt );
 	else
 		return OpenURL( lpszFileName, bDoIt );
@@ -736,7 +738,9 @@ BOOL CShareazaApp::OpenURL(LPCTSTR lpszFileName, BOOL bDoIt, BOOL bSilent)
 		if ( pURL->Parse( lpszFileName ) )
 		{
 			if ( bDoIt )
+			{
 				PostMainWndMessage( WM_URL, (WPARAM)pURL.release() );
+			}
 			return TRUE;
 		}
 	}

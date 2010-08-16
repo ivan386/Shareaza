@@ -198,7 +198,8 @@
 // Standard headers
 //
 
-#include <zlib.h>
+#include "../zlib/zlib.h"
+#include "../bzlib/bzlib.h"
 
 #include "MinMax.hpp"
 

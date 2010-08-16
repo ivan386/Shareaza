@@ -102,6 +102,9 @@ Source: "setup\builds\RestoreSettings.bat"; DestDir: "{app}"; DestName: "Restore
 ; ZLib
 Source: "zlib\{#PlatformName}\{#ConfigurationName}\zlibwapi.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 
+; BZLib
+Source: "bzlib\{#PlatformName}\{#ConfigurationName}\bzlib.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+
 ; BugTrap
 Source: "BugTrap\{#PlatformName}\{#ConfigurationName}\BugTrap.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 #if PlatformName == "Win32"

@@ -1,7 +1,7 @@
 //
 // DDEServer.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -243,19 +243,7 @@ BOOL CDDEServer::Execute(LPCTSTR pszTopic, LPCTSTR pszMessage)
 	}
 	else if ( _tcscmp( pszTopic, _T("RAZAFORMAT") ) == 0 )
 	{
-		LPCTSTR pszType = PathFindExtension( pszMessage );
-		if ( _tcsicmp( pszType, _T(".torrent") ) == 0 )
-		{
-			return CShareazaApp::OpenTorrent( pszMessage, TRUE );
-		}
-		else if ( _tcsicmp( pszType, _T(".co") ) == 0 ||
-				  _tcsicmp( pszType, _T(".collection") ) == 0 ||
-				  _tcsicmp( pszType, _T(".emulecollection") ) == 0 )
-		{
-			return CShareazaApp::OpenCollection( pszMessage, TRUE );
-		}
-		else
-			theApp.Message( MSG_ERROR, _T("Received a file with a unknown extension: %s"), pszType );
+		return CShareazaApp::Open( pszMessage, TRUE );
 	}
 
 	return FALSE;

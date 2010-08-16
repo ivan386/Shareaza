@@ -1,7 +1,7 @@
 //
 // CollectionFile.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -67,7 +67,7 @@ public:
 
 // Operations
 public:
-	BOOL		Open(LPCTSTR pszFile);
+	BOOL		Open(LPCTSTR lpszFileName);
 	void		Close();
 	void		Render(CString& strBuffer) const; // Render file list as HTML
 
@@ -78,6 +78,8 @@ public:
 protected:
 	BOOL		LoadShareaza(LPCTSTR pszFile);	// Load zipped Shareaza collection
 	BOOL		LoadEMule(LPCTSTR pszFile);		// Load binary eMule collection
+	BOOL		LoadDC(LPCTSTR pszFile);		// Load DC++ file listing
+	void		LoadDC(CXMLElement* pRoot);		// Load DC++ file listing
 	BOOL		LoadText(LPCTSTR pszFile);		// Load simple text file with links
 	static CXMLElement* CloneMetadata(CXMLElement* pMetadata);
 

@@ -154,6 +154,22 @@ DWORD CBuffer::AddBuffer(CBuffer* pBuffer, const size_t nLength)
 	}
 }
 
+void CBuffer::Attach(CBuffer* pBuffer)
+{
+	ASSERT( pBuffer );
+	if ( pBuffer == NULL ) return;
+
+	if ( m_pBuffer ) free( m_pBuffer );
+	m_pBuffer = pBuffer->m_pBuffer;
+	pBuffer->m_pBuffer = NULL;
+
+	m_nBuffer = pBuffer->m_nBuffer;
+	pBuffer->m_nBuffer = 0;
+
+	m_nLength = pBuffer->m_nLength;
+	pBuffer->m_nLength = 0;
+}
+
 // Takes a pointer to some memory, and the number of bytes we can read there
 // Adds them to this buffer, except in reverse order
 void CBuffer::AddReversed(const void *pData, const size_t nLength)
@@ -757,6 +773,42 @@ void CBuffer::InflateStreamCleanup( z_streamp& pStream ) const
 }
 
 #endif // ZLIB_H
+
+#ifdef _BZLIB_H
+
+BOOL CBuffer::UnBZip()
+{
+	// Uncompress to temporary buffer first
+	CBuffer pOutBuf;
+	UINT nOutSize = m_nLength * 3;
+	for (;;)
+	{
+		if ( ! pOutBuf.EnsureBuffer( nOutSize ) )
+			// Out of memory
+			return FALSE;
+
+		int err = BZ2_bzBuffToBuffDecompress( (char*)pOutBuf.m_pBuffer, &nOutSize,
+			(char*)m_pBuffer, m_nLength, 0, 0 );
+
+		if ( err == BZ_OK )
+		{
+			pOutBuf.m_nLength = nOutSize;
+			break;
+		}
+		else if ( err == BZ_OUTBUFF_FULL )
+			// Insufficient output buffer 
+			nOutSize *= 2;
+		else
+			// Decompression error
+			return FALSE;
+	}
+
+	Attach( &pOutBuf );
+
+	return TRUE;
+}
+
+#endif // _BZLIB_H
 
 //////////////////////////////////////////////////////////////////////
 // CBuffer reverse buffer
