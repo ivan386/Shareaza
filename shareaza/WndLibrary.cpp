@@ -1,7 +1,7 @@
 //
 // WndLibrary.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -230,6 +230,8 @@ BOOL CLibraryWnd::OnCollection(const CString& sPath)
 
 					if ( CLibraryFile* pTargetFile1 = LibraryMaps.LookupFileByPath( strTarget, FALSE, TRUE ) )
 					{
+						//Re-mount the collection
+						LibraryFolders.MountCollection( pTargetFile1->m_oSHA1, &pCollection );
 						pFolder = LibraryFolders.GetCollection( pTargetFile1->m_oSHA1 );
 					}
 				}
