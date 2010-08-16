@@ -1,7 +1,7 @@
 //
 // DlgURLAction.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -56,21 +56,22 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CURLActionDlg construction
 
-CURLActionDlg::CURLActionDlg(CWnd* pParent, CShareazaURL* pURL, BOOL bMultiple)
-:	CSkinDialog(CURLActionDlg::IDD, pParent)
+CURLActionDlg::CURLActionDlg(CShareazaURL* pURL)
+:	CSkinDialog( CURLActionDlg::IDD )
 ,	m_bNewWindow	( FALSE )
 ,	m_bAlwaysOpen	( FALSE )
-,	m_bMultiple		( bMultiple )
 {
-	m_pURLs.AddTail( pURL );
+	if ( pURL )
+	{
+		m_pURL = pURL;
+		Create( CURLActionDlg::IDD );
+		ShowWindow( SW_SHOW );
+	}
 }
 
 CURLActionDlg::~CURLActionDlg()
 {
-	for ( POSITION pos = m_pURLs.GetHeadPosition() ; pos ; )
-	{
-		delete m_pURLs.GetNext( pos );
-	}
+	delete m_pURL;
 }
 
 void CURLActionDlg::DoDataExchange(CDataExchange* pDX)
@@ -106,63 +107,16 @@ BOOL CURLActionDlg::OnInitDialog()
 	m_bAlwaysOpen	= Settings.General.AlwaysOpenURLs;
 	m_bNewWindow	= Settings.Downloads.ShowMonitorURLs;
 
-	Update();
-
-	if ( m_bAlwaysOpen )
-	{
-		if ( m_wndDownload.IsWindowEnabled() )
-			PostMessage( WM_COMMAND, IDC_URL_DOWNLOAD );
-		else
-			PostMessage( WM_COMMAND, IDC_URL_SEARCH );
-	}
-	else
-	{
-		m_bMultiple = FALSE;
-
-		if ( CWnd* pWnd = AfxGetMainWnd() )
-		{
-			if ( pWnd->IsWindowVisible() && ! pWnd->IsIconic() )
-			{
-				pWnd->BringWindowToTop();
-				pWnd->SetForegroundWindow();
-			}
-		}
-	}
-
-	return FALSE;
-}
-
-void CURLActionDlg::AddURL(CShareazaURL* pURL)
-{
-	if ( IsWindowVisible() && m_pURLs.GetCount() > 0 )
-	{
-		CShareazaURL* pFirst = m_pURLs.GetHead();
-
-		if ( pFirst->m_nAction == pURL->m_nAction )
-		{
-			m_pURLs.AddTail( pURL );
-			Update();
-			return;
-		}
-	}
-
-	delete pURL;
-}
-
-void CURLActionDlg::Update()
-{
-	CShareazaURL* pURL = m_pURLs.GetHead();
-
 	CString strMessage;
 
-	if ( pURL->m_nAction == CShareazaURL::uriHost ||
-		 pURL->m_nAction == CShareazaURL::uriDonkeyServer )
+	if ( m_pURL->m_nAction == CShareazaURL::uriHost ||
+		 m_pURL->m_nAction == CShareazaURL::uriDonkeyServer )
 	{
 		LoadString(m_sNameTitle, IDS_URL_HOST );
 		LoadString(m_sHashTitle, IDS_URL_PORT );
 
-		m_sNameValue = pURL->m_sName;
-		m_sHashValue.Format( _T("%lu"), pURL->m_nPort );
+		m_sNameValue = m_pURL->m_sName;
+		m_sHashValue.Format( _T("%lu"), m_pURL->m_nPort );
 
 		m_wndMessage2.ShowWindow( SW_SHOW );
 		m_wndNewWindow.ShowWindow( SW_HIDE );
@@ -171,7 +125,7 @@ void CURLActionDlg::Update()
 		m_wndDownload.SetWindowText( strMessage );
 		m_wndDownload.SetFocus();
 
-		if ( pURL->m_nAction == CShareazaURL::uriHost )
+		if ( m_pURL->m_nAction == CShareazaURL::uriHost )
 		{
 			LoadString(strMessage, IDS_URL_BROWSE );
 			m_wndSearch.SetWindowText( strMessage );
@@ -179,13 +133,13 @@ void CURLActionDlg::Update()
 		else
 			m_wndSearch.ShowWindow( SW_HIDE );
 	}
-	else if ( pURL->m_nAction == CShareazaURL::uriBrowse )
+	else if ( m_pURL->m_nAction == CShareazaURL::uriBrowse )
 	{
 		LoadString(m_sNameTitle, IDS_URL_HOST );
 		LoadString(m_sHashTitle, IDS_URL_PORT );
 
-		m_sNameValue = pURL->m_sName;
-		m_sHashValue.Format( _T("%lu"), pURL->m_nPort );
+		m_sNameValue = m_pURL->m_sName;
+		m_sHashValue.Format( _T("%lu"), m_pURL->m_nPort );
 
 		m_wndMessage3.ShowWindow( SW_SHOW );
 		m_wndNewWindow.ShowWindow( SW_HIDE );
@@ -196,21 +150,14 @@ void CURLActionDlg::Update()
 		LoadString(strMessage, IDS_URL_CONNECT );
 		m_wndSearch.SetWindowText( strMessage );
 	}
-	else if ( pURL->m_nAction == CShareazaURL::uriDiscovery )
+	else if ( m_pURL->m_nAction == CShareazaURL::uriDiscovery )
 	{
 		LoadString(m_sNameTitle, IDS_URL_URL );
 		LoadString(m_sHashTitle, IDS_URL_TYPE );
 
-		if ( m_pURLs.GetCount() == 1 )
-		{
-			m_sNameValue = pURL->m_sURL;
-		}
-		else
-		{
-			m_sNameValue.Format( _T("%i URL(s)"), m_pURLs.GetCount() );
-		}
+		m_sNameValue = m_pURL->m_sURL;
 
-		switch ( pURL->m_nSize )
+		switch ( m_pURL->m_nSize )
 		{
 		case CDiscoveryService::dsWebCache:
 			m_sHashValue = _T("GWebCache");
@@ -226,18 +173,11 @@ void CURLActionDlg::Update()
 		m_wndSearch.ShowWindow( SW_HIDE );
 		m_wndNewWindow.ShowWindow( SW_HIDE );
 	}
-	else if ( pURL->m_nAction == CShareazaURL::uriSource )
+	else if ( m_pURL->m_nAction == CShareazaURL::uriSource )
 	{
 		LoadString(m_sNameTitle, IDS_URL_URL );
 
-		if ( m_pURLs.GetCount() == 1 )
-		{
-			m_sNameValue = pURL->m_sURL;
-		}
-		else
-		{
-			m_sNameValue.Format( _T("%i URL(s)"), m_pURLs.GetCount() );
-		}
+		m_sNameValue = m_pURL->m_sURL;
 
 		m_wndMessage1.ShowWindow( SW_SHOW );
 		m_wndSearch.ShowWindow( SW_HIDE );
@@ -247,43 +187,43 @@ void CURLActionDlg::Update()
 		LoadString(m_sNameTitle, IDS_URL_FILENAME );
 		m_sHashTitle = _T("URN:");
 
-		if ( m_pURLs.GetCount() > 1 )
+		if ( m_pURL->m_sName.GetLength() )
 		{
-			m_sNameValue.Format( _T("%i file(s)"), m_pURLs.GetCount() );
-		}
-		else if ( pURL->m_sName.GetLength() )
-		{
-			m_sNameValue = pURL->m_sName;
+			m_sNameValue = m_pURL->m_sName;
 
-			if ( pURL->m_bSize )
-				m_sNameValue += _T(" (") + Settings.SmartVolume( pURL->m_nSize ) + _T(")");
+			if ( m_pURL->m_bSize )
+				m_sNameValue += _T(" (") + Settings.SmartVolume( m_pURL->m_nSize ) + _T(")");
 		}
 		else
 		{
 			LoadString(m_sNameValue, IDS_URL_UNSPECIFIED );
 		}
 
-		if ( m_pURLs.GetCount() > 1 )
+		if ( m_pURL->m_oTiger && m_pURL->m_oSHA1 )
 		{
-			m_sHashValue.Format( _T("%i file(s)"), m_pURLs.GetCount() );
+			m_sHashValue = _T("bitprint:")
+						 + m_pURL->m_oSHA1.toString() + _T(".")
+						 + m_pURL->m_oTiger.toString();
 		}
-		else if ( pURL->m_oTiger && pURL->m_oSHA1 )
+		else if ( m_pURL->m_oTiger )
 		{
-			m_sHashValue	= _T("bitprint:")
-							+ pURL->m_oSHA1.toString() + _T(".")
-							+ pURL->m_oTiger.toString();
+			m_sHashValue = m_pURL->m_oTiger.toShortUrn();
 		}
-		else if ( pURL->m_oTiger )
+		else if ( m_pURL->m_oSHA1 )
 		{
-			m_sHashValue = pURL->m_oTiger.toShortUrn();
+			m_sHashValue = m_pURL->m_oSHA1.toShortUrn();
 		}
-		else if ( pURL->m_oSHA1 )
+		else if ( m_pURL->m_oED2K )
 		{
-			m_sHashValue = pURL->m_oSHA1.toShortUrn();
+			m_sHashValue = m_pURL->m_oED2K.toShortUrn();
 		}
-		else if ( pURL->m_oED2K )
+		else if ( m_pURL->m_oMD5 )
 		{
-			m_sHashValue = pURL->m_oED2K.toShortUrn();
+			m_sHashValue = m_pURL->m_oMD5.toShortUrn();
+		}
+		else if ( m_pURL->m_oBTH )
+		{
+			m_sHashValue = m_pURL->m_oBTH.toShortUrn();
 		}
 		else
 		{
@@ -292,11 +232,11 @@ void CURLActionDlg::Update()
 
 		m_wndMessage1.ShowWindow( SW_SHOW );
 
-		if ( pURL->m_nAction == CShareazaURL::uriDownload )
+		if ( m_pURL->m_nAction == CShareazaURL::uriDownload )
 		{
 			m_wndDownload.SetFocus();
 		}
-		else if ( pURL->m_nAction == CShareazaURL::uriSearch )
+		else if ( m_pURL->m_nAction == CShareazaURL::uriSearch )
 		{
 			m_wndDownload.EnableWindow( FALSE );
 			m_wndDownload.ModifyStyle( BS_DEFPUSHBUTTON, 0 );
@@ -307,6 +247,16 @@ void CURLActionDlg::Update()
 	}
 
 	UpdateData( FALSE );
+
+	if ( m_bAlwaysOpen )
+	{
+		if ( m_wndDownload.IsWindowEnabled() )
+			PostMessage( WM_COMMAND, IDC_URL_DOWNLOAD );
+		else
+			PostMessage( WM_COMMAND, IDC_URL_SEARCH );
+	}
+
+	return FALSE;
 }
 
 BOOL CURLActionDlg::PreTranslateMessage(MSG* pMsg)
@@ -332,97 +282,103 @@ void CURLActionDlg::OnUrlDownload()
 	Settings.General.AlwaysOpenURLs		= m_bAlwaysOpen != FALSE;
 	Settings.Downloads.ShowMonitorURLs	= m_bNewWindow != FALSE;
 
-	for ( POSITION pos = m_pURLs.GetHeadPosition() ; pos ; )
+	if ( m_pURL->m_nAction == CShareazaURL::uriDownload ||
+		 m_pURL->m_nAction == CShareazaURL::uriSource )
 	{
-		CShareazaURL* pURL = m_pURLs.GetNext( pos );
-
-		if ( pURL->m_nAction == CShareazaURL::uriDownload ||
-			 pURL->m_nAction == CShareazaURL::uriSource )
+		CExistingFileDlg::Action action = CExistingFileDlg::CheckExisting( m_pURL );
+		if ( action == CExistingFileDlg::Cancel )
 		{
-			CExistingFileDlg::Action action = CExistingFileDlg::CheckExisting( pURL );
-			if ( action == CExistingFileDlg::Cancel )
-				return;
-			else if ( action != CExistingFileDlg::Download )
-				continue;
-
-			CDownload* pDownload = Downloads.Add( *pURL );
-
-			if ( pDownload == NULL )
-				continue;
-
-			if ( ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0 &&
-				! Network.IsWellConnected() )
-			{
-				Network.Connect( TRUE );
-			}
-
-			if ( m_bMultiple == FALSE )
-			{
-				CMainWnd* pMainWnd = (CMainWnd*)AfxGetMainWnd();
-				pMainWnd->m_pWindows.Open( RUNTIME_CLASS(CDownloadsWnd) );
-
-				if ( Settings.Downloads.ShowMonitorURLs && m_pURLs.GetCount() == 1 )
-				{
-					CSingleLock pLock( &Transfers.m_pSection, TRUE );
-					if ( Downloads.Check( pDownload ) ) pDownload->ShowMonitor( &pLock );
-				}
-			}
+			return;
 		}
-		else if ( pURL->m_nAction == CShareazaURL::uriHost )
+		else if ( action != CExistingFileDlg::Download )
 		{
-			Network.ConnectTo( pURL->m_sName, pURL->m_nPort );
+			DestroyWindow();
+			return;
 		}
-		else if ( pURL->m_nAction == CShareazaURL::uriDonkeyServer )
-		{
-			Network.ConnectTo( pURL->m_sName, pURL->m_nPort, PROTOCOL_ED2K );
-		}
-		else if ( pURL->m_nAction == CShareazaURL::uriBrowse )
-		{
-			SOCKADDR_IN pAddress;
 
-			if ( Network.Resolve( pURL->m_sName, pURL->m_nPort, &pAddress ) )
-			{
-				new CBrowseHostWnd( pURL->m_nProtocol, &pAddress );
-			}
-		}
-		else if ( pURL->m_nAction == CShareazaURL::uriDiscovery )
+		CDownload* pDownload = Downloads.Add( *m_pURL );
+
+		if ( pDownload == NULL )
 		{
-			DiscoveryServices.Add( pURL->m_sURL, (int)pURL->m_nSize );
+			DestroyWindow();
+			return;
+		}
+
+		if ( ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0 &&
+			! Network.IsWellConnected() )
+		{
+			Network.Connect( TRUE );
+		}
+
+		CMainWnd* pMainWnd = (CMainWnd*)AfxGetMainWnd();
+		pMainWnd->m_pWindows.Open( RUNTIME_CLASS(CDownloadsWnd) );
+
+		if ( Settings.Downloads.ShowMonitorURLs )
+		{
+			CSingleLock pLock( &Transfers.m_pSection, TRUE );
+			if ( Downloads.Check( pDownload ) )
+				pDownload->ShowMonitor( &pLock );
 		}
 	}
+	else if ( m_pURL->m_nAction == CShareazaURL::uriHost )
+	{
+		Network.ConnectTo( m_pURL->m_sName, m_pURL->m_nPort );
+	}
+	else if ( m_pURL->m_nAction == CShareazaURL::uriDonkeyServer )
+	{
+		Network.ConnectTo( m_pURL->m_sName, m_pURL->m_nPort, PROTOCOL_ED2K );
+	}
+	else if ( m_pURL->m_nAction == CShareazaURL::uriBrowse )
+	{
+		SOCKADDR_IN pAddress;
 
-	CSkinDialog::OnOK();
+		if ( Network.Resolve( m_pURL->m_sName, m_pURL->m_nPort, &pAddress ) )
+		{
+			new CBrowseHostWnd( m_pURL->m_nProtocol, &pAddress );
+		}
+	}
+	else if ( m_pURL->m_nAction == CShareazaURL::uriDiscovery )
+	{
+		DiscoveryServices.Add( m_pURL->m_sURL, (int)m_pURL->m_nSize );
+	}
+
+	DestroyWindow();
 }
 
 void CURLActionDlg::OnUrlSearch()
 {
 	Settings.General.AlwaysOpenURLs = m_bAlwaysOpen != FALSE;
 
-	for ( POSITION pos = m_pURLs.GetHeadPosition() ; pos ; )
+	if ( m_pURL->m_nAction == CShareazaURL::uriHost )
 	{
-		CShareazaURL* pURL = m_pURLs.GetNext( pos );
+		SOCKADDR_IN pAddress;
 
-		if ( pURL->m_nAction == CShareazaURL::uriHost )
+		if ( Network.Resolve( m_pURL->m_sName, m_pURL->m_nPort, &pAddress ) )
 		{
-			SOCKADDR_IN pAddress;
-
-			if ( Network.Resolve( pURL->m_sName, pURL->m_nPort, &pAddress ) )
-			{
-				new CBrowseHostWnd( pURL->m_nProtocol, &pAddress );
-			}
-		}
-		else if ( pURL->m_nAction == CShareazaURL::uriBrowse )
-		{
-			Network.ConnectTo( pURL->m_sName, pURL->m_nPort );
-		}
-		else if (	pURL->m_nAction == CShareazaURL::uriDownload ||
-					pURL->m_nAction == CShareazaURL::uriSearch )
-		{
-			if ( ! Network.IsWellConnected() ) Network.Connect( TRUE );
-
-			new CSearchWnd( pURL->ToQuery() );
+			new CBrowseHostWnd( m_pURL->m_nProtocol, &pAddress );
 		}
 	}
+	else if ( m_pURL->m_nAction == CShareazaURL::uriBrowse )
+	{
+		Network.ConnectTo( m_pURL->m_sName, m_pURL->m_nPort );
+	}
+	else if (	m_pURL->m_nAction == CShareazaURL::uriDownload ||
+				m_pURL->m_nAction == CShareazaURL::uriSearch )
+	{
+		if ( ! Network.IsWellConnected() ) Network.Connect( TRUE );
 
-	CSkinDialog::OnOK();
+		new CSearchWnd( m_pURL->ToQuery() );
+	}
+
+	DestroyWindow();
+}
+
+void CURLActionDlg::OnCancel()
+{
+	DestroyWindow();
+}
+
+void CURLActionDlg::PostNcDestroy()
+{
+	delete this;
 }

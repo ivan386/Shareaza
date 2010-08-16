@@ -1,7 +1,7 @@
 //
 // DlgURLAction.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -31,12 +31,10 @@ class CURLActionDlg : public CSkinDialog
 	DECLARE_DYNAMIC(CURLActionDlg)
 
 public:
-	CURLActionDlg(CWnd* pParent = NULL, CShareazaURL* pURL = NULL, BOOL bMultiple = FALSE);
+	CURLActionDlg(CShareazaURL* pURL);
 	virtual ~CURLActionDlg();
 
 	enum { IDD = IDD_URL_ACTION };
-
-	void	AddURL(CShareazaURL* pURL);
 
 protected:
 	CStatic	m_wndMessage4;
@@ -53,14 +51,13 @@ protected:
 	CString	m_sHashValue;
 	BOOL	m_bNewWindow;
 	BOOL	m_bAlwaysOpen;
-	CList< CShareazaURL* >	m_pURLs;
-	BOOL	m_bMultiple;
-
-	void	Update();
+	CShareazaURL* m_pURL;
 
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	virtual BOOL OnInitDialog();
+	virtual void OnCancel();
+	virtual void PostNcDestroy();
 
 	afx_msg void OnUrlDownload();
 	afx_msg void OnUrlSearch();

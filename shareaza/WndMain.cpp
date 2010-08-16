@@ -293,8 +293,6 @@ CMainWnd::CMainWnd() :
 	m_bTrayUpdate( TRUE ),
 	m_bTimer ( FALSE ),
 	m_pSkin ( NULL ),
-	m_pURLDialog ( NULL ),
-	m_tURLTime ( 0 ),
 	m_nAlpha ( 255 )
 {
 	ZeroMemory( &m_pTray, sizeof( NOTIFYICONDATA ) );
@@ -1206,31 +1204,11 @@ LRESULT CMainWnd::OnWinsock(WPARAM wParam, LPARAM lParam)
 
 LRESULT CMainWnd::OnHandleURL(WPARAM wParam, LPARAM /*lParam*/)
 {
-	CShareazaURL* pURL = (CShareazaURL*)wParam;
+	CWaitCursor wc;
 
-	DWORD tNow = GetTickCount();
-	BOOL bSoon = ( tNow - m_tURLTime < 750 );
-	m_tURLTime = tNow;
+	UpdateWindow();
 
-	if ( IsWindowEnabled() )
-	{
-		m_pURLDialog = new CURLActionDlg( this, pURL, bSoon );
-		m_pURLDialog->DoModal();
-		delete m_pURLDialog;
-		m_pURLDialog = NULL;
-	}
-	else
-	{
-		if ( m_pURLDialog != NULL && bSoon )
-		{
-			m_pURLDialog->AddURL( pURL );
-		}
-		else
-		{
-			theApp.Message( MSG_ERROR, IDS_URL_BUSY );
-			delete pURL;
-		}
-	}
+	new CURLActionDlg( (CShareazaURL*)wParam );
 
 	return 0;
 }

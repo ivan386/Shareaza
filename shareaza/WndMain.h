@@ -89,8 +89,6 @@ protected:
 	NOTIFYICONDATA		m_pTray;				// Tray icon data
 	BOOL				m_bTimer;
 	CString				m_sMsgStatus;
-	CURLActionDlg*		m_pURLDialog;
-	DWORD				m_tURLTime;
 	DWORD				m_nAlpha;				// Main window transparency (0...255)
 	CSkinWindow*		m_pSkin;
 	CBrush				m_brshDockbar;
