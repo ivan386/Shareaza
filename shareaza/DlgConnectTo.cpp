@@ -91,27 +91,7 @@ BOOL CConnectToDlg::OnInitDialog()
 	SelectCaption( this, (int)m_nType );
 	SelectCaption( &m_wndPrompt, (int)m_nType );
 
-	// Load default images
-	CBitmap bmImages;
-	bmImages.LoadBitmap( IDB_PROTOCOLS );
-	if ( Settings.General.LanguageRTL )
-		bmImages.m_hObject = CreateMirroredBitmap( (HBITMAP)bmImages.m_hObject );
-
-	m_pImages.Create( 16, 16, ILC_COLOR32|ILC_MASK, 7, 1 ) ||
-	m_pImages.Create( 16, 16, ILC_COLOR24|ILC_MASK, 7, 1 ) ||
-	m_pImages.Create( 16, 16, ILC_COLOR16|ILC_MASK, 7, 1 );
-	m_pImages.Add( &bmImages, RGB( 0, 255, 0 ) );
-
-	// Replace with the skin images (if fails old images remain)
-	for ( int nImage = 1 ; nImage < 4 ; nImage++ )
-	{
-		HICON hIcon = CoolInterface.ExtractIcon( (UINT)protocolCmdMap[ nImage ].commandID, FALSE );
-		if ( hIcon )
-		{
-			m_pImages.Replace( nImage, hIcon );
-			DestroyIcon( hIcon );
-		}
-	}
+	CoolInterface.LoadProtocolIconsTo( m_gdiProtocols );
 
 	m_wndAdvanced.ShowWindow( ( m_nType != Connect ) ? SW_HIDE : SW_SHOW );
 	m_wndUltrapeer.ShowWindow( ( m_nType != Connect ) ? SW_HIDE : SW_SHOW );
@@ -233,14 +213,7 @@ void CConnectToDlg::OnDrawItem(int /*nIDCtl*/, LPDRAWITEMSTRUCT lpDrawItemStruct
 		? COLOR_HIGHLIGHT : COLOR_WINDOW ) );
 	dc.SetBkMode( TRANSPARENT );
 
-	int nImage = (int)lpDrawItemStruct->itemID;
-
-	if ( Settings.General.LanguageRTL )
-		nImage = m_pImages.GetImageCount() - nImage - 2;
-	else
-		nImage += 1;
-
-	m_pImages.Draw( &dc, nImage, pt,
+	m_gdiProtocols.Draw( &dc, lpDrawItemStruct->itemID + 1, pt,
 		( lpDrawItemStruct->itemState & ODS_SELECTED ) ? ILD_SELECTED : ILD_NORMAL );
 
 	m_wndProtocol.GetLBText( lpDrawItemStruct->itemID, str );

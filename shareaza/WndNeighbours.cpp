@@ -1,7 +1,7 @@
 //
 // WndNeighbours.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -90,7 +90,7 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CNeighboursWnd construction
 
-CNeighboursWnd::CNeighboursWnd() : CPanelWnd( TRUE, TRUE ), m_nProtocolRev( 0 )
+CNeighboursWnd::CNeighboursWnd() : CPanelWnd( TRUE, TRUE )
 {
 	Create( IDR_NEIGHBOURSFRAME );
 }
@@ -116,40 +116,20 @@ int CNeighboursWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndList.SetExtendedStyle(
 		LVS_EX_DOUBLEBUFFER|LVS_EX_FULLROWSELECT|LVS_EX_HEADERDRAGDROP|LVS_EX_LABELTIP|LVS_EX_SUBITEMIMAGES );
 
-	CBitmap bmImages;
-	bmImages.LoadBitmap( IDB_PROTOCOLS );
-	if ( Settings.General.LanguageRTL )
-		bmImages.m_hObject = CreateMirroredBitmap( (HBITMAP)bmImages.m_hObject );
-
-	//Redrawn Protocol Icon Workaround
-	m_gdiImageListFix.Create( 16, 16, ILC_COLOR32|ILC_MASK, 7, 1 ) ||
-	m_gdiImageListFix.Create( 16, 16, ILC_COLOR24|ILC_MASK, 7, 1 ) ||
-	m_gdiImageListFix.Create( 16, 16, ILC_COLOR16|ILC_MASK, 7, 1 );
-	m_gdiImageListFix.Add( &bmImages, RGB( 0, 255, 0 ) );
-
-	m_gdiImageList.Create( 18, 18, ILC_COLOR32|ILC_MASK, 7, 1 ) ||
-	m_gdiImageList.Create( 18, 18, ILC_COLOR24|ILC_MASK, 7, 1 ) ||
-	m_gdiImageList.Create( 18, 18, ILC_COLOR16|ILC_MASK, 7, 1 );
-	m_gdiImageList.Add( &bmImages, RGB( 0, 255, 0 ) );
-
 	// Merge protocols and flags in one image list
+	CoolInterface.LoadProtocolIconsTo( m_gdiImageList, FALSE, 18 );
 	int nImages = m_gdiImageList.GetImageCount();
 	int nFlags = Flags.m_pImage.GetImageCount();
-	m_nProtocolRev = nImages - 1; // save the max index
-
-	m_gdiImageList.SetImageCount( nImages + nFlags );
+	VERIFY( m_gdiImageList.SetImageCount( nImages + nFlags ) );
 	for ( int nFlag = 0 ; nFlag < nFlags ; nFlag++ )
 	{
-		HICON hIcon = Flags.m_pImage.ExtractIcon( nFlag );
-		if ( hIcon )
+		if ( HICON hIcon = Flags.m_pImage.ExtractIcon( nFlag ) )
 		{
-			m_gdiImageList.Replace( nImages + nFlag, hIcon );
+			VERIFY( m_gdiImageList.Replace( nImages + nFlag, hIcon ) != -1 );
 			VERIFY( DestroyIcon( hIcon ) );
 		}
 	}
-
 	m_wndList.SetImageList( &m_gdiImageList, LVSIL_SMALL );
-	bmImages.DeleteObject();
 
 	m_wndList.InsertColumn( 0, _T("Address"), LVCFMT_LEFT, 110, -1 );
 	m_wndList.InsertColumn( 1, _T("Port"), LVCFMT_CENTER, 45, 0 );
@@ -268,7 +248,7 @@ void CNeighboursWnd::Update()
 				}
 
 				pItem->Set( 8, str );
-				pItem->m_nImage = Settings.General.LanguageRTL ? m_nProtocolRev - PROTOCOL_G1 : PROTOCOL_G1;
+				pItem->m_nImage = PROTOCOL_G1;
 			}
 			else if ( pNeighbour->m_nProtocol == PROTOCOL_G2 )
 			{
@@ -304,13 +284,13 @@ void CNeighboursWnd::Update()
 					pItem->Set( 7, _T("?") );
 				}
 
-				pItem->m_nImage = Settings.General.LanguageRTL ? m_nProtocolRev - PROTOCOL_G2 : PROTOCOL_G2;
+				pItem->m_nImage = PROTOCOL_G2;
 			}
 			else if ( pNeighbour->m_nProtocol == PROTOCOL_ED2K )
 			{
 				CEDNeighbour* pED2K = static_cast<CEDNeighbour*>(pNeighbour);
 
-				pItem->m_nImage = Settings.General.LanguageRTL ? m_nProtocolRev - PROTOCOL_ED2K : PROTOCOL_ED2K;
+				pItem->m_nImage = PROTOCOL_ED2K;
 				pItem->Set( 8, _T("eDonkey") );
 				pItem->Set( 10, pED2K->m_sServerName );
 
@@ -336,12 +316,12 @@ void CNeighboursWnd::Update()
 			}
 			else
 			{
-				pItem->m_nImage = Settings.General.LanguageRTL ? m_nProtocolRev : PROTOCOL_NULL;
+				pItem->m_nImage = PROTOCOL_NULL;
 			}
 		}
 		else
 		{
-			pItem->m_nImage = Settings.General.LanguageRTL ? m_nProtocolRev : PROTOCOL_NULL;
+			pItem->m_nImage = PROTOCOL_NULL;
 		}
 
 		if ( pNeighbour->m_pProfile != NULL )
@@ -352,7 +332,7 @@ void CNeighboursWnd::Update()
 		pItem->Set( 11, pNeighbour->m_sCountry );
 		int nFlag = Flags.GetFlagIndex( pNeighbour->m_sCountry );
 		if ( nFlag >= 0 )
-			pItem->SetImage( &m_wndList, (LPARAM)pNeighbour, 11, m_nProtocolRev + nFlag + 1 );
+			pItem->SetImage( &m_wndList, (LPARAM)pNeighbour, 11, PROTOCOL_LAST + nFlag );
 	}
 
 	pLiveList.Apply( &m_wndList, TRUE );
@@ -374,16 +354,19 @@ void CNeighboursWnd::OnSkinChange()
 	Settings.LoadList( _T("CNeighboursWnd"), &m_wndList );
 	Skin.CreateToolBar( _T("CNeighboursWnd"), &m_wndToolBar );
 
-	for ( int nImage = 0 ; nImage < 4 ; nImage++ )
+	CoolInterface.LoadProtocolIconsTo( m_gdiImageList, FALSE, 18 );
+	int nImages = m_gdiImageList.GetImageCount();
+	int nFlags = Flags.m_pImage.GetImageCount();
+	VERIFY( m_gdiImageList.SetImageCount( nImages + nFlags ) );
+	for ( int nFlag = 0 ; nFlag < nFlags ; nFlag++ )
 	{
-		HICON hIcon = CoolInterface.ExtractIcon( (UINT)protocolCmdMap[ nImage ].commandID, FALSE );
-		if ( hIcon )
+		if ( HICON hIcon = Flags.m_pImage.ExtractIcon( nFlag ) )
 		{
-			m_gdiImageList.Replace( Settings.General.LanguageRTL ? m_nProtocolRev - nImage : nImage, hIcon );
-			m_gdiImageListFix.Replace( Settings.General.LanguageRTL ? m_nProtocolRev - nImage : nImage, hIcon );
-			DestroyIcon( hIcon );
+			VERIFY( m_gdiImageList.Replace( nImages + nFlag, hIcon ) != -1 );
+			VERIFY( DestroyIcon( hIcon ) );
 		}
 	}
+	m_wndList.SetImageList( &m_gdiImageList, LVSIL_SMALL );
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -654,7 +637,7 @@ void CNeighboursWnd::OnCustomDrawList(NMHDR* pNMHDR, LRESULT* pResult)
 		LV_ITEM pItem = { LVIF_IMAGE, static_cast< int >( pDraw->nmcd.dwItemSpec ) };
 		m_wndList.GetItem( &pItem );
 
-		int nImage = Settings.General.LanguageRTL ? m_nProtocolRev - pItem.iImage : pItem.iImage;
+		int nImage = pItem.iImage;
 		switch ( nImage )
 		{
 		case PROTOCOL_NULL:
@@ -672,32 +655,6 @@ void CNeighboursWnd::OnCustomDrawList(NMHDR* pNMHDR, LRESULT* pResult)
 		}
 
 		*pResult = CDRF_NOTIFYPOSTPAINT;
-	}
-
-	// Redrawn Protocol Icon Workaround
-	else if ( CDDS_ITEMPOSTPAINT == pDraw->nmcd.dwDrawStage )
-	{
-		LVITEM rItem;
-		int    nItem = static_cast<int>( pDraw->nmcd.dwItemSpec );
-
-		ZeroMemory ( &rItem, sizeof(LVITEM) );
-		rItem.mask  = LVIF_IMAGE | LVIF_STATE;
-		rItem.iItem = nItem;
-		rItem.stateMask = LVIS_SELECTED;
-		m_wndList.GetItem ( &rItem );
-
-		CRect rcIcon;
-		m_wndList.GetItemRect ( nItem, &rcIcon, LVIR_ICON );
-		CDC* pDC = CDC::FromHandle ( pDraw->nmcd.hdc );
-
-		pDC->FillSolidRect( rcIcon.left, rcIcon.top, 18, 18, CoolInterface.m_crWindow );
-
-		if ( rItem.state & LVIS_SELECTED )
-			m_gdiImageListFix.Draw ( pDC, rItem.iImage, rcIcon.TopLeft(), ILD_SELECTED );
-		else
-			m_gdiImageListFix.Draw ( pDC, rItem.iImage, rcIcon.TopLeft(), ILD_TRANSPARENT );
-
-		*pResult = CDRF_DODEFAULT;
 	}
 }
 

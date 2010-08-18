@@ -2598,7 +2598,7 @@
 		<image id="ID_MEDIA_PREVIOUS" id1="ID_SHAREMONKEY_PREVIOUS"/>
 		<image id="ID_MEDIA_NEXT" id1="ID_SHAREMONKEY_NEXT"/>
 		<image id="ID_MEDIA_PAUSE"/>
-		<image id="ID_MEDIA_OPEN" id1="ID_SECURITY_IMPORT" id2="ID_LIBRARY_UNLINK" id3="ID_SCHEDULER_IMPORT"/>
+		<image id="ID_MEDIA_OPEN" id1="ID_SECURITY_IMPORT" id2="ID_LIBRARY_UNLINK" id3="ID_SCHEDULER_IMPORT" id4="IDC_IMPORT_DOWNLOADS"/>
 		<image id="ID_MEDIA_SAVE" id1="ID_SECURITY_EXPORT" id2="ID_SCHEDULER_EXPORT"/>
 		<image id="ID_MEDIA_ZOOM"/>
 		<image id="ID_MEDIA_FULLSCREEN"/>
@@ -2625,16 +2625,6 @@
 		<image id="ID_MEDIA_STATE_STOP"/>
 		<image id="ID_MEDIA_STATE_PAUSE"/>
 		<image id="ID_MEDIA_STATE_PLAY"/>
-	</bitmap>
-	<bitmap id="IDB_PROTOCOLS">
-		<image id="ID_NETWORK_NULL"/>
-		<image id="ID_NETWORK_G1"/>
-		<image id="ID_NETWORK_G2"/>
-		<image id="ID_NETWORK_ED2K" id1="IDC_IMPORT_DOWNLOADS"/>
-		<image id="ID_NETWORK_HTTP"/>
-		<image id="ID_NETWORK_FTP"/>
-		<image id="ID_NETWORK_BT"/>
-		<image id="ID_NETWORK_KAD"/>
 	</bitmap>
 	<bitmap id="IDB_IRCICONS">
 		<image id="ID_IRC_WHOIS"/>
@@ -2692,6 +2682,15 @@
 	<icon res="IDI_RATING_FAKE" id="IDI_RATING_FAKE" types="16" rtl="0"/>
 	<icon res="IDI_RATING_AVERAGE" id="IDI_RATING_AVERAGE" types="16" rtl="0"/>
 	<icon res="IDI_RATING_GOOD" id="IDI_RATING_GOOD" types="16" rtl="0"/>
+	<icon res="ID_NETWORK_NULL" id="ID_NETWORK_NULL" types="16,32" rtl="0"/>
+	<icon res="ID_NETWORK_G1" id="ID_NETWORK_G1" types="16,32" rtl="0"/>
+	<icon res="ID_NETWORK_G2" id="ID_NETWORK_G2" types="16,32" rtl="0"/>
+	<icon res="ID_NETWORK_ED2K" id="ID_NETWORK_ED2K" types="16,32" rtl="0"/>
+	<icon res="ID_NETWORK_HTTP" id="ID_NETWORK_HTTP" types="16,32" rtl="0"/>
+	<icon res="ID_NETWORK_FTP" id="ID_NETWORK_FTP" types="16,32" rtl="0"/>
+	<icon res="ID_NETWORK_BT" id="ID_NETWORK_BT" types="16,32" rtl="0"/>
+	<icon res="ID_NETWORK_KAD" id="ID_NETWORK_KAD" types="16,32" rtl="0"/>
+	<icon res="ID_NETWORK_DC" id="ID_NETWORK_DC" types="16,32" rtl="0"/>
 </commandImages>
 
 <!-- Tips displayed when mouse is moved over controls in the dialogs -->

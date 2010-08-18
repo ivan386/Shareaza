@@ -136,15 +136,7 @@ int CUploadsCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	
 	LoadColumnState();
 	
-	CBitmap bmImages;
-	bmImages.LoadBitmap( IDB_PROTOCOLS );
-	if ( Settings.General.LanguageRTL ) 
-		bmImages.m_hObject = CreateMirroredBitmap( (HBITMAP)bmImages.m_hObject );
-
-	m_pProtocols.Create( 16, 16, ILC_COLOR32|ILC_MASK, 7, 1 ) ||
-	m_pProtocols.Create( 16, 16, ILC_COLOR24|ILC_MASK, 7, 1 ) ||
-	m_pProtocols.Create( 16, 16, ILC_COLOR16|ILC_MASK, 7, 1 );
-	m_pProtocols.Add( &bmImages, RGB( 0, 255, 0 ) );
+	CoolInterface.LoadProtocolIconsTo( m_gdiProtocols );
 	
 	m_nFocus	= 0;
 	m_pDeselect	= NULL;
@@ -879,17 +871,17 @@ void CUploadsCtrl::PaintQueue(CDC& dc, const CRect& rcRow, CUploadQueue* pQueue,
 			rcCell.left += 16;
 			if ( pQueue == UploadQueues.m_pTorrentQueue )
 			{
-				ImageList_DrawEx( m_pProtocols, PROTOCOL_BT, dc.GetSafeHdc(),
+				ImageList_DrawEx( m_gdiProtocols, PROTOCOL_BT, dc.GetSafeHdc(),
 						rcCell.left, rcCell.top, 16, 16, crLeftAligned, CLR_DEFAULT, pQueue->m_bSelected ? ILD_SELECTED : ILD_NORMAL );
 			}
 			else if ( pQueue->m_nProtocols == ( 1 << PROTOCOL_HTTP ) )
 			{
-				ImageList_DrawEx( m_pProtocols, PROTOCOL_HTTP, dc.GetSafeHdc(),
+				ImageList_DrawEx( m_gdiProtocols, PROTOCOL_HTTP, dc.GetSafeHdc(),
 						rcCell.left, rcCell.top, 16, 16, crLeftAligned, CLR_DEFAULT, pQueue->m_bSelected ? ILD_SELECTED : ILD_NORMAL );
 			}
 			else if ( pQueue->m_nProtocols == ( 1 << PROTOCOL_ED2K ) )
 			{
-				ImageList_DrawEx( m_pProtocols, PROTOCOL_ED2K, dc.GetSafeHdc(),
+				ImageList_DrawEx( m_gdiProtocols, PROTOCOL_ED2K, dc.GetSafeHdc(),
 						rcCell.left, rcCell.top, 16, 16, crLeftAligned, CLR_DEFAULT, pQueue->m_bSelected ? ILD_SELECTED : ILD_NORMAL );
 			}
 			else
@@ -1156,15 +1148,7 @@ void CUploadsCtrl::OnSkinChange()
 {
 	m_wndHeader.SetFont( &CoolInterface.m_fntNormal );
 
-	for ( int nImage = 1 ; nImage < 7 ; nImage++ )
-	{
-		HICON hIcon = CoolInterface.ExtractIcon( (UINT)protocolCmdMap[ nImage ].commandID, FALSE );
-		if ( hIcon )
-		{
-			m_pProtocols.Replace( nImage, hIcon );
-			DestroyIcon( hIcon );
-		}
-	}
+	CoolInterface.LoadProtocolIconsTo( m_gdiProtocols );
 }
 
 //////////////////////////////////////////////////////////////////////////////

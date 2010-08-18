@@ -37,6 +37,15 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
+const static UINT nImageID[] =
+{
+	IDR_SCHEDULERFRAME,
+	IDI_NOTASK,
+	ID_SCHEDULER_ACTIVATE,
+	ID_SCHEDULER_DEACTIVATE,
+	NULL
+};
+
 IMPLEMENT_SERIAL(CSchedulerWnd, CPanelWnd, 0)
 
 BEGIN_MESSAGE_MAP(CSchedulerWnd, CPanelWnd)
@@ -99,13 +108,7 @@ int CSchedulerWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		LVS_EX_DOUBLEBUFFER|LVS_EX_FULLROWSELECT|LVS_EX_HEADERDRAGDROP|LVS_EX_LABELTIP,
 		LVS_EX_DOUBLEBUFFER|LVS_EX_FULLROWSELECT|LVS_EX_HEADERDRAGDROP|LVS_EX_LABELTIP );
 
-	m_gdiImageList.Create( 16, 16, ILC_MASK|ILC_COLOR32, 3, 1 ) ||
-		m_gdiImageList.Create( 16, 16, ILC_MASK|ILC_COLOR24, 3, 1 ) ||
-		m_gdiImageList.Create( 16, 16, ILC_MASK|ILC_COLOR16, 3, 1 );
-	m_gdiImageList.Add( CoolInterface.ExtractIcon( IDR_SCHEDULERFRAME, FALSE ));
-	m_gdiImageList.Add( CoolInterface.ExtractIcon( IDI_NOTASK, FALSE ));
-	m_gdiImageList.Add( CoolInterface.ExtractIcon( ID_SCHEDULER_ACTIVATE, FALSE ));
-	m_gdiImageList.Add( CoolInterface.ExtractIcon( ID_SCHEDULER_DEACTIVATE, FALSE ));
+	CoolInterface.LoadIconsTo( m_gdiImageList, nImageID );
 	m_wndList.SetImageList( &m_gdiImageList, LVSIL_SMALL );
 
 	m_wndList.InsertColumn( 0, _T("Action"), LVCFMT_LEFT, 250, -1 );
@@ -385,6 +388,9 @@ void CSchedulerWnd::OnSkinChange()
 
 	Settings.LoadList( _T("CSchedulerWnd"), &m_wndList, -3 );
 	Skin.CreateToolBar( _T("CSchedulerWnd"), &m_wndToolBar );
+
+	CoolInterface.LoadIconsTo( m_gdiImageList, nImageID );
+	m_wndList.SetImageList( &m_gdiImageList, LVSIL_SMALL );
 }
 
 BOOL CSchedulerWnd::PreTranslateMessage(MSG* pMsg) 

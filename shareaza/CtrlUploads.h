@@ -1,7 +1,7 @@
 //
 // CtrlUploads.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -58,7 +58,7 @@ protected:
 protected:
 	CHeaderCtrl			m_wndHeader;
 	CUploadTipCtrl		m_wndTip;
-	CImageList			m_pProtocols;
+	CImageList			m_gdiProtocols;
 	int					m_nFocus;
 	CUploadFile*		m_pDeselect;
 	int					m_nScrollWheelLines;

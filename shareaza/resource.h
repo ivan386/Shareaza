@@ -167,7 +167,6 @@
 #define IDD_SETTINGS_BITTORRENT         223
 #define IDB_TASKPANEL_FOOTER            224
 #define IDB_TASKBOX_CAPTION             225
-#define IDB_PROTOCOLS                   227
 #define IDD_DONKEY_SERVERS              230
 #define IDD_WIZARD_NETWORKS             231
 #define IDD_FILE_SHARING                232
@@ -195,7 +194,6 @@
 #define IDR_HOME_HEADER_1               257
 #define IDR_HOME_HEADER_2               258
 #define IDB_PANEL_MARK                  262
-#define IDR_BITTORRENT_ICON             263
 #define IDI_MAIL                        265
 #define IDD_CODEPAGES                   266
 #define IDD_TORRENT_GENERAL             267
@@ -1886,6 +1884,7 @@
 #define ID_DOWNLOADS_RATE               33105
 #define ID_LIBRARY_VIEW_COLLECTION      33106
 #define ID_LIBRARY_FOLDER_DOWNLOAD      33107
+#define ID_NETWORK_DC                   33108
 #define ID_LIBRARY_EXPORT_COLLECTION    33109
 #define ID_LIBRARY_SEED_TORRENT         33110
 #define ID_LIBRARY_REBUILD_ANSI         33111

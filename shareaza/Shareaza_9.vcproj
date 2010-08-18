@@ -1350,10 +1350,6 @@
 					>
 				</File>
 				<File
-					RelativePath="CtrlNetworkCombo.cpp"
-					>
-				</File>
-				<File
 					RelativePath="CtrlPanel.cpp"
 					>
 				</File>
@@ -2916,10 +2912,6 @@
 				</File>
 				<File
 					RelativePath="CtrlNeighbourTip.h"
-					>
-				</File>
-				<File
-					RelativePath="CtrlNetworkCombo.h"
 					>
 				</File>
 				<File

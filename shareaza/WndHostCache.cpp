@@ -1,7 +1,7 @@
 //
 // WndHostCache.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -118,16 +118,8 @@ int CHostCacheWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		LVS_EX_DOUBLEBUFFER|LVS_EX_FULLROWSELECT|LVS_EX_HEADERDRAGDROP|LVS_EX_LABELTIP,
 		LVS_EX_DOUBLEBUFFER|LVS_EX_FULLROWSELECT|LVS_EX_HEADERDRAGDROP|LVS_EX_LABELTIP );
 
-	CBitmap bmImages;
-	bmImages.LoadBitmap( IDB_PROTOCOLS );
-	if ( Settings.General.LanguageRTL )
-		bmImages.m_hObject = CreateMirroredBitmap( (HBITMAP)bmImages.m_hObject );
-
-	m_gdiImageList.Create( 16, 16, ILC_COLOR32|ILC_MASK, 7, 1 ) ||
-	m_gdiImageList.Create( 16, 16, ILC_COLOR24|ILC_MASK, 7, 1 ) ||
-	m_gdiImageList.Create( 16, 16, ILC_COLOR16|ILC_MASK, 7, 1 );
-	m_gdiImageList.Add( &bmImages, RGB( 0, 255, 0 ) );
-	m_wndList.SetImageList( &m_gdiImageList, LVSIL_SMALL );
+	CoolInterface.LoadProtocolIconsTo( m_gdiProtocols );
+	m_wndList.SetImageList( &m_gdiProtocols, LVSIL_SMALL );
 
 	m_wndList.InsertColumn( 0, _T("Address"), LVCFMT_LEFT, 140, -1 );
 	m_wndList.InsertColumn( 1, _T("Port"), LVCFMT_CENTER, 60, 0 );
@@ -179,7 +171,6 @@ void CHostCacheWnd::Update(BOOL bForce)
 	if ( ! oLock.Lock( 100 ) ) return;
 
 	m_nCookie = pCache->m_nCookie;
-	int nProtocolRev = m_gdiImageList.GetImageCount() - 1;
 
 	for ( CHostCacheIterator i = pCache->Begin() ; i != pCache->End() ; ++i )
 	{
@@ -192,8 +183,7 @@ void CHostCacheWnd::Update(BOOL bForce)
 
 		CLiveItem* pItem = m_wndList.Add( pHost );
 
-		pItem->SetImage( Settings.General.LanguageRTL ?
-			nProtocolRev - pHost->m_nProtocol : pHost->m_nProtocol );
+		pItem->SetImage( pHost->m_nProtocol );
 		pItem->SetMaskOverlay( pHost->m_bPriority );
 
 		pItem->Set( 0, CString( inet_ntoa( pHost->m_pAddress ) ) );
@@ -261,15 +251,8 @@ void CHostCacheWnd::OnSkinChange()
 		Settings.Gnutella.HostCacheView = m_nMode = PROTOCOL_G2;
 	}
 
-	for ( int nImage = 1 ; nImage < 6 ; nImage++ )
-	{
-		HICON hIcon = CoolInterface.ExtractIcon( (UINT)protocolCmdMap[ nImage ].commandID, FALSE );
-		if ( hIcon )
-		{
-			m_gdiImageList.Replace( nImage, hIcon );
-			DestroyIcon( hIcon );
-		}
-	}
+	CoolInterface.LoadProtocolIconsTo( m_gdiProtocols );
+	m_wndList.SetImageList( &m_gdiProtocols, LVSIL_SMALL );
 }
 
 /////////////////////////////////////////////////////////////////////////////

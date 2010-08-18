@@ -1,7 +1,7 @@
 //
 // CtrlSearchPanel.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -810,15 +810,7 @@ int CSearchAdvancedBox::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndCheckBoxED2K.SetFont( &theApp.m_gdiFontBold );
 	m_wndCheckBoxED2K.SetCheck( BST_CHECKED );
 
-	CBitmap bmProtocols;
-	bmProtocols.LoadBitmap( IDB_PROTOCOLS );
-	if ( Settings.General.LanguageRTL )
-		bmProtocols.m_hObject = CreateMirroredBitmap( (HBITMAP)bmProtocols.m_hObject );
-
-	m_gdiImageList.Create( 16, 16, ILC_COLOR32|ILC_MASK, 6, 1 ) ||
-	m_gdiImageList.Create( 16, 16, ILC_COLOR24|ILC_MASK, 6, 1 ) ||
-	m_gdiImageList.Create( 16, 16, ILC_COLOR16|ILC_MASK, 6, 1 );
-	m_gdiImageList.Add( &bmProtocols, RGB( 0, 255, 0 ) );
+	CoolInterface.LoadProtocolIconsTo( m_gdiProtocols );
 
 	// Min combo
 	if ( ! m_wndSizeMin.Create( WS_CHILD|WS_VISIBLE|WS_TABSTOP|CBS_AUTOHSCROLL|
@@ -861,16 +853,7 @@ int CSearchAdvancedBox::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 void CSearchAdvancedBox::OnSkinChange()
 {
-	int nRevStart = m_gdiImageList.GetImageCount() - 1;
-	for ( int nImage = 1 ; nImage < 7 ; nImage++ )
-	{
-		HICON hIcon = CoolInterface.ExtractIcon( (UINT)protocolCmdMap[ nImage ].commandID, FALSE );
-		if ( hIcon )
-		{
-			m_gdiImageList.Replace( Settings.General.LanguageRTL ? nRevStart - nImage : nImage, hIcon );
-			DestroyIcon( hIcon );
-		}
-	}
+	CoolInterface.LoadProtocolIconsTo( m_gdiProtocols );
 
 	CString strControlTitle;
 	LoadString( strControlTitle, IDS_SEARCH_PANEL_INPUT_5 );
@@ -964,10 +947,9 @@ void CSearchAdvancedBox::OnPaint()
 		pDC->FillSolidRect( &rc, CoolInterface.m_crTaskBoxClient );
 	}
 
-	int nStartPos = Settings.General.LanguageRTL ? -m_gdiImageList.GetImageCount() + 1 : 0;
-	m_gdiImageList.Draw( pDC, abs( nStartPos + 2 ), CPoint( BOX_MARGIN, 26 ), ILD_NORMAL );
-	m_gdiImageList.Draw( pDC, abs( nStartPos + 1 ), CPoint( BOX_MARGIN, 46 ), ILD_NORMAL );
-	m_gdiImageList.Draw( pDC, abs( nStartPos + 3 ), CPoint( PANEL_WIDTH / 2 - 3, 26 ), ILD_NORMAL );
+	m_gdiProtocols.Draw( pDC, 2, CPoint( BOX_MARGIN, 26 ), ILD_NORMAL );
+	m_gdiProtocols.Draw( pDC, 1, CPoint( BOX_MARGIN, 46 ), ILD_NORMAL );
+	m_gdiProtocols.Draw( pDC, 3, CPoint( PANEL_WIDTH / 2 - 3, 26 ), ILD_NORMAL );
 }
 
 LRESULT CSearchAdvancedBox::OnCtlColorStatic(WPARAM wParam, LPARAM /*lParam*/)

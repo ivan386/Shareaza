@@ -1,7 +1,7 @@
 //
 // WndSecurity.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -34,6 +34,14 @@
 #undef THIS_FILE
 static char THIS_FILE[] = __FILE__;
 #endif
+
+const static UINT nImageID[] =
+{
+	IDR_SECURITYFRAME,
+	IDI_GRANTED,
+	IDI_FIREWALLED,
+	NULL
+};
 
 IMPLEMENT_SERIAL(CSecurityWnd, CPanelWnd, 0)
 
@@ -100,12 +108,7 @@ int CSecurityWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		LVS_EX_DOUBLEBUFFER|LVS_EX_FULLROWSELECT|LVS_EX_HEADERDRAGDROP|LVS_EX_LABELTIP,
 		LVS_EX_DOUBLEBUFFER|LVS_EX_FULLROWSELECT|LVS_EX_HEADERDRAGDROP|LVS_EX_LABELTIP );
 	
-	m_gdiImageList.Create( 16, 16, ILC_MASK|ILC_COLOR32, 3, 1 ) ||
-	m_gdiImageList.Create( 16, 16, ILC_MASK|ILC_COLOR24, 3, 1 ) ||
-	m_gdiImageList.Create( 16, 16, ILC_MASK|ILC_COLOR16, 3, 1 );
-	m_gdiImageList.Add( CoolInterface.ExtractIcon( IDR_SECURITYFRAME, FALSE ) );
-	m_gdiImageList.Add( CoolInterface.ExtractIcon( IDI_GRANTED, FALSE ) );
-	m_gdiImageList.Add( CoolInterface.ExtractIcon( IDI_FIREWALLED, FALSE ) );
+	CoolInterface.LoadIconsTo( m_gdiImageList, nImageID );
 	m_wndList.SetImageList( &m_gdiImageList, LVSIL_SMALL );
 
 	m_wndList.InsertColumn( 0, _T("Address / Content"), LVCFMT_LEFT, 200, -1 );
@@ -147,7 +150,7 @@ void CSecurityWnd::Update(int nColumn, BOOL bSort)
 	pDefault->Set( 0, _T("Default Policy") );
 	pDefault->Set( 1, Security.m_bDenyPolicy ? _T("Deny") : _T("Accept") );
 	pDefault->Set( 3, _T("X") );
-	pDefault->m_nImage = Security.m_bDenyPolicy ? Settings.General.LanguageRTL ? 0 : 2 : 1;
+	pDefault->m_nImage = Security.m_bDenyPolicy ? 2 : 1;
 
 	Security.Expire();
 
@@ -160,7 +163,7 @@ void CSecurityWnd::Update(int nColumn, BOOL bSort)
 
 		CLiveItem* pItem = pLiveList.Add( pRule );
 
-		pItem->m_nImage = Settings.General.LanguageRTL ? 2 - pRule->m_nAction : pRule->m_nAction;
+		pItem->m_nImage = pRule->m_nAction;
 
 		if ( pRule->m_nType == CSecureRule::srAddress )
 		{
@@ -279,7 +282,7 @@ void CSecurityWnd::OnCustomDrawList(NMHDR* pNMHDR, LRESULT* pResult)
 		pItem.iSubItem	= 0;
 		m_wndList.GetItem( &pItem );
 
-		switch ( Settings.General.LanguageRTL ? 2 - pItem.iImage : pItem.iImage )
+		switch ( pItem.iImage )
 		{
 		case CSecureRule::srAccept:
 			pDraw->clrText = CoolInterface.m_crSecurityAllow ;
@@ -539,8 +542,12 @@ void CSecurityWnd::OnSecurityImport()
 void CSecurityWnd::OnSkinChange()
 {
 	CPanelWnd::OnSkinChange();
+
 	Settings.LoadList( _T("CSecurityWnd"), &m_wndList, -4 );
 	Skin.CreateToolBar( _T("CSecurityWnd"), &m_wndToolBar );
+
+	CoolInterface.LoadIconsTo( m_gdiImageList, nImageID );
+	m_wndList.SetImageList( &m_gdiImageList, LVSIL_SMALL );
 }
 
 void CSecurityWnd::OnUpdateSecurityPolicyAccept(CCmdUI* pCmdUI) 

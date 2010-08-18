@@ -1,7 +1,7 @@
 //
 // WndHostCache.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -18,9 +18,6 @@
 // along with Shareaza; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-
-#if !defined(WNDHOSTCACHE_H)
-#define WNDHOSTCACHE_H
 
 #pragma once
 
@@ -46,7 +43,7 @@ protected:
 	CCoolBarCtrl	m_wndToolBar;
 	CLiveListCtrl	m_wndList;
 	CLiveListSizer	m_pSizer;
-	CImageList		m_gdiImageList;
+	CImageList		m_gdiProtocols;
 	DWORD			m_nCookie;
 	DWORD			tLastUpdate;
 
@@ -103,5 +100,3 @@ protected:
 };
 
 #define IDC_HOSTS		100
-
-#endif // !defined(WNDHOSTCACHE_H)

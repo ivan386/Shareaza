@@ -1,7 +1,7 @@
 //
 // CtrlSearchPanel.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,15 +19,11 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_CTRLSEARCHPANEL_H__EAFFA7F3_526D_45C3_8C17_17A265ED3240__INCLUDED_)
-#define AFX_CTRLSEARCHPANEL_H__EAFFA7F3_526D_45C3_8C17_17A265ED3240__INCLUDED_
-
 #pragma once
 
 #include "AutocompleteEdit.h"
 #include "CtrlTaskPanel.h"
 #include "CtrlSchemaCombo.h"
-#include "CtrlNetworkCombo.h"
 #include "CtrlSchema.h"
 #include "CtrlIconButton.h"
 #include "ManagedSearch.h"
@@ -96,7 +92,7 @@ public:
 	CButton			m_wndCheckBoxED2K;
 	CBrush			m_brBack;
 	COLORREF		m_crBack;
-	CImageList		m_gdiImageList;
+	CImageList		m_gdiProtocols;
 	
 // Operations
 public:
@@ -248,5 +244,3 @@ protected:
 #define IDC_SEARCH_GNUTELLA1			277
 #define IDC_SEARCH_GNUTELLA2			278
 #define IDC_SEARCH_EDONKEY				279
-
-#endif // !defined(AFX_CTRLSEARCHPANEL_H__EAFFA7F3_526D_45C3_8C17_17A265ED3240__INCLUDED_)

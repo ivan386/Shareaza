@@ -339,7 +339,9 @@ enum PROTOCOLID
 	PROTOCOL_HTTP = 4,
 	PROTOCOL_FTP  = 5,
 	PROTOCOL_BT   = 6,
-	PROTOCOL_KAD   = 7
+	PROTOCOL_KAD  = 7,
+	PROTOCOL_DC   = 8,
+	PROTOCOL_LAST = 9
 };
 
 struct ProtocolCmdIDMapEntry
@@ -350,19 +352,20 @@ struct ProtocolCmdIDMapEntry
 
 const ProtocolCmdIDMapEntry protocolCmdMap[] =
 {
-	{ PROTOCOL_NULL, ID_NETWORK_NULL },
-	{ PROTOCOL_G1, ID_NETWORK_G1 },
-	{ PROTOCOL_G2, ID_NETWORK_G2 },
-	{ PROTOCOL_ED2K, ID_NETWORK_ED2K },
-	{ PROTOCOL_HTTP, ID_NETWORK_HTTP },
-	{ PROTOCOL_FTP, ID_NETWORK_FTP },
-	{ PROTOCOL_BT, ID_NETWORK_BT },
-	{ PROTOCOL_KAD, ID_NETWORK_KAD }
+	{ PROTOCOL_NULL,	ID_NETWORK_NULL },
+	{ PROTOCOL_G1,		ID_NETWORK_G1 },
+	{ PROTOCOL_G2,		ID_NETWORK_G2 },
+	{ PROTOCOL_ED2K,	ID_NETWORK_ED2K },
+	{ PROTOCOL_HTTP,	ID_NETWORK_HTTP },
+	{ PROTOCOL_FTP,		ID_NETWORK_FTP },
+	{ PROTOCOL_BT,		ID_NETWORK_BT },
+	{ PROTOCOL_KAD,		ID_NETWORK_KAD },
+	{ PROTOCOL_DC,		ID_NETWORK_DC }
 };
 
 inline PROTOCOLID& operator++(PROTOCOLID& arg)
 {
-	ASSERT( arg < PROTOCOL_KAD );
+	ASSERT( arg < PROTOCOL_LAST - 1 );
 	arg = PROTOCOLID( arg + 1 );
 	return arg;
 }
@@ -384,11 +387,10 @@ inline CArchive& operator>>(CArchive& ar, PROTOCOLID& rhs)
 {
 	int value;
 	ar >> value;
-	if ( !( value >= PROTOCOL_ANY && value <= PROTOCOL_KAD ) )
+	if ( !( value >= PROTOCOL_ANY && value < PROTOCOL_LAST ) )
 		AfxThrowUserException();
-	rhs = value >= PROTOCOL_ANY && value <= PROTOCOL_KAD
-		? PROTOCOLID( value )
-		: PROTOCOL_NULL;
+	rhs = ( value >= PROTOCOL_ANY && value < PROTOCOL_LAST ) ?
+		PROTOCOLID( value ) : PROTOCOL_NULL;
 	return ar;
 }
 

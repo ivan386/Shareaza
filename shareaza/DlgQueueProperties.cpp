@@ -135,29 +135,10 @@ BOOL CQueuePropertiesDlg::OnInitDialog()
 	m_wndTransfersMax.SetRange( 1, 512 );
 	m_wndRotateTimeSpin.SetRange( 30, 15 * 60 );
 
-	CBitmap bmProtocols;
-	bmProtocols.LoadBitmap( IDB_PROTOCOLS );
-	if ( Settings.General.LanguageRTL ) 
-		bmProtocols.m_hObject = CreateMirroredBitmap( (HBITMAP)bmProtocols.m_hObject );
-
-	m_gdiProtocols.Create( 16, 16, ILC_COLOR32|ILC_MASK, 7, 1 ) ||
-	m_gdiProtocols.Create( 16, 16, ILC_COLOR24|ILC_MASK, 7, 1 ) ||
-	m_gdiProtocols.Create( 16, 16, ILC_COLOR16|ILC_MASK, 7, 1 );
-	m_gdiProtocols.Add( &bmProtocols, RGB( 0, 255, 0 ) );
-
-	// Replace with the skin images (if fails old images remain)
-	for ( int nImage = 1 ; nImage < 7 ; nImage++ )
-	{
-		HICON hIcon = CoolInterface.ExtractIcon( (UINT)protocolCmdMap[ nImage ].commandID, FALSE );
-		if ( hIcon )
-		{
-			m_gdiProtocols.Replace( nImage, hIcon );
-			DestroyIcon( hIcon );
-		}
-	}
+	CoolInterface.LoadProtocolIconsTo( m_gdiProtocols );
+	m_wndProtocols.SetImageList( &m_gdiProtocols, LVSIL_SMALL );
 
 	m_wndProtocols.SendMessage( LVM_SETEXTENDEDLISTVIEWSTYLE, LVS_EX_CHECKBOXES, LVS_EX_CHECKBOXES );
-	m_wndProtocols.SetImageList( &m_gdiProtocols, LVSIL_SMALL );
 	m_wndProtocols.InsertItem( LVIF_TEXT|LVIF_IMAGE|LVIF_PARAM, 0, _T("HTTP"), 0, 0, PROTOCOL_HTTP, PROTOCOL_HTTP );
 	m_wndProtocols.InsertItem( LVIF_TEXT|LVIF_IMAGE|LVIF_PARAM, 1, _T("ED2K"), 0, 0, PROTOCOL_ED2K, PROTOCOL_ED2K );
 

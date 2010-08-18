@@ -181,8 +181,8 @@ public:
 	int			ImageForID(UINT nID, int nImageListType = LVSIL_SMALL) const;
 	void		AddIcon(UINT nID, HICON hIcon, int nImageListType = LVSIL_SMALL);
 	void		CopyIcon(UINT nFromID, UINT nToID, int nImageListType = LVSIL_SMALL);
-	HICON		ExtractIcon(UINT nID, BOOL bMirrored, int nImageListType = LVSIL_SMALL);
-	int			ExtractIconID(UINT nID, BOOL bMirrored, int nImageListType = LVSIL_SMALL);
+	HICON		ExtractIcon(UINT nID, BOOL bMirrored = FALSE, int nImageListType = LVSIL_SMALL);
+	int			ExtractIconID(UINT nID, BOOL bMirrored = FALSE, int nImageListType = LVSIL_SMALL);
 	// Set skinned icon to window i.e. pWnd->SetIcon( hIcon, bBigIcon )
 	void		SetIcon(UINT nID, BOOL bMirrored, BOOL bBigIcon, CWnd* pWnd);
 	// Set skinned icon to window i.e. pWnd->SetIcon( hIcon, bBigIcon )
@@ -190,7 +190,12 @@ public:
 	//	BOOL	AddImagesFromToolbar(UINT nIDToolBar, COLORREF crBack = RGB(0,255,0));
 	int			GetImageCount(int nImageListType = LVSIL_SMALL);
 	BOOL		Add(CXMLElement* pBase, HBITMAP hbmImage, COLORREF crMask, int nImageListType = LVSIL_SMALL);
+	// Assign image list to CListCtrl object. Returns old image list of CListCtrl object.
 	CImageList*	SetImageListTo(CListCtrl& pWnd, int nImageListType = LVSIL_SMALL);
+	// Loads skinable icons specified by ID array to CImageList object
+	void		LoadIconsTo(CImageList& pImageList, const UINT nID[], BOOL bMirror = FALSE, int cx = 16);
+	// Loads skinable protocol icons to CImageList object
+	void		LoadProtocolIconsTo(CImageList& pImageList, BOOL bMirror = FALSE, int cx = 16);
 	BOOL		Draw(CDC* pDC, int nImage, POINT pt, UINT nStyle = ILD_NORMAL, int nImageListType = LVSIL_SMALL) const;
 	BOOL		DrawEx(CDC* pDC, int nImage, POINT pt, SIZE sz = CSize( 16, 16 ), COLORREF clrBk = CLR_NONE, COLORREF clrFg = CLR_DEFAULT, UINT nStyle = ILD_NORMAL, int nImageListType = LVSIL_SMALL) const;
 	BOOL		Draw(CDC* pDC, UINT nID, int nSize, int nX, int nY, COLORREF crBack = CLR_NONE, BOOL bSelected = FALSE, BOOL bExclude = TRUE) const;

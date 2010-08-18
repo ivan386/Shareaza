@@ -330,18 +330,67 @@ void CCoolInterface::SetIcon(HICON hIcon, BOOL bMirrored, BOOL bBigIcon, CWnd* p
 BOOL CCoolInterface::ConfirmImageList()
 {
 	return
-		( m_pImages16.m_hImageList ||
+		( m_pImages16.GetSafeHandle() ||
 		  m_pImages16.Create( 16, 16, ILC_COLOR32|ILC_MASK, 16, 4 ) ||
 		  m_pImages16.Create( 16, 16, ILC_COLOR24|ILC_MASK, 16, 4 ) ||
 		  m_pImages16.Create( 16, 16, ILC_COLOR16|ILC_MASK, 16, 4 ) ) &&
-		( m_pImages32.m_hImageList ||
+		( m_pImages32.GetSafeHandle() ||
 		  m_pImages32.Create( 32, 32, ILC_COLOR32|ILC_MASK, 16, 4 ) ||
 		  m_pImages32.Create( 32, 32, ILC_COLOR24|ILC_MASK, 16, 4 ) ||
 		  m_pImages32.Create( 32, 32, ILC_COLOR16|ILC_MASK, 16, 4 ) ) &&
-		( m_pImages48.m_hImageList ||
+		( m_pImages48.GetSafeHandle() ||
 			m_pImages48.Create( 48, 48, ILC_COLOR32|ILC_MASK, 16, 4 ) ||
 			m_pImages48.Create( 48, 48, ILC_COLOR24|ILC_MASK, 16, 4 ) ||
 			m_pImages48.Create( 48, 48, ILC_COLOR16|ILC_MASK, 16, 4 ) );
+}
+
+void CCoolInterface::LoadIconsTo(CImageList& pImageList, const UINT nID[], BOOL bMirror, int cx)
+{
+	int nCount = 0;
+	for ( ; nID[ nCount ]; ++nCount );
+	ASSERT( nCount != 0 );
+
+	int nImageListType;
+	if ( cx < 32 )
+		nImageListType = LVSIL_SMALL;
+	else if ( cx < 48 )
+		nImageListType = LVSIL_NORMAL;
+	else
+		nImageListType = LVSIL_BIG;
+
+	if ( pImageList.GetSafeHandle() )
+		VERIFY( pImageList.DeleteImageList() );
+
+	VERIFY( pImageList.Create( cx, cx, ILC_COLOR32|ILC_MASK, nCount, 0 ) ||
+		pImageList.Create( cx, cx, ILC_COLOR24|ILC_MASK, nCount, 0 ) ||
+		pImageList.Create( cx, cx, ILC_COLOR16|ILC_MASK, nCount, 0 ) );
+
+	for ( int i = 0; nID[ i ]; ++i )
+	{
+		HICON hIcon = CoolInterface.ExtractIcon( nID[ i ], bMirror, nImageListType );
+		ASSERT( hIcon != NULL );
+		VERIFY( pImageList.Add( hIcon ) != -1 );
+		VERIFY( DestroyIcon( hIcon ) );
+	}
+}
+
+static const UINT nProtocolID[] =
+{
+	ID_NETWORK_NULL,
+	ID_NETWORK_G1,
+	ID_NETWORK_G2,
+	ID_NETWORK_ED2K,
+	ID_NETWORK_HTTP,
+	ID_NETWORK_FTP,
+	ID_NETWORK_BT,
+	ID_NETWORK_KAD,
+	ID_NETWORK_DC,
+	NULL
+};
+
+void CCoolInterface::LoadProtocolIconsTo(CImageList& pImageList, BOOL bMirror, int cx)
+{
+	LoadIconsTo( pImageList, nProtocolID, bMirror, cx );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -773,7 +822,7 @@ BOOL CCoolInterface::Add(CXMLElement* pBase, HBITMAP hbmImage, COLORREF crMask, 
 		return FALSE;
 	}
 
-	const LPCTSTR pszNames[] = {
+	const static LPCTSTR pszNames[] = {
 		_T("id"),  _T("id1"), _T("id2"), _T("id3"), _T("id4"), _T("id5"),
 		_T("id6"), _T("id7"), _T("id8"), _T("id9"), NULL };
 	int nIndex = 0;

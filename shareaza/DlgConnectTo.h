@@ -46,7 +46,7 @@ public:
 	int			m_nProtocol;
 
 protected:
-	CImageList	m_pImages;
+	CImageList	m_gdiProtocols;
 	Type		m_nType;
 
 	void		LoadItem(int nItem);

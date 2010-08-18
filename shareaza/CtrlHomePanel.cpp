@@ -127,7 +127,7 @@ int CHomePanel::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_boxConnection.Create( this, _T("Connection"), IDR_NEIGHBOURSFRAME );
 	m_boxLibrary.Create( this, _T("Library"), IDR_LIBRARYFRAME );
 #ifndef LAN_MODE
-	m_boxTorrents.Create( this, _T("Torrents"), IDR_BITTORRENT_ICON );
+	m_boxTorrents.Create( this, _T("Torrents"), ID_NETWORK_BT );
 #endif // LAN_MODE
 	
 	AddBox( &m_boxDownloads );
@@ -1314,10 +1314,8 @@ void CHomeTorrentsBox::OnSkinChange()
 	if ( pXML == NULL ) return;
 	
 	SetCaption( pXML->GetAttributeValue( _T("title"), _T("Torrents") ) );
-	HICON hIcon = CoolInterface.ExtractIcon( IDR_BITTORRENT_ICON, Settings.General.LanguageRTL );
-	if ( hIcon )
-		SetIcon( hIcon );
-	
+	SetIcon( CoolInterface.ExtractIcon( ID_NETWORK_BT ) );
+
 	m_pDocument = new CRichDocument();
 	
 	CMap< CString, const CString&, CRichElement*, CRichElement* > pMap;

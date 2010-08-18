@@ -1,7 +1,7 @@
 //
 // WndNeighbours.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -18,9 +18,6 @@
 // along with Shareaza; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-
-#if !defined(AFX_WNDNEIGHBOURS_H__C3F579F1_50F6_40F8_9A98_2A14ED05A9CC__INCLUDED_)
-#define AFX_WNDNEIGHBOURS_H__C3F579F1_50F6_40F8_9A98_2A14ED05A9CC__INCLUDED_
 
 #pragma once
 
@@ -44,11 +41,8 @@ protected:
 	CTipListCtrl		m_wndList;
 	CNeighbourTipCtrl	m_wndTip;
 	CImageList			m_gdiImageList;
-	CImageList			m_gdiImageListFix;
 	CLiveListSizer		m_pSizer;
 	DWORD				m_tLastUpdate;
-private:
-	int					m_nProtocolRev; // Reversed index of start image in RTL mode
 
 // Operations
 public:
@@ -99,7 +93,3 @@ protected:
 };
 
 #define IDC_NEIGHBOURS	100
-
-//{{AFX_INSERT_LOCATION}}
-
-#endif // !defined(AFX_WNDNEIGHBOURS_H__C3F579F1_50F6_40F8_9A98_2A14ED05A9CC__INCLUDED_)

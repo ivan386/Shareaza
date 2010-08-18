@@ -45,12 +45,10 @@
 	<resource code="191" id="IDI_FILE"/>
 	<resource code="203" id="IDI_DOWNLOAD_MONITOR"/>
 	<resource code="222" id="IDB_MEDIA_STATES"/>
-	<resource code="227" id="IDB_PROTOCOLS"/>
 	<resource code="239" id="IDR_TORRENT_ICON"/>
 	<resource code="243" id="IDI_COLLECTION_MASK"/>
 	<resource code="252" id="IDI_FIREWALLED"/>
 	<resource code="253" id="IDI_GRANTED"/>
-	<resource code="263" id="IDR_BITTORRENT_ICON"/>
   <resource code="271" id="WINDOW_SCHEDULER"/>
 	<resource code="281" id="IDI_UPDOWN_ARROW"/>
 	<resource code="301" id="IDI_PLUS"/>
@@ -379,6 +377,7 @@
 	<resource code="33105" id="ID_DOWNLOADS_RATE"/>
 	<resource code="33106" id="ID_LIBRARY_VIEW_COLLECTION"/>
 	<resource code="33107" id="ID_LIBRARY_FOLDER_DOWNLOAD"/>
+	<resource code="33108" id="ID_NETWORK_DC"/>
 	<resource code="33109" id="ID_LIBRARY_EXPORT_COLLECTION"/>
 	<resource code="33110" id="ID_LIBRARY_SEED_TORRENT"/>
 	<resource code="33111" id="ID_LIBRARY_REBUILD_ANSI"/>
