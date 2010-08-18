@@ -126,6 +126,10 @@ void CSkinDialog::EnableBanner(BOOL bEnable)
 			// Add banner
 			CRect rcBanner;
 			GetClientRect( &rcBanner );
+			if ( Settings.General.LanguageRTL )
+			{
+				rcBanner.left -= bm.bmWidth - rcBanner.Width();
+			}
 			rcBanner.right = rcBanner.left + bm.bmWidth;
 			rcBanner.bottom = rcBanner.top + bm.bmHeight;
 			VERIFY( m_oBanner.Create( NULL, WS_CHILD | WS_VISIBLE | SS_BITMAP |
@@ -263,24 +267,7 @@ void CSkinDialog::OnNcMouseMove(UINT nHitTest, CPoint point)
 
 void CSkinDialog::OnSize(UINT nType, int cx, int cy)
 {
-	CStatic* pBanner = (CStatic*)GetDlgItem( IDC_BANNER );
-	if ( pBanner && Settings.General.LanguageRTL )
-	{
-		BITMAP bm = {};
-		GetObject( pBanner->GetBitmap(), sizeof( BITMAP ), &bm );
-
-		// Adjust banner width
-		CRect rcBanner;
-		GetClientRect( &rcBanner );
-		rcBanner.left -= bm.bmWidth - rcBanner.Width();
-		rcBanner.right = rcBanner.left + bm.bmWidth;
-		rcBanner.bottom = rcBanner.top + bm.bmHeight;
-		pBanner->MoveWindow( &rcBanner );
-		pBanner->ModifyStyle( SS_CENTERIMAGE, SS_REALSIZEIMAGE );
-	}
-
 	if ( m_pSkin ) m_pSkin->OnSize( this );
-
 	CDialog::OnSize( nType, cx, cy );
 }
 
