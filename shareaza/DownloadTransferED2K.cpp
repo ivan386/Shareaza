@@ -1025,7 +1025,8 @@ void CDownloadTransferED2K::SetQueueRank(int nRank)
 	ClearRequests();
 
 	theApp.Message( MSG_INFO, IDS_DOWNLOAD_QUEUED,
-		(LPCTSTR)m_sAddress, m_nQueuePos, m_nQueueLen, _T("eDonkey2000") );
+		(LPCTSTR)m_sAddress, m_nQueuePos, m_nQueueLen,
+		(LPCTSTR)m_sQueueName );
 }
 
 

@@ -1609,7 +1609,7 @@ BOOL CDownloadTransferHTTP::ReadFlush()
 				m_mInput.pLimit = m_mOutput.pLimit = &Settings.Bandwidth.Request;
 			m_tRequest = GetTickCount() + m_nRetryDelay;
 
-			theApp.Message( MSG_ERROR, IDS_DOWNLOAD_QUEUED,
+			theApp.Message( MSG_INFO, IDS_DOWNLOAD_QUEUED,
 				(LPCTSTR)m_sAddress, m_nQueuePos, m_nQueueLen,
 				(LPCTSTR)m_sQueueName );
 		}
