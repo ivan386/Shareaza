@@ -198,7 +198,9 @@ void CConnectionSettingsPage::OnChangedInboundHost()
 {
 	CString strAutomatic = GetInOutHostTranslation();
 	CString strSelection;
-	m_wndInHost.GetLBText( m_wndInHost.GetCurSel(), strSelection );
+	int nIndex = m_wndInHost.GetCurSel();
+	if ( nIndex != CB_ERR )
+		m_wndInHost.GetLBText( nIndex, strSelection );
 
 	m_wndInBind.EnableWindow( strAutomatic != strSelection );
 }
