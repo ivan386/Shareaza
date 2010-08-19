@@ -3,6 +3,98 @@
 
 #include "stdafx.h"
 
+class ATL_NO_VTABLE CZipHandler
+{
+public:
+	CZipHandler(LPCTSTR szFilename = NULL) throw()
+		: hArchive( NULL )
+	{
+		if ( szFilename )
+			Open( szFilename );
+	}
+
+	bool Open(LPCTSTR szFilename) throw()
+	{
+		if ( hArchive )
+			unzClose( hArchive );
+		hArchive = unzOpen( CT2CA( szFilename ) );
+		if ( ! hArchive )
+		{
+			TCHAR szFileShort[ MAX_PATH ];
+			if ( GetShortPathName( szFilename, szFileShort, MAX_PATH ) )
+				hArchive = unzOpen( CT2CA( szFileShort ) );
+		}
+		return ( hArchive != NULL );
+	}
+
+	~CZipHandler() throw()
+	{
+		if ( hArchive )
+		{
+			unzClose( hArchive );
+			hArchive = NULL;
+		}
+	}
+
+	operator unzFile() const throw()
+	{
+		return hArchive;
+	}
+
+	bool Extract(LPCTSTR szSrc, LPCTSTR szDst) throw()
+	{
+		bool ret = false;
+		char* pBuf;
+		DWORD dwSize;
+		if ( Extract( szSrc, &pBuf, &dwSize ) )
+		{
+			HANDLE hFile = CreateFile( szDst, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL );
+			if ( hFile != INVALID_HANDLE_VALUE )
+			{
+				DWORD dwWritten = 0;
+				if ( WriteFile( hFile, pBuf, dwSize, &dwWritten, NULL ) )
+				{
+					ret = ( dwWritten == dwSize );
+				}
+			}
+			CloseHandle( hFile );
+		}
+		return ret;
+	}
+
+	bool Extract(LPCTSTR szSrc, char** ppBuf, DWORD* pdwSize = NULL) throw()
+	{
+		if ( pdwSize )
+			*pdwSize = 0;
+		*ppBuf = NULL;
+
+		bool ret = false;
+		if ( unzLocateFile( hArchive, CT2CA( szSrc ), 2 ) == UNZ_OK )
+		{
+			unz_file_info fi = {};
+			if ( unzGetCurrentFileInfo( hArchive, &fi, NULL, NULL, NULL, NULL, NULL, NULL ) == UNZ_OK )
+			{
+				if ( unzOpenCurrentFile( hArchive ) == UNZ_OK ) 
+				{
+					if ( pdwSize )
+						*pdwSize = fi.uncompressed_size;
+					*ppBuf = new char[ fi.uncompressed_size + 2 ];
+					if ( *ppBuf )
+					{
+						ZeroMemory( *ppBuf, fi.uncompressed_size + 2 );
+						ret = ( unzReadCurrentFile( hArchive, *ppBuf, fi.uncompressed_size ) == (int)fi.uncompressed_size );
+					}
+					unzCloseCurrentFile( hArchive );
+				}
+			}
+		}
+		return ret;
+	}
+
+protected:
+	unzFile hArchive;
+};
+
 typedef struct 
 {
 	CString sIf;
@@ -68,6 +160,8 @@ bool ProcessReport(const CString& sInput)
 {
 	_tprintf( _T("Processing %s ...\n"), PathFindFileName( sInput ) );
 
+	bool bZip = ( sInput.Find( _T(".zip") ) != -1 );
+
 	CComPtr< IXMLDOMDocument > pFile;
 	HRESULT hr = pFile.CoCreateInstance( CLSID_DOMDocument );
 	if ( FAILED( hr ) )
@@ -77,8 +171,22 @@ bool ProcessReport(const CString& sInput)
 	if ( hr != S_OK )
 		return false;
 
+	CZipHandler pZip;
 	VARIANT_BOOL ret = VARIANT_FALSE;
-	hr = pFile->load( CComVariant( sInput + _T("errorlog.xml") ), &ret );
+	if ( bZip )
+	{
+		if ( ! pZip.Open( sInput ) )
+			return false;
+		char* pBuf = NULL;
+		if ( ! pZip.Extract( _T("errorlog.xml"), &pBuf ) )
+			return false;
+		hr = pFile->loadXML( CComBSTR( pBuf ), &ret );
+		delete [] pBuf;
+	}
+	else
+	{
+		hr = pFile->load( CComVariant( sInput + _T("errorlog.xml") ), &ret );
+	}
 	if ( hr != S_OK || ! ret )
 		return false;
 
@@ -193,6 +301,9 @@ bool ProcessReport(const CString& sInput)
 	if ( i == -1 ) sVersionDate = _T("UNKNOWN");
 	sVersionDate.Trim( _T(" ()") );
 
+	if ( sVersion.IsEmpty() )
+		sVersion = _T("UNKNOWN");
+
 	_tprintf( _T("Version: %ls\n"), sVersion );
 
 	CString sOutput = g_sOutput;
@@ -223,12 +334,20 @@ bool ProcessReport(const CString& sInput)
 	if ( res != ERROR_SUCCESS && res != ERROR_FILE_EXISTS && res != ERROR_ALREADY_EXISTS )
 		return false;
 
-	if ( ! CopyFile( sInput + _T("errorlog.xml"), sOutput + _T("errorlog.xml"), FALSE ) )
-		return false;
-
-	// Опциональные файлы
-	CopyFile( sInput + _T("crashdump.dmp"), sOutput + _T("crashdump.dmp"), FALSE );
-	CopyFile( sInput + _T("settings.reg"), sOutput + _T("settings.reg"), FALSE );
+	if ( bZip )
+	{
+		if ( ! pZip.Extract( _T("errorlog.xml"), sOutput + _T("errorlog.xml") ) )
+			return false;
+		pZip.Extract( _T("crashdump.dmp"), sOutput + _T("crashdump.dmp") );
+		pZip.Extract( _T("settings.reg"), sOutput + _T("settings.reg") );
+	}
+	else
+	{
+		if ( ! CopyFile( sInput + _T("errorlog.xml"), sOutput + _T("errorlog.xml"), FALSE ) )
+			return false;
+		CopyFile( sInput + _T("crashdump.dmp"), sOutput + _T("crashdump.dmp"), FALSE );
+		CopyFile( sInput + _T("settings.reg"), sOutput + _T("settings.reg"), FALSE );
+	}
 
 	return true;
 }
@@ -245,13 +364,21 @@ bool Enum(LPCTSTR szInput, CAtlList< CString >& oDirs)
 	{
 		do 
 		{
-			if ( ( wfa.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY ) != 0 &&
-				*wfa.cFileName != _T('.') )
+			if ( *wfa.cFileName != _T('.') )
 			{
-				ret = true;
+				if ( ( wfa.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY ) != 0 )
+				{
+					ret = true;
 
-				if ( ! Enum( sDir + wfa.cFileName + _T("\\*.*"), oDirs ) )
-					oDirs.AddTail( sDir + wfa.cFileName + _T("\\") );
+					if ( ! Enum( sDir + wfa.cFileName + _T("\\*.*"), oDirs ) )
+						// Add folder without subfolders
+						oDirs.AddTail( sDir + wfa.cFileName + _T("\\") );
+				}
+				else if ( _tcsstr( wfa.cFileName, _T(".zip") ) )
+				{
+					// Add .zip-file
+					oDirs.AddTail( sDir + wfa.cFileName );					
+				}
 			}
 		}
 		while ( FindNextFile( hFF, &wfa ) );

@@ -17,3 +17,5 @@
 #include <atlstr.h>
 #include <atlcoll.h>
 #include <atltime.h>
+
+#include "../zlib/unzip.h"
