@@ -414,9 +414,12 @@ void CHostBrowser::SendRequest()
 		}
 
 		Write( _P("Accept: text/html") );
-		if ( m_nProtocol == PROTOCOL_G1 || m_nProtocol == PROTOCOL_G2 )
+		if ( m_nProtocol == PROTOCOL_G1 ||
+			 m_nProtocol == PROTOCOL_G2 ||
+			 m_nProtocol == PROTOCOL_HTTP )
 			Write( _P(", application/x-gnutella-packets") );
-		if ( m_nProtocol == PROTOCOL_G2 )
+		if ( m_nProtocol == PROTOCOL_G2 ||
+			 m_nProtocol == PROTOCOL_HTTP )
 			Write( _P(", application/x-gnutella2") );
 		Write( _P("\r\n") );
 
