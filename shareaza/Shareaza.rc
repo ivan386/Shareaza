@@ -117,6 +117,7 @@ IDI_COLLECTION          ICON                    "Res\\Collection.ico"
 IDI_COLLECTION_MASK     ICON                    "Res\\CollectionMask.ico"
 IDI_FIREWALLED          ICON                    "Res\\Firewalled.ico"
 IDI_GRANTED             ICON                    "Res\\Granted.ico"
+IDR_BITTORRENT_ICON     ICON                    "res\\Bittorrent.ico"
 IDI_COLORS              ICON                    "res\\colors.ico"
 IDI_UPDOWN_ARROW        ICON                    "Res\\UpDownArrow.ico"
 IDI_HASH                ICON                    "Res\\Hash.ico"
@@ -206,6 +207,7 @@ IDB_BANNER_MARK         BITMAP                  "Res\\BannerMark.bmp"
 IDB_MEDIA_STATES        BITMAP                  "Res\\mediaStates.bmp"
 IDB_TASKPANEL_FOOTER    BITMAP                  "Res\\TaskPanelFooter.bmp"
 IDB_TASKBOX_CAPTION     BITMAP                  "Res\\TaskBoxCaption.bmp"
+IDB_PROTOCOLS           BITMAP                  "Res\\Protocols.bmp"
 IDB_PANEL_MARK          BITMAP                  "Res\\PanelMark.bmp"
 IDB_MUSICBRAINZ_LOGO    BITMAP                  "Res\\MusicBrainz.bmp"
 IDB_CHILDFRAME          BITMAP                  "Res\\ChildFrame.bmp"
@@ -218,26 +220,26 @@ IDB_BOX_MARK            BITMAP                  "Res\\BoxMark.bmp"
 // Dialog
 //
 
-IDD_SCHEDULE_TASK DIALOGEX 0, 0, 260, 329
+IDD_SCHEDULE_TASK DIALOGEX 0, 0, 270, 366
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Schedule Item"
 FONT 8, "Tahoma", 400, 0, 0x0
 BEGIN
-    DEFPUSHBUTTON   "OK",IDOK,66,307,60,16,WS_GROUP
-    PUSHBUTTON      "Cancel",IDCANCEL,133,307,60,16
+    DEFPUSHBUTTON   "OK",IDOK,59,346,60,16,WS_GROUP
+    PUSHBUTTON      "Cancel",IDCANCEL,152,346,60,16
     CONTROL         "Only once",IDC_ONLYONCE,"Button",BS_AUTORADIOBUTTON,14,23,105,10
-    CONTROL         "On specific day(s) of week",IDC_EVERYDAY,"Button",BS_AUTORADIOBUTTON,124,23,122,10
+    CONTROL         "On specific day(s) of week",IDC_EVERYDAY,"Button",BS_AUTORADIOBUTTON,140,23,122,10
     CONTROL         "",IDC_DATE,"SysDateTimePick32",DTS_RIGHTALIGN | DTS_LONGDATEFORMAT | WS_TABSTOP,7,59,132,15
     CONTROL         "",IDC_TIME,"SysDateTimePick32",DTS_RIGHTALIGN | DTS_UPDOWN | WS_TABSTOP | 0x8,171,59,80,15
     CONTROL         "Sunday",IDC_CHECK_SUN,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,96,56,10
-    CONTROL         "Monday",IDC_CHECK_MON,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,72,96,56,10
-    CONTROL         "Tuesday",IDC_CHECK_TUES,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,130,96,56,10
-    CONTROL         "Wednesday",IDC_CHECK_WED,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,189,96,56,10
+    CONTROL         "Monday",IDC_CHECK_MON,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,78,96,56,10
+    CONTROL         "Tuesday",IDC_CHECK_TUES,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,141,96,56,10
+    CONTROL         "Wednesday",IDC_CHECK_WED,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,207,96,56,10
     CONTROL         "Thursday",IDC_CHECK_THU,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,109,56,10
-    CONTROL         " Friday",IDC_CHECK_FRI,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,72,109,56,10
-    CONTROL         "Saturday",IDC_CHECK_SAT,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,130,109,56,10
-    PUSHBUTTON      "All",IDC_BUTTON_ALLDAYS,189,109,56,11
-    COMBOBOX        IDC_EVENTTYPE,7,150,151,80,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    CONTROL         "Friday",IDC_CHECK_FRI,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,78,109,56,10
+    CONTROL         "Saturday",IDC_CHECK_SAT,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,141,109,56,10
+    PUSHBUTTON      "All",IDC_BUTTON_ALLDAYS,205,109,56,11
+    COMBOBOX        IDC_EVENTTYPE,7,150,174,80,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     EDITTEXT        IDC_SCHEDULER_LIMITED,7,172,36,12,ES_AUTOHSCROLL | ES_NUMBER
     CONTROL         "",IDC_SCHEDULER_LIMITED_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,42,172,11,12
     EDITTEXT        IDC_SCHEDULER_LIMITED_DOWN,7,187,36,12,ES_AUTOHSCROLL | ES_NUMBER
@@ -248,17 +250,23 @@ BEGIN
                     "Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,15,217,142,15,WS_EX_TRANSPARENT
     CONTROL         " &Limit network to Gnutella2",IDC_SCHEDULER_LIMITED_NETWORKS,
                     "Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,15,230,142,15,WS_EX_TRANSPARENT
-    EDITTEXT        IDC_DESCRIPTION,7,262,245,14,ES_AUTOHSCROLL
-    CONTROL         "Make this event active",IDC_ACTIVE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,284,245,10
+    EDITTEXT        IDC_DESCRIPTION,7,305,259,14,ES_AUTOHSCROLL
+    CONTROL         "Make this event active",IDC_ACTIVE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,326,245,10
     LTEXT           "Please select a date:",IDC_STATIC,7,47,132,8
     LTEXT           "Please select a time:",IDC_STATIC,171,47,80,8
     LTEXT           "Select the event type:",IDC_STATIC,7,138,243,8
-    LTEXT           "Description: (optional)",IDC_STATIC,7,250,245,8
+    LTEXT           "Description: (optional)",IDC_STATIC,7,293,245,8
     LTEXT           "% of &bandwidth under limit",IDC_STATIC_LIMITED,56,175,195,8
     LTEXT           "% of &download under limit",IDC_STATIC_LIMITED_DOWN,56,190,195,8
     LTEXT           "% of &upload under limit",IDC_STATIC_LIMITED_UP,56,205,195,8
-    GROUPBOX        "Days Of Week",IDC_DAYOFWEEK_GBOX,7,81,244,47
-    GROUPBOX        "Run this event",IDC_STATIC,7,8,244,33
+    GROUPBOX        "Days Of Week",IDC_DAYOFWEEK_GBOX,7,81,259,47
+    GROUPBOX        "Run this event",IDC_STATIC,7,8,259,33
+    GROUPBOX        "Validity Period",IDC_STATIC_VALIDITYPERIOD,8,247,258,44
+    LTEXT           "Set the time period you want the task to be executed after its defined time.",IDC_STATIC_VP_EXPLANATION,12,257,247,16
+    CONTROL         "Disable",IDC_RADIO_VP_DISABLE,"Button",BS_AUTORADIOBUTTON,13,277,39,10
+    CONTROL         "Enable",IDC_RADIO_VP_ENABLE,"Button",BS_AUTORADIOBUTTON,64,277,31,10
+    EDITTEXT        IDC_EDIT_VP_MINUTES,101,275,40,14,ES_NUMBER
+    LTEXT           "Minutes",IDC_STATIC_MINUTES,145,277,26,8
 END
 
 IDD_CONNECT_TO DIALOGEX 0, 0, 242, 120
@@ -1900,7 +1908,7 @@ FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     LTEXT           "Please select:",IDC_STATIC,7,7,243,10
     PUSHBUTTON      "OK",IDOK,143,49,50,14
-    COMBOBOX        IDC_FILE_LIST,7,22,243,150,CBS_DISABLENOSCROLL | CBS_AUTOHSCROLL | CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_FILE_LIST,7,22,243,150,CBS_DROPDOWNLIST | CBS_AUTOHSCROLL | CBS_DISABLENOSCROLL | WS_VSCROLL | WS_TABSTOP
     PUSHBUTTON      "Cancel",IDCANCEL,200,49,50,14
 END
 
@@ -4667,8 +4675,9 @@ BEGIN
     IDC_MEDIA_POSITION      "Seek to a position in the media file.\nSeek"
     IDC_MEDIA_SPEED         "Adjust the speed of the media file.\nSpeed"
     IDC_MEDIA_VOLUME        "Adjust the audio volume.\nVolume"
-	IDS_COMMANDLINE         "Command-line options:\n\n-tray : Disable startup splash screen and send application to tray\n-nosplash : Disable startup splash screen\n-nowarn : Disable alpha (daily builds) version warning dialog\n\nInterface modes:\n\n-basic : Start application in Basic interface mode\n-tabbed : Start application in Tabbed interface mode\n-windowed : Start application in Windowed interface mode\n\nSystem options:\n\n-RegServer : Register internal components for everyone\n-UnRegServer : Un-register internal components for everyone\n-RegServerPerUser : Register internal components for current user\n-UnRegServerPerUser : Un-register internal components for current user"
-	IDS_SCHEMA_LOAD_ERROR   "Failed to load metadata schemas. Please reinstall application."
+    IDS_COMMANDLINE         "Command-line options:\n\n-tray : Disable startup splash screen and send application to tray\n-nosplash : Disable startup splash screen\n-nowarn : Disable alpha (daily builds) version warning dialog\n\nInterface modes:\n\n-basic : Start application in Basic interface mode\n-tabbed : Start application in Tabbed interface mode\n-windowed : Start application in Windowed interface mode\n\nSystem options:\n\n-RegServer : Register internal components for everyone\n-UnRegServer : Un-register internal components for everyone\n-RegServerPerUser : Register internal components for current user\n-UnRegServerPerUser : Un-register internal components for current user"
+    IDS_SCHEMA_LOAD_ERROR   "Failed to load metadata schemas. Please reinstall application."
+    IDS_SCHEDULER_INVALIDVP "Validity Period must be between 1 and 1439 minutes."
 END
 
 STRINGTABLE 

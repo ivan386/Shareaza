@@ -37,15 +37,6 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-const static UINT nImageID[] =
-{
-	IDR_SCHEDULERFRAME,
-	IDI_NOTASK,
-	ID_SCHEDULER_ACTIVATE,
-	ID_SCHEDULER_DEACTIVATE,
-	NULL
-};
-
 IMPLEMENT_SERIAL(CSchedulerWnd, CPanelWnd, 0)
 
 BEGIN_MESSAGE_MAP(CSchedulerWnd, CPanelWnd)
@@ -108,7 +99,13 @@ int CSchedulerWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		LVS_EX_DOUBLEBUFFER|LVS_EX_FULLROWSELECT|LVS_EX_HEADERDRAGDROP|LVS_EX_LABELTIP,
 		LVS_EX_DOUBLEBUFFER|LVS_EX_FULLROWSELECT|LVS_EX_HEADERDRAGDROP|LVS_EX_LABELTIP );
 
-	CoolInterface.LoadIconsTo( m_gdiImageList, nImageID );
+	m_gdiImageList.Create( 16, 16, ILC_MASK|ILC_COLOR32, 3, 1 ) ||
+		m_gdiImageList.Create( 16, 16, ILC_MASK|ILC_COLOR24, 3, 1 ) ||
+		m_gdiImageList.Create( 16, 16, ILC_MASK|ILC_COLOR16, 3, 1 );
+	m_gdiImageList.Add( CoolInterface.ExtractIcon( IDR_SCHEDULERFRAME, FALSE ));
+	m_gdiImageList.Add( CoolInterface.ExtractIcon( IDI_NOTASK, FALSE ));
+	m_gdiImageList.Add( CoolInterface.ExtractIcon( ID_SCHEDULER_ACTIVATE, FALSE ));
+	m_gdiImageList.Add( CoolInterface.ExtractIcon( ID_SCHEDULER_DEACTIVATE, FALSE ));
 	m_wndList.SetImageList( &m_gdiImageList, LVSIL_SMALL );
 
 	m_wndList.InsertColumn( 0, _T("Action"), LVCFMT_LEFT, 250, -1 );
@@ -388,9 +385,6 @@ void CSchedulerWnd::OnSkinChange()
 
 	Settings.LoadList( _T("CSchedulerWnd"), &m_wndList, -3 );
 	Skin.CreateToolBar( _T("CSchedulerWnd"), &m_wndToolBar );
-
-	CoolInterface.LoadIconsTo( m_gdiImageList, nImageID );
-	m_wndList.SetImageList( &m_gdiImageList, LVSIL_SMALL );
 }
 
 BOOL CSchedulerWnd::PreTranslateMessage(MSG* pMsg) 
@@ -423,7 +417,7 @@ void CSchedulerWnd::OnUpdateSchedulerDeactivate(CCmdUI* pCmdUI)
 		return;
 	}
 
-	pCmdUI->Enable( (m_wndList.GetSelectedCount() > 0 ) && (pSchTask->m_bActive));
+	pCmdUI->Enable( ( m_wndList.GetSelectedCount() > 0 ) && ( pSchTask->m_bActive ));
 }
 
 void CSchedulerWnd::OnSchedulerDeactivate()
@@ -436,8 +430,6 @@ void CSchedulerWnd::OnSchedulerDeactivate()
 		return;
 
 	pSchTask->m_bActive = false;
-
-	//PUT HERE (MoJo)
 
 	Update();
 }
@@ -454,7 +446,7 @@ void CSchedulerWnd::OnUpdateSchedulerActivate(CCmdUI* pCmdUI)
 		return;
 	}
 
-	pCmdUI->Enable( (m_wndList.GetSelectedCount() > 0 ) && (!pSchTask->m_bActive));
+	pCmdUI->Enable( ( m_wndList.GetSelectedCount() > 0 ) && ( !pSchTask->m_bActive ));
 }
 
 void CSchedulerWnd::OnSchedulerActivate()
@@ -466,7 +458,7 @@ void CSchedulerWnd::OnSchedulerActivate()
 
 	if ( ! pSchTask ) return;
 
-	if (!Scheduler.IsScheduledTimePassed( pSchTask ) || pSchTask->m_bSpecificDays)
+	if ( Scheduler.MinutesPassed( pSchTask ) < 0 || pSchTask->m_bSpecificDays )
 	{
 		pSchTask->m_bActive = true;
 		pSchTask->m_bExecuted = false;
@@ -523,7 +515,6 @@ void CSchedulerWnd::OnSchedulerExport()
 
 	if ( ! pFile.Open( dlg.GetPathName(), CFile::modeWrite|CFile::modeCreate ) )
 	{
-		// TODO: Error
 		AfxMessageBox(_T("Error: Can not open file to export Scheduler list."),MB_ICONSTOP|MB_OK );
 		return;
 	}
@@ -535,13 +526,18 @@ void CSchedulerWnd::OnSchedulerExport()
 
 	pXML->AddAttribute( _T("xmlns"), CScheduler::xmlns );
 
+	CString strValue; 
+	strValue.Format(_T("%i"), SCHEDULER_SER_VERSION);
+	pXML->AddAttribute( _T("version"), strValue );
+
+
 	for ( int nItem = -1 ; ( nItem = m_wndList.GetNextItem( nItem, LVIS_SELECTED ) ) >= 0 ; )
 	{
 		CQuickLock oLock( Scheduler.m_pSection );
 
 		if ( CScheduleTask* pTask = GetItem( nItem ) )
 		{
-			pXML->AddElement( pTask->ToXML() );
+			pXML->AddElement( pTask->ToXML(SCHEDULER_SER_VERSION) );
 		}
 	}
 
