@@ -177,26 +177,25 @@ BOOL CShareazaURL::Parse(LPCTSTR pszURL, BOOL bResolve)
 
 BOOL CShareazaURL::ParseRoot(LPCTSTR pszURL, BOOL bResolve)
 {
-	if ( ParseHTTP( pszURL, bResolve ) )			// http://
+	if ( _tcsncmp( pszURL, _T("http://"), 7 ) == 0 )		// http://
 	{
-		return TRUE;
+		return ParseHTTP( pszURL, bResolve );
 	}
-	else if ( ParseFTP( pszURL, bResolve ) )		// ftp://
+	else if ( _tcsncmp( pszURL, _T("ftp://"), 6 ) == 0 )	// ftp://
 	{
-		return TRUE;
+		return ParseFTP( pszURL, bResolve );
 	}
-	else if ( ParseED2KFTP( pszURL, bResolve ) )	// ed2kftp://
+	else if ( _tcsnicmp( pszURL, _T("ed2kftp://"), 10 ) == 0 )	// ed2kftp://
 	{
-		return TRUE;
+		return ParseED2KFTP( pszURL, bResolve );
 	}
-	else if ( ParseBTC( pszURL, bResolve ) )		// btc://
+	else if ( _tcsnicmp( pszURL, _T("btc://"), 6 ) == 0 )	// btc://
 	{
-		return TRUE;
+		return ParseBTC( pszURL, bResolve );
 	}
 	else if ( _tcsnicmp( pszURL, _T("magnet:?"), 8 ) == 0 )
 	{
-		pszURL += 8;
-		return ParseMagnet( pszURL );
+		return ParseMagnet( pszURL + 8 );
 	}
 	else if ( _tcsnicmp( pszURL, _T("foxy:"), 5 ) == 0 )	// Foxy
 	{
@@ -248,6 +247,13 @@ BOOL CShareazaURL::ParseRoot(LPCTSTR pszURL, BOOL bResolve)
 	{
 		return ParseShareaza( pszURL );
 	}
+	else if ( _tcsnicmp( pszURL, _T("dchub://"), 8 ) == 0 )	// dchub://1.2.3.4:411
+	{
+		SkipSlashes( pszURL, 8 );
+		m_nPort = DC_DEFAULT_PORT;
+		m_nProtocol	= PROTOCOL_DC;
+		return ParseShareazaHost( pszURL, FALSE );
+	}
 
 	Clear();
 
@@ -259,8 +265,6 @@ BOOL CShareazaURL::ParseRoot(LPCTSTR pszURL, BOOL bResolve)
 
 BOOL CShareazaURL::ParseHTTP(LPCTSTR pszURL, BOOL bResolve)
 {
-	if ( _tcsncmp( pszURL, _T("http://"), 7 ) != 0 ) return FALSE;
-
 	Clear();
 
 	CString strURL = pszURL + 7;
@@ -334,8 +338,6 @@ BOOL CShareazaURL::ParseFTP(LPCTSTR pszURL, BOOL bResolve)
 	// URI format
 	// ftp://[user[:password]@]host[:port][/path]
 
-	if ( _tcsncmp( pszURL, _T("ftp://"), 6 ) != 0 ) return FALSE;
-
 	Clear();
 
 	CString strURL ( pszURL + 6 );
@@ -406,8 +408,6 @@ BOOL CShareazaURL::ParseFTP(LPCTSTR pszURL, BOOL bResolve)
 
 BOOL CShareazaURL::ParseED2KFTP(LPCTSTR pszURL, BOOL bResolve)
 {
-	if ( _tcsnicmp( pszURL, _T("ed2kftp://"), 10 ) != 0 ) return FALSE;
-
 	Clear();
 
 	CString strURL = pszURL + 10;
@@ -467,8 +467,6 @@ BOOL CShareazaURL::ParseED2KFTP(LPCTSTR pszURL, BOOL bResolve)
 
 BOOL CShareazaURL::ParseBTC(LPCTSTR pszURL, BOOL bResolve)
 {
-	if ( _tcsnicmp( pszURL, _T("btc://"), 6 ) != 0 ) return FALSE;
-
 	Clear();
 
 	CString strURL = pszURL + 6;

@@ -86,6 +86,8 @@ protected:
 	afx_msg void OnHostcacheBTCache();
 	afx_msg void OnUpdateHostcacheKADCache(CCmdUI* pCmdUI);
 	afx_msg void OnHostcacheKADCache();
+	afx_msg void OnUpdateHostcacheDCCache(CCmdUI* pCmdUI);
+	afx_msg void OnHostcacheDCCache();
 	afx_msg void OnHostcacheImport();
 	afx_msg void OnHostcacheEd2kDownload();
 	afx_msg void OnUpdateHostcachePriority(CCmdUI* pCmdUI);

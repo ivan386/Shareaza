@@ -164,7 +164,18 @@ CNeighbour* CNeighboursWithConnect::ConnectTo(
 		}
 		delete pNeighbour;
 
-	} // The computer at the IP address we have is running Gnutella or Gnutella2 software
+	}
+	else if ( nProtocol == PROTOCOL_DC )
+	{
+		/*CDCNeighbour* pNeighbour = new CDCNeighbour();
+		if ( pNeighbour->ConnectTo( &pAddress, nPort, bAutomatic ) )
+		{
+			// Started connecting to an ed2k neighbour
+			return pNeighbour;
+		}
+		delete pNeighbour;*/
+	}
+	// The computer at the IP address we have is running Gnutella or Gnutella2 software
 	else
 	{
 		// Make a new CShakeNeighbour object, connect it to the IP address, and return a pointer to it

@@ -418,6 +418,7 @@
 		<button id="ID_HOSTCACHE_ED2K_CACHE" text="eDonkey Cache"/>
 		<button id="ID_HOSTCACHE_BT_CACHE" text="BitTorrent Cache"/>
 		<button id="ID_HOSTCACHE_KAD_CACHE" text="Kademlia Cache"/>
+		<button id="ID_HOSTCACHE_DC_CACHE" text="DC++ Cache"/>
 	</toolbar>
 	<!-- PRIVATE CHAT FRAME -->
 	<toolbar name="CPrivateChatFrame">
@@ -888,6 +889,7 @@
 			<item id="ID_HOSTCACHE_ED2K_CACHE" text="_eDonkey Servers"/>
 			<item id="ID_HOSTCACHE_BT_CACHE" text="_BitTorrent Cache"/>
 			<item id="ID_HOSTCACHE_KAD_CACHE" text="_Kademlia Cache"/>
+			<item id="ID_HOSTCACHE_DC_CACHE" text="_DC++ Cache"/>
 		</menu>
 		<separator/>
 		<item id="ID_HOSTCACHE_IMPORT" text="_Import MET File..."/>

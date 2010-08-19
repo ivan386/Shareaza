@@ -374,23 +374,9 @@ void CCoolInterface::LoadIconsTo(CImageList& pImageList, const UINT nID[], BOOL 
 	}
 }
 
-static const UINT nProtocolID[] =
-{
-	ID_NETWORK_NULL,
-	ID_NETWORK_G1,
-	ID_NETWORK_G2,
-	ID_NETWORK_ED2K,
-	ID_NETWORK_HTTP,
-	ID_NETWORK_FTP,
-	ID_NETWORK_BT,
-	ID_NETWORK_KAD,
-	ID_NETWORK_DC,
-	NULL
-};
-
 void CCoolInterface::LoadProtocolIconsTo(CImageList& pImageList, BOOL bMirror, int cx)
 {
-	LoadIconsTo( pImageList, nProtocolID, bMirror, cx );
+	LoadIconsTo( pImageList, protocolIDs, bMirror, cx );
 }
 
 //////////////////////////////////////////////////////////////////////

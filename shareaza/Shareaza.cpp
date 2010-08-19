@@ -1393,6 +1393,7 @@ BOOL CShareazaApp::InternalURI(LPCTSTR pszURI)
 				strURI.Find( _T("gnutella2:") ) == 0 ||
 				strURI.Find( _T("mp2p:") ) == 0 ||
 				strURI.Find( _T("ed2k:") ) == 0 ||
+				strURI.Find( _T("dchub://") ) == 0 ||
 				strURI.Find( _T("sig2dat:") ) == 0 )
 	{
 		ShellExecute( pMainWnd->GetSafeHwnd(), _T("open"), strURI,

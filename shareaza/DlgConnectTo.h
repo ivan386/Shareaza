@@ -43,7 +43,7 @@ public:
 	CString		m_sHost;
 	BOOL		m_bNoUltraPeer;
 	int			m_nPort;
-	int			m_nProtocol;
+	PROTOCOLID	m_nProtocol;
 
 protected:
 	CImageList	m_gdiProtocols;
@@ -52,6 +52,7 @@ protected:
 	void		LoadItem(int nItem);
 	BOOL		UpdateItems();
 	void		SaveItems();
+	BOOL		UpdateData(BOOL bSaveAndValidate = TRUE);
 
 	virtual void DoDataExchange(CDataExchange* pDX);
 	virtual BOOL OnInitDialog();

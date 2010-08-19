@@ -277,6 +277,7 @@ public:
 	CHostCacheList	G1DNA;
 	CHostCacheList	BitTorrent;
 	CHostCacheList	Kademlia;
+	CHostCacheList	DC;
 
 	BOOL				Load();
 	BOOL				Save();
@@ -313,10 +314,8 @@ public:
 			return &BitTorrent;
 		case PROTOCOL_KAD:
 			return &Kademlia;
-		case PROTOCOL_NULL:
-		case PROTOCOL_ANY:
-		case PROTOCOL_HTTP:
-		case PROTOCOL_FTP:
+		case PROTOCOL_DC:
+			return &DC;
 		default:
 			ASSERT(FALSE);
 			return NULL;

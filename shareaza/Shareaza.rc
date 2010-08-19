@@ -4419,6 +4419,7 @@ BEGIN
     ID_HELP_GUIDE           "Visit the Shareaza Users Guide."
     ID_SEARCH_CHAT          "Open a chat session with the selected user."
     ID_HOSTCACHE_KAD_CACHE  "Show Kademlia cached hosts."
+    ID_HOSTCACHE_DC_CACHE   "Show DC++ cached hubs."
     ID_TRAFFIC_GRID         "Display grid lines."
     ID_TRAFFIC_AXIS         "Display Vertical Axis"
 END

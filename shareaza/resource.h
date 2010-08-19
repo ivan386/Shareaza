@@ -1668,6 +1668,7 @@
 #define ID_TRAFFIC_SETUP                32865
 #define ID_TRAFFIC_CLEAR                32866
 #define ID_TOOLS_WIZARD                 32867
+#define ID_HOSTCACHE_DC_CACHE           32868
 #define ID_CHILD_RESTORE                32869
 #define ID_CHILD_CLOSE                  32870
 #define ID_CHILD_MAXIMISE               32871

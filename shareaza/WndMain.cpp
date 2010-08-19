@@ -1682,7 +1682,7 @@ void CMainWnd::OnNetworkConnectTo()
 	if ( dlg.DoModal() != IDOK )
 		return;
 
-	Network.ConnectTo( dlg.m_sHost, dlg.m_nPort, PROTOCOLID( dlg.m_nProtocol + 1 ), dlg.m_bNoUltraPeer );
+	Network.ConnectTo( dlg.m_sHost, dlg.m_nPort, dlg.m_nProtocol, dlg.m_bNoUltraPeer );
 }
 
 void CMainWnd::OnNetworkBrowseTo()
@@ -1694,7 +1694,7 @@ void CMainWnd::OnNetworkBrowseTo()
 	SOCKADDR_IN pAddress = {};
 	if ( Network.Resolve( dlg.m_sHost, dlg.m_nPort, &pAddress ) )
 	{
-		new CBrowseHostWnd( PROTOCOLID( dlg.m_nProtocol + 1 ), &pAddress );
+		new CBrowseHostWnd( dlg.m_nProtocol, &pAddress );
 	}
 }
 
@@ -1707,7 +1707,7 @@ void CMainWnd::OnNetworkChatTo()
 	SOCKADDR_IN pAddress = {};
 	if ( Network.Resolve( dlg.m_sHost, dlg.m_nPort, &pAddress ) )
 	{
-		ChatWindows.OpenPrivate( Hashes::Guid(), &pAddress, FALSE, PROTOCOLID( dlg.m_nProtocol + 1 ) );
+		ChatWindows.OpenPrivate( Hashes::Guid(), &pAddress, FALSE, dlg.m_nProtocol );
 	}
 }
 

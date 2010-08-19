@@ -161,6 +161,7 @@
 	<resource code="32865" id="ID_TRAFFIC_SETUP"/>
 	<resource code="32866" id="ID_TRAFFIC_CLEAR"/>
 	<resource code="32867" id="ID_TOOLS_WIZARD"/>
+	<resource code="32868" id="ID_HOSTCACHE_DC_CACHE"/>
 	<resource code="32869" id="ID_CHILD_RESTORE"/>
 	<resource code="32870" id="ID_CHILD_CLOSE"/>
 	<resource code="32871" id="ID_CHILD_MAXIMISE"/>

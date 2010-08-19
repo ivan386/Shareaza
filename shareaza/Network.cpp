@@ -285,12 +285,28 @@ BOOL CNetwork::ConnectTo(LPCTSTR pszAddress, int nPort, PROTOCOLID nProtocol, BO
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 
-	if ( ! IsConnected() && ! Connect() ) return FALSE;
+	if ( ! IsConnected() && ! Connect() )
+		return FALSE;
 
-	if ( nPort == 0 ) nPort = GNUTELLA_DEFAULT_PORT;
+	if ( nPort == 0 )
+	{
+		switch ( nProtocol )
+		{
+		case PROTOCOL_ED2K:
+			nPort = ED2K_DEFAULT_PORT;
+			break;
+		case PROTOCOL_DC:
+			nPort = DC_DEFAULT_PORT;
+			break;
+		default:
+			nPort = GNUTELLA_DEFAULT_PORT;
+		}
+	}
+
 	theApp.Message( MSG_INFO, IDS_NETWORK_RESOLVING, pszAddress );
 
-	if ( AsyncResolve( pszAddress, (WORD)nPort, nProtocol, bNoUltraPeer ? 2 : 1 ) ) return TRUE;
+	if ( AsyncResolve( pszAddress, (WORD)nPort, nProtocol, bNoUltraPeer ? 2 : 1 ) )
+		return TRUE;
 
 	theApp.Message( MSG_ERROR, IDS_NETWORK_RESOLVE_FAIL, pszAddress );
 

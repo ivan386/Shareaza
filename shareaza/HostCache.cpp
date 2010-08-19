@@ -51,6 +51,7 @@ CHostCache::CHostCache() :
 	G1DNA( PROTOCOL_G1 ),
 	BitTorrent( PROTOCOL_BT ),
 	Kademlia( PROTOCOL_KAD ),
+	DC( PROTOCOL_DC ),
 	m_tLastPruneTime( 0 )
 {
 	m_pList.AddTail( &Gnutella1 );
@@ -59,6 +60,7 @@ CHostCache::CHostCache() :
 	m_pList.AddTail( &G1DNA );
 	m_pList.AddTail( &BitTorrent );
 	m_pList.AddTail( &Kademlia );
+	m_pList.AddTail( &DC );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -1196,6 +1198,7 @@ CNeighbour* CHostCacheHost::ConnectTo(BOOL bAutomatic)
 	case PROTOCOL_G1:
 	case PROTOCOL_G2:
 	case PROTOCOL_ED2K:
+	case PROTOCOL_DC:
 		return Neighbours.ConnectTo( m_pAddress, m_nPort, m_nProtocol, bAutomatic );
 	case PROTOCOL_KAD:
 		{
@@ -1245,6 +1248,7 @@ bool CHostCacheHost::IsExpired(const DWORD tNow) const
 	case PROTOCOL_G2:
 		return m_tSeen && ( tNow - m_tSeen > Settings.Gnutella2.HostExpire );
 	case PROTOCOL_ED2K:
+	case PROTOCOL_DC:
 		return false;	// Never
 	case PROTOCOL_BT:
 		return m_tSeen && ( tNow - m_tSeen > Settings.BitTorrent.DhtPruneTime );
@@ -1367,6 +1371,7 @@ bool CHostCacheHost::CanQuery(const DWORD tNow) const
 		// Don't query too fast
 		return ( tNow - m_tQuery ) >= 90u;
 
+	case PROTOCOL_DC:
 	case PROTOCOL_KAD:
 		// Online
 		if ( ! Network.IsConnected() ) return false;

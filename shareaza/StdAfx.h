@@ -344,23 +344,32 @@ enum PROTOCOLID
 	PROTOCOL_LAST = 9
 };
 
-struct ProtocolCmdIDMapEntry
+const LPCTSTR protocolNames[] =
 {
-	BYTE	protocol;
-	DWORD	commandID;
+	_T(""),
+	_T("Gnutella"),
+	_T("Gnutella2"),
+	_T("eDonkey2000"),
+	_T("HTTP"),
+	_T("FTP"),
+	_T("BitTorrent"),
+	_T("Kademlia"),
+	_T("DC++")
 };
 
-const ProtocolCmdIDMapEntry protocolCmdMap[] =
+// Protocol resource IDs (for icons)
+const UINT protocolIDs[] =
 {
-	{ PROTOCOL_NULL,	ID_NETWORK_NULL },
-	{ PROTOCOL_G1,		ID_NETWORK_G1 },
-	{ PROTOCOL_G2,		ID_NETWORK_G2 },
-	{ PROTOCOL_ED2K,	ID_NETWORK_ED2K },
-	{ PROTOCOL_HTTP,	ID_NETWORK_HTTP },
-	{ PROTOCOL_FTP,		ID_NETWORK_FTP },
-	{ PROTOCOL_BT,		ID_NETWORK_BT },
-	{ PROTOCOL_KAD,		ID_NETWORK_KAD },
-	{ PROTOCOL_DC,		ID_NETWORK_DC }
+	ID_NETWORK_NULL,
+	ID_NETWORK_G1,
+	ID_NETWORK_G2,
+	ID_NETWORK_ED2K,
+	ID_NETWORK_HTTP,
+	ID_NETWORK_FTP,
+	ID_NETWORK_BT,
+	ID_NETWORK_KAD,
+	ID_NETWORK_DC,
+	NULL
 };
 
 inline PROTOCOLID& operator++(PROTOCOLID& arg)

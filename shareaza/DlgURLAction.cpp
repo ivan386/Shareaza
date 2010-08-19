@@ -322,7 +322,7 @@ void CURLActionDlg::OnUrlDownload()
 	}
 	else if ( m_pURL->m_nAction == CShareazaURL::uriHost )
 	{
-		Network.ConnectTo( m_pURL->m_sName, m_pURL->m_nPort );
+		Network.ConnectTo( m_pURL->m_sName, m_pURL->m_nPort, m_pURL->m_nProtocol );
 	}
 	else if ( m_pURL->m_nAction == CShareazaURL::uriDonkeyServer )
 	{

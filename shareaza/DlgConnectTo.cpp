@@ -56,7 +56,7 @@ CConnectToDlg::CConnectToDlg(CWnd* pParent, Type nType)
 	: CSkinDialog	( CConnectToDlg::IDD, pParent )
 	, m_bNoUltraPeer( FALSE )
 	, m_nPort		( GNUTELLA_DEFAULT_PORT )
-	, m_nProtocol	( 1 )							// G2 Protocol
+	, m_nProtocol	( PROTOCOL_G2 )
 	, m_nType		( nType )
 {
 }
@@ -73,7 +73,6 @@ void CConnectToDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_CBString(pDX, IDC_CONNECT_HOST, m_sHost);
 	DDX_Check(pDX, IDC_CONNECT_ULTRAPEER, m_bNoUltraPeer);
 	DDX_Text(pDX, IDC_CONNECT_PORT, m_nPort);
-	DDX_CBIndex(pDX, IDC_CONNECT_PROTOCOL, m_nProtocol);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -92,6 +91,16 @@ BOOL CConnectToDlg::OnInitDialog()
 	SelectCaption( &m_wndPrompt, (int)m_nType );
 
 	CoolInterface.LoadProtocolIconsTo( m_gdiProtocols );
+
+	m_wndProtocol.ResetContent();
+	m_wndProtocol.SetItemData(
+		m_wndProtocol.AddString( protocolNames[ PROTOCOL_G1 ] ), PROTOCOL_G1 );
+	m_wndProtocol.SetItemData(
+		m_wndProtocol.AddString( protocolNames[ PROTOCOL_G2 ] ), PROTOCOL_G2 );
+	m_wndProtocol.SetItemData(
+		m_wndProtocol.AddString( protocolNames[ PROTOCOL_ED2K ] ), PROTOCOL_ED2K );
+	m_wndProtocol.SetItemData(
+		m_wndProtocol.AddString( protocolNames[ PROTOCOL_DC ] ), PROTOCOL_DC );
 
 	m_wndAdvanced.ShowWindow( ( m_nType != Connect ) ? SW_HIDE : SW_SHOW );
 	m_wndUltrapeer.ShowWindow( ( m_nType != Connect ) ? SW_HIDE : SW_SHOW );
@@ -122,7 +131,8 @@ BOOL CConnectToDlg::OnInitDialog()
 				pData->nPort <= 65535 &&
 				( pData->nProtocol == PROTOCOL_G1 ||
 				  pData->nProtocol == PROTOCOL_G2 ||
-				  pData->nProtocol == PROTOCOL_ED2K ) &&
+				  pData->nProtocol == PROTOCOL_ED2K ||
+				  pData->nProtocol == PROTOCOL_DC ) &&
 				m_wndHost.FindStringExact( -1, pData->sHost ) == CB_ERR )
 			{
 				int nIndex = m_wndHost.AddString( pData->sHost );
@@ -161,9 +171,9 @@ void CConnectToDlg::LoadItem(int nItem)
 	{
 		m_sHost		= pData->sHost;
 		m_nPort		= pData->nPort;
-		m_nProtocol	= pData->nProtocol - 1;
+		m_nProtocol	= pData->nProtocol;
 	}
-	m_wndUltrapeer.EnableWindow( ( m_nProtocol + 1 ) == PROTOCOL_G1 );
+	m_wndUltrapeer.EnableWindow( m_nProtocol == PROTOCOL_G1 );
 	UpdateData( FALSE );
 }
 
@@ -180,7 +190,7 @@ void CConnectToDlg::OnCbnSelchangeConnectProtocol()
 {
 	if ( ! UpdateData () ) return;
 
-	m_wndUltrapeer.EnableWindow( ( m_nProtocol + 1 ) == PROTOCOL_G1 );
+	m_wndUltrapeer.EnableWindow( m_nProtocol == PROTOCOL_G1 );
 }
 
 void CConnectToDlg::OnMeasureItem(int /*nIDCtl*/, LPMEASUREITEMSTRUCT lpMeasureItemStruct)
@@ -213,7 +223,7 @@ void CConnectToDlg::OnDrawItem(int /*nIDCtl*/, LPDRAWITEMSTRUCT lpDrawItemStruct
 		? COLOR_HIGHLIGHT : COLOR_WINDOW ) );
 	dc.SetBkMode( TRANSPARENT );
 
-	m_gdiProtocols.Draw( &dc, lpDrawItemStruct->itemID + 1, pt,
+	m_gdiProtocols.Draw( &dc, lpDrawItemStruct->itemData, pt,
 		( lpDrawItemStruct->itemState & ODS_SELECTED ) ? ILD_SELECTED : ILD_NORMAL );
 
 	m_wndProtocol.GetLBText( lpDrawItemStruct->itemID, str );
@@ -260,7 +270,7 @@ BOOL CConnectToDlg::UpdateItems()
 		CONNECT_HOST_DATA* pData = static_cast< CONNECT_HOST_DATA* >( m_wndHost.GetItemDataPtr( nItem ) );
 		ASSERT( pData != NULL && reinterpret_cast< INT_PTR >( pData ) != -1 );
 		pData->nPort = m_nPort;
-		pData->nProtocol = (PROTOCOLID)( m_nProtocol + 1 );
+		pData->nProtocol = m_nProtocol;
 		if( m_wndHost.GetCurSel() != nItem ) m_wndHost.SetCurSel( nItem );
 	}
 	else
@@ -272,7 +282,7 @@ BOOL CConnectToDlg::UpdateItems()
 		{
 			pData->sHost = m_sHost;
 			pData->nPort = m_nPort;
-			pData->nProtocol = (PROTOCOLID)( m_nProtocol + 1 );
+			pData->nProtocol = m_nProtocol;
 			nItem = m_wndHost.AddString( pData->sHost );
 			ASSERT( nItem != CB_ERR );
 			VERIFY( m_wndHost.SetItemDataPtr( nItem, pData ) != CB_ERR );
@@ -281,6 +291,28 @@ BOOL CConnectToDlg::UpdateItems()
 	}
 
 	return TRUE;
+}
+
+BOOL CConnectToDlg::UpdateData(BOOL bSaveAndValidate)
+{
+	if ( bSaveAndValidate )
+	{
+		m_nProtocol = (PROTOCOLID)m_wndProtocol.GetItemData( m_wndProtocol.GetCurSel() );
+	}
+	else
+	{
+		int nIndex = 0;
+		for ( int i = 0; i < m_wndProtocol.GetCount(); i++ )
+		{
+			if ( (PROTOCOLID)m_wndProtocol.GetItemData( i ) == m_nProtocol )
+			{
+				nIndex = i;
+				break;
+			}
+		}
+		m_wndProtocol.SetCurSel( nIndex );
+	}
+	return CSkinDialog::UpdateData( bSaveAndValidate );
 }
 
 void CConnectToDlg::SaveItems()
