@@ -167,7 +167,7 @@ public:
 	DWORD		m_nSpeed;
 	CString		m_sSpeed;
 	int			m_nRating;				// Total value of all ratings
-	int			m_nRated;				// Number of ratings recieved
+	int			m_nRated;				// Number of ratings received
 	BOOL		m_bDRM;					// Appears to have DRM
 	BOOL		m_bSuspicious;			// Appears to be a suspicious file (small exe, vbs, etc)
 	BOOL		m_bCollection;			// Appears to be a collection
@@ -215,7 +215,6 @@ public:
 
 //	int			GetRating() const;
 	DWORD		Filter();
-	void		Added(CQueryHit* pHit);
 	void		ClearNew();
 
 	// Access to Hits list first element.
@@ -226,7 +225,9 @@ public:
 	// Use with CAUTION. If Hit was changed then certainly call RefreshStatus().
 	CQueryHit*	GetBest() const;
 
-	// Refresh file status (name, uri, etc.) in accord with Hits list
+	// Refresh file status in accord with Hits list. Updates:
+	// m_sName, m_sURL, m_nRating, m_nRated, m_nFiltered, m_nSources,
+	// m_nSpeed and m_sSpeed members.
 	void		RefreshStatus();
 
 	// Count bogus status setted Hits
@@ -299,7 +300,7 @@ protected:
 	CQueryHit*	m_pHits;
 	CQueryHit*	m_pBest;
 	TRISTATE	m_bLibraryStatus;
-
-protected:
 	TRISTATE	m_bExisting;
+
+	void		Added(CQueryHit* pHit);
 };

@@ -121,7 +121,7 @@ protected:
 
 // Inlines
 public:
-	inline int GetSources() const
+	inline DWORD GetSources() const
 	{
 		return m_nHitSources;
 	}

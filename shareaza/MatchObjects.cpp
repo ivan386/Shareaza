@@ -1492,12 +1492,35 @@ CMatchFile::~CMatchFile()
 
 void CMatchFile::RefreshStatus()
 {
+#ifdef _DEBUG
+	DWORD nTotal = 0;
+#endif // _DEBUG
+
+	m_nRating = 0;
+	m_nRated = 0;
+	m_nFiltered = 0;
+	m_nSources = 0;
+	m_nSpeed = 0;
+	m_sSpeed.Empty();
+
 	CMap< CString, const CString&, DWORD, DWORD > oNameRatings;
 	oNameRatings.InitHashTable( GetBestHashTableSize( m_nTotal ) );
 
 	DWORD nBestVote = 0;
 	for ( CQueryHit* pHit = m_pHits ; pHit ; pHit = pHit->m_pNext )
 	{
+		if ( pHit->m_nRating )
+		{
+			m_nRating += pHit->m_nRating;
+			m_nRated ++;
+		}
+		if ( pHit->m_bFiltered )
+		{
+			m_nFiltered ++;
+		}
+		m_nSources = max( m_nSources, pHit->GetSources() );
+		m_nSpeed += pHit->m_nSpeed;
+
 		DWORD nVote = 0;
 		oNameRatings.Lookup( pHit->m_sName, nVote );
 		oNameRatings [pHit->m_sName] = ++nVote;
@@ -1507,7 +1530,18 @@ void CMatchFile::RefreshStatus()
 			m_sName = pHit->m_sName;
 			m_sURL = pHit->m_sURL;
 		}
+
+#ifdef _DEBUG
+		nTotal ++;
+#endif // _DEBUG
 	}
+
+	m_nSources = max( m_nSources, m_nTotal );
+
+	if ( m_nFiltered && m_nSpeed )
+		m_sSpeed = Settings.SmartSpeed( m_nSpeed / m_nFiltered, KiloBytes );
+
+	ASSERT( m_nTotal == nTotal );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -1553,16 +1587,8 @@ BOOL CMatchFile::Add(CQueryHit* pHit, BOOL bForce)
 			if ( bName && pHit->m_pAddress.S_un.S_addr == pOld->m_pAddress.S_un.S_addr &&
 				 pHit->m_nPort == pOld->m_nPort )
 			{
-				if ( pOld->m_bFiltered )
-				{
-					m_nFiltered --;
-					m_nSources -= pOld->GetSources();
-					m_nSpeed -= pOld->m_nSpeed;
-				}
-
 				*pOld = *pHit;
 				delete pHit;
-
 				pHit = pOld;
 				bForce = bSubstituted = TRUE;
 				break;
@@ -1689,16 +1715,10 @@ DWORD CMatchFile::Filter()
 	m_bPush			= TRI_UNKNOWN;
 	m_bStable		= TRI_UNKNOWN;
 	m_bPreview		= FALSE;
-	m_nSpeed		= 0;
-	m_nRating		= 0;
-	m_nRated		= 0;
 	m_bDRM			= FALSE;
 	m_bSuspicious	= FALSE;
 	m_bCollection	= FALSE;
 	m_bTorrent		= FALSE;
-
-	m_nFiltered		= 0;
-	m_nSources		= 0;
 	m_pBest			= NULL;
 
 	for ( CQueryHit* pHit = m_pHits ; pHit ; pHit = pHit->m_pNext )
@@ -1713,6 +1733,8 @@ DWORD CMatchFile::Filter()
 		}
 	}
 
+	RefreshStatus();
+
 	return GetItemCount();
 }
 
@@ -1722,15 +1744,6 @@ DWORD CMatchFile::Filter()
 void CMatchFile::Added(CQueryHit* pHit)
 {
 	m_pBest = pHit;
-
-	m_nFiltered ++;
-	m_nSources += pHit->GetSources();
-	m_nSpeed += pHit->m_nSpeed;
-
-	if ( m_nFiltered && m_nSpeed )
-		m_sSpeed = Settings.SmartSpeed( m_nSpeed / m_nFiltered, KiloBytes );
-	else
-		m_sSpeed.Empty();
 
 	if ( pHit->GetSources() > 0 )
 	{
@@ -1753,12 +1766,6 @@ void CMatchFile::Added(CQueryHit* pHit)
 	}
 
 	m_bCollection	|= ( pHit->m_bCollection && ! pHit->m_bBogus );
-
-	if ( pHit->m_nRating )
-	{
-		m_nRating += pHit->m_nRating;
-		m_nRated ++;
-	}
 
 	if ( m_nShellIndex == -1 )
 	{
@@ -1907,40 +1914,35 @@ void CMatchFile::ClearNew()
 
 int CMatchFile::Compare(CMatchFile* pFile) const
 {
+	LPCTSTR pszA, pszB;
 	register int x, y;
-
-	/*
-	if ( m_bCollection != pFile->m_bCollection )
-	{
-		return m_bCollection ? -m_pList->m_bSortDir : m_pList->m_bSortDir;
-	}
-	*/
 
 	switch ( m_pList->m_nSortColumn )
 	{
 	case MATCH_COL_NAME:
 		x = _tcsicoll( m_sName, pFile->m_sName );
-		if ( ! x ) return 0;
-		return x > 0 ? 1 : -1;
+		break;
 
 	case MATCH_COL_TYPE:
-		{
-			LPCTSTR pszType1 = _tcsrchr( m_sName, '.' );
-			LPCTSTR pszType2 = _tcsrchr( pFile->m_sName, '.' );
-			if ( ! pszType1 ) return ( pszType2 ? -1 : 0 );
-			if ( ! pszType2 ) return 1;
-			x = _tcsicmp( pszType1, pszType2 );
-			if ( ! x ) return 0;
-			return x > 0 ? 1 : -1;
-		}
+		pszA = _tcsrchr( m_sName, '.' );
+		pszB = _tcsrchr( pFile->m_sName, '.' );
+		if ( ! pszA )
+			x = ( pszB ? -1 : 0 );
+		else if ( ! pszB )
+			x = 1;
+		else
+			x = _tcsicmp( pszA, pszB );
+		break;
 
 	case MATCH_COL_SIZE:
-		return m_nSize == pFile->m_nSize ? 0 : ( m_nSize > pFile->m_nSize ? 1 : -1 );
+		x = ( m_nSize == pFile->m_nSize ) ? 0 : ( ( m_nSize > pFile->m_nSize ) ? 1 : -1 );
+		break;
 
 	case MATCH_COL_RATING:
 		x = m_nRated ? m_nRating / m_nRated : 0;
 		y = pFile->m_nRated ? pFile->m_nRating / pFile->m_nRated : 0;
-		return x == y ? 0 : ( x > y ? 1 : -1 );
+		x = ( x == y ) ? 0 : ( ( x > y ) ? 1 : -1 );
+		break;
 
 	case MATCH_COL_STATUS:
 		x = y = 0;
@@ -1950,72 +1952,79 @@ int CMatchFile::Compare(CMatchFile* pFile) const
 		if ( pFile->m_bPush != TRI_TRUE ) y += 4;
 		if ( pFile->m_bBusy != TRI_TRUE ) y += 2;
 		if ( pFile->m_bStable == TRI_TRUE ) y ++;
-		return x == y ? 0 : ( x > y ? 1 : -1 );
+		x = ( x == y ) ? 0 : ( ( x > y ) ? 1 : -1 );
+		break;
 
 	case MATCH_COL_COUNT:
-		return m_nSources == pFile->m_nSources ? 0 : ( m_nSources > pFile->m_nSources ? 1 : -1 );
+		x = ( m_nSources == pFile->m_nSources ) ? 0 : ( ( m_nSources > pFile->m_nSources ) ? 1 : -1 );
+		break;
 
 	case MATCH_COL_CLIENT:
-		{
-			LPCTSTR pszType1 = ( m_nFiltered == 1 ) ? (LPCTSTR)m_pHits->m_pVendor->m_sName : NULL;
-			LPCTSTR pszType2 = ( pFile->m_nFiltered == 1 ) ? (LPCTSTR)pFile->m_pHits->m_pVendor->m_sName : NULL;
-			if ( ! pszType1 ) return ( pszType2 ? -1 : 0 );
-			if ( ! pszType2 ) return 1;
-			x = _tcsicmp( pszType1, pszType2 );
-			if ( ! x ) return 0;
-			return x > 0 ? 1 : -1;
-		}
+		pszA = ( m_nFiltered == 1 ) ? (LPCTSTR)m_pHits->m_pVendor->m_sName : NULL;
+		pszB= ( pFile->m_nFiltered == 1 ) ? (LPCTSTR)pFile->m_pHits->m_pVendor->m_sName : NULL;
+		if ( ! pszA )
+			x = ( pszB ? -1 : 0 );
+		else if ( ! pszB )
+			x = 1;
+		else
+			x = _tcsicmp( pszA, pszB );
+		break;
 
 	case MATCH_COL_TIME:
-		return m_pTime == pFile->m_pTime ? 0 : ( m_pTime > pFile->m_pTime ? 1 : -1 );
+		x = ( m_pTime == pFile->m_pTime ) ? 0 : ( ( m_pTime > pFile->m_pTime ) ? 1 : -1 );
+		break;
 
 	case MATCH_COL_SPEED:
 		x = m_nFiltered ? m_nSpeed / m_nFiltered : 0;
 		y = pFile->m_nFiltered ? pFile->m_nSpeed / pFile->m_nFiltered : 0;
-		return x == y ? 0 : ( x > y ? 1 : -1 );
+		x = ( x == y ) ? 0 : ( ( x > y ) ? 1 : -1 );
+		break;
+
 	case MATCH_COL_COUNTRY:
-		{
-			LPCTSTR pszType1 = ( m_nFiltered == 1 ) ? (LPCTSTR)m_pHits->m_sCountry : NULL;
-			LPCTSTR pszType2 = ( pFile->m_nFiltered == 1 ) ? (LPCTSTR)pFile->m_pHits->m_sCountry : NULL;
-			if ( ! pszType1 ) return ( pszType2 ? -1 : 0 );
-			if ( ! pszType2 ) return 1;
-			x = _tcsicmp( pszType1, pszType2 );
-			if ( ! x ) return 0;
-			return x > 0 ? 1 : -1;
-		}
+		pszA = ( m_nFiltered == 1 ) ? (LPCTSTR)m_pHits->m_sCountry : NULL;
+		pszB = ( pFile->m_nFiltered == 1 ) ? (LPCTSTR)pFile->m_pHits->m_sCountry : NULL;
+		if ( ! pszA )
+			x = ( pszB ? -1 : 0 );
+		else if ( ! pszB )
+			x = 1;
+		else
+			x = _tcsicmp( pszA, pszB );
+		break;
+
 	default:
-		if ( ! m_pColumns ) return ( pFile->m_pColumns ? -1 : 0 );
-		else if ( ! pFile->m_pColumns ) return 1;
-
-		x = ( m_pList->m_nSortColumn - MATCH_COL_MAX >= m_nColumns );
-		y = ( m_pList->m_nSortColumn - MATCH_COL_MAX >= pFile->m_nColumns );
-		if ( x ) return ( y ? 0 : -1 );
-		else if ( y ) return 1;
-
+		if ( ! m_pColumns )
+			x = ( pFile->m_pColumns ? -1 : 0 );
+		else if ( ! pFile->m_pColumns )
+			x = 1;
+		else
 		{
-			LPCTSTR pszA = m_pColumns[ m_pList->m_nSortColumn - MATCH_COL_MAX ];
-			LPCTSTR pszB = pFile->m_pColumns[ m_pList->m_nSortColumn - MATCH_COL_MAX ];
-
-#if 0
-			if ( *pszA && *pszB &&
-				( pszA[ _tcslen( pszA ) - 1 ] == 'k' || pszA[ _tcslen( pszA ) - 1 ] == '~' )
-				&&
-				( pszB[ _tcslen( pszB ) - 1 ] == 'k' || pszB[ _tcslen( pszB ) - 1 ] == '~' ) )
-			{
-				x = CLiveList::SortProc( pszA, pszB, TRUE );
-			}
+			x = ( m_pList->m_nSortColumn - MATCH_COL_MAX >= m_nColumns );
+			y = ( m_pList->m_nSortColumn - MATCH_COL_MAX >= pFile->m_nColumns );
+			if ( x )
+				x = ( y ? 0 : -1 );
+			else if ( y )
+				x = 1;
 			else
 			{
-				x = _tcsicoll(	m_pColumns[ m_pList->m_nSortColumn - MATCH_COL_MAX ],
-								pFile->m_pColumns[ m_pList->m_nSortColumn - MATCH_COL_MAX ] );
+				pszA = m_pColumns[ m_pList->m_nSortColumn - MATCH_COL_MAX ];
+				pszB = pFile->m_pColumns[ m_pList->m_nSortColumn - MATCH_COL_MAX ];
+				x = CLiveList::SortProc( pszA, pszB );
 			}
-#else
-			x = CLiveList::SortProc( pszA, pszB );
-#endif
 		}
-		if ( ! x ) return 0;
-		return x > 0 ? 1 : -1;
 	}
+
+	if ( x == 0 && m_pList->m_nSortColumn != MATCH_COL_NAME )
+	{
+		x = _tcsicoll( m_sName, pFile->m_sName );
+		if ( x == 0 && m_pList->m_nSortColumn != MATCH_COL_COUNT )
+		{
+			x = ( m_nSources == pFile->m_nSources ) ? 0 : ( ( m_nSources > pFile->m_nSources ) ? -1 : 1 );
+		}
+		if ( m_pList->m_bSortDir == -1 )
+			x = - x;
+	}
+
+	return ( x == 0 ) ? 0 : ( ( x > 0 ) ? 1 : -1 );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -2199,12 +2208,7 @@ DWORD CMatchFile::GetTotalHitsCount() const
 
 DWORD CMatchFile::GetTotalHitsSpeed() const
 {
-	DWORD nSpeed = 0;
-	for ( CQueryHit* pHit = m_pHits ; pHit ; pHit = pHit->m_pNext )
-	{
-		nSpeed += pHit->m_nSpeed;
-	}
-	return nSpeed;
+	return m_nSpeed;
 }
 
 void CMatchFile::AddHitsToDownload(CDownload* pDownload, BOOL bForce) const
@@ -2598,6 +2602,8 @@ void CMatchFile::SanityCheck()
 
 		pHit = pNext;
 	}
+
+	RefreshStatus();
 }
 
 void CMatchFile::Ban(int nBanLength)
