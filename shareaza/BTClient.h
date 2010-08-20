@@ -42,7 +42,7 @@ public:
     Hashes::BtGuid          m_oGUID;
 	BOOL					m_bExchange;		// Exchange sources/other info (with extended client)
 	BOOL					m_bExtended;		// Extension Protocol support
-	CUploadTransferBT*		m_pUpload;
+	CUploadTransferBT*		m_pUploadTransfer;
 	CDownload*				m_pDownload;
 	CDownloadTransferBT*	m_pDownloadTransfer;
 

@@ -860,7 +860,7 @@ BOOL CDownloadSource::CheckPush(const Hashes::Guid& oClientID)
 	return validAndEqual( m_oGUID, oClientID );
 }
 
-BOOL CDownloadSource::CheckDonkey(CEDClient* pClient)
+BOOL CDownloadSource::CheckDonkey(const CEDClient* pClient)
 {
 	if ( m_nProtocol != PROTOCOL_ED2K ) return FALSE;
 	

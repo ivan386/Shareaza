@@ -120,7 +120,7 @@ public:
 	BOOL		Check(CDownload* pDownload) const;
 private:
 	int			GetActiveTorrentCount() const;
-	DWORD		GetTransferCount() const;
+//	DWORD		GetTransferCount() const;
 	BOOL		Swap(CDownload* p1, CDownload* p2);
 	DWORD		GetBandwidth() const;
 	BOOL		OnDonkeyCallback(CEDClient* pClient, CDownloadSource* pExcept = NULL);

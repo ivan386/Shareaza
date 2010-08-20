@@ -40,10 +40,8 @@ public:
 	virtual ~CUploadTransfer();
 
 public:
-	int				m_nState;		// Common state code
 	CUploadQueue*	m_pQueue;		// Queue reference
 	CUploadFile*	m_pBaseFile;	// Reference file
-	DWORD			m_nBandwidth;	// Bandwidth
 	CString			m_sNick;		// User Nick
 	DWORD			m_nUserRating;	// Has the downloader uploaded anything?
 
@@ -55,9 +53,6 @@ public:
 	DWORD			m_nRequests;	// Request count
 	QWORD			m_nUploaded;	// Bytes uploaded
 	DWORD			m_tContent;		// Send start timestamp
-	QWORD			m_nOffset;		// Fragment offset
-	QWORD			m_nLength;		// Fragment length
-	QWORD			m_nPosition;	// Send position
 
 protected:
 	BOOL			m_bStopTransfer;// Should this transfer stop? (to allow queue rotation, etc)

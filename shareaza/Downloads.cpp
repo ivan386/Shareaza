@@ -488,7 +488,7 @@ INT_PTR CDownloads::GetCount(BOOL bActiveOnly) const
 	return nCount;
 }
 
-DWORD CDownloads::GetTransferCount() const
+/*DWORD CDownloads::GetTransferCount() const
 {
 	DWORD nCount = 0;
 
@@ -500,7 +500,7 @@ DWORD CDownloads::GetTransferCount() const
 	}
 
 	return nCount;
-}
+}*/
 
 DWORD CDownloads::GetTryingCount(bool bTorrentsOnly) const
 {

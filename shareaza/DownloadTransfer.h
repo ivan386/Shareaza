@@ -42,15 +42,10 @@ public:
 	CDownloadTransfer*	m_pDlPrev;
 	CDownloadTransfer*	m_pDlNext;
 
-	int					m_nState;
 	DWORD				m_nQueuePos;
 	DWORD				m_nQueueLen;
 	CString				m_sQueueName;
-	DWORD				m_nBandwidth;		// Bandwidth allocated
 
-	QWORD				m_nOffset;			// Fragment offset
-	QWORD				m_nLength;			// Fragment length
-	QWORD				m_nPosition;		// Fragment position
 	QWORD				m_nDownloaded;
 
 	bool				m_bWantBackwards;

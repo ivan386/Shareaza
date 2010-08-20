@@ -1,7 +1,7 @@
 //
 // DownloadWithTransfers.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -18,9 +18,6 @@
 // along with Shareaza; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-
-#if !defined(AFX_DOWNLOADWITHTRANSFERS_H__B2CEC922_899C_412E_93B6_953073B992DB__INCLUDED_)
-#define AFX_DOWNLOADWITHTRANSFERS_H__B2CEC922_899C_412E_93B6_953073B992DB__INCLUDED_
 
 #pragma once
 
@@ -48,13 +45,13 @@ private:
 public:
 	bool		HasActiveTransfers() const;
 	DWORD		GetTransferCount() const;
-	DWORD		GetTransferCount(int nState, IN_ADDR* const pAddress = NULL) const;
-	QWORD		GetAmountDownloadedFrom(IN_ADDR* const pAddress) const;
+	DWORD		GetTransferCount(int nState, const IN_ADDR* pAddress = NULL) const;
+	QWORD		GetAmountDownloadedFrom(const IN_ADDR* pAddress) const;
 	void		CloseTransfers();
 	DWORD		GetAverageSpeed() const;
 	DWORD		GetMeasuredSpeed() const;
 	BOOL		OnAcceptPush(const Hashes::Guid& oClientID, CConnection* pConnection);
-	BOOL		OnDonkeyCallback(CEDClient* pClient, CDownloadSource* pExcept = NULL);
+	BOOL		OnDonkeyCallback(const CEDClient* pClient, CDownloadSource* pExcept = NULL);
 	BOOL		StartNewTransfer(DWORD tNow = 0);
 	BOOL		CanStartTransfers(DWORD tNow);
 protected:
@@ -65,10 +62,8 @@ private:
 
 // Inlines
 public:
-	inline bool			ValidTransfer(IN_ADDR* const pAddress, CDownloadTransfer* const pTransfer) const;
-	CDownloadTransfer*	GetFirstTransfer() const { return m_pTransferFirst; }
+	inline bool ValidTransfer(const IN_ADDR* pAddress, const CDownloadTransfer* pTransfer) const;
+	inline CDownloadTransfer* GetFirstTransfer() const { return m_pTransferFirst; }
 
 	friend class CDownloadTransfer; // AddTransfer && RemoveTransfer
 };
-
-#endif // !defined(AFX_DOWNLOADWITHTRANSFERS_H__B2CEC922_899C_412E_93B6_953073B992DB__INCLUDED_)

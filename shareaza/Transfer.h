@@ -36,6 +36,11 @@ public:
 	CList< CString >	m_pSourcesSent;
 	CArray< CString >	m_pHeaderName;
 	CArray< CString >	m_pHeaderValue;
+	int					m_nState;			// Common state code
+	DWORD				m_nBandwidth;		// Bandwidth allocated
+	QWORD				m_nOffset;			// Fragment offset
+	QWORD				m_nLength;			// Fragment length
+	QWORD				m_nPosition;		// Fragment position
 
 	virtual BOOL	ConnectTo(const IN_ADDR* pAddress, WORD nPort);
 	virtual void	AttachTo(CConnection* pConnection);

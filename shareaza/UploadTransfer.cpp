@@ -46,10 +46,8 @@ static char THIS_FILE[]=__FILE__;
 
 CUploadTransfer::CUploadTransfer(PROTOCOLID nProtocol)
 	: CTransfer			( nProtocol )
-	, m_nState			( upsNull )
 	, m_pQueue			( NULL )
 	, m_pBaseFile		( NULL )
-	, m_nBandwidth		( Settings.Bandwidth.Request )
 	, m_nUserRating		( urNew )
 	, m_nFileBase		( 0 )
 	, m_bFilePartial	( FALSE )
@@ -57,9 +55,6 @@ CUploadTransfer::CUploadTransfer(PROTOCOLID nProtocol)
 	, m_nRequests		( 0 )
 	, m_nUploaded		( 0 )
 	, m_tContent		( 0 )
-	, m_nOffset			( 0 )
-	, m_nLength			( SIZE_UNKNOWN )
-	, m_nPosition		( 0 )
 	, m_bStopTransfer	( FALSE )
 	, m_tRotateTime		( 0 )
 	, m_tAverageTime	( 0 )
@@ -68,6 +63,8 @@ CUploadTransfer::CUploadTransfer(PROTOCOLID nProtocol)
 	, m_nMaxRate		( 0 )
 	, m_pFile			( NULL )
 {
+	m_nBandwidth		= Settings.Bandwidth.Request;
+	m_nOffset			= 0; // ?
 	ZeroMemory( m_nAverageRate, sizeof( m_nAverageRate ) );
 
 	Uploads.Add( this );
@@ -409,7 +406,7 @@ void CUploadTransfer::ClearRequest()
 	m_nSize			= 0;
 	m_bFilePartial	= FALSE;
 
-	m_nOffset		= 0;
+	m_nOffset		= SIZE_UNKNOWN;
 	m_nLength		= SIZE_UNKNOWN;
 	m_nPosition		= 0;
 	m_nRequests ++;

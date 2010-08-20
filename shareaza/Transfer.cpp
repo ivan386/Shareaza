@@ -38,11 +38,17 @@ static char THIS_FILE[]=__FILE__;
 CTransfer::CTransfer(PROTOCOLID nProtocol)
 	: CConnection		( nProtocol )
 	, m_nRunCookie		( 0 )
+	, m_nState			( 0 )
+	, m_nBandwidth		( 0ul )
+	, m_nOffset			( SIZE_UNKNOWN )
+	, m_nLength			( SIZE_UNKNOWN )
+	, m_nPosition		( 0 )
 {
 }
 
 CTransfer::~CTransfer()
 {
+	ASSERT( m_nState == 0 );
 	ASSERT( ! IsValid() );
 	if ( IsValid() ) Close();
 }
@@ -69,6 +75,8 @@ void CTransfer::AttachTo(CConnection* pConnection)
 
 void CTransfer::Close()
 {
+	ASSERT( m_nState == 0 );
+
 	Transfers.Remove( this );
 	CConnection::Close();
 }

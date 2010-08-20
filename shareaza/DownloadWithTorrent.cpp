@@ -899,7 +899,7 @@ void CDownloadWithTorrent::ChokeTorrent(DWORD tNow)
 			if (	pTransfer->m_nProtocol == PROTOCOL_BT &&
 					pSelected.Find( pTransfer->m_pClient ) == NULL &&
 					pTransfer->m_nState == dtsDownloading &&
-					pTransfer->m_pClient->m_pUpload->m_bInterested &&
+					pTransfer->m_pClient->m_pUploadTransfer->m_bInterested &&
 					pTransfer->GetAverageSpeed() >= nBest )
 			{
 				pBest = pTransfer;

@@ -418,10 +418,14 @@ void CDownloadTransferBT::ShowInterest()
 
 BOOL CDownloadTransferBT::OnChoked(CBTPacket* /*pPacket*/)
 {
-	if ( m_bChoked ) return TRUE;
+	if ( m_bChoked )
+		return TRUE;
+
 	m_bChoked = TRUE;
 	SetState( dtsTorrent );
+
 	theApp.Message( MSG_DEBUG, _T("Download from %s was choked."), (LPCTSTR)m_sAddress );
+
 	/*for ( Fragments::Queue::const_iterator pFragment = m_oRequested.begin();
 		pFragment != m_oRequested.end() ; ++pFragment )
 	{
@@ -431,7 +435,9 @@ BOOL CDownloadTransferBT::OnChoked(CBTPacket* /*pPacket*/)
 		pPacket->WriteLongBE( (DWORD)pFragment->size() );
 		Send( pPacket );
 	}*/
+
 	m_oRequested.clear();
+
 	return TRUE;
 }
 

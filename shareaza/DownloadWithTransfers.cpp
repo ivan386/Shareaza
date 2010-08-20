@@ -66,10 +66,6 @@ bool CDownloadWithTransfers::HasActiveTransfers() const
 {
 	for ( CDownloadTransfer* pTransfer = m_pTransferFirst; pTransfer; pTransfer = pTransfer->m_pDlNext )
 	{
-		// Metadata, tiger fetch are also transfers, but since they are very short in time
-		// should we check that?
-		// TODO: find why static_cast< CConnection* >( pTransfer )->m_bConnected is FALSE
-		// when when the status is dtsDownloading.
 		if ( pTransfer->m_nState == dtsDownloading )
 		{
 			return true;
@@ -84,8 +80,8 @@ DWORD CDownloadWithTransfers::GetTransferCount() const
 
 	for ( CDownloadTransfer* pTransfer = m_pTransferFirst; pTransfer; pTransfer = pTransfer->m_pDlNext )
 	{
-		if ( pTransfer->m_nState > dtsNull &&
-			 static_cast< CConnection* >( pTransfer )->m_bConnected )
+		if ( ( pTransfer->m_nState > dtsNull ) &&
+			 ( pTransfer->m_nProtocol != PROTOCOL_ED2K || pTransfer->m_nState != dtsQueued ) )
 		{
 			++nCount;
 		}
@@ -93,16 +89,14 @@ DWORD CDownloadWithTransfers::GetTransferCount() const
 	return nCount;
 }
 
-// This inline is used to clean up the function below and make it more readable. It's the first
-// condition in any IF statement that checks if the current transfer should be counted
-bool CDownloadWithTransfers::ValidTransfer(IN_ADDR* const pAddress, CDownloadTransfer* const pTransfer) const
+bool CDownloadWithTransfers::ValidTransfer(const IN_ADDR* pAddress, const CDownloadTransfer* pTransfer) const
 {
 	return ( ! pAddress || pAddress->S_un.S_addr == pTransfer->m_pHost.sin_addr.S_un.S_addr ) &&
-			 pTransfer->m_nState > dtsNull &&
-			 static_cast< CConnection* >( pTransfer )->m_bConnected;
+		( pTransfer->m_nState > dtsNull ) &&
+		( pTransfer->m_nProtocol != PROTOCOL_ED2K || pTransfer->m_nState != dtsQueued );
 }
 
-DWORD CDownloadWithTransfers::GetTransferCount(int nState, IN_ADDR* const pAddress) const
+DWORD CDownloadWithTransfers::GetTransferCount(int nState, const IN_ADDR* pAddress) const
 {
 	int nCount = 0;
 
@@ -168,7 +162,7 @@ DWORD CDownloadWithTransfers::GetTransferCount(int nState, IN_ADDR* const pAddre
 //////////////////////////////////////////////////////////////////////
 // GetAmountDownloadedFrom total volume from an IP
 
-QWORD CDownloadWithTransfers::GetAmountDownloadedFrom(IN_ADDR* const pAddress) const
+QWORD CDownloadWithTransfers::GetAmountDownloadedFrom(const IN_ADDR* pAddress) const
 {
 	QWORD nTotal = 0;
 
@@ -459,9 +453,9 @@ BOOL CDownloadWithTransfers::OnAcceptPush(const Hashes::Guid& oClientID, CConnec
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithTransfers eDonkey2000 callback handler
 
-BOOL CDownloadWithTransfers::OnDonkeyCallback(CEDClient* pClient, CDownloadSource* pExcept)
+BOOL CDownloadWithTransfers::OnDonkeyCallback(const CEDClient* pClient, CDownloadSource* pExcept)
 {
-	CDownload* pDownload = (CDownload*)this;
+	CDownload* pDownload = static_cast< CDownload* >( this );
 	if ( pDownload->IsMoving() || pDownload->IsPaused() ) return FALSE;
 
 	CDownloadSource* pSource = NULL;

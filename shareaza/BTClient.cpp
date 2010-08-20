@@ -53,7 +53,7 @@ static char THIS_FILE[]=__FILE__;
 CBTClient::CBTClient()
 	: m_bExchange			( FALSE )
 	, m_bExtended			( FALSE )
-	, m_pUpload				( NULL )
+	, m_pUploadTransfer				( NULL )
 	, m_pDownload			( NULL )
 	, m_pDownloadTransfer	( NULL )
 	, m_bShake				( FALSE )
@@ -77,7 +77,7 @@ CBTClient::~CBTClient()
 	ASSERT( ! IsValid() );
 	ASSERT( m_pDownloadTransfer == NULL );
 	ASSERT( m_pDownload == NULL );
-	ASSERT( m_pUpload == NULL );
+	ASSERT( m_pUploadTransfer == NULL );
 
 	if ( Settings.General.DebugBTSources )
 		theApp.Message( MSG_DEBUG, L"Removing BT client from collection: %s", m_sAddress );
@@ -146,8 +146,8 @@ void CBTClient::Close()
 	if ( Settings.General.DebugBTSources )
 		theApp.Message( MSG_DEBUG, L"Deleting BT client: %s", m_sAddress );
 
-	if ( m_pUpload != NULL ) m_pUpload->Close();
-	ASSERT( m_pUpload == NULL );
+	if ( m_pUploadTransfer != NULL ) m_pUploadTransfer->Close();
+	ASSERT( m_pUploadTransfer == NULL );
 
 	if ( m_pDownloadTransfer != NULL )
 	{
@@ -231,10 +231,10 @@ BOOL CBTClient::OnRun()
 			m_tLastKeepAlive = tNow;
 		}
 
-		ASSERT ( m_pUpload != NULL );
+		ASSERT ( m_pUploadTransfer != NULL );
 
 		if ( m_pDownloadTransfer != NULL && ! m_pDownloadTransfer->OnRun() ) return FALSE;
-		if ( m_pUpload == NULL || ! m_pUpload->OnRun() ) return FALSE;
+		if ( m_pUploadTransfer == NULL || ! m_pUploadTransfer->OnRun() ) return FALSE;
 	}
 	
 	return TRUE;
@@ -518,10 +518,10 @@ BOOL CBTClient::OnHandshake2()
 		}
 	}
 
-	ASSERT( m_pUpload == NULL );
+	ASSERT( m_pUploadTransfer == NULL );
 	if ( Settings.General.DebugBTSources )
 		theApp.Message( MSG_DEBUG, L"Creating new BT upload: %s", m_sAddress );
-	m_pUpload = new CUploadTransferBT( this, m_pDownload );
+	m_pUploadTransfer = new CUploadTransferBT( this, m_pDownload );
 
 	m_bOnline = TRUE;
 
@@ -804,11 +804,11 @@ void CBTClient::DetermineUserAgent()
 		}
 	}
 
-	if ( m_pUpload != NULL )
+	if ( m_pUploadTransfer != NULL )
 	{
-		m_pUpload->m_sUserAgent = m_sUserAgent;
-		if ( strNick.GetLength() ) m_pUpload->m_sNick = strNick;
-		m_pUpload->m_bClientExtended = m_bClientExtended;
+		m_pUploadTransfer->m_sUserAgent = m_sUserAgent;
+		if ( strNick.GetLength() ) m_pUploadTransfer->m_sNick = strNick;
+		m_pUploadTransfer->m_bClientExtended = m_bClientExtended;
 	}
 }
 
@@ -841,10 +841,10 @@ BOOL CBTClient::OnOnline()
 		Send( pBitfield );
 	
 	if ( m_pDownloadTransfer != NULL && ! m_pDownloadTransfer->OnConnected() ) return FALSE;
-	if ( ! m_pUpload->OnConnected() ) return FALSE;
+	if ( ! m_pUploadTransfer->OnConnected() ) return FALSE;
 	if ( Uploads.GetTorrentUploadCount() < Settings.BitTorrent.UploadCount )
 	{
-		m_pUpload->m_bChoked = FALSE;
+		m_pUploadTransfer->m_bChoked = FALSE;
 		Send( CBTPacket::New( BT_PACKET_UNCHOKE ) );
 	}
 	
@@ -871,11 +871,11 @@ BOOL CBTClient::OnPacket(CBTPacket* pPacket)
 		m_pDownload->ChokeTorrent();
 		break;
 	case BT_PACKET_INTERESTED:
-		if ( ! m_pUpload->OnInterested( pPacket ) ) return FALSE;
+		if ( ! m_pUploadTransfer->OnInterested( pPacket ) ) return FALSE;
 		m_pDownload->ChokeTorrent();
 		break;
 	case BT_PACKET_NOT_INTERESTED:
-		if ( ! m_pUpload->OnUninterested( pPacket ) ) return FALSE;
+		if ( ! m_pUploadTransfer->OnUninterested( pPacket ) ) return FALSE;
 		m_pDownload->ChokeTorrent();
 		break;
 	case BT_PACKET_HAVE:
@@ -883,11 +883,11 @@ BOOL CBTClient::OnPacket(CBTPacket* pPacket)
 	case BT_PACKET_BITFIELD:
 			return m_pDownloadTransfer == NULL || m_pDownloadTransfer->OnBitfield( pPacket );
 	case BT_PACKET_REQUEST:
-		return m_pUpload->OnRequest( pPacket );
+		return m_pUploadTransfer->OnRequest( pPacket );
 	case BT_PACKET_PIECE:
 		return m_pDownloadTransfer == NULL || m_pDownloadTransfer->OnPiece( pPacket );
 	case BT_PACKET_CANCEL:
-		return m_pUpload->OnCancel( pPacket );
+		return m_pUploadTransfer->OnCancel( pPacket );
 	case BT_PACKET_DHT_PORT:
 		return OnDHTPort( pPacket );
 	case BT_PACKET_EXTENSION:
@@ -966,10 +966,10 @@ BOOL CBTClient::OnBeHandshake(CBTPacket* pPacket)
 			}
 		}
 		
-		if ( m_pUpload != NULL ) 
+		if ( m_pUploadTransfer != NULL ) 
 		{
-			m_pUpload->m_sUserAgent = m_sUserAgent;
-			m_pUpload->m_bClientExtended = TRUE;
+			m_pUploadTransfer->m_sUserAgent = m_sUserAgent;
+			m_pUploadTransfer->m_bClientExtended = TRUE;
 		}
 	}
 	
