@@ -140,6 +140,7 @@ public:
 	COLORREF	m_crNetworkG1;
 	COLORREF	m_crNetworkG2;
 	COLORREF	m_crNetworkED2K;
+	COLORREF	m_crNetworkDC;
 	COLORREF	m_crNetworkUp;
 	COLORREF	m_crNetworkDown;
 	COLORREF	m_crSecurityAllow;

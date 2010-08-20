@@ -42,7 +42,6 @@ public:
 	DWORD		m_nFileLimit;
 	DWORD		m_nTCPFlags;
 	DWORD		m_nUDPFlags;
-	CString		m_sServerName;
 	CList< Hashes::Guid > m_pQueries;
 	DWORD		m_nFilesSent;
 

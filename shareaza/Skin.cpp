@@ -1656,6 +1656,7 @@ BOOL CSkin::LoadColourScheme(CXMLElement* pBase)
 	pColours.SetAt( _T("system.base.network.g1"), &CoolInterface.m_crNetworkG1 );
 	pColours.SetAt( _T("system.base.network.g2"), &CoolInterface.m_crNetworkG2 );
 	pColours.SetAt( _T("system.base.network.ed2k"), &CoolInterface.m_crNetworkED2K );
+	pColours.SetAt( _T("system.base.network.dc"), &CoolInterface.m_crNetworkDC );
 	pColours.SetAt( _T("system.base.network.up"), &CoolInterface.m_crNetworkUp );
 	pColours.SetAt( _T("system.base.network.down"), &CoolInterface.m_crNetworkDown );
 	pColours.SetAt( _T("system.base.security.allow"), &CoolInterface.m_crSecurityAllow );

@@ -77,6 +77,7 @@ public:
 	DWORD			m_nRunCookie;		// The number of times this neighbour has been run, CNeighboursBase::OnRun uses this to run each neighbour in the list once
 	NrsState		m_nState;			// Neighbour state, like connecting, handshake 1, 2, or 3, or rejected
 	CVendor*		m_pVendor;
+	CString			m_sServerName;		// Server name primarily for eD2K and DC++ hubs
 	Hashes::Guid	m_oGUID;
 	CGProfile*		m_pProfile;
 	Hashes::Guid	m_oMoreResultsGUID;	// GUID of the last search, used to get more results (do)

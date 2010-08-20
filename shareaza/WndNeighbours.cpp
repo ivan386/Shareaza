@@ -27,6 +27,7 @@
 #include "G1Neighbour.h"
 #include "G2Neighbour.h"
 #include "EDNeighbour.h"
+#include "DCNeighbour.h"
 #include "EDPacket.h"
 #include "HostCache.h"
 #include "Security.h"
@@ -226,15 +227,18 @@ void CNeighboursWnd::Update()
 			Settings.SmartVolume( pNeighbour->m_mOutput.nTotal ) );
 		pItem->Format( 6, _T("%u (%u)"), pNeighbour->m_nOutbound, pNeighbour->m_nLostCount );
 
+		pItem->Set( 8, protocolNames[ pNeighbour->m_nProtocol ] );
 		pItem->Set( 9, pNeighbour->m_sUserAgent );
 
 		if ( pNeighbour->m_nState >= nrsConnected )
 		{
+			pItem->m_nImage = pNeighbour->m_nProtocol;
+
 			if ( pNeighbour->m_nProtocol == PROTOCOL_G1 )
 			{
-//				CG1Neighbour* pG1 = reinterpret_cast<CG1Neighbour*>(pNeighbour);
+				CG1Neighbour* pG1 = static_cast< CG1Neighbour* >( pNeighbour );
 
-				switch ( pNeighbour->m_nNodeType )
+				switch ( pG1->m_nNodeType )
 				{
 				case ntNode:
 					LoadString ( str,IDS_NEIGHBOUR_G1PEER );
@@ -248,13 +252,12 @@ void CNeighboursWnd::Update()
 				}
 
 				pItem->Set( 8, str );
-				pItem->m_nImage = PROTOCOL_G1;
 			}
 			else if ( pNeighbour->m_nProtocol == PROTOCOL_G2 )
 			{
-				CG2Neighbour* pG2 = static_cast<CG2Neighbour*>(pNeighbour);
+				CG2Neighbour* pG2 = static_cast< CG2Neighbour* >( pNeighbour );
 
-				switch ( pNeighbour->m_nNodeType )
+				switch ( pG2->m_nNodeType )
 				{
 				case ntNode:
 					LoadString ( str,IDS_NEIGHBOUR_G2PEER );
@@ -283,16 +286,10 @@ void CNeighboursWnd::Update()
 				{
 					pItem->Set( 7, _T("?") );
 				}
-
-				pItem->m_nImage = PROTOCOL_G2;
 			}
 			else if ( pNeighbour->m_nProtocol == PROTOCOL_ED2K )
 			{
-				CEDNeighbour* pED2K = static_cast<CEDNeighbour*>(pNeighbour);
-
-				pItem->m_nImage = PROTOCOL_ED2K;
-				pItem->Set( 8, _T("eDonkey") );
-				pItem->Set( 10, pED2K->m_sServerName );
+				CEDNeighbour* pED2K = static_cast< CEDNeighbour* >( pNeighbour );
 
 				if ( pED2K->m_nClientID > 0 )
 				{
@@ -310,13 +307,13 @@ void CNeighboursWnd::Update()
 				}
 				else
 				{
-					LoadString ( str,IDS_NEIGHBOUR_ED2K_SERVER );
+					LoadString ( str, IDS_NEIGHBOUR_ED2K_SERVER );
 					pItem->Set( 9, str );
 				}
 			}
-			else
+			else if ( pNeighbour->m_nProtocol == PROTOCOL_DC )
 			{
-				pItem->m_nImage = PROTOCOL_NULL;
+//				CDCNeighbour* pDC = static_cast< CDCNeighbour* >( pNeighbour );
 			}
 		}
 		else
@@ -324,10 +321,7 @@ void CNeighboursWnd::Update()
 			pItem->m_nImage = PROTOCOL_NULL;
 		}
 
-		if ( pNeighbour->m_pProfile != NULL )
-		{
-			pItem->Set( 10, pNeighbour->m_pProfile->GetNick() );
-		}
+		pItem->Set( 10, pNeighbour->m_pProfile ? pNeighbour->m_pProfile->GetNick() : pNeighbour->m_sServerName );
 
 		pItem->Set( 11, pNeighbour->m_sCountry );
 		int nFlag = Flags.GetFlagIndex( pNeighbour->m_sCountry );
@@ -449,12 +443,17 @@ void CNeighboursWnd::OnNeighboursCopy()
 
 	if ( pNeighbour->m_nProtocol == PROTOCOL_G1 || pNeighbour->m_nProtocol == PROTOCOL_G2 )
 	{
-		strURL.Format( _T("gnutella:host:%s:%lu"),
+		strURL.Format( _T("gnutella:host:%s:%u"),
 			(LPCTSTR)pNeighbour->m_sAddress, htons( pNeighbour->m_pHost.sin_port ) );
 	}
 	else if ( pNeighbour->m_nProtocol == PROTOCOL_ED2K )
 	{
-		strURL.Format( _T("ed2k://|server|%s|%lu|/"),
+		strURL.Format( _T("ed2k://|server|%s|%u|/"),
+			(LPCTSTR)pNeighbour->m_sAddress, htons( pNeighbour->m_pHost.sin_port ) );
+	}
+	else if ( pNeighbour->m_nProtocol == PROTOCOL_DC )
+	{
+		strURL.Format( _T("dchub://%s:%u"),
 			(LPCTSTR)pNeighbour->m_sAddress, htons( pNeighbour->m_pHost.sin_port ) );
 	}
 
@@ -469,7 +468,9 @@ void CNeighboursWnd::OnUpdateNeighboursChat(CCmdUI* pCmdUI)
 		if ( pNetworkLock.Lock( 500 ) )
 		{
 			CNeighbour* pNeighbour = GetItem( m_wndList.GetNextItem( -1, LVNI_SELECTED ) );
-			if ( pNeighbour && pNeighbour->m_nProtocol != PROTOCOL_ED2K )
+			if ( pNeighbour &&
+				( pNeighbour->m_nProtocol == PROTOCOL_G1 ||
+				  pNeighbour->m_nProtocol == PROTOCOL_G2 ) )
 			{
 				pCmdUI->Enable( TRUE );
 				return;
@@ -487,7 +488,8 @@ void CNeighboursWnd::OnNeighboursChat()
 	{
 		if ( CNeighbour* pNeighbour = GetItem( nItem ) )
 		{
-			if ( pNeighbour->m_nProtocol != PROTOCOL_ED2K )
+			if ( pNeighbour->m_nProtocol == PROTOCOL_G1 ||
+				 pNeighbour->m_nProtocol == PROTOCOL_G2 )
 			{
 				ChatWindows.OpenPrivate( pNeighbour->m_oGUID,
 					&pNeighbour->m_pHost, FALSE, pNeighbour->m_nProtocol );
@@ -526,7 +528,9 @@ void CNeighboursWnd::OnUpdateBrowseLaunch(CCmdUI* pCmdUI)
 		if ( pNetworkLock.Lock( 500 ) )
 		{
 			CNeighbour* pNeighbour = GetItem( m_wndList.GetNextItem( -1, LVNI_SELECTED ) );
-			if ( pNeighbour && pNeighbour->m_nProtocol != PROTOCOL_ED2K )
+			if ( pNeighbour &&
+				( pNeighbour->m_nProtocol == PROTOCOL_G1 ||
+				  pNeighbour->m_nProtocol == PROTOCOL_G2 ) )
 			{
 				pCmdUI->Enable( TRUE );
 				return;
@@ -542,7 +546,8 @@ void CNeighboursWnd::OnBrowseLaunch()
 
 	if ( CNeighbour* pNeighbour = GetItem( m_wndList.GetNextItem( -1, LVNI_SELECTED ) ) )
 	{
-		if ( pNeighbour->m_nProtocol != PROTOCOL_ED2K )
+		if ( pNeighbour->m_nProtocol == PROTOCOL_G1 ||
+			 pNeighbour->m_nProtocol == PROTOCOL_G2 )
 		{
 			PROTOCOLID nProtocol = pNeighbour->m_nProtocol;
 			SOCKADDR_IN pAddress = pNeighbour->m_pHost;
@@ -651,6 +656,9 @@ void CNeighboursWnd::OnCustomDrawList(NMHDR* pNMHDR, LRESULT* pResult)
 			break;
 		case PROTOCOL_ED2K:
 			pDraw->clrText = CoolInterface.m_crNetworkED2K ;
+			break;
+		case PROTOCOL_DC:
+			pDraw->clrText = CoolInterface.m_crNetworkDC ;
 			break;
 		}
 

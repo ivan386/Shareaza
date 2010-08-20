@@ -696,6 +696,7 @@ void CCoolInterface::CalculateColours(BOOL bCustom)
 	m_crNetworkG1  			= RGB( 80, 80, 80 );
 	m_crNetworkG2  			= RGB( 100, 100, 255 );
 	m_crNetworkED2K  		= RGB( 128, 128, 0 );
+	m_crNetworkDC  			= RGB( 0, 128, 0 );
 	m_crNetworkUp			= RGB( 127, 0, 0 );
 	m_crNetworkDown			= RGB( 0, 0, 127 );
 	m_crSecurityAllow		= RGB( 0, 127, 0 );

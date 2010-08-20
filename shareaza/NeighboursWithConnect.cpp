@@ -35,6 +35,7 @@
 #include "NeighboursWithConnect.h"
 #include "ShakeNeighbour.h"
 #include "EDNeighbour.h"
+#include "DCNeighbour.h"
 #include "Neighbours.h"
 #include "Scheduler.h"
 
@@ -167,13 +168,13 @@ CNeighbour* CNeighboursWithConnect::ConnectTo(
 	}
 	else if ( nProtocol == PROTOCOL_DC )
 	{
-		/*CDCNeighbour* pNeighbour = new CDCNeighbour();
+		CDCNeighbour* pNeighbour = new CDCNeighbour();
 		if ( pNeighbour->ConnectTo( &pAddress, nPort, bAutomatic ) )
 		{
 			// Started connecting to an ed2k neighbour
 			return pNeighbour;
 		}
-		delete pNeighbour;*/
+		delete pNeighbour;
 	}
 	// The computer at the IP address we have is running Gnutella or Gnutella2 software
 	else
