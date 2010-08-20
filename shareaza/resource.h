@@ -15,7 +15,6 @@
 #define IDC_MEDIA_VOLUME                119
 #define IDS_COMMANDLINE                 120
 #define IDS_SCHEMA_LOAD_ERROR           121
-#define IDS_SCHEDULER_INVALIDVP         122
 #define IDB_MENUBAR                     127
 #define IDR_MAINFRAME                   128
 #define IDR_SYSTEMFRAME                 129
@@ -168,7 +167,6 @@
 #define IDD_SETTINGS_BITTORRENT         223
 #define IDB_TASKPANEL_FOOTER            224
 #define IDB_TASKBOX_CAPTION             225
-#define IDB_PROTOCOLS                   227
 #define IDD_DONKEY_SERVERS              230
 #define IDD_WIZARD_NETWORKS             231
 #define IDD_FILE_SHARING                232
@@ -196,7 +194,6 @@
 #define IDR_HOME_HEADER_1               257
 #define IDR_HOME_HEADER_2               258
 #define IDB_PANEL_MARK                  262
-#define IDR_BITTORRENT_ICON             263
 #define IDI_MAIL                        265
 #define IDD_CODEPAGES                   266
 #define IDD_TORRENT_GENERAL             267
@@ -857,12 +854,6 @@
 #define IDC_CHECK_SAT                   1597
 #define IDC_CHECK_WED                   1598
 #define IDC_BUTTON_ALLDAYS              1599
-#define IDC_STATIC_VALIDITYPERIOD       1600
-#define IDC_STATIC_VP_EXPLANATION       1602
-#define IDC_RADIO_VP_DISABLE            1603
-#define IDC_RADIO_VP_ENABLE             1604
-#define IDC_EDIT_VP_MINUTES             1606
-#define IDC_STATIC_MINUTES              1607
 #define IDS_FILTER_DELETE_CONFIRM       7000
 #define IDS_SCHEMAS                     7001
 #define IDS_MULTIPLE_VALUES             7002
@@ -1984,7 +1975,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        342
 #define _APS_NEXT_COMMAND_VALUE         33328
-#define _APS_NEXT_CONTROL_VALUE         1606
+#define _APS_NEXT_CONTROL_VALUE         1600
 #define _APS_NEXT_SYMED_VALUE           104
 #endif
 #endif

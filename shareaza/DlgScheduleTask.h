@@ -56,13 +56,11 @@ public:
 	CTime				m_tDateAndTime;
 	bool				m_bActive;
 	bool				m_bNew;
-	bool				m_bHasValidityPeriod;
 	BOOL				m_bToggleBandwidth;
 	BOOL				m_bLimitedNetworks;
 	int					m_nLimit;
 	int					m_nLimitDown;
 	int					m_nLimitUp;
-	int					m_nValidityPeriod;
 
 // Overrides
 public:
@@ -85,8 +83,6 @@ protected:
 	afx_msg void OnBnClickedActive();
 	afx_msg void OnCbnSelchangeEventtype();
 	afx_msg void OnBnClickedButtonAllDays();
-	afx_msg void OnBnClickedRadioVpDisable();
-	afx_msg void OnBnClickedRadioVpEnable();
 	//}}AFX_MSG
 	void EnableDaysOfWeek(bool bEnable);
 	DECLARE_MESSAGE_MAP()
@@ -117,9 +113,6 @@ public:
 	CButton				m_wndChkDaySat;
 	CStatic				m_wndGrpBoxDayOfWeek;
 	CButton				m_wndBtnAllDays;
-	CButton				m_wndVPEnableRadio;	
-	CEdit				m_wndVPMinutesEdit;
-	CButton				m_wndVPDisableRadio;
 };
 
 //{{AFX_INSERT_LOCATION}}
