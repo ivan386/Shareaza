@@ -27,6 +27,7 @@
 #include "Network.h"
 #include "Neighbours.h"
 #include "GProfile.h"
+#include "Security.h"
 #include "Settings.h"
 #include "UploadQueue.h"
 #include "UploadQueues.h"
@@ -45,9 +46,12 @@ CDCNeighbour::CDCNeighbour()
 	m_nNodeType = ntHub;
 
 	// Make DC++ safe nick
+	m_sNick.Replace( _T(' '), _T('_') );
+	m_sNick.Replace( _T('&'), _T('_') );
 	m_sNick.Replace( _T('|'), _T('_') );
 	m_sNick.Replace( _T('$'), _T('_') );
 	m_sNick.Replace( _T('<'), _T('_') );
+	m_sNick.Replace( _T('>'), _T('_') );
 }
 
 CDCNeighbour::~CDCNeighbour()
@@ -185,6 +189,8 @@ BOOL CDCNeighbour::OnCommand(const std::string& strCommand, const std::string& s
 	}
 	else if ( strCommand == "$Supports" )
 	{
+		m_bExtended = TRUE;
+
 		m_oFeatures.RemoveAll();
 		for ( CString strFeatures( strParams.c_str() ); ! strFeatures.IsEmpty(); )
 		{
@@ -222,32 +228,60 @@ BOOL CDCNeighbour::OnCommand(const std::string& strCommand, const std::string& s
 	}
 	else if ( strCommand == "$OpList" )
 	{
-		// Hub operator list
 		return TRUE;
 	}
 	else if ( strCommand == "$MyINFO" )
 	{
-		// Client info
+		m_nState = nrsConnected;
+
 		return TRUE;
 	}
 	else if ( strCommand == "$ConnectToMe" )
 	{
 		// Client connection request
+		// $ConnectToMe RemoteNick SenderIp:SenderPort
 		std::string::size_type nPos = strParams.rfind( ' ' );
 		if ( nPos != std::string::npos )
 		{
-			std::string strNick = strParams.substr( 0, nPos );
+			std::string strSenderNick, strRemoteNick = strParams.substr( 0, nPos );
+			nPos = strRemoteNick.find( ' ' );
+			if ( nPos != std::string::npos )
+			{
+				// $ConnectToMe SenderNick RemoteNick SenderIp:SenderPort
+				strSenderNick = strRemoteNick.substr( nPos + 1 );
+				strRemoteNick = strRemoteNick.substr( 0, nPos );
+			}
 			std::string strAddress = strParams.substr( nPos + 1 );
 			nPos = strAddress.find( ':' );
 			if ( nPos != std::string::npos )
 			{
 				DWORD nAddress = inet_addr( strAddress.substr( 0, nPos ).c_str() );
-				WORD nPort = (WORD)atoi( strAddress.substr( nPos + 1 ).c_str() );
+				int nPort = atoi( strAddress.substr( nPos + 1 ).c_str() );
 
-				// Ok
-				nAddress, nPort;
+				if ( nPort > 0 && nPort <= USHRT_MAX && nAddress != INADDR_NONE &&
+					m_sNick == strRemoteNick.c_str() &&
+					! Network.IsFirewalledAddress( (const IN_ADDR*)&nAddress ) &&
+					! Network.IsReserved( (const IN_ADDR*)&nAddress ) &&
+					! Security.IsDenied( (const IN_ADDR*)&nAddress ) )
+				{
+					// Ok
+					//CDCClient* pClient = new CDCClient();
+					//pClient->ConnectTo( (const IN_ADDR*)&nAddress, (WORD)nPort );
+				}
+				else
+				{
+					// Wrong nick, bad IP
+				}
 			}
 		}
+		return TRUE;
+	}
+	else if ( strCommand == "$Quit" )
+	{
+		return TRUE;
+	}
+	else if ( strCommand == "$Search" )
+	{
 		return TRUE;
 	}
 

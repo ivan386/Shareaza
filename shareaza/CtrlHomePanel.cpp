@@ -1163,7 +1163,7 @@ void CHomeConnectionBox::Update()
 	CSingleLock pLock( &Network.m_pSection );
 	if ( ! pLock.Lock( 50 ) ) return;
 	
-	int nCount[4][4] = {};
+	int nCount[ PROTOCOL_LAST ][4] = {};
 	int nTotal = 0;
 	CString str;
 	
@@ -1189,7 +1189,7 @@ void CHomeConnectionBox::Update()
 	m_pDocument->ShowGroup( 1, ! bConnected );
 	m_pDocument->ShowGroup( 2, bConnected );
 	
-	const bool* pEnable[4] =
+	const bool* pEnable[ PROTOCOL_LAST ] =
 	{
 		NULL,
 		&Settings.Gnutella1.EnableToday,

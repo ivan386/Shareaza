@@ -1842,8 +1842,8 @@ void CUploadTransferHTTP::SendResponse(UINT nResourceID, BOOL bFileHeaders)
 			strReplace = m_oSHA1.toUrn();
 		else if ( strReplace.CompareNoCase( _T("Version") ) == 0 )
 			strReplace = theApp.m_sVersion;
-		else if ( strReplace.Find( _T("Neighbours") ) == 0 )
-			GetNeighbourList( strReplace );
+//		else if ( strReplace.Find( _T("Neighbours") ) == 0 )
+//			GetNeighbourList( strReplace );
 		else if ( strReplace.CompareNoCase( _T("ListenIP") ) == 0 )
 		{
 			if ( Network.IsListening() )
@@ -1882,14 +1882,19 @@ void CUploadTransferHTTP::SendResponse(UINT nResourceID, BOOL bFileHeaders)
 	StartSending( upsResponse );
 }
 
-void CUploadTransferHTTP::GetNeighbourList(CString& strOutput)
+/*void CUploadTransferHTTP::GetNeighbourList(CString& strOutput)
 {
-	static LPCTSTR pszModes[4][3] =
+	static LPCTSTR pszModes[ PROTOCOL_LAST ][ 3 ] =
 	{
 		{ _T("Handshake"), _T("Handshake"), _T("Handshake") },
 		{ _T("G1 Peer"), _T("G1 Ultrapeer"), _T("G1 Leaf") },
 		{ _T("G2 Peer"), _T("G2 Hub"), _T("G2 Leaf") },
-		{ _T("eDonkey2000"), _T("eDonkey2000"), _T("eDonkey2000") }
+		{ _T("eDonkey2000"), _T("eDonkey2000"), _T("eDonkey2000") },
+		{ _T(""), _T(""), _T("") },
+		{ _T(""), _T(""), _T("") },
+		{ _T(""), _T(""), _T("") },
+		{ _T(""), _T(""), _T("") },
+		{ _T("DC++"), _T("DC++"), _T("DC++") },
 	};
 	
 	// Strip off the leading "Neighbours " (length 11) and use the rest as a format string
@@ -1922,4 +1927,4 @@ void CUploadTransferHTTP::GetNeighbourList(CString& strOutput)
 			strOutput += strNode;
 		}
 	}
-}
+}*/
