@@ -95,6 +95,7 @@ public:
 
 	// Use the buffer with the BZLib compression library
 #ifdef _BZLIB_H
+	BOOL	BZip();													// Compress buffer in-place using BZLib
 	BOOL	UnBZip();												// Uncompress buffer in-place using BZLib
 #endif // _BZLIB_H
 

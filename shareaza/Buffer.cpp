@@ -776,6 +776,38 @@ void CBuffer::InflateStreamCleanup( z_streamp& pStream ) const
 
 #ifdef _BZLIB_H
 
+BOOL CBuffer::BZip()
+{
+	// Compress to temporary buffer first
+	CBuffer pOutBuf;
+	UINT nOutSize = m_nLength / 2;
+	for (;;)
+	{
+		if ( ! pOutBuf.EnsureBuffer( nOutSize ) )
+			// Out of memory
+			return FALSE;
+
+		int err = BZ2_bzBuffToBuffCompress( (char*)pOutBuf.m_pBuffer, &nOutSize,
+			(char*)m_pBuffer, m_nLength, 9, 0, 30 );
+
+		if ( err == BZ_OK )
+		{
+			pOutBuf.m_nLength = nOutSize;
+			break;
+		}
+		else if ( err == BZ_OUTBUFF_FULL )
+			// Insufficient output buffer 
+			nOutSize *= 2;
+		else
+			// Compression error
+			return FALSE;
+	}
+
+	Attach( &pOutBuf );
+
+	return TRUE;
+}
+
 BOOL CBuffer::UnBZip()
 {
 	// Uncompress to temporary buffer first

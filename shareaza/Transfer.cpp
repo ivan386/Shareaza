@@ -48,7 +48,6 @@ CTransfer::CTransfer(PROTOCOLID nProtocol)
 
 CTransfer::~CTransfer()
 {
-	ASSERT( m_nState == 0 );
 	ASSERT( ! IsValid() );
 	if ( IsValid() ) Close();
 }
@@ -75,8 +74,6 @@ void CTransfer::AttachTo(CConnection* pConnection)
 
 void CTransfer::Close()
 {
-	ASSERT( m_nState == 0 );
-
 	Transfers.Remove( this );
 	CConnection::Close();
 }
