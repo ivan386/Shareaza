@@ -383,8 +383,6 @@ CLibraryFile* CLibraryMaps::LookupFileBySHA1(const Hashes::Sha1Hash& oSHA1, BOOL
 		{
 			if ( pFile->CheckFileAttributes( SIZE_UNKNOWN, bSharedOnly, bAvailableOnly ) )
 				return pFile;
-			else
-				return NULL;
 		}
 	}
 
@@ -405,8 +403,6 @@ CLibraryFile* CLibraryMaps::LookupFileByTiger(const Hashes::TigerHash& oTiger, B
 		{
 			if ( pFile->CheckFileAttributes( SIZE_UNKNOWN, bSharedOnly, bAvailableOnly ) )
 				return pFile;
-			else
-				return NULL;
 		}
 	}
 
@@ -427,8 +423,6 @@ CLibraryFile* CLibraryMaps::LookupFileByED2K(const Hashes::Ed2kHash& oED2K, BOOL
 		{
 			if ( pFile->CheckFileAttributes( SIZE_UNKNOWN, bSharedOnly, bAvailableOnly ) )
 				return pFile;
-			else
-				return NULL;
 		}
 	}
 
@@ -449,8 +443,6 @@ CLibraryFile* CLibraryMaps::LookupFileByBTH(const Hashes::BtHash& oBTH, BOOL bSh
 		{
 			if ( pFile->CheckFileAttributes( SIZE_UNKNOWN, bSharedOnly, bAvailableOnly ) )
 				return pFile;
-			else
-				return NULL;
 		}
 	}
 
@@ -471,8 +463,6 @@ CLibraryFile* CLibraryMaps::LookupFileByMD5(const Hashes::Md5Hash& oMD5, BOOL bS
 		{
 			if ( pFile->CheckFileAttributes( SIZE_UNKNOWN, bSharedOnly, bAvailableOnly ) )
 				return pFile;
-			else
-				return NULL;
 		}
 	}
 
