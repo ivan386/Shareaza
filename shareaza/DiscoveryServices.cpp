@@ -1032,17 +1032,6 @@ int CDiscoveryServices::ExecuteBootstraps(int nCount, BOOL bUDP, PROTOCOLID nPro
 	return nSuccess;
 }
 
-void CDiscoveryServices::OnGnutellaAdded(IN_ADDR* /*pAddress*/, int /*nCount*/)
-{
-	// Find this host somehow and add to m_nHosts
-}
-
-void CDiscoveryServices::OnGnutellaFailed(IN_ADDR* /*pAddress*/)
-{
-	// Find this host and add to m_nFailures, and delete if excessive
-}
-
-
 //////////////////////////////////////////////////////////////////////
 // CDiscoveryServices RequestRandomService
 

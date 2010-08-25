@@ -22,7 +22,6 @@
 // CShakeNeighbour reads and sends handshake headers to negotiate the Gnutella or Gnutella2 handshake
 // http://shareazasecurity.be/wiki/index.php?title=Developers.Code.CShakeNeighbour
 
-// Copy in the contents of these files here before compiling
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
@@ -30,7 +29,6 @@
 #include "Network.h"
 #include "Buffer.h"
 #include "HostCache.h"
-#include "DiscoveryServices.h"
 #include "Neighbours.h"
 #include "ShakeNeighbour.h"
 #include "G1Neighbour.h"
@@ -38,7 +36,6 @@
 #include "Packet.h"
 #include "VendorCache.h"
 
-// If we are compiling in debug mode, replace the text "THIS_FILE" in the code with the name of this file
 #ifdef _DEBUG
 #undef THIS_FILE
 static char THIS_FILE[]=__FILE__;
@@ -51,23 +48,23 @@ static char THIS_FILE[]=__FILE__;
 // Make a new CShakeNeighbour object
 CShakeNeighbour::CShakeNeighbour() : CNeighbour( PROTOCOL_NULL ), // Call the CNeighbour constructor first, with no protocol
 	// Set member variables that record headers to false
-m_bSentAddress(FALSE),			// We haven't told the remote computer "Listen-IP: 1.2.3.4:5"
-m_bG1Send(FALSE),				// The remote computer hasn't said "Content-Type: application/x-gnutella-packets" yet
-m_bG1Accept(FALSE),				// The remote computer hasn't said "Accept: application/x-gnutella-packets" yet
-m_bG2Send(FALSE),				// The remote computer hasn't said "Content-Type: application/x-gnutella2" yet
-m_bG2Accept(FALSE),				// The remote computer hasn't said "Accept: application/x-gnutella2" yet
-m_bDeflateSend(FALSE),			// The remote computer hasn't said "Content-Encoding: deflate" yet
-m_bDeflateAccept(FALSE),		// The remote computer hasn't said "Accept-Encoding: deflate" yet
-// Start out ultrapeer settings as unknown
-m_bUltraPeerSet(TRI_UNKNOWN),	// The remote computer hasn't told us if it's ultra or not yet
-m_bUltraPeerNeeded(TRI_UNKNOWN),	// The remote computer hasn't told us if it needs more ultra connections yet
-m_bUltraPeerLoaded(TRI_UNKNOWN),	// May not be in use (do)
+	m_bSentAddress(FALSE),			// We haven't told the remote computer "Listen-IP: 1.2.3.4:5"
+	m_bG1Send(FALSE),				// The remote computer hasn't said "Content-Type: application/x-gnutella-packets" yet
+	m_bG1Accept(FALSE),				// The remote computer hasn't said "Accept: application/x-gnutella-packets" yet
+	m_bG2Send(FALSE),				// The remote computer hasn't said "Content-Type: application/x-gnutella2" yet
+	m_bG2Accept(FALSE),				// The remote computer hasn't said "Accept: application/x-gnutella2" yet
+	m_bDeflateSend(FALSE),			// The remote computer hasn't said "Content-Encoding: deflate" yet
+	m_bDeflateAccept(FALSE),		// The remote computer hasn't said "Accept-Encoding: deflate" yet
+	// Start out ultrapeer settings as unknown
+	m_bUltraPeerSet(TRI_UNKNOWN),	// The remote computer hasn't told us if it's ultra or not yet
+	m_bUltraPeerNeeded(TRI_UNKNOWN),	// The remote computer hasn't told us if it needs more ultra connections yet
+	m_bUltraPeerLoaded(TRI_UNKNOWN),	// May not be in use (do)
 m_nDelayCloseReason(0),
-	//ToDo: Check this - G1 setting?
-	// Set m_bCanDeflate to true if the checkboxes in Shareaza Settings allow us to send and receive compressed data
+		//ToDo: Check this - G1 setting?
+		// Set m_bCanDeflate to true if the checkboxes in Shareaza Settings allow us to send and receive compressed data
 m_bCanDeflate( Neighbours.IsG2Leaf() ? ( Settings.Gnutella.DeflateHub2Hub || Settings.Gnutella.DeflateLeaf2Hub ) 
 : ( Settings.Gnutella.DeflateHub2Hub || Settings.Gnutella.DeflateHub2Leaf ) ),
-m_bDelayClose(FALSE)
+	m_bDelayClose(FALSE)
 {
 }
 
@@ -309,8 +306,6 @@ BOOL CShakeNeighbour::OnRun()
 		// If we've been waiting for the connection to be made longer than the connection timeout in settings
 		if ( nTimeNow - m_tConnected > Settings.Connection.TimeoutConnect )
 		{
-			// Tell discovery services that we're giving up on this one, and close the connection
-			DiscoveryServices.OnGnutellaFailed( &m_pHost.sin_addr );
 			// Connection to remote node never succeeded. The node is likely not online.
 			Close( IDS_CONNECTION_TIMEOUT_CONNECT );
 			return FALSE;
@@ -1017,8 +1012,6 @@ BOOL CShakeNeighbour::OnHeadersComplete()
 			if ( HostCache.Gnutella2.Add( strHost, 0, NULL ) )
 				nCount++;
 		}
-		// Tell discovery services the remote computer's IP address, and how many hosts it just told us about
-		DiscoveryServices.OnGnutellaAdded( &m_pHost.sin_addr, nCount );
 		m_sTryDNAHubs.Empty();
 	}
 	else if ( m_sTryHubs.GetLength() )
@@ -1035,8 +1028,6 @@ BOOL CShakeNeighbour::OnHeadersComplete()
 			// in order to prevent HostCache/KHL pollution done by wrong assumptions.
 			if ( HostCache.Gnutella2.Add( strHost, 0, NULL ) ) nCount++; // Count it
 		}
-		// Tell discovery services the remote computer's IP address, and how many hosts it just told us about
-		DiscoveryServices.OnGnutellaAdded( &m_pHost.sin_addr, nCount );
 		m_sTryHubs.Empty();
 	} 
 	else if ( m_sTryUltrapeers.GetLength() )
@@ -1072,8 +1063,6 @@ BOOL CShakeNeighbour::OnHeadersComplete()
 				if ( HostCache.Gnutella1.Add( strHost, 0, NULL ) ) nCount++;
 			}
 		}
-		// Tell discovery services the remote computer's IP address, and how many hosts it just told us about
-		DiscoveryServices.OnGnutellaAdded( &m_pHost.sin_addr, nCount );
 		m_sTryUltrapeers.Empty();
 	}
 
@@ -1086,7 +1075,6 @@ BOOL CShakeNeighbour::OnHeadersComplete()
 
 	if ( m_bDelayClose )
 	{
-		theApp.Message( MSG_ERROR, IDS_HANDSHAKE_REJECTED, (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
 		DelayClose( IDS_HANDSHAKE_REJECTED );
 	}
 	else if ( ( ( ! m_bInitiated && m_bG2Accept ) || ( m_bInitiated && m_bG2Send ) ) &&

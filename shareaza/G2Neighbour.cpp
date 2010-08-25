@@ -147,14 +147,15 @@ BOOL CG2Neighbour::OnWrite()
 
 BOOL CG2Neighbour::OnRun()
 {
-	if ( ! CNeighbour::OnRun() ) return FALSE;
+	if ( ! CNeighbour::OnRun() )
+		return FALSE;
 
 	DWORD tNow = GetTickCount();
 
 	// Check incoming LNI traffic
 	if ( m_nCountLNIIn == 0 && tNow - m_tConnected > Settings.Gnutella2.LNIPeriod * 3 )
 	{
-		// No LNI packet was recieved during 3 periods (dead or annonymous host)
+		// No LNI packet was received during 3 periods (dead or anonymous host)
 		Close( IDS_CONNECTION_TIMEOUT_TRAFFIC );
 		return FALSE;
 	}

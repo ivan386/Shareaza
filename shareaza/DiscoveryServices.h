@@ -122,8 +122,6 @@ public:
 	BOOL				Update();
 	BOOL				Execute(BOOL bDiscovery, PROTOCOLID nProtocol, USHORT nForceDiscovery);
 	void				Stop();
-	void				OnGnutellaAdded(IN_ADDR* pAddress, int nCount);
-	void				OnGnutellaFailed(IN_ADDR* pAddress);
 	BOOL				Execute(CDiscoveryService* pService, Mode nMode);
 
 protected:
