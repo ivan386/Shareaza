@@ -52,6 +52,7 @@ CManagedSearch::CManagedSearch(CQuerySearch* pSearch, int nPriority) :
 	m_bAllowG2		( TRUE ),
 	m_bAllowG1		( TRUE ),
 	m_bAllowED2K	( TRUE ),
+	m_bAllowDC		( TRUE ),
 	m_bActive		( FALSE ),
 	m_bReceive		( TRUE ),
 	m_tStarted		( 0 ),
@@ -85,7 +86,9 @@ void CManagedSearch::Serialize(CArchive& ar)
 {
 	CQuickLock oLock( SearchManager.m_pSection );
 
-	int nVersion = 3;
+	// History:
+	// 4 - added m_bAllowDC (ryo-oh-ki)
+	int nVersion = 4;
 
 	if ( ar.IsStoring() )
 	{
@@ -98,6 +101,7 @@ void CManagedSearch::Serialize(CArchive& ar)
 		ar << m_bAllowG2;
 		ar << m_bAllowG1;
 		ar << m_bAllowED2K;
+		ar << m_bAllowDC;
 	}
 	else
 	{
@@ -118,6 +122,11 @@ void CManagedSearch::Serialize(CArchive& ar)
 			ar >> m_bAllowG2;
 			ar >> m_bAllowG1;
 			ar >> m_bAllowED2K;
+		}
+
+		if ( nVersion >= 4 )
+		{
+			ar >> m_bAllowDC;
 		}
 	}
 }
@@ -223,19 +232,35 @@ BOOL CManagedSearch::ExecuteNeighbours(const DWORD tTicks, const DWORD tSecs)
 		CNeighbour* pNeighbour = Neighbours.GetNext( pos );
 
 		// Must be connected
-		if ( pNeighbour->m_nState != nrsConnected ) continue;
+		if ( pNeighbour->m_nState != nrsConnected )
+			continue;
 
-		// Check network flags
+		// Check enabled networks and
+		// do not hammer neighbours for search results
 		switch ( pNeighbour->m_nProtocol )
 		{
 		case PROTOCOL_G1:
-			if ( ! m_bAllowG1 ) continue;
+			if ( ! m_bAllowG1 )
+				continue;
+			if ( tSecs < pNeighbour->m_tLastQuery + Settings.Gnutella1.QueryThrottle )
+				continue;
 			break;
 		case PROTOCOL_G2:
-			if ( ! m_bAllowG2 ) continue;
+			if ( ! m_bAllowG2 )
+				continue;
+			if ( tSecs < pNeighbour->m_tLastQuery + Settings.Gnutella2.QueryHostThrottle )
+				continue;
 			break;
 		case PROTOCOL_ED2K:
-			if ( ! m_bAllowED2K ) continue;
+			if ( ! m_bAllowED2K )
+				continue;
+			break;
+		case PROTOCOL_DC:
+			if ( ! m_bAllowDC ||
+				( ! m_pSearch->m_oTiger && m_pSearch->m_sSearch.IsEmpty() ) )
+				continue;
+			//if ( tSecs < pNeighbour->m_tLastQuery + Settings.DC.QueryHostThrottle )
+			//	continue;
 			break;
 		default:
 			continue;
@@ -245,35 +270,38 @@ BOOL CManagedSearch::ExecuteNeighbours(const DWORD tTicks, const DWORD tSecs)
 		if ( tTicks - pNeighbour->m_tConnected < 15000 )
 			continue;
 
-		// Do not hammer neighbours for search results
-		if ( pNeighbour->m_nProtocol == PROTOCOL_G1 )
-		{
-			if ( tSecs < pNeighbour->m_tLastQuery + Settings.Gnutella1.QueryThrottle )
-				continue;
-		}
-		else if ( pNeighbour->m_nProtocol == PROTOCOL_G2 )
-		{
-			if ( tSecs < pNeighbour->m_tLastQuery + Settings.Gnutella2.QueryHostThrottle )
-				continue;
-		}
-
 		// Lookup the host
 		DWORD nLastQuery;
 		DWORD nAddress = pNeighbour->m_pHost.sin_addr.S_un.S_addr;
 		if ( m_pNodes.Lookup( nAddress, nLastQuery ) )
 		{
-			DWORD nFrequency = 0;
-			if ( pNeighbour->m_nProtocol == PROTOCOL_G1 )
+			// Its re-query
+
+			// Do not hammer neighbours for search results
+			DWORD nFrequency;
+			switch ( pNeighbour->m_nProtocol )
+			{
+			case PROTOCOL_G1:
 				nFrequency = Settings.Gnutella1.RequeryDelay * ( m_nPriority + 1 );
-			else if ( pNeighbour->m_nProtocol == PROTOCOL_G2 )
+				break;
+			case PROTOCOL_G2:
 				nFrequency = Settings.Gnutella2.RequeryDelay * ( m_nPriority + 1 );
-			else if ( pNeighbour->m_nProtocol == PROTOCOL_ED2K )
+				break;
+			case PROTOCOL_ED2K:
 				nFrequency = 86400; // 1 day
+				break;
+			case PROTOCOL_DC:
+				// nFrequency = Settings.DC.RequeryDelay * ( m_nPriority + 1 );
+				//break;
+			default:
+				nFrequency = 30;
+			}
 
 			if ( tSecs - nLastQuery < nFrequency ) // If we've queried this neighbour 'recently'
 			{
 				// Request more ed2k results (if appropriate)
-				if ( ( pNeighbour->m_nProtocol == PROTOCOL_ED2K ) && pNeighbour->m_oMoreResultsGUID ) // If it's an ed2k server and has more results
+				if ( pNeighbour->m_nProtocol == PROTOCOL_ED2K &&
+					 pNeighbour->m_oMoreResultsGUID ) // If it's an ed2k server and has more results
 				{
 					if ( IsEqualGUID( pNeighbour->m_oMoreResultsGUID ) && // and this search is the one with results waiting
 						( m_tMoreResults + 10000 < tTicks ) )		// and we've waited a little while (to ensure the search is still active)
@@ -340,6 +368,10 @@ BOOL CManagedSearch::ExecuteNeighbours(const DWORD tTicks, const DWORD tSecs)
 		else if ( pNeighbour->m_nProtocol == PROTOCOL_ED2K )
 		{
 			pPacket = m_pSearch->ToEDPacket( FALSE, ((CEDNeighbour*)pNeighbour)->m_nTCPFlags );
+		}
+		else if ( pNeighbour->m_nProtocol == PROTOCOL_DC )
+		{
+			//pPacket = m_pSearch->ToDCPacket();
 		}
 
 		// Try to send the search

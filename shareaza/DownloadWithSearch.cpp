@@ -191,6 +191,11 @@ void CDownloadWithSearch::PrepareSearch()
 	if ( m_oTiger )
 	{
 		pSearch->m_oTiger = m_oTiger;
+		m_pSearch->m_bAllowDC = TRUE;
+	}
+	else
+	{
+		m_pSearch->m_bAllowDC = FALSE;
 	}
 
 	if ( m_oED2K )

@@ -79,9 +79,10 @@ public:
 	BOOL	IsLastED2KSearch();
 	void	CreateGUID();
 
-	BOOL			m_bAllowG2;
-	BOOL			m_bAllowG1;
-	BOOL			m_bAllowED2K;
+	BOOL			m_bAllowG2;					// Gnutella2 search enabled
+	BOOL			m_bAllowG1;					// Gnutella search enabled
+	BOOL			m_bAllowED2K;				// eDonkey2000 search enabled
+	BOOL			m_bAllowDC;					// DC++ search enabled
 	BOOL			m_bReceive;
 	DWORD			m_tStarted;					// Time search was started (s)
 	DWORD			m_nHits;					// Total hits

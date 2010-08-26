@@ -76,44 +76,35 @@ protected:
 
 class CSearchAdvancedBox : public CTaskBox
 {
-// Construction
+	DECLARE_DYNAMIC(CSearchAdvancedBox)
+
 public:
 	CSearchAdvancedBox();
 	virtual ~CSearchAdvancedBox();
-	DECLARE_DYNAMIC(CSearchAdvancedBox)
 
-// Attributes
-public:
 	CStatic			m_wndSizeMinMax;
 	CComboBox		m_wndSizeMin;
 	CComboBox		m_wndSizeMax;
 	CButton			m_wndCheckBoxG1;
 	CButton			m_wndCheckBoxG2;
 	CButton			m_wndCheckBoxED2K;
+	CButton			m_wndCheckBoxDC;
 	CBrush			m_brBack;
 	COLORREF		m_crBack;
 	CImageList		m_gdiProtocols;
 	
-// Operations
-public:
 	void	OnSkinChange();
 
-// Overrides
-public:
-	//{{AFX_VIRTUAL(CSearchAdvancedBox)
-	//}}AFX_VIRTUAL
-
-// Implementation
 protected:
-	//{{AFX_MSG(CSearchAdvancedBox)
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnPaint();
 	afx_msg void OnG2Clicked();
 	afx_msg void OnG1Clicked();
 	afx_msg void OnED2KClicked();
+	afx_msg void OnDCClicked();
 	afx_msg LRESULT OnCtlColorStatic(WPARAM, LPARAM);
-	//}}AFX_MSG
+
 	DECLARE_MESSAGE_MAP()
 };
 
@@ -244,3 +235,4 @@ protected:
 #define IDC_SEARCH_GNUTELLA1			277
 #define IDC_SEARCH_GNUTELLA2			278
 #define IDC_SEARCH_EDONKEY				279
+#define IDC_SEARCH_DC					280
