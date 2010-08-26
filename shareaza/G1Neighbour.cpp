@@ -74,7 +74,7 @@ CG1Neighbour::CG1Neighbour(CNeighbour* pBase)
 	// The member variable m_nPongNeeded is just an array of 32 bytes, start them each out as 0
 	ZeroMemory( m_nPongNeeded, PONG_NEEDED_BUFFER );
 	// Say we sent a ping packet when we last got any packet from the remote computer (do)
-	m_tLastOutPing = m_tLastPacket;
+	m_tLastPingOut = m_tLastPacket;
 	m_nLastPingHops = 0;
 
 	// Set the hops flow byte to be all 1s (do)
@@ -195,15 +195,16 @@ BOOL CG1Neighbour::OnWrite()
 // Returns false if we should disconnect from this remote computer
 BOOL CG1Neighbour::OnRun()
 {
-	// Have CNeighbour::OnRun make sure the remote computer hasn't been silent too long, and send a query patch table
 	if ( ! CNeighbour::OnRun() )
 		return FALSE;
 
-	// Send a ping if we haven't sent one in awhile
 	DWORD tNow = GetTickCount();
-	SendPing( tNow );
 
-	// We should stay connected to the remote computer
+	if ( tNow - m_tLastPingOut > Settings.Gnutella1.PingRate )
+	{
+	SendPing( tNow );
+	}
+
 	return TRUE;
 }
 
@@ -368,14 +369,8 @@ BOOL CG1Neighbour::SendPing(DWORD dwNow, const Hashes::Guid& oGUID)
 	bool bNeedLeafs = Neighbours.NeedMoreLeafs( PROTOCOL_G1 ) == TRUE;
 	bool bNeedPeers = bNeedHubs || bNeedLeafs;
 
-	// If the caller didn't give us the time, get it now
-	if ( ! dwNow ) dwNow = GetTickCount();
-
-	// If we last sent a ping in less time than the ping rate in Gnutella settings allow, report error
-	if ( dwNow - m_tLastOutPing < Settings.Gnutella1.PingRate ) return FALSE;
-
 	// Record that we most recently sent a ping now
-	m_tLastOutPing = dwNow;
+	m_tLastPingOut = dwNow;
 
 	// Send the remote computer a new Gnutella ping packet
 	CG1Packet* pPacket = CG1Packet::New( G1_PACKET_PING,

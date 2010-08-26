@@ -1,7 +1,7 @@
 //
 // G1Neighbour.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -45,7 +45,7 @@ protected:
 
 	// The tick count when something last happened
 	DWORD m_tLastInPing;  // When the remote computer last sent us a ping packet
-	DWORD m_tLastOutPing; // When we last sent a ping packet to the remote computer
+	DWORD m_tLastPingOut; // When we last sent a ping packet to the remote computer
 	DWORD m_tClusterHost; // When we last called SendClusterAdvisor (do)
 	DWORD m_tClusterSent; // When that method last sent a vendor specific cluster advisor packet
 
