@@ -633,6 +633,9 @@ BOOL CDatagrams::TryRead()
 	{
 		OnDatagram( &pFrom, m_pReadBuffer, nLength );
 	}
+	else
+		theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING, _T("UDP: Dropped datagram (%u bytes) from %s."),
+			nLength, (LPCTSTR)CString( inet_ntoa( pFrom.sin_addr ) ) );
 
 	return TRUE;
 }
