@@ -53,10 +53,10 @@ public:
 	CString		GetStringFromSubNode(LPCSTR pszKey, UINT nEncoding, bool& pEncodingError) const;
 	CString		GetStringFromSubNode(int nItem, UINT nEncoding, bool& pEncodingError) const;
 	void		Encode(CBuffer* pBuffer) const;
-public:
-	static CBENode*	Decode(const CBuffer* pBuffer, DWORD *pnReaden = NULL );
-private:
 	void		Decode(LPBYTE& pInput, DWORD& nInput, DWORD nSize);
+	static CBENode*	Decode(const CBuffer* pBuffer, DWORD *pnReaden = NULL );
+
+private:
 	static int	DecodeLen(LPBYTE& pInput, DWORD& nInput);
 
 // Inline

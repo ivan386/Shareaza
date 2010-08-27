@@ -146,26 +146,6 @@ protected:
 	void	ManagePartials();
 	void	Rerequest(CDatagramIn* pDG);
 	void	Remove(CDatagramIn* pDG, BOOL bReclaimOnly = FALSE);
-protected:
-	BOOL	OnPacket(SOCKADDR_IN* pHost, CG1Packet* pPacket);
-	BOOL	OnPacket(SOCKADDR_IN* pHost, CG2Packet* pPacket);
-	BOOL	OnPing(SOCKADDR_IN* pHost, CG1Packet* pPacket);
-	BOOL	OnPing(SOCKADDR_IN* pHost, CG2Packet* pPacket);
-	BOOL	OnPong(SOCKADDR_IN* pHost, CG1Packet* pPacket);
-	BOOL	OnPong(SOCKADDR_IN* pHost, CG2Packet* pPacket);
-	BOOL	OnQuery(SOCKADDR_IN* pHost, CG2Packet* pPacket);
-	BOOL	OnQueryAck(SOCKADDR_IN* pHost, CG2Packet* pPacket);
-	BOOL	OnCommonHit(SOCKADDR_IN* pHost, CG2Packet* pPacket);
-	BOOL	OnQueryKeyRequest(SOCKADDR_IN* pHost, CG2Packet* pPacket);
-	BOOL	OnQueryKeyAnswer(SOCKADDR_IN* pHost, CG2Packet* pPacket);
-	BOOL	OnPush(SOCKADDR_IN* pHost, CG2Packet* pPacket);
-	BOOL	OnCrawlRequest(SOCKADDR_IN* pHost, CG2Packet* pPacket);
-	BOOL	OnCrawlAnswer(SOCKADDR_IN* pHost, CG2Packet* pPacket);
-	BOOL	OnDiscovery(SOCKADDR_IN* pHost, CG2Packet* pPacket);
-	BOOL	OnKHL(SOCKADDR_IN* pHost, CG2Packet* pPacket);
-	BOOL	OnKHLA(SOCKADDR_IN* pHost, CG2Packet* pPacket);
-	BOOL	OnKHLR(SOCKADDR_IN* pHost, CG2Packet* pPacket);
-	BOOL	OnVendor(SOCKADDR_IN* pHost, CG1Packet* pPacket);
 };
 
 extern CDatagrams Datagrams;

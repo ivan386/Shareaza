@@ -1,7 +1,7 @@
 //
 // G1Packet.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -163,6 +163,14 @@ public:
 		// Tell the pool to delete this packet
 		POOL.Delete( this ); // All it will really do is link it back into the list of packets we can use later
 	}
+
+	// Packet handler
+	virtual BOOL OnPacket(SOCKADDR_IN* pHost);
+
+protected:
+	BOOL OnPing(SOCKADDR_IN* pHost);
+	BOOL OnPong(SOCKADDR_IN* pHost);
+	BOOL OnVendor(SOCKADDR_IN* pHost);
 
 	// Let the nested CG1PacketPool class access the private members of this CG1Packet class
 	friend class CG1Packet::CG1PacketPool;

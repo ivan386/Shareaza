@@ -30,7 +30,9 @@
 #include "Network.h"
 #include "SharedFile.h"
 #include "EDClient.h"
+#include "EDClients.h"
 #include "EDNeighbour.h"
+#include "Kademlia.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -844,6 +846,29 @@ BOOL CEDTag::Read(CFile* pFile)
 	}
 
 	return TRUE;
+}
+
+BOOL CEDPacket::OnPacket(SOCKADDR_IN* pHost)
+{
+	switch ( m_nEdProtocol )
+	{
+	case ED2K_PROTOCOL_EDONKEY:
+	case ED2K_PROTOCOL_EMULE:
+		return EDClients.OnPacket( pHost, this );
+
+	case ED2K_PROTOCOL_KAD:
+		return Kademlia.OnPacket( pHost, this );
+
+	case ED2K_PROTOCOL_REVCONNECT:
+		// TODO: Implement RevConnect KAD
+		Debug( _T("RevConnect KAD not implemented.") );
+		break;
+
+	default:
+		;
+	}
+
+	return FALSE;
 }
 
 //////////////////////////////////////////////////////////////////////

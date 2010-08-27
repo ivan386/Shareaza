@@ -1,7 +1,7 @@
 //
 // Packet.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -451,6 +451,9 @@ public:
 
 	// (do)
 	virtual inline void Delete() = 0;
+
+	// Packet handler
+	virtual BOOL OnPacket(SOCKADDR_IN* pHost) = 0;
 
 	// Let the CPacketPool class access the private members of this one
 	friend class CPacketPool;

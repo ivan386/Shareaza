@@ -287,6 +287,25 @@ public:
 		POOL.Delete( this );
 	}
 
+	// Packet handler
+	virtual BOOL OnPacket(SOCKADDR_IN* pHost);
+
+protected:
+	BOOL OnPing(SOCKADDR_IN* pHost);
+	BOOL OnPong(SOCKADDR_IN* pHost);
+	BOOL OnQuery(SOCKADDR_IN* pHost);
+	BOOL OnQueryAck(SOCKADDR_IN* pHost);
+	BOOL OnCommonHit(SOCKADDR_IN* pHost);
+	BOOL OnQueryKeyRequest(SOCKADDR_IN* pHost);
+	BOOL OnQueryKeyAnswer(SOCKADDR_IN* pHost);
+	BOOL OnPush(SOCKADDR_IN* pHost);
+	BOOL OnCrawlRequest(SOCKADDR_IN* pHost);
+	BOOL OnCrawlAnswer(SOCKADDR_IN* pHost);
+	BOOL OnDiscovery(SOCKADDR_IN* pHost);
+	BOOL OnKHL(SOCKADDR_IN* pHost);
+	BOOL OnKHLA(SOCKADDR_IN* pHost);
+	BOOL OnKHLR(SOCKADDR_IN* pHost);
+
 	friend class CG2Packet::CG2PacketPool;
 };
 

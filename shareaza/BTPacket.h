@@ -72,6 +72,9 @@ public:
 		POOL.Delete( this );
 	}
 
+	// Packet handler
+	virtual BOOL OnPacket(SOCKADDR_IN* /*pHost*/) { return FALSE; } // Unused
+
 	friend class CBTPacket::CBTPacketPool;
 };
 
