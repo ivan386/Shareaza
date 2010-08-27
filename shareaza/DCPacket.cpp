@@ -53,6 +53,8 @@ void CDCPacket::ToBuffer(CBuffer* pBuffer) const
 
 BOOL CDCPacket::OnPacket(SOCKADDR_IN* pHost)
 {
+	SmartDump( pHost, TRUE, FALSE );
+
 	if ( m_nLength > 4 && memcmp( m_pBuffer, "$SR ", 4 ) == 0 )
 	{
 		if ( ! OnCommonHit( pHost ) )
