@@ -329,10 +329,10 @@ void CEDClient::AttachTo(CConnection* pConnection)
 //////////////////////////////////////////////////////////////////////
 // CEDClient close
 
-void CEDClient::Close()
+void CEDClient::Close(UINT nError)
 {
 	ASSERT( this != NULL );
-	CTransfer::Close();
+	CTransfer::Close( nError );
 	m_bConnected = m_bLogin = FALSE;
 
 	if ( ( m_pDownload ) && ( m_pDownload->m_nState == dtsDownloading ) )

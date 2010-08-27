@@ -147,7 +147,7 @@ BOOL CUploadTransferED2K::Request(const Hashes::Ed2kHash& oED2K)
 //////////////////////////////////////////////////////////////////////
 // CUploadTransferED2K close
 
-void CUploadTransferED2K::Close(BOOL bMessage)
+void CUploadTransferED2K::Close(UINT nError)
 {
 	if ( m_nState == upsNull )
 	{
@@ -174,7 +174,7 @@ void CUploadTransferED2K::Close(BOOL bMessage)
 	m_pClient->OnUploadClose();
 	m_pClient = NULL;
 
-	CUploadTransfer::Close( bMessage );
+	CUploadTransfer::Close( nError );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -198,10 +198,7 @@ BOOL CUploadTransferED2K::OnRunEx(DWORD tNow)
 		if ( m_pClient->IsOnline() == FALSE && tNow > m_tRequest &&
 			 tNow - m_tRequest >= Settings.eDonkey.DequeueTime * 1000 )
 		{
-			theApp.Message( MSG_NOTICE, IDS_UPLOAD_QUEUE_TIMEOUT,
-				(LPCTSTR)m_sAddress );
-
-			Close();
+			Close( IDS_UPLOAD_QUEUE_TIMEOUT );
 			return FALSE;
 		}
 		else
@@ -234,10 +231,7 @@ BOOL CUploadTransferED2K::OnRunEx(DWORD tNow)
 		if ( tNow > m_pClient->m_mOutput.tLast &&
 			 tNow - m_pClient->m_mOutput.tLast > Settings.Connection.TimeoutTraffic * 3 )
 		{
-			theApp.Message( MSG_NOTICE, IDS_UPLOAD_TRAFFIC_TIMEOUT,
-				(LPCTSTR)m_sAddress );
-
-			Close();
+			Close( IDS_UPLOAD_TRAFFIC_TIMEOUT );
 			return FALSE;
 		}
 	}
@@ -245,10 +239,7 @@ BOOL CUploadTransferED2K::OnRunEx(DWORD tNow)
 	{
 		if ( tNow > m_tRequest && tNow - m_tRequest > Settings.Connection.TimeoutHandshake )
 		{
-			theApp.Message( MSG_NOTICE, IDS_UPLOAD_REQUEST_TIMEOUT,
-				(LPCTSTR)m_sAddress );
-
-			Close();
+			Close( IDS_UPLOAD_REQUEST_TIMEOUT );
 			return FALSE;
 		}
 	}
@@ -256,7 +247,7 @@ BOOL CUploadTransferED2K::OnRunEx(DWORD tNow)
 	{
 		if ( tNow > m_tRequest && tNow - m_tRequest > Settings.Connection.TimeoutConnect + Settings.Connection.TimeoutHandshake + 10000 )
 		{
-			Close( TRUE );
+			Close( IDS_UPLOAD_DROPPED );
 			return FALSE;
 		}
 	}
@@ -296,8 +287,7 @@ void CUploadTransferED2K::OnDropped()
 	}
 	else
 	{
-		theApp.Message( MSG_ERROR, IDS_UPLOAD_DROPPED, (LPCTSTR)m_sAddress );
-		Close();
+		Close( IDS_UPLOAD_DROPPED );
 	}
 }
 
@@ -346,7 +336,7 @@ DWORD CUploadTransferED2K::GetMeasuredSpeed()
 BOOL CUploadTransferED2K::OnQueueRelease(CEDPacket* /*pPacket*/)
 {
 	Cleanup();
-	Close( TRUE );
+	Close( IDS_UPLOAD_DROPPED );
 	return FALSE;
 }
 
@@ -394,7 +384,7 @@ BOOL CUploadTransferED2K::OnRequestParts(CEDPacket* pPacket)
 		else
 		{
 			// Invalid request- had an impossible range.
-			theApp.Message( MSG_ERROR, _T("Invalid file range(s) in request from %s"), (LPCTSTR)m_sAddress );
+			theApp.Message( MSG_ERROR, IDS_UPLOAD_BAD_RANGE, (LPCTSTR)m_sAddress, (LPCTSTR)m_sName );
 			// They probably have an incorrent hash associated with a file. Calling close now
 			// will send "file not found" to stop them re-asking, then close the connection.
 			Close();
@@ -602,7 +592,7 @@ BOOL CUploadTransferED2K::StartNextRequest()
 	{
 		Send( CEDPacket::New( ED2K_C2C_FINISHUPLOAD ) );
 		Cleanup();
-		Close( TRUE );
+		Close( IDS_UPLOAD_DROPPED );
 		return FALSE;
 	}
 }
@@ -773,7 +763,7 @@ BOOL CUploadTransferED2K::CheckRanking()
 	{
 		// Invalid queue position, or queue deleted. Drop client and exit.
 		Cleanup();
-		Close( TRUE );
+		Close( IDS_UPLOAD_DROPPED );
 		return FALSE;
 	}
 
@@ -922,7 +912,7 @@ BOOL CUploadTransferED2K::OnRequestParts64(CEDPacket* pPacket)
 		else
 		{
 			// Invalid request- had an impossible range.
-			theApp.Message( MSG_ERROR, _T("Invalid file range(s) in request from %s"), (LPCTSTR)m_sAddress );
+			theApp.Message( MSG_ERROR, IDS_UPLOAD_BAD_RANGE, (LPCTSTR)m_sAddress, (LPCTSTR)m_sName );
 			// They probably have an incorrent hash associated with a file. Calling close now
 			// will send "file not found" to stop them re-asking, then close the connection.
 			Close();

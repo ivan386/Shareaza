@@ -22,7 +22,6 @@
 // CNeighbour is in the middle of the CConnection inheritance tree, adding compression and a bunch of member variables
 // http://shareazasecurity.be/wiki/index.php?title=Developers.Code.CNeighbour
 
-// Copy in the contents of these files here before compiling
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
@@ -44,7 +43,6 @@
 #include "GProfile.h"
 #include "Statistics.h"
 
-// If we are compiling in debug mode, replace the text "THIS_FILE" in the code with the name of this file
 #ifdef _DEBUG
 #undef THIS_FILE
 static char THIS_FILE[]=__FILE__;
@@ -60,6 +58,7 @@ static char THIS_FILE[]=__FILE__;
 // Make a new CNeighbour object for a certain network
 // Takes a protocol ID, like PROTOCOL_G1
 CNeighbour::CNeighbour(PROTOCOLID nProtocol) :
+	CConnection( nProtocol ),
 	m_nRunCookie( 0 ),
 	// Set null and default values for connection state, software vendor, guid, and user profile
 	m_nState( nrsNull ),		// No state now, soon we'll connect and do the handshake
@@ -104,56 +103,55 @@ CNeighbour::CNeighbour(PROTOCOLID nProtocol) :
 	m_bZFlush( FALSE ),
 	m_tZOutput( 0 )
 {
-	m_nProtocol = nProtocol;
+	m_bAutoDelete = TRUE;
 }
 
 // Make a new CNeighbour object, copying values from a base one
 // Takes a protocol ID and a base neighbour to copy information from
 CNeighbour::CNeighbour(PROTOCOLID nProtocol, CNeighbour* pBase)
-	: CConnection( *pBase )
-	, m_nRunCookie( 0 )
-	, m_nState( nrsConnected )
-	, m_pVendor(           pBase->m_pVendor )
-	, m_oGUID(             pBase->m_oGUID )
-	, m_pProfile( NULL )
-	, m_oMoreResultsGUID()
-	, m_bAutomatic(        pBase->m_bAutomatic )
-	, m_nNodeType(         pBase->m_nNodeType )
-	, m_bQueryRouting(     pBase->m_bQueryRouting )
-	, m_bPongCaching(      pBase->m_bPongCaching )
-	, m_bVendorMsg(        pBase->m_bVendorMsg )
-	, m_bGGEP(             pBase->m_bGGEP )
-	, m_tLastQuery(        pBase->m_tLastQuery )
-	, m_bBadClient(			pBase->m_bBadClient )
-	, m_nDegree(			pBase->m_nDegree )
-	, m_nMaxTTL(			pBase->m_nMaxTTL )
-	, m_bDynamicQuerying(	pBase->m_bDynamicQuerying )
-	, m_bUltrapeerQueryRouting(	pBase->m_bUltrapeerQueryRouting )
-	, m_sLocalePref(		pBase->m_sLocalePref )
-	, m_bRequeries(			pBase->m_bRequeries )
-	, m_bExtProbes(			pBase->m_bExtProbes )
-	, m_nInputCount(       pBase->m_nInputCount )
-	, m_nOutputCount(      pBase->m_nOutputCount )
-	, m_nDropCount(        pBase->m_nDropCount )
-	, m_nLostCount(        pBase->m_nLostCount )
-	, m_nOutbound(         pBase->m_nOutbound )
-	, m_nFileCount(        pBase->m_nFileCount )
-	, m_nFileVolume(       pBase->m_nFileVolume )
-	// If this connected computer is sending and receiving Gnutella2 packets, it will also support query routing
-	, m_pQueryTableRemote( m_bQueryRouting ? new CQueryHashTable : NULL )
-	, m_pQueryTableLocal( m_bQueryRouting ? new CQueryHashTable : NULL )
-	, m_tLastPacket( GetTickCount() )
-	, m_pZInput(           pBase->m_pZInput )	// transfer of ownership
-	, m_pZOutput(          pBase->m_pZOutput )
-	, m_nZInput(           pBase->m_nZInput )
-	, m_nZOutput(          pBase->m_nZOutput )
-	, m_pZSInput( NULL )
-	, m_pZSOutput( NULL )
-	, m_bZFlush(           pBase->m_bZFlush )
-	, m_tZOutput(          pBase->m_tZOutput )
+	: CConnection				( nProtocol )
+	, m_nRunCookie				( 0 )
+	, m_nState					( nrsConnected )
+	, m_pVendor					( pBase->m_pVendor )
+	, m_oGUID					( pBase->m_oGUID )
+	, m_pProfile				( NULL )
+	, m_oMoreResultsGUID		()
+	, m_bAutomatic				( pBase->m_bAutomatic )
+	, m_nNodeType				( pBase->m_nNodeType )
+	, m_bQueryRouting			( pBase->m_bQueryRouting )
+	, m_bPongCaching			( pBase->m_bPongCaching )
+	, m_bVendorMsg				( pBase->m_bVendorMsg )
+	, m_bGGEP					( pBase->m_bGGEP )
+	, m_tLastQuery				( pBase->m_tLastQuery )
+	, m_bBadClient				( pBase->m_bBadClient )
+	, m_nDegree					( pBase->m_nDegree )
+	, m_nMaxTTL					( pBase->m_nMaxTTL )
+	, m_bDynamicQuerying		( pBase->m_bDynamicQuerying )
+	, m_bUltrapeerQueryRouting	( pBase->m_bUltrapeerQueryRouting )
+	, m_sLocalePref				( pBase->m_sLocalePref )
+	, m_bRequeries				( pBase->m_bRequeries )
+	, m_bExtProbes				( pBase->m_bExtProbes )
+	, m_nInputCount				( pBase->m_nInputCount )
+	, m_nOutputCount			( pBase->m_nOutputCount )
+	, m_nDropCount				( pBase->m_nDropCount )
+	, m_nLostCount				( pBase->m_nLostCount )
+	, m_nOutbound				( pBase->m_nOutbound )
+	, m_nFileCount				( pBase->m_nFileCount )
+	, m_nFileVolume				( pBase->m_nFileVolume )
+	, m_pQueryTableRemote		( m_bQueryRouting ? new CQueryHashTable : NULL )
+	, m_pQueryTableLocal		( m_bQueryRouting ? new CQueryHashTable : NULL )
+	, m_tLastPacket				( GetTickCount() )
+	, m_pZInput					( pBase->m_pZInput )	// transfer of ownership
+	, m_pZOutput				( pBase->m_pZOutput )	// transfer of ownership
+	, m_nZInput					( pBase->m_nZInput )	// transfer of ownership
+	, m_nZOutput				( pBase->m_nZOutput )	// transfer of ownership
+	, m_pZSInput				( NULL )
+	, m_pZSOutput				( NULL )
+	, m_bZFlush					( pBase->m_bZFlush )
+	, m_tZOutput				( pBase->m_tZOutput )
 {
-	m_nProtocol = nProtocol;
-	m_tConnected = m_tLastPacket;
+	AttachTo( pBase );
+
 	pBase->m_pZInput  = NULL;
 	pBase->m_pZOutput = NULL;
 
@@ -193,38 +191,21 @@ void CNeighbour::Close(UINT nError)
 	// Make sure that the socket stored in this CNeighbour object is valid
 	ASSERT( IsValid() );
 
-	// If nError is the default closed or a result of peer pruning, we're closing the connection voluntarily
-	BOOL bVoluntary = ( nError == IDS_CONNECTION_CLOSED || nError == IDS_CONNECTION_PEERPRUNE );
-
 	// Remove this neighbour from the list of them
 	Neighbours.Remove( this );
 
 	// Actually close the socket connection to the remote computer
-	CConnection::Close();
-
-	// If this Close method was called with an error, among which IDS_CONNECTION_CLOSED counts
-	if ( nError && nError != IDS_HANDSHAKE_REJECTED )
-	{
-		// Report a voluntary default close, or an error
-		theApp.Message( bVoluntary ? MSG_INFO : MSG_ERROR, nError, (LPCTSTR)m_sAddress );
-	}
-
-	// Delete this CNeighbour object, calling its destructor right now
-	delete this;
+	CConnection::Close( nError );
 }
 
 // Close the connection, but not until we've written the buffered outgoing data first
 // Takes the reason we're closing the connection, or 0 by default
 void CNeighbour::DelayClose(UINT nError)
 {
-	// If this method got passed a close reason error, report it
-	if ( nError ) theApp.Message( MSG_ERROR, nError, (LPCTSTR)m_sAddress );
-
 	// Change this object's state to closing
 	m_nState = nrsClosing;
 
-	// Have the connection object write all the outgoing data soon
-	QueueRun();
+	CConnection::DelayClose( nError );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -284,41 +265,62 @@ BOOL CNeighbour::SendQuery(const CQuerySearch* pSearch, CPacket* pPacket, BOOL b
 // Returns true if the connection is still open and there was no error sending the patch table
 BOOL CNeighbour::OnRun()
 {
-	// Get the tick count right now
+	if ( ! CConnection::OnRun() )
+		return FALSE;
+
 	DWORD tNow = GetTickCount();
 
-	// If it's been awhile since the last packet came in through this connection
-	if ( tNow - m_tLastPacket > Settings.Connection.TimeoutTraffic )
+	if ( m_nState == nrsConnecting )
 	{
-		// Close the connection, citing traffic timeout as the reason, and return false
-		Close( IDS_CONNECTION_TIMEOUT_TRAFFIC );
-		return FALSE;
-	}
-
-	// If this connection is to a hub above us, or to a Gnutella2 hub like us
-	if ( ( m_nNodeType == ntHub || ( m_nNodeType == ntNode && m_nProtocol == PROTOCOL_G2 ) ) &&
-		// And if we have a local query table for this neighbour and its cookie isn't the master cookie (do)
-		 ( m_pQueryTableLocal != NULL && m_pQueryTableLocal->m_nCookie != QueryHashMaster.m_nCookie ) &&
-		// And it's been more than 60 seconds since the last update (do)
-		 ( tNow - m_pQueryTableLocal->m_nCookie > 60000 ) &&
-		// And it's been more than 30 seconds since the master cookie (do)
-		 ( tNow - QueryHashMaster.m_nCookie > 30000 ||
-		// Or, the master cookie is a minute older than the local one (do)
-			QueryHashMaster.m_nCookie - m_pQueryTableLocal->m_nCookie > 60000 ||
-		// Or, the local query table is not live (do)
-			! m_pQueryTableLocal->m_bLive ) )
-	{
-		// Then send the connected computer a query hash table patch
-		if ( m_pQueryTableLocal->PatchTo( &QueryHashMaster, this ) )
+		if ( tNow - m_tConnected > Settings.Connection.TimeoutConnect )
 		{
-			// There was an error, record it
-			theApp.Message( MSG_NOTICE, IDS_PROTOCOL_QRP_SENT, (LPCTSTR)m_sAddress,
-				m_pQueryTableLocal->m_nBits, m_pQueryTableLocal->m_nHash,
-				m_pQueryTableLocal->m_nInfinity, m_pQueryTableLocal->GetPercent() );
+			Close( IDS_CONNECTION_TIMEOUT_CONNECT );
+			return FALSE;
+		}
+	}
+	else if ( m_nState < nrsConnected )
+	{
+		if ( tNow - m_tConnected > Settings.Connection.TimeoutHandshake )
+		{
+			Close( IDS_HANDSHAKE_TIMEOUT );
+			return FALSE;
+		}
+	}
+	else if ( m_nState == nrsConnected )
+	{
+		if ( m_nProtocol != PROTOCOL_ED2K &&	// ED2K has no keep-alive
+			 m_nProtocol != PROTOCOL_DC &&		// DC++ has no keep-alive
+			 tNow - m_tLastPacket > Settings.Connection.TimeoutTraffic )
+		{
+			// Close the connection, citing traffic timeout as the reason, and return false
+			Close( IDS_CONNECTION_TIMEOUT_TRAFFIC );
+			return FALSE;
+		}
+
+		// If this connection is to a hub above us, or to a Gnutella2 hub like us
+		if ( ( m_nNodeType == ntHub || ( m_nNodeType == ntNode && m_nProtocol == PROTOCOL_G2 ) ) &&
+			// And if we have a local query table for this neighbour and its cookie isn't the master cookie (do)
+			 ( m_pQueryTableLocal != NULL && m_pQueryTableLocal->m_nCookie != QueryHashMaster.m_nCookie ) &&
+			// And it's been more than 60 seconds since the last update (do)
+			 ( tNow - m_pQueryTableLocal->m_nCookie > 60000 ) &&
+			// And it's been more than 30 seconds since the master cookie (do)
+			 ( tNow - QueryHashMaster.m_nCookie > 30000 ||
+			// Or, the master cookie is a minute older than the local one (do)
+				QueryHashMaster.m_nCookie - m_pQueryTableLocal->m_nCookie > 60000 ||
+			// Or, the local query table is not live (do)
+				! m_pQueryTableLocal->m_bLive ) )
+		{
+			// Then send the connected computer a query hash table patch
+			if ( m_pQueryTableLocal->PatchTo( &QueryHashMaster, this ) )
+			{
+				// There was an error, record it
+				theApp.Message( MSG_NOTICE, IDS_PROTOCOL_QRP_SENT, (LPCTSTR)m_sAddress,
+					m_pQueryTableLocal->m_nBits, m_pQueryTableLocal->m_nHash,
+					m_pQueryTableLocal->m_nInfinity, m_pQueryTableLocal->GetPercent() );
+			}
 		}
 	}
 
-	// Report success
 	return TRUE;
 }
 

@@ -1,7 +1,7 @@
 //
 // UploadTransferED2K.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -49,7 +49,7 @@ private:
 // Operations
 public:
     BOOL			Request(const Hashes::Ed2kHash& oED2K);
-	virtual void	Close(BOOL bMessage = FALSE);
+	virtual void	Close(UINT nError = 0);
 	virtual BOOL	OnRun();
 	virtual BOOL	OnConnected();
 	virtual void	OnDropped();

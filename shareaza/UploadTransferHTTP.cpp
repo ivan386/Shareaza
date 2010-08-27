@@ -147,8 +147,7 @@ BOOL CUploadTransferHTTP::ReadRequest()
 		
 		if ( GetTickCount() - m_tRequest < tLimit )
 		{
-			theApp.Message( MSG_ERROR, IDS_UPLOAD_BUSY_FAST, (LPCTSTR)m_sAddress );
-			Close();
+			Close( IDS_UPLOAD_BUSY_FAST );
 			return FALSE;
 		}
 	}
@@ -158,8 +157,7 @@ BOOL CUploadTransferHTTP::ReadRequest()
 	if ( strLine.GetLength() < 14 || nChar < 5 ||
 		 ( strLine.Left( 4 ) != _T("GET ") && strLine.Left( 5 ) != _T("HEAD ") ) )
 	{
-		theApp.Message( MSG_ERROR, IDS_UPLOAD_NOHTTP, (LPCTSTR)m_sAddress );
-		Close();
+		Close( IDS_UPLOAD_NOHTTP );
 		return FALSE;
 	}
 
@@ -1309,16 +1307,14 @@ BOOL CUploadTransferHTTP::OnRun()
 	case upsRequest:
 		if ( ! m_bKeepAlive && GetOutputLength() == 0 )
 		{
-			theApp.Message( MSG_INFO, IDS_UPLOAD_DROPPED, (LPCTSTR)m_sAddress );
-			Close();
+			Close( IDS_UPLOAD_DROPPED );
 			return FALSE;
 		}
 
 	case upsHeaders:
 		if ( tNow - m_tRequest > Settings.Connection.TimeoutHandshake )
 		{
-			theApp.Message( MSG_ERROR, IDS_UPLOAD_REQUEST_TIMEOUT, (LPCTSTR)m_sAddress );
-			Close();
+			Close( IDS_UPLOAD_REQUEST_TIMEOUT );
 			return FALSE;
 		}
 		break;
@@ -1326,8 +1322,7 @@ BOOL CUploadTransferHTTP::OnRun()
 	case upsQueued:
 		if ( tNow - m_tRequest > ( Settings.Uploads.QueuePollMax * m_nReaskMultiplier ) )
 		{
-			theApp.Message( MSG_ERROR, IDS_UPLOAD_REQUEST_TIMEOUT, (LPCTSTR)m_sAddress );
-			Close();
+			Close( IDS_UPLOAD_REQUEST_TIMEOUT );
 			return FALSE;
 		}
 		break;
@@ -1341,8 +1336,7 @@ BOOL CUploadTransferHTTP::OnRun()
 	case upsPreQueue:
 		if ( tNow - m_mOutput.tLast > Settings.Connection.TimeoutTraffic )
 		{
-			theApp.Message( MSG_ERROR, IDS_UPLOAD_TRAFFIC_TIMEOUT, (LPCTSTR)m_sAddress );
-			Close();
+			Close( IDS_UPLOAD_TRAFFIC_TIMEOUT );
 			return FALSE;
 		}
 		break;
@@ -1357,8 +1351,6 @@ BOOL CUploadTransferHTTP::OnRun()
 
 void CUploadTransferHTTP::OnDropped()
 {
-	theApp.Message( MSG_INFO, IDS_UPLOAD_DROPPED, (LPCTSTR)m_sAddress );
-	
 	if ( m_nState == upsUploading && m_pBaseFile != NULL )
 	{
 		if ( m_bBackwards )
@@ -1373,7 +1365,7 @@ void CUploadTransferHTTP::OnDropped()
 		m_pBaseFile = NULL;
 	}
 	
-	Close();
+	Close( IDS_UPLOAD_DROPPED );
 }
 
 //////////////////////////////////////////////////////////////////////

@@ -1253,7 +1253,7 @@ void CRemote::PageNetwork()
 	{
 		if ( CNeighbour* pNeighbour = Neighbours.Get( nNeighbourID ) )
 		{
-			pNeighbour->Close();
+			pNeighbour->Close( IDS_CONNECTION_CLOSED );
 		}
 	}
 	
@@ -1290,7 +1290,8 @@ void CRemote::PageNetworkNetwork(int nID, bool* pbConnect, LPCTSTR pszName)
 		{
 			CNeighbour* pNeighbour = Neighbours.GetNext( pos );
 			if ( pNeighbour->m_nProtocol == PROTOCOL_NULL ||
-				 pNeighbour->m_nProtocol == nID ) pNeighbour->Close();
+				 pNeighbour->m_nProtocol == nID )
+				 pNeighbour->Close( IDS_CONNECTION_CLOSED );
 		}
 	}
 	

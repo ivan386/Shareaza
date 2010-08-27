@@ -46,7 +46,7 @@ public:
 	SOCKADDR_IN		m_pServer;		// ED2K server (If appropriate)
 
 	virtual void	AttachTo(CConnection* pConnection);
-	virtual void	Close();
+	virtual void	Close(UINT nError = 0);
 
 	void			Setup(const Hashes::Guid& oGUID, SOCKADDR_IN* pHost, BOOL bMustPush);
 	BOOL			Connect();

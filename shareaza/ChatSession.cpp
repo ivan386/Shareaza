@@ -232,7 +232,7 @@ BOOL CChatSession::OnPush(const Hashes::Guid& oGUID, CConnection* pConnection)
 //////////////////////////////////////////////////////////////////////
 // CChatSession close
 
-void CChatSession::Close()
+void CChatSession::Close(UINT nError)
 {
 	// ED2K Clients have their connection controlled by ED2KClient.
 	if ( m_nProtocol == PROTOCOL_ED2K ) return;
@@ -246,7 +246,7 @@ void CChatSession::Close()
 		StatusMessage( 0, IDS_CHAT_CLOSED );
 	}
 
-	CConnection::Close();
+	CConnection::Close( nError );
 
 	if ( m_pWndPrivate == NULL && m_pWndPublic == NULL ) delete this;
 }

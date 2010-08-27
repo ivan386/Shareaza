@@ -1,7 +1,7 @@
 //
 // EDClient.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -118,7 +118,7 @@ protected:
 
 public:
 	virtual void	AttachTo(CConnection* pConnection);
-	virtual void	Close();
+	virtual void	Close(UINT nError = 0);
 protected:
 	virtual BOOL	OnRun();
 	virtual BOOL	OnConnected();

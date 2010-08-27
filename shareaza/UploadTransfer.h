@@ -1,7 +1,7 @@
 //
 // UploadTransfer.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -68,7 +68,7 @@ private:
 
 public:
 	virtual void	Remove(BOOL bMessage = TRUE);
-	virtual void	Close(BOOL bMessage = FALSE);
+	virtual void	Close(UINT nError = 0);
 	virtual BOOL	Promote();
 	// Rename, delete or release uploading file.
 	// pszTarget == 0 - delete file; pszTarget == 1 - release file.

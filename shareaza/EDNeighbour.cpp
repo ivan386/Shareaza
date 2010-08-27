@@ -138,32 +138,18 @@ BOOL CEDNeighbour::Send(CPacket* pPacket, BOOL bRelease, BOOL /*bBuffered*/)
 
 BOOL CEDNeighbour::OnRun()
 {
+	if ( ! CNeighbour::OnRun() )
+		return FALSE;
+
 	DWORD tNow = GetTickCount();
 
-	if ( m_nState != nrsConnected )
-	{
-		if ( tNow - m_tConnected > Settings.Connection.TimeoutConnect )
-		{
-			Close( IDS_CONNECTION_TIMEOUT_CONNECT );
-			return FALSE;
-		}
-	}
-	else if ( m_nClientID == 0 )
+	if (  m_nState == nrsConnected && m_nClientID == 0 )
 	{
 		if ( tNow - m_tConnected > Settings.Connection.TimeoutHandshake )
 		{
 			Close( IDS_HANDSHAKE_TIMEOUT );
 			return FALSE;
 		}
-	}
-	else
-	{
-		// Temporary commenting out this code, because no PING/PONG on ed2k and can cause DROP without reason.
-		//if ( tNow - m_tLastPacket > 20 * 60 * 1000 )
-		//{
-		//	Close( IDS_CONNECTION_TIMEOUT_TRAFFIC );
-		//	return FALSE;
-		//}
 	}
 
 	return TRUE;

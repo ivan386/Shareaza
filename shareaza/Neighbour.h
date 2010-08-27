@@ -1,7 +1,7 @@
 //
 // Neighbour.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -134,7 +134,7 @@ protected:
 public:
 	virtual BOOL Send(CPacket* pPacket, BOOL bRelease = TRUE, BOOL bBuffered = FALSE);
 	virtual void Close(UINT nError = IDS_CONNECTION_CLOSED);
-	void         DelayClose(UINT nError = 0); // Send the buffer then close the socket, record the error given
+	virtual void DelayClose(UINT nError);	// Send the buffer then close the socket, record the error given
 	virtual BOOL SendQuery(const CQuerySearch* pSearch, CPacket* pPacket, BOOL bLocal); // Validate query
 
 protected:

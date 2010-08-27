@@ -59,11 +59,11 @@ CShakeNeighbour::CShakeNeighbour() : CNeighbour( PROTOCOL_NULL ), // Call the CN
 	m_bUltraPeerSet(TRI_UNKNOWN),	// The remote computer hasn't told us if it's ultra or not yet
 	m_bUltraPeerNeeded(TRI_UNKNOWN),	// The remote computer hasn't told us if it needs more ultra connections yet
 	m_bUltraPeerLoaded(TRI_UNKNOWN),	// May not be in use (do)
-m_nDelayCloseReason(0),
 		//ToDo: Check this - G1 setting?
 		// Set m_bCanDeflate to true if the checkboxes in Shareaza Settings allow us to send and receive compressed data
-m_bCanDeflate( Neighbours.IsG2Leaf() ? ( Settings.Gnutella.DeflateHub2Hub || Settings.Gnutella.DeflateLeaf2Hub ) 
-: ( Settings.Gnutella.DeflateHub2Hub || Settings.Gnutella.DeflateHub2Leaf ) ),
+	m_bCanDeflate( Neighbours.IsG2Leaf() ?
+		( Settings.Gnutella.DeflateHub2Hub || Settings.Gnutella.DeflateLeaf2Hub ) :
+		( Settings.Gnutella.DeflateHub2Hub || Settings.Gnutella.DeflateHub2Leaf ) ),
 	m_bDelayClose(FALSE)
 {
 }
@@ -186,27 +186,6 @@ void CShakeNeighbour::Close(UINT nError)
 }
 
 //////////////////////////////////////////////////////////////////////
-// CShakeNeighbour DelayClose
-
-// Called when the socket connection has been dropped
-// Takes an error code that explains why
-// Records the failure and puts everything away
-void CShakeNeighbour::DelayClose(UINT nError)
-{
-	if ( ! m_bInitiated )
-		Security.Complain( &m_pHost.sin_addr );
-
-	// If we initiated the connection to the remote computer
-	m_nDelayCloseReason = nError;
-
-	// Change this object's state to closing
-	m_nState = nrsClosing;
-
-	// Have the connection object write all the outgoing data soon
-	CNeighbour::QueueRun();
-}
-
-//////////////////////////////////////////////////////////////////////
 // CShakeNeighbour connection event
 
 // CConnection::DoRun calls this when it has just opened a socket to a remote computer
@@ -285,62 +264,6 @@ BOOL CShakeNeighbour::OnRead()
 	if ( m_nState == nrsRejected && ! ReadHeaders() ) return FALSE;
 
 	// Keep talking to the remote computer
-	return TRUE;
-}
-
-//////////////////////////////////////////////////////////////////////
-// CShakeNeighbour run event
-
-// CConnection::DoRun calls this
-// Makes sure the handshake hasn't been taking too long
-// Returns false to stop talking to this computer, true to keep talking to it
-BOOL CShakeNeighbour::OnRun()
-{
-	// Get the number of milliseconds since the computer has been turned on
-	DWORD nTimeNow = GetTickCount();
-
-	// We connected the socket, and are waiting for the socket connection to be made
-	switch ( m_nState ) {
-	case nrsConnecting:
-
-		// If we've been waiting for the connection to be made longer than the connection timeout in settings
-		if ( nTimeNow - m_tConnected > Settings.Connection.TimeoutConnect )
-		{
-			// Connection to remote node never succeeded. The node is likely not online.
-			Close( IDS_CONNECTION_TIMEOUT_CONNECT );
-			return FALSE;
-		}
-
-		break;
-
-	// We are exchanging handshake headers with the remote computer, and the most recent thing that's happened is
-	case nrsHandshake1: // Either we've sent a complete group of headers, or remote computer has just connected to us
-	case nrsHandshake2: // The remote computer sent the first line of its initial group of headers to us
-	case nrsHandshake3: // The remote computer sent the first line of its final group of headers to us
-	case nrsRejected:   // The remote computer sent us a line with a 503 error code
-
-		// If the handshake has been going on for longer than the handshake timeout in settings
-		if ( nTimeNow - m_tConnected > Settings.Connection.TimeoutHandshake )
-		{
-			Close( IDS_HANDSHAKE_TIMEOUT );
-			return FALSE;
-		}
-
-		break;
-
-	// DelayClose was called, it sends the write buffer to the remote computer before closing the socket
-	case nrsClosing:
-
-		Close( m_nDelayCloseReason );
-		return FALSE;
-
-		break;
-	default:
-//		ASSERT( 0 )
-		;
-	}
-
-	// Have CConnection::DoRun keep talking to this remote computer
 	return TRUE;
 }
 

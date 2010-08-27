@@ -58,7 +58,7 @@ protected:
 public:
 	virtual BOOL	Connect(CDownloadTransferBT* pDownloadTransfer);
 	virtual void	AttachTo(CConnection* pConnection);
-	virtual void	Close();
+	virtual void	Close(UINT nError = 0);
 	void			Send(CBTPacket* pPacket, BOOL bRelease = TRUE);
 	inline BOOL		IsOnline() const throw() { return m_bOnline; }
 	static CString	GetAzureusStyleUserAgent(LPBYTE pVendor, size_t nVendor);

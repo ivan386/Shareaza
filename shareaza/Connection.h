@@ -34,7 +34,6 @@ class CConnection
 // Construction
 protected:
 	CConnection(PROTOCOLID nProtocol = PROTOCOL_ANY);
-	CConnection(CConnection& other);
 	virtual ~CConnection();
 
 // Attributes
@@ -50,13 +49,14 @@ public:
 	CString		m_sUserAgent;	// The name of the program the remote computer is running
 	BOOL		m_bClientExtended;// Does the remote computer support extended functions i.e. running under Shareaza or compatible mod? In practice, this means can we use chat, browse, etc...
 	CString		m_sLastHeader;	// The handshake header that ReadHeaders most recently read
-	int			m_nQueuedRun;	// The queued run state of 0, 1, or 2 (do)
 	PROTOCOLID	m_nProtocol;	// Detected protocol
 
 // Buffers access
 protected:
 	// Class that looks like CBuffer* but with syncronization
 	typedef CLocked< CBuffer*, CCriticalSectionPtr > CLockedBuffer;
+
+	BOOL		m_bAutoDelete;				// Delete this object in Close() method
 
 	void LogOutgoing();
 
@@ -65,6 +65,11 @@ private:
 	CBuffer*			m_pInput;			// Data from the remote computer, will be compressed if the remote computer is sending compressed data
 	CCriticalSectionPtr	m_pOutputSection;
 	CBuffer*			m_pOutput;			// Data to send to the remote computer, will be compressed if we are sending the remote computer compressed data
+	int			m_nQueuedRun;				// The queued run state of 0, 1, or 2 (do)
+	UINT		m_nDelayCloseReason;		// Reason for DelayClose()
+
+	CConnection(const CConnection&);
+	CConnection& operator=(const CConnection&);
 
 public:
 	inline CLockedBuffer GetInput() const throw()
@@ -201,7 +206,7 @@ public:
 	{
 		CQuickLock oInputLock( *m_pInputSection );
 
-		return m_pInput->Remove( nLength );
+		m_pInput->Remove( nLength );
 	}
 
 	inline void Prefix(LPCSTR pszText, const size_t nLength) throw()
@@ -260,7 +265,8 @@ public:
 	virtual BOOL ConnectTo(const IN_ADDR* pAddress, WORD nPort);
 	virtual void AcceptFrom(SOCKET hSocket, SOCKADDR_IN* pHost); // Accept a connection from a remote computer
 	virtual void AttachTo(CConnection* pConnection);             // Copy a connection (do)
-	virtual void Close();                                        // Disconnect from the remote computer
+	virtual void Close(UINT nError = 0);		// Disconnect from the remote computer
+	virtual void DelayClose(UINT nError);		// Send the buffer then close the socket, record the error given
 
 	// Read and write data through the socket, and look at headers
 	virtual BOOL OnRun();                // (do) just returns true

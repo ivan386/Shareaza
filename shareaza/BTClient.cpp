@@ -133,7 +133,7 @@ void CBTClient::AttachTo(CConnection* pConnection)
 //////////////////////////////////////////////////////////////////////
 // CBTClient close
 
-void CBTClient::Close()
+void CBTClient::Close(UINT nError)
 {
 	ASSERT( this != NULL );
 
@@ -160,7 +160,7 @@ void CBTClient::Close()
 
 	m_pDownload = NULL;
 
-	CTransfer::Close();
+	CTransfer::Close( nError );
 
 	delete this;
 }
@@ -197,8 +197,7 @@ BOOL CBTClient::OnRun()
 	{
 		if ( tNow - m_tConnected > Settings.Connection.TimeoutConnect )
 		{
-			theApp.Message( MSG_ERROR, IDS_BT_CLIENT_CONNECT_TIMEOUT, (LPCTSTR)m_sAddress );
-			Close();
+			Close( IDS_BT_CLIENT_CONNECT_TIMEOUT );
 			return FALSE;
 		}
 	}
@@ -206,8 +205,7 @@ BOOL CBTClient::OnRun()
 	{
 		if ( tNow - m_tConnected > Settings.Connection.TimeoutHandshake )
 		{
-			theApp.Message( MSG_ERROR, IDS_BT_CLIENT_HANDSHAKE_TIMEOUT, (LPCTSTR)m_sAddress );
-			Close();
+			Close( IDS_BT_CLIENT_HANDSHAKE_TIMEOUT );
 			return FALSE;
 		}
 	}
@@ -215,8 +213,7 @@ BOOL CBTClient::OnRun()
 	{
 		if ( tNow - m_mInput.tLast > Settings.BitTorrent.LinkTimeout * 2 )
 		{
-			theApp.Message( MSG_ERROR, IDS_BT_CLIENT_LOST, (LPCTSTR)m_sAddress );
-			Close();
+			Close( IDS_BT_CLIENT_LOST );
 			return FALSE;
 		}
 		/*else if ( tNow - m_mOutput.tLast > Settings.BitTorrent.LinkPing / 2 && m_pOutput->m_nLength == 0 )
@@ -256,13 +253,11 @@ BOOL CBTClient::OnConnected()
 void CBTClient::OnDropped()
 {
 	if ( ! m_bConnected )
-		theApp.Message( MSG_ERROR, IDS_BT_CLIENT_DROP_CONNECTING, (LPCTSTR)m_sAddress );
+		Close( IDS_BT_CLIENT_DROP_CONNECTING );
 	else if ( ! m_bOnline )
-		theApp.Message( MSG_ERROR, IDS_BT_CLIENT_DROP_HANDSHAKE, (LPCTSTR)m_sAddress );
+		Close( IDS_BT_CLIENT_DROP_HANDSHAKE );
 	else
-		theApp.Message( MSG_ERROR, IDS_BT_CLIENT_DROP_CONNECTED, (LPCTSTR)m_sAddress );
-	   
-	Close();
+		Close( IDS_BT_CLIENT_DROP_CONNECTED );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -370,8 +365,7 @@ BOOL CBTClient::OnHandshake1()
 	// Read in the BT protocol header
 	if ( ! StartsWith( BT_PROTOCOL_HEADER, BT_PROTOCOL_HEADER_LEN ) )
 	{
-		theApp.Message( MSG_ERROR, _T("BitTorrent coupling from %s had invalid header"), (LPCTSTR)m_sAddress );
-		Close();
+		Close( IDS_HANDSHAKE_FAIL );
 		return FALSE;
 	}
 
@@ -390,14 +384,12 @@ BOOL CBTClient::OnHandshake1()
 
 		if ( validAndUnequal( oFileHash, m_pDownload->m_oBTH ) )
 		{	//Display an error and exit
-			theApp.Message( MSG_ERROR, IDS_BT_CLIENT_WRONG_FILE, (LPCTSTR)m_sAddress );
-			Close();
+			Close( IDS_BT_CLIENT_WRONG_FILE );
 			return FALSE;
 		}
 		else if ( ! m_pDownload->IsTrying() && ! m_pDownload->IsSeeding() )
 		{	//Display an error and exit
-			theApp.Message( MSG_ERROR, IDS_BT_CLIENT_INACTIVE_FILE, (LPCTSTR)m_sAddress );
-			Close();
+			Close( IDS_BT_CLIENT_INACTIVE_FILE );
 			return FALSE;
 		}
 	}
@@ -410,31 +402,27 @@ BOOL CBTClient::OnHandshake1()
 
 		if ( m_pDownload == NULL )				// If we can't find the file
 		{	//Display an error and exit
-			theApp.Message( MSG_ERROR, IDS_BT_CLIENT_UNKNOWN_FILE, (LPCTSTR)m_sAddress );
-			Close();
+			Close( IDS_BT_CLIENT_UNKNOWN_FILE );
 			return FALSE;
 		}
 		else if ( ! m_pDownload->IsTrying() && ! m_pDownload->IsSeeding() )	// If the file isn't active
 		{	//Display an error and exit
 			m_pDownload = NULL;
-			theApp.Message( MSG_ERROR, IDS_BT_CLIENT_INACTIVE_FILE, (LPCTSTR)m_sAddress );
-			Close();
+			Close( IDS_BT_CLIENT_INACTIVE_FILE );
 			return FALSE;
 		}
 		else if ( m_pDownload->UploadExists( &m_pHost.sin_addr ) )	// If there is already an upload of this file to this client
 		{
 			// Display an error and exit
 			m_pDownload = NULL;
-			theApp.Message( MSG_ERROR, IDS_BT_CLIENT_DUPLICATE, (LPCTSTR)m_sAddress );
-			Close();
+			Close( IDS_BT_CLIENT_DUPLICATE );
 			return FALSE;
 		}
 		// The file isn't verified yet, close the connection
 		else if ( m_pDownload->m_bVerify != TRI_TRUE
 			&& ( m_pDownload->IsMoving() ||  m_pDownload->IsCompleted() ) )
 		{
-			theApp.Message( MSG_ERROR, IDS_BT_CLIENT_INACTIVE_FILE, (LPCTSTR)m_sAddress );
-			Close();
+			Close( IDS_BT_CLIENT_INACTIVE_FILE );
 			return FALSE;
 		}
 
@@ -443,8 +431,7 @@ BOOL CBTClient::OnHandshake1()
 		// (Prevent routers overloading for very popular torrents)
 		if ( ( m_pDownload->GetTransferCount( dtsCountTorrentAndActive ) ) > ( Settings.BitTorrent.DownloadConnections * 1.25 ) ) 
 		{
-			theApp.Message( MSG_ERROR, IDS_BT_CLIENT_MAX_CONNECTIONS, (LPCTSTR)m_sAddress );
-			Close();
+			Close( IDS_BT_CLIENT_MAX_CONNECTIONS );
 			return FALSE;
 		}
 
@@ -481,8 +468,7 @@ BOOL CBTClient::OnHandshake2()
 		//ToDo: This seems to trip when it shouldn't. Should be investigated...
 		if ( memcmp( &m_pGUID, &pSource->m_pGUID, 16 ) != 0 )
 		{
-			theApp.Message( MSG_ERROR, IDS_BT_CLIENT_WRONG_GUID, (LPCTSTR)m_sAddress );
-			Close();
+			Close( IDS_BT_CLIENT_WRONG_GUID );
 			return FALSE;
 		}
 		*/
@@ -491,8 +477,7 @@ BOOL CBTClient::OnHandshake2()
 	{
 		if ( m_pDownload->UploadExists( m_oGUID ) )
 		{
-			theApp.Message( MSG_ERROR, IDS_BT_CLIENT_DUPLICATE, m_sAddress );
-			Close();
+			Close( IDS_BT_CLIENT_DUPLICATE );
 			return FALSE;
 		}
 
@@ -510,8 +495,7 @@ BOOL CBTClient::OnHandshake2()
 				if ( m_pDownloadTransfer == NULL )
 				{
 					m_pDownload = NULL;
-					theApp.Message( MSG_ERROR, IDS_BT_CLIENT_UNKNOWN_FILE, m_sAddress );
-					Close();
+					Close( IDS_BT_CLIENT_UNKNOWN_FILE );
 					return FALSE;
 				}
 			}
@@ -826,8 +810,7 @@ BOOL CBTClient::OnOnline()
 	if ( !m_pDownload->IsTorrent() ) // perhaps we just finished download; investigate this!
 	{
 		m_pDownload = NULL;
-		theApp.Message( MSG_ERROR, IDS_BT_CLIENT_UNKNOWN_FILE, (LPCTSTR)m_sAddress );
-		Close();
+		Close( IDS_BT_CLIENT_UNKNOWN_FILE );
 		return FALSE;
 	}
 

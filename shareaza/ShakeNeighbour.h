@@ -1,7 +1,7 @@
 //
 // ShakeNeighbour.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -108,7 +108,6 @@ protected:
 	// Possibly not in use (do)
 	TRISTATE m_bUltraPeerLoaded;
 	BOOL	m_bDelayClose;			// This is DelayClose
-	UINT	m_nDelayCloseReason;	// Reason for DelayClose;
 	CString	m_sTryUltrapeers;		// Storage of X-Try-Ultrapeers Header
 	CString	m_sTryHubs;				// Storage of X-Try-Hubs Header
 	CString	m_sTryDNAHubs;			// Storage of X-Try-DNA-Hubs Header
@@ -118,8 +117,7 @@ public:
 	// Connect, disconnect, and copy
 	virtual BOOL ConnectTo(const IN_ADDR* pAddress, WORD nPort, BOOL bAutomatic = FALSE, BOOL bNoUltraPeer = FALSE); // Connect to an ip address and port number
 	virtual void AttachTo(CConnection* pConnection); // Copy the values from the given CConnection object into the CConnection core of this one
-	virtual void Close(UINT nError = IDS_CONNECTION_CLOSED ); // Close the socket and log the reason the connection didn't work
-	virtual void DelayClose(UINT nError = IDS_CONNECTION_CLOSED ); // Close the socket and log the reason the connection didn't work
+	virtual void Close(UINT nError = IDS_CONNECTION_CLOSED); // Close the socket and log the reason the connection didn't work
 
 protected:
 
@@ -128,7 +126,6 @@ protected:
 	virtual BOOL OnRead();               // Read data from the remote computer, and look at it as a handshake
 	virtual BOOL OnWrite();
 	virtual void OnDropped();			 // Document that the connection was lost and why, and put everything away
-	virtual BOOL OnRun();                // Make sure the handshake hasn't been taking too long
 	virtual BOOL OnHeaderLine(CString& strHeader, CString& strValue); // Reads a header line and sets a corresponding member variable to true
 	virtual BOOL OnHeadersComplete();    // Responds to a group of headers by closing, sending a response, or turning this object into a more specific one
 	virtual BOOL OnHeadersCompleteG1();

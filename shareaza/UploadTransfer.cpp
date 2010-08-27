@@ -1,7 +1,7 @@
 //
 // UploadTransfer.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -72,7 +72,7 @@ CUploadTransfer::CUploadTransfer(PROTOCOLID nProtocol)
 
 CUploadTransfer::~CUploadTransfer()
 {
-	Close( FALSE );
+	Close();
 	UploadFiles.Remove( this );
 	Uploads.Remove( this );
 }
@@ -91,7 +91,7 @@ void CUploadTransfer::Remove(BOOL bMessage)
 	}
 
 	m_nUploaded = 1;
-	Close( FALSE );
+	Close();
 
 	delete this;
 }
@@ -99,16 +99,15 @@ void CUploadTransfer::Remove(BOOL bMessage)
 //////////////////////////////////////////////////////////////////////
 // CUploadTransfer close connection
 
-void CUploadTransfer::Close(BOOL bMessage)
+void CUploadTransfer::Close(UINT nError)
 {
 	if ( m_nState == upsNull ) return;
 	m_nState = upsNull;
 
-	CTransfer::Close();
+	CTransfer::Close( nError );
 	UploadQueues.Dequeue( this );
 	CloseFile();
 
-	if ( bMessage ) theApp.Message( MSG_NOTICE, IDS_UPLOAD_DROPPED, (LPCTSTR)m_sAddress );
 	if ( m_nUploaded == 0 ) Remove( FALSE );
 }
 
@@ -520,7 +519,7 @@ void CUploadTransfer::StartSending(int nState)
 	m_nState	= nState;
 	m_nPosition	= 0;
 	m_tContent	= m_mOutput.tLast = GetTickCount();
-	CTransfer::OnWrite();
+	OnWrite();
 }
 
 void CUploadTransfer::AllocateBaseFile()

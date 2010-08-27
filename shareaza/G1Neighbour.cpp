@@ -202,7 +202,7 @@ BOOL CG1Neighbour::OnRun()
 
 	if ( tNow - m_tLastPingOut > Settings.Gnutella1.PingRate )
 	{
-	SendPing( tNow );
+		SendPing( tNow );
 	}
 
 	return TRUE;

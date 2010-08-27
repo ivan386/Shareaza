@@ -1,7 +1,7 @@
 //
 // UploadTransferBT.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -108,7 +108,7 @@ void CUploadTransferBT::SetChoke(BOOL bChoke)
 //////////////////////////////////////////////////////////////////////
 // CUploadTransferBT close
 
-void CUploadTransferBT::Close(BOOL bMessage)
+void CUploadTransferBT::Close(UINT nError)
 {
 	if ( m_pClient != NULL )
 	{
@@ -127,7 +127,7 @@ void CUploadTransferBT::Close(BOOL bMessage)
 	m_oRequested.clear();
 	m_oServed.clear();
 	
-	CUploadTransfer::Close( bMessage );
+	CUploadTransfer::Close( nError );
 }
 
 //////////////////////////////////////////////////////////////////////

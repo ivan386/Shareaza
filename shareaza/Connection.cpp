@@ -43,15 +43,17 @@ static char THIS_FILE[]=__FILE__;
 
 // Make a new CConnection object
 CConnection::CConnection(PROTOCOLID nProtocol)
-	: m_bInitiated( FALSE )
-	, m_bConnected( FALSE )
-	, m_tConnected( 0 )
-	, m_hSocket( INVALID_SOCKET )
-	, m_pInput( NULL )
-	, m_pOutput( NULL )
-	, m_bClientExtended( FALSE )
-	, m_nQueuedRun( 0 )				// DoRun sets it to 0, QueueRun sets it to 2 (do)
-	, m_nProtocol( nProtocol )
+	: m_bInitiated			( FALSE )
+	, m_bConnected			( FALSE )
+	, m_tConnected			( 0 )
+	, m_hSocket				( INVALID_SOCKET )
+	, m_pInput				( NULL )
+	, m_pOutput				( NULL )
+	, m_bClientExtended		( FALSE )
+	, m_nQueuedRun			( 0 )
+	, m_nProtocol			( nProtocol )
+	, m_nDelayCloseReason	( 0 )
+	, m_bAutoDelete			( FALSE )
 {
 	ZeroMemory( &m_pHost, sizeof( m_pHost ) );
 	m_pHost.sin_family = AF_INET;
@@ -61,44 +63,65 @@ CConnection::CConnection(PROTOCOLID nProtocol)
 	m_pOutputSection.reset( new CCriticalSection() );
 }
 
-// make a destructive copy (similar to AttachTo)
-CConnection::CConnection(CConnection& other)
-	: m_pHost(        other.m_pHost )
-	, m_sAddress(     other.m_sAddress )
-	, m_sCountry(     other.m_sCountry )
-	, m_sCountryName( other.m_sCountryName )
-	, m_bInitiated(   other.m_bInitiated )
-	, m_bConnected(   other.m_bConnected )
-	, m_tConnected(   other.m_tConnected )
-	, m_hSocket(      other.m_hSocket )
-	, m_pInputSection( other.m_pInputSection )		// transfered
-	, m_pInput(       other.m_pInput )				// transfered
-	, m_pOutputSection( other.m_pOutputSection )	// transfered
-	, m_pOutput(      other.m_pOutput )				// transfered
-	, m_sUserAgent(   other.m_sUserAgent )
-	, m_bClientExtended( other.m_bClientExtended )
-	, m_nQueuedRun(   0 )
-{
-	ZeroMemory( &m_mInput, sizeof( m_mInput ) );
-	ZeroMemory( &m_mOutput, sizeof( m_mOutput ) );
+//////////////////////////////////////////////////////////////////////
+// CConnection attach to an existing connection
 
-	ASSERT( IsValid() );				// Make sure the socket exists
+// Call to copy a connection object to this one (do)
+// Takes another connection object
+void CConnection::AttachTo(CConnection* pConnection)
+{
+	// Make sure the socket isn't valid yet
+	ASSERT( ! IsValid() );								// Make sure the socket here isn't valid yet
+	ASSERT( pConnection != NULL );						// Make sure we got a CConnection object
+	ASSERT( AfxIsValidAddress( pConnection, sizeof( *pConnection ) ) );
+	ASSERT( pConnection->IsValid() );					// And make sure its socket exists
+	ASSERT( m_pInput == NULL );
+	ASSERT( m_pOutput == NULL );
+
+	CQuickLock oOutputLock( *pConnection->m_pOutputSection );
+	CQuickLock oInputLock( *pConnection->m_pInputSection );
+
+	// Copy values from the given CConnection object to this one
+	m_pHost				= pConnection->m_pHost;
+	m_sAddress			= pConnection->m_sAddress;
+	m_sCountry			= pConnection->m_sCountry;
+	m_sCountryName		= pConnection->m_sCountryName;
+	m_hSocket			= pConnection->m_hSocket;
+	m_bInitiated		= pConnection->m_bInitiated;
+	m_bConnected		= pConnection->m_bConnected;
+	m_tConnected		= pConnection->m_tConnected;
+	m_pInputSection		= pConnection->m_pInputSection;
+	m_pInput			= pConnection->m_pInput;
+	m_pOutputSection	= pConnection->m_pOutputSection;
+	m_pOutput			= pConnection->m_pOutput;
+	m_sUserAgent		= pConnection->m_sUserAgent;
+	m_bClientExtended	= pConnection->m_bClientExtended;
+	m_nQueuedRun		= pConnection->m_nQueuedRun;
+	if ( m_nProtocol <= PROTOCOL_NULL && pConnection->m_nProtocol > PROTOCOL_NULL )
+		m_nProtocol		= pConnection->m_nProtocol;
+	m_nDelayCloseReason	= pConnection->m_nDelayCloseReason;
+	m_bAutoDelete		= pConnection->m_bAutoDelete;
 
 	// Record the current time in the input and output TCP bandwidth meters
 	m_mInput.tLast = m_mOutput.tLast = GetTickCount();
 
 	// Invalidate the socket in the given connection object so it's just here now
-	other.m_hSocket	= INVALID_SOCKET;
+	pConnection->m_hSocket	= INVALID_SOCKET;
 
 	// Null the input and output pointers
-	other.m_pInput	= NULL;
-	other.m_pOutput	= NULL;
+	pConnection->m_pInput	= NULL;
+	pConnection->m_pOutput	= NULL;
+
+	// Zero the memory of the input and output TCPBandwidthMeter objects
+	ZeroMemory( &pConnection->m_mInput, sizeof( m_mInput ) );
+	ZeroMemory( &pConnection->m_mOutput, sizeof( m_mOutput ) );
 }
 
 // Delete this CConnection object
 CConnection::~CConnection()
 {
-	// Close the socket before the system deletes the object
+	m_bAutoDelete = FALSE;
+
 	CConnection::Close();
 }
 
@@ -269,63 +292,25 @@ void CConnection::AcceptFrom(SOCKET hSocket, SOCKADDR_IN* pHost)
 }
 
 //////////////////////////////////////////////////////////////////////
-// CConnection attach to an existing connection
-
-// Call to copy a connection object to this one (do)
-// Takes another connection object
-void CConnection::AttachTo(CConnection* pConnection)
-{
-	// Make sure the socket isn't valid yet
-	ASSERT( ! IsValid() );								// Make sure the socket here isn't valid yet
-	ASSERT( pConnection != NULL );						// Make sure we got a CConnection object
-	ASSERT( AfxIsValidAddress( pConnection, sizeof( *pConnection ) ) );
-	ASSERT( pConnection->IsValid() );					// And make sure its socket exists
-
-	CQuickLock oOutputLock( *pConnection->m_pOutputSection );
-	CQuickLock oInputLock( *pConnection->m_pInputSection );
-
-	// Copy values from the given CConnection object to this one
-	m_pHost			= pConnection->m_pHost;
-	m_sAddress		= pConnection->m_sAddress;
-	m_sCountry		= pConnection->m_sCountry;
-	m_sCountryName	= pConnection->m_sCountryName;
-	m_hSocket		= pConnection->m_hSocket;
-	m_bInitiated	= pConnection->m_bInitiated;
-	m_bConnected	= pConnection->m_bConnected;
-	m_tConnected	= pConnection->m_tConnected;
-	ASSERT( m_pInput == NULL );
-	m_pInputSection	= pConnection->m_pInputSection;
-	m_pInput		= pConnection->m_pInput;
-	ASSERT( m_pOutput == NULL );
-	m_pOutputSection= pConnection->m_pOutputSection;
-	m_pOutput		= pConnection->m_pOutput;
-	m_sUserAgent	= pConnection->m_sUserAgent;
-	m_bClientExtended = pConnection->m_bClientExtended;
-
-	// Record the current time in the input and output TCP bandwidth meters
-	m_mInput.tLast = m_mOutput.tLast = GetTickCount();
-
-	// Invalidate the socket in the given connection object so it's just here now
-	pConnection->m_hSocket	= INVALID_SOCKET;
-
-	// Null the input and output pointers
-	pConnection->m_pInput	= NULL;
-	pConnection->m_pOutput	= NULL;
-
-	// Zero the memory of the input and output TCPBandwidthMeter objects
-	ZeroMemory( &pConnection->m_mInput, sizeof(m_mInput) );
-	ZeroMemory( &pConnection->m_mOutput, sizeof(m_mOutput) );
-}
-
-//////////////////////////////////////////////////////////////////////
 // CConnection close
 
 // Call to close the connection represented by this object
-void CConnection::Close()
+void CConnection::Close(UINT nError)
 {
 	// Make sure this object exists, and is located entirely within the program's memory space
 	ASSERT( this != NULL );
 	ASSERT( AfxIsValidAddress( this, sizeof(*this) ) );
+
+	if ( nError )
+	{
+		if ( nError == IDS_HANDSHAKE_REJECTED )
+			theApp.Message( MSG_ERROR, IDS_HANDSHAKE_REJECTED, (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
+		else
+		{
+			BOOL bInfo = ( nError == IDS_CONNECTION_CLOSED || nError == IDS_CONNECTION_PEERPRUNE );
+			theApp.Message( bInfo ? MSG_INFO : MSG_ERROR, nError, (LPCTSTR)m_sAddress );
+		}
+	}
 
 	CNetwork::CloseSocket( m_hSocket, false );
 
@@ -334,6 +319,34 @@ void CConnection::Close()
 
 	// This connection object isn't connected any longer
 	m_bConnected = FALSE;
+
+	if ( m_bAutoDelete )
+		delete this;
+}
+
+// Close the connection, but not until we've written the buffered outgoing data first
+// Takes the reason we're closing the connection, or 0 by default
+void CConnection::DelayClose(UINT nError)
+{
+	ASSERT( nError );
+
+	// Clear input buffer
+	{
+		CQuickLock oInputLock( *m_pInputSection );
+		m_pInput->Clear();
+	}
+
+	// Disable incoming data
+	shutdown( m_hSocket, SD_RECEIVE );
+
+	if ( ! m_bInitiated )
+		// Prolong ban (if any) for income connection
+		Security.Complain( &m_pHost.sin_addr );
+
+	m_nDelayCloseReason = nError;
+
+	// Have the connection object write all the outgoing data soon
+	QueueRun();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -348,8 +361,9 @@ BOOL CConnection::DoRun()
 		return OnRun();
 
 	// Setup pEvents to store the socket's internal information about network events
-	WSANETWORKEVENTS pEvents;
-	WSAEnumNetworkEvents( m_hSocket, NULL, &pEvents );
+	WSANETWORKEVENTS pEvents = {};
+	if ( WSAEnumNetworkEvents( m_hSocket, NULL, &pEvents ) != 0 )
+		return FALSE;
 
 	// If the FD_CONNECT network event has occurred
 	if ( pEvents.lNetworkEvents & FD_CONNECT )
@@ -415,8 +429,10 @@ BOOL CConnection::DoRun()
 void CConnection::QueueRun()
 {
 	// If the queued run state is 1 or 2, make it 2, if it's 0, call OnWrite now (do)
-	if ( m_nQueuedRun )	m_nQueuedRun = 2;	// The queued run state is not 0, make it 2 and do nothing else here
-	else				OnWrite();			// The queued run state is 0, do a write (do)
+	if ( m_nQueuedRun )
+		m_nQueuedRun = 2;	// The queued run state is not 0, make it 2 and do nothing else here
+	else
+		OnWrite();			// The queued run state is 0, do a write (do)
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -438,7 +454,18 @@ void CConnection::OnDropped()
 // Objects that inherit from CConnection have OnRun methods that do things, unlike this one
 BOOL CConnection::OnRun()
 {
-	// Just return true
+	if ( m_nDelayCloseReason )
+	{
+		CLockedBuffer pOutputLocked( GetOutput() );
+
+		// If there is nothing to send
+		if ( pOutputLocked->m_nLength == 0 )
+		{
+			Close( m_nDelayCloseReason );
+			return FALSE;
+		}
+	}
+
 	return TRUE;
 }
 
@@ -451,7 +478,11 @@ BOOL CConnection::OnRead()
 	CQuickLock oInputLock( *m_pInputSection );
 
 	// Make sure the socket is valid
-	if ( ! IsValid() ) return FALSE;
+	if ( ! IsValid() )
+		return FALSE;
+
+	if ( m_nDelayCloseReason )
+		return TRUE;
 
 	DWORD tNow		= GetTickCount();	// The time right now
 	DWORD nLimit	= ~0ul;				// Make the limit huge
@@ -487,10 +518,12 @@ BOOL CConnection::OnWrite()
 	CQuickLock oOutputLock( *m_pOutputSection );
 
 	// Make sure the socket is valid
-	if ( ! IsValid() ) return FALSE;
+	if ( ! IsValid() )
+		return FALSE;
 
 	// If there is nothing to send, we succeed without doing anything
-	if ( m_pOutput->m_nLength == 0 ) return TRUE;
+	if ( m_pOutput->m_nLength == 0 )
+		return TRUE;
 
 	DWORD tNow		= GetTickCount();	// The time right now
 	DWORD nLimit	= ~0ul;				// Make the limit huge
@@ -557,7 +590,6 @@ void CConnection::MeasureOut()
 // Remove the headers from the input buffer, handing each to OnHeaderLine
 BOOL CConnection::ReadHeaders()
 {
-	// Move the first line from the m_pInput buffer to strLine and do the contents of the while loop
 	CString strLine;
 	while ( Read( strLine ) ) // ReadLine will return false when there are no more lines
 	{
