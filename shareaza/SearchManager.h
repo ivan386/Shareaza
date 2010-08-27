@@ -46,13 +46,13 @@ protected:
 	DWORD			m_tLastTick;
 	int				m_nPriorityClass;
 	int				m_nPriorityCount;
-	Hashes::Guid	m_oLastED2KSearch;
+	Hashes::Guid	m_oLastSearch;
 
 	bool			Add(CManagedSearch* pSearch);
 	bool			Remove(CManagedSearch* pSearch);
 	CSearchPtr		Find(const Hashes::Guid& oGUID) const;
 
-	friend class CManagedSearch;	// m_pSection, m_oLastED2KSearch, Add(), Remove()
+	friend class CManagedSearch;	// m_pSection, m_oLastSearch, Add(), Remove()
 };
 
 extern CSearchManager SearchManager;

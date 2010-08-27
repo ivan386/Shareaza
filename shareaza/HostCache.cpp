@@ -964,7 +964,7 @@ CHostCacheHost::CHostCacheHost(PROTOCOLID nProtocol) :
 		m_tConnect = tNow - Settings.Gnutella.ConnectThrottle + 10;
 		break;
 	case PROTOCOL_ED2K:
-		m_tConnect = tNow - Settings.eDonkey.QueryServerThrottle + 10;
+		m_tConnect = tNow - Settings.eDonkey.QueryThrottle + 10;
 		break;
 	default:
 		break;
@@ -1267,7 +1267,7 @@ bool CHostCacheHost::IsThrottled(const DWORD tNow) const
 	case PROTOCOL_G2:
 		return ( tNow - m_tConnect < Settings.Gnutella.ConnectThrottle );
 	case PROTOCOL_ED2K:
-		return ( tNow - m_tConnect < Settings.eDonkey.QueryServerThrottle );
+		return ( tNow - m_tConnect < Settings.eDonkey.QueryThrottle );
 	default:
 		return false;
 	}
@@ -1335,7 +1335,7 @@ bool CHostCacheHost::CanQuery(const DWORD tNow) const
 		if ( 0 == m_tQuery ) return true;
 		
 		// Don't query too fast
-		return ( tNow - m_tQuery ) >= Settings.Gnutella2.QueryHostThrottle;
+		return ( tNow - m_tQuery ) >= Settings.Gnutella2.QueryThrottle;
 
 	case PROTOCOL_ED2K:
 		// Must support ED2K
@@ -1353,7 +1353,7 @@ bool CHostCacheHost::CanQuery(const DWORD tNow) const
 		if ( 0 == m_tQuery ) return true;
 		
 		// Don't query too fast
-		return ( tNow - m_tQuery ) >= Settings.eDonkey.QueryServerThrottle;
+		return ( tNow - m_tQuery ) >= Settings.eDonkey.QueryThrottle;
 
 	default:
 		return false;

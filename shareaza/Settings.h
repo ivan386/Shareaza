@@ -363,8 +363,7 @@ public:
 		bool		EnableGGEP;
 		bool		EnableOOB;
 		bool		VendorMsg;
-		DWORD		QueryThrottle;
-		DWORD		RequeryDelay;
+		DWORD		QueryThrottle;				// Throttle for G1 neighbor searches (sec)
 		DWORD		HostCount;					// Number of hosts in X-Try-Ultrapeers
 		DWORD		HostExpire;
 		DWORD		PingFlood;
@@ -403,9 +402,9 @@ public:
 		DWORD		HostExpire;
 		DWORD		PingRate;
 		DWORD		QueryGlobalThrottle;		// Max G2 query rate (Cannot exceed 8/sec)
-		DWORD		QueryHostThrottle;
+		DWORD		QueryThrottle;				// Throttle for G2 neighbor searches (sec)
 		DWORD		QueryHostDeadline;
-		DWORD		RequeryDelay;
+		DWORD		RequeryDelay;				// Throttle for G2 neighbor UDP searches (sec)
 		DWORD		HubHorizonSize;
 		DWORD		QueryLimit;
 	} Gnutella2;
@@ -424,7 +423,7 @@ public:
 		DWORD		StatsGlobalThrottle;		// Global throttle for server UDP stats requests
 		DWORD		QueryGlobalThrottle;		// Global throttle for all ed2k searches (TCP, UDP, manual and auto)
 		DWORD		StatsServerThrottle;		// Max rate at which an individual server can be asked for stats
-		DWORD		QueryServerThrottle;		// Max rate at which an individual server can be queried
+		DWORD		QueryThrottle;				// Throttle for ED2K neighbor searches (sec)
 		DWORD		QueryFileThrottle;			// Max rate a file can have GetSources done
 		DWORD		GetSourcesThrottle;			// Max rate a general GetSources can done
 		DWORD		QueueRankThrottle;			// How frequently queue ranks are sent

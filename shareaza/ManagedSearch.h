@@ -76,7 +76,7 @@ public:
 	void	Stop();
 	BOOL	Execute(int nPriorityClass);		// Run search of specified priority class
 	void	OnHostAcknowledge(DWORD nAddress);
-	BOOL	IsLastED2KSearch();
+	BOOL	IsLastSearch();						// Check GUID of latest text search on ED2K and DC++ networks
 	void	CreateGUID();
 
 	BOOL			m_bAllowG1;					// Gnutella search enabled
