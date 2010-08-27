@@ -34,6 +34,7 @@
 #include "G1Packet.h"
 #include "G2Packet.h"
 #include "EDPacket.h"
+#include "DCPacket.h"
 #include "EDNeighbour.h"
 
 #ifdef _DEBUG
@@ -250,10 +251,9 @@ BOOL CManagedSearch::ExecuteNeighbours(const DWORD tTicks, const DWORD tSecs)
 			break;
 		case PROTOCOL_DC:
 			if ( ! m_bAllowDC ||
-				( ! m_pSearch->m_oTiger && m_pSearch->m_sSearch.IsEmpty() ) )
+				( ! m_pSearch->m_oTiger && m_pSearch->m_sSearch.IsEmpty() ) ||
+				tSecs < pNeighbour->m_tLastQuery + Settings.DC.QueryThrottle )
 				continue;
-			//if ( tSecs < pNeighbour->m_tLastQuery + Settings.DC.QueryHostThrottle )
-			//	continue;
 			break;
 		default:
 			continue;
@@ -364,7 +364,7 @@ BOOL CManagedSearch::ExecuteNeighbours(const DWORD tTicks, const DWORD tSecs)
 		}
 		else if ( pNeighbour->m_nProtocol == PROTOCOL_DC )
 		{
-			//pPacket = m_pSearch->ToDCPacket();
+			pPacket = m_pSearch->ToDCPacket();
 		}
 
 		// Try to send the search

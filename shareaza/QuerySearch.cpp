@@ -28,6 +28,7 @@
 #include "G1Packet.h"
 #include "G2Packet.h"
 #include "EDPacket.h"
+#include "DCPacket.h"
 #include "ShareazaURL.h"
 #include "Schema.h"
 #include "SchemaCache.h"
@@ -586,6 +587,58 @@ BOOL CQuerySearch::WriteHashesToEDPacket(CEDPacket* pPacket, BOOL bUDP) const
 	}
 
 	return TRUE;
+}
+
+//////////////////////////////////////////////////////////////////////
+// CQuerySearch to DC packet
+
+CDCPacket* CQuerySearch::ToDCPacket() const
+{
+	// $Search Ip:Port (F|T)?(F|T)?Size?Type?String|
+
+	int nType = 1;
+	if ( m_oTiger )
+		nType = 9;
+	else if ( m_pSchema )
+	{
+		if ( m_pSchema->CheckURI( CSchema::uriAudio )  )
+			nType = 2;
+		else if ( m_pSchema->CheckURI( CSchema::uriArchive )  )
+			nType = 3;
+		else if ( m_pSchema->CheckURI( CSchema::uriDocument )  )
+			nType = 4;
+		else if ( m_pSchema->CheckURI( CSchema::uriApplication )  )
+			nType = 5;
+		else if ( m_pSchema->CheckURI( CSchema::uriImage )  )
+			nType = 6;
+		else if ( m_pSchema->CheckURI( CSchema::uriVideo )  )
+			nType = 7;
+		else if ( m_pSchema->CheckURI( CSchema::uriFolder )  )
+			nType = 8;
+	}
+
+	CDCPacket* pPacket = CDCPacket::New();
+
+	bool bSizeRestriced = m_nMinSize != 0 || m_nMaxSize != SIZE_UNKNOWN;
+	bool bIsMaxSize = m_nMaxSize != SIZE_UNKNOWN || ! bSizeRestriced;
+
+	CString strSearch = m_sSearch;
+	strSearch.Replace( _T(' '), _T('$') );
+	strSearch.Replace( _T('|'), _T('$') );
+
+	CString strQuery;
+	strQuery.Format( _T("$Search %s:%u %c?%c?%I64u?%d?%s|"),
+		(LPCTSTR)CString( inet_ntoa( Network.m_pHost.sin_addr ) ),
+		ntohs( Network.m_pHost.sin_port ),
+		( bSizeRestriced ? _T('T') : _T('F') ),
+		( bIsMaxSize ? _T('T') : _T('F') ),
+		( bSizeRestriced ? ( bIsMaxSize ? m_nMaxSize : m_nMinSize ) : 0ull ),
+		nType, 
+		( m_oTiger ? ( _T("TTH:") + m_oTiger.toString() ) : strSearch ) );
+
+	pPacket->WriteString( strQuery, FALSE );
+
+	return pPacket;
 }
 
 //////////////////////////////////////////////////////////////////////

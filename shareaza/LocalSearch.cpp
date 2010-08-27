@@ -35,10 +35,12 @@
 #include "GProfile.h"
 #include "Network.h"
 #include "Neighbours.h"
+#include "DCNeighbour.h"
 #include "Neighbour.h"
 #include "Datagrams.h"
 #include "G1Packet.h"
 #include "G2Packet.h"
+#include "DCPacket.h"
 #include "Buffer.h"
 #include "ZLib.h"
 #include "GGEP.h"
@@ -74,12 +76,12 @@ CLocalSearch::CLocalSearch(CQuerySearch* pSearch, const CNeighbour* pNeighbour) 
 {
 }
 
-CLocalSearch::CLocalSearch(CQuerySearch* pSearch) :
+CLocalSearch::CLocalSearch(CQuerySearch* pSearch, PROTOCOLID nProtocol) :
 	m_pSearch		( pSearch ),
 	m_pEndpoint		( pSearch->m_pEndpoint ),
 	m_pBuffer		( NULL ),
 	m_bUDP			( TRUE ),
-	m_nProtocol		( PROTOCOL_G2 )
+	m_nProtocol		( nProtocol )
 {
 }
 
@@ -110,28 +112,21 @@ bool CLocalSearch::IsValidForHit< CLibraryFile >(const CLibraryFile* pFile) cons
 	switch ( m_nProtocol )
 	{
 	case PROTOCOL_G1:
-		return IsValidForHitG1( pFile );
-
+		return Settings.Gnutella1.EnableToday &&
+			// Browse request, or real file
+			( ! m_pSearch || pFile->IsAvailable() );
 	case PROTOCOL_G2:
-		return IsValidForHitG2( pFile );
-
+		return Settings.Gnutella2.EnableToday &&
+			// Browse request, or comments request, or real file
+			( ! m_pSearch || m_pSearch->m_bWantCOM || pFile->IsAvailable() );
+	case PROTOCOL_DC:
+		return Settings.DC.EnableToday &&
+			// Real file
+			pFile->IsAvailable();
 	default:
-		return false;
+		ASSERT( FALSE );
 	}
-}
-
-bool CLocalSearch::IsValidForHitG1(CLibraryFile const * const pFile) const
-{
-	return Settings.Gnutella1.EnableToday &&
-		// Browse request, or real file
-		( ! m_pSearch || pFile->IsAvailable() );
-}
-
-bool CLocalSearch::IsValidForHitG2(CLibraryFile const * const pFile) const
-{
-	return Settings.Gnutella2.EnableToday &&
-		// Browse request, or comments request, or real file
-		( ! m_pSearch || m_pSearch->m_bWantCOM || pFile->IsAvailable() );
+	return false;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -259,10 +254,24 @@ void CLocalSearch::SendHits(const CList< const T * >& oFiles)
 
 		AddHit( pPacket, pSchemas, oFiles.GetNext( pos ), nHits ++ );
 
+		bool bSend = false;
+		switch ( m_nProtocol )
+		{
+		case PROTOCOL_G1:
+		case PROTOCOL_G2:
+			bSend = nHits >= Settings.Gnutella.HitsPerPacket ||
+				pPacket->m_nLength >= MAX_QUERY_PACKET_SIZE;
+			break;
+		case PROTOCOL_DC:
+			// One hit per packet in DC++ protocol
+			bSend = true;
+			break;
+		default:
+			ASSERT( FALSE );
+		}
+
 		// Send full packet
-		if ( ( Settings.Gnutella.HitsPerPacket && nHits >= Settings.Gnutella.HitsPerPacket )
-			|| nHits >= MAX_QUERY_PACKET_HITCOUNT
-			|| pPacket->m_nLength >= MAX_QUERY_PACKET_SIZE )
+		if ( bSend )
 		{
 			WriteTrailer( pPacket, pSchemas, nHits );
 			DispatchPacket( pPacket );
@@ -290,10 +299,20 @@ void CLocalSearch::AddHit< CLibraryFile >(CPacket* pPacket, CSchemaMap& pSchemas
 {
 	ASSERT( pPacket != NULL );
 
-	if ( m_nProtocol == PROTOCOL_G1 )
+	switch ( m_nProtocol )
+	{
+	case PROTOCOL_G1:
 		AddHitG1( static_cast< CG1Packet* >( pPacket ), pSchemas, pFile, nIndex );
-	else
+		break;
+	case PROTOCOL_G2:
 		AddHitG2( static_cast< CG2Packet* >( pPacket ), pSchemas, pFile, nIndex );
+		break;
+	case PROTOCOL_DC:
+		AddHitDC( static_cast< CDCPacket* >( pPacket ), pSchemas, pFile, nIndex );
+		break;
+	default:
+		ASSERT( FALSE );
+	}
 }
 
 void CLocalSearch::AddHitG1(CG1Packet* pPacket, CSchemaMap& pSchemas, CLibraryFile const * const pFile, int nIndex)
@@ -603,6 +622,60 @@ void CLocalSearch::AddHitG2(CG2Packet* pPacket, CSchemaMap& /*pSchemas*/, CLibra
 	while( bCalculate );
 }
 
+void CLocalSearch::AddHitDC(CDCPacket* pPacket, CSchemaMap& /*pSchemas*/, CLibraryFile const * const pFile, int /*nIndex*/)
+{
+	// $SR Nick FileName<0x05>FileSize FreeSlots/TotalSlots<0x05>HubName (HubIP:HubPort)|
+	
+	if ( ! m_pSearch )
+		return;
+
+	CUploadQueue* pQueue = UploadQueues.SelectQueue(
+		PROTOCOL_DC, NULL, 0, CUploadQueue::ulqBoth, NULL );
+	int nTotalSlots = pQueue ? pQueue->m_nMaxTransfers : 0;
+	int nActiveSlots = pQueue ? pQueue->GetActiveCount() : 0;
+	int nFreeSlots = nTotalSlots > nActiveSlots ? ( nTotalSlots - nActiveSlots ) : 0;
+
+	CString sHubName = _T("Hub"), sNick = _T("User");
+	{
+		// Retrieving user and hub names
+		CQuickLock oLock( Network.m_pSection );
+		if ( CNeighbour* pNeighbour = Neighbours.Get( m_pEndpoint.sin_addr ) )
+		{
+			if ( pNeighbour->m_nProtocol == m_nProtocol )
+			{
+				CDCNeighbour* pDCNeighbour = static_cast< CDCNeighbour* >( pNeighbour );
+				sNick = pDCNeighbour->m_sNick;
+				sHubName = pDCNeighbour->m_sRemoteNick;
+			}
+		}
+	}
+	if ( pFile->m_oTiger )
+	{
+		// It's TTH search
+		sHubName = _T("TTH:") + pFile->m_oTiger.toString();
+	}
+
+	CString strAnswer;
+
+	CBuffer pAnswer;
+	pAnswer.Add( _P("$SR ") );
+	pAnswer.Print( sNick );
+	pAnswer.Add( _P(" ") );
+	pAnswer.Print( pFile->m_sName );
+	pAnswer.Add( _P("\x05") );
+	strAnswer.Format( _T("%I64u %d/%d"), pFile->m_nSize, nFreeSlots, nTotalSlots );
+	pAnswer.Print( strAnswer );
+	pAnswer.Add( _P("\x05") );
+	strAnswer.Format( _T("%s (%s:%u)"),
+		sHubName,
+		(LPCTSTR)CString( inet_ntoa( m_pSearch->m_pEndpoint.sin_addr ) ),
+		ntohs( m_pSearch->m_pEndpoint.sin_port ) );
+	pAnswer.Print( strAnswer );
+	pAnswer.Add( _P("|") );
+
+	pPacket->Write( pAnswer.m_pBuffer, pAnswer.m_nLength );
+}
+
 //////////////////////////////////////////////////////////////////////
 // CLocalSearch add download hit
 
@@ -611,10 +684,20 @@ void CLocalSearch::AddHit< CDownload >(CPacket* pPacket, CSchemaMap& pSchemas, c
 {
 	ASSERT( pPacket != NULL );
 
-	if ( m_nProtocol == PROTOCOL_G1 )
+	switch ( m_nProtocol )
+	{
+	case PROTOCOL_G1:
 		AddHitG1( static_cast< CG1Packet* >( pPacket ), pSchemas, pDownload, nIndex );
-	else
+		break;
+	case PROTOCOL_G2:
 		AddHitG2( static_cast< CG2Packet* >( pPacket ), pSchemas, pDownload, nIndex );
+		break;
+	case PROTOCOL_DC:
+		AddHitDC( static_cast< CDCPacket* >( pPacket ), pSchemas, pDownload, nIndex );
+		break;
+	default:
+		ASSERT( FALSE );
+	}
 }
 
 void CLocalSearch::AddHitG1(CG1Packet* /*pPacket*/, CSchemaMap& /*pSchemas*/, CDownload const * const /*pDownload*/, int /*nIndex*/)
@@ -775,19 +858,28 @@ void CLocalSearch::AddHitG2(CG2Packet* pPacket, CSchemaMap& /*pSchemas*/, CDownl
 	while( bCalculate );
 }
 
+void CLocalSearch::AddHitDC(CDCPacket* /*pPacket*/, CSchemaMap& /*pSchemas*/, CDownload const * const /*pDownload*/, int /*nIndex*/)
+{
+	// TODO
+}
+
 //////////////////////////////////////////////////////////////////////
 // CLocalSearch create packet
 
 CPacket* CLocalSearch::CreatePacket()
 {
-	CPacket* pPacket;
-
-	if ( m_nProtocol == PROTOCOL_G1 )
-		pPacket = static_cast< CPacket* >( CreatePacketG1() );
-	else
-		pPacket = static_cast< CPacket* >( CreatePacketG2() );
-
-	return pPacket;
+	switch ( m_nProtocol )
+	{
+	case PROTOCOL_G1:
+		return static_cast< CPacket* >( CreatePacketG1() );
+	case PROTOCOL_G2:
+		return static_cast< CPacket* >( CreatePacketG2() );
+	case PROTOCOL_DC:
+		return static_cast< CPacket* >( CreatePacketDC() );
+	default:
+		ASSERT( FALSE );
+	}
+	return NULL;
 }
 
 CG1Packet* CLocalSearch::CreatePacketG1()
@@ -893,6 +985,11 @@ CG2Packet* CLocalSearch::CreatePacketG2()
 	return pPacket;
 }
 
+CDCPacket* CLocalSearch::CreatePacketDC()
+{
+	return CDCPacket::New();
+}
+
 //////////////////////////////////////////////////////////////////////
 // CLocalSearch core trailer
 
@@ -900,10 +997,20 @@ void CLocalSearch::WriteTrailer(CPacket* pPacket, CSchemaMap& pSchemas, BYTE nHi
 {
 	ASSERT( pPacket != NULL );
 
-	if ( m_nProtocol == PROTOCOL_G1 )
+	switch ( m_nProtocol )
+	{
+	case PROTOCOL_G1:
 		WriteTrailerG1( static_cast< CG1Packet* >( pPacket ), pSchemas, nHits );
-	else
+		break;
+	case PROTOCOL_G2:
 		WriteTrailerG2( static_cast< CG2Packet* >( pPacket ), pSchemas, nHits );
+		break;
+	case PROTOCOL_DC:
+		WriteTrailerDC( static_cast< CDCPacket* >( pPacket ), pSchemas, nHits );
+		break;
+	default:
+		ASSERT( FALSE );
+	}
 }
 
 void CLocalSearch::WriteTrailerG1(CG1Packet* pPacket, CSchemaMap& pSchemas, BYTE nHits)
@@ -1025,6 +1132,10 @@ void CLocalSearch::WriteTrailerG2(CG2Packet* pPacket, CSchemaMap& /*pSchemas*/, 
 	else
 		theApp.Message( MSG_ERROR | MSG_FACILITY_SEARCH, _T("[G2] Shareaza produced search packet above but cannot parse it back!") );
 #endif // _DEBUG
+}
+
+void CLocalSearch::WriteTrailerDC(CDCPacket* /*pPacket*/, CSchemaMap& /*pSchemas*/, BYTE /*nHits*/)
+{
 }
 
 //////////////////////////////////////////////////////////////////////

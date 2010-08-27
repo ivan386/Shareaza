@@ -277,19 +277,12 @@ bool CDownload::IsTrying() const
 
 bool CDownload::IsShared() const
 {
-	if ( m_bShared )
-		return true;
-
-	if ( Settings.eDonkey.EnableToday && m_oED2K )
-		return true;
-
-	if ( Settings.BitTorrent.EnableToday && IsTorrent()
-		&& ( IsSeeding() || IsStarted() ) )
-	{
-		return true;
-	}
-
-	return false;
+	return m_bShared ||
+		( Settings.Gnutella1.EnableToday && m_oSHA1 ) ||
+		( Settings.Gnutella2.EnableToday && IsHashed() ) ||
+		( Settings.eDonkey.EnableToday && m_oED2K ) ||
+		( Settings.DC.EnableToday && m_oTiger ) ||
+		( Settings.BitTorrent.EnableToday && IsTorrent() && ( IsSeeding() || IsStarted() ) );
 }
 
 CString CDownload::GetDownloadStatus() const

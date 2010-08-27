@@ -31,7 +31,9 @@ class CXMLElement;
 class CBuffer;
 class CDownload;
 class CPacket;
+class CG1Packet;
 class CG2Packet;
+class CDCPacket;
 
 
 class CLocalSearch
@@ -39,15 +41,16 @@ class CLocalSearch
 // Construction
 public:
 	CLocalSearch(CQuerySearch* pSearch, const CNeighbour* pNeighbour);
-	CLocalSearch(CQuerySearch* pSearch);
+	CLocalSearch(CQuerySearch* pSearch, PROTOCOLID nProtocol);
 	CLocalSearch(CQuerySearch* pSearch, CBuffer* pBuffer, PROTOCOLID nProtocol);
+
+	SOCKADDR_IN		m_pEndpoint;	// Endpoint or neighbour address
+	BOOL			m_bUDP;			// Send packets via UDP or TCP
 
 // Attributes
 protected:
 	CQuerySearchPtr	m_pSearch;
-	SOCKADDR_IN		m_pEndpoint;	// Endpoint or neighbour address
-	CBuffer*		m_pBuffer;		// Save packets to this buffer or...
-	BOOL			m_bUDP;			// ...send them via UDP or TCP
+	CBuffer*		m_pBuffer;		// Save packets to this buffer
 	Hashes::Guid	m_oGUID;
 	PROTOCOLID		m_nProtocol;
 	typedef CMap< CSchemaPtr, CSchemaPtr, CXMLElement*, CXMLElement* > CSchemaMap;
@@ -66,18 +69,20 @@ protected:
 	template< typename T > void AddHit(CPacket* pPacket, CSchemaMap& pSchemas, const T * pHit, int nIndex);
 	void		AddHitG1(CG1Packet* pPacket, CSchemaMap& pSchemas, CLibraryFile const * const pFile, int nIndex);
 	void		AddHitG2(CG2Packet* pPacket, CSchemaMap& pSchemas, CLibraryFile const * const pFile, int nIndex);
+	void		AddHitDC(CDCPacket* pPacket, CSchemaMap& pSchemas, CLibraryFile const * const pFile, int nIndex);
 	void		AddHitG1(CG1Packet* pPacket, CSchemaMap& pSchemas, CDownload const * const pDownload, int nIndex);
 	void		AddHitG2(CG2Packet* pPacket, CSchemaMap& pSchemas, CDownload const * const pDownload, int nIndex);
+	void		AddHitDC(CDCPacket* pPacket, CSchemaMap& pSchemas, CDownload const * const pDownload, int nIndex);
 	template< typename T > bool IsValidForHit(const T * pHit) const;
-	bool		IsValidForHitG1(CLibraryFile const * const pFile) const;
-	bool		IsValidForHitG2(CLibraryFile const * const pFile) const;
 protected:
 	CPacket*	CreatePacket();
 	CG1Packet*	CreatePacketG1();
 	CG2Packet*	CreatePacketG2();
+	CDCPacket*	CreatePacketDC();
 	void		WriteTrailer(CPacket* pPacket, CSchemaMap& pSchemas, BYTE nHits);
 	void		WriteTrailerG1(CG1Packet* pPacket, CSchemaMap& pSchemas, BYTE nHits);
 	void		WriteTrailerG2(CG2Packet* pPacket, CSchemaMap& pSchemas, BYTE nHits);
+	void		WriteTrailerDC(CDCPacket* pPacket, CSchemaMap& pSchemas, BYTE nHits);
 	void		DispatchPacket(CPacket* pPacket);
 	CG2Packet*	AlbumToPacket(CAlbumFolder* pFolder);
 	CG2Packet*	FoldersToPacket();
@@ -87,5 +92,4 @@ private:
 	// Limit query answer packet size since Gnutella 1/2 drops packets
 	// large than Settings.Gnutella.MaximumPacket
 	static const DWORD	MAX_QUERY_PACKET_SIZE		= 16384; // (bytes)
-	static const BYTE	MAX_QUERY_PACKET_HITCOUNT	= (BYTE)~0;
 };

@@ -21,12 +21,13 @@
 
 #include "StdAfx.h"
 #include "Shareaza.h"
+#include "DCClient.h"
 #include "DCNeighbour.h"
 #include "HostCache.h"
 #include "LibraryMaps.h"
+#include "LocalSearch.h"
 #include "Network.h"
 #include "Neighbours.h"
-#include "GProfile.h"
 #include "Security.h"
 #include "Settings.h"
 #include "UploadQueue.h"
@@ -39,19 +40,8 @@ static char THIS_FILE[]=__FILE__;
 #endif
 
 CDCNeighbour::CDCNeighbour()
-	: CNeighbour( PROTOCOL_DC )
-	, m_bExtended( FALSE )
-	, m_sNick( MyProfile.GetNick() )
 {
 	m_nNodeType = ntHub;
-
-	// Make DC++ safe nick
-	m_sNick.Replace( _T(' '), _T('_') );
-	m_sNick.Replace( _T('&'), _T('_') );
-	m_sNick.Replace( _T('|'), _T('_') );
-	m_sNick.Replace( _T('$'), _T('_') );
-	m_sNick.Replace( _T('<'), _T('_') );
-	m_sNick.Replace( _T('>'), _T('_') );
 }
 
 CDCNeighbour::~CDCNeighbour()
@@ -62,7 +52,7 @@ BOOL CDCNeighbour::ConnectTo(const IN_ADDR* pAddress, WORD nPort, BOOL bAutomati
 {
 	CString sHost( inet_ntoa( *pAddress ) );
 
-	if ( CNeighbour::ConnectTo( pAddress, nPort ) )
+	if ( __super::ConnectTo( pAddress, nPort ) )
 	{
 		WSAEventSelect( m_hSocket, Network.GetWakeupEvent(),
 			FD_CONNECT | FD_READ | FD_WRITE | FD_CLOSE );
@@ -78,6 +68,7 @@ BOOL CDCNeighbour::ConnectTo(const IN_ADDR* pAddress, WORD nPort, BOOL bAutomati
 	}
 
 	m_nState = nrsConnecting;
+
 	m_bAutomatic = bAutomatic;
 
 	Neighbours.Add( this );
@@ -85,376 +76,22 @@ BOOL CDCNeighbour::ConnectTo(const IN_ADDR* pAddress, WORD nPort, BOOL bAutomati
 	return TRUE;
 }
 
-BOOL CDCNeighbour::OnRead()
+BOOL CDCNeighbour::Send(CPacket* pPacket, BOOL bRelease, BOOL /*bBuffered*/)
 {
-	if ( ! CNeighbour::OnRead() )
-		return FALSE;
+	Write( pPacket );
 
-	std::string strLine;
-	if ( ! ReadCommand( strLine ) )
-		return TRUE;
-
-	m_nInputCount++;
-	m_tLastPacket = GetTickCount();
-
-	theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING,
-		_T("%s >> %s"), (LPCTSTR)m_sAddress, (LPCTSTR)CA2CT( strLine.c_str() ) );
-
-	if ( strLine.size() == 0 )
-	{
-		// Ping, i.e. received only "|" message
-		return TRUE;
-	}
-
-	if ( strLine[ 0 ] != '$' )
-	{
-		// Chat
-		return TRUE;
-	}
-
-	std::string::size_type nPos = strLine.find( ' ' );
-	if ( nPos != std::string::npos )
-		return OnCommand( strLine.substr( 0, nPos ), strLine.substr( nPos + 1 ) );
-	else
-		return OnCommand( strLine, std::string() );
-}
-
-BOOL CDCNeighbour::ReadCommand(std::string& strLine)
-{
-	CLockedBuffer pInput( GetInput() );
-
-	if ( ! pInput->m_nLength )
-		return FALSE;
-
-	DWORD nLength = 0;
-	for ( ; nLength < pInput->m_nLength ; nLength++ )
-	{
-		if ( pInput->m_pBuffer[ nLength ] == '|' )
-			break;
-	}
-
-	if ( nLength >= pInput->m_nLength )
-		return FALSE;
-
-	strLine.append( (const char*)pInput->m_pBuffer, nLength );
-
-	pInput->Remove( nLength + 1 );
-
-	return TRUE;
-}
-
-BOOL CDCNeighbour::OnWrite()
-{
 	LogOutgoing();
 
-	return CNeighbour::OnWrite();
-}
-
-BOOL CDCNeighbour::OnCommand(const std::string& strCommand, const std::string& strParams)
-{
-	if ( strCommand == "$Lock" )
-	{
-		if ( m_nNodeType == ntHub )
-		{
-			HostCache.DC.Add( &m_pHost.sin_addr, htons( m_pHost.sin_port ) );
-		}
-
-		if ( m_nState < nrsHandshake2 )
-		{
-			m_nState = nrsHandshake2;	// Send $Support, $Key and $ValidateNick
-		}
-
-		m_bExtended = ( strParams.substr( 0, 16 ) == "EXTENDEDPROTOCOL" );
-
-		std::string strLock;
-		std::string::size_type nPos = strParams.find( " Pk=" );
-		if ( nPos != std::string::npos )
-		{
-			// Good way
-			strLock = strParams.substr( 0, nPos );
-			m_sUserAgent = strParams.substr( nPos + 4 ).c_str();
-		}
-		else
-		{
-			// Bad way
-			nPos = strParams.find( ' ' );
-			if ( nPos != std::string::npos )
-				strLock = strParams.substr( 0, nPos );
-			else
-				// Very bad way
-				strLock = strParams;
-		}
-
-		return SendKey( strLock );
-	}
-	else if ( strCommand == "$Supports" )
-	{
-		m_bExtended = TRUE;
-
-		m_oFeatures.RemoveAll();
-		for ( CString strFeatures( strParams.c_str() ); ! strFeatures.IsEmpty(); )
-		{
-			CString strFeature = strFeatures.SpanExcluding( _T(" ") );
-			strFeatures = strFeatures.Mid( strFeature.GetLength() + 1 );
-			if ( strFeature.IsEmpty() )
-				continue;
-			strFeature.MakeLower();
-			if ( m_oFeatures.Find( strFeature ) == NULL )
-			{
-				m_oFeatures.AddTail( strFeature );
-			}
-			else
-			{
-				// Duplicate feature
-			}				
-		}
-		return TRUE;
-	}
-	else if ( strCommand == "$HubName" )
-	{
-		m_nState = nrsConnected;
-
-		m_sServerName = strParams.c_str();
-
-		return TRUE;
-	}
-	else if ( strCommand == "$Hello" )
-	{
-		m_nState = nrsConnected;
-
-		m_sNick = strParams.c_str();
-
-		return SendVersion();
-	}
-	else if ( strCommand == "$OpList" )
-	{
-		return TRUE;
-	}
-	else if ( strCommand == "$MyINFO" )
-	{
-		m_nState = nrsConnected;
-
-		return TRUE;
-	}
-	else if ( strCommand == "$ConnectToMe" )
-	{
-		// Client connection request
-		// $ConnectToMe RemoteNick SenderIp:SenderPort
-		std::string::size_type nPos = strParams.rfind( ' ' );
-		if ( nPos != std::string::npos )
-		{
-			std::string strSenderNick, strRemoteNick = strParams.substr( 0, nPos );
-			nPos = strRemoteNick.find( ' ' );
-			if ( nPos != std::string::npos )
-			{
-				// $ConnectToMe SenderNick RemoteNick SenderIp:SenderPort
-				strSenderNick = strRemoteNick.substr( nPos + 1 );
-				strRemoteNick = strRemoteNick.substr( 0, nPos );
-			}
-			std::string strAddress = strParams.substr( nPos + 1 );
-			nPos = strAddress.find( ':' );
-			if ( nPos != std::string::npos )
-			{
-				DWORD nAddress = inet_addr( strAddress.substr( 0, nPos ).c_str() );
-				int nPort = atoi( strAddress.substr( nPos + 1 ).c_str() );
-
-				if ( nPort > 0 && nPort <= USHRT_MAX && nAddress != INADDR_NONE &&
-					m_sNick == strRemoteNick.c_str() &&
-					! Network.IsFirewalledAddress( (const IN_ADDR*)&nAddress ) &&
-					! Network.IsReserved( (const IN_ADDR*)&nAddress ) &&
-					! Security.IsDenied( (const IN_ADDR*)&nAddress ) )
-				{
-					// Ok
-					//CDCClient* pClient = new CDCClient();
-					//pClient->ConnectTo( (const IN_ADDR*)&nAddress, (WORD)nPort );
-				}
-				else
-				{
-					// Wrong nick, bad IP
-				}
-			}
-		}
-		return TRUE;
-	}
-	else if ( strCommand == "$Quit" )
-	{
-		return TRUE;
-	}
-	else if ( strCommand == "$Search" )
-	{
-		return TRUE;
-	}
-
-	// Unknown command - ignoring
-	return TRUE;
-}
-
-BOOL CDCNeighbour::SendKey(const std::string& strLock)
-{
-	if ( m_bExtended )
-	{
-		// UserCommand	- This indicates support for $UserCommand, which is a standard way of adding hub-specific shortcuts to the client.
-		// NoGetINFO	- This indicates that hub doesn't need to receive a $GetINFO from a client to send out $MyINFO.
-		// NoHello		- This indicates that the client doesn't need either $Hello or $NickList to be sent to it when connecting to a hub.
-		// UserIP2		- This signals support for v2 of the $UserIP command.
-		// TTHSearch	- This indicates that the client supports searching for queued files by TTH.
-		Write( _P("$Supports UserCommand NoGetINFO NoHello UserIP2 TTHSearch |") );
-
-		m_nOutputCount ++;
-	}
-
-	std::string strKey = MakeKey( strLock );
-	Write( _P("$Key ") );
-	Write( strKey.c_str(), strKey.size() );
-	Write( _P("|") );
-	m_nOutputCount ++;
-
-	Write( _P("$ValidateNick ") );
-	Write( m_sNick );
-	Write( _P("|") );
-	m_nOutputCount ++;
-
-	return TRUE;
-}
-
-BOOL CDCNeighbour::SendVersion()
-{
-	Write( _P("$Version 1,0091|") );
 	m_nOutputCount++;
 
-	//Write( _P("$GetNickList|") );
-	//m_nOutputCount++;
-
-	// $MyINFO $ALL nick description<tag>$ $connection$e-mail$sharesize$|
-
-	Write( _P("$MyINFO $ALL ") );
-	Write( m_sNick );
-	Write( _P(" " WEB_SITE "<" CLIENT_NAME) );
-	Write( _P(" V:") );
-	Write( theApp.m_sVersion );
-
-	// If the user is in active(A), passive(P), or SOCKS5(5) mode 
-	Write( _P(",M:") );
-	if ( Network.IsFirewalled( CHECK_BOTH ) )
-		Write( _P("P") );
-	else
-		Write( _P("A") );
-
-	// How many hubs the Shareaza is on and what is his status on the hubs.
-	// The first number means a normal user, second means VIP/registered
-	// hubs and the last one operator hubs
-	Write( _P(",H:1/0/0") );
-
-	CUploadQueue* pQueue = UploadQueues.SelectQueue(
-		m_nProtocol, NULL, 0, CUploadQueue::ulqBoth, NULL );
-
-	QWORD nMyVolume = 0;
-	LibraryMaps.GetStatistics( NULL, &nMyVolume );
-	CString sInfo;
-	sInfo.Format( _T(",S:%u>$ $%.2f%c$%s$%I64u$|"),
-		( pQueue ? pQueue->m_nMaxTransfers : 0 ),
-		(float)Settings.Bandwidth.Uploads * Bytes / ( Kilobits * Kilobits ),
-		1, // Normal
-		MyProfile.GetContact( _T("Email") ),
-		nMyVolume << 10 );
-	Write( sInfo );
-	m_nOutputCount++;
-
-	return TRUE;
-}
-
-std::string CDCNeighbour::MakeKey(const std::string& aLock)
-{
-	if ( aLock.size() < 3 )
-		return std::string();
-
-	auto_array< BYTE > temp( new BYTE[ aLock.size() ] );
-	size_t extra = 0;
-	BYTE v1 = (BYTE)( (BYTE)aLock[ 0 ] ^ 5 );
-	v1 = (BYTE)( ( ( v1 >> 4 ) | ( v1 << 4 ) ) & 0xff );
-	temp[ 0 ] = v1;
-	for ( size_t i = 1; i < aLock.size(); i++ )
-	{
-		v1 = (BYTE)( (BYTE)aLock[ i ] ^ (BYTE)aLock[ i - 1 ] );
-		v1 = (BYTE)( ( ( v1 >> 4 ) | ( v1 << 4 ) ) & 0xff );
-		temp[ i ] = v1;
-		if ( IsExtra( temp[ i ] ) )
-			extra++;
-	}
-	temp[ 0 ] = (BYTE)( temp[ 0 ] ^ temp[ aLock.size() - 1 ] );
-	if ( IsExtra( temp[ 0 ] ) )
-		extra++;
-
-	return KeySubst( &temp[ 0 ], aLock.size(), extra );
-}
-
-std::string CDCNeighbour::KeySubst(const BYTE* aKey, size_t len, size_t n)
-{
-	auto_array< BYTE > temp( new BYTE[ len + n * 9 ] );
-	size_t j = 0;	
-	for ( size_t i = 0; i < len; i++ )
-	{
-		if ( IsExtra( aKey[ i ] ) )
-		{
-			temp[ j++ ] = '/'; temp[ j++ ] = '%'; temp[ j++ ] = 'D';
-			temp[ j++ ] = 'C'; temp[ j++ ] = 'N';
-			switch ( aKey[ i ] )
-			{
-			case 0:   temp[ j++ ] = '0'; temp[ j++ ] = '0'; temp[ j++ ] = '0'; break;
-			case 5:   temp[ j++ ] = '0'; temp[ j++ ] = '0'; temp[ j++ ] = '5'; break;
-			case 36:  temp[ j++ ] = '0'; temp[ j++ ] = '3'; temp[ j++ ] = '6'; break;
-			case 96:  temp[ j++ ] = '0'; temp[ j++ ] = '9'; temp[ j++ ] = '6'; break;
-			case 124: temp[ j++ ] = '1'; temp[ j++ ] = '2'; temp[ j++ ] = '4'; break;
-			case 126: temp[ j++ ] = '1'; temp[ j++ ] = '2'; temp[ j++ ] = '6'; break;
-			}
-			temp[ j++ ] = '%'; temp[ j++ ] = '/';
-		}
-		else
-			temp[ j++ ] = aKey[ i ];
-	}
-	return std::string( (const char*)&temp[ 0 ], j );
-}
-
-BOOL CDCNeighbour::IsExtra(BYTE b) const
-{
-	return ( b == 0 || b == 5 || b == 124 || b == 96 || b == 126 || b == 36 );
-}
-
-BOOL CDCNeighbour::OnRun()
-{
-	DWORD tNow = GetTickCount();
-
-	if ( m_nState <= nrsConnecting )
-	{
-		if ( tNow - m_tConnected > Settings.Connection.TimeoutConnect )
-		{
-			Close( IDS_CONNECTION_TIMEOUT_CONNECT );
-			return FALSE;
-		}
-	}
-	else if ( m_nState < nrsConnected )
-	{
-		if ( tNow - m_tConnected > Settings.Connection.TimeoutHandshake )
-		{
-			Close( IDS_HANDSHAKE_TIMEOUT );
-			return FALSE;
-		}
-	}
-	/*else
-	{
-		if ( tNow - m_tLastPacket > Settings.Connection.TimeoutTraffic )
-		{
-			Close( IDS_CONNECTION_TIMEOUT_TRAFFIC );
-			return FALSE;
-		}
-	}*/
+	if ( bRelease ) pPacket->Release();
 
 	return TRUE;
 }
 
 BOOL CDCNeighbour::OnConnected()
 {
-	if ( ! CNeighbour::OnConnected() )
+	if ( ! __super::OnConnected() )
 		return FALSE;
 
 	theApp.Message( MSG_INFO, IDS_CONNECTION_CONNECTED,
@@ -467,12 +104,6 @@ BOOL CDCNeighbour::OnConnected()
 
 void CDCNeighbour::OnDropped()
 {
-	if ( m_nState < nrsConnected )
-	{
-		HostCache.OnFailure( &m_pHost.sin_addr, htons( m_pHost.sin_port ),
-			PROTOCOL_DC, false );
-	}
-
 	if ( m_nState == nrsConnecting )
 	{
 		Close( IDS_CONNECTION_REFUSED );
@@ -481,4 +112,319 @@ void CDCNeighbour::OnDropped()
 	{
 		Close( IDS_CONNECTION_DROPPED );
 	}
+}
+
+BOOL CDCNeighbour::OnCommand(const std::string& strCommand, const std::string& strParams)
+{
+	m_nInputCount++;
+	m_tLastPacket = GetTickCount();
+
+	if ( strCommand == "$HubName" )
+	{
+		// Name of hub
+		// $HubName RemoteNick [Version]|
+
+		m_nState = nrsConnected;
+
+		m_sServerName = strParams.c_str();
+
+		std::string::size_type nPos = strParams.find( ' ' );
+		if ( nPos != std::string::npos )
+			// Cut-off version
+			m_sRemoteNick = strParams.substr( 0, nPos).c_str();
+		else
+			m_sRemoteNick = strParams.c_str();
+
+		return TRUE;
+	}
+	else if ( strCommand == "$OpList" )
+	{
+		// Hub operators list
+		// $OpList operator1|
+
+		m_nState = nrsConnected;
+
+		return TRUE;
+	}
+	else if ( strCommand == "$MyINFO" )
+	{
+		// User info
+		// $MyINFO $ALL nick description<tag>$ $connection$e-mail$sharesize$|
+
+		m_nState = nrsConnected;
+
+		return TRUE;
+	}
+	else if ( strCommand == "$ConnectToMe" )
+	{
+		// Client connection request
+		// $ConnectToMe RemoteNick SenderIp:SenderPort|
+		// or
+		// $ConnectToMe SenderNick RemoteNick SenderIp:SenderPort|
+
+		std::string::size_type nPos = strParams.rfind( ' ' );
+		if ( nPos != std::string::npos )
+		{
+			std::string strAddress = strParams.substr( nPos + 1 );
+			std::string strSenderNick, strRemoteNick = strParams.substr( 0, nPos );
+			nPos = strRemoteNick.find( ' ' );
+			if ( nPos != std::string::npos )
+			{
+				strSenderNick = strRemoteNick.substr( nPos + 1 );
+				strRemoteNick = strRemoteNick.substr( 0, nPos );
+			}
+			nPos = strAddress.find( ':' );
+			if ( nPos != std::string::npos )
+			{
+				DWORD nAddress = inet_addr( strAddress.substr( 0, nPos ).c_str() );
+				int nPort = atoi( strAddress.substr( nPos + 1 ).c_str() );
+				if ( nPort > 0 && nPort <= USHRT_MAX && nAddress != INADDR_NONE &&
+					m_sNick == strRemoteNick.c_str() &&
+					! Network.IsFirewalledAddress( (const IN_ADDR*)&nAddress ) &&
+					! Network.IsReserved( (const IN_ADDR*)&nAddress ) &&
+					! Security.IsDenied( (const IN_ADDR*)&nAddress ) )
+				{
+					// Ok
+					CDCClient* pClient = new CDCClient();
+					pClient->m_sNick = m_sNick;
+					pClient->ConnectTo( (const IN_ADDR*)&nAddress, (WORD)nPort );
+				}
+				else
+				{
+					// Wrong nick, bad IP
+				}
+			}
+		}
+		return TRUE;
+	}
+	else if ( strCommand == "$Quit" )
+	{
+		// User leave hub
+		// $Quit nick|
+
+		return TRUE;
+	}
+	else if ( strCommand == "$Search" )
+	{
+		// Search request
+		// $Search SenderIP:SenderPort (F|T)?(F|T)?Size?Type?String|
+	
+		std::string::size_type nPos = strParams.find( ' ' );
+		if ( nPos != std::string::npos )
+		{
+			std::string strAddress = strParams.substr( 0, nPos );
+			std::string strSearch = strParams.substr( nPos + 1 );
+			nPos = strAddress.find( ':' );
+			if ( nPos != std::string::npos )
+			{
+				DWORD nAddress = inet_addr( strAddress.substr( 0, nPos ).c_str() );
+				int nPort = atoi( strAddress.substr( nPos + 1 ).c_str() );
+				if ( nPort > 0 && nPort <= USHRT_MAX && nAddress != INADDR_NONE &&
+					! Network.IsFirewalledAddress( (const IN_ADDR*)&nAddress ) &&
+					! Network.IsReserved( (const IN_ADDR*)&nAddress ) &&
+					! Security.IsDenied( (const IN_ADDR*)&nAddress ) )
+				{
+					OnSearch( (const IN_ADDR*)&nAddress, (WORD)nPort, strSearch );
+				}
+			}
+		}
+
+		return TRUE;
+	}
+
+	// Unknown command - ignoring
+	return TRUE;
+}
+
+BOOL CDCNeighbour::OnSearch(const IN_ADDR* pAddress, WORD nPort, std::string& strSearch)
+{
+	std::string::size_type nPos = strSearch.find( '?' );
+	if ( nPos == std::string::npos )
+		return TRUE;
+
+	std::string strSizeRestriced = strSearch.substr( 0, nPos );
+	bool bSizeRestriced = ( strSizeRestriced == "T" );
+	strSearch = strSearch.substr( nPos + 1 );
+	nPos = strSearch.find( '?' );
+	if ( nPos == std::string::npos || ( ! bSizeRestriced && strSizeRestriced != "F" ) )
+		return TRUE;
+
+	std::string strIsMaxSize = strSearch.substr( 0, nPos );
+	bool bIsMaxSize = ( strIsMaxSize == "T" );
+	strSearch = strSearch.substr( nPos + 1 );
+	nPos = strSearch.find( '?' );
+	if ( nPos == std::string::npos || ( ! bIsMaxSize && strIsMaxSize != "F" ) )
+		return TRUE;
+
+	QWORD nSize = 0;
+	std::string strSize = strSearch.substr( 0, nPos );
+	strSearch = strSearch.substr( nPos + 1 );
+	nPos = strSearch.find( '?' );
+	if ( nPos == std::string::npos ||
+		sscanf_s( strSize.c_str(), "%I64u", &nSize ) != 1 )
+		return TRUE;
+
+	std::string strType = strSearch.substr( 0, nPos );
+	int nType = atoi( strType.c_str() );
+	strSearch = strSearch.substr( nPos + 1 );
+	if ( nType < 1 || nType > 9 )
+		// Unknown search type
+		return TRUE;
+	
+	CQuerySearchPtr pSearch = new CQuerySearch( TRUE );
+
+	pSearch->m_pEndpoint = m_pHost;
+
+	if ( bSizeRestriced )
+	{
+		if ( bIsMaxSize )
+			pSearch->m_nMaxSize = nSize;
+		else
+			pSearch->m_nMinSize = nSize;
+	}
+	else if ( nSize )
+	{
+		pSearch->m_nMinSize = pSearch->m_nMaxSize = nSize;
+	}
+
+	if ( nType == 9 )
+	{
+		// Hash search
+
+		if ( strSearch.substr( 0, 4 ) != "TTH:" )
+			// Unknown hash prefix
+			return TRUE;
+
+		if ( ! pSearch->m_oTiger.fromString( CA2W( strSearch.substr( 4 ).c_str() ) ) )
+			// Invalid TigerTree hash encoding
+			return TRUE;
+	}
+	else
+	{
+		// Keywords search
+
+		pSearch->m_sSearch = strSearch.c_str();
+		pSearch->m_sSearch.Replace( _T('$'), _T(' ') );
+	}
+
+	if ( ! pSearch->CheckValid( true ) )
+		// Invalid search
+		return TRUE;
+
+	CLocalSearch* pLocalSearch = new CLocalSearch( pSearch, this );
+
+	// Send result (if any) directly to client via UDP
+	pLocalSearch->m_pEndpoint.sin_addr = *pAddress;
+	pLocalSearch->m_pEndpoint.sin_port = htons( nPort );
+	pLocalSearch->m_bUDP = TRUE;
+
+	Network.OnQuerySearch( pLocalSearch );
+
+	return TRUE;
+}
+
+BOOL CDCNeighbour::OnLock()
+{
+	if ( m_nState < nrsHandshake2 )
+	{
+		m_nState = nrsHandshake2;	// Waiting for $Hello
+	}
+
+	m_nInputCount++;
+	m_tLastPacket = GetTickCount();
+
+	if ( m_nNodeType == ntHub )
+	{
+		HostCache.DC.Add( &m_pHost.sin_addr, htons( m_pHost.sin_port ) );
+	}
+
+	if ( m_bExtended )
+	{
+		Write( _P("$Supports NoGetINFO NoHello UserIP2 TTHSearch |") );
+	}
+
+	Write( _P("$Key ") );
+	Write( m_strKey.c_str(), m_strKey.size() );
+	Write( _P("|") );
+
+	Write( _P("$ValidateNick ") );
+	Write( m_sNick );
+	Write( _P("|") );
+
+	LogOutgoing();
+
+	m_nOutputCount++;
+
+	return TRUE;
+}
+
+BOOL CDCNeighbour::OnSupport()
+{
+	m_nInputCount++;
+	m_tLastPacket = GetTickCount();
+
+	return TRUE;
+}
+
+BOOL CDCNeighbour::OnChat(const std::string& strMessage)
+{
+	m_nInputCount++;
+	m_tLastPacket = GetTickCount();
+
+	return TRUE;
+}
+
+BOOL CDCNeighbour::OnHello()
+{
+	m_nState = nrsConnected;
+
+	// NMDC version
+	Write( _P("$Version 1,0091|") );
+
+	// Request nick list
+	//Write( _P("$GetNickList|") );
+
+	// $MyINFO $ALL nick description<tag>$ $connection$e-mail$sharesize$|
+
+	CUploadQueue* pQueue = UploadQueues.SelectQueue(
+		PROTOCOL_DC, NULL, 0, CUploadQueue::ulqBoth, NULL );
+
+	QWORD nMyVolume = 0;
+	LibraryMaps.GetStatistics( NULL, &nMyVolume );
+
+	CString sInfo;
+	sInfo.Format( _T("$MyINFO $ALL %s %s<%s V:%s,M:%c,H:%u/%u/%u,S:%u>$ $%.2f%c$%s$%I64u$|"),
+		// Registered nick
+		m_sNick,
+		// Description
+		WEB_SITE_T,
+		// Client name
+		CLIENT_NAME_T,
+		// Client version
+		theApp.m_sVersion,
+		// User is in active(A), passive(P), or SOCKS5(5) mode 
+		( Network.IsFirewalled( CHECK_BOTH ) ? _T('P') : _T('A') ),
+		// Number of connected hubs as regular user
+		Neighbours.GetCount( PROTOCOL_DC, nrsConnected, ntHub ),
+		// Number of connected hubs as VIP
+		0,
+		// Number of connected hubs as operator
+		0,
+		// Number of upload slots
+		( pQueue ? pQueue->m_nMaxTransfers : 0 ),
+		// Upload speed (Mbit/s)
+		(float)Settings.Bandwidth.Uploads * Bytes / ( Kilobits * Kilobits ),
+		// User status: Normal(1), Away(2,3), Server(4,5), Server Away(6,7)
+		1,
+		// E-mail
+		MyProfile.GetContact( _T("Email") ),
+		// Share size (bytes)
+		nMyVolume << 10 );
+	Write( sInfo );
+
+	LogOutgoing();
+
+	m_nOutputCount++;
+
+	return TRUE;
 }

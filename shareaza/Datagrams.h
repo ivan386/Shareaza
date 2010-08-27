@@ -52,12 +52,9 @@ typedef struct
 } UDPBandwidthMeter;
 
 class CBuffer;
-class CPacket;
-class CG1Packet;
-class CG2Packet;
 class CDatagramIn;
 class CDatagramOut;
-class CBENode;
+class CPacket;
 
 
 class CDatagrams

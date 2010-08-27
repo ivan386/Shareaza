@@ -519,7 +519,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\DCClient.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\DCNeighbour.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\DCPacket.cpp"
 				>
 			</File>
 			<File
@@ -2140,7 +2148,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\DCClient.h"
+				>
+			</File>
+			<File
 				RelativePath=".\DCNeighbour.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DCPacket.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DCStream.h"
 				>
 			</File>
 			<File

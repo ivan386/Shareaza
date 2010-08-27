@@ -1,7 +1,7 @@
 //
 // QuerySearch.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -30,6 +30,7 @@ class CSearchWnd;
 class CG1Packet;
 class CG2Packet;
 class CEDPacket;
+class CDCPacket;
 class CQuerySearch;
 
 
@@ -132,6 +133,7 @@ public:
 	CG1Packet*				ToG1Packet(DWORD nTTL = 0) const;
 	CG2Packet*				ToG2Packet(SOCKADDR_IN* pUDP, DWORD nKey) const;
 	CEDPacket*				ToEDPacket(BOOL bUDP, DWORD nServerFlags = 0) const;
+	CDCPacket*				ToDCPacket() const;
 private:
 	BOOL					ReadG1Packet(CG1Packet* pPacket);
 	void					ReadGGEP(CG1Packet* pPacket);

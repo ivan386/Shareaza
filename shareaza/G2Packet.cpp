@@ -679,7 +679,7 @@ BOOL CG2Packet::OnQuery(SOCKADDR_IN* pHost)
 
 	Neighbours.RouteQuery( pSearch, this, NULL, TRUE );
 
-	Network.OnQuerySearch( new CLocalSearch( pSearch ) );
+	Network.OnQuerySearch( new CLocalSearch( pSearch, PROTOCOL_G2 ) );
 	
 	// Ack with hub list
 	Datagrams.Send( &pSearch->m_pEndpoint, Neighbours.CreateQueryWeb( pSearch->m_oGUID, true ), TRUE );

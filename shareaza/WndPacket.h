@@ -1,7 +1,7 @@
 //
 // WndPacket.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,14 +19,12 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_WNDPACKET_H__83132A9A_A3A0_4850_A3D9_DCF825D2F273__INCLUDED_)
-#define AFX_WNDPACKET_H__83132A9A_A3A0_4850_A3D9_DCF825D2F273__INCLUDED_
-
 #pragma once
 
 #include "WndPanel.h"
 #include "G1Packet.h"
 #include "G2Packet.h"
+#include "DCPacket.h"
 
 class CLiveItem;
 class CNeighbour;
@@ -80,8 +78,4 @@ protected:
 	DECLARE_MESSAGE_MAP()
 };
 
-//{{AFX_INSERT_LOCATION}}
-
 #define IDC_PACKETS		100
-
-#endif // !defined(AFX_WNDPACKET_H__83132A9A_A3A0_4850_A3D9_DCF825D2F273__INCLUDED_)

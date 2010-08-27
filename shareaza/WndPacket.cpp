@@ -211,6 +211,7 @@ void CPacketWnd::SmartDump(const CPacket* pPacket, const SOCKADDR_IN* pAddress, 
 	CG1Packet* pPacketG1 = ( pPacket->m_nProtocol == PROTOCOL_G1 ) ? (CG1Packet*)pPacket : NULL;
 	CG2Packet* pPacketG2 = ( pPacket->m_nProtocol == PROTOCOL_G2 ) ? (CG2Packet*)pPacket : NULL;
 	CEDPacket* pPacketED = ( pPacket->m_nProtocol == PROTOCOL_ED2K ) ? (CEDPacket*)pPacket : NULL;
+	CDCPacket* pPacketDC = ( pPacket->m_nProtocol == PROTOCOL_DC ) ? (CDCPacket*)pPacket : NULL;
 
 	if ( pPacketG1 )
 	{
@@ -256,6 +257,8 @@ void CPacketWnd::SmartDump(const CPacket* pPacket, const SOCKADDR_IN* pAddress, 
 			pItem->Set( 2, _T("G1 TCP") );
 		else if ( pPacketED )
 			pItem->Set( 2, _T("ED2K TCP") );
+		else if ( pPacketDC )
+			pItem->Set( 2, _T("DC++ TCP") );
 	}
 	else
 	{
@@ -266,6 +269,8 @@ void CPacketWnd::SmartDump(const CPacket* pPacket, const SOCKADDR_IN* pAddress, 
 			pItem->Set( 2, _T("G1 UDP") );
 		else if ( pPacketED )
 			pItem->Set( 2, _T("ED2K UDP") );
+		else if ( pPacketDC )
+			pItem->Set( 2, _T("DC++ UDP") );
 	}
 	
 	pItem->Set( 3, pPacket->GetType() );

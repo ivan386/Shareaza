@@ -123,32 +123,20 @@ CNeighbour* CNeighboursWithConnect::ConnectTo(
 		// Activate the appropriate network (if required)
 		switch ( nProtocol )
 		{
-
-		// The computer we will connect to is running Gnutella software
 		case PROTOCOL_G1:
-
-			// Let the program connect to the Gnutella network
 			Settings.Gnutella1.EnableToday = TRUE;
 			break;
-
-		// The computer we will connect to is running Gnutella2 software
 		case PROTOCOL_G2:
-
-			// Let the program connect to the Gnutella2 network
 			Settings.Gnutella2.EnableToday = TRUE;
 			break;
-
-		// The computer we will connect to is running eDonkey2000 software
 		case PROTOCOL_ED2K:
-
-			// Let the program connect to the eDonkey2000 network
 			Settings.eDonkey.EnableToday = TRUE;
-
-			// Reset the eDonkey2000 network (do)
 			CloseDonkeys();
 			break;
+		case PROTOCOL_DC:
+			Settings.DC.EnableToday = TRUE;
+			break;
 		default:
-//			ASSERT( 0 )
 			;
 		}
 	}
@@ -994,10 +982,23 @@ void CNeighboursWithConnect::Maintain()
 		nLimit[ PROTOCOL_G2 ][ ntLeaf ] = Settings.Gnutella2.NumLeafs; // 1024 by default
 	}
 
-	if ( Settings.eDonkey.EnableToday )
+	if ( Settings.eDonkey.EnableToday == FALSE )
+	{
+		nLimit[ PROTOCOL_ED2K ][ ntHub ] =  0;
+	}
+	else
 	{
 		// Set the limit for eDonkey2000 hub connections as whichever is smaller, 1, or the number from settings
 		nLimit[ PROTOCOL_ED2K ][ ntHub ] = Settings.eDonkey.NumServers; // NumServers is 1 by default
+	}
+
+	if ( Settings.DC.EnableToday == FALSE )
+	{
+		nLimit[ PROTOCOL_DC ][ ntHub ] =  0;
+	}
+	else
+	{
+		nLimit[ PROTOCOL_DC ][ ntHub ] = Settings.DC.NumServers; // NumServers is 1 by default
 	}
 
 	// Add the count of connections where we don't know the network yet to the 0 column of both Gnutella and Gnutella2
@@ -1005,7 +1006,7 @@ void CNeighboursWithConnect::Maintain()
 	nCount[ PROTOCOL_G2 ][0] += nCount[ PROTOCOL_NULL ][0];
 
 	// Connect to more computers or disconnect from some to get the connection counts where settings wants them to be
-	for ( PROTOCOLID nProtocol = PROTOCOL_ED2K ; nProtocol >= PROTOCOL_G1 ; --nProtocol ) // Loop once for each protocol, eDonkey2000, Gnutella2, then Gnutella
+	for ( PROTOCOLID nProtocol = PROTOCOL_NULL ; nProtocol < PROTOCOL_LAST ; ++nProtocol ) // Loop once for each protocol, eDonkey2000, Gnutella2, then Gnutella
 	{
 		// If we're connected to a hub of this protocol, store the tick count now in m_tPresent for this protocol
 		if ( nCount[ nProtocol ][ ntHub ] > 0 ) m_tPresent[ nProtocol ] = tNow;
@@ -1044,8 +1045,8 @@ void CNeighboursWithConnect::Maintain()
 			// Lower the needed hub number to avoid hitting Windows XP Service Pack 2's half open connection limit
 			nAttempt = min(nAttempt, ( Settings.Downloads.MaxConnectingSources - 2 ) );
 
-			// In the loop for eDonkey2000, handle priority eDonkey2000 servers
-			if ( nProtocol == PROTOCOL_ED2K )
+			// Handle priority servers
+			if ( nProtocol == PROTOCOL_ED2K || nProtocol == PROTOCOL_DC )
 			{
 				CQuickLock oLock( pCache->m_pSection );
 

@@ -1,7 +1,7 @@
 //
-// DCNeighbour.h
+// DCClient.h
 //
-// Copyright (c) Shareaza Development Team, 20010.
+// Copyright (c) Shareaza Development Team, 2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,31 +22,37 @@
 #pragma once
 
 #include "DCStream.h"
-#include "Neighbour.h"
+#include "UploadTransfer.h"
 
-class CDCNeighbour : public CDCStream< CNeighbour >
+class CLibraryFolder;
+class CLibraryFile;
+
+
+class CDCClient : public CDCStream< CUploadTransfer >
 {
 public:
-	CDCNeighbour();
-	virtual ~CDCNeighbour();
+	CDCClient();
+	virtual ~CDCClient();
 
-	virtual BOOL	ConnectTo(const IN_ADDR* pAddress, WORD nPort, BOOL bAutomatic);
-	virtual BOOL	Send(CPacket* pPacket, BOOL bRelease = TRUE, BOOL bBuffered = FALSE);
+	virtual BOOL	ConnectTo(const IN_ADDR* pAddress, WORD nPort);
 
 protected:
 	virtual BOOL	OnConnected();
 	virtual void	OnDropped();
+	virtual BOOL	OnWrite();
 
 	virtual BOOL	OnCommand(const std::string& strCommand, const std::string& strParams);
-	virtual BOOL	OnLock();
-	virtual BOOL	OnSupport();
-	virtual BOOL	OnHello();
+	virtual BOOL	OnKey();
 	virtual BOOL	OnChat(const std::string& strMessage);
 
-	// Got search request
-	BOOL			OnSearch(const IN_ADDR* pAddress, WORD nPort, std::string& strSearch);
-	// Sending $Supports, $Key, $ValidateNick
-	BOOL			SendKey(const std::string& strLock);
-	// Sending $Version, $MyINFO
-	BOOL			SendVersion();
+	BOOL			OnGet(const std::string& strType, const std::string& strFilename, QWORD nOffset, QWORD nLength, const std::string& strOptions);
+
+	BOOL			RequestFileList(const std::string& strFilename, QWORD nOffset, QWORD nLength);
+	BOOL			RequestTigerTree(const std::string& strFilename, QWORD nOffset, QWORD nLength, CLibraryFile* pFile);
+	BOOL			RequestFile(const std::string& strFilename, QWORD nOffset, QWORD nLength, CLibraryFile* pFile);
+	BOOL			SendFile(const std::string& strFilename);
+
+	void			LibraryToFileList(CBuffer& pXML);
+	void			FolderToFileList(CLibraryFolder* pFolder, CBuffer& pXML);
+	void			FileToFileList(CLibraryFile* pFile, CBuffer& pXML);
 };

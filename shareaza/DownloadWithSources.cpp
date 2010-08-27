@@ -788,8 +788,7 @@ BOOL CDownloadWithSources::OnQueryHits(const CQueryHit* pHits)
 {
 	for ( const CQueryHit* pHit = pHits; pHit ; pHit = pHit->m_pNext )
 	{
-		if ( pHit->m_sURL.GetLength() )
-			AddSourceHit( pHit );
+		AddSourceHit( pHit );
 	}
 
 	return TRUE;

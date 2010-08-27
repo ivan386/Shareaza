@@ -955,16 +955,16 @@ CHostCacheHost::CHostCacheHost(PROTOCOLID nProtocol) :
 {
 	m_pAddress.s_addr = 0;
 
-	// 30 sec cooldown to avoid neighbor add-remove oscillation
+	// 10 sec cooldown to avoid neighbor add-remove oscillation
 	DWORD tNow = static_cast< DWORD >( time( NULL ) );
 	switch ( m_nProtocol )
 	{
 	case PROTOCOL_G1:
 	case PROTOCOL_G2:
-		m_tConnect = tNow - Settings.Gnutella.ConnectThrottle + 30;
+		m_tConnect = tNow - Settings.Gnutella.ConnectThrottle + 10;
 		break;
 	case PROTOCOL_ED2K:
-		m_tConnect = tNow - Settings.eDonkey.QueryServerThrottle + 30;
+		m_tConnect = tNow - Settings.eDonkey.QueryServerThrottle + 10;
 		break;
 	default:
 		break;
@@ -1354,29 +1354,6 @@ bool CHostCacheHost::CanQuery(const DWORD tNow) const
 		
 		// Don't query too fast
 		return ( tNow - m_tQuery ) >= Settings.eDonkey.QueryServerThrottle;
-
-	case PROTOCOL_BT:
-		// Must support BT
-		if ( ! Settings.BitTorrent.EnableToday ) return false;
-
-		// Retry After
-		if ( 0 != m_tRetryAfter && tNow < m_tRetryAfter ) return false;
-
-		// Online
-		if ( ! Network.IsConnected() ) return false;
-
-		// If haven't queried yet, its ok
-		if ( 0 == m_tQuery ) return true;
-
-		// Don't query too fast
-		return ( tNow - m_tQuery ) >= 90u;
-
-	case PROTOCOL_DC:
-	case PROTOCOL_KAD:
-		// Online
-		if ( ! Network.IsConnected() ) return false;
-
-		return true; // TODO: Fix it
 
 	default:
 		return false;

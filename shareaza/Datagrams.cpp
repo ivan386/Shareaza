@@ -30,6 +30,7 @@
 #include "G1Packet.h"
 #include "G2Packet.h"
 #include "EDPacket.h"
+#include "DCPacket.h"
 #include "BENode.h"
 #include "Security.h"
 #include "DHT.h"
@@ -263,6 +264,21 @@ BOOL CDatagrams::Send(SOCKADDR_IN* pHost, CPacket* pPacket, BOOL bRelease, LPVOI
 		CBuffer pBuffer;
 
 		((CG1Packet*)pPacket)->ToBuffer( &pBuffer );
+		pPacket->SmartDump( pHost, TRUE, TRUE );
+		if ( bRelease ) pPacket->Release();
+
+		CNetwork::SendTo( m_hSocket, (LPSTR)pBuffer.m_pBuffer, pBuffer.m_nLength, pHost );
+
+		m_nOutPackets++;
+
+		return TRUE;
+	}
+	else if ( pPacket->m_nProtocol == PROTOCOL_DC )
+	{
+		// Quick hack
+		CBuffer pBuffer;
+
+		((CDCPacket*)pPacket)->ToBuffer( &pBuffer );
 		pPacket->SmartDump( pHost, TRUE, TRUE );
 		if ( bRelease ) pPacket->Release();
 
@@ -724,6 +740,24 @@ BOOL CDatagrams::OnDatagram(SOCKADDR_IN* pHost, BYTE* pBuffer, DWORD nLength)
 				}
 			}
 			// TODO: Detect obfuscated eMule packets
+		}
+	}
+
+	// Detect DC++ packets
+	if ( nLength > 2 && pBuffer[ 0 ] == '$' && pBuffer[ nLength - 1 ] == '|' )
+	{
+		if ( CDCPacket* pPacket = CDCPacket::New() )
+		{
+			pPacket->Write( pBuffer, nLength );
+
+			m_nInPackets++;
+
+			bHandled = pPacket->OnPacket( pHost );
+
+			pPacket->Release();
+
+			if ( bHandled )
+				return TRUE;
 		}
 	}
 
