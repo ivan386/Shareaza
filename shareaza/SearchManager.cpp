@@ -290,12 +290,6 @@ BOOL CSearchManager::OnQueryHits(const CQueryHit* pHits)
 		while ( pHits != NULL )
 		{
 			pSearch->m_nHits ++;
-			if ( pHits->m_nProtocol == PROTOCOL_G1 )
-				pSearch->m_nG1Hits++;
-			else if ( pHits->m_nProtocol == PROTOCOL_G2 )
-				pSearch->m_nG2Hits++;
-			else if ( pHits->m_nProtocol == PROTOCOL_ED2K )
-				pSearch->m_nEDHits++;
 			pHits = pHits->m_pNext;
 		}
 

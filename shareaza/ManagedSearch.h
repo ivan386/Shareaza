@@ -79,16 +79,12 @@ public:
 	BOOL	IsLastED2KSearch();
 	void	CreateGUID();
 
-	BOOL			m_bAllowG2;					// Gnutella2 search enabled
 	BOOL			m_bAllowG1;					// Gnutella search enabled
+	BOOL			m_bAllowG2;					// Gnutella2 search enabled
 	BOOL			m_bAllowED2K;				// eDonkey2000 search enabled
 	BOOL			m_bAllowDC;					// DC++ search enabled
 	BOOL			m_bReceive;
-	DWORD			m_tStarted;					// Time search was started (s)
 	DWORD			m_nHits;					// Total hits
-	DWORD			m_nG1Hits;					// G1 hits
-	DWORD			m_nG2Hits;					// G2 hits
-	DWORD			m_nEDHits;					// ED2k hits
 	DWORD			m_nHubs;					// Number of G2 hubs searched
 	DWORD			m_nLeaves;					// Number of G2 leaves searched
 	DWORD			m_nQueryCount;				// Total Gnutella2 queries sent
@@ -99,8 +95,6 @@ protected:
 	int				m_nPriority;
 	BOOL			m_bActive;
 	DWORD			m_tLastG2;					// Time a G2 hub was last searched
-	DWORD			m_nEDServers;				// Number of EDonkey servers searched
-	DWORD			m_nEDClients;				// Number of ED2K clients searched (Guess)
 	CQuerySearchPtr m_pSearch;					// Search handler	
 	CDwordDwordMap	m_pNodes;					// Pair of IP and query time (s)
 	CDwordDwordMap	m_pG1Nodes;					// Pair of IP and last sent packet TTL

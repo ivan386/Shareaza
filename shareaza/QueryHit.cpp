@@ -2003,7 +2003,6 @@ CQueryHit& CQueryHit::operator=(const CQueryHit& pOther)
 	m_bChat			= pOther.m_bChat;
 	m_bBrowseHost	= pOther.m_bBrowseHost;
 	m_sNick			= pOther.m_sNick;
-	m_sKeywords		= pOther.m_sKeywords;
 	m_nGroup		= pOther.m_nGroup;
 	m_nIndex		= pOther.m_nIndex;
 	m_bSize			= pOther.m_bSize;
