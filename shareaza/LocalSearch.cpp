@@ -639,7 +639,7 @@ void CLocalSearch::AddHitDC(CDCPacket* pPacket, CSchemaMap& /*pSchemas*/, CLibra
 	{
 		// Retrieving user and hub names
 		CQuickLock oLock( Network.m_pSection );
-		if ( CNeighbour* pNeighbour = Neighbours.Get( m_pEndpoint.sin_addr ) )
+		if ( CNeighbour* pNeighbour = Neighbours.Get( m_pSearch->m_pEndpoint.sin_addr ) )
 		{
 			if ( pNeighbour->m_nProtocol == m_nProtocol )
 			{
