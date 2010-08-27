@@ -444,6 +444,10 @@ void CSettings::Load()
 	Add( _T("eDonkey"), _T("StatsGlobalThrottle"), &eDonkey.StatsGlobalThrottle, 30*60*1000, 60*1000, 30, 120, _T(" m") );
 	Add( _T("eDonkey"), _T("StatsServerThrottle"), &eDonkey.StatsServerThrottle, 7*24*60*60, 24*60*60, 7, 28, _T(" d") );
 
+	Add( _T("DC"), _T("EnableAlways"), &DC.EnableAlways, false );
+	Add( _T("DC"), _T("QueryThrottle"), &DC.QueryThrottle, 300, 1, 30, 24*60*60, _T(" s") );
+	Add( _T("DC"), _T("NumServers"), &DC.NumServers, 1, 1, 0, 1 );
+
 	Add( _T("BitTorrent"), _T("AdvancedInterface"), &BitTorrent.AdvancedInterface, false );
 	Add( _T("BitTorrent"), _T("AdvancedInterfaceSet"), &BitTorrent.AdvancedInterfaceSet, false );
 	Add( _T("BitTorrent"), _T("AutoClear"), &BitTorrent.AutoClear, false );
@@ -635,6 +639,7 @@ void CSettings::Load()
 	Gnutella1.EnableToday		= Gnutella1.EnableAlways;
 	Gnutella2.EnableToday		= Gnutella2.EnableAlways;
 	eDonkey.EnableToday			= eDonkey.EnableAlways;
+	DC.EnableToday				= DC.EnableAlways;
 	BitTorrent.EnableToday		= BitTorrent.EnableAlways;
 
 	// Make sure some needed paths exist
@@ -678,6 +683,8 @@ void CSettings::Load()
 	// Set ed2k and G1
 	if ( GetOutgoingBandwidth() < 2 )
 	{
+		DC.EnableToday			= false;
+		DC.EnableAlways			= false;
 		eDonkey.EnableToday		= false;
 		eDonkey.EnableAlways	= false;
 		Gnutella1.EnableToday	= false;

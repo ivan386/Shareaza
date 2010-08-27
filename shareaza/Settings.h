@@ -447,6 +447,14 @@ public:
 		bool		LargeFileSupport;			// Allow 64 bit file sizes
 	} eDonkey;
 
+	struct sDC
+	{
+		bool		EnableToday;
+		bool		EnableAlways;
+		DWORD		NumServers;					// 1
+		DWORD		QueryThrottle;				// Throttle for DC++ neighbor searches (sec)
+	} DC;
+
 	struct sBitTorrent
 	{
 		bool		EnableToday;

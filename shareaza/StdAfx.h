@@ -374,7 +374,7 @@ const UINT protocolIDs[] =
 
 inline PROTOCOLID& operator++(PROTOCOLID& arg)
 {
-	ASSERT( arg < PROTOCOL_LAST - 1 );
+	ASSERT( arg < PROTOCOL_LAST );
 	arg = PROTOCOLID( arg + 1 );
 	return arg;
 }

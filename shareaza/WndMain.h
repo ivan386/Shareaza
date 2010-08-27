@@ -271,6 +271,8 @@ protected:
 	afx_msg void OnNetworkG1();
 	afx_msg void OnUpdateNetworkED2K(CCmdUI* pCmdUI);
 	afx_msg void OnNetworkED2K();
+	afx_msg void OnUpdateNetworkDC(CCmdUI* pCmdUI);
+	afx_msg void OnNetworkDC();
 	afx_msg void OnUpdateViewBasic(CCmdUI* pCmdUI);
 	afx_msg void OnViewBasic();
 	afx_msg void OnUpdateLibraryHashPriority(CCmdUI* pCmdUI);

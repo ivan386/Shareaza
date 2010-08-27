@@ -27,7 +27,6 @@
 #include "Statistics.h"
 #include "Network.h"
 #include "Neighbours.h"
-#include "Neighbour.h"
 #include "GraphItem.h"
 #include "Library.h"
 #include "LibraryBuilder.h"
@@ -1103,9 +1102,9 @@ void CHomeConnectionBox::OnSkinChange()
 	m_pDocument = NULL;
 	m_pdConnectedHours = m_pdConnectedMinutes = NULL;
 	
-	for ( int nP = 0 ; nP < 4 ; nP++ )
+	for ( PROTOCOLID nP = PROTOCOL_NULL ; nP < PROTOCOL_LAST ; ++nP )
 	{
-		for ( int nT = 0 ; nT < 3 ; nT++ )
+		for ( int nT = ntNode ; nT <= ntLeaf ; nT++ )
 		{
 			m_pdCount[ nP ][ nT ] = NULL;
 			m_sCount[ nP ][ nT ].Empty();
@@ -1139,10 +1138,12 @@ void CHomeConnectionBox::OnSkinChange()
 	pMap.Lookup( _T("G2Leaves"), m_pdCount[PROTOCOL_G2][ntLeaf] );
 	
 	pMap.Lookup( _T("EDServers"), m_pdCount[PROTOCOL_ED2K][ntHub] );
-	
-	for ( int nP = 0 ; nP < 4 ; nP++ )
+
+	pMap.Lookup( _T("DCHubs"), m_pdCount[PROTOCOL_DC][ntHub] );
+
+	for ( PROTOCOLID nP = PROTOCOL_NULL ; nP < PROTOCOL_LAST ; ++nP )
 	{
-		for ( int nT = 0 ; nT < 3 ; nT++ )
+		for ( int nT = ntNode ; nT <= ntLeaf ; nT++ )
 		{
 			if ( m_pdCount[ nP ][ nT ] != NULL )
 			{
@@ -1163,7 +1164,7 @@ void CHomeConnectionBox::Update()
 	CSingleLock pLock( &Network.m_pSection );
 	if ( ! pLock.Lock( 50 ) ) return;
 	
-	int nCount[ PROTOCOL_LAST ][4] = {};
+	int nCount[ PROTOCOL_LAST ][ ntLeaf + 2 ] = {};
 	int nTotal = 0;
 	CString str;
 	
@@ -1178,36 +1179,44 @@ void CHomeConnectionBox::Update()
 		}
 		else
 		{
-			nCount[ pNeighbour->m_nProtocol ][ 0 ] ++;
+			nCount[ pNeighbour->m_nProtocol ][ ntNode ] ++;
 		}
 	}
 	
-	nCount[ PROTOCOL_G1 ][ 0 ] += nCount[ 0 ][ 0 ];
-	nCount[ PROTOCOL_G2 ][ 0 ] += nCount[ 0 ][ 0 ];
+	nCount[ PROTOCOL_G1 ][ ntNode ] += nCount[ PROTOCOL_NULL ][ ntNode ];
+	nCount[ PROTOCOL_G2 ][ ntNode ] += nCount[ PROTOCOL_NULL ][ ntNode ];
 	
 	BOOL bConnected = Network.IsConnected();
 	m_pDocument->ShowGroup( 1, ! bConnected );
 	m_pDocument->ShowGroup( 2, bConnected );
 	
-	const bool* pEnable[ PROTOCOL_LAST ] =
+	static const bool* pEnable[ PROTOCOL_LAST ] =
 	{
-		NULL,
-		&Settings.Gnutella1.EnableToday,
-		&Settings.Gnutella2.EnableToday,
-		&Settings.eDonkey.EnableToday
+		NULL,								// PROTOCOL_NULL
+		&Settings.Gnutella1.EnableToday,	// PROTOCOL_G1
+		&Settings.Gnutella2.EnableToday,	// PROTOCOL_G2
+		&Settings.eDonkey.EnableToday,		// PROTOCOL_ED2K
+		NULL,								// PROTOCOL_HTTP
+		NULL,								// PROTOCOL_FTP
+		&Settings.BitTorrent.EnableToday,	// PROTOCOL_BT
+		NULL,								// PROTOCOL_KAD
+		&Settings.DC.EnableToday			// PROTOCOL_DC
 	};
-	
+
 	BOOL bDetail = Settings.General.GUIMode != GUI_BASIC;
 	
-	for ( int nProtocol = PROTOCOL_G1 ; nProtocol <= PROTOCOL_ED2K ; nProtocol++ )
+	for ( PROTOCOLID nProtocol = PROTOCOL_NULL ; nProtocol < PROTOCOL_LAST ; ++nProtocol )
 	{
 		int nBase = nProtocol * 10;
-		
+
+		if ( ! pEnable[ nProtocol ] )
+			continue;
+
 		if ( bConnected && *pEnable[ nProtocol ] )
 		{
 			m_pDocument->ShowGroup( nBase, TRUE );
 			
-			if ( nCount[ nProtocol ][ ntLeaf+1 ] )
+			if ( nCount[ nProtocol ][ ntLeaf + 1 ] )
 			{
 				if ( m_pdCount[ nProtocol ][ ntLeaf ] && bDetail )
 				{
@@ -1265,8 +1274,8 @@ void CHomeConnectionBox::Update()
 			}
 			else
 			{
-				m_pDocument->ShowGroup( nBase + 1, nCount[ nProtocol ][ 0 ] == 0 );
-				m_pDocument->ShowGroup( nBase + 2, nCount[ nProtocol ][ 0 ] != 0 );
+				m_pDocument->ShowGroup( nBase + 1, nCount[ nProtocol ][ ntNode ] == 0 );
+				m_pDocument->ShowGroup( nBase + 2, nCount[ nProtocol ][ ntNode ] != 0 );
 			}
 		}
 		else

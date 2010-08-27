@@ -257,6 +257,8 @@ BEGIN_MESSAGE_MAP(CMainWnd, CMDIFrameWnd)
 	ON_COMMAND(ID_NETWORK_G1, OnNetworkG1)
 	ON_UPDATE_COMMAND_UI(ID_NETWORK_ED2K, OnUpdateNetworkED2K)
 	ON_COMMAND(ID_NETWORK_ED2K, OnNetworkED2K)
+	ON_UPDATE_COMMAND_UI(ID_NETWORK_DC, OnUpdateNetworkDC)
+	ON_COMMAND(ID_NETWORK_DC, OnNetworkDC)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_BASIC, OnUpdateViewBasic)
 	ON_COMMAND(ID_VIEW_BASIC, OnViewBasic)
 	ON_UPDATE_COMMAND_UI(ID_LIBRARY_HASH_PRIORITY, OnUpdateLibraryHashPriority)
@@ -1813,6 +1815,33 @@ void CMainWnd::OnNetworkED2K()
 			Network.Connect( TRUE );
 	}
 #endif // LAN_MODE
+}
+
+void CMainWnd::OnUpdateNetworkDC(CCmdUI* pCmdUI)
+{
+	pCmdUI->SetCheck( Settings.DC.EnableToday );
+	pCmdUI->Enable( Settings.GetOutgoingBandwidth() >= 2 );
+}
+
+void CMainWnd::OnNetworkDC()
+{
+	Settings.DC.EnableToday = !Settings.DC.EnableToday;
+
+	if ( Settings.DC.EnableToday )
+	{
+		if ( ! Settings.DC.EnableAlways )
+		{
+			CString strMessage;
+			LoadString( strMessage, IDS_NETWORK_ALWAYS );
+			if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) == IDYES )
+			{
+				Settings.DC.EnableAlways = true;
+			}
+		}
+
+		if ( !Network.IsConnected() )
+			Network.Connect( TRUE );
+	}
 }
 
 void CMainWnd::OnUpdateNetworkAutoClose(CCmdUI* pCmdUI)

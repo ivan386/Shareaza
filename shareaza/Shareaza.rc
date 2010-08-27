@@ -4740,6 +4740,7 @@ BEGIN
     ID_NETWORK_G2           "Connect to the Gnutella2 network (highly recommended)."
     ID_NETWORK_G1           "Connect to the original Gnutella network."
     ID_NETWORK_ED2K         "Connect to the eDonkey network."
+    ID_NETWORK_DC           "Connect to the DC++ network."
     ID_HOSTCACHE_PRIORITY   "Try to connect to this server before other servers."
     ID_VIEW_BASIC           "Use Shareaza in Basic mode."
 END

@@ -340,9 +340,10 @@
 		<button id="ID_BROWSE_LAUNCH" text="Browse User"/>
 		<button id="ID_NEIGHBOURS_CHAT" text="Chat to User"/>
 		<rightAlign/>
-		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_G1" text="Gnutella1"/>
+		<button id="ID_NETWORK_G2" text="Gnutella&#178;"/>
+		<button id="ID_NETWORK_G1" text="Gnutella"/>
 		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
+		<button id="ID_NETWORK_DC" text="DC++"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Settings"/>
 	</toolbar>
@@ -354,9 +355,10 @@
 		<button id="ID_NEIGHBOURS_CHAT" text="Chat to User"/>
 		<button id="ID_SECURITY_BAN" text="Ban Host"/>
 		<rightAlign/>
-		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_G1" text="Gnutella1"/>
+		<button id="ID_NETWORK_G2" text="Gnutella&#178;"/>
+		<button id="ID_NETWORK_G1" text="Gnutella"/>
 		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
+		<button id="ID_NETWORK_DC" text="DC++"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Settings"/>
 	</toolbar>
@@ -494,9 +496,10 @@
 			<item id="ID_NETWORK_CONNECT" text="_Connect" shortcut="Ctrl+G"/>
 			<separator/>
 			<menu text="Choose _Networks">
-				<item id="ID_NETWORK_G2" text="Connect to _Gnutella2"/>
-				<item id="ID_NETWORK_G1" text="Connect to Gnutella_1"/>
+				<item id="ID_NETWORK_G2" text="Connect to _Gnutella&#178;"/>
+				<item id="ID_NETWORK_G1" text="Connect to G_nutella"/>
 				<item id="ID_NETWORK_ED2K" text="Connect to _eDonkey"/>
+				<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="Exit _After Transfers"/>
@@ -570,9 +573,10 @@
 			<item id="ID_NETWORK_DISCONNECT" text="_Disconnect"/>
 			<separator/>
 			<menu text="Choose _Networks">
-				<item id="ID_NETWORK_G2" text="Connect to _Gnutella2"/>
-				<item id="ID_NETWORK_G1" text="Connect to Gnutella_1"/>
+				<item id="ID_NETWORK_G2" text="Connect to _Gnutella&#178;"/>
+				<item id="ID_NETWORK_G1" text="Connect to G_nutella"/>
 				<item id="ID_NETWORK_ED2K" text="Connect to _eDonkey"/>
+				<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_CONNECT_TO" text="Connect _To..." shortcut="Ctrl+T"/>
@@ -681,9 +685,10 @@
 			<item id="ID_NETWORK_CHAT_TO" text="Chat to _User..."/>
 			<separator/>
 			<menu text="Choose _Networks">
-				<item id="ID_NETWORK_G2" text="Connect to _Gnutella2"/>
-				<item id="ID_NETWORK_G1" text="Connect to Gnutella_1"/>
+				<item id="ID_NETWORK_G2" text="Connect to _Gnutella&#178;"/>
+				<item id="ID_NETWORK_G1" text="Connect to G_nutella"/>
 				<item id="ID_NETWORK_ED2K" text="Connect to _eDonkey"/>
+				<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="Close _After Transfers"/>
@@ -1488,9 +1493,10 @@
 			<item id="ID_NETWORK_CONNECT" text="_Connect"/>
 			<item id="ID_NETWORK_DISCONNECT" text="_Disconnect"/>
 			<separator/>
-			<item id="ID_NETWORK_G2" text="_Gnutella2"/>
-			<item id="ID_NETWORK_G1" text="Gnutella_1"/>
+			<item id="ID_NETWORK_G2" text="_Gnutella&#178;"/>
+			<item id="ID_NETWORK_G1" text="G_nutella"/>
 			<item id="ID_NETWORK_ED2K" text="_eDonkey"/>
+			<item id="ID_NETWORK_DC" text="_DC++"/>
 		</menu>
 		<menu text="_Monitor">
 			<item id="ID_NEIGHBOURS_VIEW_ALL" text="View _All Traffic"/>
@@ -1810,7 +1816,7 @@
 			</para>
 		</group>
 		<icon group="20" command="ID_NETWORK_G2"/><gap group="20" size="4"/>
-		<text group="20" align="middle" format="b">Gnutella2: </text>
+		<text group="20" align="middle" format="b">Gnutella&#178;: </text>
 		<text group="21" align="middle">Disconnected</text>
 		<text group="22" align="middle">Connecting...</text>
 		<text group="23" align="middle">Connected</text>
@@ -1818,7 +1824,7 @@
 		<text group="25" align="middle" id="G2Leaves">%i leaves</text>
 		<newline group="20" gap="2"/>
 		<icon group="10" command="ID_NETWORK_G1"/><gap group="10" size="4"/>
-		<text group="10" align="middle" format="b">Gnutella1: </text>
+		<text group="10" align="middle" format="b">Gnutella: </text>
 		<text group="11" align="middle">Disconnected</text>
 		<text group="12" align="middle">Connecting...</text>
 		<text group="13" align="middle">Connected</text>
@@ -1831,6 +1837,12 @@
 		<text group="32" align="middle">Connecting...</text>
 		<text group="33" align="middle">Connected</text>
 		<newline group="30" gap="2"/>
+		<icon group="80" command="ID_NETWORK_DC"/><gap group="80" size="4"/>
+		<text group="80" align="middle" format="b">DC++: </text>
+		<text group="81" align="middle">Disconnected</text>
+		<text group="82" align="middle">Connecting...</text>
+		<text group="83" align="middle">Connected</text>
+		<newline group="80" gap="2"/>
 		<group id="2">
 			<para align="center">
 				<newline gap="4"/>
