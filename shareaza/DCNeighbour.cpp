@@ -251,7 +251,9 @@ BOOL CDCNeighbour::OnCommand(const std::string& strCommand, const std::string& s
 
 		return TRUE;
 	}
-	else if ( strCommand == "$ValidateDenide" )
+	else if ( strCommand == "$ValidateDenide" ||
+		// TODO: Add registered user support - for now just change nick
+		strCommand == "$GetPass" )
 	{
 		// Bad user nick
 		// $ValidateDenide Nick|
