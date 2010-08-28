@@ -288,7 +288,7 @@ BOOL CNetwork::ConnectTo(LPCTSTR pszAddress, int nPort, PROTOCOLID nProtocol, BO
 	if ( ! IsConnected() && ! Connect() )
 		return FALSE;
 
-	if ( nPort == 0 )
+	if ( nPort <= 0 || nPort > USHRT_MAX )
 	{
 		switch ( nProtocol )
 		{

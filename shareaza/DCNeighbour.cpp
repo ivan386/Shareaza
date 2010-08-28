@@ -119,7 +119,50 @@ BOOL CDCNeighbour::OnCommand(const std::string& strCommand, const std::string& s
 	m_nInputCount++;
 	m_tLastPacket = GetTickCount();
 
-	if ( strCommand == "$HubName" )
+	if ( strCommand == "$Search" )
+	{
+		// Search request
+		// $Search SenderIP:SenderPort (F|T)?(F|T)?Size?Type?String|
+	
+		std::string::size_type nPos = strParams.find( ' ' );
+		if ( nPos != std::string::npos )
+		{
+			std::string strAddress = strParams.substr( 0, nPos );
+			std::string strSearch = strParams.substr( nPos + 1 );
+			nPos = strAddress.find( ':' );
+			if ( nPos != std::string::npos )
+			{
+				DWORD nAddress = inet_addr( strAddress.substr( 0, nPos ).c_str() );
+				int nPort = atoi( strAddress.substr( nPos + 1 ).c_str() );
+				if ( nPort > 0 && nPort <= USHRT_MAX && nAddress != INADDR_NONE &&
+					! Network.IsFirewalledAddress( (const IN_ADDR*)&nAddress ) &&
+					! Network.IsReserved( (const IN_ADDR*)&nAddress ) &&
+					! Security.IsDenied( (const IN_ADDR*)&nAddress ) )
+				{
+					OnSearch( (const IN_ADDR*)&nAddress, (WORD)nPort, strSearch );
+				}
+			}
+		}
+
+		return TRUE;
+	}
+	else if ( strCommand == "$MyINFO" )
+	{
+		// User info
+		// $MyINFO $ALL nick description<tag>$ $connection$e-mail$sharesize$|
+
+		m_nState = nrsConnected;
+
+		return TRUE;
+	}
+	else if ( strCommand == "$Quit" )
+	{
+		// User leave hub
+		// $Quit nick|
+
+		return TRUE;
+	}
+	else if ( strCommand == "$HubName" )
 	{
 		// Name of hub
 		// $HubName RemoteNick [Version]|
@@ -141,15 +184,6 @@ BOOL CDCNeighbour::OnCommand(const std::string& strCommand, const std::string& s
 	{
 		// Hub operators list
 		// $OpList operator1|
-
-		m_nState = nrsConnected;
-
-		return TRUE;
-	}
-	else if ( strCommand == "$MyINFO" )
-	{
-		// User info
-		// $MyINFO $ALL nick description<tag>$ $connection$e-mail$sharesize$|
 
 		m_nState = nrsConnected;
 
@@ -197,37 +231,23 @@ BOOL CDCNeighbour::OnCommand(const std::string& strCommand, const std::string& s
 		}
 		return TRUE;
 	}
-	else if ( strCommand == "$Quit" )
+	else if ( strCommand == "$ForceMove" )
 	{
-		// User leave hub
-		// $Quit nick|
+		// User redirection
+		// $ForceMove IP:Port|
 
-		return TRUE;
-	}
-	else if ( strCommand == "$Search" )
-	{
-		// Search request
-		// $Search SenderIP:SenderPort (F|T)?(F|T)?Size?Type?String|
-	
-		std::string::size_type nPos = strParams.find( ' ' );
+		CString strAddress;
+		int nPort = 0;
+		std::string::size_type nPos = strParams.rfind( ':' );
 		if ( nPos != std::string::npos )
 		{
-			std::string strAddress = strParams.substr( 0, nPos );
-			std::string strSearch = strParams.substr( nPos + 1 );
-			nPos = strAddress.find( ':' );
-			if ( nPos != std::string::npos )
-			{
-				DWORD nAddress = inet_addr( strAddress.substr( 0, nPos ).c_str() );
-				int nPort = atoi( strAddress.substr( nPos + 1 ).c_str() );
-				if ( nPort > 0 && nPort <= USHRT_MAX && nAddress != INADDR_NONE &&
-					! Network.IsFirewalledAddress( (const IN_ADDR*)&nAddress ) &&
-					! Network.IsReserved( (const IN_ADDR*)&nAddress ) &&
-					! Security.IsDenied( (const IN_ADDR*)&nAddress ) )
-				{
-					OnSearch( (const IN_ADDR*)&nAddress, (WORD)nPort, strSearch );
-				}
-			}
+			strAddress = strParams.substr( 0, nPos ).c_str();
+			nPort = atoi( strParams.substr( nPos + 1 ).c_str() );
 		}
+		else
+			strAddress = strParams.c_str();
+
+		Network.ConnectTo( strAddress, nPort, PROTOCOL_DC );
 
 		return TRUE;
 	}
