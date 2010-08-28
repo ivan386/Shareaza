@@ -251,6 +251,21 @@ BOOL CDCNeighbour::OnCommand(const std::string& strCommand, const std::string& s
 
 		return TRUE;
 	}
+	else if ( strCommand == "$ValidateDenide" )
+	{
+		// Bad user nick
+		// $ValidateDenide Nick|
+
+		m_sNick.Format( CLIENT_NAME_T _T("%04u"), GetRandomNum( 0, 9999 ) );
+
+		Write( _P("$ValidateNick ") );
+		Write( m_sNick );
+		Write( _P("|") );
+
+		LogOutgoing();
+
+		m_nOutputCount++;
+	}
 
 	// Unknown command - ignoring
 	return TRUE;
@@ -366,6 +381,20 @@ BOOL CDCNeighbour::OnLock()
 	Write( _P("$Key ") );
 	Write( m_strKey.c_str(), m_strKey.size() );
 	Write( _P("|") );
+
+	// Make DC++ safe nick
+	m_sNick = MyProfile.GetNick();
+	if ( m_sNick.IsEmpty() )
+		m_sNick.Format( CLIENT_NAME_T _T("%04u"), GetRandomNum( 0, 9999 ) );
+	else
+	{
+		m_sNick.Replace( _T(' '), _T('_') );
+		m_sNick.Replace( _T('&'), _T('_') );
+		m_sNick.Replace( _T('|'), _T('_') );
+		m_sNick.Replace( _T('$'), _T('_') );
+		m_sNick.Replace( _T('<'), _T('_') );
+		m_sNick.Replace( _T('>'), _T('_') );
+	}
 
 	Write( _P("$ValidateNick ") );
 	Write( m_sNick );

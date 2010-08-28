@@ -71,17 +71,9 @@ protected:
 template< class CBase >
 CDCStream< CBase >::CDCStream()
 	: CBase( PROTOCOL_DC )
-	, m_sNick( MyProfile.GetNick() )
 	, m_bExtended( FALSE )
 	, m_bDownload( FALSE )
 {
-	// Make DC++ safe nick
-	m_sNick.Replace( _T(' '), _T('_') );
-	m_sNick.Replace( _T('&'), _T('_') );
-	m_sNick.Replace( _T('|'), _T('_') );
-	m_sNick.Replace( _T('$'), _T('_') );
-	m_sNick.Replace( _T('<'), _T('_') );
-	m_sNick.Replace( _T('>'), _T('_') );
 }
 
 template< class CBase >
