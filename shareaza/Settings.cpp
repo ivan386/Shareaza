@@ -364,7 +364,7 @@ void CSettings::Load()
 	Add( _T("Gnutella1"), _T("PongCount"), &Gnutella1.PongCount, 10, 1, 1, 64 );
 	Add( _T("Gnutella1"), _T("QueryHitUTF8"), &Gnutella1.QueryHitUTF8, true );
 	Add( _T("Gnutella1"), _T("QuerySearchUTF8"), &Gnutella1.QuerySearchUTF8, true );
-	Add( _T("Gnutella1"), _T("QueryThrottle"), &Gnutella1.QueryThrottle, 30, 1, 10, 10*60, _T(" s") );
+	Add( _T("Gnutella1"), _T("QueryThrottle"), &Gnutella1.QueryThrottle, 120, 1, 30, 60*60, _T(" s") );
 	Add( _T("Gnutella1"), _T("SearchTTL"), &Gnutella1.SearchTTL, 3, 1, 1, 3 );
 	Add( _T("Gnutella1"), _T("StrictPackets"), &Gnutella1.StrictPackets, false );
 	Add( _T("Gnutella1"), _T("TranslateTTL"), &Gnutella1.TranslateTTL, 2, 1, 1, 2 );
@@ -394,11 +394,7 @@ void CSettings::Load()
 	Add( _T("Gnutella2"), _T("PingRelayLimit"), &Gnutella2.PingRelayLimit, 10, 1, 10, 30 );
 	Add( _T("Gnutella2"), _T("QueryGlobalThrottle"), &Gnutella2.QueryGlobalThrottle, 125, 1, 1, 60*1000, _T(" ms") );
 	Add( _T("Gnutella2"), _T("QueryHostDeadline"), &Gnutella2.QueryHostDeadline, 10*60, 1, 1, 120*60, _T(" s") );
-#ifdef LAN_MODE
-	Add( _T("Gnutella2"), _T("QueryThrottle"), &Gnutella2.QueryThrottle, 0, 1, 0, 10*60, _T(" s") );
-#else // LAN_MODE
-	Add( _T("Gnutella2"), _T("QueryThrottle"), &Gnutella2.QueryThrottle, 120, 1, 10, 10*60, _T(" s") );
-#endif // LAN_MODE
+	Add( _T("Gnutella2"), _T("QueryThrottle"), &Gnutella2.QueryThrottle, 120, 1, 30, 60*60, _T(" s") );
 	Add( _T("Gnutella2"), _T("QueryLimit"), &Gnutella2.QueryLimit, 2400, 1, 0, 10000 );
 	Add( _T("Gnutella2"), _T("RequeryDelay"), &Gnutella2.RequeryDelay, 4*60*60, 60*60, 1, 24, _T(" h") );
 	Add( _T("Gnutella2"), _T("UdpBuffers"), &Gnutella2.UdpBuffers, 512, 1, 16, 2048 );
@@ -432,7 +428,7 @@ void CSettings::Load()
 	Add( _T("eDonkey"), _T("PacketThrottle"), &eDonkey.PacketThrottle, 500, 1, 250, 5000, _T(" ms") );
 	Add( _T("eDonkey"), _T("QueryFileThrottle"), &eDonkey.QueryFileThrottle, 60*60*1000, 60*1000, 30, 120, _T(" m") );
 	Add( _T("eDonkey"), _T("QueryGlobalThrottle"), &eDonkey.QueryGlobalThrottle, 1000, 1, 1000, 20000, _T(" ms") );
-	Add( _T("eDonkey"), _T("QueryServerThrottle"), &eDonkey.QueryThrottle, 120, 1, 60, 10*60, _T(" s") );
+	Add( _T("eDonkey"), _T("QueryThrottle"), &eDonkey.QueryThrottle, 120, 1, 60, 60*60, _T(" s") );
 	Add( _T("eDonkey"), _T("QueueRankThrottle"), &eDonkey.QueueRankThrottle, 2*60*1000, 1000, 60, 600, _T(" s") );
 	Add( _T("eDonkey"), _T("ReAskTime"), &eDonkey.ReAskTime, 29*60, 60, 20, 360, _T(" m") );
 	Add( _T("eDonkey"), _T("RequestPipe"), &eDonkey.RequestPipe, 3, 1, 1, 10 );
@@ -445,7 +441,7 @@ void CSettings::Load()
 	Add( _T("eDonkey"), _T("StatsServerThrottle"), &eDonkey.StatsServerThrottle, 7*24*60*60, 24*60*60, 7, 28, _T(" d") );
 
 	Add( _T("DC"), _T("EnableAlways"), &DC.EnableAlways, false );
-	Add( _T("DC"), _T("QueryThrottle"), &DC.QueryThrottle, 300, 1, 30, 24*60*60, _T(" s") );
+	Add( _T("DC"), _T("QueryThrottle"), &DC.QueryThrottle, 120, 1, 30, 60*60, _T(" s") );
 	Add( _T("DC"), _T("NumServers"), &DC.NumServers, 1, 1, 0, 1 );
 
 	Add( _T("BitTorrent"), _T("AdvancedInterface"), &BitTorrent.AdvancedInterface, false );
