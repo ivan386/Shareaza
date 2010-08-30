@@ -322,7 +322,7 @@ void CHostCacheList::Clear()
 //////////////////////////////////////////////////////////////////////
 // CHostCacheList host add
 
-CHostCacheHostPtr CHostCacheList::Add(IN_ADDR* pAddress, WORD nPort, DWORD tSeen, LPCTSTR pszVendor, DWORD nUptime, DWORD nCurrentLeaves, DWORD nLeafLimit)
+CHostCacheHostPtr CHostCacheList::Add(const IN_ADDR* pAddress, WORD nPort, DWORD tSeen, LPCTSTR pszVendor, DWORD nUptime, DWORD nCurrentLeaves, DWORD nLeafLimit)
 {
 	// Don't add invalid addresses
 	if ( ! nPort ) 

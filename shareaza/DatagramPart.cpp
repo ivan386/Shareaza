@@ -1,7 +1,7 @@
 //
 // DatagramPart.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -53,7 +53,7 @@ CDatagramOut::~CDatagramOut()
 //////////////////////////////////////////////////////////////////////
 // CDatagramOut create
 
-void CDatagramOut::Create(SOCKADDR_IN* pHost, CG2Packet* pPacket, WORD nSequence, CBuffer* pBuffer, BOOL bAck)
+void CDatagramOut::Create(const SOCKADDR_IN* pHost, CG2Packet* pPacket, WORD nSequence, CBuffer* pBuffer, BOOL bAck)
 {
 	ASSERT( m_pBuffer == NULL );
 

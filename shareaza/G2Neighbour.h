@@ -1,7 +1,7 @@
 //
 // G2Neighbour.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -55,7 +55,7 @@ public:
 
 	static CG2Packet* CreateLNIPacket(CG2Neighbour* pOwner = NULL);
 	static CG2Packet* CreateKHLPacket(CG2Neighbour* pOwner = NULL);
-	static BOOL		ParseKHLPacket(CG2Packet* pPacket, SOCKADDR_IN* pHost);
+	static BOOL		ParseKHLPacket(CG2Packet* pPacket, const SOCKADDR_IN* pHost);
 
 public:
 	DWORD				m_nLeafCount;

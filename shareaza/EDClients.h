@@ -1,7 +1,7 @@
 //
 // EDClients.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -57,13 +57,13 @@ public:
 	void			Remove(CEDClient* pClient);
 	void			Clear();
 	bool			PushTo(DWORD nClientID, WORD nClientPort);
-	CEDClient*		GetByIP(IN_ADDR* pAddress) const;
+	CEDClient*		GetByIP(const IN_ADDR* pAddress) const;
 	// Connect to new or known eD2K-client (nClientPort and nServerPort must be in host byte order)
 	CEDClient*		Connect(DWORD nClientID, WORD nClientPort, IN_ADDR* pServerAddress, WORD nServerPort, const Hashes::Guid& oGUID);
 	BOOL			Merge(CEDClient* pClient);
 	void			OnRun();
 	BOOL			OnAccept(CConnection* pConnection);
-	BOOL			OnPacket(SOCKADDR_IN* pHost, CEDPacket* pPacket);
+	BOOL			OnPacket(const SOCKADDR_IN* pHost, CEDPacket* pPacket);
 	bool			IsFull(const CEDClient* pCheckThis = NULL);
 	BOOL			IsOverloaded() const;
 	BOOL			IsMyDownload(const CDownloadTransferED2K* pDownload) const;
@@ -71,7 +71,7 @@ public:
 protected:
 	CEDClient*		GetByID(DWORD nClientID, IN_ADDR* pServer, const Hashes::Guid& oGUID) const;
 	CEDClient*		GetByGUID(const Hashes::Guid& oGUID) const;
-	void			OnServerStatus(SOCKADDR_IN* pHost, CEDPacket* pPacket);
+	void			OnServerStatus(const SOCKADDR_IN* pHost, CEDPacket* pPacket);
 	void			RequestServerStatus(IN_ADDR* pHost, WORD nPort);
 	void			RunGlobalStatsRequests(DWORD tNow);
 };

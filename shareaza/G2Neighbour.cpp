@@ -851,7 +851,7 @@ BOOL CG2Neighbour::OnKHL(CG2Packet* pPacket)
 	return ParseKHLPacket( pPacket, &m_pHost );
 }
 
-BOOL CG2Neighbour::ParseKHLPacket(CG2Packet* pPacket, SOCKADDR_IN* pHost)
+BOOL CG2Neighbour::ParseKHLPacket(CG2Packet* pPacket, const SOCKADDR_IN* pHost)
 {
 	BOOL bInvalid = FALSE;
 	CG2Neighbour* pOwner = static_cast< CG2Neighbour* >( Neighbours.Get( pHost->sin_addr ) );

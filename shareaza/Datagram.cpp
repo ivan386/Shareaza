@@ -1,7 +1,7 @@
 //
 // Datagram.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -52,7 +52,7 @@ CDatagramIn::~CDatagramIn()
 //////////////////////////////////////////////////////////////////////
 // CDatagramIn prepare to handle a datagram
 
-void CDatagramIn::Create(SOCKADDR_IN* pHost, BYTE nFlags, WORD nSequence, BYTE nCount)
+void CDatagramIn::Create(const SOCKADDR_IN* pHost, BYTE nFlags, WORD nSequence, BYTE nCount)
 {
 	CopyMemory( &m_pHost, pHost, sizeof(SOCKADDR_IN) );
 

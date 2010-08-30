@@ -413,7 +413,7 @@ bool CG1Packet::IsFirewalled()
 //////////////////////////////////////////////////////////////////////
 // UDP packet handler
 
-BOOL CG1Packet::OnPacket(SOCKADDR_IN* pHost)
+BOOL CG1Packet::OnPacket(const SOCKADDR_IN* pHost)
 {
 	SmartDump( pHost, TRUE, FALSE );
 
@@ -439,7 +439,7 @@ BOOL CG1Packet::OnPacket(SOCKADDR_IN* pHost)
 //////////////////////////////////////////////////////////////////////
 // PING packet handler for G1UDP
 
-BOOL CG1Packet::OnPing(SOCKADDR_IN* pHost)
+BOOL CG1Packet::OnPing(const SOCKADDR_IN* pHost)
 {
 	Statistics.Current.Gnutella1.PingsReceived++;
 
@@ -535,7 +535,7 @@ BOOL CG1Packet::OnPing(SOCKADDR_IN* pHost)
 //////////////////////////////////////////////////////////////////////
 // PONG packet handler
 
-BOOL CG1Packet::OnPong(SOCKADDR_IN* pHost)
+BOOL CG1Packet::OnPong(const SOCKADDR_IN* pHost)
 {
 	Statistics.Current.Gnutella1.PongsReceived++;
 
@@ -629,7 +629,7 @@ BOOL CG1Packet::OnPong(SOCKADDR_IN* pHost)
 	return TRUE;
 }
 
-BOOL CG1Packet::OnVendor(SOCKADDR_IN* pHost)
+BOOL CG1Packet::OnVendor(const SOCKADDR_IN* pHost)
 {
 	// If the packet payload is smaller than 8 bytes, or settings don't allow vendor messages
 	if ( m_nLength < 8 || ! Settings.Gnutella1.VendorMsg )

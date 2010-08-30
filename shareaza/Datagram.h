@@ -1,7 +1,7 @@
 //
 // Datagram.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -18,9 +18,6 @@
 // along with Shareaza; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-
-#if !defined(AFX_DATAGRAM_H__72C119CA_1D67_4B22_A9DF_51398F17B756__INCLUDED_)
-#define AFX_DATAGRAM_H__72C119CA_1D67_4B22_A9DF_51398F17B756__INCLUDED_
 
 #pragma once
 
@@ -55,10 +52,8 @@ public:
 
 // Operations
 public:
-	void		Create(SOCKADDR_IN* pHost, BYTE nFlags, WORD nSequence, BYTE nCount);
+	void		Create(const SOCKADDR_IN* pHost, BYTE nFlags, WORD nSequence, BYTE nCount);
 	BOOL		Add(BYTE nPart, LPCVOID pData, DWORD nLength);
 	CG2Packet*	ToG2Packet();
 
 };
-
-#endif // !defined(AFX_DATAGRAM_H__72C119CA_1D67_4B22_A9DF_51398F17B756__INCLUDED_)

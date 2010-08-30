@@ -41,19 +41,19 @@ static char THIS_FILE[]=__FILE__;
 CKademlia Kademlia;
 
 
-BOOL CKademlia::Send(SOCKADDR_IN* pHost, CEDPacket* pPacket)
+BOOL CKademlia::Send(const SOCKADDR_IN* pHost, CEDPacket* pPacket)
 {
 	// TODO: Kademlia packets statistics
 
 	return Datagrams.Send( pHost, pPacket );
 }
 
-BOOL CKademlia::Send(SOCKADDR_IN* pHost, BYTE nType)
+BOOL CKademlia::Send(const SOCKADDR_IN* pHost, BYTE nType)
 {
 	return Send( pHost, CEDPacket::New( nType, ED2K_PROTOCOL_KAD ) );
 }
 
-BOOL CKademlia::Bootstrap(SOCKADDR_IN* pHost, bool bKad2)
+BOOL CKademlia::Bootstrap(const SOCKADDR_IN* pHost, bool bKad2)
 {
 	if ( bKad2 )
 	{
@@ -65,7 +65,7 @@ BOOL CKademlia::Bootstrap(SOCKADDR_IN* pHost, bool bKad2)
 	}
 }
 
-BOOL CKademlia::SendMyDetails(SOCKADDR_IN* pHost, BYTE nType, bool bKad2)
+BOOL CKademlia::SendMyDetails(const SOCKADDR_IN* pHost, BYTE nType, bool bKad2)
 {
 	CEDPacket* pPacket = CEDPacket::New( nType, ED2K_PROTOCOL_KAD );
 	if ( ! pPacket )
@@ -92,7 +92,7 @@ BOOL CKademlia::SendMyDetails(SOCKADDR_IN* pHost, BYTE nType, bool bKad2)
 	}
 }
 
-BOOL CKademlia::OnPacket(SOCKADDR_IN* pHost, CEDPacket* pPacket)
+BOOL CKademlia::OnPacket(const SOCKADDR_IN* pHost, CEDPacket* pPacket)
 {
 	pPacket->SmartDump( pHost, TRUE, FALSE );
 
@@ -182,7 +182,7 @@ BOOL CKademlia::OnPacket(SOCKADDR_IN* pHost, CEDPacket* pPacket)
 	return FALSE;
 }
 
-BOOL CKademlia::OnPacket_KADEMLIA_BOOTSTRAP_RES(SOCKADDR_IN* /*pHost*/, CEDPacket* pPacket)
+BOOL CKademlia::OnPacket_KADEMLIA_BOOTSTRAP_RES(const SOCKADDR_IN* /*pHost*/, CEDPacket* pPacket)
 {
 	Hashes::Guid oGUID;
 	IN_ADDR pAddress;
@@ -219,7 +219,7 @@ BOOL CKademlia::OnPacket_KADEMLIA_BOOTSTRAP_RES(SOCKADDR_IN* /*pHost*/, CEDPacke
 	return TRUE;
 }
 
-BOOL CKademlia::OnPacket_KADEMLIA2_BOOTSTRAP_RES(SOCKADDR_IN* pHost, CEDPacket* pPacket)
+BOOL CKademlia::OnPacket_KADEMLIA2_BOOTSTRAP_RES(const SOCKADDR_IN* pHost, CEDPacket* pPacket)
 {
 	Hashes::Guid oGUID;
 	IN_ADDR pAddress;
@@ -277,12 +277,12 @@ BOOL CKademlia::OnPacket_KADEMLIA2_BOOTSTRAP_RES(SOCKADDR_IN* pHost, CEDPacket* 
 	return TRUE;
 }
 
-BOOL CKademlia::OnPacket_KADEMLIA2_PING(SOCKADDR_IN* pHost, CEDPacket* /*pPacket*/)
+BOOL CKademlia::OnPacket_KADEMLIA2_PING(const SOCKADDR_IN* pHost, CEDPacket* /*pPacket*/)
 {
 	return Send( pHost, KADEMLIA2_PONG ); 
 }
 
-BOOL CKademlia::OnPacket_KADEMLIA2_PONG(SOCKADDR_IN* /*pHost*/, CEDPacket* /*pPacket*/)
+BOOL CKademlia::OnPacket_KADEMLIA2_PONG(const SOCKADDR_IN* /*pHost*/, CEDPacket* /*pPacket*/)
 {
 	// TODO: Implement Kademlia Pong packet handling
 

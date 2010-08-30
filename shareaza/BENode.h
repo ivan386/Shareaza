@@ -23,6 +23,7 @@
 
 class CBuffer;
 
+typedef const BYTE *LPCBYTE;
 
 class CBENode
 {
@@ -46,18 +47,18 @@ public:
 // Operations
 public:
 	void		Clear();
-	CBENode*	Add(const LPBYTE pKey, size_t nKey);
+	CBENode*	Add(LPCBYTE pKey, size_t nKey);
 	CBENode*	GetNode(LPCSTR pszKey) const;
 	CBENode*	GetNode(const LPBYTE pKey, int nKey) const;
 	CSHA		GetSHA1() const;
 	CString		GetStringFromSubNode(LPCSTR pszKey, UINT nEncoding, bool& pEncodingError) const;
 	CString		GetStringFromSubNode(int nItem, UINT nEncoding, bool& pEncodingError) const;
 	void		Encode(CBuffer* pBuffer) const;
-	void		Decode(LPBYTE& pInput, DWORD& nInput, DWORD nSize);
+	void		Decode(LPCBYTE& pInput, DWORD& nInput, DWORD nSize);
 	static CBENode*	Decode(const CBuffer* pBuffer, DWORD *pnReaden = NULL );
 
 private:
-	static int	DecodeLen(LPBYTE& pInput, DWORD& nInput);
+	static int	DecodeLen(LPCBYTE& pInput, DWORD& nInput);
 
 // Inline
 public:

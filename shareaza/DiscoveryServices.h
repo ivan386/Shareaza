@@ -116,7 +116,7 @@ public:
 //	DWORD				MetQueried() const;
 	DWORD				LastExecute() const;
 	CDiscoveryService*	GetByAddress(LPCTSTR pszAddress) const;
-	CDiscoveryService*	GetByAddress( IN_ADDR* pAddress, WORD nPort, CDiscoveryService::SubType nSubType );
+	CDiscoveryService*	GetByAddress(const IN_ADDR* pAddress, WORD nPort, CDiscoveryService::SubType nSubType );
 	BOOL				Load();
 	BOOL				Save();
 	BOOL				Update();

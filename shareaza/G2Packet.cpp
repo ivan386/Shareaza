@@ -1,7 +1,7 @@
 //
 // G2Packet.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -530,7 +530,7 @@ void CG2Packet::Debug(LPCTSTR pszReason) const
 //////////////////////////////////////////////////////////////////////
 // CDatagrams G2UDP packet handler
 
-BOOL CG2Packet::OnPacket(SOCKADDR_IN* pHost)
+BOOL CG2Packet::OnPacket(const SOCKADDR_IN* pHost)
 {
 	SmartDump( pHost, TRUE, FALSE );
 
@@ -594,13 +594,13 @@ BOOL CG2Packet::OnPacket(SOCKADDR_IN* pHost)
 //////////////////////////////////////////////////////////////////////
 // CDatagrams PING packet handler
 
-BOOL CG2Packet::OnPing(SOCKADDR_IN* pHost)
+BOOL CG2Packet::OnPing(const SOCKADDR_IN* pHost)
 {
 	Datagrams.Send( pHost, CG2Packet::New( G2_PACKET_PONG ) );
 	return TRUE;
 }
 
-BOOL CG2Packet::OnPong(SOCKADDR_IN* pHost)
+BOOL CG2Packet::OnPong(const SOCKADDR_IN* pHost)
 {
 	if ( ! m_bCompound ) return TRUE;
 
@@ -624,7 +624,7 @@ BOOL CG2Packet::OnPong(SOCKADDR_IN* pHost)
 //////////////////////////////////////////////////////////////////////
 // CDatagrams QUERY packet handler
 
-BOOL CG2Packet::OnQuery(SOCKADDR_IN* pHost)
+BOOL CG2Packet::OnQuery(const SOCKADDR_IN* pHost)
 {
 	CQuerySearchPtr pSearch = CQuerySearch::FromPacket( this, pHost );
 	if ( ! pSearch || pSearch->m_bWarning )
@@ -691,7 +691,7 @@ BOOL CG2Packet::OnQuery(SOCKADDR_IN* pHost)
 //////////////////////////////////////////////////////////////////////
 // CDatagrams QUERY ACK packet handler
 
-BOOL CG2Packet::OnQueryAck(SOCKADDR_IN* pHost)
+BOOL CG2Packet::OnQueryAck(const SOCKADDR_IN* pHost)
 {
 	{
 		CQuickLock oLock( HostCache.Gnutella2.m_pSection );
@@ -728,7 +728,7 @@ BOOL CG2Packet::OnQueryAck(SOCKADDR_IN* pHost)
 //////////////////////////////////////////////////////////////////////
 // CDatagrams HIT packet handler
 
-BOOL CG2Packet::OnCommonHit(SOCKADDR_IN* pHost)
+BOOL CG2Packet::OnCommonHit(const SOCKADDR_IN* pHost)
 {
 	int nHops = 0;
 	CQueryHit* pHits = CQueryHit::FromG2Packet( this, &nHops );
@@ -784,7 +784,7 @@ BOOL CG2Packet::OnCommonHit(SOCKADDR_IN* pHost)
 //////////////////////////////////////////////////////////////////////
 // CDatagrams QUERY KEY REQUEST packet handler
 
-BOOL CG2Packet::OnQueryKeyRequest(SOCKADDR_IN* pHost)
+BOOL CG2Packet::OnQueryKeyRequest(const SOCKADDR_IN* pHost)
 {
 	if ( ! Neighbours.IsG2Hub() )
 	{
@@ -846,7 +846,7 @@ BOOL CG2Packet::OnQueryKeyRequest(SOCKADDR_IN* pHost)
 //////////////////////////////////////////////////////////////////////
 // CDatagrams QUERY KEY ANSWER packet handler
 
-BOOL CG2Packet::OnQueryKeyAnswer(SOCKADDR_IN* pHost)
+BOOL CG2Packet::OnQueryKeyAnswer(const SOCKADDR_IN* pHost)
 {
 	if ( ! m_bCompound )
 	{
@@ -930,7 +930,7 @@ BOOL CG2Packet::OnQueryKeyAnswer(SOCKADDR_IN* pHost)
 //////////////////////////////////////////////////////////////////////
 // CDatagrams PUSH packet handler
 
-BOOL CG2Packet::OnPush(SOCKADDR_IN* pHost)
+BOOL CG2Packet::OnPush(const SOCKADDR_IN* pHost)
 {
 	DWORD nLength = GetRemaining();
 
@@ -960,7 +960,7 @@ BOOL CG2Packet::OnPush(SOCKADDR_IN* pHost)
 //////////////////////////////////////////////////////////////////////
 // CDatagrams CRAWL packet handler
 
-BOOL CG2Packet::OnCrawlRequest(SOCKADDR_IN* pHost)
+BOOL CG2Packet::OnCrawlRequest(const SOCKADDR_IN* pHost)
 {
 	if ( ! m_bCompound )
 	{
@@ -1132,13 +1132,13 @@ BOOL CG2Packet::OnCrawlRequest(SOCKADDR_IN* pHost)
 	return TRUE;
 }
 
-BOOL CG2Packet::OnCrawlAnswer(SOCKADDR_IN* pHost)
+BOOL CG2Packet::OnCrawlAnswer(const SOCKADDR_IN* pHost)
 {
 	CrawlSession.OnCrawl( pHost, this );
 	return TRUE;
 }
 
-BOOL CG2Packet::OnDiscovery(SOCKADDR_IN* pHost)
+BOOL CG2Packet::OnDiscovery(const SOCKADDR_IN* pHost)
 {
 	if ( CG2Packet* pKHL = CG2Neighbour::CreateKHLPacket() )
 	{
@@ -1166,14 +1166,14 @@ BOOL CG2Packet::OnDiscovery(SOCKADDR_IN* pHost)
 	return TRUE;
 }
 
-BOOL CG2Packet::OnKHL(SOCKADDR_IN* pHost)
+BOOL CG2Packet::OnKHL(const SOCKADDR_IN* pHost)
 {
 	return CG2Neighbour::ParseKHLPacket( this, pHost );
 }
 
 // KHLA - KHL(Known Hub List) Answer, go over G2 UDP packet more like Gnutella2 version of UDPHC
 // Better put cache as security to prevent attack, such as flooding cache with invalid host addresses.
-BOOL CG2Packet::OnKHLA(SOCKADDR_IN* pHost)
+BOOL CG2Packet::OnKHLA(const SOCKADDR_IN* pHost)
 {
 	if ( ! m_bCompound )
 	{
@@ -1280,7 +1280,7 @@ BOOL CG2Packet::OnKHLA(SOCKADDR_IN* pHost)
 }
 
 // KHLR - KHL(Known Hub List) request, go over UDP packet more like UDPHC for G1.
-BOOL CG2Packet::OnKHLR(SOCKADDR_IN* pHost)
+BOOL CG2Packet::OnKHLR(const SOCKADDR_IN* pHost)
 {
 	if ( Security.IsDenied( &pHost->sin_addr ) ||
 		Network.IsFirewalledAddress( &pHost->sin_addr, TRUE ) ||

@@ -1,7 +1,7 @@
 //
 // Kademlia.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -83,21 +83,21 @@ class CEDPacket;
 class CKademlia
 {
 public:
-	BOOL Bootstrap(SOCKADDR_IN* pHost, bool bKad2 = true);
+	BOOL Bootstrap(const SOCKADDR_IN* pHost, bool bKad2 = true);
 
-	BOOL OnPacket(SOCKADDR_IN* pHost, CEDPacket* pPacket);
+	BOOL OnPacket(const SOCKADDR_IN* pHost, CEDPacket* pPacket);
 
 protected:
 	CCriticalSection m_pSection;
 
-	BOOL Send(SOCKADDR_IN* pHost, CEDPacket* pPacket);
-	BOOL Send(SOCKADDR_IN* pHost, BYTE nType);
-	BOOL SendMyDetails(SOCKADDR_IN* pHost, BYTE nType, bool bKad2);
+	BOOL Send(const SOCKADDR_IN* pHost, CEDPacket* pPacket);
+	BOOL Send(const SOCKADDR_IN* pHost, BYTE nType);
+	BOOL SendMyDetails(const SOCKADDR_IN* pHost, BYTE nType, bool bKad2);
 
-	BOOL OnPacket_KADEMLIA_BOOTSTRAP_RES(SOCKADDR_IN* pHost, CEDPacket* pPacket);
-	BOOL OnPacket_KADEMLIA2_BOOTSTRAP_RES(SOCKADDR_IN* pHost, CEDPacket* pPacket);
-	BOOL OnPacket_KADEMLIA2_PING(SOCKADDR_IN* pHost, CEDPacket* pPacket);
-	BOOL OnPacket_KADEMLIA2_PONG(SOCKADDR_IN* pHost, CEDPacket* pPacket);
+	BOOL OnPacket_KADEMLIA_BOOTSTRAP_RES(const SOCKADDR_IN* pHost, CEDPacket* pPacket);
+	BOOL OnPacket_KADEMLIA2_BOOTSTRAP_RES(const SOCKADDR_IN* pHost, CEDPacket* pPacket);
+	BOOL OnPacket_KADEMLIA2_PING(const SOCKADDR_IN* pHost, CEDPacket* pPacket);
+	BOOL OnPacket_KADEMLIA2_PONG(const SOCKADDR_IN* pHost, CEDPacket* pPacket);
 };
 
 extern CKademlia Kademlia;

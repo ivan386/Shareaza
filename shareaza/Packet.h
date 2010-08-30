@@ -453,7 +453,7 @@ public:
 	virtual inline void Delete() = 0;
 
 	// Packet handler
-	virtual BOOL OnPacket(SOCKADDR_IN* pHost) = 0;
+	virtual BOOL OnPacket(const SOCKADDR_IN* pHost) = 0;
 
 	// Let the CPacketPool class access the private members of this one
 	friend class CPacketPool;

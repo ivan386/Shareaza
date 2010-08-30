@@ -115,10 +115,7 @@ public:
 		const CEDClient* pClient, const CEDNeighbour* pServer = NULL,
 		bool bPartial = false);
 	BOOL				Deflate();
-
-	// Unzip packet if any.
-	//	Returns: FALSE - ok; TRUE - unzip error and packed was released
-	BOOL				InflateOrRelease();
+	BOOL				Inflate();
 
 	virtual	void		ToBuffer(CBuffer* pBuffer) const;
 	virtual	void		ToBufferUDP(CBuffer* pBuffer) const;
@@ -149,28 +146,42 @@ protected:
 public:
 	static CEDPacket* New(BYTE nType, BYTE nProtocol = ED2K_PROTOCOL_EDONKEY)
 	{
-		CEDPacket* pPacket		= (CEDPacket*)POOL.New();
-		pPacket->m_nEdProtocol	= nProtocol;
-		pPacket->m_nType		= nType;
-		return pPacket;
+		if ( CEDPacket* pPacket = (CEDPacket*)POOL.New() )
+		{
+			pPacket->m_nEdProtocol	= nProtocol;
+			pPacket->m_nType		= nType;
+			return pPacket;
+		}
+		return NULL;
 	}
 	
-	static CEDPacket* New(ED2K_TCP_HEADER* pHeader)
+	static CEDPacket* New(const ED2K_TCP_HEADER* pHeader)
 	{
-		CEDPacket* pPacket		= (CEDPacket*)POOL.New();
-		pPacket->m_nEdProtocol	= pHeader->nProtocol;
-		pPacket->m_nType		= pHeader->nType;
-		pPacket->Write( &pHeader[1], pHeader->nLength - 1 );
-		return pPacket;
+		if ( CEDPacket* pPacket = (CEDPacket*)POOL.New() )
+		{
+			pPacket->m_nEdProtocol	= pHeader->nProtocol;
+			pPacket->m_nType		= pHeader->nType;
+			if ( pPacket->Write( &pHeader[1], pHeader->nLength - 1 ) )
+				return pPacket;
+			pPacket->Release();
+		}
+		return NULL;
 	}
 
-	static CEDPacket* New(ED2K_UDP_HEADER* pHeader, DWORD nLength)
+	static CEDPacket* New(const ED2K_UDP_HEADER* pHeader, DWORD nLength)
 	{
-		CEDPacket* pPacket		= (CEDPacket*)POOL.New();
-		pPacket->m_nEdProtocol	= pHeader->nProtocol;
-		pPacket->m_nType		= pHeader->nType;
-		pPacket->Write( &pHeader[1], nLength - sizeof(*pHeader) );
-		return pPacket;
+		if ( CEDPacket* pPacket = (CEDPacket*)POOL.New() )
+		{
+			pPacket->m_nEdProtocol	= pHeader->nProtocol;
+			pPacket->m_nType		= pHeader->nType;
+			if ( pPacket->Write( &pHeader[1], nLength - sizeof(*pHeader) ) &&
+				 pPacket->Inflate() )
+			{
+				return pPacket;
+			}
+			pPacket->Release();
+		}
+		return NULL;
 	}
 
 	inline virtual void Delete()
@@ -179,7 +190,7 @@ public:
 	}
 
 	// Packet handler
-	virtual BOOL OnPacket(SOCKADDR_IN* pHost);
+	virtual BOOL OnPacket(const SOCKADDR_IN* pHost);
 	
 	friend class CEDPacket::CEDPacketPool;
 };

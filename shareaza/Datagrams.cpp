@@ -205,7 +205,7 @@ void CDatagrams::Disconnect()
 //////////////////////////////////////////////////////////////////////
 // CDatagrams send
 
-BOOL CDatagrams::Send(IN_ADDR* pAddress, WORD nPort, CPacket* pPacket, BOOL bRelease, LPVOID pToken, BOOL bAck)
+BOOL CDatagrams::Send(const IN_ADDR* pAddress, WORD nPort, CPacket* pPacket, BOOL bRelease, LPVOID pToken, BOOL bAck)
 {
 	SOCKADDR_IN pHost = {};
 	pHost.sin_family = PF_INET;
@@ -215,7 +215,7 @@ BOOL CDatagrams::Send(IN_ADDR* pAddress, WORD nPort, CPacket* pPacket, BOOL bRel
 	return Send( &pHost, pPacket, bRelease, pToken, bAck );
 }
 
-BOOL CDatagrams::Send(SOCKADDR_IN* pHost, const CBuffer& pOutput)
+BOOL CDatagrams::Send(const SOCKADDR_IN* pHost, const CBuffer& pOutput)
 {
 	ASSERT( pHost != NULL && pOutput.m_pBuffer != NULL );
 
@@ -231,7 +231,7 @@ BOOL CDatagrams::Send(SOCKADDR_IN* pHost, const CBuffer& pOutput)
 	return TRUE;
 }
 
-BOOL CDatagrams::Send(SOCKADDR_IN* pHost, CPacket* pPacket, BOOL bRelease, LPVOID pToken, BOOL bAck)
+BOOL CDatagrams::Send(const SOCKADDR_IN* pHost, CPacket* pPacket, BOOL bRelease, LPVOID pToken, BOOL bAck)
 {
 	ASSERT( pHost != NULL && pPacket != NULL );
 
@@ -653,14 +653,14 @@ BOOL CDatagrams::TryRead()
 //////////////////////////////////////////////////////////////////////
 // CDatagrams datagram handler
 
-BOOL CDatagrams::OnDatagram(SOCKADDR_IN* pHost, BYTE* pBuffer, DWORD nLength)
+BOOL CDatagrams::OnDatagram(const SOCKADDR_IN* pHost, const BYTE* pBuffer, DWORD nLength)
 {
 	BOOL bHandled = FALSE;
 
 	// Detect Gnutella 1 packets
 	if ( nLength >= sizeof(GNUTELLAPACKET) )
 	{
-		GNUTELLAPACKET* pG1UDP = (GNUTELLAPACKET*)pBuffer;
+		const GNUTELLAPACKET* pG1UDP = (const GNUTELLAPACKET*)pBuffer;
 		if ( ( sizeof(GNUTELLAPACKET) + pG1UDP->m_nLength ) == nLength )
 		{
 			if ( CG1Packet* pPacket = CG1Packet::New( pG1UDP ) )
@@ -687,7 +687,7 @@ BOOL CDatagrams::OnDatagram(SOCKADDR_IN* pHost, BYTE* pBuffer, DWORD nLength)
 	// Detect Gnutella 2 packets
 	if ( nLength >= sizeof(SGP_HEADER) )
 	{
-		SGP_HEADER* pSGP = (SGP_HEADER*)pBuffer;
+		const SGP_HEADER* pSGP = (const SGP_HEADER*)pBuffer;
 		if ( ( *(DWORD*)pSGP->szTag & 0x00ffffff ) == ( *(DWORD*)SGP_TAG_2 & 0x00ffffff ) &&
 			pSGP->nPart && ( ! pSGP->nCount || pSGP->nPart <= pSGP->nCount ) )
 		{
@@ -708,7 +708,7 @@ BOOL CDatagrams::OnDatagram(SOCKADDR_IN* pHost, BYTE* pBuffer, DWORD nLength)
 	// Detect ED2K and KAD packets
 	if ( nLength > sizeof(ED2K_UDP_HEADER) )
 	{
-		ED2K_UDP_HEADER* pMULE = (ED2K_UDP_HEADER*)pBuffer;
+		const ED2K_UDP_HEADER* pMULE = (const ED2K_UDP_HEADER*)pBuffer;
 		switch ( pMULE->nProtocol )
 		{
 		case ED2K_PROTOCOL_EDONKEY:
@@ -720,24 +720,21 @@ BOOL CDatagrams::OnDatagram(SOCKADDR_IN* pHost, BYTE* pBuffer, DWORD nLength)
 		case ED2K_PROTOCOL_REVCONNECT_PACKED:
 			if ( CEDPacket* pPacket = CEDPacket::New( pMULE, nLength ) )
 			{
-				if ( ! pPacket->InflateOrRelease() )
+				try
 				{
-					try
-					{
-						m_nInPackets++;
+					m_nInPackets++;
 
-						bHandled = pPacket->OnPacket( pHost );
-					}
-					catch ( CException* pException )
-					{
-						pException->Delete();
-						pPacket->Debug( _T("Malformed packet.") );
-					}
-					pPacket->Release();
-
-					if ( bHandled )
-						return TRUE;
+					bHandled = pPacket->OnPacket( pHost );
 				}
+				catch ( CException* pException )
+				{
+					pException->Delete();
+					pPacket->Debug( _T("Malformed packet.") );
+				}
+				pPacket->Release();
+
+				if ( bHandled )
+					return TRUE;
 			}
 			// TODO: Detect obfuscated eMule packets
 		}
@@ -746,10 +743,8 @@ BOOL CDatagrams::OnDatagram(SOCKADDR_IN* pHost, BYTE* pBuffer, DWORD nLength)
 	// Detect DC++ packets
 	if ( nLength > 2 && pBuffer[ 0 ] == '$' && pBuffer[ nLength - 1 ] == '|' )
 	{
-		if ( CDCPacket* pPacket = CDCPacket::New() )
+		if ( CDCPacket* pPacket = CDCPacket::New( pBuffer, nLength ) )
 		{
-			pPacket->Write( pBuffer, nLength );
-
 			m_nInPackets++;
 
 			bHandled = pPacket->OnPacket( pHost );
@@ -769,7 +764,7 @@ BOOL CDatagrams::OnDatagram(SOCKADDR_IN* pHost, BYTE* pBuffer, DWORD nLength)
 			auto_ptr< CBENode > pNode( new CBENode() );
 			if ( ! pNode.get() )
 				AfxThrowMemoryException();
-			LPBYTE pInput = pBuffer;
+			const BYTE* pInput = pBuffer;
 			DWORD nInput = nLength;
 			pNode->Decode( pInput, nInput, nInput );
 
@@ -790,7 +785,7 @@ BOOL CDatagrams::OnDatagram(SOCKADDR_IN* pHost, BYTE* pBuffer, DWORD nLength)
 //////////////////////////////////////////////////////////////////////
 // CDatagrams SGP receive handler
 
-BOOL CDatagrams::OnReceiveSGP(SOCKADDR_IN* pHost, SGP_HEADER* pHeader, DWORD nLength)
+BOOL CDatagrams::OnReceiveSGP(const SOCKADDR_IN* pHost, const SGP_HEADER* pHeader, DWORD nLength)
 {
 #ifdef DEBUG_UDP
 	theApp.Message( MSG_DEBUG, _T("UDP: Received SGP (#%i) %i of %i from %s"),
@@ -920,9 +915,9 @@ BOOL CDatagrams::OnReceiveSGP(SOCKADDR_IN* pHost, SGP_HEADER* pHeader, DWORD nLe
 }
 
 //////////////////////////////////////////////////////////////////////
-// CDatagrams SGP acknowledgement handler
+// CDatagrams SGP acknowledgment handler
 
-BOOL CDatagrams::OnAcknowledgeSGP(SOCKADDR_IN* pHost, SGP_HEADER* pHeader, DWORD /*nLength*/)
+BOOL CDatagrams::OnAcknowledgeSGP(const SOCKADDR_IN* pHost, const SGP_HEADER* pHeader, DWORD /*nLength*/)
 {
 #ifdef DEBUG_UDP
 	theApp.Message( MSG_DEBUG, _T("UDP: Received SGP ack (#%i) %i from %s"),

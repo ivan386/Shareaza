@@ -42,7 +42,7 @@ static char THIS_FILE[]=__FILE__;
 CDHT DHT;
 
 
-BOOL CDHT::OnPacket(SOCKADDR_IN* pHost, const CBENode* pRoot)
+BOOL CDHT::OnPacket(const SOCKADDR_IN* pHost, const CBENode* pRoot)
 {
 	// TODO: SmartDump( pHost, TRUE, FALSE );
 	theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING, _T("DHT: Recieved BitTorrent packet from %s: %s"),
@@ -181,7 +181,7 @@ BOOL CDHT::OnPacket(SOCKADDR_IN* pHost, const CBENode* pRoot)
 	return FALSE;
 }
 
-/*BOOL CDHT::Ping(SOCKADDR_IN* pHost)
+/*BOOL CDHT::Ping(const SOCKADDR_IN* pHost)
 {
 	CBENode pPing;
 	CBENode* pPingData = pPing.Add( "a" );
@@ -198,7 +198,7 @@ BOOL CDHT::OnPacket(SOCKADDR_IN* pHost, const CBENode* pRoot)
 	return Datagrams.Send( pHost, pOutput );
 }*/
 
-BOOL CDHT::Pong(SOCKADDR_IN* pHost, LPCSTR szTransID, size_t nTransIDLength)
+BOOL CDHT::Pong(const SOCKADDR_IN* pHost, LPCSTR szTransID, size_t nTransIDLength)
 {
 	CBENode pPong;
 	CBENode* pPongData = pPong.Add( "r" );
@@ -214,7 +214,7 @@ BOOL CDHT::Pong(SOCKADDR_IN* pHost, LPCSTR szTransID, size_t nTransIDLength)
 	return Datagrams.Send( pHost, pOutput );
 }
 
-/*BOOL CDHT::GetPeers(SOCKADDR_IN* pHost, const Hashes::BtGuid& oNodeGUID, const Hashes::BtHash& oGUID)
+/*BOOL CDHT::GetPeers(const SOCKADDR_IN* pHost, const Hashes::BtGuid& oNodeGUID, const Hashes::BtHash& oGUID)
 {
 	CBENode pGetPeers;
 	CBENode* pGetPeersData = pGetPeers.Add( "a" );

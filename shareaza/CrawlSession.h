@@ -1,7 +1,7 @@
 //
 // CrawlSession.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -18,9 +18,6 @@
 // along with Shareaza; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-
-#if !defined(AFX_CRAWLSESSION_H__262E4F3E_1C28_4318_AE74_921A8392BFD9__INCLUDED_)
-#define AFX_CRAWLSESSION_H__262E4F3E_1C28_4318_AE74_921A8392BFD9__INCLUDED_
 
 #pragma once
 
@@ -49,9 +46,9 @@ public:
 	int			GetLeafCount();
 public:
 	void		OnRun();
-	void		OnCrawl(SOCKADDR_IN* pHost, CG2Packet* pPacket);
+	void		OnCrawl(const SOCKADDR_IN* pHost, CG2Packet* pPacket);
 protected:
-	CCrawlNode*	Find(IN_ADDR* pAddress, BOOL bCreate);
+	CCrawlNode*	Find(const IN_ADDR* pAddress, BOOL bCreate);
 
 	friend class CCrawlNode;
 };
@@ -91,8 +88,4 @@ protected:
 	enum { parseSelf, parseHub, parseLeaf };
 };
 
-
 extern CCrawlSession CrawlSession;
-
-
-#endif // !defined(AFX_CRAWLSESSION_H__262E4F3E_1C28_4318_AE74_921A8392BFD9__INCLUDED_)

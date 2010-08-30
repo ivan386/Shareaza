@@ -47,9 +47,15 @@ protected:
 
 // Allocation
 public:
-	inline static CDCPacket* New()
+	inline static CDCPacket* New(const BYTE* pBuffer = NULL, DWORD nLength = 0)
 	{
-		return (CDCPacket*)POOL.New();
+		if ( CDCPacket* pPacket = (CDCPacket*)POOL.New() )
+		{
+			if ( pBuffer == NULL || pPacket->Write( pBuffer, nLength ) )
+				return pPacket;
+			pPacket->Release();
+		}
+		return NULL;
 	}
 
 	inline virtual void Delete()
@@ -58,10 +64,10 @@ public:
 	}
 
 	// Packet handler
-	virtual BOOL OnPacket(SOCKADDR_IN* pHost);
+	virtual BOOL OnPacket(const SOCKADDR_IN* pHost);
 
 protected:
-	BOOL OnCommonHit(SOCKADDR_IN* pHost);
+	BOOL OnCommonHit(const SOCKADDR_IN* pHost);
 
 	friend class CDCPacket::CDCPacketPool;
 };

@@ -368,7 +368,7 @@ CDiscoveryService* CDiscoveryServices::GetByAddress(LPCTSTR pszAddress) const
 	return NULL;
 }
 
-CDiscoveryService* CDiscoveryServices::GetByAddress( IN_ADDR* pAddress, WORD nPort, CDiscoveryService::SubType nSubType )
+CDiscoveryService* CDiscoveryServices::GetByAddress(const IN_ADDR* pAddress, WORD nPort, CDiscoveryService::SubType nSubType )
 {
 	for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
 	{

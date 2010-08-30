@@ -644,7 +644,7 @@ CDCPacket* CQuerySearch::ToDCPacket() const
 //////////////////////////////////////////////////////////////////////
 // CQuerySearch from packet root
 
-CQuerySearchPtr CQuerySearch::FromPacket(CPacket* pPacket, SOCKADDR_IN* pEndpoint)
+CQuerySearchPtr CQuerySearch::FromPacket(CPacket* pPacket, const SOCKADDR_IN* pEndpoint)
 {
 	CQuerySearchPtr pSearch = new CQuerySearch( FALSE );
 
@@ -941,7 +941,7 @@ void CQuerySearch::ReadExtension(CG1Packet* pPacket)
 //////////////////////////////////////////////////////////////////////
 // CQuerySearch from G2 packet
 
-BOOL CQuerySearch::ReadG2Packet(CG2Packet* pPacket, SOCKADDR_IN* pEndpoint)
+BOOL CQuerySearch::ReadG2Packet(CG2Packet* pPacket, const SOCKADDR_IN* pEndpoint)
 {
 	if ( ! pPacket->m_bCompound )
 		return FALSE;

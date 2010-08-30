@@ -138,7 +138,7 @@ private:
 	BOOL					ReadG1Packet(CG1Packet* pPacket);
 	void					ReadGGEP(CG1Packet* pPacket);
 	void					ReadExtension(CG1Packet* pPacket);
-	BOOL					ReadG2Packet(CG2Packet* pPacket, SOCKADDR_IN* pEndpoint = NULL);
+	BOOL					ReadG2Packet(CG2Packet* pPacket, const SOCKADDR_IN* pEndpoint = NULL);
 
 // Operations
 public:
@@ -157,7 +157,7 @@ private:
 
 // Utilities
 public:
-	static CQuerySearchPtr	FromPacket(CPacket* pPacket, SOCKADDR_IN* pEndpoint = NULL);
+	static CQuerySearchPtr	FromPacket(CPacket* pPacket, const SOCKADDR_IN* pEndpoint = NULL);
 	static CSearchWnd*		OpenWindow(CQuerySearch* pSearch);
 	static BOOL				WordMatch(LPCTSTR pszString, LPCTSTR pszFind, bool* bReject=NULL);
 	static BOOL				NumberMatch(const CString& strValue, const CString& strRange);

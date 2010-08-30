@@ -134,7 +134,7 @@ public:
 	// Takes a Gnutella packet header structure
 	// Gets a new packet from the pool and fills it with values from the header structure
 	// Returns a pointer to the prepared packet in the pool
-	inline static CG1Packet* New(GNUTELLAPACKET* pSource)
+	inline static CG1Packet* New(const GNUTELLAPACKET* pSource)
 	{
 		// Get a blank packet from the pool
 		CG1Packet* pPacket = (CG1Packet*)POOL.New();
@@ -165,12 +165,12 @@ public:
 	}
 
 	// Packet handler
-	virtual BOOL OnPacket(SOCKADDR_IN* pHost);
+	virtual BOOL OnPacket(const SOCKADDR_IN* pHost);
 
 protected:
-	BOOL OnPing(SOCKADDR_IN* pHost);
-	BOOL OnPong(SOCKADDR_IN* pHost);
-	BOOL OnVendor(SOCKADDR_IN* pHost);
+	BOOL OnPing(const SOCKADDR_IN* pHost);
+	BOOL OnPong(const SOCKADDR_IN* pHost);
+	BOOL OnVendor(const SOCKADDR_IN* pHost);
 
 	// Let the nested CG1PacketPool class access the private members of this CG1Packet class
 	friend class CG1Packet::CG1PacketPool;

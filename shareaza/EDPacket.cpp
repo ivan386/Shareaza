@@ -316,8 +316,10 @@ CEDPacket* CEDPacket::ReadBuffer(CBuffer* pBuffer)
 	if ( pBuffer->m_nLength - sizeof(*pHeader) + 1 < pHeader->nLength ) return NULL;
 	CEDPacket* pPacket = CEDPacket::New( pHeader );
 	pBuffer->Remove( sizeof(*pHeader) + pHeader->nLength - 1 );
-	if ( pPacket->InflateOrRelease() ) return NULL;
-	return pPacket;
+	if ( pPacket->Inflate() )
+		return pPacket;	
+	pPacket->Release();
+	return NULL;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -326,7 +328,8 @@ CEDPacket* CEDPacket::ReadBuffer(CBuffer* pBuffer)
 BOOL CEDPacket::Deflate()
 {
 	if ( m_nEdProtocol != ED2K_PROTOCOL_EDONKEY &&
-		 m_nEdProtocol != ED2K_PROTOCOL_EMULE ) return FALSE;
+		 m_nEdProtocol != ED2K_PROTOCOL_EMULE )
+		 return FALSE;
 
 	DWORD nOutput = 0;
 	auto_array< BYTE > pOutput( CZLib::Compress( m_pBuffer, m_nLength, &nOutput ) );
@@ -339,57 +342,45 @@ BOOL CEDPacket::Deflate()
 
 	m_nEdProtocol = ED2K_PROTOCOL_EMULE_PACKED;
 
-	memcpy( m_pBuffer, pOutput.get(), nOutput );
+	delete [] m_pBuffer;
+	m_pBuffer = pOutput.get();
 	m_nLength = nOutput;
+	m_nBuffer = nOutput;
 
 	return TRUE;
 }
 
-BOOL CEDPacket::InflateOrRelease()
+BOOL CEDPacket::Inflate()
 {
 	if ( m_nEdProtocol != ED2K_PROTOCOL_EMULE_PACKED &&
 		 m_nEdProtocol != ED2K_PROTOCOL_KAD_PACKED &&
 		 m_nEdProtocol != ED2K_PROTOCOL_REVCONNECT_PACKED )
-		return FALSE;
+		return TRUE;
 
 	DWORD nOutput = 0;
 	auto_array< BYTE > pOutput( CZLib::Decompress( m_pBuffer, m_nLength, &nOutput ) );
-
-	if ( pOutput.get() != NULL )
-	{
-		switch ( m_nEdProtocol )
-		{
-		case ED2K_PROTOCOL_EMULE_PACKED:
-			m_nEdProtocol = ED2K_PROTOCOL_EMULE;
-			break;
-		case ED2K_PROTOCOL_KAD_PACKED:
-			m_nEdProtocol = ED2K_PROTOCOL_KAD;
-			break;
-		case ED2K_PROTOCOL_REVCONNECT_PACKED:
-			m_nEdProtocol = ED2K_PROTOCOL_REVCONNECT;
-			break;
-		}
-
-		if ( m_nBuffer >= nOutput )
-		{
-			CopyMemory( m_pBuffer, pOutput.get(), nOutput );
-			m_nLength = nOutput;
-		}
-		else
-		{
-			delete [] m_pBuffer;
-			m_pBuffer = pOutput.release();
-			m_nLength = nOutput;
-			m_nBuffer = nOutput;
-		}
-
+	if ( ! pOutput.get() )
 		return FALSE;
-	}
-	else
+
+	switch ( m_nEdProtocol )
 	{
-		Release();
-		return TRUE;
+	case ED2K_PROTOCOL_EMULE_PACKED:
+		m_nEdProtocol = ED2K_PROTOCOL_EMULE;
+		break;
+	case ED2K_PROTOCOL_KAD_PACKED:
+		m_nEdProtocol = ED2K_PROTOCOL_KAD;
+		break;
+	case ED2K_PROTOCOL_REVCONNECT_PACKED:
+		m_nEdProtocol = ED2K_PROTOCOL_REVCONNECT;
+		break;
 	}
+
+	delete [] m_pBuffer;
+	m_pBuffer = pOutput.release();
+	m_nLength = nOutput;
+	m_nBuffer = nOutput;
+
+	return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -848,7 +839,7 @@ BOOL CEDTag::Read(CFile* pFile)
 	return TRUE;
 }
 
-BOOL CEDPacket::OnPacket(SOCKADDR_IN* pHost)
+BOOL CEDPacket::OnPacket(const SOCKADDR_IN* pHost)
 {
 	switch ( m_nEdProtocol )
 	{

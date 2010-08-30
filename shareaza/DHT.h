@@ -1,7 +1,7 @@
 //
 // DHT.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -27,14 +27,14 @@ class CBENode;
 class CDHT
 {
 public:
-	BOOL OnPacket(SOCKADDR_IN* pHost, const CBENode* pRoot);
+	BOOL OnPacket(const SOCKADDR_IN* pHost, const CBENode* pRoot);
 
 protected:
 	CCriticalSection m_pSection;
 
-	//BOOL Ping(SOCKADDR_IN* pHost);
-	BOOL Pong(SOCKADDR_IN* pHost, LPCSTR szTransID, size_t nTransIDLength);
-	//BOOL GetPeers(SOCKADDR_IN* pHost, const Hashes::BtGuid& oNodeGUID, const Hashes::BtHash& oGUID);
+	//BOOL Ping(const SOCKADDR_IN* pHost);
+	BOOL Pong(const SOCKADDR_IN* pHost, LPCSTR szTransID, size_t nTransIDLength);
+	//BOOL GetPeers(const SOCKADDR_IN* pHost, const Hashes::BtGuid& oNodeGUID, const Hashes::BtHash& oGUID);
 };
 
 extern CDHT DHT;

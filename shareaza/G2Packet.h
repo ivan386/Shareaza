@@ -1,7 +1,7 @@
 //
 // G2Packet.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -288,23 +288,23 @@ public:
 	}
 
 	// Packet handler
-	virtual BOOL OnPacket(SOCKADDR_IN* pHost);
+	virtual BOOL OnPacket(const SOCKADDR_IN* pHost);
 
 protected:
-	BOOL OnPing(SOCKADDR_IN* pHost);
-	BOOL OnPong(SOCKADDR_IN* pHost);
-	BOOL OnQuery(SOCKADDR_IN* pHost);
-	BOOL OnQueryAck(SOCKADDR_IN* pHost);
-	BOOL OnCommonHit(SOCKADDR_IN* pHost);
-	BOOL OnQueryKeyRequest(SOCKADDR_IN* pHost);
-	BOOL OnQueryKeyAnswer(SOCKADDR_IN* pHost);
-	BOOL OnPush(SOCKADDR_IN* pHost);
-	BOOL OnCrawlRequest(SOCKADDR_IN* pHost);
-	BOOL OnCrawlAnswer(SOCKADDR_IN* pHost);
-	BOOL OnDiscovery(SOCKADDR_IN* pHost);
-	BOOL OnKHL(SOCKADDR_IN* pHost);
-	BOOL OnKHLA(SOCKADDR_IN* pHost);
-	BOOL OnKHLR(SOCKADDR_IN* pHost);
+	BOOL OnPing(const SOCKADDR_IN* pHost);
+	BOOL OnPong(const SOCKADDR_IN* pHost);
+	BOOL OnQuery(const SOCKADDR_IN* pHost);
+	BOOL OnQueryAck(const SOCKADDR_IN* pHost);
+	BOOL OnCommonHit(const SOCKADDR_IN* pHost);
+	BOOL OnQueryKeyRequest(const SOCKADDR_IN* pHost);
+	BOOL OnQueryKeyAnswer(const SOCKADDR_IN* pHost);
+	BOOL OnPush(const SOCKADDR_IN* pHost);
+	BOOL OnCrawlRequest(const SOCKADDR_IN* pHost);
+	BOOL OnCrawlAnswer(const SOCKADDR_IN* pHost);
+	BOOL OnDiscovery(const SOCKADDR_IN* pHost);
+	BOOL OnKHL(const SOCKADDR_IN* pHost);
+	BOOL OnKHLA(const SOCKADDR_IN* pHost);
+	BOOL OnKHLR(const SOCKADDR_IN* pHost);
 
 	friend class CG2Packet::CG2PacketPool;
 };

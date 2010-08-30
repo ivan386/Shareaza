@@ -51,7 +51,7 @@ void CDCPacket::ToBuffer(CBuffer* pBuffer) const
 	pBuffer->Add( m_pBuffer, m_nLength );
 }
 
-BOOL CDCPacket::OnPacket(SOCKADDR_IN* pHost)
+BOOL CDCPacket::OnPacket(const SOCKADDR_IN* pHost)
 {
 	SmartDump( pHost, TRUE, FALSE );
 
@@ -69,7 +69,7 @@ BOOL CDCPacket::OnPacket(SOCKADDR_IN* pHost)
 	return FALSE;
 }
 
-BOOL CDCPacket::OnCommonHit(SOCKADDR_IN* /* pHost */)
+BOOL CDCPacket::OnCommonHit(const SOCKADDR_IN* /* pHost */)
 {
 	// Search result
 	// $SR Nick FileName<0x05>FileSize FreeSlots/TotalSlots<0x05>HubName (HubIP:HubPort)|

@@ -99,7 +99,7 @@ void CBENode::Clear()
 //////////////////////////////////////////////////////////////////////
 // CBENode add a child node
 
-CBENode* CBENode::Add(const LPBYTE pKey, size_t nKey)
+CBENode* CBENode::Add(LPCBYTE pKey, size_t nKey)
 {
 	switch ( m_nType )
 	{
@@ -426,7 +426,7 @@ CBENode* CBENode::Decode(const CBuffer* pBuffer, DWORD *pnReaden)
 	try
 	{
 		auto_ptr< CBENode > pNode( new CBENode() );
-		LPBYTE pInput	= pBuffer->m_pBuffer;
+		LPCBYTE pInput	= pBuffer->m_pBuffer;
 		DWORD nInput	= pBuffer->m_nLength;
 
 		if ( nInput > 1 && pInput[0] == '\r' && pInput[1] == '\n' )
@@ -451,7 +451,7 @@ CBENode* CBENode::Decode(const CBuffer* pBuffer, DWORD *pnReaden)
 	}
 }
 
-void CBENode::Decode(LPBYTE& pInput, DWORD& nInput, DWORD nSize)
+void CBENode::Decode(LPCBYTE& pInput, DWORD& nInput, DWORD nSize)
 {
 	ASSERT( m_nType == beNull );
 
@@ -475,10 +475,10 @@ void CBENode::Decode(LPBYTE& pInput, DWORD& nInput, DWORD nSize)
 
 		if ( nSeek >= 40 ) AfxThrowUserException();
 
-		pInput[nSeek] = 0;
-		if ( sscanf_s( (LPCSTR)pInput, "%I64i", &m_nValue ) != 1 )
+		char szFormat[ 8 ];
+		sprintf_s( szFormat, "%%%uI64u", nSeek );
+		if ( sscanf_s( (LPCSTR)pInput, szFormat, &m_nValue ) != 1 )
 			AfxThrowUserException();
-		pInput[nSeek] = 'e';
 
 		INC( nSeek + 1 );
 		m_nType = beInt;
@@ -515,7 +515,7 @@ void CBENode::Decode(LPBYTE& pInput, DWORD& nInput, DWORD nSize)
 
 			if ( nLen )
 			{
-				LPBYTE pKey = pInput;
+				LPCBYTE pKey = pInput;
 				INC( nLen );
 				Add( pKey, nLen )->Decode( pInput, nInput, nSize );
 			}
@@ -541,7 +541,7 @@ void CBENode::Decode(LPBYTE& pInput, DWORD& nInput, DWORD nSize)
 	m_nSize = nSize - nInput - m_nPosition;
 }
 
-int CBENode::DecodeLen(LPBYTE& pInput, DWORD& nInput)
+int CBENode::DecodeLen(LPCBYTE& pInput, DWORD& nInput)
 {
 	DWORD nSeek = 1;
 	for ( ; nSeek < 32 ; nSeek++ )
@@ -556,10 +556,10 @@ int CBENode::DecodeLen(LPBYTE& pInput, DWORD& nInput)
 		AfxThrowUserException();
 	int nLen = 0;
 
-	pInput[ nSeek ] = 0;
-	if ( sscanf_s( (LPCSTR)pInput, "%i", &nLen ) != 1 )
+	char szFormat[ 8 ];
+	sprintf_s( szFormat, "%%%ui", nSeek );
+	if ( sscanf_s( (LPCSTR)pInput, szFormat, &nLen ) != 1 )
 		AfxThrowUserException();
-	pInput[ nSeek ] = ':';
 	INC( nSeek + 1 );
 
 	if ( nInput < (DWORD)nLen )

@@ -1,7 +1,7 @@
 //
 // EDClients.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -207,7 +207,7 @@ CEDClient* CEDClients::Connect(DWORD nClientID, WORD nClientPort, IN_ADDR* pServ
 //////////////////////////////////////////////////////////////////////
 // CEDClients find by client ID and/or GUID
 
-CEDClient* CEDClients::GetByIP(IN_ADDR* pAddress) const
+CEDClient* CEDClients::GetByIP(const IN_ADDR* pAddress) const
 {
 	CQuickLock oLock( m_pSection );
 
@@ -413,7 +413,7 @@ BOOL CEDClients::OnAccept(CConnection* pConnection)
 //////////////////////////////////////////////////////////////////////
 // CEDClients process UDP Packets
 
-BOOL CEDClients::OnPacket(SOCKADDR_IN* pHost, CEDPacket* pPacket)
+BOOL CEDClients::OnPacket(const SOCKADDR_IN* pHost, CEDPacket* pPacket)
 {
 	pPacket->SmartDump( pHost, TRUE, FALSE );
 
@@ -472,20 +472,21 @@ BOOL CEDClients::OnPacket(SOCKADDR_IN* pHost, CEDPacket* pPacket)
 	case ED2K_S2CG_FOUNDSOURCES:
 		{
 		// Correct port value. (UDP port is TCP port + 4)
-		pHost->sin_port = htons( ntohs( pHost->sin_port ) - 4 );
+		SOCKADDR_IN pAddress = *pHost;
+		pAddress.sin_port = htons( ntohs( pHost->sin_port ) - 4 );
 
 		CQuickLock oLock( HostCache.eDonkey.m_pSection );
 
 		// Check server details in host cache
 		DWORD nServerFlags = Settings.eDonkey.DefaultServerFlags;
-		CHostCacheHost* pServer = HostCache.eDonkey.Find( &pHost->sin_addr );
+		CHostCacheHost* pServer = HostCache.eDonkey.Find( &pAddress.sin_addr );
 		if ( pServer && pServer->m_nUDPFlags )
 		{
 			nServerFlags = pServer->m_nUDPFlags;
 		}
 
 		// Decode packet and create hits
-		if ( CQueryHit* pHits = CQueryHit::FromEDPacket( pPacket, pHost, nServerFlags ) )
+		if ( CQueryHit* pHits = CQueryHit::FromEDPacket( pPacket, &pAddress, nServerFlags ) )
 		{
 			if ( pPacket->m_nType == ED2K_S2CG_SEARCHRESULT )
 				Network.OnQueryHits( pHits );
@@ -505,7 +506,7 @@ BOOL CEDClients::OnPacket(SOCKADDR_IN* pHost, CEDPacket* pPacket)
 }
 
 // Server status packet received
-void CEDClients::OnServerStatus(SOCKADDR_IN* /*pHost*/, CEDPacket* pPacket)
+void CEDClients::OnServerStatus(const SOCKADDR_IN* /*pHost*/, CEDPacket* pPacket)
 {
 	DWORD nLen, nKey;
 	DWORD nUsers = 0, nFiles = 0, nMaxUsers = 0, nFileLimit = 1000, nUDPFlags = 0;

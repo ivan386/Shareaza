@@ -1,7 +1,7 @@
 //
 // BTPacket.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -73,7 +73,7 @@ public:
 	}
 
 	// Packet handler
-	virtual BOOL OnPacket(SOCKADDR_IN* /*pHost*/) { return FALSE; } // Unused
+	virtual BOOL OnPacket(const SOCKADDR_IN* /*pHost*/) { return FALSE; } // Unused
 
 	friend class CBTPacket::CBTPacketPool;
 };
