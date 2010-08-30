@@ -156,6 +156,8 @@ CNeighbour::CNeighbour(PROTOCOLID nProtocol, CNeighbour* pBase)
 	pBase->m_pZOutput = NULL;
 
 	Neighbours.Add( this );
+
+	m_bAutoDelete = TRUE;
 }
 
 // Delete this CNeighbour object

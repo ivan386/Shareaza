@@ -100,7 +100,6 @@ void CConnection::AttachTo(CConnection* pConnection)
 	if ( m_nProtocol <= PROTOCOL_NULL && pConnection->m_nProtocol > PROTOCOL_NULL )
 		m_nProtocol		= pConnection->m_nProtocol;
 	m_nDelayCloseReason	= pConnection->m_nDelayCloseReason;
-	m_bAutoDelete		= pConnection->m_bAutoDelete;
 
 	// Record the current time in the input and output TCP bandwidth meters
 	m_mInput.tLast = m_mOutput.tLast = GetTickCount();
