@@ -417,7 +417,7 @@ BOOL CDCNeighbour::OnSupport()
 	return TRUE;
 }
 
-BOOL CDCNeighbour::OnChat(const std::string& strMessage)
+BOOL CDCNeighbour::OnChat(const std::string& /*strMessage*/)
 {
 	m_nInputCount++;
 	m_tLastPacket = GetTickCount();

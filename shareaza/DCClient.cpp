@@ -258,7 +258,7 @@ BOOL CDCClient::OnCommand(const std::string& strCommand, const std::string& strP
 	return TRUE;
 }
 
-BOOL CDCClient::OnChat(const std::string& strMessage)
+BOOL CDCClient::OnChat(const std::string& /*strMessage*/)
 {
 	return TRUE;
 }
@@ -266,6 +266,8 @@ BOOL CDCClient::OnChat(const std::string& strMessage)
 BOOL CDCClient::OnGet(const std::string& strType, const std::string& strFilename, QWORD nOffset, QWORD nLength, const std::string& strOptions)
 {
 	ClearRequest();
+
+	BOOL bZip = ( strOptions.find("ZL1") != std::string::npos );
 
 	if ( strType == "tthl" )
 	{
@@ -298,10 +300,8 @@ BOOL CDCClient::OnGet(const std::string& strType, const std::string& strFilename
 	{
 		if ( strFilename == "files.xml" || strFilename == "files.xml.bz2" )
 		{
-			if ( RequestFileList( strFilename, nOffset, nLength ) )
-			{
+			if ( RequestFileList( TRUE, bZip, strFilename, nOffset, nLength ) )
 				return TRUE;
-			}
 		}
 		else if ( strFilename.substr( 0, 4 ) == "TTH/" )
 		{
@@ -327,7 +327,8 @@ BOOL CDCClient::OnGet(const std::string& strType, const std::string& strFilename
 	}
 	else if ( strType == "list" )
 	{
-		// Library listing
+		if ( RequestFileList( FALSE, bZip, strFilename, nOffset, nLength ) )
+			return TRUE;
 	}
 	else
 	{
@@ -345,32 +346,48 @@ BOOL CDCClient::OnGet(const std::string& strType, const std::string& strFilename
 	return TRUE;
 }
 
-BOOL CDCClient::RequestFileList(const std::string& strFilename, QWORD nOffset, QWORD nLength)
+BOOL CDCClient::RequestFileList(BOOL bFile, BOOL bZip, const std::string& strFilename, QWORD nOffset, QWORD nLength)
 {
-	m_sName = strFilename.c_str();
+	BOOL bBZip = bFile && ( strFilename == "files.xml.bz2" );
+	m_sName = bFile ? "/" : strFilename.c_str();
 
 	// Create library file list
 	CBuffer pXML;
-	LibraryToFileList( pXML );
+	LibraryToFileList( m_sName, pXML );
 
-	// BZip it
-	if ( strFilename == "files.xml.bz2" )
+	// TODO: Implement partial request of file list
+	nOffset, nLength;
+
+	m_nOffset = 0;
+	m_nLength = pXML.m_nLength;
+
+	if ( bBZip )
 	{
+		// BZip it
 		if ( ! pXML.BZip() )
+		{
+			// Out of memory
+			return FALSE;
+		}
+		bZip = FALSE;
+		m_nLength = pXML.m_nLength;
+	}
+
+	if ( bZip )
+	{
+		// Zip it
+		if ( ! pXML.Deflate() )
 		{
 			// Out of memory
 			return FALSE;
 		}
 	}
 
-	// TODO: Implement partial request of file list
-	nOffset, nLength;
-	m_nOffset = 0;
-	m_nLength = pXML.m_nLength;
-
 	CString sAnswer;
-	sAnswer.Format( _T("$ADCSND file %hs %I64u %I64u|"),
-		strFilename.c_str(), m_nOffset, m_nLength );
+	sAnswer.Format( _T("$ADCSND %hs %hs %I64u %I64u%hs|"),
+		( bFile ? "file" : "list" ), strFilename.c_str(),
+		m_nOffset, m_nLength,
+		( bZip ? " ZL1" : "") );
 	Write( sAnswer );
 	
 	LogOutgoing();
@@ -635,7 +652,7 @@ BOOL CDCClient::OnKey()
 {
 	if ( m_bExtended )
 	{
-		Write( _P("$Supports MiniSlots XmlBZList ADCGet TTHL TTHF |") );
+		Write( _P("$Supports MiniSlots XmlBZList ADCGet TTHL TTHF ZLIG |") );
 	}
 
 	if ( m_bDownload )
@@ -652,19 +669,28 @@ BOOL CDCClient::OnKey()
 	return TRUE;
 }
 
-void CDCClient::LibraryToFileList(CBuffer& pXML)
+void CDCClient::LibraryToFileList(const CString& strRoot, CBuffer& pXML)
 {
 	CSingleLock oLock( &Library.m_pSection, TRUE );
 			
 	CString strFileListing;
 	strFileListing.Format( _T("<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>\r\n")
-		_T("<FileListing Version=\"1\" CID=\"%s\" Base=\"/\" Generator=\"%s\">\r\n"),
-		_T("SKCB4ZF4PZUDF7RKQ5LX6SVAARQER7QEVELZ2TY"), theApp.m_sSmartAgent );
+		_T("<FileListing Version=\"1\" Base=\"%s\" Generator=\"%s\">\r\n"),
+		strRoot, theApp.m_sSmartAgent );
 	pXML.Print( strFileListing, CP_UTF8 );
 
-	for ( POSITION pos = LibraryFolders.GetFolderIterator() ; pos ; )
+	if ( strRoot == _T("/") )
 	{
-		FolderToFileList( LibraryFolders.GetNextFolder( pos ), pXML );
+		// All folders
+		for ( POSITION pos = LibraryFolders.GetFolderIterator() ; pos ; )
+		{
+			FolderToFileList( LibraryFolders.GetNextFolder( pos ), pXML );
+		}
+	}
+	else if ( CLibraryFolder* pFolder = LibraryFolders.GetFolderByName( strRoot ) )
+	{
+		// Specified folder
+		FolderToFileList( pFolder, pXML );
 	}
 
 	pXML.Add( _P("</FileListing>\r\n") );

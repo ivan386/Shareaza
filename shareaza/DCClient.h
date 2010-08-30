@@ -47,12 +47,12 @@ protected:
 
 	BOOL			OnGet(const std::string& strType, const std::string& strFilename, QWORD nOffset, QWORD nLength, const std::string& strOptions);
 
-	BOOL			RequestFileList(const std::string& strFilename, QWORD nOffset, QWORD nLength);
+	BOOL			RequestFileList(BOOL bFile, BOOL bZip, const std::string& strFilename, QWORD nOffset, QWORD nLength);
 	BOOL			RequestTigerTree(const std::string& strFilename, QWORD nOffset, QWORD nLength, CLibraryFile* pFile);
 	BOOL			RequestFile(const std::string& strFilename, QWORD nOffset, QWORD nLength, CLibraryFile* pFile);
 	BOOL			SendFile(const std::string& strFilename);
 
-	void			LibraryToFileList(CBuffer& pXML);
+	void			LibraryToFileList(const CString& strRoot, CBuffer& pXML);
 	void			FolderToFileList(CLibraryFolder* pFolder, CBuffer& pXML);
 	void			FileToFileList(CLibraryFile* pFile, CBuffer& pXML);
 };

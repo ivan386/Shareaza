@@ -128,7 +128,7 @@ CLibraryFolder* CLibraryFolders::GetFolderByName(LPCTSTR pszName) const
 	ToLower( strName );
 
 	CString strNextName;
-	int nPos = strName.Find( _T('\\') );
+	int nPos = strName.FindOneOf( _T("\\/") );
 	if ( nPos != -1 )
 	{
 		strNextName = strName.Mid( nPos + 1 );
