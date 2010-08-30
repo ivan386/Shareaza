@@ -508,23 +508,22 @@ BOOL CBuffer::Deflate(BOOL bIfSmaller)
 {
 	// If the caller requested we check for small buffers, and this one contains less than 45 bytes, return false
 	if ( bIfSmaller && m_nLength < 45 )
-		return FALSE; // This buffer is too small for compression to work
+		return FALSE;
 
-	// Compress this buffer
-	DWORD nCompress = 0; // Compress will write the size of the buffer it allocates and returns in this variable
-	auto_array< BYTE > pCompress( CZLib::Compress( m_pBuffer, static_cast< DWORD >( m_nLength ), &nCompress ) );
-			// Returns a buffer we must free
-	if ( !pCompress.get() )
-		return FALSE; // Compress had an error
+	DWORD nCompress = 0;
+	BYTE* pCompress = CZLib::Compress2( m_pBuffer, m_nLength, &nCompress );
+	if ( ! pCompress )
+		return FALSE;
 
 	// If compressing the data actually made it bigger, and we were told to watch for this happening
 	if ( bIfSmaller && nCompress >= m_nLength )
 		return FALSE;
 
-	// Move the compressed data from the buffer Compress returned to this one
-	m_nLength = 0;                     // Record that there is no memory stored in this buffer
-	Add( pCompress.get(), nCompress ); // Copy the compressed data into this buffer
-	return TRUE;                       // Report success
+	if ( m_pBuffer ) free( m_pBuffer );
+	m_pBuffer = pCompress;
+	m_nBuffer = m_nLength = nCompress;
+
+	return TRUE;
 }
 
 // Decompress the data in this buffer in place
@@ -534,16 +533,16 @@ BOOL CBuffer::Deflate(BOOL bIfSmaller)
 // be decompressed, existing contents will be replaced by the decompression.
 BOOL CBuffer::Inflate()
 {
-	// The bytes in this buffer are compressed, decompress them
-	DWORD nCompress = 0; // Decompress will write the size of the buffer it allocates and returns in this variable
-	auto_array< BYTE > pCompress( CZLib::Decompress( m_pBuffer, m_nLength, &nCompress ) );
-	if ( !pCompress.get() )
-		return FALSE; // Decompress had an error
+	DWORD nCompress = 0;
+	BYTE* pCompress = CZLib::Decompress2( m_pBuffer, m_nLength, &nCompress );
+	if ( ! pCompress )
+		return FALSE;
 
-	// Move the decompressed data from the buffer Decompress returned to this one
-	m_nLength = 0;                     // Record that there is no memory stored in this buffer
-	Add( pCompress.get(), nCompress ); // Copy the decompressed data into this buffer
-	return TRUE;                       // Report success
+	if ( m_pBuffer ) free( m_pBuffer );
+	m_pBuffer = pCompress;
+	m_nBuffer = m_nLength = nCompress;
+
+	return TRUE;
 }
 
 // If the contents of this buffer are between headers and compressed with gzip, this method can remove all that

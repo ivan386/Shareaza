@@ -93,10 +93,6 @@ public:
 	// String utility, not at all related to the packet
 	virtual int GetStringLenUTF8(LPCTSTR pszString) const; // Takes a string, and determines how long it would be as ASCII text converted UTF8
 
-	// Data compression
-	auto_array< BYTE > ReadZLib(DWORD nLength, DWORD* pnOutput);         // Read compressed data from the packet, decompress it, and return it
-	void   WriteZLib(LPCVOID pData, DWORD nLength);                      // Compress the given data and write it into the packet
-
 	// Insert data into the packet
 	BYTE* WriteGetPointer(DWORD nLength, DWORD nOffset = 0xFFFFFFFF); // Makes room at the given spot, and returns a pointer to it
 

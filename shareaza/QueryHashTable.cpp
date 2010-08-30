@@ -1,7 +1,7 @@
 //
 // QueryHashTable.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -591,7 +591,14 @@ bool CQueryHashTable::PatchToOldShareaza(const CQueryHashTable* pTarget,
 			}
 		}
 
-		pPatch->WriteZLib( pBuffer, nCount / 2 );
+		DWORD nOutput = 0;
+		BYTE* pOutput = CZLib::Compress2( pBuffer, nCount / 2, &nOutput );
+		if ( pOutput )
+		{
+			pPatch->Write( pOutput, nOutput );
+			free( pOutput );
+		}
+
 		pNeighbour->Send( pPatch );
 	}
 
