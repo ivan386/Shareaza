@@ -1,7 +1,7 @@
 //
 // Handshakes.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -146,24 +146,6 @@ BOOL CHandshakes::Listen()
 		}
 	}
 
-	// If our record of our IP address on the Internet in the network object is zeroed
-	if ( Network.m_pHost.sin_addr.S_un.S_addr == 0 )
-	{
-		// Ask the socket what it thinks our IP address on this end is
-		int nSockLen = sizeof(SOCKADDR_IN);	// The number of bytes an MFC SOCKADDR_IN structure takes
-		getsockname(						// Retrieves the local name for a socket
-			m_hSocket,						// The socket
-			(SOCKADDR*)&Network.m_pHost,	// Have getsockname write the answer right into Network.m_pHost
-			&nSockLen );					// Tell getsockname how much space it has to write there
-	}
-
-	// If we were able to bind the socket to our local address
-	if ( bBound )
-	{
-		// Report that we are now listening on our IP address
-		theApp.Message( MSG_INFO, IDS_NETWORK_LISTENING_TCP, (LPCTSTR)CString( inet_ntoa( Network.m_pHost.sin_addr ) ), htons( Network.m_pHost.sin_port ) );
-	}
-
 	// Set it up so that when a remote computer connects to us, the m_pWakeup event is fired
 	WSAEventSelect(		// Specify an event object to associate with the specified set of FD_XXX network events
 		m_hSocket,		// Our listening socket
@@ -174,6 +156,17 @@ BOOL CHandshakes::Listen()
 	listen(			// Place a socket in a state in which it is listening for an incoming connection
 		m_hSocket,	// Our socket
 		256 );		// Maximum length of the queue of pending connections, let 256 computers try to call us at once (do)
+
+	Network.AcquireLocalAddress( m_hSocket );
+
+	// If we were able to bind the socket to our local address
+	if ( bBound )
+	{
+		// Report that we are now listening on our IP address
+		theApp.Message( MSG_INFO, IDS_NETWORK_LISTENING_TCP,
+			(LPCTSTR)CString( inet_ntoa( Network.m_pHost.sin_addr ) ),
+			htons( Network.m_pHost.sin_port ) );
+	}
 
 	// Create a new thread to run the ThreadStart method, passing it a pointer to this C
 	return BeginThread( "Handshakes" );
@@ -371,6 +364,8 @@ BOOL CHandshakes::AcceptConnection()
 	SOCKET hSocket = CNetwork::AcceptSocket( m_hSocket, &pHost, AcceptCheck );
 	if ( hSocket == INVALID_SOCKET )
 		return FALSE;
+
+	Network.AcquireLocalAddress( hSocket );
 
 	// We've listened for and accepted one more stable connection
 	InterlockedIncrement( (PLONG)&m_nStableCount ); // Use an interlocked function to do this in a thread-safe way

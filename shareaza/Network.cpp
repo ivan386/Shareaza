@@ -316,10 +316,20 @@ BOOL CNetwork::ConnectTo(LPCTSTR pszAddress, int nPort, PROTOCOLID nProtocol, BO
 //////////////////////////////////////////////////////////////////////
 // CNetwork local IP acquisition and sending
 
+BOOL CNetwork::AcquireLocalAddress(SOCKET hSocket)
+{
+	// Ask the socket what it thinks our IP address on this end is
+	SOCKADDR_IN pAddress = {};
+	int nSockLen = sizeof( pAddress );
+	if ( getsockname( hSocket, (SOCKADDR*)&pAddress, &nSockLen ) != 0 )
+		return FALSE;
+
+	return AcquireLocalAddress( pAddress.sin_addr );
+}
+
 BOOL CNetwork::AcquireLocalAddress(LPCTSTR pszHeader)
 {
 	int nIPb1, nIPb2, nIPb3, nIPb4;
-
 	if ( _stscanf( pszHeader, _T("%i.%i.%i.%i"), &nIPb1, &nIPb2, &nIPb3, &nIPb4 ) != 4 ||
 		nIPb1 < 0 || nIPb1 > 255 ||
 		nIPb2 < 0 || nIPb2 > 255 ||
@@ -328,12 +338,10 @@ BOOL CNetwork::AcquireLocalAddress(LPCTSTR pszHeader)
 		return FALSE;
 
 	IN_ADDR pAddress;
-
 	pAddress.S_un.S_un_b.s_b1 = (BYTE)nIPb1;
 	pAddress.S_un.S_un_b.s_b2 = (BYTE)nIPb2;
 	pAddress.S_un.S_un_b.s_b3 = (BYTE)nIPb3;
 	pAddress.S_un.S_un_b.s_b4 = (BYTE)nIPb4;
-
 	return AcquireLocalAddress( pAddress );
 }
 

@@ -384,6 +384,8 @@ BOOL CConnection::DoRun()
 		// Call CShakeNeighbour::OnConnected to start reading the handshake
 		if ( !OnConnected() )
 			return FALSE;
+
+		Network.AcquireLocalAddress( m_hSocket );
 	}
 
 	// If the FD_CLOSE network event has occurred, set bClosed to true, otherwise set it to false

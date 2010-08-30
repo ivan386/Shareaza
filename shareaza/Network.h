@@ -168,10 +168,11 @@ public:
 	DWORD		GetStableTime() const;
 	BOOL		IsConnectedTo(const IN_ADDR* pAddress) const;
 	BOOL		ReadyToTransfer(DWORD tNow) const;		// Are we ready to start downloading?
-public:
+
 	BOOL		Connect(BOOL bAutoConnect = FALSE);
 	void		Disconnect();
 	BOOL		ConnectTo(LPCTSTR pszAddress, int nPort = 0, PROTOCOLID nProtocol = PROTOCOL_NULL, BOOL bNoUltraPeer = FALSE);
+	BOOL		AcquireLocalAddress(SOCKET hSocket);
 	BOOL		AcquireLocalAddress(LPCTSTR pszHeader);
 	BOOL		AcquireLocalAddress(const IN_ADDR& pAddress);
 	BOOL		Resolve(LPCTSTR pszHost, int nPort, SOCKADDR_IN* pHost, BOOL bNames = TRUE) const;
@@ -180,7 +181,7 @@ public:
 	WORD		RandomPort() const;
 	void		CreateID(Hashes::Guid& oID);
 	BOOL		IsFirewalledAddress(const IN_ADDR* pAddress, BOOL bIncludeSelf = FALSE) const;
-public:
+
 	BOOL		GetNodeRoute(const Hashes::Guid& oGUID, CNeighbour** ppNeighbour, SOCKADDR_IN* pEndpoint);
 	BOOL		RoutePacket(CG2Packet* pPacket);
 	BOOL		SendPush(const Hashes::Guid& oGUID, DWORD nIndex = 0);
@@ -193,7 +194,6 @@ public:
 	// Add query hit to queue
 	void		OnQueryHits(CQueryHit* pHits);
 
-public:
 	void		UDPHostCache(IN_ADDR* pAddress, WORD nPort);
 	void		UDPKnownHubCache(IN_ADDR* pAddress, WORD nPort);
 
