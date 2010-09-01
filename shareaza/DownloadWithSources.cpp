@@ -58,6 +58,7 @@ CDownloadWithSources::CDownloadWithSources()
 	, m_nHTTPSourceCount( 0 )
 	, m_nBTSourceCount	( 0 )
 	, m_nFTPSourceCount	( 0 )
+	, m_nDCSourceCount	( 0 )
 	, m_pXML			( NULL )
 {
 }
@@ -137,6 +138,7 @@ DWORD CDownloadWithSources::GetEffectiveSourceCount() const
 	bool bIsG2Allowed = Settings.Gnutella2.EnableToday  || ! Settings.Connection.RequireForTransfers;
 	bool bIsEdAllowed = Settings.eDonkey.EnableToday    || ! Settings.Connection.RequireForTransfers;
 	bool bIsBtAllowed = Settings.BitTorrent.EnableToday || ! Settings.Connection.RequireForTransfers;
+	bool bIsDCAllowed = Settings.DC.EnableToday || ! Settings.Connection.RequireForTransfers;
 
 	DWORD nResult = m_nFTPSourceCount;
 
@@ -154,6 +156,9 @@ DWORD CDownloadWithSources::GetEffectiveSourceCount() const
 
 	if ( bIsBtAllowed )
 		nResult += m_nBTSourceCount;
+
+	if ( bIsDCAllowed )
+		nResult += m_nDCSourceCount;
 
 	return nResult;
 }
@@ -232,6 +237,7 @@ void CDownloadWithSources::ClearSources()
 	m_nHTTPSourceCount	= 0;
 	m_nBTSourceCount	= 0;
 	m_nFTPSourceCount	= 0;
+	m_nDCSourceCount	= 0;
 
 	SetModified();
 }
@@ -957,6 +963,9 @@ void CDownloadWithSources::InternalAdd(const CDownloadSource* pSource)
 	case PROTOCOL_FTP:
 		m_nFTPSourceCount++;
 		break;
+	case PROTOCOL_DC:
+		m_nDCSourceCount++;
+		break;
 	default:
 		ASSERT( FALSE );
 	}
@@ -989,6 +998,9 @@ void CDownloadWithSources::InternalRemove(const CDownloadSource* pSource)
 		break;
 	case PROTOCOL_FTP:
 		m_nFTPSourceCount--;
+		break;
+	case PROTOCOL_DC:
+		m_nDCSourceCount--;
 		break;
 	default:
 		ASSERT( FALSE );

@@ -63,6 +63,7 @@ private:
 	int					m_nHTTPSourceCount;
 	int					m_nBTSourceCount;
 	int					m_nFTPSourceCount;
+	int					m_nDCSourceCount;
 
 public:
 	CXMLElement*		m_pXML;

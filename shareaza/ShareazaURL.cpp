@@ -254,6 +254,10 @@ BOOL CShareazaURL::ParseRoot(LPCTSTR pszURL, BOOL bResolve)
 		m_nProtocol	= PROTOCOL_DC;
 		return ParseShareazaHost( pszURL, FALSE );
 	}
+	else if ( _tcsnicmp( pszURL, _T("dcfile://"), 8 ) == 0 )
+	{
+		return ParseDC( pszURL, FALSE );
+	}
 
 	Clear();
 
@@ -457,6 +461,54 @@ BOOL CShareazaURL::ParseED2KFTP(LPCTSTR pszURL, BOOL bResolve)
 
 	m_sURL		= pszURL;
 	m_nProtocol	= PROTOCOL_ED2K;
+	m_nAction	= uriDownload;
+
+	return bResult;
+}
+
+
+//////////////////////////////////////////////////////////////////////
+// CShareazaURL DC
+
+BOOL CShareazaURL::ParseDC(LPCTSTR pszURL, BOOL bResolve)
+{
+	Clear();
+
+	CString strURL = pszURL + 9;		// "dcfile://"
+
+	int nSlash = strURL.Find( _T('/') );
+	if ( nSlash < 7 ) return FALSE;
+
+	m_sAddress	= strURL.Left( nSlash );
+	strURL		= strURL.Mid( nSlash + 1 );
+
+	nSlash = strURL.Find( _T('/') );
+	if ( nSlash < 3 ) return FALSE;
+
+	m_sLogin	= URLDecode( strURL.Left( nSlash ) );
+	strURL		= strURL.Mid( nSlash + 1 );
+
+	nSlash = strURL.Find( _T('/') );
+	if ( nSlash != 4 + 39 ) return FALSE;
+
+	CString strHash	= strURL.Left( nSlash );
+	strURL			= strURL.Mid( nSlash + 1 );
+	strURL.TrimRight( _T("//") );
+
+	if ( strHash.Left( 4 ) != _T("TTH:") ) return FALSE;
+
+	if ( ! m_oTiger.fromString( strHash.Mid( 4 ) ) ) return FALSE;
+
+	m_bSize = _stscanf( strURL, _T("%I64i"), &m_nSize ) == 1;
+	if ( ! m_bSize ) return FALSE;
+
+	SOCKADDR_IN saHost = {};
+	BOOL bResult = Network.Resolve( m_sAddress, DC_DEFAULT_PORT, &saHost, bResolve );
+
+	m_pAddress	= saHost.sin_addr;
+	m_nPort		= htons( saHost.sin_port );
+	m_sURL		= pszURL;
+	m_nProtocol	= PROTOCOL_DC;
 	m_nAction	= uriDownload;
 
 	return bResult;

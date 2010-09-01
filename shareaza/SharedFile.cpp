@@ -623,7 +623,7 @@ CSharedSource* CLibraryFile::AddAlternateSource(LPCTSTR pszURL, FILETIME* tSeen)
 
 	if ( ! pURL.Parse( strURL ) ) return NULL;
 
-	if ( Network.IsFirewalledAddress( &pURL.m_pAddress, TRUE ) ||
+	if ( Network.IsFirewalledAddress( &pURL.m_pAddress, Settings.Connection.IgnoreOwnIP ) ||
 		 Network.IsReserved( (IN_ADDR*)&pURL.m_pAddress ) ) return NULL;
 
 	if ( pURL != *this ) return NULL;

@@ -82,3 +82,5 @@ inline void CDCPacket::CDCPacketPool::FreePoolImpl(CPacket* pPacket)
 {
 	delete [] (CDCPacket*)pPacket;
 }
+
+#define DC_PROTOCOL_MIN_LEN	3

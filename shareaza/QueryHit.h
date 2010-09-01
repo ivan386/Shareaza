@@ -30,6 +30,7 @@ class CQuerySearch;
 class CG1Packet;
 class CG2Packet;
 class CEDPacket;
+class CDCPacket;
 
 class CQueryHit : public CShareazaFile
 {
@@ -92,6 +93,7 @@ public:
 	static CQueryHit*	FromG1Packet(CG1Packet* pPacket, int* pnHops = NULL);
 	static CQueryHit*	FromG2Packet(CG2Packet* pPacket, int* pnHops = NULL);
 	static CQueryHit*	FromEDPacket(CEDPacket* pPacket, const SOCKADDR_IN* pServer, BOOL bUnicode, const Hashes::Guid& pSearchID = Hashes::Guid());
+	static CQueryHit*	FromDCPacket(CDCPacket* pPacket);
 protected:
 	static BOOL			CheckBogus(CQueryHit* pFirstHit);
 	static CXMLElement*	ReadXML(CG1Packet* pPacket, int nSize);

@@ -741,7 +741,9 @@ BOOL CDatagrams::OnDatagram(const SOCKADDR_IN* pHost, const BYTE* pBuffer, DWORD
 	}
 
 	// Detect DC++ packets
-	if ( nLength > 2 && pBuffer[ 0 ] == '$' && pBuffer[ nLength - 1 ] == '|' )
+	if ( nLength >= DC_PROTOCOL_MIN_LEN &&
+		 pBuffer[ 0 ] == '$' &&
+		 pBuffer[ nLength - 1 ] == '|' )
 	{
 		if ( CDCPacket* pPacket = CDCPacket::New( pBuffer, nLength ) )
 		{

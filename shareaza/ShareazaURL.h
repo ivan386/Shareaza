@@ -72,6 +72,7 @@ protected:
 	BOOL	ParseHTTP(LPCTSTR pszURL, BOOL bResolve);
 	BOOL	ParseFTP(LPCTSTR pszURL, BOOL bResolve);
 	BOOL	ParseED2KFTP(LPCTSTR pszURL, BOOL bResolve);
+	BOOL	ParseDC(LPCTSTR pszURL, BOOL bResolve);
 	BOOL	ParseBTC(LPCTSTR pszURL, BOOL bResolve);
 	BOOL	ParseMagnet(LPCTSTR pszURL);
 	BOOL	ParseShareaza(LPCTSTR pszURL);
