@@ -1271,14 +1271,19 @@ void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownlo
 			rcCell.left += 1;
 
 			// Is this a firewalled eDonkey client
-			if ( pSource->m_nProtocol == PROTOCOL_ED2K && pSource->m_bPushOnly == TRUE )
+			if ( pSource->m_nProtocol == PROTOCOL_DC )
+			{
+				strText.Format( _T("%s:%u"),
+					(LPCTSTR)CString( inet_ntoa( pSource->m_pServerAddress ) ),
+					pSource->m_nServerPort );
+			}
+			else if ( pSource->m_nProtocol == PROTOCOL_ED2K && pSource->m_bPushOnly == TRUE )
 			{
 				strText.Format( _T("%lu@%s:%u"),
 					pSource->m_pAddress.S_un.S_addr,
 					(LPCTSTR)CString( inet_ntoa( pSource->m_pServerAddress ) ),
 					pSource->m_nServerPort );
 			}
-
 			// Or an active transfer
 			else if ( ! pSource->IsIdle() )
 			{
@@ -1286,7 +1291,6 @@ void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownlo
 					(LPCTSTR)pSource->GetAddress(),
 					ntohs( pSource->GetPort() ) );
 			}
-
 			// Or just queued
 			else
 			{
