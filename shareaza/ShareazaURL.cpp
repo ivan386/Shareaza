@@ -505,11 +505,11 @@ BOOL CShareazaURL::ParseDC(LPCTSTR pszURL, BOOL bResolve)
 	SOCKADDR_IN saHost = {};
 	BOOL bResult = Network.Resolve( m_sAddress, DC_DEFAULT_PORT, &saHost, bResolve );
 
-	m_pAddress	= saHost.sin_addr;
-	m_nPort		= htons( saHost.sin_port );
-	m_sURL		= pszURL;
-	m_nProtocol	= PROTOCOL_DC;
-	m_nAction	= uriDownload;
+	m_pServerAddress	= saHost.sin_addr;
+	m_nServerPort		= htons( saHost.sin_port );
+	m_sURL				= pszURL;
+	m_nProtocol			= PROTOCOL_DC;
+	m_nAction			= uriDownload;
 
 	return bResult;
 }

@@ -181,7 +181,7 @@ CQueryHit* CQueryHit::FromG1Packet(CG1Packet* pPacket, int* pnHops)
 		}
 		
 		BOOL bBrowseHost = FALSE;
-		if ( pVendor && pVendor->m_bHTMLBrowse )
+		if ( pVendor && pVendor->m_bBrowseFlag )
 			bBrowseHost = TRUE;
 		
 		if ( pPacket->GetRemaining() < nPublicSize + 16u ) 
@@ -869,17 +869,21 @@ CQueryHit* CQueryHit::FromDCPacket(CDCPacket* pPacket)
 	pHit->m_sName		= CA2W( strFilename.c_str() );
 	pHit->m_nSize		= nSize;
 	pHit->m_bSize		= TRUE;
-	if ( oTiger )
-		pHit->m_oTiger	= oTiger;
-	pHit->m_pAddress	= *(const IN_ADDR*)&nHubAddress;
-	pHit->m_sCountry	= theApp.GetCountryCode( *(const IN_ADDR*)&nHubAddress );
-	pHit->m_nPort		= (WORD)nHubPort;
+	pHit->m_oTiger		= oTiger;
 	pHit->m_bChat		= TRUE;
 	pHit->m_bBrowseHost	= TRUE;
 	pHit->m_sNick		= CA2W( strNick.c_str() );
 	pHit->m_nUpSlots	= nTotalSlots;
 	pHit->m_nUpQueue	= nTotalSlots - nFreeSlots;
 	pHit->m_bBusy		= nFreeSlots ? TRI_TRUE : TRI_FALSE;
+	pHit->m_pVendor		= VendorCache.Lookup( _T("DC++") );
+	if ( ! pHit->m_pVendor ) pHit->m_pVendor = VendorCache.m_pNull;
+
+	// Hub
+	pHit->m_bPush		= TRI_TRUE; // Always
+	pHit->m_pAddress	= *(const IN_ADDR*)&nHubAddress;
+	pHit->m_nPort		= (WORD)nHubPort;
+	pHit->m_sCountry	= theApp.GetCountryCode( *(const IN_ADDR*)&nHubAddress );
 
 	pHit->Resolve();
 

@@ -76,6 +76,13 @@
 		<link>http://www.cultiv8r.com/</link>
 	</vendor>
 	
+	<vendor code="DC++">
+		<title>DC++</title>
+		<link>http://dcplusplus.sourceforge.net/</link>
+		<capability name="htmlHostBrowse"/>
+		<capability name="chatFlag"/>
+	</vendor>
+	
 	<vendor code="ED2K">
 		<title>eDonkey2000</title>
 		<link>http://www.edonkey2000.com/</link>

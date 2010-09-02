@@ -96,8 +96,8 @@ public:
 	CString		m_sCode;
 	CString		m_sName;
 	CString		m_sLink;
-	bool		m_bChatFlag;
-	bool		m_bHTMLBrowse;
+	bool		m_bChatFlag;		// Support chatting
+	bool		m_bBrowseFlag;		// Supports browsing
 	bool		m_bExtended;		// Shareaza-powered
 
 protected:

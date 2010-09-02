@@ -176,7 +176,7 @@ bool CVendorCache::IsExtended(LPCTSTR pszCode) const
 
 CVendor::CVendor() :
 	m_bChatFlag		( false ),
-	m_bHTMLBrowse	( false ),
+	m_bBrowseFlag	( false ),
 	m_bExtended		( false )
 {
 }
@@ -185,7 +185,7 @@ CVendor::CVendor(LPCTSTR pszCode) :
 	m_sCode			( pszCode ),
 	m_sName			( pszCode ),
 	m_bChatFlag		( false ),
-	m_bHTMLBrowse	( false ),
+	m_bBrowseFlag	( false ),
 	m_bExtended		( false )
 {
 	if ( m_sCode.GetLength() > 4 )
@@ -232,7 +232,7 @@ BOOL CVendor::LoadFrom(CXMLElement* pXML)
 			}
 			else if ( strCap == _T("htmlhostbrowse") )
 			{
-				m_bHTMLBrowse = true;
+				m_bBrowseFlag = true;
 			}
 			else if ( strCap == _T("extended") )
 			{
