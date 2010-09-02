@@ -66,7 +66,6 @@ static char THIS_FILE[]=__FILE__;
 
 CUploadTransferHTTP::CUploadTransferHTTP() :
 	CUploadTransfer		( PROTOCOL_HTTP )
-,	m_tRequest			( 0ul )
 ,	m_bHead				( FALSE )
 ,	m_bConnectHdr		( FALSE )
 ,	m_bKeepAlive		( TRUE )

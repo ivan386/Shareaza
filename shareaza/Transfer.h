@@ -41,6 +41,7 @@ public:
 	QWORD				m_nOffset;			// Fragment offset
 	QWORD				m_nLength;			// Fragment length
 	QWORD				m_nPosition;		// Fragment position
+	DWORD				m_tRequest;			// The time a request was sent
 
 	virtual BOOL	ConnectTo(const IN_ADDR* pAddress, WORD nPort);
 	virtual void	AttachTo(CConnection* pConnection);

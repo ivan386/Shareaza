@@ -34,7 +34,6 @@ public:
 // Attributes
 protected:
 	DWORD			m_nRequests;
-	DWORD			m_tRequest;
 	DWORD			m_tContent;
 	BOOL			m_bBadResponse;
 	BOOL			m_bBusyFault;
@@ -72,7 +71,7 @@ protected:
 // Operations
 public:
 	virtual BOOL	Initiate();
-	BOOL			AcceptPush(CConnection* pConnection);
+	virtual void	AttachTo(CConnection* pConnection);
 	virtual void	Close(TRISTATE bKeepSource, DWORD nRetryAfter = 0);
 	virtual void	Boost();
 	virtual DWORD	GetAverageSpeed();

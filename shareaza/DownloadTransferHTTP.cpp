@@ -50,7 +50,6 @@ static char THIS_FILE[]=__FILE__;
 CDownloadTransferHTTP::CDownloadTransferHTTP(CDownloadSource* pSource) :
 	CDownloadTransfer( pSource, PROTOCOL_HTTP ),
 	m_nRequests( 0 ),
-	m_tRequest( 0 ),
 	m_tContent( 0 ),
 	m_bBadResponse( FALSE ),
 	m_bBusyFault( FALSE ),
@@ -114,9 +113,9 @@ BOOL CDownloadTransferHTTP::Initiate()
 //////////////////////////////////////////////////////////////////////
 // CDownloadTransferHTTP accept push
 
-BOOL CDownloadTransferHTTP::AcceptPush(CConnection* pConnection)
+void CDownloadTransferHTTP::AttachTo(CConnection* pConnection)
 {
-	AttachTo( pConnection );
+	CDownloadTransfer::AttachTo( pConnection );
 	
 	theApp.Message( MSG_INFO, IDS_DOWNLOAD_PUSHED, (LPCTSTR)m_sAddress,
 		(LPCTSTR)m_pDownload->GetDisplayName() );
@@ -124,9 +123,7 @@ BOOL CDownloadTransferHTTP::AcceptPush(CConnection* pConnection)
 	if ( ! m_pDownload->IsBoosted() )
 		m_mInput.pLimit = m_mOutput.pLimit = &m_nBandwidth;
 	
-	if ( StartNextFragment() ) return TRUE;
-	
-	return FALSE;
+	StartNextFragment();
 }
 
 //////////////////////////////////////////////////////////////////////

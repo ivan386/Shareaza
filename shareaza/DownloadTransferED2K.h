@@ -37,7 +37,6 @@ public:
 public:
 	CEDClient*		m_pClient;
 	bool			m_bHashset;
-	DWORD			m_tRequest;				//When request was last sent
 	DWORD			m_tSources;				//When source request was last sent
 	DWORD			m_tRanking;				//When queue ranking was last received
 	Fragments::Queue m_oRequested;

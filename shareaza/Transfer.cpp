@@ -43,6 +43,7 @@ CTransfer::CTransfer(PROTOCOLID nProtocol)
 	, m_nOffset			( SIZE_UNKNOWN )
 	, m_nLength			( SIZE_UNKNOWN )
 	, m_nPosition		( 0 )
+	, m_tRequest		( 0 )
 {
 }
 
@@ -57,6 +58,8 @@ CTransfer::~CTransfer()
 
 BOOL CTransfer::ConnectTo(const IN_ADDR* pAddress, WORD nPort)
 {
+	m_nState = 0;
+
 	if ( CConnection::ConnectTo( pAddress, nPort ) )
 	{
 		Transfers.Add( this );

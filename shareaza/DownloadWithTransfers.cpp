@@ -327,7 +327,8 @@ BOOL CDownloadWithTransfers::StartNewTransfer(DWORD tNow)
 
 	if ( pConnectHead != NULL )
 	{
-		if ( pConnectHead->m_bPushOnly && ! ( pConnectHead->m_nProtocol == PROTOCOL_ED2K ) )
+		if ( pConnectHead->m_bPushOnly &&
+			pConnectHead->m_nProtocol != PROTOCOL_ED2K )
 		{
 			if ( pConnectHead->PushRequest() )
 			{
@@ -418,8 +419,10 @@ DWORD CDownloadWithTransfers::GetMeasuredSpeed() const
 
 BOOL CDownloadWithTransfers::OnAcceptPush(const Hashes::Guid& oClientID, CConnection* pConnection)
 {
-	CDownload* pDownload = (CDownload*)this;
-	if ( pDownload->IsMoving() || pDownload->IsPaused() ) return FALSE;
+	CDownload* pDownload = static_cast< CDownload* >( this );
+
+	if ( pDownload->IsMoving() || pDownload->IsPaused() )
+		return FALSE;
 
 	CDownloadSource* pSource = NULL;
 
@@ -433,7 +436,8 @@ BOOL CDownloadWithTransfers::OnAcceptPush(const Hashes::Guid& oClientID, CConnec
 		pSource = NULL;
 	}
 
-	if ( pSource == NULL ) return FALSE;
+	if ( pSource == NULL )
+		return FALSE;
 
 	if ( ! pSource->IsIdle() )
 	{
@@ -443,11 +447,16 @@ BOOL CDownloadWithTransfers::OnAcceptPush(const Hashes::Guid& oClientID, CConnec
 		pSource->Close();
 	}
 
-	if ( ! pConnection->IsValid() ) return FALSE;
+	if ( ! pConnection->IsValid() )
+		return FALSE;
 
-	CDownloadTransferHTTP* pTransfer = (CDownloadTransferHTTP*)pSource->CreateTransfer();
-	ASSERT( pTransfer->m_nProtocol == PROTOCOL_HTTP );
-	return pTransfer->AcceptPush( pConnection );
+	if ( CDownloadTransfer* pTransfer = pSource->CreateTransfer() )
+	{
+		pTransfer->AttachTo( pConnection );
+		return TRUE;
+	}
+
+	return FALSE;
 }
 
 //////////////////////////////////////////////////////////////////////

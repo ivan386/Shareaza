@@ -37,7 +37,6 @@ public:
 // Attributes
 public:
 	CEDClient*		m_pClient;					// The remote client.
-	DWORD			m_tRequest;					// The time a request was sent.
 	int				m_nRanking;					// The last queue position the remote client was sent.
 	DWORD			m_tRankingSent;				// The time a queue ranking packet was last sent.
 	DWORD			m_tRankingCheck;			// The time the queue position was last checked.

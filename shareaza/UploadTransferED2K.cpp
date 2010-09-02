@@ -52,7 +52,6 @@ static char THIS_FILE[]=__FILE__;
 CUploadTransferED2K::CUploadTransferED2K(CEDClient* pClient)
 	: CUploadTransfer( PROTOCOL_ED2K )
 	, m_pClient			( pClient )
-	, m_tRequest		( GetTickCount() )
 	, m_nRanking		( 0 )
 	, m_tRankingSent	( 0 )
 	, m_tRankingCheck	( 0 )

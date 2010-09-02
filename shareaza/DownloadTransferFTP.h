@@ -1,7 +1,7 @@
 //
 // DownloadTransferFTP.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -227,7 +227,6 @@ protected:
 	};
 
 	FTP_STATES		m_FtpState;		// FTP Control chanell state
-	DWORD			m_tRequest;		// Last request time
 	CFTPLIST		m_LIST;			// FTP "LIST" helper object
 	CFTPRETR		m_RETR;			// FTP "RETR" helper object
 	BOOL			m_bPassive;		// Passive or Active FTP mode

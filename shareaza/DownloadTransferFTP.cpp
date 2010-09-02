@@ -110,7 +110,6 @@ inline bool FTPisOK(const CString& str)
 CDownloadTransferFTP::CDownloadTransferFTP(CDownloadSource* pSource) :
 	CDownloadTransfer( pSource, PROTOCOL_FTP ),
 	m_FtpState( ftpConnecting ),
-	m_tRequest( 0 ),
 	m_bPassive( TRUE /* FALSE */ ),
 	m_bSizeChecked( FALSE ),
 	m_bMultiline( FALSE )
