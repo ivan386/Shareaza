@@ -21,10 +21,10 @@
 
 #pragma once
 
-#include "DCStream.h"
 #include "Neighbour.h"
 
-class CDCNeighbour : public CDCStream< CNeighbour >
+
+class CDCNeighbour : public CNeighbour
 {
 public:
 	CDCNeighbour();
@@ -33,20 +33,30 @@ public:
 	virtual BOOL	ConnectTo(const IN_ADDR* pAddress, WORD nPort, BOOL bAutomatic);
 	virtual BOOL	Send(CPacket* pPacket, BOOL bRelease = TRUE, BOOL bBuffered = FALSE);
 
+	// Send $ConnectToMe command
+	BOOL			ConnectToMe(const CString& sNick);
+
+	CString			m_sNick;		// User nick on this hub
+	BOOL			m_bExtended;	// Using extended protocol
+	CStringList		m_oFeatures;	// Remote client supported features
+
 protected:
 	virtual BOOL	OnConnected();
 	virtual void	OnDropped();
+	virtual BOOL	OnRead();
 
-	virtual BOOL	OnCommand(const std::string& strCommand, const std::string& strParams);
-	virtual BOOL	OnLock();
-	virtual BOOL	OnSupport();
-	virtual BOOL	OnHello();
-	virtual BOOL	OnChat(const std::string& strMessage);
-
+	// Read single command from input buffer
+	BOOL			ReadCommand(std::string& strLine);
+	// Got DC++ command
+	BOOL			OnCommand(const std::string& strCommand, const std::string& strParams);
+	// Got $Lock command
+	BOOL			OnLock(const std::string& strLock);
+	// Got $Hello command
+	BOOL			OnHello();
+	// Got $Supports command
+	BOOL			OnSupport();
+	// Got chat message
+	BOOL			OnChat(const std::string& strMessage);
 	// Got search request
 	BOOL			OnSearch(const IN_ADDR* pAddress, WORD nPort, std::string& strSearch);
-	// Sending $Supports, $Key, $ValidateNick
-	BOOL			SendKey(const std::string& strLock);
-	// Sending $Version, $MyINFO
-	BOOL			SendVersion();
 };

@@ -22,7 +22,6 @@
 // CHandshake figures out what the remote computer wants from the first 7 bytes it sends us
 // http://shareazasecurity.be/wiki/index.php?title=Developers.Code.CHandshake
 
-// Copy in the contents of these files here before compiling
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
@@ -37,12 +36,13 @@
 #include "Buffer.h"
 #include "GProfile.h"
 #include "BTClients.h"
+#include "DCClients.h"
+#include "DCPacket.h"
 #include "EDClients.h"
 #include "EDPacket.h"
 #include "WndMain.h"
 #include "WndChat.h"
 
-// If we are compiling in debug mode, replace the text "THIS_FILE" in the code with the name of this file
 #ifdef _DEBUG
 #undef THIS_FILE
 static char THIS_FILE[]=__FILE__;
@@ -52,8 +52,6 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CHandshake construction
 
-// Make a new CHandshake object
-// Initializes the member variables with default values
 CHandshake::CHandshake()
 {
 	// We did not connect to the remote computer as part of a push
@@ -202,29 +200,39 @@ void CHandshake::OnDropped()
 // Returns true if it needs more information, false if it's done
 BOOL CHandshake::OnRead()
 {
-	// Read data waiting in the socket into the input buffer
-	CConnection::OnRead();
+	if ( ! CConnection::OnRead() )
+		return FALSE;
 
-	// We need at least 7 bytes of headers from the remote compuer to figure out what network its talking about
-	if ( GetInputLength() < 7 ) return TRUE; // Not enough information yet, leave now returning true
+	DWORD nLength = GetInputLength();
+
+	if ( nLength < 3 )
+		// Not enough information yet, leave now returning true
+		return TRUE;
 
 	// Determine if the remote computer has sent an eDonkey2000 hello packet
-	if ( GetInputLength() >= 7							&& // 7 or more bytes have arrived
+	if ( nLength >= 7							&& // 7 or more bytes have arrived
 		 PeekAt( 0 ) == ED2K_PROTOCOL_EDONKEY	&& // The first byte is "e3", indicating eDonkey2000
 		 PeekAt( 5 ) == ED2K_C2C_HELLO			&& // 5 bytes in is "01", a hello for that network
 		 PeekAt( 6 ) == 0x10 )					   // And after that is "10"
 	{
-		// Have the EDClients object accept this CHandshake as a new eDonkey2000 computer
 		EDClients.OnAccept( this );
-		return FALSE; // Return false to indicate that we are done sorting the handshake
+		return FALSE; // Done sorting the handshake
 	}
 
 	// See if the remote computer is speaking BitTorrent
-	if ( GetInputLength() >= BT_PROTOCOL_HEADER_LEN && // We have at least 20 bytes
+	if ( nLength >= BT_PROTOCOL_HEADER_LEN && // We have at least 20 bytes
 		 StartsWith( BT_PROTOCOL_HEADER, BT_PROTOCOL_HEADER_LEN ) ) // They are "\023BitTorrent protocol"
 	{
-		// Have the BTClients object accept this CHandshake as a new BitTorrent computer
 		BTClients.OnAccept( this );
+		return FALSE; // Done sorting the handshake
+	}
+
+	// See if the remote computer is speaking DC++
+	if ( nLength >= DC_PROTOCOL_MIN_LEN &&
+		 PeekAt( 0 ) == '$' &&
+		 PeekAt( nLength - 1 ) == '|' )
+	{
+		DCClients.OnAccept( this );
 		return FALSE; // Done sorting the handshake
 	}
 

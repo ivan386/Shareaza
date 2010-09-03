@@ -645,7 +645,7 @@ void CLocalSearch::AddHitDC(CDCPacket* pPacket, CSchemaMap& /*pSchemas*/, CLibra
 			{
 				CDCNeighbour* pDCNeighbour = static_cast< CDCNeighbour* >( pNeighbour );
 				sNick = pDCNeighbour->m_sNick;
-				sHubName = pDCNeighbour->m_sRemoteNick;
+				sHubName = pDCNeighbour->m_sServerName;
 			}
 		}
 	}

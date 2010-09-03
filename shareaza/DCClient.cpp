@@ -21,22 +21,20 @@
 
 #include "StdAfx.h"
 #include "Shareaza.h"
+#include "Download.h"
+#include "Downloads.h"
+#include "DownloadSource.h"
+#include "DownloadTransfer.h"
+#include "DownloadTransferDC.h"
 #include "DCClient.h"
+#include "DCClients.h"
+#include "DCNeighbour.h"
 #include "HostCache.h"
-#include "Library.h"
-#include "SharedFolder.h"
-#include "LibraryFolders.h"
 #include "Network.h"
-#include "Neighbour.h"
 #include "Neighbours.h"
-#include "GProfile.h"
 #include "Settings.h"
-#include "Statistics.h"
-#include "Uploads.h"
-#include "UploadFile.h"
-#include "UploadQueue.h"
-#include "UploadQueues.h"
 #include "UploadTransfer.h"
+#include "UploadTransferDC.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -44,24 +42,55 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
-#define FILE_NOT_AVAILABLE	_P("$Error File Not Available|")
-#define CANNOT_UPLOAD		_P("$MaxedOut|")
-
-CDCClient::CDCClient()
+CDCClient::CDCClient(LPCTSTR szNick)
+	: CTransfer				( PROTOCOL_DC )
+	, m_bExtended			( FALSE )
+	, m_pDownloadTransfer	( NULL )
+	, m_pUploadTransfer		( NULL )
+	, m_bDirection			( TRI_UNKNOWN )
+	, m_nNumber				( GetRandomNum( 0u, 0x7FFFu ) )
+	, m_nRemoteNumber		( -1 )
+	, m_bLock				( FALSE )
+	, m_bClosing			( FALSE )
 {
+	m_bAutoDelete = TRUE;
+
+	if ( szNick ) m_sNick = szNick;
+	m_sUserAgent = _T("DC++");
+
 	m_mInput.pLimit = &Settings.Bandwidth.Request;
 	m_mOutput.pLimit = &Settings.Bandwidth.Request;
+
+	DCClients.Add( this );
 }
 
 CDCClient::~CDCClient()
 {
+	ASSERT( ! IsValid() );
+
+	DCClients.Remove( this );
+}
+
+std::string CDCClient::GenerateLock() const
+{
+	char cLock[ 256 ] = {};
+	sprintf_s( cLock,
+		"EXTENDEDPROTOCOL::" CLIENT_NAME "::%s:%u",
+		inet_ntoa( m_pHost.sin_addr ), htons( m_pHost.sin_port ) );
+	return cLock;
+}
+
+BOOL CDCClient::CanDownload() const
+{
+	return m_pDownloadTransfer &&
+		( m_bDirection == TRI_FALSE || m_nNumber > m_nRemoteNumber );
 }
 
 BOOL CDCClient::ConnectTo(const IN_ADDR* pAddress, WORD nPort)
 {
 	CString sHost( inet_ntoa( *pAddress ) );
 
-	if ( __super::ConnectTo( pAddress, nPort ) )
+	if ( CTransfer::ConnectTo( pAddress, nPort ) )
 	{
 		WSAEventSelect( m_hSocket, Network.GetWakeupEvent(),
 			FD_CONNECT | FD_READ | FD_WRITE | FD_CLOSE );
@@ -76,27 +105,52 @@ BOOL CDCClient::ConnectTo(const IN_ADDR* pAddress, WORD nPort)
 		return FALSE;
 	}
 
-	m_nState = upsConnecting;
+	m_nState = nrsConnecting;
 
 	return TRUE;
 }
 
+void CDCClient::AttachTo(CConnection* pConnection)
+{
+	CTransfer::AttachTo( pConnection );
+
+	m_nState = nrsConnected;
+}
+
+void CDCClient::Close(UINT nError)
+{
+	ASSERT( this != NULL );
+
+	if ( m_bClosing )
+		return;
+	m_bClosing = TRUE;
+
+	m_mInput.pLimit = NULL;
+	m_mOutput.pLimit = NULL;
+
+	if ( m_pUploadTransfer != NULL )
+	{
+		m_pUploadTransfer->Close();
+		ASSERT( m_pUploadTransfer == NULL );
+	}
+
+	if ( m_pDownloadTransfer != NULL )
+	{
+		m_pDownloadTransfer->Close( TRI_UNKNOWN );
+		ASSERT( m_pDownloadTransfer == NULL );
+	}
+
+	CTransfer::Close( nError );
+}
+
 BOOL CDCClient::OnConnected()
 {
-	if ( ! __super::OnConnected() )
+	if ( ! CTransfer::OnConnected() )
 		return FALSE;
 
-	m_nState = upsRequest;
+	m_nState = nrsConnected;
 
-	Write( _P("$MyNick ") );
-	Write( m_sNick );
-	Write( _P("|") );
-
-	std::string sLock = GenerateLock();
-
-	Write( _P("$Lock ") );
-	Write( sLock.c_str(), sLock.size() );
-	Write( _P(" Pk=" CLIENT_NAME "|") );
+	Greetings();
 
 	LogOutgoing();
 
@@ -105,13 +159,13 @@ BOOL CDCClient::OnConnected()
 
 void CDCClient::OnDropped()
 {
-	if ( m_nState == upsUploading && m_pBaseFile )
+	/*if ( m_nState == upsUploading && m_pBaseFile )
 	{
 		m_pBaseFile->AddFragment( m_nOffset, m_nPosition );
 		m_pBaseFile = NULL;
-	}
+	}*/
 
-	if ( m_nState == upsConnecting )
+	if ( m_nState == nrsConnecting )
 	{
 		Close( IDS_CONNECTION_REFUSED );
 	}
@@ -121,62 +175,224 @@ void CDCClient::OnDropped()
 	}
 }
 
-BOOL CDCClient::OnWrite()
+BOOL CDCClient::OnRun()
 {
-	if ( GetOutputLength() == 0 )
+	if ( ! CTransfer::OnRun() )
+		return FALSE;
+
+	DWORD tNow = GetTickCount();
+
+	if ( m_pDownloadTransfer )
 	{
-		// No data left to transfer
-		if ( m_nState == upsUploading )
+		if ( ! m_pDownloadTransfer->OnRun() )
+			return FALSE;
+	}
+
+	if ( m_pUploadTransfer )
+	{
+		if ( ! m_pUploadTransfer->OnRun() )
+			return FALSE;
+	}
+
+	if ( m_nState == nrsConnecting )
+	{
+		if ( tNow - m_tConnected > Settings.Connection.TimeoutConnect )
 		{
-			// No file data left to transfer
-			if ( m_nPosition >= m_nLength )
-			{
-				// File completed
+			Close( IDS_CONNECTION_TIMEOUT_CONNECT );
 
-				Uploads.SetStable( GetAverageSpeed() );
-
-				m_nState = upsRequest;
-
-				m_pBaseFile->AddFragment( m_nOffset, m_nLength );
-
-				theApp.Message( MSG_INFO, IDS_UPLOAD_FINISHED,
-					(LPCTSTR)m_sName, (LPCTSTR)m_sAddress );
-			}
-			else
-			{
-				// Reading next data chunk of file
-
-				QWORD nToRead = min( m_nLength - m_nPosition, 256 * 1024ull );
-				QWORD nRead = 0;
-				auto_array< BYTE > pBuffer( new BYTE[ nToRead ] );
-				if ( ! ReadFile( m_nFileBase + m_nOffset + m_nPosition,
-					pBuffer.get(), nToRead, &nRead ) || nToRead != nRead )
-				{
-					// File error
-					return FALSE;
-				}
-				Write( pBuffer.get(), (DWORD)nRead );
-
-				m_nPosition += nRead;
-				m_nUploaded += nRead;
-
-				Statistics.Current.Uploads.Volume += ( nRead / 1024 );
-			}
-		}
-		else if ( m_nState >= upsResponse )
-		{
-			// Current transfer completed
-
-			m_nState = ( m_nState == upsPreQueue ) ? upsQueued : upsRequest;
+			return FALSE;
 		}
 	}
 
-	return __super::OnWrite();
+	return TRUE;
+}
+
+BOOL CDCClient::OnRead()
+{
+	if ( ! CTransfer::OnRead() )
+		return FALSE;
+
+	for ( ;; )
+	{
+		// Download mode
+		if ( m_pDownloadTransfer && m_pDownloadTransfer->m_nState >= dtsDownloading )
+		{
+			return m_pDownloadTransfer->OnRead();
+		}
+
+		// Command mode
+		std::string strLine;
+		if ( ! ReadCommand( strLine ) )
+			break;
+
+		theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING,
+			_T("%s >> %s|"), (LPCTSTR)m_sAddress, (LPCTSTR)CA2CT( strLine.c_str() ) );
+
+		std::string strCommand, strParams;
+		std::string::size_type nPos = strLine.find( ' ' );
+		if ( nPos != std::string::npos )
+		{
+			strCommand = strLine.substr( 0, nPos );
+			strParams = strLine.substr( nPos + 1 );
+		}
+		else
+			strCommand = strLine;
+
+		if ( ! OnCommand( strCommand, strParams ) )
+			return FALSE;
+	}
+
+	return TRUE;
+}
+
+BOOL CDCClient::ReadCommand(std::string& strLine)
+{
+	strLine.clear();
+
+	CLockedBuffer pInput( GetInput() );
+
+	if ( ! pInput->m_nLength )
+		return FALSE;
+
+	DWORD nLength = 0;
+	for ( ; nLength < pInput->m_nLength ; nLength++ )
+	{
+		if ( pInput->m_pBuffer[ nLength ] == '|' )
+			break;
+	}
+
+	if ( nLength >= pInput->m_nLength )
+		return FALSE;
+
+	strLine.append( (const char*)pInput->m_pBuffer, nLength );
+
+	pInput->Remove( nLength + 1 );
+
+	return TRUE;
+}
+
+BOOL CDCClient::OnWrite()
+{
+	// Upload mode
+	if ( m_pUploadTransfer && m_pUploadTransfer->m_nState >= upsUploading )
+	{
+		if ( ! m_pUploadTransfer->OnWrite() )
+			return FALSE;
+	}
+
+	return CTransfer::OnWrite();
 }
 
 BOOL CDCClient::OnCommand(const std::string& strCommand, const std::string& strParams)
 {
-	if ( strCommand == "$Direction" )
+	if ( strCommand == "$MyNick" )
+	{
+		// $MyNick RemoteNick|
+
+		m_sRemoteNick = strParams.c_str();
+
+		return TRUE;
+	}
+	else if ( strCommand == "$Lock" )
+	{
+		// $Lock [EXTENDEDPROTOCOL]Challenge Pk=Vendor|
+
+		m_bExtended = ( strParams.substr( 0, 16 ) == "EXTENDEDPROTOCOL" );
+
+		std::string strLock;
+		std::string::size_type nPos = strParams.find( " Pk=" );
+		if ( nPos != std::string::npos )
+		{
+			// Good way
+			strLock = strParams.substr( 0, nPos );
+			m_sUserAgent = strParams.substr( nPos + 4 ).c_str();
+		}
+		else
+		{
+			// Bad way
+			nPos = strParams.find( ' ' );
+			if ( nPos != std::string::npos )
+				strLock = strParams.substr( 0, nPos );
+			else
+				// Very bad way
+				strLock = strParams;
+		}
+
+		m_strKey = DCClients.MakeKey( strLock );
+
+		if ( m_sRemoteNick.IsEmpty() )
+			// $Lock without $MyNick
+			return FALSE;
+
+		m_bLock = TRUE;
+
+		if ( ! m_bInitiated )
+		{
+			Hashes::Guid oGUID;
+			CMD5 pMD5;
+			pMD5.Add( (LPCTSTR)m_sRemoteNick, m_sRemoteNick.GetLength() * sizeof( TCHAR ) );
+			pMD5.Finish();
+			pMD5.GetHash( &oGUID[ 0 ] );
+			oGUID.validate();
+
+			Downloads.OnPush( oGUID, this );
+		}
+
+		return TRUE;
+	}
+	else if ( strCommand == "$Supports" )
+	{
+		// $Supports [option1]...[optionN]
+
+		m_bExtended = TRUE;
+
+		m_oFeatures.RemoveAll();
+		for ( CString strFeatures( strParams.c_str() ); ! strFeatures.IsEmpty(); )
+		{
+			CString strFeature = strFeatures.SpanExcluding( _T(" ") );
+			strFeatures = strFeatures.Mid( strFeature.GetLength() + 1 );
+			if ( strFeature.IsEmpty() )
+				continue;
+			strFeature.MakeLower();
+			if ( m_oFeatures.Find( strFeature ) == NULL )
+			{
+				m_oFeatures.AddTail( strFeature );
+			}				
+		}
+
+		return TRUE;
+	}
+	else if ( strCommand == "$Key" )
+	{
+		// $Key key
+
+		std::string sKey = DCClients.MakeKey( GenerateLock() );
+		if ( sKey == strParams )
+		{
+			// Right key
+			if ( m_bInitiated )
+			{
+				return Handshake();
+			}
+			else
+			{
+				if ( CanDownload() )
+				{
+					// Start download
+					return m_pDownloadTransfer->OnConnected();
+				}
+
+				// Waiting for remote command
+				return TRUE;
+			}
+		}
+		else
+		{
+			// Wrong key
+			return FALSE;
+		}
+	}
+	else if ( strCommand == "$Direction" )
 	{
 		// $Direction (Download|Upload) Number
 
@@ -186,14 +402,15 @@ BOOL CDCClient::OnCommand(const std::string& strCommand, const std::string& strP
 			return FALSE;
 		std::string strDirection = strParams.substr( 0, nPos );
 		if ( strDirection == "Download" )
-			m_bDownload = TRUE;
+			m_bDirection = TRI_TRUE;
 		else if ( strDirection == "Upload" )
-			m_bDownload = FALSE;
+			m_bDirection = TRI_FALSE;
 		else
 			// Invalid command
 			return FALSE;
-		int nNumber = atoi( strParams.substr( nPos + 1 ).c_str() );
-		if ( nNumber > 0x7FFF )
+
+		m_nRemoteNumber = atoi( strParams.substr( nPos + 1 ).c_str() );
+		if ( m_nRemoteNumber < 0 || m_nRemoteNumber > 0x7FFF )
 			// Invalid command
 			return FALSE;
 
@@ -238,7 +455,20 @@ BOOL CDCClient::OnCommand(const std::string& strCommand, const std::string& strP
 			// Invalid command
 			return FALSE;
 
-		return OnGet( strType, strFilename, nOffset, nLength, strOptions );
+		// Start uploading...
+		if ( ! m_pDownloadTransfer )
+		{
+			if ( ! m_pUploadTransfer )
+				m_pUploadTransfer = new CUploadTransferDC( this );
+			if ( ! m_pUploadTransfer )
+				// Out of memory
+				return FALSE;
+
+			// Start upload
+			return m_pUploadTransfer->OnUpload( strType, strFilename, nOffset, nLength, strOptions );
+		}
+
+		Write( CANNOT_UPLOAD );	
 	}
 	else if ( strCommand == "$Get" ||
 		strCommand == "$GetZBlock" ||
@@ -247,6 +477,73 @@ BOOL CDCClient::OnCommand(const std::string& strCommand, const std::string& strP
 		strCommand == "$GetListLen" )
 	{
 		Write( _P("$Error Command not supported. Use ADCGET/ADCSND instead|") );
+	}
+	else if ( strCommand == "$ADCSND" )
+	{
+		// $ADCSND (list|file|tthl) Filename Offset Length [ZL1]
+
+		std::string::size_type nPos1 = strParams.find( ' ' );
+		if ( nPos1 == std::string::npos )
+			// Invalid command
+			return FALSE;
+		std::string strType = strParams.substr( 0, nPos1 );
+		std::string::size_type nPos2 = strParams.find( ' ', nPos1 + 1 );
+		if ( nPos2 == std::string::npos )
+			// Invalid command
+			return FALSE;
+		std::string strFilename = strParams.substr( nPos1 + 1, nPos2 - nPos1 - 1 );
+		std::string::size_type nPos3 = strParams.find( ' ', nPos2 + 1 );
+		if ( nPos3 == std::string::npos )
+			// Invalid command
+			return FALSE;
+		std::string strOffset = strParams.substr( nPos2 + 1, nPos3 - nPos2 - 1 );
+		std::string::size_type nPos4 = strParams.find( ' ', nPos3 + 1 );
+		std::string strLength, strOptions;
+		if ( nPos4 == std::string::npos )
+		{
+			strLength = strParams.substr( nPos3 + 1 );
+		}
+		else
+		{
+			strLength = strParams.substr( nPos3 + 1, nPos4 - nPos3 - 1 );
+			strOptions = strParams.substr( nPos4 + 1 );
+		}
+		QWORD nOffset;
+		if ( sscanf_s( strOffset.c_str(), "%I64u", &nOffset ) != 1 )
+			// Invalid command
+			return FALSE;
+		QWORD nLength;
+		if ( sscanf_s( strLength.c_str(), "%I64d", &nLength ) != 1 )
+			// Invalid command
+			return FALSE;
+
+		if ( CanDownload() )
+		{
+			// Start downloading...
+			return m_pDownloadTransfer->OnDownload( strType, strFilename, nOffset, nLength, strOptions );
+		}
+		else
+			// Unexpected download
+			return FALSE;
+	}
+	else if ( strCommand == "$MaxedOut" )
+	{
+		// No free upload slots
+		// $MaxedOut|
+
+		if ( m_pDownloadTransfer )
+		{
+			m_pDownloadTransfer->Close( TRI_TRUE );
+			ASSERT( m_pDownloadTransfer == NULL );
+		}
+
+		return TRUE;
+	}
+	else if ( strCommand == "$Error" )
+	{
+		// $Error Error message|
+
+		return TRUE;
 	}
 	else
 	{
@@ -263,469 +560,49 @@ BOOL CDCClient::OnChat(const std::string& /*strMessage*/)
 	return TRUE;
 }
 
-BOOL CDCClient::OnGet(const std::string& strType, const std::string& strFilename, QWORD nOffset, QWORD nLength, const std::string& strOptions)
+BOOL CDCClient::Greetings()
 {
-	ClearRequest();
-
-	BOOL bZip = ( strOptions.find("ZL1") != std::string::npos );
-
-	if ( strType == "tthl" )
-	{
-		if ( strFilename.substr( 0, 4 ) != "TTH/" )
-		{
-			// Invalid hash prefix
-			return FALSE;
-		}
-
-		Hashes::TigerHash oTiger;
-		if ( ! oTiger.fromString( CA2W( strFilename.substr( 4 ).c_str() ) ) )
-		{
-			// Invalid TigerTree hash encoding
-			return FALSE;
-		}
-
-		CSingleLock oLock( &Library.m_pSection );
-		if ( oLock.Lock( 1000 ) )
-		{
-			if ( CLibraryFile* pFile = LibraryMaps.LookupFileByTiger( oTiger, TRUE, TRUE ) )
-			{
-				if ( RequestTigerTree( strFilename, nOffset, nLength, pFile ) )
-				{
-					return TRUE;
-				}
-			}
-		}
-	}
-	else if ( strType == "file" )
-	{
-		if ( strFilename == "files.xml" || strFilename == "files.xml.bz2" )
-		{
-			if ( RequestFileList( TRUE, bZip, strFilename, nOffset, nLength ) )
-				return TRUE;
-		}
-		else if ( strFilename.substr( 0, 4 ) == "TTH/" )
-		{
-			Hashes::TigerHash oTiger;
-			if ( ! oTiger.fromString( CA2W( strFilename.substr( 4 ).c_str() ) ) )
-			{
-				// Invalid TigerTree hash encoding
-				return FALSE;
-			}
-
-			CSingleLock oLock( &Library.m_pSection );
-			if ( oLock.Lock( 1000 ) )
-			{
-				if ( CLibraryFile* pFile = LibraryMaps.LookupFileByTiger( oTiger, TRUE, TRUE ) )
-				{
-					if ( RequestFile( strFilename, nOffset, nLength, pFile ) )
-					{
-						return TRUE;
-					}
-				}
-			}
-		}
-	}
-	else if ( strType == "list" )
-	{
-		if ( RequestFileList( FALSE, bZip, strFilename, nOffset, nLength ) )
-			return TRUE;
-	}
-	else
-	{
-		// Invalid request type
-		return FALSE;
-	}
-
-	Write( FILE_NOT_AVAILABLE );
-
-	LogOutgoing();
-
-	theApp.Message( MSG_ERROR, IDS_UPLOAD_FILENOTFOUND,
-		(LPCTSTR)m_sAddress, (LPCTSTR)CA2CT( strFilename.c_str() ) );
-
-	return TRUE;
-}
-
-BOOL CDCClient::RequestFileList(BOOL bFile, BOOL bZip, const std::string& strFilename, QWORD nOffset, QWORD nLength)
-{
-	BOOL bBZip = bFile && ( strFilename == "files.xml.bz2" );
-	m_sName = bFile ? "/" : strFilename.c_str();
-
-	// Create library file list
-	CBuffer pXML;
-	LibraryToFileList( m_sName, pXML );
-
-	// TODO: Implement partial request of file list
-	nOffset, nLength;
-
-	m_nOffset = 0;
-	m_nLength = pXML.m_nLength;
-
-	if ( bBZip )
-	{
-		// BZip it
-		if ( ! pXML.BZip() )
-		{
-			// Out of memory
-			return FALSE;
-		}
-		bZip = FALSE;
-		m_nLength = pXML.m_nLength;
-	}
-
-	if ( bZip )
-	{
-		// Zip it
-		if ( ! pXML.Deflate() )
-		{
-			// Out of memory
-			return FALSE;
-		}
-	}
-
-	CString sAnswer;
-	sAnswer.Format( _T("$ADCSND %hs %hs %I64u %I64u%hs|"),
-		( bFile ? "file" : "list" ), strFilename.c_str(),
-		m_nOffset, m_nLength,
-		( bZip ? " ZL1" : "") );
-	Write( sAnswer );
-	
-	LogOutgoing();
-
-	Write( &pXML );
-
-	StartSending( upsBrowse );
-
-	theApp.Message( MSG_NOTICE, IDS_UPLOAD_BROWSE,
-		(LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
-
-	return TRUE;
-}
-
-BOOL CDCClient::RequestTigerTree(const std::string& strFilename, QWORD nOffset, QWORD nLength, CLibraryFile* pFile)
-{
-	m_sName = pFile->m_sName;
-
-	auto_ptr< CTigerTree > pTigerTree( pFile->GetTigerTree() );
-	BYTE* pSerialTree = NULL;
-	DWORD nSerialTree = 0;
-	if ( ! pTigerTree.get() || ! pTigerTree->ToBytes( &pSerialTree, &nSerialTree ) )
-	{
-		ClearHashes();
-		return FALSE;
-	}
-
-	// TODO: Find out and fix TigerTree hashes placement in output buffer
-	nSerialTree = 24; // Root hash only
-
-	m_nOffset = nOffset;
-	if ( m_nOffset >= nSerialTree )
-		m_nLength = SIZE_UNKNOWN;
-	else
-		m_nLength = min( ( ( nLength == SIZE_UNKNOWN ) ? nSerialTree : nLength ), nSerialTree - m_nOffset );
-
-	if ( m_nLength > nSerialTree || m_nOffset + m_nLength > nSerialTree )
-	{
-		GlobalFree( pSerialTree );
-
-		ClearHashes();
-
-		theApp.Message( MSG_ERROR, IDS_UPLOAD_BAD_RANGE,
-			(LPCTSTR)m_sAddress, (LPCTSTR)m_sName );
-
-		return FALSE;
-	}
-
-	CString sAnswer;
-	sAnswer.Format( _T("$ADCSND tthl %hs %I64u %I64u|"),
-		strFilename.c_str(), m_nOffset, m_nLength );
-	Write( sAnswer );
-
-	LogOutgoing();
-
-	Write( pSerialTree + m_nOffset, m_nLength );
-
-	GlobalFree( pSerialTree );
-
-	StartSending( upsTigerTree );
-
-	theApp.Message( MSG_INFO, IDS_UPLOAD_TIGER_SEND,
-		(LPCTSTR)m_sName, (LPCTSTR)m_sAddress );
-
-	return TRUE;
-}
-
-BOOL CDCClient::RequestFile(const std::string& strFilename, QWORD nOffset, QWORD nLength, CLibraryFile* pFile)
-{
-	RequestComplete( pFile );
-
-	if ( ! UploadQueues.CanUpload( PROTOCOL_DC, pFile, FALSE ) )
-	{
-		theApp.Message( MSG_ERROR, IDS_UPLOAD_FILENOTFOUND,
-			(LPCTSTR)m_sAddress, (LPCTSTR)m_sName );
-
-		Write( CANNOT_UPLOAD );
-			
-		LogOutgoing();
-
-		OnWrite();
-
-		return TRUE;
-	}
-
-	m_nOffset = nOffset;
-	if ( m_nOffset >= m_nSize )
-		m_nLength = SIZE_UNKNOWN;
-	else
-		m_nLength = min( ( ( nLength == SIZE_UNKNOWN ) ? m_nSize : nLength ), m_nSize - m_nOffset );
-
-	if ( m_nLength > m_nSize || m_nOffset + m_nLength > m_nSize )
-	{
-		theApp.Message( MSG_ERROR, IDS_UPLOAD_BAD_RANGE,
-			(LPCTSTR)m_sAddress, (LPCTSTR)m_sName );
-	
-		ClearHashes();
-
-		return FALSE;
-	}
-
-	AllocateBaseFile();
-
-	UINT nError = 0;
-	int nPosition = 0;
-
-	if ( m_bStopTransfer )
-	{
-		m_tRotateTime = 0;
-		m_bStopTransfer	= FALSE;
-
-		CUploadQueue* pQueue = m_pQueue;
-		if ( pQueue )
-			pQueue->Dequeue( this );
-	}
-
-	if ( Uploads.CanUploadFileTo( &m_pHost.sin_addr, this ) )
-	{
-		nPosition = UploadQueues.GetPosition( this, TRUE );
-		if ( nPosition == 0 )
-		{
-			// Queued, and ready to send
-			return SendFile( strFilename );
-		}
-		else if ( nPosition > 0 )
-		{
-			// Queued, but must wait
-			nError = IDS_UPLOAD_BUSY_OLD;
-		}
-		else if ( UploadQueues.Enqueue( this ) )
-		{
-			nPosition = UploadQueues.GetPosition( this, TRUE );
-			if ( nPosition == 0 )
-			{
-				// Queued, and ready to send
-				return SendFile( strFilename );
-			}
-			else if ( nPosition > 0 )
-			{
-				// Queued, but must wait
-				nError = IDS_UPLOAD_BUSY_OLD;
-			}
-			else
-				// Client can't queue, so dequeue and return busy
-				nError = IDS_UPLOAD_BUSY_OLD;
-		}
-		else
-			// Unable to queue anywhere
-			nError = IDS_UPLOAD_BUSY_QUEUE;
-	}
-	else
-		// Too many from this host
-		nError = IDS_UPLOAD_BUSY_HOST;
-
-	if ( nError )
-	{
-		UploadQueues.Dequeue( this );
-		ASSERT( m_pQueue == NULL );
-	}
-		
-	if ( m_pQueue )
-	{
-		CString strAnswer;
-		DWORD nReaskMultiplier = ( nPosition <= 9 ) ? ( ( nPosition + 1 ) / 2 ) : 5;
-		DWORD nTimeScale = 1000 / nReaskMultiplier;
-		
-		CSingleLock pLock( &UploadQueues.m_pSection, TRUE );
-		if ( UploadQueues.Check( m_pQueue ) )
-		{
-			CString strName = m_pQueue->m_sName;
-			strName.Replace( _T("\""), _T("'") );
-
-			strAnswer.Format( _T(" position=%i,length=%i,limit=%i,pollMin=%lu,pollMax=%lu,id=\"%s\""),
-				nPosition,
-				m_pQueue->GetQueuedCount(),
-				m_pQueue->GetTransferCount( TRUE ),
-				Settings.Uploads.QueuePollMin / nTimeScale,
-				Settings.Uploads.QueuePollMax / nTimeScale,
-				(LPCTSTR)strName );
-
-			theApp.Message( MSG_INFO, IDS_UPLOAD_QUEUED, (LPCTSTR)m_sName,
-				(LPCTSTR)m_sAddress, nPosition, m_pQueue->GetQueuedCount(),
-				(LPCTSTR)strName );
-		}
-
-		Write( _P("$Queued") );
-		Write( strAnswer );
-		Write( _P("|") );
-
-		LogOutgoing();
-
-		StartSending( upsPreQueue );
-	}
-	else
-	{ 
-		theApp.Message( MSG_ERROR, nError,
-			(LPCTSTR)m_sName, (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
-
-		Write( CANNOT_UPLOAD );
-
-		LogOutgoing();
-
-		OnWrite();
-	}
-
-	return TRUE;
-}
-
-BOOL CDCClient::SendFile(const std::string& strFilename)
-{
-	if ( ! IsFileOpen() && ! OpenFile() )
-	{
-		Write( FILE_NOT_AVAILABLE );
-		
-		LogOutgoing();
-
-		theApp.Message( MSG_ERROR, IDS_UPLOAD_CANTOPEN,
-			(LPCTSTR)m_sName , (LPCTSTR)m_sAddress);
-
-		return FALSE;
-	}
-
-	/*{ TODO: DC++ not support download chunk size change by uploader
-		CSingleLock pLock( &UploadQueues.m_pSection, TRUE );
-		
-		if ( m_pQueue && UploadQueues.Check( m_pQueue ) && m_pQueue->m_bRotate )
-		{
-			DWORD nLimit = m_pQueue->m_nRotateChunk;
-			if ( nLimit == 0 ) nLimit = Settings.Uploads.RotateChunkLimit;
-			if ( nLimit > 0 ) m_nLength = min( m_nLength, nLimit );
-		}
-	}*/
-
-	CString sAnswer;
-	sAnswer.Format( _T("$ADCSND file %hs %I64u %I64u|"),
-		strFilename.c_str(), m_nOffset, m_nLength );
-	Write( sAnswer );
-
-	LogOutgoing();
-
-	m_mOutput.pLimit = &m_nBandwidth;
-
-	StartSending( upsUploading );
-
-	if ( m_pBaseFile->m_nRequests++ == 0 )
-	{
-		theApp.Message( MSG_NOTICE, IDS_UPLOAD_FILE,
-			(LPCTSTR)m_sName, (LPCTSTR)m_sAddress );
-		
-		ASSERT( m_pBaseFile->m_sPath.GetLength() );
-		PostMainWndMessage( WM_NOWUPLOADING, 0, (LPARAM)new CString( m_pBaseFile->m_sPath ) );
-	}
-	
-	theApp.Message( MSG_INFO, IDS_UPLOAD_CONTENT,
-		m_nOffset, m_nOffset + m_nLength - 1, (LPCTSTR)m_sName,
-		(LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
-
-	return TRUE;
-}
-
-BOOL CDCClient::OnKey()
-{
-	if ( m_bExtended )
-	{
-		Write( _P("$Supports MiniSlots XmlBZList ADCGet TTHL TTHF ZLIG |") );
-	}
-
-	if ( m_bDownload )
-		Write( _P("$Direction Upload 0|") );
-	else
-		Write( _P("$Direction Download 0|") );
-
-	Write( _P("$Key ") );
-	Write( m_strKey.c_str(), m_strKey.size() );
+	ASSERT( m_nState == nrsConnected );
+	ASSERT( ! m_sNick.IsEmpty() );
+
+	Write( _P("$MyNick ") );
+	Write( m_sNick );
 	Write( _P("|") );
 
-	LogOutgoing();
+	std::string sLock = GenerateLock();
+
+	Write( _P("$Lock ") );
+	Write( sLock.c_str(), sLock.size() );
+	Write( _P(" Pk=" CLIENT_NAME "|") );
 
 	return TRUE;
 }
 
-void CDCClient::LibraryToFileList(const CString& strRoot, CBuffer& pXML)
+BOOL CDCClient::Handshake()
 {
-	CSingleLock oLock( &Library.m_pSection, TRUE );
-			
-	CString strFileListing;
-	strFileListing.Format( _T("<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>\r\n")
-		_T("<FileListing Version=\"1\" Base=\"%s\" Generator=\"%s\">\r\n"),
-		strRoot, theApp.m_sSmartAgent );
-	pXML.Print( strFileListing, CP_UTF8 );
+	ASSERT( m_nState == nrsConnected );
 
-	if ( strRoot == _T("/") )
+	if ( ! m_bInitiated )
 	{
-		// All folders
-		for ( POSITION pos = LibraryFolders.GetFolderIterator() ; pos ; )
-		{
-			FolderToFileList( LibraryFolders.GetNextFolder( pos ), pXML );
-		}
-	}
-	else if ( CLibraryFolder* pFolder = LibraryFolders.GetFolderByName( strRoot ) )
-	{
-		// Specified folder
-		FolderToFileList( pFolder, pXML );
+		Greetings();
 	}
 
-	pXML.Add( _P("</FileListing>\r\n") );
-}
+	Write( _P("$Supports MiniSlots XmlBZList ADCGet TTHF ZLIG |") );
 
-void CDCClient::FolderToFileList(CLibraryFolder* pFolder, CBuffer& pXML)
-{
-	if ( ! pFolder || ! pFolder->IsShared() )
-		return;
+	CString strDirection;
+	strDirection.Format( _T("$Direction %s %u|"),
+		( m_pDownloadTransfer ? _T("Download") : _T("Upload") ),
+		 m_nNumber );
+	Write( strDirection );
 
-	CString strFolder;
-	strFolder.Format( _T("<Directory Name=\"%s\">\r\n"),
-		pFolder->m_sName );
-	pXML.Print( strFolder, CP_UTF8 );
-
-	for ( POSITION pos = pFolder->GetFolderIterator() ; pos ; )
+	if ( ! m_strKey.empty() )
 	{
-		FolderToFileList( pFolder->GetNextFolder( pos ), pXML );
+		Write( _P("$Key ") );
+		Write( m_strKey.c_str(), m_strKey.size() );
+		Write( _P("|") );
 	}
 
-	for ( POSITION pos = pFolder->GetFileIterator() ; pos ; )
-	{
-		FileToFileList( pFolder->GetNextFile( pos ), pXML );
-	}
+	LogOutgoing();
 
-	pXML.Add( _P("</Directory>\r\n") );
-}
-
-void CDCClient::FileToFileList(CLibraryFile* pFile, CBuffer& pXML)
-{
-	if ( ! pFile || ! pFile->IsShared() )
-		return;
-
-	CString strFile;
-	strFile.Format( _T("<File Name=\"%s\" Size=\"%I64u\" TTH=\"%s\"/>\r\n"),
-		pFile->m_sName, pFile->m_nSize, pFile->m_oTiger.toString() );
-	pXML.Print( strFile, CP_UTF8 );
+	return TRUE;
 }

@@ -26,10 +26,13 @@
 #include "Download.h"
 #include "DownloadSource.h"
 #include "DownloadTransferBT.h"
+#include "DownloadTransferDC.h"
 #include "DownloadTransferED2K.h"
 #include "DownloadTransferFTP.h"
 #include "DownloadTransferHTTP.h"
 #include "Downloads.h"
+#include "DCClient.h"
+#include "DCClients.h"
 #include "EDClient.h"
 #include "EDClients.h"
 #include "EDPacket.h"
@@ -104,7 +107,16 @@ CDownloadSource::CDownloadSource(const CDownload* pDownload, const CQueryHit* pH
 			m_sURL.Format( _T("%s%I64i/"), strTemp, pDownload->m_nSize );
 		}
 	}
-	
+	else if ( pHit->m_nProtocol == PROTOCOL_DC )
+	{
+		// Generate source GUID form source nick
+		CMD5 pMD5;
+		pMD5.Add( (LPCTSTR)m_sNick, m_sNick.GetLength() * sizeof( TCHAR ) );
+		pMD5.Finish();
+		pMD5.GetHash( &m_oGUID[ 0 ] );
+		m_oGUID.validate();
+	}
+
 	ResolveURL();
 
 	// If we got hit with BitTorrent hash
@@ -282,7 +294,8 @@ BOOL CDownloadSource::ResolveURL()
 	m_pAddress	= pURL.m_pAddress;
 	m_nPort		= pURL.m_nPort;
 	
-	if ( m_nProtocol == PROTOCOL_ED2K )
+	if ( m_nProtocol == PROTOCOL_ED2K ||
+		 m_nProtocol == PROTOCOL_DC )
 	{
 		m_pServerAddress	= pURL.m_pServerAddress;
 		m_nServerPort		= pURL.m_nServerPort;
@@ -459,6 +472,8 @@ CDownloadTransfer* CDownloadSource::CreateTransfer(LPVOID pParam)
 		return ( m_pTransfer = new CDownloadTransferFTP( this ) );
 	case PROTOCOL_BT:
 		return ( m_pTransfer = new CDownloadTransferBT( this, (CBTClient*)pParam ) );
+	case PROTOCOL_DC:
+		return ( m_pTransfer = new CDownloadTransferDC( this, (CDCClient*)pParam ) );
 	default:
 		return NULL;
 	}
@@ -816,35 +831,50 @@ BOOL CDownloadSource::CheckHash(const Hashes::Md5Hash& oMD5)
 
 BOOL CDownloadSource::PushRequest()
 {
-	if ( m_nProtocol == PROTOCOL_BT )
+	BOOL bSuccess = FALSE;
+
+	switch ( m_nProtocol )
 	{
+	case PROTOCOL_BT:
 		return FALSE;
-	}
-	else if ( m_nProtocol == PROTOCOL_ED2K )
-	{
-		if ( m_nServerPort == 0 ) return FALSE;
-		if ( EDClients.IsFull() ) return TRUE;
-		
-		CEDClient* pClient = EDClients.Connect( m_pAddress.S_un.S_addr, m_nPort,
-			&m_pServerAddress, m_nServerPort, m_oGUID );
-		
-		if ( pClient != NULL && pClient->m_bConnected )
+
+	case PROTOCOL_DC:
+		if ( DCClients.Connect( m_pServerAddress, m_nServerPort, m_sNick, bSuccess ) )
 		{
-			pClient->SeekNewDownload();
+			if ( bSuccess )
+			{
+				theApp.Message( MSG_INFO, IDS_DOWNLOAD_PUSH_SENT, (LPCTSTR)m_pDownload->m_sName );
+				m_tAttempt = GetTickCount() + Settings.Downloads.PushTimeout;
+			}
 			return TRUE;
 		}
-		
+		break;
+
+	case PROTOCOL_ED2K:
+		if ( m_nServerPort == 0 )
+			return FALSE;
+		if ( EDClients.IsFull() )
+			return TRUE;
+		if ( CEDClient* pClient = EDClients.Connect( m_pAddress.S_un.S_addr, m_nPort,
+			&m_pServerAddress, m_nServerPort, m_oGUID ) )
+		{
+			if ( pClient->m_bConnected )
+			{
+				pClient->SeekNewDownload();
+				return TRUE;
+			}
+		}
 		if ( Neighbours.PushDonkey( m_pAddress.S_un.S_addr, m_pServerAddress, m_nServerPort ) )
 		{
 			theApp.Message( MSG_INFO, IDS_DOWNLOAD_PUSH_SENT, (LPCTSTR)m_pDownload->m_sName );
 			m_tAttempt = GetTickCount() + Settings.Downloads.PushTimeout;
 			return TRUE;
 		}
-	}
-	else
-	{
-		if ( ! m_oGUID ) return FALSE;
-		
+		break;
+
+	default:
+		if ( ! m_oGUID )
+			return FALSE;
 		if ( Network.SendPush( m_oGUID, m_nIndex ) )
 		{
 			theApp.Message( MSG_INFO, IDS_DOWNLOAD_PUSH_SENT, (LPCTSTR)m_pDownload->m_sName );
@@ -858,7 +888,8 @@ BOOL CDownloadSource::PushRequest()
 
 BOOL CDownloadSource::CheckPush(const Hashes::Guid& oClientID)
 {
-	return validAndEqual( m_oGUID, oClientID );
+	return ( m_nProtocol == PROTOCOL_HTTP || m_nProtocol == PROTOCOL_DC ) &&
+		validAndEqual( m_oGUID, oClientID );
 }
 
 BOOL CDownloadSource::CheckDonkey(const CEDClient* pClient)

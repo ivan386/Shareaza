@@ -523,6 +523,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\DCClients.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\DCNeighbour.cpp"
 				>
 			</File>
@@ -576,6 +580,10 @@
 			</File>
 			<File
 				RelativePath="DownloadTransferBT.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\DownloadTransferDC.cpp"
 				>
 			</File>
 			<File
@@ -1152,6 +1160,10 @@
 			</File>
 			<File
 				RelativePath="UploadTransferBT.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\UploadTransferDC.cpp"
 				>
 			</File>
 			<File
@@ -2152,15 +2164,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\DCClients.h"
+				>
+			</File>
+			<File
 				RelativePath=".\DCNeighbour.h"
 				>
 			</File>
 			<File
 				RelativePath=".\DCPacket.h"
-				>
-			</File>
-			<File
-				RelativePath=".\DCStream.h"
 				>
 			</File>
 			<File
@@ -2209,6 +2221,10 @@
 			</File>
 			<File
 				RelativePath="DownloadTransferBT.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DownloadTransferDC.h"
 				>
 			</File>
 			<File
@@ -2729,6 +2745,10 @@
 			</File>
 			<File
 				RelativePath="UploadTransferBT.h"
+				>
+			</File>
+			<File
+				RelativePath=".\UploadTransferDC.h"
 				>
 			</File>
 			<File

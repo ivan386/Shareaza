@@ -430,7 +430,7 @@ BOOL CDownloadWithTransfers::OnAcceptPush(const Hashes::Guid& oClientID, CConnec
 	{
 		pSource = GetNext( posSource );
 
-		if ( pSource->m_nProtocol == PROTOCOL_HTTP && pSource->CheckPush( oClientID ) )
+		if ( pSource->CheckPush( oClientID ) )
 			break;
 
 		pSource = NULL;

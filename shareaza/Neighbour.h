@@ -132,6 +132,7 @@ protected:
 
 // Operations
 public:
+	virtual BOOL ConnectTo(const IN_ADDR* pAddress, WORD nPort, BOOL bAutomatic);
 	virtual BOOL Send(CPacket* pPacket, BOOL bRelease = TRUE, BOOL bBuffered = FALSE);
 	virtual void Close(UINT nError = IDS_CONNECTION_CLOSED);
 	virtual void DelayClose(UINT nError);	// Send the buffer then close the socket, record the error given

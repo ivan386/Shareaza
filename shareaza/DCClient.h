@@ -21,38 +21,64 @@
 
 #pragma once
 
-#include "DCStream.h"
-#include "UploadTransfer.h"
+#include "Transfer.h"
 
+class CDClients;
+class CDownloadTransferDC;
 class CLibraryFolder;
 class CLibraryFile;
+class CUploadTransferDC;
 
 
-class CDCClient : public CDCStream< CUploadTransfer >
+class CDCClient : public CTransfer
 {
 public:
-	CDCClient();
+	CDCClient(LPCTSTR szNick = NULL);
 	virtual ~CDCClient();
 
 	virtual BOOL	ConnectTo(const IN_ADDR* pAddress, WORD nPort);
+	virtual void	AttachTo(CConnection* pConnection);
+	virtual void	Close(UINT nError = 0);
+
+	// Second part of handshaking - Send [$MyNick, $Lock,] $Supports, $Direction and $Key commands
+	BOOL			Handshake();
 
 protected:
+	CString					m_sNick;				// User nick
+	CString					m_sRemoteNick;			// Remote user nick
+	std::string				m_strKey;				// Remote client key
+	BOOL					m_bExtended;			// Using extended protocol
+	CStringList				m_oFeatures;			// Remote client supported features
+	CDownloadTransferDC*	m_pDownloadTransfer;	// Download stream
+	CUploadTransferDC*		m_pUploadTransfer;		// Upload stream
+	TRISTATE				m_bDirection;			// TRI_TRUE - remote client want download, TRI_FALSE - upload.
+	int						m_nNumber;				// My number (0...0x7fff)
+	int						m_nRemoteNumber;		// Remote client number (0...0x7fff), -1 - unknown.
+	BOOL					m_bLock;				// Got $Lock command
+	BOOL					m_bClosing;				// Client closing
+
 	virtual BOOL	OnConnected();
 	virtual void	OnDropped();
+	virtual BOOL	OnRun();
+	virtual BOOL	OnRead();
 	virtual BOOL	OnWrite();
 
-	virtual BOOL	OnCommand(const std::string& strCommand, const std::string& strParams);
-	virtual BOOL	OnKey();
-	virtual BOOL	OnChat(const std::string& strMessage);
+	// Read single command from input buffer
+	BOOL			ReadCommand(std::string& strLine);
+	// Got DC++ command
+	BOOL			OnCommand(const std::string& strCommand, const std::string& strParams);
+	// Got $Lock command
+	BOOL			OnLock(const std::string& strLock);
+	// Got chat message
+	BOOL			OnChat(const std::string& strMessage);
+	// Generating challenge for this client
+	std::string		GenerateLock() const;
+	// First part of handshaking - Send $MyNick, $Lock
+	BOOL			Greetings();
+	// Can Shareaza start download?
+	BOOL			CanDownload() const;
 
-	BOOL			OnGet(const std::string& strType, const std::string& strFilename, QWORD nOffset, QWORD nLength, const std::string& strOptions);
-
-	BOOL			RequestFileList(BOOL bFile, BOOL bZip, const std::string& strFilename, QWORD nOffset, QWORD nLength);
-	BOOL			RequestTigerTree(const std::string& strFilename, QWORD nOffset, QWORD nLength, CLibraryFile* pFile);
-	BOOL			RequestFile(const std::string& strFilename, QWORD nOffset, QWORD nLength, CLibraryFile* pFile);
-	BOOL			SendFile(const std::string& strFilename);
-
-	void			LibraryToFileList(const CString& strRoot, CBuffer& pXML);
-	void			FolderToFileList(CLibraryFolder* pFolder, CBuffer& pXML);
-	void			FileToFileList(CLibraryFile* pFile, CBuffer& pXML);
+	friend class CDCClients;
+	friend class CDownloadTransferDC;
+	friend class CUploadTransferDC;
 };

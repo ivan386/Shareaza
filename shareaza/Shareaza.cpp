@@ -25,6 +25,7 @@
 #include "BTClients.h"
 #include "BTInfo.h"
 #include "CoolInterface.h"
+#include "DCClients.h"
 #include "DDEServer.h"
 #include "DiscoveryServices.h"
 #include "DlgDeleteFile.h"
@@ -527,6 +528,8 @@ int CShareazaApp::ExitInstance()
 
 		SplashStep( L"Clearing Clients" );
 		Uploads.Clear( FALSE );
+		BTClients.Clear();
+		DCClients.Clear();
 		EDClients.Clear();
 
 		if ( Settings.Connection.DeleteFirewallException )
@@ -563,7 +566,6 @@ int CShareazaApp::ExitInstance()
 		}
 
 		SplashStep( L"Finalizing" );
-		BTClients.Clear();
 		Downloads.Clear( true );
 		Library.Clear();
 		CoolMenu.Clear();
