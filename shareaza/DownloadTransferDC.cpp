@@ -155,6 +155,10 @@ BOOL CDownloadTransferDC::OnConnected()
 	m_sAddress		= m_pClient->m_sAddress;
 	UpdateCountry();
 
+	m_pSource->m_sServer		= m_sUserAgent;
+	m_pSource->m_sCountry		= m_sCountry;
+	m_pSource->m_sCountryName	= m_sCountryName;
+
 	theApp.Message( MSG_INFO, IDS_DOWNLOAD_CONNECTED, (LPCTSTR)m_sAddress );
 
 	if ( ! m_pDownload->PrepareFile() )
