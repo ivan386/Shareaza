@@ -333,8 +333,7 @@ BOOL CEDPacket::Deflate()
 
 	DWORD nOutput = 0;
 	auto_array< BYTE > pOutput( CZLib::Compress( m_pBuffer, m_nLength, &nOutput ) );
-
-	if ( pOutput.get() == NULL )
+	if ( ! pOutput.get() )
 		return FALSE;
 
 	if ( nOutput >= m_nLength )
@@ -343,9 +342,10 @@ BOOL CEDPacket::Deflate()
 	m_nEdProtocol = ED2K_PROTOCOL_EMULE_PACKED;
 
 	delete [] m_pBuffer;
-	m_pBuffer = pOutput.get();
+	m_pBuffer = pOutput.release();
 	m_nLength = nOutput;
 	m_nBuffer = nOutput;
+	m_nPosition = 0;
 
 	return TRUE;
 }
@@ -379,6 +379,7 @@ BOOL CEDPacket::Inflate()
 	m_pBuffer = pOutput.release();
 	m_nLength = nOutput;
 	m_nBuffer = nOutput;
+	m_nPosition = 0;
 
 	return TRUE;
 }

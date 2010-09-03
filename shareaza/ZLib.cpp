@@ -85,8 +85,8 @@ BYTE* CZLib::Compress2(LPCVOID pInput, DWORD nInput, DWORD* pnOutput, DWORD nSug
 
 auto_array< BYTE > CZLib::Decompress(LPCVOID pInput, DWORD nInput, DWORD* pnOutput)
 {
-	// Guess how big the data will be decompressed, use nSuggest, or just guess it will be 6 times as big
-	for ( DWORD nSuggest = max( nInput * 6ul, 1024ul ); ; nSuggest *= 2 )
+	// Guess how big the data will be decompressed, use nSuggest, or just guess it will be 3 times as big
+	for ( DWORD nSuggest = nInput * 3; ; nSuggest *= 2 )
 	{
 		*pnOutput = nSuggest;
 
@@ -116,8 +116,8 @@ BYTE* CZLib::Decompress2(LPCVOID pInput, DWORD nInput, DWORD* pnOutput)
 {
 	BYTE* pBuffer = NULL;
 
-	// Guess how big the data will be decompressed, use nSuggest, or just guess it will be 6 times as big
-	for ( DWORD nSuggest = max( nInput * 6ul, 1024ul ); ; nSuggest *= 2 )
+	// Guess how big the data will be decompressed, use nSuggest, or just guess it will be 3 times as big
+	for ( DWORD nSuggest = nInput * 3; ; nSuggest *= 2 )
 	{
 		*pnOutput = nSuggest;
 
