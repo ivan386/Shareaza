@@ -294,7 +294,7 @@ BOOL CDiscoveryServices::CheckWebCacheValid(LPCTSTR pszAddress)
 				return FALSE;
 		}
 	}
-	
+
 	// Check it has a valid protocol
 	if ( _tcsnicmp( pszAddress, _T("http://"),  7 ) == 0 )
 		pszAddress += 7;
@@ -603,9 +603,9 @@ void CDiscoveryServices::AddDefaults()
 				switch( cType )
 				{
 				case '1': Add( strService, CDiscoveryService::dsWebCache, PROTOCOL_G1 );	// G1 service
-					break; 	
+					break;
 				case '2': Add( strService, CDiscoveryService::dsWebCache, PROTOCOL_G2 );	// G2 service
-					break; 	
+					break;
 				case 'M': Add( strService, CDiscoveryService::dsWebCache );					// Multi-network service
 					break;
 				case 'D': Add( strService, CDiscoveryService::dsServerMet, PROTOCOL_ED2K );	// eDonkey service
@@ -1130,7 +1130,7 @@ CDiscoveryService* CDiscoveryServices::GetRandomWebCache(PROTOCOLID nProtocol, B
 
 		if ( pService->m_nType == CDiscoveryService::dsWebCache && pService != pExclude )
 		{
-			if ( ! bWorkingOnly || ( pService->m_nAccesses > 0 && pService->m_nFailures == 0 && pService->m_nHosts > 0 ) )
+			if ( ! bWorkingOnly || ( pService->m_nAccesses > 0 && pService->m_nFailures == 0 ) )
 			{
 				if ( tNow - pService->m_tAccessed > pService->m_nAccessPeriod )
 				{
@@ -1373,7 +1373,7 @@ BOOL CDiscoveryServices::RunWebCacheGet(BOOL bCaches)
 		strURL += _T("&client=")_T(VENDOR_CODE)_T("&version=");	//Version parameter is spec1
 		strURL += theApp.m_sVersion;
 	}
-	
+
 	strURL += _T("&getleaves=1&getnetworks=1&getclusters=0&getvendors=1&getuptime=1");	//Specification 2.1 additions... (cluster output disabled, as clustering concept was vague)
 
 	pLock.Unlock();
@@ -1389,7 +1389,7 @@ BOOL CDiscoveryServices::RunWebCacheGet(BOOL bCaches)
 		return FALSE;
 
 	int nHosts = 0, nCaches = 0;
-	
+
 	// Split answer to lines
 	while ( strOutput.GetLength() )
 	{
@@ -1430,7 +1430,7 @@ BOOL CDiscoveryServices::RunWebCacheGet(BOOL bCaches)
 					DWORD tSeen	= static_cast< DWORD >( time( NULL ) ) - nSeconds;
 
 					// Skip cluster field
-					
+
 					// Get current leaves field
 					DWORD nCurrentLeaves = 0;
 					if ( oParts.GetCount() >= 5 && ! oParts[ 4 ].IsEmpty() )
@@ -1487,7 +1487,7 @@ BOOL CDiscoveryServices::RunWebCacheGet(BOOL bCaches)
 							return FALSE;
 					}
 
-					if ( ( m_nLastQueryProtocol == PROTOCOL_G2 ) ? 
+					if ( ( m_nLastQueryProtocol == PROTOCOL_G2 ) ?
 						HostCache.Gnutella2.Add( (IN_ADDR*)&nAddress, (WORD)nPort,
 							tSeen, ( pVendor ? (LPCTSTR)pVendor->m_sCode : NULL ),
 							tUptime, nCurrentLeaves, nLeafLimit ) :
@@ -1753,7 +1753,7 @@ BOOL CDiscoveryServices::RunWebCacheUpdate()
 
 	if ( ! Check( m_pWebCache, CDiscoveryService::dsWebCache ) )
 		return FALSE;
-	
+
 	m_pWebCache->OnAccess();
 
 	CString strURL;
