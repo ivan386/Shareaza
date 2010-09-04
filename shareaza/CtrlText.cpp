@@ -526,7 +526,7 @@ CTextLine::CTextLine(WORD nType, const CString& strText) :
 
 CTextLine::~CTextLine()
 {
-	if ( m_pLine ) delete [] m_pLine;
+	delete [] m_pLine;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -534,7 +534,7 @@ CTextLine::~CTextLine()
 
 int CTextLine::Process(int nWidth)
 {
-	if ( m_pLine ) delete [] m_pLine;
+	delete [] m_pLine;
 	m_pLine = NULL;
 	m_nLine = 0;
 
@@ -571,8 +571,8 @@ int CTextLine::Process(int nWidth)
 void CTextLine::AddLine(int nLength)
 {
 	int* pLine = new int[ m_nLine + 1 ];
-	CopyMemory( pLine, m_pLine, m_nLine * sizeof(int) );
-	if ( m_pLine ) delete [] m_pLine;
+	if ( m_pLine ) CopyMemory( pLine, m_pLine, m_nLine * sizeof(int) );
+	delete [] m_pLine;
 	m_pLine = pLine;
 	m_pLine[ m_nLine++ ] = nLength;
 }
@@ -588,17 +588,18 @@ void CTextLine::Paint(CDC* pDC, CRect* pRect)
 	pRect->bottom	-= ( m_nLine - 1 ) * nHeight;
 
 	LPCTSTR pszLine	= m_sText;
-	int* pLength	= m_pLine;
 
-	for ( int nLine = 0 ; nLine < m_nLine ; nLine++, pLength++ )
+	for ( int nLine = 0 ; nLine < m_nLine ; nLine++ )
 	{
-		if ( pDC->RectVisible( pRect ) )
+		if ( m_pLine )
 		{
-			pDC->ExtTextOut( pRect->left + 2, pRect->top, ETO_CLIPPED|ETO_OPAQUE,
-				pRect, pszLine, *pLength, NULL );
+			if ( pDC->RectVisible( pRect ) )
+			{
+				pDC->ExtTextOut( pRect->left + 2, pRect->top, ETO_CLIPPED|ETO_OPAQUE,
+					pRect, pszLine, m_pLine[ nLine ], NULL );
+			}
+			pszLine += m_pLine[ nLine ];
 		}
-		pszLine += *pLength;
-
 		pRect->top += nHeight;
 		pRect->bottom += nHeight;
 	}
