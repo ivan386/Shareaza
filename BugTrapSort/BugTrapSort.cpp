@@ -196,7 +196,7 @@ bool ProcessReport(const CString& sInput)
 		return false;
 
 	CString sTimestamp = GetTime( pRoot, _T("/report/timestamp"), _T("%y%m%d-%H%M%S") );
-	if ( sTimestamp.IsEmpty() ) sTimestamp = _T("UNKNOWN");
+	if ( sTimestamp.IsEmpty() ) sTimestamp = _T("000000-000000");
 
 	CString sVersion = GetValue( pRoot, _T("/report/version") );
 
@@ -215,7 +215,7 @@ bool ProcessReport(const CString& sInput)
 	}
 
 	CString sWhat = GetValue( pRoot, _T("/report/error/what") );
-	if ( sWhat.IsEmpty() ) sWhat = _T("UNKNOWN");
+	if ( sWhat.IsEmpty() ) sWhat = _T("UNKNOWN_ERROR");
 
 	CString sAddress = GetValue( pRoot, _T("/report/error/address") );
 	sAddress = sAddress.Right( 4 );
@@ -274,21 +274,21 @@ bool ProcessReport(const CString& sInput)
 			sModule = sOrigModule;
 		}
 	}
-	if ( sAddress.IsEmpty() ) sAddress = _T("UNKNOWN");
+	if ( sAddress.IsEmpty() ) sAddress = _T("0000");
 	if ( sModule.IsEmpty() ) sModule = _T("UNKNOWN");
 
 	// Разбор версии
 	int i = 0;
 	CString sVersionNumber = sVersion.Tokenize( _T(" "), i );
-	if ( i == -1 ) sVersionNumber = _T("UNKNOWN");
+	if ( i == -1 ) sVersionNumber = _T("0.0.0.0");
 	
 	CString sVersionConfig = ( i == -1 ) ? _T("") : sVersion.Tokenize( _T(" "), i );
-	if ( i == -1 ) sVersionConfig = _T("UNKNOWN");
+	if ( i == -1 ) sVersionConfig = _T("u");
 	if ( sVersionConfig.CompareNoCase( _T("release") ) == 0 ) sVersionConfig = _T("r");
 	else if ( sVersionConfig.CompareNoCase( _T("debug") ) == 0 ) sVersionConfig = _T("d");
 	
 	CString sVersionPlatform = ( i == -1 ) ? _T("") : sVersion.Tokenize( _T(" "), i );
-	if ( i == -1 ) sVersionPlatform = _T("UNKNOWN");
+	if ( i == -1 ) sVersionPlatform = _T("xx");
 	if ( sVersionPlatform.Find( _T("32") ) != -1 ) sVersionPlatform = _T("32");
 	else if ( sVersionPlatform.Find( _T("64") ) != -1 ) sVersionPlatform = _T("64");
 	
@@ -298,11 +298,11 @@ bool ProcessReport(const CString& sInput)
 	sVersionRevision.MakeLower();
 	
 	CString sVersionDate = ( i == -1 ) ? _T("") : sVersion.Tokenize( _T(" "), i );
-	if ( i == -1 ) sVersionDate = _T("UNKNOWN");
+	if ( i == -1 ) sVersionDate = _T("00000000");
 	sVersionDate.Trim( _T(" ()") );
 
 	if ( sVersion.IsEmpty() )
-		sVersion = _T("UNKNOWN");
+		sVersion = _T("0.0.0.0");
 
 	_tprintf( _T("Version: %ls\n"), sVersion );
 
