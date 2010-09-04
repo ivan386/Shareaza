@@ -227,7 +227,7 @@ bool CLibraryBuilderInternals::ReadID3v1(DWORD nIndex, HANDLE hFile, CXMLElement
 	CopyID3v1Field( pXML, _T("album"), CString( pInfo.szAlbum, 30 ) );
 	CopyID3v1Field( pXML, _T("year"), CString( pInfo.szYear, 4 ) );
 
-	if ( pInfo.nGenre < ID3_GENRES )
+	if ( pInfo.nGenre >= 0 && pInfo.nGenre < ID3_GENRES )
 		pXML->AddAttribute( _T("genre"), pszID3Genre[ pInfo.nGenre ] );
 
 	if ( pInfo.szComment[28] == 0 && pInfo.szComment[29] > 0 )
@@ -495,7 +495,7 @@ bool CLibraryBuilderInternals::ReadID3v2(DWORD nIndex, HANDLE hFile)
 					{
 						strValue = _T("Cover");
 					}
-					else if ( _stscanf( strValue, _T("%i"), &nGenre ) == 1 && nGenre < ID3_GENRES )
+					else if ( _stscanf( strValue, _T("%i"), &nGenre ) == 1 && nGenre >= 0 && nGenre < ID3_GENRES )
 					{
 						if ( _tcsistr( strGenre, pszID3Genre[ nGenre ] ) == NULL )
 						{
