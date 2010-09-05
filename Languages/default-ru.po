@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2010-05-26 10:01+0000\n"
+"POT-Creation-Date: 2010-09-05 07:12+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -38,7 +38,7 @@ msgstr "ryo-oh-ki@narod.ru"
 
 #: manifest-version
 msgid "(shareaza version)"
-msgstr "2.5.2.0"
+msgstr "2.5.3.0"
 
 #: manifest-language
 msgid "(translation language code: en)"
@@ -365,6 +365,10 @@ msgstr "Gnutella1"
 msgid "eDonkey"
 msgstr "eDonkey"
 
+#: button;id_network_dc
+msgid "DC++"
+msgstr "DC++"
+
 #: button;id_network_connect_to button;id_hostcache_connect
 msgid "Connect To"
 msgstr "Соединиться..."
@@ -456,6 +460,10 @@ msgstr "BitTorrent кэш"
 #: button;id_hostcache_kad_cache
 msgid "Kademlia Cache"
 msgstr "Kademlia кэш"
+
+#: button;id_hostcache_dc_cache
+msgid "DC++ Cache"
+msgstr "DC++ кэш"
 
 #: button;id_chat_bold
 msgid "B"
@@ -571,6 +579,12 @@ msgstr "Соединиться с Gnutella_1"
 #: cmainwnd.windowed;18;19;item;id_network_ed2k
 msgid "Connect to _eDonkey"
 msgstr "Соединиться с _eDonkey"
+
+#: cmainwnd.basic;1;2;item;id_network_dc
+#: cmainwnd.tabbed;9;10;item;id_network_dc
+#: cmainwnd.windowed;18;19;item;id_network_dc
+msgid "Connect to _DC++"
+msgstr "Соединить с _DC++"
 
 #: cmainwnd.basic;1;item;id_network_auto_close
 #: cmainwnd.tabbed;9;item;id_network_auto_close
@@ -1059,6 +1073,10 @@ msgstr "_BitTorrent кэш"
 #: chostcachewnd;28;item;id_hostcache_kad_cache
 msgid "_Kademlia Cache"
 msgstr "_Kademlia кэш"
+
+#: chostcachewnd;28;item;id_hostcache_dc_cache
+msgid "_DC++ Cache"
+msgstr "_DC++ кэш"
 
 #: chostcachewnd;item;id_hostcache_import
 msgid "_Import MET File..."
@@ -1805,6 +1823,10 @@ msgstr "Gnutella_1"
 msgid "_eDonkey"
 msgstr "_eDonkey"
 
+#: cneighbourswnd;59;item;id_network_dc
+msgid "_DC++"
+msgstr "_DC++"
+
 #: cneighbourswnd;60
 msgid "_Monitor"
 msgstr "_Монитор"
@@ -2105,10 +2127,10 @@ msgstr "В Н И М А Н И Е    -    В Ы    З А    Б Р А Н Д
 #: chomeviewctrl;text;5001
 msgid ""
 "Shareaza has detected that you are behind a NAT router or firewall,\n"
-"\t\t\tand are unable to receive connections from the Internet.  "
+"\t\t\t\tand are unable to receive connections from the Internet.  "
 msgstr ""
 "Shareaza обнаружила что вы за маршрутизатором или брандмаудэром,\n"
-"\t\t\tи неспособны принимать соединения из Интернета.  "
+"\t\t\t\tи неспособны принимать соединения из Интернета.  "
 
 #: chomeviewctrl;text;5002
 msgid "This may cause poor download and search performance."
@@ -2125,10 +2147,10 @@ msgstr "В Н И М А Н И Е    -   Н Е Т   С В Я З И   C   T C
 #: chomeviewctrl;text;6001
 msgid ""
 "Shareaza has detected that you are behind a NAT router or firewall,\n"
-"\t\t\tand are unable to receive TCP connections from the Internet.  "
+"\t\t\t\tand are unable to receive TCP connections from the Internet.  "
 msgstr ""
 "Shareaza обнаружила что вы за маршрутизатором или брандмаудэром,\n"
-"\t\t\tи неспособны принимать TCP соединения из Интернета.  "
+"\t\t\t\tи неспособны принимать TCP соединения из Интернета.  "
 
 #: chomeviewctrl;text;6002
 msgid "This may cause poor download performance."
@@ -2141,10 +2163,10 @@ msgstr "В Н И М А Н И Е    -   Н Е Т   С В Я З И   C   U D
 #: chomeviewctrl;text;7001
 msgid ""
 "Shareaza has detected that you are behind a NAT router or firewall,\n"
-"\t\t\tand are unable to receive UDP messages from the Internet.  "
+"\t\t\t\tand are unable to receive UDP messages from the Internet.  "
 msgstr ""
 "Shareaza обнаружила что вы за маршрутизатором или брандмаудэром,\n"
-"\t\t\tи неспособны принимать TCP соединения из Интернета.  "
+"\t\t\t\tи неспособны принимать TCP соединения из Интернета.  "
 
 #: chomeviewctrl;text;7002
 msgid "This may cause poor search performance."
@@ -2279,17 +2301,17 @@ msgid "Gnutella2:"
 msgstr "Gnutella2: "
 
 #: chomeconnectionbox;text;4 chomeconnectionbox;text;10
-#: chomeconnectionbox;text;16
+#: chomeconnectionbox;text;16 chomeconnectionbox;text;20
 msgid "Disconnected"
 msgstr "Отключено"
 
 #: chomeconnectionbox;text;5 chomeconnectionbox;text;11
-#: chomeconnectionbox;text;17 string;8070
+#: chomeconnectionbox;text;17 chomeconnectionbox;text;21 string;8070
 msgid "Connecting..."
 msgstr "Подключение…"
 
 #: chomeconnectionbox;text;6 chomeconnectionbox;text;12
-#: chomeconnectionbox;text;18 string;8071
+#: chomeconnectionbox;text;18 chomeconnectionbox;text;22 string;8071
 msgid "Connected"
 msgstr "Подключено"
 
@@ -2314,18 +2336,22 @@ msgid "eDonkey:"
 msgstr "eDonkey: "
 
 #: chomeconnectionbox;text;19
+msgid "DC++:"
+msgstr "DC++:"
+
+#: chomeconnectionbox;text;23
 msgid "You have been connected for"
 msgstr "Вы подключены"
 
-#: chomeconnectionbox;text;20 chomeconnectionbox;text;22
+#: chomeconnectionbox;text;24 chomeconnectionbox;text;26
 msgid "%i"
 msgstr "%i"
 
-#: chomeconnectionbox;text;21
+#: chomeconnectionbox;text;25
 msgid "hours and"
 msgstr "часов и "
 
-#: chomeconnectionbox;text;23
+#: chomeconnectionbox;text;27
 msgid "minutes."
 msgstr "минут."
 
@@ -2399,10 +2425,10 @@ msgstr "Добро пожаловать в менеджер установок S
 #: cgeneralsettingsgroup;text;2
 msgid ""
 "The Shareaza Settings Manager allows advanced users to completely customise how\n"
-"\t\t\tShareaza works. The settings in the"
+"\t\t\t\tShareaza works. The settings in the"
 msgstr ""
 "Менеджер установок Shareaza опытным пользователям позволит полностью настроить\n"
-"\t\t\tработу Shareaza.  Установки в секции "
+"\t\t\t\tработу Shareaza.  Установки в секции "
 
 #: cgeneralsettingsgroup;text;4
 msgid "section relate to the user experience."
@@ -2464,10 +2490,10 @@ msgstr "Интернет"
 #: cinternetsettingsgroup;text;2
 msgid ""
 "The Shareaza Settings Manager allows advanced users to completely customise \n"
-"\t\t\thow Shareaza works. The settings in the"
+"\t\t\t\thow Shareaza works. The settings in the"
 msgstr ""
 "Менеджер установок Shareaza опытным пользователям позволит полностью настроить\n"
-"\t\t\tработу Shareaza.  Установки в секции "
+"\t\t\t\tработу Shareaza.  Установки в секции"
 
 #: cinternetsettingsgroup;text;4
 msgid "section control how Shareaza interacts with other nodes within distributed peer-to-peer networks."
@@ -2564,26 +2590,26 @@ msgstr "Область загрузок"
 #: downloadhelp.select;text;2
 msgid ""
 "This is where files currently being downloaded are displayed. You can view\n"
-"\t\tindividual sources by expanding each file with the small + on the left."
+"\t\t\tindividual sources by expanding each file with the small + on the left."
 msgstr ""
 "Здесь показываются в данный момент загружаемые файлы. Вы можете просмотреть\n"
-"\t\tотдельные источники, развернув дерево каждого файла (нажав на значок «+» слева)."
+"\t\t\tотдельные источники, развернув дерево каждого файла (нажав на значок «+» слева)."
 
 #: downloadhelp.select;text;3
 msgid ""
 "Drag'n'Drop downloads higher in the list for priority, or onto Download Group \n"
-"\t\ttabs for better organisation (in Power Mode)."
+"\t\t\ttabs for better organisation (in Power Mode)."
 msgstr ""
 "Вы можете использовать эту команду также для получения помощи по загрузке.  Просто\n"
-"\t\tвыделите загрузку и выберите эту команду снова."
+"\t\t\tвыделите загрузку и выберите эту команду снова."
 
 #: downloadhelp.select;text;4
 msgid ""
 "You can also use this command to get help information on a specific download.\n"
-"\t\tSimply select a download and choose this Help command again."
+"\t\t\tSimply select a download and choose this Help command again."
 msgstr ""
 "Вы можете использовать эту команду для получении информации о загрузках.\n"
-"\t\tПросто выделите загрузку и выберите команду \"Справка\" снова."
+"\t\t\tПросто выделите загрузку и выберите команду \"Справка\" снова."
 
 #: downloadhelp.seeding;text;1
 msgid "This Torrent is Seeding"
@@ -2592,10 +2618,10 @@ msgstr "Этот Torrent раздаётся."
 #: downloadhelp.seeding;text;2
 msgid ""
 "Shareaza has verified this complete download, and is actively sharing it\n"
-"\t\twith other downloaders through BitTorrent. Please share at least 100%."
+"\t\t\twith other downloaders through BitTorrent. Please share at least 100%."
 msgstr ""
 "Shareaza верифицировала завершенную загрузку и теперь раздаёт её\n"
-"\t\tвместе с другими пользователями. Пожалуйста раздавайте минимум до 100%."
+"\t\t\tвместе с другими пользователями. Пожалуйста раздавайте минимум до 100%."
 
 #: downloadhelp.completed;text;1
 msgid "This Download has Completed"
@@ -2604,10 +2630,10 @@ msgstr "Эта загрузка завершена"
 #: downloadhelp.completed;text;2
 msgid ""
 "Shareaza has finished downloading this file, and has verified that it\n"
-"\t\tis 100% correct. It has also moved the file to your downloads folder."
+"\t\t\tis 100% correct. It has also moved the file to your downloads folder."
 msgstr ""
 "Shareaza закончила загружать этот файл, и сверила его верность\n"
-"\t\tна 100%.  Также файл был перемещен в папку загрузок."
+"\t\t\tна 100%.  Также файл был перемещен в папку загрузок."
 
 #: downloadhelp.moving;text;1
 msgid "This Download is Moving"
@@ -2616,10 +2642,10 @@ msgstr "Эта загрука перемещается"
 #: downloadhelp.moving;text;2
 msgid ""
 "Shareaza has finished downloading this file, and has verified that\n"
-"\t\tit is correct. It is currently being moved and/or unpacked to your downloads folder."
+"\t\t\tit is correct. It is currently being moved and/or unpacked to your downloads folder."
 msgstr ""
 "Shareaza закончила загружать этот файл, и проверила его\n"
-"\t\tцелостность.  В настоящее время файл перемещается и/или распаковывается в папку ваших загрузок."
+"\t\t\tцелостность.  В настоящее время файл перемещается и/или распаковывается в папку ваших загрузок."
 
 #: downloadhelp.paused;text;1
 msgid "This Download is Paused"
@@ -2628,10 +2654,10 @@ msgstr "Эта загрузка в паузе"
 #: downloadhelp.paused;text;2
 msgid ""
 "You have paused this download. If you want it to resume downloading, you\n"
-"\t\tcan click the '"
+"\t\t\tcan click the '"
 msgstr ""
 "Вы приостановили загрузку.  Если вы хотите продолжить загрузку, Вы можете\n"
-"\t\tщелкнуть кнопку '"
+"\t\t\tщелкнуть кнопку '"
 
 #: downloadhelp.paused;text;4
 msgid "' command."
@@ -2644,15 +2670,15 @@ msgstr "Диск полон"
 #: downloadhelp.diskfull;text;2
 msgid ""
 "Shareaza has paused this download automatically because the hard disk\n"
-"\t\tappears to be full, or the download file cannot be written to. If you wish\n"
-"\t\tto continue downloading, please free some space on your hard disk and/or check\n"
-"\t\tto make sure the incomplete file folder is accessible, and then resume the\n"
-"\t\tdownload."
+"\t\t\tappears to be full, or the download file cannot be written to. If you wish\n"
+"\t\t\tto continue downloading, please free some space on your hard disk and/or check\n"
+"\t\t\tto make sure the incomplete file folder is accessible, and then resume the\n"
+"\t\t\tdownload."
 msgstr ""
 "Shareaza автоматически приостановила загрузку этого файла, потому что жесткий диск\n"
-"\t\tпохоже полный, или загружаемый файл не может быть записан на него.  Если желаете\n"
-"\t\tпродолжить загрузку, пожалуйста освободите немного места на диске, или проверьте\n"
-"\t\tчто папка для загружаемых доступна, после этого снимите паузу."
+"\t\t\tпохоже полный, или загружаемый файл не может быть записан на него.  Если желаете\n"
+"\t\t\tпродолжить загрузку, пожалуйста освободите немного места на диске, или проверьте\n"
+"\t\t\tчто папка для загружаемых доступна, после этого снимите паузу."
 
 #: downloadhelp.verifying;text;1
 msgid "This Download is Verifying"
@@ -2661,12 +2687,12 @@ msgstr "Эта загрузка сверяется"
 #: downloadhelp.verifying;text;2
 msgid ""
 "This download has finished, and Shareaza is now checking it to ensure\n"
-"\t\tthat it is exactly the same as the original file. If any damaged parts are\n"
-"\t\tfound, Shareaza will repair them automatically."
+"\t\t\tthat it is exactly the same as the original file. If any damaged parts are\n"
+"\t\t\tfound, Shareaza will repair them automatically."
 msgstr ""
 "Эта загрузка законченна, и Shareaza сейчас сверяет её, чтобы убедиться\n"
-"\t\tчто она точно такя же как оригинальный файл.  Если будут найдены пврежденные\n"
-"\t\tчасти, Shareaza восстановит их автоматически."
+"\t\t\tчто она точно такя же как оригинальный файл.  Если будут найдены пврежденные\n"
+"\t\t\tчасти, Shareaza восстановит их автоматически."
 
 #: downloadhelp.downloading;text;1
 msgid "This Download is Active!"
@@ -2675,11 +2701,11 @@ msgstr "Эта загрузка активна!"
 #: downloadhelp.downloading;text;2
 msgid ""
 "This download is currently in progress. If it is downloading too slowly,\n"
-"\t\tyou could try searching the network for more sources with the '"
+"\t\t\tyou could try searching the network for more sources with the '"
 msgstr ""
 "Эта загрузка в процессе.  Если загрузка идет слишком медленно,\n"
-"\t\tВы можете попробовать поискать в сетях больше источников файла с помощью\n"
-"\t\tкоманды"
+"\t\t\tВы можете попробовать поискать в сетях больше источников файла с помощью\n"
+"\t\t\tкоманды"
 
 #: downloadhelp.downloading;text;3 downloadhelp.searching;text;3
 msgid "Find More Sources"
@@ -2688,12 +2714,12 @@ msgstr "Найти больше источников"
 #: downloadhelp.downloading;text;4
 msgid ""
 "' command. If the speed does not \n"
-"\t\timprove it may be due to limited upload speeds of the users you are downloading \n"
-"\t\tfrom. Download speed usually increases over time."
+"\t\t\timprove it may be due to limited upload speeds of the users you are downloading \n"
+"\t\t\tfrom. Download speed usually increases over time."
 msgstr ""
 ". Если скорость\n"
-"\t\tне увеличивается, то возможно она ограниченна пользователями у которых вы загружаете.\n"
-"\t\tНо обычно скорость загрузки  увеличивается через какое-то время."
+"\t\t\tне увеличивается, то возможно она ограниченна пользователями у которых вы загружаете.\n"
+"\t\t\tНо обычно скорость загрузки  увеличивается через какое-то время."
 
 #: downloadhelp.pending;text;1
 msgid "This Download is Pending"
@@ -2702,18 +2728,18 @@ msgstr "Эта загрузка в ожидании"
 #: downloadhelp.pending;text;2
 msgid ""
 "This download is waiting for someone to start uploading.\n"
-"\t\tShareaza is ready to start downloading this file, but no-one is sending it at\n"
-"\t\tthe moment. You are probably waiting in other user's queues, and the download\n"
-"\t\tmay start transferring at any time. You can examine the individual sources to \n"
-"\t\tsee each queue you are waiting in. If you are sharing files yourself, it may\n"
-"\t\timprove the chances of a download transfer starting quickly."
+"\t\t\tShareaza is ready to start downloading this file, but no-one is sending it at\n"
+"\t\t\tthe moment. You are probably waiting in other user's queues, and the download\n"
+"\t\t\tmay start transferring at any time. You can examine the individual sources to \n"
+"\t\t\tsee each queue you are waiting in. If you are sharing files yourself, it may\n"
+"\t\t\timprove the chances of a download transfer starting quickly."
 msgstr ""
 "Ожидается пока кто-нибудь начнет раздачу.\n"
-"\t\tShareaza готова начать загрузку этого файла, но никто в данный момент его не раздаёт.\n"
-"\t\tВы, наверное, ждете в очередях других пользователей, так что загрузка файла может\n"
-"\t\tначаться в любое время. Вы можете увидеть, под каким номером стоите у них в очереди, при\n"
-"\t\tпросмотре каждого источника. Если Вы тоже обмениваетесь файлами, Ваши шансы, что загрузка\n"
-"\t\tначнеться быстрее, будут велики."
+"\t\t\tShareaza готова начать загрузку этого файла, но никто в данный момент его не раздаёт.\n"
+"\t\t\tВы, наверное, ждете в очередях других пользователей, так что загрузка файла может\n"
+"\t\t\tначаться в любое время. Вы можете увидеть, под каким номером стоите у них в очереди, при\n"
+"\t\t\tпросмотре каждого источника. Если Вы тоже обмениваетесь файлами, Ваши шансы, что загрузка\n"
+"\t\t\tначнеться быстрее, будут велики."
 
 #: downloadhelp.queued;text;1
 msgid "This Download is Queued"
@@ -2722,16 +2748,16 @@ msgstr "Эта загрузка в очереди"
 #: downloadhelp.queued;text;2
 msgid ""
 "This download is waiting for some of your other downloads to complete.\n"
-"\t\tYour download settings limit the number of downloads which may be active at\n"
-"\t\tany given time, to ensure that each download gets a good share of the available\n"
-"\t\tbandwidth. You can change these settings via Tools, Shareaza Settings.\n"
-"\t\tAlternatively, you may manually start this download with the resume command."
+"\t\t\tYour download settings limit the number of downloads which may be active at\n"
+"\t\t\tany given time, to ensure that each download gets a good share of the available\n"
+"\t\t\tbandwidth. You can change these settings via Tools, Shareaza Settings.\n"
+"\t\t\tAlternatively, you may manually start this download with the resume command."
 msgstr ""
 "Эта загрузка ждет завершения Ваших некоторых других загрузок.\n"
-"\t\tКол-во одновременных загрузок ограничиваются в установках Shareaza, для того чтобы\n"
-"\t\tбыть уверенными в том, что каждая загрузка получает хорошую долю пропускной\n"
-"\t\tспособности.  Вы можете изменить эти настройки в меню Инструменты - Установи Shareaza.\n"
-"\t\tВы также можете начать загрузку вручную, выбрав команду Продолжить."
+"\t\t\tКол-во одновременных загрузок ограничиваются в установках Shareaza, для того чтобы\n"
+"\t\t\tбыть уверенными в том, что каждая загрузка получает хорошую долю пропускной\n"
+"\t\t\tспособности.  Вы можете изменить эти настройки в меню Инструменты - Установи Shareaza.\n"
+"\t\t\tВы также можете начать загрузку вручную, выбрав команду Продолжить."
 
 #: downloadhelp.searching;text;1
 msgid "This Download is Searching"
@@ -2740,14 +2766,14 @@ msgstr "Эта загрузка в поиске"
 #: downloadhelp.searching;text;2
 msgid ""
 "There are no known sources for this download, so Shareaza is searching\n"
-"\t\tall connected P2P networks for new sources. Once sources are found, the\n"
-"\t\tdownload will start automatically. Shareaza searches for sources automatically,\n"
-"\t\thowever you can speed up the process using the"
+"\t\t\tall connected P2P networks for new sources. Once sources are found, the\n"
+"\t\t\tdownload will start automatically. Shareaza searches for sources automatically,\n"
+"\t\t\thowever you can speed up the process using the"
 msgstr ""
 "У этой загрузки нет известных источников, так что Shareaza ищет\n"
-"\t\tновые источники во всех подключенных P2P сетях.  Один источник найдеся - и загрузка\n"
-"\t\tначнется автоматически.  Shareaza ищет источники автоматически,\n"
-"\t\tоднако Вы можете ускорить процесс, используя команду '"
+"\t\t\tновые источники во всех подключенных P2P сетях.  Один источник найдеся - и загрузка\n"
+"\t\t\tначнется автоматически.  Shareaza ищет источники автоматически,\n"
+"\t\t\tоднако Вы можете ускорить процесс, используя команду '"
 
 #: downloadhelp.searching;text;4
 msgid "command."
@@ -2756,13 +2782,13 @@ msgstr "'."
 #: downloadhelp.searching;text;5
 msgid ""
 "Unfortunately in many cases there may be no users online who have the\n"
-"\t\tfile you are looking for. The only course of action here is to wait for\n"
-"\t\tsomeone to come online, or cancel it and try to find a similar file which is\n"
-"\t\tmore widely available."
+"\t\t\tfile you are looking for. The only course of action here is to wait for\n"
+"\t\t\tsomeone to come online, or cancel it and try to find a similar file which is\n"
+"\t\t\tmore widely available."
 msgstr ""
 "К сожалению во многих случаях может не быть пользовтелей, подключенных сейчас и\n"
-"\t\tимеющих файл, котоый Вы ищите.  Можно ждать что кто то подключится, или  можно попытаться\n"
-"\t\tнайти подобный файл с бoльшим количеством источников и отменив эту загрузку, загрузить его."
+"\t\t\tимеющих файл, котоый Вы ищите.  Можно ждать что кто то подключится, или  можно попытаться\n"
+"\t\t\tнайти подобный файл с бoльшим количеством источников и отменив эту загрузку, загрузить его."
 
 #: downloadhelp.creating;text;1
 msgid "This Download is Creating"
@@ -2771,10 +2797,10 @@ msgstr "Эта загрузка создается"
 #: downloadhelp.creating;text;2
 msgid ""
 "Shareaza is pre-allocating a file in which to store this download, to\n"
-"\t\tsave time later."
+"\t\t\tsave time later."
 msgstr ""
 "Shareaza пре-размещает (сегментирует, резервиует место) эту\n"
-"\t\tзагрузку чтобы сохранить время в будущем."
+"\t\t\tзагрузку чтобы сохранить время в будущем."
 
 #: downloadhelp.tracker;text;1
 msgid "BitTorrent Tracker Down"
@@ -2783,12 +2809,12 @@ msgstr "BitTorrent трекер отключен"
 #: downloadhelp.tracker;text;2
 msgid ""
 "The BitTorrent tracker server for this download appears to be\n"
-"\t\tdown or malfunctioning. Shareaza is unable to contact it to receive\n"
-"\t\ta list of peers."
+"\t\t\tdown or malfunctioning. Shareaza is unable to contact it to receive\n"
+"\t\t\ta list of peers."
 msgstr ""
 "BitTorrent трекер сервер для этой загрузки похоже недоступен или\n"
-"\t\tработает со сбоями.  Shareaza не может соединиться с ним для получения\n"
-"\t\tлиста частей загрузки."
+"\t\t\tработает со сбоями.  Shareaza не может соединиться с ним для получения\n"
+"\t\t\tлиста частей загрузки."
 
 #: uploadhelp;text;1
 msgid "Uploads Area"
@@ -2797,12 +2823,12 @@ msgstr "Область раздач"
 #: uploadhelp;text;2
 msgid ""
 "This is where queues and uploads are displayed. You can expand each queue\n"
-"\t\twith the small + on the left, and filter what is displayed with the button on the\n"
-"\t\tright of the window's toolbar."
+"\t\t\twith the small + on the left, and filter what is displayed with the button on the\n"
+"\t\t\tright of the window's toolbar."
 msgstr ""
 "Здесь показываются очереди и раздачи. Вы можете развернуть дерево каждой очереди,\n"
-"\t\tнажав на значок «+» слева, и можете фильтровать список, используя кнопку справа в\n"
-"\t\tпанели инструментов."
+"\t\t\tнажав на значок «+» слева, и можете фильтровать список, используя кнопку справа в\n"
+"\t\t\tпанели инструментов."
 
 #: generalhelp.diskspace;text;1
 msgid "Disk Space is Low"
@@ -2815,12 +2841,12 @@ msgstr "Количество свободного места на одном и�
 #: generalhelp.diskspace;text;3
 msgid ""
 "You should always attempt to keep a reasonable amount of disk space free. Programs \n"
-"\t\tcan become unstable if the drives become full, and temporary files may be lost. You should \n"
-"\t\trun a disk clean-up, delete unwanted files, or uninstall software you no longer need."
+"\t\t\tcan become unstable if the drives become full, and temporary files may be lost. You should \n"
+"\t\t\trun a disk clean-up, delete unwanted files, or uninstall software you no longer need."
 msgstr ""
 "Рекомендуется постоянно иметь и поддерживать разумное количество свободного дискового пространсва. Программы\n"
-"\t\tмогут начать работать нестабильно, если накопители заполнятся, а временные файлы могут быть утерянны. Советуем\n"
-"\t\tзапустить очистку диска, удалить ненужные файлы или деинсталлировать ПО, которого вам больше не понадобится."
+"\t\t\tмогут начать работать нестабильно, если накопители заполнятся, а временные файлы могут быть утерянны. Советуем\n"
+"\t\t\tзапустить очистку диска, удалить ненужные файлы или деинсталлировать ПО, которого вам больше не понадобится."
 
 #: generalhelp.diskwritefail;text;1
 msgid "A Required Directory is Non-writable"
@@ -2833,11 +2859,11 @@ msgstr "В диск или папку, которую использует Share
 #: generalhelp.diskwritefail;text;3
 msgid ""
 "A network drive may have been disconnected, or you may not have write permission \n"
-"\t\tto a selected directory. Please check directories and permissions, or change the\n"
-"\t\ttemporary files location."
+"\t\t\tto a selected directory. Please check directories and permissions, or change the\n"
+"\t\t\ttemporary files location."
 msgstr ""
 "Сетевой диск отключен или Вы не имеете прав записи в выбранную папку.\n"
-"\t\tПроверьте папки и их права или выберите другую папку для незаконченных файлов."
+"\t\t\tПроверьте папки и их права или выберите другую папку для незаконченных файлов."
 
 #: generalhelp.connectionfail;text;1
 msgid "Internet Connection Has Been Lost"
@@ -2850,10 +2876,10 @@ msgstr "Windows сообщили, что связь с интернетом от
 #: generalhelp.connectionfail;text;3
 msgid ""
 "It is likely that a modem or router has dropped, meaning the internet cannot\n"
-"\t\tbe accessed. You may need to manually re-connect or reset your connection."
+"\t\t\tbe accessed. You may need to manually re-connect or reset your connection."
 msgstr ""
 "Наверное, Ваш модем или маршрутизатор отключился, и доступ к инернету закрылся.\n"
-"\t\tВам необходимо соединиться вручную или выключить и включить оборудование заново."
+"\t\t\tВам необходимо соединиться вручную или выключить и включить оборудование заново."
 
 #: generalhelp.connectionfail;text;4
 msgid "Shareaza has ceased connection attempts to avoid losing all cached hosts."
@@ -2866,11 +2892,12 @@ msgstr "Фильтр содержимого для взрослых включе
 #: generalhelp.adultfilter;text;2
 msgid ""
 "Please note that (as with any automated filter) it may not be 100% effective at\n"
-"\t\tscreening content. It is designed simply to filter out excess unwanted results, rather than \n"
-"\t\tas a 100% safe block."
+"\t\t\tscreening content. It is designed simply to filter out excess unwanted results, rather than \n"
+"\t\t\tas a 100% safe block."
 msgstr ""
 "Заметьте, что этот фильтр, как и все автоматические фильтры, не является 100%-ым при сканировании\n"
-"\t\tсодержимого. Он был создан просто для того, чтобы отфильтровать избыток нежелательных результатов поика, а не для того, чтобы полностью блокировать их."
+"\t\t\tсодержимого. Он был создан просто для того, чтобы отфильтровать избыток нежелательных \n"
+"\t\t\tрезультатов поика, а не для того, чтобы полностью блокировать их."
 
 #: generalhelp.adultfilter;text;3
 msgid "Children's Internet use (including P2P file sharing) should always be under parental supervision."
@@ -2883,20 +2910,20 @@ msgstr "У этого торрента имеются ошибки кодиро�
 #: generalhelp.badtorrentencoding;text;2
 msgid ""
 "Windows has reported a translation fault while decoding text in this torrent. It is\n"
-"\t\tpossible that the torrent is corrupt, or just incorrectly encoded. The torrent may\n"
-"\t\tstill download properly, although some file names could be incorrect."
+"\t\t\tpossible that the torrent is corrupt, or just incorrectly encoded. The torrent may\n"
+"\t\t\tstill download properly, although some file names could be incorrect."
 msgstr ""
 "Windows сообщили, что во время раскодировки этого торрента обнаружена ошибка перевода. Может быть, что\n"
-"\t\tэтот файл испорчен или просто неправильно закодирован. Загрузка торрента, наверное, не пострадает, но\n"
-"\t\tнекотрые имена файлов могут быть неправильными."
+"\t\t\tэтот файл испорчен или просто неправильно закодирован. Загрузка торрента, наверное, не пострадает, но\n"
+"\t\t\tнекотрые имена файлов могут быть неправильными."
 
 #: generalhelp.badtorrentencoding;text;3
 msgid ""
 "Most torrent creation programs should allow you to repair this torrent, which\n"
-"\t\twill ensure it works properly in all BitTorrent applications."
+"\t\t\twill ensure it works properly in all BitTorrent applications."
 msgstr ""
 "Большинство программ для создания торрентов должно исправить этот файл торрента. Исправление гарантировало бы,\n"
-"\t\tчто он бутет работать со всеми программами BitTorrent."
+"\t\t\tчто он бутет работать со всеми программами BitTorrent."
 
 #: generalhelp.badtorrentencoding;link;4
 msgid "Click here for additional help"
@@ -2913,18 +2940,18 @@ msgstr "Пустой список eDonkey серверов"
 #: generalhelp.donkeyserverlist;text;2
 msgid ""
 "There are no servers in your eDonkey server list. You need to download an\n"
-"\t\tup to date server list (met file) to connect to ED2K."
+"\t\t\tup to date server list (met file) to connect to ED2K."
 msgstr ""
 "В списке eDonkey серверов нет ни одного сервера. Вам необходимо скачать\n"
-"\t\tновый список серверов (файл met), чтобы Вы смогли соединиться с eDonkey."
+"\t\t\tновый список серверов (файл met), чтобы Вы смогли соединиться с eDonkey."
 
 #: generalhelp.donkeyserverlist;text;3
 msgid ""
 "You can download a server list from the ed2k setting page, or the discovery\n"
-"\t\tservices window. (Press F9 to open the discovery services window)"
+"\t\t\tservices window. (Press F9 to open the discovery services window)"
 msgstr ""
 "Вы можете скачать этот список со страницы опций eDonkey или с окна\n"
-"\t\tслужб ресурсов. (Нажмите F9, если хотите открыть это окно)"
+"\t\t\tслужб ресурсов. (Нажмите F9, если хотите открыть это окно)"
 
 #: generalhelp.uploadwarning;text;1
 msgid "Limiting uploads may slow downloads"
@@ -2933,30 +2960,30 @@ msgstr "Ограничение раздач может замедлить заг
 #: generalhelp.uploadwarning;text;2
 msgid ""
 "Several networks Shareaza connects to enforce ratios, limit uploads to\n"
-"\t\tclients that do not share, or simply preference uploading to known sharers."
+"\t\t\tclients that do not share, or simply preference uploading to known sharers."
 msgstr ""
 "В некоторых сетях, к которым подсоединяется Shareaza, используются соотношения за-/раздач, ограничиваются\n"
-"\t\tраздачи тем, которые ничего не дают или, просто, предпочтение раздач отдается тем, которые обмениваются файлами."
+"\t\t\tраздачи тем, которые ничего не дают или, просто, предпочтение раздач отдается тем, которые обмениваются файлами."
 
 #: generalhelp.uploadwarning;text;3
 msgid ""
 "Fortunately, broadband DSL connections are like a two-lane highway: you have\n"
-"\t\tseparate allocations for upload and download. If your client is properly configured, \n"
-"\t\tyou should be able to upload at a good rate while retaining full download capacity."
+"\t\t\tseparate allocations for upload and download. If your client is properly configured, \n"
+"\t\t\tyou should be able to upload at a good rate while retaining full download capacity."
 msgstr ""
-"К счастью, широкополосное ДСЛ соединение является как двухполосное шоссе: раздача и\n"
-"\t\tзагрузка имеют отдельные каналы. Если Ваш клиент сконфигурирован как следует,\n"
-"\t\tВы сохраните полную скорость для раздач без потери скорости для загрузок."
+"К счастью, широкополосное DSL соединение является как двухполосное шоссе: раздача и\n"
+"\t\t\tзагрузка имеют отдельные каналы. Если Ваш клиент сконфигурирован как следует,\n"
+"\t\t\tВы сохраните полную скорость для раздач без потери скорости для загрузок."
 
 #: generalhelp.uploadwarning;text;4
 msgid ""
 "By default, your upload limit is set to about 85% of available upstream bandwidth,\n"
-"\t\twhile downloads are unlimited. That configuration should give you the fastest possible \n"
-"\t\tdownloads that are available."
+"\t\t\twhile downloads are unlimited. That configuration should give you the fastest possible \n"
+"\t\t\tdownloads that are available."
 msgstr ""
 "По умолчанию, лимит для раздач установлен на 85% от существующей исходящей пропускной способности,\n"
-"\t\tв то время как загрузки не имеют ограничений. Такие установки должны гарантировать Вам наибольшую возможную скорость\n"
-"\t\tдля загрузок."
+"\t\t\tв то время как загрузки не имеют ограничений. Такие установки должны гарантировать Вам наибольшую возможную скорость\n"
+"\t\t\tдля загрузок."
 
 #: searchhelp.badsearch1;text;1 searchhelp.badsearch2;text;1
 #: searchhelp.badsearch3;text;1
@@ -2966,63 +2993,65 @@ msgstr "Перефразируйте Ваш запрос"
 #: searchhelp.badsearch1;text;2
 msgid ""
 "This search is poorly formatted, and may not function correctly. \n"
-"\t\tSearches should include several terms where possible, and should specify a schema \n"
-"\t\t(file type). Furthermore, searches must not be limited to numbers or negative\n"
-"\t\tterms only, and you should avoid overly general queries."
+"\t\t\tSearches should include several terms where possible, and should specify a schema \n"
+"\t\t\t(file type). Furthermore, searches must not be limited to numbers or negative\n"
+"\t\t\tterms only, and you should avoid overly general queries."
 msgstr ""
 "Ваш запрос плохо сформатирован, и он может работать неправильно.\n"
-"\t\tДля поиска Вы должны использовать несколько слов, если это возможно, и указывать схему\n"
-"\t\t(тип файла). Кроме того, во фразах не должны быть только цифры или отрицания (с минусом перед словами),\n"
-"\t\tа также Вы должны избегать очень неконкретных запросов."
+"\t\t\tДля поиска Вы должны использовать несколько слов, если это возможно, и указывать схему\n"
+"\t\t\t(тип файла). Кроме того, во фразах не должны быть только цифры или отрицания (с минусом перед словами),\n"
+"\t\t\tа также Вы должны избегать очень неконкретных запросов."
 
 #: searchhelp.badsearch1;text;3
 msgid ""
 "Most clients on the network will ignore a search for all MP3 files, for example, \n"
-"\t\tbecause it is not specific enough, and would generate too many results."
+"\t\t\tbecause it is not specific enough, and would generate too many results."
 msgstr ""
 "Многие клиенты в сети будут игнорировать такие запросы, как например, запрос на\n"
-"\t\tвсе MP3 файлы, так как он не достаточно конкретный."
+"\t\t\tвсе MP3 файлы, так как он не достаточно конкретный."
 
 #: searchhelp.badsearch2;text;2
 msgid ""
 "This search does not contain enough terms to function properly. All searches need\n"
-"\t\ta minimum number of valid, alphabetic characters to be able to start."
+"\t\t\ta minimum number of valid, alphabetic characters to be able to start."
 msgstr ""
 "Ваш запрос плохо сформатирован, и он может работать неправильно. Для того, чтобы смогли начать поиск,\n"
-"\t\t Вы должны использовать минимальное число правильных букв/знаков."
+"\t\t\t Вы должны использовать минимальное число правильных букв/знаков."
 
 #: searchhelp.badsearch2;text;3
 msgid ""
 "While common file extensions (and numbers) can be searched for, you must enter\n"
-"\t\tother terms as well when creating the search. Punctuation and wildcards are not used \n"
-"\t\tin searches, just the text you enter."
-msgstr "Если в Вашем запросе имеются тип файла или цифры, Вы толжны указать дополнительные условия тоже."
+"\t\t\tother terms as well when creating the search. Punctuation and wildcards are not used \n"
+"\t\t\tin searches, just the text you enter."
+msgstr ""
+"Если в Вашем запросе имеются тип файла или цифры, Вы толжны указать дополнительные условия тоже.\n"
+"\t\t\tЗнаки препинания и спецсимволы в поиске не используются."
 
 #: searchhelp.badsearch3;text;2
 msgid ""
 "This search seems to contain only common file extensions, or no searchable\n"
-"\t\twords."
+"\t\t\twords."
 msgstr ""
 "В этом запросе, кажется, отсутствуют слова или он имеет только общеизвестные типы\n"
-"\t\tфайлов."
+"\t\t\tфайлов."
 
 #: searchhelp.badsearch3;text;3
 msgid ""
 "If you are having trouble creating searches, keep in mind that it's quite similar\n"
-"\t\tto a web search. Specific terms or phrases are best- Unique names, titles and\n"
-"\t\tkeywords."
+"\t\t\tto a web search. Specific terms or phrases are best- Unique names, titles and\n"
+"\t\t\tkeywords."
 msgstr ""
 "Если Вы сталкиваетесь с трудностями формулируя запросы, имейте ввиду, что они похожы на запросы в\n"
-"\t\tинтернетных поисковиках.\n"
-"\t\tЛучше всего использовать специфичные термины и фразы: уникальные названия, имена и ключевые слова."
+"\t\t\tинтернетных поисковиках.\n"
+"\t\t\tЛучше всего использовать специфичные термины и фразы: уникальные названия, имена и ключевые слова."
 
 #: searchhelp.badsearch3;text;4
 msgid ""
 "General terms cannot be searched for efficiently and may result in poor\n"
-"\t\tsearch performance, as well as high bandwidth use during searches."
+"\t\t\tsearch performance, as well as high bandwidth use during searches."
 msgstr ""
 "Поиск общих терминов бывает неэффективным и плохим, и это может вызвать большой поток данных\n"
-"\t\tво время поиска."
+"\t\t\tво время поиска."
 
 #: searchhelp.badsearch3;text;5
 msgid "Further help is available on the Shareaza web site."
@@ -3035,20 +3064,20 @@ msgstr "Не могу начать этот поиск"
 #: searchhelp.adultsearch;text;2
 msgid ""
 "The specified search would probably return a large number of results with adult \n"
-"\t\tcontent, and this has been turned off in the settings. You should either re-phrase the \n"
-"\t\tsearch, or disable the filter."
+"\t\t\tcontent, and this has been turned off in the settings. You should either re-phrase the \n"
+"\t\t\tsearch, or disable the filter."
 msgstr ""
 "Указанный поиск, возможно, даст большое количество результатов с содержимым для взрослых,\n"
-"\t\tа такое содержимое запрещено в установках. Перефразируйте Ваш поиск\n"
-"\t\tили отключите фильтр."
+"\t\t\tа такое содержимое запрещено в установках. Перефразируйте Ваш поиск\n"
+"\t\t\tили отключите фильтр."
 
 #: searchhelp.adultsearch;text;3
 msgid ""
 "To disable the filter, go into Tools > Settings > General and uncheck the\n"
-"\t\tadult content filter."
+"\t\t\tadult content filter."
 msgstr ""
 "Для того, чтобы отключить фильтр, идите в Инструменты > Установки > Общее и уберите\n"
-"\t\tгалочку с фильтра содержимого для взрослых."
+"\t\t\tгалочку с фильтра содержимого для взрослых."
 
 #: sharehelp.alreadyshared;text;1
 msgid "Already Shared"
@@ -3065,20 +3094,20 @@ msgstr "Эту папку открывать для общего доступа 
 #: sharehelp.badshare;text;2
 msgid ""
 "This folder is (or contains) a system folder. Sharing this folder is not\n"
-"\t\trecommended, since most of the files in it are of no use to other people."
+"\t\t\trecommended, since most of the files in it are of no use to other people."
 msgstr ""
 "Эта папка системная или содержит системные папки. Открывать эту папку мы\n"
-"\t\tне рекомендуем, так как для других людей файлы содержащиеся в ней бесполезны."
+"\t\t\tне рекомендуем, так как для других людей файлы содержащиеся в ней бесполезны."
 
 #: sharehelp.badshare;text;3
 msgid ""
 "Folders such as the Windows directory, Program Files, and similar folders\n"
-"\t\tdo not usually contain files suitable for sharing. Any files of interest would be in\n"
-"\t\tsub-folders located"
+"\t\t\tdo not usually contain files suitable for sharing. Any files of interest would be in\n"
+"\t\t\tsub-folders located"
 msgstr ""
 "Такие папки, как Windows, Program Files и подобные, обычно\n"
-"\t\tне содержат файлов, подходящих для общего доступа. Какие-нибудь имеющие интерес файлы\n"
-"\t\tбудут находиться"
+"\t\t\tне содержат файлов, подходящих для общего доступа. Какие-нибудь имеющие интерес файлы\n"
+"\t\t\tбудут находиться"
 
 #: sharehelp.badshare;text;4
 msgid "inside"
@@ -3087,18 +3116,18 @@ msgstr "внутри"
 #: sharehelp.badshare;text;5
 msgid ""
 "these folders.\n"
-"\t\tPlease share those instead."
+"\t\t\tPlease share those instead."
 msgstr ""
 "подкаталогах этих\n"
-"\t\tпапок. Разделяйте именно эти папки."
+"\t\t\tпапок. Разделяйте именно эти папки."
 
 #: sharehelp.badshare;text;6
 msgid ""
 "The Shareaza 'incomplete' folder should also not be shared through the\n"
-"\t\tlibrary, since attempting to hash downloads in progress may impact on performance."
+"\t\t\tlibrary, since attempting to hash downloads in progress may impact on performance."
 msgstr ""
 "Папка Shareazы 'incomplete' также не должна быть открыта для доступа в\n"
-"\t\tхранилище, так как попытка хешировать загрузки снизит производительность."
+"\t\t\tхранилище, так как попытка хешировать загрузки снизит производительность."
 
 #: message;id_browse_files
 msgid "View the user's shared files"
@@ -8024,6 +8053,26 @@ msgstr "Дни недели"
 msgid "Run this event"
 msgstr "Выполнить задачу"
 
+#: cscheduletaskdlg;control;35
+msgid "Validity Period"
+msgstr "Период действия"
+
+#: cscheduletaskdlg;control;36
+msgid "Set the time period you want the task to be executed after its defined time."
+msgstr "Установите период в течении которого задача будет выполнена после её заданого времени."
+
+#: cscheduletaskdlg;control;37
+msgid "Disable"
+msgstr "Запрет"
+
+#: cscheduletaskdlg;control;38
+msgid "Enable"
+msgstr "Разрешено"
+
+#: cscheduletaskdlg;control;40
+msgid "Minutes"
+msgstr "Минут"
+
 #: dialog;cnetworkssettingspage
 msgid "Networks"
 msgstr "Сети"
@@ -8511,7 +8560,7 @@ msgstr "_Внести..."
 
 #: cwizardsharepage;control;7
 msgid "WARNING: Distributing copyrighted works is an offence in most countries."
-msgstr "Обмен данными с авторскими правами противозаконен!"
+msgstr "ВНИМАНИЕ! Обмен данными с авторскими правами противозаконен!"
 
 #: dialog;cfolderscandlg
 msgid "Scanning Folder..."
@@ -8555,7 +8604,7 @@ msgstr " (выберите)| парень| девушка| мужчина| же�
 
 #: cwizardprofilepage;control;7
 msgid "from:"
-msgstr "Из:"
+msgstr "из:"
 
 #: dialog;cwizardinterfacepage
 msgid "Welcome to Shareaza (4/6)"
@@ -8619,7 +8668,7 @@ msgstr "Shareaza обнаружила, что у Вас установлена �
 
 #: cdonkeyimportdlg;control;3
 msgid "No|Cancel"
-msgstr "Нет"
+msgstr "Нет|Отмена"
 
 #: dialog;cwizardfinishedpage
 msgid "Welcome to Shareaza (6/6)"
@@ -10015,22 +10064,10 @@ msgstr "Комментарии"
 #~ msgstr "Соедин. с полной скоростью"
 #~ msgid "Help"
 #~ msgstr "Справка"
-#~ msgid ""
-#~ "The scheduler is designed to allow you to set times when Shareaza will "
-#~ "connect and download files. {n}{n}{n}Note: If you have Shareaza open "
-#~ "while the scheduler is active, you may see it changing settings- This is "
-#~ "normal!"
-#~ msgstr ""
-#~ "Планировщик создан для того, чтобы позволить Вам установить, когда "
-#~ "Shareaza должна соединиться и начать загрузку файлов.{n}Замечание: Если "
-#~ "Вы открыли Shareaza во время работы планировщика, Вы можете заметить, что "
-#~ "установки меняются - это нормально!"
-#~ msgid ""
-#~ "Would you like to download this file?\\n\\n\"%s\"\\n\\nChoose Cancel to "
-#~ "stop any further prompts."
-#~ msgstr ""
-#~ "Хотите ли Вы загрузить этот файл?\\n\\n\\n\\n«%s»\\n\\n\\n\\nВыберите "
-#~ "«Cancel», чтобы не тревожить об этом позже."
+#~ msgid "The scheduler is designed to allow you to set times when Shareaza will connect and download files. {n}{n}{n}Note: If you have Shareaza open while the scheduler is active, you may see it changing settings- This is normal!"
+#~ msgstr "Планировщик создан для того, чтобы позволить Вам установить, когда Shareaza должна соединиться и начать загрузку файлов.{n}Замечание: Если Вы открыли Shareaza во время работы планировщика, Вы можете заметить, что установки меняются - это нормально!"
+#~ msgid "Would you like to download this file?\\n\\n\"%s\"\\n\\nChoose Cancel to stop any further prompts."
+#~ msgstr "Хотите ли Вы загрузить этот файл?\\n\\n\\n\\n«%s»\\n\\n\\n\\nВыберите «Cancel», чтобы не тревожить об этом позже."
 #~ msgid "_Web File Info"
 #~ msgstr "_Сервис"
 #~ msgid "English"
