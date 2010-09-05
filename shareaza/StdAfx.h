@@ -107,6 +107,7 @@
 #include <afxwin.h>			// MFC core and standard components
 #include <afxext.h>			// MFC extensions
 #include <afxcmn.h>			// MFC support for Windows Common Controls
+#include <afxdtctl.h>		// MFC date & time controls
 #include <afxtempl.h>		// MFC templates
 #include <afxmt.h>			// MFC threads
 #include <afxole.h>			// MFC OLE

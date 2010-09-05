@@ -23,8 +23,9 @@
 class CXMLElement;
 
 
-#define SCHEDULER_SER_VERSION	1
-
+const int SCHEDULER_SER_VERSION	= 2;
+// History:
+// 2: m_bHasValidityPeriod and m_nValidityPeriod are added
 
 //TODO: Add new tasks here
 enum ScheduleTask
@@ -59,25 +60,27 @@ public:
 
 // Attributes
 public:
-	unsigned int	m_nDays;		//Will have a combination of DayOfWeek
-	unsigned int	m_nAction;		//Will have one of ScheduleTask values plus 0 as invalid state indicator
-	bool			m_bSpecificDays;	//Task is scheduled for everyday or just today
-	CString			m_sDescription;		//Optional task description
-	CTime			m_tScheduleDateTime;//Time the task is scheduled for
-	bool			m_bActive;			//Task should be executed or not
-	bool			m_bExecuted;		//Task is executed or not
-	bool			m_bToggleBandwidth;	//Up/Down bandwidth are limited seperately or not
-	bool			m_bLimitedNetworks;	//Network is limited to G2 or not (in SCHEDULE_LIMITED_SPEED)
-	int				m_nLimit;			//Bandwidth limit when m_bToggleBandwidth is FALSE
-	int				m_nLimitDown;		//Down stream bandwidth limit when m_bToggleBandwidth is TRUE
-	int				m_nLimitUp;			//Up stream bandwidth limit when m_bToggleBandwidth is TRUE
-	GUID			m_pGUID;			//GUID for each scheduled item
+	unsigned int	m_nDays;				//Will have a combination of DayOfWeek
+	unsigned int	m_nAction;				//Will have one of ScheduleTask values plus 0 as invalid state indicator
+	bool			m_bSpecificDays;		//Task is scheduled for everyday or just today
+	CString			m_sDescription;			//Optional task description
+	CTime			m_tScheduleDateTime;	//Time the task is scheduled for
+	bool			m_bActive;				//Task should be executed or not
+	bool			m_bExecuted;			//Task is executed or not
+	bool			m_bHasValidityPeriod;	//True if a validity period is set for task
+	bool			m_bToggleBandwidth;		//Up/Down bandwidth are limited seperately or not
+	bool			m_bLimitedNetworks;		//Network is limited to G2 or not (in SCHEDULE_LIMITED_SPEED)
+	int				m_nValidityPeriod;  	//Validity period in minute
+	int				m_nLimit;				//Bandwidth limit when m_bToggleBandwidth is FALSE
+	int				m_nLimitDown;			//Down stream bandwidth limit when m_bToggleBandwidth is TRUE
+	int				m_nLimitUp;				//Up stream bandwidth limit when m_bToggleBandwidth is TRUE
+	GUID			m_pGUID;				//GUID for each scheduled item
 
 // Operations
 public:
 	void			Serialize(CArchive& ar, int nVersion);
-	CXMLElement*	ToXML();
-	BOOL			FromXML(CXMLElement* pXML);
+	CXMLElement*	ToXML(int nVersion);
+	BOOL			FromXML(CXMLElement* pXML, int nVersion);
 };
 
 //////////////////////////////////////////////////////////////////////
@@ -141,13 +144,15 @@ public:
 	//Is called by Load(). Tries to get shutdown privilege for the process
 	bool			SetShutdownRights();
 	
-	//Is called by CheckSchedule(). Checks to see if Now is grater than Then or not.
-	bool			IsScheduledTimePassed(CScheduleTask* pSchTask) const;
+	//Is called by CheckSchedule().
+	//If Now >= Then Returns the difference between Now and Then.
+	//Else returns -1;
+	int				MinutesPassed(CScheduleTask* pSchTask) const;
 	
 	//Checks to see if task should be executed today 0,
 	//should have been executed in the past -1 or
 	//should be executed later 1.
-	int				ScheduleFromToday(CScheduleTask* pSchTask) const;
+	int				ScheduleDateFromToday(CScheduleTask* pSchTask) const;
 
 	//Adds a new task to m_pScheduleItems after giving it a GUID
 	void			Add(CScheduleTask* pSchTask);

@@ -423,7 +423,7 @@ void CSchedulerWnd::OnUpdateSchedulerDeactivate(CCmdUI* pCmdUI)
 		return;
 	}
 
-	pCmdUI->Enable( (m_wndList.GetSelectedCount() > 0 ) && (pSchTask->m_bActive));
+	pCmdUI->Enable( ( m_wndList.GetSelectedCount() > 0 ) && ( pSchTask->m_bActive ));
 }
 
 void CSchedulerWnd::OnSchedulerDeactivate()
@@ -436,8 +436,6 @@ void CSchedulerWnd::OnSchedulerDeactivate()
 		return;
 
 	pSchTask->m_bActive = false;
-
-	//PUT HERE (MoJo)
 
 	Update();
 }
@@ -454,7 +452,7 @@ void CSchedulerWnd::OnUpdateSchedulerActivate(CCmdUI* pCmdUI)
 		return;
 	}
 
-	pCmdUI->Enable( (m_wndList.GetSelectedCount() > 0 ) && (!pSchTask->m_bActive));
+	pCmdUI->Enable( ( m_wndList.GetSelectedCount() > 0 ) && ( ! pSchTask->m_bActive ) );
 }
 
 void CSchedulerWnd::OnSchedulerActivate()
@@ -466,7 +464,7 @@ void CSchedulerWnd::OnSchedulerActivate()
 
 	if ( ! pSchTask ) return;
 
-	if (!Scheduler.IsScheduledTimePassed( pSchTask ) || pSchTask->m_bSpecificDays)
+	if ( Scheduler.MinutesPassed( pSchTask ) < 0 || pSchTask->m_bSpecificDays )
 	{
 		pSchTask->m_bActive = true;
 		pSchTask->m_bExecuted = false;
@@ -523,7 +521,6 @@ void CSchedulerWnd::OnSchedulerExport()
 
 	if ( ! pFile.Open( dlg.GetPathName(), CFile::modeWrite|CFile::modeCreate ) )
 	{
-		// TODO: Error
 		AfxMessageBox(_T("Error: Can not open file to export Scheduler list."),MB_ICONSTOP|MB_OK );
 		return;
 	}
@@ -535,13 +532,17 @@ void CSchedulerWnd::OnSchedulerExport()
 
 	pXML->AddAttribute( _T("xmlns"), CScheduler::xmlns );
 
+	CString strValue; 
+	strValue.Format( _T("%i"), SCHEDULER_SER_VERSION );
+	pXML->AddAttribute( _T("version"), strValue );
+
 	for ( int nItem = -1 ; ( nItem = m_wndList.GetNextItem( nItem, LVIS_SELECTED ) ) >= 0 ; )
 	{
 		CQuickLock oLock( Scheduler.m_pSection );
 
 		if ( CScheduleTask* pTask = GetItem( nItem ) )
 		{
-			pXML->AddElement( pTask->ToXML() );
+			pXML->AddElement( pTask->ToXML( SCHEDULER_SER_VERSION ) );
 		}
 	}
 

@@ -34,8 +34,6 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 BEGIN_MESSAGE_MAP(CScheduleTaskDlg, CSkinDialog)
-	//{{AFX_MSG_MAP(CScheduleTaskDlg)
-	//}}AFX_MSG_MAP
 	ON_BN_CLICKED(IDC_ONLYONCE, OnBnClickedOnlyonce)
 	ON_BN_CLICKED(IDC_SCHEDULER_TOGGLE_BANDWIDTH, OnBnClickedToggleBandwidth)
 	ON_NOTIFY(DTN_DATETIMECHANGE, IDC_DATE, OnDtnDatetimechangeDate)
@@ -44,13 +42,17 @@ BEGIN_MESSAGE_MAP(CScheduleTaskDlg, CSkinDialog)
 	ON_BN_CLICKED(IDC_ACTIVE, OnBnClickedActive)
 	ON_CBN_SELCHANGE(IDC_EVENTTYPE, OnCbnSelchangeEventtype)
 	ON_BN_CLICKED(IDC_BUTTON_ALLDAYS, &CScheduleTaskDlg::OnBnClickedButtonAllDays)
+	ON_BN_CLICKED(IDC_RADIO_VP_DISABLE, &CScheduleTaskDlg::OnBnClickedRadioVpDisable)
+	ON_BN_CLICKED(IDC_RADIO_VP_ENABLE, &CScheduleTaskDlg::OnBnClickedRadioVpEnable)
 END_MESSAGE_MAP()
 
 
 /////////////////////////////////////////////////////////////////////////////
 // CScheduleTaskDlg dialog
 
-CScheduleTaskDlg::CScheduleTaskDlg(CWnd* pParent, CScheduleTask* pSchTask) : CSkinDialog(CScheduleTaskDlg::IDD, pParent)
+CScheduleTaskDlg::CScheduleTaskDlg(CWnd* pParent, CScheduleTask* pSchTask)
+	: CSkinDialog		( CScheduleTaskDlg::IDD, pParent )
+	, m_nValidityPeriod	( 0 )
 {
 	m_pScheduleTask = pSchTask;
 	if ( m_pScheduleTask )
@@ -84,6 +86,7 @@ void CScheduleTaskDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_SCHEDULER_LIMITED, m_nLimit);
 	DDX_Text(pDX, IDC_SCHEDULER_LIMITED_DOWN, m_nLimitDown);
 	DDX_Text(pDX, IDC_SCHEDULER_LIMITED_UP, m_nLimitUp);
+	DDX_Text(pDX, IDC_EDIT_VP_MINUTES, m_nValidityPeriod);
 	DDX_Control(pDX, IDC_ACTIVE, m_wndActiveCheck);
 	DDX_Control(pDX, IDC_SCHEDULER_LIMITED, m_wndLimitedEdit);
 	DDX_Control(pDX, IDC_EVENTTYPE, m_wndTypeSel);
@@ -105,6 +108,9 @@ void CScheduleTaskDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_CHECK_SAT, m_wndChkDaySat);
 	DDX_Control(pDX, IDC_DAYOFWEEK_GBOX, m_wndGrpBoxDayOfWeek);
 	DDX_Control(pDX, IDC_BUTTON_ALLDAYS, m_wndBtnAllDays);
+	DDX_Control(pDX, IDC_RADIO_VP_ENABLE, m_wndVPEnableRadio);
+	DDX_Control(pDX, IDC_EDIT_VP_MINUTES, m_wndVPMinutesEdit);
+	DDX_Control(pDX, IDC_RADIO_VP_DISABLE, m_wndVPDisableRadio);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -141,6 +147,8 @@ BOOL CScheduleTaskDlg::OnInitDialog()
 		m_nLimitUp			= 25;
 		m_bToggleBandwidth	= false;
 		m_bLimitedNetworks	= false;
+		m_nValidityPeriod	= 10;
+		m_wndVPEnableRadio.SetCheck(1);
 		m_wndActiveCheck.SetCheck(1);
 		m_wndDate.GetTime(m_tDateAndTime);	//Sets mtDateTime to now
 		m_wndRadioOnce.SetCheck(1);
@@ -168,8 +176,19 @@ BOOL CScheduleTaskDlg::OnInitDialog()
 		m_nLimitDown	= m_pScheduleTask->m_nLimitDown;
 		m_nLimitUp		= m_pScheduleTask->m_nLimitUp;
 		m_nDays			= m_pScheduleTask->m_nDays;
-		m_bToggleBandwidth	= m_pScheduleTask->m_bToggleBandwidth;
-		m_bLimitedNetworks	= m_pScheduleTask->m_bLimitedNetworks;
+		m_bToggleBandwidth		= m_pScheduleTask->m_bToggleBandwidth;
+		m_bLimitedNetworks		= m_pScheduleTask->m_bLimitedNetworks;
+		m_bHasValidityPeriod	= m_pScheduleTask->m_bHasValidityPeriod;
+		m_nValidityPeriod		= m_pScheduleTask->m_nValidityPeriod;
+	
+		if ( m_bHasValidityPeriod )
+			m_wndVPEnableRadio.SetCheck( 1 );
+		else
+		{
+			m_wndVPDisableRadio.SetCheck( 1 );
+			m_wndVPMinutesEdit.EnableWindow( 0 );
+
+		}
 
 		if ( m_pScheduleTask->m_bExecuted && ! m_pScheduleTask->m_bSpecificDays )
 			m_bActive = true;
@@ -266,9 +285,9 @@ BOOL CScheduleTaskDlg::OnInitDialog()
 	m_wndChkDayFri.SetCheck( m_nDays & FRIDAY );
 	m_wndChkDaySat.SetCheck( m_nDays & SATURDAY );
 
-	m_wndSpin.SetPos(m_nLimit);
-	m_wndSpinDown.SetPos(m_nLimitDown);
-	m_wndSpinUp.SetPos(m_nLimitUp);
+	m_wndSpin.SetPos( m_nLimit );
+	m_wndSpinDown.SetPos( m_nLimitDown );
+	m_wndSpinUp.SetPos( m_nLimitUp );
 
 	if( m_bSpecificDays )
 		EnableDaysOfWeek( true );
@@ -325,14 +344,14 @@ void CScheduleTaskDlg::OnOK()
 	else
 	{
 		m_nDays = 0;
-		if( m_wndChkDaySun.GetCheck() ) m_nDays |= SUNDAY; 
-		if( m_wndChkDayMon.GetCheck() ) m_nDays |= MONDAY;
-		if( m_wndChkDayTues.GetCheck() ) m_nDays |= TUESDAY; 
-		if( m_wndChkDayWed.GetCheck() ) m_nDays |= WEDNESDAY;
-		if( m_wndChkDayThu.GetCheck() ) m_nDays |= THURSDAY;
-		if( m_wndChkDayFri.GetCheck() ) m_nDays |= FRIDAY;
-		if( m_wndChkDaySat.GetCheck() ) m_nDays |= SATURDAY;
-		if( ! m_nDays )
+		if ( m_wndChkDaySun.GetCheck() ) m_nDays |= SUNDAY; 
+		if ( m_wndChkDayMon.GetCheck() ) m_nDays |= MONDAY;
+		if ( m_wndChkDayTues.GetCheck() ) m_nDays |= TUESDAY; 
+		if ( m_wndChkDayWed.GetCheck() ) m_nDays |= WEDNESDAY;
+		if ( m_wndChkDayThu.GetCheck() ) m_nDays |= THURSDAY;
+		if ( m_wndChkDayFri.GetCheck() ) m_nDays |= FRIDAY;
+		if ( m_wndChkDaySat.GetCheck() ) m_nDays |= SATURDAY;
+		if ( ! m_nDays )
 		{
 			AfxMessageBox( IDS_SCHEDULER_SELECTADAY );
 			return;
@@ -341,10 +360,16 @@ void CScheduleTaskDlg::OnOK()
 		m_bSpecificDays = true;
 	}
 
-	if ( m_wndActiveCheck.GetCheck() )
-		m_bActive = true;
-	else
-		m_bActive = false;
+
+	if ( m_wndVPEnableRadio.GetCheck() )
+	{
+		if ( ( m_nValidityPeriod > 1439 ) || ( 1 > m_nValidityPeriod ) )
+		{
+			AfxMessageBox( IDS_SCHEDULER_INVALIDVP );
+			return;
+		}
+	}
+	m_bActive = m_wndActiveCheck.GetCheck() != 0;
 
 	m_pScheduleTask->m_nLimit			= m_nLimit;
 	m_pScheduleTask->m_nLimitDown		= m_nLimitDown;
@@ -358,7 +383,8 @@ void CScheduleTaskDlg::OnOK()
 	m_pScheduleTask->m_bActive			= m_bActive;
 	m_pScheduleTask->m_bExecuted		= false;
 	m_pScheduleTask->m_nDays			= m_nDays;
-
+	m_pScheduleTask->m_bHasValidityPeriod = m_wndVPEnableRadio.GetCheck() != 0;
+	m_pScheduleTask->m_nValidityPeriod	= m_nValidityPeriod;
 	Scheduler.Add(m_pScheduleTask);
 	m_pScheduleTask = NULL;
 
@@ -513,4 +539,14 @@ void CScheduleTaskDlg::OnBnClickedButtonAllDays()
 	m_wndChkDayThu.SetCheck( true );
 	m_wndChkDayFri.SetCheck( true );
 	m_wndChkDaySat.SetCheck( true );
+}
+
+void CScheduleTaskDlg::OnBnClickedRadioVpDisable()
+{
+	m_wndVPMinutesEdit.EnableWindow( false );
+}
+
+void CScheduleTaskDlg::OnBnClickedRadioVpEnable()
+{
+	m_wndVPMinutesEdit.EnableWindow( true );
 }

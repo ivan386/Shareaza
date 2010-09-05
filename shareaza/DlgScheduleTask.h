@@ -19,14 +19,9 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_DLGSCHEDULEITEM_H__INCLUDED_)
-#define AFX_DLGSCHEDULEITEM_H__INCLUDED_
-
 #pragma once
 
 #include "DlgSkinDialog.h"
-#include "afxdtctl.h"
-#include "afxwin.h"
 
 class CScheduleTask;
 
@@ -43,10 +38,7 @@ public:
 
 // Dialog Data
 public:
-	//{{AFX_DATA(CScheduleTaskDlg)
 	enum { IDD = IDD_SCHEDULE_TASK };
-
-	//}}AFX_DATA
 
 	CScheduleTask		*m_pScheduleTask;
 	bool				m_bSpecificDays;
@@ -56,25 +48,19 @@ public:
 	CTime				m_tDateAndTime;
 	bool				m_bActive;
 	bool				m_bNew;
+	bool				m_bHasValidityPeriod;
 	BOOL				m_bToggleBandwidth;
 	BOOL				m_bLimitedNetworks;
 	int					m_nLimit;
 	int					m_nLimitDown;
 	int					m_nLimitUp;
+	int					m_nValidityPeriod;
 
-// Overrides
-public:
-	//{{AFX_VIRTUAL(CScheduleTaskDlg)
-
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
 protected:
-	//{{AFX_MSG(CScheduleTaskDlg)
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	virtual BOOL OnInitDialog();
 	virtual void OnOK();
+
 	afx_msg void OnBnClickedOnlyonce();
 	afx_msg void OnBnClickedToggleBandwidth();
 	afx_msg void OnDtnDatetimechangeDate(NMHDR *pNMHDR, LRESULT *pResult);
@@ -83,9 +69,13 @@ protected:
 	afx_msg void OnBnClickedActive();
 	afx_msg void OnCbnSelchangeEventtype();
 	afx_msg void OnBnClickedButtonAllDays();
-	//}}AFX_MSG
+	afx_msg void OnBnClickedRadioVpDisable();
+	afx_msg void OnBnClickedRadioVpEnable();
+
 	void EnableDaysOfWeek(bool bEnable);
+
 	DECLARE_MESSAGE_MAP()
+
 public:
 	CEdit				m_wndLimitedEdit;
 	CComboBox			m_wndTypeSel;
@@ -113,8 +103,7 @@ public:
 	CButton				m_wndChkDaySat;
 	CStatic				m_wndGrpBoxDayOfWeek;
 	CButton				m_wndBtnAllDays;
+	CButton				m_wndVPEnableRadio;	
+	CEdit				m_wndVPMinutesEdit;
+	CButton				m_wndVPDisableRadio;
 };
-
-//{{AFX_INSERT_LOCATION}}
-
-#endif // !defined(AFX_DLGSCHEDULEITEM_H__INCLUDED_)

@@ -3643,7 +3643,7 @@
 			<control caption="Choose a Password:"/>
 			<control/>
 		</dialog>
-		<dialog name="CScheduleTaskDlg" cookie="BuBuBuBuSySyBuBuBuBuBuBuBuBuCoEdmsEdmsEdmsBuBuEdBuStStStStStStStBuBu" caption="Schedule Item">
+		<dialog name="CScheduleTaskDlg" cookie="BuBuBuBuSySyBuBuBuBuBuBuBuBuCoEdmsEdmsEdmsBuBuEdBuStStStStStStStBuBuBuStBuBuEdSt" caption="Schedule Item">
 			<control caption="OK"/>
 			<control caption="Cancel"/>
 			<control caption="Only once"/>
@@ -3678,6 +3678,12 @@
 			<control caption="% of _upload under limit"/>
 			<control caption="Days Of Week"/>
 			<control caption="Run this event"/>
+			<control caption="Validity Period"/>
+			<control caption="Set the time period you want the task to be executed after its defined time."/>
+			<control caption="Disable"/>
+			<control caption="Enable"/>
+			<control/>
+			<control caption="Minutes"/>
 			<control/>
 		</dialog>
 		<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Networks">
