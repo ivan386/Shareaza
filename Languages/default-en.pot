@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2010-05-27 15:20+0000\n"
+"POT-Creation-Date: 2010-09-05 06:24+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: (translation author)\n"
 "Language-Team: Shareaza Development Team\n"
@@ -352,6 +352,10 @@ msgstr ""
 msgid "eDonkey"
 msgstr ""
 
+#: button;id_network_dc
+msgid "DC++"
+msgstr ""
+
 #: button;id_network_connect_to button;id_hostcache_connect
 msgid "Connect To"
 msgstr ""
@@ -442,6 +446,10 @@ msgstr ""
 
 #: button;id_hostcache_kad_cache
 msgid "Kademlia Cache"
+msgstr ""
+
+#: button;id_hostcache_dc_cache
+msgid "DC++ Cache"
 msgstr ""
 
 #: button;id_chat_bold
@@ -542,6 +550,10 @@ msgstr ""
 
 #: cmainwnd.basic;1;2;item;id_network_ed2k cmainwnd.tabbed;9;10;item;id_network_ed2k cmainwnd.windowed;18;19;item;id_network_ed2k
 msgid "Connect to _eDonkey"
+msgstr ""
+
+#: cmainwnd.basic;1;2;item;id_network_dc cmainwnd.tabbed;9;10;item;id_network_dc cmainwnd.windowed;18;19;item;id_network_dc
+msgid "Connect to _DC++"
 msgstr ""
 
 #: cmainwnd.basic;1;item;id_network_auto_close cmainwnd.tabbed;9;item;id_network_auto_close cmainwnd.tray;item;id_network_auto_close cremotewnd;item;id_network_auto_close
@@ -886,6 +898,10 @@ msgstr ""
 
 #: chostcachewnd;28;item;id_hostcache_kad_cache
 msgid "_Kademlia Cache"
+msgstr ""
+
+#: chostcachewnd;28;item;id_hostcache_dc_cache
+msgid "_DC++ Cache"
 msgstr ""
 
 #: chostcachewnd;item;id_hostcache_import
@@ -1420,6 +1436,10 @@ msgstr ""
 msgid "_eDonkey"
 msgstr ""
 
+#: cneighbourswnd;59;item;id_network_dc
+msgid "_DC++"
+msgstr ""
+
 #: cneighbourswnd;60
 msgid "_Monitor"
 msgstr ""
@@ -1717,7 +1737,7 @@ msgid "W A R N I N G   -   Y O U   A R E   F I R E W A L L E D"
 msgstr ""
 
 #: chomeviewctrl;text;5001
-msgid "Shareaza has detected that you are behind a NAT router or firewall,\n\t\t\tand are unable to receive connections from the Internet.  "
+msgid "Shareaza has detected that you are behind a NAT router or firewall,\n\t\t\t\tand are unable to receive connections from the Internet.  "
 msgstr ""
 
 #: chomeviewctrl;text;5002
@@ -1733,7 +1753,7 @@ msgid "W A R N I N G   -   Y O U R   T C P   P O R T   I S   F I R E W A L
 msgstr ""
 
 #: chomeviewctrl;text;6001
-msgid "Shareaza has detected that you are behind a NAT router or firewall,\n\t\t\tand are unable to receive TCP connections from the Internet.  "
+msgid "Shareaza has detected that you are behind a NAT router or firewall,\n\t\t\t\tand are unable to receive TCP connections from the Internet.  "
 msgstr ""
 
 #: chomeviewctrl;text;6002
@@ -1745,7 +1765,7 @@ msgid "W A R N I N G   -   Y O U R   U D P   P O R T   I S   F I R E W A L
 msgstr ""
 
 #: chomeviewctrl;text;7001
-msgid "Shareaza has detected that you are behind a NAT router or firewall,\n\t\t\tand are unable to receive UDP messages from the Internet.  "
+msgid "Shareaza has detected that you are behind a NAT router or firewall,\n\t\t\t\tand are unable to receive UDP messages from the Internet.  "
 msgstr ""
 
 #: chomeviewctrl;text;7002
@@ -1880,15 +1900,15 @@ msgstr ""
 msgid "Gnutella2:"
 msgstr ""
 
-#: chomeconnectionbox;text;4 chomeconnectionbox;text;10 chomeconnectionbox;text;16
+#: chomeconnectionbox;text;4 chomeconnectionbox;text;10 chomeconnectionbox;text;16 chomeconnectionbox;text;20
 msgid "Disconnected"
 msgstr ""
 
-#: chomeconnectionbox;text;5 chomeconnectionbox;text;11 chomeconnectionbox;text;17 string;8070
+#: chomeconnectionbox;text;5 chomeconnectionbox;text;11 chomeconnectionbox;text;17 chomeconnectionbox;text;21 string;8070
 msgid "Connecting..."
 msgstr ""
 
-#: chomeconnectionbox;text;6 chomeconnectionbox;text;12 chomeconnectionbox;text;18 string;8071
+#: chomeconnectionbox;text;6 chomeconnectionbox;text;12 chomeconnectionbox;text;18 chomeconnectionbox;text;22 string;8071
 msgid "Connected"
 msgstr ""
 
@@ -1913,18 +1933,22 @@ msgid "eDonkey:"
 msgstr ""
 
 #: chomeconnectionbox;text;19
-msgid "You have been connected for"
-msgstr ""
-
-#: chomeconnectionbox;text;20 chomeconnectionbox;text;22
-msgid "%i"
-msgstr ""
-
-#: chomeconnectionbox;text;21
-msgid "hours and"
+msgid "DC++:"
 msgstr ""
 
 #: chomeconnectionbox;text;23
+msgid "You have been connected for"
+msgstr ""
+
+#: chomeconnectionbox;text;24 chomeconnectionbox;text;26
+msgid "%i"
+msgstr ""
+
+#: chomeconnectionbox;text;25
+msgid "hours and"
+msgstr ""
+
+#: chomeconnectionbox;text;27
 msgid "minutes."
 msgstr ""
 
@@ -1993,7 +2017,7 @@ msgid "Welcome to Shareaza's Settings Manager"
 msgstr ""
 
 #: cgeneralsettingsgroup;text;2
-msgid "The Shareaza Settings Manager allows advanced users to completely customise how\n\t\t\tShareaza works. The settings in the"
+msgid "The Shareaza Settings Manager allows advanced users to completely customise how\n\t\t\t\tShareaza works. The settings in the"
 msgstr ""
 
 #: cgeneralsettingsgroup;text;4
@@ -2053,7 +2077,7 @@ msgid "Internet"
 msgstr ""
 
 #: cinternetsettingsgroup;text;2
-msgid "The Shareaza Settings Manager allows advanced users to completely customise \n\t\t\thow Shareaza works. The settings in the"
+msgid "The Shareaza Settings Manager allows advanced users to completely customise \n\t\t\t\thow Shareaza works. The settings in the"
 msgstr ""
 
 #: cinternetsettingsgroup;text;4
@@ -2149,15 +2173,15 @@ msgid "Downloads Area"
 msgstr ""
 
 #: downloadhelp.select;text;2
-msgid "This is where files currently being downloaded are displayed. You can view\n\t\tindividual sources by expanding each file with the small + on the left."
+msgid "This is where files currently being downloaded are displayed. You can view\n\t\t\tindividual sources by expanding each file with the small + on the left."
 msgstr ""
 
 #: downloadhelp.select;text;3
-msgid "Drag'n'Drop downloads higher in the list for priority, or onto Download Group \n\t\ttabs for better organisation (in Power Mode)."
+msgid "Drag'n'Drop downloads higher in the list for priority, or onto Download Group \n\t\t\ttabs for better organisation (in Power Mode)."
 msgstr ""
 
 #: downloadhelp.select;text;4
-msgid "You can also use this command to get help information on a specific download.\n\t\tSimply select a download and choose this Help command again."
+msgid "You can also use this command to get help information on a specific download.\n\t\t\tSimply select a download and choose this Help command again."
 msgstr ""
 
 #: downloadhelp.seeding;text;1
@@ -2165,7 +2189,7 @@ msgid "This Torrent is Seeding"
 msgstr ""
 
 #: downloadhelp.seeding;text;2
-msgid "Shareaza has verified this complete download, and is actively sharing it\n\t\twith other downloaders through BitTorrent. Please share at least 100%."
+msgid "Shareaza has verified this complete download, and is actively sharing it\n\t\t\twith other downloaders through BitTorrent. Please share at least 100%."
 msgstr ""
 
 #: downloadhelp.completed;text;1
@@ -2173,7 +2197,7 @@ msgid "This Download has Completed"
 msgstr ""
 
 #: downloadhelp.completed;text;2
-msgid "Shareaza has finished downloading this file, and has verified that it\n\t\tis 100% correct. It has also moved the file to your downloads folder."
+msgid "Shareaza has finished downloading this file, and has verified that it\n\t\t\tis 100% correct. It has also moved the file to your downloads folder."
 msgstr ""
 
 #: downloadhelp.moving;text;1
@@ -2181,7 +2205,7 @@ msgid "This Download is Moving"
 msgstr ""
 
 #: downloadhelp.moving;text;2
-msgid "Shareaza has finished downloading this file, and has verified that\n\t\tit is correct. It is currently being moved and/or unpacked to your downloads folder."
+msgid "Shareaza has finished downloading this file, and has verified that\n\t\t\tit is correct. It is currently being moved and/or unpacked to your downloads folder."
 msgstr ""
 
 #: downloadhelp.paused;text;1
@@ -2189,7 +2213,7 @@ msgid "This Download is Paused"
 msgstr ""
 
 #: downloadhelp.paused;text;2
-msgid "You have paused this download. If you want it to resume downloading, you\n\t\tcan click the '"
+msgid "You have paused this download. If you want it to resume downloading, you\n\t\t\tcan click the '"
 msgstr ""
 
 #: downloadhelp.paused;text;4
@@ -2201,7 +2225,7 @@ msgid "The Disk is Full"
 msgstr ""
 
 #: downloadhelp.diskfull;text;2
-msgid "Shareaza has paused this download automatically because the hard disk\n\t\tappears to be full, or the download file cannot be written to. If you wish\n\t\tto continue downloading, please free some space on your hard disk and/or check\n\t\tto make sure the incomplete file folder is accessible, and then resume the\n\t\tdownload."
+msgid "Shareaza has paused this download automatically because the hard disk\n\t\t\tappears to be full, or the download file cannot be written to. If you wish\n\t\t\tto continue downloading, please free some space on your hard disk and/or check\n\t\t\tto make sure the incomplete file folder is accessible, and then resume the\n\t\t\tdownload."
 msgstr ""
 
 #: downloadhelp.verifying;text;1
@@ -2209,7 +2233,7 @@ msgid "This Download is Verifying"
 msgstr ""
 
 #: downloadhelp.verifying;text;2
-msgid "This download has finished, and Shareaza is now checking it to ensure\n\t\tthat it is exactly the same as the original file. If any damaged parts are\n\t\tfound, Shareaza will repair them automatically."
+msgid "This download has finished, and Shareaza is now checking it to ensure\n\t\t\tthat it is exactly the same as the original file. If any damaged parts are\n\t\t\tfound, Shareaza will repair them automatically."
 msgstr ""
 
 #: downloadhelp.downloading;text;1
@@ -2217,7 +2241,7 @@ msgid "This Download is Active!"
 msgstr ""
 
 #: downloadhelp.downloading;text;2
-msgid "This download is currently in progress. If it is downloading too slowly,\n\t\tyou could try searching the network for more sources with the '"
+msgid "This download is currently in progress. If it is downloading too slowly,\n\t\t\tyou could try searching the network for more sources with the '"
 msgstr ""
 
 #: downloadhelp.downloading;text;3 downloadhelp.searching;text;3
@@ -2225,7 +2249,7 @@ msgid "Find More Sources"
 msgstr ""
 
 #: downloadhelp.downloading;text;4
-msgid "' command. If the speed does not \n\t\timprove it may be due to limited upload speeds of the users you are downloading \n\t\tfrom. Download speed usually increases over time."
+msgid "' command. If the speed does not \n\t\t\timprove it may be due to limited upload speeds of the users you are downloading \n\t\t\tfrom. Download speed usually increases over time."
 msgstr ""
 
 #: downloadhelp.pending;text;1
@@ -2233,7 +2257,7 @@ msgid "This Download is Pending"
 msgstr ""
 
 #: downloadhelp.pending;text;2
-msgid "This download is waiting for someone to start uploading.\n\t\tShareaza is ready to start downloading this file, but no-one is sending it at\n\t\tthe moment. You are probably waiting in other user's queues, and the download\n\t\tmay start transferring at any time. You can examine the individual sources to \n\t\tsee each queue you are waiting in. If you are sharing files yourself, it may\n\t\timprove the chances of a download transfer starting quickly."
+msgid "This download is waiting for someone to start uploading.\n\t\t\tShareaza is ready to start downloading this file, but no-one is sending it at\n\t\t\tthe moment. You are probably waiting in other user's queues, and the download\n\t\t\tmay start transferring at any time. You can examine the individual sources to \n\t\t\tsee each queue you are waiting in. If you are sharing files yourself, it may\n\t\t\timprove the chances of a download transfer starting quickly."
 msgstr ""
 
 #: downloadhelp.queued;text;1
@@ -2241,7 +2265,7 @@ msgid "This Download is Queued"
 msgstr ""
 
 #: downloadhelp.queued;text;2
-msgid "This download is waiting for some of your other downloads to complete.\n\t\tYour download settings limit the number of downloads which may be active at\n\t\tany given time, to ensure that each download gets a good share of the available\n\t\tbandwidth. You can change these settings via Tools, Shareaza Settings.\n\t\tAlternatively, you may manually start this download with the resume command."
+msgid "This download is waiting for some of your other downloads to complete.\n\t\t\tYour download settings limit the number of downloads which may be active at\n\t\t\tany given time, to ensure that each download gets a good share of the available\n\t\t\tbandwidth. You can change these settings via Tools, Shareaza Settings.\n\t\t\tAlternatively, you may manually start this download with the resume command."
 msgstr ""
 
 #: downloadhelp.searching;text;1
@@ -2249,7 +2273,7 @@ msgid "This Download is Searching"
 msgstr ""
 
 #: downloadhelp.searching;text;2
-msgid "There are no known sources for this download, so Shareaza is searching\n\t\tall connected P2P networks for new sources. Once sources are found, the\n\t\tdownload will start automatically. Shareaza searches for sources automatically,\n\t\thowever you can speed up the process using the"
+msgid "There are no known sources for this download, so Shareaza is searching\n\t\t\tall connected P2P networks for new sources. Once sources are found, the\n\t\t\tdownload will start automatically. Shareaza searches for sources automatically,\n\t\t\thowever you can speed up the process using the"
 msgstr ""
 
 #: downloadhelp.searching;text;4
@@ -2257,7 +2281,7 @@ msgid "command."
 msgstr ""
 
 #: downloadhelp.searching;text;5
-msgid "Unfortunately in many cases there may be no users online who have the\n\t\tfile you are looking for. The only course of action here is to wait for\n\t\tsomeone to come online, or cancel it and try to find a similar file which is\n\t\tmore widely available."
+msgid "Unfortunately in many cases there may be no users online who have the\n\t\t\tfile you are looking for. The only course of action here is to wait for\n\t\t\tsomeone to come online, or cancel it and try to find a similar file which is\n\t\t\tmore widely available."
 msgstr ""
 
 #: downloadhelp.creating;text;1
@@ -2265,7 +2289,7 @@ msgid "This Download is Creating"
 msgstr ""
 
 #: downloadhelp.creating;text;2
-msgid "Shareaza is pre-allocating a file in which to store this download, to\n\t\tsave time later."
+msgid "Shareaza is pre-allocating a file in which to store this download, to\n\t\t\tsave time later."
 msgstr ""
 
 #: downloadhelp.tracker;text;1
@@ -2273,7 +2297,7 @@ msgid "BitTorrent Tracker Down"
 msgstr ""
 
 #: downloadhelp.tracker;text;2
-msgid "The BitTorrent tracker server for this download appears to be\n\t\tdown or malfunctioning. Shareaza is unable to contact it to receive\n\t\ta list of peers."
+msgid "The BitTorrent tracker server for this download appears to be\n\t\t\tdown or malfunctioning. Shareaza is unable to contact it to receive\n\t\t\ta list of peers."
 msgstr ""
 
 #: uploadhelp;text;1
@@ -2281,7 +2305,7 @@ msgid "Uploads Area"
 msgstr ""
 
 #: uploadhelp;text;2
-msgid "This is where queues and uploads are displayed. You can expand each queue\n\t\twith the small + on the left, and filter what is displayed with the button on the\n\t\tright of the window's toolbar."
+msgid "This is where queues and uploads are displayed. You can expand each queue\n\t\t\twith the small + on the left, and filter what is displayed with the button on the\n\t\t\tright of the window's toolbar."
 msgstr ""
 
 #: generalhelp.diskspace;text;1
@@ -2293,7 +2317,7 @@ msgid "The amount of free space on one or more drives used by Shareaza is low."
 msgstr ""
 
 #: generalhelp.diskspace;text;3
-msgid "You should always attempt to keep a reasonable amount of disk space free. Programs \n\t\tcan become unstable if the drives become full, and temporary files may be lost. You should \n\t\trun a disk clean-up, delete unwanted files, or uninstall software you no longer need."
+msgid "You should always attempt to keep a reasonable amount of disk space free. Programs \n\t\t\tcan become unstable if the drives become full, and temporary files may be lost. You should \n\t\t\trun a disk clean-up, delete unwanted files, or uninstall software you no longer need."
 msgstr ""
 
 #: generalhelp.diskwritefail;text;1
@@ -2305,7 +2329,7 @@ msgid "A disk or directory Shareaza needs cannot be written to."
 msgstr ""
 
 #: generalhelp.diskwritefail;text;3
-msgid "A network drive may have been disconnected, or you may not have write permission \n\t\tto a selected directory. Please check directories and permissions, or change the\n\t\ttemporary files location."
+msgid "A network drive may have been disconnected, or you may not have write permission \n\t\t\tto a selected directory. Please check directories and permissions, or change the\n\t\t\ttemporary files location."
 msgstr ""
 
 #: generalhelp.connectionfail;text;1
@@ -2317,7 +2341,7 @@ msgid "Windows reports that there is no internet connection is available."
 msgstr ""
 
 #: generalhelp.connectionfail;text;3
-msgid "It is likely that a modem or router has dropped, meaning the internet cannot\n\t\tbe accessed. You may need to manually re-connect or reset your connection."
+msgid "It is likely that a modem or router has dropped, meaning the internet cannot\n\t\t\tbe accessed. You may need to manually re-connect or reset your connection."
 msgstr ""
 
 #: generalhelp.connectionfail;text;4
@@ -2329,7 +2353,7 @@ msgid "Adult content filter enabled"
 msgstr ""
 
 #: generalhelp.adultfilter;text;2
-msgid "Please note that (as with any automated filter) it may not be 100% effective at\n\t\tscreening content. It is designed simply to filter out excess unwanted results, rather than \n\t\tas a 100% safe block."
+msgid "Please note that (as with any automated filter) it may not be 100% effective at\n\t\t\tscreening content. It is designed simply to filter out excess unwanted results, rather than \n\t\t\tas a 100% safe block."
 msgstr ""
 
 #: generalhelp.adultfilter;text;3
@@ -2341,11 +2365,11 @@ msgid "This torrent appears to have an encoding error"
 msgstr ""
 
 #: generalhelp.badtorrentencoding;text;2
-msgid "Windows has reported a translation fault while decoding text in this torrent. It is\n\t\tpossible that the torrent is corrupt, or just incorrectly encoded. The torrent may\n\t\tstill download properly, although some file names could be incorrect."
+msgid "Windows has reported a translation fault while decoding text in this torrent. It is\n\t\t\tpossible that the torrent is corrupt, or just incorrectly encoded. The torrent may\n\t\t\tstill download properly, although some file names could be incorrect."
 msgstr ""
 
 #: generalhelp.badtorrentencoding;text;3
-msgid "Most torrent creation programs should allow you to repair this torrent, which\n\t\twill ensure it works properly in all BitTorrent applications."
+msgid "Most torrent creation programs should allow you to repair this torrent, which\n\t\t\twill ensure it works properly in all BitTorrent applications."
 msgstr ""
 
 #: generalhelp.badtorrentencoding;link;4
@@ -2361,11 +2385,11 @@ msgid "Your eDonkey server list is empty"
 msgstr ""
 
 #: generalhelp.donkeyserverlist;text;2
-msgid "There are no servers in your eDonkey server list. You need to download an\n\t\tup to date server list (met file) to connect to ED2K."
+msgid "There are no servers in your eDonkey server list. You need to download an\n\t\t\tup to date server list (met file) to connect to ED2K."
 msgstr ""
 
 #: generalhelp.donkeyserverlist;text;3
-msgid "You can download a server list from the ed2k setting page, or the discovery\n\t\tservices window. (Press F9 to open the discovery services window)"
+msgid "You can download a server list from the ed2k setting page, or the discovery\n\t\t\tservices window. (Press F9 to open the discovery services window)"
 msgstr ""
 
 #: generalhelp.uploadwarning;text;1
@@ -2373,15 +2397,15 @@ msgid "Limiting uploads may slow downloads"
 msgstr ""
 
 #: generalhelp.uploadwarning;text;2
-msgid "Several networks Shareaza connects to enforce ratios, limit uploads to\n\t\tclients that do not share, or simply preference uploading to known sharers."
+msgid "Several networks Shareaza connects to enforce ratios, limit uploads to\n\t\t\tclients that do not share, or simply preference uploading to known sharers."
 msgstr ""
 
 #: generalhelp.uploadwarning;text;3
-msgid "Fortunately, broadband DSL connections are like a two-lane highway: you have\n\t\tseparate allocations for upload and download. If your client is properly configured, \n\t\tyou should be able to upload at a good rate while retaining full download capacity."
+msgid "Fortunately, broadband DSL connections are like a two-lane highway: you have\n\t\t\tseparate allocations for upload and download. If your client is properly configured, \n\t\t\tyou should be able to upload at a good rate while retaining full download capacity."
 msgstr ""
 
 #: generalhelp.uploadwarning;text;4
-msgid "By default, your upload limit is set to about 85% of available upstream bandwidth,\n\t\twhile downloads are unlimited. That configuration should give you the fastest possible \n\t\tdownloads that are available."
+msgid "By default, your upload limit is set to about 85% of available upstream bandwidth,\n\t\t\twhile downloads are unlimited. That configuration should give you the fastest possible \n\t\t\tdownloads that are available."
 msgstr ""
 
 #: searchhelp.badsearch1;text;1 searchhelp.badsearch2;text;1 searchhelp.badsearch3;text;1
@@ -2389,31 +2413,31 @@ msgid "Please re-phrase the search"
 msgstr ""
 
 #: searchhelp.badsearch1;text;2
-msgid "This search is poorly formatted, and may not function correctly. \n\t\tSearches should include several terms where possible, and should specify a schema \n\t\t(file type). Furthermore, searches must not be limited to numbers or negative\n\t\tterms only, and you should avoid overly general queries."
+msgid "This search is poorly formatted, and may not function correctly. \n\t\t\tSearches should include several terms where possible, and should specify a schema \n\t\t\t(file type). Furthermore, searches must not be limited to numbers or negative\n\t\t\tterms only, and you should avoid overly general queries."
 msgstr ""
 
 #: searchhelp.badsearch1;text;3
-msgid "Most clients on the network will ignore a search for all MP3 files, for example, \n\t\tbecause it is not specific enough, and would generate too many results."
+msgid "Most clients on the network will ignore a search for all MP3 files, for example, \n\t\t\tbecause it is not specific enough, and would generate too many results."
 msgstr ""
 
 #: searchhelp.badsearch2;text;2
-msgid "This search does not contain enough terms to function properly. All searches need\n\t\ta minimum number of valid, alphabetic characters to be able to start."
+msgid "This search does not contain enough terms to function properly. All searches need\n\t\t\ta minimum number of valid, alphabetic characters to be able to start."
 msgstr ""
 
 #: searchhelp.badsearch2;text;3
-msgid "While common file extensions (and numbers) can be searched for, you must enter\n\t\tother terms as well when creating the search. Punctuation and wildcards are not used \n\t\tin searches, just the text you enter."
+msgid "While common file extensions (and numbers) can be searched for, you must enter\n\t\t\tother terms as well when creating the search. Punctuation and wildcards are not used \n\t\t\tin searches, just the text you enter."
 msgstr ""
 
 #: searchhelp.badsearch3;text;2
-msgid "This search seems to contain only common file extensions, or no searchable\n\t\twords."
+msgid "This search seems to contain only common file extensions, or no searchable\n\t\t\twords."
 msgstr ""
 
 #: searchhelp.badsearch3;text;3
-msgid "If you are having trouble creating searches, keep in mind that it's quite similar\n\t\tto a web search. Specific terms or phrases are best- Unique names, titles and\n\t\tkeywords."
+msgid "If you are having trouble creating searches, keep in mind that it's quite similar\n\t\t\tto a web search. Specific terms or phrases are best- Unique names, titles and\n\t\t\tkeywords."
 msgstr ""
 
 #: searchhelp.badsearch3;text;4
-msgid "General terms cannot be searched for efficiently and may result in poor\n\t\tsearch performance, as well as high bandwidth use during searches."
+msgid "General terms cannot be searched for efficiently and may result in poor\n\t\t\tsearch performance, as well as high bandwidth use during searches."
 msgstr ""
 
 #: searchhelp.badsearch3;text;5
@@ -2425,11 +2449,11 @@ msgid "This search cannot be started"
 msgstr ""
 
 #: searchhelp.adultsearch;text;2
-msgid "The specified search would probably return a large number of results with adult \n\t\tcontent, and this has been turned off in the settings. You should either re-phrase the \n\t\tsearch, or disable the filter."
+msgid "The specified search would probably return a large number of results with adult \n\t\t\tcontent, and this has been turned off in the settings. You should either re-phrase the \n\t\t\tsearch, or disable the filter."
 msgstr ""
 
 #: searchhelp.adultsearch;text;3
-msgid "To disable the filter, go into Tools > Settings > General and uncheck the\n\t\tadult content filter."
+msgid "To disable the filter, go into Tools > Settings > General and uncheck the\n\t\t\tadult content filter."
 msgstr ""
 
 #: sharehelp.alreadyshared;text;1
@@ -2445,11 +2469,11 @@ msgid "This folder should not be shared"
 msgstr ""
 
 #: sharehelp.badshare;text;2
-msgid "This folder is (or contains) a system folder. Sharing this folder is not\n\t\trecommended, since most of the files in it are of no use to other people."
+msgid "This folder is (or contains) a system folder. Sharing this folder is not\n\t\t\trecommended, since most of the files in it are of no use to other people."
 msgstr ""
 
 #: sharehelp.badshare;text;3
-msgid "Folders such as the Windows directory, Program Files, and similar folders\n\t\tdo not usually contain files suitable for sharing. Any files of interest would be in\n\t\tsub-folders located"
+msgid "Folders such as the Windows directory, Program Files, and similar folders\n\t\t\tdo not usually contain files suitable for sharing. Any files of interest would be in\n\t\t\tsub-folders located"
 msgstr ""
 
 #: sharehelp.badshare;text;4
@@ -2457,11 +2481,11 @@ msgid "inside"
 msgstr ""
 
 #: sharehelp.badshare;text;5
-msgid "these folders.\n\t\tPlease share those instead."
+msgid "these folders.\n\t\t\tPlease share those instead."
 msgstr ""
 
 #: sharehelp.badshare;text;6
-msgid "The Shareaza 'incomplete' folder should also not be shared through the\n\t\tlibrary, since attempting to hash downloads in progress may impact on performance."
+msgid "The Shareaza 'incomplete' folder should also not be shared through the\n\t\t\tlibrary, since attempting to hash downloads in progress may impact on performance."
 msgstr ""
 
 #: message;id_browse_files
@@ -7158,6 +7182,26 @@ msgstr ""
 
 #: cscheduletaskdlg;control;34
 msgid "Run this event"
+msgstr ""
+
+#: cscheduletaskdlg;control;35
+msgid "Validity Period"
+msgstr ""
+
+#: cscheduletaskdlg;control;36
+msgid "Set the time period you want the task to be executed after its defined time."
+msgstr ""
+
+#: cscheduletaskdlg;control;37
+msgid "Disable"
+msgstr ""
+
+#: cscheduletaskdlg;control;38
+msgid "Enable"
+msgstr ""
+
+#: cscheduletaskdlg;control;40
+msgid "Minutes"
 msgstr ""
 
 #: dialog;cnetworkssettingspage

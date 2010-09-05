@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
-	<!-- Manifest -->
+<!-- Manifest -->
 <manifest	name="(translation language: English)"
 		author="(translation author)"
 		updatedBy="(translation updaters)"
@@ -34,7 +34,7 @@
 			<button id="ID_TAB_LIBRARY" text="Library"/>
 			<button id="ID_TAB_MEDIA" text="Media Player"/>
 			<button id="ID_TAB_SEARCH" text="Search"/>
-		<button id="ID_TAB_TRANSFERS" text="Transfers"/>
+			<button id="ID_TAB_TRANSFERS" text="Transfers"/>
 			<button id="ID_TAB_NETWORK" text="Network"/>
 			<button id="ID_TAB_IRC" text="Chat"/>
 		</toolbar>
@@ -115,7 +115,7 @@
 			<button id="ID_LIBRARY_TREE_VIRTUAL" text="Organiser"/>
 		</toolbar>
 		<toolbar name="CBrowseHostWnd.Basic">
-		<button id="ID_SEARCH_DOWNLOAD" text="Download File"/>
+			<button id="ID_SEARCH_DOWNLOAD" text="Download File"/>
 			<button id="ID_SEARCH_CHAT" text="Chat to User"/>
 			<separator/>
 			<button id="ID_SEARCH_DETAILS" text="Show Details"/>
@@ -125,7 +125,7 @@
 			<button id="ID_SEARCH_FILTER_RAW" text="More..."/>
 		</toolbar>
 		<toolbar name="CBrowseHostWnd">
-		<button id="ID_SEARCH_DOWNLOAD" text="Download File"/>
+			<button id="ID_SEARCH_DOWNLOAD" text="Download File"/>
 			<button id="ID_SEARCH_CHAT" text="Chat to User"/>
 			<separator/>
 			<button id="ID_BROWSE_STOP" text="Stop"/>
@@ -285,7 +285,7 @@
 			<button id="ID_LIBRARY_SEARCH_QUICK" text="Find"/>
 		</toolbar>
 		<toolbar name="CLibraryCollectionView.Virtual">
-		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Play Full Album"/>
+			<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Play Full Album"/>
 			<separator/>
 			<button id="ID_LIBRARY_FOLDER_DOWNLOAD" text="Download All Files"/>
 			<rightAlign/>
@@ -295,7 +295,7 @@
 		</toolbar>
 		<!-- MEDIA WINDOW -->
 		<toolbar name="CMediaFrame.Basic">
-		<button id="ID_MEDIA_PLAY" text="Play&#160;&#160;&#160;"/>
+			<button id="ID_MEDIA_PLAY" text="Play&#160;&#160;&#160;"/>
 			<button id="ID_MEDIA_PAUSE" text="Pause" visible="false"/>
 			<button id="ID_MEDIA_STOP" text="Stop"/>
 			<separator/>
@@ -312,7 +312,7 @@
 			<button id="ID_MEDIA_PLAYLIST" text="Playlist"/>
 		</toolbar>
 		<toolbar name="CMediaFrame">
-		<button id="ID_MEDIA_PLAY" text="Play&#160;&#160;&#160;"/>
+			<button id="ID_MEDIA_PLAY" text="Play&#160;&#160;&#160;"/>
 			<button id="ID_MEDIA_PAUSE" text="Pause" visible="false"/>
 			<button id="ID_MEDIA_STOP" text="Stop"/>
 			<separator/>
@@ -323,7 +323,7 @@
 			<label text="Volume:" tip="Adjust the audio volume"/>
 			<control id="IDC_MEDIA_VOLUME" width="50" height="22"/>
 			<separator/>
-		<button id="ID_MEDIA_OPEN" text="Open"/>
+			<button id="ID_MEDIA_OPEN" text="Open"/>
 			<separator/>
 			<button id="ID_MEDIA_FULLSCREEN"/>
 			<button id="ID_MEDIA_ZOOM"/>
@@ -356,6 +356,7 @@
 			<button id="ID_NETWORK_G2" text="Gnutella2"/>
 			<button id="ID_NETWORK_G1" text="Gnutella1"/>
 			<button id="ID_NETWORK_ED2K" text="eDonkey"/>
+			<button id="ID_NETWORK_DC" text="DC++"/>
 			<separator/>
 			<button id="ID_NEIGHBOURS_SETTINGS" text="Settings"/>
 		</toolbar>
@@ -365,11 +366,12 @@
 			<separator/>
 			<button id="ID_BROWSE_LAUNCH" text="Browse User"/>
 			<button id="ID_NEIGHBOURS_CHAT" text="Chat to User"/>
-		<button id="ID_SECURITY_BAN" text="Ban Host"/>
+			<button id="ID_SECURITY_BAN" text="Ban Host"/>
 			<rightAlign/>
 			<button id="ID_NETWORK_G2" text="Gnutella2"/>
 			<button id="ID_NETWORK_G1" text="Gnutella1"/>
 			<button id="ID_NETWORK_ED2K" text="eDonkey"/>
+			<button id="ID_NETWORK_DC" text="DC++"/>
 			<separator/>
 			<button id="ID_NEIGHBOURS_SETTINGS" text="Settings"/>
 		</toolbar>
@@ -431,6 +433,7 @@
 			<button id="ID_HOSTCACHE_ED2K_CACHE" text="eDonkey Cache"/>
 			<button id="ID_HOSTCACHE_BT_CACHE" text="BitTorrent Cache"/>
 			<button id="ID_HOSTCACHE_KAD_CACHE" text="Kademlia Cache"/>
+			<button id="ID_HOSTCACHE_DC_CACHE" text="DC++ Cache"/>
 		</toolbar>
 		<!-- PRIVATE CHAT FRAME -->
 		<toolbar name="CPrivateChatFrame">
@@ -509,6 +512,7 @@
 					<item id="ID_NETWORK_G2" text="Connect to _Gnutella2"/>
 					<item id="ID_NETWORK_G1" text="Connect to Gnutella_1"/>
 					<item id="ID_NETWORK_ED2K" text="Connect to _eDonkey"/>
+					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_AUTO_CLOSE" text="Exit _After Transfers"/>
@@ -565,10 +569,10 @@
 					<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
 					<item id="ID_HELP_WEB_6" text="Shareaza S_kin Site"/>
 					<!-- 
-				<item id="ID_HELP_UPDATE" text="Latest news"/>
-				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
-				-->
+					<item id="ID_HELP_UPDATE" text="Latest news"/>
+					<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
+					<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+					-->
 				</menu>
 				<separator/>
 				<item id="ID_HELP_VERSION_CHECK" text="Check for new _version"/>
@@ -585,6 +589,7 @@
 					<item id="ID_NETWORK_G2" text="Connect to _Gnutella2"/>
 					<item id="ID_NETWORK_G1" text="Connect to Gnutella_1"/>
 					<item id="ID_NETWORK_ED2K" text="Connect to _eDonkey"/>
+					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_CONNECT_TO" text="Connect _To..." shortcut="Ctrl+T"/>
@@ -607,9 +612,9 @@
 				<item id="ID_VIEW_HOSTS" text="H_ost Cache"/>
 				<item id="ID_VIEW_SCHEDULER" text="Sch_eduler"/>
 				<separator/>
-			<menu text="A_dvanced">
+				<menu text="A_dvanced">
 					<item id="ID_VIEW_SYSTEM" text="S_ystem" shortcut="F11"/>
-				<item id="ID_VIEW_NEIGHBOURS" text="N_eighbours" shortcut="Ctrl+F11"/>
+					<item id="ID_VIEW_NEIGHBOURS" text="N_eighbours" shortcut="Ctrl+F11"/>
 					<item id="ID_VIEW_DOWNLOADS" text="_Downloads" shortcut="F3"/>
 					<item id="ID_VIEW_UPLOADS" text="_Uploads" shortcut="F4"/>
 					<item id="ID_VIEW_LIBRARY" text="_Library" shortcut="F5"/>
@@ -670,10 +675,10 @@
 					<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
 					<item id="ID_HELP_WEB_6" text="Shareaza S_kin Site"/>
 					<!-- 
-				<item id="ID_HELP_UPDATE" text="Latest news"/>
-				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
-				-->
+					<item id="ID_HELP_UPDATE" text="Latest news"/>
+					<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
+					<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+					-->
 				</menu>
 				<separator/>
 				<item id="ID_HELP_VERSION_CHECK" text="Check for new _version"/>
@@ -696,13 +701,14 @@
 					<item id="ID_NETWORK_G2" text="Connect to _Gnutella2"/>
 					<item id="ID_NETWORK_G1" text="Connect to Gnutella_1"/>
 					<item id="ID_NETWORK_ED2K" text="Connect to _eDonkey"/>
+					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_AUTO_CLOSE" text="Close _After Transfers"/>
 				<item id="ID_NETWORK_EXIT" text="E_xit"/>
 			</menu>
 			<menu text="_View">
-			<item id="ID_VIEW_SYSTEM" text="_System" shortcut="F11"/>
+				<item id="ID_VIEW_SYSTEM" text="_System" shortcut="F11"/>
 				<item id="ID_VIEW_NEIGHBOURS" text="_Neighbours" shortcut="Ctrl+F11"/>
 				<item id="ID_VIEW_DOWNLOADS" text="_Downloads" shortcut="F3"/>
 				<item id="ID_VIEW_UPLOADS" text="_Uploads" shortcut="F4"/>
@@ -720,9 +726,9 @@
 				<item id="ID_VIEW_SEARCH_MONITOR" text="Se_arch Monitor" shortcut="Ctrl+F2"/>
 				<item id="ID_VIEW_RESULTS_MONITOR" text="H_it Monitor" shortcut="Ctrl+F3"/>
 				<separator/>
-			<item id="ID_VIEW_BASIC" text="Basic Mode"/>
-			<item id="ID_VIEW_TABBED" text="Tabbed Mode"/>
-			<item id="ID_VIEW_WINDOWED" text="Windowed Mode"/>
+				<item id="ID_VIEW_BASIC" text="Basic Mode"/>
+				<item id="ID_VIEW_TABBED" text="Tabbed Mode"/>
+				<item id="ID_VIEW_WINDOWED" text="Windowed Mode"/>
 			</menu>
 			<menu text="_Tools">
 				<item id="ID_LIBRARY_FOLDERS" text="Share _Files..."/>
@@ -767,10 +773,10 @@
 					<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
 					<item id="ID_HELP_WEB_6" text="Shareaza S_kin Site"/>
 					<!-- 
-				<item id="ID_HELP_UPDATE" text="Latest news"/>
-				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
-				-->
+					<item id="ID_HELP_UPDATE" text="Latest news"/>
+					<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
+					<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+					-->
 				</menu>
 				<separator/>
 				<item id="ID_HELP_VERSION_CHECK" text="Check for new _version"/>
@@ -789,8 +795,8 @@
 			<menu text="_Advanced">
 				<item id="ID_VIEW_NEIGHBOURS" text="_Neighbours"/>
 				<item id="ID_VIEW_UPLOADS" text="_Uploads"/>
-			<item id="ID_VIEW_SECURITY" text="_Security"/>
-			<item id="ID_VIEW_HOSTS" text="_Host Cache"/>
+				<item id="ID_VIEW_SECURITY" text="_Security"/>
+				<item id="ID_VIEW_HOSTS" text="_Host Cache"/>
 				<item id="ID_VIEW_SCHEDULER" text="Sch_eduler"/>
 			</menu>
 		</menu>
@@ -804,7 +810,7 @@
 			<item id="ID_TAB_IRC" text="_Chat"/>
 			<separator/>
 			<item id="ID_VIEW_SECURITY" text="Se_curity"/>
-		<item id="ID_VIEW_HOSTS" text="_Host Cache"/>
+			<item id="ID_VIEW_HOSTS" text="_Host Cache"/>
 			<item id="ID_VIEW_DISCOVERY" text="Disco_very"/>
 			<item id="ID_VIEW_TRAFFIC" text="_Graph"/>
 			<item id="ID_VIEW_SCHEDULER" text="Sch_eduler"/>
@@ -817,14 +823,14 @@
 			<item id="ID_NETWORK_SEARCH" text="New _Search..."/>
 			<separator/>
 			<item id="ID_VIEW_SYSTEM" text="S_ystem"/>
-		<item id="ID_VIEW_NEIGHBOURS" text="N_eighbours"/>
+			<item id="ID_VIEW_NEIGHBOURS" text="N_eighbours"/>
 			<item id="ID_VIEW_DOWNLOADS" text="_Downloads"/>
 			<item id="ID_VIEW_UPLOADS" text="_Uploads"/>
 			<item id="ID_VIEW_LIBRARY" text="_Library"/>
 			<item id="ID_VIEW_MEDIA" text="_Media Player"/>
 			<separator/>
 			<item id="ID_VIEW_SECURITY" text="Se_curity"/>
-		<item id="ID_VIEW_HOSTS" text="_Host Cache"/>
+			<item id="ID_VIEW_HOSTS" text="_Host Cache"/>
 			<item id="ID_VIEW_DISCOVERY" text="Disco_very"/>
 			<item id="ID_VIEW_TRAFFIC" text="_Graph"/>
 			<item id="ID_VIEW_SCHEDULER" text="Sch_eduler"/>
@@ -837,7 +843,7 @@
 		<menu name="CMainWnd.Tray">
 			<item id="ID_TRAY_OPEN" text="_Open Shareaza"/>
 			<separator/>
-		<item id="ID_NETWORK_SEARCH" text="Ne_w Search..."/>
+			<item id="ID_NETWORK_SEARCH" text="Ne_w Search..."/>
 			<item id="ID_TOOLS_DOWNLOAD" text="_Download File..."/>
 			<separator/>
 			<item id="ID_MEDIA_PLAY" text="_Play Media"/>
@@ -847,14 +853,14 @@
 			<item id="ID_MEDIA_PREVIOUS" text="P_revious Track"/>
 			<item id="ID_MEDIA_NEXT" text="_Next Track"/>
 			<separator/>
-		<item id="ID_NETWORK_AUTO_CLOSE" text="Exit After _Transfers"/>
+			<item id="ID_NETWORK_AUTO_CLOSE" text="Exit After _Transfers"/>
 			<item id="ID_NETWORK_EXIT" text="E_xit"/>
 		</menu>
 		<!-- REMOTE MENU -->
 		<menu name="CRemoteWnd">
 			<item id="ID_TRAY_OPEN" text="_Open Shareaza"/>
 			<separator/>
-		<item id="ID_NETWORK_SEARCH" text="Ne_w Search..."/>
+			<item id="ID_NETWORK_SEARCH" text="Ne_w Search..."/>
 			<item id="ID_TOOLS_DOWNLOAD" text="_Download File..."/>
 			<separator/>
 			<item id="ID_MEDIA_PLAY" text="_Play Media"/>
@@ -864,7 +870,7 @@
 			<item id="ID_MEDIA_PREVIOUS" text="P_revious Track"/>
 			<item id="ID_MEDIA_NEXT" text="_Next Track"/>
 			<separator/>
-		<item id="ID_NETWORK_AUTO_CLOSE" text="Exit After _Transfers"/>
+			<item id="ID_NETWORK_AUTO_CLOSE" text="Exit After _Transfers"/>
 			<item id="ID_NETWORK_EXIT" text="E_xit"/>
 		</menu>
 		<!-- HOME MENU -->
@@ -878,8 +884,8 @@
 			<menu text="_Advanced">
 				<item id="ID_VIEW_NEIGHBOURS" text="_Neighbours"/>
 				<item id="ID_VIEW_UPLOADS" text="_Uploads"/>
-			<item id="ID_VIEW_SECURITY" text="_Security"/>
-			<item id="ID_VIEW_HOSTS" text="_Host Cache"/>
+				<item id="ID_VIEW_SECURITY" text="_Security"/>
+				<item id="ID_VIEW_HOSTS" text="_Host Cache"/>
 				<item id="ID_VIEW_SCHEDULER" text="Sch_eduler"/>
 			</menu>
 		</menu>
@@ -893,7 +899,7 @@
 			<item id="ID_TAB_IRC" text="_Chat"/>
 			<separator/>
 			<item id="ID_VIEW_SECURITY" text="Se_curity"/>
-		<item id="ID_VIEW_HOSTS" text="_Host Cache"/>
+			<item id="ID_VIEW_HOSTS" text="_Host Cache"/>
 			<item id="ID_VIEW_DISCOVERY" text="Disco_very"/>
 			<item id="ID_VIEW_TRAFFIC" text="_Graph"/>
 			<item id="ID_VIEW_SCHEDULER" text="Sch_eduler"/>
@@ -918,6 +924,7 @@
 				<item id="ID_HOSTCACHE_ED2K_CACHE" text="_eDonkey Servers"/>
 				<item id="ID_HOSTCACHE_BT_CACHE" text="_BitTorrent Cache"/>
 				<item id="ID_HOSTCACHE_KAD_CACHE" text="_Kademlia Cache"/>
+				<item id="ID_HOSTCACHE_DC_CACHE" text="_DC++ Cache"/>
 			</menu>
 			<separator/>
 			<item id="ID_HOSTCACHE_IMPORT" text="_Import MET File..."/>
@@ -940,7 +947,6 @@
 			</menu>
 			<menu text="_Web Services">
 				<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
-			
 			</menu>
 		</menu>
 		<menu name="CSearchWnd">
@@ -948,7 +954,7 @@
 			<item id="ID_SEARCH_DOWNLOADNOW" text="Download _Now"/>
 			<item id="ID_SEARCH_COPY" text="Copy _URI..."/>
 			<separator/>
-		<item id="ID_BROWSE_LAUNCH" text="Bro_wse User"/>
+			<item id="ID_BROWSE_LAUNCH" text="Bro_wse User"/>
 			<item id="ID_SEARCH_CHAT" text="_Chat to User"/>
 			<item id="ID_SECURITY_BAN" text="_Ban User"/>
 			<separator/>
@@ -988,7 +994,6 @@
 			</menu>
 			<menu text="_Web Services">
 				<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
-			
 			</menu>
 		</menu>
 		<menu name="CBrowseHostWnd">
@@ -1011,7 +1016,7 @@
 			</menu>
 			<separator/>
 			<item id="ID_SEARCH_FILTER" text="_Filter Results..."/>
-		<item id="ID_SEARCH_FILTER_REMOVE" text="R_emove Filter"/>
+			<item id="ID_SEARCH_FILTER_REMOVE" text="R_emove Filter"/>
 			<separator/>
 			<item id="ID_SEARCH_COLUMNS" text="Edit C_olumns..."/>
 		</menu>
@@ -1100,14 +1105,14 @@
 		</menu>
 		<menu name="CDownloadsWnd.Completed.Basic">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Open or Play"/>
-		<item id="ID_DOWNLOADS_ENQUEUE" text="_Add to Playlist"/>
+			<item id="ID_DOWNLOADS_ENQUEUE" text="_Add to Playlist"/>
 			<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Clear"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_FILE_DELETE" text="_Delete File"/>
 		</menu>
 		<menu name="CDownloadsWnd.Completed">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Open or Play"/>
-		<item id="ID_DOWNLOADS_ENQUEUE" text="_Add to Playlist"/>
+			<item id="ID_DOWNLOADS_ENQUEUE" text="_Add to Playlist"/>
 			<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Clear"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_COPY" text="Copy _URI..."/>
@@ -1148,7 +1153,7 @@
 			<item id="ID_DOWNLOADS_FILTER_PAUSED" text="Show _Paused"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_SHOW_SOURCES" text="Show All _Sources"/>
-		<item id="ID_DOWNLOAD_GROUP_SHOW" text="Show _Groups"/>
+			<item id="ID_DOWNLOAD_GROUP_SHOW" text="Show _Groups"/>
 		</menu>
 		<!-- UPLOADS WINDOW -->
 		<menu name="CUploadsWnd.Upload.Basic">
@@ -1161,7 +1166,7 @@
 			<separator/>
 			<item id="ID_BROWSE_LAUNCH" text="_Browse User"/>
 			<item id="ID_UPLOADS_CHAT" text="_Chat to User"/>
-		<item id="ID_SECURITY_BAN" text="B_an User"/>
+			<item id="ID_SECURITY_BAN" text="B_an User"/>
 		</menu>
 		<menu name="CUploadsWnd.Queue">
 			<item id="ID_UPLOADS_EDIT_QUEUE" text="_Queue Settings"/>
@@ -1208,19 +1213,19 @@
 			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="_Play Album"/>
 			<item id="ID_LIBRARY_FOLDER_DELETE" text="_Delete"/>
 			<separator/>
-		<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="_File Properties"/>
+			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="_File Properties"/>
 			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="_Album Properties"/>
 		</menu>
 		<menu name="CLibraryTree.Virtual">
 			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="_Play Album"/>
 			<item id="ID_LIBRARY_FOLDER_DELETE" text="_Delete"/>
 			<separator/>
-		<item id="ID_LIBRARY_REBUILD" text="_Rebuild"/>
+			<item id="ID_LIBRARY_REBUILD" text="_Rebuild"/>
 			<item id="ID_LIBRARY_EXPORT_COLLECTION" text="_Export Collection..."/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDER_NEW" text="_New Folder..."/>
 			<separator/>
-		<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="_File Properties"/>
+			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="_File Properties"/>
 			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="_Album Properties"/>
 		</menu>
 		<!-- LIBRARY VIEWS -->
@@ -1232,14 +1237,14 @@
 		</menu>
 		<menu name="CLibraryFileView.Physical.Basic">
 			<item id="ID_LIBRARY_LAUNCH" text="_Open or Play"/>
-		<item id="ID_LIBRARY_ENQUEUE" text="_Add to Playlist"/>
+			<item id="ID_LIBRARY_ENQUEUE" text="_Add to Playlist"/>
 			<separator/>
 			<item id="ID_LIBRARY_SHARED_FILE" text="_Shared"/>
 			<separator/>
 			<item id="ID_LIBRARY_URL" text="Copy _URI..."/>
 			<item id="ID_LIBRARY_DELETE" text="_Delete"/>
 			<separator/>
-		<menu text="S_earch For">
+			<menu text="S_earch For">
 				<item id="ID_SEARCH_FOR_THIS" text="_This File"/>
 				<item id="ID_SEARCH_FOR_SIMILAR" text="_Similar Files"/>
 				<separator/>
@@ -1270,7 +1275,7 @@
 			<item id="ID_LIBRARY_URL" text="Copy _URI..."/>
 			<item id="ID_LIBRARY_DELETE" text="_Delete"/>
 			<separator/>
-		<menu text="S_earch For">
+			<menu text="S_earch For">
 				<item id="ID_SEARCH_FOR_THIS" text="_This File"/>
 				<item id="ID_SEARCH_FOR_SIMILAR" text="_Similar Files"/>
 				<separator/>
@@ -1301,14 +1306,14 @@
 		<menu name="CLibraryFileView.Virtual.Basic">
 			<item id="ID_LIBRARY_LAUNCH" text="_Open or Play"/>
 			<item id="ID_LIBRARY_ENQUEUE" text="Add to Pla_ylist"/>
-		<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Play _Album"/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Play _Album"/>
 			<separator/>
 			<item id="ID_LIBRARY_SHARED_FILE" text="_Shared"/>
 			<separator/>
 			<item id="ID_LIBRARY_URL" text="Copy _URI..."/>
 			<item id="ID_LIBRARY_DELETE" text="_Delete"/>
 			<separator/>
-		<menu text="S_earch For">
+			<menu text="S_earch For">
 				<item id="ID_SEARCH_FOR_THIS" text="_This File"/>
 				<item id="ID_SEARCH_FOR_SIMILAR" text="_Similar Files"/>
 				<separator/>
@@ -1343,7 +1348,7 @@
 			<item id="ID_LIBRARY_URL" text="Copy _URI..."/>
 			<item id="ID_LIBRARY_DELETE" text="_Delete"/>
 			<separator/>
-		<menu text="S_earch For">
+			<menu text="S_earch For">
 				<item id="ID_SEARCH_FOR_THIS" text="_This File"/>
 				<item id="ID_SEARCH_FOR_SIMILAR" text="_Similar Files"/>
 				<separator/>
@@ -1462,7 +1467,7 @@
 		</menu>
 		<menu name="CMediaList">
 			<item id="ID_MEDIA_SELECT" text="_Play"/>
-		<item id="ID_MEDIA_RATE" text="Ra_te File..."/>
+			<item id="ID_MEDIA_RATE" text="Ra_te File..."/>
 			<item id="ID_MEDIA_PROPERTIES" text="_Properties..."/>
 			<separator/>
 			<item id="ID_MEDIA_ADD" text="_Add File..."/>
@@ -1474,10 +1479,10 @@
 			<separator/>
 			<item id="ID_MEDIA_OPEN" text="_Open Playlist..."/>
 			<item id="ID_MEDIA_SAVE" text="_Save Playlist..."/>
-		<item id="ID_MEDIA_EXPORT_COLLECTION" text="E_xport Collection..."/>
+			<item id="ID_MEDIA_EXPORT_COLLECTION" text="E_xport Collection..."/>
 			<item id="ID_MEDIA_CLEAR" text="_Clear Playlist"/>
 			<separator/>
-		<item id="ID_MEDIA_PLAYLIST" text="Show Pla_ylist"/>
+			<item id="ID_MEDIA_PLAYLIST" text="Show Pla_ylist"/>
 		</menu>
 		<!-- SYSTEM WINDOW -->
 		<menu name="CSystemWnd">
@@ -1506,7 +1511,7 @@
 		<menu name="CNeighboursWnd">
 			<item id="ID_BROWSE_LAUNCH" text="_Browse User"/>
 			<item id="ID_NEIGHBOURS_CHAT" text="_Chat to User"/>
-		<item id="ID_SECURITY_BAN" text="B_an User"/>
+			<item id="ID_SECURITY_BAN" text="B_an User"/>
 			<separator/>
 			<item id="ID_NEIGHBOURS_DISCONNECT" text="_Disconnect"/>
 			<separator/>
@@ -1519,6 +1524,7 @@
 				<item id="ID_NETWORK_G2" text="_Gnutella2"/>
 				<item id="ID_NETWORK_G1" text="Gnutella_1"/>
 				<item id="ID_NETWORK_ED2K" text="_eDonkey"/>
+				<item id="ID_NETWORK_DC" text="_DC++"/>
 			</menu>
 			<menu text="_Monitor">
 				<item id="ID_NEIGHBOURS_VIEW_ALL" text="View _All Traffic"/>
@@ -1531,10 +1537,10 @@
 			<item id="ID_HITMONITOR_SEARCH" text="_Search for This"/>
 			<separator/>
 			<item id="ID_BROWSE_LAUNCH" text="_Browse User"/>
-		<item id="ID_SECURITY_BAN" text="B_an User"/>
+			<item id="ID_SECURITY_BAN" text="B_an User"/>
 			<separator/>
 			<item id="ID_SEARCHMONITOR_PAUSE" text="_Pause Display"/>
-		<item id="ID_SEARCHMONITOR_CLEAR" text="_Clear Buffer"/>
+			<item id="ID_SEARCHMONITOR_CLEAR" text="_Clear Buffer"/>
 		</menu>
 		<!-- GRAPH/TRAFFIC WINDOW -->
 		<menu name="CTrafficWnd">
@@ -1575,7 +1581,7 @@
 			<item id="ID_SCHEDULER_ACTIVATE" text="A_ctivate"/>
 			<item id="ID_SCHEDULER_DEACTIVATE" text="_Deactivate"/>
 			<separator/>
-		<item id="ID_SCHEDULER_REMOVE" text="R_emove"/>
+			<item id="ID_SCHEDULER_REMOVE" text="R_emove"/>
 			<item id="ID_SCHEDULER_EDIT" text="_Edit"/>
 			<separator/>
 			<item id="ID_SCHEDULER_REMOVE_ALL" text="Remove Al_l"/>
@@ -1616,7 +1622,7 @@
 				<item id="ID_CHAT_EMOTICONS" text="_Emoticons"/>
 			</menu>
 			<separator/>
-		<item id="ID_CHAT_TIMESTAMP" text="_Timestamp"/>
+			<item id="ID_CHAT_TIMESTAMP" text="_Timestamp"/>
 			<item id="ID_CHAT_CLEAR" text="C_lear Window"/>
 		</menu>
 		<!-- PLUGIN MENUS -->
@@ -1679,30 +1685,30 @@
 			<newline gap="0"/>
 			<group id="1">
 				<icon res="130" width="32" height="32" target="raza:command:ID_NETWORK_CONNECT"/><gap size="8"/>
-			<heading align="middle">G E T &#160; C O N N E C T E D</heading>
+				<heading align="middle">G E T &#160; C O N N E C T E D</heading>
 				<newline gap="8" indent="42"/>
 				<text>Welcome to Shareaza!</text>
 				<newline gap="8" indent="42"/>
-			<text>You are not currently connected to any peer to peer networks. &#160;</text>
+				<text>You are not currently connected to any peer to peer networks. &#160;</text>
 				<link target="raza:command:ID_NETWORK_CONNECT">Click here to start!</link>
 				<newline gap="18" indent="0"/>
 			</group>
 			<group id="2">
 				<icon res="136" width="32" height="32" target="raza:command:ID_TOOLS_DOWNLOAD"/><gap size="8"/>
-			<heading align="middle">S T A R T &#160; D O W N L O A D</heading>
+				<heading align="middle">S T A R T &#160; D O W N L O A D</heading>
 				<newline gap="8" indent="42"/>
 				<link target="raza:command:ID_TOOLS_DOWNLOAD" format="bu">Click here to start</link>
-			<text align="middle">&#160; downloading a new file or torrent.</text>
+				<text align="middle">&#160; downloading a new file or torrent.</text>
 				<newline gap="24" indent="0"/>
 				<icon res="134" width="32" height="32" target="raza:command:ID_TAB_SEARCH"/><gap size="8"/>
-			<heading align="middle">S E A R C H &#160; F O R &#160; A &#160; F I L E</heading>
+				<heading align="middle">S E A R C H &#160; F O R &#160; A &#160; F I L E</heading>
 				<newline gap="8" indent="42"/>
 				<anchor id="SearchBox" width="256" height="80"/>
 				<newline gap="12" indent="0"/>
 			</group>
 			<group id="3">
 				<icon res="128" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">U P G R A D E &#160; N O T I C E</heading>
+				<heading align="middle">U P G R A D E &#160; N O T I C E</heading>
 				<newline gap="8" indent="42"/>
 				<text id="Upgrade"/>
 				<newline gap="6"/>
@@ -1711,10 +1717,10 @@
 			</group>
 			<group id="4">
 				<icon res="252" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">W A R N I N G &#160; - &#160; Y O U &#160; A R E &#160; F I R E W A L L E D</heading>
+				<heading align="middle">W A R N I N G &#160; - &#160; Y O U &#160; A R E &#160; F I R E W A L L E D</heading>
 				<newline gap="8" indent="42"/>
 				<text colour="FF0000">Shareaza has detected that you are behind a NAT router or firewall,
-			and are unable to receive connections from the Internet. &#160;</text>
+				and are unable to receive connections from the Internet. &#160;</text>
 				<text colour="FF0000" format="b">This may cause poor download and search performance.</text>
 				<newline gap="6"/>
 				<link target="raza:command:ID_HELP_ROUTER">Click here to learn how to configure your router or firewall</link>
@@ -1722,10 +1728,10 @@
 			</group>
 			<group id="6">
 				<icon res="252" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">W A R N I N G &#160; - &#160; Y O U R &#160; T C P &#160; P O R T &#160; I S &#160; F I R E W A L L E D</heading>
+				<heading align="middle">W A R N I N G &#160; - &#160; Y O U R &#160; T C P &#160; P O R T &#160; I S &#160; F I R E W A L L E D</heading>
 				<newline gap="8" indent="42"/>
 				<text colour="FF0000">Shareaza has detected that you are behind a NAT router or firewall,
-			and are unable to receive TCP connections from the Internet. &#160;</text>
+				and are unable to receive TCP connections from the Internet. &#160;</text>
 				<text colour="FF0000" format="b">This may cause poor download performance.</text>
 				<newline gap="6"/>
 				<link target="raza:command:ID_HELP_ROUTER">Click here to learn how to configure your router or firewall</link>
@@ -1733,46 +1739,46 @@
 			</group>
 			<group id="7">
 				<icon res="252" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">W A R N I N G &#160; - &#160; Y O U R &#160; U D P &#160; P O R T &#160; I S &#160; F I R E W A L L E D</heading>
+				<heading align="middle">W A R N I N G &#160; - &#160; Y O U R &#160; U D P &#160; P O R T &#160; I S &#160; F I R E W A L L E D</heading>
 				<newline gap="8" indent="42"/>
 				<text colour="FF0000">Shareaza has detected that you are behind a NAT router or firewall,
-			and are unable to receive UDP messages from the Internet. &#160;</text>
+				and are unable to receive UDP messages from the Internet. &#160;</text>
 				<text colour="FF0000" format="b">This may cause poor search performance.</text>
 				<newline gap="6"/>
 				<link target="raza:command:ID_HELP_ROUTER">Click here to learn how to configure your router or firewall</link>
 				<newline gap="18" indent="0"/>
 			</group>
 			<icon res="236" width="32" height="32"/><gap size="8"/>
-		<heading align="middle">C U S T O M I S E &#160; S H A R E A Z A</heading>
+			<heading align="middle">C U S T O M I S E &#160; S H A R E A Z A</heading>
 			<newline gap="12" indent="42"/>
 			<icon res="237" width="16" height="16" target="raza:command:ID_TOOLS_SKIN"/>
 			<gap size="8"/>
 			<link target="raza:command:ID_TOOLS_SKIN" format="bu" align="middle">Skins</link>
-		<text align="middle">&#160;- Change Shareaza's look &amp; feel</text>
+			<text align="middle">&#160;- Change Shareaza's look &amp; feel</text>
 			<newline gap="8"/>
 			<icon res="236" width="16" height="16" target="raza:command:ID_TOOLS_WIZARD"/>
 			<gap size="8"/>
 			<link target="raza:command:ID_TOOLS_WIZARD" format="bu" align="middle">Settings Wizard</link>
-		<text align="middle">&#160;- Edit Shareaza Settings</text>
+			<text align="middle">&#160;- Edit Shareaza Settings</text>
 			<newline gap="8"/>
 			<icon res="147" width="16" height="16" target="raza:command:ID_HELP_FAQ"/>
 			<gap size="8"/>
 			<link target="raza:command:ID_HELP_FAQ" format="bu" align="middle">Quick Help</link>
-		<text align="middle">&#160;- Get some basic help using Shareaza</text>
+			<text align="middle">&#160;- Get some basic help using Shareaza</text>
 			<newline gap="8"/>
 			<icon res="141" width="16" height="16" target="raza:command:ID_VIEW_SECURITY"/>
 			<gap size="8"/>
 			<link target="raza:command:ID_VIEW_SECURITY" format="bu" align="middle">Security Filters</link>
-		<text align="middle">&#160;- Add/Remove filters to improve your search results</text>
+			<text align="middle">&#160;- Add/Remove filters to improve your search results</text>
 			<newline gap="18" indent="0"/>
 			<group id="5">
 				<icon res="128" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">R E M O T E &#160; A C C E S S &#160; I S &#160; E N A B L E D</heading>
+				<heading align="middle">R E M O T E &#160; A C C E S S &#160; I S &#160; E N A B L E D</heading>
 				<newline gap="8" indent="42"/>
 				<text>Shareaza Remote Access is enabled. Control Shareaza using your web browser at:</text>
 				<newline gap="6"/>
 				<link id="RemoteAccessURL1"/>
-			<text>&#160;- or -&#160;</text>
+				<text>&#160;- or -&#160;</text>
 				<link id="RemoteAccessURL2"/>
 				<newline gap="16" indent="0"/>
 			</group>
@@ -1804,8 +1810,8 @@
 					<text>You have not downloaded any new files recently.</text>
 					<newline gap="8"/>
 				</group>
-				<text id="LibraryFiles" format="b">%lu</text>
-				<text>files,</text>
+				<text id="LibraryFiles" format="b">%lu </text>
+				<text>files, </text>
 				<text id="LibraryVolume" format="b">%s</text>
 				<newline gap="4"/>
 				<link format="bu" target="raza:command:ID_VIEW_LIBRARY">Go to My Library</link>
@@ -1813,8 +1819,8 @@
 				<link format="bu" target="raza:shell:downloads">Open my Downloads folder</link>
 				<group id="1">
 					<newline gap="8"/>
-					<text>Shareaza is scanning and processing</text>
-					<text id="LibraryHashRemaining" format="b">%lu</text>
+					<text>Shareaza is scanning and processing </text>
+					<text id="LibraryHashRemaining" format="b">%lu </text>
 					<text>files.</text>
 					<newline gap="8"/>
 				</group>
@@ -1840,7 +1846,7 @@
 				</para>
 			</group>
 			<icon group="20" command="ID_NETWORK_G2"/><gap group="20" size="4"/>
-			<text group="20" align="middle" format="b">Gnutella2:</text>
+			<text group="20" align="middle" format="b">Gnutella2: </text>
 			<text group="21" align="middle">Disconnected</text>
 			<text group="22" align="middle">Connecting...</text>
 			<text group="23" align="middle">Connected</text>
@@ -1848,7 +1854,7 @@
 			<text group="25" align="middle" id="G2Leaves">%i leaves</text>
 			<newline group="20" gap="2"/>
 			<icon group="10" command="ID_NETWORK_G1"/><gap group="10" size="4"/>
-			<text group="10" align="middle" format="b">Gnutella1:</text>
+			<text group="10" align="middle" format="b">Gnutella1: </text>
 			<text group="11" align="middle">Disconnected</text>
 			<text group="12" align="middle">Connecting...</text>
 			<text group="13" align="middle">Connected</text>
@@ -1856,19 +1862,25 @@
 			<text group="15" align="middle" id="G1Leaves">%i leaves</text>
 			<newline group="10" gap="2"/>
 			<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
-			<text group="30" align="middle" format="b">eDonkey:</text>
+			<text group="30" align="middle" format="b">eDonkey: </text>
 			<text group="31" align="middle">Disconnected</text>
 			<text group="32" align="middle">Connecting...</text>
 			<text group="33" align="middle">Connected</text>
 			<newline group="30" gap="2"/>
+			<icon group="80" command="ID_NETWORK_DC"/><gap group="80" size="4"/>
+			<text group="80" align="middle" format="b">DC++: </text>
+			<text group="81" align="middle">Disconnected</text>
+			<text group="82" align="middle">Connecting...</text>
+			<text group="83" align="middle">Connected</text>
+			<newline group="80" gap="2"/>
 			<group id="2">
 				<para align="center">
 					<newline gap="4"/>
-					<text>You have been connected for</text>
+					<text>You have been connected for </text>
 					<newline gap="0"/>
-					<text id="ConnectedHours" format="b">%i</text>
-					<text>hours and</text>
-					<text id="ConnectedMinutes" format="b">%i</text>
+					<text id="ConnectedHours" format="b">%i </text>
+					<text>hours and </text>
+					<text id="ConnectedMinutes" format="b">%i </text>
 					<text>minutes.</text>
 				</para>
 			</group>
@@ -1903,10 +1915,10 @@
 				<link id="ReseedTorrent" format="bu" target="raza:command:ID_TOOLS_RESEEDTORRENT">Re-seed %s</link>
 				<newline gap="4"/>
 				<group id="1">
-					<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Seed another torrent</link>
+				<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Seed another torrent</link>
 				</group>
 				<group id="2">
-					<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Seed a torrent</link>
+				<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Seed a torrent</link>
 				</group>
 			</para>
 		</document>
@@ -1920,8 +1932,8 @@
 			<text format="b">Welcome to Shareaza's Settings Manager</text>
 			<newline gap="16"/>
 			<text>The Shareaza Settings Manager allows advanced users to completely customise how
-			Shareaza works. The settings in the</text>
-			<text format="b">General</text>
+				Shareaza works. The settings in the </text>
+			<text format="b">General </text>
 			<text>section relate to the user experience.</text>
 			<newline gap="16" indent="16"/>
 			<link target="raza:page:CGeneralSettingsPage" format="b">General:</link>
@@ -1957,9 +1969,9 @@
 			<text format="b">Welcome to Shareaza's Settings Manager</text>
 			<newline gap="16"/>
 			<text>The Shareaza Settings Manager allows advanced users to completely customise 
-			how Shareaza works. The settings in the</text>
-			<text format="b">Internet</text>
-			<text>section control how Shareaza interacts with other nodes within distributed peer-to-peer networks.</text>
+				how Shareaza works. The settings in the </text>
+			<text format="b">Internet </text>
+			<text>section control how Shareaza interacts with other nodes within distributed peer-to-peer networks. </text>
 			<newline gap="16" indent="16"/>
 			<link target="raza:page:CConnectionSettingsPage" format="b">Connection:</link>
 			<gap size="4"/>
@@ -2000,7 +2012,7 @@
 				<newline gap="2" indent="8"/>
 				<text id="GenderMale">Male</text>
 				<text id="GenderFemale">Female</text>
-				<text>,</text>
+				<text>, </text>
 				<text id="Age"/>
 			</group>
 			<group id="4">
@@ -2077,116 +2089,116 @@
 			<text format="b">Downloads Area</text>
 			<newline gap="8"/>
 			<text>This is where files currently being downloaded are displayed. You can view
-		individual sources by expanding each file with the small + on the left.</text>
+			individual sources by expanding each file with the small + on the left.</text>
 			<newline gap="8"/>
 			<text>Drag'n'Drop downloads higher in the list for priority, or onto Download Group 
-		tabs for better organisation (in Power Mode).</text>
+			tabs for better organisation (in Power Mode).</text>
 			<newline gap="16"/>
 			<text>You can also use this command to get help information on a specific download.
-		Simply select a download and choose this Help command again.</text>
+			Simply select a download and choose this Help command again.</text>
 		</document>
 		<document name="DownloadHelp.Seeding">
 			<text format="b">This Torrent is Seeding</text>
 			<newline gap="8"/>
 			<text>Shareaza has verified this complete download, and is actively sharing it
-		with other downloaders through BitTorrent. Please share at least 100%.</text>
+			with other downloaders through BitTorrent. Please share at least 100%.</text>
 		</document>
 		<document name="DownloadHelp.Completed">
 			<text format="b">This Download has Completed</text>
 			<newline gap="8"/>
 			<text>Shareaza has finished downloading this file, and has verified that it
-		is 100% correct. It has also moved the file to your downloads folder.</text>
+			is 100% correct. It has also moved the file to your downloads folder.</text>
 		</document>
 		<document name="DownloadHelp.Moving">
 			<text format="b">This Download is Moving</text>
 			<newline gap="8"/>
 			<text>Shareaza has finished downloading this file, and has verified that
-		it is correct. It is currently being moved and/or unpacked to your downloads folder.</text>
+			it is correct. It is currently being moved and/or unpacked to your downloads folder.</text>
 		</document>
 		<document name="DownloadHelp.Paused">
 			<text format="b">This Download is Paused</text>
 			<newline gap="8"/>
 			<text>You have paused this download. If you want it to resume downloading, you
-		can click the '</text><text format="b">Resume Download</text><text>' command.</text>
+			can click the '</text><text format="b">Resume Download</text><text>' command.</text>
 		</document>
 		<document name="DownloadHelp.DiskFull">
 			<text format="b">The Disk is Full</text>
 			<newline gap="8"/>
 			<text>Shareaza has paused this download automatically because the hard disk
-		appears to be full, or the download file cannot be written to. If you wish
-		to continue downloading, please free some space on your hard disk and/or check
-		to make sure the incomplete file folder is accessible, and then resume the
-		download.</text>
+			appears to be full, or the download file cannot be written to. If you wish
+			to continue downloading, please free some space on your hard disk and/or check
+			to make sure the incomplete file folder is accessible, and then resume the
+			download.</text>
 		</document>
 		<document name="DownloadHelp.Verifying">
 			<text format="b">This Download is Verifying</text>
 			<newline gap="8"/>
 			<text>This download has finished, and Shareaza is now checking it to ensure
-		that it is exactly the same as the original file. If any damaged parts are
-		found, Shareaza will repair them automatically.</text>
+			that it is exactly the same as the original file. If any damaged parts are
+			found, Shareaza will repair them automatically.</text>
 		</document>
 		<document name="DownloadHelp.Downloading">
 			<text format="b">This Download is Active!</text>
 			<newline gap="8"/>
 			<text>This download is currently in progress. If it is downloading too slowly,
-		you could try searching the network for more sources with the '</text><text
-    format="b">Find More Sources</text><text>' command. If the speed does not 
-		improve it may be due to limited upload speeds of the users you are downloading 
-		from. Download speed usually increases over time.</text>
+			you could try searching the network for more sources with the '</text><text
+			format="b">Find More Sources</text><text>' command. If the speed does not 
+			improve it may be due to limited upload speeds of the users you are downloading 
+			from. Download speed usually increases over time.</text>
 		</document>
 		<document name="DownloadHelp.Pending">
 			<text format="b">This Download is Pending</text>
 			<newline gap="8"/>
 			<text>This download is waiting for someone to start uploading.
-		Shareaza is ready to start downloading this file, but no-one is sending it at
-		the moment. You are probably waiting in other user's queues, and the download
-		may start transferring at any time. You can examine the individual sources to 
-		see each queue you are waiting in. If you are sharing files yourself, it may
-		improve the chances of a download transfer starting quickly.</text>
+			Shareaza is ready to start downloading this file, but no-one is sending it at
+			the moment. You are probably waiting in other user's queues, and the download
+			may start transferring at any time. You can examine the individual sources to 
+			see each queue you are waiting in. If you are sharing files yourself, it may
+			improve the chances of a download transfer starting quickly.</text>
 		</document>
 		<document name="DownloadHelp.Queued">
 			<text format="b">This Download is Queued</text>
 			<newline gap="8"/>
 			<text>This download is waiting for some of your other downloads to complete.
-		Your download settings limit the number of downloads which may be active at
-		any given time, to ensure that each download gets a good share of the available
-		bandwidth. You can change these settings via Tools, Shareaza Settings.
-		Alternatively, you may manually start this download with the resume command.</text>
+			Your download settings limit the number of downloads which may be active at
+			any given time, to ensure that each download gets a good share of the available
+			bandwidth. You can change these settings via Tools, Shareaza Settings.
+			Alternatively, you may manually start this download with the resume command.</text>
 		</document>
 		<document name="DownloadHelp.Searching">
 			<text format="b">This Download is Searching</text>
 			<newline gap="8"/>
 			<text>There are no known sources for this download, so Shareaza is searching
-		all connected P2P networks for new sources. Once sources are found, the
-		download will start automatically. Shareaza searches for sources automatically,
-		however you can speed up the process using the</text>
-			<text format="b">Find More Sources</text><text>command.</text>
+			all connected P2P networks for new sources. Once sources are found, the
+			download will start automatically. Shareaza searches for sources automatically,
+			however you can speed up the process using the </text>
+			<text format="b">Find More Sources </text><text>command.</text>
 			<newline gap="8"/>
 			<text>Unfortunately in many cases there may be no users online who have the
-		file you are looking for. The only course of action here is to wait for
-		someone to come online, or cancel it and try to find a similar file which is
-		more widely available.</text>
+			file you are looking for. The only course of action here is to wait for
+			someone to come online, or cancel it and try to find a similar file which is
+			more widely available.</text>
 		</document>
 		<document name="DownloadHelp.Creating">
 			<text format="b">This Download is Creating</text>
 			<newline gap="8"/>
 			<text>Shareaza is pre-allocating a file in which to store this download, to
-		save time later.</text>
+			save time later.</text>
 		</document>
 		<document name="DownloadHelp.Tracker">
 			<text format="b">BitTorrent Tracker Down</text>
 			<newline gap="8"/>
 			<text>The BitTorrent tracker server for this download appears to be
-		down or malfunctioning. Shareaza is unable to contact it to receive
-		a list of peers.</text>
+			down or malfunctioning. Shareaza is unable to contact it to receive
+			a list of peers.</text>
 		</document>
 		<!-- Upload help documents -->
 		<document name="UploadHelp">
 			<text format="b">Uploads Area</text>
 			<newline gap="8"/>
 			<text>This is where queues and uploads are displayed. You can expand each queue
-		with the small + on the left, and filter what is displayed with the button on the
-		right of the window's toolbar.</text>
+			with the small + on the left, and filter what is displayed with the button on the
+			right of the window's toolbar.</text>
 		</document>
 		<!-- General help documents -->
 		<document name="GeneralHelp.DiskSpace">
@@ -2195,8 +2207,8 @@
 			<text>The amount of free space on one or more drives used by Shareaza is low.</text>
 			<newline gap="8"/>
 			<text>You should always attempt to keep a reasonable amount of disk space free. Programs 
-		can become unstable if the drives become full, and temporary files may be lost. You should 
-		run a disk clean-up, delete unwanted files, or uninstall software you no longer need.</text>
+			can become unstable if the drives become full, and temporary files may be lost. You should 
+			run a disk clean-up, delete unwanted files, or uninstall software you no longer need.</text>
 		</document>
 		<document name="GeneralHelp.DiskWriteFail">
 			<text format="b">A Required Directory is Non-writable</text>
@@ -2204,8 +2216,8 @@
 			<text>A disk or directory Shareaza needs cannot be written to.</text>
 			<newline gap="8"/>
 			<text>A network drive may have been disconnected, or you may not have write permission 
-		to a selected directory. Please check directories and permissions, or change the
-		temporary files location.</text>
+			to a selected directory. Please check directories and permissions, or change the
+			temporary files location.</text>
 		</document>
 		<document name="GeneralHelp.ConnectionFail">
 			<text format="b">Internet Connection Has Been Lost</text>
@@ -2213,7 +2225,7 @@
 			<text>Windows reports that there is no internet connection is available.</text>
 			<newline gap="8"/>
 			<text>It is likely that a modem or router has dropped, meaning the internet cannot
-		be accessed. You may need to manually re-connect or reset your connection.</text>
+			be accessed. You may need to manually re-connect or reset your connection.</text>
 			<newline gap="8"/>
 			<text>Shareaza has ceased connection attempts to avoid losing all cached hosts.</text>
 		</document>
@@ -2221,8 +2233,8 @@
 			<text format="b">Adult content filter enabled</text>
 			<newline gap="8"/>
 			<text>Please note that (as with any automated filter) it may not be 100% effective at
-		screening content. It is designed simply to filter out excess unwanted results, rather than 
-		as a 100% safe block.</text>
+			screening content. It is designed simply to filter out excess unwanted results, rather than 
+			as a 100% safe block.</text>
 			<newline gap="8"/>
 			<text>Children's Internet use (including P2P file sharing) should always be under parental supervision.</text>
 		</document>
@@ -2230,11 +2242,11 @@
 			<text format="b">This torrent appears to have an encoding error</text>
 			<newline gap="8"/>
 			<text>Windows has reported a translation fault while decoding text in this torrent. It is
-		possible that the torrent is corrupt, or just incorrectly encoded. The torrent may
-		still download properly, although some file names could be incorrect.</text>
+			possible that the torrent is corrupt, or just incorrectly encoded. The torrent may
+			still download properly, although some file names could be incorrect.</text>
 			<newline gap="8"/>
 			<text>Most torrent creation programs should allow you to repair this torrent, which
-		will ensure it works properly in all BitTorrent applications.</text>
+			will ensure it works properly in all BitTorrent applications.</text>
 			<newline gap="8"/>
 			<link target="raza:command:ID_HELP_TORRENT">Click here for additional help</link>
 			<text>, or to download software to repair the torrent.</text>
@@ -2243,59 +2255,59 @@
 			<text format="b">Your eDonkey server list is empty</text>
 			<newline gap="8"/>
 			<text>There are no servers in your eDonkey server list. You need to download an
-		up to date server list (met file) to connect to ED2K.</text>
+			up to date server list (met file) to connect to ED2K.</text>
 			<newline gap="8"/>
 			<text>You can download a server list from the ed2k setting page, or the discovery
-		services window. (Press F9 to open the discovery services window)</text>
+			services window. (Press F9 to open the discovery services window)</text>
 		</document>
 		<document name="GeneralHelp.UploadWarning">
 			<text format="b">Limiting uploads may slow downloads</text>
 			<newline gap="8"/>
 			<text>Several networks Shareaza connects to enforce ratios, limit uploads to
-		clients that do not share, or simply preference uploading to known sharers.</text>
+			clients that do not share, or simply preference uploading to known sharers.</text>
 			<newline/>
 			<text>Fortunately, broadband DSL connections are like a two-lane highway: you have
-		separate allocations for upload and download. If your client is properly configured, 
-		you should be able to upload at a good rate while retaining full download capacity.</text>
+			separate allocations for upload and download. If your client is properly configured, 
+			you should be able to upload at a good rate while retaining full download capacity.</text>
 			<newline gap="8"/>
 			<text>By default, your upload limit is set to about 85% of available upstream bandwidth,
-		while downloads are unlimited. That configuration should give you the fastest possible 
-		downloads that are available.</text>
+			while downloads are unlimited. That configuration should give you the fastest possible 
+			downloads that are available.</text>
 		</document>
 		<!-- Search help documents -->
 		<document name="SearchHelp.BadSearch1">
 			<text format="b">Please re-phrase the search</text>
 			<newline gap="8"/>
 			<text>This search is poorly formatted, and may not function correctly. 
-		Searches should include several terms where possible, and should specify a schema 
-		(file type). Furthermore, searches must not be limited to numbers or negative
-		terms only, and you should avoid overly general queries.</text>
+			Searches should include several terms where possible, and should specify a schema 
+			(file type). Furthermore, searches must not be limited to numbers or negative
+			terms only, and you should avoid overly general queries.</text>
 			<newline gap="8"/>
 			<text>Most clients on the network will ignore a search for all MP3 files, for example, 
-		because it is not specific enough, and would generate too many results.</text>
+			because it is not specific enough, and would generate too many results.</text>
 		</document>
 		<document name="SearchHelp.BadSearch2">
 			<text format="b">Please re-phrase the search</text>
 			<newline gap="8"/>
 			<text>This search does not contain enough terms to function properly. All searches need
-		a minimum number of valid, alphabetic characters to be able to start.</text>
+			a minimum number of valid, alphabetic characters to be able to start.</text>
 			<newline gap="8"/>
 			<text>While common file extensions (and numbers) can be searched for, you must enter
-		other terms as well when creating the search. Punctuation and wildcards are not used 
-		in searches, just the text you enter.</text>
+			other terms as well when creating the search. Punctuation and wildcards are not used 
+			in searches, just the text you enter.</text>
 		</document>
 		<document name="SearchHelp.BadSearch3">
 			<text format="b">Please re-phrase the search</text>
 			<newline gap="8"/>
 			<text>This search seems to contain only common file extensions, or no searchable
-		words.</text>
+			words.</text>
 			<newline gap="8"/>
 			<text>If you are having trouble creating searches, keep in mind that it's quite similar
-		to a web search. Specific terms or phrases are best- Unique names, titles and
-		keywords.</text>
+			to a web search. Specific terms or phrases are best- Unique names, titles and
+			keywords.</text>
 			<newline gap="8"/>
 			<text>General terms cannot be searched for efficiently and may result in poor
-		search performance, as well as high bandwidth use during searches.</text>
+			search performance, as well as high bandwidth use during searches.</text>
 			<newline gap="8"/>
 			<text>Further help is available on the Shareaza web site.</text>
 		</document>
@@ -2303,11 +2315,11 @@
 			<text format="b">This search cannot be started</text>
 			<newline gap="8"/>
 			<text>The specified search would probably return a large number of results with adult 
-		content, and this has been turned off in the settings. You should either re-phrase the 
-		search, or disable the filter.</text>
+			content, and this has been turned off in the settings. You should either re-phrase the 
+			search, or disable the filter.</text>
 			<newline gap="8"/>
 			<text>To disable the filter, go into Tools &gt; Settings &gt; General and uncheck the
-		adult content filter.</text>
+			adult content filter.</text>
 		</document>
 		<!-- Share help documents -->
 		<document name="ShareHelp.AlreadyShared">
@@ -2315,23 +2327,24 @@
 			<newline gap="8"/>
 			<text>The folder you have selected is already being shared as part of an existing share.</text>
 			<newline gap="8"/>
-			<text>%s</text>
+			<text> %s </text>
 		</document>
 		<document name="ShareHelp.BadShare">
 			<text format="b">This folder should not be shared</text>
 			<newline gap="8"/>
 			<text>This folder is (or contains) a system folder. Sharing this folder is not
-		recommended, since most of the files in it are of no use to other people.</text>
+			recommended, since most of the files in it are of no use to other people.</text>
 			<newline gap="8"/>
 			<text>Folders such as the Windows directory, Program Files, and similar folders
-		do not usually contain files suitable for sharing. Any files of interest would be in
-		sub-folders located</text><text format="i">inside</text><text>these folders.
-		Please share those instead.</text>
+			do not usually contain files suitable for sharing. Any files of interest would be in
+			sub-folders located</text><text format="i"> inside</text><text> these folders.
+			Please share those instead.</text>
 			<newline gap="8"/>
 			<text>The Shareaza 'incomplete' folder should also not be shared through the
-		library, since attempting to hash downloads in progress may impact on performance.</text>
+			library, since attempting to hash downloads in progress may impact on performance.</text>
 		</document>
 	</documents>
+
 	<!-- Localised Command Tip Text. The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
 	<commandTips>
 		<tip id="ID_BROWSE_FILES" message="View the user's shared files"/>
@@ -2783,7 +2796,7 @@
 		<string id="8178" value="What type of file is it?"/>
 		<string id="8179" value="(Clear Search History)"/>
 		<string id="8180" value="File size must be"/>
-	<string id="8181" value="&#160;to"/><!-- size from xx TO xx-->
+		<string id="8181" value="&#160;to"/><!-- size from xx TO xx-->
 		<string id="8208" value="Shareaza is creating hashes for %Iu file(s):"/>
 		<string id="8223" value="%i days and %i hours"/>
 		<string id="8224" value="Shareaza is downloading:"/>
@@ -2904,7 +2917,7 @@
 		<string id="16194" value="Neighbour %s forwarded a packet with excessive TTL, dropping packet (TTL=%i, Hops=%i)."/>
 		<string id="16195" value="Neighbour %s forwarded a ping packet with invalid length, ignoring."/>
 		<string id="16196" value="Neighbour %s forwarded a pong packet with invalid length, ignoring."/>
-	<string id="16197" value="%s -> %s [%i/%i] %s %s"/>
+		<string id="16197" value="%s -> %s [%i/%i] %s %s"/>
 		<string id="16198" value="Leaf neighbour %s is forwarding queries, dropping connection."/>
 		<string id="16199" value="Neighbour %s forwarded an unrecognised packet (0x%.2x), ignoring."/>
 		<string id="16200" value="Neighbour %s forwarded a pong with invalid address data, ignoring."/>
@@ -3171,7 +3184,7 @@
 		<string id="16995" value="The file may be damaged, or you may not have the necessary codecs to play it."/>
 		<string id="16996" value="Part of this file could not be played, you may need to download additional codecs."/>
 		<string id="16997" value="There is no file playing. Double-click a media file in your library to play it."/>
-	<string id="16998" value="S &#160; &#160; H &#160; &#160; A &#160; &#160; R &#160; &#160; E &#160; &#160; A &#160; &#160; Z &#160; &#160; A &#160; &#160; &#160; &#160; &#160; M &#160; &#160; E &#160; &#160; D &#160; &#160; I &#160; &#160; A &#160; &#160; &#160; &#160; &#160; S &#160; &#160; Y &#160; &#160; S &#160; &#160; T &#160; &#160; E &#160; &#160; M"/><!-- on one line -->
+		<string id="16998" value="S &#160; &#160; H &#160; &#160; A &#160; &#160; R &#160; &#160; E &#160; &#160; A &#160; &#160; Z &#160; &#160; A &#160; &#160; &#160; &#160; &#160; M &#160; &#160; E &#160; &#160; D &#160; &#160; I &#160; &#160; A &#160; &#160; &#160; &#160; &#160; S &#160; &#160; Y &#160; &#160; S &#160; &#160; T &#160; &#160; E &#160; &#160; M"/><!-- on one line -->
 		<string id="16999" value="P L A Y L I S T"/>
 		<string id="17017" value="Send:"/>
 		<string id="17018" value="Welcome to Shareaza Chat!"/>
