@@ -23,10 +23,7 @@
 
 #include "Transfer.h"
 
-class CDClients;
 class CDownloadTransferDC;
-class CLibraryFolder;
-class CLibraryFile;
 class CUploadTransferDC;
 
 
@@ -36,21 +33,24 @@ public:
 	CDCClient(LPCTSTR szNick = NULL);
 	virtual ~CDCClient();
 
+	CString					m_sNick;				// User nick
+	CString					m_sRemoteNick;			// Remote user nick
+	CDownloadTransferDC*	m_pDownloadTransfer;	// Download stream
+	CUploadTransferDC*		m_pUploadTransfer;		// Upload stream
+
 	virtual BOOL	ConnectTo(const IN_ADDR* pAddress, WORD nPort);
 	virtual void	AttachTo(CConnection* pConnection);
 	virtual void	Close(UINT nError = 0);
 
 	// Second part of handshaking - Send [$MyNick, $Lock,] $Supports, $Direction and $Key commands
 	BOOL			Handshake();
+	// Send command
+	BOOL			SendCommand(const CString& strSend);
 
 protected:
-	CString					m_sNick;				// User nick
-	CString					m_sRemoteNick;			// Remote user nick
 	std::string				m_strKey;				// Remote client key
 	BOOL					m_bExtended;			// Using extended protocol
 	CStringList				m_oFeatures;			// Remote client supported features
-	CDownloadTransferDC*	m_pDownloadTransfer;	// Download stream
-	CUploadTransferDC*		m_pUploadTransfer;		// Upload stream
 	TRISTATE				m_bDirection;			// TRI_TRUE - remote client want download, TRI_FALSE - upload.
 	int						m_nNumber;				// My number (0...0x7fff)
 	int						m_nRemoteNumber;		// Remote client number (0...0x7fff), -1 - unknown.
@@ -77,8 +77,4 @@ protected:
 	BOOL			Greetings();
 	// Can Shareaza start download?
 	BOOL			CanDownload() const;
-
-	friend class CDCClients;
-	friend class CDownloadTransferDC;
-	friend class CUploadTransferDC;
 };

@@ -22,6 +22,7 @@
 #pragma once
 
 class CDCClient;
+class CLibraryFolder;
 class CUploadTransfer;
 
 
@@ -30,8 +31,6 @@ class CUploadTransferDC : public CUploadTransfer
 public:
 	CUploadTransferDC(CDCClient* pClient);
 	virtual ~CUploadTransferDC();
-
-	CDCClient*		m_pClient;		// Upload owner
 
 	virtual void	Close(UINT nError = 0);
 	virtual DWORD	GetMeasuredSpeed();
@@ -42,6 +41,8 @@ public:
 	BOOL			OnUpload(const std::string& strType, const std::string& strFilename, QWORD nOffset, QWORD nLength, const std::string& strOptions);
 
 protected:
+	CDCClient*		m_pClient;		// Upload owner
+
 	BOOL			RequestFileList(BOOL bFile, BOOL bZip, const std::string& strFilename, QWORD nOffset, QWORD nLength);
 	BOOL			RequestTigerTree(const std::string& strFilename, QWORD nOffset, QWORD nLength, CLibraryFile* pFile);
 	BOOL			RequestFile(const std::string& strFilename, QWORD nOffset, QWORD nLength, CLibraryFile* pFile);

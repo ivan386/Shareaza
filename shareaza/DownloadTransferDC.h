@@ -21,16 +21,15 @@
 
 #pragma once
 
-class CDownloadTransfer;
 class CDCClient;
+class CDownloadTransfer;
+
 
 class CDownloadTransferDC : public CDownloadTransfer
 {
 public:
 	CDownloadTransferDC(CDownloadSource* pSource, CDCClient* pClient);
 	virtual ~CDownloadTransferDC();
-
-	CDCClient*	m_pClient;		// Download owner
 
 	virtual void	AttachTo(CConnection* pConnection);
 	virtual BOOL	Initiate();
@@ -42,8 +41,12 @@ public:
 
 	// Got $ADCSND command
 	BOOL			OnDownload(const std::string& strType, const std::string& strFilename, QWORD nOffset, QWORD nLength, const std::string& strOptions);
+	// Got $MaxedOut command
+	BOOL			OnQueue(int nQueue);
 
 protected:
+	CDCClient*	m_pClient;		// Download owner
+
 	virtual BOOL	SubtractRequested(Fragments::List& ppFragments);
 
 	BOOL			StartNextFragment();

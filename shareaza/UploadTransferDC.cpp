@@ -42,6 +42,9 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
+#define FILE_NOT_AVAILABLE	_T("$Error File Not Available|")
+#define UPLOAD_BUSY			_T("$MaxedOut|")
+
 
 CUploadTransferDC::CUploadTransferDC(CDCClient* pClient)
 	: CUploadTransfer	( PROTOCOL_DC )
@@ -60,6 +63,7 @@ void CUploadTransferDC::Close(UINT nError)
 	if ( m_pClient != NULL )
 	{
 		m_pClient->m_pUploadTransfer = NULL;
+		m_pClient->Close();
 		m_pClient = NULL;
 	}
 
@@ -98,15 +102,14 @@ BOOL CUploadTransferDC::OnWrite()
 	ASSUME_LOCK( Transfers.m_pSection );
 	ASSERT( m_pClient );
 
-	m_pClient->m_mOutput.pLimit = &m_nBandwidth;
 	m_mOutput.tLast = m_pClient->m_mOutput.tLast;
-
-	if ( m_pClient->GetOutputLength() != 0 )
-		// There is data in output buffer
-		return TRUE;
 
 	if ( m_nState == upsUploading )
 	{
+		if ( m_pClient->GetOutputLength() != 0 )
+			// There is data in output buffer
+			return TRUE;
+
 		// No file data left to transfer
 		if ( m_nPosition >= m_nLength )
 		{
@@ -164,6 +167,7 @@ BOOL CUploadTransferDC::OnUpload(const std::string& strType, const std::string& 
 	m_sAddress = m_pClient->m_sAddress;
 	UpdateCountry();
 
+	m_pClient->m_mInput.pLimit	= &Settings.Bandwidth.Request;
 	m_pClient->m_mOutput.pLimit = &m_nBandwidth;
 
 	BOOL bZip = ( strOptions.find("ZL1") != std::string::npos );
@@ -238,8 +242,7 @@ BOOL CUploadTransferDC::OnUpload(const std::string& strType, const std::string& 
 	theApp.Message( MSG_ERROR, IDS_UPLOAD_FILENOTFOUND,
 		(LPCTSTR)m_sAddress, (LPCTSTR)CA2CT( strFilename.c_str() ) );
 
-	m_pClient->Write( FILE_NOT_AVAILABLE );
-	m_pClient->LogOutgoing();
+	m_pClient->SendCommand( FILE_NOT_AVAILABLE );
 
 	return TRUE;
 }
@@ -257,8 +260,7 @@ BOOL CUploadTransferDC::RequestFile(const std::string& strFilename, QWORD nOffse
 		theApp.Message( MSG_ERROR, IDS_UPLOAD_FILENOTFOUND,
 			(LPCTSTR)m_sAddress, (LPCTSTR)m_sName );
 
-		m_pClient->Write( CANNOT_UPLOAD );	
-		m_pClient->LogOutgoing();
+		m_pClient->SendCommand( FILE_NOT_AVAILABLE );	
 
 		return TRUE;
 	}
@@ -274,13 +276,15 @@ BOOL CUploadTransferDC::RequestFile(const std::string& strFilename, QWORD nOffse
 		theApp.Message( MSG_ERROR, IDS_UPLOAD_BAD_RANGE,
 			(LPCTSTR)m_sAddress, (LPCTSTR)m_sName );
 
-		return FALSE;
+		m_pClient->SendCommand( FILE_NOT_AVAILABLE );	
+
+		return TRUE;
 	}
 
 	AllocateBaseFile();
 
-	UINT nError = 0;
-	int nPosition = 0;
+	UINT nError;
+	int nPosition;
 
 	if ( m_bStopTransfer )
 	{
@@ -302,8 +306,19 @@ BOOL CUploadTransferDC::RequestFile(const std::string& strFilename, QWORD nOffse
 		}
 		else if ( nPosition > 0 )
 		{
-			// Queued, but must wait
-			nError = IDS_UPLOAD_BUSY_OLD;
+			// Queued
+			theApp.Message( MSG_INFO, IDS_UPLOAD_QUEUED, (LPCTSTR)m_sName,
+				(LPCTSTR)m_sAddress, nPosition, m_pQueue->GetQueuedCount(),
+				(LPCTSTR)m_pQueue->m_sName );
+
+			CString strQueued;
+			strQueued.Format( _T("$MaxedOut %i|"), nPosition );
+
+			m_pClient->SendCommand( strQueued );
+
+			StartSending( upsPreQueue );
+
+			return TRUE;
 		}
 		else if ( UploadQueues.Enqueue( this ) )
 		{
@@ -316,7 +331,18 @@ BOOL CUploadTransferDC::RequestFile(const std::string& strFilename, QWORD nOffse
 			else if ( nPosition > 0 )
 			{
 				// Queued, but must wait
-				nError = IDS_UPLOAD_BUSY_OLD;
+				theApp.Message( MSG_INFO, IDS_UPLOAD_QUEUED, (LPCTSTR)m_sName,
+					(LPCTSTR)m_sAddress, nPosition, m_pQueue->GetQueuedCount(),
+					(LPCTSTR)m_pQueue->m_sName );
+
+				CString strQueued;
+				strQueued.Format( _T("$MaxedOut %i|"), nPosition );
+
+				m_pClient->SendCommand( strQueued );
+
+				StartSending( upsPreQueue );
+
+				return TRUE;
 			}
 			else
 				// Client can't queue, so dequeue and return busy
@@ -330,52 +356,13 @@ BOOL CUploadTransferDC::RequestFile(const std::string& strFilename, QWORD nOffse
 		// Too many from this host
 		nError = IDS_UPLOAD_BUSY_HOST;
 
-	if ( nError )
-	{
-		UploadQueues.Dequeue( this );
-		ASSERT( m_pQueue == NULL );
-	}
-		
-	if ( m_pQueue )
-	{
-		CString strAnswer;
-		DWORD nReaskMultiplier = ( nPosition <= 9 ) ? ( ( nPosition + 1 ) / 2 ) : 5;
-		DWORD nTimeScale = 1000 / nReaskMultiplier;
-		
-		CSingleLock pLock( &UploadQueues.m_pSection, TRUE );
-		if ( UploadQueues.Check( m_pQueue ) )
-		{
-			CString strName = m_pQueue->m_sName;
-			strName.Replace( _T("\""), _T("'") );
+	UploadQueues.Dequeue( this );
+	ASSERT( m_pQueue == NULL );
 
-			strAnswer.Format( _T(" position=%i,length=%i,limit=%i,pollMin=%lu,pollMax=%lu,id=\"%s\""),
-				nPosition,
-				m_pQueue->GetQueuedCount(),
-				m_pQueue->GetTransferCount( TRUE ),
-				Settings.Uploads.QueuePollMin / nTimeScale,
-				Settings.Uploads.QueuePollMax / nTimeScale,
-				(LPCTSTR)strName );
+	theApp.Message( MSG_ERROR, nError,
+		(LPCTSTR)m_sName, (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
 
-			theApp.Message( MSG_INFO, IDS_UPLOAD_QUEUED, (LPCTSTR)m_sName,
-				(LPCTSTR)m_sAddress, nPosition, m_pQueue->GetQueuedCount(),
-				(LPCTSTR)strName );
-		}
-
-		m_pClient->Write( _P("$Queued") );
-		m_pClient->Write( strAnswer );
-		m_pClient->Write( _P("|") );
-		m_pClient->LogOutgoing();
-
-		StartSending( upsPreQueue );
-	}
-	else
-	{ 
-		theApp.Message( MSG_ERROR, nError,
-			(LPCTSTR)m_sName, (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
-
-		m_pClient->Write( CANNOT_UPLOAD );
-		m_pClient->LogOutgoing();
-	}
+	m_pClient->SendCommand( UPLOAD_BUSY );
 
 	return TRUE;
 }
@@ -387,8 +374,7 @@ BOOL CUploadTransferDC::SendFile(const std::string& strFilename)
 		theApp.Message( MSG_ERROR, IDS_UPLOAD_CANTOPEN,
 			(LPCTSTR)m_sName , (LPCTSTR)m_sAddress);
 
-		m_pClient->Write( FILE_NOT_AVAILABLE );
-		m_pClient->LogOutgoing();
+		m_pClient->SendCommand( FILE_NOT_AVAILABLE );
 
 		return FALSE;
 	}
@@ -396,8 +382,9 @@ BOOL CUploadTransferDC::SendFile(const std::string& strFilename)
 	CString sAnswer;
 	sAnswer.Format( _T("$ADCSND file %hs %I64u %I64u|"),
 		strFilename.c_str(), m_nOffset, m_nLength );
-	m_pClient->Write( sAnswer );
-	m_pClient->LogOutgoing();
+
+	m_pClient->SendCommand( sAnswer );
+
 	StartSending( upsUploading );
 
 	if ( m_pBaseFile->m_nRequests++ == 0 )
@@ -458,8 +445,8 @@ BOOL CUploadTransferDC::RequestFileList(BOOL bFile, BOOL bZip, const std::string
 	sAnswer.Format( _T("$ADCSND %hs %hs %I64u %I64u%hs|"),
 		( bFile ? "file" : "list" ), strFilename.c_str(),
 		nOffset, nLength, ( bZip ? " ZL1" : "") );
-	m_pClient->Write( sAnswer );
-	m_pClient->LogOutgoing();
+
+	m_pClient->SendCommand( sAnswer );
 
 	m_pClient->Write( &pXML );
 
@@ -502,8 +489,8 @@ BOOL CUploadTransferDC::RequestTigerTree(const std::string& strFilename, QWORD n
 	CString sAnswer;
 	sAnswer.Format( _T("$ADCSND tthl %hs %I64u %I64u|"),
 		strFilename.c_str(), nOffset, nLength );
-	m_pClient->Write( sAnswer );
-	m_pClient->LogOutgoing();
+
+	m_pClient->SendCommand( sAnswer );
 	
 	m_pClient->Write( pSerialTree + nOffset, nLength );
 

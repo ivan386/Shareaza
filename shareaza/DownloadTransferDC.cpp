@@ -45,6 +45,8 @@ CDownloadTransferDC::CDownloadTransferDC(CDownloadSource* pSource, CDCClient* pC
 	, m_pClient( pClient )
 {
 	SetState( dtsConnecting );
+
+	m_sQueueName = _T("DC++");
 }
 
 CDownloadTransferDC::~CDownloadTransferDC()
@@ -117,6 +119,7 @@ void CDownloadTransferDC::Close(TRISTATE bKeepSource, DWORD nRetryAfter)
 	if ( m_pClient != NULL )
 	{
 		m_pClient->m_pDownloadTransfer = NULL;
+		m_pClient->Close();
 		m_pClient = NULL;
 	}
 
@@ -166,8 +169,6 @@ BOOL CDownloadTransferDC::OnConnected()
 		Close( TRI_TRUE );
 		return FALSE;
 	}
-
-	m_pClient->m_mInput.pLimit = &m_nBandwidth;
 
 	return StartNextFragment();
 }
@@ -280,6 +281,9 @@ BOOL CDownloadTransferDC::OnDownload(const std::string& strType, const std::stri
 {
 	ASSERT( m_pClient );
 
+	m_pClient->m_mInput.pLimit = &m_nBandwidth;
+	m_pClient->m_mOutput.pLimit	= &Settings.Bandwidth.Request;
+
 	BOOL bZip = ( strOptions.find("ZL1") != std::string::npos );
 
 	if ( strType == "file" )
@@ -312,6 +316,28 @@ BOOL CDownloadTransferDC::OnDownload(const std::string& strType, const std::stri
 	return FALSE;
 }
 
+BOOL CDownloadTransferDC::OnQueue(int nQueue)
+{
+	ASSERT( m_pClient );
+
+	m_pSource->SetLastSeen();
+
+	m_nOffset	= SIZE_UNKNOWN;
+	m_nPosition	= 0;
+
+	SetState( dtsQueued );
+
+	m_tRequest	= GetTickCount() + Settings.Downloads.RetryDelay;
+	m_nQueuePos	= nQueue;
+	m_nQueueLen	= 0;	// TODO: Read total upload slots
+
+	theApp.Message( MSG_INFO, IDS_DOWNLOAD_QUEUED,
+		(LPCTSTR)m_sAddress, m_nQueuePos, m_nQueueLen,
+		(LPCTSTR)m_sQueueName );
+
+	return TRUE;
+}
+
 BOOL CDownloadTransferDC::StartNextFragment()
 {
 	ASSUME_LOCK( Transfers.m_pSection );
@@ -323,13 +349,12 @@ BOOL CDownloadTransferDC::StartNextFragment()
 
 	m_pSource->SetLastSeen();
 
-	m_nOffset = SIZE_UNKNOWN;
-	m_nPosition = 0;
+	m_nOffset	= SIZE_UNKNOWN;
+	m_nPosition	= 0;
 
 	if ( m_pDownload->GetFragment( this ) )
 	{
 		// Downloading
-
 		ChunkifyRequest( &m_nOffset, &m_nLength, Settings.Downloads.ChunkSize, TRUE );
 
 		theApp.Message( MSG_INFO, IDS_DOWNLOAD_FRAGMENT_REQUEST,
@@ -339,11 +364,12 @@ BOOL CDownloadTransferDC::StartNextFragment()
 		CString strRequest;
 		strRequest.Format( _T("$ADCGET file TTH/%s %I64u %I64u|"),
 			m_pDownload->m_oTiger.toString(), m_nOffset, m_nLength );
-		m_pClient->Write( strRequest );
-		m_pClient->LogOutgoing();
+
+		m_pClient->SendCommand( strRequest );
 
 		// Sending request
 		SetState( dtsRequesting );
+
 		m_tRequest = GetTickCount();
 
 		return TRUE;

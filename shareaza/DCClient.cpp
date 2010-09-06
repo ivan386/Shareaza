@@ -154,7 +154,7 @@ BOOL CDCClient::OnConnected()
 
 	LogOutgoing();
 
-	return TRUE;
+	return OnWrite();
 }
 
 void CDCClient::OnDropped()
@@ -215,7 +215,9 @@ BOOL CDCClient::OnRead()
 	for ( ;; )
 	{
 		// Download mode
-		if ( m_pDownloadTransfer && m_pDownloadTransfer->m_nState >= dtsDownloading )
+		if ( m_pDownloadTransfer &&
+			( m_pDownloadTransfer->m_nState == dtsDownloading ||
+			  m_pDownloadTransfer->m_nState == dtsTiger ) )
 		{
 			return m_pDownloadTransfer->OnRead();
 		}
@@ -468,7 +470,8 @@ BOOL CDCClient::OnCommand(const std::string& strCommand, const std::string& strP
 			return m_pUploadTransfer->OnUpload( strType, strFilename, nOffset, nLength, strOptions );
 		}
 
-		Write( CANNOT_UPLOAD );	
+		// Unexpected request
+		return FALSE;
 	}
 	else if ( strCommand == "$Get" ||
 		strCommand == "$GetZBlock" ||
@@ -529,12 +532,13 @@ BOOL CDCClient::OnCommand(const std::string& strCommand, const std::string& strP
 	else if ( strCommand == "$MaxedOut" )
 	{
 		// No free upload slots
-		// $MaxedOut|
+		// $MaxedOut[ QueuePosition]|
+
+		int nQueue = strParams.empty() ? 0 : atoi( strParams.c_str() );
 
 		if ( m_pDownloadTransfer )
 		{
-			m_pDownloadTransfer->Close( TRI_TRUE );
-			ASSERT( m_pDownloadTransfer == NULL );
+			return m_pDownloadTransfer->OnQueue( nQueue );
 		}
 
 		return TRUE;
@@ -552,7 +556,7 @@ BOOL CDCClient::OnCommand(const std::string& strCommand, const std::string& strP
 
 	LogOutgoing();
 
-	return TRUE;
+	return OnWrite();
 }
 
 BOOL CDCClient::OnChat(const std::string& /*strMessage*/)
@@ -604,5 +608,15 @@ BOOL CDCClient::Handshake()
 
 	LogOutgoing();
 
-	return TRUE;
+	return OnWrite();
 }
+
+BOOL CDCClient::SendCommand(const CString& strSend)
+{
+	Write( strSend );
+
+	LogOutgoing();
+
+	return OnWrite();
+}
+

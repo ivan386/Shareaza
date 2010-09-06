@@ -23,7 +23,6 @@
 
 class CConnection;
 class CDCClient;
-class CDownloadTransferDC;
 
 
 class CDCClients
@@ -57,6 +56,3 @@ protected:
 };
 
 extern CDCClients DCClients;
-
-#define FILE_NOT_AVAILABLE	_P("$Error File Not Available|")
-#define CANNOT_UPLOAD		_P("$MaxedOut|")
