@@ -323,7 +323,7 @@ BOOL CEDClients::IsMyDownload(const CDownloadTransferED2K* pDownload) const
 
 	for ( CEDClient* pClient = m_pFirst ; pClient ; pClient = pClient->m_pEdNext )
 	{
-		if( pClient->m_pDownload == pDownload )
+		if( pClient->m_pDownloadTransfer == pDownload )
 			return TRUE;
 	}
 	return FALSE;

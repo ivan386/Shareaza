@@ -36,7 +36,6 @@ class CEDClient : public CTransfer
 // Construction
 public:
 	CEDClient();
-	virtual ~CEDClient();
 
 // Attributes
 public:
@@ -74,8 +73,8 @@ public:
 	Hashes::Ed2kHash m_oUpED2K;
 	QWORD		m_nUpSize;
 public:
-	CDownloadTransferED2K*	m_pDownload;
-	CUploadTransferED2K*	m_pUpload;
+	CDownloadTransferED2K*	m_pDownloadTransfer;
+	CUploadTransferED2K*	m_pUploadTransfer;
 	bool					m_bCallbackRequested;
 	BOOL					m_bSeeking;
 	DWORD					m_nRunExCookie;
@@ -106,6 +105,8 @@ public:
 	BOOL	SendCommentsPacket(int nRating, LPCTSTR pszComments);
 	void	SendPreviewRequest(CDownload* pDownload);
 protected:
+	virtual ~CEDClient();
+
 	void	DetermineUserAgent();
 	BOOL	OnLoggedIn();
 	void	DetachDownload();
