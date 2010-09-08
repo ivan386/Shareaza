@@ -978,6 +978,9 @@ void CDownloads::OnRun()
 				pDownload->m_nRunCookie = m_nRunCookie;
 				pDownload->OnRun();
 
+				if ( pDownload->IsCompleted() )
+					continue;
+
 				int nTemp = 0;
 
 				for ( CDownloadTransfer* pTransfer = pDownload->GetFirstTransfer() ; pTransfer ; pTransfer = pTransfer->m_pDlNext )
