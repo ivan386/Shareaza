@@ -414,7 +414,7 @@ void CUploadTransfer::ClearRequest()
 	ClearHeaders();
 }
 
-BOOL CUploadTransfer::RequestComplete(CLibraryFile* pFile)
+BOOL CUploadTransfer::RequestComplete(const CLibraryFile* pFile)
 {
 	ASSERT( pFile != NULL );
 

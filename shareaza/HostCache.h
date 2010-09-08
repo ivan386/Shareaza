@@ -26,6 +26,16 @@ class CG1Packet;
 class CVendor;
 
 
+// History:
+// 14 - Added m_sCountry
+// 15 - Added m_bDHT and m_oBtGUID (ryo-oh-ki)
+// 16 - Added m_nUDPPort, m_oGUID and m_nKADVersion (ryo-oh-ki)
+// 17 - Added m_tConnect (ryo-oh-ki)
+// 18 - Added m_sUser and m_sPass (ryo-oh-ki)
+
+#define HOSTCACHE_SER_VERSION 18
+
+
 class CHostCacheHost
 {
 public:
@@ -47,6 +57,8 @@ public:
 	DWORD		m_nUDPFlags;		// ED2K UDP flags (ED2K_SERVER_UDP_*)
 	BOOL		m_bCheckedLocally;	// Host was successfully accessed via TCP or UDP
 	CString		m_sCountry;			// Country code
+	CString		m_sUser;			// User name on this server
+	CString		m_sPass;			// User password on this server
 
 	// Attributes: Contact Times
 	DWORD		m_tAdded;			// Time when host was constructed (in ticks)

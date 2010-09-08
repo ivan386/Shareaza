@@ -140,12 +140,7 @@ BOOL CHostCache::Save()
 
 void CHostCache::Serialize(CArchive& ar)
 {
-	// History:
-	// 14 - Added m_sCountry
-	// 15 - Added m_bDHT and m_oBtGUID (Ryo-oh-ki)
-	// 16 - Added m_nUDPPort, m_oGUID and m_nKADVersion (Ryo-oh-ki)
-	// 17 - Added m_tConnect (Ryo-oh-ki)
-	int nVersion = 17;
+	int nVersion = HOSTCACHE_SER_VERSION;
 
 	if ( ar.IsStoring() )
 	{
@@ -1021,16 +1016,25 @@ void CHostCacheHost::Serialize(CArchive& ar, int nVersion)
 		ar << m_nFailures;
 		ar << m_bCheckedLocally;
 		ar << m_nDailyUptime;
+
+		// Version 14
 		ar << m_sCountry;
 
+		// Version 15
 		ar << m_bDHT;
 		ar.Write( &m_oBtGUID[0], m_oBtGUID.byteCount );
 
+		// Version 16
 		ar << m_nUDPPort;
 		ar.Write( &m_oGUID[0], m_oGUID.byteCount );
 		ar << m_nKADVersion;
 
+		// Version 17
 		ar << m_tConnect;
+
+		// Version 18
+		ar << m_sUser;
+		ar << m_sPass;
 	}
 	else
 	{
@@ -1126,6 +1130,12 @@ void CHostCacheHost::Serialize(CArchive& ar, int nVersion)
 		if ( nVersion >= 17 )
 		{
 			ar >> m_tConnect;
+		}
+
+		if ( nVersion >= 18 )
+		{
+			ar >> m_sUser;
+			ar >> m_sPass;
 		}
 	}
 }
@@ -1244,16 +1254,16 @@ bool CHostCacheHost::IsExpired(const DWORD tNow) const
 	switch ( m_nProtocol )
 	{
 	case PROTOCOL_G1:
-		return m_tSeen && ( tNow - m_tSeen > Settings.Gnutella1.HostExpire );
+		return m_tSeen && ( tNow > m_tSeen + Settings.Gnutella1.HostExpire );
 	case PROTOCOL_G2:
-		return m_tSeen && ( tNow - m_tSeen > Settings.Gnutella2.HostExpire );
+		return m_tSeen && ( tNow > m_tSeen + Settings.Gnutella2.HostExpire );
 	case PROTOCOL_ED2K:
 	case PROTOCOL_DC:
 		return false;	// Never
 	case PROTOCOL_BT:
-		return m_tSeen && ( tNow - m_tSeen > Settings.BitTorrent.DhtPruneTime );
+		return m_tSeen && ( tNow > m_tSeen + Settings.BitTorrent.DhtPruneTime );
 	case PROTOCOL_KAD:
-		return m_tSeen && ( tNow - m_tSeen > 24 * 60 * 60 ); // TODO: Add Kademlia setting
+		return m_tSeen && ( tNow > m_tSeen + 24 * 60 * 60 ); // TODO: Add Kademlia setting
 	default:
 		return false;
 	}
@@ -1261,13 +1271,15 @@ bool CHostCacheHost::IsExpired(const DWORD tNow) const
 
 bool CHostCacheHost::IsThrottled(const DWORD tNow) const
 {
+	if ( tNow < m_tConnect + Settings.Connection.ConnectThrottle )
+		return true;
 	switch ( m_nProtocol )
 	{
 	case PROTOCOL_G1:
 	case PROTOCOL_G2:
-		return ( tNow - m_tConnect < Settings.Gnutella.ConnectThrottle );
+		return ( tNow < m_tConnect + Settings.Gnutella.ConnectThrottle );
 	case PROTOCOL_ED2K:
-		return ( tNow - m_tConnect < Settings.eDonkey.QueryThrottle );
+		return ( tNow < m_tConnect + Settings.eDonkey.QueryThrottle );
 	default:
 		return false;
 	}

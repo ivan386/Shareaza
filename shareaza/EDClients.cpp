@@ -66,9 +66,6 @@ CEDClients::~CEDClients()
 	Clear();
 }
 
-//////////////////////////////////////////////////////////////////////
-// CEDClients add and remove
-
 void CEDClients::Add(CEDClient* pClient)
 {
 	CQuickLock oLock( m_pSection );
@@ -111,9 +108,6 @@ void CEDClients::Remove(CEDClient* pClient)
 	--m_nCount;
 }
 
-//////////////////////////////////////////////////////////////////////
-// CEDClients clear
-
 void CEDClients::Clear()
 {
 	CQuickLock oLock( m_pSection );
@@ -128,6 +122,13 @@ void CEDClients::Clear()
 	ASSERT( m_pFirst == NULL );
 	ASSERT( m_pLast == NULL );
 	ASSERT( m_nCount == 0 );
+}
+
+int CEDClients::GetCount() const
+{
+	CQuickLock oLock( m_pSection );
+
+	return m_nCount;
 }
 
 //////////////////////////////////////////////////////////////////////

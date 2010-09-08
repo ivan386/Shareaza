@@ -48,12 +48,12 @@ CDCClient::CDCClient(LPCTSTR szNick)
 	, m_pDownloadTransfer	( NULL )
 	, m_pUploadTransfer		( NULL )
 	, m_bDirection			( TRI_UNKNOWN )
-	, m_nNumber				( GetRandomNum( 0u, 0x7FFFu ) )
+	, m_bNumberSent			( FALSE )
+	, m_nNumber				( GenerateNumber() )
 	, m_nRemoteNumber		( -1 )
-	, m_bLock				( FALSE )
-	, m_bClosing			( FALSE )
+	, m_bLogin				( FALSE )
 {
-	m_bAutoDelete = TRUE;
+	TRACE( "[DC++] Creating client 0x%08x\n", (LPVOID)this );
 
 	if ( szNick ) m_sNick = szNick;
 	m_sUserAgent = _T("DC++");
@@ -66,9 +66,45 @@ CDCClient::CDCClient(LPCTSTR szNick)
 
 CDCClient::~CDCClient()
 {
+	TRACE( "[DC++] Destroying client 0x%08x\n", (LPVOID)this );
+
 	ASSERT( ! IsValid() );
+	ASSERT( m_pUploadTransfer == NULL );
+	ASSERT( m_pDownloadTransfer == NULL );
 
 	DCClients.Remove( this );
+}
+
+BOOL CDCClient::Equals(const CDCClient* pClient) const
+{
+	return validAndEqual( m_oGUID, pClient->m_oGUID );
+}
+
+void CDCClient::Merge(CDCClient* pClient)
+{
+	ASSERT( pClient != NULL );
+
+	TRACE( "[DC++] Merging client 0x%08x to 0x%08x\n", (LPVOID)pClient, (LPVOID)this );
+
+	if ( pClient->m_pDownloadTransfer )
+	{
+		DetachDownload();
+
+		m_pDownloadTransfer = pClient->m_pDownloadTransfer;
+		m_pDownloadTransfer->m_pClient = this;
+		pClient->m_pDownloadTransfer = NULL;
+	}
+
+	if ( pClient->m_pUploadTransfer )
+	{
+		DetachUpload();
+
+		m_pUploadTransfer = pClient->m_pUploadTransfer;
+		m_pUploadTransfer->m_pClient = this;
+		pClient->m_pUploadTransfer = NULL;
+	}
+
+	pClient->Remove();
 }
 
 std::string CDCClient::GenerateLock() const
@@ -80,10 +116,41 @@ std::string CDCClient::GenerateLock() const
 	return cLock;
 }
 
+int CDCClient::GenerateNumber() const
+{
+	return GetRandomNum( 0u, 0x7FFFu );
+}
+
 BOOL CDCClient::CanDownload() const
 {
 	return m_pDownloadTransfer &&
 		( m_bDirection == TRI_FALSE || m_nNumber > m_nRemoteNumber );
+}
+
+BOOL CDCClient::CanUpload() const
+{
+	return ! m_pDownloadTransfer ||
+		( m_bDirection == TRI_TRUE && m_nNumber < m_nRemoteNumber );
+}
+
+BOOL CDCClient::Connect()
+{
+	// Notify client via neighbours
+	CSingleLock oLock( &Network.m_pSection );
+	if ( oLock.Lock( 250 ) )
+	{
+		for ( POSITION pos = Neighbours.GetIterator(); pos; )
+		{
+			CNeighbour* pNeighbour = Neighbours.GetNext( pos );
+			if ( pNeighbour->m_nProtocol == m_nProtocol )
+			{
+				// TODO: Check for present nick
+				static_cast< CDCNeighbour*>( pNeighbour )->ConnectToMe( m_sRemoteNick );
+			}
+		}
+	}
+
+	return TRUE;
 }
 
 BOOL CDCClient::ConnectTo(const IN_ADDR* pAddress, WORD nPort)
@@ -105,8 +172,6 @@ BOOL CDCClient::ConnectTo(const IN_ADDR* pAddress, WORD nPort)
 		return FALSE;
 	}
 
-	m_nState = nrsConnecting;
-
 	return TRUE;
 }
 
@@ -114,41 +179,38 @@ void CDCClient::AttachTo(CConnection* pConnection)
 {
 	CTransfer::AttachTo( pConnection );
 
-	m_nState = nrsConnected;
+	m_tConnected = GetTickCount();
 }
 
 void CDCClient::Close(UINT nError)
 {
-	ASSERT( this != NULL );
-
-	if ( m_bClosing )
-		return;
-	m_bClosing = TRUE;
+	m_bLogin = FALSE;
 
 	m_mInput.pLimit = NULL;
 	m_mOutput.pLimit = NULL;
 
-	if ( m_pUploadTransfer != NULL )
-	{
-		m_pUploadTransfer->Close();
-		ASSERT( m_pUploadTransfer == NULL );
-	}
-
-	if ( m_pDownloadTransfer != NULL )
-	{
-		m_pDownloadTransfer->Close( TRI_UNKNOWN );
-		ASSERT( m_pDownloadTransfer == NULL );
-	}
-
 	CTransfer::Close( nError );
+}
+
+void CDCClient::Remove()
+{
+	Close();
+
+	DetachUpload();
+	DetachDownload();
+
+	delete this;
+}
+
+BOOL CDCClient::IsOnline() const
+{
+	return m_bConnected && m_bLogin;
 }
 
 BOOL CDCClient::OnConnected()
 {
 	if ( ! CTransfer::OnConnected() )
 		return FALSE;
-
-	m_nState = nrsConnected;
 
 	Greetings();
 
@@ -159,28 +221,23 @@ BOOL CDCClient::OnConnected()
 
 void CDCClient::OnDropped()
 {
-	/*if ( m_nState == upsUploading && m_pBaseFile )
+	if ( m_pDownloadTransfer )
 	{
-		m_pBaseFile->AddFragment( m_nOffset, m_nPosition );
-		m_pBaseFile = NULL;
-	}*/
+		m_pDownloadTransfer->OnDropped();
+	}
 
-	if ( m_nState == nrsConnecting )
+	if ( m_pUploadTransfer )
 	{
-		Close( IDS_CONNECTION_REFUSED );
+		m_pUploadTransfer->OnDropped();
 	}
-	else
-	{
-		Close( IDS_UPLOAD_DROPPED );
-	}
+
+	Close();
 }
 
 BOOL CDCClient::OnRun()
 {
 	if ( ! CTransfer::OnRun() )
 		return FALSE;
-
-	DWORD tNow = GetTickCount();
 
 	if ( m_pDownloadTransfer )
 	{
@@ -194,14 +251,12 @@ BOOL CDCClient::OnRun()
 			return FALSE;
 	}
 
-	if ( m_nState == nrsConnecting )
+	if ( ! m_pDownloadTransfer && ! m_pUploadTransfer && ! IsValid() )
 	{
-		if ( tNow - m_tConnected > Settings.Connection.TimeoutConnect )
-		{
-			Close( IDS_CONNECTION_TIMEOUT_CONNECT );
+		// Delete unused client
+		Remove();
 
-			return FALSE;
-		}
+		return FALSE;
 	}
 
 	return TRUE;
@@ -276,7 +331,7 @@ BOOL CDCClient::ReadCommand(std::string& strLine)
 BOOL CDCClient::OnWrite()
 {
 	// Upload mode
-	if ( m_pUploadTransfer && m_pUploadTransfer->m_nState >= upsUploading )
+	if ( m_pUploadTransfer )
 	{
 		if ( ! m_pUploadTransfer->OnWrite() )
 			return FALSE;
@@ -289,189 +344,39 @@ BOOL CDCClient::OnCommand(const std::string& strCommand, const std::string& strP
 {
 	if ( strCommand == "$MyNick" )
 	{
-		// $MyNick RemoteNick|
-
-		m_sRemoteNick = strParams.c_str();
-
-		return TRUE;
+		return OnMyNick( strParams );
 	}
 	else if ( strCommand == "$Lock" )
 	{
-		// $Lock [EXTENDEDPROTOCOL]Challenge Pk=Vendor|
-
-		m_bExtended = ( strParams.substr( 0, 16 ) == "EXTENDEDPROTOCOL" );
-
-		std::string strLock;
-		std::string::size_type nPos = strParams.find( " Pk=" );
-		if ( nPos != std::string::npos )
-		{
-			// Good way
-			strLock = strParams.substr( 0, nPos );
-			m_sUserAgent = strParams.substr( nPos + 4 ).c_str();
-		}
-		else
-		{
-			// Bad way
-			nPos = strParams.find( ' ' );
-			if ( nPos != std::string::npos )
-				strLock = strParams.substr( 0, nPos );
-			else
-				// Very bad way
-				strLock = strParams;
-		}
-
-		m_strKey = DCClients.MakeKey( strLock );
-
-		if ( m_sRemoteNick.IsEmpty() )
-			// $Lock without $MyNick
-			return FALSE;
-
-		m_bLock = TRUE;
-
-		if ( ! m_bInitiated )
-		{
-			Hashes::Guid oGUID;
-			CMD5 pMD5;
-			pMD5.Add( (LPCTSTR)m_sRemoteNick, m_sRemoteNick.GetLength() * sizeof( TCHAR ) );
-			pMD5.Finish();
-			pMD5.GetHash( &oGUID[ 0 ] );
-			oGUID.validate();
-
-			Downloads.OnPush( oGUID, this );
-		}
-
-		return TRUE;
+		return OnLock( strParams );
 	}
 	else if ( strCommand == "$Supports" )
 	{
-		// $Supports [option1]...[optionN]
-
-		m_bExtended = TRUE;
-
-		m_oFeatures.RemoveAll();
-		for ( CString strFeatures( strParams.c_str() ); ! strFeatures.IsEmpty(); )
-		{
-			CString strFeature = strFeatures.SpanExcluding( _T(" ") );
-			strFeatures = strFeatures.Mid( strFeature.GetLength() + 1 );
-			if ( strFeature.IsEmpty() )
-				continue;
-			strFeature.MakeLower();
-			if ( m_oFeatures.Find( strFeature ) == NULL )
-			{
-				m_oFeatures.AddTail( strFeature );
-			}				
-		}
-
-		return TRUE;
+		return OnSupports( strParams );
 	}
 	else if ( strCommand == "$Key" )
 	{
-		// $Key key
-
-		std::string sKey = DCClients.MakeKey( GenerateLock() );
-		if ( sKey == strParams )
-		{
-			// Right key
-			if ( m_bInitiated )
-			{
-				return Handshake();
-			}
-			else
-			{
-				if ( CanDownload() )
-				{
-					// Start download
-					return m_pDownloadTransfer->OnConnected();
-				}
-
-				// Waiting for remote command
-				return TRUE;
-			}
-		}
-		else
-		{
-			// Wrong key
-			return FALSE;
-		}
+		return OnKey( strParams );
 	}
 	else if ( strCommand == "$Direction" )
 	{
-		// $Direction (Download|Upload) Number
-
-		std::string::size_type nPos = strParams.find( ' ' );
-		if ( nPos == std::string::npos )
-			// Invalid command
-			return FALSE;
-		std::string strDirection = strParams.substr( 0, nPos );
-		if ( strDirection == "Download" )
-			m_bDirection = TRI_TRUE;
-		else if ( strDirection == "Upload" )
-			m_bDirection = TRI_FALSE;
-		else
-			// Invalid command
-			return FALSE;
-
-		m_nRemoteNumber = atoi( strParams.substr( nPos + 1 ).c_str() );
-		if ( m_nRemoteNumber < 0 || m_nRemoteNumber > 0x7FFF )
-			// Invalid command
-			return FALSE;
-
-		return TRUE;
+		return OnDirection( strParams );
 	}
 	else if ( strCommand == "$ADCGET" )
 	{
-		// $ADCGET (list|file|tthl) Filename Offset Length [ZL1]
-
-		std::string::size_type nPos1 = strParams.find( ' ' );
-		if ( nPos1 == std::string::npos )
-			// Invalid command
-			return FALSE;
-		std::string strType = strParams.substr( 0, nPos1 );
-		std::string::size_type nPos2 = strParams.find( ' ', nPos1 + 1 );
-		if ( nPos2 == std::string::npos )
-			// Invalid command
-			return FALSE;
-		std::string strFilename = strParams.substr( nPos1 + 1, nPos2 - nPos1 - 1 );
-		std::string::size_type nPos3 = strParams.find( ' ', nPos2 + 1 );
-		if ( nPos3 == std::string::npos )
-			// Invalid command
-			return FALSE;
-		std::string strOffset = strParams.substr( nPos2 + 1, nPos3 - nPos2 - 1 );
-		std::string::size_type nPos4 = strParams.find( ' ', nPos3 + 1 );
-		std::string strLength, strOptions;
-		if ( nPos4 == std::string::npos )
-		{
-			strLength = strParams.substr( nPos3 + 1 );
-		}
-		else
-		{
-			strLength = strParams.substr( nPos3 + 1, nPos4 - nPos3 - 1 );
-			strOptions = strParams.substr( nPos4 + 1 );
-		}
-		QWORD nOffset;
-		if ( sscanf_s( strOffset.c_str(), "%I64u", &nOffset ) != 1 )
-			// Invalid command
-			return FALSE;
-		QWORD nLength;
-		if ( sscanf_s( strLength.c_str(), "%I64d", &nLength ) != 1 )
-			// Invalid command
-			return FALSE;
-
-		// Start uploading...
-		if ( ! m_pDownloadTransfer )
-		{
-			if ( ! m_pUploadTransfer )
-				m_pUploadTransfer = new CUploadTransferDC( this );
-			if ( ! m_pUploadTransfer )
-				// Out of memory
-				return FALSE;
-
-			// Start upload
-			return m_pUploadTransfer->OnUpload( strType, strFilename, nOffset, nLength, strOptions );
-		}
-
-		// Unexpected request
-		return FALSE;
+		return OnADCGet( strParams );
+	}
+	else if ( strCommand == "$ADCSND" )
+	{
+		return OnADCSnd( strParams );
+	}
+	else if ( strCommand == "$MaxedOut" )
+	{
+		return OnMaxedOut( strParams );
+	}
+	else if ( strCommand == "$Error" )
+	{
+		return OnError( strParams );
 	}
 	else if ( strCommand == "$Get" ||
 		strCommand == "$GetZBlock" ||
@@ -480,74 +385,6 @@ BOOL CDCClient::OnCommand(const std::string& strCommand, const std::string& strP
 		strCommand == "$GetListLen" )
 	{
 		Write( _P("$Error Command not supported. Use ADCGET/ADCSND instead|") );
-	}
-	else if ( strCommand == "$ADCSND" )
-	{
-		// $ADCSND (list|file|tthl) Filename Offset Length [ZL1]
-
-		std::string::size_type nPos1 = strParams.find( ' ' );
-		if ( nPos1 == std::string::npos )
-			// Invalid command
-			return FALSE;
-		std::string strType = strParams.substr( 0, nPos1 );
-		std::string::size_type nPos2 = strParams.find( ' ', nPos1 + 1 );
-		if ( nPos2 == std::string::npos )
-			// Invalid command
-			return FALSE;
-		std::string strFilename = strParams.substr( nPos1 + 1, nPos2 - nPos1 - 1 );
-		std::string::size_type nPos3 = strParams.find( ' ', nPos2 + 1 );
-		if ( nPos3 == std::string::npos )
-			// Invalid command
-			return FALSE;
-		std::string strOffset = strParams.substr( nPos2 + 1, nPos3 - nPos2 - 1 );
-		std::string::size_type nPos4 = strParams.find( ' ', nPos3 + 1 );
-		std::string strLength, strOptions;
-		if ( nPos4 == std::string::npos )
-		{
-			strLength = strParams.substr( nPos3 + 1 );
-		}
-		else
-		{
-			strLength = strParams.substr( nPos3 + 1, nPos4 - nPos3 - 1 );
-			strOptions = strParams.substr( nPos4 + 1 );
-		}
-		QWORD nOffset;
-		if ( sscanf_s( strOffset.c_str(), "%I64u", &nOffset ) != 1 )
-			// Invalid command
-			return FALSE;
-		QWORD nLength;
-		if ( sscanf_s( strLength.c_str(), "%I64d", &nLength ) != 1 )
-			// Invalid command
-			return FALSE;
-
-		if ( CanDownload() )
-		{
-			// Start downloading...
-			return m_pDownloadTransfer->OnDownload( strType, strFilename, nOffset, nLength, strOptions );
-		}
-		else
-			// Unexpected download
-			return FALSE;
-	}
-	else if ( strCommand == "$MaxedOut" )
-	{
-		// No free upload slots
-		// $MaxedOut[ QueuePosition]|
-
-		int nQueue = strParams.empty() ? 0 : atoi( strParams.c_str() );
-
-		if ( m_pDownloadTransfer )
-		{
-			return m_pDownloadTransfer->OnQueue( nQueue );
-		}
-
-		return TRUE;
-	}
-	else if ( strCommand == "$Error" )
-	{
-		// $Error Error message|
-
-		return TRUE;
 	}
 	else
 	{
@@ -564,9 +401,308 @@ BOOL CDCClient::OnChat(const std::string& /*strMessage*/)
 	return TRUE;
 }
 
+BOOL CDCClient::OnMyNick(const std::string& strParams)
+{
+	// $MyNick RemoteNick|
+
+	m_sRemoteNick = strParams.c_str();
+
+	// Create GUID from remote nick
+	CMD5 pMD5;
+	pMD5.Add( (LPCTSTR)m_sRemoteNick, m_sRemoteNick.GetLength() * sizeof( TCHAR ) );
+	pMD5.Finish();
+	pMD5.GetHash( &m_oGUID[ 0 ] );
+	m_oGUID.validate();
+
+	return ! DCClients.Merge( this );
+}
+
+BOOL CDCClient::OnLock(const std::string& strParams)
+{
+	// $Lock [EXTENDEDPROTOCOL]Challenge Pk=Vendor[Version][Ref=URL]|
+
+	if ( m_sRemoteNick.IsEmpty() )
+		// $Lock without $MyNick
+		return FALSE;
+
+	m_bExtended = ( strParams.substr( 0, 16 ) == "EXTENDEDPROTOCOL" );
+
+	// Reset direction number
+	m_bNumberSent = FALSE;
+	m_nNumber = GenerateNumber();
+
+	std::string strLock;
+	std::string::size_type nPos = strParams.find( " Pk=" );
+	if ( nPos != std::string::npos )
+	{
+		// Good way
+		strLock = strParams.substr( 0, nPos );
+		std::string strUserAgent = strParams.substr( nPos + 4 );
+		nPos = strUserAgent.find( "Ref=" );
+		if ( nPos != std::string::npos )
+			m_sUserAgent = strUserAgent.substr( 0, nPos ).c_str();
+		else
+			m_sUserAgent = strUserAgent.c_str();
+	}
+	else
+	{
+		// Bad way
+		nPos = strParams.find( ' ' );
+		if ( nPos != std::string::npos )
+			strLock = strParams.substr( 0, nPos );
+		else
+			// Very bad way
+			strLock = strParams;
+	}
+
+	m_bLogin = TRUE;
+	m_strKey = DCClients.MakeKey( strLock );
+
+	if ( ! m_bInitiated )
+	{
+		Downloads.OnPush( m_oGUID, this );
+	}
+
+	return TRUE;
+}
+
+BOOL CDCClient::OnSupports(const std::string& strParams)
+{
+	// $Supports [option1]...[optionN]
+
+	m_bExtended = TRUE;
+
+	m_oFeatures.RemoveAll();
+	for ( CString strFeatures( strParams.c_str() ); ! strFeatures.IsEmpty(); )
+	{
+		CString strFeature = strFeatures.SpanExcluding( _T(" ") );
+		strFeatures = strFeatures.Mid( strFeature.GetLength() + 1 );
+		if ( strFeature.IsEmpty() )
+			continue;
+		strFeature.MakeLower();
+		if ( m_oFeatures.Find( strFeature ) == NULL )
+		{
+			m_oFeatures.AddTail( strFeature );
+		}				
+	}
+
+	return TRUE;
+}
+
+BOOL CDCClient::OnKey(const std::string& strParams)
+{
+	// $Key key
+
+	std::string sKey = DCClients.MakeKey( GenerateLock() );
+	if ( sKey != strParams )
+		// Wrong key
+		return FALSE;
+
+	// Right key
+	if ( m_bInitiated )
+		return Handshake();
+
+	if ( CanDownload() )
+	{
+		// Start download
+		DetachUpload();
+
+		return m_pDownloadTransfer->OnConnected();
+	}
+
+	// Can't download
+	DetachDownload();
+
+	// Waiting for next remote command
+	return TRUE;
+}
+
+BOOL CDCClient::OnDirection(const std::string& strParams)
+{
+	// $Direction (Download|Upload) Number
+
+	std::string::size_type nPos = strParams.find( ' ' );
+	if ( nPos == std::string::npos )
+		// Invalid command
+		return FALSE;
+	std::string strDirection = strParams.substr( 0, nPos );
+	if ( strDirection == "Download" )
+		m_bDirection = TRI_TRUE;
+	else if ( strDirection == "Upload" )
+		m_bDirection = TRI_FALSE;
+	else
+		// Invalid command
+		return FALSE;
+
+	m_nRemoteNumber = atoi( strParams.substr( nPos + 1 ).c_str() );
+	if ( m_nRemoteNumber < 0 || m_nRemoteNumber > 0x7FFF )
+	{
+		// Invalid number
+		return FALSE;
+	}
+
+	if ( m_bNumberSent )
+	{
+		if ( m_nRemoteNumber == m_nNumber )
+			// Same numbers
+			return FALSE;
+	}
+	else
+	{
+		// Change number until its differ from remote one
+		while ( m_nRemoteNumber == m_nNumber )
+		{
+			m_nNumber = GenerateNumber();
+		}
+	}
+
+	return TRUE;
+}
+
+BOOL CDCClient::OnADCGet(const std::string& strParams)
+{
+	// $ADCGET (list|file|tthl) Filename Offset Length [ZL1]
+
+	std::string::size_type nPos1 = strParams.find( ' ' );
+	if ( nPos1 == std::string::npos )
+		// Invalid command
+		return FALSE;
+	std::string strType = strParams.substr( 0, nPos1 );
+	std::string::size_type nPos2 = strParams.find( ' ', nPos1 + 1 );
+	if ( nPos2 == std::string::npos )
+		// Invalid command
+		return FALSE;
+	std::string strFilename = strParams.substr( nPos1 + 1, nPos2 - nPos1 - 1 );
+	std::string::size_type nPos3 = strParams.find( ' ', nPos2 + 1 );
+	if ( nPos3 == std::string::npos )
+		// Invalid command
+		return FALSE;
+	std::string strOffset = strParams.substr( nPos2 + 1, nPos3 - nPos2 - 1 );
+	std::string::size_type nPos4 = strParams.find( ' ', nPos3 + 1 );
+	std::string strLength, strOptions;
+	if ( nPos4 == std::string::npos )
+	{
+		strLength = strParams.substr( nPos3 + 1 );
+	}
+	else
+	{
+		strLength = strParams.substr( nPos3 + 1, nPos4 - nPos3 - 1 );
+		strOptions = strParams.substr( nPos4 + 1 );
+	}
+	QWORD nOffset;
+	if ( sscanf_s( strOffset.c_str(), "%I64u", &nOffset ) != 1 )
+		// Invalid command
+		return FALSE;
+	QWORD nLength;
+	if ( sscanf_s( strLength.c_str(), "%I64d", &nLength ) != 1 )
+		// Invalid command
+		return FALSE;
+
+	// Start uploading...
+	if ( CanUpload() )
+	{
+		DetachDownload();
+
+		if ( ! m_pUploadTransfer )
+			m_pUploadTransfer = new CUploadTransferDC( this );
+		if ( ! m_pUploadTransfer )
+			// Out of memory
+			return FALSE;
+
+		m_pUploadTransfer->m_sNick = m_sRemoteNick;
+
+		// Start upload
+		return m_pUploadTransfer->OnUpload( strType, strFilename, nOffset, nLength, strOptions );
+	}
+
+	TRACE( "[DC++] Got $ADCGET but can't uplod!\n" );
+
+	// Unexpected request
+	DetachUpload();
+
+	return FALSE;
+}
+
+BOOL CDCClient::OnADCSnd(const std::string& strParams)
+{
+	// $ADCSND (list|file|tthl) Filename Offset Length [ZL1]
+
+	std::string::size_type nPos1 = strParams.find( ' ' );
+	if ( nPos1 == std::string::npos )
+		// Invalid command
+		return FALSE;
+	std::string strType = strParams.substr( 0, nPos1 );
+	std::string::size_type nPos2 = strParams.find( ' ', nPos1 + 1 );
+	if ( nPos2 == std::string::npos )
+		// Invalid command
+		return FALSE;
+	std::string strFilename = strParams.substr( nPos1 + 1, nPos2 - nPos1 - 1 );
+	std::string::size_type nPos3 = strParams.find( ' ', nPos2 + 1 );
+	if ( nPos3 == std::string::npos )
+		// Invalid command
+		return FALSE;
+	std::string strOffset = strParams.substr( nPos2 + 1, nPos3 - nPos2 - 1 );
+	std::string::size_type nPos4 = strParams.find( ' ', nPos3 + 1 );
+	std::string strLength, strOptions;
+	if ( nPos4 == std::string::npos )
+	{
+		strLength = strParams.substr( nPos3 + 1 );
+	}
+	else
+	{
+		strLength = strParams.substr( nPos3 + 1, nPos4 - nPos3 - 1 );
+		strOptions = strParams.substr( nPos4 + 1 );
+	}
+	QWORD nOffset;
+	if ( sscanf_s( strOffset.c_str(), "%I64u", &nOffset ) != 1 )
+		// Invalid command
+		return FALSE;
+	QWORD nLength;
+	if ( sscanf_s( strLength.c_str(), "%I64d", &nLength ) != 1 )
+		// Invalid command
+		return FALSE;
+
+	if ( CanDownload() )
+	{
+		// Start downloading...
+		return m_pDownloadTransfer->OnDownload( strType, strFilename, nOffset, nLength, strOptions );
+	}
+
+	TRACE( "[DC++] Got $ADCSND but can't download!\n" );
+
+	// Unexpected download?
+	return FALSE;
+}
+
+BOOL CDCClient::OnMaxedOut(const std::string& strParams)
+{
+	// No free upload slots
+	// $MaxedOut[ QueuePosition]|
+
+	int nQueue = strParams.empty() ? 0 : atoi( strParams.c_str() );
+
+	if ( m_pDownloadTransfer )
+	{
+		return m_pDownloadTransfer->OnQueue( nQueue );
+	}
+
+	TRACE( "[DC++] Got $MaxedOut but have no downloads!\n" );
+
+	return TRUE;
+}
+
+BOOL CDCClient::OnError(const std::string& strParams)
+{
+	// $Error Error message|
+
+	TRACE( "[DC++] Got $Error: \"%s\"\n", strParams.c_str() );
+
+	return TRUE;
+}
+
 BOOL CDCClient::Greetings()
 {
-	ASSERT( m_nState == nrsConnected );
+	ASSERT( IsValid() );
 	ASSERT( ! m_sNick.IsEmpty() );
 
 	Write( _P("$MyNick ") );
@@ -582,10 +718,67 @@ BOOL CDCClient::Greetings()
 	return TRUE;
 }
 
+void CDCClient::AttachDownload(CDownloadTransferDC* pTransfer)
+{
+	m_pDownloadTransfer = pTransfer;
+
+	pTransfer->m_tConnected = m_tConnected;
+
+	// Get nick from connected hub
+	CSingleLock oLock( &Network.m_pSection );
+	if ( oLock.Lock( 250 ) )
+	{
+		if ( CDownloadSource* pSource = pTransfer->GetSource() )
+		{
+			CNeighbour* pNeighbour = Neighbours.Get( pSource->m_pServerAddress );
+			if ( pNeighbour &&
+				 pNeighbour->m_nProtocol == m_nProtocol &&
+				 pNeighbour->m_nState == nrsConnected )
+			{
+				m_sNick = static_cast< CDCNeighbour* >( pNeighbour )->m_sNick;
+			}
+		}
+	}
+	if ( m_sNick.IsEmpty() )
+		m_sNick = DCClients.GetDefaultNick();
+
+	Handshake();
+}
+
+void CDCClient::OnDownloadClose()
+{
+	m_pDownloadTransfer = NULL;
+
+	m_mInput.pLimit = &Settings.Bandwidth.Request;
+}
+
+void CDCClient::OnUploadClose()
+{
+	m_pUploadTransfer = NULL;
+
+	m_mOutput.pLimit = &Settings.Bandwidth.Request;
+}
+
+void CDCClient::DetachDownload()
+{
+	if ( m_pDownloadTransfer != NULL )
+	{
+		m_pDownloadTransfer->Close( TRI_UNKNOWN );
+		ASSERT( m_pDownloadTransfer == NULL );
+	}
+}
+
+void CDCClient::DetachUpload()
+{
+	if ( m_pUploadTransfer != NULL )
+	{
+		m_pUploadTransfer->Close();
+		ASSERT( m_pUploadTransfer == NULL );
+	}
+}
+
 BOOL CDCClient::Handshake()
 {
-	ASSERT( m_nState == nrsConnected );
-
 	if ( ! m_bInitiated )
 	{
 		Greetings();
@@ -598,6 +791,8 @@ BOOL CDCClient::Handshake()
 		( m_pDownloadTransfer ? _T("Download") : _T("Upload") ),
 		 m_nNumber );
 	Write( strDirection );
+
+	m_bNumberSent = TRUE;
 
 	if ( ! m_strKey.empty() )
 	{

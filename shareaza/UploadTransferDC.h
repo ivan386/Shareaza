@@ -32,8 +32,11 @@ public:
 	CUploadTransferDC(CDCClient* pClient);
 	virtual ~CUploadTransferDC();
 
+	CDCClient*		m_pClient;			// Upload owner
+
 	virtual void	Close(UINT nError = 0);
 	virtual DWORD	GetMeasuredSpeed();
+	virtual void	OnDropped();
 	virtual BOOL	OnRun();
 	virtual BOOL	OnWrite();
 
@@ -41,13 +44,16 @@ public:
 	BOOL			OnUpload(const std::string& strType, const std::string& strFilename, QWORD nOffset, QWORD nLength, const std::string& strOptions);
 
 protected:
-	CDCClient*		m_pClient;		// Upload owner
+	DWORD			m_tRankingCheck;	// The time the queue position was last checked
 
+	// Check the client's Q rank. Start upload or send notification if required
+	BOOL			CheckRanking();
+	void			Cleanup(BOOL bDequeue = TRUE);
 	BOOL			RequestFileList(BOOL bFile, BOOL bZip, const std::string& strFilename, QWORD nOffset, QWORD nLength);
-	BOOL			RequestTigerTree(const std::string& strFilename, QWORD nOffset, QWORD nLength, CLibraryFile* pFile);
-	BOOL			RequestFile(const std::string& strFilename, QWORD nOffset, QWORD nLength, CLibraryFile* pFile);
-	BOOL			SendFile(const std::string& strFilename);
+	BOOL			RequestTigerTree(CLibraryFile* pFile, QWORD nOffset, QWORD nLength);
+	BOOL			RequestFile(CLibraryFile* pFile, QWORD nOffset, QWORD nLength);
+	BOOL			SendFile();
 	void			LibraryToFileList(const CString& strRoot, CBuffer& pXML);
-	void			FolderToFileList(CLibraryFolder* pFolder, CBuffer& pXML);
-	void			FileToFileList(CLibraryFile* pFile, CBuffer& pXML);
+	void			FolderToFileList(const CLibraryFolder* pFolder, CBuffer& pXML);
+	void			FileToFileList(const CLibraryFile* pFile, CBuffer& pXML);
 };

@@ -42,7 +42,7 @@ public:
 	void		Add(CTransfer* pTransfer);
 	void		Remove(CTransfer* pTransfer);
 
-	static INT_PTR	GetActiveCount();
+	INT_PTR		GetActiveCount() const;
 
 private:
 	CList< CTransfer* >	m_pList;

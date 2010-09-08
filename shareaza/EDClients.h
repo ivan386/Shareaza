@@ -56,6 +56,7 @@ public:
 	void			Add(CEDClient* pClient);
 	void			Remove(CEDClient* pClient);
 	void			Clear();
+	int				GetCount() const;
 	bool			PushTo(DWORD nClientID, WORD nClientPort);
 	CEDClient*		GetByIP(const IN_ADDR* pAddress) const;
 	// Connect to new or known eD2K-client (nClientPort and nServerPort must be in host byte order)

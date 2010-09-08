@@ -451,8 +451,10 @@ public:
 	{
 		bool		EnableToday;
 		bool		EnableAlways;
-		DWORD		NumServers;					// 1
-		DWORD		QueryThrottle;				// Throttle for DC++ neighbor searches (sec)
+		DWORD		NumServers;					// default: 1 hub
+		DWORD		QueryThrottle;				// Throttle for DC++ neighbor searches (s), default: two minutes delay
+		DWORD		ReAskTime;					// How often Shareaza re-ask a remote client about download (ms), default: every minute
+		DWORD		DequeueTime;				// Timeout for remote client confirmation of upload queue (ms), default: 5 min
 	} DC;
 
 	struct sBitTorrent

@@ -381,7 +381,8 @@ void CDownloadSource::Serialize(CArchive& ar, int nVersion /* DOWNLOAD_SER_VERSI
 		}
 		
 		ar >> m_sServer;
-		if ( nVersion >= 24 ) ar >> m_sNick;
+		if ( nVersion >= 24 )
+			ar >> m_sNick;
 
 		if ( nVersion >= 36 ) 
 			ar >> m_sCountry;
@@ -839,6 +840,10 @@ BOOL CDownloadSource::PushRequest()
 		return FALSE;
 
 	case PROTOCOL_DC:
+		if ( m_pServerAddress.s_addr == INADDR_ANY || m_nServerPort == 0 )
+			return FALSE;
+		if ( m_sNick.IsEmpty() )
+			return FALSE;
 		if ( DCClients.Connect( m_pServerAddress, m_nServerPort, m_sNick, bSuccess ) )
 		{
 			if ( bSuccess )

@@ -24,6 +24,7 @@
 #include "DCClient.h"
 #include "DCClients.h"
 #include "DCNeighbour.h"
+#include "DCPacket.h"
 #include "HostCache.h"
 #include "GProfile.h"
 #include "LibraryMaps.h"
@@ -56,22 +57,24 @@ BOOL CDCNeighbour::ConnectToMe(const CString& sNick)
 {
 	// $ConnectToMe RemoteNick SenderIp:SenderPort|
 
-	ASSERT( ! sNick.IsEmpty() );
-
 	if ( m_nState != nrsConnected )
 		// Too early
 		return FALSE;
+
+	ASSERT( ! sNick.IsEmpty() );
 
 	CString strRequest;
 	strRequest.Format( _T("$ConnectToMe %s %hs:%u|"),
 		sNick,
 		inet_ntoa( Network.m_pHost.sin_addr ),
 		htons( Network.m_pHost.sin_port ) );
-	Write( strRequest );
 
-	LogOutgoing();
+	if ( CDCPacket* pPacket = CDCPacket::New() )
+	{
+		pPacket->WriteString( strRequest, FALSE );
 
-	m_nOutputCount++;
+		Send( pPacket );
+	}
 
 	return TRUE;
 }
@@ -112,18 +115,25 @@ BOOL CDCNeighbour::OnRead()
 	std::string strLine;
 	while ( ReadCommand( strLine ) )
 	{
-		theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING,
-			_T("[DC++ Hub] %s >> %s|"), (LPCTSTR)m_sAddress, (LPCTSTR)CA2CT( strLine.c_str() ) );
+		m_nInputCount++;
+
+		m_tLastPacket = GetTickCount();
+
+		if ( CDCPacket* pPacket = CDCPacket::New( (const BYTE*)strLine.c_str(), strLine.size() ) )
+		{
+			pPacket->SmartDump( &m_pHost, FALSE, FALSE, (DWORD_PTR)this );
+			pPacket->Release();
+		}
 
 		std::string strCommand, strParams;
 		std::string::size_type nPos = strLine.find( ' ' );
 		if ( nPos != std::string::npos )
 		{
 			strCommand = strLine.substr( 0, nPos );
-			strParams = strLine.substr( nPos + 1 );
+			strParams = strLine.substr( nPos + 1, strLine.size() - nPos - 2 );
 		}
 		else
-			strCommand = strLine;
+			strCommand = strLine.substr( 0, strLine.size() - 1 );
 
 		if ( ! OnCommand( strCommand, strParams ) )
 			return FALSE;
@@ -151,7 +161,7 @@ BOOL CDCNeighbour::ReadCommand(std::string& strLine)
 	if ( nLength >= pInput->m_nLength )
 		return FALSE;
 
-	strLine.append( (const char*)pInput->m_pBuffer, nLength );
+	strLine.append( (const char*)pInput->m_pBuffer, nLength + 1 );
 
 	pInput->Remove( nLength + 1 );
 
@@ -160,13 +170,13 @@ BOOL CDCNeighbour::ReadCommand(std::string& strLine)
 
 BOOL CDCNeighbour::Send(CPacket* pPacket, BOOL bRelease, BOOL /*bBuffered*/)
 {
+	pPacket->SmartDump( &m_pHost, FALSE, TRUE, (DWORD_PTR)this );
+
 	Write( pPacket );
 
-	LogOutgoing();
+	if ( bRelease ) pPacket->Release();
 
 	m_nOutputCount++;
-
-	if ( bRelease ) pPacket->Release();
 
 	return TRUE;
 }
@@ -198,9 +208,6 @@ void CDCNeighbour::OnDropped()
 
 BOOL CDCNeighbour::OnCommand(const std::string& strCommand, const std::string& strParams)
 {
-	m_nInputCount++;
-	m_tLastPacket = GetTickCount();
-
 	if ( strCommand == "$Search" )
 	{
 		// Search request
@@ -303,7 +310,7 @@ BOOL CDCNeighbour::OnCommand(const std::string& strCommand, const std::string& s
 			}				
 		}
 
-		return OnSupport();
+		return TRUE;
 	}
 	else if ( strCommand == "$Hello" )
 	{
@@ -311,7 +318,13 @@ BOOL CDCNeighbour::OnCommand(const std::string& strCommand, const std::string& s
 		// $Hello Nick
 
 		m_nState = nrsConnected;
+
 		m_sNick = CA2CT( strParams.c_str() );
+
+		if ( CHostCacheHost* pServer = HostCache.DC.Find( &m_pHost.sin_addr ) )
+		{
+			pServer->m_sUser = m_sNick;
+		}
 
 		return OnHello();
 	}
@@ -321,7 +334,13 @@ BOOL CDCNeighbour::OnCommand(const std::string& strCommand, const std::string& s
 		// $HubName Title [Version]|
 
 		m_nState = nrsConnected;
+
 		m_sServerName = CA2CT( strParams.c_str() );
+
+		if ( CHostCacheHost* pServer = HostCache.DC.Find( &m_pHost.sin_addr ) )
+		{
+			pServer->m_sName = m_sServerName;
+		}		
 
 		return TRUE;
 	}
@@ -363,6 +382,8 @@ BOOL CDCNeighbour::OnCommand(const std::string& strCommand, const std::string& s
 					! Network.IsReserved( (const IN_ADDR*)&nAddress ) )
 				{
 					// Ok
+					CQuickLock oLock( DCClients.m_pSection );
+
 					if ( CDCClient* pClient = new CDCClient( m_sNick ) )
 					{
 						pClient->ConnectTo( (const IN_ADDR*)&nAddress, (WORD)nPort );
@@ -405,13 +426,18 @@ BOOL CDCNeighbour::OnCommand(const std::string& strCommand, const std::string& s
 
 		m_sNick.Format( CLIENT_NAME_T _T("%04u"), GetRandomNum( 0, 9999 ) );
 
-		Write( _P("$ValidateNick ") );
-		Write( m_sNick );
-		Write( _P("|") );
+		if ( CHostCacheHost* pServer = HostCache.DC.Find( &m_pHost.sin_addr ) )
+		{
+			pServer->m_sUser = m_sNick;
+		}
 
-		LogOutgoing();
+		if ( CDCPacket* pPacket = CDCPacket::New() )
+		{
+			pPacket->WriteString( _T("$ValidateNick ") + m_sNick + _T("|"), FALSE );
+			Send( pPacket );
+		}
 
-		m_nOutputCount++;
+		return TRUE;
 	}
 	else if ( strCommand == "$UserIP" )
 	{
@@ -528,9 +554,6 @@ BOOL CDCNeighbour::OnLock(const std::string& strLock)
 		m_nState = nrsHandshake2;	// Waiting for $Hello
 	}
 
-	m_nInputCount++;
-	m_tLastPacket = GetTickCount();
-
 	if ( m_nNodeType == ntHub )
 	{
 		HostCache.DC.Add( &m_pHost.sin_addr, htons( m_pHost.sin_port ) );
@@ -538,40 +561,43 @@ BOOL CDCNeighbour::OnLock(const std::string& strLock)
 
 	if ( m_bExtended )
 	{
-		Write( _P("$Supports NoHello NoGetINFO UserIP2 TTHSearch |") );
+		if ( CDCPacket* pPacket = CDCPacket::New() )
+		{
+			pPacket->WriteString( _T("$Supports NoHello NoGetINFO UserIP2 TTHSearch |"), FALSE );
+			Send( pPacket );
+		}
 	}
 
 	std::string strKey = DCClients.MakeKey( strLock );
+	if ( CDCPacket* pPacket = CDCPacket::New() )
+	{
+		pPacket->Write( _P("$Key ") );
+		pPacket->Write( strKey.c_str(), strKey.size() );
+		pPacket->Write( _P("|") );
+		Send( pPacket );
+	}
 
-	Write( _P("$Key ") );
-	Write( strKey.c_str(), strKey.size() );
-	Write( _P("|") );
+	if ( CHostCacheHost* pServer = HostCache.DC.Find( &m_pHost.sin_addr ) )
+	{
+		m_sNick = pServer->m_sUser;
+	}
+	if ( m_sNick.IsEmpty() )
+	{
+		m_sNick = DCClients.GetDefaultNick();
+	}
 
-	m_sNick = DCClients.GetDefaultNick();
-
-	Write( _P("$ValidateNick ") );
-	Write( m_sNick );
-	Write( _P("|") );
-
-	LogOutgoing();
-
-	m_nOutputCount++;
+	if ( CDCPacket* pPacket = CDCPacket::New() )
+	{
+		pPacket->WriteString( _T("$ValidateNick ")  + m_sNick + _T("|"), FALSE );
+		Send( pPacket );
+	}
 
 	return TRUE;
 }
 
-BOOL CDCNeighbour::OnSupport()
+BOOL CDCNeighbour::OnChat(const std::string& strMessage)
 {
-	m_nInputCount++;
-	m_tLastPacket = GetTickCount();
-
-	return TRUE;
-}
-
-BOOL CDCNeighbour::OnChat(const std::string& /*strMessage*/)
-{
-	m_nInputCount++;
-	m_tLastPacket = GetTickCount();
+	theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING, _T("%s >> %s"), (LPCTSTR)m_sAddress, (LPCTSTR)CA2CT( strMessage.c_str() ) );
 
 	return TRUE;
 }
@@ -579,10 +605,18 @@ BOOL CDCNeighbour::OnChat(const std::string& /*strMessage*/)
 BOOL CDCNeighbour::OnHello()
 {
 	// NMDC version
-	Write( _P("$Version 1,0091|") );
+	if ( CDCPacket* pPacket = CDCPacket::New() )
+	{
+		pPacket->Write( _P("$Version 1,0091|") );
+		Send( pPacket );
+	}
 
 	// Request nick list
-	Write( _P("$GetNickList|") );
+	if ( CDCPacket* pPacket = CDCPacket::New() )
+	{
+		pPacket->Write( _P("$GetNickList|") );
+		Send( pPacket );
+	}
 
 	// $MyINFO $ALL nick description<tag>$ $connection$e-mail$sharesize$|
 
@@ -620,11 +654,11 @@ BOOL CDCNeighbour::OnHello()
 		MyProfile.GetContact( _T("Email") ),
 		// Share size (bytes)
 		nMyVolume << 10 );
-	Write( sInfo );
-
-	LogOutgoing();
-
-	m_nOutputCount++;
+	if ( CDCPacket* pPacket = CDCPacket::New() )
+	{
+		pPacket->WriteString( sInfo, FALSE );
+		Send( pPacket );
+	}
 
 	return TRUE;
 }

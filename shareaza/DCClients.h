@@ -31,9 +31,19 @@ public:
 	CDCClients();
 	~CDCClients();
 
+	mutable CMutex		m_pSection;	// Object guard
+
+	// Add client
 	void		Add(CDCClient* pClient);
+	// Remove client
 	void		Remove(CDCClient* pClient);
+	// Remove all clients
 	void		Clear();
+	// Get client count
+	int			GetCount() const;
+
+	// Maintain not-connected (queued) clients
+	void		OnRun();
 
 	// Initiate connection to hub
 	BOOL 		Connect(const IN_ADDR& pHubAddress, WORD nHubPort, const CString& sNick, BOOL& bSuccess);
@@ -41,14 +51,16 @@ public:
 	// Accept incoming TCP connection
 	BOOL		OnAccept(CConnection* pConnection);
 
+	// Merge same connections into one
+	BOOL		Merge(CDCClient* pClient);
+
 	// Calculate key
 	std::string	MakeKey(const std::string& aLock) const;
 
 	// Create DC++ compatible nick
 	CString		GetDefaultNick() const;
 
-protected:
-	CMutex				m_pListSection;	// m_pList guard
+private:
 	CList< CDCClient* >	m_pList;
 
 	std::string	KeySubst(const BYTE* aKey, size_t len, size_t n) const;

@@ -441,8 +441,10 @@ void CSettings::Load()
 	Add( _T("eDonkey"), _T("StatsServerThrottle"), &eDonkey.StatsServerThrottle, 7*24*60*60, 24*60*60, 7, 28, _T(" d") );
 
 	Add( _T("DC"), _T("EnableAlways"), &DC.EnableAlways, false );
-	Add( _T("DC"), _T("QueryThrottle"), &DC.QueryThrottle, 120, 1, 30, 60*60, _T(" s") );
-	Add( _T("DC"), _T("NumServers"), &DC.NumServers, 1, 1, 0, 1 );
+	Add( _T("DC"), _T("QueryThrottle"), &DC.QueryThrottle, 2*60, 1, 30, 60*60, _T(" s") );
+	Add( _T("DC"), _T("NumServers"), &DC.NumServers, 1, 1, 0, 5 );
+	Add( _T("DC"), _T("ReAskTime"), &DC.ReAskTime, 60*1000, 1000, 30, 60*60, _T(" s") );
+	Add( _T("DC"), _T("DequeueTime"), &DC.DequeueTime, 5*60*1000, 1000, 2*60, 60*60, _T(" s") );
 
 	Add( _T("BitTorrent"), _T("AdvancedInterface"), &BitTorrent.AdvancedInterface, false );
 	Add( _T("BitTorrent"), _T("AdvancedInterfaceSet"), &BitTorrent.AdvancedInterfaceSet, false );

@@ -28,6 +28,7 @@
 #include "Downloads.h"
 #include "Uploads.h"
 #include "EDClients.h"
+#include "DCClients.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -54,7 +55,7 @@ CTransfers::~CTransfers()
 //////////////////////////////////////////////////////////////////////
 // CTransfers list tests
 
-INT_PTR CTransfers::GetActiveCount()
+INT_PTR CTransfers::GetActiveCount() const
 {
 	return Downloads.GetCount( TRUE ) + Uploads.GetTransferCount();
 }
@@ -80,11 +81,6 @@ BOOL CTransfers::IsConnectedTo(const IN_ADDR* pAddress) const
 BOOL CTransfers::StartThread()
 {
 	if ( theApp.m_bClosing )
-		return FALSE;
-
-	CQuickLock oLock( m_pSection );
-
-	if ( m_pList.GetCount() == 0 && Downloads.GetCount() == 0 )
 		return FALSE;
 
 	return BeginThread( "Transfers" );
@@ -141,17 +137,22 @@ void CTransfers::OnRun()
 
 		EDClients.OnRun();
 
-		if ( !IsThreadEnabled() )
+		if ( ! IsThreadEnabled() )
+			break;
+
+		DCClients.OnRun();
+
+		if ( ! IsThreadEnabled() )
 			break;
 
 		OnRunTransfers();
 
-		if ( !IsThreadEnabled() )
+		if ( ! IsThreadEnabled() )
 			break;
 
 		Downloads.OnRun();
 
-		if ( !IsThreadEnabled() )
+		if ( ! IsThreadEnabled() )
 			break;
 
 		Uploads.OnRun();
@@ -161,8 +162,10 @@ void CTransfers::OnRun()
 		TransferFiles.CommitDeferred();
 	}
 
-	Downloads.m_nTransfers = Downloads.m_nBandwidth = 0;
-	Uploads.m_nCount = Uploads.m_nBandwidth = 0;
+	Downloads.m_nTransfers	= 0;
+	Downloads.m_nBandwidth	= 0;
+	Uploads.m_nCount		= 0;
+	Uploads.m_nBandwidth	= 0;
 }
 
 void CTransfers::OnRunTransfers()
@@ -190,12 +193,21 @@ void CTransfers::OnRunTransfers()
 
 void CTransfers::OnCheckExit()
 {
-	CSingleLock oLock( &m_pSection );
-	if ( ! oLock.Lock( 250 ) )
-		return;
-
-	if ( m_pList.GetCount() == 0 && Downloads.GetCount() == 0 )
-		Exit();
+	// Quick check to avoid locking
+	if ( m_pList.IsEmpty() )
+	{
+		CSingleLock oLock( &m_pSection, FALSE );
+		if ( oLock.Lock( 250 ) )
+		{
+			if ( m_pList.GetCount() == 0 &&
+				Downloads.GetCount() == 0 &&
+				EDClients.GetCount() == 0 &&
+				DCClients.GetCount() == 0 )
+			{
+				Exit();
+			}
+		}
+	}
 
 	if ( Settings.Live.AutoClose && GetActiveCount() == 0 )
 	{

@@ -60,26 +60,8 @@ void CDownloadTransferDC::AttachTo(CConnection* pConnection)
 	ASSERT( m_pClient == NULL );
 
 	m_pClient = static_cast< CDCClient* >( pConnection );
-	m_pClient->m_pDownloadTransfer = this;
 
-	m_tConnected = m_pClient->m_tConnected;
-
-	// Get nick from connected hub
-	CSingleLock oLock( &Network.m_pSection );
-	if ( oLock.Lock( 250 ) )
-	{
-		CNeighbour* pNeighbour = Neighbours.Get( m_pSource->m_pServerAddress );
-		if ( pNeighbour &&
-			 pNeighbour->m_nProtocol == PROTOCOL_DC &&
-			 pNeighbour->m_nState == nrsConnected )
-		{
-			m_pClient->m_sNick = static_cast< CDCNeighbour* >( pNeighbour )->m_sNick;
-		}
-	}
-	if ( m_pClient->m_sNick.IsEmpty() )
-		m_pClient->m_sNick = DCClients.GetDefaultNick();
-
-	m_pClient->Handshake();
+	m_pClient->AttachDownload( this );
 }
 
 BOOL CDownloadTransferDC::Initiate()
@@ -116,10 +98,11 @@ BOOL CDownloadTransferDC::Initiate()
 
 void CDownloadTransferDC::Close(TRISTATE bKeepSource, DWORD nRetryAfter)
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	if ( m_pClient != NULL )
 	{
-		m_pClient->m_pDownloadTransfer = NULL;
-		m_pClient->Close();
+		m_pClient->OnDownloadClose();
 		m_pClient = NULL;
 	}
 
@@ -173,6 +156,21 @@ BOOL CDownloadTransferDC::OnConnected()
 	return StartNextFragment();
 }
 
+void CDownloadTransferDC::OnDropped()
+{
+	if ( m_nState == dtsQueued )
+	{
+		theApp.Message( MSG_INFO, IDS_DOWNLOAD_QUEUE_DROP,
+			(LPCTSTR)m_pDownload->GetDisplayName() );
+	}
+	else
+	{
+		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_DROPPED, (LPCTSTR)m_sAddress );
+
+		Close( TRI_UNKNOWN );
+	}
+}
+
 BOOL CDownloadTransferDC::OnRun()
 {
 	if ( ! CDownloadTransfer::OnRun() )
@@ -183,7 +181,7 @@ BOOL CDownloadTransferDC::OnRun()
 	switch ( m_nState )
 	{
 	case dtsConnecting:
-		if ( tNow - m_tConnected > Settings.Connection.TimeoutConnect )
+		if ( tNow > m_tConnected + Settings.Connection.TimeoutConnect )
 		{
 			theApp.Message( MSG_ERROR, IDS_CONNECTION_TIMEOUT_CONNECT,
 				(LPCTSTR)m_sAddress );
@@ -193,7 +191,7 @@ BOOL CDownloadTransferDC::OnRun()
 		break;
 
 	case dtsRequesting:
-		if ( tNow - m_tRequest > Settings.Connection.TimeoutHandshake )
+		if ( tNow > m_tRequest + Settings.Connection.TimeoutHandshake )
 		{
 			theApp.Message( MSG_ERROR, IDS_DOWNLOAD_REQUEST_TIMEOUT,
 				(LPCTSTR)m_sAddress );
@@ -205,7 +203,7 @@ BOOL CDownloadTransferDC::OnRun()
 	case dtsDownloading:
 	case dtsFlushing:
 	case dtsTiger:
-		if ( tNow - m_mInput.tLast > Settings.Connection.TimeoutTraffic )
+		if ( tNow > m_mInput.tLast + Settings.Connection.TimeoutTraffic )
 		{
 			theApp.Message( MSG_ERROR, IDS_DOWNLOAD_TRAFFIC_TIMEOUT,
 				(LPCTSTR)m_sAddress );
@@ -214,21 +212,15 @@ BOOL CDownloadTransferDC::OnRun()
 		}
 		break;
 
-	case dtsBusy:
-		if ( tNow - m_tRequest > 1000 )
-		{
-			DWORD nDelay = Settings.Downloads.RetryDelay / 1000;
-			theApp.Message( MSG_ERROR, IDS_DOWNLOAD_BUSY,
-				(LPCTSTR)m_sAddress, nDelay );
-			Close( TRI_TRUE, nDelay );
-			return FALSE;
-		}
-		break;
-
 	case dtsQueued:
-		if ( tNow >= m_tRequest )
+		if ( tNow > m_tRequest + Settings.DC.ReAskTime )
 		{
-			return StartNextFragment();
+			m_tRequest = tNow;
+
+			if ( m_pClient->IsOnline() )
+				return StartNextFragment();
+			else
+				return m_pClient->Connect();
 		}
 		break;
 	}
@@ -327,7 +319,8 @@ BOOL CDownloadTransferDC::OnQueue(int nQueue)
 
 	SetState( dtsQueued );
 
-	m_tRequest	= GetTickCount() + Settings.Downloads.RetryDelay;
+	m_tRequest	= GetTickCount();
+
 	m_nQueuePos	= nQueue;
 	m_nQueueLen	= 0;	// TODO: Read total upload slots
 

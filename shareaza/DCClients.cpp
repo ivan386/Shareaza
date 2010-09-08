@@ -53,20 +53,20 @@ CDCClients::~CDCClients()
 
 void CDCClients::Clear()
 {
-	CSingleLock oLock( &m_pListSection, TRUE );
+	CSingleLock oLock( &m_pSection, TRUE );
 
 	while ( ! m_pList.IsEmpty() )
 	{
 		CDCClient* pClient = m_pList.GetHead();
 		oLock.Unlock();
-		pClient->Close();
+		pClient->Remove();
 		oLock.Lock();
 	}
 }
 
 void CDCClients::Add(CDCClient* pClient)
 {
-	CQuickLock oLock( m_pListSection );
+	CQuickLock oLock( m_pSection );
 
 	if ( m_pList.Find( pClient ) == NULL )
 		m_pList.AddTail( pClient );
@@ -74,10 +74,38 @@ void CDCClients::Add(CDCClient* pClient)
 
 void CDCClients::Remove(CDCClient* pClient)
 {
-	CQuickLock oLock( m_pListSection );
+	CQuickLock oLock( m_pSection );
 
 	if ( POSITION pos = m_pList.Find( pClient ) )
 		m_pList.RemoveAt( pos );
+}
+
+int CDCClients::GetCount() const
+{
+	CQuickLock oLock( m_pSection );
+
+	return m_pList.GetCount();
+}
+
+void CDCClients::OnRun()
+{
+	CSingleLock oTransfersLock( &Transfers.m_pSection, FALSE );
+	if ( ! oTransfersLock.Lock( 250 ) )
+		return;
+
+	CSingleLock oLock( &m_pSection, TRUE );
+	for ( POSITION pos = m_pList.GetHeadPosition(); pos; )
+	{
+		CDCClient* pClient = m_pList.GetNext( pos );
+		if ( ! pClient->IsValid() )
+		{
+			oLock.Unlock();
+
+			pClient->OnRun();
+
+			oLock.Lock();
+		}
+	}
 }
 
 CString CDCClients::GetDefaultNick() const
@@ -145,13 +173,15 @@ BOOL CDCClients::OnAccept(CConnection* pConnection)
 		return FALSE;
 	}
 
-	CSingleLock pLock( &Transfers.m_pSection );
-	if ( ! pLock.Lock( 250 ) )
+	CSingleLock oTransfersLock( &Transfers.m_pSection );
+	if ( ! oTransfersLock.Lock( 250 ) )
 	{
 		theApp.Message( MSG_ERROR, _T("Rejecting DC++ connection from %s, network core overloaded."),
 			(LPCTSTR)pConnection->m_sAddress );
 		return FALSE;
 	}
+
+	CQuickLock oLock( m_pSection );
 
 	CDCClient* pClient = new CDCClient();
 	if ( ! pClient )
@@ -161,6 +191,26 @@ BOOL CDCClients::OnAccept(CConnection* pConnection)
 	pClient->AttachTo( pConnection );
 
 	return TRUE;
+}
+
+BOOL CDCClients::Merge(CDCClient* pClient)
+{
+	CQuickLock oLock( m_pSection );
+
+	ASSERT( pClient != NULL );
+
+	for ( POSITION pos = m_pList.GetHeadPosition(); pos; )
+	{
+		CDCClient* pOther = m_pList.GetNext( pos );
+
+		if ( pOther != pClient && pOther->Equals( pClient ) )
+		{
+			pClient->Merge( pOther );
+			return TRUE;
+		}
+	}
+
+	return FALSE;
 }
 
 std::string CDCClients::MakeKey(const std::string& aLock) const

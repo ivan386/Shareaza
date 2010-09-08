@@ -53,8 +53,6 @@ protected:
 	BOOL			OnLock(const std::string& strLock);
 	// Got $Hello command
 	BOOL			OnHello();
-	// Got $Supports command
-	BOOL			OnSupport();
 	// Got chat message
 	BOOL			OnChat(const std::string& strMessage);
 	// Got search request

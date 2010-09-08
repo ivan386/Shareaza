@@ -31,11 +31,14 @@ public:
 	CDownloadTransferDC(CDownloadSource* pSource, CDCClient* pClient);
 	virtual ~CDownloadTransferDC();
 
+	CDCClient*	m_pClient;		// Download owner
+
 	virtual void	AttachTo(CConnection* pConnection);
 	virtual BOOL	Initiate();
 	virtual void	Close(TRISTATE bKeepSource, DWORD nRetryAfter = 0);
 	virtual DWORD	GetMeasuredSpeed();
 	virtual BOOL	OnConnected();
+	virtual void	OnDropped();
 	virtual BOOL	OnRun();
 	virtual BOOL	OnRead();
 
@@ -45,9 +48,6 @@ public:
 	BOOL			OnQueue(int nQueue);
 
 protected:
-	CDCClient*	m_pClient;		// Download owner
-
 	virtual BOOL	SubtractRequested(Fragments::List& ppFragments);
-
 	BOOL			StartNextFragment();
 };
