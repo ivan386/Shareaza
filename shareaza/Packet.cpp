@@ -343,8 +343,8 @@ CString CPacket::ToHex() const
 CString CPacket::ToASCII() const
 {
 	// Make a string and get direct access to its memory buffer
-	CString strDump;
-	LPTSTR pszDump = strDump.GetBuffer( m_nLength + 1 ); // We'll write a character for each byte, and 1 more for the null terminator
+	CStringA strDump;
+	LPSTR pszDump = strDump.GetBuffer( m_nLength + 1 ); // We'll write a character for each byte, and 1 more for the null terminator
 
 	// Loop i down each byte in the packet
 	for ( DWORD i = 0 ; i < m_nLength ; i++ )
@@ -353,13 +353,13 @@ CString CPacket::ToASCII() const
 		int nChar = m_pBuffer[i];
 
 		// If the byte is 32 or greater, read it as an ASCII character and copy that character into the string
-		*pszDump++ = WCHAR( nChar >= 32 ? nChar : '.' ); // If it's 0-31, copy in a period instead
+		*pszDump++ = CHAR( nChar >= 32 ? nChar : '.' ); // If it's 0-31, copy in a period instead
 	}
 
 	// Write a null terminator beyond the characters we wrote, close direct memory access to the string, and return it
 	*pszDump = 0;
 	strDump.ReleaseBuffer();
-	return strDump;
+	return (LPCTSTR)CA2CT( (LPCSTR)strDump );
 }
 
 //////////////////////////////////////////////////////////////////////
