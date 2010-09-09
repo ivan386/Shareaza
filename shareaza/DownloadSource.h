@@ -78,7 +78,7 @@ public:
 												// 3 - Mixed G1/G2
 	BOOL				m_bClientExtended;		// Does the user support extended (G2) functions? (In practice, this means can we use G2 chat, browse, etc...)
 	DWORD				m_nSortOrder;			// How should this source be sorted in the list?
-	int					m_nColour;
+	COLORREF			m_crColour;
 	DWORD				m_tAttempt;
 	BOOL				m_bKeep;				// Source keeped by NeverDrop == TRUE flag
 	int					m_nFailures;			// failure count.
@@ -116,7 +116,7 @@ public:
 	void		SetAvailableRanges(LPCTSTR pszRanges);
 	BOOL		HasUsefulRanges() const;
 	BOOL		TouchedRange(QWORD nOffset, QWORD nLength) const;
-	int			GetColour();
+	COLORREF	GetColour();
 
 	// Close source transfer
 	void		Close();

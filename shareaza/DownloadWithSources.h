@@ -92,7 +92,7 @@ public:
 
 	virtual BOOL		OnQueryHits(const CQueryHit* pHits);
 	virtual void		Serialize(CArchive& ar, int nVersion /* DOWNLOAD_SER_VERSION */);
-	int					GetSourceColour();
+	COLORREF			GetSourceColour();
 	// Get source iterator (first source position)
 	POSITION			GetIterator() const;
 	// Get next source

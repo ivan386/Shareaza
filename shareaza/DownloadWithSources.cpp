@@ -1079,42 +1079,55 @@ void CDownloadWithSources::SortSource(CDownloadSource* pSource)
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithSources source colour selector
 
-#define SRC_COLOURS 6u
-
-int CDownloadWithSources::GetSourceColour()
+COLORREF CDownloadWithSources::GetSourceColour()
 {
-	CQuickLock pLock( Transfers.m_pSection );
+	int r = 0, g = 0, b = 0;
 
-	BOOL bTaken[SRC_COLOURS] = {};
-	unsigned int nFree = SRC_COLOURS;
-	
-	for ( POSITION posSource = GetIterator() ; posSource ; )
+	BOOL bGood = FALSE;
+	for ( int i = 0; ! bGood && i < 100; ++i )
 	{
-		CDownloadSource* pSource = GetNext( posSource );
+		bGood = TRUE;
 
-		if ( pSource->m_nColour >= 0 )
+		do
 		{
-			if ( bTaken[ pSource->m_nColour ] == FALSE )
+			r = GetRandomNum( 0, 255 );
+			g = GetRandomNum( 0, 255 );
+			b = GetRandomNum( 0, 255 );
+		}
+		while ( r + g + b < 96 || r + g + b > 224 * 3 ||	// Too dark or too bright
+			( abs( r - g ) < 24 && abs( r - b ) < 24 ) );	// Too gray
+		int d = min( min( r, g ), b );
+
+		CQuickLock pLock( Transfers.m_pSection );
+
+		for ( POSITION posSource = GetIterator() ; posSource ; )
+		{
+			CDownloadSource* pSource = GetNext( posSource );
+
+			if ( pSource->m_crColour )
 			{
-				bTaken[ pSource->m_nColour ] = TRUE;
-				nFree--;
+				int sr = GetRValue( pSource->m_crColour );
+				int sg = GetGValue( pSource->m_crColour );
+				int sb = GetBValue( pSource->m_crColour );
+				int sd = min( min( sr, sg ), sb );
+				sr -= sd;
+				sg -= sd;
+				sb -= sd;
+				if ( abs( r - d - sr ) < 24 &&
+					 abs( g - d - sg ) < 24 &&
+					 abs( b - d - sb ) < 24 )
+				{
+					// Too similar
+					bGood = FALSE;
+					break;
+				}
 			}
 		}
 	}
-	
-	if ( nFree == 0 ) return GetRandomNum( 0u, SRC_COLOURS - 1 );
-	
-	nFree = GetRandomNum( 0u, nFree - 1 );
-	
-	for ( int nColour = 0 ; nColour < SRC_COLOURS ; nColour++ )
-	{
-		if ( bTaken[ nColour ] == FALSE )
-		{
-			if ( nFree-- == 0 ) return nColour;
-		}
-	}
-	
-	return GetRandomNum( 0u, SRC_COLOURS - 1 );
+
+	ASSERT( bGood );
+
+	return RGB( r, g ,b );
 }
 
 //////////////////////////////////////////////////////////////////////

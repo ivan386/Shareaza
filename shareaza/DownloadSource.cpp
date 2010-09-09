@@ -254,7 +254,7 @@ void CDownloadSource::Construct(const CDownload* pDownload)
 	m_nGnutella				= 0;
 	m_bClientExtended		= FALSE;
 	m_nSortOrder			= 0xFFFFFFFF;
-	m_nColour				= -1;
+	m_crColour				= RGB( 0, 0, 0 );
 	m_tAttempt				= 0;
 	m_bKeep					= FALSE;
 	m_nFailures				= 0;
@@ -994,11 +994,14 @@ BOOL CDownloadSource::TouchedRange(QWORD nOffset, QWORD nLength) const
 //////////////////////////////////////////////////////////////////////
 // CDownloadSource colour
 
-int CDownloadSource::GetColour()
+COLORREF CDownloadSource::GetColour()
 {
-	if ( m_nColour >= 0 ) return m_nColour;
-	m_nColour = m_pDownload->GetSourceColour();
-	return m_nColour;
+	if ( m_crColour )
+		return m_crColour;
+
+	m_crColour = m_pDownload->GetSourceColour();
+
+	return m_crColour;
 }
 
 void CDownloadSource::Close()
@@ -1086,23 +1089,7 @@ void CDownloadSource::Draw(CDC* pDC, CRect* prcBar)
 {
 	ASSUME_LOCK( Transfers.m_pSection );
 
-	static COLORREF crFill[] =
-	{
-		CoolInterface.m_crFragmentSource1, CoolInterface.m_crFragmentSource2,
-		CoolInterface.m_crFragmentSource3, CoolInterface.m_crFragmentSource4,
-		CoolInterface.m_crFragmentSource5, CoolInterface.m_crFragmentSource6
-	};
-
-	COLORREF crTransfer;
-
-	if ( m_bReadContent )
-	{
-		crTransfer = crFill[ GetColour() ];
-	}
-	else
-	{
-		crTransfer = CoolInterface.m_crFragmentComplete;
-	}
+	COLORREF crTransfer = m_bReadContent ? GetColour() : CoolInterface.m_crFragmentComplete;
 
 	crTransfer = CCoolInterface::CalculateColour( crTransfer, CoolInterface.m_crHighlight, 90 );
 

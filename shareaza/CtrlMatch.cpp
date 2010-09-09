@@ -997,12 +997,10 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 		case MATCH_COL_SPEED:
 			if ( pHit )
 			{
-				if ( ! bSelected && pHit->m_bMeasured == TRI_TRUE ) dc.SetTextColor( CoolInterface.m_crTextStatus );
 				pszText = pHit->m_sSpeed;
 			}
 			else
 			{
-				if ( ! bSelected && pFile->GetBestMeasured() == TRI_TRUE ) dc.SetTextColor( CoolInterface.m_crTextStatus );
 				pszText = pFile->m_sSpeed;
 			}
 			break;
@@ -1010,12 +1008,10 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 		case MATCH_COL_CLIENT:
 			if ( pHit )
 			{
-				if ( ! bSelected && pHit->m_bBrowseHost ) dc.SetTextColor( CoolInterface.m_crTextStatus );
 				pszText = pHit->m_pVendor->m_sName;
 			}
 			else if ( nHits == 1 )
 			{
-				if ( ! bSelected && pFile->GetBestBrowseHost() ) dc.SetTextColor( CoolInterface.m_crTextStatus );
 				pszText = pFile->GetBestVendorName();
 			}
 			break;

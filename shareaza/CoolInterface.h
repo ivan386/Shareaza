@@ -154,12 +154,6 @@ public:
 	COLORREF	m_crResizebarHighlight;
 	COLORREF	m_crFragmentShaded;
 	COLORREF	m_crFragmentComplete;
-	COLORREF	m_crFragmentSource1;
-	COLORREF	m_crFragmentSource2;
-	COLORREF	m_crFragmentSource3;
-	COLORREF	m_crFragmentSource4;
-	COLORREF	m_crFragmentSource5;
-	COLORREF	m_crFragmentSource6;
 	COLORREF	m_crFragmentPass;
 	COLORREF	m_crFragmentFail;
 	COLORREF	m_crFragmentRequest;

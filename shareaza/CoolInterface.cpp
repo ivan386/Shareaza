@@ -710,12 +710,6 @@ void CCoolInterface::CalculateColours(BOOL bCustom)
 	m_crResizebarHighlight	= GetSysColor( COLOR_3DHIGHLIGHT );
 	m_crFragmentShaded		= GetSysColor( COLOR_BTNFACE );
 	m_crFragmentComplete	= GetSysColor( COLOR_ACTIVECAPTION );
-	m_crFragmentSource1		= RGB( 0, 153, 255 );
-	m_crFragmentSource2 	= RGB( 0, 153, 0 );
-	m_crFragmentSource3 	= RGB( 255, 51, 0 );
-	m_crFragmentSource4 	= RGB( 255, 204, 0 );
-	m_crFragmentSource5 	= RGB( 153, 153, 255 );
-	m_crFragmentSource6 	= RGB( 204, 153, 0 );
 	m_crFragmentPass		= RGB( 0, 220, 0 );
 	m_crFragmentFail		= RGB( 220, 0, 0 );
 	m_crFragmentRequest		= RGB( 255, 255, 0 );

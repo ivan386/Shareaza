@@ -1670,12 +1670,6 @@ BOOL CSkin::LoadColourScheme(CXMLElement* pBase)
 	pColours.SetAt( _T("resizebar.highlight"), &CoolInterface.m_crResizebarHighlight );
 	pColours.SetAt( _T("fragmentbar.shaded"), &CoolInterface.m_crFragmentShaded );
 	pColours.SetAt( _T("fragmentbar.complete"), &CoolInterface.m_crFragmentComplete );
-	pColours.SetAt( _T("fragmentbar.source1"), &CoolInterface.m_crFragmentSource1 );
-	pColours.SetAt( _T("fragmentbar.source2"), &CoolInterface.m_crFragmentSource2 );
-	pColours.SetAt( _T("fragmentbar.source3"), &CoolInterface.m_crFragmentSource3 );
-	pColours.SetAt( _T("fragmentbar.source4"), &CoolInterface.m_crFragmentSource4 );
-	pColours.SetAt( _T("fragmentbar.source5"), &CoolInterface.m_crFragmentSource5 );
-	pColours.SetAt( _T("fragmentbar.source6"), &CoolInterface.m_crFragmentSource6 );
 	pColours.SetAt( _T("fragmentbar.pass"), &CoolInterface.m_crFragmentPass );
 	pColours.SetAt( _T("fragmentbar.fail"), &CoolInterface.m_crFragmentFail );
 	pColours.SetAt( _T("fragmentbar.request"), &CoolInterface.m_crFragmentRequest );
