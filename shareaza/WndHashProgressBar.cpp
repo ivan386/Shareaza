@@ -24,8 +24,9 @@
 #include "Library.h"
 #include "LibraryBuilder.h"
 #include "CoolInterface.h"
-#include "WndHashProgressBar.h"
+#include "ShellIcons.h"
 #include "Settings.h"
+#include "WndHashProgressBar.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -36,12 +37,12 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNCREATE(CHashProgressBar, CWnd)
 
 BEGIN_MESSAGE_MAP(CHashProgressBar, CWnd)
-	//{{AFX_MSG_MAP(CHashProgressBar)
 	ON_WM_CREATE()
+	ON_WM_DESTROY()
 	ON_WM_ERASEBKGND()
+	ON_WM_TIMER()
 	ON_WM_PAINT()
 	ON_WM_LBUTTONDOWN()
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 #define WINDOW_WIDTH		320
@@ -51,89 +52,99 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CHashProgressBar construction
 
-CHashProgressBar::CHashProgressBar() :
-	m_pParent( NULL ),
-	m_hIcon( NULL ),
-	m_nFlash( 0 )
+CHashProgressBar::CHashProgressBar()
+	: m_nRemaining( 0 )
+	, m_nPercentage( 0 )
+	, m_nLastShow( 0 )
+	, m_nPerfectWidth( 0 )
 {
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // CHashProgressBar operations
 
-void CHashProgressBar::Create(CWnd* pParent)
-{
-	m_pParent = pParent;
-}
-
 void CHashProgressBar::Run()
 {
-	if ( Settings.Library.HashWindow && LibraryBuilder.GetRemaining() )
+	DWORD nRemaining = LibraryBuilder.GetRemaining();
+	BOOL bShow = Settings.Library.HashWindow && nRemaining;
+
+	if ( bShow )
 	{
-		m_sCurrent = LibraryBuilder.GetCurrent();
-		int nPos = m_sCurrent.ReverseFind( '\\' );
-		if ( nPos > 0 ) m_sCurrent = m_sCurrent.Mid( nPos + 1 );
+		CString sCurrent = LibraryBuilder.GetCurrent();
+		if ( ! sCurrent.IsEmpty() )
+			m_sCurrent = sCurrent;
+		m_nRemaining = nRemaining;
+		m_nPercentage = LibraryBuilder.GetProgress() / 100.0f;
+		if ( m_nPercentage < 0 || m_nPercentage > 1 ) m_nPercentage = 1;
+		m_nLastShow = GetTickCount();
 
 		if ( m_hWnd == NULL )
 		{
 			try
 			{
-				CreateEx( WS_EX_TOPMOST | WS_EX_TOOLWINDOW,
-					AfxRegisterWndClass( CS_SAVEBITS |
-					// Use CS_DROPSHADOW on Windows XP and above
-					( ( theApp.m_bIsWin2000 == true || theApp.m_nWindowsVersion < 5 ) ? 0 : CS_DROPSHADOW ) ),
-					_T("Shareaza Hashing..."), WS_POPUP, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT,
-					NULL, 0 );
+				CreateEx( WS_EX_LAYERED | WS_EX_TOPMOST | WS_EX_TOOLWINDOW,
+					AfxRegisterWndClass( CS_SAVEBITS ),
+					_T("Shareaza Hashing..."), WS_POPUP | WS_VISIBLE, 0, 0,
+					WINDOW_WIDTH, WINDOW_HEIGHT, NULL, 0 );
+
+				m_nPerfectWidth = 0;
 			}
 			catch (CResourceException* pEx)
 			{
 				pEx->Delete();
 			}
 		}
-		if ( m_hWnd != NULL )
-		{
-			Update();
-		}
 	}
-	else
+	else if ( m_hWnd && GetTickCount() > m_nLastShow + 2500  ) // 2.5 sec delay
 	{
-		if ( m_hWnd != NULL )
-		{
-			DestroyWindow();
-			m_sCurrent.Empty();
-			m_sPrevious.Empty();
-		}
+		DestroyWindow();
 	}
-}
 
-void CHashProgressBar::Update()
-{
-	if ( m_sCurrent.GetLength() && m_sCurrent != m_sPrevious )
+	if ( m_hWnd )
 	{
-		m_sPrevious = m_sCurrent;
+		CRect rcWindow;
+		GetWindowRect( &rcWindow );
 
-		CClientDC dc( this );
-		CFont* pOld = (CFont*)dc.SelectObject( &CoolInterface.m_fntCaption );
-		CSize sz = dc.GetTextExtent( m_sPrevious );
-		dc.SelectObject( pOld );
+		// Resize window to fit filename
+		int nWidth = rcWindow.Width();
+		if ( m_nPerfectWidth != nWidth )
+		{
+			if ( ! m_nPerfectWidth )
+				m_nPerfectWidth = WINDOW_WIDTH;
 
-		int nWidth = 4 + 32 + sz.cx + 4;
-		nWidth = max( nWidth, WINDOW_WIDTH );
-		nWidth = min( nWidth, GetSystemMetrics( SM_CXSCREEN ) / 2 );
-		Show( nWidth, FALSE );
+			nWidth = ( m_nPerfectWidth > nWidth ) ? 
+				min( nWidth + 8, m_nPerfectWidth ) :
+				max( nWidth - 8, m_nPerfectWidth );
+
+			// Move window to lower right edge of desktop
+			CRect rcWorkArea;
+			SystemParametersInfo( SPI_GETWORKAREA, 0, &rcWorkArea, 0 );
+
+			rcWindow.left = rcWorkArea.right - nWidth - 4;
+			rcWindow.top = rcWorkArea.bottom - WINDOW_HEIGHT - 4;
+			rcWindow.right = rcWindow.left + nWidth;
+			rcWindow.bottom = rcWindow.top + WINDOW_HEIGHT;
+			MoveWindow( &rcWindow, FALSE );
+		}
+
+		// Re-draw window
+		CClientDC dcClient( this );
+		Draw( &dcClient );
+
+		BOOL bAlpha = TRUE;
+		if ( bShow )
+		{
+			// Hide window under cursor
+			CPoint ptMouse;
+			GetCursorPos( &ptMouse );
+			bAlpha = rcWindow.PtInRect( ptMouse );
+		}
+		BYTE nAlpha = 0;
+		GetLayeredWindowAttributes( NULL, &nAlpha, NULL );
+		BYTE nNewAlpha = (BYTE)( bAlpha ? max( nAlpha - 20, 0 ) : min( nAlpha + 20, 240 ) );
+		if ( nAlpha != nNewAlpha )
+			SetLayeredWindowAttributes( NULL, nNewAlpha, LWA_ALPHA );
 	}
-
-	Invalidate( FALSE );
-}
-
-void CHashProgressBar::Show(int nWidth, BOOL /*bShow*/)
-{
-	CRect rc;
-	SystemParametersInfo( SPI_GETWORKAREA, 0, &rc, 0 );
-	rc.left	= rc.right - nWidth;
-	rc.top	= rc.bottom - WINDOW_HEIGHT;
-	SetWindowPos( &wndTopMost, rc.left - 4, rc.top - 4, rc.Width(), rc.Height(),
-		SWP_SHOWWINDOW | SWP_NOACTIVATE );
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -141,19 +152,19 @@ void CHashProgressBar::Show(int nWidth, BOOL /*bShow*/)
 
 int CHashProgressBar::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
-	if ( CWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
+	if ( CWnd::OnCreate( lpCreateStruct ) == -1 )
+		return -1;
 
-	m_hIcon = (HICON)LoadImage( AfxGetResourceHandle(),
-		MAKEINTRESOURCE(IDI_SEARCH_FOLDER), IMAGE_ICON, 32, 32, 0 );
-
-	m_crFill	= CoolInterface.m_crTipBack ;
-	m_crBorder	= CoolInterface.m_crTipBorder;
-	m_crText	= CoolInterface.m_crTipText;
-
-	if ( m_brFill.m_hObject != NULL ) m_brFill.DeleteObject();
-	m_brFill.CreateSolidBrush( m_crFill );
+	SetTimer( 1, 100, NULL );
 
 	return 0;
+}
+
+void CHashProgressBar::OnDestroy()
+{
+	KillTimer( 1 );
+
+	CWnd::OnDestroy();
 }
 
 BOOL CHashProgressBar::OnEraseBkgnd(CDC* /*pDC*/)
@@ -161,39 +172,69 @@ BOOL CHashProgressBar::OnEraseBkgnd(CDC* /*pDC*/)
 	return TRUE;
 }
 
+void CHashProgressBar::OnTimer(UINT_PTR nIDEvent)
+{
+	if ( nIDEvent == 1 )
+	{
+		Run();
+	}
+
+	CWnd::OnTimer( nIDEvent );
+}
+
 void CHashProgressBar::OnPaint()
 {
-	CRect rcClient;
-	CPaintDC dc( this );
+	CPaintDC dcClient( this );
 
+	Draw( &dcClient );
+}
+
+void CHashProgressBar::Draw(CDC* pDC)
+{
+	CRect rcClient;
 	GetClientRect( &rcClient );
 
-	dc.Draw3dRect( &rcClient, m_crBorder, m_crBorder );
+	CDC dc;
+	dc.CreateCompatibleDC( pDC );
+	CBitmap bm;
+	bm.CreateCompatibleBitmap( pDC, rcClient.Width(), rcClient.Height() );
+	CBitmap* pOldBitmap = dc.SelectObject( &bm );
+
+	dc.Draw3dRect( &rcClient, CoolInterface.m_crTipBorder, CoolInterface.m_crTipBorder );
 	rcClient.DeflateRect( 1, 1 );
-	dc.FillSolidRect( &rcClient, m_crFill );
+	dc.FillSolidRect( &rcClient, CoolInterface.m_crTipBack );
 
 	dc.SetBkMode( TRANSPARENT );
-	dc.SetTextColor( ( m_nFlash++ & 1 ) ? CoolInterface.m_crTextStatus : m_crText );
+	dc.SetTextColor( CoolInterface.m_crTipText );
 
 	// Icon
-	DrawIconEx( dc, rcClient.left + 4, rcClient.top + 4, m_hIcon, 32, 32,
-		0, m_brFill, DI_NORMAL );
+	ShellIcons.Draw( &dc, ShellIcons.Get( m_sCurrent, 32 ), 32,
+		rcClient.left + 4, rcClient.top + 4, CoolInterface.m_crTipBack );
 
 	// Text
 	CString strText;
-	strText.Format( LoadString( IDS_HASH_MESSAGE ), LibraryBuilder.GetRemaining() );
+	strText.Format( LoadString( IDS_HASH_MESSAGE ), m_nRemaining );
 	
 	CFont* pOld = dc.SelectObject( &CoolInterface.m_fntNormal );
-	CSize sz = dc.GetTextExtent( strText );
+
 	CRect rcText( rcClient.left + 4 + 32 + 8, rcClient.top + 4,
-		rcClient.right - 8, rcClient.top + 4 + sz.cy );
-	dc.DrawText( strText, rcText, DT_LEFT | DT_VCENTER | DT_SINGLELINE );
+		rcClient.right - 8, rcClient.top + 4 + 12 );
+	dc.DrawText( strText, rcText,
+		DT_LEFT | DT_VCENTER | DT_SINGLELINE );
 
 	dc.SelectObject( &CoolInterface.m_fntCaption );
-	rcText.top = rcText.bottom + 4;
-	rcText.bottom = rcClient.bottom - 8;
-	dc.DrawText( m_sPrevious, rcText,
+
+	CString sFilename = PathFindFileName( m_sCurrent );
+	CRect rcFilename( rcClient.left + 4 + 32 + 8, rcClient.top + 4 + 12 + 4,
+		rcClient.right - 8, rcClient.top + 4 + 12 + 4 + 18 );
+	dc.DrawText( sFilename, rcFilename,
 		DT_LEFT | DT_VCENTER | DT_SINGLELINE | DT_END_ELLIPSIS );
+
+	// Calculate perfect width
+	dc.DrawText( sFilename, rcFilename,
+		DT_LEFT | DT_VCENTER | DT_SINGLELINE | DT_CALCRECT );
+	m_nPerfectWidth = min( max( 1 + 4 + 32 + 8 + rcFilename.Width() + 8 + 1, WINDOW_WIDTH ),
+		GetSystemMetrics( SM_CXSCREEN ) / 2 );
 
 	dc.SelectObject( pOld );
 
@@ -201,14 +242,21 @@ void CHashProgressBar::OnPaint()
 	CRect rcProgress = rcClient;
 	rcProgress.DeflateRect( 1, 1 );
 	rcProgress.top = rcProgress.bottom - 3;
-	float nPercentage = LibraryBuilder.GetProgress() / 100.0f;
-	if ( ( nPercentage < 0 ) || ( nPercentage > 1 ) ) nPercentage = 1;
-	rcProgress.right = rcProgress.left + (LONG)( rcProgress.Width() * nPercentage );
-	dc.Draw3dRect( &rcProgress, m_crText, m_crText );
+
+	rcProgress.right = rcProgress.left +
+		(LONG)( ( rcProgress.Width() - 1 ) * m_nPercentage ) + 1;
+	dc.Draw3dRect( &rcProgress, CoolInterface.m_crTipBorder, CoolInterface.m_crTipBorder );
+
+	rcClient.InflateRect( 1, 1 );
+	pDC->BitBlt( rcClient.left, rcClient.top, rcClient.Width(), rcClient.Height(),
+		&dc, 0, 0, SRCCOPY );
+
+	dc.SelectObject( pOldBitmap );
+
+	ValidateRect( NULL );
 }
 
 void CHashProgressBar::OnLButtonDown(UINT /*nFlags*/, CPoint /*point*/)
 {
-	Settings.Library.HashWindow = FALSE;
 	ShowWindow( SW_HIDE );
 }

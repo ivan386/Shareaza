@@ -1,7 +1,7 @@
 //
 // WndHashProgressBar.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -29,27 +29,21 @@ class CHashProgressBar : public CWnd
 public:
 	CHashProgressBar();
 
+	void		Run();
+
 protected:
-	CWnd*		m_pParent;
-	COLORREF	m_crBorder;
-	COLORREF	m_crFill;
-	COLORREF	m_crText;
-	CBrush		m_brFill;
-	HICON		m_hIcon;
-	int			m_nFlash;
 	CString		m_sCurrent;				// Name of file currently hashing
-	CString		m_sPrevious;			// Name of last file currently hashed
+	DWORD		m_nRemaining;
+	float		m_nPercentage;
+	DWORD		m_nLastShow;			// Time of last update
+	int			m_nPerfectWidth;		// Window perfect width for text fitting
 
-public:
-	void	Create(CWnd* pParent);
-	void	Run();
-	void	Update();
-
-protected:
-	void	Show(int nWidth, BOOL bShow);
+	void		Draw(CDC* pDC);			// Redraw window and calculate perfect width
 
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	afx_msg void OnDestroy();
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnPaint();
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 
