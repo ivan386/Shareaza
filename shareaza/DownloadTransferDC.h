@@ -44,8 +44,12 @@ public:
 
 	// Got $ADCSND command
 	BOOL			OnDownload(const std::string& strType, const std::string& strFilename, QWORD nOffset, QWORD nLength, const std::string& strOptions);
-	// Got $MaxedOut command
+	// Got $MaxedOut command with queue position
 	BOOL			OnQueue(int nQueue);
+	// Got $MaxedOut command without queue position
+	BOOL			OnBusy();
+	// Got $Error command
+	BOOL			OnError();
 
 protected:
 	virtual BOOL	SubtractRequested(Fragments::List& ppFragments);

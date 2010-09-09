@@ -324,10 +324,40 @@ BOOL CDownloadTransferDC::OnQueue(int nQueue)
 	m_nQueuePos	= nQueue;
 	m_nQueueLen	= 0;	// TODO: Read total upload slots
 
+	if ( Settings.Downloads.QueueLimit && m_nQueuePos > Settings.Downloads.QueueLimit )
+	{
+		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_QUEUE_HUGE,
+			(LPCTSTR)m_sAddress, (LPCTSTR)m_pDownload->GetDisplayName(), m_nQueuePos );
+		Close( TRI_FALSE );
+		return FALSE;
+	}
+
 	theApp.Message( MSG_INFO, IDS_DOWNLOAD_QUEUED,
 		(LPCTSTR)m_sAddress, m_nQueuePos, m_nQueueLen,
 		(LPCTSTR)m_sQueueName );
+	return TRUE;
+}
 
+BOOL CDownloadTransferDC::OnBusy()
+{
+	ASSERT( m_pClient );
+
+	m_pSource->SetLastSeen();
+	m_pSource->m_nBusyCount++;
+
+	theApp.Message( MSG_INFO, IDS_DOWNLOAD_BUSY,
+		(LPCTSTR)m_sAddress, Settings.Downloads.RetryDelay / 1000 );
+	Close( TRI_TRUE );
+	return TRUE;
+}
+
+BOOL CDownloadTransferDC::OnError()
+{
+	ASSERT( m_pClient );
+
+	theApp.Message( MSG_ERROR, IDS_DOWNLOAD_FILENOTFOUND,
+		(LPCTSTR)m_sAddress, (LPCTSTR)m_pDownload->GetDisplayName() );
+	Close( TRI_FALSE );
 	return TRUE;
 }
 

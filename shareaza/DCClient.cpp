@@ -598,9 +598,9 @@ BOOL CDCClient::OnADCGet(const std::string& strParams)
 		// Invalid command
 		return FALSE;
 
-	// Start uploading...
 	if ( CanUpload() )
 	{
+		// Start uploading...
 		DetachDownload();
 
 		if ( ! m_pUploadTransfer )
@@ -615,10 +615,10 @@ BOOL CDCClient::OnADCGet(const std::string& strParams)
 		return m_pUploadTransfer->OnUpload( strType, strFilename, nOffset, nLength, strOptions );
 	}
 
-	TRACE( "[DC++] Got $ADCGET but can't uplod!\n" );
-
 	// Unexpected request
 	DetachUpload();
+
+	TRACE( "[DC++] Got $ADCGET but can't uplod!\n" );
 
 	return FALSE;
 }
@@ -668,9 +668,11 @@ BOOL CDCClient::OnADCSnd(const std::string& strParams)
 		return m_pDownloadTransfer->OnDownload( strType, strFilename, nOffset, nLength, strOptions );
 	}
 
+	// Unexpected request
+	DetachDownload();
+
 	TRACE( "[DC++] Got $ADCSND but can't download!\n" );
 
-	// Unexpected download?
 	return FALSE;
 }
 
@@ -679,11 +681,12 @@ BOOL CDCClient::OnMaxedOut(const std::string& strParams)
 	// No free upload slots
 	// $MaxedOut[ QueuePosition]|
 
-	int nQueue = strParams.empty() ? 0 : atoi( strParams.c_str() );
-
 	if ( m_pDownloadTransfer )
 	{
-		return m_pDownloadTransfer->OnQueue( nQueue );
+		if ( strParams.empty() )
+			return m_pDownloadTransfer->OnBusy();
+
+		return m_pDownloadTransfer->OnQueue( atoi( strParams.c_str() ) );
 	}
 
 	TRACE( "[DC++] Got $MaxedOut but have no downloads!\n" );
@@ -694,6 +697,18 @@ BOOL CDCClient::OnMaxedOut(const std::string& strParams)
 BOOL CDCClient::OnError(const std::string& strParams)
 {
 	// $Error Error message|
+
+	if ( m_pDownloadTransfer )
+	{
+		if ( ! m_pDownloadTransfer->OnError() )
+			return FALSE;
+	}
+
+	/*if ( m_pUploadTransfer )
+	{
+		if ( ! m_pUploadTransfer->OnError() )
+			return FALSE;
+	}*/
 
 	TRACE( "[DC++] Got $Error: \"%s\"\n", strParams.c_str() );
 
