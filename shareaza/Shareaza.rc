@@ -3402,7 +3402,7 @@ BEGIN
     IDS_SEARCH_PAD_TYPE     "What type of file is it?"
     IDS_SEARCH_PAD_CLEAR_HISTORY "(Clear Search History)"
     IDS_SEARCH_PANEL_INPUT_4 "File size must be"
-    IDS_SEARCH_PANEL_INPUT_5 " to"
+    IDS_SEARCH_PANEL_INPUT_5 " to"
 END
 
 STRINGTABLE 
@@ -3586,7 +3586,7 @@ BEGIN
     IDS_HANDSHAKE_NOULTRAPEER 
                             "Neighbour %s wants to be a hub, closing connection."
     IDS_HANDSHAKE_NEEDAPEER "Neighbour %s is not a hub, closing connection."
-    IDS_HANDSHAKE_ONLINE_G2 "Gnutella][ connection with neighbour %s established successfully (%s)."
+    IDS_HANDSHAKE_ONLINE_G2 "Gnutella2 connection with neighbour %s established successfully (%s)."
     IDS_HANDSHAKE_NOTG2     "Closing connection to non-Gnutella2 neighbour %s."
 END
 
@@ -3984,7 +3984,6 @@ BEGIN
     IDS_DISCOVERY_FAILED    "Discovery service ""%s"" failed, fail count %i."
     IDS_DISCOVERY_FAIL_REMOVE 
                             "Discovery service ""%s"" has failed %i times, removing."
-    IDS_DISCOVERY_DEFAULTS  "\n"
     IDS_DISCOVERY_UPDATING  "Sending GWebCache update to service ""%s""..."
     IDS_DISCOVERY_SUBMIT    "Submitting GWebCache ""%s"" to a random GWebCache..."
 END
@@ -4425,9 +4424,25 @@ BEGIN
     ID_HELP_GUIDE           "Visit the Shareaza Users Guide."
     ID_SEARCH_CHAT          "Open a chat session with the selected user."
     ID_HOSTCACHE_KAD_CACHE  "Show Kademlia cached hosts."
-    ID_HOSTCACHE_DC_CACHE   "Show DC++ cached hubs."
     ID_TRAFFIC_GRID         "Display grid lines."
     ID_TRAFFIC_AXIS         "Display Vertical Axis"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_TRAFFIC_LEGEND       "Display legend."
+    ID_TRAFFIC_SETUP        "Select and configure items to graph..."
+    ID_TRAFFIC_CLEAR        "Clear the traffic graph."
+    ID_TOOLS_WIZARD         "Open the Shareaza QuickStart wizard..."
+    ID_HOSTCACHE_DC_CACHE   "Show DC++ cached hubs."
+    ID_CHILD_RESTORE        "Open the selected window."
+    ID_CHILD_CLOSE          "Close the active window."
+    ID_CHILD_MAXIMISE       "Enlarge the active window to fill the window."
+    ID_CHILD_MINIMISE       "Minimise the selected window to the tab bar."
+    ID_TRANSFERS_CHAT       "Open a chat session with the selected user."
+    ID_UPLOADS_CHAT         "Open a chat session with the selected user."
+    ID_SEARCH_CLEAR         "Clear the search results."
+    ID_TRAY_OPEN            "Open the Shareaza window."
 END
 
 STRINGTABLE 
@@ -4467,22 +4482,6 @@ BEGIN
     ID_UPLOADS_DISCONNECT   "Disconnect the selected upload transfer(s)."
     ID_UPLOADS_CLEAR_COMPLETED "Clear uploads which have been completed."
     ID_UPLOADS_CLEAR        "Clear the selected upload(s) from the list."
-END
-
-STRINGTABLE 
-BEGIN
-    ID_TRAFFIC_LEGEND       "Display legend."
-    ID_TRAFFIC_SETUP        "Select and configure items to graph..."
-    ID_TRAFFIC_CLEAR        "Clear the traffic graph."
-    ID_TOOLS_WIZARD         "Open the Shareaza QuickStart wizard..."
-    ID_CHILD_RESTORE        "Open the selected window."
-    ID_CHILD_CLOSE          "Close the active window."
-    ID_CHILD_MAXIMISE       "Enlarge the active window to fill the window."
-    ID_CHILD_MINIMISE       "Minimise the selected window to the tab bar."
-    ID_TRANSFERS_CHAT       "Open a chat session with the selected user."
-    ID_UPLOADS_CHAT         "Open a chat session with the selected user."
-    ID_SEARCH_CLEAR         "Clear the search results."
-    ID_TRAY_OPEN            "Open the Shareaza window."
 END
 
 STRINGTABLE 
@@ -4673,9 +4672,9 @@ BEGIN
     IDC_MEDIA_POSITION      "Seek to a position in the media file.\nSeek"
     IDC_MEDIA_SPEED         "Adjust the speed of the media file.\nSpeed"
     IDC_MEDIA_VOLUME        "Adjust the audio volume.\nVolume"
-	IDS_COMMANDLINE         "Command-line options:\n\n-tray : Disable startup splash screen and send application to tray\n-nosplash : Disable startup splash screen\n-nowarn : Disable alpha (daily builds) version warning dialog\n\nInterface modes:\n\n-basic : Start application in Basic interface mode\n-tabbed : Start application in Tabbed interface mode\n-windowed : Start application in Windowed interface mode\n\nSystem options:\n\n-RegServer : Register internal components for everyone\n-UnRegServer : Un-register internal components for everyone\n-RegServerPerUser : Register internal components for current user\n-UnRegServerPerUser : Un-register internal components for current user"
-	IDS_SCHEMA_LOAD_ERROR   "Failed to load metadata schemas. Please reinstall application."
-	IDS_SCHEDULER_INVALIDVP "Validity Period must be between 1 and 1439 minutes."
+    IDS_COMMANDLINE         "Command-line options:\n\n-tray : Disable startup splash screen and send application to tray\n-nosplash : Disable startup splash screen\n-nowarn : Disable alpha (daily builds) version warning dialog\n\nInterface modes:\n\n-basic : Start application in Basic interface mode\n-tabbed : Start application in Tabbed interface mode\n-windowed : Start application in Windowed interface mode\n\nSystem options:\n\n-RegServer : Register internal components for everyone\n-UnRegServer : Un-register internal components for everyone\n-RegServerPerUser : Register internal components for current user\n-UnRegServerPerUser : Un-register internal components for current user"
+    IDS_SCHEMA_LOAD_ERROR   "Failed to load metadata schemas. Please reinstall application."
+    IDS_SCHEDULER_INVALIDVP "Validity Period must be between 1 and 1439 minutes."
 END
 
 STRINGTABLE 
@@ -4747,9 +4746,28 @@ BEGIN
     ID_NETWORK_G2           "Connect to the Gnutella2 network (highly recommended)."
     ID_NETWORK_G1           "Connect to the original Gnutella network."
     ID_NETWORK_ED2K         "Connect to the eDonkey network."
-    ID_NETWORK_DC           "Connect to the DC++ network."
     ID_HOSTCACHE_PRIORITY   "Try to connect to this server before other servers."
     ID_VIEW_BASIC           "Use Shareaza in Basic mode."
+END
+
+STRINGTABLE 
+BEGIN
+    ID_WINDOW_NAVBAR        "Show or hide the navigation bar."
+    ID_DOWNLOADS_RATE       "Rate the selected download."
+    ID_LIBRARY_VIEW_COLLECTION 
+                            "Show the rich collection view\nCollection View"
+    ID_LIBRARY_FOLDER_DOWNLOAD 
+                            "Download all files in the selected collection."
+    ID_NETWORK_DC           "Connect to the DC++ network."
+    ID_LIBRARY_EXPORT_COLLECTION 
+                            "Export the selected album folder to collection files..."
+    ID_LIBRARY_SEED_TORRENT "Seed the selected Torrent on BitTorrent."
+    ID_LIBRARY_REBUILD_ANSI "Rebuild metadata using other language."
+    ID_DOWNLOADS_EDIT       "Show the advanced download properties..."
+    ID_MEDIA_MUTE           "Mute audio playback"
+    ID_WINDOW_REMOTE        "Show or hide the Shareaza Remote Control"
+    ID_UPLOADS_FILTER_TORRENT "Show BitTorrent uploads."
+    ID_TOOLS_SEEDTORRENT    "Seed the selected Torrent on BitTorrent."
 END
 
 STRINGTABLE 
@@ -4773,25 +4791,6 @@ BEGIN
                             "Remove the selected download(s) from the list."
     ID_LIBRARY_CREATETORRENT 
                             "Create a .torrent for this file to upload to a website."
-END
-
-STRINGTABLE 
-BEGIN
-    ID_WINDOW_NAVBAR        "Show or hide the navigation bar."
-    ID_DOWNLOADS_RATE       "Rate the selected download."
-    ID_LIBRARY_VIEW_COLLECTION 
-                            "Show the rich collection view\nCollection View"
-    ID_LIBRARY_FOLDER_DOWNLOAD 
-                            "Download all files in the selected collection."
-    ID_LIBRARY_EXPORT_COLLECTION 
-                            "Export the selected album folder to collection files..."
-    ID_LIBRARY_SEED_TORRENT "Seed the selected Torrent on BitTorrent."
-    ID_LIBRARY_REBUILD_ANSI "Rebuild metadata using other language."
-    ID_DOWNLOADS_EDIT       "Show the advanced download properties..."
-    ID_MEDIA_MUTE           "Mute audio playback"
-    ID_WINDOW_REMOTE        "Show or hide the Shareaza Remote Control"
-    ID_UPLOADS_FILTER_TORRENT "Show BitTorrent uploads."
-    ID_TOOLS_SEEDTORRENT    "Seed the selected Torrent on BitTorrent."
 END
 
 STRINGTABLE 
