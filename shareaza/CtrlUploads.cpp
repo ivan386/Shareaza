@@ -735,6 +735,9 @@ void CUploadsCtrl::OnSize(UINT nType, int cx, int cy)
 
 void CUploadsCtrl::OnPaint()
 {
+	CRect rcClient, rcItem;
+	CPaintDC dc( this );
+
 	CSingleLock pTransfersLock( &Transfers.m_pSection, FALSE );
 	if ( ! pTransfersLock.Lock( 250 ) )
 		return;
@@ -743,8 +746,6 @@ void CUploadsCtrl::OnPaint()
 	if ( ! pUploadQueuesLock.Lock( 250 ) )
 		return;
 
-	CRect rcClient, rcItem;
-	CPaintDC dc( this );
 	if ( Settings.General.LanguageRTL ) dc.SetTextAlign( TA_RTLREADING );
 
 	GetClientRect( &rcClient );

@@ -382,8 +382,6 @@ BOOL CDCNeighbour::OnCommand(const std::string& strCommand, const std::string& s
 					! Network.IsReserved( (const IN_ADDR*)&nAddress ) )
 				{
 					// Ok
-					CQuickLock oLock( DCClients.m_pSection );
-
 					if ( CDCClient* pClient = new CDCClient( m_sNick ) )
 					{
 						pClient->ConnectTo( (const IN_ADDR*)&nAddress, (WORD)nPort );

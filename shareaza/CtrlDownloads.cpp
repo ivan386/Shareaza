@@ -851,13 +851,13 @@ void CDownloadsCtrl::OnSize(UINT nType, int cx, int cy)
 
 void CDownloadsCtrl::OnPaint()
 {
-	CSingleLock pTransfersLock( &Transfers.m_pSection );
-	if ( ! pTransfersLock.Lock( 250 ) )
-		return;
-
 	CRect rcClient, rcItem;
 	CPaintDC dc( this );
 	DWORD tNow = GetTickCount();
+
+	CSingleLock pTransfersLock( &Transfers.m_pSection );
+	if ( ! pTransfersLock.Lock( 250 ) )
+		return;
 
 	if ( tNow - m_tSwitchTimer > 10000 )
 	{

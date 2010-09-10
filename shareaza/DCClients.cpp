@@ -89,10 +89,6 @@ int CDCClients::GetCount() const
 
 void CDCClients::OnRun()
 {
-	CSingleLock oTransfersLock( &Transfers.m_pSection, FALSE );
-	if ( ! oTransfersLock.Lock( 250 ) )
-		return;
-
 	CSingleLock oLock( &m_pSection, TRUE );
 	for ( POSITION pos = m_pList.GetHeadPosition(); pos; )
 	{
@@ -101,7 +97,13 @@ void CDCClients::OnRun()
 		{
 			oLock.Unlock();
 
-			pClient->OnRun();
+			{
+				CSingleLock oTransfersLock( &Transfers.m_pSection, FALSE );
+				if ( ! oTransfersLock.Lock( 250 ) )
+					break;
+
+				pClient->OnRun();
+			}
 
 			oLock.Lock();
 		}
