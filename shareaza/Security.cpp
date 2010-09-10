@@ -286,13 +286,20 @@ bool CSecurity::Complain(const IN_ADDR* pAddress, int nBanLength, int nExpire, i
 	CComplain* pComplain = NULL;
 	if ( m_Complains.Lookup( pAddress->s_addr, pComplain ) )
 	{
-		pComplain->m_nScore ++;
-		if ( pComplain->m_nScore > nCount )
+		if ( pComplain->m_nExpire < nNow )
 		{
-			m_Complains.RemoveKey( pAddress->s_addr );
-			delete pComplain;
-			Ban( pAddress, nBanLength );
-			return true;
+			pComplain->m_nScore = 1;
+		}
+		else
+		{
+			pComplain->m_nScore ++;
+			if ( pComplain->m_nScore > nCount )
+			{
+				m_Complains.RemoveKey( pAddress->s_addr );
+				delete pComplain;
+				Ban( pAddress, nBanLength );
+				return true;
+			}
 		}
 	}
 	else
