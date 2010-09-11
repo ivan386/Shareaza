@@ -229,8 +229,16 @@ BOOL CUploadTransferDC::OnWrite()
 
 BOOL CUploadTransferDC::OnUpload(const std::string& strType, const std::string& strFilename, QWORD nOffset, QWORD nLength, const std::string& strOptions)
 {
-	ASSERT( m_nState < upsUploading );
 	ASSERT( m_pClient );
+
+	if ( m_nState >= upsUploading )
+	{
+		// Drop unsent data
+		CLockedBuffer pOutput( m_pClient->GetOutput() );
+		pOutput->Clear();
+
+		m_nState = upsRequest;
+	}
 
 	ClearRequest();
 
