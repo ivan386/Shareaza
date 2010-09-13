@@ -480,7 +480,7 @@ BOOL CEDClients::OnPacket(const SOCKADDR_IN* pHost, CEDPacket* pPacket)
 
 		// Check server details in host cache
 		DWORD nServerFlags = Settings.eDonkey.DefaultServerFlags;
-		CHostCacheHost* pServer = HostCache.eDonkey.Find( &pAddress.sin_addr );
+		CHostCacheHostPtr pServer = HostCache.eDonkey.Find( &pAddress.sin_addr );
 		if ( pServer && pServer->m_nUDPFlags )
 		{
 			nServerFlags = pServer->m_nUDPFlags;
@@ -626,7 +626,7 @@ void CEDClients::RunGlobalStatsRequests(DWORD tNow)
 
 			CQuickLock pLock( HostCache.eDonkey.m_pSection );
 
-			CHostCacheHost* pHost = HostCache.eDonkey.Find( &m_pLastServer );
+			CHostCacheHostPtr pHost = HostCache.eDonkey.Find( &m_pLastServer );
 			if ( pHost )
 			{
 				pHost->m_tFailure = pHost->m_tStats;
@@ -654,7 +654,7 @@ void CEDClients::RunGlobalStatsRequests(DWORD tNow)
 		// Loop through servers in the host cache
 		for ( CHostCacheIterator i = HostCache.eDonkey.Begin() ; i != HostCache.eDonkey.End(); ++i )
 		{
-			CHostCacheHost* pHost = (*i);
+			CHostCacheHostPtr pHost = (*i);
 
 			/*CString strT;
 			strT.Format( _T("  -Name:%s Last Stats:%d UDP flags:%08X"), pHost->m_sName, pHost->m_tStats, pHost->m_nUDPFlags );

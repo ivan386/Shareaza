@@ -176,7 +176,7 @@ void CHostCacheWnd::Update(BOOL bForce)
 
 	for ( CHostCacheIterator i = pCache->Begin() ; i != pCache->End() ; ++i )
 	{
-		CHostCacheHost* pHost = (*i);
+		CHostCacheHostPtr pHost = (*i);
 
 		if ( m_nMode == PROTOCOL_NULL )
 		{
@@ -224,11 +224,11 @@ void CHostCacheWnd::Update(BOOL bForce)
 	tLastUpdate = GetTickCount();				// Update timer
 }
 
-CHostCacheHost* CHostCacheWnd::GetItem(int nItem)
+CHostCacheHostPtr CHostCacheWnd::GetItem(int nItem)
 {
 	if ( m_wndList.GetItemState( nItem, LVIS_SELECTED ) )
 	{
-		CHostCacheHost* pHost = (CHostCacheHost*)m_wndList.GetItemData( nItem );
+		CHostCacheHostPtr pHost = (CHostCacheHostPtr)m_wndList.GetItemData( nItem );
 		if ( HostCache.Check( pHost ) ) return pHost;
 	}
 
@@ -351,7 +351,7 @@ void CHostCacheWnd::OnHostCacheConnect()
 		while ( pos )
 		{
 			int nItem = m_wndList.GetNextSelectedItem( pos );
-			if ( CHostCacheHost* pHost = GetItem( nItem ) )
+			if ( CHostCacheHostPtr pHost = GetItem( nItem ) )
 			{
 				pHost->ConnectTo();
 			}
@@ -377,7 +377,7 @@ void CHostCacheWnd::OnUpdateHostCacheDisconnect(CCmdUI* pCmdUI)
 		while ( pos )
 		{
 			int nItem = m_wndList.GetNextSelectedItem( pos );
-			if ( CHostCacheHost* pHost = GetItem( nItem ) )
+			if ( CHostCacheHostPtr pHost = GetItem( nItem ) )
 			{
 				CNeighbour* pNeighbour = Neighbours.Get( pHost->m_pAddress );
 				if ( pNeighbour )
@@ -409,7 +409,7 @@ void CHostCacheWnd::OnHostCacheDisconnect()
 		while ( pos )
 		{
 			int nItem = m_wndList.GetNextSelectedItem( pos );
-			if ( CHostCacheHost* pHost = GetItem( nItem ) )
+			if ( CHostCacheHostPtr pHost = GetItem( nItem ) )
 			{
 				CNeighbour* pNeighbour = Neighbours.Get( pHost->m_pAddress );
 				if ( pNeighbour )
@@ -436,7 +436,7 @@ void CHostCacheWnd::OnUpdateHostcachePriority(CCmdUI* pCmdUI)
 	while ( pos )
 	{
 		int nItem = m_wndList.GetNextSelectedItem( pos );
-		if ( CHostCacheHost* pHost = GetItem( nItem ) )
+		if ( CHostCacheHostPtr pHost = GetItem( nItem ) )
 		{
 			if ( pHost->m_bPriority )
 			{
@@ -460,7 +460,7 @@ void CHostCacheWnd::OnHostcachePriority()
 	while ( pos )
 	{
 		int nItem = m_wndList.GetNextSelectedItem( pos );
-		if ( CHostCacheHost* pHost = GetItem( nItem ) )
+		if ( CHostCacheHostPtr pHost = GetItem( nItem ) )
 		{
 			pHost->m_bPriority = ! pHost->m_bPriority;
 		}
@@ -483,7 +483,7 @@ void CHostCacheWnd::OnNeighboursCopy()
 
 	CString strURL;
 
-	CHostCacheHost* pHost = GetItem( m_wndList.GetNextItem( -1, LVNI_SELECTED ) );
+	CHostCacheHostPtr pHost = GetItem( m_wndList.GetNextItem( -1, LVNI_SELECTED ) );
 	if ( ! pHost ) return;
 
 	if ( pHost->m_nProtocol == PROTOCOL_G1 || pHost->m_nProtocol == PROTOCOL_G2 )
@@ -523,7 +523,7 @@ void CHostCacheWnd::OnHostCacheRemove()
 	while ( pos )
 	{
 		int nItem = m_wndList.GetNextSelectedItem( pos );
-		if ( CHostCacheHost* pHost = GetItem( nItem ) )
+		if ( CHostCacheHostPtr pHost = GetItem( nItem ) )
 		{
 			HostCache.Remove( pHost );
 		}

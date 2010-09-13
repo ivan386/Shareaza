@@ -344,7 +344,7 @@ int CG1Packet::GGEPWriteRandomCache(CGGEPItem* pItem)
 		for ( CHostCacheIterator i = HostCache.Gnutella1.Begin() ;
 			i != HostCache.Gnutella1.End() && nCount && ! pList.empty() ; ++i )
 		{
-			CHostCacheHost* pHost = (*i);
+			CHostCacheHostPtr pHost = (*i);
 
 			nPos = pList.back();	// take the smallest value;
 			pList.pop_back();		// remove it
@@ -374,7 +374,7 @@ int CG1Packet::GGEPWriteRandomCache(CGGEPItem* pItem)
 		for ( CHostCacheIterator i = HostCache.G1DNA.Begin() ;
 			i != HostCache.G1DNA.End() && nCount && ! pList.empty() ; ++i )
 		{
-			CHostCacheHost* pHost = (*i);
+			CHostCacheHostPtr pHost = (*i);
 
 			nPos = pList.back();	// take the smallest value;
 			pList.pop_back();		// remove it

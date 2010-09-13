@@ -798,7 +798,7 @@ CG2Packet* CG2Neighbour::CreateKHLPacket(CG2Neighbour* pOwner)
 	for ( CHostCacheIterator i = HostCache.Gnutella2.Begin() ;
 		i != HostCache.Gnutella2.End() && nCount > 0; ++i )
 	{
-		CHostCacheHost* pHost = (*i);
+		CHostCacheHostPtr pHost = (*i);
 
 		if (	pHost->CanQuote( tNow ) &&
 				Neighbours.Get( pHost->m_pAddress ) == NULL &&
@@ -943,7 +943,7 @@ BOOL CG2Neighbour::ParseKHLPacket(CG2Packet* pPacket, const SOCKADDR_IN* pHost)
 				{
 					CQuickLock oLock( HostCache.Gnutella2.m_pSection );
 
-					CHostCacheHost* pCached = HostCache.Gnutella2.Add(
+					CHostCacheHostPtr pCached = HostCache.Gnutella2.Add(
 						(IN_ADDR*)&nAddress, nPort, tSeen, strVendor );
 					if ( pCached != NULL )
 					{
@@ -1294,7 +1294,7 @@ BOOL CG2Neighbour::OnQueryKeyReq(CG2Packet* pPacket)
 	{
 		CQuickLock oLock( HostCache.Gnutella2.m_pSection );
 
-		CHostCacheHost* pCached = HostCache.Gnutella2.Find( (IN_ADDR*)&nAddress );
+		CHostCacheHostPtr pCached = HostCache.Gnutella2.Find( (IN_ADDR*)&nAddress );
 		if ( pCached != NULL && pCached->m_nKeyValue != 0 &&
 			pCached->m_nKeyHost == Network.m_pHost.sin_addr.S_un.S_addr )
 		{
@@ -1355,7 +1355,7 @@ BOOL CG2Neighbour::OnQueryKeyAns(CG2Packet* pPacket)
 
 	CQuickLock oLock( HostCache.Gnutella2.m_pSection );
 
-	CHostCacheHost* pCache = HostCache.Gnutella2.Add( (IN_ADDR*)&nAddress, nPort );
+	CHostCacheHostPtr pCache = HostCache.Gnutella2.Add( (IN_ADDR*)&nAddress, nPort );
 	if ( pCache != NULL )
 	{
 		theApp.Message( MSG_DEBUG, _T("Got a query key for %s:%i via neighbour %s: 0x%x"),
@@ -1472,7 +1472,7 @@ BOOL CG2Neighbour::OnProfileDelivery(CG2Packet* pPacket)
 	{
 		CQuickLock oLock( HostCache.Gnutella2.m_pSection );
 
-		CHostCacheHost* pHost = HostCache.Gnutella2.Find( &m_pHost.sin_addr );
+		CHostCacheHostPtr pHost = HostCache.Gnutella2.Find( &m_pHost.sin_addr );
 		if ( pHost )
 		{
 			pHost->m_sName = m_pProfile->GetNick();

@@ -249,7 +249,7 @@ public:
 		for ( CHostCacheIterator it = m_HostsTime.begin();
 			it != m_HostsTime.end(); ++it )
 		{
-			CHostCacheHost* pHost = (*it);
+			CHostCacheHostPtr pHost = (*it);
 			if ( pHost->CanQuery( tNow ) && pHost->m_bDHT && pHost->m_oBtGUID )
 				return pHost;
 		}
@@ -262,7 +262,7 @@ public:
 		for ( CHostCacheRIterator it = m_HostsTime.rbegin();
 			it != m_HostsTime.rend(); ++it )
 		{
-			CHostCacheHost* pHost = (*it);
+			CHostCacheHostPtr pHost = (*it);
 			if ( pHost->CanQuery( tNow ) )
 				return pHost;
 		}

@@ -126,7 +126,7 @@ CG2Packet* CNeighboursWithG2::CreateQueryWeb(const Hashes::Guid& oGUID, bool bWi
 		// Loop, starting with the newest entry in the Gnutella2 host cache, then stepping to the one before that
 		for ( CHostCacheIterator i = HostCache.Gnutella2.Begin() ; i != HostCache.Gnutella2.End() ; ++i )
 		{
-			CHostCacheHost* pHost = (*i);
+			CHostCacheHostPtr pHost = (*i);
 
 			// If this host cache entry is good
 			if ( pHost->CanQuote( tNow ) &&								// If this host cache entry hasn't expired, and

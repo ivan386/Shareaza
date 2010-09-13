@@ -402,7 +402,7 @@ BOOL CManagedSearch::ExecuteG2Mesh(const DWORD /*tTicks*/, const DWORD tSecs)
 	for ( CHostCacheIterator i = HostCache.Gnutella2.Begin() ;
 		i != HostCache.Gnutella2.End();	++i )
 	{
-		CHostCacheHost* pHost = (*i);
+		CHostCacheHostPtr pHost = (*i);
 		// Must be Gnutella2
 
 		ASSERT( pHost->m_nProtocol == PROTOCOL_G2 );
@@ -621,7 +621,7 @@ BOOL CManagedSearch::ExecuteDonkeyMesh(const DWORD /*tTicks*/, const DWORD tSecs
 
 	for ( CHostCacheIterator i = HostCache.eDonkey.Begin() ; i != HostCache.eDonkey.End();	++i )
 	{
-		CHostCacheHost* pHost = (*i);
+		CHostCacheHostPtr pHost = (*i);
 
 		ASSERT( pHost->m_nProtocol == PROTOCOL_ED2K );
 

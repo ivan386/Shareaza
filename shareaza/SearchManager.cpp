@@ -217,7 +217,7 @@ BOOL CSearchManager::OnQueryAck(CG2Packet* pPacket, const SOCKADDR_IN* pAddress,
 
 			CQuickLock oLock( HostCache.Gnutella2.m_pSection );
 
-			if ( CHostCacheHost* pHost = HostCache.Gnutella2.Find( (IN_ADDR*)&nFromIP ) )
+			if ( CHostCacheHostPtr pHost = HostCache.Gnutella2.Find( (IN_ADDR*)&nFromIP ) )
 			{
 				pHost->m_tRetryAfter = tNow + nRetryAfter;
 			}

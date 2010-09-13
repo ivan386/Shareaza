@@ -443,7 +443,7 @@ BOOL CEDNeighbour::OnServerStatus(CEDPacket* pPacket)
 
 	CQuickLock oLock( HostCache.eDonkey.m_pSection );
 
-	if ( CHostCacheHost* pHost = HostCache.eDonkey.Add( &m_pHost.sin_addr, htons( m_pHost.sin_port ) ) )
+	if ( CHostCacheHostPtr pHost = HostCache.eDonkey.Add( &m_pHost.sin_addr, htons( m_pHost.sin_port ) ) )
 	{
 		// pHost->m_nUserCount = max( pHost->m_nUserCount, m_nUserCount );
 		pHost->m_nUserCount = m_nUserCount;
@@ -507,7 +507,7 @@ BOOL CEDNeighbour::OnServerIdent(CEDPacket* pPacket)
 
 	CQuickLock oLock( HostCache.eDonkey.m_pSection );
 
-	if ( CHostCacheHost* pHost = HostCache.eDonkey.Add( &m_pHost.sin_addr, htons( m_pHost.sin_port ) ) )
+	if ( CHostCacheHostPtr pHost = HostCache.eDonkey.Add( &m_pHost.sin_addr, htons( m_pHost.sin_port ) ) )
 	{
 		pHost->m_sName			= m_sServerName;
 		pHost->m_sDescription	= strDescription;

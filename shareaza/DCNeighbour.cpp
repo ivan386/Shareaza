@@ -321,7 +321,7 @@ BOOL CDCNeighbour::OnCommand(const std::string& strCommand, const std::string& s
 
 		m_sNick = CA2CT( strParams.c_str() );
 
-		if ( CHostCacheHost* pServer = HostCache.DC.Find( &m_pHost.sin_addr ) )
+		if ( CHostCacheHostPtr pServer = HostCache.DC.Find( &m_pHost.sin_addr ) )
 		{
 			pServer->m_sUser = m_sNick;
 		}
@@ -337,7 +337,7 @@ BOOL CDCNeighbour::OnCommand(const std::string& strCommand, const std::string& s
 
 		m_sServerName = CA2CT( strParams.c_str() );
 
-		if ( CHostCacheHost* pServer = HostCache.DC.Find( &m_pHost.sin_addr ) )
+		if ( CHostCacheHostPtr pServer = HostCache.DC.Find( &m_pHost.sin_addr ) )
 		{
 			pServer->m_sName = m_sServerName;
 		}		
@@ -424,7 +424,7 @@ BOOL CDCNeighbour::OnCommand(const std::string& strCommand, const std::string& s
 
 		m_sNick.Format( CLIENT_NAME_T _T("%04u"), GetRandomNum( 0, 9999 ) );
 
-		if ( CHostCacheHost* pServer = HostCache.DC.Find( &m_pHost.sin_addr ) )
+		if ( CHostCacheHostPtr pServer = HostCache.DC.Find( &m_pHost.sin_addr ) )
 		{
 			pServer->m_sUser = m_sNick;
 		}
@@ -575,7 +575,7 @@ BOOL CDCNeighbour::OnLock(const std::string& strLock)
 		Send( pPacket );
 	}
 
-	if ( CHostCacheHost* pServer = HostCache.DC.Find( &m_pHost.sin_addr ) )
+	if ( CHostCacheHostPtr pServer = HostCache.DC.Find( &m_pHost.sin_addr ) )
 	{
 		m_sNick = pServer->m_sUser;
 	}

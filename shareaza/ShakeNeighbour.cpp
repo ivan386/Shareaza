@@ -530,7 +530,7 @@ void CShakeNeighbour::SendHostHeaders(LPCSTR pszMessage, size_t nLength)
 		for ( CHostCacheIterator i = HostCache.Gnutella2.Begin() ;
 			i != HostCache.Gnutella2.End() && nCount > 0 ; ++i )
 		{
-			CHostCacheHost* pHost = (*i);
+			CHostCacheHostPtr pHost = (*i);
 
 			if ( pHost->CanQuote( nTime ) )		// if host is still recent enough
 			{
@@ -561,7 +561,7 @@ void CShakeNeighbour::SendHostHeaders(LPCSTR pszMessage, size_t nLength)
 		for ( CHostCacheIterator i = HostCache.Gnutella1.Begin() ;
 			i != HostCache.Gnutella1.End() && nCount > 0 ; ++i )
 		{
-			CHostCacheHost* pHost = (*i);
+			CHostCacheHostPtr pHost = (*i);
 
 			// This host is still recent enough to tell another computer about
 			if ( pHost->CanQuote( nTime ) )

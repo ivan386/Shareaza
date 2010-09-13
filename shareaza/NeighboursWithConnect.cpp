@@ -1055,7 +1055,7 @@ void CNeighboursWithConnect::Maintain()
 					i != pCache->End() && nCount[ nProtocol ][0] < nAttempt;
 					++i )
 				{
-					CHostCacheHost* pHost = (*i);
+					CHostCacheHostPtr pHost = (*i);
 
 					// If we can connect to this host, try it, if it works, move into this if block
 					if ( pHost->m_bPriority       && // This host in the host cache is marked as priority (do)
@@ -1090,7 +1090,7 @@ void CNeighboursWithConnect::Maintain()
 				i != pCache->End() && nCount[ nProtocol ][0] < nAttempt;
 				++i )
 			{
-				CHostCacheHost* pHost = (*i);
+				CHostCacheHostPtr pHost = (*i);
 
 				// If we can connect to this IP address from the host cache, try to make the connection
 				if ( pHost->CanConnect( tNow ) && pHost->ConnectTo( TRUE ) ) // Enter the if statement if the connection worked

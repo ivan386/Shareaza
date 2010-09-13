@@ -1065,7 +1065,7 @@ void CG1Neighbour::SendClusterAdvisor()
 			i != HostCache.Gnutella1.End() && nCount < 20;
 			++i )
 		{
-			CHostCacheHost* pHost = (*i);
+			CHostCacheHostPtr pHost = (*i);
 
 			// If this host is running Shareaza, was added recently, and we can connect to it (do)
 			if ( pHost->m_pVendor && pHost->m_pVendor->m_bExtended &&	// If this host is running Shareaza, and

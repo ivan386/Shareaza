@@ -50,7 +50,7 @@ protected:
 // Operations
 public:
 	void			Update(BOOL bForce = FALSE);
-	CHostCacheHost*	GetItem(int nItem);
+	CHostCacheHostPtr	GetItem(int nItem);
 	virtual void	OnSkinChange();
 	
 // Overrides

@@ -696,7 +696,7 @@ BOOL CG2Packet::OnQueryAck(const SOCKADDR_IN* pHost)
 	{
 		CQuickLock oLock( HostCache.Gnutella2.m_pSection );
 
-		CHostCacheHost* pCache = HostCache.Gnutella2.Add( &pHost->sin_addr, htons( pHost->sin_port ) );
+		CHostCacheHostPtr pCache = HostCache.Gnutella2.Add( &pHost->sin_addr, htons( pHost->sin_port ) );
 		if ( pCache ) pCache->m_tAck = pCache->m_nFailures = 0;
 	}
 
@@ -882,7 +882,7 @@ BOOL CG2Packet::OnQueryKeyAnswer(const SOCKADDR_IN* pHost)
 	{
 		CQuickLock oLock( HostCache.Gnutella2.m_pSection );
 
-		CHostCacheHost* pCache = HostCache.Gnutella2.Add(
+		CHostCacheHostPtr pCache = HostCache.Gnutella2.Add(
 			&pHost->sin_addr, htons( pHost->sin_port ) );
 		if ( pCache != NULL ) pCache->SetKey( nKey );
 	}
@@ -1247,7 +1247,7 @@ BOOL CG2Packet::OnKHLA(const SOCKADDR_IN* pHost)
 					tSeen = ReadLongBE() + tAdjust;
 			}
 
-			CHostCacheHost* pCached = HostCache.Gnutella2.Add(
+			CHostCacheHostPtr pCached = HostCache.Gnutella2.Add(
 				(IN_ADDR*)&nAddress, nPort, tSeen, strVendor );
 			if ( pCached != NULL )
 			{
@@ -1338,7 +1338,7 @@ BOOL CG2Packet::OnKHLR(const SOCKADDR_IN* pHost)
 		for ( CHostCacheIterator i = HostCache.Gnutella2.Begin() ;
 			i != HostCache.Gnutella2.End() && nCount > 0; ++i )
 		{
-			CHostCacheHost* pCachedHost = (*i);
+			CHostCacheHostPtr pCachedHost = (*i);
 
 			if ( pCachedHost->CanQuote( tNow ) &&
 				Neighbours.Get( pCachedHost->m_pAddress ) == NULL &&

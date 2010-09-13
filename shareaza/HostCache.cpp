@@ -599,7 +599,7 @@ void CHostCacheList::PruneHosts()
 		m_Hosts.size() > Settings.Gnutella.HostCacheSize && i != m_HostsTime.begin(); )
 	{
 		--i;
-		CHostCacheHost* pHost = (*i);
+		CHostCacheHostPtr pHost = (*i);
 		if ( ! pHost->m_bPriority )
 		{
 			i = m_HostsTime.erase( i );
@@ -613,7 +613,7 @@ void CHostCacheList::PruneHosts()
 		m_Hosts.size() > Settings.Gnutella.HostCacheSize && i != m_HostsTime.begin(); )
 	{
 		--i;
-		CHostCacheHost* pHost = (*i);
+		CHostCacheHostPtr pHost = (*i);
 		i = m_HostsTime.erase( i );
 		m_Hosts.erase( pHost->m_pAddress );
 		delete pHost;
