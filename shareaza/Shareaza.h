@@ -25,11 +25,13 @@
 #include "ComObject.h"
 #include "Buffer.h"
 
-class CUPnPFinder;
-class CMainWnd;
-class CSplashDlg;
+class CDatabase;
 class CFontManager;
+class CMainWnd;
 class CPacketWnd;
+class CSplashDlg;
+class CUPnPFinder;
+
 
 class __declspec(novtable) CLogMessage
 {
@@ -44,6 +46,7 @@ public:
 };
 
 typedef CList< CLogMessage* > CLogMessageList;
+
 
 class CShareazaApp : public CWinApp
 {
@@ -168,6 +171,10 @@ public:
 	// Rename, delete or release file.
 	// pszTarget == 0 - delete file; pszTarget == 1 - release file.
 	void				OnRename(LPCTSTR strSource, LPCTSTR pszTarget = (LPCTSTR)1);
+
+	// Get database handler
+	// Must be freed by "delete" operator.
+	CDatabase*			GetDatabase() const;
 
 protected:
 	CSplashDlg*			m_dlgSplash;

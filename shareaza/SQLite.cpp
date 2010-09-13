@@ -1,7 +1,7 @@
 //
 // SQLite.cpp
 //
-// Copyright (c) Shareaza Development Team, 2008.
+// Copyright (c) Shareaza Development Team, 2008-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -20,6 +20,7 @@
 //
 
 #include "StdAfx.h"
+#include "../sqlite3/sqlite3.h"
 #include "SQLite.h"
 
 #ifdef _DEBUG
@@ -28,22 +29,31 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-using namespace SQLite;
-
 //////////////////////////////////////////////////////////////////////////////
 // CDatabase
 
-CDatabase::CSQLitePtr::CSQLitePtr(LPCWSTR szDatabasePath) :
-	m_db( NULL )
+CDatabase::CDatabase(LPCTSTR szDatabase)
+	: m_db			( NULL )
+	, m_st			( NULL )
+	, m_bBusy		( false )
+#ifdef _DEBUG
+	, m_nThread		( GetCurrentThreadId() )
+#endif
 {
-	if( sqlite3_open16( szDatabasePath, &m_db ) == SQLITE_OK )
+	sqlite3_enable_shared_cache( 1 );
+
+	if ( sqlite3_open16( szDatabase, &m_db ) == SQLITE_OK )
 	{
-		sqlite3_busy_timeout( m_db, 1000 ); // 1 sec
+		sqlite3_busy_timeout( m_db, 100 ); // 0.1 s
 	}
 }
 
-CDatabase::CSQLitePtr::~CSQLitePtr()
+CDatabase::~CDatabase()
 {
+	ASSERT( m_nThread == GetCurrentThreadId() );	// Don't pass database across thread boundaries
+
+	Finalize();
+
 	if ( m_db )
 	{
 		sqlite3_close( m_db );
@@ -51,231 +61,157 @@ CDatabase::CSQLitePtr::~CSQLitePtr()
 	}
 }
 
-CDatabase::CDatabase(LPCTSTR szDatabasePath)
-{
-	if ( szDatabasePath )
-	{
-		Open( szDatabasePath );
-	}
-}
-
-CDatabase::~CDatabase()
-{
-}
-
-CDatabase::CSQLiteSharedPtr CDatabase::GetHandle() const throw()
-{
-	return m_db;
-}
-
 CDatabase::operator bool() const throw()
 {
-	return m_db;
+	return ( m_db != NULL );
 }
 
-bool CDatabase::Open(LPCWSTR szDatabasePath)
+CString CDatabase::GetLastErrorMessage() const
 {
-	// Check if database already opened
-	if ( ! m_db )
-	{
-		// Open database
-		CSQLitePtr* pDatabase = new CSQLitePtr( szDatabasePath );
-		if ( pDatabase->m_db )
-			m_db.reset( pDatabase );
-		else
-			delete pDatabase;
-	}
-	return m_db;
+	return ( m_db ? CString( (LPCWSTR)sqlite3_errmsg16( m_db ) ) : CString() );
 }
 
-bool CDatabase::Exec(LPCWSTR szQuery)
+bool CDatabase::IsBusy() const throw()
 {
-	CStatement st( *this, szQuery );
-	while( st.Step() )
-	{
-		// Bypass
-		st.Finalize();
+	return m_bBusy;
+}
 
-		if ( ! st.IsPending() )
-			// No more SQL commands
-			return true;
+int CDatabase::GetCount() const throw()
+{
+	return m_raw.GetCount();
+}
+
+bool CDatabase::Exec(LPCTSTR szQuery)
+{
+	ASSERT( szQuery && *szQuery );
+
+	m_sQuery = szQuery;
+
+	while ( PrepareHelper() )
+	{
+		bool ret = Step();
+
+		Finalize();
+
+		if ( m_sQuery.IsEmpty() )
+			// Done
+			return ret;
 	}
 	return false;
 }
 
-LPCWSTR CDatabase::GetLastErrorMessage() const
+bool CDatabase::Prepare(LPCTSTR szQuery)
 {
-	return m_db ? (LPCWSTR)sqlite3_errmsg16( m_db->m_db ) : NULL;
+	ASSERT( szQuery && *szQuery );
+
+	m_sQuery = szQuery;
+
+	return PrepareHelper();
 }
 
-
-//////////////////////////////////////////////////////////////////////////////
-// CStatement
-
-CStatement::CStatement(const CDatabase& db, LPCWSTR pszQuery) :
-	m_db( db.GetHandle() ),
-	m_query( pszQuery ),
-	m_st( NULL ),
-	m_prepared( false ),
-	m_busy( false )
+bool CDatabase::PrepareHelper()
 {
-}
+	ASSERT( m_nThread == GetCurrentThreadId() );	// Don't pass database across thread boundaries
+	ASSERT( m_db );
 
-CStatement::~CStatement()
-{
+	if ( ! m_db )
+		// Database open error
+		return false;
+
 	Finalize();
-}
 
-CStatement::operator bool() const throw()
-{
-	return ( m_st != NULL );
-}
-
-bool CStatement::IsPending() const throw()
-{
-	return ! m_query.empty();
-}
-
-bool CStatement::IsBusy() const throw()
-{
-	return m_busy;
-}
-
-int CStatement::GetCount() const throw()
-{
-	return sqlite3_data_count( m_st );
-}
-
-bool CStatement::Prepare()
-{
-	if ( m_db && ! m_prepared && m_query.size() )
+	for ( ; ; )
 	{
-		m_busy = false;
-		for(;;)
+		LPCWSTR pszTail = NULL;
+		CT2CW szQueryW( m_sQuery );
+		switch( sqlite3_prepare16_v2( m_db, (LPCVOID)(LPCWSTR)szQueryW,
+			-1, &m_st, (LPCVOID*)&pszTail ) )
 		{
-			LPCWSTR pszTail = NULL;
-			int rc = sqlite3_prepare16( m_db->m_db,
-				(LPCVOID)m_query.c_str(), -1, &m_st, (LPCVOID*)&pszTail );
-			switch( rc )
-			{
-			case SQLITE_OK:
-				if ( pszTail && *pszTail )
-					m_query = pszTail;
-				else
-				{
-					// FIXIT: when SQL command ends with a space in a composite SQL query
-					// it enters an infinite loop.
-					m_query.clear();
-				}
+		case SQLITE_OK:
+			if ( pszTail && *pszTail )
+				m_sQuery = pszTail;
+			else
+				m_sQuery.Empty();
 
-				if ( m_st == NULL )
-					// This happens for a comment or white-space
-					continue;
+			if ( m_st )
+				return true;
 
-				m_prepared = true;
-				break;
-
-			case SQLITE_BUSY:
-				m_busy = true;
-				break;
-
-			default:
-				// To get good error message
-				sqlite3_reset( m_st );
-				break;
-			}
-
+			// This happens for a comment or white-space
 			break;
+
+		case SQLITE_BUSY:
+			m_bBusy = true;
+			return false;
+
+		default:
+			return false;
 		}
 	}
-	return m_prepared;
 }
 
-void CStatement::Reset()
+void CDatabase::Finalize()
 {
-	if ( m_st && m_prepared )
-	{
-		sqlite3_reset( m_st );
-	}
-	m_busy = false;
-	m_raw.clear();
-}
+	ASSERT( m_nThread == GetCurrentThreadId() );	// Don't pass database across thread boundaries
 
-void CStatement::Finalize()
-{
 	if ( m_st )
 	{
 		sqlite3_finalize( m_st );
 		m_st = NULL;
 	}
-	m_prepared = false;
-	m_busy = false;
-	m_raw.clear();
+
+	m_bBusy = false;
+	m_raw.RemoveAll();
 }
 
-bool CStatement::Step()
+bool CDatabase::Step()
 {
-	m_busy = false;
-	m_raw.clear();
+	ASSERT( m_nThread == GetCurrentThreadId() );	// Don't pass database across thread boundaries
+	ASSERT( m_st );
 
-	if ( Prepare() )
+	if ( ! m_st )
+		return false;
+
+	m_bBusy = false;
+	m_raw.RemoveAll();
+
+	switch ( sqlite3_step( m_st ) )
 	{
-		int rc = sqlite3_step( m_st );
-		switch ( rc )
-		{
-		case SQLITE_BUSY:
-			m_busy = true;
-			break;
+	case SQLITE_ROW:
+		break;
 
-		case SQLITE_ROW:
-			{
-				// Save column names
-				int count = sqlite3_data_count( m_st );
-				for ( int i = 0; i < count; i++ )
-					m_raw.insert( CRaw::value_type(
-						(LPCWSTR)sqlite3_column_name16( m_st, i ), i ) );
-			}
-			return true;
+	case SQLITE_BUSY:
+		m_bBusy = true;
+		return false;
 
-		case SQLITE_DONE:
-			Finalize();
-			return true;
+	case SQLITE_DONE:
+		Finalize();
+		return true;
 
-		case SQLITE_ERROR:
-		default:
-			// To get good error message
-			sqlite3_reset( m_st );
-			break;
-		}
+	default:
+		// To get good error message
+		sqlite3_reset( m_st );
+		return false;
 	}
-	return false;
+
+	// Save column names
+	int count = sqlite3_data_count( m_st );
+	for ( int i = 0; i < count; i++ )
+	{
+		m_raw.SetAt( (LPCTSTR)CW2CT( (LPCWSTR)sqlite3_column_name16( m_st, i ) ), i );
+	}
+	return true;
 }
 
-int CStatement::GetColumn(LPCWSTR szName) const
+int CDatabase::GetColumn(LPCTSTR szName) const
 {
-	if ( szName )
-	{
-		CRaw::const_iterator i = m_raw.find( szName );
-		if ( i != m_raw.end() && IsValidIndex( (*i).second ) )
-			// Specified column
-			return (*i).second;
-	}
-	else
-	{
-		if ( IsValidIndex( 0 ) )
-			// First column
-			return 0;
-	}
-	// Error
-	return -1;
+	int column;
+	return ( m_st &&
+		m_raw.Lookup( szName, column ) &&
+		column >= 0 &&
+		column < sqlite3_data_count( m_st ) ) ? column : -1;
 }
 
-bool CStatement::IsValidIndex(int nIndex) const
-{
-	return m_st && nIndex >= 0 && nIndex < sqlite3_data_count( m_st );
-}
-
-int CStatement::GetType(LPCWSTR pszName) const
+int CDatabase::GetType(LPCTSTR pszName) const
 {
 	int column = GetColumn( pszName );
 	if ( column != -1 )
@@ -285,7 +221,7 @@ int CStatement::GetType(LPCWSTR pszName) const
 	return 0;
 }
 
-int CStatement::GetInt(LPCWSTR pszName) const
+__int32 CDatabase::GetInt32(LPCTSTR pszName) const
 {
 	int column = GetColumn( pszName );
 	if ( column != -1 )
@@ -295,7 +231,7 @@ int CStatement::GetInt(LPCWSTR pszName) const
 	return 0;
 }
 
-__int64 CStatement::GetInt64(LPCWSTR pszName) const
+__int64 CDatabase::GetInt64(LPCTSTR pszName) const
 {
 	int column = GetColumn( pszName );
 	if ( column != -1 )
@@ -305,7 +241,7 @@ __int64 CStatement::GetInt64(LPCWSTR pszName) const
 	return 0;
 }
 
-double CStatement::GetDouble(LPCWSTR pszName) const
+double CDatabase::GetDouble(LPCTSTR pszName) const
 {
 	int column = GetColumn( pszName );
 	if ( column != -1 )
@@ -315,17 +251,17 @@ double CStatement::GetDouble(LPCWSTR pszName) const
 	return 0;
 }
 
-LPCWSTR CStatement::GetString(LPCWSTR pszName) const
+CString CDatabase::GetString(LPCTSTR pszName) const
 {
 	int column = GetColumn( pszName );
 	if ( column != -1 )
 	{
-		return (LPCWSTR)sqlite3_column_text16( m_st, column );
+		return CString( (LPCWSTR)sqlite3_column_text16( m_st, column ) );
 	}
-	return NULL;
+	return CString();
 }
 
-LPCVOID CStatement::GetBlob(LPCWSTR pszName, int* pnLength) const
+LPCVOID CDatabase::GetBlob(LPCTSTR pszName, int* pnLength) const
 {
 	if ( pnLength )
 		*pnLength = 0;
@@ -339,49 +275,30 @@ LPCVOID CStatement::GetBlob(LPCWSTR pszName, int* pnLength) const
 	return NULL;
 }
 
-bool CStatement::Bind(int nNumber, int nData)
+bool CDatabase::Bind(int nIndex, __int32 nData)
 {
-	if ( Prepare() )
-	{
-		return sqlite3_bind_int( m_st, nNumber, nData ) == SQLITE_OK;
-	}
-	return false;
+	return m_st && sqlite3_bind_int( m_st, nIndex, nData ) == SQLITE_OK;
 }
 
-bool CStatement::Bind(int nNumber, __int64 nData)
+bool CDatabase::Bind(int nIndex, __int64 nData)
 {
-	if ( Prepare() )
-	{
-		return sqlite3_bind_int64( m_st, nNumber, nData ) == SQLITE_OK;
-	}
-	return false;
+	return m_st && sqlite3_bind_int64( m_st, nIndex, nData ) == SQLITE_OK;
 }
 
-bool CStatement::Bind(int nNumber, double dData)
+bool CDatabase::Bind(int nIndex, double dData)
 {
-	if ( Prepare() )
-	{
-		return sqlite3_bind_double( m_st, nNumber, dData ) == SQLITE_OK;
-	}
-	return false;
+	return m_st && sqlite3_bind_double( m_st, nIndex, dData ) == SQLITE_OK;
 }
 
-bool CStatement::Bind(int nNumber, LPCWSTR szData)
+bool CDatabase::Bind(int nIndex, LPCTSTR szData)
 {
-	if ( Prepare() )
-	{
-		return sqlite3_bind_text16( m_st, nNumber, (LPVOID)szData,
-			lstrlenW( szData ) * sizeof( WCHAR ), SQLITE_STATIC ) == SQLITE_OK;
-	}
-	return false;
+	CT2CW szDataW( szData );
+	return m_st && sqlite3_bind_text16( m_st, nIndex, (LPVOID)(LPCWSTR)szDataW,
+		lstrlenW( (LPCWSTR)szDataW ) * sizeof( WCHAR ), SQLITE_STATIC ) == SQLITE_OK;
 }
 
-bool CStatement::Bind(int nNumber, LPCVOID pData, int nLength)
+bool CDatabase::Bind(int nIndex, LPCVOID pData, int nLength)
 {
-	if ( Prepare() )
-	{
-		return sqlite3_bind_blob( m_st, nNumber,
-			pData, nLength, SQLITE_STATIC ) == SQLITE_OK;
-	}
-	return false;
+	return m_st && sqlite3_bind_blob( m_st, nIndex,
+		pData, nLength, SQLITE_STATIC ) == SQLITE_OK;
 }

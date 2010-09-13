@@ -55,6 +55,7 @@
 #include "SharedFile.h"
 #include "ShellIcons.h"
 #include "Skin.h"
+#include "SQLite.h"
 #include "ThumbCache.h"
 #include "Transfers.h"
 #include "UPnPFinder.h"
@@ -2299,6 +2300,11 @@ void CShareazaApp::OnRename(LPCTSTR pszSource, LPCTSTR pszTarget)
 			}
 		}
 	}
+}
+
+CDatabase* CShareazaApp::GetDatabase() const
+{
+	return new CDatabase( Settings.General.UserPath + _T("\\Data\\Shareaza.db3") );
 }
 
 CString SafeFilename(CString strName, bool bPath)

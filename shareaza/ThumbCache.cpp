@@ -1,7 +1,7 @@
 //
 // ThumbCache.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -40,15 +40,15 @@ static char THIS_FILE[]=__FILE__;
 
 void CThumbCache::InitDatabase()
 {
-	SQLite::CDatabase db( Settings.General.UserPath + _T("\\Data\\Shareaza.db3") );
-	if ( ! db )
+	auto_ptr< CDatabase > db( theApp.GetDatabase() );
+	if ( ! *db )
 	{
-		TRACE( _T("CThumbCache::InitDatabase : Database error: %s\n"), db.GetLastErrorMessage() );
+		TRACE( _T("CThumbCache::InitDatabase : Database error: %s\n"), db->GetLastErrorMessage() );
 		return;
 	}
 
 	// Recreate table
-	if ( !db.Exec( L"CREATE TABLE Files ("
+	if ( ! db->Exec( L"CREATE TABLE Files ("
 			 L"Filename TEXT UNIQUE NOT NULL PRIMARY KEY, "
 			 L"FileSize INTEGER NOT NULL, "
 			 L"LastWriteTime INTEGER NOT NULL, "
@@ -59,7 +59,9 @@ void CThumbCache::InitDatabase()
 			 L"CREATE INDEX IDX_TTH ON Files(TTH ASC); "
 			 L"CREATE INDEX IDX_ED2K ON Files(ED2K ASC); "
 			 L"CREATE INDEX IDX_MD5 ON Files(MD5 ASC);" ) )
-		db.Exec( L"VACUUM;");
+	{
+		db->Exec( L"VACUUM;");
+	}
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -80,38 +82,37 @@ BOOL CThumbCache::Load(LPCTSTR pszPath, CImageFile* pImage)
 	}
 
 	// Load file info from database
-	SQLite::CDatabase db( Settings.General.UserPath + _T("\\Data\\Shareaza.db3") );
-	if ( ! db )
+	auto_ptr< CDatabase > db( theApp.GetDatabase() );
+	if ( ! *db )
 	{
-		TRACE( _T("CThumbCache::InitDatabase : Database error: %s\n"), db.GetLastErrorMessage() );
+		TRACE( _T("CThumbCache::InitDatabase : Database error: %s\n"), db->GetLastErrorMessage() );
 		return FALSE;
 	}
 
 	CString sPath( pszPath );
 	sPath.MakeLower();
 
-	SQLite::CStatement st( db,
-		_T("SELECT FileSize, LastWriteTime, Image FROM Files WHERE Filename == ?;") );
-	if ( ! st.Bind( 1, sPath ) ||
-		 ! st.Step() ||
-		 ! ( st.GetCount() == 0 || st.GetCount() == 3 ) )
+	if ( ! db->Prepare( _T("SELECT FileSize, LastWriteTime, Image FROM Files WHERE Filename == ?;") ) ||
+		 ! db->Bind( 1, sPath ) ||
+		 ! db->Step() ||
+		 ! ( db->GetCount() == 0 || db->GetCount() == 3 ) )
 	{
-		TRACE( _T("CThumbCache::Load : Database error: %s\n"), db.GetLastErrorMessage() );
+		TRACE( _T("CThumbCache::Load : Database error: %s\n"), db->GetLastErrorMessage() );
 		return FALSE;
 	}
-	if ( st.GetCount() == 0 )
+	if ( db->GetCount() == 0 )
 	{
 		TRACE( _T("CThumbCache::Load : No thumbnail for %s\n"), pszPath );
 		return FALSE;
 	}
 
-	QWORD nFileSize = (QWORD)st.GetInt64( _T("FileSize") );
-	QWORD nLastWriteTime = (QWORD)st.GetInt64( _T("LastWriteTime") );
+	QWORD nFileSize = (QWORD)db->GetInt64( _T("FileSize") );
+	QWORD nLastWriteTime = (QWORD)db->GetInt64( _T("LastWriteTime") );
 	int data_len;
-	LPCVOID data = st.GetBlob( _T("Image"), &data_len );
+	LPCVOID data = db->GetBlob( _T("Image"), &data_len );
 	if ( ! data )
 	{
-		TRACE( _T("CThumbCache::Load : Database error: %s\n"), db.GetLastErrorMessage() );
+		TRACE( _T("CThumbCache::Load : Database error: %s\n"), db->GetLastErrorMessage() );
 		return FALSE;
 	}
 
@@ -135,24 +136,24 @@ BOOL CThumbCache::Load(LPCTSTR pszPath, CImageFile* pImage)
 
 void CThumbCache::Delete(LPCTSTR pszPath)
 {
-	SQLite::CDatabase db( Settings.General.UserPath + _T("\\Data\\Shareaza.db3") );
-	if ( ! db )
+	auto_ptr< CDatabase > db( theApp.GetDatabase() );
+	if ( ! *db )
 	{
-		TRACE( _T("CThumbCache::InitDatabase : Database error: %s\n"), db.GetLastErrorMessage() );
+		TRACE( _T("CThumbCache::InitDatabase : Database error: %s\n"), db->GetLastErrorMessage() );
 		return;
 	}
 
 	CString sPath( pszPath );
 	sPath.MakeLower();
 
-	SQLite::CStatement st( db, _T("DELETE FROM Files WHERE Filename == ?;") );
-	if ( ! st.Bind( 1, sPath ) )
+	if ( ! db->Prepare( _T("DELETE FROM Files WHERE Filename == ?;") ) ||
+		 ! db->Bind( 1, sPath ) )
 	{
-		TRACE( _T("CThumbCache::Load : Database error: %s\n"), db.GetLastErrorMessage() );
+		TRACE( _T("CThumbCache::Load : Database error: %s\n"), db->GetLastErrorMessage() );
 	}
 	else
 	{
-		st.Step();
+		db->Step();
 	}
 }
 
@@ -173,10 +174,10 @@ BOOL CThumbCache::Store(LPCTSTR pszPath, CImageFile* pImage)
 		return FALSE;
 	}
 
-	SQLite::CDatabase db( Settings.General.UserPath + _T("\\Data\\Shareaza.db3") );
-	if ( ! db )
+	auto_ptr< CDatabase > db( theApp.GetDatabase() );
+	if ( ! *db )
 	{
-		TRACE( _T("CThumbCache::InitDatabase : Database error: %s\n"), db.GetLastErrorMessage() );
+		TRACE( _T("CThumbCache::InitDatabase : Database error: %s\n"), db->GetLastErrorMessage() );
 		return FALSE;
 	}
 
@@ -194,24 +195,23 @@ BOOL CThumbCache::Store(LPCTSTR pszPath, CImageFile* pImage)
 	auto_array< BYTE > data( buf );	
 
 	// Remove old image
-	SQLite::CStatement st1( db, _T("DELETE FROM Files WHERE Filename == ?;") );
-	if ( ! st1.Bind( 1, sPath ) )
+	if ( ! db->Prepare( _T("DELETE FROM Files WHERE Filename == ?;") ) ||
+		 ! db->Bind( 1, sPath ) )
 	{
-		TRACE( _T("CThumbCache::Store : Database error: %s\n"), db.GetLastErrorMessage() );
+		TRACE( _T("CThumbCache::Store : Database error: %s\n"), db->GetLastErrorMessage() );
 		return FALSE;
 	}
-	st1.Step();
+	db->Step();
 
 	// Store new one
-	SQLite::CStatement st2( db, _T("INSERT INTO Files ")
-		_T("( Filename, FileSize, LastWriteTime, Image ) VALUES ( ?, ?, ?, ? );") );
-	if ( ! st2.Bind( 1, sPath ) ||
-		 ! st2.Bind( 2, (__int64)MAKEQWORD( fd.nFileSizeLow, fd.nFileSizeHigh ) ) ||
-		 ! st2.Bind( 3, (__int64)MAKEQWORD( fd.ftLastWriteTime.dwLowDateTime, fd.ftLastWriteTime.dwHighDateTime ) ) ||
-		 ! st2.Bind( 4, data.get(), data_len ) ||
-		 ! st2.Step() )
+	if ( ! db->Prepare( _T("INSERT INTO Files ( Filename, FileSize, LastWriteTime, Image ) VALUES ( ?, ?, ?, ? );") ) ||
+		 ! db->Bind( 1, sPath ) ||
+		 ! db->Bind( 2, (__int64)MAKEQWORD( fd.nFileSizeLow, fd.nFileSizeHigh ) ) ||
+		 ! db->Bind( 3, (__int64)MAKEQWORD( fd.ftLastWriteTime.dwLowDateTime, fd.ftLastWriteTime.dwHighDateTime ) ) ||
+		 ! db->Bind( 4, data.get(), data_len ) ||
+		 ! db->Step() )
 	{
-		TRACE( _T("CThumbCache::Store : Database error: %s\n"), db.GetLastErrorMessage() );
+		TRACE( _T("CThumbCache::Store : Database error: %s\n"), db->GetLastErrorMessage() );
 		return FALSE;
 	}
 
