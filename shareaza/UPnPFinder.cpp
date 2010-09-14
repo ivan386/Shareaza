@@ -1,7 +1,7 @@
 //
 // UPnPFinder.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -132,7 +132,7 @@ bool CUPnPFinder::AreServicesHealthy()
 
 	if ( !bResult )
 	{
-		Settings.Connection.EnableUPnP = FALSE;
+		Settings.Connection.EnableUPnP = false;
 		theApp.Message( MSG_ERROR, L"UPnP Device Host service is not running, skipping UPnP setup." );
 	}
 
@@ -163,7 +163,7 @@ void CUPnPFinder::ProcessAsyncFind(BSTR bsSearchType) throw()
 
 	if ( FAILED( hr ) )
 	{
-		theApp.Message( MSG_ERROR, L"CreateAsyncFind failed in UPnP finder." );
+		theApp.Message( MSG_ERROR, L"UPnP is not available." );
 		return;
 	}
 
@@ -183,16 +183,10 @@ void CUPnPFinder::ProcessAsyncFind(BSTR bsSearchType) throw()
 	{
 		__try
 		{
-			hr = m_pDeviceFinder->CancelAsyncFind( m_nAsyncFindHandle );
+			m_pDeviceFinder->CancelAsyncFind( m_nAsyncFindHandle );
 		}
 		__except( EXCEPTION_EXECUTE_HANDLER )
 		{
-			hr = E_FAIL;
-		}
-
-		if ( FAILED( hr ) )
-		{
-			theApp.Message( MSG_ERROR, L"CancelAsyncFind failed in UPnP finder." );
 		}
 
 		m_bAsyncFindRunning = false;
@@ -207,8 +201,7 @@ void CUPnPFinder::StopAsyncFind()
 
 	if ( m_bInited && IsAsyncFindRunning() )
 	{
-		if ( FAILED( m_pDeviceFinder->CancelAsyncFind( m_nAsyncFindHandle ) ) )
-			theApp.Message( MSG_ERROR, L"Cancel AsyncFind failed in UPnP finder." );
+		m_pDeviceFinder->CancelAsyncFind( m_nAsyncFindHandle );
 	}
 
 	if ( m_bSecondTry )
@@ -225,7 +218,7 @@ void CUPnPFinder::StartDiscovery(bool bSecondTry)
 		return;
 
 	if ( !bSecondTry )
-		theApp.Message( MSG_INFO, L"Trying to setup port forwardings with UPnP...");
+		theApp.Message( MSG_INFO, L"Trying to setup port mappings with legacy UPnP...");
 
 	// On tests, in some cases the search for WANConnectionDevice had no results and only a search for InternetGatewayDevice
 	// showed up the UPnP root Device which contained the WANConnectionDevice as a child. I'm not sure if there are cases
@@ -344,13 +337,12 @@ bool CUPnPFinder::OnSearchComplete()
 	{
 		if ( m_bSecondTry )
 		{
-			theApp.Message( MSG_INFO, L"Found no UPnP gateway devices" );
-			Settings.Connection.EnableUPnP = FALSE;
+			theApp.Message( MSG_INFO, L"Found no UPnP gateway devices." );
+			Settings.Connection.EnableUPnP = false;
 			theApp.m_bUPnPPortsForwarded = TRI_FALSE;
-			theApp.m_bUPnPDeviceConnected = TRI_FALSE;
 		}
 		else
-			theApp.Message( MSG_INFO, L"Found no UPnP gateway devices - will retry with different parameters" );
+			theApp.Message( MSG_INFO, L"Found no UPnP gateway devices - will retry with different parameters..." );
 		return false; // no devices found
 	}
 
@@ -391,7 +383,7 @@ HRESULT	CUPnPFinder::GetDeviceServices(DevicePointer pDevice)
 	if ( nCount == 0 )
 	{
 		// Should we ask a user to disable auto-detection?
-		theApp.Message( MSG_INFO, L"Found no services for the currect UPnP device." );
+		theApp.Message( MSG_INFO, L"Found no services for the current UPnP device." );
 		return hr;
 	}
 
@@ -529,7 +521,6 @@ HRESULT CUPnPFinder::MapPort(const ServicePointer& service)
 		{
 			DeleteExistingPortMappings( service );
 			CreatePortMappings( service );
-			theApp.m_bUPnPDeviceConnected = TRI_TRUE;
 		}
 	}
 	else if ( _tcsistr( strResult, L"|VT_BSTR=Disconnected|" ) != NULL && m_bADSL && bPPP )
@@ -1152,15 +1143,7 @@ HRESULT CServiceCallback::StateVariableChanged(IUPnPService* pService,
 	// We are not interested in the initial values; we will request them explicitly
 	if ( !m_instance.IsAsyncFindRunning() )
 	{
-		if ( _wcsicmp( pszStateVarName, L"ConnectionStatus" ) == 0 )
-		{
-			theApp.m_bUPnPDeviceConnected = strValue.CompareNoCase( L"Disconnected" ) == 0
-					? TRI_FALSE
-					: ( strValue.CompareNoCase( L"Connected" ) == 0 )
-						? TRI_TRUE
-						: TRI_UNKNOWN;
-		}
-		else if ( _wcsicmp( pszStateVarName, L"ExternalIPAddress" ) == 0 )
+		if ( _wcsicmp( pszStateVarName, L"ExternalIPAddress" ) == 0 )
 		{
 			theApp.m_nUPnPExternalAddress.s_addr = inet_addr( CT2A( strValue.Trim() ) );
 			if ( theApp.m_nUPnPExternalAddress.s_addr == INADDR_ANY )
@@ -1182,7 +1165,7 @@ HRESULT CServiceCallback::ServiceInstanceDied(IUPnPService* pService)
 	HRESULT hr = pService->get_Id( &bsServiceId );
 	if ( SUCCEEDED( hr ) )
 	{
-		theApp.Message( MSG_ERROR, L"UPnP service %s died", bsServiceId );
+		theApp.Message( MSG_ERROR, L"UPnP service %s died.", bsServiceId );
 		return hr;
 	}
 

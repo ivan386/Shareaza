@@ -189,7 +189,6 @@ CShareazaApp::CShareazaApp() :
 ,	m_nPhysicalMemory		( 0ull )
 ,	m_bMenuWasVisible		( FALSE )
 ,	m_bUPnPPortsForwarded	( TRI_UNKNOWN )
-,	m_bUPnPDeviceConnected	( TRI_UNKNOWN )
 ,	m_nLastInput			( 0ul )
 ,	m_hHookKbd				( NULL )
 ,	m_hHookMouse			( NULL )
@@ -356,11 +355,7 @@ BOOL CShareazaApp::InitInstance()
 		return FALSE;
 #endif // RELEASE_BUILD
 
-	int nSplashSteps = 18
-		+ ( Settings.Connection.EnableFirewallException ? 1 : 0 )
-		+ ( ( Settings.Connection.EnableUPnP && ! Settings.Live.FirstRun ) ? 1 : 0 );
-
-	SplashStep( L"Winsock", ( ( cmdInfo.m_bNoSplash || ! cmdInfo.m_bShowSplash ) ? 0 : nSplashSteps ), false );
+	SplashStep( L"Winsock", ( ( cmdInfo.m_bNoSplash || ! cmdInfo.m_bShowSplash ) ? 0 : 19 ), false );
 	WSADATA wsaData;
 	for ( int i = 1; i <= 2; i++ )
 	{
@@ -443,28 +438,8 @@ BOOL CShareazaApp::InitInstance()
 	SplashStep( L"Rich Documents" );
 		Emoticons.Load();
 		Flags.Load();
-
-	if ( Settings.Connection.EnableFirewallException )
-	{
-		SplashStep( L"Windows Firewall Setup" );
-		CFirewall firewall;
-		if ( firewall.AccessWindowsFirewall() && firewall.AreExceptionsAllowed() )
-		{
-			// Add to firewall exception list if necessary
-			// and enable UPnP Framework if disabled
-			firewall.SetupService( NET_FW_SERVICE_UPNP );
-			firewall.SetupProgram( m_strBinaryPath, theApp.m_pszAppName );
-		}
-	}
-
-	// If it is the first run we will run the UPnP discovery only in the QuickStart Wizard
-	if ( Settings.Connection.EnableUPnP && ! Settings.Live.FirstRun )
-	{
-		SplashStep( L"Firewall/Router Setup" );
-		m_pUPnPFinder.Attach( new CUPnPFinder );
-		if ( m_pUPnPFinder->AreServicesHealthy() )
-			m_pUPnPFinder->StartDiscovery();
-	}
+	SplashStep( L"Windows Firewall and UPnP/NAT Setup" );
+		SetupConnection();
 
 	SplashStep( L"GUI" );
 		if ( cmdInfo.m_bTray ) WriteProfileInt( _T("Windows"), _T("CMainWnd.ShowCmd"), 0 );
@@ -533,29 +508,12 @@ int CShareazaApp::ExitInstance()
 		DCClients.Clear();
 		EDClients.Clear();
 
-		if ( Settings.Connection.DeleteFirewallException )
-		{
-			SplashStep( L"Closing Windows Firewall Access" );
-			CFirewall firewall;
-			if ( firewall.AccessWindowsFirewall() )
-			{
-				// Remove application from the firewall exception list
-				firewall.SetupProgram( m_strBinaryPath, theApp.m_pszAppName, TRUE );
-			}
-		}
+		SplashStep( L"Closing Windows Firewall and UPnP Access" );
+		CloseConnection();
 
-		if ( m_pUPnPFinder )
-		{
-			SplashStep( L"Closing Firewall/Router Access" );
-			m_pUPnPFinder->StopAsyncFind();
-			if ( Settings.Connection.DeleteUPnPPorts )
-				m_pUPnPFinder->DeletePorts();
-			m_pUPnPFinder.Free();
-		}
-
+		SplashStep( L"Saving" );
 		if ( m_bLive )
 		{
-			SplashStep( L"Saving" );
 			Downloads.Save();
 			DownloadGroups.Save();
 			Library.Save();
@@ -611,6 +569,118 @@ int CShareazaApp::ExitInstance()
 	}
 
 	return CWinApp::ExitInstance();
+}
+
+void CShareazaApp::SetupConnection()
+{
+	if ( Settings.Connection.EnableUPnP ||
+		 Settings.Connection.EnableFirewallException )
+	{
+		if ( ! m_pFirewall )
+			m_pFirewall.Attach( new CFirewall );
+
+		if ( m_pFirewall && m_pFirewall->AreExceptionsAllowed() )
+		{
+			if ( Settings.Connection.EnableUPnP )
+			{
+				if ( m_pFirewall->SetupService( NET_FW_SERVICE_UPNP ) )
+					theApp.Message( MSG_INFO, _T("Windows Firewall setup for UPnP succeeded.") );
+				else
+					theApp.Message( MSG_ERROR, _T("Windows Firewall setup for UPnP failed.") );
+			}
+
+			if ( Settings.Connection.EnableFirewallException )
+			{
+				if ( m_pFirewall->SetupProgram( m_strBinaryPath, CLIENT_NAME_T, FALSE ) )
+					theApp.Message( MSG_INFO, _T("Windows Firewall setup for application succeeded.") );
+				else
+					theApp.Message( MSG_ERROR, _T("Windows Firewall setup for application failed.") );
+			}
+		}
+		else
+			theApp.Message( MSG_INFO, _T("Windows Firewall is not available.") );
+	}
+
+	// If it is the first run we will run the UPnP discovery only in the QuickStart Wizard
+	if ( Settings.Connection.EnableUPnP && ! Settings.Live.FirstRun )
+	{
+		BOOL bSuccess = FALSE;
+		if ( m_pFirewall && m_pFirewall->AreMappingsAllowed() )
+		{
+			ULONG ulOutBufLen = sizeof( IP_ADAPTER_INFO );
+			auto_array< char > pAdapterInfo( new char[ ulOutBufLen ] );			
+			ULONG ret = GetAdaptersInfo( (PIP_ADAPTER_INFO)pAdapterInfo.get(), &ulOutBufLen );
+			if ( ret == ERROR_BUFFER_OVERFLOW ) 
+			{
+				pAdapterInfo.reset( new char[ ulOutBufLen ] ); 
+				ret = GetAdaptersInfo( (PIP_ADAPTER_INFO)pAdapterInfo.get(), &ulOutBufLen );
+			}
+			if ( ret == NO_ERROR )
+			{
+				IP_ADAPTER_INFO& pInfo = *(PIP_ADAPTER_INFO)pAdapterInfo.get();
+				CString strLocalIP( (LPCSTR)( pInfo.IpAddressList.IpAddress.String ) );
+
+				if ( Settings.Connection.InPort == 0 ) // random port
+					Settings.Connection.InPort = Network.RandomPort();
+
+				for ( int i = 0; i < 5; ++i )
+				{
+					bSuccess = m_pFirewall->SetupMappings( strLocalIP, Settings.Connection.InPort,
+						CLIENT_NAME_T, m_nUPnPExternalAddress );
+					if ( bSuccess )
+					{
+						m_bUPnPPortsForwarded = TRI_TRUE;
+						Network.AcquireLocalAddress( m_nUPnPExternalAddress );
+						break;
+					}
+
+					// Change port
+					Settings.Connection.InPort = Network.RandomPort();
+					Settings.Connection.RandomPort = true;
+				}
+			}
+
+			if ( bSuccess )
+				theApp.Message( MSG_INFO, _T("UPnP port mapping succeeded.") );
+			else
+				theApp.Message( MSG_ERROR, _T("UPnP port mapping failed.") );
+		}
+		else
+			theApp.Message( MSG_INFO, _T("UPnP is not available.") );
+
+		// Using legacy methods
+		if ( ! bSuccess )
+		{
+			if ( ! m_pUPnPFinder )
+				m_pUPnPFinder.Attach( new CUPnPFinder );
+
+			if ( m_pUPnPFinder->AreServicesHealthy() )
+				m_pUPnPFinder->StartDiscovery();
+		}
+	}
+}
+
+void CShareazaApp::CloseConnection()
+{
+	if ( m_pFirewall )
+	{
+		// Remove application from the firewall exception list
+		if ( Settings.Connection.DeleteFirewallException )
+			m_pFirewall->SetupProgram( m_strBinaryPath, CLIENT_NAME_T, TRUE );
+
+		// Remove port mappings
+		if ( Settings.Connection.DeleteUPnPPorts )
+			m_pFirewall->RemoveMappings( Settings.Connection.InPort );
+	}
+	m_pFirewall.Free();
+
+	if ( m_pUPnPFinder )
+	{
+		m_pUPnPFinder->StopAsyncFind();
+		if ( Settings.Connection.DeleteUPnPPorts )
+			m_pUPnPFinder->DeletePorts();
+	}
+	m_pUPnPFinder.Free();
 }
 
 void CShareazaApp::WinHelp(DWORD /*dwData*/, UINT /*nCmd*/)

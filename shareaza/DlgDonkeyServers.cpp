@@ -22,6 +22,7 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
+#include "Buffer.h"
 #include "HostCache.h"
 #include "DlgDonkeyServers.h"
 

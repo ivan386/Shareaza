@@ -1,7 +1,7 @@
 //
 // PageSettingsConnection.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -270,30 +270,13 @@ void CConnectionSettingsPage::OnOK()
 	if ( m_sOutHost.CompareNoCase( strAutomatic ) == 0 )
 		m_sOutHost.Empty();
 
-	Settings.Connection.FirewallState		= m_wndCanAccept.GetCurSel();
-	Settings.Connection.InHost				= m_sInHost;
-
-	bool bRandomForwarded = ( m_nInPort == 0 &&
-		theApp.m_bUPnPPortsForwarded == TRI_TRUE );
-
-	if ( !bRandomForwarded || m_nInPort != 0 || !m_bInRandom )
-	{
-		if ( m_bEnableUPnP && ( (DWORD)m_nInPort != Settings.Connection.InPort ||
-			!Settings.Connection.EnableUPnP ) )
-		{
-			Settings.Connection.InPort = m_nInPort;
-
-			if ( !theApp.m_pUPnPFinder )
-				theApp.m_pUPnPFinder.Attach( new CUPnPFinder );
-			if ( theApp.m_pUPnPFinder->AreServicesHealthy() )
-				theApp.m_pUPnPFinder->StartDiscovery();
-		}
-		else
-			Settings.Connection.InPort = m_nInPort;
-	}
-
+	DWORD nOldInPort	= Settings.Connection.InPort;
+	bool bOldEnableUPnP	= Settings.Connection.EnableUPnP;
 	DWORD nOldOutSpeed	= Settings.Connection.OutSpeed;
 
+	Settings.Connection.FirewallState		= m_wndCanAccept.GetCurSel();
+	Settings.Connection.InHost				= m_sInHost;
+	Settings.Connection.InPort				= m_nInPort;
 	Settings.Connection.RandomPort			= ( m_bInRandom && m_nInPort == 0 );
 	Settings.Connection.EnableUPnP			= m_bEnableUPnP != FALSE;
 	Settings.Connection.InBind				= m_bInBind != FALSE;
@@ -327,6 +310,13 @@ void CConnectionSettingsPage::OnOK()
 			Settings.Live.UploadLimitWarning = TRUE;
 		}
 	}
+
+	if ( Settings.Connection.EnableUPnP &&
+		( ! bOldEnableUPnP || nOldInPort != Settings.Connection.InPort ) )
+	{
+		theApp.SetupConnection();
+	}
+
 	CSettingsPage::OnOK();
 }
 
@@ -384,9 +374,9 @@ void CConnectionSettingsPage::OnShowWindow(BOOL bShow, UINT nStatus)
 
 void CConnectionSettingsPage::OnClickedEnableUpnp()
 {
-	if ( !m_bEnableUPnP )
+	if ( ! m_bEnableUPnP )
 	{
-		if ( !theApp.m_pUPnPFinder )
+		if ( ! theApp.m_pUPnPFinder )
 			theApp.m_pUPnPFinder.Attach( new CUPnPFinder );
 
 		// If the UPnP Device Host service is not running ask the user to

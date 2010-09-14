@@ -1,7 +1,7 @@
 //
 // Firewall.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,13 +22,7 @@
 // CFirewall wraps Windows COM components to change Windows Firewall settings, and talk UPnP to a NAT router
 // http://shareazasecurity.be/wiki/index.php?title=Developers.Code.CFirewall
 
-// If Visual Studio can't find these files, check out http://shareazasecurity.be/wiki/index.php?title=Zootella.SP2Platform
-// Include headers from the Windows XP SP2 version of the Platform SDK, or later
-
-#ifndef FIREWALL_H_INCLUDED
-#define FIREWALL_H_INCLUDED
-
-#include <upnp.h>
+#pragma once
 
 // Control the Windows Firewall, and talk UPnP to the NAT router to setup port forwarding
 class CFirewall
@@ -36,7 +30,7 @@ class CFirewall
 public:
 
 	// Windows Firewall COM interfaces accessed with the object
-    CComPtr< INetFwMgr >					Manager;
+    CComPtr< INetFwMgr >					FwManager;
     CComPtr< INetFwPolicy >					Policy;
 	CComPtr< INetFwProfile >				Profile;
 	CComPtr< INetFwServices >				ServiceList;
@@ -50,11 +44,11 @@ public:
 
 	// UPnP COM interfaces
 	CComPtr< IUPnPNAT >						Nat;
+	CComPtr< INATEventManager >				NatManager;
 	CComPtr< IStaticPortMappingCollection >	Collection;
-	CComPtr< IStaticPortMapping >			Mapping;
-	BOOL									m_bInitialized;
+	CComPtr< IStaticPortMapping >			MappingTCP;
+	CComPtr< IStaticPortMapping >			MappingUDP;
 
-	// Constructor and destructor
 	CFirewall();
 	~CFirewall();
 
@@ -68,17 +62,35 @@ public:
 	//	firewall.SetupService( NET_FW_SERVICE_UPNP );
 
 	// Windows Firewall Methods
-	BOOL SetupService( NET_FW_SERVICE_TYPE service );                    // Check a box for a service on the Windows Firewall exceptions list
-	BOOL SetupProgram( const CString& path, const CString& name, BOOL bRemove = FALSE);// List a program and check its box
-	BOOL AccessWindowsFirewall();                                        // Access the Windows Firewall COM objects, call before calling the methods below
-	BOOL IsProgramListed( const CString& path, BOOL* listed );           // Determine if a program is on the exceptions list
-	BOOL IsServiceEnabled( NET_FW_SERVICE_TYPE service, BOOL* enabled ); // Determine if a service is checked
-	BOOL IsProgramEnabled( const CString& path, BOOL* enabled );         // Determine if a listed program is checked
-	BOOL AreExceptionsAllowed();										 // Find out if the system is in no-exceptions mode
-	BOOL AddProgram( const CString& path, const CString& name );         // Add a program to the list with a checked box
-	BOOL RemoveProgram( const CString& path );							 // Add a program to the list with a checked box
-	BOOL EnableService( NET_FW_SERVICE_TYPE service );                   // Check the box for a service
-	BOOL EnableProgram( const CString& path );                           // Check the box for a program
-};
 
-#endif //#ifndef FIREWALL_H_INCLUDED
+	// Find out if the system is in no-exceptions mode
+	BOOL AreExceptionsAllowed() const;
+	// Check a box for a service on the Windows Firewall exceptions list
+	BOOL SetupService(NET_FW_SERVICE_TYPE service);
+	// List a program and check its box
+	BOOL SetupProgram(const CString& path, const CString& name, BOOL bRemove);
+	// Determine if a program is on the exceptions list
+	BOOL IsProgramListed(const CString& path, BOOL* listed);
+	// Determine if a service is checked
+	BOOL IsServiceEnabled(NET_FW_SERVICE_TYPE service, BOOL* enabled);
+	// Determine if a listed program is checked
+	BOOL IsProgramEnabled(const CString& path, BOOL* enabled);
+	// Add a program to the list with a checked box
+	BOOL AddProgram(const CString& path, const CString& name);
+	// Add a program to the list with a checked box
+	BOOL RemoveProgram(const CString& path);
+	// Check the box for a service
+	BOOL EnableService(NET_FW_SERVICE_TYPE service);
+	// Check the box for a program
+	BOOL EnableProgram(const CString& path);
+
+	// NAT Methods
+
+	// Find out if the system is NAT-compatible
+	BOOL AreMappingsAllowed() const;
+	// Create TCP and UDP port mappings
+	BOOL SetupMappings(LPCWSTR szLocalIP, long nPort, LPCWSTR szDescription, IN_ADDR& pExternalAddress);
+	BOOL SetupMappings(LPCWSTR szLocalIP, long nPort, LPCWSTR szProtocol, LPCWSTR szDescription, IStaticPortMapping** ppMapping);
+	// Remove TCP and UDP port mappings
+	BOOL RemoveMappings(long nPort);
+};

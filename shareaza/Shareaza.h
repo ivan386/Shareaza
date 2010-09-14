@@ -23,9 +23,10 @@
 
 #include "Resource.h"
 #include "ComObject.h"
-#include "Buffer.h"
 
+class CBuffer;
 class CDatabase;
+class CFirewall;
 class CFontManager;
 class CMainWnd;
 class CPacketWnd;
@@ -79,15 +80,15 @@ public:
 	DWORD				m_nWindowsVersionMinor;		// Windows minor version
 	QWORD				m_nPhysicalMemory;			// Physical RAM installed
 	BOOL				m_bMenuWasVisible;			// For the menus in media player window
-	CAutoPtr< CUPnPFinder > m_pUPnPFinder;
-	TRISTATE			m_bUPnPPortsForwarded;		// UPnP values are assigned when the discovery is complete
-	TRISTATE			m_bUPnPDeviceConnected;		// or when the service notifies
-	IN_ADDR				m_nUPnPExternalAddress;		// UPnP current external address
 	DWORD				m_nLastInput;				// Time of last input event (in secs)
 	HHOOK				m_hHookKbd;
 	HHOOK				m_hHookMouse;
 	CPacketWnd*			m_pPacketWnd;				// Packet Window (NULL - not opened)
 	SYSTEM_INFO			m_SysInfo;					// System Information
+	CAutoPtr< CFirewall >	m_pFirewall;			// Windows Firewall interface
+	CAutoPtr< CUPnPFinder >	m_pUPnPFinder;			// Legacy UPnP interface
+	TRISTATE			m_bUPnPPortsForwarded;		// UPnP values are assigned when the discovery is complete
+	IN_ADDR				m_nUPnPExternalAddress;		// UPnP current external address
 
 	// Cryptography Context handle
 	HCRYPTPROV			m_hCryptProv;
@@ -176,8 +177,13 @@ public:
 	// Must be freed by "delete" operator.
 	CDatabase*			GetDatabase() const;
 
+	// Setup Window Firewall and UPnP/NAT
+	void				SetupConnection();
+	// Close Window Firewall and UPnP/NAT access
+	void				CloseConnection();
+
 protected:
-	CSplashDlg*			m_dlgSplash;
+	CSplashDlg*			m_dlgSplash;		// Splash dialog
 
 	virtual BOOL		InitInstance();
 	virtual int			ExitInstance();

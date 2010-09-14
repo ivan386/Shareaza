@@ -24,6 +24,7 @@
 
 #include "StdAfx.h"
 #include "Shareaza.h"
+#include "Buffer.h"
 #include "Settings.h"
 #include "Datagrams.h"
 #include "DiscoveryServices.h"

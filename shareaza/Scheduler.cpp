@@ -29,15 +29,13 @@
 //DlgScheduleTask: A dialog to edit or create a ScheduleTask.
 
 #include "StdAfx.h"
-#include "atltime.h"
 #include "Shareaza.h"
 #include "Settings.h"
+#include "Buffer.h"
 #include "DlgHelp.h"
 #include "Scheduler.h"
 #include "XML.h"
 #include "Network.h"
-#include "Ras.h"
-#include "Reason.h"
 
 CScheduler Scheduler;
 

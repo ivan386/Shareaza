@@ -21,6 +21,7 @@
 
 #include "StdAfx.h"
 #include "Shareaza.h"
+#include "Buffer.h"
 #include "ImageServices.h"
 #include "ImageFile.h"
 #include "HttpRequest.h"

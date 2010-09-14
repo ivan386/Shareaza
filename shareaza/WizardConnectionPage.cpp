@@ -1,7 +1,7 @@
 //
 // WizardConnectionPage.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -255,12 +255,12 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 	{
 		m_nProgressSteps += 30;	// UPnP device detection
 
-		// Create UPnP finder object if it doesn't exist
-		if ( !theApp.m_pUPnPFinder )
-			theApp.m_pUPnPFinder.Attach( new CUPnPFinder );
-		if ( theApp.m_pUPnPFinder->AreServicesHealthy() )
-			theApp.m_pUPnPFinder->StartDiscovery();
+		Settings.Connection.EnableUPnP = true;
+
+		theApp.SetupConnection();
 	}
+	else
+		Settings.Connection.EnableUPnP = false;
 
 	BeginThread( "WizardConnectionPage" );
 

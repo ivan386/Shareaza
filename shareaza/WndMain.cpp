@@ -572,11 +572,7 @@ void CMainWnd::OnClose()
 
 	RemoveSkin();
 
-	int nSplashSteps = 6
-		+ ( Settings.Connection.DeleteFirewallException ? 1 : 0 )
-		+ ( theApp.m_pUPnPFinder ? 1 : 0 )
-		+ ( theApp.m_bLive ? 1 : 0 );
-	theApp.SplashStep( L"Closing GUI", nSplashSteps, true );
+	theApp.SplashStep( L"Closing GUI", 8, true );
 
 	LibraryBuilder.StopThread();
 	Library.StopThread();
