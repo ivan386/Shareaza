@@ -188,7 +188,13 @@ void CHostCacheWnd::Update(BOOL bForce)
 		pItem->SetImage( pHost->m_nProtocol );
 		pItem->SetMaskOverlay( pHost->m_bPriority );
 
-		pItem->Set( 0, CString( inet_ntoa( pHost->m_pAddress ) ) );
+		if ( pHost->m_sAddress.IsEmpty() )
+			pItem->Set( 0, CString( inet_ntoa( pHost->m_pAddress ) ) );
+		else if ( pHost->m_pAddress.s_addr == INADDR_ANY )
+			pItem->Set( 0, pHost->m_sAddress );
+		else
+			pItem->Set( 0, pHost->m_sAddress + _T(" (") + CString( inet_ntoa( pHost->m_pAddress ) ) + _T(")") );
+
 		pItem->Format( 1, _T("%hu"), pHost->m_nPort );
 
 		if ( pHost->m_pVendor )
@@ -489,22 +495,22 @@ void CHostCacheWnd::OnNeighboursCopy()
 	if ( pHost->m_nProtocol == PROTOCOL_G1 || pHost->m_nProtocol == PROTOCOL_G2 )
 	{
 		strURL.Format( _T("gnutella:host:%s:%u"),
-			(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)pHost->m_pAddress ) ), pHost->m_nPort );
+			(LPCTSTR)pHost->Address(), pHost->m_nPort );
 	}
 	else if ( pHost->m_nProtocol == PROTOCOL_ED2K )
 	{
 		strURL.Format( _T("ed2k://|server|%s|%u|/"),
-			(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)pHost->m_pAddress ) ), pHost->m_nPort );
+			(LPCTSTR)pHost->Address(), pHost->m_nPort );
 	}
 	else if ( pHost->m_nProtocol == PROTOCOL_KAD )
 	{
 		strURL.Format( _T("ed2k://|kad|%s|%u|/"),
-			(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)pHost->m_pAddress ) ), pHost->m_nUDPPort );
+			(LPCTSTR)pHost->Address(), pHost->m_nUDPPort );
 	}
 	else if ( pHost->m_nProtocol == PROTOCOL_DC )
 	{
 		strURL.Format( _T("dchub://%s:%u"),
-			(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)pHost->m_pAddress ) ), pHost->m_nUDPPort );
+			(LPCTSTR)pHost->Address(), pHost->m_nUDPPort );
 	}
 
 	CURLCopyDlg::SetClipboardText( strURL );
@@ -624,13 +630,14 @@ void CHostCacheWnd::OnHostcacheImport()
 	CFileDialog dlg( TRUE, _T("met"), NULL, OFN_HIDEREADONLY,
 		_T("eDonkey2000 MET files|*.met|")
 		_T("Kademlia Nodes files|nodes.dat|")
+		_T("DC++ hub lists|*.xml.bz2|")
 		_T("All Files|*.*||"), this );
 
 	if ( dlg.DoModal() != IDOK ) return;
 
 	CWaitCursor pCursor;
 	HostCache.Import( dlg.GetPathName() );
-	HostCache.Save();
+
 	Update( TRUE );
 }
 

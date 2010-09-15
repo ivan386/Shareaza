@@ -728,26 +728,37 @@ BOOL CShareazaApp::Open(LPCTSTR lpszFileName, BOOL bDoIt)
 		return OpenCollection( lpszFileName, bDoIt );
 	else if ( nLength > 16 && ! _tcsicmp( lpszFileName + nLength - 16, _T(".emulecollection") ) )
 		return OpenCollection( lpszFileName, bDoIt );
+	else if ( nLength > 15 && ! _tcsicmp( lpszFileName + nLength - 15, _T("hublist.xml.bz2") ) )
+		return OpenImport( lpszFileName, bDoIt );
 	else if ( nLength > 8  && ! _tcsicmp( lpszFileName + nLength - 8,  _T(".xml.bz2") ) )
 		return OpenCollection( lpszFileName, bDoIt );
 	else if ( nLength > 4  && ! _tcsicmp( lpszFileName + nLength - 4,  _T(".url") ) )
 		return OpenInternetShortcut( lpszFileName, bDoIt );
 	else if ( nLength > 4  && ! _tcsicmp( lpszFileName + nLength - 4,  _T(".met") ) )
-		return OpenMET( lpszFileName, bDoIt );
+		return OpenImport( lpszFileName, bDoIt );
 	else if ( nLength > 4  && ! _tcsicmp( lpszFileName + nLength - 4,  _T(".dat") ) )
-		return OpenMET( lpszFileName, bDoIt );
+		return OpenImport( lpszFileName, bDoIt );
 	else if ( nLength > 4  && ! _tcsicmp( lpszFileName + nLength - 4,  _T(".lnk") ) )
 		return OpenShellShortcut( lpszFileName, bDoIt );
 	else
 		return OpenURL( lpszFileName, bDoIt );
 }
 
-BOOL CShareazaApp::OpenMET(LPCTSTR lpszFileName, BOOL bDoIt)
+BOOL CShareazaApp::OpenImport(LPCTSTR lpszFileName, BOOL bDoIt)
 {
 	if ( ! bDoIt )
 		return TRUE;
 
-	return HostCache.Import( lpszFileName );
+	const size_t nLen = _tcslen( lpszFileName ) + 1;
+	auto_array< TCHAR > pszPath( new TCHAR[ nLen ] );
+	if ( pszPath.get() )
+	{
+		_tcscpy_s( pszPath.get(), nLen, lpszFileName );
+		if ( PostMainWndMessage( WM_IMPORT, (WPARAM)pszPath.release() ) )
+			return TRUE;
+	}
+
+	return FALSE;
 }
 
 BOOL CShareazaApp::OpenShellShortcut(LPCTSTR lpszFileName, BOOL bDoIt)

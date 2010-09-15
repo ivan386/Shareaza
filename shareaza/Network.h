@@ -76,8 +76,8 @@ protected:
 		};
 	} ResolveStruct;
 	typedef CMap< HANDLE, HANDLE, ResolveStruct*, ResolveStruct* > CResolveMap;
-	CResolveMap			m_pLookups;
-	CCriticalSection	m_pLookupsSection;
+	CResolveMap					m_pLookups;
+	mutable CCriticalSection	m_pLookupsSection;
 
 	class CJob
 	{
@@ -177,6 +177,8 @@ public:
 	BOOL		AcquireLocalAddress(const IN_ADDR& pAddress);
 	BOOL		Resolve(LPCTSTR pszHost, int nPort, SOCKADDR_IN* pHost, BOOL bNames = TRUE) const;
 	BOOL		AsyncResolve(LPCTSTR pszAddress, WORD nPort, PROTOCOLID nProtocol, BYTE nCommand);
+	// Pending network name resolves queue size
+	UINT		GetResolveCount() const;
 	BOOL		IsReserved(const IN_ADDR* pAddress, bool bCheckLocal=true) const;
 	WORD		RandomPort() const;
 	void		CreateID(Hashes::Guid& oID);

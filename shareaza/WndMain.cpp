@@ -128,6 +128,7 @@ BEGIN_MESSAGE_MAP(CMainWnd, CMDIFrameWnd)
 	ON_MESSAGE(WM_WINSOCK, OnWinsock)
 	ON_MESSAGE(WM_URL, OnHandleURL)
 	ON_MESSAGE(WM_COLLECTION, OnHandleCollection)
+	ON_MESSAGE(WM_IMPORT, OnHandleImport)
 	ON_MESSAGE(WM_TORRENT, OnHandleTorrent)
 	ON_MESSAGE(WM_VERSIONCHECK, OnVersionCheck)
 	ON_MESSAGE(WM_OPENCHAT, OnOpenChat)
@@ -1207,6 +1208,23 @@ LRESULT CMainWnd::OnHandleURL(WPARAM wParam, LPARAM /*lParam*/)
 	UpdateWindow();
 
 	new CURLActionDlg( (CShareazaURL*)wParam );
+
+	return 0;
+}
+
+LRESULT CMainWnd::OnHandleImport(WPARAM wParam, LPARAM /*lParam*/)
+{
+	LPTSTR pszPath = (LPTSTR)wParam;
+
+	CWaitCursor wc;
+	HostCache.Import( pszPath );
+
+	delete [] pszPath;
+
+	if ( CHostCacheWnd* pCacheWnd = (CHostCacheWnd*)m_pWindows.Open( RUNTIME_CLASS(CHostCacheWnd) ) )
+	{
+		pCacheWnd->Update( TRUE );
+	}
 
 	return 0;
 }

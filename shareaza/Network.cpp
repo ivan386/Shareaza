@@ -303,14 +303,7 @@ BOOL CNetwork::ConnectTo(LPCTSTR pszAddress, int nPort, PROTOCOLID nProtocol, BO
 		}
 	}
 
-	theApp.Message( MSG_INFO, IDS_NETWORK_RESOLVING, pszAddress );
-
-	if ( AsyncResolve( pszAddress, (WORD)nPort, nProtocol, bNoUltraPeer ? 2 : 1 ) )
-		return TRUE;
-
-	theApp.Message( MSG_ERROR, IDS_NETWORK_RESOLVE_FAIL, pszAddress );
-
-	return FALSE;
+	return AsyncResolve( pszAddress, (WORD)nPort, nProtocol, bNoUltraPeer ? 2 : 1 );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -417,22 +410,37 @@ BOOL CNetwork::Resolve(LPCTSTR pszHost, int nPort, SOCKADDR_IN* pHost, BOOL bNam
 
 BOOL CNetwork::AsyncResolve(LPCTSTR pszAddress, WORD nPort, PROTOCOLID nProtocol, BYTE nCommand)
 {
+	theApp.Message( MSG_INFO, IDS_NETWORK_RESOLVING, pszAddress );
+
 	auto_ptr< ResolveStruct > pResolve( new ResolveStruct );
+	if ( pResolve.get() )
+	{
+		pResolve->m_sAddress = pszAddress;
+		pResolve->m_nProtocol = nProtocol;
+		pResolve->m_nPort = nPort;
+		pResolve->m_nCommand = nCommand;
 
-	HANDLE hAsync = WSAAsyncGetHostByName( AfxGetMainWnd()->GetSafeHwnd(), WM_WINSOCK,
-		CT2CA(pszAddress), pResolve->m_pBuffer, MAXGETHOSTSTRUCT );
+		HANDLE hAsync = WSAAsyncGetHostByName( AfxGetMainWnd()->GetSafeHwnd(), WM_WINSOCK,
+			CT2CA( pszAddress ), pResolve->m_pBuffer, MAXGETHOSTSTRUCT );
+		if ( hAsync )
+		{
+			CQuickLock pLock( m_pLookupsSection );
+			m_pLookups.SetAt( hAsync, pResolve.release() );
+			DEBUG_ONLY( theApp.Message( MSG_DEBUG, _T("Network name resolver has %u pending requests."), m_pLookups.GetCount() ) );
+			return TRUE;
+		}
+	}
 
-	if ( hAsync == NULL )
-		return FALSE;
+	theApp.Message( MSG_ERROR, IDS_NETWORK_RESOLVE_FAIL, pszAddress );
 
-	pResolve->m_sAddress = pszAddress;
-	pResolve->m_nProtocol = nProtocol;
-	pResolve->m_nPort = nPort;
-	pResolve->m_nCommand = nCommand;
+	return FALSE;
+}
 
+UINT CNetwork::GetResolveCount() const
+{
 	CQuickLock pLock( m_pLookupsSection );
-	m_pLookups.SetAt( hAsync, pResolve.release() );
-	return TRUE;
+
+	return m_pLookups.GetCount();
 }
 
 CNetwork::ResolveStruct* CNetwork::GetResolve(HANDLE hAsync)
@@ -442,6 +450,8 @@ CNetwork::ResolveStruct* CNetwork::GetResolve(HANDLE hAsync)
 	ResolveStruct* pResolve = NULL;
 	if ( m_pLookups.Lookup( hAsync, pResolve ) )
 		m_pLookups.RemoveKey( hAsync );
+
+	DEBUG_ONLY( theApp.Message( MSG_DEBUG, _T("Network name resolver has %u pending requests."), m_pLookups.GetCount() ) );
 
 	return pResolve;
 }
@@ -728,102 +738,86 @@ void CNetwork::OnWinsock(WPARAM wParam, LPARAM lParam)
 {
 	auto_ptr< ResolveStruct > pResolve( GetResolve( (HANDLE)wParam ) );
 	if ( ! pResolve.get() )
+		// Out of memory
 		return;
+
+	CHostCacheList* pCache = HostCache.ForProtocol( pResolve->m_nProtocol );
 
 	CQuickLock oNetworkLock( m_pSection );
 
-	CString strAddress;
-	CDiscoveryService* pService;
-
-	if ( WSAGETASYNCERROR(lParam) == 0 )
+	if ( WSAGETASYNCERROR( lParam ) == 0 )
 	{
+		IN_ADDR& pAddress = *(IN_ADDR*)pResolve->m_pHost.h_addr;
+
 		if ( pResolve->m_nCommand == 0 )
 		{
-			HostCache.ForProtocol( pResolve->m_nProtocol )->Add( (IN_ADDR*)pResolve->m_pHost.h_addr, pResolve->m_nPort );
+			pCache->OnResolve( pResolve->m_sAddress, &pAddress, pResolve->m_nPort );
 		}
 		else if ( pResolve->m_nCommand == 1 || pResolve->m_nCommand == 2 )
 		{
-			Neighbours.ConnectTo( *(IN_ADDR*)pResolve->m_pHost.h_addr, pResolve->m_nPort, pResolve->m_nProtocol, FALSE, pResolve->m_nCommand );
+			pCache->OnResolve( pResolve->m_sAddress, &pAddress, pResolve->m_nPort );
+
+			BOOL bNoUltraPeer = ( pResolve->m_nCommand == 2 );
+
+			Neighbours.ConnectTo( pAddress, pResolve->m_nPort, pResolve->m_nProtocol, FALSE, bNoUltraPeer );
 		}
 		else if ( pResolve->m_nCommand == 3 )
 		{
 			// code to invoke UDPHC/UDPKHL Sender.
-			if ( pResolve->m_nProtocol == PROTOCOL_G1 )
+			if ( pResolve->m_nProtocol == PROTOCOL_G1 ||
+				 pResolve->m_nProtocol == PROTOCOL_G2 )
 			{
-				strAddress = L"uhc:" + pResolve->m_sAddress;
-				pService = DiscoveryServices.GetByAddress( strAddress );
+				CString strAddress = ( ( pResolve->m_nProtocol == PROTOCOL_G1 ) ?
+					L"uhc:" : L"ukhl:" ) + pResolve->m_sAddress;
+				CDiscoveryService* pService = DiscoveryServices.GetByAddress( strAddress );
 				if ( pService == NULL )
 				{
 					strAddress.AppendFormat(_T(":%u"), pResolve->m_nPort );
 					pService = DiscoveryServices.GetByAddress( strAddress );
 				}
-
 				if ( pService != NULL )
 				{
-					pService->m_pAddress = *((IN_ADDR*)pResolve->m_pHost.h_addr);
-					pService->m_nPort =  pResolve->m_nPort;
+					pService->m_pAddress = pAddress;
+					pService->m_nPort = pResolve->m_nPort;
 				}
-				UDPHostCache((IN_ADDR*)pResolve->m_pHost.h_addr, pResolve->m_nPort);
-			}
-			else if ( pResolve->m_nProtocol == PROTOCOL_G2 )
-			{
-				strAddress = L"ukhl:" + pResolve->m_sAddress;
-				pService = DiscoveryServices.GetByAddress( strAddress );
-				if ( pService == NULL )
-				{
-					strAddress.AppendFormat(_T(":%u"), pResolve->m_nPort );
-					pService = DiscoveryServices.GetByAddress( strAddress );
-				}
-
-				if ( pService != NULL )
-				{
-					pService->m_pAddress =  *((IN_ADDR*)pResolve->m_pHost.h_addr);
-					pService->m_nPort =  pResolve->m_nPort;
-				}
-				UDPKnownHubCache((IN_ADDR*)pResolve->m_pHost.h_addr, pResolve->m_nPort);
+				if ( pResolve->m_nProtocol == PROTOCOL_G1 )
+					UDPHostCache((IN_ADDR*)pResolve->m_pHost.h_addr, pResolve->m_nPort);
+				else
+					UDPKnownHubCache( &pAddress, pResolve->m_nPort );
 			}
 		}
 	}
-	else if ( pResolve->m_nCommand == 0 )
+	else 
 	{
-		theApp.Message( MSG_ERROR, IDS_NETWORK_RESOLVE_FAIL, pResolve->m_sAddress );
-	}
-	else
-	{
-		if ( pResolve->m_nCommand == 3 )
+		if ( pResolve->m_nCommand == 0 )
 		{
-			if ( pResolve->m_nProtocol == PROTOCOL_G1 )
+			theApp.Message( MSG_ERROR, IDS_NETWORK_RESOLVE_FAIL, pResolve->m_sAddress );
+		}
+		else if ( pResolve->m_nCommand == 1 || pResolve->m_nCommand == 2 )
+		{
+			theApp.Message( MSG_ERROR, IDS_NETWORK_RESOLVE_FAIL, pResolve->m_sAddress );
+
+			pCache->OnFailure( pResolve->m_sAddress, false );
+		}
+		else if ( pResolve->m_nCommand == 3 )
+		{
+			if ( pResolve->m_nProtocol == PROTOCOL_G1 ||
+				 pResolve->m_nProtocol == PROTOCOL_G2 )
 			{
-				strAddress = L"uhc:" + pResolve->m_sAddress;
-				pService = DiscoveryServices.GetByAddress( strAddress );
+				CString strAddress = ( ( pResolve->m_nProtocol == PROTOCOL_G1 ) ?
+					L"uhc:" : L"ukhl:" ) + pResolve->m_sAddress;
+				CDiscoveryService* pService = DiscoveryServices.GetByAddress( strAddress );
 				if ( pService == NULL )
 				{
 					strAddress.AppendFormat(_T(":%u"), pResolve->m_nPort );
 					pService = DiscoveryServices.GetByAddress( strAddress );
 				}
-
-				if ( pService != NULL )
-				{
-					pService->OnFailure();
-				}
-			}
-			else if ( pResolve->m_nProtocol == PROTOCOL_G2 )
-			{
-				strAddress = L"ukhl:" + pResolve->m_sAddress;
-				pService = DiscoveryServices.GetByAddress( strAddress );
-				if ( pService == NULL )
-				{
-					strAddress.AppendFormat(_T(":%u"), pResolve->m_nPort );
-					pService = DiscoveryServices.GetByAddress( strAddress );
-				}
-
 				if ( pService != NULL )
 				{
 					pService->OnFailure();
 				}
 			}
 		}
-
 	}
 }
 

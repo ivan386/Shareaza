@@ -21,16 +21,17 @@
 
 #include "StdAfx.h"
 #include "Shareaza.h"
-#include "Settings.h"
-#include "Network.h"
-#include "HostCache.h"
-#include "Neighbours.h"
-#include "Security.h"
-#include "VendorCache.h"
-#include "EDPacket.h"
 #include "Buffer.h"
-#include "Kademlia.h"
 #include "DiscoveryServices.h"
+#include "EDPacket.h"
+#include "HostCache.h"
+#include "Kademlia.h"
+#include "Neighbours.h"
+#include "Network.h"
+#include "Security.h"
+#include "Settings.h"
+#include "VendorCache.h"
+#include "XML.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -178,35 +179,6 @@ void CHostCache::Serialize(CArchive& ar)
 }
 
 //////////////////////////////////////////////////////////////////////
-// CHostCache root import
-
-int CHostCache::Import(LPCTSTR pszFile, BOOL bFreshOnly)
-{
-	// Ignore too old file
-	if ( bFreshOnly && ! IsFileNewerThan( pszFile, 90ull * 24 * 60 * 60 * 1000 ) ) // 90 days
-		return 0;
-
-	CFile pFile;
-	if ( ! pFile.Open( pszFile, CFile::modeRead ) )
-		return 0;
-
-	// server.met
-	if ( _tcsicmp( PathFindExtension( pszFile ), _T(".met") ) == 0 )
-	{
-		theApp.Message( MSG_NOTICE, _T("Importing MET file: %s ..."), pszFile );
-		return ImportMET( &pFile );
-	}
-	// nodes.dat
-	else if ( _tcsicmp( PathFindExtension( pszFile ), _T(".dat") ) == 0 )
-	{
-		theApp.Message( MSG_NOTICE, _T("Importing Nodes file: %s ..."), pszFile );
-		return ImportNodes( &pFile );
-	}
-	else
-		return 0;
-}
-
-//////////////////////////////////////////////////////////////////////
 // CHostCache prune old hosts
 
 void CHostCache::PruneOldHosts()
@@ -231,6 +203,16 @@ CHostCacheHostPtr CHostCache::Find(const IN_ADDR* pAddress) const
 	{
 		CHostCacheList* pCache = m_pList.GetNext( pos );
 		if ( CHostCacheHostPtr pHost = pCache->Find( pAddress ) ) return pHost;
+	}
+	return NULL;
+}
+
+CHostCacheHostPtr CHostCache::Find(LPCTSTR szAddress) const
+{
+	for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
+	{
+		CHostCacheList* pCache = m_pList.GetNext( pos );
+		if ( CHostCacheHostPtr pHost = pCache->Find( szAddress ) ) return pHost;
 	}
 	return NULL;
 }
@@ -317,28 +299,30 @@ void CHostCacheList::Clear()
 //////////////////////////////////////////////////////////////////////
 // CHostCacheList host add
 
-CHostCacheHostPtr CHostCacheList::Add(const IN_ADDR* pAddress, WORD nPort, DWORD tSeen, LPCTSTR pszVendor, DWORD nUptime, DWORD nCurrentLeaves, DWORD nLeafLimit)
+CHostCacheHostPtr CHostCacheList::Add(const IN_ADDR* pAddress, WORD nPort, DWORD tSeen, LPCTSTR pszVendor, DWORD nUptime, DWORD nCurrentLeaves, DWORD nLeafLimit, LPCTSTR szAddress)
 {
+	ASSERT( pAddress || szAddress );
+
 	// Don't add invalid addresses
-	if ( ! nPort ) 
+	if ( ! nPort )
 		return NULL;
-	if ( ! pAddress->S_un.S_un_b.s_b1 ) 
+	if ( pAddress && ! pAddress->S_un.S_un_b.s_b1 )
 		return NULL;
 
 	// Don't add own firewalled IPs
-	if ( Network.IsFirewalledAddress( pAddress, TRUE ) ) 
+	if ( pAddress && Network.IsFirewalledAddress( pAddress, TRUE ) )
 		return NULL;
 
 	// check against IANA Reserved address.
-	if ( Network.IsReserved( pAddress ) )
+	if ( pAddress && Network.IsReserved( pAddress ) )
 		return NULL;
 
 	// Check security settings, don't add blocked IPs
-	if ( Security.IsDenied( pAddress ) )
+	if ( pAddress && Security.IsDenied( pAddress ) )
 		return NULL;
 
 	// Try adding it to the cache. (duplicates will be rejected)
-	return AddInternal( pAddress, nPort, tSeen, pszVendor, nUptime, nCurrentLeaves, nLeafLimit );
+	return AddInternal( pAddress, nPort, tSeen, pszVendor, nUptime, nCurrentLeaves, nLeafLimit, szAddress );
 }
 
 BOOL CHostCacheList::Add(LPCTSTR pszHost, DWORD tSeen, LPCTSTR pszVendor, DWORD nUptime, DWORD nCurrentLeaves, DWORD nLeafLimit)
@@ -379,18 +363,31 @@ BOOL CHostCacheList::Add(LPCTSTR pszHost, DWORD tSeen, LPCTSTR pszVendor, DWORD 
 
 // This function actually add the remote client to the host cache. Private, but used by the public 
 // functions. No security checking, etc.
-CHostCacheHostPtr CHostCacheList::AddInternal(const IN_ADDR* pAddress, WORD nPort, 
-											DWORD tSeen, LPCTSTR pszVendor, DWORD nUptime, DWORD nCurrentLeaves, DWORD nLeafLimit)
+CHostCacheHostPtr CHostCacheList::AddInternal(const IN_ADDR* pAddress, WORD nPort, DWORD tSeen, LPCTSTR pszVendor, DWORD nUptime, DWORD nCurrentLeaves, DWORD nLeafLimit, LPCTSTR szAddress)
 {
-	CQuickLock oLock( m_pSection );
-
-	ASSERT( pAddress );
-	ASSERT( pAddress->s_addr != INADDR_NONE && pAddress->s_addr != INADDR_ANY );
+	ASSERT( pAddress || szAddress );
 	ASSERT( nPort );
-	ASSERT( m_Hosts.size() == m_HostsTime.size() );
+
+	SOCKADDR_IN saHost;
+	if ( ! pAddress )
+	{
+		// Try to quick resolve dotted IP address
+		if (  ! Network.Resolve( szAddress, nPort, &saHost, FALSE ) )
+			// Cannot resolve
+			return FALSE;
+
+		pAddress = &saHost.sin_addr;
+		nPort = ntohs( saHost.sin_port );
+		if ( pAddress->s_addr != INADDR_ANY )
+			szAddress = NULL;
+	}
+
+	CQuickLock oLock( m_pSection );
 
 	// Check if we already have the host
 	CHostCacheHostPtr pHost = Find( pAddress );
+	if ( ! pHost && szAddress )
+		pHost = Find( szAddress );
 	if ( ! pHost )
 	{
 		// Create new host
@@ -399,10 +396,14 @@ CHostCacheHostPtr CHostCacheList::AddInternal(const IN_ADDR* pAddress, WORD nPor
 		{
 			PruneHosts();
 
-			// Add host to map and index
 			pHost->m_pAddress = *pAddress;
+			if ( szAddress ) pHost->m_sAddress = szAddress;
+			pHost->m_sAddress = pHost->m_sAddress.SpanExcluding( _T(":") );
+
 			pHost->Update( nPort, tSeen, pszVendor, nUptime, nCurrentLeaves, nLeafLimit );
-			m_Hosts.insert( CHostCacheMapPair( *pAddress, pHost ) );
+
+			// Add host to map and index
+			m_Hosts.insert( CHostCacheMapPair( pHost->m_pAddress, pHost ) );
 			m_HostsTime.insert( pHost );
 
 			m_nCookie++;
@@ -410,8 +411,14 @@ CHostCacheHostPtr CHostCacheList::AddInternal(const IN_ADDR* pAddress, WORD nPor
 	}
 	else
 	{
+		if ( szAddress ) pHost->m_sAddress = szAddress;
+		pHost->m_sAddress = pHost->m_sAddress.SpanExcluding( _T(":") );
+
 		Update( pHost, nPort, tSeen, pszVendor, nUptime, nCurrentLeaves, nLeafLimit );
 	}
+
+	ASSERT( m_Hosts.size() == m_HostsTime.size() );
+
 	return pHost;
 }
 
@@ -420,7 +427,6 @@ void CHostCacheList::Update(CHostCacheHostPtr pHost, WORD nPort, DWORD tSeen, LP
 	CQuickLock oLock( m_pSection );
 
 	ASSERT( pHost );
-	ASSERT( pHost->IsValid() );
 	ASSERT( m_Hosts.size() == m_HostsTime.size() );
 
 	// Update host
@@ -500,6 +506,32 @@ void CHostCacheList::SanityCheck()
 	}
 }
 
+void CHostCacheList::OnResolve(LPCTSTR szAddress, const IN_ADDR* pAddress, WORD nPort)
+{
+	CQuickLock oLock( m_pSection );
+
+	CHostCacheHostPtr pHost = Find( szAddress );
+	if ( pHost )
+	{
+		// Remove from old place
+		m_Hosts.erase( std::find_if( m_Hosts.begin(), m_Hosts.end(),
+			std::bind2nd( is_host(), pHost ) ) );
+
+		pHost->m_pAddress = *pAddress;
+		pHost->m_nPort = nPort;
+		pHost->m_sCountry = theApp.GetCountryCode( pHost->m_pAddress );
+
+		// Add to new place
+		m_Hosts.insert( CHostCacheMapPair( pHost->m_pAddress, pHost ) );
+
+		ASSERT( m_Hosts.size() == m_HostsTime.size() );
+	}
+	else
+	{
+		Add( pAddress, nPort, 0, 0, 0, 0, 0, szAddress );
+	}
+}
+
 //////////////////////////////////////////////////////////////////////
 // CHostCacheList failure processor
 
@@ -509,6 +541,32 @@ void CHostCacheList::OnFailure(const IN_ADDR* pAddress, WORD nPort, bool bRemove
 
 	CHostCacheHostPtr pHost = Find( pAddress );
 	if ( pHost && ( ! nPort || pHost->m_nPort == nPort ) )
+	{
+		m_nCookie++;
+		pHost->m_nFailures++;
+
+		if ( ! pHost->m_sAddress.IsEmpty() )
+			// Clear current IP address to re-resolve name later
+			pHost->m_pAddress.s_addr = INADDR_ANY;
+
+		if ( pHost->m_bPriority )
+			return;
+		if ( bRemove || pHost->m_nFailures >= Settings.Connection.FailureLimit )
+			Remove( pHost );
+		else
+		{
+			pHost->m_tFailure = static_cast< DWORD >( time( NULL ) );
+			pHost->m_bCheckedLocally = TRUE;
+		}
+	}
+}
+
+void CHostCacheList::OnFailure(LPCTSTR szAddress, bool bRemove)
+{
+	CQuickLock oLock( m_pSection );
+
+	CHostCacheHostPtr pHost = Find( szAddress );
+	if ( pHost )
 	{
 		m_nCookie++;
 		pHost->m_nFailures++;
@@ -600,10 +658,12 @@ void CHostCacheList::PruneHosts()
 	{
 		--i;
 		CHostCacheHostPtr pHost = (*i);
+
 		if ( ! pHost->m_bPriority )
 		{
 			i = m_HostsTime.erase( i );
-			m_Hosts.erase( pHost->m_pAddress );
+			m_Hosts.erase( std::find_if( m_Hosts.begin(), m_Hosts.end(),
+				std::bind2nd( is_host(), pHost ) ) );
 			delete pHost;
 			m_nCookie++;
 		}
@@ -614,8 +674,10 @@ void CHostCacheList::PruneHosts()
 	{
 		--i;
 		CHostCacheHostPtr pHost = (*i);
+
 		i = m_HostsTime.erase( i );
-		m_Hosts.erase( pHost->m_pAddress );
+		m_Hosts.erase( std::find_if( m_Hosts.begin(), m_Hosts.end(),
+			std::bind2nd( is_host(), pHost ) ) );
 		delete pHost;
 		m_nCookie++;
 	}
@@ -649,9 +711,9 @@ void CHostCacheList::Serialize(CArchive& ar, int nVersion)
 			if ( pHost )
 			{
 				pHost->Serialize( ar, nVersion );
-				if ( pHost->IsValid() &&
-					! Security.IsDenied( &pHost->m_pAddress ) &&
-					! Find( &pHost->m_pAddress ) )
+				if ( ! Security.IsDenied( &pHost->m_pAddress ) &&
+					 ! Find( &pHost->m_pAddress ) &&
+					 ! Find( pHost->m_sAddress ) )
 				{
 					m_Hosts.insert( CHostCacheMapPair( pHost->m_pAddress, pHost ) );
 					m_HostsTime.insert( pHost );
@@ -668,8 +730,100 @@ void CHostCacheList::Serialize(CArchive& ar, int nVersion)
 	}
 }
 
-//////////////////////////////////////////////////////////////////////
-// CHostCache MET import
+int CHostCache::Import(LPCTSTR pszFile, BOOL bFreshOnly)
+{
+	LPCTSTR szExt = PathFindExtension( pszFile );
+
+	// Ignore too old file
+	if ( bFreshOnly && ! IsFileNewerThan( pszFile, 90ull * 24 * 60 * 60 * 1000 ) ) // 90 days
+		return 0;
+
+	CFile pFile;
+	if ( ! pFile.Open( pszFile, CFile::modeRead ) )
+		return 0;
+
+	int nImported = 0;
+
+	if ( _tcsicmp( szExt, _T(".bz2") ) == 0 )
+	{
+		theApp.Message( MSG_NOTICE, _T("Importing HubList file: %s ..."), pszFile );
+
+		nImported = ImportHubList( &pFile );
+	}
+	else if ( _tcsicmp( szExt, _T(".met") ) == 0 )
+	{
+		theApp.Message( MSG_NOTICE, _T("Importing MET file: %s ..."), pszFile );
+
+		nImported = ImportMET( &pFile );
+	}
+	else if ( _tcsicmp( szExt, _T(".dat") ) == 0 )
+	{
+		theApp.Message( MSG_NOTICE, _T("Importing Nodes file: %s ..."), pszFile );
+
+		nImported = ImportNodes( &pFile );
+	}
+	
+	Save();
+
+	return nImported;
+}
+
+int CHostCache::ImportHubList(CFile* pFile)
+{
+	DWORD nSize = pFile->GetLength();
+
+	CBuffer pBuffer;
+	if ( ! pBuffer.EnsureBuffer( nSize ) )
+		// Out of memory
+		return 0;
+
+	if ( pFile->Read( pBuffer.GetData(), nSize ) != nSize )
+		// File error
+		return 0;
+	pBuffer.m_nLength = nSize;
+
+	if ( ! pBuffer.UnBZip() )
+		// Decompression error
+		return 0;
+
+	auto_ptr< CXMLElement > pHublist ( CXMLElement::FromString(
+		pBuffer.ReadString( pBuffer.m_nLength, CP_UTF8 ), TRUE ) );
+	if ( ! pHublist.get() )
+		// XML decoding error
+		return FALSE;
+
+	if ( ! pHublist->IsNamed( _T("Hublist") ) )
+		// Invalid XML file format
+		return FALSE;
+
+	CXMLElement* pHubs = pHublist->GetFirstElement();
+	if ( !  pHubs || ! pHubs->IsNamed( _T("Hubs") ) )
+		// Invalid XML file format
+		return FALSE;
+
+	int nHubs = 0;
+	for ( POSITION pos = pHubs->GetElementIterator() ; pos ; )
+	{
+		CXMLElement* pHub = pHubs->GetNextElement( pos );
+		if ( pHub->IsNamed( _T("Hub") ) )
+		{
+			CString sAddress = pHub->GetAttributeValue( _T("Address") );
+			int nUsers = _tstoi( pHub->GetAttributeValue( _T("Users") ) );
+			int nMaxusers = _tstoi( pHub->GetAttributeValue( _T("Maxusers") ) );
+
+			CHostCacheHostPtr pServer = DC.Add( NULL, DC_DEFAULT_PORT, 0,
+				_T("DC++"), 0, nUsers, nMaxusers, sAddress );
+			if ( pServer )
+			{
+				pServer->m_sName = pHub->GetAttributeValue( _T("Name") );
+				pServer->m_sDescription = pHub->GetAttributeValue( _T("Description") );
+				nHubs ++;
+			}
+		}
+	}
+
+	return nHubs;
+}
 
 int CHostCache::ImportMET(CFile* pFile)
 {
@@ -677,7 +831,7 @@ int CHostCache::ImportMET(CFile* pFile)
 	pFile->Read( &nVersion, sizeof(nVersion) );
 	if ( nVersion != 0xE0 &&
 		 nVersion != ED2K_MET &&
-		 nVersion != ED2K_MET_I64TAGS ) return FALSE;
+		 nVersion != ED2K_MET_I64TAGS ) return 0;
 	
 	int nServers = 0;
 	UINT nCount = 0;
@@ -729,9 +883,6 @@ int CHostCache::ImportMET(CFile* pFile)
 	
 	return nServers;
 }
-
-//////////////////////////////////////////////////////////////////////
-// CHostCache Nodes import
 
 int CHostCache::ImportNodes(CFile* pFile)
 {
@@ -948,7 +1099,7 @@ CHostCacheHost::CHostCacheHost(PROTOCOLID nProtocol) :
 	// Attributes: Kademlia
 	m_nKADVersion(0)
 {
-	m_pAddress.s_addr = 0;
+	m_pAddress.s_addr = INADDR_ANY;
 
 	// 10 sec cooldown to avoid neighbor add-remove oscillation
 	DWORD tNow = static_cast< DWORD >( time( NULL ) );
@@ -964,6 +1115,19 @@ CHostCacheHost::CHostCacheHost(PROTOCOLID nProtocol) :
 	default:
 		break;
 	}
+}
+
+DWORD CHostCacheHost::Seen() const
+{
+	return m_tSeen;
+}
+
+CString CHostCacheHost::Address() const
+{
+	if ( m_pAddress.s_addr != INADDR_ANY )
+		return CString( inet_ntoa( m_pAddress ) );
+	else
+		return m_sAddress;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -1035,6 +1199,9 @@ void CHostCacheHost::Serialize(CArchive& ar, int nVersion)
 		// Version 18
 		ar << m_sUser;
 		ar << m_sPass;
+
+		// Version 18
+		ar << m_sAddress;
 	}
 	else
 	{
@@ -1137,6 +1304,11 @@ void CHostCacheHost::Serialize(CArchive& ar, int nVersion)
 			ar >> m_sUser;
 			ar >> m_sPass;
 		}
+
+		if ( nVersion >= 19 )
+		{
+			ar >> m_sAddress;
+		}
 	}
 }
 
@@ -1199,7 +1371,7 @@ bool CHostCacheHost::Update(WORD nPort, DWORD tSeen, LPCTSTR pszVendor, DWORD nU
 //////////////////////////////////////////////////////////////////////
 // CHostCacheHost connection setup
 
-CNeighbour* CHostCacheHost::ConnectTo(BOOL bAutomatic)
+bool CHostCacheHost::ConnectTo(BOOL bAutomatic)
 {
 	m_tConnect = static_cast< DWORD >( time( NULL ) );
 
@@ -1209,20 +1381,29 @@ CNeighbour* CHostCacheHost::ConnectTo(BOOL bAutomatic)
 	case PROTOCOL_G2:
 	case PROTOCOL_ED2K:
 	case PROTOCOL_DC:
-		return Neighbours.ConnectTo( m_pAddress, m_nPort, m_nProtocol, bAutomatic );
+		if ( m_pAddress.s_addr != INADDR_ANY )
+			return Neighbours.ConnectTo( m_pAddress, m_nPort, m_nProtocol, bAutomatic, FALSE ) != NULL;
+		else
+		{
+			m_tConnect += 30; // Throttle for 30 seconds
+			return Network.ConnectTo( m_sAddress, m_nPort, m_nProtocol, FALSE ) != FALSE;
+		}
+
 	case PROTOCOL_KAD:
 		{
-			SOCKADDR_IN pHost = { 0 };
+			SOCKADDR_IN pHost = {};
 			pHost.sin_family = AF_INET;
 			pHost.sin_addr.s_addr = m_pAddress.s_addr;
 			pHost.sin_port = htons( m_nUDPPort );
 			Kademlia.Bootstrap( &pHost );
 		}
 		break;
+
 	default:
 		ASSERT( FALSE );
 	}
-	return NULL;
+
+	return false;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -1271,8 +1452,13 @@ bool CHostCacheHost::IsExpired(const DWORD tNow) const
 
 bool CHostCacheHost::IsThrottled(const DWORD tNow) const
 {
+	// Don't overload network name resolver
+	if ( m_pAddress.s_addr == INADDR_ANY && Network.GetResolveCount() > 3 )
+		return true;
+
 	if ( tNow < m_tConnect + Settings.Connection.ConnectThrottle )
 		return true;
+
 	switch ( m_nProtocol )
 	{
 	case PROTOCOL_G1:

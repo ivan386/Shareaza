@@ -24,7 +24,9 @@
 class CNeighbour;
 class CG1Packet;
 class CVendor;
-
+class CHostCacheHost;
+class CHostCacheList;
+class CHostCache;
 
 // History:
 // 14 - Added m_sCountry
@@ -32,17 +34,19 @@ class CVendor;
 // 16 - Added m_nUDPPort, m_oGUID and m_nKADVersion (ryo-oh-ki)
 // 17 - Added m_tConnect (ryo-oh-ki)
 // 18 - Added m_sUser and m_sPass (ryo-oh-ki)
+// 19 - Added m_sAddress (ryo-oh-ki)
 
-#define HOSTCACHE_SER_VERSION 18
+#define HOSTCACHE_SER_VERSION 19
 
 
 class CHostCacheHost
 {
 public:
-	CHostCacheHost(PROTOCOLID nProtocol = PROTOCOL_NULL);
+	CHostCacheHost(PROTOCOLID nProtocol);
 
 	// Attributes: Host Information
 	PROTOCOLID	m_nProtocol;		// Host protocol (PROTOCOL_*)
+	CString		m_sAddress;			// Host full address (unresolved)
 	IN_ADDR		m_pAddress;			// Host IP address
 	WORD		m_nPort;			// Host TCP port number
 	WORD		m_nUDPPort;			// Host UDP port number
@@ -85,7 +89,7 @@ public:
 	Hashes::Guid	m_oGUID;		// Host GUID (128 bit)
 	BYTE			m_nKADVersion;	// Kademlia version
 
-	CNeighbour*	ConnectTo(BOOL bAutomatic = FALSE);
+	bool		ConnectTo(BOOL bAutomatic = FALSE);
 	CString		ToString(bool bLong = true) const;	// "10.0.0.1:6346 2002-04-30T08:30Z"
 	bool		IsExpired(DWORD tNow) const;		// Is this host expired?
 	bool		IsThrottled(DWORD tNow) const;		// Is host temporary throttled down?
@@ -94,25 +98,15 @@ public:
 	bool		CanQuery(DWORD tNow) const;			// Can we UDP query this host? (G2/ed2k)
 	void		SetKey(DWORD nKey, const IN_ADDR* pHost = NULL);
 
-	inline DWORD Seen() const throw()
-	{
-		return m_tSeen;
-	}
+	DWORD		Seen() const;						// Get host last seen time
+	CString		Address() const;					// Get host address as string
 
 protected:
-	DWORD		m_tSeen;
+	DWORD			m_tSeen;		// Host last seen time
 
 	// Return: true - if tSeen changed, false - otherwise.
 	bool		Update(WORD nPort, DWORD tSeen = 0, LPCTSTR pszVendor = NULL, DWORD nUptime = 0, DWORD nCurrentLeaves = 0, DWORD nLeafLimit = 0);
 	void		Serialize(CArchive& ar, int nVersion);
-
-	inline bool	IsValid() const throw()
-	{
-		return m_nProtocol != PROTOCOL_NULL &&
-			m_pAddress.s_addr != INADDR_ANY && m_pAddress.s_addr != INADDR_NONE &&
-			m_nPort != 0 &&
-			m_tSeen != 0;
-	}
 
 	friend class CHostCacheList;
 
@@ -132,7 +126,7 @@ struct std::less< IN_ADDR > : public std::binary_function< IN_ADDR, IN_ADDR, boo
 	}
 };
 
-typedef std::map< IN_ADDR, CHostCacheHostPtr > CHostCacheMap;
+typedef std::multimap< IN_ADDR, CHostCacheHostPtr > CHostCacheMap;
 typedef std::pair< IN_ADDR, CHostCacheHostPtr > CHostCacheMapPair;
 
 template<>
@@ -158,6 +152,21 @@ struct good_host : public std::binary_function< CHostCacheMapPair, BOOL, bool>
 	}
 };
 
+struct is_host : public std::binary_function< CHostCacheMapPair, CHostCacheHostPtr, bool>
+{
+	inline bool operator()(const CHostCacheMapPair& _Pair, const CHostCacheHostPtr& _bLocally) const throw()
+	{
+		return ( _Pair.second == _bLocally );
+	}
+};
+
+struct is_address : public std::binary_function< CHostCacheMapPair, LPCTSTR, bool>
+{
+	inline bool operator()(const CHostCacheMapPair& _Pair, const LPCTSTR& _bLocally) const throw()
+	{
+		return ( _Pair.second->m_sAddress.CompareNoCase( _bLocally ) == 0 );
+	}
+};
 
 class CHostCacheList
 {
@@ -169,15 +178,17 @@ public:
 	DWORD				m_nCookie;
 	mutable CMutex		m_pSection;
 
-	CHostCacheHostPtr	Add(const IN_ADDR* pAddress, WORD nPort, DWORD tSeen = 0, LPCTSTR pszVendor = NULL, DWORD nUptime = 0, DWORD nCurrentLeaves = 0, DWORD nLeafLimit = 0);
+	CHostCacheHostPtr	Add(const IN_ADDR* pAddress, WORD nPort, DWORD tSeen = 0, LPCTSTR pszVendor = NULL, DWORD nUptime = 0, DWORD nCurrentLeaves = 0, DWORD nLeafLimit = 0, LPCTSTR szAddress = NULL);
 	// Add host in form "IP:Port SeenTime"
 	BOOL				Add(LPCTSTR pszHost, DWORD tSeen = 0, LPCTSTR pszVendor = NULL, DWORD nUptime = 0, DWORD nCurrentLeaves = 0, DWORD nLeafLimit = 0);
 	void				Update(CHostCacheHostPtr pHost, WORD nPort = 0, DWORD tSeen = 0, LPCTSTR pszVendor = NULL, DWORD nUptime = 0, DWORD nCurrentLeaves = 0, DWORD nLeafLimit = 0);
 	bool				Remove(CHostCacheHostPtr pHost);
 	bool				Remove(const IN_ADDR* pAddress);
 	void				SanityCheck();
-	void				OnFailure(const IN_ADDR* pAddress, WORD nPort, bool bRemove=true);
-	void				OnSuccess(const IN_ADDR* pAddress, WORD nPort, bool bUpdate=true);
+	void				OnResolve(LPCTSTR szAddress, const IN_ADDR* pAddress, WORD nPort);
+	void				OnFailure(const IN_ADDR* pAddress, WORD nPort, bool bRemove = true);
+	void				OnFailure(LPCTSTR szAddress, bool bRemove = true);
+	void				OnSuccess(const IN_ADDR* pAddress, WORD nPort, bool bUpdate = true);
 	void				PruneOldHosts();
 	void				Clear();
 	void				Serialize(CArchive& ar, int nVersion);
@@ -224,16 +235,30 @@ public:
 
 	inline CHostCacheHostPtr Find(const IN_ADDR* pAddress) const throw()
 	{
+		if ( pAddress->s_addr == INADDR_ANY ||
+			 pAddress->s_addr == INADDR_NONE )
+			return NULL;
 		CQuickLock oLock( m_pSection );
 		CHostCacheMap::const_iterator i = m_Hosts.find( *pAddress );
+		return ( i != m_Hosts.end() ) ? (*i).second : NULL;
+	}
+
+	inline CHostCacheHostPtr Find(LPCTSTR szAddress) const throw()
+	{
+		if ( ! szAddress || ! *szAddress )
+			return NULL;
+		CQuickLock oLock( m_pSection );
+		CHostCacheMap::const_iterator i = 
+			std::find_if( m_Hosts.begin(), m_Hosts.end(),
+			std::bind2nd( is_address(), szAddress ) );
 		return ( i != m_Hosts.end() ) ? (*i).second : NULL;
 	}
 
 	inline bool Check(const CHostCacheHostPtr pHost) const throw()
 	{
 		CQuickLock oLock( m_pSection );
-		return std::find( m_HostsTime.begin(), m_HostsTime.end(), pHost )
-			!= m_HostsTime.end();
+		return std::find( m_HostsTime.begin(), m_HostsTime.end(), pHost ) !=
+			m_HostsTime.end();
 	}
 
 	inline DWORD CountHosts(const BOOL bCountUncheckedLocally = FALSE) const throw()
@@ -273,7 +298,7 @@ protected:
 	CHostCacheMap				m_Hosts;		// Hosts map (sorted by IP)
 	CHostCacheIndex				m_HostsTime;	// Host index (sorted from newer to older)
 
-	CHostCacheHostPtr	AddInternal(const IN_ADDR* pAddress, WORD nPort, DWORD tSeen, LPCTSTR pszVendor, DWORD nUptime, DWORD nCurrentLeaves = 0, DWORD nLeafLimit = 0);
+	CHostCacheHostPtr	AddInternal(const IN_ADDR* pAddress, WORD nPort, DWORD tSeen, LPCTSTR pszVendor, DWORD nUptime, DWORD nCurrentLeaves, DWORD nLeafLimit, LPCTSTR szAddress);
 	void				PruneHosts();
 };
 
@@ -293,11 +318,19 @@ public:
 
 	BOOL				Load();
 	BOOL				Save();
+
+	// Import DC++, ED2K or Kademlia file. Returns imported host count.
 	int					Import(LPCTSTR pszFile, BOOL bFreshOnly = FALSE);
+	// Import DC++ hub list .xml.bz2-file. Returns imported host count.
+	int					ImportHubList(CFile* pFile);
+	// Import eDonkey2000 servers .met-file. Returns imported host count.
 	int					ImportMET(CFile* pFile);
+	// Import Kademlia nodes .dat-file. Returns imported host count.
 	int					ImportNodes(CFile* pFile);
+
 	bool				CheckMinimumED2KServers();
 	CHostCacheHostPtr	Find(const IN_ADDR* pAddress) const;
+	CHostCacheHostPtr	Find(LPCTSTR szAddress) const;
 	BOOL				Check(const CHostCacheHostPtr pHost) const;
 	void				Remove(CHostCacheHostPtr pHost);
 	void				SanityCheck();
