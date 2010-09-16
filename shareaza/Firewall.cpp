@@ -23,6 +23,7 @@
 // http://shareazasecurity.be/wiki/index.php?title=Developers.Code.CFirewall
 
 #include "StdAfx.h"
+#include "ComObject.h"
 #include "Firewall.h"
 
 #ifdef _DEBUG
@@ -31,7 +32,11 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
+IMPLEMENT_DYNCREATE(CFirewall, CComObject)
+
 CFirewall::CFirewall()
+	: UPnPExternalAddress()
+	, m_pNotify( NULL )
 {
 	HRESULT hr;
 
@@ -61,11 +66,15 @@ CFirewall::CFirewall()
 	hr = Nat.CoCreateInstance( __uuidof( UPnPNAT ) );
 	if ( SUCCEEDED( hr ) && Nat )
 	{
-		// Retrieve the NAT manager interface
+		// Retrieve the NAT manager interface and register callbacks
 		hr = Nat->get_NATEventManager( &NatManager );
-
-		// Retrieve the mappings collection
-		hr = Nat->get_StaticPortMappingCollection( &Collection );
+		if ( SUCCEEDED( hr ) && NatManager )
+		{
+			hr = NatManager->put_ExternalIPAddressCallback(
+				GetInterface( IID_INATExternalIPAddressCallback ) );
+			hr = NatManager->put_NumberOfEntriesCallback(
+				GetInterface( IID_INATNumberOfEntriesCallback ) );
+		}
 	}
 }
 
@@ -353,51 +362,54 @@ BOOL CFirewall::EnableProgram( const CString& path )
 
 // UPnP port mapping
 
-BOOL CFirewall::AreMappingsAllowed() const
+void CFirewall::RegisterNotify(NotifyCallback pNotify)
 {
-	return ! ! Collection;
+	m_pNotify = pNotify;
 }
 
-BOOL CFirewall::SetupMappings(LPCWSTR szLocalIP, long nPort, LPCWSTR szDescription, IN_ADDR& pExternalAddress)
+BOOL CFirewall::AreMappingsAllowed() const
+{
+	return Nat && NatManager;
+}
+
+BOOL CFirewall::SetupMappings(LPCWSTR szLocalIP, long nPort, LPCWSTR szDescription)
 {
 	HRESULT hr;
 
-	if ( ! Collection )
+	if ( ! Nat )
 		// COM not initialized
 		return FALSE;
 
-	MappingTCP.Release();
-	if ( ! SetupMappings( szLocalIP, nPort, L"TCP", szDescription, &MappingTCP ) )
+	// Retrieve the mappings collection
+	CComPtr< IStaticPortMappingCollection >	pCollection;
+	hr = Nat->get_StaticPortMappingCollection( &pCollection );
+	if ( FAILED( hr ) || ! pCollection )
+		// UPnP unsupported
 		return FALSE;
 
-	MappingUDP.Release();
-	if ( ! SetupMappings( szLocalIP, nPort, L"UDP", szDescription, &MappingUDP ) )
+	CComPtr< IStaticPortMapping > pMappingTCP;
+	if ( ! SetupMappings( pCollection, szLocalIP, nPort, L"TCP", szDescription, &pMappingTCP ) )
 		return FALSE;
 
-	CComBSTR bstrAddress;
-	hr = MappingTCP->get_ExternalIPAddress( &bstrAddress );
-	if ( SUCCEEDED( hr ) )
-	{
-		pExternalAddress.s_addr = inet_addr( CW2A( (LPCWSTR)bstrAddress ) );
-	}
+	CComPtr< IStaticPortMapping > pMappingUDP;
+	if ( ! SetupMappings( pCollection, szLocalIP, nPort, L"UDP", szDescription, &pMappingUDP ) )
+		return FALSE;
 
 	return TRUE;
 }
 
-BOOL CFirewall::SetupMappings(LPCWSTR szLocalIP, long nPort, LPCWSTR szProtocol, LPCWSTR szDescription, IStaticPortMapping** ppMapping)
+BOOL CFirewall::SetupMappings(IStaticPortMappingCollection* pCollection, LPCWSTR szLocalIP, long nPort, LPCWSTR szProtocol, LPCWSTR szDescription, IStaticPortMapping** ppMapping)
 {
 	HRESULT hr;
 
-	hr = Collection->get_Item( nPort, CComBSTR( szProtocol ), ppMapping );
+	hr = pCollection->get_Item( nPort, CComBSTR( szProtocol ), ppMapping );
 	if ( FAILED( hr ) || ! *ppMapping )
 	{
-		hr = Collection->Add( nPort, CComBSTR( szProtocol ), nPort, CComBSTR( szLocalIP ),
+		hr = pCollection->Add( nPort, CComBSTR( szProtocol ), nPort, CComBSTR( szLocalIP ),
 			VARIANT_TRUE, CComBSTR( szDescription ), ppMapping );
 		if ( FAILED( hr ) || ! *ppMapping )
 			return FALSE;
 	}
-
-	hr = (*ppMapping)->EditInternalClient( CComBSTR( szLocalIP ) );
 
 	long nInternalPort = 0;
 	hr = (*ppMapping)->get_InternalPort( &nInternalPort );
@@ -422,19 +434,56 @@ BOOL CFirewall::SetupMappings(LPCWSTR szLocalIP, long nPort, LPCWSTR szProtocol,
 
 BOOL CFirewall::RemoveMappings(long nPort)
 {
-	if ( ! Collection )
+	HRESULT hr;
+
+	if ( ! Nat )
 		// COM not initialized
 		return FALSE;
 
-	HRESULT hr;
-	const CComBSTR bstrTCP( L"TCP" );
-	const CComBSTR bstrUDP( L"UDP" );
+	// Retrieve the mappings collection
+	CComPtr< IStaticPortMappingCollection >	pCollection;
+	hr = Nat->get_StaticPortMappingCollection( &pCollection );
+	if ( FAILED( hr ) || ! pCollection )
+		// UPnP unsupported
+		return FALSE;
 
-	MappingTCP.Release();
-	MappingUDP.Release();
-
-	hr = Collection->Remove( nPort, bstrTCP );
-	hr = Collection->Remove( nPort, bstrUDP );
+	hr = pCollection->Remove( nPort, CComBSTR( L"TCP" ) );
+	hr = pCollection->Remove( nPort, CComBSTR( L"UDP" ) );
 
 	return TRUE;
+}
+
+BEGIN_INTERFACE_MAP(CFirewall, CComObject)
+	INTERFACE_PART(CFirewall, IID_INATNumberOfEntriesCallback, NATNumberOfEntriesCallback)
+	INTERFACE_PART(CFirewall, IID_INATExternalIPAddressCallback, NATExternalIPAddressCallback)
+END_INTERFACE_MAP()
+
+IMPLEMENT_UNKNOWN(CFirewall, NATNumberOfEntriesCallback)
+
+STDMETHODIMP CFirewall::XNATNumberOfEntriesCallback::NewNumberOfEntries(/* [in] */ long /* lNewNumberOfEntries */)
+{
+	METHOD_PROLOGUE( CFirewall, NATNumberOfEntriesCallback )
+
+	TRACE( _T("[UPnP] New number of entries\n") );
+
+	if ( pThis->m_pNotify )
+		pThis->m_pNotify();
+
+	return S_OK;
+}
+
+IMPLEMENT_UNKNOWN(CFirewall, NATExternalIPAddressCallback)
+
+STDMETHODIMP CFirewall::XNATExternalIPAddressCallback::NewExternalIPAddress(/* [in] */ BSTR bstrNewExternalIPAddress)
+{
+	METHOD_PROLOGUE( CFirewall, NATExternalIPAddressCallback )
+
+	TRACE( _T("[UPnP] Got new external IP address\n") );
+
+	pThis->UPnPExternalAddress.s_addr = inet_addr( CW2A( (LPCWSTR)bstrNewExternalIPAddress ) );
+
+	if ( pThis->m_pNotify )
+		pThis->m_pNotify();
+
+	return S_OK;
 }

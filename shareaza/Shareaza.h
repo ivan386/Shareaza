@@ -181,6 +181,8 @@ public:
 	void				SetupConnection();
 	// Close Window Firewall and UPnP/NAT access
 	void				CloseConnection();
+	// UPnP/Nat port mappings or external address changed
+	static void			OnUPnP();
 
 protected:
 	CSplashDlg*			m_dlgSplash;		// Splash dialog

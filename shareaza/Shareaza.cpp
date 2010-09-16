@@ -625,12 +625,11 @@ void CShareazaApp::SetupConnection()
 
 				for ( int i = 0; i < 5; ++i )
 				{
-					bSuccess = m_pFirewall->SetupMappings( strLocalIP, Settings.Connection.InPort,
-						CLIENT_NAME_T, m_nUPnPExternalAddress );
+					bSuccess = m_pFirewall->SetupMappings( strLocalIP, Settings.Connection.InPort, CLIENT_NAME_T );
 					if ( bSuccess )
 					{
 						m_bUPnPPortsForwarded = TRI_TRUE;
-						Network.AcquireLocalAddress( m_nUPnPExternalAddress );
+						m_pFirewall->RegisterNotify( CShareazaApp::OnUPnP );
 						break;
 					}
 
@@ -664,6 +663,8 @@ void CShareazaApp::CloseConnection()
 {
 	if ( m_pFirewall )
 	{
+		m_pFirewall->RegisterNotify( NULL );
+
 		// Remove application from the firewall exception list
 		if ( Settings.Connection.DeleteFirewallException )
 			m_pFirewall->SetupProgram( m_strBinaryPath, CLIENT_NAME_T, TRUE );
@@ -681,6 +682,19 @@ void CShareazaApp::CloseConnection()
 			m_pUPnPFinder->DeletePorts();
 	}
 	m_pUPnPFinder.Free();
+}
+
+void CShareazaApp::OnUPnP()
+{
+	// Save new address
+	if ( theApp.m_pFirewall )
+	{
+		theApp.m_nUPnPExternalAddress = theApp.m_pFirewall->UPnPExternalAddress;
+		Network.AcquireLocalAddress( theApp.m_nUPnPExternalAddress );
+
+		// Re-create port mappings
+		theApp.SetupConnection();
+	}
 }
 
 void CShareazaApp::WinHelp(DWORD /*dwData*/, UINT /*nCmd*/)
