@@ -100,6 +100,14 @@ public:
 		return m_nFolderCookie;
 	}
 
+	inline void Switch()
+	{
+		if ( Settings.Library.ShowVirtual )
+			OnLibraryTreePhysical();
+		else
+			OnLibraryTreeVirtual();
+	}
+
 protected:
 	CLibraryTreeView	m_wndTree;
 	CLibraryHeaderPanel	m_wndHeader;

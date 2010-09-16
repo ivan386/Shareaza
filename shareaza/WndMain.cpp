@@ -2228,7 +2228,16 @@ void CMainWnd::OnUpdateTabLibrary(CCmdUI* pCmdUI)
 
 void CMainWnd::OnTabLibrary()
 {
-	m_pWindows.Open( RUNTIME_CLASS(CLibraryWnd) );
+	CChildWnd* pChild = m_pWindows.GetActive();
+
+	if ( CLibraryWnd* pLibraryWnd = (CLibraryWnd*)m_pWindows.Open( RUNTIME_CLASS(CLibraryWnd) ) )
+	{
+		if ( pChild == pLibraryWnd )
+		{
+			pLibraryWnd->m_wndFrame.Switch();
+		}
+	}
+
 	OpenFromTray();
 }
 
