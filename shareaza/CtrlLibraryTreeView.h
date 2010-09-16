@@ -1,7 +1,7 @@
 //
 // CtrlLibraryTreeView.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -48,6 +48,7 @@ private:
 	CLibraryTreeItem*	m_pSelFirst;
 	CLibraryTreeItem*	m_pSelLast;
 	CLibraryTreeItem*	m_pFocus;
+	void*				m_pFocusedObject[ 2 ];	// Last focused object in both views
 	BOOL				m_bDrag;
 	CPoint				m_ptDrag;
 	CLibraryTreeItem*	m_pDropItem;
@@ -70,7 +71,7 @@ public:
 	BOOL				GetRect(CLibraryTreeItem* pItem, RECT* pRect);
 	CLibraryTreeItem*	GetFolderItem(void* pSearch, CLibraryTreeItem* pParent = NULL);
 	void				SetVirtual(BOOL bVirtual);
-	void				Update(DWORD nSelectCookie);
+	BOOL				Update(DWORD nSelectCookie);
 	BOOL				SelectFolder(LPVOID pSearch);
 
 protected:
@@ -87,8 +88,8 @@ protected:
 	virtual HBITMAP		CreateDragImage(const CPoint& ptMouse, CPoint& ptMiddle);
 	void				StartDragging(CPoint& ptMouse);
 	void				PostUpdate();
-	void				UpdatePhysical(DWORD nSelectCookie);
-	void				UpdateVirtual(DWORD nSelectCookie);
+	BOOL				UpdatePhysical(DWORD nSelectCookie);
+	BOOL				UpdateVirtual(DWORD nSelectCookie);
 	BOOL				Update(CLibraryFolder* pFolder, CLibraryTreeItem* pItem, CLibraryTreeItem* pParent, BOOL bVisible, BOOL bShared, DWORD nCleanCookie, DWORD nSelectCookie, BOOL bRecurse);
 	BOOL				Update(CAlbumFolder* pFolder, CLibraryTreeItem* pItem, CLibraryTreeItem* pParent, BOOL bVisible, DWORD nCleanCookie, DWORD nSelectCookie);
 

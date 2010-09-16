@@ -1,7 +1,7 @@
 //
 // CtrlLibraryFrame.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -915,8 +915,8 @@ BOOL CLibraryFrame::Select(DWORD nObject)
 
 void CLibraryFrame::OnTreeSelection(NMHDR* /*pNotify*/, LRESULT* pResult)
 {
-	if ( ! m_bUpdating )
-		Update( TRUE, TRUE );
+	Update( TRUE, TRUE );
+
 	*pResult = 0;
 }
 

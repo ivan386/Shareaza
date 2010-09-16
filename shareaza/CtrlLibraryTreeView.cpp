@@ -112,6 +112,7 @@ CLibraryTreeView::CLibraryTreeView()
 , m_pSelFirst( NULL )
 , m_pSelLast( NULL )
 , m_pFocus( NULL )
+, m_pFocusedObject()
 , m_pDropItem( NULL )
 , m_bVirtual( -1 )
 , m_bDrag( FALSE )
@@ -141,18 +142,20 @@ void CLibraryTreeView::SetVirtual(BOOL bVirtual)
 	Clear();
 }
 
-void CLibraryTreeView::Update(DWORD nSelectCookie)
+BOOL CLibraryTreeView::Update(DWORD nSelectCookie)
 {
 	CQuickLock pLock( Library.m_pSection );
 
-	if ( m_bVirtual )
+	BOOL bChanged = m_bVirtual ?
+		UpdateVirtual( nSelectCookie ) : UpdatePhysical( nSelectCookie );
+
+	if ( bChanged )
 	{
-		UpdateVirtual( nSelectCookie );
+		if ( ! SelectFolder( m_pFocusedObject[ m_bVirtual ? 1 : 0 ] ) )
+			m_pFocusedObject[ m_bVirtual ? 1 : 0 ] = NULL;
 	}
-	else
-	{
-		UpdatePhysical( nSelectCookie );
-	}
+
+	return bChanged;
 }
 
 void CLibraryTreeView::PostUpdate()
@@ -294,6 +297,11 @@ BOOL CLibraryTreeView::Select(CLibraryTreeItem* pItem, TRISTATE bSelect, BOOL bI
 
 	if ( pItem->m_bSelected )
 	{
+		if ( m_bVirtual )
+			m_pFocusedObject[ 1 ] = pItem ? pItem->m_pVirtual : NULL;
+		else
+			m_pFocusedObject[ 0 ] = pItem ? pItem->m_pPhysical : NULL;
+
 		m_nSelected++;
 
 		if ( m_pSelLast )
@@ -1281,7 +1289,7 @@ int CLibraryTreeItem::GetFileList(CLibraryList* pList, BOOL bRecursive) const
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryTreeView update physical
 
-void CLibraryTreeView::UpdatePhysical(DWORD nSelectCookie)
+BOOL CLibraryTreeView::UpdatePhysical(DWORD nSelectCookie)
 {
 	DWORD nCleanCookie = m_nCleanCookie++;
 	BOOL bChanged = FALSE;
@@ -1319,6 +1327,8 @@ void CLibraryTreeView::UpdatePhysical(DWORD nSelectCookie)
 		Invalidate();
 		NotifySelection();
 	}
+
+	return bChanged;
 }
 
 BOOL CLibraryTreeView::Update(CLibraryFolder* pFolder, CLibraryTreeItem* pItem, CLibraryTreeItem* pParent, BOOL bVisible, BOOL bShared, DWORD nCleanCookie, DWORD nSelectCookie, BOOL bRecurse)
@@ -1429,7 +1439,7 @@ BOOL CLibraryTreeView::Update(CLibraryFolder* pFolder, CLibraryTreeItem* pItem, 
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryTreeView update virtual
 
-void CLibraryTreeView::UpdateVirtual(DWORD nSelectCookie)
+BOOL CLibraryTreeView::UpdateVirtual(DWORD nSelectCookie)
 {
 	BOOL bChanged = Update( Library.GetAlbumRoot(), m_pRoot, NULL, TRUE, 0, nSelectCookie );
 
@@ -1439,6 +1449,8 @@ void CLibraryTreeView::UpdateVirtual(DWORD nSelectCookie)
 		if (m_hWnd) Invalidate();
 		NotifySelection();
 	}
+
+	return bChanged;
 }
 
 BOOL CLibraryTreeView::Update(CAlbumFolder* pFolder, CLibraryTreeItem* pItem, CLibraryTreeItem* pParent, BOOL bVisible, DWORD nCleanCookie, DWORD nSelectCookie)
@@ -1544,10 +1556,13 @@ BOOL CLibraryTreeView::SelectFolder(LPVOID pSearch)
 		return TRUE;
 	}
 
-	DeselectAll( pItem, NULL, FALSE );
-	Select( pItem, TRI_TRUE, FALSE );
-	Highlight( pItem );
-	NotifySelection();
+	DeselectAll( pItem );
+	if ( Select( pItem ) )
+	{
+		Highlight( pItem );
+		NotifySelection();
+		RedrawWindow();
+	}
 
 	return TRUE;
 }
