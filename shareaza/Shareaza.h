@@ -26,12 +26,10 @@
 
 class CBuffer;
 class CDatabase;
-class CFirewall;
 class CFontManager;
 class CMainWnd;
 class CPacketWnd;
 class CSplashDlg;
-class CUPnPFinder;
 
 
 class __declspec(novtable) CLogMessage
@@ -85,10 +83,6 @@ public:
 	HHOOK				m_hHookMouse;
 	CPacketWnd*			m_pPacketWnd;				// Packet Window (NULL - not opened)
 	SYSTEM_INFO			m_SysInfo;					// System Information
-	CAutoPtr< CFirewall >	m_pFirewall;			// Windows Firewall interface
-	CAutoPtr< CUPnPFinder >	m_pUPnPFinder;			// Legacy UPnP interface
-	TRISTATE			m_bUPnPPortsForwarded;		// UPnP values are assigned when the discovery is complete
-	IN_ADDR				m_nUPnPExternalAddress;		// UPnP current external address
 
 	// Cryptography Context handle
 	HCRYPTPROV			m_hCryptProv;
@@ -176,13 +170,6 @@ public:
 	// Get database handler
 	// Must be freed by "delete" operator.
 	CDatabase*			GetDatabase() const;
-
-	// Setup Window Firewall and UPnP/NAT
-	void				SetupConnection();
-	// Close Window Firewall and UPnP/NAT access
-	void				CloseConnection();
-	// UPnP/Nat port mappings or external address changed
-	static void			OnUPnP();
 
 protected:
 	CSplashDlg*			m_dlgSplash;		// Splash dialog

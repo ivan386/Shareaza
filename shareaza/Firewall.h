@@ -24,16 +24,13 @@
 
 #pragma once
 
-class CComObject;
 
 // Control the Windows Firewall, and talk UPnP to the NAT router to setup port forwarding
-class CFirewall : public CComObject
+class CFirewall
 {
-	DECLARE_DYNCREATE(CFirewall)
-
 public:
 	CFirewall();
-	virtual ~CFirewall();
+	~CFirewall();
 
 	// Windows Firewall COM interfaces accessed with the object
     CComPtr< INetFwMgr >					FwManager;
@@ -48,11 +45,6 @@ public:
 	CComPtr< INetFwAuthorizedApplication >	Program;
     CComPtr< INetFwOpenPort >				Port;
 
-	// UPnP COM interfaces
-	CComPtr< IUPnPNAT >						Nat;
-	CComPtr< INATEventManager >				NatManager;
-	IN_ADDR									UPnPExternalAddress;
-
 	// Examples controlling Windows Firewall
 	//
 	//	// Let a program listen on a socket without Windows Firewall poping up a warning
@@ -64,6 +56,8 @@ public:
 
 	// Windows Firewall Methods
 
+	// Initialization
+	BOOL Init();
 	// Find out if the system is in no-exceptions mode
 	BOOL AreExceptionsAllowed() const;
 	// Check a box for a service on the Windows Firewall exceptions list
@@ -84,32 +78,4 @@ public:
 	BOOL EnableService(NET_FW_SERVICE_TYPE service);
 	// Check the box for a program
 	BOOL EnableProgram(const CString& path);
-
-	// UPnP/NAT Methods
-
-	typedef void (*NotifyCallback)();
-	// Register UPnP/NAT change callback
-	void RegisterNotify(NotifyCallback pNotify);
-	// Find out if the system is NAT-compatible
-	BOOL AreMappingsAllowed() const;
-	// Create TCP and UDP port mappings
-	BOOL SetupMappings(LPCWSTR szLocalIP, long nPort, LPCWSTR szDescription);
-	// Remove TCP and UDP port mappings
-	BOOL RemoveMappings(long nPort);
-
-protected:
-	NotifyCallback	m_pNotify;
-
-	// Create port mapping
-	BOOL SetupMappings(IStaticPortMappingCollection* pCollection, LPCWSTR szLocalIP, long nPort, LPCWSTR szProtocol, LPCWSTR szDescription, IStaticPortMapping** ppMapping);
-
-	BEGIN_INTERFACE_PART(NATNumberOfEntriesCallback, INATNumberOfEntriesCallback)
-		STDMETHOD(NewNumberOfEntries)(/* [in] */ long lNewNumberOfEntries);
-	END_INTERFACE_PART(NATNumberOfEntriesCallback)
-
-	BEGIN_INTERFACE_PART(NATExternalIPAddressCallback, INATExternalIPAddressCallback)
-		STDMETHOD(NewExternalIPAddress)(/* [in] */ BSTR bstrNewExternalIPAddress);
-	END_INTERFACE_PART(NATExternalIPAddressCallback)
-
-	DECLARE_INTERFACE_MAP()
 };

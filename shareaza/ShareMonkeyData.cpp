@@ -24,6 +24,7 @@
 #include "ShareMonkeyData.h"
 #include "Settings.h"
 #include "Library.h"
+#include "Network.h"
 #include "CtrlLibraryFileView.h"
 #include "SharedFile.h"
 #include "XML.h"
@@ -214,10 +215,10 @@ BOOL CShareMonkeyData::BuildRequest()
 
 	if ( m_nRequestType == stProductMatch || m_nRequestType == stComparison )
 	{
-		if ( theApp.m_nUPnPExternalAddress.s_addr != INADDR_NONE )
+		if ( Network.m_pHost.sin_addr.s_addr != INADDR_NONE )
 		{
 			m_sURL += L"&user_ip_address=";
-			m_sURL += inet_ntoa( theApp.m_nUPnPExternalAddress );
+			m_sURL += inet_ntoa( Network.m_pHost.sin_addr );
 		}
 		else
 		{

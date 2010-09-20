@@ -283,6 +283,7 @@ public:
 		bool		DeleteFirewallException;	// Delete Firewall exception on shutdown
 		bool		EnableUPnP;
 		bool		DeleteUPnPPorts;			// Delete forwarded ports on shutdown (UPnP)
+		DWORD		UPnPRefreshTime;			// Refresh time of port mappings(UPnP)
 		bool		SkipWANPPPSetup;			// Skip WANPPPConn1 device setup (UPnP)
 		bool		SkipWANIPSetup;				// Skip WANIPConn1 device setup (UPnP)
 	} Connection;

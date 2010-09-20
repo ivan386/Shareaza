@@ -257,7 +257,7 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 
 		Settings.Connection.EnableUPnP = true;
 
-		theApp.SetupConnection();
+		Network.MapPorts();
 	}
 	else
 		Settings.Connection.EnableUPnP = false;
@@ -290,8 +290,7 @@ void CWizardConnectionPage::OnRun()
 		LoadString( strMessage, IDS_WIZARD_UPNP_SETUP );
 		m_wndStatus.SetWindowText( strMessage );
 
-		while ( theApp.m_pUPnPFinder &&
-				theApp.m_pUPnPFinder->IsAsyncFindRunning() )
+		while ( Network.UPnPFinder->IsAsyncFindRunning() )
 		{
 			Sleep( 1000 );
 			if ( nCurrentStep < 30  )
@@ -375,7 +374,7 @@ void CWizardConnectionPage::OnTimer(UINT_PTR nIDEvent)
 
 	CloseThread();
 
-	if ( m_bUPnPForward && theApp.m_bUPnPPortsForwarded != TRI_TRUE )
+	if ( m_bUPnPForward && Network.m_bUPnPPortsForwarded != TRI_TRUE )
 	{
 		CString strFormat, strMessage;
 		LoadString( strFormat, IDS_WIZARD_PORT_FORWARD );

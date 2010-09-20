@@ -20,10 +20,10 @@
 //
 
 #include "StdAfx.h"
-#include "Shareaza.h"
 #include "Settings.h"
-#include "PageSettingsConnection.h"
 #include "DlgHelp.h"
+#include "Network.h"
+#include "PageSettingsConnection.h"
 #include "UPnPFinder.h"
 
 #ifdef _DEBUG
@@ -314,7 +314,7 @@ void CConnectionSettingsPage::OnOK()
 	if ( Settings.Connection.EnableUPnP &&
 		( ! bOldEnableUPnP || nOldInPort != Settings.Connection.InPort ) )
 	{
-		theApp.SetupConnection();
+		Network.MapPorts();
 	}
 
 	CSettingsPage::OnOK();
@@ -376,15 +376,12 @@ void CConnectionSettingsPage::OnClickedEnableUpnp()
 {
 	if ( ! m_bEnableUPnP )
 	{
-		if ( ! theApp.m_pUPnPFinder )
-			theApp.m_pUPnPFinder.Attach( new CUPnPFinder );
-
 		// If the UPnP Device Host service is not running ask the user to
 		// start it. It is not wise to have a delay up to 1 minute,
 		// especially that we would need to wait until this and SSDP
 		// service are started. If the upnphost service can not be started
 		// Shareaza will lock up.
-		if ( !theApp.m_pUPnPFinder->AreServicesHealthy() )
+		if ( ! Network.UPnPFinder->AreServicesHealthy() )
 		{
 			CString strMessage;
 			LoadString( strMessage, IDS_UPNP_SERVICES_ERROR );

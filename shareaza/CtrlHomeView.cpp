@@ -1,7 +1,7 @@
 //
 // CtrlHomeView.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -129,7 +129,7 @@ void CHomeViewCtrl::Update()
 	// BOOL bTCPFirewalled = Network.IsFirewalled(CHECK_TCP);
 	BOOL bUDPFirewalled = Network.IsFirewalled(CHECK_UDP);
 
-	m_pDocument.ShowGroup( GROUP_FIREWALLED, bOnG2 && bUDPFirewalled && !theApp.m_bUPnPPortsForwarded );
+	m_pDocument.ShowGroup( GROUP_FIREWALLED, bOnG2 && bUDPFirewalled && ! Network.m_bUPnPPortsForwarded );
 	m_pDocument.ShowGroup( GROUP_FIREWALLED_TCP, FALSE );
 	m_pDocument.ShowGroup( GROUP_FIREWALLED_UDP, FALSE );
 

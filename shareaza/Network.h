@@ -23,46 +23,58 @@
 
 #include "ThreadImpl.h"
 
-class CNeighbour;
 class CBuffer;
-class CLocalSearch;
-class CPacket;
+class CFirewall;
 class CG2Packet;
-class CRouteCache;
+class CLocalSearch;
+class CNeighbour;
+class CPacket;
+class CQueryHit;
 class CQueryKeys;
 class CQuerySearch;
-class CQueryHit;
+class CRouteCache;
+class CUPnPFinder;
+
 
 enum // It is used from CNetwork::IsFirewalled
 {
 	CHECK_BOTH, CHECK_TCP, CHECK_UDP
 };
 
-class CNetwork :
-	public CThreadImpl
+class CNetwork : public CComObject, public CThreadImpl
 {
-// Construction
+	DECLARE_DYNCREATE(CNetwork)
+
 public:
 	CNetwork();
 	virtual ~CNetwork();
 
 // Attributes
 public:
-	CRouteCache*	NodeRoute;
-	CRouteCache*	QueryRoute;
-	CQueryKeys*		QueryKeys;
+	CAutoPtr< CRouteCache >	NodeRoute;
+	CAutoPtr< CRouteCache >	QueryRoute;
+	CAutoPtr< CQueryKeys >	QueryKeys;
+	CAutoPtr< CUPnPFinder >	UPnPFinder;			// Control Point UPnP
+	CAutoPtr< CFirewall >	Firewall;			// Windows Firewall	
 
 	CMutexEx		m_pSection;
-	SOCKADDR_IN		m_pHost;				// Structure (Windows Sockets) which holds address of the local machine
+	SOCKADDR_IN		m_pHost;					// Structure (Windows Sockets) which holds address of the local machine
 	BOOL			m_bAutoConnect;
-	volatile bool	m_bConnected;			// Network has finished initialising and is connected
-	DWORD			m_tStartedConnecting;	// The time Shareaza started trying to connect
-	DWORD			m_tLastConnect;			// The last time a neighbour connection attempt was made
-	DWORD			m_tLastED2KServerHop;	// The last time the ed2k server was changed
+	volatile bool	m_bConnected;				// Network has finished initializing and is connected
+	DWORD			m_tStartedConnecting;		// The time Shareaza started trying to connect
+	DWORD			m_tLastConnect;				// The last time a neighbour connection attempt was made
+	DWORD			m_tLastED2KServerHop;		// The last time the ed2k server was changed
+	TRISTATE		m_bUPnPPortsForwarded;		// UPnP values are assigned when the discovery is complete
+
 protected:
 	CStringA		m_sHostName;
 	CList< ULONG >	m_pHostAddresses;
 	DWORD			m_nSequence;
+	CComPtr< IUPnPNAT >			m_pNat;			// NAT UPnP
+	CComPtr< INATEventManager >	m_pNatManager;	// NAT Manager interface
+	IN_ADDR			m_nUPnPExternalAddress;		// UPnP current external address
+	DWORD			m_tUPnPMap;					// Time of last UPnP port mapping
+
 	typedef struct
 	{
 		CString		m_sAddress;
@@ -75,7 +87,9 @@ protected:
 			HOSTENT	m_pHost;
 		};
 	} ResolveStruct;
+
 	typedef CMap< HANDLE, HANDLE, ResolveStruct*, ResolveStruct* > CResolveMap;
+
 	CResolveMap					m_pLookups;
 	mutable CCriticalSection	m_pLookupsSection;
 
@@ -156,8 +170,15 @@ protected:
 	void		OnRun();
 	void		PostRun();
 
+	// Create port mapping
+	static BOOL MapPort(IStaticPortMappingCollection* pCollection, LPCWSTR szLocalIP, long nPort, LPCWSTR szProtocol, LPCWSTR szDescription);
+
 // Operations
 public:
+	// Initialize network: Windows Sockets, Windows Firewall, UPnP NAT.
+	BOOL		Init();
+	// Shutdown network
+	void		Clear();
 	BOOL		IsSelfIP(const IN_ADDR& nAddress) const;
 	bool		IsAvailable() const;
 	bool		IsConnected() const;
@@ -213,6 +234,31 @@ public:
 	static int RecvFrom(SOCKET s, char* buf, int len, SOCKADDR_IN* pFrom);
 	// Safe way to call InternetOpenUrl
 	static HINTERNET InternetOpenUrl(HINTERNET hInternet, LPCWSTR lpszUrl, LPCWSTR lpszHeaders, DWORD dwHeadersLength, DWORD dwFlags);
+
+	// UPnP/NAT Methods
+
+	// Create TCP and UDP port mappings
+	void MapPorts();
+	// Remove TCP and UDP port mappings
+	void DeletePorts();
+	// Got new external IP address. Called by UPnP-services
+	void OnNewExternalIPAddress(const IN_ADDR& pAddress);
+	// UPnP success (called by UPnP-services)
+	void OnMapSuccess();
+	// UPnP error (called by UPnP-services)
+	void OnMapFailed();
+
+	// INATNumberOfEntriesCallback interface
+	BEGIN_INTERFACE_PART(NATNumberOfEntriesCallback, INATNumberOfEntriesCallback)
+		STDMETHOD(NewNumberOfEntries)(/* [in] */ long lNewNumberOfEntries);
+	END_INTERFACE_PART(NATNumberOfEntriesCallback)
+
+	// INATExternalIPAddressCallback interface
+	BEGIN_INTERFACE_PART(NATExternalIPAddressCallback, INATExternalIPAddressCallback)
+		STDMETHOD(NewExternalIPAddress)(/* [in] */ BSTR bstrNewExternalIPAddress);
+	END_INTERFACE_PART(NATExternalIPAddressCallback)
+
+	DECLARE_INTERFACE_MAP()
 
 	friend class CHandshakes;
 	friend class CNeighbours;

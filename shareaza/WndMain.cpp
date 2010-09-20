@@ -573,7 +573,7 @@ void CMainWnd::OnClose()
 
 	RemoveSkin();
 
-	theApp.SplashStep( L"Closing GUI", 8, true );
+	theApp.SplashStep( L"Closing GUI", 7, true );
 
 	LibraryBuilder.StopThread();
 	Library.StopThread();

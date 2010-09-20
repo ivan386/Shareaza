@@ -131,7 +131,7 @@ BOOL CHandshakes::Listen()
 		// If this is not our first attempt
 		if ( nAttempt )
 		{
-			if ( theApp.m_bUPnPPortsForwarded != TRI_TRUE )
+			if ( Network.m_bUPnPPortsForwarded != TRI_TRUE )
 			{
 				int nPort = Network.RandomPort();
 				Network.m_pHost.sin_port = saListen.sin_port = htons( u_short( nPort ) );
