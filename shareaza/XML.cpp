@@ -471,7 +471,7 @@ void CXMLElement::ToString(CString& strXML, BOOL bNewline) const
 //////////////////////////////////////////////////////////////////////
 // CXMLElement from string
 
-CXMLElement* CXMLElement::FromString(LPCTSTR pszXML, BOOL bHeader)
+CXMLElement* CXMLElement::FromString(LPCTSTR pszXML, BOOL bHeader, CString* pEncoding)
 {
 	CXMLElement* pElement	= NULL;
 	LPCTSTR pszElement		= NULL;
@@ -483,6 +483,19 @@ CXMLElement* CXMLElement::FromString(LPCTSTR pszXML, BOOL bHeader)
 			pszElement = _tcsstr( pszXML, _T("?>") );
 			if ( !pszElement )
 				return FALSE;
+			if ( pEncoding )
+			{
+				LPCTSTR pszEncoding = _tcsstr( pszXML, _T("encoding=\"") );
+				if ( pszEncoding && pszEncoding < pszElement )
+				{
+					pszEncoding += 10;
+					LPCTSTR pszEncodingEnd = _tcschr( pszEncoding, _T('\"') );
+					if ( pszEncodingEnd && pszEncodingEnd < pszElement )
+					{
+						pEncoding->Append( pszEncoding, pszEncodingEnd - pszEncoding );
+					}
+				}
+			}
 			pszXML = pszElement + 2;
 		}
 		else if ( bHeader )

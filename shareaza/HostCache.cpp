@@ -786,8 +786,13 @@ int CHostCache::ImportHubList(CFile* pFile)
 		// Decompression error
 		return 0;
 
+	CString strEncoding;
 	auto_ptr< CXMLElement > pHublist ( CXMLElement::FromString(
-		pBuffer.ReadString( pBuffer.m_nLength, CP_UTF8 ), TRUE ) );
+		pBuffer.ReadString( pBuffer.m_nLength ), TRUE, &strEncoding ) );
+	if ( strEncoding.CompareNoCase( _T("utf-8") ) == 0 )
+		// Reload as UTF-8
+		pHublist.reset( CXMLElement::FromString(
+			pBuffer.ReadString( pBuffer.m_nLength, CP_UTF8 ), TRUE ) );
 	if ( ! pHublist.get() )
 		// XML decoding error
 		return FALSE;
@@ -808,6 +813,15 @@ int CHostCache::ImportHubList(CFile* pFile)
 		if ( pHub->IsNamed( _T("Hub") ) )
 		{
 			CString sAddress = pHub->GetAttributeValue( _T("Address") );
+			if ( _tcsnicmp( sAddress, _T("dchub://"), 8 ) == 0 )
+				sAddress = sAddress.Mid( 8 );
+			else if ( _tcsnicmp( sAddress, _T("adc://"), 6 ) == 0 )
+				// Skip ADC-hubs
+				continue;
+			else if ( _tcsnicmp( sAddress, _T("adcs://"), 7 ) == 0 )
+				// Skip ADCS-hubs
+				continue;
+
 			int nUsers = _tstoi( pHub->GetAttributeValue( _T("Users") ) );
 			int nMaxusers = _tstoi( pHub->GetAttributeValue( _T("Maxusers") ) );
 
