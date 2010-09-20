@@ -10,7 +10,7 @@ Shareaza German Schemas File translated by Spooky; jlh
 Shareaza Estonian Schemas File translated by Janza
 Shareaza Spanish Schemas File translated by Unknown
 Shareaza Spanish (Mexico) Schemas File translated by Help
-Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
+Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi), zigotozor
 Shareaza Greek Schemas File translated by erimitis
 Shareaza Hebrew Schemas File translated by _peer_ (H.L)
 Shareaza Croatian Schemas File translated by Biza
@@ -26,7 +26,7 @@ Shareaza Slovenian Schemas File translated by Martin McDowell
 Shareaza Albanian Schemas File translated by Besmir Godole
 Shareaza Serbian Schemas File translated by Woodstoock
 Shareaza Swedish Schemas File translated by Marcus Ehrenlans; Printz; DanielB
-Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
+Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları, zigotozor
 -->
 
 <schemaDescriptor location="http://www.shareaza.com/schemas/archive.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
@@ -58,7 +58,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="sq">Arkiv</title>
                <title language="sr">Archive</title>
                <title language="sv">Arkiv</title>
-               <title language="tr">Archive</title>
+               <title language="tr">Arşiv</title>
        </titles>
        <members>
                <member name="title" search="generic">
@@ -102,7 +102,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="ee">Folders</title>
                        <title language="es">Folders</title>
                        <title language="es-mx">Folders</title>
-                       <title language="fr">Folders</title>
+                       <title language="fr">Dossiers</title>
                        <title language="gr">Φάκελοι</title>
                        <title language="heb">Folders</title>
                        <title language="hr">Folders</title>
@@ -118,7 +118,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sq">Dosje</title>
                        <title language="sr">Folders</title>
                        <title language="sv">Mappar</title>
-                       <title language="tr">Folders</title>
+                       <title language="tr">Klasörler</title>
               </member>
               <member name="files" search="generic">
                        <title language="en">Files</title>
@@ -131,7 +131,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="ee">Files</title>
                        <title language="es">Files</title>
                        <title language="es-mx">Files</title>
-                       <title language="fr">Files</title>
+                       <title language="fr">Fichiers</title>
                        <title language="gr">Αρχεία</title>
                        <title language="heb">Files</title>
                        <title language="hr">Files</title>
@@ -147,7 +147,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sq">Skeda</title>
                        <title language="sr">Files</title>
                        <title language="sv">Filer</title>
-                       <title language="tr">Files</title>
+                       <title language="tr">Dosyalar</title>
               </member>
               <member name="comments" search="generic">
                        <title language="en">Comments</title>
@@ -218,7 +218,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="ee">Võtmesõnad</title>
                        <title language="es">Palabras Clave</title>
                        <title language="es-mx">Palabras Clave</title>
-                       <title language="fr">Mots clés</title>
+                       <title language="fr">Mots-clés</title>
                        <title language="gr">Λέξεις Κλειδιά</title>
                        <title language="heb">מילים לזיהוי</title>
                        <title language="hr">Ključne Riječi</title>
@@ -248,7 +248,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="ee">Encrypted</title>
                        <title language="es">Encrypted</title>
                        <title language="es-mx">Encrypted</title>
-                       <title language="fr">Encrypted</title>
+                       <title language="fr">Cryptée</title>
                        <title language="gr">Κρυπτογραφημένο</title>
                        <title language="heb">Encrypted</title>
                        <title language="hr">Encrypted</title>
@@ -264,7 +264,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sq">Kriptuar</title>
                        <title language="sr">Encrypted</title>
                        <title language="sv">Krypterad</title>
-                       <title language="tr">Encrypted</title>
+                       <title language="tr">Şifrelenmiş</title>
                </member>
                <member name="unpackedsize">
                        <display columnAlign="center"/>
@@ -278,7 +278,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="ee">Unpacked Size</title>
                        <title language="es">Unpacked Size</title>
                        <title language="es-mx">Unpacked Size</title>
-                       <title language="fr">Unpacked Size</title>
+                       <title language="fr">Taille décompressée</title>
                        <title language="gr">Αποσυμπιεσμένο Μέγεθος</title>
                        <title language="heb">Unpacked Size</title>
                        <title language="hr">Unpacked Size</title>
@@ -294,7 +294,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sq">Masa e shpaketuar</title>
                        <title language="sr">Unpacked Size</title>
                        <title language="sv">Okomprimerad storlek</title>
-                       <title language="tr">Unpacked Size</title>
+                       <title language="tr">Sıkıştırılmamış boyut</title>
                </member>
       </members>
        <typeFilter>
@@ -315,5 +315,6 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <type extension="tar.z"/>
                <type extension="tgz"/>
                <type extension="zip"/>
+               <type extension="zoo"/>
        </typeFilter>
 </schemaDescriptor>
