@@ -35,6 +35,8 @@
 #include "Skin.h"
 #include "CoolInterface.h"
 
+#include "Flags.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
@@ -86,12 +88,12 @@ END_MESSAGE_MAP()
 // CHostCacheWnd construction
 
 CHostCacheWnd::CHostCacheWnd()
+	: m_nMode			( PROTOCOLID( Settings.Gnutella.HostCacheView ) )
+	, m_bAllowUpdates	( TRUE )
+	, m_nCookie			( 0 )
+	, m_tLastUpdate		( 0 )
 {
 	Create( IDR_HOSTCACHEFRAME );
-}
-
-CHostCacheWnd::~CHostCacheWnd()
-{
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -99,8 +101,6 @@ CHostCacheWnd::~CHostCacheWnd()
 
 int CHostCacheWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
-	m_nMode = PROTOCOLID( Settings.Gnutella.HostCacheView );
-
 	if ( CPanelWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
 
 	if ( ! m_wndToolBar.Create( this, WS_CHILD|WS_VISIBLE|CBRS_NOALIGN, AFX_IDW_TOOLBAR ) ) return -1;
@@ -120,8 +120,20 @@ int CHostCacheWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		LVS_EX_DOUBLEBUFFER|LVS_EX_FULLROWSELECT|LVS_EX_HEADERDRAGDROP|LVS_EX_LABELTIP,
 		LVS_EX_DOUBLEBUFFER|LVS_EX_FULLROWSELECT|LVS_EX_HEADERDRAGDROP|LVS_EX_LABELTIP );
 
-	CoolInterface.LoadProtocolIconsTo( m_gdiProtocols );
-	m_wndList.SetImageList( &m_gdiProtocols, LVSIL_SMALL );
+	// Merge protocols and flags in one image list
+	CoolInterface.LoadProtocolIconsTo( m_gdiImageList );
+	int nImages = m_gdiImageList.GetImageCount();
+	int nFlags = Flags.GetCount();
+	VERIFY( m_gdiImageList.SetImageCount( nImages + nFlags ) );
+	for ( int nFlag = 0 ; nFlag < nFlags ; nFlag++ )
+	{
+		if ( HICON hIcon = Flags.ExtractIcon( nFlag ) )
+		{
+			VERIFY( m_gdiImageList.Replace( nImages + nFlag, hIcon ) != -1 );
+			VERIFY( DestroyIcon( hIcon ) );
+		}
+	}
+	m_wndList.SetImageList( &m_gdiImageList, LVSIL_SMALL );
 
 	m_wndList.InsertColumn( 0, _T("Address"), LVCFMT_LEFT, 140, -1 );
 	m_wndList.InsertColumn( 1, _T("Port"), LVCFMT_CENTER, 60, 0 );
@@ -143,10 +155,8 @@ int CHostCacheWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	Settings.LoadList( _T("CHostCacheWnd"), &m_wndList );
 	LoadState( _T("CHostCacheWnd"), TRUE );
-
-	CWaitCursor pCursor;
-	m_bAllowUpdates = TRUE;
-	Update( TRUE );
+	
+	PostMessage( WM_TIMER, 1 );
 
 	return 0;
 }
@@ -185,7 +195,7 @@ void CHostCacheWnd::Update(BOOL bForce)
 
 		CLiveItem* pItem = m_wndList.Add( pHost );
 
-		pItem->SetImage( pHost->m_nProtocol );
+		pItem->SetImage( 0, pHost->m_nProtocol );
 		pItem->SetMaskOverlay( pHost->m_bPriority );
 
 		if ( pHost->m_sAddress.IsEmpty() )
@@ -217,7 +227,13 @@ void CHostCacheWnd::Update(BOOL bForce)
 		if ( pHost->m_nUserCount ) pItem->Format( 7, _T("%u"), pHost->m_nUserCount );
 		if ( pHost->m_nUserLimit ) pItem->Format( 8, _T("%u"), pHost->m_nUserLimit );
 		if ( pHost->m_nFailures ) pItem->Format( 9, _T("%u"), pHost->m_nFailures );
-		if ( pHost->m_sCountry ) pItem->Set( 10, pHost->m_sCountry );
+		if ( pHost->m_sCountry )
+		{
+			pItem->Set( 10, pHost->m_sCountry );
+			int nFlag = Flags.GetFlagIndex( pHost->m_sCountry );
+			if ( nFlag >= 0 )
+				pItem->SetImage( 10, PROTOCOL_LAST + nFlag );
+		}
 #ifdef _DEBUG
 		if ( pHost->m_nKeyValue ) pItem->Format( 11, _T("%u"), pHost->m_nKeyValue);
 		if ( pHost->m_tQuery ) pItem->Format( 12, _T("%u"), pHost->m_tQuery );
@@ -227,7 +243,7 @@ void CHostCacheWnd::Update(BOOL bForce)
 
 	m_wndList.Apply();
 
-	tLastUpdate = GetTickCount();				// Update timer
+	m_tLastUpdate = GetTickCount();				// Update timer
 }
 
 CHostCacheHostPtr CHostCacheWnd::GetItem(int nItem)
@@ -246,13 +262,25 @@ void CHostCacheWnd::OnSkinChange()
 	CPanelWnd::OnSkinChange();
 	Settings.LoadList( _T("CHostCacheWnd"), &m_wndList );
 	Skin.CreateToolBar( _T("CHostCacheWnd"), &m_wndToolBar );
+
+	CoolInterface.LoadProtocolIconsTo( m_gdiImageList );
+	int nImages = m_gdiImageList.GetImageCount();
+	int nFlags = Flags.GetCount();
+	VERIFY( m_gdiImageList.SetImageCount( nImages + nFlags ) );
+	for ( int nFlag = 0 ; nFlag < nFlags ; nFlag++ )
+	{
+		if ( HICON hIcon = Flags.ExtractIcon( nFlag ) )
+		{
+			VERIFY( m_gdiImageList.Replace( nImages + nFlag, hIcon ) != -1 );
+			VERIFY( DestroyIcon( hIcon ) );
+		}
+	}
+	m_wndList.SetImageList( &m_gdiImageList, LVSIL_SMALL );
+
 	if ( Settings.General.GUIMode == GUI_BASIC)
 	{
 		Settings.Gnutella.HostCacheView = m_nMode = PROTOCOL_G2;
 	}
-
-	CoolInterface.LoadProtocolIconsTo( m_gdiProtocols );
-	m_wndList.SetImageList( &m_gdiProtocols, LVSIL_SMALL );
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -283,7 +311,7 @@ void CHostCacheWnd::OnTimer(UINT_PTR nIDEvent)
 		DWORD tTicks = GetTickCount();
 
 		// Wait 10 seconds before refreshing; do not force updates
-		if ( ( pCache->m_nCookie != m_nCookie ) && ( ( tTicks - tLastUpdate ) > 10000 ) ) Update();
+		if ( ( pCache->m_nCookie != m_nCookie ) && ( ( tTicks - m_tLastUpdate ) > 10000 ) ) Update();
 	}
 }
 
@@ -293,14 +321,18 @@ void CHostCacheWnd::OnCustomDrawList(NMHDR* pNMHDR, LRESULT* pResult)
 
 	if ( pDraw->nmcd.dwDrawStage == CDDS_PREPAINT )
 	{
-		*pResult = ( m_nMode == PROTOCOL_ED2K ) ? CDRF_NOTIFYITEMDRAW : CDRF_DODEFAULT;
+		*pResult = CDRF_NOTIFYITEMDRAW;
 	}
 	else if ( pDraw->nmcd.dwDrawStage == CDDS_ITEMPREPAINT )
 	{
 		if ( m_wndList.GetItemOverlayMask( (int)pDraw->nmcd.dwItemSpec ) )
-			pDraw->clrText = CoolInterface.m_crSysActiveCaption ;
-
-		*pResult = CDRF_DODEFAULT;
+		{
+			SelectObject( pDraw->nmcd.hdc, CoolInterface.m_fntBold );
+			pDraw->clrText = CoolInterface.m_crTextLink;
+			*pResult = CDRF_NEWFONT;
+		}
+		else
+			*pResult = CDRF_DODEFAULT;
 	}
 }
 
@@ -427,14 +459,15 @@ void CHostCacheWnd::OnHostCacheDisconnect()
 
 void CHostCacheWnd::OnUpdateHostcachePriority(CCmdUI* pCmdUI)
 {
-	if ( m_nMode != PROTOCOL_ED2K || m_wndList.GetSelectedCount() == 0 )
+	if ( m_wndList.GetSelectedCount() == 0 )
 	{
 		pCmdUI->Enable( FALSE );
 		pCmdUI->SetCheck( FALSE );
 		return;
 	}
 
-	CQuickLock oLock( HostCache.ForProtocol( PROTOCOL_ED2K )->m_pSection );
+	CHostCacheList* pList = HostCache.ForProtocol( m_nMode ? m_nMode : PROTOCOL_G2 );
+	CQuickLock oLock( pList->m_pSection );
 
 	pCmdUI->Enable( TRUE );
 
@@ -457,10 +490,8 @@ void CHostCacheWnd::OnUpdateHostcachePriority(CCmdUI* pCmdUI)
 
 void CHostCacheWnd::OnHostcachePriority()
 {
-	if ( m_nMode != PROTOCOL_ED2K)
-		return;
-
-	CQuickLock oLock( HostCache.ForProtocol( PROTOCOL_ED2K )->m_pSection );
+	CHostCacheList* pList = HostCache.ForProtocol( m_nMode ? m_nMode : PROTOCOL_G2 );
+	CQuickLock oLock( pList->m_pSection );
 
 	POSITION pos = m_wndList.GetFirstSelectedItemPosition();
 	while ( pos )
@@ -472,7 +503,7 @@ void CHostCacheWnd::OnHostcachePriority()
 		}
 	}
 
-	HostCache.eDonkey.m_nCookie ++;
+	pList->m_nCookie ++;
 
 	InvalidateRect( NULL );
 	Update();

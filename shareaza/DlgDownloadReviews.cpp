@@ -111,19 +111,19 @@ BOOL CDownloadReviewDlg::OnInitDialog()
 		switch ( pReview->m_nUserPicture )
 		{
 		case 0:
-			pItem->m_nImage = CoolInterface.ImageForID( ID_TOOLS_WIZARD );
+			pItem->SetImage( 0, CoolInterface.ImageForID( ID_TOOLS_WIZARD ) );
 			break;
 		case 1:
-			pItem->m_nImage = CoolInterface.ImageForID( ID_TOOLS_PROFILE );
+			pItem->SetImage( 0, CoolInterface.ImageForID( ID_TOOLS_PROFILE ) );
 			break;
 		case 2:
-			pItem->m_nImage = CoolInterface.ImageForID( ID_TOOLS_WIZARD );
+			pItem->SetImage( 0, CoolInterface.ImageForID( ID_TOOLS_WIZARD ) );
 			break;
 		case 3:
-			pItem->m_nImage = CoolInterface.ImageForID( ID_TOOLS_PROFILE );
+			pItem->SetImage( 0, CoolInterface.ImageForID( ID_TOOLS_PROFILE ) );
 			break;
 		default:
-			pItem->m_nImage = CoolInterface.ImageForID( ID_TOOLS_PROFILE );
+			pItem->SetImage( 0, CoolInterface.ImageForID( ID_TOOLS_PROFILE ) );
 		}
 		
 		pItem->Set( 0, pReview->m_sUserName );

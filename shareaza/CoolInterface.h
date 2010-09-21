@@ -188,9 +188,9 @@ public:
 	// Assign image list to CListCtrl object. Returns old image list of CListCtrl object.
 	CImageList*	SetImageListTo(CListCtrl& pWnd, int nImageListType = LVSIL_SMALL);
 	// Loads skinable icons specified by ID array to CImageList object
-	void		LoadIconsTo(CImageList& pImageList, const UINT nID[], BOOL bMirror = FALSE, int cx = 16);
+	void		LoadIconsTo(CImageList& pImageList, const UINT nID[], BOOL bMirror = FALSE, int nImageListType = LVSIL_SMALL);
 	// Loads skinable protocol icons to CImageList object
-	void		LoadProtocolIconsTo(CImageList& pImageList, BOOL bMirror = FALSE, int cx = 16);
+	void		LoadProtocolIconsTo(CImageList& pImageList, BOOL bMirror = FALSE);
 	BOOL		Draw(CDC* pDC, int nImage, POINT pt, UINT nStyle = ILD_NORMAL, int nImageListType = LVSIL_SMALL) const;
 	BOOL		DrawEx(CDC* pDC, int nImage, POINT pt, SIZE sz = CSize( 16, 16 ), COLORREF clrBk = CLR_NONE, COLORREF clrFg = CLR_DEFAULT, UINT nStyle = ILD_NORMAL, int nImageListType = LVSIL_SMALL) const;
 	BOOL		Draw(CDC* pDC, UINT nID, int nSize, int nX, int nY, COLORREF crBack = CLR_NONE, BOOL bSelected = FALSE, BOOL bExclude = TRUE) const;

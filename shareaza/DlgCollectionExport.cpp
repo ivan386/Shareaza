@@ -282,11 +282,11 @@ BOOL CCollectionExportDlg::AddTemplate(LPCTSTR pszPath, LPCTSTR pszName)
 	
 	if ( ExtractIconEx( strIcon, 0, NULL, &hIcon, 1 ) != NULL && hIcon != NULL )
 	{
-		pItem.m_nImage = AddIcon( hIcon, m_gdiImageList );
+		pItem.SetImage( 0, AddIcon( hIcon, m_gdiImageList ) );
 	}
 	else
 	{
-		pItem.m_nImage = 0;
+		pItem.SetImage( 0, 0 );
 	}
 	
 	pItem.Set( 0, strName );

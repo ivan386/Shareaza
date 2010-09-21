@@ -21,6 +21,10 @@
 
 #pragma once
 
+class CLiveItem;
+class CLiveList;
+class CLiveListCtrl;
+
 
 class CLiveItem : public CObject
 {
@@ -34,28 +38,32 @@ public:
 	virtual void AssertValid() const
 	{
 		CObject::AssertValid();
-		ASSERT( m_nImage >= I_IMAGECALLBACK && m_nImage < 1000 );
+		ASSERT( m_nImage );
 		ASSERT( m_pColumn );
 	}
 #endif
 
 	void	Set(int nColumn, LPCTSTR pszText);
-	void	SetImage(int nImage);
+	void	SetImage(int nColumn, int nImage);
 	void	SetMaskOverlay(UINT nMaskOverlay);
 	void	Format(int nColumn, LPCTSTR pszFormat, ...);
+
 	int		Add(CListCtrl* pCtrl, int nItem, int nColumns);
 	BOOL	Update(CListCtrl* pCtrl, int nItem, int nColumns);
 	BOOL	SetImage(CListCtrl* pCtrl, LPARAM nParam, int nColumn, int nImageIndex);
 
-public:
+protected:
 	DWORD_PTR	m_nParam;
-	int			m_nImage;
-	UINT		m_nMaskOverlay;
-	UINT		m_nMaskState;
-	CString*	m_pColumn;
 	bool		m_bModified;	// Is data modified?
 	UINT		m_nModified;	// Modified columns (bitmask)
 	bool		m_bOld;			// Is item old? (marked to deletion)
+	UINT		m_nMaskOverlay;
+	UINT		m_nMaskState;
+	int*		m_nImage;		// Image for each column (-1 : no image, 0..N : image index)
+	CString*	m_pColumn;		// Text for each column
+
+	friend class CLiveList;
+	friend class CLiveListCtrl;
 };
 
 typedef CLiveItem* CLiveItemPtr;
@@ -146,6 +154,7 @@ typedef struct tagLVHITTESTINFOEX
 
 #endif
 
+
 class CLiveListCtrl : public CListCtrl
 {
 	DECLARE_DYNAMIC(CLiveListCtrl)
@@ -174,11 +183,11 @@ protected:
 	CLiveMap			m_pItems;
 	CLiveIndex			m_pIndex;
 
-	DECLARE_MESSAGE_MAP()
-
 	afx_msg void OnLvnGetdispinfoW(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnLvnGetdispinfoA(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnLvnOdfinditemW(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnLvnOdfinditemA(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnLvnOdcachehint(NMHDR *pNMHDR, LRESULT *pResult);
+
+	DECLARE_MESSAGE_MAP()
 };

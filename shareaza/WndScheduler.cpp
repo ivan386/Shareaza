@@ -155,9 +155,9 @@ void CSchedulerWnd::Update(int nColumn, BOOL bSort)
 		CLiveItem* pItem = pLiveList.Add( pSchTask );
 
 		if ( pSchTask->m_bActive )
-			pItem->m_nImage = SCHEDULE_ITEM_ACTIVE;
+			pItem->SetImage( 0, SCHEDULE_ITEM_ACTIVE );
 		else 
-			pItem->m_nImage = SCHEDULE_ITEM_INACTIVE;
+			pItem->SetImage( 0, SCHEDULE_ITEM_INACTIVE );
 
 		//Action column
 		switch ( pSchTask->m_nAction )
@@ -223,7 +223,7 @@ void CSchedulerWnd::Update(int nColumn, BOOL bSort)
 	{
 		CLiveItem* pDefault = pLiveList.Add( (LPVOID)0 );
 		pDefault->Set( 0, LoadString( IDS_SCHEDULER_NOTASK ) );
-		pDefault->m_nImage = SCHEDULE_NO_ITEM;
+		pDefault->SetImage( 0, SCHEDULE_NO_ITEM );
 	}
 
 	if ( nColumn >= 0 )

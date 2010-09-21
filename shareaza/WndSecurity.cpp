@@ -150,7 +150,7 @@ void CSecurityWnd::Update(int nColumn, BOOL bSort)
 	pDefault->Set( 0, _T("Default Policy") );
 	pDefault->Set( 1, Security.m_bDenyPolicy ? _T("Deny") : _T("Accept") );
 	pDefault->Set( 3, _T("X") );
-	pDefault->m_nImage = Security.m_bDenyPolicy ? 2 : 1;
+	pDefault->SetImage( 0, Security.m_bDenyPolicy ? 2 : 1 );
 
 	Security.Expire();
 
@@ -163,7 +163,7 @@ void CSecurityWnd::Update(int nColumn, BOOL bSort)
 
 		CLiveItem* pItem = pLiveList.Add( pRule );
 
-		pItem->m_nImage = pRule->m_nAction;
+		pItem->SetImage( 0, pRule->m_nAction );
 
 		if ( pRule->m_nType == CSecureRule::srAddress )
 		{

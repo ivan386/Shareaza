@@ -698,7 +698,9 @@ void CDownloadTipCtrl::OnCalcSize(CDC* pDC, CDownloadSource* pSource)
 
 	pDC->SelectObject( &CoolInterface.m_fntNormal );
 	AddSize( pDC, m_sCountryName );
-	m_sz.cy += TIP_TEXTHEIGHT + TIP_RULE;
+	m_sz.cy += 16;
+
+	m_sz.cy += TIP_RULE;
 
 	AddSize( pDC, m_sURL, 80 );
 	m_sz.cy += TIP_TEXTHEIGHT * 4;
@@ -740,19 +742,14 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownloadSource* pSource)
 	int nFlagIndex = Flags.GetFlagIndex( pSource->m_sCountry );
 	if ( nFlagIndex >= 0 )
 	{
-		ImageList_DrawEx( Flags.m_pImage, nFlagIndex, pDC->GetSafeHdc(),
-			pt.x, pt.y, 18, 18, CoolInterface.m_crTipBack, CLR_NONE, ILD_NORMAL );
-		pDC->ExcludeClipRect( pt.x, pt.y, pt.x + 18, pt.y + 18 );
+		Flags.Draw( nFlagIndex, pDC->GetSafeHdc(), pt.x, pt.y, CoolInterface.m_crTipBack );
+		pDC->ExcludeClipRect( pt.x, pt.y, pt.x + 16, pt.y + 16 );
 	}
-
-	pt.x += 25;
-	pt.y += 2;
-
+	pt.x += 16 + 4;
 	pDC->SelectObject( &CoolInterface.m_fntNormal );
 	DrawText( pDC, &pt, m_sCountryName );
-	pt.y += TIP_TEXTHEIGHT;
-
-	pt.x -= 25;
+	pt.y += 16;
+	pt.x -= 16 + 4;
 
 	DrawRule( pDC, &pt );
 

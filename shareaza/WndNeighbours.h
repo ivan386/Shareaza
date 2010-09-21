@@ -29,13 +29,11 @@ class CNeighbour;
 
 class CNeighboursWnd : public CPanelWnd
 {
-// Construction
+	DECLARE_SERIAL(CNeighboursWnd)
+
 public:
 	CNeighboursWnd();
 
-	DECLARE_SERIAL(CNeighboursWnd)
-
-// Attributes
 protected:
 	CCoolBarCtrl		m_wndToolBar;
 	CTipListCtrl		m_wndList;
@@ -44,25 +42,15 @@ protected:
 	CLiveListSizer		m_pSizer;
 	DWORD				m_tLastUpdate;
 
-// Operations
-public:
-	void			Update();
-	CNeighbour*		GetItem(int nItem);
-	void			OpenPacketWnd(BOOL bIncoming, BOOL bOutgoing);
-	void			DrawEmptyMessage(CDC* pDC);
-	virtual void	OnSkinChange();
+	void		 Update();
+	CNeighbour*	 GetItem(int nItem);
+	void		 OpenPacketWnd(BOOL bIncoming, BOOL bOutgoing);
+	void		 DrawEmptyMessage(CDC* pDC);
+	virtual void OnSkinChange();
 
-// Overrides
-public:
-	//{{AFX_VIRTUAL(CNeighboursWnd)
-	public:
 	virtual BOOL OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo);
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
-	//}}AFX_VIRTUAL
 
-// Implementation
-protected:
-	//{{AFX_MSG(CNeighboursWnd)
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
@@ -88,7 +76,7 @@ protected:
 	afx_msg void OnNeighboursCopy();
 	afx_msg void OnNeighboursSettings();
 	afx_msg void OnActivate(UINT nState, CWnd* pWndOther, BOOL bMinimized);
-	//}}AFX_MSG
+
 	DECLARE_MESSAGE_MAP()
 };
 

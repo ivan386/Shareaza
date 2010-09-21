@@ -151,7 +151,7 @@ void CNeighbourTipCtrl::OnCalcSize(CDC* pDC)
 	if ( pNeighbour->m_sCountryName.GetLength() )
 	{
 		AddSize( pDC, pNeighbour->m_sCountryName );
-		m_sz.cy += TIP_TEXTHEIGHT + 4;
+		m_sz.cy += 16;
 	}
 
 	if ( pNeighbour->m_sUserAgent.GetLength() )
@@ -224,20 +224,13 @@ void CNeighbourTipCtrl::OnPaint(CDC* pDC)
 		int nFlagIndex = Flags.GetFlagIndex( pNeighbour->m_sCountry );
 		if ( nFlagIndex >= 0 )
 		{
-			ImageList_DrawEx( Flags.m_pImage, nFlagIndex, pDC->GetSafeHdc(),
-				pt.x, pt.y, 18, 18, CoolInterface.m_crTipBack, CLR_NONE, ILD_NORMAL );
-			pDC->ExcludeClipRect( pt.x, pt.y, pt.x + 18, pt.y + 18 );
-
-			pt.x += 25;
-			pt.y += 2;
-			DrawText( pDC, &pt, pNeighbour->m_sCountryName );
-			pt.x -= 25;
+			Flags.Draw( nFlagIndex, pDC->GetSafeHdc(), pt.x, pt.y, CoolInterface.m_crTipBack );
+			pDC->ExcludeClipRect( pt.x, pt.y, pt.x + 16, pt.y + 16 );
 		}
-		else
-		{
-			DrawText( pDC, &pt, pNeighbour->m_sCountryName );
-		}
-		pt.y += TIP_TEXTHEIGHT + 2;
+		pt.x += 16 + 4;
+		DrawText( pDC, &pt, pNeighbour->m_sCountryName );
+		pt.x -= 16 + 4;
+		pt.y += 16;
 	}
 
 	if ( pNeighbour->m_nState < nrsConnected )

@@ -132,7 +132,7 @@ void CUploadTipCtrl::OnCalcSize(CDC* pDC)
 	m_sz.cy += TIP_RULE;
 	m_sz.cy += TIP_TEXTHEIGHT * 3;
 	m_sz.cy += TIP_GAP;
-	m_sz.cy += TIP_TEXTHEIGHT;
+	m_sz.cy += 16;
 	m_sz.cy += TIP_GAP;
 	m_sz.cy += 40;
 	m_sz.cy += TIP_GAP;
@@ -182,17 +182,13 @@ void CUploadTipCtrl::OnPaint(CDC* pDC)
 	int nFlagIndex = Flags.GetFlagIndex( pUpload->m_sCountry );
 	if ( nFlagIndex >= 0 )
 	{
-		ImageList_DrawEx( Flags.m_pImage, nFlagIndex, pDC->GetSafeHdc(),
-			pt.x, pt.y, 18, 18, CoolInterface.m_crTipBack, CLR_NONE, ILD_NORMAL );
-		pDC->ExcludeClipRect( pt.x, pt.y, pt.x + 18, pt.y + 18 );
+		Flags.Draw( nFlagIndex, pDC->GetSafeHdc(), pt.x, pt.y, CoolInterface.m_crTipBack );
+		pDC->ExcludeClipRect( pt.x, pt.y, pt.x + 16, pt.y + 16 );
 	}
-
-	pt.x += 25;
-	pt.y += 2;
-
+	pt.x += 16 + 4;
 	DrawText( pDC, &pt, pUpload->m_sCountryName );
-	pt.x -= 25;
-	pt.y += TIP_TEXTHEIGHT + 2;
+	pt.x -= 16 + 4;
+	pt.y += 16;
 
 	DrawRule( pDC, &pt );
 

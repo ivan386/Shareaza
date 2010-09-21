@@ -165,7 +165,7 @@ void CDiscoveryWnd::Update()
 			if ( ! m_bShowGnutella ) continue;
 			pItem = pLiveList.Add( pService );
 			pItem->Set( 1, _T("Bootstrap") );
-			pItem->m_nImage = 0;
+			pItem->SetImage( 0, 0 );
 		}
 		else if ( pService->m_nType == CDiscoveryService::dsWebCache )
 		{
@@ -174,16 +174,16 @@ void CDiscoveryWnd::Update()
 			pItem->Set( 1, _T("GWebCache") );
 			if ( pService->m_bGnutella2 && pService->m_bGnutella1 )
 			{
-				pItem->m_nImage = 2;			// Multi-coloured icon
+				pItem->SetImage( 0, 2 );			// Multi-coloured icon
 			}
 			else
 			{
 				if ( pService->m_bGnutella2 )
-					pItem->m_nImage = 4;		// Blue icon
+					pItem->SetImage( 0, 4 );		// Blue icon
 				else if ( pService->m_bGnutella1 )
-					pItem->m_nImage = 1;		// Grey icon
+					pItem->SetImage( 0, 1 );		// Grey icon
 				else 
-					pItem->m_nImage = 3;		// Blank
+					pItem->SetImage( 0, 3 );		// Blank
 			}
 		}
 		else if ( pService->m_nType == CDiscoveryService::dsServerMet )
@@ -191,14 +191,14 @@ void CDiscoveryWnd::Update()
 			if ( ! m_bShowServerMet ) continue;
 			pItem = pLiveList.Add( pService );
 			pItem->Set( 1, _T("Server.met") );
-			pItem->m_nImage = 3;
+			pItem->SetImage( 0, 3 );
 		}
 		else if ( pService->m_nType == CDiscoveryService::dsBlocked )
 		{
 			if ( ! m_bShowBlocked ) continue;
 			pItem = pLiveList.Add( pService );
 			pItem->Set( 1, _T("Blocked") );
-			pItem->m_nImage = 5;
+			pItem->SetImage( 0, 5 );
 		}
 		else
 		{

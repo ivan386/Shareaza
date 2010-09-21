@@ -1,7 +1,7 @@
 //
 // Flags.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -23,20 +23,24 @@
 
 class CImageFile;
 
+// Loads 26x26 Flags.png image
 class CFlags
 {
 public:
 	CFlags();
-	virtual ~CFlags();
+	~CFlags();
 
-	CImageList			m_pImage;
-
-	BOOL	Load();
-	void	Clear();
-	int		GetFlagIndex(CString sCountry);
+	BOOL		Load();
+	void		Clear();
+	int			GetCount() const;
+	int			GetFlagIndex(const CString& sCountry) const;
+	BOOL		Draw(int i, HDC hdcDst, int x, int y, COLORREF rgbBk, COLORREF rgbFg = CLR_NONE, UINT fStyle = ILD_NORMAL);
+	HICON		ExtractIcon(int i);
 
 protected:
-	void	AddFlag(CImageFile* pImage, CRect* pRect, COLORREF crBack);
+	CImageList	m_pImage;	// Flag images
+
+	void		AddFlag(CImageFile* pImage, CRect* pRect, COLORREF crBack);
 
 private:
 	CFlags(const CFlags&);

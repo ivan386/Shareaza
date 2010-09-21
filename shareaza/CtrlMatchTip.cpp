@@ -527,8 +527,8 @@ CSize CMatchTipCtrl::ComputeSize()
 
 	if ( m_sCountry.GetLength() )
 	{
-		ExpandSize( dc, sz, m_sCountry, 18 + 2 );
-		sz.cy += TIP_TEXTHEIGHT;
+		ExpandSize( dc, sz, m_sCountry, 16 + 2 );
+		sz.cy += 16;
 	}
 
 	sz.cy += 5 + 6;
@@ -707,19 +707,13 @@ void CMatchTipCtrl::OnPaint()
 		int nFlagIndex = Flags.GetFlagIndex( m_sCountryCode );
 		if ( nFlagIndex >= 0 )
 		{
-			ImageList_DrawEx( Flags.m_pImage, nFlagIndex, dc,
-				pt.x, pt.y, 18, 18, m_crBack, m_crBack, ILD_NORMAL );
-			dc.ExcludeClipRect( pt.x, pt.y, pt.x + 18, pt.y + 18 );
-			pt.x += 20;
-			pt.y += 2;
+			Flags.Draw( nFlagIndex, dc, pt.x, pt.y, m_crBack, m_crBack );
+			dc.ExcludeClipRect( pt.x, pt.y, pt.x + 16, pt.y + 16 );
 		}
+		pt.x += 16 + 4;
 		DrawText( dc, pt, m_sCountry );
-		if ( nFlagIndex >= 0 )
-		{
-			pt.y -= 2;
-			pt.x -= 20;
-		}
-		pt.y += TIP_TEXTHEIGHT;
+		pt.x -= 16 + 4;
+		pt.y += 16;
 	}
 
 	pt.y += 5;

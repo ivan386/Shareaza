@@ -91,7 +91,9 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CNeighboursWnd construction
 
-CNeighboursWnd::CNeighboursWnd() : CPanelWnd( TRUE, TRUE )
+CNeighboursWnd::CNeighboursWnd()
+	: CPanelWnd( TRUE, TRUE )
+	, m_tLastUpdate( 0 )
 {
 	Create( IDR_NEIGHBOURSFRAME );
 }
@@ -118,13 +120,13 @@ int CNeighboursWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		LVS_EX_DOUBLEBUFFER|LVS_EX_FULLROWSELECT|LVS_EX_HEADERDRAGDROP|LVS_EX_LABELTIP|LVS_EX_SUBITEMIMAGES );
 
 	// Merge protocols and flags in one image list
-	CoolInterface.LoadProtocolIconsTo( m_gdiImageList, FALSE, 18 );
+	CoolInterface.LoadProtocolIconsTo( m_gdiImageList );
 	int nImages = m_gdiImageList.GetImageCount();
-	int nFlags = Flags.m_pImage.GetImageCount();
+	int nFlags = Flags.GetCount();
 	VERIFY( m_gdiImageList.SetImageCount( nImages + nFlags ) );
 	for ( int nFlag = 0 ; nFlag < nFlags ; nFlag++ )
 	{
-		if ( HICON hIcon = Flags.m_pImage.ExtractIcon( nFlag ) )
+		if ( HICON hIcon = Flags.ExtractIcon( nFlag ) )
 		{
 			VERIFY( m_gdiImageList.Replace( nImages + nFlag, hIcon ) != -1 );
 			VERIFY( DestroyIcon( hIcon ) );
@@ -147,9 +149,8 @@ int CNeighboursWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	m_wndList.SetFont( &theApp.m_gdiFont );
 
+	Settings.LoadList( _T("CNeighboursWnd"), &m_wndList );
 	LoadState( _T("CNeighboursWnd"), FALSE );
-
-	m_tLastUpdate = 0;
 
 	PostMessage( WM_TIMER, 1 );
 
@@ -232,7 +233,7 @@ void CNeighboursWnd::Update()
 
 		if ( pNeighbour->m_nState >= nrsConnected )
 		{
-			pItem->m_nImage = pNeighbour->m_nProtocol;
+			pItem->SetImage( 0, pNeighbour->m_nProtocol );
 
 			if ( pNeighbour->m_nProtocol == PROTOCOL_G1 )
 			{
@@ -318,7 +319,7 @@ void CNeighboursWnd::Update()
 		}
 		else
 		{
-			pItem->m_nImage = PROTOCOL_NULL;
+			pItem->SetImage( 0, PROTOCOL_NULL );
 		}
 
 		pItem->Set( 10, pNeighbour->m_pProfile ? pNeighbour->m_pProfile->GetNick() : pNeighbour->m_sServerName );
@@ -326,7 +327,7 @@ void CNeighboursWnd::Update()
 		pItem->Set( 11, pNeighbour->m_sCountry );
 		int nFlag = Flags.GetFlagIndex( pNeighbour->m_sCountry );
 		if ( nFlag >= 0 )
-			pItem->SetImage( &m_wndList, (LPARAM)pNeighbour, 11, PROTOCOL_LAST + nFlag );
+			pItem->SetImage( 11, PROTOCOL_LAST + nFlag );
 	}
 
 	pLiveList.Apply( &m_wndList, TRUE );
@@ -348,13 +349,13 @@ void CNeighboursWnd::OnSkinChange()
 	Settings.LoadList( _T("CNeighboursWnd"), &m_wndList );
 	Skin.CreateToolBar( _T("CNeighboursWnd"), &m_wndToolBar );
 
-	CoolInterface.LoadProtocolIconsTo( m_gdiImageList, FALSE, 18 );
+	CoolInterface.LoadProtocolIconsTo( m_gdiImageList );
 	int nImages = m_gdiImageList.GetImageCount();
-	int nFlags = Flags.m_pImage.GetImageCount();
+	int nFlags = Flags.GetCount();
 	VERIFY( m_gdiImageList.SetImageCount( nImages + nFlags ) );
 	for ( int nFlag = 0 ; nFlag < nFlags ; nFlag++ )
 	{
-		if ( HICON hIcon = Flags.m_pImage.ExtractIcon( nFlag ) )
+		if ( HICON hIcon = Flags.ExtractIcon( nFlag ) )
 		{
 			VERIFY( m_gdiImageList.Replace( nImages + nFlag, hIcon ) != -1 );
 			VERIFY( DestroyIcon( hIcon ) );

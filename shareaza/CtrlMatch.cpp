@@ -1263,11 +1263,10 @@ void CMatchCtrl::DrawCountry(CDC& dc, CRect& rcCol, CString sCountry, BOOL bSele
 	if ( nFlagIndex >= 0 && rcCol.Width() >= 22 )
 	{
 		CPoint pt( rcCol.left, rcCol.top - 1 );
-		ImageList_DrawEx( Flags.m_pImage, nFlagIndex, dc,
-			pt.x, pt.y, 18, 18, crBack, crBack, bSelected ? ILD_BLEND50 : ILD_NORMAL );
-		dc.ExcludeClipRect( pt.x, pt.y, pt.x + 18, pt.y + 18 );
+		Flags.Draw( nFlagIndex, dc, pt.x, pt.y + 2, crBack, crBack, bSelected ? ILD_BLEND50 : ILD_NORMAL );
+		dc.ExcludeClipRect( pt.x, pt.y + 2, pt.x + 16, pt.y + 16 );
 		dc.FillSolidRect( &rcCol, crBack );
-		rcCol.left += 18;
+		rcCol.left += 16;
 	}
 }
 

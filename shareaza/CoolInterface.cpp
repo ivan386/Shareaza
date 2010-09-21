@@ -344,19 +344,22 @@ BOOL CCoolInterface::ConfirmImageList()
 			m_pImages48.Create( 48, 48, ILC_COLOR16|ILC_MASK, 16, 4 ) );
 }
 
-void CCoolInterface::LoadIconsTo(CImageList& pImageList, const UINT nID[], BOOL bMirror, int cx)
+void CCoolInterface::LoadIconsTo(CImageList& pImageList, const UINT nID[], BOOL bMirror, int nImageListType)
 {
 	int nCount = 0;
 	for ( ; nID[ nCount ]; ++nCount );
 	ASSERT( nCount != 0 );
 
-	int nImageListType;
-	if ( cx < 32 )
-		nImageListType = LVSIL_SMALL;
-	else if ( cx < 48 )
-		nImageListType = LVSIL_NORMAL;
-	else
-		nImageListType = LVSIL_BIG;
+	int cx = 16;
+	switch ( nImageListType )
+	{
+	case LVSIL_NORMAL:
+		cx = 32;
+		break;
+	case LVSIL_BIG:
+		cx = 48;
+		break;
+	}
 
 	if ( pImageList.GetSafeHandle() )
 		VERIFY( pImageList.DeleteImageList() );
@@ -374,9 +377,9 @@ void CCoolInterface::LoadIconsTo(CImageList& pImageList, const UINT nID[], BOOL 
 	}
 }
 
-void CCoolInterface::LoadProtocolIconsTo(CImageList& pImageList, BOOL bMirror, int cx)
+void CCoolInterface::LoadProtocolIconsTo(CImageList& pImageList, BOOL bMirror)
 {
-	LoadIconsTo( pImageList, protocolIDs, bMirror, cx );
+	LoadIconsTo( pImageList, protocolIDs, bMirror );
 }
 
 //////////////////////////////////////////////////////////////////////

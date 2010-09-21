@@ -238,9 +238,7 @@ void CPacketWnd::SmartDump(const CPacket* pPacket, const SOCKADDR_IN* pAddress, 
 	
 	if ( m_bPaused ) return;
 	
-	CLiveItem* pItem = new CLiveItem( 8, 0 );
-	
-	pItem->m_nParam = bOutgoing;
+	CLiveItem* pItem = new CLiveItem( 8, bOutgoing );
 
 	CTime pNow( CTime::GetCurrentTime() );
 	CString strNow;

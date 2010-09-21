@@ -1084,10 +1084,9 @@ void CUploadsCtrl::PaintFile(CDC& dc, const CRect& rcRow, CUploadQueue* /*pQueue
 			dc.FillSolidRect( rcCell.left, rcCell.top, 20, rcCell.Height(), crBack );
 			rcCell.left += 2;
 			if ( nFlagImage >= 0 )
-				ImageList_DrawEx( Flags.m_pImage, nFlagImage, dc.GetSafeHdc(),
-						rcCell.left, rcCell.top - 1, 18, 18, CLR_NONE, CLR_DEFAULT, pFile->m_bSelected ? ILD_SELECTED : ILD_NORMAL );
+				Flags.Draw( nFlagImage, dc.GetSafeHdc(), rcCell.left, rcCell.top + 2, CLR_NONE, CLR_DEFAULT, pFile->m_bSelected ? ILD_SELECTED : ILD_NORMAL );
 
-			rcCell.left += 18;
+			rcCell.left += 16;
 			dc.FillSolidRect( rcCell.left, rcCell.top, 1, rcCell.Height(), crNatural );
 
 			strText = pTransfer->m_sCountry;

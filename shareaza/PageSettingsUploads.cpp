@@ -200,14 +200,14 @@ void CUploadsSettingsPage::UpdateQueues()
 			pItem->Set( 2, Settings.SmartSpeed( nBandwidth ) + '+' );
 			pItem->Format( 3, _T("%u-%u"), pQueue->m_nMinTransfers, pQueue->m_nMaxTransfers );
 
-			pItem->m_nImage = CoolInterface.ImageForID( ID_VIEW_UPLOADS );
+			pItem->SetImage( 0, CoolInterface.ImageForID( ID_VIEW_UPLOADS ) );
 		}
 		else
 		{
 			pItem->Set( 2, _T("- ") );
 			pItem->Format( 3, _T("-"));
 
-			pItem->m_nImage = CoolInterface.ImageForID( ID_SYSTEM_CLEAR );
+			pItem->SetImage( 0, CoolInterface.ImageForID( ID_SYSTEM_CLEAR ) );
 		}
 
 		pItem->Set( 0, pQueue->m_sName );

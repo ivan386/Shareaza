@@ -29,36 +29,29 @@ class CHostCacheHost;
 
 class CHostCacheWnd : public CPanelWnd
 {
-public:
-	CHostCacheWnd();
-	virtual ~CHostCacheWnd();
-
 	DECLARE_SERIAL(CHostCacheWnd)
 
-// Attributes
 public:
+	CHostCacheWnd();
+
+	void			Update(BOOL bForce = FALSE);
+	
+protected:
 	PROTOCOLID		m_nMode;
 	BOOL			m_bAllowUpdates;
-protected:
 	CCoolBarCtrl	m_wndToolBar;
 	CLiveListCtrl	m_wndList;
 	CLiveListSizer	m_pSizer;
-	CImageList		m_gdiProtocols;
+	CImageList		m_gdiImageList;
 	DWORD			m_nCookie;
-	DWORD			tLastUpdate;
+	DWORD			m_tLastUpdate;
 
-// Operations
-public:
-	void			Update(BOOL bForce = FALSE);
 	CHostCacheHostPtr	GetItem(int nItem);
-	virtual void	OnSkinChange();
-	
-// Overrides
-protected:
-	virtual BOOL PreTranslateMessage(MSG* pMsg);
 
-// Implementation
-protected:
+	virtual void RecalcLayout(BOOL bNotify = TRUE);
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
+	virtual void	OnSkinChange();
+
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnCustomDrawList(NMHDR* pNMHDR, LRESULT* pResult);
@@ -96,9 +89,6 @@ protected:
 	afx_msg void OnNeighboursCopy();
 
 	DECLARE_MESSAGE_MAP()
-
-protected:
-	virtual void RecalcLayout(BOOL bNotify = TRUE);
 };
 
 #define IDC_HOSTS		100
