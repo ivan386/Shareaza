@@ -337,9 +337,6 @@ void CWizardConnectionPage::OnRun()
 			for ( i = 0; i < 2 && !DiscoveryServices.Execute(TRUE, PROTOCOL_ED2K, 2); i++ ) Sleep(200);
 			nCurrentStep += 5;
 			m_wndProgress.PostMessage( PBM_SETPOS, nCurrentStep );
-
-			if ( !bConnected )
-				Network.Disconnect();
 		}
 		else
 		{
