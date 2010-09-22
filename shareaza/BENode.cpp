@@ -475,10 +475,10 @@ void CBENode::Decode(LPCBYTE& pInput, DWORD& nInput, DWORD nSize)
 
 		if ( nSeek >= 40 ) AfxThrowUserException();
 
-		char szFormat[ 8 ];
-		sprintf_s( szFormat, "%%%uI64u", nSeek );
-		if ( sscanf_s( (LPCSTR)pInput, szFormat, &m_nValue ) != 1 )
+		__int64 nValue = atoin( (LPCSTR)pInput, nSeek );
+		if ( nValue == -1 )
 			AfxThrowUserException();
+		m_nValue = (QWORD)nValue;
 
 		INC( nSeek + 1 );
 		m_nType = beInt;
@@ -554,18 +554,15 @@ int CBENode::DecodeLen(LPCBYTE& pInput, DWORD& nInput)
 
 	if ( nSeek >= 32 )
 		AfxThrowUserException();
-	int nLen = 0;
-
-	char szFormat[ 8 ];
-	sprintf_s( szFormat, "%%%ui", nSeek );
-	if ( sscanf_s( (LPCSTR)pInput, szFormat, &nLen ) != 1 )
+	__int64 nLen = atoin( (LPCSTR)pInput, nSeek );
+	if ( nLen == -1 )
 		AfxThrowUserException();
 	INC( nSeek + 1 );
 
 	if ( nInput < (DWORD)nLen )
 		AfxThrowUserException();
 
-	return nLen;
+	return (int)nLen;
 }
 
 CString CBENode::GetString() const

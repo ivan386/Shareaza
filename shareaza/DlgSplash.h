@@ -1,7 +1,7 @@
 //
 // DlgSplash.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -24,18 +24,18 @@
 
 class CSplashDlg : public CDialog
 {
+	DECLARE_DYNAMIC(CSplashDlg)
+
 public:
 	CSplashDlg(int nMax, bool bClosing);
 	virtual ~CSplashDlg();
 
 	enum { IDD = IDD_SPLASH };
 
-	DECLARE_DYNAMIC(CSplashDlg)
-
 public:
 	void	Step(LPCTSTR pszText);
 	void	Topmost();
-	void	Hide();
+	void	Hide(BOOL bAbort = FALSE);
 
 protected:
 	int			m_nPos;

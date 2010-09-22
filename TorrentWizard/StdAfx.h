@@ -40,6 +40,7 @@
 #include "..\shareaza\augment\auto_array.hpp"
 
 #include "..\HashLib\HashLib.h"
+#include "..\Shareaza\Strings.h"
 #include "..\Shareaza\Buffer.h"
 #include "..\Shareaza\BENode.h"
 

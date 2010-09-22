@@ -95,7 +95,7 @@ BOOL CNetwork::Init()
 	{
 		if ( WSAStartup( MAKEWORD( 1, 1 ), &wsaData ) )
 			return FALSE;
-		if ( wsaData.wVersion == MAKEWORD( 1, 1 ) )
+		if ( MAKEWORD( HIBYTE ( wsaData.wVersion ), LOBYTE( wsaData.wVersion ) ) >= MAKEWORD( 1, 1 ) )
 			break;
 		if ( i == 2 )
 			return FALSE;

@@ -135,6 +135,7 @@ public:
 	void				PrintMessage(WORD nType, const CString& strLog);
 
 	void				SplashStep(LPCTSTR pszMessage = NULL, int nMax = 0, bool bClosing = false);
+	void				SplashAbort();
 
 	CString				GetCountryCode(IN_ADDR pAddress) const;
 	CString				GetCountryName(IN_ADDR pAddress) const;
@@ -207,12 +208,9 @@ BOOL PostMainWndMessage(UINT Msg, WPARAM wParam = NULL, LPARAM lParam = NULL);
 
 CRuntimeClass* AfxClassForName(LPCTSTR pszClass);
 
-BOOL LoadString(CString& str, UINT nID);
-CString LoadString(UINT nID);
-LPCTSTR _tcsistr(LPCTSTR pszString, LPCTSTR pszSubString);
-LPCTSTR _tcsnistr(LPCTSTR pszString, LPCTSTR pszPattern, size_t plen);
-void Split(const CString& strSource, TCHAR cDelimiter, CStringArray& pAddIt, BOOL bAddFirstEmpty = FALSE);
-BOOL LoadSourcesString(CString& str, DWORD num, bool bFraction=false);
+BOOL	LoadString(CString& str, UINT nID);
+CString	LoadString(UINT nID);
+BOOL	LoadSourcesString(CString& str, DWORD num, bool bFraction=false);
 
 DWORD	TimeFromString(LPCTSTR psz);
 CString	TimeToString(time_t tVal);
@@ -296,25 +294,6 @@ struct CompareNums
 		return lhs > rhs;
 	}
 };
-
-bool IsCharacter(WCHAR nChar);
-bool IsHiragana(WCHAR nChar);
-bool IsKatakana(WCHAR nChar);
-bool IsKanji(WCHAR nChar);
-bool IsWord(LPCTSTR pszString, size_t nStart, size_t nLength);
-void IsType(LPCTSTR pszString, size_t nStart, size_t nLength, bool& bWord, bool& bDigit, bool& bMix);
-
-class CLowerCaseTable
-{
-public:
-	explicit CLowerCaseTable();
-	TCHAR operator()(TCHAR cLookup) const;
-	CString& operator()(CString& strSource) const;
-private:
-	TCHAR cTable[ 65536 ];
-};
-
-extern const CLowerCaseTable ToLower;
 
 // Use with whole numbers only
 template <typename T>

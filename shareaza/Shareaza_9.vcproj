@@ -1119,6 +1119,10 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\Strings.cpp"
+				>
+			</File>
+			<File
 				RelativePath="ThumbCache.cpp"
 				>
 			</File>
@@ -2697,6 +2701,10 @@
 			</File>
 			<File
 				RelativePath="StreamArchive.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Strings.h"
 				>
 			</File>
 			<File

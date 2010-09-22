@@ -131,21 +131,23 @@ void CSplashDlg::Topmost()
 	}
 }
 
-void CSplashDlg::Hide()
+void CSplashDlg::Hide(BOOL bAbort)
 {
-	// Check if m_nMax was set too high during construction, or if not enough
-	// steps were run
-	ASSERT( m_nPos == m_nMax );
-
-	m_sState = _T("Ready");
-	SetWindowText( m_sState );
-	Invalidate();
-
-	if ( m_pfnAnimateWindow != NULL )
+	if ( ! bAbort )
 	{
-		(*m_pfnAnimateWindow)( GetSafeHwnd(), 250, AW_HIDE|AW_BLEND );
-	}
+		// Check if m_nMax was set too high during construction, or if not enough
+		// steps were run
+		ASSERT( m_nPos == m_nMax );
 
+		m_sState = _T("Ready");
+		SetWindowText( m_sState );
+		Invalidate();
+
+		if ( m_pfnAnimateWindow != NULL )
+		{
+			(*m_pfnAnimateWindow)( GetSafeHwnd(), 250, AW_HIDE|AW_BLEND );
+		}
+	}
 	::DestroyWindow( m_hWnd );
 	delete this;
 }

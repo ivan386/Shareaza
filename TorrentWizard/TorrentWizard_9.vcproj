@@ -469,6 +469,10 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="..\shareaza\Strings.cpp"
+				>
+			</File>
+			<File
 				RelativePath="TorrentBuilder.cpp"
 				>
 			</File>
@@ -536,6 +540,10 @@
 			</File>
 			<File
 				RelativePath="StdAfx.h"
+				>
+			</File>
+			<File
+				RelativePath="..\shareaza\Strings.h"
 				>
 			</File>
 			<File

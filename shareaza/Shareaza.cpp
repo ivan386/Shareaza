@@ -309,15 +309,10 @@ BOOL CShareazaApp::InitInstance()
 		return FALSE;
 	}
 
-	m_bInteractive = true;
-
 	if ( m_pRegisterApplicationRestart )
 		m_pRegisterApplicationRestart( NULL, 0 );
 
 	ShowStartupText();
-
-	if ( Settings.Live.FirstRun )
-		Plugins.Register();
 
 	DDEServer.Create();
 	IEProtocol.Create();
@@ -351,26 +346,35 @@ BOOL CShareazaApp::InitInstance()
 		return FALSE;
 #endif // RELEASE_BUILD
 
-	SplashStep( L"Network", ( ( cmdInfo.m_bNoSplash || ! cmdInfo.m_bShowSplash ) ? 0 : 18 ), false );
-		if ( ! Network.Init() )
-			return FALSE;
+	m_bInteractive = true;
 
 	if ( cmdInfo.m_nGUIMode != -1 )
 		Settings.General.GUIMode = cmdInfo.m_nGUIMode;
-
-	if ( Settings.General.GUIMode != GUI_WINDOWED && Settings.General.GUIMode != GUI_TABBED && Settings.General.GUIMode != GUI_BASIC )
+	if ( Settings.General.GUIMode != GUI_WINDOWED &&
+		 Settings.General.GUIMode != GUI_TABBED &&
+		 Settings.General.GUIMode != GUI_BASIC )
 		Settings.General.GUIMode = GUI_BASIC;
 
+	SplashStep( L"Network", ( ( cmdInfo.m_bNoSplash || ! cmdInfo.m_bShowSplash ) ? 0 : 18 ), false );
+		if ( ! Network.Init() )
+		{
+			SplashAbort();
+			AfxMessageBox( _T("Failed to initialize Windows Sockets."), MB_ICONHAND | MB_OK );
+			return FALSE;
+		}
 	SplashStep( L"Database" );
 		PurgeDeletes();
 		CThumbCache::InitDatabase();
 	SplashStep( L"P2P URIs" );
 		CShareazaURL::Register( TRUE, TRUE );
+		if ( Settings.Live.FirstRun )
+			Plugins.Register();
 	SplashStep( L"Shell Icons" );
 		ShellIcons.Clear();
 	SplashStep( L"Metadata Schemas" );
 		if ( SchemaCache.Load() < 46 )
 		{
+			SplashAbort();
 			AfxMessageBox( IDS_SCHEMA_LOAD_ERROR, MB_ICONHAND | MB_OK );
 			return FALSE;
 		}
@@ -473,9 +477,6 @@ int CShareazaApp::ExitInstance()
 	{
 		CWaitCursor pCursor;
 
-		DDEServer.Close();
-		IEProtocol.Close();
-
 		SplashStep( L"Disconnecting" );
 		VersionChecker.Stop();
 		DiscoveryServices.Stop();
@@ -517,6 +518,8 @@ int CShareazaApp::ExitInstance()
 		SplashStep();
 	}
 
+	DDEServer.Close();
+	IEProtocol.Close();
 	Skin.Clear();
 	Plugins.Clear();
 
@@ -1051,13 +1054,22 @@ void CShareazaApp::ShowStartupText()
 	PrintMessage( MSG_INFO, strCPU );
 }
 
+void CShareazaApp::SplashAbort()
+{
+	if ( m_dlgSplash )
+	{
+		m_dlgSplash->Hide( TRUE );
+		m_dlgSplash = NULL;
+	}
+}
+
 void CShareazaApp::SplashStep(LPCTSTR pszMessage, int nMax, bool bClosing)
 {
 	if ( ! pszMessage )
 	{
 		if ( m_dlgSplash )
 		{
-			m_dlgSplash->Hide();
+			m_dlgSplash->Hide( FALSE );
 			m_dlgSplash = NULL;
 		}
 	}
@@ -1470,23 +1482,6 @@ CRuntimeClass* AfxClassForName(LPCTSTR pszClass)
 /////////////////////////////////////////////////////////////////////////////
 // String functions
 
-void Split(const CString& strSource, TCHAR cDelimiter, CStringArray& pAddIt, BOOL bAddFirstEmpty)
-{
-	for( LPCTSTR start = strSource; *start; start++ )
-	{
-		LPCTSTR c = _tcschr( start, cDelimiter );
-		int len = c ? (int) ( c - start ) : (int) _tcslen( start );
-		if ( len > 0 )
-			pAddIt.Add( CString( start, len ) );
-		else
-			if ( bAddFirstEmpty && ( start == strSource ) )
-				pAddIt.Add( CString() );
-		if ( ! c )
-			break;
-		start = c;
-	}
-}
-
 BOOL LoadString(CString& str, UINT nID)
 {
 	return Skin.LoadString( str, nID );
@@ -1536,88 +1531,6 @@ BOOL LoadSourcesString(CString& str, DWORD num, bool bFraction)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// Case independent string search
-
-LPCTSTR _tcsistr(LPCTSTR pszString, LPCTSTR pszSubString)
-{
-	// Return null if string or substring is empty
-	if ( !*pszString || !*pszSubString )
-		return NULL;
-
-	// Return if string is too small to hold the substring
-	size_t nString( _tcslen( pszString ) );
-	size_t nSubString( _tcslen( pszSubString ) );
-	if ( nString < nSubString )
-		return NULL;
-
-	// Get the first character from the substring and lowercase it
-	const TCHAR cFirstPatternChar = ToLower( *pszSubString );
-
-	// Loop over the part of the string that the substring could fit into
-	LPCTSTR pszCutOff = pszString + nString - nSubString;
-	while ( pszString <= pszCutOff )
-	{
-		// Search for the start of the substring
-		while ( pszString <= pszCutOff
-			&& ToLower( *pszString ) != cFirstPatternChar )
-		{
-			++pszString;
-		}
-
-		// Exit loop if no match found
-		if ( pszString > pszCutOff )
-			break;
-
-		// Check the rest of the substring
-		size_t nChar( 1 );
-		while ( pszSubString[nChar]
-			&& ToLower( pszString[nChar] ) == ToLower( pszSubString[nChar] ) )
-		{
-			++nChar;
-		}
-
-		// If the substring matched return a pointer to the start of the match
-		if ( !pszSubString[nChar] )
-			return pszString;
-
-		// Move on to the next character and continue search
-		++pszString;
-	}
-
-	// No match found, return a null pointer
-	return NULL;
-}
-
-LPCTSTR _tcsnistr(LPCTSTR pszString, LPCTSTR pszPattern, size_t plen)
-{
-	if ( !*pszString || !*pszPattern || !plen ) return NULL;
-
-	const TCHAR cFirstPatternChar = ToLower( *pszPattern );
-
-	for ( ; ; ++pszString )
-	{
-		while ( *pszString && ToLower( *pszString ) != cFirstPatternChar ) ++pszString;
-
-		if ( !*pszString ) return NULL;
-
-		DWORD i = 0;
-		while ( ++i < plen )
-		{
-			if ( const TCHAR cStringChar = ToLower( pszString[ i ] ) )
-			{
-				if ( cStringChar != ToLower( pszPattern[ i ] ) ) break;
-			}
-			else
-			{
-				return NULL;
-			}
-		}
-
-		if ( i == plen ) return pszString;
-	}
-}
-
-/////////////////////////////////////////////////////////////////////////////
 // Time Management Functions (C-runtime)
 
 DWORD TimeFromString(LPCTSTR pszTime)
@@ -1654,7 +1567,6 @@ DWORD TimeFromString(LPCTSTR pszTime)
 		gmtime_s( &pGM, &tGMT ) != 0 ||
 		( tSub = mktime( &pGM ) ) == -1 )
 	{
-		theApp.Message( MSG_ERROR, _T("Invalid Date/Time"), pszTime );
 		return 0;
 	}
 
@@ -2906,155 +2818,6 @@ void SafeMessageLoop()
 	{
 	}
 	InterlockedDecrement( &theApp.m_bBusy );
-}
-
-bool IsCharacter(const WCHAR nChar)
-{
-	WORD nCharType = 0;
-
-	if ( GetStringTypeW( CT_CTYPE3, &nChar, 1, &nCharType ) )
-		return ( nCharType & C3_ALPHA
-			|| ( ( nCharType & ( C3_KATAKANA | C3_HIRAGANA ) ) && ( nCharType & C3_DIACRITIC ) )
-			|| iswdigit( nChar ) );
-
-	return false;
-}
-
-bool IsHiragana(const WCHAR nChar)
-{
-	WORD nCharType = 0;
-
-	if ( GetStringTypeW( CT_CTYPE3, &nChar, 1, &nCharType ) )
-		return ( nCharType & C3_HIRAGANA ) != 0;
-
-	return false;
-}
-
-bool IsKatakana(const WCHAR nChar)
-{
-	WORD nCharType = 0;
-
-	if ( GetStringTypeW( CT_CTYPE3, &nChar, 1, &nCharType ) )
-		return ( nCharType & C3_KATAKANA ) != 0;
-
-	return false;
-}
-
-bool IsKanji(const WCHAR nChar)
-{
-	WORD nCharType = 0;
-
-	if ( GetStringTypeW( CT_CTYPE3, &nChar, 1, &nCharType ) )
-		return ( nCharType & C3_IDEOGRAPH ) != 0;
-
-	return false;
-}
-
-bool IsWord(LPCTSTR pszString, size_t nStart, size_t nLength)
-{
-	for ( pszString += nStart ; *pszString && nLength ; ++pszString, --nLength )
-	{
-		if ( _istdigit( *pszString ) )
-			return false;
-	}
-	return true;
-}
-
-void IsType(LPCTSTR pszString, size_t nStart, size_t nLength, bool& bWord, bool& bDigit, bool& bMix)
-{
-	bWord = false;
-	bDigit = false;
-	for ( pszString += nStart ; *pszString && nLength ; ++pszString, --nLength )
-	{
-		if ( _istdigit( *pszString ) )
-			bDigit = true;
-		else if ( IsCharacter( *pszString ) )
-			bWord = true;
-	}
-
-	bMix = bWord && bDigit;
-	if ( bMix )
-	{
-		bWord = false;
-		bDigit = false;
-	}
-}
-
-const CLowerCaseTable ToLower;
-
-CLowerCaseTable::CLowerCaseTable()
-{
-	for ( size_t i = 0; i < 65536; ++i ) cTable[ i ] = TCHAR( i );
-	CharLowerBuff( cTable, 65536 );
-
-	// Greek Capital Sigma and Greek Small Final Sigma to Greek Small Sigma
-	cTable[ 931 ] = 963;
-	cTable[ 962 ] = 963;
-
-	// Turkish Capital I with dot to "i"
-	cTable[ 304 ] = 105;
-
-	// Convert fullwidth latin characters to halfwidth
-	for ( size_t i = 65281 ; i < 65313 ; ++i ) cTable[ i ] = TCHAR( i - 65248 );
-	for ( size_t i = 65313 ; i < 65339 ; ++i ) cTable[ i ] = TCHAR( i - 65216 );
-	for ( size_t i = 65339 ; i < 65375 ; ++i ) cTable[ i ] = TCHAR( i - 65248 );
-
-	// Convert circled katakana to ordinary katakana
-	for ( size_t i = 13008 ; i < 13028 ; ++i ) cTable[ i ] = TCHAR( 2 * i - 13566 );
-	for ( size_t i = 13028 ; i < 13033 ; ++i ) cTable[ i ] = TCHAR( i - 538 );
-	for ( size_t i = 13033 ; i < 13038 ; ++i ) cTable[ i ] = TCHAR( 3 * i - 26604 );
-	for ( size_t i = 13038 ; i < 13043 ; ++i ) cTable[ i ] = TCHAR( i - 528 );
-	for ( size_t i = 13043 ; i < 13046 ; ++i ) cTable[ i ] = TCHAR( 2 * i - 13571 );
-	for ( size_t i = 13046 ; i < 13051 ; ++i ) cTable[ i ] = TCHAR( i - 525 );
-	cTable[ 13051 ] = TCHAR( 12527 );
-	for ( size_t i = 13052 ; i < 13055 ; ++i ) cTable[ i ] = TCHAR( i - 524 );
-
-	// Map Katakana middle dot to space, since no API identifies it as a punctuation
-	cTable[ 12539 ] = cTable[ 65381 ] = L' ';
-
-	// Map CJK Fullwidth space to halfwidth space
-	cTable[ 12288 ] = L' ';
-
-	// Convert japanese halfwidth sound marks to fullwidth
-	// all forms should be mapped; we need NFKD here
-	cTable[ 65392 ] = TCHAR( 12540 );
-	cTable[ 65438 ] = TCHAR( 12443 );
-	cTable[ 65439 ] = TCHAR( 12444 );
-}
-
-TCHAR CLowerCaseTable::operator()(TCHAR cLookup) const
-{
-	if ( cLookup <= 127 )
-	{
-		// A..Z -> a..z
-		if ( cLookup >= _T('A') && cLookup <= _T('Z') )
-			return (TCHAR)( cLookup + 32 );
-		else
-			return cLookup;
-	}
-	else
-		return cTable[ cLookup ];
-}
-
-CString& CLowerCaseTable::operator()(CString& strSource) const
-{
-	const int nLength = strSource.GetLength();
-	LPTSTR str = strSource.GetBuffer();
-	for ( int i = 0; i < nLength; ++i, ++str )
-	{
-		TCHAR cLookup = *str;
-		if ( cLookup <= 127 )
-		{
-			// A..Z -> a..z
-			if ( cLookup >= _T('A') && cLookup <= _T('Z') )
-				*str = (TCHAR)( cLookup + 32 );
-		}
-		else
-			*str = cTable[ cLookup ];
-	}
-	strSource.ReleaseBuffer( nLength );
-
-	return strSource;
 }
 
 template <>

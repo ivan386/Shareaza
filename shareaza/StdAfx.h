@@ -247,6 +247,9 @@ template<> AFX_INLINE UINT AFXAPI HashKey(const IN_ADDR& key)
 
 #include "Hashes.hpp"
 
+// Various string functions and classes
+#include "Strings.h"
+
 #undef IDC_HAND		// Defined in Windows.h->WinUser.h and in Resource.h
 
 #include "Resource.h"
@@ -606,26 +609,6 @@ __int64 GetMicroCount();
 
 // Produces the best hash table size for CMap::InitHashTable use
 UINT GetBestHashTableSize(UINT nCount);
-
-// Encode Unicode text to UTF-8 text
-CStringA UTF8Encode(__in const CStringW& strInput);
-CStringA UTF8Encode(__in_bcount(nInput) LPCWSTR psInput, __in int nInput);
-
-// Decode UTF-8 text to Unicode text
-CStringW UTF8Decode(__in const CStringA& strInput);
-CStringW UTF8Decode(__in_bcount(nInput) LPCSTR psInput, __in int nInput);
-
-// Encode and decode URL text, and see if a string starts with a tag
-CString URLEncode(LPCTSTR pszInput);                   // Encode "hello world" into "hello%20world"
-CString URLDecode(LPCTSTR pszInput);                   // Decode "hello%20world" back to "hello world"
-CString URLDecodeANSI(LPCTSTR pszInput);               // Decodes properly encoded URLs
-CString URLDecodeUnicode(LPCTSTR pszInput);            // Decodes URLs with extended characters
-
-// StartsWith("hello world", "hello") is true
-inline BOOL StartsWith(const CString& sInput, LPCTSTR pszText, const int len)
-{
-	return ( sInput.GetLength() >= len ) && ! _tcsnicmp( (LPCTSTR)sInput, pszText, len );
-}
 
 // Compute average of values collected by specified time
 template< class T, DWORD dwMilliseconds >
