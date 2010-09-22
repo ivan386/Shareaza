@@ -54,14 +54,18 @@ CBTClient::CBTClient()
 	: m_bExchange			( FALSE )
 	, m_bExtended			( FALSE )
 	, m_pUploadTransfer				( NULL )
+	, m_bSeeder				( FALSE )
+	, m_bPrefersEncryption	( FALSE )
 	, m_pDownload			( NULL )
 	, m_pDownloadTransfer	( NULL )
 	, m_bShake				( FALSE )
 	, m_bOnline				( FALSE )
 	, m_bClosing			( FALSE )
 	, m_tLastKeepAlive		( GetTickCount() )
+	, m_tLastUtPex			( 0 )
 	, m_nUtMetadataID		( 0 )
 	, m_nUtMetadataSize		( 0 )
+	, m_nUtPexID			( 0 )
 {
 	m_sUserAgent = _T("BitTorrent");
 	m_mInput.pLimit = m_mOutput.pLimit = &Settings.Bandwidth.Request;
@@ -229,6 +233,11 @@ BOOL CBTClient::OnRun()
 		}
 
 		ASSERT ( m_pUploadTransfer != NULL );
+		if ( tNow - m_tLastUtPex > Settings.BitTorrent.UtPexPeriod )
+		{
+			SendUtPex( m_tLastUtPex );
+			m_tLastUtPex = tNow;
+		}
 
 		if ( m_pDownloadTransfer != NULL && ! m_pDownloadTransfer->OnRun() ) return FALSE;
 		if ( m_pUploadTransfer == NULL || ! m_pUploadTransfer->OnRun() ) return FALSE;
@@ -1065,6 +1074,7 @@ BOOL CBTClient::OnDHTPort(CBTPacket* pPacket)
 
 #define EXTENDED_PACKET_HANDSHAKE	0
 #define EXTENDED_PACKET_UT_METADATA	1
+#define EXTENDED_PACKET_UT_PEX		2
 #define UT_METADATA_REQUEST			0
 #define UT_METADATA_DATA			1
 #define UT_METADATA_REJECT			2
@@ -1081,9 +1091,13 @@ void CBTClient::SendExtendedHandshake()
 {
 	CBENode pRoot;
 
-	pRoot.Add( "m" )->Add( "ut_metadata" )->SetInt( EXTENDED_PACKET_UT_METADATA	);
-	if ( m_pDownload->IsTorrent() && ! m_pDownload->m_pTorrent.m_bPrivate &&
-		 m_pDownload->m_pTorrent.GetInfoSize() > 0 )
+	CBENode* pM = pRoot.Add( "m" );
+	pM->Add( "ut_pex"		)->SetInt( EXTENDED_PACKET_UT_PEX		);
+	pM->Add( "ut_metadata"	)->SetInt( EXTENDED_PACKET_UT_METADATA	);
+	
+	if ( m_pDownload->IsTorrent() 
+		&& ! m_pDownload->m_pTorrent.m_bPrivate 
+		&& m_pDownload->m_pTorrent.GetInfoSize() > 0 )
 	{
 		pRoot.Add( "metadata_size" )->SetInt( m_pDownload->m_pTorrent.GetInfoSize() );
 	}
@@ -1139,6 +1153,17 @@ BOOL CBTClient::OnExtended(CBTPacket* pPacket)
 			if ( CBENode* pUtMetadataSize = pRoot->GetNode( "metadata_size" ) )
 			{
 				m_nUtMetadataSize = pUtMetadataSize->GetInt();
+			}
+
+			if ( CBENode* pUtPex = pMetadata->GetNode( "ut_pex" ) )
+			{
+				BOOL bSendUtPex = m_nUtPexID != pUtPex->GetInt();
+				m_nUtPexID = pUtPex->GetInt();
+				if ( bSendUtPex )
+				{
+					SendUtPex();
+					m_tLastUtPex = GetTickCount();
+				}
 			}
 		}
 	}
@@ -1204,6 +1229,50 @@ BOOL CBTClient::OnExtended(CBTPacket* pPacket)
 			}
 		}
 	}
+	else if ( nPacketID == EXTENDED_PACKET_UT_PEX ) 
+	{
+		theApp.Message( MSG_DEBUG,
+			_T("[BT] EXTENDED PACKET PEX: %s"), (LPCTSTR)pRoot->Encode() );
+
+		CBENode* pPeersAdd = pRoot->GetNode( "added" );
+
+		if ( pPeersAdd && 0 == ( pPeersAdd->m_nValue % 6 ) )
+		{
+			const BYTE* pPointer = (const BYTE*)pPeersAdd->m_pValue;
+
+			for ( int nPeer = (int)pPeersAdd->m_nValue / 6 ; nPeer > 0 ; nPeer --, pPointer += 6 )
+			{
+				const IN_ADDR* pAddress = (const IN_ADDR*)pPointer;
+				WORD nPort = *(const WORD*)( pPointer + 4 );
+
+				m_pDownload->AddSourceBT( Hashes::BtGuid(), pAddress, ntohs( nPort ) );
+			}
+		}
+		
+		CBENode* pPeersDrop = pRoot->GetNode( "dropped" );
+
+		if ( pPeersDrop && 0 == ( pPeersDrop->m_nValue % 6 ) )
+		{
+			for ( POSITION posSource = m_pDownload->GetIterator(); posSource ; )
+			{
+				CDownloadSource* pSource = m_pDownload->GetNext( posSource );
+
+				if ( pSource->IsConnected() 
+					 || pSource->m_nProtocol != PROTOCOL_BT )
+					continue;
+				
+				WORD nPort = htons( pSource->m_nPort );
+				const BYTE* pPointer = (const BYTE*)pPeersDrop->m_pValue;
+
+				for ( int nPeer = (int)pPeersDrop->m_nValue / 6 ; nPeer > 0 ; nPeer --, pPointer += 6 )
+				{
+					if ( memcmp( &pSource->m_pAddress, pPointer, 4 ) == 0
+						 && memcmp( &nPort, (pPointer + 4), 2 ) == 0 )
+						pSource->m_tAttempt = pSource->CalcFailureDelay();
+				}
+			}
+		}
+	}
 	else
 	{
 		ASSERT( nPacketID );
@@ -1226,4 +1295,74 @@ void CBTClient::SendInfoRequest(QWORD nPiece)
 	pRoot.Encode( &pOutput );
 
 	SendExtendedPacket( m_nUtMetadataID, &pOutput );
+}
+
+/*	
+ The PEX message payload is a bencoded dict with three keys:
+
+ 'added': the set of peers met since the last PEX
+ 'added.f': a flag for every peer, apparently with the following values:
+    \x00: unknown, assuming default
+    \x01: Prefers encryption
+    \x02: Is seeder
+  OR-ing them together is allowed
+ 'dropped': the set of peers dropped since last PEX
+*/
+
+void CBTClient::SendUtPex(DWORD tConnectedAfter)
+{
+	if ( m_pDownload->m_pTorrent.m_bPrivate
+		 || m_nUtPexID == 0 )
+		return;
+
+	CBuffer pAddedBuffer;
+	CBuffer pAddedFalgsBuffer;
+	BYTE* pnFlagsByte = NULL;
+	DWORD nPeersCount = 0;
+	for ( POSITION posSource = m_pDownload->GetIterator(); posSource ; )
+	{
+		CDownloadSource* pSource = m_pDownload->GetNext( posSource );
+
+		if ( ! pSource->IsConnected()
+			 || pSource->GetTransfer()->m_tConnected < tConnectedAfter
+			 || pSource->m_nProtocol != PROTOCOL_BT ) 
+			continue;
+
+		WORD nPort = htons( pSource->m_nPort );
+		pAddedBuffer.Add( &pSource->m_pAddress, 4 );
+		pAddedBuffer.Add( &nPort, 2 );
+
+		nPeersCount += 1;
+
+		const CDownloadTransferBT* pBTDownload =
+			static_cast< const CDownloadTransferBT* >( pSource->GetTransfer() );
+
+		BYTE nFlag = (pBTDownload->m_pClient->m_bPrefersEncryption ? 1 : 0 ) |
+					 (pBTDownload->m_pClient->m_bSeeder ? 2 : 0);
+		 
+		DWORD nFalgInBytePos = (nPeersCount - 1 ) % 4;
+
+		if ( nFalgInBytePos == 0 )
+		{
+			DWORD nLength = nPeersCount / 4 + 1;
+			pAddedFalgsBuffer.EnsureBuffer( nLength );
+			pAddedFalgsBuffer.m_nLength = nLength;
+			pnFlagsByte = &pAddedFalgsBuffer.m_pBuffer[nLength - 1];
+			*pnFlagsByte = 0;
+		}
+
+		*pnFlagsByte |= ( nFlag & 3 ) << ( 6 - nFalgInBytePos * 2 );
+	}
+
+	if ( pAddedBuffer.m_nLength )
+	{
+		CBENode pRoot;
+		pRoot.Add("added")->SetString( pAddedBuffer.m_pBuffer, pAddedBuffer.m_nLength );
+		pRoot.Add("added.f")->SetString( pAddedFalgsBuffer.m_pBuffer, pAddedFalgsBuffer.m_nLength );
+
+		CBuffer pOutput;
+		pRoot.Encode( &pOutput );
+
+		SendExtendedPacket( m_nUtPexID, &pOutput );
+	}
 }

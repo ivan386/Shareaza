@@ -470,6 +470,7 @@ public:
 		DWORD		TorrentCodePage;			// The code page to assume for a .torrent file if it isn't UTF-8
 		DWORD		LinkTimeout;
 		DWORD		LinkPing;
+		DWORD		UtPexPeriod;
 		DWORD		RequestPipe;
 		DWORD		RequestSize;
 		DWORD		RequestLimit;

@@ -43,6 +43,8 @@ public:
 	BOOL					m_bExchange;		// Exchange sources/other info (with extended client)
 	BOOL					m_bExtended;		// Extension Protocol support
 	CUploadTransferBT*		m_pUploadTransfer;
+	BOOL					m_bSeeder;
+	BOOL					m_bPrefersEncryption;
 	CDownload*				m_pDownload;
 	CDownloadTransferBT*	m_pDownloadTransfer;
 
@@ -51,8 +53,10 @@ protected:
 	BOOL					m_bOnline;
 	BOOL					m_bClosing;
 	DWORD					m_tLastKeepAlive;
+	DWORD					m_tLastUtPex;
 	QWORD					m_nUtMetadataID;
 	QWORD					m_nUtMetadataSize;
+	QWORD					m_nUtPexID;
 
 // Operations
 public:
@@ -74,6 +78,7 @@ protected:
 	void			SendExtendedHandshake();
 	void			SendExtendedPacket(BYTE Type, CBuffer *pOutput);
 	void			SendInfoRequest(QWORD nPiece);
+	void			SendUtPex(DWORD tConnectedAfter = 0);
 	BOOL			OnHandshake1();								// First part of handshake
 	BOOL			OnHandshake2();								// Second part- Peer ID
 	//BOOL			OnNoHandshake2();							// If no peer ID is received
