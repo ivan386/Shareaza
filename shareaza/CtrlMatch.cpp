@@ -970,9 +970,17 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 					if ( ppHit->GetSources() )
 					{
 						CString strSource, strText;
-						LoadSourcesString( strSource, pFile->m_nSources );
-						strText.Format( _T("(%u %s)"), pFile->m_nSources, (LPCTSTR)strSource );
-						_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), strText, pFile->m_nSources );
+						LoadSourcesString( strSource, pFile->m_nFiltered );
+						int nAltSources = pFile->m_nSources - pFile->m_nFiltered;
+						if ( nAltSources > 0 )
+						{
+							strText.Format( _T("%u %s+%u"), pFile->m_nFiltered, (LPCTSTR)strSource, nAltSources );
+						}
+						else
+						{
+							strText.Format( _T("%u %s"), pFile->m_nFiltered, (LPCTSTR)strSource );
+						}
+						_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), strText, pFile->m_nFiltered );
 						szBuffer[ sizeof( szBuffer ) / sizeof( TCHAR ) - 1 ] = 0;
 					}
 					else
@@ -986,9 +994,17 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 			else
 			{
 				CString strSource, strText;
-				LoadSourcesString( strSource, pFile->m_nSources );
-				strText.Format( _T("(%u %s)"), pFile->m_nSources, (LPCTSTR)strSource );
-				_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), strText, pFile->m_nSources );
+				LoadSourcesString( strSource, pFile->m_nFiltered );
+				int nAltSources = pFile->m_nSources - pFile->m_nFiltered;
+				if ( nAltSources > 0 )
+				{
+					strText.Format( _T("%u %s+%u"), pFile->m_nFiltered, (LPCTSTR)strSource, nAltSources );
+				}
+				else
+				{
+					strText.Format( _T("%u %s"), pFile->m_nFiltered, (LPCTSTR)strSource );
+				}
+				_sntprintf( szBuffer, sizeof( szBuffer ) / sizeof( TCHAR ), strText, pFile->m_nFiltered );
 				szBuffer[ sizeof( szBuffer ) / sizeof( TCHAR ) - 1 ] = 0;
 			}
 			pszText = szBuffer;

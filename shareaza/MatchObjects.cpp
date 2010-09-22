@@ -1956,7 +1956,7 @@ int CMatchFile::Compare(CMatchFile* pFile) const
 		break;
 
 	case MATCH_COL_COUNT:
-		x = ( m_nSources == pFile->m_nSources ) ? 0 : ( ( m_nSources > pFile->m_nSources ) ? 1 : -1 );
+		x = ( m_nFiltered == pFile->m_nFiltered ) ? 0 : ( ( m_nFiltered > pFile->m_nFiltered ) ? 1 : -1 );
 		break;
 
 	case MATCH_COL_CLIENT:
