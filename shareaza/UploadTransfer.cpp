@@ -451,7 +451,7 @@ BOOL CUploadTransfer::RequestPartial(CDownload* pFile)
 	if ( validAndUnequal( m_oMD5, pFile->m_oMD5 ) ) return FALSE;
 
 	m_sName	= pFile->m_sName;
-	if ( ! pFile->IsTorrent() )
+	if ( ! pFile->IsTorrent() || pFile->IsSingleFileTorrent() )
 		m_sPath	= pFile->GetPath( 0 );
 	m_nFileBase	= 0;
 	m_nSize	= pFile->m_nSize;

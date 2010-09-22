@@ -33,7 +33,7 @@ class CDownload;
 #define ULA_SLOTS	16
 
 
-class CUploadTransfer : public CTransfer, public CShareazaFile
+class CUploadTransfer abstract : public CTransfer, public CShareazaFile
 {
 public:
 	CUploadTransfer(PROTOCOLID nProtocol);
