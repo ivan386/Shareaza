@@ -68,11 +68,17 @@ public:
 	CLibraryTreeItem*	GetFirstSelected() const;
 	CLibraryTreeItem*	GetLastSelected() const;
 	CLibraryTreeItem*	HitTest(const POINT& point, RECT* pRect = NULL) const;
-	BOOL				GetRect(CLibraryTreeItem* pItem, RECT* pRect);
-	CLibraryTreeItem*	GetFolderItem(void* pSearch, CLibraryTreeItem* pParent = NULL);
+	BOOL				GetRect(CLibraryTreeItem* pItem, RECT* pRect) const;
+	// Search tree for physical folder or virtual album (recursive)
+	CLibraryTreeItem*	GetFolderItem(void* pSearch, CLibraryTreeItem* pParent = NULL) const;
+	// Get default download folder for physical view or favorites album for virtual view
+	CLibraryTreeItem*	GetDefaultFolderItem() const;
 	void				SetVirtual(BOOL bVirtual);
 	BOOL				Update(DWORD nSelectCookie);
+	// Forcefully select and highlight folder, then update all views
 	BOOL				SelectFolder(LPVOID pSearch);
+	// Forcefully select and highlight tree item, then update all views
+	BOOL				SelectFolderItem(CLibraryTreeItem* pItem);
 
 protected:
 	void				Clear();
@@ -81,7 +87,7 @@ protected:
 	void				ScrollTo(int nPosition);
 	void				Paint(CDC& dc, CRect& rcClient, CPoint& pt, CLibraryTreeItem* pItem);
 	CLibraryTreeItem*	HitTest(CRect& rcClient, CPoint& pt, CLibraryTreeItem* pItem, const POINT& point, RECT* pRect) const;
-	BOOL				GetRect(CPoint& pt, CLibraryTreeItem* pItem, CLibraryTreeItem* pFind, RECT* pRect);
+	BOOL				GetRect(CPoint& pt, CLibraryTreeItem* pItem, CLibraryTreeItem* pFind, RECT* pRect) const;
 	BOOL				CleanItems(CLibraryTreeItem* pItem, DWORD nCookie, BOOL bVisible);
 	BOOL				CollapseRecursive(CLibraryTreeItem* pItem);
 	void				NotifySelection();

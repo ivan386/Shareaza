@@ -151,8 +151,9 @@ BOOL CLibraryTreeView::Update(DWORD nSelectCookie)
 
 	if ( bChanged )
 	{
-		if ( ! SelectFolder( m_pFocusedObject[ m_bVirtual ? 1 : 0 ] ) )
-			m_pFocusedObject[ m_bVirtual ? 1 : 0 ] = NULL;
+		LPVOID& pFocused = m_pFocusedObject[ m_bVirtual ? 1 : 0 ];
+		if ( ! SelectFolderItem( pFocused ? GetFolderItem( pFocused ) : GetDefaultFolderItem() ) )
+			pFocused = NULL;
 	}
 
 	return bChanged;
@@ -486,18 +487,39 @@ void CLibraryTreeView::NotifySelection()
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryTreeView search
 
-CLibraryTreeItem* CLibraryTreeView::GetFolderItem(void* pSearch, CLibraryTreeItem* pParent)
+CLibraryTreeItem* CLibraryTreeView::GetFolderItem(void* pSearch, CLibraryTreeItem* pParent) const
 {
 	if ( pParent == NULL ) pParent = m_pRoot;
 
 	for ( CLibraryTreeItem::iterator pChild = pParent->begin(); pChild != pParent->end(); ++pChild )
 	{
-		if ( pSearch == pChild->m_pPhysical || pSearch == pChild->m_pVirtual ) return &*pChild;
+		if ( pSearch == pChild->m_pPhysical || pSearch == pChild->m_pVirtual )
+			return &*pChild;
 
-		if ( !pChild->empty() )
+		if ( ! pChild->empty() )
 		{
 			CLibraryTreeItem* pFound = GetFolderItem( pSearch, &*pChild );
-			if ( pFound ) return pFound;
+			if ( pFound )
+				return pFound;
+		}
+	}
+
+	return NULL;
+}
+
+CLibraryTreeItem* CLibraryTreeView::GetDefaultFolderItem() const
+{
+	for ( CLibraryTreeItem::iterator pChild = m_pRoot->begin(); pChild != m_pRoot->end(); ++pChild )
+	{
+		if ( m_bVirtual )
+		{
+			if ( CheckURI( pChild->m_pVirtual->m_sSchemaURI, CSchema::uriFavouritesFolder ) )
+				return &*pChild;
+		}
+		else
+		{
+			if ( pChild->m_pPhysical->m_sPath.CompareNoCase( Settings.Downloads.CompletePath ) == 0 )
+				return &*pChild;
 		}
 	}
 
@@ -957,7 +979,7 @@ CLibraryTreeItem* CLibraryTreeView::HitTest(CRect& rcClient, CPoint& pt, CLibrar
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryTreeView rect lookup
 
-BOOL CLibraryTreeView::GetRect(CLibraryTreeItem* pItem, RECT* pRect)
+BOOL CLibraryTreeView::GetRect(CLibraryTreeItem* pItem, RECT* pRect) const
 {
 	CRect rcClient;
 	GetClientRect( &rcClient );
@@ -966,13 +988,14 @@ BOOL CLibraryTreeView::GetRect(CLibraryTreeItem* pItem, RECT* pRect)
 
 	for ( CLibraryTreeItem::iterator pChild = m_pRoot->begin(); pChild != m_pRoot->end(); ++pChild )
 	{
-		if ( GetRect( pt, &*pChild, pItem, pRect ) ) return TRUE;
+		if ( GetRect( pt, &*pChild, pItem, pRect ) )
+			return TRUE;
 	}
 
 	return FALSE;
 }
 
-BOOL CLibraryTreeView::GetRect(CPoint& pt, CLibraryTreeItem* pItem, CLibraryTreeItem* pFind, RECT* pRect)
+BOOL CLibraryTreeView::GetRect(CPoint& pt, CLibraryTreeItem* pItem, CLibraryTreeItem* pFind, RECT* pRect) const
 {
 	if ( pItem == pFind )
 	{
@@ -981,7 +1004,7 @@ BOOL CLibraryTreeView::GetRect(CPoint& pt, CLibraryTreeItem* pItem, CLibraryTree
 		pRect->right	= pt.x;
 		pRect->bottom	= pt.y = pRect->top + ITEM_HEIGHT;
 
-		CClientDC dc( this );
+		CClientDC dc( const_cast< CLibraryTreeView* >( this ) );
 		CFont* pOld = (CFont*)dc.SelectObject( pItem->m_bBold ?
 			&CoolInterface.m_fntBold : &CoolInterface.m_fntNormal );
 		pRect->right += 33 + dc.GetTextExtent( pItem->m_sText ).cx + 4;
@@ -1547,8 +1570,13 @@ BOOL CLibraryTreeView::Update(CAlbumFolder* pFolder, CLibraryTreeItem* pItem, CL
 
 BOOL CLibraryTreeView::SelectFolder(LPVOID pSearch)
 {
-	CLibraryTreeItem* pItem = GetFolderItem( pSearch );
-	if ( pItem == NULL ) return FALSE;
+	return SelectFolderItem( GetFolderItem( pSearch ) );
+}
+
+BOOL CLibraryTreeView::SelectFolderItem(CLibraryTreeItem* pItem)
+{
+	if ( pItem == NULL )
+		return FALSE;
 
 	if ( m_nSelected == 1 && pItem->m_bSelected )
 	{
