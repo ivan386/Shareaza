@@ -1,7 +1,7 @@
 //
 // DlgURLCopy.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,13 +19,12 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_DLGURLCOPY_H__CFF49DD5_9C74_4024_B7C0_551F4B05DFB6__INCLUDED_)
-#define AFX_DLGURLCOPY_H__CFF49DD5_9C74_4024_B7C0_551F4B05DFB6__INCLUDED_
-
 #pragma once
 
 #include "DlgSkinDialog.h"
-#include "ShareazaFile.h"
+
+class CShareazaFile;
+
 
 class CURLCopyDlg : public CSkinDialog
 {
@@ -35,28 +34,28 @@ public:
 	CURLCopyDlg(CWnd* pParent = NULL);
 
 	enum { IDD = IDD_URL_COPY };
-	CButton			m_wndIncludeSelf;
-	CStatic			m_wndMessage;
-	CString			m_sHost;
-	CString			m_sMagnet;
-	CString			m_sGnutella;
-	CString			m_sED2K;
 
 	void		Add(const CShareazaFile* pFile);
+
 	static BOOL	SetClipboardText(CString& strText);
 
 protected:
-	const CShareazaFile*			m_pFile;
+	CButton					m_wndIncludeSelf;
+	CStatic					m_wndMessage;
+	CString					m_sHost;
+	CString					m_sMagnet;
+	CString					m_sED2K;
+	const CShareazaFile*	m_pFile;
 
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	virtual BOOL OnInitDialog();
+
 	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 	afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);
-	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnIncludeSelf();
+	afx_msg void OnStnClickedUrlHost();
+	afx_msg void OnStnClickedUrlMagnet();
+	afx_msg void OnStnClickedUrlEd2k();
 
 	DECLARE_MESSAGE_MAP()
-
 };
-
-#endif // !defined(AFX_DLGURLCOPY_H__CFF49DD5_9C74_4024_B7C0_551F4B05DFB6__INCLUDED_)

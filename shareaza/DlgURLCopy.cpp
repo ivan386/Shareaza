@@ -1,7 +1,7 @@
 //
 // DlgURLCopy.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -21,6 +21,7 @@
 
 #include "StdAfx.h"
 #include "Shareaza.h"
+#include "ShareazaFile.h"
 #include "CoolInterface.h"
 #include "DlgURLCopy.h"
 #include "Transfer.h"
@@ -35,12 +36,12 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNAMIC(CURLCopyDlg, CSkinDialog)
 
 BEGIN_MESSAGE_MAP(CURLCopyDlg, CSkinDialog)
-	//{{AFX_MSG_MAP(CURLCopyDlg)
 	ON_WM_CTLCOLOR()
 	ON_WM_SETCURSOR()
-	ON_WM_LBUTTONDOWN()
-	ON_BN_CLICKED(IDC_INCLUDE_SELF, OnIncludeSelf)
-	//}}AFX_MSG_MAP
+	ON_BN_CLICKED(IDC_INCLUDE_SELF, &CURLCopyDlg::OnIncludeSelf)
+	ON_STN_CLICKED(IDC_URL_HOST, &CURLCopyDlg::OnStnClickedUrlHost)
+	ON_STN_CLICKED(IDC_URL_MAGNET, &CURLCopyDlg::OnStnClickedUrlMagnet)
+	ON_STN_CLICKED(IDC_URL_ED2K, &CURLCopyDlg::OnStnClickedUrlEd2k)
 END_MESSAGE_MAP()
 
 
@@ -54,13 +55,12 @@ CURLCopyDlg::CURLCopyDlg(CWnd* pParent) : CSkinDialog(CURLCopyDlg::IDD, pParent)
 void CURLCopyDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CSkinDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CURLCopyDlg)
+
 	DDX_Control(pDX, IDC_INCLUDE_SELF, m_wndIncludeSelf);
 	DDX_Control(pDX, IDC_MESSAGE, m_wndMessage);
 	DDX_Text(pDX, IDC_URL_HOST, m_sHost);
 	DDX_Text(pDX, IDC_URL_MAGNET, m_sMagnet);
 	DDX_Text(pDX, IDC_URL_ED2K, m_sED2K);
-	//}}AFX_DATA_MAP
 }
 
 void CURLCopyDlg::Add(const CShareazaFile* pFile)
@@ -77,10 +77,8 @@ BOOL CURLCopyDlg::OnInitDialog()
 	CSkinDialog::OnInitDialog();
 
 	SkinMe( NULL, IDI_WEB_URL );
-
-	m_sHost = m_pFile->m_sURL;
-
-	m_wndIncludeSelf.ShowWindow( ( Network.IsListening() && m_sHost.IsEmpty() )
+	
+	m_wndIncludeSelf.ShowWindow( ( Network.IsListening() && m_pFile->m_sURL.IsEmpty() )
 		? SW_SHOW : SW_HIDE );
 
 	OnIncludeSelf();
@@ -90,6 +88,10 @@ BOOL CURLCopyDlg::OnInitDialog()
 
 void CURLCopyDlg::OnIncludeSelf()
 {
+	UpdateData();
+
+	BOOL bIncludeSelf = m_wndIncludeSelf.GetCheck();
+
 	CString strURN, strIncludeSelfURN, strTemp;
 
 	if ( m_pFile->m_oTiger && m_pFile->m_oSHA1 )
@@ -140,24 +142,12 @@ void CURLCopyDlg::OnIncludeSelf()
 
 	m_sMagnet = _T("magnet:?") + m_sMagnet;
 
-	if ( m_wndIncludeSelf.GetCheck() )
+	if ( bIncludeSelf )
 	{
 		CString strURL = m_pFile->GetURL( Network.m_pHost.sin_addr,
 			htons( Network.m_pHost.sin_port ) );
 		if ( strURL.GetLength() )
 			m_sMagnet += _T("&xs=") + URLEncode( strURL );
-	}
-
-	if ( m_pFile->m_oSHA1 )
-	{
-		m_sGnutella.Format( _T("gnutella://%s/"),
-			(LPCTSTR)m_pFile->m_oSHA1.toUrn() );
-
-		if ( m_pFile->m_sName.GetLength() )
-		{
-			m_sGnutella += URLEncode( m_pFile->m_sName )
-						+ _T("/");
-		}
 	}
 
 	if ( m_pFile->m_oED2K &&
@@ -169,7 +159,7 @@ void CURLCopyDlg::OnIncludeSelf()
 			m_pFile->m_nSize,
 			(LPCTSTR)m_pFile->m_oED2K.toString() );
 
-		if ( m_wndIncludeSelf.GetCheck() )
+		if ( bIncludeSelf )
 		{
 			CString strURL2;
 
@@ -181,6 +171,20 @@ void CURLCopyDlg::OnIncludeSelf()
 					+ strURL2
 					+ _T("|/");
 		}
+	}
+
+	if ( m_pFile->m_sURL.GetLength() )
+	{
+		m_sHost = m_pFile->m_sURL;
+	}
+	else if ( bIncludeSelf )
+	{
+		m_sHost = m_pFile->GetURL( Network.m_pHost.sin_addr,
+			htons( Network.m_pHost.sin_port ) );
+	}
+	else
+	{
+		m_sHost.Empty();
 	}
 
 	UpdateData( FALSE );
@@ -238,38 +242,6 @@ BOOL CURLCopyDlg::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 	return CSkinDialog::OnSetCursor( pWnd, nHitTest, message );
 }
 
-void CURLCopyDlg::OnLButtonDown(UINT nFlags, CPoint point)
-{
-	ClientToScreen( &point );
-
-	for ( CWnd* pWnd = GetWindow( GW_CHILD ) ; pWnd ; pWnd = pWnd->GetNextWindow() )
-	{
-		TCHAR szName[32];
-		GetClassName( pWnd->GetSafeHwnd(), szName, 32 );
-
-		if ( ! _tcsicmp( szName, _T("Static") ) && pWnd != &m_wndMessage )
-		{
-			CRect rc;
-			pWnd->GetWindowRect( &rc );
-
-			if ( rc.PtInRect( point ) )
-			{
-				CString strURL;
-
-				pWnd->GetWindowText( strURL );
-				if ( strURL.IsEmpty() ) return;
-
-				SetClipboardText( strURL );
-
-				CSkinDialog::OnOK();
-				return;
-			}
-		}
-	}
-
-	CSkinDialog::OnLButtonDown( nFlags, point );
-}
-
 BOOL CURLCopyDlg::SetClipboardText(CString& strText)
 {
 	if ( ! AfxGetMainWnd()->OpenClipboard() ) return FALSE;
@@ -292,4 +264,40 @@ BOOL CURLCopyDlg::SetClipboardText(CString& strText)
 	CloseClipboard();
 
 	return TRUE;
+}
+
+void CURLCopyDlg::OnStnClickedUrlHost()
+{
+	UpdateData();
+
+	if ( m_sHost.GetLength() )
+	{
+		SetClipboardText( m_sHost );
+
+		CSkinDialog::OnOK();
+	}
+}
+
+void CURLCopyDlg::OnStnClickedUrlMagnet()
+{
+	UpdateData();
+
+	if ( m_sMagnet.GetLength() )
+	{
+		SetClipboardText( m_sMagnet );
+
+		CSkinDialog::OnOK();
+	}
+}
+
+void CURLCopyDlg::OnStnClickedUrlEd2k()
+{
+	UpdateData();
+
+	if ( m_sED2K.GetLength() )
+	{
+		SetClipboardText( m_sED2K );
+
+		CSkinDialog::OnOK();
+	}
 }
