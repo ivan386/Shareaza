@@ -40,11 +40,11 @@ REGEXP_API BOOL Match(LPCTSTR szRegExp, LPCTSTR szContent)
 {
 	try
 	{
-		const wstring sRegExp( (LPCWSTR)CT2CW( szRegExp ) );
-		const wregex regExpPattern( sRegExp,
-			regex_constants::ECMAScript | regex_constants::icase );
-		const wstring sContent( (LPCWSTR)CT2CW( szContent ) );
-		if ( regex_search( sContent, regExpPattern ) )
+		const std::wstring sRegExp( (LPCWSTR)CT2CW( szRegExp ) );
+		const std::tr1::wregex regExpPattern( sRegExp,
+			std::tr1::regex_constants::ECMAScript | std::tr1::regex_constants::icase );
+		const std::wstring sContent( (LPCWSTR)CT2CW( szContent ) );
+		if ( std::tr1::regex_search( sContent, regExpPattern ) )
 			return TRUE;
 	}
 	catch (...)
@@ -57,12 +57,12 @@ REGEXP_API size_t Split(LPCTSTR szRegExp, LPCTSTR szContent, LPTSTR* pszResult)
 {
 	try
 	{
-		const wstring sRegExp( (LPCWSTR)CT2CW( szRegExp ) );
-		const wregex regExpPattern( sRegExp,
-			regex_constants::ECMAScript | regex_constants::icase );
-		const wstring sContent( (LPCWSTR)CT2CW( szContent ) );
-		wsmatch results;
-		if ( regex_search( sContent, results, regExpPattern ) )
+		const std::wstring sRegExp( (LPCWSTR)CT2CW( szRegExp ) );
+		const std::tr1::wregex regExpPattern( sRegExp,
+			std::tr1::regex_constants::ECMAScript | std::tr1::regex_constants::icase );
+		const std::wstring sContent( (LPCWSTR)CT2CW( szContent ) );
+		std::tr1::wsmatch results;
+		if ( std::tr1::regex_search( sContent, results, regExpPattern ) )
 		{
 			const size_t nCount = results.size();
 			size_t len = 0;

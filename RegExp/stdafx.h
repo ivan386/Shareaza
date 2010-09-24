@@ -42,5 +42,3 @@
 #include <regex>
 
 using namespace ATL;
-using namespace std;
-using namespace std::tr1;
