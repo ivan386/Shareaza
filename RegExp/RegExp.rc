@@ -27,7 +27,7 @@ LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,0,0,1
+ FILEVERSION 2,0,0,1
  PRODUCTVERSION 2,5,3,0
  FILEFLAGSMASK 0x17L
 #ifdef _DEBUG
@@ -43,10 +43,9 @@ BEGIN
     BEGIN
         BLOCK "000004b0"
         BEGIN
-            VALUE "Comments", "Regular Expression functions"
             VALUE "CompanyName", "Shareaza Development Team"
-            VALUE "FileDescription", "RegExp DLL"
-            VALUE "FileVersion", "1, 0, 0, 1"
+            VALUE "FileDescription", "Regular Expression Library"
+            VALUE "FileVersion", "2, 0, 0, 1"
             VALUE "InternalName", "RegExp"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2010. All rights reserved."
             VALUE "OriginalFilename", "RegExp.dll"

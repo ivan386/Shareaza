@@ -909,7 +909,7 @@ BOOL CAlbumFolder::OrganiseFile(CLibraryFile* pFile)
 			std::vector<std::wstring> results;
 			
 			LPTSTR szResults = NULL;
-			size_t nCount = RegExp::Split( _T("(.*)(\\bse?a?s?o?n?)\\s*([0-9]+)\\s*(ep?i?s?o?d?e?)\\s*([0-9]+)[^0-9]+"),
+			size_t nCount = RegExp::Split( _T("(.*)(\\bse?a?s?o?n?)\\s*([0-9]+)\\s*(ep?i?s?o?d?e?)\\s*([0-9]+)[^0-9]+.*"),
 				sFileName, &szResults );
 			LPCTSTR p = szResults;
 			for ( size_t i = 0; i < nCount; ++i )
@@ -942,7 +942,7 @@ BOOL CAlbumFolder::OrganiseFile(CLibraryFile* pFile)
 
 			if ( nCount < 4 && Settings.Library.SmartSeriesDetection )
 			{
-				nCount = RegExp::Split( _T("(.*[^0-9]+\\b)([0-9]+)\\s*[xX]\\s*([0-9]+)[^0-9]+"),
+				nCount = RegExp::Split( _T("(.*[^0-9]+\\b)([0-9]+)\\s*[xX]\\s*([0-9]+)[^0-9]+.*"),
 					sFileName, &szResults );
 				LPCTSTR p = szResults;
 				for ( size_t i = 0; i < nCount; ++i )

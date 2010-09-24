@@ -24,7 +24,6 @@
 #include "targetver.h"
 
 #define WIN32_LEAN_AND_MEAN
-#define _SCL_SECURE_NO_WARNINGS
 
 #ifndef VC_EXTRALEAN
 #define VC_EXTRALEAN
@@ -33,16 +32,15 @@
 #pragma warning(disable:4820) // X bytes padding added after data member 'Y'
 #pragma warning(disable:4365) // conversion from '' to '', signed/unsigned mismatch
 #pragma warning(disable:4548) // expression before comma has no effect; expected expression with side-effect
-#pragma warning(disable:4555) // expression has no effect; expected expression with side-effect
-#pragma warning(disable:4571) // catch(...) semantics changed since Visual C++ 7.1; structured exceptions (SEH) are no longer caught
-#pragma warning(disable:4619) // #pragma warning : there is no warning number
-#pragma warning(disable:4625) // copy constructor could not be generated because a base class copy constructor is inaccessible
 #pragma warning(disable:4668) // is not defined as a preprocessor macro, replacing with '0' for '#if/#elif'
-#pragma warning(disable:4686) // possible change in behavior, change in UDT return calling convention
+#pragma warning(disable:4710) // function not inlined
 
 #include <atlconv.h>
 #include <tchar.h>
 
-#include "regexpr2.h"
+#include <string>
+#include <regex>
 
 using namespace ATL;
+using namespace std;
+using namespace std::tr1;

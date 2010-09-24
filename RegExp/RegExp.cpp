@@ -40,12 +40,11 @@ REGEXP_API BOOL Match(LPCTSTR szRegExp, LPCTSTR szContent)
 {
 	try
 	{
-		regex::rpattern regExpPattern( (LPCWSTR)CT2CW( szRegExp ),
-			regex::NOCASE, regex::MODE_SAFE );
-		regex::match_results results;
-		regex::rpattern::backref_type matches = regExpPattern.match(
-			std::wstring( (LPCWSTR)CT2CW( szContent ) ), results );
-		if ( matches.matched )
+		const wstring sRegExp( (LPCWSTR)CT2CW( szRegExp ) );
+		const wregex regExpPattern( sRegExp,
+			regex_constants::ECMAScript | regex_constants::icase );
+		const wstring sContent( (LPCWSTR)CT2CW( szContent ) );
+		if ( regex_search( sContent, regExpPattern ) )
 			return TRUE;
 	}
 	catch (...)
@@ -58,26 +57,29 @@ REGEXP_API size_t Split(LPCTSTR szRegExp, LPCTSTR szContent, LPTSTR* pszResult)
 {
 	try
 	{
-		regex::rpattern regExpPattern( (LPCWSTR)CT2CW( szRegExp ),
-			regex::NOCASE, regex::MODE_SAFE );
-		regex::split_results results;
-		size_t nCount = regExpPattern.split(
-			std::wstring( (LPCWSTR)CT2CW( szContent ) ), results, 0 );
-
-		size_t len = 0;
-		for ( size_t i = 0; i < nCount; ++i )
+		const wstring sRegExp( (LPCWSTR)CT2CW( szRegExp ) );
+		const wregex regExpPattern( sRegExp,
+			regex_constants::ECMAScript | regex_constants::icase );
+		const wstring sContent( (LPCWSTR)CT2CW( szContent ) );
+		wsmatch results;
+		if ( regex_search( sContent, results, regExpPattern ) )
 		{
-			len += results.strings()[ i ].size() + 1;
-		}
-		LPTSTR p = (LPTSTR)GlobalAlloc( GPTR, len * sizeof( TCHAR ) );
+			const size_t nCount = results.size();
+			size_t len = 0;
+			for ( size_t i = 0; i < nCount; ++i )
+			{
+				len += results.str( i ).size() + 1;
+			}
+			LPTSTR p = (LPTSTR)GlobalAlloc( GPTR, len * sizeof( wchar_t ) );
 
-		*pszResult = p;
-		for ( size_t i = 0; i < nCount; ++i )
-		{
-			_tcscpy_s( p, len - ( p - *pszResult ), results.strings()[ i ].c_str() );
-			p += results.strings()[ i ].size() + 1;
+			*pszResult = p;
+			for ( size_t i = 0; i < nCount; ++i )
+			{
+				wcscpy_s( p, len - ( p - *pszResult ), results.str( i ).c_str() );
+				p += results.str( i ).size() + 1;
+			}
+			return nCount;
 		}
-		return nCount;
 	}
 	catch (...)
 	{

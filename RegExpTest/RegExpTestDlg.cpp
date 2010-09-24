@@ -16,8 +16,10 @@ CRegExpDlg::CRegExpDlg(CWnd* pParent /*=NULL*/)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 
-	m_strInput = AfxGetApp()->GetProfileString( _T("RegExp"), _T("Input") );
-	m_strRegExp = AfxGetApp()->GetProfileString( _T("RegExp"), _T("RegExp") );
+	m_strInput = AfxGetApp()->GetProfileString( _T("RegExp"), _T("Input"),
+		_T("The.Video.Clip.s01e02.en.[x264].avi") );
+	m_strRegExp = AfxGetApp()->GetProfileString( _T("RegExp"), _T("RegExp"),
+		_T("(.*)(\\bse?a?s?o?n?)\\s*([0-9]+)\\s*(ep?i?s?o?d?e?)\\s*([0-9]+)[^0-9]+.*") );
 }
 
 void CRegExpDlg::DoDataExchange(CDataExchange* pDX)
