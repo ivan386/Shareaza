@@ -26,9 +26,6 @@
     <Filter Include="Source Files\Pages">
       <UniqueIdentifier>{eef40a62-97ad-4397-812d-d6676f4f8957}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\RegExp">
-      <UniqueIdentifier>{49eb0a46-1424-417d-960a-b099e38709fd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files">
       <UniqueIdentifier>{184136d7-562c-4992-a2ac-0733309a5b02}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl</Extensions>
@@ -59,9 +56,6 @@
     </Filter>
     <Filter Include="Header Files\File fragments\Filefragments">
       <UniqueIdentifier>{c2b4d4f2-f585-4dd5-be71-2f099f2359e9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\RegExp">
-      <UniqueIdentifier>{4aecffdd-e1fd-4714-840c-9d8b9ec2953b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{3c7cd365-2af0-47b6-ba8f-e17209bdd2e0}</UniqueIdentifier>
@@ -702,9 +696,6 @@
     <ClCompile Include="CtrlNeighbourTip.cpp">
       <Filter>Source Files\Controls</Filter>
     </ClCompile>
-    <ClCompile Include="CtrlNetworkCombo.cpp">
-      <Filter>Source Files\Controls</Filter>
-    </ClCompile>
     <ClCompile Include="CtrlPanel.cpp">
       <Filter>Source Files\Controls</Filter>
     </ClCompile>
@@ -1140,11 +1131,26 @@
     <ClCompile Include="PageTorrentTrackers.cpp">
       <Filter>Source Files\Pages</Filter>
     </ClCompile>
-    <ClCompile Include="RegExp\regexpr2.cpp">
-      <Filter>Source Files\RegExp</Filter>
+    <ClCompile Include="DCClient.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RegExp\syntax2.cpp">
-      <Filter>Source Files\RegExp</Filter>
+    <ClCompile Include="DCClients.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DCNeighbour.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DCPacket.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Strings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DownloadTransferDC.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UploadTransferDC.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1815,9 +1821,6 @@
     <ClInclude Include="CtrlNeighbourTip.h">
       <Filter>Header Files\Controls</Filter>
     </ClInclude>
-    <ClInclude Include="CtrlNetworkCombo.h">
-      <Filter>Header Files\Controls</Filter>
-    </ClInclude>
     <ClInclude Include="CtrlPanel.h">
       <Filter>Header Files\Controls</Filter>
     </ClInclude>
@@ -2292,17 +2295,26 @@
     <ClInclude Include="FileFragments\Ranges.hpp">
       <Filter>Header Files\File fragments\Filefragments</Filter>
     </ClInclude>
-    <ClInclude Include="RegExp\regexpr2.h">
-      <Filter>Header Files\RegExp</Filter>
+    <ClInclude Include="DCClient.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="RegExp\reimpl2.h">
-      <Filter>Header Files\RegExp</Filter>
+    <ClInclude Include="DCClients.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="RegExp\restack.h">
-      <Filter>Header Files\RegExp</Filter>
+    <ClInclude Include="DCNeighbour.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="RegExp\syntax2.h">
-      <Filter>Header Files\RegExp</Filter>
+    <ClInclude Include="DCPacket.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Strings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DownloadTransferDC.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UploadTransferDC.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -152,11 +152,12 @@
       <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>rasapi32.lib;winmm.lib;version.lib;ws2_32.lib;wininet.lib;Iphlpapi.lib;msi.lib;powrprof.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>bzlib.lib;regexp.lib;rasapi32.lib;winmm.lib;version.lib;ws2_32.lib;wininet.lib;Iphlpapi.lib;msi.lib;powrprof.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalLibraryDirectories>..\bzlib\$(OutDir);..\RegExp\$(OutDir)</AdditionalLibraryDirectories>
     </Link>
     <Manifest>
       <InputResourceManifests>$(TargetPath);%(InputResourceManifests)</InputResourceManifests>
@@ -196,13 +197,14 @@
       <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>rasapi32.lib;winmm.lib;version.lib;ws2_32.lib;wininet.lib;Iphlpapi.lib;msi.lib;powrprof.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>bzlib.lib;regexp.lib;rasapi32.lib;winmm.lib;version.lib;ws2_32.lib;wininet.lib;Iphlpapi.lib;msi.lib;powrprof.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX64</TargetMachine>
       <KeyFile>
       </KeyFile>
+      <AdditionalLibraryDirectories>..\bzlib\$(OutDir);..\RegExp\$(OutDir)</AdditionalLibraryDirectories>
     </Link>
     <Manifest>
       <InputResourceManifests>$(TargetPath);%(InputResourceManifests)</InputResourceManifests>
@@ -249,7 +251,7 @@
       <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>rasapi32.lib;winmm.lib;version.lib;ws2_32.lib;wininet.lib;Iphlpapi.lib;msi.lib;powrprof.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>bzlib.lib;regexp.lib;rasapi32.lib;winmm.lib;version.lib;ws2_32.lib;wininet.lib;Iphlpapi.lib;msi.lib;powrprof.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -259,6 +261,7 @@
       <TargetMachine>MachineX86</TargetMachine>
       <KeyFile>
       </KeyFile>
+      <AdditionalLibraryDirectories>..\bzlib\$(OutDir);..\RegExp\$(OutDir)</AdditionalLibraryDirectories>
     </Link>
     <Manifest>
       <InputResourceManifests>$(TargetPath);%(InputResourceManifests)</InputResourceManifests>
@@ -306,7 +309,7 @@
       <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>rasapi32.lib;winmm.lib;version.lib;ws2_32.lib;wininet.lib;Iphlpapi.lib;msi.lib;powrprof.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>bzlib.lib;regexp.lib;rasapi32.lib;winmm.lib;version.lib;ws2_32.lib;wininet.lib;Iphlpapi.lib;msi.lib;powrprof.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -316,6 +319,7 @@
       <TargetMachine>MachineX64</TargetMachine>
       <KeyFile>
       </KeyFile>
+      <AdditionalLibraryDirectories>..\bzlib\$(OutDir);..\RegExp\$(OutDir)</AdditionalLibraryDirectories>
     </Link>
     <Manifest>
       <InputResourceManifests>$(TargetPath);%(InputResourceManifests)</InputResourceManifests>
@@ -362,6 +366,10 @@
     <ClCompile Include="Datagram.cpp" />
     <ClCompile Include="DatagramPart.cpp" />
     <ClCompile Include="Datagrams.cpp" />
+    <ClCompile Include="DCClient.cpp" />
+    <ClCompile Include="DCClients.cpp" />
+    <ClCompile Include="DCNeighbour.cpp" />
+    <ClCompile Include="DCPacket.cpp" />
     <ClCompile Include="DDEServer.cpp" />
     <ClCompile Include="DHT.cpp" />
     <ClCompile Include="DiscoveryServices.cpp" />
@@ -374,6 +382,7 @@
     <ClCompile Include="DownloadTask.cpp" />
     <ClCompile Include="DownloadTransfer.cpp" />
     <ClCompile Include="DownloadTransferBT.cpp" />
+    <ClCompile Include="DownloadTransferDC.cpp" />
     <ClCompile Include="DownloadTransferED2K.cpp" />
     <ClCompile Include="DownloadTransferFTP.cpp" />
     <ClCompile Include="DownloadTransferHTTP.cpp" />
@@ -515,6 +524,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Strings.cpp" />
     <ClCompile Include="ThumbCache.cpp" />
     <ClCompile Include="Transfer.cpp" />
     <ClCompile Include="TransferFile.cpp" />
@@ -526,6 +536,7 @@
     <ClCompile Include="Uploads.cpp" />
     <ClCompile Include="UploadTransfer.cpp" />
     <ClCompile Include="UploadTransferBT.cpp" />
+    <ClCompile Include="UploadTransferDC.cpp" />
     <ClCompile Include="UploadTransferED2K.cpp" />
     <ClCompile Include="UploadTransferHTTP.cpp" />
     <ClCompile Include="UPnPFinder.cpp" />
@@ -577,7 +588,6 @@
     <ClCompile Include="CtrlMediaList.cpp" />
     <ClCompile Include="CtrlMonitorBar.cpp" />
     <ClCompile Include="CtrlNeighbourTip.cpp" />
-    <ClCompile Include="CtrlNetworkCombo.cpp" />
     <ClCompile Include="CtrlPanel.cpp" />
     <ClCompile Include="CtrlPrivateChatFrame.cpp" />
     <ClCompile Include="CtrlRichTaskBox.cpp" />
@@ -741,8 +751,6 @@
     <ClCompile Include="PageTorrentFiles.cpp" />
     <ClCompile Include="PageTorrentGeneral.cpp" />
     <ClCompile Include="PageTorrentTrackers.cpp" />
-    <ClCompile Include="RegExp\regexpr2.cpp" />
-    <ClCompile Include="RegExp\syntax2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="Shareaza.idl" />
@@ -777,6 +785,10 @@
     <ClInclude Include="Datagram.h" />
     <ClInclude Include="DatagramPart.h" />
     <ClInclude Include="Datagrams.h" />
+    <ClInclude Include="DCClient.h" />
+    <ClInclude Include="DCClients.h" />
+    <ClInclude Include="DCNeighbour.h" />
+    <ClInclude Include="DCPacket.h" />
     <ClInclude Include="DDEServer.h" />
     <ClInclude Include="DHT.h" />
     <ClInclude Include="DiscoveryServices.h" />
@@ -789,6 +801,7 @@
     <ClInclude Include="DownloadTask.h" />
     <ClInclude Include="DownloadTransfer.h" />
     <ClInclude Include="DownloadTransferBT.h" />
+    <ClInclude Include="DownloadTransferDC.h" />
     <ClInclude Include="DownloadTransferED2K.h" />
     <ClInclude Include="DownloadTransferFTP.h" />
     <ClInclude Include="DownloadTransferHTTP.h" />
@@ -907,6 +920,7 @@
     <ClInclude Include="Statistics.h" />
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="StreamArchive.h" />
+    <ClInclude Include="Strings.h" />
     <ClInclude Include="ThreadImpl.h" />
     <ClInclude Include="ThumbCache.h" />
     <ClInclude Include="Transfer.h" />
@@ -919,6 +933,7 @@
     <ClInclude Include="Uploads.h" />
     <ClInclude Include="UploadTransfer.h" />
     <ClInclude Include="UploadTransferBT.h" />
+    <ClInclude Include="UploadTransferDC.h" />
     <ClInclude Include="UploadTransferED2K.h" />
     <ClInclude Include="UploadTransferHTTP.h" />
     <ClInclude Include="UPnPFinder.h" />
@@ -970,7 +985,6 @@
     <ClInclude Include="CtrlMediaList.h" />
     <ClInclude Include="CtrlMonitorBar.h" />
     <ClInclude Include="CtrlNeighbourTip.h" />
-    <ClInclude Include="CtrlNetworkCombo.h" />
     <ClInclude Include="CtrlPanel.h" />
     <ClInclude Include="CtrlPrivateChatFrame.h" />
     <ClInclude Include="CtrlRichTaskBox.h" />
@@ -1129,10 +1143,6 @@
     <ClInclude Include="FileFragments\Queue.hpp" />
     <ClInclude Include="FileFragments\Range.hpp" />
     <ClInclude Include="FileFragments\Ranges.hpp" />
-    <ClInclude Include="RegExp\regexpr2.h" />
-    <ClInclude Include="RegExp\reimpl2.h" />
-    <ClInclude Include="RegExp\restack.h" />
-    <ClInclude Include="RegExp\syntax2.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="XML.inl" />

@@ -269,6 +269,7 @@
   <ItemGroup>
     <ClCompile Include="..\shareaza\BENode.cpp" />
     <ClCompile Include="..\shareaza\Buffer.cpp" />
+    <ClCompile Include="..\shareaza\Strings.cpp" />
     <ClCompile Include="CmdLine.cpp" />
     <ClCompile Include="PageCommandline.cpp" />
     <ClCompile Include="PageComment.cpp" />
@@ -291,6 +292,7 @@
   <ItemGroup>
     <ClInclude Include="..\shareaza\BENode.h" />
     <ClInclude Include="..\shareaza\Buffer.h" />
+    <ClInclude Include="..\shareaza\Strings.h" />
     <ClInclude Include="CmdLine.h" />
     <ClInclude Include="PageCommandline.h" />
     <ClInclude Include="PageComment.h" />

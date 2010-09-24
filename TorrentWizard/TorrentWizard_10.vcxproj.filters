@@ -60,6 +60,9 @@
     <ClCompile Include="WizardSheet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\shareaza\Strings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\shareaza\BENode.h">
@@ -108,6 +111,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="WizardSheet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\shareaza\Strings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
