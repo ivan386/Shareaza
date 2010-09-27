@@ -371,7 +371,6 @@
     <ClCompile Include="DCNeighbour.cpp" />
     <ClCompile Include="DCPacket.cpp" />
     <ClCompile Include="DDEServer.cpp" />
-    <ClCompile Include="DHT.cpp" />
     <ClCompile Include="DiscoveryServices.cpp" />
     <ClCompile Include="Download.cpp" />
     <ClCompile Include="DownloadBase.cpp" />
@@ -790,7 +789,6 @@
     <ClInclude Include="DCNeighbour.h" />
     <ClInclude Include="DCPacket.h" />
     <ClInclude Include="DDEServer.h" />
-    <ClInclude Include="DHT.h" />
     <ClInclude Include="DiscoveryServices.h" />
     <ClInclude Include="Download.h" />
     <ClInclude Include="DownloadBase.h" />
