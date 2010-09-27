@@ -509,14 +509,17 @@ CLibraryTreeItem* CLibraryTreeView::GetFolderItem(void* pSearch, CLibraryTreeIte
 
 CLibraryTreeItem* CLibraryTreeView::GetDefaultFolderItem() const
 {
+	if ( m_bVirtual )
+		return NULL;
+
 	for ( CLibraryTreeItem::iterator pChild = m_pRoot->begin(); pChild != m_pRoot->end(); ++pChild )
 	{
-		if ( m_bVirtual )
+		/*if ( m_bVirtual )
 		{
 			if ( CheckURI( pChild->m_pVirtual->m_sSchemaURI, CSchema::uriFavouritesFolder ) )
 				return &*pChild;
 		}
-		else
+		else*/
 		{
 			if ( pChild->m_pPhysical->m_sPath.CompareNoCase( Settings.Downloads.CompletePath ) == 0 )
 				return &*pChild;
