@@ -629,11 +629,9 @@ BOOL CDownloadTransferBT::OnPiece(CBTPacket* pPacket)
 
 BOOL CDownloadTransferBT::OnSourceResponse(CBTPacket* pPacket)
 {
-	CBuffer pInput;
-	pInput.Add( pPacket->m_pBuffer, pPacket->GetRemaining() );
-	CBENode* pRoot = CBENode::Decode( &pInput );
-	if ( pRoot == NULL ) return TRUE;
-	CBENode* pPeers = pRoot->GetNode( "peers" );
+	const CBENode* pRoot = pPacket->m_pNode.get();
+
+	const CBENode* pPeers = pRoot->GetNode( "peers" );
 	if ( ! pPeers->IsType( CBENode::beList ) )
 	{
 		delete pRoot;
@@ -644,10 +642,10 @@ BOOL CDownloadTransferBT::OnSourceResponse(CBTPacket* pPacket)
 	
 	for ( int nPeer = 0 ; nPeer < pPeers->GetCount() ; nPeer++ )
 	{
-		CBENode* pPeer = pPeers->GetNode( nPeer );
+		const CBENode* pPeer = pPeers->GetNode( nPeer );
 		if ( ! pPeer->IsType( CBENode::beDict ) ) continue;
 		
-		CBENode* pURL = pPeer->GetNode( "url" );
+		const CBENode* pURL = pPeer->GetNode( "url" );
 		
 		if ( pURL->IsType( CBENode::beString ) )
 		{
@@ -655,20 +653,20 @@ BOOL CDownloadTransferBT::OnSourceResponse(CBTPacket* pPacket)
 		}
 		else
 		{
-			CBENode* pIP = pPeer->GetNode( "ip" );
+			const CBENode* pIP = pPeer->GetNode( "ip" );
 			if ( ! pIP->IsType( CBENode::beString ) ) continue;
 			
-			CBENode* pPort = pPeer->GetNode( "port" );
+			const CBENode* pPort = pPeer->GetNode( "port" );
 			if ( ! pPort->IsType( CBENode::beInt ) ) continue;
 			
-			SOCKADDR_IN saPeer;
+			SOCKADDR_IN saPeer = {};
 			if ( ! Network.Resolve( pIP->GetString(), (int)pPort->GetInt(), &saPeer ) ) continue;
 			
 			theApp.Message( MSG_DEBUG, _T("CDownloadTransferBT::OnSourceResponse(): %s: %s:%i"),
 				(LPCTSTR)m_sAddress,
 				(LPCTSTR)CString( inet_ntoa( saPeer.sin_addr ) ), htons( saPeer.sin_port ) );
 			
-			CBENode* pID = pPeer->GetNode( "peer id" );
+			const CBENode* pID = pPeer->GetNode( "peer id" );
 			if ( ! pID->IsType( CBENode::beString ) || pID->m_nValue != Hashes::BtGuid::byteCount )
 			{
 				nCount += m_pDownload->AddSourceBT( Hashes::BtGuid(),
@@ -683,8 +681,6 @@ BOOL CDownloadTransferBT::OnSourceResponse(CBTPacket* pPacket)
 			}
 		}
 	}
-	
-	delete pRoot;
 	
 	theApp.Message( MSG_INFO, IDS_BT_CLIENT_EXCHANGE, nCount, (LPCTSTR)m_sAddress );
 	

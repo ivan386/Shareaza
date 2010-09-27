@@ -117,8 +117,8 @@ public:
 	BOOL				Deflate();
 	BOOL				Inflate();
 
-	virtual	void		ToBuffer(CBuffer* pBuffer) const;
-	virtual	void		ToBufferUDP(CBuffer* pBuffer) const;
+	virtual void		Reset();
+	virtual	void		ToBuffer(CBuffer* pBuffer, bool bTCP = true) const;
 	static	CEDPacket*	ReadBuffer(CBuffer* pBuffer);
 	virtual CString		GetType() const;
 	virtual void		Debug(LPCTSTR pszReason) const;
@@ -193,6 +193,10 @@ public:
 	virtual BOOL OnPacket(const SOCKADDR_IN* pHost);
 	
 	friend class CEDPacket::CEDPacketPool;
+
+private:
+	CEDPacket(const CEDPacket&);
+	CEDPacket& operator=(const CEDPacket&);
 };
 
 inline void CEDPacket::CEDPacketPool::NewPoolImpl(int nSize, CPacket*& pPool, int& nPitch)

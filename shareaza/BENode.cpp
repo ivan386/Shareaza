@@ -423,11 +423,23 @@ const CString CBENode::Encode() const
 
 CBENode* CBENode::Decode(const CBuffer* pBuffer, DWORD *pnReaden)
 {
+	return Decode( pBuffer->m_pBuffer, pBuffer->m_nLength, pnReaden );
+}
+
+CBENode* CBENode::Decode(LPCBYTE pBuffer, DWORD nLength, DWORD *pnReaden)
+{
+	if ( pnReaden )
+		*pnReaden = 0;
+
 	try
 	{
 		auto_ptr< CBENode > pNode( new CBENode() );
-		LPCBYTE pInput	= pBuffer->m_pBuffer;
-		DWORD nInput	= pBuffer->m_nLength;
+		if ( ! pNode.get() )
+			// Out of memory
+			return NULL;
+
+		LPCBYTE pInput	= pBuffer;
+		DWORD nInput	= nLength;
 
 		if ( nInput > 1 && pInput[0] == '\r' && pInput[1] == '\n' )
 		{
@@ -440,7 +452,7 @@ CBENode* CBENode::Decode(const CBuffer* pBuffer, DWORD *pnReaden)
 		pNode->Decode( pInput, nInput, nInput );
 
 		if ( pnReaden )
-			*pnReaden = pBuffer->m_nLength - nInput;
+			*pnReaden = nLength - nInput;
 
 		return pNode.release();
 	}
@@ -580,6 +592,22 @@ CString CBENode::GetString() const
 	// Use as is
 	return CString( szValue );
 }
+
+#ifdef HASHES_HPP_INCLUDED
+
+bool CBENode::GetString(Hashes::BtGuid& oGUID) const
+{
+	if ( m_nType != beString ||
+		 m_nValue != oGUID.byteCount )
+		 return false;
+
+	CopyMemory( &oGUID[0], m_pValue, oGUID.byteCount );
+	oGUID.validate();
+
+	return true;
+}
+
+#endif // HASHES_HPP_INCLUDED
 
 CString CBENode::DecodeString(UINT nCodePage) const
 {

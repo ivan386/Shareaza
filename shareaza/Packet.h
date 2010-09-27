@@ -69,7 +69,7 @@ public:
 	virtual void Reset();
 
 	// What is const = 0 (do)
-	virtual void ToBuffer(CBuffer* pBuffer) const = 0;
+	virtual void ToBuffer(CBuffer* pBuffer, bool bTCP = true) const = 0;
 
 public:
 
@@ -102,14 +102,14 @@ public:
 	virtual CString GetType() const;
 
 	// Encode the bytes of the packet into text
-	CString ToHex()   const; // Express the bytes of the packet in base 16 with spaces, like "08 C0 12 AF"
-	CString ToASCII() const; // Express the bytes of the packet as ASCII characters, like "abc..fgh.i", spaces replace low characters
+	virtual CString ToHex()   const; // Express the bytes of the packet in base 16 with spaces, like "08 C0 12 AF"
+	virtual CString ToASCII() const; // Express the bytes of the packet as ASCII characters, like "abc..fgh.i", spaces replace low characters
 
 	// Inheriting classes will override this to (do)
 	virtual void    Debug(LPCTSTR pszReason) const;
 
 	// Gives this packet and related objects to each window in the tab bar for them to process it
-	void SmartDump(const SOCKADDR_IN* pAddress, BOOL bUDP, BOOL bOutgoing, DWORD_PTR nNeighbourUnique = 0) const;
+	virtual void SmartDump(const SOCKADDR_IN* pAddress, BOOL bUDP, BOOL bOutgoing, DWORD_PTR nNeighbourUnique = 0) const;
 
 public:
 
@@ -453,6 +453,10 @@ public:
 
 	// Let the CPacketPool class access the private members of this one
 	friend class CPacketPool;
+
+private:
+	CPacket(const CPacket&);
+	CPacket& operator=(const CPacket&);
 };
 
 // Allocates and holds array of 256 packets so we can grab a packet to use it quickly

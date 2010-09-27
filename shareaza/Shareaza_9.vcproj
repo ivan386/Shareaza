@@ -539,10 +539,6 @@
 				>
 			</File>
 			<File
-				RelativePath="DHT.cpp"
-				>
-			</File>
-			<File
 				RelativePath="DiscoveryServices.cpp"
 				>
 			</File>
@@ -2181,10 +2177,6 @@
 			</File>
 			<File
 				RelativePath="DDEServer.h"
-				>
-			</File>
-			<File
-				RelativePath="DHT.h"
 				>
 			</File>
 			<File

@@ -76,7 +76,7 @@ protected:
 
 	void			SendHandshake(BOOL bPart1, BOOL bPart2);
 	void			SendExtendedHandshake();
-	void			SendExtendedPacket(BYTE Type, CBuffer *pOutput);
+	void			SendMetadataRequest(QWORD nPiece);
 	void			SendInfoRequest(QWORD nPiece);
 	void			SendUtPex(DWORD tConnectedAfter = 0);
 	BOOL			OnHandshake1();								// First part of handshake

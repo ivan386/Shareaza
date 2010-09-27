@@ -23,71 +23,7 @@
 
 #include "Packet.h"
 
-//
-// Packet
-//
-
-class CBTPacket : public CPacket
-{
-// Construction
-protected:
-	CBTPacket();
-	virtual ~CBTPacket();
-
-// Attributes
-public:
-	BYTE	m_nType;
-
-// Operations
-public:
-	virtual	void		ToBuffer(CBuffer* pBuffer) const;
-	static	CBTPacket*	ReadBuffer(CBuffer* pBuffer);
-public:
-	virtual CString		GetType() const;
-
-// Packet Pool
-protected:
-	class CBTPacketPool : public CPacketPool
-	{
-	public:
-		virtual ~CBTPacketPool() { Clear(); }
-	protected:
-		virtual void NewPoolImpl(int nSize, CPacket*& pPool, int& nPitch);
-		virtual void FreePoolImpl(CPacket* pPool);
-	};
-
-	static CBTPacketPool POOL;
-
-// Allocation
-public:
-	inline static CBTPacket* New(BYTE nType)
-	{
-		CBTPacket* pPacket = (CBTPacket*)POOL.New();
-		pPacket->m_nType = nType;
-		return pPacket;
-	}
-
-	inline virtual void Delete()
-	{
-		POOL.Delete( this );
-	}
-
-	// Packet handler
-	virtual BOOL OnPacket(const SOCKADDR_IN* /*pHost*/) { return FALSE; } // Unused
-
-	friend class CBTPacket::CBTPacketPool;
-};
-
-inline void CBTPacket::CBTPacketPool::NewPoolImpl(int nSize, CPacket*& pPool, int& nPitch)
-{
-	nPitch	= sizeof(CBTPacket);
-	pPool	= new CBTPacket[ nSize ];
-}
-
-inline void CBTPacket::CBTPacketPool::FreePoolImpl(CPacket* pPacket)
-{
-	delete [] (CBTPacket*)pPacket;
-}
+class CBENode;
 
 //
 // Packet Types
@@ -110,6 +46,100 @@ inline void CBTPacket::CBTPacketPool::FreePoolImpl(CPacket* pPacket)
 #define BT_PACKET_SOURCE_RESPONSE	130
 
 #define BT_PACKET_KEEPALIVE			255
+
+// Packet extensions (for BT_PACKET_EXTENSION)
+
+#define BT_EXTENSION_HANDSHAKE		0
+#define BT_EXTENSION_UT_METADATA	1
+#define BT_EXTENSION_UT_PEX			2
+
+#define BT_EXTENSION_NOP			255	// Packet without standard header i.e. bencoded data only
+
+// Packet metadata type (for EXTENDED_PACKET_UT_METADATA)
+
+#define UT_METADATA_REQUEST			0
+#define UT_METADATA_DATA			1
+#define UT_METADATA_REJECT			2
+
+//
+// Packet
+//
+
+class CBTPacket : public CPacket
+{
+protected:
+	CBTPacket();
+	virtual ~CBTPacket();
+
+public:
+	BYTE				m_nType;
+	BYTE				m_nExtension;	// Extension type if packet type is a BT_PACKET_EXTENSION
+	auto_ptr< CBENode > m_pNode;		// Extension decoded data
+
+	virtual void		Reset();
+	virtual	void		ToBuffer(CBuffer* pBuffer, bool bTCP = true) const;
+	static	CBTPacket*	ReadBuffer(CBuffer* pBuffer);
+	virtual void		SmartDump(const SOCKADDR_IN* pAddress, BOOL bUDP, BOOL bOutgoing, DWORD_PTR nNeighbourUnique = 0) const;
+	virtual CString		GetType() const;
+	virtual CString		ToHex()   const;
+	virtual CString		ToASCII() const;
+
+	inline static bool IsEncoded(BYTE nType)
+	{
+		return
+			nType == BT_PACKET_EXTENSION ||
+			nType == BT_PACKET_HANDSHAKE ||
+			nType == BT_PACKET_SOURCE_REQUEST ||
+			nType == BT_PACKET_SOURCE_RESPONSE;
+	}
+
+	bool HasEncodedData() const;
+
+// Packet Pool
+protected:
+	class CBTPacketPool : public CPacketPool
+	{
+	public:
+		virtual ~CBTPacketPool() { Clear(); }
+	protected:
+		virtual void NewPoolImpl(int nSize, CPacket*& pPool, int& nPitch);
+		virtual void FreePoolImpl(CPacket* pPool);
+	};
+
+	static CBTPacketPool POOL;
+
+// Allocation
+public:
+	static CBTPacket* New(BYTE nType = BT_PACKET_EXTENSION, BYTE nExtension = BT_EXTENSION_NOP, const BYTE* pBuffer = NULL, DWORD nLength = 0);
+
+	inline virtual void Delete()
+	{
+		POOL.Delete( this );
+	}
+
+	// Packet handler
+	virtual BOOL OnPacket(const SOCKADDR_IN* pHost);
+
+	BOOL OnPing(const SOCKADDR_IN* pHost);
+	BOOL OnError(const SOCKADDR_IN* pHost);
+
+	friend class CBTPacket::CBTPacketPool;
+
+private:
+	CBTPacket(const CBTPacket&);
+	CBTPacket& operator=(const CBTPacket&);
+};
+
+inline void CBTPacket::CBTPacketPool::NewPoolImpl(int nSize, CPacket*& pPool, int& nPitch)
+{
+	nPitch	= sizeof(CBTPacket);
+	pPool	= new CBTPacket[ nSize ];
+}
+
+inline void CBTPacket::CBTPacketPool::FreePoolImpl(CPacket* pPacket)
+{
+	delete [] (CBTPacket*)pPacket;
+}
 
 #pragma pack(1)
 

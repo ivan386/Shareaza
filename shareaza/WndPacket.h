@@ -22,9 +22,11 @@
 #pragma once
 
 #include "WndPanel.h"
+#include "BTPacket.h"
 #include "G1Packet.h"
 #include "G2Packet.h"
 #include "DCPacket.h"
+#include "EDPacket.h"
 
 class CLiveItem;
 class CNeighbour;

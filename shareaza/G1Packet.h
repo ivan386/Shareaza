@@ -79,7 +79,9 @@ public:
 	// Get the packet's type, GUID, and all its bytes
 	virtual CString GetType()                  const; // Returns a pointer to a text literal like "Ping" or "Pong"
 	CString         GetGUID()                  const; // Returns the packet's GUID encoded into text in base 16
-	virtual void    ToBuffer(CBuffer* pBuffer) const; // Adds the Gnutella packet header and payload into the given CBuffer object
+
+	virtual void	Reset();
+	virtual void    ToBuffer(CBuffer* pBuffer, bool bTCP = true) const; // Adds the Gnutella packet header and payload into the given CBuffer object
 
 	// Record information about the packet for debugging purposes
 	virtual void Debug(LPCTSTR pszReason) const; // Writes debug information about the packet into the Shareaza.log file
@@ -174,6 +176,10 @@ protected:
 
 	// Let the nested CG1PacketPool class access the private members of this CG1Packet class
 	friend class CG1Packet::CG1PacketPool;
+
+private:
+	CG1Packet(const CG1Packet&);
+	CG1Packet& operator=(const CG1Packet&);
 };
 
 // Takes nSize, the number of CG1Packet objects we want

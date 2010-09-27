@@ -55,7 +55,8 @@ public:
 	CString		GetStringFromSubNode(int nItem, UINT nEncoding, bool& pEncodingError) const;
 	void		Encode(CBuffer* pBuffer) const;
 	void		Decode(LPCBYTE& pInput, DWORD& nInput, DWORD nSize);
-	static CBENode*	Decode(const CBuffer* pBuffer, DWORD *pnReaden = NULL );
+	static CBENode*	Decode(const CBuffer* pBuffer, DWORD *pnReaden = NULL);
+	static CBENode* Decode(LPCBYTE pBuffer, DWORD nLength, DWORD *pnReaden = NULL);
 
 private:
 	static int	DecodeLen(LPCBYTE& pInput, DWORD& nInput);
@@ -116,6 +117,17 @@ public:
 		m_pValue	= new BYTE[ nLength + ( bNull ? 1 : 0 ) ];
 		CopyMemory( m_pValue, pString, nLength + ( bNull ? 1 : 0 ) );
 	}
+
+#ifdef HASHES_HPP_INCLUDED
+
+	bool GetString(Hashes::BtGuid& oGUID) const;
+
+	inline void SetString(const Hashes::BtGuid& oGUID)
+	{
+		SetString( &oGUID[0], oGUID.byteCount );
+	}
+
+#endif // HASHES_HPP_INCLUDED
 
 	inline CBENode* Add(LPCSTR pszKey = NULL)
 	{

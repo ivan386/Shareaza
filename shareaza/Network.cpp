@@ -1103,13 +1103,13 @@ BOOL CNetwork::RouteHits(CQueryHit* pHits, CPacket* pPacket)
 	else if ( pPacket->m_nProtocol == PROTOCOL_G2 )
 	{
 		if ( IsSelfIP( pEndpoint.sin_addr ) ) return FALSE;
-		Datagrams.Send( &pEndpoint, (CG2Packet*)pPacket, FALSE );
+		Datagrams.Send( &pEndpoint, pPacket, FALSE );
 	}
 	else
 	{
 		if ( IsSelfIP( pEndpoint.sin_addr ) ) return FALSE;
 		pPacket = CG2Packet::New( G2_PACKET_HIT_WRAP, (CG1Packet*)pPacket );
-		Datagrams.Send( &pEndpoint, (CG2Packet*)pPacket, TRUE );
+		Datagrams.Send( &pEndpoint, pPacket, TRUE );
 	}
 
 	if ( pPacket->m_nProtocol == PROTOCOL_G1 )

@@ -48,24 +48,30 @@ CG1Packet::CG1PacketPool CG1Packet::POOL;
 //////////////////////////////////////////////////////////////////////
 // CG1Packet construction
 
-// Make a new CG1Packet object
-CG1Packet::CG1Packet() : CPacket( PROTOCOL_G1 ) // Before running the code here, call the CPacket constructor, giving it Gnutella as the protocol
+CG1Packet::CG1Packet()
+	: CPacket		( PROTOCOL_G1 )
+	, m_nType		( 0 )
+	, m_nTTL		( 0 )
+	, m_nHops		( 0 )
+	, m_nTypeIndex	( 0 )
+	, m_nHash		( 0 )
 {
-	// Start out with the type and type index 0, later they will be set to ping or pong
-	m_nType      = 0;
-	m_nTypeIndex = 0;
-
-	// Set the time to live and hops counts to 0
-	m_nTTL = m_nHops = 0;
-
-	// No hash yet
-	m_nHash = 0;
 }
 
-// Delete this CG1Packet object
 CG1Packet::~CG1Packet()
 {
-	// The CPacket destructor will take care of freeing memory, so there is nothing to do here (do)
+}
+
+void CG1Packet::Reset()
+{
+	CPacket::Reset();
+
+	m_oGUID.clear();
+	m_nType		 = 0;
+	m_nTTL		 = 0;
+	m_nHops		 = 0;
+	m_nTypeIndex = 0;
+	m_nHash		 = 0;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -222,7 +228,7 @@ CString CG1Packet::GetGUID() const
 
 // Takes a pointer to a buffer
 // Writes this Gnutella packet into it, composing a Gnutella packet header and then adding the payload from the packet's buffer
-void CG1Packet::ToBuffer(CBuffer* pBuffer) const
+void CG1Packet::ToBuffer(CBuffer* pBuffer, bool /*bTCP*/) const
 {
 	// Compose a Gnutella packet header with values from this CG1Packet object
 	GNUTELLAPACKET pHeader;						// Make a local GNUTELLAPACKET structure called pHeader

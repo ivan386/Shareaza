@@ -36,7 +36,8 @@ static char THIS_FILE[]=__FILE__;
 
 CDCPacket::CDCPacketPool CDCPacket::POOL;
 
-CDCPacket::CDCPacket() : CPacket( PROTOCOL_DC )
+CDCPacket::CDCPacket()
+	: CPacket( PROTOCOL_DC )
 {
 }
 
@@ -44,7 +45,12 @@ CDCPacket::~CDCPacket()
 {
 }
 
-void CDCPacket::ToBuffer(CBuffer* pBuffer) const
+void CDCPacket::Reset()
+{
+	CPacket::Reset();
+}
+
+void CDCPacket::ToBuffer(CBuffer* pBuffer, bool /*bTCP*/) const
 {
 	ASSERT( m_pBuffer && m_nLength );
 

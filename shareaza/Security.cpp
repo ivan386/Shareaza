@@ -1101,8 +1101,6 @@ BOOL CSecureRule::Match(CQuerySearch::const_iterator itStart,
 		{
 			return RegExp::Match( strFilter, pszContent );
 		}
-
-		theApp.Message( MSG_DEBUG, L"Invalid RegExp filter: \"%s\". Ignoring.", m_pContent );
 	}
 
 	return FALSE;

@@ -130,10 +130,10 @@ private:
 public:
 	void		Serialize(CArchive& ar);
 
-	BOOL		LoadInfoPiece(DWORD nPieceSize, DWORD nInfoSize, DWORD nInfoPiece, BYTE *pPacketBuffer, DWORD nPacketLength);
-	int			NextInfoPiece();
-	DWORD		GetInfoPiece(DWORD nPiece, BYTE **pInfoPiece);
-	DWORD		GetInfoSize();
+	BOOL		LoadInfoPiece(BYTE *pPiece, DWORD nPieceSize, DWORD nInfoSize, DWORD nInfoPiece);
+	int			NextInfoPiece() const;
+	DWORD		GetInfoPiece(DWORD nPiece, BYTE **pInfoPiece) const;
+	DWORD		GetInfoSize() const;
 	BOOL		CheckInfoData();
 	BOOL		LoadTorrentFile(LPCTSTR pszFile);
 	BOOL		LoadTorrentBuffer(const CBuffer* pBuffer);

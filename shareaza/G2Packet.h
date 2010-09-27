@@ -234,7 +234,7 @@ public:
 	virtual CString	ReadString(DWORD nMaximum = 0xFFFFFFFF);
 	virtual void	WriteString(LPCTSTR pszString, BOOL bNull = TRUE);
 	virtual int		GetStringLen(LPCTSTR pszString) const;
-	virtual void	ToBuffer(CBuffer* pBuffer) const;
+	virtual void	ToBuffer(CBuffer* pBuffer, bool bTCP = true) const;
 	virtual void	Debug(LPCTSTR pszReason) const;
 public:
 	static CG2Packet* ReadBuffer(CBuffer* pBuffer);
@@ -307,6 +307,10 @@ protected:
 	BOOL OnKHLR(const SOCKADDR_IN* pHost);
 
 	friend class CG2Packet::CG2PacketPool;
+
+private:
+	CG2Packet(const CG2Packet&);
+	CG2Packet& operator=(const CG2Packet&);
 };
 
 inline void CG2Packet::CG2PacketPool::NewPoolImpl(int nSize, CPacket*& pPool, int& nPitch)

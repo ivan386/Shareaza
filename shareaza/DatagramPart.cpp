@@ -61,7 +61,7 @@ void CDatagramOut::Create(const SOCKADDR_IN* pHost, CG2Packet* pPacket, WORD nSe
 	m_nSequence	= nSequence;
 	m_pBuffer	= pBuffer;
 
-	pPacket->ToBuffer( m_pBuffer );
+	pPacket->ToBuffer( m_pBuffer, false );
 
 	m_bCompressed = m_pBuffer->Deflate( TRUE );
 

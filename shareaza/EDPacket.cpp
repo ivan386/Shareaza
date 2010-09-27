@@ -46,12 +46,20 @@ CEDPacket::CEDPacketPool CEDPacket::POOL;
 //////////////////////////////////////////////////////////////////////
 // CEDPacket construction
 
-CEDPacket::CEDPacket() : CPacket( PROTOCOL_ED2K )
+CEDPacket::CEDPacket()
+	: CPacket		( PROTOCOL_ED2K )
+	, m_nEdProtocol	( 0 )
+	, m_nType		( 0 )
 {
 }
 
 CEDPacket::~CEDPacket()
 {
+}
+
+void CEDPacket::Reset()
+{
+	CPacket::Reset();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -287,23 +295,20 @@ void CEDPacket::WriteFile(const CShareazaFile* pShareazaFile, QWORD nSize,
 //////////////////////////////////////////////////////////////////////
 // CEDPacket buffers
 
-void CEDPacket::ToBuffer(CBuffer* pBuffer) const
+void CEDPacket::ToBuffer(CBuffer* pBuffer, bool bTCP) const
 {
-	ED2K_TCP_HEADER pHeader;
-	pHeader.nProtocol	= m_nEdProtocol;
-	pHeader.nLength		= m_nLength + 1;
-	pHeader.nType		= m_nType;
-	pBuffer->Add( &pHeader, sizeof(pHeader) );
-	pBuffer->Add( m_pBuffer, m_nLength );
-}
-
-void CEDPacket::ToBufferUDP(CBuffer* pBuffer) const
-{
-	ED2K_UDP_HEADER pHeader;
-	pHeader.nProtocol	= m_nEdProtocol;
-	pHeader.nType		= m_nType;
-	pBuffer->Add( &pHeader, sizeof(pHeader) );
-	pBuffer->Add( m_pBuffer, m_nLength );
+	if ( bTCP )
+	{
+		ED2K_TCP_HEADER pHeader = { m_nEdProtocol, m_nLength + 1, m_nType };
+		pBuffer->Add( &pHeader, sizeof(pHeader) );
+		pBuffer->Add( m_pBuffer, m_nLength );
+	}
+	else
+	{
+		ED2K_UDP_HEADER pHeader = { m_nEdProtocol, m_nType };
+		pBuffer->Add( &pHeader, sizeof(pHeader) );
+		pBuffer->Add( m_pBuffer, m_nLength );
+	}
 }
 
 CEDPacket* CEDPacket::ReadBuffer(CBuffer* pBuffer)

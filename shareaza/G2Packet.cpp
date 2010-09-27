@@ -56,10 +56,10 @@ CG2Packet::CG2PacketPool CG2Packet::POOL;
 //////////////////////////////////////////////////////////////////////
 // CG2Packet construction
 
-CG2Packet::CG2Packet() :
-	CPacket( PROTOCOL_G2 ),
-	m_nType( G2_PACKET_NULL ),
-	m_bCompound( FALSE )
+CG2Packet::CG2Packet()
+	: CPacket		( PROTOCOL_G2 )
+	, m_nType		( G2_PACKET_NULL )
+	, m_bCompound	( FALSE )
 {
 	m_bBigEndian = FALSE;
 }
@@ -413,7 +413,7 @@ int CG2Packet::GetStringLen(LPCTSTR pszString) const
 //////////////////////////////////////////////////////////////////////
 // CG2Packet to buffer
 
-void CG2Packet::ToBuffer(CBuffer* pBuffer) const
+void CG2Packet::ToBuffer(CBuffer* pBuffer, bool /*bTCP*/) const
 {
 	ASSERT( G2_TYPE_LEN( m_nType ) > 0 );
 

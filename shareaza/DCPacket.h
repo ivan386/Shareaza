@@ -30,7 +30,8 @@ protected:
 	virtual ~CDCPacket();
 
 public:
-	virtual void ToBuffer(CBuffer* pBuffer) const;
+	virtual void Reset();
+	virtual void ToBuffer(CBuffer* pBuffer, bool bTCP = true) const;
 
 // Packet Pool
 protected:
@@ -70,6 +71,10 @@ protected:
 	BOOL OnCommonHit(const SOCKADDR_IN* pHost);
 
 	friend class CDCPacket::CDCPacketPool;
+
+private:
+	CDCPacket(const CDCPacket&);
+	CDCPacket& operator=(const CDCPacket&);
 };
 
 inline void CDCPacket::CDCPacketPool::NewPoolImpl(int nSize, CPacket*& pPool, int& nPitch)

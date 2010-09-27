@@ -28,13 +28,13 @@
 #include "Datagrams.h"
 #include "Datagram.h"
 #include "DatagramPart.h"
+#include "BTPacket.h"
 #include "G1Packet.h"
 #include "G2Packet.h"
 #include "EDPacket.h"
 #include "DCPacket.h"
 #include "BENode.h"
 #include "Security.h"
-#include "DHT.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -216,22 +216,6 @@ BOOL CDatagrams::Send(const IN_ADDR* pAddress, WORD nPort, CPacket* pPacket, BOO
 	return Send( &pHost, pPacket, bRelease, pToken, bAck );
 }
 
-BOOL CDatagrams::Send(const SOCKADDR_IN* pHost, const CBuffer& pOutput)
-{
-	ASSERT( pHost != NULL && pOutput.m_pBuffer != NULL );
-
-	if ( ! IsValid() || Security.IsDenied( &pHost->sin_addr ) )
-	{
-		return FALSE;
-	}
-
-	CNetwork::SendTo( m_hSocket, (const char*)pOutput.m_pBuffer, pOutput.m_nLength, pHost );
-
-	m_nOutPackets++;
-
-	return TRUE;
-}
-
 BOOL CDatagrams::Send(const SOCKADDR_IN* pHost, CPacket* pPacket, BOOL bRelease, LPVOID pToken, BOOL bAck)
 {
 	ASSERT( pHost != NULL && pPacket != NULL );
@@ -242,30 +226,13 @@ BOOL CDatagrams::Send(const SOCKADDR_IN* pHost, CPacket* pPacket, BOOL bRelease,
 		return FALSE;
 	}
 
-	if ( pPacket->m_nProtocol == PROTOCOL_ED2K )
+	pPacket->SmartDump( pHost, TRUE, TRUE );
+
+	if ( pPacket->m_nProtocol != PROTOCOL_G2 )
 	{
 		CBuffer pBuffer;
+		pPacket->ToBuffer( &pBuffer, false );
 
-		((CEDPacket*)pPacket)->ToBufferUDP( &pBuffer );
-		pPacket->SmartDump( pHost, TRUE, TRUE );
-		if ( bRelease ) pPacket->Release();
-
-		if ( ntohs( pHost->sin_port ) != 4669 )	// Hack
-		{
-			CNetwork::SendTo( m_hSocket, (LPSTR)pBuffer.m_pBuffer, pBuffer.m_nLength, pHost );
-
-			m_nOutPackets++;
-		}
-
-		return TRUE;
-	}
-	else if ( pPacket->m_nProtocol == PROTOCOL_G1 )
-	{
-		// Quick hack
-		CBuffer pBuffer;
-
-		((CG1Packet*)pPacket)->ToBuffer( &pBuffer );
-		pPacket->SmartDump( pHost, TRUE, TRUE );
 		if ( bRelease ) pPacket->Release();
 
 		CNetwork::SendTo( m_hSocket, (LPSTR)pBuffer.m_pBuffer, pBuffer.m_nLength, pHost );
@@ -274,26 +241,8 @@ BOOL CDatagrams::Send(const SOCKADDR_IN* pHost, CPacket* pPacket, BOOL bRelease,
 
 		return TRUE;
 	}
-	else if ( pPacket->m_nProtocol == PROTOCOL_DC )
-	{
-		// Quick hack
-		CBuffer pBuffer;
 
-		((CDCPacket*)pPacket)->ToBuffer( &pBuffer );
-		pPacket->SmartDump( pHost, TRUE, TRUE );
-		if ( bRelease ) pPacket->Release();
-
-		CNetwork::SendTo( m_hSocket, (LPSTR)pBuffer.m_pBuffer, pBuffer.m_nLength, pHost );
-
-		m_nOutPackets++;
-
-		return TRUE;
-	}
-	else if ( pPacket->m_nProtocol != PROTOCOL_G2 )
-	{
-		if ( bRelease ) pPacket->Release();
-		return FALSE;
-	}
+	// Gnutella 2 uses SGP-powered datagrams
 
 	if ( m_pOutputFree == NULL || m_pBufferFree == NULL )
 	{
@@ -349,8 +298,6 @@ BOOL CDatagrams::Send(const SOCKADDR_IN* pHost, CPacket* pPacket, BOOL bRelease,
 	*pHash = pDG;
 
 	m_nOutPackets++;
-
-	pPacket->SmartDump( pHost, TRUE, TRUE );
 
 #ifdef DEBUG_UDP
 	theApp.Message( MSG_DEBUG, _T("UDP: Queued SGP (#%i) x%i for %s:%lu"),
@@ -762,23 +709,15 @@ BOOL CDatagrams::OnDatagram(const SOCKADDR_IN* pHost, const BYTE* pBuffer, DWORD
 	// Detect BitTorrent packets
 	if ( nLength > 16 )
 	{
-		try
+		if ( CBTPacket* pPacket = CBTPacket::New(
+			BT_PACKET_EXTENSION, BT_EXTENSION_NOP, pBuffer, nLength ) )
 		{
-			auto_ptr< CBENode > pNode( new CBENode() );
-			if ( ! pNode.get() )
-				AfxThrowMemoryException();
-			const BYTE* pInput = pBuffer;
-			DWORD nInput = nLength;
-			pNode->Decode( pInput, nInput, nInput );
-
 			m_nInPackets++;
 
-			if ( DHT.OnPacket( pHost, pNode.get() ) )
+			bHandled = pPacket->OnPacket( pHost );
+
+			if ( bHandled )
 				return TRUE;
-		}
-		catch ( CException* pException )
-		{
-			pException->Delete();
 		}
 	}
 
