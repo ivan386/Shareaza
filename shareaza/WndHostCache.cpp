@@ -116,24 +116,8 @@ int CHostCacheWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		);
 	m_pSizer.Attach( &m_wndList );
 
-	m_wndList.SendMessage( LVM_SETEXTENDEDLISTVIEWSTYLE,
-		LVS_EX_DOUBLEBUFFER|LVS_EX_FULLROWSELECT|LVS_EX_HEADERDRAGDROP|LVS_EX_LABELTIP,
-		LVS_EX_DOUBLEBUFFER|LVS_EX_FULLROWSELECT|LVS_EX_HEADERDRAGDROP|LVS_EX_LABELTIP );
-
-	// Merge protocols and flags in one image list
-	CoolInterface.LoadProtocolIconsTo( m_gdiImageList );
-	int nImages = m_gdiImageList.GetImageCount();
-	int nFlags = Flags.GetCount();
-	VERIFY( m_gdiImageList.SetImageCount( nImages + nFlags ) );
-	for ( int nFlag = 0 ; nFlag < nFlags ; nFlag++ )
-	{
-		if ( HICON hIcon = Flags.ExtractIcon( nFlag ) )
-		{
-			VERIFY( m_gdiImageList.Replace( nImages + nFlag, hIcon ) != -1 );
-			VERIFY( DestroyIcon( hIcon ) );
-		}
-	}
-	m_wndList.SetImageList( &m_gdiImageList, LVSIL_SMALL );
+	m_wndList.SetExtendedStyle(
+		LVS_EX_DOUBLEBUFFER|LVS_EX_FULLROWSELECT|LVS_EX_HEADERDRAGDROP|LVS_EX_LABELTIP|LVS_EX_SUBITEMIMAGES );
 
 	m_wndList.InsertColumn( 0, _T("Address"), LVCFMT_LEFT, 140, -1 );
 	m_wndList.InsertColumn( 1, _T("Port"), LVCFMT_CENTER, 60, 0 );
@@ -151,10 +135,8 @@ int CHostCacheWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndList.InsertColumn( 12, _T("Query"), LVCFMT_RIGHT, 0, 8 );
 	m_wndList.InsertColumn( 13, _T("Ack"), LVCFMT_RIGHT, 0, 9 );
 #endif
-	m_wndList.SetFont( &theApp.m_gdiFont );
 
-	Settings.LoadList( _T("CHostCacheWnd"), &m_wndList );
-	LoadState( _T("CHostCacheWnd"), TRUE );
+	LoadState();
 	
 	PostMessage( WM_TIMER, 1 );
 
@@ -260,9 +242,17 @@ CHostCacheHostPtr CHostCacheWnd::GetItem(int nItem)
 void CHostCacheWnd::OnSkinChange()
 {
 	CPanelWnd::OnSkinChange();
+
+	// Columns
 	Settings.LoadList( _T("CHostCacheWnd"), &m_wndList );
+
+	// Toolbar
 	Skin.CreateToolBar( _T("CHostCacheWnd"), &m_wndToolBar );
 
+	// Fonts
+	m_wndList.SetFont( &theApp.m_gdiFont );
+
+	// Icons (merge protocols and flags in one image list)
 	CoolInterface.LoadProtocolIconsTo( m_gdiImageList );
 	int nImages = m_gdiImageList.GetImageCount();
 	int nFlags = Flags.GetCount();

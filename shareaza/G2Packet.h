@@ -21,6 +21,8 @@
 
 #pragma once
 
+// #define DEBUG_G2 // Uncomment this to get beautiful dump in Packet Dump window
+
 #include "Packet.h"
 
 class CG1Packet;
@@ -249,6 +251,11 @@ public:
 	}
 
 	virtual CString GetType() const;
+
+#ifdef DEBUG_G2
+	virtual CString ToASCII() const;
+	CString Dump(DWORD nTotal);
+#endif // DEBUG_G2
 
 // Packet Pool
 protected:

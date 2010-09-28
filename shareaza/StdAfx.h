@@ -273,7 +273,8 @@ template<> AFX_INLINE UINT AFXAPI HashKey(const IN_ADDR& key)
 // 64-bit type
 //
 
-typedef uint64 QWORD;
+typedef unsigned __int64 QWORD;
+
 const QWORD SIZE_UNKNOWN = ~0ull;
 
 #define	MAKEDWORD(a,b)	((DWORD) (((a)) | ((DWORD) ((b))) << 16))
@@ -348,33 +349,12 @@ enum PROTOCOLID
 	PROTOCOL_LAST = 9
 };
 
-const LPCTSTR protocolNames[] =
-{
-	_T(""),
-	_T("Gnutella"),
-	_T("Gnutella2"),
-	_T("eDonkey2000"),
-	_T("HTTP"),
-	_T("FTP"),
-	_T("BitTorrent"),
-	_T("Kademlia"),
-	_T("DC++")
-};
-
+// Protocol full names
+extern const LPCTSTR protocolNames[];
+// Protocol short names (4 symbols max)
+extern const LPCTSTR protocolAbbr[];
 // Protocol resource IDs (for icons)
-const UINT protocolIDs[] =
-{
-	ID_NETWORK_NULL,
-	ID_NETWORK_G1,
-	ID_NETWORK_G2,
-	ID_NETWORK_ED2K,
-	ID_NETWORK_HTTP,
-	ID_NETWORK_FTP,
-	ID_NETWORK_BT,
-	ID_NETWORK_KAD,
-	ID_NETWORK_DC,
-	NULL
-};
+extern const UINT protocolIDs[];
 
 inline PROTOCOLID& operator++(PROTOCOLID& arg)
 {

@@ -511,10 +511,131 @@ CG2Packet* CG2Packet::ReadBuffer(CBuffer* pBuffer)
 
 CString CG2Packet::GetType() const
 {
-	CStringA tmp;
-	tmp.Append( (LPCSTR)&m_nType, G2_TYPE_LEN( m_nType ) );
-	return CString( tmp );
+	CStringA sType;
+	sType.Append( (LPCSTR)&m_nType, G2_TYPE_LEN( m_nType ) );
+
+	return CString(  sType );
 }
+
+#ifdef DEBUG_G2
+
+CString CG2Packet::ToASCII() const
+{
+	if ( ! m_bCompound )
+		return CPacket::ToASCII();
+
+	CString sASCII;
+
+	DWORD nOrigPosition = m_nPosition;
+	const_cast< CG2Packet* >( this )->m_nPosition = 0;
+	try
+	{
+		sASCII = const_cast< CG2Packet* >( this )->Dump( m_nLength );
+	}
+	catch ( CException* pException )
+	{
+		pException->Delete();
+	}
+	const_cast< CG2Packet* >( this )->m_nPosition = nOrigPosition;
+
+	return sASCII;
+}
+
+CString CG2Packet::Dump(DWORD nTotal)
+{
+	CString sASCII;
+
+	G2_PACKET nType;
+	DWORD nLength;
+	BOOL bCompound;
+	while ( m_nPosition < nTotal && ReadPacket( nType, nLength, &bCompound ) )
+	{
+		DWORD nOffset = m_nPosition + nLength;
+
+		if ( ! sASCII.IsEmpty() ) sASCII += _T(", ");
+
+		CStringA sType;
+		sType.Append( (LPCSTR)&nType, G2_TYPE_LEN( nType ) );
+		sASCII += sType;
+
+		if ( nLength )
+		{
+			CString sTmp;
+			sTmp.Format( _T("[%u]="), nLength );
+			sASCII += sTmp;
+
+			if ( bCompound )
+				sASCII += _T("{ ") + Dump( m_nPosition + nLength ) + _T(" }");
+			else if ( nType == G2_PACKET_HUB_STATUS )
+			{
+				WORD nLeafCount = ReadShortBE();
+				WORD nLeafLimit = ReadShortBE();
+				sTmp.Format( _T("%u/%u"), nLeafCount, nLeafLimit );
+				sASCII += sTmp;
+			}
+			else if ( nType == G2_PACKET_TIMESTAMP )
+			{
+				DWORD tSeen = ReadLongBE();
+				sTmp.Format( _T("%u"), tSeen );
+				sASCII += sTmp;
+			}
+			else if ( nType == G2_PACKET_QUERY_DONE )
+			{
+				DWORD nAddress = ReadLongLE();
+				WORD nPort = 0;
+				if ( nLength >= 6 )
+					nPort = ReadShortBE();
+				WORD nLeaves = 0;
+				if ( nLength >= 8 )
+					nLeaves = ReadShortBE();
+				sTmp.Format( _T("%hs:%u/%u"), inet_ntoa( *(IN_ADDR*)&nAddress ), nPort, nLeaves );
+				sASCII += sTmp;
+			}
+			else if ( nType == G2_PACKET_QUERY_SEARCH )
+			{
+				DWORD nAddress = ReadLongLE();
+				WORD nPort = ReadShortBE();
+				DWORD tSeen = 0;
+				if ( nLength >= 10 )
+					tSeen = ReadLongBE();
+				sTmp.Format( _T("%hs:%u+%u"), inet_ntoa( *(IN_ADDR*)&nAddress ), nPort, tSeen );
+				sASCII += sTmp;
+			}
+			else if ( nType == G2_PACKET_LIBRARY_STATUS )
+			{
+				DWORD nFileCount = ReadLongBE();
+				DWORD nFileVolume = ReadLongBE();
+				sTmp.Format( _T("%lu/%lu"), nFileCount, nFileVolume );
+				sASCII += sTmp;
+			}
+			else if ( nType == G2_PACKET_NODE_ADDRESS ||
+				nType == G2_PACKET_UDP )
+			{
+				DWORD nAddress = ReadLongLE();
+				WORD nPort = ReadShortBE();
+				sTmp.Format( _T("%hs:%u"), inet_ntoa( *(IN_ADDR*)&nAddress ), nPort );
+				sASCII += sTmp;
+			}
+			else
+			{
+				CStringA sDump;
+				char* c = sDump.GetBuffer( nLength );
+				for ( DWORD i = 0; i < nLength; ++i )
+				{
+					c[ i ] = ( m_pBuffer[ m_nPosition + i ] < ' ' ) ? '.' : m_pBuffer[ m_nPosition + i ];
+				}
+				sDump.ReleaseBuffer( nLength );
+				sASCII += _T("\"") + UTF8Decode( (LPCSTR)sDump, nLength ) + _T("\"");
+			}
+		}
+
+		m_nPosition = nOffset;
+	}
+
+	return sASCII;
+}
+
+#endif // DEBUG_G2
 
 void CG2Packet::Debug(LPCTSTR pszReason) const
 {

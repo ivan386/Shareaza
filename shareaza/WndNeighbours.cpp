@@ -119,21 +119,6 @@ int CNeighboursWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndList.SetExtendedStyle(
 		LVS_EX_DOUBLEBUFFER|LVS_EX_FULLROWSELECT|LVS_EX_HEADERDRAGDROP|LVS_EX_LABELTIP|LVS_EX_SUBITEMIMAGES );
 
-	// Merge protocols and flags in one image list
-	CoolInterface.LoadProtocolIconsTo( m_gdiImageList );
-	int nImages = m_gdiImageList.GetImageCount();
-	int nFlags = Flags.GetCount();
-	VERIFY( m_gdiImageList.SetImageCount( nImages + nFlags ) );
-	for ( int nFlag = 0 ; nFlag < nFlags ; nFlag++ )
-	{
-		if ( HICON hIcon = Flags.ExtractIcon( nFlag ) )
-		{
-			VERIFY( m_gdiImageList.Replace( nImages + nFlag, hIcon ) != -1 );
-			VERIFY( DestroyIcon( hIcon ) );
-		}
-	}
-	m_wndList.SetImageList( &m_gdiImageList, LVSIL_SMALL );
-
 	m_wndList.InsertColumn( 0, _T("Address"), LVCFMT_LEFT, 110, -1 );
 	m_wndList.InsertColumn( 1, _T("Port"), LVCFMT_CENTER, 45, 0 );
 	m_wndList.InsertColumn( 2, _T("Time"), LVCFMT_CENTER, 80, 1 );
@@ -147,9 +132,6 @@ int CNeighboursWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndList.InsertColumn( 10, _T("Name"), LVCFMT_LEFT, 100, 9 );
 	m_wndList.InsertColumn( 11, _T("Country"), LVCFMT_LEFT, 40, 10 );
 
-	m_wndList.SetFont( &theApp.m_gdiFont );
-
-	Settings.LoadList( _T("CNeighboursWnd"), &m_wndList );
 	LoadState( _T("CNeighboursWnd"), FALSE );
 
 	PostMessage( WM_TIMER, 1 );
@@ -346,9 +328,17 @@ CNeighbour* CNeighboursWnd::GetItem(int nItem)
 void CNeighboursWnd::OnSkinChange()
 {
 	CPanelWnd::OnSkinChange();
+
+	// Columns
 	Settings.LoadList( _T("CNeighboursWnd"), &m_wndList );
+
+	// Toolbar
 	Skin.CreateToolBar( _T("CNeighboursWnd"), &m_wndToolBar );
 
+	// Fonts
+	m_wndList.SetFont( &theApp.m_gdiFont );
+
+	// Icons (merge protocols and flags in one image list)
 	CoolInterface.LoadProtocolIconsTo( m_gdiImageList );
 	int nImages = m_gdiImageList.GetImageCount();
 	int nFlags = Flags.GetCount();

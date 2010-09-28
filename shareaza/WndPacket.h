@@ -57,6 +57,7 @@ protected:
 	BOOL				m_bTypeG2[nTypeG2Size];
 	BOOL				m_bTypeED;
 	CListCtrl			m_wndList;
+	CImageList			m_gdiImageList;
 	CLiveListSizer		m_pSizer;
 	CFont				m_pFont;
 	CCoolMenu*			m_pCoolMenu;

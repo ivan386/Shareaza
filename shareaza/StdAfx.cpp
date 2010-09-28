@@ -27,6 +27,47 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
+const LPCTSTR protocolNames[] =
+{
+	_T(""),
+	_T("Gnutella"),
+	_T("Gnutella2"),
+	_T("eDonkey2000"),
+	_T("HTTP"),
+	_T("FTP"),
+	_T("BitTorrent"),
+	_T("Kademlia"),
+	_T("DC++")
+};
+
+const LPCTSTR protocolAbbr[] =
+{
+	_T(""),
+	_T("G1"),
+	_T("G2"),
+	_T("ED2K"),
+	_T("HTTP"),
+	_T("FTP"),
+	_T("BT"),
+	_T("KAD"),
+	_T("DC++")
+};
+
+// Protocol resource IDs (for icons)
+const UINT protocolIDs[] =
+{
+	ID_NETWORK_NULL,
+	ID_NETWORK_G1,
+	ID_NETWORK_G2,
+	ID_NETWORK_ED2K,
+	ID_NETWORK_HTTP,
+	ID_NETWORK_FTP,
+	ID_NETWORK_BT,
+	ID_NETWORK_KAD,
+	ID_NETWORK_DC,
+	NULL
+};
+
 __int64 GetMicroCount()
 {
 	static __int64 Freq = 0;
