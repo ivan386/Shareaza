@@ -631,7 +631,7 @@ BOOL CDownloadTransferBT::OnSourceResponse(CBTPacket* pPacket)
 {
 	const CBENode* pRoot = pPacket->m_pNode.get();
 
-	const CBENode* pPeers = pRoot->GetNode( "peers" );
+	const CBENode* pPeers = pRoot->GetNode( BT_DICT_PEERS );
 	if ( ! pPeers->IsType( CBENode::beList ) )
 	{
 		delete pRoot;
@@ -645,7 +645,7 @@ BOOL CDownloadTransferBT::OnSourceResponse(CBTPacket* pPacket)
 		const CBENode* pPeer = pPeers->GetNode( nPeer );
 		if ( ! pPeer->IsType( CBENode::beDict ) ) continue;
 		
-		const CBENode* pURL = pPeer->GetNode( "url" );
+		const CBENode* pURL = pPeer->GetNode( BT_DICT_PEER_URL );
 		
 		if ( pURL->IsType( CBENode::beString ) )
 		{
@@ -653,10 +653,10 @@ BOOL CDownloadTransferBT::OnSourceResponse(CBTPacket* pPacket)
 		}
 		else
 		{
-			const CBENode* pIP = pPeer->GetNode( "ip" );
+			const CBENode* pIP = pPeer->GetNode( BT_DICT_PEER_IP );
 			if ( ! pIP->IsType( CBENode::beString ) ) continue;
 			
-			const CBENode* pPort = pPeer->GetNode( "port" );
+			const CBENode* pPort = pPeer->GetNode( BT_DICT_PEER_PORT );
 			if ( ! pPort->IsType( CBENode::beInt ) ) continue;
 			
 			SOCKADDR_IN saPeer = {};
@@ -666,7 +666,7 @@ BOOL CDownloadTransferBT::OnSourceResponse(CBTPacket* pPacket)
 				(LPCTSTR)m_sAddress,
 				(LPCTSTR)CString( inet_ntoa( saPeer.sin_addr ) ), htons( saPeer.sin_port ) );
 			
-			const CBENode* pID = pPeer->GetNode( "peer id" );
+			const CBENode* pID = pPeer->GetNode( BT_DICT_PEER_ID );
 			if ( ! pID->IsType( CBENode::beString ) || pID->m_nValue != Hashes::BtGuid::byteCount )
 			{
 				nCount += m_pDownload->AddSourceBT( Hashes::BtGuid(),

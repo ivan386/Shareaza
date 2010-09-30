@@ -24,6 +24,7 @@
 #include "Settings.h"
 #include "Network.h"
 #include "BENode.h"
+#include "BTPacket.h"
 #include "BTTrackerRequest.h"
 #include "Transfers.h"
 #include "Downloads.h"
@@ -283,7 +284,7 @@ void CBTTrackerRequest::Process(const CBENode* pRoot)
 	CString strError;
 
 	// Check for failure
-	if ( const CBENode* pError = pRoot->GetNode( "failure reason" ) )
+	if ( const CBENode* pError = pRoot->GetNode( BT_DICT_FAILURE ) )
 	{
 		CString strErrorFormat;
 		LoadString( strErrorFormat, IDS_BT_TRACK_ERROR );
@@ -293,7 +294,7 @@ void CBTTrackerRequest::Process(const CBENode* pRoot)
 	}
 
 	// Get the interval (next tracker contact)
-	const CBENode* pInterval = pRoot->GetNode( "interval" );
+	const CBENode* pInterval = pRoot->GetNode( BT_DICT_INTERVAL );
 	if ( ! pInterval->IsType( CBENode::beInt ) )
 	{
 		LoadString( strError, IDS_BT_TRACK_PARSE_ERROR );
@@ -312,7 +313,7 @@ void CBTTrackerRequest::Process(const CBENode* pRoot)
 	m_pDownload->m_bTorrentStarted = TRUE;
 
 	// Get list of peers
-	const CBENode* pPeers = pRoot->GetNode( "peers" );
+	const CBENode* pPeers = pRoot->GetNode( BT_DICT_PEERS );
 	int nCount = 0;
 
 	if ( pPeers->IsType( CBENode::beList ) )
@@ -323,13 +324,13 @@ void CBTTrackerRequest::Process(const CBENode* pRoot)
 			if ( ! pPeer->IsType( CBENode::beDict ) )
 				continue;
 
-			const CBENode* pID = pPeer->GetNode( "peer id" );
+			const CBENode* pID = pPeer->GetNode( BT_DICT_PEER_ID );
 
-			const CBENode* pIP = pPeer->GetNode( "ip" );
+			const CBENode* pIP = pPeer->GetNode( BT_DICT_PEER_IP );
 			if ( ! pIP->IsType( CBENode::beString ) )
 				continue;
 
-			const CBENode* pPort = pPeer->GetNode( "port" );
+			const CBENode* pPort = pPeer->GetNode( BT_DICT_PEER_PORT );
 			if ( ! pPort->IsType( CBENode::beInt ) )
 				continue;
 

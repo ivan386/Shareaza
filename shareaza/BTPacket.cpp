@@ -262,6 +262,9 @@ CString CBTPacket::GetType() const
 		case BT_EXTENSION_UT_PEX:
 			sType = _T("UT PEX");
 			break;
+		case BT_EXTENSION_LT_TEX:
+			sType = _T("LT TEX");
+			break;
 		case BT_EXTENSION_NOP:
 			sType = _T("DHT");
 			break;
@@ -299,8 +302,8 @@ BOOL CBTPacket::OnPacket(const SOCKADDR_IN* pHost)
 		return FALSE;
 
 	// Get packet type and transaction id
-	CBENode* pType = m_pNode->GetNode( "y" );
-	CBENode* pTransID = m_pNode->GetNode( "t" );
+	CBENode* pType = m_pNode->GetNode( BT_DICT_TYPE );
+	CBENode* pTransID = m_pNode->GetNode( BT_DICT_TRANSACT_ID );
 	if ( ! pType ||
 		 ! pType->IsType( CBENode::beString ) ||
 		 ! pTransID ||
@@ -321,7 +324,7 @@ BOOL CBTPacket::OnPacket(const SOCKADDR_IN* pHost)
 	HostCache.BitTorrent.m_nCookie++;
 
 	// Get version
-	CBENode* pVersion = m_pNode->GetNode( "v" );
+	CBENode* pVersion = m_pNode->GetNode( BT_DICT_VENDOR );
 	if ( pVersion && pVersion->IsType( CBENode::beString ) )
 	{
 		pCache->m_sName = CBTClient::GetAzureusStyleUserAgent(
@@ -329,10 +332,10 @@ BOOL CBTPacket::OnPacket(const SOCKADDR_IN* pHost)
 	}
 
 	CString sType = pType->GetString();
-	if ( sType == "q" )
+	if ( sType == BT_DICT_QUERY )
 	{
 		// Query message
-		CBENode* pQueryMethod = m_pNode->GetNode( "q" );
+		CBENode* pQueryMethod = m_pNode->GetNode( BT_DICT_QUERY );
 		if ( ! pQueryMethod ||
 			 ! pQueryMethod->IsType( CBENode::beString ) )
 			return FALSE;
@@ -359,16 +362,16 @@ BOOL CBTPacket::OnPacket(const SOCKADDR_IN* pHost)
 
 		return TRUE;
 	}
-	else if ( sType == "r" )
+	else if ( sType == BT_DICT_RESPONSE )
 	{
 		// Response message
-		CBENode* pResponse = m_pNode->GetNode( "r" );
+		CBENode* pResponse = m_pNode->GetNode( BT_DICT_RESPONSE );
 		if ( ! pResponse ||
 			 ! pResponse->IsType( CBENode::beDict ) )
 			 return FALSE;
 
 		Hashes::BtGuid oNodeGUID;
-		CBENode* pNodeID = pResponse->GetNode( "id" );
+		CBENode* pNodeID = pResponse->GetNode( BT_DICT_ID );
 		if ( ! pNodeID ||
 			 ! pNodeID->GetString( oNodeGUID ) )
 			return FALSE;
@@ -379,29 +382,29 @@ BOOL CBTPacket::OnPacket(const SOCKADDR_IN* pHost)
 		// TODO: Check queries pool for pTransID
 
 		// Save access token
-		CBENode* pToken = pResponse->GetNode( "token" );
+		CBENode* pToken = pResponse->GetNode( BT_DICT_TOKEN );
 		if ( pToken && pToken->IsType( CBENode::beString ) )
 		{
 			pCache->m_Token.SetSize( (INT_PTR)pToken->m_nValue );
 			CopyMemory( pCache->m_Token.GetData(), pToken->m_pValue, (size_t)pToken->m_nValue );
 		}
 
-		CBENode* pPeers = pResponse->GetNode( "values" );
+		CBENode* pPeers = pResponse->GetNode( BT_DICT_VALUES );
 		if ( pPeers && pPeers->IsType( CBENode::beList) )
 		{
 		}
 
-		CBENode* pNodes = pResponse->GetNode( "nodes" );
+		CBENode* pNodes = pResponse->GetNode( BT_DICT_NODES );
 		if ( pNodes && pNodes->IsType( CBENode::beString ) )
 		{
 		}
 
 		return TRUE;
 	}
-	else if ( sType == "e" )
+	else if ( sType == BT_DICT_ERROR )
 	{
 		// Error message
-		CBENode* pError = m_pNode->GetNode( "e" );
+		CBENode* pError = m_pNode->GetNode( BT_DICT_ERROR );
 		if ( ! pError ||
 			 ! pError->IsType( CBENode::beList ) )
 			return FALSE;
@@ -414,15 +417,15 @@ BOOL CBTPacket::OnPacket(const SOCKADDR_IN* pHost)
 
 BOOL CBTPacket::OnPing(const SOCKADDR_IN* pHost)
 {
-	CBENode* pTransID = m_pNode->GetNode( "t" );
+	CBENode* pTransID = m_pNode->GetNode( BT_DICT_TRANSACT_ID );
 
-	CBENode* pQueryData = m_pNode->GetNode( "a" );
+	CBENode* pQueryData = m_pNode->GetNode( BT_DICT_DATA );
 	if ( ! pQueryData ||
 		 ! pQueryData->IsType( CBENode::beDict ) )
 		return FALSE;
 
 	Hashes::BtGuid oNodeGUID;
-	CBENode* pNodeID = pQueryData->GetNode( "id" );
+	CBENode* pNodeID = pQueryData->GetNode( BT_DICT_ID );
 	if ( ! pNodeID ||
 		 ! pNodeID->GetString( oNodeGUID ) )
 		return FALSE;
@@ -446,10 +449,10 @@ BOOL CBTPacket::OnPing(const SOCKADDR_IN* pHost)
 	CBENode* pRoot = pPacket->m_pNode.get();
 	ASSERT( pRoot );
 
-	pRoot->Add( "r" )->Add( "id" )->SetString( MyProfile.oGUIDBT );
-	pRoot->Add( "y" )->SetString( "r" );
-	pRoot->Add( "t" )->SetString( (LPCSTR)pTransID->m_pValue, (size_t)pTransID->m_nValue );
-	pRoot->Add( "v" )->SetString( theApp.m_pBTVersion, 4 );
+	pRoot->Add( BT_DICT_RESPONSE )->Add( BT_DICT_ID )->SetString( MyProfile.oGUIDBT );
+	pRoot->Add( BT_DICT_TYPE )->SetString( BT_DICT_RESPONSE );
+	pRoot->Add( BT_DICT_TRANSACT_ID )->SetString( (LPCSTR)pTransID->m_pValue, (size_t)pTransID->m_nValue );
+	pRoot->Add( BT_DICT_VENDOR )->SetString( theApp.m_pBTVersion, 4 );
 
 	return Datagrams.Send( pHost, pPacket );
 }
@@ -462,12 +465,12 @@ BOOL CBTPacket::OnError(const SOCKADDR_IN* /*pHost*/)
 /*BOOL CBTPacket::Ping(const SOCKADDR_IN* pHost)
 {
 	CBENode pPing;
-	CBENode* pPingData = pPing.Add( "a" );
-	pPingData->Add( "id" )->SetString( MyProfile.oGUIDBT );
-	pPing.Add( "y" )->SetString( "q" );
-	pPing.Add( "t" )->SetString( "1234" ); // TODO
-	pPing.Add( "q" )->SetString( "ping" );
-	pPing.Add( "v" )->SetString( theApp.m_pBTVersion, 4 );
+	CBENode* pPingData = pPing.Add( BT_DICT_DATA );
+	pPingData->Add( BT_DICT_ID )->SetString( MyProfile.oGUIDBT );
+	pPing.Add( BT_DICT_TYPE )->SetString( BT_DICT_QUERY );
+	pPing.Add( BT_DICT_TRANSACT_ID )->SetString( "1234" ); // TODO
+	pPing.Add( BT_DICT_QUERY )->SetString( "ping" );
+	pPing.Add( BT_DICT_VENDOR )->SetString( theApp.m_pBTVersion, 4 );
 	CBuffer pOutput;
 	pPing.Encode( &pOutput );
 	return Datagrams.Send( pHost, pOutput );
@@ -476,13 +479,13 @@ BOOL CBTPacket::OnError(const SOCKADDR_IN* /*pHost*/)
 /*BOOL CBTPacket::GetPeers(const SOCKADDR_IN* pHost, const Hashes::BtGuid& oNodeGUID, const Hashes::BtHash& oGUID)
 {
 	CBENode pGetPeers;
-	CBENode* pGetPeersData = pGetPeers.Add( "a" );
-	pGetPeersData->Add( "id" )->SetString( oNodeGUID );
+	CBENode* pGetPeersData = pGetPeers.Add( BT_DICT_DATA );
+	pGetPeersData->Add( BT_DICT_ID )->SetString( oNodeGUID );
 	pGetPeersData->Add( "info_hash" )->SetString( oGUID );
-	pGetPeers.Add( "y" )->SetString( "q" );
-	pGetPeers.Add( "t" )->SetString( "4567" ); // TODO
-	pGetPeers.Add( "q" )->SetString( "get_peers" );
-	pGetPeers.Add( "v" )->SetString( theApp.m_pBTVersion, 4 );
+	pGetPeers.Add( BT_DICT_TYPE )->SetString( BT_DICT_QUERY );
+	pGetPeers.Add( BT_DICT_TRANSACT_ID )->SetString( "4567" ); // TODO
+	pGetPeers.Add( BT_DICT_QUERY )->SetString( "get_peers" );
+	pGetPeers.Add( BT_DICT_VENDOR )->SetString( theApp.m_pBTVersion, 4 );
 	CBuffer pOutput;
 	pGetPeers.Encode( &pOutput );
 	return Datagrams.Send( pHost, pOutput );

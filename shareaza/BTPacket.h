@@ -39,7 +39,7 @@ class CBENode;
 #define BT_PACKET_PIECE				7
 #define BT_PACKET_CANCEL			8
 #define BT_PACKET_DHT_PORT			9
-#define BT_PACKET_EXTENSION			20 // http://www.bittorrent.org/beps/bep_0010.html
+#define BT_PACKET_EXTENSION			20 // Extension Protocol - http://www.bittorrent.org/beps/bep_0010.html
 
 #define BT_PACKET_HANDSHAKE			128
 #define BT_PACKET_SOURCE_REQUEST	129
@@ -50,8 +50,9 @@ class CBENode;
 // Packet extensions (for BT_PACKET_EXTENSION)
 
 #define BT_EXTENSION_HANDSHAKE		0
-#define BT_EXTENSION_UT_METADATA	1
+#define BT_EXTENSION_UT_METADATA	1	// Extension for Peers to Send Metadata Files - http://www.bittorrent.org/beps/bep_0009.html 
 #define BT_EXTENSION_UT_PEX			2
+#define BT_EXTENSION_LT_TEX			3	// Tracker exchange extension - http://www.bittorrent.org/beps/bep_0028.html
 
 #define BT_EXTENSION_NOP			255	// Packet without standard header i.e. bencoded data only
 
@@ -60,6 +61,41 @@ class CBENode;
 #define UT_METADATA_REQUEST			0
 #define UT_METADATA_DATA			1
 #define UT_METADATA_REJECT			2
+
+const LPCSTR BT_DICT_ADDED			= "added";
+const LPCSTR BT_DICT_ADDED_F		= "added.f";
+const LPCSTR BT_DICT_DATA			= "a";
+const LPCSTR BT_DICT_DROPPED		= "dropped";
+const LPCSTR BT_DICT_ERROR			= "e";
+const LPCSTR BT_DICT_FAILURE		= "failure reason";
+const LPCSTR BT_DICT_EXT_MSG		= "m";					// Dictionary of supported extension messages
+const LPCSTR BT_DICT_ID				= "id";
+const LPCSTR BT_DICT_INTERVAL		= "interval";
+const LPCSTR BT_DICT_LT_TEX			= "lt_tex";
+const LPCSTR BT_DICT_METADATA_SIZE	= "metadata_size";
+const LPCSTR BT_DICT_MSG_TYPE		= "msg_type";
+const LPCSTR BT_DICT_NICKNAME		= "nickname";
+const LPCSTR BT_DICT_NODES			= "nodes";
+const LPCSTR BT_DICT_PEER_ID		= "peer id";
+const LPCSTR BT_DICT_PEER_IP		= "ip";
+const LPCSTR BT_DICT_PEER_PORT		= "port";
+const LPCSTR BT_DICT_PEER_URL		= "url";
+const LPCSTR BT_DICT_PEERS			= "peers";
+const LPCSTR BT_DICT_PIECE			= "piece";
+const LPCSTR BT_DICT_PORT			= "p";					// Local TCP listen port
+const LPCSTR BT_DICT_QUERY			= "q";
+const LPCSTR BT_DICT_RESPONSE		= "r";
+const LPCSTR BT_DICT_SRC_EXCHANGE	= "source-exchange";
+const LPCSTR BT_DICT_TOKEN			= "token";
+const LPCSTR BT_DICT_TOTAL_SIZE		= "total_size";
+const LPCSTR BT_DICT_TRANSACT_ID	= "t";
+const LPCSTR BT_DICT_TYPE			= "y";
+const LPCSTR BT_DICT_YOURIP			= "yourip";				// External IP (IPv4 or IPv6)
+const LPCSTR BT_DICT_USER_AGENT		= "user-agent";
+const LPCSTR BT_DICT_UT_PEX			= "ut_pex";
+const LPCSTR BT_DICT_UT_METADATA	= "ut_metadata";
+const LPCSTR BT_DICT_VENDOR			= "v";					// Client name and version (as a utf-8 string)
+const LPCSTR BT_DICT_VALUES			= "values";
 
 //
 // Packet

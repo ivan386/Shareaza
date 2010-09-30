@@ -920,14 +920,11 @@ void CBTClient::SendBeHandshake()
 
 	CString strNick = MyProfile.GetNick().Left( 255 ); // Truncate to 255 characters
 	if ( strNick.GetLength() )
-		pRoot->Add( "nickname" )->SetString( strNick );
+		pRoot->Add( BT_DICT_NICKNAME )->SetString( strNick );
 
-	if ( m_pDownload && m_pDownload->m_pTorrent.m_bPrivate )
-		pRoot->Add( "source-exchange" )->SetInt( 0 );
-	else
-		pRoot->Add( "source-exchange" )->SetInt( 2 );
-
-	pRoot->Add( "user-agent" )->SetString( Settings.SmartAgent() );	
+	pRoot->Add( BT_DICT_SRC_EXCHANGE )->SetInt( 
+		( m_pDownload && m_pDownload->m_pTorrent.m_bPrivate ) ? 0 : 2 );
+	pRoot->Add( BT_DICT_USER_AGENT )->SetString( Settings.SmartAgent() );	
 
 	Send( pPacket );
 }
@@ -939,7 +936,7 @@ BOOL CBTClient::OnBeHandshake(CBTPacket* pPacket)
 	const CBENode* pRoot = pPacket->m_pNode.get();
 	ASSERT( pRoot );
 	
-	const CBENode* pAgent = pRoot->GetNode( "user-agent" );
+	const CBENode* pAgent = pRoot->GetNode( BT_DICT_USER_AGENT );
 	
 	if ( pAgent->IsType( CBENode::beString ) )
 	{
@@ -962,7 +959,7 @@ BOOL CBTClient::OnBeHandshake(CBTPacket* pPacket)
 		}
 	}
 	
-	const CBENode* pNick = pRoot->GetNode( "nickname" );
+	const CBENode* pNick = pRoot->GetNode( BT_DICT_NICKNAME );
 	
 	if ( pNick->IsType( CBENode::beString ) )
 	{
@@ -972,7 +969,7 @@ BOOL CBTClient::OnBeHandshake(CBTPacket* pPacket)
 		}
 	}
 	
-	if ( const CBENode* pExchange = pRoot->GetNode( "source-exchange" ) )
+	if ( const CBENode* pExchange = pRoot->GetNode( BT_DICT_SRC_EXCHANGE ) )
 	{
 		if ( pExchange->GetInt() >= 2 )
 		{
@@ -1010,12 +1007,12 @@ BOOL CBTClient::OnSourceRequest(CBTPacket* /*pPacket*/)
 	CBENode* pRoot = pResponse->m_pNode.get();
 	ASSERT( pRoot );
 
-	CBENode* pPeers = pRoot->Add( "peers" );
+	CBENode* pPeers = pRoot->Add( BT_DICT_PEERS );
 	for ( POSITION posSource = m_pDownload->GetIterator(); posSource ; )
 	{
 		CDownloadSource* pSource = m_pDownload->GetNext( posSource );
 
-		if ( !pSource->IsConnected() )
+		if ( ! pSource->IsConnected() )
 			continue;
 
 		if ( pSource->m_nProtocol == PROTOCOL_BT )
@@ -1024,17 +1021,17 @@ BOOL CBTClient::OnSourceRequest(CBTPacket* /*pPacket*/)
 			CShareazaURL oURL;
 
 			if ( oURL.Parse( pSource->m_sURL ) && oURL.m_oBTC )
-				pPeer->Add( "peer id" )->SetString( &*oURL.m_oBTC.begin(), oURL.m_oBTC.byteCount );
+				pPeer->Add( BT_DICT_PEER_ID )->SetString( &*oURL.m_oBTC.begin(), oURL.m_oBTC.byteCount );
 
-			pPeer->Add( "ip" )->SetString( CString( inet_ntoa( pSource->m_pAddress ) ) );
-			pPeer->Add( "port" )->SetInt( pSource->m_nPort );
+			pPeer->Add( BT_DICT_PEER_IP )->SetString( CString( inet_ntoa( pSource->m_pAddress ) ) );
+			pPeer->Add( BT_DICT_PEER_PORT )->SetInt( pSource->m_nPort );
 		}
 		else if (	pSource->m_nProtocol == PROTOCOL_HTTP &&
 					pSource->m_bReadContent == TRUE &&
 					pSource->m_bPushOnly == FALSE )
 		{
 			CBENode* pPeer = pPeers->Add();
-			pPeer->Add( "url" )->SetString( pSource->m_sURL );
+			pPeer->Add( BT_DICT_PEER_URL )->SetString( pSource->m_sURL );
 		}
 	}
 
@@ -1073,19 +1070,20 @@ void CBTClient::SendExtendedHandshake()
 	CBENode* pRoot = pResponse->m_pNode.get();
 	ASSERT( pRoot );
 
-	CBENode* pM = pRoot->Add( "m" );
-	pM->Add( "ut_pex"		)->SetInt( BT_EXTENSION_UT_PEX		);
-	pM->Add( "ut_metadata"	)->SetInt( BT_EXTENSION_UT_METADATA	);
-	
-	if ( m_pDownload->IsTorrent() 
-		&& ! m_pDownload->m_pTorrent.m_bPrivate 
-		&& m_pDownload->m_pTorrent.GetInfoSize() > 0 )
+	CBENode* pM = pRoot->Add( BT_DICT_EXT_MSG );
+	pM->Add( BT_DICT_UT_PEX )->SetInt( BT_EXTENSION_UT_PEX );
+	pM->Add( BT_DICT_UT_METADATA )->SetInt( BT_EXTENSION_UT_METADATA );
+	pM->Add( BT_DICT_LT_TEX )->SetInt( BT_EXTENSION_LT_TEX );
+
+	if (  m_pDownload->IsTorrent() &&
+		! m_pDownload->m_pTorrent.m_bPrivate &&
+		  m_pDownload->m_pTorrent.GetInfoSize() > 0 )
 	{
-		pRoot->Add( "metadata_size" )->SetInt( m_pDownload->m_pTorrent.GetInfoSize() );
+		pRoot->Add( BT_DICT_METADATA_SIZE )->SetInt( m_pDownload->m_pTorrent.GetInfoSize() );
 	}
 
-	pRoot->Add( "p" )->SetInt( Settings.Connection.InPort );
-	pRoot->Add( "v" )->SetString( Settings.SmartAgent() );
+	pRoot->Add( BT_DICT_PORT )->SetInt( Settings.Connection.InPort );
+	pRoot->Add( BT_DICT_VENDOR )->SetString( Settings.SmartAgent() );
 
 	Send( pResponse );
 }
@@ -1098,7 +1096,7 @@ void CBTClient::SendMetadataRequest(QWORD nPiece)
 	CBENode* pRoot = pResponse->m_pNode.get();
 	ASSERT( pRoot );
 
-	pRoot->Add( "piece" )->SetInt( nPiece );
+	pRoot->Add( BT_DICT_PIECE )->SetInt( nPiece );
 
 	CBuffer pOutput;
 
@@ -1106,12 +1104,12 @@ void CBTClient::SendMetadataRequest(QWORD nPiece)
 	DWORD InfoLen = m_pDownload->m_pTorrent.GetInfoPiece( nPiece, &pInfoPiece );
 	if ( InfoLen == 0 || m_pDownload->m_pTorrent.m_bPrivate )
 	{
-		pRoot->Add( "msg_type" )->SetInt( UT_METADATA_REJECT );
+		pRoot->Add( BT_DICT_MSG_TYPE )->SetInt( UT_METADATA_REJECT );
 	}
 	else
 	{
-		pRoot->Add( "msg_type"		)->SetInt( UT_METADATA_DATA );
-		pRoot->Add( "total_size"	)->SetInt( m_pDownload->m_pTorrent.GetInfoSize() );
+		pRoot->Add( BT_DICT_MSG_TYPE )->SetInt( UT_METADATA_DATA );
+		pRoot->Add( BT_DICT_TOTAL_SIZE )->SetInt( m_pDownload->m_pTorrent.GetInfoSize() );
 
 		pResponse->Write( pInfoPiece, InfoLen );
 	}
@@ -1127,9 +1125,9 @@ BOOL CBTClient::OnExtended(CBTPacket* pPacket)
 
 	if ( pPacket->m_nExtension == BT_EXTENSION_HANDSHAKE )
 	{
-		if ( CBENode* pMetadata = pRoot->GetNode( "m" ) )
+		if ( CBENode* pMetadata = pRoot->GetNode( BT_DICT_EXT_MSG ) )
 		{
-			if ( CBENode* pUtMetadata = pMetadata->GetNode( "ut_metadata" ) )
+			if ( CBENode* pUtMetadata = pMetadata->GetNode( BT_DICT_UT_METADATA ) )
 			{
 				m_nUtMetadataID = pUtMetadata->GetInt();
 				if ( m_nUtMetadataID > 0 && ! m_pDownload->m_pTorrent.m_pBlockBTH ) // Send first info request
@@ -1140,12 +1138,12 @@ BOOL CBTClient::OnExtended(CBTPacket* pPacket)
 				}
 			}
 			
-			if ( CBENode* pUtMetadataSize = pRoot->GetNode( "metadata_size" ) )
+			if ( CBENode* pUtMetadataSize = pRoot->GetNode( BT_DICT_METADATA_SIZE ) )
 			{
 				m_nUtMetadataSize = pUtMetadataSize->GetInt();
 			}
 
-			if ( CBENode* pUtPex = pMetadata->GetNode( "ut_pex" ) )
+			if ( CBENode* pUtPex = pMetadata->GetNode( BT_DICT_UT_PEX ) )
 			{
 				QWORD nOldUtPexID = m_nUtPexID;
 				m_nUtPexID = pUtPex->GetInt();
@@ -1159,8 +1157,8 @@ BOOL CBTClient::OnExtended(CBTPacket* pPacket)
 	}
 	else if ( pPacket->m_nExtension == BT_EXTENSION_UT_METADATA ) 
 	{ 
-		CBENode* pMsgType = pRoot->GetNode( "msg_type" );
-		CBENode* pPiece = pRoot->GetNode( "piece" );
+		CBENode* pMsgType = pRoot->GetNode( BT_DICT_MSG_TYPE );
+		CBENode* pPiece = pRoot->GetNode( BT_DICT_PIECE );
 		if ( pMsgType && pPiece )
 		{
 			QWORD nMsgType	= pMsgType->GetInt();
@@ -1173,7 +1171,7 @@ BOOL CBTClient::OnExtended(CBTPacket* pPacket)
 			}
 			else if ( nMsgType == UT_METADATA_DATA )
 			{
-				if ( CBENode* pTotalSize = pRoot->GetNode( "total_size" ) )
+				if ( CBENode* pTotalSize = pRoot->GetNode( BT_DICT_TOTAL_SIZE ) )
 				{
 					QWORD nTotalSize = pTotalSize->GetInt();
 					ASSERT( !(m_nUtMetadataSize > 0 && m_nUtMetadataSize != nTotalSize) );
@@ -1201,7 +1199,7 @@ BOOL CBTClient::OnExtended(CBTPacket* pPacket)
 	}
 	else if ( pPacket->m_nExtension == BT_EXTENSION_UT_PEX ) 
 	{
-		CBENode* pPeersAdd = pRoot->GetNode( "added" );
+		CBENode* pPeersAdd = pRoot->GetNode( BT_DICT_ADDED );
 
 		if ( pPeersAdd && 0 == ( pPeersAdd->m_nValue % 6 ) )
 		{
@@ -1216,7 +1214,7 @@ BOOL CBTClient::OnExtended(CBTPacket* pPacket)
 			}
 		}
 		
-		CBENode* pPeersDrop = pRoot->GetNode( "dropped" );
+		CBENode* pPeersDrop = pRoot->GetNode( BT_DICT_DROPPED );
 
 		if ( pPeersDrop && 0 == ( pPeersDrop->m_nValue % 6 ) )
 		{
@@ -1251,15 +1249,14 @@ void CBTClient::SendInfoRequest(QWORD nPiece)
 	CBTPacket* pResponse = CBTPacket::New( BT_PACKET_EXTENSION, m_nUtMetadataID );
 	CBENode* pRoot = pResponse->m_pNode.get();
 
-	pRoot->Add( "msg_type"	)->SetInt( UT_METADATA_REQUEST ); //Request
-	pRoot->Add( "piece"		)->SetInt( nPiece );
+	pRoot->Add( BT_DICT_MSG_TYPE )->SetInt( UT_METADATA_REQUEST ); //Request
+	pRoot->Add( BT_DICT_PIECE )->SetInt( nPiece );
 
 	Send( pResponse );
 }
 
 /*	
- The PEX message payload is a bencoded dict with three keys:
-
+ The PEX message payload is a bencoded dictionary with three keys:
  'added': the set of peers met since the last PEX
  'added.f': a flag for every peer, apparently with the following values:
     \x00: unknown, assuming default
@@ -1318,8 +1315,8 @@ void CBTClient::SendUtPex(DWORD tConnectedAfter)
 		CBTPacket* pResponse = CBTPacket::New( BT_PACKET_EXTENSION, m_nUtPexID );
 		CBENode* pRoot = pResponse->m_pNode.get();
 
-		pRoot->Add("added")->SetString( pAddedBuffer.m_pBuffer, pAddedBuffer.m_nLength );
-		pRoot->Add("added.f")->SetString( pAddedFalgsBuffer.m_pBuffer, pAddedFalgsBuffer.m_nLength );
+		pRoot->Add( BT_DICT_ADDED )->SetString( pAddedBuffer.m_pBuffer, pAddedBuffer.m_nLength );
+		pRoot->Add( BT_DICT_ADDED_F )->SetString( pAddedFalgsBuffer.m_pBuffer, pAddedFalgsBuffer.m_nLength );
 
 		Send( pResponse );
 	}
