@@ -256,20 +256,11 @@ CString CBTPacket::GetType() const
 		case BT_EXTENSION_HANDSHAKE:
 			sType = _T("Handshake");
 			break;
-		case BT_EXTENSION_UT_METADATA:
-			sType = _T("UT Metadata");
-			break;
-		case BT_EXTENSION_UT_PEX:
-			sType = _T("UT PEX");
-			break;
-		case BT_EXTENSION_LT_TEX:
-			sType = _T("LT TEX");
-			break;
 		case BT_EXTENSION_NOP:
 			sType = _T("DHT");
 			break;
 		default:
-			sType.Format( _T("Extension %d"), m_nExtension );
+			sType.Format( _T("Ext %02u"), m_nExtension );
 		}
 		break;
 	case BT_PACKET_KEEPALIVE:

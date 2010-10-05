@@ -89,6 +89,7 @@ const LPCSTR BT_DICT_SRC_EXCHANGE	= "source-exchange";
 const LPCSTR BT_DICT_TOKEN			= "token";
 const LPCSTR BT_DICT_TOTAL_SIZE		= "total_size";
 const LPCSTR BT_DICT_TRANSACT_ID	= "t";
+const LPCSTR BT_DICT_TRACKERS		= "tr";					// Tracker List hash
 const LPCSTR BT_DICT_TYPE			= "y";
 const LPCSTR BT_DICT_YOURIP			= "yourip";				// External IP (IPv4 or IPv6)
 const LPCSTR BT_DICT_USER_AGENT		= "user-agent";
