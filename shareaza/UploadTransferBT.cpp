@@ -97,9 +97,13 @@ void CUploadTransferBT::SetChoke(BOOL bChoke)
 	{
 		m_nState = upsReady;
 		UploadFiles.MoveToTail( this );
+
+		m_pClient->Choke();
 	}
-	
-	m_pClient->Send( CBTPacket::New( bChoke ? BT_PACKET_CHOKE : BT_PACKET_UNCHOKE ) );
+	else
+	{
+		m_pClient->UnChoke();
+	}
 	
 	theApp.Message( MSG_DEBUG, _T("%s upload to %s"),
 		bChoke ? _T("Choking") : _T("Unchoking"), (LPCTSTR)m_sAddress );
@@ -329,25 +333,18 @@ BOOL CUploadTransferBT::ServeRequests()
 			(LPCTSTR)m_sName, (LPCTSTR)m_sAddress, _T("BT") );
 		
 		CBuffer pBuffer;
-		pBuffer.EnsureBuffer( sizeof(BT_PIECE_HEADER) + (DWORD)m_nLength );
-		
-		BT_PIECE_HEADER* pHeader = (BT_PIECE_HEADER*)( pBuffer.m_pBuffer + pBuffer.m_nLength );
-		
-		if ( ! ReadFile( m_nOffset + m_nPosition, &pHeader[1], m_nLength, &m_nLength ) )
+		pBuffer.EnsureBuffer( m_nLength );
+
+		QWORD nRead = 0;
+		if ( ! ReadFile( m_nOffset + m_nPosition, pBuffer.m_pBuffer, m_nLength, &nRead ) )
 			return FALSE;
+		pBuffer.m_nLength = (DWORD)nRead;
 
-		pHeader->nLength	= swapEndianess( 1 + 8 + (DWORD)m_nLength );
-		pHeader->nType		= BT_PACKET_PIECE;
-		pHeader->nPiece		= (DWORD)( m_nOffset / m_pDownload->m_pTorrent.m_nBlockSize );
-		pHeader->nOffset	= (DWORD)( m_nOffset % m_pDownload->m_pTorrent.m_nBlockSize );
-		pHeader->nPiece		= swapEndianess( pHeader->nPiece );
-		pHeader->nOffset	= swapEndianess( pHeader->nOffset );
-		
-		pBuffer.m_nLength += sizeof(BT_PIECE_HEADER) + (DWORD)m_nLength;
+		m_pClient->Piece( 
+			(DWORD)( m_nOffset / m_pDownload->m_pTorrent.m_nBlockSize ),
+			(DWORD)( m_nOffset % m_pDownload->m_pTorrent.m_nBlockSize ),
+			pBuffer.m_nLength, pBuffer.m_pBuffer );
 
-		m_pClient->Write( &pBuffer );
-		m_pClient->Send( NULL );
-		
 		m_nPosition += m_nLength;
 		m_nUploaded += m_nLength;
 		m_pDownload->m_nTorrentUploaded += m_nLength;

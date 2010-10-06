@@ -47,41 +47,41 @@ static bool IsValid(const CString& str)
 // CBTInfo construction
 
 CBTInfo::CBTInfo()
-:	m_nBlockSize		( 0ul )
-,	m_nBlockCount		( 0ul )
-,	m_pBlockBTH			( NULL )
-,	m_nTotalUpload		( 0ull )
-,	m_nTotalDownload	( 0ull )
-,	m_nTrackerIndex		( -1 )
-,	m_nTrackerMode		( tNull )
-,	m_nEncoding			( Settings.BitTorrent.TorrentCodePage )
-,	m_tCreationDate		( 0ul )
-,	m_bPrivate			( FALSE )
-,	m_nStartDownloads	( dtAlways )
-,	m_bEncodingError	( false )
-,	m_nTestByte			( 0ul )
-,	m_nInfoSize			( 0ul )
-,	m_nInfoStart		( 0ul )
+	: m_nBlockSize		( 0ul )
+	, m_nBlockCount		( 0ul )
+	, m_pBlockBTH		( NULL )
+	, m_nTotalUpload	( 0ull )
+	, m_nTotalDownload	( 0ull )
+	, m_nTrackerIndex	( -1 )
+	, m_nTrackerMode	( tNull )
+	, m_nEncoding		( Settings.BitTorrent.TorrentCodePage )
+	, m_tCreationDate	( 0ul )
+	, m_bPrivate		( FALSE )
+	, m_nStartDownloads	( dtAlways )
+	, m_bEncodingError	( false )
+	, m_nTestByte		( 0ul )
+	, m_nInfoSize		( 0ul )
+	, m_nInfoStart		( 0ul )
 {
 	CBENode::m_nDefaultCP = Settings.BitTorrent.TorrentCodePage;
 }
 
 CBTInfo::CBTInfo(const CBTInfo& oSource)
-:	m_nBlockSize		( 0ul )
-,	m_nBlockCount		( 0ul )
-,	m_pBlockBTH			( NULL )
-,	m_nTotalUpload		( 0ull )
-,	m_nTotalDownload	( 0ull )
-,	m_nTrackerIndex		( -1 )
-,	m_nTrackerMode		( tNull )
-,	m_nEncoding			( Settings.BitTorrent.TorrentCodePage )
-,	m_tCreationDate		( 0ul )
-,	m_bPrivate			( FALSE )
-,	m_nStartDownloads	( dtAlways )
-,	m_bEncodingError	( false )
-,	m_nTestByte			( 0ul )
-,	m_nInfoSize			( 0ul )
-,	m_nInfoStart		( 0ul )
+	: m_nBlockSize		( 0ul )
+	, m_nBlockCount		( 0ul )
+	, m_pBlockBTH		( NULL )
+	, m_nTotalUpload	( 0ull )
+	, m_nTotalDownload	( 0ull )
+	, m_nTrackerIndex	( -1 )
+	, m_nTrackerMode	( tNull )
+	, m_nEncoding		( Settings.BitTorrent.TorrentCodePage )
+	, m_tCreationDate	( 0ul )
+	, m_bPrivate		( FALSE )
+	, m_nStartDownloads	( dtAlways )
+	, m_bEncodingError	( false )
+	, m_nTestByte		( 0ul )
+	, m_nInfoSize		( 0ul )
+	, m_nInfoStart		( 0ul )
 {
 	*this = oSource;
 
@@ -96,9 +96,9 @@ CBTInfo::~CBTInfo()
 //////////////////////////////////////////////////////////////////////
 // CBTFile construction
 
-CBTInfo::CBTFile::CBTFile(const CBTInfo* pInfo, const CBTFile* pBTFile) :
-	m_pInfo				( pInfo )
-,	m_nOffset			( pBTFile ? pBTFile->m_nOffset : 0 )
+CBTInfo::CBTFile::CBTFile(const CBTInfo* pInfo, const CBTFile* pBTFile)
+	: m_pInfo			( pInfo )
+	, m_nOffset			( pBTFile ? pBTFile->m_nOffset : 0 )
 {
 	if ( pBTFile )
 	{
@@ -828,10 +828,7 @@ BOOL CBTInfo::LoadTorrentTree(const CBENode* pRoot)
 					for ( POSITION pos = pTrackers.GetHeadPosition() ; pos ; )
 					{
 						// Create the tracker and add it to the list
-						CBTTracker oTracker;
-						oTracker.m_sAddress	= pTrackers.GetNext( pos );
-						oTracker.m_nTier	= nTier;
-						AddTracker( oTracker );
+						AddTracker( CBTTracker( pTrackers.GetNext( pos ), nTier ) );
 					}
 					// Delete temporary storage
 					pTrackers.RemoveAll();
@@ -1464,9 +1461,7 @@ void CBTInfo::OnTrackerFailure()
 
 void CBTInfo::SetTracker(const CString& sTracker)
 {
-	CBTTracker oTracker;
-	oTracker.m_sAddress = sTracker;
-	m_nTrackerIndex = AddTracker( oTracker );
+	m_nTrackerIndex = AddTracker( CBTTracker( sTracker ) );
 }
 
 void CBTInfo::SetTrackerMode(int nTrackerMode)
@@ -1490,35 +1485,78 @@ void CBTInfo::SetTrackerMode(int nTrackerMode)
 int CBTInfo::AddTracker(const CBTTracker& oTracker)
 {
 	for ( int i = 0; i < (int)m_oTrackers.GetCount(); ++i )
-		if ( m_oTrackers[ i ].m_sAddress == oTracker.m_sAddress )
+		if ( m_oTrackers[ i ] == oTracker )
 			// Already have
 			return i;
 
 	return (int)m_oTrackers.Add( oTracker );
 }
 
+CString CBTInfo::GetTrackerHash() const
+{
+	// Get concatenated tracker URLs list sorted in alphabetical order
+	string_set oAddr;
+	int nCount = (int)m_oTrackers.GetCount();
+	for ( int i = 0; i < nCount; ++i )
+		oAddr.insert( m_oTrackers[ i ].m_sAddress );
+	CStringA sAddress;
+	for( string_set::const_iterator i = oAddr.begin(); i != oAddr.end(); i++ )
+		sAddress += CT2A( (*i) );
+
+	// Get SHA1 of it
+	CSHA oSHA;
+	oSHA.Add( (LPCSTR)sAddress, sAddress.GetLength() );
+	oSHA.Finish();
+
+	Hashes::Sha1Hash oSHA1;
+	oSHA.GetHash( &oSHA1[ 0 ] );
+	oSHA1.validate();
+
+	// Return hex-encoded hash
+	return oSHA1.toString< Hashes::base16Encoding >();
+}
+
 //////////////////////////////////////////////////////////////////////
 // CBTInfo::CBTTracker construction
 
-CBTInfo::CBTTracker::CBTTracker() :
-	m_tLastAccess		( 0 )
-,	m_tLastSuccess		( 0 )
-,	m_tNextTry			( 0 )
-,	m_nFailures			( 0 )
-,	m_nTier				( 0 )
-,	m_nType				( 0 )
+CBTInfo::CBTTracker::CBTTracker(LPCTSTR szAddress, INT nTier)
+	: m_sAddress		( szAddress ? szAddress : _T("") )
+	, m_tLastAccess		( 0 )
+	, m_tLastSuccess	( 0 )
+	, m_tNextTry		( 0 )
+	, m_nFailures		( 0 )
+	, m_nTier			( nTier )
+	, m_nType			( 0 )
 {
 }
 
-CBTInfo::CBTTracker::CBTTracker(const CBTTracker& oSource) :
-	m_sAddress			( oSource.m_sAddress )
-,	m_tLastAccess		( oSource.m_tLastAccess )
-,	m_tLastSuccess		( oSource.m_tLastSuccess )
-,	m_tNextTry			( oSource.m_tNextTry )
-,	m_nFailures			( oSource.m_nFailures )
-,	m_nTier				( oSource.m_nTier )
-,	m_nType				( oSource.m_nType )
+CBTInfo::CBTTracker::CBTTracker(const CBTTracker& oSource)
+	: m_sAddress		( oSource.m_sAddress )
+	, m_tLastAccess		( oSource.m_tLastAccess )
+	, m_tLastSuccess	( oSource.m_tLastSuccess )
+	, m_tNextTry		( oSource.m_tNextTry )
+	, m_nFailures		( oSource.m_nFailures )
+	, m_nTier			( oSource.m_nTier )
+	, m_nType			( oSource.m_nType )
 {
+}
+
+CBTInfo::CBTTracker& CBTInfo::CBTTracker::operator=(const CBTTracker& oSource)
+{
+	m_sAddress			= oSource.m_sAddress;
+	m_tLastAccess		= oSource.m_tLastAccess;
+	m_tLastSuccess		= oSource.m_tLastSuccess;
+	m_tNextTry			= oSource.m_tNextTry;
+	m_nFailures			= oSource.m_nFailures;
+	m_nTier				= oSource.m_nTier;
+	m_nType				= oSource.m_nType;
+
+	return *this;
+}
+
+bool CBTInfo::CBTTracker::operator==(const CBTTracker& oSource)
+{
+	return ( m_sAddress == oSource.m_sAddress );
 }
 
 //////////////////////////////////////////////////////////////////////

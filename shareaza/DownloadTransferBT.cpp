@@ -112,7 +112,8 @@ void CDownloadTransferBT::Close(TRISTATE bKeepSource, DWORD nRetryAfter)
 		if ( m_pClient->IsOnline() )
 		{
 			m_pClient->m_mInput.pLimit = &Settings.Bandwidth.Request;
-			m_pClient->Send( CBTPacket::New( BT_PACKET_NOT_INTERESTED ) );
+
+			m_pClient->NotInterested();
 		}
 		else
 		{
@@ -155,15 +156,6 @@ CString CDownloadTransferBT::GetStateText(BOOL bLong)
 		return str;
 	}
 	return CDownloadTransfer::GetStateText( bLong );
-}
-
-//////////////////////////////////////////////////////////////////////
-// CDownloadTransferBT send packet helper
-
-void CDownloadTransferBT::Send(CBTPacket* pPacket, BOOL bRelease)
-{
-	ASSERT( m_pClient != NULL );
-	m_pClient->Send( pPacket, bRelease );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -221,11 +213,14 @@ BOOL CDownloadTransferBT::OnRun()
 				return FALSE;
 		}
 	}
-	if ( m_pClient->m_bExchange && tNow - m_tSourceRequest >= Settings.BitTorrent.SourceExchangePeriod * 60000 )
+
+	if ( tNow >= m_tSourceRequest + Settings.BitTorrent.SourceExchangePeriod * 60 * 1000 )
 	{
-		Send( CBTPacket::New( BT_PACKET_SOURCE_REQUEST ) );
+		m_pClient->SendSourceRequest();
+
 		m_tSourceRequest = tNow;
 	}
+
 	return CDownloadTransfer::OnRun();
 }
 
@@ -322,10 +317,10 @@ BOOL CDownloadTransferBT::OnBitfield(CBTPacket* pPacket)
 
 void CDownloadTransferBT::SendFinishedBlock(DWORD nBlock)
 {
-	if ( m_pClient == NULL || ! m_pClient->IsOnline() ) return;
-	CBTPacket* pPacket = CBTPacket::New( BT_PACKET_HAVE );
-	pPacket->WriteLongBE( nBlock );
-	Send( pPacket );
+	if ( ! m_pClient || ! m_pClient->IsOnline() )
+		return;
+
+	m_pClient->Have( nBlock );
 }
 
 BOOL CDownloadTransferBT::OnHave(CBTPacket* pPacket)
@@ -406,7 +401,11 @@ void CDownloadTransferBT::ShowInterest()
 	if ( bInterested != m_bInterested )
 	{
 		m_bInterested = bInterested;
-		Send( CBTPacket::New( bInterested ? BT_PACKET_INTERESTED : BT_PACKET_NOT_INTERESTED ) );
+
+		if ( bInterested )
+			m_pClient->Interested();
+		else
+			m_pClient->NotInterested();
 
 		if ( ! bInterested )
 			m_oRequested.clear();
@@ -429,11 +428,10 @@ BOOL CDownloadTransferBT::OnChoked(CBTPacket* /*pPacket*/)
 	/*for ( Fragments::Queue::const_iterator pFragment = m_oRequested.begin();
 		pFragment != m_oRequested.end() ; ++pFragment )
 	{
-		CBTPacket* pPacket = CBTPacket::New( BT_PACKET_CANCEL );
-		pPacket->WriteLongBE( (DWORD)( pFragment->begin() / m_pDownload->m_pTorrent.m_nBlockSize ) );
-		pPacket->WriteLongBE( (DWORD)( pFragment->begin() % m_pDownload->m_pTorrent.m_nBlockSize ) );
-		pPacket->WriteLongBE( (DWORD)pFragment->size() );
-		Send( pPacket );
+		m_pClient->Cancel(
+			(DWORD)( pFragment->begin() / m_pDownload->m_pTorrent.m_nBlockSize ),
+			(DWORD)( pFragment->begin() % m_pDownload->m_pTorrent.m_nBlockSize ),
+			(DWORD)( pFragment->size() ) );
 	}*/
 
 	m_oRequested.clear();
@@ -510,7 +508,6 @@ bool CDownloadTransferBT::SendFragmentRequests()
 				theApp.Message( MSG_INFO, IDS_DOWNLOAD_FRAGMENT_REQUEST,
 					nOffset, nOffset + nLength - 1,
 					(LPCTSTR)m_pDownload->GetDisplayName(), (LPCTSTR)m_sAddress );
-
 #ifdef _DEBUG
 			DWORD ndBlock1 = (DWORD)( nOffset / nBlockSize );
 			DWORD ndBlock2 = (DWORD)( ( nOffset + nLength - 1 ) / nBlockSize );
@@ -518,12 +515,10 @@ bool CDownloadTransferBT::SendFragmentRequests()
 			ASSERT( ndBlock1 == ndBlock2 );
 			ASSERT( nLength <= nBlockSize );
 #endif
-
-			CBTPacket* pPacket = CBTPacket::New( BT_PACKET_REQUEST );
-			pPacket->WriteLongBE( (DWORD)( nOffset / nBlockSize ) );
-			pPacket->WriteLongBE( (DWORD)( nOffset % nBlockSize ) );
-			pPacket->WriteLongBE( (DWORD)nLength );
-			Send( pPacket );
+			m_pClient->Request(
+				(DWORD)( nOffset / nBlockSize ),
+				(DWORD)( nOffset % nBlockSize ),
+				(DWORD)( nLength ) );
 		}
 		else
 		{
@@ -581,11 +576,10 @@ bool CDownloadTransferBT::UnrequestRange(QWORD nOffset, QWORD nLength)
 	for ( Fragments::Queue::const_iterator pFragment = oUnrequests.begin();
 		pFragment != oUnrequests.end(); ++pFragment )
 	{
-		CBTPacket* pPacket = CBTPacket::New( BT_PACKET_CANCEL );
-		pPacket->WriteLongBE( (DWORD)( pFragment->begin() / m_pDownload->m_pTorrent.m_nBlockSize ) );
-		pPacket->WriteLongBE( (DWORD)( pFragment->begin() % m_pDownload->m_pTorrent.m_nBlockSize ) );
-		pPacket->WriteLongBE( (DWORD)pFragment->size() );
-		Send( pPacket );
+		m_pClient->Cancel(
+			(DWORD)( pFragment->begin() / m_pDownload->m_pTorrent.m_nBlockSize ),
+			(DWORD)( pFragment->begin() % m_pDownload->m_pTorrent.m_nBlockSize ),
+			(DWORD)( pFragment->size() ) );
 	}
 
 	return !oUnrequests.empty();

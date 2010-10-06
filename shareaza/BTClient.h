@@ -40,7 +40,6 @@ public:
 // Attributes
 public:
     Hashes::BtGuid          m_oGUID;
-	BOOL					m_bExchange;		// Exchange sources/other info (with extended client)
 	BOOL					m_bExtended;		// Extension Protocol support
 	CUploadTransferBT*		m_pUploadTransfer;
 	BOOL					m_bSeeder;
@@ -57,40 +56,58 @@ protected:
 	QWORD					m_nUtMetadataID;
 	QWORD					m_nUtMetadataSize;
 	QWORD					m_nUtPexID;
+	QWORD					m_nLtTexID;
+	CString					m_sLtTexTrackers;
+	QWORD					m_nSrcExchangeID;
 
 // Operations
 public:
 	virtual BOOL	Connect(CDownloadTransferBT* pDownloadTransfer);
 	virtual void	AttachTo(CConnection* pConnection);
 	virtual void	Close(UINT nError = 0);
-	void			Send(CBTPacket* pPacket, BOOL bRelease = TRUE);
-	inline BOOL		IsOnline() const throw() { return m_bOnline; }
+
+	inline BOOL IsOnline() const
+	{
+		return m_bOnline;
+	}
+
 	static CString	GetAzureusStyleUserAgent(LPBYTE pVendor, size_t nVendor);
 
+	BOOL			OnPacket(CBTPacket* pPacket);
+	void			SendExtendedHandshake();
+	BOOL			OnExtendedHandshake(CBTPacket* pPacket);
+	void			SendMetadataRequest(QWORD nPiece);
+	void			SendInfoRequest(QWORD nPiece);
+	BOOL			OnMetadataRequest(CBTPacket* pPacket);
+	void			SendUtPex(DWORD tConnectedAfter = 0);
+	BOOL			OnUtPex(CBTPacket* pPacket);
+	void			SendLtTex();
+	BOOL			OnLtTex(CBTPacket* pPacket);
+	void			SendHandshake(BOOL bPart1, BOOL bPart2);
+	BOOL			OnHandshake1();								// First part of handshake
+	BOOL			OnHandshake2();								// Second part - Peer ID
+	void			SendBeHandshake();							// Send Shareaza client handshake
+	BOOL			OnBeHandshake(CBTPacket* pPacket);			// Process Shareaza client handshake
+	void			SendSourceRequest();						// Send Shareaza client source request
+	BOOL			OnSourceRequest(CBTPacket* pPacket);		// Process Shareaza client source request
+	BOOL			OnDHTPort(CBTPacket* pPacket);
+	void			Choke();
+	void			UnChoke();
+	void			Interested();
+	void			NotInterested();
+	void			Request(DWORD nBlock, DWORD nOffset, DWORD nLength);
+	void			Cancel(DWORD nBlock, DWORD nOffset, DWORD nLength);
+	void			Have(DWORD nBlock);
+	void			Piece(DWORD nBlock, DWORD nOffset, DWORD nLength, LPCVOID pBuffer);
+	void			DetermineUserAgent();						// Figure out the other client name/version from the peer ID
+	CDownloadSource* GetSource() const;							// Get download transfer source
+
 protected:
+	void			Send(CBTPacket* pPacket, BOOL bRelease = TRUE);
+
 	virtual BOOL	OnRun();
 	virtual BOOL	OnConnected();
 	virtual void	OnDropped();
 	virtual BOOL	OnWrite();
 	virtual BOOL	OnRead();
-
-	void			SendHandshake(BOOL bPart1, BOOL bPart2);
-	void			SendExtendedHandshake();
-	void			SendMetadataRequest(QWORD nPiece);
-	void			SendInfoRequest(QWORD nPiece);
-	void			SendUtPex(DWORD tConnectedAfter = 0);
-	BOOL			OnHandshake1();								// First part of handshake
-	BOOL			OnHandshake2();								// Second part- Peer ID
-	//BOOL			OnNoHandshake2();							// If no peer ID is received
-	BOOL			OnOnline();
-	BOOL			OnPacket(CBTPacket* pPacket);
-	void			SendBeHandshake();							// Send extended client handshake
-	BOOL			OnBeHandshake(CBTPacket* pPacket);			// Process extended client handshake
-	BOOL			OnSourceRequest(CBTPacket* pPacket);
-	BOOL			OnDHTPort(CBTPacket* pPacket);
-	BOOL			OnExtended(CBTPacket* pPacket);
-	void			DetermineUserAgent();						// Figure out the other client name/version from the peer ID
-
-	// Get download transfer source
-	CDownloadSource* GetSource() const;
 };

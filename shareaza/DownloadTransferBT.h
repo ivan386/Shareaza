@@ -56,7 +56,6 @@ public:
 	BOOL	OnSourceResponse(CBTPacket* pPacket);
 	void	SendFinishedBlock(DWORD nBlock);
 protected:
-	void	Send(CBTPacket* pPacket, BOOL bRelease = TRUE);
 	void	ShowInterest();
 
 // Overides
