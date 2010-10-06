@@ -124,21 +124,33 @@ void CBTPacket::ToBuffer(CBuffer* pBuffer, bool /*bTCP*/) const
 	else
 	{
 		// Full packet
+
+		// Reserve memory for packet length field
 		DWORD nZero = 0;
 		pBuffer->Add( &nZero, 4 );
 		DWORD nOldLength = pBuffer->m_nLength;
-		DWORD* pLength = (DWORD*)( pBuffer->m_pBuffer + pBuffer->m_nLength - 4 );
+
+		// Add packet type
 		pBuffer->Add( &m_nType, 1 );
+
 		if ( m_nType == BT_PACKET_EXTENSION )
 		{
+			// Add packet extension
 			pBuffer->Add( &m_nExtension, 1 );
 		}
+
+		// Add bencoded data
 		if ( HasEncodedData() )
 		{
 			m_pNode->Encode( pBuffer );
 		}
+
+		// Add payload
 		pBuffer->Add( m_pBuffer, m_nLength );
-		*pLength = swapEndianess( pBuffer->m_nLength - nOldLength );
+
+		// Set packet total length
+		*(DWORD*)( pBuffer->m_pBuffer + nOldLength - 4 ) =
+			swapEndianess( pBuffer->m_nLength - nOldLength );
 	}
 
 	ASSERT( pBuffer->m_nLength );
@@ -262,6 +274,15 @@ CString CBTPacket::GetType() const
 		default:
 			sType.Format( _T("Ext %02u"), m_nExtension );
 		}
+		break;
+	case BT_PACKET_HANDSHAKE:
+		sType = _T("ExtHandshake");
+		break;
+	case BT_PACKET_SOURCE_REQUEST:
+		sType = _T("SrcRequest");
+		break;
+	case BT_PACKET_SOURCE_RESPONSE:
+		sType = _T("SrcResponse");
 		break;
 	case BT_PACKET_KEEPALIVE:
 		sType = _T("Keep-Alive");

@@ -39,9 +39,9 @@ class CBENode;
 #define BT_PACKET_PIECE				7
 #define BT_PACKET_CANCEL			8
 #define BT_PACKET_DHT_PORT			9
-#define BT_PACKET_EXTENSION			20 // Extension Protocol - http://www.bittorrent.org/beps/bep_0010.html
+#define BT_PACKET_EXTENSION			20	// Extension Protocol - http://www.bittorrent.org/beps/bep_0010.html
 
-#define BT_PACKET_HANDSHAKE			128
+#define BT_PACKET_HANDSHAKE			128	// Shareaza Extension Protocol
 #define BT_PACKET_SOURCE_REQUEST	129
 #define BT_PACKET_SOURCE_RESPONSE	130
 
@@ -55,6 +55,10 @@ class CBENode;
 #define BT_EXTENSION_LT_TEX			3	// Tracker exchange extension - http://www.bittorrent.org/beps/bep_0028.html
 
 #define BT_EXTENSION_NOP			255	// Packet without standard header i.e. bencoded data only
+
+// Packet extensions (for BT_PACKET_HANDSHAKE)
+
+#define BT_HANDSHAKE_SOURCE			2	// Source Exchange extension
 
 // Packet metadata type (for EXTENDED_PACKET_UT_METADATA)
 
