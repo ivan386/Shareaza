@@ -52,26 +52,26 @@ INT_PTR CALLBACK ExtractProc(HWND hwndDlg, UINT msg, WPARAM wParam, LPARAM lPara
 				SendDlgItemMessage(hwndDlg,IDC_NAME,WM_SETFONT,(WPARAM)hFont,0);
 			}
 			if (szName) {
-				TCHAR buf[256], tbuf[256];
-				_snwprintf(buf, sizeof(buf), L"%s %s", szName, szVersion?szVersion:L"");
-				_snwprintf(tbuf, sizeof(tbuf), L"%s - %s", buf, skinType? SKIN_LANG_TITLE : SKIN_SKIN_TITLE);
+				TCHAR buf[MAX_PATH], tbuf[MAX_PATH];
+				_snwprintf(buf, MAX_PATH, L"%s %s", szName, szVersion?szVersion:L"");
+				_snwprintf(tbuf, MAX_PATH, L"%s - %s", buf, skinType? SKIN_LANG_TITLE : SKIN_SKIN_TITLE);
 				SetDlgItemText(hwndDlg, IDC_NAME, buf);
 				SetWindowText(hwndDlg, tbuf);
 			}
 			if (szAuthor) {
-				TCHAR buf[256];
-				_snwprintf(buf, sizeof(buf), L"By %s", szAuthor);
+				TCHAR buf[MAX_PATH];
+				_snwprintf(buf, MAX_PATH, L"By %s", szAuthor);
 				SetDlgItemText(hwndDlg, IDC_AUTH, buf);
 			}
 			if ( szUpdates && wcscmp( szAuthor, szUpdates ) != 0 ) {
-				TCHAR updbuf[256], buf[256];
+				TCHAR updbuf[MAX_PATH], buf[MAX_PATH];
 				if (szAuthor) {
-					_snwprintf(updbuf, sizeof(updbuf), L"; Updated by %s", szUpdates);
-					GetDlgItemText(hwndDlg, IDC_AUTH, buf, 256 );
-					wcsncat( buf, updbuf, 256 - wcslen(buf) );
+					_snwprintf(updbuf, MAX_PATH, L"; Updated by %s", szUpdates);
+					GetDlgItemText(hwndDlg, IDC_AUTH, buf, MAX_PATH );
+					wcsncat( buf, updbuf, MAX_PATH - wcslen(buf) );
 				}
 				else
-					_snwprintf(buf, sizeof(buf), L"Updated by %s", szUpdates);
+					_snwprintf(buf, MAX_PATH, L"Updated by %s", szUpdates);
 				SetDlgItemText(hwndDlg, IDC_AUTH, buf);
 			}
 			SetWindowLongPtr( GetDlgItem(hwndDlg,IDC_WHITERECT), GWL_STYLE, WS_VISIBLE|WS_CHILD|SS_LEFT|SS_OWNERDRAW );

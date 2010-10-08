@@ -452,8 +452,8 @@ BOOL CTorrentBuilder::ProcessFile(DWORD nFile, LPCTSTR pszFile)
 		DWORD nLimit	= min( m_nBuffer, m_nPieceSize - m_nPieceUsed );
 		DWORD nRead		= ( nSize > (QWORD)nLimit ) ? nLimit : (DWORD)nSize;
 		
-		ReadFile( hFile, m_pBuffer, nRead, &nRead, NULL );
-		if ( nRead == 0 ) break;
+		if ( ! ReadFile( hFile, m_pBuffer, nRead, &nRead, NULL ) || nRead == 0 )
+			break;
 		
 		nSize -= (QWORD)nRead;
 		m_nTotalPos += (QWORD)nRead;

@@ -145,28 +145,33 @@ void CPackagePage::OnAddFile()
 		OFN_HIDEREADONLY|OFN_ALLOWMULTISELECT|OFN_ENABLESIZING,
 		_T("All Files|*.*||"), this );
 	
-	TCHAR szFiles[81920] = { 0 };
+	const DWORD nFilesSize = 81920;
+	LPTSTR szFiles = new TCHAR [ nFilesSize ];
+	ZeroMemory( szFiles, nFilesSize * sizeof( TCHAR ) );
 	dlg.m_ofn.lpstrFile	= szFiles;
-	dlg.m_ofn.nMaxFile	= 81920;
+	dlg.m_ofn.nMaxFile	= nFilesSize;
 	
-	if ( dlg.DoModal() != IDOK ) return;
+	if ( dlg.DoModal() == IDOK )
+	{	
+		CWaitCursor wc;
+		CString strFolder	= szFiles;
+		LPCTSTR pszFile		= szFiles + strFolder.GetLength() + 1;
 	
-	CWaitCursor wc;
-	CString strFolder	= CString( szFiles );
-	LPCTSTR pszFile		= szFiles + strFolder.GetLength() + 1;
-	
-	if ( *pszFile )
-	{
-		for ( strFolder += '\\' ; *pszFile ; )
+		if ( *pszFile )
 		{
-			AddFile( strFolder + pszFile );
-			pszFile += _tcslen( pszFile ) + 1;
+			for ( strFolder += '\\' ; *pszFile ; )
+			{
+				AddFile( strFolder + pszFile );
+				pszFile += _tcslen( pszFile ) + 1;
+			}
+		}
+		else
+		{
+			AddFile( strFolder );
 		}
 	}
-	else
-	{
-		AddFile( strFolder );
-	}
+
+	delete [] szFiles;
 }
 
 void CPackagePage::OnRemoveFile() 

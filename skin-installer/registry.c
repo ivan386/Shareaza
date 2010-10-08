@@ -19,9 +19,9 @@ LSTATUS CreateSkinKeys()
 	TCHAR fullpath[MAX_PATH];
 	TCHAR imagpath[MAX_PATH];
 
-	GetModuleFileName(NULL,filename,sizeof(filename));
-	_snwprintf(fullpath, sizeof(fullpath), L"\"%s\" \"%%1\"", filename);
-	_snwprintf(imagpath, sizeof(imagpath), L"%s,0", filename);
+	GetModuleFileName(NULL,filename,MAX_PATH);
+	_snwprintf(fullpath, MAX_PATH, L"\"%s\" \"%%1\"", filename);
+	_snwprintf(imagpath, MAX_PATH, L"%s,0", filename);
 
 	rtn = CreateHKCRKey(L"SOFTWARE\\Classes\\.sks", L"", L"Shareaza.SkinFile");
 	if ( rtn != ERROR_SUCCESS ) return rtn;

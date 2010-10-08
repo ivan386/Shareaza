@@ -252,9 +252,8 @@ int ExtractSkin(LPTSTR pszFile, HWND hwndDlg)
         }
 		SendDlgItemMessage(hwndDlg, IDC_PROGRESS, PBM_STEPIT, 0, 0);
 		{
-			TCHAR pb[512];
-
-			_snwprintf(pb, sizeof(pb), L"Installing (%s)...", (TCHAR*)filename_withoutpath);
+			TCHAR pb[MAX_PATH];
+			_snwprintf(pb, MAX_PATH, L"Installing (%s)...", (TCHAR*)filename_withoutpath);
 			SetWindowText(GetDlgItem(hwndDlg, IDC_STATUS), pb);
 		}
 		if (err!=UNZ_OK) {
@@ -336,7 +335,7 @@ LPCTSTR GetUnicodeString(char* pszString)
 	nLen = MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)pszString, (DWORD)strlen(pszString), NULL, 0 );
 	if ( nLen == 0 ) return NULL;
 	ret = (TCHAR*)malloc( ( nLen + 1) * sizeof(TCHAR) );
-	MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)pszString, (DWORD)strlen(pszString), ret, nLen * sizeof(TCHAR) );
+	MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)pszString, (DWORD)strlen(pszString), ret, nLen );
 	ret[nLen] = '\0';
 	return ret;
 }

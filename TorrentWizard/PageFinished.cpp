@@ -321,7 +321,7 @@ void CFinishedPage::OnTorrentCopy()
 			EmptyClipboard();
 			SetClipboardData( CF_TEXT, hMem );
 			CloseClipboard();
-			delete pStr;
+			delete [] pStr;
 		}
 	}
 }
