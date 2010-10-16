@@ -251,6 +251,7 @@ public:
 		bool		ED2K;
 		bool		Piolet;
 		bool		Torrent;
+		bool		DC;
 	} Web;
 
 	struct sConnection

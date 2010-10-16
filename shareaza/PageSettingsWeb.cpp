@@ -56,6 +56,7 @@ CWebSettingsPage::CWebSettingsPage() : CSettingsPage( CWebSettingsPage::IDD )
 	m_bWebHook = FALSE;
 	m_bUriPiolet = FALSE;
 	m_bUriTorrent = FALSE;
+	m_bUriDC = FALSE;
 	//}}AFX_DATA_INIT
 }
 
@@ -71,6 +72,7 @@ void CWebSettingsPage::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_EXT_ADD, m_wndExtAdd);
 	DDX_Control(pDX, IDC_EXT_LIST, m_wndExtensions);
 	DDX_Check(pDX, IDC_URI_MAGNET, m_bUriMagnet);
+	DDX_Check(pDX, IDC_URI_DC, m_bUriDC);
 	DDX_Check(pDX, IDC_URI_GNUTELLA, m_bUriGnutella);
 	DDX_Check(pDX, IDC_URI_ED2K, m_bUriED2K);
 	DDX_Check(pDX, IDC_WEB_HOOK, m_bWebHook);
@@ -91,6 +93,7 @@ BOOL CWebSettingsPage::OnInitDialog()
 	m_bUriED2K		= Settings.Web.ED2K;
 	m_bUriPiolet	= Settings.Web.Piolet;
 	m_bUriTorrent	= Settings.Web.Torrent;
+	m_bUriDC		= Settings.Web.DC;
 
 	m_bWebHook		= Settings.Downloads.WebHookEnable;
 
@@ -157,6 +160,7 @@ void CWebSettingsPage::OnOK()
 	Settings.Web.ED2K		= m_bUriED2K != FALSE;
 	Settings.Web.Piolet		= m_bUriPiolet != FALSE;
 	Settings.Web.Torrent	= m_bUriTorrent != FALSE;
+	Settings.Web.DC			= m_bUriDC != FALSE;
 
 	Settings.Downloads.WebHookEnable = m_bWebHook != FALSE;
 

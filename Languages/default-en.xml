@@ -3550,7 +3550,7 @@
 			<control caption="Port:"/>
 			<control/>
 		</dialog>
-		<dialog name="CWebSettingsPage" cookie="BuStBuBuBuBuBuBuBuCoBuBuSt" caption="Web">
+		<dialog name="CWebSettingsPage" cookie="BuStBuBuBuBuBuBuBuBuCoBuBuSt" caption="Web">
 			<control caption="_Peer to Peer Link Handling:"/>
 			<control caption="Use Shareaza to open these types of links:"/>
 			<control caption="Magnet ( magnet: )"/>
@@ -3558,6 +3558,7 @@
 			<control caption="eDonkey ( ed2k: )"/>
 			<control caption="Piolet ( mp2p: )"/>
 			<control caption="BitTorrent ( .torrent )"/>
+			<control caption="DC++ ( dchub: )"/>
 			<control caption="_Download Manager:"/>
 			<control caption="Use Shareaza to manage all my web downloads:"/>
 			<control/>

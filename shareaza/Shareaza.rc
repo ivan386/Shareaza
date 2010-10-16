@@ -1162,6 +1162,7 @@ BEGIN
     CONTROL         "eDonkey ( ed2k: )",IDC_URI_ED2K,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,20,65,105,12
     CONTROL         "Piolet ( mp2p: )",IDC_URI_PIOLET,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,150,35,105,12
     CONTROL         "BitTorrent ( .torrent )",IDC_URI_TORRENT,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,150,50,105,12
+    CONTROL         "DC++ ( dchub: )",IDC_URI_DC,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,150,65,105,12
     GROUPBOX        "&Download Manager:",IDC_STATIC,5,95,270,120,WS_GROUP
     CONTROL         "Use Shareaza to manage all my web downloads:",IDC_WEB_HOOK,
                     "Button",BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP,15,110,245,15

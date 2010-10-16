@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2010-09-05 06:24+0000\n"
+"POT-Creation-Date: 2010-10-16 05:17+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: (translation author)\n"
 "Language-Team: Shareaza Development Team\n"
@@ -1172,7 +1172,7 @@ msgstr ""
 msgid "_Shared"
 msgstr ""
 
-#: clibrarytree.physical.basic;item;id_library_remove clibrarytree.physical;item;id_library_remove cmedialist;item;id_media_remove csecuritywnd;item;id_security_remove cschedulerwnd;item;id_scheduler_remove cdiscoverywnd;item;id_discovery_remove clibrarysettingspage;control;19 clibrarysettingspage;control;23 cmediasettingspage;control;8 cwebsettingspage;control;12 cwizardsharepage;control;6 cavatarprofilepage;control;6 cfilesourcespage;control;6 cgraphlistdlg;control;4 cgraphitemdlg;control;12 csharemanagerdlg;control;4 cdownloadgroupdlg;control;8
+#: clibrarytree.physical.basic;item;id_library_remove clibrarytree.physical;item;id_library_remove cmedialist;item;id_media_remove csecuritywnd;item;id_security_remove cschedulerwnd;item;id_scheduler_remove cdiscoverywnd;item;id_discovery_remove clibrarysettingspage;control;19 clibrarysettingspage;control;23 cmediasettingspage;control;8 cwebsettingspage;control;13 cwizardsharepage;control;6 cavatarprofilepage;control;6 cfilesourcespage;control;6 cgraphlistdlg;control;4 cgraphitemdlg;control;12 csharemanagerdlg;control;4 cdownloadgroupdlg;control;8
 msgid "_Remove"
 msgstr ""
 
@@ -6740,7 +6740,7 @@ msgstr ""
 msgid "_Safe to Open:"
 msgstr ""
 
-#: clibrarysettingspage;control;18 clibrarysettingspage;control;22 cmediasettingspage;control;7 cwebsettingspage;control;11 cfilesourcespage;control;5 cdownloadgroupdlg;control;7
+#: clibrarysettingspage;control;18 clibrarysettingspage;control;22 cmediasettingspage;control;7 cwebsettingspage;control;12 cfilesourcespage;control;5 cdownloadgroupdlg;control;7
 msgid "_Add"
 msgstr ""
 
@@ -6929,14 +6929,18 @@ msgid "BitTorrent ( .torrent )"
 msgstr ""
 
 #: cwebsettingspage;control;8
-msgid "_Download Manager:"
+msgid "DC++ ( dchub: )"
 msgstr ""
 
 #: cwebsettingspage;control;9
+msgid "_Download Manager:"
+msgstr ""
+
+#: cwebsettingspage;control;10
 msgid "Use Shareaza to manage all my web downloads:"
 msgstr ""
 
-#: cwebsettingspage;control;13
+#: cwebsettingspage;control;14
 msgid "The download manager plugin will only attempt to download file types listed here.  Other file types will be handled by your web browser.  Shareaza must be running to manage downloads."
 msgstr ""
 

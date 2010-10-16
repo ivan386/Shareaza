@@ -47,6 +47,7 @@ public:
 	BOOL	m_bWebHook;
 	BOOL	m_bUriPiolet;
 	BOOL	m_bUriTorrent;
+	BOOL	m_bUriDC;
 	//}}AFX_DATA
 
 // Overrides

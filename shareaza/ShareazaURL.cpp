@@ -1246,6 +1246,17 @@ void CShareazaURL::Register(BOOL bRegister, BOOL bOnStartup)
 		UnregisterShellType( _T("magnet") );
 	}
 
+	if ( Settings.Web.DC && bRegister )
+	{
+		RegisterShellType( NULL, _T("dchub"), _T("URL:DirectConnect Protocol"), NULL, _T("Shareaza"), _T("URL"), IDR_MAINFRAME );
+		RegisterShellType( NULL, _T("dcfile"), _T("URL:DirectConnect Protocol"), NULL, _T("Shareaza"), _T("URL"), IDR_MAINFRAME );
+	}
+	else
+	{
+		UnregisterShellType( _T("dchub") );
+		UnregisterShellType( _T("dcfile") );
+	}
+
 	if ( Settings.Web.Foxy && bRegister )
 	{
 		RegisterShellType( NULL, _T("foxy"), _T("URL:Foxy Protocol"), NULL, _T("Shareaza"), _T("URL"), IDR_MAINFRAME );

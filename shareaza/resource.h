@@ -863,6 +863,7 @@
 #define IDC_RADIO_VP_ENABLE             1604
 #define IDC_EDIT_VP_MINUTES             1606
 #define IDC_STATIC_MINUTES              1607
+#define IDC_URI_DC                      1608
 #define IDS_FILTER_DELETE_CONFIRM       7000
 #define IDS_SCHEMAS                     7001
 #define IDS_MULTIPLE_VALUES             7002
@@ -1983,7 +1984,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        344
 #define _APS_NEXT_COMMAND_VALUE         33328
-#define _APS_NEXT_CONTROL_VALUE         1608
+#define _APS_NEXT_CONTROL_VALUE         1609
 #define _APS_NEXT_SYMED_VALUE           104
 #endif
 #endif

@@ -4029,6 +4029,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Res\in.ico"
+				>
+			</File>
+			<File
 				RelativePath="Res\irc.ico"
 				>
 			</File>
@@ -4102,6 +4106,46 @@
 			</File>
 			<File
 				RelativePath="Res\Neighbours.ico"
+				>
+			</File>
+			<File
+				RelativePath=".\Res\Network_BT.ico"
+				>
+			</File>
+			<File
+				RelativePath=".\Res\Network_DC.ico"
+				>
+			</File>
+			<File
+				RelativePath=".\Res\Network_ED2K.ico"
+				>
+			</File>
+			<File
+				RelativePath=".\Res\Network_FTP.ico"
+				>
+			</File>
+			<File
+				RelativePath=".\Res\Network_G1.ico"
+				>
+			</File>
+			<File
+				RelativePath=".\Res\Network_G2.ico"
+				>
+			</File>
+			<File
+				RelativePath=".\Res\Network_HTTP.ico"
+				>
+			</File>
+			<File
+				RelativePath=".\Res\Network_KAD.ico"
+				>
+			</File>
+			<File
+				RelativePath=".\Res\Network_NULL.ico"
+				>
+			</File>
+			<File
+				RelativePath=".\Res\out.ico"
 				>
 			</File>
 			<File

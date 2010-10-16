@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2010-09-05 07:12+0000\n"
+"POT-Creation-Date: 2010-10-16 05:17+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -1489,7 +1489,7 @@ msgstr "_Общий доступ"
 #: cschedulerwnd;item;id_scheduler_remove
 #: cdiscoverywnd;item;id_discovery_remove clibrarysettingspage;control;19
 #: clibrarysettingspage;control;23 cmediasettingspage;control;8
-#: cwebsettingspage;control;12 cwizardsharepage;control;6
+#: cwebsettingspage;control;13 cwizardsharepage;control;6
 #: cavatarprofilepage;control;6 cfilesourcespage;control;6
 #: cgraphlistdlg;control;4 cgraphitemdlg;control;12 csharemanagerdlg;control;4
 #: cdownloadgroupdlg;control;8
@@ -7608,7 +7608,7 @@ msgid "_Safe to Open:"
 msgstr "_Не опасно открывать:"
 
 #: clibrarysettingspage;control;18 clibrarysettingspage;control;22
-#: cmediasettingspage;control;7 cwebsettingspage;control;11
+#: cmediasettingspage;control;7 cwebsettingspage;control;12
 #: cfilesourcespage;control;5 cdownloadgroupdlg;control;7
 msgid "_Add"
 msgstr "_Внести"
@@ -7798,14 +7798,18 @@ msgid "BitTorrent ( .torrent )"
 msgstr "BitTorrent ( .torrent )"
 
 #: cwebsettingspage;control;8
+msgid "DC++ ( dchub: )"
+msgstr "DC++ ( dchub: )"
+
+#: cwebsettingspage;control;9
 msgid "_Download Manager:"
 msgstr "_Менеджер загрузок:"
 
-#: cwebsettingspage;control;9
+#: cwebsettingspage;control;10
 msgid "Use Shareaza to manage all my web downloads:"
 msgstr "Обрабатывать Shareaz'ой все мои веб загрузки:"
 
-#: cwebsettingspage;control;13
+#: cwebsettingspage;control;14
 msgid "The download manager plugin will only attempt to download file types listed here.  Other file types will be handled by your web browser.  Shareaza must be running to manage downloads."
 msgstr "Модуль менеджера загрузок предложит загрузить только указанные здесь типы файлов.  Остальные типы файлов будут обработанны вашим обозревателем.  Shareaza должна быть запущена для перехвата загрузок."
 
@@ -10064,10 +10068,22 @@ msgstr "Комментарии"
 #~ msgstr "Соедин. с полной скоростью"
 #~ msgid "Help"
 #~ msgstr "Справка"
-#~ msgid "The scheduler is designed to allow you to set times when Shareaza will connect and download files. {n}{n}{n}Note: If you have Shareaza open while the scheduler is active, you may see it changing settings- This is normal!"
-#~ msgstr "Планировщик создан для того, чтобы позволить Вам установить, когда Shareaza должна соединиться и начать загрузку файлов.{n}Замечание: Если Вы открыли Shareaza во время работы планировщика, Вы можете заметить, что установки меняются - это нормально!"
-#~ msgid "Would you like to download this file?\\n\\n\"%s\"\\n\\nChoose Cancel to stop any further prompts."
-#~ msgstr "Хотите ли Вы загрузить этот файл?\\n\\n\\n\\n«%s»\\n\\n\\n\\nВыберите «Cancel», чтобы не тревожить об этом позже."
+#~ msgid ""
+#~ "The scheduler is designed to allow you to set times when Shareaza will "
+#~ "connect and download files. {n}{n}{n}Note: If you have Shareaza open "
+#~ "while the scheduler is active, you may see it changing settings- This is "
+#~ "normal!"
+#~ msgstr ""
+#~ "Планировщик создан для того, чтобы позволить Вам установить, когда "
+#~ "Shareaza должна соединиться и начать загрузку файлов.{n}Замечание: Если "
+#~ "Вы открыли Shareaza во время работы планировщика, Вы можете заметить, что "
+#~ "установки меняются - это нормально!"
+#~ msgid ""
+#~ "Would you like to download this file?\\n\\n\"%s\"\\n\\nChoose Cancel to "
+#~ "stop any further prompts."
+#~ msgstr ""
+#~ "Хотите ли Вы загрузить этот файл?\\n\\n\\n\\n«%s»\\n\\n\\n\\nВыберите "
+#~ "«Cancel», чтобы не тревожить об этом позже."
 #~ msgid "_Web File Info"
 #~ msgstr "_Сервис"
 #~ msgid "English"

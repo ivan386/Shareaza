@@ -3532,7 +3532,7 @@
 			<control caption="Порт:"/>
 			<control/>
 		</dialog>
-		<dialog name="CWebSettingsPage" cookie="BuStBuBuBuBuBuBuBuCoBuBuSt" caption="Веб">
+		<dialog name="CWebSettingsPage" cookie="BuStBuBuBuBuBuBuBuBuCoBuBuSt" caption="Веб">
 			<control caption="Обработка _пиринговых ссылок:"/>
 			<control caption="Использовать Shareaza для перехвата следующих типов ссылок:"/>
 			<control caption="Magnet ( magnet: )"/>
@@ -3540,6 +3540,7 @@
 			<control caption="eDonkey ( ed2k: )"/>
 			<control caption="Piolet ( mp2p: )"/>
 			<control caption="BitTorrent ( .torrent )"/>
+			<control caption="DC++ ( dchub: )"/>
 			<control caption="_Менеджер загрузок:"/>
 			<control caption="Обрабатывать Shareaz'ой все мои веб загрузки:"/>
 			<control/>

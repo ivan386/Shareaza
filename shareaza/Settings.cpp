@@ -261,6 +261,7 @@ void CSettings::Load()
 	Add( _T("Web"), _T("Foxy"), &Web.Foxy, true );
 	Add( _T("Web"), _T("Piolet"), &Web.Piolet, true );
 	Add( _T("Web"), _T("Torrent"), &Web.Torrent, true );
+	Add( _T("Web"), _T("DC"), &Web.DC, true );
 
 	Add( _T("Connection"), _T("AutoConnect"), &Connection.AutoConnect, true );
 	Add( _T("Connection"), _T("ConnectThrottle"), &Connection.ConnectThrottle, 250, 1, 0, 5000, _T(" ms") );
