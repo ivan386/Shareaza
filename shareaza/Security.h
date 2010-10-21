@@ -1,7 +1,7 @@
 //
 // Security.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -21,9 +21,9 @@
 
 #pragma once
 
-#include "QuerySearch.h"
-
+class CShareazaFile;
 class CSecureRule;
+class CQuerySearch;
 class CXMLElement;
 
 
@@ -41,7 +41,7 @@ class CSecurity
 // Construction
 public:
 	CSecurity();
-	virtual ~CSecurity();
+	~CSecurity();
 
 // Attributes
 public:
@@ -86,8 +86,7 @@ public:
 	BOOL			IsDenied(const IN_ADDR* pAddress);
 	BOOL			IsDenied(LPCTSTR pszContent);
 	BOOL			IsDenied(const CShareazaFile* pFile);
-	BOOL			IsDenied(CQuerySearch::const_iterator itStart, 
-							 CQuerySearch::const_iterator itEnd, LPCTSTR pszContent);
+	BOOL			IsDenied(const CQuerySearch* pQuery, const CString& strContent);
 	void			Expire();
 	BOOL			Load();
 	BOOL			Save();
@@ -95,7 +94,7 @@ public:
 
 	// Checks the user agent to see if it's a GPL breaker, or other trouble-maker
 	// We don't ban them, but also don't offer leaf slots to them.
-	BOOL			IsClientBad(const CString& sUserAgent);
+	BOOL			IsClientBad(const CString& sUserAgent) const;
 
 	// Checks the user agent to see if it's a leecher client, or other banned client
 	// Test new releases, and remove block if/when they are fixed.
@@ -103,10 +102,10 @@ public:
 
 	// Check the other computer's software title against our list of programs
 	// not to talk to
-	BOOL			IsAgentBlocked(const CString& sUserAgent);
+	BOOL			IsAgentBlocked(const CString& sUserAgent) const;
 	
 	// Check the evil's G1/G2 vendor code
-	BOOL			IsVendorBlocked(const CString& sVendor);
+	BOOL			IsVendorBlocked(const CString& sVendor) const;
 
 protected:
 	void			BanHelper(const IN_ADDR* pAddress, const CShareazaFile* pFile, int nBanLength, BOOL bMessage, LPCTSTR szComment);
@@ -122,7 +121,7 @@ public:
 	CSecureRule(BOOL bCreate = TRUE);
 	CSecureRule(const CSecureRule& pRule);
 	CSecureRule& operator=(const CSecureRule& pRule);
-	virtual ~CSecureRule();
+	~CSecureRule();
 
 	typedef enum { srAddress, srContentAny, srContentAll, srContentRegExp } RuleType;
 	enum { srNull, srAccept, srDeny };
@@ -140,21 +139,20 @@ public:
 	TCHAR*		m_pContent;
 	DWORD		m_nContentLength;
 
-	void	Remove();
-	void	Reset();
-	void	MaskFix();
-	BOOL	IsExpired(DWORD nNow, BOOL bSession = FALSE) const;
-	BOOL	Match(const IN_ADDR* pAddress) const;
-	BOOL	Match(LPCTSTR pszContent) const;
-	BOOL	Match(const CShareazaFile* pFile) const;
-	BOOL	Match(CQuerySearch::const_iterator itStart, 
-				  CQuerySearch::const_iterator itEnd, LPCTSTR pszContent) const;
-	void	SetContentWords(const CString& strContent);
-	CString	GetContentWords();
+	void			Remove();
+	void			Reset();
+	void			MaskFix();
+	BOOL			IsExpired(DWORD nNow, BOOL bSession = FALSE) const;
+	BOOL			Match(const IN_ADDR* pAddress) const;
+	BOOL			Match(LPCTSTR pszContent) const;
+	BOOL			Match(const CShareazaFile* pFile) const;
+	BOOL			Match(const CQuerySearch* pQuery, const CString& strContent) const;
+	void			SetContentWords(const CString& strContent);
+	CString			GetContentWords() const;
 	void			Serialize(CArchive& ar, int nVersion);
 	CXMLElement*	ToXML();
 	BOOL			FromXML(CXMLElement* pXML);
-	CString			ToGnucleusString();
+	CString			ToGnucleusString() const;
 	BOOL			FromGnucleusString(CString& str);
 };
 
@@ -164,24 +162,24 @@ class CAdultFilter
 // Construction
 public:
 	CAdultFilter();
-	virtual ~CAdultFilter();
+	~CAdultFilter();
 
 // Attributes
 private:
 	LPTSTR		m_pszBlockedWords;			// Definitely adult content
 	LPTSTR		m_pszDubiousWords;			// Possibly adult content
-	LPTSTR		m_pszChildWords;			// Words related to child ponography
+	LPTSTR		m_pszChildWords;			// Words related to child pornography
 
 // Operations
 public:
 	void		Load();
-	BOOL		IsHitAdult(LPCTSTR);		// Does this search result have adult content?
-	BOOL		IsSearchFiltered(LPCTSTR);	// Check if search is filtered
-	BOOL		IsChatFiltered(LPCTSTR);	// Check filter for chat
-	BOOL		Censor(TCHAR*);				// Censor (remove) bad words from a string
-	BOOL		IsChildPornography(LPCTSTR);
+	BOOL		IsHitAdult(LPCTSTR) const;		// Does this search result have adult content?
+	BOOL		IsSearchFiltered(LPCTSTR) const;// Check if search is filtered
+	BOOL		IsChatFiltered(LPCTSTR) const;	// Check filter for chat
+	BOOL		Censor(TCHAR*) const;			// Censor (remove) bad words from a string
+	BOOL		IsChildPornography(LPCTSTR) const;
 private:
-	BOOL		IsFiltered(LPCTSTR);
+	BOOL		IsFiltered(LPCTSTR) const;
 };
 
 // A message filter class for chat messages. (Spam protection)
@@ -190,7 +188,7 @@ class CMessageFilter
 // Construction
 public:
 	CMessageFilter();
-	virtual ~CMessageFilter();
+	~CMessageFilter();
 
 // Attributes
 private:

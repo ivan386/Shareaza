@@ -896,7 +896,7 @@ BOOL CMatchList::FilterHit(CQueryHit* pHit)
 	if ( pParent && pParent->IsKindOf( RUNTIME_CLASS( CSearchWnd ) ) )
 	{
 		CQuerySearchPtr pQuery = static_cast< CSearchWnd* >( pParent )->GetLastSearch();
-		if ( pQuery && Security.IsDenied( pQuery->begin(), pQuery->end(), pHit->m_sName ) )
+		if ( pQuery && Security.IsDenied( pQuery, pHit->m_sName ) )
 			return FALSE;
 	}
 

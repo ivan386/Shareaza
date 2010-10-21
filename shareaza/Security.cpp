@@ -1,7 +1,7 @@
 //
 // Security.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -21,9 +21,11 @@
 
 #include "StdAfx.h"
 #include "Shareaza.h"
+#include "Buffer.h"
 #include "Settings.h"
 #include "Security.h"
-#include "Buffer.h"
+#include "ShareazaFile.h"
+#include "QuerySearch.h"
 #include "XML.h"
 
 #ifdef _DEBUG
@@ -426,8 +428,7 @@ BOOL CSecurity::IsDenied(const CShareazaFile* pFile)
 	return m_bDenyPolicy;
 }
 
-BOOL CSecurity::IsDenied(CQuerySearch::const_iterator itStart, CQuerySearch::const_iterator itEnd, 
-						 LPCTSTR pszContent)
+BOOL CSecurity::IsDenied(const CQuerySearch* pQuery, const CString& strContent)
 {
 	CQuickLock oLock( m_pSection );
 
@@ -443,7 +444,7 @@ BOOL CSecurity::IsDenied(CQuerySearch::const_iterator itStart, CQuerySearch::con
 			m_pRules.RemoveAt( posLast );
 			delete pRule;
 		}
-		else if ( pRule->Match( itStart, itEnd, pszContent ) )
+		else if ( pRule->Match( pQuery, strContent ) )
 		{
 			pRule->m_nToday ++;
 			pRule->m_nEver ++;
@@ -727,7 +728,7 @@ BOOL CSecurity::Import(LPCTSTR pszFile)
 	return bResult;
 }
 
-BOOL CSecurity::IsClientBad(const CString& sUserAgent)
+BOOL CSecurity::IsClientBad(const CString& sUserAgent) const
 {
 	// No user agent- assume bad
 	if ( sUserAgent.IsEmpty() )							return TRUE; // They allowed to connect but no searches were performed
@@ -840,11 +841,10 @@ BOOL CSecurity::IsClientBanned(const CString& sUserAgent)
 	return IsDenied( sUserAgent );
 }
 
-BOOL CSecurity::IsAgentBlocked(const CString& sUserAgent)
+BOOL CSecurity::IsAgentBlocked(const CString& sUserAgent) const
 {
 	// The remote computer didn't send a "User-Agent", or it sent whitespace
-	if ( sUserAgent.IsEmpty() ||
-		CString( sUserAgent ).Trim().IsEmpty() )					return TRUE;
+	if ( sUserAgent.IsEmpty() )										return TRUE;
 
 	// Loop through the list of programs to block
 	for ( string_set::const_iterator i = Settings.Uploads.BlockAgents.begin() ;
@@ -857,11 +857,11 @@ BOOL CSecurity::IsAgentBlocked(const CString& sUserAgent)
 	return FALSE;
 }
 
-BOOL CSecurity::IsVendorBlocked(const CString& sVendor)
+BOOL CSecurity::IsVendorBlocked(const CString& sVendor) const
 {
 	// foxy - leecher client. (Tested, does not upload)
 	// having something like Authentication which is not defined on specification
-	if ( sVendor.CompareNoCase( _T("foxy") ) == 0 )					return TRUE;
+	if ( _tcsistr( sVendor, _T("foxy") ) )							return TRUE;
 
 	// Allow it
 	return FALSE;
@@ -1028,82 +1028,103 @@ BOOL CSecureRule::Match(const CShareazaFile* pFile) const
 	return FALSE;
 }
 
-BOOL CSecureRule::Match(CQuerySearch::const_iterator itStart, 
-						CQuerySearch::const_iterator itEnd, LPCTSTR pszContent) const
+BOOL CSecureRule::Match(const CQuerySearch* pQuery, const CString& strContent) const
 {
-	if ( m_nType == srContentRegExp && pszContent && m_pContent )
+	if ( m_nType != srContentRegExp || ! m_pContent )
+		return FALSE;
+
+	// Build a regular expression filter from the search query words.
+	// Returns an empty string if not applied or if the filter was invalid.
+	//
+	// Substitutes:
+	// <_> - inserts all query keywords;
+	// <1>..<9> - inserts query keyword number 1..9;
+	// <> - inserts next query keyword.
+	//
+	// For example regular expression:
+	//	.*(<2><1>)|(<_>).*
+	// for "music mp3" query will be converted to:
+	//	.*(mp3\s*music\s*)|(music\s*mp3\s*).*
+	//
+	// Note: \s* - matches any number of white-space symbols (including zero).
+
+	CString strFilter;
+	int nTotal = 0;
+	for ( LPCTSTR pszPattern = m_pContent; *pszPattern; ++pszPattern )
 	{
-		// Build a regular expression filter from the search query words
-		// Returns an empty string if not applied or if the filter was invalid
-		CString strFilter;
-		int nTotal = 0;
-		for ( LPCTSTR pszPattern = m_pContent; *pszPattern; pszPattern++ )
+		LPCTSTR pszLt = _tcschr( pszPattern, _T('<') );
+		if ( pszLt )
 		{
-			if ( *pszPattern == '<' )
+			int nLength = pszLt - pszPattern;
+			if ( nLength )
 			{
-				pszPattern++;
-				bool bEnds = false;
-				bool bAll = ( *pszPattern == '_' );
-				for ( ; *pszPattern ; pszPattern++ )
+				strFilter.Append( pszPattern, nLength );
+			}
+
+			pszPattern = pszLt + 1;
+			bool bEnds = false;
+			bool bAll = ( *pszPattern == '_' );
+			for ( ; *pszPattern ; pszPattern++ )
+			{
+				if ( *pszPattern == '>' )
 				{
-					if ( *pszPattern == '>' )
-					{
-						bEnds = true;
-						break;
-					}
+					bEnds = true;
+					break;
 				}
-				if ( bEnds )
+			}
+			if ( bEnds )
+			{
+				if ( bAll )
 				{
-					if ( bAll )
+					// Add all keywords at the "<_>" position
+					for ( CQuerySearch::const_iterator i = pQuery->begin();
+						i != pQuery->end(); ++i )
 					{
-						// Add all keywords at the "<_>" position
-						for ( ; itStart != itEnd ; itStart++ )
-						{
-							strFilter.AppendFormat( L"%s\\s*", 
-								CString( itStart->first, int(itStart->second) ) );
-						}
-					}
-					else
-					{
-						pszPattern--; // Go back
-						int nNumber = 0;
-
-						// Numbers from 1 to 9, no more
-						if ( _stscanf( &pszPattern[0], L"%i", &nNumber ) != 1 )
-							nNumber = ++nTotal;
-
-						for ( int nWord = 1 ; itStart != itEnd ; itStart++, nWord++ )
-						{
-							if ( nWord == nNumber )
-							{
-								strFilter.AppendFormat( L"%s\\s*", 
-									CString( itStart->first, int(itStart->second) ) );
-								break;
-							}
-						}
-						pszPattern++; // return to the last position
+						strFilter.AppendFormat( L"%s\\s*", 
+							CString( i->first, (int)( i->second ) ) );
 					}
 				}
 				else
 				{
-					// no closing '>'
-					strFilter.Empty();
-					break;
+					pszPattern--; // Go back
+					int nNumber = 0;
+
+					// Numbers from 1 to 9, no more
+					if ( _stscanf( &pszPattern[0], L"%i", &nNumber ) != 1 )
+						nNumber = ++nTotal;
+
+					int nWord = 1;
+					for ( CQuerySearch::const_iterator i = pQuery->begin();
+						i != pQuery->end(); ++i, ++nWord )
+					{
+						if ( nWord == nNumber )
+						{
+							strFilter.AppendFormat( L"%s\\s*", 
+								CString( i->first, (int)( i->second ) ) );
+							break;
+						}
+					}
+					pszPattern++; // return to the last position
 				}
 			}
 			else
 			{
-				strFilter += *pszPattern; // not replacing
+				// no closing '>'
+				strFilter.Empty();
+				break;
 			}
 		}
-
-		if ( strFilter.GetLength() )
+		else
 		{
-			return RegExp::Match( strFilter, pszContent );
+			strFilter += pszPattern;
+			break;
 		}
 	}
 
-	return FALSE;
+	if ( strFilter.IsEmpty() )
+		return FALSE;
+
+	return RegExp::Match( strFilter, strContent );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -1171,7 +1192,7 @@ void CSecureRule::SetContentWords(const CString& strContent)
 	*pszContent++ = 0;
 }
 
-CString CSecureRule::GetContentWords()
+CString CSecureRule::GetContentWords() const
 {
 	if ( m_pContent == NULL )
 		return CString();
@@ -1464,7 +1485,7 @@ BOOL CSecureRule::FromXML(CXMLElement* pXML)
 //////////////////////////////////////////////////////////////////////
 // CSecureRule Gnucelus strings
 
-CString CSecureRule::ToGnucleusString()
+CString CSecureRule::ToGnucleusString() const
 {
 	CString strRule;
 
@@ -1825,7 +1846,7 @@ void CAdultFilter::Load()
 	}
 }
 
-BOOL CAdultFilter::IsHitAdult(LPCTSTR pszText)
+BOOL CAdultFilter::IsHitAdult(LPCTSTR pszText) const
 {
 	if ( pszText )
 	{
@@ -1834,7 +1855,7 @@ BOOL CAdultFilter::IsHitAdult(LPCTSTR pszText)
 	return FALSE;
 }
 
-BOOL CAdultFilter::IsSearchFiltered(LPCTSTR pszText)
+BOOL CAdultFilter::IsSearchFiltered(LPCTSTR pszText) const
 {
 	if ( Settings.Search.AdultFilter && pszText )
 	{
@@ -1843,7 +1864,7 @@ BOOL CAdultFilter::IsSearchFiltered(LPCTSTR pszText)
 	return FALSE;
 }
 
-BOOL CAdultFilter::IsChatFiltered(LPCTSTR pszText)
+BOOL CAdultFilter::IsChatFiltered(LPCTSTR pszText) const
 {
 	if ( Settings.Community.ChatCensor && pszText )
 	{
@@ -1852,7 +1873,7 @@ BOOL CAdultFilter::IsChatFiltered(LPCTSTR pszText)
 	return FALSE;
 }
 
-BOOL CAdultFilter::Censor(TCHAR* pszText)
+BOOL CAdultFilter::Censor(TCHAR* pszText) const
 {
 	BOOL bModified = FALSE;
 	if ( ! pszText ) return FALSE;
@@ -1886,7 +1907,7 @@ BOOL CAdultFilter::Censor(TCHAR* pszText)
 	return bModified;
 }
 
-BOOL CAdultFilter::IsChildPornography(LPCTSTR pszText)
+BOOL CAdultFilter::IsChildPornography(LPCTSTR pszText) const
 {
 	if ( pszText )
 	{
@@ -1909,7 +1930,7 @@ BOOL CAdultFilter::IsChildPornography(LPCTSTR pszText)
 	return FALSE;
 }
 
-BOOL CAdultFilter::IsFiltered(LPCTSTR pszText)
+BOOL CAdultFilter::IsFiltered(LPCTSTR pszText) const
 {
 	if ( pszText )
 	{
