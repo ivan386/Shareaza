@@ -121,21 +121,26 @@ void CPlugins::Enumerate()
 {
 	HUSKEY hKey = NULL;
 	if ( SHRegOpenUSKey( _T(REGISTRY_KEY) _T("\\Plugins\\General"),
-		KEY_READ, NULL, &hKey, FALSE ) != ERROR_SUCCESS ) return;
+		KEY_READ, NULL, &hKey, FALSE ) != ERROR_SUCCESS )
+		return;
 
 	for ( DWORD nKey = 0 ; ; nKey++ )
 	{
-		TCHAR szName[128], szCLSID[64];
-		DWORD dwType, dwName = 128, dwCLSID = 64 * sizeof(TCHAR);
+		TCHAR szName[ 128 ], szCLSID[ 64 ];
+		DWORD dwType, dwName = _countof( szName ), dwCLSID = sizeof( szCLSID );
 
 		if ( SHRegEnumUSValue( hKey, nKey, szName, &dwName, &dwType,
-			(LPBYTE)szCLSID, &dwCLSID, SHREGENUM_DEFAULT ) != ERROR_SUCCESS ) break;
-
-		if ( dwType != REG_SZ ) continue;
+			(LPBYTE)szCLSID, &dwCLSID, SHREGENUM_DEFAULT ) != ERROR_SUCCESS )
+			break;
+		if ( dwType != REG_SZ )
+			continue;
 		szCLSID[ 38 ] = 0;
 
 		CLSID pCLSID;
-		if ( ! Hashes::fromGuid( szCLSID, &pCLSID ) ) continue;
+		if ( ! Hashes::fromGuid( szCLSID, &pCLSID ) )
+			continue;
+
+		CQuickLock oLock( m_pSection );
 
 		for ( POSITION pos = GetIterator() ; pos ; )
 		{
@@ -146,12 +151,11 @@ void CPlugins::Enumerate()
 			}
 		}
 
-		if ( pCLSID == GUID_NULL ) continue;
+		if ( pCLSID == GUID_NULL )
+			continue;
 
 		if ( CPlugin* pPlugin = new CPlugin( pCLSID, szName ) )
 		{
-			CQuickLock oLock( m_pSection );
-
 			m_pList.AddTail( pPlugin );
 
 			if ( LookupEnable( pCLSID ) )
