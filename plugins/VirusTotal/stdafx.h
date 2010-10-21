@@ -36,6 +36,7 @@
 #include <atlbase.h>
 #include <atlcom.h>
 #include <atlsafe.h>
+#include <atlstr.h>
 #include <ExDisp.h>
 
 using namespace ATL;

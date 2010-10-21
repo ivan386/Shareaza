@@ -24,7 +24,8 @@
 
 static const LPCWSTR VIRUSTOTAL_CHECK	= L"&VirusTotal Check";
 static const LPCWSTR VIRUSTOTAL_HOME	= L"http://www.virustotal.com";
-static const LPCWSTR VIRUSTOTAL_URL		= L"http://www.virustotal.com/vt/en/consultamd5";
+//static const LPCWSTR VIRUSTOTAL_URL	= L"http://www.virustotal.com/vt/en/consultamd5";
+static const LPCWSTR VIRUSTOTAL_URL		= L"http://www.virustotal.com/latest-report.html?resource=";
 
 void CPlugin::InsertCommand(ISMenu* pWebMenu, int nPos, UINT nID, LPCWSTR szItem)
 {
@@ -50,6 +51,10 @@ HRESULT CPlugin::Request(LPCWSTR szHash)
 {
 	ATLTRACE( _T("CPlugin::Request( %ls )\n"), szHash );
 
+	ShellExecute( NULL, NULL, CString( VIRUSTOTAL_URL ) + szHash, NULL, NULL, SW_SHOWDEFAULT );
+
+	return S_OK;
+/*
 	CComPtr< IWebBrowserApp > pWebBrowserApp;
 	HRESULT hr = pWebBrowserApp.CoCreateInstance( CLSID_InternetExplorer );
 	if ( SUCCEEDED( hr ) )
@@ -80,8 +85,8 @@ HRESULT CPlugin::Request(LPCWSTR szHash)
 	}
 	else
 		ATLTRACE( _T("CPlugin::Request() : Create Internet Explorer instance error: 0x%08x\n"), hr );
-
 	return hr;
+*/
 }
 
 // IGeneralPlugin
