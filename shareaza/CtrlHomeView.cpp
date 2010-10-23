@@ -230,8 +230,8 @@ void CHomeViewCtrl::OnPaintBegin(CDC* pDC)
 		BITMAP pHeader1;
 		m_bmHeader1.GetBitmap( &pHeader1 );
 
-		pDC->BitBlt( rcAnchor.left, rcAnchor.top, min( rcAnchor.Width(), pHeader1.bmWidth ),
-			min( rcAnchor.Height(), pHeader1.bmHeight ), &dcHeader, 0, 0, SRCCOPY );
+		pDC->BitBlt( rcAnchor.left, rcAnchor.top, min( (LONG)rcAnchor.Width(), pHeader1.bmWidth ),
+			min( (LONG)rcAnchor.Height(), pHeader1.bmHeight ), &dcHeader, 0, 0, SRCCOPY );
 
 		CRect rcMark( &rcAnchor );
 		rcMark.left += pHeader1.bmWidth;
@@ -244,8 +244,8 @@ void CHomeViewCtrl::OnPaintBegin(CDC* pDC)
 
 			while ( rcMark.left < rcMark.right )
 			{
-				pDC->BitBlt( rcMark.left, rcMark.top, min( rcMark.Width(), pHeader2.bmWidth ),
-					min( rcMark.Height(), pHeader2.bmHeight ), &dcHeader, 0, 0, SRCCOPY );
+				pDC->BitBlt( rcMark.left, rcMark.top, min( (LONG)rcMark.Width(), pHeader2.bmWidth ),
+					min( (LONG)rcMark.Height(), pHeader2.bmHeight ), &dcHeader, 0, 0, SRCCOPY );
 				rcMark.left += pHeader2.bmWidth;
 			}
 		}

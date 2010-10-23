@@ -846,7 +846,7 @@ CQueryHit* CQueryHit::FromDCPacket(CDCPacket* pPacket)
 			return FALSE;
 	}
 
-	int len = strParams.size();
+	size_t len = strParams.size();
 	if ( strParams[ 0 ] != '(' || strParams[ len - 1 ] != ')' )
 		return FALSE;
 	nPos = strParams.find( ':' );

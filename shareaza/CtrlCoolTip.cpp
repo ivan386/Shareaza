@@ -218,7 +218,7 @@ void CCoolTipCtrl::AddSize(CDC* pDC, LPCTSTR pszText, int nBase)
 		DT_SINGLELINE | DT_NOPREFIX;
 	CRect rcText( 0, 0, 0, 0 );
 	pDC->DrawText( pszText, -1, &rcText, dwFlags | DT_CALCRECT );
-	m_sz.cx = max( m_sz.cx, rcText.Width() + nBase );
+	m_sz.cx = max( m_sz.cx, (LONG)rcText.Width() + nBase );
 }
 
 void CCoolTipCtrl::GetPaintRect(RECT* pRect)

@@ -471,7 +471,7 @@ BOOL CZIPFile::File::Extract(LPCTSTR pszFile)
 		{
 			if ( pStream.avail_in == 0 )
 			{
-				pStream.avail_in	= (DWORD)min( m_nCompressedSize - nCompressed, BUFFER_IN_SIZE );
+				pStream.avail_in	= (uInt)min( m_nCompressedSize - nCompressed, (QWORD)BUFFER_IN_SIZE );
 				pStream.next_in		= pBufferIn.get();
 
 				DWORD nRead = 0;
@@ -506,7 +506,7 @@ BOOL CZIPFile::File::Extract(LPCTSTR pszFile)
 
 		while ( pBufferOut.get() && nUncompressed < m_nSize )
 		{
-			DWORD nChunk = (DWORD)min( m_nSize - nUncompressed, BUFFER_OUT_SIZE );
+			DWORD nChunk = (DWORD)min( m_nSize - nUncompressed, (QWORD)BUFFER_OUT_SIZE );
 			DWORD nProcess = 0;
 
 			if ( ! ReadFile( m_pZIP->m_hFile, pBufferOut.get(), nChunk, &nProcess, NULL ) )

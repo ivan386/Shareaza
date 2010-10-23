@@ -504,24 +504,24 @@ void CSkinWindow::CalcWindowRect(RECT* pRect, BOOL bToClient, BOOL /*bZoomed*/)
 	CRect rcAdjust( 0, 0, 0, 0 );
 
 	if ( m_bPart[ SKINPART_TOP_LEFT ] )
-		rcAdjust.top = max( rcAdjust.top, m_rcPart[ SKINPART_TOP_LEFT ].Height() );
+		rcAdjust.top = max( rcAdjust.top, (LONG)m_rcPart[ SKINPART_TOP_LEFT ].Height() );
 	if ( m_bPart[ SKINPART_TOP ] )
-		rcAdjust.top = max( rcAdjust.top, m_rcPart[ SKINPART_TOP ].Height() );
+		rcAdjust.top = max( rcAdjust.top, (LONG)m_rcPart[ SKINPART_TOP ].Height() );
 	if ( m_bPart[ SKINPART_TOP_RIGHT ] )
-		rcAdjust.top = max( rcAdjust.top, m_rcPart[ SKINPART_TOP_RIGHT ].Height() );
+		rcAdjust.top = max( rcAdjust.top, (LONG)m_rcPart[ SKINPART_TOP_RIGHT ].Height() );
 
 	if ( m_bPart[ SKINPART_LEFT ] )
-		rcAdjust.left = max( rcAdjust.left, m_rcPart[ SKINPART_LEFT ].Width() );
+		rcAdjust.left = max( rcAdjust.left, (LONG)m_rcPart[ SKINPART_LEFT ].Width() );
 
 	if ( m_bPart[ SKINPART_RIGHT ] )
-		rcAdjust.right = max( rcAdjust.right, m_rcPart[ SKINPART_RIGHT ].Width() );
+		rcAdjust.right = max( rcAdjust.right, (LONG)m_rcPart[ SKINPART_RIGHT ].Width() );
 
 	if ( m_bPart[ SKINPART_BOTTOM_LEFT ] )
-		rcAdjust.bottom = max( rcAdjust.bottom, m_rcPart[ SKINPART_BOTTOM_LEFT ].Height() );
+		rcAdjust.bottom = max( rcAdjust.bottom, (LONG)m_rcPart[ SKINPART_BOTTOM_LEFT ].Height() );
 	if ( m_bPart[ SKINPART_BOTTOM ] )
-		rcAdjust.bottom = max( rcAdjust.bottom, m_rcPart[ SKINPART_BOTTOM ].Height() );
+		rcAdjust.bottom = max( rcAdjust.bottom, (LONG)m_rcPart[ SKINPART_BOTTOM ].Height() );
 	if ( m_bPart[ SKINPART_BOTTOM_RIGHT ] )
-		rcAdjust.bottom = max( rcAdjust.bottom, m_rcPart[ SKINPART_BOTTOM_RIGHT ].Height() );
+		rcAdjust.bottom = max( rcAdjust.bottom, (LONG)m_rcPart[ SKINPART_BOTTOM_RIGHT ].Height() );
 
 	if ( bToClient )
 	{
@@ -1137,7 +1137,7 @@ void CSkinWindow::Paint(CWnd* pWnd, TRISTATE bActive)
 		{
 			for ( int nX = rcTop.left ; nX < rcTop.right ; nX += pRect->Width() )
 			{
-				pDC->BitBlt( nX, 0, min( pRect->Width(), rcTop.right - nX ),
+				pDC->BitBlt( nX, 0, min( (LONG)pRect->Width(), rcTop.right - nX ),
 					pRect->Height(), &m_dcSkin, pRect->left, pRect->top, SRCCOPY );
 			}
 		}
@@ -1157,7 +1157,7 @@ void CSkinWindow::Paint(CWnd* pWnd, TRISTATE bActive)
 		{
 			for ( int nX = rcTop.left ; nX < rcTop.right ; nX += pRect->Width() )
 			{
-				pDC->BitBlt( nX, 0, min( pRect->Width(), rcTop.right - nX ),
+				pDC->BitBlt( nX, 0, min( (LONG)pRect->Width(), rcTop.right - nX ),
 					pRect->Height(), &m_dcSkin, pRect->left, pRect->top, SRCCOPY );
 			}
 		}
@@ -1179,7 +1179,7 @@ void CSkinWindow::Paint(CWnd* pWnd, TRISTATE bActive)
 			for ( int nY = rcRight.top ; nY < rcRight.bottom ; nY += pRect->Height() )
 			{
 				dc.BitBlt( rc.right - pRect->Width(), nY, pRect->Width(),
-					min( pRect->Height(), rcRight.bottom - nY ),
+					min( (LONG)pRect->Height(), rcRight.bottom - nY ),
 					&m_dcSkin, 	pRect->left, pRect->top, SRCCOPY );
 			}
 		}
@@ -1202,7 +1202,7 @@ void CSkinWindow::Paint(CWnd* pWnd, TRISTATE bActive)
 			for ( int nX = rcBottom.left ; nX < rcBottom.right ; nX += pRect->Width() )
 			{
 				dc.BitBlt( nX, rc.bottom - pRect->Height(),
-					min( pRect->Width(), rcBottom.right - nX ), pRect->Height(),
+					min( (LONG)pRect->Width(), rcBottom.right - nX ), pRect->Height(),
 					&m_dcSkin, pRect->left, pRect->top, SRCCOPY );
 			}
 		}
@@ -1506,9 +1506,9 @@ BOOL CSkinWindow::PreBlend(CBitmap* pbmTarget, const CRect& rcTarget, const CRec
 	int nDstY = rcTarget.top, nDstLeft = rcTarget.left * 3;
 
 	int nWidth = min( rcSource.Width(), rcTarget.Width() );
-	nWidth = min( nWidth, pTargeInfo.bmiHeader.biWidth - rcTarget.left );
-	nWidth = min( nWidth, pImageInfo.bmiHeader.biWidth - rcSource.left );
-	nWidth = min( nWidth, pAlphaInfo.bmiHeader.biWidth - rcSource.left );
+	nWidth = min( (LONG)nWidth, pTargeInfo.bmiHeader.biWidth - rcTarget.left );
+	nWidth = min( (LONG)nWidth, pImageInfo.bmiHeader.biWidth - rcSource.left );
+	nWidth = min( (LONG)nWidth, pAlphaInfo.bmiHeader.biWidth - rcSource.left );
 	if ( nWidth > 0 )
 	{
 		for ( int nY = min( rcTarget.Height(), rcSource.Height() ) ; nY ; nY--, nSrcY++, nDstY++ )

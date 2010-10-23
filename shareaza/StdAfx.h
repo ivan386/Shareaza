@@ -66,39 +66,31 @@
 #pragma warning ( disable : 4710 )	// (Level 4)	'function' : function not inlined
 #pragma warning ( disable : 4820 )	// (Level 4)	'bytes' bytes padding added after construct 'member_name'
 
-#define _SCL_SECURE_NO_WARNINGS		// For RegExp only
-#define _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES 1
-#define _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES_COUNT 1
-
 #endif
 
-// Target features available from Windows Vista onwards.
-//	To show features that need guards for Windows 2000/XP compatibility use:
-//	#define NTDDI_VERSION	NTDDI_WIN2K
-//	#define _WIN32_WINNT	0x0500
-#define NTDDI_VERSION	NTDDI_LONGHORN	// Minimum build target
-#define _WIN32_WINNT	0x0600			// Vista, 2008
 #include <sdkddkver.h>					// Setup versioning for windows SDK/DDK
-
-// Add defines missed/messed up when Microsoft converted to NTDDI macros
-#define WINXP			0x05010000		// rpcdce.h, rpcdcep.h
-#define NTDDI_XP		0x05010000		// ipexport.h, iphlpapi.h
-#define NTDDI_WXP		0x05010000		// rpcasync.h
-#define NTDDI_XPSP1		0				// 0x05010100	// ipmib.h (leave as 0 due to broken struct)
-#define NTDDI_XPSP2		0x05010200		// shellapi.h
-#define NTDDI_WIN2K3	0				// 0x05020000	// docobj.h (leave as 0 due to broken enum)
-#define NTDDI_WINLH		0x06000000		// objidl.h
-#define NTDDK_VERSION	NTDDI_VERSION	// winioctl.h
 
 #define VC_EXTRALEAN
 
-#define _ATL_NO_COM_SUPPORT
-#define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS
+#define _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES 1		// Enable secure template overloads
+#define _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES_COUNT 1	// Enable secure template overloads
 
 #define BOOST_USE_WINDOWS_H
 #define BOOST_DISABLE_ASSERTS
+#ifndef _WIN64
+#define BOOST_BIND_ENABLE_STDCALL 1
+#define BOOST_MEM_FN_ENABLE_STDCALL 1
+#endif
 
-#pragma warning( push, 0 )			// Suppress Microsoft warnings
+#define _ATL_NO_COM_SUPPORT					// Prevents ATL COM-related code from being compiled
+#define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS	// Makes certain ATL CString constructors explicit, preventing any unintentional conversions
+
+#pragma warning ( push )			// Suppress Microsoft warnings
+
+#pragma warning ( disable : 4302 )	// afxwin4.inl : 'type cast' : truncation from 'HIMAGELIST' to 'WCHAR'
+#pragma warning ( disable : 4668 )	// 'symbol' is not defined as a preprocessor macro, replacing with '0' for '#if/#elif'
+#pragma warning ( disable : 4917 )	// ocidl.h : 'symbol' a GUID can only be associated with a class, interface or namespace
+#pragma warning ( disable : 4371 )	// boost : layout of class may have changed from a previous version of the compiler due to better packing of member
 
 //
 // MFC
@@ -117,6 +109,14 @@
 #include <../src/mfc/afximpl.h>
 
 //
+// ATL
+//
+
+#include <atltime.h>		// Time classes
+#include <atlenc.h>			// Base64Encode, UUEncode etc.
+#include <atlfile.h>		// Thin file classes
+
+//
 // WIN32
 //
 
@@ -130,9 +130,8 @@
 #include <exdispid.h>		// Internet Explorer DISPIDs
 #include <mmsystem.h>		// Multimedia
 #include <winioctl.h>		// Sparse files support
-#include <atltime.h>		// Time classes
-#include <atlenc.h>			// Base64Encode, UUEncode etc.
-#include <atlfile.h>		// Thin file classes
+#include <mstask.h>			// Task Scheduler 1.0 interfaces
+#include <taskschd.h>		// Task Scheduler 2.0 interfaces
 
 // If this header is not found, you'll need to install the Windows XP SP2 Platform SDK (or later)
 // from http://www.microsoft.com/msdownload/platformsdk/sdkupdate/
@@ -180,11 +179,6 @@
 // Boost
 //
 
-#ifndef _WIN64
-	#define BOOST_BIND_ENABLE_STDCALL 1
-	#define BOOST_MEM_FN_ENABLE_STDCALL 1
-#endif
-
 #include <boost/cstdint.hpp>
 #include <boost/bind.hpp>
 #include <boost/bind/placeholders.hpp>
@@ -202,14 +196,13 @@
 #include "../zlib/zlib.h"
 #include "../bzlib/bzlib.h"
 
-#include "MinMax.hpp"
-
 // Work-around for VC9 where a (pop) is ifdef'd out in stdio.h
 #if _MSC_VER >= 1500 && _MSC_VER < 1600
-	#pragma warning( pop )
+	#pragma warning ( pop )
 #endif
+#pragma warning ( pop )
 
-#pragma warning( pop )				// Restore warnings
+#include "MinMax.hpp"
 
 #include "augment/augment.hpp"
 using augment::implicit_cast;

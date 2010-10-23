@@ -490,7 +490,7 @@ CEDPacket* CQuerySearch::ToEDPacket(BOOL bUDP, DWORD nServerFlags) const
 
 			// Size limit (max)
 			pPacket->WriteByte( 3 );
-			pPacket->WriteLongLE( (DWORD)min( m_nMaxSize, 0xFFFFFFFF ) );
+			pPacket->WriteLongLE( (DWORD)min( m_nMaxSize, (QWORD)0xFFFFFFFF ) );
 			pPacket->WriteByte( 2 );
 			pPacket->WriteShortLE( 1 );
 			pPacket->WriteByte( ED2K_FT_FILESIZE );

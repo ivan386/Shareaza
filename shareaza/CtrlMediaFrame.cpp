@@ -959,7 +959,7 @@ BOOL CMediaFrame::DoSizeList()
 		nSplit += nOffset;
 
 		nSplit = max( nSplit, 0 );
-		nSplit = min( nSplit, rcClient.right - SPLIT_SIZE );
+		nSplit = min( nSplit, (int)rcClient.right - SPLIT_SIZE );
 
 		if ( nSplit < 8 )
 			nSplit = 0;
@@ -1666,7 +1666,7 @@ void CMediaFrame::OffsetPosition(int nPositionOffset)
 			Cleanup( TRUE );
 			return;
 		}
-		nPos = max( min( nPos + nPositionOffset * TIME_FACTOR, nLen ), 0 );
+		nPos = max( min( nPos + nPositionOffset * TIME_FACTOR, nLen ), 0ll );
 		hr = m_pPlayer->SetPosition( nPos );
 		if ( FAILED( hr ) )
 		{

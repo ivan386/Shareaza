@@ -66,6 +66,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="ws2_32.lib"
 				GenerateManifest="false"
+				DelayLoadDLLs="ws2_32.dll"
 				GenerateDebugInformation="true"
 			/>
 			<Tool
@@ -138,6 +139,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="ws2_32.lib"
 				GenerateManifest="false"
+				DelayLoadDLLs="ws2_32.dll"
 				GenerateDebugInformation="true"
 				TargetMachine="17"
 			/>
@@ -214,6 +216,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="ws2_32.lib"
 				LinkIncremental="1"
+				DelayLoadDLLs="ws2_32.dll"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				SetChecksum="true"
@@ -292,6 +295,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="ws2_32.lib"
 				LinkIncremental="1"
+				DelayLoadDLLs="ws2_32.dll"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				SetChecksum="true"

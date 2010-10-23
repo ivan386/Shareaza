@@ -95,7 +95,7 @@ INT_PTR CALLBACK ExtractProc(HWND hwndDlg, UINT msg, WPARAM wParam, LPARAM lPara
 				TCHAR buf[256];
 				LPDRAWITEMSTRUCT lpDrawItemStruct;
 				lpDrawItemStruct = (LPDRAWITEMSTRUCT)lParam;
-				FillRect(lpDrawItemStruct->hDC, &lpDrawItemStruct->rcItem, (HBRUSH)(WHITE_BRUSH+1));
+				FillRect(lpDrawItemStruct->hDC, &lpDrawItemStruct->rcItem, (HBRUSH)(DWORD_PTR)(WHITE_BRUSH+1));
 				ExtFloodFill(lpDrawItemStruct->hDC, lpDrawItemStruct->rcItem.top,
 					lpDrawItemStruct->rcItem.left, RGB(0, 0, 0), FLOODFILLBORDER);
 				SetBkMode(lpDrawItemStruct->hDC, TRANSPARENT);

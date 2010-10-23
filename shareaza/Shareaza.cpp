@@ -593,7 +593,7 @@ CDocument* CShareazaApp::OpenDocumentFile(LPCTSTR lpszFileName)
 
 BOOL CShareazaApp::Open(LPCTSTR lpszFileName, BOOL bDoIt)
 {
-	int nLength = _tcslen( lpszFileName );
+	size_t nLength = _tcslen( lpszFileName );
 	if (      nLength > 8  && ! _tcsicmp( lpszFileName + nLength - 8,  _T(".torrent") ) )
 		return OpenTorrent( lpszFileName, bDoIt );
 	else if ( nLength > 3  && ! _tcsicmp( lpszFileName + nLength - 3,  _T(".co") ) )

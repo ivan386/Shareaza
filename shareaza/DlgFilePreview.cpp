@@ -392,7 +392,7 @@ BOOL CFilePreviewDlg::RunManual()
 
 		while ( nLength && IsThreadEnabled() )
 		{
-			DWORD nChunk = (DWORD)min( BUFFER_SIZE, nLength );
+			DWORD nChunk = (DWORD)min( (QWORD)BUFFER_SIZE, nLength );
 
 			hr = oSourceFile.Read( pData.get(), nChunk, nChunk );
 			if ( FAILED( hr ) || nChunk == 0 )
@@ -473,7 +473,7 @@ void CFilePreviewDlg::UpdateProgress(BOOL bRange, QWORD nRange, BOOL bPosition, 
 	if ( bPosition )
 		m_nPosition = nPosition;
 
-	m_nScaled = min( (DWORD)( (double)m_nPosition / (double)m_nRange * 100 ), 100u );
+	m_nScaled = (DWORD)min( (double)m_nPosition / (double)m_nRange * 100., 100. );
 
 	if ( m_nScaled != m_nOldScaled )
 		PostMessage( WM_TIMER, 1 );

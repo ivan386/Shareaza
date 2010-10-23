@@ -92,7 +92,7 @@ void CDownloadTipCtrl::OnCalcSize(CDC* pDC)
 	{
 		OnCalcSize( pDC, m_pSource );
 	}
-	m_sz.cx = min( max( m_sz.cx, 400 ), GetSystemMetrics( SM_CXSCREEN ) / 2 );
+	m_sz.cx = min( max( m_sz.cx, 400l ), (LONG)GetSystemMetrics( SM_CXSCREEN ) / 2 );
 }
 
 void CDownloadTipCtrl::OnShow()
@@ -728,7 +728,7 @@ void CDownloadTipCtrl::OnCalcSize(CDC* pDC, CDownloadSource* pSource)
 	}
 
 	if ( m_nHeaderWidth ) m_nHeaderWidth += TIP_GAP;
-	m_sz.cx = max( m_sz.cx, m_nHeaderWidth + nValueWidth );
+	m_sz.cx = max( m_sz.cx, (LONG)m_nHeaderWidth + nValueWidth );
 }
 
 void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownloadSource* pSource)

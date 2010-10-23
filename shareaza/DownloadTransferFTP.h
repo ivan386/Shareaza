@@ -172,7 +172,7 @@ protected:
 
 				if ( m_pOwner && pInput->m_nLength > 0 )
 				{
-					QWORD nLength = min( pInput->m_nLength,
+					QWORD nLength = min( (QWORD)pInput->m_nLength,
 						m_pOwner->m_nLength - m_pOwner->m_nPosition );
 					m_pOwner->m_pDownload->SubmitData(
 						m_pOwner->m_nOffset + m_pOwner->m_nPosition,

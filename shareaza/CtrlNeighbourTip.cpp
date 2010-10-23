@@ -165,7 +165,7 @@ void CNeighbourTipCtrl::OnCalcSize(CDC* pDC)
 
 	m_sz.cy += TIP_TEXTHEIGHT * 6;
 
-	m_sz.cx = max( m_sz.cx, 128 + 160 );
+	m_sz.cx = max( m_sz.cx, 128l + 160l );
 	m_sz.cy += 40;
 }
 

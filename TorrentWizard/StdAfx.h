@@ -21,11 +21,19 @@
 
 #pragma once
 
-#define NTDDI_VERSION	NTDDI_LONGHORN	// Minimum build target
-#define _WIN32_WINNT	0x0600			// Vista, 2008
 #include <sdkddkver.h>					// Setup versioning for windows SDK/DDK
+
 #define VC_EXTRALEAN					// Exclude rarely-used stuff from Windows headers
+
+#define _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES 1		// Enable secure template overloads
+#define _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES_COUNT 1	// Enable secure template overloads
+
 #define BOOST_USE_WINDOWS_H
+#define BOOST_DISABLE_ASSERTS
+#ifndef _WIN64
+#define BOOST_BIND_ENABLE_STDCALL 1
+#define BOOST_MEM_FN_ENABLE_STDCALL 1
+#endif
 
 #include <afxwin.h>         // MFC core and standard components
 #include <afxext.h>         // MFC extensions

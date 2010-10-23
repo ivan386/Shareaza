@@ -347,7 +347,7 @@ void CDownloadTransfer::ChunkifyRequest(QWORD* pnOffset, QWORD* pnLength, DWORD 
 		nCount = GetRandomNum( 0ui64, nCount - 1 );
 
 		QWORD nStart = *pnOffset + nChunk * nCount;
-		*pnLength = min( nChunk, *pnOffset + *pnLength - nStart );
+		*pnLength = min( (QWORD)nChunk, *pnOffset + *pnLength - nStart );
 		*pnOffset = nStart;
 	}
 }
@@ -385,7 +385,7 @@ blockPair CDownloadTransfer::SelectBlock(const Fragments::List& oPossible,
 	if ( pItr->begin() < Settings.Downloads.ChunkStrap )
 	{
 		return std::make_pair( pItr->begin(),
-			min( pItr->end() - pItr->begin(), Settings.Downloads.ChunkStrap ) );
+			min( pItr->end() - pItr->begin(), (QWORD)Settings.Downloads.ChunkStrap ) );
 	}
 
 	DWORD nBlockSize = m_pDownload->GetVerifyLength( m_nProtocol );

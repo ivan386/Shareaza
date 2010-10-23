@@ -767,8 +767,7 @@ BOOL CG1Neighbour::OnPong(CG1Packet* pPacket)
 	}
 
 	// Tell the neighbours object about this pong packet (do)
-	BYTE nHops = pPacket->m_nHops + 1;
-	nHops = min( nHops, PONG_NEEDED_BUFFER - 1u );
+	BYTE nHops = (BYTE)min( pPacket->m_nHops + 1, PONG_NEEDED_BUFFER - 1 );
 	if ( ! bLocal ) Neighbours.OnG1Pong( this, (IN_ADDR*)&nAddress, nPort, nHops + 1, nFiles, nVolume );
 
 	// This method always returns true

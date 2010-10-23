@@ -911,8 +911,8 @@ void CUploadsCtrl::PaintQueue(CDC& dc, const CRect& rcRow, CUploadQueue* pQueue,
 			break;
 		}
 		
-		nTextLeft	= min( nTextLeft, rcCell.left );
-		nTextRight	= max( nTextRight, rcCell.right );
+		nTextLeft	= min( nTextLeft, (int)rcCell.left );
+		nTextRight	= max( nTextRight, (int)rcCell.right );
 		
 		if ( rcCell.Width() < 8 ) strText.Empty();
 		
@@ -957,7 +957,7 @@ void CUploadsCtrl::PaintQueue(CDC& dc, const CRect& rcRow, CUploadQueue* pQueue,
 	
 	if ( bFocus )
 	{
-		CRect rcFocus( nTextLeft, rcRow.top, max( rcRow.right, nTextRight ), rcRow.bottom );
+		CRect rcFocus( nTextLeft, rcRow.top, max( (int)rcRow.right, nTextRight ), rcRow.bottom );
 		dc.Draw3dRect( &rcFocus, CoolInterface.m_crHiBorder, CoolInterface.m_crHiBorder );
 	}
 }
@@ -1093,8 +1093,8 @@ void CUploadsCtrl::PaintFile(CDC& dc, const CRect& rcRow, CUploadQueue* /*pQueue
 			break;
 		}
 		
-		nTextLeft	= min( nTextLeft, rcCell.left );
-		nTextRight	= max( nTextRight, rcCell.right );
+		nTextLeft	= min( (LONG)nTextLeft, rcCell.left );
+		nTextRight	= max( (LONG)nTextRight, rcCell.right );
 		
 		if ( pColumn.lParam == UPLOAD_COLUMN_PROGRESS ) continue;
 		
@@ -1139,7 +1139,7 @@ void CUploadsCtrl::PaintFile(CDC& dc, const CRect& rcRow, CUploadQueue* /*pQueue
 	
 	if ( bFocus )
 	{
-		CRect rcFocus( nTextLeft, rcRow.top, max( rcRow.right, nTextRight ), rcRow.bottom );
+		CRect rcFocus( nTextLeft, rcRow.top, max( (int)rcRow.right, nTextRight ), rcRow.bottom );
 		dc.Draw3dRect( &rcFocus, CoolInterface.m_crHiBorder, CoolInterface.m_crHiBorder );
 	}
 }

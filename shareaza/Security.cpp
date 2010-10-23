@@ -1949,7 +1949,7 @@ BOOL CAdultFilter::IsFiltered(LPCTSTR pszText) const
 		// Check dubious words
 		if ( m_pszDubiousWords )
 		{
-			size_t nDubiousWords = 0, nWordsPermitted = min( _tcslen( pszText ) / 8, 4u );
+			size_t nDubiousWords = 0, nWordsPermitted = min( (int)_tcslen( pszText ) / 8, 4 );
 
 			for ( pszWord = m_pszDubiousWords ; *pszWord ; )
 			{

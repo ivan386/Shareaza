@@ -119,7 +119,7 @@ BOOL CDCNeighbour::OnRead()
 
 		m_tLastPacket = GetTickCount();
 
-		if ( CDCPacket* pPacket = CDCPacket::New( (const BYTE*)strLine.c_str(), strLine.size() ) )
+		if ( CDCPacket* pPacket = CDCPacket::New( (const BYTE*)strLine.c_str(), (DWORD)strLine.size() ) )
 		{
 			pPacket->SmartDump( &m_pHost, FALSE, FALSE, (DWORD_PTR)this );
 			pPacket->Release();
@@ -570,7 +570,7 @@ BOOL CDCNeighbour::OnLock(const std::string& strLock)
 	if ( CDCPacket* pPacket = CDCPacket::New() )
 	{
 		pPacket->Write( _P("$Key ") );
-		pPacket->Write( strKey.c_str(), strKey.size() );
+		pPacket->Write( strKey.c_str(), (DWORD)strKey.size() );
 		pPacket->Write( _P("|") );
 		Send( pPacket );
 	}

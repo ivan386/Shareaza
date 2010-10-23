@@ -60,7 +60,7 @@ typedef enum NeighbourNodeEnum
 } NrsNode;
 
 // Make the m_nPongNeeded buffer an array of 32 bytes
-const uchar PONG_NEEDED_BUFFER = 32;
+const BYTE PONG_NEEDED_BUFFER = 32;
 
 // Define the CNeighbour class to inherit from CConnection, picking up a socket and methods to connect it and read data through it
 class CNeighbour : public CConnection

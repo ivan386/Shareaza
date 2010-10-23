@@ -379,9 +379,9 @@ LRESULT PASCAL CSchemaCombo::ListWndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LP
 
 		if ( rcClient.PtInRect( pt ) )
 		{
-			LRESULT nItemHeight = ::SendMessage( hWnd, LB_GETITEMHEIGHT, 0, 0 );
-			LRESULT nTopIndex   = ::SendMessage( hWnd, LB_GETTOPINDEX, 0, 0 );
-			int nIndex		= static_cast< int >( nTopIndex + pt.y / nItemHeight );
+			int nItemHeight = (int)::SendMessage( hWnd, LB_GETITEMHEIGHT, 0, 0 );
+			int nTopIndex   = (int)::SendMessage( hWnd, LB_GETTOPINDEX, 0, 0 );
+			int nIndex		= nTopIndex + pt.y / nItemHeight;
 
 			CRect rcItem;
 			::SendMessage( hWnd, LB_GETITEMRECT, nIndex, (LPARAM)&rcItem );
@@ -396,11 +396,11 @@ LRESULT PASCAL CSchemaCombo::ListWndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LP
 					if ( nIndex >= 0 ) CallWindowProc( pThis->m_pWndProc, hWnd, LB_SETCURSEL, nIndex, 0 );
 
 					::GetWindowRect( hWnd, &rcClient );
-					LRESULT nHeight = pThis->GetCount() * nItemHeight + 2;
+					int nHeight = pThis->GetCount() * nItemHeight + 2;
 
 					if ( rcClient.Height() < nHeight )
 					{
-						rcClient.bottom = (LONG)min( GetSystemMetrics( SM_CYSCREEN ) - 1,
+						rcClient.bottom = min( (LONG)GetSystemMetrics( SM_CYSCREEN ) - 1,
 							rcClient.top + nHeight );
 
 						::MoveWindow( hWnd, rcClient.left, rcClient.top,

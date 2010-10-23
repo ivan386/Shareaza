@@ -330,7 +330,7 @@ BOOL CBrowseFrameCtrl::DoSizeTree()
 		nSplit += nOffset;
 
 		nSplit = max( nSplit, 0 );
-		nSplit = min( nSplit, rcClient.right - SPLIT_SIZE );
+		nSplit = min( nSplit, (int)rcClient.right - SPLIT_SIZE );
 
 		if ( nSplit < 8 )
 			nSplit = 0;

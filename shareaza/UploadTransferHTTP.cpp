@@ -1148,7 +1148,7 @@ BOOL CUploadTransferHTTP::OpenFileSendHeaders()
 	{
 		DWORD nLimit = m_pQueue->m_nRotateChunk;
 		if ( nLimit == 0 ) nLimit = Settings.Uploads.RotateChunkLimit;
-		if ( nLimit > 0 ) m_nLength = min( m_nLength, nLimit );
+		if ( nLimit > 0 ) m_nLength = min( m_nLength, (QWORD)nLimit );
 	}
 	
 	pLock.Unlock();

@@ -65,7 +65,7 @@ CHashProgressBar::CHashProgressBar()
 
 void CHashProgressBar::Run()
 {
-	DWORD nRemaining = LibraryBuilder.GetRemaining();
+	size_t nRemaining = LibraryBuilder.GetRemaining();
 	BOOL bShow = Settings.Library.HashWindow && nRemaining;
 
 	if ( bShow )

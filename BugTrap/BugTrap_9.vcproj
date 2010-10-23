@@ -67,6 +67,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="comctl32.lib version.lib shlwapi.lib ws2_32.lib wininet.lib"
+				DelayLoadDLLs="comctl32.dll;version.dll;shlwapi.dll;ws2_32.dll;wininet.dll;comdlg32.dll;ole32.dll;oleaut32.dll;shell32.dll"
 				GenerateDebugInformation="true"
 				TargetMachine="1"
 			/>
@@ -144,6 +145,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="comctl32.lib version.lib shlwapi.lib ws2_32.lib wininet.lib"
 				ModuleDefinitionFile=""
+				DelayLoadDLLs="comctl32.dll;version.dll;shlwapi.dll;ws2_32.dll;wininet.dll;comdlg32.dll;ole32.dll;oleaut32.dll;shell32.dll"
 				GenerateDebugInformation="true"
 				MapFileName=""
 				SubSystem="2"
@@ -226,6 +228,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="comctl32.lib version.lib shlwapi.lib ws2_32.lib wininet.lib"
 				LinkIncremental="1"
+				DelayLoadDLLs="comctl32.dll;version.dll;shlwapi.dll;ws2_32.dll;wininet.dll;comdlg32.dll;ole32.dll;oleaut32.dll;shell32.dll"
 				GenerateDebugInformation="true"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
@@ -312,6 +315,7 @@
 				AdditionalDependencies="comctl32.lib version.lib shlwapi.lib ws2_32.lib wininet.lib"
 				LinkIncremental="1"
 				ModuleDefinitionFile=""
+				DelayLoadDLLs="comctl32.dll;version.dll;shlwapi.dll;ws2_32.dll;wininet.dll;comdlg32.dll;ole32.dll;oleaut32.dll;shell32.dll"
 				GenerateDebugInformation="true"
 				MapFileName=""
 				SubSystem="2"

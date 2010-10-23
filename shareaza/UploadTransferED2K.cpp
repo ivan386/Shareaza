@@ -609,8 +609,7 @@ BOOL CUploadTransferED2K::DispatchNextChunk()
 	ASSERT( m_nLength < SIZE_UNKNOWN );
 	ASSERT( m_nPosition < m_nLength );
 
-	QWORD nChunk = m_nLength - m_nPosition;
-	nChunk = min( nChunk, Settings.eDonkey.FrameSize );
+	QWORD nChunk = min( m_nLength - m_nPosition, (QWORD)Settings.eDonkey.FrameSize );
 	bool bI64Offset =	( ( m_nOffset + m_nPosition ) & 0xffffffff00000000 ) ||
 						( ( m_nOffset + m_nPosition + nChunk ) & 0xffffffff00000000 );
 

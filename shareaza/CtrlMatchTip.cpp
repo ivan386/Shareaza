@@ -597,7 +597,7 @@ CSize CMatchTipCtrl::ComputeSize()
 		m_pMetadata.ComputeWidth( &dc, m_nKeyWidth, nValueWidth );
 
 		if ( m_nKeyWidth ) m_nKeyWidth += TIP_MARGIN;
-		sz.cx = max( sz.cx, m_nKeyWidth + nValueWidth );
+		sz.cx = max( sz.cx, (LONG)m_nKeyWidth + nValueWidth );
 		sz.cy += LONG( TIP_TEXTHEIGHT * m_pMetadata.GetCount() );
 	}
 
@@ -655,7 +655,7 @@ CSize CMatchTipCtrl::ComputeSize()
 	sz.cx += TIP_MARGIN * 2;
 	sz.cy += TIP_MARGIN * 2;
 
-	sz.cx = min( max( sz.cx, 400 ), GetSystemMetrics( SM_CXSCREEN ) / 2 );
+	sz.cx = min( max( sz.cx, 400l ), (LONG)GetSystemMetrics( SM_CXSCREEN ) / 2 );
 
 	return sz;
 }
@@ -937,8 +937,8 @@ void CMatchTipCtrl::DrawText(CDC& dc, CPoint& pt, const CString& strText)
 	GetClientRect( &rcClient );
 	CSize sz = dc.GetTextExtent( strText );
 	CRect rc( pt.x, pt.y,
-		min( pt.x + sz.cx + nExtraPoint, rcClient.Width() - TIP_MARGIN ),
-		min( pt.y + sz.cy, rcClient.Height() - TIP_MARGIN ) );
+		min( pt.x + sz.cx + nExtraPoint, (LONG)rcClient.Width() - TIP_MARGIN ),
+		min( pt.y + sz.cy, (LONG)rcClient.Height() - TIP_MARGIN ) );
 
 	dc.SetBkMode( TRANSPARENT );
 	dc.FillSolidRect( &rc, m_crBack );

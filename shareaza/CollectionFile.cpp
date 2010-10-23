@@ -65,7 +65,7 @@ BOOL CCollectionFile::Open(LPCTSTR lpszFileName)
 {
 	Close();
 
-	int nLength = _tcslen( lpszFileName );
+	size_t nLength = _tcslen( lpszFileName );
 	if (      nLength > 3  && ! _tcsicmp( lpszFileName + nLength - 3, _T(".co") ) ||
 		      nLength > 11 && ! _tcsicmp( lpszFileName + nLength - 11, _T(".collection") ) )
 	{

@@ -371,7 +371,7 @@ void CSearchDetailPanel::DrawText(CDC* pDC, int nX, int nY, LPCTSTR pszText, REC
 	int nWidth = sz.cx;
 	if ( nMaxWidth > 0 )
 	{
-		nWidth = min( sz.cx, nMaxWidth );
+		nWidth = min( (int)sz.cx, nMaxWidth );
 	}
 	CRect rc( nX - 2, nY - 2, nX + nWidth + 2, nY + sz.cy + 2 );
 

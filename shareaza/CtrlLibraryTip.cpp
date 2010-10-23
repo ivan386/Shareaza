@@ -217,8 +217,8 @@ void CLibraryTipCtrl::OnCalcSize(CDC* pDC)
 	m_pMetadata.ComputeWidth( pDC, m_nKeyWidth, nValueWidth );
 
 	if ( m_nKeyWidth ) m_nKeyWidth += TIP_GAP;
-	m_sz.cx =  min( max( m_sz.cx, m_nKeyWidth + nValueWidth +
-		(int)Settings.Library.ThumbSize + 16 ), GetSystemMetrics( SM_CXSCREEN ) / 2 );
+	m_sz.cx =  min( max( m_sz.cx, (LONG)m_nKeyWidth + nValueWidth +
+		(LONG)Settings.Library.ThumbSize + 16 ), (LONG)GetSystemMetrics( SM_CXSCREEN ) / 2 );
 	m_sz.cy += max( nMetaHeight, (int)Settings.Library.ThumbSize + 4 );
 	m_sz.cy += 6;
 }

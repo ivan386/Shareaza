@@ -395,7 +395,7 @@ void CLibraryMetaPanel::DrawText(CDC* pDC, int nX, int nY, LPCTSTR pszText, RECT
 	int nWidth = sz.cx;
 	if ( nMaxWidth > 0 )
 	{
-		nWidth = min( sz.cx, nMaxWidth );
+		nWidth = min( sz.cx, (LONG)nMaxWidth );
 	}
 
 	CRect rc( nX - 2, nY - 2, nX + nWidth + 2, nY + sz.cy + 2 );

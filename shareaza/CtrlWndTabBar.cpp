@@ -321,7 +321,7 @@ CWndTabBar::TabItem* CWndTabBar::HitTest(const CPoint& point, CRect* pItemRect) 
 
 	CRect rcItem( rc.left + 3, rc.top + 1, 0, rc.bottom - 1 );
 	rcItem.right = static_cast< LONG >( ( rc.Width() - 3 * m_pItems.GetCount() ) / m_pItems.GetCount() + 3 );
-	rcItem.right = min( rcItem.right, m_nMaximumWidth );
+	rcItem.right = min( rcItem.right, (LONG)m_nMaximumWidth );
 
 	for ( POSITION pos = m_pItems.GetHeadPosition() ; pos ; )
 	{
@@ -382,7 +382,7 @@ void CWndTabBar::DoPaint(CDC* pDC)
 
 		CRect rcItem( rc.left + 3, rc.top + 1, 0, rc.bottom - 1 );
 		rcItem.right = static_cast< LONG >( ( rc.Width() - 3 * m_pItems.GetCount() ) / m_pItems.GetCount() + 3 );
-		rcItem.right = min( rcItem.right, m_nMaximumWidth );
+		rcItem.right = min( rcItem.right, (LONG)m_nMaximumWidth );
 
 		for ( POSITION pos = m_pItems.GetHeadPosition() ; pos ; )
 		{

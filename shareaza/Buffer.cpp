@@ -392,17 +392,17 @@ DWORD CBuffer::Receive(SOCKET hSocket, DWORD nSpeedLimit)
 	while ( nSpeedLimit )
 	{
 		// Limit nLength to the free buffer space or the maximum size of an int
-		size_t nLength = min( GetBufferFree(), static_cast< size_t >( INT_MAX ) );
+		size_t nLength = min( GetBufferFree(), (size_t)INT_MAX );
 
 		if ( nLength )
 		{
 			// Limit nLength to the speed limit
-			nLength = min( nLength, nSpeedLimit );
+			nLength = min( nLength, (size_t)nSpeedLimit );
 		}
 		else
 		{
 			// Limit nLength to the maximum recieve size
-			nLength = min( nSpeedLimit, MAX_RECV_SIZE );
+			nLength = min( (size_t)nSpeedLimit, MAX_RECV_SIZE );
 		}
 
 		// Exit loop if the buffer isn't big enough to hold the data
@@ -698,7 +698,7 @@ bool CBuffer::InflateStreamTo( CBuffer& oBuffer, z_streamp& pStream )
 	}
 
 	// Tell Zlib how much data is available to try and decompress
-	pStream->avail_in  = static_cast< uInt >( min( m_nLength, UINT_MAX ) );
+	pStream->avail_in  = (uInt)min( (size_t)m_nLength, (size_t)UINT_MAX );
 
 	// Record inflation state
 	int nResult = Z_OK;
@@ -707,7 +707,7 @@ bool CBuffer::InflateStreamTo( CBuffer& oBuffer, z_streamp& pStream )
 	do
 	{
 		// Limit nLength to the free buffer space or the maximum chunk size
-		UINT nLength = static_cast< UINT >( max( GetBufferFree(), ZLIB_CHUNK_SIZE ) );
+		size_t nLength = max( GetBufferFree(), ZLIB_CHUNK_SIZE );
 
 		// Make sure the receiving buffer is large enough to hold at least 1KB
 		if ( !oBuffer.EnsureBuffer( nLength ) )
@@ -716,7 +716,7 @@ bool CBuffer::InflateStreamTo( CBuffer& oBuffer, z_streamp& pStream )
 		// Tell the z_stream structure where to work
 		pStream->next_in   = m_pBuffer;				// Decompress the data from here
 		pStream->next_out  = oBuffer.GetDataEnd();	// Write decompressed data here
-		pStream->avail_out = nLength;				// There is this much room to
+		pStream->avail_out = (uInt)nLength;			// There is this much room to
 													// decompress data to
 
 		// Call ZLib inflate to decompress all the available data
