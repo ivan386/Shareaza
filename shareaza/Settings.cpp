@@ -583,8 +583,6 @@ void CSettings::Load()
 	Add( _T("IRC"), _T("RealName"), &IRC.RealName, _T("razaIRC") );
 	Add( _T("IRC"), _T("ScreenFont"), &IRC.ScreenFont );
 
-	Add( _T("Scheduler"), _T("ForceShutdown"), &Scheduler.ForceShutdown, FALSE );
-
 	// Load settings
 	for ( POSITION pos = m_pItems.GetHeadPosition() ; pos ; )
 	{

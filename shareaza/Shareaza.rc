@@ -218,53 +218,28 @@ IDB_BOX_MARK            BITMAP                  "Res\\BoxMark.bmp"
 // Dialog
 //
 
-IDD_SCHEDULE_TASK DIALOGEX 0, 0, 270, 366
-STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Schedule Item"
+IDD_SCHEDULE_TASK DIALOGEX 0, 0, 253, 163
+STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Action"
 FONT 8, "Tahoma", 400, 0, 0x0
 BEGIN
-    DEFPUSHBUTTON   "OK",IDOK,59,346,60,16,WS_GROUP
-    PUSHBUTTON      "Cancel",IDCANCEL,152,346,60,16
-    CONTROL         "Only once",IDC_ONLYONCE,"Button",BS_AUTORADIOBUTTON,14,23,105,10
-    CONTROL         "On specific day(s) of week",IDC_EVERYDAY,"Button",BS_AUTORADIOBUTTON,140,23,122,10
-    CONTROL         "",IDC_DATE,"SysDateTimePick32",DTS_RIGHTALIGN | DTS_LONGDATEFORMAT | WS_TABSTOP,7,59,132,15
-    CONTROL         "",IDC_TIME,"SysDateTimePick32",DTS_RIGHTALIGN | DTS_UPDOWN | WS_TABSTOP | 0x8,171,59,80,15
-    CONTROL         "Sunday",IDC_CHECK_SUN,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,96,56,10
-    CONTROL         "Monday",IDC_CHECK_MON,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,78,96,56,10
-    CONTROL         "Tuesday",IDC_CHECK_TUES,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,141,96,56,10
-    CONTROL         "Wednesday",IDC_CHECK_WED,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,207,96,56,10
-    CONTROL         "Thursday",IDC_CHECK_THU,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,109,56,10
-    CONTROL         "Friday",IDC_CHECK_FRI,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,78,109,56,10
-    CONTROL         "Saturday",IDC_CHECK_SAT,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,141,109,56,10
-    PUSHBUTTON      "All",IDC_BUTTON_ALLDAYS,205,109,56,11
-    COMBOBOX        IDC_EVENTTYPE,7,150,174,80,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    EDITTEXT        IDC_SCHEDULER_LIMITED,7,172,36,12,ES_AUTOHSCROLL | ES_NUMBER
-    CONTROL         "",IDC_SCHEDULER_LIMITED_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,42,172,11,12
-    EDITTEXT        IDC_SCHEDULER_LIMITED_DOWN,7,187,36,12,ES_AUTOHSCROLL | ES_NUMBER
-    CONTROL         "",IDC_SCHEDULER_LIMITED_SPIN_DOWN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,42,187,11,12
-    EDITTEXT        IDC_SCHEDULER_LIMITED_UP,7,202,36,12,ES_AUTOHSCROLL | ES_NUMBER
-    CONTROL         "",IDC_SCHEDULER_LIMITED_SPIN_UP,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,42,202,11,12
-    CONTROL         " &Toggle bandwidth independently",IDC_SCHEDULER_TOGGLE_BANDWIDTH,
-                    "Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,15,217,142,15,WS_EX_TRANSPARENT
-    CONTROL         " &Limit network to Gnutella2",IDC_SCHEDULER_LIMITED_NETWORKS,
-                    "Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,15,230,142,15,WS_EX_TRANSPARENT
-    EDITTEXT        IDC_DESCRIPTION,7,305,259,14,ES_AUTOHSCROLL
-    CONTROL         "Make this event active",IDC_ACTIVE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,326,245,10
-    LTEXT           "Please select a date:",IDC_STATIC,7,47,132,8
-    LTEXT           "Please select a time:",IDC_STATIC,171,47,80,8
-    LTEXT           "Select the event type:",IDC_STATIC,7,138,243,8
-    LTEXT           "Description: (optional)",IDC_STATIC,7,293,245,8
-    LTEXT           "% of &bandwidth under limit",IDC_STATIC_LIMITED,56,175,195,8
-    LTEXT           "% of &download under limit",IDC_STATIC_LIMITED_DOWN,56,190,195,8
-    LTEXT           "% of &upload under limit",IDC_STATIC_LIMITED_UP,56,205,195,8
-    GROUPBOX        "Days Of Week",IDC_DAYOFWEEK_GBOX,7,81,259,47
-    GROUPBOX        "Run this event",IDC_STATIC,7,8,259,33
-    GROUPBOX        "Validity Period",IDC_STATIC_VALIDITYPERIOD,8,247,258,44
-    LTEXT           "Set the time period you want the task to be executed after its defined time.",IDC_STATIC_VP_EXPLANATION,12,257,247,16
-    CONTROL         "Disable",IDC_RADIO_VP_DISABLE,"Button",BS_AUTORADIOBUTTON,13,277,39,10
-    CONTROL         "Enable",IDC_RADIO_VP_ENABLE,"Button",BS_AUTORADIOBUTTON,64,277,31,10
-    EDITTEXT        IDC_EDIT_VP_MINUTES,101,275,40,14,ES_NUMBER
-    LTEXT           "Minutes",IDC_STATIC_MINUTES,145,277,26,8
+    CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME,19,57,53,20
+    COMBOBOX        IDC_EVENTTYPE,15,20,231,80,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    CONTROL         "",IDC_SCHEDULER_TOGGLE_BANDWIDTH,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,61,14,12,WS_EX_TRANSPARENT
+    EDITTEXT        IDC_SCHEDULER_LIMITED_DOWN,32,51,36,14,ES_AUTOHSCROLL | ES_NUMBER
+    CONTROL         "",IDC_SCHEDULER_LIMITED_SPIN_DOWN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,62,55,11,12
+    EDITTEXT        IDC_SCHEDULER_LIMITED_UP,32,69,36,14,ES_AUTOHSCROLL | ES_NUMBER
+    CONTROL         "",IDC_SCHEDULER_LIMITED_SPIN_UP,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,62,73,11,12
+    CONTROL         "Gnutella1",IDC_SCHEDULER_LIMITED_G1,"Button",BS_AUTO3STATE | WS_GROUP | WS_TABSTOP,15,109,59,12,WS_EX_TRANSPARENT
+    CONTROL         "Gnutella2",IDC_SCHEDULER_LIMITED_G2,"Button",BS_AUTO3STATE | WS_GROUP | WS_TABSTOP,15,123,60,12,WS_EX_TRANSPARENT
+    CONTROL         "eDoonkey2K",IDC_SCHEDULER_LIMITED_ED2K,"Button",BS_AUTO3STATE | WS_GROUP | WS_TABSTOP,85,109,60,12,WS_EX_TRANSPARENT
+    CONTROL         "DC++",IDC_SCHEDULER_LIMITED_DC,"Button",BS_AUTO3STATE | WS_GROUP | WS_TABSTOP,85,123,60,12,WS_EX_TRANSPARENT
+    CONTROL         "BitTorrent",IDC_SCHEDULER_LIMITED_BT,"Button",BS_AUTO3STATE | WS_GROUP | WS_TABSTOP,166,109,60,12,WS_EX_TRANSPARENT
+    LTEXT           "Select the event type:",IDC_STATIC,7,7,239,8
+    LTEXT           "% of &download under limit",IDC_STATIC,79,54,156,8
+    CONTROL         "% of &upload under limit",IDC_STATIC,"Static",SS_LEFTNOWORDWRAP | WS_GROUP,79,72,156,8
+    GROUPBOX        "Networks",IDC_STATIC,7,96,239,47
+    GROUPBOX        "Bandwidth",IDC_STATIC,7,38,239,53
 END
 
 IDD_CONNECT_TO DIALOGEX 0, 0, 242, 120
@@ -1951,6 +1926,13 @@ GUIDELINES DESIGNINFO
 BEGIN
     IDD_SCHEDULE_TASK, DIALOG
     BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 246
+        VERTGUIDE, 15
+        VERTGUIDE, 85
+        VERTGUIDE, 166
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 156
     END
 
     IDD_SETTINGS_IRC, DIALOG
@@ -4680,6 +4662,7 @@ BEGIN
     IDS_COMMANDLINE         "Command-line options:\n\n-tray : Disable startup splash screen and send application to tray\n-nosplash : Disable startup splash screen\n-nowarn : Disable alpha (daily builds) version warning dialog\n\nInterface modes:\n\n-basic : Start application in Basic interface mode\n-tabbed : Start application in Tabbed interface mode\n-windowed : Start application in Windowed interface mode\n\nSystem options:\n\n-RegServer : Register internal components for everyone\n-UnRegServer : Un-register internal components for everyone\n-RegServerPerUser : Register internal components for current user\n-UnRegServerPerUser : Un-register internal components for current user"
     IDS_SCHEMA_LOAD_ERROR   "Failed to load metadata schemas. Please reinstall application."
     IDS_SCHEDULER_INVALIDVP "Validity Period must be between 1 and 1439 minutes."
+    IDS_SCHEDULER_SYSTEM_START "System: Start Shareaza"
 END
 
 STRINGTABLE
@@ -4910,17 +4893,13 @@ STRINGTABLE
 BEGIN
     IDS_SCHEDULER_SYSTEM_EXIT "System: Exit Shareaza"
     IDS_SCHEDULER_SYSTEM_DIALUP_DC "System: Disconnect Dial-up Connection"
-    IDS_SCHEDULER_SYSTEM_TURNOFF "System: Turn Off the Computer"
+    IDS_SCHEDULER_SYSTEM_SHUTDOWN "System: Turn Off the Computer"
     IDS_SCHEDULER_SELECTTASK "Please select a task."
-    IDS_SCHEDULER_TASK_SPECIFICDAYS "Specific day(s) of week"
     IDS_SCHEDULER_TASK_ACTIVE "Active"
     IDS_SCHEDULER_TASK_INACTIVE "Inactive"
     IDS_SCHEDULER_TASK_DONE "Done"
     IDS_SCHEDULER_TASK_WAITING "Waiting..."
     IDS_SCHEDULER_NOTASK    "No Tasks Currently Scheduled"
-    ID_SCHEDULER_IMPORT     "Imports scheduled tasks from a file..."
-    ID_SCHEDULER_EXPORT     "Exports scheduled tasks to a file..."
-    IDS_SCHEDULER_TASK_DONETODAY "Done Today"
     IDS_SCHEDULER_SELECTADAY "You should select at least one day of week."
 END
 

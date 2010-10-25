@@ -195,7 +195,7 @@ protected:
 	afx_msg void OnHelpUpdate();
 	afx_msg void OnHelpRouter();
 	afx_msg void OnHelpSecurity();
-	afx_msg void OnHelpScheduler();
+//	afx_msg void OnHelpScheduler();
 	afx_msg void OnHelpCodec();
 	afx_msg void OnHelpTorrent();
 	afx_msg void OnUpdateViewTraffic(CCmdUI* pCmdUI);
@@ -290,6 +290,7 @@ protected:
 	afx_msg LRESULT OnSanityCheck(WPARAM wParam, LPARAM lParam);
 	afx_msg LRESULT OnNowUploading(WPARAM wParam, LPARAM lParam);
 	afx_msg UINT OnPowerBroadcast(UINT nPowerEvent, UINT nEventData);
+	afx_msg BOOL OnCopyData(CWnd* pWnd,COPYDATASTRUCT* pCopyDataStruct);
 
 	DECLARE_MESSAGE_MAP()
 	DECLARE_DROP()

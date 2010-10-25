@@ -37,9 +37,7 @@
 #include "EDNeighbour.h"
 #include "DCNeighbour.h"
 #include "Neighbours.h"
-#include "Scheduler.h"
 
-// If we are compiling in debug mode, replace the text "THIS_FILE" in the code with the name of this file
 #ifdef _DEBUG
 #undef THIS_FILE
 static char THIS_FILE[]=__FILE__;
@@ -1231,17 +1229,6 @@ DWORD CNeighboursWithConnect::CalculateSystemPerformanceScore(BOOL bDebug)
 	{
 		nRating++;
 		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("Stable for 8 hours") );
-	}
-
-	// If the scheduler isn't enabled, award another point
-	if ( !Settings.Scheduler.Enable )
-	{
-		nRating++;
-	}
-	else if( Scheduler.GetHoursTo(BANDWIDTH_STOP|SYSTEM_DISCONNECT|SYSTEM_EXIT|SYSTEM_SHUTDOWN ) > 4)
-	{
-		nRating++;
-		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("Scheduler won't shutdown or disconnect in the next 4 hours") );
 	}
 
 	//Having more CPUs has significant effect on performance

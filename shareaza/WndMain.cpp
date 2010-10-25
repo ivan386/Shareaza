@@ -46,12 +46,11 @@
 #include "BTInfo.h"
 #include "Skin.h"
 #include "SkinWindow.h"
-#include "Scheduler.h"
 #include "DlgHelp.h"
 #include "LibraryHistory.h"
 #include "SharedFile.h"
 #include "DiscoveryServices.h"
-#include "DlgDonkeyImport.h"
+#include "Scheduler.h"
 
 #include "WndMain.h"
 #include "WndChild.h"
@@ -75,24 +74,25 @@
 #include "WndIRC.h"
 #include "WizardSheet.h"
 
-#include "DlgSettingsManager.h"
-#include "DlgShareManager.h"
 #include "DlgAbout.h"
+#include "DlgCloseMode.h"
 #include "DlgConnectTo.h"
-#include "DlgNewSearch.h"
+#include "DlgDonkeyImport.h"
 #include "DlgDownload.h"
-#include "DlgURLAction.h"
-#include "DlgUpgrade.h"
 #include "DlgDownloadMonitor.h"
 #include "DlgExistingFile.h"
 #include "DlgFilePreview.h"
 #include "DlgLanguage.h"
+#include "DlgNewSearch.h"
 #include "DlgProfileManager.h"
-#include "DlgWarnings.h"
 #include "DlgPromote.h"
-#include "DlgCloseMode.h"
-#include "DlgTorrentSeed.h"
 #include "DlgScheduleTask.h"
+#include "DlgSettingsManager.h"
+#include "DlgShareManager.h"
+#include "DlgTorrentSeed.h"
+#include "DlgURLAction.h"
+#include "DlgUpgrade.h"
+#include "DlgWarnings.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -284,7 +284,8 @@ BEGIN_MESSAGE_MAP(CMainWnd, CMDIFrameWnd)
 	ON_MESSAGE(WM_SANITY_CHECK, &CMainWnd::OnSanityCheck)
 	ON_MESSAGE(WM_NOWUPLOADING, &CMainWnd::OnNowUploading)
 	ON_WM_POWERBROADCAST()
-	END_MESSAGE_MAP()
+	ON_WM_COPYDATA()
+END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CMainWnd construction
@@ -514,13 +515,9 @@ int CMainWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		PostMessage( WM_COMMAND, ID_HELP_PROMOTE );
 	}
 
-	Scheduler.CheckSchedule();	// Now we are sure main window is valid
-
 	// If it is the first run we will connect only in the QuickStart Wizard
-	// If Scheduler is enabled let it decide when to connect
 	if (  Settings.Connection.AutoConnect &&
-		! Settings.Live.FirstRun &&
-		! Settings.Scheduler.Enable )
+		! Settings.Live.FirstRun )
 	{
 		PostMessage( WM_COMMAND, ID_NETWORK_CONNECT );
 	}
@@ -856,9 +853,6 @@ void CMainWnd::OnTimer(UINT_PTR nIDEvent)
 		// Periodic cleanup
 		PurgeDeletes();
 
-		// Scheduler
-		Scheduler.CheckSchedule();
-		
 		if ( tNow - tLast60SecInterval > 60 )
 		{
 			tLast60SecInterval = tNow;
@@ -3071,4 +3065,19 @@ UINT CMainWnd::OnPowerBroadcast(UINT nPowerEvent, UINT nEventData)
 	}
 
 	return CMDIFrameWnd::OnPowerBroadcast( nPowerEvent, nEventData );
+}
+
+BOOL CMainWnd::OnCopyData(CWnd* /*pWnd*/, COPYDATASTRUCT* pCopyDataStruct)
+{
+	if ( pCopyDataStruct )
+	{
+		switch ( pCopyDataStruct->dwData )
+		{
+		case COPYDATA_SCHEDULER:
+			CScheduler::Execute( CString( (LPCTSTR)pCopyDataStruct->lpData,
+				(int)( pCopyDataStruct->cbData / sizeof( TCHAR ) ) ) );
+			break;
+		}
+	}
+	return TRUE;
 }

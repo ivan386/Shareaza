@@ -270,6 +270,9 @@ CString ResolveShortcut(LPCTSTR lpszFileName);
 // Get Win32 API error description
 CString GetErrorString(DWORD dwError = GetLastError());
 
+// Show message box using GetErrorString() message
+void ReportError(DWORD dwError = GetLastError());
+
 // Displays a dialog box enabling the user to select a Shell folder
 CString BrowseForFolder(UINT nTitle, LPCTSTR szInitialPath = NULL, HWND hWnd = NULL);
 CString BrowseForFolder(LPCTSTR szTitle, LPCTSTR szInitialPath = NULL, HWND hWnd = NULL);
@@ -357,6 +360,9 @@ __int64 GetRandomNum<__int64>(const __int64& min, const __int64& max);
 #define WM_NOWUPLOADING		(WM_APP+117)	// New upload notification ( WPARAM: unused, LPARAM: CString* pFilename )
 #define WM_TORRENT			(WM_APP+118)	// Open torrent file ( WPARAM: LPTSTR szFilename, LPARAM: unused )
 #define WM_IMPORT			(WM_APP+119)	// Import hub list file ( WPARAM: LPTSTR szFilename, LPARAM: unused )
+
+// WM_COPYDATA types
+#define COPYDATA_SCHEDULER	0				// Scheduler task ( lpData: LPCTSTR szTaskData - encoded string )
 
 #define ID_PLUGIN_FIRST	27000
 #define ID_PLUGIN_LAST	27999

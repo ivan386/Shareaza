@@ -1,5 +1,5 @@
 //
-// DlgScheduleItem.h
+// DlgScheduleTask.h
 //
 // Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
@@ -21,89 +21,82 @@
 
 #pragma once
 
-#include "DlgSkinDialog.h"
-
-class CScheduleTask;
+#include "PagePropertyAdv.h"
 
 //////////////////////////////////////////////////////////////////////
 // CScheduleTaskDlg class: Schedule Item Dialog
-//////////////////////////////////////////////////////////////////////
 
-class CScheduleTaskDlg : public CSkinDialog
+class CScheduleTaskDlg : public CPropertySheetAdv
 {
-// Construction
-public:
-	CScheduleTaskDlg(CWnd* pParent = NULL, CScheduleTask* pSchTask = NULL);
-	virtual ~CScheduleTaskDlg();
+	DECLARE_DYNAMIC(CScheduleTaskDlg)
 
-// Dialog Data
 public:
-	enum { IDD = IDD_SCHEDULE_TASK };
+	CScheduleTaskDlg(LPCTSTR szTaskName = NULL);
 
-	CScheduleTask		*m_pScheduleTask;
-	bool				m_bSpecificDays;
-	unsigned int		m_nAction;
-	unsigned int		m_nDays;
-	CString				m_sDescription;
-	CTime				m_tDateAndTime;
-	bool				m_bActive;
-	bool				m_bNew;
-	bool				m_bHasValidityPeriod;
-	BOOL				m_bToggleBandwidth;
-	BOOL				m_bLimitedNetworks;
-	int					m_nLimit;
-	int					m_nLimitDown;
-	int					m_nLimitUp;
-	int					m_nValidityPeriod;
+	virtual INT_PTR DoModal(int nPage = -1);
 
 protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+	CString			m_sTaskName;
+	bool			m_bNew;
+	CString			m_sActionTitle;
+	HPROPSHEETPAGE	m_phPages[ 4 ];
+
+#ifdef _DEBUG
+	virtual void AssertValid() const;
+#endif
+
 	virtual BOOL OnInitDialog();
-	virtual void OnOK();
+	virtual void BuildPropPageArray();
 
-	afx_msg void OnBnClickedOnlyonce();
-	afx_msg void OnBnClickedToggleBandwidth();
-	afx_msg void OnDtnDatetimechangeDate(NMHDR *pNMHDR, LRESULT *pResult);
-	afx_msg void OnDtnDatetimechangeTime(NMHDR *pNMHDR, LRESULT *pResult);
-	afx_msg void OnBnClickedEveryday();
-	afx_msg void OnBnClickedActive();
-	afx_msg void OnCbnSelchangeEventtype();
-	afx_msg void OnBnClickedButtonAllDays();
-	afx_msg void OnBnClickedRadioVpDisable();
-	afx_msg void OnBnClickedRadioVpEnable();
-
-	void EnableDaysOfWeek(bool bEnable);
+	afx_msg LRESULT OnKickIdle(WPARAM, LPARAM);
 
 	DECLARE_MESSAGE_MAP()
+};
+
+
+class CScheduleTaskPage : public CPropertyPageAdv
+{
+	DECLARE_DYNAMIC(CScheduleTaskPage)
 
 public:
-	CEdit				m_wndLimitedEdit;
-	CComboBox			m_wndTypeSel;
+	CScheduleTaskPage();
+
+	enum { IDD = IDD_SCHEDULE_TASK };
+
+	int					m_nAction;
+	int					m_nLimitDown;
+	int					m_nLimitUp;
+	BOOL				m_bG1;
+	BOOL				m_bG2;
+	BOOL				m_bED2K;
+	BOOL				m_bDC;
+	BOOL				m_bBT;
+
+	HPROPSHEETPAGE Create(BOOL bWizard);
+
+protected:
+	CComboBox			m_wndAction;
+	BOOL				m_bToggleBandwidth;
+	CButton				m_wndToggleBandwidth;
 	CEdit				m_wndLimitedEditDown;
-	CEdit				m_wndLimitedEditUp;
-	CButton				m_wndLimitedCheck;
-	CButton				m_wndLimitedCheckTgl;
-	CStatic				m_wndLimitedStatic;
-	CStatic				m_wndLimitedStaticDown;
-	CStatic				m_wndLimitedStaticUp;
-	CButton				m_wndActiveCheck;
-	CDateTimeCtrl		m_wndDate;
-	CDateTimeCtrl		m_wndTime;
-	CSpinButtonCtrl		m_wndSpin;
 	CSpinButtonCtrl		m_wndSpinDown;
+	CEdit				m_wndLimitedEditUp;
 	CSpinButtonCtrl		m_wndSpinUp;
-	CButton				m_wndRadioOnce;
-	CButton				m_wndRadioEveryDay;
-	CButton				m_wndChkDaySun;
-	CButton				m_wndChkDayMon;
-	CButton				m_wndChkDayTues;
-	CButton				m_wndChkDayWed;
-	CButton				m_wndChkDayThu;
-	CButton				m_wndChkDayFri;
-	CButton				m_wndChkDaySat;
-	CStatic				m_wndGrpBoxDayOfWeek;
-	CButton				m_wndBtnAllDays;
-	CButton				m_wndVPEnableRadio;	
-	CEdit				m_wndVPMinutesEdit;
-	CButton				m_wndVPDisableRadio;
+	CButton				m_wndG1;
+	CButton				m_wndG2;
+	CButton				m_wndED2K;
+	CButton				m_wndDC;
+	CButton				m_wndBT;
+
+	virtual BOOL OnInitDialog();
+	virtual void DoDataExchange(CDataExchange* pDX);
+	
+	void Update();
+
+	afx_msg void OnBnClickedSchedulerToggleBandwidth();
+	afx_msg void OnEnChangeSchedulerLimitedDown();
+	afx_msg void OnEnChangeSchedulerLimitedUp();
+	afx_msg void OnCbnSelchangeEventtype();
+
+	DECLARE_MESSAGE_MAP()
 };

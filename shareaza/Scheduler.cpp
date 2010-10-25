@@ -18,15 +18,6 @@
 // along with Shareaza; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-//Explanation:
-//Scheduler module consists of four objects which work together to setup and execute
-//user defined tasks. These objects are:
-//ScheduleTask: Keeps type and time of execution for a particular task.
-//Scheduler: Keeps a list of ScheduleTasks. Iterates through tasks to see if time has come
-//for tasks and sets global Settings.Scheduler.Enable if not.
-//WndScheduler: The window which shows the list of ScheduleTasks and gives user
-//the ability to add, edit, remove, export or import tasks.
-//DlgScheduleTask: A dialog to edit or create a ScheduleTask.
 
 #include "StdAfx.h"
 #include "Shareaza.h"
@@ -37,697 +28,183 @@
 #include "XML.h"
 #include "Network.h"
 
-CScheduler Scheduler;
-
-//////////////////////////////////////////////////////////////////////
-// CScheduler load and save
-
-BOOL CScheduler::Load()
+void CScheduler::Execute(const CString& sTaskData)
 {
-	CQuickLock oLock( Scheduler.m_pSection );
-	CFile pFile;
-	CString strFile = Settings.General.UserPath + _T("\\Data\\SchTasks.dat");
+	int nAction, nLimitDown, nLimitUp, nDisabled, nEnabled;
+	if ( _stscanf( sTaskData, _T("%d:%d:%d:%d:%d"),
+		&nAction, &nLimitDown, &nLimitUp, &nDisabled, &nEnabled ) != 5 ||
+		nAction < BANDWIDTH_FULLSPEED || nAction > SYSTEM_START ||
+		nLimitDown < 0 || nLimitDown > 100 ||
+		nLimitUp < 0 || nLimitUp > 100 ||
+		nDisabled < 0 ||
+		nEnabled < 0 )
+		// Invalid argument
+		return;
 
-	// Try to open the scheduler file
-	if ( ! pFile.Open( strFile, CFile::modeRead ) ) 
+	if ( nAction == BANDWIDTH_FULLSPEED ||
+		 nAction == BANDWIDTH_REDUCEDSPEED )
 	{
-		theApp.Message( MSG_ERROR, _T("Failed to open SchTasks.dat") );
-		return FALSE;
-	}
-	try
-	{
-		CArchive ar( &pFile, CArchive::load );	// 4 KB buffer
-
-		Serialize( ar );
-		ar.Close();
-	}
-	catch ( CException* pException )
-	{
-		pException->Delete();
-	}
-
-	pFile.Close();
-
-	return TRUE;
-}
-
-BOOL CScheduler::Save()
-{
-	CQuickLock oLock( Scheduler.m_pSection );
-	CString strFile = Settings.General.UserPath + _T("\\Data\\SchTasks.dat");
-
-	CFile pFile;
-	if ( ! pFile.Open( strFile, CFile::modeWrite|CFile::modeCreate ) )
-		return FALSE;
-
-	try
-	{
-		CArchive ar( &pFile, CArchive::store );	// 4 KB buffer
-		try
-		{
-			Serialize( ar );
-			ar.Close();
-		}
-		catch ( CException* pException )
-		{
-			ar.Abort();
-			pFile.Abort();
-			pException->Delete();
-			return FALSE;
-		}
-		pFile.Close();
-	}
-	catch ( CException* pException )
-	{
-		pFile.Abort();
-		pException->Delete();
-		return FALSE;
-	}
-
-
-	return TRUE;
-}
-
-//////////////////////////////////////////////////////////////////////
-// CScheduler serialize
-
-void CScheduler::Serialize(CArchive& ar)
-{
-	int nVersion = SCHEDULER_SER_VERSION;
-
-	if ( ar.IsStoring() )
-	{
-		ar << nVersion;
-
-		// Write the number of scheduled tasks
-		ar.WriteCount( GetCount() );
-		for ( POSITION pos = GetIterator() ; pos ; )
-		{
-			// Get a pointer to each task
-			CScheduleTask *pSchTask = GetNext( pos );
-			// Store each task's data
-			pSchTask->Serialize( ar, nVersion );
-		}
-	}
-	else
-	{
-		// First clear any existing tasks
-		Clear();
-
-		ar >> nVersion;
-
-		// Read the number of tasks to load
-		for ( int nNumTasks = ar.ReadCount(); nNumTasks > 0; nNumTasks-- )
-		{
-			// Create a new instance of each task
-			CScheduleTask *pSchTask = new CScheduleTask();
-			// Read each task's data
-			pSchTask->Serialize( ar,nVersion );
-			// Add the task to the task list
-			m_pScheduleTasks.AddTail( pSchTask );
-		}
-	}
-}
-
-//////////////////////////////////////////////////////////////////////
-// CScheduleTask construction
-
-CScheduleTask::CScheduleTask(BOOL bCreate)
-{
-	m_nDays = 0x7F; //All days of week
-	m_bSpecificDays = false;
-	m_nAction = 0;		//Invalid value
-	m_sDescription = "";
-	m_tScheduleDateTime = 0;
-	m_bHasValidityPeriod = true;
-	m_nValidityPeriod = 10;
-	m_bActive = false;
-	m_bExecuted = false;
-
-	if ( bCreate ) CoCreateGuid( &m_pGUID );
-}
-
-CScheduleTask::CScheduleTask(const CScheduleTask& pSchTask)
-{
-	*this = pSchTask;
-}
-
-CScheduleTask::~CScheduleTask()
-{
-}
-
-//////////////////////////////////////////////////////////////////////
-// CScheduleTask class
-//////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////
-// CScheduleTask serialize
-
-void CScheduleTask::Serialize(CArchive& ar, int nVersion)
-{
-	if ( ar.IsStoring() )
-	{
-		// Store all task variables
-		if ( nVersion == 1 )
-		{
-			ar << m_bSpecificDays;
-			ar << m_nAction;
-			ar << m_sDescription;
-			ar << m_tScheduleDateTime;
-			ar << m_bActive;
-			ar << m_bExecuted;
-			ar << m_nLimit;
-			ar << m_nLimitDown;
-			ar << m_nLimitUp;
-			ar << m_bToggleBandwidth;
-			ar << m_bLimitedNetworks;
-			ar << m_nDays;
-			ar.Write( &m_pGUID, sizeof( GUID ) );
-		}
-		else if ( nVersion == 2 )
-		{
-			ar << m_bSpecificDays;
-			ar << m_nAction;
-			ar << m_sDescription;
-			ar << m_tScheduleDateTime;
-			ar << m_bActive;
-			ar << m_bExecuted;
-			ar << m_nLimit;
-			ar << m_nLimitDown;
-			ar << m_nLimitUp;
-			ar << m_bToggleBandwidth;
-			ar << m_bLimitedNetworks;
-			ar << m_nDays;
-			ar << m_bHasValidityPeriod;
-			ar << m_nValidityPeriod;
-			ar.Write( &m_pGUID, sizeof(GUID) );
-		}
-	}
-	else
-	{
-		// Load all task variables
-		if ( nVersion == 1 )
-		{
-			ar >> m_bSpecificDays;
-			ar >> m_nAction;
-			ar >> m_sDescription;
-			ar >> m_tScheduleDateTime;
-			ar >> m_bActive;
-			ar >> m_bExecuted;
-			ar >> m_nLimit;
-			ar >> m_nLimitDown;
-			ar >> m_nLimitUp;
-			ar >> m_bToggleBandwidth;
-			ar >> m_bLimitedNetworks;
-			ar >> m_nDays;
-			m_bHasValidityPeriod = true;
-			m_nValidityPeriod = 10;
-			ReadArchive( ar, &m_pGUID, sizeof(GUID) );
-		}
-		else if ( nVersion == 2 )
-		{
-			// Load all task variables
-			ar >> m_bSpecificDays;
-			ar >> m_nAction;
-			ar >> m_sDescription;
-			ar >> m_tScheduleDateTime;
-			ar >> m_bActive;
-			ar >> m_bExecuted;
-			ar >> m_nLimit;
-			ar >> m_nLimitDown;
-			ar >> m_nLimitUp;
-			ar >> m_bToggleBandwidth;
-			ar >> m_bLimitedNetworks;
-			ar >> m_nDays;
-			ar >> m_bHasValidityPeriod;
-			ar >> m_nValidityPeriod;
-			ReadArchive( ar, &m_pGUID, sizeof( GUID ) );
-		}
-	}
-}
-/////////////////////////////////////////////////////////////////////
-// CSchedulerTask XML
-
-CXMLElement* CScheduleTask::ToXML(int nVersion)
-{
-	CXMLElement* pXML = new CXMLElement( NULL, _T("task") );
-	CString strValue;
-	if ( nVersion == 2)
-	{
-		if ( m_sDescription.GetLength() )
-		{
-			pXML->AddAttribute( _T("description"), m_sDescription );
-		}
-
-		switch ( m_nAction )
-		{
-		case BANDWIDTH_FULL_SPEED:
-			pXML->AddAttribute( _T("action"), _T("Bandwidth - Full Speed") );
-			break;
-		case BANDWIDTH_REDUCED_SPEED:
-			pXML->AddAttribute( _T("action"), _T("Bandwidth - Reduced Speed") );
-			break;
-		case BANDWIDTH_STOP:
-			pXML->AddAttribute( _T("action"), _T("Bandwidth - Stop") );
-			break;
-		case SYSTEM_DISCONNECT:
-			pXML->AddAttribute( _T("action"), _T("System - Dial-Up Disconnect") );
-			break;
-		case SYSTEM_EXIT: 
-			pXML->AddAttribute( _T("action"), _T("System - Exit Shareaza") );
-			break;
-		case SYSTEM_SHUTDOWN:
-			pXML->AddAttribute( _T("action"), _T("System - Shutdown") );
-			break;
-		}
-
-		strValue.Format(_T("%I64i"), m_tScheduleDateTime.GetTime());
-		pXML->AddAttribute( _T("time"), strValue );
-
-
-		if( m_bActive )
-			pXML->AddAttribute( _T("active"), _T("Yes") );
+		if ( nEnabled & 1 )
+			Settings.Gnutella1.EnableToday = TRUE;
+		else if ( nDisabled & 1 )
+			Settings.Gnutella1.EnableToday = FALSE;
 		else
-			pXML->AddAttribute( _T("active"), _T("No") );
-
-		if ( m_bSpecificDays )
-			pXML->AddAttribute( _T("specificdays"), _T("Yes") );
+			Settings.Gnutella1.EnableToday = Settings.Gnutella1.EnableAlways;
+		
+		if ( nEnabled & 2 )
+			Settings.Gnutella2.EnableToday = TRUE;
+		else if ( nDisabled & 2 )
+			Settings.Gnutella2.EnableToday = FALSE;
 		else
-			pXML->AddAttribute( _T("specificdays"), _T("No") );
-
-		if ( m_bExecuted )
-			pXML->AddAttribute( _T("executed"), _T("Yes") );
+			Settings.Gnutella2.EnableToday = Settings.Gnutella2.EnableAlways;
+		
+		if ( nEnabled & 4 )
+			Settings.eDonkey.EnableToday = TRUE;
+		else if ( nDisabled & 4 )
+			Settings.eDonkey.EnableToday = FALSE;
 		else
-			pXML->AddAttribute( _T("executed"), _T("No") );
-
-		if ( m_bToggleBandwidth )
-			pXML->AddAttribute( _T("tglbandwidth"), _T("Yes") );
+			Settings.eDonkey.EnableToday = Settings.eDonkey.EnableAlways;
+		
+		if ( nEnabled & 8 )
+			Settings.DC.EnableToday = TRUE;
+		else if ( nDisabled & 8 )
+			Settings.DC.EnableToday = FALSE;
 		else
-			pXML->AddAttribute( _T("tglbandwidth"), _T("No") );
-
-		if ( m_bLimitedNetworks )
-			pXML->AddAttribute( _T("limitednet"), _T("Yes") );
+			Settings.DC.EnableToday = Settings.DC.EnableAlways;
+		
+		if ( nEnabled & 16 )
+			Settings.BitTorrent.EnableToday = TRUE;
+		else if ( nDisabled & 16 )
+			Settings.BitTorrent.EnableToday = FALSE;
 		else
-			pXML->AddAttribute( _T("limitednet"), _T("No") );
-
-		strValue.Format( _T("%i") , m_nLimit);
-		pXML->AddAttribute( _T("limit"), strValue );
-
-		strValue.Format( _T("%i") , m_nLimitDown );
-		pXML->AddAttribute( _T("limitdown"), strValue );
-
-		strValue.Format( _T("%i") , m_nLimitUp );
-		pXML->AddAttribute( _T("limitup"), strValue );
-
-		strValue.Format( _T("%i|%i|%i|%i|%i|%i|%i") , (m_nDays & SUNDAY) != 0, 
-			(m_nDays & MONDAY) != 0,
-			(m_nDays & TUESDAY) != 0, 
-			(m_nDays & WEDNESDAY) != 0, 
-			(m_nDays & THURSDAY) != 0, 
-			(m_nDays & FRIDAY) != 0, 
-			(m_nDays & SATURDAY) != 0);
-
-		pXML->AddAttribute( _T("days"), strValue );
-
-		wchar_t szGUID[39];
-		szGUID[ StringFromGUID2( *(GUID*)&m_pGUID, szGUID, 39 ) - 2 ] = 0;
-		pXML->AddAttribute( _T("guid"), (CString)&szGUID[1] );
-
-		if ( m_bHasValidityPeriod )
-			pXML->AddAttribute( _T("has_validity_period"), _T("Yes") );
-		else
-			pXML->AddAttribute( _T("has_validity_period"), _T("No") );
-
-		strValue.Format( _T("%i") , m_nValidityPeriod);
-		pXML->AddAttribute( _T("validity_period"), strValue );
+			Settings.BitTorrent.EnableToday = Settings.BitTorrent.EnableAlways;
 	}
-	return pXML;
-}
-
-BOOL CScheduleTask::FromXML( CXMLElement* pXML, int nVersion)
-{
-	CString strValue;
-	if ( nVersion == 2 )
+	
+	switch ( nAction )
 	{
-		m_sDescription = pXML->GetAttributeValue( _T("description") );
-
-		strValue = pXML->GetAttributeValue( _T("action") );
-
-		if ( strValue.CompareNoCase( _T("Bandwidth - Full Speed") ) == 0 )
-		{
-			m_nAction = BANDWIDTH_FULL_SPEED;
-		}
-		else if ( strValue.CompareNoCase( _T("Bandwidth - Reduced Speed") ) == 0 )
-		{
-			m_nAction = BANDWIDTH_REDUCED_SPEED;
-		}
-		else if ( strValue.CompareNoCase( _T("Bandwidth - Stop") ) == 0 )
-		{
-			m_nAction = BANDWIDTH_STOP;
-		}
-		else if ( strValue.CompareNoCase( _T("System - Dial-Up Disconnect") ) == 0 )
-		{
-			m_nAction = SYSTEM_DISCONNECT;
-		}
-		else if ( strValue.CompareNoCase( _T("System - Exit Shareaza") ) == 0 )
-		{
-			m_nAction = SYSTEM_EXIT;
-		}
-		else if ( strValue.CompareNoCase( _T("System - Shutdown") ) == 0 )
-		{
-			m_nAction = SYSTEM_SHUTDOWN;
-		}
-		else
-		{
-			return FALSE;
-		}
-
-		strValue = pXML->GetAttributeValue( _T("time") );
-		__time64_t tTemp;
-		if( _stscanf( strValue, _T("%I64i"), &tTemp ) == EOF ) return FALSE;
-		if( tTemp > 0 )
-			m_tScheduleDateTime = tTemp;
-		else
-			return FALSE;
-
-
-		strValue = pXML->GetAttributeValue( _T("active") );
-		if( strValue.CompareNoCase( _T("Yes") ) == 0 )
-			m_bActive = TRUE;
-		else if( strValue.CompareNoCase( _T("No") ) == 0 )
-			m_bActive = FALSE;
-		else
-			return FALSE;
-
-		strValue = pXML->GetAttributeValue( _T("specificdays") );
-		if( strValue.CompareNoCase( _T("Yes") ) == 0 )
-			m_bSpecificDays = TRUE;
-		else if( strValue.CompareNoCase( _T("No") ) == 0 )
-			m_bSpecificDays = FALSE;
-		else
-			return FALSE;
-
-		strValue = pXML->GetAttributeValue( _T("executed") );
-		if( strValue.CompareNoCase( _T("Yes") ) == 0 )
-			m_bExecuted = TRUE;
-		else if( strValue.CompareNoCase( _T("No") ) == 0 )
-			m_bExecuted = FALSE;
-		else
-			return FALSE;
-
-		strValue = pXML->GetAttributeValue( _T("tglbandwidth") );
-		if( strValue.CompareNoCase( _T("Yes") ) == 0 )
-			m_bToggleBandwidth = TRUE;
-		else if( strValue.CompareNoCase( _T("No") ) == 0 )
-			m_bToggleBandwidth = FALSE;
-		else
-			return FALSE;
-
-		strValue = pXML->GetAttributeValue( _T("limitednet") );
-		if( strValue.CompareNoCase( _T("Yes") ) == 0 )
-			m_bLimitedNetworks = TRUE;
-		else if( strValue.CompareNoCase( _T("No") ) == 0 )
-			m_bLimitedNetworks = FALSE;
-		else
-			return FALSE;
-
-		strValue = pXML->GetAttributeValue( _T("limit") );
-		if( _stscanf( strValue, _T("%i"), &m_nLimit) == EOF ) return FALSE;
-
-		strValue = pXML->GetAttributeValue( _T("limitdown") );
-		if( _stscanf( strValue, _T("%i"), &m_nLimitDown) == EOF ) return FALSE;
-
-		strValue = pXML->GetAttributeValue( _T("limitup") );
-		if( _stscanf( strValue, _T("%i"), &m_nLimitUp) == EOF ) return FALSE;
-
-		strValue = pXML->GetAttributeValue( _T("days") );
-
-		//_wtoi returns 0 on failure so bad data won't crash the application
-		m_nDays = 0;
-		wchar_t wcTmp;
-		wcTmp = strValue[0];
-		if( _wtoi(&wcTmp )) m_nDays |= SUNDAY; 
-		wcTmp = strValue[2];
-		if( _wtoi(&wcTmp )) m_nDays |= MONDAY;
-		wcTmp = strValue[4];
-		if( _wtoi(&wcTmp )) m_nDays |= TUESDAY; 
-		wcTmp =	strValue[6];
-		if( _wtoi(&wcTmp) ) m_nDays |= WEDNESDAY;
-		wcTmp =	strValue[8];
-		if( _wtoi(&wcTmp) ) m_nDays |= THURSDAY;
-		wcTmp = strValue[10];
-		if( _wtoi(&wcTmp) ) m_nDays |= FRIDAY;
-		wcTmp = strValue[12];
-		if( _wtoi(&wcTmp) ) m_nDays |= SATURDAY;
-
-		strValue = pXML->GetAttributeValue( _T("has_validity_period") );
-		if( strValue.CompareNoCase( _T("Yes") ) == 0 )
-			m_bHasValidityPeriod = TRUE;
-		else if( strValue.CompareNoCase( _T("No") ) == 0 )
-			m_bHasValidityPeriod = FALSE;
-		else
-			return FALSE;
-
-		strValue = pXML->GetAttributeValue( _T("validity_period") );
-		if( _stscanf( strValue, _T("%i"), &m_nValidityPeriod) == EOF ) return FALSE;
-	}
-	return TRUE;
-}
-
-//////////////////////////////////////////////////////////////////////
-// CScheduler class
-//////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////
-// CScheduler construction
-
-CScheduler::CScheduler()
-{
-
-}
-
-CScheduler::~CScheduler()
-{
-	Clear();
-}
-
-//////////////////////////////////////////////////////////////////////
-//GUID
-
-CScheduleTask* CScheduler::GetGUID(const GUID& pGUID) const
-{
-	CQuickLock oLock( m_pSection );
-
-	for ( POSITION pos = m_pScheduleTasks.GetHeadPosition() ; pos ; )
-	{
-		CScheduleTask* pSchTask = m_pScheduleTasks.GetNext( pos );
-		if ( pSchTask->m_pGUID == pGUID )
-			return pSchTask;
-	}
-
-	return NULL;
-}
-
-//////////////////////////////////////////////////////////////////////
-// CScheduler item modification
-
-void CScheduler::Add(CScheduleTask* pSchTask)
-{
-	CQuickLock oLock( m_pSection );
-
-	CScheduleTask* pExistingTask = GetGUID( pSchTask->m_pGUID );
-	if ( pExistingTask == NULL )
-	{
-		m_pScheduleTasks.AddHead( pSchTask );
-	}
-	else if ( pExistingTask != pSchTask )
-	{
-		*pExistingTask = *pSchTask;
-		delete pSchTask;
-	}
-}
-
-void CScheduler::Remove(CScheduleTask* pSchTask)
-{
-	CQuickLock oLock( m_pSection );
-
-	POSITION pos = m_pScheduleTasks.Find( pSchTask );
-	if ( pos )
-		m_pScheduleTasks.RemoveAt( pos );
-	delete pSchTask;
-}
-
-void CScheduler::Clear()
-{
-	CQuickLock oLock( m_pSection );
-
-	for ( POSITION pos = GetIterator() ; pos ; )
-	{
-		delete GetNext( pos );
-	}
-
-	m_pScheduleTasks.RemoveAll();
-}
-
-
-//////////////////////////////////////////////////////////////////////
-// CScheduler schedule checking
-
-void CScheduler::CheckSchedule()
-{
-	//m_tLastCheckTicks = 0;
-	bool bSchedulerIsEnabled = false;
-	CTime tNow = CTime::GetCurrentTime();
-
-	//Enable it to test GetHoursTo()
-	//int nHoursToDisconnect = Scheduler.GetHoursTo(BANDWIDTH_STOP|SYSTEM_DISCONNECT|SYSTEM_EXIT|SYSTEM_SHUTDOWN );
-	//theApp.Message( MSG_DEBUG, _T("Calculated time to disconnect is %i hours."), nHoursToDisconnect );
-
-	CQuickLock oLock( m_pSection );
-	for ( POSITION pos = GetIterator() ; pos ; )
-	{
-		CScheduleTask *pSchTask = GetNext( pos );
-
-		// Check if a task should be executed
-		if ( pSchTask->m_bActive )
-		{	//We always ignore deactivated tasks
-			bSchedulerIsEnabled = true;
-
-			//Shorter if structure
-			if ( pSchTask->m_bExecuted )
-			{
-				//Task is executed and active. The task is either "Only Once" or "Specific Day(s) of Week"
-				//In the first case if the date is for the days passed, its a task not executed and expired
-				//In the second case it should be marked as not executed so in the next CheckSchedule() call 
-				//it will enter else block.
-				if ( !pSchTask->m_bSpecificDays || ( ScheduleDateFromToday( pSchTask ) < 0 ) )
-					pSchTask->m_bExecuted = false;
-			}
-			else
-			{
-				int nMinutesPassed = MinutesPassed( pSchTask );
-				//Time is passed so task should be executed if one of two conditions is met
-				if ( nMinutesPassed >= 0 )
-				{	//It is scheduled for a specific date and time ("Only Once"). Checking for date
-					if ( ( !pSchTask->m_bSpecificDays && ScheduleDateFromToday( pSchTask ) == 0 )  || 
-						//Or, it is scheduled for specific days of week. Checking for day
-						( pSchTask->m_bSpecificDays &&  ( ( 1 << ( tNow.GetDayOfWeek() - 1 ) ) & pSchTask->m_nDays ) ) )
-					{
-						if(!(pSchTask->m_bHasValidityPeriod && nMinutesPassed > pSchTask->m_nValidityPeriod))
-							ExecuteScheduledTask( pSchTask );
-						//Else we only mark it as executed because its expired
-						pSchTask->m_bExecuted = true;
-						//If active but not executed, scheduler will remain enabled
-						bSchedulerIsEnabled = false;
-						//Smart way for deactivating task if it is "Only Once"
-						pSchTask->m_bActive = pSchTask->m_bSpecificDays;
-						//Setting the date of task to last execution for further checks
-						pSchTask->m_tScheduleDateTime = CTime( tNow.GetYear(), tNow.GetMonth(),tNow.GetDay(), pSchTask->m_tScheduleDateTime.GetHour(), pSchTask->m_tScheduleDateTime.GetMinute(), pSchTask->m_tScheduleDateTime.GetSecond() );
-					}
-				}
-			}
-
-			/////////////////////////////////////////////////
-			Scheduler.Save();
-		}
-	}
-
-	//Scheduler is enable when an active task is scheduled
-	Settings.Scheduler.Enable = bSchedulerIsEnabled;
-}
-
-//////////////////////////////////////////////////////////////////////
-// CScheduler execute task
-// TODO: Add new tasks here 
-void CScheduler::ExecuteScheduledTask( CScheduleTask *pSchTask )
-{
-	// Execute the selected scheduled task
-	switch ( pSchTask->m_nAction )
-	{
-	case BANDWIDTH_FULL_SPEED:  // Set the bandwidth to full speed
-		theApp.Message( MSG_DEBUG, _T("Scheduler - Bandwidth: Full Speed") );
-		Settings.Live.BandwidthScale = 100;
-		Settings.Bandwidth.Downloads = 0;
+	case BANDWIDTH_FULLSPEED:
+		Settings.Live.BandwidthScale	= 100;
+		// No Limit
+		Settings.Bandwidth.Downloads	= 0;
+		// Reset upload limit to 90% of capacity, trimmed down to the nearest KB.
 		Settings.Bandwidth.Uploads = ( ( ( Settings.Connection.OutSpeed *
-			( 100 - Settings.Uploads.FreeBandwidthFactor ) ) / 100 ) / 8 ) * 1024;
-		Settings.Gnutella2.EnableToday	= TRUE;
-		Settings.Gnutella1.EnableToday	= Settings.Gnutella1.EnableAlways;
-		Settings.eDonkey.EnableToday	= Settings.eDonkey.EnableAlways;
+			( 100 - Settings.Uploads.FreeBandwidthFactor ) ) / 100 ) / Bytes ) * Kilobits;
 		if ( ! Network.IsConnected() ) Network.Connect( TRUE );
 		break;
 
-	case BANDWIDTH_REDUCED_SPEED:  // Set the bandwidth to limited speed
-		theApp.Message( MSG_DEBUG, _T("Scheduler - Bandwidth: Limited Speed") );
-
-		if ( ! pSchTask->m_bToggleBandwidth )
+	case BANDWIDTH_REDUCEDSPEED:
+		if ( nLimitDown == nLimitUp )
 		{
-			Settings.Live.BandwidthScale = pSchTask->m_nLimit;
+			Settings.Live.BandwidthScale	= nLimitDown;
+			// No Limit
+			Settings.Bandwidth.Downloads	= 0;
+			// Reset upload limit to 90% of capacity, trimmed down to the nearest KB.
 			Settings.Bandwidth.Uploads = ( ( ( Settings.Connection.OutSpeed *
-				( 100 - Settings.Uploads.FreeBandwidthFactor ) ) / 100 ) / 8 ) * 1024;
-			Settings.Bandwidth.Downloads = 0;
+				( 100 - Settings.Uploads.FreeBandwidthFactor ) ) / 100 ) / Bytes ) * Kilobits;
 		}
 		else
 		{
-			Settings.Live.BandwidthScale = 100;
-			Settings.Bandwidth.Downloads = ( ( ( Settings.Connection.InSpeed * 1024) / 8) *
-				pSchTask->m_nLimitDown ) / 100;
-			Settings.Bandwidth.Uploads = ( ( ( Settings.Connection.OutSpeed * 1024) / 8) *
-				pSchTask->m_nLimitUp ) / 100;
+			Settings.Live.BandwidthScale	= 100;
+			Settings.Bandwidth.Downloads	= ( ( Settings.Connection.InSpeed  * Kilobits / Bytes ) * nLimitDown ) / 100;
+			Settings.Bandwidth.Uploads		= ( ( Settings.Connection.OutSpeed * Kilobits / Bytes ) * nLimitUp   ) / 100;
 		}
-		Settings.Gnutella2.EnableToday	= TRUE;
-		Settings.Gnutella1.EnableToday	= pSchTask->m_bLimitedNetworks ? FALSE :Settings.Gnutella1.EnableAlways;
-		Settings.eDonkey.EnableToday	= pSchTask->m_bLimitedNetworks ? FALSE :Settings.eDonkey.EnableAlways;
 		if ( ! Network.IsConnected() ) Network.Connect( TRUE );
 		break;
 
-	case BANDWIDTH_STOP:	// Set the bandwidth to 0 and disconnect all networks
-		theApp.Message( MSG_DEBUG, _T("Scheduler - Bandwidth: Stop") );
-		Settings.Live.BandwidthScale = 0;
-		Settings.Gnutella2.EnableToday	= FALSE;
+	case BANDWIDTH_STOP:
+		Settings.Live.BandwidthScale	= 0;
 		Settings.Gnutella1.EnableToday	= FALSE;
+		Settings.Gnutella2.EnableToday	= FALSE;
 		Settings.eDonkey.EnableToday	= FALSE;
+		Settings.DC.EnableToday			= FALSE;
+		Settings.BitTorrent.EnableToday	= FALSE;
 		if ( Network.IsConnected() ) Network.Disconnect();
 		break;
 
-	case SYSTEM_DISCONNECT:	// Disconnect
-		theApp.Message( MSG_DEBUG, _T("Scheduler - System: Disconnect Dial-up Connection") );
-		Settings.Live.BandwidthScale = 0;
-		Settings.Gnutella2.EnableToday	= FALSE;
+	case SYSTEM_DIALUP_DC:
+		Settings.Live.BandwidthScale	= 0;
 		Settings.Gnutella1.EnableToday	= FALSE;
+		Settings.Gnutella2.EnableToday	= FALSE;
 		Settings.eDonkey.EnableToday	= FALSE;
+		Settings.DC.EnableToday			= FALSE;
+		Settings.BitTorrent.EnableToday	= FALSE;
 		if ( Network.IsConnected() ) Network.Disconnect();
-		HangUpConnection(); // Hang up the connection
+		HangUpConnection();
 		break;
 
-	case SYSTEM_EXIT:		// Exit Shareaza
-		theApp.Message( MSG_DEBUG, _T("Scheduler - System: Exit Shareaza") );
-		if ( ! PostMainWndMessage( WM_CLOSE ) )
-			theApp.Message( MSG_ERROR, _T("Scheduler failed to send CLOSE message") );
+	case SYSTEM_EXIT:
+		// Close self
+		PostMainWndMessage( WM_CLOSE );
 		break;
 
-	case SYSTEM_SHUTDOWN:	// Shut down the computer
-		theApp.Message( MSG_DEBUG, _T("Scheduler - System: Shut Down the Computer") );
-
-		// If we dont have shutdown rights
-		if (!SetShutdownRights()) 
+	case SYSTEM_SHUTDOWN:
+		// Begin shutdown
+		if ( SetShutdownRights()&& ShutDownComputer() )
 		{
-			theApp.Message( MSG_DEBUG, _T("Insufficient rights to shut down the system") );
-			return;
-		}
-		if ( ShutDownComputer() ) 
 			// Close Shareaza if shutdown successfully started
-			if ( ! PostMainWndMessage( WM_CLOSE ) )
-				theApp.Message( MSG_ERROR, _T("Scheduler failed to send CLOSE message") );
-			else
-				theApp.Message( MSG_DEBUG, _T("System shutdown failed!") );
+			PostMainWndMessage( WM_CLOSE );
+		}
 		break;
 
-	default: //Error
-		theApp.Message( MSG_ERROR, _T("Invalid task in scheduler") );
+	case SYSTEM_START:
+		// Unexpected
+		break;
 	}
 }
 
-// Disconnect a dial-up connection
+void CScheduler::Execute(HWND hWnd, const CString& sTaskData)
+{
+	DWORD_PTR dwResult;
+
+	// Execute the selected scheduled task
+	int nAction = _tstoi( sTaskData );
+	switch ( nAction )
+	{
+	case SYSTEM_DIALUP_DC:
+		if ( ! hWnd )
+		{
+			HangUpConnection();
+		}
+		return;
+
+	case SYSTEM_EXIT:
+		// Close remote Shareaza
+		if ( hWnd )
+		{
+			SendMessageTimeout( hWnd, WM_CLOSE, 0, 0, SMTO_NORMAL, 250, &dwResult );
+		}
+		return;
+
+	case SYSTEM_SHUTDOWN:
+		// Begin shutdown
+		if ( SetShutdownRights() && ShutDownComputer() )
+		{
+			// Close remote Shareaza
+			if ( hWnd )
+			{
+				SendMessageTimeout( hWnd, WM_CLOSE, 0, 0, SMTO_NORMAL, 250, &dwResult );
+			}
+		}
+		return;
+
+	case SYSTEM_START:
+		// Unexpected
+		return;
+	}
+
+	// Just pass data to already running Shareaza
+	if ( hWnd )
+	{
+		COPYDATASTRUCT cd =
+		{
+			COPYDATA_SCHEDULER,
+			sTaskData.GetLength() * sizeof( TCHAR ),
+			(PVOID)(LPCTSTR)sTaskData
+		};
+		SendMessageTimeout( hWnd, WM_COPYDATA, NULL, (WPARAM)&cd, SMTO_NORMAL, 250, &dwResult );
+	}
+}
+
 void CScheduler::HangUpConnection()
 {
 	DWORD dwCb = sizeof( RASCONN );
@@ -771,12 +248,12 @@ bool  CScheduler::ShutDownComputer()
 	int ShutdownSuccess = 0;
 	
 	// Try 2000/XP way first
-	ShutdownSuccess = InitiateSystemShutdownEx( NULL,_T("Shareaza Scheduled Shutdown\n\nA system shutdown was scheduled using Shareaza. The system will now shut down."), 30, Settings.Scheduler.ForceShutdown, FALSE, SHTDN_REASON_FLAG_USER_DEFINED );
+	ShutdownSuccess = InitiateSystemShutdownEx( NULL,_T("Shareaza Scheduled Shutdown\n\nA system shutdown was scheduled using Shareaza. The system will now shut down."), 30, FALSE, FALSE, SHTDN_REASON_FLAG_USER_DEFINED );
 	
 	// Fall back to 9x way if this does not work
 	if ( !ShutdownSuccess && GetLastError() != ERROR_SHUTDOWN_IN_PROGRESS )
 	{
-		UINT ShutdownFlags = Settings.Scheduler.ForceShutdown ? ( EWX_POWEROFF | EWX_FORCE ) : ( EWX_POWEROFF | EWX_FORCEIFHUNG ); 
+		UINT ShutdownFlags = EWX_POWEROFF; 
 		DWORD dReason;
 		dReason = ( SHTDN_REASON_MAJOR_OTHER | SHTDN_REASON_MINOR_OTHER | SHTDN_REASON_FLAG_PLANNED );
 		ShutdownSuccess = ExitWindowsEx( ShutdownFlags, dReason );
@@ -784,8 +261,7 @@ bool  CScheduler::ShutDownComputer()
 	return (ShutdownSuccess != 0);
 }
 
-// Give the process shutdown rights
-bool  CScheduler::SetShutdownRights()
+bool CScheduler::SetShutdownRights()
 {
 	HANDLE hToken; 
 	TOKEN_PRIVILEGES tkp; 
@@ -810,203 +286,4 @@ bool  CScheduler::SetShutdownRights()
 		return FALSE; 
 
 	return TRUE;
-}
-
-int CScheduler::MinutesPassed(CScheduleTask* pSchTask) const
-{
-	CTime tNow = CTime::GetCurrentTime();
-
-	if ( tNow.GetHour() < pSchTask->m_tScheduleDateTime.GetHour() )
-		return -1;
-	else
-		if ( tNow.GetHour() == pSchTask->m_tScheduleDateTime.GetHour() )
-			if ( tNow.GetMinute() < pSchTask->m_tScheduleDateTime.GetMinute() )
-				return -1;
-			else
-				if ( tNow.GetMinute() == pSchTask->m_tScheduleDateTime.GetMinute() )
-					if ( tNow.GetSecond() < pSchTask->m_tScheduleDateTime.GetSecond() )
-						return -1;
-					else
-						return 0;
-				else
-					return tNow.GetMinute() - pSchTask->m_tScheduleDateTime.GetMinute();
-		else
-			return ( tNow.GetHour() - pSchTask->m_tScheduleDateTime.GetHour() ) * 60 +
-				tNow.GetMinute() - pSchTask->m_tScheduleDateTime.GetMinute();
-}
-
-int  CScheduler::ScheduleDateFromToday(CScheduleTask* pSchTask) const
-{
-	CTime tNow  = CTime::GetCurrentTime();
-	int nDirection = 0;
-	if ( tNow.GetYear() > pSchTask->m_tScheduleDateTime.GetYear() ) 
-		nDirection = -1;
-	else
-		if ( tNow.GetYear() == pSchTask->m_tScheduleDateTime.GetYear() )
-			if ( tNow.GetMonth() > pSchTask->m_tScheduleDateTime.GetMonth() )
-				nDirection = -1;
-			else
-				if ( tNow.GetMonth() == pSchTask->m_tScheduleDateTime.GetMonth() )
-					if ( tNow.GetDay() > pSchTask->m_tScheduleDateTime.GetDay() )
-						nDirection = -1;
-					else 
-						if ( tNow.GetDay() == pSchTask->m_tScheduleDateTime.GetDay() )
-							nDirection = 0;
-						else
-							nDirection = 1;
-				else
-					nDirection = 1;
-		else
-			nDirection = 1;
-
-	return nDirection;
-}
-
-//Calculates the different between current hour and shutdown hour
-//Caller must first check to see if scheduler is enabled or not
-LONGLONG CScheduler::GetHoursTo(unsigned int nTaskCombination)
-{
-	int nHoursToTasks = 0xFFFF;
-	POSITION pos = GetIterator();
-	CTime tNow = CTime::GetCurrentTime();
-
-	CQuickLock oLock( m_pSection );
-	while ( pos )
-	{
-		CScheduleTask *pSchTask = GetNext( pos );
-		if ( pSchTask->m_bActive && ( pSchTask->m_nAction & nTaskCombination ) )
-		{
-			CTimeSpan tToTasks(1, 0, 0, 0);
-			if ( pSchTask->m_bSpecificDays )
-			{
-				for ( int i = -1; i < 6 ; ++i )
-				{
-					if ( ( ( 1 << ( ( tNow.GetDayOfWeek() + i ) % 7 ) ) & pSchTask->m_nDays ) && ( i != -1 || !pSchTask->m_bExecuted ) )
-					{
-						tToTasks = CTime( tNow.GetYear(), tNow.GetMonth(), tNow.GetDay(), pSchTask->m_tScheduleDateTime.GetHour(), pSchTask->m_tScheduleDateTime.GetMinute(), pSchTask->m_tScheduleDateTime.GetSecond() ) + CTimeSpan( i + 1, 0, 0, 0 ) - tNow;
-						break;
-					};
-				}
-			}
-			else
-			{
-				tToTasks = pSchTask->m_tScheduleDateTime - tNow;
-			}
-
-			if ( tToTasks.GetTotalHours() < nHoursToTasks ) 
-				nHoursToTasks = tToTasks.GetTotalHours();
-		}
-	}
-
-	return nHoursToTasks;
-}
-
-//////////////////////////////////////////////////////////////////////
-// CScheduler XML
-
-LPCTSTR CScheduler::xmlns = _T("http://shareaza.sourceforge.com/schemas/Scheduler.xsd");
-
-CXMLElement* CScheduler::ToXML(BOOL bTasks)
-{
-	CXMLElement* pXML = new CXMLElement( NULL, _T("scheduler") );
-	pXML->AddAttribute( _T("xmlns"), CScheduler::xmlns );
-
-	CString strValue; 
-	strValue.Format( _T("%i"), SCHEDULER_SER_VERSION );
-	pXML->AddAttribute( _T("version"), strValue );
-
-	if ( bTasks)
-	{
-		for ( POSITION pos = GetIterator() ; pos ; )
-		{
-			pXML->AddElement( GetNext( pos )->ToXML( SCHEDULER_SER_VERSION ) );
-		}
-	}
-
-	return pXML;
-}
-
-BOOL CScheduler::FromXML(CXMLElement* pXML)
-{
-	if ( ! pXML->IsNamed( _T("scheduler") ) )
-		return FALSE;
-
-	int nVersion;
-	if ( _stscanf( pXML->GetAttributeValue( _T("version")), _T("%i"), &nVersion ) != 1 )
-		return FALSE;
-
-	int nCount = 0;
-
-	for ( POSITION pos = pXML->GetElementIterator() ; pos ; )
-	{
-		CXMLElement* pElement = pXML->GetNextElement( pos );
-
-		if ( pElement->IsNamed( _T("task") ) )
-		{
-			CQuickLock oLock( m_pSection );
-			CScheduleTask* pSchTask	= NULL;
-			CString strGUID = pElement->GetAttributeValue( _T("guid") );
-			BOOL bExisting = FALSE;
-			GUID pGUID;
-
-			if ( Hashes::fromGuid( strGUID, &pGUID ) )
-			{
-				if ( ( pSchTask = GetGUID( pGUID ) ) != NULL ) bExisting = TRUE;
-
-				if ( pSchTask == NULL )
-				{
-					pSchTask = new CScheduleTask( FALSE );
-					pSchTask->m_pGUID = pGUID;
-				}
-			}
-			else
-			{
-				pSchTask = new CScheduleTask();
-			}
-
-			if ( pSchTask->FromXML( pElement, nVersion ) )
-			{
-				if ( ! bExisting )
-				{
-					m_pScheduleTasks.AddTail( pSchTask );
-				}
-
-				nCount++;
-			}
-			else
-			{
-				//Unsuccessful read from XML
-				if ( ! bExisting ) delete pSchTask;
-			}
-		}
-	}
-
-	return nCount > 0;
-}
-
-//////////////////////////////////////////////////////////////////////
-// CScheduler import
-
-BOOL CScheduler::Import(LPCTSTR pszFile)
-{
-	CString strText;
-	CBuffer pBuffer;
-	CFile pFile;
-
-	if ( ! pFile.Open( pszFile, CFile::modeRead ) ) return FALSE;
-	pBuffer.EnsureBuffer( (DWORD)pFile.GetLength() );
-	pBuffer.m_nLength = (DWORD)pFile.GetLength();
-	pFile.Read( pBuffer.m_pBuffer, pBuffer.m_nLength );
-	pFile.Close();
-
-	CXMLElement* pXML = CXMLElement::FromBytes( pBuffer.m_pBuffer, pBuffer.m_nLength, TRUE );
-	BOOL bResult = FALSE;
-
-	if ( pXML != NULL )
-	{
-		bResult = FromXML( pXML );
-		delete pXML;
-	}
-
-	return bResult;
 }

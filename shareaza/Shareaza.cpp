@@ -95,11 +95,12 @@ public:
 
 	virtual void ParseParam(const TCHAR* pszParam, BOOL bFlag, BOOL bLast);
 
-	BOOL m_bTray;
-	BOOL m_bNoSplash;
-	BOOL m_bNoAlphaWarning;
-	INT  m_nGUIMode;
-	BOOL m_bHelp;
+	BOOL	m_bTray;
+	BOOL	m_bNoSplash;
+	BOOL	m_bNoAlphaWarning;
+	INT		m_nGUIMode;
+	BOOL	m_bHelp;
+	CString	m_sTask;
 
 private:
 	CShareazaCommandLineInfo(const CShareazaCommandLineInfo&);
@@ -119,40 +120,48 @@ void CShareazaCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag, BOO
 {
 	if ( bFlag )
 	{
-		if ( ! lstrcmpi( pszParam, _T("tray") ) )
+		if ( ! _tcsicmp( pszParam, _T("tray") ) )
 		{
 			m_bTray = TRUE;
 			m_bNoSplash = TRUE;
 			return;
 		}
-		else if ( ! lstrcmpi( pszParam, _T("nosplash") ) )
+		else if ( ! _tcsicmp( pszParam, _T("nosplash") ) )
 		{
 			m_bNoSplash = TRUE;
 			return;
 		}
-		else if ( ! lstrcmpi( pszParam, _T("nowarn") ) )
+		else if ( ! _tcsicmp( pszParam, _T("nowarn") ) )
 		{
 			m_bNoAlphaWarning = TRUE;
 			return;
 		}
-		else if ( ! lstrcmpi( pszParam, _T("basic") ) )
+		else if ( ! _tcsicmp( pszParam, _T("basic") ) )
 		{
 			m_nGUIMode = GUI_BASIC;
 			return;
 		}
-		else if ( ! lstrcmpi( pszParam, _T("tabbed") ) )
+		else if ( ! _tcsicmp( pszParam, _T("tabbed") ) )
 		{
 			m_nGUIMode = GUI_TABBED;
 			return;
 		}
-		else if ( ! lstrcmpi( pszParam, _T("windowed") ) )
+		else if ( ! _tcsicmp( pszParam, _T("windowed") ) )
 		{
 			m_nGUIMode = GUI_WINDOWED;
 			return;
 		}
-		else if ( ! lstrcmpi( pszParam, _T("?") ) )
+		else if ( ! _tcsicmp( pszParam, _T("?") ) )
 		{
 			m_bHelp = TRUE;
+			return;
+		}
+		else if ( ! _tcsncicmp( pszParam, _T("task"), 4 ) )
+		{
+			m_bTray = TRUE;
+			m_bNoSplash = TRUE;
+			m_bNoAlphaWarning = TRUE;
+			m_sTask = pszParam + 4;
 			return;
 		}
 	}
@@ -263,6 +272,8 @@ BOOL CShareazaApp::InitInstance()
 		return FALSE;
 	}
 
+	BOOL bFirst = TRUE;
+	HWND hWnd = NULL;
 	m_pMutex = CreateMutex( NULL, FALSE, _T("Global\\") _T(CLIENT_NAME) );
 	if ( m_pMutex != NULL )
 	{
@@ -271,29 +282,40 @@ BOOL CShareazaApp::InitInstance()
 			CloseHandle( m_pMutex );
 			m_pMutex = NULL;
 
-			// Popup first instance
-			if ( HWND hWnd = FindWindow( _T("ShareazaMainWnd"), NULL ) )
+			bFirst = FALSE;
+			hWnd = FindWindow( _T("ShareazaMainWnd"), NULL );
+			if ( hWnd )
 			{
-				DWORD_PTR dwResult;
-				SendMessageTimeout( hWnd, WM_SYSCOMMAND, SC_RESTORE, 0,
-					SMTO_NORMAL, 250, &dwResult );
-				ShowWindow( hWnd, SW_SHOWNORMAL );
-				BringWindowToTop( hWnd );
-				SetForegroundWindow( hWnd );
+				if ( cmdInfo.m_sTask.IsEmpty() )
+				{
+					// Popup first instance
+					DWORD_PTR dwResult;
+					SendMessageTimeout( hWnd, WM_SYSCOMMAND, SC_RESTORE, 0,
+						SMTO_NORMAL, 250, &dwResult );
+					ShowWindow( hWnd, SW_SHOWNORMAL );
+					BringWindowToTop( hWnd );
+					SetForegroundWindow( hWnd );
+				}
+				// Pass scheduler task to existing instance
 			}
-			else
-			{
-				// Probably window created in another user's session
-			}
-			return FALSE;
+			// Probably window created in another user's session
 		}
 		// We are first!
 	}
 	else
-	{
 		// Probably mutex created in another user's session
+		bFirst = FALSE;
+
+	// Process task scheduler
+	if ( ! cmdInfo.m_sTask.IsEmpty() )
+	{
+		CScheduler::Execute( hWnd, cmdInfo.m_sTask );
 		return FALSE;
 	}
+
+	if ( ! bFirst )
+		// Don't start second instance
+		return FALSE;
 
 	Register();					// Re-register Shareaza Type Library
 
@@ -355,7 +377,7 @@ BOOL CShareazaApp::InitInstance()
 		 Settings.General.GUIMode != GUI_BASIC )
 		Settings.General.GUIMode = GUI_BASIC;
 
-	SplashStep( L"Network", ( ( cmdInfo.m_bNoSplash || ! cmdInfo.m_bShowSplash ) ? 0 : 18 ), false );
+	SplashStep( L"Network", ( ( cmdInfo.m_bNoSplash || ! cmdInfo.m_bShowSplash ) ? 0 : 17 ), false );
 		if ( ! Network.Init() )
 		{
 			SplashAbort();
@@ -427,8 +449,6 @@ BOOL CShareazaApp::InitInstance()
 		HostCache.Load();
 	SplashStep( L"Discovery Services" );
 		DiscoveryServices.Load();
-	SplashStep( L"Scheduler" );
-		Scheduler.Load();
 	SplashStep( L"Rich Documents" );
 		Emoticons.Load();
 		Flags.Load();
@@ -1261,6 +1281,13 @@ CString GetErrorString(DWORD dwError)
 		}
 	}
 	return CString();
+}
+
+void ReportError(DWORD dwError)
+{
+	CString sError = GetErrorString( dwError );
+	theApp.Message( MSG_ERROR, _T("%s"), sError );
+	AfxMessageBox( sError, MB_OK | MB_ICONEXCLAMATION );
 }
 
 CString CShareazaApp::GetCountryCode(IN_ADDR pAddress) const

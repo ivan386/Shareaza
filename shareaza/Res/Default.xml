@@ -387,9 +387,6 @@
 			<button id="ID_SCHEDULER_REMOVE" text="Remove Task"/>
 			<separator/>
 			<button id="ID_SCHEDULER_REMOVE_ALL" text="Remove All"/>
-			<rightAlign/>
-			<button id="ID_SCHEDULER_IMPORT" text="Import List"/>
-			<button id="ID_SCHEDULER_EXPORT" text="Export List"/>
 		</toolbar>
 		<!-- HIT MONITOR WINDOW -->
 		<toolbar name="CHitMonitorWnd">
@@ -1555,9 +1552,6 @@
 			<item id="ID_SCHEDULER_EDIT" text="_Edit"/>
 			<separator/>
 			<item id="ID_SCHEDULER_REMOVE_ALL" text="Remove Al_l"/>
-			<separator/>
-			<item id="ID_SCHEDULER_IMPORT" text="_Import..."/>
-			<item id="ID_SCHEDULER_EXPORT" text="E_xport..."/>
 		</menu>
 		<!-- DISCOVERY SERVICES WINDOW -->
 		<menu name="CDiscoveryWnd">
@@ -2610,8 +2604,8 @@
 			<image id="ID_MEDIA_PREVIOUS" id1="ID_SHAREMONKEY_PREVIOUS"/>
 			<image id="ID_MEDIA_NEXT" id1="ID_SHAREMONKEY_NEXT"/>
 			<image id="ID_MEDIA_PAUSE"/>
-			<image id="ID_MEDIA_OPEN" id1="ID_SECURITY_IMPORT" id2="ID_LIBRARY_UNLINK" id3="ID_SCHEDULER_IMPORT" id4="IDC_IMPORT_DOWNLOADS"/>
-			<image id="ID_MEDIA_SAVE" id1="ID_SECURITY_EXPORT" id2="ID_SCHEDULER_EXPORT"/>
+			<image id="ID_MEDIA_OPEN" id1="ID_SECURITY_IMPORT" id2="ID_LIBRARY_UNLINK" id4="IDC_IMPORT_DOWNLOADS"/>
+			<image id="ID_MEDIA_SAVE" id1="ID_SECURITY_EXPORT"/>
 			<image id="ID_MEDIA_ZOOM"/>
 			<image id="ID_MEDIA_FULLSCREEN"/>
 			<image id="ID_MEDIA_ADD" id1="ID_IRC_ADD"/>

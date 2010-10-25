@@ -22,13 +22,13 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
-#include "Scheduler.h"
 #include "Skin.h"
 #include "Network.h"
 #include "LiveList.h"
 #include "WndScheduler.h"
 #include "CoolInterface.h"
 #include "DlgScheduleTask.h"
+#include "Scheduler.h"
 #include "XML.h"
 
 #ifdef _DEBUG
@@ -36,6 +36,13 @@
 #undef THIS_FILE
 static char THIS_FILE[] = __FILE__;
 #endif
+
+enum
+{
+	SCHEDULE_NO_ITEM = 1,
+	SCHEDULE_ITEM_ACTIVE,
+	SCHEDULE_ITEM_INACTIVE
+};
 
 const static UINT nImageID[] =
 {
@@ -49,33 +56,26 @@ const static UINT nImageID[] =
 IMPLEMENT_SERIAL(CSchedulerWnd, CPanelWnd, 0)
 
 BEGIN_MESSAGE_MAP(CSchedulerWnd, CPanelWnd)
-	//{{AFX_MSG_MAP(CSchedulerWnd)
 	ON_WM_CREATE()
 	ON_WM_DESTROY()
 	ON_WM_SIZE()
 	ON_WM_TIMER()
-	ON_NOTIFY(NM_CUSTOMDRAW, IDC_SCHEDULE, OnCustomDrawList)
-	ON_NOTIFY(NM_DBLCLK, IDC_SCHEDULE, OnDblClkList)
-	ON_NOTIFY(LVN_COLUMNCLICK, IDC_SCHEDULE, OnSortList)
-	ON_COMMAND(ID_SCHEDULER_ADD, OnSchedulerAdd)
-	ON_UPDATE_COMMAND_UI(ID_SCHEDULER_ACTIVATE, OnUpdateSchedulerActivate)
-	ON_COMMAND(ID_SCHEDULER_ACTIVATE, OnSchedulerActivate)
-	ON_UPDATE_COMMAND_UI(ID_SCHEDULER_DEACTIVATE, OnUpdateSchedulerDeactivate)
-	ON_COMMAND(ID_SCHEDULER_DEACTIVATE, OnSchedulerDeactivate)
-	ON_UPDATE_COMMAND_UI(ID_SCHEDULER_EDIT, OnUpdateSchedulerEdit)
-	ON_COMMAND(ID_SCHEDULER_EDIT, OnSchedulerEdit)
-	ON_UPDATE_COMMAND_UI(ID_SCHEDULER_REMOVE, OnUpdateSchedulerRemove)
-	ON_COMMAND(ID_SCHEDULER_REMOVE, OnSchedulerRemove)
+	ON_NOTIFY(NM_CUSTOMDRAW, IDC_SCHEDULE, &CSchedulerWnd::OnCustomDrawList)
+	ON_NOTIFY(NM_DBLCLK, IDC_SCHEDULE, &CSchedulerWnd::OnDblClkList)
+	ON_NOTIFY(LVN_COLUMNCLICK, IDC_SCHEDULE, &CSchedulerWnd::OnSortList)
+	ON_COMMAND(ID_SCHEDULER_ADD, &CSchedulerWnd::OnSchedulerAdd)
+	ON_UPDATE_COMMAND_UI(ID_SCHEDULER_ACTIVATE, &CSchedulerWnd::OnUpdateSchedulerActivate)
+	ON_COMMAND(ID_SCHEDULER_ACTIVATE, &CSchedulerWnd::OnSchedulerActivate)
+	ON_UPDATE_COMMAND_UI(ID_SCHEDULER_DEACTIVATE, &CSchedulerWnd::OnUpdateSchedulerDeactivate)
+	ON_COMMAND(ID_SCHEDULER_DEACTIVATE, &CSchedulerWnd::OnSchedulerDeactivate)
+	ON_UPDATE_COMMAND_UI(ID_SCHEDULER_EDIT, &CSchedulerWnd::OnUpdateSchedulerEdit)
+	ON_COMMAND(ID_SCHEDULER_EDIT, &CSchedulerWnd::OnSchedulerEdit)
+	ON_UPDATE_COMMAND_UI(ID_SCHEDULER_REMOVE, &CSchedulerWnd::OnUpdateSchedulerRemove)
+	ON_COMMAND(ID_SCHEDULER_REMOVE, &CSchedulerWnd::OnSchedulerRemove)
 	ON_WM_CONTEXTMENU()
-	//}}AFX_MSG_MAP
-
-	ON_UPDATE_COMMAND_UI(ID_SCHEDULER_REMOVE_ALL, OnUpdateSchedulerRemoveAll)
-	ON_COMMAND(ID_SCHEDULER_REMOVE_ALL, OnSchedulerRemoveAll)
-	ON_UPDATE_COMMAND_UI(ID_SCHEDULER_EXPORT, OnUpdateSchedulerExport)
-	ON_COMMAND(ID_SCHEDULER_EXPORT, OnSchedulerExport)
-	ON_COMMAND(ID_SCHEDULER_IMPORT, OnSchedulerImport)
+	ON_UPDATE_COMMAND_UI(ID_SCHEDULER_REMOVE_ALL, &CSchedulerWnd::OnUpdateSchedulerRemoveAll)
+	ON_COMMAND(ID_SCHEDULER_REMOVE_ALL, &CSchedulerWnd::OnSchedulerRemoveAll)
 END_MESSAGE_MAP()
-
 
 /////////////////////////////////////////////////////////////////////////////
 // CSchedulerWnd construction
@@ -85,8 +85,21 @@ CSchedulerWnd::CSchedulerWnd()
 	Create( IDR_SCHEDULERFRAME );
 }
 
-CSchedulerWnd::~CSchedulerWnd()
+BOOL CSchedulerWnd::IsTaskActive(LPCWSTR szTaskName) const
 {
+	HRESULT hr;
+
+	CComPtr< ITask > pTask;
+	hr = m_pScheduler->Activate( szTaskName, IID_ITask, (IUnknown**)&pTask );
+	if ( FAILED( hr ) )
+		return FALSE;
+
+	DWORD nFlags = 0;
+	hr = pTask->GetFlags( &nFlags );
+	if ( FAILED( hr ) )
+		return FALSE;
+
+	return ( ( nFlags & TASK_FLAG_DISABLED ) != TASK_FLAG_DISABLED );
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -94,7 +107,12 @@ CSchedulerWnd::~CSchedulerWnd()
 
 int CSchedulerWnd::OnCreate(LPCREATESTRUCT lpCreateStruct) 
 {
+	HRESULT hr;
+
 	if ( CPanelWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
+	
+	hr = m_pScheduler.CoCreateInstance( CLSID_CTaskScheduler );
+	if ( FAILED( hr ) ) return -1;
 
 	if ( ! m_wndToolBar.Create( this, WS_CHILD|WS_VISIBLE|CBRS_NOALIGN, AFX_IDW_TOOLBAR ) ) return -1;
 	m_wndToolBar.SetBarStyle( m_wndToolBar.GetBarStyle() | CBRS_TOOLTIPS | CBRS_BORDER_TOP );
@@ -112,11 +130,11 @@ int CSchedulerWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndList.SetImageList( &m_gdiImageList, LVSIL_SMALL );
 
 	m_wndList.InsertColumn( 0, _T("Action"), LVCFMT_LEFT, 250, -1 );
-	m_wndList.InsertColumn( 1, _T("Date"), LVCFMT_LEFT, 200, -1 );
-	m_wndList.InsertColumn( 2, _T("Time"), LVCFMT_CENTER, 100, -1 );
+	m_wndList.InsertColumn( 1, _T("Trigger"), LVCFMT_LEFT, 250, -1 );
+	m_wndList.InsertColumn( 2, _T("Next Run"), LVCFMT_CENTER, 100, -1 );
 	m_wndList.InsertColumn( 3, _T("Active"), LVCFMT_CENTER, 100, -1 );
 	m_wndList.InsertColumn( 4, _T("Status"), LVCFMT_CENTER, 100, -1);
-	m_wndList.InsertColumn( 5, _T("Description"), LVCFMT_LEFT, 400, -1 );
+	m_wndList.InsertColumn( 5, _T("Description"), LVCFMT_LEFT, 100, -1 );
 
 	m_wndList.SetFont( &theApp.m_gdiFont );
 
@@ -129,8 +147,6 @@ int CSchedulerWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 void CSchedulerWnd::OnDestroy() 
 {
-	Scheduler.Save();
-
 	Settings.SaveList( _T("CSchedulerWnd"), &m_wndList );		
 	SaveState( _T("CSchedulerWnd") );
 
@@ -142,86 +158,171 @@ void CSchedulerWnd::OnDestroy()
 
 void CSchedulerWnd::Update(int nColumn, BOOL bSort)
 {
-	CQuickLock oLock( Scheduler.m_pSection );
-	CLiveList pLiveList( 6, Scheduler.GetCount() + Scheduler.GetCount() / 4u );	
+	HRESULT hr;
+
+	CComPtr< IEnumWorkItems > pEnum;
+	hr = m_pScheduler->Enum( &pEnum );
+	if ( FAILED( hr ) )
+		return;
+
+	CLiveList pLiveList( 6 );
 
 	int nCount = 1;
-	for ( POSITION pos = Scheduler.GetIterator() ; pos ; nCount++ )
+	for ( ; ; )
 	{
-		CScheduleTask* pSchTask = Scheduler.GetNext( pos );
+		LPWSTR* pszTaskName = NULL;
+		hr = pEnum->Next( 1, &pszTaskName, NULL );
+		if ( hr != S_OK )
+			// No tasks left
+			break;
+		CString sTaskName = *pszTaskName;
+		CoTaskMemFree( pszTaskName );
+
+		CString sVendor = sTaskName.SpanExcluding( _T(".") );
+		if ( sVendor.Compare( CLIENT_NAME_T ) != 0 )
+			// Wrong name
+			continue;
+		DWORD_PTR nNumber = _tstoi( sTaskName.Mid( sVendor.GetLength() + 1 ) );
+
+		CComPtr< ITask > pTask;
+		hr = m_pScheduler->Activate( sTaskName, IID_ITask, (IUnknown**)&pTask );
+		if ( FAILED( hr ) )
+			// Can't open task
+			continue;
+
+		DWORD nFlags = 0;
+		hr = pTask->GetFlags( &nFlags );
+		BOOL bActive = ( ( nFlags & TASK_FLAG_DISABLED ) != TASK_FLAG_DISABLED );
+
+		HRESULT hrStatus = S_OK;
+		hr = pTask->GetStatus( &hrStatus );
+
+		CString sTriggerString;
+		LPWSTR szTriggerString = NULL;
+		hr = pTask->GetTriggerString( 0, &szTriggerString );
+		if ( hr == S_OK )
+		{
+			sTriggerString = szTriggerString;
+			CoTaskMemFree( szTriggerString );
+		}
+
+		CString strDate, strTime;
+		SYSTEMTIME pTime = {};
+		hr = pTask->GetNextRunTime( &pTime );
+		if ( hr == S_OK )
+		{
+			GetDateFormat( LOCALE_USER_DEFAULT, DATE_SHORTDATE, &pTime, NULL, strDate.GetBuffer( 64 ), 64 );
+			GetTimeFormat( LOCALE_USER_DEFAULT, TIME_NOSECONDS, &pTime, NULL, strTime.GetBuffer( 64 ), 64 );
+			strDate.ReleaseBuffer();
+			strTime.ReleaseBuffer();
+		}
+		else if ( hr == SCHED_S_TASK_DISABLED )
+			bActive = FALSE;
+
+		CString sStatus;
+		DWORD nExitCode = 0;
+		hr = pTask->GetExitCode( &nExitCode );
+		if ( SUCCEEDED( hr ) )
+		{
+			sStatus.Format( _T("0x%08X"), nExitCode );
+		}
+
+		int nAction = -1;
+		LPWSTR szParams = NULL;
+		hr = pTask->GetParameters( &szParams );
+		if ( SUCCEEDED( hr ) )
+		{
+			CString sParams = szParams;
+			CoTaskMemFree( szParams );
+
+			int nPos = sParams.Find( _T("task") );
+			if ( nPos != -1 )
+				nAction = _tstoi( sParams.Mid( nPos + 4 ) );
+			else
+				nAction = SYSTEM_START;
+		}
+
+		CString sComment;
+		LPWSTR szComment = NULL;
+		hr = pTask->GetComment( &szComment );
+		if ( SUCCEEDED( hr ) )
+		{
+			sComment = szComment;
+			CoTaskMemFree( szComment );
+		}
 
 		//Adding tasks we got from Scheduler to temp list and getting a handle
 		//to modify their properties according to scheduler item.
-		CLiveItem* pItem = pLiveList.Add( pSchTask );
+		CLiveItem* pItem = pLiveList.Add( nNumber );
 
-		if ( pSchTask->m_bActive )
+		if ( ( nFlags & TASK_FLAG_DISABLED ) != TASK_FLAG_DISABLED )
 			pItem->SetImage( 0, SCHEDULE_ITEM_ACTIVE );
 		else 
 			pItem->SetImage( 0, SCHEDULE_ITEM_INACTIVE );
 
 		//Action column
-		switch ( pSchTask->m_nAction )
+		switch ( nAction )
 		{
-		case BANDWIDTH_FULL_SPEED: 
+		case BANDWIDTH_FULLSPEED:
 			pItem->Set( 0, LoadString( IDS_SCHEDULER_BANDWIDTH_FULLSPEED ) );
 			break;
-		case BANDWIDTH_REDUCED_SPEED: 
+		case BANDWIDTH_REDUCEDSPEED:
 			pItem->Set( 0, LoadString( IDS_SCHEDULER_BANDWIDTH_REDUCEDSPEED ) );
 			break;
-		case BANDWIDTH_STOP: 
+		case BANDWIDTH_STOP:
 			pItem->Set( 0, LoadString( IDS_SCHEDULER_BANDWIDTH_STOP ) );
 			break;
-		case SYSTEM_DISCONNECT: 
+		case SYSTEM_DIALUP_DC:
 			pItem->Set( 0, LoadString( IDS_SCHEDULER_SYSTEM_DIALUP_DC ) );
 			break;
-		case SYSTEM_EXIT: 
+		case SYSTEM_EXIT:
 			pItem->Set( 0, LoadString( IDS_SCHEDULER_SYSTEM_EXIT ) );
 			break;
-		case SYSTEM_SHUTDOWN: 
-			pItem->Set( 0, LoadString( IDS_SCHEDULER_SYSTEM_TURNOFF ) );
+		case SYSTEM_SHUTDOWN:
+			pItem->Set( 0, LoadString( IDS_SCHEDULER_SYSTEM_SHUTDOWN ) );
+			break;
+		case SYSTEM_START:
+			pItem->Set( 0, LoadString( IDS_SCHEDULER_SYSTEM_START ) );
 			break;
 		}
 
 		// Date column
-		if (pSchTask->m_bSpecificDays)
-			pItem->Set( 1, LoadString( IDS_SCHEDULER_TASK_SPECIFICDAYS ) );
-		else
-			pItem->Set( 1, pSchTask->m_tScheduleDateTime.Format( _T("%A, %B %m, %Y") ) );
+		pItem->Set( 1, sTriggerString );
 
 		// Time column
-		pItem->Set( 2, pSchTask->m_tScheduleDateTime.Format( _T("%I:%M:%S %p") ) );
+		pItem->Set( 2, strDate + _T(" ") + strTime );
 
 		// Active column
-		if ( pSchTask->m_bActive )
-			pItem->Set( 3, LoadString( IDS_SCHUDULER_TASK_ACTIVE ) );
+		if ( bActive )
+		{
+			switch ( hrStatus )
+			{
+			case SCHED_S_TASK_NO_MORE_RUNS:
+				pItem->Set( 3, LoadString( IDS_SCHEDULER_TASK_DONE ) );
+				break;
+			case SCHED_S_TASK_RUNNING:
+				pItem->Set( 3, LoadString( IDS_SCHEDULER_TASK_ACTIVE ) );
+				break;
+			default:
+				pItem->Set( 3, LoadString( IDS_SCHEDULER_TASK_WAITING ) );
+			}
+		}
 		else
 			pItem->Set( 3, LoadString( IDS_SCHEDULER_TASK_INACTIVE ) );
 
 		// Status column 
-		if ( pSchTask->m_bActive)
-		{
-			if ( pSchTask->m_bExecuted )
-				pItem->Set( 4, LoadString( IDS_SCHEDULER_TASK_DONETODAY ) );
-			else
-				pItem->Set( 4, LoadString( IDS_SCHEDULER_TASK_WAITING ) );
-		}
-		else
-		{
-			if ( pSchTask->m_bExecuted )
-				pItem->Set( 4, LoadString( IDS_SCHEDULER_TASK_DONE ) );
-			else
-				pItem->Set( 4, LoadString( IDS_SCHEDULER_TASK_INACTIVE ) );
-		}
+		pItem->Set( 4, sStatus );
 
 		//Description column
-		pItem->Set( 5, pSchTask->m_sDescription );
+		pItem->Set( 5, sComment );
 
+		++nCount;
 	}
 
-	//In case scheduler gave nothing
+	// In case scheduler gave nothing
 	if ( nCount == 1 )
 	{
-		CLiveItem* pDefault = pLiveList.Add( (LPVOID)0 );
+		CLiveItem* pDefault = pLiveList.Add( (DWORD_PTR)0 );
 		pDefault->Set( 0, LoadString( IDS_SCHEDULER_NOTASK ) );
 		pDefault->SetImage( 0, SCHEDULE_NO_ITEM );
 	}
@@ -234,18 +335,18 @@ void CSchedulerWnd::Update(int nColumn, BOOL bSort)
 	pLiveList.Apply( &m_wndList, bSort );	//Putting items in the main list
 
 	tLastUpdate = GetTickCount();	// Update time after it's done doing its work
-
 }
 
-CScheduleTask* CSchedulerWnd::GetItem(int nItem)
+CString CSchedulerWnd::GetItem(int nItem)
 {
 	if ( nItem > -1 )
 	{
-		CScheduleTask* pSchTask = (CScheduleTask*)m_wndList.GetItemData( nItem );
-		if ( Scheduler.Check( pSchTask ) )
-			return pSchTask;
+		DWORD_PTR nNumber = m_wndList.GetItemData( nItem );
+		CString sTaskName;
+		sTaskName.Format( _T("%s.%04d"), CLIENT_NAME_T, nNumber );
+		return sTaskName;
 	}
-	return NULL;
+	return CString();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -264,14 +365,9 @@ void CSchedulerWnd::OnTimer(UINT_PTR nIDEvent)
 	if ( nIDEvent == 1 && IsPartiallyVisible() )
 	{
 		DWORD tTicks = GetTickCount();
-		DWORD tDelay = max( ( 2 * (DWORD)Scheduler.GetCount() ), 1000ul ); // Delay based on size of list
-
-		if ( ( tTicks - tLastUpdate ) > tDelay )
+		if ( ( tTicks - tLastUpdate ) > 1000ul )
 		{
-			if ( tDelay < 2000 )
-				Update();				// Sort if list is under 1000
-			else
-				Update( -1, FALSE );	// Otherwise just refresh values
+			Update();
 		}
 	}
 }
@@ -298,7 +394,7 @@ void CSchedulerWnd::OnCustomDrawList(NMHDR* pNMHDR, LRESULT* pResult)
 			pDraw->clrText = RGB( 0, 127, 0 );
 			break;
 		case 3:
-			pDraw->clrText = RGB( 255, 0, 0 );
+			pDraw->clrText = RGB( 224, 0, 0 );
 			break;
 		}
 
@@ -331,23 +427,15 @@ void CSchedulerWnd::OnUpdateSchedulerEdit(CCmdUI* pCmdUI)
 
 void CSchedulerWnd::OnSchedulerEdit() 
 {
-	CScheduleTask* pEditableItem;
+	CString sTaskName = GetItem( m_wndList.GetNextItem( -1, LVIS_SELECTED ) );
+	if ( sTaskName.GetLength() )
 	{
-		CQuickLock oLock( Scheduler.m_pSection );
-
-		CScheduleTask* pSchTask = GetItem( m_wndList.GetNextItem( -1, LVIS_SELECTED ) );
-		if ( ! pSchTask ) return;
-		pEditableItem = new CScheduleTask( *pSchTask ); 
+		CScheduleTaskDlg dlg( sTaskName );
+		if ( dlg.DoModal() == IDOK )
+		{
+			Update();
+		}
 	}
-
-	CScheduleTaskDlg dlg( NULL, pEditableItem );
-	if ( dlg.DoModal() == IDOK )
-	{
-		Scheduler.Save();
-		Update();
-	}
-	else
-		delete pEditableItem;
 }
 
 void CSchedulerWnd::OnUpdateSchedulerRemove(CCmdUI* pCmdUI) 
@@ -357,27 +445,25 @@ void CSchedulerWnd::OnUpdateSchedulerRemove(CCmdUI* pCmdUI)
 
 void CSchedulerWnd::OnSchedulerRemove() 
 {
-	CQuickLock oLock( Scheduler.m_pSection);
+	HRESULT hr;
 
 	for ( int nItem = -1 ; ( nItem = m_wndList.GetNextItem( nItem, LVIS_SELECTED ) ) >= 0 ; )
 	{
-		if ( CScheduleTask* pSchTask = GetItem( nItem ) )
+		CString sTaskName = GetItem( nItem );
+		if ( sTaskName.GetLength() )
 		{
-			Scheduler.Remove( pSchTask );
+			hr = m_pScheduler->Delete( sTaskName );
 		}
 	}
 
-	Scheduler.Save();
 	Update();
 }
 
 void CSchedulerWnd::OnSchedulerAdd() 
 {
 	CScheduleTaskDlg dlg;
-
 	if ( dlg.DoModal() == IDOK )
 	{
-		Scheduler.Save();
 		Update();
 	}
 }
@@ -386,7 +472,7 @@ void CSchedulerWnd::OnSkinChange()
 {
 	CPanelWnd::OnSkinChange();
 
-	Settings.LoadList( _T("CSchedulerWnd"), &m_wndList, -3 );
+	Settings.LoadList( _T("CSchedulerWnd"), &m_wndList, -2 );
 	Skin.CreateToolBar( _T("CSchedulerWnd"), &m_wndToolBar );
 
 	CoolInterface.LoadIconsTo( m_gdiImageList, nImageID );
@@ -414,168 +500,116 @@ BOOL CSchedulerWnd::PreTranslateMessage(MSG* pMsg)
 
 void CSchedulerWnd::OnUpdateSchedulerDeactivate(CCmdUI* pCmdUI) 
 {	
-	CQuickLock oLock( Scheduler.m_pSection );
-	CScheduleTask* pSchTask = GetItem( m_wndList.GetNextItem( -1, LVIS_SELECTED ) );
-
-	if ( ! pSchTask )
+	CString sTaskName = GetItem( m_wndList.GetNextItem( -1, LVIS_SELECTED ) );
+	if ( sTaskName.IsEmpty() )
 	{
 		pCmdUI->Enable(FALSE);
 		return;
 	}
 
-	pCmdUI->Enable( ( m_wndList.GetSelectedCount() > 0 ) && ( pSchTask->m_bActive ));
+	pCmdUI->Enable( m_wndList.GetSelectedCount() > 0 && IsTaskActive( sTaskName ) );
 }
 
 void CSchedulerWnd::OnSchedulerDeactivate()
 {
-	CQuickLock oLock( Scheduler.m_pSection );
+	HRESULT hr;
 
-	CScheduleTask* pSchTask = GetItem( m_wndList.GetNextItem( -1, LVIS_SELECTED ) );
-
-	if ( ! pSchTask )
+	CString sTaskName = GetItem( m_wndList.GetNextItem( -1, LVIS_SELECTED ) );
+	if ( sTaskName.IsEmpty() )
 		return;
 
-	pSchTask->m_bActive = false;
+	CComPtr< ITask > pTask;
+	hr = m_pScheduler->Activate( sTaskName, IID_ITask, (IUnknown**)&pTask );
+	if ( FAILED( hr ) )
+		return;
 
-	Update();
+	DWORD nFlags = 0;
+	hr = pTask->GetFlags( &nFlags );
+	if ( ( nFlags & TASK_FLAG_DISABLED ) != TASK_FLAG_DISABLED )
+	{
+		hr = pTask->SetFlags( nFlags | TASK_FLAG_DISABLED );
+		if ( SUCCEEDED( hr ) )
+		{
+			CComQIPtr< IPersistFile > pFile( pTask );
+			if ( pFile )
+			{
+				hr = pFile->Save( NULL, TRUE );
+				if ( SUCCEEDED( hr ) )
+				{
+					Update();
+				}
+			}
+		}
+	}
 }
 
 void CSchedulerWnd::OnUpdateSchedulerActivate(CCmdUI* pCmdUI) 
 {	
-	CQuickLock oLock( Scheduler.m_pSection );
-
-	CScheduleTask* pSchTask = GetItem( m_wndList.GetNextItem( -1, LVIS_SELECTED ) );
-
-	if ( ! pSchTask )
+	CString sTaskName = GetItem( m_wndList.GetNextItem( -1, LVIS_SELECTED ) );
+	if ( sTaskName.IsEmpty() )
 	{
 		pCmdUI->Enable(FALSE);
 		return;
 	}
 
-	pCmdUI->Enable( ( m_wndList.GetSelectedCount() > 0 ) && ( ! pSchTask->m_bActive ) );
+	pCmdUI->Enable( m_wndList.GetSelectedCount() > 0 && ! IsTaskActive( sTaskName ) );
 }
 
 void CSchedulerWnd::OnSchedulerActivate()
 {
-	CQuickLock oLock( Scheduler.m_pSection );
+	HRESULT hr;
 
-	CScheduleTask* pSchTask = GetItem( m_wndList.GetNextItem( -1, LVIS_SELECTED ) );
+	CString sTaskName = GetItem( m_wndList.GetNextItem( -1, LVIS_SELECTED ) );
+	if ( sTaskName.IsEmpty() )
+		return;
 
+	CComPtr< ITask > pTask;
+	hr = m_pScheduler->Activate( sTaskName, IID_ITask, (IUnknown**)&pTask );
+	if ( FAILED( hr ) )
+		return;
 
-	if ( ! pSchTask ) return;
-
-	if ( Scheduler.MinutesPassed( pSchTask ) < 0 || pSchTask->m_bSpecificDays )
+	DWORD nFlags = 0;
+	hr = pTask->GetFlags( &nFlags );
+	if ( ( nFlags & TASK_FLAG_DISABLED ) == TASK_FLAG_DISABLED )
 	{
-		pSchTask->m_bActive = true;
-		pSchTask->m_bExecuted = false;
+		hr = pTask->SetFlags( nFlags & ~TASK_FLAG_DISABLED );
+		if ( SUCCEEDED( hr ) )
+		{
+			CComQIPtr< IPersistFile > pFile( pTask );
+			if ( pFile )
+			{
+				hr = pFile->Save( NULL, TRUE );
+				if ( SUCCEEDED( hr ) )
+				{
+					Update();
+				}
+			}
+		}
 	}
-	else
-	{
-		OnSchedulerEdit();
-	}
-
-	Update();
 }
-
 
 void CSchedulerWnd::OnUpdateSchedulerRemoveAll(CCmdUI* pCmdUI)
 {
-	CScheduleTask *pSchTask = (CScheduleTask *)m_wndList.GetItemData (0);
-	pCmdUI->Enable( pSchTask != NULL );
+	pCmdUI->Enable( m_wndList.GetItemCount() > 0 );
 }
 
 void CSchedulerWnd::OnSchedulerRemoveAll()
 {
+	HRESULT hr;
+
 	CString strMessage;
 	LoadString( strMessage, IDS_SCHEDULER_REMOVEALL_CONFIRM );
-	if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) != IDYES ) return;
-
-	CQuickLock oLock( Scheduler.m_pSection);
+	if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) != IDYES )
+		return;
 
 	for ( int nItem = 0 ;  nItem < m_wndList.GetItemCount() ; nItem++)
 	{
-		if ( CScheduleTask* pSchTask = GetItem( nItem ) )
+		CString sTaskName = GetItem( nItem );
+		if ( sTaskName.GetLength() )
 		{
-			Scheduler.Remove( pSchTask );
+			hr = m_pScheduler->Delete( sTaskName );
 		}
 	}
 
-	Scheduler.Save();
 	Update();
-}
-
-void CSchedulerWnd::OnUpdateSchedulerExport(CCmdUI* pCmdUI) 
-{
-	pCmdUI->Enable( m_wndList.GetSelectedCount() > 0 );
-}
-
-void CSchedulerWnd::OnSchedulerExport() 
-{
-	CFileDialog dlg( FALSE, _T("xml"), NULL, OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT,
-		_T("XML Scheduler Files|*.xml|") );
-
-	if ( dlg.DoModal() != IDOK ) return;
-
-	CString strText;
-	CFile pFile;
-
-	if ( ! pFile.Open( dlg.GetPathName(), CFile::modeWrite|CFile::modeCreate ) )
-	{
-		AfxMessageBox(_T("Error: Can not open file to export Scheduler list."),MB_ICONSTOP|MB_OK );
-		return;
-	}
-
-	CWaitCursor pCursor;
-
-
-	CXMLElement* pXML = new CXMLElement( NULL, _T("scheduler") );
-
-	pXML->AddAttribute( _T("xmlns"), CScheduler::xmlns );
-
-	CString strValue; 
-	strValue.Format( _T("%i"), SCHEDULER_SER_VERSION );
-	pXML->AddAttribute( _T("version"), strValue );
-
-	for ( int nItem = -1 ; ( nItem = m_wndList.GetNextItem( nItem, LVIS_SELECTED ) ) >= 0 ; )
-	{
-		CQuickLock oLock( Scheduler.m_pSection );
-
-		if ( CScheduleTask* pTask = GetItem( nItem ) )
-		{
-			pXML->AddElement( pTask->ToXML( SCHEDULER_SER_VERSION ) );
-		}
-	}
-
-	strText = pXML->ToString( TRUE, TRUE );
-
-	int nBytes = WideCharToMultiByte( CP_ACP, 0, strText, strText.GetLength(), NULL, 0, NULL, NULL );
-	LPSTR pBytes = new CHAR[nBytes];
-	WideCharToMultiByte( CP_ACP, 0, strText, strText.GetLength(), pBytes, nBytes, NULL, NULL );
-	pFile.Write( pBytes, nBytes );
-	delete [] pBytes;
-
-	delete pXML;
-
-
-	pFile.Close();
-}
-
-void CSchedulerWnd::OnSchedulerImport() 
-{
-	CFileDialog dlg( TRUE, _T("xml"), NULL, OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT,
-		_T("XML Scheduler Files|*.xml|All Files|*.*||") );
-
-	if ( dlg.DoModal() != IDOK ) return;
-
-	CWaitCursor pCursor;
-
-	if ( Scheduler.Import( dlg.GetPathName() ) )
-	{
-		Scheduler.Save();
-	}
-	else
-	{
-		// TODO: Error message, unable to import rules
-		AfxMessageBox(_T("Error: Can not open file to import Scheduler list."),MB_ICONSTOP|MB_OK );
-	}
 }

@@ -18,169 +18,30 @@
 // along with Shareaza; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
+
 #pragma once
-
-class CXMLElement;
-
-
-const int SCHEDULER_SER_VERSION	= 2;
-// History:
-// 2: m_bHasValidityPeriod and m_nValidityPeriod are added
 
 //TODO: Add new tasks here
 enum ScheduleTask
 {
-	BANDWIDTH_FULL_SPEED = 0x1, BANDWIDTH_REDUCED_SPEED = 0x2, 
-	BANDWIDTH_STOP = 0x4, SYSTEM_DISCONNECT = 0x8, 
-	SYSTEM_EXIT = 0x10, SYSTEM_SHUTDOWN = 0x20
-};
-
-enum DayOfWeek
-{
-	SUNDAY = 0x1,
-	MONDAY = 0x2,
-	TUESDAY = 0x4,
-	WEDNESDAY = 0x8,
-	THURSDAY = 0x10,
-	FRIDAY = 0x20,
-	SATURDAY = 0x40
-};
-
-//////////////////////////////////////////////////////////////////////
-// CScheduleTask class: Represents a scheduled task
-//////////////////////////////////////////////////////////////////////
-
-class CScheduleTask
-{
-// Construction
-public:
-	CScheduleTask(BOOL bCreate = TRUE);
-	CScheduleTask(const CScheduleTask& pItem);
-	virtual ~CScheduleTask();
-
-// Attributes
-public:
-	unsigned int	m_nDays;				//Will have a combination of DayOfWeek
-	unsigned int	m_nAction;				//Will have one of ScheduleTask values plus 0 as invalid state indicator
-	bool			m_bSpecificDays;		//Task is scheduled for everyday or just today
-	CString			m_sDescription;			//Optional task description
-	CTime			m_tScheduleDateTime;	//Time the task is scheduled for
-	bool			m_bActive;				//Task should be executed or not
-	bool			m_bExecuted;			//Task is executed or not
-	bool			m_bHasValidityPeriod;	//True if a validity period is set for task
-	bool			m_bToggleBandwidth;		//Up/Down bandwidth are limited seperately or not
-	bool			m_bLimitedNetworks;		//Network is limited to G2 or not (in SCHEDULE_LIMITED_SPEED)
-	int				m_nValidityPeriod;  	//Validity period in minute
-	int				m_nLimit;				//Bandwidth limit when m_bToggleBandwidth is FALSE
-	int				m_nLimitDown;			//Down stream bandwidth limit when m_bToggleBandwidth is TRUE
-	int				m_nLimitUp;				//Up stream bandwidth limit when m_bToggleBandwidth is TRUE
-	GUID			m_pGUID;				//GUID for each scheduled item
-
-// Operations
-public:
-	void			Serialize(CArchive& ar, int nVersion);
-	CXMLElement*	ToXML(int nVersion);
-	BOOL			FromXML(CXMLElement* pXML, int nVersion);
+	BANDWIDTH_FULLSPEED = 0,
+	BANDWIDTH_REDUCEDSPEED,
+	BANDWIDTH_STOP,
+	SYSTEM_DIALUP_DC,
+	SYSTEM_EXIT,
+	SYSTEM_SHUTDOWN,
+	SYSTEM_START
 };
 
 //////////////////////////////////////////////////////////////////////
 // CScheduler class: Controls scheduler operations
-//////////////////////////////////////////////////////////////////////
 
 class CScheduler  
 {
-// Construction
 public:
-	CScheduler();
-	virtual ~CScheduler();
-	
-// Attributes
-public:
-	static LPCTSTR					xmlns;
-	
-	//Lock is used when objects reads/wirtes from/to m_pScheduleItems 
-	mutable CCriticalSection		m_pSection;
-
-protected:
-	CList< CScheduleTask* >			m_pScheduleTasks;
-
-
-// Operations
-public:
-
-	//To iterate through m_pScheduleItems
-	inline POSITION	GetIterator() const
-	{
-		return m_pScheduleTasks.GetHeadPosition();
-	}
-
-	inline CScheduleTask*	GetNext(POSITION& pos) const
-	{
-		return m_pScheduleTasks.GetNext( pos );
-	}
-
-	inline int		GetCount() const
-	{
-		return m_pScheduleTasks.GetCount();
-	}
-
-	//Checks to see pItem exists in m_pScheduleItems or not, by comparing GUID values
-	bool			Check(CScheduleTask* pSchTask) const
-	{
-		return pSchTask != NULL && GetGUID( pSchTask->m_pGUID ) != NULL;
-	}
-	
-	//It is called regularly by timers to see if any scheduled item should be executed
-	//This method also sets Settings.Scheduler.Enable to indiate globally if any item 
-	//is going to be executed
-	void			CheckSchedule();
-
-	//Is used to disconnect dial up connection
-	void			HangUpConnection();
-
-	//Is used to shut down computer
-	bool			ShutDownComputer();
-
-	//Is called by Load(). Tries to get shutdown privilege for the process
-	bool			SetShutdownRights();
-	
-	//Is called by CheckSchedule().
-	//If Now >= Then Returns the difference between Now and Then.
-	//Else returns -1;
-	int				MinutesPassed(CScheduleTask* pSchTask) const;
-	
-	//Checks to see if task should be executed today 0,
-	//should have been executed in the past -1 or
-	//should be executed later 1.
-	int				ScheduleDateFromToday(CScheduleTask* pSchTask) const;
-
-	//Adds a new task to m_pScheduleItems after giving it a GUID
-	void			Add(CScheduleTask* pSchTask);
-	
-	//Removes a task from m_pScheduleItems if it exists in the m_pScheduleItems
-	void			Remove(CScheduleTask* pSchTask);
-	
-	//Clears all m_pScheduleItems items
-	void			Clear();
-
-	BOOL			Load();
-	BOOL			Save();
-	BOOL			Import(LPCTSTR pszFile);
-
-	//Calculates hours remaining to execution of a combination of scheduled tasks
-	LONGLONG		GetHoursTo(unsigned int nTaskCombination);	//Example: nEventCombination = BANDWIDTH_FULL_SPEED | SYSTEM_DISCONNECT
-
-protected:
-	void			Serialize(CArchive& ar);
-	BOOL			FromXML(CXMLElement* pXML);
-	CXMLElement*	ToXML(BOOL bTasks);
-
-	//Called by CheckSchedule() to execute a task
-	void			ExecuteScheduledTask(CScheduleTask* pItem);
-
-	CScheduleTask*	GetGUID(const GUID& pGUID) const;
+	static void		Execute(const CString& sTaskData);
+	static void		Execute(HWND hShareazaWnd, const CString& sTaskData);
+	static void		HangUpConnection();
+	static bool		ShutDownComputer();
+	static bool		SetShutdownRights();
 };
-
-extern CScheduler Scheduler;
-
-

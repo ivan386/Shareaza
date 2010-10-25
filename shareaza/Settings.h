@@ -579,12 +579,6 @@ public:
 		CString		Password;
 	} Remote;
 
-	struct sScheduler
-	{
-		bool		Enable;						// Enable the scheduler
-		bool		ForceShutdown;
-	} Scheduler;
-
 	struct sIRC
 	{
 		
