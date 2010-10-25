@@ -22,7 +22,6 @@
 #pragma once
 
 #include <stdlib.h>
-#include <boost/cstdint.hpp>
 
 // Work-around for Microsoft double declaration
 #define _interlockedbittestandset _ms_set
@@ -36,22 +35,22 @@
 #undef _interlockedbittestandreset
 
 //! \brief platform independent signed 8 bit integer type.
-typedef boost::int8_t int8;
+typedef char int8;
 //! \brief platform independent signed 16 bit integer type.
-typedef boost::int16_t int16;
+typedef short int16;
 //! \brief platform independent signed 32 bit integer type.
-typedef boost::int32_t int32;
+typedef long int32;
 //! \brief platform independent signed 64 bit integer type.
-typedef boost::int64_t int64;
+typedef __int64 int64;
 
 //! \brief platform independent unsigned 8 bit integer type.
-typedef boost::uint8_t uint8;
+typedef unsigned char uint8;
 //! \brief platform independent unsigned 16 bit integer type.
-typedef boost::uint16_t uint16;
+typedef unsigned short uint16;
 //! \brief platform independent unsigned 32 bit integer type.
-typedef boost::uint32_t uint32;
+typedef unsigned long uint32;
 //! \brief platform independent unsigned 64 bit integer type.
-typedef boost::uint64_t uint64;
+typedef unsigned __int64 uint64;
 
 //! \brief alias for unsigned char.
 typedef unsigned char uchar;

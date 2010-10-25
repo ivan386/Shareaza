@@ -2707,6 +2707,39 @@
     </None>
     <None Include="Pre-Build.cmd" />
     <None Include="revision.js" />
+    <None Include="Res\in.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Res\out.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Res\Network_NULL.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Res\Network_G1.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Res\Network_G2.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Res\Network_ED2K.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Res\Network_HTTP.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Res\Network_FTP.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Res\Network_BT.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Res\Network_KAD.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Res\Network_DC.ico">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="Res\About.htm">

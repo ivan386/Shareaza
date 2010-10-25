@@ -152,12 +152,13 @@
       <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>bzlib.lib;regexp.lib;rasapi32.lib;winmm.lib;version.lib;ws2_32.lib;wininet.lib;Iphlpapi.lib;msi.lib;powrprof.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>bzlib.lib;regexp.lib;secur32.lib;rasapi32.lib;winmm.lib;version.lib;ws2_32.lib;wininet.lib;Iphlpapi.lib;msi.lib;powrprof.lib;mstask.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
       <AdditionalLibraryDirectories>..\bzlib\$(OutDir);..\RegExp\$(OutDir)</AdditionalLibraryDirectories>
+      <DelayLoadDLLs>secur32.dll;rasapi32.dll;winmm.dll;version.dll;ws2_32.dll;wininet.dll;iphlpapi.dll;msi.dll;powrprof.dll;winspool.drv;comdlg32.dll;comctl32.dll;oledlg.dll;ole32.dll;oleaut32.dll;oleacc.dll;urlmon.dll</DelayLoadDLLs>
     </Link>
     <Manifest>
       <InputResourceManifests>$(TargetPath);%(InputResourceManifests)</InputResourceManifests>
@@ -197,7 +198,7 @@
       <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>bzlib.lib;regexp.lib;rasapi32.lib;winmm.lib;version.lib;ws2_32.lib;wininet.lib;Iphlpapi.lib;msi.lib;powrprof.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>bzlib.lib;regexp.lib;secur32.lib;rasapi32.lib;winmm.lib;version.lib;ws2_32.lib;wininet.lib;Iphlpapi.lib;msi.lib;powrprof.lib;mstask.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -205,6 +206,7 @@
       <KeyFile>
       </KeyFile>
       <AdditionalLibraryDirectories>..\bzlib\$(OutDir);..\RegExp\$(OutDir)</AdditionalLibraryDirectories>
+      <DelayLoadDLLs>secur32.dll;rasapi32.dll;winmm.dll;version.dll;ws2_32.dll;wininet.dll;iphlpapi.dll;msi.dll;powrprof.dll;winspool.drv;comdlg32.dll;comctl32.dll;oledlg.dll;ole32.dll;oleaut32.dll;oleacc.dll;urlmon.dll</DelayLoadDLLs>
     </Link>
     <Manifest>
       <InputResourceManifests>$(TargetPath);%(InputResourceManifests)</InputResourceManifests>
@@ -251,7 +253,7 @@
       <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>bzlib.lib;regexp.lib;rasapi32.lib;winmm.lib;version.lib;ws2_32.lib;wininet.lib;Iphlpapi.lib;msi.lib;powrprof.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>bzlib.lib;regexp.lib;secur32.lib;rasapi32.lib;winmm.lib;version.lib;ws2_32.lib;wininet.lib;Iphlpapi.lib;msi.lib;powrprof.lib;mstask.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -262,6 +264,7 @@
       <KeyFile>
       </KeyFile>
       <AdditionalLibraryDirectories>..\bzlib\$(OutDir);..\RegExp\$(OutDir)</AdditionalLibraryDirectories>
+      <DelayLoadDLLs>secur32.dll;rasapi32.dll;winmm.dll;version.dll;ws2_32.dll;wininet.dll;iphlpapi.dll;msi.dll;powrprof.dll;winspool.drv;comdlg32.dll;comctl32.dll;oledlg.dll;ole32.dll;oleaut32.dll;oleacc.dll;urlmon.dll</DelayLoadDLLs>
     </Link>
     <Manifest>
       <InputResourceManifests>$(TargetPath);%(InputResourceManifests)</InputResourceManifests>
@@ -309,7 +312,7 @@
       <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>bzlib.lib;regexp.lib;rasapi32.lib;winmm.lib;version.lib;ws2_32.lib;wininet.lib;Iphlpapi.lib;msi.lib;powrprof.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>bzlib.lib;regexp.lib;secur32.lib;rasapi32.lib;winmm.lib;version.lib;ws2_32.lib;wininet.lib;Iphlpapi.lib;msi.lib;powrprof.lib;mstask.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -320,6 +323,7 @@
       <KeyFile>
       </KeyFile>
       <AdditionalLibraryDirectories>..\bzlib\$(OutDir);..\RegExp\$(OutDir)</AdditionalLibraryDirectories>
+      <DelayLoadDLLs>secur32.dll;rasapi32.dll;winmm.dll;version.dll;ws2_32.dll;wininet.dll;iphlpapi.dll;msi.dll;powrprof.dll;winspool.drv;comdlg32.dll;comctl32.dll;oledlg.dll;ole32.dll;oleaut32.dll;oleacc.dll;urlmon.dll</DelayLoadDLLs>
     </Link>
     <Manifest>
       <InputResourceManifests>$(TargetPath);%(InputResourceManifests)</InputResourceManifests>
@@ -1143,6 +1147,17 @@
     <ClInclude Include="FileFragments\Ranges.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Res\in.ico" />
+    <None Include="Res\Network_BT.ico" />
+    <None Include="Res\Network_DC.ico" />
+    <None Include="Res\Network_ED2K.ico" />
+    <None Include="Res\Network_FTP.ico" />
+    <None Include="Res\Network_G1.ico" />
+    <None Include="Res\Network_G2.ico" />
+    <None Include="Res\Network_HTTP.ico" />
+    <None Include="Res\Network_KAD.ico" />
+    <None Include="Res\Network_NULL.ico" />
+    <None Include="Res\out.ico" />
     <None Include="XML.inl" />
     <None Include="Hashes\Hashes.dox" />
     <CustomBuild Include="Res\About.htm">

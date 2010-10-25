@@ -89,7 +89,7 @@ void CCoolMenu::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
 		MENUITEMINFO mii = {};
 		mii.cbSize = sizeof( mii );
 		mii.fMask = MIIM_ID;
-		for ( UINT i = 0; i < pPopupMenu->GetMenuItemCount(); i++ )
+		for ( UINT i = 0; i < (UINT)pPopupMenu->GetMenuItemCount(); i++ )
 		{
 			if ( pPopupMenu->GetMenuItemInfo( i, &mii, TRUE ) &&
 				mii.wID >= ID_SHELL_MENU_MIN && mii.wID <= ID_SHELL_MENU_MAX )
@@ -103,7 +103,7 @@ void CCoolMenu::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
 					Skin.AddString( strHelp, mii.wID );
 			}
 		}
-		for ( UINT i = 0; i < pPopupMenu->GetMenuItemCount(); i++ )
+		for ( UINT i = 0; i < (UINT)pPopupMenu->GetMenuItemCount(); i++ )
 		{
 			if ( ! pPopupMenu->GetMenuItemInfo( i, &mii, TRUE ) ||
 				mii.wID == ID_SEPARATOR || mii.wID == -1 )

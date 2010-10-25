@@ -36,6 +36,8 @@
 
 #if 1
 
+#pragma warning ( disable : 4619 )	// #pragma warning : there is no warning number
+
 // Warnings that are normally ON by default
 #pragma warning ( disable : 4350 )	// (Level 1)	behavior change: 'member1' called instead of 'member2'
 #pragma warning ( disable : 4351 )	// (Level 1)	new behavior: elements of array 'array' will be default initialized
@@ -71,6 +73,7 @@
 #include <sdkddkver.h>					// Setup versioning for windows SDK/DDK
 
 #define VC_EXTRALEAN
+#define SECURITY_WIN32
 
 #define _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES 1		// Enable secure template overloads
 #define _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES_COUNT 1	// Enable secure template overloads
@@ -91,58 +94,58 @@
 #pragma warning ( disable : 4668 )	// 'symbol' is not defined as a preprocessor macro, replacing with '0' for '#if/#elif'
 #pragma warning ( disable : 4917 )	// ocidl.h : 'symbol' a GUID can only be associated with a class, interface or namespace
 #pragma warning ( disable : 4371 )	// boost : layout of class may have changed from a previous version of the compiler due to better packing of member
+#pragma warning ( disable : 4987 )	// nonstandard extension used: 'throw (...)'
+#pragma warning ( disable : 4996 )	// Function call with parameters that may be unsafe
+
 
 //
 // MFC
 //
 
 #include <afxwin.h>			// MFC core and standard components
-#include <afxext.h>			// MFC extensions
 #include <afxcmn.h>			// MFC support for Windows Common Controls
 #include <afxdtctl.h>		// MFC date & time controls
-#include <afxtempl.h>		// MFC templates
-#include <afxmt.h>			// MFC threads
-#include <afxole.h>			// MFC OLE
-#include <afxocc.h>			// MDC OCC
+#include <afxext.h>			// MFC extensions
 #include <afxhtml.h>		// MFC HTML
-#include <afxpriv.h>
+#include <afxmt.h>			// MFC threads
+#include <afxocc.h>			// MDC OCC
+#include <afxole.h>			// MFC OLE
+#include <afxpriv.h>		// MFC internals
+#include <afxtempl.h>		// MFC templates
 #include <../src/mfc/afximpl.h>
 
 //
 // ATL
 //
 
-#include <atltime.h>		// Time classes
 #include <atlenc.h>			// Base64Encode, UUEncode etc.
 #include <atlfile.h>		// Thin file classes
+#include <atltime.h>		// Time classes
 
 //
 // WIN32
 //
 
-#include <winsock2.h>		// Windows sockets V2
-#include <wininet.h>		// Internet
-#include <wincrypt.h>		// Cryptographic API
 #include <ddeml.h>			// DDE
-#include <math.h>			// Math
-#include <winsvc.h>			// Services (excluded by VC_EXTRALEAN)
-#include <shlwapi.h>		// Windows Shell API
 #include <exdispid.h>		// Internet Explorer DISPIDs
+#include <iphlpapi.h>		// IP Stack
+#include <math.h>			// Math
 #include <mmsystem.h>		// Multimedia
-#include <winioctl.h>		// Sparse files support
+#include <msidefs.h>		// Windows Installer
+#include <msiquery.h>		// Windows Installer
 #include <mstask.h>			// Task Scheduler 1.0 interfaces
+#include <natupnp.h>		// NAT UPnP interfaces
+#include <netfw.h>			// Windows Firewall interfaces
+#include <powrprof.h>		// The power policy applicator
+#include <security.h>		// For security aware components
+#include <shlwapi.h>		// Windows Shell API
 #include <taskschd.h>		// Task Scheduler 2.0 interfaces
-
-// If this header is not found, you'll need to install the Windows XP SP2 Platform SDK (or later)
-// from http://www.microsoft.com/msdownload/platformsdk/sdkupdate/
-
-#include <netfw.h>
-#include <upnp.h>
-#include <natupnp.h>
-#include <iphlpapi.h>
-#include <MsiQuery.h>
-#include <MsiDefs.h>
-#include <Powrprof.h>		// The power policy applicator
+#include <upnp.h>			// Control Point API
+#include <wincrypt.h>		// Cryptographic API
+#include <wininet.h>		// Internet
+#include <winioctl.h>		// Sparse files support
+#include <winsock2.h>		// Windows sockets V2
+#include <winsvc.h>			// Services (excluded by VC_EXTRALEAN)
 
 // Work-around for Microsoft double declaration
 #define _interlockedbittestandset _ms_set
@@ -159,42 +162,42 @@
 // STL
 //
 
-#include <vector>
-#include <list>
-#include <deque>
-#include <queue>
-#include <stack>
-#include <map>
-#include <set>
-#include <string>
-#include <utility>
-#include <functional>
 #include <algorithm>
-#include <memory>
+#include <deque>
+#include <functional>
 #include <iterator>
 #include <limits>
+#include <list>
+#include <map>
+#include <memory>
 #include <new>
+#include <queue>
+#include <set>
+#include <stack>
+#include <string>
+#include <utility>
+#include <vector>
 
 //
 // Boost
 //
 
-#include <boost/cstdint.hpp>
+#include <boost/array.hpp>
 #include <boost/bind.hpp>
 #include <boost/bind/placeholders.hpp>
-#include <boost/type_traits.hpp>
-#include <boost/shared_ptr.hpp>
-#include <boost/utility.hpp>
-#include <boost/array.hpp>
-#include <boost/ptr_container/ptr_list.hpp>
 #include <boost/checked_delete.hpp>
+#include <boost/cstdint.hpp>
+#include <boost/ptr_container/ptr_list.hpp>
+#include <boost/shared_ptr.hpp>
+#include <boost/type_traits.hpp>
+#include <boost/utility.hpp>
 
 //
 // Standard headers
 //
 
-#include "../zlib/zlib.h"
 #include "../bzlib/bzlib.h"
+#include "../zlib/zlib.h"
 
 // Work-around for VC9 where a (pop) is ifdef'd out in stdio.h
 #if _MSC_VER >= 1500 && _MSC_VER < 1600

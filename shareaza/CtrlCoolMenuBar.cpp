@@ -83,7 +83,7 @@ void CCoolMenuBarCtrl::SetMenu(HMENU hMenu)
 	CMenu pMenu;
 	pMenu.Attach( m_hMenu );
 
-	for ( UINT nItem = 0 ; nItem < pMenu.GetMenuItemCount() ; nItem++ )
+	for ( UINT nItem = 0 ; nItem < (UINT)pMenu.GetMenuItemCount() ; nItem++ )
 	{
 		CString strMenu;
 		pMenu.GetMenuString( nItem, strMenu, MF_BYPOSITION );
@@ -112,7 +112,7 @@ BOOL CCoolMenuBarCtrl::OpenMenuChar(UINT nChar)
 	CMenu pMenu;
 	pMenu.Attach( m_hMenu );
 
-	for ( UINT nItem = 0 ; nItem < pMenu.GetMenuItemCount() ; nItem++ )
+	for ( UINT nItem = 0 ; nItem < (UINT)pMenu.GetMenuItemCount() ; nItem++ )
 	{
 		CString strMenu;
 		pMenu.GetMenuString( nItem, strMenu, MF_BYPOSITION );
@@ -202,13 +202,13 @@ void CCoolMenuBarCtrl::ShowMenu()
 
 void CCoolMenuBarCtrl::UpdateWindowMenu(CMenu* pMenu)
 {
-	for ( UINT nItem = 0 ; nItem < pMenu->GetMenuItemCount() ; nItem++ )
+	for ( UINT nItem = 0 ; nItem < (UINT)pMenu->GetMenuItemCount() ; nItem++ )
 	{
 		UINT nID = pMenu->GetMenuItemID( nItem );
 
 		if ( nID >= AFX_IDM_FIRST_MDICHILD )
 		{
-			for ( UINT nRemove = nItem ; nRemove < pMenu->GetMenuItemCount() ; )
+			for ( UINT nRemove = nItem ; nRemove < (UINT)pMenu->GetMenuItemCount() ; )
 				pMenu->RemoveMenu( nItem, MF_BYPOSITION );
 			pMenu->RemoveMenu( nItem - 1, MF_BYPOSITION );
 			break;
