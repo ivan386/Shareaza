@@ -590,29 +590,19 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                </member>
        </members>
        <typeFilter>
-               <type extension="7z"/>
-               <type extension="ace"/>
-               <type extension="arj"/>
-               <type extension="bin"/>
-               <type extension="bz2"/>
-               <type extension="cab"/>
-               <type extension="cue"/>
+               <type extension="bat"/>
+               <type extension="cmd"/>
+               <type extension="com"/>
                <type extension="exe"/>
-               <type extension="iso"/>
-               <type extension="jar"/>
-               <type extension="gz"/>
-               <type extension="gzip"/>
+               <type extension="js"/>
+               <type extension="jse"/>
                <type extension="msi"/>
                <type extension="ppa"/>
-               <type extension="rar"/>
-               <type extension="sit"/>
-               <type extension="t"/>
-               <type extension="tar"/>
-               <type extension="tar.gz"/>
-               <type extension="tar.gzip"/>
-               <type extension="tar.z"/>
-               <type extension="tgz"/>
+               <type extension="vbe"/>
+               <type extension="vbs"/>
+               <type extension="wsf"/>
+               <type extension="wsh"/>
+               <type extension="msc"/>
                <type extension="xla"/>
-               <type extension="zip"/>
        </typeFilter>
 </schemaDescriptor>
