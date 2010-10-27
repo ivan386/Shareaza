@@ -389,7 +389,7 @@ STDMETHODIMP CLibraryCollectionView::External::XView::Open(BSTR sURN, VARIANT_BO
 			{
 				CString strPath = pFile->GetPath();
 				oLock.Unlock();
-				*pbResult = CFileExecutor::Execute( strPath, FALSE ) ? VARIANT_TRUE : VARIANT_FALSE;
+				*pbResult = CFileExecutor::Execute( strPath ) ? VARIANT_TRUE : VARIANT_FALSE;
 			}
 			else
 			{

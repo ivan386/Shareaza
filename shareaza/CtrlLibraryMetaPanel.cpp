@@ -476,7 +476,8 @@ void CLibraryMetaPanel::OnLButtonUp(UINT nFlags, CPoint point)
 			}
 			else if ( LibraryFolders.CheckFolder( pFolder, TRUE ) )
 			{
-				CFileExecutor::Execute( m_sFolder, TRUE );
+				ShellExecute( AfxGetMainWnd()->GetSafeHwnd(), NULL,
+					m_sFolder, NULL, NULL, SW_SHOWNORMAL );
 			}
 		}
 	}

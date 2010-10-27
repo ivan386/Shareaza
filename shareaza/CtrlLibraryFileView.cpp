@@ -252,55 +252,20 @@ void CLibraryFileView::OnLibraryLaunch()
 {
 	GetToolTip()->Hide();
 
-	CMap< CString, const CString&, bool, bool > oFileList;
+	CStringList oList;
 
 	{
-		CQuickLock pLock( Library.m_pSection );
+		CSingleLock oLock( &Library.m_pSection );
+		if ( !oLock.Lock( 250 ) ) return;
+
 		POSITION posSel = StartSelectedFileLoop();
 		while ( CLibraryFile* pFile = GetNextSelectedFile( posSel ) )
 		{
-			CString strPath = pFile->GetPath();
-			oFileList.SetAt( strPath, ( pFile->m_bVerify == TRI_FALSE ) &&
-				( ! Settings.Search.AdultFilter || ! AdultFilter.IsChildPornography( strPath ) ) );
+			oList.AddTail( pFile->GetPath() );
 		}
 	}
 
-	for ( POSITION pos = oFileList.GetStartPosition(); pos; )
-	{
-		CString strPath;
-		bool bSecurity;
-		oFileList.GetNextAssoc( pos, strPath, bSecurity );
-
-		if ( bSecurity )
-		{
-			CString strFormat, strMessage;
-
-			LoadString( strFormat, IDS_LIBRARY_VERIFY_FAIL );
-			strMessage.Format( strFormat, (LPCTSTR)strPath );
-			INT_PTR nResponse = AfxMessageBox( strMessage, MB_ICONEXCLAMATION|MB_YESNOCANCEL|MB_DEFBUTTON2 );
-			if ( nResponse == IDCANCEL )
-				break;
-			if ( nResponse == IDNO )
-				continue;
-
-			LoadString( strMessage, IDS_LIBRARY_VERIFY_FIX );
-			nResponse = AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNOCANCEL|MB_DEFBUTTON2 );
-			if ( nResponse == IDCANCEL )
-				break;
-			if ( nResponse == IDYES )
-			{
-				CQuickLock pLock( Library.m_pSection );
-				CLibraryFile* pFile = LibraryMaps.LookupFileByPath( strPath );
-				if ( pFile )
-				{
-					pFile->m_bVerify = TRI_UNKNOWN;
-					Library.Update();
-				}
-			}
-		}
-		if ( ! CFileExecutor::Execute( strPath, FALSE ) )
-			break;
-	}
+	CFileExecutor::Execute( oList );
 }
 
 void CLibraryFileView::OnUpdateLibraryEnqueue(CCmdUI* pCmdUI)
@@ -313,17 +278,20 @@ void CLibraryFileView::OnUpdateLibraryEnqueue(CCmdUI* pCmdUI)
 
 void CLibraryFileView::OnLibraryEnqueue()
 {
-	CSingleLock pLock( &Library.m_pSection, TRUE );
+	CStringList pList;
 
-	POSITION posSel = StartSelectedFileLoop();
-
-	while ( CLibraryFile* pFile = GetNextSelectedFile( posSel ) )
 	{
-		CString strPath = pFile->GetPath();
-		pLock.Unlock();
-		CFileExecutor::Enqueue( strPath );
-		pLock.Lock();
+		CSingleLock oLock( &Library.m_pSection );
+		if ( !oLock.Lock( 250 ) ) return;
+
+		POSITION posSel = StartSelectedFileLoop();
+		while ( CLibraryFile* pFile = GetNextSelectedFile( posSel ) )
+		{
+			pList.AddTail( pFile->GetPath() );
+		}
 	}
+
+	CFileExecutor::Enqueue( pList );
 }
 
 void CLibraryFileView::OnUpdateLibraryURL(CCmdUI* pCmdUI)

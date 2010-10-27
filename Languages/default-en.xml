@@ -2690,6 +2690,12 @@
 		<string id="WINDOW_HELP" value="Shareaza Help"/>
 		<string id="WINDOW_IRC" value="Shareaza Chat"/>
 		<string id="WINDOW_SCHEDULER" value="Scheduler"/>
+		<string id="148" value="Off"/>
+		<string id="149" value="Low"/>
+		<string id="150" value="Normal"/>
+		<string id="151" value="High"/>
+		<string id="152" value="Skin load error: %s. Element: %s"/>
+		<string id="153" value="Loading skin: %s"/>
 		<string id="154" value="Are you sure you want to remove all scheduled tasks? This cannot be undone."/>
 		<string id="156" value="Scheduled time has already passed.\n\nPlease select a time in the future."/>
 		<string id="157" value="Bandwidth: Full Speed"/>
@@ -2699,14 +2705,11 @@
 		<string id="161" value="System: Disconnect Dial-up Connection"/>
 		<string id="162" value="System: Turn Off the Computer"/>
 		<string id="163" value="Please select a task."/>
-		<string id="164" value="Specific day(s) of week"/>
 		<string id="165" value="Active"/>
 		<string id="166" value="Inactive"/>
 		<string id="167" value="Done"/>
 		<string id="168" value="Waiting..."/>
 		<string id="169" value="No Tasks Currently Scheduled"/>
-		<string id="172" value="Done Today"/>
-		<string id="173" value="You should select at least one day of week."/>
 		<string id="7000" value="Are you sure you want to delete this filter ?"/>
 		<string id="7001" value="&amp;Schemas"/>
 		<string id="7002" value="Multiple Values"/>
@@ -2726,9 +2729,7 @@
 		<string id="8007" value="There are no active searches. Click here to search for files."/>
 		<string id="8008" value="Shareaza has finished downloading the next Shareaza version (%s). Would you like to upgrade now?\n\nIf you select Yes, Shareaza will close temporarily while the upgrade is installed."/>
 		<string id="8009" value="Are you sure you want to delete the &quot;%s&quot; skin? This cannot be undone."/>
-		<string id="8010" value="This is a pre-release version of Shareaza, and the beta testing period has ended. Please download the full, official release from http://shareaza.sourceforge.net/."/>
 		<string id="8011" value="Changing view will close any windows you have open. Would you like to change now?"/>
-		<string id="8012" value="Torrent Information"/>
 		<string id="8013" value="No new Shareaza version detected."/>
 		<string id="8014" value="Download Properties"/>
 		<string id="8060" value="Hub/Ultrapeer mode with %lu neighbour(s). %s in local library."/>
@@ -2796,7 +2797,7 @@
 		<string id="8178" value="What type of file is it?"/>
 		<string id="8179" value="(Clear Search History)"/>
 		<string id="8180" value="File size must be"/>
-		<string id="8181" value="&#160;to"/><!-- size from xx TO xx-->
+		<string id="8181" value="&#160;to (size from xx TO xx)"/>
 		<string id="8208" value="Shareaza is creating hashes for %Iu file(s):"/>
 		<string id="8223" value="%i days and %i hours"/>
 		<string id="8224" value="Shareaza is downloading:"/>
@@ -2816,7 +2817,7 @@
 		<string id="8239" value="Completed"/>
 		<string id="8240" value="Shareaza is moving the download:"/>
 		<string id="8241" value="Shareaza is checking the download for errors:"/>
-		<string id="8243" value="Volume uploaded:"/>
+		<string id="8243" value="Upload ratio:"/>
 		<string id="8244" value="Number of reviews:"/>
 		<string id="8288" value="Exploring Your Shareaza Library"/>
 		<string id="8289" value="Exploring "/>
@@ -2878,10 +2879,9 @@
 		<string id="16077" value="The address %s is already blocked by your security rules."/>
 		<string id="16078" value="Added a security rule to block %s."/>
 		<string id="16079" value="Are you sure you want to disconnect?"/>
-		<string id="16080" value="You are running the Scheduler in 'G2 only' mode. Would you like to turn this mode off, so that all active networks remain connected?"/>
+		<string id="16080" value="Would you like to always connect to this network?"/>
 		<string id="16081" value="Sending query for &quot;%s&quot; to %s."/>
 		<string id="16083" value="Forcing your PC into hub mode may have adverse effects on performance and the P2P network. It is generally better to allow Shareaza to decide whether or not hub mode should be used.\n\nHub mode does NOT produce better search results, or have any other advantages for you.\n\nDo you really want to do this, despite these disadvantages?"/>
-		<string id="16084" value="Disabling support for Gnutella-1 protocols may limit your search results, and if you are acting as a hub it may also impact upon the results of other users. Are you sure you want to do this?"/>
 		<string id="16085" value="Gnutella2 is Shareaza's premiere network. Disabling support for it may severely limit both the number and quality of your search results. Are you SURE you want to do this?"/>
 		<string id="16087" value="Your outgoing bandwidth is too low to enable this network"/>
 		<string id="16128" value="Accepted an incoming connection from %s port %i."/>
@@ -3003,7 +3003,7 @@
 		<string id="16326" value="Upload host %s requested &quot;%s&quot; with different SHA1."/>
 		<string id="16327" value="Refusing upload of &quot;%s&quot; to %s (%s), busy and client does not support queues."/>
 		<string id="16328" value="Push connection to %s established, waiting for handshake..."/>
-		<string id="16329" value="Can't open &quot;%s&quot; to upload to host %s, disk/file error."/>
+		<string id="16329" value="Can't open &quot;%s&quot; to upload to host %s due to disk or file error."/>
 		<string id="16330" value="Sending upload content range %I64i-%I64i from &quot;%s&quot; to host %s (%s)."/>
 		<string id="16331" value="Finished uploading part of &quot;%s&quot; to %s."/>
 		<string id="16332" value="Incoming connection from %s is a HTTP upload request."/>
@@ -3052,6 +3052,7 @@
 		<string id="16375" value="Partial"/>
 		<string id="16376" value="All Files"/>
 		<string id="16377" value="HTTP Guard"/>
+		<string id="16378" value="Host &quot;%s&quot; sent a 416, without providing available ranges. Closing connection."/>
 		<string id="16379" value="Library Files"/>
 		<string id="16384" value="Are you sure you want to launch the file &quot;%s&quot; ?\n\nSome files can be harmful to your computer. Ensure you know what the file is before launching it."/>
 		<string id="16385" value="You are about to modify the metadata of %i files, are you sure you want to continue?"/>
@@ -3179,12 +3180,11 @@
 		<string id="16944" value="Found %i shared files in %s's library."/>
 		<string id="16991" value="Shareaza Media Player"/>
 		<string id="16992" value="Shareaza could not instantiate its MediaServices plugin. Please reinstall Shareaza, and confirm that you have the necessary media codecs and output drivers installed."/>
-		<string id="16993" value="All Media Files|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Playlists|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Audio Files|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|Video Files|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|CD Audio Tracks|*.cda|MIDI Files|*.mid;*.rmi;*.midi|All Files|*.*||"/>
 		<string id="16994" value="Unable to load media file &quot;%s&quot;"/>
 		<string id="16995" value="The file may be damaged, or you may not have the necessary codecs to play it."/>
 		<string id="16996" value="Part of this file could not be played, you may need to download additional codecs."/>
 		<string id="16997" value="There is no file playing. Double-click a media file in your library to play it."/>
-		<string id="16998" value="S &#160; &#160; H &#160; &#160; A &#160; &#160; R &#160; &#160; E &#160; &#160; A &#160; &#160; Z &#160; &#160; A &#160; &#160; &#160; &#160; &#160; M &#160; &#160; E &#160; &#160; D &#160; &#160; I &#160; &#160; A &#160; &#160; &#160; &#160; &#160; S &#160; &#160; Y &#160; &#160; S &#160; &#160; T &#160; &#160; E &#160; &#160; M"/><!-- on one line -->
+		<string id="16998" value="S &#160; &#160; H &#160; &#160; A &#160; &#160; R &#160; &#160; E &#160; &#160; A &#160; &#160; Z &#160; &#160; A &#160; &#160; &#160; &#160; &#160; M &#160; &#160; E &#160; &#160; D &#160; &#160; I &#160; &#160; A &#160; &#160; &#160; &#160; &#160; S &#160; &#160; Y &#160; &#160; S &#160; &#160; T &#160; &#160; E &#160; &#160; M"/>
 		<string id="16999" value="P L A Y L I S T"/>
 		<string id="17017" value="Send:"/>
 		<string id="17018" value="Welcome to Shareaza Chat!"/>
@@ -3284,6 +3284,7 @@
 		<string id="17477" value="BitTorrent coupling with %s responded with the wrong file."/>
 		<string id="17478" value="BitTorrent coupling with %s requested an unknown file."/>
 		<string id="17479" value="BitTorrent coupling with %s established for &quot;%s&quot;."/>
+		<string id="17480" value="BitTorrent coupling with %s requested an inactive file."/>
 		<string id="17481" value="Received BitTorrent descriptor file: &quot;%s&quot;"/>
 		<string id="17482" value="Unable to parse prefetched BitTorrent file &quot;%s&quot;."/>
 		<string id="17483" value="Error from BitTorrent tracker for &quot;%s&quot; : &quot;%s&quot;."/>
@@ -3297,14 +3298,13 @@
 		<string id="17491" value="The torrent &quot;%s&quot; is already on your download list, and cannot be seeded."/>
 		<string id="17492" value="Error loading the torrent file &quot;%s&quot;. This may not be a valid torrent."/>
 		<string id="17493" value="Unable to create BitTorrent share file &quot;%s&quot;."/>
-		<string id="17494" value="This torrent includes the file &quot;%s&quot;, but Shareaza cannot find this file in your library. If possible, move the file to the same folder as the torrent and try again."/>
+		<string id="17494" value="This torrent includes the file &quot;%s&quot;, but Shareaza cannot find this file in your library. If possible, move the file to a shared folder and try again."/>
 		<string id="17495" value="This torrent includes the file &quot;%s&quot; which should be %s, however your version of the file is %s."/>
 		<string id="17496" value="An error occurred while copying from &quot;%s&quot; to a BitTorrent share file."/>
 		<string id="17497" value="An unknown error occurred while trying to seed &quot;%s&quot;."/>
 		<string id="17498" value="An error was detected in the file &quot;%s&quot;."/>
-		<string id="17500" value="Tracker did not respond- Retrying announce (%i of %i)"/>
 		<string id="17501" value="Unable to communicate with tracker"/>
-		<string id="17503" value="Tracker failed- Trying next tracker (%i of %i)"/>
+		<string id="17503" value="Trying next tracker (%i of %i)"/>
 		<string id="17505" value="BitTorrent connection to %s was dropped."/>
 		<string id="17506" value="BitTorrent handshake with %s was dropped."/>
 		<string id="17507" value="BitTorrent coupling with %s was dropped."/>
@@ -3315,12 +3315,6 @@
 		<string id="17514" value="Updating Bittorrent Downloads..."/>
 		<string id="17515" value="Converting Torrent:"/>
 		<string id="18496" value="You have made changes to the name field. Are you sure you want to rename this download?"/>
-		<string id="18497" value="You have typed a SHA1 value, however it is invalid. Please check it and try again."/>
-		<string id="18498" value="You have typed a root tiger-tree value, however it is invalid. Please check it and try again."/>
-		<string id="18499" value="You have typed an eDonkey hash value, however it is invalid. Please check it and try again."/>
-		<string id="18500" value="You have provided a SHA1 hash value which is different to the one currently associated with this download. Are you sure you want to change the SHA1 hash now?"/>
-		<string id="18501" value="You have provided a root tiger-tree hash value which is different to the one currently associated with this download. Are you sure you want to change the tiger-tree root hash now?"/>
-		<string id="18502" value="You have provided an eDonkey hash value which is different to the one currently associated with this download. Are you sure you want to change the eDonkey hash now?"/>
 		<string id="18503" value="Are you sure you want to forget the current verification status? All downloaded data will be treated as untrusted, and cached hashtrees and hashsets will be flushed."/>
 		<string id="18504" value="Are you sure you want to forget all sources for the selected download?"/>
 		<string id="18505" value="Please enter a valid range to erase. The &quot;from&quot; field is the first byte to erase, the &quot;last&quot; field is the last byte to erase."/>
@@ -3330,9 +3324,15 @@
 		<string id="18509" value="You cannot assume this download is complete and reverify it because you do not yet have any partial verification data, such as tiger-tree volume, eDonkey hashset or BitTorrent hashset. Without verification information the download cannot be reverified."/>
 		<string id="18510" value="Are you sure you want to assume this download is complete and reverify it? The whole file will be considered, and Shareaza will accept parts which pass verification and redownload parts which fail verification."/>
 		<string id="18511" value="You have made changes to the file size. Are you sure you want to change the file size for this download?"/>
+		<string id="18512" value="Are you sure you want to cancel this download but save incomplete file(s)?"/>
+		<string id="18513" value="You have typed an %s hash value, however it is invalid. Please check it and try again."/>
+		<string id="18514" value="You have provided an %s hash value which is different to the one currently associated with this download. Are you sure you want to change the %s hash now?"/>
 		<string id="19000" value="Remote access is disabled."/>
 		<string id="19001" value="You must choose a username and password."/>
 		<string id="19002" value="Unable to accept connections, URL unavailable."/>
+		<string id="19103" value="Welcome to Shareaza Chat!"/>
+		<string id="19104" value="Please respect others while using this service"/>
+		<string id="19105" value="Chat!"/>
 		<string id="20000" value="No URN available"/>
 		<string id="20001" value="Close"/>
 		<string id="20002" value="of (e.g. 1 of 10)"/>
@@ -3346,6 +3346,7 @@
 		<string id="20011" value="&amp;Next"/>
 		<string id="20012" value="Finish"/>
 		<string id="20013" value="All"/>
+		<string id="20014" value="This option uses services provided by ShareMonkey.com for recognising information about selected files.\n\nShareaza will transmit file details and your location in order to query the ShareMonkey database.  If you are concerned about privacy, you may wish to consult the ShareMonkey.com privacy policy.\n\nWould you like to proceed?"/>
 		<string id="20100" value="Connecting"/>
 		<string id="20101" value="Requesting"/>
 		<string id="20102" value="Response"/>
@@ -3384,13 +3385,6 @@
 		<string id="20135" value="Next"/>
 		<string id="20136" value="Q"/>
 		<string id="20137" value="sources (e.g. 3/10 sources)"/>
-		<string id="20200" value="Sunday"/>
-		<string id="20201" value="Monday"/>
-		<string id="20202" value="Tuesday"/>
-		<string id="20203" value="Wednesday"/>
-		<string id="20204" value="Thursday"/>
-		<string id="20205" value="Friday"/>
-		<string id="20206" value="Saturday"/>
 		<string id="20210" value="(No Rating)"/>
 		<string id="20211" value="Fake / Corrupt"/>
 		<string id="20212" value="Poor"/>
@@ -3399,7 +3393,6 @@
 		<string id="20215" value="Very Good"/>
 		<string id="20216" value="Excellent"/>
 		<string id="20217" value="Select the eDonkey/eMule temp folder:"/>
-		<!-- Column headers in Library Album View -->
 		<string id="20230" value="# (Track number)"/>
 		<string id="20231" value="Title"/>
 		<string id="20232" value="Length"/>
@@ -3418,7 +3411,6 @@
 		<string id="20245" value="New Folder"/>
 		<string id="32825" value="Open my folder of completed Downloads"/>
 		<string id="32773" value="Check for new version"/>
-		<string id="61215" value="Activate this window"/>
 	</strings>
 	<!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 	<!-- Don't edit dialogs manualy! Use DialogScan feature instead -->

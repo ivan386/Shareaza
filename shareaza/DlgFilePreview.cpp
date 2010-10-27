@@ -233,7 +233,7 @@ void CFilePreviewDlg::OnTimer(UINT_PTR nIDEvent)
 		m_sExecute.Empty();
 		pLock.Unlock();
 
-		CFileExecutor::Execute( strExecute, TRUE );
+		CFileExecutor::Execute( strExecute );
 
 		return;
 	}

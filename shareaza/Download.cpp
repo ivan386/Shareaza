@@ -875,28 +875,9 @@ BOOL CDownload::Launch(int nIndex, CSingleLock* pLock, BOOL bForceOriginal)
 	if ( IsCompleted() )
 	{
 		// Run complete file
-		if ( m_bVerify == TRI_FALSE )
-		{
-			CString strFormat, strMessage;
-			LoadString( strFormat, IDS_LIBRARY_VERIFY_FAIL );
-			strMessage.Format( strFormat, (LPCTSTR)strName );
-
-			if ( pLock ) pLock->Unlock();
-
-			INT_PTR nResponse = AfxMessageBox( strMessage,
-				MB_ICONEXCLAMATION | MB_YESNOCANCEL | MB_DEFBUTTON2 );
-
-			if ( pLock ) pLock->Lock();
-
-			if ( nResponse == IDCANCEL )
-				return FALSE;
-			if ( nResponse == IDNO )
-				return TRUE;
-		}
-
 		if ( pLock ) pLock->Unlock();
 
-		bResult = CFileExecutor::Execute( strPath, FALSE, strExt );
+		bResult = CFileExecutor::Execute( strPath, strExt );
 
 		if ( pLock ) pLock->Lock();
 	}
@@ -926,7 +907,7 @@ BOOL CDownload::Launch(int nIndex, CSingleLock* pLock, BOOL bForceOriginal)
 		// Run file as is
 		if ( pLock ) pLock->Unlock();
 
-		bResult = CFileExecutor::Execute( strPath, FALSE, strExt );
+		bResult = CFileExecutor::Execute( strPath, strExt );
 
 		if ( pLock ) pLock->Lock();
 	}
@@ -949,7 +930,7 @@ BOOL CDownload::Enqueue(int nIndex, CSingleLock* pLock)
 	{
 		if ( pLock ) pLock->Unlock();
 
-		bResult = CFileExecutor::Enqueue( strPath, FALSE, strExt );
+		bResult = CFileExecutor::Enqueue( strPath, strExt );
 
 		if ( pLock ) pLock->Lock();
 	}

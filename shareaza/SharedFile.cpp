@@ -1317,13 +1317,13 @@ STDMETHODIMP CLibraryFile::XLibraryFile::put_Metadata(ISXMLElement FAR* pXML)
 STDMETHODIMP CLibraryFile::XLibraryFile::Execute()
 {
 	METHOD_PROLOGUE( CLibraryFile, LibraryFile )
-	return CFileExecutor::Execute( pThis->GetPath(), TRUE ) ? S_OK : E_FAIL;
+	return CFileExecutor::Execute( pThis->GetPath() ) ? S_OK : E_FAIL;
 }
 
 STDMETHODIMP CLibraryFile::XLibraryFile::SmartExecute()
 {
 	METHOD_PROLOGUE( CLibraryFile, LibraryFile )
-	return CFileExecutor::Execute( pThis->GetPath(), FALSE ) ? S_OK : E_FAIL;
+	return CFileExecutor::Execute( pThis->GetPath() ) ? S_OK : E_FAIL;
 }
 
 STDMETHODIMP CLibraryFile::XLibraryFile::Delete()

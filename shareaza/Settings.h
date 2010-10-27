@@ -174,6 +174,7 @@ public:
 		bool		SmartSeriesDetection;		// Organize video files in Library by using predefined patterns
 		CString		LastUsedView;				// Name of last used view
 		CString		URLExportFormat;			// Template for URL export
+		DWORD		TooManyWarning;				// Too many files warning. 0 - ask user; 1 - no; 2 - yes.
 	} Library;
 
 	struct sWebServices
@@ -239,7 +240,7 @@ public:
 		CString		VisCLSID;
 		CString		VisPath;
 		DWORD		VisSize;
-		string_set	ServicePath;				// Keeps track of 3 different player	i.e. "*kmplayer.exe|**wmplayer.exe*|***vlc.exe" begining astrix shows the order and tailing shows selected 
+		string_set	ServicePath;				// Keeps track of user players, beginning astrix shows the order and tailing shows selected
 		bool		ShortPaths;					// Some players differently handle unicode paths but they can launch files using 8.3 paths
 	} MediaPlayer;
 

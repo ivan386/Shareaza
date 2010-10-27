@@ -23,26 +23,28 @@
 #include "Shareaza.h"
 #include "Settings.h"
 #include "FileExecutor.h"
+#include "Library.h"
 #include "Plugins.h"
-#include "Skin.h"
-#include "ShellIcons.h"
-#include "XML.h"
 #include "Schema.h"
 #include "SchemaCache.h"
-#include "Library.h"
-#include "SharedFile.h"
-#include "Connection.h"
+#include "Security.h"
+#include "ShellIcons.h"
+#include "XML.h"
+
+#include "DlgTorrentSeed.h"
+
 #include "WindowManager.h"
+#include "WndLibrary.h"
 #include "WndMain.h"
 #include "WndMedia.h"
-#include "WndLibrary.h"
-#include "DlgTorrentSeed.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
 static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
+
+#define TOO_MANY_FILES_LIMIT	20
 
 // Some known media players
 static const struct
@@ -54,6 +56,12 @@ KnownPlayers[] =
 {
 	// MediaPlayer Classic
 	{ _T("mplayerc.exe"),	_T("\"%s\" /add") },
+	// MediaPlayer Classic 64
+	{ _T("mplayerc64.exe"),	_T("\"%s\" /add") },
+	// MediaPlayer Classic Home Cinema
+	{ _T("mpc-hc.exe"),		_T("\"%s\" /add") },
+	// MediaPlayer Classic Home Cinema 64
+	{ _T("mpc-hc64.exe"),	_T("\"%s\" /add") },
 	// Windows Media Player
 	{ _T("wmplayer.exe"),	_T("/SHELLHLP_V9 Enqueue \"%s\"") },
 	// VideoLAN
@@ -170,27 +178,20 @@ void CFileExecutor::DetectFileType(LPCTSTR pszFile, LPCTSTR szType, bool& bVideo
 	}
 }
 
-int CFileExecutor::FillServices(CString sServicePaths[])
+CString CFileExecutor::GetCustomPlayer()
 {
-	int nCount = 0;
-	int nSelected = 3;
-
-	for(string_set::const_reverse_iterator i = Settings.MediaPlayer.ServicePath.rbegin() ;i != Settings.MediaPlayer.ServicePath.rend(); ++i)
+	for ( string_set::const_iterator i = Settings.MediaPlayer.ServicePath.begin() ;
+		i != Settings.MediaPlayer.ServicePath.end(); ++i )
 	{
-		
-		sServicePaths[nCount] = *i;
-
-		int nAstrix= sServicePaths[nCount].ReverseFind( '*' );
-		
-		if(nAstrix == sServicePaths[nCount].GetLength()-1)	//Has astrix at the end so Is Selected player
+		CString sPlayer = *i;
+		int nAstrix = sPlayer.ReverseFind( _T('*') );
+		sPlayer.Remove( _T('*') );
+		if ( nAstrix != -1 )	// Has astrix at the end so Is Selected player
 		{
-			nSelected = nCount;
+			return sPlayer;
 		}
-
-		sServicePaths[nCount].Remove('*');
-		nCount++;
 	}
-	return nSelected;
+	return CString();
 }
 
 TRISTATE CFileExecutor::IsSafeExecute(LPCTSTR szExt, LPCTSTR szFile)
@@ -201,11 +202,10 @@ TRISTATE CFileExecutor::IsSafeExecute(LPCTSTR szExt, LPCTSTR szFile)
 
 	if ( ! bSafe && szFile )
 	{
-		CString strFormat, strPrompt;
-		Skin.LoadString( strFormat, IDS_LIBRARY_CONFIRM_EXECUTE );
+		CString strPrompt;
 		TCHAR szPrettyPath[ 60 ];
 		PathCompactPathEx( szPrettyPath, szFile, _countof( szPrettyPath ) - 1, 0 );
-		strPrompt.Format( strFormat, szPrettyPath );
+		strPrompt.Format( LoadString( IDS_LIBRARY_CONFIRM_EXECUTE ), szPrettyPath );
 		switch ( AfxMessageBox( strPrompt,
 			MB_ICONQUESTION | MB_YESNOCANCEL | MB_DEFBUTTON2 ) )
 		{
@@ -224,12 +224,65 @@ TRISTATE CFileExecutor::IsSafeExecute(LPCTSTR szExt, LPCTSTR szFile)
 	return bSafe ? TRI_TRUE : TRI_FALSE;
 }
 
-BOOL CFileExecutor::Execute(LPCTSTR pszFile, BOOL bSkipSecurityCheck, LPCTSTR pszExt)
+TRISTATE CFileExecutor::IsVerified(LPCTSTR szFile)
 {
-	CString sServicePaths[3];
-	int nSelServiceIndex = FillServices(sServicePaths);
+	BOOL bInsecure = FALSE;
+	{
+		CQuickLock pLock( Library.m_pSection );
+		if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( szFile ) )
+		{
+			bInsecure = ( pFile->m_bVerify == TRI_FALSE ) &&
+				( ! Settings.Search.AdultFilter ||
+				  ! AdultFilter.IsChildPornography( szFile ) );
+		}
+	}
 
+	if ( ! bInsecure )
+		// Run it
+		return TRI_TRUE;
+
+	CString strMessage;
+	strMessage.Format( LoadString( IDS_LIBRARY_VERIFY_FAIL ), szFile );
+	INT_PTR nResponse = AfxMessageBox( strMessage,
+		MB_ICONEXCLAMATION|MB_YESNOCANCEL|MB_DEFBUTTON2 );
+	if ( nResponse == IDCANCEL )
+		// Cancel file operation
+		return TRI_UNKNOWN;
+	else if ( nResponse == IDNO )
+		// Skip it
+		return TRI_FALSE;
+
+	nResponse = AfxMessageBox( LoadString( IDS_LIBRARY_VERIFY_FIX ),
+		MB_ICONQUESTION|MB_YESNOCANCEL|MB_DEFBUTTON2 );
+	if ( nResponse == IDCANCEL )
+		// Cancel file operation
+		return TRI_UNKNOWN;
+	else if ( nResponse == IDYES )
+	{
+		// Reset failed verification flag
+		CQuickLock pLock( Library.m_pSection );
+		if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( szFile ) )
+		{
+			pFile->m_bVerify = TRI_UNKNOWN;
+			Library.Update();
+		}
+	}
+
+	// Run it
+	return TRI_TRUE;
+}
+
+BOOL CFileExecutor::Execute(LPCTSTR pszFile, LPCTSTR pszExt)
+{
 	CWaitCursor pCursor;
+
+	TRISTATE bVerified = IsVerified( pszFile );
+	if ( bVerified == TRI_UNKNOWN )
+		// Cancel operation
+		return FALSE;
+	else if ( bVerified == TRI_FALSE )
+		// Skip file
+		return TRUE;
 
 	CString strType;
 	if ( ! ( GetFileAttributes( pszFile ) & FILE_ATTRIBUTE_DIRECTORY ) )
@@ -239,8 +292,6 @@ BOOL CFileExecutor::Execute(LPCTSTR pszFile, BOOL bSkipSecurityCheck, LPCTSTR ps
 	if ( theApp.Open( pszFile, FALSE ) )
 	{
 		theApp.Open( pszFile, TRUE );
-
-		// Skip file
 		return TRUE;
 	}
 
@@ -260,12 +311,14 @@ BOOL CFileExecutor::Execute(LPCTSTR pszFile, BOOL bSkipSecurityCheck, LPCTSTR ps
 	DetectFileType( pszFile, strType, bVideo, bAudio, bImage );
 
 	// Detect dangerous files
-	if ( ! ( bAudio || bVideo || bImage ) && ! bSkipSecurityCheck )
+	if ( ! ( bAudio || bVideo || bImage ) )
 	{
 		TRISTATE bSafe = IsSafeExecute( strType, pszFile );
 		if ( bSafe == TRI_UNKNOWN )
+			// Cancel operation
 			return FALSE;
 		else if ( bSafe == TRI_FALSE )
+			// Skip file
 			return TRUE;
 	}
 
@@ -283,8 +336,8 @@ BOOL CFileExecutor::Execute(LPCTSTR pszFile, BOOL bSkipSecurityCheck, LPCTSTR ps
 	}
 
 	// Handle video and audio files by external player
-	if ( ! bShiftKey && ( bVideo || bAudio ) &&
-		 nSelServiceIndex < 3 )
+	CString sCustomPlayer = GetCustomPlayer();
+	if ( ! bShiftKey && ( bVideo || bAudio ) && ! sCustomPlayer.IsEmpty() )
 	{
 		// Prepare file path for execution
 		TCHAR pszShortPath[ MAX_PATH ];
@@ -295,8 +348,7 @@ BOOL CFileExecutor::Execute(LPCTSTR pszFile, BOOL bSkipSecurityCheck, LPCTSTR ps
 		}
 
 		HINSTANCE hResult = ShellExecute( AfxGetMainWnd()->GetSafeHwnd(), _T("open"),
-			sServicePaths[nSelServiceIndex],
-			CString( _T('\"') ) + pszFile + CString( _T('\"') ), NULL, SW_SHOWNORMAL );
+			sCustomPlayer, CString( _T('\"') ) + pszFile + _T('\"'), NULL, SW_SHOWNORMAL );
 		if ( hResult > (HINSTANCE)32 )
 			return TRUE;
 	}
@@ -318,18 +370,41 @@ BOOL CFileExecutor::Execute(LPCTSTR pszFile, BOOL bSkipSecurityCheck, LPCTSTR ps
 	return FALSE;
 }
 
+BOOL CFileExecutor::Execute(const CStringList& pList)
+{
+	if ( pList.GetCount() > TOO_MANY_FILES_LIMIT )
+	{
+		CString sMessage;
+		sMessage.Format( LoadString( IDS_TOO_MANY_FILES ), pList.GetCount() );
+		if ( MsgBox( sMessage, MB_ICONQUESTION | MB_YESNO, 0,
+			&Settings.Library.TooManyWarning ) != IDYES )
+		{
+			return FALSE;
+		}
+	}
+
+	for ( POSITION pos = pList.GetHeadPosition() ; pos ; )
+	{
+		if ( ! CFileExecutor::Execute( pList.GetNext( pos ) ) )
+			return FALSE;
+	}
+
+	return TRUE;
+}
+
 //////////////////////////////////////////////////////////////////////
 // CFileExecutor enqueue
 
-BOOL CFileExecutor::Enqueue(LPCTSTR pszFile, BOOL /*bSkipSecurityCheck*/, LPCTSTR pszExt)
+BOOL CFileExecutor::Enqueue(LPCTSTR pszFile, LPCTSTR pszExt)
 {
-	CString sServicePaths[3];
-	int nSelServiceIndex = FillServices(sServicePaths);
-	
 	CWaitCursor pCursor;
 
-	// Handle all by plugins
-	if ( Plugins.OnEnqueueFile( pszFile ) )
+	TRISTATE bVerified = IsVerified( pszFile );
+	if ( bVerified == TRI_UNKNOWN )
+		// Cancel operation
+		return FALSE;
+	else if ( bVerified == TRI_FALSE )
+		// Skip file
 		return TRUE;
 
 	CString strType;
@@ -349,6 +424,16 @@ BOOL CFileExecutor::Enqueue(LPCTSTR pszFile, BOOL /*bSkipSecurityCheck*/, LPCTST
 	bool bImage = false;
 	DetectFileType( pszFile, strType, bVideo, bAudio, bImage );
 
+	// Detect dangerous files
+	if ( ! ( bAudio || bVideo || bImage ) )
+	{
+		TRISTATE bSafe = IsSafeExecute( strType, pszFile );
+		if ( bSafe == TRI_UNKNOWN )
+			return FALSE;
+		else if ( bSafe == TRI_FALSE )
+			return TRUE;
+	}
+
 	// Handle video and audio files by internal player
 	bool bShiftKey = ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) != 0;
 	if ( ! bShiftKey && ( bVideo || bAudio ) && Settings.MediaPlayer.EnableEnqueue &&
@@ -360,6 +445,13 @@ BOOL CFileExecutor::Enqueue(LPCTSTR pszFile, BOOL /*bSkipSecurityCheck*/, LPCTST
 			pWnd->EnqueueFile( pszFile );
 			return TRUE;
 		}
+	}
+
+	// Handle all by plugins
+	if ( ! bShiftKey )
+	{
+		if ( Plugins.OnEnqueueFile( pszFile ) )
+			return TRUE;
 	}
 
 	// Delay between first and second in row runs
@@ -381,14 +473,14 @@ BOOL CFileExecutor::Enqueue(LPCTSTR pszFile, BOOL /*bSkipSecurityCheck*/, LPCTST
 	}
 
 	// Handle video and audio files by external player
-	if ( ! bShiftKey && ( bVideo || bAudio ) &&
-		  nSelServiceIndex < 3 )
+	CString sCustomPlayer = GetCustomPlayer();
+	if ( ! bShiftKey && ( bVideo || bAudio ) && ! sCustomPlayer.IsEmpty() )
 	{
 		// Try Shell "enqueue" verb
 		CString strCommand, strParam;
 		DWORD nBufferSize = MAX_PATH;
 		HRESULT hr = AssocQueryString( ASSOCF_OPEN_BYEXENAME, ASSOCSTR_COMMAND,
-			sServicePaths[nSelServiceIndex], _T("enqueue"),
+			sCustomPlayer, _T("enqueue"),
 			strCommand.GetBuffer( MAX_PATH ), &nBufferSize );
 		strCommand.ReleaseBuffer();
 		int nPos = PathGetArgsIndex( strCommand );
@@ -412,7 +504,7 @@ BOOL CFileExecutor::Enqueue(LPCTSTR pszFile, BOOL /*bSkipSecurityCheck*/, LPCTST
 		}
 
 		// Try to create "enqueue" verb from default verb for known players
-		CString strExecutable = PathFindFileName( sServicePaths[nSelServiceIndex] );
+		CString strExecutable = PathFindFileName( sCustomPlayer );
 		for ( int i = 0; KnownPlayers[ i ].szPlayer; ++i )
 		{
 			if ( strExecutable.CompareNoCase( KnownPlayers[ i ].szPlayer ) == 0 )
@@ -424,7 +516,7 @@ BOOL CFileExecutor::Enqueue(LPCTSTR pszFile, BOOL /*bSkipSecurityCheck*/, LPCTST
 		if ( ! strParam.IsEmpty() )
 		{
 			HINSTANCE hResult = ShellExecute( AfxGetMainWnd()->GetSafeHwnd(), NULL,
-				sServicePaths[nSelServiceIndex], strParam, NULL, SW_SHOWNORMAL );
+				sCustomPlayer, strParam, NULL, SW_SHOWNORMAL );
 			if ( hResult > (HINSTANCE)32 )
 				return TRUE;
 		}
@@ -477,6 +569,28 @@ BOOL CFileExecutor::Enqueue(LPCTSTR pszFile, BOOL /*bSkipSecurityCheck*/, LPCTST
 	return FALSE;
 }
 
+BOOL CFileExecutor::Enqueue(const CStringList& pList)
+{
+	if ( pList.GetCount() > TOO_MANY_FILES_LIMIT )
+	{
+		CString sMessage;
+		sMessage.Format( LoadString( IDS_TOO_MANY_FILES ), pList.GetCount() );
+		if ( MsgBox( sMessage, MB_ICONQUESTION | MB_YESNO, 0,
+			&Settings.Library.TooManyWarning ) != IDYES )
+		{
+			return FALSE;
+		}
+	}
+
+	for ( POSITION pos = pList.GetHeadPosition() ; pos ; )
+	{
+		if ( ! CFileExecutor::Enqueue( pList.GetNext( pos ) ) )
+			return FALSE;
+	}
+
+	return TRUE;
+}
+
 //////////////////////////////////////////////////////////////////////
 // CFileExecutor show Bitzi ticket
 
@@ -486,8 +600,7 @@ BOOL CFileExecutor::ShowBitziTicket(DWORD nIndex)
 
 	if ( ! Settings.WebServices.BitziOkay )
 	{
-		Skin.LoadString( str, IDS_LIBRARY_BITZI_MESSAGE );
-		if ( AfxMessageBox( str, MB_ICONQUESTION|MB_YESNO ) != IDYES ) return FALSE;
+		if ( AfxMessageBox( LoadString( IDS_LIBRARY_BITZI_MESSAGE ), MB_ICONQUESTION|MB_YESNO ) != IDYES ) return FALSE;
 		Settings.WebServices.BitziOkay = TRUE;
 		Settings.Save();
 	}
@@ -499,9 +612,7 @@ BOOL CFileExecutor::ShowBitziTicket(DWORD nIndex)
 
 	if ( !pFile->m_oSHA1 || !pFile->m_oTiger || !pFile->m_oED2K )
 	{
-		CString strFormat;
-		Skin.LoadString( strFormat, IDS_LIBRARY_BITZI_HASHED );
-		str.Format( strFormat, (LPCTSTR)pFile->m_sName );
+		str.Format( LoadString( IDS_LIBRARY_BITZI_HASHED ), (LPCTSTR)pFile->m_sName );
 		pLock.Unlock();
 		AfxMessageBox( str, MB_ICONINFORMATION );
 		return FALSE;

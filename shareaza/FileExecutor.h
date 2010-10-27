@@ -29,10 +29,19 @@ class CFileExecutor
 {
 public:
 	// Is file extension safe to execute?
-	// Returns: TRI_TRUE - safe, TRI_FALSE - dangerous, TRI_UNKNOWN - dangerous and cancel
+	// Returns: TRI_TRUE - safe, TRI_FALSE - dangerous, TRI_UNKNOWN - cancel operation
 	static TRISTATE IsSafeExecute(LPCTSTR szExt, LPCTSTR szFile = NULL);
-	static BOOL		Execute(LPCTSTR pszFile, BOOL bSkipSecurityCheck = FALSE, LPCTSTR pszExt = NULL);
-	static BOOL		Enqueue(LPCTSTR pszFiles, BOOL bSkipSecurityCheck = FALSE, LPCTSTR pszExt = NULL);
+	// Is file verified?
+	// Returns: TRI_TRUE - secure, TRI_FALSE - insecure, TRI_UNKNOWN - cancel operation
+	static TRISTATE	IsVerified(LPCTSTR szFile);
+	// Execute one file
+	static BOOL		Execute(LPCTSTR pszFile, LPCTSTR pszExt = NULL);
+	// Execute file list
+	static BOOL		Execute(const CStringList& pList);
+	// Enqueue one file
+	static BOOL		Enqueue(LPCTSTR pszFile, LPCTSTR pszExt = NULL);
+	// Enqueue file list
+	static BOOL		Enqueue(const CStringList& pList);
 	static BOOL		ShowBitziTicket(DWORD nFile);
 	static BOOL		DisplayURL(LPCTSTR pszURL);
 
@@ -46,6 +55,6 @@ protected:
 	// Is file a video, audio or image file?
 	static void DetectFileType(LPCTSTR pszFile, LPCTSTR szType, bool& bVideo, bool& bAudio, bool& bImage);
 
-	//Extracts players form settings
-	static int FillServices(CString sServicePaths[]);
+	// Extracts player form settings
+	static CString GetCustomPlayer();
 };

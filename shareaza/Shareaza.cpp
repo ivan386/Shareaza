@@ -1366,7 +1366,7 @@ BOOL CShareazaApp::InternalURI(LPCTSTR pszURI)
 			{
 				CString strPath = pFile->GetPath();
 				oLock.Unlock();
-				CFileExecutor::Execute( strPath, FALSE );
+				CFileExecutor::Execute( strPath );
 			}
 		}
 	}

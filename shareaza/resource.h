@@ -17,6 +17,7 @@
 #define IDS_SCHEMA_LOAD_ERROR           121
 #define IDS_SCHEDULER_INVALIDVP         122
 #define IDS_SCHEDULER_SYSTEM_START      123
+#define IDS_TOO_MANY_FILES              124
 #define IDB_MENUBAR                     127
 #define IDR_MAINFRAME                   128
 #define IDR_SYSTEMFRAME                 129
@@ -94,7 +95,6 @@
 #define IDS_SCHEDULER_NOTASK            169
 #define IDD_URL_COPY                    172
 #define IDD_SPLASH                      173
-#define IDS_SCHEDULER_SELECTADAY        173
 #define IDD_DISCOVERY_SERVICE           174
 #define IDI_WEB_URL                     175
 #define IDD_SETTINGS_BANDWIDTH          175
@@ -1042,7 +1042,6 @@
 #define IDS_NETWORK_ALWAYS              16080
 #define IDS_NETWORK_SEARCH_SENT         16081
 #define IDS_NETWORK_FORCE_HUB           16083
-#define IDS_NETWORK_DISABLE_G1          16084
 #define IDS_NETWORK_DISABLE_G2          16085
 #define IDS_NETWORK_BANDWIDTH_LOW       16087
 #define IDS_CONNECTION_ACCEPTED         16128
@@ -1341,7 +1340,6 @@
 #define IDS_BROWSE_INTRO_FORMAT         16944
 #define IDS_MEDIA_SMPLAYER              16991
 #define IDS_MEDIA_PLUGIN_CREATE         16992
-#define IDS_MEDIA_FILTER                16993
 #define IDS_MEDIA_LOAD_FAIL             16994
 #define IDS_MEDIA_LOAD_FAIL_HELP        16995
 #define IDS_MEDIA_PARTIAL_RENDER        16996
@@ -1477,12 +1475,6 @@
 #define IDS_BT_UPDATE_TITLE             17514
 #define IDS_BT_UPDATE_CONVERTING        17515
 #define IDS_DOWNLOAD_EDIT_RENAME        18496
-#define IDS_DOWNLOAD_EDIT_BAD_SHA1      18497
-#define IDS_DOWNLOAD_EDIT_BAD_TIGER     18498
-#define IDS_DOWNLOAD_EDIT_BAD_ED2K      18499
-#define IDS_DOWNLOAD_EDIT_CHANGE_SHA1   18500
-#define IDS_DOWNLOAD_EDIT_CHANGE_TIGER  18501
-#define IDS_DOWNLOAD_EDIT_CHANGE_ED2K   18502
 #define IDS_DOWNLOAD_EDIT_FORGET_VERIFY 18503
 #define IDS_DOWNLOAD_EDIT_FORGET_SOURCES 18504
 #define IDS_DOWNLOAD_EDIT_BAD_RANGE     18505
@@ -1498,8 +1490,6 @@
 #define IDS_REMOTE_DISABLED             19000
 #define IDS_REMOTE_ENABLED              19001
 #define IDS_REMOTE_UNAVAILABLE          19002
-#define IDS_IRC_USERLIST                19100
-#define IDS_IRC_CHANLIST                19101
 #define IDS_IRC_HEADERTITLE             19103
 #define IDS_IRC_HEADERSUBTITLE          19104
 #define IDS_IRC_HEADERCHAT              19105
@@ -1555,14 +1545,6 @@
 #define IDS_STATUS_NEXT                 20135
 #define IDS_STATUS_Q                    20136
 #define IDS_STATUS_SOURCESOF            20137
-#define IDS_DAY_SUNDAY                  20200
-#define IDS_DAY_MONDAY                  20201
-#define IDS_DAY_TUESDAY                 20202
-#define IDS_DAY_WEDNESDAY               20203
-#define IDS_DAY_THURSDAY                20204
-#define IDS_DAY_FRIDAY                  20205
-#define IDS_DAY_SATURDAY                20206
-#define IDS_DAY_EVERYDAY                20207
 #define IDS_RATING_NORATING             20210
 #define IDS_RATING_1                    20211
 #define IDS_RATING_2                    20212

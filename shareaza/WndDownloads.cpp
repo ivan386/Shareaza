@@ -371,7 +371,7 @@ void CDownloadsWnd::OnTimer(UINT_PTR nIDEvent)
 					CString sPreview = pDownload->m_sPath + L".png";
 					pLock.Unlock();
 
-					CFileExecutor::Execute( sPreview, TRUE );
+					CFileExecutor::Execute( sPreview );
 
 					break; // Show next preview on next update
 				}

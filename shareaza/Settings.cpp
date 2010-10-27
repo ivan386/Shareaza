@@ -196,6 +196,7 @@ void CSettings::Load()
 	Add( _T("Library"), _T("SmartSeriesDetection"), &Library.SmartSeriesDetection, true );
 	Add( _T("Library"), _T("LastUsedView"), &Library.LastUsedView );
 	Add( _T("Library"), _T("URLExportFormat"), &Library.URLExportFormat, _T("<a href=\"magnet:?xt=urn:bitprint:[SHA1].[TIGER]&amp;xt=urn:ed2khash:[ED2K]&amp;xt=urn:md5:[MD5]&amp;xl=[ByteSize]&amp;dn=[NameURI]\">[Name]</a><br>") );
+	Add( _T("Library"), _T("TooManyWarning"), &Library.TooManyWarning, 0, 1, 0, 2 );
 
 	Add( _T("WebServices"), _T("BitziAgent"), &WebServices.BitziAgent, _T(".") );
 	Add( _T("WebServices"), _T("BitziOkay"), &WebServices.BitziOkay, false, true );
