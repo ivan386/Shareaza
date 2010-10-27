@@ -30,7 +30,7 @@ BOOL ProcessString(CStringA sID, CStringA sString)
 	if ( ! g_oIDs.Lookup( sID, nID ) )
 	{
 		_tprintf( _T("Warning: Unknown ID %hs \"%hs\"\n"), sID, sString );
-		return FALSE;
+		return TRUE;
 	}
 
 	CStringA sFoo;
@@ -75,7 +75,7 @@ BOOL LoadIDs(LPCTSTR szFilename)
 				continue;
 			CStringA sID = sLine.Left( nPos );
 			sLine = sLine.Mid( nPos + 1 ).TrimLeft( " \t" );
-			int nID = 0;
+			UINT nID = 0;
 			if ( sLine.Left( 2 ).CompareNoCase( "0x" ) == 0 )
 			{
 				if ( sscanf_s( sLine, "%x", &nID ) != 1 )
@@ -87,6 +87,11 @@ BOOL LoadIDs(LPCTSTR szFilename)
 				if ( sscanf_s( sLine, "%u", &nID ) != 1 )
 					// Skip unknown line
 					continue;
+			}
+			if ( g_oIDs.Lookup( sID, nID ) )
+			{
+				_tprintf( _T("Error: Duplicate ID %hs\n"), sID );
+				continue;
 			}
 			g_oIDs.SetAt( sID, nID );
 			bSuccess = TRUE;
@@ -306,12 +311,22 @@ int _tmain(int argc, _TCHAR* argv[])
 	}
 
 	// Sort by ID
-	std::list< UINT > index;
+	std::list< UINT > indexTips;
+	std::list< UINT > indexStrings;
 	for ( POSITION pos = g_oStrings.GetStartPosition(); pos; )
 	{
-		index.push_back( g_oStrings.GetNextKey( pos ) );
+		UINT nID = g_oStrings.GetNextKey( pos );
+		if ( nID < 30000 )
+			// Strings
+			indexStrings.push_back( nID );
+		else if ( nID < 50000 )
+			// Tips
+			indexTips.push_back( nID );
+		//else
+			// Afx;
 	}
-	index.sort();
+	indexTips.sort();
+	indexStrings.sort();
 
 	if ( ! szOutput )
 	{
@@ -330,7 +345,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		_T("\t<!-- Localised Strings -->\n")
 		_T("\t<strings>\n") );
 
-	for ( std::list< UINT >::iterator i = index.begin(); i != index.end(); ++i )
+	for ( std::list< UINT >::iterator i = indexStrings.begin(); i != indexStrings.end(); ++i )
 	{
 		CStringA sString;
 		g_oStrings.Lookup( (*i), sString );
