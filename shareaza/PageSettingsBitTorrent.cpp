@@ -24,6 +24,7 @@
 #include "Settings.h"
 #include "WndMain.h"
 #include "PageSettingsBitTorrent.h"
+#include "SchemaCache.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -156,8 +157,10 @@ void CBitTorrentSettingsPage::OnTorrentsBrowse()
 
 void CBitTorrentSettingsPage::OnMakerBrowse()
 {
-	CFileDialog dlg( TRUE, _T("exe"), _T("TorrentWizard.exe") , OFN_HIDEREADONLY|OFN_FILEMUSTEXIST,
-		_T("Executable Files|*.exe;*.com|All Files|*.*||"), this );
+	CFileDialog dlg( TRUE, _T("exe"), _T("TorrentWizard.exe"), OFN_HIDEREADONLY | OFN_FILEMUSTEXIST,
+		SchemaCache.GetFilter( CSchema::uriApplicationAll ) +
+		SchemaCache.GetFilter( CSchema::uriAllFiles ) +
+		_T("|"), this );
 
 	if ( dlg.DoModal() != IDOK ) return;
 

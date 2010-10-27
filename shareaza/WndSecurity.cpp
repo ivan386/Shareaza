@@ -27,6 +27,7 @@
 #include "WndSecurity.h"
 #include "DlgSecureRule.h"
 #include "CoolInterface.h"
+#include "SchemaCache.h"
 #include "XML.h"
 
 #ifdef _DEBUG
@@ -452,7 +453,9 @@ void CSecurityWnd::OnUpdateSecurityExport(CCmdUI* pCmdUI)
 void CSecurityWnd::OnSecurityExport() 
 {
 	CFileDialog dlg( FALSE, _T("xml"), NULL, OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT,
-		_T("XML Security Files|*.xml|NET Security Files|*.net|All Files|*.*||") );
+		_T("XML Security Files|*.xml|NET Security Files|*.net|") +
+		SchemaCache.GetFilter( CSchema::uriAllFiles ) +
+		_T("|"), this );
 	
 	if ( dlg.DoModal() != IDOK ) return;
 	
@@ -522,7 +525,9 @@ void CSecurityWnd::OnSecurityExport()
 void CSecurityWnd::OnSecurityImport() 
 {
 	CFileDialog dlg( TRUE, _T("xml"), NULL, OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT,
-		_T("Security Rules|*.xml;*.net|XML Files|*.xml|NET Files|*.net|All Files|*.*||") );
+		_T("Security Rules|*.xml;*.net|") +
+		SchemaCache.GetFilter( CSchema::uriAllFiles ) +
+		_T("|"), this );
 	
 	if ( dlg.DoModal() != IDOK ) return;
 

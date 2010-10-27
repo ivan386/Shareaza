@@ -27,6 +27,7 @@
 #include "ImageFile.h"
 #include "PageProfileAvatar.h"
 #include "CoolInterface.h"
+#include "SchemaCache.h"
 #include "XML.h"
 
 #ifdef _DEBUG
@@ -123,7 +124,9 @@ void CAvatarProfilePage::OnPaint()
 void CAvatarProfilePage::OnAvatarBrowse()
 {
 	CFileDialog dlg( TRUE, _T("png"), m_sAvatar, OFN_HIDEREADONLY,
-		_T("Image Files|*.jpg;*.jpeg;*.png;*.bmp|All Files|*.*||"), this );
+		SchemaCache.GetFilter( CSchema::uriImageAll ) +
+		SchemaCache.GetFilter( CSchema::uriAllFiles ) +
+		_T("|"), this );
 
 	if ( dlg.DoModal() == IDOK )
 	{

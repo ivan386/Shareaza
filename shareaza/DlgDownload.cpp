@@ -25,6 +25,7 @@
 #include "ShareazaURL.h"
 #include "DlgDownload.h"
 #include "Settings.h"
+#include "SchemaCache.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -113,7 +114,9 @@ void CDownloadDlg::OnTorrentFile()
 	UpdateData();
 
 	CFileDialog dlg( TRUE, _T("torrent"), ( Settings.Downloads.TorrentPath + _T("\\.") ) , OFN_HIDEREADONLY,
-		_T("Torrent Files|*.torrent|All Files|*.*||"), this );
+		_T("Torrent Files|*.torrent|") +
+		SchemaCache.GetFilter( CSchema::uriAllFiles ) +
+		_T("|"), this );
 
 	if ( dlg.DoModal() != IDOK ) return;
 

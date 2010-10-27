@@ -28,6 +28,7 @@
 #include "Skin.h"
 #include "PageSettingsSkins.h"
 #include "CoolInterface.h"
+#include "SchemaCache.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -448,7 +449,9 @@ void CSkinsSettingsPage::OnLButtonUp(UINT /*nFlags*/, CPoint point)
 void CSkinsSettingsPage::OnSkinsBrowse()
 {
 	CFileDialog dlg( TRUE, _T("sks"), _T("*.sks"), OFN_HIDEREADONLY,
-		_T("Skin Packages|*.sks|All Files|*.*||"), this );
+		_T("Skin Packages|*.sks|") +
+		SchemaCache.GetFilter( CSchema::uriAllFiles ) +
+		_T("|"), this );
 
 	if ( dlg.DoModal() != IDOK ) return;
 

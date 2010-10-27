@@ -34,6 +34,7 @@
 #include "LiveList.h"
 #include "Skin.h"
 #include "CoolInterface.h"
+#include "SchemaCache.h"
 
 #include "Flags.h"
 
@@ -651,8 +652,9 @@ void CHostCacheWnd::OnHostcacheImport()
 	CFileDialog dlg( TRUE, _T("met"), NULL, OFN_HIDEREADONLY,
 		_T("eDonkey2000 MET files|*.met|")
 		_T("Kademlia Nodes files|nodes.dat|")
-		_T("DC++ hub lists|*.xml.bz2|")
-		_T("All Files|*.*||"), this );
+		_T("DC++ hub lists|*.xml.bz2|") +
+		SchemaCache.GetFilter( CSchema::uriAllFiles ) +
+		_T("|"), this );
 
 	if ( dlg.DoModal() != IDOK ) return;
 

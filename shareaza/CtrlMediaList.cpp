@@ -22,17 +22,18 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
-#include "Library.h"
 #include "AlbumFolder.h"
-#include "SharedFile.h"
-#include "ShellIcons.h"
-#include "LiveList.h"
-#include "Skin.h"
 #include "Buffer.h"
+#include "CoolInterface.h"
 #include "CtrlMediaList.h"
 #include "DlgCollectionExport.h"
 #include "DlgFilePropertiesSheet.h"
-#include "CoolInterface.h"
+#include "Library.h"
+#include "LiveList.h"
+#include "SchemaCache.h"
+#include "SharedFile.h"
+#include "ShellIcons.h"
+#include "Skin.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -89,9 +90,9 @@ END_MESSAGE_MAP()
 // CMediaListCtrl construction
 
 CMediaListCtrl::CMediaListCtrl()
+	: m_pDragImage		( NULL )
+	, m_bCreateDragImage( FALSE )
 {
-	m_pDragImage		= NULL;
-	m_bCreateDragImage	= FALSE;
 }
 
 CMediaListCtrl::~CMediaListCtrl()
@@ -667,12 +668,12 @@ void CMediaListCtrl::OnMediaAdd()
 {
 	if ( ! AfxGetMainWnd()->IsWindowEnabled() ) return;
 	
-	CString strFilter;
-	Skin.LoadString( strFilter, IDS_MEDIA_FILTER );
-
 	CFileDialog dlg( TRUE, NULL, NULL,
 		OFN_HIDEREADONLY|OFN_ALLOWMULTISELECT|OFN_ENABLESIZING,
-		strFilter, this );
+		SchemaCache.GetFilter( CSchema::uriVideoAll ) +
+		SchemaCache.GetFilter( CSchema::uriMusicAll ) +
+		SchemaCache.GetFilter( CSchema::uriAllFiles ) +
+		_T("|"), this );
 
 	const int nLimit = 81920;
 
@@ -744,9 +745,11 @@ void CMediaListCtrl::OnMediaClear()
 
 void CMediaListCtrl::OnMediaOpen() 
 {
-	CString strFilter;
-	Skin.LoadString( strFilter, IDS_MEDIA_FILTER );
-	CFileDialog dlg( TRUE, NULL, NULL, OFN_HIDEREADONLY|OFN_ENABLESIZING, strFilter, this );
+	CFileDialog dlg( TRUE, NULL, NULL, OFN_HIDEREADONLY|OFN_ENABLESIZING,
+		SchemaCache.GetFilter( CSchema::uriVideoAll ) +
+		SchemaCache.GetFilter( CSchema::uriMusicAll ) +
+		SchemaCache.GetFilter( CSchema::uriAllFiles ) +
+		_T("|"), this );
 
 	if ( dlg.DoModal() != IDOK ) return;
 
@@ -761,7 +764,9 @@ void CMediaListCtrl::OnUpdateMediaSave(CCmdUI* pCmdUI)
 void CMediaListCtrl::OnMediaSave() 
 {
 	CFileDialog dlg( FALSE, _T("m3u"), NULL, OFN_HIDEREADONLY|OFN_ENABLESIZING,
-		_T("Media Playlists|*.m3u|All Files|*.*||"), this );
+		_T("Media Playlists|*.m3u|") +
+		SchemaCache.GetFilter( CSchema::uriAllFiles ) +
+		_T("|"), this );
 
 	if ( dlg.DoModal() != IDOK ) return;
 

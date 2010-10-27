@@ -234,3 +234,38 @@ CXMLElement* CSchemaCache::AutoDetectAudio(LPCTSTR pszInfo)
 
 	return pXML;
 }
+
+CString CSchemaCache::GetFilter(LPCTSTR pszURI) const
+{
+	if ( CSchemaPtr pSchema = Get( pszURI ) )
+	{
+		LPCTSTR pszURIType;
+		if ( pszURI == CSchema::uriImageAll )
+			pszURIType = CSchema::uriImage;
+		else if ( pszURI == CSchema::uriVideoAll )
+			pszURIType = CSchema::uriVideo;
+		else if ( pszURI == CSchema::uriMusicAll )
+			pszURIType = CSchema::uriAudio;
+		else if ( pszURI == CSchema::uriApplicationAll )
+			pszURIType = CSchema::uriApplication;
+		else if ( pszURI == CSchema::uriAllFiles )
+			pszURIType = NULL;
+		else
+		{
+			ASSERT( FALSE );
+			return CString();
+		}
+		CString sTypes;
+		if ( CSchemaPtr pSchemaType = Get( pszURIType ) )
+		{
+			sTypes = pSchemaType->m_sTypeFilter;
+			sTypes.Replace( _T("||"), _T(";*") );
+			sTypes.Insert( 1, _T('*') );
+		}
+		else
+			sTypes = _T("|*.*|");
+		return pSchema->m_sHeaderTitle + sTypes;
+	}
+
+	return CString();
+}

@@ -51,6 +51,7 @@
 #include "SharedFile.h"
 #include "DiscoveryServices.h"
 #include "Scheduler.h"
+#include "SchemaCache.h"
 
 #include "WndMain.h"
 #include "WndChild.h"
@@ -2437,7 +2438,9 @@ void CMainWnd::OnToolsLanguage()
 void CMainWnd::OnToolsSeedTorrent()
 {
 	CFileDialog dlgFile( TRUE, _T("torrent"), ( Settings.Downloads.TorrentPath + _T("\\.") ) , OFN_HIDEREADONLY,
-		_T("Torrent Files|*.torrent|All Files|*.*||"), this );
+		_T("Torrent Files|*.torrent|") +
+		SchemaCache.GetFilter( CSchema::uriAllFiles ) +
+		_T("|"), this );
 
 	if ( dlgFile.DoModal() != IDOK ) return;
 

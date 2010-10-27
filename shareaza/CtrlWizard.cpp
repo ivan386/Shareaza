@@ -32,6 +32,7 @@
 #include "CtrlIconButton.h"
 #include "Transfer.h" 
 #include "CtrlWizard.h"
+#include "SchemaCache.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -836,7 +837,8 @@ BOOL CWizardCtrl::OnCommand(WPARAM wParam, LPARAM lParam)
 		if ( pButton->GetWindowTextLength() ) // file picker
 		{
 			CFileDialog dlg( TRUE, NULL, NULL, OFN_HIDEREADONLY|OFN_FILEMUSTEXIST,
-				_T("All Files(*.*)|*.*||"), this );
+				SchemaCache.GetFilter( CSchema::uriAllFiles ) +
+				_T("|"), this );
 			if ( dlg.DoModal() == IDOK )
 				pEdit->SetWindowText( dlg.GetPathName() );
 		}
