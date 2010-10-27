@@ -76,22 +76,6 @@ protected:
 		FORMATETC					fe;
 		STGMEDIUM					stgm;
 	} DATAENTRY, *LPDATAENTRY;
-	
-	template < typename T > class THREADDATA
-	{
-	public:
-		THREADDATA(const T* pList, HBITMAP pImage, const Hashes::Guid& oGUID) :
-			m_pList (pList),
-			m_pImage (pImage),
-			m_oGUID (oGUID),
-			m_hReady (CreateEvent( NULL, TRUE, FALSE, NULL ))
-		{
-		}
-		const T*					m_pList;
-		HBITMAP						m_pImage;
-		Hashes::Guid				m_oGUID;
-		HANDLE						m_hReady;
-	};
 
 	LPDATAENTRY						m_rgde;		// Array of active DATAENTRY entries
 	int								m_cde;		// Size of m_rgde

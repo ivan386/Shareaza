@@ -118,11 +118,11 @@ void CLibraryWnd::OnMDIActivate(BOOL bActivate, CWnd* pActivateWnd, CWnd* pDeact
 {
 	CPanelWnd::OnMDIActivate( bActivate, pActivateWnd, pDeactivateWnd );
 
-	if ( bActivate )
+	/*if ( bActivate )
 	{
 		m_wndFrame.Update();
 		m_wndFrame.SetFocus();
-	}
+	}*/
 }
 
 void CLibraryWnd::OnTimer(UINT_PTR nIDEvent)

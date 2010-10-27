@@ -122,9 +122,9 @@ protected:
 	CButton				m_wndSaveOption;
 	CLibraryViewList	m_pViews;
 	CLibraryView*		m_pView;
-	CLibraryMetaPanel	 m_pMetaPanel;
-	CLibraryHistoryPanel m_pHistoryPanel;
-	CPanelCtrl*		m_pPanel;
+	CLibraryMetaPanel	m_pMetaPanel;
+	CLibraryHistoryPanel	m_pHistoryPanel;
+	CPanelCtrl*			m_pPanel;
 	int					m_nTreeSize;
 	int					m_nPanelSize;
 	BOOL				m_bPanelShow;
@@ -141,6 +141,8 @@ protected:
 	BOOL				m_bShowDynamicBar;
 	BOOL				m_bDynamicBarHidden;
 
+	BOOL		HasView() const;
+	BOOL		HasPanel() const;
 	BOOL		DoSizeTree();
 	BOOL		DoSizePanel();
 	void		UpdatePanel(BOOL bForce);
