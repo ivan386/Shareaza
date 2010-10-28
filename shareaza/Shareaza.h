@@ -76,7 +76,6 @@ public:
 	bool				m_bLimitedConnections;		// Networking is limited (XP SP2)
 	DWORD				m_nWindowsVersion;			// Windows version
 	DWORD				m_nWindowsVersionMinor;		// Windows minor version
-	QWORD				m_nPhysicalMemory;			// Physical RAM installed
 	BOOL				m_bMenuWasVisible;			// For the menus in media player window
 	DWORD				m_nLastInput;				// Time of last input event (in secs)
 	HHOOK				m_hHookKbd;

@@ -322,8 +322,11 @@ DWORD CNeighboursWithConnect::IsG2HubCapable(BOOL bIgnoreTime, BOOL bDebug)
 	} // The user didn't check the force hub box in settings, so the program will have to pass the additional tests below
 	else
 	{
+		MEMORYSTATUSEX pMemory = { sizeof( MEMORYSTATUSEX ) };
+		GlobalMemoryStatusEx( &pMemory );
+
 		// See how much physical memory the computer we are running on has
-		if ( theApp.m_nPhysicalMemory < 250 * 1024 * 1024 ) // It's less than 250 MB
+		if ( pMemory.ullTotalPhys < 250 * 1024 * 1024 ) // It's less than 250 MB
 		{
 			// Not enough memory to be a hub
 			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: less than 250 MB RAM") );
@@ -503,8 +506,11 @@ DWORD CNeighboursWithConnect::IsG1UltrapeerCapable(BOOL bIgnoreTime, BOOL bDebug
 			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("OK: not a G2 hub") );
 		}
 
-		// Check how much memory is installed in this computer
-		if ( theApp.m_nPhysicalMemory < 250 * 1024 * 1024 ) // If it's less than 250 MB
+		MEMORYSTATUSEX pMemory = { sizeof( MEMORYSTATUSEX ) };
+		GlobalMemoryStatusEx( &pMemory );
+
+		// See how much physical memory the computer we are running on has
+		if ( pMemory.ullTotalPhys < 250 * 1024 * 1024 ) // It's less than 250 MB
 		{
 			// Not enough memory to become a Gnutella ultrapeer
 			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: less than 250 MB RAM") );
@@ -1204,10 +1210,19 @@ DWORD CNeighboursWithConnect::CalculateSystemPerformanceScore(BOOL bDebug)
 {
 	DWORD nRating = 0;
 	
-	if ( theApp.m_nPhysicalMemory > 600 * 1024 * 1024 ) // The computer here has more than 600 MB of memory
+	MEMORYSTATUSEX pMemory = { sizeof( MEMORYSTATUSEX ) };
+	GlobalMemoryStatusEx( &pMemory );
+
+	if ( pMemory.ullTotalPhys >= 1024 * 1024 * 1024 ) // The computer here has more than 1 GB of memory
 	{
 		nRating++;
-		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("More than 600 MB RAM") );
+		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("More than 1 GB RAM") );
+	}
+
+	if ( pMemory.ullAvailPhys > 1024 * 1024 * 1024 ) // The computer has more than 1 GB of free memory
+	{
+		nRating++;
+		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("More than 1 GB free RAM") );
 	}
 
 	// Our Internet connection allows fast downloads
@@ -1231,12 +1246,23 @@ DWORD CNeighboursWithConnect::CalculateSystemPerformanceScore(BOOL bDebug)
 		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("Stable for 8 hours") );
 	}
 
-	//Having more CPUs has significant effect on performance
-	nRating += theApp.m_SysInfo.dwNumberOfProcessors - 1;
-	if ( bDebug && theApp.m_SysInfo.dwNumberOfProcessors > 0 )
-		theApp.Message( MSG_DEBUG, _T("Multi-processor") );
+	// Having more CPUs has significant effect on performance
+	if ( theApp.m_SysInfo.dwNumberOfProcessors > 1 )
+	{
+		nRating += theApp.m_SysInfo.dwNumberOfProcessors / 2;
+		if ( bDebug )
+			theApp.Message( MSG_DEBUG, _T("Number of processors: %u"), theApp.m_SysInfo.dwNumberOfProcessors );
+	}
 
-	
+	// 64-bit
+#ifdef _WIN64
+	{
+		nRating++;
+		if ( bDebug )
+			theApp.Message( MSG_DEBUG, _T("Mode: 64-bit") );
+	}
+#endif // _WIN64
+
 	// ToDo: Find out more about the computer to award more rating points
 	// CPU: Add a CPU check, award a point if this computer has a fast processor
 	// Router: Some routers can't handle the 100+ socket connections an ultrapeer maintains, check for a router and lower the score
