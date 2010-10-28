@@ -354,22 +354,21 @@ void CMainWnd::SaveState()
 
 BOOL CMainWnd::PreCreateWindow(CREATESTRUCT& cs)
 {
-	WNDCLASS wndcls = {};
+	cs.lpszClass = _T("ShareazaMainWnd");
 
-	wndcls.style			= CS_PARENTDC | CS_DBLCLKS;
-	wndcls.lpfnWndProc		= AfxWndProc;
-	wndcls.hInstance		= AfxGetInstanceHandle();
-	wndcls.hIcon			= CoolInterface.ExtractIcon( IDR_MAINFRAME, FALSE, LVSIL_NORMAL );
-	wndcls.hCursor			= theApp.LoadStandardCursor( IDC_ARROW );
-	wndcls.hbrBackground	= NULL;
-	wndcls.lpszMenuName		= NULL;
-	wndcls.lpszClassName	= _T("ShareazaMainWnd");
+	if ( cs.hInstance )
+	{
+		WNDCLASS wndcls = {};
+		wndcls.style			= CS_PARENTDC | CS_DBLCLKS;
+		wndcls.lpfnWndProc		= AfxWndProc;
+		wndcls.hInstance		= cs.hInstance;
+		wndcls.hIcon			= CoolInterface.ExtractIcon( IDR_MAINFRAME, FALSE, LVSIL_NORMAL );
+		wndcls.hCursor			= theApp.LoadStandardCursor( IDC_ARROW );
+		wndcls.lpszClassName	= cs.lpszClass;
+		VERIFY( AfxRegisterClass( &wndcls ) );
+	}
 
-	AfxRegisterClass( &wndcls );
-
-	cs.lpszClass = wndcls.lpszClassName;
-
-	return CMDIFrameWnd::PreCreateWindow( cs );
+	return TRUE;
 }
 
 int CMainWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)

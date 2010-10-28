@@ -329,7 +329,7 @@ void CSchedulerWnd::Update(int nColumn, BOOL bSort)
 
 	if ( nColumn >= 0 )
 	{
-		SetWindowLong( m_wndList.GetSafeHwnd(), GWLP_USERDATA, 0 - nColumn - 1 );
+		SetWindowLongPtr( m_wndList.GetSafeHwnd(), GWLP_USERDATA, 0 - nColumn - 1 );
 	}
 
 	pLiveList.Apply( &m_wndList, bSort );	//Putting items in the main list
