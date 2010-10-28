@@ -68,6 +68,7 @@
 				GenerateManifest="false"
 				DelayLoadDLLs="ws2_32.dll"
 				GenerateDebugInformation="true"
+				LargeAddressAware="2"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -141,6 +142,7 @@
 				GenerateManifest="false"
 				DelayLoadDLLs="ws2_32.dll"
 				GenerateDebugInformation="true"
+				LargeAddressAware="2"
 				TargetMachine="17"
 			/>
 			<Tool
@@ -217,6 +219,7 @@
 				AdditionalDependencies="ws2_32.lib"
 				LinkIncremental="1"
 				DelayLoadDLLs="ws2_32.dll"
+				LargeAddressAware="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				SetChecksum="true"
@@ -296,6 +299,7 @@
 				AdditionalDependencies="ws2_32.lib"
 				LinkIncremental="1"
 				DelayLoadDLLs="ws2_32.dll"
+				LargeAddressAware="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				SetChecksum="true"

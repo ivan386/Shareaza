@@ -58,6 +58,7 @@
 				ExceptionHandling="0"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
+				EnableFunctionLevelLinking="true"
 				FloatingPointModel="2"
 				RuntimeTypeInfo="false"
 				UsePrecompiledHeader="2"
@@ -84,6 +85,7 @@
 				ModuleDefinitionFile="VirusTotal.def"
 				GenerateDebugInformation="true"
 				SubSystem="2"
+				LargeAddressAware="2"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -173,6 +175,7 @@
 				ModuleDefinitionFile="VirusTotal.def"
 				GenerateDebugInformation="true"
 				SubSystem="2"
+				LargeAddressAware="2"
 				TargetMachine="17"
 			/>
 			<Tool
@@ -265,6 +268,7 @@
 				LinkIncremental="1"
 				ModuleDefinitionFile="VirusTotal.def"
 				SubSystem="2"
+				LargeAddressAware="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				SetChecksum="true"
@@ -359,6 +363,7 @@
 				LinkIncremental="1"
 				ModuleDefinitionFile="VirusTotal.def"
 				SubSystem="2"
+				LargeAddressAware="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				SetChecksum="true"

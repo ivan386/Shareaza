@@ -75,6 +75,7 @@
 				IgnoreDefaultLibraryNames=""
 				DelayLoadDLLs="comctl32.dll;shlwapi.dll"
 				GenerateDebugInformation="true"
+				LargeAddressAware="2"
 				TargetMachine="1"
 				KeyFile=""
 			/>
@@ -159,6 +160,7 @@
 				IgnoreDefaultLibraryNames=""
 				DelayLoadDLLs="comctl32.dll;shlwapi.dll"
 				GenerateDebugInformation="true"
+				LargeAddressAware="2"
 				TargetMachine="17"
 			/>
 			<Tool
@@ -245,6 +247,7 @@
 				IgnoreDefaultLibraryNames=""
 				DelayLoadDLLs="comctl32.dll;shlwapi.dll"
 				SubSystem="2"
+				LargeAddressAware="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				SetChecksum="true"
@@ -336,6 +339,7 @@
 				IgnoreDefaultLibraryNames=""
 				DelayLoadDLLs="comctl32.dll;shlwapi.dll"
 				SubSystem="2"
+				LargeAddressAware="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				SetChecksum="true"

@@ -48,6 +48,8 @@
 				ExceptionHandling="0"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
+				EnableFunctionLevelLinking="true"
+				FloatingPointModel="2"
 				RuntimeTypeInfo="false"
 				WarningLevel="2"
 				DebugInformationFormat="4"
@@ -67,6 +69,7 @@
 				ModuleDefinitionFile="$(TargetName).def"
 				GenerateDebugInformation="true"
 				SubSystem="2"
+				LargeAddressAware="2"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -121,6 +124,7 @@
 				ExceptionHandling="0"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
+				FloatingPointModel="2"
 				RuntimeTypeInfo="false"
 				WarningLevel="2"
 				DebugInformationFormat="3"
@@ -139,6 +143,7 @@
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				SubSystem="2"
+				LargeAddressAware="2"
 				TargetMachine="17"
 			/>
 			<Tool
@@ -215,6 +220,7 @@
 				LinkIncremental="1"
 				ModuleDefinitionFile="$(TargetName).def"
 				SubSystem="2"
+				LargeAddressAware="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				SetChecksum="true"
@@ -294,6 +300,7 @@
 				Name="VCLinkerTool"
 				LinkIncremental="1"
 				SubSystem="2"
+				LargeAddressAware="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				SetChecksum="true"

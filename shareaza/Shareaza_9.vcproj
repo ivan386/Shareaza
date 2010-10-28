@@ -86,6 +86,7 @@
 				DelayLoadDLLs="secur32.dll;rasapi32.dll;winmm.dll;version.dll;ws2_32.dll;wininet.dll;iphlpapi.dll;msi.dll;powrprof.dll;winspool.drv;comdlg32.dll;comctl32.dll;oledlg.dll;ole32.dll;oleaut32.dll;oleacc.dll;urlmon.dll"
 				GenerateDebugInformation="true"
 				SubSystem="2"
+				LargeAddressAware="2"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -178,6 +179,7 @@
 				DelayLoadDLLs="secur32.dll;rasapi32.dll;winmm.dll;version.dll;ws2_32.dll;wininet.dll;iphlpapi.dll;msi.dll;powrprof.dll;winspool.drv;comdlg32.dll;comctl32.dll;oledlg.dll;ole32.dll;oleaut32.dll;oleacc.dll;urlmon.dll"
 				GenerateDebugInformation="true"
 				SubSystem="2"
+				LargeAddressAware="2"
 				TargetMachine="17"
 				KeyFile=""
 			/>
@@ -277,6 +279,7 @@
 				DelayLoadDLLs="secur32.dll;rasapi32.dll;winmm.dll;version.dll;ws2_32.dll;wininet.dll;iphlpapi.dll;msi.dll;powrprof.dll;winspool.drv;comdlg32.dll;comctl32.dll;oledlg.dll;ole32.dll;oleaut32.dll;oleacc.dll;urlmon.dll"
 				GenerateDebugInformation="true"
 				SubSystem="2"
+				LargeAddressAware="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				SetChecksum="true"
@@ -380,6 +383,7 @@
 				DelayLoadDLLs="secur32.dll;rasapi32.dll;winmm.dll;version.dll;ws2_32.dll;wininet.dll;iphlpapi.dll;msi.dll;powrprof.dll;winspool.drv;comdlg32.dll;comctl32.dll;oledlg.dll;ole32.dll;oleaut32.dll;oleacc.dll;urlmon.dll"
 				GenerateDebugInformation="true"
 				SubSystem="2"
+				LargeAddressAware="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				SetChecksum="true"

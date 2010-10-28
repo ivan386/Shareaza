@@ -84,6 +84,7 @@
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				SubSystem="2"
+				LargeAddressAware="2"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -175,6 +176,7 @@
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				SubSystem="2"
+				LargeAddressAware="2"
 				TargetMachine="17"
 			/>
 			<Tool
@@ -270,6 +272,7 @@
 				LinkIncremental="1"
 				GenerateDebugInformation="false"
 				SubSystem="2"
+				LargeAddressAware="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				SetChecksum="true"
@@ -368,6 +371,7 @@
 				LinkIncremental="1"
 				GenerateDebugInformation="false"
 				SubSystem="2"
+				LargeAddressAware="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				SetChecksum="true"

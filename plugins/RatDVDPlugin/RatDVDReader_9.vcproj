@@ -88,6 +88,7 @@
 				ModuleDefinitionFile="RatDVDReader.def"
 				GenerateDebugInformation="true"
 				SubSystem="2"
+				LargeAddressAware="2"
 				BaseAddress="0x22200000"
 				TargetMachine="1"
 			/>
@@ -183,6 +184,7 @@
 				ModuleDefinitionFile="RatDVDReader.def"
 				GenerateDebugInformation="true"
 				SubSystem="2"
+				LargeAddressAware="2"
 				TargetMachine="17"
 			/>
 			<Tool
@@ -280,6 +282,7 @@
 				IgnoreDefaultLibraryNames=""
 				ModuleDefinitionFile="RatDVDReader.def"
 				SubSystem="2"
+				LargeAddressAware="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				SetChecksum="true"
@@ -381,6 +384,7 @@
 				IgnoreDefaultLibraryNames=""
 				ModuleDefinitionFile="RatDVDReader.def"
 				SubSystem="2"
+				LargeAddressAware="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				SetChecksum="true"

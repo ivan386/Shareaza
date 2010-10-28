@@ -76,6 +76,7 @@
 				IgnoreDefaultLibraryNames=""
 				ModuleDefinitionFile="zlib.def"
 				GenerateDebugInformation="true"
+				LargeAddressAware="2"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -154,6 +155,7 @@
 				Name="VCLinkerTool"
 				ModuleDefinitionFile="zlib.def"
 				GenerateDebugInformation="true"
+				LargeAddressAware="2"
 				TargetMachine="17"
 			/>
 			<Tool
@@ -236,6 +238,7 @@
 				LinkIncremental="1"
 				IgnoreDefaultLibraryNames=""
 				ModuleDefinitionFile="zlib.def"
+				LargeAddressAware="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				SetChecksum="true"
@@ -321,6 +324,7 @@
 				Name="VCLinkerTool"
 				LinkIncremental="1"
 				ModuleDefinitionFile="zlib.def"
+				LargeAddressAware="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				SetChecksum="true"

@@ -85,6 +85,7 @@
 				ModuleDefinitionFile="$(ProjectName).def"
 				GenerateDebugInformation="true"
 				SubSystem="2"
+				LargeAddressAware="2"
 				BaseAddress="0x22100000"
 				TargetMachine="1"
 			/>
@@ -178,6 +179,7 @@
 				ModuleDefinitionFile="$(ProjectName).def"
 				GenerateDebugInformation="true"
 				SubSystem="2"
+				LargeAddressAware="2"
 				TargetMachine="17"
 			/>
 			<Tool
@@ -273,6 +275,7 @@
 				ModuleDefinitionFile="$(ProjectName).def"
 				GenerateDebugInformation="false"
 				SubSystem="2"
+				LargeAddressAware="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				SetChecksum="true"
@@ -374,6 +377,7 @@
 				ModuleDefinitionFile="$(ProjectName).def"
 				GenerateDebugInformation="false"
 				SubSystem="2"
+				LargeAddressAware="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				SetChecksum="true"

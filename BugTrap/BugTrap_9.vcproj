@@ -49,6 +49,7 @@
 				ExceptionHandling="0"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
+				EnableFunctionLevelLinking="true"
 				FloatingPointModel="2"
 				RuntimeTypeInfo="false"
 				UsePrecompiledHeader="2"
@@ -69,6 +70,7 @@
 				AdditionalDependencies="comctl32.lib version.lib shlwapi.lib ws2_32.lib wininet.lib"
 				DelayLoadDLLs="comctl32.dll;version.dll;shlwapi.dll;ws2_32.dll;wininet.dll;comdlg32.dll;ole32.dll;oleaut32.dll;shell32.dll"
 				GenerateDebugInformation="true"
+				LargeAddressAware="2"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -149,6 +151,7 @@
 				GenerateDebugInformation="true"
 				MapFileName=""
 				SubSystem="2"
+				LargeAddressAware="2"
 				OptimizeForWindows98="0"
 				TargetMachine="17"
 			/>
@@ -230,6 +233,7 @@
 				LinkIncremental="1"
 				DelayLoadDLLs="comctl32.dll;version.dll;shlwapi.dll;ws2_32.dll;wininet.dll;comdlg32.dll;ole32.dll;oleaut32.dll;shell32.dll"
 				GenerateDebugInformation="true"
+				LargeAddressAware="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				SetChecksum="true"
@@ -319,6 +323,7 @@
 				GenerateDebugInformation="true"
 				MapFileName=""
 				SubSystem="2"
+				LargeAddressAware="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				OptimizeForWindows98="0"

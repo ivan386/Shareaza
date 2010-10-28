@@ -68,6 +68,7 @@
 				Name="VCLinkerTool"
 				GenerateDebugInformation="true"
 				SubSystem="2"
+				LargeAddressAware="2"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -143,6 +144,7 @@
 				Name="VCLinkerTool"
 				GenerateDebugInformation="true"
 				SubSystem="2"
+				LargeAddressAware="2"
 				TargetMachine="17"
 			/>
 			<Tool
@@ -221,6 +223,7 @@
 				Name="VCLinkerTool"
 				LinkIncremental="1"
 				SubSystem="2"
+				LargeAddressAware="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				SetChecksum="true"
@@ -304,6 +307,7 @@
 				Name="VCLinkerTool"
 				LinkIncremental="1"
 				SubSystem="2"
+				LargeAddressAware="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				SetChecksum="true"
