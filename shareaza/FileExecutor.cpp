@@ -54,6 +54,14 @@ static const struct
 }
 KnownPlayers[] =
 {
+	// AIMP2
+	{ _T("aimp2.exe"),		_T("/ADD_PLAY \"%s\"") },
+	// BSPlayer
+	{ _T("bsplayer.exe"),	_T("\"%s\" -ADD") },
+	// GOM Player
+	{ _T("gom.exe"),		_T("/add \"%s\"") },
+	// Light Alloy
+	{ _T("la.exe"),			_T("/ADD \"%s\"") },
 	// MediaPlayer Classic
 	{ _T("mplayerc.exe"),	_T("\"%s\" /add") },
 	// MediaPlayer Classic 64
@@ -62,16 +70,16 @@ KnownPlayers[] =
 	{ _T("mpc-hc.exe"),		_T("\"%s\" /add") },
 	// MediaPlayer Classic Home Cinema 64
 	{ _T("mpc-hc64.exe"),	_T("\"%s\" /add") },
-	// Windows Media Player
-	{ _T("wmplayer.exe"),	_T("/SHELLHLP_V9 Enqueue \"%s\"") },
+	// MPlayer
+	{ _T("mplayer.exe"),	_T("-enqueue \"%s\"") },
+	// SMplayer (GUI for MPlayer)
+	{ _T("smplayer.exe"),	_T("-add-to-playlist \"%s\"") },
 	// VideoLAN
 	{ _T("vlc.exe"),		_T("--one-instance --playlist-enqueue \"%s\"") },
 	// WinAmp
 	{ _T("winamp.exe"),		_T("/ADD \"%s\"") },
-	// Light Alloy
-	{ _T("la.exe"),			_T("/ADD \"%s\"") },
-	// BSPlayer
-	{ _T("bsplayer.exe"),	_T("\"%s\" -ADD") },
+	// Windows Media Player
+	{ _T("wmplayer.exe"),	_T("/SHELLHLP_V9 Enqueue \"%s\"") },
 	// Zoom Player
 	{ _T("zplayer.exe"),	_T("\"/Queue:%s\"") },
 	// (end)
