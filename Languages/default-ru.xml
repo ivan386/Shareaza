@@ -287,9 +287,9 @@
 			<button id="ID_MEDIA_STOP" text="Стоп"/>
 			<separator/>
 			<label text="Мотать:" tip="Перемещение по медиа файлу (совет: щелкните на ползунок и передвигайтесь стрелками клавиатуры - влево или вправо)"/>
-			<control id="IDC_MEDIA_POSITION" width="190" height="22"/>
+			<control id="ID_MEDIA_POSITION" width="190" height="22"/>
 			<label text="Громкость:" tip="Изменить громкость (совет: щелкните на ползунок и меняйте громкость стрелками клавиатуры - влево или вправо)"/>
-			<control id="IDC_MEDIA_VOLUME" width="50" height="22"/>
+			<control id="ID_MEDIA_VOLUME" width="50" height="22"/>
 			<separator/>
 			<button id="ID_MEDIA_OPEN" text="Открыть файл"/>
 			<rightAlign/>
@@ -304,11 +304,11 @@
 			<button id="ID_MEDIA_STOP" text="Стоп"/>
 			<separator/>
 			<label text="Мотать:" tip="Перемещение по медиа файлу (совет: щелкните на ползунок и передвигайтесь стрелками клавиатуры - влево или вправо)"/>
-			<control id="IDC_MEDIA_POSITION" width="190" height="22"/>
+			<control id="ID_MEDIA_POSITION" width="190" height="22"/>
 			<label text="Скорость:" tip="Изменить скорость воспроизведения"/>
-			<control id="IDC_MEDIA_SPEED" width="40" height="22"/>
+			<control id="ID_MEDIA_SPEED" width="40" height="22"/>
 			<label text="Громкость:" tip="Изменить громкость (совет: щелкните на ползунок и меняйте громкость стрелками клавиатуры - влево или вправо)"/>
-			<control id="IDC_MEDIA_VOLUME" width="50" height="22"/>
+			<control id="ID_MEDIA_VOLUME" width="50" height="22"/>
 			<separator/>
 			<button id="ID_MEDIA_OPEN" text="Открыть файл"/>
 			<separator/>
@@ -387,9 +387,6 @@
 			<button id="ID_SCHEDULER_REMOVE" text="Удалить"/>
 			<separator/>
 			<button id="ID_SCHEDULER_REMOVE_ALL" text="Удалить Всё"/>
-			<rightAlign/>
-			<button id="ID_SCHEDULER_IMPORT" text="Импорт"/>
-			<button id="ID_SCHEDULER_EXPORT" text="Экспорт"/>
 		</toolbar>
 		<!-- HIT MONITOR WINDOW -->
 		<toolbar name="CHitMonitorWnd">
@@ -626,7 +623,7 @@
 			<menu text="_Инструменты">
 				<item id="ID_LIBRARY_FOLDERS" text="Общий _доступ..."/>
 				<item id="ID_TOOLS_DOWNLOAD" text="_Начать загрузку..."/>
-				<item id="IDC_IMPORT_DOWNLOADS" text="_Импорт частичных загрузок eMule..."/>
+				<item id="ID_IMPORT_DOWNLOADS" text="_Импорт частичных загрузок eMule..."/>
 				<item id="ID_OPEN_DOWNLOADS_FOLDER" text="_Открыть папку с загрузками"/>
 				<separator/>
 				<item id="ID_TOOLS_SKIN" text="Выбрать _шкурку..."/>
@@ -720,7 +717,7 @@
 			<menu text="_Инструменты">
 				<item id="ID_LIBRARY_FOLDERS" text="Общий _доступ..."/>
 				<item id="ID_TOOLS_DOWNLOAD" text="_Начать загрузку..."/>
-				<item id="IDC_IMPORT_DOWNLOADS" text="_Импорт частичных загрузок eMule..."/>
+				<item id="ID_IMPORT_DOWNLOADS" text="_Импорт частичных загрузок eMule..."/>
 				<item id="ID_OPEN_DOWNLOADS_FOLDER" text="_Открыть папку с загрузками"/>
 				<separator/>
 				<item id="ID_TOOLS_SKIN" text="Выбрать _шкурку..."/>
@@ -1572,9 +1569,6 @@
 			<item id="ID_SCHEDULER_EDIT" text="_Изменить"/>
 			<separator/>
 			<item id="ID_SCHEDULER_REMOVE_ALL" text="_Удалить всё"/>
-			<separator/>
-			<item id="ID_SCHEDULER_IMPORT" text="_Импорт..."/>
-			<item id="ID_SCHEDULER_EXPORT" text="_Экспорт..."/>
 		</menu>
 		<!-- DISCOVERY SERVICES WINDOW -->
 		<menu name="CDiscoveryWnd">
@@ -2329,6 +2323,19 @@
 	</documents>
 	<!-- Localised Command Tip Text. The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
 	<commandTips>
+		<tip id="AFX_IDS_APP_TITLE" message="Shareaza"/>
+		<tip id="AFX_IDS_IDLEMESSAGE" message="Готово"/>
+		<tip id="AFX_IDS_MDICHILD" message="Переключиться на это окно"/>
+		<tip id="AFX_IDS_PREVIEW_CLOSE" message="Close print preview mode" tip="Отменить просмотр"/>
+		<tip id="AFX_IDS_SCCLOSE" message="Закрыть окно"/>
+		<tip id="AFX_IDS_SCMAXIMIZE" message="Увеличить окно до полного размера"/>
+		<tip id="AFX_IDS_SCMINIMIZE" message="Reduce the window to an icon"/>
+		<tip id="AFX_IDS_SCMOVE" message="Передвинуть окно"/>
+		<tip id="AFX_IDS_SCNEXTWINDOW" message="Switch to the next document window"/>
+		<tip id="AFX_IDS_SCPREVWINDOW" message="Switch to the previous document window"/>
+		<tip id="AFX_IDS_SCRESTORE" message="Restore the window to normal size"/>
+		<tip id="AFX_IDS_SCSIZE" message="Изменить размер окна"/>
+		<tip id="AFX_IDS_SCTASKLIST" message="Вызвать список окон"/>
 		<tip id="ID_BROWSE_FILES" message="Просмотр файлов."/>
 		<tip id="ID_BROWSE_LAUNCH" message="Просмотр профиля и файлов пользователя."/>
 		<tip id="ID_BROWSE_PROFILE" message="Просмотр профиля пользователя."/>
@@ -2343,7 +2350,6 @@
 		<tip id="ID_CHAT_EMOTICONS" message="Вставить смайлик."/>
 		<tip id="ID_CHAT_ITALIC" message="Применить формат курсива (Ctrl+I)"/>
 		<tip id="ID_CHAT_PRIORITY" message="Предоставить пользователю приоритет на загрузку."/>
-		<!-- <tip id="ID_CHAT_SEND_FILE" message="Send a file to the user..."/> -->
 		<tip id="ID_CHAT_TIMESTAMP" message="Показывать время, когда получено каждое сообщение."/>
 		<tip id="ID_CHAT_UNDERLINE" message="Применить формат подчеркивания (Ctrl+U)"/>
 		<tip id="ID_CHILD_CLOSE" message="Закрыть активное окно."/>
@@ -2352,6 +2358,7 @@
 		<tip id="ID_CHILD_RESTORE" message="Открыть выбранное окно."/>
 		<tip id="ID_DISCOVERY_ADD" message="Добавить новую службу ресурсов соединений..."/>
 		<tip id="ID_DISCOVERY_ADVERTISE" message="Рекламировать помеченную GWebCache службу в случайной GWebCache."/>
+		<tip id="ID_DISCOVERY_BLOCKED" message="Показывать отключённые службы в окне Ресурсов Соединений."/>
 		<tip id="ID_DISCOVERY_BROWSE" message="Просмотреть статистику помеченной службы GWebCache в Интернете."/>
 		<tip id="ID_DISCOVERY_EDIT" message="Просмотр свойств помеченной службы ресурсов соединений."/>
 		<tip id="ID_DISCOVERY_GNUTELLA" message="Показывать bootstrap службы в окне Ресурсов Соединений."/>
@@ -2399,17 +2406,18 @@
 		<tip id="ID_DOWNLOADS_SHOW_SOURCES" message="Показывать источники, которые в данный момент не используются."/>
 		<tip id="ID_DOWNLOADS_SOURCES" message="Искать большего кол-ва источников для помеченной загрузки(ок)."/>
 		<tip id="ID_DOWNLOADS_URL" message="Добавить ссылку источника к помеченной загрузке..."/>
-		<tip id="ID_DOWNLOADS_VIEW_REVIEWS" message="Просмотр оценок о помеченной загрузке."/>
+		<tip id="ID_DOWNLOADS_VIEW_REVIEWS" message="Просмотр оценок выделенной загрузки."/>
 		<tip id="ID_HELP_ABOUT" message="Показать диалог «О Shareaza...»"/>
 		<tip id="ID_HELP_CODEC" message="Все о кодеках и видео проблемах."/>
 		<tip id="ID_HELP_FAQ" message="Посетить ЧаВо Shareaza."/>
-		<tip id="ID_HELP_ROUTER" message="Получите помощь по настройке вашего маршрутизатора или брандмауэра."/>
 		<tip id="ID_HELP_FORUMS" message="Посетить форумы дискуссий Shareaza."/>
 		<tip id="ID_HELP_GUIDE" message="Посетить Руководство пользователя Shareaza."/>
 		<tip id="ID_HELP_HOMEPAGE" message="Посетить сайт Shareaza.com."/>
+		<tip id="ID_HELP_ROUTER" message="Получите помощь по настройке вашего маршрутизатора или брандмауэра."/>
 		<tip id="ID_HELP_SECURITY" message="Узнайте как защититься от вредителей в сетях."/>
-		<tip id="ID_HELP_UPDATE" message="Узнайте новости и об обновлениях."/>
 		<tip id="ID_HELP_TEST" message="Произвести тест соединения."/>
+		<tip id="ID_HELP_UPDATE" message="Узнайте новости и об обновлениях."/>
+		<tip id="ID_HELP_VERSION_CHECK" message="Проверить новую версию"/>
 		<tip id="ID_HELP_WEB_1" message="Посетить этот сайт"/>
 		<tip id="ID_HELP_WEB_2" message="Посетить этот сайт"/>
 		<tip id="ID_HELP_WEB_3" message="Посетить этот сайт"/>
@@ -2419,7 +2427,9 @@
 		<tip id="ID_HITMONITOR_CLEAR" message="Очистить буфер монитора хитов."/>
 		<tip id="ID_HITMONITOR_PAUSE" message="Приостановить вывод в монитор хитов."/>
 		<tip id="ID_HITMONITOR_SEARCH" message="Искать в сети указанную фразу."/>
+		<tip id="ID_HOSTCACHE_BT_CACHE" message="Показывать кэшированные хосты BitTorrent."/>
 		<tip id="ID_HOSTCACHE_CONNECT" message="Соединится с помеченным хостом(и)."/>
+		<tip id="ID_HOSTCACHE_DC_CACHE" message="Показать кэшированные хосты DC++."/>
 		<tip id="ID_HOSTCACHE_DISCONNECT" message="Отключиться от помеченного хоста(ов)."/>
 		<tip id="ID_HOSTCACHE_ED2K_CACHE" message="Показать eDonkey серверы."/>
 		<tip id="ID_HOSTCACHE_ED2K_DOWNLOAD" message="Загрузить файл eDonkey «server.met»..."/>
@@ -2427,8 +2437,10 @@
 		<tip id="ID_HOSTCACHE_G2_CACHE" message="Показать кэшированные хосты Gnutella2."/>
 		<tip id="ID_HOSTCACHE_G2_HORIZON" message="Показать верхние узлы Gnutella2."/>
 		<tip id="ID_HOSTCACHE_IMPORT" message="Импортировать список известных хостов (например, из файла «server.met»)..."/>
+		<tip id="ID_HOSTCACHE_KAD_CACHE" message="Показать кэшированные хосты Kademlia."/>
 		<tip id="ID_HOSTCACHE_PRIORITY" message="Пробовать подсоединиться к этому серверу прежде чем к другим."/>
 		<tip id="ID_HOSTCACHE_REMOVE" message="Удалить помеченные хосты из кэша хостов."/>
+		<tip id="ID_IMPORT_DOWNLOADS" message="Импорт частичных загрузок eMule..."/>
 		<tip id="ID_LIBRARY_ADD" message="Добавить новую папку в Ваше хранилище..."/>
 		<tip id="ID_LIBRARY_ALBUM_DELETE" message="Удалить помеченную папку альбома."/>
 		<tip id="ID_LIBRARY_ALBUM_OPEN" message="Открыть помеченную папку альбома."/>
@@ -2458,6 +2470,7 @@
 		<tip id="ID_LIBRARY_REBUILD" message="Переделать мета данные и хешы поменченных папок или файлов."/>
 		<tip id="ID_LIBRARY_REBUILD_ANSI" message="Перекодировать мета данные на другой язык."/>
 		<tip id="ID_LIBRARY_REFRESH" message="Обновить вид хранилища."/>
+		<tip id="ID_LIBRARY_REFRESH_METADATA" message="Обновить метаданные"/>
 		<tip id="ID_LIBRARY_REMOVE" message="Удалить файл."/>
 		<tip id="ID_LIBRARY_RENAME" message="Переименовать помеченный файл."/>
 		<tip id="ID_LIBRARY_SCAN" message="Сканировать помеченные папки или файлы на предмет изменений."/>
@@ -2495,6 +2508,7 @@
 		<tip id="ID_MEDIA_PAUSE" message="Приостановить воспроизведение медиа файла." tip="Пауза"/>
 		<tip id="ID_MEDIA_PLAY" message="Начать играть текущий медиа файл." tip="Играть"/>
 		<tip id="ID_MEDIA_PLAYLIST" message="Показать или скрыть редактор списка воспроизведения."/>
+		<tip id="ID_MEDIA_POSITION" message="Перемещение по медиа файлу." tip="Поиск"/>
 		<tip id="ID_MEDIA_PREVIOUS" message="Перейти к предыдущему файлу в текущем списке воспроизведения." tip="Предыдущий файл"/>
 		<tip id="ID_MEDIA_PROPERTIES" message="Просмотр и правка свойств выделенных файлов."/>
 		<tip id="ID_MEDIA_RANDOM" message="В-/Выключить режим перетасовки в текущем списке воспроизведения."/>
@@ -2509,14 +2523,15 @@
 		<tip id="ID_MEDIA_SIZE_ONE" message="Показывать видео в его оригинальном (естественном) размере."/>
 		<tip id="ID_MEDIA_SIZE_THREE" message="Показывать видео в тройном оригинальном (естественном) размере."/>
 		<tip id="ID_MEDIA_SIZE_TWO" message="Показывать видео в двойном оригинальном (естественном) размере."/>
+		<tip id="ID_MEDIA_SPEED" message="Изменить скорость воспроизведения." tip="Скорость"/>
 		<tip id="ID_MEDIA_STATUS" message="Показать или скрыть строку медиа статуса."/>
 		<tip id="ID_MEDIA_STOP" message="Остановить воспроизведение медиа файла." tip="Стоп"/>
 		<tip id="ID_MEDIA_VIS" message="Выбрать модуль аудио визуализации..."/>
+		<tip id="ID_MEDIA_VOLUME" message="Изменить громкость." tip="Громкость"/>
 		<tip id="ID_MEDIA_ZOOM" message="Регулировка видео масштаба и пропорций."/>
-		<tip id="IDC_MEDIA_POSITION" value="Seek to a position in the media file." tip="Поиск"/>
-		<tip id="IDC_MEDIA_SPEED" value="Adjust the speed of the media file." tip="Скорость"/>
-		<tip id="IDC_MEDIA_VOLUME" value="Adjust the audio volume." tip="Громкость"/>
 		<tip id="ID_MONITOR_CLOSE" message="Закрыть окно монитора."/>
+		<tip id="ID_MUSICBRAINZ_ALBUMS" message="Look at all albums for this artist."/>
+		<tip id="ID_MUSICBRAINZ_MATCHES" message="Искать подходящие альбомы для выбранного файла."/>
 		<tip id="ID_NEIGHBOURS_CHAT" message="Открыть чат сессию с помеченным пользователем."/>
 		<tip id="ID_NEIGHBOURS_COPY" message="Копировать ссылку доступа к помеченному хосту."/>
 		<tip id="ID_NEIGHBOURS_DISCONNECT" message="Отключиться от помеченного хоста(ов)."/>
@@ -2529,12 +2544,22 @@
 		<tip id="ID_NETWORK_CHAT_TO" message="Открыть чат сессию с хостом..."/>
 		<tip id="ID_NETWORK_CONNECT" message="Соединиться с выбранными сетями."/>
 		<tip id="ID_NETWORK_CONNECT_TO" message="Вручную присоединиться к хосту..."/>
+		<tip id="ID_NETWORK_DC" message="Соединиться с сетью DC++."/>
 		<tip id="ID_NETWORK_DISCONNECT" message="Отсоединиться от сетей. Это также остановит все загрузки и раздачи."/>
 		<tip id="ID_NETWORK_ED2K" message="Соединиться с сетью eDonkey."/>
 		<tip id="ID_NETWORK_EXIT" message="Выйти из Shareaza"/>
 		<tip id="ID_NETWORK_G1" message="Соединиться с оригинальной сетью Gnutella."/>
 		<tip id="ID_NETWORK_G2" message="Соединиться с сетью Gnutella2 (рекомендуется)."/>
 		<tip id="ID_NETWORK_SEARCH" message="Начать новый поиск в сети..."/>
+		<tip id="ID_NEXT_PANE" message="Switch to the next window pane" tip="Следующее окно"/>
+		<tip id="ID_OPEN_DOWNLOADS_FOLDER" message="Открыть папку с завершёнными загрузками"/>
+		<tip id="ID_PREV_PANE" message="Перейти к предыдущему окну" tip="Предыдущее окно"/>
+		<tip id="ID_SCHEDULER_ACTIVATE" message="Включить выбранную задачу."/>
+		<tip id="ID_SCHEDULER_ADD" message="Добавить новую задачу в Планировщике."/>
+		<tip id="ID_SCHEDULER_DEACTIVATE" message="Выключить выбранные задачи."/>
+		<tip id="ID_SCHEDULER_EDIT" message="Править выбранную задачу..."/>
+		<tip id="ID_SCHEDULER_REMOVE" message="Убрать выбранные задачи из списка."/>
+		<tip id="ID_SCHEDULER_REMOVE_ALL" message="Удалить все задачи Планировщика."/>
 		<tip id="ID_SEARCH_CHAT" message="Открыть чат сессию с помеченным пользователем."/>
 		<tip id="ID_SEARCH_CLEAR" message="Очистить результаты поиска."/>
 		<tip id="ID_SEARCH_COLUMNS" message="Выбрать колонки мета данных для показа..."/>
@@ -2566,9 +2591,22 @@
 		<tip id="ID_SECURITY_POLICY_DENY" message="Установить политику безопасности по умочанию на отказ допуска всем хостам."/>
 		<tip id="ID_SECURITY_REMOVE" message="Удалить помеченное правило(а) безопасности."/>
 		<tip id="ID_SECURITY_RESET" message="Сбросить счетчики хитов для помеченных правил."/>
+		<tip id="ID_SHAREMONKEY_BUY" message="Buy it and support the author"/>
+		<tip id="ID_SHAREMONKEY_COMPARE" message="Compare prices in different stores"/>
+		<tip id="ID_SHAREMONKEY_DOWNLOAD" message="Искать совпадения"/>
+		<tip id="ID_SHAREMONKEY_NEXT" message="Go to the next match"/>
+		<tip id="ID_SHAREMONKEY_PREVIOUS" message="Go to the previous match"/>
+		<tip id="ID_SHAREMONKEY_PRICES" message="Получить цены для текущего совпадения"/>
+		<tip id="ID_SHAREMONKEY_SAVE" message="Сохранить совпадение в хранилище"/>
 		<tip id="ID_SYSTEM_CLEAR" message="Очистить журнал статуса."/>
+		<tip id="ID_SYSTEM_COPY" message="Копировать выделенные строки."/>
 		<tip id="ID_SYSTEM_TIMESTAMP" message="Добавлять штамп времени в каждую строчку."/>
 		<tip id="ID_SYSTEM_VERBOSE" message="Показывать подробный журнал активности системы."/>
+		<tip id="ID_SYSTEM_VERBOSE_DEBUG" message="Показать всё."/>
+		<tip id="ID_SYSTEM_VERBOSE_ERROR" message="Показывать только ошибки."/>
+		<tip id="ID_SYSTEM_VERBOSE_INFO" message="Показывать информацию."/>
+		<tip id="ID_SYSTEM_VERBOSE_NOTICE" message="Показывать уведомления."/>
+		<tip id="ID_SYSTEM_VERBOSE_WARNING" message="Показывать предупреждения."/>
 		<tip id="ID_TAB_CONNECT" message="Соединиться или отключиться от сети."/>
 		<tip id="ID_TAB_HOME" message="Вернутся на начальную страницу Shareaza"/>
 		<tip id="ID_TAB_IRC" message="Показать окно IRC чата."/>
@@ -2619,6 +2657,7 @@
 		<tip id="ID_VIEW_NEIGHBOURS" message="Показать или скрыть окно Соединений."/>
 		<tip id="ID_VIEW_PACKETS" message="Показать или скрыть окно Дампа Пакетов."/>
 		<tip id="ID_VIEW_RESULTS_MONITOR" message="Показать или скрыть окно Монитора Хитов."/>
+		<tip id="ID_VIEW_SCHEDULER" message="Показать или скрыть окно Планировщик."/>
 		<tip id="ID_VIEW_SEARCH_MONITOR" message="Показать или скрыть окно Монитора Поиска."/>
 		<tip id="ID_VIEW_SECURITY" message="Показать или скрыть окно Безопасность."/>
 		<tip id="ID_VIEW_SYSTEM" message="Показать или скрыть окно Системы."/>
@@ -2626,6 +2665,10 @@
 		<tip id="ID_VIEW_TRAFFIC" message="Показать или скрыть окно Графиков."/>
 		<tip id="ID_VIEW_UPLOADS" message="Показать или скрыть окно Раздач."/>
 		<tip id="ID_VIEW_WINDOWED" message="Переключить Shareaza в оконный режим для опытных."/>
+		<tip id="ID_WEBSERVICES_LIST" message="Выберите сервис для получения более полной информации о файле."/>
+		<tip id="ID_WEBSERVICES_MUSICBRAINZ" message="Поиск информации о файле при помощи службы MusicBrainz."/>
+		<tip id="ID_WEBSERVICES_SHAREMONKEY" message="Поиск информации о файле при помощи службы ShareMonkey."/>
+		<tip id="ID_WINDOW_ARRANGE" message="Arrange icons at the bottom of the window" tip="Выстроить иконки"/>
 		<tip id="ID_WINDOW_CASCADE" message="Расширить все открытые окна, чтобы заполнить экран."/>
 		<tip id="ID_WINDOW_MONITOR" message="Показать или скрыть монитор пропускной способности."/>
 		<tip id="ID_WINDOW_NAVBAR" message="Показать или скрыть навигационную полоску."/>
@@ -2634,8 +2677,6 @@
 		<tip id="ID_WINDOW_TILE_HORZ" message="Расположить открытые окна горизонтально, без перекрывания."/>
 		<tip id="ID_WINDOW_TILE_VERT" message="Расположить открытые окна вертикально, без перекрывания."/>
 		<tip id="ID_WINDOW_TOOLBAR" message="Показать или скрыть полоску инструментов."/>
-		<tip id="ID_WEBSERVICES_LIST" message="Выберите сервис для получения более полной информации о файле."/>
-		<tip id="ID_WEBSERVICES_SHAREMONKEY" message="Поиск информации о файле при помощи службы ShareMonkey."/>
 		<!-- PLUGIN TIPS -->
 		<tip id="ImageViewer_BestFit" message="Изменить размер, чтобы картинка посметилась в окне."/>
 		<tip id="ImageViewer_ActualSize" message="Показывать картинку в натуральном размере."/>
@@ -2672,23 +2713,6 @@
 		<string id="WINDOW_HELP" value="Shareaza помощь"/>
 		<string id="WINDOW_IRC" value="Чат Shareaza"/>
 		<string id="WINDOW_SCHEDULER" value="Планировщик"/>
-		<string id="154" value="Уверены, что хотите удалить все задачи планировщика?  Действие будет необратимое."/>
-		<string id="156" value="Время задачи уже прошло.\n\nПожалуйста задайте время в будущем."/>
-		<string id="157" value="Скорость: Полная"/>
-		<string id="158" value="Скорость: Уменьшена"/>
-		<string id="159" value="Скорость: Остановка"/>
-		<string id="160" value="Система: Выход из Shareaza"/>
-		<string id="161" value="Система: Отключить интернет"/>
-		<string id="162" value="Система: Выключить компьютер"/>
-		<string id="163" value="Выберите задачу:"/>
-		<string id="164" value="Заданные дни недели"/>
-		<string id="165" value="Активный"/>
-		<string id="166" value="Неактивный"/>
-		<string id="167" value="Готово"/>
-		<string id="168" value="Ждите..."/>
-		<string id="169" value="Нет задач для Планировщика"/>
-		<string id="172" value="Готово сегодня"/>
-		<string id="173" value="Вы должны выбрать по карйней мере один из дней недели."/>
 		<string id="7000" value="Вы уверены, что хотите удалить этот фильтр?"/>
 		<string id="7001" value="&amp;Схемы"/>
 		<string id="7002" value="Разные значения"/>
@@ -2708,9 +2732,7 @@
 		<string id="8007" value="Нет активных процессов поиска.  Щелкните здесь, чтобы начать поиск файлов."/>
 		<string id="8008" value="Shareaza закончила загрузку новой версии Shareaza (%s).  Хотите ли сейчас обновить?\n\nЕсли выберите «Да», то Shareaza временно окончит работу, пока она будет обновляться."/>
 		<string id="8009" value="Уверены, что хотите удалить шкурку «%s»?  Действие будет необратимое."/>
-		<string id="8010" value="Это предвыпускная версия Shareaza, и период бета тестирования закончился.  Пожалуйста загрузите полную, официальную версию с http://shareaza.sourceforge.net/."/>
 		<string id="8011" value="При смене вида все открытые Вами окна будут закрыты.  Хотите переключить сейчас?"/>
-		<string id="8012" value="Информация о торренте"/>
 		<string id="8013" value="Новых версий Shareazы не обнаружено."/>
 		<string id="8014" value="Свойства загрузки"/>
 		<string id="8060" value="G1/G2 Хаб соединён с %lu хостами.  %s в хранилище."/>
@@ -2778,7 +2800,7 @@
 		<string id="8178" value="Какого типа файл?"/>
 		<string id="8179" value="(Очистить историю поисков)"/>
 		<string id="8180" value="Размер файла должен быть:"/>
-		<string id="8181" value="до"/><!-- size from xx TO xx-->
+		<string id="8181" value=" до "/>
 		<string id="8208" value="Shareaza создает хешы для %Iu файла(ов):"/>
 		<string id="8223" value="%i д. и %i час."/>
 		<string id="8224" value="Shareaza загружает:"/>
@@ -2798,7 +2820,7 @@
 		<string id="8239" value="Завершено"/>
 		<string id="8240" value="Shareaza перемещает загрузку:"/>
 		<string id="8241" value="Shareaza проверяет загрузку на ошибки:"/>
-		<string id="8243" value="Соотношение:"/>
+		<string id="8243" value="Рейтинг:"/>
 		<string id="8244" value="Число просмотров:"/>
 		<string id="8288" value="Просмотр вашего хранилища"/>
 		<string id="8289" value="Просматривается "/>
@@ -2860,10 +2882,9 @@
 		<string id="16077" value="Адрес %s уже заблокирован вашими правилами безопасности."/>
 		<string id="16078" value="Добавленно правило безопасности для блокировки %s."/>
 		<string id="16079" value="Вы уверены, что хотите отключиться"/>
-		<string id="16080" value="Вы запустили расписание в режиме «только G2». Не хотите ли выключить этот режим, тогда все активные сети останутся подключёнными?"/>
+		<string id="16080" value="Хотите всегда подключаться к сети?"/>
 		<string id="16081" value="Шлю запрос для «%s» в %s."/>
 		<string id="16083" value="Принужденное становление Вашего ПК узлом может неблагоприятно повлиять на производительность и на P2P сеть.  Вообще, лучше позволить самой Shareaza решать, использовать или нет режим узла.\n\nРежим узла НЕ дает лучших результатов поиска или каких-нибудь преимуществ для Вас.\n\nВы действительно хотите это сделать, несмотря на упомянутые неудобства?"/>
-		<string id="16084" value="Выключая поддержку протоколов Gnutella-1, Вы уменьшите результаты поиска, и, если Вы работаете в режиме узла, это повлияет и на результаты других пользователей.  Вы уверены, что хотите это сделать?"/>
 		<string id="16085" value="Gnutella2 - это главная сеть Shareazы.  Выключая её поддержку, Вы очень уменьшите число и ухудшите качество результатов поиска.  Вы УВЕРЕНЫ, что хотите это сделать?"/>
 		<string id="16087" value="Исходящяя полоса пропускания слишком низка для включения этой сети."/>
 		<string id="16128" value="Принято входящее соединение с %s порт %i."/>
@@ -2985,7 +3006,7 @@
 		<string id="16326" value="Хост раздачи %s запросил «%s» с другим SHA1."/>
 		<string id="16327" value="Отказываю в раздаче «%s» на %s (%s), занят и клиент не поддерживает очередей."/>
 		<string id="16328" value="Соединение активной доставки с %s установлена, жду подтверждения..."/>
-		<string id="16329" value="Не могу открыть «%s», чтобы раздать хосту %s, ошибка диска/файла."/>
+		<string id="16329" value="Не могу открыть «%s», чтобы раздать хосту %s, ошибка диска или файла."/>
 		<string id="16330" value="Посылаю отрезок %I64i-%I64i содержимого раздачи «%s» на хост %s (%s)."/>
 		<string id="16331" value="Закончена раздача части «%s» %s."/>
 		<string id="16332" value="Входящее соединение с %s является HTTP запросом на раздачу."/>
@@ -3034,6 +3055,7 @@
 		<string id="16375" value="Частичные"/>
 		<string id="16376" value="Все файлы"/>
 		<string id="16377" value="Охраняющяя HTTP"/>
+		<string id="16378" value="Хост &quot;%s&quot; прислал 416, без сообщения о доступных диапазонах. Закрытие соединения."/>
 		<string id="16379" value="Файлы хранилища"/>
 		<string id="16384" value="Уверены, что хотите открыть файл «%s» ?\n\nНекоторые файлы могут причинить вред для вашего компьютера.  Удостоверьтесь, что это за файл прежде чем открывать его."/>
 		<string id="16385" value="Вы собираетесь изменить мета данные для %i файлов, уверены, что хотите продолжить?"/>
@@ -3161,12 +3183,11 @@
 		<string id="16944" value=" Найдено %i файлов в хранилище у %s."/>
 		<string id="16991" value="Проигрыватель Shareaza"/>
 		<string id="16992" value="Shareaza не смогла создать экземпляр модуля MediaServices.  Переустановите Shareaza программу и удостоверьтесь, что у Вас установлены все необходимые медиа кодеки и драйвера вывода данных."/>
-		<string id="16993" value="Все медиа файлы|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Списки воспроизв.|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Аудио файлы|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|Видео файлы|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|CD аудио трэки|*.cda|MIDI файлы|*.mid;*.rmi;*.midi|Все файлы|*.*||"/>
 		<string id="16994" value="Не могу загрузить медиа файл «%s»"/>
 		<string id="16995" value="Файл может быть поврежден, или Вы не имеете подходящих кодеков для его воспроизведения."/>
 		<string id="16996" value="Часть этого файла не может быть воспроизведена, воможно Вам нужно загрузить дополнительные кодеки."/>
 		<string id="16997" value="Нет воспроизводимых файлов.  Щелкните дважды на медиа файле в Вашем хранилище для его проигрывания."/>
-		<string id="16998" value="М       Е       Д       И       А                С       И       С       Т       Е       М       А                S       H       A       R       E       A       Z       A"/><!-- on one line -->
+		<string id="16998" value="М       Е       Д       И       А                С       И       С       Т       Е       М       А                S       H       A       R       E       A       Z       A"/>
 		<string id="16999" value="Список   Воспроизведения"/>
 		<string id="17017" value="Послать:"/>
 		<string id="17018" value="Добро пожаловать в чат Shareaza!"/>
@@ -3266,6 +3287,7 @@
 		<string id="17477" value="В BitTorrent паре с %s получен ответ с неправильным файлом."/>
 		<string id="17478" value="В BitTorrent  паре с %s получен запрос на неизвестный файл."/>
 		<string id="17479" value="Установлено BitTorrent соединение с партнером %s для пересылки «%s»."/>
+		<string id="17480" value="В BitTorrent  паре с %s получен запрос на неактивный файл."/>
 		<string id="17481" value="Получен файл-дескриптор BitTorrent'а: «%s»"/>
 		<string id="17482" value="Невозможно разобрать файл BitTorrent'а «%s», полученный методом упреждающей выборки ."/>
 		<string id="17483" value="Сообщение ошибки от BitTorrent трекера для файла «%s» : «%s»."/>
@@ -3279,14 +3301,13 @@
 		<string id="17491" value="Торрент «%s» уже в Вашем списке загрузок, и его нельзя раздавать."/>
 		<string id="17492" value="Ошибка загружая торрент файл «%s».  Возможно, это неправильный торрент."/>
 		<string id="17493" value="Невозможно создать BitTorrent файл «%s»."/>
-		<string id="17494" value="Этот торрент содержит файл «%s», но Shareaza не может найти этого файла в Вашем хранилище.  Если возможно, переместите файл в папку с открытым доступом и попробуйте снова."/>
+		<string id="17494" value="Этот торрент содержит файл «%s», но Shareaza не может найти этого файла в Вашем хранилище. Если возможно, переместите файл в папку с открытым доступом и попробуйте снова."/>
 		<string id="17495" value="Этот торрент содержит файл «%s» версии %s, но версия Вашего файла - %s."/>
 		<string id="17496" value="Произошла ошибка во время  копирования «%s» в BitTorrent файл."/>
 		<string id="17497" value="Произошла неясная ошибка во время рапространения «%s»."/>
 		<string id="17498" value="Обнаружена ошибка в файле «%s»."/>
-		<string id="17500" value="Трекер не ответил - повтор анонсирования (%i из %i)"/>
 		<string id="17501" value="Невозможно соединиться с трекером"/>
-		<string id="17503" value="Трекер не ответил - пробуется следующий трекер (%i из %i)"/>
+		<string id="17503" value="Пробуется следующий трекер (%i из %i)"/>
 		<string id="17505" value="Установка связи BitTorrent с %s оборвалась."/>
 		<string id="17506" value="Приветствие BitTorrent с %s оборвалось."/>
 		<string id="17507" value="Пара BitTorrent с %s оборвалась."/>
@@ -3297,12 +3318,6 @@
 		<string id="17514" value="Обновление загрузок BitTorrent..."/>
 		<string id="17515" value="Конвертирование Torrent'ов:"/>
 		<string id="18496" value="Вы сделали изменения в поле имени.  Уверены, что хотите переименовать эту загрузку?"/>
-		<string id="18497" value="Вы ввели неправильное значение SHA1.  Проверьте и попробуйте снова."/>
-		<string id="18498" value="Вы ввели неправильное корневое значение tiger-tree.   Проверьте и попробуйте снова."/>
-		<string id="18499" value="Вы ввели неправильное значение eDonkey хеша.   Проверьте и попробуйте снова."/>
-		<string id="18500" value="Вы ввели значение SHA1 хеша, не совпадающее с текущим значением у загрузки.  Уверены, что хотите изменить SHA1 хеш сейчас?"/>
-		<string id="18501" value="Вы ввели корневое значение tiger-tree хеша, не совпадающее с текущим значением у загрузки.  Уверены, что хотите изменить корневой tiger-tree хеш сейчас?"/>
-		<string id="18502" value="Вы ввели значение eDonkey хеша, не совпадающее с текущим значением у загрузки.  Уверены, что хотите изменить eDonkey хеш сейчас?"/>
 		<string id="18503" value="Уверены, что хотите забыть текущее состояние проверки?  Все загруженные данные будут считаться недостоверными, и все деревья и наборы хешов будут сброшены."/>
 		<string id="18504" value="Уверены, что хотите забыть все источники помеченной загрузки?"/>
 		<string id="18505" value="Введите правильный промежуток для стирания.  «С» поле должно содержать первый, а «по» - последний байт стирания."/>
@@ -3312,9 +3327,15 @@
 		<string id="18509" value="Вы не можете предположить, что загрузка полна, и проверить её заново, так как у Вас нет никаких частичных проверочных данных, таких как том tiger-tree, набор eDonkey или BitTorrent хеша.  Без этой проверочной информации загрузка не может быть перепроверена."/>
 		<string id="18510" value="Вы уверены, что хотите предположить, что эта загрузка полна, и повторно её проверить?  Будет рассмотрен весь файл, и Shareaza примет только те части, которые пройдут проверку. Другие же части будут загружены заново."/>
 		<string id="18511" value="Вы внесли изменения в размер файла.  Уверены, что хотите изменить размер для этой загрузки?"/>
+		<string id="18512" value="Вы уверены что хотите отменить загрузку с сохранением неполных файлов?"/>
+		<string id="18513" value="Вы ввели неправильное значение eDonkey хеша.  Проверьте и попробуйте снова."/>
+		<string id="18514" value="Вы ввели значение %s хеша, не совпадающее с текущим значением у загрузки. Уверены, что хотите изменить%s хеш сейчас?"/>
 		<string id="19000" value="Удаленный доступ отключен."/>
 		<string id="19001" value="Вы должны выбрать имя пользователя и пароль."/>
 		<string id="19002" value="Невозможно принять соединений, ссылка недоступна."/>
+		<string id="19103" value="Добро пожаловать в чат Shareaza!"/>
+		<string id="19104" value="Пожалуйста уважайте других, когда пользуетесь этим сервисом"/>
+		<string id="19105" value="Чат!"/>
 		<string id="20000" value="Нет доступных ссылок"/>
 		<string id="20001" value="Закрыть"/>
 		<string id="20002" value="из"/>
@@ -3328,6 +3349,7 @@
 		<string id="20011" value="&amp;Далее"/>
 		<string id="20012" value="Закончить"/>
 		<string id="20013" value="Все"/>
+		<string id="20014" value="Эта опция использует службу, предоставленную ShareMonkey.com для получения и обмена информацией о помеченных файлах.\n\nShareaza перешлет описания помеченного файла(ов) для того, чтобы запросить базу данных ShareMonkey.  Если Вы заинтересованы в секретности, наверное, Вы захотите познакомиться с политикой конфиденциальности ShareMonkey.com.\n\nХотите ли продолжать?"/>
 		<string id="20100" value="Соединение"/>
 		<string id="20101" value="Запрос"/>
 		<string id="20102" value="Ответ"/>
@@ -3366,13 +3388,6 @@
 		<string id="20135" value="Следующий"/>
 		<string id="20136" value="Оч."/>
 		<string id="20137" value="источников"/>
-		<string id="20200" value="Воскресенье"/>
-		<string id="20201" value="Понедельник"/>
-		<string id="20202" value="Вторник"/>
-		<string id="20203" value="Среда"/>
-		<string id="20204" value="Четверг"/>
-		<string id="20205" value="Пятница"/>
-		<string id="20206" value="Суббота"/>
 		<string id="20210" value="(без оценки)"/>
 		<string id="20211" value="Фальшивка / Испорчен"/>
 		<string id="20212" value="Плохой"/>
@@ -3381,7 +3396,6 @@
 		<string id="20215" value="Очень хороший"/>
 		<string id="20216" value="Отменный"/>
 		<string id="20217" value="Выберите папку с частичными загрузками eMule:"/>
-		<!-- Column headers in Library Album View -->
 		<string id="20230" value="№"/>
 		<string id="20231" value="Название"/>
 		<string id="20232" value="Время"/>
@@ -3398,9 +3412,28 @@
 		<string id="20243" value="Продолжить"/>
 		<string id="20244" value="&amp;Запомнить мой выбор на будущее"/>
 		<string id="20245" value="Новая папка"/>
-		<string id="32825" value="Открыть папку с завершёнными загрузками"/>
-		<string id="32773" value="Проверить новую версию"/>
-		<string id="61215" value="Переключиться на это окно"/>
+		<string id="20246" value="Command-line options:\n\n-tray : Disable startup splash screen and send application to tray\n-nosplash : Disable startup splash screen\n-nowarn : Disable alpha (daily builds) version warning dialog\n\nInterface modes:\n\n-basic : Start application in Basic interface mode\n-tabbed : Start application in Tabbed interface mode\n-windowed : Start application in Windowed interface mode\n\nSystem options:\n\n-RegServer : Register internal components for everyone\n-UnRegServer : Un-register internal components for everyone\n-RegServerPerUser : Register internal components for current user\n-UnRegServerPerUser : Un-register internal components for current user"/>
+		<string id="20247" value="Ошибка загрузки схем метаданных. Пожалуйста переустановите приложение."/>
+		<string id="20248" value="Вы выбрали %u файлов. Вы уверены?"/>
+		<string id="20249" value="Ненужно"/>
+		<string id="20250" value="Низкий"/>
+		<string id="20251" value="Обычный"/>
+		<string id="20252" value="Высокий"/>
+		<string id="20253" value="Ошибка загрузки шукурки: %s. Элемент: %s"/>
+		<string id="20254" value="Загрузка шкурки: %s"/>
+		<string id="20255" value="Уверены, что хотите удалить все задачи планировщика?  Действие будет необратимое."/>
+		<string id="20256" value="Система: Запуск Shareaza"/>
+		<string id="20257" value="Скорость: Полная"/>
+		<string id="20258" value="Скорость: Уменьшена"/>
+		<string id="20259" value="Скорость: Остановка"/>
+		<string id="20260" value="Система: Выход из Shareaza"/>
+		<string id="20261" value="Система: Отключить интернет"/>
+		<string id="20262" value="Система: Выключить компьютер"/>
+		<string id="20263" value="Активный"/>
+		<string id="20264" value="Неактивный"/>
+		<string id="20265" value="Готово"/>
+		<string id="20266" value="Ждите..."/>
+		<string id="20267" value="Нет задач для Планировщика"/>
 	</strings>
 	<!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 	<!-- Don't edit dialogs manualy! Use DialogScan feature instead -->
@@ -3637,49 +3670,6 @@
 			<control caption="Введите имя:"/>
 			<control/>
 			<control caption="Введите пароль:"/>
-			<control/>
-		</dialog>
-		<dialog name="CScheduleTaskDlg" cookie="BuBuBuBuSySyBuBuBuBuBuBuBuBuCoEdmsEdmsEdmsBuBuEdBuStStStStStStStBuBuBuStBuBuEdSt" caption="Запланировать">
-			<control caption="OK"/>
-			<control caption="Отмена"/>
-			<control caption="Один раз"/>
-			<control caption="По заданным дням недели"/>
-			<control/>
-			<control/>
-			<control caption="Воскресенье"/>
-			<control caption="Понедельник"/>
-			<control caption="Вторник"/>
-			<control caption="Среда"/>
-			<control caption="Четверг"/>
-			<control caption="Пятница"/>
-			<control caption="Суббота"/>
-			<control caption="Все"/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control caption="_Управлять скростью независимо"/>
-			<control caption="_Использовать только Gnutella2"/>
-			<control/>
-			<control caption="Включить эту задачу"/>
-			<control caption="Выберите дату:"/>
-			<control caption="Выберите время:"/>
-			<control caption="Выберите тип:"/>
-			<control caption="Описание: (необязательно)"/>
-			<control caption="% _общей скорости при лимите"/>
-			<control caption="% скорости _загрузки при лимите"/>
-			<control caption="% скорости _раздачи при лимите"/>
-			<control caption="Дни недели"/>
-			<control caption="Выполнить задачу"/>
-			<control caption="Период действия"/>
-			<control caption="Установите период в течении которого задача будет выполнена после её заданого времени."/>
-			<control caption="Запрет"/>
-			<control caption="Разрешено"/>
-			<control/>
-			<control caption="Минут"/>
 			<control/>
 		</dialog>
 		<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Сети">
@@ -3998,7 +3988,7 @@
 			<control/>
 			<control caption="_Интересы:"/>
 			<control/>
-			<control caption="&lt; Внести"/>
+			<control caption="&lt; Добавить"/>
 			<control caption="Удалить &gt;"/>
 			<control/>
 		</dialog>
@@ -4035,7 +4025,7 @@
 			<control/>
 			<control caption="Создан:"/>
 			<control/>
-			<control caption="Генери-ть новый"/>
+			<control caption="Получить новый"/>
 		</dialog>
 		<dialog name="CLanguageDlg" cookie="" caption="Выберите язык программы">
 		</dialog>
@@ -4168,7 +4158,7 @@
 			<control caption="Открыть общий доступ к файлу"/>
 			<control caption="Метка для выбора очереди раздачи"/>
 			<control/>
-			<control caption="-Сети, в которых разделять"/>
+			<control caption="-Сети для раздач"/>
 			<control/>
 			<control/>
 		</dialog>
@@ -4434,8 +4424,8 @@
 			<control caption="ВНИМАНИЕ: Этот диалог для ОПЫТНЫХ пользователей и дает опции, которые при неправильном использовании могут разрушить загрузку."/>
 			<control caption="Имя и размер файла:"/>
 			<control caption="Файл:"/>
-			<control caption="Размер (байты):"/>
-			<control caption="_URNs:"/>
+			<control caption="Размер (байт):"/>
+			<control caption="_URNы:"/>
 			<control caption="Верим"/>
 			<control caption="SHA1:"/>
 			<control caption="Tiger-Root:"/>
@@ -4491,7 +4481,7 @@
 			<control/>
 			<control/>
 			<control/>
-			<control caption="Отключен|Одиночный|Мульти-трекер|Мульти-трекер (заблок.)"/>
+			<control caption="Отключен|Одиночный|Мульти-трекер|Мульти-трекер (выбран)"/>
 			<control caption="_Обновить"/>
 			<control/>
 			<control caption="Трекер:"/>
@@ -4548,11 +4538,30 @@
 			<control caption="OK"/>
 			<control caption="Отмена"/>
 		</dialog>
-		<dialog name="CIrcInputDlg" cookie="EdBuBuSt" caption="Channel Name|Why reason">
+		<dialog name="CIrcInputDlg" cookie="EdBuBuSt" caption="Имя канала|Причина">
 			<control/>
 			<control caption="OK"/>
 			<control caption="Отмена"/>
-			<control caption="Add a channel name:|Enter kick/ban reason:"/>
+			<control caption="Введите канал для добавления:|Введите причину кика/бана:"/>
+		</dialog>
+		<dialog name="CScheduleTaskPage" cookie="StCoBuEdmsEdmsBuBuBuBuBuStStStBuBu" caption="Действие">
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control caption="Gnutella1"/>
+			<control caption="Gnutella2"/>
+			<control caption="eDonkey2K"/>
+			<control caption="DC++"/>
+			<control caption="BitTorrent"/>
+			<control caption="Выберите тип действия:"/>
+			<control caption="% скорости _загрузки при лимите"/>
+			<control caption="% скорости _раздачи при лимите"/>
+			<control caption="Сети"/>
+			<control caption="Трафик"/>
 		</dialog>
 	</dialogs>
 	<!-- Columns Definitions -->
@@ -4651,7 +4660,7 @@
 			<column from="Size" to="Размер"/>
 			<column from="Rating" to="Оценка"/>
 			<column from="Status" to="Статус"/>
-			<column from="Host/Count" to="Кол-во хостов"/>
+			<column from="Host/Count" to="Хосты"/>
 			<column from="Speed" to="Скорость"/>
 			<column from="Client" to="Клиент"/>
 			<column from="Time" to="Время"/>
@@ -4692,6 +4701,14 @@
 			<column from="Rating" to="Оценка"/>
 			<column from="Comments" to="Комментарии"/>
 			<column from="Order" to="Порядок"/>
+		</list>
+		<list name="CSchedulerWnd">
+			<column from="Action" to="Действие"/>
+			<column from="Trigger" to="Триггер"/>
+			<column from="Next Run" to="Следующий запуск"/>
+			<column from="Active" to="Активный"/>
+			<column from="Status" to="Статус"/>
+			<column from="Description" to="Описание"/>
 		</list>
 	</listColumns>
 </skin>
