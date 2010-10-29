@@ -196,19 +196,19 @@ int CMediaFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndToolBar.SetOwner( GetOwner() );
 
 	m_wndPosition.Create( WS_CHILD|WS_TABSTOP|TBS_HORZ|TBS_NOTICKS|TBS_TOP,
-		rectDefault, &m_wndToolBar, IDC_MEDIA_POSITION );
+		rectDefault, &m_wndToolBar, ID_MEDIA_POSITION );
 	m_wndPosition.SetRange( 0, 0 );
 	m_wndPosition.SetPageSize( 0 );
 
 	m_wndSpeed.Create( WS_CHILD|WS_TABSTOP|TBS_HORZ|TBS_NOTICKS|TBS_TOP,
-		rectDefault, &m_wndToolBar, IDC_MEDIA_SPEED );
+		rectDefault, &m_wndToolBar, ID_MEDIA_SPEED );
 	m_wndSpeed.SetRange( 0, 200 );
 	m_wndSpeed.SetTic( 0 );
 	m_wndSpeed.SetTic( 100 );
 	m_wndSpeed.SetTic( 200 );
 
 	m_wndVolume.Create( WS_CHILD|WS_TABSTOP|TBS_HORZ|TBS_NOTICKS|TBS_TOP,
-		rectDefault, &m_wndToolBar, IDC_MEDIA_VOLUME );
+		rectDefault, &m_wndToolBar, ID_MEDIA_VOLUME );
 	m_wndVolume.SetRange( 0, 100 );
 	m_wndVolume.SetTic( 0 );
 	m_wndVolume.SetTic( 100 );
@@ -337,9 +337,9 @@ void CMediaFrame::OnSkinChange()
 	Skin.CreateToolBar( _T("CMediaFrame"), &m_wndToolBar );
 	Skin.CreateToolBar( _T("CMediaList"), &m_wndListBar );
 
-	if ( CCoolBarItem* pItem = m_wndToolBar.GetID( IDC_MEDIA_POSITION ) ) pItem->Enable( FALSE );
-	if ( CCoolBarItem* pItem = m_wndToolBar.GetID( IDC_MEDIA_SPEED ) ) pItem->Enable( FALSE );
-	if ( CCoolBarItem* pItem = m_wndToolBar.GetID( IDC_MEDIA_VOLUME ) ) pItem->Enable( FALSE );
+	if ( CCoolBarItem* pItem = m_wndToolBar.GetID( ID_MEDIA_POSITION ) ) pItem->Enable( FALSE );
+	if ( CCoolBarItem* pItem = m_wndToolBar.GetID( ID_MEDIA_SPEED ) ) pItem->Enable( FALSE );
+	if ( CCoolBarItem* pItem = m_wndToolBar.GetID( ID_MEDIA_VOLUME ) ) pItem->Enable( FALSE );
 
 	HICON hIcon = CoolInterface.ExtractIcon( (UINT)ID_MEDIA_STATE_STOP, FALSE );
 	if ( hIcon )

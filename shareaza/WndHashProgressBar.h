@@ -37,6 +37,7 @@ protected:
 	float		m_nPercentage;
 	DWORD		m_nLastShow;			// Time of last update
 	int			m_nPerfectWidth;		// Window perfect width for text fitting
+	BYTE		m_nAlpha;
 
 	void		Draw(CDC* pDC);			// Redraw window and calculate perfect width
 

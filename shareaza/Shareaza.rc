@@ -226,7 +226,7 @@ CAPTION "Action"
 FONT 8, "Tahoma", 400, 0, 0x0
 BEGIN
     CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME,19,57,53,20
-    COMBOBOX        IDC_EVENTTYPE,15,20,231,80,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_SCHEDULER_EVENTTYPE,15,20,231,80,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     CONTROL         "",IDC_SCHEDULER_TOGGLE_BANDWIDTH,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,61,14,12,WS_EX_TRANSPARENT
     EDITTEXT        IDC_SCHEDULER_LIMITED_DOWN,32,51,36,14,ES_AUTOHSCROLL | ES_NUMBER
     CONTROL         "",IDC_SCHEDULER_LIMITED_SPIN_DOWN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,62,55,11,12
@@ -1291,7 +1291,7 @@ BEGIN
     GROUPBOX        "Select an audio visualisation from the list:",IDC_STATIC,5,5,280,140,WS_GROUP
     CONTROL         "List1",IDC_PLUGINS,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SORTASCENDING | LVS_SHAREIMAGELISTS | LVS_ALIGNLEFT | LVS_NOCOLUMNHEADER | WS_BORDER | WS_TABSTOP,15,20,260,95
     COMBOBOX        IDC_VIS_SIZE,15,120,100,105,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    PUSHBUTTON      "&Setup...",IDC_SETUP,220,120,55,15
+    PUSHBUTTON      "&Setup...",IDC_VIS_SETUP,220,120,55,15
     DEFPUSHBUTTON   "OK",IDOK,189,150,45,15,WS_GROUP
     PUSHBUTTON      "Cancel",IDCANCEL,239,150,45,15
 END
@@ -1752,7 +1752,7 @@ STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Chat"
 FONT 8, "Tahoma", 0, 0, 0x0
 BEGIN
-    GROUPBOX        "Client &Options:",IDC_STATIC,7,6,145,100
+    GROUPBOX        "Client &Options:",IDC_STATIC,7,7,145,100
     CONTROL         "Show chat  integration",IDC_IRC_SHOW,"Button",BS_AUTOCHECKBOX | WS_DISABLED | WS_TABSTOP,13,19,132,9
     CONTROL         "Flood protection:",IDC_IRC_FLOODENABLE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,13,33,132,9
     EDITTEXT        IDC_IRC_FLOODLIMIT,23,46,26,12,ES_AUTOHSCROLL
@@ -1760,7 +1760,7 @@ BEGIN
     CONTROL         "Show timestamp",IDC_IRC_TIMESTAMP,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,62,132,9
     LTEXT           "Screen Font:",IDC_STATIC,14,75,132,11
     COMBOBOX        IDC_IRC_TEXTFONT,23,87,121,15,CBS_DROPDOWNLIST | CBS_OWNERDRAWFIXED | CBS_SORT | CBS_HASSTRINGS | WS_VSCROLL | WS_TABSTOP
-    GROUPBOX        "&Colors:",IDC_STATIC,156,6,118,100,WS_GROUP
+    GROUPBOX        "&Colors:",IDC_STATIC,157,7,118,100,WS_GROUP
     CONTROL         "",IDC_IRC_COLOR_SERVER,"Button",BS_OWNERDRAW | WS_TABSTOP,165,22,8,8,WS_EX_STATICEDGE
     LTEXT           "Server messages",IDC_STATIC,179,21,85,10
     CONTROL         "",IDC_IRC_COLOR_TOPIC,"Button",BS_OWNERDRAW | WS_TABSTOP,165,35,8,8,WS_EX_STATICEDGE
@@ -1773,7 +1773,7 @@ BEGIN
     LTEXT           "Chat background",IDC_STATIC,179,73,85,10
     CONTROL         "",IDC_IRC_COLOR_TEXT,"Button",BS_OWNERDRAW | WS_TABSTOP,165,87,8,8,WS_EX_STATICEDGE
     LTEXT           "Text",IDC_STATIC,179,86,85,10
-    GROUPBOX        "Connection &Settings:",IDC_STATIC,7,111,267,69,WS_GROUP
+    GROUPBOX        "Connection &Settings:",IDC_STATIC,7,111,268,69,WS_GROUP
     CONTROL         "Nickname:",IDC_STATIC,"Static",SS_LEFTNOWORDWRAP | WS_GROUP,14,127,74,9,WS_EX_TRANSPARENT
     EDITTEXT        IDC_IRC_NICK,90,125,52,12,ES_AUTOHSCROLL | WS_GROUP
     CONTROL         "User name:",IDC_STATIC,"Static",SS_LEFTNOWORDWRAP | WS_GROUP,149,126,64,9,WS_EX_TRANSPARENT
@@ -1793,9 +1793,9 @@ STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_CAPTION | WS_SYSMEN
 CAPTION "Channel Name|Why reason"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    EDITTEXT        IDC_IRC_INPUT,7,19,128,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_IRC_INPUT,7,18,128,14,ES_AUTOHSCROLL
     DEFPUSHBUTTON   "OK",IDOK,148,7,50,14
-    PUSHBUTTON      "Cancel",IDCANCEL,148,24,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,148,25,50,14
     LTEXT           "Enter channel you want to add:|Enter kick/ban reason:",IDC_IRC_PROMPT,7,7,129,8
 END
 
@@ -1937,14 +1937,6 @@ BEGIN
         BOTTOMMARGIN, 156
     END
 
-    IDD_SETTINGS_IRC, DIALOG
-    BEGIN
-    END
-
-	IDD_IRC_INPUTBOX, DIALOG
-    BEGIN
-    END
-
     IDD_CONNECT_TO, DIALOG
     BEGIN
         LEFTMARGIN, 7
@@ -2033,7 +2025,6 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 285
         TOPMARGIN, 7
-        BOTTOMMARGIN, 173
     END
 
     IDD_GRAPH_LIST, DIALOG
@@ -2121,7 +2112,6 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 285
         TOPMARGIN, 7
-        BOTTOMMARGIN, 197
     END
 
     IDD_BITZI_DOWNLOAD, DIALOG
@@ -2153,7 +2143,6 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 285
         TOPMARGIN, 7
-        BOTTOMMARGIN, 147
     END
 
     IDD_URL_COPY, DIALOG
@@ -2161,7 +2150,6 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 285
         TOPMARGIN, 7
-        BOTTOMMARGIN, 127
     END
 
     IDD_SPLASH, DIALOG
@@ -2181,7 +2169,6 @@ BEGIN
         VERTGUIDE, 148
         VERTGUIDE, 278
         TOPMARGIN, 7
-        BOTTOMMARGIN, 138
     END
 
     IDD_SETTINGS_BANDWIDTH, DIALOG
@@ -2197,7 +2184,6 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 285
         TOPMARGIN, 7
-        BOTTOMMARGIN, 122
     END
 
     IDD_UPGRADE, DIALOG
@@ -2207,7 +2193,6 @@ BEGIN
         VERTGUIDE, 20
         VERTGUIDE, 272
         TOPMARGIN, 7
-        BOTTOMMARGIN, 147
     END
 
     IDD_SETTINGS_COMMUNITY, DIALOG
@@ -2383,7 +2368,6 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 285
         TOPMARGIN, 7
-        BOTTOMMARGIN, 179
     END
 
     IDD_PROFILE_AVATAR, DIALOG
@@ -2399,7 +2383,6 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 285
         TOPMARGIN, 7
-        BOTTOMMARGIN, 192
     END
 
     IDD_SETTINGS_UPLOADS, DIALOG
@@ -2423,7 +2406,6 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 285
         TOPMARGIN, 7
-        BOTTOMMARGIN, 207
     END
 
     IDD_PROMOTE, DIALOG
@@ -2431,7 +2413,6 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 285
         TOPMARGIN, 7
-        BOTTOMMARGIN, 178
     END
 
     IDD_EXISTING_FILE, DIALOG
@@ -2439,7 +2420,6 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 285
         TOPMARGIN, 7
-        BOTTOMMARGIN, 165
     END
 
     IDD_CLOSE_MODE, DIALOG
@@ -2447,7 +2427,6 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 285
         TOPMARGIN, 7
-        BOTTOMMARGIN, 143
     END
 
     IDD_SETTINGS_DONKEY, DIALOG
@@ -2487,7 +2466,6 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 285
         TOPMARGIN, 7
-        BOTTOMMARGIN, 119
     END
 
     IDD_FILE_SHARING, DIALOG
@@ -2503,7 +2481,6 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 285
         TOPMARGIN, 7
-        BOTTOMMARGIN, 162
     END
 
     IDD_DOWNLOAD_GROUP, DIALOG
@@ -2524,7 +2501,6 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 285
         TOPMARGIN, 7
-        BOTTOMMARGIN, 173
     END
 
     IDD_DELETE_FILE, DIALOG
@@ -2548,7 +2524,6 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 285
         TOPMARGIN, 7
-        BOTTOMMARGIN, 122
     END
 
     IDD_DOWNLOAD_EDIT, DIALOG
@@ -2594,7 +2569,6 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 355
         TOPMARGIN, 7
-        BOTTOMMARGIN, 195
     END
 
     IDD_CODEPAGES, DIALOG
@@ -2603,6 +2577,22 @@ BEGIN
         RIGHTMARGIN, 179
         TOPMARGIN, 7
         BOTTOMMARGIN, 183
+    END
+
+    IDD_SETTINGS_IRC, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 275
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 213
+    END
+
+    IDD_IRC_INPUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 198
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 39
     END
 
     IDD_TORRENT_GENERAL, DIALOG
@@ -3214,6 +3204,21 @@ BEGIN
     IDR_MEDIAFRAME          "Media Player"
     IDR_SEARCHPADFRAME      "Search"
     IDR_HELPFRAME           "Shareaza Help"
+    IDR_IRCFRAME            "Shareaza Chat"
+    IDR_SCHEDULERFRAME      "Scheduler"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_GENERAL_RETRY       "Retry"
+    IDS_GENERAL_IGNORE      "Ignore"
+    IDS_GENERAL_TRYAGAIN    "Try Again"
+    IDS_GENERAL_CONTINUE    "Continue"
+    IDS_INFO_REMEMBER       "&Remember my selection next time"
+    IDS_NEW_FOLDER          "New Folder"
+    IDS_COMMANDLINE         "Command-line options:\n\n-tray : Disable startup splash screen and send application to tray\n-nosplash : Disable startup splash screen\n-nowarn : Disable alpha (daily builds) version warning dialog\n\nInterface modes:\n\n-basic : Start application in Basic interface mode\n-tabbed : Start application in Tabbed interface mode\n-windowed : Start application in Windowed interface mode\n\nSystem options:\n\n-RegServer : Register internal components for everyone\n-UnRegServer : Un-register internal components for everyone\n-RegServerPerUser : Register internal components for current user\n-UnRegServerPerUser : Un-register internal components for current user"
+    IDS_SCHEMA_LOAD_ERROR   "Failed to load metadata schemas. Please reinstall application."
+    IDS_TOO_MANY_FILES      "You selected %u files. Are you sure?"
     IDS_PRIORITY_OFF        "Off"
     IDS_PRIORITY_LOW        "Low"
     IDS_PRIORITY_NORMAL     "Normal"
@@ -3222,12 +3227,22 @@ BEGIN
     IDS_SKIN_LOAD           "Loading skin: %s"
     IDS_SCHEDULER_REMOVEALL_CONFIRM 
                             "Are you sure you want to remove all scheduled tasks? This cannot be undone."
-    ID_HELP_SCHEDULER       "Schedule tasks to be done in the future."
-    IDS_SCHEDULER_TIME_PASSED 
-                            "Scheduled time has already passed.\n\nPlease select a time in the future."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_SCHEDULER_SYSTEM_START "System: Start Shareaza"
     IDS_SCHEDULER_BANDWIDTH_FULLSPEED "Bandwidth: Full Speed"
     IDS_SCHEDULER_BANDWIDTH_REDUCEDSPEED "Bandwidth: Reduced Speed"
     IDS_SCHEDULER_BANDWIDTH_STOP "Bandwidth: Stop"
+    IDS_SCHEDULER_SYSTEM_EXIT "System: Exit Shareaza"
+    IDS_SCHEDULER_SYSTEM_DIALUP_DC "System: Disconnect Dial-up Connection"
+    IDS_SCHEDULER_SYSTEM_SHUTDOWN "System: Turn Off the Computer"
+    IDS_SCHEDULER_TASK_ACTIVE "Active"
+    IDS_SCHEDULER_TASK_INACTIVE "Inactive"
+    IDS_SCHEDULER_TASK_DONE "Done"
+    IDS_SCHEDULER_TASK_WAITING "Waiting..."
+    IDS_SCHEDULER_NOTASK    "No Tasks Currently Scheduled"
 END
 
 STRINGTABLE 
@@ -3242,21 +3257,6 @@ BEGIN
     IDS_GENERAL_OK          "OK"
     IDS_GENERAL_CANCEL      "Cancel"
     IDS_GENERAL_ABORT       "Abort"
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_GENERAL_RETRY       "Retry"
-    IDS_GENERAL_IGNORE      "Ignore"
-    IDS_GENERAL_TRYAGAIN    "Try Again"
-    IDS_GENERAL_CONTINUE    "Continue"
-    IDS_INFO_REMEMBER       "&Remember my selection next time"
-    IDS_NEW_FOLDER          "New Folder"
-END
-
-STRINGTABLE 
-BEGIN
-    IDR_IRCFRAME            "Shareaza Chat"
 END
 
 STRINGTABLE 
@@ -4394,7 +4394,7 @@ BEGIN
     ID_HELP_WEB_3           "Visit this website"
     ID_HELP_WEB_4           "Visit this website"
     ID_HELP_WEB_5           "Visit this website"
-    ID_HELP_WEB_6           "Visit the skin site"
+    ID_HELP_WEB_6           "Visit this website"
     ID_HELP_FAQ             "View the Shareaza FAQ."
     ID_HELP_GUIDE           "Visit the Shareaza Users Guide."
     ID_SEARCH_CHAT          "Open a chat session with the selected user."
@@ -4498,6 +4498,7 @@ BEGIN
     ID_SECURITY_MOVE_UP     "Move the selected security rules up the precedence list."
     ID_SECURITY_MOVE_DOWN   "Move the selected security rules down the precedence list."
     ID_SECURITY_BAN         "Ban the selected host for the duration of this session."
+    ID_IMPORT_DOWNLOADS     "Import eMule partial downloads..."
     ID_TAB_NETWORK          "See how well you are connected to the Network."
     ID_TAB_LIBRARY          "View and manage your local content library."
     ID_TAB_TRANSFERS        "Monitor uploads and downloads you are performing."
@@ -4644,14 +4645,21 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDC_MEDIA_POSITION      "Seek to a position in the media file.\nSeek"
-    IDC_MEDIA_SPEED         "Adjust the speed of the media file.\nSpeed"
-    IDC_MEDIA_VOLUME        "Adjust the audio volume.\nVolume"
-    IDS_COMMANDLINE         "Command-line options:\n\n-tray : Disable startup splash screen and send application to tray\n-nosplash : Disable startup splash screen\n-nowarn : Disable alpha (daily builds) version warning dialog\n\nInterface modes:\n\n-basic : Start application in Basic interface mode\n-tabbed : Start application in Tabbed interface mode\n-windowed : Start application in Windowed interface mode\n\nSystem options:\n\n-RegServer : Register internal components for everyone\n-UnRegServer : Un-register internal components for everyone\n-RegServerPerUser : Register internal components for current user\n-UnRegServerPerUser : Un-register internal components for current user"
-    IDS_SCHEMA_LOAD_ERROR   "Failed to load metadata schemas. Please reinstall application."
-    IDS_SCHEDULER_INVALIDVP "Validity Period must be between 1 and 1439 minutes."
-    IDS_SCHEDULER_SYSTEM_START "System: Start Shareaza"
-    IDS_TOO_MANY_FILES      "You selected %u files. Are you sure?"
+    ID_HELP_FORUMS          "Visit the Shareaza Discussion Forums."
+    ID_HELP_UPDATE          "Check for news and updates."
+    ID_HELP_ROUTER          "Get help configuring your router or firewall."
+    ID_HELP_SECURITY        "Help protecting your system from hostile programs."
+    ID_HELP_CODEC           "All about codecs and video problems."
+    ID_HELP_TEST            "Run the connection test."
+    ID_MEDIA_POSITION       "Seek to a position in the media file.\nSeek"
+    ID_MEDIA_SPEED          "Adjust the speed of the media file.\nSpeed"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_MEDIA_VOLUME         "Adjust the audio volume.\nVolume"
+    ID_MEDIA_PROPERTIES     "View and edit the properties of the selected files."
+    ID_MEDIA_RATE           "Rate the selected files."
 END
 
 STRINGTABLE 
@@ -4685,7 +4693,6 @@ BEGIN
     ID_CHAT_BOLD            "Apply bold formatting (Ctrl+B)"
     ID_CHAT_ITALIC          "Apply italic formatting (Ctrl+I)"
     ID_CHAT_UNDERLINE       "Apply underline formatting (Ctrl+U)"
-    ID_CHAT_SEND_FILE       "Send a file to the user..."
     ID_CHAT_PRIORITY        "Grant upload priority to this user."
     ID_CHAT_CLEAR           "Clear the message text in this window."
     ID_CHAT_EMOTICONS       "Insert an emoticon."
@@ -4772,16 +4779,6 @@ END
 
 STRINGTABLE 
 BEGIN
-    ID_HELP_FORUMS          "Visit the Shareaza Discussion Forums."
-    ID_HELP_UPDATE          "Check for news and updates."
-    ID_HELP_ROUTER          "Get help configuring your router or firewall."
-    ID_HELP_SECURITY        "Help protecting your system from hostile programs."
-    ID_HELP_CODEC           "All about codecs and video problems."
-    ID_HELP_TEST            "Run the connection test."
-END
-
-STRINGTABLE 
-BEGIN
     AFX_IDS_APP_TITLE       "Shareaza"
     AFX_IDS_IDLEMESSAGE     "Ready"
 END
@@ -4807,18 +4804,7 @@ END
 
 STRINGTABLE 
 BEGIN
-    ID_MEDIA_PROPERTIES     "View and edit the properties of the selected files..."
-    ID_MEDIA_RATE           "Rate the selected files."
-END
-
-STRINGTABLE 
-BEGIN
     ID_TAB_IRC              "Show the IRC Chat window."
-END
-
-STRINGTABLE 
-BEGIN
-    IDR_SCHEDULERFRAME      "Scheduler"
 END
 
 STRINGTABLE 
@@ -4870,25 +4856,7 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDC_IMPORT_DOWNLOADS    "Import eMule partial downloads..."
-END
-
-STRINGTABLE 
-BEGIN
     ID_SCHEDULER_REMOVE_ALL "Removes all scheduled tasks."
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_SCHEDULER_SYSTEM_EXIT "System: Exit Shareaza"
-    IDS_SCHEDULER_SYSTEM_DIALUP_DC "System: Disconnect Dial-up Connection"
-    IDS_SCHEDULER_SYSTEM_SHUTDOWN "System: Turn Off the Computer"
-    IDS_SCHEDULER_SELECTTASK "Please select a task."
-    IDS_SCHEDULER_TASK_ACTIVE "Active"
-    IDS_SCHEDULER_TASK_INACTIVE "Inactive"
-    IDS_SCHEDULER_TASK_DONE "Done"
-    IDS_SCHEDULER_TASK_WAITING "Waiting..."
-    IDS_SCHEDULER_NOTASK    "No Tasks Currently Scheduled"
 END
 
 #endif    // English (Australia) resources

@@ -272,7 +272,7 @@
 			<button id="ID_LIBRARY_SEARCH_QUICK" text="Find"/>
 		</toolbar>
 		<toolbar name="CLibraryCollectionView.Virtual">
-			<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Play Full Album"/>
+			<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Play Album"/>
 			<separator/>
 			<button id="ID_LIBRARY_FOLDER_DOWNLOAD" text="Download All Files"/>
 			<rightAlign/>
@@ -287,9 +287,9 @@
 			<button id="ID_MEDIA_STOP" text="Stop"/>
 			<separator/>
 			<label text="Seek:" tip="Seek to a position in the media file"/>
-			<control id="IDC_MEDIA_POSITION" width="190" height="22"/>
+			<control id="ID_MEDIA_POSITION" width="190" height="22"/>
 			<label text="Volume:" tip="Adjust the audio volume"/>
-			<control id="IDC_MEDIA_VOLUME" width="50" height="22"/>
+			<control id="ID_MEDIA_VOLUME" width="50" height="22"/>
 			<separator/>
 			<button id="ID_MEDIA_OPEN" text="Open File"/>
 			<rightAlign/>
@@ -304,11 +304,11 @@
 			<button id="ID_MEDIA_STOP" text="Stop"/>
 			<separator/>
 			<label text="Seek:" tip="Seek to a position in the media file"/>
-			<control id="IDC_MEDIA_POSITION" width="190" height="22"/>
+			<control id="ID_MEDIA_POSITION" width="190" height="22"/>
 			<label text="Speed:" tip="Adjust the speed of the media file"/>
-			<control id="IDC_MEDIA_SPEED" width="40" height="22"/>
+			<control id="ID_MEDIA_SPEED" width="40" height="22"/>
 			<label text="Volume:" tip="Adjust the audio volume"/>
-			<control id="IDC_MEDIA_VOLUME" width="50" height="22"/>
+			<control id="ID_MEDIA_VOLUME" width="50" height="22"/>
 			<separator/>
 			<button id="ID_MEDIA_OPEN" text="Open"/>
 			<separator/>
@@ -428,7 +428,6 @@
 			<button id="ID_CHAT_EMOTICONS"/>
 			<separator/>
 			<button id="ID_CHAT_BROWSE" text="Browse User"/>
-			<!-- <button id="ID_CHAT_SEND_FILE" text="Send File"/> -->
 			<button id="ID_CHAT_PRIORITY" text="Grant Priority"/>
 			<separator/>
 			<button id="ID_CHAT_CONNECT" text="Connect" visible="false"/>
@@ -623,7 +622,7 @@
 			<menu text="_Tools">
 				<item id="ID_LIBRARY_FOLDERS" text="Share _Files..."/>
 				<item id="ID_TOOLS_DOWNLOAD" text="_Download File/Torrent..."/>
-				<item id="IDC_IMPORT_DOWNLOADS" text="_Import eMule partial downloads..."/>
+				<item id="ID_IMPORT_DOWNLOADS" text="_Import eMule partial downloads..."/>
 				<item id="ID_OPEN_DOWNLOADS_FOLDER" text="_Open my folder of completed Downloads"/>
 				<separator/>
 				<item id="ID_TOOLS_SKIN" text="Choose a S_kin..."/>
@@ -717,7 +716,7 @@
 			<menu text="_Tools">
 				<item id="ID_LIBRARY_FOLDERS" text="Share _Files..."/>
 				<item id="ID_TOOLS_DOWNLOAD" text="_Download File/Torrent..."/>
-				<item id="IDC_IMPORT_DOWNLOADS" text="_Import eMule partial downloads..."/>
+				<item id="ID_IMPORT_DOWNLOADS" text="_Import eMule partial downloads..."/>
 				<item id="ID_OPEN_DOWNLOADS_FOLDER" text="_Open my folder of completed Downloads"/>
 				<separator/>
 				<item id="ID_TOOLS_SKIN" text="Choose a S_kin..."/>
@@ -1177,14 +1176,14 @@
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="File _Properties"/>
 		</menu>
 		<menu name="CLibraryTree.Virtual.Basic">
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="_Play Album"/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Play _Album"/>
 			<item id="ID_LIBRARY_FOLDER_DELETE" text="_Delete"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="_File Properties"/>
-			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="_Album Properties"/>
+			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="Album _Properties"/>
 		</menu>
 		<menu name="CLibraryTree.Virtual">
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="_Play Album"/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Play _Album"/>
 			<item id="ID_LIBRARY_FOLDER_DELETE" text="_Delete"/>
 			<separator/>
 			<item id="ID_LIBRARY_REBUILD" text="_Rebuild"/>
@@ -1193,7 +1192,7 @@
 			<item id="ID_LIBRARY_FOLDER_NEW" text="_New Folder..."/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="_File Properties"/>
-			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="_Album Properties"/>
+			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="Album _Properties"/>
 		</menu>
 		<!-- LIBRARY VIEWS -->
 		<menu name="CLibraryTileView">
@@ -1575,7 +1574,6 @@
 			<item id="ID_CHAT_DISCONNECT" text="_Disconnect"/>
 			<separator/>
 			<item id="ID_CHAT_BROWSE" text="_Browse User"/>
-			<!-- <item id="ID_CHAT_SEND_FILE" text="_Send File..."/> -->
 			<item id="ID_CHAT_PRIORITY" text="Grant _Priority"/>
 			<separator/>
 			<menu text="_Format">
@@ -2570,7 +2568,7 @@
 			<image id="ID_VIEW_SYSTEM"/>
 			<image id="ID_VIEW_NEIGHBOURS" id1="ID_TAB_NETWORK"/>
 			<image id="ID_VIEW_DOWNLOADS" id1="ID_TAB_TRANSFERS" id2="ID_LIBRARY_FOLDER_DOWNLOAD"/>
-			<image id="ID_VIEW_UPLOADS" id1="ID_CHAT_SEND_FILE"/>
+			<image id="ID_VIEW_UPLOADS"/>
 			<image id="ID_VIEW_LIBRARY" id1="ID_TAB_LIBRARY" id2="ID_LIBRARY_FOLDERS"/>
 			<image id="ID_VIEW_SECURITY"/>
 			<image id="ID_VIEW_SCHEDULER" id1="ID_SCHEDULER_ADD"/>
@@ -2604,7 +2602,7 @@
 			<image id="ID_MEDIA_PREVIOUS" id1="ID_SHAREMONKEY_PREVIOUS"/>
 			<image id="ID_MEDIA_NEXT" id1="ID_SHAREMONKEY_NEXT"/>
 			<image id="ID_MEDIA_PAUSE"/>
-			<image id="ID_MEDIA_OPEN" id1="ID_SECURITY_IMPORT" id2="ID_LIBRARY_UNLINK" id4="IDC_IMPORT_DOWNLOADS"/>
+			<image id="ID_MEDIA_OPEN" id1="ID_SECURITY_IMPORT" id2="ID_LIBRARY_UNLINK" id4="ID_IMPORT_DOWNLOADS"/>
 			<image id="ID_MEDIA_SAVE" id1="ID_SECURITY_EXPORT"/>
 			<image id="ID_MEDIA_ZOOM"/>
 			<image id="ID_MEDIA_FULLSCREEN"/>

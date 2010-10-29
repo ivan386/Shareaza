@@ -11,9 +11,6 @@
 	<resource code="108" id="IDC_SEARCH_BOX"/>
 	<resource code="112" id="IDC_SEARCH_ADVANCED"/>
 	<resource code="113" id="IDC_SEARCH_TEXT"/>
-	<resource code="117" id="IDC_MEDIA_POSITION"/>
-	<resource code="118" id="IDC_MEDIA_SPEED"/>
-	<resource code="119" id="IDC_MEDIA_VOLUME"/>
 	<resource code="127" id="IDB_MENUBAR"/>
 	<resource code="128" id="WINDOW_MAIN"/>
 	<resource code="129" id="WINDOW_SYSTEM"/>
@@ -35,6 +32,8 @@
 	<resource code="145" id="WINDOW_MEDIA"/>
 	<resource code="146" id="WINDOW_SEARCHPAD"/>
 	<resource code="147" id="WINDOW_HELP"/>
+	<resource code="148" id="WINDOW_IRC"/>
+	<resource code="149" id="WINDOW_SCHEDULER"/>
 	<resource code="159" id="IDB_CHILDFRAME"/>
 	<resource code="159" id="WINDOW_CHILD"/>
 	<resource code="160" id="IDI_BROWSE"/>
@@ -43,11 +42,10 @@
 	<resource code="191" id="IDI_FILE"/>
 	<resource code="203" id="IDI_DOWNLOAD_MONITOR"/>
 	<resource code="222" id="IDB_MEDIA_STATES"/>
-	<resource code="239" id="IDR_TORRENT_ICON"/>
+	<resource code="239" id="IDI_TORRENT_ICON"/>
 	<resource code="243" id="IDI_COLLECTION_MASK"/>
 	<resource code="252" id="IDI_FIREWALLED"/>
 	<resource code="253" id="IDI_GRANTED"/>
-	<resource code="271" id="WINDOW_SCHEDULER"/>
 	<resource code="281" id="IDI_UPDOWN_ARROW"/>
 	<resource code="301" id="IDI_PLUS"/>
 	<resource code="302" id="IDI_MINUS"/>
@@ -68,11 +66,8 @@
 	<resource code="322" id="IDI_RATING_FAKE"/>
 	<resource code="323" id="IDI_RATING_AVERAGE"/>
 	<resource code="324" id="IDI_RATING_GOOD"/>
-	<resource code="339" id="ID_SCHEDULER_REMOVE_ALL"/>
-	<resource code="994" id="WINDOW_IRC"/>
 	<resource code="999" id="IDB_IRCICONS"/>
 	<resource code="1006" id="IDI_COMPUTER"/>
-	<resource code="1293" id="IDC_IMPORT_DOWNLOADS"/>
 	<resource code="32772" id="ID_HELP_ABOUT"/>
 	<resource code="32773" id="ID_HELP_VERSION_CHECK"/>
 	<resource code="32774" id="ID_CHECKMARK"/>
@@ -195,6 +190,7 @@
 	<resource code="32912" id="ID_SECURITY_MOVE_UP"/>
 	<resource code="32913" id="ID_SECURITY_MOVE_DOWN"/>
 	<resource code="32914" id="ID_SECURITY_BAN"/>
+	<resource code="32915" id="ID_IMPORT_DOWNLOADS"/>
 	<resource code="32918" id="ID_TAB_NETWORK"/>
 	<resource code="32919" id="ID_TAB_LIBRARY"/>
 	<resource code="32920" id="ID_TAB_TRANSFERS"/>
@@ -319,7 +315,6 @@
 	<resource code="33047" id="ID_CHAT_BOLD"/>
 	<resource code="33048" id="ID_CHAT_ITALIC"/>
 	<resource code="33049" id="ID_CHAT_UNDERLINE"/>
-	<resource code="33050" id="ID_CHAT_SEND_FILE"/>
 	<resource code="33051" id="ID_CHAT_PRIORITY"/>
 	<resource code="33052" id="ID_CHAT_CLEAR"/>
 	<resource code="33053" id="ID_CHAT_EMOTICONS"/>
@@ -397,6 +392,9 @@
 	<resource code="33131" id="ID_HELP_DISKWRITEFAIL"/>
 	<resource code="33132" id="ID_HELP_CONNECTIONFAIL"/>
 	<resource code="33133" id="ID_HELP_DONKEYSERVERS"/>
+	<resource code="33134" id="ID_MEDIA_POSITION"/>
+	<resource code="33135" id="ID_MEDIA_SPEED"/>
+	<resource code="33136" id="ID_MEDIA_VOLUME"/>
 	<resource code="33137" id="ID_MEDIA_PROPERTIES"/>
 	<resource code="33138" id="ID_MEDIA_RATE"/>
 	<resource code="33200" id="ID_MEDIA_STATE_STOP"/>
@@ -452,15 +450,32 @@
 	<resource code="33319" id="ImageViewer_ActualSize"/>
 	<resource code="33320" id="ImageViewer_Refresh"/>
 	<resource code="33321" id="ImageViewer_Close"/>
-	<resource code="57650" id="ID_WINDOW_CASCADE"/>
 	<resource code="33322" id="ID_VIEW_SCHEDULER"/>
 	<resource code="33323" id="ID_SCHEDULER_EDIT"/>
 	<resource code="33324" id="ID_SCHEDULER_REMOVE"/>
 	<resource code="33325" id="ID_SCHEDULER_ACTIVATE"/>
 	<resource code="33326" id="ID_SCHEDULER_DEACTIVATE"/>
 	<resource code="33327" id="ID_SCHEDULER_ADD"/>
+	<resource code="33328" id="ID_SCHEDULER_REMOVE_ALL"/>
+	<resource code="57344" id="AFX_IDS_APP_TITLE"/>
+	<resource code="57345" id="AFX_IDS_IDLEMESSAGE"/>
+	<resource code="57649" id="ID_WINDOW_ARRANGE"/>
+	<resource code="57650" id="ID_WINDOW_CASCADE"/>
 	<resource code="57651" id="ID_WINDOW_TILE_HORZ"/>
 	<resource code="57652" id="ID_WINDOW_TILE_VERT"/>
+	<resource code="57680" id="ID_NEXT_PANE"/>
+	<resource code="57681" id="ID_PREV_PANE"/>
+	<resource code="61184" id="AFX_IDS_SCSIZE"/>
+	<resource code="61185" id="AFX_IDS_SCMOVE"/>
+	<resource code="61186" id="AFX_IDS_SCMINIMIZE"/>
+	<resource code="61187" id="AFX_IDS_SCMAXIMIZE"/>
+	<resource code="61188" id="AFX_IDS_SCNEXTWINDOW"/>
+	<resource code="61189" id="AFX_IDS_SCPREVWINDOW"/>
+	<resource code="61190" id="AFX_IDS_SCCLOSE"/>
+	<resource code="61202" id="AFX_IDS_SCRESTORE"/>
+	<resource code="61203" id="AFX_IDS_SCTASKLIST"/>
+	<resource code="61215" id="AFX_IDS_MDICHILD"/>
+	<resource code="61445" id="AFX_IDS_PREVIEW_CLOSE"/>
 </resourceMap>
 
 <tipMap>

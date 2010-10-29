@@ -324,7 +324,7 @@ BEGIN_MESSAGE_MAP(CScheduleTaskPage, CPropertyPageAdv)
 	ON_BN_CLICKED(IDC_SCHEDULER_TOGGLE_BANDWIDTH, &CScheduleTaskPage::OnBnClickedSchedulerToggleBandwidth)
 	ON_EN_CHANGE(IDC_SCHEDULER_LIMITED_DOWN, &CScheduleTaskPage::OnEnChangeSchedulerLimitedDown)
 	ON_EN_CHANGE(IDC_SCHEDULER_LIMITED_UP, &CScheduleTaskPage::OnEnChangeSchedulerLimitedUp)
-	ON_CBN_SELCHANGE(IDC_EVENTTYPE, &CScheduleTaskPage::OnCbnSelchangeEventtype)
+	ON_CBN_SELCHANGE(IDC_SCHEDULER_EVENTTYPE, &CScheduleTaskPage::OnCbnSelchangeEventtype)
 END_MESSAGE_MAP()
 
 CScheduleTaskPage::CScheduleTaskPage()
@@ -345,7 +345,7 @@ void CScheduleTaskPage::DoDataExchange(CDataExchange* pDX)
 {
 	CPropertyPageAdv::DoDataExchange( pDX );
 
-	DDX_Control(pDX, IDC_EVENTTYPE, m_wndAction);
+	DDX_Control(pDX, IDC_SCHEDULER_EVENTTYPE, m_wndAction);
 	DDX_Check(pDX, IDC_SCHEDULER_TOGGLE_BANDWIDTH, m_bToggleBandwidth);
 	DDX_Control(pDX, IDC_SCHEDULER_TOGGLE_BANDWIDTH, m_wndToggleBandwidth);
 	DDX_Text(pDX, IDC_SCHEDULER_LIMITED_DOWN, m_nLimitDown);

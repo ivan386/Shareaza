@@ -57,6 +57,7 @@ CHashProgressBar::CHashProgressBar()
 	, m_nPercentage( 0 )
 	, m_nLastShow( 0 )
 	, m_nPerfectWidth( 0 )
+	, m_nAlpha( 0 )
 {
 }
 
@@ -139,11 +140,12 @@ void CHashProgressBar::Run()
 			GetCursorPos( &ptMouse );
 			bAlpha = rcWindow.PtInRect( ptMouse );
 		}
-		BYTE nAlpha = 0;
-		GetLayeredWindowAttributes( NULL, &nAlpha, NULL );
-		BYTE nNewAlpha = (BYTE)( bAlpha ? max( nAlpha - 20, 0 ) : min( nAlpha + 20, 240 ) );
-		if ( nAlpha != nNewAlpha )
-			SetLayeredWindowAttributes( NULL, nNewAlpha, LWA_ALPHA );
+		BYTE nNewAlpha = (BYTE)( bAlpha ? max( m_nAlpha - 20, 0 ) : min( m_nAlpha + 20, 240 ) );
+		if ( m_nAlpha != nNewAlpha )
+		{
+			m_nAlpha = nNewAlpha;
+			SetLayeredWindowAttributes( NULL, m_nAlpha, LWA_ALPHA );
+		}
 	}
 }
 

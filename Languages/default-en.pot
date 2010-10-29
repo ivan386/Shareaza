@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2010-10-16 05:17+0000\n"
+"POT-Creation-Date: 2010-10-29 12:48+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: (translation author)\n"
 "Language-Team: Shareaza Development Team\n"
@@ -340,11 +340,11 @@ msgstr ""
 msgid "Configure IRC Settings"
 msgstr ""
 
-#: button;id_network_g2
+#: button;id_network_g2 cscheduletaskpage;control;9
 msgid "Gnutella2"
 msgstr ""
 
-#: button;id_network_g1
+#: button;id_network_g1 cscheduletaskpage;control;8
 msgid "Gnutella1"
 msgstr ""
 
@@ -352,7 +352,7 @@ msgstr ""
 msgid "eDonkey"
 msgstr ""
 
-#: button;id_network_dc
+#: button;id_network_dc cscheduletaskpage;control;11
 msgid "DC++"
 msgstr ""
 
@@ -384,11 +384,11 @@ msgstr ""
 msgid "Reset List"
 msgstr ""
 
-#: button;id_security_import button;id_scheduler_import
+#: button;id_security_import
 msgid "Import List"
 msgstr ""
 
-#: button;id_security_export button;id_scheduler_export
+#: button;id_security_export
 msgid "Export List"
 msgstr ""
 
@@ -776,7 +776,7 @@ msgstr ""
 msgid "_Windowed Mode"
 msgstr ""
 
-#: cmainwnd.tabbed;13;item;idc_import_downloads cmainwnd.windowed;21;item;idc_import_downloads
+#: cmainwnd.tabbed;13;item;id_import_downloads cmainwnd.windowed;21;item;id_import_downloads
 msgid "_Import eMule partial downloads..."
 msgstr ""
 
@@ -1488,11 +1488,11 @@ msgstr ""
 msgid "Rese_t"
 msgstr ""
 
-#: csecuritywnd;item;id_security_import cschedulerwnd;item;id_scheduler_import
+#: csecuritywnd;item;id_security_import
 msgid "_Import..."
 msgstr ""
 
-#: csecuritywnd;item;id_security_export cschedulerwnd;item;id_scheduler_export
+#: csecuritywnd;item;id_security_export
 msgid "E_xport..."
 msgstr ""
 
@@ -2488,6 +2488,62 @@ msgstr ""
 msgid "The Shareaza 'incomplete' folder should also not be shared through the\n\t\t\tlibrary, since attempting to hash downloads in progress may impact on performance."
 msgstr ""
 
+#: message;afx_ids_app_title string;window_main
+msgid "Shareaza"
+msgstr ""
+
+#: message;afx_ids_idlemessage
+msgid "Ready"
+msgstr ""
+
+#: message;afx_ids_mdichild
+msgid "Activate this window"
+msgstr ""
+
+#: message;afx_ids_preview_close
+msgid "Close print preview mode"
+msgstr ""
+
+#: tip;afx_ids_preview_close
+msgid "Cancel Preview"
+msgstr ""
+
+#: message;afx_ids_scclose
+msgid "Close the active window and prompts to save the documents"
+msgstr ""
+
+#: message;afx_ids_scmaximize
+msgid "Enlarge the window to full size"
+msgstr ""
+
+#: message;afx_ids_scminimize
+msgid "Reduce the window to an icon"
+msgstr ""
+
+#: message;afx_ids_scmove
+msgid "Change the window position"
+msgstr ""
+
+#: message;afx_ids_scnextwindow
+msgid "Switch to the next document window"
+msgstr ""
+
+#: message;afx_ids_scprevwindow
+msgid "Switch to the previous document window"
+msgstr ""
+
+#: message;afx_ids_screstore
+msgid "Restore the window to normal size"
+msgstr ""
+
+#: message;afx_ids_scsize
+msgid "Change the window size"
+msgstr ""
+
+#: message;afx_ids_sctasklist
+msgid "Activate Task List"
+msgstr ""
+
 #: message;id_browse_files
 msgid "View the user's shared files"
 msgstr ""
@@ -2574,6 +2630,10 @@ msgstr ""
 
 #: message;id_discovery_advertise
 msgid "Advertise the selected GWebCache service to a random existing GWebCache."
+msgstr ""
+
+#: message;id_discovery_blocked
+msgid "Show blocked services in the Discovery window."
 msgstr ""
 
 #: message;id_discovery_browse
@@ -2765,7 +2825,7 @@ msgid "Add a source URL to the selected download..."
 msgstr ""
 
 #: message;id_downloads_view_reviews
-msgid "View reviews for the selected download"
+msgid "View reviews for the selected download."
 msgstr ""
 
 #: message;id_help_about
@@ -2780,10 +2840,6 @@ msgstr ""
 msgid "View the Shareaza FAQ."
 msgstr ""
 
-#: message;id_help_router
-msgid "Get help configuring your router or firewall."
-msgstr ""
-
 #: message;id_help_forums
 msgid "Visit the Shareaza Discussion Forums."
 msgstr ""
@@ -2796,16 +2852,24 @@ msgstr ""
 msgid "Visit the Shareaza web site."
 msgstr ""
 
+#: message;id_help_router
+msgid "Get help configuring your router or firewall."
+msgstr ""
+
 #: message;id_help_security
 msgid "Help protecting your system from hostile programs."
+msgstr ""
+
+#: message;id_help_test
+msgid "Run the connection test."
 msgstr ""
 
 #: message;id_help_update
 msgid "Check for news and updates."
 msgstr ""
 
-#: message;id_help_test
-msgid "Run the connection test."
+#: message;id_help_version_check
+msgid "Check for new version"
 msgstr ""
 
 #: message;id_help_web_1 message;id_help_web_2 message;id_help_web_3 message;id_help_web_4 message;id_help_web_5 message;id_help_web_6
@@ -2824,8 +2888,16 @@ msgstr ""
 msgid "Search the network for the selected term."
 msgstr ""
 
+#: message;id_hostcache_bt_cache
+msgid "Show BitTorrent cached hosts."
+msgstr ""
+
 #: message;id_hostcache_connect
 msgid "Connect to the selected host(s)."
+msgstr ""
+
+#: message;id_hostcache_dc_cache
+msgid "Show DC++ cached hubs."
 msgstr ""
 
 #: message;id_hostcache_disconnect
@@ -2856,12 +2928,20 @@ msgstr ""
 msgid "Import a list of known hosts, such as a \"server.met\" file..."
 msgstr ""
 
+#: message;id_hostcache_kad_cache
+msgid "Show Kademlia cached hosts."
+msgstr ""
+
 #: message;id_hostcache_priority
 msgid "Try to connect to this server before other servers."
 msgstr ""
 
 #: message;id_hostcache_remove
 msgid "Remove the selected hosts from the host cache."
+msgstr ""
+
+#: message;id_import_downloads
+msgid "Import eMule partial downloads..."
 msgstr ""
 
 #: message;id_library_add
@@ -2970,6 +3050,10 @@ msgstr ""
 
 #: message;id_library_refresh
 msgid "Refresh the library view."
+msgstr ""
+
+#: message;id_library_refresh_metadata
+msgid "Refresh file metadata"
 msgstr ""
 
 #: message;id_library_remove
@@ -3152,6 +3236,14 @@ msgstr ""
 msgid "Show or hide the playlist editor."
 msgstr ""
 
+#: message;id_media_position
+msgid "Seek to a position in the media file."
+msgstr ""
+
+#: tip;id_media_position
+msgid "Seek"
+msgstr ""
+
 #: message;id_media_previous
 msgid "Skip back to the previous file in the current playlist."
 msgstr ""
@@ -3212,6 +3304,14 @@ msgstr ""
 msgid "Show the video at double its original (natural) size."
 msgstr ""
 
+#: message;id_media_speed
+msgid "Adjust the speed of the media file."
+msgstr ""
+
+#: tip;id_media_speed column;speed
+msgid "Speed"
+msgstr ""
+
 #: message;id_media_status
 msgid "Show or hide the media status line."
 msgstr ""
@@ -3224,24 +3324,28 @@ msgstr ""
 msgid "Select an audio visualisation plugin..."
 msgstr ""
 
+#: message;id_media_volume
+msgid "Adjust the audio volume."
+msgstr ""
+
+#: tip;id_media_volume
+msgid "Volume"
+msgstr ""
+
 #: message;id_media_zoom
 msgid "Adjust video zoom and aspect ratio settings."
 msgstr ""
 
-#: tip;idc_media_position
-msgid "Seek"
-msgstr ""
-
-#: tip;idc_media_speed column;speed
-msgid "Speed"
-msgstr ""
-
-#: tip;idc_media_volume
-msgid "Volume"
-msgstr ""
-
 #: message;id_monitor_close
 msgid "Close the monitor window."
+msgstr ""
+
+#: message;id_musicbrainz_albums
+msgid "Look at all albums for this artist."
+msgstr ""
+
+#: message;id_musicbrainz_matches
+msgid "Search for albums matching the selected file."
 msgstr ""
 
 #: message;id_neighbours_chat message;id_search_chat message;id_transfers_chat message;id_uploads_chat
@@ -3292,6 +3396,10 @@ msgstr ""
 msgid "Manually connect to a host..."
 msgstr ""
 
+#: message;id_network_dc
+msgid "Connect to the DC++ network."
+msgstr ""
+
 #: message;id_network_disconnect
 msgid "Disconnect from all networks, this will also stop all downloads and uploads."
 msgstr ""
@@ -3314,6 +3422,50 @@ msgstr ""
 
 #: message;id_network_search
 msgid "Start a new search of the network..."
+msgstr ""
+
+#: message;id_next_pane
+msgid "Switch to the next window pane"
+msgstr ""
+
+#: tip;id_next_pane
+msgid "Next Pane"
+msgstr ""
+
+#: message;id_open_downloads_folder
+msgid "Open my folder of completed Downloads"
+msgstr ""
+
+#: message;id_prev_pane
+msgid "Switch back to the previous window pane"
+msgstr ""
+
+#: tip;id_prev_pane
+msgid "Previous Pane"
+msgstr ""
+
+#: message;id_scheduler_activate
+msgid "Activates selected task(s) from the list."
+msgstr ""
+
+#: message;id_scheduler_add
+msgid "Adds a new task to scheduler list."
+msgstr ""
+
+#: message;id_scheduler_deactivate
+msgid "Deactivates selected tasks."
+msgstr ""
+
+#: message;id_scheduler_edit
+msgid "Edit the selected task..."
+msgstr ""
+
+#: message;id_scheduler_remove
+msgid "Removes selected task(s) from the list."
+msgstr ""
+
+#: message;id_scheduler_remove_all
+msgid "Removes all scheduled tasks."
 msgstr ""
 
 #: message;id_search_clear
@@ -3424,8 +3576,40 @@ msgstr ""
 msgid "Reset the hit counts on the selected rules."
 msgstr ""
 
+#: message;id_sharemonkey_buy
+msgid "Buy it and support the author"
+msgstr ""
+
+#: message;id_sharemonkey_compare
+msgid "Compare prices in different stores"
+msgstr ""
+
+#: message;id_sharemonkey_download
+msgid "Search for matches"
+msgstr ""
+
+#: message;id_sharemonkey_next
+msgid "Go to the next match"
+msgstr ""
+
+#: message;id_sharemonkey_previous
+msgid "Go to the previous match"
+msgstr ""
+
+#: message;id_sharemonkey_prices
+msgid "Look at the prices for the current match"
+msgstr ""
+
+#: message;id_sharemonkey_save
+msgid "Save the match in your Library"
+msgstr ""
+
 #: message;id_system_clear
 msgid "Clear the status log."
+msgstr ""
+
+#: message;id_system_copy
+msgid "Copy selected line(s) of status log."
 msgstr ""
 
 #: message;id_system_timestamp
@@ -3434,6 +3618,26 @@ msgstr ""
 
 #: message;id_system_verbose
 msgid "Display a detailed system activity log."
+msgstr ""
+
+#: message;id_system_verbose_debug
+msgid "Display all."
+msgstr ""
+
+#: message;id_system_verbose_error
+msgid "Display errors only."
+msgstr ""
+
+#: message;id_system_verbose_info
+msgid "Display infos and above."
+msgstr ""
+
+#: message;id_system_verbose_notice
+msgid "Display notices and above."
+msgstr ""
+
+#: message;id_system_verbose_warning
+msgid "Display warnings and above."
 msgstr ""
 
 #: message;id_tab_connect
@@ -3624,6 +3828,10 @@ msgstr ""
 msgid "Show or hide the HIT MONITOR window."
 msgstr ""
 
+#: message;id_view_scheduler
+msgid "Show or hide SCHEDULER window."
+msgstr ""
+
 #: message;id_view_search_monitor
 msgid "Show or hide the SEARCH MONITOR window."
 msgstr ""
@@ -3650,6 +3858,26 @@ msgstr ""
 
 #: message;id_view_windowed
 msgid "Use Shareaza in power Windowed mode."
+msgstr ""
+
+#: message;id_webservices_list
+msgid "Choose the web service to get more information about the selected file."
+msgstr ""
+
+#: message;id_webservices_musicbrainz
+msgid "Search for the same artist songs using MusicBrainz service."
+msgstr ""
+
+#: message;id_webservices_sharemonkey
+msgid "Search for the file infomation using ShareMonkey service."
+msgstr ""
+
+#: message;id_window_arrange
+msgid "Arrange icons at the bottom of the window"
+msgstr ""
+
+#: tip;id_window_arrange
+msgid "Arrange Icons"
 msgstr ""
 
 #: message;id_window_cascade
@@ -3684,14 +3912,6 @@ msgstr ""
 msgid "Show or hide the toolbar."
 msgstr ""
 
-#: message;id_webservices_list
-msgid "Choose the web service to get more information about the selected file."
-msgstr ""
-
-#: message;id_webservices_sharemonkey
-msgid "Search for the file infomation using ShareMonkey service."
-msgstr ""
-
 #: message;imageviewer_bestfit
 msgid "Resize the image to fit within the window."
 msgstr ""
@@ -3718,10 +3938,6 @@ msgstr ""
 
 #: tip;idc_share_partials
 msgid "This setting has no effect on downloads previously started, also this setting is ignored if the file have the eDonkey hash and the eDonkey network is enabled or if it is a torrent.{n}However this setting isn't ignored if the download is paused.{n}{n}ATTENTION: Use this option only in case of real necessity, if you abuse of the option you may be banned."
-msgstr ""
-
-#: string;window_main
-msgid "Shareaza"
 msgstr ""
 
 #: string;window_system
@@ -3778,74 +3994,6 @@ msgstr ""
 
 #: string;window_scheduler
 msgid "Scheduler"
-msgstr ""
-
-#: string;154
-msgid "Are you sure you want to remove all scheduled tasks? This cannot be undone."
-msgstr ""
-
-#: string;156
-msgid "Scheduled time has already passed.\\n\\nPlease select a time in the future."
-msgstr ""
-
-#: string;157
-msgid "Bandwidth: Full Speed"
-msgstr ""
-
-#: string;158
-msgid "Bandwidth: Reduced Speed"
-msgstr ""
-
-#: string;159
-msgid "Bandwidth: Stop"
-msgstr ""
-
-#: string;160
-msgid "System: Exit Shareaza"
-msgstr ""
-
-#: string;161
-msgid "System: Disconnect Dial-up Connection"
-msgstr ""
-
-#: string;162
-msgid "System: Turn Off the Computer"
-msgstr ""
-
-#: string;163
-msgid "Please select a task."
-msgstr ""
-
-#: string;164
-msgid "Specific day(s) of week"
-msgstr ""
-
-#: string;165 string;8325 string;20118
-msgid "Active"
-msgstr ""
-
-#: string;166 string;8324
-msgid "Inactive"
-msgstr ""
-
-#: string;167
-msgid "Done"
-msgstr ""
-
-#: string;168
-msgid "Waiting..."
-msgstr ""
-
-#: string;169
-msgid "No Tasks Currently Scheduled"
-msgstr ""
-
-#: string;172
-msgid "Done Today"
-msgstr ""
-
-#: string;173
-msgid "You should select at least one day of week."
 msgstr ""
 
 #: string;7000
@@ -3924,16 +4072,8 @@ msgstr ""
 msgid "Are you sure you want to delete the \"%s\" skin? This cannot be undone."
 msgstr ""
 
-#: string;8010
-msgid "This is a pre-release version of Shareaza, and the beta testing period has ended. Please download the full, official release from http://shareaza.sourceforge.net/."
-msgstr ""
-
 #: string;8011
 msgid "Changing view will close any windows you have open. Would you like to change now?"
-msgstr ""
-
-#: string;8012
-msgid "Torrent Information"
 msgstr ""
 
 #: string;8013
@@ -4173,7 +4313,7 @@ msgid "File size must be"
 msgstr ""
 
 #: string;8181
-msgid " to"
+msgid " to (size from xx TO xx)"
 msgstr ""
 
 #: string;8208
@@ -4253,7 +4393,7 @@ msgid "Shareaza is checking the download for errors:"
 msgstr ""
 
 #: string;8243
-msgid "Volume uploaded:"
+msgid "Upload ratio:"
 msgstr ""
 
 #: string;8244
@@ -4354,6 +4494,14 @@ msgstr ""
 
 #: string;8323
 msgid "User Agent:"
+msgstr ""
+
+#: string;8324 string;20264
+msgid "Inactive"
+msgstr ""
+
+#: string;8325 string;20118 string;20263 column;active
+msgid "Active"
 msgstr ""
 
 #: string;8326
@@ -4481,7 +4629,7 @@ msgid "Are you sure you want to disconnect?"
 msgstr ""
 
 #: string;16080
-msgid "You are running the Scheduler in 'G2 only' mode. Would you like to turn this mode off, so that all active networks remain connected?"
+msgid "Would you like to always connect to this network?"
 msgstr ""
 
 #: string;16081
@@ -4490,10 +4638,6 @@ msgstr ""
 
 #: string;16083
 msgid "Forcing your PC into hub mode may have adverse effects on performance and the P2P network. It is generally better to allow Shareaza to decide whether or not hub mode should be used.\\n\\nHub mode does NOT produce better search results, or have any other advantages for you.\\n\\nDo you really want to do this, despite these disadvantages?"
-msgstr ""
-
-#: string;16084
-msgid "Disabling support for Gnutella-1 protocols may limit your search results, and if you are acting as a hub it may also impact upon the results of other users. Are you sure you want to do this?"
 msgstr ""
 
 #: string;16085
@@ -4981,7 +5125,7 @@ msgid "Push connection to %s established, waiting for handshake..."
 msgstr ""
 
 #: string;16329
-msgid "Can't open \"%s\" to upload to host %s, disk/file error."
+msgid "Can't open \"%s\" to upload to host %s due to disk or file error."
 msgstr ""
 
 #: string;16330
@@ -5174,6 +5318,10 @@ msgstr ""
 
 #: string;16377
 msgid "HTTP Guard"
+msgstr ""
+
+#: string;16378
+msgid "Host \"%s\" sent a 416, without providing available ranges. Closing connection."
 msgstr ""
 
 #: string;16379
@@ -5680,10 +5828,6 @@ msgstr ""
 msgid "Shareaza could not instantiate its MediaServices plugin. Please reinstall Shareaza, and confirm that you have the necessary media codecs and output drivers installed."
 msgstr ""
 
-#: string;16993
-msgid "All Media Files|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Playlists|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Audio Files|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|Video Files|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|CD Audio Tracks|*.cda|MIDI Files|*.mid;*.rmi;*.midi|All Files|*.*||"
-msgstr ""
-
 #: string;16994
 msgid "Unable to load media file \"%s\""
 msgstr ""
@@ -5712,11 +5856,11 @@ msgstr ""
 msgid "Send:"
 msgstr ""
 
-#: string;17018
+#: string;17018 string;19103
 msgid "Welcome to Shareaza Chat!"
 msgstr ""
 
-#: string;17019
+#: string;17019 string;19104
 msgid "Please respect others while using this service"
 msgstr ""
 
@@ -6092,6 +6236,10 @@ msgstr ""
 msgid "BitTorrent coupling with %s established for \"%s\"."
 msgstr ""
 
+#: string;17480
+msgid "BitTorrent coupling with %s requested an inactive file."
+msgstr ""
+
 #: string;17481
 msgid "Received BitTorrent descriptor file: \"%s\""
 msgstr ""
@@ -6145,7 +6293,7 @@ msgid "Unable to create BitTorrent share file \"%s\"."
 msgstr ""
 
 #: string;17494
-msgid "This torrent includes the file \"%s\", but Shareaza cannot find this file in your library. If possible, move the file to the same folder as the torrent and try again."
+msgid "This torrent includes the file \"%s\", but Shareaza cannot find this file in your library. If possible, move the file to a shared folder and try again."
 msgstr ""
 
 #: string;17495
@@ -6164,16 +6312,12 @@ msgstr ""
 msgid "An error was detected in the file \"%s\"."
 msgstr ""
 
-#: string;17500
-msgid "Tracker did not respond- Retrying announce (%i of %i)"
-msgstr ""
-
 #: string;17501
 msgid "Unable to communicate with tracker"
 msgstr ""
 
 #: string;17503
-msgid "Tracker failed- Trying next tracker (%i of %i)"
+msgid "Trying next tracker (%i of %i)"
 msgstr ""
 
 #: string;17505
@@ -6216,30 +6360,6 @@ msgstr ""
 msgid "You have made changes to the name field. Are you sure you want to rename this download?"
 msgstr ""
 
-#: string;18497
-msgid "You have typed a SHA1 value, however it is invalid. Please check it and try again."
-msgstr ""
-
-#: string;18498
-msgid "You have typed a root tiger-tree value, however it is invalid. Please check it and try again."
-msgstr ""
-
-#: string;18499
-msgid "You have typed an eDonkey hash value, however it is invalid. Please check it and try again."
-msgstr ""
-
-#: string;18500
-msgid "You have provided a SHA1 hash value which is different to the one currently associated with this download. Are you sure you want to change the SHA1 hash now?"
-msgstr ""
-
-#: string;18501
-msgid "You have provided a root tiger-tree hash value which is different to the one currently associated with this download. Are you sure you want to change the tiger-tree root hash now?"
-msgstr ""
-
-#: string;18502
-msgid "You have provided an eDonkey hash value which is different to the one currently associated with this download. Are you sure you want to change the eDonkey hash now?"
-msgstr ""
-
 #: string;18503
 msgid "Are you sure you want to forget the current verification status? All downloaded data will be treated as untrusted, and cached hashtrees and hashsets will be flushed."
 msgstr ""
@@ -6276,6 +6396,18 @@ msgstr ""
 msgid "You have made changes to the file size. Are you sure you want to change the file size for this download?"
 msgstr ""
 
+#: string;18512
+msgid "Are you sure you want to cancel this download but save incomplete file(s)?"
+msgstr ""
+
+#: string;18513
+msgid "You have typed an %s hash value, however it is invalid. Please check it and try again."
+msgstr ""
+
+#: string;18514
+msgid "You have provided an %s hash value which is different to the one currently associated with this download. Are you sure you want to change the %s hash now?"
+msgstr ""
+
 #: string;19000
 msgid "Remote access is disabled."
 msgstr ""
@@ -6286,6 +6418,10 @@ msgstr ""
 
 #: string;19002
 msgid "Unable to accept connections, URL unavailable."
+msgstr ""
+
+#: string;19105
+msgid "Chat!"
 msgstr ""
 
 #: string;20000
@@ -6332,8 +6468,12 @@ msgstr ""
 msgid "Finish"
 msgstr ""
 
-#: string;20013 cscheduletaskdlg;control;14 cfolderpropertiesdlg;control;5
+#: string;20013 cfolderpropertiesdlg;control;5
 msgid "All"
+msgstr ""
+
+#: string;20014
+msgid "This option uses services provided by ShareMonkey.com for recognising information about selected files.\\n\\nShareaza will transmit file details and your location in order to query the ShareMonkey database.  If you are concerned about privacy, you may wish to consult the ShareMonkey.com privacy policy.\\n\\nWould you like to proceed?"
 msgstr ""
 
 #: string;20101
@@ -6464,34 +6604,6 @@ msgstr ""
 msgid "sources (e.g. 3/10 sources)"
 msgstr ""
 
-#: string;20200 cscheduletaskdlg;control;7
-msgid "Sunday"
-msgstr ""
-
-#: string;20201 cscheduletaskdlg;control;8
-msgid "Monday"
-msgstr ""
-
-#: string;20202 cscheduletaskdlg;control;9
-msgid "Tuesday"
-msgstr ""
-
-#: string;20203 cscheduletaskdlg;control;10
-msgid "Wednesday"
-msgstr ""
-
-#: string;20204 cscheduletaskdlg;control;11
-msgid "Thursday"
-msgstr ""
-
-#: string;20205
-msgid "Friday"
-msgstr ""
-
-#: string;20206 cscheduletaskdlg;control;13
-msgid "Saturday"
-msgstr ""
-
 #: string;20210
 msgid "(No Rating)"
 msgstr ""
@@ -6552,11 +6664,11 @@ msgstr ""
 msgid "Rating"
 msgstr ""
 
-#: string;20237 csettingsheet;control;2 cscheduletaskdlg;control;1 cqueuepropertiesdlg;control;37 cprofilemanagerdlg;control;2 csavefilterasdlg;control;2 cdiscoveryservicedlg;control;5 cfilecopydlg;control;4 cfolderpropertiesdlg;control;7 cgraphlistdlg;control;16 cgraphitemdlg;control;1 cschemacolumnsdlg;control;3 csecureruledlg;control;33 csharemanagerdlg;control;5 cpromotedlg;control;7 cexistingfiledlg;control;8 cclosemodedlg;control;5 cdonkeyserversdlg;control;4 cdownloadgroupdlg;control;1 cmediavisdlg;control;5 cdownloadreviewdlg;control;1 cdecodemetadatadlg;control;8 circinputdlg;control;2
+#: string;20237 csettingsheet;control;2 cqueuepropertiesdlg;control;37 cprofilemanagerdlg;control;2 csavefilterasdlg;control;2 cdiscoveryservicedlg;control;5 cfilecopydlg;control;4 cfolderpropertiesdlg;control;7 cgraphlistdlg;control;16 cgraphitemdlg;control;1 cschemacolumnsdlg;control;3 csecureruledlg;control;33 csharemanagerdlg;control;5 cpromotedlg;control;7 cexistingfiledlg;control;8 cclosemodedlg;control;5 cdonkeyserversdlg;control;4 cdownloadgroupdlg;control;1 cmediavisdlg;control;5 cdownloadreviewdlg;control;1 cdecodemetadatadlg;control;8 circinputdlg;control;2
 msgid "OK"
 msgstr ""
 
-#: string;20238 csettingsheet;control;3 cscheduletaskdlg;control;2 cqueuepropertiesdlg;control;38 cprofilemanagerdlg;control;3 cconnecttodlg;control;8 cdownloaddlg;control;5 cnewsearchdlg;control;4 cfiltersearchdlg;control;30 csavefilterasdlg;control;3 cdiscoveryservicedlg;control;6 cfilecopydlg;control;5 cfolderpropertiesdlg;control;8 cgraphlistdlg;control;17 cgraphitemdlg;control;2 cschemacolumnsdlg;control;4 csecureruledlg;control;34 csharemanagerdlg;control;6 curlcopydlg;control;6 curlexportdlg;control;10 curlactiondlg;control;11 cbitzidownloaddlg;control;4 cfilepreviewdlg;control;6 cexistingfiledlg;control;9 cclosemodedlg;control;6 cdonkeyserversdlg;control;5 cdeletefiledlg;control;5 ctorrentseeddlg;control;4 cdownloadgroupdlg;control;2 cmediavisdlg;control;6 cdecodemetadatadlg;control;9 circinputdlg;control;3
+#: string;20238 csettingsheet;control;3 cqueuepropertiesdlg;control;38 cprofilemanagerdlg;control;3 cconnecttodlg;control;8 cdownloaddlg;control;5 cnewsearchdlg;control;4 cfiltersearchdlg;control;30 csavefilterasdlg;control;3 cdiscoveryservicedlg;control;6 cfilecopydlg;control;5 cfolderpropertiesdlg;control;8 cgraphlistdlg;control;17 cgraphitemdlg;control;2 cschemacolumnsdlg;control;4 csecureruledlg;control;34 csharemanagerdlg;control;6 curlcopydlg;control;6 curlexportdlg;control;10 curlactiondlg;control;11 cbitzidownloaddlg;control;4 cfilepreviewdlg;control;6 cexistingfiledlg;control;9 cclosemodedlg;control;6 cdonkeyserversdlg;control;5 cdeletefiledlg;control;5 ctorrentseeddlg;control;4 cdownloadgroupdlg;control;2 cmediavisdlg;control;6 cdecodemetadatadlg;control;9 circinputdlg;control;3
 msgid "Cancel"
 msgstr ""
 
@@ -6588,16 +6700,84 @@ msgstr ""
 msgid "New Folder"
 msgstr ""
 
-#: string;32825
-msgid "Open my folder of completed Downloads"
+#: string;20246
+msgid "Command-line options:\\n\\n-tray : Disable startup splash screen and send application to tray\\n-nosplash : Disable startup splash screen\\n-nowarn : Disable alpha (daily builds) version warning dialog\\n\\nInterface modes:\\n\\n-basic : Start application in Basic interface mode\\n-tabbed : Start application in Tabbed interface mode\\n-windowed : Start application in Windowed interface mode\\n\\nSystem options:\\n\\n-RegServer : Register internal components for everyone\\n-UnRegServer : Un-register internal components for everyone\\n-RegServerPerUser : Register internal components for current user\\n-UnRegServerPerUser : Un-register internal components for current user"
 msgstr ""
 
-#: string;32773
-msgid "Check for new version"
+#: string;20247
+msgid "Failed to load metadata schemas. Please reinstall application."
 msgstr ""
 
-#: string;61215
-msgid "Activate this window"
+#: string;20248
+msgid "You selected %u files. Are you sure?"
+msgstr ""
+
+#: string;20249
+msgid "Off"
+msgstr ""
+
+#: string;20250
+msgid "Low"
+msgstr ""
+
+#: string;20251
+msgid "Normal"
+msgstr ""
+
+#: string;20252
+msgid "High"
+msgstr ""
+
+#: string;20253
+msgid "Skin load error: %s. Element: %s"
+msgstr ""
+
+#: string;20254
+msgid "Loading skin: %s"
+msgstr ""
+
+#: string;20255
+msgid "Are you sure you want to remove all scheduled tasks? This cannot be undone."
+msgstr ""
+
+#: string;20256
+msgid "System: Start Shareaza"
+msgstr ""
+
+#: string;20257
+msgid "Bandwidth: Full Speed"
+msgstr ""
+
+#: string;20258
+msgid "Bandwidth: Reduced Speed"
+msgstr ""
+
+#: string;20259
+msgid "Bandwidth: Stop"
+msgstr ""
+
+#: string;20260
+msgid "System: Exit Shareaza"
+msgstr ""
+
+#: string;20261
+msgid "System: Disconnect Dial-up Connection"
+msgstr ""
+
+#: string;20262
+msgid "System: Turn Off the Computer"
+msgstr ""
+
+#: string;20265
+msgid "Done"
+msgstr ""
+
+#: string;20266
+msgid "Waiting..."
+msgstr ""
+
+#: string;20267
+msgid "No Tasks Currently Scheduled"
 msgstr ""
 
 #: csettingsheet;control;4 cprofilemanagerdlg;control;4
@@ -7124,91 +7304,7 @@ msgstr ""
 msgid "Choose a Password:"
 msgstr ""
 
-#: dialog;cscheduletaskdlg
-msgid "Schedule Item"
-msgstr ""
-
-#: cscheduletaskdlg;control;3
-msgid "Only once"
-msgstr ""
-
-#: cscheduletaskdlg;control;4
-msgid "On specific day(s) of week"
-msgstr ""
-
-#: cscheduletaskdlg;control;12
-msgid " Friday"
-msgstr ""
-
-#: cscheduletaskdlg;control;22
-msgid " _Toggle bandwidth independently"
-msgstr ""
-
-#: cscheduletaskdlg;control;23
-msgid " _Limit network to Gnutella2"
-msgstr ""
-
-#: cscheduletaskdlg;control;25
-msgid "Make this event active"
-msgstr ""
-
-#: cscheduletaskdlg;control;26
-msgid "Please select a date:"
-msgstr ""
-
-#: cscheduletaskdlg;control;27
-msgid "Please select a time:"
-msgstr ""
-
-#: cscheduletaskdlg;control;28
-msgid "Select the event type:"
-msgstr ""
-
-#: cscheduletaskdlg;control;29
-msgid "Description: (optional)"
-msgstr ""
-
-#: cscheduletaskdlg;control;30
-msgid "% of _bandwidth under limit"
-msgstr ""
-
-#: cscheduletaskdlg;control;31
-msgid "% of _download under limit"
-msgstr ""
-
-#: cscheduletaskdlg;control;32
-msgid "% of _upload under limit"
-msgstr ""
-
-#: cscheduletaskdlg;control;33
-msgid "Days Of Week"
-msgstr ""
-
-#: cscheduletaskdlg;control;34
-msgid "Run this event"
-msgstr ""
-
-#: cscheduletaskdlg;control;35
-msgid "Validity Period"
-msgstr ""
-
-#: cscheduletaskdlg;control;36
-msgid "Set the time period you want the task to be executed after its defined time."
-msgstr ""
-
-#: cscheduletaskdlg;control;37
-msgid "Disable"
-msgstr ""
-
-#: cscheduletaskdlg;control;38
-msgid "Enable"
-msgstr ""
-
-#: cscheduletaskdlg;control;40
-msgid "Minutes"
-msgstr ""
-
-#: dialog;cnetworkssettingspage
+#: dialog;cnetworkssettingspage cscheduletaskpage;control;16
 msgid "Networks"
 msgstr ""
 
@@ -7404,7 +7500,7 @@ msgstr ""
 msgid "Download..."
 msgstr ""
 
-#: dialog;cbittorrentsettingspage
+#: dialog;cbittorrentsettingspage cscheduletaskpage;control;12
 msgid "BitTorrent"
 msgstr ""
 
@@ -8940,6 +9036,30 @@ msgstr ""
 msgid "Enter channel you want to add:|Enter kick/ban reason:"
 msgstr ""
 
+#: dialog;cscheduletaskpage column;action
+msgid "Action"
+msgstr ""
+
+#: cscheduletaskpage;control;10
+msgid "eDoonkey2K"
+msgstr ""
+
+#: cscheduletaskpage;control;13
+msgid "Select the event type:"
+msgstr ""
+
+#: cscheduletaskpage;control;14
+msgid "% of _download under limit"
+msgstr ""
+
+#: cscheduletaskpage;control;15
+msgid "% of _upload under limit"
+msgstr ""
+
+#: cscheduletaskpage;control;17 column;bandwidth
+msgid "Bandwidth"
+msgstr ""
+
 #: column;file
 msgid "File"
 msgstr ""
@@ -9004,10 +9124,6 @@ msgstr ""
 msgid "Packets"
 msgstr ""
 
-#: column;bandwidth
-msgid "Bandwidth"
-msgstr ""
-
 #: column;total
 msgid "Total"
 msgstr ""
@@ -9026,10 +9142,6 @@ msgstr ""
 
 #: column;address/content
 msgid "Address/Content"
-msgstr ""
-
-#: column;action
-msgid "Action"
 msgstr ""
 
 #: column;expires
@@ -9154,4 +9266,12 @@ msgstr ""
 
 #: column;comments
 msgid "Comments"
+msgstr ""
+
+#: column;trigger
+msgid "Trigger"
+msgstr ""
+
+#: column;nextrun
+msgid "NextRun"
 msgstr ""

@@ -187,7 +187,6 @@ BEGIN_MESSAGE_MAP(CMainWnd, CMDIFrameWnd)
 	ON_COMMAND(ID_HELP_UPDATE, OnHelpUpdate)
 	ON_COMMAND(ID_HELP_ROUTER, OnHelpRouter)
 	ON_COMMAND(ID_HELP_SECURITY, OnHelpSecurity)
-	//ON_COMMAND(ID_HELP_SCHEDULER, OnHelpScheduler)
 	ON_COMMAND(ID_HELP_CODEC, OnHelpCodec)
 	ON_COMMAND(ID_HELP_TORRENT, OnHelpTorrent)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_TRAFFIC, OnUpdateViewTraffic)
@@ -199,8 +198,8 @@ BEGIN_MESSAGE_MAP(CMainWnd, CMDIFrameWnd)
 	ON_COMMAND(ID_NETWORK_AUTO_CLOSE, OnNetworkAutoClose)
 	ON_UPDATE_COMMAND_UI(ID_TOOLS_DOWNLOAD, OnUpdateToolsDownload)
 	ON_COMMAND(ID_TOOLS_DOWNLOAD, OnToolsDownload)
-	ON_UPDATE_COMMAND_UI(IDC_IMPORT_DOWNLOADS, OnUpdateToolsImportDownloads)
-	ON_COMMAND(IDC_IMPORT_DOWNLOADS, OnToolsImportDownloads)
+	ON_UPDATE_COMMAND_UI(ID_IMPORT_DOWNLOADS, OnUpdateToolsImportDownloads)
+	ON_COMMAND(ID_IMPORT_DOWNLOADS, OnToolsImportDownloads)
 	ON_UPDATE_COMMAND_UI(ID_OPEN_DOWNLOADS_FOLDER, OnUpdateOpenDownloadsFolder)
 	ON_COMMAND(ID_OPEN_DOWNLOADS_FOLDER, OnOpenDownloadsFolder)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_SECURITY, OnUpdateViewSecurity)
@@ -2757,14 +2756,6 @@ void CMainWnd::OnHelpSecurity()
 	ShellExecute( GetSafeHwnd(), _T("open"), strWebSite + _T("help/?security"),
 		NULL, NULL, SW_SHOWNORMAL );
 }
-
-//void CMainWnd::OnHelpScheduler()
-//{
-//	const CString strWebSite(WEB_SITE_T);
-//
-//	ShellExecute( GetSafeHwnd(), _T("open"), strWebSite + _T("help/?scheduler"),
-//		NULL, NULL, SW_SHOWNORMAL );
-//}
 
 void CMainWnd::OnHelpCodec()
 {

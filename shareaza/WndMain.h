@@ -195,7 +195,6 @@ protected:
 	afx_msg void OnHelpUpdate();
 	afx_msg void OnHelpRouter();
 	afx_msg void OnHelpSecurity();
-//	afx_msg void OnHelpScheduler();
 	afx_msg void OnHelpCodec();
 	afx_msg void OnHelpTorrent();
 	afx_msg void OnUpdateViewTraffic(CCmdUI* pCmdUI);

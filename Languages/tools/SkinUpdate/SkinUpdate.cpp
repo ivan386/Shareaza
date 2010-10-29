@@ -9,7 +9,17 @@ enum States
 };
 
 typedef CAtlMap< CStringA, UINT > CSUMap;
-typedef CAtlMap< UINT, CStringA > CUSMap;
+class CSSPair
+{
+public:
+	CSSPair() {}
+	CSSPair(const CStringA& f, const CStringA& s) : sFirst( f ), sSecond( s ) {}
+	CSSPair(const CSSPair& p) : sFirst( p.sFirst ), sSecond( p.sSecond ) {}
+	CSSPair& operator= (const CSSPair& p) { sFirst = p.sFirst; sSecond = p.sSecond; return *this; }
+	CStringA sFirst;
+	CStringA sSecond;
+};
+typedef CAtlMap< UINT, CSSPair > CUSMap;
 
 CSUMap g_oGudelines;
 CSUMap g_oDialogs;
@@ -33,14 +43,14 @@ BOOL ProcessString(CStringA sID, CStringA sString)
 		return TRUE;
 	}
 
-	CStringA sFoo;
+	CSSPair sFoo;
 	if ( g_oStrings.Lookup( nID, sFoo ) )
 	{
 		_tprintf( _T("Error: Duplicate ID %hs \"%hs\"\n"), sID, sString );
 		return FALSE;
 	}
 
-	g_oStrings.SetAt( nID, sString );
+	g_oStrings.SetAt( nID, CSSPair( sString, sID ) );
 
 	return TRUE;
 }
@@ -311,19 +321,19 @@ int _tmain(int argc, _TCHAR* argv[])
 	}
 
 	// Sort by ID
-	std::list< UINT > indexTips;
+	std::list< CStringA > indexTips;
 	std::list< UINT > indexStrings;
 	for ( POSITION pos = g_oStrings.GetStartPosition(); pos; )
 	{
-		UINT nID = g_oStrings.GetNextKey( pos );
+		UINT nID;
+		CSSPair oPair;
+		g_oStrings.GetNextAssoc( pos, nID, oPair );
 		if ( nID < 30000 )
 			// Strings
 			indexStrings.push_back( nID );
-		else if ( nID < 50000 )
+		else
 			// Tips
-			indexTips.push_back( nID );
-		//else
-			// Afx;
+			indexTips.push_back( oPair.sSecond );
 	}
 	indexTips.sort();
 	indexStrings.sort();
@@ -340,24 +350,88 @@ int _tmain(int argc, _TCHAR* argv[])
 		return 1;
 	}
 
+	// File header
 	_ftprintf( pFile, _T("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n")
 		_T("<skin xmlns=\"http://www.shareaza.com/schemas/Skin.xsd\" version=\"1.0\">\n")
-		_T("\t<!-- Localised Strings -->\n")
-		_T("\t<strings>\n") );
+		_T("<!-- Manifest -->\n")
+		_T("<manifest\tname=\"(translation language: English)\"\n")
+		_T("\t\tauthor=\"(translation author)\"\n")
+		_T("\t\tupdatedBy=\"(translation updaters)\"\n")
+		_T("\t\tdescription=\"(translation description: Shareaza English Skin File)\"\n")
+		_T("\t\tlink=\"(translation URL: http://shareaza.sourceforge.net/)\"\n")
+		_T("\t\temail=\"(author e-mail)\"\n")
+		_T("\t\tversion=\"(shareaza version)\"\n")
+		_T("\t\ttype=\"Language\"\n")
+		_T("\t\tlanguage=\"(translation language code: en)\"\n")
+		_T("\t\tprompt=\"(translation prompt: Click here to select English as your natural language.)\"\n")
+		_T("\t\tdir=\"(translation language direction: ltr or rtl)\"\n")
+		_T("/>\n\n") );
 
+	// Toolbars
+	_ftprintf( pFile, _T("\t<!-- Toolbar Definitions -->\n\t<toolbars>\n") );
+	_ftprintf( pFile, _T("\t</toolbars>\n") );
+
+	// Menus
+	_ftprintf( pFile, _T("\t<!-- Menu Definitions -->\n\t<menus>\n") );
+	_ftprintf( pFile, _T("\t</menus>\n") );
+
+	// Documents
+	_ftprintf( pFile, _T("\t<!-- Documents -->\n\t<documents>\n") );
+	_ftprintf( pFile, _T("\t</documents>\n\n") );
+
+	// Command Tips
+	_ftprintf( pFile, _T("\t<!-- Localised Command Tip Text. The \"message\" is displayed in the status bar, while the \"tip\" is shown in a tooltip -->\n\t<commandTips>\n") );
+	for ( std::list< CStringA >::iterator i = indexTips.begin(); i != indexTips.end(); ++i )
+	{
+		UINT nID;
+		ATLVERIFY( g_oIDs.Lookup( (*i), nID ) );
+		CSSPair oPair;
+		ATLVERIFY( g_oStrings.Lookup( nID, oPair ) );
+		ATLASSERT( oPair.sSecond == (*i) );
+		oPair.sFirst.Replace( "&", "&amp;" );
+		oPair.sFirst.Replace( " ", "&#160;" ); // it's not a space
+		oPair.sFirst.Replace( "\"\"", "&quot;" );
+		oPair.sFirst.Replace( "\\r\\n", "\\n" );
+		int nPos = oPair.sFirst.Find( "\\n" );
+		if ( nPos == -1 )
+			_ftprintf( pFile, _T("\t\t<tip id=\"%hs\" message=\"%hs\"/>\n"), oPair.sSecond, oPair.sFirst ); 
+		else
+			_ftprintf( pFile, _T("\t\t<tip id=\"%hs\" message=\"%hs\" tip=\"%hs\"/>\n"), oPair.sSecond, oPair.sFirst.Left( nPos ), oPair.sFirst.Mid( nPos + 2 ) ); 
+	}
+	_ftprintf( pFile, _T("\t</commandTips>\n") );
+
+	// Control Tips
+	_ftprintf( pFile, _T("\t<!-- Tips displayed when mouse is moved over controls in the dialogs -->\n\t<controlTips>\n") );
+	_ftprintf( pFile, _T("\t</controlTips>\n") );
+
+	// Strings 
+	_ftprintf( pFile, _T("\t<!-- Localised Strings -->\n\t<strings>\n") );
 	for ( std::list< UINT >::iterator i = indexStrings.begin(); i != indexStrings.end(); ++i )
 	{
-		CStringA sString;
-		g_oStrings.Lookup( (*i), sString );
-		sString.Replace( "&", "&amp;" );
-		sString.Replace( " ", "&#160;" ); // it's not a space
-		sString.Replace( "\"\"", "&quot;" );
-		sString.Replace( "\\r\\n", "\\n" );
-		_ftprintf( pFile, _T("\t\t<string id=\"%u\" value=\"%hs\"/>\n"), (*i), sString ); 
+		CSSPair oPair;
+		ATLVERIFY( g_oStrings.Lookup( (*i), oPair ) );
+		oPair.sFirst.Replace( "&", "&amp;" );
+		oPair.sFirst.Replace( " ", "&#160;" ); // it's not a space
+		oPair.sFirst.Replace( "\"\"", "&quot;" );
+		oPair.sFirst.Replace( "\\r\\n", "\\n" );
+		if ( (*i) < 7000 )
+			// Frames
+			_ftprintf( pFile, _T("\t\t<string id=\"WINDOW_%hs\" value=\"%hs\"/>\n"), oPair.sSecond.Left( oPair.sSecond.GetLength() - 5 ).Mid( 4 ), oPair.sFirst ); 
+		else
+			_ftprintf( pFile, _T("\t\t<string id=\"%u\" value=\"%hs\"/>\n"), (*i), oPair.sFirst ); 
 	}
+	_ftprintf( pFile, _T("\t</strings>\n") );
 
-	_ftprintf( pFile, _T("\t</strings>\n")
-		_T("</skin>\n") );
+	// Dialogs
+	_ftprintf( pFile, _T("\t<!-- Localised Dialog Text, the \"cookie\" verifies that the dialog matches the skin -->\n\t<!-- Don't edit dialogs manualy! Use DialogScan feature instead -->\n\t<dialogs>\n") );
+	_ftprintf( pFile, _T("\t</dialogs>\n") );
+
+	// Columns
+	_ftprintf( pFile, _T("\t<!-- Columns Definitions -->\n\t<listColumns>\n") );
+	_ftprintf( pFile, _T("\t</listColumns>\n") );
+
+	// EOF
+	_ftprintf( pFile, _T("</skin>\n") );
 
 	fclose( pFile );
 

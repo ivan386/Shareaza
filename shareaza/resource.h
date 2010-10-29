@@ -2,7 +2,6 @@
 // Microsoft Visual C++ generated include file.
 // Used by Shareaza.rc
 //
-#define IDC_SETUP                       3
 #define IDC_SEARCH_START                105
 #define IDC_SEARCH_STOP                 106
 #define IDD_SETTINGS_CONNECTION         107
@@ -10,14 +9,6 @@
 #define IDC_SEARCH_BOX                  108
 #define IDC_SEARCH_ADVANCED             112
 #define IDC_SEARCH_TEXT                 113
-#define IDC_MEDIA_POSITION              117
-#define IDC_MEDIA_SPEED                 118
-#define IDC_MEDIA_VOLUME                119
-#define IDS_COMMANDLINE                 120
-#define IDS_SCHEMA_LOAD_ERROR           121
-#define IDS_SCHEDULER_INVALIDVP         122
-#define IDS_SCHEDULER_SYSTEM_START      123
-#define IDS_TOO_MANY_FILES              124
 #define IDB_MENUBAR                     127
 #define IDR_MAINFRAME                   128
 #define IDR_SYSTEMFRAME                 129
@@ -53,46 +44,27 @@
 #define IDC_HAND                        147
 #define IDR_HELPFRAME                   147
 #define IDD_ABOUT                       148
-#define IDS_PRIORITY_OFF                148
+#define IDR_IRCFRAME                    148
 #define IDD_FILTER_SAVE_AS              149
-#define IDS_PRIORITY_LOW                149
+#define IDR_SCHEDULERFRAME              149
 #define IDD_GRAPH_LIST                  150
-#define IDS_PRIORITY_NORMAL             150
 #define IDD_GRAPH_ITEM                  151
 #define IDB_COLOURDOT                   151
-#define IDS_PRIORITY_HIGH               151
 #define IDD_WIZARD_WELCOME              152
-#define IDS_SKIN_ERROR                  152
 #define IDD_WIZARD_CONNECTION           153
-#define IDS_SKIN_LOAD                   153
 #define IDB_BANNER                      154
 #define IDD_WIZARD_SHARING              154
-#define IDS_SCHEDULER_REMOVEALL_CONFIRM 154
 #define IDD_WIZARD_FINISHED             155
-#define ID_HELP_SCHEDULER               155
-#define IDS_SCHEDULER_TIME_PASSED       156
-#define IDS_SCHEDULER_BANDWIDTH_FULLSPEED 157
 #define IDI_WIZARD_DOT                  158
-#define IDS_SCHEDULER_BANDWIDTH_REDUCEDSPEED 158
 #define IDB_CHILDFRAME                  159
-#define IDS_SCHEDULER_BANDWIDTH_STOP    159
 #define IDD_FOLDER_SCAN                 160
 #define IDI_BROWSE                      160
-#define IDS_SCHEDULER_SYSTEM_EXIT       160
-#define IDS_SCHEDULER_SYSTEM_DIALUP_DC  161
 #define IDD_DOWNLOAD                    162
-#define IDS_SCHEDULER_SYSTEM_SHUTDOWN   162
 #define IDD_BITZI_DOWNLOAD              163
-#define IDS_SCHEDULER_SELECTTASK        163
 #define IDD_SECURE_RULE                 165
-#define IDS_SCHEDULER_TASK_ACTIVE       165
-#define IDS_SCHEDULER_TASK_INACTIVE     166
 #define IDD_FILE_COPY                   167
-#define IDS_SCHEDULER_TASK_DONE         167
 #define IDD_URL_ACTION                  168
-#define IDS_SCHEDULER_TASK_WAITING      168
 #define IDD_WIZARD_INTERFACE            169
-#define IDS_SCHEDULER_NOTASK            169
 #define IDD_URL_COPY                    172
 #define IDD_SPLASH                      173
 #define IDD_DISCOVERY_SERVICE           174
@@ -166,7 +138,7 @@
 #define IDI_TOOLS_WIZARD                236
 #define IDD_DOWNLOAD_GROUP              236
 #define IDI_PAINTBRUSHES                237
-#define IDR_TORRENT_ICON                239
+#define IDI_TORRENT_ICON                239
 #define IDD_HELP                        240
 #define IDB_NAVBAR_IMAGE                241
 #define IDD_DELETE_FILE                 242
@@ -192,7 +164,6 @@
 #define IDD_TORRENT_FILES               268
 #define IDD_TORRENT_TRACKERS            269
 #define IDB_SCHEDULER                   270
-#define IDR_SCHEDULERFRAME              271
 #define IDB_NAVBAR_IMAGE_RTL            273
 #define IDB_NAVBAR_ALPHA_RTL            274
 #define IDI_COLORS                      275
@@ -228,15 +199,11 @@
 #define IDI_RATING_AVERAGE              323
 #define IDI_RATING_GOOD                 324
 #define IDI_EXCLAMATIONMARK             336
-#define ID_SCHEDULER_MOVE_UP            337
-#define ID_SCHEDULER_MOVE_DOWN          338
-#define ID_SCHEDULER_REMOVE_ALL         339
 #define IDI_NOTASK                      341
 #define IDI_INCOMING                    342
 #define IDI_OUTGOING                    343
 #define IDR_CHANSFRAME                  991
 #define IDD_DOWNLOAD_ACTIONS            993
-#define IDR_IRCFRAME                    994
 #define IDR_USERSFRAME                  995
 #define IDB_FONT_SYMBOLS                996
 #define IDD_SETTINGS_IRC                997
@@ -538,7 +505,6 @@
 #define IDC_RESULTS                     1290
 #define IDC_RESULTS_SPIN                1291
 #define IDC_LINKS                       1292
-#define IDC_IMPORT_DOWNLOADS            1293
 #define IDC_PROTOCOLS                   1294
 #define IDC_DISCOVERY_GO                1295
 #define IDC_MINIMUM_CHECK               1296
@@ -644,19 +610,9 @@
 #define IDC_G2_CLIENTMODE               1397
 #define IDC_REVIEW_FILENAME             1398
 #define IDC_CODEPAGES                   1399
-#define IDC_SCHEDULER_ENABLE            1400
-#define IDC_SCHEDULER_LIMITED           1401
-#define IDC_SCHEDULER_LIMITED_SPIN      1402
-#define IDC_SCHEDULER_LIMITED_NETWORKS  1403
-#define IDC_SCHEDULER_LIMITED_G2        1403
-#define IDC_SCHEDULER_ALLOWHUB          1404
-#define IDC_SCHEDULER_LIMITED_G1        1404
 #define IDC_ONLYONCE                    1405
-#define IDC_SCHEDULER_LIMITED_ED2K      1405
 #define IDC_WIZARD_DOWNLOAD_SPEED       1406
-#define IDC_SCHEDULER_LIMITED_DC        1406
 #define IDC_LINKS_SPIN                  1407
-#define IDC_SCHEDULER_LIMITED_BT        1407
 #define IDC_MINIMUM_VALUE               1408
 #define IDC_G2_ALWAYS                   1409
 #define IDC_PROFILE_AOL                 1410
@@ -819,29 +775,17 @@
 #define IDC_TRUST_MD5                   1569
 #define IDC_TRUST_BTH                   1570
 #define IDC_INFO_TEXT                   1571
-#define IDC_EVERYDAY                    1571
 #define IDC_INFO_ICON                   1572
-#define IDC_DATE                        1572
 #define IDC_INFO_BUTTON1                1573
-#define IDC_EVENTTYPE                   1573
 #define IDC_INFO_BUTTON2                1574
-#define IDC_TIME                        1574
 #define IDC_INFO_BUTTON3                1575
-#define IDC_ACTIVE                      1575
 #define IDC_INFO_SPLIT                  1576
-#define IDC_STATIC_LIMITED              1576
 #define IDC_INFO_REMEMBER               1577
-#define IDC_STATIC_LIMITED_DOWN         1577
-#define IDC_STATIC_LIMITED_UP           1578
-#define IDC_SCHEDULER_LIMITED_DOWN      1579
+#define IDC_VIS_SETUP                   1578
 #define IDC_LABEL_ACTION                1580
-#define IDC_SCHEDULER_LIMITED_UP        1580
 #define IDC_LABEL_EVENT                 1581
-#define IDC_SCHEDULER_LIMITED_SPIN_DOWN 1581
 #define IDC_PROGRESS_EVENT              1582
-#define IDC_SCHEDULER_LIMITED_SPIN_UP   1582
 #define IDC_LABEL_SUB_ACTION            1583
-#define IDC_SCHEDULER_TOGGLE_BANDWIDTH  1583
 #define IDC_SUB_EVENT                   1584
 #define IDC_PROGRESS_SUB_EVENT          1585
 #define IDC_DAYOFWEEK_GBOX              1591
@@ -860,6 +804,17 @@
 #define IDC_EDIT_VP_MINUTES             1606
 #define IDC_STATIC_MINUTES              1607
 #define IDC_URI_DC                      1608
+#define IDC_SCHEDULER_EVENTTYPE         1609
+#define IDC_SCHEDULER_TOGGLE_BANDWIDTH  1610
+#define IDC_SCHEDULER_LIMITED_DOWN      1611
+#define IDC_SCHEDULER_LIMITED_SPIN_DOWN 1612
+#define IDC_SCHEDULER_LIMITED_UP        1613
+#define IDC_SCHEDULER_LIMITED_SPIN_UP   1614
+#define IDC_SCHEDULER_LIMITED_G1        1615
+#define IDC_SCHEDULER_LIMITED_G2        1616
+#define IDC_SCHEDULER_LIMITED_ED2K      1617
+#define IDC_SCHEDULER_LIMITED_DC        1618
+#define IDC_SCHEDULER_LIMITED_BT        1619
 #define IDS_FILTER_DELETE_CONFIRM       7000
 #define IDS_SCHEMAS                     7001
 #define IDS_MULTIPLE_VALUES             7002
@@ -1569,6 +1524,28 @@
 #define IDS_GENERAL_CONTINUE            20243
 #define IDS_INFO_REMEMBER               20244
 #define IDS_NEW_FOLDER                  20245
+#define IDS_COMMANDLINE                 20246
+#define IDS_SCHEMA_LOAD_ERROR           20247
+#define IDS_TOO_MANY_FILES              20248
+#define IDS_PRIORITY_OFF                20249
+#define IDS_PRIORITY_LOW                20250
+#define IDS_PRIORITY_NORMAL             20251
+#define IDS_PRIORITY_HIGH               20252
+#define IDS_SKIN_ERROR                  20253
+#define IDS_SKIN_LOAD                   20254
+#define IDS_SCHEDULER_REMOVEALL_CONFIRM 20255
+#define IDS_SCHEDULER_SYSTEM_START      20256
+#define IDS_SCHEDULER_BANDWIDTH_FULLSPEED 20257
+#define IDS_SCHEDULER_BANDWIDTH_REDUCEDSPEED 20258
+#define IDS_SCHEDULER_BANDWIDTH_STOP    20259
+#define IDS_SCHEDULER_SYSTEM_EXIT       20260
+#define IDS_SCHEDULER_SYSTEM_DIALUP_DC  20261
+#define IDS_SCHEDULER_SYSTEM_SHUTDOWN   20262
+#define IDS_SCHEDULER_TASK_ACTIVE       20263
+#define IDS_SCHEDULER_TASK_INACTIVE     20264
+#define IDS_SCHEDULER_TASK_DONE         20265
+#define IDS_SCHEDULER_TASK_WAITING      20266
+#define IDS_SCHEDULER_NOTASK            20267
 #define ID_HELP_ABOUT                   32772
 #define ID_HELP_VERSION_CHECK           32773
 #define ID_CHECKMARK                    32774
@@ -1691,6 +1668,7 @@
 #define ID_SECURITY_MOVE_UP             32912
 #define ID_SECURITY_MOVE_DOWN           32913
 #define ID_SECURITY_BAN                 32914
+#define ID_IMPORT_DOWNLOADS             32915
 #define ID_TAB_NETWORK                  32918
 #define ID_TAB_LIBRARY                  32919
 #define ID_TAB_TRANSFERS                32920
@@ -1815,7 +1793,6 @@
 #define ID_CHAT_BOLD                    33047
 #define ID_CHAT_ITALIC                  33048
 #define ID_CHAT_UNDERLINE               33049
-#define ID_CHAT_SEND_FILE               33050
 #define ID_CHAT_PRIORITY                33051
 #define ID_CHAT_CLEAR                   33052
 #define ID_CHAT_EMOTICONS               33053
@@ -1893,6 +1870,9 @@
 #define ID_HELP_DISKWRITEFAIL           33131
 #define ID_HELP_CONNECTIONFAIL          33132
 #define ID_HELP_DONKEYSERVERS           33133
+#define ID_MEDIA_POSITION               33134
+#define ID_MEDIA_SPEED                  33135
+#define ID_MEDIA_VOLUME                 33136
 #define ID_MEDIA_PROPERTIES             33137
 #define ID_MEDIA_RATE                   33138
 #define ID_MEDIA_STATE_STOP             33200
@@ -1954,6 +1934,7 @@
 #define ID_SCHEDULER_ACTIVATE           33325
 #define ID_SCHEDULER_DEACTIVATE         33326
 #define ID_SCHEDULER_ADD                33327
+#define ID_SCHEDULER_REMOVE_ALL         33328
 
 // Next default values for new objects
 // 
@@ -1961,8 +1942,8 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        344
-#define _APS_NEXT_COMMAND_VALUE         33328
-#define _APS_NEXT_CONTROL_VALUE         1609
+#define _APS_NEXT_COMMAND_VALUE         33329
+#define _APS_NEXT_CONTROL_VALUE         1620
 #define _APS_NEXT_SYMED_VALUE           104
 #endif
 #endif
