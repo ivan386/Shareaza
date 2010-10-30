@@ -1196,6 +1196,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <type extension="mpg"/>
                <type extension="nsv"/>
                <type extension="ogm"/>
+			   <type extension="ogv"/>
                <type extension="qt"/>
                <type extension="ram"/>
                <type extension="ratdvd"/>
@@ -1203,6 +1204,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <type extension="rmvb"/>
                <type extension="swf"/>
                <type extension="vob"/>
+			   <type extension="webm"/>
                <type extension="wm"/>
                <type extension="wmv"/>
                <type extension="xvid"/>

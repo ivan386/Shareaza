@@ -1468,6 +1468,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <type extension="mp3"/>
                <type extension="mpc"/>
                <type extension="ogg"/>
+			   <type extension="oga"/>
                <type extension="pcm"/>
                <type extension="ra"/>
                <type extension="sam"/>
