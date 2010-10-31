@@ -1,7 +1,7 @@
 //
 // GProfile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -157,24 +157,10 @@ BOOL CGProfile::Save()
 BOOL CGProfile::FromXML(const CXMLElement* pXML)
 {
 	// Checking XML for validness
-	if ( pXML == NULL )
-		return FALSE;
-
-
-	if ( pXML->GetAttributeValue( _T("xmlns") ).CompareNoCase( xmlns ) == 0 )
-	{
-		if ( ! pXML->IsNamed( _T("gProfile") ) )
-			return FALSE;
-	}
-	else if ( pXML->GetAttributeValue( _T("xmlns") ).CompareNoCase( _T("http://schemas.peerproject.org/Profile.xsd") ) == 0 )
-	{
-		if ( ! pXML->IsNamed( _T("profile") ) )
-			return FALSE;
-	}
-	else
-	{
-		return FALSE;
-	}
+	if ( pXML == NULL ||
+		 pXML->GetAttributeValue( _T("xmlns") ).CompareNoCase( xmlns ) ||
+		 pXML->IsNamed( _T("gProfile") ) == FALSE )
+		 return FALSE;
 
 	// Loading Gnutella GUID (required)
 	const CXMLElement* pGnutella = pXML->GetElementByName( _T("gnutella") );
