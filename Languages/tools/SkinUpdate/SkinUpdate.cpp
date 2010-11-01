@@ -22,7 +22,8 @@ public:
 typedef CAtlMap< UINT, CSSPair > CUSMap;
 
 CSUMap g_oGudelines;
-CSUMap g_oDialogs;
+CSUMap g_oDialogs;		// DIALOG or DIALOGEX resource
+CSUMap g_oIcons;		// ICON resource
 CSUMap g_oIDs;
 CUSMap g_oStrings;
 
@@ -165,6 +166,24 @@ BOOL LoadResources(LPCTSTR szFilename)
 						}
 						g_oDialogs.SetAt( sID, nID );
 					}
+
+					nPos = sLine.Find( " ICON " );
+					if ( nPos != -1 )
+					{
+						CStringA sID = sLine.SpanExcluding( " " );
+						UINT nID;
+						if ( ! g_oIDs.Lookup( sID, nID ) )
+						{
+							_tprintf( _T("Error: Unknown ID \"%hs\" of ICON\n"), sID );
+							return 2;
+						}
+						if ( g_oIcons.Lookup( sID, nID ) )
+						{
+							_tprintf( _T("Error: Duplicate ID \"%hs\" of ICON\n"), sID );
+							return 2;
+						}
+						g_oIcons.SetAt( sID, nID );
+					}
 				}
 				break;
 
@@ -294,9 +313,16 @@ int _tmain(int argc, _TCHAR* argv[])
 				_tprintf( _T("Error: Filed to load strings from: %s\n"), szFilename );
 				return 1;
 			}
-			_tprintf( _T("Loaded %d strings from: %s\n"), g_oStrings.GetCount(), szFilename );
-			_tprintf( _T("Loaded %d gudelines from: %s\n"), g_oGudelines.GetCount(), szFilename );
-			_tprintf( _T("Loaded %d dialogs from: %s\n"), g_oDialogs.GetCount(), szFilename );
+			_tprintf( _T("Loaded %d strings")
+				_T(", %d gudelines")
+				_T(", %d dialogs")
+				_T(", %d icons")
+				_T(" from: %s\n"),
+				g_oStrings.GetCount(),
+				g_oGudelines.GetCount(),
+				g_oDialogs.GetCount(),
+				g_oIcons.GetCount(),
+				szFilename );
 		}
 		else if ( _tcscmp( szExt, _T(".xml") ) == 0 )
 		{
