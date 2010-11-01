@@ -1622,7 +1622,6 @@ void CShakeNeighbour::OnHandshakeComplete()
 
 	if ( pNeighbour == NULL )
 	{
-		theApp.Message( MSG_ERROR, _T("memory allocation error making new connection from CShakeNeighbour.") );
 	}// This connection is to a hub above us
 	else if ( m_nNodeType == ntHub )
 	{

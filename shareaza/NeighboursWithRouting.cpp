@@ -224,7 +224,6 @@ int CNeighboursWithRouting::RouteQuery(const CQuerySearch* pSearch, CPacket* pPa
 
 			if ( pPtr == NULL )
 			{
-				theApp.Message( MSG_ERROR, _T("Memory allocation error in CNeighboursWithRouting::RouteQuery()") );
 				return 0;
 			}
 

@@ -1472,8 +1472,6 @@ void CDownloadsWnd::OnTransfersChat()
 					ChatWindows.OpenPrivate( Hashes::Guid(), &pSource->m_pAddress, pSource->m_nPort, FALSE, PROTOCOL_G2 );
 				else if ( pSource->m_nProtocol == PROTOCOL_ED2K )					// ED2K chat
 					ChatWindows.OpenPrivate( Hashes::Guid(), &pSource->m_pAddress, pSource->m_nPort, pSource->m_bPushOnly, pSource->m_nProtocol, &pSource->m_pServerAddress, pSource->m_nServerPort );
-				else		// Should never be called
-					theApp.Message( MSG_ERROR, _T("Error while initiating chat- Unable to select protocol") );
 			}
 		}
 	}

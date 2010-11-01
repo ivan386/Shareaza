@@ -1016,7 +1016,6 @@ BOOL CG2Packet::OnQueryKeyAnswer(const SOCKADDR_IN* pHost)
 
 			if ( pOut == NULL )
 			{
-				theApp.Message( MSG_ERROR, _T("Memory allocation error in CDatagrams::OnQueryKeyAnswer()") );
 				return TRUE;
 			}
 

@@ -524,7 +524,6 @@ BOOL CG2Neighbour::OnPing(CG2Packet* pPacket, BOOL bTCP)
 		BYTE* pRelay = pPacket->WriteGetPointer( 7, 0 );
 		if ( pRelay == NULL )
 		{
-			theApp.Message( MSG_ERROR, _T("Memory allocation error in CG2Neighbour::OnPing()") );
 			return TRUE;
 		}
 

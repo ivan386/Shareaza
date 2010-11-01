@@ -518,8 +518,6 @@ void CUploadsWnd::OnUploadsChat()
 				ChatWindows.OpenPrivate( Hashes::Guid(), &pFile->GetActive()->m_pHost, FALSE, PROTOCOL_G2 );
 			else if ( pFile->GetActive()->m_nProtocol == PROTOCOL_ED2K )// ED2K chat.
 				ChatWindows.OpenPrivate( Hashes::Guid(), &pFile->GetActive()->m_pHost, FALSE, PROTOCOL_ED2K );
-			else		// Should never be called
-				theApp.Message( MSG_ERROR, _T("Error while initiating chat- Unable to select protocol") );
 		}
 	}
 }

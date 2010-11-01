@@ -2082,7 +2082,6 @@ BOOL CEDClient::OnSourceRequest(CEDPacket* pPacket)
 
 		if ( pStart == NULL )
 		{
-			theApp.Message( MSG_ERROR, _T("Memory allocation error in CEDClient::OnSourceRequest()") );
 			pReply->Release();
 			return TRUE;
 		}

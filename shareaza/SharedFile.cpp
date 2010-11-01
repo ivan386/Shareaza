@@ -881,7 +881,6 @@ void CLibraryFile::Serialize(CArchive& ar, int nVersion)
 				CSharedSource* pSource = new CSharedSource();
 				if ( pSource == NULL )
 				{
-					theApp.Message( MSG_ERROR, _T("Memory allocation error in CLibraryFile::Serialize") );
 					break;
 				}
 				pSource->Serialize( ar, nVersion );
