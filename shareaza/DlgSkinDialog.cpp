@@ -67,6 +67,8 @@ CSkinDialog::CSkinDialog(UINT nResID, CWnd* pParent, BOOL bAutoBanner) :
 void CSkinDialog::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
+	
+	if ( m_oBanner.m_hWnd ) DDX_Control(pDX, IDC_BANNER, m_oBanner);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -339,6 +341,24 @@ void CSkinDialog::OnWindowPosChanging(WINDOWPOS* lpwndpos)
 		lpwndpos->x = oMonitor.rcWork.right - lpwndpos->cx;
 	if ( abs( lpwndpos->y + lpwndpos->cy - oMonitor.rcWork.bottom ) < SNAP_SIZE )
 		lpwndpos->y = oMonitor.rcWork.bottom - lpwndpos->cy;
+
+	if ( m_oBanner.m_hWnd )
+	{	
+		if ( HBITMAP hBitmap = m_oBanner.GetBitmap() )
+		{
+			BITMAP bm = {};
+			GetObject( hBitmap, sizeof( BITMAP ), &bm );
+			CRect rcBanner;
+			GetClientRect( &rcBanner );
+			if ( Settings.General.LanguageRTL )
+			{
+				rcBanner.left -= bm.bmWidth - rcBanner.Width();
+			}
+			rcBanner.right = rcBanner.left + bm.bmWidth;
+			rcBanner.bottom = rcBanner.top + bm.bmHeight;
+			m_oBanner.MoveWindow( rcBanner );
+		}
+	}
 }
 
 int CSkinDialog::OnCreate(LPCREATESTRUCT lpCreateStruct)

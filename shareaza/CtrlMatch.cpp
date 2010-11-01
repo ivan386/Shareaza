@@ -166,9 +166,11 @@ int CMatchCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 void CMatchCtrl::OnDestroy() 
 {
+	SaveColumnState();
+
+	m_pStars.DeleteImageList();
 	m_wndTip.DestroyWindow();
 
-	SaveColumnState();
 	CWnd::OnDestroy();
 }
 
