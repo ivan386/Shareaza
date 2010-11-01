@@ -101,6 +101,7 @@ public:
 	INT		m_nGUIMode;
 	BOOL	m_bHelp;
 	CString	m_sTask;
+	BOOL	m_bWait;
 
 private:
 	CShareazaCommandLineInfo(const CShareazaCommandLineInfo&);
@@ -112,7 +113,8 @@ CShareazaCommandLineInfo::CShareazaCommandLineInfo() :
 	m_bNoSplash( FALSE ),
 	m_bNoAlphaWarning( FALSE ),
 	m_nGUIMode( -1 ),
-	m_bHelp( FALSE )
+	m_bHelp( FALSE ),
+	m_bWait( FALSE )
 {
 }
 
@@ -162,6 +164,11 @@ void CShareazaCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag, BOO
 			m_bNoSplash = TRUE;
 			m_bNoAlphaWarning = TRUE;
 			m_sTask = pszParam + 4;
+			return;
+		}
+		else if ( ! _tcsicmp( pszParam, _T("wait") ) )
+		{
+			m_bWait = TRUE;
 			return;
 		}
 	}
@@ -244,6 +251,14 @@ CShareazaApp::CShareazaApp() :
 	BT_SetTerminate();
 }
 
+CShareazaApp::~CShareazaApp()
+{
+	if ( m_pMutex != NULL )
+	{
+		CloseHandle( m_pMutex );
+	}
+}
+
 /////////////////////////////////////////////////////////////////////////////
 // CShareazaApp initialization
 
@@ -271,44 +286,53 @@ BOOL CShareazaApp::InitInstance()
 		return FALSE;
 	}
 
-	BOOL bFirst = TRUE;
-	HWND hWnd = NULL;
-	m_pMutex = CreateMutex( NULL, FALSE, _T("Global\\") _T(CLIENT_NAME) );
-	if ( m_pMutex != NULL )
+	BOOL bFirst = FALSE;
+	HWND hwndFirst = NULL;
+	for (;;)
 	{
-		if ( GetLastError() == ERROR_ALREADY_EXISTS )
+		m_pMutex = CreateMutex( NULL, FALSE, _T("Global\\") _T(CLIENT_NAME) );
+		if ( m_pMutex != NULL )
 		{
-			CloseHandle( m_pMutex );
-			m_pMutex = NULL;
-
-			bFirst = FALSE;
-			hWnd = FindWindow( _T("ShareazaMainWnd"), NULL );
-			if ( hWnd )
+			if ( GetLastError() == ERROR_ALREADY_EXISTS )
 			{
-				if ( cmdInfo.m_sTask.IsEmpty() )
-				{
-					// Popup first instance
-					DWORD_PTR dwResult;
-					SendMessageTimeout( hWnd, WM_SYSCOMMAND, SC_RESTORE, 0,
-						SMTO_NORMAL, 250, &dwResult );
-					ShowWindow( hWnd, SW_SHOWNORMAL );
-					BringWindowToTop( hWnd );
-					SetForegroundWindow( hWnd );
-				}
-				// Pass scheduler task to existing instance
+				CloseHandle( m_pMutex );
+				m_pMutex = NULL;
+				hwndFirst = FindWindow( _T(CLIENT_NAME) _T("MainWnd"), NULL );
 			}
-			// Probably window created in another user's session
+			else
+				// We are first!
+				bFirst = TRUE;
 		}
-		// We are first!
+		// else Probably mutex created in another user's session
+
+		if ( ! cmdInfo.m_bWait || bFirst )
+			break;
+
+		// Wait for first instance exit
+		Sleep( 250 );
+	}
+
+	if ( cmdInfo.m_sTask.IsEmpty() )
+	{
+		if ( ! bFirst )
+		{
+			if ( hwndFirst )
+			{
+				// Popup first instance
+				DWORD_PTR dwResult;
+				SendMessageTimeout( hwndFirst, WM_SYSCOMMAND, SC_RESTORE, 0,
+					SMTO_NORMAL, 250, &dwResult );
+				ShowWindow( hwndFirst, SW_SHOWNORMAL );
+				BringWindowToTop( hwndFirst );
+				SetForegroundWindow( hwndFirst );
+			}
+			// else Probably window created in another user's session
+		}
 	}
 	else
-		// Probably mutex created in another user's session
-		bFirst = FALSE;
-
-	// Process task scheduler
-	if ( ! cmdInfo.m_sTask.IsEmpty() )
 	{
-		CScheduler::Execute( hWnd, cmdInfo.m_sTask );
+		// Pass scheduler task to existing instance
+		CScheduler::Execute( hwndFirst, cmdInfo.m_sTask );
 		return FALSE;
 	}
 
@@ -316,13 +340,17 @@ BOOL CShareazaApp::InitInstance()
 		// Don't start second instance
 		return FALSE;
 
+	if ( cmdInfo.m_bWait )
+		// Wait for other instance complete exit
+		Sleep( 1000 );
+
 	Register();					// Re-register Shareaza Type Library
 
 	LoadStdProfileSettings();	// Load MRU file list and last preview state.
 	EnableShellOpen();			// Enable open data files when user double-click the files from within the Windows File Manager.
 	Settings.Load();			// Loads settings. Depends on InitResources().
 	InitFonts();				// Loads default fonts. Depends on Settings.Load().
-	Skin.CreateDefault();		// Loads colors and fonts. Depends on InitFonts().
+	Skin.CreateDefault();		// Loads colors, fonts and language. Depends on InitFonts().
 
 	if ( cmdInfo.m_bHelp )
 	{
@@ -331,7 +359,7 @@ BOOL CShareazaApp::InitInstance()
 	}
 
 	if ( m_pRegisterApplicationRestart )
-		m_pRegisterApplicationRestart( NULL, 0 );
+		m_pRegisterApplicationRestart( _T("-nowarn"), 0 );
 
 	ShowStartupText();
 
@@ -563,9 +591,6 @@ int CShareazaApp::ExitInstance()
 
 	if ( m_hCryptProv )
 		CryptReleaseContext( m_hCryptProv, 0 );
-
-	if ( m_pMutex != NULL )
-		CloseHandle( m_pMutex );
 
 	{
 		CQuickLock pLock( m_csMessage );

@@ -353,7 +353,7 @@ void CMainWnd::SaveState()
 
 BOOL CMainWnd::PreCreateWindow(CREATESTRUCT& cs)
 {
-	cs.lpszClass = _T("ShareazaMainWnd");
+	cs.lpszClass = _T(CLIENT_NAME) _T("MainWnd");
 
 	if ( cs.hInstance )
 	{
@@ -2412,25 +2412,36 @@ void CMainWnd::OnToolsSkin()
 
 void CMainWnd::OnToolsLanguage()
 {
-	if ( ! IsWindowEnabled() ) return;
+	if ( ! IsWindowEnabled() )
+		return;
+
 	theApp.WriteProfileInt( _T("Windows"), _T("RunLanguage"), TRUE );
 
 	CLanguageDlg dlg;
-	if ( dlg.DoModal() == IDOK )
+	if ( dlg.DoModal() != IDOK )
+		 return;
+
+	bool bRestart = AfxMessageBox( IDS_GENERAL_RTL_WARNING,
+		MB_ICONQUESTION | MB_YESNO ) == IDYES;
+
+	CWaitCursor pCursor;
+
+	Settings.General.Language = dlg.m_sLanguage;
+	Settings.General.LanguageRTL = dlg.m_bLanguageRTL;
+	Settings.Save();
+
+	if ( bRestart )
 	{
-		bool bRestart = Settings.General.LanguageRTL != dlg.m_bLanguageRTL &&
-			AfxMessageBox( IDS_GENERAL_RTL_WARNING, MB_ICONQUESTION | MB_YESNO ) == IDYES;
-
-		CWaitCursor pCursor;
-
-		Settings.General.Language = dlg.m_sLanguage;
-		Settings.General.LanguageRTL = dlg.m_bLanguageRTL;
-
-		if ( bRestart )
+		HINSTANCE hResult = ShellExecute( AfxGetMainWnd()->GetSafeHwnd(), NULL,
+			theApp.m_strBinaryPath, _T("-nowarn -wait"), Settings.General.Path, SW_SHOWNORMAL );
+		if ( hResult > (HINSTANCE)32 )
+		{
 			PostMessage( WM_CLOSE );
-		else
-			SetGUIMode( Settings.General.GUIMode );
+			return;
+		}
 	}
+
+	PostMessage( WM_SKINCHANGED );
 }
 
 void CMainWnd::OnToolsSeedTorrent()

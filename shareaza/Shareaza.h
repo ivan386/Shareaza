@@ -51,6 +51,7 @@ class CShareazaApp : public CWinApp
 {
 public:
 	CShareazaApp();
+	~CShareazaApp();
 
 	HANDLE				m_pMutex;
 	CMutex				m_pSection;

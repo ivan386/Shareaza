@@ -1147,10 +1147,10 @@ BEGIN
     LTEXT           "The download manager plugin will only attempt to download file types listed here.  Other file types will be handled by your web browser.  Shareaza must be running to manage downloads.",IDC_STATIC,135,130,130,70
 END
 
-IDD_PROFILE_IDENTITY DIALOG  0, 0, 282, 159
+IDD_PROFILE_IDENTITY DIALOGEX 0, 0, 282, 159
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Identity"
-FONT 8, "Tahoma"
+FONT 8, "Tahoma", 0, 0, 0x0
 BEGIN
     GROUPBOX        "&Name:",IDC_STATIC,5,5,270,60,WS_GROUP
     RTEXT           "Screen Name:",IDC_STATIC,15,20,50,12,SS_CENTERIMAGE
@@ -1158,10 +1158,10 @@ BEGIN
     RTEXT           "Real Name:",IDC_STATIC,15,40,50,12,SS_CENTERIMAGE
     EDITTEXT        IDC_PROFILE_FIRST,75,40,90,12,ES_AUTOHSCROLL
     EDITTEXT        IDC_PROFILE_LAST,175,40,90,12,ES_AUTOHSCROLL
-    GROUPBOX        "&Vitals:",IDC_STATIC,5,70,105,60
-    COMBOBOX        IDC_PROFILE_GENDER,55,86,45,45,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        "&Vitals:",IDC_STATIC,5,70,150,60
+    COMBOBOX        IDC_PROFILE_GENDER,55,86,90,45,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     LTEXT           "Gender:",IDC_STATIC,15,86,35,12,SS_CENTERIMAGE
-    COMBOBOX        IDC_PROFILE_AGE,55,105,45,45,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_PROFILE_AGE,55,105,90,45,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
     LTEXT           "Age:",IDC_STATIC,15,105,35,12,SS_CENTERIMAGE
     CONTROL         "Allow others to browse my user profile",IDC_BROWSE_USER,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,140,260,12
@@ -3216,7 +3216,7 @@ BEGIN
     IDS_GENERAL_CONTINUE    "Continue"
     IDS_INFO_REMEMBER       "&Remember my selection next time"
     IDS_NEW_FOLDER          "New Folder"
-    IDS_COMMANDLINE         "Command-line options:\n\n-tray : Disable startup splash screen and send application to tray\n-nosplash : Disable startup splash screen\n-nowarn : Disable alpha (daily builds) version warning dialog\n\nInterface modes:\n\n-basic : Start application in Basic interface mode\n-tabbed : Start application in Tabbed interface mode\n-windowed : Start application in Windowed interface mode\n\nSystem options:\n\n-RegServer : Register internal components for everyone\n-UnRegServer : Un-register internal components for everyone\n-RegServerPerUser : Register internal components for current user\n-UnRegServerPerUser : Un-register internal components for current user"
+    IDS_COMMANDLINE         "Command-line options:\n\n-tray : Disable startup splash screen and send application to tray\n-nosplash : Disable startup splash screen\n-nowarn : Disable alpha (daily builds) version warning dialog\n-wait : Wait for other application instance exit\n\nInterface modes:\n\n-basic : Start application in Basic interface mode\n-tabbed : Start application in Tabbed interface mode\n-windowed : Start application in Windowed interface mode\n\nSystem options:\n\n-RegServer : Register internal components for everyone\n-UnRegServer : Un-register internal components for everyone\n-RegServerPerUser : Register internal components for current user\n-UnRegServerPerUser : Un-register internal components for current user"
     IDS_SCHEMA_LOAD_ERROR   "Failed to load metadata schemas. Please reinstall application."
     IDS_TOO_MANY_FILES      "You selected %u files. Are you sure?"
     IDS_PRIORITY_OFF        "Off"
@@ -4261,7 +4261,7 @@ BEGIN
     IDS_GENERAL_NOURNAVAILABLE "No URN available"
     IDS_GENERAL_CLOSE       "Close"
     IDS_GENERAL_OF          "of"
-    IDS_GENERAL_RTL_WARNING "Changing interface direction requires restart. \nYou will need to start Shareaza manually. Exit now?"
+    IDS_GENERAL_RTL_WARNING "Changing language requires application restart.\nRestart now?"
     IDS_GENERAL_NO          "No"
     IDS_GENERAL_YES         "Yes"
     IDS_GENERAL_AUTO        "Auto"
