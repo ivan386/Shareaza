@@ -55,7 +55,8 @@ void CFragmentBar::DrawFragment(CDC* pDC, CRect* prcBar, QWORD nTotal, QWORD nOf
 	if ( nTotal == SIZE_UNKNOWN || nOffset == SIZE_UNKNOWN || nLength == SIZE_UNKNOWN )
 		return;
 
-	ASSERT( nLength <= nTotal - nOffset );
+	if ( nLength > nTotal - nOffset )
+		return;
 
 	if ( Settings.General.LanguageRTL )
 		nOffset = nTotal - nOffset - nLength;
