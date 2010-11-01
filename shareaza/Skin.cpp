@@ -80,7 +80,6 @@ void CSkin::Apply()
 	Plugins.RegisterCommands();
 	Plugins.InsertCommands();
 
-	ApplyRecursive( L"Languages\\" );
 	ApplyRecursive( NULL );
 
 	if ( m_brDialog.m_hObject != NULL ) m_brDialog.DeleteObject();
@@ -138,6 +137,8 @@ void CSkin::CreateDefault()
 	CoolInterface.CopyIcon( ID_HELP_FAQ, ID_HELP_WEB_4 );
 	CoolInterface.CopyIcon( ID_HELP_FAQ, ID_HELP_WEB_5 );
 	CoolInterface.CopyIcon( ID_HELP_FAQ, ID_HELP_WEB_6 );
+
+	ApplyRecursive( L"Languages\\" );
 }
 
 void CSkin::CreateDefaultColors()
@@ -1138,7 +1139,11 @@ BOOL CSkin::LoadListColumns(CXMLElement* pBase)
 		if ( pXML->IsNamed( _T("list") ) )
 		{
 			CString strName = pXML->GetAttributeValue( _T("name") );
-			if ( strName.IsEmpty() ) continue;
+			if ( strName.IsEmpty() )
+			{
+				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Missed [name] attribute in [list] element"), pXML->ToString() );
+				continue;
+			}
 
 			CString strEdit;
 			for ( POSITION posCol = pXML->GetElementIterator() ; posCol ; )
@@ -1147,14 +1152,19 @@ BOOL CSkin::LoadListColumns(CXMLElement* pBase)
 				if ( pCol->IsNamed( _T("column") ) )
 				{
 					CString strFrom	= pCol->GetAttributeValue( _T("from") );
-					CString strTo	= pCol->GetAttributeValue( _T("to") );
-
-					if ( strFrom.IsEmpty() || strTo.IsEmpty() ) continue;
-
-					if ( strEdit.GetLength() ) strEdit += '|';
-					strEdit += strFrom;
-					strEdit += '=';
-					strEdit += strTo;
+					if ( ! strFrom.IsEmpty() )
+					{
+						CString strTo = pCol->GetAttributeValue( _T("to") );
+						if ( strTo.IsEmpty() )
+							strTo = strFrom;
+						if ( strEdit.GetLength() )
+							strEdit += '|';
+						strEdit += strFrom;
+						strEdit += '=';
+						strEdit += strTo;
+					}
+					else
+						theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Missed [from] attribute in [column] element"), pCol->ToString() );
 				}
 				else
 					theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [list] element"), pCol->ToString() );
@@ -1520,15 +1530,12 @@ BOOL CSkin::LoadWindowSkins(CXMLElement* pSub, const CString& strPath)
 
 		if ( pSkinElement->IsNamed( _T("windowSkin") ) )
 		{
-			CSkinWindow* pSkin = new CSkinWindow();
-
-			if ( pSkin->Parse( pSkinElement, strPath ) )
+			if ( CSkinWindow* pSkin = new CSkinWindow() )
 			{
-				m_pSkins.AddHead( pSkin );
-			}
-			else
-			{
-				delete pSkin;
+				if ( pSkin->Parse( pSkinElement, strPath ) )
+					m_pSkins.AddHead( pSkin );
+				else
+					delete pSkin;
 			}
 		}
 		else
@@ -1743,6 +1750,8 @@ BOOL CSkin::LoadColourScheme(CXMLElement* pBase)
 				{
 					*pColour = CLR_NONE;
 				}
+				else
+					theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [value] attribute in [colour] element"), pXML->ToString() );
 			}
 			else
 				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown [name] attribute in [colourScheme] element"), pXML->ToString() );
@@ -1779,18 +1788,16 @@ BOOL CSkin::LoadResourceMap(CXMLElement* pBase)
 		{
 			CString strCode = pXML->GetAttributeValue( _T("code") );
 			UINT nID;
-			if ( _stscanf( strCode, _T("%lu"), &nID ) != 1 )
+			if ( _stscanf( strCode, _T("%lu"), &nID ) == 1 )
 			{
+				CString strID = pXML->GetAttributeValue( _T("id") );
+				if ( ! strID.IsEmpty() )
+					CoolInterface.NameCommand( nID, strID );
+				else
+					theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Missed [id] attribute in resource map element"), pXML->ToString() );
+			}
+			else
 				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [code] attribute in resource map element"), pXML->ToString() );
-				return FALSE;
-			}
-			CString strID = pXML->GetAttributeValue( _T("id") );
-			if ( strID.IsEmpty() )
-			{
-				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Missed [id] attribute in resource map element"), pXML->ToString() );
-				return FALSE;
-			}
-			CoolInterface.NameCommand( nID, strID );
 		}
 		else
 			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in resource map"), pXML->ToString() );
@@ -2009,7 +2016,7 @@ BOOL CSkin::LoadCommandIcon(CXMLElement* pXML, const CString& strPath)
 	if ( nID == 0 )
 	{
 		theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown [id] attribute in [icon] element"), pXML->ToString() );
-		return FALSE;
+		return TRUE;
 	}
 
 	// Is this a RTL-enabled icon? (default: "0" - no)
@@ -2036,7 +2043,7 @@ BOOL CSkin::LoadCommandIcon(CXMLElement* pXML, const CString& strPath)
 			break;
 		default:
 			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Icon has invalid size"), pXML->ToString() );
-			return FALSE;
+			continue;
 		}
 
 		HICON hIcon = NULL;
@@ -2063,10 +2070,7 @@ BOOL CSkin::LoadCommandIcon(CXMLElement* pXML, const CString& strPath)
 			VERIFY( DestroyIcon( hIcon ) );
 		}
 		else
-		{
 			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Failed to load icon"), pXML->ToString() );
-			return FALSE;
-		}
 	}
 
 	return TRUE;
@@ -2084,7 +2088,7 @@ BOOL CSkin::LoadCommandBitmap(CXMLElement* pBase, const CString& strPath)
 		strFile.Format( _T("%s%s"), (LPCTSTR)strPath, (LPCTSTR)pBase->GetAttributeValue( _T("path") ) );
 
 	CString strMask = pBase->GetAttributeValue( _T("mask"), _T("00FF00") );
-	COLORREF crMask;
+	COLORREF crMask = RGB( 0, 255, 0 );
 	int nRed = 0, nGreen = 0, nBlue = 0;
 	if ( strMask.GetLength() == 6 &&
 		_stscanf( strMask.Mid( 0, 2 ), _T("%x"), &nRed ) == 1 &&
@@ -2094,16 +2098,13 @@ BOOL CSkin::LoadCommandBitmap(CXMLElement* pBase, const CString& strPath)
 		crMask = RGB( nRed, nGreen, nBlue );
 	}
 	else
-	{
 		theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Image has invalid mask"), pBase->ToString() );
-		return FALSE;
-	}
 
 	HBITMAP hBitmap = LoadBitmap( strFile );
 	if ( hBitmap == NULL )
 	{
 		theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Failed to load image"), pBase->ToString() );
-		return FALSE;
+		return TRUE;
 	}
 	if ( Settings.General.LanguageRTL )
 		hBitmap = CreateMirroredBitmap( hBitmap );
@@ -2111,10 +2112,7 @@ BOOL CSkin::LoadCommandBitmap(CXMLElement* pBase, const CString& strPath)
 	BOOL bResult = CoolInterface.Add( pBase, hBitmap, crMask );
 	DeleteObject( hBitmap );
 	if ( ! bResult )
-	{
 		theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Failed to add image"), pBase->ToString() );
-		return FALSE;
-	}
 
 	return TRUE;
 }
@@ -2409,3 +2407,23 @@ LPCTSTR CSkin::m_pszModeSuffix[3][4] =
 	{ _T(".Tabbed"), _T(""), NULL, NULL },				// GUI_TABBED
 	{ _T(".Basic"), _T(".Tabbed"), _T(""), NULL }		// GUI_BASIC
 };
+
+BOOL CSkin::LoadColour(CXMLElement* pXML, LPCTSTR pszName, COLORREF* pColour)
+{
+	CString str = pXML->GetAttributeValue( pszName );
+	if ( str.GetLength() )
+	{
+		int nRed = 0, nGreen = 0, nBlue = 0;
+		if ( str.GetLength() == 6 &&	
+			_stscanf( str.Mid( 0, 2 ), _T("%x"), &nRed ) == 1 &&
+			_stscanf( str.Mid( 2, 2 ), _T("%x"), &nGreen ) == 1 &&
+			_stscanf( str.Mid( 4, 2 ), _T("%x"), &nBlue ) == 1 )
+		{
+			*pColour = RGB( nRed, nGreen, nBlue );
+		}
+		else
+			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad color attribute"), pXML->ToString() );
+	}
+
+	return TRUE;
+}

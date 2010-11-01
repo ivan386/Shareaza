@@ -306,22 +306,14 @@ BOOL CSkinWindow::Parse(CXMLElement* pBase, const CString& strPath)
 				m_fnCaption.CreateFontIndirect( &lf );
 			}
 
-			str = pGroup->GetAttributeValue( _T("color") );
-			ParseColour( str, m_crCaptionText );
-			str = pGroup->GetAttributeValue( _T("colour") );
-			ParseColour( str, m_crCaptionText );
-			str = pGroup->GetAttributeValue( _T("inactiveColor") );
-			ParseColour( str, m_crCaptionInactive );
-			str = pGroup->GetAttributeValue( _T("inactiveColour") );
-			ParseColour( str, m_crCaptionInactive );
-			str = pGroup->GetAttributeValue( _T("outlineColor") );
-			ParseColour( str, m_crCaptionOutline );
-			str = pGroup->GetAttributeValue( _T("outlineColour") );
-			ParseColour( str, m_crCaptionOutline );
-			str = pGroup->GetAttributeValue( _T("shadowColor") );
-			ParseColour( str, m_crCaptionShadow );
-			str = pGroup->GetAttributeValue( _T("shadowColour") );
-			ParseColour( str, m_crCaptionShadow );
+			CSkin::LoadColour( pGroup, _T("color"), &m_crCaptionText );
+			CSkin::LoadColour( pGroup, _T("colour"), &m_crCaptionText );
+			CSkin::LoadColour( pGroup, _T("inactiveColor"), &m_crCaptionInactive );
+			CSkin::LoadColour( pGroup, _T("inactiveColour"), &m_crCaptionInactive );
+			CSkin::LoadColour( pGroup, _T("outlineColor"), &m_crCaptionOutline );
+			CSkin::LoadColour( pGroup, _T("outlineColour"), &m_crCaptionOutline );
+			CSkin::LoadColour( pGroup, _T("shadowColor"), &m_crCaptionShadow );
+			CSkin::LoadColour( pGroup, _T("shadowColour"), &m_crCaptionShadow );
 
 			str = pGroup->GetAttributeValue( _T("caps") );
 			m_bCaptionCaps = str.GetLength() > 0;
@@ -371,7 +363,7 @@ BOOL CSkinWindow::Parse(CXMLElement* pBase, const CString& strPath)
 				if ( _stscanf( strRes, _T("%lu"), &nResID ) != 1 )
 				{
 					theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown [res] attribute in [image] element"), pGroup->ToString() );
-					return FALSE;
+					continue;
 				}
 
 				if ( nResID == IDB_NAVBAR_IMAGE && Settings.General.LanguageRTL )
@@ -389,7 +381,7 @@ BOOL CSkinWindow::Parse(CXMLElement* pBase, const CString& strPath)
 			if ( hBitmap == NULL )
 			{
 				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Cannot load image"), pGroup->ToString() );
-				return FALSE;
+				continue;
 			}
 
 			str = pGroup->GetAttributeValue( _T("type") );
@@ -445,53 +437,36 @@ BOOL CSkinWindow::Parse(CXMLElement* pBase, const CString& strPath)
 
 BOOL CSkinWindow::ParseRect(CXMLElement* pXML, CRect* pRect)
 {
-	CString strValue = pXML->GetAttributeValue( _T("rect") );
-
-	if ( strValue.GetLength() )
+	CString strRect = pXML->GetAttributeValue( _T("rect") );
+	if ( strRect.GetLength() )
 	{
 		int x, y, cx, cy;
-		if ( _stscanf( strValue, _T("%i,%i,%i,%i"), &x, &y, &cx, &cy ) != 4 )
+		if ( _stscanf( strRect, _T("%i,%i,%i,%i"), &x, &y, &cx, &cy ) == 4 )
 		{
+			pRect->left = x;
+			pRect->top = y;
+			pRect->right = x + cx;
+			pRect->bottom = y + cy;
+		}
+		else
 			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Invalid [rect] attribute"), pXML->ToString() );
-			return FALSE;
-		}
-		pRect->left = x;
-		pRect->top = y;
-		pRect->right = x + cx;
-		pRect->bottom = y + cy;
-		return TRUE;
 	}
-
-	strValue = pXML->GetAttributeValue( _T("point") );
-
-	if ( strValue.GetLength() )
+	else
 	{
-		int x, y;
-		if ( _stscanf( strValue, _T("%i,%i"), &x, &y ) != 2 )
+		CString strPoint = pXML->GetAttributeValue( _T("point") );
+		if ( strPoint.GetLength() )
 		{
-			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Invalid [point] attribute"), pXML->ToString() );
-			return FALSE;
+			int x, y;
+			if ( _stscanf( strPoint, _T("%i,%i"), &x, &y ) == 2 )
+			{
+				pRect->left = x;
+				pRect->top = y;
+				pRect->right = pRect->bottom = 0;
+			}
+			else
+				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Invalid [point] attribute"), pXML->ToString() );
 		}
-		pRect->left = x;
-		pRect->top = y;
-		pRect->right = pRect->bottom = 0;
-		return TRUE;
 	}
-
-	return FALSE;
-}
-
-BOOL CSkinWindow::ParseColour(const CString& str, COLORREF& cr)
-{
-	if ( str.GetLength() != 6 ) return FALSE;
-
-	int nRed, nGreen, nBlue;
-
-	if ( _stscanf( str.Mid( 0, 2 ), _T("%x"), &nRed ) != 1 ) return FALSE;
-	if ( _stscanf( str.Mid( 2, 2 ), _T("%x"), &nGreen ) != 1 ) return FALSE;
-	if ( _stscanf( str.Mid( 4, 2 ), _T("%x"), &nBlue ) != 1 ) return FALSE;
-
-	cr = RGB( nRed, nGreen, nBlue );
 
 	return TRUE;
 }

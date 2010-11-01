@@ -248,11 +248,11 @@ BOOL CRichDocument::LoadXML(CXMLElement* pBase, CMap< CString, const CString&, C
 		m_crHover		= CoolInterface.m_crTextLinkHot;
 		m_crHeading		= CoolInterface.m_crRichdocHeading;
 
-		LoadXMLColour( pBase, _T("crBackground"), &m_crBackground );
-		LoadXMLColour( pBase, _T("crText"), &m_crText );
-		LoadXMLColour( pBase, _T("crLink"), &m_crLink );
-		LoadXMLColour( pBase, _T("crHover"), &m_crHover );
-		LoadXMLColour( pBase, _T("crHeading"), &m_crHeading );
+		CSkin::LoadColour( pBase, _T("crBackground"), &m_crBackground );
+		CSkin::LoadColour( pBase, _T("crText"), &m_crText );
+		CSkin::LoadColour( pBase, _T("crLink"), &m_crLink );
+		CSkin::LoadColour( pBase, _T("crHover"), &m_crHover );
+		CSkin::LoadColour( pBase, _T("crHeading"), &m_crHeading );
 		
 		strTemp = pBase->GetAttributeValue( _T("leftMargin") );
 		if ( strTemp.GetLength() && _stscanf( strTemp, _T("%i"), &m_szMargin.cx ) != 1 )
@@ -319,13 +319,15 @@ BOOL CRichDocument::LoadXML(CXMLElement* pBase, CMap< CString, const CString&, C
 		}
 		else if ( pXML->IsNamed( _T("para") ) )
 		{
-			Add( pElement = new CRichElement( retAlign,
-				pXML->GetAttributeValue( _T("align") ) ) );
+			CString strAlign = pXML->GetAttributeValue( _T("align") );
+			pElement = new CRichElement( retAlign, strAlign );
+			Add( pElement );
 			
 			if ( pXML->GetElementCount() )
 			{
 				if ( ! LoadXML( pXML, pMap, nGroup ) )
 					return FALSE;
+
 				if ( pElement->m_sText.CompareNoCase( _T("left") ) )
 				{
 					Add( new CRichElement( retAlign, _T("left") ) );
@@ -337,14 +339,13 @@ BOOL CRichDocument::LoadXML(CXMLElement* pBase, CMap< CString, const CString&, C
 		else if ( pXML->IsNamed( _T("group") ) )
 		{
 			int nSubGroup = 0;
-			if ( _stscanf( pXML->GetAttributeValue( _T("id") ), _T("%i"), &nSubGroup ) != 1 )
+			if ( _stscanf( pXML->GetAttributeValue( _T("id") ), _T("%i"), &nSubGroup ) == 1 )
 			{
-				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [id] attribute in [group] element"), pXML->ToString() );
-				return FALSE;
+				if ( ! LoadXML( pXML, pMap, nSubGroup ) )
+					return FALSE;
 			}
-			if ( ! LoadXML( pXML, pMap, nSubGroup ) )
-				return FALSE;
-			continue;
+			else
+				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [id] attribute in [group] element"), pXML->ToString() );
 		}
 		else if ( pXML->IsNamed( _T("styles") ) )
 		{
@@ -352,10 +353,7 @@ BOOL CRichDocument::LoadXML(CXMLElement* pBase, CMap< CString, const CString&, C
 				return FALSE;
 		}
 		else
-		{
 			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [document] element"), pXML->ToString() );
-			return FALSE;
-		}
 		
 		if ( pElement == NULL ) continue;
 		
@@ -380,18 +378,16 @@ BOOL CRichDocument::LoadXML(CXMLElement* pBase, CMap< CString, const CString&, C
 		if ( strTemp == _T("middle") ) pElement->m_nFlags |= retfMiddle;
 		
 		strTemp = pXML->GetAttributeValue( _T("colour") );
-		if ( strTemp.GetLength() == 6 )
+		if ( CSkin::LoadColour( pXML, _T("colour"), &pElement->m_cColour ) )
 		{
 			pElement->m_nFlags |= retfColour;
-			LoadXMLColour( pXML, _T("colour"), &pElement->m_cColour );
 		}
 		else
 		{
 			strTemp = pXML->GetAttributeValue( _T("color") );
-			if ( strTemp.GetLength() == 6 )
+			if ( CSkin::LoadColour( pXML, _T("color"), &pElement->m_cColour ) )
 			{
 				pElement->m_nFlags |= retfColour;
-				LoadXMLColour( pXML, _T("color"), &pElement->m_cColour );
 			}
 		}
 		
@@ -441,8 +437,12 @@ BOOL CRichDocument::LoadXMLStyles(CXMLElement* pParent)
 	for ( POSITION pos = pParent->GetElementIterator() ; pos ; )
 	{
 		CXMLElement* pXML = pParent->GetNextElement( pos );
-		if ( ! pXML->IsNamed( _T("style") ) ) continue;
-		
+		if ( ! pXML->IsNamed( _T("style") ) )
+		{
+			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [styles] element"), pXML->ToString() );
+			continue;
+		}
+
 		CString strName = pXML->GetAttributeValue( _T("name") );
 		strName.MakeLower();
 		bool bDefault = ( strName == _T("default") || strName.IsEmpty() );
@@ -468,9 +468,10 @@ BOOL CRichDocument::LoadXMLStyles(CXMLElement* pParent)
 			CString strSize = pFont->GetAttributeValue( _T("size") );
 			if ( ! strSize.IsEmpty() )
 			{
-				if ( _stscanf( strSize, _T("%i"), &lf.lfHeight ) == 1 )
+				int height;
+				if ( _stscanf( strSize, _T("%i"), &height ) == 1 )
 				{
-					lf.lfHeight = - lf.lfHeight;
+					lf.lfHeight = - height;
 				}
 				else
 					theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [size] attribute in [font] element"), pFont->ToString() );
@@ -478,8 +479,13 @@ BOOL CRichDocument::LoadXMLStyles(CXMLElement* pParent)
 			CString strWeight = pFont->GetAttributeValue( _T("weight") );
 			if ( ! strWeight.IsEmpty() )
 			{
-				if ( _stscanf( strWeight, _T("%i"), &lf.lfWeight ) != 1 )
-					theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [size] attribute in [font] element"), pFont->ToString() );
+				int weight;
+				if ( _stscanf( strWeight, _T("%i"), &weight ) == 1 )
+				{
+					lf.lfWeight = weight;
+				}
+				else
+					theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad [weight] attribute in [font] element"), pFont->ToString() );
 			}
 		}
 		
@@ -489,38 +495,22 @@ BOOL CRichDocument::LoadXMLStyles(CXMLElement* pParent)
 		
 		if ( bDefault )
 		{
-			LoadXMLColour( pColours, _T("text"), &m_crText );
-			LoadXMLColour( pColours, _T("link"), &m_crLink );
-			LoadXMLColour( pColours, _T("hover"), &m_crHover );
+			CSkin::LoadColour( pColours, _T("text"), &m_crText );
+			CSkin::LoadColour( pColours, _T("link"), &m_crLink );
+			CSkin::LoadColour( pColours, _T("hover"), &m_crHover );
 
 			// Create specified fonts (using default font as heading font)
 			CreateFonts( &lf, NULL );
 		}
 		else if ( bHeading )
 		{
-			LoadXMLColour( pColours, _T("text"), &m_crHeading );
+			CSkin::LoadColour( pColours, _T("text"), &m_crHeading );
 
 			// Create heading font
 			if ( m_fntHeading.m_hObject ) m_fntHeading.DeleteObject();
 			m_fntHeading.CreateFontIndirect( &lf );
 		}
 	}
-	
-	return TRUE;
-}
-
-BOOL CRichDocument::LoadXMLColour(CXMLElement* pXML, LPCTSTR pszName, COLORREF* pColour)
-{
-	CString str = pXML->GetAttributeValue( pszName );
-	if ( str.GetLength() != 6 ) return FALSE;
-	
-	int nRed, nGreen, nBlue;
-	
-	if ( _stscanf( str.Mid( 0, 2 ), _T("%x"), &nRed ) != 1 ) return FALSE;
-	if ( _stscanf( str.Mid( 2, 2 ), _T("%x"), &nGreen ) != 1 ) return FALSE;
-	if ( _stscanf( str.Mid( 4, 2 ), _T("%x"), &nBlue ) != 1 ) return FALSE;
-	
-	*pColour = RGB( nRed, nGreen, nBlue );
 	
 	return TRUE;
 }

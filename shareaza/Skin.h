@@ -45,6 +45,7 @@ public:
 	static BOOL	SelectCaption(CString& strCaption, int nIndex);
 	static void	DrawWrappedText(CDC* pDC, CRect* pBox, LPCTSTR pszText, CPoint ptStart, BOOL bExclude = TRUE);
 	static int GetTextFlowChange(LPCTSTR pszText, BOOL* bIsRTL);
+	static BOOL LoadColour(CXMLElement* pXML, LPCTSTR pszName, COLORREF* pColour);
 
 protected:
 	mutable CCriticalSection m_pSection;

@@ -109,15 +109,11 @@ BOOL CIdentityProfilePage::OnInitDialog()
 			CComboBox* pGender = (CComboBox*) GetDlgItem( IDC_PROFILE_GENDER );
 			if ( m_sGender.CompareNoCase( _T("male") ) == 0 )
 			{
-				int nIndex = pGender->SelectString( 1, (LPCTSTR) strGenderMale );
-				ASSERT(nIndex != CB_ERR);
-				UNUSED_ALWAYS(nIndex);
+				pGender->SelectString( -1, (LPCTSTR) strGenderMale );
 			}
 			else if ( m_sGender.CompareNoCase( _T("female") ) == 0 )
 			{
-				int nIndex = pGender->SelectString( 2, (LPCTSTR) strGenderFemale );
-				ASSERT(nIndex != CB_ERR);
-				UNUSED_ALWAYS(nIndex);
+				pGender->SelectString( -1, (LPCTSTR) strGenderFemale );
 			}
 			else
 				m_sGender.Empty();

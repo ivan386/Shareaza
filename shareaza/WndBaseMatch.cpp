@@ -162,9 +162,8 @@ int CBaseMatchWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if ( CPanelWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
 
 	m_wndList.Create( m_pMatches, this );
-	m_wndList.ModifyStyle( 0, WS_TABSTOP );
 
-	if ( ! m_wndToolBar.Create( this, WS_CHILD|WS_TABSTOP|WS_VISIBLE|CBRS_NOALIGN ) ) return -1;
+	if ( ! m_wndToolBar.Create( this, WS_CHILD|WS_CLIPSIBLINGS|WS_TABSTOP|WS_VISIBLE|CBRS_NOALIGN ) ) return -1;
 	m_wndToolBar.SetBarStyle( m_wndToolBar.GetBarStyle() | CBRS_TOOLTIPS | CBRS_BORDER_TOP );
 	m_wndToolBar.ModifyStyleEx( 0, WS_EX_CONTROLPARENT );
 
