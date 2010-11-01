@@ -158,7 +158,7 @@ int CLibraryFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndViewTop.SetBarStyle( m_wndViewTop.GetBarStyle() | CBRS_TOOLTIPS );
 	m_wndViewTop.SetOwner( GetOwner() );
 
-	if ( ! m_wndViewBottom.Create( this, WS_CHILD|WS_CLIPSIBLINGS|WS_VISIBLE|CBRS_NOALIGN, AFX_IDW_TOOLBAR ) ) return -1;
+	if ( ! m_wndViewBottom.Create( this, WS_CHILD|WS_CLIPSIBLINGS|WS_VISIBLE|CBRS_NOALIGN ) ) return -1;
 	m_wndViewBottom.SetBarStyle( m_wndViewBottom.GetBarStyle() | CBRS_TOOLTIPS|CBRS_BORDER_TOP );
 	m_wndViewBottom.SetOwner( GetOwner() );
 
@@ -167,7 +167,6 @@ int CLibraryFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndBottomDynamic.SetOwner( GetOwner() );
 
 	if ( ! m_wndSearch.Create( WS_CHILD|WS_CLIPSIBLINGS|WS_TABSTOP|ES_AUTOHSCROLL, rcTypes, &m_wndViewBottom, IDC_SEARCH_BOX, _T("Search"), _T("Search.%.2i") ) ) return -1;
-	m_wndSearch.SetFont( &CoolInterface.m_fntNormal );
 
 	if ( ! m_wndSaveOption.Create( NULL, WS_CHILD|WS_CLIPSIBLINGS|WS_TABSTOP|BS_AUTOCHECKBOX, rcTypes, &m_wndBottomDynamic,
 		ID_SHAREMONKEY_SAVE_OPTION ) ) return -1;
@@ -219,6 +218,8 @@ void CLibraryFrame::OnSkinChange()
 	m_wndTreeBottom.ShowWindow( Settings.Library.ShowVirtual ? SW_SHOW : SW_HIDE );
 	m_wndTreeTypes.ShowWindow( Settings.Library.ShowVirtual ? SW_HIDE : SW_SHOW );
 	m_wndHeader.OnSkinChange();
+
+	m_wndSearch.SetFont( &CoolInterface.m_fntNormal );
 
 	CLibraryView* pView = m_pView;
 	CPanelCtrl* pPanel = m_pPanel;
