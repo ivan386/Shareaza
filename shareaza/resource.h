@@ -175,7 +175,6 @@
 #define IDR_XML_SCHEMA_MAPS             282
 #define IDB_MUSICBRAINZ_LOGO            284
 #define IDI_HASH                        285
-#define IDI_SEARCH_ARTIST               286
 #define IDB_BOX_MARK                    287
 #define IDC_COPY_VISTA                  290
 #define IDC_MOVE_VISTA                  291
@@ -202,13 +201,15 @@
 #define IDI_NOTASK                      341
 #define IDI_INCOMING                    342
 #define IDI_OUTGOING                    343
+#define IDI_CONTACT_MSN                 344
+#define IDI_COMPUTER                    345
+#define IDB_IRCICONS                    346
 #define IDR_CHANSFRAME                  991
 #define IDD_DOWNLOAD_ACTIONS            993
 #define IDR_USERSFRAME                  995
 #define IDB_FONT_SYMBOLS                996
 #define IDD_SETTINGS_IRC                997
 #define IDD_IRC_INPUTBOX                998
-#define IDB_IRCICONS                    999
 #define IDD_SELECT                      999
 #define IDC_CONNECT_HOST                1000
 #define IDD_MESSAGE                     1000
@@ -218,9 +219,7 @@
 #define IDC_SEARCH                      1003
 #define IDC_FILTER                      1004
 #define IDC_COLUMNS                     1005
-#define IDI_COMPUTER                    1006
 #define IDC_CONNECT_ULTRAPEER           1007
-#define IDI_CONTACT_MSN                 1008
 #define IDC_FILE_SHA1                   1009
 #define IDC_FILE_TYPE                   1010
 #define IDC_FILE_SIZE                   1011
@@ -1941,7 +1940,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        344
+#define _APS_NEXT_RESOURCE_VALUE        347
 #define _APS_NEXT_COMMAND_VALUE         33329
 #define _APS_NEXT_CONTROL_VALUE         1620
 #define _APS_NEXT_SYMED_VALUE           104

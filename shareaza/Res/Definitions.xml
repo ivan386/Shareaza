@@ -37,16 +37,35 @@
 	<resource code="159" id="IDB_CHILDFRAME"/>
 	<resource code="159" id="WINDOW_CHILD"/>
 	<resource code="160" id="IDI_BROWSE"/>
+	<resource code="175" id="IDI_WEB_URL"/>
 	<resource code="181" id="IDI_EXECUTABLE"/>
+	<resource code="182" id="IDI_SKIN"/>
 	<resource code="183" id="IDI_POINTER_ARROW"/>
+	<resource code="185" id="IDI_WORLD"/>
+	<resource code="186" id="IDI_FLAG_ENGLISH"/>
+	<resource code="188" id="IDI_CHECKMARK"/>
 	<resource code="191" id="IDI_FILE"/>
+	<resource code="202" id="IDI_PROPERTIES"/>
 	<resource code="203" id="IDI_DOWNLOAD_MONITOR"/>
+	<resource code="206" id="IDI_CONTACT_YAHOO"/>
+	<resource code="207" id="IDI_CONTACT_AOL"/>
+	<resource code="208" id="IDI_CONTACT_ICQ"/>
+	<resource code="212" id="IDI_COMPUTER_GRAY"/>
+	<resource code="213" id="IDI_DISCOVERY_GRAY"/>
+	<resource code="214" id="IDI_SEARCH_FOLDER"/>
+	<resource code="215" id="IDI_DISCOVERY_BLUE"/>
 	<resource code="222" id="IDB_MEDIA_STATES"/>
+	<resource code="236" id="IDI_TOOLS_WIZARD"/>
+	<resource code="237" id="IDI_PAINTBRUSHES"/>
 	<resource code="239" id="IDI_TORRENT_ICON"/>
 	<resource code="243" id="IDI_COLLECTION_MASK"/>
+	<resource code="244" id="IDI_COLLECTION"/>
 	<resource code="252" id="IDI_FIREWALLED"/>
 	<resource code="253" id="IDI_GRANTED"/>
+	<resource code="265" id="IDI_MAIL"/>
+	<resource code="275" id="IDI_COLORS"/>
 	<resource code="281" id="IDI_UPDOWN_ARROW"/>
+	<resource code="285" id="IDI_HASH"/> 
 	<resource code="301" id="IDI_PLUS"/>
 	<resource code="302" id="IDI_MINUS"/>
 	<resource code="303" id="IDI_TICK"/>
@@ -66,8 +85,13 @@
 	<resource code="322" id="IDI_RATING_FAKE"/>
 	<resource code="323" id="IDI_RATING_AVERAGE"/>
 	<resource code="324" id="IDI_RATING_GOOD"/>
-	<resource code="999" id="IDB_IRCICONS"/>
-	<resource code="1006" id="IDI_COMPUTER"/>
+	<resource code="336" id="IDI_EXCLAMATIONMARK"/>
+	<resource code="341" id="IDI_NOTASK"/>
+	<resource code="342" id="IDI_INCOMING"/>
+	<resource code="343" id="IDI_OUTGOING"/>
+	<resource code="344" id="IDI_CONTACT_MSN"/>
+	<resource code="345" id="IDI_COMPUTER"/>
+	<resource code="346" id="IDB_IRCICONS"/>
 	<resource code="32772" id="ID_HELP_ABOUT"/>
 	<resource code="32773" id="ID_HELP_VERSION_CHECK"/>
 	<resource code="32774" id="ID_CHECKMARK"/>

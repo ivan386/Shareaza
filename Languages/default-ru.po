@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2010-10-29 11:01+0000\n"
+"POT-Creation-Date: 2010-11-01 12:35+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -1526,7 +1526,7 @@ msgstr "_Свойства файла"
 #: clibrarytree.virtual.basic;item;id_library_folder_enqueue
 #: clibrarytree.virtual;item;id_library_folder_enqueue
 #: clibraryfileview.virtual.basic;item;id_library_folder_enqueue
-msgid "_Play Album"
+msgid "Play _Album"
 msgstr "Играть _альбом"
 
 #: clibrarytree.virtual.basic;item;id_library_folder_delete
@@ -1542,8 +1542,8 @@ msgstr "_Удалить"
 
 #: clibrarytree.virtual.basic;item;id_library_folder_properties
 #: clibrarytree.virtual;item;id_library_folder_properties
-msgid "_Album Properties"
-msgstr "Свойства _альбома"
+msgid "Album _Properties"
+msgstr "_Свойства альбома"
 
 #: clibrarytree.virtual;item;id_library_export_collection
 #: cmedialist;item;id_media_export_collection
@@ -4221,7 +4221,7 @@ msgstr "Сбросить счетчики хитов для помеченных
 
 #: message;id_sharemonkey_buy
 msgid "Buy it and support the author"
-msgstr ""
+msgstr "Купить и поблагодарить автора"
 
 #: message;id_sharemonkey_compare
 msgid "Compare prices in different stores"
@@ -7267,11 +7267,11 @@ msgstr "из"
 
 #: string;20003
 msgid ""
-"Changing interface direction requires restart. \\n"
-"You will need to start Shareaza manually. Exit now?"
+"Changing language requires application restart.\\n"
+"Restart now?"
 msgstr ""
-"Для смены направления интерфейса Вы должны перезапустить Shareaza. \\n"
-"Выйти сейчас?"
+"Изменение языка требует перезапуска приложения.\\n"
+"Перезапустить сейчас?"
 
 #: string;20005
 msgid "No"
@@ -7576,6 +7576,7 @@ msgid ""
 "-tray : Disable startup splash screen and send application to tray\\n"
 "-nosplash : Disable startup splash screen\\n"
 "-nowarn : Disable alpha (daily builds) version warning dialog\\n"
+"-wait : Wait for other application instance exit\\n"
 "\\n"
 "Interface modes:\\n"
 "\\n"
@@ -7590,6 +7591,25 @@ msgid ""
 "-RegServerPerUser : Register internal components for current user\\n"
 "-UnRegServerPerUser : Un-register internal components for current user"
 msgstr ""
+"Опции командной строки:\\n"
+"\\n"
+"-tray : Disable startup splash screen and send application to tray\\n"
+"-nosplash : Disable startup splash screen\\n"
+"-nowarn : Disable alpha (daily builds) version warning dialog\\n"
+"-wait : Wait for other application instance exit\\n"
+"\\n"
+"Interface modes:\\n"
+"\\n"
+"-basic : Start application in Basic interface mode\\n"
+"-tabbed : Start application in Tabbed interface mode\\n"
+"-windowed : Start application in Windowed interface mode\\n"
+"\\n"
+"System options:\\n"
+"\\n"
+"-RegServer : Register internal components for everyone\\n"
+"-UnRegServer : Un-register internal components for everyone\\n"
+"-RegServerPerUser : Register internal components for current user\\n"
+"-UnRegServerPerUser : Un-register internal components for current user"
 
 #: string;20247
 msgid "Failed to load metadata schemas. Please reinstall application."
@@ -8841,7 +8861,7 @@ msgstr "Настоящее:"
 
 #: cidentityprofilepage;control;7
 msgid "_Vitals:"
-msgstr "_Важное:"
+msgstr "_Личные данные:"
 
 #: cidentityprofilepage;control;8
 msgid "Male|Female"
@@ -10175,6 +10195,14 @@ msgstr "Триггер"
 msgid "NextRun"
 msgstr "Следующий запуск"
 
+#~ msgid "_Play Album"
+#~ msgstr "Играть _альбом"
+#~ msgid ""
+#~ "Changing interface direction requires restart. \\nYou will need to start "
+#~ "Shareaza manually. Exit now?"
+#~ msgstr ""
+#~ "Для смены направления интерфейса Вы должны перезапустить Shareaza. "
+#~ "\\nВыйти сейчас?"
 #~ msgid "Schedule Item"
 #~ msgstr "Запланировать"
 #~ msgid "Only once"

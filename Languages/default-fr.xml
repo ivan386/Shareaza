@@ -287,9 +287,9 @@
 			<button id="ID_MEDIA_STOP" text="Stop"/>
 			<separator/>
 			<label text="Position :" tip="Se déplacer dans le fichier média"/>
-			<control id="IDC_MEDIA_POSITION" width="190" height="22"/>
+			<control id="ID_MEDIA_POSITION" width="190" height="22"/>
 			<label text="Volume :" tip="Ajuster le volume audio"/>
-			<control id="IDC_MEDIA_VOLUME" width="50" height="22"/>
+			<control id="ID_MEDIA_VOLUME" width="50" height="22"/>
 			<separator/>
 			<button id="ID_MEDIA_OPEN" text="Ouvrir le fichier"/>
 			<rightAlign/>
@@ -304,11 +304,11 @@
 			<button id="ID_MEDIA_STOP" text="Stop"/>
 			<separator/>
 			<label text="Position :" tip="Se déplacer dans le fichier média"/>
-			<control id="IDC_MEDIA_POSITION" width="190" height="22"/>
+			<control id="ID_MEDIA_POSITION" width="190" height="22"/>
 			<label text="Vitesse :" tip="Ajuster la vitesse du fichier média"/>
-			<control id="IDC_MEDIA_SPEED" width="40" height="22"/>
+			<control id="ID_MEDIA_SPEED" width="40" height="22"/>
 			<label text="Volume :" tip="Ajuster le volume audio"/>
-			<control id="IDC_MEDIA_VOLUME" width="50" height="22"/>
+			<control id="ID_MEDIA_VOLUME" width="50" height="22"/>
 			<separator/>
 			<button id="ID_MEDIA_OPEN" text="Ouvrir le fichier"/>
 			<separator/>
@@ -387,9 +387,6 @@
 			<button id="ID_SCHEDULER_REMOVE" text="Enlever une tâche"/>
 			<separator/>
 			<button id="ID_SCHEDULER_REMOVE_ALL" text="Tout enlever"/>
-			<rightAlign/>
-			<button id="ID_SCHEDULER_IMPORT" text="Importer une liste"/>
-			<button id="ID_SCHEDULER_EXPORT" text="Exporter une liste"/>
 		</toolbar>
 		<!-- HIT MONITOR WINDOW -->
 		<toolbar name="CHitMonitorWnd">
@@ -431,7 +428,6 @@
 			<button id="ID_CHAT_EMOTICONS"/>
 			<separator/>
 			<button id="ID_CHAT_BROWSE" text="Parcourir l'utilisateur"/>
-			<!-- <button id="ID_CHAT_SEND_FILE" text="Send File"/> -->
 			<button id="ID_CHAT_PRIORITY" text="Donner la priorité"/>
 			<separator/>
 			<button id="ID_CHAT_CONNECT" text="Se connecter" visible="false"/>
@@ -626,7 +622,7 @@
 			<menu text="_Outils">
 				<item id="ID_LIBRARY_FOLDERS" text="_Partager des fichiers..."/>
 				<item id="ID_TOOLS_DOWNLOAD" text="_Ajouter un téléchargement/torrent..."/>
-				<item id="IDC_IMPORT_DOWNLOADS" text="_Importer des téléchargements incomplets eMule(.part)..."/>
+				<item id="ID_IMPORT_DOWNLOADS" text="_Importer des téléchargements incomplets eMule..."/>
 				<item id="ID_OPEN_DOWNLOADS_FOLDER" text="_Ouvrir le dossier de fichiers terminés"/>
 				<separator/>
 				<item id="ID_TOOLS_SKIN" text="Choisir un _thème..."/>
@@ -720,7 +716,7 @@
 			<menu text="_Outils">
 				<item id="ID_LIBRARY_FOLDERS" text="_Partager des fichiers..."/>
 				<item id="ID_TOOLS_DOWNLOAD" text="_Ajouter un téléchargement/torrent..."/>
-				<item id="IDC_IMPORT_DOWNLOADS" text="_Importer des téléchargements incomplets eMule(.part)..."/>
+				<item id="ID_IMPORT_DOWNLOADS" text="_Importer des téléchargements incomplets eMule..."/>
 				<item id="ID_OPEN_DOWNLOADS_FOLDER" text="_Ouvrir le dossier de fichiers terminés"/>
 				<separator/>
 				<item id="ID_TOOLS_SKIN" text="Choisir un _thème..."/>
@@ -1572,9 +1568,6 @@
 			<item id="ID_SCHEDULER_EDIT" text="_Éditer"/>
 			<separator/>
 			<item id="ID_SCHEDULER_REMOVE_ALL" text="Tout en_leverl"/>
-			<separator/>
-			<item id="ID_SCHEDULER_IMPORT" text="_Importer..."/>
-			<item id="ID_SCHEDULER_EXPORT" text="E_xporter..."/>
 		</menu>
 		<!-- DISCOVERY SERVICES WINDOW -->
 		<menu name="CDiscoveryWnd">
@@ -1598,7 +1591,6 @@
 			<item id="ID_CHAT_DISCONNECT" text="Se _déconnecter"/>
 			<separator/>
 			<item id="ID_CHAT_BROWSE" text="_Parcourir l'utilisateur"/>
-			<!-- <item id="ID_CHAT_SEND_FILE" text="_Send File..."/> -->
 			<item id="ID_CHAT_PRIORITY" text="Octroyer la _priorité"/>
 			<separator/>
 			<menu text="_Format">
@@ -2330,6 +2322,19 @@
 	</documents>
 	<!-- Localised Command Tip Text. The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
 	<commandTips>
+		<tip id="AFX_IDS_APP_TITLE" message="Shareaza"/>
+		<tip id="AFX_IDS_IDLEMESSAGE" message="Ready"/>
+		<tip id="AFX_IDS_MDICHILD" message="Activer cette fenêtre"/>
+		<tip id="AFX_IDS_PREVIEW_CLOSE" message="Close print preview mode" tip="Cancel Preview"/>
+		<tip id="AFX_IDS_SCCLOSE" message="Close the active window and prompts to save the documents"/>
+		<tip id="AFX_IDS_SCMAXIMIZE" message="Enlarge the window to full size"/>
+		<tip id="AFX_IDS_SCMINIMIZE" message="Reduce the window to an icon"/>
+		<tip id="AFX_IDS_SCMOVE" message="Change the window position"/>
+		<tip id="AFX_IDS_SCNEXTWINDOW" message="Switch to the next document window"/>
+		<tip id="AFX_IDS_SCPREVWINDOW" message="Switch to the previous document window"/>
+		<tip id="AFX_IDS_SCRESTORE" message="Restore the window to normal size"/>
+		<tip id="AFX_IDS_SCSIZE" message="Change the window size"/>
+		<tip id="AFX_IDS_SCTASKLIST" message="Activate Task List"/>
 		<tip id="ID_BROWSE_FILES" message="Voir les fichiers partagés par l'utilisateur."/>
 		<tip id="ID_BROWSE_LAUNCH" message="Parcourir les fichiers partagés et le profil de l'utilisateur sélectionné."/>
 		<tip id="ID_BROWSE_PROFILE" message="Parcourir le profil de l'utilisateur."/>
@@ -2344,7 +2349,6 @@
 		<tip id="ID_CHAT_EMOTICONS" message="Insérer une émoticône."/>
 		<tip id="ID_CHAT_ITALIC" message="Appliquer le formatage en italique (Ctrl+I)"/>
 		<tip id="ID_CHAT_PRIORITY" message="Octroyer la priorité à cet utilisateur."/>
-		<!-- <tip id="ID_CHAT_SEND_FILE" message="Send a file to the user..."/> -->
 		<tip id="ID_CHAT_TIMESTAMP" message="Afficher la date à laquelle chacun des messages a été reçu."/>
 		<tip id="ID_CHAT_UNDERLINE" message="Appliquer le formatage en souligné (Ctrl+U)"/>
 		<tip id="ID_CHILD_CLOSE" message="Fermer la fenêtre active."/>
@@ -2353,6 +2357,7 @@
 		<tip id="ID_CHILD_RESTORE" message="Ouvrir la fenêtre sélectionnée."/>
 		<tip id="ID_DISCOVERY_ADD" message="Ajouter un nouveau service « Découverte »..."/>
 		<tip id="ID_DISCOVERY_ADVERTISE" message="Faire connaître le service « GWebCache » sélectionné à un « GWebcache » existant aléatoire."/>
+		<tip id="ID_DISCOVERY_BLOCKED" message="Show blocked services in the Discovery window."/>
 		<tip id="ID_DISCOVERY_BROWSE" message="Parcourir sur le Web les statistiques du service « GWebCache » sélectionné."/>
 		<tip id="ID_DISCOVERY_EDIT" message="Voir les propriétés pour le service « Découverte » sélectionné."/>
 		<tip id="ID_DISCOVERY_GNUTELLA" message="Afficher les services de « bootstrap » (amorçage) dans la fenêtre « Découverte »."/>
@@ -2404,13 +2409,14 @@
 		<tip id="ID_HELP_ABOUT" message="Affiche le dialogue « À propos de Shareaza »..."/>
 		<tip id="ID_HELP_CODEC" message="Tout sur les codecs et les problèmes vidéo."/>
 		<tip id="ID_HELP_FAQ" message="Visiter la FAQ Shareaza."/>
-		<tip id="ID_HELP_ROUTER" message="Obtenir de l'aide pour configurer son routeur ou son pare-feu."/>
 		<tip id="ID_HELP_FORUMS" message="Visiter les forums de discussion Shareaza."/>
 		<tip id="ID_HELP_GUIDE" message="Visiter le guide utilisateurs Shareaza."/>
 		<tip id="ID_HELP_HOMEPAGE" message="Visiter le site web Shareaza.Sourceforge.net."/>
+		<tip id="ID_HELP_ROUTER" message="Obtenir de l'aide pour configurer son routeur ou son pare-feu."/>
 		<tip id="ID_HELP_SECURITY" message="Aide pour protéger votre système des programmes hostiles"/>
-		<tip id="ID_HELP_UPDATE" message="Vérifier le présence d'informations et de mises à jour."/>
 		<tip id="ID_HELP_TEST" message="Effectuer le test de connexion."/>
+		<tip id="ID_HELP_UPDATE" message="Vérifier le présence d'informations et de mises à jour."/>
+		<tip id="ID_HELP_VERSION_CHECK" message="Rechercher une nouvelle version"/>
 		<tip id="ID_HELP_WEB_1" message="Visiter ce site web"/>
 		<tip id="ID_HELP_WEB_2" message="Visiter ce site web"/>
 		<tip id="ID_HELP_WEB_3" message="Visiter ce site web"/>
@@ -2420,7 +2426,9 @@
 		<tip id="ID_HITMONITOR_CLEAR" message="Nettoyer le tampon du moniteur d'accès."/>
 		<tip id="ID_HITMONITOR_PAUSE" message="Mettre en pause le moniteur d'accès."/>
 		<tip id="ID_HITMONITOR_SEARCH" message="Rechercher le réseau avec le terme sélectionné."/>
+		<tip id="ID_HOSTCACHE_BT_CACHE" message="Show BitTorrent cached hosts."/>
 		<tip id="ID_HOSTCACHE_CONNECT" message="Se connecter à cette sélection d'hôtes."/>
+		<tip id="ID_HOSTCACHE_DC_CACHE" message="Show DC++ cached hubs."/>
 		<tip id="ID_HOSTCACHE_DISCONNECT" message="Se déconnecter de cette sélection d'hôtes."/>
 		<tip id="ID_HOSTCACHE_ED2K_CACHE" message="Afficher ou masquer les serveurs eDonkey."/>
 		<tip id="ID_HOSTCACHE_ED2K_DOWNLOAD" message="Télécharger un fichier « server.met »..."/>
@@ -2428,8 +2436,10 @@
 		<tip id="ID_HOSTCACHE_G2_CACHE" message="Afficher les hôtes Gnutella2 en cache."/>
 		<tip id="ID_HOSTCACHE_G2_HORIZON" message="Afficher les hubs d'horizon de Gnutella2."/>
 		<tip id="ID_HOSTCACHE_IMPORT" message="Importer une liste d'hôtes connus, tel qu'un fichier « server.met »..."/>
+		<tip id="ID_HOSTCACHE_KAD_CACHE" message="Show Kademlia cached hosts."/>
 		<tip id="ID_HOSTCACHE_PRIORITY" message="Donner la priorité à cette sélection de serveurs pour l'établissement d'une connexion."/>
 		<tip id="ID_HOSTCACHE_REMOVE" message="Supprimer cette sélection d'hôtes du cache."/>
+		<tip id="ID_IMPORT_DOWNLOADS" message="Import eMule partial downloads..."/>
 		<tip id="ID_LIBRARY_ADD" message="Ajouter un nouveau dossier à votre bibliothèque..."/>
 		<tip id="ID_LIBRARY_ALBUM_DELETE" message="Supprimer le dossier « album » sélectionné."/>
 		<tip id="ID_LIBRARY_ALBUM_OPEN" message="Ouvrir le dossier « album » sélectionné."/>
@@ -2459,6 +2469,7 @@
 		<tip id="ID_LIBRARY_REBUILD" message="Reconstruire les métadonnées et recalculer les hachages de cette sélection de dossiers ou fichiers."/>
 		<tip id="ID_LIBRARY_REBUILD_ANSI" message="Reconstruire les métadonnées en utilisant une autre langue."/>
 		<tip id="ID_LIBRARY_REFRESH" message="Actualiser l'affichage de la bibliothèque."/>
+		<tip id="ID_LIBRARY_REFRESH_METADATA" message="Refresh file metadata"/>
 		<tip id="ID_LIBRARY_REMOVE" message="Enlever cette sélection de dossiers partagés."/>
 		<tip id="ID_LIBRARY_RENAME" message="Renommer le fichier sélectionné en interne."/>
 		<tip id="ID_LIBRARY_SCAN" message="Parcourir afin de mettre à jour d'éventuels changements dans cette sélection de dossiers ou de fichiers."/>
@@ -2496,6 +2507,7 @@
 		<tip id="ID_MEDIA_PAUSE" message="Mettre en pause la lecture du fichier média." tip="Pause"/>
 		<tip id="ID_MEDIA_PLAY" message="Lancer la lecture du fichier média actuel." tip="Lecture"/>
 		<tip id="ID_MEDIA_PLAYLIST" message="Afficher ou masquer l'éditeur de liste de lecture."/>
+		<tip id="ID_MEDIA_POSITION" message="Seek to a position in the media file." tip="Recherche"/>
 		<tip id="ID_MEDIA_PREVIOUS" message="Revenir au fichier précédent dans la liste de lecture actuelle." tip="Fichier précédent"/>
 		<tip id="ID_MEDIA_PROPERTIES" message="Voir ou éditer les propriétés des fichiers sélectionné."/>
 		<tip id="ID_MEDIA_RANDOM" message="Basculer la liste de lecture actuelle en mode lecture aléatoire."/>
@@ -2510,14 +2522,15 @@
 		<tip id="ID_MEDIA_SIZE_ONE" message="Afficher la vidéo dans sa taille d'origine."/>
 		<tip id="ID_MEDIA_SIZE_THREE" message="Afficher la vidéo dans une taille triple à sa taille d'origine."/>
 		<tip id="ID_MEDIA_SIZE_TWO" message="Afficher la vidéo dans une taille double à sa taille d'origine."/>
+		<tip id="ID_MEDIA_SPEED" message="Adjust the speed of the media file." tip="Vitesse"/>
 		<tip id="ID_MEDIA_STATUS" message="Afficher ou masquer la ligne de statut du média."/>
 		<tip id="ID_MEDIA_STOP" message="Stopper la lecture du fichier média." tip="Stop"/>
 		<tip id="ID_MEDIA_VIS" message="Sélectionner une extension de visualisation audio."/>
+		<tip id="ID_MEDIA_VOLUME" message="Adjust the audio volume." tip="Volume"/>
 		<tip id="ID_MEDIA_ZOOM" message="Ajuster le grossissement et le ratio d'aspect de la vidéo."/>
-		<tip id="IDC_MEDIA_POSITION" value="Seek to a position in the media file." tip="Recherche"/>
-		<tip id="IDC_MEDIA_SPEED" value="Adjust the speed of the media file." tip="Vitesse"/>
-		<tip id="IDC_MEDIA_VOLUME" value="Adjust the audio volume." tip="Volume"/>
 		<tip id="ID_MONITOR_CLOSE" message="Fermer la fenêtre du moniteur."/>
+		<tip id="ID_MUSICBRAINZ_ALBUMS" message="Look at all albums for this artist."/>
+		<tip id="ID_MUSICBRAINZ_MATCHES" message="Search for albums matching the selected file."/>
 		<tip id="ID_NEIGHBOURS_CHAT" message="Ouvrir une session de discussion avec l'utilisateur sélectionné."/>
 		<tip id="ID_NEIGHBOURS_COPY" message="Copier un URI pour accéder à l'hôte sélectionné."/>
 		<tip id="ID_NEIGHBOURS_DISCONNECT" message="Déconnecter cette sélection de voisins."/>
@@ -2530,12 +2543,22 @@
 		<tip id="ID_NETWORK_CHAT_TO" message="Ouvrir une session de discussion avec l'utilisateur sélectionné...."/>
 		<tip id="ID_NETWORK_CONNECT" message="Se connecter au réseau."/>
 		<tip id="ID_NETWORK_CONNECT_TO" message="Se connecter manuellement à un hôte..."/>
+		<tip id="ID_NETWORK_DC" message="Connect to the DC++ network."/>
 		<tip id="ID_NETWORK_DISCONNECT" message="Se déconnecter du réseau."/>
 		<tip id="ID_NETWORK_ED2K" message="Se connecter au réseau eDonkey."/>
 		<tip id="ID_NETWORK_EXIT" message="Quitter Shareaza"/>
 		<tip id="ID_NETWORK_G1" message="Se connecter au réseau Gnutella original."/>
 		<tip id="ID_NETWORK_G2" message="Se connecter au réseau Gnutella2 (hautement recommandé)."/>
 		<tip id="ID_NETWORK_SEARCH" message="Commencer une nouvelle recherche sur le réseau..."/>
+		<tip id="ID_NEXT_PANE" message="Switch to the next window pane" tip="Next Pane"/>
+		<tip id="ID_OPEN_DOWNLOADS_FOLDER" message="Ouvrir mon dossier des téléchargements terminés"/>
+		<tip id="ID_PREV_PANE" message="Switch back to the previous window pane" tip="Previous Pane"/>
+		<tip id="ID_SCHEDULER_ACTIVATE" message="Activates selected task(s) from the list."/>
+		<tip id="ID_SCHEDULER_ADD" message="Adds a new task to scheduler list."/>
+		<tip id="ID_SCHEDULER_DEACTIVATE" message="Deactivates selected tasks."/>
+		<tip id="ID_SCHEDULER_EDIT" message="Edit the selected task..."/>
+		<tip id="ID_SCHEDULER_REMOVE" message="Removes selected task(s) from the list."/>
+		<tip id="ID_SCHEDULER_REMOVE_ALL" message="Removes all scheduled tasks."/>
 		<tip id="ID_SEARCH_CHAT" message="Ouvrir une session de discussion avec l'utilisateur sélectionné."/>
 		<tip id="ID_SEARCH_CLEAR" message="Nettoyer les résultats de la recherche."/>
 		<tip id="ID_SEARCH_COLUMNS" message="Sélectionner les colonnes de métadonnées à afficher..."/>
@@ -2567,9 +2590,22 @@
 		<tip id="ID_SECURITY_POLICY_DENY" message="Régler la politique de sécurité par défaut pour refuser tous les hôtes."/>
 		<tip id="ID_SECURITY_REMOVE" message="Supprimer cette sélection de règles de sécurité."/>
 		<tip id="ID_SECURITY_RESET" message="Remettre le compteur d'accès à zéro pour cette sélection de règles."/>
+		<tip id="ID_SHAREMONKEY_BUY" message="Buy it and support the author"/>
+		<tip id="ID_SHAREMONKEY_COMPARE" message="Compare prices in different stores"/>
+		<tip id="ID_SHAREMONKEY_DOWNLOAD" message="Search for matches"/>
+		<tip id="ID_SHAREMONKEY_NEXT" message="Go to the next match"/>
+		<tip id="ID_SHAREMONKEY_PREVIOUS" message="Go to the previous match"/>
+		<tip id="ID_SHAREMONKEY_PRICES" message="Look at the prices for the current match"/>
+		<tip id="ID_SHAREMONKEY_SAVE" message="Save the match in your Library"/>
 		<tip id="ID_SYSTEM_CLEAR" message="Nettoyer le journal de statut."/>
+		<tip id="ID_SYSTEM_COPY" message="Copy selected line(s) of status log."/>
 		<tip id="ID_SYSTEM_TIMESTAMP" message="Enregistrer l'horodatage pour chaque ligne."/>
 		<tip id="ID_SYSTEM_VERBOSE" message="Affiche un journal détaillé de l'activité du système."/>
+		<tip id="ID_SYSTEM_VERBOSE_DEBUG" message="Display all."/>
+		<tip id="ID_SYSTEM_VERBOSE_ERROR" message="Display errors only."/>
+		<tip id="ID_SYSTEM_VERBOSE_INFO" message="Display infos and above."/>
+		<tip id="ID_SYSTEM_VERBOSE_NOTICE" message="Display notices and above."/>
+		<tip id="ID_SYSTEM_VERBOSE_WARNING" message="Display warnings and above."/>
 		<tip id="ID_TAB_CONNECT" message="Se connecter ou se déconnecter au réseau."/>
 		<tip id="ID_TAB_HOME" message="Revenir à la page d'accueil de Shareaza"/>
 		<tip id="ID_TAB_IRC" message="Afficher la fenêtre de discussion IRC (Internet Relay Chat)."/>
@@ -2620,6 +2656,7 @@
 		<tip id="ID_VIEW_NEIGHBOURS" message="Afficher ou masquer la fenêtre VOISINS."/>
 		<tip id="ID_VIEW_PACKETS" message="Afficher ou masquer la fenêtre DÉCHARGE DE PAQUETS."/>
 		<tip id="ID_VIEW_RESULTS_MONITOR" message="Afficher ou masquer la fenêtre MONITEUR D'ACCÈS."/>
+		<tip id="ID_VIEW_SCHEDULER" message="Show or hide SCHEDULER window."/>
 		<tip id="ID_VIEW_SEARCH_MONITOR" message="Afficher ou masquer la fenêtre MONITEUR DE RECHERCHE."/>
 		<tip id="ID_VIEW_SECURITY" message="Afficher ou masquer la fenêtre SÉCURITÉ."/>
 		<tip id="ID_VIEW_SYSTEM" message="Afficher ou masquer la fenêtre SYSTÈME."/>
@@ -2627,6 +2664,10 @@
 		<tip id="ID_VIEW_TRAFFIC" message="Afficher ou masquer la fenêtre GRAPHIQUE."/>
 		<tip id="ID_VIEW_UPLOADS" message="Afficher ou masquer la fenêtre ENVOIS."/>
 		<tip id="ID_VIEW_WINDOWED" message="Utiliser Shareaza en mode expert fenêtré."/>
+		<tip id="ID_WEBSERVICES_LIST" message="Choisir le service Web pour chercher des informations supplémentaires sur le fichier sélectionné."/>
+		<tip id="ID_WEBSERVICES_MUSICBRAINZ" message="Search for the same artist songs using MusicBrainz service."/>
+		<tip id="ID_WEBSERVICES_SHAREMONKEY" message="Chercher des informations sur le fichier en utilisant le service Sharemonkey."/>
+		<tip id="ID_WINDOW_ARRANGE" message="Arrange icons at the bottom of the window" tip="Arrange Icons"/>
 		<tip id="ID_WINDOW_CASCADE" message="Arranger les fenêtres ouvertes en cascade."/>
 		<tip id="ID_WINDOW_MONITOR" message="Afficher ou masquer le moniteur de bande passante."/>
 		<tip id="ID_WINDOW_NAVBAR" message="Afficher ou masquer la barre de navigation."/>
@@ -2635,8 +2676,6 @@
 		<tip id="ID_WINDOW_TILE_HORZ" message="Arrange les fenêtres ouvertes en tuiles horizontales."/>
 		<tip id="ID_WINDOW_TILE_VERT" message="Arrange les fenêtres ouvertes en tuiles verticales."/>
 		<tip id="ID_WINDOW_TOOLBAR" message="Afficher ou masquer la barre d'outils."/>
-		<tip id="ID_WEBSERVICES_LIST" message="Choisir le service Web pour chercher des informations supplémentaires sur le fichier sélectionné."/>
-		<tip id="ID_WEBSERVICES_SHAREMONKEY" message="Chercher des informations sur le fichier en utilisant le service Sharemonkey."/>
 		<!-- PLUGIN TIPS -->
 		<tip id="ImageViewer_BestFit" message="Mettre l'image à la taille de la fenêtre."/>
 		<tip id="ImageViewer_ActualSize" message="Mettre l'image à sa taille réelle."/>
@@ -2673,23 +2712,6 @@
 		<string id="WINDOW_HELP" value="Aide Shareaza"/>
 		<string id="WINDOW_IRC" value="Salon IRC Shareaza"/>
 		<string id="WINDOW_SCHEDULER" value="Tâches planifiées"/>
-		<string id="154" value="Êtes-vous sûr de vouloir enlever toutes les tâches planifiées ? Ce choix ne pourra pas être annulé."/>
-		<string id="156" value="La date planifiée est déjà passée.\n\nVeuillez choisir une date dans le futur."/>
-		<string id="157" value="Bande passante : Vitesse maximale"/>
-		<string id="158" value="Bande passante : Vitesse réduite"/>
-		<string id="159" value="Bande passante : Arrêt complet"/>
-		<string id="160" value="Système : Quitter Shareaza"/>
-		<string id="161" value="Système : Déconnecter une connexion 56K"/>
-		<string id="162" value="Système : Éteindre l'ordinateur"/>
-		<string id="163" value="Veuillez choisir une tâche."/>
-		<string id="164" value="Jour(s) spécifiques de la semaine"/>
-		<string id="165" value="Actif"/>
-		<string id="166" value="Inactif"/>
-		<string id="167" value="Effectué"/>
-		<string id="168" value="En attente..."/>
-		<string id="169" value="Aucune tâche n'est actuellement planifiée"/>
-		<string id="172" value="Effectué aujourd'hui"/>
-		<string id="173" value="Vous devez choisir au moins un jour de la semaine."/>
 		<string id="7000" value="Êtes vous sûr de vouloir effacer ce filtre ?"/>
 		<string id="7001" value="&amp;Schémas"/>
 		<string id="7002" value="Valeurs multiples"/>
@@ -2709,9 +2731,7 @@
 		<string id="8007" value="Il n'y a pas de recherche active. Cliquez ici pour rechercher des fichiers."/>
 		<string id="8008" value="Shareaza a terminé le téléchargement de la nouvelle version (%s) de Shareaza. Voulez-vous mettre à jour maintenant ?\n\nSi vous choisissez « Oui », Shareaza va se fermer temporairement durant l'installation de la mise à jour."/>
 		<string id="8009" value="Êtes-vous certain de vouloir supprimer le thème « %s »? Ceci est irréversible."/>
-		<string id="8010" value="Ceci est une pré-distribution de Shareaza, et la période de test est terminée. Merci de télécharger la version complète et officielle à partir de http://shareaza.sourceforge.net/."/>
 		<string id="8011" value="Changer de vue fermera toutes les fenêtres ouvertes actuellement. Voulez-vous changer la vue maintenant ?"/>
-		<string id="8012" value="Information Torrent"/>
 		<string id="8013" value="Aucune mise à jour n'est disponible."/>
 		<string id="8014" value="Propriétés du téléchargement"/>
 		<string id="8060" value="En mode Hub/Ultrapair avec %lu voisin(s). %s dans votre bibliothèque locale."/>
@@ -2779,7 +2799,7 @@
 		<string id="8178" value="Quel type de fichier ?"/>
 		<string id="8179" value="(Nettoyer l'historique des recherches)"/>
 		<string id="8180" value="La taille du fichier doit être"/>
-		<string id="8181" value=" à"/><!-- size from xx TO xx-->
+		<string id="8181" value=" à"/>
 		<string id="8208" value="Shareaza crée les hachages pour %Iu fichier(s) :"/>
 		<string id="8223" value="%i jours et %i heures"/>
 		<string id="8224" value="Shareaza télécharge :"/>
@@ -2864,7 +2884,6 @@
 		<string id="16080" value="Le planificateur fonctionne actuellement en mode « limité à G2 ». Voulez-vous désactiver ce mode pour que tous les réseaux actifs restent connectés ?"/>
 		<string id="16081" value="Envoi d'une requête pour « %s » à %s."/>
 		<string id="16083" value="Forcer votre PC à passer en mode « hub » peut avoir des effets néfastes sur ses performances et le réseau. Il est généralement conseillé de laisser Shareaza décider seul si le mode « hub » doit être utilisé.\n\nLe mode « hub » n'apporte aucun bénéfice à l'utilisateur local, et il consomme plus de bande passante, de mémoire et de ressources système.\n\nÊtes-vous certain de vouloir le faire ?"/>
-		<string id="16084" value="Désactiver le support des protocoles Gnutella-1 peut limiter vos résultats de recherche et, si vous êtes en mode « hub », cela peut également avoir un impact sur les résultats des autres utilisateurs.\n\nÊtes-vous certain de vouloir le faire ?"/>
 		<string id="16085" value="Gnutella2 est le réseau principal de Shareaza. Le désactiver peut limiter considérablement le nombre de résultats et la qualité de vos recherches.\n\nÊtes-vous certain de vouloir vous déconnecter de ce réseau ?"/>
 		<string id="16087" value="Votre bande passante sortante est trop basse pour activer ce réseau"/>
 		<string id="16128" value="Connexion entrante en provenance de %s port %i acceptée."/>
@@ -3035,6 +3054,7 @@
 		<string id="16375" value="Partiel"/>
 		<string id="16376" value="Tous les fichiers"/>
 		<string id="16377" value="Garde HTTP"/>
+		<string id="16378" value="Host &quot;%s&quot; sent a 416, without providing available ranges. Closing connection."/>
 		<string id="16379" value="Fichiers de la bibliothèque"/>
 		<string id="16384" value="Voulez-vous vraiment ouvrir fichier « %s » ?\n\nCertains fichiers exécutables peuvent endommager votre système s'ils comportent des virus."/>
 		<string id="16385" value="Vous allez modifier les métadonnées de %i fichiers, voulez-vous continuer ?"/>
@@ -3162,12 +3182,11 @@
 		<string id="16944" value="%i fichiers partagés dans la bibliothèque de %s."/>
 		<string id="16991" value="Lecteur Multimédia Shareaza"/>
 		<string id="16992" value="Shareaza ne peut instancier le module MediaServices. Veuillez réinstaller Shareaza et confirmer que les codecs et pilotes nécessaires sont installés sur votre PC."/>
-		<string id="16993" value="Fichiers multimédia|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Playlists|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Fichiers Audio|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|Fichiers Video|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Pistes CD Audio|*.cda|Fichiers MIDI|*.mid;*.rmi;*.midi|Tous|*.*||"/>
 		<string id="16994" value="Impossible de charger le fichier média « %s »"/>
 		<string id="16995" value="Le fichier est endommagé, ou vous n'avez pas les bons codecs pour le lire."/>
 		<string id="16996" value="Une partie de ce fichier ne peut être jouée, vous devriez télécharger des codecs additionnels."/>
 		<string id="16997" value="Aucun fichier en lecture. Double-cliquez un fichier média dans votre bibliothèque pour le lire."/>
-		<string id="16998" value="L  E  C  T  E  U  R      M  U  L  T  I  M  E  D  I  A      S  H  A  R  E  A  Z  A"/><!-- on one line -->
+		<string id="16998" value="L  E  C  T  E  U  R      M  U  L  T  I  M  E  D  I  A      S  H  A  R  E  A  Z  A"/>
 		<string id="16999" value="L i s t e   d e   l e c t u r e"/>
 		<string id="17017" value="Votre message :"/>
 		<string id="17018" value="Bienvenue au salon IRC de Shareaza !"/>
@@ -3267,6 +3286,7 @@
 		<string id="17477" value="Le couplage BitTorrent avec %s a répondu avec un mauvais fichier."/>
 		<string id="17478" value="Le couplage BitTorrent avec %s a demandé un fichier inconnu."/>
 		<string id="17479" value="Le couplage BitTorrent avec %s établi pour « %s »."/>
+		<string id="17480" value="BitTorrent coupling with %s requested an inactive file."/>
 		<string id="17481" value="Réception du fichier de description BitTorrent : « %s »"/>
 		<string id="17482" value="Impossible d'analyser le fichier BitTorrent préchargée « %s »."/>
 		<string id="17483" value="Erreur du traqueur BitTorrent pour « %s » : « %s »."/>
@@ -3285,7 +3305,6 @@
 		<string id="17496" value="Erreur durant la copie de « %s » dans un fichier de partage BitTorrent."/>
 		<string id="17497" value="Erreur inconnue en essayant de seed « %s »."/>
 		<string id="17498" value="Erreur détectée dans le fichier « %s »."/>
-		<string id="17500" value="Le traqueur n'a pas répondu - Nouvel essai de l'annonce (%i de %i)"/>
 		<string id="17501" value="Impossible de communiquer avec le traqueur"/>
 		<string id="17503" value="Échec de la connexion au traqueur - Essayons le prochain traqueur (%i of %i)"/>
 		<string id="17505" value="La connexion BitTorrent avec %s a été abandonée."/>
@@ -3298,12 +3317,6 @@
 		<string id="17514" value="Mise à jour des téléchargements Bittorrent..."/>
 		<string id="17515" value="Conversion du Torrent :"/>
 		<string id="18496" value="Vous avez fait des changements dans le champ « nom ». Êtes-vous certain de vouloir renommer ce téléchargement ?"/>
-		<string id="18497" value="Vous avez tapez une valeur SHA1, cependant elle est invalide. Merci de la vérifier et de recommencer."/>
-		<string id="18498" value="Vous avez tapez une valeur tiger-tree, cependant elle est invalide. Merci de la vérifier et de recommencer."/>
-		<string id="18499" value="Vous avez tapez une valeur de hash eDonkey, cependant elle est invalide. Merci de la vérifier et de recommencer."/>
-		<string id="18500" value="Vous avez fourni une valeur de hachage SHA1 qui est différente de celle actuellement associée avec ce téléchargement. Êtes-vous certain de vouloir changer le hachage SHA1 maintenant ?"/>
-		<string id="18501" value="Vous avez fourni une valeur de hachage du root tiger-tree qui est différente de celle actuellement associée avec ce téléchargement. Êtes-vous certain de vouloir changer le hachage du root tiger-tree maintenant ?"/>
-		<string id="18502" value="Vous avez fourni une valeur de hachage eDonkey qui est différente de celle actuellement associée avec ce téléchargement. Êtes-vous certain de vouloir changer le hachage eDonkey maintenant ?"/>
 		<string id="18503" value="Êtes-vous certain de vouloir oublier le statut de vérification actuel ? Toutes les données téléchargées seront considérées comme non-vérifiées, et les « hashtrees » et « hashsets » en cache seront nettoyés."/>
 		<string id="18504" value="Êtes-vous certain de vouloir oublier toutes les sources du téléchargement sélectionné ?"/>
 		<string id="18505" value="Merci de saisir un segment valide à effacer. Le champ « De » est le premier octet à effacer, le champ « Dernier » est le dernier octet à effacer."/>
@@ -3313,9 +3326,15 @@
 		<string id="18509" value="Vous ne pouvez pas considérer que ce téléchargement est terminé et le revérifier car vous n'avez pour l'instant aucune donnée de vérification partielle, tel un volume tiger-tree, un hashset eDonkey ou BitTorrent. Sans information de vérification le téléchargement ne peut pas être vérifié."/>
 		<string id="18510" value="Êtes-vous certain de vouloir considérer ce téléchargement comme terminé et de le revérifier ?? Le fichier terminé sera pris en compte, et Shareaza acceptera les parties qui passent la vérification et téléchargera à nouveau les parties qui échouent lors de cette vérification."/>
 		<string id="18511" value="Vous avez apporté des modificaiton à la taille du fichier. Êtes-vous certain de vouloir changer la taille de ce fichier ?"/>
+		<string id="18512" value="Are you sure you want to cancel this download but save incomplete file(s)?"/>
+		<string id="18513" value="You have typed an %s hash value, however it is invalid. Please check it and try again."/>
+		<string id="18514" value="You have provided an %s hash value which is different to the one currently associated with this download. Are you sure you want to change the %s hash now?"/>
 		<string id="19000" value="L'accès à distance est désactivé."/>
 		<string id="19001" value="Vous devez choisir un nom d'utilisateur et un mot de passe."/>
 		<string id="19002" value="Impossible d'accepter des connexions, URL indisponible."/>
+		<string id="19103" value="Bienvenue au salon IRC de Shareaza !"/>
+		<string id="19104" value="Veuillez respecter les autres lors de l'utilisation de ce service"/>
+		<string id="19105" value="Chat!"/>
 		<string id="20000" value="Pas d'URN disponible"/>
 		<string id="20001" value="Fermer"/>
 		<string id="20002" value="sur"/>
@@ -3329,6 +3348,7 @@
 		<string id="20011" value="&amp;Suivant"/>
 		<string id="20012" value="Terminer"/>
 		<string id="20013" value="Tout"/>
+		<string id="20014" value="This option uses services provided by ShareMonkey.com for recognising information about selected files.\n\nShareaza will transmit file details and your location in order to query the ShareMonkey database.  If you are concerned about privacy, you may wish to consult the ShareMonkey.com privacy policy.\n\nWould you like to proceed?"/>
 		<string id="20100" value="Connexion"/>
 		<string id="20101" value="Requête"/>
 		<string id="20102" value="Réponse"/>
@@ -3367,13 +3387,6 @@
 		<string id="20135" value="Suivant"/>
 		<string id="20136" value="Q"/>
 		<string id="20137" value="sources"/>
-		<string id="20200" value="Dimanche"/>
-		<string id="20201" value="Lundi"/>
-		<string id="20202" value="Mardi"/>
-		<string id="20203" value="Mercredi"/>
-		<string id="20204" value="Jeudi"/>
-		<string id="20205" value="Vendredi"/>
-		<string id="20206" value="Samedi"/>
 		<string id="20210" value="(Pas d'évaluation)"/>
 		<string id="20211" value="Faux/Corrompu"/>
 		<string id="20212" value="Pauvre"/>
@@ -3382,7 +3395,6 @@
 		<string id="20215" value="Très bon"/>
 		<string id="20216" value="Excellent"/>
 		<string id="20217" value="Veuillez sélectionner le répertoire des fichiers incomplets eMule :"/>
-		<!-- Column headers in Library Album View -->
 		<string id="20230" value="#"/>
 		<string id="20231" value="Titre"/>
 		<string id="20232" value="Durée"/>
@@ -3399,9 +3411,28 @@
 		<string id="20243" value="Continuer"/>
 		<string id="20244" value="&amp;Se souvenir de ma sélection la prochaine fois"/>
 		<string id="20245" value="Nouveau dossier"/>
-		<string id="32825" value="Ouvrir mon dossier des téléchargements terminés"/>
-		<string id="32773" value="Rechercher une nouvelle version"/>
-		<string id="61215" value="Activer cette fenêtre"/>
+		<string id="20246" value="Command-line options:\n\n-tray : Disable startup splash screen and send application to tray\n-nosplash : Disable startup splash screen\n-nowarn : Disable alpha (daily builds) version warning dialog\n-wait : Wait for other application instance exit\n\nInterface modes:\n\n-basic : Start application in Basic interface mode\n-tabbed : Start application in Tabbed interface mode\n-windowed : Start application in Windowed interface mode\n\nSystem options:\n\n-RegServer : Register internal components for everyone\n-UnRegServer : Un-register internal components for everyone\n-RegServerPerUser : Register internal components for current user\n-UnRegServerPerUser : Un-register internal components for current user"/>
+		<string id="20247" value="Failed to load metadata schemas. Please reinstall application."/>
+		<string id="20248" value="You selected %u files. Are you sure?"/>
+		<string id="20249" value="Off"/>
+		<string id="20250" value="Low"/>
+		<string id="20251" value="Normal"/>
+		<string id="20252" value="High"/>
+		<string id="20253" value="Skin load error: %s. Element: %s"/>
+		<string id="20254" value="Loading skin: %s"/>
+		<string id="20255" value="Êtes-vous sûr de vouloir enlever toutes les tâches planifiées ? Ce choix ne pourra pas être annulé."/>
+		<string id="20256" value="System: Start Shareaza"/>
+		<string id="20257" value="Bande passante : Vitesse maximale"/>
+		<string id="20258" value="Bande passante : Vitesse réduite"/>
+		<string id="20259" value="Bande passante : Arrêt complet"/>
+		<string id="20260" value="Système : Quitter Shareaza"/>
+		<string id="20261" value="Système : Déconnecter une connexion 56K"/>
+		<string id="20262" value="Système : Éteindre l'ordinateur"/>
+		<string id="20263" value="Actif"/>
+		<string id="20264" value="Inactif"/>
+		<string id="20265" value="Effectué"/>
+		<string id="20266" value="En attente..."/>
+		<string id="20267" value="Aucune tâche n'est actuellement planifiée"/>
 	</strings>
 	<!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 	<!-- Don't edit dialogs manualy! Use DialogScan feature instead -->
@@ -3533,7 +3564,7 @@
 			<control caption="Port :"/>
 			<control/>
 		</dialog>
-		<dialog name="CWebSettingsPage" cookie="BuStBuBuBuBuBuBuBuCoBuBuSt" caption="Web">
+		<dialog name="CWebSettingsPage" cookie="BuStBuBuBuBuBuBuBuBuCoBuBuSt" caption="Web">
 			<control caption="_Prise en charge des liens P2P (URI) :"/>
 			<control caption="Utiliser Shareaza pour ouvrir ces types de lien :"/>
 			<control caption="Magnet ( magnet: )"/>
@@ -3543,9 +3574,10 @@
 			<control caption="BitTorrent ( .torrent )"/>
 			<control caption="_Gestionnaire de Téléchargements:"/>
 			<control caption="Utiliser Shareaza pour tous les téléchargements Web :"/>
+			<control caption="Utiliser Shareaza pour tous les téléchargements Web :"/>
 			<control/>
-			<control caption="_Ajouter"/>
 			<control caption="_Enlever"/>
+			<control caption="Le gestionnaire de téléchargement ne téléchargera que les fichiers dont le type est dans cette liste. Les autres types de fichier seront gérés par votre navigateur Web. Shareaza doit être lancé pour que cette gestion soit active."/>
 			<control caption="Le gestionnaire de téléchargement ne téléchargera que les fichiers dont le type est dans cette liste. Les autres types de fichier seront gérés par votre navigateur Web. Shareaza doit être lancé pour que cette gestion soit active."/>
 		</dialog>
 		<dialog name="CInternetSettingsGroup" cookie="Af" caption="Internet">
@@ -3637,49 +3669,6 @@
 			<control caption="Nom d'utilisateur :"/>
 			<control/>
 			<control caption="Mot de passe :"/>
-			<control/>
-		</dialog>
-		<dialog name="CScheduleTaskDlg" cookie="BuBuBuBuSySyBuBuBuBuBuBuBuBuCoEdmsEdmsEdmsBuBuEdBuStStStStStStStBuBuBuStBuBuEdSt" caption="Planifier une tâche">
-			<control caption="Valider"/>
-			<control caption="Annuler"/>
-			<control caption="Une seule fois"/>
-			<control caption="Dans des jours spécifiques de la semaine "/>
-			<control/>
-			<control/>
-			<control caption="Dimanche"/>
-			<control caption="Lundi"/>
-			<control caption="Mardi"/>
-			<control caption="Mercredi"/>
-			<control caption="Jeudi"/>
-			<control caption=" Vendredi"/>
-			<control caption="Samedi"/>
-			<control caption="Tout"/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control caption=" _Régler la bande passante indépendamment"/>
-			<control caption=" _Limiter les réseaux à Gnutella2"/>
-			<control/>
-			<control caption="Activer cette tâche"/>
-			<control caption="Veuillez choisir une date :"/>
-			<control caption="Veuillez choisir une heure :"/>
-			<control caption="Selectionnez le type de tâche :"/>
-			<control caption="Description : (optionelle)"/>
-			<control caption="% de _bande passante sous la limite"/>
-			<control caption="% de _téléchargement sous la limite"/>
-			<control caption="% de l'_envoi sous la limite"/>
-			<control caption="Jours de la semaine"/>
-			<control caption="Exécuter cette tâche"/>
-			<control caption="Délai de validité"/>
-			<control caption="Définissez le délai pendant lequel la tâche sera exécutée après la date établie."/>
-			<control caption="Désactiver"/>
-			<control caption="Activer"/>
-			<control/>
-			<control caption="Minutes"/>
 			<control/>
 		</dialog>
 		<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Réseaux">
@@ -4554,6 +4543,25 @@
 			<control caption="Annuler"/>
 			<control caption="Entrez le canal à ajouter :|Entrez la justification du kick/ban :"/>
 		</dialog>
+		<dialog name="CScheduleTaskPage" cookie="StCoBuEdmsEdmsBuBuBuBuBuStStStBuBu" caption="Action">
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control caption="Gnutella1"/>
+			<control caption="Gnutella2"/>
+			<control caption="eDoonkey2K"/>
+			<control caption="DC++"/>
+			<control caption="BitTorrent"/>
+			<control caption="Selectionnez le type de tâche :"/>
+			<control caption="% de _téléchargement sous la limite"/>
+			<control caption="% de l'_envoi sous la limite"/>
+			<control caption="Réseaux"/>
+			<control caption="Bande passante"/>
+		</dialog>
 	</dialogs>
 	<!-- Columns Definitions -->
 	<listColumns>
@@ -4692,6 +4700,14 @@
 			<column from="Rating" to="Évaluation"/>
 			<column from="Comments" to="Commentaires"/>
 			<column from="Order" to="Ordre"/>
+		</list>
+		<list name="CSchedulerWnd">
+			<column from="Action" to="Action"/>
+			<column from="Trigger" to=""/>
+			<column from="Next Run" to=""/>
+			<column from="Active" to=""/>
+			<column from="Status" to="Statut"/>
+			<column from="Description" to="Description"/>
 		</list>
 	</listColumns>
 </skin>

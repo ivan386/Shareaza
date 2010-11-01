@@ -428,7 +428,6 @@
 			<button id="ID_CHAT_EMOTICONS"/>
 			<separator/>
 			<button id="ID_CHAT_BROWSE" text="Просмотр хоста"/>
-			<!-- <button id="ID_CHAT_SEND_FILE" text="Send File"/> -->
 			<button id="ID_CHAT_PRIORITY" text="Предоставить приоритет"/>
 			<separator/>
 			<button id="ID_CHAT_CONNECT" text="Соединиться" visible="false"/>
@@ -1198,7 +1197,7 @@
 			<item id="ID_LIBRARY_FOLDER_DELETE" text="_Удалить"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="_Свойства файла"/>
-			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="Свойства _альбома"/>
+			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="_Свойства альбома"/>
 		</menu>
 		<menu name="CLibraryTree.Virtual">
 			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Играть _альбом"/>
@@ -1210,7 +1209,7 @@
 			<item id="ID_LIBRARY_FOLDER_NEW" text="_Новая папка..."/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="_Свойства файла"/>
-			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="Свойства _альбома"/>
+			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="_Свойства альбома"/>
 		</menu>
 		<!-- LIBRARY VIEWS -->
 		<menu name="CLibraryTileView">
@@ -1592,7 +1591,6 @@
 			<item id="ID_CHAT_DISCONNECT" text="_Отключиться"/>
 			<separator/>
 			<item id="ID_CHAT_BROWSE" text="Просмотр _хоста"/>
-			<!-- <item id="ID_CHAT_SEND_FILE" text="_Send File..."/> -->
 			<item id="ID_CHAT_PRIORITY" text="_Поднять приоритет"/>
 			<separator/>
 			<menu text="_Формат">
@@ -2591,7 +2589,7 @@
 		<tip id="ID_SECURITY_POLICY_DENY" message="Установить политику безопасности по умочанию на отказ допуска всем хостам."/>
 		<tip id="ID_SECURITY_REMOVE" message="Удалить помеченное правило(а) безопасности."/>
 		<tip id="ID_SECURITY_RESET" message="Сбросить счетчики хитов для помеченных правил."/>
-		<tip id="ID_SHAREMONKEY_BUY" message="Buy it and support the author"/>
+		<tip id="ID_SHAREMONKEY_BUY" message="Купить и поблагодарить автора"/>
 		<tip id="ID_SHAREMONKEY_COMPARE" message="Compare prices in different stores"/>
 		<tip id="ID_SHAREMONKEY_DOWNLOAD" message="Искать совпадения"/>
 		<tip id="ID_SHAREMONKEY_NEXT" message="Go to the next match"/>
@@ -3339,7 +3337,7 @@
 		<string id="20000" value="Нет доступных ссылок"/>
 		<string id="20001" value="Закрыть"/>
 		<string id="20002" value="из"/>
-		<string id="20003" value="Для смены направления интерфейса Вы должны перезапустить Shareaza. \nВыйти сейчас?"/>
+		<string id="20003" value="Изменение языка требует перезапуска приложения.\nПерезапустить сейчас?"/>
 		<string id="20005" value="Нет"/>
 		<string id="20006" value="Да"/>
 		<string id="20007" value="Авто"/>
@@ -3412,7 +3410,7 @@
 		<string id="20243" value="Продолжить"/>
 		<string id="20244" value="&amp;Запомнить мой выбор на будущее"/>
 		<string id="20245" value="Новая папка"/>
-		<string id="20246" value="Command-line options:\n\n-tray : Disable startup splash screen and send application to tray\n-nosplash : Disable startup splash screen\n-nowarn : Disable alpha (daily builds) version warning dialog\n\nInterface modes:\n\n-basic : Start application in Basic interface mode\n-tabbed : Start application in Tabbed interface mode\n-windowed : Start application in Windowed interface mode\n\nSystem options:\n\n-RegServer : Register internal components for everyone\n-UnRegServer : Un-register internal components for everyone\n-RegServerPerUser : Register internal components for current user\n-UnRegServerPerUser : Un-register internal components for current user"/>
+		<string id="20246" value="Опции командной строки:\n\n-tray : Disable startup splash screen and send application to tray\n-nosplash : Disable startup splash screen\n-nowarn : Disable alpha (daily builds) version warning dialog\n-wait : Wait for other application instance exit\n\nInterface modes:\n\n-basic : Start application in Basic interface mode\n-tabbed : Start application in Tabbed interface mode\n-windowed : Start application in Windowed interface mode\n\nSystem options:\n\n-RegServer : Register internal components for everyone\n-UnRegServer : Un-register internal components for everyone\n-RegServerPerUser : Register internal components for current user\n-UnRegServerPerUser : Un-register internal components for current user"/>
 		<string id="20247" value="Ошибка загрузки схем метаданных. Пожалуйста переустановите приложение."/>
 		<string id="20248" value="Вы выбрали %u файлов. Вы уверены?"/>
 		<string id="20249" value="Ненужно"/>
@@ -3952,7 +3950,7 @@
 			<control caption="Настоящее:"/>
 			<control/>
 			<control/>
-			<control caption="_Важное:"/>
+			<control caption="_Личные данные:"/>
 			<control caption="|Мужской|Женский"/>
 			<control caption="Пол:"/>
 			<control/>
