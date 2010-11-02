@@ -21,11 +21,13 @@ public:
 };
 typedef CAtlMap< UINT, CSSPair > CUSMap;
 
-CSUMap g_oGudelines;
-CSUMap g_oDialogs;		// DIALOG or DIALOGEX resource
-CSUMap g_oIcons;		// ICON resource
+CSUMap g_oGudelines;	// GUIDELINES resources
+CSUMap g_oDialogs;		// DIALOG or DIALOGEX resources
+CSUMap g_oIcons;		// ICON resources
+CSUMap g_oBitmaps;		// JPEG, PNG or BITMAP resources
+CSUMap g_oHtmls;		// HTML or GZIP resources
 CSUMap g_oIDs;
-CUSMap g_oStrings;
+CUSMap g_oStrings;		// STRINGTABLE resources
 
 BOOL ProcessString(CStringA sID, CStringA sString)
 {
@@ -184,6 +186,48 @@ BOOL LoadResources(LPCTSTR szFilename)
 						}
 						g_oIcons.SetAt( sID, nID );
 					}
+
+					nPos = sLine.Find( " HTML " );
+					if ( nPos == -1 )
+						nPos = sLine.Find( " GZIP " );
+					if ( nPos != -1 )
+					{
+						CStringA sID = sLine.SpanExcluding( " " );
+						UINT nID;
+						if ( ! g_oIDs.Lookup( sID, nID ) )
+						{
+							_tprintf( _T("Error: Unknown ID \"%hs\" of HTML\n"), sID );
+							return 2;
+						}
+						if ( g_oHtmls.Lookup( sID, nID ) )
+						{
+							_tprintf( _T("Error: Duplicate ID \"%hs\" of HTML\n"), sID );
+							return 2;
+						}
+						g_oHtmls.SetAt( sID, nID );
+					}
+
+					nPos = sLine.Find( " BITMAP " );
+					if ( nPos == -1 )
+						nPos = sLine.Find( " JPEG " );
+					if ( nPos == -1 )
+						nPos = sLine.Find( " PNG " );
+					if ( nPos != -1 )
+					{
+						CStringA sID = sLine.SpanExcluding( " " );
+						UINT nID;
+						if ( ! g_oIDs.Lookup( sID, nID ) )
+						{
+							_tprintf( _T("Error: Unknown ID \"%hs\" of BITMAP\n"), sID );
+							return 2;
+						}
+						if ( g_oBitmaps.Lookup( sID, nID ) )
+						{
+							_tprintf( _T("Error: Duplicate ID \"%hs\" of BITMAP\n"), sID );
+							return 2;
+						}
+						g_oBitmaps.SetAt( sID, nID );
+					}
 				}
 				break;
 
@@ -304,7 +348,7 @@ int _tmain(int argc, _TCHAR* argv[])
 				_tprintf( _T("Error: Filed to load IDs from: %s\n"), szFilename );
 				return 1;
 			}
-			_tprintf( _T("Loaded %d IDs from: %s\n"), g_oIDs.GetCount(), szFilename);
+			_tprintf( _T("Loaded from %s\n    IDs       : %d\n"), szFilename, g_oIDs.GetCount());
 		}
 		else if ( _tcscmp( szExt, _T(".rc") ) == 0 )
 		{
@@ -313,16 +357,21 @@ int _tmain(int argc, _TCHAR* argv[])
 				_tprintf( _T("Error: Filed to load strings from: %s\n"), szFilename );
 				return 1;
 			}
-			_tprintf( _T("Loaded %d strings")
-				_T(", %d gudelines")
-				_T(", %d dialogs")
-				_T(", %d icons")
-				_T(" from: %s\n"),
+			_tprintf(
+				_T("Loaded from %s\n")
+				_T("    strings   : %d\n")
+				_T("    gudelines : %d\n")
+				_T("    dialogs   : %d\n")
+				_T("    icons     : %d\n")
+				_T("    bitmaps   : %d\n")
+				_T("    htmls     : %d\n"),
+				szFilename,
 				g_oStrings.GetCount(),
 				g_oGudelines.GetCount(),
 				g_oDialogs.GetCount(),
 				g_oIcons.GetCount(),
-				szFilename );
+				g_oBitmaps.GetCount(),
+				g_oHtmls.GetCount() );
 		}
 		else if ( _tcscmp( szExt, _T(".xml") ) == 0 )
 		{
@@ -340,10 +389,69 @@ int _tmain(int argc, _TCHAR* argv[])
 		CStringA sID;
 		UINT nID;
 		g_oDialogs.GetNextAssoc( pos, sID, nID );
+
 		if ( ! g_oGudelines.Lookup( sID, nID ) )
 		{
 			_tprintf( _T("Warning: Found dialog \"%hs\" without gudeline\n"), sID );			
 		}
+	}
+
+	for ( POSITION pos = g_oIDs.GetStartPosition(); pos; )
+	{
+		CStringA sID;
+		UINT nID;
+		g_oIDs.GetNextAssoc( pos, sID, nID );
+
+		if ( _strnicmp( sID, "IDI_", 4 ) == 0 )
+		{
+			UINT nFoo;
+			if ( ! g_oIcons.Lookup( sID, nFoo ) )
+			{
+				_tprintf( _T("Warning: Found orphan icon ID \"%hs\"\n"), sID );			
+			}
+		}
+		else if ( _strnicmp( sID, "IDR_", 4 ) == 0 )
+		{
+			UINT nFoo;
+			if ( ! g_oBitmaps.Lookup( sID, nFoo ) &&
+				 ! g_oIcons.Lookup( sID, nFoo ) &&
+				 ! g_oHtmls.Lookup( sID, nFoo ) )
+			{
+				_tprintf( _T("Warning: Found orphan bitmap/icon/html ID \"%hs\"\n"), sID );			
+			}
+		}
+		else if ( _strnicmp( sID, "IDB_", 4 ) == 0 )
+		{
+			UINT nFoo;
+			if ( ! g_oBitmaps.Lookup( sID, nFoo ) )
+			{
+				_tprintf( _T("Warning: Found orphan bitmap ID \"%hs\"\n"), sID );			
+			}
+		}
+		else if ( _strnicmp( sID, "IDD_", 4 ) == 0 )
+		{
+			UINT nFoo;
+			if ( ! g_oDialogs.Lookup( sID, nFoo ) )
+			{
+				_tprintf( _T("Warning: Found orphan dialog ID \"%hs\"\n"), sID );			
+			}
+		}
+		else if ( _strnicmp( sID, "IDS_", 4 ) == 0 )
+		{
+			CSSPair oFoo;
+			if ( ! g_oStrings.Lookup( nID, oFoo ) )
+			{
+				_tprintf( _T("Warning: Found orphan string ID \"%hs\"\n"), sID );			
+			}
+		}
+		/*else if ( _strnicmp( sID, "ID_", 3 ) == 0 )
+		{
+			CSSPair oFoo;
+			if ( ! g_oStrings.Lookup( nID, oFoo ) )
+			{
+				_tprintf( _T("Warning: Found orphan string ID \"%hs\"\n"), sID );			
+			}
+		}*/
 	}
 
 	// Sort by ID
