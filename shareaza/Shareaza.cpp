@@ -88,26 +88,6 @@ const LPCTSTR RT_GZIP = _T("GZIP");
 /////////////////////////////////////////////////////////////////////////////
 // CShareazaCommandLineInfo
 
-class CShareazaCommandLineInfo : public CCommandLineInfo
-{
-public:
-	CShareazaCommandLineInfo();
-
-	virtual void ParseParam(const TCHAR* pszParam, BOOL bFlag, BOOL bLast);
-
-	BOOL	m_bTray;
-	BOOL	m_bNoSplash;
-	BOOL	m_bNoAlphaWarning;
-	INT		m_nGUIMode;
-	BOOL	m_bHelp;
-	CString	m_sTask;
-	BOOL	m_bWait;
-
-private:
-	CShareazaCommandLineInfo(const CShareazaCommandLineInfo&);
-	CShareazaCommandLineInfo& operator=(const CShareazaCommandLineInfo&);
-};
-
 CShareazaCommandLineInfo::CShareazaCommandLineInfo() :
 	m_bTray( FALSE ),
 	m_bNoSplash( FALSE ),
@@ -160,9 +140,6 @@ void CShareazaCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag, BOO
 		}
 		else if ( ! _tcsncicmp( pszParam, _T("task"), 4 ) )
 		{
-			m_bTray = TRUE;
-			m_bNoSplash = TRUE;
-			m_bNoAlphaWarning = TRUE;
 			m_sTask = pszParam + 4;
 			return;
 		}
@@ -273,76 +250,8 @@ BOOL CShareazaApp::InitInstance()
 	AfxEnableControlContainer( /*m_pFontManager*/); // Enable support for containment of OLE controls.
 	InitResources();								// Loads theApp settings.
 
-	CShareazaCommandLineInfo cmdInfo;
-	ParseCommandLine( cmdInfo );
-	AfxSetPerUserRegistration( cmdInfo.m_bRegisterPerUser || ! IsRunAsAdmin() );
-	if ( cmdInfo.m_nShellCommand == CCommandLineInfo::AppUnregister ||
-		 cmdInfo.m_nShellCommand == CCommandLineInfo::AppRegister )
-	{
-		cmdInfo.m_bRunEmbedded = TRUE; // Suppress dialog
-
-		ProcessShellCommand( cmdInfo );
-
+	if ( ! ParseCommandLine() )
 		return FALSE;
-	}
-
-	BOOL bFirst = FALSE;
-	HWND hwndFirst = NULL;
-	for (;;)
-	{
-		m_pMutex = CreateMutex( NULL, FALSE, _T("Global\\") _T(CLIENT_NAME) );
-		if ( m_pMutex != NULL )
-		{
-			if ( GetLastError() == ERROR_ALREADY_EXISTS )
-			{
-				CloseHandle( m_pMutex );
-				m_pMutex = NULL;
-				hwndFirst = FindWindow( _T(CLIENT_NAME) _T("MainWnd"), NULL );
-			}
-			else
-				// We are first!
-				bFirst = TRUE;
-		}
-		// else Probably mutex created in another user's session
-
-		if ( ! cmdInfo.m_bWait || bFirst )
-			break;
-
-		// Wait for first instance exit
-		Sleep( 250 );
-	}
-
-	if ( cmdInfo.m_sTask.IsEmpty() )
-	{
-		if ( ! bFirst )
-		{
-			if ( hwndFirst )
-			{
-				// Popup first instance
-				DWORD_PTR dwResult;
-				SendMessageTimeout( hwndFirst, WM_SYSCOMMAND, SC_RESTORE, 0,
-					SMTO_NORMAL, 250, &dwResult );
-				ShowWindow( hwndFirst, SW_SHOWNORMAL );
-				BringWindowToTop( hwndFirst );
-				SetForegroundWindow( hwndFirst );
-			}
-			// else Probably window created in another user's session
-		}
-	}
-	else
-	{
-		// Pass scheduler task to existing instance
-		CScheduler::Execute( hwndFirst, cmdInfo.m_sTask );
-		return FALSE;
-	}
-
-	if ( ! bFirst )
-		// Don't start second instance
-		return FALSE;
-
-	if ( cmdInfo.m_bWait )
-		// Wait for other instance complete exit
-		Sleep( 1000 );
 
 	Register();					// Re-register Shareaza Type Library
 
@@ -352,7 +261,7 @@ BOOL CShareazaApp::InitInstance()
 	InitFonts();				// Loads default fonts. Depends on Settings.Load().
 	Skin.CreateDefault();		// Loads colors, fonts and language. Depends on InitFonts().
 
-	if ( cmdInfo.m_bHelp )
+	if ( m_cmdInfo.m_bHelp )
 	{
 		AfxMessageBox( IDS_COMMANDLINE, MB_ICONINFORMATION | MB_OK );
 		return FALSE;
@@ -382,7 +291,7 @@ BOOL CShareazaApp::InitInstance()
 	}
 
 	// Alpha warning. Remember to remove this section for final releases and public betas.
-	if ( ! cmdInfo.m_bNoAlphaWarning && cmdInfo.m_bShowSplash )
+	if ( ! m_cmdInfo.m_bNoAlphaWarning && m_cmdInfo.m_bShowSplash )
 	if ( AfxMessageBox(
 		_T("WARNING: This is an ALPHA TEST version of ") CLIENT_NAME_T _T(".\n\n")
 		_T("It is NOT FOR GENERAL USE, and is only for testing specific features in a controlled ")
@@ -397,14 +306,14 @@ BOOL CShareazaApp::InitInstance()
 
 	m_bInteractive = true;
 
-	if ( cmdInfo.m_nGUIMode != -1 )
-		Settings.General.GUIMode = cmdInfo.m_nGUIMode;
+	if ( m_cmdInfo.m_nGUIMode != -1 )
+		Settings.General.GUIMode = m_cmdInfo.m_nGUIMode;
 	if ( Settings.General.GUIMode != GUI_WINDOWED &&
 		 Settings.General.GUIMode != GUI_TABBED &&
 		 Settings.General.GUIMode != GUI_BASIC )
 		Settings.General.GUIMode = GUI_BASIC;
 
-	SplashStep( L"Network", ( ( cmdInfo.m_bNoSplash || ! cmdInfo.m_bShowSplash ) ? 0 : 17 ), false );
+	SplashStep( L"Network", ( ( m_cmdInfo.m_bNoSplash || ! m_cmdInfo.m_bShowSplash ) ? 0 : 17 ), false );
 		if ( ! Network.Init() )
 		{
 			SplashAbort();
@@ -480,10 +389,10 @@ BOOL CShareazaApp::InitInstance()
 		Emoticons.Load();
 		Flags.Load();
 	SplashStep( L"GUI" );
-		if ( cmdInfo.m_bTray ) WriteProfileInt( _T("Windows"), _T("CMainWnd.ShowCmd"), 0 );
+		if ( m_cmdInfo.m_bTray ) WriteProfileInt( _T("Windows"), _T("CMainWnd.ShowCmd"), 0 );
 		new CMainWnd();
 		CoolMenu.EnableHook();
-		if ( cmdInfo.m_bTray )
+		if ( m_cmdInfo.m_bTray )
 		{
 			((CMainWnd*)m_pMainWnd)->CloseToTray();
 		}
@@ -508,7 +417,7 @@ BOOL CShareazaApp::InitInstance()
 
 	m_bLive = true;
 
-	ProcessShellCommand( cmdInfo );
+	ProcessShellCommand( m_cmdInfo );
 
 //	afxMemDF = allocMemDF | delayFreeMemDF | checkAlwaysMemDF;
 
@@ -599,6 +508,99 @@ int CShareazaApp::ExitInstance()
 	}
 
 	return CWinApp::ExitInstance();
+}
+
+BOOL CShareazaApp::ParseCommandLine()
+{
+	CWinApp::ParseCommandLine( m_cmdInfo );
+
+	AfxSetPerUserRegistration( m_cmdInfo.m_bRegisterPerUser || ! IsRunAsAdmin() );
+
+	if ( m_cmdInfo.m_nShellCommand == CCommandLineInfo::AppUnregister ||
+		 m_cmdInfo.m_nShellCommand == CCommandLineInfo::AppRegister )
+	{
+		m_cmdInfo.m_bRunEmbedded = TRUE; // Suppress dialog
+
+		ProcessShellCommand( m_cmdInfo );
+
+		return FALSE;
+	}
+
+	BOOL bFirst = FALSE;
+	HWND hwndFirst = NULL;
+	for (;;)
+	{
+		m_pMutex = CreateMutex( NULL, FALSE, _T("Global\\") _T(CLIENT_NAME) );
+		if ( m_pMutex != NULL )
+		{
+			if ( GetLastError() == ERROR_ALREADY_EXISTS )
+			{
+				CloseHandle( m_pMutex );
+				m_pMutex = NULL;
+				hwndFirst = FindWindow( _T(CLIENT_NAME) _T("MainWnd"), NULL );
+			}
+			else
+				// We are first!
+				bFirst = TRUE;
+		}
+		// else Probably mutex created in another user's session
+
+		if ( ! m_cmdInfo.m_bWait || bFirst )
+			break;
+
+		// Wait for first instance exit
+		Sleep( 250 );
+	}
+
+	if ( ! m_cmdInfo.m_sTask.IsEmpty() )
+	{
+		// Pass scheduler task to existing instance
+		CScheduler::Execute( hwndFirst, m_cmdInfo.m_sTask );
+
+		// Don't start second instance
+		return FALSE;
+	}
+
+	if ( ! bFirst )
+	{
+		if ( hwndFirst )
+		{
+			if ( m_cmdInfo.m_nShellCommand == CCommandLineInfo::FileOpen )
+			{
+				// Pass command line to first instance
+				m_cmdInfo.m_strFileName.Trim( _T(" \t\r\n\"") );
+				COPYDATASTRUCT cd =
+				{
+					COPYDATA_OPEN,
+					m_cmdInfo.m_strFileName.GetLength() * sizeof( TCHAR ),
+					(PVOID)(LPCTSTR)m_cmdInfo.m_strFileName
+				};
+				DWORD_PTR dwResult;
+				SendMessageTimeout( hwndFirst, WM_COPYDATA, NULL, (WPARAM)&cd, SMTO_NORMAL, 250, &dwResult );
+			}
+			else
+			{
+				// Popup first instance
+				DWORD_PTR dwResult;
+				SendMessageTimeout( hwndFirst, WM_COMMAND, ID_TRAY_OPEN, 0,
+					SMTO_NORMAL, 250, &dwResult );
+				ShowWindow( hwndFirst, SW_SHOWNA );
+				BringWindowToTop( hwndFirst );
+				SetForegroundWindow( hwndFirst );
+			}
+		}
+		// else Probably window created in another user's session
+
+		// Don't start second instance
+		return FALSE;
+	}
+
+	if ( m_cmdInfo.m_bWait )
+		// Wait for other instance complete exit
+		Sleep( 1000 );
+
+	// Continue Shareaza execution
+	return TRUE;
 }
 
 void CShareazaApp::WinHelp(DWORD /*dwData*/, UINT /*nCmd*/)

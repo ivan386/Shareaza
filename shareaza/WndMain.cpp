@@ -3081,6 +3081,10 @@ BOOL CMainWnd::OnCopyData(CWnd* /*pWnd*/, COPYDATASTRUCT* pCopyDataStruct)
 			CScheduler::Execute( CString( (LPCTSTR)pCopyDataStruct->lpData,
 				(int)( pCopyDataStruct->cbData / sizeof( TCHAR ) ) ) );
 			break;
+
+		case COPYDATA_OPEN:
+			CShareazaApp::Open( CString( (LPCTSTR)pCopyDataStruct->lpData,
+				(int)( pCopyDataStruct->cbData / sizeof( TCHAR ) ) ), TRUE );
 		}
 	}
 	return TRUE;

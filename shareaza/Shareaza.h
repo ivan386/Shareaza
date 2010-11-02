@@ -47,6 +47,27 @@ public:
 typedef CList< CLogMessage* > CLogMessageList;
 
 
+class CShareazaCommandLineInfo : public CCommandLineInfo
+{
+public:
+	CShareazaCommandLineInfo();
+
+	virtual void ParseParam(const TCHAR* pszParam, BOOL bFlag, BOOL bLast);
+
+	BOOL	m_bTray;
+	BOOL	m_bNoSplash;
+	BOOL	m_bNoAlphaWarning;
+	INT		m_nGUIMode;
+	BOOL	m_bHelp;
+	CString	m_sTask;
+	BOOL	m_bWait;
+
+private:
+	CShareazaCommandLineInfo(const CShareazaCommandLineInfo&);
+	CShareazaCommandLineInfo& operator=(const CShareazaCommandLineInfo&);
+};
+
+
 class CShareazaApp : public CWinApp
 {
 public:
@@ -83,6 +104,7 @@ public:
 	HHOOK				m_hHookMouse;
 	CPacketWnd*			m_pPacketWnd;				// Packet Window (NULL - not opened)
 	SYSTEM_INFO			m_SysInfo;					// System Information
+	CShareazaCommandLineInfo m_cmdInfo;				// Command-line options
 
 	// Cryptography Context handle
 	HCRYPTPROV			m_hCryptProv;
@@ -183,6 +205,7 @@ protected:
 
 	void				InitResources();	// Initialize Shareaza version, system info, load DLLs, etc.
 	void				InitFonts();		// Create default fonts
+	BOOL				ParseCommandLine();	// Parse and execute command-line
 
 	void				LoadCountry();		// Load the GeoIP library for mapping IPs to countries
 	void				FreeCountry();		// Free GeoIP resources
@@ -363,6 +386,7 @@ __int64 GetRandomNum<__int64>(const __int64& min, const __int64& max);
 
 // WM_COPYDATA types
 #define COPYDATA_SCHEDULER	0				// Scheduler task ( lpData: LPCTSTR szTaskData - encoded string )
+#define COPYDATA_OPEN		1				// Open file ( lpData: LPCTSTR szFilename - file name or URL )
 
 #define ID_PLUGIN_FIRST	27000
 #define ID_PLUGIN_LAST	27999
