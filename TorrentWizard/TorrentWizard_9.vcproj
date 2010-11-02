@@ -81,7 +81,6 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="version.lib"
 				LinkIncremental="2"
-				GenerateManifest="false"
 				IgnoreDefaultLibraryNames=""
 				DelayLoadDLLs="version.dll;comdlg32.dll;winspool.drv;shell32.dll;shlwapi.dll;ole32.dll;oleaut32.dll;oleacc.dll;ws2_32.dll"
 				GenerateDebugInformation="true"
@@ -94,7 +93,6 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
-				InputResourceManifests="$(TargetPath)"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -168,7 +166,6 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="version.lib"
 				LinkIncremental="2"
-				GenerateManifest="false"
 				IgnoreDefaultLibraryNames=""
 				DelayLoadDLLs="version.dll;comdlg32.dll;winspool.drv;shell32.dll;shlwapi.dll;ole32.dll;oleaut32.dll;oleacc.dll;ws2_32.dll"
 				GenerateDebugInformation="true"
@@ -181,7 +178,6 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
-				InputResourceManifests="$(TargetPath)"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -259,7 +255,6 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="version.lib"
 				LinkIncremental="1"
-				GenerateManifest="false"
 				IgnoreDefaultLibraryNames=""
 				DelayLoadDLLs="version.dll;comdlg32.dll;winspool.drv;shell32.dll;shlwapi.dll;ole32.dll;oleaut32.dll;oleacc.dll;ws2_32.dll"
 				SubSystem="2"
@@ -274,7 +269,6 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
-				InputResourceManifests="$(TargetPath)"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -353,7 +347,6 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="version.lib"
 				LinkIncremental="1"
-				GenerateManifest="false"
 				IgnoreDefaultLibraryNames=""
 				DelayLoadDLLs="version.dll;comdlg32.dll;winspool.drv;shell32.dll;shlwapi.dll;ole32.dll;oleaut32.dll;oleacc.dll;ws2_32.dll"
 				SubSystem="2"
@@ -368,7 +361,6 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
-				InputResourceManifests="$(TargetPath)"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
