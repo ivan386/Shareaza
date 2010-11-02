@@ -27,7 +27,6 @@
 #define IDD_NEW_SEARCH                  139
 #define IDR_TRAFFICFRAME                139
 #define IDD_FILTER_SEARCH               140
-#define IDB_FOLDERS                     140
 #define IDR_CHATFRAME                   140
 #define IDR_SECURITYFRAME               141
 #define IDD_SCHEMA_COLUMNS              141
@@ -138,7 +137,6 @@
 #define IDI_TOOLS_WIZARD                236
 #define IDD_DOWNLOAD_GROUP              236
 #define IDI_PAINTBRUSHES                237
-#define IDI_TORRENT_ICON                239
 #define IDD_HELP                        240
 #define IDB_NAVBAR_IMAGE                241
 #define IDD_DELETE_FILE                 242
@@ -150,7 +148,6 @@
 #define IDB_REMOTE_SKIN                 248
 #define IDD_DOWNLOAD_EDIT               248
 #define IDD_SETTINGS_REMOTE             249
-#define IDD_SCHEDULE_ITEM               250
 #define IDD_SCHEDULE_TASK               250
 #define IDD_DOWNLOAD_REVIEWS            251
 #define IDI_FIREWALLED                  252
@@ -163,7 +160,6 @@
 #define IDD_TORRENT_GENERAL             267
 #define IDD_TORRENT_FILES               268
 #define IDD_TORRENT_TRACKERS            269
-#define IDB_SCHEDULER                   270
 #define IDB_NAVBAR_IMAGE_RTL            273
 #define IDB_NAVBAR_ALPHA_RTL            274
 #define IDI_COLORS                      275
@@ -197,7 +193,6 @@
 #define IDI_RATING_FAKE                 322
 #define IDI_RATING_AVERAGE              323
 #define IDI_RATING_GOOD                 324
-#define IDI_EXCLAMATIONMARK             336
 #define IDI_NOTASK                      341
 #define IDI_INCOMING                    342
 #define IDI_OUTGOING                    343

@@ -57,7 +57,6 @@
 	<resource code="222" id="IDB_MEDIA_STATES"/>
 	<resource code="236" id="IDI_TOOLS_WIZARD"/>
 	<resource code="237" id="IDI_PAINTBRUSHES"/>
-	<resource code="239" id="IDI_TORRENT_ICON"/>
 	<resource code="243" id="IDI_COLLECTION_MASK"/>
 	<resource code="244" id="IDI_COLLECTION"/>
 	<resource code="252" id="IDI_FIREWALLED"/>
@@ -85,7 +84,6 @@
 	<resource code="322" id="IDI_RATING_FAKE"/>
 	<resource code="323" id="IDI_RATING_AVERAGE"/>
 	<resource code="324" id="IDI_RATING_GOOD"/>
-	<resource code="336" id="IDI_EXCLAMATIONMARK"/>
 	<resource code="341" id="IDI_NOTASK"/>
 	<resource code="342" id="IDI_INCOMING"/>
 	<resource code="343" id="IDI_OUTGOING"/>

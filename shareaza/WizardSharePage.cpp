@@ -79,9 +79,6 @@ BOOL CWizardSharePage::OnInitDialog()
 
 	Skin.Apply( _T("CWizardSharePage"), this );
 
-	CBitmap bmBase;
-	bmBase.LoadBitmap( IDB_FOLDERS );
-
 	CRect rc;
 	m_wndList.GetClientRect( &rc );
 	m_wndList.InsertColumn( 0, _T("Folder"), LVCFMT_LEFT, rc.Width() - GetSystemMetrics( SM_CXVSCROLL ) );
