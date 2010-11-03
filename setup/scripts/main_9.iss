@@ -295,41 +295,47 @@ Root: HKCU; Subkey: "Software\Microsoft\Windows\CurrentVersion\Run"; ValueName: 
 
 Root: HKLM; Subkey: "SOFTWARE\Classes\.co"; Flags: dontcreatekey uninsdeletekey
 Root: HKLM; Subkey: "SOFTWARE\Classes\.collection"; Flags: dontcreatekey uninsdeletekey
+Root: HKLM; Subkey: "SOFTWARE\Classes\.emulecollection"; Flags: dontcreatekey uninsdeletekey
 Root: HKLM; Subkey: "SOFTWARE\Classes\.torrent"; Flags: dontcreatekey uninsdeletekey
 Root: HKLM; Subkey: "SOFTWARE\Classes\bittorrent"; Flags: dontcreatekey uninsdeletekey
 Root: HKLM; Subkey: "SOFTWARE\Classes\.sks"; Flags: dontcreatekey uninsdeletekey
+Root: HKLM; Subkey: "SOFTWARE\Classes\dchub"; Flags: dontcreatekey uninsdeletekey
+Root: HKLM; Subkey: "SOFTWARE\Classes\dcfile"; Flags: dontcreatekey uninsdeletekey
 Root: HKLM; Subkey: "SOFTWARE\Classes\ed2k"; Flags: dontcreatekey uninsdeletekey
+Root: HKLM; Subkey: "SOFTWARE\Classes\foxy"; Flags: dontcreatekey uninsdeletekey
 Root: HKLM; Subkey: "SOFTWARE\Classes\gnet"; Flags: dontcreatekey uninsdeletekey
 Root: HKLM; Subkey: "SOFTWARE\Classes\gnutella"; Flags: dontcreatekey uninsdeletekey
 Root: HKLM; Subkey: "SOFTWARE\Classes\gnutella1"; Flags: dontcreatekey uninsdeletekey
 Root: HKLM; Subkey: "SOFTWARE\Classes\gnutella2"; Flags: dontcreatekey uninsdeletekey
+Root: HKLM; Subkey: "SOFTWARE\Classes\gwc"; Flags: dontcreatekey uninsdeletekey
 Root: HKLM; Subkey: "SOFTWARE\Classes\uhc"; Flags: dontcreatekey uninsdeletekey
 Root: HKLM; Subkey: "SOFTWARE\Classes\ukhl"; Flags: dontcreatekey uninsdeletekey
 Root: HKLM; Subkey: "SOFTWARE\Classes\magnet"; Flags: dontcreatekey uninsdeletekey
 Root: HKLM; Subkey: "SOFTWARE\Classes\mp2p"; Flags: dontcreatekey uninsdeletekey
-Root: HKLM; Subkey: "SOFTWARE\Classes\gwc"; Flags: dontcreatekey uninsdeletekey
-Root: HKLM; Subkey: "SOFTWARE\Classes\shareaza"; Flags: dontcreatekey uninsdeletekey
-Root: HKLM; Subkey: "SOFTWARE\Classes\Shareaza.*"; Flags: dontcreatekey uninsdeletekey
+Root: HKLM; Subkey: "SOFTWARE\Classes\shareaza*"; Flags: dontcreatekey uninsdeletekey
 Root: HKLM; Subkey: "SOFTWARE\Classes\Applications\Shareaza.exe"; Flags: dontcreatekey uninsdeletekey
 Root: HKLM; Subkey: "SOFTWARE\Classes\Applications\skin.exe"; Flags: dontcreatekey uninsdeletekey
 
 Root: HKCU; Subkey: "SOFTWARE\Classes\.co"; Flags: dontcreatekey uninsdeletekey
 Root: HKCU; Subkey: "SOFTWARE\Classes\.collection"; Flags: dontcreatekey uninsdeletekey
+Root: HKCU; Subkey: "SOFTWARE\Classes\.emulecollection"; Flags: dontcreatekey uninsdeletekey
 Root: HKCU; Subkey: "SOFTWARE\Classes\.torrent"; Flags: dontcreatekey uninsdeletekey
 Root: HKCU; Subkey: "SOFTWARE\Classes\bittorrent"; Flags: dontcreatekey uninsdeletekey
 Root: HKCU; Subkey: "SOFTWARE\Classes\.sks"; Flags: dontcreatekey uninsdeletekey
+Root: HKCU; Subkey: "SOFTWARE\Classes\dchub"; Flags: dontcreatekey uninsdeletekey
+Root: HKCU; Subkey: "SOFTWARE\Classes\dcfile"; Flags: dontcreatekey uninsdeletekey
 Root: HKCU; Subkey: "SOFTWARE\Classes\ed2k"; Flags: dontcreatekey uninsdeletekey
+Root: HKCU; Subkey: "SOFTWARE\Classes\foxy"; Flags: dontcreatekey uninsdeletekey
 Root: HKCU; Subkey: "SOFTWARE\Classes\gnet"; Flags: dontcreatekey uninsdeletekey
 Root: HKCU; Subkey: "SOFTWARE\Classes\gnutella"; Flags: dontcreatekey uninsdeletekey
 Root: HKCU; Subkey: "SOFTWARE\Classes\gnutella1"; Flags: dontcreatekey uninsdeletekey
 Root: HKCU; Subkey: "SOFTWARE\Classes\gnutella2"; Flags: dontcreatekey uninsdeletekey
+Root: HKCU; Subkey: "SOFTWARE\Classes\gwc"; Flags: dontcreatekey uninsdeletekey
 Root: HKCU; Subkey: "SOFTWARE\Classes\uhc"; Flags: dontcreatekey uninsdeletekey
 Root: HKCU; Subkey: "SOFTWARE\Classes\ukhl"; Flags: dontcreatekey uninsdeletekey
 Root: HKCU; Subkey: "SOFTWARE\Classes\magnet"; Flags: dontcreatekey uninsdeletekey
 Root: HKCU; Subkey: "SOFTWARE\Classes\mp2p"; Flags: dontcreatekey uninsdeletekey
-Root: HKCU; Subkey: "SOFTWARE\Classes\gwc"; Flags: dontcreatekey uninsdeletekey
-Root: HKCU; Subkey: "SOFTWARE\Classes\shareaza"; Flags: dontcreatekey uninsdeletekey
-Root: HKCU; Subkey: "SOFTWARE\Classes\Shareaza.*"; Flags: dontcreatekey uninsdeletekey
+Root: HKCU; Subkey: "SOFTWARE\Classes\shareaza*"; Flags: dontcreatekey uninsdeletekey
 Root: HKCU; Subkey: "SOFTWARE\Classes\Applications\Shareaza.exe"; Flags: dontcreatekey uninsdeletekey
 Root: HKCU; Subkey: "SOFTWARE\Classes\Applications\skin.exe"; Flags: dontcreatekey uninsdeletekey
 
@@ -381,9 +387,27 @@ Root: HKCU; SubKey: "Software\BHO Shareaza"; Flags: deletekey
 
 ; Set program default associations
 Root: HKLM; Subkey: "Software\Shareaza\Shareaza\Capabilities"; ValueType: string; ValueName: "ApplicationDescription"; ValueData: "{cm:reg_apptitle}" ; Flags: createvalueifdoesntexist uninsdeletekey
+
 Root: HKLM; Subkey: "Software\Shareaza\Shareaza\Capabilities\FileAssociations"; ValueType: string; ValueName: ".torrent"; ValueData: "bittorrent"; Flags: createvalueifdoesntexist uninsdeletevalue
 Root: HKLM; Subkey: "Software\Shareaza\Shareaza\Capabilities\FileAssociations"; ValueType: string; ValueName: ".co"; ValueData: "Shareaza.Collection"; Flags: createvalueifdoesntexist uninsdeletevalue
 Root: HKLM; Subkey: "Software\Shareaza\Shareaza\Capabilities\FileAssociations"; ValueType: string; ValueName: ".collection"; ValueData: "Shareaza.Collection"; Flags: createvalueifdoesntexist uninsdeletevalue
+Root: HKLM; Subkey: "Software\Shareaza\Shareaza\Capabilities\FileAssociations"; ValueType: string; ValueName: ".emulecollection"; ValueData: "eMule"; Flags: createvalueifdoesntexist uninsdeletevalue
+
+Root: HKLM; Subkey: "Software\Shareaza\Shareaza\Capabilities\UrlAssociations"; ValueType: string; ValueName: "shareaza"; ValueData: "Shareaza"; Flags: createvalueifdoesntexist uninsdeletevalue
+Root: HKLM; Subkey: "Software\Shareaza\Shareaza\Capabilities\UrlAssociations"; ValueType: string; ValueName: "magnet"; ValueData: "Shareaza"; Flags: createvalueifdoesntexist uninsdeletevalue
+Root: HKLM; Subkey: "Software\Shareaza\Shareaza\Capabilities\UrlAssociations"; ValueType: string; ValueName: "dchub"; ValueData: "Shareaza"; Flags: createvalueifdoesntexist uninsdeletevalue
+Root: HKLM; Subkey: "Software\Shareaza\Shareaza\Capabilities\UrlAssociations"; ValueType: string; ValueName: "dcfile"; ValueData: "Shareaza"; Flags: createvalueifdoesntexist uninsdeletevalue
+Root: HKLM; Subkey: "Software\Shareaza\Shareaza\Capabilities\UrlAssociations"; ValueType: string; ValueName: "foxy"; ValueData: "Shareaza"; Flags: createvalueifdoesntexist uninsdeletevalue
+Root: HKLM; Subkey: "Software\Shareaza\Shareaza\Capabilities\UrlAssociations"; ValueType: string; ValueName: "gnutella"; ValueData: "Shareaza"; Flags: createvalueifdoesntexist uninsdeletevalue
+Root: HKLM; Subkey: "Software\Shareaza\Shareaza\Capabilities\UrlAssociations"; ValueType: string; ValueName: "gnet"; ValueData: "Shareaza"; Flags: createvalueifdoesntexist uninsdeletevalue
+Root: HKLM; Subkey: "Software\Shareaza\Shareaza\Capabilities\UrlAssociations"; ValueType: string; ValueName: "uhc"; ValueData: "Shareaza"; Flags: createvalueifdoesntexist uninsdeletevalue
+Root: HKLM; Subkey: "Software\Shareaza\Shareaza\Capabilities\UrlAssociations"; ValueType: string; ValueName: "ukhl"; ValueData: "Shareaza"; Flags: createvalueifdoesntexist uninsdeletevalue
+Root: HKLM; Subkey: "Software\Shareaza\Shareaza\Capabilities\UrlAssociations"; ValueType: string; ValueName: "gnutella1"; ValueData: "Shareaza"; Flags: createvalueifdoesntexist uninsdeletevalue
+Root: HKLM; Subkey: "Software\Shareaza\Shareaza\Capabilities\UrlAssociations"; ValueType: string; ValueName: "gnutella2"; ValueData: "Shareaza"; Flags: createvalueifdoesntexist uninsdeletevalue
+Root: HKLM; Subkey: "Software\Shareaza\Shareaza\Capabilities\UrlAssociations"; ValueType: string; ValueName: "gwc"; ValueData: "Shareaza"; Flags: createvalueifdoesntexist uninsdeletevalue
+Root: HKLM; Subkey: "Software\Shareaza\Shareaza\Capabilities\UrlAssociations"; ValueType: string; ValueName: "ed2k"; ValueData: "Shareaza"; Flags: createvalueifdoesntexist uninsdeletevalue
+Root: HKLM; Subkey: "Software\Shareaza\Shareaza\Capabilities\UrlAssociations"; ValueType: string; ValueName: "mp2p"; ValueData: "Shareaza"; Flags: createvalueifdoesntexist uninsdeletevalue
+
 Root: HKLM; Subkey: "Software\RegisteredApplications"; ValueType: string; ValueName: "Shareaza"; ValueData: "Software\Shareaza\Shareaza\Capabilities" ; Flags: createvalueifdoesntexist uninsdeletevalue
 
 [Dirs]
