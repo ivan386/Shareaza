@@ -377,18 +377,10 @@ BOOL CRichDocument::LoadXML(CXMLElement* pBase, CMap< CString, const CString&, C
 
 		if ( strTemp == _T("middle") ) pElement->m_nFlags |= retfMiddle;
 		
-		strTemp = pXML->GetAttributeValue( _T("colour") );
-		if ( CSkin::LoadColour( pXML, _T("colour"), &pElement->m_cColour ) )
+		if ( CSkin::LoadColour( pXML, _T("colour"), &pElement->m_cColour ) ||
+			 CSkin::LoadColour( pXML, _T("color"),  &pElement->m_cColour ) )
 		{
 			pElement->m_nFlags |= retfColour;
-		}
-		else
-		{
-			strTemp = pXML->GetAttributeValue( _T("color") );
-			if ( CSkin::LoadColour( pXML, _T("color"), &pElement->m_cColour ) )
-			{
-				pElement->m_nFlags |= retfColour;
-			}
 		}
 		
 		if ( pElement->m_nType == retIcon )

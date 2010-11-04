@@ -2420,10 +2420,11 @@ BOOL CSkin::LoadColour(CXMLElement* pXML, LPCTSTR pszName, COLORREF* pColour)
 			_stscanf( str.Mid( 4, 2 ), _T("%x"), &nBlue ) == 1 )
 		{
 			*pColour = RGB( nRed, nGreen, nBlue );
+			return TRUE;
 		}
 		else
 			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Bad color attribute"), pXML->ToString() );
 	}
 
-	return TRUE;
+	return FALSE;
 }
