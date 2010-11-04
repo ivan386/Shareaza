@@ -2327,11 +2327,11 @@
 		<tip id="AFX_IDS_PREVIEW_CLOSE" message="Close print preview mode" tip="Отменить просмотр"/>
 		<tip id="AFX_IDS_SCCLOSE" message="Закрыть окно"/>
 		<tip id="AFX_IDS_SCMAXIMIZE" message="Увеличить окно до полного размера"/>
-		<tip id="AFX_IDS_SCMINIMIZE" message="Reduce the window to an icon"/>
+		<tip id="AFX_IDS_SCMINIMIZE" message="Свернуть окошко в иконку"/>
 		<tip id="AFX_IDS_SCMOVE" message="Передвинуть окно"/>
-		<tip id="AFX_IDS_SCNEXTWINDOW" message="Switch to the next document window"/>
-		<tip id="AFX_IDS_SCPREVWINDOW" message="Switch to the previous document window"/>
-		<tip id="AFX_IDS_SCRESTORE" message="Restore the window to normal size"/>
+		<tip id="AFX_IDS_SCNEXTWINDOW" message="Переключится в следующее окошко"/>
+		<tip id="AFX_IDS_SCPREVWINDOW" message="Переключится в предыдущее окошко"/>
+		<tip id="AFX_IDS_SCRESTORE" message="Восстановить окошко в нормальном размере"/>
 		<tip id="AFX_IDS_SCSIZE" message="Изменить размер окна"/>
 		<tip id="AFX_IDS_SCTASKLIST" message="Вызвать список окон"/>
 		<tip id="ID_BROWSE_FILES" message="Просмотр файлов."/>
@@ -2528,7 +2528,7 @@
 		<tip id="ID_MEDIA_VOLUME" message="Изменить громкость." tip="Громкость"/>
 		<tip id="ID_MEDIA_ZOOM" message="Регулировка видео масштаба и пропорций."/>
 		<tip id="ID_MONITOR_CLOSE" message="Закрыть окно монитора."/>
-		<tip id="ID_MUSICBRAINZ_ALBUMS" message="Look at all albums for this artist."/>
+		<tip id="ID_MUSICBRAINZ_ALBUMS" message="Искать все альбомы этого исполнителя."/>
 		<tip id="ID_MUSICBRAINZ_MATCHES" message="Искать подходящие альбомы для выбранного файла."/>
 		<tip id="ID_NEIGHBOURS_CHAT" message="Открыть чат сессию с помеченным пользователем."/>
 		<tip id="ID_NEIGHBOURS_COPY" message="Копировать ссылку доступа к помеченному хосту."/>
@@ -2666,7 +2666,7 @@
 		<tip id="ID_WEBSERVICES_LIST" message="Выберите сервис для получения более полной информации о файле."/>
 		<tip id="ID_WEBSERVICES_MUSICBRAINZ" message="Поиск информации о файле при помощи службы MusicBrainz."/>
 		<tip id="ID_WEBSERVICES_SHAREMONKEY" message="Поиск информации о файле при помощи службы ShareMonkey."/>
-		<tip id="ID_WINDOW_ARRANGE" message="Arrange icons at the bottom of the window" tip="Выстроить иконки"/>
+		<tip id="ID_WINDOW_ARRANGE" message="Выстроить иконки внизу окошка" tip="Выстроить иконки"/>
 		<tip id="ID_WINDOW_CASCADE" message="Расширить все открытые окна, чтобы заполнить экран."/>
 		<tip id="ID_WINDOW_MONITOR" message="Показать или скрыть монитор пропускной способности."/>
 		<tip id="ID_WINDOW_NAVBAR" message="Показать или скрыть навигационную полоску."/>
@@ -3609,14 +3609,14 @@
 			<control/>
 			<control/>
 		</dialog>
-		<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStCoStCoBuBu" caption="Загрузки">
-			<control caption="Сохранять загруженные файлы в папке:"/>
+		<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuEdBu" caption="Загрузки">
+			<control caption="Загруженные файлы лежат здесь"/>
 			<control/>
 			<control/>
-			<control caption="Держать незаконченные файлы в папке:"/>
+			<control caption="Проверять каждый файл антивирусом"/>
+			<control caption="Выбор антивируса:"/>
 			<control/>
-			<control/>
-			<control caption="_Макс. параметры загрузок:"/>
+			<control caption="Число загрузок"/>
 			<control caption="Файлов всего:"/>
 			<control/>
 			<control/>
@@ -3626,13 +3626,15 @@
 			<control caption="Потоков на файл:"/>
 			<control/>
 			<control/>
-			<control caption="Лимиты:"/>
+			<control caption="Лимиты"/>
 			<control caption="Макс. скорость загрузки:"/>
 			<control/>
 			<control caption="Макс. номер в очереди:"/>
 			<control/>
-			<control/>
 			<control caption="Загрузки и раздачи только с соединенными сетями."/>
+			<control caption="Незаконченные файлы лежат здесь"/>
+			<control/>
+			<control/>
 		</dialog>
 		<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStCoStCoBuSyBuBuBuSt" caption="Раздачи">
 			<control caption="_Опции:"/>

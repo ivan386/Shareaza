@@ -1,7 +1,7 @@
 //
 // PageSettingsDownloads.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -28,6 +28,12 @@
 #include "Skin.h"
 #include "PageSettingsDownloads.h"
 
+// AntiVirus interfaces
+#define AVVENDOR
+#pragma warning ( disable : 4201 )
+#include <initguid.h>
+#include <msoav.h>
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
@@ -37,8 +43,8 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNCREATE(CDownloadsSettingsPage, CSettingsPage)
 
 BEGIN_MESSAGE_MAP(CDownloadsSettingsPage, CSettingsPage)
-	ON_BN_CLICKED(IDC_DOWNLOADS_BROWSE, OnDownloadsBrowse)
-	ON_BN_CLICKED(IDC_INCOMPLETE_BROWSE, OnIncompleteBrowse)
+	ON_BN_CLICKED(IDC_DOWNLOADS_BROWSE, &CDownloadsSettingsPage::OnDownloadsBrowse)
+	ON_BN_CLICKED(IDC_INCOMPLETE_BROWSE, &CDownloadsSettingsPage::OnIncompleteBrowse)
 	ON_WM_SHOWWINDOW()
 END_MESSAGE_MAP()
 
@@ -68,6 +74,7 @@ void CDownloadsSettingsPage::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_MAX_FILES_SPIN, m_wndMaxDownFiles);
 	DDX_Control(pDX, IDC_INCOMPLETE_BROWSE, m_wndIncompletePath);
 	DDX_Control(pDX, IDC_DOWNLOADS_BROWSE, m_wndDownloadsPath);
+	DDX_Control(pDX, IDC_ANTIVIRUS, m_wndAntiVirus);
 	DDX_Control(pDX, IDC_DOWNLOADS_BANDWIDTH_LIMIT, m_wndBandwidthLimit);
 	DDX_Control(pDX, IDC_DOWNLOADS_QUEUE_LIMIT, m_wndQueueLimit);
 	DDX_Text(pDX, IDC_DOWNLOADS_FOLDER, m_sDownloadsPath);
@@ -78,6 +85,7 @@ void CDownloadsSettingsPage::DoDataExchange(CDataExchange* pDX)
 	DDX_CBString(pDX, IDC_DOWNLOADS_BANDWIDTH_LIMIT, m_sBandwidthLimit);
 	DDX_CBString(pDX, IDC_DOWNLOADS_QUEUE_LIMIT, m_sQueueLimit);
 	DDX_Check(pDX, IDC_REQUIRE_CONNECT, m_bRequireConnect);
+	DDX_Control(pDX, IDC_ANTIVIRUS, m_wndAntiVirus);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -97,6 +105,41 @@ BOOL CDownloadsSettingsPage::OnInitDialog()
 	Settings.SetRange( &Settings.Downloads.MaxFiles, m_wndMaxDownFiles );
 	Settings.SetRange( &Settings.Downloads.MaxTransfers, m_wndMaxDownTransfers );
 	Settings.SetRange( &Settings.Downloads.MaxFileTransfers, m_wndMaxFileTransfers );
+
+	/*CComPtr< ICatInformation > pInfo;
+	HRESULT hr = pInfo.CoCreateInstance( CLSID_StdComponentCategoriesMgr );
+	if ( SUCCEEDED( hr ) )
+	{
+		const CATID IDs[ 1 ] = { CATID_MSOfficeAntiVirus };
+        CComPtr< IEnumCLSID > pEnum;
+        hr = pInfo->EnumClassesOfCategories( 1, IDs, 0, NULL, &pEnum );
+		if ( SUCCEEDED( hr ) )
+		{
+			CLSID clsid;
+			while ( pEnum->Next( 1, &clsid, NULL ) == S_OK )
+			{
+				CComPtr< IOfficeAntiVirus > pAntivirus;
+				hr = ::CoCreateInstance( clsid, NULL, CLSCTX_ALL, IID_IOfficeAntiVirus, (void**)&pAntivirus );
+				if ( SUCCEEDED( hr ) )
+				{
+					HKEY hClass = NULL;
+					if ( ERROR_SUCCESS == RegOpenKeyEx( HKEY_CLASSES_ROOT,
+						_T("CLSID\\") + Hashes::toGuid( clsid, true ), 0, KEY_READ, &hClass ) )
+					{
+						TCHAR szValue[ MAX_PATH ] = {};
+						DWORD nValue = sizeof( szValue ), nType = REG_SZ;
+						if ( ERROR_SUCCESS == RegQueryValueEx( hClass, NULL, NULL, &nType,
+							(LPBYTE)szValue, &nValue ) )
+						{
+							m_wndAntiVirus.AddString( szValue );
+						}
+						RegCloseKey( hClass );
+					}
+				}
+			}
+		}
+	}*/
+	m_wndAntiVirus.EnableWindow( FALSE );
 
 	m_wndDownloadsPath.SetIcon( IDI_BROWSE );
 	m_wndIncompletePath.SetIcon( IDI_BROWSE );

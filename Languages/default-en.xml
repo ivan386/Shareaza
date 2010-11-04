@@ -3627,14 +3627,14 @@
 			<control/>
 			<control/>
 		</dialog>
-		<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStCoStCoBuBu" caption="Downloads">
-			<control caption="Save _Completed Files Here:"/>
+		<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuEdBu" caption="Downloads">
+			<control caption="Save Completed Files Here"/>
 			<control/>
 			<control/>
-			<control caption="Store Temporary _Incomplete Files Here:"/>
+			<control caption="Scan every completed file with AntiVirus"/>
+			<control caption="Select AntiVirus:"/>
 			<control/>
-			<control/>
-			<control caption="_Number of Downloads:"/>
+			<control caption="Number of Downloads"/>
 			<control caption="Maximum Files:"/>
 			<control/>
 			<control/>
@@ -3644,13 +3644,15 @@
 			<control caption="Transfers per File:"/>
 			<control/>
 			<control/>
-			<control caption="_Limits:"/>
+			<control caption="Limits"/>
 			<control caption="Total Download Bandwidth:"/>
 			<control/>
 			<control caption="Maximum Queue Length:"/>
 			<control/>
-			<control/>
 			<control caption="Only download and upload to networks which are connected."/>
+			<control caption="Store Temporary Incomplete Files Here"/>
+			<control/>
+			<control/>
 		</dialog>
 		<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStCoStCoBuSyBuBuBuSt" caption="Uploads">
 			<control caption="_Options:"/>

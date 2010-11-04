@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2010-11-01 12:35+0000\n"
+"POT-Creation-Date: 2010-11-04 08:03+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -3159,7 +3159,7 @@ msgstr "Увеличить окно до полного размера"
 
 #: message;afx_ids_scminimize
 msgid "Reduce the window to an icon"
-msgstr ""
+msgstr "Свернуть окошко в иконку"
 
 #: message;afx_ids_scmove
 msgid "Change the window position"
@@ -3167,15 +3167,15 @@ msgstr "Передвинуть окно"
 
 #: message;afx_ids_scnextwindow
 msgid "Switch to the next document window"
-msgstr ""
+msgstr "Переключится в следующее окошко"
 
 #: message;afx_ids_scprevwindow
 msgid "Switch to the previous document window"
-msgstr ""
+msgstr "Переключится в предыдущее окошко"
 
 #: message;afx_ids_screstore
 msgid "Restore the window to normal size"
-msgstr ""
+msgstr "Восстановить окошко в нормальном размере"
 
 #: message;afx_ids_scsize
 msgid "Change the window size"
@@ -3984,7 +3984,7 @@ msgstr "Закрыть окно монитора."
 
 #: message;id_musicbrainz_albums
 msgid "Look at all albums for this artist."
-msgstr ""
+msgstr "Искать все альбомы этого исполнителя."
 
 #: message;id_musicbrainz_matches
 msgid "Search for albums matching the selected file."
@@ -4517,7 +4517,7 @@ msgstr "Поиск информации о файле при помощи слу
 
 #: message;id_window_arrange
 msgid "Arrange icons at the bottom of the window"
-msgstr ""
+msgstr "Выстроить иконки внизу окошка"
 
 #: tip;id_window_arrange
 msgid "Arrange Icons"
@@ -8079,16 +8079,20 @@ msgid "Handshake:"
 msgstr "Приветствие:"
 
 #: cdownloadssettingspage;control;1
-msgid "Save _Completed Files Here:"
-msgstr "Сохранять загруженные файлы в папке:"
+msgid "Save Completed Files Here"
+msgstr "Загруженные файлы лежат здесь"
 
 #: cdownloadssettingspage;control;4
-msgid "Store Temporary _Incomplete Files Here:"
-msgstr "Держать незаконченные файлы в папке:"
+msgid "Scan every completed file with AntiVirus"
+msgstr "Проверять каждый файл антивирусом"
+
+#: cdownloadssettingspage;control;5
+msgid "Select AntiVirus:"
+msgstr "Выбор антивируса:"
 
 #: cdownloadssettingspage;control;7
-msgid "_Number of Downloads:"
-msgstr "_Макс. параметры загрузок:"
+msgid "Number of Downloads"
+msgstr "Число загрузок"
 
 #: cdownloadssettingspage;control;8
 msgid "Maximum Files:"
@@ -8103,8 +8107,8 @@ msgid "Transfers per File:"
 msgstr "Потоков на файл:"
 
 #: cdownloadssettingspage;control;17
-msgid "_Limits:"
-msgstr "Лимиты:"
+msgid "Limits"
+msgstr "Лимиты"
 
 #: cdownloadssettingspage;control;18
 msgid "Total Download Bandwidth:"
@@ -8114,9 +8118,13 @@ msgstr "Макс. скорость загрузки:"
 msgid "Maximum Queue Length:"
 msgstr "Макс. номер в очереди:"
 
-#: cdownloadssettingspage;control;23
+#: cdownloadssettingspage;control;22
 msgid "Only download and upload to networks which are connected."
 msgstr "Загрузки и раздачи только с соединенными сетями."
+
+#: cdownloadssettingspage;control;23
+msgid "Store Temporary Incomplete Files Here"
+msgstr "Незаконченные файлы лежат здесь"
 
 #: cuploadssettingspage;control;2
 msgid "Share NEW partial downloads"

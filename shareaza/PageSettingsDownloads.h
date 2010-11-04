@@ -1,7 +1,7 @@
 //
 // PageSettingsDownloads.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -44,6 +44,7 @@ protected:
 	CSpinButtonCtrl	m_wndMaxDownFiles;
 	CIconButtonCtrl	m_wndIncompletePath;
 	CIconButtonCtrl	m_wndDownloadsPath;
+	CComboBox		m_wndAntiVirus;
 	CComboBox		m_wndBandwidthLimit;
 	CComboBox		m_wndQueueLimit;
 	CString			m_sDownloadsPath;
