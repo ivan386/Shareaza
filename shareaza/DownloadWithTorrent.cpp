@@ -546,9 +546,7 @@ void CDownloadWithTorrent::SendStarted(DWORD nNumWant)
 		return;
 
 	// Log the 'start' event
-	theApp.Message( MSG_INFO,
-		_T("[BT] Sending initial tracker announce for %s"),
-		m_pTorrent.m_sName );
+	theApp.Message( MSG_DEBUG, _T("[BT] Sending initial tracker announce for %s"), m_pTorrent.m_sName );
 
 	// Record that the start request has been sent
 	m_bTorrentRequested = TRUE;
@@ -570,9 +568,7 @@ void CDownloadWithTorrent::SendUpdate(DWORD nNumWant)
 		return;
 
 	// Log the 'update' event
-	theApp.Message( MSG_INFO,
-		_T("[BT] Sending update tracker announce for %s"),
-		m_pTorrent.m_sName );
+	theApp.Message( MSG_DEBUG, _T("[BT] Sending update tracker announce for %s"), m_pTorrent.m_sName );
 
 	// Record that an update has been sent
 	m_tTorrentTracker = m_tTorrentSources = GetTickCount();
@@ -592,9 +588,7 @@ void CDownloadWithTorrent::SendCompleted()
 		return;
 
 	// Log the 'complete' event
-	theApp.Message( MSG_INFO,
-		_T("[BT] Sending completed tracker announce for %s"),
-		m_pTorrent.m_sName );
+	theApp.Message( MSG_DEBUG, _T("[BT] Sending completed tracker announce for %s"), m_pTorrent.m_sName );
 
 	// Create and run tracker request
 	new CBTTrackerRequest( this, _T("completed"), 0ul, TRUE );
@@ -610,9 +604,7 @@ void CDownloadWithTorrent::SendStopped()
 		return;
 
 	// Log the 'stop' event
-	theApp.Message( MSG_INFO,
-		_T("[BT] Sending final tracker announce for %s"),
-		m_pTorrent.m_sName );
+	theApp.Message( MSG_DEBUG, _T("[BT] Sending final tracker announce for %s"), m_pTorrent.m_sName );
 
 	// Update download to indicate it has been stopped
 	m_bTorrentStarted = m_bTorrentRequested = FALSE;
@@ -640,8 +632,7 @@ void CDownloadWithTorrent::OnTrackerEvent(bool bSuccess, LPCTSTR pszReason, LPCT
 		// Lock on this tracker if we were searching for one
 		if ( m_pTorrent.GetTrackerMode() == CBTInfo::tMultiFinding )
 		{
-			theApp.Message( MSG_DEBUG , _T("[BT] Locked onto tracker %s"),
-				m_pTorrent.GetTrackerAddress() );
+			theApp.Message( MSG_DEBUG , _T("[BT] Locked onto tracker %s"), m_pTorrent.GetTrackerAddress() );
 			m_pTorrent.SetTrackerMode( CBTInfo::tMultiFound );
 		}
 	}
@@ -811,8 +802,7 @@ void CDownloadWithTorrent::ChokeTorrent(DWORD tNow)
 			(DWORD)m_pTorrentUploads.GetCount() != GetBTSourceCount() &&
 			CanStartTransfers( tNow ) )
 		{
-			theApp.Message( MSG_DEBUG, _T("Attempting to push-start a BitTorrent upload for %s"),
-				m_pTorrent.m_sName );
+			theApp.Message( MSG_DEBUG, _T("Attempting to push-start a BitTorrent upload for %s"), m_pTorrent.m_sName );
 			StartNewTransfer( tNow );
 		}
 	}
