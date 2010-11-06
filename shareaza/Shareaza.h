@@ -303,6 +303,9 @@ CString BrowseForFolder(LPCTSTR szTitle, LPCTSTR szInitialPath = NULL, HWND hWnd
 // Do message loop
 void SafeMessageLoop();
 
+// Detect full screen application
+BOOL IsUserUsingFullscreen();
+
 typedef enum
 {
 	sNone = 0,

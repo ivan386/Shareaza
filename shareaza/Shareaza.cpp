@@ -2867,6 +2867,23 @@ void SafeMessageLoop()
 	InterlockedDecrement( &theApp.m_bBusy );
 }
 
+BOOL IsUserUsingFullscreen()
+{
+	HWND hwnd = GetForegroundWindow();
+	if ( ! hwnd )
+		return FALSE;
+	RECT rcWindow;
+	GetWindowRect( hwnd, &rcWindow );
+	HMONITOR hm = MonitorFromRect( &rcWindow, MONITOR_DEFAULTTONULL );
+	if ( ! hm )
+		return FALSE;
+	MONITORINFO mi = { sizeof( MONITORINFO ) };
+	GetMonitorInfo( hm, &mi );
+	if ( ! EqualRect( &rcWindow, &mi.rcMonitor ) )
+		return FALSE;
+	return TRUE;
+}
+
 template <>
 __int8 GetRandomNum<__int8>(const __int8& min, const __int8& max)
 {

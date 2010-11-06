@@ -48,7 +48,6 @@ END_MESSAGE_MAP()
 #define WINDOW_WIDTH		320
 #define WINDOW_HEIGHT		48
 
-
 /////////////////////////////////////////////////////////////////////////////
 // CHashProgressBar construction
 
@@ -67,7 +66,8 @@ CHashProgressBar::CHashProgressBar()
 void CHashProgressBar::Run()
 {
 	size_t nRemaining = LibraryBuilder.GetRemaining();
-	BOOL bShow = Settings.Library.HashWindow && nRemaining;
+	BOOL bFullscreen = IsUserUsingFullscreen();
+	BOOL bShow = Settings.Library.HashWindow && nRemaining && ! bFullscreen;
 
 	if ( bShow )
 	{
@@ -96,7 +96,7 @@ void CHashProgressBar::Run()
 			}
 		}
 	}
-	else if ( m_hWnd && GetTickCount() > m_nLastShow + 2500  ) // 2.5 sec delay
+	else if ( m_hWnd && ( bFullscreen || GetTickCount() > m_nLastShow + 2500 ) ) // 2.5 sec delay
 	{
 		DestroyWindow();
 	}
@@ -157,6 +157,8 @@ int CHashProgressBar::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if ( CWnd::OnCreate( lpCreateStruct ) == -1 )
 		return -1;
 
+	m_nAlpha = 0;
+
 	SetTimer( 1, 100, NULL );
 
 	return 0;
@@ -165,6 +167,8 @@ int CHashProgressBar::OnCreate(LPCREATESTRUCT lpCreateStruct)
 void CHashProgressBar::OnDestroy()
 {
 	KillTimer( 1 );
+
+	m_nAlpha = 0;
 
 	CWnd::OnDestroy();
 }
