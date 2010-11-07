@@ -130,8 +130,8 @@ void CTransfers::Remove(CTransfer* pTransfer)
 
 void CTransfers::OnRun()
 {
-	if ( theApp.m_bIsVistaOrNewer )
-		::SetThreadPriority( GetCurrentThread(), THREAD_MODE_BACKGROUND_BEGIN );
+//	if ( theApp.m_bIsVistaOrNewer )
+//		::SetThreadPriority( GetCurrentThread(), THREAD_MODE_BACKGROUND_BEGIN );
 
 	while ( IsThreadEnabled() )
 	{
