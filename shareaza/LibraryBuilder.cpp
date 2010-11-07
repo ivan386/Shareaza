@@ -378,6 +378,9 @@ bool CLibraryBuilder::GetBoostPriority() const
 
 void CLibraryBuilder::OnRun()
 {
+	if ( theApp.m_bIsVistaOrNewer )
+		::SetThreadPriority( GetCurrentThread(), THREAD_MODE_BACKGROUND_BEGIN );
+
 	int nAttempts = 0;
 
 	while ( IsThreadEnabled() )

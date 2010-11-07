@@ -181,6 +181,9 @@ bool CDownloadTask::WasAborted() const
 
 int CDownloadTask::Run()
 {
+	if ( theApp.m_bIsVistaOrNewer )
+		::SetThreadPriority( GetCurrentThread(), THREAD_MODE_BACKGROUND_BEGIN );
+
 	BOOL bCOM = SUCCEEDED( OleInitialize( NULL ) );
 
 	switch ( m_nTask )
