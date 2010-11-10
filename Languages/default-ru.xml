@@ -2740,15 +2740,15 @@
 		<string id="8064" value="Соединено с %lu хостами.  %s в хранилище."/>
 		<string id="8065" value="Подключаюсь к сети..."/>
 		<string id="8066" value="Нет соединения с сетью."/>
-		<string id="8067" value="%s-Вх. %s-Исх. [З:%I64i/В:%I64i]"/>
-		<string id="8068" value="[У:%I64i] %s-Вх. %s-Исх. [З:%I64i/В:%I64i]"/>
+		<string id="8067" value="%s вх : %s исх [З:%I64i/В:%I64i]"/>
+		<string id="8068" value="[У:%I64i] %s вх : %s исх [З:%I64i/В:%I64i]"/>
 		<string id="8069" value="Соединиться"/>
 		<string id="8070" value="Подключение…"/>
 		<string id="8071" value="Подключено"/>
 		<string id="8072" value="Отключиться"/>
 		<string id="8096" value="Эта область показывает подробную информацию о помеченных файлах."/>
-		<string id="8097" value="Один источник доступен (%s).  "/>
-		<string id="8098" value="%i источника(ов) доступно (%s).  "/>
+		<string id="8097" value="Один источник доступен (%s)."/>
+		<string id="8098" value="%i источников доступно (%s)."/>
 		<string id="8099" value="Есть один просмотр."/>
 		<string id="8100" value="Есть %i просмотр(ов)."/>
 		<string id="8101" value="%s пишет:"/>
@@ -2770,14 +2770,14 @@
 		<string id="8142" value="Скрыть панель поиска"/>
 		<string id="8143" value="Поиск"/>
 		<string id="8144" value="Поиск"/>
-		<string id="8145" value="Далее"/>
+		<string id="8145" value="Ещё"/>
 		<string id="8146" value="Стоп"/>
 		<string id="8147" value="Любой тип файла"/>
 		<string id="8148" value="Введите искомое сюда:"/>
 		<string id="8149" value="Искать файлы данного типа:"/>
-		<string id="8150" value="Ищется:"/>
+		<string id="8150" value="Поиск:"/>
 		<string id="8151" value="Найдено:"/>
-		<string id="8152" value="Узлов: %lu; Ветвей: %lu"/>
+		<string id="8152" value="%lu узлов, %lu ветвей"/>
 		<string id="8153" value="Пока ничего не ищем"/>
 		<string id="8154" value="Файлов не найдено"/>
 		<string id="8155" value="%lu файлов, %lu хитов|%lu файлов, %lu хитов|%lu файлов, %lu хитов"/>
@@ -2791,8 +2791,8 @@
 		<string id="8163" value="Загружается ответ на просмотр (%2.f%%)..."/>
 		<string id="8164" value="Невозможно соединиться с хостом для просмотра пользователя."/>
 		<string id="8165" value="Невозможно загрузить список файлов.  Возможно хост не поддерживает просматривания."/>
-		<string id="8166" value="Искать в сети:"/>
-		<string id="8167" value="Во всех сетях"/>
+		<string id="8166" value="Искать в этой сети:"/>
+		<string id="8167" value="Все сети"/>
 		<string id="8176" value="Поиск Shareaza"/>
 		<string id="8177" value="Введите ключевые слова для поиска:"/>
 		<string id="8178" value="Какого типа файл?"/>
@@ -2804,27 +2804,27 @@
 		<string id="8224" value="Shareaza загружает:"/>
 		<string id="8225" value="Загрузка приостановлена:"/>
 		<string id="8226" value="Shareaza завершила загрузку:"/>
-		<string id="8227" value="%i час. и %i мин."/>
-		<string id="8228" value="%i мин. и %i сек."/>
-		<string id="8229" value="%i сек."/>
+		<string id="8227" value="%i часов и %i минут"/>
+		<string id="8228" value="%i минут и %i секунд"/>
+		<string id="8229" value="%i секунд"/>
 		<string id="8230" value="Shareaza ищет источники для:"/>
 		<string id="8231" value="Нет источников"/>
 		<string id="8232" value="Открыть"/>
 		<string id="8233" value="Просмотр"/>
 		<string id="8235" value="Скорость передачи:"/>
 		<string id="8236" value="Примерно осталось:"/>
-		<string id="8237" value="Загрузили|Всего|%:"/>
-		<string id="8238" value="Кол-во источников:"/>
+		<string id="8237" value="Загружено:"/>
+		<string id="8238" value="Источников:"/>
 		<string id="8239" value="Завершено"/>
 		<string id="8240" value="Shareaza перемещает загрузку:"/>
 		<string id="8241" value="Shareaza проверяет загрузку на ошибки:"/>
 		<string id="8243" value="Рейтинг:"/>
-		<string id="8244" value="Число просмотров:"/>
+		<string id="8244" value="Число ревью:"/>
 		<string id="8288" value="Просмотр вашего хранилища"/>
 		<string id="8289" value="Просматривается "/>
 		<string id="8290" value="Просматривается содержимое %i папок"/>
 		<string id="8291" value="Несколько папок"/>
-		<string id="8292" value="Помечено %i файлов(ы)"/>
+		<string id="8292" value="%i файлов помечено"/>
 		<string id="8293" value="Нет выбранных файлов"/>
 		<string id="8294" value="Недавние дополнения"/>
 		<string id="8295" value="Оценить файл"/>
@@ -4111,9 +4111,9 @@
 			<control caption="..."/>
 			<control caption="Примерно осталось:"/>
 			<control caption="..."/>
-			<control caption="Загрузили|Всего|%:"/>
+			<control caption="Загружено:"/>
 			<control caption="..."/>
-			<control caption="Кол-во источников:"/>
+			<control caption="Источников:"/>
 			<control caption="..."/>
 			<control caption="Закрыть окно по завершению загрузки"/>
 			<control caption="Открыть файл"/>

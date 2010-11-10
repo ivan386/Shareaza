@@ -4777,11 +4777,11 @@ msgstr "Нет соединения с сетью."
 
 #: string;8067
 msgid "%s in : %s out [D:%I64i/U:%I64i]"
-msgstr "%s-Вх. %s-Исх. [З:%I64i/В:%I64i]"
+msgstr "%s вх : %s исх [З:%I64i/В:%I64i]"
 
 #: string;8068
 msgid "[H:%I64i] %s in : %s out [D:%I64i/U:%I64i]"
-msgstr "[У:%I64i] %s-Вх. %s-Исх. [З:%I64i/В:%I64i]"
+msgstr "[У:%I64i] %s вх : %s исх [З:%I64i/В:%I64i]"
 
 #: string;8096
 msgid "This area shows more information about files you select."
@@ -4789,11 +4789,11 @@ msgstr "Эта область показывает подробную инфор
 
 #: string;8097
 msgid "One source is available (%s)."
-msgstr "Один источник доступен (%s).  "
+msgstr "Один источник доступен (%s)."
 
 #: string;8098
 msgid "%i sources are available (%s)."
-msgstr "%i источника(ов) доступно (%s).  "
+msgstr "%i источников доступно (%s)."
 
 #: string;8099
 msgid "There is one review."
@@ -4877,7 +4877,7 @@ msgstr "Поиск"
 
 #: string;8145
 msgid "More"
-msgstr "Далее"
+msgstr "Ещё"
 
 #: string;8147
 msgid "Any File Type"
@@ -4893,7 +4893,7 @@ msgstr "Искать файлы данного типа:"
 
 #: string;8150
 msgid "Searching:"
-msgstr "Ищется:"
+msgstr "Поиск:"
 
 #: string;8151
 msgid "Found:"
@@ -4901,7 +4901,7 @@ msgstr "Найдено:"
 
 #: string;8152
 msgid "%lu hubs, %lu leaves"
-msgstr "Узлов: %lu; Ветвей: %lu"
+msgstr "%lu узлов, %lu ветвей"
 
 #: string;8153
 msgid "Not currently searching"
@@ -4949,11 +4949,11 @@ msgstr "Невозможно загрузить список файлов.  Во
 
 #: string;8166
 msgid "Search on this network:"
-msgstr "Искать в сети:"
+msgstr "Искать в этой сети:"
 
 #: string;8167
 msgid "All Networks"
-msgstr "Во всех сетях"
+msgstr "Все сети"
 
 #: string;8176
 msgid "Search Shareaza"
@@ -5001,15 +5001,15 @@ msgstr "Shareaza завершила загрузку:"
 
 #: string;8227
 msgid "%i hours and %i minutes"
-msgstr "%i час. и %i мин."
+msgstr "%i часов и %i минут"
 
 #: string;8228
 msgid "%i minutes and %i seconds"
-msgstr "%i мин. и %i сек."
+msgstr "%i минут и %i секунд"
 
 #: string;8229
 msgid "%i seconds"
-msgstr "%i сек."
+msgstr "%i секунд"
 
 #: string;8230
 msgid "Shareaza is looking for sources for:"
@@ -5037,11 +5037,11 @@ msgstr "Примерно осталось:"
 
 #: string;8237 cdownloadmonitordlg;control;10
 msgid "Volume downloaded:"
-msgstr "Загрузили|Всего|%:"
+msgstr "Загружено:"
 
 #: string;8238 cdownloadmonitordlg;control;12
 msgid "Number of sources:"
-msgstr "Кол-во источников:"
+msgstr "Источников:"
 
 #: string;8239 string;20111
 msgid "Completed"
@@ -5061,7 +5061,7 @@ msgstr "Рейтинг:"
 
 #: string;8244
 msgid "Number of reviews:"
-msgstr "Число просмотров:"
+msgstr "Число ревью:"
 
 #: string;8288
 msgid "Exploring Your Shareaza Library"
@@ -5081,7 +5081,7 @@ msgstr "Несколько папок"
 
 #: string;8292
 msgid "%i files selected"
-msgstr "Помечено %i файлов(ы)"
+msgstr "%i файлов помечено"
 
 #: string;8293
 msgid "No files are selected"
