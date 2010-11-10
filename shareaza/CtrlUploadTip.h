@@ -1,7 +1,7 @@
 //
 // CtrlUploadTip.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -25,6 +25,7 @@
 
 class CUpload;
 class CUploadFile;
+class CUploadTransfer;
 class CLineGraph;
 class CGraphItem;
 
@@ -50,9 +51,9 @@ protected:
 	CString			m_sAddress;
 	CLineGraph*		m_pGraph;
 	CGraphItem*		m_pItem;
-	CArray< CString >	m_pHeaderName;
-	CArray< CString >	m_pHeaderValue;
 	int				m_nHeaderWidth;
+	int				m_nValueWidth;
+	int				m_nHeaders;
 
 	virtual BOOL OnPrepare();
 	virtual void OnCalcSize(CDC* pDC);
@@ -61,6 +62,8 @@ protected:
 	virtual void OnPaint(CDC* pDC);
 
 	void DrawProgressBar(CDC* pDC, CPoint* pPoint, CUploadFile* pFile);
+	void OnCalcSize(CDC* pDC, CUploadTransfer* pUpload);
+	void OnPaint(CDC* pDC, CUploadTransfer* pUpload);
 
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 

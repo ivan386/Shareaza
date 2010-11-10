@@ -57,16 +57,22 @@ END_MESSAGE_MAP()
 // CDownloadTipCtrl construction
 
 CDownloadTipCtrl::CDownloadTipCtrl()
-	: m_pDownload( NULL )
-	, m_pSource( NULL )
-	, m_pGraph( NULL )
-	, m_nIcon( 0 )
+	: m_pDownload	( NULL )
+	, m_pSource		( NULL )
+	, m_pGraph		( NULL )
+	, m_nIcon		( 0 )
+	, m_nHeaderWidth( 0 )
+	, m_nValueWidth	( 0 )
+	, m_nHeaders	( 0 )
+	, m_nStatWidth	( 0 )
+	, m_bDrawGraph	( FALSE )
+	, m_bDrawError	( FALSE )
 {
 }
 
 CDownloadTipCtrl::~CDownloadTipCtrl()
 {
-	if ( m_pGraph ) delete m_pGraph;
+	delete m_pGraph;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -79,7 +85,7 @@ BOOL CDownloadTipCtrl::OnPrepare()
 
 	CalcSizeHelper();
 
-	return m_sz.cx > 0;
+	return ( m_sz.cx > 0 );
 }
 
 void CDownloadTipCtrl::OnCalcSize(CDC* pDC)
@@ -97,16 +103,17 @@ void CDownloadTipCtrl::OnCalcSize(CDC* pDC)
 
 void CDownloadTipCtrl::OnShow()
 {
-	if ( m_pGraph ) delete m_pGraph;
+	delete m_pGraph;
 
 	m_pGraph	= CreateLineGraph();
 	m_pItem		= new CGraphItem( 0, 1.0f, RGB( 0, 0, 0xFF ) );
+
 	m_pGraph->AddItem( m_pItem );
 }
 
 void CDownloadTipCtrl::OnHide()
 {
-	if ( m_pGraph ) delete m_pGraph;
+	delete m_pGraph;
 	m_pGraph = NULL;
 	m_pItem = NULL;
 }
@@ -638,6 +645,8 @@ void CDownloadTipCtrl::PrepareFileInfo(CShareazaFile* pDownload)
 
 void CDownloadTipCtrl::OnCalcSize(CDC* pDC, CDownloadSource* pSource)
 {
+	const CTransfer* pTransfer = pSource->GetTransfer();
+
 	// Is this a firewalled eDonkey client
 	if ( pSource->m_nProtocol == PROTOCOL_ED2K && pSource->m_bPushOnly == TRUE )
 	{
@@ -675,24 +684,6 @@ void CDownloadTipCtrl::OnCalcSize(CDC* pDC, CDownloadSource* pSource)
 
 	m_sURL = pSource->m_sURL;
 
-	m_pHeaderName.RemoveAll();
-	m_pHeaderValue.RemoveAll();
-
-	if ( ! pSource->IsIdle() && Settings.General.GUIMode != GUI_BASIC )
-	{
-		const CDownloadTransfer* pTransfer = pSource->GetTransfer();
-		for ( int nHeader = 0 ; nHeader < pTransfer->m_pHeaderName.GetSize() ; nHeader++ )
-		{
-			CString strName		= pTransfer->m_pHeaderName.GetAt( nHeader );
-			CString strValue	= pTransfer->m_pHeaderValue.GetAt( nHeader );
-
-			if ( strValue.GetLength() > 64 ) strValue = strValue.Left( 64 ) + _T("...");
-
-			m_pHeaderName.Add( strName );
-			m_pHeaderValue.Add( strValue );
-		}
-	}
-
 	AddSize( pDC, m_sName );
 	m_sz.cy += TIP_TEXTHEIGHT;
 
@@ -711,24 +702,26 @@ void CDownloadTipCtrl::OnCalcSize(CDC* pDC, CDownloadSource* pSource)
 	m_sz.cy += 40;
 	m_sz.cy += TIP_GAP;
 
-	int nValueWidth = 0;
+	m_nValueWidth = 0;
 	m_nHeaderWidth = 0;
-
-	for ( int nHeader = 0 ; nHeader < m_pHeaderName.GetSize() ; nHeader++ )
+	m_nHeaders = 0;
+	if ( ! pSource->IsIdle() && Settings.General.GUIMode != GUI_BASIC )
 	{
-		CString strName		= m_pHeaderName.GetAt( nHeader );
-		CString strValue	= m_pHeaderValue.GetAt( nHeader );
-		CSize szKey			= pDC->GetTextExtent( strName + ':' );
-		CSize szValue		= pDC->GetTextExtent( strValue );
-
-		m_nHeaderWidth		= max( m_nHeaderWidth, int(szKey.cx) );
-		nValueWidth			= max( nValueWidth, int(szValue.cx) );
-
-		m_sz.cy += TIP_TEXTHEIGHT;
+		m_nHeaders = pTransfer->m_pHeaderName.GetSize();
+		for ( int nHeader = 0 ; nHeader < m_nHeaders ; nHeader++ )
+		{
+			CString strName		= pTransfer->m_pHeaderName.GetAt( nHeader ) + _T(':');
+			CString strValue	= pTransfer->m_pHeaderValue.GetAt( nHeader );
+			CSize szKey			= pDC->GetTextExtent( strName );
+			CSize szValue		= pDC->GetTextExtent( strValue );
+			m_nHeaderWidth		= max( m_nHeaderWidth, (int)szKey.cx );
+			m_nValueWidth		= max( m_nValueWidth, (int)szValue.cx );
+			m_sz.cy				+= TIP_TEXTHEIGHT;
+		}
 	}
 
 	if ( m_nHeaderWidth ) m_nHeaderWidth += TIP_GAP;
-	m_sz.cx = max( m_sz.cx, (LONG)m_nHeaderWidth + nValueWidth );
+	m_sz.cx = max( m_sz.cx, (LONG)m_nHeaderWidth + m_nValueWidth );
 }
 
 void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownloadSource* pSource)
@@ -820,14 +813,26 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownloadSource* pSource)
 	}
 	pt.y += TIP_GAP;
 
-	for ( int nHeader = 0 ; nHeader < m_pHeaderName.GetSize() ; nHeader++ )
+	if ( ! pSource->IsIdle() && Settings.General.GUIMode != GUI_BASIC )
 	{
-		CString strName		= m_pHeaderName.GetAt( nHeader );
-		CString strValue	= m_pHeaderValue.GetAt( nHeader );
-
-		DrawText( pDC, &pt, strName + ':' );
-		DrawText( pDC, &pt, strValue, m_nHeaderWidth );
-		pt.y += TIP_TEXTHEIGHT;
+		const CTransfer* pTransfer = pSource->GetTransfer();
+		if ( m_nHeaders != pTransfer->m_pHeaderName.GetSize() )
+		{
+			ShowImpl( true );
+			return;
+		}
+		for ( int nHeader = 0 ; nHeader < m_nHeaders ; nHeader++ )
+		{
+			CString strName = pTransfer->m_pHeaderName.GetAt( nHeader ) + _T(':');
+			CString strValue = pTransfer->m_pHeaderValue.GetAt( nHeader );
+			DrawText( pDC, &pt, strName );
+			pt.x += m_nHeaderWidth;
+			sz.cx -= m_nHeaderWidth;
+			DrawText( pDC, &pt, strValue, &sz );
+			pt.x -= m_nHeaderWidth;
+			sz.cx += m_nHeaderWidth;
+			pt.y += TIP_TEXTHEIGHT;
+		}
 	}
 }
 
@@ -880,7 +885,7 @@ void CDownloadTipCtrl::OnTimer(UINT_PTR nIDEvent)
 		m_pItem->Add( nSpeed );
 		m_pGraph->m_nUpdates++;
 		m_pGraph->m_nMaximum = max( m_pGraph->m_nMaximum, nSpeed );
-		Invalidate();
+		Invalidate( FALSE );
 	}
 	else if ( m_pSource && Downloads.Check( m_pSource ) )
 	{
@@ -890,7 +895,7 @@ void CDownloadTipCtrl::OnTimer(UINT_PTR nIDEvent)
 			m_pItem->Add( nSpeed );
 			m_pGraph->m_nUpdates++;
 			m_pGraph->m_nMaximum = max( m_pGraph->m_nMaximum, nSpeed );
-			Invalidate();
+			Invalidate( FALSE );
 		}
 	}
 }

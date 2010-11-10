@@ -1,7 +1,7 @@
 //
 // CtrlDownloadTip.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -72,9 +72,9 @@ protected:
 	int				m_nIcon;
 	CLineGraph*		m_pGraph;
 	CGraphItem*		m_pItem;
-	CArray< CString >	m_pHeaderName;
-	CArray< CString >	m_pHeaderValue;
 	int				m_nHeaderWidth;
+	int				m_nValueWidth;
+	int				m_nHeaders;
 	int				m_nStatWidth;
 	BOOL			m_bDrawGraph;		//Draw the download graph?
 	BOOL			m_bDrawError;		//Display the tracker error?

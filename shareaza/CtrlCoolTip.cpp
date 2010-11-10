@@ -350,21 +350,30 @@ void CCoolTipCtrl::OnPaint()
 	if ( ! IsWindow( GetSafeHwnd() ) || ! IsWindowVisible() ) return;
 
 	CPaintDC dc( this );
-	CRect rc;
 
+	CRect rc;
 	GetClientRect( &rc );
 
-	CFont* pOldFont = (CFont*)dc.SelectObject( &CoolInterface.m_fntBold );
-
-	dc.Draw3dRect( &rc, CoolInterface.m_crTipBorder, CoolInterface.m_crTipBorder );
-	dc.SetViewportOrg( TIP_MARGIN, TIP_MARGIN );
+	CSize size = rc.Size();
+	CDC* pMemDC = CoolInterface.GetBuffer( dc, size );
+	if ( Settings.General.LanguageRTL )
+		SetLayout( pMemDC->m_hDC, 0 );
+	
+	pMemDC->SetTextColor( CoolInterface.m_crTipText );
+	pMemDC->SetBkColor( CoolInterface.m_crTipBack );
+	CFont* pOldFont = (CFont*)pMemDC->SelectObject( &CoolInterface.m_fntBold );
+	pMemDC->Draw3dRect( &rc, CoolInterface.m_crTipBorder, CoolInterface.m_crTipBorder );
+	pMemDC->SetViewportOrg( TIP_MARGIN, TIP_MARGIN );
 	rc.DeflateRect( 1, 1 );
+	OnPaint( pMemDC );
+	pMemDC->SetViewportOrg( 0, 0 );
+	pMemDC->FillSolidRect( &rc, CoolInterface.m_crTipBack );
+	pMemDC->SelectObject( pOldFont );
 
-	OnPaint( &dc );
-
-	dc.SetViewportOrg( 0, 0 );
-	dc.FillSolidRect( &rc, CoolInterface.m_crTipBack );
-	dc.SelectObject( pOldFont );
+	GetClientRect( &rc );
+	dc.BitBlt( rc.left, rc.top, rc.Width(), rc.Height(), pMemDC, 0, 0, SRCCOPY );
+	if ( Settings.General.LanguageRTL )
+		SetLayout( pMemDC->m_hDC, LAYOUT_RTL );
 }
 
 void CCoolTipCtrl::OnMouseMove(UINT /*nFlags*/, CPoint /*point*/)

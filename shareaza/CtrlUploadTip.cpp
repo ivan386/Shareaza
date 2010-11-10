@@ -53,10 +53,12 @@ END_MESSAGE_MAP()
 // CUploadTipCtrl construction
 
 CUploadTipCtrl::CUploadTipCtrl()
-	: m_pUploadFile( NULL )
-	, m_pGraph( NULL )
-	, m_pItem( NULL )
+	: m_pUploadFile	( NULL )
+	, m_pGraph		( NULL )
+	, m_pItem		( NULL )
 	, m_nHeaderWidth( 0 )
+	, m_nValueWidth	( 0 )
+	, m_nHeaders	( 0 )
 {
 }
 
@@ -75,7 +77,16 @@ BOOL CUploadTipCtrl::OnPrepare()
 
 	CalcSizeHelper();
 
-	return m_sz.cx > 0;
+	return ( m_sz.cx > 0 );
+}
+
+void CUploadTipCtrl::OnCalcSize(CDC* pDC)
+{
+	if ( m_pUploadFile && UploadFiles.Check( m_pUploadFile ) )
+	{
+		OnCalcSize( pDC, m_pUploadFile->GetActive() );
+	}
+	m_sz.cx = min( max( m_sz.cx, 400l ), (LONG)GetSystemMetrics( SM_CXSCREEN ) / 2 );
 }
 
 void CUploadTipCtrl::OnShow()
@@ -95,33 +106,31 @@ void CUploadTipCtrl::OnHide()
 	m_pItem = NULL;
 }
 
-void CUploadTipCtrl::OnCalcSize(CDC* pDC)
+void CUploadTipCtrl::OnPaint(CDC* pDC)
 {
-	if ( ! m_pUploadFile || ! UploadFiles.Check( m_pUploadFile ) ) return;
-	CUploadTransfer* pUpload = m_pUploadFile->GetActive();
+	CSingleLock pLock( &Transfers.m_pSection );
+	if ( ! pLock.Lock( 100 ) ) return;
 
+	if ( m_pUploadFile && UploadFiles.Check( m_pUploadFile ) )
+	{
+		OnPaint( pDC, m_pUploadFile->GetActive() );
+	}
+	else
+	{
+		Hide();
+	}
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// CDownloadTipCtrl upload transfer case
+
+void CUploadTipCtrl::OnCalcSize(CDC* pDC, CUploadTransfer* pUpload)
+{
 	if ( pUpload->m_sNick.GetLength() > 0 )
 		m_sAddress = pUpload->m_sNick + _T(" (") +
 			CString( inet_ntoa( pUpload->m_pHost.sin_addr ) ) + _T(")");
 	else
 		m_sAddress = inet_ntoa( pUpload->m_pHost.sin_addr );
-
-	m_pHeaderName.RemoveAll();
-	m_pHeaderValue.RemoveAll();
-
-	if ( Settings.General.GUIMode != GUI_BASIC )
-	{
-		for ( int nHeader = 0 ; nHeader < pUpload->m_pHeaderName.GetSize() ; nHeader++ )
-		{
-			CString strName		= pUpload->m_pHeaderName.GetAt( nHeader );
-			CString strValue	= pUpload->m_pHeaderValue.GetAt( nHeader );
-
-			if ( strValue.GetLength() > 64 ) strValue = strValue.Left( 64 ) + _T("...");
-
-			m_pHeaderName.Add( strName );
-			m_pHeaderValue.Add( strValue );
-		}
-	}
 
 	AddSize( pDC, m_pUploadFile->m_sName );
 	AddSize( pDC, m_sAddress );
@@ -137,41 +146,32 @@ void CUploadTipCtrl::OnCalcSize(CDC* pDC)
 	m_sz.cy += 40;
 	m_sz.cy += TIP_GAP;
 
-	int nValueWidth = 0;
+	m_nValueWidth = 0;
 	m_nHeaderWidth = 0;
-
-	for ( int nHeader = 0 ; nHeader < m_pHeaderName.GetSize() ; nHeader++ )
+	m_nHeaders = 0;
+	if ( Settings.General.GUIMode != GUI_BASIC )
 	{
-		CString strName		= m_pHeaderName.GetAt( nHeader );
-		CString strValue	= m_pHeaderValue.GetAt( nHeader );
-		CSize szKey			= pDC->GetTextExtent( strName + ':' );
-		CSize szValue		= pDC->GetTextExtent( strValue );
-
-		m_nHeaderWidth		= max( m_nHeaderWidth, (int)szKey.cx );
-		nValueWidth			= max( nValueWidth, (int)szValue.cx );
-
-		m_sz.cy += TIP_TEXTHEIGHT;
+		m_nHeaders = pUpload->m_pHeaderName.GetSize();
+		for ( int nHeader = 0 ; nHeader < m_nHeaders ; nHeader++ )
+		{
+			CString strName		= pUpload->m_pHeaderName.GetAt( nHeader ) + _T(':');
+			CString strValue	= pUpload->m_pHeaderValue.GetAt( nHeader );
+			CSize szKey			= pDC->GetTextExtent( strName );
+			CSize szValue		= pDC->GetTextExtent( strValue );
+			m_nHeaderWidth		= max( m_nHeaderWidth, (int)szKey.cx );
+			m_nValueWidth		= max( m_nValueWidth, (int)szValue.cx );
+			m_sz.cy				+= TIP_TEXTHEIGHT;
+		}
 	}
 
 	if ( m_nHeaderWidth ) m_nHeaderWidth += TIP_GAP;
-	m_sz.cx = min( max( max( m_sz.cx, (LONG)m_nHeaderWidth + nValueWidth ), 400l ),
-		(LONG)GetSystemMetrics( SM_CXSCREEN ) / 2 );
+	m_sz.cx = max( m_sz.cx, (LONG)m_nHeaderWidth + m_nValueWidth );
 }
 
-void CUploadTipCtrl::OnPaint(CDC* pDC)
+void CUploadTipCtrl::OnPaint(CDC* pDC, CUploadTransfer* pUpload)
 {
-	CSingleLock pLock( &Transfers.m_pSection );
-	if ( ! pLock.Lock( 100 ) ) return;
-
-	if ( ! m_pUploadFile || ! UploadFiles.Check( m_pUploadFile ) )
-	{
-		Hide();
-		return;
-	}
-
-	CUploadTransfer* pUpload = m_pUploadFile->GetActive();
-
 	CPoint pt( 0, 0 );
+	CSize sz( m_sz.cx, TIP_TEXTHEIGHT );
 
 	DrawText( pDC, &pt, m_pUploadFile->m_sName );
 	pt.y += TIP_TEXTHEIGHT;
@@ -263,14 +263,25 @@ void CUploadTipCtrl::OnPaint(CDC* pDC)
 	pt.y += 40;
 	pt.y += TIP_GAP;
 
-	for ( int nHeader = 0 ; nHeader < m_pHeaderName.GetSize() ; nHeader++ )
+	if ( Settings.General.GUIMode != GUI_BASIC )
 	{
-		CString strName		= m_pHeaderName.GetAt( nHeader );
-		CString strValue	= m_pHeaderValue.GetAt( nHeader );
-
-		DrawText( pDC, &pt, strName + ':' );
-		DrawText( pDC, &pt, strValue, m_nHeaderWidth );
-		pt.y += TIP_TEXTHEIGHT;
+		if ( m_nHeaders != pUpload->m_pHeaderName.GetSize() )
+		{
+			ShowImpl( true );
+			return;
+		}
+		for ( int nHeader = 0 ; nHeader < m_nHeaders ; nHeader++ )
+		{
+			CString strName = pUpload->m_pHeaderName.GetAt( nHeader ) + _T(':');
+			CString strValue = pUpload->m_pHeaderValue.GetAt( nHeader );
+			DrawText( pDC, &pt, strName );
+			pt.x += m_nHeaderWidth;
+			sz.cx -= m_nHeaderWidth;
+			DrawText( pDC, &pt, strValue, &sz );
+			pt.x -= m_nHeaderWidth;
+			sz.cx += m_nHeaderWidth;
+			pt.y += TIP_TEXTHEIGHT;
+		}
 	}
 }
 
@@ -312,6 +323,6 @@ void CUploadTipCtrl::OnTimer(UINT_PTR nIDEvent)
 		m_pItem->Add( nSpeed );
 		m_pGraph->m_nUpdates++;
 		m_pGraph->m_nMaximum = max( m_pGraph->m_nMaximum, nSpeed );
-		Invalidate();
+		Invalidate( FALSE );
 	}
 }
