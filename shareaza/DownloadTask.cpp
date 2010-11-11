@@ -107,6 +107,7 @@ CDownloadTask::CDownloadTask(CDownload* pDownload, dtask nTask)
 	, m_bMergeValidation( FALSE )
 	, m_posTorrentFile	( NULL )
 	, m_pEvent			( NULL )
+	, m_fProgress		( 0 )
 {
 	ASSERT( ! pDownload->IsTasking() );
 	pDownload->SetTask( this );
@@ -159,6 +160,11 @@ const CHttpRequest* CDownloadTask::GetRequest() const
 	return m_pRequest;
 }
 
+float CDownloadTask::GetProgress() const
+{
+	return m_fProgress;
+}
+
 /////////////////////////////////////////////////////////////////////////////
 // CDownloadTask aborting
 
@@ -181,9 +187,6 @@ bool CDownloadTask::WasAborted() const
 
 int CDownloadTask::Run()
 {
-	if ( theApp.m_bIsVistaOrNewer )
-		::SetThreadPriority( GetCurrentThread(), THREAD_MODE_BACKGROUND_BEGIN );
-
 	BOOL bCOM = SUCCEEDED( OleInitialize( NULL ) );
 
 	switch ( m_nTask )
@@ -259,19 +262,24 @@ int CDownloadTask::Run()
 
 void CDownloadTask::RunCopy()
 {
+	m_fProgress = 0;
 	m_nFileError = m_pDownload->MoveFile( m_sDestination, CopyProgressRoutine, this );
 	m_bSuccess = ( m_nFileError == ERROR_SUCCESS );
+	m_fProgress = 100.0f;
 }
 
-DWORD CALLBACK CDownloadTask::CopyProgressRoutine(LARGE_INTEGER /*TotalFileSize*/,
-	LARGE_INTEGER /*TotalBytesTransferred*/, LARGE_INTEGER /*StreamSize*/,
+DWORD CALLBACK CDownloadTask::CopyProgressRoutine(LARGE_INTEGER TotalFileSize,
+	LARGE_INTEGER TotalBytesTransferred, LARGE_INTEGER /*StreamSize*/,
 	LARGE_INTEGER /*StreamBytesTransferred*/, DWORD /*dwStreamNumber*/,
 	DWORD /*dwCallbackReason*/, HANDLE /*hSourceFile*/, HANDLE /*hDestinationFile*/,
 	LPVOID lpData)
 {
 	CDownloadTask* pThis = (CDownloadTask*)lpData;
 
-	// TODO: Implement notification dialog
+	if ( TotalFileSize.QuadPart) 
+		pThis->m_fProgress = (float)( TotalBytesTransferred.QuadPart * 100 ) / (float)TotalFileSize.QuadPart;
+	else
+		pThis->m_fProgress = 100.0f;
 
 	return ( pThis->m_pEvent == NULL ) ? PROGRESS_CONTINUE : PROGRESS_CANCEL;
 }

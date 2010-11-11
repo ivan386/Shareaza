@@ -1,7 +1,7 @@
 //
 // DownloadTask.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -54,6 +54,8 @@ public:
 	DWORD				GetFileError() const;
 	dtask				GetTaskType() const;
 	const CHttpRequest*	GetRequest() const;
+	// Get progress of current operation (0..100%)
+	float				GetProgress() const;
 	CBuffer*			IsPreviewAnswerValid() const;
 
 protected:
@@ -73,6 +75,7 @@ protected:
 	BOOL				m_bMergeValidation;	// Run validation after merging
 	POSITION			m_posTorrentFile;	// Torrent file list current position
 	CEvent*				m_pEvent;
+	float				m_fProgress;		// Progress of current operation (0..100%)
 
 	static DWORD CALLBACK CopyProgressRoutine(LARGE_INTEGER TotalFileSize,
 		LARGE_INTEGER TotalBytesTransferred, LARGE_INTEGER StreamSize,
