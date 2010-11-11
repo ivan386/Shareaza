@@ -284,13 +284,13 @@ BOOL CSettingsSheet::OnInitDialog()
 
 void CSettingsSheet::BuildTree()
 {
-	HTREEITEM hGroup = NULL;
+	HTREEITEM hGroup = TVI_ROOT;
 
 	for ( int nPage = 0 ; nPage < GetPageCount() ; nPage++ )
 	{
 		CSettingsPage* pPage = GetPage( nPage );
 
-		if ( pPage->m_bGroup ) hGroup = NULL;
+		if ( pPage->m_bGroup ) hGroup = TVI_ROOT;
 
 		HTREEITEM hItem = m_wndTree.InsertItem(
 			TVIF_PARAM|TVIF_TEXT|TVIF_STATE,

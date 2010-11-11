@@ -118,7 +118,6 @@
 // ATL
 //
 
-#include <atlenc.h>			// Base64Encode, UUEncode etc.
 #include <atlfile.h>		// Thin file classes
 #include <atltime.h>		// Time classes
 
