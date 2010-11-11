@@ -53,7 +53,7 @@ public:
 	bool				WasAborted() const;
 	DWORD				GetFileError() const;
 	dtask				GetTaskType() const;
-	const CHttpRequest*	GetRequest() const;
+	CString				GetRequest() const;
 	// Get progress of current operation (0..100%)
 	float				GetProgress() const;
 	CBuffer*			IsPreviewAnswerValid() const;
@@ -63,6 +63,7 @@ protected:
 	virtual ~CDownloadTask();
 
 	dtask				m_nTask;
+	CString				m_sURL;				// Request URL
 	CHttpRequest*		m_pRequest;
 	bool				m_bSuccess;
 	CString				m_sFilename;

@@ -217,33 +217,19 @@ BOOL CImageFile::LoadFromBitmap(HBITMAP hBitmap, BOOL bScanOnly)
 
 BOOL CImageFile::SaveToMemory(LPCTSTR pszType, int nQuality, LPBYTE* ppBuffer, DWORD* pnLength)
 {
-	if ( ! m_bLoaded ) return FALSE;
+	if ( ! m_bLoaded )
+		return FALSE;
+
 	return ImageServices.SaveToMemory( this, pszType, nQuality, ppBuffer, pnLength );
 }
 
-/*BOOL CImageFile::SaveToFile(LPCTSTR pszType, int nQuality, HANDLE hFile, DWORD* pnLength)
+BOOL CImageFile::SaveToFile(LPCTSTR pszFile, int nQuality, DWORD* pnLength)
 {
-	if ( ! m_bLoaded ) return FALSE;
-	return ImageServices.SaveToFile( this, pszType, nQuality, hFile, pnLength );
+	if ( ! m_bLoaded )
+		return FALSE;
+
+	return ImageServices.SaveToFile( this, pszFile, nQuality, pnLength );
 }
-
-BOOL CImageFile::SaveToFile(LPCTSTR pszFile, int nQuality)
-{
-	if ( ! m_bLoaded ) return FALSE;
-
-	HANDLE hFile = CreateFile( pszFile, GENERIC_WRITE, 0,
-		NULL, CREATE_NEW, FILE_ATTRIBUTE_NORMAL, NULL );
-
-	if ( hFile == INVALID_HANDLE_VALUE ) return FALSE;
-
-	BOOL bResult = ImageServices.SaveToFile( this, pszFile, nQuality, hFile );
-
-	CloseHandle( hFile );
-
-	if ( ! bResult ) DeleteFile( pszFile );
-
-	return bResult;
-}*/
 
 /////////////////////////////////////////////////////////////////////////////
 // CImageFile serialization

@@ -70,8 +70,9 @@ void CDownloadTask::PreviewRequest(CDownload* pDownload, LPCTSTR szURL)
 		// Out of memory
 		return;
 
+	pTask->m_sURL = szURL;
 	pTask->m_pRequest = new CHttpRequest();
-	pTask->m_pRequest->SetURL( szURL );
+	pTask->m_pRequest->SetURL( pTask->m_sURL );
 	pTask->m_pRequest->AddHeader( _T("Accept"), _T("image/jpeg") );
 	pTask->m_pRequest->LimitContentLength( Settings.Search.MaxPreviewLength );
 
@@ -155,9 +156,9 @@ dtask CDownloadTask::GetTaskType() const
 	return m_nTask;
 }
 
-const CHttpRequest* CDownloadTask::GetRequest() const
+CString CDownloadTask::GetRequest() const
 {
-	return m_pRequest;
+	return m_sURL;
 }
 
 float CDownloadTask::GetProgress() const
@@ -554,6 +555,5 @@ CBuffer* CDownloadTask::IsPreviewAnswerValid() const
 		return NULL;
 	}
 
-	CBuffer* pBuffer = m_pRequest->GetResponseBuffer();
-	return pBuffer;
+	return m_pRequest->GetResponseBuffer();
 }

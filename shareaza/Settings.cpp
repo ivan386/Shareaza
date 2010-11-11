@@ -539,7 +539,7 @@ void CSettings::Load()
 	Add( _T("Uploads"), _T("FreeBandwidthValue"), &Uploads.FreeBandwidthValue, 20*128, 128, 0, 4096, _T(" Kb/s") );
 	Add( _T("Uploads"), _T("HubUnshare"), &Uploads.HubUnshare, true );
 	Add( _T("Uploads"), _T("MaxPerHost"), &Uploads.MaxPerHost, 2, 1, 1, 64 );
-	Add( _T("Uploads"), _T("PreviewQuality"), &Uploads.PreviewQuality, 70, 1, 5, 100, _T("%") );
+	Add( _T("Uploads"), _T("PreviewQuality"), &Uploads.PreviewQuality, 75, 1, 5, 100, _T("%") );
 	Add( _T("Uploads"), _T("PreviewTransfers"), &Uploads.PreviewTransfers, 3, 1, 1, 64 );
 	Add( _T("Uploads"), _T("QueuePollMax"), &Uploads.QueuePollMax, 120*1000, 1000, 30, 180, _T(" s") );
 	Add( _T("Uploads"), _T("QueuePollMin"), &Uploads.QueuePollMin, 45*1000, 1000, 0, 60, _T(" s") );

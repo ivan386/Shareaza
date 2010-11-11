@@ -47,8 +47,7 @@ public:
 	// Get image copy from HBITMAP (24/32-bit only)
 	BOOL	LoadFromBitmap(HBITMAP hBitmap, BOOL bScanOnly = FALSE);
 	BOOL	SaveToMemory(LPCTSTR pszType, int nQuality, LPBYTE* ppBuffer, DWORD* pnLength);
-//	BOOL	SaveToFile(LPCTSTR pszType, int nQuality, HANDLE hFile, DWORD* pnLength = NULL);
-//	BOOL	SaveToFile(LPCTSTR pszFile, int nQuality);
+	BOOL	SaveToFile(LPCTSTR pszFile, int nQuality, DWORD* pnLength = NULL);
 	DWORD	GetSerialSize() const;
 	void	Serialize(CArchive& ar);
 	HBITMAP	CreateBitmap(HDC hUseDC = 0);
