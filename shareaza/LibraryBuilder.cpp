@@ -378,9 +378,6 @@ bool CLibraryBuilder::GetBoostPriority() const
 
 void CLibraryBuilder::OnRun()
 {
-	if ( theApp.m_bIsVistaOrNewer )
-		::SetThreadPriority( GetCurrentThread(), THREAD_MODE_BACKGROUND_BEGIN );
-
 	int nAttempts = 0;
 
 	while ( IsThreadEnabled() )
@@ -498,6 +495,10 @@ bool CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile)
 	}
 
 	void* pBuffer = VirtualAlloc( NULL, MAX_HASH_BUFFER_SIZE, MEM_COMMIT, PAGE_READWRITE );
+
+	if ( theApp.m_bIsVistaOrNewer && ! m_bPriority )
+		::SetThreadPriority( GetCurrentThread(), THREAD_MODE_BACKGROUND_BEGIN );
+
 	DWORD nBlock;
 	QWORD nLength = nFileSize;
 	while ( nLength )
@@ -556,6 +557,9 @@ bool CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile)
 
 		nLength -= nBlock;
 	}
+
+	if ( theApp.m_bIsVistaOrNewer )
+		::SetThreadPriority( GetCurrentThread(), THREAD_MODE_BACKGROUND_END );
 
 	{
 		CQuickLock pLock( m_pSection );
