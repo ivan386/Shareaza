@@ -86,6 +86,8 @@ protected:
 	CRouteCacheTable*	m_pRecent;
 	CRouteCacheTable*	m_pHistory;
 
+	CRouteCacheItem*	Add(const Hashes::Guid& oGUID, const CNeighbour* pNeighbour, const SOCKADDR_IN* pEndpoint, DWORD tAdded);
+
 // Operations
 public:
 	void		SetDuration(DWORD nSeconds);
@@ -93,10 +95,8 @@ public:
 	BOOL		Add(const Hashes::Guid& oGUID, const SOCKADDR_IN* pEndpoint);
 	void		Remove(CNeighbour* pNeighbour);
 	void		Clear();
-public:
-	CRouteCacheItem*	Add(const Hashes::Guid& oGUID, const CNeighbour* pNeighbour, const SOCKADDR_IN* pEndpoint, DWORD tAdded);
-	CRouteCacheItem*	Lookup(const Hashes::Guid& oGUID, CNeighbour** ppNeighbour = NULL, SOCKADDR_IN* pEndpoint = NULL);
 
+	CRouteCacheItem*	Lookup(const Hashes::Guid& oGUID, CNeighbour** ppNeighbour = NULL, SOCKADDR_IN* pEndpoint = NULL);
 };
 
 #endif // !defined(AFX_ROUTECACHE_H__7FDD7D02_ABC8_4718_A985_C411BCE0D660__INCLUDED_)

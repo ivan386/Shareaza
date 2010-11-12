@@ -77,7 +77,6 @@ CQuerySearch::CQuerySearch(BOOL bGUID) :
 	m_bPartial	( false ),
 	m_bNoProxy	( false ),
 	m_bExtQuery	( false ),
-	m_bWarning	( false ),
 	m_oWords	(),
 	m_oNegWords	()
 {
@@ -657,17 +656,8 @@ CQuerySearchPtr CQuerySearch::FromPacket(CPacket* pPacket, const SOCKADDR_IN* pE
 		}
 		else if ( pPacket->m_nProtocol == PROTOCOL_G2 )
 		{
-			if ( ((CG2Packet*)pPacket)->IsType( G2_PACKET_QUERY_WRAP ) )
-			{
-				//if ( pSearch->ReadG1Packet( (CG1Packet*)pPacket ) )
-				//	return pSearch;
-				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("CQuerySearch::FromPacket dropping obsolete wrapped packet") );
-			}
-			else
-			{
-				if ( pSearch->ReadG2Packet( (CG2Packet*)pPacket, pEndpoint ) )
-					return pSearch;
-			}
+			if ( pSearch->ReadG2Packet( (CG2Packet*)pPacket, pEndpoint ) )
+				return pSearch;
 		}
 	}
 	catch ( CException* pException )
@@ -878,8 +868,7 @@ void CQuerySearch::ReadGGEP(CG1Packet* pPacket)
 	}
 	else
 	{
-		m_bWarning = true;
-		theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got query packet with malformed GGEP") );
+		pPacket->Debug( _T("Malformed GGEP.") );
 	}
 }
 

@@ -199,7 +199,8 @@ BOOL CG2Neighbour::OnRun()
 
 	// Is it time to send HAW?
 	if ( tNow - m_tLastHAWOut > Settings.Gnutella2.HAWPeriod &&
-		m_nNodeType != ntLeaf && ! Neighbours.IsG2Leaf() )
+		m_nNodeType == ntNode && ! Neighbours.IsG2Leaf() &&
+		( Neighbours.IsG2Hub() || Neighbours.IsG2HubCapable() ) )
 	{
 		SendHAW();
 	}
@@ -1131,13 +1132,16 @@ BOOL CG2Neighbour::SendQuery(const CQuerySearch* pSearch, CPacket* pPacket, BOOL
 BOOL CG2Neighbour::OnQuery(CG2Packet* pPacket)
 {
 	CQuerySearchPtr pSearch = CQuerySearch::FromPacket( pPacket );
-	if ( ! pSearch || pSearch->m_bWarning )
-		pPacket->Debug( _T("Malformed query.") );
-	if ( ! pSearch )
+	if ( ! pSearch ||
+		// or leaf used firewalled (or invalid) return address
+		( m_nNodeType == ntLeaf &&
+		  pSearch->m_bUDP &&
+		  pSearch->m_pEndpoint.sin_addr.S_un.S_addr != m_pHost.sin_addr.S_un.S_addr ) )
 	{
 		theApp.Message( MSG_INFO, IDS_PROTOCOL_BAD_QUERY, (LPCTSTR)m_sAddress );
 		Statistics.Current.Gnutella2.Dropped++;
 		m_nDropCount++;
+		pPacket->Debug( _T("Malformed Query.") );
 		return TRUE;
 	}
 
@@ -1171,23 +1175,6 @@ BOOL CG2Neighbour::OnQuery(CG2Packet* pPacket)
 		}
 	}
 
-	// Check for old wrapped queries
-	if ( pPacket->IsType( G2_PACKET_QUERY_WRAP ) )
-	{
-		theApp.Message( MSG_DEBUG, _T("CG2Neighbour::OnQuery Ignoring wrapped query packet") );
-		Statistics.Current.Gnutella2.Dropped++;
-		m_nDropCount++;
-		return TRUE;
-	}
-
-	if ( m_nNodeType == ntLeaf && pSearch->m_bUDP &&
-		 pSearch->m_pEndpoint.sin_addr.S_un.S_addr != m_pHost.sin_addr.S_un.S_addr )
-	{
-		Statistics.Current.Gnutella2.Dropped++;
-		m_nDropCount++;
-		return TRUE;
-	}
-
 	if ( ! Network.QueryRoute->Add( pSearch->m_oGUID, this ) )
 	{
 		Statistics.Current.Gnutella2.Dropped++;
@@ -1197,43 +1184,16 @@ BOOL CG2Neighbour::OnQuery(CG2Packet* pPacket)
 
 	if ( m_nNodeType != ntHub )
 	{
-		/*
-		if ( pPacket->IsType( G2_PACKET_QUERY_WRAP ) )
-		{
-			if ( ! pPacket->SeekToWrapped() ) return TRUE;
-			GNUTELLAPACKET* pG1 = (GNUTELLAPACKET*)( pPacket->m_pBuffer + pPacket->m_nPosition );
-
-			if ( pG1->m_nTTL > 1 )
-			{
-				pG1->m_nTTL--;
-				pG1->m_nHops++;
-				Neighbours.RouteQuery( pSearch, pPacket, this, TRUE );
-			}
-		}
-		else
-		{
-			Neighbours.RouteQuery( pSearch, pPacket, this, m_nNodeType == ntLeaf );
-		}*/
-
 		Neighbours.RouteQuery( pSearch, pPacket, this, m_nNodeType == ntLeaf );
 	}
 
-	if ( pSearch->m_bUDP && /* !Network.IsFirewalled() && */
+	if ( pSearch->m_bUDP &&
 		 pSearch->m_pEndpoint.sin_addr.S_un.S_addr != m_pHost.sin_addr.S_un.S_addr )
 	{
 		Network.OnQuerySearch( new CLocalSearch( pSearch, PROTOCOL_G2 ) );
 	}
 	else
 	{
-		/*
-		BOOL bIsG1 = pPacket->IsType( G2_PACKET_QUERY_WRAP );
-
-		if ( ! bIsG1 || Settings.Gnutella1.EnableToday )
-		{
-			CLocalSearch pLocal( pSearch, this, bIsG1 );
-			pLocal.Execute();
-		}
-		*/
 		Network.OnQuerySearch( new CLocalSearch( pSearch, this ) );
 	}
 

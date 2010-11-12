@@ -78,7 +78,6 @@ public:
 	bool				m_bPartial;		// G1: Partial results support
 	bool				m_bNoProxy;		// G1: Disable OOB proxying
 	bool				m_bExtQuery;	// G1: Extended query (long query)
-	bool				m_bWarning;		// Got parser warnings
 
 	Hash32List			m_oURNs;			// Hashed URNs
 	Hash32List			m_oKeywordHashList;	// list of hashed keywords to BOOST QUery Routing.

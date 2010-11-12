@@ -748,13 +748,12 @@ BOOL CG2Packet::OnPong(const SOCKADDR_IN* pHost)
 BOOL CG2Packet::OnQuery(const SOCKADDR_IN* pHost)
 {
 	CQuerySearchPtr pSearch = CQuerySearch::FromPacket( this, pHost );
-	if ( ! pSearch || pSearch->m_bWarning )
-		Debug( _T("Malformed query.") );
 	if ( ! pSearch || ! pSearch->m_bUDP )
 	{
 		theApp.Message( MSG_INFO, IDS_PROTOCOL_BAD_QUERY,
 			(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ) );
 		Statistics.Current.Gnutella2.Dropped++;
+		Debug( _T("Malformed Query.") );
 		return FALSE;
 	}
 
