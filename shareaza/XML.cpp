@@ -28,6 +28,11 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
+// Produces two arguments divided by comma, where first argument is a string itself
+// and second argument is a string length without null terminator
+#define _P(x)	(x),((sizeof(x))/sizeof((x)[0])-1)
+#define _PT(x)	_P(_T(x))
+
 #define IsSpace(ch)	((ch) == _T(' ') || (ch) == _T('\t') || (ch) == _T('\r') || (ch) == _T('\n'))
 
 //////////////////////////////////////////////////////////////////////
@@ -39,6 +44,7 @@ CXMLNode::CXMLNode(CXMLElement* pParent, LPCTSTR pszName) :
 {
 	if ( pszName )
 	{
+		ASSERT( *pszName );
 		m_sName = pszName;
 		m_sName.MakeLower();
 	}
@@ -54,8 +60,10 @@ void CXMLNode::Delete()
 
 	if ( m_pParent != NULL )
 	{
-		if ( m_nNode == xmlElement ) m_pParent->RemoveElement( (CXMLElement*)this );
-		else if ( m_nNode == xmlAttribute ) m_pParent->RemoveAttribute( (CXMLAttribute*)this );
+		if ( m_nNode == xmlElement )
+			m_pParent->RemoveElement( (CXMLElement*)this );
+		else if ( m_nNode == xmlAttribute )
+			m_pParent->RemoveAttribute( (CXMLAttribute*)this );
 	}
 
 	delete this;
@@ -69,7 +77,7 @@ BOOL CXMLNode::ParseMatch(LPCTSTR& pszBase, LPCTSTR pszToken)
 	LPCTSTR pszXML = pszBase;
 	int nParse = 0;
 
-	for ( ; *pszXML == ' ' || *pszXML == '\t' || *pszXML == '\r' || *pszXML == '\n' ; pszXML++, nParse++ );
+	for ( ; IsSpace( *pszXML ) ; pszXML++, nParse++ );
 	if ( ! *pszXML ) return FALSE;
 
 	for ( ; *pszXML && *pszToken ; pszXML++, pszToken++, nParse++ )
@@ -87,7 +95,7 @@ BOOL CXMLNode::ParseIdentifier(LPCTSTR& pszBase, CString& strIdentifier)
 	LPCTSTR pszXML = pszBase;
 	int nParse = 0;
 
-	while ( *pszXML == ' ' || *pszXML == '\t' || *pszXML == '\r' || *pszXML == '\n' )
+	while ( IsSpace( *pszXML ) )
 	{
 		pszXML++;
 		nParse++;
@@ -356,6 +364,7 @@ CXMLElement::~CXMLElement()
 CXMLElement* CXMLElement::AddElement(LPCTSTR pszName)
 {
 	CXMLElement* pElement = new CXMLElement( this, pszName );
+	if ( ! pElement ) return NULL; // Out of memory
 	m_pElements.AddTail( pElement );
 	return pElement;
 }
@@ -366,10 +375,12 @@ CXMLElement* CXMLElement::AddElement(LPCTSTR pszName)
 CXMLElement* CXMLElement::Clone(CXMLElement* pParent) const
 {
 	CXMLElement* pClone = new CXMLElement( pParent, m_sName );
+	if ( ! pClone ) return NULL; // Out of memory
 
 	for ( POSITION pos = GetAttributeIterator() ; pos ; )
 	{
 		CXMLAttribute* pAttribute = GetNextAttribute( pos )->Clone( pClone );
+		if ( ! pAttribute ) return NULL; // Out of memory
 		CString strName( pAttribute->m_sName );
 		strName.MakeLower();
 
@@ -387,6 +398,7 @@ CXMLElement* CXMLElement::Clone(CXMLElement* pParent) const
 		pClone->m_pElements.AddTail( pElement->Clone( pClone ) );
 	}
 
+	ASSERT( pClone->m_sName.GetLength() );
 	pClone->m_sValue = m_sValue;
 
 	return pClone;
@@ -423,10 +435,11 @@ void CXMLElement::DeleteAllAttributes()
 CString CXMLElement::ToString(BOOL bHeader, BOOL bNewline) const
 {
 	CString strXML;
+	strXML.Preallocate( 256 );
 	if ( bHeader )
 		strXML = _T("<?xml version=\"1.0\"?>");
 	if ( bNewline )
-		strXML += _T("\r\n");
+		strXML.Append( _PT("\r\n") );
 	ToString( strXML, bNewline );
 	ASSERT( strXML.GetLength() == int( _tcslen(strXML) ) );
 	return strXML;
@@ -434,12 +447,13 @@ CString CXMLElement::ToString(BOOL bHeader, BOOL bNewline) const
 
 void CXMLElement::ToString(CString& strXML, BOOL bNewline) const
 {
-	strXML += '<' + m_sName;
+	strXML.AppendChar( _T('<') );
+	strXML.Append( m_sName );
 
 	POSITION pos = GetAttributeIterator();
 	for ( ; pos ; )
 	{
-		strXML += ' ';
+		strXML.AppendChar( _T(' ') );
 		CXMLAttribute* pAttribute = GetNextAttribute( pos );
 		pAttribute->ToString( strXML );
 	}
@@ -448,13 +462,13 @@ void CXMLElement::ToString(CString& strXML, BOOL bNewline) const
 
 	if ( pos == NULL && m_sValue.IsEmpty() )
 	{
-		strXML += _T("/>");
-		if ( bNewline ) strXML += _T("\r\n");
+		strXML.Append( _PT("/>") );
+		if ( bNewline ) strXML.Append( _PT("\r\n") );
 		return;
 	}
 
-	strXML += '>';
-	if ( bNewline && pos ) strXML += _T("\r\n");
+	strXML.AppendChar( _T('>') );
+	if ( bNewline && pos ) strXML.Append( _PT("\r\n") );
 
 	while ( pos )
 	{
@@ -464,8 +478,10 @@ void CXMLElement::ToString(CString& strXML, BOOL bNewline) const
 
 	ValueToString( m_sValue, strXML );
 
-	strXML += _T("</") + m_sName + '>';
-	if ( bNewline ) strXML += _T("\r\n");
+	strXML.Append( _PT("</") );
+	strXML.Append( m_sName );
+	strXML.AppendChar( _T('>') );
+	if ( bNewline ) strXML.Append( _PT("\r\n") );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -558,6 +574,7 @@ BOOL CXMLElement::ParseString(LPCTSTR& strXML)
 
 	if ( !ParseIdentifier( strXML, m_sName ) )
 		return FALSE;
+	ASSERT( m_sName.GetLength() );
 
 	while ( ! ParseMatch( strXML, _T(">") ) )
 	{
@@ -935,6 +952,8 @@ CXMLAttribute::~CXMLAttribute()
 
 CXMLAttribute* CXMLElement::AddAttribute(LPCTSTR pszName, LPCTSTR pszValue)
 {
+	ASSERT( pszName && *pszName );
+
 	CXMLAttribute* pAttribute = GetAttribute( pszName );
 
 	if ( ! pAttribute )
@@ -978,6 +997,8 @@ CXMLAttribute* CXMLElement::AddAttribute(CXMLAttribute* pAttribute)
 CXMLAttribute* CXMLAttribute::Clone(CXMLElement* pParent) const
 {
 	CXMLAttribute* pClone = new CXMLAttribute( pParent, m_sName );
+	if ( ! pClone ) return NULL; // Out of memory
+	ASSERT( pClone->m_sName.GetLength() );
 	pClone->m_sValue = m_sValue;
 	return pClone;
 }
@@ -999,6 +1020,8 @@ BOOL CXMLAttribute::ParseString(LPCTSTR& strXML)
 {
 	if ( !ParseIdentifier( strXML, m_sName ) )
 		return FALSE;
+	ASSERT( m_sName.GetLength() );
+
 	if ( !ParseMatch( strXML, _T("=") ) )
 		return FALSE;
 

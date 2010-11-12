@@ -61,6 +61,7 @@ inline CString CXMLNode::GetName() const
 
 inline void CXMLNode::SetName(LPCTSTR pszValue)
 {
+	ASSERT( pszValue && *pszValue );
 	m_sName = pszValue;
 }
 
@@ -80,6 +81,7 @@ inline CString CXMLNode::GetValue() const
 
 inline void CXMLNode::SetValue(LPCTSTR pszValue)
 {
+	ASSERT( m_sName.GetLength() );
 	m_sValue = pszValue;
 }
 

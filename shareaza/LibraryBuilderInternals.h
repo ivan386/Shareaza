@@ -23,13 +23,8 @@
 
 class CXMLElement;
 
-class CLibraryBuilderInternals : private boost::noncopyable
+class CLibraryBuilderInternals
 {
-// Construction
-public:
-	CLibraryBuilderInternals();
-	virtual ~CLibraryBuilderInternals()=0;
-
 // Attributes
 private:
 	static LPCTSTR	pszID3Genre[];
@@ -42,7 +37,7 @@ public:
 // Implementation
 private:
 	// ID3v1 and ID3v2 and MP3
-	bool		ReadID3v1(DWORD nIndex, HANDLE hFile, CXMLElement* pXML = NULL);
+	bool		ReadID3v1(DWORD nIndex, HANDLE hFile);
 	bool		CopyID3v1Field(CXMLElement* pXML, LPCTSTR pszAttribute, CString strValue);
 	bool		ReadID3v2(DWORD nIndex, HANDLE hFile);
 	bool		CopyID3v2Field(CXMLElement* pXML, LPCTSTR pszAttribute, BYTE* pBuffer, DWORD nLength, bool bSkipLanguage = false);
@@ -76,7 +71,7 @@ private:
 	bool		ReadOGG(DWORD nIndex, HANDLE hFile);
 	BYTE*		ReadOGGPage(HANDLE hFile, DWORD& nBuffer, BYTE nFlags, DWORD nSequence, DWORD nMinSize = 0);
 	bool		ReadOGGString(BYTE*& pOGG, DWORD& nOGG, CString& str);
-	bool		ReadAPE(DWORD nIndex, HANDLE hFile, bool bPreferFooter = false);
+	bool		ReadAPE(DWORD nIndex, HANDLE hFile, bool bPreferFooter);
 	bool		ReadMPC(DWORD nIndex, HANDLE hFile);
 	bool		ReadPDF(DWORD nIndex, HANDLE hFile, LPCTSTR pszPath);
 	CString		ReadPDFLine(HANDLE hFile, bool bReverse, bool bComplex = false, bool bSplitter = true);

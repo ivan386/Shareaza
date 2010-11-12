@@ -155,7 +155,6 @@ public:
 		DWORD		LowPriorityHashing;			// desired speed in MB/s when hashing with low priority
 		DWORD		MaxMaliciousFileSize;		// Size for which to trigger malicious software search
 		string_set	MaliciousTypes;				// Malicious software file extensions
-		bool		PreferAPETags;				// Read APE tags first and only then ID3 tags from audio files
 		bool		UseFolderGUID;				// Save/Load folder GUID using NTFS stream
 		bool		MarkFileAsDownload;			// Mark downloaded file using NTFS stream as Internet Explorer
 		bool		UseCustomFolders;			// Use desktop.ini

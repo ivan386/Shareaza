@@ -44,17 +44,6 @@ static char THIS_FILE[]=__FILE__;
 #endif
 
 //////////////////////////////////////////////////////////////////////
-// CLibraryBuilderPlugins construction
-
-CLibraryBuilderInternals::CLibraryBuilderInternals()
-{
-}
-
-CLibraryBuilderInternals::~CLibraryBuilderInternals()
-{
-}
-
-//////////////////////////////////////////////////////////////////////
 // CLibraryBuilderInternals extract metadata (threaded)
 
 bool CLibraryBuilderInternals::ExtractMetadata(DWORD nIndex, const CString& strPath, HANDLE hFile)
@@ -66,25 +55,15 @@ bool CLibraryBuilderInternals::ExtractMetadata(DWORD nIndex, const CString& strP
 	{
 		if ( !Settings.Library.ScanMP3 )
 			return false;
-		if ( Settings.Library.PreferAPETags )
-		{
-			if ( ReadAPE( nIndex, hFile, true ) )
-				return true;
-			if ( ReadID3v2( nIndex, hFile ) )
-				return true;
-		}
-		else
-		{
-			if ( ReadID3v2( nIndex, hFile ) )
-				return true;
-			if ( ReadAPE( nIndex, hFile, true ) )
-				return true;
-		}
+		bool bGood = false;
 		if ( ReadID3v1( nIndex, hFile ) )
-			return true;
-		if ( ReadMP3Frames( nIndex, hFile ) )
-			return true;
-		return LibraryBuilder.SubmitCorrupted( nIndex );
+			bGood = true;
+		if ( ReadID3v2( nIndex, hFile ) )
+			bGood = true;
+		if ( ReadAPE( nIndex, hFile, true ) )
+			bGood = true;
+		if ( ! bGood ) ReadMP3Frames( nIndex, hFile );
+		return true;
 	}
 	else if ( strType == _T(".exe") || strType == _T(".dll") )
 	{
@@ -126,27 +105,16 @@ bool CLibraryBuilderInternals::ExtractMetadata(DWORD nIndex, const CString& strP
 	{
 		if ( !Settings.Library.ScanAPE )
 			return false;
-		return ReadAPE( nIndex, hFile );
+		return ReadAPE( nIndex, hFile, false );
 	}
 	else if ( strType == _T(".mpc") || strType == _T(".mpp") || strType == _T(".mp+") )
 	{
 		if ( !Settings.Library.ScanMPC )
 			return false;
-		if ( Settings.Library.PreferAPETags )
-		{
-			if ( ReadMPC( nIndex, hFile ) )
-				return true;
-			if ( ReadID3v2( nIndex, hFile ) )
-				return true;
-		}
-		else
-		{
-			if ( ReadID3v2( nIndex, hFile ) )
-				return true;
-			if ( ReadMPC( nIndex, hFile ) )
-				return true;
-		}
-		return ReadID3v1( nIndex, hFile );
+		ReadID3v1( nIndex, hFile );
+		ReadID3v2( nIndex, hFile );
+		ReadMPC( nIndex, hFile );
+		return true;
 	}
 	else if ( strType == _T(".jpg") || strType == _T(".jpeg") )
 	{
@@ -201,7 +169,7 @@ bool CLibraryBuilderInternals::ExtractMetadata(DWORD nIndex, const CString& strP
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilderInternals ID3v1 (threaded)
 
-bool CLibraryBuilderInternals::ReadID3v1(DWORD nIndex, HANDLE hFile, CXMLElement* pXML)
+bool CLibraryBuilderInternals::ReadID3v1(DWORD nIndex, HANDLE hFile)
 {
 	if ( GetFileSize( hFile, NULL ) < 128 )
 		return false;
@@ -218,14 +186,12 @@ bool CLibraryBuilderInternals::ReadID3v1(DWORD nIndex, HANDLE hFile, CXMLElement
 	if ( strncmp( pInfo.szTag, ID3V1_TAG, 3 ) )
 		return false;
 
-	bool bIsMP3 = ( pXML == NULL );
-	if ( bIsMP3 )
-		pXML = new CXMLElement( NULL, _T("audio") );
+	auto_ptr< CXMLElement > pXML( new CXMLElement( NULL, L"audio" ) );
 
-	CopyID3v1Field( pXML, _T("title"), CString( pInfo.szSongname, 30 ) );
-	CopyID3v1Field( pXML, _T("artist"), CString( pInfo.szArtist, 30 ) );
-	CopyID3v1Field( pXML, _T("album"), CString( pInfo.szAlbum, 30 ) );
-	CopyID3v1Field( pXML, _T("year"), CString( pInfo.szYear, 4 ) );
+	CopyID3v1Field( pXML.get(), _T("title"), CString( pInfo.szSongname, 30 ) );
+	CopyID3v1Field( pXML.get(), _T("artist"), CString( pInfo.szArtist, 30 ) );
+	CopyID3v1Field( pXML.get(), _T("album"), CString( pInfo.szAlbum, 30 ) );
+	CopyID3v1Field( pXML.get(), _T("year"), CString( pInfo.szYear, 4 ) );
 
 	if ( pInfo.nGenre >= 0 && pInfo.nGenre < ID3_GENRES )
 		pXML->AddAttribute( _T("genre"), pszID3Genre[ pInfo.nGenre ] );
@@ -235,20 +201,16 @@ bool CLibraryBuilderInternals::ReadID3v1(DWORD nIndex, HANDLE hFile, CXMLElement
 		CString strTrack;
 		strTrack.Format( _T("%i"), static_cast< int >( pInfo.szComment[29] ) );
 		pXML->AddAttribute( _T("track"), strTrack );
-		CopyID3v1Field( pXML, _T("description"), CString( pInfo.szComment, 28 ) );
+		CopyID3v1Field( pXML.get(), _T("description"), CString( pInfo.szComment, 28 ) );
 	}
 	else
-		CopyID3v1Field( pXML, _T("description"), CString( pInfo.szComment, 30 ) );
+		CopyID3v1Field( pXML.get(), _T("description"), CString( pInfo.szComment, 30 ) );
 
 	SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
 
-	if ( bIsMP3 )
-	{
-		ScanMP3Frame( pXML, hFile, sizeof(pInfo) );
-		return LibraryBuilder.SubmitMetadata( nIndex, CSchema::uriAudio, pXML ) != 0;
-	}
+	ScanMP3Frame( pXML.get(), hFile, sizeof(pInfo) );
 
-	return pXML->GetAttributeCount() > 0;
+	return LibraryBuilder.SubmitMetadata( nIndex, CSchema::uriAudio, pXML.release() ) != 0;
 }
 
 bool CLibraryBuilderInternals::CopyID3v1Field(CXMLElement* pXML, LPCTSTR pszAttribute, CString strValue)
@@ -705,52 +667,48 @@ bool CLibraryBuilderInternals::CopyID3v2Field(CXMLElement* pXML, LPCTSTR pszAttr
 			break;
 	}
 
-	if ( !pszAttribute )
+	if ( pszAttribute )
 	{
-		int nSlash = strResult.Find( '/' );
-		if ( nSlash > 0 )
-		{
-			strValue = strResult.Mid( nSlash + 1 + ( ( nEncoding == 1 ) ? 1 : 0 ) );
-			if ( strValue.IsEmpty() )
-				return false;
-
-			if ( _tcsnicmp( strResult, L"musicbrainz ", 12 ) == 0 )
-			{
-				CString strField = strResult.Mid( 12, nSlash - 12 );
-				if ( strField.CompareNoCase( L"Artist Id" ) == 0 )
-					pXML->AddAttribute( L"mbartistid", strValue );
-				else if ( strField.CompareNoCase( L"Album Id" ) == 0 )
-					pXML->AddAttribute( L"mbalbumid", strValue );
-				else if ( strField.CompareNoCase( L"Album Type" ) == 0 )
-					pXML->AddAttribute( L"type", strValue );
-				else if ( strField.CompareNoCase( L"Album Status" ) == 0 )
-					pXML->AddAttribute( L"albumStatus", strValue );
-				else if ( strField.CompareNoCase( L"Album Artist Id" ) == 0 )
-					pXML->AddAttribute( L"mbalbumartistid", strValue );
-
-				// "Album Artist", "Album Artist Sortname", "Album Release Country", "Non-Album"
-				// ToDo: find field names for mbtrmid, mbuniquefileid and cddb
-				return true;
-			}
-			else if ( _tcsnicmp( strResult, L"musicip ", 8 ) == 0 )
-			{
-				CString strField = strResult.Mid( 8, nSlash - 8 );
-				if ( strField.CompareNoCase( L"PUID" ) == 0 )
-					pXML->AddAttribute( L"mbpuid", strValue );
-
-				return true;
-			}
-			else
-			{
-				// Unsupported user text frame
-				return false;
-			}
-		}
+		pXML->AddAttribute( pszAttribute, strResult );
+		return true;
 	}
 
-	pXML->AddAttribute( pszAttribute, strResult );
+	int nSlash = strResult.Find( '/' );
+	if ( nSlash == -1 )
+		return false;
 
-	return true;
+	strValue = strResult.Mid( nSlash + 1 + ( ( nEncoding == 1 ) ? 1 : 0 ) );
+	if ( strValue.IsEmpty() )
+		return false;
+
+	if ( _tcsnicmp( strResult, L"musicbrainz ", 12 ) == 0 )
+	{
+		CString strField = strResult.Mid( 12, nSlash - 12 );
+		if ( strField.CompareNoCase( L"Artist Id" ) == 0 )
+			pXML->AddAttribute( L"mbartistid", strValue );
+		else if ( strField.CompareNoCase( L"Album Id" ) == 0 )
+			pXML->AddAttribute( L"mbalbumid", strValue );
+		else if ( strField.CompareNoCase( L"Album Type" ) == 0 )
+			pXML->AddAttribute( L"type", strValue );
+		else if ( strField.CompareNoCase( L"Album Status" ) == 0 )
+			pXML->AddAttribute( L"albumStatus", strValue );
+		else if ( strField.CompareNoCase( L"Album Artist Id" ) == 0 )
+			pXML->AddAttribute( L"mbalbumartistid", strValue );
+
+		// "Album Artist", "Album Artist Sortname", "Album Release Country", "Non-Album"
+		// ToDo: find field names for mbtrmid, mbuniquefileid and cddb
+		return true;
+	}
+	else if ( _tcsnicmp( strResult, L"musicip ", 8 ) == 0 )
+	{
+		CString strField = strResult.Mid( 8, nSlash - 8 );
+		if ( strField.CompareNoCase( L"PUID" ) == 0 )
+			pXML->AddAttribute( L"mbpuid", strValue );
+
+		return true;
+	}
+
+	return false;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -2593,8 +2551,6 @@ bool CLibraryBuilderInternals::ReadAPE(DWORD nIndex, HANDLE hFile, bool bPreferF
 
 	strItem.Format( L"%lu", pNewAPE.nChannels );
 	pXML->AddAttribute( L"channels", strItem );
-
-	ReadID3v1( nIndex, hFile, pXML.get() );
 
 	return LibraryBuilder.SubmitMetadata( nIndex, CSchema::uriAudio, pXML.release() ) != 0;
 }

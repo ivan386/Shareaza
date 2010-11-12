@@ -690,26 +690,26 @@ BOOL CFileExecutor::ShowBitziTicket(DWORD nIndex)
 			str = pNode->GetName();
 			strReplace = pNode->GetValue();
 
-			if ( str == "link" )
+			if ( str.CompareNoCase( _T("link") ) == 0 )
 				strINFO += _T("&tag.url.url=") + URLEncode( strReplace );
 			else if ( pFile->m_pSchema->CheckURI( CSchema::uriAudio ) )
 			{
-				if ( str == "description" )
+				if ( str.CompareNoCase( _T("description") ) == 0 )
 					strINFO += _T("&tag.objective.description=") + URLEncode( strReplace.Trim() );
-				else if ( str == "title" )
+				else if ( str.CompareNoCase( _T("title") ) == 0 )
 					strINFO += _T("&tag.audiotrack.title=") + URLEncode( strReplace.Trim() );
-				else if ( str == "artist" )
+				else if ( str.CompareNoCase( _T("artist") ) == 0 )
 					strINFO += _T("&tag.audiotrack.artist=") + URLEncode( strReplace.Trim() );
-				else if ( str == "album" )
+				else if ( str.CompareNoCase( _T("album") ) == 0 )
 					strINFO += _T("&tag.audiotrack.album=") + URLEncode( strReplace.Trim() );
-				else if ( str == "track" )
+				else if ( str.CompareNoCase( _T("track") ) == 0 )
 				{
 					nTemp = _ttoi( strReplace );
 					strReplace.Format( _T("%d"), nTemp );
 
 					strINFO += _T("&tag.audiotrack.tracknumber=") + strReplace;
 				}
-				else if ( str == "year" )
+				else if ( str.CompareNoCase( _T("year") ) == 0 )
 				{
 					nTemp = _ttoi( strReplace );
 					strReplace.Format( _T("%d"), nTemp );
@@ -719,7 +719,7 @@ BOOL CFileExecutor::ShowBitziTicket(DWORD nIndex)
 				// ToDO: Read WAV information in FileExecutor.cpp, bitzi submit is already ready
 				else if ( strExt == "MP3" || strExt == "OGG" || strExt == "WAV" )
 				{
-					if ( str == "bitrate" )
+					if ( str.CompareNoCase( _T("bitrate") ) == 0 )
 					{
 						if ( strExt == "MP3" )
 						{
@@ -748,7 +748,7 @@ BOOL CFileExecutor::ShowBitziTicket(DWORD nIndex)
 						}
 					}
 					// ToDO: Read sampleSize of WAV in FileExecutor.cpp, bitzi submit is already ready
-					else if ( str == "sampleSize" )
+					else if ( str.CompareNoCase( _T("sampleSize") ) == 0 )
 					{
 						nTemp = _ttoi( strReplace );
 						strReplace.Format( _T("%d"), nTemp );
@@ -759,7 +759,7 @@ BOOL CFileExecutor::ShowBitziTicket(DWORD nIndex)
 							nMP3orOGGorWAVTag++;
 						}
 					}
-					else if ( str == "seconds" )
+					else if ( str.CompareNoCase( _T("seconds") ) == 0 )
 					{
 						nTemp = (int)( _wtof( strReplace ) * 1000 );
 						strReplace.Format( _T("%d"), nTemp );
@@ -779,7 +779,7 @@ BOOL CFileExecutor::ShowBitziTicket(DWORD nIndex)
 							nMP3orOGGorWAVTag++;
 						}
 					}
-					else if ( str == "sampleRate" )
+					else if ( str.CompareNoCase( _T("sampleRate") ) == 0 )
 					{
 						nTemp = _ttoi( strReplace );
 						strReplace.Format( _T("%d"), nTemp );
@@ -799,7 +799,7 @@ BOOL CFileExecutor::ShowBitziTicket(DWORD nIndex)
 							nMP3orOGGorWAVTag++;
 						}
 					}
-					else if ( str == "channels" )
+					else if ( str.CompareNoCase( _T("channels") ) == 0 )
 					{
 						nTemp = _ttoi( strReplace );
 						strReplace.Format( _T("%d"), nTemp );
@@ -817,7 +817,7 @@ BOOL CFileExecutor::ShowBitziTicket(DWORD nIndex)
 							nMP3orOGGorWAVTag++;
 						}
 					}
-					else if ( str == "soundType" )
+					else if ( str.CompareNoCase( _T("soundType") ) == 0 )
 					{
 						if ( strExt == "MP3" )
 							if ( ( strReplace == "Stereo" ) || ( strReplace == "Joint Stereo" ) )
@@ -830,7 +830,7 @@ BOOL CFileExecutor::ShowBitziTicket(DWORD nIndex)
 						if ( strReplace.GetLength() )
 							nMP3orOGGorWAVTag++;
 					}
-					else if ( str == "encoder" )
+					else if ( str.CompareNoCase( _T("encoder") ) == 0 )
 					{
 						if ( strExt == "MP3" )
 							strMP3orOGGorWAVTag += _T("&tag.mp3.encoder=");
@@ -846,9 +846,9 @@ BOOL CFileExecutor::ShowBitziTicket(DWORD nIndex)
 			}
 			else if ( pFile->m_pSchema->CheckURI( CSchema::uriImage ) )
 			{
-				if ( str == "description" )
+				if ( str.CompareNoCase( _T("description") ) == 0 )
 					strINFO += _T("&tag.objective.description=") + URLEncode( strReplace.Trim() );
-				else if ( str == "width" )
+				else if ( str.CompareNoCase( _T("width") ) == 0 )
 				{
 					nTemp = _ttoi( strReplace );
 					strReplace.Format( _T("%d"), nTemp );
@@ -856,7 +856,7 @@ BOOL CFileExecutor::ShowBitziTicket(DWORD nIndex)
 					strImageTag += _T("&tag.image.width=") + strReplace;
 					nImageTag++;
 				}
-				else if ( str == "height" )
+				else if ( str.CompareNoCase( _T("height") ) == 0 )
 				{
 					nTemp = _ttoi( strReplace );
 					strReplace.Format( _T("%d"), nTemp );
@@ -864,7 +864,7 @@ BOOL CFileExecutor::ShowBitziTicket(DWORD nIndex)
 					strImageTag += _T("&tag.image.height=") + strReplace;
 					nImageTag++;
 				}
-				else if ( str == "colors" )
+				else if ( str.CompareNoCase( _T("colors") ) == 0 )
 				{
 					if ( strReplace == "2" ) strReplace = "1";
 					else if ( strReplace == "16" ) strReplace = "4";
@@ -882,30 +882,30 @@ BOOL CFileExecutor::ShowBitziTicket(DWORD nIndex)
 			}
 			else if ( pFile->m_pSchema->CheckURI( CSchema::uriVideo ) )
 			{
-				if ( str == "realdescription" )
+				if ( str.CompareNoCase( _T("realdescription") ) == 0 )
 					strINFO += _T("&tag.objective.description=") + URLEncode( strReplace.Trim() );
-				else if ( str == "width" )
+				else if ( str.CompareNoCase( _T("width") ) == 0 )
 				{
 					nTemp = _ttoi( strReplace );
 					strReplace.Format( _T("%d"), nTemp );
 
 					strINFO += _T("&tag.video.width=") + strReplace;
 				}
-				else if ( str == "height" )
+				else if ( str.CompareNoCase( _T("height") ) == 0 )
 				{
 					nTemp = _ttoi( strReplace );
 					strReplace.Format( _T("%d"), nTemp );
 
 					strINFO += _T("&tag.video.height=") + strReplace;
 				}
-				else if ( str == "frameRate" )
+				else if ( str.CompareNoCase( _T("frameRate") ) == 0 )
 				{
 					nTemp = _ttoi( strReplace );
 					strReplace.Format( _T("%d"), nTemp );
 
 					strINFO += _T("&tag.video.fps=") + strReplace;
 				}
-				else if ( str == "minutes" )
+				else if ( str.CompareNoCase( _T("minutes") ) == 0 )
 				{
 					nTemp = (int)( _wtof( strReplace ) * 60 * 1000 );
 					strReplace.Format( _T("%d"), nTemp );
@@ -913,14 +913,14 @@ BOOL CFileExecutor::ShowBitziTicket(DWORD nIndex)
 					strINFO += _T("&tag.video.duration=") + strReplace;
 				}
 				// ToDO: Read video's bitrate in FileExecutor.cpp, bitzi submit is already ready
-				else if ( str == "bitrate" )
+				else if ( str.CompareNoCase( _T("bitrate") ) == 0 )
 				{
 					nTemp = _ttoi( strReplace );
 					strReplace.Format( _T("%d"), nTemp );
 
 					strINFO += _T("&tag.video.bitrate=") + strReplace;
 				}
-				else if ( str == "codec" )
+				else if ( str.CompareNoCase( _T("codec") ) == 0 )
 				{
 					strReplace.MakeUpper();
 					strINFO += _T("&tag.video.codec=") + URLEncode( strReplace );
@@ -928,14 +928,14 @@ BOOL CFileExecutor::ShowBitziTicket(DWORD nIndex)
 			}
 			else if ( pFile->m_pSchema->CheckURI( CSchema::uriApplication ) )
 			{
-				if ( str == "fileDescription" )
+				if ( str.CompareNoCase( _T("fileDescription") ) == 0 )
 					strDescription = URLEncode( strReplace.Trim() );
-				else if ( str == "title" )
+				else if ( str.CompareNoCase( _T("title") ) == 0 )
 					strTitle = URLEncode( strReplace.Trim() );
 			}
 			else
 			{
-				if ( str == "description" )
+				if ( str.CompareNoCase( _T("description") ) == 0 )
 					strINFO += _T("&tag.objective.description=") + URLEncode( strReplace.Trim() );
 			}
 		}
