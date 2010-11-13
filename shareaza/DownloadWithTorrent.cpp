@@ -278,20 +278,23 @@ void CDownloadWithTorrent::Serialize(CArchive& ar, int nVersion)
 				for ( QWORD nLength = m_pTorrent.m_nSize; nLength; )
 				{
 					DWORD nBuffer = (DWORD)min( nLength, BUFFER_SIZE );
-					nBuffer = oSource.Read( pBuffer.get(), nBuffer );
-					if ( nBuffer )
+					DWORD nRead = oSource.Read( pBuffer.get(), nBuffer );
+					if ( nRead )
 					{
-						if ( ! pFragFile->Write( nTotal, pBuffer.get(), nBuffer ) )
+						if ( ! pFragFile->Write( nTotal, pBuffer.get(), nRead ) )
 							AfxThrowFileException( CFileException::genericException );
 					}
+					if ( nRead != nBuffer )
+						// EOF
+						break;
 					nLength -= nBuffer;
 					nTotal += nBuffer;
 
 					CString strText;
 					strText.Format( _T("%s %s %s"),
-						Settings.SmartVolume( nTotal, KiloBytes ),
-						LoadString( IDS_GENERAL_OF ),
-						Settings.SmartVolume( m_pTorrent.m_nSize, KiloBytes ) );
+						(LPCTSTR)Settings.SmartVolume( nTotal, KiloBytes ),
+						(LPCTSTR)LoadString( IDS_GENERAL_OF ),
+						(LPCTSTR)Settings.SmartVolume( m_pTorrent.m_nSize, KiloBytes ) );
 					oProgress.SetSubActionText( strText );
 					oProgress.StepSubEvent( (int)( nBuffer / 1024ul ) );
 					oProgress.SetEventPos( (int)( nTotal / 1024ull ) );
