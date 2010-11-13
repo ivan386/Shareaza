@@ -221,21 +221,21 @@ STDMETHODIMP CRatDVDPlugin::ProcessRatDVD(HANDLE hFile, ISXMLElement* pXML)
 	CComQIPtr< ISXMLElements > pTempElements;
 
 	pXML->get_Elements( &pTempElements );
-	pTempElements->Create( L"videos", &pPlural );
+	pTempElements->Create( CComBSTR( L"videos" ), &pPlural );
 	pTempElements.Release();
 
 	// Add root element attributes
 	CComQIPtr< ISXMLAttributes > pAttributes;
 	pPlural->get_Attributes( &pAttributes );
-	pAttributes->Add( L"xmlns:xsi", L"http://www.w3.org/2001/XMLSchema-instance" );
-	pAttributes->Add( L"xsi:noNamespaceSchemaLocation", CComBSTR( CRatDVDPlugin::uriVideo ) );
+	pAttributes->Add( CComBSTR( L"xmlns:xsi" ), CComBSTR( L"http://www.w3.org/2001/XMLSchema-instance" ) );
+	pAttributes->Add( CComBSTR( L"xsi:noNamespaceSchemaLocation" ), CComBSTR( CRatDVDPlugin::uriVideo ) );
 	pAttributes.Release();
 
 	// Create inner element describing metadata
 	CComQIPtr< ISXMLElement > pSingular;
 	pPlural->get_Elements( &pTempElements );
 
-	pTempElements->Create( L"video", &pSingular );
+	pTempElements->Create( CComBSTR( L"video" ), &pSingular );
 	pTempElements.Release();
 
 	// Get attributes and add all metadata
@@ -244,16 +244,16 @@ STDMETHODIMP CRatDVDPlugin::ProcessRatDVD(HANDLE hFile, ISXMLElement* pXML)
 	CComQIPtr< ISXMLElement > pData;
 	CComBSTR strValue;
 
-	HRESULT hr = pElements->get_ByName( L"Titles", &pData );
+	HRESULT hr = pElements->get_ByName( CComBSTR( L"Titles" ), &pData );
 	if ( SUCCEEDED( hr ) && pData )
 	{
 		if ( SUCCEEDED( pData->get_Elements( &pTempElements ) ) && pTempElements )
 		{
 			pData.Release();
-			if ( SUCCEEDED( pTempElements->get_ByName( L"Original", &pData ) ) && pData )
+			if ( SUCCEEDED( pTempElements->get_ByName( CComBSTR( L"Original" ), &pData ) ) && pData )
 			{
 				if ( SUCCEEDED( pData->get_Value( &strValue ) ) )
-					pAttributes->Add( L"title", strValue );
+					pAttributes->Add( CComBSTR( L"title" ), strValue );
 			}
 		}
 	}
@@ -261,48 +261,48 @@ STDMETHODIMP CRatDVDPlugin::ProcessRatDVD(HANDLE hFile, ISXMLElement* pXML)
 	if ( pData ) pData.Release();
 	if ( pTempElements ) pTempElements.Release();
 
-	hr = pElements->get_ByName( L"tagline", &pData );
+	hr = pElements->get_ByName( CComBSTR( L"tagline" ), &pData );
 	if ( SUCCEEDED(hr) && pData )
 	{
 		if ( SUCCEEDED( pData->get_Value( &strValue ) ) )
-			pAttributes->Add( L"description", strValue );
+			pAttributes->Add( CComBSTR( L"description" ), strValue );
 		pData.Release();
 	}
 
-	hr = pElements->get_ByName( L"year", &pData );
+	hr = pElements->get_ByName( CComBSTR( L"year" ), &pData );
 	if ( SUCCEEDED(hr) && pData )
 	{
 		if ( SUCCEEDED( pData->get_Value( &strValue ) ) )
-			pAttributes->Add( L"year", strValue );
+			pAttributes->Add( CComBSTR( L"year" ), strValue );
 		pData.Release();
 	}
 
-	hr = pElements->get_ByName( L"director", &pData );
+	hr = pElements->get_ByName( CComBSTR( L"director" ), &pData );
 	if ( SUCCEEDED(hr) && pData )
 	{
 		if ( SUCCEEDED( pData->get_Value( &strValue ) ) )
-			pAttributes->Add( L"director", strValue );
+			pAttributes->Add( CComBSTR( L"director" ), strValue );
 		pData.Release();
 	}
 
-	hr = pElements->get_ByName( L"genre", &pData );
+	hr = pElements->get_ByName( CComBSTR( L"genre" ), &pData );
 	if ( SUCCEEDED(hr) && pData )
 	{
 		if ( SUCCEEDED( pData->get_Value( &strValue ) ) )
-			pAttributes->Add( L"genre", strValue );
+			pAttributes->Add( CComBSTR( L"genre" ), strValue );
 		pData.Release();
 	}
 
-	hr = pElements->get_ByName( L"Plot", &pData );
+	hr = pElements->get_ByName( CComBSTR( L"Plot" ), &pData );
 	if ( SUCCEEDED( hr ) && pData )
 	{
 		if ( SUCCEEDED( pData->get_Elements( &pTempElements ) ) && pTempElements )
 		{
 			pData.Release();
-			if ( SUCCEEDED( pTempElements->get_ByName( L"Original", &pData ) ) && pData )
+			if ( SUCCEEDED( pTempElements->get_ByName( CComBSTR( L"Original" ), &pData ) ) && pData )
 			{
 				if ( SUCCEEDED( pData->get_Value( &strValue ) ) )
-					pAttributes->Add( L"realdescription", strValue );
+					pAttributes->Add( CComBSTR( L"realdescription" ), strValue );
 			}
 		}
 	}
@@ -310,21 +310,21 @@ STDMETHODIMP CRatDVDPlugin::ProcessRatDVD(HANDLE hFile, ISXMLElement* pXML)
 	if ( pData ) pData.Release();
 	if ( pTempElements ) pTempElements.Release();
 
-	hr = pElements->get_ByName( L"IMDB", &pData );
+	hr = pElements->get_ByName( CComBSTR( L"IMDB" ), &pData );
 	if ( SUCCEEDED(hr) && pData )
 	{
 		if ( SUCCEEDED( pData->get_Value( &strValue ) ) )
 		{
 			CComBSTR strURL( L"http://www.imdb.com/title/" );
 			strURL.Append( strValue );
-			pAttributes->Add( L"imdbLink", strURL );
+			pAttributes->Add( CComBSTR( L"imdbLink" ), strURL );
 		}
 		pData.Release();
 	}
 
 	// Loop through all artists
 	CComBSTR strActors;
-	hr = pElements->get_ByName( L"Cast", &pData );
+	hr = pElements->get_ByName( CComBSTR( L"Cast" ), &pData );
 
 	if ( SUCCEEDED( hr ) && pData )
 	{
@@ -336,7 +336,7 @@ STDMETHODIMP CRatDVDPlugin::ProcessRatDVD(HANDLE hFile, ISXMLElement* pXML)
 			do
 			{
 				if ( pData ) pData.Release();
-				hr = pTempElements->get_ByName( L"actor", &pData );
+				hr = pTempElements->get_ByName( CComBSTR( L"actor" ), &pData );
 				if ( SUCCEEDED(hr) && pData )
 				{
 					hr = pData->get_Attributes( &pActorAttributes );
@@ -344,7 +344,7 @@ STDMETHODIMP CRatDVDPlugin::ProcessRatDVD(HANDLE hFile, ISXMLElement* pXML)
 					{
 						CComBSTR strSeparator;
 						CComQIPtr< ISXMLAttribute > pSeparator;
-						hr = pActorAttributes->get_ByName( L"separator", &pSeparator );
+						hr = pActorAttributes->get_ByName( CComBSTR( L"separator" ), &pSeparator );
 						if ( SUCCEEDED( hr ) && pSeparator )
 							pSeparator->get_Value( &strSeparator );
 
@@ -378,7 +378,7 @@ STDMETHODIMP CRatDVDPlugin::ProcessRatDVD(HANDLE hFile, ISXMLElement* pXML)
 			while ( pData );
 		}
 	}
-	if ( strActors.Length() ) pAttributes->Add( L"stars", strActors );
+	if ( strActors.Length() ) pAttributes->Add( CComBSTR( L"stars" ), strActors );
 
 	// Cleanup destination
 	pInputXML->Delete();
