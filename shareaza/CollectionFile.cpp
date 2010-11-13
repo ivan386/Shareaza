@@ -489,7 +489,7 @@ void CCollectionFile::Render(CString& strBuffer) const
 		_T(".size { width: 100px; text-align: center; }\n")
 		_T("</style>\n</head>\n<body>\n<h1>%s</h1>\n<table>\n"),
 		(LPCTSTR)GetTitle(),
-		Settings.Fonts.DefaultFont, Settings.Fonts.FontSize,
+		(LPCTSTR)Settings.Fonts.DefaultFont, Settings.Fonts.FontSize,
 		(LPCTSTR)GetTitle() );
 
 	DWORD i = 1;
@@ -524,7 +524,7 @@ void CCollectionFile::Render(CString& strBuffer) const
 			_T("<td class=\"url\" onclick=\"if ( ! window.external.open('%s') ) window.external.download('%s');\" onmouseover=\"window.external.hover('%s');\" onmouseout=\"window.external.hover('');\">%s</td>")
 			_T("<td class=\"size\">%s</td></tr>\n"),
 			i++, (LPCTSTR)strURN, (LPCTSTR)strURN, (LPCTSTR)strURN, (LPCTSTR)pFile->m_sName,
-			Settings.SmartVolume( pFile->m_nSize ) );
+			(LPCTSTR)Settings.SmartVolume( pFile->m_nSize ) );
 		strBuffer += strTemp;
 	}
 

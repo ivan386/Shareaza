@@ -247,12 +247,12 @@ BOOL CSkinWindow::Parse(CXMLElement* pBase, const CString& strPath)
 						pRect = new CRect( &rc );
 						m_pAnchorList.SetAt( strName, pRect );
 					}
-					if ( strName == "Mirror" )
+					if ( strName == _T("Mirror") )
 					{
 						m_nMirror = 1;
 						m_rcMirror = pRect;
 					}
-					if ( strName == "MirrorFull" )
+					if ( strName == _T("MirrorFull") )
 					{
 						m_nMirror = 2;
 						m_rcMirror = pRect;

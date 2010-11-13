@@ -375,17 +375,16 @@ BOOL CLibraryDetailView::Select(DWORD nObject)
 	}
 
 	LDVITEM* pItem = m_pList;
-
 	for ( DWORD nCount = 0 ; nCount < m_nList ; nCount++, pItem++ )
 	{
 		if ( pItem->nIndex == nObject )
 		{
-			LV_ITEM pItem;
-
-			pItem.mask = LVIF_STATE; pItem.state = 0xFFFFFFFF; pItem.stateMask = LVIS_SELECTED|LVIS_FOCUSED;
-			SendMessage( LVM_SETITEMSTATE, nCount, (LPARAM)&pItem );
+			LV_ITEM it = {};
+			it.mask = LVIF_STATE;
+			it.state = 0xFFFFFFFF;
+			it.stateMask = LVIS_SELECTED | LVIS_FOCUSED;
+			SendMessage( LVM_SETITEMSTATE, nCount, (LPARAM)&it );
 			PostMessage( LVM_ENSUREVISIBLE, nCount, FALSE );
-
 			return TRUE;
 		}
 	}

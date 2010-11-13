@@ -174,9 +174,6 @@ BOOL CImageServices::LoadFromFileHelper(IImageServicePlugin* pService, CImageFil
 						0, 0, 0 );
 					if ( pBuffer )
 					{
-						CString strType( PathFindExtension( szFilename ) ); // ".ext"
-						strType.MakeLower();
-
 						bSuccess = LoadFromMemory( pFile, strType, pBuffer,
 							GetFileSize( hFile, NULL ), bScanOnly, bPartialOk );
 

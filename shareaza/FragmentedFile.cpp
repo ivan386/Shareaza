@@ -265,7 +265,7 @@ BOOL CFragmentedFile::Open(CShareazaFile& oSHFile, BOOL bWrite)
 	{
 		// Generate new filename (inside incomplete folder)
 		strSource.Format( _T("%s\\%s.partial"),
-			Settings.Downloads.IncompletePath, sUniqueName );
+			(LPCTSTR)Settings.Downloads.IncompletePath, (LPCTSTR)sUniqueName );
 	}
 	else if ( GetFileAttributes( oSHFile.m_sPath ) != INVALID_FILE_ATTRIBUTES )
 	{
@@ -327,7 +327,7 @@ BOOL CFragmentedFile::Open(const CBTInfo& oInfo, const BOOL bWrite,
 		{
 			// Generate new filename (inside incomplete folder)
 			strSource.Format( _T("%s\\%s_%d.partial"),
-				Settings.Downloads.IncompletePath, sUniqueName, i );
+				(LPCTSTR)Settings.Downloads.IncompletePath, (LPCTSTR)sUniqueName, i );
 		}
 		else
 		{
@@ -897,21 +897,23 @@ BOOL CFragmentedFile::VirtualRead(QWORD nOffset, char* pBuffer, QWORD nBuffer, Q
 		if ( i == m_oFile.end() )
 			// EOF
 			return FALSE;
-		if( (*i).m_nOffset > nOffset )
+		const CVirtualFilePart& file = (*i);
+		if ( file.m_nOffset > nOffset )
 			// EOF
 			return FALSE;
-		QWORD nPartOffset = ( nOffset - (*i).m_nOffset );
-		if ( (*i).m_nSize < nPartOffset )
+		QWORD nPartOffset = ( nOffset - file.m_nOffset );
+		if ( file.m_nSize < nPartOffset )
 			// EOF
 			return FALSE;
-		QWORD nPartLength = min( nBuffer, (*i).m_nSize - nPartOffset );
+		QWORD nPartLength = min( nBuffer, file.m_nSize - nPartOffset );
 		if ( ! nPartLength )
 			// Skip zero length files
 			continue;
 
 		QWORD nRead = 0;
-		if ( ! (*i).m_pFile ||
-			 ! (*i).m_pFile->Read( nPartOffset, pBuffer, nPartLength, &nRead ) )
+		if ( ! file.m_pFile )
+			return FALSE;
+		if ( ! file.m_pFile->Read( nPartOffset, pBuffer, nPartLength, &nRead ) )
 			return FALSE;
 
 		pBuffer += nRead;
@@ -947,25 +949,30 @@ BOOL CFragmentedFile::VirtualWrite(QWORD nOffset, const char* pBuffer, QWORD nBu
 		if ( i == m_oFile.end() )
 			// EOF
 			return FALSE;
-		if ( (*i).m_nOffset > nOffset )
+		const CVirtualFilePart& file = (*i);
+		if ( file.m_nOffset > nOffset )
 			// EOF
 			return FALSE;
-		QWORD nPartOffset = ( nOffset - (*i).m_nOffset );
-		if ( (*i).m_nSize < nPartOffset )
+		QWORD nPartOffset = ( nOffset - file.m_nOffset );
+		if ( file.m_nSize < nPartOffset )
 			// EOF
 			return FALSE;
-		QWORD nPartLength = min( nBuffer, (*i).m_nSize - nPartOffset );
+		QWORD nPartLength = min( nBuffer, file.m_nSize - nPartOffset );
 		if ( ! nPartLength )
 			// Skip zero length files
 			continue;
 
 		QWORD nWritten = 0;
-		if ( ! (*i).m_bWrite )
+		if ( ! file.m_bWrite )
 			// Skip read only files
 			nWritten = nPartLength;
-		else if ( ! (*i).m_pFile ||
-			 ! (*i).m_pFile->Write( nPartOffset, pBuffer, nPartLength, &nWritten ) )
-			return FALSE;
+		else
+		{
+			if ( ! file.m_pFile )
+				return FALSE;
+			if ( ! file.m_pFile->Write( nPartOffset, pBuffer, nPartLength, &nWritten ) )
+				return FALSE;
+		}
 
 		pBuffer += nWritten;
 		nOffset += nWritten;

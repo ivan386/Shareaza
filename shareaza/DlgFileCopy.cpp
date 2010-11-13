@@ -339,48 +339,43 @@ bool CFileCopyDlg::ProcessFile(const CString& strName, const CString& strPath)
 	if ( strPath.CompareNoCase( m_sTarget ) == 0 )
 		return false;
 
-	CString sSource, sTarget;
+	CString sSource = strPath + _T("\\") + strName;
+	CString sTarget = m_sTarget + _T("\\") + strName;
 
 	// Check if we can move the file first
-	sSource = strPath + _T("\\") + strName;
-	HANDLE hFile = CreateFile( sSource, GENERIC_WRITE, 0, NULL,
-		OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
-	VERIFY_FILE_ACCESS( hFile, sSource )
-	if ( hFile == INVALID_HANDLE_VALUE )
-	{
-		CString strMessage, strFormat, strName;
-		LoadString( strFormat, IDS_LIBRARY_MOVE_FAIL );
-
-		m_wndFileName.GetWindowText( strName );
-		strMessage.Format( strFormat, strName );
-
-		switch ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 ) )
-		{
-		case IDYES:
-			break;
-		case IDNO:
-		default:
-			CloseHandle( hFile );
-			return false;
-		}
-	}
-	CloseHandle( hFile );
-
-	// Move the file
-	sSource = strPath + _T("\\") + strName;
-	sTarget = m_sTarget + _T("\\") + strName;
-
-	if ( sSource.CompareNoCase( sTarget ) == 0 )
-		return false;
-
 	if ( m_bMove )
 	{
-		if ( !ProcessMove( sSource, sTarget ) )
+		HANDLE hFile = CreateFile( sSource, GENERIC_WRITE, 0, NULL,
+			OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
+		VERIFY_FILE_ACCESS( hFile, sSource )
+		if ( hFile == INVALID_HANDLE_VALUE )
+		{
+			CString strMessage;
+			strMessage.Format( LoadString( IDS_LIBRARY_MOVE_FAIL ), strName );
+			switch ( AfxMessageBox( strMessage, MB_ICONQUESTION | MB_YESNO | MB_DEFBUTTON2 ) )
+			{
+			case IDYES:
+				m_bMove = FALSE;
+				break;
+			case IDNO:
+				break;
+			default:
+				return false;
+			}
+		}
+		else
+			CloseHandle( hFile );
+	}
+
+	// Move the file
+	if ( m_bMove )
+	{
+		if ( ! ProcessMove( sSource, sTarget ) )
 			return false;
 	}
 	else
 	{
-		if ( !ProcessCopy( sSource, sTarget ) )
+		if ( ! ProcessCopy( sSource, sTarget ) )
 			return false;
 	}
 

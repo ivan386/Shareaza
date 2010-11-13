@@ -104,7 +104,7 @@ CDownloadSource::CDownloadSource(const CDownload* pDownload, const CQueryHit* pH
 		if ( ( m_sURL.Right( 3 ) == _T("/0/") ) && ( pDownload->m_nSize ) )
 		{	//Add the size if it was missing.
 			CString strTemp =  m_sURL.Left( m_sURL.GetLength() - 2 );
-			m_sURL.Format( _T("%s%I64i/"), strTemp, pDownload->m_nSize );
+			m_sURL.Format( _T("%s%I64i/"), (LPCTSTR)strTemp, pDownload->m_nSize );
 		}
 	}
 	else if ( pHit->m_nProtocol == PROTOCOL_DC )

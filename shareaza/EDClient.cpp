@@ -475,8 +475,7 @@ void CEDClient::OnRunEx(DWORD tNow)
 		if ( m_bOpenChat )
 		{
 			// We might be waiting for a push reply, give it a little time
-			DWORD tNow = GetTickCount();
-			if ( tNow - m_tConnected < Settings.Connection.TimeoutHandshake  )
+			if ( tNow < m_tConnected + Settings.Connection.TimeoutHandshake  )
 				return;
 		}
 

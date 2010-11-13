@@ -667,7 +667,7 @@ void CLocalSearch::AddHitDC(CDCPacket* pPacket, CSchemaMap& /*pSchemas*/, CLibra
 	pAnswer.Print( strAnswer );
 	pAnswer.Add( _P("\x05") );
 	strAnswer.Format( _T("%s (%s:%u)"),
-		sHubName,
+		(LPCTSTR)sHubName,
 		(LPCTSTR)CString( inet_ntoa( m_pSearch->m_pEndpoint.sin_addr ) ),
 		ntohs( m_pSearch->m_pEndpoint.sin_port ) );
 	pAnswer.Print( strAnswer );

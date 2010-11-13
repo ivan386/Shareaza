@@ -386,7 +386,7 @@ BOOL CDownloadTransferDC::StartNextFragment()
 
 		CString strRequest;
 		strRequest.Format( _T("$ADCGET file TTH/%s %I64u %I64u|"),
-			m_pDownload->m_oTiger.toString(), m_nOffset, m_nLength );
+			(LPCTSTR)m_pDownload->m_oTiger.toString(), m_nOffset, m_nLength );
 
 		m_pClient->SendCommand( strRequest );
 

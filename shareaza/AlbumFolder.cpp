@@ -944,7 +944,7 @@ BOOL CAlbumFolder::OrganiseFile(CLibraryFile* pFile)
 			{
 				nCount = RegExp::Split( _T("(.*[^0-9]+\\b)([0-9]+)\\s*[xX]\\s*([0-9]+)[^0-9]+.*"),
 					sFileName, &szResults );
-				LPCTSTR p = szResults;
+				p = szResults;
 				for ( size_t i = 0; i < nCount; ++i )
 				{
 					results.push_back( p );
@@ -1137,8 +1137,6 @@ BOOL CAlbumFolder::OrganiseFile(CLibraryFile* pFile)
 
 void CAlbumFolder::Serialize(CArchive& ar, int nVersion)
 {
-	POSITION pos;
-
 	if ( ar.IsStoring() )
 	{
 		ar << m_sSchemaURI;
@@ -1156,7 +1154,7 @@ void CAlbumFolder::Serialize(CArchive& ar, int nVersion)
 
 		ar.WriteCount( GetFolderCount() );
 
-		for ( pos = GetFolderIterator() ; pos ; )
+		for ( POSITION pos = GetFolderIterator() ; pos ; )
 		{
 			CAlbumFolder* pFolder = GetNextFolder( pos );
 			pFolder->Serialize( ar, nVersion );
@@ -1164,7 +1162,7 @@ void CAlbumFolder::Serialize(CArchive& ar, int nVersion)
 
 		ar.WriteCount( GetFileCount() );
 
-		for ( pos = GetFileIterator() ; pos ; )
+		for ( POSITION pos = GetFileIterator() ; pos ; )
 		{
 			CLibraryFile* pFile = GetNextFile( pos );
 			ar << pFile->m_nIndex;

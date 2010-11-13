@@ -65,7 +65,7 @@ BOOL CDCNeighbour::ConnectToMe(const CString& sNick)
 
 	CString strRequest;
 	strRequest.Format( _T("$ConnectToMe %s %hs:%u|"),
-		sNick,
+		(LPCTSTR)sNick,
 		inet_ntoa( Network.m_pHost.sin_addr ),
 		htons( Network.m_pHost.sin_port ) );
 
@@ -627,13 +627,13 @@ BOOL CDCNeighbour::OnHello()
 	CString sInfo;
 	sInfo.Format( _T("$MyINFO $ALL %s %s<%s V:%s,M:%c,H:%u/%u/%u,S:%u>$ $%.2f%c$%s$%I64u$|"),
 		// Registered nick
-		m_sNick,
+		(LPCTSTR)m_sNick,
 		// Description
 		WEB_SITE_T,
 		// Client name
 		CLIENT_NAME_T,
 		// Client version
-		theApp.m_sVersion,
+		(LPCTSTR)theApp.m_sVersion,
 		// User is in active(A), passive(P), or SOCKS5(5) mode 
 		( Network.IsFirewalled( CHECK_BOTH ) ? _T('P') : _T('A') ),
 		// Number of connected hubs as regular user
@@ -649,7 +649,7 @@ BOOL CDCNeighbour::OnHello()
 		// User status: Normal(1), Away(2,3), Server(4,5), Server Away(6,7)
 		1,
 		// E-mail
-		MyProfile.GetContact( _T("Email") ),
+		(LPCTSTR)MyProfile.GetContact( _T("Email") ),
 		// Share size (bytes)
 		nMyVolume << 10 );
 	if ( CDCPacket* pPacket = CDCPacket::New() )

@@ -866,7 +866,7 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 					// in case if "X-Thex-URI" and "X-TigerTree-Path" headers
 					// will be absent (perfect workaround for "silent" Sareaza 2.2.0.0)
 					m_sTigerTree.Format( L"/gnutella/thex/v1?%s&depth=%d&ed2k=%d",
-						oTiger.toUrn(),
+						(LPCTSTR)oTiger.toUrn(),
 						Settings.Library.TigerHeight,
 						Settings.Downloads.VerifyED2K );
 				}

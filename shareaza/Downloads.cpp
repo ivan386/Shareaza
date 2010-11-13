@@ -1207,7 +1207,6 @@ void CDownloads::Load()
 	m_nLimitDonkey = Settings.Bandwidth.Downloads;
 
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
-	CString strPath;
 
 	PurgePreviews();
 

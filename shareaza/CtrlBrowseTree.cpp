@@ -762,8 +762,8 @@ CBrowseTreeItem* CBrowseTreeCtrl::HitTest(CRect& rcClient, CPoint& pt, CBrowseTr
 
 		for ( int nCount = pItem->m_nCount ; nCount ; nCount--, pChild++ )
 		{
-			CBrowseTreeItem* pItem = HitTest( rcClient, pt, *pChild, point, pRect );
-			if ( pItem ) return pItem;
+			if ( CBrowseTreeItem* pHit = HitTest( rcClient, pt, *pChild, point, pRect ) )
+				return pHit;
 			if ( pt.y >= rcClient.bottom + ITEM_HEIGHT ) break;
 		}
 

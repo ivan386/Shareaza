@@ -56,10 +56,10 @@ CBTTrackerRequest::CBTTrackerRequest(CDownloadWithTorrent* pDownload, LPCTSTR ps
 	// Create the basic URL (http://wiki.theory.org/BitTorrentSpecification#Tracker_HTTP.2FHTTPS_Protocol)
 	CString strURL;
 	strURL.Format( _T("%s%cinfo_hash=%s&peer_id=%s&port=%i&uploaded=%I64i&downloaded=%I64i&left=%I64i&compact=1"),
-		strAddress.TrimRight( _T('&') ),
+		(LPCTSTR)strAddress.TrimRight( _T('&') ),
 		( ( strAddress.Find( _T('?') ) != -1 ) ? _T('&') : _T('?') ),
-		Escape( pDownload->m_oBTH ),
-		Escape( m_pDownload->m_pPeerID ),
+		(LPCTSTR)Escape( pDownload->m_oBTH ),
+		(LPCTSTR)Escape( m_pDownload->m_pPeerID ),
 		Network.m_pHost.sin_port ? (int)htons( Network.m_pHost.sin_port ) : (int)Settings.Connection.InPort,
 		pDownload->m_nTorrentUploaded,
 		pDownload->m_nTorrentDownloaded,

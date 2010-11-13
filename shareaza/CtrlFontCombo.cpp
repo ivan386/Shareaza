@@ -88,7 +88,10 @@ void CFontCombo::Initialize()
 
 	ResetContent();
 	DeleteAllFonts();
-	EnumFontFamiliesEx( dc.m_hDC, NULL, (FONTENUMPROC)EnumFontProc, (LPARAM)this, 0 );
+
+	LOGFONT lf = {};
+	lf.lfCharSet = DEFAULT_CHARSET;
+	EnumFontFamiliesEx( dc.m_hDC, &lf, (FONTENUMPROC)EnumFontProc, (LPARAM)this, 0 );
 
 	SetCurSel( 0 );
 }
