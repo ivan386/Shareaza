@@ -212,19 +212,38 @@ void CScheduler::HangUpConnection()
 	RASCONN* lpRasConn = NULL;
 	LPRASCONNSTATUS RasConStatus = 0;
 
-	// Allocate the size needed for the RAS structure.
-	lpRasConn = (RASCONN*)HeapAlloc( GetProcessHeap(), 0, dwCb );
+	for (;;)
+	{
+		// Free the memory if necessary.
+		if ( lpRasConn != NULL )
+		{
+			HeapFree( GetProcessHeap(), 0, lpRasConn );
+			lpRasConn = NULL;
+		}
 
-	// Set the structure size for version checking purposes.
-	lpRasConn->dwSize = sizeof( RASCONN );
+		// Allocate the size needed for the RAS structure.
+		lpRasConn = (RASCONN*)HeapAlloc( GetProcessHeap(), 0, dwCb );
+		if ( ! lpRasConn )
+			// Out of memory
+			return;
 
-	// Call the RAS API 
-	RasEnumConnections( lpRasConn, &dwCb, &dwConnections );
+		// Set the first structure size for version checking purposes.
+		lpRasConn->dwSize = sizeof( RASCONN );
 
-	DWORD i;
-	int loop = 0;
+		// Call the RAS API 
+		DWORD ret = RasEnumConnections( lpRasConn, &dwCb, &dwConnections );
+		if ( ret == 0 )
+			// Ok
+			break;
+		if ( ret == ERROR_NOT_ENOUGH_MEMORY )
+			// Re-allocate more memory
+			continue;
+		// Error
+		return;
+	}
 
-	for ( i = 0; i < dwConnections; i++ ) // Loop through all current connections
+	DWORD loop = 0;
+	for ( DWORD i = 0; i < dwConnections; ++i ) // Loop through all current connections
 	{
 		RasHangUp( lpRasConn[i].hrasconn ); // Hang up the connection
 		while( ( RasGetConnectStatus( lpRasConn[i].hrasconn,RasConStatus ) || ( loop > 10 ) ) )
