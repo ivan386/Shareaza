@@ -165,7 +165,6 @@ public:
 		bool		ScanEXE;					// Enable .exe,.dll metadata extraction by internals
 		bool		ScanImage;					// Enable .jpg,.jpeg,.gif,.png,.bmp metadata extraction by internals
 		bool		ScanMP3;					// Enable .mp3 metadata extraction by internals
-		bool		ScanMPC;					// Enable .mpc,.mpp,.mp+ metadata extraction by internals
 		bool		ScanMPEG;					// Enable .mpeg,.mpg metadata extraction by internals
 		bool		ScanMSI;					// Enable .msi metadata extraction by internals
 		bool		ScanOGG;					// Enable .ogg metadata extraction by internals

@@ -72,7 +72,6 @@ private:
 	BYTE*		ReadOGGPage(HANDLE hFile, DWORD& nBuffer, BYTE nFlags, DWORD nSequence, DWORD nMinSize = 0);
 	bool		ReadOGGString(BYTE*& pOGG, DWORD& nOGG, CString& str);
 	bool		ReadAPE(DWORD nIndex, HANDLE hFile, bool bPreferFooter);
-	bool		ReadMPC(DWORD nIndex, HANDLE hFile);
 	bool		ReadPDF(DWORD nIndex, HANDLE hFile, LPCTSTR pszPath);
 	CString		ReadPDFLine(HANDLE hFile, bool bReverse, bool bComplex = false, bool bSplitter = true);
 	bool		ReadCollection(DWORD nIndex, LPCTSTR pszPath);

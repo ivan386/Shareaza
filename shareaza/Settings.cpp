@@ -172,7 +172,6 @@ void CSettings::Load()
 	Add( _T("Library"), _T("ScanEXE"), &Library.ScanEXE, true );
 	Add( _T("Library"), _T("ScanImage"), &Library.ScanImage, true );
 	Add( _T("Library"), _T("ScanMP3"), &Library.ScanMP3, true );
-	Add( _T("Library"), _T("ScanMPC"), &Library.ScanMPC, true );
 	Add( _T("Library"), _T("ScanMPEG"), &Library.ScanMPEG, true );
 	Add( _T("Library"), _T("ScanMSI"), &Library.ScanMSI, true );
 	Add( _T("Library"), _T("ScanOGG"), &Library.ScanOGG, true );
