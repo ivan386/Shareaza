@@ -83,9 +83,6 @@ CG2Packet* CNeighboursWithG2::CreateQueryWeb(const Hashes::Guid& oGUID, bool bWi
 	pPacket->WritePacket( G2_PACKET_TIMESTAMP, 4 );
 	pPacket->WriteLongBE( tNow );
 
-	// Record that we are making this packet
-	theApp.Message( MSG_DEBUG, _T("Creating a query acknowledgement:") );
-
 	// Write in header information about us
 	pPacket->WritePacket( G2_PACKET_QUERY_DONE, 8 );
 	pPacket->WriteLongLE( Network.m_pHost.sin_addr.S_un.S_addr );
@@ -112,9 +109,6 @@ CG2Packet* CNeighboursWithG2::CreateQueryWeb(const Hashes::Guid& oGUID, bool bWi
 				pPacket->WriteLongLE( pNeighbour->m_pHost.sin_addr.S_un.S_addr );
 				pPacket->WriteShortBE( htons( pNeighbour->m_pHost.sin_port ) );
 				pPacket->WriteShortBE( (WORD)pNeighbour->m_nLeafCount );
-
-				// Record that you wrote information about this computer into the packet
-				theApp.Message( MSG_DEBUG, _T("  Done neighbour %s"), (LPCTSTR)pNeighbour->m_sAddress );
 			}
 		}
 
@@ -138,9 +132,6 @@ CG2Packet* CNeighboursWithG2::CreateQueryWeb(const Hashes::Guid& oGUID, bool bWi
 				pPacket->WriteLongLE( pHost->m_pAddress.S_un.S_addr );
 				pPacket->WriteShortBE( pHost->m_nPort );
 				pPacket->WriteLongBE( pHost->Seen() );
-
-				// Report that the packet will encourage the recipient to try this IP address
-				theApp.Message( MSG_DEBUG, _T("  Try cached hub %s"), (LPCTSTR)CString( inet_ntoa( pHost->m_pAddress ) ) );
 
 				// Lower the count, if it is then 0, leave the loop
 				if ( ! --nCount ) break;

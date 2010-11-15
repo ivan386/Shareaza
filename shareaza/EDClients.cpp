@@ -499,8 +499,15 @@ BOOL CEDClients::OnPacket(const SOCKADDR_IN* pHost, CEDPacket* pPacket)
 		}
 		}
 		break;
+
+#ifdef _DEBUG
 	default:
-		pPacket->Debug( _T("Unknown ED2K UDP opcode.") );
+		CString tmp;
+		tmp.Format( _T("Unknown packet from %s:%u."),
+			(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ),
+			htons( pHost->sin_port ) );
+		pPacket->Debug( tmp );
+#endif // _DEBUG
 	}
 
 	return TRUE;

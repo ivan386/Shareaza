@@ -281,7 +281,7 @@ CQueryHit* CQueryHit::FromG1Packet(CG1Packet* pPacket, int* pnHops)
 			bBogus = TRUE;
 
 		if ( bBogus )
-			pPacket->Debug( _T("Malformed hit.") );
+			DEBUG_ONLY( pPacket->Debug( _T("Bogus hit.") ) );
 	}
 	catch ( CException* pException )
 	{

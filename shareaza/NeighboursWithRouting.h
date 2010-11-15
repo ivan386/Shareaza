@@ -1,7 +1,7 @@
 //
 // NeighboursWithRouting.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,38 +19,36 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-// Adds methods that send packets and Gnutella queries to all the computers we're connected to
-// http://shareazasecurity.be/wiki/index.php?title=Developers.Code.CNeighboursWithRouting
-
-// Make the compiler only include the lines here once, this is the same thing as pragma once
-#if !defined(AFX_NEIGHBOURSWITHROUTING_H__F6307BC0_A35F_43A3_A6BE_98C69D9A351E__INCLUDED_)
-#define AFX_NEIGHBOURSWITHROUTING_H__F6307BC0_A35F_43A3_A6BE_98C69D9A351E__INCLUDED_
-
-// Only include the lines beneath this one once
 #pragma once
 
-// Copy in the contents of these files here before compiling
 #include "NeighboursWithED2K.h"
 
-// Tell the compiler these classes exist, and it will find out more about them soon
 class CPacket;
 class CQuerySearch;
 
-// Add methods to broadcast packets and Gnutella queries to all the neighbours in the list
-class CNeighboursWithRouting : public CNeighboursWithED2K // Continue the inheritance column CNeighbours : CNeighboursWithConnect : Routing : ED2K : G2 : G1 : CNeighboursBase
+class CNeighboursWithRouting : public CNeighboursWithED2K
 {
 protected:
-	CNeighboursWithRouting(); // The constructor and destructor don't do anything
+	CNeighboursWithRouting();
 	virtual ~CNeighboursWithRouting();
 
+	typedef struct
+	{
+		IN_ADDR	m_pAddress;
+		DWORD	m_nTime;
+	} CIPTime;
+
+	CList< CIPTime > m_pQueries;
+
 public:
+	virtual void Connect();
 
 	// Send a packet to all the computers we're connected to
 	int Broadcast(CPacket* pPacket, CNeighbour* pExcept = NULL, BOOL bGGEP = FALSE);
 
+	// Limit queries by endpoint addresses
+	bool CheckQuery(const CQuerySearch* pSearch);
+
 	// Send a query packet to all the computers we're connected to, translating it to Gnutella and Gnutella2 for computers running that software
 	int RouteQuery(const CQuerySearch* pSearch, CPacket* pPacket, CNeighbour* pFrom, BOOL bToHubs);
 };
-
-// End the group of lines to only include once, pragma once doesn't require an endif at the bottom
-#endif // !defined(AFX_NEIGHBOURSWITHROUTING_H__F6307BC0_A35F_43A3_A6BE_98C69D9A351E__INCLUDED_)

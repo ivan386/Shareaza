@@ -867,9 +867,7 @@ void CQuerySearch::ReadGGEP(CG1Packet* pPacket)
 		if ( oMD5   && ! m_oMD5 )   m_oMD5   = oMD5;
 	}
 	else
-	{
-		pPacket->Debug( _T("Malformed GGEP.") );
-	}
+		DEBUG_ONLY( pPacket->Debug( _T("Malformed GGEP.") ) );
 }
 
 void CQuerySearch::ReadExtension(CG1Packet* pPacket)

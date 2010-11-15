@@ -1,7 +1,7 @@
 //
 // NeighboursWithRouting.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,10 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-// Adds methods that send packets and Gnutella queries to all the computers we're connected to
-// http://shareazasecurity.be/wiki/index.php?title=Developers.Code.CNeighboursWithRouting
-
-// Copy in the contents of these files here before compiling
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
@@ -35,7 +31,6 @@
 #include "G1Packet.h"
 #include "G2Packet.h"
 
-// If we are compiling in debug mode, replace the text "THIS_FILE" in the code with the name of this file
 #ifdef _DEBUG
 #undef THIS_FILE
 static char THIS_FILE[]=__FILE__;
@@ -45,22 +40,24 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CNeighboursWithRouting construction
 
-// Nothing that CNeighboursWithRouting adds to CNeighbours needs to be setup
 CNeighboursWithRouting::CNeighboursWithRouting()
 {
 }
 
-// Nothing that CNeighboursWithRouting adds to CNeighbours needs to be put away
 CNeighboursWithRouting::~CNeighboursWithRouting()
 {
+}
+
+void CNeighboursWithRouting::Connect()
+{
+	CNeighboursWithED2K::Connect();
+
+	m_pQueries.RemoveAll();
 }
 
 //////////////////////////////////////////////////////////////////////
 // CNeighboursWithRouting packet broadcasting
 
-// Takes a packet, and neighbour to ignore (do)
-// Sends the packet to all the neighbours
-// Returns the number of neighbours that got the packet
 int CNeighboursWithRouting::Broadcast(CPacket* pPacket, CNeighbour* pExcept, BOOL bGGEP)
 {
 	// Have this thread get exclusive access to the network object (do)
@@ -97,15 +94,41 @@ int CNeighboursWithRouting::Broadcast(CPacket* pPacket, CNeighbour* pExcept, BOO
 	return nCount;
 }
 
+bool CNeighboursWithRouting::CheckQuery(const CQuerySearch* pSearch)
+{
+	const DWORD QueryThrottle = 5 * 1000; // Maximum 1 query per 5 seconds
+
+	CIPTime pThisQuery;
+	pThisQuery.m_pAddress = pSearch->m_pEndpoint.sin_addr;
+	pThisQuery.m_nTime = GetTickCount();
+
+	for ( POSITION pos = m_pQueries.GetHeadPosition(); pos; )
+	{
+		POSITION posOrig = pos;
+		const CIPTime& pLastQuery = m_pQueries.GetNext( pos );
+
+		if ( pThisQuery.m_nTime >= pLastQuery.m_nTime + QueryThrottle )
+		{
+			// Remove old
+			m_pQueries.RemoveAt( posOrig );
+		}
+		else if ( pThisQuery.m_pAddress.s_addr == pLastQuery.m_pAddress.s_addr )
+		{
+			// Too early
+			return false;
+		}
+	}
+
+	m_pQueries.AddHead( pThisQuery );
+
+	return true;
+}
+
 //////////////////////////////////////////////////////////////////////
 // CNeighboursWithRouting query dispatch
 
-// Takes a CQuerySearch object (do), the packet that goes along with it, the neighbour it's from, and true to forward it to hubs (do)
-// Forwards the query to connected computers, converting it into a Gnutella or Gnutella2 query if necessary
-// Returns the number of computers we sent the packet to
 int CNeighboursWithRouting::RouteQuery(const CQuerySearch* pSearch, CPacket* pPacket, CNeighbour* pFrom, BOOL bToHubs)
 {
-	// Local variables
 	BOOL bHubLoop = FALSE; // We'll set this to true if this is a Gnutella Q2 packet and we found at least one Gnutella2 computer
 	int nCount = 0;        // We'll count how many neighbours we send the packet to
 	POSITION pos;          // Position used looping down the list of neighbours
@@ -278,6 +301,5 @@ int CNeighboursWithRouting::RouteQuery(const CQuerySearch* pSearch, CPacket* pPa
 		else if ( pPacket->m_nProtocol == PROTOCOL_G2 ) Statistics.Current.Gnutella2.Routed++;
 	}
 
-	// Return the number of packets we sent
 	return nCount;
 }

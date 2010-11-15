@@ -83,8 +83,10 @@ public:
 	virtual void	Reset();
 	virtual void    ToBuffer(CBuffer* pBuffer, bool bTCP = true) const; // Adds the Gnutella packet header and payload into the given CBuffer object
 
+#ifdef _DEBUG
 	// Record information about the packet for debugging purposes
 	virtual void Debug(LPCTSTR pszReason) const; // Writes debug information about the packet into the Shareaza.log file
+#endif // _DEBUG
 
 public:
 

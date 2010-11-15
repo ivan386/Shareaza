@@ -711,6 +711,7 @@ BOOL CDCClient::OnError(const std::string& strParams)
 	}*/
 
 	TRACE( "[DC++] Got $Error: \"%s\"\n", strParams.c_str() );
+	strParams;
 
 	return TRUE;
 }

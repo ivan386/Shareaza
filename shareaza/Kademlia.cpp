@@ -176,8 +176,15 @@ BOOL CKademlia::OnPacket(const SOCKADDR_IN* pHost, CEDPacket* pPacket)
 		return OnPacket_KADEMLIA2_PING( pHost, pPacket );
 	case KADEMLIA2_PONG:
 		return OnPacket_KADEMLIA2_PONG( pHost, pPacket );
+
+#ifdef _DEBUG
 	default:
-		pPacket->Debug( _T("Unknown KAD UDP opcode.") );
+		CString tmp;
+		tmp.Format( _T("Unknown packet from %s:%u."),
+			(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ),
+			htons( pHost->sin_port ) );
+		pPacket->Debug( tmp );
+#endif // _DEBUG
 	}
 	return FALSE;
 }

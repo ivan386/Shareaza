@@ -1319,7 +1319,7 @@ BOOL CG1Neighbour::OnQuery(CG1Packet* pPacket)
 		theApp.Message( MSG_INFO, IDS_PROTOCOL_BAD_QUERY, (LPCTSTR)m_sAddress );
 		Statistics.Current.Gnutella1.Dropped++;
 		m_nDropCount++;
-		pPacket->Debug( _T("Malformed Query.") );
+		DEBUG_ONLY( pPacket->Debug( _T("Malformed Query.") ) );
 		return TRUE; // Stay connected to the remote computer
 	}
 

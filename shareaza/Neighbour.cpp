@@ -494,7 +494,7 @@ BOOL CNeighbour::OnCommonHit(CPacket* pPacket)
 
 	if ( pHits == NULL )
 	{
-		pPacket->Debug( _T("Malformed Hit") );
+		DEBUG_ONLY( pPacket->Debug( _T("Malformed Hit") ) );
 		theApp.Message( MSG_ERROR, IDS_PROTOCOL_BAD_HIT, (LPCTSTR)m_sAddress );
 		m_nDropCount++;
 		if ( m_nProtocol == PROTOCOL_G1 )
@@ -506,7 +506,6 @@ BOOL CNeighbour::OnCommonHit(CPacket* pPacket)
 
 	if ( Security.IsDenied( &pHits->m_pAddress ) )
 	{
-		pPacket->Debug( _T("Security manager denied Hit") );
 		theApp.Message( MSG_ERROR, IDS_PROTOCOL_BAD_HIT, (LPCTSTR)m_sAddress );
 		m_nDropCount++;
 		if ( m_nProtocol == PROTOCOL_G1 )

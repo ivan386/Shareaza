@@ -2931,6 +2931,7 @@
 		<string id="16157" value="Neighbour %s is not a hub, closing connection."/>
 		<string id="16158" value="Gnutella2 connection with neighbour %s established successfully (%s)."/>
 		<string id="16159" value="Closing connection to non-Gnutella2 neighbour %s."/>
+		<string id="16191" value="Received a packet from %s which excess query limits, ignoring."/>
 		<string id="16192" value="Neighbour %s forwarded a packet of excessive size, dropping connection."/>
 		<string id="16193" value="Neighbour %s forwarded a packet with zero TTL, ignoring."/>
 		<string id="16194" value="Neighbour %s forwarded a packet with excessive TTL, dropping packet (TTL=%i, Hops=%i)."/>

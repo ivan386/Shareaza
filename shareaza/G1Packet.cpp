@@ -249,24 +249,16 @@ void CG1Packet::ToBuffer(CBuffer* pBuffer, bool /*bTCP*/) const
 //////////////////////////////////////////////////////////////////////
 // CG1Packet debug
 
-// Takes text that describes something that happened when debugging the program
-// Writes it into a line at the bottom of the file Shareaza.log
-void CG1Packet::Debug(LPCTSTR pszReason) const
-{
-
-// Only include these lines in the program if it is being compiled in debug mode
 #ifdef _DEBUG
 
-	// Local objects
-	CString strOutput; // We'll compose text that describes what happened here
+void CG1Packet::Debug(LPCTSTR pszReason) const
+{
+	CString strOutput;
 	strOutput.Format( L"[G1] %s Type: %s [%i/%i]", pszReason, GetType(), m_nTTL, m_nHops );
 	CPacket::Debug( strOutput );
-#else
-	UNUSED_ALWAYS(pszReason);
-// Go back to including all the lines in the program
-#endif
-
 }
+
+#endif // _DEBUG
 
 int CG1Packet::GGEPReadCachedHosts(const CGGEPBlock& pGGEP)
 {
@@ -424,6 +416,8 @@ BOOL CG1Packet::OnPacket(const SOCKADDR_IN* pHost)
 {
 	SmartDump( pHost, TRUE, FALSE );
 
+	if ( ! Settings.Gnutella1.EnableToday ) return TRUE;
+
 	switch ( m_nType )
 	{
 	case G1_PACKET_PING:
@@ -432,12 +426,15 @@ BOOL CG1Packet::OnPacket(const SOCKADDR_IN* pHost)
 		return OnPong( pHost );
 	case G1_PACKET_VENDOR:
 		return OnVendor( pHost );
+
+#ifdef _DEBUG
 	default:
 		CString tmp;
-		tmp.Format( _T("Received unexpected UDP packet from %s:%u"),
+		tmp.Format( _T("Unknown packet from %s:%u."),
 			(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ),
 			htons( pHost->sin_port ) );
 		Debug( tmp );
+#endif // _DEBUG
 	}
 
 	return TRUE;
@@ -659,11 +656,14 @@ BOOL CG1Packet::OnVendor(const SOCKADDR_IN* pHost)
 		}
 	}
 
+#ifdef _DEBUG
 	CString tmp;
-	tmp.Format( _T("Received vendor packet from %s:%u Function: %u Version: %u"),
+	tmp.Format( _T("Received vendor packet from %s:%u Function: %u Version: %u."),
 		(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ), htons( pHost->sin_port ),
 		nFunction, nVersion );
 	Debug( tmp );
+#endif //_DEBUG
+	pHost;
 
 	return TRUE;
 }

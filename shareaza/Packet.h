@@ -105,8 +105,10 @@ public:
 	virtual CString ToHex()   const; // Express the bytes of the packet in base 16 with spaces, like "08 C0 12 AF"
 	virtual CString ToASCII() const; // Express the bytes of the packet as ASCII characters, like "abc..fgh.i", spaces replace low characters
 
+#ifdef _DEBUG
 	// Inheriting classes will override this to (do)
 	virtual void    Debug(LPCTSTR pszReason) const;
+#endif // _DEBUG
 
 	// Gives this packet and related objects to each window in the tab bar for them to process it
 	virtual void SmartDump(const SOCKADDR_IN* pAddress, BOOL bUDP, BOOL bOutgoing, DWORD_PTR nNeighbourUnique = 0) const;

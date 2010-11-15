@@ -221,9 +221,6 @@ void CEDClient::Remove()
 
 	Close();
 
-	//if ( Settings.General.Debug && Settings.General.DebugLog )
-	//	theApp.Message( MSG_DEBUG, _T("CEDClient::Remove(): %x"), this );
-
 	delete this;
 }
 
@@ -747,10 +744,7 @@ BOOL CEDClient::OnPacket(CEDPacket* pPacket)
 		}
 	}
 
-	CString str;
-	str.Format( _T("Unrecognised packet type (in CEDClient::OnPacket) IP: %s"),
-		LPCTSTR( m_sAddress ) );
-	pPacket->Debug( str );
+	DEBUG_ONLY( pPacket->Debug( _T("Unrecognised packet type from ") + m_sAddress + _T(".") ) );
 
 	return TRUE;
 }
@@ -969,10 +963,12 @@ BOOL CEDClient::OnHello(CEDPacket* pPacket)
 			}
 			else
 			{
+#ifdef _DEBUG
 				CString str;
-				str.Format( _T("Unrecognised packet opcode (in CEDClient::OnHello) IP: %s Opcode: 0x%x:0x%x"),
-					LPCTSTR( m_sAddress ), int( pTag.m_nKey ), int( pTag.m_nType ) );
+				str.Format( _T("Unrecognised Hello packet opcode 0x%x:0x%x from %s."),
+					int( pTag.m_nKey ), int( pTag.m_nType ), (LPCTSTR)m_sAddress );
 				pPacket->Debug( str );
+#endif // _DEBUG
 			}
 		}
 	}
@@ -1123,11 +1119,14 @@ BOOL CEDClient::OnEmuleInfo(CEDPacket* pPacket)
 			// eMule Plus version
 			//if ( pTag.m_nType == ED2K_TAG_INT ) m_nPlusVers = (DWORD)pTag.m_nValue;
 			break;
+
+#ifdef _DEBUG
 		default:
 			CString str;
-			str.Format( _T("Unrecognised packet opcode (in CEDClient::OnEmuleInfo) IP: %s Opcode: 0x%x:0x%x"),
-				LPCTSTR( m_sAddress ), int( pTag.m_nKey ), int( pTag.m_nType ) );
+			str.Format( _T("Unrecognised packet opcode 0x%x:0x%x from %s."),
+				int( pTag.m_nKey ), int( pTag.m_nType ), (LPCTSTR)m_sAddress );
 			pPacket->Debug( str );
+#endif // _DEBUG
 		}
 	}
 

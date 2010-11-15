@@ -92,9 +92,6 @@ protected:
 	DWORD				m_nCountHAWIn;			// Number of HAW packets recievied
 	DWORD				m_nCountHAWOut;			// Number of HAW packets sent
 	CList< CG2Packet* >	m_pOutbound;			// Queue of outbound packets
-	int					m_nQueryLimiter;		// Counter for query limiting
-	DWORD				m_tQueryTimer;			// Timer for query limiting
-	BOOL				m_bBlacklisted;			// Has this client been over-querying.
 	BOOL				m_bFirewalled;			// Is the client reporting they are firewalled from /LNI/FW
 
 protected:

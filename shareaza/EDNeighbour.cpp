@@ -288,7 +288,7 @@ BOOL CEDNeighbour::OnPacket(CEDPacket* pPacket)
 	case ED2K_S2C_FOUNDSOURCES:
 		return OnFoundSources( pPacket );
 	default:
-		pPacket->Debug( _T("Unknown") );
+		DEBUG_ONLY( pPacket->Debug( _T("Unknown packet type from ") + m_sAddress + _T(".") ) );
 		break;
 	}
 
@@ -492,11 +492,14 @@ BOOL CEDNeighbour::OnServerIdent(CEDPacket* pPacket)
 			nUDPFlags = pTag.m_nValue;
 			break;
 */
+
+#ifdef _DEBUG
 		default:
 			CString str;
-			str.Format( _T("Unrecognised packet opcode (in CEDNeighbour::OnServerIdent) IP: %s Opcode: 0x%x:0x%x"),
-				LPCTSTR( m_sAddress ), int( pTag.m_nKey ), int( pTag.m_nType ) );
+			str.Format( _T("Unrecognised Server Ident packet opcode 0x%x:0x%x from %s"),
+				int( pTag.m_nKey ), int( pTag.m_nType ), LPCTSTR( m_sAddress ) );
 			pPacket->Debug( str );
+#endif // _DEBUG
 		}
 	}
 
@@ -593,7 +596,7 @@ BOOL CEDNeighbour::OnSearchResults(CEDPacket* pPacket)
 	{
 		if ( pPacket->m_nLength != 17 && pPacket->m_nLength != 5 )
 		{
-			pPacket->Debug( _T("BadSearchResult") );
+			DEBUG_ONLY( pPacket->Debug( _T("BadSearchResult") ) );
 			theApp.Message( MSG_ERROR, IDS_PROTOCOL_BAD_HIT, (LPCTSTR)m_sAddress );
 			Statistics.Current.eDonkey.Dropped++;
 			m_nDropCount++;
@@ -626,7 +629,7 @@ BOOL CEDNeighbour::OnFoundSources(CEDPacket* pPacket)
 
 		if ( pPacket->m_nLength != 17 && pPacket->m_nLength != 5 )
 		{
-			pPacket->Debug( _T("BadSearchResult") );
+			DEBUG_ONLY( pPacket->Debug( _T("BadSearchResult") ) );
 			theApp.Message( MSG_ERROR, IDS_PROTOCOL_BAD_HIT, (LPCTSTR)m_sAddress );
 			Statistics.Current.eDonkey.Dropped++;
 			m_nDropCount++;

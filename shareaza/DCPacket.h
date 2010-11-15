@@ -33,6 +33,10 @@ public:
 	virtual void Reset();
 	virtual void ToBuffer(CBuffer* pBuffer, bool bTCP = true) const;
 
+#ifdef _DEBUG
+	virtual void Debug(LPCTSTR pszReason) const; // Writes debug information about the packet into the Shareaza.log file
+#endif // _DEBUG
+
 // Packet Pool
 protected:
 	class CDCPacketPool : public CPacketPool

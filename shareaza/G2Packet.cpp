@@ -637,16 +637,16 @@ CString CG2Packet::Dump(DWORD nTotal)
 
 #endif // DEBUG_G2
 
+#ifdef _DEBUG
+
 void CG2Packet::Debug(LPCTSTR pszReason) const
 {
-#ifdef _DEBUG
 	CString strOutput;
 	strOutput.Format( L"[G2] %s Type: %s", pszReason, GetType() );
 	CPacket::Debug( strOutput );
-#else
-	pszReason;
-#endif
 }
+
+#endif // _DEBUG
 
 //////////////////////////////////////////////////////////////////////
 // CDatagrams G2UDP packet handler
@@ -654,6 +654,8 @@ void CG2Packet::Debug(LPCTSTR pszReason) const
 BOOL CG2Packet::OnPacket(const SOCKADDR_IN* pHost)
 {
 	SmartDump( pHost, TRUE, FALSE );
+
+	if ( ! Settings.Gnutella2.EnableToday ) return TRUE;
 
 	// Is it neigbour's packet or stranger's packet?
 	CNeighbour* pNeighbour = Neighbours.Get( pHost->sin_addr );
@@ -701,12 +703,15 @@ BOOL CG2Packet::OnPacket(const SOCKADDR_IN* pHost)
 		return OnDiscovery( pHost );
 	case G2_PACKET_KHL:
 		return OnKHL( pHost );
+
+#ifdef _DEBUG
 	default:
 		CString tmp;
-		tmp.Format( _T("Received unexpected UDP packet from %s:%u"),
+		tmp.Format( _T("Unknown packet from %s:%u."),
 			(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ),
 			htons( pHost->sin_port ) );
 		Debug( tmp );
+#endif // _DEBUG
 	}
 
 	return TRUE;
@@ -750,15 +755,13 @@ BOOL CG2Packet::OnQuery(const SOCKADDR_IN* pHost)
 	CQuerySearchPtr pSearch = CQuerySearch::FromPacket( this, pHost );
 	if ( ! pSearch || ! pSearch->m_bUDP )
 	{
-		theApp.Message( MSG_INFO, IDS_PROTOCOL_BAD_QUERY,
-			(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ) );
+		DEBUG_ONLY( Debug( _T("Malformed Query.") ) );
+		theApp.Message( MSG_WARNING, IDS_PROTOCOL_BAD_QUERY, (LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ) );
 		Statistics.Current.Gnutella2.Dropped++;
-		Debug( _T("Malformed Query.") );
 		return FALSE;
 	}
 
-	if ( Security.IsDenied( &pSearch->m_pEndpoint.sin_addr ) ||
-		! Settings.Gnutella2.EnableToday )
+	if ( Security.IsDenied( &pSearch->m_pEndpoint.sin_addr ) )
 	{
 		Statistics.Current.Gnutella2.Dropped++;
 		return FALSE;
@@ -793,6 +796,13 @@ BOOL CG2Packet::OnQuery(const SOCKADDR_IN* pHost)
 		Datagrams.Send( &pSearch->m_pEndpoint,
 			Neighbours.CreateQueryWeb( pSearch->m_oGUID, false ), TRUE );
 
+		Statistics.Current.Gnutella2.Dropped++;
+		return TRUE;
+	}
+
+	if ( ! Neighbours.CheckQuery( pSearch ) )
+	{
+		theApp.Message( MSG_WARNING, IDS_PROTOCOL_EXCESS, (LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ) );
 		Statistics.Current.Gnutella2.Dropped++;
 		return TRUE;
 	}
@@ -855,7 +865,7 @@ BOOL CG2Packet::OnCommonHit(const SOCKADDR_IN* pHost)
 
 	if ( pHits == NULL )
 	{
-		Debug( _T("Malformed Hit") );
+		DEBUG_ONLY( Debug( _T("Malformed Hit") ) );
 		theApp.Message( MSG_ERROR, IDS_PROTOCOL_BAD_HIT,
 			(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ) );
 		Statistics.Current.Gnutella2.Dropped++;
@@ -866,7 +876,7 @@ BOOL CG2Packet::OnCommonHit(const SOCKADDR_IN* pHost)
 	// If it doesn't we'll drop it.
 	if ( pHits->m_pAddress.S_un.S_addr != pHost->sin_addr.S_un.S_addr )
 	{
-		Debug( _T("Hit sender IP does not match \"NA\"") );
+		DEBUG_ONLY( Debug( _T("Hit sender IP does not match \"Node Address\"") ) );
 		theApp.Message( MSG_ERROR, IDS_PROTOCOL_BAD_HIT,
 			(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ) );
 		Statistics.Current.Gnutella2.Dropped++;
@@ -876,7 +886,6 @@ BOOL CG2Packet::OnCommonHit(const SOCKADDR_IN* pHost)
 
 	if ( Security.IsDenied( &pHits->m_pAddress ) )
 	{
-		Debug( _T("Security manager denied Hit") );
 		theApp.Message( MSG_ERROR, IDS_PROTOCOL_BAD_HIT,
 			(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ) );
 		Statistics.Current.Gnutella2.Dropped++;
@@ -939,11 +948,9 @@ BOOL CG2Packet::OnQueryKeyRequest(const SOCKADDR_IN* pHost)
 		}
 	}
 
-	CString strNode( inet_ntoa( *(IN_ADDR*)&nRequestedAddress ) );
-	theApp.Message( MSG_DEBUG, _T("Node %s asked for a query key for node %s:%i"),
-		(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ), (LPCTSTR)strNode, nRequestedPort );
-
-	if ( Network.IsFirewalledAddress( (IN_ADDR*)&nRequestedAddress, TRUE ) || 0 == nRequestedPort ) return TRUE;
+	if ( Network.IsFirewalledAddress( (IN_ADDR*)&nRequestedAddress, TRUE ) ||
+		! nRequestedPort )
+		return TRUE;
 
 	DWORD nKey = Network.QueryKeys->Create( nRequestedAddress );
 
@@ -959,6 +966,10 @@ BOOL CG2Packet::OnQueryKeyRequest(const SOCKADDR_IN* pHost)
 	}
 
 	Datagrams.Send( (IN_ADDR*)&nRequestedAddress, nRequestedPort, pAnswer, TRUE );
+
+	theApp.Message( MSG_DEBUG, _T("Node %s asked for a query key (0x%08x) for node %s:%i"),
+		(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ), nKey,
+		(LPCTSTR)CString( inet_ntoa( *(IN_ADDR*)&nRequestedAddress ) ), nRequestedPort );
 
 	return TRUE;
 }

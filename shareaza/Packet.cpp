@@ -362,19 +362,17 @@ CString CPacket::ToASCII() const
 //////////////////////////////////////////////////////////////////////
 // CPacket debugging
 
-// Classes that inherit from CPacket override this with their own Debug methods that record debugging information
-// Takes text that describes what happened
+#ifdef _DEBUG
+
 void CPacket::Debug(LPCTSTR pszReason) const
 {
-#ifdef _DEBUG
 	if ( m_nLength )
 		theApp.Message( MSG_DEBUG, _T("%s Size: %u bytes ASCII: %s HEX: %s"), pszReason, m_nLength, (LPCTSTR)ToASCII(), (LPCTSTR)ToHex() );
 	else
 		theApp.Message( MSG_DEBUG, _T("%s Size: %u bytes"), pszReason, m_nLength );
-#else
-	UNUSED_ALWAYS(pszReason);
-#endif
 }
+
+#endif // _DEBUG
 
 //////////////////////////////////////////////////////////////////////
 // CPacket smart dumping

@@ -237,7 +237,11 @@ public:
 	virtual void	WriteString(LPCTSTR pszString, BOOL bNull = TRUE);
 	virtual int		GetStringLen(LPCTSTR pszString) const;
 	virtual void	ToBuffer(CBuffer* pBuffer, bool bTCP = true) const;
+
+#ifdef _DEBUG
 	virtual void	Debug(LPCTSTR pszReason) const;
+#endif // _DEBUG
+
 public:
 	static CG2Packet* ReadBuffer(CBuffer* pBuffer);
 

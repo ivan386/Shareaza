@@ -88,10 +88,7 @@ CG2Neighbour::CG2Neighbour(CNeighbour* pBase) :
 	m_tLastHAWIn		( 0 ),
 	m_tLastHAWOut		( 0 ),
 	m_nCountHAWIn		( 0 ),
-	m_nCountHAWOut		( 0 ),
-	m_nQueryLimiter		( 40 ),
-	m_tQueryTimer		( 0 ),
-	m_bBlacklisted		( FALSE )
+	m_nCountHAWOut		( 0 )
 {
 	theApp.Message( MSG_INFO, IDS_HANDSHAKE_ONLINE_G2, (LPCTSTR)m_sAddress,
 		m_sUserAgent.IsEmpty() ? _T("Unknown") : (LPCTSTR)m_sUserAgent );
@@ -203,24 +200,6 @@ BOOL CG2Neighbour::OnRun()
 		( Neighbours.IsG2Hub() || Neighbours.IsG2HubCapable() ) )
 	{
 		SendHAW();
-	}
-
-	// Update allowed queries based on the node type
-	if ( m_nNodeType == ntLeaf )
-	{
-		if ( ( tNow - m_tQueryTimer ) > ( 5*60*1000 ) )
-		{
-			if ( m_nQueryLimiter < 60 ) m_nQueryLimiter ++;
-			m_tQueryTimer = tNow;
-		}
-	}
-	else
-	{
-		if ( ( tNow - m_tQueryTimer ) > ( 1000 ) )
-		{
-			if ( m_nQueryLimiter < 240 ) m_nQueryLimiter += 10;
-			m_tQueryTimer = tNow;
-		}
 	}
 
 	return TRUE;
@@ -686,8 +665,13 @@ BOOL CG2Neighbour::OnLNI(CG2Packet* pPacket)
 
 		if ( nType == G2_PACKET_NODE_ADDRESS && nLength >= 6 )
 		{
-			m_pHost.sin_addr.S_un.S_addr = pPacket->ReadLongLE();
-			m_pHost.sin_port = htons( pPacket->ReadShortBE() );
+			DWORD nAddress = pPacket->ReadLongLE();
+			WORD nPort = pPacket->ReadShortBE();
+			if ( nPort && nAddress ) // skip 0.0.0.0:0
+			{
+				m_pHost.sin_addr.s_addr = nAddress;
+				m_pHost.sin_port = htons( nPort );
+			}
 		}
 		else if ( nType == G2_PACKET_NODE_GUID && nLength >= 16 )
 		{
@@ -1132,51 +1116,37 @@ BOOL CG2Neighbour::SendQuery(const CQuerySearch* pSearch, CPacket* pPacket, BOOL
 BOOL CG2Neighbour::OnQuery(CG2Packet* pPacket)
 {
 	CQuerySearchPtr pSearch = CQuerySearch::FromPacket( pPacket );
-	if ( ! pSearch ||
-		// or leaf used firewalled (or invalid) return address
-		( m_nNodeType == ntLeaf &&
-		  pSearch->m_bUDP &&
-		  pSearch->m_pEndpoint.sin_addr.S_un.S_addr != m_pHost.sin_addr.S_un.S_addr ) )
+	if ( ! pSearch )
 	{
-		theApp.Message( MSG_INFO, IDS_PROTOCOL_BAD_QUERY, (LPCTSTR)m_sAddress );
+		theApp.Message( MSG_WARNING, IDS_PROTOCOL_BAD_QUERY, (LPCTSTR)m_sAddress );
 		Statistics.Current.Gnutella2.Dropped++;
 		m_nDropCount++;
-		pPacket->Debug( _T("Malformed Query.") );
+		DEBUG_ONLY( pPacket->Debug( _T("Malformed Query.") ) );
 		return TRUE;
 	}
 
-	// Check for excessive source searching
-	if ( pSearch->m_oSHA1 || pSearch->m_oED2K || pSearch->m_oBTH || pSearch->m_oMD5 )
+	if ( Security.IsDenied( &pSearch->m_pEndpoint.sin_addr ) )
 	{
-
-		// Update allowed query operations, check for bad client
-		if ( m_nQueryLimiter > -60 )
-		{
-			m_nQueryLimiter--;
-		}
-		else if ( ! m_bBlacklisted && ( m_nNodeType == ntLeaf ) )
-		{
-			// Abusive client
-			m_bBlacklisted = TRUE;
-			theApp.Message( MSG_NOTICE, _T("Blacklisting %s due to excess traffic"), (LPCTSTR)m_sAddress );
-			//Security.Ban( &m_pHost.sin_addr, ban30Mins, FALSE );
-
-		}
-
-		if ( ( m_bBlacklisted ) || ( m_nQueryLimiter < 0 ) )
-		{
-			// Too many FMS operations
-			if ( ! m_bBlacklisted )
-				theApp.Message( MSG_DEBUG, _T("Dropping excess query traffic from %s"), (LPCTSTR)m_sAddress );
-
-			Statistics.Current.Gnutella2.Dropped++;
-			m_nDropCount++;
-			return TRUE;
-		}
+		Statistics.Current.Gnutella2.Dropped++;
+		m_nDropCount++;
+		return TRUE;
 	}
 
-	if ( ! Network.QueryRoute->Add( pSearch->m_oGUID, this ) )
+	BOOL bUseUDP = pSearch->m_bUDP &&
+		pSearch->m_pEndpoint.sin_addr.s_addr != m_pHost.sin_addr.s_addr;
+
+	if ( ( m_nNodeType == ntLeaf && bUseUDP ) ||
+		! Network.QueryRoute->Add( pSearch->m_oGUID, this ) )
 	{
+		// Looped query, ignoring.
+		Statistics.Current.Gnutella2.Dropped++;
+		m_nDropCount++;
+		return TRUE;
+	}
+
+	if ( ! Neighbours.CheckQuery( pSearch ) )
+	{
+		theApp.Message( MSG_WARNING, IDS_PROTOCOL_EXCESS, (LPCTSTR)m_sAddress );
 		Statistics.Current.Gnutella2.Dropped++;
 		m_nDropCount++;
 		return TRUE;
@@ -1187,8 +1157,7 @@ BOOL CG2Neighbour::OnQuery(CG2Packet* pPacket)
 		Neighbours.RouteQuery( pSearch, pPacket, this, m_nNodeType == ntLeaf );
 	}
 
-	if ( pSearch->m_bUDP &&
-		 pSearch->m_pEndpoint.sin_addr.S_un.S_addr != m_pHost.sin_addr.S_un.S_addr )
+	if ( bUseUDP )
 	{
 		Network.OnQuerySearch( new CLocalSearch( pSearch, PROTOCOL_G2 ) );
 	}
@@ -1198,8 +1167,10 @@ BOOL CG2Neighbour::OnQuery(CG2Packet* pPacket)
 	}
 
 	if ( m_nNodeType == ntLeaf )
+	{
 		// Ack with hub list
 		Send( Neighbours.CreateQueryWeb( pSearch->m_oGUID, true, this ), TRUE, FALSE );
+	}
 
 	Statistics.Current.Gnutella2.Queries++;
 
@@ -1340,7 +1311,7 @@ bool CG2Neighbour::OnPush(CG2Packet* pPacket)
 	{
 		// Ignore packet and return that it was handled
 		theApp.Message( MSG_NOTICE, IDS_PROTOCOL_SIZE_PUSH, m_sAddress );
-		pPacket->Debug( _T("BadPush") );
+		DEBUG_ONLY( pPacket->Debug( _T("BadPush") ) );
 		++Statistics.Current.Gnutella2.Dropped;
 		++m_nDropCount;
 		return true;

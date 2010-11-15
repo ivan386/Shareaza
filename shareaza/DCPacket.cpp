@@ -57,6 +57,17 @@ void CDCPacket::ToBuffer(CBuffer* pBuffer, bool /*bTCP*/) const
 	pBuffer->Add( m_pBuffer, m_nLength );
 }
 
+#ifdef _DEBUG
+
+void CDCPacket::Debug(LPCTSTR pszReason) const
+{
+	CString strOutput;
+	strOutput.Format( L"[DC++] %s ", pszReason );
+	CPacket::Debug( strOutput );
+}
+
+#endif // _DEBUG
+
 BOOL CDCPacket::OnPacket(const SOCKADDR_IN* pHost)
 {
 	SmartDump( pHost, TRUE, FALSE );
@@ -70,8 +81,17 @@ BOOL CDCPacket::OnPacket(const SOCKADDR_IN* pHost)
 		}
 		return TRUE;
 	}
+	else
+	{
+#ifdef _DEBUG
+		CString tmp;
+		tmp.Format( _T("Unknown packet from %s:%u."),
+			(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ),
+			htons( pHost->sin_port ) );
+		Debug( tmp );
+#endif // _DEBUG
+	}
 
-	// Unknown packet
 	return FALSE;
 }
 

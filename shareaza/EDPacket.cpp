@@ -404,9 +404,10 @@ CString CEDPacket::GetType() const
 	return tmp;
 }
 
+#ifdef _DEBUG
+
 void CEDPacket::Debug(LPCTSTR pszReason) const
 {
-#ifdef _DEBUG
 	if ( m_nType == ED2K_C2C_SENDINGPART ) return;
 	if ( m_nType == ED2K_C2C_HASHSETANSWER ) return;
 	if ( m_nType == ED2K_C2C_COMPRESSEDPART ) return;
@@ -414,11 +415,9 @@ void CEDPacket::Debug(LPCTSTR pszReason) const
 	CString strOutput;
 	strOutput.Format( L"[ED2K] %s Proto: 0x%x Type: %s", pszReason, int( m_nEdProtocol ), GetType() );
 	CPacket::Debug( strOutput );
-#else
-	pszReason;
-#endif
 }
 
+#endif // _DEBUG
 
 //////////////////////////////////////////////////////////////////////
 // CEDTag construction
@@ -858,7 +857,7 @@ BOOL CEDPacket::OnPacket(const SOCKADDR_IN* pHost)
 
 	case ED2K_PROTOCOL_REVCONNECT:
 		// TODO: Implement RevConnect KAD
-		Debug( _T("RevConnect KAD not implemented.") );
+		DEBUG_ONLY( Debug( _T("RevConnect KAD not implemented.") ) );
 		break;
 
 	default:

@@ -121,7 +121,10 @@ public:
 	virtual	void		ToBuffer(CBuffer* pBuffer, bool bTCP = true) const;
 	static	CEDPacket*	ReadBuffer(CBuffer* pBuffer);
 	virtual CString		GetType() const;
+
+#ifdef _DEBUG
 	virtual void		Debug(LPCTSTR pszReason) const;
+#endif // _DEBUG
 
 	inline static bool IsLowID(DWORD nID) { return nID > 0 && nID < 16777216; }
 

@@ -522,18 +522,13 @@ BOOL CChatSession::ReadPacketsED2K()
 		{
 			// Note: This isn't a "real" packet parser. Message packets are simply dumped into
 			// the input buffer by the EDClient, so all packets should be valid ED2K chat messages.
-			if ( ( pPacket->m_nEdProtocol == ED2K_PROTOCOL_EDONKEY ) &&
-				( pPacket->m_nType == ED2K_C2C_MESSAGE ) )
+			if ( pPacket->m_nEdProtocol == ED2K_PROTOCOL_EDONKEY &&
+				 pPacket->m_nType == ED2K_C2C_MESSAGE )
 			{
 				bSuccess = OnChatMessage( pPacket );
 			}
 			else
-			{
-				CString str;
-				str.Format( _T("Unrecognised packet - IP: %s - in CChatSession::ReadPacketsED2K"),
-					LPCTSTR( m_sAddress ) );
-				pPacket->Debug( str );
-			}
+				DEBUG_ONLY( pPacket->Debug( _T("Unrecognised chat packet form ") + m_sAddress + _T(".") ) );
 		}
 		catch ( CException* pException )
 		{
@@ -871,12 +866,15 @@ BOOL CChatSession::OnPacket(CG2Packet* pPacket)
 		return OnChatRequest( pPacket );
 	case G2_PACKET_CHAT_ANSWER:
 		return OnChatAnswer( pPacket );
+
+#ifdef _DEBUG
 	default:
 		CString tmp;
-		tmp.Format( _T("Received unexpected Chat packet from %s:%u"),
+		tmp.Format( _T("Unknown chat packet from %s:%u."),
 			(LPCTSTR)CString( inet_ntoa( m_pHost.sin_addr ) ),
 			htons( m_pHost.sin_port ) );
 		pPacket->Debug( tmp );
+#endif // _DEBUG
 	}
 
 	return TRUE;

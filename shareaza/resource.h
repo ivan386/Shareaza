@@ -1022,6 +1022,7 @@
 #define IDS_HANDSHAKE_NEEDAPEER         16157
 #define IDS_HANDSHAKE_ONLINE_G2         16158
 #define IDS_HANDSHAKE_NOTG2             16159
+#define IDS_PROTOCOL_EXCESS             16191
 #define IDS_PROTOCOL_TOO_LARGE          16192
 #define IDS_PROTOCOL_NO_TTL             16193
 #define IDS_PROTOCOL_HIGH_TTL           16194

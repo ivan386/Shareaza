@@ -622,7 +622,7 @@ BOOL CDatagrams::OnDatagram(const SOCKADDR_IN* pHost, const BYTE* pBuffer, DWORD
 				catch ( CException* pException )
 				{
 					pException->Delete();
-					pPacket->Debug( _T("Malformed packet.") );
+					DEBUG_ONLY( pPacket->Debug( _T("Malformed packet.") ) );
 				}
 				pPacket->Release();
 
@@ -677,7 +677,7 @@ BOOL CDatagrams::OnDatagram(const SOCKADDR_IN* pHost, const BYTE* pBuffer, DWORD
 				catch ( CException* pException )
 				{
 					pException->Delete();
-					pPacket->Debug( _T("Malformed packet.") );
+					DEBUG_ONLY( pPacket->Debug( _T("Malformed packet.") ) );
 				}
 				pPacket->Release();
 
@@ -780,7 +780,7 @@ BOOL CDatagrams::OnReceiveSGP(const SOCKADDR_IN* pHost, const SGP_HEADER* pHeade
 					catch ( CException* pException )
 					{
 						pException->Delete();
-						pPacket->Debug( _T("Malformed packet.") );
+						DEBUG_ONLY( pPacket->Debug( _T("Malformed packet.") ) );
 					}
 					pPacket->Release();
 				}
@@ -826,7 +826,7 @@ BOOL CDatagrams::OnReceiveSGP(const SOCKADDR_IN* pHost, const SGP_HEADER* pHeade
 			catch ( CException* pException )
 			{
 				pException->Delete();
-				pPacket->Debug( _T("Malformed packet.") );
+				DEBUG_ONLY( pPacket->Debug( _T("Malformed packet.") ) );
 			}
 			pPacket->Release();
 		}

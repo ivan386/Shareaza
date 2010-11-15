@@ -792,12 +792,14 @@ BOOL CHostBrowser::OnPacket(CG2Packet* pPacket)
 		}
 		break;
 
+#ifdef _DEBUG
 	default:
 		CString tmp;
-		tmp.Format( _T("Received unexpected Browse packet from %s:%u"),
+		tmp.Format( _T("Unknown Browse packet from %s:%u."),
 			(LPCTSTR)CString( inet_ntoa( m_pHost.sin_addr ) ),
 			htons( m_pHost.sin_port ) );
 		pPacket->Debug( tmp );
+#endif // _DEBUG
 	}
 
 	return TRUE;
