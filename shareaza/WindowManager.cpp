@@ -338,8 +338,7 @@ void CWindowManager::SetGUIMode(int nMode, BOOL bSaveState)
 	{
 		SaveSearchWindows();
 		SaveBrowseHostWindows();
-		if ( Settings.General.GUIMode == GUI_WINDOWED )
-			SaveWindowStates();
+		SaveWindowStates();
 	}
 
 	Close();
@@ -347,40 +346,12 @@ void CWindowManager::SetGUIMode(int nMode, BOOL bSaveState)
 	Settings.General.GUIMode = nMode;
 	Settings.Save();
 
-	if ( Settings.General.GUIMode != GUI_WINDOWED )
-	{
-		CreateTabbedWindows();
-	}
-	else
-	{
-		LoadWindowStates();
-	}
-
 	LoadSearchWindows();
 	LoadBrowseHostWindows();
+	LoadWindowStates();
 
 	AutoResize();
 	ShowWindow( SW_SHOW );
-}
-
-//////////////////////////////////////////////////////////////////////
-// CWindowManager create tabbed windows
-
-void CWindowManager::CreateTabbedWindows()
-{
-	CDownloadsWnd* pDownloads = new CDownloadsWnd();
-
-	if ( Settings.General.GUIMode != GUI_BASIC )
-	{
-		CUploadsWnd* pUploads = new CUploadsWnd();
-		pUploads->m_pGroupParent = pDownloads;
-
-		CNeighboursWnd* pNeighbours = new CNeighboursWnd();
-		CSystemWnd* pSystem = new CSystemWnd();
-		pSystem->m_pGroupParent = pNeighbours;
-	}
-
-	/*CHomeWnd* pHome =*/ new CHomeWnd();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -388,12 +359,27 @@ void CWindowManager::CreateTabbedWindows()
 
 void CWindowManager::LoadWindowStates()
 {
-	if ( Settings.General.GUIMode != GUI_WINDOWED ) return;
+	CString strWindows;
 
-	CString strWindows = theApp.GetProfileString( _T("Windows"), _T("State"),
-		_T("CSystemWnd|CNeighboursWnd") );
+	CChildWnd* pDownloads = Open( RUNTIME_CLASS( CDownloadsWnd ) );
+	CChildWnd* pUploads = NULL;
+	CChildWnd* pNeighbours = NULL;
+	CChildWnd* pSystem = NULL;
 
-	for ( strWindows += '|' ; strWindows.GetLength() ; )
+	if ( Settings.General.GUIMode != GUI_BASIC )
+	{
+		strWindows = theApp.GetProfileString( _T("Windows"), _T("State") );
+		pUploads = Open( RUNTIME_CLASS( CUploadsWnd ) );
+		pNeighbours = Open( RUNTIME_CLASS( CNeighboursWnd ) );
+		pSystem = Open( RUNTIME_CLASS( CSystemWnd ) );
+	}
+	if ( Settings.General.GUIMode == GUI_TABBED )
+	{
+		pUploads->m_pGroupParent = pDownloads;
+		pSystem->m_pGroupParent = pNeighbours;
+	}
+
+	for ( strWindows += '|' ; strWindows.GetLength() > 1 ; )
 	{
 		CString strClass = strWindows.SpanExcluding( _T("| ,.\t") );
 		strWindows = strWindows.Mid( strClass.GetLength() + 1 );
@@ -407,16 +393,26 @@ void CWindowManager::LoadWindowStates()
 				new CTrafficWnd( nUnique );
 			}
 		}
-		else if ( strClass.GetLength() )
+		else if ( strClass.GetLength() &&
+			strClass != _T("CHomeWnd") &&		// Skip
+			strClass != _T("CMediaWnd") &&		// Never
+			strClass != _T("CBrowseHostWnd") &&	// Open by LoadBrowseHostWindows()
+			strClass != _T("CSearchWnd") &&		// Open by LoadSearchWindows()
+			( ! pDownloads  || strClass != _T("CDownloadsWnd") ) &&
+			( ! pUploads    || strClass != _T("CUploadsWnd") ) &&
+			( ! pNeighbours || strClass != _T("CNeighboursWnd") ) &&
+			( ! pSystem     || strClass != _T("CSystemWnd") ) )
 		{
 			CRuntimeClass* pClass = AfxClassForName( strClass );
-
 			if ( pClass && pClass->IsDerivedFrom( RUNTIME_CLASS(CChildWnd) ) )
 			{
 				Open( pClass );
 			}
 		}
 	}
+
+	if ( Settings.General.GUIMode != GUI_WINDOWED )
+		Open( RUNTIME_CLASS( CHomeWnd ) );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -424,8 +420,6 @@ void CWindowManager::LoadWindowStates()
 
 void CWindowManager::SaveWindowStates() const
 {
-//	if ( Settings.General.GUIMode != GUI_WINDOWED ) return;
-
 	CString strWindows;
 
 	for ( POSITION pos = GetIterator() ; pos ; )
@@ -476,9 +470,6 @@ void CWindowManager::LoadSearchWindows()
 	{
 		pException->Delete();
 	}
-
-	if ( Settings.General.GUIMode != GUI_WINDOWED )
-		Open( RUNTIME_CLASS(CHomeWnd) );
 }
 
 BOOL CWindowManager::SaveSearchWindows() const
@@ -555,9 +546,6 @@ void CWindowManager::LoadBrowseHostWindows()
 	{
 		pException->Delete();
 	}
-
-	if ( Settings.General.GUIMode != GUI_WINDOWED )
-		Open( RUNTIME_CLASS(CHomeWnd) );
 }
 
 BOOL CWindowManager::SaveBrowseHostWindows() const

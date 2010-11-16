@@ -63,7 +63,6 @@ protected:
 	void		Add(CChildWnd* pChild);
 	void		Remove(CChildWnd* pChild);
 	void		ActivateGrouped(CChildWnd* pExcept);
-	void		CreateTabbedWindows();
 
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
