@@ -22,13 +22,15 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
-#include "Network.h"
-#include "SearchManager.h"
-#include "ManagedSearch.h"
-#include "QuerySearch.h"
-#include "QueryHit.h"
 #include "HostCache.h"
 #include "G2Packet.h"
+#include "ManagedSearch.h"
+#include "Neighbour.h"
+#include "Neighbours.h"
+#include "Network.h"
+#include "QuerySearch.h"
+#include "QueryHit.h"
+#include "SearchManager.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -210,16 +212,9 @@ BOOL CSearchManager::OnQueryAck(CG2Packet* pPacket, const SOCKADDR_IN* pAddress,
 			{
 				nRetryAfter = pPacket->ReadLongBE();
 			}
-			else if ( nLength >= 2 )
+			else
 			{
 				nRetryAfter = pPacket->ReadShortBE();
-			}
-
-			CQuickLock oLock( HostCache.Gnutella2.m_pSection );
-
-			if ( CHostCacheHostPtr pHost = HostCache.Gnutella2.Find( (IN_ADDR*)&nFromIP ) )
-			{
-				pHost->m_tRetryAfter = tNow + nRetryAfter;
 			}
 		}
 		else if ( nType == G2_PACKET_FROM_ADDRESS && nLength >= 4 )
@@ -239,6 +234,26 @@ BOOL CSearchManager::OnQueryAck(CG2Packet* pPacket, const SOCKADDR_IN* pAddress,
 		_T("Processing query acknowledge from %s (time adjust %+d seconds): %d hubs, %d leaves, %d suggested hubs, retry after %d seconds."),
 		(LPCTSTR)CString( inet_ntoa( pAddress->sin_addr ) ), tAdjust,
 		nHubs, nLeaves, nSuggestedHubs, nRetryAfter );
+
+	// Update host cache
+	if ( nFromIP && nRetryAfter )
+	{
+		CQuickLock oLock( HostCache.Gnutella2.m_pSection );
+		if ( CHostCacheHostPtr pHost = HostCache.Gnutella2.Find( (IN_ADDR*)&nFromIP ) )
+		{
+			pHost->m_tRetryAfter = tNow + nRetryAfter;
+		}
+	}
+
+	// Update neighbours
+	if ( nFromIP && nRetryAfter )
+	{
+		CQuickLock oLock( Network.m_pSection );
+		if ( CNeighbour* pNeighbour = Neighbours.Get( *(IN_ADDR*)&nFromIP ) )
+		{
+			pNeighbour->m_tLastQuery = max( pNeighbour->m_tLastQuery, tNow + nRetryAfter );
+		}
+	}
 	
 	CSingleLock oLock( &m_pSection );
 	if ( ! oLock.Lock( 100 ) )

@@ -43,7 +43,6 @@ CStatistics::CStatistics()
 	ZeroMemory( &Ever, sizeof(Ever) );
 	ZeroMemory( &Current, sizeof(Current) );
 
-	//m_tUpdate = 0;
 	m_tSeconds = 0;
 }
 

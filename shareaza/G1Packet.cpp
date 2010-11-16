@@ -414,6 +414,8 @@ bool CG1Packet::IsFirewalled()
 
 BOOL CG1Packet::OnPacket(const SOCKADDR_IN* pHost)
 {
+	Statistics.Current.Gnutella1.Incoming++;
+
 	SmartDump( pHost, TRUE, FALSE );
 
 	if ( ! Settings.Gnutella1.EnableToday ) return TRUE;

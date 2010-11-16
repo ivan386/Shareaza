@@ -96,8 +96,6 @@ int CNeighboursWithRouting::Broadcast(CPacket* pPacket, CNeighbour* pExcept, BOO
 
 bool CNeighboursWithRouting::CheckQuery(const CQuerySearch* pSearch)
 {
-	const DWORD QueryThrottle = 5 * 1000; // Maximum 1 query per 5 seconds
-
 	CIPTime pThisQuery;
 	pThisQuery.m_pAddress = pSearch->m_pEndpoint.sin_addr;
 	pThisQuery.m_nTime = GetTickCount();
@@ -107,7 +105,7 @@ bool CNeighboursWithRouting::CheckQuery(const CQuerySearch* pSearch)
 		POSITION posOrig = pos;
 		const CIPTime& pLastQuery = m_pQueries.GetNext( pos );
 
-		if ( pThisQuery.m_nTime >= pLastQuery.m_nTime + QueryThrottle )
+		if ( pThisQuery.m_nTime >= pLastQuery.m_nTime + 5 * 1000 )	// Maximum 1 query per 5 seconds
 		{
 			// Remove old
 			m_pQueries.RemoveAt( posOrig );

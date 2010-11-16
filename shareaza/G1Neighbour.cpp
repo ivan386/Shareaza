@@ -1282,6 +1282,8 @@ void CG1Neighbour::SendG2Push(const Hashes::Guid& oGUID, CPacket* pPacket)
 // Returns false if the remote computer sent a malformed packet and we should disconnect from it, true otherwise
 BOOL CG1Neighbour::OnQuery(CG1Packet* pPacket)
 {
+	Statistics.Current.Gnutella1.Queries++;
+
 	// if the packet payload is too long
 	if ( pPacket->m_nLength > Settings.Gnutella1.MaximumQuery )
 	{
@@ -1333,8 +1335,8 @@ BOOL CG1Neighbour::OnQuery(CG1Packet* pPacket)
 	// Give the CQuerySearch object to the Network object (do)
 	Network.OnQuerySearch( new CLocalSearch( pSearch, this ) );
 
-	// Delete the local object, and record another Gnutella query packet processed
-	Statistics.Current.Gnutella1.Queries++;
+	Statistics.Current.Gnutella1.QueriesProcessed++;
+
 	return TRUE; // Stay connected to the remote computer
 }
 

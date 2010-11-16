@@ -3582,7 +3582,7 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_PROTOCOL_EXCESS     "Received a packet from %s which excess query limits, ignoring."
+    IDS_PROTOCOL_EXCESS     "Received a packet from %s for %s which excess query limits, ignoring."
     IDS_PROTOCOL_TOO_LARGE  "Neighbour %s forwarded a packet of excessive size, dropping connection."
     IDS_PROTOCOL_NO_TTL     "Neighbour %s forwarded a packet with zero TTL, ignoring."
     IDS_PROTOCOL_HIGH_TTL   "Neighbour %s forwarded a packet with excessive TTL, dropping packet (TTL=%i, Hops=%i)."
@@ -3898,7 +3898,8 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_GRAPH_GNUTELLA_QUERIES "Gnutella Local Queries"
+    IDS_GRAPH_GNUTELLA_QUERIES "Gnutella Incoming Queries"
+    IDS_GRAPH_GNUTELLA_QUERIES_PROCESSED "Gnutella Processed Queries"
     IDS_GRAPH_TOTAL_BANDWIDTH_TCP_IN "Total TCP Receive Bandwidth"
     IDS_GRAPH_TOTAL_BANDWIDTH_TCP_OUT "Total TCP Transmit Bandwidth"
     IDS_GRAPH_TOTAL_BANDWIDTH_UDP_IN "Total UDP Receive Bandwidth"

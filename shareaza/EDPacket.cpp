@@ -22,17 +22,18 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
-#include "EDPacket.h"
 #include "Buffer.h"
-#include "ZLib.h"
-#include "Schema.h"
-#include "XML.h"
-#include "Network.h"
-#include "SharedFile.h"
 #include "EDClient.h"
 #include "EDClients.h"
 #include "EDNeighbour.h"
+#include "EDPacket.h"
 #include "Kademlia.h"
+#include "Network.h"
+#include "Schema.h"
+#include "SharedFile.h"
+#include "Statistics.h"
+#include "XML.h"
+#include "ZLib.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -846,6 +847,8 @@ BOOL CEDTag::Read(CFile* pFile)
 
 BOOL CEDPacket::OnPacket(const SOCKADDR_IN* pHost)
 {
+	Statistics.Current.eDonkey.Incoming++;
+
 	switch ( m_nEdProtocol )
 	{
 	case ED2K_PROTOCOL_EDONKEY:

@@ -22,22 +22,22 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
+#include "BENode.h"
 #include "BTClient.h"
 #include "BTClients.h"
 #include "BTPacket.h"
-#include "BENode.h"
 #include "Buffer.h"
-
+#include "Datagrams.h"
 #include "Download.h"
-#include "Downloads.h"
 #include "DownloadSource.h"
 #include "DownloadTransferBT.h"
-#include "Uploads.h"
-#include "UploadTransferBT.h"
-#include "ShareazaURL.h"
+#include "Downloads.h"
 #include "GProfile.h"
-#include "Datagrams.h"
+#include "ShareazaURL.h"
+#include "Statistics.h"
 #include "Transfers.h"
+#include "UploadTransferBT.h"
+#include "Uploads.h"
 #include "VendorCache.h"
 
 #ifdef _DEBUG
@@ -176,6 +176,8 @@ void CBTClient::Send(CBTPacket* pPacket, BOOL bRelease)
 	if ( pPacket != NULL )
 	{
 		ASSERT( pPacket->m_nProtocol == PROTOCOL_BT );
+
+		Statistics.Current.BitTorrent.Outgoing++;
 
 		pPacket->SmartDump( &m_pHost, FALSE, TRUE );
 
@@ -839,6 +841,8 @@ CDownloadSource* CBTClient::GetSource() const
 
 BOOL CBTClient::OnPacket(CBTPacket* pPacket)
 {
+	Statistics.Current.BitTorrent.Incoming++;
+
 	pPacket->SmartDump( &m_pHost, FALSE, FALSE );
 
 	switch ( pPacket->m_nType )

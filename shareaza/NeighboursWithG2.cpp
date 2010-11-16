@@ -70,13 +70,12 @@ void CNeighboursWithG2::Connect()
 //////////////////////////////////////////////////////////////////////
 // CNeighboursWithG2 create query web packet
 
-// Takes a GUID, and a neighbour to except from the packet we will make
-// Makes a Gnutella2 query web packet, containing the IP addresses of the computers we are connected to and from the Gnutella2 host cache
-// Returns the packet
-CG2Packet* CNeighboursWithG2::CreateQueryWeb(const Hashes::Guid& oGUID, bool bWithHubs, CNeighbour* pExcept)
+CG2Packet* CNeighboursWithG2::CreateQueryWeb(const Hashes::Guid& oGUID, bool bWithHubs, CNeighbour* pExcept, bool bDone)
 {
 	// Make a new Gnutella2 Query Ack packet
 	CG2Packet* pPacket = CG2Packet::New( G2_PACKET_QUERY_ACK, TRUE );
+	if ( ! pPacket )
+		return NULL;
 
 	// Start it with the text "TS" and the time now
 	DWORD tNow = static_cast< DWORD >( time( NULL ) ); // Number of seconds since 1970
@@ -84,66 +83,75 @@ CG2Packet* CNeighboursWithG2::CreateQueryWeb(const Hashes::Guid& oGUID, bool bWi
 	pPacket->WriteLongBE( tNow );
 
 	// Write in header information about us
-	pPacket->WritePacket( G2_PACKET_QUERY_DONE, 8 );
+	pPacket->WritePacket( G2_PACKET_FROM_ADDRESS, 4 );
 	pPacket->WriteLongLE( Network.m_pHost.sin_addr.S_un.S_addr );
-	pPacket->WriteShortBE( htons( Network.m_pHost.sin_port ) );
+	pPacket->WritePacket( G2_PACKET_RETRY_AFTER, 4 );
+	pPacket->WriteLongBE( Settings.Gnutella2.QueryThrottle );
 
-	if ( bWithHubs )
+	if ( bDone )
 	{
-		pPacket->WriteShortBE( WORD( GetCount( PROTOCOL_G2, nrsConnected, ntLeaf ) ) );
+		pPacket->WritePacket( G2_PACKET_QUERY_DONE, 8 );
+		pPacket->WriteLongLE( Network.m_pHost.sin_addr.S_un.S_addr );
+		pPacket->WriteShortBE( htons( Network.m_pHost.sin_port ) );
 
-		// Loop through the connected computers
-		for ( POSITION pos = GetIterator() ; pos ; )
+		if ( bWithHubs )
 		{
-			// Get the neighbour object at this position, and move pos to the next one
-			CG2Neighbour* pNeighbour = (CG2Neighbour*)GetNext( pos );
+			WORD nLeafs = (WORD)GetCount( PROTOCOL_G2, nrsConnected, ntLeaf );
+			pPacket->WriteShortBE( nLeafs );
 
-			// If this neighbour is running Gnutella2 software
-			if ( pNeighbour->m_nProtocol == PROTOCOL_G2 && // The remote computer is running Gnutella2 software, and
-				 pNeighbour->m_nNodeType != ntLeaf      && // Our connection to it is not down to a leaf, and
-				 pNeighbour->m_nState >= nrsConnected   && // We've finished the handshake with it, and
-				 pNeighbour != pExcept )                   // This isn't the computer the caller warned us to except
+			// Loop through the connected computers
+			for ( POSITION pos = GetIterator() ; pos ; )
 			{
-				// Write information about this connected computer into the packet
-				pPacket->WritePacket( G2_PACKET_QUERY_DONE, 8 );
-				pPacket->WriteLongLE( pNeighbour->m_pHost.sin_addr.S_un.S_addr );
-				pPacket->WriteShortBE( htons( pNeighbour->m_pHost.sin_port ) );
-				pPacket->WriteShortBE( (WORD)pNeighbour->m_nLeafCount );
+				// Get the neighbour object at this position, and move pos to the next one
+				CG2Neighbour* pNeighbour = (CG2Neighbour*)GetNext( pos );
+
+				// If this neighbour is running Gnutella2 software
+				if ( pNeighbour->m_nProtocol == PROTOCOL_G2 && // The remote computer is running Gnutella2 software, and
+					 pNeighbour->m_nNodeType != ntLeaf      && // Our connection to it is not down to a leaf, and
+					 pNeighbour->m_nState >= nrsConnected   && // We've finished the handshake with it, and
+					 pNeighbour != pExcept )                   // This isn't the computer the caller warned us to except
+				{
+					// Write information about this connected computer into the packet
+					pPacket->WritePacket( G2_PACKET_QUERY_DONE, 8 );
+					pPacket->WriteLongLE( pNeighbour->m_pHost.sin_addr.S_un.S_addr );
+					pPacket->WriteShortBE( htons( pNeighbour->m_pHost.sin_port ) );
+					pPacket->WriteShortBE( (WORD)pNeighbour->m_nLeafCount );
+				}
 			}
+
+			// If the caller didn't give us a computer to ignore, make nCount 3, if it did give us an except, make nCount 25
+			int nCount = ( pExcept == NULL ) ? 3 : 25; // Will put up to 3 or 25 IP addresses in the packet
+
+			CQuickLock oLock( HostCache.Gnutella2.m_pSection );
+
+			// Loop, starting with the newest entry in the Gnutella2 host cache, then stepping to the one before that
+			for ( CHostCacheIterator i = HostCache.Gnutella2.Begin() ; i != HostCache.Gnutella2.End() ; ++i )
+			{
+				CHostCacheHostPtr pHost = (*i);
+
+				// If this host cache entry is good
+				if ( pHost->CanQuote( tNow ) &&								// If this host cache entry hasn't expired, and
+					 Get( pHost->m_pAddress ) == NULL &&					// We're connected to that IP address right now, and
+					 HubHorizonPool.Find( &pHost->m_pAddress ) == NULL )	// The IP address is also in the hub horizon pool
+				{
+					// Add the IP address to the packet we're making
+					pPacket->WritePacket( G2_PACKET_QUERY_SEARCH, 10 );
+					pPacket->WriteLongLE( pHost->m_pAddress.S_un.S_addr );
+					pPacket->WriteShortBE( pHost->m_nPort );
+					pPacket->WriteLongBE( pHost->Seen() );
+
+					// Lower the count, if it is then 0, leave the loop
+					if ( ! --nCount ) break;
+				}
+			}
+
+			// Give the packet we're making to our own hub horizon pool
+			HubHorizonPool.AddHorizonHubs( pPacket );
 		}
-
-		// If the caller didn't give us a computer to ignore, make nCount 3, if it did give us an except, make nCount 25
-		int nCount = ( pExcept == NULL ) ? 3 : 25; // Will put up to 3 or 25 IP addresses in the packet
-
-		CQuickLock oLock( HostCache.Gnutella2.m_pSection );
-
-		// Loop, starting with the newest entry in the Gnutella2 host cache, then stepping to the one before that
-		for ( CHostCacheIterator i = HostCache.Gnutella2.Begin() ; i != HostCache.Gnutella2.End() ; ++i )
+		else
 		{
-			CHostCacheHostPtr pHost = (*i);
-
-			// If this host cache entry is good
-			if ( pHost->CanQuote( tNow ) &&								// If this host cache entry hasn't expired, and
-				 Get( pHost->m_pAddress ) == NULL &&					// We're connected to that IP address right now, and
-				 HubHorizonPool.Find( &pHost->m_pAddress ) == NULL )	// The IP address is also in the hub horizon pool
-			{
-				// Add the IP address to the packet we're making
-				pPacket->WritePacket( G2_PACKET_QUERY_SEARCH, 10 );
-				pPacket->WriteLongLE( pHost->m_pAddress.S_un.S_addr );
-				pPacket->WriteShortBE( pHost->m_nPort );
-				pPacket->WriteLongBE( pHost->Seen() );
-
-				// Lower the count, if it is then 0, leave the loop
-				if ( ! --nCount ) break;
-			}
+			pPacket->WriteShortBE( 0 );
 		}
-
-		// Give the packet we're making to our own hub horizon pool
-		HubHorizonPool.AddHorizonHubs( pPacket );
-	}
-	else
-	{
-		pPacket->WriteShortBE( 0 );
 	}
 
 	// Finish the packet with a 0 byte and the guid the caller gave us, and return it

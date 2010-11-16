@@ -226,18 +226,31 @@ BOOL CDatagrams::Send(const SOCKADDR_IN* pHost, CPacket* pPacket, BOOL bRelease,
 		return FALSE;
 	}
 
-	pPacket->SmartDump( pHost, TRUE, TRUE );
-
 	if ( pPacket->m_nProtocol != PROTOCOL_G2 )
 	{
 		CBuffer pBuffer;
 		pPacket->ToBuffer( &pBuffer, false );
 
+		m_nOutPackets++;
+		switch ( pPacket->m_nProtocol )
+		{
+		case PROTOCOL_G1:
+			Statistics.Current.Gnutella1.Outgoing++;
+			break;
+		case PROTOCOL_ED2K:
+			Statistics.Current.eDonkey.Outgoing++;
+			break;
+		case PROTOCOL_BT:
+			Statistics.Current.BitTorrent.Outgoing++;
+			break;
+		default:
+			;
+		}
+
+		pPacket->SmartDump( pHost, TRUE, TRUE );
 		if ( bRelease ) pPacket->Release();
 
 		CNetwork::SendTo( m_hSocket, (LPSTR)pBuffer.m_pBuffer, pBuffer.m_nLength, pHost );
-
-		m_nOutPackets++;
 
 		return TRUE;
 	}
@@ -298,6 +311,7 @@ BOOL CDatagrams::Send(const SOCKADDR_IN* pHost, CPacket* pPacket, BOOL bRelease,
 	*pHash = pDG;
 
 	m_nOutPackets++;
+	Statistics.Current.Gnutella2.Outgoing++;
 
 #ifdef DEBUG_UDP
 	theApp.Message( MSG_DEBUG, _T("UDP: Queued SGP (#%i) x%i for %s:%lu"),
@@ -306,6 +320,7 @@ BOOL CDatagrams::Send(const SOCKADDR_IN* pHost, CPacket* pPacket, BOOL bRelease,
 		htons( pDG->m_pHost.sin_port ) );
 #endif
 
+	pPacket->SmartDump( pHost, TRUE, TRUE );
 	if ( bRelease ) pPacket->Release();
 
 	TryWrite();

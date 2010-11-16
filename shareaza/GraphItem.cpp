@@ -312,10 +312,18 @@ QWORD CGraphItem::GetValue(const DWORD nCode, const float nMultiplier)
 		nValue = (long double)Statistics.Last.Gnutella1.Lost + Statistics.Last.Gnutella2.Lost;
 		Network.m_pSection.Unlock();
 		break;
+
 	case GRC_GNUTELLA_QUERIES:
 		if ( ! Network.m_pSection.Lock( 20 ) ) break;
 		Statistics.Update();
 		nValue = (long double)Statistics.Last.Gnutella1.Queries + Statistics.Last.Gnutella2.Queries;
+		Network.m_pSection.Unlock();
+		break;
+
+	case GRC_GNUTELLA_QUERIES_PROCESSED:
+		if ( ! Network.m_pSection.Lock( 20 ) ) break;
+		Statistics.Update();
+		nValue = (long double)Statistics.Last.Gnutella1.QueriesProcessed + Statistics.Last.Gnutella2.QueriesProcessed;
 		Network.m_pSection.Unlock();
 		break;
 
@@ -380,6 +388,7 @@ const GRAPHITEM CGraphItem::m_pItemDesc[] =
 	{ GRC_GNUTELLA_DROPPED, IDS_GRAPH_GNUTELLA_DROPPED, 0, 1.0f },
 	{ GRC_GNUTELLA_LOST, IDS_GRAPH_GNUTELLA_LOST, 0, 1.0f },
 	{ GRC_GNUTELLA_QUERIES, IDS_GRAPH_GNUTELLA_QUERIES, 0, 1.0f },
+	{ GRC_GNUTELLA_QUERIES_PROCESSED, IDS_GRAPH_GNUTELLA_QUERIES_PROCESSED, 0, 1.0f },
 
 	{ GRC_GNUTELLA_PINGS, IDS_GRAPH_GNUTELLA_PINGS, 3, 1.0f },
 	{ GRC_GNUTELLA_PONGS, IDS_GRAPH_GNUTELLA_PONGS, 3, 1.0f },

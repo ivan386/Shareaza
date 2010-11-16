@@ -1,7 +1,7 @@
 //
 // Statistics.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,21 +19,15 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_STATISTICS_H__58CE4F23_CE39_4AAF_B3DE_1A77B801D9AC__INCLUDED_)
-#define AFX_STATISTICS_H__58CE4F23_CE39_4AAF_B3DE_1A77B801D9AC__INCLUDED_
-
 #pragma once
 
 
 class CStatistics
 {
-// Construction
 public:
 	CStatistics();
-	virtual ~CStatistics();
+	~CStatistics();
 
-// Attributes
-public:
 	struct
 	{
 		struct
@@ -70,6 +64,7 @@ public:
 			QWORD	Dropped;
 			QWORD	Lost;
 			QWORD	Queries;
+			QWORD	QueriesProcessed;
 			QWORD	PingsSent;
 			QWORD	PingsReceived;
 			QWORD	PongsSent;
@@ -81,20 +76,16 @@ public:
 			QWORD	Outgoing;
 			QWORD	Incoming;
 			QWORD	Dropped;
-		} eDonkey;
+		} BitTorrent, eDonkey;
 	}
 	Ever, Today, Last, Current;
 
 	DWORD	m_tSeconds;
 
-// Operations
-public:
 	void	Update();
+
 protected:
 	static void Add(LPVOID pTarget, LPCVOID pSource, int nCount);
-
 };
 
 extern CStatistics Statistics;
-
-#endif // !defined(AFX_STATISTICS_H__58CE4F23_CE39_4AAF_B3DE_1A77B801D9AC__INCLUDED_)

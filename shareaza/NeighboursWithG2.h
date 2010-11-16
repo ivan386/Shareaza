@@ -42,7 +42,7 @@ public:
 public:
 
 	// Make and return a query web packet with IP addresses from the neighbours list and the Gnutella2 host cache
-	CG2Packet* CreateQueryWeb(const Hashes::Guid& oGUID, bool bWithHubs, CNeighbour* pExcept = NULL);
+	CG2Packet* CreateQueryWeb(const Hashes::Guid& oGUID, bool bWithHubs, CNeighbour* pExcept = NULL, bool bDone = true);
 
 	// Return a random Gnutella2 hub neighbour that isn't pExcept and doesn't know about pGUID
 	CG2Neighbour* GetRandomHub(CG2Neighbour* pExcept, const Hashes::Guid& oGUID);

@@ -1,7 +1,7 @@
 //
 // EDNeighbour.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,26 +22,24 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
-#include "Network.h"
-#include "Statistics.h"
-#include "Neighbours.h"
+#include "Download.h"
+#include "Downloads.h"
+#include "EDClients.h"
 #include "EDNeighbour.h"
 #include "EDPacket.h"
-#include "Security.h"
 #include "GProfile.h"
 #include "HostCache.h"
-#include "EDClients.h"
-
 #include "Library.h"
-#include "SharedFile.h"
-#include "Transfers.h"
-#include "Downloads.h"
-#include "Download.h"
-#include "QuerySearch.h"
+#include "Neighbours.h"
+#include "Network.h"
 #include "QueryHit.h"
-
-#include "UploadQueues.h"
+#include "QuerySearch.h"
 #include "Schema.h"
+#include "Security.h"
+#include "SharedFile.h"
+#include "Statistics.h"
+#include "Transfers.h"
+#include "UploadQueues.h"
 #include "XML.h"
 
 #ifdef _DEBUG

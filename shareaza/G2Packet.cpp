@@ -653,6 +653,8 @@ void CG2Packet::Debug(LPCTSTR pszReason) const
 
 BOOL CG2Packet::OnPacket(const SOCKADDR_IN* pHost)
 {
+	Statistics.Current.Gnutella2.Incoming++;
+
 	SmartDump( pHost, TRUE, FALSE );
 
 	if ( ! Settings.Gnutella2.EnableToday ) return TRUE;
@@ -752,8 +754,11 @@ BOOL CG2Packet::OnPong(const SOCKADDR_IN* pHost)
 
 BOOL CG2Packet::OnQuery(const SOCKADDR_IN* pHost)
 {
+	Statistics.Current.Gnutella2.Queries++;
+
 	CQuerySearchPtr pSearch = CQuerySearch::FromPacket( this, pHost );
-	if ( ! pSearch || ! pSearch->m_bUDP )
+	if ( ! pSearch ||			// Malformed query
+		 ! pSearch->m_bUDP )	// Forbid query with firewalled return address
 	{
 		DEBUG_ONLY( Debug( _T("Malformed Query.") ) );
 		theApp.Message( MSG_WARNING, IDS_PROTOCOL_BAD_QUERY, (LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ) );
@@ -793,8 +798,7 @@ BOOL CG2Packet::OnQuery(const SOCKADDR_IN* pHost)
 	if ( ! Network.QueryRoute->Add( pSearch->m_oGUID, &pSearch->m_pEndpoint ) )
 	{
 		// Ack without hub list
-		Datagrams.Send( &pSearch->m_pEndpoint,
-			Neighbours.CreateQueryWeb( pSearch->m_oGUID, false ), TRUE );
+		Datagrams.Send( &pSearch->m_pEndpoint, Neighbours.CreateQueryWeb( pSearch->m_oGUID, false ) );
 
 		Statistics.Current.Gnutella2.Dropped++;
 		return TRUE;
@@ -802,7 +806,12 @@ BOOL CG2Packet::OnQuery(const SOCKADDR_IN* pHost)
 
 	if ( ! Neighbours.CheckQuery( pSearch ) )
 	{
-		theApp.Message( MSG_WARNING, IDS_PROTOCOL_EXCESS, (LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ) );
+		// Ack without hub list with retry time
+		Datagrams.Send( &pSearch->m_pEndpoint, Neighbours.CreateQueryWeb( pSearch->m_oGUID, false, NULL, false ) );
+
+		theApp.Message( MSG_WARNING, IDS_PROTOCOL_EXCESS,
+			(LPCTSTR)( CString( inet_ntoa( pHost->sin_addr ) ) + _T(" [UDP]") ),
+			(LPCTSTR)CString( inet_ntoa( pSearch->m_pEndpoint.sin_addr ) ) );
 		Statistics.Current.Gnutella2.Dropped++;
 		return TRUE;
 	}
@@ -812,9 +821,10 @@ BOOL CG2Packet::OnQuery(const SOCKADDR_IN* pHost)
 	Network.OnQuerySearch( new CLocalSearch( pSearch, PROTOCOL_G2 ) );
 	
 	// Ack with hub list
-	Datagrams.Send( &pSearch->m_pEndpoint, Neighbours.CreateQueryWeb( pSearch->m_oGUID, true ), TRUE );
+	Datagrams.Send( &pSearch->m_pEndpoint, Neighbours.CreateQueryWeb( pSearch->m_oGUID, true ) );
 
-	Statistics.Current.Gnutella2.Queries++;
+	Statistics.Current.Gnutella2.QueriesProcessed++;
+
 	return TRUE;
 }
 

@@ -22,28 +22,28 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
-#include "Network.h"
-#include "Security.h"
-#include "Statistics.h"
-#include "Neighbours.h"
+#include "Buffer.h"
+#include "Datagrams.h"
+#include "G1Packet.h"
 #include "G2Neighbour.h"
 #include "G2Packet.h"
-#include "G1Packet.h"
-#include "Buffer.h"
+#include "GProfile.h"
 #include "Handshakes.h"
-#include "Datagrams.h"
 #include "HostCache.h"
-#include "RouteCache.h"
-#include "VendorCache.h"
-#include "QuerySearch.h"
-#include "QueryHit.h"
+#include "HubHorizon.h"
 #include "Library.h"
 #include "LocalSearch.h"
-#include "SearchManager.h"
+#include "Neighbours.h"
+#include "Network.h"
 #include "QueryHashTable.h"
-#include "HubHorizon.h"
-#include "GProfile.h"
+#include "QueryHit.h"
+#include "QuerySearch.h"
+#include "RouteCache.h"
+#include "SearchManager.h"
+#include "Security.h"
+#include "Statistics.h"
 #include "Uploads.h"
+#include "VendorCache.h"
 #include "XML.h"
 
 #ifdef _DEBUG
@@ -88,7 +88,9 @@ CG2Neighbour::CG2Neighbour(CNeighbour* pBase) :
 	m_tLastHAWIn		( 0 ),
 	m_tLastHAWOut		( 0 ),
 	m_nCountHAWIn		( 0 ),
-	m_nCountHAWOut		( 0 )
+	m_nCountHAWOut		( 0 ),
+	m_tLastQueryIn		( 0 ),
+	m_nCountQueryIn		( 0 )
 {
 	theApp.Message( MSG_INFO, IDS_HANDSHAKE_ONLINE_G2, (LPCTSTR)m_sAddress,
 		m_sUserAgent.IsEmpty() ? _T("Unknown") : (LPCTSTR)m_sUserAgent );
@@ -1115,13 +1117,29 @@ BOOL CG2Neighbour::SendQuery(const CQuerySearch* pSearch, CPacket* pPacket, BOOL
 
 BOOL CG2Neighbour::OnQuery(CG2Packet* pPacket)
 {
+	DWORD tPrevQueryIn = m_tLastQueryIn;
+	m_tLastQueryIn = GetTickCount();
+	m_nCountQueryIn ++;
+	Statistics.Current.Gnutella2.Queries++;
+
 	CQuerySearchPtr pSearch = CQuerySearch::FromPacket( pPacket );
 	if ( ! pSearch )
 	{
+		DEBUG_ONLY( pPacket->Debug( _T("Malformed Query.") ) );
 		theApp.Message( MSG_WARNING, IDS_PROTOCOL_BAD_QUERY, (LPCTSTR)m_sAddress );
 		Statistics.Current.Gnutella2.Dropped++;
 		m_nDropCount++;
-		DEBUG_ONLY( pPacket->Debug( _T("Malformed Query.") ) );
+		return TRUE;
+	}
+
+	BOOL bUseUDP = pSearch->m_bUDP &&
+		pSearch->m_pEndpoint.sin_addr.s_addr != m_pHost.sin_addr.s_addr;
+
+	if ( ( bUseUDP && m_nNodeType == ntLeaf ) ||				// Forbid UDP answer for leaf query
+		! Network.QueryRoute->Add( pSearch->m_oGUID, this ) )	// Forbid looped query
+	{
+		Statistics.Current.Gnutella2.Dropped++;
+		m_nDropCount++;
 		return TRUE;
 	}
 
@@ -1132,21 +1150,18 @@ BOOL CG2Neighbour::OnQuery(CG2Packet* pPacket)
 		return TRUE;
 	}
 
-	BOOL bUseUDP = pSearch->m_bUDP &&
-		pSearch->m_pEndpoint.sin_addr.s_addr != m_pHost.sin_addr.s_addr;
-
-	if ( ( m_nNodeType == ntLeaf && bUseUDP ) ||
-		! Network.QueryRoute->Add( pSearch->m_oGUID, this ) )
+	if ( ( bUseUDP && ! Neighbours.CheckQuery( pSearch ) ) ||	// Too many UDP queries for one return address
+		 ( m_nNodeType == ntLeaf && m_tLastQueryIn < tPrevQueryIn + 5 * 1000 ) )	// Too many queries for this leaf (maximum 1 query per 5 seconds)
 	{
-		// Looped query, ignoring.
-		Statistics.Current.Gnutella2.Dropped++;
-		m_nDropCount++;
-		return TRUE;
-	}
+		if ( m_nNodeType == ntLeaf )
+		{
+			// Ack without hub list with retry time
+			Send( Neighbours.CreateQueryWeb( pSearch->m_oGUID, false, NULL, false ) );
+		}
 
-	if ( ! Neighbours.CheckQuery( pSearch ) )
-	{
-		theApp.Message( MSG_WARNING, IDS_PROTOCOL_EXCESS, (LPCTSTR)m_sAddress );
+		theApp.Message( MSG_WARNING, IDS_PROTOCOL_EXCESS,
+			(LPCTSTR)( CString( inet_ntoa( m_pHost.sin_addr ) ) + _T(" [TCP]") ),
+			(LPCTSTR)CString( inet_ntoa( pSearch->m_pEndpoint.sin_addr ) ) );
 		Statistics.Current.Gnutella2.Dropped++;
 		m_nDropCount++;
 		return TRUE;
@@ -1169,10 +1184,10 @@ BOOL CG2Neighbour::OnQuery(CG2Packet* pPacket)
 	if ( m_nNodeType == ntLeaf )
 	{
 		// Ack with hub list
-		Send( Neighbours.CreateQueryWeb( pSearch->m_oGUID, true, this ), TRUE, FALSE );
+		Send( Neighbours.CreateQueryWeb( pSearch->m_oGUID, true, this ) );
 	}
 
-	Statistics.Current.Gnutella2.Queries++;
+	Statistics.Current.Gnutella2.QueriesProcessed++;
 
 	return TRUE;
 }
