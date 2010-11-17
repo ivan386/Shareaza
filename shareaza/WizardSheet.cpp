@@ -155,8 +155,6 @@ BOOL CWizardSheet::OnInitDialog()
 	// ATL_IDC_STATIC1?
 	if ( GetDlgItem( 0x3026 ) ) GetDlgItem( 0x3026 )->ShowWindow( SW_HIDE );
 
-	m_bmHeader.Attach( Skin.GetWatermark( _T("Banner") ) );
-
 	return TRUE;
 }
 
@@ -219,13 +217,15 @@ void CWizardSheet::OnSize(UINT nType, int cx, int cy)
 void CWizardSheet::OnPaint()
 {
 	CPaintDC dc( this );
-	CRect rc;
 
+	CRect rc;
 	GetClientRect( &rc );
+
+	HBITMAP hHeader = Skin.GetWatermark( _T("Banner"), TRUE );
 
 	CDC mdc;
 	mdc.CreateCompatibleDC( &dc );
-	CBitmap* pOldBitmap = (CBitmap*)mdc.SelectObject( &m_bmHeader );
+	CBitmap* pOldBitmap = (CBitmap*)mdc.SelectObject( hHeader );
 	dc.BitBlt( 0, 0, 438, 50, &mdc, 0, 0, SRCCOPY );
 	mdc.SelectObject( pOldBitmap );
 	mdc.DeleteDC();

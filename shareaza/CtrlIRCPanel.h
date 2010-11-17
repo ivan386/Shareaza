@@ -69,7 +69,6 @@ public:
 	HCURSOR				m_hHand;
 	CBitmap				m_bmWatermark;
 	CDC					m_dcBuffer;
-	CBitmap				m_bmBuffer;
 	HBITMAP				m_hBuffer;
 	CString				m_sPassedChannel;
 

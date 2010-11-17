@@ -1,7 +1,7 @@
 //
 // WindowManager.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,20 +22,19 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
-#include "WindowManager.h"
-#include "Skin.h"
-#include "SearchManager.h"
+#include "CoolInterface.h"
 #include "CtrlWndTabBar.h"
-
-#include "WndHome.h"
-#include "WndSystem.h"
-#include "WndNeighbours.h"
-#include "WndDownloads.h"
-#include "WndUploads.h"
-
-#include "WndTraffic.h"
-#include "WndSearch.h"
+#include "SearchManager.h"
+#include "Skin.h"
+#include "WindowManager.h"
 #include "WndBrowseHost.h"
+#include "WndDownloads.h"
+#include "WndHome.h"
+#include "WndNeighbours.h"
+#include "WndSearch.h"
+#include "WndSystem.h"
+#include "WndTraffic.h"
+#include "WndUploads.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -46,11 +45,9 @@ static char THIS_FILE[]=__FILE__;
 IMPLEMENT_DYNCREATE(CWindowManager, CWnd)
 
 BEGIN_MESSAGE_MAP(CWindowManager, CWnd)
-	//{{AFX_MSG_MAP(CWindowManager)
 	ON_WM_SIZE()
 	ON_WM_ERASEBKGND()
 	ON_WM_PAINT()
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
@@ -58,9 +55,9 @@ END_MESSAGE_MAP()
 // CWindowManager construction
 
 CWindowManager::CWindowManager(CMDIFrameWnd* pParent)
+	: m_pParent( NULL )
+	, m_bIgnoreActivate( FALSE )
 {
-	m_bIgnoreActivate	= FALSE;
-
 	if ( pParent ) SetOwner( pParent );
 }
 
@@ -359,24 +356,30 @@ void CWindowManager::SetGUIMode(int nMode, BOOL bSaveState)
 
 void CWindowManager::LoadWindowStates()
 {
-	CString strWindows;
+	CString strWindows = theApp.GetProfileString( _T("Windows"), _T("State") );
 
-	CChildWnd* pDownloads = Open( RUNTIME_CLASS( CDownloadsWnd ) );
+	CChildWnd* pDownloads = NULL;
 	CChildWnd* pUploads = NULL;
 	CChildWnd* pNeighbours = NULL;
 	CChildWnd* pSystem = NULL;
 
-	if ( Settings.General.GUIMode != GUI_BASIC )
+	switch ( Settings.General.GUIMode )
 	{
-		strWindows = theApp.GetProfileString( _T("Windows"), _T("State") );
+	case GUI_BASIC:
+		pDownloads = Open( RUNTIME_CLASS( CDownloadsWnd ) );
+		break;
+
+	case GUI_TABBED:
+		pDownloads = Open( RUNTIME_CLASS( CDownloadsWnd ) );
 		pUploads = Open( RUNTIME_CLASS( CUploadsWnd ) );
+		pUploads->m_pGroupParent = pDownloads;
 		pNeighbours = Open( RUNTIME_CLASS( CNeighboursWnd ) );
 		pSystem = Open( RUNTIME_CLASS( CSystemWnd ) );
-	}
-	if ( Settings.General.GUIMode == GUI_TABBED )
-	{
-		pUploads->m_pGroupParent = pDownloads;
 		pSystem->m_pGroupParent = pNeighbours;
+		break;
+
+	case GUI_WINDOWED:
+		break;
 	}
 
 	for ( strWindows += '|' ; strWindows.GetLength() > 1 ; )
@@ -394,7 +397,6 @@ void CWindowManager::LoadWindowStates()
 			}
 		}
 		else if ( strClass.GetLength() &&
-			strClass != _T("CHomeWnd") &&		// Skip
 			strClass != _T("CMediaWnd") &&		// Never
 			strClass != _T("CBrowseHostWnd") &&	// Open by LoadBrowseHostWindows()
 			strClass != _T("CSearchWnd") &&		// Open by LoadSearchWindows()
@@ -406,13 +408,13 @@ void CWindowManager::LoadWindowStates()
 			CRuntimeClass* pClass = AfxClassForName( strClass );
 			if ( pClass && pClass->IsDerivedFrom( RUNTIME_CLASS(CChildWnd) ) )
 			{
-				Open( pClass );
+				Open( pClass, FALSE, FALSE );
 			}
 		}
 	}
 
 	if ( Settings.General.GUIMode != GUI_WINDOWED )
-		Open( RUNTIME_CLASS( CHomeWnd ) );
+		Open( RUNTIME_CLASS( CHomeWnd ), FALSE, TRUE );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -645,22 +647,45 @@ void CWindowManager::PostSkinRemove()
 
 void CWindowManager::OnSize(UINT nType, int cx, int cy)
 {
-	if ( nType != 1982 )
-		CWnd::OnSize( nType, cx, cy );
+	CWnd::OnSize( nType, cx, cy );
 
 	AutoResize();
+
+	Invalidate();
 }
 
-BOOL CWindowManager::OnEraseBkgnd(CDC* pDC)
+BOOL CWindowManager::OnEraseBkgnd(CDC* /*pDC*/)
 {
-	CRect rc;
-	GetClientRect( &rc );
-	pDC->FillSolidRect( &rc, Skin.m_crPanelBack );
-
-	return TRUE;
+	return FALSE;
 }
 
 void CWindowManager::OnPaint()
 {
 	CPaintDC dc( this );
+
+	CRect rc;
+	GetClientRect( &rc );
+
+	COLORREF crBackground = CoolInterface.m_crMediaWindow;
+
+	if ( Settings.General.GUIMode == GUI_WINDOWED )
+	{
+		if ( HBITMAP hLogo = Skin.GetWatermark( _T("LargeLogo"), TRUE ) )
+		{
+			BITMAP pInfo = {};
+			GetObject( hLogo, sizeof( BITMAP ), &pInfo );
+			CPoint pt = rc.CenterPoint();
+			pt.x -= pInfo.bmWidth / 2;
+			pt.y -= pInfo.bmHeight / 2;
+			CDC dcMem;
+			dcMem.CreateCompatibleDC( &dc );
+			HBITMAP pOldBmp = (HBITMAP)dcMem.SelectObject( hLogo );
+			dc.BitBlt( pt.x, pt.y, pInfo.bmWidth, pInfo.bmHeight, &dcMem, 0, 0, SRCCOPY );
+			crBackground = dc.GetPixel( pt.x, pt.y );
+			dc.ExcludeClipRect( pt.x, pt.y, pt.x + pInfo.bmWidth, pt.y + pInfo.bmHeight );
+			dcMem.SelectObject( pOldBmp );
+		}
+	}
+
+	dc.FillSolidRect( &rc, crBackground );
 }

@@ -162,22 +162,22 @@ void CSearchPanel::OnSkinChange()
 	LoadString( strCaption, IDS_SEARCH_PANEL_ADVANCED );
 	m_boxAdvanced.SetCaption( strCaption );
 	
-	SetWatermark( Skin.GetWatermark( _T("CSearchPanel") ) );
-	SetFooter( Skin.GetWatermark( _T("CSearchPanel.Footer") ), TRUE );
+	SetWatermark( _T("CSearchPanel") );
+	SetFooter( _T("CSearchPanel.Footer") );
 	
-	m_boxSearch.SetWatermark( Skin.GetWatermark( _T("CSearchInputBox") ) );
-	m_boxSearch.SetCaptionmark( Skin.GetWatermark( _T("CSearchInputBox.Caption") ) );
+	m_boxSearch.SetWatermark( _T("CSearchInputBox") );
+	m_boxSearch.SetCaptionmark( _T("CSearchInputBox.Caption") );
 	m_boxSearch.OnSkinChange();
 
-	m_boxAdvanced.SetWatermark( Skin.GetWatermark( _T("CSearchAdvancedBox") ) );
-	m_boxAdvanced.SetCaptionmark( Skin.GetWatermark( _T("CSearchAdvancedBox.Caption") ) );
+	m_boxAdvanced.SetWatermark( _T("CSearchAdvancedBox") );
+	m_boxAdvanced.SetCaptionmark(  _T("CSearchAdvancedBox.Caption") );
 	m_boxAdvanced.OnSkinChange();
 	
-	m_boxSchema.SetWatermark( Skin.GetWatermark( _T("CSearchSchemaBox") ) );
-	m_boxSchema.SetCaptionmark( Skin.GetWatermark( _T("CSearchSchemaBox.Caption") ) );
+	m_boxSchema.SetWatermark( _T("CSearchSchemaBox") );
+	m_boxSchema.SetCaptionmark( _T("CSearchSchemaBox.Caption") );
 	
-	m_boxResults.SetWatermark( Skin.GetWatermark( _T("CSearchResultsBox") ) );
-	m_boxResults.SetCaptionmark( Skin.GetWatermark( _T("CSearchResultsBox.Caption") ) );
+	m_boxResults.SetWatermark( _T("CSearchResultsBox") );
+	m_boxResults.SetCaptionmark(  _T("CSearchResultsBox.Caption") );
 	
 	Invalidate();
 }
@@ -593,50 +593,34 @@ void CSearchInputBox::OnPaint()
 	CRect rc, rct;
 	CString str;
 	
-	UINT nFlags = ETO_CLIPPED;
-	CDC* pDC = &dc;
-	
 	GetClientRect( &rc );
 	
-	if ( m_bmWatermark.m_hObject != NULL )
-	{
-		CSize size = rc.Size();
-		pDC = CoolInterface.GetBuffer( dc, size );
-		CoolInterface.DrawWatermark( pDC, &rc, &m_bmWatermark );
-		pDC->SetBkMode( TRANSPARENT );
-	}
-	else
-	{
-		pDC->SetBkMode( OPAQUE );
-		pDC->SetBkColor( CoolInterface.m_crTaskBoxClient );
-		nFlags |= ETO_OPAQUE;
-	}
-	
-	CFont* pOldFont = (CFont*)pDC->SelectObject( &CoolInterface.m_fntNormal );
-	
-	pDC->SetTextColor( 0 );
-	
-	LoadString( str, IDS_SEARCH_PANEL_INPUT_1 );
-	rct.SetRect( BOX_MARGIN + 1, BOX_MARGIN, rc.right - BOX_MARGIN - 8, BOX_MARGIN + 16 );
-	pDC->ExtTextOut( rct.left, rct.top, nFlags, &rct, str, NULL );
-	pDC->ExcludeClipRect( &rct );
+	CSize size = rc.Size();
+	CDC* pDC = CoolInterface.GetBuffer( dc, size );
 
-	LoadString( str, IDS_SEARCH_PANEL_INPUT_2 );
-	rct.OffsetRect( 0, 50 - rct.top );
-	pDC->ExtTextOut( rct.left, rct.top, nFlags, &rct, str, NULL );
-	pDC->ExcludeClipRect( &rct );
-
-	pDC->SelectObject( pOldFont );
-	
-	if ( pDC != &dc )
-	{
-		dc.BitBlt( 0, 0, rc.Width(), rc.Height(), pDC, 0, 0, SRCCOPY );
-		pDC->SelectClipRgn( NULL );
-	}
-	else
+	if ( ! CoolInterface.DrawWatermark( pDC, &rc, CBitmap::FromHandle( m_hbmWatermark ) ) )
 	{
 		pDC->FillSolidRect( &rc, CoolInterface.m_crTaskBoxClient );
 	}
+
+	CFont* pOldFont = (CFont*)pDC->SelectObject( &CoolInterface.m_fntNormal );
+
+	pDC->SetTextColor( CoolInterface.m_crText );
+	pDC->SetBkMode( TRANSPARENT );
+	pDC->SetBkColor( CoolInterface.m_crTaskBoxClient );
+
+	LoadString( str, IDS_SEARCH_PANEL_INPUT_1 );
+	rct.SetRect( BOX_MARGIN + 1, BOX_MARGIN, rc.right - BOX_MARGIN - 8, BOX_MARGIN + 16 );
+	pDC->ExtTextOut( rct.left, rct.top, ETO_CLIPPED, &rct, str, NULL );
+
+	LoadString( str, IDS_SEARCH_PANEL_INPUT_2 );
+	rct.OffsetRect( 0, 50 - rct.top );
+	pDC->ExtTextOut( rct.left, rct.top, ETO_CLIPPED, &rct, str, NULL );
+
+	pDC->SelectObject( pOldFont );
+
+	dc.BitBlt( 0, 0, rc.Width(), rc.Height(), pDC, 0, 0, SRCCOPY );
+	dc.ExcludeClipRect( &rc );
 }
 
 void CSearchInputBox::OnSelChangeSchemas()
@@ -916,59 +900,40 @@ void CSearchAdvancedBox::OnPaint()
 	CRect rc, rct;
 	CString strControlTitle;
 	
-	UINT nFlags = ETO_CLIPPED;
-	CDC* pDC = &dc;
-	
 	GetClientRect( &rc );
 	
-	if ( m_bmWatermark.m_hObject != NULL )
+	CSize size = rc.Size();
+	CDC* pDC = CoolInterface.GetBuffer( dc, size );
+	if ( ! CoolInterface.DrawWatermark( pDC, &rc, CBitmap::FromHandle( m_hbmWatermark ) ) )
 	{
-		CSize size = rc.Size();
-		pDC = CoolInterface.GetBuffer( dc, size );
-		CoolInterface.DrawWatermark( pDC, &rc, &m_bmWatermark );
-		pDC->SetBkMode( TRANSPARENT );
+		pDC->FillSolidRect( &rc, CoolInterface.m_crTaskBoxClient );
 	}
-	else
-	{
-		// Paints the background behind controls except checkboxes (see OnCtlColorStatic)
-		pDC->SetBkMode( OPAQUE );
-		pDC->SetBkColor( CoolInterface.m_crTaskBoxClient );
-		nFlags |= ETO_OPAQUE;
-	}
-	
+
 	CFont* pOldFont = (CFont*)pDC->SelectObject( &CoolInterface.m_fntNormal );
 	
-	pDC->SetTextColor( 0 );
+	pDC->SetTextColor( CoolInterface.m_crText );
+	pDC->SetBkMode( TRANSPARENT );
+	pDC->SetBkColor( CoolInterface.m_crTaskBoxClient );
 
 	// Text of "Search on this Network" check boxes
 	LoadString( strControlTitle, IDS_SEARCH_PANEL_INPUT_3 );
 	rct.SetRect( BOX_MARGIN + 1, BOX_MARGIN, rc.right - BOX_MARGIN, BOX_MARGIN + 16 );
-	pDC->ExtTextOut( rct.left, rct.top, nFlags, &rct, strControlTitle, NULL );
-	pDC->ExcludeClipRect( &rct );
+	pDC->ExtTextOut( rct.left, rct.top, ETO_CLIPPED, &rct, strControlTitle, NULL );
 
 	// Text of "File size must be" above drop down box of MinFileSize and MaxFileSize
 	LoadString( strControlTitle, IDS_SEARCH_PANEL_INPUT_4 );
 	rct.OffsetRect( 0, 64 - rct.top );
-	pDC->ExtTextOut( rct.left, rct.top, nFlags, &rct, strControlTitle, NULL );
-	pDC->ExcludeClipRect( &rct );
+	pDC->ExtTextOut( rct.left, rct.top, ETO_CLIPPED, &rct, strControlTitle, NULL );
 	
 	pDC->SelectObject( pOldFont );
-	
-	if ( pDC != &dc )
-	{
-		dc.BitBlt( 0, 0, rc.Width(), rc.Height(), pDC, 0, 0, SRCCOPY );
-		pDC->SelectClipRgn( NULL );
-	}
-	else
-	{
-		// Fills the background of the advanced box
-		pDC->FillSolidRect( &rc, CoolInterface.m_crTaskBoxClient );
-	}
 
 	m_gdiProtocols.Draw( pDC, PROTOCOL_G2, CPoint( BOX_MARGIN, 26 ), ILD_NORMAL );
 	m_gdiProtocols.Draw( pDC, PROTOCOL_G1, CPoint( BOX_MARGIN, 46 ), ILD_NORMAL );
 	m_gdiProtocols.Draw( pDC, PROTOCOL_ED2K, CPoint( PANEL_WIDTH / 2 - 3, 26 ), ILD_NORMAL );
 	m_gdiProtocols.Draw( pDC, PROTOCOL_DC, CPoint( PANEL_WIDTH / 2 - 3, 46 ), ILD_NORMAL );
+
+	dc.BitBlt( 0, 0, rc.Width(), rc.Height(), pDC, 0, 0, SRCCOPY );
+	dc.ExcludeClipRect( &rc );
 }
 
 LRESULT CSearchAdvancedBox::OnCtlColorStatic(WPARAM wParam, LPARAM /*lParam*/)
@@ -1086,35 +1051,27 @@ void CSearchResultsBox::OnPaint()
 	CPaintDC dc( this );
 	CRect rc;
 	
-	UINT nFlags = ETO_CLIPPED;
-	CDC* pDC = &dc;
-	
 	GetClientRect( &rc );
 	
-	if ( m_bmWatermark.m_hObject )
+	CSize size = rc.Size();
+	CDC* pDC = CoolInterface.GetBuffer( dc, size );
+	if ( ! CoolInterface.DrawWatermark( pDC, &rc, CBitmap::FromHandle( m_hbmWatermark ) ) )
 	{
-		CSize size = rc.Size();
-		pDC = CoolInterface.GetBuffer( dc, size );
-		CoolInterface.DrawWatermark( pDC, &rc, &m_bmWatermark );
-		pDC->SetBkMode( TRANSPARENT );
-	}
-	else
-	{
-		pDC->SetBkMode( OPAQUE );
-		pDC->SetBkColor( CoolInterface.m_crTaskBoxClient );
-		nFlags |= ETO_OPAQUE;
+		pDC->FillSolidRect( &rc, CoolInterface.m_crTaskBoxClient );
 	}
 
-	CFont* pOldFont = (CFont*)pDC->SelectObject( &theApp.m_gdiFontBold );
+	CFont* pOldFont = (CFont*)pDC->SelectObject( &CoolInterface.m_fntBold );
 
-	pDC->SetTextColor( 0 );
+	pDC->SetTextColor( CoolInterface.m_crText );
+	pDC->SetBkMode( TRANSPARENT );
+	pDC->SetBkColor( CoolInterface.m_crTaskBoxClient );
 
 	LoadString( strText, IDS_SEARCH_PANEL_RESULTS_STATUS );
-	DrawText( pDC, BOX_MARGIN, BOX_MARGIN, nFlags, strText );
+	DrawText( pDC, BOX_MARGIN, BOX_MARGIN, ETO_CLIPPED, strText );
 	LoadString( strText, IDS_SEARCH_PANEL_RESULTS_FOUND );
-	DrawText( pDC, BOX_MARGIN, BOX_MARGIN + 32, nFlags, strText );
+	DrawText( pDC, BOX_MARGIN, BOX_MARGIN + 32, ETO_CLIPPED, strText );
 
-	pDC->SelectObject( &theApp.m_gdiFont );
+	pDC->SelectObject( &CoolInterface.m_fntNormal );
 
 	if ( m_bActive )
 	{
@@ -1126,7 +1083,7 @@ void CSearchResultsBox::OnPaint()
 		LoadString( strText, IDS_SEARCH_PANEL_RESULTS_INACTIVE );
 	}
 
-	DrawText( pDC, BOX_MARGIN + 8, BOX_MARGIN + 14, nFlags, strText );
+	DrawText( pDC, BOX_MARGIN + 8, BOX_MARGIN + 14, ETO_CLIPPED, strText );
 
 	if ( m_nFiles )
 	{
@@ -1156,19 +1113,12 @@ void CSearchResultsBox::OnPaint()
 		LoadString( strText, IDS_SEARCH_PANEL_RESULTS_NONE );
 	}
 
-	DrawText( pDC, BOX_MARGIN + 8, BOX_MARGIN + 32 + 14, nFlags, strText );
+	DrawText( pDC, BOX_MARGIN + 8, BOX_MARGIN + 32 + 14, ETO_CLIPPED, strText );
 
 	pDC->SelectObject( pOldFont );
 
-	if ( pDC != &dc )
-	{
-		dc.BitBlt( 0, 0, rc.Width(), rc.Height(), pDC, 0, 0, SRCCOPY );
-		pDC->SelectClipRgn( NULL );
-	}
-	else
-	{
-		pDC->FillSolidRect( &rc, CoolInterface.m_crTaskBoxClient );
-	}
+	dc.BitBlt( 0, 0, rc.Width(), rc.Height(), pDC, 0, 0, SRCCOPY );
+	dc.ExcludeClipRect( &rc );
 }
 
 void CSearchResultsBox::DrawText(CDC* pDC, int nX, int nY, UINT nFlags, LPCTSTR pszText)
@@ -1177,7 +1127,6 @@ void CSearchResultsBox::DrawText(CDC* pDC, int nX, int nY, UINT nFlags, LPCTSTR 
 	CRect rc( nX, nY, nX + cz.cx, nY + cz.cy );
 	
 	pDC->ExtTextOut( nX, nY, nFlags, &rc, pszText, static_cast< UINT >( _tcslen( pszText ) ), NULL );
-	pDC->ExcludeClipRect( nX, nY, nX + cz.cx, nY + cz.cy );
 }
 
 void CSearchResultsBox::OnExpanded(BOOL bOpen)

@@ -32,7 +32,6 @@ public:
 	CWizardSheet(CWnd *pParentWnd = NULL, UINT iSelectPage = 0);
 
 	CRect			m_rcPage;
-	CBitmap			m_bmHeader;
 
 	static BOOL	RunWizard(CWnd* pParent = NULL);
 

@@ -147,8 +147,8 @@ int CHomePanel::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 void CHomePanel::OnSkinChange()
 {
-	SetWatermark( Skin.GetWatermark( _T("CHomePanel") ) );
-	SetFooter( Skin.GetWatermark( _T("CHomePanel.Footer") ), TRUE );
+	SetWatermark( _T("CHomePanel") );
+	SetFooter( _T("CHomePanel.Footer") );
 	
 	m_boxDownloads.OnSkinChange();
 	m_boxUploads.OnSkinChange();
@@ -219,7 +219,7 @@ void CHomeDownloadsBox::OnSkinChange()
 	m_pDocument = NULL;
 	m_pdDownloadsNone = m_pdDownloadsOne = m_pdDownloadsMany = NULL;
 	
-	SetCaptionmark( Skin.GetWatermark( _T("CHomeDownloadsBox.Caption") ) );
+	SetCaptionmark( _T("CHomeDownloadsBox.Caption") );
 	
 	CXMLElement* pXML = Skin.GetDocument( _T("CHomeDownloadsBox") );
 	if ( pXML == NULL ) return;
@@ -611,7 +611,7 @@ void CHomeLibraryBox::OnSkinChange()
 	m_pDocument = NULL;
 	m_pdLibraryFiles = m_pdLibraryVolume = m_pdLibraryHashRemaining = NULL;
 	
-	SetCaptionmark( Skin.GetWatermark( _T("CHomeLibraryBox.Caption") ) );
+	SetCaptionmark( _T("CHomeLibraryBox.Caption") );
 	
 	CXMLElement* pXML = Skin.GetDocument( _T("CHomeLibraryBox") );
 	if ( pXML == NULL ) return;
@@ -977,7 +977,7 @@ void CHomeUploadsBox::OnSkinChange()
 	m_pdUploadsNone = m_pdUploadsOne = m_pdUploadsMany = NULL;
 	m_pdUploadedNone = m_pdUploadedOne = m_pdUploadedMany = NULL;
 	
-	SetCaptionmark( Skin.GetWatermark( _T("CHomeUploadsBox.Caption") ) );
+	SetCaptionmark( _T("CHomeUploadsBox.Caption") );
 	
 	CXMLElement* pXML = Skin.GetDocument( _T("CHomeUploadsBox") );
 	if ( pXML == NULL ) return;
@@ -1111,7 +1111,7 @@ void CHomeConnectionBox::OnSkinChange()
 		}
 	}
 	
-	SetCaptionmark( Skin.GetWatermark( _T("CHomeConnectionBox.Caption") ) );
+	SetCaptionmark( _T("CHomeConnectionBox.Caption") );
 	
 	CXMLElement* pXML = Skin.GetDocument( _T("CHomeConnectionBox") );
 	if ( pXML == NULL ) return;
@@ -1317,7 +1317,7 @@ void CHomeTorrentsBox::OnSkinChange()
 	m_pDocument = NULL;
 	m_pdTorrentsNone = m_pdTorrentsOne = m_pdTorrentsMany = m_pdReseedTorrent = NULL;
 	
-	SetCaptionmark( Skin.GetWatermark( _T("CHomeTorrentsBox.Caption") ) );
+	SetCaptionmark( _T("CHomeTorrentsBox.Caption") );
 	
 	CXMLElement* pXML = Skin.GetDocument( _T("CHomeTorrentsBox") );
 	if ( pXML == NULL ) return;

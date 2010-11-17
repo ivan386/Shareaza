@@ -108,7 +108,6 @@ protected:
 	CRect			m_rcVideo;
 	CRect			m_rcStatus;
 	VARIANT_BOOL	m_bNoLogo;		// VARIANT_TRUE - don't paint logo and window background
-	CBitmap			m_bmLogo;
 	CImageList		m_pIcons;
 	CFont			m_pFontDefault;
 	CFont			m_pFontKey;
@@ -122,7 +121,6 @@ protected:
 	CString			m_sNowPlaying;
 
 	void	SetFullScreen(BOOL bFullScreen);
-	void	PaintSplash(CDC& dc, CRect& rcBar);
 	void	PaintListHeader(CDC& dc, CRect& rcBar);
 	void	PaintStatus(CDC& dc, CRect& rcBar);
 	BOOL	DoSizeList();

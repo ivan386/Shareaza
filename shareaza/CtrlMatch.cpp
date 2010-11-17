@@ -148,12 +148,10 @@ int CMatchCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	InsertColumn( MATCH_COL_TIME, _T("Time"), HDF_CENTER, 120 );
 	InsertColumn( MATCH_COL_COUNTRY, _T("Country"), HDF_LEFT, 60 );
 
-	CBitmap bmStar;
-	bmStar.LoadBitmap( IDB_SMALL_STAR );
 	m_pStars.Create( 12, 12, ILC_COLOR32|ILC_MASK, 7, 0 ) ||
 	m_pStars.Create( 12, 12, ILC_COLOR24|ILC_MASK, 7, 0 ) ||
 	m_pStars.Create( 12, 12, ILC_COLOR16|ILC_MASK, 7, 0 );
-	m_pStars.Add( &bmStar, RGB( 0, 255, 0 ) );
+	m_pStars.Add( CBitmap::FromHandle( Skin.LoadBitmap( IDB_SMALL_STAR ) ), RGB( 0, 255, 0 ) );
 	
 	LoadColumnState();
 	

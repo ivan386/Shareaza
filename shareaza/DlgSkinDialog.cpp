@@ -102,8 +102,7 @@ void CSkinDialog::EnableBanner(BOOL bEnable)
 	}
 	else if ( bEnable && ! m_oBanner.m_hWnd )
 	{	
-		HBITMAP hBitmap = Skin.GetWatermark( _T("Banner") );
-		if ( hBitmap )
+		if ( HBITMAP hBitmap = Skin.GetWatermark( _T("Banner"), TRUE ) )
 		{
 			BITMAP bm = {};
 			GetObject( hBitmap, sizeof( BITMAP ), &bm );

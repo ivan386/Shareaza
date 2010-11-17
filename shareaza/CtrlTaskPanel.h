@@ -1,7 +1,7 @@
 //
 // CtrlTaskPanel.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -18,9 +18,6 @@
 // along with Shareaza; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-
-#if !defined(AFX_CTRLTASKPANEL_H__509DBC3E_C56B_4A11_993A_3F227C6D9621__INCLUDED_)
-#define AFX_CTRLTASKPANEL_H__509DBC3E_C56B_4A11_993A_3F227C6D9621__INCLUDED_
 
 #pragma once
 
@@ -41,8 +38,8 @@ protected:
 	CTaskBox*	m_pStretch;
 	int			m_nMargin;
 	int			m_nCurve;
-	CBitmap		m_bmWatermark;
-	CBitmap		m_bmFooter;
+	HBITMAP		m_hbmWatermark;
+	HBITMAP		m_hbmFooter;
 	BOOL		m_bLayout;
 
 // Operations
@@ -56,27 +53,23 @@ public:
 public:
 	void		SetStretchBox(CTaskBox* pBox);
 	void		SetMargin(int nMargin, int nCurve = 2);
-	void		SetWatermark(HBITMAP hBitmap);
-	void		SetFooter(HBITMAP hBitmap, BOOL bDefault = TRUE);
+	void		SetWatermark(LPCTSTR szWatermark);
+	void		SetFooter(LPCTSTR szWatermark);
 	void		OnChanged();
 protected:
 	void		Layout(CRect& rcClient);
 
 // Overrides
 public:
-	//{{AFX_VIRTUAL(CTaskPanel)
-	public:
 	virtual BOOL Create(LPCTSTR lpszWindowName, DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID);
-	//}}AFX_VIRTUAL
 
 // Implementation
 protected:
-	//{{AFX_MSG(CTaskPanel)
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnPaint();
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
-	//}}AFX_MSG
+
 	DECLARE_MESSAGE_MAP()
 
 	friend class CTaskBox;
@@ -96,8 +89,8 @@ public:
 	void		SetIcon(HICON hIcon);
 	void		SetSize(int nHeight);
 	void		SetPrimary(BOOL bPrimary = TRUE);
-	void		SetWatermark(HBITMAP hBitmap);
-	void		SetCaptionmark(HBITMAP hBitmap, BOOL bDefault = TRUE);
+	void		SetWatermark(LPCTSTR szWatermark);
+	void		SetCaptionmark(LPCTSTR szWatermark);
 	void		Expand(BOOL bOpen = TRUE);
 
 protected:
@@ -109,8 +102,8 @@ protected:
 	BOOL		m_bPrimary;
 	HICON		m_hIcon;
 	BOOL		m_bIconDel;
-	CBitmap		m_bmWatermark;
-	CBitmap		m_bmCaptionmark;
+	HBITMAP		m_hbmWatermark;
+	HBITMAP		m_hbmCaptionmark;
 	BOOL		m_bCaptionCurve;
 
 	int			GetOuterHeight() const;
@@ -123,7 +116,6 @@ public:
 	virtual void DrawItem(LPDRAWITEMSTRUCT) {}
 
 protected:
-	//{{AFX_MSG(CTaskBox)
 	afx_msg void OnNcCalcSize(BOOL bCalcValidRects, NCCALCSIZE_PARAMS FAR* lpncsp);
 	afx_msg void OnNcPaint();
 	afx_msg LRESULT OnNcHitTest(CPoint point);
@@ -134,12 +126,8 @@ protected:
 	afx_msg void OnNcLButtonUp(UINT nHitTest, CPoint point);
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnNcLButtonDown(UINT nHitTest, CPoint point);
-	//}}AFX_MSG
+
 	DECLARE_MESSAGE_MAP()
 
 	friend class CTaskPanel;
 };
-
-//{{AFX_INSERT_LOCATION}}
-
-#endif // !defined(AFX_CTRLTASKPANEL_H__509DBC3E_C56B_4A11_993A_3F227C6D9621__INCLUDED_)

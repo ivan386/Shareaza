@@ -518,13 +518,6 @@ void CMediaFrame::OnPaint()
 {
 	CPaintDC dc( this );
 
-	if ( m_bmLogo.m_hObject == NULL)
-	{
-		m_bmLogo.m_hObject = Skin.GetWatermark( _T("LargeLogo") );
-//		if ( m_pPlayer && m_bmLogo.m_hObject )
-//			m_pPlayer->SetLogoBitmap( m_bmLogo );
-	}
-
 	if ( m_pFontDefault.m_hObject == NULL )
 	{
 		LOGFONT pFont = { 80, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET,
@@ -572,49 +565,41 @@ void CMediaFrame::OnPaint()
 
 	if ( dc.RectVisible( &m_rcVideo ) && ! m_bNoLogo )
 	{
-		PaintSplash( dc, m_rcVideo );
+		if ( HBITMAP hLogo = Skin.GetWatermark( _T("LargeLogo"), TRUE ) )
+		{
+			//if ( m_pPlayer ) m_pPlayer->SetLogoBitmap( hLogo );
+
+			BITMAP pInfo = {};
+			GetObject( hLogo, sizeof( BITMAP ), &pInfo );
+			CPoint pt = m_rcVideo.CenterPoint();
+			pt.x -= pInfo.bmWidth / 2;
+			pt.y -= ( pInfo.bmHeight + 32 ) / 2;
+			CDC dcMem;
+			dcMem.CreateCompatibleDC( &dc );
+			HBITMAP pOldBmp = (HBITMAP)dcMem.SelectObject( hLogo );
+			dc.BitBlt( pt.x, pt.y, pInfo.bmWidth, pInfo.bmHeight, &dcMem,
+				0, 0, SRCCOPY );
+			dc.ExcludeClipRect( pt.x, pt.y, pt.x + pInfo.bmWidth, pt.y + pInfo.bmHeight );
+			dcMem.SelectObject( pOldBmp );
+
+			CRect rcText( m_rcVideo.left, pt.y + pInfo.bmHeight, m_rcVideo.right, pt.y + pInfo.bmHeight + 32 );
+
+			CString strText;
+			LoadString( strText, IDS_MEDIA_TITLE );
+
+			pt.x = ( m_rcVideo.left + m_rcVideo.right ) / 2 - dc.GetTextExtent( strText ).cx / 2;
+			pt.y = rcText.top + 8;
+
+			dc.SetBkColor( CoolInterface.m_crMediaWindow );
+			dc.SetTextColor( CoolInterface.m_crMediaWindowText );
+			dc.ExtTextOut( pt.x, pt.y, ETO_OPAQUE, &m_rcVideo, strText, NULL );
+			dc.ExcludeClipRect( &rcText );
+		}
+
+		dc.FillSolidRect( &m_rcVideo, CoolInterface.m_crMediaWindow );
 	}
 
 	dc.SelectObject( pOldFont );
-}
-
-void CMediaFrame::PaintSplash(CDC& dc, CRect& /*rcBar*/)
-{
-	if ( m_bmLogo.m_hObject == NULL )
-	{
-		dc.FillSolidRect( &m_rcVideo, CoolInterface.m_crMediaWindow );
-		return;
-	}
-
-	BITMAP pInfo;
-	m_bmLogo.GetBitmap( &pInfo );
-
-	CPoint pt = m_rcVideo.CenterPoint();
-	pt.x -= pInfo.bmWidth / 2;
-	pt.y -= ( pInfo.bmHeight + 32 ) / 2;
-
-	CDC dcMem;
-	dcMem.CreateCompatibleDC( &dc );
-	CBitmap* pOldBmp = (CBitmap*)dcMem.SelectObject( &m_bmLogo );
-	dc.BitBlt( pt.x, pt.y, pInfo.bmWidth, pInfo.bmHeight, &dcMem,
-		0, 0, SRCCOPY );
-	dc.ExcludeClipRect( pt.x, pt.y, pt.x + pInfo.bmWidth, pt.y + pInfo.bmHeight );
-	dcMem.SelectObject( pOldBmp );
-
-	CRect rcText( m_rcVideo.left, pt.y + pInfo.bmHeight, m_rcVideo.right, pt.y + pInfo.bmHeight + 32 );
-
-	CString strText;
-	LoadString( strText, IDS_MEDIA_TITLE );
-
-	pt.x = ( m_rcVideo.left + m_rcVideo.right ) / 2 - dc.GetTextExtent( strText ).cx / 2;
-	pt.y = rcText.top + 8;
-
-	dc.SetBkColor( CoolInterface.m_crMediaWindow );
-	dc.SetTextColor( CoolInterface.m_crMediaWindowText );
-	dc.ExtTextOut( pt.x, pt.y, ETO_OPAQUE, &m_rcVideo, strText, NULL );
-	dc.ExcludeClipRect( &rcText );
-
-	dc.FillSolidRect( &m_rcVideo, CoolInterface.m_crMediaWindow );
 }
 
 void CMediaFrame::PaintListHeader(CDC& dc, CRect& rcBar)

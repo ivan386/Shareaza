@@ -51,7 +51,6 @@ protected:
 	mutable CCriticalSection m_pSection;
 	void	ApplyRecursive(LPCTSTR pszPath);
 	void	CreateDefaultColors();
-	HBITMAP	LoadBitmap(const CString& strName);
 
 // Strings
 public:
@@ -92,13 +91,16 @@ protected:
 	BOOL			LoadDocuments(CXMLElement* pBase);
 	CMap< CString, const CString&, CXMLElement*, CXMLElement* > m_pDocuments;
 
-// Watermarks
+// Watermarks (images)
 public:
-	HBITMAP	GetWatermark(LPCTSTR pszName);
-	BOOL	GetWatermark(CBitmap* pBitmap, LPCTSTR pszName);
+	HBITMAP	GetWatermark(LPCTSTR pszName, BOOL bShared = FALSE);
+	BOOL	GetWatermark(CBitmap* pBitmap, LPCTSTR pszName, BOOL bShared = FALSE);
+	HBITMAP	LoadBitmap(const CString& strName, BOOL bShared = FALSE);
+	HBITMAP	LoadBitmap(UINT nID, BOOL bShared = FALSE);
 protected:
 	BOOL	LoadWatermarks(CXMLElement* pSub, const CString& strPath);
 	CMap< CString, const CString&, CString, CString& > m_pWatermarks;
+	CMap< CString, const CString&, HBITMAP, const HBITMAP& > m_pBitmaps;
 
 // Translate
 public:

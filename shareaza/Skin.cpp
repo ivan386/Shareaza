@@ -50,6 +50,7 @@ CSkin Skin;
 CSkin::CSkin()
 {
 	// experimental values
+	m_pBitmaps.InitHashTable( 31 );
 	m_pStrings.InitHashTable( 1531 );
 	m_pMenus.InitHashTable( 83 );
 	m_pToolbars.InitHashTable( 61 );
@@ -85,13 +86,16 @@ void CSkin::Apply()
 	if ( m_brDialog.m_hObject != NULL ) m_brDialog.DeleteObject();
 	m_brDialog.CreateSolidBrush( m_crDialog );
 
-	if ( HBITMAP hPanelMark = GetWatermark( _T("CPanelWnd.Caption") ) )
+	if ( HBITMAP hPanelMark = GetWatermark( _T("CPanelWnd.Caption"), TRUE ) )
 	{
 		m_bmPanelMark.Attach( hPanelMark );
 	}
 	else if ( m_crPanelBack == RGB( 60, 60, 60 ) )
 	{
-		m_bmPanelMark.LoadBitmap( IDB_PANEL_MARK );
+		if ( HBITMAP hPanelMark = LoadBitmap( IDB_PANEL_MARK, TRUE ) )
+		{
+			m_bmPanelMark.Attach( hPanelMark );
+		}
 	}
 
 	CoolMenu.SetWatermark( GetWatermark( _T("CCoolMenu") ) );
@@ -192,12 +196,22 @@ void CSkin::Clear()
 	CString strName;
 	POSITION pos;
 
+	m_bmPanelMark.Detach();
+	for ( pos = m_pBitmaps.GetStartPosition() ; pos ; )
+	{
+		HBITMAP hBitmap;
+		m_pBitmaps.GetNextAssoc( pos, strName, hBitmap );
+		if ( hBitmap ) DeleteObject( hBitmap );
+	}
+	m_pBitmaps.RemoveAll();
+
 	for ( pos = m_pMenus.GetStartPosition() ; pos ; )
 	{
 		CMenu* pMenu;
 		m_pMenus.GetNextAssoc( pos, strName, pMenu );
 		delete pMenu;
 	}
+	m_pMenus.RemoveAll();
 
 	for ( pos = m_pToolbars.GetStartPosition() ; pos ; )
 	{
@@ -205,6 +219,7 @@ void CSkin::Clear()
 		m_pToolbars.GetNextAssoc( pos, strName, pBar );
 		delete pBar;
 	}
+	m_pToolbars.RemoveAll();
 
 	for ( pos = m_pDialogs.GetStartPosition() ; pos ; )
 	{
@@ -212,6 +227,7 @@ void CSkin::Clear()
 		m_pDialogs.GetNextAssoc( pos, strName, pXML );
 		delete pXML;
 	}
+	m_pDialogs.RemoveAll();
 
 	for ( pos = m_pDocuments.GetStartPosition() ; pos ; )
 	{
@@ -219,31 +235,27 @@ void CSkin::Clear()
 		m_pDocuments.GetNextAssoc( pos, strName, pXML );
 		delete pXML;
 	}
+	m_pDocuments.RemoveAll();
 
 	for ( pos = m_pSkins.GetHeadPosition() ; pos ; )
 	{
 		delete m_pSkins.GetNext( pos );
 	}
+	m_pSkins.RemoveAll();
 
 	for ( pos = m_pFontPaths.GetHeadPosition() ; pos ; )
 	{
 		RemoveFontResourceEx( m_pFontPaths.GetNext( pos ), FR_PRIVATE, NULL );
 	}
+	m_pFontPaths.RemoveAll();
 
 	m_pStrings.RemoveAll();
 	m_pControlTips.RemoveAll();
-	m_pMenus.RemoveAll();
-	m_pToolbars.RemoveAll();
-	m_pDocuments.RemoveAll();
 	m_pWatermarks.RemoveAll();
 	m_pLists.RemoveAll();
-	m_pDialogs.RemoveAll();
-	m_pSkins.RemoveAll();
-	m_pFontPaths.RemoveAll();
 	m_pImages.RemoveAll();
 
 	if ( m_brDialog.m_hObject != NULL ) m_brDialog.DeleteObject();
-	if ( m_bmPanelMark.m_hObject != NULL ) m_bmPanelMark.DeleteObject();
 
 	CoolInterface.Clear();
 }
@@ -1011,14 +1023,14 @@ CXMLElement* CSkin::GetDocument(LPCTSTR pszName)
 //////////////////////////////////////////////////////////////////////
 // CSkin watermarks
 
-HBITMAP CSkin::GetWatermark(LPCTSTR pszName)
+HBITMAP CSkin::GetWatermark(LPCTSTR pszName, BOOL bShared)
 {
 	CQuickLock oLock( m_pSection );
 
 	CString strPath;
 	if ( m_pWatermarks.Lookup( pszName, strPath ) && strPath.GetLength() )
 	{
-		if ( HBITMAP hBitmap = LoadBitmap( strPath ) )
+		if ( HBITMAP hBitmap = LoadBitmap( strPath, bShared ) )
 			return hBitmap;
 
 		theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Failed to load watermark"), CString( pszName ) + _T(". File: ") + strPath );
@@ -1026,15 +1038,20 @@ HBITMAP CSkin::GetWatermark(LPCTSTR pszName)
 	return NULL;
 }
 
-BOOL CSkin::GetWatermark(CBitmap* pBitmap, LPCTSTR pszName)
+BOOL CSkin::GetWatermark(CBitmap* pBitmap, LPCTSTR pszName, BOOL bShared)
 {
-	ASSERT( pBitmap != NULL );
-	if ( pBitmap->m_hObject != NULL )
-		pBitmap->DeleteObject();
-	HBITMAP hBitmap = GetWatermark( pszName );
-	if ( hBitmap != NULL )
-		pBitmap->Attach( hBitmap );
-	return ( hBitmap != NULL );
+	if ( pBitmap->m_hObject )
+	{
+		if ( bShared )
+			pBitmap->Detach();
+		else
+			pBitmap->DeleteObject();
+	}
+
+	if ( HBITMAP hBitmap = GetWatermark( pszName, bShared ) )
+		return pBitmap->Attach( hBitmap );
+
+	return FALSE;
 }
 
 BOOL CSkin::LoadWatermarks(CXMLElement* pSub, const CString& strPath)
@@ -2377,25 +2394,47 @@ void CSkin::DrawWrappedText(CDC* pDC, CRect* pBox, LPCTSTR pszText, CPoint ptSta
 //////////////////////////////////////////////////////////////////////
 // CSkin load bitmap helper
 
-HBITMAP CSkin::LoadBitmap(const CString& strName)
+HBITMAP CSkin::LoadBitmap(const CString& strName, BOOL bShared)
 {
-	int nPos = strName.Find( '$' );
+	CQuickLock oLock( m_pSection );
+
+	HBITMAP hBitmap = NULL;
+
+	if ( bShared )
+	{
+		if ( m_pBitmaps.Lookup( strName, hBitmap ) )
+			return hBitmap;
+	}
+
+	int nPos = strName.Find( _T('$') );
 	if ( nPos < 0 )
 	{
-		return CImageFile::LoadBitmapFromFile( strName );
+		hBitmap = CImageFile::LoadBitmapFromFile( strName );
 	}
 	else
 	{
-		HINSTANCE hInstance = NULL;
-		if ( _stscanf( (LPCTSTR)strName, _T("%p"), &hInstance ) != 1 )
-			return NULL;
-
-		UINT nID = 0;
-		if ( _stscanf( (LPCTSTR)strName + nPos + 1, _T("%lu"), &nID ) != 1 )
-			return NULL;
-
-		return CImageFile::LoadBitmapFromResource( nID, hInstance );
+		HINSTANCE hInstance;
+		UINT nID;
+		if ( _stscanf( (LPCTSTR)strName, _T("%p"), &hInstance ) == 1 &&
+			 _stscanf( (LPCTSTR)strName + nPos + 1, _T("%lu"), &nID ) == 1 )
+		{
+			hBitmap = CImageFile::LoadBitmapFromResource( nID, hInstance );
+		}
 	}
+
+	if ( bShared && hBitmap )
+	{
+		m_pBitmaps.SetAt( strName, hBitmap );
+	}
+
+	return hBitmap;
+}
+
+HBITMAP CSkin::LoadBitmap(UINT nID, BOOL bShared)
+{
+	CString strName;
+	strName.Format( _T("%p$%lu"), (HINSTANCE)GetModuleHandle( NULL ), nID );
+	return LoadBitmap( strName, bShared );
 }
 
 //////////////////////////////////////////////////////////////////////

@@ -66,11 +66,13 @@ END_MESSAGE_MAP()
 // CTaskPanel construction
 
 CTaskPanel::CTaskPanel()
+	: m_pStretch	( NULL )
+	, m_nMargin		( 12 )
+	, m_nCurve		( 2 )
+	, m_hbmWatermark( NULL )
+	, m_hbmFooter	( NULL )
+	, m_bLayout		( FALSE )
 {
-	m_pStretch	= NULL;
-	m_nMargin	= 12;
-	m_nCurve	= 2;
-	m_bLayout	= FALSE;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -153,20 +155,16 @@ void CTaskPanel::SetMargin(int nMargin, int nCurve)
 	m_nCurve	= nCurve;
 }
 
-void CTaskPanel::SetWatermark(HBITMAP hBitmap)
+void CTaskPanel::SetWatermark(LPCTSTR szWatermark)
 {
-	if ( m_bmWatermark.m_hObject != NULL ) m_bmWatermark.DeleteObject();
-	if ( hBitmap != NULL ) m_bmWatermark.Attach( hBitmap );
+	m_hbmWatermark  = Skin.GetWatermark( szWatermark, TRUE );
 }
 
-void CTaskPanel::SetFooter(HBITMAP hBitmap, BOOL bDefault)
+void CTaskPanel::SetFooter(LPCTSTR szWatermark)
 {
-	if ( m_bmFooter.m_hObject != NULL ) m_bmFooter.DeleteObject();
-	
-	if ( hBitmap != NULL)
-		m_bmFooter.Attach( hBitmap );
-	else if ( bDefault && CoolInterface.m_crTaskPanelBack == RGB( 122, 161, 230 ) )
-		m_bmFooter.LoadBitmap( IDB_TASKPANEL_FOOTER );
+	m_hbmFooter = Skin.GetWatermark( szWatermark, TRUE );
+	if ( ! m_hbmFooter && CoolInterface.m_crTaskPanelBack == RGB( 122, 161, 230 ) )
+		m_hbmFooter = Skin.LoadBitmap( IDB_TASKPANEL_FOOTER, TRUE );
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -204,18 +202,18 @@ void CTaskPanel::OnPaint()
 	
 	if ( m_bLayout ) Layout( rc );
 
-	if ( m_bmFooter.m_hObject != NULL )
+	if ( m_hbmFooter )
 	{
-		BITMAP pInfo;
-		m_bmFooter.GetBitmap( &pInfo );
+		BITMAP pInfo = {};
+		GetObject( m_hbmFooter, sizeof ( BITMAP ), &pInfo );
 		
 		CRect rcFooter( &rc );
 		rc.bottom = rcFooter.top = rcFooter.bottom - pInfo.bmHeight;
 		
-		CoolInterface.DrawWatermark( &dc, &rcFooter, &m_bmFooter );
+		CoolInterface.DrawWatermark( &dc, &rcFooter, CBitmap::FromHandle( m_hbmFooter ) );
 	}
 	
-	if ( ! CoolInterface.DrawWatermark( &dc, &rc, &m_bmWatermark ) )
+	if ( ! CoolInterface.DrawWatermark( &dc, &rc, CBitmap::FromHandle( m_hbmWatermark ) ) )
 	{
 		dc.FillSolidRect( &rc, CoolInterface.m_crTaskPanelBack );
 		CRect rcShadow( rc );
@@ -298,15 +296,17 @@ void CTaskPanel::Layout(CRect& rcClient)
 // CTaskBox construction
 
 CTaskBox::CTaskBox()
+	: m_pPanel			( NULL )
+	, m_nHeight			( 0 )
+	, m_bVisible		( TRUE )
+	, m_bOpen			( TRUE )
+	, m_bHover			( FALSE )
+	, m_bPrimary		( FALSE )
+	, m_hIcon			( NULL )
+	, m_hbmWatermark	( NULL )
+	, m_hbmCaptionmark	( NULL )
+	, m_bCaptionCurve	( TRUE )
 {
-	m_pPanel		= NULL;
-	m_nHeight		= 0;
-	m_bVisible		= TRUE;
-	m_bOpen			= TRUE;
-	m_bHover		= FALSE;
-	m_bPrimary		= FALSE;
-	m_hIcon			= NULL;
-	m_bCaptionCurve	= TRUE;
 }
 
 CTaskBox::~CTaskBox()
@@ -390,27 +390,23 @@ void CTaskBox::SetPrimary(BOOL bPrimary)
 	if ( m_pPanel ) m_pPanel->OnChanged();
 }
 
-void CTaskBox::SetWatermark(HBITMAP hBitmap)
+void CTaskBox::SetWatermark(LPCTSTR szWatermark)
 {
-	if ( m_bmWatermark.m_hObject != NULL ) m_bmWatermark.DeleteObject();
-	if ( hBitmap != NULL ) m_bmWatermark.Attach( hBitmap );
+	m_hbmWatermark = Skin.GetWatermark( szWatermark, TRUE );
 }
 
-void CTaskBox::SetCaptionmark(HBITMAP hBitmap, BOOL bDefault)
+void CTaskBox::SetCaptionmark(LPCTSTR szWatermark)
 {
-	if ( m_bmCaptionmark.m_hObject != NULL ) m_bmCaptionmark.DeleteObject();
-	
-	if ( hBitmap != NULL )
-		m_bmCaptionmark.Attach( hBitmap );
-	else if ( bDefault && m_bPrimary && CoolInterface.m_crTaskBoxPrimaryBack == RGB( 30, 87, 199 ) )
-		m_bmCaptionmark.LoadBitmap( IDB_TASKBOX_CAPTION );
-	
+	m_hbmCaptionmark = Skin.GetWatermark( szWatermark, TRUE );
+	if ( ! m_hbmCaptionmark && m_bPrimary && CoolInterface.m_crTaskBoxPrimaryBack == RGB( 30, 87, 199 ) )
+		m_hbmCaptionmark = Skin.LoadBitmap( IDB_TASKBOX_CAPTION, TRUE );
+
 	m_bCaptionCurve = TRUE;
 	
-	if ( m_bmCaptionmark.m_hObject != NULL )
+	if ( m_hbmCaptionmark )
 	{
 		BITMAP pInfo;
-		m_bmCaptionmark.GetBitmap( &pInfo );
+		GetObject( m_hbmCaptionmark, sizeof( BITMAP ), &pInfo );
 		m_bCaptionCurve = pInfo.bmWidth < 176;
 	}
 }
@@ -550,11 +546,7 @@ void CTaskBox::PaintBorders()
 	CSize size= rcc.Size();
 	CDC* pBuffer = CoolInterface.GetBuffer( dc, size );
 	
-	if ( m_bmCaptionmark.m_hObject != NULL )
-	{
-		CoolInterface.DrawWatermark( pBuffer, &rcc, &m_bmCaptionmark );
-	}
-	else
+	if ( ! CoolInterface.DrawWatermark( pBuffer, &rcc, CBitmap::FromHandle( m_hbmCaptionmark ) ) )
 	{
 		pBuffer->FillSolidRect( &rcc, m_bPrimary ?
 			CoolInterface.m_crTaskBoxPrimaryBack : CoolInterface.m_crTaskBoxCaptionBack );
@@ -610,7 +602,7 @@ void CTaskBox::OnPaint()
 	
 	GetClientRect( &rc );	
 
-	if ( ! CoolInterface.DrawWatermark( &dc, &rc, &m_bmWatermark ) )
+	if ( ! CoolInterface.DrawWatermark( &dc, &rc, CBitmap::FromHandle( m_hbmWatermark ) ) )
 	{
 		dc.FillSolidRect( &rc, CoolInterface.m_crTaskBoxClient );
 	}

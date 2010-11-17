@@ -112,15 +112,15 @@ void CIRCPanel::OnSkinChange()
 	LoadString( strCaption, IDS_IRC_PANEL_USERS_CAPTION );
 	m_boxUsers.SetCaption( strCaption );
 
-	SetWatermark( Skin.GetWatermark( _T("CIRCPanel") ) );
-	SetFooter( Skin.GetWatermark( _T("CIRCPanel.Footer") ), TRUE );
+	SetWatermark( _T("CIRCPanel") );
+	SetFooter( _T("CIRCPanel.Footer") );
 
-	m_boxChans.SetWatermark( Skin.GetWatermark( _T("CIRCChannelsBox") ) );
-	m_boxChans.SetCaptionmark( Skin.GetWatermark( _T("CIRCChannelsBox.Caption") ) );
+	m_boxChans.SetWatermark( _T("CIRCChannelsBox") );
+	m_boxChans.SetCaptionmark( _T("CIRCChannelsBox.Caption") );
 	m_boxChans.OnSkinChange();
 
-	m_boxUsers.SetWatermark( Skin.GetWatermark( _T("CIRCUsersBox") ) );
-	m_boxUsers.SetCaptionmark( Skin.GetWatermark( _T("CIRCUsersBox.Caption") ) );
+	m_boxUsers.SetWatermark( _T("CIRCUsersBox") );
+	m_boxUsers.SetCaptionmark( _T("CIRCUsersBox.Caption") );
 	m_boxUsers.OnSkinChange();
 
 	Invalidate();
