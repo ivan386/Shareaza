@@ -130,13 +130,15 @@ void CTransfers::Remove(CTransfer* pTransfer)
 
 void CTransfers::OnRun()
 {
-//	if ( theApp.m_bIsVistaOrNewer )
-//		::SetThreadPriority( GetCurrentThread(), THREAD_MODE_BACKGROUND_BEGIN );
-
 	while ( IsThreadEnabled() )
 	{
-		Sleep( Settings.General.MinTransfersRest );
-		Doze( 50 );
+		Doze( Settings.General.MinTransfersRest );
+
+		if ( ! theApp.m_bLive )
+		{
+			Sleep( 0 );
+			continue;
+		}
 
 		EDClients.OnRun();
 

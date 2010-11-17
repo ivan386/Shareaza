@@ -89,7 +89,7 @@ void CSettings::Load()
 	Add( _T(""), _T("HashIntegrity"), &General.HashIntegrity, true );
 	Add( _T(""), _T("ItWasLimited"), &General.ItWasLimited, false, true );
 	Add( _T(""), _T("MaxDebugLogSize"), &General.MaxDebugLogSize, 10*Mega, Mega, 0, 100, _T(" MB") );
-	Add( _T(""), _T("MinTransfersRest"), &General.MinTransfersRest, 15, 1, 1, 100, _T(" ms") );
+	Add( _T(""), _T("MinTransfersRest"), &General.MinTransfersRest, 50, 1, 1, 100, _T(" ms") );
 	Add( _T(""), _T("Path"), &General.Path );
 	Add( _T(""), _T("LogLevel"), &General.LogLevel, MSG_INFO, 1, MSG_ERROR, MSG_DEBUG, _T(" level") );
 	Add( _T(""), _T("SearchLog"), &General.SearchLog, true );
@@ -302,7 +302,6 @@ void CSettings::Load()
 	Add( _T("Bandwidth"), _T("Downloads"), &Bandwidth.Downloads, 0 );
 	Add( _T("Bandwidth"), _T("HubIn"), &Bandwidth.HubIn, 0, 128, 0, 8192, _T(" Kb/s") );
 	Add( _T("Bandwidth"), _T("HubOut"), &Bandwidth.HubOut, 0, 128, 0, 8192, _T(" Kb/s") );
-	Add( _T("Bandwidth"), _T("HubUploads"), &Bandwidth.HubUploads, 40*128, 128, 0, 4096, _T(" Kb/s") );
 	Add( _T("Bandwidth"), _T("LeafIn"), &Bandwidth.LeafIn, 0, 128, 0, 8192, _T(" Kb/s") );
 	Add( _T("Bandwidth"), _T("LeafOut"), &Bandwidth.LeafOut, 0, 128, 0, 8192, _T(" Kb/s") );
 	Add( _T("Bandwidth"), _T("PeerIn"), &Bandwidth.PeerIn, 0, 128, 0, 8192, _T(" Kb/s") );

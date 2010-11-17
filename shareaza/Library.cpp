@@ -503,8 +503,15 @@ void CLibrary::OnRun()
 {
 	while ( IsThreadEnabled() )
 	{
-		ThreadScan();
 		Doze( 1000 );
+
+		if ( ! theApp.m_bLive )
+		{
+			Sleep( 0 );
+			continue;
+		}
+
+		ThreadScan();
 	}
 }
 

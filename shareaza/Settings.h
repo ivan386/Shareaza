@@ -300,7 +300,6 @@ public:
 		DWORD		UdpOut;
 		DWORD		Downloads;					// Inbound speed limit in Bytes/seconds
 		DWORD		Uploads;					// Outbound speed limit in Bytes/seconds
-		DWORD		HubUploads;
 	} Bandwidth;
 
 	struct sCommunity

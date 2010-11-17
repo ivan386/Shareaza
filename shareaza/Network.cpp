@@ -756,16 +756,19 @@ void CNetwork::OnRun()
 	{
 		while ( IsThreadEnabled() )
 		{
-			HostCache.PruneOldHosts();	// Every minute
-
-			Sleep( 50 );
 			Doze( 100 );
 
 			if ( ! theApp.m_bLive )
+			{
+				Sleep( 0 );
 				continue;
+			}
 
 			if ( UPnPFinder->IsAsyncFindRunning() )
+			{
+				Sleep( 0 );
 				continue;
+			}
 
 			// Refresh UPnP port mappings
 			DWORD tNow = GetTickCount();
@@ -791,6 +794,8 @@ void CNetwork::OnRun()
 			Neighbours.OnRun();
 
 			RunJobs();
+
+			HostCache.PruneOldHosts();	// Every minute
 		}
 	}
 

@@ -362,18 +362,9 @@ DWORD CUploadQueue::GetBandwidthLimit(DWORD nTransfers) const
 		CUploadQueue* pOther = UploadQueues.GetNext( pos );
 		if ( pOther != this ) nTotalPoints += pOther->GetBandwidthPoints();
 	}
-	
-	DWORD nTotal = Settings.Connection.OutSpeed * 128;
-	DWORD nLimit = ( Settings.Uploads.HubUnshare && Neighbours.IsG2Hub() ) ?
-		Settings.Bandwidth.HubUploads : Settings.Bandwidth.Uploads;
-	if ( nLimit == 0 || nLimit > nTotal ) nLimit = nTotal;
-	
-	// Limit if torrents are active
-	if ( Uploads.m_nTorrentSpeed > 0 ) 
-		nLimit = ( nLimit * Settings.BitTorrent.BandwidthPercentage ) / 100;
-	
-	return nLimit * ( nLocalPoints + Settings.Uploads.ThrottleMode ) /
-		max( 1ul, nTotalPoints );
+
+	return Uploads.GetBandwidthLimit() *
+		( nLocalPoints + Settings.Uploads.ThrottleMode ) / max( 1ul, nTotalPoints );
 }
 
 DWORD CUploadQueue::GetAvailableBandwidth() const

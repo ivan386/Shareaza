@@ -384,6 +384,12 @@ void CLibraryBuilder::OnRun()
 	{
 		Sleep( 100 );	// Max 10 files per second
 
+		if ( ! theApp.m_bLive )
+		{
+			Sleep( 0 );
+			continue;
+		}
+
 		CString sPath;
 		DWORD nIndex = GetNextFileToHash( sPath );
 

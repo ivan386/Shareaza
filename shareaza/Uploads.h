@@ -57,6 +57,8 @@ public:
 public:
 	void		SetStable(DWORD nSpeed);
 	DWORD		GetBandwidth() const;
+	// Calculate upload limit (Bytes/s)
+	DWORD		GetBandwidthLimit() const;
 	void		OnRun();
 	BOOL		OnAccept(CConnection* pConnection);
 	// Rename, delete or release uploading file.
