@@ -1,7 +1,7 @@
 //
 // LibraryList.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -30,7 +30,7 @@ class CLibraryListItem
 public:
 	CLibraryListItem();
 	CLibraryListItem(DWORD val);
-	CLibraryListItem(CLibraryFile* val);
+	CLibraryListItem(const CLibraryFile* val);
 	CLibraryListItem(CAlbumFolder* val);
 	CLibraryListItem(CLibraryFolder* val);
 	CLibraryListItem(const CLibraryListItem& val);

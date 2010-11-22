@@ -159,9 +159,9 @@ BOOL CLibraryFolder::CheckFolder(CLibraryFolder* pFolder, BOOL bRecursive) const
 	return FALSE;
 }
 
-INT_PTR CLibraryFolder::GetFolderCount() const
+DWORD CLibraryFolder::GetFolderCount() const
 {
-	return m_pFolders.GetCount();
+	return (DWORD)m_pFolders.GetCount();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -188,18 +188,19 @@ CLibraryFile* CLibraryFolder::GetFile(LPCTSTR pszName) const
 	return ( m_pFiles.Lookup( strName, pOutput ) ) ? pOutput : NULL;
 }
 
-INT_PTR CLibraryFolder::GetFileCount() const
+DWORD CLibraryFolder::GetFileCount() const
 {
-	return m_pFiles.GetCount();
+	return (DWORD)m_pFiles.GetCount();
 }
 
-int CLibraryFolder::GetFileList(CLibraryList* pList, BOOL bRecursive) const
+DWORD CLibraryFolder::GetFileList(CLibraryList* pList, BOOL bRecursive) const
 {
-	int nCount = 0;
+	DWORD nCount = 0;
 
 	for ( POSITION pos = GetFileIterator() ; pos ; )
 	{
-		pList->CheckAndAdd( GetNextFile( pos ) );
+		const CLibraryFile* pFile = GetNextFile( pos );
+		pList->CheckAndAdd( pFile );
 		nCount++;
 	}
 
@@ -207,26 +208,31 @@ int CLibraryFolder::GetFileList(CLibraryList* pList, BOOL bRecursive) const
 	{
 		for ( POSITION pos = GetFolderIterator() ; pos ; )
 		{
-			GetNextFolder( pos )->GetFileList( pList, bRecursive );
+			const CLibraryFolder* pFolder = GetNextFolder( pos );
+			nCount += pFolder->GetFileList( pList, bRecursive );
 		}
 	}
 
 	return nCount;
 }
 
-int CLibraryFolder::GetSharedCount() const
+DWORD CLibraryFolder::GetSharedCount(BOOL bRecursive) const
 {
-	int nCount = 0;
+	DWORD nCount = 0;
 
 	for ( POSITION pos = GetFileIterator() ; pos ; )
 	{
-		CLibraryFile* pFile = GetNextFile( pos );
+		const CLibraryFile* pFile = GetNextFile( pos );
 		if ( pFile->IsShared() ) nCount++;
 	}
 
-	for ( POSITION pos = GetFolderIterator() ; pos ; )
+	if ( bRecursive )
 	{
-		nCount += GetNextFolder( pos )->GetSharedCount();
+		for ( POSITION pos = GetFolderIterator() ; pos ; )
+		{
+			const CLibraryFolder* pFolder = GetNextFolder( pos );
+			nCount += pFolder->GetSharedCount( bRecursive );
+		}
 	}
 
 	return nCount;
@@ -975,7 +981,7 @@ STDMETHODIMP CLibraryFolder::XLibraryFolders::get_Item(VARIANT vIndex, ILibraryF
 
 		if ( FAILED( VariantChangeType( &va, (VARIANT FAR*)&vIndex, 0, VT_I4 ) ) )
 			return E_INVALIDARG;
-		if ( va.lVal < 0 || va.lVal >= pThis->GetFolderCount() )
+		if ( va.lVal < 0 || va.lVal >= (LONG)pThis->GetFolderCount() )
 			return E_INVALIDARG;
 
 		for ( POSITION pos = pThis->GetFolderIterator() ; pos ; )
@@ -1047,7 +1053,7 @@ STDMETHODIMP CLibraryFolder::XLibraryFiles::get_Item(VARIANT vIndex, ILibraryFil
 
 		if ( FAILED( VariantChangeType( &va, (VARIANT FAR*)&vIndex, 0, VT_I4 ) ) )
 			return E_INVALIDARG;
-		if ( va.lVal < 0 || va.lVal >= pThis->GetFileCount() )
+		if ( va.lVal < 0 || va.lVal >= (LONG)pThis->GetFileCount() )
 			return E_INVALIDARG;
 
 		for ( POSITION pos = pThis->GetFileIterator() ; pos ; )

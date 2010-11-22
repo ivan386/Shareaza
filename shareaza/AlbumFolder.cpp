@@ -328,21 +328,25 @@ DWORD CAlbumFolder::GetFileCount() const
 	return (DWORD)m_pFiles.GetCount();
 }
 
-int CAlbumFolder::GetSharedCount() const
+DWORD CAlbumFolder::GetSharedCount(BOOL bRecursive) const
 {
 	ASSUME_LOCK( Library.m_pSection );
 
-	int nCount = 0;
+	DWORD nCount = 0;
 
 	for ( POSITION pos = GetFileIterator() ; pos ; )
 	{
-		CLibraryFile* pFile = GetNextFile( pos );
+		const CLibraryFile* pFile = GetNextFile( pos );
 		if ( pFile->IsShared() ) nCount++;
 	}
 
-	for ( POSITION pos = GetFolderIterator() ; pos ; )
+	if ( bRecursive )
 	{
-		nCount += GetNextFolder( pos )->GetSharedCount();
+		for ( POSITION pos = GetFolderIterator() ; pos ; )
+		{
+			const CAlbumFolder* pFolder = GetNextFolder( pos );
+			nCount += pFolder->GetSharedCount( bRecursive );
+		}
 	}
 
 	return nCount;

@@ -848,7 +848,7 @@ int CHostCache::ImportMET(CFile* pFile)
 		 nVersion != ED2K_MET_I64TAGS ) return 0;
 	
 	int nServers = 0;
-	UINT nCount = 0;
+	DWORD nCount = 0;
 	
 	pFile->Read( &nCount, sizeof(nCount) );
 	
@@ -856,7 +856,7 @@ int CHostCache::ImportMET(CFile* pFile)
 	{
 		IN_ADDR pAddress;
 		WORD nPort;
-		UINT nTags;
+		DWORD nTags;
 		
 		if ( pFile->Read( &pAddress, sizeof(pAddress) ) != sizeof(pAddress) ) break;
 		if ( pFile->Read( &nPort, sizeof(nPort) ) != sizeof(nPort) ) break;
@@ -901,9 +901,9 @@ int CHostCache::ImportMET(CFile* pFile)
 int CHostCache::ImportNodes(CFile* pFile)
 {
 	int nServers = 0;
-	UINT nVersion = 0;
+	DWORD nVersion = 0;
 
-	UINT nCount;
+	DWORD nCount;
 	if ( pFile->Read( &nCount, sizeof( nCount ) ) != sizeof( nCount ) )
 		return 0;
 	if ( nCount == 0 )

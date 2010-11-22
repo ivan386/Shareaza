@@ -391,13 +391,13 @@ void CLibraryDictionary::Serialize(CArchive& ar, const int nVersion)
 
 	if ( ar.IsStoring() )
 	{
-		ar << (UINT)m_oWordMap.GetCount();
+		ar << (DWORD)m_oWordMap.GetCount();
 	}
 	else
 	{
 		if ( nVersion >= 29 )
 		{
-			UINT nWordsCount = 0u;
+			DWORD nWordsCount = 0u;
 			ar >> nWordsCount;
 			m_oWordMap.InitHashTable( GetBestHashTableSize( nWordsCount ) );
 		}

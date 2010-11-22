@@ -1721,7 +1721,7 @@ BOOL CUploadTransferHTTP::RequestHostBrowse()
 	{
 		if ( Settings.Community.ServeFiles )
 		{
-			CLocalSearch pSearch( NULL, &pBuffer, PROTOCOL_G1 );
+			CLocalSearch pSearch( &pBuffer, PROTOCOL_G1 );
 			pSearch.Execute( 0 );
 		}
 	}
@@ -1739,9 +1739,8 @@ BOOL CUploadTransferHTTP::RequestHostBrowse()
 		
 		if ( Settings.Community.ServeFiles )
 		{
-			CLocalSearch pSearch( NULL, &pBuffer, PROTOCOL_G2 );
+			CLocalSearch pSearch( &pBuffer, PROTOCOL_G2 );
 			pSearch.Execute( 0 );
-			pSearch.WriteVirtualTree();
 		}
 		
 		if ( Settings.Community.ServeProfile && MyProfile.IsValid() )

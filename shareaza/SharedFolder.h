@@ -1,7 +1,7 @@
 //
 // SharedFolder.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -18,9 +18,6 @@
 // along with Shareaza; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-
-#if !defined(AFX_SHAREDFOLDER_H__3538DA5D_21AB_428B_90C7_E1BE8F1B927E__INCLUDED_)
-#define AFX_SHAREDFOLDER_H__3538DA5D_21AB_428B_90C7_E1BE8F1B927E__INCLUDED_
 
 #pragma once
 
@@ -66,7 +63,7 @@ public:
 	CLibraryFolder*	GetFolderByName(LPCTSTR pszName) const;
 	CLibraryFolder*	GetFolderByPath(LPCTSTR pszPath) const;
 	BOOL			CheckFolder(CLibraryFolder* pFolder, BOOL bRecursive = FALSE) const;
-	INT_PTR			GetFolderCount() const;
+	DWORD			GetFolderCount() const;
 	// Add new or get existing file
 	CLibraryFile*	AddFile(LPCTSTR szName, BOOL& bNew);
 	// Remove existing file recursively
@@ -75,9 +72,9 @@ public:
 	POSITION		GetFileIterator() const;
 	CLibraryFile*	GetNextFile(POSITION& pos) const;
 	CLibraryFile*	GetFile(LPCTSTR pszName) const;
-	INT_PTR			GetFileCount() const;
-	int				GetFileList(CLibraryList* pList, BOOL bRecursive) const;
-	int				GetSharedCount() const;
+	DWORD			GetFileCount() const;
+	DWORD			GetFileList(CLibraryList* pList, BOOL bRecursive) const;
+	DWORD			GetSharedCount(BOOL bRecursive) const;
 	CString			GetRelativeName() const;
 
 	void			Scan();
@@ -138,5 +135,3 @@ protected:
 
 	DECLARE_INTERFACE_MAP()
 };
-
-#endif // !defined(AFX_SHAREDFOLDER_H__3538DA5D_21AB_428B_90C7_E1BE8F1B927E__INCLUDED_)

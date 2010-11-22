@@ -80,7 +80,7 @@ public:
 	POSITION		GetFileIterator() const;
 	CLibraryFile*	GetNextFile(POSITION& pos) const;
 	DWORD			GetFileCount() const;
-	int				GetSharedCount() const;
+	DWORD			GetSharedCount(BOOL bRecursive) const;
 	void			RemoveFile(CLibraryFile* pFile);
 	CAlbumFolder*	FindFile(CLibraryFile* pFile);
 	int				GetFileList(CLibraryList* pList, BOOL bRecursive) const;

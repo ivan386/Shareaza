@@ -1,7 +1,7 @@
 //
 // LibraryMaps.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -782,9 +782,9 @@ void CLibraryMaps::Serialize1(CArchive& ar, int nVersion)
 	{
 		ar << m_nNextIndex;
 
-		ar << (UINT)m_pIndexMap.GetCount();
-		ar << (UINT)m_pNameMap.GetCount();
-		ar << (UINT)m_pPathMap.GetCount();
+		ar << (DWORD)m_pIndexMap.GetCount();
+		ar << (DWORD)m_pNameMap.GetCount();
+		ar << (DWORD)m_pPathMap.GetCount();
 	}
 	else
 	{
@@ -794,15 +794,15 @@ void CLibraryMaps::Serialize1(CArchive& ar, int nVersion)
 
 		if ( nVersion >= 28 )
 		{
-			UINT nIndexMapCount = 0;
+			DWORD nIndexMapCount = 0;
 			ar >> nIndexMapCount;
 			m_pIndexMap.InitHashTable( GetBestHashTableSize( nIndexMapCount ) );
 
-			UINT nNameMapCount = 0;
+			DWORD nNameMapCount = 0;
 			ar >> nNameMapCount;
 			m_pNameMap.InitHashTable( GetBestHashTableSize( nNameMapCount ) );
 
-			UINT nPathMapCount = 0;
+			DWORD nPathMapCount = 0;
 			ar >> nPathMapCount;
 			m_pPathMap.InitHashTable( GetBestHashTableSize( nPathMapCount ) );
 		}

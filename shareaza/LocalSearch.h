@@ -42,12 +42,15 @@ class CLocalSearch
 public:
 	CLocalSearch(CQuerySearch* pSearch, const CNeighbour* pNeighbour);
 	CLocalSearch(CQuerySearch* pSearch, PROTOCOLID nProtocol);
-	CLocalSearch(CQuerySearch* pSearch, CBuffer* pBuffer, PROTOCOLID nProtocol);
+	CLocalSearch(CBuffer* pBuffer, PROTOCOLID nProtocol);
 
 	SOCKADDR_IN		m_pEndpoint;	// Endpoint or neighbour address
 	BOOL			m_bUDP;			// Send packets via UDP or TCP
 
-// Attributes
+	// Search library and downloads (-1 - use default limit, 0 - no limit)
+	bool		Execute(INT_PTR nMaximum = -1, bool bPartial = true, bool bShared = true);
+	const CQuerySearch* GetSearch() const { return m_pSearch; }
+
 protected:
 	CQuerySearchPtr	m_pSearch;
 	CBuffer*		m_pBuffer;		// Save packets to this buffer
@@ -55,14 +58,6 @@ protected:
 	PROTOCOLID		m_nProtocol;
 	typedef CMap< CSchemaPtr, CSchemaPtr, CXMLElement*, CXMLElement* > CSchemaMap;
 
-// Operations
-public:
-	// Search library and downloads (-1 - use default limit, 0 - no limit)
-	bool		Execute(INT_PTR nMaximum = -1, bool bPartial = true, bool bShared = true);
-	void		WriteVirtualTree();
-	const CQuerySearch* GetSearch() const{ return m_pSearch; }
-
-protected:
 	bool		ExecuteSharedFiles(INT_PTR nMaximum, INT_PTR& nHits);
 	bool		ExecutePartialFiles(INT_PTR nMaximum, INT_PTR& nHits);
 	template< typename T > void SendHits(const CList< const T * >& oFiles);
@@ -74,7 +69,7 @@ protected:
 	void		AddHitG2(CG2Packet* pPacket, CSchemaMap& pSchemas, CDownload const * const pDownload, int nIndex);
 	void		AddHitDC(CDCPacket* pPacket, CSchemaMap& pSchemas, CDownload const * const pDownload, int nIndex);
 	template< typename T > bool IsValidForHit(const T * pHit) const;
-protected:
+
 	CPacket*	CreatePacket();
 	CG1Packet*	CreatePacketG1();
 	CG2Packet*	CreatePacketG2();

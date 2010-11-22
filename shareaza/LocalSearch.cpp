@@ -85,8 +85,8 @@ CLocalSearch::CLocalSearch(CQuerySearch* pSearch, PROTOCOLID nProtocol) :
 {
 }
 
-CLocalSearch::CLocalSearch(CQuerySearch* pSearch, CBuffer* pBuffer, PROTOCOLID nProtocol) :
-	m_pSearch		( pSearch ),
+CLocalSearch::CLocalSearch(CBuffer* pBuffer, PROTOCOLID nProtocol) :
+	m_pSearch		( NULL ),
 	m_pEndpoint		(),
 	m_pBuffer		( pBuffer ),
 	m_bUDP			( FALSE ),
@@ -216,26 +216,35 @@ bool CLocalSearch::ExecuteSharedFiles(INT_PTR nMaximum, INT_PTR& nHits)
 		// Ghost files only for G2
 		m_nProtocol != PROTOCOL_G2 ) );
 
-	if ( ! pFiles.get() )
-		// No files found
-		return true;
-
-	CFileList oFilesInPacket;
-
-	for ( POSITION pos = pFiles->GetHeadPosition() ;
-		pos && ( ! nMaximum || ( nHits + oFilesInPacket.GetCount() < nMaximum ) ); )
+	if ( pFiles.get() )
 	{
-		const CLibraryFile* pFile = pFiles->GetNext( pos );
+		CFileList oFilesInPacket;
 
-		if ( IsValidForHit( pFile ) )
+		for ( POSITION pos = pFiles->GetHeadPosition() ;
+			pos && ( ! nMaximum || ( nHits + oFilesInPacket.GetCount() < nMaximum ) ); )
 		{
-			oFilesInPacket.AddTail( pFile );
+			const CLibraryFile* pFile = pFiles->GetNext( pos );
+
+			if ( IsValidForHit( pFile ) )
+			{
+				oFilesInPacket.AddTail( pFile );
+			}
 		}
+
+		SendHits( oFilesInPacket );
+
+		nHits += oFilesInPacket.GetCount();
 	}
 
-	SendHits( oFilesInPacket );
+	// Is it a browser request?
+	if ( ! m_pSearch && m_nProtocol == PROTOCOL_G2 )
+	{
+		// Send virtual tree		
+		DispatchPacket( AlbumToPacket( Library.GetAlbumRoot() ) );
 
-	nHits += oFilesInPacket.GetCount();
+		// Send physical tree
+		DispatchPacket( FoldersToPacket() );
+	}
 
 	return true;
 }
@@ -910,12 +919,9 @@ CG2Packet* CLocalSearch::CreatePacketG2()
 	pPacket->WritePacket( G2_PACKET_NODE_GUID, 16 );
 	pPacket->Write( Hashes::Guid( MyProfile.oGUID ) );
 
-	//if ( Network.IsListening() )
-	{
-		pPacket->WritePacket( G2_PACKET_NODE_ADDRESS, 6 );
-		pPacket->WriteLongLE( Network.m_pHost.sin_addr.S_un.S_addr );
-		pPacket->WriteShortBE( htons( Network.m_pHost.sin_port ) );
-	}
+	pPacket->WritePacket( G2_PACKET_NODE_ADDRESS, 6 );
+	pPacket->WriteLongLE( Network.m_pHost.sin_addr.s_addr );
+	pPacket->WriteShortBE( htons( Network.m_pHost.sin_port ) );
 
 	pPacket->WritePacket( G2_PACKET_VENDOR, 4 );
 	pPacket->WriteString( VENDOR_CODE, FALSE );
@@ -1143,7 +1149,8 @@ void CLocalSearch::WriteTrailerDC(CDCPacket* /*pPacket*/, CSchemaMap& /*pSchemas
 
 void CLocalSearch::DispatchPacket(CPacket* pPacket)
 {
-	ASSERT( pPacket != NULL );
+	if ( ! pPacket )
+		return;
 
 	if ( m_pBuffer )
 	{
@@ -1171,36 +1178,19 @@ void CLocalSearch::DispatchPacket(CPacket* pPacket)
 //////////////////////////////////////////////////////////////////////
 // CLocalSearch physical and virtual folder tree
 
-void CLocalSearch::WriteVirtualTree()
-{
-	CSingleLock oLock( &Library.m_pSection );
-	if ( oLock.Lock( 1000 ) )
-	{
-		CG2Packet* pPacket = AlbumToPacket( Library.GetAlbumRoot() );
-		oLock.Unlock();
-		if ( pPacket ) DispatchPacket( pPacket );
-	}
-
-	if ( oLock.Lock( 1000 ) )
-	{
-		CG2Packet* pPacket = FoldersToPacket();
-		oLock.Unlock();
-		if ( pPacket ) DispatchPacket( pPacket );
-	}
-}
-
 CG2Packet* CLocalSearch::AlbumToPacket(CAlbumFolder* pFolder)
 {
 	if ( pFolder == NULL ) return NULL;
-
 	if ( pFolder->m_pSchema != NULL && pFolder->m_pSchema->m_bPrivate ) return NULL;
-	if ( pFolder->GetSharedCount() == 0 ) return NULL;
+	if ( pFolder->GetSharedCount( TRUE ) == 0 ) return NULL;
 
 	CG2Packet* pPacket = CG2Packet::New( G2_PACKET_VIRTUAL_FOLDER, TRUE );
+	if ( ! pPacket ) return NULL;
 
 	if ( pFolder->m_pSchema != NULL )
 	{
-		CXMLElement* pXML = pFolder->m_pSchema->Instantiate( TRUE );
+		auto_ptr< CXMLElement > pXML( pFolder->m_pSchema->Instantiate( TRUE ) );
+		if ( ! pXML.get() ) return NULL;
 
 		if ( pFolder->m_pXML != NULL )
 		{
@@ -1208,13 +1198,13 @@ CG2Packet* CLocalSearch::AlbumToPacket(CAlbumFolder* pFolder)
 		}
 		else
 		{
-			CXMLElement* pBody = pXML->AddElement( pFolder->m_pSchema->m_sSingular );
-			pBody->AddAttribute( pFolder->m_pSchema->GetFirstMemberName(), pFolder->m_sName );
+			if ( CXMLElement* pBody = pXML->AddElement( pFolder->m_pSchema->m_sSingular ) )
+			{
+				pBody->AddAttribute( pFolder->m_pSchema->GetFirstMemberName(), pFolder->m_sName );
+			}
 		}
 
 		CString strXML = pXML->ToString();
-		delete pXML;
-
 		pPacket->WritePacket( G2_PACKET_METADATA, pPacket->GetStringLen( strXML ) );
 		pPacket->WriteString( strXML, FALSE );
 	}
@@ -1228,12 +1218,15 @@ CG2Packet* CLocalSearch::AlbumToPacket(CAlbumFolder* pFolder)
 		}
 	}
 
-	pPacket->WritePacket( G2_PACKET_FILES, static_cast< DWORD >( pFolder->GetFileCount() * 4 ) );
-
-	for ( POSITION pos = pFolder->GetFileIterator() ; pos ; )
+	if ( DWORD nFiles = pFolder->GetSharedCount( FALSE ) )
 	{
-		CLibraryFile* pFile = pFolder->GetNextFile( pos );
-		pPacket->WriteLongBE( pFile->m_nIndex );
+		pPacket->WritePacket( G2_PACKET_FILES, nFiles * 4u );
+
+		for ( POSITION pos = pFolder->GetFileIterator() ; pos ; )
+		{
+			const CLibraryFile* pFile = pFolder->GetNextFile( pos );
+			if ( pFile->IsShared() ) pPacket->WriteLongBE( pFile->m_nIndex );
+		}
 	}
 
 	return pPacket;
@@ -1242,6 +1235,7 @@ CG2Packet* CLocalSearch::AlbumToPacket(CAlbumFolder* pFolder)
 CG2Packet* CLocalSearch::FoldersToPacket()
 {
 	CG2Packet* pPacket = CG2Packet::New( G2_PACKET_PHYSICAL_FOLDER, TRUE );
+	if ( ! pPacket ) return NULL;
 
 	for ( POSITION pos = LibraryFolders.GetFolderIterator() ; pos ; )
 	{
@@ -1258,10 +1252,10 @@ CG2Packet* CLocalSearch::FoldersToPacket()
 CG2Packet* CLocalSearch::FolderToPacket(CLibraryFolder* pFolder)
 {
 	if ( pFolder == NULL ) return NULL;
-
-	if ( pFolder->GetSharedCount() == 0 ) return NULL;
+	if ( pFolder->GetSharedCount( TRUE ) == 0 ) return NULL;
 
 	CG2Packet* pPacket = CG2Packet::New( G2_PACKET_PHYSICAL_FOLDER, TRUE );
+	if ( ! pPacket ) return NULL;
 
 	pPacket->WritePacket( G2_PACKET_DESCRIPTIVE_NAME, pPacket->GetStringLen( pFolder->m_sName ) );
 	pPacket->WriteString( pFolder->m_sName, FALSE );
@@ -1275,12 +1269,15 @@ CG2Packet* CLocalSearch::FolderToPacket(CLibraryFolder* pFolder)
 		}
 	}
 
-	pPacket->WritePacket( G2_PACKET_FILES, static_cast< DWORD >( pFolder->GetFileCount() * 4 ) );
-
-	for ( POSITION pos = pFolder->GetFileIterator() ; pos ; )
+	if ( DWORD nFiles = pFolder->GetSharedCount( FALSE ) )
 	{
-		CLibraryFile* pFile = pFolder->GetNextFile( pos );
-		pPacket->WriteLongBE( pFile->m_nIndex );
+		pPacket->WritePacket( G2_PACKET_FILES, nFiles * 4u );
+
+		for ( POSITION pos = pFolder->GetFileIterator() ; pos ; )
+		{
+			const CLibraryFile* pFile = pFolder->GetNextFile( pos );
+			if ( pFile->IsShared() ) pPacket->WriteLongBE( pFile->m_nIndex );
+		}
 	}
 
 	return pPacket;

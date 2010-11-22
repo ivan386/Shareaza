@@ -539,9 +539,7 @@ CQueryHit* CQueryHit::FromG2Packet(CG2Packet* pPacket, int* pnHops)
 				break;
 
 			case G2_PACKET_PEER_FIREWALLED:
-#ifndef LAN_MODE
 				bPush = TRUE;
-#endif // LAN_MODE
 				break;
 
 			case G2_PACKET_PEER_STATUS:
@@ -600,9 +598,13 @@ CQueryHit* CQueryHit::FromG2Packet(CG2Packet* pPacket, int* pnHops)
 		return NULL;
 	}
 
-	if ( !bPush )
+	if ( ! bPush )
 		bPush = ( nPort == 0 || Network.IsFirewalledAddress( (IN_ADDR*)&nAddress ) );
-	
+
+#ifdef LAN_MODE
+	bPush = FALSE;	// No push in LAN mode
+#endif // LAN_MODE
+
 	DWORD nIndex = 0;
 	for ( CQueryHit* pHit = pFirstHit ; pHit ; pHit = pHit->m_pNext, nIndex++ )
 	{
