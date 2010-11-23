@@ -895,17 +895,17 @@ BOOL CG2Neighbour::ParseKHLPacket(CG2Packet* pPacket, const SOCKADDR_IN* pHost)
 							if ( nInner >= 4 )
 								nLeafLimit = pPacket->ReadShortBE();
 						}
-						//else if ( nInnerType == G2_PACKET_NODE_GUID && nInner >= 16 )
-						//{
-						//	// Used by Morpheus
+						else if ( nInnerType == G2_PACKET_NODE_GUID && nInner >= 16 )
+						{
+							// Used by Morpheus
 						//	pPacket->Read( oNodeID );
-						//}
-						//else if ( nInnerType == G2_PACKET_LIBRARY_STATUS && nInner >= 8 )
-						//{
-						//	// Used by Morpheus
+						}
+						else if ( nInnerType == G2_PACKET_LIBRARY_STATUS && nInner >= 8 )
+						{
+							// Used by Morpheus
 						//	nFileCount	= pPacket->ReadLongBE();
 						//	nFileVolume	= pPacket->ReadLongBE();
-						//}
+						}
 						else
 							bInvalid = TRUE;
 

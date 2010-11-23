@@ -597,7 +597,7 @@ BOOL CShakeNeighbour::ReadResponse()
 	if ( ! Read( strLine ) ) return TRUE; // The line is still arriving, return true to try this method again
 	if ( strLine.GetLength() > HTTP_HEADER_MAX_LINE ) strLine = _T("#LINE_TOO_LONG#"); // Make sure the line isn't too long
 
-	theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING, _T("%s >> HANDSHAKE: %s"), (LPCTSTR)m_sAddress, (LPCTSTR)strLine ); // Report handshake lines
+	if ( m_bInitiated ) theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING, _T("%s >> HANDSHAKE: %s"), (LPCTSTR)m_sAddress, (LPCTSTR)strLine ); // Report handshake lines
 
 	// If we initiated the connection to the remote computer, and now it's responding with "GNUTELLA OK"
 	if ( strLine == _T("GNUTELLA OK") && m_bInitiated )
@@ -913,7 +913,7 @@ BOOL CShakeNeighbour::OnHeadersComplete()
 	}
 
 	// These codes for HostCache should be here and ones in HeaderLine should just store these info in String array for this part of Process.
-	if ( !m_bInitiated || m_bBadClient )
+	if ( ! m_bInitiated || m_bBadClient )
 	{
 		// We don't want accept Hubs or UltraPeers from clients that have bugs that pollute
 		// the host cache, not even the cache from incoming connections. this part should be 
@@ -1195,48 +1195,16 @@ BOOL CShakeNeighbour::OnHeadersCompleteG2()
 			m_nNodeType = ntHub;
 		}
 
-		// If it's a leaf, check version, etc
-		if ( m_nNodeType == ntLeaf ) 
-		{
-			if ( m_bBadClient ) 
-			{
-				// We don't allow these to act as a leaf. (resource use, etc)
-				theApp.Message( MSG_ERROR, _T("Rejecting bad leaf client %s") , (LPCTSTR)m_sUserAgent );
-				Write( _P("GNUTELLA/0.6 503 Refused\r\n") );
-
-				SendMinimalHeaders();  
-				DelayClose( IDS_HANDSHAKE_SURPLUS );
-				return FALSE; 
-			}
-			else if ( ! m_bClientExtended )
-			{
-				// Check to see if we have enough free leaf slots.
-				if ( Neighbours.GetCount(PROTOCOL_G2, nrsConnected, ntLeaf ) > ( Settings.Gnutella2.NumLeafs - 5 ) )
-				{
-					SendHostHeaders( _P("GNUTELLA/0.6 503 Maximum connections reached") );
-					DelayClose( IDS_HANDSHAKE_SURPLUS );
-					return FALSE;
-				}
-			}
-		}
-
-		// If we don't need another connection to the role the remote computer is acting in
-		if ((
-				// If the remote computer is a leaf and we don't need any more
-				m_nNodeType == ntLeaf                        // This connection is to a leaf below us
-				&& ! Neighbours.NeedMoreHubs( PROTOCOL_G2 )  // And the neighbours object says we don't need more Gnutella2 hubs or leaves
-				&& ! Neighbours.NeedMoreLeafs( PROTOCOL_G2 )
-			) || (
-
-				// Or, if the remote computer is a hub and we don't need any more
-				m_nNodeType != ntLeaf                        // This connection isn't to a leaf below us
-				&& ! Neighbours.NeedMoreHubs( PROTOCOL_G2 )  // And the neighbours object says we don't need any more Gnutella2 hubs
-			))
+		// If we don't need this connection
+		if ( ( m_nNodeType == ntLeaf && m_bBadClient ) ||
+			 ( m_nNodeType == ntLeaf && ! Neighbours.NeedMoreHubs( PROTOCOL_G2 ) && ! Neighbours.NeedMoreLeafs( PROTOCOL_G2 ) ) ||
+			 ( m_nNodeType != ntLeaf && ! Neighbours.NeedMoreHubs( PROTOCOL_G2 ) ) ||
+			 ( m_nNodeType == ntLeaf && ! m_bClientExtended && Neighbours.GetCount(PROTOCOL_G2, nrsConnected, ntLeaf ) > Settings.Gnutella2.NumLeafs - 5 ) )
 		{
 			// Tell the remote computer that we can't connect because we have too many connections already, and close the connection
 			SendHostHeaders( _P("GNUTELLA/0.6 503 Maximum connections reached") ); // Send this error code along with some more IP addresses it can try
-			DelayClose( IDS_HANDSHAKE_SURPLUS ); // Close the connection, but not until we've written the buffered outgoing data first
-			return FALSE; // Return false all the way back to CHandshakes::RunHandshakes, which will delete this object
+			DelayClose( IDS_HANDSHAKE_SURPLUS );
+			return FALSE;
 
 		} // Or, if we're both in the same role on the network
 		else if ( ( m_nNodeType == ntHub && ( Settings.Gnutella2.ClientMode == MODE_HUB ) ) ||  // We're both hubs
@@ -1449,17 +1417,16 @@ BOOL CShakeNeighbour::OnHeadersCompleteG1()
 		}
 
 		// If we don't need this connection
-		if ( ( m_nNodeType == ntLeaf && ! Neighbours.NeedMoreHubs( PROTOCOL_G1) &&		// This connection is to a leaf below us, and we don't need more hubs/leaves
-			 ! Neighbours.NeedMoreLeafs( PROTOCOL_G1 ) ) ||
-			 ( m_nNodeType != ntLeaf && ! Neighbours.NeedMoreHubs( PROTOCOL_G1 ) ) ||	// This connection is to a hub and we don't need more hubs
-			 ( m_nNodeType != ntHub && m_bBadClient ) )	// This is an obsolete version of Shareaza
+		if ( ( m_nNodeType == ntLeaf && m_bBadClient ) ||
+			 ( m_nNodeType == ntLeaf && ! Neighbours.NeedMoreHubs( PROTOCOL_G1 ) && ! Neighbours.NeedMoreLeafs( PROTOCOL_G1 ) ) ||
+			 ( m_nNodeType != ntLeaf && ! Neighbours.NeedMoreHubs( PROTOCOL_G1 ) ) )
 		{
 			// Tell the remote computer we can't connect because we already have too many connections
 			SendHostHeaders( _P("GNUTELLA/0.6 503 Maximum connections reached") );
-			DelayClose( IDS_HANDSHAKE_SURPLUS ); // Send the buffer then close the socket
-			return FALSE; // Return false all the way back to CHandshakes::RunHandshakes, which will delete this object
+			DelayClose( IDS_HANDSHAKE_SURPLUS );
+			return FALSE;
 
-		} // Weed out this nonsense combination that should never happen
+		} // Or, if we're both in the same role on the network
 		else if ( ( m_nNodeType == ntHub && ( Settings.Gnutella1.ClientMode == MODE_ULTRAPEER ) ) || // This connection is up to a hub, and we are a hub
 				  ( m_nNodeType == ntLeaf && ( Settings.Gnutella1.ClientMode == MODE_LEAF ) ) )      // Or, this connection is down to a leaf like us
 		{
