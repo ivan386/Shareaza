@@ -784,9 +784,7 @@ void CNetwork::OnRun()
 				Datagrams.OnRun();
 				SearchManager.OnRun();
 				QueryHashMaster.Build();
-
-				if ( CrawlSession.m_bActive )
-					CrawlSession.OnRun();
+				CrawlSession.OnRun();
 
 				m_pSection.Unlock();
 			}

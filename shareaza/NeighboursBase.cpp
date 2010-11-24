@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-// Keeps a list of CNeighbour objects, with methods to go through them, add and remove them, and count them
-// http://shareazasecurity.be/wiki/index.php?title=Developers.Code.CNeighboursBase
-
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
@@ -41,11 +38,6 @@ static char THIS_FILE[]=__FILE__;
 
 CNeighboursBase::CNeighboursBase()
 	: m_nRunCookie    ( 5 ) // Start the run cookie as 5, OnRun will make it 6, 7, 8 and so on
-	, m_nStableCount  ( 0 ) // We don't have any stable connections to remote computers yet
-	, m_nLeafCount    ( 0 ) // We aren't connected to any leaves yet
-	, m_nLeafContent  ( 0 ) // When we do have some leaf connetions, the total size of the files they are sharing will go here
-	, m_nBandwidthIn  ( 0 ) // Start the bandwidth totals at 0
-	, m_nBandwidthOut ( 0 )
 {
 	m_pNeighbours.InitHashTable( GetBestHashTableSize( 300 ) );
 	m_pIndex.InitHashTable( GetBestHashTableSize( 300 ) );
@@ -207,17 +199,12 @@ void CNeighboursBase::Connect()
 // Calls Close on all the neighbours in the list, and resets member variables back to 0
 void CNeighboursBase::Close()
 {
+	ASSUME_LOCK( Network.m_pSection );
+
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		GetNext( pos )->Close();
 	}
-
-	// Reset member variables back to 0
-	m_nStableCount  = 0;
-	m_nLeafCount    = 0;
-	m_nLeafContent  = 0;
-	m_nBandwidthIn  = 0;
-	m_nBandwidthOut = 0;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -227,17 +214,6 @@ void CNeighboursBase::Close()
 // Calls DoRun on neighbours in the list, and totals statistics from them
 void CNeighboursBase::OnRun()
 {
-	// Calculate time from now
-	DWORD tNow       = GetTickCount(); // The tick count now, the number of milliseconds since the user turned the computer on
-	DWORD tEstablish = tNow - 1500;    // The tick count 1.5 seconds ago
-
-	// Make local variables to mirror member variables, and start them all out as 0
-	int nStableCount    = 0;
-	int nLeafCount      = 0;
-	DWORD nLeafContent  = 0;
-	DWORD nBandwidthIn  = 0;
-	DWORD nBandwidthOut = 0;
-
 	// Have the loop test each neighbour's run cookie count against the next number
 	m_nRunCookie++;			// The first time this runs, it will take the value from 5 to 6
 	bool bUpdated = true;	// Indicate if stats were updated
@@ -246,8 +222,8 @@ void CNeighboursBase::OnRun()
 	while ( bUpdated )
 	{
 		// Make sure this thread is the only one accessing the network object
-		CSingleLock pLock( &Network.m_pSection, FALSE );
-		if ( ! pLock.Lock( 200 ) )
+		CSingleLock pLock( &Network.m_pSection );
+		if ( ! pLock.Lock( 100 ) )
 			continue;
 
 		// Indicate if stats were updated
@@ -265,24 +241,6 @@ void CNeighboursBase::OnRun()
 				// Give it the current run cookie count so we don't run it twice, even if GetNext is weird or broken
 				pNeighbour->m_nRunCookie = m_nRunCookie;
 
-				// If the socket has been open for 1.5 seconds and we've finished the handshake, count this neighbour as stable
-				if ( pNeighbour->m_nState == nrsConnected && // This neighbour has finished the handshake with us, and
-					 pNeighbour->m_tConnected < tEstablish ) // Our socket to it connected before 1.5 seconds ago
-					 nStableCount++;                         // Count this as a stable connection
-
-				// If this connection is down to a leaf
-				if ( pNeighbour->m_nNodeType == ntLeaf )
-				{
-					// Count the leaf and add the number of bytes it's sharing to the total we're keeping of that
-					nLeafCount++;                              // Count one more leaf
-					nLeafContent += pNeighbour->m_nFileVolume; // Add the number of bytes of files this leaf is sharing to the total
-				}
-
-				// Have this neighbour measure its bandwidth, compute the totals, and then we'll save them in the member variables
-				pNeighbour->Measure(); // Calls CConnection::Measure, which edits the values in the TCP bandwidth meter structure
-				nBandwidthIn   += pNeighbour->m_mInput.nMeasure;  // We started these out as 0, and will save the totals in the CNeighbours object
-				nBandwidthOut  += pNeighbour->m_mOutput.nMeasure;
-
 				// Send and receive data with this remote computer through the socket
 				pNeighbour->DoRun(); // Calls CConnection::DoRun
 
@@ -293,13 +251,6 @@ void CNeighboursBase::OnRun()
 			}
 		}
 	}
-
-	// Save the values we calculated in local variables into the corresponding member variables
-	m_nStableCount  = nStableCount;
-	m_nLeafCount    = nLeafCount;
-	m_nLeafContent  = nLeafContent;
-	m_nBandwidthIn  = nBandwidthIn;
-	m_nBandwidthOut = nBandwidthOut;
 }
 
 //////////////////////////////////////////////////////////////////////

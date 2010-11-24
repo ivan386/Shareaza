@@ -44,17 +44,33 @@ static char THIS_FILE[]=__FILE__;
 // CNeighboursWithConnect construction
 
 CNeighboursWithConnect::CNeighboursWithConnect()
-	: m_bG2Leaf      ( FALSE )
-	, m_bG2Hub       ( FALSE )
-	, m_bG1Leaf      ( FALSE )
-	, m_bG1Ultrapeer ( FALSE )
+	: m_nBandwidthIn	( 0 )
+	, m_nBandwidthOut	( 0 )
+	, m_bG2Leaf			( FALSE )
+	, m_bG2Hub			( FALSE )
+	, m_bG1Leaf			( FALSE )
+	, m_bG1Ultrapeer	( FALSE )
+	, m_nStableCount	( 0 )
 	, m_tHubG2Promotion	( 0 )
+	, m_tPresent		()
 {
-	ZeroMemory( m_tPresent, sizeof( m_tPresent ) );
 }
 
 CNeighboursWithConnect::~CNeighboursWithConnect()
 {
+}
+
+void CNeighboursWithConnect::Close()
+{
+	CNeighboursWithRouting::Close();
+
+	m_nBandwidthIn	= 0;
+	m_nBandwidthOut	= 0;
+	m_bG2Leaf		= FALSE;
+	m_bG2Hub		= FALSE;
+	m_bG1Leaf		= FALSE;
+	m_bG1Ultrapeer	= FALSE;
+	m_nStableCount	= 0;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -762,8 +778,7 @@ void CNeighboursWithConnect::OnRun()
 	CNeighboursWithRouting::OnRun();
 
 	CSingleLock pLock( &Network.m_pSection );
-	if ( ! pLock.Lock( 50 ) )
-		// If we're waiting more than 1/20th of a second, give up
+	if ( ! pLock.Lock( 100 ) )
 		return;
 
 	MaintainNodeStatus();
@@ -781,60 +796,76 @@ void CNeighboursWithConnect::OnRun()
 	
 void CNeighboursWithConnect::MaintainNodeStatus()
 {
-	m_bG2Leaf      = FALSE;
-	m_bG2Hub       = FALSE;
-	m_bG1Leaf      = FALSE;
-	m_bG1Ultrapeer = FALSE;
+	BOOL bG2Leaf		= FALSE;
+	BOOL bG2Hub			= FALSE;
+	BOOL bG1Leaf		= FALSE;
+	BOOL bG1Ultrapeer	= FALSE;
+	DWORD nStableCount	= 0;
+	DWORD tEstablish	= GetTickCount() - 1500;
+	DWORD nBandwidthIn	= 0;
+	DWORD nBandwidthOut	= 0;
 
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
-		const CNeighbour* pNeighbour = GetNext( pos );
+		CNeighbour* pNeighbour = GetNext( pos );
 
 		// We're done with the handshake with this neighbour
 		if ( pNeighbour->m_nState == nrsConnected )
 		{
+			pNeighbour->Measure();
+			nBandwidthIn += pNeighbour->m_mInput.nMeasure;
+			nBandwidthOut += pNeighbour->m_mOutput.nMeasure;
+
+			if ( pNeighbour->m_tConnected < tEstablish )
+				nStableCount++;
+
 			// We're connected to this neighbour and exchanging Gnutella2 packets
 			if ( pNeighbour->m_nProtocol == PROTOCOL_G2 )
 			{
 				// If our connection to this remote computer is up to a hub, we are a leaf, if it's down to a leaf, we are a hub
 				if ( pNeighbour->m_nNodeType == ntHub )
-					m_bG2Leaf = TRUE;
+					bG2Leaf = TRUE;
 				else
-					m_bG2Hub  = TRUE;
+					bG2Hub  = TRUE;
 
 			} // We're connected to this neighbours and exchanging Gnutella packets
 			else if ( pNeighbour->m_nProtocol == PROTOCOL_G1 )
 			{
 				// If our connection to this remote computer is up to a hub, we are a leaf, if it's down to a leaf, we are an ultrapeer
 				if ( pNeighbour->m_nNodeType == ntHub )
-					m_bG1Leaf      = TRUE;
+					bG1Leaf      = TRUE;
 				else
-					m_bG1Ultrapeer = TRUE;
+					bG1Ultrapeer = TRUE;
 			}
 		}
 	}
+
+	m_bG2Leaf		= bG2Leaf;
+	m_bG2Hub		= bG2Hub;
+	m_bG1Leaf		= bG1Leaf;
+	m_bG1Ultrapeer	= bG1Ultrapeer;
+	m_nStableCount	= nStableCount;
+	m_nBandwidthIn	= nBandwidthIn;
+	m_nBandwidthOut	= nBandwidthOut;
 }
 
 // As the program runs, CNetwork::OnRun calls this method periodically and repeatedly
 // Counts how many connections we have for each network and in each role, and connects to more from the host cache or disconnects from some
 void CNeighboursWithConnect::Maintain()
 {
-	DWORD nCount[ PROTOCOL_LAST ][3] = {}, nLimit[ PROTOCOL_LAST ][3] = {};
-
 	// Get the time
 	DWORD tTimer = GetTickCount();							// The tick count (milliseconds)
 	DWORD tNow   = static_cast< DWORD >( time( NULL ) );	// The time (in seconds)
 
 	// Don't initiate neighbour connections too quickly if connections are limited
-	if ( ( Settings.Connection.ConnectThrottle != 0 ) && ( tTimer >= Network.m_tLastConnect ) )
+	if ( Settings.Connection.ConnectThrottle && tTimer >= Network.m_tLastConnect )
 	{
 		// If we've started a new connection recently, wait a little before starting another
-		if ( tTimer - Network.m_tLastConnect < Settings.Connection.ConnectThrottle ) return;
+		if ( tTimer < Network.m_tLastConnect + Settings.Connection.ConnectThrottle )
+			return;
 	}
 
-	// Set all the integers in both arrays to 0s
-	ZeroMemory( nCount, sizeof nCount );
-	ZeroMemory( nLimit, sizeof nLimit  );
+	DWORD nCount[ PROTOCOL_LAST ][3] = {}, nLimit[ PROTOCOL_LAST ][3] = {};
 
 	// Loop down the list of connected neighbours, sorting each by network and role and counting it
 	for ( POSITION pos = GetIterator() ; pos ; ) // We'll also prune leaf to leaf connections, which shouldn't happen
@@ -898,12 +929,12 @@ void CNeighboursWithConnect::Maintain()
 			if ( ( nCount[ PROTOCOL_G2 ][ ntHub ] ) > ( Settings.Gnutella2.NumLeafs * 3 / 4 ) )
 			{
 				// Then we probably make a pretty good hub
-				Settings.Gnutella2.HubVerified = TRUE;
+				Settings.Gnutella2.HubVerified = true;
 			}
 		}
 	}
 
-	if ( Settings.Gnutella1.EnableToday == FALSE )
+	if ( ! Settings.Gnutella1.EnableToday )
 	{
 		// Set the limit as no Gnutella hub or leaf connections allowed at all
 		nLimit[ PROTOCOL_G1 ][ ntHub ] = nLimit[ PROTOCOL_G1 ][ ntLeaf ] = 0;
@@ -923,7 +954,7 @@ void CNeighboursWithConnect::Maintain()
 		nLimit[ PROTOCOL_G1 ][ ntLeaf ] = Settings.Gnutella1.NumLeafs; // 0 by default
 	}
 
-	if ( Settings.Gnutella2.EnableToday == FALSE )
+	if ( ! Settings.Gnutella2.EnableToday )
 	{
 		// Set the limit as no Gnutella2 hub or leaf connections allowed at all
 		nLimit[ PROTOCOL_G2 ][ ntHub ] = nLimit[ PROTOCOL_G2 ][ ntLeaf ] = 0;
@@ -943,7 +974,7 @@ void CNeighboursWithConnect::Maintain()
 		nLimit[ PROTOCOL_G2 ][ ntLeaf ] = Settings.Gnutella2.NumLeafs; // 1024 by default
 	}
 
-	if ( Settings.eDonkey.EnableToday == FALSE )
+	if ( ! Settings.eDonkey.EnableToday )
 	{
 		nLimit[ PROTOCOL_ED2K ][ ntHub ] =  0;
 	}
@@ -953,7 +984,7 @@ void CNeighboursWithConnect::Maintain()
 		nLimit[ PROTOCOL_ED2K ][ ntHub ] = Settings.eDonkey.NumServers; // NumServers is 1 by default
 	}
 
-	if ( Settings.DC.EnableToday == FALSE )
+	if ( ! Settings.DC.EnableToday )
 	{
 		nLimit[ PROTOCOL_DC ][ ntHub ] =  0;
 	}
@@ -976,7 +1007,7 @@ void CNeighboursWithConnect::Maintain()
 		if ( nCount[ nProtocol ][ ntHub ] < nLimit[ nProtocol ][ ntHub ] )
 		{
 			// Don't try to connect to G1 right away, wait a few seconds to reduce the number of connections
-			if ( nProtocol == PROTOCOL_G1 && Settings.Gnutella2.EnableToday == TRUE )
+			if ( nProtocol == PROTOCOL_G1 && Settings.Gnutella2.EnableToday )
 			{
 				// Wait 4 seconds before trying G1
 				if ( ! Network.ReadyToTransfer( tTimer ) ) return;
@@ -1005,12 +1036,12 @@ void CNeighboursWithConnect::Maintain()
 
 			// Lower the needed hub number to avoid hitting Windows XP Service Pack 2's half open connection limit
 			nAttempt = min(nAttempt, ( Settings.Downloads.MaxConnectingSources - 2 ) );
+		
+			CQuickLock oLock( pCache->m_pSection );
 
 			// Handle priority servers
 			if ( nProtocol == PROTOCOL_ED2K || nProtocol == PROTOCOL_DC )
 			{
-				CQuickLock oLock( pCache->m_pSection );
-
 				// Loop into the host cache until we have as many handshaking connections as we need hub connections
 				for ( CHostCacheIterator i = pCache->Begin() ;
 					i != pCache->End() && nCount[ nProtocol ][0] < nAttempt;
@@ -1033,7 +1064,7 @@ void CNeighboursWithConnect::Maintain()
 						pHost->m_tQuery = tNow;
 
 						// If settings wants to limit how frequently this method can run
-						if ( Settings.Connection.ConnectThrottle != 0 )
+						if ( Settings.Connection.ConnectThrottle )
 						{
 							// Save the time we last made a connection as now, and leave
 							Network.m_tLastConnect = tTimer;
@@ -1043,8 +1074,6 @@ void CNeighboursWithConnect::Maintain()
 					}
 				}
 			}
-
-			CQuickLock oLock( pCache->m_pSection );
 
 			// If we need more connections for this network, get IP addresses from the host cache and try to connect to them
 			for ( CHostCacheIterator i = pCache->Begin() ;
@@ -1083,28 +1112,24 @@ void CNeighboursWithConnect::Maintain()
 				}
 			}
 
-			// If network autoconnect is on (do)
-			if ( Network.m_bAutoConnect )
+			// If we don't have any handshaking connections for this network, and we've been connected to a hub for more than 30 seconds
+			if ( nCount[ nProtocol ][ 0 ] == 0          || // We don't have any handshaking connections for this network, or
+				 tNow - m_tPresent[ nProtocol ] >= 30 )    // We've been connected to a hub for more than 30 seconds
 			{
-				// If we don't have any handshaking connections for this network, and we've been connected to a hub for more than 30 seconds
-				if ( nCount[ nProtocol ][ 0 ] == 0          || // We don't have any handshaking connections for this network, or
-					 tNow - m_tPresent[ nProtocol ] >= 30 )    // We've been connected to a hub for more than 30 seconds
-				{
-					DWORD tDiscoveryLastExecute = DiscoveryServices.LastExecute();
+				DWORD tDiscoveryLastExecute = DiscoveryServices.LastExecute();
 
-					// We're looping for Gnutella2 right now
-					if ( nProtocol == PROTOCOL_G2 && Settings.Gnutella2.EnableToday )
-					{
-						// Execute the discovery services (do)
-						if ( pCache->IsEmpty() && ( tDiscoveryLastExecute == 0 || tNow - tDiscoveryLastExecute >= 8 ) )
-							DiscoveryServices.Execute( TRUE, PROTOCOL_G2, 1 );
-					} // We're looping for Gnutella right now
-					else if ( nProtocol == PROTOCOL_G1 && Settings.Gnutella1.EnableToday )
-					{
-						// If the Gnutella host cache is empty (do), execute discovery services (do)
-						if ( pCache->IsEmpty() && ( tDiscoveryLastExecute == 0 || tNow - tDiscoveryLastExecute >= 8 ) )
-							DiscoveryServices.Execute( TRUE, PROTOCOL_G1, 1 );
-					}
+				// We're looping for Gnutella2 right now
+				if ( nProtocol == PROTOCOL_G2 && Settings.Gnutella2.EnableToday )
+				{
+					// Execute the discovery services (do)
+					if ( pCache->IsEmpty() && ( tDiscoveryLastExecute == 0 || tNow - tDiscoveryLastExecute >= 8 ) )
+						DiscoveryServices.Execute( TRUE, PROTOCOL_G2, 1 );
+				} // We're looping for Gnutella right now
+				else if ( nProtocol == PROTOCOL_G1 && Settings.Gnutella1.EnableToday )
+				{
+					// If the Gnutella host cache is empty (do), execute discovery services (do)
+					if ( pCache->IsEmpty() && ( tDiscoveryLastExecute == 0 || tNow - tDiscoveryLastExecute >= 8 ) )
+						DiscoveryServices.Execute( TRUE, PROTOCOL_G1, 1 );
 				}
 			}
 
@@ -1161,6 +1186,11 @@ void CNeighboursWithConnect::Maintain()
 			if ( pNewest != NULL ) pNewest->Close(); // Close the connection
 		}
 	}
+}
+
+DWORD CNeighboursWithConnect::GetStableCount() const
+{
+	return m_nStableCount;
 }
 
 DWORD CNeighboursWithConnect::CalculateSystemPerformanceScore(BOOL bDebug) const
