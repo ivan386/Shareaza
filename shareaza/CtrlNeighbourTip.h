@@ -1,7 +1,7 @@
 //
 // CtrlNeighbourTip.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -47,6 +47,7 @@ protected:
 	CLineGraph*	m_pGraph;
 	CGraphItem*	m_pItemIn;
 	CGraphItem*	m_pItemOut;
+	CImageList	m_pProtocols;
 
 	virtual BOOL OnPrepare();
 	virtual void OnShow();

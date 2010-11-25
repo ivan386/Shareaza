@@ -1,7 +1,7 @@
 //
 // CtrlNeighbourTip.cpp : implementation file
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,18 +22,16 @@
 #include "Stdafx.h"
 #include "Shareaza.h"
 #include "Settings.h"
-#include "Neighbours.h"
-#include "Neighbour.h"
-#include "Network.h"
-#include "GProfile.h"
 #include "CoolInterface.h"
 #include "CtrlNeighbourTip.h"
-#include "GraphLine.h"
-#include "GraphItem.h"
-#include "Flags.h"
-
-#include "EDPacket.h"
 #include "EDNeighbour.h"
+#include "EDPacket.h"
+#include "Flags.h"
+#include "GProfile.h"
+#include "GraphItem.h"
+#include "GraphLine.h"
+#include "Neighbours.h"
+#include "Network.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -52,8 +50,10 @@ END_MESSAGE_MAP()
 // CNeighbourTipCtrl construction
 
 CNeighbourTipCtrl::CNeighbourTipCtrl()
-	: m_nNeighbour( 0 )
-	, m_pGraph( NULL )
+	: m_nNeighbour	( 0 )
+	, m_pGraph		( NULL )
+	, m_pItemIn		( NULL )
+	, m_pItemOut	( NULL )
 {
 }
 
@@ -70,10 +70,12 @@ BOOL CNeighbourTipCtrl::OnPrepare()
 	CSingleLock pLock( &Network.m_pSection );
 	if ( ! pLock.Lock( 100 ) ) return FALSE;
 
-	CNeighbour* pNeighbour = Neighbours.Get( m_nNeighbour );
+	const CNeighbour* pNeighbour = Neighbours.Get( m_nNeighbour );
 	if ( pNeighbour == NULL ) return FALSE;
 
 	CalcSizeHelper();
+
+	CoolInterface.LoadProtocolIconsTo( m_pProtocols, FALSE, LVSIL_NORMAL );
 
 	return TRUE;
 }
@@ -107,7 +109,7 @@ void CNeighbourTipCtrl::OnCalcSize(CDC* pDC)
 	CSingleLock pLock( &Network.m_pSection );
 	if ( ! pLock.Lock( 100 ) ) return;
 
-	CNeighbour* pNeighbour = Neighbours.Get( m_nNeighbour );
+	const CNeighbour* pNeighbour = Neighbours.Get( m_nNeighbour );
 	CString str;
 
 	if ( pNeighbour->m_pProfile && pNeighbour->m_pProfile->IsValid() )
@@ -177,12 +179,12 @@ void CNeighbourTipCtrl::OnPaint(CDC* pDC)
 	CSingleLock pLock( &Network.m_pSection );
 	if ( ! pLock.Lock( 100 ) ) return;
 
-	CNeighbour* pNeighbour = Neighbours.Get( m_nNeighbour );
+	const CNeighbour* pNeighbour = Neighbours.Get( m_nNeighbour );
 	if ( pNeighbour == NULL ) return;
 
 	CPoint pt( 0, 0 );
 	CString str;
-
+	
 	if ( pNeighbour->m_pProfile != NULL && pNeighbour->m_pProfile->IsValid() )
 	{
 		str = pNeighbour->m_pProfile->GetNick();
@@ -214,6 +216,12 @@ void CNeighbourTipCtrl::OnPaint(CDC* pDC)
 		}
 	}
 
+	CRect rcProtocol( m_sz.cx - 32 - 4, pt.y + 4, m_sz.cx - 4, pt.y + 32 + 4 );
+	ImageList_DrawEx( m_pProtocols, pNeighbour->m_nProtocol, pDC->GetSafeHdc(),
+		rcProtocol.left, rcProtocol.top, rcProtocol.Width(), rcProtocol.Height(),
+		CoolInterface.m_crTipBack, CLR_DEFAULT, ILD_NORMAL );
+	pDC->ExcludeClipRect( &rcProtocol );
+
 	pDC->SelectObject( &CoolInterface.m_fntBold );
 	DrawText( pDC, &pt, pNeighbour->m_sAddress );
 	pDC->SelectObject( &CoolInterface.m_fntNormal );
@@ -232,6 +240,17 @@ void CNeighbourTipCtrl::OnPaint(CDC* pDC)
 		pt.x -= 16 + 4;
 		pt.y += 16;
 	}
+
+	if ( pNeighbour->m_sUserAgent.GetLength() )
+	{
+		str = pNeighbour->m_sUserAgent;
+	}
+	else
+	{
+		str = protocolNames[ pNeighbour->m_nProtocol ];
+	}
+	DrawText( pDC, &pt, str );
+	pt.y += TIP_TEXTHEIGHT;
 
 	if ( pNeighbour->m_nState < nrsConnected )
 	{
@@ -290,12 +309,6 @@ void CNeighbourTipCtrl::OnPaint(CDC* pDC)
 		}
 	}
 
-	if ( pNeighbour->m_sUserAgent.GetLength() )
-	{
-		DrawText( pDC, &pt, pNeighbour->m_sUserAgent );
-		pt.y += TIP_TEXTHEIGHT;
-	}
-
 	DrawText( pDC, &pt, str );
 	pt.y += TIP_TEXTHEIGHT;
 
@@ -330,7 +343,7 @@ void CNeighbourTipCtrl::OnPaint(CDC* pDC)
 	pt.y += TIP_TEXTHEIGHT;
 
 	float nCompIn, nCompOut;
-	pNeighbour->GetCompression( &nCompIn, &nCompOut );
+	pNeighbour->GetCompression( nCompIn, nCompOut );
 
 	LoadString( str, IDS_NEIGHBOUR_COMPRESSION );
 	DrawText( pDC, &pt, str );

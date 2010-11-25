@@ -377,9 +377,9 @@ void CCoolInterface::LoadIconsTo(CImageList& pImageList, const UINT nID[], BOOL 
 	}
 }
 
-void CCoolInterface::LoadProtocolIconsTo(CImageList& pImageList, BOOL bMirror)
+void CCoolInterface::LoadProtocolIconsTo(CImageList& pImageList, BOOL bMirror, int nImageListType)
 {
-	LoadIconsTo( pImageList, protocolIDs, bMirror );
+	LoadIconsTo( pImageList, protocolIDs, bMirror, nImageListType );
 }
 
 //////////////////////////////////////////////////////////////////////

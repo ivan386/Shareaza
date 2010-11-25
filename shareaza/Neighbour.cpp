@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-// CNeighbour is in the middle of the CConnection inheritance tree, adding compression and a bunch of member variables
-// http://shareazasecurity.be/wiki/index.php?title=Developers.Code.CNeighbour
-
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
@@ -229,7 +226,6 @@ BOOL CNeighbour::Send(CPacket* pPacket, BOOL bRelease, BOOL /*bBuffered*/)
 	return FALSE;
 }
 
-// CG1Neighbour, which inherits from CNeighbour, overrides this method with its own version that does something
 BOOL CNeighbour::SendQuery(const CQuerySearch* pSearch, CPacket* pPacket, BOOL bLocal)
 {
 	ASSERT( pSearch );
@@ -567,37 +563,35 @@ BOOL CNeighbour::OnCommonQueryHash(CPacket* pPacket)
 //////////////////////////////////////////////////////////////////////
 // CNeighbour compression statistics
 
-// Calculate the average compression rate in either direction for this connection
-// Takes pointers to numbers to write the answers in
-void CNeighbour::GetCompression(float* pnInRate, float* pnOutRate)
+void CNeighbour::GetCompression(float& nInRate, float& nOutRate) const
 {
 	// Set the compression ratios to -1 to indicate that compression is off
-	*pnInRate = -1; *pnOutRate = -1;
+	nInRate = nOutRate = -1.;
 
 	// If there is a buffer for decompressing read data and a count of bytes have been decompressed
-	if ( m_pZInput != NULL && m_nZInput > 0.)
+	if ( m_pZInput && m_nZInput )
 	{
 		// Calculate the compression rate of the data coming in
-		*pnInRate = 1.0f				// 1 minus, so if there were 80 compressed bytes that inflated to 100, its 1 - (80 / 100) = .2
+		nInRate = 1.0f				// 1 minus, so if there were 80 compressed bytes that inflated to 100, its 1 - (80 / 100) = .2
 			- (float)m_mInput.nTotal	// The total number of compressed bytes the bandwidth meter has counted come in from the socket
 			/ (float)m_nZInput;			// Divided by the total number of not compressed bytes that OnRead has decompressed into the m_nZInput buffer
 
 		// Keep the rate between 0 and 1
-		if ( *pnInRate < 0 ) *pnInRate = 0;
-		else if ( *pnInRate > 1 ) *pnInRate = 1;
+		if ( nInRate < 0 ) nInRate = 0.;
+		else if ( nInRate > 1 ) nInRate = 1.;
 	}
 
 	// If there is a buffer for compressing data to write and a count of bytes have been compressed
-	if ( m_pZOutput != NULL && m_mOutput.nTotal > 0.)
+	if ( m_pZOutput && m_mOutput.nTotal )
 	{
 		// Calculate the compressing rate of the data going out
-		*pnOutRate = 1.0f				// 1 minus, so if there were 100 bytes that deflated down to 70, its 1 - (70 / 100) = .3
+		nOutRate = 1.0f				// 1 minus, so if there were 100 bytes that deflated down to 70, its 1 - (70 / 100) = .3
 			- (float)m_mOutput.nTotal	// The total number of compressed bytes the bandwidth meter has counted go out through the socket
 			/ (float)m_nZOutput;		// Divided by the total number of not compressed bytes that OnWrite has compressed from the m_nZOutput buffer
 
 		// Keep the rate between 0 and 1
-		if ( *pnOutRate < 0 ) *pnOutRate = 0;
-		else if ( *pnOutRate > 1 ) *pnOutRate = 1;
+		if ( nOutRate < 0 ) nOutRate = 0.;
+		else if ( nOutRate > 1 ) nOutRate = 1.;
 	}
 }
 

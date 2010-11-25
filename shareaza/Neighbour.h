@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-// CNeighbour is in the middle of the CConnection inheritance tree, adding compression and a bunch of member variables
-// http://shareazasecurity.be/wiki/index.php?title=Developers.Code.CNeighbour
-
 #pragma once
 
 #include "Connection.h"
@@ -135,8 +132,10 @@ public:
 	virtual BOOL ConnectTo(const IN_ADDR* pAddress, WORD nPort, BOOL bAutomatic);
 	virtual BOOL Send(CPacket* pPacket, BOOL bRelease = TRUE, BOOL bBuffered = FALSE);
 	virtual void Close(UINT nError = IDS_CONNECTION_CLOSED);
-	virtual void DelayClose(UINT nError);	// Send the buffer then close the socket, record the error given
-	virtual BOOL SendQuery(const CQuerySearch* pSearch, CPacket* pPacket, BOOL bLocal); // Validate query
+	// Send the buffer then close the socket, record the error given
+	virtual void DelayClose(UINT nError);
+	// Validate query
+	virtual BOOL SendQuery(const CQuerySearch* pSearch, CPacket* pPacket, BOOL bLocal);
 
 protected:
 	virtual BOOL OnRun();
@@ -147,6 +146,8 @@ protected:
 	virtual BOOL OnCommonQueryHash(CPacket* pPacket);
 
 public:
-	DWORD GetMaxTTL() const;	// Get maximum TTL which is safe for both sides
-	void GetCompression(float* pnInRate, float* pnOutRate);
+	// Get maximum TTL which is safe for both sides
+	DWORD GetMaxTTL() const;
+	// Calculate the average compression rate in either direction for this connection
+	void GetCompression(float& nInRate, float& nOutRate) const;
 };
