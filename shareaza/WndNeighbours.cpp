@@ -197,7 +197,8 @@ void CNeighboursWnd::Update()
 			break;
 		}
 
-		pItem->Set( 2, str );
+		pItem->Set( 2, ( pNeighbour->m_nState == nrsConnected ) ? str :
+			( _T(" ") + str + _T(" ") ) );
 
 		pNeighbour->Measure();
 
