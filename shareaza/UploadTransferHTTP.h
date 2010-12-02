@@ -79,7 +79,6 @@ protected:
 	void	SendFileHeaders();
 	void	OnCompleted();
 	void	SendResponse(UINT nResourceID, BOOL bFileHeaders = FALSE);
-//	void	GetNeighbourList(CString& strOutput);
 
 	virtual BOOL	OnRun();
 	virtual void	OnDropped();

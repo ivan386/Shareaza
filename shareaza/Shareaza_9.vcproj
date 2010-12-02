@@ -4339,6 +4339,50 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Res\style.css"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;"
+						Outputs="$(InputDir)$(InputFileName).gz"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|x64"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;"
+						Outputs="$(InputDir)$(InputFileName).gz"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;"
+						Outputs="$(InputDir)$(InputFileName).gz"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|x64"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;"
+						Outputs="$(InputDir)$(InputFileName).gz"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\Res\style.css.gz"
+				>
+			</File>
+			<File
 				RelativePath="Res\System.ico"
 				>
 			</File>

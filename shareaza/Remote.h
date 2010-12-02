@@ -32,7 +32,7 @@ class CRemote : public CTransfer
 // Construction
 public:
 	CRemote(CConnection* pConnection);
-	~CRemote();
+	virtual ~CRemote();
 
 // Attributes
 protected:

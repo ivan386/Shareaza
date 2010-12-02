@@ -852,11 +852,13 @@ void CNetwork::OnWinsock(WPARAM wParam, LPARAM lParam)
 
 		if ( pResolve->m_nCommand == 0 )
 		{
-			pCache->OnResolve( pResolve->m_sAddress, &pAddress, pResolve->m_nPort );
+			if ( pCache )
+				pCache->OnResolve( pResolve->m_sAddress, &pAddress, pResolve->m_nPort );
 		}
 		else if ( pResolve->m_nCommand == 1 || pResolve->m_nCommand == 2 )
 		{
-			pCache->OnResolve( pResolve->m_sAddress, &pAddress, pResolve->m_nPort );
+			if ( pCache )
+				pCache->OnResolve( pResolve->m_sAddress, &pAddress, pResolve->m_nPort );
 
 			BOOL bNoUltraPeer = ( pResolve->m_nCommand == 2 );
 
@@ -898,7 +900,8 @@ void CNetwork::OnWinsock(WPARAM wParam, LPARAM lParam)
 		{
 			theApp.Message( MSG_ERROR, IDS_NETWORK_RESOLVE_FAIL, pResolve->m_sAddress );
 
-			pCache->OnFailure( pResolve->m_sAddress, false );
+			if ( pCache )
+				pCache->OnFailure( pResolve->m_sAddress, false );
 		}
 		else if ( pResolve->m_nCommand == 3 )
 		{

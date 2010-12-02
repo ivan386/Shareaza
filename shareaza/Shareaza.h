@@ -29,6 +29,7 @@ class CDatabase;
 class CFontManager;
 class CMainWnd;
 class CPacketWnd;
+class CShareazaFile;
 class CSplashDlg;
 
 
@@ -274,6 +275,7 @@ void PurgeDeletes();
 
 // Loads RT_HTML or RT_GZIP resource as string
 CString LoadHTML(HINSTANCE hInstance, UINT nResourceID);
+CString LoadRichHTML(UINT nResourceID, CString& strResponse, CShareazaFile* pFile = NULL);
 
 // Loads well-known resource for HTTP-uploading
 bool ResourceRequest(const CString& strPath, CBuffer& pResponse, CString& sHeader);

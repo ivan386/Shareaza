@@ -764,6 +764,7 @@ BOOL CShareazaURL::ParseShareazaHost(LPCTSTR pszURL, BOOL bBrowse)
 	m_sName.TrimLeft();
 	m_sName.TrimRight();
 
+	m_nProtocol = PROTOCOL_G2;
 	m_nAction = bBrowse ? uriBrowse : uriHost;
 
 	return m_sName.GetLength();

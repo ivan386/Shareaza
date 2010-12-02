@@ -2744,6 +2744,7 @@ IDR_HTML_DISABLED       HTML                    "Res\\Disabled.htm"
 // GZIP
 //
 
+IDR_HTML_STYLE          GZIP                    "Res\\style.css.gz"
 IDR_HTML_ABOUT          GZIP                    "Res\\About.htm.gz"
 IDR_HTML_BROWSER        GZIP                    "Res\\Browser.htm.gz"
 IDR_XML_DEFINITIONS     GZIP                    "Res\\Definitions.xml.gz"

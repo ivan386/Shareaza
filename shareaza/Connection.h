@@ -93,7 +93,8 @@ public:
 	BOOL ReadHeaders();		// Read text headers sitting in the input buffer
 	BOOL SendMyAddress();	// If we are listening on a port, tell the other computer our IP address and port number
 	void UpdateCountry();	// Call whenever the IP address is set
-	
+	void SendHTML(UINT nResourceID);
+
 	// True if the socket is valid, false if its closed
 	inline BOOL IsValid() const throw()
 	{

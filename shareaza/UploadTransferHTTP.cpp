@@ -379,15 +379,23 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 	CString sHeader;
 	if ( ResourceRequest( m_sRequest, pResponse, sHeader ) )
 	{
+		m_nBandwidth = 0;
+
 		Write( _P("HTTP/1.1 200 OK\r\n") );
+		SendDefaultHeaders();
 		CString strLength;
 		strLength.Format( _T("Content-Length: %i\r\n"), pResponse.m_nLength );
 		Write( strLength );
 		if ( ! sHeader.IsEmpty() )
 			Write( sHeader );
 		Write( _P("\r\n") );
+
+		LogOutgoing();
+
 		Write( &pResponse );
+
 		StartSending( upsResponse );
+
 		return TRUE;
 	}
 	else if ( m_sRequest == _T("/") || ::StartsWith( m_sRequest, _PT("/gnutella/browse/v1") ) )
@@ -431,7 +439,7 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 		if ( m_sName.IsEmpty() ) m_sName = _T("file");
 		SendResponse( IDR_HTML_BROWSER );
 		theApp.Message( MSG_ERROR, IDS_UPLOAD_BROWSER, (LPCTSTR)m_sAddress, (LPCTSTR)m_sName );
-		Security.Ban( &m_pHost.sin_addr, ban5Mins, FALSE ); // Anti-hammer protection if client doesn't understand 403 (Don't bother re-sending HTML every 5 seconds)
+		Security.Complain( &m_pHost.sin_addr );
 		if ( m_sUserAgent.Find( _T("Mozilla") ) >= 0 ) return TRUE;
 		Remove( FALSE );
 		return FALSE;
@@ -847,6 +855,8 @@ BOOL CUploadTransferHTTP::RequestPartialFile(CDownload* pDownload)
 	Write( _P("Content-Length: 0\r\n") );
 	Write( _P("\r\n") );
 
+	LogOutgoing();
+
 	StartSending( upsResponse );
 
 	theApp.Message( MSG_INFO, IDS_UPLOAD_BAD_RANGE, (LPCTSTR)m_sAddress,
@@ -1020,7 +1030,8 @@ void CUploadTransferHTTP::SendDefaultHeaders()
 		// Ask to retry after some delay in seconds
 		Write( _P("Retry-After: 3600\r\n") ); // 1 hour
 	}
-	else if ( m_bKeepAlive )
+
+	if ( m_bKeepAlive )
 	{
 		Write( _P("Connection: Keep-Alive\r\n") );
 	}
@@ -1384,7 +1395,9 @@ BOOL CUploadTransferHTTP::RequestMetadata(CXMLElement* pMetadata)
 	strHeader.Format( _T("Content-Length: %lu\r\n"), strXML.GetLength() );
 	Write( strHeader );
 	Write( _P("\r\n") );
-	
+
+	LogOutgoing();
+
 	if ( ! m_bHead ) Write( (LPCSTR)strXML, strXML.GetLength() );
 	
 	StartSending( upsMetadata );
@@ -1450,6 +1463,8 @@ BOOL CUploadTransferHTTP::RequestTigerTreeRaw(CTigerTree* pTigerTree, BOOL bDele
 		}
 		
 		Write( _P("\r\n") );
+
+		LogOutgoing();
 		
 		if ( ! m_bHead ) Write( pSerialTree + m_nOffset, (DWORD)m_nLength );
 		
@@ -1576,6 +1591,8 @@ BOOL CUploadTransferHTTP::RequestTigerTreeDIME(CTigerTree* pTigerTree, int nDept
 		}
 		
 		Write( _P("\r\n") );
+
+		LogOutgoing();
 		
 		if ( ! m_bHead )
 		{
@@ -1798,60 +1815,17 @@ BOOL CUploadTransferHTTP::RequestHostBrowse()
 
 void CUploadTransferHTTP::SendResponse(UINT nResourceID, BOOL bFileHeaders)
 {
-	CString strBody( ::LoadHTML( GetModuleHandle( NULL ), nResourceID ) ), strResponse;
+	m_nBandwidth = 0;
 
-	int nBreak	= strBody.Find( _T("\r\n") );
-	bool bWindowsEOL = true;
+	CString strResponse;
+	CString strBody = LoadRichHTML( nResourceID, strResponse, this );
 
-	if ( nBreak == -1 )
-	{
-		nBreak	= strBody.Find( _T("\n") );
-		bWindowsEOL = false;
-	}
-	strResponse	= strBody.Left( nBreak + ( bWindowsEOL ? 2 : 1 ) );
-	strBody		= strBody.Mid( nBreak + ( bWindowsEOL ? 2 : 1 ) );
-	
-	for (;;)
-	{
-		int nStart = strBody.Find( _T("<%") );
-		if ( nStart < 0 ) break;
-		
-		int nEnd = strBody.Find( _T("%>") );
-		if ( nEnd < nStart ) break;
-
-		CString strReplace = strBody.Mid( nStart + 2, nEnd - nStart - 2 );
-
-		strReplace.TrimLeft();
-		strReplace.TrimRight();
-		
-		if ( strReplace.CompareNoCase( _T("Name") ) == 0 )
-			strReplace = m_sName;
-		else if ( strReplace.CompareNoCase( _T("SHA1") ) == 0 )
-            strReplace = m_oSHA1.toString();
-		else if ( strReplace.CompareNoCase( _T("URN") ) == 0 )
-			strReplace = m_oSHA1.toUrn();
-		else if ( strReplace.CompareNoCase( _T("Version") ) == 0 )
-			strReplace = theApp.m_sVersion;
-//		else if ( strReplace.Find( _T("Neighbours") ) == 0 )
-//			GetNeighbourList( strReplace );
-		else if ( strReplace.CompareNoCase( _T("ListenIP") ) == 0 )
-		{
-			if ( Network.IsListening() )
-			{
-				strReplace.Format( _T("%s:%i"),
-					(LPCTSTR)CString( inet_ntoa( Network.m_pHost.sin_addr ) ),
-					htons( Network.m_pHost.sin_port ) );
-			}
-			else strReplace.Empty();
-		}
-		
-		strBody = strBody.Left( nStart ) + strReplace + strBody.Mid( nEnd + 2 );
-	}
-
-	Write( _T("HTTP/1.1 ") + strResponse );
+	if ( strResponse.IsEmpty() )
+		Write( _P("HTTP/1.1 200 OK\r\n") );
+	else
+		Write( _T("HTTP/1.1 ") + strResponse );
 
 	SendDefaultHeaders();
-
 	if ( bFileHeaders )
 		SendFileHeaders();
 
@@ -1861,9 +1835,10 @@ void CUploadTransferHTTP::SendResponse(UINT nResourceID, BOOL bFileHeaders)
 	Write( _P("Content-Type: text/html\r\n") );
 
 	CStringA strBodyUTF8 = UTF8Encode( strBody );
-	
-	strResponse.Format( _T("Content-Length: %lu\r\n\r\n"), strBodyUTF8.GetLength() );
-	Write( strResponse );
+
+	CString strLength;
+	strLength.Format( _T("Content-Length: %lu\r\n\r\n"), strBodyUTF8.GetLength() );
+	Write( strLength );
 
 	LogOutgoing();
 
@@ -1871,50 +1846,3 @@ void CUploadTransferHTTP::SendResponse(UINT nResourceID, BOOL bFileHeaders)
 	
 	StartSending( upsResponse );
 }
-
-/*void CUploadTransferHTTP::GetNeighbourList(CString& strOutput)
-{
-	static LPCTSTR pszModes[ PROTOCOL_LAST ][ 3 ] =
-	{
-		{ _T("Handshake"), _T("Handshake"), _T("Handshake") },
-		{ _T("G1 Peer"), _T("G1 Ultrapeer"), _T("G1 Leaf") },
-		{ _T("G2 Peer"), _T("G2 Hub"), _T("G2 Leaf") },
-		{ _T("eDonkey2000"), _T("eDonkey2000"), _T("eDonkey2000") },
-		{ _T(""), _T(""), _T("") },
-		{ _T(""), _T(""), _T("") },
-		{ _T(""), _T(""), _T("") },
-		{ _T(""), _T(""), _T("") },
-		{ _T("DC++"), _T("DC++"), _T("DC++") },
-	};
-	
-	// Strip off the leading "Neighbours " (length 11) and use the rest as a format string
-	CString strFormat = strOutput.Right( strOutput.GetLength() - 11 );
-	strOutput.Empty();
-	
-	CSingleLock pLock( &Network.m_pSection );
-	if ( ! pLock.Lock( 100 ) ) return;
-		
-	DWORD tNow = GetTickCount();
-		
-	for ( POSITION pos = Neighbours.GetIterator() ; pos ; )
-	{
-		CNeighbour* pNeighbour = Neighbours.GetNext( pos );
-		
-		if ( pNeighbour->m_nState == nrsConnected )
-		{
-			CString strNode;
-			
-			DWORD nTime = ( tNow - pNeighbour->m_tConnected ) / 1000;
-			
-			strNode.Format( strFormat,
-				(LPCTSTR)pNeighbour->m_sAddress, htons( pNeighbour->m_pHost.sin_port ),
-				(LPCTSTR)pNeighbour->m_sAddress, htons( pNeighbour->m_pHost.sin_port ),
-				nTime / 3600, ( nTime % 3600 ) / 60, nTime % 60,
-				pszModes[ pNeighbour->m_nProtocol ][ pNeighbour->m_nNodeType ],
-				(LPCTSTR)pNeighbour->m_sUserAgent,
-				(LPCTSTR)pNeighbour->m_sAddress, htons( pNeighbour->m_pHost.sin_port ) );
-			
-			strOutput += strNode;
-		}
-	}
-}*/

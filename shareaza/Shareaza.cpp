@@ -42,6 +42,7 @@
 #include "ImageServices.h"
 #include "Library.h"
 #include "LibraryBuilder.h"
+#include "Neighbours.h"
 #include "Network.h"
 #include "Plugins.h"
 #include "QueryHashMaster.h"
@@ -2484,6 +2485,65 @@ CString LoadHTML(HINSTANCE hInstance, UINT nResourceID)
 	return strBody;
 }
 
+CString LoadRichHTML(UINT nResourceID, CString& strResponse, CShareazaFile* pFile)
+{
+	CString strBody = LoadHTML( GetModuleHandle( NULL ), nResourceID );
+
+	bool bWindowsEOL = true;
+	int nBreak = strBody.Find( _T("\r\n") );
+	if ( nBreak == -1 )
+	{
+		nBreak = strBody.Find( _T("\n") );
+		bWindowsEOL = false;
+	}
+	strResponse	= strBody.Left( nBreak + ( bWindowsEOL ? 2 : 1 ) );
+	strBody = strBody.Mid( nBreak + ( bWindowsEOL ? 2 : 1 ) );
+
+	for (;;)
+	{
+		int nStart = strBody.Find( _T("<%") );
+		if ( nStart < 0 ) break;
+		
+		int nEnd = strBody.Find( _T("%>") );
+		if ( nEnd < nStart ) break;
+
+		CString strReplace = strBody.Mid( nStart + 2, nEnd - nStart - 2 );
+
+		strReplace.TrimLeft();
+		strReplace.TrimRight();
+		
+		if ( strReplace.CompareNoCase( _T("Client") ) == 0 )
+			strReplace = CLIENT_NAME_T;
+		else if ( strReplace.CompareNoCase( _T("SmartAgent") ) == 0 )
+			strReplace = theApp.m_sSmartAgent;
+		else if ( strReplace.CompareNoCase( _T("Name") ) == 0 )
+			strReplace = pFile ? pFile->m_sName : _T("");
+		else if ( strReplace.CompareNoCase( _T("SHA1") ) == 0 )
+            strReplace = pFile ? pFile->m_oSHA1.toString() : _T("");
+		else if ( strReplace.CompareNoCase( _T("URN") ) == 0 )
+			strReplace = pFile ? pFile->m_oSHA1.toUrn() : _T("");
+		else if ( strReplace.CompareNoCase( _T("Version") ) == 0 )
+			strReplace = theApp.m_sVersion;
+		else if ( strReplace.Find( _T("Neighbours") ) == 0 )
+			strReplace = Neighbours.GetNeighbourList( strReplace.Right( strReplace.GetLength() - 11 ) );
+		else if ( strReplace.CompareNoCase( _T("ListenIP") ) == 0 )
+		{
+			if ( Network.IsListening() )
+			{
+				strReplace.Format( _T("%s:%i"),
+					(LPCTSTR)CString( inet_ntoa( Network.m_pHost.sin_addr ) ),
+					htons( Network.m_pHost.sin_port ) );
+			}
+			else
+				strReplace.Empty();
+		}
+
+		strBody = strBody.Left( nStart ) + strReplace + strBody.Mid( nEnd + 2 );
+	}
+
+	return strBody;
+}
+
 const struct
 {
 	LPCTSTR szPath;
@@ -2492,9 +2552,10 @@ const struct
 	LPCTSTR	szContentType;
 } WebResources [] =
 {
-	{ _T("/remote/header_1.png"),	IDR_HOME_HEADER_1,	RT_PNG,			_T("image/png") },
-	{ _T("/remote/header_2.png"),	IDR_HOME_HEADER_2,	RT_PNG,			_T("image/png") },
-	{ _T("/favicon.ico"),			IDR_MAINFRAME,		RT_GROUP_ICON,	_T("image/x-icon") },
+	{ _T("/style.css"),		IDR_HTML_STYLE,		RT_GZIP,		_T("text/css") },
+	{ _T("/header_1.png"),	IDR_HOME_HEADER_1,	RT_PNG,			_T("image/png") },
+	{ _T("/header_2.png"),	IDR_HOME_HEADER_2,	RT_PNG,			_T("image/png") },
+	{ _T("/favicon.ico"),	IDR_MAINFRAME,		RT_GROUP_ICON,	_T("image/x-icon") },
 	{ NULL, NULL, NULL, NULL }
 };
 
@@ -2516,7 +2577,12 @@ bool ResourceRequest(const CString& strPath, CBuffer& pResponse, CString& sHeade
 					BYTE* pSource	= (BYTE*)LockResource( hMemory );
 					if ( pSource )
 					{
-						if ( WebResources[ i ].szType == RT_GROUP_ICON )
+						if ( WebResources[ i ].szType == RT_GZIP ||
+							 WebResources[ i ].szType == RT_HTML )
+						{
+							pResponse.Print( LoadHTML( hModule, WebResources[ i ].nID ) );
+						}
+						else if ( WebResources[ i ].szType == RT_GROUP_ICON )
 						{
 							// Save main header
 							ICONDIR* piDir = (ICONDIR*)pSource;

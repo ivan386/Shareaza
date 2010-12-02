@@ -966,6 +966,7 @@
 #define IDR_HTML_BUSY                   12004
 #define IDR_HTML_BADRANGE               12005
 #define IDR_HTML_BROWSER                12006
+#define IDR_HTML_STYLE                  12007
 #define IDR_XML_DEFAULT                 12009
 #define IDR_XML_DEFINITIONS             12010
 #define IDR_HTML_DISABLED               12011

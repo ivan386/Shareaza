@@ -362,7 +362,6 @@ public:
 		case PROTOCOL_DC:
 			return &DC;
 		default:
-			ASSERT(FALSE);
 			return NULL;
 		}
 	}

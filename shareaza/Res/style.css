@@ -1,0 +1,42 @@
+﻿body
+{
+	margin: 0px;
+	padding: 0px;
+	background-color: #ffffff;
+	color: #000000;
+	font-size: 8pt;
+}
+.headerborder
+{
+	width: 100%;
+	background-image:url(/header_2.png);
+}
+.page
+{
+	padding: 20px;
+}
+.nodeinfo
+{
+	border-bottom: solid #999999 1px;
+}
+th
+{
+	border-bottom: solid #999999 1px;
+	padding-bottom: 8px;
+	background-color: #ffffff;
+}
+.lcol
+{
+	border-left: solid #999999 1px;
+}
+.rcol
+{
+	border-right: solid #999999 1px;
+}
+table.nodeinfo tr td
+{
+	background-color: #F7F7F7;
+	padding: 11px 0 10px 12px;
+	text-align: center;
+	font-size: 8pt;
+}

@@ -157,8 +157,13 @@ BOOL CRemote::OnHeadersComplete()
 	m_sResponse.Empty();
 	m_pResponse.Clear();
 	
-	PageSwitch( strPath );
-	
+	if ( strPath == _T("/") )
+	{
+		SendHTML( IDR_HTML_ABOUT );
+	}
+	else
+		PageSwitch( strPath );
+
 	if ( ! m_sRedirect.IsEmpty() )
 	{
 		Write( _P("HTTP/1.1 302 Found\r\n") );
@@ -166,7 +171,8 @@ BOOL CRemote::OnHeadersComplete()
 		if ( ! m_sHeader.IsEmpty() ) Write( m_sHeader );
 		Write( _P("Location: ") );
 		Write( m_sRedirect );
-		Write( _P("\r\n") );
+		Write( _P("\r\n\r\n") );
+		LogOutgoing();
 	}
 	else if ( ! m_sResponse.IsEmpty() )
 	{
@@ -179,37 +185,30 @@ BOOL CRemote::OnHeadersComplete()
 		Write( _P("Content-Type: text/html; charset=UTF-8\r\n") );
 		Write( strLength );
 		if ( ! m_sHeader.IsEmpty() ) Write( m_sHeader );
+		Write( _P("\r\n") );
+		LogOutgoing();
+		Write( m_sResponse, CP_UTF8 );
 	}
-	else if ( m_pResponse.m_nLength > 0 )
+	else if ( m_pResponse.m_nLength )
 	{
 		Write( _P("HTTP/1.1 200 OK\r\n") );
 		CString strLength;
 		strLength.Format( _T("Content-Length: %i\r\n"), m_pResponse.m_nLength );
 		Write( strLength );
 		if ( ! m_sHeader.IsEmpty() ) Write( m_sHeader );
+		Write( _P("\r\n") );
+		LogOutgoing();
+		Write( &m_pResponse );
 	}
 	else
 	{
-		Write( _P("HTTP/1.1 404 Not Found\r\n") );
-		Write( _P("Content-Length: 0\r\n") );
-		Write( _P("Content-Type: text/html\r\n") );
-	}
-
-	LogOutgoing();
-
-	Write( _P("\r\n") );
-	if ( ! m_sResponse.IsEmpty() )
-	{
-		Write( m_sResponse, CP_UTF8 );
-		m_sResponse.Empty();
-	}
-	else if ( m_pResponse.m_nLength > 0 )
-	{
-		Write( &m_pResponse );
+		SendHTML( IDR_HTML_BROWSER );
 	}
 
 	m_sHandshake.Empty();
+
 	ClearHeaders();
+
 	OnWrite();
 	
 	return TRUE;
@@ -431,7 +430,7 @@ void CRemote::Output(LPCTSTR pszName)
 
 void CRemote::PageSwitch(CString& strPath)
 {
-	if ( strPath == _T("/") || strPath == _T("/remote") )
+	if ( strPath == _T("/remote") )
 	{
 		m_sRedirect = _T("/remote/");
 	}
@@ -1309,7 +1308,9 @@ void CRemote::PageNetworkNetwork(int nID, bool* pbConnect, LPCTSTR pszName)
 		str.Format( _T("%i"), (DWORD_PTR)pNeighbour );
 		Add( _T("row_id"), str );
 		Add( _T("row_address"), pNeighbour->m_sAddress );
-		Add( _T("row_agent"), pNeighbour->m_sUserAgent );
+		Add( _T("row_mode"), Neighbours.GetName( pNeighbour ) );
+		Add( _T("row_agent"), Neighbours.GetAgent( pNeighbour ) );
+		Add( _T("row_nick"), Neighbours.GetNick( pNeighbour ) );
 		str.Format( _T("%i -/- %i"), pNeighbour->m_nInputCount, pNeighbour->m_nOutputCount );
 		Add( _T("row_packets"), str );
 		str.Format( _T("%s -/- %s"),
@@ -1352,70 +1353,31 @@ void CRemote::PageNetworkNetwork(int nID, bool* pbConnect, LPCTSTR pszName)
 			break;
 		}
 		Add( _T("row_time"), str );
-		
-		if ( pNeighbour->m_nProtocol == PROTOCOL_G1 )
+
+		if ( pNeighbour->m_nProtocol == PROTOCOL_G2 )
 		{
-//			CG1Neighbour* pG1 = reinterpret_cast<CG1Neighbour*>(pNeighbour);
+			const CG2Neighbour* pG2 = static_cast< const CG2Neighbour* >( pNeighbour );
 			
-			switch ( pNeighbour->m_nNodeType )
+			if ( pG2->m_nLeafCount )
 			{
-			case ntNode:
-				LoadString( str, IDS_NEIGHBOUR_G1PEER );
-				break;
-			case ntHub:
-				LoadString( str, IDS_NEIGHBOUR_G1ULTRA );
-				break;
-			case ntLeaf:
-				LoadString( str, IDS_NEIGHBOUR_G1LEAF );
-				break;
-			}
-			
-			Add( _T("row_mode"), str );
-			str.Empty();
-		}
-		else if ( pNeighbour->m_nProtocol == PROTOCOL_G2 )
-		{
-			CG2Neighbour* pG2 = static_cast<CG2Neighbour*>(pNeighbour);
-			
-			switch ( pNeighbour->m_nNodeType )
-			{
-			case ntNode:
-				LoadString( str, IDS_NEIGHBOUR_G2PEER );
-				break;
-			case ntHub:
-				LoadString( str, IDS_NEIGHBOUR_G2HUB );
-				break;
-			case ntLeaf:
-				LoadString( str, IDS_NEIGHBOUR_G2LEAF );
-				break;
-			}
-			
-			Add( _T("row_mode"), str );
-			
-			if ( pG2->m_nLeafCount > 0 )
-			{
-				if ( pG2->m_nLeafLimit > 0 )
+				if ( pG2->m_nLeafLimit )
 				{
 					str.Format( _T("%i/%i"), pG2->m_nLeafCount, pG2->m_nLeafLimit );
 				}
 				else
 				{
 					str.Format( _T("%i"), pG2->m_nLeafCount );
-				}
-				
+				}				
 				Add( _T("row_leaves"), str );
 			}
-			
-			str.Empty();
-			if ( pG2->m_pProfile != NULL ) str = pG2->m_pProfile->GetNick();
 		}
 		else if ( pNeighbour->m_nProtocol == PROTOCOL_ED2K )
 		{
-			CEDNeighbour* pED2K = static_cast<CEDNeighbour*>(pNeighbour);
+			const CEDNeighbour* pED2K = static_cast< const CEDNeighbour* >( pNeighbour );
 			
-			if ( pED2K->m_nClientID > 0 )
+			if ( pED2K->m_nClientID )
 			{
-				if ( pED2K->m_nUserLimit > 0 )
+				if ( pED2K->m_nUserLimit )
 				{
 					str.Format( _T("%i/%i"), pED2K->m_nUserCount, pED2K->m_nUserLimit );
 				}
@@ -1423,24 +1385,11 @@ void CRemote::PageNetworkNetwork(int nID, bool* pbConnect, LPCTSTR pszName)
 				{
 					str.Format( _T("%i"), pED2K->m_nUserCount );
 				}
-				
 				Add( _T("row_leaves"), str );
-				CString strText1, strText2;
-				LoadString( strText1, IDS_NEIGHBOUR_ED2K_LOWID );
-				LoadString( strText2, IDS_NEIGHBOUR_ED2K_HIGHID );
-				Add( _T("row_mode"), CEDPacket::IsLowID( pED2K->m_nClientID ) ? strText1 : strText2 );
 			}
-			else
-			{
-				Add( _T("row_mode"), _T("eDonkey2000") );
-			}
-			
-			str = pED2K->m_sServerName;
 		}
-		
-		Add( _T("row_nick"), str );
-		str = pNeighbour->m_sAddress + _T(" - ") + str;
-		Add( _T("row_caption"), str );
+
+		Add( _T("row_caption"), pNeighbour->m_sAddress + _T(" - ") + Neighbours.GetNick( pNeighbour ) );
 		
 		Output( _T("networkRow") );
 		Prepare( _T("row_") );

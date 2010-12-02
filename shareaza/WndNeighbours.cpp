@@ -211,49 +211,13 @@ void CNeighboursWnd::Update()
 			Settings.SmartVolume( pNeighbour->m_mOutput.nTotal ) );
 		pItem->Format( 6, _T("%u (%u)"), pNeighbour->m_nOutbound, pNeighbour->m_nLostCount );
 
-		pItem->Set( 8, protocolNames[ pNeighbour->m_nProtocol ] );
-		pItem->Set( 9, pNeighbour->m_sUserAgent );
-
 		if ( pNeighbour->m_nState >= nrsConnected )
 		{
 			pItem->SetImage( 0, pNeighbour->m_nProtocol );
 
-			if ( pNeighbour->m_nProtocol == PROTOCOL_G1 )
+			if ( pNeighbour->m_nProtocol == PROTOCOL_G2 )
 			{
-				CG1Neighbour* pG1 = static_cast< CG1Neighbour* >( pNeighbour );
-
-				switch ( pG1->m_nNodeType )
-				{
-				case ntNode:
-					LoadString ( str,IDS_NEIGHBOUR_G1PEER );
-					break;
-				case ntHub:
-					LoadString ( str,IDS_NEIGHBOUR_G1ULTRA );
-					break;
-				case ntLeaf:
-					LoadString ( str,IDS_NEIGHBOUR_G1LEAF );
-					break;
-				}
-
-				pItem->Set( 8, str );
-			}
-			else if ( pNeighbour->m_nProtocol == PROTOCOL_G2 )
-			{
-				CG2Neighbour* pG2 = static_cast< CG2Neighbour* >( pNeighbour );
-
-				switch ( pG2->m_nNodeType )
-				{
-				case ntNode:
-					LoadString ( str,IDS_NEIGHBOUR_G2PEER );
-					break;
-				case ntHub:
-					LoadString ( str,IDS_NEIGHBOUR_G2HUB );
-					break;
-				case ntLeaf:
-					LoadString ( str,IDS_NEIGHBOUR_G2LEAF );
-					break;
-				}
-				pItem->Set( 8, str );
+				const CG2Neighbour* pG2 = static_cast< const CG2Neighbour* >( pNeighbour );
 
 				if ( pG2->m_nLeafCount > 0 )
 				{
@@ -273,11 +237,11 @@ void CNeighboursWnd::Update()
 			}
 			else if ( pNeighbour->m_nProtocol == PROTOCOL_ED2K )
 			{
-				CEDNeighbour* pED2K = static_cast< CEDNeighbour* >( pNeighbour );
+				const CEDNeighbour* pED2K = static_cast< const CEDNeighbour* >( pNeighbour );
 
-				if ( pED2K->m_nClientID > 0 )
+				if ( pED2K->m_nClientID )
 				{
-					if ( pED2K->m_nUserLimit > 0 )
+					if ( pED2K->m_nUserLimit )
 					{
 						pItem->Format( 7, _T("%u/%u"), pED2K->m_nUserCount, pED2K->m_nUserLimit );
 					}
@@ -285,19 +249,7 @@ void CNeighboursWnd::Update()
 					{
 						pItem->Format( 7, _T("%u"), pED2K->m_nUserCount );
 					}
-
-					LoadString( str, CEDPacket::IsLowID( pED2K->m_nClientID ) ? IDS_NEIGHBOUR_ED2K_LOWID : IDS_NEIGHBOUR_ED2K_HIGHID );
-					pItem->Set( 9, str );
 				}
-				else
-				{
-					LoadString ( str, IDS_NEIGHBOUR_ED2K_SERVER );
-					pItem->Set( 9, str );
-				}
-			}
-			else if ( pNeighbour->m_nProtocol == PROTOCOL_DC )
-			{
-//				CDCNeighbour* pDC = static_cast< CDCNeighbour* >( pNeighbour );
 			}
 		}
 		else
@@ -305,7 +257,9 @@ void CNeighboursWnd::Update()
 			pItem->SetImage( 0, PROTOCOL_NULL );
 		}
 
-		pItem->Set( 10, pNeighbour->m_pProfile ? pNeighbour->m_pProfile->GetNick() : pNeighbour->m_sServerName );
+		pItem->Set( 8, Neighbours.GetName( pNeighbour ) );
+		pItem->Set( 9, Neighbours.GetAgent( pNeighbour ) );
+		pItem->Set( 10, Neighbours.GetNick( pNeighbour ) );
 
 		pItem->Set( 11, pNeighbour->m_sCountry );
 		int nFlag = Flags.GetFlagIndex( pNeighbour->m_sCountry );

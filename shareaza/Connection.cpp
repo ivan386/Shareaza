@@ -747,6 +747,32 @@ void CConnection::UpdateCountry()
 	m_sCountryName = theApp.GetCountryName( m_pHost.sin_addr );
 }
 
+void CConnection::SendHTML(UINT nResourceID)
+{
+	CString strResponse;
+	CString strBody = LoadRichHTML( nResourceID, strResponse );
+
+	if ( strResponse.IsEmpty() )
+		Write( _P("HTTP/1.1 200 OK\r\n") );
+	else
+		Write( _T("HTTP/1.1 ") + strResponse );
+
+	if ( nResourceID == IDR_HTML_BUSY )
+		Write( _P("Retry-After: 30\r\n") );
+
+	Write( _P("Content-Type: text/html\r\n") );
+
+	CStringA strBodyUTF8 = UTF8Encode( strBody );
+
+	CString strLength;
+	strLength.Format( _T("Content-Length: %lu\r\n\r\n"), strBodyUTF8.GetLength() );
+	Write( strLength );
+
+	LogOutgoing();
+
+	Write( (LPCSTR)strBodyUTF8, strBodyUTF8.GetLength() );
+}
+
 //////////////////////////////////////////////////////////////////////
 // TCPBandwidthMeter Utility routines
 
