@@ -1,7 +1,7 @@
 //
 // PageSettingsRemote.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2010.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -36,9 +36,9 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNAMIC(CRemoteSettingsPage, CSettingsPage)
 
 BEGIN_MESSAGE_MAP(CRemoteSettingsPage, CSettingsPage)
-	ON_BN_CLICKED(IDC_REMOTE_ENABLE, OnBnClickedRemoteEnable)
-	ON_EN_CHANGE(IDC_REMOTE_USERNAME, OnBnClickedRemoteEnable)
-	ON_EN_CHANGE(IDC_REMOTE_PASSWORD, OnNewPassword)
+	ON_BN_CLICKED(IDC_REMOTE_ENABLE, &CRemoteSettingsPage::OnBnClickedRemoteEnable)
+	ON_EN_CHANGE(IDC_REMOTE_USERNAME, &CRemoteSettingsPage::OnBnClickedRemoteEnable)
+	ON_EN_CHANGE(IDC_REMOTE_PASSWORD, &CRemoteSettingsPage::OnNewPassword)
 	ON_WM_CTLCOLOR()
 	ON_WM_SETCURSOR()
 	ON_WM_LBUTTONUP()
@@ -82,7 +82,6 @@ BOOL CRemoteSettingsPage::OnInitDialog()
 	if ( ! m_sOldPassword.IsEmpty() ) m_sPassword = _T("      ");
 
 	UpdateData( FALSE );
-	OnBnClickedRemoteEnable();
 
 	return TRUE;
 }
@@ -215,4 +214,11 @@ void CRemoteSettingsPage::OnCancel()
 	Settings.Remote.Password	= m_sOldPassword;
 
 	CSettingsPage::OnCancel();
+}
+
+void CRemoteSettingsPage::OnSkinChange()
+{
+	CSettingsPage::OnSkinChange();
+
+	OnBnClickedRemoteEnable();
 }

@@ -3685,7 +3685,7 @@
 			<control caption="Shareaza Remote Access allows you to leave Shareaza running on your PC, and control it remotely using a web browser.  You will need to be able to accept incoming connections to use this feature (i.e. properly configured router, etc)."/>
 			<control caption="_Enable:"/>
 			<control caption="Enable Shareaza Remote Access:"/>
-			<control caption="URL"/>
+			<control/>
 			<control caption="_Credentials:"/>
 			<control caption="Choose a Username:"/>
 			<control/>
