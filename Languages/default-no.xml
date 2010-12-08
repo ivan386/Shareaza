@@ -287,9 +287,9 @@
 			<button id="ID_MEDIA_STOP" text="Stopp"/>
 			<separator/>
 			<label text="Søk" tip="Søk til bestemt posisjon"/>
-			<control id="IDC_MEDIA_POSITION" width="190" height="22"/>
+			<control id="ID_MEDIA_POSITION" width="190" height="22"/>
 			<label text="Volum:" tip="Juster volum"/>
-			<control id="IDC_MEDIA_VOLUME" width="50" height="22"/>
+			<control id="ID_MEDIA_VOLUME" width="50" height="22"/>
 			<separator/>
 			<button id="ID_MEDIA_OPEN" text="Åpne fil"/>
 			<rightAlign/>
@@ -304,11 +304,11 @@
 			<button id="ID_MEDIA_STOP" text="Stopp"/>
 			<separator/>
 			<label text="Søk" tip="Søk til bestemt posisjon"/>
-			<control id="IDC_MEDIA_POSITION" width="190" height="22"/>
+			<control id="ID_MEDIA_POSITION" width="190" height="22"/>
 			<label text="Hastighet" tip="Juster hastighet"/>
-			<control id="IDC_MEDIA_SPEED" width="40" height="22"/>
+			<control id="ID_MEDIA_SPEED" width="40" height="22"/>
 			<label text="Volum:" tip="Juster volum"/>
-			<control id="IDC_MEDIA_VOLUME" width="50" height="22"/>
+			<control id="ID_MEDIA_VOLUME" width="50" height="22"/>
 			<separator/>
 			<button id="ID_MEDIA_OPEN" text="Åpne fil"/>
 			<separator/>
@@ -343,6 +343,7 @@
 			<button id="ID_NETWORK_G2" text="Gnutella2"/>
 			<button id="ID_NETWORK_G1" text="Gnutella1"/>
 			<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
+			<button id="ID_NETWORK_DC" text="DC++"/>
 			<separator/>
 			<button id="ID_NEIGHBOURS_SETTINGS" text="Innstillinger"/>
 		</toolbar>
@@ -357,6 +358,7 @@
 			<button id="ID_NETWORK_G2" text="Gnutella2"/>
 			<button id="ID_NETWORK_G1" text="Gnutella1"/>
 			<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
+			<button id="ID_NETWORK_DC" text="DC++"/>
 			<separator/>
 			<button id="ID_NEIGHBOURS_SETTINGS" text="Innstillinger"/>
 		</toolbar>
@@ -385,9 +387,6 @@
 			<button id="ID_SCHEDULER_REMOVE" text="Remove Task"/>
 			<separator/>
 			<button id="ID_SCHEDULER_REMOVE_ALL" text="Remove All"/>
-			<rightAlign/>
-			<button id="ID_SCHEDULER_IMPORT" text="Import List"/>
-			<button id="ID_SCHEDULER_EXPORT" text="Export List"/>
 		</toolbar>
 		<!-- HIT MONITOR WINDOW -->
 		<toolbar name="CHitMonitorWnd">
@@ -418,6 +417,7 @@
 			<button id="ID_HOSTCACHE_ED2K_CACHE" text="eDonkey cache"/>
 			<button id="ID_HOSTCACHE_BT_CACHE" text="BitTorrent Cache"/>
 			<button id="ID_HOSTCACHE_KAD_CACHE" text="Kademlia Cache"/>
+			<button id="ID_HOSTCACHE_DC_CACHE" text="DC++ Cache"/>
 		</toolbar>
 		<!-- PRIVATE CHAT FRAME -->
 		<toolbar name="CPrivateChatFrame">
@@ -428,7 +428,6 @@
 			<button id="ID_CHAT_EMOTICONS"/>
 			<separator/>
 			<button id="ID_CHAT_BROWSE" text="Utforsk bruker"/>
-			<!-- <button id="ID_CHAT_SEND_FILE" text="Send File"/> -->
 			<button id="ID_CHAT_PRIORITY" text="Gi prioritet"/>
 			<separator/>
 			<button id="ID_CHAT_CONNECT" text="Koble til" visible="false"/>
@@ -496,6 +495,7 @@
 					<item id="ID_NETWORK_G2" text="Koble til Gnutella2"/>
 					<item id="ID_NETWORK_G1" text="Koble til Gnutella1"/>
 					<item id="ID_NETWORK_ED2K" text="Koble til eDonkey2000"/>
+					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_AUTO_CLOSE" text="Avslutt etter overføringer"/>
@@ -552,10 +552,10 @@
 					<item id="ID_HELP_FORUMS" text="Shareaza forum"/>
 					<item id="ID_HELP_WEB_6" text="Shareaza s_kin site"/>
 					<!-- 
-				<item id="ID_HELP_UPDATE" text="Latest news"/>
-				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
-				-->
+					<item id="ID_HELP_UPDATE" text="Latest news"/>
+					<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
+					<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+					-->
 				</menu>
 				<separator/>
 				<item id="ID_HELP_VERSION_CHECK" text="Check _Version"/>
@@ -572,6 +572,7 @@
 					<item id="ID_NETWORK_G2" text="Koble til Gnutella2"/>
 					<item id="ID_NETWORK_G1" text="Koble til Gnutella1"/>
 					<item id="ID_NETWORK_ED2K" text="Koble til eDonkey2000"/>
+					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_CONNECT_TO" text="Koble til..." shortcut="Ctrl+T"/>
@@ -621,7 +622,7 @@
 			<menu text="_Verktøy">
 				<item id="ID_LIBRARY_FOLDERS" text="Del filer"/>
 				<item id="ID_TOOLS_DOWNLOAD" text="Last ned fil/torrent..."/>
-				<item id="IDC_IMPORT_DOWNLOADS" text="_Import eMule partial downloads..."/>
+				<item id="ID_IMPORT_DOWNLOADS" text="_Import eMule partial downloads..."/>
 				<item id="ID_OPEN_DOWNLOADS_FOLDER" text="_Open my folder of completed Downloads"/>
 				<separator/>
 				<item id="ID_TOOLS_SKIN" text="Velg et skin..."/>
@@ -657,10 +658,10 @@
 					<item id="ID_HELP_FORUMS" text="Shareaza forum"/>
 					<item id="ID_HELP_WEB_6" text="Shareaza s_kin site"/>
 					<!-- 
-				<item id="ID_HELP_UPDATE" text="Latest news"/>
-				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
-				-->
+					<item id="ID_HELP_UPDATE" text="Latest news"/>
+					<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
+					<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+					-->
 				</menu>
 				<separator/>
 				<item id="ID_HELP_VERSION_CHECK" text="Check _Version"/>
@@ -683,6 +684,7 @@
 					<item id="ID_NETWORK_G2" text="Koble til Gnutella2"/>
 					<item id="ID_NETWORK_G1" text="Koble til Gnutella1"/>
 					<item id="ID_NETWORK_ED2K" text="Koble til eDonkey2000"/>
+					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_AUTO_CLOSE" text="Avslutt etter overføringer"/>
@@ -714,7 +716,7 @@
 			<menu text="_Verktøy">
 				<item id="ID_LIBRARY_FOLDERS" text="Del filer"/>
 				<item id="ID_TOOLS_DOWNLOAD" text="Last ned fil/torrent..."/>
-				<item id="IDC_IMPORT_DOWNLOADS" text="_Import eMule partial downloads..."/>
+				<item id="ID_IMPORT_DOWNLOADS" text="_Import eMule partial downloads..."/>
 				<item id="ID_OPEN_DOWNLOADS_FOLDER" text="_Open my folder of completed Downloads"/>
 				<separator/>
 				<item id="ID_TOOLS_SKIN" text="Velg et skin..."/>
@@ -754,10 +756,10 @@
 					<item id="ID_HELP_FORUMS" text="Shareaza forum"/>
 					<item id="ID_HELP_WEB_6" text="Shareaza s_kin site"/>
 					<!-- 
-				<item id="ID_HELP_UPDATE" text="Latest news"/>
-				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
-				-->
+					<item id="ID_HELP_UPDATE" text="Latest news"/>
+					<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
+					<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+					-->
 				</menu>
 				<separator/>
 				<item id="ID_HELP_VERSION_CHECK" text="Check _Version"/>
@@ -905,6 +907,7 @@
 				<item id="ID_HOSTCACHE_ED2K_CACHE" text="eDonkey-servere"/>
 				<item id="ID_HOSTCACHE_BT_CACHE" text="_BitTorrent Cache"/>
 				<item id="ID_HOSTCACHE_KAD_CACHE" text="_Kademlia Cache"/>
+				<item id="ID_HOSTCACHE_DC_CACHE" text="_DC++ Cache"/>
 			</menu>
 			<separator/>
 			<item id="ID_HOSTCACHE_IMPORT" text="Åpne MET fil..."/>
@@ -1504,6 +1507,7 @@
 				<item id="ID_NETWORK_G2" text="_Gnutella2"/>
 				<item id="ID_NETWORK_G1" text="Gnutella_1"/>
 				<item id="ID_NETWORK_ED2K" text="_eDonkey"/>
+				<item id="ID_NETWORK_DC" text="_DC++"/>
 			</menu>
 			<menu text="_Monitor">
 				<item id="ID_NEIGHBOURS_VIEW_ALL" text="View _All Traffic"/>
@@ -1564,9 +1568,6 @@
 			<item id="ID_SCHEDULER_EDIT" text="_Edit"/>
 			<separator/>
 			<item id="ID_SCHEDULER_REMOVE_ALL" text="Remove Al_l"/>
-			<separator/>
-			<item id="ID_SCHEDULER_IMPORT" text="Åpne..."/>
-			<item id="ID_SCHEDULER_EXPORT" text="Lagre..."/>
 		</menu>
 		<!-- DISCOVERY SERVICES WINDOW -->
 		<menu name="CDiscoveryWnd">
@@ -1590,7 +1591,6 @@
 			<item id="ID_CHAT_DISCONNECT" text="Koble fra"/>
 			<separator/>
 			<item id="ID_CHAT_BROWSE" text="Utforsk bruker"/>
-			<!-- <item id="ID_CHAT_SEND_FILE" text="_Send File..."/> -->
 			<item id="ID_CHAT_PRIORITY" text="Gi prioritet"/>
 			<separator/>
 			<menu text="_Format">
@@ -1698,8 +1698,7 @@
 				<icon res="252" width="32" height="32"/><gap size="8"/>
 				<heading align="middle">M O D I F I S E R   S H A R E A Z A</heading>
 				<newline gap="8" indent="42"/>
-				<text colour="FF0000">Shareaza has detected that you are behind a NAT router or firewall,
-			and are unable to receive connections from the Internet.  </text>
+				<text colour="FF0000">To open the folder with your downloads</text>
 				<text colour="FF0000" format="b"> - Endre Shareaza's utseende</text>
 				<newline gap="6"/>
 				<link target="raza:command:ID_HELP_ROUTER">Innstillingsveiviser</link>
@@ -1844,6 +1843,12 @@
 			<text group="32" align="middle">Kobler til...</text>
 			<text group="33" align="middle">Koblet til</text>
 			<newline group="30" gap="2"/>
+			<icon group="80" command="ID_NETWORK_DC"/><gap group="80" size="4"/>
+			<text group="80" align="middle" format="b">DC++:</text>
+			<text group="81" align="middle">Ikke koblet til</text>
+			<text group="82" align="middle">Kobler til...</text>
+			<text group="83" align="middle">Koblet til</text>
+			<newline group="80" gap="2"/>
 			<group id="2">
 				<para align="center">
 					<newline gap="4"/>
@@ -2066,13 +2071,13 @@
 		Velg en nedlasting og denne kommandoen en gang til.</text>
 			<newline gap="16"/>
 			<text>You can also use this command to get help information on a specific download.
-		Simply select a download and choose this Help command again.</text>
+			Simply select a download and choose this Help command again.</text>
 		</document>
 		<document name="DownloadHelp.Seeding">
 			<text format="b">This Torrent is Seeding</text>
 			<newline gap="8"/>
 			<text>Shareaza has verified this complete download, and is actively sharing it
-		with other downloaders through BitTorrent. Please share at least 100%.</text>
+			with other downloaders through BitTorrent. Please share at least 100%.</text>
 		</document>
 		<document name="DownloadHelp.Completed">
 			<text format="b">Denne nedlastingen er ferdig.</text>
@@ -2313,6 +2318,19 @@
 	</documents>
 	<!-- Localised Command Tip Text. The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
 	<commandTips>
+		<tip id="AFX_IDS_APP_TITLE" message="Shareaza"/>
+		<tip id="AFX_IDS_IDLEMESSAGE" message="Klar..."/>
+		<tip id="AFX_IDS_MDICHILD" message="Activate this window"/>
+		<tip id="AFX_IDS_PREVIEW_CLOSE" message="Close print preview mode" tip="Forhåndsvis"/>
+		<tip id="AFX_IDS_SCCLOSE" message="Maksimer det aktive vinduet."/>
+		<tip id="AFX_IDS_SCMAXIMIZE" message="Maksimer det aktive vinduet."/>
+		<tip id="AFX_IDS_SCMINIMIZE" message="Reduce the window to an icon"/>
+		<tip id="AFX_IDS_SCMOVE" message="Change the window position"/>
+		<tip id="AFX_IDS_SCNEXTWINDOW" message="Switch to the next document window"/>
+		<tip id="AFX_IDS_SCPREVWINDOW" message="Switch to the previous document window"/>
+		<tip id="AFX_IDS_SCRESTORE" message="Restore the window to normal size"/>
+		<tip id="AFX_IDS_SCSIZE" message="Change the window size"/>
+		<tip id="AFX_IDS_SCTASKLIST" message="Activate Task List"/>
 		<tip id="ID_BROWSE_FILES" message="Vis brukers delte filer."/>
 		<tip id="ID_BROWSE_LAUNCH" message="Utforsk valgte brukers profil og delte filer."/>
 		<tip id="ID_BROWSE_PROFILE" message="Utforsk brukers profil."/>
@@ -2327,7 +2345,6 @@
 		<tip id="ID_CHAT_EMOTICONS" message="Sett inn et uttrykksikon."/>
 		<tip id="ID_CHAT_ITALIC" message="Velg kursiv skrift (Ctrl+I)"/>
 		<tip id="ID_CHAT_PRIORITY" message="Gi opplastingsprioritet til bruker."/>
-		<!-- <tip id="ID_CHAT_SEND_FILE" message="Send a file to the user..."/> -->
 		<tip id="ID_CHAT_TIMESTAMP" message="Vis tidspunkt for når hver melding ble mottatt."/>
 		<tip id="ID_CHAT_UNDERLINE" message="Velg understreking (Ctrl+U)"/>
 		<tip id="ID_CHILD_CLOSE" message="Lukk det aktive vinduet."/>
@@ -2336,6 +2353,7 @@
 		<tip id="ID_CHILD_RESTORE" message="Åpne valgte vindu."/>
 		<tip id="ID_DISCOVERY_ADD" message="Legg til ny oppdagelsestjeneste..."/>
 		<tip id="ID_DISCOVERY_ADVERTISE" message="Kjør valgte GWebCache-tjeneste mot en tilfeldig eksisterende GWebCache."/>
+		<tip id="ID_DISCOVERY_BLOCKED" message="Vis GWebCache-tjeneste i oppdagelsesvinduet."/>
 		<tip id="ID_DISCOVERY_BROWSE" message="Utforsk statistikken til valgte GWebCache-tjeneste på nettet."/>
 		<tip id="ID_DISCOVERY_EDIT" message="Vis egenskapene til valgte oppdagelsestjeneste."/>
 		<tip id="ID_DISCOVERY_GNUTELLA" message="Vis bootstrap-tjeneste i oppdagelsesvinduet."/>
@@ -2387,13 +2405,14 @@
 		<tip id="ID_HELP_ABOUT" message="Viser Shareazas om-dialog..."/>
 		<tip id="ID_HELP_CODEC" message="Alt om codec'er og videoproblemer."/>
 		<tip id="ID_HELP_FAQ" message="Besøk Shareazas FAQ."/>
-		<tip id="ID_HELP_ROUTER" message="Få hjelp til å sette opp din router eller brannmur."/>
 		<tip id="ID_HELP_FORUMS" message="Besøk Shareazas forum."/>
 		<tip id="ID_HELP_GUIDE" message="Besøk Shareazas brukerguide"/>
 		<tip id="ID_HELP_HOMEPAGE" message="Besøk Shareazas nettsted."/>
+		<tip id="ID_HELP_ROUTER" message="Få hjelp til å sette opp din router eller brannmur."/>
 		<tip id="ID_HELP_SECURITY" message="Få hjelp til å beskytte systemet ditt mot fiendtlige programmer"/>
-		<tip id="ID_HELP_UPDATE" message="Se nyheter og oppdateringer."/>
 		<tip id="ID_HELP_TEST" message="Run the connection test."/>
+		<tip id="ID_HELP_UPDATE" message="Se nyheter og oppdateringer."/>
+		<tip id="ID_HELP_VERSION_CHECK" message="Check for new version"/>
 		<tip id="ID_HELP_WEB_1" message="Besøk denne nettsiden"/>
 		<tip id="ID_HELP_WEB_2" message="Besøk denne nettsiden"/>
 		<tip id="ID_HELP_WEB_3" message="Besøk denne nettsiden"/>
@@ -2403,7 +2422,9 @@
 		<tip id="ID_HITMONITOR_CLEAR" message="Oppdater treffmonitor-bufferen."/>
 		<tip id="ID_HITMONITOR_PAUSE" message="Sett treffmonitoren på pause."/>
 		<tip id="ID_HITMONITOR_SEARCH" message="Søk på nettverket etter valgte uttrykk."/>
+		<tip id="ID_HOSTCACHE_BT_CACHE" message="Vis BitTorrent opplastninger."/>
 		<tip id="ID_HOSTCACHE_CONNECT" message="Koble til valgte vert."/>
+		<tip id="ID_HOSTCACHE_DC_CACHE" message="Show DC++ cached hubs."/>
 		<tip id="ID_HOSTCACHE_DISCONNECT" message="Koble fra valgte nabo."/>
 		<tip id="ID_HOSTCACHE_ED2K_CACHE" message="Vis eDonkey2000-servere."/>
 		<tip id="ID_HOSTCACHE_ED2K_DOWNLOAD" message="Last ned en eDonkey2000 &quot;server.met&quot; fil..."/>
@@ -2411,8 +2432,10 @@
 		<tip id="ID_HOSTCACHE_G2_CACHE" message="Vis Gnutella2-vertene."/>
 		<tip id="ID_HOSTCACHE_G2_HORIZON" message="Vis Gnutella2 horizon-hubene."/>
 		<tip id="ID_HOSTCACHE_IMPORT" message="Åpne en liste med kjente verter, som en &quot;server.met&quot; fil..."/>
+		<tip id="ID_HOSTCACHE_KAD_CACHE" message="Vis Gnutella1-vertene."/>
 		<tip id="ID_HOSTCACHE_PRIORITY" message="Prøv å koble til denne serveren før de andre tjenerne."/>
 		<tip id="ID_HOSTCACHE_REMOVE" message="Fjern valgte vert fra vert-cache-listen."/>
+		<tip id="ID_IMPORT_DOWNLOADS" message="Del NYE delvise nedlastinger"/>
 		<tip id="ID_LIBRARY_ADD" message="Legg til ny mappe i mine filer..."/>
 		<tip id="ID_LIBRARY_ALBUM_DELETE" message="Slett valgte mappe."/>
 		<tip id="ID_LIBRARY_ALBUM_OPEN" message="Åpne valgte mappe."/>
@@ -2442,6 +2465,7 @@
 		<tip id="ID_LIBRARY_REBUILD" message="Oppdater metadata og hash, til valgte mapper eller filer."/>
 		<tip id="ID_LIBRARY_REBUILD_ANSI" message="Gjenoppbygg metadata ved hjelp av et annet språk."/>
 		<tip id="ID_LIBRARY_REFRESH" message="Oppdater biblioteket."/>
+		<tip id="ID_LIBRARY_REFRESH_METADATA" message="_Refresh Metadata"/>
 		<tip id="ID_LIBRARY_REMOVE" message="Fjern de valgte mappene."/>
 		<tip id="ID_LIBRARY_RENAME" message="Gi den valgte filen nytt navn."/>
 		<tip id="ID_LIBRARY_SCAN" message="Skann valgte mappe eller filer etter forandringer."/>
@@ -2479,6 +2503,7 @@
 		<tip id="ID_MEDIA_PAUSE" message="Sett denne filen på pause." tip="Pause"/>
 		<tip id="ID_MEDIA_PLAY" message="Spill av denne filen." tip="Spill av"/>
 		<tip id="ID_MEDIA_PLAYLIST" message="Vis eller skjul spilleliste-vinduet."/>
+		<tip id="ID_MEDIA_POSITION" message="Søk til bestemt posisjon" tip="Seek"/>
 		<tip id="ID_MEDIA_PREVIOUS" message="Gå tilbake til forrige fil i denne spillelisten." tip="Tilbake"/>
 		<tip id="ID_MEDIA_PROPERTIES" message="View and edit the properties of the selected files."/>
 		<tip id="ID_MEDIA_RANDOM" message="Bruk tilfeldig (shuffle) modus i denne spillelisten."/>
@@ -2493,14 +2518,15 @@
 		<tip id="ID_MEDIA_SIZE_ONE" message="Vis videoen i dens orginale størrelse."/>
 		<tip id="ID_MEDIA_SIZE_THREE" message="Vis videoen i trippel størrelse av orginal."/>
 		<tip id="ID_MEDIA_SIZE_TWO" message="Vis videoen i dobbel størrelse av orginal."/>
+		<tip id="ID_MEDIA_SPEED" message="Juster hastighet" tip="Hastighet"/>
 		<tip id="ID_MEDIA_STATUS" message="Vis eller skjul mediastatus linjen."/>
 		<tip id="ID_MEDIA_STOP" message="Stopp avspillingen. " tip="Stopp"/>
 		<tip id="ID_MEDIA_VIS" message="Velg hvilke effekter som skal vises."/>
+		<tip id="ID_MEDIA_VOLUME" message="Juster volum" tip="Volume"/>
 		<tip id="ID_MEDIA_ZOOM" message="Juster zoom- og aspektinnstillinger."/>
-		<tip id="IDC_MEDIA_POSITION" value="Seek to a position in the media file." tip="Seek"/>
-		<tip id="IDC_MEDIA_SPEED" value="Adjust the speed of the media file." tip="Hastighet"/>
-		<tip id="IDC_MEDIA_VOLUME" value="Adjust the audio volume." tip="Volume"/>
 		<tip id="ID_MONITOR_CLOSE" message="Lukk monitorvinduet."/>
+		<tip id="ID_MUSICBRAINZ_ALBUMS" message="Look at all albums for this artist."/>
+		<tip id="ID_MUSICBRAINZ_MATCHES" message="Søk etter andre kopier av valgte fil."/>
 		<tip id="ID_NEIGHBOURS_CHAT" message="Start en samtale med valgte bruker."/>
 		<tip id="ID_NEIGHBOURS_COPY" message="Kopier URI for å koble til valgte vert."/>
 		<tip id="ID_NEIGHBOURS_DISCONNECT" message="Koble fra valgte nabo(er)."/>
@@ -2513,12 +2539,22 @@
 		<tip id="ID_NETWORK_CHAT_TO" message="Open a chat session with a user..."/>
 		<tip id="ID_NETWORK_CONNECT" message="Koble til nettverket."/>
 		<tip id="ID_NETWORK_CONNECT_TO" message="Manuelt koble til en vert..."/>
+		<tip id="ID_NETWORK_DC" message="Connect to the DC++ network."/>
 		<tip id="ID_NETWORK_DISCONNECT" message="Koble fra nettverket"/>
 		<tip id="ID_NETWORK_ED2K" message="Koble til eDonkey2000-nettverket."/>
 		<tip id="ID_NETWORK_EXIT" message="Avslutt Shareaza"/>
 		<tip id="ID_NETWORK_G1" message="Koble til det originale Gnutella-nettverket."/>
 		<tip id="ID_NETWORK_G2" message="Koble til Gnutella2-nettverket (Høyst anbefalt)."/>
 		<tip id="ID_NETWORK_SEARCH" message="Start et nytt søk på nettverket..."/>
+		<tip id="ID_NEXT_PANE" message="Switch to the next window pane" tip="Neste..."/>
+		<tip id="ID_OPEN_DOWNLOADS_FOLDER" message="Open my folder of completed Downloads"/>
+		<tip id="ID_PREV_PANE" message="Gå tilbake til forrige fil i denne spillelisten." tip="Tilbake"/>
+		<tip id="ID_SCHEDULER_ACTIVATE" message="Fjern valgte opplasting(er) fra listen."/>
+		<tip id="ID_SCHEDULER_ADD" message="Adds a new task to scheduler list."/>
+		<tip id="ID_SCHEDULER_DEACTIVATE" message="Koble til nettverket."/>
+		<tip id="ID_SCHEDULER_EDIT" message="Endre valgte sikkerhetsregel."/>
+		<tip id="ID_SCHEDULER_REMOVE" message="Fjern valgte nedlasting(er) fra listen."/>
+		<tip id="ID_SCHEDULER_REMOVE_ALL" message="Removes all scheduled tasks."/>
 		<tip id="ID_SEARCH_CHAT" message="Start en samtale med valgte bruker."/>
 		<tip id="ID_SEARCH_CLEAR" message="Fjern søkeresultatene."/>
 		<tip id="ID_SEARCH_COLUMNS" message="Velg hvilke metadata-kolonner som skal vises."/>
@@ -2550,9 +2586,22 @@
 		<tip id="ID_SECURITY_POLICY_DENY" message="Velg at normal sikkerhet skal nekte alle verter."/>
 		<tip id="ID_SECURITY_REMOVE" message="Fjern valgte sikkerhetsregler."/>
 		<tip id="ID_SECURITY_RESET" message="Fjern treffresultat til valgte regler."/>
+		<tip id="ID_SHAREMONKEY_BUY" message="Buy it and support the author"/>
+		<tip id="ID_SHAREMONKEY_COMPARE" message="Compare prices in different stores"/>
+		<tip id="ID_SHAREMONKEY_DOWNLOAD" message="Søk etter dette"/>
+		<tip id="ID_SHAREMONKEY_NEXT" message="Go to the next match"/>
+		<tip id="ID_SHAREMONKEY_PREVIOUS" message="Go to the previous match"/>
+		<tip id="ID_SHAREMONKEY_PRICES" message="Gå tilbake til forrige fil i denne spillelisten."/>
+		<tip id="ID_SHAREMONKEY_SAVE" message="Vis filen i mine filer"/>
 		<tip id="ID_SYSTEM_CLEAR" message="Oppdater stausloggen."/>
+		<tip id="ID_SYSTEM_COPY" message="Copy selected line(s) of status log."/>
 		<tip id="ID_SYSTEM_TIMESTAMP" message="Lag tidsstempel for hver linje."/>
 		<tip id="ID_SYSTEM_VERBOSE" message="Vis en detaljert systemlogg."/>
+		<tip id="ID_SYSTEM_VERBOSE_DEBUG" message="Vis beskrivelse."/>
+		<tip id="ID_SYSTEM_VERBOSE_ERROR" message="Vis beskrivelse."/>
+		<tip id="ID_SYSTEM_VERBOSE_INFO" message="Vis graf-linjer."/>
+		<tip id="ID_SYSTEM_VERBOSE_NOTICE" message="Display notices and above."/>
+		<tip id="ID_SYSTEM_VERBOSE_WARNING" message="Vis graf-linjer."/>
 		<tip id="ID_TAB_CONNECT" message="Koble til eller koble fra nettverket."/>
 		<tip id="ID_TAB_HOME" message="Gå tilbake til hjem-vinduet."/>
 		<tip id="ID_TAB_IRC" message="Show the IRC Chat window."/>
@@ -2603,6 +2652,7 @@
 		<tip id="ID_VIEW_NEIGHBOURS" message="Vis eller skjul naboer-vinduet."/>
 		<tip id="ID_VIEW_PACKETS" message="Vis eller skjul pakkedump-vindu."/>
 		<tip id="ID_VIEW_RESULTS_MONITOR" message="Vis eller skjul treffmonitor-vinduet."/>
+		<tip id="ID_VIEW_SCHEDULER" message="Vis eller skjul sikkerhetsvinduet."/>
 		<tip id="ID_VIEW_SEARCH_MONITOR" message="Vis eller skjul søkemonitor-vinduet."/>
 		<tip id="ID_VIEW_SECURITY" message="Vis eller skjul sikkerhetsvinduet."/>
 		<tip id="ID_VIEW_SYSTEM" message="Vis eller skjul system-vinduet."/>
@@ -2610,6 +2660,10 @@
 		<tip id="ID_VIEW_TRAFFIC" message="Vis eller skjul graf-vinduet."/>
 		<tip id="ID_VIEW_UPLOADS" message="Vis eller skjul opplastings-vinduet."/>
 		<tip id="ID_VIEW_WINDOWED" message="Bruk Shareaza i power vindumodus."/>
+		<tip id="ID_WEBSERVICES_LIST" message="Choose the web service to get more information about the selected file."/>
+		<tip id="ID_WEBSERVICES_MUSICBRAINZ" message="Search for the same artist songs using MusicBrainz service."/>
+		<tip id="ID_WEBSERVICES_SHAREMONKEY" message="Search for the file infomation using ShareMonkey service."/>
+		<tip id="ID_WINDOW_ARRANGE" message="Arrange icons at the bottom of the window" tip="Arrange Icons"/>
 		<tip id="ID_WINDOW_CASCADE" message="Maksimer alle vindu."/>
 		<tip id="ID_WINDOW_MONITOR" message="Vis eller skjul monitor for båndbredde."/>
 		<tip id="ID_WINDOW_NAVBAR" message="Vis eller skjul navigasjonslinjen."/>
@@ -2618,8 +2672,6 @@
 		<tip id="ID_WINDOW_TILE_HORZ" message="Still opp vinduene side ved side vannrett"/>
 		<tip id="ID_WINDOW_TILE_VERT" message="Still opp vinduene side ved side Loddrett."/>
 		<tip id="ID_WINDOW_TOOLBAR" message="Vis eller skjul verktøylinjen."/>
-		<tip id="ID_WEBSERVICES_LIST" message="Choose the web service to get more information about the selected file."/>
-		<tip id="ID_WEBSERVICES_SHAREMONKEY" message="Search for the file infomation using ShareMonkey service."/>
 		<!-- PLUGIN TIPS -->
 		<tip id="ImageViewer_BestFit" message="Resize the image to fit within the window."/>
 		<tip id="ImageViewer_ActualSize" message="Show the image at its natural size."/>
@@ -2656,23 +2708,6 @@
 		<string id="WINDOW_HELP" value="Shareaza hjelp"/>
 		<string id="WINDOW_IRC" value="Shareaza Chat"/>
 		<string id="WINDOW_SCHEDULER" value="Scheduler"/>
-		<string id="154" value="Are you sure you want to remove all scheduled tasks? This cannot be undone."/>
-		<string id="156" value="Scheduled time has already passed.\n\nPlease select a time in the future."/>
-		<string id="157" value="Bandwidth: Full Speed"/>
-		<string id="158" value="Bandwidth: Reduced Speed"/>
-		<string id="159" value="Bandwidth: Stop"/>
-		<string id="160" value="System: Exit Shareaza"/>
-		<string id="161" value="System: Disconnect Dial-up Connection"/>
-		<string id="162" value="System: Turn Off the Computer"/>
-		<string id="163" value="Please select a task."/>
-		<string id="164" value="Specific day(s) of week"/>
-		<string id="165" value="Aktiv"/>
-		<string id="166" value="Inaktiv"/>
-		<string id="167" value="Done"/>
-		<string id="168" value="Waiting..."/>
-		<string id="169" value="No Tasks Currently Scheduled"/>
-		<string id="172" value="Done Today"/>
-		<string id="173" value="You should select at least one day of week."/>
 		<string id="7000" value="Er du sikker på at du vil slette dette filteret?"/>
 		<string id="7001" value="&amp;Skjemaer"/>
 		<string id="7002" value="Sammensatte verdier"/>
@@ -2692,9 +2727,7 @@
 		<string id="8007" value="Det er ingen aktive søk. Klikk her for å søke etter filer."/>
 		<string id="8008" value="Shareaza er ferdig med å laste ned den nyeste Shareaza versjonen (%s). Vil du oppgradere nå?\n\nHvis du velger JA, vil Shareaza lukkes for å fullføre oppgraderingen."/>
 		<string id="8009" value="Er du sikker på at du vil slette dette &quot;%s&quot; skinnet? Det kan ikke gjenopprettes."/>
-		<string id="8010" value="Dette er en test-versjon av Shareaza, beta test perioden er over. Vennligst last ned den offisielle fullversjonen fra http://shareaza.sourceforge.net/."/>
 		<string id="8011" value="Når du endrer utseende vil alle åpne vinduer lukkes. Vil du endre nå?"/>
-		<string id="8012" value="Torrent Informasjon"/>
 		<string id="8013" value="Ingen nye Shareaza versjon oppdaget."/>
 		<string id="8014" value="Egenskaper"/>
 		<string id="8060" value="Hub/Ultrapeer-modus med %lu nabo(er).  %s in local library."/>
@@ -2762,7 +2795,7 @@
 		<string id="8178" value="Hva slags filtype er det?"/>
 		<string id="8179" value="(Fjern søkelogg)"/>
 		<string id="8180" value="Filstørrelsen må være"/>
-		<string id="8181" value=" til"/><!-- size from xx TO xx-->
+		<string id="8181" value=" to (size from xx TO xx)"/>
 		<string id="8208" value="Shareaza lager hash for %Iu fil(er):"/>
 		<string id="8223" value="%i dager og %i timer"/>
 		<string id="8224" value="Shareaza laster ned:"/>
@@ -2782,7 +2815,7 @@
 		<string id="8239" value="Ferdig"/>
 		<string id="8240" value="Shareaza flytter filen."/>
 		<string id="8241" value="Shareaza sjekker om det finnes feil på filen: "/>
-		<string id="8243" value="Lastet opp:"/>
+		<string id="8243" value="Opplastingsområde"/>
 		<string id="8244" value="Number of reviews:"/>
 		<string id="8288" value="Utforsker mine filer."/>
 		<string id="8289" value="Utforsker "/>
@@ -2844,10 +2877,9 @@
 		<string id="16077" value="Adressen %s er allerede blokert i sikkerhetsreglene."/>
 		<string id="16078" value="La til ny sikkerhetsregel for å blokkere %s."/>
 		<string id="16079" value="Er du sikker på at du vil koble fra?"/>
-		<string id="16080" value="You are running the Scheduler in 'G2 only' mode. Would you like to turn this mode off, so that all active networks remain connected?"/>
+		<string id="16080" value="Du er ikke koblet til nettverket."/>
 		<string id="16081" value="Sender forespørsel for &quot;%s&quot; til %s."/>
 		<string id="16083" value="Å tvinge pc-en til å være hub kan påvirke evnen til å utnytte nettverket. Det er generelt bedre å la Shareaza velge. \n\nHub modus gir IKKE bedre søkeresultat, det hjelper heller ikke på noen annen måte.\n\nEr du helt sikker på at du vil gjøre dette?"/>
-		<string id="16084" value="Å skru av Gnutella-1 protokollen kan gi dårligere søkeresultat, hvis du er hub kan dette også påvirke andre på nettverket. Er du sikker på at du vil gjøre dette?"/>
 		<string id="16085" value="Gnutella2 er hovednettverket til Shareaza. Hvis du skrur det av kan det være at du får både lavere antall søkeresultat og lavere kvalitet på filene. Er du sikker på at du vil gjøre dette?"/>
 		<string id="16087" value="Din utgende bndbresse er for lav for  kunne bruke dette nettverket"/>
 		<string id="16128" value="Godta innkommende koblinger fra %s port %i."/>
@@ -2878,6 +2910,7 @@
 		<string id="16157" value="Nabo %s er ikke hub, lukker kobling."/>
 		<string id="16158" value="Gnutella2-kobling med nabo %s vellyket opprettet (%s)."/>
 		<string id="16159" value="Lukker kobling til ikke-Gnutella2 nabo %s."/>
+		<string id="16191" value="Received a packet from %s for %s which excess query limits, ignoring."/>
 		<string id="16192" value="Nabo %s videresendte en overdreven stor pakke, lukker kobling."/>
 		<string id="16193" value="Nabo %s videresendte en pakke med null TTL, ignorerer."/>
 		<string id="16194" value="Nabo %s videresendte en pakke med overdrevet TTL, dropper pakke (TTL=%i, Hops=%i)."/>
@@ -3018,6 +3051,7 @@
 		<string id="16375" value="Delvis"/>
 		<string id="16376" value="Alle filer"/>
 		<string id="16377" value="HTTP Guard"/>
+		<string id="16378" value="Host &quot;%s&quot; sent a 416, without providing available ranges. Closing connection."/>
 		<string id="16379" value="Library Files"/>
 		<string id="16384" value="Er du sikker på at du vil åpne denne filen &quot;%s&quot; ?\n\nNoen filer kan være skadelige for pc-en. Forsikre deg om at du vet hva filen er før du åpner den."/>
 		<string id="16385" value="Du prøver å endre metadataene til %i filer, er du sikker på at du vil fortsette?"/>
@@ -3077,6 +3111,7 @@
 		<string id="16526" value="Gnutella-pakker dropped"/>
 		<string id="16527" value="Gnutella-pakker mistet"/>
 		<string id="16528" value="Gnutella lokale forespørsler"/>
+		<string id="16529" value="Gnutella lokale forespørsler"/>
 		<string id="16532" value="Total TCP mottatt båndbredde"/>
 		<string id="16533" value="Total TCP overført bånbredde"/>
 		<string id="16534" value="Total UDP mottatt båndbredde"/>
@@ -3145,12 +3180,11 @@
 		<string id="16944" value="Fant %i delte filer i %s's mine filer."/>
 		<string id="16991" value="Shareaza Media Player"/>
 		<string id="16992" value="Shareaza klarte ikke å starte pluginfunksjonen for mediafiler. Vennligst installer Shareaza på nytt og kontroller at du har tilstrekkelige codec og drivere installert."/>
-		<string id="16993" value="Alle media filer|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Playlists|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Audio Files|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|Video Filer|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|CD lyd Tracks|*.cda|MIDI filer|*.mid;*.rmi;*.midi|Alle filer|*.*||"/>
 		<string id="16994" value="Klarte ikke å åpne media fil &quot;%s&quot;"/>
 		<string id="16995" value="Denne filen kan være ødelagt, eller så kan det være at du ikke har rett codec til å spille den av med."/>
 		<string id="16996" value="Deler av denne filen kunne ikke spilles av, du bør kanskje laste ned ekstra codec."/>
 		<string id="16997" value="Det er ingen filer som spilles av. Dobbelt-klikk på en av dine filer for å spille av."/>
-		<string id="16998" value="S     H     A     R     E     A     Z     A           M     E     D     I     A           S     Y     S     T     E     M"/><!-- on one line -->
+		<string id="16998" value="S     H     A     R     E     A     Z     A           M     E     D     I     A           S     Y     S     T     E     M"/>
 		<string id="16999" value="Spilleliste"/>
 		<string id="17017" value="Send:"/>
 		<string id="17018" value="Welcome to Shareaza Chat!"/>
@@ -3250,6 +3284,7 @@
 		<string id="17477" value="BitTorrent koblingen med %s svarte med feil fil."/>
 		<string id="17478" value="BitTorrent koblingen med %s forespurte en ukjent fil."/>
 		<string id="17479" value="BitTorrent kobling med %s startet for &quot;%s&quot;."/>
+		<string id="17480" value="BitTorrent koblingen med %s forespurte en ukjent fil."/>
 		<string id="17481" value="Mottok BitTorrent beskrivelsesfil: &quot;%s&quot;"/>
 		<string id="17482" value="Klarer ikke å dele prefetched BitTorrent fil &quot;%s&quot;."/>
 		<string id="17483" value="Feil fra BitTorrent trackeren for &quot;%s&quot; : &quot;%s&quot;."/>
@@ -3268,9 +3303,8 @@
 		<string id="17496" value="Det skjedde en feil ved kopieringen fra &quot;%s&quot; til en BitTorrent delings-fil."/>
 		<string id="17497" value="Det skjedde en feil ved forsøk på å spre &quot;%s&quot;."/>
 		<string id="17498" value="Det ble funnet en feil i filen &quot;%s&quot;."/>
-		<string id="17500" value="Trackeren svarte ikke- Prøver announce om igjen (%i av %i)"/>
 		<string id="17501" value="Klarer ikke å kommunisere med tracker"/>
-		<string id="17503" value="Tracker failed- Trying next tracker (%i of %i)"/>
+		<string id="17503" value="Trying next tracker (%i of %i)"/>
 		<string id="17505" value="BitTorrent connection to %s was dropped."/>
 		<string id="17506" value="BitTorrent handshake with %s was dropped."/>
 		<string id="17507" value="BitTorrent coupling with %s was dropped."/>
@@ -3281,12 +3315,6 @@
 		<string id="17514" value="Updating Bittorrent Downloads..."/>
 		<string id="17515" value="Converting Torrent:"/>
 		<string id="18496" value="Du har gjort endringer i navnefeltet. Er du sikker på at du vil endre navnet på denne nedlastingen?"/>
-		<string id="18497" value="Du har skrevet inn en ugyldig SHA1 hash-verdi. Vennligst sjekk verdien og prøv på nytt."/>
-		<string id="18498" value="Du har skrevet inn en ugyldig root tiger-tree hash-verdi. Vennligst sjekk verdien og prøv på nytt."/>
-		<string id="18499" value="Du har skrevet inn en ugyldig eDonkey2000 hash-verdi. Vennligst sjekk verdien og prøv på nytt."/>
-		<string id="18500" value="Du har gitt en SHA1 hash-verdi som er forskjellig fra den som er asossiert med denne nedlastingen. Er du sikker på at du vil endre SHA1 hashen nå?"/>
-		<string id="18501" value="Du har gitt en root tiger-tree hash-verdi som er forskjellig fra den som er asossiert med denne nedlastingen. Er du sikker på at du vil endre tiger-tree hashen nå?"/>
-		<string id="18502" value="Du har gitt en eDonkey2000 hash-verdi som er forskjellig fra den som er asossiert med denne nedlastingen. Er du sikker på at du vil endre eDonkey2000 hashen nå?"/>
 		<string id="18503" value="Er du sikker på at du vil glemme nåværende verifiseringsposisjon?  Alle data som blir lastet ned vil bli sett på som usikre og cachede hashtrees og hash-sets vil bli fjernet."/>
 		<string id="18504" value="Er du helt sikker på at du vil glemme alle kildene til denne nedlastingen?"/>
 		<string id="18505" value="Vennligst velg hvilket omfang du vil slette. &quot;Fra&quot; feltet er den første byten som skal slettes, &quot;Siste&quot; feltet er den siste byten som skal slettes."/>
@@ -3296,13 +3324,19 @@
 		<string id="18509" value="Du kan ikke gå ut i fra at denne filen er ferdig og reverifisere den fordi du har ennå ingen partielle verifikasjons data, slik som tiger-tree innhold, eDonkey hashset eller BitTorrent hashset. Uten verifikasjons-data kan ikke filen reverifiseres."/>
 		<string id="18510" value="Er du sikker på at du vil gå ut i fra at denne filen er ferdig og reverifisere den? Hele filen vil betraktes, Shareaza vil godta deler som blit verifiserte og laste ned nye deler for de som feilet verifiseringen."/>
 		<string id="18511" value="You have made changes to the file size. Are you sure you want to change the file size for this download?"/>
+		<string id="18512" value="Er du sikker p at du vil avbryte alle nedlastningene i denne gruppen?"/>
+		<string id="18513" value="Du har skrevet inn en ugyldig eDonkey2000 hash-verdi. Vennligst sjekk verdien og prøv på nytt."/>
+		<string id="18514" value="Du har gitt en SHA1 hash-verdi som er forskjellig fra den som er asossiert med denne nedlastingen. Er du sikker på at du vil endre SHA1 hashen nå?"/>
 		<string id="19000" value="Fjern konsoll er AV."/>
 		<string id="19001" value="Du må velge et brukernavn og et passord."/>
 		<string id="19002" value="Klarte ikke  motta tilkoblinger, URL ikke tilgjengelig."/>
+		<string id="19103" value="Welcome to Shareaza Chat!"/>
+		<string id="19104" value="Please respect others while using this service"/>
+		<string id="19105" value="IRC"/>
 		<string id="20000" value="URN ikke tilgjengelig"/>
 		<string id="20001" value="Lukk"/>
 		<string id="20002" value="av"/>
-		<string id="20003" value="Forandring av grensesnittets retning krever omstart. \nDu må starte Shareaza på nytt manuelt. Avslutte nå?"/>
+		<string id="20003" value="Changing language requires application restart.\nRestart now?"/>
 		<string id="20005" value="Nei"/>
 		<string id="20006" value="Ja"/>
 		<string id="20007" value="Auto"/>
@@ -3312,6 +3346,7 @@
 		<string id="20011" value="&amp;Next"/>
 		<string id="20012" value="Finish"/>
 		<string id="20013" value="Match alle"/>
+		<string id="20014" value="Dette valget bruker Bitzi.com for å finne informasjon om valgte filer.\n\nShareaza sender SHA1 hash koden til den valgte filen for å søke i Bitzi databasen. Hvis du er redd for å dele slik informasjon, kan du lese Bitzi.com's retningslinjer for personopplysninger.\n\nVil du fortsette?"/>
 		<string id="20100" value="Oppretter kobling"/>
 		<string id="20101" value="Anmoder"/>
 		<string id="20102" value="Respons"/>
@@ -3350,13 +3385,6 @@
 		<string id="20135" value="Neste"/>
 		<string id="20136" value="K"/>
 		<string id="20137" value="sources (e.g. 3/10 sources)"/>
-		<string id="20200" value="Søndag"/>
-		<string id="20201" value="Mandag"/>
-		<string id="20202" value="Tirsdag"/>
-		<string id="20203" value="Onsdag"/>
-		<string id="20204" value="Tordsag"/>
-		<string id="20205" value="Fredag"/>
-		<string id="20206" value="Lørdag"/>
 		<string id="20210" value="(Ingen karakter)"/>
 		<string id="20211" value="Falsk / Korrupt"/>
 		<string id="20212" value="Dårlig"/>
@@ -3365,7 +3393,6 @@
 		<string id="20215" value="Veldig god"/>
 		<string id="20216" value="Utmerket"/>
 		<string id="20217" value="Select the eDonkey/eMule temp folder:"/>
-		<!-- Column headers in Library Album View -->
 		<string id="20230" value="# (Track number)"/>
 		<string id="20231" value="Title"/>
 		<string id="20232" value="Length"/>
@@ -3382,9 +3409,28 @@
 		<string id="20243" value="Continue"/>
 		<string id="20244" value="&amp;Remember my selection next time"/>
 		<string id="20245" value="New Folder"/>
-		<string id="32825" value="Open my folder of completed Downloads"/>
-		<string id="32773" value="Check for new version"/>
-		<string id="61215" value="Activate this window"/>
+		<string id="20246" value="Command-line options:\n\n-tray : Disable startup splash screen and send application to tray\n-nosplash : Disable startup splash screen\n-nowarn : Disable alpha (daily builds) version warning dialog\n-wait : Wait for other application instance exit\n\nInterface modes:\n\n-basic : Start application in Basic interface mode\n-tabbed : Start application in Tabbed interface mode\n-windowed : Start application in Windowed interface mode\n\nSystem options:\n\n-RegServer : Register internal components for everyone\n-UnRegServer : Un-register internal components for everyone\n-RegServerPerUser : Register internal components for current user\n-UnRegServerPerUser : Un-register internal components for current user"/>
+		<string id="20247" value="Failed to load metadata schemas. Please reinstall application."/>
+		<string id="20248" value="Du har ikke spesifisert hvilke mapper du vil dele. Er du sikker?"/>
+		<string id="20249" value="Off"/>
+		<string id="20250" value="Low"/>
+		<string id="20251" value="Normalmodus"/>
+		<string id="20252" value="High"/>
+		<string id="20253" value="Skin load error: %s. Element: %s"/>
+		<string id="20254" value="Loading skin: %s"/>
+		<string id="20255" value="Are you sure you want to remove all scheduled tasks? This cannot be undone."/>
+		<string id="20256" value="Søk med Shareaza"/>
+		<string id="20257" value="Bandwidth: Full Speed"/>
+		<string id="20258" value="Bandwidth: Reduced Speed"/>
+		<string id="20259" value="Bandwidth: Stop"/>
+		<string id="20260" value="System: Exit Shareaza"/>
+		<string id="20261" value="System: Disconnect Dial-up Connection"/>
+		<string id="20262" value="System: Turn Off the Computer"/>
+		<string id="20263" value="Aktiv"/>
+		<string id="20264" value="Inaktiv"/>
+		<string id="20265" value="Done"/>
+		<string id="20266" value="Waiting..."/>
+		<string id="20267" value="No Tasks Currently Scheduled"/>
 	</strings>
 	<!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 	<!-- Don't edit dialogs manualy! Use DialogScan feature instead -->
@@ -3516,7 +3562,7 @@
 			<control caption="Port:"/>
 			<control/>
 		</dialog>
-		<dialog name="CWebSettingsPage" cookie="BuStBuBuBuBuBuBuBuCoBuBuSt" caption="Internett">
+		<dialog name="CWebSettingsPage" cookie="BuStBuBuBuBuBuBuBuBuCoBuBuSt" caption="Internett">
 			<control caption="_Bruk av peer to peer linker:"/>
 			<control caption="Bruk Shareaza til å åpne denne typen linker:"/>
 			<control caption="Magnet ( magnet: )"/>
@@ -3524,6 +3570,7 @@
 			<control caption="eDonkey2000 ( ed2k: )"/>
 			<control caption="Piolet ( mp2p: )"/>
 			<control caption="BitTorrent ( .torrent )"/>
+			<control caption="DC++ ( dchub: )"/>
 			<control caption="Nedlastingsguide:"/>
 			<control caption="Bruk Shareaza til alle mine nedlastinger fra nettet:"/>
 			<control/>
@@ -3561,12 +3608,12 @@
 			<control/>
 			<control/>
 		</dialog>
-		<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStCoStCoBuBu" caption="Nedlasting">
+		<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuEdBu" caption="Nedlasting">
 			<control caption="Lagre _ferdige filer her:"/>
 			<control/>
 			<control/>
-			<control caption="Lagre _midlertidige filer her:"/>
-			<control/>
+			<control caption="Scan every completed file with AntiVirus"/>
+			<control caption="Velg forhåndsinstilling:"/>
 			<control/>
 			<control caption="_Antall nedlastinger:"/>
 			<control caption="Maks filer:"/>
@@ -3583,8 +3630,10 @@
 			<control/>
 			<control caption="Maksimalt antall i kø:"/>
 			<control/>
-			<control/>
 			<control caption="Last bare opp og ned til nettverk som er tilkoblet."/>
+			<control caption="Lagre _midlertidige filer her:"/>
+			<control/>
+			<control/>
 		</dialog>
 		<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStCoStCoBuSyBuBuBuSt" caption="Opplastinger">
 			<control caption="_Egenskaper:"/>
@@ -3615,48 +3664,11 @@
 			<control caption="Shareaza fjernkonsoll gir deg muligheten til å kjøre og kontrollere Shareaza gjennom internettleseren din. Du må kunne motta innkommende tilkoblinger for å bruke konsollen (sjekk oppsettet på routeren/brannmuren)."/>
 			<control caption="Skru på:"/>
 			<control caption="Skru på Shareaza fjernkonsoll:"/>
-			<control caption="URL"/>
+			<control/>
 			<control caption="Bruker:"/>
 			<control caption="Velg brukernavn:"/>
 			<control/>
 			<control caption="Velg passord:"/>
-			<control/>
-		</dialog>
-		<dialog name="CScheduleTaskDlg" cookie="BuBuBuBuSySyBuBuBuBuBuBuBuBuCoEdmsEdmsEdmsBuBuEdBuStStStStStStStBuBu" caption="Schedule Item">
-			<control caption="OK"/>
-			<control caption="Avbryt"/>
-			<control caption="Only once"/>
-			<control caption="On specific day(s) of week"/>
-			<control/>
-			<control/>
-			<control caption="Søndag"/>
-			<control caption="Mandag"/>
-			<control caption="Tirsdag"/>
-			<control caption="Onsdag"/>
-			<control caption="Tordsag"/>
-			<control caption=" Friday"/>
-			<control caption="Lørdag"/>
-			<control caption="Match alle"/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control caption=" _Toggle bandwidth independently"/>
-			<control caption=" _Limit network to Gnutella2"/>
-			<control/>
-			<control caption="Make this event active"/>
-			<control caption="Please select a date:"/>
-			<control caption="Please select a time:"/>
-			<control caption="Select the event type:"/>
-			<control caption="Description: (optional)"/>
-			<control caption="% of _bandwidth under limit"/>
-			<control caption="% of _download under limit"/>
-			<control caption="% of _upload under limit"/>
-			<control caption="Days Of Week"/>
-			<control caption="Run this event"/>
 			<control/>
 		</dialog>
 		<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Nettverk">
@@ -4531,6 +4543,25 @@
 			<control caption="Avbryt"/>
 			<control caption="Add a channel name:|Enter kick/ban reason:"/>
 		</dialog>
+		<dialog name="CScheduleTaskPage" cookie="StCoBuEdmsEdmsBuBuBuBuBuStStStBuBu" caption="Tiltak">
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control caption="Gnutella1"/>
+			<control caption="Gnutella2"/>
+			<control caption="eDonkey2000"/>
+			<control caption="DC++"/>
+			<control caption="BitTorrent"/>
+			<control caption="Select the event type:"/>
+			<control caption="% of _download under limit"/>
+			<control caption="% of _upload under limit"/>
+			<control caption="Nettverk"/>
+			<control caption="Båndbredde"/>
+		</dialog>
 	</dialogs>
 	<!-- Columns Definitions -->
 	<listColumns>
@@ -4669,6 +4700,14 @@
 			<column from="Rating" to="Karakter"/>
 			<column from="Comments" to="Kommentarer"/>
 			<column from="Order" to="Rekkefølge"/>
+		</list>
+		<list name="CSchedulerWnd">
+			<column from="Action" to="Tiltak"/>
+			<column from="Trigger" to="TigerTree"/>
+			<column from="Next Run" to="Neste"/>
+			<column from="Active" to="Aktiv"/>
+			<column from="Status" to="Status"/>
+			<column from="Description" to="Beskrivelse"/>
 		</list>
 	</listColumns>
 </skin>

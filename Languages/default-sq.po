@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2010-05-27 12:52+0000\n"
+"POT-Creation-Date: 2010-11-16 14:53+0000\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Besmir Godole\n"
+"Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -353,17 +353,21 @@ msgstr "Vendosje"
 msgid "Configure IRC Settings"
 msgstr "Konfiguro Vendosjet e IRC"
 
-#: button;id_network_g2
+#: button;id_network_g2 cscheduletaskpage;control;9
 msgid "Gnutella2"
 msgstr "Gnutella2"
 
-#: button;id_network_g1
+#: button;id_network_g1 cscheduletaskpage;control;8
 msgid "Gnutella1"
 msgstr "Gnutella1"
 
 #: button;id_network_ed2k dialog;cdonkeysettingspage
 msgid "eDonkey"
 msgstr "eDonkey"
+
+#: button;id_network_dc cscheduletaskpage;control;11
+msgid "DC++"
+msgstr "DC++"
 
 #: button;id_network_connect_to button;id_hostcache_connect
 msgid "Connect To"
@@ -393,11 +397,11 @@ msgstr "Lëvize Poshtë"
 msgid "Reset List"
 msgstr "Rivendose Listën"
 
-#: button;id_security_import button;id_scheduler_import
+#: button;id_security_import
 msgid "Import List"
 msgstr "Importo Listën"
 
-#: button;id_security_export button;id_scheduler_export
+#: button;id_security_export
 msgid "Export List"
 msgstr "Eksporto Listën"
 
@@ -456,6 +460,10 @@ msgstr "Depo e BitTorrent"
 #: button;id_hostcache_kad_cache
 msgid "Kademlia Cache"
 msgstr "Depo e Kademlia"
+
+#: button;id_hostcache_dc_cache
+msgid "DC++ Cache"
+msgstr "DC++ Cache"
 
 #: button;id_chat_bold
 msgid "B"
@@ -571,6 +579,12 @@ msgstr "Lidhu te Gnutella_1"
 #: cmainwnd.windowed;18;19;item;id_network_ed2k
 msgid "Connect to _eDonkey"
 msgstr "Lidhu te _eDonkey"
+
+#: cmainwnd.basic;1;2;item;id_network_dc
+#: cmainwnd.tabbed;9;10;item;id_network_dc
+#: cmainwnd.windowed;18;19;item;id_network_dc
+msgid "Connect to _DC++"
+msgstr "Connect to _DC++"
 
 #: cmainwnd.basic;1;item;id_network_auto_close
 #: cmainwnd.tabbed;9;item;id_network_auto_close
@@ -925,8 +939,8 @@ msgstr "Mënyrë me F_usha"
 msgid "_Windowed Mode"
 msgstr "Mënyrë me _Dritare"
 
-#: cmainwnd.tabbed;13;item;idc_import_downloads
-#: cmainwnd.windowed;21;item;idc_import_downloads
+#: cmainwnd.tabbed;13;item;id_import_downloads
+#: cmainwnd.windowed;21;item;id_import_downloads
 msgid "_Import eMule partial downloads..."
 msgstr "_Importo Shkarkesat e Pjesshme nga eMule..."
 
@@ -1059,6 +1073,10 @@ msgstr "Depo e _BitTorrent"
 #: chostcachewnd;28;item;id_hostcache_kad_cache
 msgid "_Kademlia Cache"
 msgstr "Depo e _Kademlia"
+
+#: chostcachewnd;28;item;id_hostcache_dc_cache
+msgid "_DC++ Cache"
+msgstr "_DC++ Cache"
 
 #: chostcachewnd;item;id_hostcache_import
 msgid "_Import MET File..."
@@ -1471,7 +1489,7 @@ msgstr "_Shpërndahet"
 #: cschedulerwnd;item;id_scheduler_remove
 #: cdiscoverywnd;item;id_discovery_remove clibrarysettingspage;control;19
 #: clibrarysettingspage;control;23 cmediasettingspage;control;8
-#: cwebsettingspage;control;12 cwizardsharepage;control;6
+#: cwebsettingspage;control;13 cwizardsharepage;control;6
 #: cavatarprofilepage;control;6 cfilesourcespage;control;6
 #: cgraphlistdlg;control;4 cgraphitemdlg;control;12 csharemanagerdlg;control;4
 #: cdownloadgroupdlg;control;8
@@ -1508,8 +1526,9 @@ msgstr "_Vetitë e Skedës"
 #: clibrarytree.virtual.basic;item;id_library_folder_enqueue
 #: clibrarytree.virtual;item;id_library_folder_enqueue
 #: clibraryfileview.virtual.basic;item;id_library_folder_enqueue
-msgid "_Play Album"
-msgstr "_Luaj Albumin"
+#, fuzzy
+msgid "Play _Album"
+msgstr "Luaj Albumin"
 
 #: clibrarytree.virtual.basic;item;id_library_folder_delete
 #: clibrarytree.virtual;item;id_library_folder_delete
@@ -1524,7 +1543,8 @@ msgstr "_Fshije"
 
 #: clibrarytree.virtual.basic;item;id_library_folder_properties
 #: clibrarytree.virtual;item;id_library_folder_properties
-msgid "_Album Properties"
+#, fuzzy
+msgid "Album _Properties"
 msgstr "Vetitë e _Albumit"
 
 #: clibrarytree.virtual;item;id_library_export_collection
@@ -1805,6 +1825,10 @@ msgstr "Gnutella_1"
 msgid "_eDonkey"
 msgstr "_eDonkey"
 
+#: cneighbourswnd;59;item;id_network_dc
+msgid "_DC++"
+msgstr "_DC++"
+
 #: cneighbourswnd;60
 msgid "_Monitor"
 msgstr "_Monitori"
@@ -1853,11 +1877,11 @@ msgstr "_Shto Rregull..."
 msgid "Rese_t"
 msgstr "_Rivendose"
 
-#: csecuritywnd;item;id_security_import cschedulerwnd;item;id_scheduler_import
+#: csecuritywnd;item;id_security_import
 msgid "_Import..."
 msgstr "_Importo..."
 
-#: csecuritywnd;item;id_security_export cschedulerwnd;item;id_scheduler_export
+#: csecuritywnd;item;id_security_export
 msgid "E_xport..."
 msgstr "E_ksporto..."
 
@@ -2103,9 +2127,10 @@ msgid "W A R N I N G   -   Y O U   A R E   F I R E W A L L E D"
 msgstr "K U J D E S   -   J E   P A S   N J Ë   F A J R U O L L I"
 
 #: chomeviewctrl;text;5001
+#, fuzzy
 msgid ""
 "Shareaza has detected that you are behind a NAT router or firewall,\n"
-"\t\t\tand are unable to receive connections from the Internet.  "
+"\t\t\t\tand are unable to receive connections from the Internet.  "
 msgstr ""
 "Shareaza dikton se ndodhesh pas një ruteri NAT ose fajruolli\n"
 "\t\t\t  dhe nuk mund të marrësh lidhje nga Interneti.  "
@@ -2123,9 +2148,10 @@ msgid "W A R N I N G   -   Y O U R   T C P   P O R T   I S   F I R E W A L
 msgstr "K U J D E S   -   P O R T I   T C P   B L L O K O H E T   N G A   F A J R U O L L I"
 
 #: chomeviewctrl;text;6001
+#, fuzzy
 msgid ""
 "Shareaza has detected that you are behind a NAT router or firewall,\n"
-"\t\t\tand are unable to receive TCP connections from the Internet.  "
+"\t\t\t\tand are unable to receive TCP connections from the Internet.  "
 msgstr ""
 "Shareaza dikton se ndodhesh pas një ruteri NAT ose fajruolli\n"
 "\t\t\t  dhe nuk mund të marrësh lidhje TCP nga Interneti.  "
@@ -2139,9 +2165,10 @@ msgid "W A R N I N G   -   Y O U R   U D P   P O R T   I S   F I R E W A L
 msgstr "K U J D E S   -   P O R T I   U D P   B L L O K O H E T   N G A   F A J R U O L L I"
 
 #: chomeviewctrl;text;7001
+#, fuzzy
 msgid ""
 "Shareaza has detected that you are behind a NAT router or firewall,\n"
-"\t\t\tand are unable to receive UDP messages from the Internet.  "
+"\t\t\t\tand are unable to receive UDP messages from the Internet.  "
 msgstr ""
 "Shareaza dikton se ndodhesh pas një ruteri NAT ose fajruolli\n"
 "\t\t\t  dhe nuk mund të marrësh lidhje UDP nga Interneti. "
@@ -2279,17 +2306,17 @@ msgid "Gnutella2:"
 msgstr "Gnutella2:"
 
 #: chomeconnectionbox;text;4 chomeconnectionbox;text;10
-#: chomeconnectionbox;text;16
+#: chomeconnectionbox;text;16 chomeconnectionbox;text;20
 msgid "Disconnected"
 msgstr "I shkëputur"
 
 #: chomeconnectionbox;text;5 chomeconnectionbox;text;11
-#: chomeconnectionbox;text;17 string;8070
+#: chomeconnectionbox;text;17 chomeconnectionbox;text;21 string;8070
 msgid "Connecting..."
 msgstr "Lidhje..."
 
 #: chomeconnectionbox;text;6 chomeconnectionbox;text;12
-#: chomeconnectionbox;text;18 string;8071
+#: chomeconnectionbox;text;18 chomeconnectionbox;text;22 string;8071
 msgid "Connected"
 msgstr "I lidhur"
 
@@ -2314,18 +2341,22 @@ msgid "eDonkey:"
 msgstr "eDonkey:"
 
 #: chomeconnectionbox;text;19
+msgid "DC++:"
+msgstr "DC++:"
+
+#: chomeconnectionbox;text;23
 msgid "You have been connected for"
 msgstr "Je i lidhur për"
 
-#: chomeconnectionbox;text;20 chomeconnectionbox;text;22
+#: chomeconnectionbox;text;24 chomeconnectionbox;text;26
 msgid "%i"
 msgstr "%i"
 
-#: chomeconnectionbox;text;21
+#: chomeconnectionbox;text;25
 msgid "hours and"
 msgstr "orë dhe"
 
-#: chomeconnectionbox;text;23
+#: chomeconnectionbox;text;27
 msgid "minutes."
 msgstr "minuta."
 
@@ -2397,9 +2428,10 @@ msgid "Welcome to Shareaza's Settings Manager"
 msgstr "Mirë se erdhe te Menaxheri i Vendosjeve të Shareaza-s"
 
 #: cgeneralsettingsgroup;text;2
+#, fuzzy
 msgid ""
 "The Shareaza Settings Manager allows advanced users to completely customise how\n"
-"\t\t\tShareaza works. The settings in the"
+"\t\t\t\tShareaza works. The settings in the"
 msgstr ""
 "Menaxheri i Vendosjeve të Shareaza-s i lejon përdoruesit e avancuar që të porositin tërësisht mënyrën si\n"
 "\t\t\tfunksionon Shareaza. Vendosjet te seksioni"
@@ -2462,9 +2494,10 @@ msgid "Internet"
 msgstr "Interneti"
 
 #: cinternetsettingsgroup;text;2
+#, fuzzy
 msgid ""
 "The Shareaza Settings Manager allows advanced users to completely customise \n"
-"\t\t\thow Shareaza works. The settings in the"
+"\t\t\t\thow Shareaza works. The settings in the"
 msgstr ""
 "Menaxheri i Vendosjeve të Shareaza-s i lejon përdoruesit e avancuar që të porositin tërësisht mënyrën si\n"
 "\t\t\tfunksionon Shareaza.  Vendosjet te seksioni"
@@ -2562,25 +2595,28 @@ msgid "Downloads Area"
 msgstr "Zona e Shkarkesave"
 
 #: downloadhelp.select;text;2
+#, fuzzy
 msgid ""
 "This is where files currently being downloaded are displayed. You can view\n"
-"\t\tindividual sources by expanding each file with the small + on the left."
+"\t\t\tindividual sources by expanding each file with the small + on the left."
 msgstr ""
 "Këtu shfaqen skedat që janë aktualisht në shkarkim. Mund t'i shikosh\n"
 "\t\tburimet individuale duke e zgjeruar çdo skedë me + e vogël anash."
 
 #: downloadhelp.select;text;3
+#, fuzzy
 msgid ""
 "Drag'n'Drop downloads higher in the list for priority, or onto Download Group \n"
-"\t\ttabs for better organisation (in Power Mode)."
+"\t\t\ttabs for better organisation (in Power Mode)."
 msgstr ""
 "Kapi e hidhi shkarkesat që janë më lart në listë për parësi, ose te fushat e Grupit\n"
 "\t\ttë Shkarkimit për organizim më të mirë (te Mënyra e Avancuar)."
 
 #: downloadhelp.select;text;4
+#, fuzzy
 msgid ""
 "You can also use this command to get help information on a specific download.\n"
-"\t\tSimply select a download and choose this Help command again."
+"\t\t\tSimply select a download and choose this Help command again."
 msgstr ""
 "Këtë komandë mund ta përdorësh edhe për të marrë informacion ndihmës për një\n"
 "\t\tshkarkesë të caktuar. Thjesht zgjidhe një shkarkesë dhe pastaj komandën Ndihmë."
@@ -2590,9 +2626,10 @@ msgid "This Torrent is Seeding"
 msgstr "Ky Torrent Mbillet"
 
 #: downloadhelp.seeding;text;2
+#, fuzzy
 msgid ""
 "Shareaza has verified this complete download, and is actively sharing it\n"
-"\t\twith other downloaders through BitTorrent. Please share at least 100%."
+"\t\t\twith other downloaders through BitTorrent. Please share at least 100%."
 msgstr ""
 "Shareaza ka verifikuar këtë shkarkesë të plotë, dhe po e ndan atë tërë kohën\n"
 "\t\tme shkarkues të tjerë përmes BitTorrent-it. Të lutem shpërndaje të paktën 100%."
@@ -2602,9 +2639,10 @@ msgid "This Download has Completed"
 msgstr "Kjo Shkarkesë Përfundon"
 
 #: downloadhelp.completed;text;2
+#, fuzzy
 msgid ""
 "Shareaza has finished downloading this file, and has verified that it\n"
-"\t\tis 100% correct. It has also moved the file to your downloads folder."
+"\t\t\tis 100% correct. It has also moved the file to your downloads folder."
 msgstr ""
 "Shareaza e përfundoi shkarkimin e kësaj skede dhe verifikoi se ajo\n"
 "\t\tështë 100% korrekte. Skeda gjithashtu ka lëvizur në dosjen e shkarkesave tuaja."
@@ -2614,9 +2652,10 @@ msgid "This Download is Moving"
 msgstr "Kjo Shkarkesë Lëvizet"
 
 #: downloadhelp.moving;text;2
+#, fuzzy
 msgid ""
 "Shareaza has finished downloading this file, and has verified that\n"
-"\t\tit is correct. It is currently being moved and/or unpacked to your downloads folder."
+"\t\t\tit is correct. It is currently being moved and/or unpacked to your downloads folder."
 msgstr ""
 "Shareaza e përfundoi shkarkimin e kësaj skede dhe verifikoi se ajo\n"
 "\t\tështë korrekte. Ajo po lëvizet dhe/ose shpaketohet në dosjen e shkarkesave tuaja."
@@ -2626,9 +2665,10 @@ msgid "This Download is Paused"
 msgstr "Kjo Shkarkesë Pushon"
 
 #: downloadhelp.paused;text;2
+#, fuzzy
 msgid ""
 "You have paused this download. If you want it to resume downloading, you\n"
-"\t\tcan click the '"
+"\t\t\tcan click the '"
 msgstr ""
 "Shkarkesa pushno. Nëse do ta rimarrësh shkarkimin, mund\n"
 "\t\ttë klikosh komandën '"
@@ -2642,12 +2682,13 @@ msgid "The Disk is Full"
 msgstr "Disku Është Plot"
 
 #: downloadhelp.diskfull;text;2
+#, fuzzy
 msgid ""
 "Shareaza has paused this download automatically because the hard disk\n"
-"\t\tappears to be full, or the download file cannot be written to. If you wish\n"
-"\t\tto continue downloading, please free some space on your hard disk and/or check\n"
-"\t\tto make sure the incomplete file folder is accessible, and then resume the\n"
-"\t\tdownload."
+"\t\t\tappears to be full, or the download file cannot be written to. If you wish\n"
+"\t\t\tto continue downloading, please free some space on your hard disk and/or check\n"
+"\t\t\tto make sure the incomplete file folder is accessible, and then resume the\n"
+"\t\t\tdownload."
 msgstr ""
 "Shareaza e pushoi automatikisht këtë shkarkesë sepse disku i ngurtë\n"
 "\t\tduket se është plot ose skeda në shkarkim nuk mund të shkruhet. Nëse dëshiron\n"
@@ -2660,10 +2701,11 @@ msgid "This Download is Verifying"
 msgstr "Kjo Shkarkesë Verifikohet"
 
 #: downloadhelp.verifying;text;2
+#, fuzzy
 msgid ""
 "This download has finished, and Shareaza is now checking it to ensure\n"
-"\t\tthat it is exactly the same as the original file. If any damaged parts are\n"
-"\t\tfound, Shareaza will repair them automatically."
+"\t\t\tthat it is exactly the same as the original file. If any damaged parts are\n"
+"\t\t\tfound, Shareaza will repair them automatically."
 msgstr ""
 "Kjo shkarkesë ka përfunduar dhe tani Shareaza e verifikon atë për t'u siguruar\n"
 "\t\tqë të jetë pikërisht e njëjtë me skedën origjinale. Nëse gjendet ndonjë pjesë e\n"
@@ -2674,9 +2716,10 @@ msgid "This Download is Active!"
 msgstr "Kjo Shkarkesë është Aktive!"
 
 #: downloadhelp.downloading;text;2
+#, fuzzy
 msgid ""
 "This download is currently in progress. If it is downloading too slowly,\n"
-"\t\tyou could try searching the network for more sources with the '"
+"\t\t\tyou could try searching the network for more sources with the '"
 msgstr ""
 "Kjo shkarkesë është aktualisht në progres. Nëse shkarkohet shumë ngadalë,\n"
 "\t\tmund të provosh të kërkosh rrjetin për më shumë burime me komandën '"
@@ -2686,10 +2729,11 @@ msgid "Find More Sources"
 msgstr "Gjej më Shumë Burime"
 
 #: downloadhelp.downloading;text;4
+#, fuzzy
 msgid ""
 "' command. If the speed does not \n"
-"\t\timprove it may be due to limited upload speeds of the users you are downloading \n"
-"\t\tfrom. Download speed usually increases over time."
+"\t\t\timprove it may be due to limited upload speeds of the users you are downloading \n"
+"\t\t\tfrom. Download speed usually increases over time."
 msgstr ""
 "'. Nëse shpejtësia nuk përmirësohet,\n"
 "\t\tshkaku mund të jetë shpejtësia e kufizuar e ngarkimit për përdoruesit nga të cilët po\n"
@@ -2700,13 +2744,14 @@ msgid "This Download is Pending"
 msgstr "Kjo Shkarkesë Varet"
 
 #: downloadhelp.pending;text;2
+#, fuzzy
 msgid ""
 "This download is waiting for someone to start uploading.\n"
-"\t\tShareaza is ready to start downloading this file, but no-one is sending it at\n"
-"\t\tthe moment. You are probably waiting in other user's queues, and the download\n"
-"\t\tmay start transferring at any time. You can examine the individual sources to \n"
-"\t\tsee each queue you are waiting in. If you are sharing files yourself, it may\n"
-"\t\timprove the chances of a download transfer starting quickly."
+"\t\t\tShareaza is ready to start downloading this file, but no-one is sending it at\n"
+"\t\t\tthe moment. You are probably waiting in other user's queues, and the download\n"
+"\t\t\tmay start transferring at any time. You can examine the individual sources to \n"
+"\t\t\tsee each queue you are waiting in. If you are sharing files yourself, it may\n"
+"\t\t\timprove the chances of a download transfer starting quickly."
 msgstr ""
 "Kjo shkarkesë pret që dikush të nisë ngarkimin.\n"
 "\t\tShareaza është gati ta nisë shkarkimin e kësaj skede, por për momentin askush nuk po\n"
@@ -2720,12 +2765,13 @@ msgid "This Download is Queued"
 msgstr "Kjo Shkarkesë Vendoshet në Pritje"
 
 #: downloadhelp.queued;text;2
+#, fuzzy
 msgid ""
 "This download is waiting for some of your other downloads to complete.\n"
-"\t\tYour download settings limit the number of downloads which may be active at\n"
-"\t\tany given time, to ensure that each download gets a good share of the available\n"
-"\t\tbandwidth. You can change these settings via Tools, Shareaza Settings.\n"
-"\t\tAlternatively, you may manually start this download with the resume command."
+"\t\t\tYour download settings limit the number of downloads which may be active at\n"
+"\t\t\tany given time, to ensure that each download gets a good share of the available\n"
+"\t\t\tbandwidth. You can change these settings via Tools, Shareaza Settings.\n"
+"\t\t\tAlternatively, you may manually start this download with the resume command."
 msgstr ""
 "Kjo shkarkesë pret që disa nga shkarkesat e tjera të përfundojnë.\n"
 "\t\tVendosjet e shkarkimit e kufizojnë numrin e shkarkesave që mund të jenë aktive\n"
@@ -2738,11 +2784,12 @@ msgid "This Download is Searching"
 msgstr "Kjo Shkarkesë Kërkon"
 
 #: downloadhelp.searching;text;2
+#, fuzzy
 msgid ""
 "There are no known sources for this download, so Shareaza is searching\n"
-"\t\tall connected P2P networks for new sources. Once sources are found, the\n"
-"\t\tdownload will start automatically. Shareaza searches for sources automatically,\n"
-"\t\thowever you can speed up the process using the"
+"\t\t\tall connected P2P networks for new sources. Once sources are found, the\n"
+"\t\t\tdownload will start automatically. Shareaza searches for sources automatically,\n"
+"\t\t\thowever you can speed up the process using the"
 msgstr ""
 "Për këtë shkarkesë ka burime të njohura, ndaj edhe Shareaza kërkon në\n"
 "\t\ttërë rrjet e lidhura P2P për burime të reja.  Sapo burimet të gjenden, shkarkimi\n"
@@ -2754,11 +2801,12 @@ msgid "command."
 msgstr "."
 
 #: downloadhelp.searching;text;5
+#, fuzzy
 msgid ""
 "Unfortunately in many cases there may be no users online who have the\n"
-"\t\tfile you are looking for. The only course of action here is to wait for\n"
-"\t\tsomeone to come online, or cancel it and try to find a similar file which is\n"
-"\t\tmore widely available."
+"\t\t\tfile you are looking for. The only course of action here is to wait for\n"
+"\t\t\tsomeone to come online, or cancel it and try to find a similar file which is\n"
+"\t\t\tmore widely available."
 msgstr ""
 "Për fat të keq, në linjë mund të mos ketë përdorues për skedën\n"
 "\t\tqë kërkon.  I vetmi rend veprimi në këtë rast është të presësh që\n"
@@ -2770,9 +2818,10 @@ msgid "This Download is Creating"
 msgstr "Kjo Shkarkesë Krijon"
 
 #: downloadhelp.creating;text;2
+#, fuzzy
 msgid ""
 "Shareaza is pre-allocating a file in which to store this download, to\n"
-"\t\tsave time later."
+"\t\t\tsave time later."
 msgstr ""
 "Shareaza paracakton një skedë ku të depozitojë shkarkesën, që ta ruajë\n"
 "\t\tkohën për më vonë."
@@ -2782,10 +2831,11 @@ msgid "BitTorrent Tracker Down"
 msgstr "Gjurmuesi BitTorrent Bie"
 
 #: downloadhelp.tracker;text;2
+#, fuzzy
 msgid ""
 "The BitTorrent tracker server for this download appears to be\n"
-"\t\tdown or malfunctioning. Shareaza is unable to contact it to receive\n"
-"\t\ta list of peers."
+"\t\t\tdown or malfunctioning. Shareaza is unable to contact it to receive\n"
+"\t\t\ta list of peers."
 msgstr ""
 "Serveri gjurmues BitTorrent për këtë shkarkesë duket se është prishur ose\n"
 "\t\tpo keqfunksionon.  Shareaza nuk mund të kontaktojë me të për të marrë\n"
@@ -2796,10 +2846,11 @@ msgid "Uploads Area"
 msgstr "Zona e Ngarkesave"
 
 #: uploadhelp;text;2
+#, fuzzy
 msgid ""
 "This is where queues and uploads are displayed. You can expand each queue\n"
-"\t\twith the small + on the left, and filter what is displayed with the button on the\n"
-"\t\tright of the window's toolbar."
+"\t\t\twith the small + on the left, and filter what is displayed with the button on the\n"
+"\t\t\tright of the window's toolbar."
 msgstr ""
 "Këtu shfaqen radhët dhe ngarkesat. Çdo radhë mund të zgjerohet me\n"
 "\t\t+ e vogël majtas, dhe mund ta filtrosh atë që shfaqet me butonin në të\n"
@@ -2814,10 +2865,11 @@ msgid "The amount of free space on one or more drives used by Shareaza is low."
 msgstr "Hapësira e lirë në një ose disa prej disqeve që përdoren nga Shareaza është e ulët."
 
 #: generalhelp.diskspace;text;3
+#, fuzzy
 msgid ""
 "You should always attempt to keep a reasonable amount of disk space free. Programs \n"
-"\t\tcan become unstable if the drives become full, and temporary files may be lost. You should \n"
-"\t\trun a disk clean-up, delete unwanted files, or uninstall software you no longer need."
+"\t\t\tcan become unstable if the drives become full, and temporary files may be lost. You should \n"
+"\t\t\trun a disk clean-up, delete unwanted files, or uninstall software you no longer need."
 msgstr ""
 "Mundohu gjithmonë që të mbash një hapësirë të lirë të mjaftueshme për diskun. Programet\n"
 "\t\tmund të bëhen të paqëndrueshme nëse disqet janë plot, kurse skedat kohëshkurtër mund të humbasin. Duhet të\n"
@@ -2832,10 +2884,11 @@ msgid "A disk or directory Shareaza needs cannot be written to."
 msgstr "Te disku ose direktoria që nevojitet nga Shareaza nuk mund të shkruhet."
 
 #: generalhelp.diskwritefail;text;3
+#, fuzzy
 msgid ""
 "A network drive may have been disconnected, or you may not have write permission \n"
-"\t\tto a selected directory. Please check directories and permissions, or change the\n"
-"\t\ttemporary files location."
+"\t\t\tto a selected directory. Please check directories and permissions, or change the\n"
+"\t\t\ttemporary files location."
 msgstr ""
 "Një disk në rrjet mund të jetë shkëputur, ose mbase nuk ke të drejta shkrimi te \n"
 "\t\tdirektoria e zgjedhur. Të lutem zgjidhe direktorinë dhe të drejtat ose ndrysho vendin\n"
@@ -2850,9 +2903,10 @@ msgid "Windows reports that there is no internet connection is available."
 msgstr "Windows raporton se nuk je i lidhur në Internet."
 
 #: generalhelp.connectionfail;text;3
+#, fuzzy
 msgid ""
 "It is likely that a modem or router has dropped, meaning the internet cannot\n"
-"\t\tbe accessed. You may need to manually re-connect or reset your connection."
+"\t\t\tbe accessed. You may need to manually re-connect or reset your connection."
 msgstr ""
 "Mbase modemi ose ruteri janë prishur, që do të thotë se nuk mund\n"
 "\t\ttë hysh në Internet. Ndreqe vetë ose rivendos lidhjen."
@@ -2866,10 +2920,11 @@ msgid "Adult content filter enabled"
 msgstr "Aktivizohet Filtri i përmbajtjeve për të rritur"
 
 #: generalhelp.adultfilter;text;2
+#, fuzzy
 msgid ""
 "Please note that (as with any automated filter) it may not be 100% effective at\n"
-"\t\tscreening content. It is designed simply to filter out excess unwanted results, rather than \n"
-"\t\tas a 100% safe block."
+"\t\t\tscreening content. It is designed simply to filter out excess unwanted results, rather than \n"
+"\t\t\tas a 100% safe block."
 msgstr ""
 "Të lutem vëre se (si me çdo filtër automatik) mund të mos jetë 100% efektiv në\n"
 "\t\tekranizimin e përmbajtjes. Ai është ndërtuar thjesht për të filtruar rezultatet e tepërta \n"
@@ -2884,19 +2939,21 @@ msgid "This torrent appears to have an encoding error"
 msgstr "Ky torrent duket se ka gabime në kodim"
 
 #: generalhelp.badtorrentencoding;text;2
+#, fuzzy
 msgid ""
 "Windows has reported a translation fault while decoding text in this torrent. It is\n"
-"\t\tpossible that the torrent is corrupt, or just incorrectly encoded. The torrent may\n"
-"\t\tstill download properly, although some file names could be incorrect."
+"\t\t\tpossible that the torrent is corrupt, or just incorrectly encoded. The torrent may\n"
+"\t\t\tstill download properly, although some file names could be incorrect."
 msgstr ""
 "Windows raporton një gabim përkthimi gjatë dekodimit të tekstit në këtë torrent. Ka mundësi\n"
 "\t\tqë torrenti të jetë i korruptuar ose thjesht i koduar jokorrektësisht. Torrenti mundet ende\n"
 "\t\ttë shkarkohet siç duhet, edhe pse disa emra skedash mund të mos jenë korrekte."
 
 #: generalhelp.badtorrentencoding;text;3
+#, fuzzy
 msgid ""
 "Most torrent creation programs should allow you to repair this torrent, which\n"
-"\t\twill ensure it works properly in all BitTorrent applications."
+"\t\t\twill ensure it works properly in all BitTorrent applications."
 msgstr ""
 "Shumica e programeve për krijimin e torrenteve lejojnë riparimin e këtij torrenti, i cili\n"
 "\t\tdo të sigurojë që të punojë siç duhet në tërë aplikimet BitTorrent."
@@ -2914,17 +2971,19 @@ msgid "Your eDonkey server list is empty"
 msgstr "Lista e serverit eDonkey është bosh"
 
 #: generalhelp.donkeyserverlist;text;2
+#, fuzzy
 msgid ""
 "There are no servers in your eDonkey server list. You need to download an\n"
-"\t\tup to date server list (met file) to connect to ED2K."
+"\t\t\tup to date server list (met file) to connect to ED2K."
 msgstr ""
 "Në listën e serverit eDonkey nuk ka servera. Për t'u lidhur te ED2K,\n"
 "\t\tduhet të shkarkosh një listë serverash të ridatuar (skedë met)."
 
 #: generalhelp.donkeyserverlist;text;3
+#, fuzzy
 msgid ""
 "You can download a server list from the ed2k setting page, or the discovery\n"
-"\t\tservices window. (Press F9 to open the discovery services window)"
+"\t\t\tservices window. (Press F9 to open the discovery services window)"
 msgstr ""
 "Listën e serverave mund ta shkarkosh nga faqja e vendosjeve ed2k ose në dritaren\n"
 "\t\tpër zbulimin e shërbimeve. (Shtype F9 që të hapësh dritaren për zbulimin e shërbimeve)"
@@ -2934,28 +2993,31 @@ msgid "Limiting uploads may slow downloads"
 msgstr "Kufizimi i ngarkesave mund të ngadalësojë shkarkimin"
 
 #: generalhelp.uploadwarning;text;2
+#, fuzzy
 msgid ""
 "Several networks Shareaza connects to enforce ratios, limit uploads to\n"
-"\t\tclients that do not share, or simply preference uploading to known sharers."
+"\t\t\tclients that do not share, or simply preference uploading to known sharers."
 msgstr ""
 "Shumë nga rrjetet ku Shareaza lidhet detyorjnë raporte, kufij ngarkese te\n"
 "\t\tklientë që nuk shpërndajnë, ose thjesht parapëlqejnë ngarkim tek shpërndarësit e njohur."
 
 #: generalhelp.uploadwarning;text;3
+#, fuzzy
 msgid ""
 "Fortunately, broadband DSL connections are like a two-lane highway: you have\n"
-"\t\tseparate allocations for upload and download. If your client is properly configured, \n"
-"\t\tyou should be able to upload at a good rate while retaining full download capacity."
+"\t\t\tseparate allocations for upload and download. If your client is properly configured, \n"
+"\t\t\tyou should be able to upload at a good rate while retaining full download capacity."
 msgstr ""
 "Për fat të mirë, lidhjet me bandë të gjerë DSL janë si një rrugë me dy korsi: ka caktime\n"
 "\t\ttë ndryshme për ngarkimin dhe shkarkimin. Nëse klienti yt është konfiguruar siç duhet, \n"
 "\t\tdo të jesh i aftë të ngarkosh me një raport të mirë, ndërkohë që mban kapacitet të plotë shkarkues."
 
 #: generalhelp.uploadwarning;text;4
+#, fuzzy
 msgid ""
 "By default, your upload limit is set to about 85% of available upstream bandwidth,\n"
-"\t\twhile downloads are unlimited. That configuration should give you the fastest possible \n"
-"\t\tdownloads that are available."
+"\t\t\twhile downloads are unlimited. That configuration should give you the fastest possible \n"
+"\t\t\tdownloads that are available."
 msgstr ""
 "Normalisht, kufiri i shkarkimit vendoset rreth 85% nga shtrirja e bandës së mbirrymës së vlefshme,\n"
 "\t\tkurse shkarkesat janë pa kufij. Ky konfigurim do japë shkarkimin më të shpejtë \n"
@@ -2967,11 +3029,12 @@ msgid "Please re-phrase the search"
 msgstr "Të lutem rishkruaj kërkimin"
 
 #: searchhelp.badsearch1;text;2
+#, fuzzy
 msgid ""
 "This search is poorly formatted, and may not function correctly. \n"
-"\t\tSearches should include several terms where possible, and should specify a schema \n"
-"\t\t(file type). Furthermore, searches must not be limited to numbers or negative\n"
-"\t\tterms only, and you should avoid overly general queries."
+"\t\t\tSearches should include several terms where possible, and should specify a schema \n"
+"\t\t\t(file type). Furthermore, searches must not be limited to numbers or negative\n"
+"\t\t\tterms only, and you should avoid overly general queries."
 msgstr ""
 "Kërkimi nuk është i formatuar mirë, ndaj mund të mos funksionojë si duhet.\n"
 "\t\tKërkimi duhet të përfshijë terma të ndryshëm, atje ku mundet, dhe duhet të caktojë një skemë\n"
@@ -2979,53 +3042,59 @@ msgstr ""
 "\t\tnegativë, pra nevojitet që të shmangësh hetimet mjaft të përgjithshme."
 
 #: searchhelp.badsearch1;text;3
+#, fuzzy
 msgid ""
 "Most clients on the network will ignore a search for all MP3 files, for example, \n"
-"\t\tbecause it is not specific enough, and would generate too many results."
+"\t\t\tbecause it is not specific enough, and would generate too many results."
 msgstr ""
 "Shumë nga klientët në rrjet, për shembull, do e përbuznin kërkimin për një skedë MP3: \n"
 "\t\tnuk është aq i mirëpërcaktuar dhe gjeneron shumë rezultate."
 
 #: searchhelp.badsearch2;text;2
+#, fuzzy
 msgid ""
 "This search does not contain enough terms to function properly. All searches need\n"
-"\t\ta minimum number of valid, alphabetic characters to be able to start."
+"\t\t\ta minimum number of valid, alphabetic characters to be able to start."
 msgstr ""
 "Kërkimi nuk i përmban termat e mjaftueshëm për të funksionuar si duhet. Për të nisur, tërë kërkimet\n"
 "\t\tnevojitet të kenë një minimum numrash me shkronja alfabetike me vlerë."
 
 #: searchhelp.badsearch2;text;3
+#, fuzzy
 msgid ""
 "While common file extensions (and numbers) can be searched for, you must enter\n"
-"\t\tother terms as well when creating the search. Punctuation and wildcards are not used \n"
-"\t\tin searches, just the text you enter."
+"\t\t\tother terms as well when creating the search. Punctuation and wildcards are not used \n"
+"\t\t\tin searches, just the text you enter."
 msgstr ""
 "Ndonëse mund të kërkosh shtojca të zakonshme të skedave (edhe numra), gjatë krijimit \n"
 "\t\ttë një kërkimi duhet të shkruash\n"
 "\t\tedhe terma të tjerë. Pikësimi dhe thonjëzat nuk përdoren, vetëm teksti që shkruan."
 
 #: searchhelp.badsearch3;text;2
+#, fuzzy
 msgid ""
 "This search seems to contain only common file extensions, or no searchable\n"
-"\t\twords."
+"\t\t\twords."
 msgstr ""
 "Me sa duket, kërkimi përmban vetëm shtojcën e zakonshme të skedës ose fjalë që\n"
 "\t\tnuk kërkohen."
 
 #: searchhelp.badsearch3;text;3
+#, fuzzy
 msgid ""
 "If you are having trouble creating searches, keep in mind that it's quite similar\n"
-"\t\tto a web search. Specific terms or phrases are best- Unique names, titles and\n"
-"\t\tkeywords."
+"\t\t\tto a web search. Specific terms or phrases are best- Unique names, titles and\n"
+"\t\t\tkeywords."
 msgstr ""
 "Nëse ke probleme me krijimin e kërkimeve, mbaj mend se është mjaft i ngjashëm\n"
 "\t\tme kërkimin në rrjet. Termat ose frazat e mirëpërcaktuara janë emrat unikë, titujt dhe\n"
 "\t\tfjalët kyçe."
 
 #: searchhelp.badsearch3;text;4
+#, fuzzy
 msgid ""
 "General terms cannot be searched for efficiently and may result in poor\n"
-"\t\tsearch performance, as well as high bandwidth use during searches."
+"\t\t\tsearch performance, as well as high bandwidth use during searches."
 msgstr ""
 "Termat e përgjithshëm nuk kërkohen me efektshmëri, ndaj edhe rezultatet mund të jenë të\n"
 "\t\tdobëta, sikurse përdorimi i lartë i shtrirjes së bandës."
@@ -3039,19 +3108,21 @@ msgid "This search cannot be started"
 msgstr "Ky kërkim nuk mund të nisë"
 
 #: searchhelp.adultsearch;text;2
+#, fuzzy
 msgid ""
 "The specified search would probably return a large number of results with adult \n"
-"\t\tcontent, and this has been turned off in the settings. You should either re-phrase the \n"
-"\t\tsearch, or disable the filter."
+"\t\t\tcontent, and this has been turned off in the settings. You should either re-phrase the \n"
+"\t\t\tsearch, or disable the filter."
 msgstr ""
 "Kërkimi i përcaktuar ka mundësi që të kthejë një numër të madh rezultatesh me përmbajtje\n"
 "\t\tpër të rritur, dhe kjo gjë është çaktivizuar te vendosjet. Duhet ose të riformulosh\n"
 "\t\tkërkesën, ose të çaktivizosh filtrin."
 
 #: searchhelp.adultsearch;text;3
+#, fuzzy
 msgid ""
 "To disable the filter, go into Tools > Settings > General and uncheck the\n"
-"\t\tadult content filter."
+"\t\t\tadult content filter."
 msgstr ""
 "Për të çaktivizuar filtrin, shko te Mjete > Vendosje > Përgjithësi, dhe mos e zgjidh\n"
 "\t\tfiltrin e përmbajtjes për të rritur."
@@ -3069,18 +3140,20 @@ msgid "This folder should not be shared"
 msgstr "Kjo dosje nuk duhet shpërndarë"
 
 #: sharehelp.badshare;text;2
+#, fuzzy
 msgid ""
 "This folder is (or contains) a system folder. Sharing this folder is not\n"
-"\t\trecommended, since most of the files in it are of no use to other people."
+"\t\t\trecommended, since most of the files in it are of no use to other people."
 msgstr ""
 "Kjo dosje është (ose përmban) një dosje sistemi. Shpërndarja e kësaj dosjeje\n"
 "\t\tnuk rekomandohet, derisa shumica e skedave në të nuk përdoren nga të tjerë."
 
 #: sharehelp.badshare;text;3
+#, fuzzy
 msgid ""
 "Folders such as the Windows directory, Program Files, and similar folders\n"
-"\t\tdo not usually contain files suitable for sharing. Any files of interest would be in\n"
-"\t\tsub-folders located"
+"\t\t\tdo not usually contain files suitable for sharing. Any files of interest would be in\n"
+"\t\t\tsub-folders located"
 msgstr ""
 "Dosjet si direktoria Windows, Program Files dhe dosje të ngjashme,\n"
 "\t\tzakonisht nuk përmbajnë skeda të përshtatshme për shpërndarje. Çdo skedë me interes do të ndodhej\n"
@@ -3091,20 +3164,82 @@ msgid "inside"
 msgstr "brenda"
 
 #: sharehelp.badshare;text;5
+#, fuzzy
 msgid ""
 "these folders.\n"
-"\t\tPlease share those instead."
+"\t\t\tPlease share those instead."
 msgstr ""
 "këtyre dosjeve.\n"
 "\t\tTë lutem shpërdaji më mirë."
 
 #: sharehelp.badshare;text;6
+#, fuzzy
 msgid ""
 "The Shareaza 'incomplete' folder should also not be shared through the\n"
-"\t\tlibrary, since attempting to hash downloads in progress may impact on performance."
+"\t\t\tlibrary, since attempting to hash downloads in progress may impact on performance."
 msgstr ""
 "Dosja e 'paplotë' në Shareaza gjithashtu nuk duhet shpërndarë përmes\n"
 "\t\tlibrarisë, derisa orvatja për grirjen e shkarkesave në progres mund të prekë efektshmërinë."
+
+#: message;afx_ids_app_title string;window_main
+msgid "Shareaza"
+msgstr "Shareaza"
+
+#: message;afx_ids_idlemessage
+#, fuzzy
+msgid "Ready"
+msgstr "Gati..."
+
+#: message;afx_ids_mdichild
+msgid "Activate this window"
+msgstr ""
+
+#: message;afx_ids_preview_close
+msgid "Close print preview mode"
+msgstr ""
+
+#: tip;afx_ids_preview_close
+#, fuzzy
+msgid "Cancel Preview"
+msgstr "Ruaj Parashikimin"
+
+#: message;afx_ids_scclose
+#, fuzzy
+msgid "Close the active window and prompts to save the documents"
+msgstr "Zmadhon dritaren aktive sa për të mbushur dritaren."
+
+#: message;afx_ids_scmaximize
+#, fuzzy
+msgid "Enlarge the window to full size"
+msgstr "Zmadhon dritaren aktive sa për të mbushur dritaren."
+
+#: message;afx_ids_scminimize
+msgid "Reduce the window to an icon"
+msgstr ""
+
+#: message;afx_ids_scmove
+msgid "Change the window position"
+msgstr ""
+
+#: message;afx_ids_scnextwindow
+msgid "Switch to the next document window"
+msgstr ""
+
+#: message;afx_ids_scprevwindow
+msgid "Switch to the previous document window"
+msgstr ""
+
+#: message;afx_ids_screstore
+msgid "Restore the window to normal size"
+msgstr ""
+
+#: message;afx_ids_scsize
+msgid "Change the window size"
+msgstr ""
+
+#: message;afx_ids_sctasklist
+msgid "Activate Task List"
+msgstr ""
 
 #: message;id_browse_files
 msgid "View the user's shared files"
@@ -3193,6 +3328,11 @@ msgstr "Shton një shërbim zbulues të ri..."
 #: message;id_discovery_advertise
 msgid "Advertise the selected GWebCache service to a random existing GWebCache."
 msgstr "Reklamon shërbimin e zgjedhur GWebDepo në një GWebDepo ekzistues rastësor."
+
+#: message;id_discovery_blocked
+#, fuzzy
+msgid "Show blocked services in the Discovery window."
+msgstr "Tregon shërbimet GWebDepo në dritaren Zbulimi."
 
 #: message;id_discovery_browse
 msgid "Browse statistics for the selected GWebCache service on the Web."
@@ -3383,7 +3523,8 @@ msgid "Add a source URL to the selected download..."
 msgstr "Shton një URL-burim në shkarkesën e zgjedhur..."
 
 #: message;id_downloads_view_reviews
-msgid "View reviews for the selected download"
+#, fuzzy
+msgid "View reviews for the selected download."
 msgstr "Shikon pasqyrimet për shkarkesën e zgjedhur"
 
 #: message;id_help_about
@@ -3398,10 +3539,6 @@ msgstr "Gjithçka për problemet me koduesit dhe videot."
 msgid "View the Shareaza FAQ."
 msgstr "Tregon pyetjet me përgjigje rreth Shareaza-s."
 
-#: message;id_help_router
-msgid "Get help configuring your router or firewall."
-msgstr "Ndihmon në konfigurimin e ruterit ose fajruollit."
-
 #: message;id_help_forums
 msgid "Visit the Shareaza Discussion Forums."
 msgstr "Viziton forumet për diskutimet rreth Shareaza-s."
@@ -3414,17 +3551,25 @@ msgstr "Viziton guidën e përdoruesit të Shareaza-s."
 msgid "Visit the Shareaza web site."
 msgstr "Viziton truallin në rrjet të Shareaza-s."
 
+#: message;id_help_router
+msgid "Get help configuring your router or firewall."
+msgstr "Ndihmon në konfigurimin e ruterit ose fajruollit."
+
 #: message;id_help_security
 msgid "Help protecting your system from hostile programs."
 msgstr "Ndihmon në mbrojtjen e sistemit nga programet keqbërëse."
+
+#: message;id_help_test
+msgid "Run the connection test."
+msgstr "Vepron testin e lidhjes."
 
 #: message;id_help_update
 msgid "Check for news and updates."
 msgstr "Verifikon për lajmet dhe ridatimet."
 
-#: message;id_help_test
-msgid "Run the connection test."
-msgstr "Vepron testin e lidhjes."
+#: message;id_help_version_check
+msgid "Check for new version"
+msgstr ""
 
 #: message;id_help_web_1 message;id_help_web_2 message;id_help_web_3
 #: message;id_help_web_4 message;id_help_web_5 message;id_help_web_6
@@ -3443,9 +3588,18 @@ msgstr "Pushon monitorimin e hiteve."
 msgid "Search the network for the selected term."
 msgstr "Kërkon në rrjet për termin e zgjedhur."
 
+#: message;id_hostcache_bt_cache
+#, fuzzy
+msgid "Show BitTorrent cached hosts."
+msgstr "Tregon ngarkesat e BitTorrent."
+
 #: message;id_hostcache_connect
 msgid "Connect to the selected host(s)."
 msgstr "Lidhet te hosti i zgjedhur."
+
+#: message;id_hostcache_dc_cache
+msgid "Show DC++ cached hubs."
+msgstr "Show DC++ cached hubs."
 
 #: message;id_hostcache_disconnect
 msgid "Disconnect from the selected neighbour(s)."
@@ -3475,6 +3629,11 @@ msgstr "Tregon nyjat në horizont të Gnutella2."
 msgid "Import a list of known hosts, such as a \"server.met\" file..."
 msgstr "Importon listën me hostet e njohura, p.sh. skedën \"server.met\"..."
 
+#: message;id_hostcache_kad_cache
+#, fuzzy
+msgid "Show Kademlia cached hosts."
+msgstr "Tregon hostet në depot e Gnutella1."
+
 #: message;id_hostcache_priority
 msgid "Try to connect to this server before other servers."
 msgstr "Provon të lidhet me një server para të tjerëve."
@@ -3482,6 +3641,11 @@ msgstr "Provon të lidhet me një server para të tjerëve."
 #: message;id_hostcache_remove
 msgid "Remove the selected hosts from the host cache."
 msgstr "Fshin hostin e zgjedhur nga depoja e hosteve."
+
+#: message;id_import_downloads
+#, fuzzy
+msgid "Import eMule partial downloads..."
+msgstr "_Importo Shkarkesat e Pjesshme nga eMule..."
 
 #: message;id_library_add
 msgid "Add a new folder to your library..."
@@ -3590,6 +3754,11 @@ msgstr "Rindërton metadatat duke përdorur një gjuhë tjetër."
 #: message;id_library_refresh
 msgid "Refresh the library view."
 msgstr "Rifreskon pamjen e librarisë."
+
+#: message;id_library_refresh_metadata
+#, fuzzy
+msgid "Refresh file metadata"
+msgstr "_Rifresko Metadata"
 
 #: message;id_library_remove
 msgid "Remove the selected shared folders."
@@ -3771,6 +3940,15 @@ msgstr "Luaj"
 msgid "Show or hide the playlist editor."
 msgstr "Tregon ose fsheh editorin e listës."
 
+#: message;id_media_position
+#, fuzzy
+msgid "Seek to a position in the media file."
+msgstr "Kërkon në pozicionin e skedës mediatike"
+
+#: tip;id_media_position
+msgid "Seek"
+msgstr ""
+
 #: message;id_media_previous
 msgid "Skip back to the previous file in the current playlist."
 msgstr "Kalon pas në skedën tjetër të listës aktuale."
@@ -3831,6 +4009,15 @@ msgstr "Tregon videon me masë trefishe nga origjinali (natyrale)."
 msgid "Show the video at double its original (natural) size."
 msgstr "Tregon videon me masë dyfishe nga origjinali (natyrale)."
 
+#: message;id_media_speed
+#, fuzzy
+msgid "Adjust the speed of the media file."
+msgstr "Ndreq shpejtësinë e skedës mediatike"
+
+#: tip;id_media_speed column;speed
+msgid "Speed"
+msgstr "Shpejtësi"
+
 #: message;id_media_status
 msgid "Show or hide the media status line."
 msgstr "Tregon ose fsheh vijën e statusit të medias."
@@ -3843,25 +4030,31 @@ msgstr "Ndalon lojën e skedës mediatike."
 msgid "Select an audio visualisation plugin..."
 msgstr "Zgjedh spinën e vegimit zanor..."
 
+#: message;id_media_volume
+#, fuzzy
+msgid "Adjust the audio volume."
+msgstr "Ndreq volumin e zërit"
+
+#: tip;id_media_volume
+msgid "Volume"
+msgstr ""
+
 #: message;id_media_zoom
 msgid "Adjust video zoom and aspect ratio settings."
 msgstr "Ndreq zmadhimin e videos dhe vendosjet për raportin e aspektit."
 
-#: tip;idc_media_position
-msgid "Seek"
-msgstr ""
-
-#: tip;idc_media_speed column;speed
-msgid "Speed"
-msgstr "Shpejtësi"
-
-#: tip;idc_media_volume
-msgid "Volume"
-msgstr ""
-
 #: message;id_monitor_close
 msgid "Close the monitor window."
 msgstr "Mbyll dritaren e monitorit."
+
+#: message;id_musicbrainz_albums
+msgid "Look at all albums for this artist."
+msgstr ""
+
+#: message;id_musicbrainz_matches
+#, fuzzy
+msgid "Search for albums matching the selected file."
+msgstr "Kërkon kopjen tjetër të skedës së zgjedhur."
 
 #: message;id_neighbours_chat message;id_search_chat message;id_transfers_chat
 #: message;id_uploads_chat
@@ -3912,6 +4105,10 @@ msgstr "Lidhet në rrjet."
 msgid "Manually connect to a host..."
 msgstr "Lidhet me porosi në host..."
 
+#: message;id_network_dc
+msgid "Connect to the DC++ network."
+msgstr "Connect to the DC++ network."
+
 #: message;id_network_disconnect
 msgid "Disconnect from all networks, this will also stop all downloads and uploads."
 msgstr "Shkëputet nga rrjeti."
@@ -3935,6 +4132,57 @@ msgstr "Lidhet tek rrjeti Gnutella2 (rekomandohet fort)."
 #: message;id_network_search
 msgid "Start a new search of the network..."
 msgstr "Nis një kërkim të ri në rrjet..."
+
+#: message;id_next_pane
+msgid "Switch to the next window pane"
+msgstr ""
+
+#: tip;id_next_pane
+#, fuzzy
+msgid "Next Pane"
+msgstr "Tjetri në Rresht"
+
+#: message;id_open_downloads_folder
+msgid "Open my folder of completed Downloads"
+msgstr ""
+
+#: message;id_prev_pane
+#, fuzzy
+msgid "Switch back to the previous window pane"
+msgstr "Kalon pas në skedën tjetër të listës aktuale."
+
+#: tip;id_prev_pane
+#, fuzzy
+msgid "Previous Pane"
+msgstr "Skedë e Pasme"
+
+#: message;id_scheduler_activate
+#, fuzzy
+msgid "Activates selected task(s) from the list."
+msgstr "Pastron nga lista ngarkesën e zgjedhur."
+
+#: message;id_scheduler_add
+msgid "Adds a new task to scheduler list."
+msgstr ""
+
+#: message;id_scheduler_deactivate
+#, fuzzy
+msgid "Deactivates selected tasks."
+msgstr "Lidhet në rrjet."
+
+#: message;id_scheduler_edit
+#, fuzzy
+msgid "Edit the selected task..."
+msgstr "Editon rregullin e zgjedhur të sigurisë..."
+
+#: message;id_scheduler_remove
+#, fuzzy
+msgid "Removes selected task(s) from the list."
+msgstr "Fshin nga lista shkarkesën e zgjedhur."
+
+#: message;id_scheduler_remove_all
+msgid "Removes all scheduled tasks."
+msgstr ""
 
 #: message;id_search_clear
 msgid "Clear the search results."
@@ -4044,9 +4292,44 @@ msgstr "Fshin rregullin e zgjedhur të sigurisë."
 msgid "Reset the hit counts on the selected rules."
 msgstr "Rivendos numërimin e hiteve në rregullin e zgjedhur."
 
+#: message;id_sharemonkey_buy
+msgid "Buy it and support the author"
+msgstr ""
+
+#: message;id_sharemonkey_compare
+msgid "Compare prices in different stores"
+msgstr ""
+
+#: message;id_sharemonkey_download
+#, fuzzy
+msgid "Search for matches"
+msgstr "_Kërko për Këtë"
+
+#: message;id_sharemonkey_next
+msgid "Go to the next match"
+msgstr ""
+
+#: message;id_sharemonkey_previous
+msgid "Go to the previous match"
+msgstr ""
+
+#: message;id_sharemonkey_prices
+#, fuzzy
+msgid "Look at the prices for the current match"
+msgstr "Kalon pas në skedën tjetër të listës aktuale."
+
+#: message;id_sharemonkey_save
+#, fuzzy
+msgid "Save the match in your Library"
+msgstr "Më trego skedën në librarinë time"
+
 #: message;id_system_clear
 msgid "Clear the status log."
 msgstr "Pastron ditarin e statusit."
+
+#: message;id_system_copy
+msgid "Copy selected line(s) of status log."
+msgstr ""
 
 #: message;id_system_timestamp
 msgid "Record a timestamp for each line."
@@ -4055,6 +4338,30 @@ msgstr "Regjistron shtypjen e kohës për secilën vijë."
 #: message;id_system_verbose
 msgid "Display a detailed system activity log."
 msgstr "Tregon një ditar me detaje për aktivitetet e sistemit."
+
+#: message;id_system_verbose_debug
+#, fuzzy
+msgid "Display all."
+msgstr "Tregon legjendën."
+
+#: message;id_system_verbose_error
+#, fuzzy
+msgid "Display errors only."
+msgstr "Tregon legjendën."
+
+#: message;id_system_verbose_info
+#, fuzzy
+msgid "Display infos and above."
+msgstr "Tregon pamje me rrjetë."
+
+#: message;id_system_verbose_notice
+msgid "Display notices and above."
+msgstr ""
+
+#: message;id_system_verbose_warning
+#, fuzzy
+msgid "Display warnings and above."
+msgstr "Tregon pamje me rrjetë."
 
 #: message;id_tab_connect
 msgid "Connect or disconnect from the network."
@@ -4244,6 +4551,11 @@ msgstr "Tregon ose fsheh dritaren SKUTA PAKETE."
 msgid "Show or hide the HIT MONITOR window."
 msgstr "Tregon ose fsheh dritaren MONITORI I HITEVE."
 
+#: message;id_view_scheduler
+#, fuzzy
+msgid "Show or hide SCHEDULER window."
+msgstr "Tregon ose fsheh dritaren SIGURI."
+
 #: message;id_view_search_monitor
 msgid "Show or hide the SEARCH MONITOR window."
 msgstr "Tregon ose fsheh dritare MONITORI I KËRKIMIT."
@@ -4271,6 +4583,27 @@ msgstr "Tregon ose fsheh dritaren NGARKIM."
 #: message;id_view_windowed
 msgid "Use Shareaza in power Windowed mode."
 msgstr "Përdor Shareaza-n në mënyrë të avancuar me Dritare."
+
+#: message;id_webservices_list
+msgid "Choose the web service to get more information about the selected file."
+msgstr "Zgjedh shërbimin e rrjetit për të marrë më shumë informacion për skedën e zgjedhur."
+
+#: message;id_webservices_musicbrainz
+#, fuzzy
+msgid "Search for the same artist songs using MusicBrainz service."
+msgstr "Kërkon për informacionin e skedës duke përdorur shërbimin ShareMonkey."
+
+#: message;id_webservices_sharemonkey
+msgid "Search for the file infomation using ShareMonkey service."
+msgstr "Kërkon për informacionin e skedës duke përdorur shërbimin ShareMonkey."
+
+#: message;id_window_arrange
+msgid "Arrange icons at the bottom of the window"
+msgstr ""
+
+#: tip;id_window_arrange
+msgid "Arrange Icons"
+msgstr ""
 
 #: message;id_window_cascade
 msgid "Expand all open windows to fill the screen."
@@ -4304,14 +4637,6 @@ msgstr "Radhit dritaret e hapura si vertikale, me tituj jombulues."
 msgid "Show or hide the toolbar."
 msgstr "Tregon ose fsheh shufrën e mjeteve."
 
-#: message;id_webservices_list
-msgid "Choose the web service to get more information about the selected file."
-msgstr "Zgjedh shërbimin e rrjetit për të marrë më shumë informacion për skedën e zgjedhur."
-
-#: message;id_webservices_sharemonkey
-msgid "Search for the file infomation using ShareMonkey service."
-msgstr "Kërkon për informacionin e skedës duke përdorur shërbimin ShareMonkey."
-
 #: message;imageviewer_bestfit
 msgid "Resize the image to fit within the window."
 msgstr "Ripërmason imazhin që të jetë brenda dritares."
@@ -4339,10 +4664,6 @@ msgstr "Shkruaj shprehje të rregullta sipas sintaksës perl.{n}Fjalët kyçe mu
 #: tip;idc_share_partials
 msgid "This setting has no effect on downloads previously started, also this setting is ignored if the file have the eDonkey hash and the eDonkey network is enabled or if it is a torrent.{n}However this setting isn't ignored if the download is paused.{n}{n}ATTENTION: Use this option only in case of real necessity, if you abuse of the option you may be banned."
 msgstr "Kjo vendosje nuk ka efekt te shkarkesat që kanë nisur më parë, po ashtu kjo vendosje përbuzet nëse skeda ka hashin eDonkey dhe rrjeti eDonkey është aktivizuar ose nëse është torrent.{n}Gjithsesi kjo vendosje nuk përbuzet nëse shkarkimi pushon.{n}{n}KUJDES: Përdore këtë mundësi vetëm në rast të një nevoje reale, nëse abuzon me mundësinë mund të dëbohesh."
-
-#: string;window_main
-msgid "Shareaza"
-msgstr "Shareaza"
 
 #: string;window_system
 msgid "System"
@@ -4400,74 +4721,6 @@ msgstr "Chat në Shareaza"
 msgid "Scheduler"
 msgstr ""
 
-#: string;154
-msgid "Are you sure you want to remove all scheduled tasks? This cannot be undone."
-msgstr ""
-
-#: string;156
-msgid "Scheduled time has already passed.\\n\\nPlease select a time in the future."
-msgstr ""
-
-#: string;157
-msgid "Bandwidth: Full Speed"
-msgstr ""
-
-#: string;158
-msgid "Bandwidth: Reduced Speed"
-msgstr ""
-
-#: string;159
-msgid "Bandwidth: Stop"
-msgstr ""
-
-#: string;160
-msgid "System: Exit Shareaza"
-msgstr ""
-
-#: string;161
-msgid "System: Disconnect Dial-up Connection"
-msgstr ""
-
-#: string;162
-msgid "System: Turn Off the Computer"
-msgstr ""
-
-#: string;163
-msgid "Please select a task."
-msgstr ""
-
-#: string;164
-msgid "Specific day(s) of week"
-msgstr ""
-
-#: string;165 string;8325 string;20118
-msgid "Active"
-msgstr "Aktiv"
-
-#: string;166 string;8324
-msgid "Inactive"
-msgstr "Joaktiv"
-
-#: string;167
-msgid "Done"
-msgstr ""
-
-#: string;168
-msgid "Waiting..."
-msgstr ""
-
-#: string;169
-msgid "No Tasks Currently Scheduled"
-msgstr ""
-
-#: string;172
-msgid "Done Today"
-msgstr ""
-
-#: string;173
-msgid "You should select at least one day of week."
-msgstr ""
-
 #: string;7000
 msgid "Are you sure you want to delete this filter ?"
 msgstr "Je i sigurt për fshirjen e këtij filtri?"
@@ -4501,8 +4754,12 @@ msgid "This template does not have any customizations."
 msgstr "Kjo tempujkë nuk të jep mundësi zgjedhjeje."
 
 #: string;7102
-msgid "Are you sure you want to delete the \"%s\" template?\\nThis cannot be undone."
-msgstr "Je i sigurt për fshirjen e tempujkës \"%s\"?\\nKjo nuk mund të kthehet!"
+msgid ""
+"Are you sure you want to delete the \"%s\" template?\\n"
+"This cannot be undone."
+msgstr ""
+"Je i sigurt për fshirjen e tempujkës \"%s\"?\\n"
+"Kjo nuk mund të kthehet!"
 
 #: string;8000 dialog;csettingsheet
 msgid "Shareaza Settings"
@@ -4521,8 +4778,18 @@ msgid "Edit My Profile"
 msgstr "Edito Profilin Tim"
 
 #: string;8004
-msgid "!Welcome to Shareaza (version) !\\n.\\nShareaza is completely free software.\\nPlease use it responsibly and respect intellectual property law.\\n."
-msgstr "Mirë se erdhe te Shareaza (version) !\\n.\\nShareaza është softuer tërësisht falas.\\nTë lutem përdore me përgjegjësi dhe respekto ligjin për pronën intelektuale.\\n."
+msgid ""
+"!Welcome to Shareaza (version) !\\n"
+".\\n"
+"Shareaza is completely free software.\\n"
+"Please use it responsibly and respect intellectual property law.\\n"
+"."
+msgstr ""
+"Mirë se erdhe te Shareaza (version) !\\n"
+".\\n"
+"Shareaza është softuer tërësisht falas.\\n"
+"Të lutem përdore me përgjegjësi dhe respekto ligjin për pronën intelektuale.\\n"
+"."
 
 #: string;8005
 msgid "(closing after transfers)"
@@ -4537,24 +4804,22 @@ msgid "There are no active searches. Click here to search for files."
 msgstr "Nuk ka asnjë kërkim aktiv. Kliko që të kërkosh një skedë."
 
 #: string;8008
-msgid "Shareaza has finished downloading the next Shareaza version (%s). Would you like to upgrade now?\\n\\nIf you select Yes, Shareaza will close temporarily while the upgrade is installed."
-msgstr "Shareaza mbaroi shkarkimin e versionit të ri (%s). Do e përmirësosh tani?\\n\\nNëse zgjedh Po, Shareaza do të mbyllet përkohësisht deri në instalimin e përmirësimit."
+msgid ""
+"Shareaza has finished downloading the next Shareaza version (%s). Would you like to upgrade now?\\n"
+"\\n"
+"If you select Yes, Shareaza will close temporarily while the upgrade is installed."
+msgstr ""
+"Shareaza mbaroi shkarkimin e versionit të ri (%s). Do e përmirësosh tani?\\n"
+"\\n"
+"Nëse zgjedh Po, Shareaza do të mbyllet përkohësisht deri në instalimin e përmirësimit."
 
 #: string;8009
 msgid "Are you sure you want to delete the \"%s\" skin? This cannot be undone."
 msgstr "Je i sigurt për fshirjen e veshjes \"%s\"? Kjo nuk mund të kthehet."
 
-#: string;8010
-msgid "This is a pre-release version of Shareaza, and the beta testing period has ended. Please download the full, official release from http://shareaza.sourceforge.net/."
-msgstr "Ky është një version i paralëshuar i Shareaza dhe periudha beta e testimit ka përfunduar. Të lutem shkarko lëshimin e plotë, zyrtar, në http://shareaza.sourceforge.net/."
-
 #: string;8011
 msgid "Changing view will close any windows you have open. Would you like to change now?"
 msgstr "Ndryshimi i pamjes mbyll tërë dritaret e hapura. Je i sigurt për këtë?"
-
-#: string;8012
-msgid "Torrent Information"
-msgstr "Informacioni i Torrentit"
 
 #: string;8013
 msgid "No new Shareaza version detected."
@@ -4793,8 +5058,8 @@ msgid "File size must be"
 msgstr "Masa e skedës të jetë nga"
 
 #: string;8181
-msgid " to"
-msgstr " në"
+msgid " to (size from xx TO xx)"
+msgstr ""
 
 #: string;8208
 msgid "Shareaza is creating hashes for %Iu file(s):"
@@ -4873,8 +5138,9 @@ msgid "Shareaza is checking the download for errors:"
 msgstr "Shareaza verifikon shkarkesën për gabime:"
 
 #: string;8243
-msgid "Volume uploaded:"
-msgstr "Vëllimi i ngarkuar:"
+#, fuzzy
+msgid "Upload ratio:"
+msgstr "Zona e Ngarkesave"
 
 #: string;8244
 msgid "Number of reviews:"
@@ -4975,6 +5241,14 @@ msgstr "URLi:"
 #: string;8323
 msgid "User Agent:"
 msgstr "Agjenti Përd.:"
+
+#: string;8324 string;20264
+msgid "Inactive"
+msgstr "Joaktiv"
+
+#: string;8325 string;20118 string;20263 column;active
+msgid "Active"
+msgstr "Aktiv"
 
 #: string;8326
 msgid "Next in Line"
@@ -5101,20 +5375,27 @@ msgid "Are you sure you want to disconnect?"
 msgstr "Je i sigurt se do të shkëputesh?"
 
 #: string;16080
-msgid "You are running the Scheduler in 'G2 only' mode. Would you like to turn this mode off, so that all active networks remain connected?"
-msgstr "Planifikuesi vepron sipas mënyrës 'Vetëm G2'. Do e fikësh këtë mënyrë që tërë rrjetet aktive të mbeten të lidhura?"
+#, fuzzy
+msgid "Would you like to always connect to this network?"
+msgstr "Nuk je i lidhur në rrjet."
 
 #: string;16081
 msgid "Sending query for \"%s\" to %s."
 msgstr "Dërgim i hetimit për \"%s\" te %s."
 
 #: string;16083
-msgid "Forcing your PC into hub mode may have adverse effects on performance and the P2P network. It is generally better to allow Shareaza to decide whether or not hub mode should be used.\\n\\nHub mode does NOT produce better search results, or have any other advantages for you.\\n\\nDo you really want to do this, despite these disadvantages?"
-msgstr "Detyrimi i kompjuterit tënd drejt mënyrës Nyjë mund të ketë pasoja të kundërta në efektshmërinë dhe rrjetin P2P. Është më e sigurt nëse Shareaza vendos a duhet përdorur mënyra Nyjë.\\n\\nMënyra Nyjë NUK jep rezultate kërkimi më të mira ose nuk ka ndonjë avantazh tjetër.\\n\\nVërtet do e bësh këtë, pavarësisht disavantazheve?"
-
-#: string;16084
-msgid "Disabling support for Gnutella-1 protocols may limit your search results, and if you are acting as a hub it may also impact upon the results of other users. Are you sure you want to do this?"
-msgstr "Moslejimi i përkrahjes për protokollet Gnutella-1 mund t'i kufizojë rezultatet e kërkimit, madje nëse vepron si Nyjë mund të prekë edhe rezultatet e përdoruesve të tjerë. Je i sigurt për këtë?"
+msgid ""
+"Forcing your PC into hub mode may have adverse effects on performance and the P2P network. It is generally better to allow Shareaza to decide whether or not hub mode should be used.\\n"
+"\\n"
+"Hub mode does NOT produce better search results, or have any other advantages for you.\\n"
+"\\n"
+"Do you really want to do this, despite these disadvantages?"
+msgstr ""
+"Detyrimi i kompjuterit tënd drejt mënyrës Nyjë mund të ketë pasoja të kundërta në efektshmërinë dhe rrjetin P2P. Është më e sigurt nëse Shareaza vendos a duhet përdorur mënyra Nyjë.\\n"
+"\\n"
+"Mënyra Nyjë NUK jep rezultate kërkimi më të mira ose nuk ka ndonjë avantazh tjetër.\\n"
+"\\n"
+"Vërtet do e bësh këtë, pavarësisht disavantazheve?"
 
 #: string;16085
 msgid "Gnutella2 is Shareaza's premiere network. Disabling support for it may severely limit both the number and quality of your search results. Are you SURE you want to do this?"
@@ -5235,6 +5516,10 @@ msgstr "Lidhja Gnutella2 me fqinjin %s u vendos me sukses (%s)."
 #: string;16159
 msgid "Closing connection to non-Gnutella2 neighbour %s."
 msgstr "Mbyllet lidhja me fqinjin jo-Gnutella2 %s."
+
+#: string;16191
+msgid "Received a packet from %s for %s which excess query limits, ignoring."
+msgstr ""
 
 #: string;16192
 msgid "Neighbour %s forwarded a packet of excessive size, dropping connection."
@@ -5409,8 +5694,14 @@ msgid "Download host %s is busy, retrying in %i seconds."
 msgstr "Download host %s is busy, retrying in %i seconds."
 
 #: string;16281
-msgid "Are you sure you want to clear \"%s\"?\\n\\nOnce a download has been cleared from the Downloads window, it cannot be resumed later."
-msgstr "Je i sigurt për pastrimin e \"%s\"?\\n\\nKur një shkarkesë pastrohet nga dritarja e Shkarkesave, ajo nuk mund të rimerret më."
+msgid ""
+"Are you sure you want to clear \"%s\"?\\n"
+"\\n"
+"Once a download has been cleared from the Downloads window, it cannot be resumed later."
+msgstr ""
+"Je i sigurt për pastrimin e \"%s\"?\\n"
+"\\n"
+"Kur një shkarkesë pastrohet nga dritarja e Shkarkesave, ajo nuk mund të rimerret më."
 
 #: string;16282
 msgid "Aborting download of \"%s\" from %s (%s), network disabled."
@@ -5601,7 +5892,8 @@ msgid "Push connection to %s established, waiting for handshake..."
 msgstr "Push connection to %s established, waiting for handshake..."
 
 #: string;16329
-msgid "Can't open \"%s\" to upload to host %s, disk/file error."
+#, fuzzy
+msgid "Can't open \"%s\" to upload to host %s due to disk or file error."
 msgstr "Can't open \"%s\" to upload to host %s, disk/file error."
 
 #: string;16330
@@ -5796,13 +6088,23 @@ msgstr "All Files"
 msgid "HTTP Guard"
 msgstr "HTTP Guard"
 
+#: string;16378
+msgid "Host \"%s\" sent a 416, without providing available ranges. Closing connection."
+msgstr ""
+
 #: string;16379
 msgid "Library Files"
 msgstr "Library Files"
 
 #: string;16384
-msgid "Are you sure you want to launch the file \"%s\" ?\\n\\nSome files can be harmful to your computer. Ensure you know what the file is before launching it."
-msgstr "Are you sure you want to launch the file \"%s\" ?\\n\\nSome files can be harmful to your computer. Ensure you know what the file is before launching it."
+msgid ""
+"Are you sure you want to launch the file \"%s\" ?\\n"
+"\\n"
+"Some files can be harmful to your computer. Ensure you know what the file is before launching it."
+msgstr ""
+"Are you sure you want to launch the file \"%s\" ?\\n"
+"\\n"
+"Some files can be harmful to your computer. Ensure you know what the file is before launching it."
 
 #: string;16385
 msgid "You are about to modify the metadata of %i files, are you sure you want to continue?"
@@ -5817,16 +6119,38 @@ msgid "The file \"%s\" has not yet been hashed. Please wait for the file to be h
 msgstr "The file \"%s\" has not yet been hashed. Please wait for the file to be hashed, and then try again."
 
 #: string;16388
-msgid "This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n\\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database. If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n\\nWould you like to proceed?"
-msgstr "This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n\\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database. If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n\\nWould you like to proceed?"
+msgid ""
+"This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n"
+"\\n"
+"Shareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database. If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n"
+"\\n"
+"Would you like to proceed?"
+msgstr ""
+"This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n"
+"\\n"
+"Shareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database. If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n"
+"\\n"
+"Would you like to proceed?"
 
 #: string;16389
-msgid "Are you sure you want to permanently delete the %i selected file(s) ?\\n\\nThe files will be moved to your \"recycle bin\" if it is enabled."
-msgstr "Are you sure you want to permanently delete the %i selected file(s) ?\\n\\nThe files will be moved to your \"recycle bin\" if it is enabled."
+msgid ""
+"Are you sure you want to permanently delete the %i selected file(s) ?\\n"
+"\\n"
+"The files will be moved to your \"recycle bin\" if it is enabled."
+msgstr ""
+"Are you sure you want to permanently delete the %i selected file(s) ?\\n"
+"\\n"
+"The files will be moved to your \"recycle bin\" if it is enabled."
 
 #: string;16390
-msgid "You have not yet selected a media player to enqueue files with, such as Nullsoft Winamp. Would you like to select one now?\\n\\nShareaza will pass the name of the file to your selected program with the \"/ADD\" argument."
-msgstr "You have not yet selected a media player to enqueue files with, such as Nullsoft Winamp. Would you like to select one now?\\n\\nShareaza will pass the name of the file to your selected program with the \"/ADD\" argument."
+msgid ""
+"You have not yet selected a media player to enqueue files with, such as Nullsoft Winamp. Would you like to select one now?\\n"
+"\\n"
+"Shareaza will pass the name of the file to your selected program with the \"/ADD\" argument."
+msgstr ""
+"You have not yet selected a media player to enqueue files with, such as Nullsoft Winamp. Would you like to select one now?\\n"
+"\\n"
+"Shareaza will pass the name of the file to your selected program with the \"/ADD\" argument."
 
 #: string;16391
 msgid "You're not connected to the network."
@@ -5845,36 +6169,88 @@ msgid "Would you like to remove the \"potentially unsafe\" attribute from this f
 msgstr "Would you like to remove the \"potentially unsafe\" attribute from this file?"
 
 #: string;16395
-msgid "Your downloaded files folder \"%s\" is not yet in your library.\\n\\nIncluding your downloaded files folder in your library makes it easier to view and organise new downloads, and lets you take advantage of advanced Shareaza features such as download verification and automatic upgrading. Placing downloaded files in your library does not necessarily require you to share them: you can choose whether or not to share files independently.\\n\\nWould you like to add your downloaded files folder to your library now?"
-msgstr "Your downloaded files folder \"%s\" is not yet in your library.\\n\\nIncluding your downloaded files folder in your library makes it easier to view and organise new downloads, and lets you take advantage of advanced Shareaza features such as download verification and automatic upgrading. Placing downloaded files in your library does not necessarily require you to share them: you can choose whether or not to share files independently.\\n\\nWould you like to add your downloaded files folder to your library now?"
+msgid ""
+"Your downloaded files folder \"%s\" is not yet in your library.\\n"
+"\\n"
+"Including your downloaded files folder in your library makes it easier to view and organise new downloads, and lets you take advantage of advanced Shareaza features such as download verification and automatic upgrading. Placing downloaded files in your library does not necessarily require you to share them: you can choose whether or not to share files independently.\\n"
+"\\n"
+"Would you like to add your downloaded files folder to your library now?"
+msgstr ""
+"Your downloaded files folder \"%s\" is not yet in your library.\\n"
+"\\n"
+"Including your downloaded files folder in your library makes it easier to view and organise new downloads, and lets you take advantage of advanced Shareaza features such as download verification and automatic upgrading. Placing downloaded files in your library does not necessarily require you to share them: you can choose whether or not to share files independently.\\n"
+"\\n"
+"Would you like to add your downloaded files folder to your library now?"
 
 #: string;16396
 msgid "Your downloads folder has been added to your library. Would you like to share it too?"
 msgstr "Your downloads folder has been added to your library. Would you like to share it too?"
 
 #: string;16397
-msgid "Are you sure you want to delete the %i selected album folder(s) ?\\n\\nNote that this action does not delete the files within the album folders, only the folders themselves."
-msgstr "Are you sure you want to delete the %i selected album folder(s) ?\\n\\nNote that this action does not delete the files within the album folders, only the folders themselves."
+msgid ""
+"Are you sure you want to delete the %i selected album folder(s) ?\\n"
+"\\n"
+"Note that this action does not delete the files within the album folders, only the folders themselves."
+msgstr ""
+"Are you sure you want to delete the %i selected album folder(s) ?\\n"
+"\\n"
+"Note that this action does not delete the files within the album folders, only the folders themselves."
 
 #: string;16398
-msgid "Shareaza could not rename:\\n\\n%s\\nto\\n%s"
-msgstr "Shareaza could not rename:\\n\\n%s\\nto\\n%s"
+msgid ""
+"Shareaza could not rename:\\n"
+"\\n"
+"%s\\n"
+"to\\n"
+"%s"
+msgstr ""
+"Shareaza could not rename:\\n"
+"\\n"
+"%s\\n"
+"to\\n"
+"%s"
 
 #: string;16399
-msgid "Shareaza could not delete the file:\\n\\n%s"
-msgstr "Shareaza could not delete the file:\\n\\n%s"
+msgid ""
+"Shareaza could not delete the file:\\n"
+"\\n"
+"%s"
+msgstr ""
+"Shareaza could not delete the file:\\n"
+"\\n"
+"%s"
 
 #: string;16400
-msgid "Target file exists:\\n\\n%s\\n\\nWould you like to overwrite it?"
-msgstr "Target file exists:\\n\\n%s\\n\\nWould you like to overwrite it?"
+msgid ""
+"Target file exists:\\n"
+"\\n"
+"%s\\n"
+"\\n"
+"Would you like to overwrite it?"
+msgstr ""
+"Target file exists:\\n"
+"\\n"
+"%s\\n"
+"\\n"
+"Would you like to overwrite it?"
 
 #: string;16401
 msgid "Show All File Types"
 msgstr "Trego Tërë Llojet e Skedave"
 
 #: string;16402
-msgid "Shareaza received a collection file:\\n\\n\"%s\"\\n\\nThis file does not appear to be a valid collection file."
-msgstr "Shareaza received a collection file:\\n\\n\"%s\"\\n\\nThis file does not appear to be a valid collection file."
+msgid ""
+"Shareaza received a collection file:\\n"
+"\\n"
+"\"%s\"\\n"
+"\\n"
+"This file does not appear to be a valid collection file."
+msgstr ""
+"Shareaza received a collection file:\\n"
+"\\n"
+"\"%s\"\\n"
+"\\n"
+"This file does not appear to be a valid collection file."
 
 #: string;16403
 msgid "Shareaza has added the collection file \"%s\" to your library."
@@ -5885,8 +6261,14 @@ msgid "Shareaza was unable to install the collection file \"%s\" by copying it t
 msgstr "Shareaza was unable to install the collection file \"%s\" by copying it to the folder \"%s\"."
 
 #: string;16406
-msgid "Would you like to download all files in this collection?\\n\\nChoose Cancel to stop any further prompts."
-msgstr "Would you like to download all files in this collection?\\n\\nChoose Cancel to stop any further prompts."
+msgid ""
+"Would you like to download all files in this collection?\\n"
+"\\n"
+"Choose Cancel to stop any further prompts."
+msgstr ""
+"Would you like to download all files in this collection?\\n"
+"\\n"
+"Choose Cancel to stop any further prompts."
 
 #: string;16407
 msgid "Would you like to prevent this collection from prompting you to download anything else?"
@@ -5901,12 +6283,26 @@ msgid "Export &URIs..."
 msgstr "Eksporto &URIt..."
 
 #: string;16410
-msgid "A subfolder of the selected folder \"%s\" is already part of your library.\\nAdding this folder will cause re-hashing of some files.\\n\\nDo you want to continue ?"
-msgstr "A subfolder of the selected folder \"%s\" is already part of your library.\\nAdding this folder will cause re-hashing of some files.\\n\\nDo you want to continue ?"
+msgid ""
+"A subfolder of the selected folder \"%s\" is already part of your library.\\n"
+"Adding this folder will cause re-hashing of some files.\\n"
+"\\n"
+"Do you want to continue ?"
+msgstr ""
+"A subfolder of the selected folder \"%s\" is already part of your library.\\n"
+"Adding this folder will cause re-hashing of some files.\\n"
+"\\n"
+"Do you want to continue ?"
 
 #: string;16411
-msgid "Unable to move the file %s. The file may be in use by another application.\\n\\nDo you wish to try to copy this file instead?"
-msgstr "Unable to move the file %s. The file may be in use by another application.\\n\\nDo you wish to try to copy this file instead?"
+msgid ""
+"Unable to move the file %s. The file may be in use by another application.\\n"
+"\\n"
+"Do you wish to try to copy this file instead?"
+msgstr ""
+"Unable to move the file %s. The file may be in use by another application.\\n"
+"\\n"
+"Do you wish to try to copy this file instead?"
 
 #: string;16412
 msgid "Ghost File"
@@ -6029,7 +6425,13 @@ msgid "Gnutella Packets Lost"
 msgstr "Gnutella Packets Lost"
 
 #: string;16528
-msgid "Gnutella Local Queries"
+#, fuzzy
+msgid "Gnutella Incoming Queries"
+msgstr "Gnutella Local Queries"
+
+#: string;16529
+#, fuzzy
+msgid "Gnutella Processed Queries"
 msgstr "Gnutella Local Queries"
 
 #: string;16532
@@ -6133,20 +6535,42 @@ msgid "You have not specified any folders to share. Are you sure?"
 msgstr "Nuk ke përcaktuar asnjë dosje për ta shpërndarë. Je i sigurt?"
 
 #: string;16803
-msgid "The folder you are sharing is already shared as part of another shared folder:\\n\\n%s"
-msgstr "Dosja që shpërndani shpërndahet që më parë si pjesë e një tjetër dosje të shpërndarë:\\n\\n%s"
+msgid ""
+"The folder you are sharing is already shared as part of another shared folder:\\n"
+"\\n"
+"%s"
+msgstr ""
+"Dosja që shpërndani shpërndahet që më parë si pjesë e një tjetër dosje të shpërndarë:\\n"
+"\\n"
+"%s"
 
 #: string;16804
 msgid "You haven't entered a screen name in your user profile."
 msgstr "Në profilin e përdoruesit nuk keni shkruar asnjë emër."
 
 #: string;16805
-msgid "You haven't entered your location in your user profile.\\n\\nIt's a good idea to enter your location so that other users can see which country you are from. Note that entering a location does not reveal any compromising information.\\n\\nAre you sure you want to continue without entering your location?"
-msgstr "Në profilin e përdoruesit nuk keni shkruar vendin tuaj.\\n\\nËshtë mirë që ta shkruani atë që përdoruesit e tjerë ta shohin se nga cili vend jeni.  Vëreni se hyrja e vendit nuk zbulon ndonjë informacion me rrezik.\\n\\nJe i sigurt se do të vijosh pa shkruar vendin nga je?"
+msgid ""
+"You haven't entered your location in your user profile.\\n"
+"\\n"
+"It's a good idea to enter your location so that other users can see which country you are from. Note that entering a location does not reveal any compromising information.\\n"
+"\\n"
+"Are you sure you want to continue without entering your location?"
+msgstr ""
+"Në profilin e përdoruesit nuk keni shkruar vendin tuaj.\\n"
+"\\n"
+"Është mirë që ta shkruani atë që përdoruesit e tjerë ta shohin se nga cili vend jeni.  Vëreni se hyrja e vendit nuk zbulon ndonjë informacion me rrezik.\\n"
+"\\n"
+"Je i sigurt se do të vijosh pa shkruar vendin nga je?"
 
 #: string;16806
-msgid "Shareaza was unable to set up port-forwarding on your NAT router or firewall.\\n\\nPlease configure your network to forward TCP and UDP ports %i to your local PC."
-msgstr "Shareaza was unable to set up port-forwarding on your NAT router or firewall.\\n\\nPlease configure your network to forward TCP and UDP ports %i to your local PC."
+msgid ""
+"Shareaza was unable to set up port-forwarding on your NAT router or firewall.\\n"
+"\\n"
+"Please configure your network to forward TCP and UDP ports %i to your local PC."
+msgstr ""
+"Shareaza was unable to set up port-forwarding on your NAT router or firewall.\\n"
+"\\n"
+"Please configure your network to forward TCP and UDP ports %i to your local PC."
 
 #: string;16807
 msgid "Please type the bandwidth limit you wish to set in the form \"123 kb/s\" for kilobits per second, or \"123 KB/s\" for kilobytes per second."
@@ -6182,16 +6606,28 @@ msgid "Please wait: Updating eDonkey server list..."
 msgstr "Please wait: Updating eDonkey server list..."
 
 #: string;16815
-msgid "UPnP Device Host Service is not running. This service is required to perform the setup.\\nYou need to set the startup type of the service to automatic."
-msgstr "UPnP Device Host Service is not running. This service is required to perform the setup.\\nYou need to set the startup type of the service to automatic."
+msgid ""
+"UPnP Device Host Service is not running. This service is required to perform the setup.\\n"
+"You need to set the startup type of the service to automatic."
+msgstr ""
+"UPnP Device Host Service is not running. This service is required to perform the setup.\\n"
+"You need to set the startup type of the service to automatic."
 
 #: string;16816
-msgid "The eDonkey network uses large queues with long wait times. By limiting the maximum queue position you will accept so strictly, you may have trouble getting downloads to begin.\\nAre you sure you want to limit what queue positions you will accept?"
-msgstr "The eDonkey network uses large queues with long wait times. By limiting the maximum queue position you will accept so strictly, you may have trouble getting downloads to begin.\\nAre you sure you want to limit what queue positions you will accept?"
+msgid ""
+"The eDonkey network uses large queues with long wait times. By limiting the maximum queue position you will accept so strictly, you may have trouble getting downloads to begin.\\n"
+"Are you sure you want to limit what queue positions you will accept?"
+msgstr ""
+"The eDonkey network uses large queues with long wait times. By limiting the maximum queue position you will accept so strictly, you may have trouble getting downloads to begin.\\n"
+"Are you sure you want to limit what queue positions you will accept?"
 
 #: string;16817
-msgid "Windows doesn't support paths longer than 256 characters.\\nPlease select a folder with a shorter path."
-msgstr "Windows doesn't support paths longer than 256 characters.\\nPlease select a folder with a shorter path."
+msgid ""
+"Windows doesn't support paths longer than 256 characters.\\n"
+"Please select a folder with a shorter path."
+msgstr ""
+"Windows doesn't support paths longer than 256 characters.\\n"
+"Please select a folder with a shorter path."
 
 #: string;16818
 msgid "The complete and incomplete folders should not be the same"
@@ -6301,10 +6737,6 @@ msgstr "MediaLuajtësi i Shareaza-s"
 msgid "Shareaza could not instantiate its MediaServices plugin. Please reinstall Shareaza, and confirm that you have the necessary media codecs and output drivers installed."
 msgstr "Shareaza could not instantiate its MediaServices plugin. Please reinstall Shareaza, and confirm that you have the necessary media codecs and output drivers installed."
 
-#: string;16993
-msgid "All Media Files|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Playlists|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Audio Files|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|Video Files|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|CD Audio Tracks|*.cda|MIDI Files|*.mid;*.rmi;*.midi|All Files|*.*||"
-msgstr "Tërë Skedat Mediatike|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Lista|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Skeda Zanore|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|Skeda Filmike|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Kolona CD Audio|*.cda|Skeda MIDI|*.mid;*.rmi;*.midi|Tërë Skedat|*.*||"
-
 #: string;16994
 msgid "Unable to load media file \"%s\""
 msgstr "Nuk mund të ngarkohet kjo skedë mediatike \"%s\""
@@ -6333,11 +6765,11 @@ msgstr "L I S T A"
 msgid "Send:"
 msgstr "Dërgo:"
 
-#: string;17018
+#: string;17018 string;19103
 msgid "Welcome to Shareaza Chat!"
 msgstr "Mirë se erdhe te Chat-i i Shareaza-s!"
 
-#: string;17019
+#: string;17019 string;19104
 msgid "Please respect others while using this service"
 msgstr "Të lutem respekto të tjerët kur e përdor këtë shërbim"
 
@@ -6422,8 +6854,14 @@ msgid "Cannot send message, a connection has not been established yet."
 msgstr "Cannot send message, a connection has not been established yet."
 
 #: string;17042
-msgid "You have not yet filled in your user profile. You must provide a profile before you can chat with other users.\\n\\nWould you like to fill in your profile now?"
-msgstr "You have not yet filled in your user profile. You must provide a profile before you can chat with other users.\\n\\nWould you like to fill in your profile now?"
+msgid ""
+"You have not yet filled in your user profile. You must provide a profile before you can chat with other users.\\n"
+"\\n"
+"Would you like to fill in your profile now?"
+msgstr ""
+"You have not yet filled in your user profile. You must provide a profile before you can chat with other users.\\n"
+"\\n"
+"Would you like to fill in your profile now?"
 
 #: string;17043
 msgid "Granted upload priority to host %s."
@@ -6713,6 +7151,11 @@ msgstr "BitTorrent coupling with %s requested an unknown file."
 msgid "BitTorrent coupling with %s established for \"%s\"."
 msgstr "BitTorrent coupling with %s established for \"%s\"."
 
+#: string;17480
+#, fuzzy
+msgid "BitTorrent coupling with %s requested an inactive file."
+msgstr "BitTorrent coupling with %s requested an unknown file."
+
 #: string;17481
 msgid "Received BitTorrent descriptor file: \"%s\""
 msgstr "Received BitTorrent descriptor file: \"%s\""
@@ -6742,8 +7185,14 @@ msgid "Established BitTorrent coupling with %s, handshaking..."
 msgstr "Established BitTorrent coupling with %s, handshaking..."
 
 #: string;17488
-msgid "You have changed the tracker URL for this torrent. Are you sure you want to save this change?\\n\\nAn invalid tracker URL may prevent further downloading."
-msgstr "You have changed the tracker URL for this torrent. Are you sure you want to save this change?\\n\\nAn invalid tracker URL may prevent further downloading."
+msgid ""
+"You have changed the tracker URL for this torrent. Are you sure you want to save this change?\\n"
+"\\n"
+"An invalid tracker URL may prevent further downloading."
+msgstr ""
+"You have changed the tracker URL for this torrent. Are you sure you want to save this change?\\n"
+"\\n"
+"An invalid tracker URL may prevent further downloading."
 
 #: string;17489
 msgid "BitTorrent coupling with %s is extended protocol, identified \"%s\"."
@@ -6766,7 +7215,8 @@ msgid "Unable to create BitTorrent share file \"%s\"."
 msgstr "Unable to create BitTorrent share file \"%s\"."
 
 #: string;17494
-msgid "This torrent includes the file \"%s\", but Shareaza cannot find this file in your library. If possible, move the file to the same folder as the torrent and try again."
+#, fuzzy
+msgid "This torrent includes the file \"%s\", but Shareaza cannot find this file in your library. If possible, move the file to a shared folder and try again."
 msgstr "Ky torrent përfshin skedën \"%s\", të cilën Shareaza nuk e gjen dot në librarinë tuaj.  Nëse mundeni, lëvizeni skedën në të njëjtën dosje me torrentin dhe provoni përsëri."
 
 #: string;17495
@@ -6785,16 +7235,13 @@ msgstr "An unknown error occurred while trying to seed \"%s\"."
 msgid "An error was detected in the file \"%s\"."
 msgstr "An error was detected in the file \"%s\"."
 
-#: string;17500
-msgid "Tracker did not respond- Retrying announce (%i of %i)"
-msgstr "Tracker did not respond- Retrying announce (%i of %i)"
-
 #: string;17501
 msgid "Unable to communicate with tracker"
 msgstr "Unable to communicate with tracker"
 
 #: string;17503
-msgid "Tracker failed- Trying next tracker (%i of %i)"
+#, fuzzy
+msgid "Trying next tracker (%i of %i)"
 msgstr "Tracker failed- Trying next tracker (%i of %i)"
 
 #: string;17505
@@ -6837,30 +7284,6 @@ msgstr "Konvertim i Torrentit:"
 msgid "You have made changes to the name field. Are you sure you want to rename this download?"
 msgstr "Kryet ndryshime te fusha e emrit.  Je i sigurt për riemërtimin e shkarkesës?"
 
-#: string;18497
-msgid "You have typed a SHA1 value, however it is invalid. Please check it and try again."
-msgstr "Shkruat një vlerë SHA1, gjithsesi nuk ka vlerë.  Të lutem rishikoje dhe provoje përsëri."
-
-#: string;18498
-msgid "You have typed a root tiger-tree value, however it is invalid. Please check it and try again."
-msgstr "Shkruat një vlerë-rrënjë tiger-tree, gjithsesi nuk ka vlerë.  Të lutem rishikoje dhe provoje përsëri."
-
-#: string;18499
-msgid "You have typed an eDonkey hash value, however it is invalid. Please check it and try again."
-msgstr "Shkruat një vlerë hashi për eDonkey, gjithsesi nuk ka vlerë.  Të lutem rishikoje dhe provoje përsëri."
-
-#: string;18500
-msgid "You have provided a SHA1 hash value which is different to the one currently associated with this download. Are you sure you want to change the SHA1 hash now?"
-msgstr "Dhatë një vlerë hashi SHA1 që ndryshon nga ajo që aktualisht shoqërohet me këtë shkarkesë.  Je i sigurt se tani do të ndryshosh hashin SHA1?"
-
-#: string;18501
-msgid "You have provided a root tiger-tree hash value which is different to the one currently associated with this download. Are you sure you want to change the tiger-tree root hash now?"
-msgstr "Dhatë një vlerë-rrënjë hashi tiger-tree që ndryshon nga ajo që aktualisht shoqërohet me këtë shkarkesë.  Je i sigurt se tani do të ndryshosh hashin rrënjë tiger-tree?"
-
-#: string;18502
-msgid "You have provided an eDonkey hash value which is different to the one currently associated with this download. Are you sure you want to change the eDonkey hash now?"
-msgstr "Dhatë një vlerë hashi eDonkey që ndryshon nga ajo që aktualisht shoqërohet me këtë shkarkesë.  Je i sigurt se tani do të ndryshosh hashin eDonkey?"
-
 #: string;18503
 msgid "Are you sure you want to forget the current verification status? All downloaded data will be treated as untrusted, and cached hashtrees and hashsets will be flushed."
 msgstr "Je i sigurt se do të harrosh statusin aktual të verifikimit?  Tërë të dhënat e shkarkuara do të trajtohen si të pabesueshme, dhe hash-pemët e depozituara do të shpërbëhen."
@@ -6897,6 +7320,21 @@ msgstr "Je i sigurt se do të supozosh se kjo shkarkesë ka përfunduar dhe do e
 msgid "You have made changes to the file size. Are you sure you want to change the file size for this download?"
 msgstr "Kryet ndryshime te masa e skedës. Je i sigurt për ndryshimin e masës për këtë shkarkesë?"
 
+#: string;18512
+#, fuzzy
+msgid "Are you sure you want to cancel this download but save incomplete file(s)?"
+msgstr "Anulo shkarkimin por ruaj skedat e papërfunduara:"
+
+#: string;18513
+#, fuzzy
+msgid "You have typed an %s hash value, however it is invalid. Please check it and try again."
+msgstr "Shkruat një vlerë hashi për eDonkey, gjithsesi nuk ka vlerë.  Të lutem rishikoje dhe provoje përsëri."
+
+#: string;18514
+#, fuzzy
+msgid "You have provided an %s hash value which is different to the one currently associated with this download. Are you sure you want to change the %s hash now?"
+msgstr "Dhatë një vlerë hashi SHA1 që ndryshon nga ajo që aktualisht shoqërohet me këtë shkarkesë.  Je i sigurt se tani do të ndryshosh hashin SHA1?"
+
 #: string;19000
 msgid "Remote access is disabled."
 msgstr "Aksesi në largësi është çaktivizuar."
@@ -6909,6 +7347,11 @@ msgstr "Duhet të zgjidhet një emër përdoruesi dhe fjalëkalimi."
 msgid "Unable to accept connections, URL unavailable."
 msgstr "Nuk mund të pranoj lidhjet, URLi pa vlerë."
 
+#: string;19105
+#, fuzzy
+msgid "Chat!"
+msgstr "Chat"
+
 #: string;20000
 msgid "No URN available"
 msgstr "Asnjë URN me vlerë"
@@ -6918,8 +7361,10 @@ msgid "of (e.g. 1 of 10)"
 msgstr "nga"
 
 #: string;20003
-msgid "Changing interface direction requires restart. \\nYou will need to start Shareaza manually. Exit now?"
-msgstr "Ndryshimi i drejtimit të ndërfaqes kërkon rinisje. \\nShareaza-n duhet ta nisni vetë. A doni të dilni?"
+msgid ""
+"Changing language requires application restart.\\n"
+"Restart now?"
+msgstr ""
 
 #: string;20005
 msgid "No"
@@ -6953,9 +7398,24 @@ msgstr "&Tjetër"
 msgid "Finish"
 msgstr "Përfundo"
 
-#: string;20013 cscheduletaskdlg;control;14 cfolderpropertiesdlg;control;5
+#: string;20013 cfolderpropertiesdlg;control;5
 msgid "All"
 msgstr "Gjithçka"
+
+#: string;20014
+#, fuzzy
+msgid ""
+"This option uses services provided by ShareMonkey.com for recognising information about selected files.\\n"
+"\\n"
+"Shareaza will transmit file details and your location in order to query the ShareMonkey database.  If you are concerned about privacy, you may wish to consult the ShareMonkey.com privacy policy.\\n"
+"\\n"
+"Would you like to proceed?"
+msgstr ""
+"This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n"
+"\\n"
+"Shareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database. If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n"
+"\\n"
+"Would you like to proceed?"
 
 #: string;20101
 msgid "Requesting"
@@ -7085,34 +7545,6 @@ msgstr "Q"
 msgid "sources (e.g. 3/10 sources)"
 msgstr "burime"
 
-#: string;20200 cscheduletaskdlg;control;7
-msgid "Sunday"
-msgstr "e Diel"
-
-#: string;20201 cscheduletaskdlg;control;8
-msgid "Monday"
-msgstr "e Hënë"
-
-#: string;20202 cscheduletaskdlg;control;9
-msgid "Tuesday"
-msgstr "e Martë"
-
-#: string;20203 cscheduletaskdlg;control;10
-msgid "Wednesday"
-msgstr "e Mërkurë"
-
-#: string;20204 cscheduletaskdlg;control;11
-msgid "Thursday"
-msgstr "e Enjte"
-
-#: string;20205
-msgid "Friday"
-msgstr "e Premte"
-
-#: string;20206 cscheduletaskdlg;control;13
-msgid "Saturday"
-msgstr "e Shtunë"
-
 #: string;20210
 msgid "(No Rating)"
 msgstr "(Pa Vlerësim)"
@@ -7173,34 +7605,33 @@ msgstr "Artisti"
 msgid "Rating"
 msgstr "Vlerësimi"
 
-#: string;20237 csettingsheet;control;2 cscheduletaskdlg;control;1
-#: cqueuepropertiesdlg;control;37 cprofilemanagerdlg;control;2
-#: csavefilterasdlg;control;2 cdiscoveryservicedlg;control;5
-#: cfilecopydlg;control;4 cfolderpropertiesdlg;control;7
-#: cgraphlistdlg;control;16 cgraphitemdlg;control;1
-#: cschemacolumnsdlg;control;3 csecureruledlg;control;33
-#: csharemanagerdlg;control;5 cpromotedlg;control;7 cexistingfiledlg;control;8
-#: cclosemodedlg;control;5 cdonkeyserversdlg;control;4
-#: cdownloadgroupdlg;control;1 cmediavisdlg;control;5
-#: cdownloadreviewdlg;control;1 cdecodemetadatadlg;control;8
-#: circinputdlg;control;2
+#: string;20237 csettingsheet;control;2 cqueuepropertiesdlg;control;37
+#: cprofilemanagerdlg;control;2 csavefilterasdlg;control;2
+#: cdiscoveryservicedlg;control;5 cfilecopydlg;control;4
+#: cfolderpropertiesdlg;control;7 cgraphlistdlg;control;16
+#: cgraphitemdlg;control;1 cschemacolumnsdlg;control;3
+#: csecureruledlg;control;33 csharemanagerdlg;control;5 cpromotedlg;control;7
+#: cexistingfiledlg;control;8 cclosemodedlg;control;5
+#: cdonkeyserversdlg;control;4 cdownloadgroupdlg;control;1
+#: cmediavisdlg;control;5 cdownloadreviewdlg;control;1
+#: cdecodemetadatadlg;control;8 circinputdlg;control;2
 msgid "OK"
 msgstr "OK"
 
-#: string;20238 csettingsheet;control;3 cscheduletaskdlg;control;2
-#: cqueuepropertiesdlg;control;38 cprofilemanagerdlg;control;3
-#: cconnecttodlg;control;8 cdownloaddlg;control;5 cnewsearchdlg;control;4
-#: cfiltersearchdlg;control;30 csavefilterasdlg;control;3
-#: cdiscoveryservicedlg;control;6 cfilecopydlg;control;5
-#: cfolderpropertiesdlg;control;8 cgraphlistdlg;control;17
-#: cgraphitemdlg;control;2 cschemacolumnsdlg;control;4
-#: csecureruledlg;control;34 csharemanagerdlg;control;6 curlcopydlg;control;6
-#: curlexportdlg;control;10 curlactiondlg;control;11
-#: cbitzidownloaddlg;control;4 cfilepreviewdlg;control;6
-#: cexistingfiledlg;control;9 cclosemodedlg;control;6
-#: cdonkeyserversdlg;control;5 cdeletefiledlg;control;5
-#: ctorrentseeddlg;control;4 cdownloadgroupdlg;control;2
-#: cmediavisdlg;control;6 cdecodemetadatadlg;control;9 circinputdlg;control;3
+#: string;20238 csettingsheet;control;3 cqueuepropertiesdlg;control;38
+#: cprofilemanagerdlg;control;3 cconnecttodlg;control;8 cdownloaddlg;control;5
+#: cnewsearchdlg;control;4 cfiltersearchdlg;control;30
+#: csavefilterasdlg;control;3 cdiscoveryservicedlg;control;6
+#: cfilecopydlg;control;5 cfolderpropertiesdlg;control;8
+#: cgraphlistdlg;control;17 cgraphitemdlg;control;2
+#: cschemacolumnsdlg;control;4 csecureruledlg;control;34
+#: csharemanagerdlg;control;6 curlcopydlg;control;6 curlexportdlg;control;10
+#: curlactiondlg;control;11 cbitzidownloaddlg;control;4
+#: cfilepreviewdlg;control;6 cexistingfiledlg;control;9
+#: cclosemodedlg;control;6 cdonkeyserversdlg;control;5
+#: cdeletefiledlg;control;5 ctorrentseeddlg;control;4
+#: cdownloadgroupdlg;control;2 cmediavisdlg;control;6
+#: cdecodemetadatadlg;control;9 circinputdlg;control;3
 msgid "Cancel"
 msgstr "Anulo"
 
@@ -7232,16 +7663,106 @@ msgstr "&Mbaj mend zgjedhjen time herën tjetër"
 msgid "New Folder"
 msgstr ""
 
-#: string;32825
-msgid "Open my folder of completed Downloads"
+#: string;20246
+msgid ""
+"Command-line options:\\n"
+"\\n"
+"-tray : Disable startup splash screen and send application to tray\\n"
+"-nosplash : Disable startup splash screen\\n"
+"-nowarn : Disable alpha (daily builds) version warning dialog\\n"
+"-wait : Wait for other application instance exit\\n"
+"\\n"
+"Interface modes:\\n"
+"\\n"
+"-basic : Start application in Basic interface mode\\n"
+"-tabbed : Start application in Tabbed interface mode\\n"
+"-windowed : Start application in Windowed interface mode\\n"
+"\\n"
+"System options:\\n"
+"\\n"
+"-RegServer : Register internal components for everyone\\n"
+"-UnRegServer : Un-register internal components for everyone\\n"
+"-RegServerPerUser : Register internal components for current user\\n"
+"-UnRegServerPerUser : Un-register internal components for current user"
 msgstr ""
 
-#: string;32773
-msgid "Check for new version"
+#: string;20247
+msgid "Failed to load metadata schemas. Please reinstall application."
 msgstr ""
 
-#: string;61215
-msgid "Activate this window"
+#: string;20248
+#, fuzzy
+msgid "You selected %u files. Are you sure?"
+msgstr "Nuk ke përcaktuar asnjë dosje për ta shpërndarë. Je i sigurt?"
+
+#: string;20249
+msgid "Off"
+msgstr ""
+
+#: string;20250
+msgid "Low"
+msgstr ""
+
+#: string;20251
+#, fuzzy
+msgid "Normal"
+msgstr "Mënyrë N_ormale"
+
+#: string;20252
+msgid "High"
+msgstr ""
+
+#: string;20253
+msgid "Skin load error: %s. Element: %s"
+msgstr ""
+
+#: string;20254
+msgid "Loading skin: %s"
+msgstr ""
+
+#: string;20255
+msgid "Are you sure you want to remove all scheduled tasks? This cannot be undone."
+msgstr ""
+
+#: string;20256
+#, fuzzy
+msgid "System: Start Shareaza"
+msgstr "Kërko te Shareaza"
+
+#: string;20257
+msgid "Bandwidth: Full Speed"
+msgstr ""
+
+#: string;20258
+msgid "Bandwidth: Reduced Speed"
+msgstr ""
+
+#: string;20259
+msgid "Bandwidth: Stop"
+msgstr ""
+
+#: string;20260
+msgid "System: Exit Shareaza"
+msgstr ""
+
+#: string;20261
+msgid "System: Disconnect Dial-up Connection"
+msgstr ""
+
+#: string;20262
+msgid "System: Turn Off the Computer"
+msgstr ""
+
+#: string;20265
+msgid "Done"
+msgstr ""
+
+#: string;20266
+msgid "Waiting..."
+msgstr ""
+
+#: string;20267
+msgid "No Tasks Currently Scheduled"
 msgstr ""
 
 #: csettingsheet;control;4 cprofilemanagerdlg;control;4
@@ -7386,7 +7907,7 @@ msgid "_Safe to Open:"
 msgstr "_Hap pa Rrezik:"
 
 #: clibrarysettingspage;control;18 clibrarysettingspage;control;22
-#: cmediasettingspage;control;7 cwebsettingspage;control;11
+#: cmediasettingspage;control;7 cwebsettingspage;control;12
 #: cfilesourcespage;control;5 cdownloadgroupdlg;control;7
 msgid "_Add"
 msgstr "_Shto"
@@ -7576,14 +8097,18 @@ msgid "BitTorrent ( .torrent )"
 msgstr "BitTorrent ( .torrent )"
 
 #: cwebsettingspage;control;8
+msgid "DC++ ( dchub: )"
+msgstr "DC++ ( dchub: )"
+
+#: cwebsettingspage;control;9
 msgid "_Download Manager:"
 msgstr "Menaxheri _Shkarkues:"
 
-#: cwebsettingspage;control;9
+#: cwebsettingspage;control;10
 msgid "Use Shareaza to manage all my web downloads:"
 msgstr "Shareaza do të menaxhojë tërë shkarkesat e mia nga rrjeti:"
 
-#: cwebsettingspage;control;13
+#: cwebsettingspage;control;14
 msgid "The download manager plugin will only attempt to download file types listed here.  Other file types will be handled by your web browser.  Shareaza must be running to manage downloads."
 msgstr "Spina e menaxherit shkarkues do të orvatet të shkarkojë vetëm llojet e skedave në listë. Llojet e tjera do të trajtohen nga shfletuesi yt i rrjetit. Shareaza duhet të veprojë për të menaxhuar shkarkesat."
 
@@ -7632,15 +8157,22 @@ msgid "Handshake:"
 msgstr "Takimi i Dorës:"
 
 #: cdownloadssettingspage;control;1
-msgid "Save _Completed Files Here:"
+#, fuzzy
+msgid "Save Completed Files Here"
 msgstr "Depozito Këtu Skedat e _Përfunduara:"
 
 #: cdownloadssettingspage;control;4
-msgid "Store Temporary _Incomplete Files Here:"
-msgstr "Depozito Këtu Skedat Kohëshkurtër të _Papërfunduara:"
+msgid "Scan every completed file with AntiVirus"
+msgstr ""
+
+#: cdownloadssettingspage;control;5
+#, fuzzy
+msgid "Select AntiVirus:"
+msgstr "Zgjidhe paravendosjen:"
 
 #: cdownloadssettingspage;control;7
-msgid "_Number of Downloads:"
+#, fuzzy
+msgid "Number of Downloads"
 msgstr "_Numri i Shkarkesave:"
 
 #: cdownloadssettingspage;control;8
@@ -7656,7 +8188,8 @@ msgid "Transfers per File:"
 msgstr "Transferta për Skedë:"
 
 #: cdownloadssettingspage;control;17
-msgid "_Limits:"
+#, fuzzy
+msgid "Limits"
 msgstr "_Kufijtë:"
 
 #: cdownloadssettingspage;control;18
@@ -7667,9 +8200,14 @@ msgstr "Banda Totale e Shkarkimit:"
 msgid "Maximum Queue Length:"
 msgstr "Gjatësi Maksimale e Radhës:"
 
-#: cdownloadssettingspage;control;23
+#: cdownloadssettingspage;control;22
 msgid "Only download and upload to networks which are connected."
 msgstr "Shkarko dhe ngarko vetëm nga rrjetet e lidhura."
+
+#: cdownloadssettingspage;control;23
+#, fuzzy
+msgid "Store Temporary Incomplete Files Here"
+msgstr "Depozito Këtu Skedat Kohëshkurtër të _Papërfunduara:"
 
 #: cuploadssettingspage;control;2
 msgid "Share NEW partial downloads"
@@ -7767,71 +8305,7 @@ msgstr "Zgjidhe Përdoruesin:"
 msgid "Choose a Password:"
 msgstr "Zgjidhe Fjalëkalimin:"
 
-#: dialog;cscheduletaskdlg
-msgid "Schedule Item"
-msgstr ""
-
-#: cscheduletaskdlg;control;3
-msgid "Only once"
-msgstr ""
-
-#: cscheduletaskdlg;control;4
-msgid "On specific day(s) of week"
-msgstr ""
-
-#: cscheduletaskdlg;control;12
-msgid " Friday"
-msgstr ""
-
-#: cscheduletaskdlg;control;22
-msgid " _Toggle bandwidth independently"
-msgstr ""
-
-#: cscheduletaskdlg;control;23
-msgid " _Limit network to Gnutella2"
-msgstr ""
-
-#: cscheduletaskdlg;control;25
-msgid "Make this event active"
-msgstr ""
-
-#: cscheduletaskdlg;control;26
-msgid "Please select a date:"
-msgstr ""
-
-#: cscheduletaskdlg;control;27
-msgid "Please select a time:"
-msgstr ""
-
-#: cscheduletaskdlg;control;28
-msgid "Select the event type:"
-msgstr ""
-
-#: cscheduletaskdlg;control;29
-msgid "Description: (optional)"
-msgstr ""
-
-#: cscheduletaskdlg;control;30
-msgid "% of _bandwidth under limit"
-msgstr ""
-
-#: cscheduletaskdlg;control;31
-msgid "% of _download under limit"
-msgstr ""
-
-#: cscheduletaskdlg;control;32
-msgid "% of _upload under limit"
-msgstr ""
-
-#: cscheduletaskdlg;control;33
-msgid "Days Of Week"
-msgstr ""
-
-#: cscheduletaskdlg;control;34
-msgid "Run this event"
-msgstr ""
-
-#: dialog;cnetworkssettingspage
+#: dialog;cnetworkssettingspage cscheduletaskpage;control;16
 msgid "Networks"
 msgstr "Rrjete"
 
@@ -8027,7 +8501,7 @@ msgstr "Shkarko server-listën e eDonkey në rrjet:"
 msgid "Download..."
 msgstr "Shkarko..."
 
-#: dialog;cbittorrentsettingspage
+#: dialog;cbittorrentsettingspage cscheduletaskpage;control;12
 msgid "BitTorrent"
 msgstr "BitTorrent"
 
@@ -9572,6 +10046,31 @@ msgstr "Emri i Kanalit|Arsyeja pse"
 msgid "Enter channel you want to add:|Enter kick/ban reason:"
 msgstr "Shkruaj kanalin që do të shtosh:|Shkruaj arsyen e gjuajtjes/dëbimit:"
 
+#: dialog;cscheduletaskpage column;action
+msgid "Action"
+msgstr "Veprimi"
+
+#: cscheduletaskpage;control;10
+#, fuzzy
+msgid "eDoonkey2K"
+msgstr "eDonkey"
+
+#: cscheduletaskpage;control;13
+msgid "Select the event type:"
+msgstr ""
+
+#: cscheduletaskpage;control;14
+msgid "% of _download under limit"
+msgstr ""
+
+#: cscheduletaskpage;control;15
+msgid "% of _upload under limit"
+msgstr ""
+
+#: cscheduletaskpage;control;17 column;bandwidth
+msgid "Bandwidth"
+msgstr "Gjerësi e bandës"
+
 #: column;file
 msgid "File"
 msgstr "Skeda"
@@ -9636,10 +10135,6 @@ msgstr "Ora"
 msgid "Packets"
 msgstr "Paketa"
 
-#: column;bandwidth
-msgid "Bandwidth"
-msgstr "Gjerësi e bandës"
-
 #: column;total
 msgid "Total"
 msgstr "Totali"
@@ -9659,10 +10154,6 @@ msgstr "Mënyra"
 #: column;address/content
 msgid "Address/Content"
 msgstr "Adresa / Përmbajtje"
-
-#: column;action
-msgid "Action"
-msgstr "Veprimi"
 
 #: column;expires
 msgid "Expires"
@@ -9787,3 +10278,57 @@ msgstr "Përdoruesi"
 #: column;comments
 msgid "Comments"
 msgstr "Komente"
+
+#: column;trigger
+#, fuzzy
+msgid "Trigger"
+msgstr "TigerTree"
+
+#: column;nextrun
+#, fuzzy
+msgid "NextRun"
+msgstr "Tjetër"
+
+#~ msgid "_Play Album"
+#~ msgstr "_Luaj Albumin"
+#~ msgid "This is a pre-release version of Shareaza, and the beta testing period has ended. Please download the full, official release from http://shareaza.sourceforge.net/."
+#~ msgstr "Ky është një version i paralëshuar i Shareaza dhe periudha beta e testimit ka përfunduar. Të lutem shkarko lëshimin e plotë, zyrtar, në http://shareaza.sourceforge.net/."
+#~ msgid "Torrent Information"
+#~ msgstr "Informacioni i Torrentit"
+#~ msgid " to"
+#~ msgstr " në"
+#~ msgid "Volume uploaded:"
+#~ msgstr "Vëllimi i ngarkuar:"
+#~ msgid "You are running the Scheduler in 'G2 only' mode. Would you like to turn this mode off, so that all active networks remain connected?"
+#~ msgstr "Planifikuesi vepron sipas mënyrës 'Vetëm G2'. Do e fikësh këtë mënyrë që tërë rrjetet aktive të mbeten të lidhura?"
+#~ msgid "Disabling support for Gnutella-1 protocols may limit your search results, and if you are acting as a hub it may also impact upon the results of other users. Are you sure you want to do this?"
+#~ msgstr "Moslejimi i përkrahjes për protokollet Gnutella-1 mund t'i kufizojë rezultatet e kërkimit, madje nëse vepron si Nyjë mund të prekë edhe rezultatet e përdoruesve të tjerë. Je i sigurt për këtë?"
+#~ msgid "All Media Files|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Playlists|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Audio Files|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|Video Files|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|CD Audio Tracks|*.cda|MIDI Files|*.mid;*.rmi;*.midi|All Files|*.*||"
+#~ msgstr "Tërë Skedat Mediatike|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Lista|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Skeda Zanore|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|Skeda Filmike|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Kolona CD Audio|*.cda|Skeda MIDI|*.mid;*.rmi;*.midi|Tërë Skedat|*.*||"
+#~ msgid "Tracker did not respond- Retrying announce (%i of %i)"
+#~ msgstr "Tracker did not respond- Retrying announce (%i of %i)"
+#~ msgid "You have typed a SHA1 value, however it is invalid. Please check it and try again."
+#~ msgstr "Shkruat një vlerë SHA1, gjithsesi nuk ka vlerë.  Të lutem rishikoje dhe provoje përsëri."
+#~ msgid "You have typed a root tiger-tree value, however it is invalid. Please check it and try again."
+#~ msgstr "Shkruat një vlerë-rrënjë tiger-tree, gjithsesi nuk ka vlerë.  Të lutem rishikoje dhe provoje përsëri."
+#~ msgid "You have provided a root tiger-tree hash value which is different to the one currently associated with this download. Are you sure you want to change the tiger-tree root hash now?"
+#~ msgstr "Dhatë një vlerë-rrënjë hashi tiger-tree që ndryshon nga ajo që aktualisht shoqërohet me këtë shkarkesë.  Je i sigurt se tani do të ndryshosh hashin rrënjë tiger-tree?"
+#~ msgid "You have provided an eDonkey hash value which is different to the one currently associated with this download. Are you sure you want to change the eDonkey hash now?"
+#~ msgstr "Dhatë një vlerë hashi eDonkey që ndryshon nga ajo që aktualisht shoqërohet me këtë shkarkesë.  Je i sigurt se tani do të ndryshosh hashin eDonkey?"
+#~ msgid "Changing interface direction requires restart. \\nYou will need to start Shareaza manually. Exit now?"
+#~ msgstr "Ndryshimi i drejtimit të ndërfaqes kërkon rinisje. \\nShareaza-n duhet ta nisni vetë. A doni të dilni?"
+#~ msgid "Sunday"
+#~ msgstr "e Diel"
+#~ msgid "Monday"
+#~ msgstr "e Hënë"
+#~ msgid "Tuesday"
+#~ msgstr "e Martë"
+#~ msgid "Wednesday"
+#~ msgstr "e Mërkurë"
+#~ msgid "Thursday"
+#~ msgstr "e Enjte"
+#~ msgid "Friday"
+#~ msgstr "e Premte"
+#~ msgid "Saturday"
+#~ msgstr "e Shtunë"
+

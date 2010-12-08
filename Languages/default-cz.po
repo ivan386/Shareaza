@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2010-05-27 12:52+0000\n"
+"POT-Creation-Date: 2010-11-16 14:53+0000\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Prometheus\n"
+"Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -353,17 +353,21 @@ msgstr "Nastavení"
 msgid "Configure IRC Settings"
 msgstr ""
 
-#: button;id_network_g2
+#: button;id_network_g2 cscheduletaskpage;control;9
 msgid "Gnutella2"
 msgstr "Gnutella2"
 
-#: button;id_network_g1
+#: button;id_network_g1 cscheduletaskpage;control;8
 msgid "Gnutella1"
 msgstr "Gnutella1"
 
 #: button;id_network_ed2k dialog;cdonkeysettingspage
 msgid "eDonkey"
 msgstr "eDonkey"
+
+#: button;id_network_dc cscheduletaskpage;control;11
+msgid "DC++"
+msgstr ""
 
 #: button;id_network_connect_to button;id_hostcache_connect
 msgid "Connect To"
@@ -393,11 +397,11 @@ msgstr ""
 msgid "Reset List"
 msgstr ""
 
-#: button;id_security_import button;id_scheduler_import
+#: button;id_security_import
 msgid "Import List"
 msgstr ""
 
-#: button;id_security_export button;id_scheduler_export
+#: button;id_security_export
 msgid "Export List"
 msgstr ""
 
@@ -456,6 +460,10 @@ msgstr ""
 #: button;id_hostcache_kad_cache
 msgid "Kademlia Cache"
 msgstr ""
+
+#: button;id_hostcache_dc_cache
+msgid "DC++ Cache"
+msgstr "DC++ Cache"
 
 #: button;id_chat_bold
 msgid "B"
@@ -571,6 +579,12 @@ msgstr "Připojit ke Gnutelle_1"
 #: cmainwnd.windowed;18;19;item;id_network_ed2k
 msgid "Connect to _eDonkey"
 msgstr "Připojit k _eDonkey"
+
+#: cmainwnd.basic;1;2;item;id_network_dc
+#: cmainwnd.tabbed;9;10;item;id_network_dc
+#: cmainwnd.windowed;18;19;item;id_network_dc
+msgid "Connect to _DC++"
+msgstr "Connect to _DC++"
 
 #: cmainwnd.basic;1;item;id_network_auto_close
 #: cmainwnd.tabbed;9;item;id_network_auto_close
@@ -925,8 +939,8 @@ msgstr "Režim _tabulí"
 msgid "_Windowed Mode"
 msgstr "Režim _oken"
 
-#: cmainwnd.tabbed;13;item;idc_import_downloads
-#: cmainwnd.windowed;21;item;idc_import_downloads
+#: cmainwnd.tabbed;13;item;id_import_downloads
+#: cmainwnd.windowed;21;item;id_import_downloads
 msgid "_Import eMule partial downloads..."
 msgstr "_Importovat soubory z eMule..."
 
@@ -1059,6 +1073,10 @@ msgstr "_BitTorrent Cache"
 #: chostcachewnd;28;item;id_hostcache_kad_cache
 msgid "_Kademlia Cache"
 msgstr "_Kademlia Cache"
+
+#: chostcachewnd;28;item;id_hostcache_dc_cache
+msgid "_DC++ Cache"
+msgstr "_DC++ Cache"
 
 #: chostcachewnd;item;id_hostcache_import
 msgid "_Import MET File..."
@@ -1471,7 +1489,7 @@ msgstr "_Sdílené"
 #: cschedulerwnd;item;id_scheduler_remove
 #: cdiscoverywnd;item;id_discovery_remove clibrarysettingspage;control;19
 #: clibrarysettingspage;control;23 cmediasettingspage;control;8
-#: cwebsettingspage;control;12 cwizardsharepage;control;6
+#: cwebsettingspage;control;13 cwizardsharepage;control;6
 #: cavatarprofilepage;control;6 cfilesourcespage;control;6
 #: cgraphlistdlg;control;4 cgraphitemdlg;control;12 csharemanagerdlg;control;4
 #: cdownloadgroupdlg;control;8
@@ -1508,8 +1526,9 @@ msgstr "_Vlastnosti souboru"
 #: clibrarytree.virtual.basic;item;id_library_folder_enqueue
 #: clibrarytree.virtual;item;id_library_folder_enqueue
 #: clibraryfileview.virtual.basic;item;id_library_folder_enqueue
-msgid "_Play Album"
-msgstr "_Přehrát album"
+#, fuzzy
+msgid "Play _Album"
+msgstr "Přehrát album"
 
 #: clibrarytree.virtual.basic;item;id_library_folder_delete
 #: clibrarytree.virtual;item;id_library_folder_delete
@@ -1524,7 +1543,8 @@ msgstr "_Vymazat"
 
 #: clibrarytree.virtual.basic;item;id_library_folder_properties
 #: clibrarytree.virtual;item;id_library_folder_properties
-msgid "_Album Properties"
+#, fuzzy
+msgid "Album _Properties"
 msgstr "Vlastnosti _albumu"
 
 #: clibrarytree.virtual;item;id_library_export_collection
@@ -1805,6 +1825,10 @@ msgstr ""
 msgid "_eDonkey"
 msgstr ""
 
+#: cneighbourswnd;59;item;id_network_dc
+msgid "_DC++"
+msgstr ""
+
 #: cneighbourswnd;60
 msgid "_Monitor"
 msgstr ""
@@ -1853,11 +1877,11 @@ msgstr "Přid_at pravidlo..."
 msgid "Rese_t"
 msgstr "Rese_t"
 
-#: csecuritywnd;item;id_security_import cschedulerwnd;item;id_scheduler_import
+#: csecuritywnd;item;id_security_import
 msgid "_Import..."
 msgstr "_Import..."
 
-#: csecuritywnd;item;id_security_export cschedulerwnd;item;id_scheduler_export
+#: csecuritywnd;item;id_security_export
 msgid "E_xport..."
 msgstr "E_xport..."
 
@@ -2103,9 +2127,10 @@ msgid "W A R N I N G   -   Y O U   A R E   F I R E W A L L E D"
 msgstr "P O Z O R   -   M Á T E   Z A P N U T Ý   F I R E W A L L"
 
 #: chomeviewctrl;text;5001
+#, fuzzy
 msgid ""
 "Shareaza has detected that you are behind a NAT router or firewall,\n"
-"\t\t\tand are unable to receive connections from the Internet.  "
+"\t\t\t\tand are unable to receive connections from the Internet.  "
 msgstr ""
 "Shareaza zjistila ten jste za firewallem nebo NAT routerem,\n"
 "\t\t\ta nemůžete proto přijmout spojení z Internetu.  "
@@ -2123,9 +2148,10 @@ msgid "W A R N I N G   -   Y O U R   T C P   P O R T   I S   F I R E W A L
 msgstr "P O Z O R   -   N A S T A V E N Ý   T C P   P O R T   J E   B L O K O V Á N"
 
 #: chomeviewctrl;text;6001
+#, fuzzy
 msgid ""
 "Shareaza has detected that you are behind a NAT router or firewall,\n"
-"\t\t\tand are unable to receive TCP connections from the Internet.  "
+"\t\t\t\tand are unable to receive TCP connections from the Internet.  "
 msgstr ""
 "Shareaza zjistila ten jste za firewallem nebo NAT routerem,\n"
 "\t\t\ta nemůžete proto přijímat TCP spojení z Internetu.  "
@@ -2139,9 +2165,10 @@ msgid "W A R N I N G   -   Y O U R   U D P   P O R T   I S   F I R E W A L
 msgstr "P O Z O R   -   N A S T A V E N Ý   U D P   P O R T   J E   B L O K O V Á N"
 
 #: chomeviewctrl;text;7001
+#, fuzzy
 msgid ""
 "Shareaza has detected that you are behind a NAT router or firewall,\n"
-"\t\t\tand are unable to receive UDP messages from the Internet.  "
+"\t\t\t\tand are unable to receive UDP messages from the Internet.  "
 msgstr ""
 "Shareaza zjistila ten jste za firewallem nebo NAT routerem,\n"
 "\t\t\ta nemůžete proto přijímat UDP spojení z Internetu.  "
@@ -2279,17 +2306,17 @@ msgid "Gnutella2:"
 msgstr "Gnutella2:"
 
 #: chomeconnectionbox;text;4 chomeconnectionbox;text;10
-#: chomeconnectionbox;text;16
+#: chomeconnectionbox;text;16 chomeconnectionbox;text;20
 msgid "Disconnected"
 msgstr "Nepřipojeno"
 
 #: chomeconnectionbox;text;5 chomeconnectionbox;text;11
-#: chomeconnectionbox;text;17 string;8070
+#: chomeconnectionbox;text;17 chomeconnectionbox;text;21 string;8070
 msgid "Connecting..."
 msgstr "Připojuji..."
 
 #: chomeconnectionbox;text;6 chomeconnectionbox;text;12
-#: chomeconnectionbox;text;18 string;8071
+#: chomeconnectionbox;text;18 chomeconnectionbox;text;22 string;8071
 msgid "Connected"
 msgstr "Připojeno"
 
@@ -2314,18 +2341,22 @@ msgid "eDonkey:"
 msgstr "Připojuji..."
 
 #: chomeconnectionbox;text;19
+msgid "DC++:"
+msgstr ""
+
+#: chomeconnectionbox;text;23
 msgid "You have been connected for"
 msgstr "hodin a"
 
-#: chomeconnectionbox;text;20 chomeconnectionbox;text;22
+#: chomeconnectionbox;text;24 chomeconnectionbox;text;26
 msgid "%i"
 msgstr "%i"
 
-#: chomeconnectionbox;text;21
+#: chomeconnectionbox;text;25
 msgid "hours and"
 msgstr "minut."
 
-#: chomeconnectionbox;text;23
+#: chomeconnectionbox;text;27
 msgid "minutes."
 msgstr ""
 
@@ -2397,9 +2428,10 @@ msgid "Welcome to Shareaza's Settings Manager"
 msgstr "Vítejte ve správci nastavení Shareazy"
 
 #: cgeneralsettingsgroup;text;2
+#, fuzzy
 msgid ""
 "The Shareaza Settings Manager allows advanced users to completely customise how\n"
-"\t\t\tShareaza works. The settings in the"
+"\t\t\t\tShareaza works. The settings in the"
 msgstr ""
 "Správce nastavení Shareazy dovolí pokročilým uživatelům komletně upravit\n"
 "\t\tpráci se Shareazou. Nastavení položek v záložce"
@@ -2462,9 +2494,10 @@ msgid "Internet"
 msgstr "Internet"
 
 #: cinternetsettingsgroup;text;2
+#, fuzzy
 msgid ""
 "The Shareaza Settings Manager allows advanced users to completely customise \n"
-"\t\t\thow Shareaza works. The settings in the"
+"\t\t\t\thow Shareaza works. The settings in the"
 msgstr ""
 "Správce nastavení Shareazy dovolí pokročilým uživatelům zcela komletně upravit\n"
 "\t\tpráci se Shareazou. Nastavení v sekci"
@@ -2562,17 +2595,19 @@ msgid "Downloads Area"
 msgstr "Oblast stahování"
 
 #: downloadhelp.select;text;2
+#, fuzzy
 msgid ""
 "This is where files currently being downloaded are displayed. You can view\n"
-"\t\tindividual sources by expanding each file with the small + on the left."
+"\t\t\tindividual sources by expanding each file with the small + on the left."
 msgstr ""
 "Zde jsou zobrazené soubory které se právě stahují. Můžete si prohlížet\n"
 "\t\tjednotlivé zdroje pokud je rozbalíte kliknutím vlevo u souboru na malé +."
 
 #: downloadhelp.select;text;3
+#, fuzzy
 msgid ""
 "Drag'n'Drop downloads higher in the list for priority, or onto Download Group \n"
-"\t\ttabs for better organisation (in Power Mode)."
+"\t\t\ttabs for better organisation (in Power Mode)."
 msgstr ""
 "Tento příkaz můžete využít k získání Nápovědy pro stahování. Jednoduše\n"
 "\t\tvyberte stahování a znovu použijte tento příkaz."
@@ -2580,7 +2615,7 @@ msgstr ""
 #: downloadhelp.select;text;4
 msgid ""
 "You can also use this command to get help information on a specific download.\n"
-"\t\tSimply select a download and choose this Help command again."
+"\t\t\tSimply select a download and choose this Help command again."
 msgstr ""
 
 #: downloadhelp.seeding;text;1
@@ -2590,7 +2625,7 @@ msgstr ""
 #: downloadhelp.seeding;text;2
 msgid ""
 "Shareaza has verified this complete download, and is actively sharing it\n"
-"\t\twith other downloaders through BitTorrent. Please share at least 100%."
+"\t\t\twith other downloaders through BitTorrent. Please share at least 100%."
 msgstr ""
 
 #: downloadhelp.completed;text;1
@@ -2598,9 +2633,10 @@ msgid "This Download has Completed"
 msgstr "Toto stahování je dokončeno"
 
 #: downloadhelp.completed;text;2
+#, fuzzy
 msgid ""
 "Shareaza has finished downloading this file, and has verified that it\n"
-"\t\tis 100% correct. It has also moved the file to your downloads folder."
+"\t\t\tis 100% correct. It has also moved the file to your downloads folder."
 msgstr ""
 "Shareaza dokončila stahování tohoto souboru, a ověřila že je\n"
 "\t\tna 100% v pořádku. Také jej přesunula k vašim souborům do složky pro dokončená stahování."
@@ -2610,9 +2646,10 @@ msgid "This Download is Moving"
 msgstr "Toto stahování bylo přesunuto"
 
 #: downloadhelp.moving;text;2
+#, fuzzy
 msgid ""
 "Shareaza has finished downloading this file, and has verified that\n"
-"\t\tit is correct. It is currently being moved and/or unpacked to your downloads folder."
+"\t\t\tit is correct. It is currently being moved and/or unpacked to your downloads folder."
 msgstr ""
 "Shareaza dokončila stahování tohoto souboru, a ověřila\n"
 "\t\tže je v pořádku. Soubor je aktuálně přesunutý a rozbalený k vašim souborům do složky pro stahování."
@@ -2622,9 +2659,10 @@ msgid "This Download is Paused"
 msgstr "Toto stahování je pozastaveno"
 
 #: downloadhelp.paused;text;2
+#, fuzzy
 msgid ""
 "You have paused this download. If you want it to resume downloading, you\n"
-"\t\tcan click the '"
+"\t\t\tcan click the '"
 msgstr "Pozastavili jste toto stahování. Pokud chcete znovu začít stahovat, můžete kliknout na"
 
 #: downloadhelp.paused;text;4
@@ -2636,12 +2674,13 @@ msgid "The Disk is Full"
 msgstr "Disk je plný"
 
 #: downloadhelp.diskfull;text;2
+#, fuzzy
 msgid ""
 "Shareaza has paused this download automatically because the hard disk\n"
-"\t\tappears to be full, or the download file cannot be written to. If you wish\n"
-"\t\tto continue downloading, please free some space on your hard disk and/or check\n"
-"\t\tto make sure the incomplete file folder is accessible, and then resume the\n"
-"\t\tdownload."
+"\t\t\tappears to be full, or the download file cannot be written to. If you wish\n"
+"\t\t\tto continue downloading, please free some space on your hard disk and/or check\n"
+"\t\t\tto make sure the incomplete file folder is accessible, and then resume the\n"
+"\t\t\tdownload."
 msgstr ""
 "Shareaza automaticky pozastavila toto stahování, protože pevný disk je\n"
 "\t\tuž nešjspíš plný, nebo má stahovaný soubor problémy se zápisem. Pokud si přejete\n"
@@ -2654,10 +2693,11 @@ msgid "This Download is Verifying"
 msgstr "Toto stahování bylo ověřeno"
 
 #: downloadhelp.verifying;text;2
+#, fuzzy
 msgid ""
 "This download has finished, and Shareaza is now checking it to ensure\n"
-"\t\tthat it is exactly the same as the original file. If any damaged parts are\n"
-"\t\tfound, Shareaza will repair them automatically."
+"\t\t\tthat it is exactly the same as the original file. If any damaged parts are\n"
+"\t\t\tfound, Shareaza will repair them automatically."
 msgstr ""
 "Toto stahování je dokončeno, a je nyní Shareazou kontrolováno aby se ubezpečila\n"
 "\t\tže je stažený soubor stejný jako původní soubor. Pokud jsou nalezeny poškozené části,\n"
@@ -2668,9 +2708,10 @@ msgid "This Download is Active!"
 msgstr "Toto stahování je aktivní!"
 
 #: downloadhelp.downloading;text;2
+#, fuzzy
 msgid ""
 "This download is currently in progress. If it is downloading too slowly,\n"
-"\t\tyou could try searching the network for more sources with the '"
+"\t\t\tyou could try searching the network for more sources with the '"
 msgstr ""
 "Toto stahování právě probíhá. Jestliže se stahuje příliš pomalu,\n"
 "\t\tmůžete zkusit vyhledat v síti více zdrojů viz příkaz"
@@ -2680,10 +2721,11 @@ msgid "Find More Sources"
 msgstr "Najít více zdrojů."
 
 #: downloadhelp.downloading;text;4
+#, fuzzy
 msgid ""
 "' command. If the speed does not \n"
-"\t\timprove it may be due to limited upload speeds of the users you are downloading \n"
-"\t\tfrom. Download speed usually increases over time."
+"\t\t\timprove it may be due to limited upload speeds of the users you are downloading \n"
+"\t\t\tfrom. Download speed usually increases over time."
 msgstr ""
 "Jestli se rychlost nezlepší,\n"
 "\t\tmůže to být způsobeno omezení rychlosti odesílání uživatele od kterého stahujete.\n"
@@ -2694,13 +2736,14 @@ msgid "This Download is Pending"
 msgstr "Toto stahování zatím čeká"
 
 #: downloadhelp.pending;text;2
+#, fuzzy
 msgid ""
 "This download is waiting for someone to start uploading.\n"
-"\t\tShareaza is ready to start downloading this file, but no-one is sending it at\n"
-"\t\tthe moment. You are probably waiting in other user's queues, and the download\n"
-"\t\tmay start transferring at any time. You can examine the individual sources to \n"
-"\t\tsee each queue you are waiting in. If you are sharing files yourself, it may\n"
-"\t\timprove the chances of a download transfer starting quickly."
+"\t\t\tShareaza is ready to start downloading this file, but no-one is sending it at\n"
+"\t\t\tthe moment. You are probably waiting in other user's queues, and the download\n"
+"\t\t\tmay start transferring at any time. You can examine the individual sources to \n"
+"\t\t\tsee each queue you are waiting in. If you are sharing files yourself, it may\n"
+"\t\t\timprove the chances of a download transfer starting quickly."
 msgstr ""
 "Toto stahování čeká až někdo začne soubor posílat. Shareaza může\n"
 "\t\tzačít stahovat ihned, ale pravděpodobně čeká ve frontě u zdrojových uživatelů.\n"
@@ -2714,12 +2757,13 @@ msgid "This Download is Queued"
 msgstr "Toto stahování čeká ve frontě"
 
 #: downloadhelp.queued;text;2
+#, fuzzy
 msgid ""
 "This download is waiting for some of your other downloads to complete.\n"
-"\t\tYour download settings limit the number of downloads which may be active at\n"
-"\t\tany given time, to ensure that each download gets a good share of the available\n"
-"\t\tbandwidth. You can change these settings via Tools, Shareaza Settings.\n"
-"\t\tAlternatively, you may manually start this download with the resume command."
+"\t\t\tYour download settings limit the number of downloads which may be active at\n"
+"\t\t\tany given time, to ensure that each download gets a good share of the available\n"
+"\t\t\tbandwidth. You can change these settings via Tools, Shareaza Settings.\n"
+"\t\t\tAlternatively, you may manually start this download with the resume command."
 msgstr ""
 "Toto stahování čeká na dokončení nějakého jiného právě stahovaného souboru .\n"
 "\t\tVaše nastavení pro stahování omezí počet stahovaných souborů které mohou být aktivní\n"
@@ -2732,11 +2776,12 @@ msgid "This Download is Searching"
 msgstr "Toto stahování vyhledává zdroje"
 
 #: downloadhelp.searching;text;2
+#, fuzzy
 msgid ""
 "There are no known sources for this download, so Shareaza is searching\n"
-"\t\tall connected P2P networks for new sources. Once sources are found, the\n"
-"\t\tdownload will start automatically. Shareaza searches for sources automatically,\n"
-"\t\thowever you can speed up the process using the"
+"\t\t\tall connected P2P networks for new sources. Once sources are found, the\n"
+"\t\t\tdownload will start automatically. Shareaza searches for sources automatically,\n"
+"\t\t\thowever you can speed up the process using the"
 msgstr ""
 "Pro toto stahování nebyly nalezeny žádné známé zdroje, proto Shareaza prohledává\n"
 "\t\tvšechny připojené sítě P2P pro nové zdroje. Jakmile budou nalezeny,\n"
@@ -2754,9 +2799,9 @@ msgstr ""
 #: downloadhelp.searching;text;5
 msgid ""
 "Unfortunately in many cases there may be no users online who have the\n"
-"\t\tfile you are looking for. The only course of action here is to wait for\n"
-"\t\tsomeone to come online, or cancel it and try to find a similar file which is\n"
-"\t\tmore widely available."
+"\t\t\tfile you are looking for. The only course of action here is to wait for\n"
+"\t\t\tsomeone to come online, or cancel it and try to find a similar file which is\n"
+"\t\t\tmore widely available."
 msgstr ""
 
 #: downloadhelp.creating;text;1
@@ -2764,9 +2809,10 @@ msgid "This Download is Creating"
 msgstr "Tento stahování se připravuje"
 
 #: downloadhelp.creating;text;2
+#, fuzzy
 msgid ""
 "Shareaza is pre-allocating a file in which to store this download, to\n"
-"\t\tsave time later."
+"\t\t\tsave time later."
 msgstr ""
 "Shareaza přerozdělí soubor ve kterém uloží toto stahování,\n"
 "\t\tušetříte tím později čas."
@@ -2776,10 +2822,11 @@ msgid "BitTorrent Tracker Down"
 msgstr "BitTorrent Tracker Down"
 
 #: downloadhelp.tracker;text;2
+#, fuzzy
 msgid ""
 "The BitTorrent tracker server for this download appears to be\n"
-"\t\tdown or malfunctioning. Shareaza is unable to contact it to receive\n"
-"\t\ta list of peers."
+"\t\t\tdown or malfunctioning. Shareaza is unable to contact it to receive\n"
+"\t\t\ta list of peers."
 msgstr ""
 "Trasováním serveru BitTorrent pro toto stahování se zdá, že úkol byl\n"
 "\t\tdokončen nebo také mohl selhat. Shareaza se nemůže připojit a přijmout\n"
@@ -2790,10 +2837,11 @@ msgid "Uploads Area"
 msgstr "Oblast odesílání"
 
 #: uploadhelp;text;2
+#, fuzzy
 msgid ""
 "This is where queues and uploads are displayed. You can expand each queue\n"
-"\t\twith the small + on the left, and filter what is displayed with the button on the\n"
-"\t\tright of the window's toolbar."
+"\t\t\twith the small + on the left, and filter what is displayed with the button on the\n"
+"\t\t\tright of the window's toolbar."
 msgstr ""
 "Toto jsou fronty kde se zobrazují odesílání. Můžete rozbalit každou frontu\n"
 "\t\tmalýnm + nalevo, a filtrovat co bude zobrazeno tlačítkem vpravo\n"
@@ -2808,10 +2856,11 @@ msgid "The amount of free space on one or more drives used by Shareaza is low."
 msgstr "Na disku je málo místa."
 
 #: generalhelp.diskspace;text;3
+#, fuzzy
 msgid ""
 "You should always attempt to keep a reasonable amount of disk space free. Programs \n"
-"\t\tcan become unstable if the drives become full, and temporary files may be lost. You should \n"
-"\t\trun a disk clean-up, delete unwanted files, or uninstall software you no longer need."
+"\t\t\tcan become unstable if the drives become full, and temporary files may be lost. You should \n"
+"\t\t\trun a disk clean-up, delete unwanted files, or uninstall software you no longer need."
 msgstr ""
 "Měli by jste se vždy pokusit udržet rozumnou volnou velikost místa na disku. Programy\n"
 "\t\tse mohou stát nestabilní pokud jsou disky příliš zaplněné, a dočasné soubory mohou být ztraceny.\n"
@@ -2826,10 +2875,11 @@ msgid "A disk or directory Shareaza needs cannot be written to."
 msgstr "Na disk nebo do adresáře Shareaza není možno zapisovat."
 
 #: generalhelp.diskwritefail;text;3
+#, fuzzy
 msgid ""
 "A network drive may have been disconnected, or you may not have write permission \n"
-"\t\tto a selected directory. Please check directories and permissions, or change the\n"
-"\t\ttemporary files location."
+"\t\t\tto a selected directory. Please check directories and permissions, or change the\n"
+"\t\t\ttemporary files location."
 msgstr ""
 "Síťový disk byl možná odpojen, nebo nemáte povolení zapisovat\n"
 "\t\tdo zvoleného adresáře. Prosím zkontrolujte adresáře a povolení, nebo změňte\n"
@@ -2844,9 +2894,10 @@ msgid "Windows reports that there is no internet connection is available."
 msgstr "Windows oznámily že není k dispozici žádné internetové spojení."
 
 #: generalhelp.connectionfail;text;3
+#, fuzzy
 msgid ""
 "It is likely that a modem or router has dropped, meaning the internet cannot\n"
-"\t\tbe accessed. You may need to manually re-connect or reset your connection."
+"\t\t\tbe accessed. You may need to manually re-connect or reset your connection."
 msgstr ""
 "Je pravděpodobné, že modem nebo router nefunguje, to znamená že Internet není\n"
 "\t\tpřístupný. Musíte se opět ručně připojit nebo resetujte vaše připojení."
@@ -2860,10 +2911,11 @@ msgid "Adult content filter enabled"
 msgstr "Aktivace filtrování obsahu pro dospělé"
 
 #: generalhelp.adultfilter;text;2
+#, fuzzy
 msgid ""
 "Please note that (as with any automated filter) it may not be 100% effective at\n"
-"\t\tscreening content. It is designed simply to filter out excess unwanted results, rather than \n"
-"\t\tas a 100% safe block."
+"\t\t\tscreening content. It is designed simply to filter out excess unwanted results, rather than \n"
+"\t\t\tas a 100% safe block."
 msgstr ""
 "Uvědomte si prosím, že (jako u každého automatizovaného filtru) nemusí být filtrování obsahu účinné\n"
 "\t\tna 100%. Kontrola je navržena tak, aby jednoduše odfiltrovala většinu nežádoucích výsledků.\n"
@@ -2878,19 +2930,21 @@ msgid "This torrent appears to have an encoding error"
 msgstr "Zdá se, že tento torrent má chybný kód"
 
 #: generalhelp.badtorrentencoding;text;2
+#, fuzzy
 msgid ""
 "Windows has reported a translation fault while decoding text in this torrent. It is\n"
-"\t\tpossible that the torrent is corrupt, or just incorrectly encoded. The torrent may\n"
-"\t\tstill download properly, although some file names could be incorrect."
+"\t\t\tpossible that the torrent is corrupt, or just incorrectly encoded. The torrent may\n"
+"\t\t\tstill download properly, although some file names could be incorrect."
 msgstr ""
 "Windows oznámily chybu překladu při dekódování textu v tomto torrentu. Není vyloučeno, že\n"
 "\t\ttorrent je poškozen, nebo jen nesprávně zakódovaný. Torrent může dál\n"
 "\t\tještě řádně stahovat, i když pak mohou být nějaká jména souborů být nesprávná."
 
 #: generalhelp.badtorrentencoding;text;3
+#, fuzzy
 msgid ""
 "Most torrent creation programs should allow you to repair this torrent, which\n"
-"\t\twill ensure it works properly in all BitTorrent applications."
+"\t\t\twill ensure it works properly in all BitTorrent applications."
 msgstr ""
 "Většina torrentů vytvořených programy by vám měla dovolit opravit tento torrent, takže\n"
 "\t\tpo opravě bude řádně pracovat ve všech aplikacích BitTorrent."
@@ -2908,17 +2962,19 @@ msgid "Your eDonkey server list is empty"
 msgstr "Váš seznam serveů eDonkey je prázdný"
 
 #: generalhelp.donkeyserverlist;text;2
+#, fuzzy
 msgid ""
 "There are no servers in your eDonkey server list. You need to download an\n"
-"\t\tup to date server list (met file) to connect to ED2K."
+"\t\t\tup to date server list (met file) to connect to ED2K."
 msgstr ""
 "Servery nejsou ve vašem seznamu serverů eDonkey. Potřebujete stáhnout\n"
 "\t\taktualizovaný seznam serverů připojením k ED2K."
 
 #: generalhelp.donkeyserverlist;text;3
+#, fuzzy
 msgid ""
 "You can download a server list from the ed2k setting page, or the discovery\n"
-"\t\tservices window. (Press F9 to open the discovery services window)"
+"\t\t\tservices window. (Press F9 to open the discovery services window)"
 msgstr ""
 "Můžete si stáhnout seznam serverů ze stránky ed2k, nebo vyhledat\n"
 "\t\tv okně služeb. ( Pro otevření okna služby vyhledávání stiskněte F9)"
@@ -2928,28 +2984,31 @@ msgid "Limiting uploads may slow downloads"
 msgstr "Omezení uploadů může zpomalit stahování souborů"
 
 #: generalhelp.uploadwarning;text;2
+#, fuzzy
 msgid ""
 "Several networks Shareaza connects to enforce ratios, limit uploads to\n"
-"\t\tclients that do not share, or simply preference uploading to known sharers."
+"\t\t\tclients that do not share, or simply preference uploading to known sharers."
 msgstr ""
 "Některé připojené sítě Shareaza prosazují procenta, limitují tím uploady ke klientům\n"
 "\t\tkteří nesdílejí, nebo prostě upřednosťují upload známým uživatelům kteří hodně sdílí."
 
 #: generalhelp.uploadwarning;text;3
+#, fuzzy
 msgid ""
 "Fortunately, broadband DSL connections are like a two-lane highway: you have\n"
-"\t\tseparate allocations for upload and download. If your client is properly configured, \n"
-"\t\tyou should be able to upload at a good rate while retaining full download capacity."
+"\t\t\tseparate allocations for upload and download. If your client is properly configured, \n"
+"\t\t\tyou should be able to upload at a good rate while retaining full download capacity."
 msgstr ""
 "Naštěstí, širokopásmové připojení DSL jsou jako dvě široké hlavní silnice: máte\n"
 "\t\tpřidělené samostatné přenosy pro odesílání a stahování. Pokud je váš klient vhodně nastavený,\n"
 "\t\tměl by být schopen poskytovat upload při dobré kapacitě stahování."
 
 #: generalhelp.uploadwarning;text;4
+#, fuzzy
 msgid ""
 "By default, your upload limit is set to about 85% of available upstream bandwidth,\n"
-"\t\twhile downloads are unlimited. That configuration should give you the fastest possible \n"
-"\t\tdownloads that are available."
+"\t\t\twhile downloads are unlimited. That configuration should give you the fastest possible \n"
+"\t\t\tdownloads that are available."
 msgstr ""
 "Standardně by váš limit odesílání měl být nastavený na asi 85% z dostupné šířka pásma,\n"
 "\t\tzatímco vaše stahování je bez omezení. Toto nastavení by vám mělo umožnit nejrychlejší\n"
@@ -2961,11 +3020,12 @@ msgid "Please re-phrase the search"
 msgstr "Prosím zadejte výraz pro hledání znovu a upřesněte jej"
 
 #: searchhelp.badsearch1;text;2
+#, fuzzy
 msgid ""
 "This search is poorly formatted, and may not function correctly. \n"
-"\t\tSearches should include several terms where possible, and should specify a schema \n"
-"\t\t(file type). Furthermore, searches must not be limited to numbers or negative\n"
-"\t\tterms only, and you should avoid overly general queries."
+"\t\t\tSearches should include several terms where possible, and should specify a schema \n"
+"\t\t\t(file type). Furthermore, searches must not be limited to numbers or negative\n"
+"\t\t\tterms only, and you should avoid overly general queries."
 msgstr ""
 "Zadané hledání je špatně formulované a mohlo by dělat problémy.\n"
 "\t\tPokud je to možné, zadané hledání by by mělo zahrnout několik výrazů které by měly\n"
@@ -2973,53 +3033,59 @@ msgstr ""
 "\t\tpodmínky a měli by jste se také vyhnout moc všeobecných výrazů."
 
 #: searchhelp.badsearch1;text;3
+#, fuzzy
 msgid ""
 "Most clients on the network will ignore a search for all MP3 files, for example, \n"
-"\t\tbecause it is not specific enough, and would generate too many results."
+"\t\t\tbecause it is not specific enough, and would generate too many results."
 msgstr ""
 "Většina klientů na síti bude ignorovat hledání například všech souborů MP3,\n"
 "\t\tprotože hledání není upřesněno a nalezlo by se příliš mnoho výsledků."
 
 #: searchhelp.badsearch2;text;2
+#, fuzzy
 msgid ""
 "This search does not contain enough terms to function properly. All searches need\n"
-"\t\ta minimum number of valid, alphabetic characters to be able to start."
+"\t\t\ta minimum number of valid, alphabetic characters to be able to start."
 msgstr ""
 "Toto hledání neobsahuje dost podmínek aby fungovalo pořádně. Aby mohlo začít,\n"
 "\t\tmusí mít všechna hledání minimální počet platných abecedních znaků."
 
 #: searchhelp.badsearch2;text;3
+#, fuzzy
 msgid ""
 "While common file extensions (and numbers) can be searched for, you must enter\n"
-"\t\tother terms as well when creating the search. Punctuation and wildcards are not used \n"
-"\t\tin searches, just the text you enter."
+"\t\t\tother terms as well when creating the search. Punctuation and wildcards are not used \n"
+"\t\t\tin searches, just the text you enter."
 msgstr ""
 "Běžně zadané soubory (i čísla) lze vyhledávat, musíte proto zadat\n"
 "\t\ttakové podmínky také umožní hledání. Interpunkce a náhradní znaky nejsou podporované\n"
 "\t\tpři hledání, jen text který zadáte."
 
 #: searchhelp.badsearch3;text;2
+#, fuzzy
 msgid ""
 "This search seems to contain only common file extensions, or no searchable\n"
-"\t\twords."
+"\t\t\twords."
 msgstr ""
 "Zdá se že toto hledání obsahuje jen samotnou příponu souboru, nebo se nevyhledávají\n"
 "\t\tslova."
 
 #: searchhelp.badsearch3;text;3
+#, fuzzy
 msgid ""
 "If you are having trouble creating searches, keep in mind that it's quite similar\n"
-"\t\tto a web search. Specific terms or phrases are best- Unique names, titles and\n"
-"\t\tkeywords."
+"\t\t\tto a web search. Specific terms or phrases are best- Unique names, titles and\n"
+"\t\t\tkeywords."
 msgstr ""
 "Jestliže máte problém při vytváření hledání, mějte na paměti že to je docela podobné jako\n"
 "\t\t hledání na Webu. Přesné termíny nebo fráze jsou nejlepší - Přesný název, tituly a\n"
 "\t\tklíčová slova."
 
 #: searchhelp.badsearch3;text;4
+#, fuzzy
 msgid ""
 "General terms cannot be searched for efficiently and may result in poor\n"
-"\t\tsearch performance, as well as high bandwidth use during searches."
+"\t\t\tsearch performance, as well as high bandwidth use during searches."
 msgstr ""
 "Všeobecná slova nemohou být vyhledávaná moc efektivně, to může mít za následek málo\n"
 "\t\tvyhledaných výsledků, stejně jako velká šířka pásma použitá během hledání."
@@ -3033,19 +3099,21 @@ msgid "This search cannot be started"
 msgstr "Toto vyhledávání nemůže být spuštěno"
 
 #: searchhelp.adultsearch;text;2
+#, fuzzy
 msgid ""
 "The specified search would probably return a large number of results with adult \n"
-"\t\tcontent, and this has been turned off in the settings. You should either re-phrase the \n"
-"\t\tsearch, or disable the filter."
+"\t\t\tcontent, and this has been turned off in the settings. You should either re-phrase the \n"
+"\t\t\tsearch, or disable the filter."
 msgstr ""
 "Takto zadané hledání by pravděpodobně nalezlo velké množství výsledků s erotickým\n"
 "\t\tobsahem, toto bylo vypnuto v nastavení. Musíte jinak zadat hledání,\n"
 "\t\tnebo musíte vyřadit filtr pro dospělé."
 
 #: searchhelp.adultsearch;text;3
+#, fuzzy
 msgid ""
 "To disable the filter, go into Tools > Settings > General and uncheck the\n"
-"\t\tadult content filter."
+"\t\t\tadult content filter."
 msgstr ""
 "Pro vyřazení filtru, jděte do menu: Nástroje > Nastavení Shareazy > U hledání filtrovat\n"
 "\t\tobsah (porno)."
@@ -3063,18 +3131,20 @@ msgid "This folder should not be shared"
 msgstr "Tato složka nebude sdílená"
 
 #: sharehelp.badshare;text;2
+#, fuzzy
 msgid ""
 "This folder is (or contains) a system folder. Sharing this folder is not\n"
-"\t\trecommended, since most of the files in it are of no use to other people."
+"\t\t\trecommended, since most of the files in it are of no use to other people."
 msgstr ""
 "Tato složka je (nebo obsahuje) systémové adresáře. Sdílení této složky není\n"
 "\t\tdoporučené, většinu souborů nemusí další lidé vidět."
 
 #: sharehelp.badshare;text;3
+#, fuzzy
 msgid ""
 "Folders such as the Windows directory, Program Files, and similar folders\n"
-"\t\tdo not usually contain files suitable for sharing. Any files of interest would be in\n"
-"\t\tsub-folders located"
+"\t\t\tdo not usually contain files suitable for sharing. Any files of interest would be in\n"
+"\t\t\tsub-folders located"
 msgstr ""
 "Adrešáře jako jsou Windows, Program Files a podobné obvykle neobsahují\n"
 "\t\tsoubory vhodné pro sdílení. Do těchto adresářů byste"
@@ -3084,20 +3154,82 @@ msgid "inside"
 msgstr "neměli"
 
 #: sharehelp.badshare;text;5
+#, fuzzy
 msgid ""
 "these folders.\n"
-"\t\tPlease share those instead."
+"\t\t\tPlease share those instead."
 msgstr ""
 "ukládat zajímavé soubory ke sdílení. Vyberte prosím jiný adresář ke\n"
 "\t\tsdílení."
 
 #: sharehelp.badshare;text;6
+#, fuzzy
 msgid ""
 "The Shareaza 'incomplete' folder should also not be shared through the\n"
-"\t\tlibrary, since attempting to hash downloads in progress may impact on performance."
+"\t\t\tlibrary, since attempting to hash downloads in progress may impact on performance."
 msgstr ""
 "Také složku Shareazy 'Incomplete'(nedokončené) by jste neměli sdílet přes\n"
 "\t\tknihovnu, ta se pak pokouší načítat pracovní soubory, což může mít dopad na výkon."
+
+#: message;afx_ids_app_title string;window_main
+msgid "Shareaza"
+msgstr "Shareaza"
+
+#: message;afx_ids_idlemessage
+#, fuzzy
+msgid "Ready"
+msgstr "Připraven..."
+
+#: message;afx_ids_mdichild
+msgid "Activate this window"
+msgstr ""
+
+#: message;afx_ids_preview_close
+msgid "Close print preview mode"
+msgstr ""
+
+#: tip;afx_ids_preview_close
+#, fuzzy
+msgid "Cancel Preview"
+msgstr "Náhled"
+
+#: message;afx_ids_scclose
+#, fuzzy
+msgid "Close the active window and prompts to save the documents"
+msgstr "Zvětšit aktivní okno na maximum."
+
+#: message;afx_ids_scmaximize
+#, fuzzy
+msgid "Enlarge the window to full size"
+msgstr "Zvětšit aktivní okno na maximum."
+
+#: message;afx_ids_scminimize
+msgid "Reduce the window to an icon"
+msgstr ""
+
+#: message;afx_ids_scmove
+msgid "Change the window position"
+msgstr ""
+
+#: message;afx_ids_scnextwindow
+msgid "Switch to the next document window"
+msgstr ""
+
+#: message;afx_ids_scprevwindow
+msgid "Switch to the previous document window"
+msgstr ""
+
+#: message;afx_ids_screstore
+msgid "Restore the window to normal size"
+msgstr ""
+
+#: message;afx_ids_scsize
+msgid "Change the window size"
+msgstr ""
+
+#: message;afx_ids_sctasklist
+msgid "Activate Task List"
+msgstr ""
 
 #: message;id_browse_files
 msgid "View the user's shared files"
@@ -3186,6 +3318,11 @@ msgstr "Přidat novou službu vyhledávání..."
 #: message;id_discovery_advertise
 msgid "Advertise the selected GWebCache service to a random existing GWebCache."
 msgstr "Prohlásit označenou službu GWebCache jako náhodně danou GWebCache."
+
+#: message;id_discovery_blocked
+#, fuzzy
+msgid "Show blocked services in the Discovery window."
+msgstr "Zobrazit služby GWebCache v okně Vyhledávání."
 
 #: message;id_discovery_browse
 msgid "Browse statistics for the selected GWebCache service on the Web."
@@ -3376,7 +3513,8 @@ msgid "Add a source URL to the selected download..."
 msgstr "Přidat zdroj URL k vybranému stahování..."
 
 #: message;id_downloads_view_reviews
-msgid "View reviews for the selected download"
+#, fuzzy
+msgid "View reviews for the selected download."
 msgstr "Prohlížet hodnocení pro vybrané stahování"
 
 #: message;id_help_about
@@ -3391,10 +3529,6 @@ msgstr "Všechno o kodetkách a problémech videa."
 msgid "View the Shareaza FAQ."
 msgstr "Zobrazit FAQ Shareaza."
 
-#: message;id_help_router
-msgid "Get help configuring your router or firewall."
-msgstr "Získejte pomoc při nastavení vašeho routeru nebo firewallu."
-
 #: message;id_help_forums
 msgid "Visit the Shareaza Discussion Forums."
 msgstr "Navštivte diskusní fóra Shareazy."
@@ -3407,17 +3541,25 @@ msgstr "Navštivte Průvodce uživatelů Shareazy."
 msgid "Visit the Shareaza web site."
 msgstr "Navštivte webovou stránku Shareaza.Sourceforge.net."
 
+#: message;id_help_router
+msgid "Get help configuring your router or firewall."
+msgstr "Získejte pomoc při nastavení vašeho routeru nebo firewallu."
+
 #: message;id_help_security
 msgid "Help protecting your system from hostile programs."
 msgstr "Pomoc při ochraně vašeho systému před nebezpečnými programy."
+
+#: message;id_help_test
+msgid "Run the connection test."
+msgstr "Spustit test připojení."
 
 #: message;id_help_update
 msgid "Check for news and updates."
 msgstr "Zkontrolujte novinky a aktualizace."
 
-#: message;id_help_test
-msgid "Run the connection test."
-msgstr "Spustit test připojení."
+#: message;id_help_version_check
+msgid "Check for new version"
+msgstr ""
 
 #: message;id_help_web_1 message;id_help_web_2 message;id_help_web_3
 #: message;id_help_web_4 message;id_help_web_5 message;id_help_web_6
@@ -3436,9 +3578,18 @@ msgstr "Pozastavit monitorování."
 msgid "Search the network for the selected term."
 msgstr "Hledání sítě v určeném termínu."
 
+#: message;id_hostcache_bt_cache
+#, fuzzy
+msgid "Show BitTorrent cached hosts."
+msgstr "Ukázat odesílání BitTorrent."
+
 #: message;id_hostcache_connect
 msgid "Connect to the selected host(s)."
 msgstr "Připojit k označenému hostiteli."
+
+#: message;id_hostcache_dc_cache
+msgid "Show DC++ cached hubs."
+msgstr "Show DC++ cached hubs."
 
 #: message;id_hostcache_disconnect
 msgid "Disconnect from the selected neighbour(s)."
@@ -3468,6 +3619,11 @@ msgstr "Ukázat perspektivní uzle Gnutelly2."
 msgid "Import a list of known hosts, such as a \"server.met\" file..."
 msgstr "Importovat seznam ze známých hostitelů, podobných jako \"server.met\" soubor..."
 
+#: message;id_hostcache_kad_cache
+#, fuzzy
+msgid "Show Kademlia cached hosts."
+msgstr "Ukázat cache hosta Gnutelly1."
+
 #: message;id_hostcache_priority
 msgid "Try to connect to this server before other servers."
 msgstr "Pokuste se nejprve připojit k toto serveru než zkusíte další servery."
@@ -3475,6 +3631,11 @@ msgstr "Pokuste se nejprve připojit k toto serveru než zkusíte další server
 #: message;id_hostcache_remove
 msgid "Remove the selected hosts from the host cache."
 msgstr "Odstranit označené hosty z cache hostů."
+
+#: message;id_import_downloads
+#, fuzzy
+msgid "Import eMule partial downloads..."
+msgstr "_Importovat soubory z eMule..."
 
 #: message;id_library_add
 msgid "Add a new folder to your library..."
@@ -3583,6 +3744,11 @@ msgstr "Upravit popisky zhotovené v jiném jazyce."
 #: message;id_library_refresh
 msgid "Refresh the library view."
 msgstr "Obnovit zobrazení knihoven."
+
+#: message;id_library_refresh_metadata
+#, fuzzy
+msgid "Refresh file metadata"
+msgstr "_Refresh Metadata"
 
 #: message;id_library_remove
 msgid "Remove the selected shared folders."
@@ -3764,6 +3930,15 @@ msgstr "Přehrát soubor"
 msgid "Show or hide the playlist editor."
 msgstr "Zobrazit nebo skrýt editor playlistu."
 
+#: message;id_media_position
+#, fuzzy
+msgid "Seek to a position in the media file."
+msgstr "Vyhledat pozici v přehrávání"
+
+#: tip;id_media_position
+msgid "Seek"
+msgstr ""
+
 #: message;id_media_previous
 msgid "Skip back to the previous file in the current playlist."
 msgstr "Přeskočit zpět na předchozího soubor v aktuálním playlistu."
@@ -3824,6 +3999,15 @@ msgstr "Ukázat video v jeho trojnásobné velikosti."
 msgid "Show the video at double its original (natural) size."
 msgstr "Ukázat video v jeho dvojnásobné velikosti."
 
+#: message;id_media_speed
+#, fuzzy
+msgid "Adjust the speed of the media file."
+msgstr "Nastavit rychlost přehrávání"
+
+#: tip;id_media_speed column;speed
+msgid "Speed"
+msgstr "Rychlost"
+
 #: message;id_media_status
 msgid "Show or hide the media status line."
 msgstr "Ukázat nebo skrýt stavový řádek multimédií."
@@ -3836,25 +4020,31 @@ msgstr "Zastavit přehrávání souboru."
 msgid "Select an audio visualisation plugin..."
 msgstr "Vyberte pro audio vzhled..."
 
+#: message;id_media_volume
+#, fuzzy
+msgid "Adjust the audio volume."
+msgstr "Nastavit hlasitost"
+
+#: tip;id_media_volume
+msgid "Volume"
+msgstr ""
+
 #: message;id_media_zoom
 msgid "Adjust video zoom and aspect ratio settings."
 msgstr "Nastavit velikost videa a poměr zobrazení."
 
-#: tip;idc_media_position
-msgid "Seek"
-msgstr ""
-
-#: tip;idc_media_speed column;speed
-msgid "Speed"
-msgstr "Rychlost"
-
-#: tip;idc_media_volume
-msgid "Volume"
-msgstr ""
-
 #: message;id_monitor_close
 msgid "Close the monitor window."
 msgstr "Zavřít okno monitorování."
+
+#: message;id_musicbrainz_albums
+msgid "Look at all albums for this artist."
+msgstr ""
+
+#: message;id_musicbrainz_matches
+#, fuzzy
+msgid "Search for albums matching the selected file."
+msgstr "Vyhledat další kopie označeného souboru."
 
 #: message;id_neighbours_chat message;id_search_chat message;id_transfers_chat
 #: message;id_uploads_chat
@@ -3905,6 +4095,10 @@ msgstr "Připojit k síti."
 msgid "Manually connect to a host..."
 msgstr "Ručně se připojit k hostiteli..."
 
+#: message;id_network_dc
+msgid "Connect to the DC++ network."
+msgstr "Connect to the DC++ network."
+
 #: message;id_network_disconnect
 msgid "Disconnect from all networks, this will also stop all downloads and uploads."
 msgstr "Odpojit od sítě."
@@ -3928,6 +4122,57 @@ msgstr "Připojit k síti Gnutelly2 (velmi doporučeno)."
 #: message;id_network_search
 msgid "Start a new search of the network..."
 msgstr "Začít nové hledání v síti..."
+
+#: message;id_next_pane
+msgid "Switch to the next window pane"
+msgstr ""
+
+#: tip;id_next_pane
+#, fuzzy
+msgid "Next Pane"
+msgstr "Další v pořadí"
+
+#: message;id_open_downloads_folder
+msgid "Open my folder of completed Downloads"
+msgstr ""
+
+#: message;id_prev_pane
+#, fuzzy
+msgid "Switch back to the previous window pane"
+msgstr "Přeskočit zpět na předchozího soubor v aktuálním playlistu."
+
+#: tip;id_prev_pane
+#, fuzzy
+msgid "Previous Pane"
+msgstr "Předchozí soubor"
+
+#: message;id_scheduler_activate
+#, fuzzy
+msgid "Activates selected task(s) from the list."
+msgstr "Vymazat označené odesílání ze seznamu."
+
+#: message;id_scheduler_add
+msgid "Adds a new task to scheduler list."
+msgstr ""
+
+#: message;id_scheduler_deactivate
+#, fuzzy
+msgid "Deactivates selected tasks."
+msgstr "Připojit k síti."
+
+#: message;id_scheduler_edit
+#, fuzzy
+msgid "Edit the selected task..."
+msgstr "Upravit označené pravidlo zabezpečení..."
+
+#: message;id_scheduler_remove
+#, fuzzy
+msgid "Removes selected task(s) from the list."
+msgstr "Odstranit označené stahování ze seznamu."
+
+#: message;id_scheduler_remove_all
+msgid "Removes all scheduled tasks."
+msgstr ""
 
 #: message;id_search_clear
 msgid "Clear the search results."
@@ -4037,9 +4282,44 @@ msgstr "Odstranit označené pravidlo zabezpečení."
 msgid "Reset the hit counts on the selected rules."
 msgstr "Ihned resetovat a počítat s pravidly výběru."
 
+#: message;id_sharemonkey_buy
+msgid "Buy it and support the author"
+msgstr ""
+
+#: message;id_sharemonkey_compare
+msgid "Compare prices in different stores"
+msgstr ""
+
+#: message;id_sharemonkey_download
+#, fuzzy
+msgid "Search for matches"
+msgstr "_Pátrat po tomto"
+
+#: message;id_sharemonkey_next
+msgid "Go to the next match"
+msgstr ""
+
+#: message;id_sharemonkey_previous
+msgid "Go to the previous match"
+msgstr ""
+
+#: message;id_sharemonkey_prices
+#, fuzzy
+msgid "Look at the prices for the current match"
+msgstr "Přeskočit zpět na předchozího soubor v aktuálním playlistu."
+
+#: message;id_sharemonkey_save
+#, fuzzy
+msgid "Save the match in your Library"
+msgstr "Ukázat mi soubor z knihovny"
+
 #: message;id_system_clear
 msgid "Clear the status log."
 msgstr "Vymazat stav záznamu."
+
+#: message;id_system_copy
+msgid "Copy selected line(s) of status log."
+msgstr ""
 
 #: message;id_system_timestamp
 msgid "Record a timestamp for each line."
@@ -4048,6 +4328,30 @@ msgstr "Zaznamenat časovou značku pro každou linku."
 #: message;id_system_verbose
 msgid "Display a detailed system activity log."
 msgstr "Zobrazit podrobný záznam aktivit záznamu."
+
+#: message;id_system_verbose_debug
+#, fuzzy
+msgid "Display all."
+msgstr "Zobrazit popisek."
+
+#: message;id_system_verbose_error
+#, fuzzy
+msgid "Display errors only."
+msgstr "Zobrazit popisek."
+
+#: message;id_system_verbose_info
+#, fuzzy
+msgid "Display infos and above."
+msgstr "Zobrazit rastrovou čáru."
+
+#: message;id_system_verbose_notice
+msgid "Display notices and above."
+msgstr ""
+
+#: message;id_system_verbose_warning
+#, fuzzy
+msgid "Display warnings and above."
+msgstr "Zobrazit rastrovou čáru."
 
 #: message;id_tab_connect
 msgid "Connect or disconnect from the network."
@@ -4237,6 +4541,11 @@ msgstr "Ukázat se nebo skrýt okno výpisu PACKETU."
 msgid "Show or hide the HIT MONITOR window."
 msgstr "Ukázat se nebo skrýt okno MONITORU."
 
+#: message;id_view_scheduler
+#, fuzzy
+msgid "Show or hide SCHEDULER window."
+msgstr "Ukázat se nebo skrýt okno ZABEZPEČENÍ."
+
 #: message;id_view_search_monitor
 msgid "Show or hide the SEARCH MONITOR window."
 msgstr "Ukázat nebo skrýt okno MONITORU HLEDÁNÍ."
@@ -4264,6 +4573,26 @@ msgstr "Ukázat se nebo skrýt okno ODESÍLÁNÍ."
 #: message;id_view_windowed
 msgid "Use Shareaza in power Windowed mode."
 msgstr "Používat Shareazu ve speciálním režimu oken."
+
+#: message;id_webservices_list
+msgid "Choose the web service to get more information about the selected file."
+msgstr ""
+
+#: message;id_webservices_musicbrainz
+msgid "Search for the same artist songs using MusicBrainz service."
+msgstr ""
+
+#: message;id_webservices_sharemonkey
+msgid "Search for the file infomation using ShareMonkey service."
+msgstr ""
+
+#: message;id_window_arrange
+msgid "Arrange icons at the bottom of the window"
+msgstr ""
+
+#: tip;id_window_arrange
+msgid "Arrange Icons"
+msgstr ""
 
 #: message;id_window_cascade
 msgid "Expand all open windows to fill the screen."
@@ -4297,14 +4626,6 @@ msgstr "Uspořádat otevřená okna jako svislé, nepřekrývající se dlaždic
 msgid "Show or hide the toolbar."
 msgstr "Ukázat se nebo skrýt pracovní lištu."
 
-#: message;id_webservices_list
-msgid "Choose the web service to get more information about the selected file."
-msgstr ""
-
-#: message;id_webservices_sharemonkey
-msgid "Search for the file infomation using ShareMonkey service."
-msgstr ""
-
 #: message;imageviewer_bestfit
 msgid "Resize the image to fit within the window."
 msgstr "Zmenšit obrázek podle okna."
@@ -4332,10 +4653,6 @@ msgstr ""
 #: tip;idc_share_partials
 msgid "This setting has no effect on downloads previously started, also this setting is ignored if the file have the eDonkey hash and the eDonkey network is enabled or if it is a torrent.{n}However this setting isn't ignored if the download is paused.{n}{n}ATTENTION: Use this option only in case of real necessity, if you abuse of the option you may be banned."
 msgstr "Toto nastavení nemá vliv na již započatá stahování, stejně tak nemá toto stahování vliv na soubory s eDonkey hashem pokud je eDonkey síť povoelená ani na torrenty.{n}Toto nastavení ale ovlivňuje stahování, která jsou zastavená.{n}{n}POZOR: Používejte toto nastavení jen v případě nutnosti, při zneužívání můžete dostat ban."
-
-#: string;window_main
-msgid "Shareaza"
-msgstr "Shareaza"
 
 #: string;window_system
 msgid "System"
@@ -4393,74 +4710,6 @@ msgstr ""
 msgid "Scheduler"
 msgstr ""
 
-#: string;154
-msgid "Are you sure you want to remove all scheduled tasks? This cannot be undone."
-msgstr ""
-
-#: string;156
-msgid "Scheduled time has already passed.\\n\\nPlease select a time in the future."
-msgstr ""
-
-#: string;157
-msgid "Bandwidth: Full Speed"
-msgstr ""
-
-#: string;158
-msgid "Bandwidth: Reduced Speed"
-msgstr ""
-
-#: string;159
-msgid "Bandwidth: Stop"
-msgstr ""
-
-#: string;160
-msgid "System: Exit Shareaza"
-msgstr ""
-
-#: string;161
-msgid "System: Disconnect Dial-up Connection"
-msgstr ""
-
-#: string;162
-msgid "System: Turn Off the Computer"
-msgstr ""
-
-#: string;163
-msgid "Please select a task."
-msgstr ""
-
-#: string;164
-msgid "Specific day(s) of week"
-msgstr ""
-
-#: string;165 string;8325 string;20118
-msgid "Active"
-msgstr "Aktivní"
-
-#: string;166 string;8324
-msgid "Inactive"
-msgstr "Neaktivní"
-
-#: string;167
-msgid "Done"
-msgstr ""
-
-#: string;168
-msgid "Waiting..."
-msgstr ""
-
-#: string;169
-msgid "No Tasks Currently Scheduled"
-msgstr ""
-
-#: string;172
-msgid "Done Today"
-msgstr ""
-
-#: string;173
-msgid "You should select at least one day of week."
-msgstr ""
-
 #: string;7000
 msgid "Are you sure you want to delete this filter ?"
 msgstr "Opravdu chcete vymazat tento filtr ?"
@@ -4494,8 +4743,12 @@ msgid "This template does not have any customizations."
 msgstr "Tato šablona neobsahuje žádné přizpůsobení."
 
 #: string;7102
-msgid "Are you sure you want to delete the \"%s\" template?\\nThis cannot be undone."
-msgstr "Smazat šablonu \"%s\" ?\\nTato operace je nevratná."
+msgid ""
+"Are you sure you want to delete the \"%s\" template?\\n"
+"This cannot be undone."
+msgstr ""
+"Smazat šablonu \"%s\" ?\\n"
+"Tato operace je nevratná."
 
 #: string;8000 dialog;csettingsheet
 msgid "Shareaza Settings"
@@ -4514,8 +4767,18 @@ msgid "Edit My Profile"
 msgstr "Upravit vlastní profil"
 
 #: string;8004
-msgid "!Welcome to Shareaza (version) !\\n.\\nShareaza is completely free software.\\nPlease use it responsibly and respect intellectual property law.\\n."
-msgstr "!Vítejte v Shareaze (version) !\\n.\\nShareaza je naprosto volný software.\\nProsím používejte jej zodpovědně a respektujte právo duševního vlastnictví. Krást se nemá.\\n."
+msgid ""
+"!Welcome to Shareaza (version) !\\n"
+".\\n"
+"Shareaza is completely free software.\\n"
+"Please use it responsibly and respect intellectual property law.\\n"
+"."
+msgstr ""
+"!Vítejte v Shareaze (version) !\\n"
+".\\n"
+"Shareaza je naprosto volný software.\\n"
+"Prosím používejte jej zodpovědně a respektujte právo duševního vlastnictví. Krást se nemá.\\n"
+"."
 
 #: string;8005
 msgid "(closing after transfers)"
@@ -4530,24 +4793,22 @@ msgid "There are no active searches. Click here to search for files."
 msgstr "Nejsou spuštěna žádná aktivní hledání. Klikněte zde pro vyhledání souborů."
 
 #: string;8008
-msgid "Shareaza has finished downloading the next Shareaza version (%s). Would you like to upgrade now?\\n\\nIf you select Yes, Shareaza will close temporarily while the upgrade is installed."
-msgstr "Shareaza dokončila stahování novější verze (%s). Chcete ji hned aktualizovat?\\n\\nPokud zvolíte Ano, Shareaza se dočasně ukončí aby se mohla nainstalovat aktualizace."
+msgid ""
+"Shareaza has finished downloading the next Shareaza version (%s). Would you like to upgrade now?\\n"
+"\\n"
+"If you select Yes, Shareaza will close temporarily while the upgrade is installed."
+msgstr ""
+"Shareaza dokončila stahování novější verze (%s). Chcete ji hned aktualizovat?\\n"
+"\\n"
+"Pokud zvolíte Ano, Shareaza se dočasně ukončí aby se mohla nainstalovat aktualizace."
 
 #: string;8009
 msgid "Are you sure you want to delete the \"%s\" skin? This cannot be undone."
 msgstr "Opravdu chcete vymazat skin \"%s\"? Tento skin nemůže být odstraněný."
 
-#: string;8010
-msgid "This is a pre-release version of Shareaza, and the beta testing period has ended. Please download the full, official release from http://shareaza.sourceforge.net/."
-msgstr "Toto je předběžně uvolněná verze Shareazy, beta testovací doba skončila. Prosím stáhněte si plnou oficiální verzi z http://shareaza.sourceforge.net/."
-
 #: string;8011
 msgid "Changing view will close any windows you have open. Would you like to change now?"
 msgstr "Změna prohlížeče musí zavřít všechna okna které máte otevřená. Chcete pokračovat"
-
-#: string;8012
-msgid "Torrent Information"
-msgstr "Informace o torrentu"
 
 #: string;8013
 msgid "No new Shareaza version detected."
@@ -4786,8 +5047,8 @@ msgid "File size must be"
 msgstr "Velikost souboru:"
 
 #: string;8181
-msgid " to"
-msgstr " do"
+msgid " to (size from xx TO xx)"
+msgstr ""
 
 #: string;8208
 msgid "Shareaza is creating hashes for %Iu file(s):"
@@ -4866,8 +5127,9 @@ msgid "Shareaza is checking the download for errors:"
 msgstr "Shareaza kontroluje stahování na chyby:"
 
 #: string;8243
-msgid "Volume uploaded:"
-msgstr "Velikost odesílání:"
+#, fuzzy
+msgid "Upload ratio:"
+msgstr "Oblast odesílání"
 
 #: string;8244
 msgid "Number of reviews:"
@@ -4968,6 +5230,14 @@ msgstr "URL:"
 #: string;8323
 msgid "User Agent:"
 msgstr "Agent:"
+
+#: string;8324 string;20264
+msgid "Inactive"
+msgstr "Neaktivní"
+
+#: string;8325 string;20118 string;20263 column;active
+msgid "Active"
+msgstr "Aktivní"
 
 #: string;8326
 msgid "Next in Line"
@@ -5094,20 +5364,27 @@ msgid "Are you sure you want to disconnect?"
 msgstr "Opravdu se chcete odpojit?"
 
 #: string;16080
-msgid "You are running the Scheduler in 'G2 only' mode. Would you like to turn this mode off, so that all active networks remain connected?"
-msgstr ""
+#, fuzzy
+msgid "Would you like to always connect to this network?"
+msgstr "Nejste připojeni do sítě."
 
 #: string;16081
 msgid "Sending query for \"%s\" to %s."
 msgstr "Posílám dotaz na \"%s\" do %s."
 
 #: string;16083
-msgid "Forcing your PC into hub mode may have adverse effects on performance and the P2P network. It is generally better to allow Shareaza to decide whether or not hub mode should be used.\\n\\nHub mode does NOT produce better search results, or have any other advantages for you.\\n\\nDo you really want to do this, despite these disadvantages?"
-msgstr "Přepnutí vašeho PC do režimu uzle může mít nepříznivé účinky na výkon. Pro síť P2P je většinou lepší umožnit Shareaze rozhodnout zda by měl být režim uzle používán.\\n\\nRežim uzle pro vás NEVYTVOŘÍ lepší vyhledání výsledků, nebo žádné další jiné výhody.\\n\\nOpravdu chcete udělat tyto změny navzdory uvedeným nevýhodám?"
-
-#: string;16084
-msgid "Disabling support for Gnutella-1 protocols may limit your search results, and if you are acting as a hub it may also impact upon the results of other users. Are you sure you want to do this?"
-msgstr "Vyřazení podpory pro protokoly Gnutella-1 může omezit vaše hledávání výsledků, a pokud jednáte jako uzel, může mít také konflikt s výsledky ostatních uživatelů. Opravdu to chcete udělat?"
+msgid ""
+"Forcing your PC into hub mode may have adverse effects on performance and the P2P network. It is generally better to allow Shareaza to decide whether or not hub mode should be used.\\n"
+"\\n"
+"Hub mode does NOT produce better search results, or have any other advantages for you.\\n"
+"\\n"
+"Do you really want to do this, despite these disadvantages?"
+msgstr ""
+"Přepnutí vašeho PC do režimu uzle může mít nepříznivé účinky na výkon. Pro síť P2P je většinou lepší umožnit Shareaze rozhodnout zda by měl být režim uzle používán.\\n"
+"\\n"
+"Režim uzle pro vás NEVYTVOŘÍ lepší vyhledání výsledků, nebo žádné další jiné výhody.\\n"
+"\\n"
+"Opravdu chcete udělat tyto změny navzdory uvedeným nevýhodám?"
 
 #: string;16085
 msgid "Gnutella2 is Shareaza's premiere network. Disabling support for it may severely limit both the number and quality of your search results. Are you SURE you want to do this?"
@@ -5228,6 +5505,10 @@ msgstr "Spojení se sousedem Gnutelly ][ %s bylo úspěšně zavedeno (%s)."
 #: string;16159
 msgid "Closing connection to non-Gnutella2 neighbour %s."
 msgstr "Ukončení připojení k počítači který nepodporuje Gnutella2 %s."
+
+#: string;16191
+msgid "Received a packet from %s for %s which excess query limits, ignoring."
+msgstr ""
 
 #: string;16192
 msgid "Neighbour %s forwarded a packet of excessive size, dropping connection."
@@ -5402,8 +5683,14 @@ msgid "Download host %s is busy, retrying in %i seconds."
 msgstr "Stahuji od hosta %s ale ten je příliš přetížen , opakuji za %i sekund."
 
 #: string;16281
-msgid "Are you sure you want to clear \"%s\"?\\n\\nOnce a download has been cleared from the Downloads window, it cannot be resumed later."
-msgstr "Opravdu chcete vymazat \"%s\"?\\n\\nPokud jednou soubor stáhnete a vymažete jej z okna stahování, nemůže později pokračovat."
+msgid ""
+"Are you sure you want to clear \"%s\"?\\n"
+"\\n"
+"Once a download has been cleared from the Downloads window, it cannot be resumed later."
+msgstr ""
+"Opravdu chcete vymazat \"%s\"?\\n"
+"\\n"
+"Pokud jednou soubor stáhnete a vymažete jej z okna stahování, nemůže později pokračovat."
 
 #: string;16282
 msgid "Aborting download of \"%s\" from %s (%s), network disabled."
@@ -5594,7 +5881,8 @@ msgid "Push connection to %s established, waiting for handshake..."
 msgstr "Nucené připojení k %s bylo zavedeno, čeká se na odezvu..."
 
 #: string;16329
-msgid "Can't open \"%s\" to upload to host %s, disk/file error."
+#, fuzzy
+msgid "Can't open \"%s\" to upload to host %s due to disk or file error."
 msgstr "Nelze otevřít \"%s\" pro odeslání pro hosta %s, chyba na disku/souboru."
 
 #: string;16330
@@ -5789,13 +6077,23 @@ msgstr "Všechny soubory"
 msgid "HTTP Guard"
 msgstr "Hlídač HTTP"
 
+#: string;16378
+msgid "Host \"%s\" sent a 416, without providing available ranges. Closing connection."
+msgstr ""
+
 #: string;16379
 msgid "Library Files"
 msgstr "Soubory v knihovně"
 
 #: string;16384
-msgid "Are you sure you want to launch the file \"%s\" ?\\n\\nSome files can be harmful to your computer. Ensure you know what the file is before launching it."
-msgstr "Opravdu chcete spustit soubor \"%s\" ?\\n\\nNěkteré soubory mohou poškodit váš počítač. Ujistěte se, že víte jaký soubor spouštíte."
+msgid ""
+"Are you sure you want to launch the file \"%s\" ?\\n"
+"\\n"
+"Some files can be harmful to your computer. Ensure you know what the file is before launching it."
+msgstr ""
+"Opravdu chcete spustit soubor \"%s\" ?\\n"
+"\\n"
+"Některé soubory mohou poškodit váš počítač. Ujistěte se, že víte jaký soubor spouštíte."
 
 #: string;16385
 msgid "You are about to modify the metadata of %i files, are you sure you want to continue?"
@@ -5810,16 +6108,38 @@ msgid "The file \"%s\" has not yet been hashed. Please wait for the file to be h
 msgstr "Soubor \"%s\" ještě nemá hash. Prosím čekejte než bude pro soubor vypočítán hash, a potom to zkuste znovu."
 
 #: string;16388
-msgid "This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n\\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database. If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n\\nWould you like to proceed?"
-msgstr "Tuto možnost využívá služba poskytovaná Bitzi.com která zjišťuje a sdílí informace o vybraných souborech.\\n\\nShareaza bude přenášet SHA1 hash pro označený soubor(y) v rámci dotazu poslaného databázi Bitzi. Pokud máte obavy o soukromí přečtěte si prohlášení Bitzi.com o ochraně osobních údajů.\\n\\nChcete pokračovat?"
+msgid ""
+"This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n"
+"\\n"
+"Shareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database. If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n"
+"\\n"
+"Would you like to proceed?"
+msgstr ""
+"Tuto možnost využívá služba poskytovaná Bitzi.com která zjišťuje a sdílí informace o vybraných souborech.\\n"
+"\\n"
+"Shareaza bude přenášet SHA1 hash pro označený soubor(y) v rámci dotazu poslaného databázi Bitzi. Pokud máte obavy o soukromí přečtěte si prohlášení Bitzi.com o ochraně osobních údajů.\\n"
+"\\n"
+"Chcete pokračovat?"
 
 #: string;16389
-msgid "Are you sure you want to permanently delete the %i selected file(s) ?\\n\\nThe files will be moved to your \"recycle bin\" if it is enabled."
-msgstr "Opravdu chcete trvale vymazat vybraný soubor(y) %i ?\\n\\nPokud to povolíte, soubory budou přesunuty do \"koše\" (pokud je povolený)."
+msgid ""
+"Are you sure you want to permanently delete the %i selected file(s) ?\\n"
+"\\n"
+"The files will be moved to your \"recycle bin\" if it is enabled."
+msgstr ""
+"Opravdu chcete trvale vymazat vybraný soubor(y) %i ?\\n"
+"\\n"
+"Pokud to povolíte, soubory budou přesunuty do \"koše\" (pokud je povolený)."
 
 #: string;16390
-msgid "You have not yet selected a media player to enqueue files with, such as Nullsoft Winamp. Would you like to select one now?\\n\\nShareaza will pass the name of the file to your selected program with the \"/ADD\" argument."
-msgstr "Ještě jste nevybrali přehrávač pro multimédiální soubory, jako např. Nullsoft WinAmp. Chcete přehrávač vybrat nyní?\\n\\nShareaza předá programu název souboru s parametrem \"/ADD\"."
+msgid ""
+"You have not yet selected a media player to enqueue files with, such as Nullsoft Winamp. Would you like to select one now?\\n"
+"\\n"
+"Shareaza will pass the name of the file to your selected program with the \"/ADD\" argument."
+msgstr ""
+"Ještě jste nevybrali přehrávač pro multimédiální soubory, jako např. Nullsoft WinAmp. Chcete přehrávač vybrat nyní?\\n"
+"\\n"
+"Shareaza předá programu název souboru s parametrem \"/ADD\"."
 
 #: string;16391
 msgid "You're not connected to the network."
@@ -5838,36 +6158,88 @@ msgid "Would you like to remove the \"potentially unsafe\" attribute from this f
 msgstr "Chcete odstranit \"potenciálně nebezpečnou\" vlastnist z tohoto souboru?"
 
 #: string;16395
-msgid "Your downloaded files folder \"%s\" is not yet in your library.\\n\\nIncluding your downloaded files folder in your library makes it easier to view and organise new downloads, and lets you take advantage of advanced Shareaza features such as download verification and automatic upgrading. Placing downloaded files in your library does not necessarily require you to share them: you can choose whether or not to share files independently.\\n\\nWould you like to add your downloaded files folder to your library now?"
-msgstr "Adresář se staženými soubory \"%s\" ještě není zařazen ve vaší knihovně.\\n\\nStažené soubory ve knihovně můžete snadněji prohlížet a třídit, a umožňuje využívat pokročilé funkce Shareazy: například ověření stahování a automatické aktualizace. Umístění stažených souborů v knihovně nevyžaduje nutně jejich sdílení: můžete si zvolit, zda budete nebo nebudete sdílet tyto soubory.\\n\\nChcete přidat stažené soubory do knihovny?"
+msgid ""
+"Your downloaded files folder \"%s\" is not yet in your library.\\n"
+"\\n"
+"Including your downloaded files folder in your library makes it easier to view and organise new downloads, and lets you take advantage of advanced Shareaza features such as download verification and automatic upgrading. Placing downloaded files in your library does not necessarily require you to share them: you can choose whether or not to share files independently.\\n"
+"\\n"
+"Would you like to add your downloaded files folder to your library now?"
+msgstr ""
+"Adresář se staženými soubory \"%s\" ještě není zařazen ve vaší knihovně.\\n"
+"\\n"
+"Stažené soubory ve knihovně můžete snadněji prohlížet a třídit, a umožňuje využívat pokročilé funkce Shareazy: například ověření stahování a automatické aktualizace. Umístění stažených souborů v knihovně nevyžaduje nutně jejich sdílení: můžete si zvolit, zda budete nebo nebudete sdílet tyto soubory.\\n"
+"\\n"
+"Chcete přidat stažené soubory do knihovny?"
 
 #: string;16396
 msgid "Your downloads folder has been added to your library. Would you like to share it too?"
 msgstr "Adresář se staženými soubory byl přidaný do složky v knihovně. Chcete jej také sdílet?"
 
 #: string;16397
-msgid "Are you sure you want to delete the %i selected album folder(s) ?\\n\\nNote that this action does not delete the files within the album folders, only the folders themselves."
-msgstr "Opravdu chcete vymazat %i označených složek s albem ?\\n\\nTato akce nevymaže samotné soubory uvnitř složek alba, ale jen složky."
+msgid ""
+"Are you sure you want to delete the %i selected album folder(s) ?\\n"
+"\\n"
+"Note that this action does not delete the files within the album folders, only the folders themselves."
+msgstr ""
+"Opravdu chcete vymazat %i označených složek s albem ?\\n"
+"\\n"
+"Tato akce nevymaže samotné soubory uvnitř složek alba, ale jen složky."
 
 #: string;16398
-msgid "Shareaza could not rename:\\n\\n%s\\nto\\n%s"
-msgstr "Shareaza nemohla přejmenovat:\\n\\n%s\\nna\\n%s"
+msgid ""
+"Shareaza could not rename:\\n"
+"\\n"
+"%s\\n"
+"to\\n"
+"%s"
+msgstr ""
+"Shareaza nemohla přejmenovat:\\n"
+"\\n"
+"%s\\n"
+"na\\n"
+"%s"
 
 #: string;16399
-msgid "Shareaza could not delete the file:\\n\\n%s"
-msgstr "Shareaza nemohla smazat soubor:\\n\\n%s"
+msgid ""
+"Shareaza could not delete the file:\\n"
+"\\n"
+"%s"
+msgstr ""
+"Shareaza nemohla smazat soubor:\\n"
+"\\n"
+"%s"
 
 #: string;16400
-msgid "Target file exists:\\n\\n%s\\n\\nWould you like to overwrite it?"
-msgstr "Cílový soubor již existuje:\\n\\n%s\\n\\nChcete jej přepsat?"
+msgid ""
+"Target file exists:\\n"
+"\\n"
+"%s\\n"
+"\\n"
+"Would you like to overwrite it?"
+msgstr ""
+"Cílový soubor již existuje:\\n"
+"\\n"
+"%s\\n"
+"\\n"
+"Chcete jej přepsat?"
 
 #: string;16401
 msgid "Show All File Types"
 msgstr "Zobrazit všecny typy souborů"
 
 #: string;16402
-msgid "Shareaza received a collection file:\\n\\n\"%s\"\\n\\nThis file does not appear to be a valid collection file."
-msgstr "Shareaza stáhla nový soubor se sbírkou:\\n\\n\"%s\"\\n\\nSoubor však nelze přečíst, pravděpodovně je poškozený."
+msgid ""
+"Shareaza received a collection file:\\n"
+"\\n"
+"\"%s\"\\n"
+"\\n"
+"This file does not appear to be a valid collection file."
+msgstr ""
+"Shareaza stáhla nový soubor se sbírkou:\\n"
+"\\n"
+"\"%s\"\\n"
+"\\n"
+"Soubor však nelze přečíst, pravděpodovně je poškozený."
 
 #: string;16403
 msgid "Shareaza has added the collection file \"%s\" to your library."
@@ -5878,8 +6250,14 @@ msgid "Shareaza was unable to install the collection file \"%s\" by copying it t
 msgstr "Shareaza nemůže instalovat soubor sbírky \"%s\" zkopírováním do složky \"%s\"."
 
 #: string;16406
-msgid "Would you like to download all files in this collection?\\n\\nChoose Cancel to stop any further prompts."
-msgstr "Chcete stáhnout všechny soubory v této sbírce?\\n\\nKliknutím na Zrušit zrušíte i všechny další výzvy."
+msgid ""
+"Would you like to download all files in this collection?\\n"
+"\\n"
+"Choose Cancel to stop any further prompts."
+msgstr ""
+"Chcete stáhnout všechny soubory v této sbírce?\\n"
+"\\n"
+"Kliknutím na Zrušit zrušíte i všechny další výzvy."
 
 #: string;16407
 msgid "Would you like to prevent this collection from prompting you to download anything else?"
@@ -5894,12 +6272,21 @@ msgid "Export &URIs..."
 msgstr "Export &URIs..."
 
 #: string;16410
-msgid "A subfolder of the selected folder \"%s\" is already part of your library.\\nAdding this folder will cause re-hashing of some files.\\n\\nDo you want to continue ?"
+msgid ""
+"A subfolder of the selected folder \"%s\" is already part of your library.\\n"
+"Adding this folder will cause re-hashing of some files.\\n"
+"\\n"
+"Do you want to continue ?"
 msgstr "Kompletní a neúplné složky by neměly být stejné"
 
 #: string;16411
-msgid "Unable to move the file %s. The file may be in use by another application.\\n\\nDo you wish to try to copy this file instead?"
-msgstr "Nelze přesunout soubor %s. Soubor možná používá jiná aplikace..\\n\\Chcete zkusit tento soubor zkopírovat?"
+msgid ""
+"Unable to move the file %s. The file may be in use by another application.\\n"
+"\\n"
+"Do you wish to try to copy this file instead?"
+msgstr ""
+"Nelze přesunout soubor %s. Soubor možná používá jiná aplikace..\\n"
+"\\Chcete zkusit tento soubor zkopírovat?"
 
 #: string;16412
 msgid "Ghost File"
@@ -6022,7 +6409,13 @@ msgid "Gnutella Packets Lost"
 msgstr "Ztracené pakety Gnutelly"
 
 #: string;16528
-msgid "Gnutella Local Queries"
+#, fuzzy
+msgid "Gnutella Incoming Queries"
+msgstr "Místní dotazy Gnutelly"
+
+#: string;16529
+#, fuzzy
+msgid "Gnutella Processed Queries"
 msgstr "Místní dotazy Gnutelly"
 
 #: string;16532
@@ -6126,20 +6519,47 @@ msgid "You have not specified any folders to share. Are you sure?"
 msgstr "Nezadali jste žádné složky ke sdílení. Opravdu nechcete nic sdílet?"
 
 #: string;16803
-msgid "The folder you are sharing is already shared as part of another shared folder:\\n\\n%s"
-msgstr "Část složky je již sdílená jako další sdílený podadresář\\n\\n%s"
+msgid ""
+"The folder you are sharing is already shared as part of another shared folder:\\n"
+"\\n"
+"%s"
+msgstr ""
+"Část složky je již sdílená jako další sdílený podadresář\\n"
+"\\n"
+"%s"
 
 #: string;16804
 msgid "You haven't entered a screen name in your user profile."
-msgstr "Nezadali jste přezdívku ve vašem profilu uživatele.\\n\\nJe dobré zadat alespoň přezdívku, aby ostatí uživatelé mohli vidět kdo se k nim připojil.\\n\\nOpravdu chcete pokračovat bez zadání jména?"
+msgstr ""
+"Nezadali jste přezdívku ve vašem profilu uživatele.\\n"
+"\\n"
+"Je dobré zadat alespoň přezdívku, aby ostatí uživatelé mohli vidět kdo se k nim připojil.\\n"
+"\\n"
+"Opravdu chcete pokračovat bez zadání jména?"
 
 #: string;16805
-msgid "You haven't entered your location in your user profile.\\n\\nIt's a good idea to enter your location so that other users can see which country you are from. Note that entering a location does not reveal any compromising information.\\n\\nAre you sure you want to continue without entering your location?"
-msgstr "Zadejte ve vašem uživatelském profilu umístění vašeho počítače.\\n\\nJe dobře zadat vaše umístění tak, aby ostatní uživatelé mohli vidět odkud pocházíte.\\n\\nOpravdu chcete pokračovat bez zadání vašeho umístění?"
+msgid ""
+"You haven't entered your location in your user profile.\\n"
+"\\n"
+"It's a good idea to enter your location so that other users can see which country you are from. Note that entering a location does not reveal any compromising information.\\n"
+"\\n"
+"Are you sure you want to continue without entering your location?"
+msgstr ""
+"Zadejte ve vašem uživatelském profilu umístění vašeho počítače.\\n"
+"\\n"
+"Je dobře zadat vaše umístění tak, aby ostatní uživatelé mohli vidět odkud pocházíte.\\n"
+"\\n"
+"Opravdu chcete pokračovat bez zadání vašeho umístění?"
 
 #: string;16806
-msgid "Shareaza was unable to set up port-forwarding on your NAT router or firewall.\\n\\nPlease configure your network to forward TCP and UDP ports %i to your local PC."
-msgstr "Zadali jste že chcete nastavit přenosový port na vašem firewallu nebo routeru.\\n\\nProsím nastavte si přenos vaší sítě na port TCP %i ve vašem počítači."
+msgid ""
+"Shareaza was unable to set up port-forwarding on your NAT router or firewall.\\n"
+"\\n"
+"Please configure your network to forward TCP and UDP ports %i to your local PC."
+msgstr ""
+"Zadali jste že chcete nastavit přenosový port na vašem firewallu nebo routeru.\\n"
+"\\n"
+"Prosím nastavte si přenos vaší sítě na port TCP %i ve vašem počítači."
 
 #: string;16807
 msgid "Please type the bandwidth limit you wish to set in the form \"123 kb/s\" for kilobits per second, or \"123 KB/s\" for kilobytes per second."
@@ -6175,16 +6595,28 @@ msgid "Please wait: Updating eDonkey server list..."
 msgstr "Prosím čekejte, aktualizuji seznam eDonkey serverů..."
 
 #: string;16815
-msgid "UPnP Device Host Service is not running. This service is required to perform the setup.\\nYou need to set the startup type of the service to automatic."
-msgstr "Služba UPnP zařízení není spuštěna. Tato služba je nutná pro nastavení zařízení.\\nNastavte typ spouštění této služby na automatický."
+msgid ""
+"UPnP Device Host Service is not running. This service is required to perform the setup.\\n"
+"You need to set the startup type of the service to automatic."
+msgstr ""
+"Služba UPnP zařízení není spuštěna. Tato služba je nutná pro nastavení zařízení.\\n"
+"Nastavte typ spouštění této služby na automatický."
 
 #: string;16816
-msgid "The eDonkey network uses large queues with long wait times. By limiting the maximum queue position you will accept so strictly, you may have trouble getting downloads to begin.\\nAre you sure you want to limit what queue positions you will accept?"
-msgstr "Síť eDonkey používá velké fronty a dlouhé čekání. Striktní omezení délky fronty může způsobit problém se stahováním souborů.\\nOpravdu chcete omezit délku fronty?"
+msgid ""
+"The eDonkey network uses large queues with long wait times. By limiting the maximum queue position you will accept so strictly, you may have trouble getting downloads to begin.\\n"
+"Are you sure you want to limit what queue positions you will accept?"
+msgstr ""
+"Síť eDonkey používá velké fronty a dlouhé čekání. Striktní omezení délky fronty může způsobit problém se stahováním souborů.\\n"
+"Opravdu chcete omezit délku fronty?"
 
 #: string;16817
-msgid "Windows doesn't support paths longer than 256 characters.\\nPlease select a folder with a shorter path."
-msgstr "Windows nepodporuje cesty pro soubory delší než 256 znaků.\\nProsím vyberte složku s kratší cestou."
+msgid ""
+"Windows doesn't support paths longer than 256 characters.\\n"
+"Please select a folder with a shorter path."
+msgstr ""
+"Windows nepodporuje cesty pro soubory delší než 256 znaků.\\n"
+"Prosím vyberte složku s kratší cestou."
 
 #: string;16818
 msgid "The complete and incomplete folders should not be the same"
@@ -6294,10 +6726,6 @@ msgstr "Shareaza Media Player"
 msgid "Shareaza could not instantiate its MediaServices plugin. Please reinstall Shareaza, and confirm that you have the necessary media codecs and output drivers installed."
 msgstr "Shareaza nemůže použít plugin pro MediaServices. Prosím nainstalujte znovu Shareazu, a zkontrolujte že máte také nainstalované potřebné kodetky a ovladače."
 
-#: string;16993
-msgid "All Media Files|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Playlists|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Audio Files|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|Video Files|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|CD Audio Tracks|*.cda|MIDI Files|*.mid;*.rmi;*.midi|All Files|*.*||"
-msgstr "Všechny multimediální soubory|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Playlisty|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Audio soubory|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|Video soubory|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|CD stopy|*.cda|MIDI soubory|*.mid;*.rmi;*.midi|Všechny soubory|*.*||"
-
 #: string;16994
 msgid "Unable to load media file \"%s\""
 msgstr "Nelze načíst multimediální soubor \"%s\""
@@ -6326,11 +6754,11 @@ msgstr "P L A Y L I S T"
 msgid "Send:"
 msgstr ""
 
-#: string;17018
+#: string;17018 string;19103
 msgid "Welcome to Shareaza Chat!"
 msgstr ""
 
-#: string;17019
+#: string;17019 string;19104
 msgid "Please respect others while using this service"
 msgstr ""
 
@@ -6415,8 +6843,14 @@ msgid "Cannot send message, a connection has not been established yet."
 msgstr "Nelze poslat zprávu, spojení ještě nebylo navázáno."
 
 #: string;17042
-msgid "You have not yet filled in your user profile. You must provide a profile before you can chat with other users.\\n\\nWould you like to fill in your profile now?"
-msgstr "Ještě jste nevyplnili váš profil uživatele. Nejprve musíte poskytnout váš profil, teprve potom si můžete povídat s dalšími uživateli.\\n\\nChcete hned vyplnit váš profil?"
+msgid ""
+"You have not yet filled in your user profile. You must provide a profile before you can chat with other users.\\n"
+"\\n"
+"Would you like to fill in your profile now?"
+msgstr ""
+"Ještě jste nevyplnili váš profil uživatele. Nejprve musíte poskytnout váš profil, teprve potom si můžete povídat s dalšími uživateli.\\n"
+"\\n"
+"Chcete hned vyplnit váš profil?"
 
 #: string;17043
 msgid "Granted upload priority to host %s."
@@ -6706,6 +7140,11 @@ msgstr "Připojení BitTorrent se %s požaduje neznámý soubor."
 msgid "BitTorrent coupling with %s established for \"%s\"."
 msgstr "BitTorrent je připojen s %s ustanovený pro \"%s\"."
 
+#: string;17480
+#, fuzzy
+msgid "BitTorrent coupling with %s requested an inactive file."
+msgstr "Připojení BitTorrent se %s požaduje neznámý soubor."
+
 #: string;17481
 msgid "Received BitTorrent descriptor file: \"%s\""
 msgstr "BitTorrent přijal klíčový soubor: \"%s\""
@@ -6735,8 +7174,14 @@ msgid "Established BitTorrent coupling with %s, handshaking..."
 msgstr "Založení BitTorrent spojení s %s, přihlašuji se..."
 
 #: string;17488
-msgid "You have changed the tracker URL for this torrent. Are you sure you want to save this change?\\n\\nAn invalid tracker URL may prevent further downloading."
-msgstr "Změnili jste adresu URL pro tento torrent. Opravdu chcete uložit tuto změnu?\\n\\nNesprávná adresa URL může zabránit dalšímu stahování."
+msgid ""
+"You have changed the tracker URL for this torrent. Are you sure you want to save this change?\\n"
+"\\n"
+"An invalid tracker URL may prevent further downloading."
+msgstr ""
+"Změnili jste adresu URL pro tento torrent. Opravdu chcete uložit tuto změnu?\\n"
+"\\n"
+"Nesprávná adresa URL může zabránit dalšímu stahování."
 
 #: string;17489
 msgid "BitTorrent coupling with %s is extended protocol, identified \"%s\"."
@@ -6759,7 +7204,8 @@ msgid "Unable to create BitTorrent share file \"%s\"."
 msgstr "Nelze vytvořit sdílení BitTorrent souboru \"%s\"."
 
 #: string;17494
-msgid "This torrent includes the file \"%s\", but Shareaza cannot find this file in your library. If possible, move the file to the same folder as the torrent and try again."
+#, fuzzy
+msgid "This torrent includes the file \"%s\", but Shareaza cannot find this file in your library. If possible, move the file to a shared folder and try again."
 msgstr "Tento torrent obsahuje soubor \"%s\", ale Shareaza nemůže tento soubor najít ve vaší knihovně. Pokud možno, přesuňte soubor do stejné složky jako torrent a zkuste to znovu."
 
 #: string;17495
@@ -6778,16 +7224,13 @@ msgstr "Vyskytla se neznámá chyba během pokusu o sdílení \"%s\"."
 msgid "An error was detected in the file \"%s\"."
 msgstr "Byla objevena chyba v souboru \"%s\"."
 
-#: string;17500
-msgid "Tracker did not respond- Retrying announce (%i of %i)"
-msgstr "Tracker neodpovídá- Opakuji spojení (%i z %i)"
-
 #: string;17501
 msgid "Unable to communicate with tracker"
 msgstr "Není možné komunikovat s trackerem"
 
 #: string;17503
-msgid "Tracker failed- Trying next tracker (%i of %i)"
+#, fuzzy
+msgid "Trying next tracker (%i of %i)"
 msgstr "Tracker failed- Zkouším další tracker (%i z %i)"
 
 #: string;17505
@@ -6830,30 +7273,6 @@ msgstr ""
 msgid "You have made changes to the name field. Are you sure you want to rename this download?"
 msgstr "Provedli jste změny v názvu. Opravdu chcete přejmenovat toto stahování?"
 
-#: string;18497
-msgid "You have typed a SHA1 value, however it is invalid. Please check it and try again."
-msgstr "Zadali jste hodnotu SHA1, ale je nesprávná. Prosím zkontrolujte to a zkuste znovu."
-
-#: string;18498
-msgid "You have typed a root tiger-tree value, however it is invalid. Please check it and try again."
-msgstr "Zadali jste v kořenovém stromu hodnotu, ale ta je nesprávná. Prosím překontrolujte to a zkuste znovu."
-
-#: string;18499
-msgid "You have typed an eDonkey hash value, however it is invalid. Please check it and try again."
-msgstr "Zadali jste eDonkey hash, který je nesprávný. Prosím překontrolujte to a zkuste znovu."
-
-#: string;18500
-msgid "You have provided a SHA1 hash value which is different to the one currently associated with this download. Are you sure you want to change the SHA1 hash now?"
-msgstr "Zadali jste hodnotu SHA1 hash která je odlišná od aktuální hodnoty. Opravdu teď chcete změnit SHA1 hash?"
-
-#: string;18501
-msgid "You have provided a root tiger-tree hash value which is different to the one currently associated with this download. Are you sure you want to change the tiger-tree root hash now?"
-msgstr "Zadali jste hodnotu tiger-tree hash která je odlišná od aktuální hodnoty. Opravdu teď chcete změnit tiger-tree hash?"
-
-#: string;18502
-msgid "You have provided an eDonkey hash value which is different to the one currently associated with this download. Are you sure you want to change the eDonkey hash now?"
-msgstr "Zadali jste hodnotu eDonkey hash která je odlišná od aktuální hodnoty. Opravdu teď chcete změnit eDonkey hash?"
-
 #: string;18503
 msgid "Are you sure you want to forget the current verification status? All downloaded data will be treated as untrusted, and cached hashtrees and hashsets will be flushed."
 msgstr "Opravdu chcete zapomenout aktuální stav ověření? Všechna stažená data budou považována za nedůvěryhodná, a všechny dočasné ověřovací hash budou vymazány."
@@ -6890,6 +7309,21 @@ msgstr "Checete označit tento soubor jako kompletní a ověřit jej? Celý soub
 msgid "You have made changes to the file size. Are you sure you want to change the file size for this download?"
 msgstr "Změnili jste velikost souboru. Opravdu chcete změnit velikost tohoto souboru?"
 
+#: string;18512
+#, fuzzy
+msgid "Are you sure you want to cancel this download but save incomplete file(s)?"
+msgstr "Opravdu chcete zrušit/přerušit všechna stahování v této skupině?"
+
+#: string;18513
+#, fuzzy
+msgid "You have typed an %s hash value, however it is invalid. Please check it and try again."
+msgstr "Zadali jste eDonkey hash, který je nesprávný. Prosím překontrolujte to a zkuste znovu."
+
+#: string;18514
+#, fuzzy
+msgid "You have provided an %s hash value which is different to the one currently associated with this download. Are you sure you want to change the %s hash now?"
+msgstr "Zadali jste hodnotu SHA1 hash která je odlišná od aktuální hodnoty. Opravdu teď chcete změnit SHA1 hash?"
+
 #: string;19000
 msgid "Remote access is disabled."
 msgstr "Vzdálený přístup je vypnutý."
@@ -6902,6 +7336,11 @@ msgstr "Musíte zadat uživatelské jméno a heslo."
 msgid "Unable to accept connections, URL unavailable."
 msgstr "Nelze přijmout spojení, URL je nedostupné."
 
+#: string;19105
+#, fuzzy
+msgid "Chat!"
+msgstr "Pokec"
+
 #: string;20000
 msgid "No URN available"
 msgstr "Žadné URN není dostupné"
@@ -6911,8 +7350,10 @@ msgid "of (e.g. 1 of 10)"
 msgstr "z"
 
 #: string;20003
-msgid "Changing interface direction requires restart. \\nYou will need to start Shareaza manually. Exit now?"
-msgstr "Změna směru vyžaduje restart. \\nBudete muset spustit Shareazu ručně. Ukončit?"
+msgid ""
+"Changing language requires application restart.\\n"
+"Restart now?"
+msgstr ""
 
 #: string;20005
 msgid "No"
@@ -6946,9 +7387,24 @@ msgstr "&Vpřed"
 msgid "Finish"
 msgstr "Ukončit"
 
-#: string;20013 cscheduletaskdlg;control;14 cfolderpropertiesdlg;control;5
+#: string;20013 cfolderpropertiesdlg;control;5
 msgid "All"
 msgstr "All"
+
+#: string;20014
+#, fuzzy
+msgid ""
+"This option uses services provided by ShareMonkey.com for recognising information about selected files.\\n"
+"\\n"
+"Shareaza will transmit file details and your location in order to query the ShareMonkey database.  If you are concerned about privacy, you may wish to consult the ShareMonkey.com privacy policy.\\n"
+"\\n"
+"Would you like to proceed?"
+msgstr ""
+"Tuto možnost využívá služba poskytovaná Bitzi.com která zjišťuje a sdílí informace o vybraných souborech.\\n"
+"\\n"
+"Shareaza bude přenášet SHA1 hash pro označený soubor(y) v rámci dotazu poslaného databázi Bitzi. Pokud máte obavy o soukromí přečtěte si prohlášení Bitzi.com o ochraně osobních údajů.\\n"
+"\\n"
+"Chcete pokračovat?"
 
 #: string;20101
 msgid "Requesting"
@@ -7078,34 +7534,6 @@ msgstr "ve frontě"
 msgid "sources (e.g. 3/10 sources)"
 msgstr "zdrojů"
 
-#: string;20200 cscheduletaskdlg;control;7
-msgid "Sunday"
-msgstr "Neděle"
-
-#: string;20201 cscheduletaskdlg;control;8
-msgid "Monday"
-msgstr "Pondělí"
-
-#: string;20202 cscheduletaskdlg;control;9
-msgid "Tuesday"
-msgstr "Úterý"
-
-#: string;20203 cscheduletaskdlg;control;10
-msgid "Wednesday"
-msgstr "Středa"
-
-#: string;20204 cscheduletaskdlg;control;11
-msgid "Thursday"
-msgstr "Čtvrtek"
-
-#: string;20205
-msgid "Friday"
-msgstr "Pátek"
-
-#: string;20206 cscheduletaskdlg;control;13
-msgid "Saturday"
-msgstr "Sobota"
-
 #: string;20210
 msgid "(No Rating)"
 msgstr "(Není žádné hodnocení)"
@@ -7166,34 +7594,33 @@ msgstr "Autor"
 msgid "Rating"
 msgstr "Hodnocení"
 
-#: string;20237 csettingsheet;control;2 cscheduletaskdlg;control;1
-#: cqueuepropertiesdlg;control;37 cprofilemanagerdlg;control;2
-#: csavefilterasdlg;control;2 cdiscoveryservicedlg;control;5
-#: cfilecopydlg;control;4 cfolderpropertiesdlg;control;7
-#: cgraphlistdlg;control;16 cgraphitemdlg;control;1
-#: cschemacolumnsdlg;control;3 csecureruledlg;control;33
-#: csharemanagerdlg;control;5 cpromotedlg;control;7 cexistingfiledlg;control;8
-#: cclosemodedlg;control;5 cdonkeyserversdlg;control;4
-#: cdownloadgroupdlg;control;1 cmediavisdlg;control;5
-#: cdownloadreviewdlg;control;1 cdecodemetadatadlg;control;8
-#: circinputdlg;control;2
+#: string;20237 csettingsheet;control;2 cqueuepropertiesdlg;control;37
+#: cprofilemanagerdlg;control;2 csavefilterasdlg;control;2
+#: cdiscoveryservicedlg;control;5 cfilecopydlg;control;4
+#: cfolderpropertiesdlg;control;7 cgraphlistdlg;control;16
+#: cgraphitemdlg;control;1 cschemacolumnsdlg;control;3
+#: csecureruledlg;control;33 csharemanagerdlg;control;5 cpromotedlg;control;7
+#: cexistingfiledlg;control;8 cclosemodedlg;control;5
+#: cdonkeyserversdlg;control;4 cdownloadgroupdlg;control;1
+#: cmediavisdlg;control;5 cdownloadreviewdlg;control;1
+#: cdecodemetadatadlg;control;8 circinputdlg;control;2
 msgid "OK"
 msgstr "OK"
 
-#: string;20238 csettingsheet;control;3 cscheduletaskdlg;control;2
-#: cqueuepropertiesdlg;control;38 cprofilemanagerdlg;control;3
-#: cconnecttodlg;control;8 cdownloaddlg;control;5 cnewsearchdlg;control;4
-#: cfiltersearchdlg;control;30 csavefilterasdlg;control;3
-#: cdiscoveryservicedlg;control;6 cfilecopydlg;control;5
-#: cfolderpropertiesdlg;control;8 cgraphlistdlg;control;17
-#: cgraphitemdlg;control;2 cschemacolumnsdlg;control;4
-#: csecureruledlg;control;34 csharemanagerdlg;control;6 curlcopydlg;control;6
-#: curlexportdlg;control;10 curlactiondlg;control;11
-#: cbitzidownloaddlg;control;4 cfilepreviewdlg;control;6
-#: cexistingfiledlg;control;9 cclosemodedlg;control;6
-#: cdonkeyserversdlg;control;5 cdeletefiledlg;control;5
-#: ctorrentseeddlg;control;4 cdownloadgroupdlg;control;2
-#: cmediavisdlg;control;6 cdecodemetadatadlg;control;9 circinputdlg;control;3
+#: string;20238 csettingsheet;control;3 cqueuepropertiesdlg;control;38
+#: cprofilemanagerdlg;control;3 cconnecttodlg;control;8 cdownloaddlg;control;5
+#: cnewsearchdlg;control;4 cfiltersearchdlg;control;30
+#: csavefilterasdlg;control;3 cdiscoveryservicedlg;control;6
+#: cfilecopydlg;control;5 cfolderpropertiesdlg;control;8
+#: cgraphlistdlg;control;17 cgraphitemdlg;control;2
+#: cschemacolumnsdlg;control;4 csecureruledlg;control;34
+#: csharemanagerdlg;control;6 curlcopydlg;control;6 curlexportdlg;control;10
+#: curlactiondlg;control;11 cbitzidownloaddlg;control;4
+#: cfilepreviewdlg;control;6 cexistingfiledlg;control;9
+#: cclosemodedlg;control;6 cdonkeyserversdlg;control;5
+#: cdeletefiledlg;control;5 ctorrentseeddlg;control;4
+#: cdownloadgroupdlg;control;2 cmediavisdlg;control;6
+#: cdecodemetadatadlg;control;9 circinputdlg;control;3
 msgid "Cancel"
 msgstr "Zrušit"
 
@@ -7225,16 +7652,106 @@ msgstr ""
 msgid "New Folder"
 msgstr ""
 
-#: string;32825
-msgid "Open my folder of completed Downloads"
+#: string;20246
+msgid ""
+"Command-line options:\\n"
+"\\n"
+"-tray : Disable startup splash screen and send application to tray\\n"
+"-nosplash : Disable startup splash screen\\n"
+"-nowarn : Disable alpha (daily builds) version warning dialog\\n"
+"-wait : Wait for other application instance exit\\n"
+"\\n"
+"Interface modes:\\n"
+"\\n"
+"-basic : Start application in Basic interface mode\\n"
+"-tabbed : Start application in Tabbed interface mode\\n"
+"-windowed : Start application in Windowed interface mode\\n"
+"\\n"
+"System options:\\n"
+"\\n"
+"-RegServer : Register internal components for everyone\\n"
+"-UnRegServer : Un-register internal components for everyone\\n"
+"-RegServerPerUser : Register internal components for current user\\n"
+"-UnRegServerPerUser : Un-register internal components for current user"
 msgstr ""
 
-#: string;32773
-msgid "Check for new version"
+#: string;20247
+msgid "Failed to load metadata schemas. Please reinstall application."
 msgstr ""
 
-#: string;61215
-msgid "Activate this window"
+#: string;20248
+#, fuzzy
+msgid "You selected %u files. Are you sure?"
+msgstr "Nezadali jste žádné složky ke sdílení. Opravdu nechcete nic sdílet?"
+
+#: string;20249
+msgid "Off"
+msgstr ""
+
+#: string;20250
+msgid "Low"
+msgstr ""
+
+#: string;20251
+#, fuzzy
+msgid "Normal"
+msgstr "_Normální režim"
+
+#: string;20252
+msgid "High"
+msgstr ""
+
+#: string;20253
+msgid "Skin load error: %s. Element: %s"
+msgstr ""
+
+#: string;20254
+msgid "Loading skin: %s"
+msgstr ""
+
+#: string;20255
+msgid "Are you sure you want to remove all scheduled tasks? This cannot be undone."
+msgstr ""
+
+#: string;20256
+#, fuzzy
+msgid "System: Start Shareaza"
+msgstr "Hledat v Shareaze"
+
+#: string;20257
+msgid "Bandwidth: Full Speed"
+msgstr ""
+
+#: string;20258
+msgid "Bandwidth: Reduced Speed"
+msgstr ""
+
+#: string;20259
+msgid "Bandwidth: Stop"
+msgstr ""
+
+#: string;20260
+msgid "System: Exit Shareaza"
+msgstr ""
+
+#: string;20261
+msgid "System: Disconnect Dial-up Connection"
+msgstr ""
+
+#: string;20262
+msgid "System: Turn Off the Computer"
+msgstr ""
+
+#: string;20265
+msgid "Done"
+msgstr ""
+
+#: string;20266
+msgid "Waiting..."
+msgstr ""
+
+#: string;20267
+msgid "No Tasks Currently Scheduled"
 msgstr ""
 
 #: csettingsheet;control;4 cprofilemanagerdlg;control;4
@@ -7379,7 +7896,7 @@ msgid "_Safe to Open:"
 msgstr "Bezpečné soubory:"
 
 #: clibrarysettingspage;control;18 clibrarysettingspage;control;22
-#: cmediasettingspage;control;7 cwebsettingspage;control;11
+#: cmediasettingspage;control;7 cwebsettingspage;control;12
 #: cfilesourcespage;control;5 cdownloadgroupdlg;control;7
 msgid "_Add"
 msgstr "Přid_at"
@@ -7569,14 +8086,18 @@ msgid "BitTorrent ( .torrent )"
 msgstr "BitTorrent (.torrent)"
 
 #: cwebsettingspage;control;8
+msgid "DC++ ( dchub: )"
+msgstr ""
+
+#: cwebsettingspage;control;9
 msgid "_Download Manager:"
 msgstr "_Správce stahování:"
 
-#: cwebsettingspage;control;9
+#: cwebsettingspage;control;10
 msgid "Use Shareaza to manage all my web downloads:"
 msgstr "Používat Shareazu pro všechna stahování z webu:"
 
-#: cwebsettingspage;control;13
+#: cwebsettingspage;control;14
 msgid "The download manager plugin will only attempt to download file types listed here.  Other file types will be handled by your web browser.  Shareaza must be running to manage downloads."
 msgstr "Plugin správce stahování se bude pokoušet stahovat jen soubory ze seznamu vlevo. Ostatní typy souborů budou stahovány webovým prohlížečem. Správce stahování je aktivní pouze pokud je Shareaza spuštěna."
 
@@ -7625,15 +8146,22 @@ msgid "Handshake:"
 msgstr "Navázání spojení:"
 
 #: cdownloadssettingspage;control;1
-msgid "Save _Completed Files Here:"
+#, fuzzy
+msgid "Save Completed Files Here"
 msgstr "Ukládat _dokončené soubory do:"
 
 #: cdownloadssettingspage;control;4
-msgid "Store Temporary _Incomplete Files Here:"
-msgstr "Ukládat _neúplné soubory do:"
+msgid "Scan every completed file with AntiVirus"
+msgstr ""
+
+#: cdownloadssettingspage;control;5
+#, fuzzy
+msgid "Select AntiVirus:"
+msgstr "Select preset:"
 
 #: cdownloadssettingspage;control;7
-msgid "_Number of Downloads:"
+#, fuzzy
+msgid "Number of Downloads"
 msgstr "Počet _stahovaných souborů:"
 
 #: cdownloadssettingspage;control;8
@@ -7649,7 +8177,8 @@ msgid "Transfers per File:"
 msgstr "Přenosy na soubor:"
 
 #: cdownloadssettingspage;control;17
-msgid "_Limits:"
+#, fuzzy
+msgid "Limits"
 msgstr "_Limity:"
 
 #: cdownloadssettingspage;control;18
@@ -7660,9 +8189,14 @@ msgstr "Celková šířka pásma stahování:"
 msgid "Maximum Queue Length:"
 msgstr "Maximální délka fronty:"
 
-#: cdownloadssettingspage;control;23
+#: cdownloadssettingspage;control;22
 msgid "Only download and upload to networks which are connected."
 msgstr "Stahovat a odesílat pouze ze sítí, které jsou připojené."
+
+#: cdownloadssettingspage;control;23
+#, fuzzy
+msgid "Store Temporary Incomplete Files Here"
+msgstr "Ukládat _neúplné soubory do:"
 
 #: cuploadssettingspage;control;2
 msgid "Share NEW partial downloads"
@@ -7760,71 +8294,7 @@ msgstr "Zadejte login:"
 msgid "Choose a Password:"
 msgstr "Zadejte heslo:"
 
-#: dialog;cscheduletaskdlg
-msgid "Schedule Item"
-msgstr ""
-
-#: cscheduletaskdlg;control;3
-msgid "Only once"
-msgstr ""
-
-#: cscheduletaskdlg;control;4
-msgid "On specific day(s) of week"
-msgstr ""
-
-#: cscheduletaskdlg;control;12
-msgid " Friday"
-msgstr ""
-
-#: cscheduletaskdlg;control;22
-msgid " _Toggle bandwidth independently"
-msgstr ""
-
-#: cscheduletaskdlg;control;23
-msgid " _Limit network to Gnutella2"
-msgstr ""
-
-#: cscheduletaskdlg;control;25
-msgid "Make this event active"
-msgstr ""
-
-#: cscheduletaskdlg;control;26
-msgid "Please select a date:"
-msgstr ""
-
-#: cscheduletaskdlg;control;27
-msgid "Please select a time:"
-msgstr ""
-
-#: cscheduletaskdlg;control;28
-msgid "Select the event type:"
-msgstr ""
-
-#: cscheduletaskdlg;control;29
-msgid "Description: (optional)"
-msgstr ""
-
-#: cscheduletaskdlg;control;30
-msgid "% of _bandwidth under limit"
-msgstr ""
-
-#: cscheduletaskdlg;control;31
-msgid "% of _download under limit"
-msgstr ""
-
-#: cscheduletaskdlg;control;32
-msgid "% of _upload under limit"
-msgstr ""
-
-#: cscheduletaskdlg;control;33
-msgid "Days Of Week"
-msgstr ""
-
-#: cscheduletaskdlg;control;34
-msgid "Run this event"
-msgstr ""
-
-#: dialog;cnetworkssettingspage
+#: dialog;cnetworkssettingspage cscheduletaskpage;control;16
 msgid "Networks"
 msgstr "Sítě"
 
@@ -8020,7 +8490,7 @@ msgstr "Stáhnout seznam serverů eDonkey z webu:"
 msgid "Download..."
 msgstr "Stáhnout..."
 
-#: dialog;cbittorrentsettingspage
+#: dialog;cbittorrentsettingspage cscheduletaskpage;control;12
 msgid "BitTorrent"
 msgstr "BitTorrent"
 
@@ -9565,6 +10035,31 @@ msgstr "Channel Name|Why reason"
 msgid "Enter channel you want to add:|Enter kick/ban reason:"
 msgstr "Add a channel name:|Enter kick/ban reason:"
 
+#: dialog;cscheduletaskpage column;action
+msgid "Action"
+msgstr "Akce"
+
+#: cscheduletaskpage;control;10
+#, fuzzy
+msgid "eDoonkey2K"
+msgstr "eDonkey"
+
+#: cscheduletaskpage;control;13
+msgid "Select the event type:"
+msgstr ""
+
+#: cscheduletaskpage;control;14
+msgid "% of _download under limit"
+msgstr ""
+
+#: cscheduletaskpage;control;15
+msgid "% of _upload under limit"
+msgstr ""
+
+#: cscheduletaskpage;control;17 column;bandwidth
+msgid "Bandwidth"
+msgstr "Šířka pásma"
+
 #: column;file
 msgid "File"
 msgstr "Soubor"
@@ -9629,10 +10124,6 @@ msgstr "Čas"
 msgid "Packets"
 msgstr "Pakety"
 
-#: column;bandwidth
-msgid "Bandwidth"
-msgstr "Šířka pásma"
-
 #: column;total
 msgid "Total"
 msgstr "Celkem"
@@ -9652,10 +10143,6 @@ msgstr "Režim"
 #: column;address/content
 msgid "Address/Content"
 msgstr "Adresa / Obsah"
-
-#: column;action
-msgid "Action"
-msgstr "Akce"
 
 #: column;expires
 msgid "Expires"
@@ -9780,3 +10267,55 @@ msgstr "Uživatel"
 #: column;comments
 msgid "Comments"
 msgstr "Poznámky"
+
+#: column;trigger
+#, fuzzy
+msgid "Trigger"
+msgstr "TigerTree"
+
+#: column;nextrun
+#, fuzzy
+msgid "NextRun"
+msgstr "Další"
+
+#~ msgid "_Play Album"
+#~ msgstr "_Přehrát album"
+#~ msgid "This is a pre-release version of Shareaza, and the beta testing period has ended. Please download the full, official release from http://shareaza.sourceforge.net/."
+#~ msgstr "Toto je předběžně uvolněná verze Shareazy, beta testovací doba skončila. Prosím stáhněte si plnou oficiální verzi z http://shareaza.sourceforge.net/."
+#~ msgid "Torrent Information"
+#~ msgstr "Informace o torrentu"
+#~ msgid " to"
+#~ msgstr " do"
+#~ msgid "Volume uploaded:"
+#~ msgstr "Velikost odesílání:"
+#~ msgid "Disabling support for Gnutella-1 protocols may limit your search results, and if you are acting as a hub it may also impact upon the results of other users. Are you sure you want to do this?"
+#~ msgstr "Vyřazení podpory pro protokoly Gnutella-1 může omezit vaše hledávání výsledků, a pokud jednáte jako uzel, může mít také konflikt s výsledky ostatních uživatelů. Opravdu to chcete udělat?"
+#~ msgid "All Media Files|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Playlists|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Audio Files|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|Video Files|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|CD Audio Tracks|*.cda|MIDI Files|*.mid;*.rmi;*.midi|All Files|*.*||"
+#~ msgstr "Všechny multimediální soubory|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Playlisty|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Audio soubory|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|Video soubory|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|CD stopy|*.cda|MIDI soubory|*.mid;*.rmi;*.midi|Všechny soubory|*.*||"
+#~ msgid "Tracker did not respond- Retrying announce (%i of %i)"
+#~ msgstr "Tracker neodpovídá- Opakuji spojení (%i z %i)"
+#~ msgid "You have typed a SHA1 value, however it is invalid. Please check it and try again."
+#~ msgstr "Zadali jste hodnotu SHA1, ale je nesprávná. Prosím zkontrolujte to a zkuste znovu."
+#~ msgid "You have typed a root tiger-tree value, however it is invalid. Please check it and try again."
+#~ msgstr "Zadali jste v kořenovém stromu hodnotu, ale ta je nesprávná. Prosím překontrolujte to a zkuste znovu."
+#~ msgid "You have provided a root tiger-tree hash value which is different to the one currently associated with this download. Are you sure you want to change the tiger-tree root hash now?"
+#~ msgstr "Zadali jste hodnotu tiger-tree hash která je odlišná od aktuální hodnoty. Opravdu teď chcete změnit tiger-tree hash?"
+#~ msgid "You have provided an eDonkey hash value which is different to the one currently associated with this download. Are you sure you want to change the eDonkey hash now?"
+#~ msgstr "Zadali jste hodnotu eDonkey hash která je odlišná od aktuální hodnoty. Opravdu teď chcete změnit eDonkey hash?"
+#~ msgid "Changing interface direction requires restart. \\nYou will need to start Shareaza manually. Exit now?"
+#~ msgstr "Změna směru vyžaduje restart. \\nBudete muset spustit Shareazu ručně. Ukončit?"
+#~ msgid "Sunday"
+#~ msgstr "Neděle"
+#~ msgid "Monday"
+#~ msgstr "Pondělí"
+#~ msgid "Tuesday"
+#~ msgstr "Úterý"
+#~ msgid "Wednesday"
+#~ msgstr "Středa"
+#~ msgid "Thursday"
+#~ msgstr "Čtvrtek"
+#~ msgid "Friday"
+#~ msgstr "Pátek"
+#~ msgid "Saturday"
+#~ msgstr "Sobota"
+

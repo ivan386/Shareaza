@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2010-05-27 12:52+0000\n"
+"POT-Creation-Date: 2010-11-16 14:53+0000\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Tom Seland\n"
+"Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -353,17 +353,21 @@ msgstr "Innstillinger"
 msgid "Configure IRC Settings"
 msgstr ""
 
-#: button;id_network_g2
+#: button;id_network_g2 cscheduletaskpage;control;9
 msgid "Gnutella2"
 msgstr "Gnutella2"
 
-#: button;id_network_g1
+#: button;id_network_g1 cscheduletaskpage;control;8
 msgid "Gnutella1"
 msgstr "Gnutella1"
 
 #: button;id_network_ed2k dialog;cdonkeysettingspage
 msgid "eDonkey"
 msgstr "eDonkey2000"
+
+#: button;id_network_dc cscheduletaskpage;control;11
+msgid "DC++"
+msgstr "DC++"
 
 #: button;id_network_connect_to button;id_hostcache_connect
 msgid "Connect To"
@@ -393,11 +397,11 @@ msgstr ""
 msgid "Reset List"
 msgstr ""
 
-#: button;id_security_import button;id_scheduler_import
+#: button;id_security_import
 msgid "Import List"
 msgstr ""
 
-#: button;id_security_export button;id_scheduler_export
+#: button;id_security_export
 msgid "Export List"
 msgstr ""
 
@@ -456,6 +460,10 @@ msgstr ""
 #: button;id_hostcache_kad_cache
 msgid "Kademlia Cache"
 msgstr ""
+
+#: button;id_hostcache_dc_cache
+msgid "DC++ Cache"
+msgstr "DC++ Cache"
 
 #: button;id_chat_bold
 msgid "B"
@@ -571,6 +579,12 @@ msgstr "Koble til Gnutella1"
 #: cmainwnd.windowed;18;19;item;id_network_ed2k
 msgid "Connect to _eDonkey"
 msgstr "Koble til eDonkey2000"
+
+#: cmainwnd.basic;1;2;item;id_network_dc
+#: cmainwnd.tabbed;9;10;item;id_network_dc
+#: cmainwnd.windowed;18;19;item;id_network_dc
+msgid "Connect to _DC++"
+msgstr "Connect to _DC++"
 
 #: cmainwnd.basic;1;item;id_network_auto_close
 #: cmainwnd.tabbed;9;item;id_network_auto_close
@@ -925,8 +939,8 @@ msgstr "Fanemodus"
 msgid "_Windowed Mode"
 msgstr "Vindumodus"
 
-#: cmainwnd.tabbed;13;item;idc_import_downloads
-#: cmainwnd.windowed;21;item;idc_import_downloads
+#: cmainwnd.tabbed;13;item;id_import_downloads
+#: cmainwnd.windowed;21;item;id_import_downloads
 msgid "_Import eMule partial downloads..."
 msgstr ""
 
@@ -1059,6 +1073,10 @@ msgstr ""
 #: chostcachewnd;28;item;id_hostcache_kad_cache
 msgid "_Kademlia Cache"
 msgstr ""
+
+#: chostcachewnd;28;item;id_hostcache_dc_cache
+msgid "_DC++ Cache"
+msgstr "_DC++ Cache"
 
 #: chostcachewnd;item;id_hostcache_import
 msgid "_Import MET File..."
@@ -1471,7 +1489,7 @@ msgstr "Delt"
 #: cschedulerwnd;item;id_scheduler_remove
 #: cdiscoverywnd;item;id_discovery_remove clibrarysettingspage;control;19
 #: clibrarysettingspage;control;23 cmediasettingspage;control;8
-#: cwebsettingspage;control;12 cwizardsharepage;control;6
+#: cwebsettingspage;control;13 cwizardsharepage;control;6
 #: cavatarprofilepage;control;6 cfilesourcespage;control;6
 #: cgraphlistdlg;control;4 cgraphitemdlg;control;12 csharemanagerdlg;control;4
 #: cdownloadgroupdlg;control;8
@@ -1508,7 +1526,8 @@ msgstr "Egenskaper"
 #: clibrarytree.virtual.basic;item;id_library_folder_enqueue
 #: clibrarytree.virtual;item;id_library_folder_enqueue
 #: clibraryfileview.virtual.basic;item;id_library_folder_enqueue
-msgid "_Play Album"
+#, fuzzy
+msgid "Play _Album"
 msgstr "Spill av..."
 
 #: clibrarytree.virtual.basic;item;id_library_folder_delete
@@ -1524,7 +1543,8 @@ msgstr "Slett"
 
 #: clibrarytree.virtual.basic;item;id_library_folder_properties
 #: clibrarytree.virtual;item;id_library_folder_properties
-msgid "_Album Properties"
+#, fuzzy
+msgid "Album _Properties"
 msgstr "Egenskaper"
 
 #: clibrarytree.virtual;item;id_library_export_collection
@@ -1805,6 +1825,10 @@ msgstr ""
 msgid "_eDonkey"
 msgstr ""
 
+#: cneighbourswnd;59;item;id_network_dc
+msgid "_DC++"
+msgstr "_DC++"
+
 #: cneighbourswnd;60
 msgid "_Monitor"
 msgstr ""
@@ -1853,11 +1877,11 @@ msgstr "Legg til regel..."
 msgid "Rese_t"
 msgstr "Oppdater"
 
-#: csecuritywnd;item;id_security_import cschedulerwnd;item;id_scheduler_import
+#: csecuritywnd;item;id_security_import
 msgid "_Import..."
 msgstr "Åpne..."
 
-#: csecuritywnd;item;id_security_export cschedulerwnd;item;id_scheduler_export
+#: csecuritywnd;item;id_security_export
 msgid "E_xport..."
 msgstr "Lagre..."
 
@@ -2103,10 +2127,11 @@ msgid "W A R N I N G   -   Y O U   A R E   F I R E W A L L E D"
 msgstr "M O D I F I S E R   S H A R E A Z A"
 
 #: chomeviewctrl;text;5001
+#, fuzzy
 msgid ""
 "Shareaza has detected that you are behind a NAT router or firewall,\n"
-"\t\t\tand are unable to receive connections from the Internet.  "
-msgstr ""
+"\t\t\t\tand are unable to receive connections from the Internet.  "
+msgstr "To open the folder with your downloads"
 
 #: chomeviewctrl;text;5002
 msgid "This may cause poor download and search performance."
@@ -2121,9 +2146,10 @@ msgid "W A R N I N G   -   Y O U R   T C P   P O R T   I S   F I R E W A L
 msgstr "M I N E   N E D L A S T I N G E R"
 
 #: chomeviewctrl;text;6001
+#, fuzzy
 msgid ""
 "Shareaza has detected that you are behind a NAT router or firewall,\n"
-"\t\t\tand are unable to receive TCP connections from the Internet.  "
+"\t\t\t\tand are unable to receive TCP connections from the Internet.  "
 msgstr "To open the folder with your downloads"
 
 #: chomeviewctrl;text;6002
@@ -2135,9 +2161,10 @@ msgid "W A R N I N G   -   Y O U R   U D P   P O R T   I S   F I R E W A L
 msgstr "F J E R N K O N S O L L E N   E R   P Å"
 
 #: chomeviewctrl;text;7001
+#, fuzzy
 msgid ""
 "Shareaza has detected that you are behind a NAT router or firewall,\n"
-"\t\t\tand are unable to receive UDP messages from the Internet.  "
+"\t\t\t\tand are unable to receive UDP messages from the Internet.  "
 msgstr "Shareaza Fjernkonsoll er skrudd på. Kjør og kontroller Shareaza med internettleseren din her:"
 
 #: chomeviewctrl;text;7002
@@ -2273,17 +2300,17 @@ msgid "Gnutella2:"
 msgstr "Gnutella2:"
 
 #: chomeconnectionbox;text;4 chomeconnectionbox;text;10
-#: chomeconnectionbox;text;16
+#: chomeconnectionbox;text;16 chomeconnectionbox;text;20
 msgid "Disconnected"
 msgstr "Ikke koblet til"
 
 #: chomeconnectionbox;text;5 chomeconnectionbox;text;11
-#: chomeconnectionbox;text;17 string;8070
+#: chomeconnectionbox;text;17 chomeconnectionbox;text;21 string;8070
 msgid "Connecting..."
 msgstr "Kobler til..."
 
 #: chomeconnectionbox;text;6 chomeconnectionbox;text;12
-#: chomeconnectionbox;text;18 string;8071
+#: chomeconnectionbox;text;18 chomeconnectionbox;text;22 string;8071
 msgid "Connected"
 msgstr "Koblet til"
 
@@ -2308,18 +2335,22 @@ msgid "eDonkey:"
 msgstr "Kobler til..."
 
 #: chomeconnectionbox;text;19
+msgid "DC++:"
+msgstr "DC++:"
+
+#: chomeconnectionbox;text;23
 msgid "You have been connected for"
 msgstr "timer og"
 
-#: chomeconnectionbox;text;20 chomeconnectionbox;text;22
+#: chomeconnectionbox;text;24 chomeconnectionbox;text;26
 msgid "%i"
 msgstr "%i"
 
-#: chomeconnectionbox;text;21
+#: chomeconnectionbox;text;25
 msgid "hours and"
 msgstr "minutter."
 
-#: chomeconnectionbox;text;23
+#: chomeconnectionbox;text;27
 msgid "minutes."
 msgstr ""
 
@@ -2391,9 +2422,10 @@ msgid "Welcome to Shareaza's Settings Manager"
 msgstr "Velkommen til Shareaza's innstillinger"
 
 #: cgeneralsettingsgroup;text;2
+#, fuzzy
 msgid ""
 "The Shareaza Settings Manager allows advanced users to completely customise how\n"
-"\t\t\tShareaza works. The settings in the"
+"\t\t\t\tShareaza works. The settings in the"
 msgstr ""
 "Her kan brukere med erfaring endre Shareaza og hvordan det virker\n"
 "\t\t\tpå nettverket.  Innstillingene i"
@@ -2456,9 +2488,10 @@ msgid "Internet"
 msgstr "Tilkobling"
 
 #: cinternetsettingsgroup;text;2
+#, fuzzy
 msgid ""
 "The Shareaza Settings Manager allows advanced users to completely customise \n"
-"\t\t\thow Shareaza works. The settings in the"
+"\t\t\t\thow Shareaza works. The settings in the"
 msgstr ""
 "Her kan brukere med erfaring endre Shareaza og hvordan det virker\n"
 "\t\t\tpå nettverket. Innstillingene i"
@@ -2556,17 +2589,19 @@ msgid "Downloads Area"
 msgstr "Velg en nedlasting"
 
 #: downloadhelp.select;text;2
+#, fuzzy
 msgid ""
 "This is where files currently being downloaded are displayed. You can view\n"
-"\t\tindividual sources by expanding each file with the small + on the left."
+"\t\t\tindividual sources by expanding each file with the small + on the left."
 msgstr ""
 "Her vises de filene som blir lastet ned. Du kan se\n"
 "\t\tindividuelle kilder ved å utvide hver fil med den lille pluss'en til venstre."
 
 #: downloadhelp.select;text;3
+#, fuzzy
 msgid ""
 "Drag'n'Drop downloads higher in the list for priority, or onto Download Group \n"
-"\t\ttabs for better organisation (in Power Mode)."
+"\t\t\ttabs for better organisation (in Power Mode)."
 msgstr ""
 "Du kan også bruke denne kommandoen for å få informasjon om nedlastingen.\n"
 "\t\tVelg en nedlasting og denne kommandoen en gang til."
@@ -2574,7 +2609,7 @@ msgstr ""
 #: downloadhelp.select;text;4
 msgid ""
 "You can also use this command to get help information on a specific download.\n"
-"\t\tSimply select a download and choose this Help command again."
+"\t\t\tSimply select a download and choose this Help command again."
 msgstr ""
 
 #: downloadhelp.seeding;text;1
@@ -2584,7 +2619,7 @@ msgstr ""
 #: downloadhelp.seeding;text;2
 msgid ""
 "Shareaza has verified this complete download, and is actively sharing it\n"
-"\t\twith other downloaders through BitTorrent. Please share at least 100%."
+"\t\t\twith other downloaders through BitTorrent. Please share at least 100%."
 msgstr ""
 
 #: downloadhelp.completed;text;1
@@ -2592,9 +2627,10 @@ msgid "This Download has Completed"
 msgstr "Denne nedlastingen er ferdig."
 
 #: downloadhelp.completed;text;2
+#, fuzzy
 msgid ""
 "Shareaza has finished downloading this file, and has verified that it\n"
-"\t\tis 100% correct. It has also moved the file to your downloads folder."
+"\t\t\tis 100% correct. It has also moved the file to your downloads folder."
 msgstr ""
 "Shareaza er ferdig med denne filen og har kontollert at den\n"
 "\t\ter 100% korrekt. Den er også flyttet til din nedlastingsmappe."
@@ -2604,9 +2640,10 @@ msgid "This Download is Moving"
 msgstr "Denne filen flyttes"
 
 #: downloadhelp.moving;text;2
+#, fuzzy
 msgid ""
 "Shareaza has finished downloading this file, and has verified that\n"
-"\t\tit is correct. It is currently being moved and/or unpacked to your downloads folder."
+"\t\t\tit is correct. It is currently being moved and/or unpacked to your downloads folder."
 msgstr ""
 "Shareaza er ferdig med denne filen og har kontrollert at den er\n"
 "\t\tkorrekt. Den blir nå flyttet og/eller pakket ut i din nedlastingsmappe."
@@ -2616,9 +2653,10 @@ msgid "This Download is Paused"
 msgstr "Denne filen er satt på pause"
 
 #: downloadhelp.paused;text;2
+#, fuzzy
 msgid ""
 "You have paused this download. If you want it to resume downloading, you\n"
-"\t\tcan click the '"
+"\t\t\tcan click the '"
 msgstr "Du har pauset denne filen. Hvis du ønsker å fortsette den kan du klikke på"
 
 #: downloadhelp.paused;text;4
@@ -2630,12 +2668,13 @@ msgid "The Disk is Full"
 msgstr "Harddisken er full"
 
 #: downloadhelp.diskfull;text;2
+#, fuzzy
 msgid ""
 "Shareaza has paused this download automatically because the hard disk\n"
-"\t\tappears to be full, or the download file cannot be written to. If you wish\n"
-"\t\tto continue downloading, please free some space on your hard disk and/or check\n"
-"\t\tto make sure the incomplete file folder is accessible, and then resume the\n"
-"\t\tdownload."
+"\t\t\tappears to be full, or the download file cannot be written to. If you wish\n"
+"\t\t\tto continue downloading, please free some space on your hard disk and/or check\n"
+"\t\t\tto make sure the incomplete file folder is accessible, and then resume the\n"
+"\t\t\tdownload."
 msgstr ""
 "Shareaza har pauset denne filen automatisk fordi det ser ut som at\n"
 "\t\tharddisken er full, eller at filen ikke kan skrives til. Hvis du vil fortsette,\n"
@@ -2647,10 +2686,11 @@ msgid "This Download is Verifying"
 msgstr "Denne filen blir kontrollert"
 
 #: downloadhelp.verifying;text;2
+#, fuzzy
 msgid ""
 "This download has finished, and Shareaza is now checking it to ensure\n"
-"\t\tthat it is exactly the same as the original file. If any damaged parts are\n"
-"\t\tfound, Shareaza will repair them automatically."
+"\t\t\tthat it is exactly the same as the original file. If any damaged parts are\n"
+"\t\t\tfound, Shareaza will repair them automatically."
 msgstr ""
 "Denne filen er ferdig, den blir nå kontrollert for å sjekke at den er\n"
 "\t\teksakt lik den orginale filen. Hvis det finnes noen ødelagte deler vil\n"
@@ -2661,9 +2701,10 @@ msgid "This Download is Active!"
 msgstr "Denne filen er aktiv!"
 
 #: downloadhelp.downloading;text;2
+#, fuzzy
 msgid ""
 "This download is currently in progress. If it is downloading too slowly,\n"
-"\t\tyou could try searching the network for more sources with the '"
+"\t\t\tyou could try searching the network for more sources with the '"
 msgstr ""
 "Denne filen lastes ned. Hvis den har lav hastighet kan du søke etter\n"
 "\t\tflere kilder med"
@@ -2673,10 +2714,11 @@ msgid "Find More Sources"
 msgstr "Finn flere kilder"
 
 #: downloadhelp.downloading;text;4
+#, fuzzy
 msgid ""
 "' command. If the speed does not \n"
-"\t\timprove it may be due to limited upload speeds of the users you are downloading \n"
-"\t\tfrom. Download speed usually increases over time."
+"\t\t\timprove it may be due to limited upload speeds of the users you are downloading \n"
+"\t\t\tfrom. Download speed usually increases over time."
 msgstr ""
 "-kommandoen. Hvis ikke dette\n"
 "\t\thjelper kan det komme av begrensninger hos brukeren du laster ned fra.\n"
@@ -2687,13 +2729,14 @@ msgid "This Download is Pending"
 msgstr "Denne filen venter"
 
 #: downloadhelp.pending;text;2
+#, fuzzy
 msgid ""
 "This download is waiting for someone to start uploading.\n"
-"\t\tShareaza is ready to start downloading this file, but no-one is sending it at\n"
-"\t\tthe moment. You are probably waiting in other user's queues, and the download\n"
-"\t\tmay start transferring at any time. You can examine the individual sources to \n"
-"\t\tsee each queue you are waiting in. If you are sharing files yourself, it may\n"
-"\t\timprove the chances of a download transfer starting quickly."
+"\t\t\tShareaza is ready to start downloading this file, but no-one is sending it at\n"
+"\t\t\tthe moment. You are probably waiting in other user's queues, and the download\n"
+"\t\t\tmay start transferring at any time. You can examine the individual sources to \n"
+"\t\t\tsee each queue you are waiting in. If you are sharing files yourself, it may\n"
+"\t\t\timprove the chances of a download transfer starting quickly."
 msgstr ""
 "Denne nedlastingen venter på at noen skal starte å laste opp.\n"
 "\t\tShareaza er klar til å laste ned denne filen, men ingen sender den\n"
@@ -2707,12 +2750,13 @@ msgid "This Download is Queued"
 msgstr "Denne nedlastingen er i kø"
 
 #: downloadhelp.queued;text;2
+#, fuzzy
 msgid ""
 "This download is waiting for some of your other downloads to complete.\n"
-"\t\tYour download settings limit the number of downloads which may be active at\n"
-"\t\tany given time, to ensure that each download gets a good share of the available\n"
-"\t\tbandwidth. You can change these settings via Tools, Shareaza Settings.\n"
-"\t\tAlternatively, you may manually start this download with the resume command."
+"\t\t\tYour download settings limit the number of downloads which may be active at\n"
+"\t\t\tany given time, to ensure that each download gets a good share of the available\n"
+"\t\t\tbandwidth. You can change these settings via Tools, Shareaza Settings.\n"
+"\t\t\tAlternatively, you may manually start this download with the resume command."
 msgstr ""
 "Denne filen venter på at en av dine andre filer skal bli ferdig.\n"
 "\t\tDine innstillinger begrenser antall aktive nedlastinger,\n"
@@ -2725,11 +2769,12 @@ msgid "This Download is Searching"
 msgstr "Denne nedlastingen søker"
 
 #: downloadhelp.searching;text;2
+#, fuzzy
 msgid ""
 "There are no known sources for this download, so Shareaza is searching\n"
-"\t\tall connected P2P networks for new sources. Once sources are found, the\n"
-"\t\tdownload will start automatically. Shareaza searches for sources automatically,\n"
-"\t\thowever you can speed up the process using the"
+"\t\t\tall connected P2P networks for new sources. Once sources are found, the\n"
+"\t\t\tdownload will start automatically. Shareaza searches for sources automatically,\n"
+"\t\t\thowever you can speed up the process using the"
 msgstr ""
 "Det er ingen kjente kilder til denne filen, så Shareaza søker alle\n"
 "\t\tnettverkene etter nye kilder. Når en kilde blir funnet vil nedlastingen\n"
@@ -2741,11 +2786,12 @@ msgid "command."
 msgstr "-kommandoen."
 
 #: downloadhelp.searching;text;5
+#, fuzzy
 msgid ""
 "Unfortunately in many cases there may be no users online who have the\n"
-"\t\tfile you are looking for. The only course of action here is to wait for\n"
-"\t\tsomeone to come online, or cancel it and try to find a similar file which is\n"
-"\t\tmore widely available."
+"\t\t\tfile you are looking for. The only course of action here is to wait for\n"
+"\t\t\tsomeone to come online, or cancel it and try to find a similar file which is\n"
+"\t\t\tmore widely available."
 msgstr ""
 "Uheldigvis kan det noen ganger være at ingen andre brukere\n"
 "\t\tmed filen du leter etter er online. Det eneste du da kan gjøre er å vente\n"
@@ -2757,9 +2803,10 @@ msgid "This Download is Creating"
 msgstr "Denne filen forarbeides"
 
 #: downloadhelp.creating;text;2
+#, fuzzy
 msgid ""
 "Shareaza is pre-allocating a file in which to store this download, to\n"
-"\t\tsave time later."
+"\t\t\tsave time later."
 msgstr ""
 "Shareaza arbeider med å lage lagringsplass til denne filen, dette\n"
 "\t\tgjøres for å spare tid senere."
@@ -2769,10 +2816,11 @@ msgid "BitTorrent Tracker Down"
 msgstr "BitTorrent tracker nede"
 
 #: downloadhelp.tracker;text;2
+#, fuzzy
 msgid ""
 "The BitTorrent tracker server for this download appears to be\n"
-"\t\tdown or malfunctioning. Shareaza is unable to contact it to receive\n"
-"\t\ta list of peers."
+"\t\t\tdown or malfunctioning. Shareaza is unable to contact it to receive\n"
+"\t\t\ta list of peers."
 msgstr ""
 "BitTorrent-serveren for denne filen ser ut til å være\n"
 "\t\toffline eller ødelagt. Shareaza klarer ikke å kontakte serveren\n"
@@ -2783,10 +2831,11 @@ msgid "Uploads Area"
 msgstr "Opplastingsområde"
 
 #: uploadhelp;text;2
+#, fuzzy
 msgid ""
 "This is where queues and uploads are displayed. You can expand each queue\n"
-"\t\twith the small + on the left, and filter what is displayed with the button on the\n"
-"\t\tright of the window's toolbar."
+"\t\t\twith the small + on the left, and filter what is displayed with the button on the\n"
+"\t\t\tright of the window's toolbar."
 msgstr ""
 "Her vises køer og opplastinger. Du kan utvide hver kø\n"
 "\t\tmed den lille pluss'en til venstre, og filtrere visningen med knappen til\n"
@@ -2801,10 +2850,11 @@ msgid "The amount of free space on one or more drives used by Shareaza is low."
 msgstr "Det begynner å bli lite plass på harddisken."
 
 #: generalhelp.diskspace;text;3
+#, fuzzy
 msgid ""
 "You should always attempt to keep a reasonable amount of disk space free. Programs \n"
-"\t\tcan become unstable if the drives become full, and temporary files may be lost. You should \n"
-"\t\trun a disk clean-up, delete unwanted files, or uninstall software you no longer need."
+"\t\t\tcan become unstable if the drives become full, and temporary files may be lost. You should \n"
+"\t\t\trun a disk clean-up, delete unwanted files, or uninstall software you no longer need."
 msgstr ""
 "Du br alltid ha en del ledig plass p harddisken.\n"
 "\t\tProgrammer kan bli ustabile hvis disken blir full, og man kan miste midlertidige filer\n"
@@ -2819,10 +2869,11 @@ msgid "A disk or directory Shareaza needs cannot be written to."
 msgstr "En stasjon eller et område Shareaza trenger, kan ikke skrives til."
 
 #: generalhelp.diskwritefail;text;3
+#, fuzzy
 msgid ""
 "A network drive may have been disconnected, or you may not have write permission \n"
-"\t\tto a selected directory. Please check directories and permissions, or change the\n"
-"\t\ttemporary files location."
+"\t\t\tto a selected directory. Please check directories and permissions, or change the\n"
+"\t\t\ttemporary files location."
 msgstr ""
 "En nettverksstasjon kan være frakoblet, eller du har kanskje ikke skrivetillatelse\n"
 "\t\ti det angitte området. Vennligst sjekk mapper og tillatelser, eller forandres\n"
@@ -2837,9 +2888,10 @@ msgid "Windows reports that there is no internet connection is available."
 msgstr "Windows rapporterer at det ikke er noen internettforbindelse tilgjengelig."
 
 #: generalhelp.connectionfail;text;3
+#, fuzzy
 msgid ""
 "It is likely that a modem or router has dropped, meaning the internet cannot\n"
-"\t\tbe accessed. You may need to manually re-connect or reset your connection."
+"\t\t\tbe accessed. You may need to manually re-connect or reset your connection."
 msgstr ""
 "Det er sannsynlig at et modem eller en router har koblet fra, noe som innebærer at\n"
 "\t\tinternett ikke kan nås. Det er mulig du må koble til manuelt, eller nullstille din forbindelse."
@@ -2853,10 +2905,11 @@ msgid "Adult content filter enabled"
 msgstr "Filter for voksent innhold skrudd på"
 
 #: generalhelp.adultfilter;text;2
+#, fuzzy
 msgid ""
 "Please note that (as with any automated filter) it may not be 100% effective at\n"
-"\t\tscreening content. It is designed simply to filter out excess unwanted results, rather than \n"
-"\t\tas a 100% safe block."
+"\t\t\tscreening content. It is designed simply to filter out excess unwanted results, rather than \n"
+"\t\t\tas a 100% safe block."
 msgstr ""
 "Som med alle automatiserte filtre, vil ikke dette filteret være 100% effektivt\n"
 "\t\tmot alt uønsket innhold. Filteret er designet for å luke ut mesteparten av uønsket\n"
@@ -2871,19 +2924,21 @@ msgid "This torrent appears to have an encoding error"
 msgstr "Denne torrenten ser ut til å ha en kodingsfeil"
 
 #: generalhelp.badtorrentencoding;text;2
+#, fuzzy
 msgid ""
 "Windows has reported a translation fault while decoding text in this torrent. It is\n"
-"\t\tpossible that the torrent is corrupt, or just incorrectly encoded. The torrent may\n"
-"\t\tstill download properly, although some file names could be incorrect."
+"\t\t\tpossible that the torrent is corrupt, or just incorrectly encoded. The torrent may\n"
+"\t\t\tstill download properly, although some file names could be incorrect."
 msgstr ""
 "Windows har rapportert oversettelsesfeil under dekoding av tekst i denne torrenten. Det er\n"
 "\t\tmulig at torrenten er korrupt, eller bare uriktig kodet. Torrenten kan muligens likevel lastes ned,\n"
 "\t\tmen noen filnavn kan være uriktige."
 
 #: generalhelp.badtorrentencoding;text;3
+#, fuzzy
 msgid ""
 "Most torrent creation programs should allow you to repair this torrent, which\n"
-"\t\twill ensure it works properly in all BitTorrent applications."
+"\t\t\twill ensure it works properly in all BitTorrent applications."
 msgstr ""
 "De fleste programmer for å lage torrenter vil la deg reparere denne torrenten, noe som vil\n"
 "\t\tsørge for at den fungerer korrekt i alle BitTorrent-programmer."
@@ -2901,17 +2956,19 @@ msgid "Your eDonkey server list is empty"
 msgstr "Din eDonkey serverliste er tom"
 
 #: generalhelp.donkeyserverlist;text;2
+#, fuzzy
 msgid ""
 "There are no servers in your eDonkey server list. You need to download an\n"
-"\t\tup to date server list (met file) to connect to ED2K."
+"\t\t\tup to date server list (met file) to connect to ED2K."
 msgstr ""
 "Det er ingen servere i din eDonkey2000 serverliste. Du må laste ned en\n"
 "\t\toppdatert serverliste (met-fil) for å koble til ED2K."
 
 #: generalhelp.donkeyserverlist;text;3
+#, fuzzy
 msgid ""
 "You can download a server list from the ed2k setting page, or the discovery\n"
-"\t\tservices window. (Press F9 to open the discovery services window)"
+"\t\t\tservices window. (Press F9 to open the discovery services window)"
 msgstr ""
 "Du kan laste ned en serverliste i instillingene for ed2k, eller vinduet for\n"
 "\t\topppdagelsestjenester. (Trykk F9 for å åpne vinduet for oppdagelsestjenester)"
@@ -2921,28 +2978,31 @@ msgid "Limiting uploads may slow downloads"
 msgstr "Begrensning av opplastinger kan sinke nedlastinger"
 
 #: generalhelp.uploadwarning;text;2
+#, fuzzy
 msgid ""
 "Several networks Shareaza connects to enforce ratios, limit uploads to\n"
-"\t\tclients that do not share, or simply preference uploading to known sharers."
+"\t\t\tclients that do not share, or simply preference uploading to known sharers."
 msgstr ""
 "Flere nettverk Shareaza kobler til benytter ratesystemer, som begrenser opplastinger til\n"
 "\t\tklienter som ikke deler, eller prioriterer opplasting til kjente delere."
 
 #: generalhelp.uploadwarning;text;3
+#, fuzzy
 msgid ""
 "Fortunately, broadband DSL connections are like a two-lane highway: you have\n"
-"\t\tseparate allocations for upload and download. If your client is properly configured, \n"
-"\t\tyou should be able to upload at a good rate while retaining full download capacity."
+"\t\t\tseparate allocations for upload and download. If your client is properly configured, \n"
+"\t\t\tyou should be able to upload at a good rate while retaining full download capacity."
 msgstr ""
 "Heldigvis er bredbåndskoblinger som en to felts vei: du har\n"
 "\t\tseparate kanaler for opp og nedlasting. Hvis din klient er riktig konfigurert,\n"
 "\t\tskal du kunne laste opp med en god hastighet samtidig som du har full nedlastingskapasitet."
 
 #: generalhelp.uploadwarning;text;4
+#, fuzzy
 msgid ""
 "By default, your upload limit is set to about 85% of available upstream bandwidth,\n"
-"\t\twhile downloads are unlimited. That configuration should give you the fastest possible \n"
-"\t\tdownloads that are available."
+"\t\t\twhile downloads are unlimited. That configuration should give you the fastest possible \n"
+"\t\t\tdownloads that are available."
 msgstr ""
 "Som standard er din opplastingshastighet begrenset til omtrent 85% av tilgjengelig opplastingsbåndbredde,\n"
 "\t\tmens nedlastinger er ubegrenset. Den konfigurasjonen burde gi deg så høy nedlastingshastighet\n"
@@ -2954,11 +3014,12 @@ msgid "Please re-phrase the search"
 msgstr "Vennligst omformuler søket"
 
 #: searchhelp.badsearch1;text;2
+#, fuzzy
 msgid ""
 "This search is poorly formatted, and may not function correctly. \n"
-"\t\tSearches should include several terms where possible, and should specify a schema \n"
-"\t\t(file type). Furthermore, searches must not be limited to numbers or negative\n"
-"\t\tterms only, and you should avoid overly general queries."
+"\t\t\tSearches should include several terms where possible, and should specify a schema \n"
+"\t\t\t(file type). Furthermore, searches must not be limited to numbers or negative\n"
+"\t\t\tterms only, and you should avoid overly general queries."
 msgstr ""
 "Dette er et dårlig formulert søk, og vil muligens ikke gi noe bra resultat.\n"
 "\t\tSøk bør inneholde flere uttrykk hvis mulig, og bør spesifiseres til en filtype\n"
@@ -2966,53 +3027,59 @@ msgstr ""
 "\t\tman bør også unngå generelle søk."
 
 #: searchhelp.badsearch1;text;3
+#, fuzzy
 msgid ""
 "Most clients on the network will ignore a search for all MP3 files, for example, \n"
-"\t\tbecause it is not specific enough, and would generate too many results."
+"\t\t\tbecause it is not specific enough, and would generate too many results."
 msgstr ""
 "De fleste programmene på nettverket vil ignorere søk etter alle MP3 filer, for eksempel,\n"
 "\t\tfordi det ikke er spesifisert godt nok og man ville fått alt for mange resultat."
 
 #: searchhelp.badsearch2;text;2
+#, fuzzy
 msgid ""
 "This search does not contain enough terms to function properly. All searches need\n"
-"\t\ta minimum number of valid, alphabetic characters to be able to start."
+"\t\t\ta minimum number of valid, alphabetic characters to be able to start."
 msgstr ""
 "Dette søket inneholder ikke nok kriterier for å fungere skikkelig. Alle søk trenger\n"
 "\t\tet minimum av gyldige, alfabetiske tegn for å kunne starte."
 
 #: searchhelp.badsearch2;text;3
+#, fuzzy
 msgid ""
 "While common file extensions (and numbers) can be searched for, you must enter\n"
-"\t\tother terms as well when creating the search. Punctuation and wildcards are not used \n"
-"\t\tin searches, just the text you enter."
+"\t\t\tother terms as well when creating the search. Punctuation and wildcards are not used \n"
+"\t\t\tin searches, just the text you enter."
 msgstr ""
 "Selv om vanlige filetternavn (og nummere) kan søkes etter, må du angi\n"
 "\t\tandre kriterier også, når du foretar et søk. Tegnsetting og jokertegn blir ikke brukt\n"
 "\t\ti søk, kun teksten du skriver inn."
 
 #: searchhelp.badsearch3;text;2
+#, fuzzy
 msgid ""
 "This search seems to contain only common file extensions, or no searchable\n"
-"\t\twords."
+"\t\t\twords."
 msgstr ""
 "Dette søket ser ut til å kun inneholde vanlige filetternavn, eller ikke-søkbare\n"
 "\t\tord."
 
 #: searchhelp.badsearch3;text;3
+#, fuzzy
 msgid ""
 "If you are having trouble creating searches, keep in mind that it's quite similar\n"
-"\t\tto a web search. Specific terms or phrases are best- Unique names, titles and\n"
-"\t\tkeywords."
+"\t\t\tto a web search. Specific terms or phrases are best- Unique names, titles and\n"
+"\t\t\tkeywords."
 msgstr ""
 "Hvis du har problemer med å foreta søk, husk at det er nokså likt som\n"
 "\t\tet nettsøk. Spesifikke uttrykk og kriterier er best- Unike navn, titler og\n"
 "\t\tnøkkelord."
 
 #: searchhelp.badsearch3;text;4
+#, fuzzy
 msgid ""
 "General terms cannot be searched for efficiently and may result in poor\n"
-"\t\tsearch performance, as well as high bandwidth use during searches."
+"\t\t\tsearch performance, as well as high bandwidth use during searches."
 msgstr ""
 "Generelle uttrykk kan ikke bli søkt etter på en effektiv måte, og kan resultere\n"
 "\t\ti dårlig søkeytelse og høyt bruk av båndbredde under søk."
@@ -3026,19 +3093,21 @@ msgid "This search cannot be started"
 msgstr "Dette søket kan ikke startes"
 
 #: searchhelp.adultsearch;text;2
+#, fuzzy
 msgid ""
 "The specified search would probably return a large number of results with adult \n"
-"\t\tcontent, and this has been turned off in the settings. You should either re-phrase the \n"
-"\t\tsearch, or disable the filter."
+"\t\t\tcontent, and this has been turned off in the settings. You should either re-phrase the \n"
+"\t\t\tsearch, or disable the filter."
 msgstr ""
 "Det spesifiserte søket vil sannsynligvis gi et stort antall resultater med innhold\n"
 "\t\tment kun for voksne. Dette forhindres av et filter for voksent innhold, som finnes under Innstilinger.\n"
 "\t\tForandre søketeksten eller skru av filteret for voksent innhold."
 
 #: searchhelp.adultsearch;text;3
+#, fuzzy
 msgid ""
 "To disable the filter, go into Tools > Settings > General and uncheck the\n"
-"\t\tadult content filter."
+"\t\t\tadult content filter."
 msgstr ""
 "For å skru av filteret, gå til Verktøy > Innstillinger > Generelt og fjern\n"
 "\t\thaken for filteret."
@@ -3056,18 +3125,20 @@ msgid "This folder should not be shared"
 msgstr "Dene mappen bør ikke deles."
 
 #: sharehelp.badshare;text;2
+#, fuzzy
 msgid ""
 "This folder is (or contains) a system folder. Sharing this folder is not\n"
-"\t\trecommended, since most of the files in it are of no use to other people."
+"\t\t\trecommended, since most of the files in it are of no use to other people."
 msgstr ""
 "Denne mappen er (eller inneholder) en systemmappe. Det anbeafales ikke\n"
 "\t\tå dele systemmapper siden filene ikke kan brukes av andre personer."
 
 #: sharehelp.badshare;text;3
+#, fuzzy
 msgid ""
 "Folders such as the Windows directory, Program Files, and similar folders\n"
-"\t\tdo not usually contain files suitable for sharing. Any files of interest would be in\n"
-"\t\tsub-folders located"
+"\t\t\tdo not usually contain files suitable for sharing. Any files of interest would be in\n"
+"\t\t\tsub-folders located"
 msgstr ""
 "Mapper som Windows, Programfiler, og lignende mapper\n"
 "\t\tinneholder ikke filer som passer for å bli delt. Filer av interesse vil være i\n"
@@ -3078,18 +3149,80 @@ msgid "inside"
 msgstr "i"
 
 #: sharehelp.badshare;text;5
+#, fuzzy
 msgid ""
 "these folders.\n"
-"\t\tPlease share those instead."
+"\t\t\tPlease share those instead."
 msgstr "disse mappene. Vennligst del disse i stedet."
 
 #: sharehelp.badshare;text;6
+#, fuzzy
 msgid ""
 "The Shareaza 'incomplete' folder should also not be shared through the\n"
-"\t\tlibrary, since attempting to hash downloads in progress may impact on performance."
+"\t\t\tlibrary, since attempting to hash downloads in progress may impact on performance."
 msgstr ""
 "Mappen 'incomplete' bør ikke deles,\n"
 "\t\tda det vil få store konsekvenser for programmets ytelse."
+
+#: message;afx_ids_app_title string;window_main
+msgid "Shareaza"
+msgstr "Shareaza"
+
+#: message;afx_ids_idlemessage
+#, fuzzy
+msgid "Ready"
+msgstr "Klar..."
+
+#: message;afx_ids_mdichild
+msgid "Activate this window"
+msgstr ""
+
+#: message;afx_ids_preview_close
+msgid "Close print preview mode"
+msgstr ""
+
+#: tip;afx_ids_preview_close
+#, fuzzy
+msgid "Cancel Preview"
+msgstr "Forhåndsvis"
+
+#: message;afx_ids_scclose
+#, fuzzy
+msgid "Close the active window and prompts to save the documents"
+msgstr "Maksimer det aktive vinduet."
+
+#: message;afx_ids_scmaximize
+#, fuzzy
+msgid "Enlarge the window to full size"
+msgstr "Maksimer det aktive vinduet."
+
+#: message;afx_ids_scminimize
+msgid "Reduce the window to an icon"
+msgstr ""
+
+#: message;afx_ids_scmove
+msgid "Change the window position"
+msgstr ""
+
+#: message;afx_ids_scnextwindow
+msgid "Switch to the next document window"
+msgstr ""
+
+#: message;afx_ids_scprevwindow
+msgid "Switch to the previous document window"
+msgstr ""
+
+#: message;afx_ids_screstore
+msgid "Restore the window to normal size"
+msgstr ""
+
+#: message;afx_ids_scsize
+msgid "Change the window size"
+msgstr ""
+
+#: message;afx_ids_sctasklist
+msgid "Activate Task List"
+msgstr ""
 
 #: message;id_browse_files
 msgid "View the user's shared files"
@@ -3178,6 +3311,11 @@ msgstr "Legg til ny oppdagelsestjeneste..."
 #: message;id_discovery_advertise
 msgid "Advertise the selected GWebCache service to a random existing GWebCache."
 msgstr "Kjør valgte GWebCache-tjeneste mot en tilfeldig eksisterende GWebCache."
+
+#: message;id_discovery_blocked
+#, fuzzy
+msgid "Show blocked services in the Discovery window."
+msgstr "Vis GWebCache-tjeneste i oppdagelsesvinduet."
 
 #: message;id_discovery_browse
 msgid "Browse statistics for the selected GWebCache service on the Web."
@@ -3368,7 +3506,8 @@ msgid "Add a source URL to the selected download..."
 msgstr "Legg til en kilde URL til valgte nedlasting..."
 
 #: message;id_downloads_view_reviews
-msgid "View reviews for the selected download"
+#, fuzzy
+msgid "View reviews for the selected download."
 msgstr "Se omtalene for den valgte nedlastingen"
 
 #: message;id_help_about
@@ -3383,10 +3522,6 @@ msgstr "Alt om codec'er og videoproblemer."
 msgid "View the Shareaza FAQ."
 msgstr "Besøk Shareazas FAQ."
 
-#: message;id_help_router
-msgid "Get help configuring your router or firewall."
-msgstr "Få hjelp til å sette opp din router eller brannmur."
-
 #: message;id_help_forums
 msgid "Visit the Shareaza Discussion Forums."
 msgstr "Besøk Shareazas forum."
@@ -3399,16 +3534,24 @@ msgstr "Besøk Shareazas brukerguide"
 msgid "Visit the Shareaza web site."
 msgstr "Besøk Shareazas nettsted."
 
+#: message;id_help_router
+msgid "Get help configuring your router or firewall."
+msgstr "Få hjelp til å sette opp din router eller brannmur."
+
 #: message;id_help_security
 msgid "Help protecting your system from hostile programs."
 msgstr "Få hjelp til å beskytte systemet ditt mot fiendtlige programmer"
+
+#: message;id_help_test
+msgid "Run the connection test."
+msgstr ""
 
 #: message;id_help_update
 msgid "Check for news and updates."
 msgstr "Se nyheter og oppdateringer."
 
-#: message;id_help_test
-msgid "Run the connection test."
+#: message;id_help_version_check
+msgid "Check for new version"
 msgstr ""
 
 #: message;id_help_web_1 message;id_help_web_2 message;id_help_web_3
@@ -3428,9 +3571,18 @@ msgstr "Sett treffmonitoren på pause."
 msgid "Search the network for the selected term."
 msgstr "Søk på nettverket etter valgte uttrykk."
 
+#: message;id_hostcache_bt_cache
+#, fuzzy
+msgid "Show BitTorrent cached hosts."
+msgstr "Vis BitTorrent opplastninger."
+
 #: message;id_hostcache_connect
 msgid "Connect to the selected host(s)."
 msgstr "Koble til valgte vert."
+
+#: message;id_hostcache_dc_cache
+msgid "Show DC++ cached hubs."
+msgstr "Show DC++ cached hubs."
 
 #: message;id_hostcache_disconnect
 msgid "Disconnect from the selected neighbour(s)."
@@ -3460,6 +3612,11 @@ msgstr "Vis Gnutella2 horizon-hubene."
 msgid "Import a list of known hosts, such as a \"server.met\" file..."
 msgstr "Åpne en liste med kjente verter, som en \"server.met\" fil..."
 
+#: message;id_hostcache_kad_cache
+#, fuzzy
+msgid "Show Kademlia cached hosts."
+msgstr "Vis Gnutella1-vertene."
+
 #: message;id_hostcache_priority
 msgid "Try to connect to this server before other servers."
 msgstr "Prøv å koble til denne serveren før de andre tjenerne."
@@ -3467,6 +3624,11 @@ msgstr "Prøv å koble til denne serveren før de andre tjenerne."
 #: message;id_hostcache_remove
 msgid "Remove the selected hosts from the host cache."
 msgstr "Fjern valgte vert fra vert-cache-listen."
+
+#: message;id_import_downloads
+#, fuzzy
+msgid "Import eMule partial downloads..."
+msgstr "Del NYE delvise nedlastinger"
 
 #: message;id_library_add
 msgid "Add a new folder to your library..."
@@ -3575,6 +3737,11 @@ msgstr "Gjenoppbygg metadata ved hjelp av et annet språk."
 #: message;id_library_refresh
 msgid "Refresh the library view."
 msgstr "Oppdater biblioteket."
+
+#: message;id_library_refresh_metadata
+#, fuzzy
+msgid "Refresh file metadata"
+msgstr "_Refresh Metadata"
 
 #: message;id_library_remove
 msgid "Remove the selected shared folders."
@@ -3756,6 +3923,15 @@ msgstr "Spill av"
 msgid "Show or hide the playlist editor."
 msgstr "Vis eller skjul spilleliste-vinduet."
 
+#: message;id_media_position
+#, fuzzy
+msgid "Seek to a position in the media file."
+msgstr "Søk til bestemt posisjon"
+
+#: tip;id_media_position
+msgid "Seek"
+msgstr ""
+
 #: message;id_media_previous
 msgid "Skip back to the previous file in the current playlist."
 msgstr "Gå tilbake til forrige fil i denne spillelisten."
@@ -3816,6 +3992,15 @@ msgstr "Vis videoen i trippel størrelse av orginal."
 msgid "Show the video at double its original (natural) size."
 msgstr "Vis videoen i dobbel størrelse av orginal."
 
+#: message;id_media_speed
+#, fuzzy
+msgid "Adjust the speed of the media file."
+msgstr "Juster hastighet"
+
+#: tip;id_media_speed column;speed
+msgid "Speed"
+msgstr "Hastighet"
+
 #: message;id_media_status
 msgid "Show or hide the media status line."
 msgstr "Vis eller skjul mediastatus linjen."
@@ -3828,25 +4013,31 @@ msgstr "Stopp avspillingen. "
 msgid "Select an audio visualisation plugin..."
 msgstr "Velg hvilke effekter som skal vises."
 
+#: message;id_media_volume
+#, fuzzy
+msgid "Adjust the audio volume."
+msgstr "Juster volum"
+
+#: tip;id_media_volume
+msgid "Volume"
+msgstr ""
+
 #: message;id_media_zoom
 msgid "Adjust video zoom and aspect ratio settings."
 msgstr "Juster zoom- og aspektinnstillinger."
 
-#: tip;idc_media_position
-msgid "Seek"
-msgstr ""
-
-#: tip;idc_media_speed column;speed
-msgid "Speed"
-msgstr "Hastighet"
-
-#: tip;idc_media_volume
-msgid "Volume"
-msgstr ""
-
 #: message;id_monitor_close
 msgid "Close the monitor window."
 msgstr "Lukk monitorvinduet."
+
+#: message;id_musicbrainz_albums
+msgid "Look at all albums for this artist."
+msgstr ""
+
+#: message;id_musicbrainz_matches
+#, fuzzy
+msgid "Search for albums matching the selected file."
+msgstr "Søk etter andre kopier av valgte fil."
 
 #: message;id_neighbours_chat message;id_search_chat message;id_transfers_chat
 #: message;id_uploads_chat
@@ -3897,6 +4088,10 @@ msgstr "Koble til nettverket."
 msgid "Manually connect to a host..."
 msgstr "Manuelt koble til en vert..."
 
+#: message;id_network_dc
+msgid "Connect to the DC++ network."
+msgstr "Connect to the DC++ network."
+
 #: message;id_network_disconnect
 msgid "Disconnect from all networks, this will also stop all downloads and uploads."
 msgstr "Koble fra nettverket"
@@ -3920,6 +4115,57 @@ msgstr "Koble til Gnutella2-nettverket (Høyst anbefalt)."
 #: message;id_network_search
 msgid "Start a new search of the network..."
 msgstr "Start et nytt søk på nettverket..."
+
+#: message;id_next_pane
+msgid "Switch to the next window pane"
+msgstr ""
+
+#: tip;id_next_pane
+#, fuzzy
+msgid "Next Pane"
+msgstr "Neste..."
+
+#: message;id_open_downloads_folder
+msgid "Open my folder of completed Downloads"
+msgstr ""
+
+#: message;id_prev_pane
+#, fuzzy
+msgid "Switch back to the previous window pane"
+msgstr "Gå tilbake til forrige fil i denne spillelisten."
+
+#: tip;id_prev_pane
+#, fuzzy
+msgid "Previous Pane"
+msgstr "Tilbake"
+
+#: message;id_scheduler_activate
+#, fuzzy
+msgid "Activates selected task(s) from the list."
+msgstr "Fjern valgte opplasting(er) fra listen."
+
+#: message;id_scheduler_add
+msgid "Adds a new task to scheduler list."
+msgstr ""
+
+#: message;id_scheduler_deactivate
+#, fuzzy
+msgid "Deactivates selected tasks."
+msgstr "Koble til nettverket."
+
+#: message;id_scheduler_edit
+#, fuzzy
+msgid "Edit the selected task..."
+msgstr "Endre valgte sikkerhetsregel."
+
+#: message;id_scheduler_remove
+#, fuzzy
+msgid "Removes selected task(s) from the list."
+msgstr "Fjern valgte nedlasting(er) fra listen."
+
+#: message;id_scheduler_remove_all
+msgid "Removes all scheduled tasks."
+msgstr ""
 
 #: message;id_search_clear
 msgid "Clear the search results."
@@ -4029,9 +4275,44 @@ msgstr "Fjern valgte sikkerhetsregler."
 msgid "Reset the hit counts on the selected rules."
 msgstr "Fjern treffresultat til valgte regler."
 
+#: message;id_sharemonkey_buy
+msgid "Buy it and support the author"
+msgstr ""
+
+#: message;id_sharemonkey_compare
+msgid "Compare prices in different stores"
+msgstr ""
+
+#: message;id_sharemonkey_download
+#, fuzzy
+msgid "Search for matches"
+msgstr "Søk etter dette"
+
+#: message;id_sharemonkey_next
+msgid "Go to the next match"
+msgstr ""
+
+#: message;id_sharemonkey_previous
+msgid "Go to the previous match"
+msgstr ""
+
+#: message;id_sharemonkey_prices
+#, fuzzy
+msgid "Look at the prices for the current match"
+msgstr "Gå tilbake til forrige fil i denne spillelisten."
+
+#: message;id_sharemonkey_save
+#, fuzzy
+msgid "Save the match in your Library"
+msgstr "Vis filen i mine filer"
+
 #: message;id_system_clear
 msgid "Clear the status log."
 msgstr "Oppdater stausloggen."
+
+#: message;id_system_copy
+msgid "Copy selected line(s) of status log."
+msgstr ""
 
 #: message;id_system_timestamp
 msgid "Record a timestamp for each line."
@@ -4040,6 +4321,30 @@ msgstr "Lag tidsstempel for hver linje."
 #: message;id_system_verbose
 msgid "Display a detailed system activity log."
 msgstr "Vis en detaljert systemlogg."
+
+#: message;id_system_verbose_debug
+#, fuzzy
+msgid "Display all."
+msgstr "Vis beskrivelse."
+
+#: message;id_system_verbose_error
+#, fuzzy
+msgid "Display errors only."
+msgstr "Vis beskrivelse."
+
+#: message;id_system_verbose_info
+#, fuzzy
+msgid "Display infos and above."
+msgstr "Vis graf-linjer."
+
+#: message;id_system_verbose_notice
+msgid "Display notices and above."
+msgstr ""
+
+#: message;id_system_verbose_warning
+#, fuzzy
+msgid "Display warnings and above."
+msgstr "Vis graf-linjer."
 
 #: message;id_tab_connect
 msgid "Connect or disconnect from the network."
@@ -4229,6 +4534,11 @@ msgstr "Vis eller skjul pakkedump-vindu."
 msgid "Show or hide the HIT MONITOR window."
 msgstr "Vis eller skjul treffmonitor-vinduet."
 
+#: message;id_view_scheduler
+#, fuzzy
+msgid "Show or hide SCHEDULER window."
+msgstr "Vis eller skjul sikkerhetsvinduet."
+
 #: message;id_view_search_monitor
 msgid "Show or hide the SEARCH MONITOR window."
 msgstr "Vis eller skjul søkemonitor-vinduet."
@@ -4256,6 +4566,26 @@ msgstr "Vis eller skjul opplastings-vinduet."
 #: message;id_view_windowed
 msgid "Use Shareaza in power Windowed mode."
 msgstr "Bruk Shareaza i power vindumodus."
+
+#: message;id_webservices_list
+msgid "Choose the web service to get more information about the selected file."
+msgstr ""
+
+#: message;id_webservices_musicbrainz
+msgid "Search for the same artist songs using MusicBrainz service."
+msgstr ""
+
+#: message;id_webservices_sharemonkey
+msgid "Search for the file infomation using ShareMonkey service."
+msgstr ""
+
+#: message;id_window_arrange
+msgid "Arrange icons at the bottom of the window"
+msgstr ""
+
+#: tip;id_window_arrange
+msgid "Arrange Icons"
+msgstr ""
 
 #: message;id_window_cascade
 msgid "Expand all open windows to fill the screen."
@@ -4289,14 +4619,6 @@ msgstr "Still opp vinduene side ved side Loddrett."
 msgid "Show or hide the toolbar."
 msgstr "Vis eller skjul verktøylinjen."
 
-#: message;id_webservices_list
-msgid "Choose the web service to get more information about the selected file."
-msgstr ""
-
-#: message;id_webservices_sharemonkey
-msgid "Search for the file infomation using ShareMonkey service."
-msgstr ""
-
 #: message;imageviewer_bestfit
 msgid "Resize the image to fit within the window."
 msgstr ""
@@ -4324,10 +4646,6 @@ msgstr ""
 #: tip;idc_share_partials
 msgid "This setting has no effect on downloads previously started, also this setting is ignored if the file have the eDonkey hash and the eDonkey network is enabled or if it is a torrent.{n}However this setting isn't ignored if the download is paused.{n}{n}ATTENTION: Use this option only in case of real necessity, if you abuse of the option you may be banned."
 msgstr ""
-
-#: string;window_main
-msgid "Shareaza"
-msgstr "Shareaza"
 
 #: string;window_system
 msgid "System"
@@ -4385,74 +4703,6 @@ msgstr ""
 msgid "Scheduler"
 msgstr ""
 
-#: string;154
-msgid "Are you sure you want to remove all scheduled tasks? This cannot be undone."
-msgstr ""
-
-#: string;156
-msgid "Scheduled time has already passed.\\n\\nPlease select a time in the future."
-msgstr ""
-
-#: string;157
-msgid "Bandwidth: Full Speed"
-msgstr ""
-
-#: string;158
-msgid "Bandwidth: Reduced Speed"
-msgstr ""
-
-#: string;159
-msgid "Bandwidth: Stop"
-msgstr ""
-
-#: string;160
-msgid "System: Exit Shareaza"
-msgstr ""
-
-#: string;161
-msgid "System: Disconnect Dial-up Connection"
-msgstr ""
-
-#: string;162
-msgid "System: Turn Off the Computer"
-msgstr ""
-
-#: string;163
-msgid "Please select a task."
-msgstr ""
-
-#: string;164
-msgid "Specific day(s) of week"
-msgstr ""
-
-#: string;165 string;8325 string;20118
-msgid "Active"
-msgstr "Aktiv"
-
-#: string;166 string;8324
-msgid "Inactive"
-msgstr "Inaktiv"
-
-#: string;167
-msgid "Done"
-msgstr ""
-
-#: string;168
-msgid "Waiting..."
-msgstr ""
-
-#: string;169
-msgid "No Tasks Currently Scheduled"
-msgstr ""
-
-#: string;172
-msgid "Done Today"
-msgstr ""
-
-#: string;173
-msgid "You should select at least one day of week."
-msgstr ""
-
 #: string;7000
 msgid "Are you sure you want to delete this filter ?"
 msgstr "Er du sikker på at du vil slette dette filteret?"
@@ -4486,7 +4736,9 @@ msgid "This template does not have any customizations."
 msgstr ""
 
 #: string;7102
-msgid "Are you sure you want to delete the \"%s\" template?\\nThis cannot be undone."
+msgid ""
+"Are you sure you want to delete the \"%s\" template?\\n"
+"This cannot be undone."
 msgstr ""
 
 #: string;8000 dialog;csettingsheet
@@ -4506,8 +4758,18 @@ msgid "Edit My Profile"
 msgstr "Endre min profil"
 
 #: string;8004
-msgid "!Welcome to Shareaza (version) !\\n.\\nShareaza is completely free software.\\nPlease use it responsibly and respect intellectual property law.\\n."
-msgstr "!Velkommen til Shareaza (version) !\\n.\\nShareaza er helt gratis software.\\nVennligst vis ansvar og respekt for materiell opphavsrett.\\n."
+msgid ""
+"!Welcome to Shareaza (version) !\\n"
+".\\n"
+"Shareaza is completely free software.\\n"
+"Please use it responsibly and respect intellectual property law.\\n"
+"."
+msgstr ""
+"!Velkommen til Shareaza (version) !\\n"
+".\\n"
+"Shareaza er helt gratis software.\\n"
+"Vennligst vis ansvar og respekt for materiell opphavsrett.\\n"
+"."
 
 #: string;8005
 msgid "(closing after transfers)"
@@ -4522,24 +4784,22 @@ msgid "There are no active searches. Click here to search for files."
 msgstr "Det er ingen aktive søk. Klikk her for å søke etter filer."
 
 #: string;8008
-msgid "Shareaza has finished downloading the next Shareaza version (%s). Would you like to upgrade now?\\n\\nIf you select Yes, Shareaza will close temporarily while the upgrade is installed."
-msgstr "Shareaza er ferdig med å laste ned den nyeste Shareaza versjonen (%s). Vil du oppgradere nå?\\n\\nHvis du velger JA, vil Shareaza lukkes for å fullføre oppgraderingen."
+msgid ""
+"Shareaza has finished downloading the next Shareaza version (%s). Would you like to upgrade now?\\n"
+"\\n"
+"If you select Yes, Shareaza will close temporarily while the upgrade is installed."
+msgstr ""
+"Shareaza er ferdig med å laste ned den nyeste Shareaza versjonen (%s). Vil du oppgradere nå?\\n"
+"\\n"
+"Hvis du velger JA, vil Shareaza lukkes for å fullføre oppgraderingen."
 
 #: string;8009
 msgid "Are you sure you want to delete the \"%s\" skin? This cannot be undone."
 msgstr "Er du sikker på at du vil slette dette \"%s\" skinnet? Det kan ikke gjenopprettes."
 
-#: string;8010
-msgid "This is a pre-release version of Shareaza, and the beta testing period has ended. Please download the full, official release from http://shareaza.sourceforge.net/."
-msgstr "Dette er en test-versjon av Shareaza, beta test perioden er over. Vennligst last ned den offisielle fullversjonen fra http://shareaza.sourceforge.net/."
-
 #: string;8011
 msgid "Changing view will close any windows you have open. Would you like to change now?"
 msgstr "Når du endrer utseende vil alle åpne vinduer lukkes. Vil du endre nå?"
-
-#: string;8012
-msgid "Torrent Information"
-msgstr "Torrent Informasjon"
 
 #: string;8013
 msgid "No new Shareaza version detected."
@@ -4778,8 +5038,8 @@ msgid "File size must be"
 msgstr "Filstørrelsen må være"
 
 #: string;8181
-msgid " to"
-msgstr " til"
+msgid " to (size from xx TO xx)"
+msgstr ""
 
 #: string;8208
 msgid "Shareaza is creating hashes for %Iu file(s):"
@@ -4858,8 +5118,9 @@ msgid "Shareaza is checking the download for errors:"
 msgstr "Shareaza sjekker om det finnes feil på filen: "
 
 #: string;8243
-msgid "Volume uploaded:"
-msgstr "Lastet opp:"
+#, fuzzy
+msgid "Upload ratio:"
+msgstr "Opplastingsområde"
 
 #: string;8244
 msgid "Number of reviews:"
@@ -4960,6 +5221,14 @@ msgstr "URL:"
 #: string;8323
 msgid "User Agent:"
 msgstr "Program:"
+
+#: string;8324 string;20264
+msgid "Inactive"
+msgstr "Inaktiv"
+
+#: string;8325 string;20118 string;20263 column;active
+msgid "Active"
+msgstr "Aktiv"
 
 #: string;8326
 msgid "Next in Line"
@@ -5086,20 +5355,27 @@ msgid "Are you sure you want to disconnect?"
 msgstr "Er du sikker på at du vil koble fra?"
 
 #: string;16080
-msgid "You are running the Scheduler in 'G2 only' mode. Would you like to turn this mode off, so that all active networks remain connected?"
-msgstr ""
+#, fuzzy
+msgid "Would you like to always connect to this network?"
+msgstr "Du er ikke koblet til nettverket."
 
 #: string;16081
 msgid "Sending query for \"%s\" to %s."
 msgstr "Sender forespørsel for \"%s\" til %s."
 
 #: string;16083
-msgid "Forcing your PC into hub mode may have adverse effects on performance and the P2P network. It is generally better to allow Shareaza to decide whether or not hub mode should be used.\\n\\nHub mode does NOT produce better search results, or have any other advantages for you.\\n\\nDo you really want to do this, despite these disadvantages?"
-msgstr "Å tvinge pc-en til å være hub kan påvirke evnen til å utnytte nettverket. Det er generelt bedre å la Shareaza velge. \\n\\nHub modus gir IKKE bedre søkeresultat, det hjelper heller ikke på noen annen måte.\\n\\nEr du helt sikker på at du vil gjøre dette?"
-
-#: string;16084
-msgid "Disabling support for Gnutella-1 protocols may limit your search results, and if you are acting as a hub it may also impact upon the results of other users. Are you sure you want to do this?"
-msgstr "Å skru av Gnutella-1 protokollen kan gi dårligere søkeresultat, hvis du er hub kan dette også påvirke andre på nettverket. Er du sikker på at du vil gjøre dette?"
+msgid ""
+"Forcing your PC into hub mode may have adverse effects on performance and the P2P network. It is generally better to allow Shareaza to decide whether or not hub mode should be used.\\n"
+"\\n"
+"Hub mode does NOT produce better search results, or have any other advantages for you.\\n"
+"\\n"
+"Do you really want to do this, despite these disadvantages?"
+msgstr ""
+"Å tvinge pc-en til å være hub kan påvirke evnen til å utnytte nettverket. Det er generelt bedre å la Shareaza velge. \\n"
+"\\n"
+"Hub modus gir IKKE bedre søkeresultat, det hjelper heller ikke på noen annen måte.\\n"
+"\\n"
+"Er du helt sikker på at du vil gjøre dette?"
 
 #: string;16085
 msgid "Gnutella2 is Shareaza's premiere network. Disabling support for it may severely limit both the number and quality of your search results. Are you SURE you want to do this?"
@@ -5220,6 +5496,10 @@ msgstr "Gnutella2-kobling med nabo %s vellyket opprettet (%s)."
 #: string;16159
 msgid "Closing connection to non-Gnutella2 neighbour %s."
 msgstr "Lukker kobling til ikke-Gnutella2 nabo %s."
+
+#: string;16191
+msgid "Received a packet from %s for %s which excess query limits, ignoring."
+msgstr ""
 
 #: string;16192
 msgid "Neighbour %s forwarded a packet of excessive size, dropping connection."
@@ -5394,8 +5674,14 @@ msgid "Download host %s is busy, retrying in %i seconds."
 msgstr "Nedlastingsvert %s er opptatt, prøver på nytt om %i sekunder."
 
 #: string;16281
-msgid "Are you sure you want to clear \"%s\"?\\n\\nOnce a download has been cleared from the Downloads window, it cannot be resumed later."
-msgstr "Er du sikker på at du vil fjerne \"%s\"?\\n\\nNår en nedlasting er fjernet fra nedlastingsvinduet, kan den ikke fortsettes senere."
+msgid ""
+"Are you sure you want to clear \"%s\"?\\n"
+"\\n"
+"Once a download has been cleared from the Downloads window, it cannot be resumed later."
+msgstr ""
+"Er du sikker på at du vil fjerne \"%s\"?\\n"
+"\\n"
+"Når en nedlasting er fjernet fra nedlastingsvinduet, kan den ikke fortsettes senere."
 
 #: string;16282
 msgid "Aborting download of \"%s\" from %s (%s), network disabled."
@@ -5586,7 +5872,8 @@ msgid "Push connection to %s established, waiting for handshake..."
 msgstr "Push kobling til %s startet, venter på håndtrykk..."
 
 #: string;16329
-msgid "Can't open \"%s\" to upload to host %s, disk/file error."
+#, fuzzy
+msgid "Can't open \"%s\" to upload to host %s due to disk or file error."
 msgstr "Kan ikke åpne \"%s\" for å laste opp til vert %s, disk/fil feil."
 
 #: string;16330
@@ -5781,13 +6068,23 @@ msgstr "Alle filer"
 msgid "HTTP Guard"
 msgstr "HTTP Guard"
 
+#: string;16378
+msgid "Host \"%s\" sent a 416, without providing available ranges. Closing connection."
+msgstr ""
+
 #: string;16379
 msgid "Library Files"
 msgstr ""
 
 #: string;16384
-msgid "Are you sure you want to launch the file \"%s\" ?\\n\\nSome files can be harmful to your computer. Ensure you know what the file is before launching it."
-msgstr "Er du sikker på at du vil åpne denne filen \"%s\" ?\\n\\nNoen filer kan være skadelige for pc-en. Forsikre deg om at du vet hva filen er før du åpner den."
+msgid ""
+"Are you sure you want to launch the file \"%s\" ?\\n"
+"\\n"
+"Some files can be harmful to your computer. Ensure you know what the file is before launching it."
+msgstr ""
+"Er du sikker på at du vil åpne denne filen \"%s\" ?\\n"
+"\\n"
+"Noen filer kan være skadelige for pc-en. Forsikre deg om at du vet hva filen er før du åpner den."
 
 #: string;16385
 msgid "You are about to modify the metadata of %i files, are you sure you want to continue?"
@@ -5802,16 +6099,38 @@ msgid "The file \"%s\" has not yet been hashed. Please wait for the file to be h
 msgstr "Filen \"%s\" er ikke hashet. Vennligst vent til filen er hashet og prøv på nytt."
 
 #: string;16388
-msgid "This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n\\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database. If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n\\nWould you like to proceed?"
-msgstr "Dette valget bruker Bitzi.com for å finne informasjon om valgte filer.\\n\\nShareaza sender SHA1 hash koden til den valgte filen for å søke i Bitzi databasen. Hvis du er redd for å dele slik informasjon, kan du lese Bitzi.com's retningslinjer for personopplysninger.\\n\\nVil du fortsette?"
+msgid ""
+"This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n"
+"\\n"
+"Shareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database. If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n"
+"\\n"
+"Would you like to proceed?"
+msgstr ""
+"Dette valget bruker Bitzi.com for å finne informasjon om valgte filer.\\n"
+"\\n"
+"Shareaza sender SHA1 hash koden til den valgte filen for å søke i Bitzi databasen. Hvis du er redd for å dele slik informasjon, kan du lese Bitzi.com's retningslinjer for personopplysninger.\\n"
+"\\n"
+"Vil du fortsette?"
 
 #: string;16389
-msgid "Are you sure you want to permanently delete the %i selected file(s) ?\\n\\nThe files will be moved to your \"recycle bin\" if it is enabled."
-msgstr "Er du sikker på at du vil slette %i valgte fil(er) ?\\n\\nFilene vil bli sendt til din \"papirkurv\" hvis den er skrudd på."
+msgid ""
+"Are you sure you want to permanently delete the %i selected file(s) ?\\n"
+"\\n"
+"The files will be moved to your \"recycle bin\" if it is enabled."
+msgstr ""
+"Er du sikker på at du vil slette %i valgte fil(er) ?\\n"
+"\\n"
+"Filene vil bli sendt til din \"papirkurv\" hvis den er skrudd på."
 
 #: string;16390
-msgid "You have not yet selected a media player to enqueue files with, such as Nullsoft Winamp. Would you like to select one now?\\n\\nShareaza will pass the name of the file to your selected program with the \"/ADD\" argument."
-msgstr "Du har ikke valgt en mediaspiller å sende filer i kø til. Vil du velge en nå?\\n\\nShareaza kan sende navnet til filen ved hjelp av \"/Legg til\" kommandoen."
+msgid ""
+"You have not yet selected a media player to enqueue files with, such as Nullsoft Winamp. Would you like to select one now?\\n"
+"\\n"
+"Shareaza will pass the name of the file to your selected program with the \"/ADD\" argument."
+msgstr ""
+"Du har ikke valgt en mediaspiller å sende filer i kø til. Vil du velge en nå?\\n"
+"\\n"
+"Shareaza kan sende navnet til filen ved hjelp av \"/Legg til\" kommandoen."
 
 #: string;16391
 msgid "You're not connected to the network."
@@ -5830,36 +6149,88 @@ msgid "Would you like to remove the \"potentially unsafe\" attribute from this f
 msgstr "Vil du fjerne den \"potensielt usikkre\" egenskapen til denne filen?"
 
 #: string;16395
-msgid "Your downloaded files folder \"%s\" is not yet in your library.\\n\\nIncluding your downloaded files folder in your library makes it easier to view and organise new downloads, and lets you take advantage of advanced Shareaza features such as download verification and automatic upgrading. Placing downloaded files in your library does not necessarily require you to share them: you can choose whether or not to share files independently.\\n\\nWould you like to add your downloaded files folder to your library now?"
-msgstr "Din nedlastingsmappe \"%s\" er ikke i mine filer ennå.\\n\\nÅ inkludere din nedlastings mappe i mine filer gjør det lettere å se og organisere nye filer, dette lar deg også ta i bruk verifisering og automatisk oppdatering. Å lagre filer i mine filer betyr ikke at du må dele dem: du kan selv velge om du vil dele dem eller ikke.\\n\\nVil du legge til din nedlastingsmappe i mine filer nå?"
+msgid ""
+"Your downloaded files folder \"%s\" is not yet in your library.\\n"
+"\\n"
+"Including your downloaded files folder in your library makes it easier to view and organise new downloads, and lets you take advantage of advanced Shareaza features such as download verification and automatic upgrading. Placing downloaded files in your library does not necessarily require you to share them: you can choose whether or not to share files independently.\\n"
+"\\n"
+"Would you like to add your downloaded files folder to your library now?"
+msgstr ""
+"Din nedlastingsmappe \"%s\" er ikke i mine filer ennå.\\n"
+"\\n"
+"Å inkludere din nedlastings mappe i mine filer gjør det lettere å se og organisere nye filer, dette lar deg også ta i bruk verifisering og automatisk oppdatering. Å lagre filer i mine filer betyr ikke at du må dele dem: du kan selv velge om du vil dele dem eller ikke.\\n"
+"\\n"
+"Vil du legge til din nedlastingsmappe i mine filer nå?"
 
 #: string;16396
 msgid "Your downloads folder has been added to your library. Would you like to share it too?"
 msgstr "Din nedlastingsmappe er lagt til i mine filer. Vil du dele den også?"
 
 #: string;16397
-msgid "Are you sure you want to delete the %i selected album folder(s) ?\\n\\nNote that this action does not delete the files within the album folders, only the folders themselves."
-msgstr "Er du sikker på at du vil slette %i valgte mappe(r) ?\\n\\nDette sletter ikke filene, kun mappen(e) filene er i."
+msgid ""
+"Are you sure you want to delete the %i selected album folder(s) ?\\n"
+"\\n"
+"Note that this action does not delete the files within the album folders, only the folders themselves."
+msgstr ""
+"Er du sikker på at du vil slette %i valgte mappe(r) ?\\n"
+"\\n"
+"Dette sletter ikke filene, kun mappen(e) filene er i."
 
 #: string;16398
-msgid "Shareaza could not rename:\\n\\n%s\\nto\\n%s"
-msgstr "Shareaza klarte ikke å endre navnet:\\n\\n%s\\nto\\n%s"
+msgid ""
+"Shareaza could not rename:\\n"
+"\\n"
+"%s\\n"
+"to\\n"
+"%s"
+msgstr ""
+"Shareaza klarte ikke å endre navnet:\\n"
+"\\n"
+"%s\\n"
+"to\\n"
+"%s"
 
 #: string;16399
-msgid "Shareaza could not delete the file:\\n\\n%s"
-msgstr "Shareaza klarte ikke å slette filen:\\n\\n%s"
+msgid ""
+"Shareaza could not delete the file:\\n"
+"\\n"
+"%s"
+msgstr ""
+"Shareaza klarte ikke å slette filen:\\n"
+"\\n"
+"%s"
 
 #: string;16400
-msgid "Target file exists:\\n\\n%s\\n\\nWould you like to overwrite it?"
-msgstr "Denne filen finnes allerede:\\n\\n%s\\n\\nVil du skrive over den?"
+msgid ""
+"Target file exists:\\n"
+"\\n"
+"%s\\n"
+"\\n"
+"Would you like to overwrite it?"
+msgstr ""
+"Denne filen finnes allerede:\\n"
+"\\n"
+"%s\\n"
+"\\n"
+"Vil du skrive over den?"
 
 #: string;16401
 msgid "Show All File Types"
 msgstr "Vis alle fil-typer"
 
 #: string;16402
-msgid "Shareaza received a collection file:\\n\\n\"%s\"\\n\\nThis file does not appear to be a valid collection file."
-msgstr "Shareaza mottok en samlings-fil:\\r\\n\\r\\n\"%s\"\\r\\n\\r\\nDette ser ikke ut som en gyldig samlings-fil."
+msgid ""
+"Shareaza received a collection file:\\n"
+"\\n"
+"\"%s\"\\n"
+"\\n"
+"This file does not appear to be a valid collection file."
+msgstr ""
+"Shareaza mottok en samlings-fil:\\r\\n"
+"\\r\\n"
+"\"%s\"\\r\\n"
+"\\r\\n"
+"Dette ser ikke ut som en gyldig samlings-fil."
 
 #: string;16403
 msgid "Shareaza has added the collection file \"%s\" to your library."
@@ -5870,8 +6241,14 @@ msgid "Shareaza was unable to install the collection file \"%s\" by copying it t
 msgstr "Shareaza klarte ikke å legge inn samlings-filen \"%s\" ved  kopiere den til mappe \"%s\"."
 
 #: string;16406
-msgid "Would you like to download all files in this collection?\\n\\nChoose Cancel to stop any further prompts."
-msgstr "Vil du laste ned alle filene i denne samlingen?\\r\\n\\r\\nVelg avbryt for å slippe flere spørsmål."
+msgid ""
+"Would you like to download all files in this collection?\\n"
+"\\n"
+"Choose Cancel to stop any further prompts."
+msgstr ""
+"Vil du laste ned alle filene i denne samlingen?\\r\\n"
+"\\r\\n"
+"Velg avbryt for å slippe flere spørsmål."
 
 #: string;16407
 msgid "Would you like to prevent this collection from prompting you to download anything else?"
@@ -5886,12 +6263,22 @@ msgid "Export &URIs..."
 msgstr "Eksporter &URI'er..."
 
 #: string;16410
-msgid "A subfolder of the selected folder \"%s\" is already part of your library.\\nAdding this folder will cause re-hashing of some files.\\n\\nDo you want to continue ?"
+msgid ""
+"A subfolder of the selected folder \"%s\" is already part of your library.\\n"
+"Adding this folder will cause re-hashing of some files.\\n"
+"\\n"
+"Do you want to continue ?"
 msgstr "Mappen for fullstendige filer og mappen for ufullstendige filer bør ikke være den samme"
 
 #: string;16411
-msgid "Unable to move the file %s. The file may be in use by another application.\\n\\nDo you wish to try to copy this file instead?"
-msgstr "Kan ikke flytte filen %s. Filen kan være i bruk av et annet program.\\n\\nVil du forsøke å kopiere filen i stedet?"
+msgid ""
+"Unable to move the file %s. The file may be in use by another application.\\n"
+"\\n"
+"Do you wish to try to copy this file instead?"
+msgstr ""
+"Kan ikke flytte filen %s. Filen kan være i bruk av et annet program.\\n"
+"\\n"
+"Vil du forsøke å kopiere filen i stedet?"
 
 #: string;16412
 msgid "Ghost File"
@@ -6014,7 +6401,13 @@ msgid "Gnutella Packets Lost"
 msgstr "Gnutella-pakker mistet"
 
 #: string;16528
-msgid "Gnutella Local Queries"
+#, fuzzy
+msgid "Gnutella Incoming Queries"
+msgstr "Gnutella lokale forespørsler"
+
+#: string;16529
+#, fuzzy
+msgid "Gnutella Processed Queries"
 msgstr "Gnutella lokale forespørsler"
 
 #: string;16532
@@ -6118,20 +6511,42 @@ msgid "You have not specified any folders to share. Are you sure?"
 msgstr "Du har ikke spesifisert hvilke mapper du vil dele. Er du sikker?"
 
 #: string;16803
-msgid "The folder you are sharing is already shared as part of another shared folder:\\n\\n%s"
-msgstr "Mappen du deler er allerede delt gjennom en annen delt mappe:\\n\\n%s"
+msgid ""
+"The folder you are sharing is already shared as part of another shared folder:\\n"
+"\\n"
+"%s"
+msgstr ""
+"Mappen du deler er allerede delt gjennom en annen delt mappe:\\n"
+"\\n"
+"%s"
 
 #: string;16804
 msgid "You haven't entered a screen name in your user profile."
 msgstr "Du har ikke valgt et navn i din bruker profil."
 
 #: string;16805
-msgid "You haven't entered your location in your user profile.\\n\\nIt's a good idea to enter your location so that other users can see which country you are from. Note that entering a location does not reveal any compromising information.\\n\\nAre you sure you want to continue without entering your location?"
-msgstr "Du har ikke angitt hvor du er fra i bruker profilen din.\\n\\nDet er en god idé å angi hvor du er fra slik at andre kan se hvor de er koblet til. Dette vil ikke gjøre noe utslag på din sikkerhet.\\n\\nEr du sikker på at du vil fortsette uten å angi sted?"
+msgid ""
+"You haven't entered your location in your user profile.\\n"
+"\\n"
+"It's a good idea to enter your location so that other users can see which country you are from. Note that entering a location does not reveal any compromising information.\\n"
+"\\n"
+"Are you sure you want to continue without entering your location?"
+msgstr ""
+"Du har ikke angitt hvor du er fra i bruker profilen din.\\n"
+"\\n"
+"Det er en god idé å angi hvor du er fra slik at andre kan se hvor de er koblet til. Dette vil ikke gjøre noe utslag på din sikkerhet.\\n"
+"\\n"
+"Er du sikker på at du vil fortsette uten å angi sted?"
 
 #: string;16806
-msgid "Shareaza was unable to set up port-forwarding on your NAT router or firewall.\\n\\nPlease configure your network to forward TCP and UDP ports %i to your local PC."
-msgstr "Du har indikert at du vil sette opp port forwarding på din NAT-router eller brannmur.\\n\\nVennligst sett opp nettverket til å videresende TCP og UDP port %i til din lokale PC."
+msgid ""
+"Shareaza was unable to set up port-forwarding on your NAT router or firewall.\\n"
+"\\n"
+"Please configure your network to forward TCP and UDP ports %i to your local PC."
+msgstr ""
+"Du har indikert at du vil sette opp port forwarding på din NAT-router eller brannmur.\\n"
+"\\n"
+"Vennligst sett opp nettverket til å videresende TCP og UDP port %i til din lokale PC."
 
 #: string;16807
 msgid "Please type the bandwidth limit you wish to set in the form \"123 kb/s\" for kilobits per second, or \"123 KB/s\" for kilobytes per second."
@@ -6167,16 +6582,26 @@ msgid "Please wait: Updating eDonkey server list..."
 msgstr ""
 
 #: string;16815
-msgid "UPnP Device Host Service is not running. This service is required to perform the setup.\\nYou need to set the startup type of the service to automatic."
+msgid ""
+"UPnP Device Host Service is not running. This service is required to perform the setup.\\n"
+"You need to set the startup type of the service to automatic."
 msgstr ""
 
 #: string;16816
-msgid "The eDonkey network uses large queues with long wait times. By limiting the maximum queue position you will accept so strictly, you may have trouble getting downloads to begin.\\nAre you sure you want to limit what queue positions you will accept?"
-msgstr "eDonkey-nettverket har lange køer med lange ventetider. Ved å begrense den maksimale akseptable køposisjonen så strengt, kan du få problemer med å få nedlastinger til å begynne.\\nEr du sikker på at du vil begrense hvilken køposisjon du vil akseptere?"
+msgid ""
+"The eDonkey network uses large queues with long wait times. By limiting the maximum queue position you will accept so strictly, you may have trouble getting downloads to begin.\\n"
+"Are you sure you want to limit what queue positions you will accept?"
+msgstr ""
+"eDonkey-nettverket har lange køer med lange ventetider. Ved å begrense den maksimale akseptable køposisjonen så strengt, kan du få problemer med å få nedlastinger til å begynne.\\n"
+"Er du sikker på at du vil begrense hvilken køposisjon du vil akseptere?"
 
 #: string;16817
-msgid "Windows doesn't support paths longer than 256 characters.\\nPlease select a folder with a shorter path."
-msgstr "Windows støtter ikke filbaner langre enn 256 tegn.\\nVennligst angi en mappe med kortere filbane."
+msgid ""
+"Windows doesn't support paths longer than 256 characters.\\n"
+"Please select a folder with a shorter path."
+msgstr ""
+"Windows støtter ikke filbaner langre enn 256 tegn.\\n"
+"Vennligst angi en mappe med kortere filbane."
 
 #: string;16818
 msgid "The complete and incomplete folders should not be the same"
@@ -6184,7 +6609,11 @@ msgstr "Mappen for ufullstendige filer bør ikke være i biblioteket, ettersom d
 
 #: string;16819
 msgid "The incomplete files folder should not be in the library, as it would reduce performance. Incomplete files may be shared directly from the transfers window."
-msgstr "En undermappe av den valgte mappen \"%s\" er allerede en del av biblioteket ditt.\\nÅ legge til denne mapen vil føre til re-hashing av noen filer.\\n\\nØnsker du å fortsette?"
+msgstr ""
+"En undermappe av den valgte mappen \"%s\" er allerede en del av biblioteket ditt.\\n"
+"Å legge til denne mapen vil føre til re-hashing av noen filer.\\n"
+"\\n"
+"Ønsker du å fortsette?"
 
 #: string;16864
 msgid "Querying host discovery services..."
@@ -6286,10 +6715,6 @@ msgstr ""
 msgid "Shareaza could not instantiate its MediaServices plugin. Please reinstall Shareaza, and confirm that you have the necessary media codecs and output drivers installed."
 msgstr "Shareaza klarte ikke å starte pluginfunksjonen for mediafiler. Vennligst installer Shareaza på nytt og kontroller at du har tilstrekkelige codec og drivere installert."
 
-#: string;16993
-msgid "All Media Files|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Playlists|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Audio Files|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|Video Files|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|CD Audio Tracks|*.cda|MIDI Files|*.mid;*.rmi;*.midi|All Files|*.*||"
-msgstr "Alle media filer|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Playlists|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Audio Files|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|Video Filer|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|CD lyd Tracks|*.cda|MIDI filer|*.mid;*.rmi;*.midi|Alle filer|*.*||"
-
 #: string;16994
 msgid "Unable to load media file \"%s\""
 msgstr "Klarte ikke å åpne media fil \"%s\""
@@ -6318,11 +6743,11 @@ msgstr "Spilleliste"
 msgid "Send:"
 msgstr ""
 
-#: string;17018
+#: string;17018 string;19103
 msgid "Welcome to Shareaza Chat!"
 msgstr ""
 
-#: string;17019
+#: string;17019 string;19104
 msgid "Please respect others while using this service"
 msgstr ""
 
@@ -6407,8 +6832,14 @@ msgid "Cannot send message, a connection has not been established yet."
 msgstr "Kan ikke sende melding, har ikke koblet til ennå."
 
 #: string;17042
-msgid "You have not yet filled in your user profile. You must provide a profile before you can chat with other users.\\n\\nWould you like to fill in your profile now?"
-msgstr "Du har ikke fylt inn brukerprofilen din ennå. Du må ha en profil for å kunne chatte med andre brukere.\\n\\nVil du fylle inn profilen din nå?"
+msgid ""
+"You have not yet filled in your user profile. You must provide a profile before you can chat with other users.\\n"
+"\\n"
+"Would you like to fill in your profile now?"
+msgstr ""
+"Du har ikke fylt inn brukerprofilen din ennå. Du må ha en profil for å kunne chatte med andre brukere.\\n"
+"\\n"
+"Vil du fylle inn profilen din nå?"
 
 #: string;17043
 msgid "Granted upload priority to host %s."
@@ -6698,6 +7129,11 @@ msgstr "BitTorrent koblingen med %s forespurte en ukjent fil."
 msgid "BitTorrent coupling with %s established for \"%s\"."
 msgstr "BitTorrent kobling med %s startet for \"%s\"."
 
+#: string;17480
+#, fuzzy
+msgid "BitTorrent coupling with %s requested an inactive file."
+msgstr "BitTorrent koblingen med %s forespurte en ukjent fil."
+
 #: string;17481
 msgid "Received BitTorrent descriptor file: \"%s\""
 msgstr "Mottok BitTorrent beskrivelsesfil: \"%s\""
@@ -6727,8 +7163,14 @@ msgid "Established BitTorrent coupling with %s, handshaking..."
 msgstr "Startet BitTorrent-kobling med %s, starter håndtrykk..."
 
 #: string;17488
-msgid "You have changed the tracker URL for this torrent. Are you sure you want to save this change?\\n\\nAn invalid tracker URL may prevent further downloading."
-msgstr "Du har endret tracker URL-en til denne torrenten.  Er du sikker på at du vil lagre denne endringen?\\n\\nEn ugyldig tracker URL kan stoppe videre nedlasting."
+msgid ""
+"You have changed the tracker URL for this torrent. Are you sure you want to save this change?\\n"
+"\\n"
+"An invalid tracker URL may prevent further downloading."
+msgstr ""
+"Du har endret tracker URL-en til denne torrenten.  Er du sikker på at du vil lagre denne endringen?\\n"
+"\\n"
+"En ugyldig tracker URL kan stoppe videre nedlasting."
 
 #: string;17489
 msgid "BitTorrent coupling with %s is extended protocol, identified \"%s\"."
@@ -6751,7 +7193,8 @@ msgid "Unable to create BitTorrent share file \"%s\"."
 msgstr "Klarte ikke å dele BitTorrent-fil \"%s\"."
 
 #: string;17494
-msgid "This torrent includes the file \"%s\", but Shareaza cannot find this file in your library. If possible, move the file to the same folder as the torrent and try again."
+#, fuzzy
+msgid "This torrent includes the file \"%s\", but Shareaza cannot find this file in your library. If possible, move the file to a shared folder and try again."
 msgstr "Denne torrenten inneholder filen \"%s\", men Shareaza klarer ikke å finne filen i mine filer. Hvis mulig flytt filen til samme mappe som torrenten og prøv på nytt."
 
 #: string;17495
@@ -6770,16 +7213,12 @@ msgstr "Det skjedde en feil ved forsøk på å spre \"%s\"."
 msgid "An error was detected in the file \"%s\"."
 msgstr "Det ble funnet en feil i filen \"%s\"."
 
-#: string;17500
-msgid "Tracker did not respond- Retrying announce (%i of %i)"
-msgstr "Trackeren svarte ikke- Prøver announce om igjen (%i av %i)"
-
 #: string;17501
 msgid "Unable to communicate with tracker"
 msgstr "Klarer ikke å kommunisere med tracker"
 
 #: string;17503
-msgid "Tracker failed- Trying next tracker (%i of %i)"
+msgid "Trying next tracker (%i of %i)"
 msgstr ""
 
 #: string;17505
@@ -6822,30 +7261,6 @@ msgstr ""
 msgid "You have made changes to the name field. Are you sure you want to rename this download?"
 msgstr "Du har gjort endringer i navnefeltet. Er du sikker på at du vil endre navnet på denne nedlastingen?"
 
-#: string;18497
-msgid "You have typed a SHA1 value, however it is invalid. Please check it and try again."
-msgstr "Du har skrevet inn en ugyldig SHA1 hash-verdi. Vennligst sjekk verdien og prøv på nytt."
-
-#: string;18498
-msgid "You have typed a root tiger-tree value, however it is invalid. Please check it and try again."
-msgstr "Du har skrevet inn en ugyldig root tiger-tree hash-verdi. Vennligst sjekk verdien og prøv på nytt."
-
-#: string;18499
-msgid "You have typed an eDonkey hash value, however it is invalid. Please check it and try again."
-msgstr "Du har skrevet inn en ugyldig eDonkey2000 hash-verdi. Vennligst sjekk verdien og prøv på nytt."
-
-#: string;18500
-msgid "You have provided a SHA1 hash value which is different to the one currently associated with this download. Are you sure you want to change the SHA1 hash now?"
-msgstr "Du har gitt en SHA1 hash-verdi som er forskjellig fra den som er asossiert med denne nedlastingen. Er du sikker på at du vil endre SHA1 hashen nå?"
-
-#: string;18501
-msgid "You have provided a root tiger-tree hash value which is different to the one currently associated with this download. Are you sure you want to change the tiger-tree root hash now?"
-msgstr "Du har gitt en root tiger-tree hash-verdi som er forskjellig fra den som er asossiert med denne nedlastingen. Er du sikker på at du vil endre tiger-tree hashen nå?"
-
-#: string;18502
-msgid "You have provided an eDonkey hash value which is different to the one currently associated with this download. Are you sure you want to change the eDonkey hash now?"
-msgstr "Du har gitt en eDonkey2000 hash-verdi som er forskjellig fra den som er asossiert med denne nedlastingen. Er du sikker på at du vil endre eDonkey2000 hashen nå?"
-
 #: string;18503
 msgid "Are you sure you want to forget the current verification status? All downloaded data will be treated as untrusted, and cached hashtrees and hashsets will be flushed."
 msgstr "Er du sikker på at du vil glemme nåværende verifiseringsposisjon?  Alle data som blir lastet ned vil bli sett på som usikre og cachede hashtrees og hash-sets vil bli fjernet."
@@ -6882,6 +7297,21 @@ msgstr "Er du sikker på at du vil gå ut i fra at denne filen er ferdig og reve
 msgid "You have made changes to the file size. Are you sure you want to change the file size for this download?"
 msgstr ""
 
+#: string;18512
+#, fuzzy
+msgid "Are you sure you want to cancel this download but save incomplete file(s)?"
+msgstr "Er du sikker p at du vil avbryte alle nedlastningene i denne gruppen?"
+
+#: string;18513
+#, fuzzy
+msgid "You have typed an %s hash value, however it is invalid. Please check it and try again."
+msgstr "Du har skrevet inn en ugyldig eDonkey2000 hash-verdi. Vennligst sjekk verdien og prøv på nytt."
+
+#: string;18514
+#, fuzzy
+msgid "You have provided an %s hash value which is different to the one currently associated with this download. Are you sure you want to change the %s hash now?"
+msgstr "Du har gitt en SHA1 hash-verdi som er forskjellig fra den som er asossiert med denne nedlastingen. Er du sikker på at du vil endre SHA1 hashen nå?"
+
 #: string;19000
 msgid "Remote access is disabled."
 msgstr "Fjern konsoll er AV."
@@ -6894,6 +7324,11 @@ msgstr "Du må velge et brukernavn og et passord."
 msgid "Unable to accept connections, URL unavailable."
 msgstr "Klarte ikke  motta tilkoblinger, URL ikke tilgjengelig."
 
+#: string;19105
+#, fuzzy
+msgid "Chat!"
+msgstr "IRC"
+
 #: string;20000
 msgid "No URN available"
 msgstr "URN ikke tilgjengelig"
@@ -6903,8 +7338,10 @@ msgid "of (e.g. 1 of 10)"
 msgstr "av"
 
 #: string;20003
-msgid "Changing interface direction requires restart. \\nYou will need to start Shareaza manually. Exit now?"
-msgstr "Forandring av grensesnittets retning krever omstart. \\nDu må starte Shareaza på nytt manuelt. Avslutte nå?"
+msgid ""
+"Changing language requires application restart.\\n"
+"Restart now?"
+msgstr ""
 
 #: string;20005
 msgid "No"
@@ -6938,9 +7375,24 @@ msgstr ""
 msgid "Finish"
 msgstr ""
 
-#: string;20013 cscheduletaskdlg;control;14 cfolderpropertiesdlg;control;5
+#: string;20013 cfolderpropertiesdlg;control;5
 msgid "All"
 msgstr "Match alle"
+
+#: string;20014
+#, fuzzy
+msgid ""
+"This option uses services provided by ShareMonkey.com for recognising information about selected files.\\n"
+"\\n"
+"Shareaza will transmit file details and your location in order to query the ShareMonkey database.  If you are concerned about privacy, you may wish to consult the ShareMonkey.com privacy policy.\\n"
+"\\n"
+"Would you like to proceed?"
+msgstr ""
+"Dette valget bruker Bitzi.com for å finne informasjon om valgte filer.\\n"
+"\\n"
+"Shareaza sender SHA1 hash koden til den valgte filen for å søke i Bitzi databasen. Hvis du er redd for å dele slik informasjon, kan du lese Bitzi.com's retningslinjer for personopplysninger.\\n"
+"\\n"
+"Vil du fortsette?"
 
 #: string;20101
 msgid "Requesting"
@@ -7070,34 +7522,6 @@ msgstr "K"
 msgid "sources (e.g. 3/10 sources)"
 msgstr ""
 
-#: string;20200 cscheduletaskdlg;control;7
-msgid "Sunday"
-msgstr "Søndag"
-
-#: string;20201 cscheduletaskdlg;control;8
-msgid "Monday"
-msgstr "Mandag"
-
-#: string;20202 cscheduletaskdlg;control;9
-msgid "Tuesday"
-msgstr "Tirsdag"
-
-#: string;20203 cscheduletaskdlg;control;10
-msgid "Wednesday"
-msgstr "Onsdag"
-
-#: string;20204 cscheduletaskdlg;control;11
-msgid "Thursday"
-msgstr "Tordsag"
-
-#: string;20205
-msgid "Friday"
-msgstr "Fredag"
-
-#: string;20206 cscheduletaskdlg;control;13
-msgid "Saturday"
-msgstr "Lørdag"
-
 #: string;20210
 msgid "(No Rating)"
 msgstr "(Ingen karakter)"
@@ -7158,34 +7582,33 @@ msgstr ""
 msgid "Rating"
 msgstr "Karakter"
 
-#: string;20237 csettingsheet;control;2 cscheduletaskdlg;control;1
-#: cqueuepropertiesdlg;control;37 cprofilemanagerdlg;control;2
-#: csavefilterasdlg;control;2 cdiscoveryservicedlg;control;5
-#: cfilecopydlg;control;4 cfolderpropertiesdlg;control;7
-#: cgraphlistdlg;control;16 cgraphitemdlg;control;1
-#: cschemacolumnsdlg;control;3 csecureruledlg;control;33
-#: csharemanagerdlg;control;5 cpromotedlg;control;7 cexistingfiledlg;control;8
-#: cclosemodedlg;control;5 cdonkeyserversdlg;control;4
-#: cdownloadgroupdlg;control;1 cmediavisdlg;control;5
-#: cdownloadreviewdlg;control;1 cdecodemetadatadlg;control;8
-#: circinputdlg;control;2
+#: string;20237 csettingsheet;control;2 cqueuepropertiesdlg;control;37
+#: cprofilemanagerdlg;control;2 csavefilterasdlg;control;2
+#: cdiscoveryservicedlg;control;5 cfilecopydlg;control;4
+#: cfolderpropertiesdlg;control;7 cgraphlistdlg;control;16
+#: cgraphitemdlg;control;1 cschemacolumnsdlg;control;3
+#: csecureruledlg;control;33 csharemanagerdlg;control;5 cpromotedlg;control;7
+#: cexistingfiledlg;control;8 cclosemodedlg;control;5
+#: cdonkeyserversdlg;control;4 cdownloadgroupdlg;control;1
+#: cmediavisdlg;control;5 cdownloadreviewdlg;control;1
+#: cdecodemetadatadlg;control;8 circinputdlg;control;2
 msgid "OK"
 msgstr "OK"
 
-#: string;20238 csettingsheet;control;3 cscheduletaskdlg;control;2
-#: cqueuepropertiesdlg;control;38 cprofilemanagerdlg;control;3
-#: cconnecttodlg;control;8 cdownloaddlg;control;5 cnewsearchdlg;control;4
-#: cfiltersearchdlg;control;30 csavefilterasdlg;control;3
-#: cdiscoveryservicedlg;control;6 cfilecopydlg;control;5
-#: cfolderpropertiesdlg;control;8 cgraphlistdlg;control;17
-#: cgraphitemdlg;control;2 cschemacolumnsdlg;control;4
-#: csecureruledlg;control;34 csharemanagerdlg;control;6 curlcopydlg;control;6
-#: curlexportdlg;control;10 curlactiondlg;control;11
-#: cbitzidownloaddlg;control;4 cfilepreviewdlg;control;6
-#: cexistingfiledlg;control;9 cclosemodedlg;control;6
-#: cdonkeyserversdlg;control;5 cdeletefiledlg;control;5
-#: ctorrentseeddlg;control;4 cdownloadgroupdlg;control;2
-#: cmediavisdlg;control;6 cdecodemetadatadlg;control;9 circinputdlg;control;3
+#: string;20238 csettingsheet;control;3 cqueuepropertiesdlg;control;38
+#: cprofilemanagerdlg;control;3 cconnecttodlg;control;8 cdownloaddlg;control;5
+#: cnewsearchdlg;control;4 cfiltersearchdlg;control;30
+#: csavefilterasdlg;control;3 cdiscoveryservicedlg;control;6
+#: cfilecopydlg;control;5 cfolderpropertiesdlg;control;8
+#: cgraphlistdlg;control;17 cgraphitemdlg;control;2
+#: cschemacolumnsdlg;control;4 csecureruledlg;control;34
+#: csharemanagerdlg;control;6 curlcopydlg;control;6 curlexportdlg;control;10
+#: curlactiondlg;control;11 cbitzidownloaddlg;control;4
+#: cfilepreviewdlg;control;6 cexistingfiledlg;control;9
+#: cclosemodedlg;control;6 cdonkeyserversdlg;control;5
+#: cdeletefiledlg;control;5 ctorrentseeddlg;control;4
+#: cdownloadgroupdlg;control;2 cmediavisdlg;control;6
+#: cdecodemetadatadlg;control;9 circinputdlg;control;3
 msgid "Cancel"
 msgstr "Avbryt"
 
@@ -7217,16 +7640,106 @@ msgstr ""
 msgid "New Folder"
 msgstr ""
 
-#: string;32825
-msgid "Open my folder of completed Downloads"
+#: string;20246
+msgid ""
+"Command-line options:\\n"
+"\\n"
+"-tray : Disable startup splash screen and send application to tray\\n"
+"-nosplash : Disable startup splash screen\\n"
+"-nowarn : Disable alpha (daily builds) version warning dialog\\n"
+"-wait : Wait for other application instance exit\\n"
+"\\n"
+"Interface modes:\\n"
+"\\n"
+"-basic : Start application in Basic interface mode\\n"
+"-tabbed : Start application in Tabbed interface mode\\n"
+"-windowed : Start application in Windowed interface mode\\n"
+"\\n"
+"System options:\\n"
+"\\n"
+"-RegServer : Register internal components for everyone\\n"
+"-UnRegServer : Un-register internal components for everyone\\n"
+"-RegServerPerUser : Register internal components for current user\\n"
+"-UnRegServerPerUser : Un-register internal components for current user"
 msgstr ""
 
-#: string;32773
-msgid "Check for new version"
+#: string;20247
+msgid "Failed to load metadata schemas. Please reinstall application."
 msgstr ""
 
-#: string;61215
-msgid "Activate this window"
+#: string;20248
+#, fuzzy
+msgid "You selected %u files. Are you sure?"
+msgstr "Du har ikke spesifisert hvilke mapper du vil dele. Er du sikker?"
+
+#: string;20249
+msgid "Off"
+msgstr ""
+
+#: string;20250
+msgid "Low"
+msgstr ""
+
+#: string;20251
+#, fuzzy
+msgid "Normal"
+msgstr "Normalmodus"
+
+#: string;20252
+msgid "High"
+msgstr ""
+
+#: string;20253
+msgid "Skin load error: %s. Element: %s"
+msgstr ""
+
+#: string;20254
+msgid "Loading skin: %s"
+msgstr ""
+
+#: string;20255
+msgid "Are you sure you want to remove all scheduled tasks? This cannot be undone."
+msgstr ""
+
+#: string;20256
+#, fuzzy
+msgid "System: Start Shareaza"
+msgstr "Søk med Shareaza"
+
+#: string;20257
+msgid "Bandwidth: Full Speed"
+msgstr ""
+
+#: string;20258
+msgid "Bandwidth: Reduced Speed"
+msgstr ""
+
+#: string;20259
+msgid "Bandwidth: Stop"
+msgstr ""
+
+#: string;20260
+msgid "System: Exit Shareaza"
+msgstr ""
+
+#: string;20261
+msgid "System: Disconnect Dial-up Connection"
+msgstr ""
+
+#: string;20262
+msgid "System: Turn Off the Computer"
+msgstr ""
+
+#: string;20265
+msgid "Done"
+msgstr ""
+
+#: string;20266
+msgid "Waiting..."
+msgstr ""
+
+#: string;20267
+msgid "No Tasks Currently Scheduled"
 msgstr ""
 
 #: csettingsheet;control;4 cprofilemanagerdlg;control;4
@@ -7371,7 +7884,7 @@ msgid "_Safe to Open:"
 msgstr "_Sikre å åpne:"
 
 #: clibrarysettingspage;control;18 clibrarysettingspage;control;22
-#: cmediasettingspage;control;7 cwebsettingspage;control;11
+#: cmediasettingspage;control;7 cwebsettingspage;control;12
 #: cfilesourcespage;control;5 cdownloadgroupdlg;control;7
 msgid "_Add"
 msgstr "_Legg til"
@@ -7561,14 +8074,18 @@ msgid "BitTorrent ( .torrent )"
 msgstr "BitTorrent ( .torrent )"
 
 #: cwebsettingspage;control;8
+msgid "DC++ ( dchub: )"
+msgstr "DC++ ( dchub: )"
+
+#: cwebsettingspage;control;9
 msgid "_Download Manager:"
 msgstr "Nedlastingsguide:"
 
-#: cwebsettingspage;control;9
+#: cwebsettingspage;control;10
 msgid "Use Shareaza to manage all my web downloads:"
 msgstr "Bruk Shareaza til alle mine nedlastinger fra nettet:"
 
-#: cwebsettingspage;control;13
+#: cwebsettingspage;control;14
 msgid "The download manager plugin will only attempt to download file types listed here.  Other file types will be handled by your web browser.  Shareaza must be running to manage downloads."
 msgstr "Nedlastingsguiden vil bare laste ned filer i denne listen. Andre filer vil bli åpnet i din internettleser. Shareaza må være i gang for å kunne ta imot nedlastinger."
 
@@ -7617,15 +8134,22 @@ msgid "Handshake:"
 msgstr "Håndtrykk:"
 
 #: cdownloadssettingspage;control;1
-msgid "Save _Completed Files Here:"
+#, fuzzy
+msgid "Save Completed Files Here"
 msgstr "Lagre _ferdige filer her:"
 
 #: cdownloadssettingspage;control;4
-msgid "Store Temporary _Incomplete Files Here:"
-msgstr "Lagre _midlertidige filer her:"
+msgid "Scan every completed file with AntiVirus"
+msgstr ""
+
+#: cdownloadssettingspage;control;5
+#, fuzzy
+msgid "Select AntiVirus:"
+msgstr "Velg forhåndsinstilling:"
 
 #: cdownloadssettingspage;control;7
-msgid "_Number of Downloads:"
+#, fuzzy
+msgid "Number of Downloads"
 msgstr "_Antall nedlastinger:"
 
 #: cdownloadssettingspage;control;8
@@ -7641,7 +8165,8 @@ msgid "Transfers per File:"
 msgstr "Overføringer per fil:"
 
 #: cdownloadssettingspage;control;17
-msgid "_Limits:"
+#, fuzzy
+msgid "Limits"
 msgstr "Grenser:"
 
 #: cdownloadssettingspage;control;18
@@ -7652,9 +8177,14 @@ msgstr "Nedlastingsbåndbredde:"
 msgid "Maximum Queue Length:"
 msgstr "Maksimalt antall i kø:"
 
-#: cdownloadssettingspage;control;23
+#: cdownloadssettingspage;control;22
 msgid "Only download and upload to networks which are connected."
 msgstr "Last bare opp og ned til nettverk som er tilkoblet."
+
+#: cdownloadssettingspage;control;23
+#, fuzzy
+msgid "Store Temporary Incomplete Files Here"
+msgstr "Lagre _midlertidige filer her:"
 
 #: cuploadssettingspage;control;2
 msgid "Share NEW partial downloads"
@@ -7752,71 +8282,7 @@ msgstr "Velg brukernavn:"
 msgid "Choose a Password:"
 msgstr "Velg passord:"
 
-#: dialog;cscheduletaskdlg
-msgid "Schedule Item"
-msgstr ""
-
-#: cscheduletaskdlg;control;3
-msgid "Only once"
-msgstr ""
-
-#: cscheduletaskdlg;control;4
-msgid "On specific day(s) of week"
-msgstr ""
-
-#: cscheduletaskdlg;control;12
-msgid " Friday"
-msgstr ""
-
-#: cscheduletaskdlg;control;22
-msgid " _Toggle bandwidth independently"
-msgstr ""
-
-#: cscheduletaskdlg;control;23
-msgid " _Limit network to Gnutella2"
-msgstr ""
-
-#: cscheduletaskdlg;control;25
-msgid "Make this event active"
-msgstr ""
-
-#: cscheduletaskdlg;control;26
-msgid "Please select a date:"
-msgstr ""
-
-#: cscheduletaskdlg;control;27
-msgid "Please select a time:"
-msgstr ""
-
-#: cscheduletaskdlg;control;28
-msgid "Select the event type:"
-msgstr ""
-
-#: cscheduletaskdlg;control;29
-msgid "Description: (optional)"
-msgstr ""
-
-#: cscheduletaskdlg;control;30
-msgid "% of _bandwidth under limit"
-msgstr ""
-
-#: cscheduletaskdlg;control;31
-msgid "% of _download under limit"
-msgstr ""
-
-#: cscheduletaskdlg;control;32
-msgid "% of _upload under limit"
-msgstr ""
-
-#: cscheduletaskdlg;control;33
-msgid "Days Of Week"
-msgstr ""
-
-#: cscheduletaskdlg;control;34
-msgid "Run this event"
-msgstr ""
-
-#: dialog;cnetworkssettingspage
+#: dialog;cnetworkssettingspage cscheduletaskpage;control;16
 msgid "Networks"
 msgstr "Nettverk"
 
@@ -8012,7 +8478,7 @@ msgstr "Last ned eDonkey2000 serverliste fra nettet:"
 msgid "Download..."
 msgstr "Last ned..."
 
-#: dialog;cbittorrentsettingspage
+#: dialog;cbittorrentsettingspage cscheduletaskpage;control;12
 msgid "BitTorrent"
 msgstr "BitTorrent"
 
@@ -9557,6 +10023,31 @@ msgstr "Channel Name|Why reason"
 msgid "Enter channel you want to add:|Enter kick/ban reason:"
 msgstr "Add a channel name:|Enter kick/ban reason:"
 
+#: dialog;cscheduletaskpage column;action
+msgid "Action"
+msgstr "Tiltak"
+
+#: cscheduletaskpage;control;10
+#, fuzzy
+msgid "eDoonkey2K"
+msgstr "eDonkey2000"
+
+#: cscheduletaskpage;control;13
+msgid "Select the event type:"
+msgstr ""
+
+#: cscheduletaskpage;control;14
+msgid "% of _download under limit"
+msgstr ""
+
+#: cscheduletaskpage;control;15
+msgid "% of _upload under limit"
+msgstr ""
+
+#: cscheduletaskpage;control;17 column;bandwidth
+msgid "Bandwidth"
+msgstr "Båndbredde"
+
 #: column;file
 msgid "File"
 msgstr "Fil"
@@ -9621,10 +10112,6 @@ msgstr "Tid"
 msgid "Packets"
 msgstr "Pakker"
 
-#: column;bandwidth
-msgid "Bandwidth"
-msgstr "Båndbredde"
-
 #: column;total
 msgid "Total"
 msgstr "Total"
@@ -9644,10 +10131,6 @@ msgstr "Modus"
 #: column;address/content
 msgid "Address/Content"
 msgstr "Adresse / Inn"
-
-#: column;action
-msgid "Action"
-msgstr "Tiltak"
 
 #: column;expires
 msgid "Expires"
@@ -9772,3 +10255,55 @@ msgstr "Bruker"
 #: column;comments
 msgid "Comments"
 msgstr "Kommentarer"
+
+#: column;trigger
+#, fuzzy
+msgid "Trigger"
+msgstr "TigerTree"
+
+#: column;nextrun
+#, fuzzy
+msgid "NextRun"
+msgstr "Neste"
+
+#~ msgid "_Play Album"
+#~ msgstr "Spill av..."
+#~ msgid "This is a pre-release version of Shareaza, and the beta testing period has ended. Please download the full, official release from http://shareaza.sourceforge.net/."
+#~ msgstr "Dette er en test-versjon av Shareaza, beta test perioden er over. Vennligst last ned den offisielle fullversjonen fra http://shareaza.sourceforge.net/."
+#~ msgid "Torrent Information"
+#~ msgstr "Torrent Informasjon"
+#~ msgid " to"
+#~ msgstr " til"
+#~ msgid "Volume uploaded:"
+#~ msgstr "Lastet opp:"
+#~ msgid "Disabling support for Gnutella-1 protocols may limit your search results, and if you are acting as a hub it may also impact upon the results of other users. Are you sure you want to do this?"
+#~ msgstr "Å skru av Gnutella-1 protokollen kan gi dårligere søkeresultat, hvis du er hub kan dette også påvirke andre på nettverket. Er du sikker på at du vil gjøre dette?"
+#~ msgid "All Media Files|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Playlists|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Audio Files|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|Video Files|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|CD Audio Tracks|*.cda|MIDI Files|*.mid;*.rmi;*.midi|All Files|*.*||"
+#~ msgstr "Alle media filer|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Playlists|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Audio Files|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|Video Filer|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|CD lyd Tracks|*.cda|MIDI filer|*.mid;*.rmi;*.midi|Alle filer|*.*||"
+#~ msgid "Tracker did not respond- Retrying announce (%i of %i)"
+#~ msgstr "Trackeren svarte ikke- Prøver announce om igjen (%i av %i)"
+#~ msgid "You have typed a SHA1 value, however it is invalid. Please check it and try again."
+#~ msgstr "Du har skrevet inn en ugyldig SHA1 hash-verdi. Vennligst sjekk verdien og prøv på nytt."
+#~ msgid "You have typed a root tiger-tree value, however it is invalid. Please check it and try again."
+#~ msgstr "Du har skrevet inn en ugyldig root tiger-tree hash-verdi. Vennligst sjekk verdien og prøv på nytt."
+#~ msgid "You have provided a root tiger-tree hash value which is different to the one currently associated with this download. Are you sure you want to change the tiger-tree root hash now?"
+#~ msgstr "Du har gitt en root tiger-tree hash-verdi som er forskjellig fra den som er asossiert med denne nedlastingen. Er du sikker på at du vil endre tiger-tree hashen nå?"
+#~ msgid "You have provided an eDonkey hash value which is different to the one currently associated with this download. Are you sure you want to change the eDonkey hash now?"
+#~ msgstr "Du har gitt en eDonkey2000 hash-verdi som er forskjellig fra den som er asossiert med denne nedlastingen. Er du sikker på at du vil endre eDonkey2000 hashen nå?"
+#~ msgid "Changing interface direction requires restart. \\nYou will need to start Shareaza manually. Exit now?"
+#~ msgstr "Forandring av grensesnittets retning krever omstart. \\nDu må starte Shareaza på nytt manuelt. Avslutte nå?"
+#~ msgid "Sunday"
+#~ msgstr "Søndag"
+#~ msgid "Monday"
+#~ msgstr "Mandag"
+#~ msgid "Tuesday"
+#~ msgstr "Tirsdag"
+#~ msgid "Wednesday"
+#~ msgstr "Onsdag"
+#~ msgid "Thursday"
+#~ msgstr "Tordsag"
+#~ msgid "Friday"
+#~ msgstr "Fredag"
+#~ msgid "Saturday"
+#~ msgstr "Lørdag"
+

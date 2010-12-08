@@ -287,9 +287,9 @@
 			<button id="ID_MEDIA_STOP" text="Stopp"/>
 			<separator/>
 			<label text="Sök:" tip="Sök till en position i mediafilen"/>
-			<control id="IDC_MEDIA_POSITION" width="190" height="22"/>
+			<control id="ID_MEDIA_POSITION" width="190" height="22"/>
 			<label text="Volym:" tip="Justera ljudvolymen"/>
-			<control id="IDC_MEDIA_VOLUME" width="50" height="22"/>
+			<control id="ID_MEDIA_VOLUME" width="50" height="22"/>
 			<separator/>
 			<button id="ID_MEDIA_OPEN" text="Öppna fil"/>
 			<rightAlign/>
@@ -304,11 +304,11 @@
 			<button id="ID_MEDIA_STOP" text="Stopp"/>
 			<separator/>
 			<label text="Sök:" tip="Sök till en position i mediafilen"/>
-			<control id="IDC_MEDIA_POSITION" width="190" height="22"/>
+			<control id="ID_MEDIA_POSITION" width="190" height="22"/>
 			<label text="Hastighet:" tip="Justera uppspelningshastigheten"/>
-			<control id="IDC_MEDIA_SPEED" width="40" height="22"/>
+			<control id="ID_MEDIA_SPEED" width="40" height="22"/>
 			<label text="Volym:" tip="Justera ljudvolymen"/>
-			<control id="IDC_MEDIA_VOLUME" width="50" height="22"/>
+			<control id="ID_MEDIA_VOLUME" width="50" height="22"/>
 			<separator/>
 			<button id="ID_MEDIA_OPEN" text="Öppna fil"/>
 			<separator/>
@@ -343,6 +343,7 @@
 			<button id="ID_NETWORK_G2" text="Gnutella2"/>
 			<button id="ID_NETWORK_G1" text="Gnutella1"/>
 			<button id="ID_NETWORK_ED2K" text="eDonkey"/>
+			<button id="ID_NETWORK_DC" text="DC++"/>
 			<separator/>
 			<button id="ID_NEIGHBOURS_SETTINGS" text="Inställningar"/>
 		</toolbar>
@@ -357,6 +358,7 @@
 			<button id="ID_NETWORK_G2" text="Gnutella2"/>
 			<button id="ID_NETWORK_G1" text="Gnutella1"/>
 			<button id="ID_NETWORK_ED2K" text="eDonkey"/>
+			<button id="ID_NETWORK_DC" text="DC++"/>
 			<separator/>
 			<button id="ID_NEIGHBOURS_SETTINGS" text="Inställningar"/>
 		</toolbar>
@@ -385,9 +387,6 @@
 			<button id="ID_SCHEDULER_REMOVE" text="Remove Task"/>
 			<separator/>
 			<button id="ID_SCHEDULER_REMOVE_ALL" text="Remove All"/>
-			<rightAlign/>
-			<button id="ID_SCHEDULER_IMPORT" text="Import List"/>
-			<button id="ID_SCHEDULER_EXPORT" text="Export List"/>
 		</toolbar>
 		<!-- HIT MONITOR WINDOW -->
 		<toolbar name="CHitMonitorWnd">
@@ -418,6 +417,7 @@
 			<button id="ID_HOSTCACHE_ED2K_CACHE" text="eDonkey Cache"/>
 			<button id="ID_HOSTCACHE_BT_CACHE" text="BitTorrent Cache"/>
 			<button id="ID_HOSTCACHE_KAD_CACHE" text="Kademlia Cache"/>
+			<button id="ID_HOSTCACHE_DC_CACHE" text="DC++ Cache"/>
 		</toolbar>
 		<!-- PRIVATE CHAT FRAME -->
 		<toolbar name="CPrivateChatFrame">
@@ -428,7 +428,6 @@
 			<button id="ID_CHAT_EMOTICONS"/>
 			<separator/>
 			<button id="ID_CHAT_BROWSE" text="Visa användarens filer"/>
-			<!-- <button id="ID_CHAT_SEND_FILE" text="Send File"/> -->
 			<button id="ID_CHAT_PRIORITY" text="Ge prioritet"/>
 			<separator/>
 			<button id="ID_CHAT_CONNECT" text="_Anslut" visible="false"/>
@@ -496,6 +495,7 @@
 					<item id="ID_NETWORK_G2" text="Anslut till _Gnutella2"/>
 					<item id="ID_NETWORK_G1" text="Anslut till Gnutella_1"/>
 					<item id="ID_NETWORK_ED2K" text="Anslut till _eDonkey"/>
+					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_AUTO_CLOSE" text="Avsluta _efter överföringar"/>
@@ -552,10 +552,10 @@
 					<item id="ID_HELP_FORUMS" text="Shareaza _Forum"/>
 					<item id="ID_HELP_WEB_6" text="Shareaza S_kin Site"/>
 					<!-- 
-				<item id="ID_HELP_UPDATE" text="Latest news"/>
-				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
-				-->
+					<item id="ID_HELP_UPDATE" text="Latest news"/>
+					<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
+					<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+					-->
 				</menu>
 				<separator/>
 				<item id="ID_HELP_VERSION_CHECK" text="_Leta efter nya versioner"/>
@@ -572,6 +572,7 @@
 					<item id="ID_NETWORK_G2" text="Anslut till _Gnutella2"/>
 					<item id="ID_NETWORK_G1" text="Anslut till Gnutella_1"/>
 					<item id="ID_NETWORK_ED2K" text="Anslut till _eDonkey"/>
+					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_CONNECT_TO" text="Anslut _till…" shortcut="Ctrl+T"/>
@@ -621,7 +622,7 @@
 			<menu text="_Verktyg">
 				<item id="ID_LIBRARY_FOLDERS" text="Dela ut _filer..."/>
 				<item id="ID_TOOLS_DOWNLOAD" text="_Ladda ned fil/Torrent"/>
-				<item id="IDC_IMPORT_DOWNLOADS" text="_Importera oavslutade eMule nedladdningar"/>
+				<item id="ID_IMPORT_DOWNLOADS" text="_Importera oavslutade eMule nedladdningar"/>
 				<item id="ID_OPEN_DOWNLOADS_FOLDER" text="_Öppna mappen med avslutade nedladdninagar"/>
 				<separator/>
 				<item id="ID_TOOLS_SKIN" text="Välj _skinn"/>
@@ -657,10 +658,10 @@
 					<item id="ID_HELP_FORUMS" text="Shareaza _Forum"/>
 					<item id="ID_HELP_WEB_6" text="Shareaza S_kin Site"/>
 					<!-- 
-				<item id="ID_HELP_UPDATE" text="Latest news"/>
-				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
-				-->
+					<item id="ID_HELP_UPDATE" text="Latest news"/>
+					<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
+					<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+					-->
 				</menu>
 				<separator/>
 				<item id="ID_HELP_VERSION_CHECK" text="_Leta efter nya versioner"/>
@@ -683,6 +684,7 @@
 					<item id="ID_NETWORK_G2" text="Anslut till _Gnutella2"/>
 					<item id="ID_NETWORK_G1" text="Anslut till Gnutella_1"/>
 					<item id="ID_NETWORK_ED2K" text="Anslut till _eDonkey"/>
+					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_AUTO_CLOSE" text="Stäng _efter överföringar"/>
@@ -714,7 +716,7 @@
 			<menu text="_Verktyg">
 				<item id="ID_LIBRARY_FOLDERS" text="Dela ut _filer..."/>
 				<item id="ID_TOOLS_DOWNLOAD" text="_Ladda ned fil/Torrent"/>
-				<item id="IDC_IMPORT_DOWNLOADS" text="_Importera oavslutade eMule nedladdningar"/>
+				<item id="ID_IMPORT_DOWNLOADS" text="_Importera oavslutade eMule nedladdningar"/>
 				<item id="ID_OPEN_DOWNLOADS_FOLDER" text="_Öppna mappen med avslutade nedladdninagar"/>
 				<separator/>
 				<item id="ID_TOOLS_SKIN" text="Välj _skinn"/>
@@ -754,10 +756,10 @@
 					<item id="ID_HELP_FORUMS" text="Shareaza _Forum"/>
 					<item id="ID_HELP_WEB_6" text="Shareaza S_kin Site"/>
 					<!-- 
-				<item id="ID_HELP_UPDATE" text="Latest news"/>
-				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
-				-->
+					<item id="ID_HELP_UPDATE" text="Latest news"/>
+					<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
+					<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+					-->
 				</menu>
 				<separator/>
 				<item id="ID_HELP_VERSION_CHECK" text="_Leta efter nya versioner"/>
@@ -905,6 +907,7 @@
 				<item id="ID_HOSTCACHE_ED2K_CACHE" text="_eDonkey-servrar"/>
 				<item id="ID_HOSTCACHE_BT_CACHE" text="_BitTorrent Cache"/>
 				<item id="ID_HOSTCACHE_KAD_CACHE" text="_Kademlia Cache"/>
+				<item id="ID_HOSTCACHE_DC_CACHE" text="_DC++ Cache"/>
 			</menu>
 			<separator/>
 			<item id="ID_HOSTCACHE_IMPORT" text="_Importera MET-fil…"/>
@@ -1190,14 +1193,14 @@
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="_Filegenskaper"/>
 		</menu>
 		<menu name="CLibraryTree.Virtual.Basic">
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="_Spella upp album"/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Spela upp album"/>
 			<item id="ID_LIBRARY_FOLDER_DELETE" text="_Radera"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="_Filegenskaper"/>
 			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="_Albumegenskaper"/>
 		</menu>
 		<menu name="CLibraryTree.Virtual">
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="_Spella upp album"/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Spela upp album"/>
 			<item id="ID_LIBRARY_FOLDER_DELETE" text="_Radera"/>
 			<separator/>
 			<item id="ID_LIBRARY_REBUILD" text="_Bygg upp igen"/>
@@ -1286,7 +1289,7 @@
 		<menu name="CLibraryFileView.Virtual.Basic">
 			<item id="ID_LIBRARY_LAUNCH" text="_Öppna eller spela upp"/>
 			<item id="ID_LIBRARY_ENQUEUE" text="_Lägg till i spellista"/>
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="_Spella upp album"/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Spela upp album"/>
 			<separator/>
 			<item id="ID_LIBRARY_SHARED_FILE" text="_Utdelad"/>
 			<separator/>
@@ -1504,6 +1507,7 @@
 				<item id="ID_NETWORK_G2" text="_Gnutella2"/>
 				<item id="ID_NETWORK_G1" text="Gnutella_1"/>
 				<item id="ID_NETWORK_ED2K" text="_eDonkey"/>
+				<item id="ID_NETWORK_DC" text="_DC++"/>
 			</menu>
 			<menu text="_Monitor">
 				<item id="ID_NEIGHBOURS_VIEW_ALL" text="View _All Traffic"/>
@@ -1564,9 +1568,6 @@
 			<item id="ID_SCHEDULER_EDIT" text="_Edit"/>
 			<separator/>
 			<item id="ID_SCHEDULER_REMOVE_ALL" text="Remove Al_l"/>
-			<separator/>
-			<item id="ID_SCHEDULER_IMPORT" text="_Importera…"/>
-			<item id="ID_SCHEDULER_EXPORT" text="E_xportera…"/>
 		</menu>
 		<!-- DISCOVERY SERVICES WINDOW -->
 		<menu name="CDiscoveryWnd">
@@ -1590,7 +1591,6 @@
 			<item id="ID_CHAT_DISCONNECT" text="_Koppla ifrån"/>
 			<separator/>
 			<item id="ID_CHAT_BROWSE" text="_Visa användarens filer"/>
-			<!-- <item id="ID_CHAT_SEND_FILE" text="_Send File..."/> -->
 			<item id="ID_CHAT_PRIORITY" text="Ge _prioritet"/>
 			<separator/>
 			<menu text="_Format">
@@ -1846,6 +1846,12 @@
 			<text group="32" align="middle">Ansluter…</text>
 			<text group="33" align="middle">Ansluten</text>
 			<newline group="30" gap="2"/>
+			<icon group="80" command="ID_NETWORK_DC"/><gap group="80" size="4"/>
+			<text group="80" align="middle" format="b">DC++:</text>
+			<text group="81" align="middle">Inte ansluten</text>
+			<text group="82" align="middle">Ansluter…</text>
+			<text group="83" align="middle">Ansluten</text>
+			<newline group="80" gap="2"/>
 			<group id="2">
 				<para align="center">
 					<newline gap="4"/>
@@ -2068,13 +2074,13 @@
 	en nedladdning och klicka på detta kommando igen.</text>
 			<newline gap="16"/>
 			<text>You can also use this command to get help information on a specific download.
-		Simply select a download and choose this Help command again.</text>
+			Simply select a download and choose this Help command again.</text>
 		</document>
 		<document name="DownloadHelp.Seeding">
 			<text format="b">This Torrent is Seeding</text>
 			<newline gap="8"/>
 			<text>Shareaza has verified this complete download, and is actively sharing it
-		with other downloaders through BitTorrent. Please share at least 100%.</text>
+			with other downloaders through BitTorrent. Please share at least 100%.</text>
 		</document>
 		<document name="DownloadHelp.Completed">
 			<text format="b">Denna nedladdning är fullständig</text>
@@ -2313,6 +2319,19 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 	</documents>
 	<!-- Localised Command Tip Text. The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
 	<commandTips>
+		<tip id="AFX_IDS_APP_TITLE" message="Shareaza"/>
+		<tip id="AFX_IDS_IDLEMESSAGE" message="Redo…"/>
+		<tip id="AFX_IDS_MDICHILD" message="Activate this window"/>
+		<tip id="AFX_IDS_PREVIEW_CLOSE" message="Close print preview mode" tip="Förhandsvisa"/>
+		<tip id="AFX_IDS_SCCLOSE" message="Förstora det aktiva fönstret så att det fyller hela fönstret."/>
+		<tip id="AFX_IDS_SCMAXIMIZE" message="Förstora det aktiva fönstret så att det fyller hela fönstret."/>
+		<tip id="AFX_IDS_SCMINIMIZE" message="Reduce the window to an icon"/>
+		<tip id="AFX_IDS_SCMOVE" message="Change the window position"/>
+		<tip id="AFX_IDS_SCNEXTWINDOW" message="Switch to the next document window"/>
+		<tip id="AFX_IDS_SCPREVWINDOW" message="Switch to the previous document window"/>
+		<tip id="AFX_IDS_SCRESTORE" message="Restore the window to normal size"/>
+		<tip id="AFX_IDS_SCSIZE" message="Change the window size"/>
+		<tip id="AFX_IDS_SCTASKLIST" message="Activate Task List"/>
 		<tip id="ID_BROWSE_FILES" message="Visa användarens utdelade filer."/>
 		<tip id="ID_BROWSE_LAUNCH" message="Visa den valda användarens profil och utdelade filer."/>
 		<tip id="ID_BROWSE_PROFILE" message="Visa användarens profil."/>
@@ -2327,7 +2346,6 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<tip id="ID_CHAT_EMOTICONS" message="Infoga ett känslouttryck."/>
 		<tip id="ID_CHAT_ITALIC" message="Gör texten kursiv (Ctrl+I)"/>
 		<tip id="ID_CHAT_PRIORITY" message="Ge uppladdningsprioritet till användaren."/>
-		<!-- <tip id="ID_CHAT_SEND_FILE" message="Send a file to the user..."/> -->
 		<tip id="ID_CHAT_TIMESTAMP" message="Visa tid för när varje meddelandes togs emot."/>
 		<tip id="ID_CHAT_UNDERLINE" message="Gör texten understruken (Ctrl+U)"/>
 		<tip id="ID_CHILD_CLOSE" message="Stäng det aktiva fönstret."/>
@@ -2336,6 +2354,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<tip id="ID_CHILD_RESTORE" message="Öppna de valda fönstrena."/>
 		<tip id="ID_DISCOVERY_ADD" message="Lägg till en upptäckstjänst…"/>
 		<tip id="ID_DISCOVERY_ADVERTISE" message="Annonsera de valda GWebCache-tjänsterna till en slumpvald existerande GWebCache."/>
+		<tip id="ID_DISCOVERY_BLOCKED" message="Visa GWebCachetjänster i upptäcksfönstret."/>
 		<tip id="ID_DISCOVERY_BROWSE" message="Visa statistik för GWebCache-tjänsten på webben."/>
 		<tip id="ID_DISCOVERY_EDIT" message="Visa egenskaper för den valda upptäckstjänsten."/>
 		<tip id="ID_DISCOVERY_GNUTELLA" message="Visa Bootstraptjänster i upptäcksfönstret."/>
@@ -2387,13 +2406,14 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<tip id="ID_HELP_ABOUT" message="Visar Shareazas omdialog…"/>
 		<tip id="ID_HELP_CODEC" message="Allt om codecs och videoproblem."/>
 		<tip id="ID_HELP_FAQ" message="Visa Shareazas FAQ."/>
-		<tip id="ID_HELP_ROUTER" message="Få hjälp att konfigurera din router eller brandvägg."/>
 		<tip id="ID_HELP_FORUMS" message="Besök Shareazas diskussionsforum."/>
 		<tip id="ID_HELP_GUIDE" message="Besk Shareazas användarguide."/>
 		<tip id="ID_HELP_HOMEPAGE" message="Besök Shareazas hemsida."/>
+		<tip id="ID_HELP_ROUTER" message="Få hjälp att konfigurera din router eller brandvägg."/>
 		<tip id="ID_HELP_SECURITY" message="Få hjälp att skydda din dator från skadlig programvara."/>
-		<tip id="ID_HELP_UPDATE" message="Sök efter nyheter och uppdateringar."/>
 		<tip id="ID_HELP_TEST" message="Testa din anslutning."/>
+		<tip id="ID_HELP_UPDATE" message="Sök efter nyheter och uppdateringar."/>
+		<tip id="ID_HELP_VERSION_CHECK" message="Check for new version"/>
 		<tip id="ID_HELP_WEB_1" message="Besök webbplatsen"/>
 		<tip id="ID_HELP_WEB_2" message="Besök webbplatsen"/>
 		<tip id="ID_HELP_WEB_3" message="Besök webbplatsen"/>
@@ -2403,7 +2423,9 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<tip id="ID_HITMONITOR_CLEAR" message="Rensa träffmonitorns buffert."/>
 		<tip id="ID_HITMONITOR_PAUSE" message="Gör en paus i träffmontorn."/>
 		<tip id="ID_HITMONITOR_SEARCH" message="Sök på nätverket efter den valda artikeln."/>
+		<tip id="ID_HOSTCACHE_BT_CACHE" message="Visa BitTorrent-uppladdningar."/>
 		<tip id="ID_HOSTCACHE_CONNECT" message="Anslut till de valda värdarna."/>
+		<tip id="ID_HOSTCACHE_DC_CACHE" message="Show DC++ cached hubs."/>
 		<tip id="ID_HOSTCACHE_DISCONNECT" message="Koppla ifrån de valda grannarna."/>
 		<tip id="ID_HOSTCACHE_ED2K_CACHE" message="Visa eDonkey-servrar"/>
 		<tip id="ID_HOSTCACHE_ED2K_DOWNLOAD" message="Ladda ned eDonkey &quot;Server.met&quot;-fil.."/>
@@ -2411,8 +2433,10 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<tip id="ID_HOSTCACHE_G2_CACHE" message="Visa Gnutella2s värdar i cachen."/>
 		<tip id="ID_HOSTCACHE_G2_HORIZON" message="Visa Gnutella2-horizontnaven."/>
 		<tip id="ID_HOSTCACHE_IMPORT" message="Importera en lista över kända värdar som t.ex. &quot;Server.met&quot;-fil."/>
+		<tip id="ID_HOSTCACHE_KAD_CACHE" message="Visa Gnutella1s värdar i cachen."/>
 		<tip id="ID_HOSTCACHE_PRIORITY" message="Försök att ansluta till denna server före andra servrar."/>
 		<tip id="ID_HOSTCACHE_REMOVE" message="Raderar de valda värdarna från värdcachen."/>
+		<tip id="ID_IMPORT_DOWNLOADS" message="_Importera oavslutade eMule nedladdningar"/>
 		<tip id="ID_LIBRARY_ADD" message="Lägg till en mapp till ditt bibliotek…"/>
 		<tip id="ID_LIBRARY_ALBUM_DELETE" message="Radera de valda albummapparna."/>
 		<tip id="ID_LIBRARY_ALBUM_OPEN" message="Öppna de valda albummapparna."/>
@@ -2442,6 +2466,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<tip id="ID_LIBRARY_REBUILD" message="Bygg om metadata och granskning av de valda mapparna eller filerna."/>
 		<tip id="ID_LIBRARY_REBUILD_ANSI" message="Skapa om metadata med annat sprk."/>
 		<tip id="ID_LIBRARY_REFRESH" message="Uppdatera biblioteksvyn."/>
+		<tip id="ID_LIBRARY_REFRESH_METADATA" message="_Uppdatera metadata"/>
 		<tip id="ID_LIBRARY_REMOVE" message="Radera de valda utdelade mapparna."/>
 		<tip id="ID_LIBRARY_RENAME" message="Byt namn på den valda filen på plats."/>
 		<tip id="ID_LIBRARY_SCAN" message="Granska de valda mapparna eller filerna efter förändringar."/>
@@ -2479,6 +2504,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<tip id="ID_MEDIA_PAUSE" message="Gör en paus i uppspelningen av mediafilen." tip="Paus"/>
 		<tip id="ID_MEDIA_PLAY" message="Starta uppspelning av den nuvarande mediafilen." tip="Spela upp"/>
 		<tip id="ID_MEDIA_PLAYLIST" message="Visa eller dölj spellistseditorn."/>
+		<tip id="ID_MEDIA_POSITION" message="Sök till en position i mediafilen" tip="Seek"/>
 		<tip id="ID_MEDIA_PREVIOUS" message="Byt till den föregående filen i spellistan." tip="Föregående fil"/>
 		<tip id="ID_MEDIA_PROPERTIES" message="Visa och redigera egenskaper fr de valda filerna."/>
 		<tip id="ID_MEDIA_RANDOM" message="Växla slumpläge för spellistan."/>
@@ -2493,14 +2519,15 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<tip id="ID_MEDIA_SIZE_ONE" message="Visa videon i sin ursprungsstorlek."/>
 		<tip id="ID_MEDIA_SIZE_THREE" message="Visa videon i tre gånger så stor storlek som dess ursprungsstorlek."/>
 		<tip id="ID_MEDIA_SIZE_TWO" message="Visa videon i dubbel så stor storlek som dess ursprungsstorlek."/>
+		<tip id="ID_MEDIA_SPEED" message="Justera uppspelningshastigheten" tip="Hastighet"/>
 		<tip id="ID_MEDIA_STATUS" message="Visa eller dölj mediastatusraden."/>
 		<tip id="ID_MEDIA_STOP" message="Stoppa uppspelning av mediafilen." tip="Stopp"/>
 		<tip id="ID_MEDIA_VIS" message="Välj ett insticksprogram för ljudvisualisering."/>
+		<tip id="ID_MEDIA_VOLUME" message="Justera ljudvolymen" tip="Volume"/>
 		<tip id="ID_MEDIA_ZOOM" message="Justera videons zoomning och proportioner."/>
-		<tip id="IDC_MEDIA_POSITION" value="Seek to a position in the media file." tip="Seek"/>
-		<tip id="IDC_MEDIA_SPEED" value="Adjust the speed of the media file." tip="Hastighet"/>
-		<tip id="IDC_MEDIA_VOLUME" value="Adjust the audio volume." tip="Volume"/>
 		<tip id="ID_MONITOR_CLOSE" message="Stäng monitorfönstret."/>
+		<tip id="ID_MUSICBRAINZ_ALBUMS" message="Look at all albums for this artist."/>
+		<tip id="ID_MUSICBRAINZ_MATCHES" message="Sök efter andra kopior av den valda filen."/>
 		<tip id="ID_NEIGHBOURS_CHAT" message="Öppna en chattsession med den valda användaren."/>
 		<tip id="ID_NEIGHBOURS_COPY" message="Kopiera URI för åtkomst till de valda värdarna."/>
 		<tip id="ID_NEIGHBOURS_DISCONNECT" message="Koppla ifrån de valda grannen/grannarna."/>
@@ -2513,12 +2540,22 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<tip id="ID_NETWORK_CHAT_TO" message="Open a chat session with a user..."/>
 		<tip id="ID_NETWORK_CONNECT" message="Anslut till nätverket."/>
 		<tip id="ID_NETWORK_CONNECT_TO" message="Ansluter manuellt till värden…"/>
+		<tip id="ID_NETWORK_DC" message="Connect to the DC++ network."/>
 		<tip id="ID_NETWORK_DISCONNECT" message="Koppla ifrån nätverket."/>
 		<tip id="ID_NETWORK_ED2K" message="Anslut till eDonkey-nätverket."/>
 		<tip id="ID_NETWORK_EXIT" message="Avsluta Shareaza"/>
 		<tip id="ID_NETWORK_G1" message="Anslut till Gnutellas ursprungsnätverk."/>
 		<tip id="ID_NETWORK_G2" message="Anslut till Gnutella2-nätverket (mycket rekommenderat)."/>
 		<tip id="ID_NETWORK_SEARCH" message="Starta en ny sökning i nätverket…"/>
+		<tip id="ID_NEXT_PANE" message="Switch to the next window pane" tip="Nästa i rad"/>
+		<tip id="ID_OPEN_DOWNLOADS_FOLDER" message="Open my folder of completed Downloads"/>
+		<tip id="ID_PREV_PANE" message="Byt till den föregående filen i spellistan." tip="Föregående fil"/>
+		<tip id="ID_SCHEDULER_ACTIVATE" message="Rensa de valda uppladdningen/uppladdningarna från listan."/>
+		<tip id="ID_SCHEDULER_ADD" message="Adds a new task to scheduler list."/>
+		<tip id="ID_SCHEDULER_DEACTIVATE" message="Anslut till nätverket."/>
+		<tip id="ID_SCHEDULER_EDIT" message="Redigera den valda säkerhetspolicyn…"/>
+		<tip id="ID_SCHEDULER_REMOVE" message="Radera de valda nedladdningarna från listan."/>
+		<tip id="ID_SCHEDULER_REMOVE_ALL" message="Removes all scheduled tasks."/>
 		<tip id="ID_SEARCH_CHAT" message="Öppna en chattsession med den valda användaren."/>
 		<tip id="ID_SEARCH_CLEAR" message="Rensa sökresultatet."/>
 		<tip id="ID_SEARCH_COLUMNS" message="Välj en metadatakolumn att visa…"/>
@@ -2550,9 +2587,22 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<tip id="ID_SECURITY_POLICY_DENY" message="Sätt förvald säkerhetspolicy till att neka alla värdar."/>
 		<tip id="ID_SECURITY_REMOVE" message="Radera den valda säkerhetspolicyn."/>
 		<tip id="ID_SECURITY_RESET" message="Återställ träffräknaren för de valda reglerna."/>
+		<tip id="ID_SHAREMONKEY_BUY" message="Buy it and support the author"/>
+		<tip id="ID_SHAREMONKEY_COMPARE" message="Compare prices in different stores"/>
+		<tip id="ID_SHAREMONKEY_DOWNLOAD" message="_Sök efter detta"/>
+		<tip id="ID_SHAREMONKEY_NEXT" message="Go to the next match"/>
+		<tip id="ID_SHAREMONKEY_PREVIOUS" message="Go to the previous match"/>
+		<tip id="ID_SHAREMONKEY_PRICES" message="Byt till den föregående filen i spellistan."/>
+		<tip id="ID_SHAREMONKEY_SAVE" message="Visa filen i mitt bibliotek"/>
 		<tip id="ID_SYSTEM_CLEAR" message="Rensa statusloggen."/>
+		<tip id="ID_SYSTEM_COPY" message="Copy selected line(s) of status log."/>
 		<tip id="ID_SYSTEM_TIMESTAMP" message="Gör en tidsstämpel för varje rad."/>
 		<tip id="ID_SYSTEM_VERBOSE" message="Visa en detaljerad logg över systemaktiviteter."/>
+		<tip id="ID_SYSTEM_VERBOSE_DEBUG" message="Visa förklaring."/>
+		<tip id="ID_SYSTEM_VERBOSE_ERROR" message="Visa förklaring."/>
+		<tip id="ID_SYSTEM_VERBOSE_INFO" message="Visa rutnätslinjer."/>
+		<tip id="ID_SYSTEM_VERBOSE_NOTICE" message="Display notices and above."/>
+		<tip id="ID_SYSTEM_VERBOSE_WARNING" message="Visa rutnätslinjer."/>
 		<tip id="ID_TAB_CONNECT" message="Anslut eller koppla ifrån nätverket."/>
 		<tip id="ID_TAB_HOME" message="Återvänd till Shareaza hemsida"/>
 		<tip id="ID_TAB_IRC" message="Show the IRC Chat window."/>
@@ -2603,6 +2653,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<tip id="ID_VIEW_NEIGHBOURS" message="Visa eller dölj fönstret GRANNAR."/>
 		<tip id="ID_VIEW_PACKETS" message="Visa eller dölj fönstret PAKTEDUMP."/>
 		<tip id="ID_VIEW_RESULTS_MONITOR" message="Visa eller dölj fönstret TRÄFFMONITOR."/>
+		<tip id="ID_VIEW_SCHEDULER" message="Visa eller dölj fönstret SÄKERHET."/>
 		<tip id="ID_VIEW_SEARCH_MONITOR" message="Visa eller dölj fönstret SÖKMONITOR."/>
 		<tip id="ID_VIEW_SECURITY" message="Visa eller dölj fönstret SÄKERHET."/>
 		<tip id="ID_VIEW_SYSTEM" message="Visar eller dölj fönstret SYSTEM."/>
@@ -2610,6 +2661,10 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<tip id="ID_VIEW_TRAFFIC" message="Visa eller dölj fönstret DIAGRAM."/>
 		<tip id="ID_VIEW_UPLOADS" message="Visa eller dölj fönstret UPPLADDNINGAR."/>
 		<tip id="ID_VIEW_WINDOWED" message="Använd Shareaza i expertläge."/>
+		<tip id="ID_WEBSERVICES_LIST" message="Välj webbtjänsten för att ta reda på mer information om den valda filen."/>
+		<tip id="ID_WEBSERVICES_MUSICBRAINZ" message="Sök efter filinformation med tjänsten ShareMonkey."/>
+		<tip id="ID_WEBSERVICES_SHAREMONKEY" message="Sök efter filinformation med tjänsten ShareMonkey."/>
+		<tip id="ID_WINDOW_ARRANGE" message="Arrange icons at the bottom of the window" tip="Arrange Icons"/>
 		<tip id="ID_WINDOW_CASCADE" message="Expandera öppna fönster så att de visas på skärmen."/>
 		<tip id="ID_WINDOW_MONITOR" message="Visa eller dälj bandbreddsmonitorn"/>
 		<tip id="ID_WINDOW_NAVBAR" message="Visa eller dölj navigationsfältet."/>
@@ -2618,8 +2673,6 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<tip id="ID_WINDOW_TILE_HORZ" message="Arrangera öppna fönster horizontellt utan att de överlappar varandra."/>
 		<tip id="ID_WINDOW_TILE_VERT" message="Arrangera öppna fönster vertikalt utan att de överlappar varandra."/>
 		<tip id="ID_WINDOW_TOOLBAR" message="Visa eller dölj verktygsfältet."/>
-		<tip id="ID_WEBSERVICES_LIST" message="Välj webbtjänsten för att ta reda på mer information om den valda filen."/>
-		<tip id="ID_WEBSERVICES_SHAREMONKEY" message="Sök efter filinformation med tjänsten ShareMonkey."/>
 		<!-- PLUGIN TIPS -->
 		<tip id="ImageViewer_BestFit" message="Anpassa bilden till fönstrets storlek."/>
 		<tip id="ImageViewer_ActualSize" message="Visa bilden i originalstorlek."/>
@@ -2656,23 +2709,6 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<string id="WINDOW_HELP" value="Hjälp för Shareaza"/>
 		<string id="WINDOW_IRC" value="Shareaza Chat"/>
 		<string id="WINDOW_SCHEDULER" value="Scheduler"/>
-		<string id="154" value="Are you sure you want to remove all scheduled tasks? This cannot be undone."/>
-		<string id="156" value="Scheduled time has already passed.\n\nPlease select a time in the future."/>
-		<string id="157" value="Bandwidth: Full Speed"/>
-		<string id="158" value="Bandwidth: Reduced Speed"/>
-		<string id="159" value="Bandwidth: Stop"/>
-		<string id="160" value="System: Exit Shareaza"/>
-		<string id="161" value="System: Disconnect Dial-up Connection"/>
-		<string id="162" value="System: Turn Off the Computer"/>
-		<string id="163" value="Please select a task."/>
-		<string id="164" value="Specific day(s) of week"/>
-		<string id="165" value="Aktiv"/>
-		<string id="166" value="Inaktiv"/>
-		<string id="167" value="Done"/>
-		<string id="168" value="Waiting..."/>
-		<string id="169" value="No Tasks Currently Scheduled"/>
-		<string id="172" value="Done Today"/>
-		<string id="173" value="You should select at least one day of week."/>
 		<string id="7000" value="Är du säker på att du vill radera detta filter ?"/>
 		<string id="7001" value="&amp;Scheman"/>
 		<string id="7002" value="Flera värden"/>
@@ -2692,9 +2728,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<string id="8007" value="Det finns inga aktiva sökningar. Klicka här för att söka efter filer."/>
 		<string id="8008" value="Shareaza har fullständigt laddad ned Shareaza version (%s).  Vill du uppgradera nu?\n\nOm du väljer Ja kommer Shareaza stängas tillfälligt och uppgraderingen kommer att installeras.."/>
 		<string id="8009" value="Är du säker på att du vill radera skinnet &quot;%s&quot;?  Detta kan inte ångras."/>
-		<string id="8010" value="Detta är en förhandsversion av Shareaza och förhandstestningen har avslutats. Ladda ned en fullständig officiell version från Shareaza.Sourceforge.net."/>
 		<string id="8011" value="Vid vyändring stängs alla öppna fönster. Vill du ändra vy nu?"/>
-		<string id="8012" value="Torrentinformation"/>
 		<string id="8013" value="Inga nya Shareaza version upptäcks."/>
 		<string id="8014" value="Egenskaper"/>
 		<string id="8060" value="Nav/Ultralikeläge med %lu grannar. %s i ditt lokala bibliotek."/>
@@ -2762,7 +2796,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<string id="8178" value="Vad är det för filtyp?"/>
 		<string id="8179" value="(Rensa sökhistorik)"/>
 		<string id="8180" value="Filstorleken mste vara"/>
-		<string id="8181" value=" till"/><!-- size from xx TO xx-->
+		<string id="8181" value=" to (size from xx TO xx)"/>
 		<string id="8208" value="Shareaza granskar %Iu filer:"/>
 		<string id="8223" value="%i dagar och %i timmar"/>
 		<string id="8224" value="Shareaza laddar ned:"/>
@@ -2782,7 +2816,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<string id="8239" value="Färdig"/>
 		<string id="8240" value="Shareaza flyttar nedladdningen:"/>
 		<string id="8241" value="Shareaza kontrollerar nedladdningen efter fil:"/>
-		<string id="8243" value="Uppladdad volym:"/>
+		<string id="8243" value="Upladdningar"/>
 		<string id="8244" value="Antal recensioner:"/>
 		<string id="8288" value="Utforska ditt Shareazabibliotek"/>
 		<string id="8289" value="Utforskar "/>
@@ -2844,10 +2878,9 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<string id="16077" value="Adressen %s är redan blockerad  av dina säkerhetsregler."/>
 		<string id="16078" value="Lade till säkerhetsregel för att blockera %s."/>
 		<string id="16079" value="Är du säker på att du vill koppla ifrån?"/>
-		<string id="16080" value="You are running the Scheduler in 'G2 only' mode. Would you like to turn this mode off, so that all active networks remain connected?"/>
+		<string id="16080" value="Du är inte ansluten till nätverket."/>
 		<string id="16081" value="Skickar begäran om &quot;%s&quot; till %s."/>
 		<string id="16083" value="Att tvinga din PC till navläge kan skada prestandan på fildelningsnätverket. Det är vanligtvis bättre att låta Shareaza bestämma om navläge ska användas eller inte.\n\nNavläge ger INTE bättre sökresultat eller några andra föredelar för dig.\n\nVill du verkligen göra detta trots dessa nackdelar?"/>
-		<string id="16084" value="Avstängning av stöd för Gnutella 1-protokoll kan begränsa dina sökresultat och om du beter dig som ett nav kan det också påverka resultatet för andra användare. Vill du verkligen göra detta?"/>
 		<string id="16085" value="Gnutella2 är Shareazas primära nätverk. Avstängning av stöd för det kan drastiskt minska både mängden och kvaliteten på sökresultat. Är du SÄKER på att du vill göra detta?"/>
 		<string id="16087" value="Din utgående bandbredd är för låg för att använda detta nätverk"/>
 		<string id="16128" value="Accepterade en inkommande anslutning från %s port %i."/>
@@ -2878,6 +2911,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<string id="16157" value="Grannen %s är inte ett nav, stänger anslutning."/>
 		<string id="16158" value="Gnutella2-anslutning med grannen %s upprättad fullständigt (%s)."/>
 		<string id="16159" value="Stänger anslutning till ej-Gnutella2-granne %s."/>
+		<string id="16191" value="Received a packet from %s for %s which excess query limits, ignoring."/>
 		<string id="16192" value="Grannen %s skickade ett paket med för stor storlek, släpper anslutning."/>
 		<string id="16193" value="Grannen %s skickade ett paket med noll TTL, ignorerar."/>
 		<string id="16194" value="Grannen %s skickade ett paket med för stor TTL, släpper paket (TTL=%i, Hops=%i)."/>
@@ -3018,6 +3052,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<string id="16375" value="Ofullständig"/>
 		<string id="16376" value="Fullständiga filer"/>
 		<string id="16377" value="HTTP Guard"/>
+		<string id="16378" value="Host &quot;%s&quot; sent a 416, without providing available ranges. Closing connection."/>
 		<string id="16379" value="Biblioteksfiler"/>
 		<string id="16384" value="Är du säker på att du vill köra filen &quot;%s&quot;?\n\nVissa filer kan skada din dator. Försäkra dig om vad det är för fil innan du kör den."/>
 		<string id="16385" value="Du är på väg att förändra metadatan för %i filer. Är du säker på att du vill fortsätta?"/>
@@ -3077,6 +3112,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<string id="16526" value="Gnutellapaket släppta"/>
 		<string id="16527" value="Gnutellapaket förlorade"/>
 		<string id="16528" value="Gnutella lokala frågor"/>
+		<string id="16529" value="Gnutella lokala frågor"/>
 		<string id="16532" value="Total TCP-mottagningsbandbredd"/>
 		<string id="16533" value="Total TCP-sändningsbandbredd"/>
 		<string id="16534" value="Total UDP-mottagningsbandbredd"/>
@@ -3145,12 +3181,11 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<string id="16944" value="Hittade %i utdelade filer i %ss bibliotek."/>
 		<string id="16991" value="Shareaza mediaspelare"/>
 		<string id="16992" value="Shareaza kan inte initiera sitt insticksprogram för MediaServices. Installera om Shareaza och kontrollera att alla mediacodecs och utmatningsenheter är installerade."/>
-		<string id="16993" value="Alla mediafiler|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Spellistor|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Ljudfiler|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|Videofiler|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Ljudspår på CD|*.cda|MIDI-filer|*.mid;*.rmi;*.midi|Alla filer|*.*||"/>
 		<string id="16994" value="Kan inte ladda mediafilen &quot;%s&quot;"/>
 		<string id="16995" value="Filen kan vara skadad eller du kanske inte har nödvändig codec för att spela upp den."/>
 		<string id="16996" value="Delar av filen kan inte spelas upp. Du kanske måste ladda ned ytterligare codecs."/>
 		<string id="16997" value="Ingen fil spelas. Dubbelklicka på en mediafil i ditt bibliotek för att spela den."/>
-		<string id="16998" value="S     H     A     R     E     A     Z     A           M     E     D     I     A     S     Y     S     T     E     M"/><!-- on one line -->
+		<string id="16998" value="S     H     A     R     E     A     Z     A           M     E     D     I     A     S     Y     S     T     E     M"/>
 		<string id="16999" value="S P E L L I S T A"/>
 		<string id="17017" value="Send:"/>
 		<string id="17018" value="Welcome to Shareaza Chat!"/>
@@ -3250,6 +3285,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<string id="17477" value="BitTorrentkopplingen med %s svarade med fel fil."/>
 		<string id="17478" value="BitTorrentkopplingen med %s begärde en okänd fil."/>
 		<string id="17479" value="BitTorrentkopplingen med %s upprättades för &quot;%s&quot;."/>
+		<string id="17480" value="BitTorrentkopplingen med %s begärde en okänd fil."/>
 		<string id="17481" value="Mottog BitTorrent beskrivningsfil: &quot;%s&quot;"/>
 		<string id="17482" value="Kan inte analysera förhämtad BitTorrentfil &quot;%s&quot;."/>
 		<string id="17483" value="Fel från BitTorrentspåraren för &quot;%s&quot; : &quot;%s&quot;."/>
@@ -3268,7 +3304,6 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<string id="17496" value="Ett fel inträffade vid kopiering från &quot;%s&quot; till en BitTorrentutdelningsfil."/>
 		<string id="17497" value="Ett okänt fel uppstod vid försöka att så &quot;%s&quot;."/>
 		<string id="17498" value="Ett fel hittades i filen &quot;%s&quot;."/>
-		<string id="17500" value="Trackern svarade inte - försöker igen (%i av %i)"/>
 		<string id="17501" value="Kan inte kommunicera med trackern"/>
 		<string id="17503" value="Trackern misslyckades - försöker med nästa tracker (%i av %i)"/>
 		<string id="17505" value="BitTorrentanslutningen till %s avbröts."/>
@@ -3281,12 +3316,6 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<string id="17514" value="Updating Bittorrent Downloads..."/>
 		<string id="17515" value="Converting Torrent:"/>
 		<string id="18496" value="Du har ändrat filnamnet. Är du säker på att du vill ändra namn på denna nedladdning?"/>
-		<string id="18497" value="Du har skrivit ett felaktigt SHA1-värde. Kontrollera det och försök igen."/>
-		<string id="18498" value="Du har skrivit ett felaktigt tiger-tree-värde. Kontrollera det och försök igen."/>
-		<string id="18499" value="Du har skrivit ett felaktigt eDonkey hashset-värde. Kontrollera det och försök igen."/>
-		<string id="18500" value="Du har anget ett annat SHA1-värde än det som för tillfället är associerat med denna nedladdning. Är du säker på att du vill ändra det?"/>
-		<string id="18501" value="Du har anget ett annat tiger-tree hash-värde än det som för tillfället är associerat med denna nedladdning. Är du säker på att du vill ändra det?"/>
-		<string id="18502" value="Du har anget ett annat eDonkey hash-värde än det som för tillfället är associerat med denna nedladdning. Är du säker på att du vill ändra det?"/>
 		<string id="18503" value="Är du säker på att du vill glömma aktuell verifikationsstatus? All nedladdad data kommer att behandlas som opålitlig och cachade hashtrees och hashsets kommer att bli spolade."/>
 		<string id="18504" value="Är du säker på att du vill glömma alla källor för den valda nedladdningen?"/>
 		<string id="18505" value="Ange ett giltigt omfång av bytes att radera. Från-fältet är anger den första byten att radera och till-fältet anger den sista."/>
@@ -3296,13 +3325,19 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<string id="18509" value="Du kan inte anta att denna nedladdning är färdig och återverifiera den eftersom du inte har någon verifikationsdata, t.ex. tiger-tree-volym, eDonkey hashset eller BitTorrent hashset. Utan verifikationsinformation kan inte nedladdningen verifieras."/>
 		<string id="18510" value="Är du säker på att du vill anta att nedladdningen är färdig och återverifiera den? Hela filen kommer att granskas och Shareaza kommer att acceptera godkänta delar och ladda ned ej godkända delar igen. "/>
 		<string id="18511" value="Du har ndrat filstorleken. Är du säker på att du vill ändra filstorleken för den här nedladdningen?"/>
+		<string id="18512" value="Är du säker på att du vill avbryta alla nedladdningar i denna grupp?"/>
+		<string id="18513" value="Du har skrivit ett felaktigt eDonkey hashset-värde. Kontrollera det och försök igen."/>
+		<string id="18514" value="Du har anget ett annat SHA1-värde än det som för tillfället är associerat med denna nedladdning. Är du säker på att du vill ändra det?"/>
 		<string id="19000" value="Fjärråtkomst är avstängd."/>
 		<string id="19001" value="Du måste välja ett användarnamn och lösenord."/>
 		<string id="19002" value="Kan inte acceptera anslutningar. URL otillgänlig."/>
+		<string id="19103" value="Welcome to Shareaza Chat!"/>
+		<string id="19104" value="Please respect others while using this service"/>
+		<string id="19105" value="Chat"/>
 		<string id="20000" value="Ingen URN tillgänglig"/>
 		<string id="20001" value="Stäng"/>
 		<string id="20002" value="av"/>
-		<string id="20003" value="Att ändra gränssnittets riktning kräver omstart. \nDu måste starta om Shareaza manuellt. Avsluta nu?"/>
+		<string id="20003" value="Changing language requires application restart.\nRestart now?"/>
 		<string id="20005" value="Nej"/>
 		<string id="20006" value="Ja"/>
 		<string id="20007" value="Auto"/>
@@ -3312,6 +3347,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<string id="20011" value="&amp;Framåt"/>
 		<string id="20012" value="Avsluta"/>
 		<string id="20013" value="Alla"/>
+		<string id="20014" value="Detta val använder tjänster tillhandahållna av Bitzi.com för igenkänning och utdelning av information om valda filer.\n\nShareaza kommer att överföra SHA1-granskningskoden för de valda filerna för att begära information från Bitzidatabasen. Om du är rädd om din integritet kan du välja att läsa integritetspolicyn för Bitzi.com.\n\nVill du fortsätta?"/>
 		<string id="20100" value="ANsluter"/>
 		<string id="20101" value="Efterfrågar"/>
 		<string id="20102" value="Svar"/>
@@ -3350,13 +3386,6 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<string id="20135" value="Nästa"/>
 		<string id="20136" value="K"/>
 		<string id="20137" value="kllor"/>
-		<string id="20200" value="Söndag"/>
-		<string id="20201" value="Måndag"/>
-		<string id="20202" value="Tisdag"/>
-		<string id="20203" value="Onsdag"/>
-		<string id="20204" value="Torsdag"/>
-		<string id="20205" value="Fredag"/>
-		<string id="20206" value="Lördag"/>
 		<string id="20210" value="(Inget betyg)"/>
 		<string id="20211" value="Falsk / Skadad"/>
 		<string id="20212" value="Dlig"/>
@@ -3365,7 +3394,6 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<string id="20215" value="Mycket bra"/>
 		<string id="20216" value="Utmärkt"/>
 		<string id="20217" value="Välj temporär filmapp för eDonkey/eMule:"/>
-		<!-- Column headers in Library Album View -->
 		<string id="20230" value="#"/>
 		<string id="20231" value="Titel"/>
 		<string id="20232" value="Längd"/>
@@ -3382,9 +3410,28 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<string id="20243" value="Continue"/>
 		<string id="20244" value="&amp;Remember my selection next time"/>
 		<string id="20245" value="New Folder"/>
-		<string id="32825" value="Open my folder of completed Downloads"/>
-		<string id="32773" value="Check for new version"/>
-		<string id="61215" value="Activate this window"/>
+		<string id="20246" value="Command-line options:\n\n-tray : Disable startup splash screen and send application to tray\n-nosplash : Disable startup splash screen\n-nowarn : Disable alpha (daily builds) version warning dialog\n-wait : Wait for other application instance exit\n\nInterface modes:\n\n-basic : Start application in Basic interface mode\n-tabbed : Start application in Tabbed interface mode\n-windowed : Start application in Windowed interface mode\n\nSystem options:\n\n-RegServer : Register internal components for everyone\n-UnRegServer : Un-register internal components for everyone\n-RegServerPerUser : Register internal components for current user\n-UnRegServerPerUser : Un-register internal components for current user"/>
+		<string id="20247" value="Failed to load metadata schemas. Please reinstall application."/>
+		<string id="20248" value="Du har inte valt någon mapp att dela ut. Vill du fortsätta?"/>
+		<string id="20249" value="Off"/>
+		<string id="20250" value="Low"/>
+		<string id="20251" value="_Normalt läge"/>
+		<string id="20252" value="High"/>
+		<string id="20253" value="Skin load error: %s. Element: %s"/>
+		<string id="20254" value="Loading skin: %s"/>
+		<string id="20255" value="Are you sure you want to remove all scheduled tasks? This cannot be undone."/>
+		<string id="20256" value="Sök Shareaza"/>
+		<string id="20257" value="Bandwidth: Full Speed"/>
+		<string id="20258" value="Bandwidth: Reduced Speed"/>
+		<string id="20259" value="Bandwidth: Stop"/>
+		<string id="20260" value="System: Exit Shareaza"/>
+		<string id="20261" value="System: Disconnect Dial-up Connection"/>
+		<string id="20262" value="System: Turn Off the Computer"/>
+		<string id="20263" value="Aktiv"/>
+		<string id="20264" value="Inaktiv"/>
+		<string id="20265" value="Done"/>
+		<string id="20266" value="Waiting..."/>
+		<string id="20267" value="No Tasks Currently Scheduled"/>
 	</strings>
 	<!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 	<!-- Don't edit dialogs manualy! Use DialogScan feature instead -->
@@ -3516,7 +3563,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 			<control caption="Port:"/>
 			<control/>
 		</dialog>
-		<dialog name="CWebSettingsPage" cookie="BuStBuBuBuBuBuBuBuCoBuBuSt" caption="Webb">
+		<dialog name="CWebSettingsPage" cookie="BuStBuBuBuBuBuBuBuBuCoBuBuSt" caption="Webb">
 			<control caption="_Hantering av P2P-länkar:"/>
 			<control caption="Använd Shareaza för att öppna filer av typen:"/>
 			<control caption="Magnet ( magnet: )"/>
@@ -3524,6 +3571,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 			<control caption="eDonkey ( ed2k: )"/>
 			<control caption="Piolet ( mp2p: )"/>
 			<control caption="BitTorrent ( .torrent )"/>
+			<control caption="DC++ ( dchub: )"/>
 			<control caption="_Nedladdningshanterare:"/>
 			<control caption="Använd Shareaza för att hantera alla mina webbnedladdningar:"/>
 			<control/>
@@ -3561,12 +3609,12 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 			<control/>
 			<control/>
 		</dialog>
-		<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStCoStCoBuBu" caption="Nedladdningar">
+		<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuEdBu" caption="Nedladdningar">
 			<control caption="Spara _färdiga nedladdningar här:"/>
 			<control/>
 			<control/>
-			<control caption="Spara tillfälliga _ofullständiga nedladdningar här:"/>
-			<control/>
+			<control caption="Scan every completed file with AntiVirus"/>
+			<control caption="Välj förinställd:"/>
 			<control/>
 			<control caption="Antal _nedladdningar:"/>
 			<control caption="Max antal filer:"/>
@@ -3583,8 +3631,10 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 			<control/>
 			<control caption="Största köstorlek:"/>
 			<control/>
-			<control/>
 			<control caption="Tillåt endast överföringar till och från nätverk som är /nanslutna för närvarande."/>
+			<control caption="Spara tillfälliga _ofullständiga nedladdningar här:"/>
+			<control/>
+			<control/>
 		</dialog>
 		<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStCoStCoBuSyBuBuBuSt" caption="Uppladdningar">
 			<control caption="_Alternativ:"/>
@@ -3615,48 +3665,11 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 			<control caption="Shareazas fjärråtkomst tillåter dig att lämna Shareaza igång på din PC och kontrollera det med en webbläsare. Du måste kunna acceptera inkommande anslutningar för att använda denna funktion (d.v.s. en ordentligt anpassad router eller dylikt)."/>
 			<control caption="_Aktivera:"/>
 			<control caption="Aktivera Shareazas fjärråtkomst:"/>
-			<control caption="URL"/>
+			<control/>
 			<control caption="_Inloggning:"/>
 			<control caption="Användarnamn:"/>
 			<control/>
 			<control caption="Lösenord:"/>
-			<control/>
-		</dialog>
-		<dialog name="CScheduleTaskDlg" cookie="BuBuBuBuSySyBuBuBuBuBuBuBuBuCoEdmsEdmsEdmsBuBuEdBuStStStStStStStBuBu" caption="Schedule Item">
-			<control caption="OK"/>
-			<control caption="Avbryt"/>
-			<control caption="Only once"/>
-			<control caption="On specific day(s) of week"/>
-			<control/>
-			<control/>
-			<control caption="Söndag"/>
-			<control caption="Måndag"/>
-			<control caption="Tisdag"/>
-			<control caption="Onsdag"/>
-			<control caption="Torsdag"/>
-			<control caption=" Friday"/>
-			<control caption="Lördag"/>
-			<control caption="Alla"/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control caption=" _Toggle bandwidth independently"/>
-			<control caption=" _Limit network to Gnutella2"/>
-			<control/>
-			<control caption="Make this event active"/>
-			<control caption="Please select a date:"/>
-			<control caption="Please select a time:"/>
-			<control caption="Select the event type:"/>
-			<control caption="Description: (optional)"/>
-			<control caption="% of _bandwidth under limit"/>
-			<control caption="% of _download under limit"/>
-			<control caption="% of _upload under limit"/>
-			<control caption="Days Of Week"/>
-			<control caption="Run this event"/>
 			<control/>
 		</dialog>
 		<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Nätverk">
@@ -4531,6 +4544,25 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 			<control caption="Avbryt"/>
 			<control caption="Add a channel name:|Enter kick/ban reason:"/>
 		</dialog>
+		<dialog name="CScheduleTaskPage" cookie="StCoBuEdmsEdmsBuBuBuBuBuStStStBuBu" caption="Händelse">
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control caption="Gnutella1"/>
+			<control caption="Gnutella2"/>
+			<control caption="eDonkey"/>
+			<control caption="DC++"/>
+			<control caption="BitTorrent"/>
+			<control caption="Select the event type:"/>
+			<control caption="% of _download under limit"/>
+			<control caption="% of _upload under limit"/>
+			<control caption="Nätverk"/>
+			<control caption="Bandbredd"/>
+		</dialog>
 	</dialogs>
 	<!-- Columns Definitions -->
 	<listColumns>
@@ -4669,6 +4701,14 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 			<column from="Rating" to="Betyg"/>
 			<column from="Comments" to="Kommentarer"/>
 			<column from="Order" to="Ordning"/>
+		</list>
+		<list name="CSchedulerWnd">
+			<column from="Action" to="Händelse"/>
+			<column from="Trigger" to="TigerTree"/>
+			<column from="Next Run" to="Nästa"/>
+			<column from="Active" to="Aktiv"/>
+			<column from="Status" to="Status"/>
+			<column from="Description" to="Beskrivning"/>
 		</list>
 	</listColumns>
 </skin>

@@ -2916,6 +2916,7 @@ t		Alternativamente, você pode manualmente iniciar este download com o comando 
 		<string id="16157" value="O Vizinho %s não é um hub, fechando conexão."/>
 		<string id="16158" value="Conexão Gnutella2 com o vizinho %s estabelecida com sucesso (%s)."/>
 		<string id="16159" value="Fechando a conexão com o vizinho que não é Gnutella2 %s.."/>
+		<string id="16191" value="Received a packet from %s for %s which excess query limits, ignoring."/>
 		<string id="16192" value="O Vizinho %s repassou um pacote de tamanho excessivo, derrubando conexão."/>
 		<string id="16193" value="O Vizinho %s repassou um pacote com TTL Zero, ignorando."/>
 		<string id="16194" value="O Vizinho %s repassou um pacote com TTL excessivo, derrubando pacote (TTL=%i, Hops=%i)."/>
@@ -3120,6 +3121,7 @@ pasta dos arquivos baixados a sua biblioteca agora?"/>
 		<string id="16526" value="Pacotes Gnutella Descartados"/>
 		<string id="16527" value="Pacotes Gnutella Perdidos"/>
 		<string id="16528" value="Pesquisas Locais Gnutella"/>
+		<string id="16529" value="Pesquisas Locais Gnutella"/>
 		<string id="16532" value="Total de Banda TCP Recebida"/>
 		<string id="16533" value="Total de Banda TCP Transmitida"/>
 		<string id="16534" value="Total de Banda UDP Recebida"/>
@@ -3620,8 +3622,8 @@ pasta dos arquivos baixados a sua biblioteca agora?"/>
 			<control caption="Salvar _Arquivos Completados Aqui:"/>
 			<control/>
 			<control/>
-			<control caption="Armazenar Arquivos _Incompletos Temporários Aqui:"/>
-			<control caption="Select AntiVirus:"/>
+			<control caption="Scan every completed file with AntiVirus"/>
+			<control caption="Selecionar a config salva:"/>
 			<control/>
 			<control caption="_Número de Downloads:"/>
 			<control caption="Máximo de Arquivos:"/>
@@ -3639,7 +3641,7 @@ pasta dos arquivos baixados a sua biblioteca agora?"/>
 			<control caption="Tamanho Máximo da Fila:"/>
 			<control/>
 			<control caption="Só baixar e enviar para redes nas quais está conectado."/>
-			<control caption="Só baixar e enviar para redes nas quais está conectado."/>
+			<control caption="Armazenar Arquivos _Incompletos Temporários Aqui:"/>
 			<control/>
 			<control/>
 		</dialog>
@@ -3672,7 +3674,7 @@ pasta dos arquivos baixados a sua biblioteca agora?"/>
 			<control caption="O Acesso Remoto do Shareaza permite a você deixar o Shareaza rodando no seu PC, e controlá-lo remotamente usando um navegador da rede. Você precisará ser capaz de aceitar conexões de entrada para usar esta função (ex: roteador apropriadamente configurado, etc)"/>
 			<control caption="_Ativar:"/>
 			<control caption="Ativar o Acesso Remoto do Shareaza:"/>
-			<control caption="URL"/>
+			<control/>
 			<control caption="_Credenciais:"/>
 			<control caption="Escolha um Nome:"/>
 			<control/>

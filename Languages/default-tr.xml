@@ -287,9 +287,9 @@
 			<button id="ID_MEDIA_STOP" text="Durdur"/>
 			<separator/>
 			<label text="Ara:" tip="Ortam Dosyasında Konum Ara"/>
-			<control id="IDC_MEDIA_POSITION" width="190" height="22"/>
+			<control id="ID_MEDIA_POSITION" width="190" height="22"/>
 			<label text="Ses:" tip="Sesi Ayarla"/>
-			<control id="IDC_MEDIA_VOLUME" width="50" height="22"/>
+			<control id="ID_MEDIA_VOLUME" width="50" height="22"/>
 			<separator/>
 			<button id="ID_MEDIA_OPEN" text="Dosya Aç"/>
 			<rightAlign/>
@@ -304,11 +304,11 @@
 			<button id="ID_MEDIA_STOP" text="Durdur"/>
 			<separator/>
 			<label text="Ara:" tip="Ortam Dosyasında Konum Ara"/>
-			<control id="IDC_MEDIA_POSITION" width="190" height="22"/>
+			<control id="ID_MEDIA_POSITION" width="190" height="22"/>
 			<label text="Hız:" tip="Ortam Dosyasının Hızını Ayarla"/>
-			<control id="IDC_MEDIA_SPEED" width="40" height="22"/>
+			<control id="ID_MEDIA_SPEED" width="40" height="22"/>
 			<label text="Ses:" tip="Sesi Ayarla"/>
-			<control id="IDC_MEDIA_VOLUME" width="50" height="22"/>
+			<control id="ID_MEDIA_VOLUME" width="50" height="22"/>
 			<separator/>
 			<button id="ID_MEDIA_OPEN" text="Dosya Aç"/>
 			<separator/>
@@ -343,6 +343,7 @@
 			<button id="ID_NETWORK_G2" text="Gnutella2"/>
 			<button id="ID_NETWORK_G1" text="Gnutella1"/>
 			<button id="ID_NETWORK_ED2K" text="eDonkey"/>
+			<button id="ID_NETWORK_DC" text="DC++"/>
 			<separator/>
 			<button id="ID_NEIGHBOURS_SETTINGS" text="Ayarlar"/>
 		</toolbar>
@@ -357,6 +358,7 @@
 			<button id="ID_NETWORK_G2" text="Gnutella2"/>
 			<button id="ID_NETWORK_G1" text="Gnutella1"/>
 			<button id="ID_NETWORK_ED2K" text="eDonkey"/>
+			<button id="ID_NETWORK_DC" text="DC++"/>
 			<separator/>
 			<button id="ID_NEIGHBOURS_SETTINGS" text="Ayarlar"/>
 		</toolbar>
@@ -385,9 +387,6 @@
 			<button id="ID_SCHEDULER_REMOVE" text="Remove Task"/>
 			<separator/>
 			<button id="ID_SCHEDULER_REMOVE_ALL" text="Remove All"/>
-			<rightAlign/>
-			<button id="ID_SCHEDULER_IMPORT" text="Import List"/>
-			<button id="ID_SCHEDULER_EXPORT" text="Export List"/>
 		</toolbar>
 		<!-- HIT MONITOR WINDOW -->
 		<toolbar name="CHitMonitorWnd">
@@ -418,6 +417,7 @@
 			<button id="ID_HOSTCACHE_ED2K_CACHE" text="eDonkey Bellek"/>
 			<button id="ID_HOSTCACHE_BT_CACHE" text="BitTorrent Bellek"/>
 			<button id="ID_HOSTCACHE_KAD_CACHE" text="Kademlia Bellek"/>
+			<button id="ID_HOSTCACHE_DC_CACHE" text="DC++ Cache"/>
 		</toolbar>
 		<!-- PRIVATE CHAT FRAME -->
 		<toolbar name="CPrivateChatFrame">
@@ -428,7 +428,6 @@
 			<button id="ID_CHAT_EMOTICONS"/>
 			<separator/>
 			<button id="ID_CHAT_BROWSE" text="Kullanıcı Ara"/>
-			<!-- <button id="ID_CHAT_SEND_FILE" text="Send File"/> -->
 			<button id="ID_CHAT_PRIORITY" text="Öncelik Ver"/>
 			<separator/>
 			<button id="ID_CHAT_CONNECT" text="Bağlan" visible="false"/>
@@ -496,6 +495,7 @@
 					<item id="ID_NETWORK_G2" text="Bağlan _Gnutella2"/>
 					<item id="ID_NETWORK_G1" text="Bağlan Gnutella_1"/>
 					<item id="ID_NETWORK_ED2K" text="Bağlan _eDonkey2000"/>
+					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_AUTO_CLOSE" text="Çıkış _Transferden Sonra"/>
@@ -552,10 +552,10 @@
 					<item id="ID_HELP_FORUMS" text="Shareaza _Forumları"/>
 					<item id="ID_HELP_WEB_6" text="Shareaza S_kin Sitesi"/>
 					<!-- 
-				<item id="ID_HELP_UPDATE" text="Latest news"/>
-				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
-				-->
+					<item id="ID_HELP_UPDATE" text="Latest news"/>
+					<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
+					<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+					-->
 				</menu>
 				<separator/>
 				<item id="ID_HELP_VERSION_CHECK" text="Güncellemeleri _Kontrol Et"/>
@@ -572,6 +572,7 @@
 					<item id="ID_NETWORK_G2" text="Bağlan _Gnutella2"/>
 					<item id="ID_NETWORK_G1" text="Bağlan Gnutella_1"/>
 					<item id="ID_NETWORK_ED2K" text="Bağlan _eDonkey2000"/>
+					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_CONNECT_TO" text="B_ağlan..." shortcut="Ctrl+T"/>
@@ -621,7 +622,7 @@
 			<menu text="A_raçlar">
 				<item id="ID_LIBRARY_FOLDERS" text="Dosya _Paylaşımı..."/>
 				<item id="ID_TOOLS_DOWNLOAD" text="_Dosya/Torrent İndir..."/>
-				<item id="IDC_IMPORT_DOWNLOADS" text="_eMule indirim bölümlerini içe aktar..."/>
+				<item id="ID_IMPORT_DOWNLOADS" text="_eMule indirim bölümlerini içe aktar..."/>
 				<item id="ID_OPEN_DOWNLOADS_FOLDER" text="_Tamamlanan indirimler dosyamı aç"/>
 				<separator/>
 				<item id="ID_TOOLS_SKIN" text="Ara_yüz Seçimi..."/>
@@ -657,10 +658,10 @@
 					<item id="ID_HELP_FORUMS" text="Shareaza _Forumları"/>
 					<item id="ID_HELP_WEB_6" text="Shareaza S_kin Sitesi"/>
 					<!-- 
-				<item id="ID_HELP_UPDATE" text="Latest news"/>
-				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
-				-->
+					<item id="ID_HELP_UPDATE" text="Latest news"/>
+					<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
+					<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+					-->
 				</menu>
 				<separator/>
 				<item id="ID_HELP_VERSION_CHECK" text="Güncellemeleri _Kontrol Et"/>
@@ -683,6 +684,7 @@
 					<item id="ID_NETWORK_G2" text="Bağlan _Gnutella2"/>
 					<item id="ID_NETWORK_G1" text="Bağlan Gnutella_1"/>
 					<item id="ID_NETWORK_ED2K" text="Bağlan _eDonkey2000"/>
+					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_AUTO_CLOSE" text="Kapat _Transferden Sonra"/>
@@ -714,7 +716,7 @@
 			<menu text="A_raçlar">
 				<item id="ID_LIBRARY_FOLDERS" text="Dosya _Paylaşımı..."/>
 				<item id="ID_TOOLS_DOWNLOAD" text="_Dosya/Torrent İndir..."/>
-				<item id="IDC_IMPORT_DOWNLOADS" text="_eMule indirim bölümlerini içe aktar..."/>
+				<item id="ID_IMPORT_DOWNLOADS" text="_eMule indirim bölümlerini içe aktar..."/>
 				<item id="ID_OPEN_DOWNLOADS_FOLDER" text="_Tamamlanan indirimler dosyamı aç"/>
 				<separator/>
 				<item id="ID_TOOLS_SKIN" text="Ara_yüz Seçimi..."/>
@@ -754,10 +756,10 @@
 					<item id="ID_HELP_FORUMS" text="Shareaza _Forumları"/>
 					<item id="ID_HELP_WEB_6" text="Shareaza S_kin Sitesi"/>
 					<!-- 
-				<item id="ID_HELP_UPDATE" text="Latest news"/>
-				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
-				-->
+					<item id="ID_HELP_UPDATE" text="Latest news"/>
+					<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
+					<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+					-->
 				</menu>
 				<separator/>
 				<item id="ID_HELP_VERSION_CHECK" text="Güncellemeleri _Kontrol Et"/>
@@ -905,6 +907,7 @@
 				<item id="ID_HOSTCACHE_ED2K_CACHE" text="_eDonkey Sunucuları"/>
 				<item id="ID_HOSTCACHE_BT_CACHE" text="_BitTorrent Bellek"/>
 				<item id="ID_HOSTCACHE_KAD_CACHE" text="K_ademlia Bellek"/>
+				<item id="ID_HOSTCACHE_DC_CACHE" text="_DC++ Cache"/>
 			</menu>
 			<separator/>
 			<item id="ID_HOSTCACHE_IMPORT" text="_MET Dosyası Aktar..."/>
@@ -1190,14 +1193,14 @@
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="_Dosya Özellikleri"/>
 		</menu>
 		<menu name="CLibraryTree.Virtual.Basic">
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="_Albüm Oynat"/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Albüm Oynat"/>
 			<item id="ID_LIBRARY_FOLDER_DELETE" text="_Sil"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="_Dosya Özellikleri"/>
 			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="A_lbüm Özellikleri"/>
 		</menu>
 		<menu name="CLibraryTree.Virtual">
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="_Albüm Oynat"/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Albüm Oynat"/>
 			<item id="ID_LIBRARY_FOLDER_DELETE" text="_Sil"/>
 			<separator/>
 			<item id="ID_LIBRARY_REBUILD" text="_Yenilenme"/>
@@ -1286,7 +1289,7 @@
 		<menu name="CLibraryFileView.Virtual.Basic">
 			<item id="ID_LIBRARY_LAUNCH" text="_Aç/Oynat"/>
 			<item id="ID_LIBRARY_ENQUEUE" text="_Oynatma Listesine Ekle"/>
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="_Albüm Oynat"/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Albüm Oynat"/>
 			<separator/>
 			<item id="ID_LIBRARY_SHARED_FILE" text="_Paylaşılanlar"/>
 			<separator/>
@@ -1504,6 +1507,7 @@
 				<item id="ID_NETWORK_G2" text="_Gnutella2"/>
 				<item id="ID_NETWORK_G1" text="Gnutella_1"/>
 				<item id="ID_NETWORK_ED2K" text="_eDonkey2000"/>
+				<item id="ID_NETWORK_DC" text="_DC++"/>
 			</menu>
 			<menu text="Ek_ran">
 				<item id="ID_NEIGHBOURS_VIEW_ALL" text="_Tüm Aktarımları Görüntüle"/>
@@ -1564,9 +1568,6 @@
 			<item id="ID_SCHEDULER_EDIT" text="_Edit"/>
 			<separator/>
 			<item id="ID_SCHEDULER_REMOVE_ALL" text="Remove Al_l"/>
-			<separator/>
-			<item id="ID_SCHEDULER_IMPORT" text="_Al..."/>
-			<item id="ID_SCHEDULER_EXPORT" text="_Gönder..."/>
 		</menu>
 		<!-- DISCOVERY SERVICES WINDOW -->
 		<menu name="CDiscoveryWnd">
@@ -1590,7 +1591,6 @@
 			<item id="ID_CHAT_DISCONNECT" text="Bağ_lantı Kes"/>
 			<separator/>
 			<item id="ID_CHAT_BROWSE" text="_Kullanıcıya Gözat"/>
-			<!-- <item id="ID_CHAT_SEND_FILE" text="_Send File..."/> -->
 			<item id="ID_CHAT_PRIORITY" text="Ö_ncelik Ver"/>
 			<separator/>
 			<menu text="B_içim">
@@ -1845,6 +1845,12 @@
 			<text group="32" align="middle">Bağlanıyor...</text>
 			<text group="33" align="middle">Bağlandı</text>
 			<newline group="30" gap="2"/>
+			<icon group="80" command="ID_NETWORK_DC"/><gap group="80" size="4"/>
+			<text group="80" align="middle" format="b">DC++:</text>
+			<text group="81" align="middle">Bağlantı Yok</text>
+			<text group="82" align="middle">Bağlanıyor...</text>
+			<text group="83" align="middle">Bağlandı</text>
+			<newline group="80" gap="2"/>
 			<group id="2">
 				<para align="center">
 					<newline gap="4"/>
@@ -2067,13 +2073,13 @@
 		İndirmeyi seçmek ve karar vermek de bu komutla yapılır.</text>
 			<newline gap="16"/>
 			<text>You can also use this command to get help information on a specific download.
-		Simply select a download and choose this Help command again.</text>
+			Simply select a download and choose this Help command again.</text>
 		</document>
 		<document name="DownloadHelp.Seeding">
 			<text format="b">This Torrent is Seeding</text>
 			<newline gap="8"/>
 			<text>Shareaza has verified this complete download, and is actively sharing it
-		with other downloaders through BitTorrent. Please share at least 100%.</text>
+			with other downloaders through BitTorrent. Please share at least 100%.</text>
 		</document>
 		<document name="DownloadHelp.Completed">
 			<text format="b">İndirme Tamamlandı</text>
@@ -2285,6 +2291,19 @@
 	</documents>
 	<!-- Localised Command Tip Text. The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
 	<commandTips>
+		<tip id="AFX_IDS_APP_TITLE" message="Shareaza"/>
+		<tip id="AFX_IDS_IDLEMESSAGE" message="Hazır..."/>
+		<tip id="AFX_IDS_MDICHILD" message="Activate this window"/>
+		<tip id="AFX_IDS_PREVIEW_CLOSE" message="Close print preview mode" tip="Ön İzlemeyi Kaydet"/>
+		<tip id="AFX_IDS_SCCLOSE" message="Etkin pencereyi ekranı kaplayacak şekilde genişlet."/>
+		<tip id="AFX_IDS_SCMAXIMIZE" message="Etkin pencereyi ekranı kaplayacak şekilde genişlet."/>
+		<tip id="AFX_IDS_SCMINIMIZE" message="Reduce the window to an icon"/>
+		<tip id="AFX_IDS_SCMOVE" message="Change the window position"/>
+		<tip id="AFX_IDS_SCNEXTWINDOW" message="Switch to the next document window"/>
+		<tip id="AFX_IDS_SCPREVWINDOW" message="Switch to the previous document window"/>
+		<tip id="AFX_IDS_SCRESTORE" message="Restore the window to normal size"/>
+		<tip id="AFX_IDS_SCSIZE" message="Change the window size"/>
+		<tip id="AFX_IDS_SCTASKLIST" message="Activate Task List"/>
 		<tip id="ID_BROWSE_FILES" message="Kullanıcının paylaşılan dosyalarını göster"/>
 		<tip id="ID_BROWSE_LAUNCH" message="Seçilmiş kullanıcının profiline ve paylaşılan dosyalarına gözat."/>
 		<tip id="ID_BROWSE_PROFILE" message="Kullanıcının profiline gözat."/>
@@ -2299,7 +2318,6 @@
 		<tip id="ID_CHAT_EMOTICONS" message="Emotikon ekle."/>
 		<tip id="ID_CHAT_ITALIC" message="İtalik biçimini uygula (Ctrl+I)"/>
 		<tip id="ID_CHAT_PRIORITY" message="Kullanıcının aktarım üstünlüğünü onayla."/>
-		<!-- <tip id="ID_CHAT_SEND_FILE" message="Send a file to the user..."/> -->
 		<tip id="ID_CHAT_TIMESTAMP" message="Mesajların gönderildiği zamanı göster."/>
 		<tip id="ID_CHAT_UNDERLINE" message="Altı çizili biçimini uygula (Ctrl+U)"/>
 		<tip id="ID_CHILD_CLOSE" message="Etkin olan pencereyi kapat."/>
@@ -2308,6 +2326,7 @@
 		<tip id="ID_CHILD_RESTORE" message="Seçilmiş pencereyi aç."/>
 		<tip id="ID_DISCOVERY_ADD" message="Yeni bir keşif servisi ekle..."/>
 		<tip id="ID_DISCOVERY_ADVERTISE" message="Mevcut GWebCache'i seçilmiş GWebCache servisine bildir."/>
+		<tip id="ID_DISCOVERY_BLOCKED" message="Keşif penceresindeki GWebCache servislerini göster."/>
 		<tip id="ID_DISCOVERY_BROWSE" message="Seçilmiş GWebCache servisin web'deki istatiklerine gözat."/>
 		<tip id="ID_DISCOVERY_EDIT" message="Seçilmiş keşif servisinin özelliklerini göster."/>
 		<tip id="ID_DISCOVERY_GNUTELLA" message="Keşif penceresindeki önyükleme servislerini göster."/>
@@ -2359,13 +2378,14 @@
 		<tip id="ID_HELP_ABOUT" message="Shareaza hakkında diyalogları görüntüle..."/>
 		<tip id="ID_HELP_CODEC" message="Şifre ve video problemleri hakkında herşey."/>
 		<tip id="ID_HELP_FAQ" message="Shareaza SSS göster."/>
-		<tip id="ID_HELP_ROUTER" message="Yönlendirici ve güvenlik duvarı yapılandırma yardımı."/>
 		<tip id="ID_HELP_FORUMS" message="Shareaza Tartışma Forumlarını Ziyaret et."/>
 		<tip id="ID_HELP_GUIDE" message="Shareaza Kullanıcı Yardımcısını Ziyaret et."/>
 		<tip id="ID_HELP_HOMEPAGE" message="Shareaza Ziyaret et."/>
+		<tip id="ID_HELP_ROUTER" message="Yönlendirici ve güvenlik duvarı yapılandırma yardımı."/>
 		<tip id="ID_HELP_SECURITY" message="Zararlı programlardan sisteminizi korumak için yardım."/>
-		<tip id="ID_HELP_UPDATE" message="Yenilikleri ve güncelleştirmeleri kontrol et."/>
 		<tip id="ID_HELP_TEST" message="Bağlantıyı kontrol et."/>
+		<tip id="ID_HELP_UPDATE" message="Yenilikleri ve güncelleştirmeleri kontrol et."/>
+		<tip id="ID_HELP_VERSION_CHECK" message="Check for new version"/>
 		<tip id="ID_HELP_WEB_1" message="Web sitesini ziyaret et"/>
 		<tip id="ID_HELP_WEB_2" message="Web sitesini ziyaret et"/>
 		<tip id="ID_HELP_WEB_3" message="Web sitesini ziyaret et"/>
@@ -2375,7 +2395,9 @@
 		<tip id="ID_HITMONITOR_CLEAR" message="Ulaşılan denetleme belleğini temizle."/>
 		<tip id="ID_HITMONITOR_PAUSE" message="Ulaşılan denetlemeleri duraklat."/>
 		<tip id="ID_HITMONITOR_SEARCH" message="Seçilmiş terimi ağda ara."/>
+		<tip id="ID_HOSTCACHE_BT_CACHE" message="BitTorrent yüklemelerini göster."/>
 		<tip id="ID_HOSTCACHE_CONNECT" message="Seçilmiş hostlara bağlan."/>
+		<tip id="ID_HOSTCACHE_DC_CACHE" message="Show DC++ cached hubs."/>
 		<tip id="ID_HOSTCACHE_DISCONNECT" message="Seçilmiş komşularla bağlantıyı kes."/>
 		<tip id="ID_HOSTCACHE_ED2K_CACHE" message="eDonkey2000 sunucularını göster."/>
 		<tip id="ID_HOSTCACHE_ED2K_DOWNLOAD" message="eDonkey2000 &quot;server.met&quot; dosyası indir..."/>
@@ -2383,8 +2405,10 @@
 		<tip id="ID_HOSTCACHE_G2_CACHE" message="Gnutella2 host bellek sunucularını göster."/>
 		<tip id="ID_HOSTCACHE_G2_HORIZON" message="Gnutella2 çevre hubları göster."/>
 		<tip id="ID_HOSTCACHE_IMPORT" message="&quot;server.met&quot; dosyasına benzeyen, bilinen hostların bir listesini aktar..."/>
+		<tip id="ID_HOSTCACHE_KAD_CACHE" message="Gnutella1 host bellek sunucularını göster."/>
 		<tip id="ID_HOSTCACHE_PRIORITY" message="Diğer sunuculardan önce bu sunucuya bağlanmayı dene."/>
 		<tip id="ID_HOSTCACHE_REMOVE" message="Seçilmiş hostları, Host belleğinden çıkart."/>
+		<tip id="ID_IMPORT_DOWNLOADS" message="_eMule indirim bölümlerini içe aktar..."/>
 		<tip id="ID_LIBRARY_ADD" message="Kütüphanenize yeni klasör ekleyin..."/>
 		<tip id="ID_LIBRARY_ALBUM_DELETE" message="Seçilmiş albüm klasörlerini sil."/>
 		<tip id="ID_LIBRARY_ALBUM_OPEN" message="Seçilmiş albüm klasörlerini aç."/>
@@ -2414,6 +2438,7 @@
 		<tip id="ID_LIBRARY_REBUILD" message="Seçilen dosya ve klasörleri verileri düzenle."/>
 		<tip id="ID_LIBRARY_REBUILD_ANSI" message="Diğer dillerin kullanımında veri düzenle."/>
 		<tip id="ID_LIBRARY_REFRESH" message="Kütüphane görünümünü yenile."/>
+		<tip id="ID_LIBRARY_REFRESH_METADATA" message="_Meta Verileri Tazele"/>
 		<tip id="ID_LIBRARY_REMOVE" message="Seçilmiş paylaşım dosyalarını kaldır."/>
 		<tip id="ID_LIBRARY_RENAME" message="Seçilmiş dosyanın adını değiştir."/>
 		<tip id="ID_LIBRARY_SCAN" message="Seçilmiş klasör ya da dosyadaki değişiklikleri tara."/>
@@ -2451,6 +2476,7 @@
 		<tip id="ID_MEDIA_PAUSE" message="Ortma dosyasını oynatmayı duraklat." tip="Duraklat"/>
 		<tip id="ID_MEDIA_PLAY" message="Yürürlükteki ortam dosyasını oynatmaya başla." tip="Oynat"/>
 		<tip id="ID_MEDIA_PLAYLIST" message="Oynatma listesi yayıncısını göster/gizle."/>
+		<tip id="ID_MEDIA_POSITION" message="Ortam Dosyasında Konum Ara" tip="Seek"/>
 		<tip id="ID_MEDIA_PREVIOUS" message="Yürürlükteki oynatma dosyasındaki bir önceki dosyaya geri dön." tip="Önceki Dosya"/>
 		<tip id="ID_MEDIA_PROPERTIES" message="Seçilen dosyanın özelliklerini göster ve değişimine imkan ver."/>
 		<tip id="ID_MEDIA_RANDOM" message="Oynatma listesi karışık modda."/>
@@ -2465,14 +2491,15 @@
 		<tip id="ID_MEDIA_SIZE_ONE" message="Videoyu orijinal boyutunda göster."/>
 		<tip id="ID_MEDIA_SIZE_THREE" message="Videoyu üç boyutlu göster."/>
 		<tip id="ID_MEDIA_SIZE_TWO" message="Videoyu iki boyutlu göster."/>
+		<tip id="ID_MEDIA_SPEED" message="Ortam Dosyasının Hızını Ayarla" tip="Hız"/>
 		<tip id="ID_MEDIA_STATUS" message="Ortam durum çubuğunu göster/gizle."/>
 		<tip id="ID_MEDIA_STOP" message="Ortam dosyasını oynatmayı durdur." tip="Durdur"/>
 		<tip id="ID_MEDIA_VIS" message="Bir ses görselleştirme plugini seçiniz..."/>
+		<tip id="ID_MEDIA_VOLUME" message="Sesi Ayarla" tip="Volume"/>
 		<tip id="ID_MEDIA_ZOOM" message="Videonun yakınlığını ve en boy oranı ayarlarını ayarla."/>
-		<tip id="IDC_MEDIA_POSITION" value="Seek to a position in the media file." tip="Seek"/>
-		<tip id="IDC_MEDIA_SPEED" value="Adjust the speed of the media file." tip="Hız"/>
-		<tip id="IDC_MEDIA_VOLUME" value="Adjust the audio volume." tip="Volume"/>
 		<tip id="ID_MONITOR_CLOSE" message="Ekran penceresini kapat."/>
+		<tip id="ID_MUSICBRAINZ_ALBUMS" message="Look at all albums for this artist."/>
+		<tip id="ID_MUSICBRAINZ_MATCHES" message="Seçilen dosyanın diğer kopyalarını ara."/>
 		<tip id="ID_NEIGHBOURS_CHAT" message="Seçilen kullanıcıyla sohbete başla."/>
 		<tip id="ID_NEIGHBOURS_COPY" message="Seçilen hosta erişim için URI kopyala."/>
 		<tip id="ID_NEIGHBOURS_DISCONNECT" message="Seçilen komşularla bağlantıyı kes."/>
@@ -2485,12 +2512,22 @@
 		<tip id="ID_NETWORK_CHAT_TO" message="Open a chat session with a user..."/>
 		<tip id="ID_NETWORK_CONNECT" message="Ağa bağlan."/>
 		<tip id="ID_NETWORK_CONNECT_TO" message="Hosta elle bağlan..."/>
+		<tip id="ID_NETWORK_DC" message="Connect to the DC++ network."/>
 		<tip id="ID_NETWORK_DISCONNECT" message="Ağla bağlantıyı kes."/>
 		<tip id="ID_NETWORK_ED2K" message="eDonkey2000 ağına bağlan."/>
 		<tip id="ID_NETWORK_EXIT" message="Shareaza'dan çık"/>
 		<tip id="ID_NETWORK_G1" message="Orijinal Gnutella ağına bağlan."/>
 		<tip id="ID_NETWORK_G2" message="Gnutella2 ağına bağlan."/>
 		<tip id="ID_NETWORK_SEARCH" message="Ağda yeni bir arama başlat..."/>
+		<tip id="ID_NEXT_PANE" message="Switch to the next window pane" tip="Diğer bağlantı"/>
+		<tip id="ID_OPEN_DOWNLOADS_FOLDER" message="Open my folder of completed Downloads"/>
+		<tip id="ID_PREV_PANE" message="Yürürlükteki oynatma dosyasındaki bir önceki dosyaya geri dön." tip="Önceki Dosya"/>
+		<tip id="ID_SCHEDULER_ACTIVATE" message="Listeden seçilen yüklemeleri temizle."/>
+		<tip id="ID_SCHEDULER_ADD" message="Adds a new task to scheduler list."/>
+		<tip id="ID_SCHEDULER_DEACTIVATE" message="Ağa bağlan."/>
+		<tip id="ID_SCHEDULER_EDIT" message="Seçilen güvenlik kuralını düzenle..."/>
+		<tip id="ID_SCHEDULER_REMOVE" message="Listeden seçilmiş indirmeleri kaldır."/>
+		<tip id="ID_SCHEDULER_REMOVE_ALL" message="Removes all scheduled tasks."/>
 		<tip id="ID_SEARCH_CHAT" message="Seçilen kullanıcıyla sohbete başla."/>
 		<tip id="ID_SEARCH_CLEAR" message="Arama sonuçlarını temizle."/>
 		<tip id="ID_SEARCH_COLUMNS" message="Seçilmiş veri sütunlarını görüntüle..."/>
@@ -2522,9 +2559,22 @@
 		<tip id="ID_SECURITY_POLICY_DENY" message="Tanınmayan tüm hostlar için varsayılan güvenlik politikasını kümele."/>
 		<tip id="ID_SECURITY_REMOVE" message="Seçilen güvenlik kurallarını kaldır."/>
 		<tip id="ID_SECURITY_RESET" message="Güvenlik kurallarında ulaşılan sayıları sıfırla."/>
+		<tip id="ID_SHAREMONKEY_BUY" message="Buy it and support the author"/>
+		<tip id="ID_SHAREMONKEY_COMPARE" message="Compare prices in different stores"/>
+		<tip id="ID_SHAREMONKEY_DOWNLOAD" message="_Bunu Ara"/>
+		<tip id="ID_SHAREMONKEY_NEXT" message="Go to the next match"/>
+		<tip id="ID_SHAREMONKEY_PREVIOUS" message="Go to the previous match"/>
+		<tip id="ID_SHAREMONKEY_PRICES" message="Yürürlükteki oynatma dosyasındaki bir önceki dosyaya geri dön."/>
+		<tip id="ID_SHAREMONKEY_SAVE" message="Kütüphanemdeki dosyaları göster"/>
 		<tip id="ID_SYSTEM_CLEAR" message="Durum günlüğünü temizle."/>
+		<tip id="ID_SYSTEM_COPY" message="Copy selected line(s) of status log."/>
 		<tip id="ID_SYSTEM_TIMESTAMP" message="Her hat için zamanı kaydet."/>
 		<tip id="ID_SYSTEM_VERBOSE" message="Sistemin detaylı etkinlik günlüğünü görüntüle."/>
+		<tip id="ID_SYSTEM_VERBOSE_DEBUG" message="Açıklamaları görüntüle."/>
+		<tip id="ID_SYSTEM_VERBOSE_ERROR" message="Açıklamaları görüntüle."/>
+		<tip id="ID_SYSTEM_VERBOSE_INFO" message="Izgara çizgilerini görüntüle."/>
+		<tip id="ID_SYSTEM_VERBOSE_NOTICE" message="Display notices and above."/>
+		<tip id="ID_SYSTEM_VERBOSE_WARNING" message="Izgara çizgilerini görüntüle."/>
 		<tip id="ID_TAB_CONNECT" message="Ağa bağlan/bağlantı kes."/>
 		<tip id="ID_TAB_HOME" message="Shareaza Anasayfaya dön"/>
 		<tip id="ID_TAB_IRC" message="IRC Sohbet penceresini göster."/>
@@ -2575,6 +2625,7 @@
 		<tip id="ID_VIEW_NEIGHBOURS" message="KOMŞULAR ARA penceresini göster/gizle."/>
 		<tip id="ID_VIEW_PACKETS" message="ÇÖP KUTUSU penceresini göster/gizle."/>
 		<tip id="ID_VIEW_RESULTS_MONITOR" message="ULAŞILAN GÖRÜNTÜ penceresini göster/gizle."/>
+		<tip id="ID_VIEW_SCHEDULER" message="GÜVENLİK penceresini göster/gizle."/>
 		<tip id="ID_VIEW_SEARCH_MONITOR" message="GÖRÜNTÜ ARA penceresini göster/gizle."/>
 		<tip id="ID_VIEW_SECURITY" message="GÜVENLİK penceresini göster/gizle."/>
 		<tip id="ID_VIEW_SYSTEM" message="SİSTEM penceresini göster/gizle."/>
@@ -2582,6 +2633,10 @@
 		<tip id="ID_VIEW_TRAFFIC" message="GRAFİK penceresini göster/gizle."/>
 		<tip id="ID_VIEW_UPLOADS" message="YÜKLEME penceresini göster/gizle."/>
 		<tip id="ID_VIEW_WINDOWED" message="Shareaza'yı güçlü Window modunda kullan."/>
+		<tip id="ID_WEBSERVICES_LIST" message="Seçilen dosya hakkında daha fazla bilgi edinmek için kullanılacak Web servisini berlirle."/>
+		<tip id="ID_WEBSERVICES_MUSICBRAINZ" message="Dosyayı Sharemonkey servisinde ara."/>
+		<tip id="ID_WEBSERVICES_SHAREMONKEY" message="Dosyayı Sharemonkey servisinde ara."/>
+		<tip id="ID_WINDOW_ARRANGE" message="Arrange icons at the bottom of the window" tip="Arrange Icons"/>
 		<tip id="ID_WINDOW_CASCADE" message="Tüm açık pencereleri ekranı kaplayacak şekilde genişlet."/>
 		<tip id="ID_WINDOW_MONITOR" message="Görüntü bant genişliğini göster/gizle."/>
 		<tip id="ID_WINDOW_NAVBAR" message="Kaydırma çubuğunu göster/gizle."/>
@@ -2590,8 +2645,6 @@
 		<tip id="ID_WINDOW_TILE_HORZ" message="Açık pencereleri üstüste binmeden yatay olarak düzenle."/>
 		<tip id="ID_WINDOW_TILE_VERT" message="Açık pencereleri üstüste binmeden düşey olarak düzenle."/>
 		<tip id="ID_WINDOW_TOOLBAR" message="Araç çubuğu göster/gizle."/>
-		<tip id="ID_WEBSERVICES_LIST" message="Seçilen dosya hakkında daha fazla bilgi edinmek için kullanılacak Web servisini berlirle."/>
-		<tip id="ID_WEBSERVICES_SHAREMONKEY" message="Dosyayı Sharemonkey servisinde ara."/>
 		<!-- PLUGIN TIPS -->
 		<tip id="ImageViewer_BestFit" message="Resmi pencereye uyacak şekilde uyarla."/>
 		<tip id="ImageViewer_ActualSize" message="Resmi temel boyutlarında göster."/>
@@ -2628,23 +2681,6 @@
 		<string id="WINDOW_HELP" value="Shareaza Yardım"/>
 		<string id="WINDOW_IRC" value="Shareaza Sohbet"/>
 		<string id="WINDOW_SCHEDULER" value="Scheduler"/>
-		<string id="154" value="Are you sure you want to remove all scheduled tasks? This cannot be undone."/>
-		<string id="156" value="Scheduled time has already passed.\n\nPlease select a time in the future."/>
-		<string id="157" value="Bandwidth: Full Speed"/>
-		<string id="158" value="Bandwidth: Reduced Speed"/>
-		<string id="159" value="Bandwidth: Stop"/>
-		<string id="160" value="System: Exit Shareaza"/>
-		<string id="161" value="System: Disconnect Dial-up Connection"/>
-		<string id="162" value="System: Turn Off the Computer"/>
-		<string id="163" value="Please select a task."/>
-		<string id="164" value="Specific day(s) of week"/>
-		<string id="165" value="Aktif"/>
-		<string id="166" value="Pasif"/>
-		<string id="167" value="Done"/>
-		<string id="168" value="Waiting..."/>
-		<string id="169" value="No Tasks Currently Scheduled"/>
-		<string id="172" value="Done Today"/>
-		<string id="173" value="You should select at least one day of week."/>
 		<string id="7000" value="Bu filtreyi silmek istediğinize emin misiniz?"/>
 		<string id="7001" value="&amp;Şemalar"/>
 		<string id="7002" value="Çeşitli Değerler"/>
@@ -2664,9 +2700,7 @@
 		<string id="8007" value="Etkin bir arama yok. Dosya aramak için tıklayınız."/>
 		<string id="8008" value="Shareaza bi sonraki Shareaza versiyonunun (%s) İndirilmesi tamamlandı. Şimdi güncelemek ister misiniz?\n\nEvet ise, Shareaza güncelleme kurulana kadar geçici olarak kapatılacaktır."/>
 		<string id="8009" value=" &quot;%s&quot; arayüzünü silmek istediğinizden emin misiniz? Bu yapılamaz."/>
-		<string id="8010" value="Bu Shareaza'nın değiştirme öncesi programıdır ve bu beta deneme aşaması sonlanmıştır. Lütfen http://shareaza.sourceforge.net/ adresinden programın tamamını yükleyiniz."/>
 		<string id="8011" value="Görüntü Değiştirme açıldığında pencereler kapanacaktır. Şimdi değiştirmek ister misin?"/>
-		<string id="8012" value="Torrent Bilgisi"/>
 		<string id="8013" value="Yeni bir Shareaza sürümü henüz yoktur."/>
 		<string id="8014" value="İndirme Özellikleri"/>
 		<string id="8060" value="%lu komşusu ile Hub/Ultrapeer mod.  %s yerel kütüphanede."/>
@@ -2734,7 +2768,7 @@
 		<string id="8178" value="Dosyanın türü nedir?"/>
 		<string id="8179" value="(Arama geçmişini temizle)"/>
 		<string id="8180" value="Dosya uzunluğu"/>
-		<string id="8181" value="olmalı"/><!-- size from xx TO xx-->
+		<string id="8181" value=" to (size from xx TO xx)"/>
 		<string id="8208" value="Shareaza %Iu dosyası için hash yaratıyor:"/>
 		<string id="8223" value="%i gün ve %i saat"/>
 		<string id="8224" value="Shareaza indiriliyor:"/>
@@ -2754,7 +2788,7 @@
 		<string id="8239" value="Tamamlandı"/>
 		<string id="8240" value="Shareaza indirmeyi bırakıyor:"/>
 		<string id="8241" value="Shareaza hatalar için İndirmeyi konrol ediyor:"/>
-		<string id="8243" value="Aktarım miktarı:"/>
+		<string id="8243" value="Aktarım Alanı"/>
 		<string id="8244" value="Yorum sayısı:"/>
 		<string id="8288" value="Shareaza kütüphanesi araştırılıyor"/>
 		<string id="8289" value="Araştırılıyor "/>
@@ -2816,10 +2850,9 @@
 		<string id="16077" value="Güvenlik kuralları tarafından %s adresi engellendi."/>
 		<string id="16078" value="%s engelini güvenlik kuralı olarak ekle."/>
 		<string id="16079" value="Bağlantıyı kesmek istediğinize emin misiniz?"/>
-		<string id="16080" value="Planlayıcıyı 'sadece G2' modunda işletmektesiniz. Tüm etkin ağların bağlı kalması için bu modu devre dışı bırakmak ister misiniz?"/>
+		<string id="16080" value="Ağa bağlanamadınız."/>
 		<string id="16081" value="&quot;%s&quot; için %s 'ye sorgu gönderiliyor."/>
 		<string id="16083" value="Hub modundaki PC'niz performans ve P2P ağında karşıt efektler bulunduğu için zorlanıyor. Shareaza'nın karar vermesine izin vermek genellikle daha iyidir ya da hub modunu kullanmayınız.\n\n	Hub modu daha iyi arama sonuçları üretmez, sizin için üstünlük sağlamaz.\n\nDezavantajlarına rağmen bunu gerçekten yapmak istiyor musunuz?"/>
-		<string id="16084" value="Gnutella-1 protokolleri için destek kaldırma, arama sonuçlarınızı kısıtlayabilir ve eğer bir hub görevindeyseniz bu diğer kullanıcıların sonuçları üzerine etki eder. Bunu yapmak istediğinize emin misiniz?"/>
 		<string id="16085" value="Gnutella2 Shareaza'nın ana ağıdır. Bunun desteği kaldırılırsa arama sonuçlarının kalitesi ve sayısı kısıtlanır. Bunu yapmak istediğinize emin misiniz?"/>
 		<string id="16087" value="Ağı etkinleştirmek için ayrılan bantgenişliği çok az."/>
 		<string id="16128" value="%s portdan gelmekte olan %i bağlantısı kabul edildi."/>
@@ -2850,6 +2883,7 @@
 		<string id="16157" value="Komşu %s hub değil, bağlantı kapatılıyor."/>
 		<string id="16158" value="Komşu %s ile Gnutella2 bağlantısı başarıyla kuruldu (%s)."/>
 		<string id="16159" value="Komşu %s Gnutella2 bağlantısı kapatılıyor."/>
+		<string id="16191" value="Received a packet from %s for %s which excess query limits, ignoring."/>
 		<string id="16192" value="Komşu %s büyük boyutlu bir paket gönderdi, bağlantı kesiliyor."/>
 		<string id="16193" value="Komşu %s sıfır TTL ile bir paket gönderdi, görmezlikten geliniyor."/>
 		<string id="16194" value="Komşu %s aşırı TTL ile bir paket gönderdi, paket durduruluyor (TTL=%i, Sekme=%i)."/>
@@ -2990,6 +3024,7 @@
 		<string id="16375" value="Bölüm"/>
 		<string id="16376" value="Tüm Dosyalar"/>
 		<string id="16377" value="HTTP Koruma"/>
+		<string id="16378" value="Host &quot;%s&quot; sent a 416, without providing available ranges. Closing connection."/>
 		<string id="16379" value="Kütüphane Dosyaları"/>
 		<string id="16384" value="&quot;%s&quot; dosyasını atmak istediğinize emin misiniz?\n\nBazı dosyalar bilgisayarınıza zarar verebilir. Dosyayı atmadan önce ne dosyası olduğundan emin olun."/>
 		<string id="16385" value="%i dosyada veri değiştirmek üzeresiniz, devam etmek istediğinize emin misiniz?"/>
@@ -3049,6 +3084,7 @@
 		<string id="16526" value="Gnutella Paketler Durduruldu"/>
 		<string id="16527" value="Gnutella Paketler Kaybedildi "/>
 		<string id="16528" value="Gnutella Yerel Sorguları"/>
+		<string id="16529" value="Gnutella Yerel Sorguları"/>
 		<string id="16532" value="Toplam TCP Alım Bantgenişliği"/>
 		<string id="16533" value="Toplam TCP Gönderim Bantgenişliği"/>
 		<string id="16534" value="Toplam UDP Alım Bantgenişliği"/>
@@ -3117,12 +3153,11 @@
 		<string id="16944" value="%i paylaşılan dosya %s'nin kütüphanesinde  bulundu."/>
 		<string id="16991" value="Shareaza Ortam Sistema"/>
 		<string id="16992" value="Shareaza MedyaServisleri plugin'ini desteklenemedi. Lütfen Shareazayı tekrar yükleyin ve zorunlu ortam codeclerinin ve çıkış sürücülerinin yüklendiğini doğrulayın."/>
-		<string id="16993" value="Tüm ortam dosyaları|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Oynatma Listeleri|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Ses Dosyaları|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|Video Dosyaları|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|CD Ses Trackleri|*.cda|MIDI Dosyalar|*.mid;*.rmi;*.midi|Tüm Dosyalar|*.*||"/>
 		<string id="16994" value="&quot;%s&quot; ortam dosyası yüklenemez"/>
 		<string id="16995" value="Bu dosya zarar görmüş olabilir ya da bunu oynatmak için gerekli codec'e sahip olmayabilirsiniz."/>
 		<string id="16996" value="Dosyanın bir parçası oynatılamadı, indirim için ek codec'e ihtiyacınız olabilir."/>
 		<string id="16997" value="Oynayacak dosya yok. Kütüphanenizdeki bir ortam dosyasını oynatmak için çift-tıklayın."/>
-		<string id="16998" value="S     H     A     R     E     A     Z     A           O     R     T     A     M           S     İ     S     T     E     M     İ"/><!-- on one line -->
+		<string id="16998" value="S     H     A     R     E     A     Z     A           O     R     T     A     M           S     İ     S     T     E     M     İ"/>
 		<string id="16999" value="O Y N A T M A  L İ S T E S İ"/>
 		<string id="17017" value="Sohbet:"/>
 		<string id="17018" value="Shareaza Sohbetine Hoşgeldiniz!"/>
@@ -3222,6 +3257,7 @@
 		<string id="17477" value="BitTorrent ile %s birleştirilmesi yanlış dosyayla karşılık verdi."/>
 		<string id="17478" value="BitTorrent ile %s birleştirilmesi bilinmeyen bir dosya istedi."/>
 		<string id="17479" value="BitTorrent ile %s birleştirilmesi &quot;%s&quot; için doğrulandı."/>
+		<string id="17480" value="BitTorrent ile %s birleştirilmesi bilinmeyen bir dosya istedi."/>
 		<string id="17481" value="BitTorrent tanımlama dosyası alındı : &quot;%s&quot;"/>
 		<string id="17482" value="&quot;%s&quot; BitTorrent dosyası almadan ayrıştırılamaz."/>
 		<string id="17483" value="BitTorrent trackerdan &quot;%s&quot; için hata : &quot;%s&quot;."/>
@@ -3240,7 +3276,6 @@
 		<string id="17496" value="&quot;%s&quot;'dan bir BitTorrent paylaşım dosyasına kopyalanırken bilinmeyen bir hata meydana geldi."/>
 		<string id="17497" value="&quot;%s&quot; oluşturması denenirken bilinmeyen bir hata meydana geldi."/>
 		<string id="17498" value="&quot;%s&quot; dosyasında bir hata bulundu."/>
-		<string id="17500" value="Tracker yanıtlayamadı- Bildirim tekrar deneniyor(%i de %i)"/>
 		<string id="17501" value="Tracker ile iletişim kurulamaz"/>
 		<string id="17503" value="Tracker'da sorun var- Sonraki tracker deneniyor (%i toplam: %i)"/>
 		<string id="17505" value="%s ile BitTorrent bağlantısı kapatıldı."/>
@@ -3253,12 +3288,6 @@
 		<string id="17514" value="Updating Bittorrent Downloads..."/>
 		<string id="17515" value="Converting Torrent:"/>
 		<string id="18496" value="İsim alanında değişiklikler yaptınız. Bu indirme ismini değiştirmek istediğinize emin misiniz?"/>
-		<string id="18497" value="Geçersiz bir SHA1 değeri yazdınız. Lütfen kontrol edin ve tekrar deneyin."/>
-		<string id="18498" value="Geçersiz bir tiger-tree kök değeri yazdınız. Lütfen kontrol edin ve tekrar deneyin."/>
-		<string id="18499" value="Geçersiz bir eDonkey2000 hash değeri yazdınız. Lütfen kontrol edin ve tekrar deneyin."/>
-		<string id="18500" value="Bu indirme ile güncel olarak birleşmiş farklı SHA1 hash  değeri sağlanır. Şimdi SHA1 hash'i değiştirmek istediğinizden amin misiniz?"/>
-		<string id="18501" value="Bu indirme ile güncel olarak birleşmiş farklı tiger-tree hash kök değeri sağlanır.  Şimdi tiger-tree kök hash'i değiştirmek istediğinizden emin misiniz? "/>
-		<string id="18502" value="Bu indirme ile güncel olarak birleşmiş farklı eDonkey2000 hash değeri sağlanır. Şimdi eDonkey2000 hash'i değiştirmek istediğinizden emin misiniz?"/>
 		<string id="18503" value="Güncel doğrulama durumlarını kaybetmek istediğinize emin misiniz? Tüm İndirme verilerine güvenilmeyecektir ve hashtrees-hashsets zulaları temizlenecektir."/>
 		<string id="18504" value="Seçilen indirme için bütün kaynakları kaybetmek istediğinize emin misiniz?"/>
 		<string id="18505" value="Geçerli alanı silmek için enter'a basın. &quot;from&quot; alanı ilk silinecek bayt, &quot;last&quot; alanı son silinecek bayttır."/>
@@ -3268,13 +3297,19 @@
 		<string id="18509" value="Bu indirmenin tamamlanmasını kabul edemezsiniz çünkü tiger-tree bölümü, eDonkey hashset ya da BitTorrent hashset gibi bazı veri doğrulama parçalarına sahip değilsiniz. Doğrulama bilgileri olmadan indirme gerçekleştirilemez."/>
 		<string id="18510" value="Bu indirmeyi tamamlanmış kabul etmek istediğine emin misiniz?  Bütün dosya hesaba katılacak ve Shareaza doğrulanan parçaları kabul edecek, doğrulanmayan parçalar kabul edilmeyecek."/>
 		<string id="18511" value="Dosya boyutunda değişiklikler yaptınız. Bu indirme için dosya boyutunu değiştirmek istediğinize emin misiniz?"/>
+		<string id="18512" value="Bu gruptaki tüm indirmeleri iptal etmek/durdurmak istediğinize emin misiniz?"/>
+		<string id="18513" value="Geçersiz bir eDonkey2000 hash değeri yazdınız. Lütfen kontrol edin ve tekrar deneyin."/>
+		<string id="18514" value="Bu indirme ile güncel olarak birleşmiş farklı SHA1 hash  değeri sağlanır. Şimdi SHA1 hash'i değiştirmek istediğinizden amin misiniz?"/>
 		<string id="19000" value="Uzaktan erişim engellendi."/>
 		<string id="19001" value="Bir kullanıcı adı ve şifresi seçmelisiniz."/>
 		<string id="19002" value="Bağlantı onaylanılamaz, URL kullanılamaz."/>
+		<string id="19103" value="Shareaza Sohbetine Hoşgeldiniz!"/>
+		<string id="19104" value="Bu servisi kullanırken diğer kullanıcılara saygı göstermeniz gerektiğini unutmayın"/>
+		<string id="19105" value="IRC Sohbet"/>
 		<string id="20000" value="URN kullanılamaz"/>
 		<string id="20001" value="Kapat"/>
 		<string id="20002" value="den"/>
-		<string id="20003" value="Arayüz yönetimi değiştirildiğinde yeniden başlama gerekir. \n Shareaza elle başlatmanız gerekecek. Şimdi çık?"/>
+		<string id="20003" value="Changing language requires application restart.\nRestart now?"/>
 		<string id="20005" value="Hayır"/>
 		<string id="20006" value="Evet"/>
 		<string id="20007" value="Otomatik"/>
@@ -3284,6 +3319,7 @@
 		<string id="20011" value="&amp;Sonraki"/>
 		<string id="20012" value="Sona erdir"/>
 		<string id="20013" value="Tümü"/>
+		<string id="20014" value="Bu seçeneklerle seçilen dosyada onaylanan ve paylaşılan bilgi için Bitzi.com tarafından sağlanan servisler kullanılır.\n\nShareaza Bitzi veritabanı sorgu düzeninde seçilen dosyalar için SHA1 hash kod gönderecek.Eğer gizlilikle ilgileniyorsan Bitzi.com gizlilik politikasını danışmak isteyebilirsin.\n\nİlerlemek istiyor musun?"/>
 		<string id="20100" value="Bağlanıyor"/>
 		<string id="20101" value="İstekte Bulunuluyor"/>
 		<string id="20102" value="Yanıt"/>
@@ -3322,13 +3358,6 @@
 		<string id="20135" value="Sonraki"/>
 		<string id="20136" value="Q"/>
 		<string id="20137" value="sources (e.g. 3/10 sources)"/>
-		<string id="20200" value="Pazar"/>
-		<string id="20201" value="Pazartesi"/>
-		<string id="20202" value="Salı"/>
-		<string id="20203" value="Çarşamba"/>
-		<string id="20204" value="Perşembe"/>
-		<string id="20205" value="Cuma"/>
-		<string id="20206" value="Cumartesi"/>
 		<string id="20210" value="(Beğenilmeyen)"/>
 		<string id="20211" value="Taklit / Bozuk"/>
 		<string id="20212" value="Kalitesiz"/>
@@ -3337,7 +3366,6 @@
 		<string id="20215" value="Çok İyi"/>
 		<string id="20216" value="Mükemmel"/>
 		<string id="20217" value="Geçici (temp) eDonkey/eMule dosyasını seçiniz:"/>
-		<!-- Column headers in Library Album View -->
 		<string id="20230" value="#"/>
 		<string id="20231" value="Başlık"/>
 		<string id="20232" value="Süre"/>
@@ -3354,9 +3382,28 @@
 		<string id="20243" value="Continue"/>
 		<string id="20244" value="&amp;Remember my selection next time"/>
 		<string id="20245" value="New Folder"/>
-		<string id="32825" value="Open my folder of completed Downloads"/>
-		<string id="32773" value="Check for new version"/>
-		<string id="61215" value="Activate this window"/>
+		<string id="20246" value="Command-line options:\n\n-tray : Disable startup splash screen and send application to tray\n-nosplash : Disable startup splash screen\n-nowarn : Disable alpha (daily builds) version warning dialog\n-wait : Wait for other application instance exit\n\nInterface modes:\n\n-basic : Start application in Basic interface mode\n-tabbed : Start application in Tabbed interface mode\n-windowed : Start application in Windowed interface mode\n\nSystem options:\n\n-RegServer : Register internal components for everyone\n-UnRegServer : Un-register internal components for everyone\n-RegServerPerUser : Register internal components for current user\n-UnRegServerPerUser : Un-register internal components for current user"/>
+		<string id="20247" value="Failed to load metadata schemas. Please reinstall application."/>
+		<string id="20248" value="Paylaşım için açıkça bir klasör belirtmediniz. Bundan emin misiniz?"/>
+		<string id="20249" value="Off"/>
+		<string id="20250" value="Low"/>
+		<string id="20251" value="_Normal Mod"/>
+		<string id="20252" value="High"/>
+		<string id="20253" value="Skin load error: %s. Element: %s"/>
+		<string id="20254" value="Loading skin: %s"/>
+		<string id="20255" value="Are you sure you want to remove all scheduled tasks? This cannot be undone."/>
+		<string id="20256" value="Shareaza'da Ara"/>
+		<string id="20257" value="Bandwidth: Full Speed"/>
+		<string id="20258" value="Bandwidth: Reduced Speed"/>
+		<string id="20259" value="Bandwidth: Stop"/>
+		<string id="20260" value="System: Exit Shareaza"/>
+		<string id="20261" value="System: Disconnect Dial-up Connection"/>
+		<string id="20262" value="System: Turn Off the Computer"/>
+		<string id="20263" value="Aktif"/>
+		<string id="20264" value="Pasif"/>
+		<string id="20265" value="Done"/>
+		<string id="20266" value="Waiting..."/>
+		<string id="20267" value="No Tasks Currently Scheduled"/>
 	</strings>
 	<!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 	<!-- Don't edit dialogs manualy! Use DialogScan feature instead -->
@@ -3488,7 +3535,7 @@
 			<control caption="Port:"/>
 			<control/>
 		</dialog>
-		<dialog name="CWebSettingsPage" cookie="BuStBuBuBuBuBuBuBuCoBuBuSt" caption="Web">
+		<dialog name="CWebSettingsPage" cookie="BuStBuBuBuBuBuBuBuBuCoBuBuSt" caption="Web">
 			<control caption="E_şli bağlantı kullanılıyor:"/>
 			<control caption="Bu bağlantı türlerini açmak için Shareaza kullan:"/>
 			<control caption="Magnet ( magnet: )"/>
@@ -3496,6 +3543,7 @@
 			<control caption="eDonkey2000 ( ed2k: )"/>
 			<control caption="Piolet ( mp2p: )"/>
 			<control caption="BitTorrent ( .torrent )"/>
+			<control caption="DC++ ( dchub: )"/>
 			<control caption="_İndirme Yönetimi:"/>
 			<control caption="Tüm web indirmelerinin yönetiminde Shareaza'yı kullan:"/>
 			<control/>
@@ -3533,12 +3581,12 @@
 			<control/>
 			<control/>
 		</dialog>
-		<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStCoStCoBuBu" caption="İndirmeler">
+		<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuEdBu" caption="İndirmeler">
 			<control caption="Dosyanın _tamamını buraya kaydet:"/>
 			<control/>
 			<control/>
-			<control caption="Geçici tamamlan_mamış dosyaları burada depola:"/>
-			<control/>
+			<control caption="Scan every completed file with AntiVirus"/>
+			<control caption="Ayarlanmış Seçim:"/>
 			<control/>
 			<control caption="İndirme _sayısı:"/>
 			<control caption="Maksimum Dosya:"/>
@@ -3555,8 +3603,10 @@
 			<control/>
 			<control caption="Maksimum sıra uzunluğu:"/>
 			<control/>
-			<control/>
 			<control caption="Sadece bağlanılan ağlara aktarım yapın ve indirmede bulunun."/>
+			<control caption="Geçici tamamlan_mamış dosyaları burada depola:"/>
+			<control/>
+			<control/>
 		</dialog>
 		<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStCoStCoBuSyBuBuBuSt" caption="Uploads">
 			<control caption="_Seçenekler:"/>
@@ -3587,48 +3637,11 @@
 			<control caption="Shareaza Uzaktan Erişim PC'nizde çalışan Shareaza'dan ayrılmanıza ve uzaktaki web tarayıcısını kontrol etmenize izin verir. Gelen bağlantıları kabul etmek için bu özellikleri kullanmaya ihtiyaç duyacaksınız(i.e. düzgün yönlendirme yapılandırması, vb) ."/>
 			<control caption="_Olanak Ver:"/>
 			<control caption="Shareaza Uzaktan Erişime olanak ver:"/>
-			<control caption="URL"/>
+			<control/>
 			<control caption="_Güven Belgesi:"/>
 			<control caption="Kullanıcı Adı Seçin:"/>
 			<control/>
 			<control caption="Şifre Seçiniz:"/>
-			<control/>
-		</dialog>
-		<dialog name="CScheduleTaskDlg" cookie="BuBuBuBuSySyBuBuBuBuBuBuBuBuCoEdmsEdmsEdmsBuBuEdBuStStStStStStStBuBu" caption="Schedule Item">
-			<control caption="Tamam"/>
-			<control caption="İptal"/>
-			<control caption="Only once"/>
-			<control caption="On specific day(s) of week"/>
-			<control/>
-			<control/>
-			<control caption="Pazar"/>
-			<control caption="Pazartesi"/>
-			<control caption="Salı"/>
-			<control caption="Çarşamba"/>
-			<control caption="Perşembe"/>
-			<control caption=" Friday"/>
-			<control caption="Cumartesi"/>
-			<control caption="Tümü"/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control caption=" _Toggle bandwidth independently"/>
-			<control caption=" _Limit network to Gnutella2"/>
-			<control/>
-			<control caption="Make this event active"/>
-			<control caption="Please select a date:"/>
-			<control caption="Please select a time:"/>
-			<control caption="Select the event type:"/>
-			<control caption="Description: (optional)"/>
-			<control caption="% of _bandwidth under limit"/>
-			<control caption="% of _download under limit"/>
-			<control caption="% of _upload under limit"/>
-			<control caption="Days Of Week"/>
-			<control caption="Run this event"/>
 			<control/>
 		</dialog>
 		<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Ağlar">
@@ -4503,6 +4516,25 @@
 			<control caption="İptal"/>
 			<control caption="Eklemek istediğiniz kanalı giriniz:|Kovma/yasaklama nedenini giriniz:"/>
 		</dialog>
+		<dialog name="CScheduleTaskPage" cookie="StCoBuEdmsEdmsBuBuBuBuBuStStStBuBu" caption="Faaliyet">
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control caption="Gnutella1"/>
+			<control caption="Gnutella2"/>
+			<control caption="eDonkey"/>
+			<control caption="DC++"/>
+			<control caption="BitTorrent"/>
+			<control caption="Select the event type:"/>
+			<control caption="% of _download under limit"/>
+			<control caption="% of _upload under limit"/>
+			<control caption="Ağlar"/>
+			<control caption="Bantgenişliği"/>
+		</dialog>
 	</dialogs>
 	<!-- Columns Definitions -->
 	<listColumns>
@@ -4641,6 +4673,14 @@
 			<column from="Rating" to="Reyting"/>
 			<column from="Comments" to="Yorumlar"/>
 			<column from="Order" to="Düzen"/>
+		</list>
+		<list name="CSchedulerWnd">
+			<column from="Action" to="Faaliyet"/>
+			<column from="Trigger" to="TigerTree"/>
+			<column from="Next Run" to="Sonraki"/>
+			<column from="Active" to="Aktif"/>
+			<column from="Status" to="Durum"/>
+			<column from="Description" to="Açıklama"/>
 		</list>
 	</listColumns>
 </skin>

@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2010-05-27 12:52+0000\n"
+"POT-Creation-Date: 2010-11-16 14:53+0000\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Janza\n"
+"Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -353,17 +353,21 @@ msgstr "Seaded"
 msgid "Configure IRC Settings"
 msgstr ""
 
-#: button;id_network_g2
+#: button;id_network_g2 cscheduletaskpage;control;9
 msgid "Gnutella2"
 msgstr "Gnutella2"
 
-#: button;id_network_g1
+#: button;id_network_g1 cscheduletaskpage;control;8
 msgid "Gnutella1"
 msgstr "Gnutella1"
 
 #: button;id_network_ed2k dialog;cdonkeysettingspage
 msgid "eDonkey"
 msgstr "eDonkey2000"
+
+#: button;id_network_dc cscheduletaskpage;control;11
+msgid "DC++"
+msgstr ""
 
 #: button;id_network_connect_to button;id_hostcache_connect
 msgid "Connect To"
@@ -393,11 +397,11 @@ msgstr ""
 msgid "Reset List"
 msgstr ""
 
-#: button;id_security_import button;id_scheduler_import
+#: button;id_security_import
 msgid "Import List"
 msgstr ""
 
-#: button;id_security_export button;id_scheduler_export
+#: button;id_security_export
 msgid "Export List"
 msgstr ""
 
@@ -456,6 +460,10 @@ msgstr ""
 #: button;id_hostcache_kad_cache
 msgid "Kademlia Cache"
 msgstr ""
+
+#: button;id_hostcache_dc_cache
+msgid "DC++ Cache"
+msgstr "DC++ Cache"
 
 #: button;id_chat_bold
 msgid "B"
@@ -571,6 +579,12 @@ msgstr "Ühenda Gnutella_1"
 #: cmainwnd.windowed;18;19;item;id_network_ed2k
 msgid "Connect to _eDonkey"
 msgstr "Ühenda _eDonkey2000"
+
+#: cmainwnd.basic;1;2;item;id_network_dc
+#: cmainwnd.tabbed;9;10;item;id_network_dc
+#: cmainwnd.windowed;18;19;item;id_network_dc
+msgid "Connect to _DC++"
+msgstr "Connect to _DC++"
 
 #: cmainwnd.basic;1;item;id_network_auto_close
 #: cmainwnd.tabbed;9;item;id_network_auto_close
@@ -925,8 +939,8 @@ msgstr "_Navigatsiooni vaade"
 msgid "_Windowed Mode"
 msgstr "_Akende vaade"
 
-#: cmainwnd.tabbed;13;item;idc_import_downloads
-#: cmainwnd.windowed;21;item;idc_import_downloads
+#: cmainwnd.tabbed;13;item;id_import_downloads
+#: cmainwnd.windowed;21;item;id_import_downloads
 msgid "_Import eMule partial downloads..."
 msgstr ""
 
@@ -1059,6 +1073,10 @@ msgstr ""
 #: chostcachewnd;28;item;id_hostcache_kad_cache
 msgid "_Kademlia Cache"
 msgstr ""
+
+#: chostcachewnd;28;item;id_hostcache_dc_cache
+msgid "_DC++ Cache"
+msgstr "_DC++ Cache"
 
 #: chostcachewnd;item;id_hostcache_import
 msgid "_Import MET File..."
@@ -1471,7 +1489,7 @@ msgstr "_Jagatud"
 #: cschedulerwnd;item;id_scheduler_remove
 #: cdiscoverywnd;item;id_discovery_remove clibrarysettingspage;control;19
 #: clibrarysettingspage;control;23 cmediasettingspage;control;8
-#: cwebsettingspage;control;12 cwizardsharepage;control;6
+#: cwebsettingspage;control;13 cwizardsharepage;control;6
 #: cavatarprofilepage;control;6 cfilesourcespage;control;6
 #: cgraphlistdlg;control;4 cgraphitemdlg;control;12 csharemanagerdlg;control;4
 #: cdownloadgroupdlg;control;8
@@ -1508,8 +1526,9 @@ msgstr "Faili _Omadused"
 #: clibrarytree.virtual.basic;item;id_library_folder_enqueue
 #: clibrarytree.virtual;item;id_library_folder_enqueue
 #: clibraryfileview.virtual.basic;item;id_library_folder_enqueue
-msgid "_Play Album"
-msgstr "_Mängi Albumit"
+#, fuzzy
+msgid "Play _Album"
+msgstr "Mängi Albumit"
 
 #: clibrarytree.virtual.basic;item;id_library_folder_delete
 #: clibrarytree.virtual;item;id_library_folder_delete
@@ -1524,7 +1543,8 @@ msgstr "_Kustuta"
 
 #: clibrarytree.virtual.basic;item;id_library_folder_properties
 #: clibrarytree.virtual;item;id_library_folder_properties
-msgid "_Album Properties"
+#, fuzzy
+msgid "Album _Properties"
 msgstr "_Albumi Omadused"
 
 #: clibrarytree.virtual;item;id_library_export_collection
@@ -1805,6 +1825,10 @@ msgstr ""
 msgid "_eDonkey"
 msgstr ""
 
+#: cneighbourswnd;59;item;id_network_dc
+msgid "_DC++"
+msgstr ""
+
 #: cneighbourswnd;60
 msgid "_Monitor"
 msgstr ""
@@ -1853,11 +1877,11 @@ msgstr "_Lisa Reegel..."
 msgid "Rese_t"
 msgstr "Algseade_d"
 
-#: csecuritywnd;item;id_security_import cschedulerwnd;item;id_scheduler_import
+#: csecuritywnd;item;id_security_import
 msgid "_Import..."
 msgstr "_Impordi..."
 
-#: csecuritywnd;item;id_security_export cschedulerwnd;item;id_scheduler_export
+#: csecuritywnd;item;id_security_export
 msgid "E_xport..."
 msgstr "E_kspordi..."
 
@@ -2103,10 +2127,11 @@ msgid "W A R N I N G   -   Y O U   A R E   F I R E W A L L E D"
 msgstr "K O H A N D A   S H A R E A Z A T"
 
 #: chomeviewctrl;text;5001
+#, fuzzy
 msgid ""
 "Shareaza has detected that you are behind a NAT router or firewall,\n"
-"\t\t\tand are unable to receive connections from the Internet.  "
-msgstr ""
+"\t\t\t\tand are unable to receive connections from the Internet.  "
+msgstr "To open the folder with your downloads"
 
 #: chomeviewctrl;text;5002
 msgid "This may cause poor download and search performance."
@@ -2121,9 +2146,10 @@ msgid "W A R N I N G   -   Y O U R   T C P   P O R T   I S   F I R E W A L
 msgstr "M I N U   T Õ M B A M I S E D"
 
 #: chomeviewctrl;text;6001
+#, fuzzy
 msgid ""
 "Shareaza has detected that you are behind a NAT router or firewall,\n"
-"\t\t\tand are unable to receive TCP connections from the Internet.  "
+"\t\t\t\tand are unable to receive TCP connections from the Internet.  "
 msgstr "To open the folder with your downloads"
 
 #: chomeviewctrl;text;6002
@@ -2135,9 +2161,10 @@ msgid "W A R N I N G   -   Y O U R   U D P   P O R T   I S   F I R E W A L
 msgstr "K A U G T Ö Ö   O N   L U B A T U D"
 
 #: chomeviewctrl;text;7001
+#, fuzzy
 msgid ""
 "Shareaza has detected that you are behind a NAT router or firewall,\n"
-"\t\t\tand are unable to receive UDP messages from the Internet.  "
+"\t\t\t\tand are unable to receive UDP messages from the Internet.  "
 msgstr "Shareaza Kaugtöö on lubatud. Kontrolli Shareazat, kasutades oma browserit:"
 
 #: chomeviewctrl;text;7002
@@ -2273,17 +2300,17 @@ msgid "Gnutella2:"
 msgstr "Gnutella2:"
 
 #: chomeconnectionbox;text;4 chomeconnectionbox;text;10
-#: chomeconnectionbox;text;16
+#: chomeconnectionbox;text;16 chomeconnectionbox;text;20
 msgid "Disconnected"
 msgstr "Ühenduseta"
 
 #: chomeconnectionbox;text;5 chomeconnectionbox;text;11
-#: chomeconnectionbox;text;17 string;8070
+#: chomeconnectionbox;text;17 chomeconnectionbox;text;21 string;8070
 msgid "Connecting..."
 msgstr "Ühendan..."
 
 #: chomeconnectionbox;text;6 chomeconnectionbox;text;12
-#: chomeconnectionbox;text;18 string;8071
+#: chomeconnectionbox;text;18 chomeconnectionbox;text;22 string;8071
 msgid "Connected"
 msgstr "Ühendatud"
 
@@ -2308,18 +2335,22 @@ msgid "eDonkey:"
 msgstr "Ühendan..."
 
 #: chomeconnectionbox;text;19
+msgid "DC++:"
+msgstr ""
+
+#: chomeconnectionbox;text;23
 msgid "You have been connected for"
 msgstr "tundi ja"
 
-#: chomeconnectionbox;text;20 chomeconnectionbox;text;22
+#: chomeconnectionbox;text;24 chomeconnectionbox;text;26
 msgid "%i"
 msgstr "%i"
 
-#: chomeconnectionbox;text;21
+#: chomeconnectionbox;text;25
 msgid "hours and"
 msgstr "minutit."
 
-#: chomeconnectionbox;text;23
+#: chomeconnectionbox;text;27
 msgid "minutes."
 msgstr ""
 
@@ -2391,9 +2422,10 @@ msgid "Welcome to Shareaza's Settings Manager"
 msgstr "Teretulemast Shareaza seadmehaldurisse"
 
 #: cgeneralsettingsgroup;text;2
+#, fuzzy
 msgid ""
 "The Shareaza Settings Manager allows advanced users to completely customise how\n"
-"\t\t\tShareaza works. The settings in the"
+"\t\t\t\tShareaza works. The settings in the"
 msgstr ""
 "Shareaza Seadehaldur lubab edasijõudnud kasutajal täielikult kohandada\n"
 "\t\t\tShareaza töötamist.  Seaded"
@@ -2456,9 +2488,10 @@ msgid "Internet"
 msgstr "Internet"
 
 #: cinternetsettingsgroup;text;2
+#, fuzzy
 msgid ""
 "The Shareaza Settings Manager allows advanced users to completely customise \n"
-"\t\t\thow Shareaza works. The settings in the"
+"\t\t\t\thow Shareaza works. The settings in the"
 msgstr ""
 "Shareaza Seadehaldur lubab edasijõudnud kasutajal täielikult kohandada\n"
 "\t\t\tShareaza töötamist.  Seaded"
@@ -2558,17 +2591,19 @@ msgid "Downloads Area"
 msgstr "Allalaadimised"
 
 #: downloadhelp.select;text;2
+#, fuzzy
 msgid ""
 "This is where files currently being downloaded are displayed. You can view\n"
-"\t\tindividual sources by expanding each file with the small + on the left."
+"\t\t\tindividual sources by expanding each file with the small + on the left."
 msgstr ""
 "Siin kuvatakse hetkel allalaaditavad failid. Sa saad vaadata\n"
 "\t\tiga faili allikaid, vajutades vasakul oleval väikesel + märgil."
 
 #: downloadhelp.select;text;3
+#, fuzzy
 msgid ""
 "Drag'n'Drop downloads higher in the list for priority, or onto Download Group \n"
-"\t\ttabs for better organisation (in Power Mode)."
+"\t\t\ttabs for better organisation (in Power Mode)."
 msgstr ""
 "Sa saad seda käsku kasutada ka iga laadimise kohta eraldi.\n"
 "\t\tLihtsalt vali laadimine ja vali sama käsklus uuesti."
@@ -2576,7 +2611,7 @@ msgstr ""
 #: downloadhelp.select;text;4
 msgid ""
 "You can also use this command to get help information on a specific download.\n"
-"\t\tSimply select a download and choose this Help command again."
+"\t\t\tSimply select a download and choose this Help command again."
 msgstr ""
 
 #: downloadhelp.seeding;text;1
@@ -2586,7 +2621,7 @@ msgstr ""
 #: downloadhelp.seeding;text;2
 msgid ""
 "Shareaza has verified this complete download, and is actively sharing it\n"
-"\t\twith other downloaders through BitTorrent. Please share at least 100%."
+"\t\t\twith other downloaders through BitTorrent. Please share at least 100%."
 msgstr ""
 
 #: downloadhelp.completed;text;1
@@ -2594,9 +2629,10 @@ msgid "This Download has Completed"
 msgstr "See laadimine on lõpetatud"
 
 #: downloadhelp.completed;text;2
+#, fuzzy
 msgid ""
 "Shareaza has finished downloading this file, and has verified that it\n"
-"\t\tis 100% correct. It has also moved the file to your downloads folder."
+"\t\t\tis 100% correct. It has also moved the file to your downloads folder."
 msgstr ""
 "Shareaza on lõpetanud selle faili allalaadimise ja on kinnitanud, et\n"
 "\t\tsee on 100% korras.  See on samuti viidud Sinu Allalaaditud failide kausta."
@@ -2606,9 +2642,10 @@ msgid "This Download is Moving"
 msgstr "Seda Faili viiakse Failide kausta"
 
 #: downloadhelp.moving;text;2
+#, fuzzy
 msgid ""
 "Shareaza has finished downloading this file, and has verified that\n"
-"\t\tit is correct. It is currently being moved and/or unpacked to your downloads folder."
+"\t\t\tit is correct. It is currently being moved and/or unpacked to your downloads folder."
 msgstr ""
 "Shareaza on lõpetanud selle faili allalaadimise ja on kinnitanud, et see on\n"
 "\t\tkorralik.  Seda parajasti viiakse ja/või pakitakse lahti sinu Allalaaditud failide kausta."
@@ -2618,9 +2655,10 @@ msgid "This Download is Paused"
 msgstr "See allalaadimine on peataud"
 
 #: downloadhelp.paused;text;2
+#, fuzzy
 msgid ""
 "You have paused this download. If you want it to resume downloading, you\n"
-"\t\tcan click the '"
+"\t\t\tcan click the '"
 msgstr ""
 "Sa oled selle allalaadimise peatanud.  Kui tahad allalaadimist jätkata, siis\n"
 "\t\tkliki '"
@@ -2634,12 +2672,13 @@ msgid "The Disk is Full"
 msgstr "Ketas on täis"
 
 #: downloadhelp.diskfull;text;2
+#, fuzzy
 msgid ""
 "Shareaza has paused this download automatically because the hard disk\n"
-"\t\tappears to be full, or the download file cannot be written to. If you wish\n"
-"\t\tto continue downloading, please free some space on your hard disk and/or check\n"
-"\t\tto make sure the incomplete file folder is accessible, and then resume the\n"
-"\t\tdownload."
+"\t\t\tappears to be full, or the download file cannot be written to. If you wish\n"
+"\t\t\tto continue downloading, please free some space on your hard disk and/or check\n"
+"\t\t\tto make sure the incomplete file folder is accessible, and then resume the\n"
+"\t\t\tdownload."
 msgstr ""
 "Shareaza on peatanud automaatselt allalaadimise, sest kõvaketas tundub täis olevat,\n"
 "\t\tvõi faili ei ole võimalik sellele kirjutada.  Kui sa soovid allalaadimist jätkata, palun\n"
@@ -2651,10 +2690,11 @@ msgid "This Download is Verifying"
 msgstr "Seda allalaadimist kinnitatakse"
 
 #: downloadhelp.verifying;text;2
+#, fuzzy
 msgid ""
 "This download has finished, and Shareaza is now checking it to ensure\n"
-"\t\tthat it is exactly the same as the original file. If any damaged parts are\n"
-"\t\tfound, Shareaza will repair them automatically."
+"\t\t\tthat it is exactly the same as the original file. If any damaged parts are\n"
+"\t\t\tfound, Shareaza will repair them automatically."
 msgstr ""
 "See allalaadimine on lõpetatud ja Shareaza kontrollib nüüd, et\n"
 "\t\tfail vastaks originaalile.  Kui leitakse kahjustatud osasid, siis\n"
@@ -2665,9 +2705,10 @@ msgid "This Download is Active!"
 msgstr "See allalaadimine on Aktiivne!"
 
 #: downloadhelp.downloading;text;2
+#, fuzzy
 msgid ""
 "This download is currently in progress. If it is downloading too slowly,\n"
-"\t\tyou could try searching the network for more sources with the '"
+"\t\t\tyou could try searching the network for more sources with the '"
 msgstr ""
 "Sea allalaadimist parajasti töödeldakse.  Kui ta tõmbab liiga aeglaselt,\n"
 "\t\tproovi otsida lisa allikaid '"
@@ -2677,10 +2718,11 @@ msgid "Find More Sources"
 msgstr "Leia Rohkem Kasutajaid"
 
 #: downloadhelp.downloading;text;4
+#, fuzzy
 msgid ""
 "' command. If the speed does not \n"
-"\t\timprove it may be due to limited upload speeds of the users you are downloading \n"
-"\t\tfrom. Download speed usually increases over time."
+"\t\t\timprove it may be due to limited upload speeds of the users you are downloading \n"
+"\t\t\tfrom. Download speed usually increases over time."
 msgstr ""
 "' käsuga. Kui kiirus ei parane\n"
 "\t\tvõib see olla põhjustatud üleslaadimis kiiruse piirangust, mille on määranud faili\n"
@@ -2691,13 +2733,14 @@ msgid "This Download is Pending"
 msgstr "See allalaadimine on Ootel"
 
 #: downloadhelp.pending;text;2
+#, fuzzy
 msgid ""
 "This download is waiting for someone to start uploading.\n"
-"\t\tShareaza is ready to start downloading this file, but no-one is sending it at\n"
-"\t\tthe moment. You are probably waiting in other user's queues, and the download\n"
-"\t\tmay start transferring at any time. You can examine the individual sources to \n"
-"\t\tsee each queue you are waiting in. If you are sharing files yourself, it may\n"
-"\t\timprove the chances of a download transfer starting quickly."
+"\t\t\tShareaza is ready to start downloading this file, but no-one is sending it at\n"
+"\t\t\tthe moment. You are probably waiting in other user's queues, and the download\n"
+"\t\t\tmay start transferring at any time. You can examine the individual sources to \n"
+"\t\t\tsee each queue you are waiting in. If you are sharing files yourself, it may\n"
+"\t\t\timprove the chances of a download transfer starting quickly."
 msgstr ""
 "See fail ootab, et keegi hakkaks seda jagama.\n"
 "\t\tShareaza on valmis faili allalaadima, aga momendil ei jaga seda keegi.\n"
@@ -2710,12 +2753,13 @@ msgid "This Download is Queued"
 msgstr "See allalaadimine on järjekorras"
 
 #: downloadhelp.queued;text;2
+#, fuzzy
 msgid ""
 "This download is waiting for some of your other downloads to complete.\n"
-"\t\tYour download settings limit the number of downloads which may be active at\n"
-"\t\tany given time, to ensure that each download gets a good share of the available\n"
-"\t\tbandwidth. You can change these settings via Tools, Shareaza Settings.\n"
-"\t\tAlternatively, you may manually start this download with the resume command."
+"\t\t\tYour download settings limit the number of downloads which may be active at\n"
+"\t\t\tany given time, to ensure that each download gets a good share of the available\n"
+"\t\t\tbandwidth. You can change these settings via Tools, Shareaza Settings.\n"
+"\t\t\tAlternatively, you may manually start this download with the resume command."
 msgstr ""
 "See allalaadimine ootab, et mõni teine sinu allalaadimine lõpetaks.\n"
 "\t\tSinu allalaadimise seaded piiravad korraga allalaaditavate failide arvu,\n"
@@ -2728,11 +2772,12 @@ msgid "This Download is Searching"
 msgstr "See allalaadimine otsib"
 
 #: downloadhelp.searching;text;2
+#, fuzzy
 msgid ""
 "There are no known sources for this download, so Shareaza is searching\n"
-"\t\tall connected P2P networks for new sources. Once sources are found, the\n"
-"\t\tdownload will start automatically. Shareaza searches for sources automatically,\n"
-"\t\thowever you can speed up the process using the"
+"\t\t\tall connected P2P networks for new sources. Once sources are found, the\n"
+"\t\t\tdownload will start automatically. Shareaza searches for sources automatically,\n"
+"\t\t\thowever you can speed up the process using the"
 msgstr ""
 "Sellele allalaadimisele ei ole hetkel ühtegi allikat ja Shareaza otsib\n"
 "\t\tkõigist P2P võrkudest uusi allikaid.  Kui allikas on leitud algalab\n"
@@ -2744,11 +2789,12 @@ msgid "command."
 msgstr "käsklust."
 
 #: downloadhelp.searching;text;5
+#, fuzzy
 msgid ""
 "Unfortunately in many cases there may be no users online who have the\n"
-"\t\tfile you are looking for. The only course of action here is to wait for\n"
-"\t\tsomeone to come online, or cancel it and try to find a similar file which is\n"
-"\t\tmore widely available."
+"\t\t\tfile you are looking for. The only course of action here is to wait for\n"
+"\t\t\tsomeone to come online, or cancel it and try to find a similar file which is\n"
+"\t\t\tmore widely available."
 msgstr ""
 "Mõnikord kahjuks ei ole ühtegi selle faili kasutajat võrgus.\n"
 "\t\tSellisel juhul on ainuke võimalus oodata, etkeegi selle faili kasutaja tuleb\n"
@@ -2760,9 +2806,10 @@ msgid "This Download is Creating"
 msgstr "Seda allalaadimist Kirjutatakse"
 
 #: downloadhelp.creating;text;2
+#, fuzzy
 msgid ""
 "Shareaza is pre-allocating a file in which to store this download, to\n"
-"\t\tsave time later."
+"\t\t\tsave time later."
 msgstr ""
 "Shareaza paigutab faili hilisemaks salvestuseks\n"
 "\t\tringi."
@@ -2772,10 +2819,11 @@ msgid "BitTorrent Tracker Down"
 msgstr "BitTorrenti Jälitus ei vasta"
 
 #: downloadhelp.tracker;text;2
+#, fuzzy
 msgid ""
 "The BitTorrent tracker server for this download appears to be\n"
-"\t\tdown or malfunctioning. Shareaza is unable to contact it to receive\n"
-"\t\ta list of peers."
+"\t\t\tdown or malfunctioning. Shareaza is unable to contact it to receive\n"
+"\t\t\ta list of peers."
 msgstr ""
 "BitTorrenti server selle allalaadimiseks tundub olevat maas\n"
 "\t\tvõi ei vasta.  Shareazal ei ole võimalik saada selle faili\n"
@@ -2786,10 +2834,11 @@ msgid "Uploads Area"
 msgstr "Üleslaadimine"
 
 #: uploadhelp;text;2
+#, fuzzy
 msgid ""
 "This is where queues and uploads are displayed. You can expand each queue\n"
-"\t\twith the small + on the left, and filter what is displayed with the button on the\n"
-"\t\tright of the window's toolbar."
+"\t\t\twith the small + on the left, and filter what is displayed with the button on the\n"
+"\t\t\tright of the window's toolbar."
 msgstr ""
 "Siin kuvatakse üleslaadimised ja järjekorrad. Sa saad igat järjekrda laiendada\n"
 "\t\tvasakul olevast + märgist, ja filtreerida kuvatavat infot, all paremas nurgas\n"
@@ -2804,10 +2853,11 @@ msgid "The amount of free space on one or more drives used by Shareaza is low."
 msgstr "Ühe või rohkema Shareaza poolt kasutatava ketta maht on liiga väike."
 
 #: generalhelp.diskspace;text;3
+#, fuzzy
 msgid ""
 "You should always attempt to keep a reasonable amount of disk space free. Programs \n"
-"\t\tcan become unstable if the drives become full, and temporary files may be lost. You should \n"
-"\t\trun a disk clean-up, delete unwanted files, or uninstall software you no longer need."
+"\t\t\tcan become unstable if the drives become full, and temporary files may be lost. You should \n"
+"\t\t\trun a disk clean-up, delete unwanted files, or uninstall software you no longer need."
 msgstr ""
 "Sul peaks alati olema piisavalt palju vaba kettaruumi. Programmid võivad muutuda\n"
 "\t\tebastabiilseks, kui ketas hakkab täis saama ajutised failid võivad kaduma minna. Sa peaks\n"
@@ -2822,10 +2872,11 @@ msgid "A disk or directory Shareaza needs cannot be written to."
 msgstr "Ketas või kaust, mida Shareaza vajab ei ole ligipääsetav."
 
 #: generalhelp.diskwritefail;text;3
+#, fuzzy
 msgid ""
 "A network drive may have been disconnected, or you may not have write permission \n"
-"\t\tto a selected directory. Please check directories and permissions, or change the\n"
-"\t\ttemporary files location."
+"\t\t\tto a selected directory. Please check directories and permissions, or change the\n"
+"\t\t\ttemporary files location."
 msgstr ""
 "Võrguketas võib olla lahti ühendatud, või ei ole sul kirjutusõigusi valitud\n"
 "\t\tkaustas. Kontrolli kausata ja õigusi, või muuda ajutiste failide\n"
@@ -2840,9 +2891,10 @@ msgid "Windows reports that there is no internet connection is available."
 msgstr "Windowsi teatel ei ole hetkel internetiühendust."
 
 #: generalhelp.connectionfail;text;3
+#, fuzzy
 msgid ""
 "It is likely that a modem or router has dropped, meaning the internet cannot\n"
-"\t\tbe accessed. You may need to manually re-connect or reset your connection."
+"\t\t\tbe accessed. You may need to manually re-connect or reset your connection."
 msgstr ""
 "Tõenäoliselt on modem or ruuter ühenduse katkestanud, tähendab, etinternetti\n"
 "\t\tpuudub juurdepääs. Sa pead käsitsi looma uue ühenduse või taaskäivitama süsteemi."
@@ -2856,10 +2908,11 @@ msgid "Adult content filter enabled"
 msgstr "Täiskasvanu filter"
 
 #: generalhelp.adultfilter;text;2
+#, fuzzy
 msgid ""
 "Please note that (as with any automated filter) it may not be 100% effective at\n"
-"\t\tscreening content. It is designed simply to filter out excess unwanted results, rather than \n"
-"\t\tas a 100% safe block."
+"\t\t\tscreening content. It is designed simply to filter out excess unwanted results, rather than \n"
+"\t\t\tas a 100% safe block."
 msgstr ""
 "Tähelepanu (nagu kõik automaatsed filtrid) ei pruugi see olla 100% efektiivne.\n"
 "\t\tSee on mõeldud pigem üleliigse välja sorteerimiseks, mitte niivõrd, 100% tõkkeks"
@@ -2873,19 +2926,21 @@ msgid "This torrent appears to have an encoding error"
 msgstr "Sellel torrentil paistavad olema kodeerimisvead"
 
 #: generalhelp.badtorrentencoding;text;2
+#, fuzzy
 msgid ""
 "Windows has reported a translation fault while decoding text in this torrent. It is\n"
-"\t\tpossible that the torrent is corrupt, or just incorrectly encoded. The torrent may\n"
-"\t\tstill download properly, although some file names could be incorrect."
+"\t\t\tpossible that the torrent is corrupt, or just incorrectly encoded. The torrent may\n"
+"\t\t\tstill download properly, although some file names could be incorrect."
 msgstr ""
 "Windows teatel on selle torentil vigane kodeering. On võimalik, et torrent\n"
 "\t\ton vigane, või lihtsalt valesti kodeeritud. Torrent võib õigesti allalaaditud\n"
 "\t\tolla aga nimes võivad erinevused olla."
 
 #: generalhelp.badtorrentencoding;text;3
+#, fuzzy
 msgid ""
 "Most torrent creation programs should allow you to repair this torrent, which\n"
-"\t\twill ensure it works properly in all BitTorrent applications."
+"\t\t\twill ensure it works properly in all BitTorrent applications."
 msgstr ""
 "Enamus torrentitegemise programme peaksid olema suutelised seda torrentit\n"
 "\t\tparandama, et kõik BitTorrenti programmid oleksid suutelised seda lugema."
@@ -2903,17 +2958,19 @@ msgid "Your eDonkey server list is empty"
 msgstr "Sinu eDonkey serveri nimekiri on tühi"
 
 #: generalhelp.donkeyserverlist;text;2
+#, fuzzy
 msgid ""
 "There are no servers in your eDonkey server list. You need to download an\n"
-"\t\tup to date server list (met file) to connect to ED2K."
+"\t\t\tup to date server list (met file) to connect to ED2K."
 msgstr ""
 "Sinu eDonkey2000 serveri nimekirjas ei ole ühtegi serverit. Sa pead tõmbama uuendatud\n"
 "\t\tserveri nimekirja (met faili), et ühendada ED2K võrku."
 
 #: generalhelp.donkeyserverlist;text;3
+#, fuzzy
 msgid ""
 "You can download a server list from the ed2k setting page, or the discovery\n"
-"\t\tservices window. (Press F9 to open the discovery services window)"
+"\t\t\tservices window. (Press F9 to open the discovery services window)"
 msgstr ""
 "Sa saad tõmmata serveri nimekirja ed2k seadete lehelt, või serverite aknas.\n"
 "\t\t(Vajuta F9-t, et avada serverite aken)"
@@ -2923,28 +2980,31 @@ msgid "Limiting uploads may slow downloads"
 msgstr "Piiratud üleslaadimine võib langetada allalaadimiskiirust"
 
 #: generalhelp.uploadwarning;text;2
+#, fuzzy
 msgid ""
 "Several networks Shareaza connects to enforce ratios, limit uploads to\n"
-"\t\tclients that do not share, or simply preference uploading to known sharers."
+"\t\t\tclients that do not share, or simply preference uploading to known sharers."
 msgstr ""
 "Mitmed võrgud kuhu Shareaza ühendub, et kindlustada liikluse suhet, piiravad\n"
 "\t\tüleslaadimisi klientidele kes ei jaga, või lihtsalt ei anna allalaadimis õigusi."
 
 #: generalhelp.uploadwarning;text;3
+#, fuzzy
 msgid ""
 "Fortunately, broadband DSL connections are like a two-lane highway: you have\n"
-"\t\tseparate allocations for upload and download. If your client is properly configured, \n"
-"\t\tyou should be able to upload at a good rate while retaining full download capacity."
+"\t\t\tseparate allocations for upload and download. If your client is properly configured, \n"
+"\t\t\tyou should be able to upload at a good rate while retaining full download capacity."
 msgstr ""
 "Õnneks, püsiühendusega DSL ühendused on nagu kahesuunalised kiirteed: siin on\n"
 "\t\teraldi kanalid allalaadimiseks ja üleslaadimiseks. Kui klient on õigesti seadistatud,\n"
 "\t\tsaad head tulemused nii alla- kui üleslaadimisel."
 
 #: generalhelp.uploadwarning;text;4
+#, fuzzy
 msgid ""
 "By default, your upload limit is set to about 85% of available upstream bandwidth,\n"
-"\t\twhile downloads are unlimited. That configuration should give you the fastest possible \n"
-"\t\tdownloads that are available."
+"\t\t\twhile downloads are unlimited. That configuration should give you the fastest possible \n"
+"\t\t\tdownloads that are available."
 msgstr ""
 "Vaikimisi on sinu üleslaadimise piirang seatud 85% võimalikust ülesalaadimisest,\n"
 "\t\tsamas allalaadimine on piiramatu. Selline konfiguratsioon peaks andma kiireima võimaliku\n"
@@ -2956,11 +3016,12 @@ msgid "Please re-phrase the search"
 msgstr "Palun sõnasta otsingusõna ümber"
 
 #: searchhelp.badsearch1;text;2
+#, fuzzy
 msgid ""
 "This search is poorly formatted, and may not function correctly. \n"
-"\t\tSearches should include several terms where possible, and should specify a schema \n"
-"\t\t(file type). Furthermore, searches must not be limited to numbers or negative\n"
-"\t\tterms only, and you should avoid overly general queries."
+"\t\t\tSearches should include several terms where possible, and should specify a schema \n"
+"\t\t\t(file type). Furthermore, searches must not be limited to numbers or negative\n"
+"\t\t\tterms only, and you should avoid overly general queries."
 msgstr ""
 "See otsing on halvasti sõnastatud ja ei pruugi anda korralikku vastet.\n"
 "\t\tOtsinud peaksid sisaldama võimlikult palju vihjeid ja peaks täpsustama teemat\n"
@@ -2968,51 +3029,57 @@ msgstr ""
 "\t\tja samas peaks vältima liiga üldsõnalisi otsinguid."
 
 #: searchhelp.badsearch1;text;3
+#, fuzzy
 msgid ""
 "Most clients on the network will ignore a search for all MP3 files, for example, \n"
-"\t\tbecause it is not specific enough, and would generate too many results."
+"\t\t\tbecause it is not specific enough, and would generate too many results."
 msgstr ""
 "Enamus kliente eirab liiga üldsõnalisi otsinguid, näiteks MP3, sest see\n"
 "\t\tei ole piisavalt täpne, ja võib anda liiga palju vastuseid."
 
 #: searchhelp.badsearch2;text;2
+#, fuzzy
 msgid ""
 "This search does not contain enough terms to function properly. All searches need\n"
-"\t\ta minimum number of valid, alphabetic characters to be able to start."
+"\t\t\ta minimum number of valid, alphabetic characters to be able to start."
 msgstr ""
 "Otsing ei sisalda piisavalt märksõnu, et anda korralikku vastust. Kõik otsingud\n"
 "\t\tvajavad minimaalset arvu sümboleid et, alustada."
 
 #: searchhelp.badsearch2;text;3
+#, fuzzy
 msgid ""
 "While common file extensions (and numbers) can be searched for, you must enter\n"
-"\t\tother terms as well when creating the search. Punctuation and wildcards are not used \n"
-"\t\tin searches, just the text you enter."
+"\t\t\tother terms as well when creating the search. Punctuation and wildcards are not used \n"
+"\t\t\tin searches, just the text you enter."
 msgstr ""
 "Kuigi on võimalik otsida levinud faililaiendeid (ja numbreid), siiski peab\n"
 "\t\tsisestama ka teisi märksõnu, et otsida. Otsingus ei kasutata kirjavahemärke, sisestatakse\n"
 "\t\tainult tekst."
 
 #: searchhelp.badsearch3;text;2
+#, fuzzy
 msgid ""
 "This search seems to contain only common file extensions, or no searchable\n"
-"\t\twords."
+"\t\t\twords."
 msgstr "Otsing sisaldab ainult faililaindit, või mitteotsitavat sõna."
 
 #: searchhelp.badsearch3;text;3
+#, fuzzy
 msgid ""
 "If you are having trouble creating searches, keep in mind that it's quite similar\n"
-"\t\tto a web search. Specific terms or phrases are best- Unique names, titles and\n"
-"\t\tkeywords."
+"\t\t\tto a web search. Specific terms or phrases are best- Unique names, titles and\n"
+"\t\t\tkeywords."
 msgstr ""
 "Kui sul on otsinguga raskusi, siis pea meeles, et see on sarnane\n"
 "\t\tweebiotsingule. Parimad on täpsed terminid ja sõnad- ainulaadsed sõnad, pealkirjad\n"
 "\t\tja võtmesõnad."
 
 #: searchhelp.badsearch3;text;4
+#, fuzzy
 msgid ""
 "General terms cannot be searched for efficiently and may result in poor\n"
-"\t\tsearch performance, as well as high bandwidth use during searches."
+"\t\t\tsearch performance, as well as high bandwidth use during searches."
 msgstr ""
 "Liiga üldsõnalisi termineid ei saa eriti efektiivselt otsida ja liiga palju vastuseid\n"
 "\t\tlangetavad otsingu kvaliteeti, samuti ka liiga suur ressursikasutus."
@@ -3026,19 +3093,21 @@ msgid "This search cannot be started"
 msgstr "Otsingut ei saa teha"
 
 #: searchhelp.adultsearch;text;2
+#, fuzzy
 msgid ""
 "The specified search would probably return a large number of results with adult \n"
-"\t\tcontent, and this has been turned off in the settings. You should either re-phrase the \n"
-"\t\tsearch, or disable the filter."
+"\t\t\tcontent, and this has been turned off in the settings. You should either re-phrase the \n"
+"\t\t\tsearch, or disable the filter."
 msgstr ""
 "Antud otsing annab liiga palju täiskasvanutele orienteeritud vastuseid ja see\n"
 "\t\ton seadetest keelatud toiming. Sa peaksid kas otsingu ümbersõnastama või\n"
 "\t\tfiltri välja lülitama."
 
 #: searchhelp.adultsearch;text;3
+#, fuzzy
 msgid ""
 "To disable the filter, go into Tools > Settings > General and uncheck the\n"
-"\t\tadult content filter."
+"\t\t\tadult content filter."
 msgstr ""
 "Et filtrit välja lülitada, mine Tööriistad - Seaded - Üldiselt ja võta linnuke\n"
 "\t\ttäiskasvanu filtri eest."
@@ -3056,18 +3125,20 @@ msgid "This folder should not be shared"
 msgstr "Seda kausta ei tohiks jagada"
 
 #: sharehelp.badshare;text;2
+#, fuzzy
 msgid ""
 "This folder is (or contains) a system folder. Sharing this folder is not\n"
-"\t\trecommended, since most of the files in it are of no use to other people."
+"\t\t\trecommended, since most of the files in it are of no use to other people."
 msgstr ""
 "See kaust on (või sisaldab) süsteemi kaust. Selle kausta jagamine ei ole\n"
 "\t\tsoovitatav, kuna enamus failitest pole teistele mingit kasu."
 
 #: sharehelp.badshare;text;3
+#, fuzzy
 msgid ""
 "Folders such as the Windows directory, Program Files, and similar folders\n"
-"\t\tdo not usually contain files suitable for sharing. Any files of interest would be in\n"
-"\t\tsub-folders located"
+"\t\t\tdo not usually contain files suitable for sharing. Any files of interest would be in\n"
+"\t\t\tsub-folders located"
 msgstr ""
 "Kaustad nagu Windowsi kaustad, Program Files, ja teised sarnased kaustad\n"
 "\t\tei sisalda tavaliselt jagamiseks sobivaid faile. Failid, mida võiks jagada ja mis\n"
@@ -3078,18 +3149,80 @@ msgid "inside"
 msgstr "nende"
 
 #: sharehelp.badshare;text;5
+#, fuzzy
 msgid ""
 "these folders.\n"
-"\t\tPlease share those instead."
+"\t\t\tPlease share those instead."
 msgstr "alamkaustades. Jagage siis alamkauste."
 
 #: sharehelp.badshare;text;6
+#, fuzzy
 msgid ""
 "The Shareaza 'incomplete' folder should also not be shared through the\n"
-"\t\tlibrary, since attempting to hash downloads in progress may impact on performance."
+"\t\t\tlibrary, since attempting to hash downloads in progress may impact on performance."
 msgstr ""
 "Shareaza 'poolikute' kausta ei peaks samuti jagama läbi raamatukogu, kuna\n"
 "\t\tnende hashimine võib need rikkuda."
+
+#: message;afx_ids_app_title string;window_main
+msgid "Shareaza"
+msgstr "Shareaza"
+
+#: message;afx_ids_idlemessage
+#, fuzzy
+msgid "Ready"
+msgstr "Valmis..."
+
+#: message;afx_ids_mdichild
+msgid "Activate this window"
+msgstr ""
+
+#: message;afx_ids_preview_close
+msgid "Close print preview mode"
+msgstr ""
+
+#: tip;afx_ids_preview_close
+#, fuzzy
+msgid "Cancel Preview"
+msgstr "Eelvaade"
+
+#: message;afx_ids_scclose
+#, fuzzy
+msgid "Close the active window and prompts to save the documents"
+msgstr "Suurenda aktiivne aken."
+
+#: message;afx_ids_scmaximize
+#, fuzzy
+msgid "Enlarge the window to full size"
+msgstr "Suurenda aktiivne aken."
+
+#: message;afx_ids_scminimize
+msgid "Reduce the window to an icon"
+msgstr ""
+
+#: message;afx_ids_scmove
+msgid "Change the window position"
+msgstr ""
+
+#: message;afx_ids_scnextwindow
+msgid "Switch to the next document window"
+msgstr ""
+
+#: message;afx_ids_scprevwindow
+msgid "Switch to the previous document window"
+msgstr ""
+
+#: message;afx_ids_screstore
+msgid "Restore the window to normal size"
+msgstr ""
+
+#: message;afx_ids_scsize
+msgid "Change the window size"
+msgstr ""
+
+#: message;afx_ids_sctasklist
+msgid "Activate Task List"
+msgstr ""
 
 #: message;id_browse_files
 msgid "View the user's shared files"
@@ -3178,6 +3311,11 @@ msgstr "Lisa uus serveri aadress..."
 #: message;id_discovery_advertise
 msgid "Advertise the selected GWebCache service to a random existing GWebCache."
 msgstr "Levita valitud GWebCache serverit juhuslikule GWebCache serverile."
+
+#: message;id_discovery_blocked
+#, fuzzy
+msgid "Show blocked services in the Discovery window."
+msgstr "Näita GWebCache servereid selles aknas."
 
 #: message;id_discovery_browse
 msgid "Browse statistics for the selected GWebCache service on the Web."
@@ -3368,7 +3506,8 @@ msgid "Add a source URL to the selected download..."
 msgstr "Lisa URL allikas valitud allalaadimisele..."
 
 #: message;id_downloads_view_reviews
-msgid "View reviews for the selected download"
+#, fuzzy
+msgid "View reviews for the selected download."
 msgstr "Vaata valitud allalaadimise kohta kirjutatud arvamusi"
 
 #: message;id_help_about
@@ -3383,10 +3522,6 @@ msgstr "Koodekite ja video probleemide kohta käiv abi."
 msgid "View the Shareaza FAQ."
 msgstr "Vaata Shareaza Korduvaid küsimusi."
 
-#: message;id_help_router
-msgid "Get help configuring your router or firewall."
-msgstr "Leia abi ruuteri ja tulemüüri seadistamiseks."
-
 #: message;id_help_forums
 msgid "Visit the Shareaza Discussion Forums."
 msgstr "Külasta Shareaza Foorumit."
@@ -3399,16 +3534,24 @@ msgstr "Külasta Shareaza Kasutusõpetust."
 msgid "Visit the Shareaza web site."
 msgstr "Külasta Shareaza kodulehte."
 
+#: message;id_help_router
+msgid "Get help configuring your router or firewall."
+msgstr "Leia abi ruuteri ja tulemüüri seadistamiseks."
+
 #: message;id_help_security
 msgid "Help protecting your system from hostile programs."
 msgstr "Abi arvuti kaitsmiseks pahade programmide eest."
+
+#: message;id_help_test
+msgid "Run the connection test."
+msgstr ""
 
 #: message;id_help_update
 msgid "Check for news and updates."
 msgstr "Kontrolli uuendusi."
 
-#: message;id_help_test
-msgid "Run the connection test."
+#: message;id_help_version_check
+msgid "Check for new version"
 msgstr ""
 
 #: message;id_help_web_1 message;id_help_web_2 message;id_help_web_3
@@ -3428,9 +3571,18 @@ msgstr "Peata jälgimine."
 msgid "Search the network for the selected term."
 msgstr "Otsi võrgust valitud terminit."
 
+#: message;id_hostcache_bt_cache
+#, fuzzy
+msgid "Show BitTorrent cached hosts."
+msgstr "Näita BitTorrenti üleslaadimisi."
+
 #: message;id_hostcache_connect
 msgid "Connect to the selected host(s)."
 msgstr "Ühenda valitud serveriga."
+
+#: message;id_hostcache_dc_cache
+msgid "Show DC++ cached hubs."
+msgstr "Show DC++ cached hubs."
 
 #: message;id_hostcache_disconnect
 msgid "Disconnect from the selected neighbour(s)."
@@ -3460,6 +3612,11 @@ msgstr "Näita Gnutella2 horizon hube."
 msgid "Import a list of known hosts, such as a \"server.met\" file..."
 msgstr "Impordi tuntud serverite nimekiri, nagu \"server.met\" fail..."
 
+#: message;id_hostcache_kad_cache
+#, fuzzy
+msgid "Show Kademlia cached hosts."
+msgstr "Näita Gnutella1 cached servereid."
+
 #: message;id_hostcache_priority
 msgid "Try to connect to this server before other servers."
 msgstr "Proovi kõigepealt selle serveriga ühendada."
@@ -3467,6 +3624,11 @@ msgstr "Proovi kõigepealt selle serveriga ühendada."
 #: message;id_hostcache_remove
 msgid "Remove the selected hosts from the host cache."
 msgstr "Eemalda valitud serverid nimekirjast."
+
+#: message;id_import_downloads
+#, fuzzy
+msgid "Import eMule partial downloads..."
+msgstr "Jaga uusi poolikuid allalaadimisi"
 
 #: message;id_library_add
 msgid "Add a new folder to your library..."
@@ -3575,6 +3737,11 @@ msgstr "Taasloo andmebaas kasutades teist keelt."
 #: message;id_library_refresh
 msgid "Refresh the library view."
 msgstr "Värskenda raamatukogu vaadet."
+
+#: message;id_library_refresh_metadata
+#, fuzzy
+msgid "Refresh file metadata"
+msgstr "_Refresh Metadata"
 
 #: message;id_library_remove
 msgid "Remove the selected shared folders."
@@ -3756,6 +3923,15 @@ msgstr "Mängi"
 msgid "Show or hide the playlist editor."
 msgstr "Näita või peida playlisti toimetaja."
 
+#: message;id_media_position
+#, fuzzy
+msgid "Seek to a position in the media file."
+msgstr "Mängi kohta meedia failis"
+
+#: tip;id_media_position
+msgid "Seek"
+msgstr ""
+
 #: message;id_media_previous
 msgid "Skip back to the previous file in the current playlist."
 msgstr "Hüppa tagasi, eelmisele failile playlistis ."
@@ -3816,6 +3992,15 @@ msgstr "Näita pilti kolm korda suurmana originaalist."
 msgid "Show the video at double its original (natural) size."
 msgstr "Näita pilt topelt suuruses."
 
+#: message;id_media_speed
+#, fuzzy
+msgid "Adjust the speed of the media file."
+msgstr "Muuda heli kiirust"
+
+#: tip;id_media_speed column;speed
+msgid "Speed"
+msgstr "Kiirus"
+
 #: message;id_media_status
 msgid "Show or hide the media status line."
 msgstr "Näita või peida meedia oleku riba."
@@ -3828,25 +4013,31 @@ msgstr "Peata meedia."
 msgid "Select an audio visualisation plugin..."
 msgstr "Vali audio-video plugin..."
 
+#: message;id_media_volume
+#, fuzzy
+msgid "Adjust the audio volume."
+msgstr "Muuda helitugevust"
+
+#: tip;id_media_volume
+msgid "Volume"
+msgstr ""
+
 #: message;id_media_zoom
 msgid "Adjust video zoom and aspect ratio settings."
 msgstr "Muuda pildi suurenduse ja kuvasuhte seadeid."
 
-#: tip;idc_media_position
-msgid "Seek"
-msgstr ""
-
-#: tip;idc_media_speed column;speed
-msgid "Speed"
-msgstr "Kiirus"
-
-#: tip;idc_media_volume
-msgid "Volume"
-msgstr ""
-
 #: message;id_monitor_close
 msgid "Close the monitor window."
 msgstr "Sulge jälgimise aken."
+
+#: message;id_musicbrainz_albums
+msgid "Look at all albums for this artist."
+msgstr ""
+
+#: message;id_musicbrainz_matches
+#, fuzzy
+msgid "Search for albums matching the selected file."
+msgstr "Search for other copies of the selected file."
 
 #: message;id_neighbours_chat message;id_search_chat message;id_transfers_chat
 #: message;id_uploads_chat
@@ -3897,6 +4088,10 @@ msgstr "Ühenda võrkku."
 msgid "Manually connect to a host..."
 msgstr "Ühenda serveriga käsitsi..."
 
+#: message;id_network_dc
+msgid "Connect to the DC++ network."
+msgstr "Connect to the DC++ network."
+
 #: message;id_network_disconnect
 msgid "Disconnect from all networks, this will also stop all downloads and uploads."
 msgstr "Katkesta võrguga ühendus."
@@ -3920,6 +4115,57 @@ msgstr "Ühendu Gnutella2 võrkku (väga soovitatav)."
 #: message;id_network_search
 msgid "Start a new search of the network..."
 msgstr "Alusta võrgus uut otsingut..."
+
+#: message;id_next_pane
+msgid "Switch to the next window pane"
+msgstr ""
+
+#: tip;id_next_pane
+#, fuzzy
+msgid "Next Pane"
+msgstr "Järgmine reas"
+
+#: message;id_open_downloads_folder
+msgid "Open my folder of completed Downloads"
+msgstr ""
+
+#: message;id_prev_pane
+#, fuzzy
+msgid "Switch back to the previous window pane"
+msgstr "Hüppa tagasi, eelmisele failile playlistis ."
+
+#: tip;id_prev_pane
+#, fuzzy
+msgid "Previous Pane"
+msgstr "Eelmine"
+
+#: message;id_scheduler_activate
+#, fuzzy
+msgid "Activates selected task(s) from the list."
+msgstr "Eemalda nimekirjast valitud üleslaadimised."
+
+#: message;id_scheduler_add
+msgid "Adds a new task to scheduler list."
+msgstr ""
+
+#: message;id_scheduler_deactivate
+#, fuzzy
+msgid "Deactivates selected tasks."
+msgstr "Ühenda võrkku."
+
+#: message;id_scheduler_edit
+#, fuzzy
+msgid "Edit the selected task..."
+msgstr "Muuda valitud turvareeglit..."
+
+#: message;id_scheduler_remove
+#, fuzzy
+msgid "Removes selected task(s) from the list."
+msgstr "Eemalda nimekirjast valitud allalaadimised."
+
+#: message;id_scheduler_remove_all
+msgid "Removes all scheduled tasks."
+msgstr ""
 
 #: message;id_search_clear
 msgid "Clear the search results."
@@ -4029,9 +4275,44 @@ msgstr "Eemalda valitud turvareegel."
 msgid "Reset the hit counts on the selected rules."
 msgstr "Nulli löögilugeja valitud reeglil."
 
+#: message;id_sharemonkey_buy
+msgid "Buy it and support the author"
+msgstr ""
+
+#: message;id_sharemonkey_compare
+msgid "Compare prices in different stores"
+msgstr ""
+
+#: message;id_sharemonkey_download
+#, fuzzy
+msgid "Search for matches"
+msgstr "_Otsi Seda"
+
+#: message;id_sharemonkey_next
+msgid "Go to the next match"
+msgstr ""
+
+#: message;id_sharemonkey_previous
+msgid "Go to the previous match"
+msgstr ""
+
+#: message;id_sharemonkey_prices
+#, fuzzy
+msgid "Look at the prices for the current match"
+msgstr "Hüppa tagasi, eelmisele failile playlistis ."
+
+#: message;id_sharemonkey_save
+#, fuzzy
+msgid "Save the match in your Library"
+msgstr "Näita seda faili Raamatukogus"
+
 #: message;id_system_clear
 msgid "Clear the status log."
 msgstr "Puhasta oleku logi."
+
+#: message;id_system_copy
+msgid "Copy selected line(s) of status log."
+msgstr ""
 
 #: message;id_system_timestamp
 msgid "Record a timestamp for each line."
@@ -4040,6 +4321,30 @@ msgstr "Salvesta iga rea jaoks ajamärk."
 #: message;id_system_verbose
 msgid "Display a detailed system activity log."
 msgstr "Kuva detailselt süsteemi tegevuste logi."
+
+#: message;id_system_verbose_debug
+#, fuzzy
+msgid "Display all."
+msgstr "Kuva legend."
+
+#: message;id_system_verbose_error
+#, fuzzy
+msgid "Display errors only."
+msgstr "Kuva legend."
+
+#: message;id_system_verbose_info
+#, fuzzy
+msgid "Display infos and above."
+msgstr "Kuva baasruudustik."
+
+#: message;id_system_verbose_notice
+msgid "Display notices and above."
+msgstr ""
+
+#: message;id_system_verbose_warning
+#, fuzzy
+msgid "Display warnings and above."
+msgstr "Kuva baasruudustik."
 
 #: message;id_tab_connect
 msgid "Connect or disconnect from the network."
@@ -4229,6 +4534,11 @@ msgstr "Näita või peida Pakettide aken."
 msgid "Show or hide the HIT MONITOR window."
 msgstr "Näita või peida Tõmbamiste aken."
 
+#: message;id_view_scheduler
+#, fuzzy
+msgid "Show or hide SCHEDULER window."
+msgstr "Näita või peida Turvalisuse aken."
+
 #: message;id_view_search_monitor
 msgid "Show or hide the SEARCH MONITOR window."
 msgstr "Näita või peida Otsingujälgimis aken."
@@ -4256,6 +4566,26 @@ msgstr "SNäita või peida Üleslaadimiste aken."
 #: message;id_view_windowed
 msgid "Use Shareaza in power Windowed mode."
 msgstr "Kasuta Shareaza Akende vaadet."
+
+#: message;id_webservices_list
+msgid "Choose the web service to get more information about the selected file."
+msgstr ""
+
+#: message;id_webservices_musicbrainz
+msgid "Search for the same artist songs using MusicBrainz service."
+msgstr ""
+
+#: message;id_webservices_sharemonkey
+msgid "Search for the file infomation using ShareMonkey service."
+msgstr ""
+
+#: message;id_window_arrange
+msgid "Arrange icons at the bottom of the window"
+msgstr ""
+
+#: tip;id_window_arrange
+msgid "Arrange Icons"
+msgstr ""
 
 #: message;id_window_cascade
 msgid "Expand all open windows to fill the screen."
@@ -4289,14 +4619,6 @@ msgstr "Reasta avatud aknad vertikaalselt."
 msgid "Show or hide the toolbar."
 msgstr "Näita või peida tööriistariba."
 
-#: message;id_webservices_list
-msgid "Choose the web service to get more information about the selected file."
-msgstr ""
-
-#: message;id_webservices_sharemonkey
-msgid "Search for the file infomation using ShareMonkey service."
-msgstr ""
-
 #: message;imageviewer_bestfit
 msgid "Resize the image to fit within the window."
 msgstr ""
@@ -4324,10 +4646,6 @@ msgstr ""
 #: tip;idc_share_partials
 msgid "This setting has no effect on downloads previously started, also this setting is ignored if the file have the eDonkey hash and the eDonkey network is enabled or if it is a torrent.{n}However this setting isn't ignored if the download is paused.{n}{n}ATTENTION: Use this option only in case of real necessity, if you abuse of the option you may be banned."
 msgstr ""
-
-#: string;window_main
-msgid "Shareaza"
-msgstr "Shareaza"
 
 #: string;window_system
 msgid "System"
@@ -4385,74 +4703,6 @@ msgstr ""
 msgid "Scheduler"
 msgstr ""
 
-#: string;154
-msgid "Are you sure you want to remove all scheduled tasks? This cannot be undone."
-msgstr ""
-
-#: string;156
-msgid "Scheduled time has already passed.\\n\\nPlease select a time in the future."
-msgstr ""
-
-#: string;157
-msgid "Bandwidth: Full Speed"
-msgstr ""
-
-#: string;158
-msgid "Bandwidth: Reduced Speed"
-msgstr ""
-
-#: string;159
-msgid "Bandwidth: Stop"
-msgstr ""
-
-#: string;160
-msgid "System: Exit Shareaza"
-msgstr ""
-
-#: string;161
-msgid "System: Disconnect Dial-up Connection"
-msgstr ""
-
-#: string;162
-msgid "System: Turn Off the Computer"
-msgstr ""
-
-#: string;163
-msgid "Please select a task."
-msgstr ""
-
-#: string;164
-msgid "Specific day(s) of week"
-msgstr ""
-
-#: string;165 string;8325 string;20118
-msgid "Active"
-msgstr "Aktiivne"
-
-#: string;166 string;8324
-msgid "Inactive"
-msgstr "Mitteaktiivne"
-
-#: string;167
-msgid "Done"
-msgstr ""
-
-#: string;168
-msgid "Waiting..."
-msgstr ""
-
-#: string;169
-msgid "No Tasks Currently Scheduled"
-msgstr ""
-
-#: string;172
-msgid "Done Today"
-msgstr ""
-
-#: string;173
-msgid "You should select at least one day of week."
-msgstr ""
-
 #: string;7000
 msgid "Are you sure you want to delete this filter ?"
 msgstr "Kas oled kindel, et tahad selle filtri kustutada ?"
@@ -4486,8 +4736,12 @@ msgid "This template does not have any customizations."
 msgstr "Sellel mallil ei ole muutmis võimalusi."
 
 #: string;7102
-msgid "Are you sure you want to delete the \"%s\" template?\\nThis cannot be undone."
-msgstr "oled kindel, et tahad kustutada \"%s\" template?\\nSeda ei saa enam tagasi võtta."
+msgid ""
+"Are you sure you want to delete the \"%s\" template?\\n"
+"This cannot be undone."
+msgstr ""
+"oled kindel, et tahad kustutada \"%s\" template?\\n"
+"Seda ei saa enam tagasi võtta."
 
 #: string;8000 dialog;csettingsheet
 msgid "Shareaza Settings"
@@ -4506,8 +4760,18 @@ msgid "Edit My Profile"
 msgstr "Muuda Minu Profiili"
 
 #: string;8004
-msgid "!Welcome to Shareaza (version) !\\n.\\nShareaza is completely free software.\\nPlease use it responsibly and respect intellectual property law.\\n."
-msgstr "!Teretulemast Shareazasse (version) !\\n.\\nShareaza vabavara.\\nKasuta seda vastutustundlikult ja järgides intellektuaalse omandi seadusi.\\n."
+msgid ""
+"!Welcome to Shareaza (version) !\\n"
+".\\n"
+"Shareaza is completely free software.\\n"
+"Please use it responsibly and respect intellectual property law.\\n"
+"."
+msgstr ""
+"!Teretulemast Shareazasse (version) !\\n"
+".\\n"
+"Shareaza vabavara.\\n"
+"Kasuta seda vastutustundlikult ja järgides intellektuaalse omandi seadusi.\\n"
+"."
 
 #: string;8005
 msgid "(closing after transfers)"
@@ -4522,24 +4786,22 @@ msgid "There are no active searches. Click here to search for files."
 msgstr "Siin ei ole ühtegi aktiivset otsingut.  Klikka siia, et alustada otsingut."
 
 #: string;8008
-msgid "Shareaza has finished downloading the next Shareaza version (%s). Would you like to upgrade now?\\n\\nIf you select Yes, Shareaza will close temporarily while the upgrade is installed."
-msgstr "Shareaza on lõpetanud uue Shareaza versiooni (%s) allalaadimise.  Kas soovid kohe uuendada?\\n\\nKui valid Jah, Shareaza peab ajutiselt sulguma, kuni uuendus on lõpetatud."
+msgid ""
+"Shareaza has finished downloading the next Shareaza version (%s). Would you like to upgrade now?\\n"
+"\\n"
+"If you select Yes, Shareaza will close temporarily while the upgrade is installed."
+msgstr ""
+"Shareaza on lõpetanud uue Shareaza versiooni (%s) allalaadimise.  Kas soovid kohe uuendada?\\n"
+"\\n"
+"Kui valid Jah, Shareaza peab ajutiselt sulguma, kuni uuendus on lõpetatud."
 
 #: string;8009
 msgid "Are you sure you want to delete the \"%s\" skin? This cannot be undone."
 msgstr "Oled kindel, et tahad kustutada \"%s\" naha?  Seda ei saa enam tagasi võtta."
 
-#: string;8010
-msgid "This is a pre-release version of Shareaza, and the beta testing period has ended. Please download the full, official release from http://shareaza.sourceforge.net/."
-msgstr "See on Shareaza eelversioon ja beta testid on lõppenud.  Tõmba täis-, ametlik versioon http://shareaza.sourceforge.net/."
-
 #: string;8011
 msgid "Changing view will close any windows you have open. Would you like to change now?"
 msgstr "Vaadete muutmine sulgeb kõik avatud aknad.  Kas soovid kohe muuta?"
-
-#: string;8012
-msgid "Torrent Information"
-msgstr "Torrenti Informatsioon"
 
 #: string;8013
 msgid "No new Shareaza version detected."
@@ -4778,8 +5040,8 @@ msgid "File size must be"
 msgstr "Faili suurus peaks olema"
 
 #: string;8181
-msgid " to"
-msgstr " kuni"
+msgid " to (size from xx TO xx)"
+msgstr ""
 
 #: string;8208
 msgid "Shareaza is creating hashes for %Iu file(s):"
@@ -4858,8 +5120,9 @@ msgid "Shareaza is checking the download for errors:"
 msgstr "Shareaza kontrollib faili vigu:"
 
 #: string;8243
-msgid "Volume uploaded:"
-msgstr "Seni üleslaaditud:"
+#, fuzzy
+msgid "Upload ratio:"
+msgstr "Üleslaadimine"
 
 #: string;8244
 msgid "Number of reviews:"
@@ -4960,6 +5223,14 @@ msgstr "URL:"
 #: string;8323
 msgid "User Agent:"
 msgstr "Kasutaja agent:"
+
+#: string;8324 string;20264
+msgid "Inactive"
+msgstr "Mitteaktiivne"
+
+#: string;8325 string;20118 string;20263 column;active
+msgid "Active"
+msgstr "Aktiivne"
 
 #: string;8326
 msgid "Next in Line"
@@ -5086,20 +5357,27 @@ msgid "Are you sure you want to disconnect?"
 msgstr "Oled kindel, et tahad selle ühenduse katkestada?"
 
 #: string;16080
-msgid "You are running the Scheduler in 'G2 only' mode. Would you like to turn this mode off, so that all active networks remain connected?"
-msgstr ""
+#, fuzzy
+msgid "Would you like to always connect to this network?"
+msgstr "Sa ei ole võrku ühendatud."
 
 #: string;16081
 msgid "Sending query for \"%s\" to %s."
 msgstr "Saadan päringu \"%s\"  %s."
 
 #: string;16083
-msgid "Forcing your PC into hub mode may have adverse effects on performance and the P2P network. It is generally better to allow Shareaza to decide whether or not hub mode should be used.\\n\\nHub mode does NOT produce better search results, or have any other advantages for you.\\n\\nDo you really want to do this, despite these disadvantages?"
-msgstr "Sundides oma arvutit jaoturiks võivad mõjutada sinu arvutit ja P2P võrku.  Tavakasutajal on parem lasta Shareazal otsustada kas olla jaotur või mitte.\\n\\nJaoturiks olek paranda otsingu tulemusi, ega anna sulle mingit muud eelist.\\n\\nOled kindel, et tahad seda teha, vaatamata eespool öeldule?"
-
-#: string;16084
-msgid "Disabling support for Gnutella-1 protocols may limit your search results, and if you are acting as a hub it may also impact upon the results of other users. Are you sure you want to do this?"
-msgstr "Peatades toe Gnutella-1 protokollile, piirab sinu otsingu tulemusi, ja kui sa oled jaotur mõjutab see ka teiste kasutajate otsingute tulemusi.  Oled kindel, et tahad seda teha?"
+msgid ""
+"Forcing your PC into hub mode may have adverse effects on performance and the P2P network. It is generally better to allow Shareaza to decide whether or not hub mode should be used.\\n"
+"\\n"
+"Hub mode does NOT produce better search results, or have any other advantages for you.\\n"
+"\\n"
+"Do you really want to do this, despite these disadvantages?"
+msgstr ""
+"Sundides oma arvutit jaoturiks võivad mõjutada sinu arvutit ja P2P võrku.  Tavakasutajal on parem lasta Shareazal otsustada kas olla jaotur või mitte.\\n"
+"\\n"
+"Jaoturiks olek paranda otsingu tulemusi, ega anna sulle mingit muud eelist.\\n"
+"\\n"
+"Oled kindel, et tahad seda teha, vaatamata eespool öeldule?"
 
 #: string;16085
 msgid "Gnutella2 is Shareaza's premiere network. Disabling support for it may severely limit both the number and quality of your search results. Are you SURE you want to do this?"
@@ -5220,6 +5498,10 @@ msgstr "Gnutella2 ühendus %s edukalt sisse seatud (%s)."
 #: string;16159
 msgid "Closing connection to non-Gnutella2 neighbour %s."
 msgstr "Sulgen ühenduse mitte-Gnutella2 %s."
+
+#: string;16191
+msgid "Received a packet from %s for %s which excess query limits, ignoring."
+msgstr ""
 
 #: string;16192
 msgid "Neighbour %s forwarded a packet of excessive size, dropping connection."
@@ -5394,8 +5676,14 @@ msgid "Download host %s is busy, retrying in %i seconds."
 msgstr "Server %s on kinni, proovin uuesti %i sekundi pärast."
 
 #: string;16281
-msgid "Are you sure you want to clear \"%s\"?\\n\\nOnce a download has been cleared from the Downloads window, it cannot be resumed later."
-msgstr "Oled kindel, et tahad puhastada \"%s\"?\\n\\nKui allalaadimine on eemaldatud Allalaadimiste aknast, ei saa selle allalaadimist hiljem jätkata."
+msgid ""
+"Are you sure you want to clear \"%s\"?\\n"
+"\\n"
+"Once a download has been cleared from the Downloads window, it cannot be resumed later."
+msgstr ""
+"Oled kindel, et tahad puhastada \"%s\"?\\n"
+"\\n"
+"Kui allalaadimine on eemaldatud Allalaadimiste aknast, ei saa selle allalaadimist hiljem jätkata."
 
 #: string;16282
 msgid "Aborting download of \"%s\" from %s (%s), network disabled."
@@ -5586,7 +5874,8 @@ msgid "Push connection to %s established, waiting for handshake..."
 msgstr "Surutud ühendus %s saavutatud, ootan kinnitust..."
 
 #: string;16329
-msgid "Can't open \"%s\" to upload to host %s, disk/file error."
+#, fuzzy
+msgid "Can't open \"%s\" to upload to host %s due to disk or file error."
 msgstr "Ei saa avada \"%s\" et üleslaadida serverile %s, ketta/faili viga."
 
 #: string;16330
@@ -5781,13 +6070,23 @@ msgstr "Kõik Failid"
 msgid "HTTP Guard"
 msgstr "HTTP Kaitse"
 
+#: string;16378
+msgid "Host \"%s\" sent a 416, without providing available ranges. Closing connection."
+msgstr ""
+
 #: string;16379
 msgid "Library Files"
 msgstr ""
 
 #: string;16384
-msgid "Are you sure you want to launch the file \"%s\" ?\\n\\nSome files can be harmful to your computer. Ensure you know what the file is before launching it."
-msgstr "Oled kuindel, et tahad selle faili käivitada \"%s\" ?\\n\\nMõned failid võivad sinu arvutile kahjulikud olla.  Ole enne faili käivitamist kindel, millega tegu."
+msgid ""
+"Are you sure you want to launch the file \"%s\" ?\\n"
+"\\n"
+"Some files can be harmful to your computer. Ensure you know what the file is before launching it."
+msgstr ""
+"Oled kuindel, et tahad selle faili käivitada \"%s\" ?\\n"
+"\\n"
+"Mõned failid võivad sinu arvutile kahjulikud olla.  Ole enne faili käivitamist kindel, millega tegu."
 
 #: string;16385
 msgid "You are about to modify the metadata of %i files, are you sure you want to continue?"
@@ -5802,16 +6101,38 @@ msgid "The file \"%s\" has not yet been hashed. Please wait for the file to be h
 msgstr "Fail \"%s\" on alles segamini.  Palun oota kuni fail koos on ja proovi siis uuesti."
 
 #: string;16388
-msgid "This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n\\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database. If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n\\nWould you like to proceed?"
-msgstr "See võimalus kasutab teenuseid, mida pakub Bitzi.com failide tuvastamise ja jagamiste kohta.\\n\\nShareaza võtab SHA1 koodi, valitud failide kohta Bitzi andmebaasist.  Kui oled mures oma turvalisuse pärast, siis võid tutvuda Bitzi.com privaatsus poliitikaga.\\n\\nKas tahad jätkata?"
+msgid ""
+"This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n"
+"\\n"
+"Shareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database. If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n"
+"\\n"
+"Would you like to proceed?"
+msgstr ""
+"See võimalus kasutab teenuseid, mida pakub Bitzi.com failide tuvastamise ja jagamiste kohta.\\n"
+"\\n"
+"Shareaza võtab SHA1 koodi, valitud failide kohta Bitzi andmebaasist.  Kui oled mures oma turvalisuse pärast, siis võid tutvuda Bitzi.com privaatsus poliitikaga.\\n"
+"\\n"
+"Kas tahad jätkata?"
 
 #: string;16389
-msgid "Are you sure you want to permanently delete the %i selected file(s) ?\\n\\nThe files will be moved to your \"recycle bin\" if it is enabled."
-msgstr "Oled kindel, et tahad lõplikult kustutada %i faili ?\\n\\nFailid viiakse sinu \"prügikasti\" kui see on võimaldatud."
+msgid ""
+"Are you sure you want to permanently delete the %i selected file(s) ?\\n"
+"\\n"
+"The files will be moved to your \"recycle bin\" if it is enabled."
+msgstr ""
+"Oled kindel, et tahad lõplikult kustutada %i faili ?\\n"
+"\\n"
+"Failid viiakse sinu \"prügikasti\" kui see on võimaldatud."
 
 #: string;16390
-msgid "You have not yet selected a media player to enqueue files with, such as Nullsoft Winamp. Would you like to select one now?\\n\\nShareaza will pass the name of the file to your selected program with the \"/ADD\" argument."
-msgstr "Sa ei ole veel valinud meedia pleierit oma valitud failide jaoks, nagu WinAmp.  Kas sooviksid valida selle nüüd?\\n\\nShareaza seob sinupoolt valitud failinime, valitud programmiga \"/Lisa\" argumendiga."
+msgid ""
+"You have not yet selected a media player to enqueue files with, such as Nullsoft Winamp. Would you like to select one now?\\n"
+"\\n"
+"Shareaza will pass the name of the file to your selected program with the \"/ADD\" argument."
+msgstr ""
+"Sa ei ole veel valinud meedia pleierit oma valitud failide jaoks, nagu WinAmp.  Kas sooviksid valida selle nüüd?\\n"
+"\\n"
+"Shareaza seob sinupoolt valitud failinime, valitud programmiga \"/Lisa\" argumendiga."
 
 #: string;16391
 msgid "You're not connected to the network."
@@ -5830,36 +6151,88 @@ msgid "Would you like to remove the \"potentially unsafe\" attribute from this f
 msgstr "Kas tahad eemaldada \"ebaturvalisee\" osa, sellest failist?"
 
 #: string;16395
-msgid "Your downloaded files folder \"%s\" is not yet in your library.\\n\\nIncluding your downloaded files folder in your library makes it easier to view and organise new downloads, and lets you take advantage of advanced Shareaza features such as download verification and automatic upgrading. Placing downloaded files in your library does not necessarily require you to share them: you can choose whether or not to share files independently.\\n\\nWould you like to add your downloaded files folder to your library now?"
-msgstr "Sinu allalaadimiste kaust \"%s\" ei ole veel sinu raamatukogus.\\n\\nLisades selle oma raamatukokku on seda lihtsam käsitleda ja saad ärakasutada täielikult Shareaza võimalusi, nagu allalaadimiste kinnitused ja automaatsed uuendused.  Allalaetud failide raamatukokku panemine ei tähenda tingimita, et sa pead neid jagama: sa saad jagada ka üksikuid faile.\\n\\nKas soovid lisada oma allalaadimiste kausta kohe raamatukokku?"
+msgid ""
+"Your downloaded files folder \"%s\" is not yet in your library.\\n"
+"\\n"
+"Including your downloaded files folder in your library makes it easier to view and organise new downloads, and lets you take advantage of advanced Shareaza features such as download verification and automatic upgrading. Placing downloaded files in your library does not necessarily require you to share them: you can choose whether or not to share files independently.\\n"
+"\\n"
+"Would you like to add your downloaded files folder to your library now?"
+msgstr ""
+"Sinu allalaadimiste kaust \"%s\" ei ole veel sinu raamatukogus.\\n"
+"\\n"
+"Lisades selle oma raamatukokku on seda lihtsam käsitleda ja saad ärakasutada täielikult Shareaza võimalusi, nagu allalaadimiste kinnitused ja automaatsed uuendused.  Allalaetud failide raamatukokku panemine ei tähenda tingimita, et sa pead neid jagama: sa saad jagada ka üksikuid faile.\\n"
+"\\n"
+"Kas soovid lisada oma allalaadimiste kausta kohe raamatukokku?"
 
 #: string;16396
 msgid "Your downloads folder has been added to your library. Would you like to share it too?"
 msgstr "Sinu allalaadimiste kaust on lisatud raamatukokku.  Kas sooviksid seda ka jagada?"
 
 #: string;16397
-msgid "Are you sure you want to delete the %i selected album folder(s) ?\\n\\nNote that this action does not delete the files within the album folders, only the folders themselves."
-msgstr "Oled kindel, et tahad kustutada %i valitud albumi kausta?\\n\\nSee tegevus ei kustuta faile endid, vaid ainult kausta."
+msgid ""
+"Are you sure you want to delete the %i selected album folder(s) ?\\n"
+"\\n"
+"Note that this action does not delete the files within the album folders, only the folders themselves."
+msgstr ""
+"Oled kindel, et tahad kustutada %i valitud albumi kausta?\\n"
+"\\n"
+"See tegevus ei kustuta faile endid, vaid ainult kausta."
 
 #: string;16398
-msgid "Shareaza could not rename:\\n\\n%s\\nto\\n%s"
-msgstr "Shareaza ei suutnud ümber nimetada:\\n\\n%s\\nto\\n%s"
+msgid ""
+"Shareaza could not rename:\\n"
+"\\n"
+"%s\\n"
+"to\\n"
+"%s"
+msgstr ""
+"Shareaza ei suutnud ümber nimetada:\\n"
+"\\n"
+"%s\\n"
+"to\\n"
+"%s"
 
 #: string;16399
-msgid "Shareaza could not delete the file:\\n\\n%s"
-msgstr "Shareaza ei suutnud kustutada:\\n\\n%s"
+msgid ""
+"Shareaza could not delete the file:\\n"
+"\\n"
+"%s"
+msgstr ""
+"Shareaza ei suutnud kustutada:\\n"
+"\\n"
+"%s"
 
 #: string;16400
-msgid "Target file exists:\\n\\n%s\\n\\nWould you like to overwrite it?"
-msgstr "Fail on juba olemas:\\n\\n%s\\n\\nKas soovid selle üle kirjutada?"
+msgid ""
+"Target file exists:\\n"
+"\\n"
+"%s\\n"
+"\\n"
+"Would you like to overwrite it?"
+msgstr ""
+"Fail on juba olemas:\\n"
+"\\n"
+"%s\\n"
+"\\n"
+"Kas soovid selle üle kirjutada?"
 
 #: string;16401
 msgid "Show All File Types"
 msgstr "Näita kõiki failitüüpe"
 
 #: string;16402
-msgid "Shareaza received a collection file:\\n\\n\"%s\"\\n\\nThis file does not appear to be a valid collection file."
-msgstr "Shareaza võttis vastu kolleksiooni faili:\\n\\n\"%s\"\\n\\nSee ei paista õige fail olema."
+msgid ""
+"Shareaza received a collection file:\\n"
+"\\n"
+"\"%s\"\\n"
+"\\n"
+"This file does not appear to be a valid collection file."
+msgstr ""
+"Shareaza võttis vastu kolleksiooni faili:\\n"
+"\\n"
+"\"%s\"\\n"
+"\\n"
+"See ei paista õige fail olema."
 
 #: string;16403
 msgid "Shareaza has added the collection file \"%s\" to your library."
@@ -5870,8 +6243,14 @@ msgid "Shareaza was unable to install the collection file \"%s\" by copying it t
 msgstr "Shareaza ei saanud kollektsiooni faili installida \"%s\" kopeerides seda \"%s\" kausta."
 
 #: string;16406
-msgid "Would you like to download all files in this collection?\\n\\nChoose Cancel to stop any further prompts."
-msgstr "Kas soovid tõmmata kõik selle kollektsiooni failid?\\n\\nVali Tühista, et edaspidiseid küsimusi ära hoida."
+msgid ""
+"Would you like to download all files in this collection?\\n"
+"\\n"
+"Choose Cancel to stop any further prompts."
+msgstr ""
+"Kas soovid tõmmata kõik selle kollektsiooni failid?\\n"
+"\\n"
+"Vali Tühista, et edaspidiseid küsimusi ära hoida."
 
 #: string;16407
 msgid "Would you like to prevent this collection from prompting you to download anything else?"
@@ -5886,12 +6265,26 @@ msgid "Export &URIs..."
 msgstr "Ekspordi &URI-d..."
 
 #: string;16410
-msgid "A subfolder of the selected folder \"%s\" is already part of your library.\\nAdding this folder will cause re-hashing of some files.\\n\\nDo you want to continue ?"
-msgstr "Valitud kausta alamkaust \"%s\" on juba sinu raamatukogus.\\nSelle kausta lisamine võib mõnede failide ümberjagamist mõjutada.\\n\\nKas soovid jätkata ?"
+msgid ""
+"A subfolder of the selected folder \"%s\" is already part of your library.\\n"
+"Adding this folder will cause re-hashing of some files.\\n"
+"\\n"
+"Do you want to continue ?"
+msgstr ""
+"Valitud kausta alamkaust \"%s\" on juba sinu raamatukogus.\\n"
+"Selle kausta lisamine võib mõnede failide ümberjagamist mõjutada.\\n"
+"\\n"
+"Kas soovid jätkata ?"
 
 #: string;16411
-msgid "Unable to move the file %s. The file may be in use by another application.\\n\\nDo you wish to try to copy this file instead?"
-msgstr "Ei suuda liigutada  %s faili. Mõni teine programm võib seda faili kasutada.\\n\\nVõib-olla soovid hoopis sellest failist koopia teha?"
+msgid ""
+"Unable to move the file %s. The file may be in use by another application.\\n"
+"\\n"
+"Do you wish to try to copy this file instead?"
+msgstr ""
+"Ei suuda liigutada  %s faili. Mõni teine programm võib seda faili kasutada.\\n"
+"\\n"
+"Võib-olla soovid hoopis sellest failist koopia teha?"
 
 #: string;16412
 msgid "Ghost File"
@@ -6014,7 +6407,13 @@ msgid "Gnutella Packets Lost"
 msgstr "Kaotatud Gnutella Paketid"
 
 #: string;16528
-msgid "Gnutella Local Queries"
+#, fuzzy
+msgid "Gnutella Incoming Queries"
+msgstr "Gnutella Kohalikud Järjekorrad"
+
+#: string;16529
+#, fuzzy
+msgid "Gnutella Processed Queries"
 msgstr "Gnutella Kohalikud Järjekorrad"
 
 #: string;16532
@@ -6118,20 +6517,42 @@ msgid "You have not specified any folders to share. Are you sure?"
 msgstr "Sa ei ole veel täpsustanud oma jagatavaid kausu.  Oled kindel?"
 
 #: string;16803
-msgid "The folder you are sharing is already shared as part of another shared folder:\\n\\n%s"
-msgstr "Kaust mida jagad on juba jagatud, kui osa teisest kaustast:\\n\\n%s"
+msgid ""
+"The folder you are sharing is already shared as part of another shared folder:\\n"
+"\\n"
+"%s"
+msgstr ""
+"Kaust mida jagad on juba jagatud, kui osa teisest kaustast:\\n"
+"\\n"
+"%s"
 
 #: string;16804
 msgid "You haven't entered a screen name in your user profile."
 msgstr "Sa ei ole veel andnud oma kasutajale nime."
 
 #: string;16805
-msgid "You haven't entered your location in your user profile.\\n\\nIt's a good idea to enter your location so that other users can see which country you are from. Note that entering a location does not reveal any compromising information.\\n\\nAre you sure you want to continue without entering your location?"
-msgstr "Sa ei ole sisestanud oma asukohta oma profiili.\\n\\nKasulikum oleks määrata oma asukoht, et teised kasutajad teaksid millisest riigist sa oled.  Oma asukoha avalikustamine ei anna sinukohta midagi üleliigset välja.\\n\\nOled kindel, et tahad jätkata ilma asukohta sisestamata?"
+msgid ""
+"You haven't entered your location in your user profile.\\n"
+"\\n"
+"It's a good idea to enter your location so that other users can see which country you are from. Note that entering a location does not reveal any compromising information.\\n"
+"\\n"
+"Are you sure you want to continue without entering your location?"
+msgstr ""
+"Sa ei ole sisestanud oma asukohta oma profiili.\\n"
+"\\n"
+"Kasulikum oleks määrata oma asukoht, et teised kasutajad teaksid millisest riigist sa oled.  Oma asukoha avalikustamine ei anna sinukohta midagi üleliigset välja.\\n"
+"\\n"
+"Oled kindel, et tahad jätkata ilma asukohta sisestamata?"
 
 #: string;16806
-msgid "Shareaza was unable to set up port-forwarding on your NAT router or firewall.\\n\\nPlease configure your network to forward TCP and UDP ports %i to your local PC."
-msgstr "Sa oled näidanud, et tahad kasutada Portide suunamist, oma NAT ruuteri või tulemüüriga.\\n\\nPalun seadista oma võrk läbima TCP ja UDP porte %i oma PCl."
+msgid ""
+"Shareaza was unable to set up port-forwarding on your NAT router or firewall.\\n"
+"\\n"
+"Please configure your network to forward TCP and UDP ports %i to your local PC."
+msgstr ""
+"Sa oled näidanud, et tahad kasutada Portide suunamist, oma NAT ruuteri või tulemüüriga.\\n"
+"\\n"
+"Palun seadista oma võrk läbima TCP ja UDP porte %i oma PCl."
 
 #: string;16807
 msgid "Please type the bandwidth limit you wish to set in the form \"123 kb/s\" for kilobits per second, or \"123 KB/s\" for kilobytes per second."
@@ -6167,16 +6588,26 @@ msgid "Please wait: Updating eDonkey server list..."
 msgstr ""
 
 #: string;16815
-msgid "UPnP Device Host Service is not running. This service is required to perform the setup.\\nYou need to set the startup type of the service to automatic."
+msgid ""
+"UPnP Device Host Service is not running. This service is required to perform the setup.\\n"
+"You need to set the startup type of the service to automatic."
 msgstr ""
 
 #: string;16816
-msgid "The eDonkey network uses large queues with long wait times. By limiting the maximum queue position you will accept so strictly, you may have trouble getting downloads to begin.\\nAre you sure you want to limit what queue positions you will accept?"
-msgstr "eDonkey võrk kasutab suuri järjekordi ja pikki ooteaegu. Piirates maksimaalset järjekorra kohta, võib sul tekkida probleeme allalaadimiste alustusega.\\nOled kindel, et tahad seada piirangu, millise järjekorra kohaga leppida?"
+msgid ""
+"The eDonkey network uses large queues with long wait times. By limiting the maximum queue position you will accept so strictly, you may have trouble getting downloads to begin.\\n"
+"Are you sure you want to limit what queue positions you will accept?"
+msgstr ""
+"eDonkey võrk kasutab suuri järjekordi ja pikki ooteaegu. Piirates maksimaalset järjekorra kohta, võib sul tekkida probleeme allalaadimiste alustusega.\\n"
+"Oled kindel, et tahad seada piirangu, millise järjekorra kohaga leppida?"
 
 #: string;16817
-msgid "Windows doesn't support paths longer than 256 characters.\\nPlease select a folder with a shorter path."
-msgstr "Windows ei toeta pikemaid failinimesid kui 256 tähemärki.\\nPalun vali lühema nimega kaust."
+msgid ""
+"Windows doesn't support paths longer than 256 characters.\\n"
+"Please select a folder with a shorter path."
+msgstr ""
+"Windows ei toeta pikemaid failinimesid kui 256 tähemärki.\\n"
+"Palun vali lühema nimega kaust."
 
 #: string;16818
 msgid "The complete and incomplete folders should not be the same"
@@ -6286,10 +6717,6 @@ msgstr ""
 msgid "Shareaza could not instantiate its MediaServices plugin. Please reinstall Shareaza, and confirm that you have the necessary media codecs and output drivers installed."
 msgstr "Shareaza ei suutnud oma Meediateenuste lisa käivitada.  Palun installi Shareaza uuesti ja kontrolli, et sul on vajalikud meedia koodekid ja draiverid installitud."
 
-#: string;16993
-msgid "All Media Files|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Playlists|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Audio Files|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|Video Files|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|CD Audio Tracks|*.cda|MIDI Files|*.mid;*.rmi;*.midi|All Files|*.*||"
-msgstr "Kõik Meedia Failid|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Playlistid|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Audio Failid|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|Video Failid|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|CD Audio Tracks|*.cda|MIDI Failid|*.mid;*.rmi;*.midi|Kõik Failid|*.*||"
-
 #: string;16994
 msgid "Unable to load media file \"%s\""
 msgstr "Ei saa avada meedia faili \"%s\""
@@ -6318,11 +6745,11 @@ msgstr "P L A Y L I S T"
 msgid "Send:"
 msgstr ""
 
-#: string;17018
+#: string;17018 string;19103
 msgid "Welcome to Shareaza Chat!"
 msgstr ""
 
-#: string;17019
+#: string;17019 string;19104
 msgid "Please respect others while using this service"
 msgstr ""
 
@@ -6407,8 +6834,14 @@ msgid "Cannot send message, a connection has not been established yet."
 msgstr "Ei saa sõnumit saata, ühendus on loomisel."
 
 #: string;17042
-msgid "You have not yet filled in your user profile. You must provide a profile before you can chat with other users.\\n\\nWould you like to fill in your profile now?"
-msgstr "Sa ei ole veel täitnud oma kasutaja profiili.  Sa pead enne teistega vestlemist, täitma oma profiili.\\n\\nKas soovid kohe oma profiili teha?"
+msgid ""
+"You have not yet filled in your user profile. You must provide a profile before you can chat with other users.\\n"
+"\\n"
+"Would you like to fill in your profile now?"
+msgstr ""
+"Sa ei ole veel täitnud oma kasutaja profiili.  Sa pead enne teistega vestlemist, täitma oma profiili.\\n"
+"\\n"
+"Kas soovid kohe oma profiili teha?"
 
 #: string;17043
 msgid "Granted upload priority to host %s."
@@ -6698,6 +7131,11 @@ msgstr "BitTorrent ühenduse loomine %s küsis tundmatut faili."
 msgid "BitTorrent coupling with %s established for \"%s\"."
 msgstr "BitTorrent ühenduse loomine %s kinnitatud \"%s\"."
 
+#: string;17480
+#, fuzzy
+msgid "BitTorrent coupling with %s requested an inactive file."
+msgstr "BitTorrent ühenduse loomine %s küsis tundmatut faili."
+
 #: string;17481
 msgid "Received BitTorrent descriptor file: \"%s\""
 msgstr "Vastu võetud BitTorrenti kirjeldav fail: \"%s\""
@@ -6727,8 +7165,14 @@ msgid "Established BitTorrent coupling with %s, handshaking..."
 msgstr "Sisse seatud BitTorrent ühendus %s, kinnitan..."
 
 #: string;17488
-msgid "You have changed the tracker URL for this torrent. Are you sure you want to save this change?\\n\\nAn invalid tracker URL may prevent further downloading."
-msgstr "Sa oled muutnud jälitaja URL -i sellele torrentile.  Oled kindel, et tahad need muudatused salvestada?\\n\\nVigane URL -i jälitus võib mõjutada allalaadimist."
+msgid ""
+"You have changed the tracker URL for this torrent. Are you sure you want to save this change?\\n"
+"\\n"
+"An invalid tracker URL may prevent further downloading."
+msgstr ""
+"Sa oled muutnud jälitaja URL -i sellele torrentile.  Oled kindel, et tahad need muudatused salvestada?\\n"
+"\\n"
+"Vigane URL -i jälitus võib mõjutada allalaadimist."
 
 #: string;17489
 msgid "BitTorrent coupling with %s is extended protocol, identified \"%s\"."
@@ -6751,7 +7195,8 @@ msgid "Unable to create BitTorrent share file \"%s\"."
 msgstr "Ei saa luua BitTorrenti faili \"%s\"."
 
 #: string;17494
-msgid "This torrent includes the file \"%s\", but Shareaza cannot find this file in your library. If possible, move the file to the same folder as the torrent and try again."
+#, fuzzy
+msgid "This torrent includes the file \"%s\", but Shareaza cannot find this file in your library. If possible, move the file to a shared folder and try again."
 msgstr "See torrent sisaldab faili \"%s\", aga Shareaza ei suuda seda sinu raamatukogust leida.  Kui võimalik, tõsta fail torrentiga samasse kausta ja proovi uuesti."
 
 #: string;17495
@@ -6770,16 +7215,13 @@ msgstr "Ilmnes tundmatu viga, proovides jagada \"%s\"."
 msgid "An error was detected in the file \"%s\"."
 msgstr "Failis \"%s\" tuvastati viga."
 
-#: string;17500
-msgid "Tracker did not respond- Retrying announce (%i of %i)"
-msgstr "Jälitaja ei vastanud- Proovin uuesti (%i of %i)"
-
 #: string;17501
 msgid "Unable to communicate with tracker"
 msgstr "Ei suuda jälitajaga suhelda"
 
 #: string;17503
-msgid "Tracker failed- Trying next tracker (%i of %i)"
+#, fuzzy
+msgid "Trying next tracker (%i of %i)"
 msgstr "Jälitamine ebaõnnestus- Proovin järgmist (%i of %i)"
 
 #: string;17505
@@ -6822,30 +7264,6 @@ msgstr ""
 msgid "You have made changes to the name field. Are you sure you want to rename this download?"
 msgstr "Sa oled teinud muutusi nimes.  Oled kindel, et tahad faili ümber nimetada?"
 
-#: string;18497
-msgid "You have typed a SHA1 value, however it is invalid. Please check it and try again."
-msgstr "Sa oled sisestanud SHA1 väärtuse, mis aga on vale. Palun kontrolli seda ja proovi uuesti."
-
-#: string;18498
-msgid "You have typed a root tiger-tree value, however it is invalid. Please check it and try again."
-msgstr "Sa oled sisestanud tiger-tree juurväärtuse, mis aga on vale.  Palun kontrolli seda ja proovi uuesti."
-
-#: string;18499
-msgid "You have typed an eDonkey hash value, however it is invalid. Please check it and try again."
-msgstr "Sa oled sisestanud eDonkey2000 hash väärtuse, mis aga on vale.  Palun kontrolli seda ja proovi uuesti."
-
-#: string;18500
-msgid "You have provided a SHA1 hash value which is different to the one currently associated with this download. Are you sure you want to change the SHA1 hash now?"
-msgstr "Sa oled andnud uue SHA1 hash väärtuse, mis on aga erinev käesolevast.  Oled kindel, et tahad muuta SHA1 hash -i?"
-
-#: string;18501
-msgid "You have provided a root tiger-tree hash value which is different to the one currently associated with this download. Are you sure you want to change the tiger-tree root hash now?"
-msgstr "Sa oled andnud root tiger-tree hash väärtuse, mis on aga erinev käesolevast .  Oled kindel, et tahad muuta tiger-tree root hash -i?"
-
-#: string;18502
-msgid "You have provided an eDonkey hash value which is different to the one currently associated with this download. Are you sure you want to change the eDonkey hash now?"
-msgstr "Sa oled andnud eDonkey2000 hash väärtuse, mis on aga erinev käesolevast.  Oled kindel, et tahad muuta eDonkey2000 hash -i?"
-
 #: string;18503
 msgid "Are you sure you want to forget the current verification status? All downloaded data will be treated as untrusted, and cached hashtrees and hashsets will be flushed."
 msgstr "Oled kindel, et tahad unustada praeguse kinnituse seisu? Kõiki allalaaditud andmeid käsitletakse kui ebausaldatavat ja kogu andmebaas ehitatakse uuesti."
@@ -6882,6 +7300,21 @@ msgstr "Oled kindel, et tahad eeldada, et fail on tervenisti alla tõmmatud ja �
 msgid "You have made changes to the file size. Are you sure you want to change the file size for this download?"
 msgstr "Sa oled muutnud faili suurust.  Oled kindel, et tahad selle tõmbamise failisuurust muuta?"
 
+#: string;18512
+#, fuzzy
+msgid "Are you sure you want to cancel this download but save incomplete file(s)?"
+msgstr "Oled kindel, et tahad peatada/tühistada terve selle allalaadimisgrupi?"
+
+#: string;18513
+#, fuzzy
+msgid "You have typed an %s hash value, however it is invalid. Please check it and try again."
+msgstr "Sa oled sisestanud eDonkey2000 hash väärtuse, mis aga on vale.  Palun kontrolli seda ja proovi uuesti."
+
+#: string;18514
+#, fuzzy
+msgid "You have provided an %s hash value which is different to the one currently associated with this download. Are you sure you want to change the %s hash now?"
+msgstr "Sa oled andnud uue SHA1 hash väärtuse, mis on aga erinev käesolevast.  Oled kindel, et tahad muuta SHA1 hash -i?"
+
 #: string;19000
 msgid "Remote access is disabled."
 msgstr "Kaugtöö ei ole käivitatud."
@@ -6894,6 +7327,11 @@ msgstr "Sa pead valima kasutajanime ja salasõna."
 msgid "Unable to accept connections, URL unavailable."
 msgstr "Ei saa ühendust, URL ei ole saadaval."
 
+#: string;19105
+#, fuzzy
+msgid "Chat!"
+msgstr "Vestlus"
+
 #: string;20000
 msgid "No URN available"
 msgstr "URN-i ei ole saadaval"
@@ -6903,8 +7341,10 @@ msgid "of (e.g. 1 of 10)"
 msgstr "of"
 
 #: string;20003
-msgid "Changing interface direction requires restart. \\nYou will need to start Shareaza manually. Exit now?"
-msgstr "Kasutajaliidese suundade muutmine nõuab taaskäivitust. \\nSa pead Shareaza käsits taaskäivitama . Välju nüüd?"
+msgid ""
+"Changing language requires application restart.\\n"
+"Restart now?"
+msgstr ""
 
 #: string;20005
 msgid "No"
@@ -6938,9 +7378,24 @@ msgstr ""
 msgid "Finish"
 msgstr ""
 
-#: string;20013 cscheduletaskdlg;control;14 cfolderpropertiesdlg;control;5
+#: string;20013 cfolderpropertiesdlg;control;5
 msgid "All"
 msgstr "Kõik"
+
+#: string;20014
+#, fuzzy
+msgid ""
+"This option uses services provided by ShareMonkey.com for recognising information about selected files.\\n"
+"\\n"
+"Shareaza will transmit file details and your location in order to query the ShareMonkey database.  If you are concerned about privacy, you may wish to consult the ShareMonkey.com privacy policy.\\n"
+"\\n"
+"Would you like to proceed?"
+msgstr ""
+"See võimalus kasutab teenuseid, mida pakub Bitzi.com failide tuvastamise ja jagamiste kohta.\\n"
+"\\n"
+"Shareaza võtab SHA1 koodi, valitud failide kohta Bitzi andmebaasist.  Kui oled mures oma turvalisuse pärast, siis võid tutvuda Bitzi.com privaatsus poliitikaga.\\n"
+"\\n"
+"Kas tahad jätkata?"
 
 #: string;20101
 msgid "Requesting"
@@ -7070,34 +7525,6 @@ msgstr "Q"
 msgid "sources (e.g. 3/10 sources)"
 msgstr "allikast"
 
-#: string;20200 cscheduletaskdlg;control;7
-msgid "Sunday"
-msgstr "Pühapäev"
-
-#: string;20201 cscheduletaskdlg;control;8
-msgid "Monday"
-msgstr "Esmaspäev"
-
-#: string;20202 cscheduletaskdlg;control;9
-msgid "Tuesday"
-msgstr "Teisipäev"
-
-#: string;20203 cscheduletaskdlg;control;10
-msgid "Wednesday"
-msgstr "Kolmapäev"
-
-#: string;20204 cscheduletaskdlg;control;11
-msgid "Thursday"
-msgstr "Neljapäev"
-
-#: string;20205
-msgid "Friday"
-msgstr "Reede"
-
-#: string;20206 cscheduletaskdlg;control;13
-msgid "Saturday"
-msgstr "Laupäev"
-
 #: string;20210
 msgid "(No Rating)"
 msgstr "(Hindamata)"
@@ -7158,34 +7585,33 @@ msgstr ""
 msgid "Rating"
 msgstr "Reiting"
 
-#: string;20237 csettingsheet;control;2 cscheduletaskdlg;control;1
-#: cqueuepropertiesdlg;control;37 cprofilemanagerdlg;control;2
-#: csavefilterasdlg;control;2 cdiscoveryservicedlg;control;5
-#: cfilecopydlg;control;4 cfolderpropertiesdlg;control;7
-#: cgraphlistdlg;control;16 cgraphitemdlg;control;1
-#: cschemacolumnsdlg;control;3 csecureruledlg;control;33
-#: csharemanagerdlg;control;5 cpromotedlg;control;7 cexistingfiledlg;control;8
-#: cclosemodedlg;control;5 cdonkeyserversdlg;control;4
-#: cdownloadgroupdlg;control;1 cmediavisdlg;control;5
-#: cdownloadreviewdlg;control;1 cdecodemetadatadlg;control;8
-#: circinputdlg;control;2
+#: string;20237 csettingsheet;control;2 cqueuepropertiesdlg;control;37
+#: cprofilemanagerdlg;control;2 csavefilterasdlg;control;2
+#: cdiscoveryservicedlg;control;5 cfilecopydlg;control;4
+#: cfolderpropertiesdlg;control;7 cgraphlistdlg;control;16
+#: cgraphitemdlg;control;1 cschemacolumnsdlg;control;3
+#: csecureruledlg;control;33 csharemanagerdlg;control;5 cpromotedlg;control;7
+#: cexistingfiledlg;control;8 cclosemodedlg;control;5
+#: cdonkeyserversdlg;control;4 cdownloadgroupdlg;control;1
+#: cmediavisdlg;control;5 cdownloadreviewdlg;control;1
+#: cdecodemetadatadlg;control;8 circinputdlg;control;2
 msgid "OK"
 msgstr "OK"
 
-#: string;20238 csettingsheet;control;3 cscheduletaskdlg;control;2
-#: cqueuepropertiesdlg;control;38 cprofilemanagerdlg;control;3
-#: cconnecttodlg;control;8 cdownloaddlg;control;5 cnewsearchdlg;control;4
-#: cfiltersearchdlg;control;30 csavefilterasdlg;control;3
-#: cdiscoveryservicedlg;control;6 cfilecopydlg;control;5
-#: cfolderpropertiesdlg;control;8 cgraphlistdlg;control;17
-#: cgraphitemdlg;control;2 cschemacolumnsdlg;control;4
-#: csecureruledlg;control;34 csharemanagerdlg;control;6 curlcopydlg;control;6
-#: curlexportdlg;control;10 curlactiondlg;control;11
-#: cbitzidownloaddlg;control;4 cfilepreviewdlg;control;6
-#: cexistingfiledlg;control;9 cclosemodedlg;control;6
-#: cdonkeyserversdlg;control;5 cdeletefiledlg;control;5
-#: ctorrentseeddlg;control;4 cdownloadgroupdlg;control;2
-#: cmediavisdlg;control;6 cdecodemetadatadlg;control;9 circinputdlg;control;3
+#: string;20238 csettingsheet;control;3 cqueuepropertiesdlg;control;38
+#: cprofilemanagerdlg;control;3 cconnecttodlg;control;8 cdownloaddlg;control;5
+#: cnewsearchdlg;control;4 cfiltersearchdlg;control;30
+#: csavefilterasdlg;control;3 cdiscoveryservicedlg;control;6
+#: cfilecopydlg;control;5 cfolderpropertiesdlg;control;8
+#: cgraphlistdlg;control;17 cgraphitemdlg;control;2
+#: cschemacolumnsdlg;control;4 csecureruledlg;control;34
+#: csharemanagerdlg;control;6 curlcopydlg;control;6 curlexportdlg;control;10
+#: curlactiondlg;control;11 cbitzidownloaddlg;control;4
+#: cfilepreviewdlg;control;6 cexistingfiledlg;control;9
+#: cclosemodedlg;control;6 cdonkeyserversdlg;control;5
+#: cdeletefiledlg;control;5 ctorrentseeddlg;control;4
+#: cdownloadgroupdlg;control;2 cmediavisdlg;control;6
+#: cdecodemetadatadlg;control;9 circinputdlg;control;3
 msgid "Cancel"
 msgstr "Tühista"
 
@@ -7217,16 +7643,106 @@ msgstr ""
 msgid "New Folder"
 msgstr ""
 
-#: string;32825
-msgid "Open my folder of completed Downloads"
+#: string;20246
+msgid ""
+"Command-line options:\\n"
+"\\n"
+"-tray : Disable startup splash screen and send application to tray\\n"
+"-nosplash : Disable startup splash screen\\n"
+"-nowarn : Disable alpha (daily builds) version warning dialog\\n"
+"-wait : Wait for other application instance exit\\n"
+"\\n"
+"Interface modes:\\n"
+"\\n"
+"-basic : Start application in Basic interface mode\\n"
+"-tabbed : Start application in Tabbed interface mode\\n"
+"-windowed : Start application in Windowed interface mode\\n"
+"\\n"
+"System options:\\n"
+"\\n"
+"-RegServer : Register internal components for everyone\\n"
+"-UnRegServer : Un-register internal components for everyone\\n"
+"-RegServerPerUser : Register internal components for current user\\n"
+"-UnRegServerPerUser : Un-register internal components for current user"
 msgstr ""
 
-#: string;32773
-msgid "Check for new version"
+#: string;20247
+msgid "Failed to load metadata schemas. Please reinstall application."
 msgstr ""
 
-#: string;61215
-msgid "Activate this window"
+#: string;20248
+#, fuzzy
+msgid "You selected %u files. Are you sure?"
+msgstr "Sa ei ole veel täpsustanud oma jagatavaid kausu.  Oled kindel?"
+
+#: string;20249
+msgid "Off"
+msgstr ""
+
+#: string;20250
+msgid "Low"
+msgstr ""
+
+#: string;20251
+#, fuzzy
+msgid "Normal"
+msgstr "_Tavaline vaade"
+
+#: string;20252
+msgid "High"
+msgstr ""
+
+#: string;20253
+msgid "Skin load error: %s. Element: %s"
+msgstr ""
+
+#: string;20254
+msgid "Loading skin: %s"
+msgstr ""
+
+#: string;20255
+msgid "Are you sure you want to remove all scheduled tasks? This cannot be undone."
+msgstr ""
+
+#: string;20256
+#, fuzzy
+msgid "System: Start Shareaza"
+msgstr "Otsi Shareazast"
+
+#: string;20257
+msgid "Bandwidth: Full Speed"
+msgstr ""
+
+#: string;20258
+msgid "Bandwidth: Reduced Speed"
+msgstr ""
+
+#: string;20259
+msgid "Bandwidth: Stop"
+msgstr ""
+
+#: string;20260
+msgid "System: Exit Shareaza"
+msgstr ""
+
+#: string;20261
+msgid "System: Disconnect Dial-up Connection"
+msgstr ""
+
+#: string;20262
+msgid "System: Turn Off the Computer"
+msgstr ""
+
+#: string;20265
+msgid "Done"
+msgstr ""
+
+#: string;20266
+msgid "Waiting..."
+msgstr ""
+
+#: string;20267
+msgid "No Tasks Currently Scheduled"
 msgstr ""
 
 #: csettingsheet;control;4 cprofilemanagerdlg;control;4
@@ -7371,7 +7887,7 @@ msgid "_Safe to Open:"
 msgstr "_Ohutu Avada:"
 
 #: clibrarysettingspage;control;18 clibrarysettingspage;control;22
-#: cmediasettingspage;control;7 cwebsettingspage;control;11
+#: cmediasettingspage;control;7 cwebsettingspage;control;12
 #: cfilesourcespage;control;5 cdownloadgroupdlg;control;7
 msgid "_Add"
 msgstr "_Lisa"
@@ -7561,14 +8077,18 @@ msgid "BitTorrent ( .torrent )"
 msgstr "BitTorrent ( .torrent )"
 
 #: cwebsettingspage;control;8
+msgid "DC++ ( dchub: )"
+msgstr ""
+
+#: cwebsettingspage;control;9
 msgid "_Download Manager:"
 msgstr "_Allalaadimiste Haldus:"
 
-#: cwebsettingspage;control;9
+#: cwebsettingspage;control;10
 msgid "Use Shareaza to manage all my web downloads:"
 msgstr "Kasuta Shareazat kõikideks weebi allalaadimisteks:"
 
-#: cwebsettingspage;control;13
+#: cwebsettingspage;control;14
 msgid "The download manager plugin will only attempt to download file types listed here.  Other file types will be handled by your web browser.  Shareaza must be running to manage downloads."
 msgstr "Allalaadimishalduri plugin proovib tõmmata ainult nimekirjas olevaid faile.  Teisi failitüüpe käsitleb sinu weebibrauser.  Shareaza peab allalaadimiste haldamiseks töötama."
 
@@ -7617,15 +8137,22 @@ msgid "Handshake:"
 msgstr ""
 
 #: cdownloadssettingspage;control;1
-msgid "Save _Completed Files Here:"
+#, fuzzy
+msgid "Save Completed Files Here"
 msgstr "Salvesta _Lõpetatud Failid Siia:"
 
 #: cdownloadssettingspage;control;4
-msgid "Store Temporary _Incomplete Files Here:"
-msgstr "Salvesta Ajutised _Poolikud Failid Siia:"
+msgid "Scan every completed file with AntiVirus"
+msgstr ""
+
+#: cdownloadssettingspage;control;5
+#, fuzzy
+msgid "Select AntiVirus:"
+msgstr "Vali eelasetus:"
 
 #: cdownloadssettingspage;control;7
-msgid "_Number of Downloads:"
+#, fuzzy
+msgid "Number of Downloads"
 msgstr "_Allalaadimised:"
 
 #: cdownloadssettingspage;control;8
@@ -7641,7 +8168,8 @@ msgid "Transfers per File:"
 msgstr "Ülekandeid Faili Kohta:"
 
 #: cdownloadssettingspage;control;17
-msgid "_Limits:"
+#, fuzzy
+msgid "Limits"
 msgstr "_Piirangud:"
 
 #: cdownloadssettingspage;control;18
@@ -7652,9 +8180,14 @@ msgstr "Allalaadimiskiiruse Piirang:"
 msgid "Maximum Queue Length:"
 msgstr "Maksimaalne Järjekordade arv:"
 
-#: cdownloadssettingspage;control;23
+#: cdownloadssettingspage;control;22
 msgid "Only download and upload to networks which are connected."
 msgstr "Tõmba ainult ühendatud võrkudest."
+
+#: cdownloadssettingspage;control;23
+#, fuzzy
+msgid "Store Temporary Incomplete Files Here"
+msgstr "Salvesta Ajutised _Poolikud Failid Siia:"
 
 #: cuploadssettingspage;control;2
 msgid "Share NEW partial downloads"
@@ -7752,71 +8285,7 @@ msgstr "Vali Kasutajanimi:"
 msgid "Choose a Password:"
 msgstr "Vali Salasõna:"
 
-#: dialog;cscheduletaskdlg
-msgid "Schedule Item"
-msgstr ""
-
-#: cscheduletaskdlg;control;3
-msgid "Only once"
-msgstr ""
-
-#: cscheduletaskdlg;control;4
-msgid "On specific day(s) of week"
-msgstr ""
-
-#: cscheduletaskdlg;control;12
-msgid " Friday"
-msgstr ""
-
-#: cscheduletaskdlg;control;22
-msgid " _Toggle bandwidth independently"
-msgstr ""
-
-#: cscheduletaskdlg;control;23
-msgid " _Limit network to Gnutella2"
-msgstr ""
-
-#: cscheduletaskdlg;control;25
-msgid "Make this event active"
-msgstr ""
-
-#: cscheduletaskdlg;control;26
-msgid "Please select a date:"
-msgstr ""
-
-#: cscheduletaskdlg;control;27
-msgid "Please select a time:"
-msgstr ""
-
-#: cscheduletaskdlg;control;28
-msgid "Select the event type:"
-msgstr ""
-
-#: cscheduletaskdlg;control;29
-msgid "Description: (optional)"
-msgstr ""
-
-#: cscheduletaskdlg;control;30
-msgid "% of _bandwidth under limit"
-msgstr ""
-
-#: cscheduletaskdlg;control;31
-msgid "% of _download under limit"
-msgstr ""
-
-#: cscheduletaskdlg;control;32
-msgid "% of _upload under limit"
-msgstr ""
-
-#: cscheduletaskdlg;control;33
-msgid "Days Of Week"
-msgstr ""
-
-#: cscheduletaskdlg;control;34
-msgid "Run this event"
-msgstr ""
-
-#: dialog;cnetworkssettingspage
+#: dialog;cnetworkssettingspage cscheduletaskpage;control;16
 msgid "Networks"
 msgstr "Võrgud"
 
@@ -8012,7 +8481,7 @@ msgstr "Tõmba weebist eDonkey2000 serverite nimekiri:"
 msgid "Download..."
 msgstr "Tõmba..."
 
-#: dialog;cbittorrentsettingspage
+#: dialog;cbittorrentsettingspage cscheduletaskpage;control;12
 msgid "BitTorrent"
 msgstr "BitTorrent"
 
@@ -9557,6 +10026,31 @@ msgstr "Channel Name|Why reason"
 msgid "Enter channel you want to add:|Enter kick/ban reason:"
 msgstr "Add a channel name:|Enter kick/ban reason:"
 
+#: dialog;cscheduletaskpage column;action
+msgid "Action"
+msgstr "Tegevus"
+
+#: cscheduletaskpage;control;10
+#, fuzzy
+msgid "eDoonkey2K"
+msgstr "eDonkey2000"
+
+#: cscheduletaskpage;control;13
+msgid "Select the event type:"
+msgstr ""
+
+#: cscheduletaskpage;control;14
+msgid "% of _download under limit"
+msgstr ""
+
+#: cscheduletaskpage;control;15
+msgid "% of _upload under limit"
+msgstr ""
+
+#: cscheduletaskpage;control;17 column;bandwidth
+msgid "Bandwidth"
+msgstr "Läbilaskevõime"
+
 #: column;file
 msgid "File"
 msgstr "Fail"
@@ -9621,10 +10115,6 @@ msgstr "Aeg"
 msgid "Packets"
 msgstr "Paketid"
 
-#: column;bandwidth
-msgid "Bandwidth"
-msgstr "Läbilaskevõime"
-
 #: column;total
 msgid "Total"
 msgstr "Kokku"
@@ -9644,10 +10134,6 @@ msgstr "Mode"
 #: column;address/content
 msgid "Address/Content"
 msgstr "Aadress / Sisu"
-
-#: column;action
-msgid "Action"
-msgstr "Tegevus"
 
 #: column;expires
 msgid "Expires"
@@ -9772,3 +10258,55 @@ msgstr "Kasutaja"
 #: column;comments
 msgid "Comments"
 msgstr "Kommentaarid"
+
+#: column;trigger
+#, fuzzy
+msgid "Trigger"
+msgstr "TigerTree"
+
+#: column;nextrun
+#, fuzzy
+msgid "NextRun"
+msgstr "Järgmine"
+
+#~ msgid "_Play Album"
+#~ msgstr "_Mängi Albumit"
+#~ msgid "This is a pre-release version of Shareaza, and the beta testing period has ended. Please download the full, official release from http://shareaza.sourceforge.net/."
+#~ msgstr "See on Shareaza eelversioon ja beta testid on lõppenud.  Tõmba täis-, ametlik versioon http://shareaza.sourceforge.net/."
+#~ msgid "Torrent Information"
+#~ msgstr "Torrenti Informatsioon"
+#~ msgid " to"
+#~ msgstr " kuni"
+#~ msgid "Volume uploaded:"
+#~ msgstr "Seni üleslaaditud:"
+#~ msgid "Disabling support for Gnutella-1 protocols may limit your search results, and if you are acting as a hub it may also impact upon the results of other users. Are you sure you want to do this?"
+#~ msgstr "Peatades toe Gnutella-1 protokollile, piirab sinu otsingu tulemusi, ja kui sa oled jaotur mõjutab see ka teiste kasutajate otsingute tulemusi.  Oled kindel, et tahad seda teha?"
+#~ msgid "All Media Files|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Playlists|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Audio Files|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|Video Files|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|CD Audio Tracks|*.cda|MIDI Files|*.mid;*.rmi;*.midi|All Files|*.*||"
+#~ msgstr "Kõik Meedia Failid|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Playlistid|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Audio Failid|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|Video Failid|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|CD Audio Tracks|*.cda|MIDI Failid|*.mid;*.rmi;*.midi|Kõik Failid|*.*||"
+#~ msgid "Tracker did not respond- Retrying announce (%i of %i)"
+#~ msgstr "Jälitaja ei vastanud- Proovin uuesti (%i of %i)"
+#~ msgid "You have typed a SHA1 value, however it is invalid. Please check it and try again."
+#~ msgstr "Sa oled sisestanud SHA1 väärtuse, mis aga on vale. Palun kontrolli seda ja proovi uuesti."
+#~ msgid "You have typed a root tiger-tree value, however it is invalid. Please check it and try again."
+#~ msgstr "Sa oled sisestanud tiger-tree juurväärtuse, mis aga on vale.  Palun kontrolli seda ja proovi uuesti."
+#~ msgid "You have provided a root tiger-tree hash value which is different to the one currently associated with this download. Are you sure you want to change the tiger-tree root hash now?"
+#~ msgstr "Sa oled andnud root tiger-tree hash väärtuse, mis on aga erinev käesolevast .  Oled kindel, et tahad muuta tiger-tree root hash -i?"
+#~ msgid "You have provided an eDonkey hash value which is different to the one currently associated with this download. Are you sure you want to change the eDonkey hash now?"
+#~ msgstr "Sa oled andnud eDonkey2000 hash väärtuse, mis on aga erinev käesolevast.  Oled kindel, et tahad muuta eDonkey2000 hash -i?"
+#~ msgid "Changing interface direction requires restart. \\nYou will need to start Shareaza manually. Exit now?"
+#~ msgstr "Kasutajaliidese suundade muutmine nõuab taaskäivitust. \\nSa pead Shareaza käsits taaskäivitama . Välju nüüd?"
+#~ msgid "Sunday"
+#~ msgstr "Pühapäev"
+#~ msgid "Monday"
+#~ msgstr "Esmaspäev"
+#~ msgid "Tuesday"
+#~ msgstr "Teisipäev"
+#~ msgid "Wednesday"
+#~ msgstr "Kolmapäev"
+#~ msgid "Thursday"
+#~ msgstr "Neljapäev"
+#~ msgid "Friday"
+#~ msgstr "Reede"
+#~ msgid "Saturday"
+#~ msgstr "Laupäev"
+

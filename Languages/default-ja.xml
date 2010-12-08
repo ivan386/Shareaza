@@ -287,9 +287,9 @@
 			<button id="ID_MEDIA_STOP" text="停止"/>
 			<separator/>
 			<label text="移動:" tip="メディアファイル内の指定した位置に移動します"/>
-			<control id="IDC_MEDIA_POSITION" width="190" height="22"/>
+			<control id="ID_MEDIA_POSITION" width="190" height="22"/>
 			<label text="音量:" tip="オーディオ音声を調節します"/>
-			<control id="IDC_MEDIA_VOLUME" width="50" height="22"/>
+			<control id="ID_MEDIA_VOLUME" width="50" height="22"/>
 			<separator/>
 			<button id="ID_MEDIA_OPEN" text="ファイルを開く"/>
 			<rightAlign/>
@@ -304,11 +304,11 @@
 			<button id="ID_MEDIA_STOP" text="停止"/>
 			<separator/>
 			<label text="移動:" tip="メディアファイル内の指定した位置に移動します"/>
-			<control id="IDC_MEDIA_POSITION" width="190" height="22"/>
+			<control id="ID_MEDIA_POSITION" width="190" height="22"/>
 			<label text="スピード:" tip="メディアファイルの再生速度を調節します"/>
-			<control id="IDC_MEDIA_SPEED" width="40" height="22"/>
+			<control id="ID_MEDIA_SPEED" width="40" height="22"/>
 			<label text="音量:" tip="オーディオ音声を調節します"/>
-			<control id="IDC_MEDIA_VOLUME" width="50" height="22"/>
+			<control id="ID_MEDIA_VOLUME" width="50" height="22"/>
 			<separator/>
 			<button id="ID_MEDIA_OPEN" text="ファイルを開く"/>
 			<separator/>
@@ -343,6 +343,7 @@
 			<button id="ID_NETWORK_G2" text="Gnutella2"/>
 			<button id="ID_NETWORK_G1" text="Gnutella1"/>
 			<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
+			<button id="ID_NETWORK_DC" text="DC++"/>
 			<separator/>
 			<button id="ID_NEIGHBOURS_SETTINGS" text="設定"/>
 		</toolbar>
@@ -357,6 +358,7 @@
 			<button id="ID_NETWORK_G2" text="Gnutella2"/>
 			<button id="ID_NETWORK_G1" text="Gnutella1"/>
 			<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
+			<button id="ID_NETWORK_DC" text="DC++"/>
 			<separator/>
 			<button id="ID_NEIGHBOURS_SETTINGS" text="設定"/>
 		</toolbar>
@@ -385,9 +387,6 @@
 			<button id="ID_SCHEDULER_REMOVE" text="Remove Task"/>
 			<separator/>
 			<button id="ID_SCHEDULER_REMOVE_ALL" text="Remove All"/>
-			<rightAlign/>
-			<button id="ID_SCHEDULER_IMPORT" text="Import List"/>
-			<button id="ID_SCHEDULER_EXPORT" text="Export List"/>
 		</toolbar>
 		<!-- HIT MONITOR WINDOW -->
 		<toolbar name="CHitMonitorWnd">
@@ -418,6 +417,7 @@
 			<button id="ID_HOSTCACHE_ED2K_CACHE" text="eDonkey キャッシュ"/>
 			<button id="ID_HOSTCACHE_BT_CACHE" text="BitTorrent Cache"/>
 			<button id="ID_HOSTCACHE_KAD_CACHE" text="Kademlia Cache"/>
+			<button id="ID_HOSTCACHE_DC_CACHE" text="DC++ Cache"/>
 		</toolbar>
 		<!-- PRIVATE CHAT FRAME -->
 		<toolbar name="CPrivateChatFrame">
@@ -428,7 +428,6 @@
 			<button id="ID_CHAT_EMOTICONS"/>
 			<separator/>
 			<button id="ID_CHAT_BROWSE" text="ユーザを参照"/>
-			<!-- <button id="ID_CHAT_SEND_FILE" text="Send File"/> -->
 			<button id="ID_CHAT_PRIORITY" text="転送順位を優先"/>
 			<separator/>
 			<button id="ID_CHAT_CONNECT" text="接続" visible="false"/>
@@ -496,6 +495,7 @@
 					<item id="ID_NETWORK_G2" text="Gnutella2へ接続(_G)"/>
 					<item id="ID_NETWORK_G1" text="Gnutella1へ接続(_1)"/>
 					<item id="ID_NETWORK_ED2K" text="eDonkey2000へ接続(_E)"/>
+					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_AUTO_CLOSE" text="転送後に終了(_A)"/>
@@ -552,10 +552,10 @@
 					<item id="ID_HELP_FORUMS" text="Shareazaフォーラム(_F)"/>
 					<item id="ID_HELP_WEB_6" text="Shareaza S_kin Site"/>
 					<!-- 
-				<item id="ID_HELP_UPDATE" text="Latest news"/>
-				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
-				-->
+					<item id="ID_HELP_UPDATE" text="Latest news"/>
+					<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
+					<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+					-->
 				</menu>
 				<separator/>
 				<item id="ID_HELP_VERSION_CHECK" text="最新ニュース"/>
@@ -572,6 +572,7 @@
 					<item id="ID_NETWORK_G2" text="Gnutella2へ接続(_G)"/>
 					<item id="ID_NETWORK_G1" text="Gnutella1へ接続(_1)"/>
 					<item id="ID_NETWORK_ED2K" text="eDonkey2000へ接続(_E)"/>
+					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_CONNECT_TO" text="接続先(_T)..." shortcut="Ctrl+T"/>
@@ -621,7 +622,7 @@
 			<menu text="ツール(_T)">
 				<item id="ID_LIBRARY_FOLDERS" text="共有ファイル(_F)..."/>
 				<item id="ID_TOOLS_DOWNLOAD" text="ダウンロード/Torrent(_D)..."/>
-				<item id="IDC_IMPORT_DOWNLOADS" text="_Import eMule partial downloads..."/>
+				<item id="ID_IMPORT_DOWNLOADS" text="_Import eMule partial downloads..."/>
 				<item id="ID_OPEN_DOWNLOADS_FOLDER" text="_Open my folder of completed Downloads"/>
 				<separator/>
 				<item id="ID_TOOLS_SKIN" text="スキンを選択(_K)..."/>
@@ -657,10 +658,10 @@
 					<item id="ID_HELP_FORUMS" text="Shareazaフォーラム(_F)"/>
 					<item id="ID_HELP_WEB_6" text="Shareaza S_kin Site"/>
 					<!-- 
-				<item id="ID_HELP_UPDATE" text="Latest news"/>
-				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
-				-->
+					<item id="ID_HELP_UPDATE" text="Latest news"/>
+					<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
+					<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+					-->
 				</menu>
 				<separator/>
 				<item id="ID_HELP_VERSION_CHECK" text="最新ニュース"/>
@@ -683,6 +684,7 @@
 					<item id="ID_NETWORK_G2" text="Gnutella2へ接続(_G)"/>
 					<item id="ID_NETWORK_G1" text="Gnutella1へ接続(_1)"/>
 					<item id="ID_NETWORK_ED2K" text="eDonkey2000へ接続(_E)"/>
+					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_AUTO_CLOSE" text="転送後に終了(_A)"/>
@@ -714,7 +716,7 @@
 			<menu text="ツール(_T)">
 				<item id="ID_LIBRARY_FOLDERS" text="共有ファイル(_F)..."/>
 				<item id="ID_TOOLS_DOWNLOAD" text="ダウンロード/Torrent(_D)..."/>
-				<item id="IDC_IMPORT_DOWNLOADS" text="_Import eMule partial downloads..."/>
+				<item id="ID_IMPORT_DOWNLOADS" text="_Import eMule partial downloads..."/>
 				<item id="ID_OPEN_DOWNLOADS_FOLDER" text="_Open my folder of completed Downloads"/>
 				<separator/>
 				<item id="ID_TOOLS_SKIN" text="スキンを選択(_K)..."/>
@@ -754,10 +756,10 @@
 					<item id="ID_HELP_FORUMS" text="Shareazaフォーラム(_F)"/>
 					<item id="ID_HELP_WEB_6" text="Shareaza S_kin Site"/>
 					<!-- 
-				<item id="ID_HELP_UPDATE" text="Latest news"/>
-				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
-				-->
+					<item id="ID_HELP_UPDATE" text="Latest news"/>
+					<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
+					<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+					-->
 				</menu>
 				<separator/>
 				<item id="ID_HELP_VERSION_CHECK" text="最新ニュース"/>
@@ -905,6 +907,7 @@
 				<item id="ID_HOSTCACHE_ED2K_CACHE" text="eDonkeyサーバ(_E)"/>
 				<item id="ID_HOSTCACHE_BT_CACHE" text="_BitTorrent Cache"/>
 				<item id="ID_HOSTCACHE_KAD_CACHE" text="_Kademlia Cache"/>
+				<item id="ID_HOSTCACHE_DC_CACHE" text="_DC++ Cache"/>
 			</menu>
 			<separator/>
 			<item id="ID_HOSTCACHE_IMPORT" text="METファイルをインポート(_I)..."/>
@@ -1190,14 +1193,14 @@
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="ファイルプロパティ(_P)"/>
 		</menu>
 		<menu name="CLibraryTree.Virtual.Basic">
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="アルバムを再生(_P)"/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="アルバムを再生"/>
 			<item id="ID_LIBRARY_FOLDER_DELETE" text="削除(_D)"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="ファイルプロパティ(_P)"/>
 			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="アルバムプロパティ(_A)"/>
 		</menu>
 		<menu name="CLibraryTree.Virtual">
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="アルバムを再生(_P)"/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="アルバムを再生"/>
 			<item id="ID_LIBRARY_FOLDER_DELETE" text="削除(_D)"/>
 			<separator/>
 			<item id="ID_LIBRARY_REBUILD" text="再構成(_B)"/>
@@ -1286,7 +1289,7 @@
 		<menu name="CLibraryFileView.Virtual.Basic">
 			<item id="ID_LIBRARY_LAUNCH" text="開く・再生(_O)"/>
 			<item id="ID_LIBRARY_ENQUEUE" text="再生リストに追加(_Y)"/>
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="アルバムを再生(_P)"/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="アルバムを再生"/>
 			<separator/>
 			<item id="ID_LIBRARY_SHARED_FILE" text="共有(_S)"/>
 			<separator/>
@@ -1504,6 +1507,7 @@
 				<item id="ID_NETWORK_G2" text="_Gnutella2"/>
 				<item id="ID_NETWORK_G1" text="Gnutella_1"/>
 				<item id="ID_NETWORK_ED2K" text="_eDonkey"/>
+				<item id="ID_NETWORK_DC" text="_DC++"/>
 			</menu>
 			<menu text="_Monitor">
 				<item id="ID_NEIGHBOURS_VIEW_ALL" text="View _All Traffic"/>
@@ -1564,9 +1568,6 @@
 			<item id="ID_SCHEDULER_EDIT" text="_Edit"/>
 			<separator/>
 			<item id="ID_SCHEDULER_REMOVE_ALL" text="Remove Al_l"/>
-			<separator/>
-			<item id="ID_SCHEDULER_IMPORT" text="インポート(_I)..."/>
-			<item id="ID_SCHEDULER_EXPORT" text="エクスポート(_X)..."/>
 		</menu>
 		<!-- DISCOVERY SERVICES WINDOW -->
 		<menu name="CDiscoveryWnd">
@@ -1590,7 +1591,6 @@
 			<item id="ID_CHAT_DISCONNECT" text="切断(_D)"/>
 			<separator/>
 			<item id="ID_CHAT_BROWSE" text="参照(_B)"/>
-			<!-- <item id="ID_CHAT_SEND_FILE" text="_Send File..."/> -->
 			<item id="ID_CHAT_PRIORITY" text="認証優先順位(_P)"/>
 			<separator/>
 			<menu text="_Format">
@@ -1846,6 +1846,12 @@
 			<text group="32" align="middle">接続中...</text>
 			<text group="33" align="middle">接続済</text>
 			<newline group="30" gap="2"/>
+			<icon group="80" command="ID_NETWORK_DC"/><gap group="80" size="4"/>
+			<text group="80" align="middle" format="b">DC++:</text>
+			<text group="81" align="middle">切断</text>
+			<text group="82" align="middle">接続中...</text>
+			<text group="83" align="middle">接続済</text>
+			<newline group="80" gap="2"/>
 			<group id="2">
 				<para align="center">
 					<newline gap="4"/>
@@ -2068,13 +2074,13 @@
 		ダウンロードを選択した後で再びこのコマンドを実行して下さい。</text>
 			<newline gap="16"/>
 			<text>You can also use this command to get help information on a specific download.
-		Simply select a download and choose this Help command again.</text>
+			Simply select a download and choose this Help command again.</text>
 		</document>
 		<document name="DownloadHelp.Seeding">
 			<text format="b">This Torrent is Seeding</text>
 			<newline gap="8"/>
 			<text>Shareaza has verified this complete download, and is actively sharing it
-		with other downloaders through BitTorrent. Please share at least 100%.</text>
+			with other downloaders through BitTorrent. Please share at least 100%.</text>
 		</document>
 		<document name="DownloadHelp.Completed">
 			<text format="b">このダウンロードは完了しました</text>
@@ -2311,6 +2317,19 @@
 	</documents>
 	<!-- Localised Command Tip Text. The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
 	<commandTips>
+		<tip id="AFX_IDS_APP_TITLE" message="Shareaza"/>
+		<tip id="AFX_IDS_IDLEMESSAGE" message="準備完了..."/>
+		<tip id="AFX_IDS_MDICHILD" message="Activate this window"/>
+		<tip id="AFX_IDS_PREVIEW_CLOSE" message="Close print preview mode" tip="プレビュー"/>
+		<tip id="AFX_IDS_SCCLOSE" message="アクティブウィンドウを最大化します"/>
+		<tip id="AFX_IDS_SCMAXIMIZE" message="アクティブウィンドウを最大化します"/>
+		<tip id="AFX_IDS_SCMINIMIZE" message="Reduce the window to an icon"/>
+		<tip id="AFX_IDS_SCMOVE" message="Change the window position"/>
+		<tip id="AFX_IDS_SCNEXTWINDOW" message="Switch to the next document window"/>
+		<tip id="AFX_IDS_SCPREVWINDOW" message="Switch to the previous document window"/>
+		<tip id="AFX_IDS_SCRESTORE" message="Restore the window to normal size"/>
+		<tip id="AFX_IDS_SCSIZE" message="Change the window size"/>
+		<tip id="AFX_IDS_SCTASKLIST" message="Activate Task List"/>
 		<tip id="ID_BROWSE_FILES" message="ユーザの共有ファイルを参照します"/>
 		<tip id="ID_BROWSE_LAUNCH" message="選択したユーザのプロフィールと共有ファイルを参照します"/>
 		<tip id="ID_BROWSE_PROFILE" message="ユーザのプロフィールを参照します"/>
@@ -2325,7 +2344,6 @@
 		<tip id="ID_CHAT_EMOTICONS" message="絵文字を挿入します"/>
 		<tip id="ID_CHAT_ITALIC" message="イタリック体フォーマットを適用します(Ctrl+I)"/>
 		<tip id="ID_CHAT_PRIORITY" message="このユーザにアップロード優先権を与えます"/>
-		<!-- <tip id="ID_CHAT_SEND_FILE" message="Send a file to the user..."/> -->
 		<tip id="ID_CHAT_TIMESTAMP" message="各メッセージを受信した時間を表示します"/>
 		<tip id="ID_CHAT_UNDERLINE" message="アンダーライン属性のフォーマットを適用します(Ctrl+U)"/>
 		<tip id="ID_CHILD_CLOSE" message="アクティブウィンドウを閉じます"/>
@@ -2334,6 +2352,7 @@
 		<tip id="ID_CHILD_RESTORE" message="選択したウィンドウを開きます"/>
 		<tip id="ID_DISCOVERY_ADD" message="新しいディスカバリサービスを追加します..."/>
 		<tip id="ID_DISCOVERY_ADVERTISE" message="ランダムで既存GWebCasheへGWebCasheサービスの宣伝をします"/>
+		<tip id="ID_DISCOVERY_BLOCKED" message="ディスカバリウィンドウ内のGWebCacheサービスを表示します"/>
 		<tip id="ID_DISCOVERY_BROWSE" message="選択したGWebChacheのウェブ上での統計を参照します"/>
 		<tip id="ID_DISCOVERY_EDIT" message="選択したディスカバリサービスのプロパティを表示します"/>
 		<tip id="ID_DISCOVERY_GNUTELLA" message="ディスカバリウィンドウ内のブートストラップサービスを表示します"/>
@@ -2385,13 +2404,14 @@
 		<tip id="ID_HELP_ABOUT" message="Shareazaのアバウトダイアログを表示します..."/>
 		<tip id="ID_HELP_CODEC" message="コーデックとビデオの諸問題について"/>
 		<tip id="ID_HELP_FAQ" message="Shareaza FAQを表示します"/>
-		<tip id="ID_HELP_ROUTER" message="ルータやファイアーウォールの設定についてのヘルプを閲覧します"/>
 		<tip id="ID_HELP_FORUMS" message="Shareaza討論フォーラムを訪問します"/>
 		<tip id="ID_HELP_GUIDE" message="Shareazaユーザーズガイドを訪問します"/>
 		<tip id="ID_HELP_HOMEPAGE" message="Shareaza.Sourceforge.netウェブサイトを訪問します"/>
+		<tip id="ID_HELP_ROUTER" message="ルータやファイアーウォールの設定についてのヘルプを閲覧します"/>
 		<tip id="ID_HELP_SECURITY" message="悪意のあるプログラムからシステムを守るためのヘルプ"/>
-		<tip id="ID_HELP_UPDATE" message="ニュースと更新をチェックします"/>
 		<tip id="ID_HELP_TEST" message="Run the connection test."/>
+		<tip id="ID_HELP_UPDATE" message="ニュースと更新をチェックします"/>
+		<tip id="ID_HELP_VERSION_CHECK" message="Check for new version"/>
 		<tip id="ID_HELP_WEB_1" message="このウェブサイトを訪問します"/>
 		<tip id="ID_HELP_WEB_2" message="このウェブサイトを訪問します"/>
 		<tip id="ID_HELP_WEB_3" message="このウェブサイトを訪問します"/>
@@ -2401,7 +2421,9 @@
 		<tip id="ID_HITMONITOR_CLEAR" message="ヒットモニタのバッファをクリアします"/>
 		<tip id="ID_HITMONITOR_PAUSE" message="ヒットモニタを一時停止します"/>
 		<tip id="ID_HITMONITOR_SEARCH" message="ネットワークで選択した項目を検索します"/>
+		<tip id="ID_HOSTCACHE_BT_CACHE" message="BitTorrentアップロードを表示します"/>
 		<tip id="ID_HOSTCACHE_CONNECT" message="選択したホストへ接続します"/>
+		<tip id="ID_HOSTCACHE_DC_CACHE" message="Show DC++ cached hubs."/>
 		<tip id="ID_HOSTCACHE_DISCONNECT" message="選択した近隣から切断します"/>
 		<tip id="ID_HOSTCACHE_ED2K_CACHE" message="eDonkey2000サーバーを表示します"/>
 		<tip id="ID_HOSTCACHE_ED2K_DOWNLOAD" message="eDonkey2000 &quot;server.met&quot; ファイルをダウンロードします..."/>
@@ -2409,8 +2431,10 @@
 		<tip id="ID_HOSTCACHE_G2_CACHE" message="Gnutella2キャッシュホストを表示します"/>
 		<tip id="ID_HOSTCACHE_G2_HORIZON" message="Gnutella2水平ハブを表示します"/>
 		<tip id="ID_HOSTCACHE_IMPORT" message="&quot;server.met&quot; ファイルのような既知ホストのリストをインポートします..."/>
+		<tip id="ID_HOSTCACHE_KAD_CACHE" message="Gnutella1キャッシュホストを表示します"/>
 		<tip id="ID_HOSTCACHE_PRIORITY" message="他のサーバの前にこのサーバへの接続を試行します"/>
 		<tip id="ID_HOSTCACHE_REMOVE" message="ホストキャッシュから選択したホストを削除します"/>
+		<tip id="ID_IMPORT_DOWNLOADS" message="_Import eMule partial downloads..."/>
 		<tip id="ID_LIBRARY_ADD" message="ライブラリに新しいフォルダを追加します..."/>
 		<tip id="ID_LIBRARY_ALBUM_DELETE" message="選択したアルバムフォルダを削除します"/>
 		<tip id="ID_LIBRARY_ALBUM_OPEN" message="選択したアルバムフォルダを開きます"/>
@@ -2440,6 +2464,7 @@
 		<tip id="ID_LIBRARY_REBUILD" message="選択したフォルダ又はファイル用のメタデータとハッシュを再構築します"/>
 		<tip id="ID_LIBRARY_REBUILD_ANSI" message="他の言語を使用してメタデータを再構築します"/>
 		<tip id="ID_LIBRARY_REFRESH" message="ライブラリの表示を更新します"/>
+		<tip id="ID_LIBRARY_REFRESH_METADATA" message="_Refresh Metadata"/>
 		<tip id="ID_LIBRARY_REMOVE" message="選択した共有フォルダを取り除きます"/>
 		<tip id="ID_LIBRARY_RENAME" message="選択したファイルをその場所でリネームします"/>
 		<tip id="ID_LIBRARY_SCAN" message="変更を反映させる為に選択したフォルダ又はファイルをスキャンします"/>
@@ -2477,6 +2502,7 @@
 		<tip id="ID_MEDIA_PAUSE" message="メディアファイルの再生を一時停止します" tip="一時停止"/>
 		<tip id="ID_MEDIA_PLAY" message="現在のメディアファイルを再生します" tip="再生"/>
 		<tip id="ID_MEDIA_PLAYLIST" message="再生リストエディタを表示・非表示します"/>
+		<tip id="ID_MEDIA_POSITION" message="メディアファイル内の指定した位置に移動します" tip="Seek"/>
 		<tip id="ID_MEDIA_PREVIOUS" message="現在の再生リスト内の前のファイルに戻ります" tip="前のファイル"/>
 		<tip id="ID_MEDIA_PROPERTIES" message="View and edit the properties of the selected files."/>
 		<tip id="ID_MEDIA_RANDOM" message="現在の再生リストをランダム(シャッフル)モードに切り替えます"/>
@@ -2491,14 +2517,15 @@
 		<tip id="ID_MEDIA_SIZE_ONE" message="ビデオ画像をオリジナルサイズで表示します"/>
 		<tip id="ID_MEDIA_SIZE_THREE" message="ビデオ画像をオリジナルサイズの3倍に拡大して表示します"/>
 		<tip id="ID_MEDIA_SIZE_TWO" message="ビデオ画像をオリジナルサイズの2倍に拡大して表示します"/>
+		<tip id="ID_MEDIA_SPEED" message="メディアファイルの再生速度を調節します" tip="速度"/>
 		<tip id="ID_MEDIA_STATUS" message="メディアステータスラインを表示・非表示します"/>
 		<tip id="ID_MEDIA_STOP" message="再生中のメディアファイルを停止します" tip="停止"/>
 		<tip id="ID_MEDIA_VIS" message="オーディオの視覚化プラグインを選択します..."/>
+		<tip id="ID_MEDIA_VOLUME" message="オーディオ音声を調節します" tip="Volume"/>
 		<tip id="ID_MEDIA_ZOOM" message="ズームとアスペクト比設定を調整します"/>
-		<tip id="IDC_MEDIA_POSITION" value="Seek to a position in the media file." tip="Seek"/>
-		<tip id="IDC_MEDIA_SPEED" value="Adjust the speed of the media file." tip="速度"/>
-		<tip id="IDC_MEDIA_VOLUME" value="Adjust the audio volume." tip="Volume"/>
 		<tip id="ID_MONITOR_CLOSE" message="モニタウィンドウを閉じます"/>
+		<tip id="ID_MUSICBRAINZ_ALBUMS" message="Look at all albums for this artist."/>
+		<tip id="ID_MUSICBRAINZ_MATCHES" message="選択したファイルの他のコピーを検索します"/>
 		<tip id="ID_NEIGHBOURS_CHAT" message="選択したユーザとのチャットを開始します"/>
 		<tip id="ID_NEIGHBOURS_COPY" message="選択したホストにアクセスするURIをコピーします"/>
 		<tip id="ID_NEIGHBOURS_DISCONNECT" message="選択した近隣を切断します"/>
@@ -2511,12 +2538,22 @@
 		<tip id="ID_NETWORK_CHAT_TO" message="Open a chat session with a user..."/>
 		<tip id="ID_NETWORK_CONNECT" message="ネットワークに接続します"/>
 		<tip id="ID_NETWORK_CONNECT_TO" message="手動でホストに接続します..."/>
+		<tip id="ID_NETWORK_DC" message="Connect to the DC++ network."/>
 		<tip id="ID_NETWORK_DISCONNECT" message="ネットワークから切断します"/>
 		<tip id="ID_NETWORK_ED2K" message="eDonkey2000ネットワークに接続します"/>
 		<tip id="ID_NETWORK_EXIT" message="Shareazaを終了します"/>
 		<tip id="ID_NETWORK_G1" message="オリジナルGnutellaネットワークに接続します"/>
 		<tip id="ID_NETWORK_G2" message="Gnutella2ネットワークに接続します(推奨)"/>
 		<tip id="ID_NETWORK_SEARCH" message="ネットワークで新規検索します..."/>
+		<tip id="ID_NEXT_PANE" message="Switch to the next window pane" tip="次の行"/>
+		<tip id="ID_OPEN_DOWNLOADS_FOLDER" message="Open my folder of completed Downloads"/>
+		<tip id="ID_PREV_PANE" message="現在の再生リスト内の前のファイルに戻ります" tip="前のファイル"/>
+		<tip id="ID_SCHEDULER_ACTIVATE" message="選択したアップロードをリストからクリアします"/>
+		<tip id="ID_SCHEDULER_ADD" message="Adds a new task to scheduler list."/>
+		<tip id="ID_SCHEDULER_DEACTIVATE" message="ネットワークに接続します"/>
+		<tip id="ID_SCHEDULER_EDIT" message="選択したセキュリィティ規則を編集します..."/>
+		<tip id="ID_SCHEDULER_REMOVE" message="選択したダウンロードをリストから取り除きます"/>
+		<tip id="ID_SCHEDULER_REMOVE_ALL" message="Removes all scheduled tasks."/>
 		<tip id="ID_SEARCH_CHAT" message="選択したユーザとのチャットを開始します"/>
 		<tip id="ID_SEARCH_CLEAR" message="検索結果をクリアします"/>
 		<tip id="ID_SEARCH_COLUMNS" message="表示するメタデータカラムを選択します..."/>
@@ -2548,9 +2585,22 @@
 		<tip id="ID_SECURITY_POLICY_DENY" message="デフォルトセキュリティ方針を全てのホストで許可しないように設定します"/>
 		<tip id="ID_SECURITY_REMOVE" message="選択したセキュリティ規則を削除します"/>
 		<tip id="ID_SECURITY_RESET" message="選択した規則のヒット数をリセットします"/>
+		<tip id="ID_SHAREMONKEY_BUY" message="Buy it and support the author"/>
+		<tip id="ID_SHAREMONKEY_COMPARE" message="Compare prices in different stores"/>
+		<tip id="ID_SHAREMONKEY_DOWNLOAD" message="これを検索(_S)"/>
+		<tip id="ID_SHAREMONKEY_NEXT" message="Go to the next match"/>
+		<tip id="ID_SHAREMONKEY_PREVIOUS" message="Go to the previous match"/>
+		<tip id="ID_SHAREMONKEY_PRICES" message="現在の再生リスト内の前のファイルに戻ります"/>
+		<tip id="ID_SHAREMONKEY_SAVE" message="ライブラリ内のファイルを表示する"/>
 		<tip id="ID_SYSTEM_CLEAR" message="ステータスログをクリアします"/>
+		<tip id="ID_SYSTEM_COPY" message="Copy selected line(s) of status log."/>
 		<tip id="ID_SYSTEM_TIMESTAMP" message="各行のタイムスタンプを記録します"/>
 		<tip id="ID_SYSTEM_VERBOSE" message="詳細なシステム稼働ログを表示します"/>
+		<tip id="ID_SYSTEM_VERBOSE_DEBUG" message="履歴を表示します"/>
+		<tip id="ID_SYSTEM_VERBOSE_ERROR" message="履歴を表示します"/>
+		<tip id="ID_SYSTEM_VERBOSE_INFO" message="グリッド線を表示します"/>
+		<tip id="ID_SYSTEM_VERBOSE_NOTICE" message="Display notices and above."/>
+		<tip id="ID_SYSTEM_VERBOSE_WARNING" message="グリッド線を表示します"/>
 		<tip id="ID_TAB_CONNECT" message="ネットワークに接続・切断します"/>
 		<tip id="ID_TAB_HOME" message="Shareazaホームページに戻ります"/>
 		<tip id="ID_TAB_IRC" message="Show the IRC Chat window."/>
@@ -2601,6 +2651,7 @@
 		<tip id="ID_VIEW_NEIGHBOURS" message="近隣ウィンドウを表示/非表示します"/>
 		<tip id="ID_VIEW_PACKETS" message="パケットダンプウィンドウを表示/非表示します"/>
 		<tip id="ID_VIEW_RESULTS_MONITOR" message="ヒットモニタウィンドウを表示/非表示します"/>
+		<tip id="ID_VIEW_SCHEDULER" message="セキュリティウィンドウを表示・非表示します"/>
 		<tip id="ID_VIEW_SEARCH_MONITOR" message="検索モニタウィンドウを表示/非表示します"/>
 		<tip id="ID_VIEW_SECURITY" message="セキュリティウィンドウを表示・非表示します"/>
 		<tip id="ID_VIEW_SYSTEM" message="システムウィンドウを表示/非表示します"/>
@@ -2608,6 +2659,10 @@
 		<tip id="ID_VIEW_TRAFFIC" message="グラフウィンドウを表示/非表示します"/>
 		<tip id="ID_VIEW_UPLOADS" message="アップロードウィンドウを表示/非表示します"/>
 		<tip id="ID_VIEW_WINDOWED" message="Shareazaを上級ウィンドウモードで使用します"/>
+		<tip id="ID_WEBSERVICES_LIST" message="Choose the web service to get more information about the selected file."/>
+		<tip id="ID_WEBSERVICES_MUSICBRAINZ" message="Search for the same artist songs using MusicBrainz service."/>
+		<tip id="ID_WEBSERVICES_SHAREMONKEY" message="Search for the file infomation using ShareMonkey service."/>
+		<tip id="ID_WINDOW_ARRANGE" message="Arrange icons at the bottom of the window" tip="Arrange Icons"/>
 		<tip id="ID_WINDOW_CASCADE" message="開いているウィンドウを全て最大化します"/>
 		<tip id="ID_WINDOW_MONITOR" message="帯域モニタを表示・非表示します"/>
 		<tip id="ID_WINDOW_NAVBAR" message="ナビゲーションバーを表示/非表示します"/>
@@ -2616,8 +2671,6 @@
 		<tip id="ID_WINDOW_TILE_HORZ" message="開いているウィンドウを重ならないようにタイル状に横に並べて表示します"/>
 		<tip id="ID_WINDOW_TILE_VERT" message="開いているウィンドウを重ならないようにタイル状に縦に並べて表示します"/>
 		<tip id="ID_WINDOW_TOOLBAR" message="ツールバーを表示・非表示します"/>
-		<tip id="ID_WEBSERVICES_LIST" message="Choose the web service to get more information about the selected file."/>
-		<tip id="ID_WEBSERVICES_SHAREMONKEY" message="Search for the file infomation using ShareMonkey service."/>
 		<!-- PLUGIN TIPS -->
 		<tip id="ImageViewer_BestFit" message="イメージの大きさをウインドウの大きさにあわせて自動的に拡大・縮小します"/>
 		<tip id="ImageViewer_ActualSize" message="イメージを原寸大で表示します"/>
@@ -2654,23 +2707,6 @@
 		<string id="WINDOW_HELP" value="Shareazaヘルプ"/>
 		<string id="WINDOW_IRC" value="Shareaza Chat"/>
 		<string id="WINDOW_SCHEDULER" value="Scheduler"/>
-		<string id="154" value="Are you sure you want to remove all scheduled tasks? This cannot be undone."/>
-		<string id="156" value="Scheduled time has already passed.\n\nPlease select a time in the future."/>
-		<string id="157" value="Bandwidth: Full Speed"/>
-		<string id="158" value="Bandwidth: Reduced Speed"/>
-		<string id="159" value="Bandwidth: Stop"/>
-		<string id="160" value="System: Exit Shareaza"/>
-		<string id="161" value="System: Disconnect Dial-up Connection"/>
-		<string id="162" value="System: Turn Off the Computer"/>
-		<string id="163" value="Please select a task."/>
-		<string id="164" value="Specific day(s) of week"/>
-		<string id="165" value="有効"/>
-		<string id="166" value="無効"/>
-		<string id="167" value="Done"/>
-		<string id="168" value="Waiting..."/>
-		<string id="169" value="No Tasks Currently Scheduled"/>
-		<string id="172" value="Done Today"/>
-		<string id="173" value="You should select at least one day of week."/>
 		<string id="7000" value="このフィルタを削除して宜しいですか?"/>
 		<string id="7001" value="&amp;スキーマ"/>
 		<string id="7002" value="複数値"/>
@@ -2690,9 +2726,7 @@
 		<string id="8007" value="アクティブな検索はありません。ここをクリックすればファイルを検索できます"/>
 		<string id="8008" value="新しいShareazaのバージョン (%s) のダウンロードが完了しました。今すぐアップロードしますか?\n\n「はい」を選択すれば、Shareazaはアップグレードのために一時的に終了します"/>
 		<string id="8009" value="&quot;%s&quot; スキンを削除してよろしいですか?  この作業は元に戻せません"/>
-		<string id="8010" value="これはShareazaのプレリリースバージョンで、ベータテスト期間は終了しています。http://shareaza.sourceforge.net/からオフィシャルリリースをダウンロードして下さい"/>
 		<string id="8011" value="画面表示の変更は現在開いている全てのウィンドウを閉じます。今すぐ変更しますか?"/>
-		<string id="8012" value="Torrent情報"/>
 		<string id="8013" value="Shareazaも新しいバージョンを検出しました。"/>
 		<string id="8014" value="プロフィールを編集"/>
 		<string id="8060" value="ハブ/ウルトラピアモード 近隣接続 %lu, 共有 %s"/>
@@ -2760,7 +2794,7 @@
 		<string id="8178" value="ファイルの種類は?"/>
 		<string id="8179" value="(検索履歴をクリア)"/>
 		<string id="8180" value="最小ファイルサイズ"/>
-		<string id="8181" value=" ～"/><!-- size from xx TO xx-->
+		<string id="8181" value=" to (size from xx TO xx)"/>
 		<string id="8208" value="Shareazaは %Iu ファイルのハッシュを作成しています:"/>
 		<string id="8223" value="%i 日 %i 時間"/>
 		<string id="8224" value="Shareazaはダウンロード中です:"/>
@@ -2780,7 +2814,7 @@
 		<string id="8239" value="完了"/>
 		<string id="8240" value="Shareazaはダウンロードデータを移動中です:"/>
 		<string id="8241" value="Shareazaはダウンロードエラーをチェック中です:"/>
-		<string id="8243" value="アップロード量:"/>
+		<string id="8243" value="アップロード領域"/>
 		<string id="8244" value="レビュー数:"/>
 		<string id="8288" value="Shareazaライブラリを閲覧中です"/>
 		<string id="8289" value="閲覧:"/>
@@ -2842,10 +2876,9 @@
 		<string id="16077" value="セキュリティ規則によりアドレス %s は既にブロックされています"/>
 		<string id="16078" value="%s をブロックする為のセキュリティ規則が追加されました"/>
 		<string id="16079" value="本当に切断してよろしいですか?"/>
-		<string id="16080" value="You are running the Scheduler in 'G2 only' mode. Would you like to turn this mode off, so that all active networks remain connected?"/>
+		<string id="16080" value="ネットワーク未接続です"/>
 		<string id="16081" value="&quot;%s&quot; の問い合わせを %s へ送信中です"/>
 		<string id="16083" value="あなたのPCを強制的にハブモードに移行させた場合、マシンの処理能力とP2Pネットワークに悪影響を及ぼす恐れがあります。通常はShareaza自身にハブモードを使用するかどうか選択させる方が良好な結果が得られます。\n\nハブモードにしたところでよりよい検索結果もありませんし、その他のいかなる利点もありません。\n\nこれらの欠点にも関わらずまだそれを望みますか?"/>
-		<string id="16084" value="Gnutella1プロトコルを使用禁止することはあなた自身の検索結果を制限するだけでなく、もしハブとして機能しているならば他のユーザの検索結果にも影響を与える可能性があります。それでも使用禁止にしますか?"/>
 		<string id="16085" value="Gnutella2はShareazaの主ネットワークです。それを禁止した場合、検索結果の数と品質に重大な制限を与える可能性があります。それでも禁止しますか?"/>
 		<string id="16087" value="あなたの出力帯域はこのネットワークへ接続出来る程大きくありません"/>
 		<string id="16128" value="%s ポート %i からの入力接続を受け付けました"/>
@@ -2876,6 +2909,7 @@
 		<string id="16157" value="近隣 %s がハブでない為接続を閉じています"/>
 		<string id="16158" value="近隣 %s とのGnutella2接続の確立に成功しました (%s)"/>
 		<string id="16159" value="非Gnutella2である近隣 %s との接続を閉じています"/>
+		<string id="16191" value="Received a packet from %s for %s which excess query limits, ignoring."/>
 		<string id="16192" value="近隣 %s が大きすぎるパケットを転送した為、接続を中止しました"/>
 		<string id="16193" value="近隣 %s がTTLが0のパケットを転送した為、無視しています"/>
 		<string id="16194" value="近隣 %s が大きすぎるTTLを転送した為、パケットを中止しています (TTL=%i, Hops=%i)"/>
@@ -3016,6 +3050,7 @@
 		<string id="16375" value="部品"/>
 		<string id="16376" value="全てのファイル"/>
 		<string id="16377" value="HTTPガード"/>
+		<string id="16378" value="Host &quot;%s&quot; sent a 416, without providing available ranges. Closing connection."/>
 		<string id="16379" value="ライブラリファイル"/>
 		<string id="16384" value="ファイル &quot;%s&quot; を開いてよろしいですか?\n\nファイルがコンピュータに有害であることもあります。  ファイルを開く前に安全であるか確認して下さい"/>
 		<string id="16385" value="%i ファイルのメタデータを改変しようとしています。 続けて宜しいですか?"/>
@@ -3075,6 +3110,7 @@
 		<string id="16526" value="Gnutellaパケット廃棄"/>
 		<string id="16527" value="Gnutellaパケット損失"/>
 		<string id="16528" value="Gnutellaローカル問い合わせ"/>
+		<string id="16529" value="Gnutellaローカル問い合わせ"/>
 		<string id="16532" value="総TCP受信帯域幅"/>
 		<string id="16533" value="総TCP送信帯域幅"/>
 		<string id="16534" value="総UDP受信帯域幅"/>
@@ -3143,12 +3179,11 @@
 		<string id="16944" value="共有ファイル数 %i (%sライブラリ)"/>
 		<string id="16991" value="Shareazaメディアプレーヤー"/>
 		<string id="16992" value="Shareazaはそのメディアサービスプラグインをインスタンス化できません。 Shareazaを再インストールし、必要なメディアコーデックと出力ドライバがインストールされているか確認して下さい"/>
-		<string id="16993" value="全てのメディアファイル|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|再生リスト|*.asx;*.wax;*.m3u;*.wvx;*.wmx|オーディオファイル|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|ビデオファイル|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|CDオーディオトラック|*.cda|MIDIファイル|*.mid;*.rmi;*.midi|全てのファイル|*.*||"/>
 		<string id="16994" value="メディアファイル &quot;%s&quot; を読み込めませんでした"/>
 		<string id="16995" value="ファイルが破損しているか、再生に必要なコーデックがインストールされていない可能性があります"/>
 		<string id="16996" value="このファイルで再生できない部分があり、追加のコーデックをダウンロードする必要がある可能性があります"/>
 		<string id="16997" value="再生中のファイルはありません。 ライブラリ内のメディアファイルをダブルクリックすれば再生できます"/>
-		<string id="16998" value="S     H     A     R     E     A     Z     A           メ     デ     ィ     ア           シ     ス     テ     ム"/><!-- on one line -->
+		<string id="16998" value="S     H     A     R     E     A     Z     A           メ     デ     ィ     ア           シ     ス     テ     ム"/>
 		<string id="16999" value="再 生 リ ス ト"/>
 		<string id="17017" value="Send:"/>
 		<string id="17018" value="Welcome to Shareaza Chat!"/>
@@ -3248,6 +3283,7 @@
 		<string id="17477" value="%s とのBitTorrentカップリングは間違ったファイルで応答しました"/>
 		<string id="17478" value="%s とのBitTorrentカップリングは不明のファイルを要求しました"/>
 		<string id="17479" value="%s とのBitTorrentカップリングが確立しました(&quot;%s&quot;)"/>
+		<string id="17480" value="%s とのBitTorrentカップリングは不明のファイルを要求しました"/>
 		<string id="17481" value="BitTorrent定義ファイルを受信しました: &quot;%s&quot;"/>
 		<string id="17482" value="プリフェッチされたBitTorrentファイル &quot;%s&quot; を解析できません"/>
 		<string id="17483" value="&quot;%s&quot; 用のBitTorrentトラッカーでエラーが発生しました: &quot;%s&quot;"/>
@@ -3266,7 +3302,6 @@
 		<string id="17496" value="&quot;%s&quot; からBitTorrent共有ファイルへコピー中にエラーが発生しました"/>
 		<string id="17497" value="&quot;%s&quot; のシード化試行中に未知のエラーが発生しました"/>
 		<string id="17498" value="ファイル &quot;%s&quot; 内でエラーが検出されました"/>
-		<string id="17500" value="トラッカーが応答しませんでした。再アナウンスしています (%i / %i)"/>
 		<string id="17501" value="トラッカーと通信できませんでした"/>
 		<string id="17503" value="トラッカー接続失敗 - 次のトラッカーに接続します (%i / %i)"/>
 		<string id="17505" value="%s とのBitTorrent接続が破棄されました"/>
@@ -3279,12 +3314,6 @@
 		<string id="17514" value="Updating Bittorrent Downloads..."/>
 		<string id="17515" value="Converting Torrent:"/>
 		<string id="18496" value="名前領域を変更しました。このダウンロードをリネームして宜しいですか?"/>
-		<string id="18497" value="SHA1値を入力しましたが、この値は無効です。正確な値かどうか確認して再試行して下さい"/>
-		<string id="18498" value="ルートtiger-tree値を入力しましたが、この値は無効です。正確な値かどうか確認して再試行して下さい"/>
-		<string id="18499" value="eDonkey2000ハッシュ値を入力しましたが、この値は無効です。正確な値かどうか確認して再試行して下さい"/>
-		<string id="18500" value="現在このダウンロードと関連づけられているものとは異なるSHA1ハッシュ値を与えました。 本当にSHA1ハッシュを変更して宜しいですか?"/>
-		<string id="18501" value="現在このダウンロードと関連づけられているものとは異なるtiger-treeルートハッシュ値を与えました。 本当にtiger-treeルートハッシュを変更して宜しいですか?"/>
-		<string id="18502" value="現在このダウンロードと関連づけられているものとは異なるeDonkey2000ハッシュ値を与えました。 本当にeDonkey2000ハッシュを変更して宜しいですか?"/>
 		<string id="18503" value="現在の検証状況を消去してよろしいですか?　ダウンロードした全てのデータが未検証として扱われ、キャッシュされたハッシュツリーとハッシュセットはフラッシュされます"/>
 		<string id="18504" value="選択したダウンロードの全てのソースを消去してよろしいですか?"/>
 		<string id="18505" value="消去する有効な範囲を入力して下さい。 &quot;開始&quot; フィールドには消去する最初のバイト、&quot;終了&quot; フィールドには消去する最後のバイトを入力します"/>
@@ -3294,13 +3323,19 @@
 		<string id="18509" value="tiger-treeボリュームやeDonkeyハッシュセット、BitTorrentハッシュセットといった、どのような部分検証データもない為、このダウンロードを完了・再検証できません。 検証情報が無ければダウンロードを再検証できません"/>
 		<string id="18510" value="このダウンロードを完了済みとして再検証しますか?　ファイル全体が考慮され、Shareazaは検証に成功する部分を受け付け、検証に失敗する部分を再ダウンロードします"/>
 		<string id="18511" value="ファイルサイズの変更が行われました。 本当にこのダウンロードのファイルサイズを変更して宜しいですか?"/>
+		<string id="18512" value="このグループの全てのダウンロードをキャンセル/中止してよろしいですか?"/>
+		<string id="18513" value="eDonkey2000ハッシュ値を入力しましたが、この値は無効です。正確な値かどうか確認して再試行して下さい"/>
+		<string id="18514" value="現在このダウンロードと関連づけられているものとは異なるSHA1ハッシュ値を与えました。 本当にSHA1ハッシュを変更して宜しいですか?"/>
 		<string id="19000" value="リモートアクセスが無効になりました"/>
 		<string id="19001" value="ユーザー名とパスワードを入力しなければなりません"/>
 		<string id="19002" value="接続を受け付けることができません。URLが利用不能です"/>
+		<string id="19103" value="Welcome to Shareaza Chat!"/>
+		<string id="19104" value="Please respect others while using this service"/>
+		<string id="19105" value="IRC"/>
 		<string id="20000" value="利用可能なURNがありません"/>
 		<string id="20001" value="閉じる"/>
 		<string id="20002" value="/"/>
-		<string id="20003" value="インターフェースの変更を適用するにはShareazaの再起動が必要になります。\nあなたはShareazaを手動で再起動しなければなりません。今すぐShareazaを終了しますか?"/>
+		<string id="20003" value="Changing language requires application restart.\nRestart now?"/>
 		<string id="20005" value="いいえ"/>
 		<string id="20006" value="はい"/>
 		<string id="20007" value="自動"/>
@@ -3310,6 +3345,7 @@
 		<string id="20011" value="次へ(&amp;N)"/>
 		<string id="20012" value="Finish"/>
 		<string id="20013" value="全て"/>
+		<string id="20014" value="このオプション選択されたファイルに関する識別・共有情報が提供されるBitzi.comのサービスを使用します\n\nShareazaは選択したファイルのためにBitziデータベースにSHA1ハッシュコードを送信して問い合わせます。 プライバシーが心配ならBitzi.comプライバシーポリシーを参照できます\n\n続けて宜しいですか?"/>
 		<string id="20100" value="接続中"/>
 		<string id="20101" value="要求中"/>
 		<string id="20102" value="応答"/>
@@ -3348,13 +3384,6 @@
 		<string id="20135" value="次へ"/>
 		<string id="20136" value="Q"/>
 		<string id="20137" value="ソース"/>
-		<string id="20200" value="日曜"/>
-		<string id="20201" value="月曜"/>
-		<string id="20202" value="火曜"/>
-		<string id="20203" value="水曜"/>
-		<string id="20204" value="木曜"/>
-		<string id="20205" value="金曜"/>
-		<string id="20206" value="土曜"/>
 		<string id="20210" value="(評価無し)"/>
 		<string id="20211" value="偽物 / 破損"/>
 		<string id="20212" value="悪い"/>
@@ -3363,7 +3392,6 @@
 		<string id="20215" value="とても良い"/>
 		<string id="20216" value="素薔薇しい"/>
 		<string id="20217" value="Select the eDonkey/eMule temp folder:"/>
-		<!-- Column headers in Library Album View -->
 		<string id="20230" value="# (Track number)"/>
 		<string id="20231" value="Title"/>
 		<string id="20232" value="Length"/>
@@ -3380,9 +3408,28 @@
 		<string id="20243" value="Continue"/>
 		<string id="20244" value="&amp;Remember my selection next time"/>
 		<string id="20245" value="New Folder"/>
-		<string id="32825" value="Open my folder of completed Downloads"/>
-		<string id="32773" value="Check for new version"/>
-		<string id="61215" value="Activate this window"/>
+		<string id="20246" value="Command-line options:\n\n-tray : Disable startup splash screen and send application to tray\n-nosplash : Disable startup splash screen\n-nowarn : Disable alpha (daily builds) version warning dialog\n-wait : Wait for other application instance exit\n\nInterface modes:\n\n-basic : Start application in Basic interface mode\n-tabbed : Start application in Tabbed interface mode\n-windowed : Start application in Windowed interface mode\n\nSystem options:\n\n-RegServer : Register internal components for everyone\n-UnRegServer : Un-register internal components for everyone\n-RegServerPerUser : Register internal components for current user\n-UnRegServerPerUser : Un-register internal components for current user"/>
+		<string id="20247" value="Failed to load metadata schemas. Please reinstall application."/>
+		<string id="20248" value="共有フォルダが指定されていません。宜しいですかですか?"/>
+		<string id="20249" value="Off"/>
+		<string id="20250" value="Low"/>
+		<string id="20251" value="標準モード(_O)"/>
+		<string id="20252" value="High"/>
+		<string id="20253" value="Skin load error: %s. Element: %s"/>
+		<string id="20254" value="Loading skin: %s"/>
+		<string id="20255" value="Are you sure you want to remove all scheduled tasks? This cannot be undone."/>
+		<string id="20256" value="Shareaza検索"/>
+		<string id="20257" value="Bandwidth: Full Speed"/>
+		<string id="20258" value="Bandwidth: Reduced Speed"/>
+		<string id="20259" value="Bandwidth: Stop"/>
+		<string id="20260" value="System: Exit Shareaza"/>
+		<string id="20261" value="System: Disconnect Dial-up Connection"/>
+		<string id="20262" value="System: Turn Off the Computer"/>
+		<string id="20263" value="有効"/>
+		<string id="20264" value="無効"/>
+		<string id="20265" value="Done"/>
+		<string id="20266" value="Waiting..."/>
+		<string id="20267" value="No Tasks Currently Scheduled"/>
 	</strings>
 	<!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 	<!-- Don't edit dialogs manualy! Use DialogScan feature instead -->
@@ -3514,7 +3561,7 @@
 			<control caption="ポート:"/>
 			<control/>
 		</dialog>
-		<dialog name="CWebSettingsPage" cookie="BuStBuBuBuBuBuBuBuCoBuBuSt" caption="ウェブ">
+		<dialog name="CWebSettingsPage" cookie="BuStBuBuBuBuBuBuBuBuCoBuBuSt" caption="ウェブ">
 			<control caption="ピア・ツー・ピアリンク処理(_P):"/>
 			<control caption="これらの種類のリンクをShareazaを使って開く:"/>
 			<control caption="Magnet ( magnet: )"/>
@@ -3522,6 +3569,7 @@
 			<control caption="eDonkey2000 ( ed2k: )"/>
 			<control caption="Piolet ( mp2p: )"/>
 			<control caption="BitTorrent ( .torrent )"/>
+			<control caption="DC++ ( dchub: )"/>
 			<control caption="ダウンロードマネージャ(_D):"/>
 			<control caption="全てのウェブダウンロードにShareazaを使用する:"/>
 			<control/>
@@ -3559,12 +3607,12 @@
 			<control/>
 			<control/>
 		</dialog>
-		<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStCoStCoBuBu" caption="転送">
+		<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuEdBu" caption="転送">
 			<control caption="完了ファイルの保存先(_C):"/>
 			<control/>
 			<control/>
-			<control caption="未完了ファイルの保存先(_I):"/>
-			<control/>
+			<control caption="Scan every completed file with AntiVirus"/>
+			<control caption="プリセット選択:"/>
 			<control/>
 			<control caption="ダウンロード数(_N):"/>
 			<control caption="最大ファイル数:"/>
@@ -3581,8 +3629,10 @@
 			<control/>
 			<control caption="最大キュー数:"/>
 			<control/>
-			<control/>
 			<control caption="接続済みのネットワークでしかアップロード・ダウンロードしない"/>
+			<control caption="未完了ファイルの保存先(_I):"/>
+			<control/>
+			<control/>
 		</dialog>
 		<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStCoStCoBuSyBuBuBuSt" caption="アップロード">
 			<control caption="オプション(_O):"/>
@@ -3613,48 +3663,11 @@
 			<control caption="ShareazaリモートアクセスはあなたがPCの前を離れていても、ウェブブラウザを使用してShareazaを遠隔操作することができるようにします。この機能を利用するには(ルータを適切に設定する等して)入力接続を受け付けることができるようにする必要があります"/>
 			<control caption="有効(_E):"/>
 			<control caption="Shareazaリモートアクセスを有効にする:"/>
-			<control caption="URL"/>
+			<control/>
 			<control caption="認証(_C):"/>
 			<control caption="ユーザ名:"/>
 			<control/>
 			<control caption="パスワード:"/>
-			<control/>
-		</dialog>
-		<dialog name="CScheduleTaskDlg" cookie="BuBuBuBuSySyBuBuBuBuBuBuBuBuCoEdmsEdmsEdmsBuBuEdBuStStStStStStStBuBu" caption="Schedule Item">
-			<control caption="OK"/>
-			<control caption="キャンセル"/>
-			<control caption="Only once"/>
-			<control caption="On specific day(s) of week"/>
-			<control/>
-			<control/>
-			<control caption="日曜"/>
-			<control caption="月曜"/>
-			<control caption="火曜"/>
-			<control caption="水曜"/>
-			<control caption="木曜"/>
-			<control caption=" Friday"/>
-			<control caption="土曜"/>
-			<control caption="全て"/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control caption=" _Toggle bandwidth independently"/>
-			<control caption=" _Limit network to Gnutella2"/>
-			<control/>
-			<control caption="Make this event active"/>
-			<control caption="Please select a date:"/>
-			<control caption="Please select a time:"/>
-			<control caption="Select the event type:"/>
-			<control caption="Description: (optional)"/>
-			<control caption="% of _bandwidth under limit"/>
-			<control caption="% of _download under limit"/>
-			<control caption="% of _upload under limit"/>
-			<control caption="Days Of Week"/>
-			<control caption="Run this event"/>
 			<control/>
 		</dialog>
 		<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="ネットワーク">
@@ -4529,6 +4542,25 @@
 			<control caption="キャンセル"/>
 			<control caption="Enter channel you want to add:|Enter kick/ban reason:"/>
 		</dialog>
+		<dialog name="CScheduleTaskPage" cookie="StCoBuEdmsEdmsBuBuBuBuBuStStStBuBu" caption="動作">
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control caption="Gnutella1"/>
+			<control caption="Gnutella2"/>
+			<control caption="eDonkey2000"/>
+			<control caption="DC++"/>
+			<control caption="BitTorrent"/>
+			<control caption="Select the event type:"/>
+			<control caption="% of _download under limit"/>
+			<control caption="% of _upload under limit"/>
+			<control caption="ネットワーク"/>
+			<control caption="帯域幅"/>
+		</dialog>
 	</dialogs>
 	<!-- Columns Definitions -->
 	<listColumns>
@@ -4667,6 +4699,14 @@
 			<column from="Rating" to="評価"/>
 			<column from="Comments" to="コメント"/>
 			<column from="Order" to="順番"/>
+		</list>
+		<list name="CSchedulerWnd">
+			<column from="Action" to="動作"/>
+			<column from="Trigger" to="TigerTree"/>
+			<column from="Next Run" to="次へ"/>
+			<column from="Active" to="有効"/>
+			<column from="Status" to="状態"/>
+			<column from="Description" to="説明"/>
 		</list>
 	</listColumns>
 </skin>

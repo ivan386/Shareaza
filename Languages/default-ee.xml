@@ -287,9 +287,9 @@
 			<button id="ID_MEDIA_STOP" text="Stop"/>
 			<separator/>
 			<label text="Edenemine:" tip="Mängi kohta meedia failis"/>
-			<control id="IDC_MEDIA_POSITION" width="190" height="22"/>
+			<control id="ID_MEDIA_POSITION" width="190" height="22"/>
 			<label text="Heli:" tip="Muuda helitugevust"/>
-			<control id="IDC_MEDIA_VOLUME" width="50" height="22"/>
+			<control id="ID_MEDIA_VOLUME" width="50" height="22"/>
 			<separator/>
 			<button id="ID_MEDIA_OPEN" text="Ava Fail"/>
 			<rightAlign/>
@@ -304,11 +304,11 @@
 			<button id="ID_MEDIA_STOP" text="Stop"/>
 			<separator/>
 			<label text="Edenemine:" tip="Mängi kohta meedia failis"/>
-			<control id="IDC_MEDIA_POSITION" width="190" height="22"/>
+			<control id="ID_MEDIA_POSITION" width="190" height="22"/>
 			<label text="Kiirus:" tip="Muuda heli kiirust"/>
-			<control id="IDC_MEDIA_SPEED" width="40" height="22"/>
+			<control id="ID_MEDIA_SPEED" width="40" height="22"/>
 			<label text="Heli:" tip="Muuda helitugevust"/>
-			<control id="IDC_MEDIA_VOLUME" width="50" height="22"/>
+			<control id="ID_MEDIA_VOLUME" width="50" height="22"/>
 			<separator/>
 			<button id="ID_MEDIA_OPEN" text="Ava Fail"/>
 			<separator/>
@@ -343,6 +343,7 @@
 			<button id="ID_NETWORK_G2" text="Gnutella2"/>
 			<button id="ID_NETWORK_G1" text="Gnutella1"/>
 			<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
+			<button id="ID_NETWORK_DC" text="DC++"/>
 			<separator/>
 			<button id="ID_NEIGHBOURS_SETTINGS" text="Seaded"/>
 		</toolbar>
@@ -357,6 +358,7 @@
 			<button id="ID_NETWORK_G2" text="Gnutella2"/>
 			<button id="ID_NETWORK_G1" text="Gnutella1"/>
 			<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
+			<button id="ID_NETWORK_DC" text="DC++"/>
 			<separator/>
 			<button id="ID_NEIGHBOURS_SETTINGS" text="Seaded"/>
 		</toolbar>
@@ -385,9 +387,6 @@
 			<button id="ID_SCHEDULER_REMOVE" text="Remove Task"/>
 			<separator/>
 			<button id="ID_SCHEDULER_REMOVE_ALL" text="Remove All"/>
-			<rightAlign/>
-			<button id="ID_SCHEDULER_IMPORT" text="Import List"/>
-			<button id="ID_SCHEDULER_EXPORT" text="Export List"/>
 		</toolbar>
 		<!-- HIT MONITOR WINDOW -->
 		<toolbar name="CHitMonitorWnd">
@@ -418,6 +417,7 @@
 			<button id="ID_HOSTCACHE_ED2K_CACHE" text="eDonkey Cache"/>
 			<button id="ID_HOSTCACHE_BT_CACHE" text="BitTorrent Cache"/>
 			<button id="ID_HOSTCACHE_KAD_CACHE" text="Kademlia Cache"/>
+			<button id="ID_HOSTCACHE_DC_CACHE" text="DC++ Cache"/>
 		</toolbar>
 		<!-- PRIVATE CHAT FRAME -->
 		<toolbar name="CPrivateChatFrame">
@@ -428,7 +428,6 @@
 			<button id="ID_CHAT_EMOTICONS"/>
 			<separator/>
 			<button id="ID_CHAT_BROWSE" text="Sirvi kasutajat"/>
-			<!-- <button id="ID_CHAT_SEND_FILE" text="Send File"/> -->
 			<button id="ID_CHAT_PRIORITY" text="Sea esmaseks"/>
 			<separator/>
 			<button id="ID_CHAT_CONNECT" text="Ühenda" visible="false"/>
@@ -496,6 +495,7 @@
 					<item id="ID_NETWORK_G2" text="Ühenda _Gnutella2"/>
 					<item id="ID_NETWORK_G1" text="Ühenda Gnutella_1"/>
 					<item id="ID_NETWORK_ED2K" text="Ühenda _eDonkey2000"/>
+					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_AUTO_CLOSE" text="Välju _Ülekande lõpus"/>
@@ -552,10 +552,10 @@
 					<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
 					<item id="ID_HELP_WEB_6" text="Shareaza S_kin Site"/>
 					<!-- 
-				<item id="ID_HELP_UPDATE" text="Latest news"/>
-				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
-				-->
+					<item id="ID_HELP_UPDATE" text="Latest news"/>
+					<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
+					<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+					-->
 				</menu>
 				<separator/>
 				<item id="ID_HELP_VERSION_CHECK" text="Version Check"/>
@@ -572,6 +572,7 @@
 					<item id="ID_NETWORK_G2" text="Ühenda _Gnutella2"/>
 					<item id="ID_NETWORK_G1" text="Ühenda Gnutella_1"/>
 					<item id="ID_NETWORK_ED2K" text="Ühenda _eDonkey2000"/>
+					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_CONNECT_TO" text="Ühenda _Aadressil..." shortcut="Ctrl+T"/>
@@ -621,7 +622,7 @@
 			<menu text="_Tööriistad">
 				<item id="ID_LIBRARY_FOLDERS" text="Jaga _Faile..."/>
 				<item id="ID_TOOLS_DOWNLOAD" text="_Tõmba Fail/Torrent..."/>
-				<item id="IDC_IMPORT_DOWNLOADS" text="_Import eMule partial downloads..."/>
+				<item id="ID_IMPORT_DOWNLOADS" text="_Import eMule partial downloads..."/>
 				<item id="ID_OPEN_DOWNLOADS_FOLDER" text="_Open my folder of completed Downloads"/>
 				<separator/>
 				<item id="ID_TOOLS_SKIN" text="Vali _Nahk..."/>
@@ -657,10 +658,10 @@
 					<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
 					<item id="ID_HELP_WEB_6" text="Shareaza S_kin Site"/>
 					<!-- 
-				<item id="ID_HELP_UPDATE" text="Latest news"/>
-				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
-				-->
+					<item id="ID_HELP_UPDATE" text="Latest news"/>
+					<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
+					<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+					-->
 				</menu>
 				<separator/>
 				<item id="ID_HELP_VERSION_CHECK" text="Version Check"/>
@@ -683,6 +684,7 @@
 					<item id="ID_NETWORK_G2" text="Ühenda _Gnutella2"/>
 					<item id="ID_NETWORK_G1" text="Ühenda Gnutella_1"/>
 					<item id="ID_NETWORK_ED2K" text="Ühenda _eDonkey2000"/>
+					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_AUTO_CLOSE" text="Välju _Ülekande Lõpus"/>
@@ -714,7 +716,7 @@
 			<menu text="_Tööriistad">
 				<item id="ID_LIBRARY_FOLDERS" text="Jaga _Faile..."/>
 				<item id="ID_TOOLS_DOWNLOAD" text="_Tõmba Fail/Torrent..."/>
-				<item id="IDC_IMPORT_DOWNLOADS" text="_Import eMule partial downloads..."/>
+				<item id="ID_IMPORT_DOWNLOADS" text="_Import eMule partial downloads..."/>
 				<item id="ID_OPEN_DOWNLOADS_FOLDER" text="_Open my folder of completed Downloads"/>
 				<separator/>
 				<item id="ID_TOOLS_SKIN" text="Vali _Nahk..."/>
@@ -754,10 +756,10 @@
 					<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
 					<item id="ID_HELP_WEB_6" text="Shareaza S_kin Site"/>
 					<!-- 
-				<item id="ID_HELP_UPDATE" text="Latest news"/>
-				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
-				-->
+					<item id="ID_HELP_UPDATE" text="Latest news"/>
+					<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
+					<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+					-->
 				</menu>
 				<separator/>
 				<item id="ID_HELP_VERSION_CHECK" text="Version Check"/>
@@ -905,6 +907,7 @@
 				<item id="ID_HOSTCACHE_ED2K_CACHE" text="_eDonkey Servers"/>
 				<item id="ID_HOSTCACHE_BT_CACHE" text="_BitTorrent Cache"/>
 				<item id="ID_HOSTCACHE_KAD_CACHE" text="_Kademlia Cache"/>
+				<item id="ID_HOSTCACHE_DC_CACHE" text="_DC++ Cache"/>
 			</menu>
 			<separator/>
 			<item id="ID_HOSTCACHE_IMPORT" text="_Impordi MET Fail..."/>
@@ -1190,14 +1193,14 @@
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="Faili _Omadused"/>
 		</menu>
 		<menu name="CLibraryTree.Virtual.Basic">
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="_Mängi Albumit"/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Mängi Albumit"/>
 			<item id="ID_LIBRARY_FOLDER_DELETE" text="_Kustuta"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="Faili _Omadused"/>
 			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="_Albumi Omadused"/>
 		</menu>
 		<menu name="CLibraryTree.Virtual">
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="_Mängi Albumit"/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Mängi Albumit"/>
 			<item id="ID_LIBRARY_FOLDER_DELETE" text="_Kustuta"/>
 			<separator/>
 			<item id="ID_LIBRARY_REBUILD" text="_Taasloo sisu"/>
@@ -1286,7 +1289,7 @@
 		<menu name="CLibraryFileView.Virtual.Basic">
 			<item id="ID_LIBRARY_LAUNCH" text="_Ava"/>
 			<item id="ID_LIBRARY_ENQUEUE" text="Lisa Pla_ylisti"/>
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="_Mängi Albumit"/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Mängi Albumit"/>
 			<separator/>
 			<item id="ID_LIBRARY_SHARED_FILE" text="_Jagatud"/>
 			<separator/>
@@ -1504,6 +1507,7 @@
 				<item id="ID_NETWORK_G2" text="_Gnutella2"/>
 				<item id="ID_NETWORK_G1" text="Gnutella_1"/>
 				<item id="ID_NETWORK_ED2K" text="_eDonkey"/>
+				<item id="ID_NETWORK_DC" text="_DC++"/>
 			</menu>
 			<menu text="_Monitor">
 				<item id="ID_NEIGHBOURS_VIEW_ALL" text="View _All Traffic"/>
@@ -1564,9 +1568,6 @@
 			<item id="ID_SCHEDULER_EDIT" text="_Edit"/>
 			<separator/>
 			<item id="ID_SCHEDULER_REMOVE_ALL" text="Remove Al_l"/>
-			<separator/>
-			<item id="ID_SCHEDULER_IMPORT" text="_Impordi..."/>
-			<item id="ID_SCHEDULER_EXPORT" text="E_kspordi..."/>
 		</menu>
 		<!-- DISCOVERY SERVICES WINDOW -->
 		<menu name="CDiscoveryWnd">
@@ -1590,7 +1591,6 @@
 			<item id="ID_CHAT_DISCONNECT" text="_Katkesta ühendus"/>
 			<separator/>
 			<item id="ID_CHAT_BROWSE" text="_Sirvi Kasutajat"/>
-			<!-- <item id="ID_CHAT_SEND_FILE" text="_Send File..."/> -->
 			<item id="ID_CHAT_PRIORITY" text="Anna _Eelistusi"/>
 			<separator/>
 			<menu text="_Format">
@@ -1698,8 +1698,7 @@
 				<icon res="252" width="32" height="32"/><gap size="8"/>
 				<heading align="middle">K O H A N D A   S H A R E A Z A T</heading>
 				<newline gap="8" indent="42"/>
-				<text colour="FF0000">Shareaza has detected that you are behind a NAT router or firewall,
-			and are unable to receive connections from the Internet.  </text>
+				<text colour="FF0000">To open the folder with your downloads</text>
 				<text colour="FF0000" format="b"> - Muuda Shareaza välimust</text>
 				<newline gap="6"/>
 				<link target="raza:command:ID_HELP_ROUTER">Seadete Abiline</link>
@@ -1844,6 +1843,12 @@
 			<text group="32" align="middle">Ühendan...</text>
 			<text group="33" align="middle">Ühendatud</text>
 			<newline group="30" gap="2"/>
+			<icon group="80" command="ID_NETWORK_DC"/><gap group="80" size="4"/>
+			<text group="80" align="middle" format="b">DC++:</text>
+			<text group="81" align="middle">Ühenduseta</text>
+			<text group="82" align="middle">Ühendan...</text>
+			<text group="83" align="middle">Ühendatud</text>
+			<newline group="80" gap="2"/>
 			<group id="2">
 				<para align="center">
 					<newline gap="4"/>
@@ -2067,13 +2072,13 @@
 		Lihtsalt vali laadimine ja vali sama käsklus uuesti.</text>
 			<newline gap="16"/>
 			<text>You can also use this command to get help information on a specific download.
-		Simply select a download and choose this Help command again.</text>
+			Simply select a download and choose this Help command again.</text>
 		</document>
 		<document name="DownloadHelp.Seeding">
 			<text format="b">This Torrent is Seeding</text>
 			<newline gap="8"/>
 			<text>Shareaza has verified this complete download, and is actively sharing it
-		with other downloaders through BitTorrent. Please share at least 100%.</text>
+			with other downloaders through BitTorrent. Please share at least 100%.</text>
 		</document>
 		<document name="DownloadHelp.Completed">
 			<text format="b">See laadimine on lõpetatud</text>
@@ -2312,6 +2317,19 @@
 	</documents>
 	<!-- Localised Command Tip Text. The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
 	<commandTips>
+		<tip id="AFX_IDS_APP_TITLE" message="Shareaza"/>
+		<tip id="AFX_IDS_IDLEMESSAGE" message="Valmis..."/>
+		<tip id="AFX_IDS_MDICHILD" message="Activate this window"/>
+		<tip id="AFX_IDS_PREVIEW_CLOSE" message="Close print preview mode" tip="Eelvaade"/>
+		<tip id="AFX_IDS_SCCLOSE" message="Suurenda aktiivne aken."/>
+		<tip id="AFX_IDS_SCMAXIMIZE" message="Suurenda aktiivne aken."/>
+		<tip id="AFX_IDS_SCMINIMIZE" message="Reduce the window to an icon"/>
+		<tip id="AFX_IDS_SCMOVE" message="Change the window position"/>
+		<tip id="AFX_IDS_SCNEXTWINDOW" message="Switch to the next document window"/>
+		<tip id="AFX_IDS_SCPREVWINDOW" message="Switch to the previous document window"/>
+		<tip id="AFX_IDS_SCRESTORE" message="Restore the window to normal size"/>
+		<tip id="AFX_IDS_SCSIZE" message="Change the window size"/>
+		<tip id="AFX_IDS_SCTASKLIST" message="Activate Task List"/>
 		<tip id="ID_BROWSE_FILES" message="Sirvi kasutaja jagatud faile"/>
 		<tip id="ID_BROWSE_LAUNCH" message="Sirvi kasutaja profiili ja faile."/>
 		<tip id="ID_BROWSE_PROFILE" message="Vaata kasutaja profiili."/>
@@ -2326,7 +2344,6 @@
 		<tip id="ID_CHAT_EMOTICONS" message="Sisesta emotikon."/>
 		<tip id="ID_CHAT_ITALIC" message="Kinnita kaldkiri (Ctrl+I)"/>
 		<tip id="ID_CHAT_PRIORITY" message="Anna kasutajale eesõigus."/>
-		<!-- <tip id="ID_CHAT_SEND_FILE" message="Send a file to the user..."/> -->
 		<tip id="ID_CHAT_TIMESTAMP" message="Näita sõnumite vastuvõtuaega."/>
 		<tip id="ID_CHAT_UNDERLINE" message="Kinnita alakriips (Ctrl+U)"/>
 		<tip id="ID_CHILD_CLOSE" message="Sulge aken."/>
@@ -2335,6 +2352,7 @@
 		<tip id="ID_CHILD_RESTORE" message="Taasta valitud aken."/>
 		<tip id="ID_DISCOVERY_ADD" message="Lisa uus serveri aadress..."/>
 		<tip id="ID_DISCOVERY_ADVERTISE" message="Levita valitud GWebCache serverit juhuslikule GWebCache serverile."/>
+		<tip id="ID_DISCOVERY_BLOCKED" message="Näita GWebCache servereid selles aknas."/>
 		<tip id="ID_DISCOVERY_BROWSE" message="Sirvi valitud GWebCache serveri statistikat."/>
 		<tip id="ID_DISCOVERY_EDIT" message="Vaata valitud serveri omadusi."/>
 		<tip id="ID_DISCOVERY_GNUTELLA" message="Näita bootstrap teenuseid serveri aknas."/>
@@ -2386,13 +2404,14 @@
 		<tip id="ID_HELP_ABOUT" message="Kuva Shareaza dialoog aken..."/>
 		<tip id="ID_HELP_CODEC" message="Koodekite ja video probleemide kohta käiv abi."/>
 		<tip id="ID_HELP_FAQ" message="Vaata Shareaza Korduvaid küsimusi."/>
-		<tip id="ID_HELP_ROUTER" message="Leia abi ruuteri ja tulemüüri seadistamiseks."/>
 		<tip id="ID_HELP_FORUMS" message="Külasta Shareaza Foorumit."/>
 		<tip id="ID_HELP_GUIDE" message="Külasta Shareaza Kasutusõpetust."/>
 		<tip id="ID_HELP_HOMEPAGE" message="Külasta Shareaza kodulehte."/>
+		<tip id="ID_HELP_ROUTER" message="Leia abi ruuteri ja tulemüüri seadistamiseks."/>
 		<tip id="ID_HELP_SECURITY" message="Abi arvuti kaitsmiseks pahade programmide eest."/>
-		<tip id="ID_HELP_UPDATE" message="Kontrolli uuendusi."/>
 		<tip id="ID_HELP_TEST" message="Run the connection test."/>
+		<tip id="ID_HELP_UPDATE" message="Kontrolli uuendusi."/>
+		<tip id="ID_HELP_VERSION_CHECK" message="Check for new version"/>
 		<tip id="ID_HELP_WEB_1" message="Mine kodulehele"/>
 		<tip id="ID_HELP_WEB_2" message="Mine kodulehele"/>
 		<tip id="ID_HELP_WEB_3" message="Mine kodulehele"/>
@@ -2402,7 +2421,9 @@
 		<tip id="ID_HITMONITOR_CLEAR" message="Puhasta puhvri aken."/>
 		<tip id="ID_HITMONITOR_PAUSE" message="Peata jälgimine."/>
 		<tip id="ID_HITMONITOR_SEARCH" message="Otsi võrgust valitud terminit."/>
+		<tip id="ID_HOSTCACHE_BT_CACHE" message="Näita BitTorrenti üleslaadimisi."/>
 		<tip id="ID_HOSTCACHE_CONNECT" message="Ühenda valitud serveriga."/>
+		<tip id="ID_HOSTCACHE_DC_CACHE" message="Show DC++ cached hubs."/>
 		<tip id="ID_HOSTCACHE_DISCONNECT" message="Katkesta ühendus valitud serveriga."/>
 		<tip id="ID_HOSTCACHE_ED2K_CACHE" message="Näita eDonkey2000 servereid."/>
 		<tip id="ID_HOSTCACHE_ED2K_DOWNLOAD" message="Tõmba eDonkey2000 &quot;server.met&quot; fail..."/>
@@ -2410,8 +2431,10 @@
 		<tip id="ID_HOSTCACHE_G2_CACHE" message="Näita Gnutella2 cached servereid."/>
 		<tip id="ID_HOSTCACHE_G2_HORIZON" message="Näita Gnutella2 horizon hube."/>
 		<tip id="ID_HOSTCACHE_IMPORT" message="Impordi tuntud serverite nimekiri, nagu &quot;server.met&quot; fail..."/>
+		<tip id="ID_HOSTCACHE_KAD_CACHE" message="Näita Gnutella1 cached servereid."/>
 		<tip id="ID_HOSTCACHE_PRIORITY" message="Proovi kõigepealt selle serveriga ühendada."/>
 		<tip id="ID_HOSTCACHE_REMOVE" message="Eemalda valitud serverid nimekirjast."/>
+		<tip id="ID_IMPORT_DOWNLOADS" message="Jaga uusi poolikuid allalaadimisi"/>
 		<tip id="ID_LIBRARY_ADD" message="Lisa raamatukokku uus kaust..."/>
 		<tip id="ID_LIBRARY_ALBUM_DELETE" message="Kustuta valitud Albumi kaust."/>
 		<tip id="ID_LIBRARY_ALBUM_OPEN" message="Ava valitud Albumi kaust."/>
@@ -2441,6 +2464,7 @@
 		<tip id="ID_LIBRARY_REBUILD" message="Taasloo andmebaas ja failiosad valitud kaustas."/>
 		<tip id="ID_LIBRARY_REBUILD_ANSI" message="Taasloo andmebaas kasutades teist keelt."/>
 		<tip id="ID_LIBRARY_REFRESH" message="Värskenda raamatukogu vaadet."/>
+		<tip id="ID_LIBRARY_REFRESH_METADATA" message="_Refresh Metadata"/>
 		<tip id="ID_LIBRARY_REMOVE" message="Eemalda valitud jagatud kaustad."/>
 		<tip id="ID_LIBRARY_RENAME" message="Nimeta valitud failid ümber."/>
 		<tip id="ID_LIBRARY_SCAN" message="Skänni valitud kausta või faili muutusi."/>
@@ -2478,6 +2502,7 @@
 		<tip id="ID_MEDIA_PAUSE" message="Peata meedia faili taasesitus." tip="Paus"/>
 		<tip id="ID_MEDIA_PLAY" message="Alusta meedia faili taasesitust." tip="Mängi"/>
 		<tip id="ID_MEDIA_PLAYLIST" message="Näita või peida playlisti toimetaja."/>
+		<tip id="ID_MEDIA_POSITION" message="Mängi kohta meedia failis" tip="Seek"/>
 		<tip id="ID_MEDIA_PREVIOUS" message="Hüppa tagasi, eelmisele failile playlistis ." tip="Eelmine"/>
 		<tip id="ID_MEDIA_PROPERTIES" message="View and edit the properties of the selected files."/>
 		<tip id="ID_MEDIA_RANDOM" message="Juhuesitus käesolevast playlistis."/>
@@ -2492,14 +2517,15 @@
 		<tip id="ID_MEDIA_SIZE_ONE" message="Näita pilti originaal suuruses."/>
 		<tip id="ID_MEDIA_SIZE_THREE" message="Näita pilti kolm korda suurmana originaalist."/>
 		<tip id="ID_MEDIA_SIZE_TWO" message="Näita pilt topelt suuruses."/>
+		<tip id="ID_MEDIA_SPEED" message="Muuda heli kiirust" tip="Kiirus"/>
 		<tip id="ID_MEDIA_STATUS" message="Näita või peida meedia oleku riba."/>
 		<tip id="ID_MEDIA_STOP" message="Peata meedia." tip="Stop"/>
 		<tip id="ID_MEDIA_VIS" message="Vali audio-video plugin..."/>
+		<tip id="ID_MEDIA_VOLUME" message="Muuda helitugevust" tip="Volume"/>
 		<tip id="ID_MEDIA_ZOOM" message="Muuda pildi suurenduse ja kuvasuhte seadeid."/>
-		<tip id="IDC_MEDIA_POSITION" value="Seek to a position in the media file." tip="Seek"/>
-		<tip id="IDC_MEDIA_SPEED" value="Adjust the speed of the media file." tip="Kiirus"/>
-		<tip id="IDC_MEDIA_VOLUME" value="Adjust the audio volume." tip="Volume"/>
 		<tip id="ID_MONITOR_CLOSE" message="Sulge jälgimise aken."/>
+		<tip id="ID_MUSICBRAINZ_ALBUMS" message="Look at all albums for this artist."/>
+		<tip id="ID_MUSICBRAINZ_MATCHES" message="Search for other copies of the selected file."/>
 		<tip id="ID_NEIGHBOURS_CHAT" message="Ava vestluse aken valitud kasutajaga."/>
 		<tip id="ID_NEIGHBOURS_COPY" message="Kopeeri URI ligipääsuks valitud serverile."/>
 		<tip id="ID_NEIGHBOURS_DISCONNECT" message="Katkesta valitud naabritega ühendus."/>
@@ -2512,12 +2538,22 @@
 		<tip id="ID_NETWORK_CHAT_TO" message="Open a chat session with a user..."/>
 		<tip id="ID_NETWORK_CONNECT" message="Ühenda võrkku."/>
 		<tip id="ID_NETWORK_CONNECT_TO" message="Ühenda serveriga käsitsi..."/>
+		<tip id="ID_NETWORK_DC" message="Connect to the DC++ network."/>
 		<tip id="ID_NETWORK_DISCONNECT" message="Katkesta võrguga ühendus."/>
 		<tip id="ID_NETWORK_ED2K" message="Ühenda eDonkey2000 võrgustikku."/>
 		<tip id="ID_NETWORK_EXIT" message="Välju Shareazast"/>
 		<tip id="ID_NETWORK_G1" message="Ühendu algsesse Gnutella võrkku."/>
 		<tip id="ID_NETWORK_G2" message="Ühendu Gnutella2 võrkku (väga soovitatav)."/>
 		<tip id="ID_NETWORK_SEARCH" message="Alusta võrgus uut otsingut..."/>
+		<tip id="ID_NEXT_PANE" message="Switch to the next window pane" tip="Järgmine reas"/>
+		<tip id="ID_OPEN_DOWNLOADS_FOLDER" message="Open my folder of completed Downloads"/>
+		<tip id="ID_PREV_PANE" message="Hüppa tagasi, eelmisele failile playlistis ." tip="Eelmine"/>
+		<tip id="ID_SCHEDULER_ACTIVATE" message="Eemalda nimekirjast valitud üleslaadimised."/>
+		<tip id="ID_SCHEDULER_ADD" message="Adds a new task to scheduler list."/>
+		<tip id="ID_SCHEDULER_DEACTIVATE" message="Ühenda võrkku."/>
+		<tip id="ID_SCHEDULER_EDIT" message="Muuda valitud turvareeglit..."/>
+		<tip id="ID_SCHEDULER_REMOVE" message="Eemalda nimekirjast valitud allalaadimised."/>
+		<tip id="ID_SCHEDULER_REMOVE_ALL" message="Removes all scheduled tasks."/>
 		<tip id="ID_SEARCH_CHAT" message="Ava vestluse aken valitud kasutajaga."/>
 		<tip id="ID_SEARCH_CLEAR" message="Puhasta otsingu tulemused."/>
 		<tip id="ID_SEARCH_COLUMNS" message="Vali andmebaasi info, mida kuvada..."/>
@@ -2549,9 +2585,22 @@
 		<tip id="ID_SECURITY_POLICY_DENY" message="Keela vaikimisi reeglina kõik serverid."/>
 		<tip id="ID_SECURITY_REMOVE" message="Eemalda valitud turvareegel."/>
 		<tip id="ID_SECURITY_RESET" message="Nulli löögilugeja valitud reeglil."/>
+		<tip id="ID_SHAREMONKEY_BUY" message="Buy it and support the author"/>
+		<tip id="ID_SHAREMONKEY_COMPARE" message="Compare prices in different stores"/>
+		<tip id="ID_SHAREMONKEY_DOWNLOAD" message="_Otsi Seda"/>
+		<tip id="ID_SHAREMONKEY_NEXT" message="Go to the next match"/>
+		<tip id="ID_SHAREMONKEY_PREVIOUS" message="Go to the previous match"/>
+		<tip id="ID_SHAREMONKEY_PRICES" message="Hüppa tagasi, eelmisele failile playlistis ."/>
+		<tip id="ID_SHAREMONKEY_SAVE" message="Näita seda faili Raamatukogus"/>
 		<tip id="ID_SYSTEM_CLEAR" message="Puhasta oleku logi."/>
+		<tip id="ID_SYSTEM_COPY" message="Copy selected line(s) of status log."/>
 		<tip id="ID_SYSTEM_TIMESTAMP" message="Salvesta iga rea jaoks ajamärk."/>
 		<tip id="ID_SYSTEM_VERBOSE" message="Kuva detailselt süsteemi tegevuste logi."/>
+		<tip id="ID_SYSTEM_VERBOSE_DEBUG" message="Kuva legend."/>
+		<tip id="ID_SYSTEM_VERBOSE_ERROR" message="Kuva legend."/>
+		<tip id="ID_SYSTEM_VERBOSE_INFO" message="Kuva baasruudustik."/>
+		<tip id="ID_SYSTEM_VERBOSE_NOTICE" message="Display notices and above."/>
+		<tip id="ID_SYSTEM_VERBOSE_WARNING" message="Kuva baasruudustik."/>
 		<tip id="ID_TAB_CONNECT" message="Ühenda või katkesta võrguga ühendus."/>
 		<tip id="ID_TAB_HOME" message="Mine Shareaza Esilehele"/>
 		<tip id="ID_TAB_IRC" message="Show the IRC Chat window."/>
@@ -2602,6 +2651,7 @@
 		<tip id="ID_VIEW_NEIGHBOURS" message="Näita või peida Naabrite aken."/>
 		<tip id="ID_VIEW_PACKETS" message="Näita või peida Pakettide aken."/>
 		<tip id="ID_VIEW_RESULTS_MONITOR" message="Näita või peida Tõmbamiste aken."/>
+		<tip id="ID_VIEW_SCHEDULER" message="Näita või peida Turvalisuse aken."/>
 		<tip id="ID_VIEW_SEARCH_MONITOR" message="Näita või peida Otsingujälgimis aken."/>
 		<tip id="ID_VIEW_SECURITY" message="Näita või peida Turvalisuse aken."/>
 		<tip id="ID_VIEW_SYSTEM" message="Näita või peida Süsteemi aken."/>
@@ -2609,6 +2659,10 @@
 		<tip id="ID_VIEW_TRAFFIC" message="Näita või peida Graafika aken."/>
 		<tip id="ID_VIEW_UPLOADS" message="SNäita või peida Üleslaadimiste aken."/>
 		<tip id="ID_VIEW_WINDOWED" message="Kasuta Shareaza Akende vaadet."/>
+		<tip id="ID_WEBSERVICES_LIST" message="Choose the web service to get more information about the selected file."/>
+		<tip id="ID_WEBSERVICES_MUSICBRAINZ" message="Search for the same artist songs using MusicBrainz service."/>
+		<tip id="ID_WEBSERVICES_SHAREMONKEY" message="Search for the file infomation using ShareMonkey service."/>
+		<tip id="ID_WINDOW_ARRANGE" message="Arrange icons at the bottom of the window" tip="Arrange Icons"/>
 		<tip id="ID_WINDOW_CASCADE" message="Laienda kõik avatud aknad tervele ekraanile."/>
 		<tip id="ID_WINDOW_MONITOR" message="Näita või peida liikluse jälgijat."/>
 		<tip id="ID_WINDOW_NAVBAR" message="Näita või peida navigatsiooniriba."/>
@@ -2617,8 +2671,6 @@
 		<tip id="ID_WINDOW_TILE_HORZ" message="Reasta avatud aknad horisontaalselt."/>
 		<tip id="ID_WINDOW_TILE_VERT" message="Reasta avatud aknad vertikaalselt."/>
 		<tip id="ID_WINDOW_TOOLBAR" message="Näita või peida tööriistariba."/>
-		<tip id="ID_WEBSERVICES_LIST" message="Choose the web service to get more information about the selected file."/>
-		<tip id="ID_WEBSERVICES_SHAREMONKEY" message="Search for the file infomation using ShareMonkey service."/>
 		<!-- PLUGIN TIPS -->
 		<tip id="ImageViewer_BestFit" message="Resize the image to fit within the window."/>
 		<tip id="ImageViewer_ActualSize" message="Show the image at its natural size."/>
@@ -2655,23 +2707,6 @@
 		<string id="WINDOW_HELP" value="Shareaza Abi"/>
 		<string id="WINDOW_IRC" value="Shareaza Chat"/>
 		<string id="WINDOW_SCHEDULER" value="Scheduler"/>
-		<string id="154" value="Are you sure you want to remove all scheduled tasks? This cannot be undone."/>
-		<string id="156" value="Scheduled time has already passed.\n\nPlease select a time in the future."/>
-		<string id="157" value="Bandwidth: Full Speed"/>
-		<string id="158" value="Bandwidth: Reduced Speed"/>
-		<string id="159" value="Bandwidth: Stop"/>
-		<string id="160" value="System: Exit Shareaza"/>
-		<string id="161" value="System: Disconnect Dial-up Connection"/>
-		<string id="162" value="System: Turn Off the Computer"/>
-		<string id="163" value="Please select a task."/>
-		<string id="164" value="Specific day(s) of week"/>
-		<string id="165" value="Aktiivne"/>
-		<string id="166" value="Mitteaktiivne"/>
-		<string id="167" value="Done"/>
-		<string id="168" value="Waiting..."/>
-		<string id="169" value="No Tasks Currently Scheduled"/>
-		<string id="172" value="Done Today"/>
-		<string id="173" value="You should select at least one day of week."/>
 		<string id="7000" value="Kas oled kindel, et tahad selle filtri kustutada ?"/>
 		<string id="7001" value="&amp;Skeemid"/>
 		<string id="7002" value="Erinevad väärtused"/>
@@ -2691,9 +2726,7 @@
 		<string id="8007" value="Siin ei ole ühtegi aktiivset otsingut.  Klikka siia, et alustada otsingut."/>
 		<string id="8008" value="Shareaza on lõpetanud uue Shareaza versiooni (%s) allalaadimise.  Kas soovid kohe uuendada?\n\nKui valid Jah, Shareaza peab ajutiselt sulguma, kuni uuendus on lõpetatud."/>
 		<string id="8009" value="Oled kindel, et tahad kustutada &quot;%s&quot; naha?  Seda ei saa enam tagasi võtta."/>
-		<string id="8010" value="See on Shareaza eelversioon ja beta testid on lõppenud.  Tõmba täis-, ametlik versioon http://shareaza.sourceforge.net/."/>
 		<string id="8011" value="Vaadete muutmine sulgeb kõik avatud aknad.  Kas soovid kohe muuta?"/>
-		<string id="8012" value="Torrenti Informatsioon"/>
 		<string id="8013" value="No new Shareaza version detected."/>
 		<string id="8014" value="Download Properties"/>
 		<string id="8060" value="Hub/Ultrapeer mode with %lu neighbour(s).  %s kohalikus raamatukogus."/>
@@ -2761,7 +2794,7 @@
 		<string id="8178" value="Mis tüüpi faili otsida?"/>
 		<string id="8179" value="(Puhasta otsingu ajalugu)"/>
 		<string id="8180" value="Faili suurus peaks olema"/>
-		<string id="8181" value=" kuni"/><!-- size from xx TO xx-->
+		<string id="8181" value=" to (size from xx TO xx)"/>
 		<string id="8208" value="Shareaza loob kohti %Iu failile:"/>
 		<string id="8223" value="%i päeva ja %i tundi"/>
 		<string id="8224" value="Shareaza tõmbab:"/>
@@ -2781,7 +2814,7 @@
 		<string id="8239" value="Lõpetatud"/>
 		<string id="8240" value="Shareaza tõstab faili ringi:"/>
 		<string id="8241" value="Shareaza kontrollib faili vigu:"/>
-		<string id="8243" value="Seni üleslaaditud:"/>
+		<string id="8243" value="Üleslaadimine"/>
 		<string id="8244" value="Arvamuste arv:"/>
 		<string id="8288" value="Uuri oma Shareaza Raamatukogu"/>
 		<string id="8289" value="Vaatan   "/>
@@ -2843,10 +2876,9 @@
 		<string id="16077" value="Address %s on juba sinu turva seadetega keelatud."/>
 		<string id="16078" value="Lisatud turvareegel %s blokeerimiseks."/>
 		<string id="16079" value="Oled kindel, et tahad selle ühenduse katkestada?"/>
-		<string id="16080" value="You are running the Scheduler in 'G2 only' mode. Would you like to turn this mode off, so that all active networks remain connected?"/>
+		<string id="16080" value="Sa ei ole võrku ühendatud."/>
 		<string id="16081" value="Saadan päringu &quot;%s&quot;  %s."/>
 		<string id="16083" value="Sundides oma arvutit jaoturiks võivad mõjutada sinu arvutit ja P2P võrku.  Tavakasutajal on parem lasta Shareazal otsustada kas olla jaotur või mitte.\n\nJaoturiks olek paranda otsingu tulemusi, ega anna sulle mingit muud eelist.\n\nOled kindel, et tahad seda teha, vaatamata eespool öeldule?"/>
-		<string id="16084" value="Peatades toe Gnutella-1 protokollile, piirab sinu otsingu tulemusi, ja kui sa oled jaotur mõjutab see ka teiste kasutajate otsingute tulemusi.  Oled kindel, et tahad seda teha?"/>
 		<string id="16085" value="Gnutella2 on Shareaza esmane võrk.  Peatades selle töö piirab nii arvuliselt kui kvaliteedilt  sinu otsinute tulemusi. Oled kindel, et tahad seda teha?"/>
 		<string id="16087" value="Sinu võrgu läbilaskevõime on liiga madal, et võimaldada võrgul korralikult töötada"/>
 		<string id="16128" value="Lubatud sissetulev ühendus %s port %i."/>
@@ -2877,6 +2909,7 @@
 		<string id="16157" value=" %s ei ole hub(jaotur), sulgen ühenduse."/>
 		<string id="16158" value="Gnutella2 ühendus %s edukalt sisse seatud (%s)."/>
 		<string id="16159" value="Sulgen ühenduse mitte-Gnutella2 %s."/>
+		<string id="16191" value="Received a packet from %s for %s which excess query limits, ignoring."/>
 		<string id="16192" value=" %s saatis liiga suure infopaketi, katkestan ühenduse."/>
 		<string id="16193" value=" %s saatis paketi ilma TTL-ita, eiran."/>
 		<string id="16194" value=" %s saatis liiga suure TTL, kaotan paketi (TTL=%i, Hops=%i)."/>
@@ -3017,6 +3050,7 @@
 		<string id="16375" value="Poolikud"/>
 		<string id="16376" value="Kõik Failid"/>
 		<string id="16377" value="HTTP Kaitse"/>
+		<string id="16378" value="Host &quot;%s&quot; sent a 416, without providing available ranges. Closing connection."/>
 		<string id="16379" value="Library Files"/>
 		<string id="16384" value="Oled kuindel, et tahad selle faili käivitada &quot;%s&quot; ?\n\nMõned failid võivad sinu arvutile kahjulikud olla.  Ole enne faili käivitamist kindel, millega tegu."/>
 		<string id="16385" value="Sa hakkad faili %i andmebaasi muutma, oled kindel, et tahad jätkata?"/>
@@ -3076,6 +3110,7 @@
 		<string id="16526" value="Katkestatud Gnutella Paketid"/>
 		<string id="16527" value="Kaotatud Gnutella Paketid"/>
 		<string id="16528" value="Gnutella Kohalikud Järjekorrad"/>
+		<string id="16529" value="Gnutella Kohalikud Järjekorrad"/>
 		<string id="16532" value="Kokku TCP Vastuvõetud Andmemahud"/>
 		<string id="16533" value="Kokku TCP Ülekantud Andmemahud"/>
 		<string id="16534" value="Kokku UDP Vastuvõetud Andmemahud"/>
@@ -3144,12 +3179,11 @@
 		<string id="16944" value="Leitud %i jagatud faili %s's raamatukogus."/>
 		<string id="16991" value="Shareaza Media Player"/>
 		<string id="16992" value="Shareaza ei suutnud oma Meediateenuste lisa käivitada.  Palun installi Shareaza uuesti ja kontrolli, et sul on vajalikud meedia koodekid ja draiverid installitud."/>
-		<string id="16993" value="Kõik Meedia Failid|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Playlistid|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Audio Failid|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|Video Failid|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|CD Audio Tracks|*.cda|MIDI Failid|*.mid;*.rmi;*.midi|Kõik Failid|*.*||"/>
 		<string id="16994" value="Ei saa avada meedia faili &quot;%s&quot;"/>
 		<string id="16995" value="Fail võib olla kahjustunud või ei ole sul selle mängimiseks vajalikke koodekeid."/>
 		<string id="16996" value="Ühte osa failist ei ole võimalik avada, sa pead tõmbama lisa koodekeid."/>
 		<string id="16997" value="Ühtegi faili ei mängi hetkel.  Topeltklikk failil, et alustada meediafaili mängimist."/>
-		<string id="16998" value="S     H     A     R     E     A     Z     A           M     E     D     I     A           S     Y     S     T     E     M"/><!-- on one line -->
+		<string id="16998" value="S     H     A     R     E     A     Z     A           M     E     D     I     A           S     Y     S     T     E     M"/>
 		<string id="16999" value="P L A Y L I S T"/>
 		<string id="17017" value="Send:"/>
 		<string id="17018" value="Welcome to Shareaza Chat!"/>
@@ -3249,6 +3283,7 @@
 		<string id="17477" value="BitTorrent ühenduse loomine %s vastas vale failiga."/>
 		<string id="17478" value="BitTorrent ühenduse loomine %s küsis tundmatut faili."/>
 		<string id="17479" value="BitTorrent ühenduse loomine %s kinnitatud &quot;%s&quot;."/>
+		<string id="17480" value="BitTorrent ühenduse loomine %s küsis tundmatut faili."/>
 		<string id="17481" value="Vastu võetud BitTorrenti kirjeldav fail: &quot;%s&quot;"/>
 		<string id="17482" value="Ei suuda tuvastada BitTorrent faili &quot;%s&quot;."/>
 		<string id="17483" value="Veateade BitTorrenti jälitajalt &quot;%s&quot; : &quot;%s&quot;."/>
@@ -3267,7 +3302,6 @@
 		<string id="17496" value="Ilmnes viga, kopeerides &quot;%s&quot;  BitTorrenti jagatavaks failiks."/>
 		<string id="17497" value="Ilmnes tundmatu viga, proovides jagada &quot;%s&quot;."/>
 		<string id="17498" value="Failis &quot;%s&quot; tuvastati viga."/>
-		<string id="17500" value="Jälitaja ei vastanud- Proovin uuesti (%i of %i)"/>
 		<string id="17501" value="Ei suuda jälitajaga suhelda"/>
 		<string id="17503" value="Jälitamine ebaõnnestus- Proovin järgmist (%i of %i)"/>
 		<string id="17505" value="BitTorrenti ühendus %s katkes."/>
@@ -3280,12 +3314,6 @@
 		<string id="17514" value="Updating Bittorrent Downloads..."/>
 		<string id="17515" value="Converting Torrent:"/>
 		<string id="18496" value="Sa oled teinud muutusi nimes.  Oled kindel, et tahad faili ümber nimetada?"/>
-		<string id="18497" value="Sa oled sisestanud SHA1 väärtuse, mis aga on vale. Palun kontrolli seda ja proovi uuesti."/>
-		<string id="18498" value="Sa oled sisestanud tiger-tree juurväärtuse, mis aga on vale.  Palun kontrolli seda ja proovi uuesti."/>
-		<string id="18499" value="Sa oled sisestanud eDonkey2000 hash väärtuse, mis aga on vale.  Palun kontrolli seda ja proovi uuesti."/>
-		<string id="18500" value="Sa oled andnud uue SHA1 hash väärtuse, mis on aga erinev käesolevast.  Oled kindel, et tahad muuta SHA1 hash -i?"/>
-		<string id="18501" value="Sa oled andnud root tiger-tree hash väärtuse, mis on aga erinev käesolevast .  Oled kindel, et tahad muuta tiger-tree root hash -i?"/>
-		<string id="18502" value="Sa oled andnud eDonkey2000 hash väärtuse, mis on aga erinev käesolevast.  Oled kindel, et tahad muuta eDonkey2000 hash -i?"/>
 		<string id="18503" value="Oled kindel, et tahad unustada praeguse kinnituse seisu? Kõiki allalaaditud andmeid käsitletakse kui ebausaldatavat ja kogu andmebaas ehitatakse uuesti."/>
 		<string id="18504" value="Oled kindel, et tahad selle allalaadimise allikad unustada?"/>
 		<string id="18505" value="Palun sisesta kustutamise ulatus.  &quot;alates&quot; väljal on esimesed baidid, mis kustutatakse ja &quot;viimane&quot; väljal viimased baidid."/>
@@ -3295,13 +3323,19 @@
 		<string id="18509" value="Sa ei saa eeldada, et fail on tervenisti alla tõmmatud ja seda kinnitada, sest sul ei ole veel ühtegi kinnituse osa, nagu tiger-tree suurus, eDonkey hashset ja BitTorrenti hashset.  Ilma kinnituse teabeta ei saa allalaadimist üle kinnitada."/>
 		<string id="18510" value="Oled kindel, et tahad eeldada, et fail on tervenisti alla tõmmatud ja üle kinnitada?  Terve fail vaadatakse üle ja Shareaza nõustub kinnitatud faili osadega ja tõmbab uuesti need osad, mis kinnitust ei läbinud."/>
 		<string id="18511" value="Sa oled muutnud faili suurust.  Oled kindel, et tahad selle tõmbamise failisuurust muuta?"/>
+		<string id="18512" value="Oled kindel, et tahad peatada/tühistada terve selle allalaadimisgrupi?"/>
+		<string id="18513" value="Sa oled sisestanud eDonkey2000 hash väärtuse, mis aga on vale.  Palun kontrolli seda ja proovi uuesti."/>
+		<string id="18514" value="Sa oled andnud uue SHA1 hash väärtuse, mis on aga erinev käesolevast.  Oled kindel, et tahad muuta SHA1 hash -i?"/>
 		<string id="19000" value="Kaugtöö ei ole käivitatud."/>
 		<string id="19001" value="Sa pead valima kasutajanime ja salasõna."/>
 		<string id="19002" value="Ei saa ühendust, URL ei ole saadaval."/>
+		<string id="19103" value="Welcome to Shareaza Chat!"/>
+		<string id="19104" value="Please respect others while using this service"/>
+		<string id="19105" value="Vestlus"/>
 		<string id="20000" value="URN-i ei ole saadaval"/>
 		<string id="20001" value="Sule"/>
 		<string id="20002" value="of"/>
-		<string id="20003" value="Kasutajaliidese suundade muutmine nõuab taaskäivitust. \nSa pead Shareaza käsits taaskäivitama . Välju nüüd?"/>
+		<string id="20003" value="Changing language requires application restart.\nRestart now?"/>
 		<string id="20005" value="Ei"/>
 		<string id="20006" value="Jah"/>
 		<string id="20007" value="Auto"/>
@@ -3311,6 +3345,7 @@
 		<string id="20011" value="&amp;Next"/>
 		<string id="20012" value="Finish"/>
 		<string id="20013" value="Kõik"/>
+		<string id="20014" value="See võimalus kasutab teenuseid, mida pakub Bitzi.com failide tuvastamise ja jagamiste kohta.\n\nShareaza võtab SHA1 koodi, valitud failide kohta Bitzi andmebaasist.  Kui oled mures oma turvalisuse pärast, siis võid tutvuda Bitzi.com privaatsus poliitikaga.\n\nKas tahad jätkata?"/>
 		<string id="20100" value="Ühendan"/>
 		<string id="20101" value="Saadan Päringu"/>
 		<string id="20102" value="Vastus"/>
@@ -3349,13 +3384,6 @@
 		<string id="20135" value="Järgmine"/>
 		<string id="20136" value="Q"/>
 		<string id="20137" value="allikast"/>
-		<string id="20200" value="Pühapäev"/>
-		<string id="20201" value="Esmaspäev"/>
-		<string id="20202" value="Teisipäev"/>
-		<string id="20203" value="Kolmapäev"/>
-		<string id="20204" value="Neljapäev"/>
-		<string id="20205" value="Reede"/>
-		<string id="20206" value="Laupäev"/>
 		<string id="20210" value="(Hindamata)"/>
 		<string id="20211" value="Vale / Vigane"/>
 		<string id="20212" value="Kehv"/>
@@ -3364,7 +3392,6 @@
 		<string id="20215" value="Väga Hea"/>
 		<string id="20216" value="Suurepärane"/>
 		<string id="20217" value="Select the eDonkey/eMule temp folder:"/>
-		<!-- Column headers in Library Album View -->
 		<string id="20230" value="# (Track number)"/>
 		<string id="20231" value="Title"/>
 		<string id="20232" value="Length"/>
@@ -3381,9 +3408,28 @@
 		<string id="20243" value="Continue"/>
 		<string id="20244" value="&amp;Remember my selection next time"/>
 		<string id="20245" value="New Folder"/>
-		<string id="32825" value="Open my folder of completed Downloads"/>
-		<string id="32773" value="Check for new version"/>
-		<string id="61215" value="Activate this window"/>
+		<string id="20246" value="Command-line options:\n\n-tray : Disable startup splash screen and send application to tray\n-nosplash : Disable startup splash screen\n-nowarn : Disable alpha (daily builds) version warning dialog\n-wait : Wait for other application instance exit\n\nInterface modes:\n\n-basic : Start application in Basic interface mode\n-tabbed : Start application in Tabbed interface mode\n-windowed : Start application in Windowed interface mode\n\nSystem options:\n\n-RegServer : Register internal components for everyone\n-UnRegServer : Un-register internal components for everyone\n-RegServerPerUser : Register internal components for current user\n-UnRegServerPerUser : Un-register internal components for current user"/>
+		<string id="20247" value="Failed to load metadata schemas. Please reinstall application."/>
+		<string id="20248" value="Sa ei ole veel täpsustanud oma jagatavaid kausu.  Oled kindel?"/>
+		<string id="20249" value="Off"/>
+		<string id="20250" value="Low"/>
+		<string id="20251" value="_Tavaline vaade"/>
+		<string id="20252" value="High"/>
+		<string id="20253" value="Skin load error: %s. Element: %s"/>
+		<string id="20254" value="Loading skin: %s"/>
+		<string id="20255" value="Are you sure you want to remove all scheduled tasks? This cannot be undone."/>
+		<string id="20256" value="Otsi Shareazast"/>
+		<string id="20257" value="Bandwidth: Full Speed"/>
+		<string id="20258" value="Bandwidth: Reduced Speed"/>
+		<string id="20259" value="Bandwidth: Stop"/>
+		<string id="20260" value="System: Exit Shareaza"/>
+		<string id="20261" value="System: Disconnect Dial-up Connection"/>
+		<string id="20262" value="System: Turn Off the Computer"/>
+		<string id="20263" value="Aktiivne"/>
+		<string id="20264" value="Mitteaktiivne"/>
+		<string id="20265" value="Done"/>
+		<string id="20266" value="Waiting..."/>
+		<string id="20267" value="No Tasks Currently Scheduled"/>
 	</strings>
 	<!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 	<!-- Don't edit dialogs manualy! Use DialogScan feature instead -->
@@ -3515,7 +3561,7 @@
 			<control caption="Port:"/>
 			<control/>
 		</dialog>
-		<dialog name="CWebSettingsPage" cookie="BuStBuBuBuBuBuBuBuCoBuBuSt" caption="Weeb">
+		<dialog name="CWebSettingsPage" cookie="BuStBuBuBuBuBuBuBuBuCoBuBuSt" caption="Weeb">
 			<control caption="_P2P linkide käsitlus:"/>
 			<control caption="Kasuta Shareazat, et avada seda tüüpi faile:"/>
 			<control caption="Magnet ( magnet: )"/>
@@ -3523,6 +3569,7 @@
 			<control caption="eDonkey2000 ( ed2k: )"/>
 			<control caption="Piolet ( mp2p: )"/>
 			<control caption="BitTorrent ( .torrent )"/>
+			<control caption="DC++ ( dchub: )"/>
 			<control caption="_Allalaadimiste Haldus:"/>
 			<control caption="Kasuta Shareazat kõikideks weebi allalaadimisteks:"/>
 			<control/>
@@ -3560,12 +3607,12 @@
 			<control/>
 			<control/>
 		</dialog>
-		<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStCoStCoBuBu" caption="Ülekanded">
+		<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuEdBu" caption="Ülekanded">
 			<control caption="Salvesta _Lõpetatud Failid Siia:"/>
 			<control/>
 			<control/>
-			<control caption="Salvesta Ajutised _Poolikud Failid Siia:"/>
-			<control/>
+			<control caption="Scan every completed file with AntiVirus"/>
+			<control caption="Vali eelasetus:"/>
 			<control/>
 			<control caption="_Allalaadimised:"/>
 			<control caption="Maksimaalselt Faile:"/>
@@ -3582,8 +3629,10 @@
 			<control/>
 			<control caption="Maksimaalne Järjekordade arv:"/>
 			<control/>
-			<control/>
 			<control caption="Tõmba ainult ühendatud võrkudest."/>
+			<control caption="Salvesta Ajutised _Poolikud Failid Siia:"/>
+			<control/>
+			<control/>
 		</dialog>
 		<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStCoStCoBuSyBuBuBuSt" caption="Üleslaadimised">
 			<control caption="_Seaded:"/>
@@ -3614,48 +3663,11 @@
 			<control caption="Shareaza Kaugtöö laseb sul jätta Shareaza tööle ja kontrollida seda eemalt, kasutades weebibrauserit.  Sa pead selle võimaluse kasutamiseks lubama sissetulevad ühendused (näiteks: seadistama ruuteri, jne.)."/>
 			<control caption="_Käivitus:"/>
 			<control caption="Võimalda Shareaza Kaugtöö:"/>
-			<control caption="URL"/>
+			<control/>
 			<control caption="_Andmed:"/>
 			<control caption="Vali Kasutajanimi:"/>
 			<control/>
 			<control caption="Vali Salasõna:"/>
-			<control/>
-		</dialog>
-		<dialog name="CScheduleTaskDlg" cookie="BuBuBuBuSySyBuBuBuBuBuBuBuBuCoEdmsEdmsEdmsBuBuEdBuStStStStStStStBuBu" caption="Schedule Item">
-			<control caption="OK"/>
-			<control caption="Tühista"/>
-			<control caption="Only once"/>
-			<control caption="On specific day(s) of week"/>
-			<control/>
-			<control/>
-			<control caption="Pühapäev"/>
-			<control caption="Esmaspäev"/>
-			<control caption="Teisipäev"/>
-			<control caption="Kolmapäev"/>
-			<control caption="Neljapäev"/>
-			<control caption=" Friday"/>
-			<control caption="Laupäev"/>
-			<control caption="Kõik"/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control caption=" _Toggle bandwidth independently"/>
-			<control caption=" _Limit network to Gnutella2"/>
-			<control/>
-			<control caption="Make this event active"/>
-			<control caption="Please select a date:"/>
-			<control caption="Please select a time:"/>
-			<control caption="Select the event type:"/>
-			<control caption="Description: (optional)"/>
-			<control caption="% of _bandwidth under limit"/>
-			<control caption="% of _download under limit"/>
-			<control caption="% of _upload under limit"/>
-			<control caption="Days Of Week"/>
-			<control caption="Run this event"/>
 			<control/>
 		</dialog>
 		<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Võrgud">
@@ -4530,6 +4542,25 @@
 			<control caption="Tühista"/>
 			<control caption="Add a channel name:|Enter kick/ban reason:"/>
 		</dialog>
+		<dialog name="CScheduleTaskPage" cookie="StCoBuEdmsEdmsBuBuBuBuBuStStStBuBu" caption="Tegevus">
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control caption="Gnutella1"/>
+			<control caption="Gnutella2"/>
+			<control caption="eDonkey2000"/>
+			<control caption="DC++"/>
+			<control caption="BitTorrent"/>
+			<control caption="Select the event type:"/>
+			<control caption="% of _download under limit"/>
+			<control caption="% of _upload under limit"/>
+			<control caption="Võrgud"/>
+			<control caption="Läbilaskevõime"/>
+		</dialog>
 	</dialogs>
 	<!-- Columns Definitions -->
 	<listColumns>
@@ -4668,6 +4699,14 @@
 			<column from="Rating" to="Reiting"/>
 			<column from="Comments" to="Kommentaarid"/>
 			<column from="Order" to="Järjekord"/>
+		</list>
+		<list name="CSchedulerWnd">
+			<column from="Action" to="Tegevus"/>
+			<column from="Trigger" to="TigerTree"/>
+			<column from="Next Run" to="Järgmine"/>
+			<column from="Active" to="Aktiivne"/>
+			<column from="Status" to="Olek"/>
+			<column from="Description" to="Kirjeldus"/>
 		</list>
 	</listColumns>
 </skin>

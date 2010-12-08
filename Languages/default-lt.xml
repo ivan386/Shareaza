@@ -287,9 +287,9 @@
 			<button id="ID_MEDIA_STOP" text="Stabdyti"/>
 			<separator/>
 			<label text="Vieta:" tip="Nueiti į grotuvo failo tam tikrą vietą"/>
-			<control id="IDC_MEDIA_POSITION" width="190" height="22"/>
+			<control id="ID_MEDIA_POSITION" width="190" height="22"/>
 			<label text="Garsas:" tip="Derinti garsumą"/>
-			<control id="IDC_MEDIA_VOLUME" width="50" height="22"/>
+			<control id="ID_MEDIA_VOLUME" width="50" height="22"/>
 			<separator/>
 			<button id="ID_MEDIA_OPEN" text="Atverti failą"/>
 			<rightAlign/>
@@ -304,11 +304,11 @@
 			<button id="ID_MEDIA_STOP" text="Stabdyti"/>
 			<separator/>
 			<label text="Vieta:" tip="Nueiti į grotuvo failo tam tikrą vietą"/>
-			<control id="IDC_MEDIA_POSITION" width="190" height="22"/>
+			<control id="ID_MEDIA_POSITION" width="190" height="22"/>
 			<label text="Sparta:" tip="Derinti grotuvo failo atlikimo spartą"/>
-			<control id="IDC_MEDIA_SPEED" width="40" height="22"/>
+			<control id="ID_MEDIA_SPEED" width="40" height="22"/>
 			<label text="Garsas:" tip="Derinti garsumą"/>
-			<control id="IDC_MEDIA_VOLUME" width="50" height="22"/>
+			<control id="ID_MEDIA_VOLUME" width="50" height="22"/>
 			<separator/>
 			<button id="ID_MEDIA_OPEN" text="Atverti failą"/>
 			<separator/>
@@ -343,6 +343,7 @@
 			<button id="ID_NETWORK_G2" text="Gnutella2"/>
 			<button id="ID_NETWORK_G1" text="Gnutella1"/>
 			<button id="ID_NETWORK_ED2K" text="eDonkey"/>
+			<button id="ID_NETWORK_DC" text="DC++"/>
 			<separator/>
 			<button id="ID_NEIGHBOURS_SETTINGS" text="Nuostatos"/>
 		</toolbar>
@@ -357,6 +358,7 @@
 			<button id="ID_NETWORK_G2" text="Gnutella2"/>
 			<button id="ID_NETWORK_G1" text="Gnutella1"/>
 			<button id="ID_NETWORK_ED2K" text="eDonkey"/>
+			<button id="ID_NETWORK_DC" text="DC++"/>
 			<separator/>
 			<button id="ID_NEIGHBOURS_SETTINGS" text="Nuostatos"/>
 		</toolbar>
@@ -385,9 +387,6 @@
 			<button id="ID_SCHEDULER_REMOVE" text="Remove Task"/>
 			<separator/>
 			<button id="ID_SCHEDULER_REMOVE_ALL" text="Remove All"/>
-			<rightAlign/>
-			<button id="ID_SCHEDULER_IMPORT" text="Importuoti..."/>
-			<button id="ID_SCHEDULER_EXPORT" text="Eksportuoti..."/>
 		</toolbar>
 		<!-- HIT MONITOR WINDOW -->
 		<toolbar name="CHitMonitorWnd">
@@ -418,6 +417,7 @@
 			<button id="ID_HOSTCACHE_ED2K_CACHE" text="eDonkey talpykla"/>
 			<button id="ID_HOSTCACHE_BT_CACHE" text="BitTorrent talpykla"/>
 			<button id="ID_HOSTCACHE_KAD_CACHE" text="Kademlia talpykla"/>
+			<button id="ID_HOSTCACHE_DC_CACHE" text="DC++ Cache"/>
 		</toolbar>
 		<!-- PRIVATE CHAT FRAME -->
 		<toolbar name="CPrivateChatFrame">
@@ -428,7 +428,6 @@
 			<button id="ID_CHAT_EMOTICONS"/>
 			<separator/>
 			<button id="ID_CHAT_BROWSE" text="Rodyti naudotojo duomenis"/>
-			<!-- <button id="ID_CHAT_SEND_FILE" text="Send File"/> -->
 			<button id="ID_CHAT_PRIORITY" text="Suteikti prioritetą"/>
 			<separator/>
 			<button id="ID_CHAT_CONNECT" text="Jungtis" visible="false"/>
@@ -496,6 +495,7 @@
 					<item id="ID_NETWORK_G2" text="Jungtis prie _Gnutella2"/>
 					<item id="ID_NETWORK_G1" text="Jungtis prie Gnutella_1"/>
 					<item id="ID_NETWORK_ED2K" text="Jungtis prie _eDonkey"/>
+					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_AUTO_CLOSE" text="Išeiti _baigus siųsti"/>
@@ -552,10 +552,10 @@
 					<item id="ID_HELP_FORUMS" text="„Shareaza“ _forumai"/>
 					<item id="ID_HELP_WEB_6" text="„Shareaza“ apvalkalų svetainė"/>
 					<!-- 
-				<item id="ID_HELP_UPDATE" text="Latest news"/>
-				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
-				-->
+					<item id="ID_HELP_UPDATE" text="Latest news"/>
+					<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
+					<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+					-->
 				</menu>
 				<separator/>
 				<item id="ID_HELP_VERSION_CHECK" text="Tikrinti naujesnės _versijos"/>
@@ -572,6 +572,7 @@
 					<item id="ID_NETWORK_G2" text="Jungtis prie _Gnutella2"/>
 					<item id="ID_NETWORK_G1" text="Jungtis prie Gnutella_1"/>
 					<item id="ID_NETWORK_ED2K" text="Jungtis prie _eDonkey"/>
+					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_CONNECT_TO" text="Jung_tis prie..." shortcut="Ctrl+T"/>
@@ -621,7 +622,7 @@
 			<menu text="Įran_kiai">
 				<item id="ID_LIBRARY_FOLDERS" text="_Bendrinti failus..."/>
 				<item id="ID_TOOLS_DOWNLOAD" text="_Atsisiųsti failą/Torrent..."/>
-				<item id="IDC_IMPORT_DOWNLOADS" text="_Importuoti eMule dalinius failus..."/>
+				<item id="ID_IMPORT_DOWNLOADS" text="_Importuoti eMule dalinius failus..."/>
 				<item id="ID_OPEN_DOWNLOADS_FOLDER" text="Atverti atsisiųstų failų _katalogą"/>
 				<separator/>
 				<item id="ID_TOOLS_SKIN" text="Pasirinkti ap_valkalą..."/>
@@ -657,10 +658,10 @@
 					<item id="ID_HELP_FORUMS" text="„Shareaza“ _forumai"/>
 					<item id="ID_HELP_WEB_6" text="„Shareaza“ apvalkalų svetainė"/>
 					<!-- 
-				<item id="ID_HELP_UPDATE" text="Latest news"/>
-				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
-				-->
+					<item id="ID_HELP_UPDATE" text="Latest news"/>
+					<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
+					<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+					-->
 				</menu>
 				<separator/>
 				<item id="ID_HELP_VERSION_CHECK" text="Tikrinti naujesnės _versijos"/>
@@ -683,6 +684,7 @@
 					<item id="ID_NETWORK_G2" text="Jungtis prie _Gnutella2"/>
 					<item id="ID_NETWORK_G1" text="Jungtis prie Gnutella_1"/>
 					<item id="ID_NETWORK_ED2K" text="Jungtis prie _eDonkey"/>
+					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_AUTO_CLOSE" text="Išeiti _baigus siųsti"/>
@@ -714,7 +716,7 @@
 			<menu text="Įran_kiai">
 				<item id="ID_LIBRARY_FOLDERS" text="_Bendrinti failus..."/>
 				<item id="ID_TOOLS_DOWNLOAD" text="_Atsisiųsti failą/Torrent..."/>
-				<item id="IDC_IMPORT_DOWNLOADS" text="_Importuoti eMule dalinius failus..."/>
+				<item id="ID_IMPORT_DOWNLOADS" text="_Importuoti eMule dalinius failus..."/>
 				<item id="ID_OPEN_DOWNLOADS_FOLDER" text="Atverti atsisiųstų failų _katalogą"/>
 				<separator/>
 				<item id="ID_TOOLS_SKIN" text="Pasirinkti ap_valkalą..."/>
@@ -754,10 +756,10 @@
 					<item id="ID_HELP_FORUMS" text="„Shareaza“ _forumai"/>
 					<item id="ID_HELP_WEB_6" text="„Shareaza“ apvalkalų svetainė"/>
 					<!-- 
-				<item id="ID_HELP_UPDATE" text="Latest news"/>
-				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
-				-->
+					<item id="ID_HELP_UPDATE" text="Latest news"/>
+					<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
+					<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+					-->
 				</menu>
 				<separator/>
 				<item id="ID_HELP_VERSION_CHECK" text="Tikrinti naujesnės _versijos"/>
@@ -905,6 +907,7 @@
 				<item id="ID_HOSTCACHE_ED2K_CACHE" text="_eDonkey serveriai"/>
 				<item id="ID_HOSTCACHE_BT_CACHE" text="_BitTorrent talpykla"/>
 				<item id="ID_HOSTCACHE_KAD_CACHE" text="_Kademlia talpykla"/>
+				<item id="ID_HOSTCACHE_DC_CACHE" text="_DC++ Cache"/>
 			</menu>
 			<separator/>
 			<item id="ID_HOSTCACHE_IMPORT" text="_Importuoti MET failą..."/>
@@ -1190,14 +1193,14 @@
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="Failo _ypatybės"/>
 		</menu>
 		<menu name="CLibraryTree.Virtual.Basic">
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Atv_erti albumą"/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Atverti albumą"/>
 			<item id="ID_LIBRARY_FOLDER_DELETE" text="_Trinti"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="Failo _ypatybės"/>
 			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="Alb_umo ypatybės"/>
 		</menu>
 		<menu name="CLibraryTree.Virtual">
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Atv_erti albumą"/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Atverti albumą"/>
 			<item id="ID_LIBRARY_FOLDER_DELETE" text="_Trinti"/>
 			<separator/>
 			<item id="ID_LIBRARY_REBUILD" text="Per_daryti"/>
@@ -1286,7 +1289,7 @@
 		<menu name="CLibraryFileView.Virtual.Basic">
 			<item id="ID_LIBRARY_LAUNCH" text="A_tverti ar vykdyti"/>
 			<item id="ID_LIBRARY_ENQUEUE" text="Įt_raukti į grojaraštį"/>
-			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Atv_erti albumą"/>
+			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Atverti albumą"/>
 			<separator/>
 			<item id="ID_LIBRARY_SHARED_FILE" text="_Bendrintas"/>
 			<separator/>
@@ -1504,6 +1507,7 @@
 				<item id="ID_NETWORK_G2" text="_Gnutella2"/>
 				<item id="ID_NETWORK_G1" text="Gnutella_1"/>
 				<item id="ID_NETWORK_ED2K" text="_eDonkey"/>
+				<item id="ID_NETWORK_DC" text="_DC++"/>
 			</menu>
 			<menu text="_Monitorius">
 				<item id="ID_NEIGHBOURS_VIEW_ALL" text="Rodyti _visą srautą"/>
@@ -1564,9 +1568,6 @@
 			<item id="ID_SCHEDULER_EDIT" text="_Edit"/>
 			<separator/>
 			<item id="ID_SCHEDULER_REMOVE_ALL" text="Remove Al_l"/>
-			<separator/>
-			<item id="ID_SCHEDULER_IMPORT" text="_Importuoti..."/>
-			<item id="ID_SCHEDULER_EXPORT" text="_Eksportuoti..."/>
 		</menu>
 		<!-- DISCOVERY SERVICES WINDOW -->
 		<menu name="CDiscoveryWnd">
@@ -1590,7 +1591,6 @@
 			<item id="ID_CHAT_DISCONNECT" text="_Atsijungti"/>
 			<separator/>
 			<item id="ID_CHAT_BROWSE" text="_Rodyti naudotojo duomenis"/>
-			<!-- <item id="ID_CHAT_SEND_FILE" text="_Send File..."/> -->
 			<item id="ID_CHAT_PRIORITY" text="Suteikti _prioritetą"/>
 			<separator/>
 			<menu text="_Formatas">
@@ -1846,6 +1846,12 @@
 			<text group="32" align="middle">Jungiamasi...</text>
 			<text group="33" align="middle">Prisijungta</text>
 			<newline group="30" gap="2"/>
+			<icon group="80" command="ID_NETWORK_DC"/><gap group="80" size="4"/>
+			<text group="80" align="middle" format="b">DC++:</text>
+			<text group="81" align="middle">Atsijungta</text>
+			<text group="82" align="middle">Jungiamasi...</text>
+			<text group="83" align="middle">Prisijungta</text>
+			<newline group="80" gap="2"/>
 			<group id="2">
 				<para align="center">
 					<newline gap="4"/>
@@ -2310,6 +2316,19 @@
 	</documents>
 	<!-- Localised Command Tip Text. The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
 	<commandTips>
+		<tip id="AFX_IDS_APP_TITLE" message="Shareaza"/>
+		<tip id="AFX_IDS_IDLEMESSAGE" message="Pasiruošta..."/>
+		<tip id="AFX_IDS_MDICHILD" message="Activate this window"/>
+		<tip id="AFX_IDS_PREVIEW_CLOSE" message="Close print preview mode" tip="Išsaugoti paveikslą"/>
+		<tip id="AFX_IDS_SCCLOSE" message="Išdidinti aktyvų langą iki maksimalių matmenų."/>
+		<tip id="AFX_IDS_SCMAXIMIZE" message="Išdidinti aktyvų langą iki maksimalių matmenų."/>
+		<tip id="AFX_IDS_SCMINIMIZE" message="Reduce the window to an icon"/>
+		<tip id="AFX_IDS_SCMOVE" message="Change the window position"/>
+		<tip id="AFX_IDS_SCNEXTWINDOW" message="Switch to the next document window"/>
+		<tip id="AFX_IDS_SCPREVWINDOW" message="Switch to the previous document window"/>
+		<tip id="AFX_IDS_SCRESTORE" message="Restore the window to normal size"/>
+		<tip id="AFX_IDS_SCSIZE" message="Change the window size"/>
+		<tip id="AFX_IDS_SCTASKLIST" message="Activate Task List"/>
 		<tip id="ID_BROWSE_FILES" message="Peržiūrėti naudotojo bendrintus failus."/>
 		<tip id="ID_BROWSE_LAUNCH" message="Peržiūrėti pasirinkto naudotojo profilį ir bendrintus failus."/>
 		<tip id="ID_BROWSE_PROFILE" message="Peržiūrėti naudotojo profilį."/>
@@ -2324,7 +2343,6 @@
 		<tip id="ID_CHAT_EMOTICONS" message="Įterpti emociją."/>
 		<tip id="ID_CHAT_ITALIC" message="Išskirti kursyvu (Ctrl+I)"/>
 		<tip id="ID_CHAT_PRIORITY" message="Suteikti naudotojui parsisiuntimo prioritetą."/>
-		<!-- <tip id="ID_CHAT_SEND_FILE" message="Send a file to the user..."/> -->
 		<tip id="ID_CHAT_TIMESTAMP" message="Rodyti laiką, kada buvo gautas kiekvienas pranešimas."/>
 		<tip id="ID_CHAT_UNDERLINE" message="Rašyti su pabraukimu (Ctrl+U)"/>
 		<tip id="ID_CHILD_CLOSE" message="Užverti aktyvų langą."/>
@@ -2333,6 +2351,7 @@
 		<tip id="ID_CHILD_RESTORE" message="Atverti pasirinktą langą."/>
 		<tip id="ID_DISCOVERY_ADD" message="Pridėti naują paslaugų radimo tarnybą..."/>
 		<tip id="ID_DISCOVERY_ADVERTISE" message="Anonsuoti pasirinktą GWebCache tarnybą atsitiktinei egzistuojančiai GWebCache tarnybai."/>
+		<tip id="ID_DISCOVERY_BLOCKED" message="Rodyti GWebCache tarnybas paslaugų radimo tarnybų lange."/>
 		<tip id="ID_DISCOVERY_BROWSE" message="Peržvelgti internete pasirinktos GWebCache tarnybos statistiką."/>
 		<tip id="ID_DISCOVERY_EDIT" message="Peržiūrėti pasirinktos paslaugų radimo tarnybos ypatybes."/>
 		<tip id="ID_DISCOVERY_GNUTELLA" message="Rodyti savikėlos („bootstrap“) tarnybas paslaugų radimo tarnybų lange."/>
@@ -2384,13 +2403,14 @@
 		<tip id="ID_HELP_ABOUT" message="Rodyti „Apie ‚Shareaza‘“ dialogo langą..."/>
 		<tip id="ID_HELP_CODEC" message="Viskas apie kodekus ir video problemas."/>
 		<tip id="ID_HELP_FAQ" message="Atverti naršyklėje „Shareaza“ DUK puslapį."/>
-		<tip id="ID_HELP_ROUTER" message="Sužinokite, kaip sukonfigūruoti savo maršrutizatorių ar užkardą."/>
 		<tip id="ID_HELP_FORUMS" message="Apsilankyti „Shareaza“ diskusijų forumuose."/>
 		<tip id="ID_HELP_GUIDE" message="Atverti naršyklėje „Shareaza“ naudotojo vadovą."/>
 		<tip id="ID_HELP_HOMEPAGE" message="Aplankyti Shareaza site tinklalapį."/>
+		<tip id="ID_HELP_ROUTER" message="Sužinokite, kaip sukonfigūruoti savo maršrutizatorių ar užkardą."/>
 		<tip id="ID_HELP_SECURITY" message="Sužinokite, kaip apsisaugoti nuo kenkėjų tinkluose."/>
-		<tip id="ID_HELP_UPDATE" message="Sužinokite naujienas ir apie atnaujinimus."/>
 		<tip id="ID_HELP_TEST" message="Atlikite susijungimo testą."/>
+		<tip id="ID_HELP_UPDATE" message="Sužinokite naujienas ir apie atnaujinimus."/>
+		<tip id="ID_HELP_VERSION_CHECK" message="Check for new version"/>
 		<tip id="ID_HELP_WEB_1" message="Aplankyti šią svetainę"/>
 		<tip id="ID_HELP_WEB_2" message="Aplankyti šią svetainę"/>
 		<tip id="ID_HELP_WEB_3" message="Aplankyti šią svetainę"/>
@@ -2400,7 +2420,9 @@
 		<tip id="ID_HITMONITOR_CLEAR" message="Valyti kreipinių monitoriaus buferį."/>
 		<tip id="ID_HITMONITOR_PAUSE" message="Pristabdyti kreipinių stebėjimą."/>
 		<tip id="ID_HITMONITOR_SEARCH" message="Ieškoti tinkle pasirinkto termino."/>
+		<tip id="ID_HOSTCACHE_BT_CACHE" message="Rodyti BitTorrent išsiuntimus."/>
 		<tip id="ID_HOSTCACHE_CONNECT" message="Jungtis prie pasirinkto adresato(-ų)."/>
+		<tip id="ID_HOSTCACHE_DC_CACHE" message="Show DC++ cached hubs."/>
 		<tip id="ID_HOSTCACHE_DISCONNECT" message="Atsijungti nuo pasirinkto kaimyno(-ų)."/>
 		<tip id="ID_HOSTCACHE_ED2K_CACHE" message="Rodyti eDonkey serverius."/>
 		<tip id="ID_HOSTCACHE_ED2K_DOWNLOAD" message="Parsisiųsti eDonkey „server.met“ failą..."/>
@@ -2408,8 +2430,10 @@
 		<tip id="ID_HOSTCACHE_G2_CACHE" message="Rodyti Gnutella2 tinklo adresatus, esančius laikinoje talpykloje."/>
 		<tip id="ID_HOSTCACHE_G2_HORIZON" message="Rodyti Gnutella2 tinklo kertinius mazgus."/>
 		<tip id="ID_HOSTCACHE_IMPORT" message="Importuoti žinomų adresatų sąrašą iš tokio failo, kaip kad „server.met“ failas..."/>
+		<tip id="ID_HOSTCACHE_KAD_CACHE" message="Rodyti Gnutella1 tinklo adresatus, esančius laikinoje talpykloje."/>
 		<tip id="ID_HOSTCACHE_PRIORITY" message="Mėginti jungtis prie šito serverio, prieš jungiantis prie kitų."/>
 		<tip id="ID_HOSTCACHE_REMOVE" message="Šalinti pasirinktus adresatus iš adresatų talpyklos."/>
+		<tip id="ID_IMPORT_DOWNLOADS" message="_Importuoti eMule dalinius failus..."/>
 		<tip id="ID_LIBRARY_ADD" message="Pridėti naują aplanką prie savo kolekcijos..."/>
 		<tip id="ID_LIBRARY_ALBUM_DELETE" message="Pašalinti pasirinktą albumo katalogą."/>
 		<tip id="ID_LIBRARY_ALBUM_OPEN" message="Atverti pasirinktą albumo katalogą."/>
@@ -2439,6 +2463,7 @@
 		<tip id="ID_LIBRARY_REBUILD" message="Perdaryti iš naujo pasirinktų katalogų ar failų meta duomenis ir maišas."/>
 		<tip id="ID_LIBRARY_REBUILD_ANSI" message="Perdaryti meta duomenis kita kalba."/>
 		<tip id="ID_LIBRARY_REFRESH" message="Atnaujinti kolekcijos rodinį."/>
+		<tip id="ID_LIBRARY_REFRESH_METADATA" message="At_naujinti meta duomenis"/>
 		<tip id="ID_LIBRARY_REMOVE" message="Pašalinti pasirinktus bendrintus aplankus."/>
 		<tip id="ID_LIBRARY_RENAME" message="Pervardinti pasirinktą failą."/>
 		<tip id="ID_LIBRARY_SCAN" message="Skenuoti pokyčius pasirinktuose failuose ar aplankuose."/>
@@ -2476,6 +2501,7 @@
 		<tip id="ID_MEDIA_PAUSE" message="Pristabdyti grotuvo failo grojimą." tip="Pristabdyti"/>
 		<tip id="ID_MEDIA_PLAY" message="Groti pažymėtą grotuvo failą." tip="Play"/>
 		<tip id="ID_MEDIA_PLAYLIST" message="Rodyti ar paslėpti grojaraščio redaktorių."/>
+		<tip id="ID_MEDIA_POSITION" message="Nueiti į grotuvo failo tam tikrą vietą" tip="Seek"/>
 		<tip id="ID_MEDIA_PREVIOUS" message="Pereiti prie ankstesnio failo veikiančiame grojaraštyje." tip="Previous File"/>
 		<tip id="ID_MEDIA_PROPERTIES" message="Peržvelgti ir redaguoti pasirinktų failų ypatybes."/>
 		<tip id="ID_MEDIA_RANDOM" message="Į-/Išjungti atsitiktinį failų pasirinkimą iš veikiančio grojaraščio."/>
@@ -2490,14 +2516,15 @@
 		<tip id="ID_MEDIA_SIZE_ONE" message="Rodyti vaizdą tokiais matmenimis, kaip nurodyta faile."/>
 		<tip id="ID_MEDIA_SIZE_THREE" message="Rodyti vaizdą patrigubinant nurodytus faile matmenis."/>
 		<tip id="ID_MEDIA_SIZE_TWO" message="Rodyti vaizdą padvigubinant nurodytus faile matmenis."/>
+		<tip id="ID_MEDIA_SPEED" message="Derinti grotuvo failo atlikimo spartą" tip="Sparta"/>
 		<tip id="ID_MEDIA_STATUS" message="Rodyti ar paslėpti grotuvo būklės juostelę."/>
 		<tip id="ID_MEDIA_STOP" message="Sustabdyti grotuvo failo grojimą." tip="Stabdyti"/>
 		<tip id="ID_MEDIA_VIS" message="Pasirinkti muzikos vaizdo papildinį..."/>
+		<tip id="ID_MEDIA_VOLUME" message="Derinti garsumą" tip="Volume"/>
 		<tip id="ID_MEDIA_ZOOM" message="Derinti vaizdo mastelį ir matmenų santykį."/>
-		<tip id="IDC_MEDIA_POSITION" value="Seek to a position in the media file." tip="Seek"/>
-		<tip id="IDC_MEDIA_SPEED" value="Adjust the speed of the media file." tip="Sparta"/>
-		<tip id="IDC_MEDIA_VOLUME" value="Adjust the audio volume." tip="Volume"/>
 		<tip id="ID_MONITOR_CLOSE" message="Užverti monitoriaus langą."/>
+		<tip id="ID_MUSICBRAINZ_ALBUMS" message="Look at all albums for this artist."/>
+		<tip id="ID_MUSICBRAINZ_MATCHES" message="Ieškoti kitų pasirinkto failo kopijų."/>
 		<tip id="ID_NEIGHBOURS_CHAT" message="Pradėti pokalbio sesiją su pasirinktu naudotoju."/>
 		<tip id="ID_NEIGHBOURS_COPY" message="Kopijuoti pasirinkto adresato prieigos nuorodą."/>
 		<tip id="ID_NEIGHBOURS_DISCONNECT" message="Atjungti pasirinktą kaimyną(-us)."/>
@@ -2510,12 +2537,22 @@
 		<tip id="ID_NETWORK_CHAT_TO" message="Open a chat session with a user..."/>
 		<tip id="ID_NETWORK_CONNECT" message="Jungtis prie pasirinktų tinklų."/>
 		<tip id="ID_NETWORK_CONNECT_TO" message="Jungtis prie adresato rankiniu būdu..."/>
+		<tip id="ID_NETWORK_DC" message="Connect to the DC++ network."/>
 		<tip id="ID_NETWORK_DISCONNECT" message="Atsijungti nuo tinklų. Tai sustabdys visus išsiuntimus ir atsisiuntimus."/>
 		<tip id="ID_NETWORK_ED2K" message="Jungtis prie eDonkey tinklo."/>
 		<tip id="ID_NETWORK_EXIT" message="Baigti darbą su „Shareaza“"/>
 		<tip id="ID_NETWORK_G1" message="Jungtis prie pirminio Gnutella tinklo."/>
 		<tip id="ID_NETWORK_G2" message="Jungtis prie Gnutella2 tinklo (labai rekomenduojama)."/>
 		<tip id="ID_NETWORK_SEARCH" message="Pradėti naują paiešką tinkle..."/>
+		<tip id="ID_NEXT_PANE" message="Switch to the next window pane" tip="Sekantis eilėje"/>
+		<tip id="ID_OPEN_DOWNLOADS_FOLDER" message="Open my folder of completed Downloads"/>
+		<tip id="ID_PREV_PANE" message="Pereiti prie ankstesnio failo veikiančiame grojaraštyje." tip="Ankstesnis"/>
+		<tip id="ID_SCHEDULER_ACTIVATE" message="Pašalinti iš išsiunčiamų failų sąrašo pasirinktą failą(-us)."/>
+		<tip id="ID_SCHEDULER_ADD" message="Adds a new task to scheduler list."/>
+		<tip id="ID_SCHEDULER_DEACTIVATE" message="Jungtis prie pasirinktų tinklų."/>
+		<tip id="ID_SCHEDULER_EDIT" message="Taisyti pasirinktą saugos taisyklę..."/>
+		<tip id="ID_SCHEDULER_REMOVE" message="Pašalinti pasirinktą failą(-us) iš sąrašo."/>
+		<tip id="ID_SCHEDULER_REMOVE_ALL" message="Removes all scheduled tasks."/>
 		<tip id="ID_SEARCH_CHAT" message="Pradėti pokalbio sesiją su pasirinktu naudotoju."/>
 		<tip id="ID_SEARCH_CLEAR" message="Išvalyti radinius."/>
 		<tip id="ID_SEARCH_COLUMNS" message="Pasirinkti, kuriuos meta duomenų stulpelius rodyti..."/>
@@ -2547,9 +2584,22 @@
 		<tip id="ID_SECURITY_POLICY_DENY" message="Nustatyti, kad saugos politika, draudžianti visų adresatų prieigą, būtų numatytąja."/>
 		<tip id="ID_SECURITY_REMOVE" message="Pašalinti pasirinktą(-as) saugos taisyklę(-es)."/>
 		<tip id="ID_SECURITY_RESET" message="Apnulinti pasirinktų saugos taisyklių kreipinių skaitliukus."/>
+		<tip id="ID_SHAREMONKEY_BUY" message="Buy it and support the author"/>
+		<tip id="ID_SHAREMONKEY_COMPARE" message="Compare prices in different stores"/>
+		<tip id="ID_SHAREMONKEY_DOWNLOAD" message="_Ieškoti šito"/>
+		<tip id="ID_SHAREMONKEY_NEXT" message="Go to the next match"/>
+		<tip id="ID_SHAREMONKEY_PREVIOUS" message="Go to the previous match"/>
+		<tip id="ID_SHAREMONKEY_PRICES" message="Pereiti prie ankstesnio failo veikiančiame grojaraštyje."/>
+		<tip id="ID_SHAREMONKEY_SAVE" message="Parodyti failą mano kolekcijoje"/>
 		<tip id="ID_SYSTEM_CLEAR" message="Valyti būsenos žurnalą."/>
+		<tip id="ID_SYSTEM_COPY" message="Copy selected line(s) of status log."/>
 		<tip id="ID_SYSTEM_TIMESTAMP" message="Registruoti laiką kiekvienoje eilutėje."/>
 		<tip id="ID_SYSTEM_VERBOSE" message="Rodyti išsamų sistemos aktyvumo žurnalą."/>
+		<tip id="ID_SYSTEM_VERBOSE_DEBUG" message="Rodyti legendą."/>
+		<tip id="ID_SYSTEM_VERBOSE_ERROR" message="Rodyti legendą."/>
+		<tip id="ID_SYSTEM_VERBOSE_INFO" message="Rodyti tinklelį."/>
+		<tip id="ID_SYSTEM_VERBOSE_NOTICE" message="Display notices and above."/>
+		<tip id="ID_SYSTEM_VERBOSE_WARNING" message="Rodyti tinklelį."/>
 		<tip id="ID_TAB_CONNECT" message="Jungtis ar atsijungti nuo tinklo."/>
 		<tip id="ID_TAB_HOME" message="Grįžti į „Shareaza“ pradžios puslapį"/>
 		<tip id="ID_TAB_IRC" message="Rodyti IRC pokalbių langą."/>
@@ -2600,6 +2650,7 @@
 		<tip id="ID_VIEW_NEIGHBOURS" message="Rodyti arba paslėpti „KAIMYNŲ“ langą."/>
 		<tip id="ID_VIEW_PACKETS" message="Rodyti arba paslėpti „PAKETŲ IŠVESTIES“ langą."/>
 		<tip id="ID_VIEW_RESULTS_MONITOR" message="Rodyti arba paslėpti „KREIPINIŲ MONITORIAUS“ langą."/>
+		<tip id="ID_VIEW_SCHEDULER" message="Rodyti ar paslėpti „APSAUGOS“ langą."/>
 		<tip id="ID_VIEW_SEARCH_MONITOR" message="Rodyti arba paslėpti „PAIEŠKOS UŽKLAUSŲ MONITORIAUS“ langą."/>
 		<tip id="ID_VIEW_SECURITY" message="Rodyti ar paslėpti „APSAUGOS“ langą."/>
 		<tip id="ID_VIEW_SYSTEM" message="Rodyti arba paslėpti „SISTEMOS“ langą."/>
@@ -2607,6 +2658,10 @@
 		<tip id="ID_VIEW_TRAFFIC" message="Rodyti arba paslėpti „GRAFIKŲ“ langą."/>
 		<tip id="ID_VIEW_UPLOADS" message="Rodyti arba paslėpti „IŠSIUNTIMŲ“ langą."/>
 		<tip id="ID_VIEW_WINDOWED" message="Perjunkite „Shareaza“ į langų veikseną, skirtą patyrusiems naudotojams."/>
+		<tip id="ID_WEBSERVICES_LIST" message="Pasirinkite paslaugą internete ir gaukite daugiau informacijos apie pasirinktą failą."/>
+		<tip id="ID_WEBSERVICES_MUSICBRAINZ" message="Ieškokite failo informacijos naudodamiesi ShareMonkey tarnyba."/>
+		<tip id="ID_WEBSERVICES_SHAREMONKEY" message="Ieškokite failo informacijos naudodamiesi ShareMonkey tarnyba."/>
+		<tip id="ID_WINDOW_ARRANGE" message="Arrange icons at the bottom of the window" tip="Arrange Icons"/>
 		<tip id="ID_WINDOW_CASCADE" message="Išdidinti visus atvertus langus, užpildant visą ekraną."/>
 		<tip id="ID_WINDOW_MONITOR" message="Rodyti ar paslėpti siuntimo srauto monitorių."/>
 		<tip id="ID_WINDOW_NAVBAR" message="Rodyti ar paslėpti naršymo juostą."/>
@@ -2615,8 +2670,6 @@
 		<tip id="ID_WINDOW_TILE_HORZ" message="Išdėstyti atvertus langus iš kairės į dešinę, neuždengiant vienas kito."/>
 		<tip id="ID_WINDOW_TILE_VERT" message="Išdėstyti atvertus langus iš viršaus į apačią, neuždengiant vienas kito."/>
 		<tip id="ID_WINDOW_TOOLBAR" message="Rodyti ar paslėpti įrankių juostą."/>
-		<tip id="ID_WEBSERVICES_LIST" message="Pasirinkite paslaugą internete ir gaukite daugiau informacijos apie pasirinktą failą."/>
-		<tip id="ID_WEBSERVICES_SHAREMONKEY" message="Ieškokite failo informacijos naudodamiesi ShareMonkey tarnyba."/>
 		<!-- PLUGIN TIPS -->
 		<tip id="ImageViewer_BestFit" message="Keisti paveikslėlio dydį, kad tilptų į langą."/>
 		<tip id="ImageViewer_ActualSize" message="Rodyti natūralaus dydžio paveikslėlį."/>
@@ -2653,23 +2706,6 @@
 		<string id="WINDOW_HELP" value="„Shareaza“ žinynas"/>
 		<string id="WINDOW_IRC" value="Shareaza pokalbiai"/>
 		<string id="WINDOW_SCHEDULER" value="Scheduler"/>
-		<string id="154" value="Are you sure you want to remove all scheduled tasks? This cannot be undone."/>
-		<string id="156" value="Scheduled time has already passed.\n\nPlease select a time in the future."/>
-		<string id="157" value="Bandwidth: Full Speed"/>
-		<string id="158" value="Bandwidth: Reduced Speed"/>
-		<string id="159" value="Bandwidth: Stop"/>
-		<string id="160" value="System: Exit Shareaza"/>
-		<string id="161" value="System: Disconnect Dial-up Connection"/>
-		<string id="162" value="System: Turn Off the Computer"/>
-		<string id="163" value="Please select a task."/>
-		<string id="164" value="Specific day(s) of week"/>
-		<string id="165" value="Aktyvus"/>
-		<string id="166" value="Neaktyvus"/>
-		<string id="167" value="Done"/>
-		<string id="168" value="Waiting..."/>
-		<string id="169" value="No Tasks Currently Scheduled"/>
-		<string id="172" value="Done Today"/>
-		<string id="173" value="You should select at least one day of week."/>
 		<string id="7000" value="Ar tikrai norite pašalinti šį filtrą?"/>
 		<string id="7001" value="&amp;Schemos"/>
 		<string id="7002" value="Skirtingos reikšmės"/>
@@ -2689,9 +2725,7 @@
 		<string id="8007" value="Nėra aktyvių paieškos procesų. Pradėkite paiešką paspaudę čia."/>
 		<string id="8008" value="„Shareaza“ baigė parsisiųsti naujesnę „Shareaza“ versiją (%s). Ar norite dabar atnaujinti?\n\nJei pasirinksite „Taip“, „Shareaza“ laikinai baigs savo darbą, kol vyks atnaujinimas."/>
 		<string id="8009" value="Ar tikrai norite ištrinti „%s“ apvalkalą? Atstatyti vėliau bus neįmanoma."/>
-		<string id="8010" value="Tai priešišleidžiamoji „Shareaza“ versija, beta testavimo periodas baigėsi. Parsisiųskite pilną oficialią programos laidą iš http://shareaza.sourceforge.net/."/>
 		<string id="8011" value="Pakeitus peržiūros būdą, visi atverti langai bus uždaryti. Ar norite keisti tuoj pat?"/>
-		<string id="8012" value="Torrent informacija"/>
 		<string id="8013" value="Nėra naujų Shareaza versija aptikti."/>
 		<string id="8014" value="Atsisiunčiamo failo savybės"/>
 		<string id="8060" value="Mazgas/Vedančiojo veiksena su %lu kaimynais(-ų). %s asmeninėje kolekcijoje."/>
@@ -2759,7 +2793,7 @@
 		<string id="8178" value="Koks tai failo tipas?"/>
 		<string id="8179" value="(Valyti paieškos žurnalą)"/>
 		<string id="8180" value="Failo dydis turi būti"/>
-		<string id="8181" value=" iki"/><!-- size from xx TO xx-->
+		<string id="8181" value=" to (size from xx TO xx)"/>
 		<string id="8208" value="„Shareaza“ kuria maišą (tapatyb. kodą) failui (liko %Iu):"/>
 		<string id="8223" value="%i d. ir %i val."/>
 		<string id="8224" value="„Shareaza“ siunčiasi:"/>
@@ -2779,7 +2813,7 @@
 		<string id="8239" value="Baigta"/>
 		<string id="8240" value="„Shareaza“ perkelia parsisiųstą failą:"/>
 		<string id="8241" value="„Shareaza“ ieško klaidų parsisiųstame faile:"/>
-		<string id="8243" value="Išsiunt. santykis:"/>
+		<string id="8243" value="Išsiuntimų sritis"/>
 		<string id="8244" value="Apžvalgų skaičius:"/>
 		<string id="8288" value="Naršoma Jūsų „Shareaza“ kolekcija"/>
 		<string id="8289" value="Naršomas "/>
@@ -2841,10 +2875,9 @@
 		<string id="16077" value="Adresas %s jau yra blokuojamas pagal Jūsų saugos taisykles."/>
 		<string id="16078" value="Pridėta %s adreso blokavimo saugos taisyklė."/>
 		<string id="16079" value="Ar tikrai norite atsijungti?"/>
-		<string id="16080" value="Jūsų planuotojas veikia tik G2 tinklo veiksenoje. Ar norite išjungti šią veikseną, kad visi aktyvūs tinklai liktų prijungti?"/>
+		<string id="16080" value="Jūsų kompiuteris nėra prijungtas prie tinklo."/>
 		<string id="16081" value="Siunčiama užklausa failui „%s“ adresatui %s."/>
 		<string id="16083" value="Dirbtinis Jūsų kompiuterio veiksenos pakeitimas į mazgo veikseną gali sukelti nepageidaujamą poveikį našumui ir P2P tinklui. Geriau leisti, kad „Shareaza“ pati nuspręstų, ar tapti mazgu, ar ne.\n\nMazgo veiksena NEDUODA daugiau radinių ir nesuteikia Jums jokių pranašumų.\n\nAr tikrai norite tęsti, nežiūrint į visas kliūtis, kurias tai gali sukelti?"/>
-		<string id="16084" value="Atjungus Gnutella-1 protokolų palaikymą, radinių gali sumažėti, ir, jei Jūs veiksite kaip mazgas, tai gali paveikti ir kitų naudotojų paiešką. Ar tikrai norite tęsti?"/>
 		<string id="16085" value="Gnutella2 - tai „Shareaza“ programos pagrindinis tinklas. Atjungus jo palaikymą, gali labai sumažėti tiek radinių skaičius, tiek ir jų kokybė. Ar TIKRAI norite tęsti?"/>
 		<string id="16087" value="Jūsų išeinanti greitaveika yra per maža šio tinklo įgalinimui"/>
 		<string id="16128" value="Priimtas įeinantis susijungimas su %s per %i prievadą."/>
@@ -2875,6 +2908,7 @@
 		<string id="16157" value="Kaimynas adresu %s nėra mazgas, nutraukiamas ryšys."/>
 		<string id="16158" value="Gnutella ryšys su kaimynu %s užmegztas sėkmingai (%s)."/>
 		<string id="16159" value="Nutraukiamas ryšys su ne-Gnutella2 kaimynu %s."/>
+		<string id="16191" value="Received a packet from %s for %s which excess query limits, ignoring."/>
 		<string id="16192" value="Kaimynas adresu %s persiuntė pernelyg didelį paketą, ryšys nutraukiamas."/>
 		<string id="16193" value="Kaimynas adresu %s persiuntė paketą su nuliniu TTL, ignoruojama."/>
 		<string id="16194" value="Kaimynas adresu %s persiuntė paketą su pernelyg dideliu TTL, paketas šalinamas (TTL=%i, šuolių=%i)."/>
@@ -3015,6 +3049,7 @@
 		<string id="16375" value="Daliniai"/>
 		<string id="16376" value="Visi failai"/>
 		<string id="16377" value="HTTP saugančioji"/>
+		<string id="16378" value="Host &quot;%s&quot; sent a 416, without providing available ranges. Closing connection."/>
 		<string id="16379" value="Kolekcijos failai"/>
 		<string id="16384" value="Ar tikrai norite vykdyti failą „%s“ ?\n\nKai kurie failai gali pakenkti Jūsų kompiuteriui. Įsitikinkite, kas tai per failas, prieš vykdydami jį."/>
 		<string id="16385" value="Jūs ruošiatės pakeisti %i failų(-os) meta duomenis. Ar tikrai norite tęsti?"/>
@@ -3074,6 +3109,7 @@
 		<string id="16526" value="Gnutella atmesti paketai"/>
 		<string id="16527" value="Gnutella prarasti paketai"/>
 		<string id="16528" value="Gnutella vietinės užklausos"/>
+		<string id="16529" value="Gnutella vietinės užklausos"/>
 		<string id="16532" value="Bendra TCP gavimų greitaveika"/>
 		<string id="16533" value="Bendra TCP išsiuntimų greitaveika"/>
 		<string id="16534" value="Bendra UDP gavimų greitaveika"/>
@@ -3142,12 +3178,11 @@
 		<string id="16944" value="Rasta %i bendrintų failų(-ai) %s kolekcijoje."/>
 		<string id="16991" value="Shareaza grotuvas"/>
 		<string id="16992" value="„Shareaza“ nesugebėjo sukurti atmintyje Grotuvo paslaugų papildinio objekto. Įdiekite „Shareaza“ iš naujo ir įsitikinkite, kad Jūs turite įdiegę reikalingus grotuvo kodekus bei išvesties tvarkykles."/>
-		<string id="16993" value="Visi grotuvo failai|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Grojaraščiai|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Garso failai|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|Vaizdo failai|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|CD garso takeliai|*.cda|MIDI failai|*.mid;*.rmi;*.midi|Visi failai|*.*||"/>
 		<string id="16994" value="Neįmanoma įkelti grotuvo failo „%s“"/>
 		<string id="16995" value="Failas turbūt sugadintas arba Jūs galbūt neturite reikiamo šio failui grojimui kodeko."/>
 		<string id="16996" value="Dalies šio failo neįmanoma atlikti. Jums reikėtų parsisiųsti papildomų kodekų."/>
 		<string id="16997" value="Joks failas negrojamas. Grojimui spragtelkite grotuvo failą savo kolekcijoje."/>
-		<string id="16998" value="S     H     A     R     E     A     Z     A           M     E     D     I     J     A           S     I     S     T     E     M     A"/><!-- on one line -->
+		<string id="16998" value="S     H     A     R     E     A     Z     A           M     E     D     I     J     A           S     I     S     T     E     M     A"/>
 		<string id="16999" value="G R O J A R A Š T I S"/>
 		<string id="17017" value="Kalbėk:"/>
 		<string id="17018" value="Sveiki! Čia Shareaza pokalbiai!"/>
@@ -3247,6 +3282,7 @@
 		<string id="17477" value="BitTorrent adresato %s atsakyme nurodytas ne tas failas."/>
 		<string id="17478" value="BitTorrent adresatas %s užklausė nežinomo failo."/>
 		<string id="17479" value="BitTorrent ryšys su adresatu %s užmegztas failui „%s“ siųstis."/>
+		<string id="17480" value="BitTorrent adresatas %s užklausė nežinomo failo."/>
 		<string id="17481" value="Gautas BitTorrent aprašantysis failas: „%s“"/>
 		<string id="17482" value="Neįmanoma išnagrinėti įkelto BitTorrent failo „%s“."/>
 		<string id="17483" value="Iš BitTorrent seklio gauta klaida, susijusi su „%s“ : „%s“."/>
@@ -3265,7 +3301,6 @@
 		<string id="17496" value="Įvyko klaida kopijuojant „%s“ į BitTorrent bendrintą failą."/>
 		<string id="17497" value="Įvyko nežinoma klaida mėginant skleisti failą „%s“."/>
 		<string id="17498" value="Faile „%s“ aptikta klaida."/>
-		<string id="17500" value="Seklys neatsakė — anonsavimas kartojamas (%i iš %i)."/>
 		<string id="17501" value="Neįmanoma susisiekti su sekliu."/>
 		<string id="17503" value="Nesėkmingas bandymas — Bandomas kitas seklys (%i iš %i)"/>
 		<string id="17505" value="BitTorrent ryšys su adresatu %s nutrūko susijungimo metu."/>
@@ -3278,12 +3313,6 @@
 		<string id="17514" value="Atnaujinami BitTorrent atsisiuntimai..."/>
 		<string id="17515" value="Konvertuojamas torrent failas:"/>
 		<string id="18496" value="Jūs pakeitėte vardą. Ar tikrai norite pervardinti šį parsisiunčiamą failą?"/>
-		<string id="18497" value="Jūs įrašėte SHA1 reikšmę, tačiau ji yra neteisinga. Pasitikrinkite ir mėginkite dar kartą."/>
-		<string id="18498" value="Jūs įrašėte šakninę dryžinės maišos (tiger-tree) reikšmę, tačiau ji yra neteisinga. Pasitikrinkite ir mėginkite dar kartą."/>
-		<string id="18499" value="Jūs įrašėte eDonkey maišos reikšmę, tačiau ji yra neteisinga. Pasitikrinkite ir mėginkite dar kartą."/>
-		<string id="18500" value="Jūs pateikėte SHA1 maišos reikšmę, kuri skiriasi nuo reikšmės, priskirtos šiam parsisiunčiamam failui. Ar tikrai įsitikinę, kad norite pakeisti SHA1 maišą?"/>
-		<string id="18501" value="Jūs pateikėte šakninę dryžinės (tiger-tree) maišos reikšmę, kuri skiriasi nuo reikšmės, priskirtos šiam parsisiunčiamam failui. Ar tikrai įsitikinę, kad norite pakeisti šakninę dryžinę maišą?"/>
-		<string id="18502" value="Jūs pateikėte eDonkey maišos reikšmę, kuri skiriasi nuo reikšmės, priskirtos šiam parsisiunčiamam failui. Ar tikrai įsitikinę, kad norite pakeisti eDonkey maišą?"/>
 		<string id="18503" value="Ar tikrai norite, kad būtų užmiršta esamos patikros būklė? Visi parsisiųsti duomenys bus laikomi nepatikimais, o talpykla su maišų medžiais ir rinkiniais bus išvalyta."/>
 		<string id="18504" value="Ar tikrai norite, kad būtų užmiršti visi šaltiniai pažymėtam failui?"/>
 		<string id="18505" value="Įveskite teisingus trinimo rėžius. „Nuo“ lauke nurodomas pirmasis trinamas baitas, o „iki“ lauke — paskutinis."/>
@@ -3293,13 +3322,19 @@
 		<string id="18509" value="Negalima nustatyti, kad šio failo parsisiuntimas baigtas, ir atlikti patikrą iš naujo, nes kol kas nėra jokių dalinių patikros duomenų, tokių kaip dryžinės (tiger-tree) maišos apimtis, eDonkey ar BitTorrent maišos rinkiniai. Be patikros informacijos parsisiunčiamam failui negali būti atlikta patikra."/>
 		<string id="18510" value="Ar tikrai norite nustatyti, kad šio failo parsisiuntimas baigtas ir atlikti jos patikrą? Bus peržiūrimas visas failas, ir „Shareaza“ priims tas dalis, kurios praeis patikrą, o tas dalis, kurios nepraeis patikros, atsiųs iš naujo."/>
 		<string id="18511" value="Jūs pakeitėte failo dydį. Ar tikrai norite jį pakeisti šiam parsisiunčiamam failui?"/>
+		<string id="18512" value="Atšaukti siuntimą bet išsaugoti dalinį failą(-us)"/>
+		<string id="18513" value="Jūs įrašėte eDonkey maišos reikšmę, tačiau ji yra neteisinga. Pasitikrinkite ir mėginkite dar kartą."/>
+		<string id="18514" value="Jūs pateikėte SHA1 maišos reikšmę, kuri skiriasi nuo reikšmės, priskirtos šiam parsisiunčiamam failui. Ar tikrai įsitikinę, kad norite pakeisti SHA1 maišą?"/>
 		<string id="19000" value="Nuotolinė prieiga neįgalinta."/>
 		<string id="19001" value="Jūs privalote įrašyti naudotojo vardą ir slaptažodį."/>
 		<string id="19002" value="Neįmanoma priimti susijungimų, nuoroda nepasiekiama."/>
+		<string id="19103" value="Sveiki! Čia Shareaza pokalbiai!"/>
+		<string id="19104" value="Gerbkite kitus naudodamiesi šia paslauga"/>
+		<string id="19105" value="Pokalbiai"/>
 		<string id="20000" value="Nėra universalių šaltinių vardų."/>
 		<string id="20001" value="Užverti"/>
 		<string id="20002" value="iš"/>
-		<string id="20003" value="Sąsajos krypties pakeitimui reikalinga startuoti iš naujo. \nJums reikės paleisti „Shareaza“ programą rankiniu būdu. Ar baigti darbą dabar?"/>
+		<string id="20003" value="Changing language requires application restart.\nRestart now?"/>
 		<string id="20005" value="Ne"/>
 		<string id="20006" value="Taip"/>
 		<string id="20007" value="Auto"/>
@@ -3309,6 +3344,7 @@
 		<string id="20011" value="&amp;Toliau"/>
 		<string id="20012" value="Baigti"/>
 		<string id="20013" value="Visi"/>
+		<string id="20014" value="Šios parinkties naudojimas reikalauja Bitzi.com paslaugos pasirinktiems failams atpažinti ir dalintis su kitais failo informacija.\n\nShareaza persiųs pasirinkto failo(-ų) SHA1 maišą(-as), kuri reikalinga(-os) užklausoms Bitzi duomenų bazėje. Jei Jums svarbus slaptumas, Jūs galbūt norėsite susipažinti su Bitzi.com privatumo laidavimo dokumentu.\n\nAr norite tęsti?"/>
 		<string id="20100" value="Jungiamasi"/>
 		<string id="20101" value="Užklausiama"/>
 		<string id="20102" value="Atsakas"/>
@@ -3347,13 +3383,6 @@
 		<string id="20135" value="Tolesnis"/>
 		<string id="20136" value="Eil."/>
 		<string id="20137" value="šaltinių"/>
-		<string id="20200" value="Sekmadienis"/>
-		<string id="20201" value="Pirmadienis"/>
-		<string id="20202" value="Antradienis"/>
-		<string id="20203" value="Trečiadienis"/>
-		<string id="20204" value="Ketvirtadienis"/>
-		<string id="20205" value="Penktadienis"/>
-		<string id="20206" value="Šeštadienis"/>
 		<string id="20210" value="(Be įvertinimo)"/>
 		<string id="20211" value="Klastotė / Sugadinta"/>
 		<string id="20212" value="Prasta"/>
@@ -3362,7 +3391,6 @@
 		<string id="20215" value="Labai gera"/>
 		<string id="20216" value="Puiki"/>
 		<string id="20217" value="Pasirinkite eDonkey/eMule temp aplanką:"/>
-		<!-- Column headers in Library Album View -->
 		<string id="20230" value="Nr."/>
 		<string id="20231" value="Pavadinimas"/>
 		<string id="20232" value="Trukmė"/>
@@ -3379,9 +3407,28 @@
 		<string id="20243" value="Tęsti"/>
 		<string id="20244" value="&amp;Prisiminti mano pasirinkimą kitą kartą"/>
 		<string id="20245" value="New Folder"/>
-		<string id="32825" value="Open my folder of completed Downloads"/>
-		<string id="32773" value="Check for new version"/>
-		<string id="61215" value="Activate this window"/>
+		<string id="20246" value="Command-line options:\n\n-tray : Disable startup splash screen and send application to tray\n-nosplash : Disable startup splash screen\n-nowarn : Disable alpha (daily builds) version warning dialog\n-wait : Wait for other application instance exit\n\nInterface modes:\n\n-basic : Start application in Basic interface mode\n-tabbed : Start application in Tabbed interface mode\n-windowed : Start application in Windowed interface mode\n\nSystem options:\n\n-RegServer : Register internal components for everyone\n-UnRegServer : Un-register internal components for everyone\n-RegServerPerUser : Register internal components for current user\n-UnRegServerPerUser : Un-register internal components for current user"/>
+		<string id="20247" value="Failed to load metadata schemas. Please reinstall application."/>
+		<string id="20248" value="Jūs nenurodėte, kokius aplankus bendrinti. Ar tikrai tęsti?"/>
+		<string id="20249" value="Off"/>
+		<string id="20250" value="Low"/>
+		<string id="20251" value="Įprastinė _veiksena"/>
+		<string id="20252" value="High"/>
+		<string id="20253" value="Skin load error: %s. Element: %s"/>
+		<string id="20254" value="Loading skin: %s"/>
+		<string id="20255" value="Are you sure you want to remove all scheduled tasks? This cannot be undone."/>
+		<string id="20256" value="Ieškoti P2P tinkle"/>
+		<string id="20257" value="Bandwidth: Full Speed"/>
+		<string id="20258" value="Bandwidth: Reduced Speed"/>
+		<string id="20259" value="Bandwidth: Stop"/>
+		<string id="20260" value="System: Exit Shareaza"/>
+		<string id="20261" value="System: Disconnect Dial-up Connection"/>
+		<string id="20262" value="System: Turn Off the Computer"/>
+		<string id="20263" value="Aktyvus"/>
+		<string id="20264" value="Neaktyvus"/>
+		<string id="20265" value="Done"/>
+		<string id="20266" value="Waiting..."/>
+		<string id="20267" value="No Tasks Currently Scheduled"/>
 	</strings>
 	<!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 	<!-- Don't edit dialogs manualy! Use DialogScan feature instead -->
@@ -3513,7 +3560,7 @@
 			<control caption="Prievadas:"/>
 			<control/>
 		</dialog>
-		<dialog name="CWebSettingsPage" cookie="BuStBuBuBuBuBuBuBuCoBuBuSt" caption="Žiniatinklis">
+		<dialog name="CWebSettingsPage" cookie="BuStBuBuBuBuBuBuBuBuCoBuBuSt" caption="Žiniatinklis">
 			<control caption="_Lygiaverčio tarptinklinio ryšio nuorodos:"/>
 			<control caption="Naudoti „Shareaza“ šių tipų nuorodoms atverti:"/>
 			<control caption="Magnet ( magnet: )"/>
@@ -3521,6 +3568,7 @@
 			<control caption="eDonkey ( ed2k: )"/>
 			<control caption="Piolet ( mp2p: )"/>
 			<control caption="BitTorrent ( .torrent )"/>
+			<control caption="DC++ ( dchub: )"/>
 			<control caption="_Parsisiuntimų tvarkytuvė:"/>
 			<control caption="Naudoti „Shareaza“ tvarkant visus mano parsisiuntimus iš interneto:"/>
 			<control/>
@@ -3558,12 +3606,12 @@
 			<control/>
 			<control/>
 		</dialog>
-		<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStCoStCoBuBu" caption="Atsisiuntimai">
+		<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuStCoBuStEdmsStEdmsStEdmsBuStCoStCoBuBuEdBu" caption="Atsisiuntimai">
 			<control caption="Saugoti _parsiųstus failus čia:"/>
 			<control/>
 			<control/>
-			<control caption="Laikyti _nebaigtus siųstis failus čia:"/>
-			<control/>
+			<control caption="Scan every completed file with AntiVirus"/>
+			<control caption="Šablonai:"/>
 			<control/>
 			<control caption="Parsisiuntimų _skaičius:"/>
 			<control caption="Daugiausiai failų:"/>
@@ -3580,8 +3628,10 @@
 			<control/>
 			<control caption="Maksimalus eilės dydis:"/>
 			<control/>
-			<control/>
 			<control caption="Failų mainus vykdyti tik tinkluose, prie kurių prisijungta."/>
+			<control caption="Laikyti _nebaigtus siųstis failus čia:"/>
+			<control/>
+			<control/>
 		</dialog>
 		<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStCoStCoBuSyBuBuBuSt" caption="Išsiuntimai">
 			<control caption="Pa_rinktys:"/>
@@ -3612,48 +3662,11 @@
 			<control caption="„Shareaza“ nuotolinės prieigos funkcija leidžia jums, naudojantis naršykle, kontroliuoti nuotoliniu būdu „Shareaza“ programą, paliktą veikiančią savo kompiuteryje. Šios funkcijos naudojimuisi reikia, kad kompiuteris priimtų įeinančius susijungimus (t.y. teisingai suderintas maršrutizatorius ir t.t.)."/>
 			<control caption="Įg_alinti:"/>
 			<control caption="Įgalinti nuotolinę prieigą prie „Shareaza“ programos"/>
-			<control caption="Nuoroda"/>
+			<control/>
 			<control caption="Autentifikacijos _duomenys:"/>
 			<control caption="Naudotojo vardas:"/>
 			<control/>
 			<control caption="Slaptažodis:"/>
-			<control/>
-		</dialog>
-		<dialog name="CScheduleTaskDlg" cookie="BuBuBuBuSySyBuBuBuBuBuBuBuBuCoEdmsEdmsEdmsBuBuEdBuStStStStStStStBuBu" caption="Schedule Item">
-			<control caption="Gerai"/>
-			<control caption="Atšaukti"/>
-			<control caption="Only once"/>
-			<control caption="On specific day(s) of week"/>
-			<control/>
-			<control/>
-			<control caption="Sekmadienis"/>
-			<control caption="Pirmadienis"/>
-			<control caption="Antradienis"/>
-			<control caption="Trečiadienis"/>
-			<control caption="Ketvirtadienis"/>
-			<control caption=" Friday"/>
-			<control caption="Šeštadienis"/>
-			<control caption="Visi"/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control caption=" _Toggle bandwidth independently"/>
-			<control caption=" _Limit network to Gnutella2"/>
-			<control/>
-			<control caption="Make this event active"/>
-			<control caption="Please select a date:"/>
-			<control caption="Please select a time:"/>
-			<control caption="Select the event type:"/>
-			<control caption="Description: (optional)"/>
-			<control caption="% of _bandwidth under limit"/>
-			<control caption="% of _download under limit"/>
-			<control caption="% of _upload under limit"/>
-			<control caption="Days Of Week"/>
-			<control caption="Run this event"/>
 			<control/>
 		</dialog>
 		<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Tinklai">
@@ -4528,6 +4541,25 @@
 			<control caption="Atšaukti"/>
 			<control caption="Įveskite kanalą, kurį norite pridėti:|Įveskite veiksmo priežastį:"/>
 		</dialog>
+		<dialog name="CScheduleTaskPage" cookie="StCoBuEdmsEdmsBuBuBuBuBuStStStBuBu" caption="Veiksmas">
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control caption="Gnutella1"/>
+			<control caption="Gnutella2"/>
+			<control caption="eDonkey"/>
+			<control caption="DC++"/>
+			<control caption="BitTorrent"/>
+			<control caption="Select the event type:"/>
+			<control caption="% of _download under limit"/>
+			<control caption="% of _upload under limit"/>
+			<control caption="Tinklai"/>
+			<control caption="Greitaveika"/>
+		</dialog>
 	</dialogs>
 	<!-- Columns Definitions -->
 	<listColumns>
@@ -4666,6 +4698,14 @@
 			<column from="Rating" to="Įvertinimas"/>
 			<column from="Comments" to="Komentarai"/>
 			<column from="Order" to="Eilė"/>
+		</list>
+		<list name="CSchedulerWnd">
+			<column from="Action" to="Veiksmas"/>
+			<column from="Trigger" to="Dryžinė maiša"/>
+			<column from="Next Run" to="Tolesnis"/>
+			<column from="Active" to="Aktyvus"/>
+			<column from="Status" to="Būklė"/>
+			<column from="Description" to="Aprašas"/>
 		</list>
 	</listColumns>
 </skin>
