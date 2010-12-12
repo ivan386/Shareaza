@@ -44,8 +44,8 @@ public:
 	bool Extract(LPCTSTR szSrc, LPCTSTR szDst) throw()
 	{
 		bool ret = false;
-		char* pBuf;
-		DWORD dwSize;
+		char* pBuf = NULL;
+		DWORD dwSize = 0;
 		if ( Extract( szSrc, &pBuf, &dwSize ) )
 		{
 			HANDLE hFile = CreateFile( szDst, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL );
@@ -59,6 +59,7 @@ public:
 			}
 			CloseHandle( hFile );
 		}
+		delete [] pBuf;
 		return ret;
 	}
 
@@ -178,10 +179,12 @@ bool ProcessReport(const CString& sInput)
 		if ( ! pZip.Open( sInput ) )
 			return false;
 		char* pBuf = NULL;
-		if ( ! pZip.Extract( _T("errorlog.xml"), &pBuf ) )
-			return false;
-		hr = pFile->loadXML( CComBSTR( pBuf ), &ret );
+		bool res = pZip.Extract( _T("errorlog.xml"), &pBuf );
+		if ( res )
+			hr = pFile->loadXML( CComBSTR( pBuf ), &ret );
 		delete [] pBuf;
+		if ( ! res )
+			return false;
 	}
 	else
 	{
