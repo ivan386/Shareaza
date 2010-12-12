@@ -1814,7 +1814,7 @@ BOOL CMediaFrame::OpenFile(LPCTSTR pszFile)
 
 	{
 		CSingleLock oLock( &Library.m_pSection, TRUE );
-		if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( m_sFile ) )
+		if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( pszFile ) )
 		{
 			m_pMetadata.Add( _T("Filename"), pFile->m_sName );
 			m_pMetadata.Setup( pFile->m_pSchema, FALSE );
