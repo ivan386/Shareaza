@@ -218,6 +218,10 @@ void CRemoteSettingsPage::OnCancel()
 
 void CRemoteSettingsPage::OnSkinChange()
 {
+	if ( ! IsWindow( GetSafeHwnd() ) )
+		// Not created yet page
+		return;
+
 	CSettingsPage::OnSkinChange();
 
 	OnBnClickedRemoteEnable();
