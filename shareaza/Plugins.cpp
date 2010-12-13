@@ -649,8 +649,11 @@ BOOL CPlugin::Start()
 	m_nCapabilities = 0;
 	hr = m_pPlugin->QueryCapabilities( &m_nCapabilities );
 
+	ASSERT( ! m_pCommand );
 	hr = m_pPlugin->QueryInterface( IID_ICommandPlugin, (void**)&m_pCommand );
+	ASSERT( ! m_pExecute );
 	hr = m_pPlugin->QueryInterface( IID_IExecutePlugin, (void**)&m_pExecute );
+	ASSERT( ! m_pChat );
 	hr = m_pPlugin->QueryInterface( IID_IChatPlugin, (void**)&m_pChat );
 
 	return TRUE;
@@ -658,10 +661,34 @@ BOOL CPlugin::Start()
 
 void CPlugin::Stop()
 {
-	m_pChat.Release();
-	m_pExecute.Release();
-	m_pCommand.Release();
-	m_pPlugin.Release();
+	__try
+	{
+		m_pChat.Release();
+	}
+	__except( EXCEPTION_EXECUTE_HANDLER )
+	{
+	}
+	__try
+	{
+		m_pExecute.Release();
+	}
+	__except( EXCEPTION_EXECUTE_HANDLER )
+	{
+	}
+	__try
+	{
+		m_pCommand.Release();
+	}
+	__except( EXCEPTION_EXECUTE_HANDLER )
+	{
+	}
+	__try
+	{
+		m_pPlugin.Release();
+	}
+	__except( EXCEPTION_EXECUTE_HANDLER )
+	{
+	}
 }
 
 //////////////////////////////////////////////////////////////////////
