@@ -269,6 +269,7 @@ void CBrowseHostWnd::UpdateMessages(BOOL /*bActive*/)
 	CString strCaption, strOld;
 
 	m_wndHeader.Update( m_pBrowser );
+	m_wndProfile.Update( m_pBrowser );
 
 	LoadString( strCaption, IDR_BROWSEHOSTFRAME );
 	if ( Settings.General.LanguageRTL ) strCaption = _T("\x200F") + strCaption + _T("\x202E");

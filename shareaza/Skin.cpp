@@ -1735,24 +1735,27 @@ BOOL CSkin::LoadColourScheme(CXMLElement* pBase)
 		{
 			CString strName		= pXML->GetAttributeValue( _T("name") );
 			CString strValue	= pXML->GetAttributeValue( _T("value") );
-			ToLower( strName );
+			strName.MakeLower();
+
+			// Re-calculate all colors based on already loaded "system.base.*" colors, then load custom colors
+			if ( ! bNonBase )
+			{
+				if ( strName.Left( 12 ).CompareNoCase( _T("system.base.") ) == 0 )
+				{
+					bSystem = TRUE;
+				}
+				else if ( bSystem )
+				{
+					bNonBase = TRUE;
+					CoolInterface.CalculateColours( TRUE );
+				}
+			}
 
 			COLORREF* pColour;
-
 			if ( pColours.Lookup( strName, (void*&)pColour ) )
 			{
 				if ( strValue.GetLength() == 6 )
 				{
-					if ( strName.Find( _T("system.") ) >= 0 )
-					{
-						bSystem = TRUE;
-						if ( ! bNonBase && strName.Find( _T(".base.") ) < 0 )
-						{
-							bNonBase = TRUE;
-							CoolInterface.CalculateColours( TRUE );
-						}
-					}
-
 					int nRed = 0, nGreen = 0, nBlue = 0;
 					if ( _stscanf( strValue.Mid( 0, 2 ), _T("%x"), &nRed ) == 1 &&
 						 _stscanf( strValue.Mid( 2, 2 ), _T("%x"), &nGreen ) == 1 &&
@@ -1776,8 +1779,6 @@ BOOL CSkin::LoadColourScheme(CXMLElement* pBase)
 		else
 			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [colourScheme] element"), pXML->ToString() );
 	}
-
-	if ( bSystem && ! bNonBase ) CoolInterface.CalculateColours( TRUE );
 
 	return TRUE;
 }

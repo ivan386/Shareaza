@@ -109,6 +109,7 @@
 #define IDD_SHARE_MANAGER               208
 #define IDI_CONTACT_ICQ                 208
 #define IDD_PROFILE_AVATAR              209
+#define IDI_CONTACT_JABBER              209
 #define IDD_MEDIA_VIS                   210
 #define IDD_WIZARD_PROFILE              211
 #define IDI_COMPUTER_GRAY               212
