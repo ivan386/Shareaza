@@ -187,6 +187,7 @@ Source: "Skins\No Banner\*"; DestDir:  "{app}\Skins\No Banner";  Flags: ignoreve
 ; Source: "Skins\Winter\*";            DestDir: "{app}\Skins\Winter";            Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
 ; Source: "Skins\Valentine\*";         DestDir: "{app}\Skins\Valentine";         Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
 ; Source: "Skins\St. Patrick's Day\*"; DestDir: "{app}\Skins\St. Patrick's Day"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
+Source: "Skins\X-Mas\*";               DestDir: "{app}\Skins\X-Mas";             Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
 
 ; Templates
 Source: "Templates\*"; DestDir: "{app}\Templates"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
@@ -375,6 +376,7 @@ Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Skins"; ValueType: dword; ValueN
 Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Skins"; ValueType: dword; ValueName: "Winter\Winter.xml";                       ValueData: "0"; Flags: deletevalue uninsdeletevalue
 Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Skins"; ValueType: dword; ValueName: "Valentine\Valentine.xml";                 ValueData: "0"; Flags: deletevalue uninsdeletevalue
 Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Skins"; ValueType: dword; ValueName: "St. Patrick's Day\St. Patrick's Day.xml"; ValueData: "0"; Flags: deletevalue uninsdeletevalue
+Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Skins"; ValueType: dword; ValueName: "X-Mas\X-Mas.xml";                         ValueData: "1"; Flags: deletevalue uninsdeletevalue
 
 ; Disable extensions for plugins which make trouble
 ; Since it is image services plugin we need to add extensions required for the first run
@@ -955,6 +957,7 @@ End;
 #include "pages.iss"
 
 #expr SaveToFile("builds\Preprocessed.iss")
+
 
 
 

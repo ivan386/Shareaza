@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
+<manifest
+	name="X-Mas"
+	author="Ryo-oh-ki"
+	link="http://en.wikipedia.org/wiki/X-Mas"
+	email="ryo-oh-ki@narod.ru"
+	Description="Skin for X-Mas"
+	version="1.0"
+	type="Skin" />
+<watermarks>
+	<watermark target="Banner" path="X-Mas-banner.png" />
+	<watermark target="CHomeViewCtrl.Header1" path="X-Mas.png" />
+</watermarks>
+<colourScheme> 
+	<colour name="Dialog.Back" value="f9f9f9" />
+</colourScheme>
+</skin>
