@@ -826,7 +826,7 @@ int CHostCache::ImportHubList(CFile* pFile)
 			int nMaxusers = _tstoi( pHub->GetAttributeValue( _T("Maxusers") ) );
 
 			CHostCacheHostPtr pServer = DC.Add( NULL, DC_DEFAULT_PORT, 0,
-				_T("DC++"), 0, nUsers, nMaxusers, sAddress );
+				protocolNames[ PROTOCOL_DC ], 0, nUsers, nMaxusers, sAddress );
 			if ( pServer )
 			{
 				pServer->m_sName = pHub->GetAttributeValue( _T("Name") );

@@ -46,7 +46,7 @@ CDownloadTransferDC::CDownloadTransferDC(CDownloadSource* pSource, CDCClient* pC
 {
 	SetState( dtsConnecting );
 
-	m_sQueueName = _T("DC++");
+	m_sQueueName = protocolNames[ m_nProtocol ];
 }
 
 CDownloadTransferDC::~CDownloadTransferDC()

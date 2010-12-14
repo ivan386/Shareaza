@@ -56,12 +56,9 @@ CDCClient::CDCClient(LPCTSTR szNick)
 	TRACE( "[DC++] Creating client 0x%08x\n", (LPVOID)this );
 
 	if ( szNick ) m_sNick = szNick;
-	m_sUserAgent = _T("DC++");
-
+	m_sUserAgent = protocolNames[ m_nProtocol ];
 	m_mInput.pLimit = &Settings.Bandwidth.Request;
 	m_mOutput.pLimit = &Settings.Bandwidth.Request;
-
-	DCClients.Add( this );
 }
 
 CDCClient::~CDCClient()
@@ -172,6 +169,8 @@ BOOL CDCClient::ConnectTo(const IN_ADDR* pAddress, WORD nPort)
 		return FALSE;
 	}
 
+	DCClients.Add( this );
+
 	return TRUE;
 }
 
@@ -180,6 +179,8 @@ void CDCClient::AttachTo(CConnection* pConnection)
 	CTransfer::AttachTo( pConnection );
 
 	m_tConnected = GetTickCount();
+
+	DCClients.Add( this );
 }
 
 void CDCClient::Close(UINT nError)

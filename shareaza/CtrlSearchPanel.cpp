@@ -790,13 +790,13 @@ int CSearchAdvancedBox::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	CRect rc( 0, 0, 0, 0 );
 	CString strCaption;
 
-	if ( ! m_wndCheckBoxG2.Create( L"G2", WS_CHILD | WS_VISIBLE | WS_TABSTOP |
+	if ( ! m_wndCheckBoxG2.Create( protocolAbbr[ PROTOCOL_G2 ], WS_CHILD | WS_VISIBLE | WS_TABSTOP |
 		BS_CHECKBOX, rc, this, IDC_SEARCH_GNUTELLA2 ) ) return -1;
-	if ( ! m_wndCheckBoxG1.Create( L"G1", WS_CHILD | WS_VISIBLE | WS_TABSTOP |
+	if ( ! m_wndCheckBoxG1.Create( protocolAbbr[ PROTOCOL_G1 ], WS_CHILD | WS_VISIBLE | WS_TABSTOP |
 		BS_CHECKBOX, rc, this, IDC_SEARCH_GNUTELLA1 ) ) return -1;
-	if ( ! m_wndCheckBoxED2K.Create( L"eD2K", WS_CHILD | WS_VISIBLE | WS_TABSTOP |
+	if ( ! m_wndCheckBoxED2K.Create( protocolAbbr[ PROTOCOL_ED2K ], WS_CHILD | WS_VISIBLE | WS_TABSTOP |
 		BS_CHECKBOX, rc, this, IDC_SEARCH_EDONKEY ) ) return -1;
-	if ( ! m_wndCheckBoxDC.Create( L"DC++", WS_CHILD | WS_VISIBLE | WS_TABSTOP |
+	if ( ! m_wndCheckBoxDC.Create( protocolAbbr[ PROTOCOL_DC ], WS_CHILD | WS_VISIBLE | WS_TABSTOP |
 		BS_CHECKBOX, rc, this, IDC_SEARCH_DC ) ) return -1;
 	
 	m_wndCheckBoxG2.SetFont( &theApp.m_gdiFontBold );
