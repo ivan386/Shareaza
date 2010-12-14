@@ -508,13 +508,7 @@ bool CDownloadTransferBT::SendFragmentRequests()
 				theApp.Message( MSG_INFO, IDS_DOWNLOAD_FRAGMENT_REQUEST,
 					nOffset, nOffset + nLength - 1,
 					(LPCTSTR)m_pDownload->GetDisplayName(), (LPCTSTR)m_sAddress );
-#ifdef _DEBUG
-			DWORD ndBlock1 = (DWORD)( nOffset / nBlockSize );
-			DWORD ndBlock2 = (DWORD)( ( nOffset + nLength - 1 ) / nBlockSize );
-			ASSERT( ndBlock1 < m_pDownload->m_pTorrent.m_nBlockCount );
-			ASSERT( ndBlock1 == ndBlock2 );
-			ASSERT( nLength <= nBlockSize );
-#endif
+
 			m_pClient->Request(
 				(DWORD)( nOffset / nBlockSize ),
 				(DWORD)( nOffset % nBlockSize ),
