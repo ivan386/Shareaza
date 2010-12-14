@@ -147,20 +147,19 @@ CLiveItem::CLiveItem(int nColumns, DWORD_PTR nParam) :
 	m_bModified		( true ),
 	m_nModified		( 0xffffffff ),
 	m_nParam		( nParam ),
-	m_nImage		( new int[ nColumns ] ),
-	m_pColumn		( new CString[ nColumns ] ),
 	m_nMaskOverlay	( 0 ),
 	m_nMaskState	( 0 ),
 	m_bOld			( false )
 {
+	m_nImage.SetSize( nColumns );
+	m_pColumn.SetSize( nColumns );
+
 	for ( int i = 0; i < nColumns; ++i )
 		m_nImage[ i ] = -1;
 }
 
 CLiveItem::~CLiveItem()
 {
-	delete [] m_nImage;
-	delete [] m_pColumn;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -170,6 +169,7 @@ void CLiveItem::Set(int nColumn, LPCTSTR pszText)
 {
 	ASSERT_VALID( this );
 	ASSERT( pszText );
+	ASSERT( nColumn >= 0 && nColumn < m_pColumn.GetSize() );
 
 	if ( m_pColumn[ nColumn ] != pszText )
 	{
@@ -182,6 +182,7 @@ void CLiveItem::Set(int nColumn, LPCTSTR pszText)
 void CLiveItem::SetImage(int nColumn, int nImage)
 {
 	ASSERT_VALID( this );
+	ASSERT( nColumn >= 0 && nColumn < m_nImage.GetSize() );
 
 	m_bModified = ( m_nImage[ nColumn ] != nImage );
 	m_nImage[ nColumn ] = nImage;
@@ -202,7 +203,7 @@ void CLiveItem::Format(int nColumn, LPCTSTR pszFormat, ...)
 {
 	ASSERT_VALID( this );
 	ASSERT( pszFormat );
-	ASSERT( nColumn >= 0 );
+	ASSERT( nColumn >= 0 && nColumn < m_pColumn.GetSize() );
 
 	TCHAR szBuffer[1024];
 	va_list pArgs;
@@ -899,14 +900,18 @@ void CLiveListCtrl::OnLvnGetdispinfoW(NMHDR *pNMHDR, LRESULT *pResult)
 
 	CLiveItemPtr pItem = m_pIndex[ pDispInfo.iItem ];
 
-	if ( pDispInfo.mask & LVIF_TEXT )
+	if ( ( pDispInfo.mask & LVIF_TEXT ) &&
+		pDispInfo.iSubItem >= 0 &&
+		pDispInfo.iSubItem < pItem->m_pColumn.GetSize() )
 	{
 		wcsncpy_s( (LPWSTR)pDispInfo.pszText, pDispInfo.cchTextMax,
 			CT2CW( pItem->m_pColumn[ pDispInfo.iSubItem ] ),
 			pDispInfo.cchTextMax - 1 );
 	}
 
-	if ( pItem->m_nImage[ pDispInfo.iSubItem ] >= 0 ) 
+	if ( pDispInfo.iSubItem >= 0 &&
+		pDispInfo.iSubItem < pItem->m_pColumn.GetSize() &&
+		pItem->m_nImage[ pDispInfo.iSubItem ] >= 0 )
 	{
 		pDispInfo.mask |= LVIF_IMAGE;
 		pDispInfo.iImage = pItem->m_nImage[ pDispInfo.iSubItem ];
@@ -934,14 +939,18 @@ void CLiveListCtrl::OnLvnGetdispinfoA(NMHDR *pNMHDR, LRESULT *pResult)
 
 	CLiveItemPtr pItem = m_pIndex[ pDispInfo.iItem ];
 
-	if ( pDispInfo.mask & LVIF_TEXT )
+	if ( ( pDispInfo.mask & LVIF_TEXT ) &&
+		pDispInfo.iSubItem >= 0 &&
+		pDispInfo.iSubItem < pItem->m_pColumn.GetSize() )
 	{
 		strncpy_s( (LPSTR)pDispInfo.pszText, pDispInfo.cchTextMax,
 			(LPCSTR)CT2A( pItem->m_pColumn[ pDispInfo.iSubItem ] ),
 			pDispInfo.cchTextMax - 1 );
 	}
 
-	if ( pItem->m_nImage[ pDispInfo.iSubItem ] >= 0 ) 
+	if ( pDispInfo.iSubItem >= 0 &&
+		 pDispInfo.iSubItem < pItem->m_pColumn.GetSize() &&
+		 pItem->m_nImage[ pDispInfo.iSubItem ] >= 0 )
 	{
 		pDispInfo.mask |= LVIF_IMAGE;
 		pDispInfo.iImage = pItem->m_nImage[ pDispInfo.iSubItem ];

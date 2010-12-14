@@ -38,8 +38,8 @@ public:
 	virtual void AssertValid() const
 	{
 		CObject::AssertValid();
-		ASSERT( m_nImage );
-		ASSERT( m_pColumn );
+		m_nImage.AssertValid();
+		m_pColumn.AssertValid();
 	}
 #endif
 
@@ -59,8 +59,8 @@ protected:
 	bool		m_bOld;			// Is item old? (marked to deletion)
 	UINT		m_nMaskOverlay;
 	UINT		m_nMaskState;
-	int*		m_nImage;		// Image for each column (-1 : no image, 0..N : image index)
-	CString*	m_pColumn;		// Text for each column
+	CArray< int >		m_nImage;		// Image for each column (-1 : no image, 0..N : image index)
+	CArray< CString >	m_pColumn;		// Text for each column
 
 	friend class CLiveList;
 	friend class CLiveListCtrl;
