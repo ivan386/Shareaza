@@ -387,8 +387,14 @@ BOOL CShareazaApp::InitInstance()
 	SplashStep( L"Discovery Services" );
 		DiscoveryServices.Load();
 	SplashStep( L"Rich Documents" );
-		Emoticons.Load();
-		Flags.Load();
+		if ( ! Emoticons.Load() )
+		{
+			Message( MSG_ERROR, _T("Failed to load Emoticons.") );
+		}
+		if ( ! Flags.Load() )
+		{
+			Message( MSG_ERROR, _T("Failed to load Flags.") );
+		}
 	SplashStep( L"GUI" );
 		if ( m_cmdInfo.m_bTray ) WriteProfileInt( _T("Windows"), _T("CMainWnd.ShowCmd"), 0 );
 		new CMainWnd();

@@ -178,14 +178,13 @@ CMenu* CEmoticons::CreateMenu()
 BOOL CEmoticons::Load()
 {
 	Clear();
+
 	m_pImage.Create( EMOTICON_SIZE, EMOTICON_SIZE, ILC_COLOR32|ILC_MASK, 1, 8 ) ||
-		m_pImage.Create( EMOTICON_SIZE, EMOTICON_SIZE, ILC_COLOR24|ILC_MASK, 1, 8 ) ||
-		m_pImage.Create( EMOTICON_SIZE, EMOTICON_SIZE, ILC_COLOR16|ILC_MASK, 1, 8 );
+	m_pImage.Create( EMOTICON_SIZE, EMOTICON_SIZE, ILC_COLOR24|ILC_MASK, 1, 8 ) ||
+	m_pImage.Create( EMOTICON_SIZE, EMOTICON_SIZE, ILC_COLOR16|ILC_MASK, 1, 8 );
 
-	CString strFile = Settings.General.Path + _T("\\Data\\Emoticons.xml");
-
-	BOOL bSuccess = LoadTrillian( strFile );
-	if ( ! bSuccess ) return FALSE;
+	if ( ! LoadTrillian( Settings.General.Path + _T("\\Data\\Emoticons.xml") ) )
+		return FALSE;
 
 	BuildTokens();
 

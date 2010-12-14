@@ -61,18 +61,20 @@ BOOL CFlags::Load()
 	Clear();
 
 	m_pImage.Create( IMAGELIST_FLAG_WIDTH, IMAGELIST_FLAG_HEIGHT, ILC_COLOR32|ILC_MASK, 26 * 26, 8 ) ||
-		m_pImage.Create( IMAGELIST_FLAG_WIDTH, IMAGELIST_FLAG_HEIGHT, ILC_COLOR24|ILC_MASK, 26 * 26, 8 ) ||
-		m_pImage.Create( IMAGELIST_FLAG_WIDTH, IMAGELIST_FLAG_HEIGHT, ILC_COLOR16|ILC_MASK, 26 * 26, 8 );
+	m_pImage.Create( IMAGELIST_FLAG_WIDTH, IMAGELIST_FLAG_HEIGHT, ILC_COLOR24|ILC_MASK, 26 * 26, 8 ) ||
+	m_pImage.Create( IMAGELIST_FLAG_WIDTH, IMAGELIST_FLAG_HEIGHT, ILC_COLOR16|ILC_MASK, 26 * 26, 8 );
 
 	CImageFile pImage;
 	if ( ! pImage.LoadFromFile( Settings.General.Path + _T("\\Data\\Flags.png") ) ||
 		 ! pImage.EnsureRGB( GetSysColor( COLOR_WINDOW ) ) ||
-		 ! pImage.SwapRGB() )
+		 ! pImage.SwapRGB() ||
+		   pImage.m_nWidth != FLAG_WIDTH * 26 ||
+		   pImage.m_nHeight != FLAG_HEIGHT * 26 )
 	{
 		return FALSE;
 	}
 
-	COLORREF crBack = RGB( 0, 255, 0 );
+	const COLORREF crBack = RGB( 0, 255, 0 );
 
 	for ( int i = 0; i < 26; ++i )
 	{
@@ -92,99 +94,59 @@ BOOL CFlags::Load()
 
 void CFlags::AddFlag(CImageFile* pImage, CRect* pRect, COLORREF crBack)
 {
-	ASSERT( pImage->m_bLoaded && pImage->m_nComponents == 3 );
-	ASSERT( pRect->left >= 0 && pRect->left + FLAG_WIDTH <= pImage->m_nWidth );
-	ASSERT( pRect->top >= 0 && pRect->top <= pImage->m_nHeight + FLAG_HEIGHT );
-	ASSERT( pRect->right == pRect->left + FLAG_WIDTH );
-	ASSERT( pRect->bottom == pRect->top + FLAG_HEIGHT );
-
 	DWORD nPitch = pImage->m_nWidth * pImage->m_nComponents;
 	while ( nPitch & 3 ) nPitch++;
 
 	BYTE* pSource = pImage->m_pImage;
 	pSource += pRect->top * nPitch + pRect->left * pImage->m_nComponents;
 
-	HDC hDCMem1, hDCMem2;
-	if ( HDC hDC = GetDC( NULL ) ) // Get screen DC
+	HDC hDC = GetDC( NULL );
+	HDC hDCMem1 = CreateCompatibleDC( hDC ); // Create memory DC for the source
+	HDC hDCMem2 = CreateCompatibleDC( hDC ); // Create memory DC for the destination
+	CBitmap bmOriginal, bmMoved;
+	CDC* pDC = CDC::FromHandle( hDC );
+	bmOriginal.CreateCompatibleBitmap( pDC, FLAG_WIDTH, FLAG_HEIGHT );
+	bmMoved.CreateCompatibleBitmap( pDC, IMAGELIST_FLAG_WIDTH, IMAGELIST_FLAG_HEIGHT );
+
+	BITMAPINFOHEADER pInfo = {};
+	pInfo.biSize		= sizeof(BITMAPINFOHEADER);
+	pInfo.biWidth		= FLAG_WIDTH;
+	pInfo.biHeight		= FLAG_HEIGHT;
+	pInfo.biPlanes		= 1;
+	pInfo.biBitCount	= 24;
+	pInfo.biCompression	= BI_RGB;
+	pInfo.biSizeImage	= FLAG_WIDTH * FLAG_HEIGHT * 3;
+
+	for ( int nY = FLAG_HEIGHT - 1 ; nY >= 0 ; nY-- )
 	{
-		hDCMem1 = CreateCompatibleDC( hDC ); // Create memory DC for the source
-		ASSERT( hDCMem1 );
-		if ( !hDCMem1 )
-		{
-			ReleaseDC( NULL, hDC );
-			return;
-		}
-
-		hDCMem2 = CreateCompatibleDC( hDC ); // Create memory DC for the destination
-		ASSERT( hDCMem2 );
-		if ( !hDCMem2 )
-		{
-			DeleteDC( hDCMem1 );
-			ReleaseDC( NULL, hDC );
-			return;
-		}
-
-		CBitmap bmOriginal, bmMoved;
-		CDC* pDC = CDC::FromHandle( hDC );
-
-		if ( !bmOriginal.CreateCompatibleBitmap( pDC, FLAG_WIDTH, FLAG_HEIGHT ) ) // Source bitmap
-		{
-			ASSERT( FALSE );
-			ReleaseDC( NULL, hDC );
-			DeleteDC( hDCMem1 );
-			DeleteDC( hDCMem2 );
-			return;
-		}
-
-		if ( !bmMoved.CreateCompatibleBitmap( pDC, IMAGELIST_FLAG_WIDTH, IMAGELIST_FLAG_HEIGHT ) ) // Destination bitmap
-		{
-			ASSERT( FALSE );
-			ReleaseDC( NULL, hDC );
-			DeleteDC( hDCMem1 );
-			DeleteDC( hDCMem2 );
-			bmOriginal.DeleteObject();
-			return;
-		}
-
-		BITMAPINFOHEADER pInfo = {};
-		pInfo.biSize		= sizeof(BITMAPINFOHEADER);
-		pInfo.biWidth		= FLAG_WIDTH;
-		pInfo.biHeight		= FLAG_HEIGHT;
-		pInfo.biPlanes		= 1;
-		pInfo.biBitCount	= 24;
-		pInfo.biCompression	= BI_RGB;
-		pInfo.biSizeImage	= FLAG_WIDTH * FLAG_HEIGHT * 3;
-
-		for ( int nY = FLAG_HEIGHT - 1 ; nY >= 0 ; nY-- )
-		{
-			SetDIBits( hDCMem1, bmOriginal, nY, 1, pSource, (BITMAPINFO*)&pInfo, DIB_RGB_COLORS );
-			pSource += nPitch;
-		}
-
-		HBITMAP hOld_bm1 = (HBITMAP)SelectObject( hDCMem1, bmOriginal.m_hObject );
-		HBITMAP hOld_bm2 = (HBITMAP)SelectObject( hDCMem2, bmMoved.m_hObject );
-		CDC* pDC2 = CDC::FromHandle( hDCMem2 );
-		pDC2->SetBkMode( TRANSPARENT );
-		pDC2->FillSolidRect( 0, 0, IMAGELIST_FLAG_WIDTH, IMAGELIST_FLAG_HEIGHT, crBack );
-
-		if ( Settings.General.LanguageRTL )
-			SetLayout( hDCMem2, LAYOUT_RTL );
-		VERIFY( BitBlt( hDCMem2,
-			( IMAGELIST_FLAG_WIDTH - REAL_FLAG_WIDTH ) / 2,
-			( IMAGELIST_FLAG_HEIGHT - REAL_FLAG_HEIGHT ) / 2,
-			REAL_FLAG_WIDTH,
-			REAL_FLAG_HEIGHT,
-			hDCMem1, REAL_FLAG_X, REAL_FLAG_Y, SRCCOPY ) );
-
-		SelectObject( hDCMem1, hOld_bm1 );
-		SelectObject( hDCMem2, hOld_bm2 );
-		VERIFY( DeleteDC( hDCMem1 ) );
-		VERIFY( DeleteDC( hDCMem2 ) );
-		ReleaseDC( NULL, hDC );
-		m_pImage.Add( &bmMoved, crBack );
-		bmMoved.DeleteObject();
-		bmOriginal.DeleteObject();
+		SetDIBits( hDCMem1, bmOriginal, nY, 1, pSource, (BITMAPINFO*)&pInfo, DIB_RGB_COLORS );
+		pSource += nPitch;
 	}
+
+	HBITMAP hOld_bm1 = (HBITMAP)SelectObject( hDCMem1, bmOriginal.m_hObject );
+	HBITMAP hOld_bm2 = (HBITMAP)SelectObject( hDCMem2, bmMoved.m_hObject );
+	CDC* pDC2 = CDC::FromHandle( hDCMem2 );
+	pDC2->SetBkMode( TRANSPARENT );
+	pDC2->FillSolidRect( 0, 0, IMAGELIST_FLAG_WIDTH, IMAGELIST_FLAG_HEIGHT, crBack );
+
+	if ( Settings.General.LanguageRTL )
+		SetLayout( hDCMem2, LAYOUT_RTL );
+	VERIFY( BitBlt( hDCMem2,
+		( IMAGELIST_FLAG_WIDTH - REAL_FLAG_WIDTH ) / 2,
+		( IMAGELIST_FLAG_HEIGHT - REAL_FLAG_HEIGHT ) / 2,
+		REAL_FLAG_WIDTH,
+		REAL_FLAG_HEIGHT,
+		hDCMem1, REAL_FLAG_X, REAL_FLAG_Y, SRCCOPY ) );
+
+	SelectObject( hDCMem1, hOld_bm1 );
+	SelectObject( hDCMem2, hOld_bm2 );
+	VERIFY( DeleteDC( hDCMem1 ) );
+	VERIFY( DeleteDC( hDCMem2 ) );
+	ReleaseDC( NULL, hDC );
+
+	m_pImage.Add( &bmMoved, crBack );
+	bmMoved.DeleteObject();
+	bmOriginal.DeleteObject();
 }
 
 //////////////////////////////////////////////////////////////////////
