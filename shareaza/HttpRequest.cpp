@@ -197,10 +197,8 @@ BOOL CHttpRequest::InflateResponse()
 
 bool CHttpRequest::Execute(bool bBackground)
 {
-	if ( IsPending() )
+	if ( IsPending() || m_sURL.IsEmpty() )
 		return false;
-
-	ASSERT( m_sURL.GetLength() );
 
 	m_hInternet = NULL;
 	m_nStatusCode = 0;
