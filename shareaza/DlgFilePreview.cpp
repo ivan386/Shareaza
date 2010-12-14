@@ -299,6 +299,9 @@ void CFilePreviewDlg::OnDestroy()
 		m_pDownload = NULL;
 	}
 
+	if ( ! IsWindow( GetSafeHwnd() ) )
+		return;
+
 	CSkinDialog::OnDestroy();
 }
 
