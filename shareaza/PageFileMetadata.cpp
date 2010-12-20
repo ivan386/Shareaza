@@ -316,9 +316,9 @@ void CFileMetadataPage::OnOK()
 				pFile->ClearMetadata();
 			}
 		}
-
-		Library.Update();
 	}
+
+	Library.Update();
 
 	CFilePropertiesPage::OnOK();
 }

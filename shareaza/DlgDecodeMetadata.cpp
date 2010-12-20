@@ -150,6 +150,8 @@ void CDecodeMetadataDlg::OnOK()
 			delete pContainer;
 		}
 	}
+
+	Library.Update();
 }
 
 void CDecodeMetadataDlg::GetEncodedText(CString& strText, int nMethod) const
