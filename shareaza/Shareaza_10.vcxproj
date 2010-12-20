@@ -1158,6 +1158,17 @@
     <None Include="Res\Network_KAD.ico" />
     <None Include="Res\Network_NULL.ico" />
     <None Include="Res\out.ico" />
+    <CustomBuild Include="Res\style.css">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">gzip -c "%(RootDir)%(Directory)%(Filename)%(Extension)" &gt;"%(RootDir)%(Directory)%(Filename)%(Extension).gz"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">gzip -c "%(RootDir)%(Directory)%(Filename)%(Extension)" &gt;"%(RootDir)%(Directory)%(Filename)%(Extension).gz"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">gzip -c "%(RootDir)%(Directory)%(Filename)%(Extension)" &gt;"%(RootDir)%(Directory)%(Filename)%(Extension).gz"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">gzip -c "%(RootDir)%(Directory)%(Filename)%(Extension)" &gt;"%(RootDir)%(Directory)%(Filename)%(Extension).gz"</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(RootDir)%(Directory)%(Filename)%(Extension).gz;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(RootDir)%(Directory)%(Filename)%(Extension).gz;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(RootDir)%(Directory)%(Filename)%(Extension).gz;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(RootDir)%(Directory)%(Filename)%(Extension).gz;%(Outputs)</Outputs>
+    </CustomBuild>
+    <None Include="Res\style.css.gz" />
     <None Include="XML.inl" />
     <None Include="Hashes\Hashes.dox" />
     <CustomBuild Include="Res\About.htm">

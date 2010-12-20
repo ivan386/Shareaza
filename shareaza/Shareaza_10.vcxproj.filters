@@ -2740,6 +2740,9 @@
     <None Include="Res\Network_DC.ico">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="Res\style.css.gz">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="Res\About.htm">
@@ -2755,6 +2758,9 @@
       <Filter>Resource Files</Filter>
     </CustomBuild>
     <CustomBuild Include="Res\SchemaMappings.xml">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Res\style.css">
       <Filter>Resource Files</Filter>
     </CustomBuild>
   </ItemGroup>
