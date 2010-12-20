@@ -892,36 +892,36 @@ void CLibraryFrame::UpdatePanel(BOOL bForce)
 	}
 }
 
-BOOL CLibraryFrame::Display(CLibraryFolder* pFolder)
+BOOL CLibraryFrame::Display(const CLibraryFolder* pFolder)
 {
 	if ( Settings.Library.ShowVirtual != FALSE ) OnLibraryTreePhysical();
 	return m_wndTree.SelectFolder( pFolder );
 }
 
-BOOL CLibraryFrame::Display(CAlbumFolder* pFolder)
+BOOL CLibraryFrame::Display(const CAlbumFolder* pFolder)
 {
 	if ( Settings.Library.ShowVirtual != TRUE ) OnLibraryTreeVirtual();
 	return m_wndTree.SelectFolder( pFolder );
 }
 
-BOOL CLibraryFrame::Display(CLibraryFile* pFile)
+BOOL CLibraryFrame::Display(const CLibraryFile* pFile)
 {
 	if ( Settings.Library.ShowVirtual )
 	{
-		CAlbumFolder* pRoot = Library.GetAlbumRoot();
-		if ( CAlbumFolder* pFolder = pRoot ? pRoot->FindFile( pFile ) : NULL )
+		const CAlbumFolder* pRoot = Library.GetAlbumRoot();
+		if ( const CAlbumFolder* pFolder = pRoot ? pRoot->FindFile( pFile ) : NULL )
 		{
 			Display( pFolder );
 		}
 		else
 		{
-			Display( pFile->m_pFolder );
+			Display( pFile->GetFolderPtr() );
 		}
 	}
 	else
 	{
 		Settings.Library.FilterURI.Empty();
-		Display( pFile->m_pFolder );
+		Display( pFile->GetFolderPtr() );
 	}
 
 	return Select( pFile->m_nIndex );

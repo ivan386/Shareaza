@@ -70,13 +70,13 @@ public:
 	CLibraryTreeItem*	HitTest(const POINT& point, RECT* pRect = NULL) const;
 	BOOL				GetRect(CLibraryTreeItem* pItem, RECT* pRect) const;
 	// Search tree for physical folder or virtual album (recursive)
-	CLibraryTreeItem*	GetFolderItem(void* pSearch, CLibraryTreeItem* pParent = NULL) const;
+	CLibraryTreeItem*	GetFolderItem(LPCVOID pSearch, CLibraryTreeItem* pParent = NULL) const;
 	// Get default download folder for physical view or favorites album for virtual view
 	CLibraryTreeItem*	GetDefaultFolderItem() const;
 	void				SetVirtual(BOOL bVirtual);
 	BOOL				Update(DWORD nSelectCookie);
 	// Forcefully select and highlight folder, then update all views
-	BOOL				SelectFolder(LPVOID pSearch);
+	BOOL				SelectFolder(LPCVOID pSearch);
 	// Forcefully select and highlight tree item, then update all views
 	BOOL				SelectFolderItem(CLibraryTreeItem* pItem);
 

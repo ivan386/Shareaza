@@ -729,10 +729,10 @@ void CLibraryMaps::CullDeletedFiles(CLibraryFile* pMatch)
 	{
 		for ( POSITION pos = pList->GetHeadPosition() ; pos ; )
 		{
-			const CLibraryFile* pFile = pList->GetNext( pos );
+			CLibraryFile* pFile = const_cast< CLibraryFile* >( pList->GetNext( pos ) );
 			if ( ! pFile->IsAvailable() )
 			{
-				const_cast< CLibraryFile* >( pFile )->Delete();
+				pFile->Delete( TRUE );
 			}
 		}
 		delete pList;

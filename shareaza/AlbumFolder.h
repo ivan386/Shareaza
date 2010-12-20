@@ -82,7 +82,7 @@ public:
 	DWORD			GetFileCount() const;
 	DWORD			GetSharedCount(BOOL bRecursive) const;
 	void			RemoveFile(CLibraryFile* pFile);
-	CAlbumFolder*	FindFile(CLibraryFile* pFile);
+	const CAlbumFolder*	FindFile(const CLibraryFile* pFile) const;
 	int				GetFileList(CLibraryList* pList, BOOL bRecursive) const;
 public:
 	void			Delete(BOOL bIfEmpty = FALSE);

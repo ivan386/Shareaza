@@ -33,14 +33,14 @@ class CLibraryTileItem
 // Construction
 public:
 	CLibraryTileItem(CAlbumFolder* pFolder)
-	: m_pFolder( pFolder ), m_nCookie( ~0ul ), m_bSelected()
+	: m_pAlbum( pFolder ), m_nCookie( ~0ul ), m_bSelected()
 	{
 		Update();
 	}
 
 // Attributes
 public:
-	CAlbumFolder* const m_pFolder;
+	CAlbumFolder*	m_pAlbum;
 	DWORD			m_nCookie;
 	CString			m_sTitle;
 	CString			m_sSubtitle1;

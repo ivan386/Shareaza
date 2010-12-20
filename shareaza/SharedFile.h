@@ -51,7 +51,6 @@ public:
 	DWORD			m_nUpdateCookie;
 	DWORD			m_nSelectCookie;
 	DWORD			m_nListCookie;
-	CLibraryFolder*	m_pFolder;				// NULL for Ghost files
 	DWORD			m_nIndex;
 	FILETIME		m_pTime;
 	QWORD			m_nVirtualBase;
@@ -91,6 +90,7 @@ public:
 	inline BOOL		IsSharedOverride() const { return m_bShared != TRI_UNKNOWN; }
 	// Is it a real file (i.e. not a ghost file)?
 	inline bool		IsAvailable() const { return m_pFolder != NULL; }
+	const CLibraryFolder* GetFolderPtr() const;
 	BOOL			IsSchemaURI(LPCTSTR pszURI) const;
 	BOOL			IsRated() const;		// File rated (or commented)
 	BOOL			IsRatedOnly() const;	// File rated but have no metadata
@@ -131,6 +131,7 @@ public:
 
 protected:
 	TRISTATE		m_bShared;
+	CLibraryFolder*	m_pFolder;				// NULL for Ghost files
 
 	void			Serialize(CArchive& ar, int nVersion);
 	BOOL			ThreadScan(CSingleLock& pLock, DWORD nScanCookie, QWORD nSize, FILETIME* pTime/*, LPCTSTR pszMetaData*/);

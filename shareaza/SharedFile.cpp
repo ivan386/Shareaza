@@ -129,9 +129,17 @@ CLibraryFile::~CLibraryFile()
 //////////////////////////////////////////////////////////////////////
 // CLibraryFile path computation
 
+const CLibraryFolder* CLibraryFile::GetFolderPtr() const
+{
+	ASSUME_LOCK( Library.m_pSection );
+	ASSERT_VALID( this );
+
+	return m_pFolder;
+}
+
 CString CLibraryFile::GetFolder() const
 {
-	if ( IsAvailable() )
+	if ( m_pFolder )
 		return m_pFolder->m_sPath;
 	else
 		return CString();
@@ -139,7 +147,7 @@ CString CLibraryFile::GetFolder() const
 
 CString CLibraryFile::GetPath() const
 {
-	if ( IsAvailable() )
+	if ( m_pFolder )
 		return m_pFolder->m_sPath + _T('\\') + m_sName;
 	else
 		return m_sName;
@@ -150,7 +158,7 @@ CString CLibraryFile::GetSearchName() const
 	int nBase = 0;
 	CString str;
 
-	if ( IsAvailable() && m_pFolder->m_pParent != NULL )
+	if ( m_pFolder && m_pFolder->m_pParent )
 	{
 		for ( CLibraryFolder* pFolder = m_pFolder ; ; pFolder = pFolder->m_pParent )
 		{
@@ -181,8 +189,10 @@ CString CLibraryFile::GetSearchName() const
 
 bool CLibraryFile::IsShared(bool bIgnoreOverride) const
 {
+	ASSUME_LOCK( Library.m_pSection );
+
 	// Don't share offline files
-	if ( IsAvailable() && m_pFolder->IsOffline() )
+	if ( m_pFolder && m_pFolder->IsOffline() )
 		return false;
 
 	// Don't share private torrents
@@ -196,12 +206,8 @@ bool CLibraryFile::IsShared(bool bIgnoreOverride) const
 	if ( m_bShared != TRI_UNKNOWN && ! bIgnoreOverride )
 		return ( m_bShared == TRI_TRUE );
 
-	// Ghost files by default shared
-	if ( ! IsAvailable() )
-		return true;
-
-	// Use folder shared flag
-	return ( m_pFolder->IsShared() != FALSE );
+	// Ghost files by default shared, then use folder shared flag
+	return ! m_pFolder || m_pFolder->IsShared();
 }
 
 void CLibraryFile::SetShared(bool bShared, bool bOverride)
@@ -219,7 +225,7 @@ void CLibraryFile::SetShared(bool bShared, bool bOverride)
 		m_pMetadata->GetAttributeValue( L"privateflag", L"true" ).CompareNoCase( L"true" ) == 0 )
 		bNewShare = TRI_FALSE;
 
-	bool bFolderShared = ! IsAvailable() || m_pFolder->IsShared();
+	bool bFolderShared = ! m_pFolder || m_pFolder->IsShared();
 
 	if ( bNewShare == TRI_UNKNOWN )
 		// Use folder default shared flag
@@ -239,8 +245,8 @@ void CLibraryFile::SetShared(bool bShared, bool bOverride)
 BOOL CLibraryFile::CheckFileAttributes(QWORD nSize, BOOL bSharedOnly, BOOL bAvailableOnly) const
 {
 	return ( nSize == SIZE_UNKNOWN || nSize == 0 || nSize == m_nSize ) &&
-		( ! bSharedOnly || IsShared() ) &&
-		( ! bAvailableOnly || IsAvailable() );
+		( ! bAvailableOnly || m_pFolder ) &&
+		( ! bSharedOnly || IsShared() );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -289,7 +295,7 @@ BOOL CLibraryFile::IsNewFile() const
 
 BOOL CLibraryFile::Rebuild()
 {
-	if ( ! IsAvailable() ) return FALSE;
+	if ( ! m_pFolder ) return FALSE;
 
 	Library.RemoveFile( this );
 
@@ -316,7 +322,7 @@ BOOL CLibraryFile::Rebuild()
 
 BOOL CLibraryFile::Rename(LPCTSTR pszName)
 {
-	if ( ! IsAvailable() ) return FALSE;
+	if ( ! m_pFolder ) return FALSE;
 	if ( ! pszName || ! *pszName ) return FALSE;
 	if ( _tcschr( pszName, '\\' ) ) return FALSE;
 
@@ -362,7 +368,7 @@ BOOL CLibraryFile::Rename(LPCTSTR pszName)
 
 BOOL CLibraryFile::Delete(BOOL bDeleteGhost)
 {
-	if ( IsAvailable() )
+	if ( m_pFolder )
 	{
 		// Delete file
 		BOOL bToRecycleBin = ( ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0 );
@@ -520,7 +526,7 @@ CString CLibraryFile::GetMetadataWords() const
 CTigerTree* CLibraryFile::GetTigerTree()
 {
 	if ( ! m_oTiger ) return NULL;
-	if ( ! IsAvailable() ) return NULL;
+	if ( ! m_pFolder ) return NULL;
 
 	CTigerTree* pTiger = new CTigerTree();
 
@@ -545,7 +551,7 @@ CTigerTree* CLibraryFile::GetTigerTree()
 CED2K* CLibraryFile::GetED2K()
 {
 	if ( ! m_oED2K ) return NULL;
-	if ( ! IsAvailable() ) return NULL;
+	if ( ! m_pFolder ) return NULL;
 
 	CED2K* pED2K = new CED2K();
 
@@ -911,7 +917,7 @@ void CLibraryFile::Serialize(CArchive& ar, int nVersion)
 
 BOOL CLibraryFile::ThreadScan(CSingleLock& pLock, DWORD nScanCookie, QWORD nSize, FILETIME* pTime/*, LPCTSTR pszMetaData*/)
 {
-	ASSERT( IsAvailable() );
+	ASSERT( m_pFolder );
 
 	m_nScanCookie = nScanCookie;
 
@@ -957,7 +963,7 @@ BOOL CLibraryFile::ThreadScan(CSingleLock& pLock, DWORD nScanCookie, QWORD nSize
 
 BOOL CLibraryFile::IsReadable() const
 {
-	if ( ! IsAvailable() )
+	if ( ! m_pFolder )
 		return FALSE;
 
 	HANDLE hFile = CreateFile( GetPath(), GENERIC_READ,
@@ -977,7 +983,7 @@ BOOL CLibraryFile::IsReadable() const
 
 void CLibraryFile::OnDelete(BOOL bDeleteGhost, TRISTATE bCreateGhost)
 {
-	if ( IsAvailable() )
+	if ( m_pFolder )
 	{
 		CThumbCache::Delete( GetPath() );
 
@@ -1023,6 +1029,8 @@ void CLibraryFile::OnDelete(BOOL bDeleteGhost, TRISTATE bCreateGhost)
 
 void CLibraryFile::Ghost()
 {
+	ASSUME_LOCK( Library.m_pSection );
+
 	SYSTEMTIME pTime;
 	GetSystemTime( &pTime );
 	SystemTimeToFileTime( &pTime, &m_pTime );
@@ -1055,7 +1063,7 @@ BOOL CLibraryFile::OnVerifyDownload(
 	const Hashes::Md5ManagedHash& oMD5,
 	LPCTSTR pszSources)
 {
-	if ( ! IsAvailable() ) return FALSE;
+	if ( ! m_pFolder ) return FALSE;
 
 	if ( Settings.Downloads.VerifyFiles && m_bVerify == TRI_UNKNOWN && m_nVirtualSize == 0 )
 	{
@@ -1211,7 +1219,7 @@ STDMETHODIMP CLibraryFile::XLibraryFile::get_Library(ILibrary FAR* FAR* ppLibrar
 STDMETHODIMP CLibraryFile::XLibraryFile::get_Folder(ILibraryFolder FAR* FAR* ppFolder)
 {
 	METHOD_PROLOGUE( CLibraryFile, LibraryFile )
-	if ( ! pThis->IsAvailable() )
+	if ( ! pThis->m_pFolder )
 		*ppFolder = NULL;
 	else
 		*ppFolder = (ILibraryFolder*)pThis->m_pFolder->GetInterface( IID_ILibraryFolder, TRUE );

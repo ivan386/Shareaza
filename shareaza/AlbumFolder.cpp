@@ -332,6 +332,10 @@ DWORD CAlbumFolder::GetSharedCount(BOOL bRecursive) const
 {
 	ASSUME_LOCK( Library.m_pSection );
 
+	if ( CheckURI( m_sSchemaURI, CSchema::uriGhostFolder ) )
+		// Skip ghost folder files
+		return 0;
+
 	DWORD nCount = 0;
 
 	for ( POSITION pos = GetFileIterator() ; pos ; )
@@ -355,6 +359,7 @@ DWORD CAlbumFolder::GetSharedCount(BOOL bRecursive) const
 void CAlbumFolder::RemoveFile(CLibraryFile* pFile)
 {
 	ASSUME_LOCK( Library.m_pSection );
+	ASSERT_VALID( pFile );
 
 	if ( POSITION pos = m_pFiles.Find( pFile ) )
 	{
@@ -382,25 +387,25 @@ void CAlbumFolder::OnFileDelete(CLibraryFile* pFile, BOOL bDeleteGhost)
 	RemoveFile( pFile );
 }
 
-CAlbumFolder* CAlbumFolder::FindFile(CLibraryFile* pFile)
+const CAlbumFolder* CAlbumFolder::FindFile(const CLibraryFile* pFile) const
 {
-	if ( m_pFiles.Find( pFile ) != NULL ) return this;
+	if ( m_pFiles.Find( const_cast< CLibraryFile* >( pFile ) ) != NULL ) return this;
 
 	POSITION pos = GetFolderIterator();
-	CAlbumFolder* pFirst = pos ? GetNextFolder( pos ) : NULL;
+	const CAlbumFolder* pFirst = pos ? GetNextFolder( pos ) : NULL;
 
 	if ( GetFolderCount() > 1 )
 	{
 		while ( pos )
 		{
-			CAlbumFolder* pFolder = GetNextFolder( pos )->FindFile( pFile );
+			const CAlbumFolder* pFolder = GetNextFolder( pos )->FindFile( pFile );
 			if ( pFolder != NULL ) return pFolder;
 		}
 	}
 
 	if ( pFirst != NULL )
 	{
-		CAlbumFolder* pFolder = pFirst->FindFile( pFile );
+		const CAlbumFolder* pFolder = pFirst->FindFile( pFile );
 		if ( pFolder != NULL ) return pFolder;
 	}
 

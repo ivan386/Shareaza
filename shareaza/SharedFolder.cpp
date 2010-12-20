@@ -161,6 +161,9 @@ BOOL CLibraryFolder::CheckFolder(CLibraryFolder* pFolder, BOOL bRecursive) const
 
 DWORD CLibraryFolder::GetFolderCount() const
 {
+	ASSUME_LOCK( Library.m_pSection );
+	ASSERT_VALID( this );
+
 	return (DWORD)m_pFolders.GetCount();
 }
 
@@ -169,11 +172,17 @@ DWORD CLibraryFolder::GetFolderCount() const
 
 POSITION CLibraryFolder::GetFileIterator() const
 {
+	ASSUME_LOCK( Library.m_pSection );
+	ASSERT_VALID( this );
+
 	return m_pFiles.GetStartPosition();
 }
 
 CLibraryFile* CLibraryFolder::GetNextFile(POSITION& pos) const
 {
+	ASSUME_LOCK( Library.m_pSection );
+	ASSERT_VALID( this );
+
 	CLibraryFile* pOutput = NULL;
 	CString strName;
 	m_pFiles.GetNextAssoc( pos, strName, pOutput );
@@ -182,6 +191,9 @@ CLibraryFile* CLibraryFolder::GetNextFile(POSITION& pos) const
 
 CLibraryFile* CLibraryFolder::GetFile(LPCTSTR pszName) const
 {
+	ASSUME_LOCK( Library.m_pSection );
+	ASSERT_VALID( this );
+
 	CLibraryFile* pOutput = NULL;
 	CString strName( pszName );
 	ToLower( strName );
@@ -190,6 +202,9 @@ CLibraryFile* CLibraryFolder::GetFile(LPCTSTR pszName) const
 
 DWORD CLibraryFolder::GetFileCount() const
 {
+	ASSUME_LOCK( Library.m_pSection );
+	ASSERT_VALID( this );
+
 	return (DWORD)m_pFiles.GetCount();
 }
 
@@ -218,6 +233,9 @@ DWORD CLibraryFolder::GetFileList(CLibraryList* pList, BOOL bRecursive) const
 
 DWORD CLibraryFolder::GetSharedCount(BOOL bRecursive) const
 {
+	ASSUME_LOCK( Library.m_pSection );
+	ASSERT_VALID( this );
+
 	DWORD nCount = 0;
 
 	for ( POSITION pos = GetFileIterator() ; pos ; )
@@ -497,7 +515,7 @@ BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 
 		if ( pFile->m_nScanCookie != nScanCookie )
 		{
-			pFile->OnDelete();
+			pFile->OnDelete( TRUE );
 			bChanged = TRUE;
 		}
 	}

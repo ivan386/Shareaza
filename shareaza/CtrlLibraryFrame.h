@@ -51,9 +51,9 @@ public:
 	void			SetView(CLibraryView* pView, BOOL bUpdate = TRUE, BOOL bUser = TRUE);
 	void			OnSkinChange();
 	BOOL			Update(BOOL bForce = TRUE, BOOL bBestView = TRUE);
-	BOOL			Display(CLibraryFolder* pFolder);
-	BOOL			Display(CAlbumFolder* pFolder);
-	BOOL			Display(CLibraryFile* pFile);
+	BOOL			Display(const CLibraryFolder* pFolder);
+	BOOL			Display(const CAlbumFolder* pFolder);
+	BOOL			Display(const CLibraryFile* pFile);
 	BOOL			Select(DWORD nObject);
 	BOOL			SetDynamicBar(LPCTSTR pszName);
  	void			HideDynamicBar();
