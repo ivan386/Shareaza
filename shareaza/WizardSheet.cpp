@@ -225,9 +225,9 @@ void CWizardSheet::OnPaint()
 
 	CDC mdc;
 	mdc.CreateCompatibleDC( &dc );
-	CBitmap* pOldBitmap = (CBitmap*)mdc.SelectObject( hHeader );
+	HBITMAP hOldBitmap = (HBITMAP)mdc.SelectObject( hHeader );
 	dc.BitBlt( 0, 0, 438, 50, &mdc, 0, 0, SRCCOPY );
-	mdc.SelectObject( pOldBitmap );
+	mdc.SelectObject( hOldBitmap );
 	mdc.DeleteDC();
 
 	dc.Draw3dRect( 0, 50, rc.Width() + 1, 1,
