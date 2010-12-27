@@ -108,9 +108,9 @@ Source: "bzlib\{#PlatformName}\{#ConfigurationName}\bzlib.dll"; DestDir: "{app}"
 ; BugTrap
 Source: "BugTrap\{#PlatformName}\{#ConfigurationName}\BugTrap.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 #if PlatformName == "Win32"
-Source: "BugTrap\dbghelp.dll";     DestDir: "{app}"; DestName: "dbghelp.dll"; Flags: overwritereadonly restartreplace uninsneveruninstall sortfilesbyextension
+Source: "BugTrap\dbghelp.dll";     DestDir: "{app}"; DestName: "dbghelp.dll"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 #elif PlatformName == "x64"
-Source: "BugTrap\dbghelp-x64.dll"; DestDir: "{app}"; DestName: "dbghelp.dll"; Flags: overwritereadonly restartreplace uninsneveruninstall sortfilesbyextension
+Source: "BugTrap\dbghelp-x64.dll"; DestDir: "{app}"; DestName: "dbghelp.dll"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 #endif
 
 ; HashLib
