@@ -112,7 +112,7 @@ CBENode* CBENode::Add(LPCBYTE pKey, size_t nKey)
 		ASSERT( pKey == NULL && nKey == 0 );
 		break;
 	case beDict:
-		ASSERT( pKey != NULL && nKey > 0 );
+		ASSERT( pKey != NULL );
 		break;
 	default:
 		ASSERT( FALSE );
@@ -209,48 +209,27 @@ CBENode* CBENode::GetNode(const LPBYTE pKey, int nKey) const
 //////////////////////////////////////////////////////////////////////
 // CBENode Extract a string from a node under this one. (Checks both normal and .utf-8)
 
-CString CBENode::GetStringFromSubNode(LPCSTR pszKey, UINT nEncoding, bool& bEncodingError) const
+CString CBENode::GetStringFromSubNode(LPCSTR pszKey, UINT nEncoding) const
 {
-	// Open the supplied node + .utf-8
-	CBENode* pSubNode = GetNode( CStringA( pszKey ) + ".utf-8" );
-
-	// We found a back-up node
-	// If it exists and is a string, try reading it
 	CString strValue;
-	if ( ( pSubNode ) && ( pSubNode->m_nType == CBENode::beString ) )
+
+	// Open the supplied node + .utf-8
+	const CBENode* pSubNodeUTF8 = GetNode( CStringA( pszKey ) + ".utf-8" );
+	if ( pSubNodeUTF8 && pSubNodeUTF8->m_nType == CBENode::beString )
 	{
-		// Assumed to be UTF-8
-		strValue = pSubNode->GetString();
+		strValue = pSubNodeUTF8->GetString();
 	}
-
-	// Open the supplied sub-node
-	pSubNode = GetNode( pszKey );
-
-	// If it exists and is a string, try reading it
-	if ( ( pSubNode ) && ( pSubNode->m_nType == CBENode::beString ) )
+	else
 	{
-		if ( ! IsValid( strValue ) )
+		// Open the supplied sub-node
+		const CBENode* pSubNode = GetNode( pszKey );
+		if ( pSubNode && pSubNode->m_nType == CBENode::beString )
 		{
-			// Read the string using the correct encoding. (UTF-8)
 			strValue = pSubNode->GetString();
-		}
-		else
-		{
-			// We already have a value - check it's valid
-			CString strCheck = pSubNode->GetString();
-			if ( strCheck != strValue )
-				bEncodingError = true;
-		}
-	}
-
-	if ( ! IsValid( strValue ) )
-	{
-		// If we still don't have a valid name, try a decode by forcing the code page.
-		pSubNode = GetNode( pszKey );
-		if ( ( pSubNode ) && ( pSubNode->m_nType == CBENode::beString ) )
-		{
-			bEncodingError = true;
-			strValue = pSubNode->DecodeString( nEncoding );
+			if ( strValue.IsEmpty() )
+			{
+				strValue = pSubNode->DecodeString( nEncoding );
+			}
 		}
 	}
 
@@ -259,32 +238,22 @@ CString CBENode::GetStringFromSubNode(LPCSTR pszKey, UINT nEncoding, bool& bEnco
 
 // CBENode Extract a string from a list/dictionary
 
-CString CBENode::GetStringFromSubNode(int nItem, UINT nEncoding, bool& bEncodingError) const
+CString CBENode::GetStringFromSubNode(int nItem, UINT nEncoding) const
 {
-	CBENode*	pSubNode;
-	CString		strValue;
+	CString strValue;
 
 	// Check we are a list / dictionary type
-	if ( m_nType != beList && m_nType != beDict ) return strValue;
-
-	// Open the supplied list/dictionary item
-	pSubNode = GetNode( nItem );
-
-	// If it exists and is a string, try reading it
-	if ( ( pSubNode ) && ( pSubNode->m_nType == CBENode::beString ) )
+	if ( m_nType == beList || m_nType == beDict )
 	{
-		// Read the string using the correct encoding. (UTF-8)
-		strValue = pSubNode->GetString();
-	}
-
-	// If it wasn't valid, try a decode by forcing the code page.
-	if ( ! IsValid( strValue ) )
-	{
-		// If we still don't have a valid name, try a decode by forcing the code page.
-		if ( ( pSubNode ) && ( pSubNode->m_nType == CBENode::beString ) )
+		// Open the supplied list/dictionary item
+		const CBENode* pSubNode = GetNode( nItem );
+		if ( pSubNode && pSubNode->m_nType == CBENode::beString )
 		{
-			bEncodingError = true;
-			strValue = pSubNode->DecodeString( nEncoding );
+			strValue = pSubNode->GetString();
+			if ( strValue.IsEmpty() )
+			{
+				strValue = pSubNode->DecodeString( nEncoding );
+			}
 		}
 	}
 
@@ -524,13 +493,9 @@ void CBENode::Decode(LPCBYTE& pInput, DWORD& nInput, DWORD nSize)
 				break;
 
 			int nLen = DecodeLen( pInput, nInput );
-
-			if ( nLen )
-			{
-				LPCBYTE pKey = pInput;
-				INC( nLen );
-				Add( pKey, nLen )->Decode( pInput, nInput, nSize );
-			}
+			LPCBYTE pKey = pInput;
+			INC( nLen );
+			Add( pKey, nLen )->Decode( pInput, nInput, nSize );
 		}
 
 		INC( 1 );
