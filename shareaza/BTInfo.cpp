@@ -1316,7 +1316,7 @@ void CBTInfo::SetTrackerSucceeded(DWORD tNow)
 void CBTInfo::SetTrackerRetry(DWORD tTime)
 {
 	// Check that there should be a tracker
-	if ( m_oTrackers.IsEmpty() )
+	if ( ! HasTracker() )
 		return;
 
 	ASSERT( m_nTrackerIndex >= 0 && m_nTrackerIndex < m_oTrackers.GetCount() );
