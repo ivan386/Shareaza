@@ -342,11 +342,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\bzip2.def"
+				RelativePath=".\bzlib.c"
 				>
 			</File>
 			<File
-				RelativePath=".\bzlib.c"
+				RelativePath=".\bzlib.def"
 				>
 			</File>
 			<File
