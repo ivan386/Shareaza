@@ -355,8 +355,20 @@
 				>
 			</File>
 		</Filter>
+		<Filter
+			Name="Resource Files"
+			>
+			<File
+				RelativePath="GeoIP.rc"
+				>
+			</File>
+		</Filter>
 		<File
-			RelativePath="GeoIP.rc"
+			RelativePath=".\HowToUpdate.txt"
+			>
+		</File>
+		<File
+			RelativePath=".\License.txt"
 			>
 		</File>
 	</Files>
