@@ -459,7 +459,19 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="gzio.c"
+				RelativePath=".\gzclose.c"
+				>
+			</File>
+			<File
+				RelativePath=".\gzlib.c"
+				>
+			</File>
+			<File
+				RelativePath=".\gzread.c"
+				>
+			</File>
+			<File
+				RelativePath=".\gzwrite.c"
 				>
 			</File>
 			<File
@@ -617,11 +629,15 @@
 				>
 			</File>
 			<File
-				RelativePath="crypt.h"
+				RelativePath=".\crypt.h"
 				>
 			</File>
 			<File
 				RelativePath="deflate.h"
+				>
+			</File>
+			<File
+				RelativePath=".\gzguts.h"
 				>
 			</File>
 			<File
