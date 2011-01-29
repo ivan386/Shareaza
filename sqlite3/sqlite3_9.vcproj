@@ -364,6 +364,10 @@
 				RelativePath=".\sqlite3.h"
 				>
 			</File>
+			<File
+				RelativePath=".\sqlite3ext.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"
