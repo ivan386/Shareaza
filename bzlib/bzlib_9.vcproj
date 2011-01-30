@@ -141,6 +141,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkIncremental="2"
+				ModuleDefinitionFile="$(TargetName).def"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				LargeAddressAware="2"
@@ -299,6 +300,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkIncremental="1"
+				ModuleDefinitionFile="$(TargetName).def"
 				SubSystem="2"
 				LargeAddressAware="2"
 				OptimizeReferences="2"
