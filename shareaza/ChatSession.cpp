@@ -792,12 +792,6 @@ BOOL CChatSession::ReadPackets()
 		BYTE nTypeLen	= ( nInput & 0x38 ) >> 3;
 		BYTE nFlags		= ( nInput & 0x07 );
 
-		if ( nLenLen == 0 )
-		{
-			Close();
-			return FALSE;
-		}
-
 		if ( (DWORD)pInput->m_nLength < (DWORD)nLenLen + nTypeLen + 2 ) break;
 
 		DWORD nLength = 0;
