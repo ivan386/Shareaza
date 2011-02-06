@@ -2,12 +2,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2010-11-16 14:53+0000\n"
+"POT-Creation-Date: 2010-11-14 02:19+0000\n"
 "PO-Revision-Date: \n"
-"Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
+"Last-Translator: John <ShareazaSTC@gmail.com>\n"
 "Language-Team: Shareaza Development Team\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-Language: 简体中文\n"
@@ -52,8 +52,7 @@ msgstr "单击这里显示简体中文"
 msgid "(translation language direction: ltr or rtl)"
 msgstr "ltr"
 
-#: button;id_network_connect button;id_tab_connect button;id_irc_connect
-#: button;id_chat_connect string;8069 cconnecttodlg;control;7
+#: button;id_network_connect button;id_tab_connect button;id_irc_connect button;id_chat_connect string;8069 cconnecttodlg;control;7
 msgid "Connect"
 msgstr "连接"
 
@@ -69,13 +68,11 @@ msgstr "收藏"
 msgid "Media Player"
 msgstr "媒体播放器"
 
-#: button;id_tab_search string;window_search string;window_searchpad
-#: string;8144 string;8156 cnewsearchdlg;control;3 column;search
+#: button;id_tab_search string;window_search string;window_searchpad string;8144 string;8156 cnewsearchdlg;control;3 column;search
 msgid "Search"
 msgstr "搜索"
 
-#: button;id_tab_transfers string;window_downloads
-#: dialog;cdownloadssettingspage
+#: button;id_tab_transfers string;window_downloads dialog;cdownloadssettingspage
 msgid "Downloads"
 msgstr "传送"
 
@@ -107,15 +104,11 @@ msgstr "显示搜索"
 msgid "Show Details"
 msgstr "详细信息"
 
-#: csearchwnd.panel.basic;label-text;1 csearchwnd.panel;label-text;1
-#: csearchwnd.full;label-text;1 cbrowsehostwnd.basic;label-text;1
-#: cbrowsehostwnd;label-text;1 chitmonitorwnd;label-text;1
+#: csearchwnd.panel.basic;label-text;1 csearchwnd.panel;label-text;1 csearchwnd.full;label-text;1 cbrowsehostwnd.basic;label-text;1 cbrowsehostwnd;label-text;1 chitmonitorwnd;label-text;1
 msgid "Filter:"
 msgstr "过滤:"
 
-#: csearchwnd.panel.basic;label-tip;1 csearchwnd.panel;label-tip;1
-#: csearchwnd.full;label-tip;1 cbrowsehostwnd.basic;label-tip;1
-#: cbrowsehostwnd;label-tip;1 chitmonitorwnd;label-tip;1
+#: csearchwnd.panel.basic;label-tip;1 csearchwnd.panel;label-tip;1 csearchwnd.full;label-tip;1 cbrowsehostwnd.basic;label-tip;1 cbrowsehostwnd;label-tip;1 chitmonitorwnd;label-tip;1
 msgid "Type some words to filter the results with"
 msgstr "键入需要过滤的文字"
 
@@ -147,8 +140,7 @@ msgstr "目录"
 msgid "Organiser"
 msgstr "类别"
 
-#: button;id_search_chat button;id_uploads_chat button;id_neighbours_chat
-#: cbrowsehostprofile.2;link;4
+#: button;id_search_chat button;id_uploads_chat button;id_neighbours_chat cbrowsehostprofile.2;link;4
 msgid "Chat to User"
 msgstr "与用户聊天"
 
@@ -160,8 +152,7 @@ msgstr "停止"
 msgid "Refresh"
 msgstr "刷新"
 
-#: button;id_downloads_launch_complete button;id_uploads_launch
-#: button;id_library_launch
+#: button;id_downloads_launch_complete button;id_uploads_launch button;id_library_launch
 msgid "Open or Play"
 msgstr "打开或播放"
 
@@ -205,8 +196,7 @@ msgstr "清除完成文件"
 msgid "Properties"
 msgstr "属性"
 
-#: button;id_downloads_filter_menu button;id_uploads_filter_menu
-#: cfiltersearchdlg;control;29
+#: button;id_downloads_filter_menu button;id_uploads_filter_menu cfiltersearchdlg;control;29
 msgid "Filter"
 msgstr "过滤"
 
@@ -262,8 +252,7 @@ msgstr "移动"
 msgid "Copy"
 msgstr "复制"
 
-#: button;id_library_delete cskinssettingspage;control;9
-#: cdeletefiledlg;control;3
+#: button;id_library_delete cskinssettingspage;control;9 cdeletefiledlg;control;3
 msgid "Delete"
 msgstr "删除"
 
@@ -315,8 +304,7 @@ msgstr "下一个"
 msgid "Playlist"
 msgstr "播放列表"
 
-#: cmediaframe;label-text;2 string;8321 cconnectionsettingspage;control;4
-#: cconnectionsettingspage;control;13
+#: cmediaframe;label-text;2 string;8321 cconnectionsettingspage;control;4 cconnectionsettingspage;control;13
 msgid "Speed:"
 msgstr "速度:"
 
@@ -336,8 +324,7 @@ msgstr "保存"
 msgid "Connect to IRC"
 msgstr "连接到 IRC"
 
-#: button;id_irc_disconnect button;id_neighbours_disconnect
-#: button;id_hostcache_disconnect button;id_chat_disconnect string;8072
+#: button;id_irc_disconnect button;id_neighbours_disconnect button;id_hostcache_disconnect button;id_chat_disconnect string;8072
 msgid "Disconnect"
 msgstr "断开"
 
@@ -367,7 +354,7 @@ msgstr "eDonkey"
 
 #: button;id_network_dc cscheduletaskpage;control;11
 msgid "DC++"
-msgstr ""
+msgstr "DC++"
 
 #: button;id_network_connect_to button;id_hostcache_connect
 msgid "Connect To"
@@ -407,27 +394,27 @@ msgstr "导出列表"
 
 #: button;id_scheduler_edit
 msgid "Edit Task"
-msgstr ""
+msgstr "编辑任务"
 
 #: button;id_scheduler_activate
 msgid "Activate"
-msgstr ""
+msgstr "启用"
 
 #: button;id_scheduler_deactivate
 msgid "Deactivate"
-msgstr ""
+msgstr "禁用"
 
 #: button;id_scheduler_add
 msgid "Add Task"
-msgstr ""
+msgstr "添加任务"
 
 #: button;id_scheduler_remove
 msgid "Remove Task"
-msgstr ""
+msgstr "删除任务"
 
 #: button;id_scheduler_remove_all
 msgid "Remove All"
-msgstr ""
+msgstr "删除所有"
 
 #: button;id_hitmonitor_search
 msgid "Requery"
@@ -463,7 +450,7 @@ msgstr "KAD 缓存"
 
 #: button;id_hostcache_dc_cache
 msgid "DC++ Cache"
-msgstr "DC++ Cache"
+msgstr "DC++ 缓存"
 
 #: button;id_chat_bold
 msgid "B"
@@ -521,8 +508,7 @@ msgstr "实际大小"
 msgid "Best Fit"
 msgstr "最佳适合"
 
-#: button;imageviewer_close string;20001 cfolderscandlg;control;7
-#: cdonkeyimportdlg;control;5 cwarningsdlg;control;7 chelpdlg;control;1
+#: button;imageviewer_close string;20001 cfolderscandlg;control;7 cdonkeyimportdlg;control;5 cwarningsdlg;control;7 chelpdlg;control;1
 msgid "Close"
 msgstr "关闭"
 
@@ -530,9 +516,7 @@ msgstr "关闭"
 msgid "_Close Window"
 msgstr "关闭窗口(_C)"
 
-#: child;item;id_child_maximise cmainwnd.windowed;22;item;id_window_cascade
-#: cmediaframe.basic;53;item;id_media_fullscreen
-#: cmediaframe;56;item;id_media_fullscreen
+#: child;item;id_child_maximise cmainwnd.windowed;22;item;id_window_cascade cmediaframe.basic;53;item;id_media_fullscreen cmediaframe;56;item;id_media_fullscreen
 msgid "_Full Screen"
 msgstr "全屏(_F)"
 
@@ -544,17 +528,11 @@ msgstr "重置(_R)"
 msgid "_Minimise"
 msgstr "最小化(_M)"
 
-#: cmainwnd.basic;1 cmainwnd.tabbed;9 cmainwnd.tabbed;11;item;id_tab_network
-#: cmainwnd.windowed;18 cmainwnd.view.tabbed;item;id_tab_network
-#: chomewnd.tabbed;item;id_tab_network
+#: cmainwnd.basic;1 cmainwnd.tabbed;9 cmainwnd.tabbed;11;item;id_tab_network cmainwnd.windowed;18 cmainwnd.view.tabbed;item;id_tab_network chomewnd.tabbed;item;id_tab_network
 msgid "_Network"
 msgstr "网络(_N)"
 
-#: cmainwnd.basic;1;item;id_network_connect
-#: cmainwnd.tabbed;9;item;id_network_connect
-#: cmainwnd.windowed;18;item;id_network_connect
-#: cneighbourswnd;59;item;id_network_connect
-#: cprivatechatframe;item;id_chat_connect
+#: cmainwnd.basic;1;item;id_network_connect cmainwnd.tabbed;9;item;id_network_connect cmainwnd.windowed;18;item;id_network_connect cneighbourswnd;59;item;id_network_connect cprivatechatframe;item;id_chat_connect
 msgid "_Connect"
 msgstr "连接(_C)"
 
@@ -562,41 +540,27 @@ msgstr "连接(_C)"
 msgid "Choose _Networks"
 msgstr "选择网络(_N)"
 
-#: cmainwnd.basic;1;2;item;id_network_g2
-#: cmainwnd.tabbed;9;10;item;id_network_g2
-#: cmainwnd.windowed;18;19;item;id_network_g2
+#: cmainwnd.basic;1;2;item;id_network_g2 cmainwnd.tabbed;9;10;item;id_network_g2 cmainwnd.windowed;18;19;item;id_network_g2
 msgid "Connect to _Gnutella2"
 msgstr "连接到 Gnutella2(_G)"
 
-#: cmainwnd.basic;1;2;item;id_network_g1
-#: cmainwnd.tabbed;9;10;item;id_network_g1
-#: cmainwnd.windowed;18;19;item;id_network_g1
+#: cmainwnd.basic;1;2;item;id_network_g1 cmainwnd.tabbed;9;10;item;id_network_g1 cmainwnd.windowed;18;19;item;id_network_g1
 msgid "Connect to Gnutella_1"
 msgstr "连接到 Gnutella1(_1)"
 
-#: cmainwnd.basic;1;2;item;id_network_ed2k
-#: cmainwnd.tabbed;9;10;item;id_network_ed2k
-#: cmainwnd.windowed;18;19;item;id_network_ed2k
+#: cmainwnd.basic;1;2;item;id_network_ed2k cmainwnd.tabbed;9;10;item;id_network_ed2k cmainwnd.windowed;18;19;item;id_network_ed2k
 msgid "Connect to _eDonkey"
 msgstr "连接到 edonkey(_E)"
 
-#: cmainwnd.basic;1;2;item;id_network_dc
-#: cmainwnd.tabbed;9;10;item;id_network_dc
-#: cmainwnd.windowed;18;19;item;id_network_dc
+#: cmainwnd.basic;1;2;item;id_network_dc cmainwnd.tabbed;9;10;item;id_network_dc cmainwnd.windowed;18;19;item;id_network_dc
 msgid "Connect to _DC++"
-msgstr "Connect to _DC++"
+msgstr "连接至 DC++(_D)"
 
-#: cmainwnd.basic;1;item;id_network_auto_close
-#: cmainwnd.tabbed;9;item;id_network_auto_close
-#: cmainwnd.tray;item;id_network_auto_close
-#: cremotewnd;item;id_network_auto_close
+#: cmainwnd.basic;1;item;id_network_auto_close cmainwnd.tabbed;9;item;id_network_auto_close cmainwnd.tray;item;id_network_auto_close cremotewnd;item;id_network_auto_close
 msgid "Exit _After Transfers"
 msgstr "传送后退出(_A)"
 
-#: cmainwnd.basic;1;item;id_network_exit
-#: cmainwnd.tabbed;9;item;id_network_exit
-#: cmainwnd.windowed;18;item;id_network_exit
-#: cmainwnd.tray;item;id_network_exit cremotewnd;item;id_network_exit
+#: cmainwnd.basic;1;item;id_network_exit cmainwnd.tabbed;9;item;id_network_exit cmainwnd.windowed;18;item;id_network_exit cmainwnd.tray;item;id_network_exit cremotewnd;item;id_network_exit
 msgid "E_xit"
 msgstr "退出(_X)"
 
@@ -604,45 +568,23 @@ msgstr "退出(_X)"
 msgid "_View"
 msgstr "视图(_V)"
 
-#: cmainwnd.basic;3;item;id_tab_home cmainwnd.tabbed;11;item;id_tab_home
-#: cmainwnd.view.basic;item;id_tab_home cmainwnd.view.tabbed;item;id_tab_home
-#: chomewnd.basic;item;id_tab_home chomewnd.tabbed;item;id_tab_home
+#: cmainwnd.basic;3;item;id_tab_home cmainwnd.tabbed;11;item;id_tab_home cmainwnd.view.basic;item;id_tab_home cmainwnd.view.tabbed;item;id_tab_home chomewnd.basic;item;id_tab_home chomewnd.tabbed;item;id_tab_home
 msgid "_Home"
 msgstr "首页(_H)"
 
-#: cmainwnd.basic;3;item;id_tab_library cmainwnd.tabbed;11;item;id_tab_library
-#: cmainwnd.tabbed;11;12;item;id_view_library
-#: cmainwnd.windowed;20;item;id_view_library
-#: cmainwnd.view.basic;item;id_tab_library
-#: cmainwnd.view.tabbed;item;id_tab_library
-#: cmainwnd.view.windowed;item;id_view_library
-#: chomewnd.basic;item;id_tab_library chomewnd.tabbed;item;id_tab_library
+#: cmainwnd.basic;3;item;id_tab_library cmainwnd.tabbed;11;item;id_tab_library cmainwnd.tabbed;11;12;item;id_view_library cmainwnd.windowed;20;item;id_view_library cmainwnd.view.basic;item;id_tab_library cmainwnd.view.tabbed;item;id_tab_library cmainwnd.view.windowed;item;id_view_library chomewnd.basic;item;id_tab_library chomewnd.tabbed;item;id_tab_library
 msgid "_Library"
 msgstr "收藏(_L)"
 
-#: cmainwnd.basic;3;item;id_tab_media cmainwnd.tabbed;11;item;id_tab_media
-#: cmainwnd.tabbed;11;12;item;id_view_media
-#: cmainwnd.windowed;20;item;id_view_media
-#: cmainwnd.view.basic;item;id_tab_media
-#: cmainwnd.view.tabbed;item;id_tab_media
-#: cmainwnd.view.windowed;item;id_view_media chomewnd.basic;item;id_tab_media
-#: chomewnd.tabbed;item;id_tab_media
+#: cmainwnd.basic;3;item;id_tab_media cmainwnd.tabbed;11;item;id_tab_media cmainwnd.tabbed;11;12;item;id_view_media cmainwnd.windowed;20;item;id_view_media cmainwnd.view.basic;item;id_tab_media cmainwnd.view.tabbed;item;id_tab_media cmainwnd.view.windowed;item;id_view_media chomewnd.basic;item;id_tab_media chomewnd.tabbed;item;id_tab_media
 msgid "_Media Player"
 msgstr "媒体播放器(_M)"
 
-#: cmainwnd.basic;3;item;id_tab_search cmainwnd.tabbed;11;item;id_tab_search
-#: cmainwnd.view.basic;item;id_tab_search
-#: cmainwnd.view.tabbed;item;id_tab_search chomewnd.basic;item;id_tab_search
-#: chomewnd.tabbed;item;id_tab_search
+#: cmainwnd.basic;3;item;id_tab_search cmainwnd.tabbed;11;item;id_tab_search cmainwnd.view.basic;item;id_tab_search cmainwnd.view.tabbed;item;id_tab_search chomewnd.basic;item;id_tab_search chomewnd.tabbed;item;id_tab_search
 msgid "_Search"
 msgstr "搜索(_S)"
 
-#: cmainwnd.basic;3;item;id_tab_transfers
-#: cmainwnd.tabbed;11;12;item;id_view_downloads
-#: cmainwnd.windowed;20;item;id_view_downloads
-#: cmainwnd.view.basic;item;id_tab_transfers
-#: cmainwnd.view.windowed;item;id_view_downloads
-#: chomewnd.basic;item;id_tab_transfers
+#: cmainwnd.basic;3;item;id_tab_transfers cmainwnd.tabbed;11;12;item;id_view_downloads cmainwnd.windowed;20;item;id_view_downloads cmainwnd.view.basic;item;id_tab_transfers cmainwnd.view.windowed;item;id_view_downloads chomewnd.basic;item;id_tab_transfers
 msgid "_Downloads"
 msgstr "下载(_D)"
 
@@ -650,76 +592,37 @@ msgstr "下载(_D)"
 msgid "_Remote"
 msgstr "遥控器(_R)"
 
-#: cmainwnd.basic;3;item;id_tab_irc cmainwnd.tabbed;11;item;id_tab_irc
-#: cmainwnd.view.tabbed;item;id_tab_irc chomewnd.tabbed;item;id_tab_irc
+#: cmainwnd.basic;3;item;id_tab_irc cmainwnd.tabbed;11;item;id_tab_irc cmainwnd.view.tabbed;item;id_tab_irc chomewnd.tabbed;item;id_tab_irc
 msgid "_Chat"
 msgstr "聊天(_C)"
 
-#: cmainwnd.basic;3;4 cmainwnd.tabbed;11;12 cmainwnd.view.basic;26
-#: chomewnd.basic;27 cdownloadswnd.download;39
+#: cmainwnd.basic;3;4 cmainwnd.tabbed;11;12 cmainwnd.view.basic;26 chomewnd.basic;27 cdownloadswnd.download;39
 msgid "_Advanced"
 msgstr "高级(_A)"
 
-#: cmainwnd.basic;3;4;item;id_view_neighbours
-#: cmainwnd.tabbed;11;12;item;id_view_neighbours
-#: cmainwnd.windowed;20;item;id_view_neighbours
-#: cmainwnd.view.basic;26;item;id_view_neighbours
-#: cmainwnd.view.windowed;item;id_view_neighbours
-#: chomewnd.basic;27;item;id_view_neighbours
+#: cmainwnd.basic;3;4;item;id_view_neighbours cmainwnd.tabbed;11;12;item;id_view_neighbours cmainwnd.windowed;20;item;id_view_neighbours cmainwnd.view.basic;26;item;id_view_neighbours cmainwnd.view.windowed;item;id_view_neighbours chomewnd.basic;27;item;id_view_neighbours
 msgid "_Neighbours"
 msgstr "邻居(_N)"
 
-#: cmainwnd.basic;3;4;item;id_view_uploads
-#: cmainwnd.tabbed;11;12;item;id_view_uploads
-#: cmainwnd.windowed;20;item;id_view_uploads
-#: cmainwnd.view.basic;26;item;id_view_uploads
-#: cmainwnd.view.windowed;item;id_view_uploads
-#: chomewnd.basic;27;item;id_view_uploads
+#: cmainwnd.basic;3;4;item;id_view_uploads cmainwnd.tabbed;11;12;item;id_view_uploads cmainwnd.windowed;20;item;id_view_uploads cmainwnd.view.basic;26;item;id_view_uploads cmainwnd.view.windowed;item;id_view_uploads chomewnd.basic;27;item;id_view_uploads
 msgid "_Uploads"
 msgstr "上传(_U)"
 
-#: cmainwnd.basic;3;4;item;id_view_security
-#: cmainwnd.tabbed;11;item;id_view_security
-#: cmainwnd.tabbed;11;12;item;id_view_security
-#: cmainwnd.windowed;20;item;id_view_security
-#: cmainwnd.view.basic;26;item;id_view_security
-#: cmainwnd.view.tabbed;item;id_view_security
-#: cmainwnd.view.windowed;item;id_view_security
-#: chomewnd.basic;27;item;id_view_security
-#: chomewnd.tabbed;item;id_view_security
+#: cmainwnd.basic;3;4;item;id_view_security cmainwnd.tabbed;11;item;id_view_security cmainwnd.tabbed;11;12;item;id_view_security cmainwnd.windowed;20;item;id_view_security cmainwnd.view.basic;26;item;id_view_security cmainwnd.view.tabbed;item;id_view_security cmainwnd.view.windowed;item;id_view_security chomewnd.basic;27;item;id_view_security chomewnd.tabbed;item;id_view_security
 msgid "Se_curity"
 msgstr "安全(_C)"
 
-#: cmainwnd.basic;3;4;item;id_view_hosts cmainwnd.tabbed;11;item;id_view_hosts
-#: cmainwnd.tabbed;11;12;item;id_view_hosts
-#: cmainwnd.windowed;20;item;id_view_hosts
-#: cmainwnd.view.basic;26;item;id_view_hosts
-#: cmainwnd.view.tabbed;item;id_view_hosts
-#: cmainwnd.view.windowed;item;id_view_hosts
-#: chomewnd.basic;27;item;id_view_hosts chomewnd.tabbed;item;id_view_hosts
+#: cmainwnd.basic;3;4;item;id_view_hosts cmainwnd.tabbed;11;item;id_view_hosts cmainwnd.tabbed;11;12;item;id_view_hosts cmainwnd.windowed;20;item;id_view_hosts cmainwnd.view.basic;26;item;id_view_hosts cmainwnd.view.tabbed;item;id_view_hosts cmainwnd.view.windowed;item;id_view_hosts chomewnd.basic;27;item;id_view_hosts chomewnd.tabbed;item;id_view_hosts
 msgid "H_ost Cache"
 msgstr "主机缓存(_O)"
 
-#: cmainwnd.basic;3;4;item;id_view_discovery
-#: cmainwnd.tabbed;11;12;item;id_view_discovery
-#: cmainwnd.windowed;20;item;id_view_discovery
-#: cmainwnd.view.tabbed;item;id_view_discovery
-#: cmainwnd.view.windowed;item;id_view_discovery
-#: chomewnd.tabbed;item;id_view_discovery
+#: cmainwnd.basic;3;4;item;id_view_discovery cmainwnd.tabbed;11;12;item;id_view_discovery cmainwnd.windowed;20;item;id_view_discovery cmainwnd.view.tabbed;item;id_view_discovery cmainwnd.view.windowed;item;id_view_discovery chomewnd.tabbed;item;id_view_discovery
 msgid "Disco_very"
 msgstr "发现服务(_V)"
 
-#: cmainwnd.basic;3;4;item;id_view_scheduler
-#: cmainwnd.tabbed;11;item;id_view_scheduler
-#: cmainwnd.tabbed;11;12;item;id_view_scheduler
-#: cmainwnd.windowed;20;item;id_view_scheduler
-#: cmainwnd.view.basic;26;item;id_view_scheduler
-#: cmainwnd.view.tabbed;item;id_view_scheduler
-#: cmainwnd.view.windowed;item;id_view_scheduler
-#: chomewnd.basic;27;item;id_view_scheduler
-#: chomewnd.tabbed;item;id_view_scheduler
+#: cmainwnd.basic;3;4;item;id_view_scheduler cmainwnd.tabbed;11;item;id_view_scheduler cmainwnd.tabbed;11;12;item;id_view_scheduler cmainwnd.windowed;20;item;id_view_scheduler cmainwnd.view.basic;26;item;id_view_scheduler cmainwnd.view.tabbed;item;id_view_scheduler cmainwnd.view.windowed;item;id_view_scheduler chomewnd.basic;27;item;id_view_scheduler chomewnd.tabbed;item;id_view_scheduler
 msgid "Sch_eduler"
-msgstr ""
+msgstr "计划任务(_E)"
 
 #: cmainwnd.basic;3;item;id_view_basic cmainwnd.windowed;20;item;id_view_basic
 msgid "_Basic Mode"
@@ -733,46 +636,31 @@ msgstr "增强模式(_P)"
 msgid "_Tools"
 msgstr "工具(_T)"
 
-#: cmainwnd.basic;5;item;id_library_folders
-#: cmainwnd.tabbed;13;item;id_library_folders
-#: cmainwnd.windowed;21;item;id_library_folders
-#: clibrarytree.physical.basic;item;id_library_folders
-#: clibrarytree.physical;item;id_library_folders
+#: cmainwnd.basic;5;item;id_library_folders cmainwnd.tabbed;13;item;id_library_folders cmainwnd.windowed;21;item;id_library_folders clibrarytree.physical.basic;item;id_library_folders clibrarytree.physical;item;id_library_folders
 msgid "Share _Files..."
 msgstr "共享文件(_F)..."
 
-#: cmainwnd.basic;5;item;id_tools_download
-#: cmainwnd.tabbed;13;item;id_tools_download
-#: cmainwnd.windowed;21;item;id_tools_download
+#: cmainwnd.basic;5;item;id_tools_download cmainwnd.tabbed;13;item;id_tools_download cmainwnd.windowed;21;item;id_tools_download
 msgid "_Download File/Torrent..."
 msgstr "下载文件/Torrent(_D)..."
 
-#: cmainwnd.basic;5;item;id_tools_skin cmainwnd.tabbed;13;item;id_tools_skin
-#: cmainwnd.windowed;21;item;id_tools_skin
+#: cmainwnd.basic;5;item;id_tools_skin cmainwnd.tabbed;13;item;id_tools_skin cmainwnd.windowed;21;item;id_tools_skin
 msgid "Choose a S_kin..."
 msgstr "选择皮肤(_K)..."
 
-#: cmainwnd.basic;5;item;id_tools_language
-#: cmainwnd.tabbed;13;item;id_tools_language
-#: cmainwnd.windowed;21;item;id_tools_language
+#: cmainwnd.basic;5;item;id_tools_language cmainwnd.tabbed;13;item;id_tools_language cmainwnd.windowed;21;item;id_tools_language
 msgid "Choose a _Language..."
 msgstr "选择语言(_L)..."
 
-#: cmainwnd.basic;5;item;id_tools_profile
-#: cmainwnd.tabbed;13;item;id_tools_profile
-#: cmainwnd.windowed;21;item;id_tools_profile
+#: cmainwnd.basic;5;item;id_tools_profile cmainwnd.tabbed;13;item;id_tools_profile cmainwnd.windowed;21;item;id_tools_profile
 msgid "Edit My _Profile..."
-msgstr "编辑个人资料...(_P)"
+msgstr "编辑个人资料(_P)..."
 
-#: cmainwnd.basic;5;item;id_tools_wizard
-#: cmainwnd.tabbed;13;item;id_tools_wizard
-#: cmainwnd.windowed;21;item;id_tools_wizard
+#: cmainwnd.basic;5;item;id_tools_wizard cmainwnd.tabbed;13;item;id_tools_wizard cmainwnd.windowed;21;item;id_tools_wizard
 msgid "QuickStart _Wizard..."
-msgstr "快速启动向导...(_W)"
+msgstr "快速启动向导(_W)..."
 
-#: cmainwnd.basic;5;item;id_tools_settings
-#: cmainwnd.tabbed;13;item;id_tools_settings
-#: cmainwnd.windowed;21;item;id_tools_settings
+#: cmainwnd.basic;5;item;id_tools_settings cmainwnd.tabbed;13;item;id_tools_settings cmainwnd.windowed;21;item;id_tools_settings
 msgid "_Shareaza Settings..."
 msgstr "Shareaza 设置(_S)..."
 
@@ -780,13 +668,11 @@ msgstr "Shareaza 设置(_S)..."
 msgid "_Help"
 msgstr "帮助(_H)"
 
-#: cmainwnd.basic;6;item;id_help_faq cmainwnd.tabbed;15;item;id_help_faq
-#: cmainwnd.windowed;23;item;id_help_faq
+#: cmainwnd.basic;6;item;id_help_faq cmainwnd.tabbed;15;item;id_help_faq cmainwnd.windowed;23;item;id_help_faq
 msgid "Shareaza _FAQ"
 msgstr "Shareaza 常见问题(_F)"
 
-#: cmainwnd.basic;6;item;id_help_test cmainwnd.tabbed;15;item;id_help_test
-#: cmainwnd.windowed;23;item;id_help_test
+#: cmainwnd.basic;6;item;id_help_test cmainwnd.tabbed;15;item;id_help_test cmainwnd.windowed;23;item;id_help_test
 msgid "_Connection Test"
 msgstr "连接测试(_C)"
 
@@ -794,27 +680,19 @@ msgstr "连接测试(_C)"
 msgid "_Guides"
 msgstr "指南(_G)"
 
-#: cmainwnd.basic;6;7;item;id_help_guide
-#: cmainwnd.tabbed;15;16;item;id_help_guide
-#: cmainwnd.windowed;23;24;item;id_help_guide
+#: cmainwnd.basic;6;7;item;id_help_guide cmainwnd.tabbed;15;16;item;id_help_guide cmainwnd.windowed;23;24;item;id_help_guide
 msgid "Shareaza _Users Guide"
 msgstr "Shareaza 用户指南(_U)"
 
-#: cmainwnd.basic;6;7;item;id_help_router
-#: cmainwnd.tabbed;15;16;item;id_help_router
-#: cmainwnd.windowed;23;24;item;id_help_router
+#: cmainwnd.basic;6;7;item;id_help_router cmainwnd.tabbed;15;16;item;id_help_router cmainwnd.windowed;23;24;item;id_help_router
 msgid "_Router Help"
 msgstr "路由器帮助(_R)"
 
-#: cmainwnd.basic;6;7;item;id_help_security
-#: cmainwnd.tabbed;15;16;item;id_help_security
-#: cmainwnd.windowed;23;24;item;id_help_security
+#: cmainwnd.basic;6;7;item;id_help_security cmainwnd.tabbed;15;16;item;id_help_security cmainwnd.windowed;23;24;item;id_help_security
 msgid "_Security Help"
 msgstr "安全帮助(_C)"
 
-#: cmainwnd.basic;6;7;item;id_help_codec
-#: cmainwnd.tabbed;15;16;item;id_help_codec
-#: cmainwnd.windowed;23;24;item;id_help_codec
+#: cmainwnd.basic;6;7;item;id_help_codec cmainwnd.tabbed;15;16;item;id_help_codec cmainwnd.windowed;23;24;item;id_help_codec
 msgid "_Codec Help"
 msgstr "解码器帮助(_C)"
 
@@ -822,70 +700,47 @@ msgstr "解码器帮助(_C)"
 msgid "_Websites"
 msgstr "网站(_W)"
 
-#: cmainwnd.basic;6;8;item;id_help_homepage
-#: cmainwnd.tabbed;15;17;item;id_help_homepage
-#: cmainwnd.windowed;23;25;item;id_help_homepage
+#: cmainwnd.basic;6;8;item;id_help_homepage cmainwnd.tabbed;15;17;item;id_help_homepage cmainwnd.windowed;23;25;item;id_help_homepage
 msgid "_Shareaza site"
 msgstr "Shareaza 网站(_S)"
 
-#: cmainwnd.basic;6;8;item;id_help_forums
-#: cmainwnd.tabbed;15;17;item;id_help_forums
-#: cmainwnd.windowed;23;25;item;id_help_forums
+#: cmainwnd.basic;6;8;item;id_help_forums cmainwnd.tabbed;15;17;item;id_help_forums cmainwnd.windowed;23;25;item;id_help_forums
 msgid "Shareaza _Forums"
 msgstr "Shareaza 论坛(_F)"
 
-#: cmainwnd.basic;6;8;item;id_help_web_6
-#: cmainwnd.tabbed;15;17;item;id_help_web_6
-#: cmainwnd.windowed;23;25;item;id_help_web_6
+#: cmainwnd.basic;6;8;item;id_help_web_6 cmainwnd.tabbed;15;17;item;id_help_web_6 cmainwnd.windowed;23;25;item;id_help_web_6
 msgid "Shareaza S_kin Site"
 msgstr "Shareaza 皮肤站点(_K)"
 
-#: cmainwnd.basic;6;item;id_help_version_check
-#: cmainwnd.tabbed;15;item;id_help_version_check
-#: cmainwnd.windowed;23;item;id_help_version_check
+#: cmainwnd.basic;6;item;id_help_version_check cmainwnd.tabbed;15;item;id_help_version_check cmainwnd.windowed;23;item;id_help_version_check
 msgid "Check for new _version"
 msgstr "检查更新版本(_V)"
 
-#: cmainwnd.basic;6;item;id_help_about cmainwnd.tabbed;15;item;id_help_about
-#: cmainwnd.windowed;23;item;id_help_about
+#: cmainwnd.basic;6;item;id_help_about cmainwnd.tabbed;15;item;id_help_about cmainwnd.windowed;23;item;id_help_about
 msgid "_About Shareaza..."
 msgstr "关于 Shareaza(_A)..."
 
-#: cmainwnd.tabbed;9;item;id_network_disconnect
-#: cmainwnd.windowed;18;item;id_network_disconnect
-#: chostcachewnd;item;id_hostcache_disconnect
-#: cdownloadswnd.source;item;id_transfers_disconnect
-#: cneighbourswnd.basic;item;id_neighbours_disconnect
-#: cneighbourswnd;item;id_neighbours_disconnect
-#: cneighbourswnd;59;item;id_network_disconnect
-#: cprivatechatframe;item;id_chat_disconnect
+#: cmainwnd.tabbed;9;item;id_network_disconnect cmainwnd.windowed;18;item;id_network_disconnect chostcachewnd;item;id_hostcache_disconnect cdownloadswnd.source;item;id_transfers_disconnect cneighbourswnd.basic;item;id_neighbours_disconnect cneighbourswnd;item;id_neighbours_disconnect cneighbourswnd;59;item;id_network_disconnect cprivatechatframe;item;id_chat_disconnect
 msgid "_Disconnect"
 msgstr "断开(_D)"
 
-#: cmainwnd.tabbed;9;item;id_network_connect_to
-#: cmainwnd.windowed;18;item;id_network_connect_to
+#: cmainwnd.tabbed;9;item;id_network_connect_to cmainwnd.windowed;18;item;id_network_connect_to
 msgid "Connect _To..."
 msgstr "连接到(_T)..."
 
-#: cmainwnd.tabbed;9;item;id_network_browse_to
-#: cmainwnd.windowed;18;item;id_network_browse_to
+#: cmainwnd.tabbed;9;item;id_network_browse_to cmainwnd.windowed;18;item;id_network_browse_to
 msgid "_Browse User..."
 msgstr "浏览主机(_B)..."
 
-#: cmainwnd.tabbed;9;item;id_network_chat_to
-#: cmainwnd.windowed;18;item;id_network_chat_to
+#: cmainwnd.tabbed;9;item;id_network_chat_to cmainwnd.windowed;18;item;id_network_chat_to
 msgid "Chat to _User..."
-msgstr ""
+msgstr "聊天...(_U)"
 
-#: cmainwnd.tabbed;11;item;id_tab_transfers
-#: cmainwnd.view.tabbed;item;id_tab_transfers
-#: chomewnd.tabbed;item;id_tab_transfers
+#: cmainwnd.tabbed;11;item;id_tab_transfers cmainwnd.view.tabbed;item;id_tab_transfers chomewnd.tabbed;item;id_tab_transfers
 msgid "_Transfers"
 msgstr "传送(_T)"
 
-#: cmainwnd.tabbed;11;12;item;id_view_system
-#: cmainwnd.windowed;20;item;id_view_system
-#: cmainwnd.view.windowed;item;id_view_system
+#: cmainwnd.tabbed;11;12;item;id_view_system cmainwnd.windowed;20;item;id_view_system cmainwnd.view.windowed;item;id_view_system
 msgid "S_ystem"
 msgstr "系统(_Y)"
 
@@ -893,35 +748,19 @@ msgstr "系统(_Y)"
 msgid "IR_C"
 msgstr "聊天(_C)"
 
-#: cmainwnd.tabbed;11;12;item;id_view_traffic
-#: cmainwnd.windowed;20;item;id_view_traffic
-#: cmainwnd.view.tabbed;item;id_view_traffic
-#: cmainwnd.view.windowed;item;id_view_traffic
-#: chomewnd.tabbed;item;id_view_traffic
+#: cmainwnd.tabbed;11;12;item;id_view_traffic cmainwnd.windowed;20;item;id_view_traffic cmainwnd.view.tabbed;item;id_view_traffic cmainwnd.view.windowed;item;id_view_traffic chomewnd.tabbed;item;id_view_traffic
 msgid "_Graph"
 msgstr "图表(_G)"
 
-#: cmainwnd.tabbed;11;12;item;id_view_packets
-#: cmainwnd.windowed;20;item;id_view_packets
-#: cmainwnd.view.tabbed;item;id_view_packets
-#: cmainwnd.view.windowed;item;id_view_packets
-#: chomewnd.tabbed;item;id_view_packets
+#: cmainwnd.tabbed;11;12;item;id_view_packets cmainwnd.windowed;20;item;id_view_packets cmainwnd.view.tabbed;item;id_view_packets cmainwnd.view.windowed;item;id_view_packets chomewnd.tabbed;item;id_view_packets
 msgid "_Packet Dump"
 msgstr "数据包转储(_P)"
 
-#: cmainwnd.tabbed;11;12;item;id_view_search_monitor
-#: cmainwnd.windowed;20;item;id_view_search_monitor
-#: cmainwnd.view.tabbed;item;id_view_search_monitor
-#: cmainwnd.view.windowed;item;id_view_search_monitor
-#: chomewnd.tabbed;item;id_view_search_monitor
+#: cmainwnd.tabbed;11;12;item;id_view_search_monitor cmainwnd.windowed;20;item;id_view_search_monitor cmainwnd.view.tabbed;item;id_view_search_monitor cmainwnd.view.windowed;item;id_view_search_monitor chomewnd.tabbed;item;id_view_search_monitor
 msgid "Se_arch Monitor"
 msgstr "搜索监视器(_A)"
 
-#: cmainwnd.tabbed;11;12;item;id_view_results_monitor
-#: cmainwnd.windowed;20;item;id_view_results_monitor
-#: cmainwnd.view.tabbed;item;id_view_results_monitor
-#: cmainwnd.view.windowed;item;id_view_results_monitor
-#: chomewnd.tabbed;item;id_view_results_monitor
+#: cmainwnd.tabbed;11;12;item;id_view_results_monitor cmainwnd.windowed;20;item;id_view_results_monitor cmainwnd.view.tabbed;item;id_view_results_monitor cmainwnd.view.windowed;item;id_view_results_monitor chomewnd.tabbed;item;id_view_results_monitor
 msgid "H_it Monitor"
 msgstr "命中监视器(_I)"
 
@@ -929,23 +768,19 @@ msgstr "命中监视器(_I)"
 msgid "N_ormal Mode"
 msgstr "普通模式(_O)"
 
-#: cmainwnd.tabbed;11;item;id_view_tabbed
-#: cmainwnd.windowed;20;item;id_view_tabbed
+#: cmainwnd.tabbed;11;item;id_view_tabbed cmainwnd.windowed;20;item;id_view_tabbed
 msgid "T_abbed Mode"
 msgstr "标签模式(_A)"
 
-#: cmainwnd.tabbed;11;item;id_view_windowed
-#: cmainwnd.windowed;20;item;id_view_windowed
+#: cmainwnd.tabbed;11;item;id_view_windowed cmainwnd.windowed;20;item;id_view_windowed
 msgid "_Windowed Mode"
 msgstr "视窗模式(_W)"
 
-#: cmainwnd.tabbed;13;item;id_import_downloads
-#: cmainwnd.windowed;21;item;id_import_downloads
+#: cmainwnd.tabbed;13;item;id_import_downloads cmainwnd.windowed;21;item;id_import_downloads
 msgid "_Import eMule partial downloads..."
-msgstr "导入 eMule 部分下载(_I)..."
+msgstr "导入电驴部分下载...(_I)"
 
-#: cmainwnd.tabbed;13;item;id_open_downloads_folder
-#: cmainwnd.windowed;21;item;id_open_downloads_folder
+#: cmainwnd.tabbed;13;item;id_open_downloads_folder cmainwnd.windowed;21;item;id_open_downloads_folder
 msgid "_Open my folder of completed Downloads"
 msgstr "打开我的已完成文件夹(_O)"
 
@@ -953,34 +788,27 @@ msgstr "打开我的已完成文件夹(_O)"
 msgid "_Window"
 msgstr "窗口(_W)"
 
-#: cmainwnd.tabbed;14;item;id_window_navbar
-#: cmainwnd.windowed;22;item;id_window_navbar
+#: cmainwnd.tabbed;14;item;id_window_navbar cmainwnd.windowed;22;item;id_window_navbar
 msgid "Show _Navigation Bar"
 msgstr "显示导航栏(_N)"
 
-#: cmainwnd.tabbed;14;item;id_window_toolbar
-#: cmainwnd.windowed;22;item;id_window_toolbar
+#: cmainwnd.tabbed;14;item;id_window_toolbar cmainwnd.windowed;22;item;id_window_toolbar
 msgid "Show _Tool Bar"
 msgstr "显示工具栏(_T)"
 
-#: cmainwnd.tabbed;14;item;id_window_tabbar
-#: cmainwnd.windowed;22;item;id_window_tabbar
+#: cmainwnd.tabbed;14;item;id_window_tabbar cmainwnd.windowed;22;item;id_window_tabbar
 msgid "Show Tab _Bar"
 msgstr "显示标签栏(_B)"
 
-#: cmainwnd.tabbed;14;item;id_window_monitor
-#: cmainwnd.windowed;22;item;id_window_monitor
+#: cmainwnd.tabbed;14;item;id_window_monitor cmainwnd.windowed;22;item;id_window_monitor
 msgid "Show _Monitor"
 msgstr "显示监视器(_M)"
 
-#: cmainwnd.tabbed;14;item;id_window_remote
-#: cmainwnd.windowed;22;item;id_window_remote
+#: cmainwnd.tabbed;14;item;id_window_remote cmainwnd.windowed;22;item;id_window_remote
 msgid "Show _Remote"
 msgstr "显示遥控器(_R)"
 
-#: cmainwnd.windowed;18;item;id_network_search
-#: cmainwnd.view.windowed;item;id_network_search
-#: cmainwnd.tray;item;id_network_search cremotewnd;item;id_network_search
+#: cmainwnd.windowed;18;item;id_network_search cmainwnd.view.windowed;item;id_network_search cmainwnd.tray;item;id_network_search cremotewnd;item;id_network_search
 msgid "New _Search..."
 msgstr "新建搜索(_S)..."
 
@@ -1032,9 +860,7 @@ msgstr "下一曲目(_N)"
 msgid "_Connect Now"
 msgstr "立即连接(_C)"
 
-#: chostcachewnd;item;id_neighbours_copy
-#: cneighbourswnd.basic;item;id_neighbours_copy
-#: cneighbourswnd;item;id_neighbours_copy
+#: chostcachewnd;item;id_neighbours_copy cneighbourswnd.basic;item;id_neighbours_copy cneighbourswnd;item;id_neighbours_copy
 msgid "Copy _URI"
 msgstr "复制 URI(_U)"
 
@@ -1076,7 +902,7 @@ msgstr "KAD 缓存(_K)"
 
 #: chostcachewnd;28;item;id_hostcache_dc_cache
 msgid "_DC++ Cache"
-msgstr "_DC++ Cache"
+msgstr "DC++ 缓存(_D)"
 
 #: chostcachewnd;item;id_hostcache_import
 msgid "_Import MET File..."
@@ -1086,153 +912,67 @@ msgstr "导入 MET 文件(_I)..."
 msgid "Download MET..."
 msgstr "下载 MET..."
 
-#: csearchwnd.basic;item;id_search_download csearchwnd;item;id_search_download
-#: cbrowsehostwnd.basic;item;id_search_download
-#: cbrowsehostwnd;item;id_search_download
-#: chitmonitorwnd;item;id_search_download
+#: csearchwnd.basic;item;id_search_download csearchwnd;item;id_search_download cbrowsehostwnd.basic;item;id_search_download cbrowsehostwnd;item;id_search_download chitmonitorwnd;item;id_search_download
 msgid "_Download"
 msgstr "下载(_D)"
 
-#: csearchwnd.basic;item;id_search_copy csearchwnd;item;id_search_copy
-#: cbrowsehostwnd.basic;item;id_search_copy cbrowsehostwnd;item;id_search_copy
-#: chitmonitorwnd;item;id_search_copy
-#: cdownloadswnd.download.basic;item;id_downloads_copy
-#: cdownloadswnd.download;39;item;id_downloads_copy
-#: cdownloadswnd.source;item;id_downloads_copy
-#: cdownloadswnd.completed;item;id_downloads_copy
-#: clibraryfileview.physical.basic;item;id_library_url
-#: clibraryfileview.physical;item;id_library_url
-#: clibraryfileview.virtual.basic;item;id_library_url
-#: clibraryfileview.virtual;item;id_library_url
+#: csearchwnd.basic;item;id_search_copy csearchwnd;item;id_search_copy cbrowsehostwnd.basic;item;id_search_copy cbrowsehostwnd;item;id_search_copy chitmonitorwnd;item;id_search_copy cdownloadswnd.download.basic;item;id_downloads_copy cdownloadswnd.download;39;item;id_downloads_copy cdownloadswnd.source;item;id_downloads_copy cdownloadswnd.completed;item;id_downloads_copy clibraryfileview.physical.basic;item;id_library_url clibraryfileview.physical;item;id_library_url clibraryfileview.virtual.basic;item;id_library_url clibraryfileview.virtual;item;id_library_url
 msgid "Copy _URI..."
 msgstr "复制链接(_U)"
 
-#: csearchwnd.basic;item;id_browse_launch csearchwnd;item;id_browse_launch
-#: chitmonitorwnd;item;id_browse_launch
-#: cdownloadswnd.source;item;id_browse_launch
-#: cuploadswnd.upload.basic;item;id_browse_launch
-#: cuploadswnd.upload;item;id_browse_launch
-#: cneighbourswnd.basic;item;id_browse_launch
-#: cneighbourswnd;item;id_browse_launch
-#: csearchmonitorwnd;item;id_browse_launch
-#: cprivatechatframe;item;id_chat_browse
+#: csearchwnd.basic;item;id_browse_launch csearchwnd;item;id_browse_launch chitmonitorwnd;item;id_browse_launch cdownloadswnd.source;item;id_browse_launch cuploadswnd.upload.basic;item;id_browse_launch cuploadswnd.upload;item;id_browse_launch cneighbourswnd.basic;item;id_browse_launch cneighbourswnd;item;id_browse_launch csearchmonitorwnd;item;id_browse_launch cprivatechatframe;item;id_chat_browse
 msgid "_Browse User"
 msgstr "浏览用户(_B)"
 
-#: csearchwnd.basic;item;id_search_chat csearchwnd;item;id_search_chat
-#: cbrowsehostwnd.basic;item;id_search_chat cbrowsehostwnd;item;id_search_chat
-#: chitmonitorwnd;item;id_search_chat
-#: cdownloadswnd.source;item;id_transfers_chat
-#: cuploadswnd.upload.basic;item;id_uploads_chat
-#: cuploadswnd.upload;item;id_uploads_chat
-#: cneighbourswnd.basic;item;id_neighbours_chat
-#: cneighbourswnd;item;id_neighbours_chat
+#: csearchwnd.basic;item;id_search_chat csearchwnd;item;id_search_chat cbrowsehostwnd.basic;item;id_search_chat cbrowsehostwnd;item;id_search_chat chitmonitorwnd;item;id_search_chat cdownloadswnd.source;item;id_transfers_chat cuploadswnd.upload.basic;item;id_uploads_chat cuploadswnd.upload;item;id_uploads_chat cneighbourswnd.basic;item;id_neighbours_chat cneighbourswnd;item;id_neighbours_chat
 msgid "_Chat to User"
 msgstr "与用户聊天(_C)"
 
-#: csearchwnd.basic;29 csearchwnd;31 cbrowsehostwnd.basic;33 cbrowsehostwnd;35
-#: chitmonitorwnd;37 clibraryfileview.physical.basic;40
-#: clibraryfileview.physical;43 clibraryfileview.virtual.basic;46
-#: clibraryfileview.virtual;49
+#: csearchwnd.basic;29 csearchwnd;31 cbrowsehostwnd.basic;33 cbrowsehostwnd;35 chitmonitorwnd;37 clibraryfileview.physical.basic;40 clibraryfileview.physical;43 clibraryfileview.virtual.basic;46 clibraryfileview.virtual;49
 msgid "_Search For"
 msgstr "搜索(_S)"
 
-#: csearchwnd.basic;29;item;id_search_for_similar
-#: csearchwnd;31;item;id_search_for_similar
-#: cbrowsehostwnd.basic;33;item;id_search_for_similar
-#: cbrowsehostwnd;35;item;id_search_for_similar
-#: chitmonitorwnd;37;item;id_search_for_similar
-#: clibraryfileview.physical.basic;40;item;id_search_for_similar
-#: clibraryfileview.physical;43;item;id_search_for_similar
-#: clibraryfileview.virtual.basic;46;item;id_search_for_similar
-#: clibraryfileview.virtual;49;item;id_search_for_similar
+#: csearchwnd.basic;29;item;id_search_for_similar csearchwnd;31;item;id_search_for_similar cbrowsehostwnd.basic;33;item;id_search_for_similar cbrowsehostwnd;35;item;id_search_for_similar chitmonitorwnd;37;item;id_search_for_similar clibraryfileview.physical.basic;40;item;id_search_for_similar clibraryfileview.physical;43;item;id_search_for_similar clibraryfileview.virtual.basic;46;item;id_search_for_similar clibraryfileview.virtual;49;item;id_search_for_similar
 msgid "_Similar Files"
 msgstr "相似文件"
 
-#: csearchwnd.basic;29;item;id_search_for_artist
-#: csearchwnd;31;item;id_search_for_artist
-#: cbrowsehostwnd.basic;33;item;id_search_for_artist
-#: cbrowsehostwnd;35;item;id_search_for_artist
-#: chitmonitorwnd;37;item;id_search_for_artist
-#: clibraryfileview.physical.basic;40;item;id_search_for_artist
-#: clibraryfileview.physical;43;item;id_search_for_artist
-#: clibraryfileview.virtual.basic;46;item;id_search_for_artist
-#: clibraryfileview.virtual;49;item;id_search_for_artist
+#: csearchwnd.basic;29;item;id_search_for_artist csearchwnd;31;item;id_search_for_artist cbrowsehostwnd.basic;33;item;id_search_for_artist cbrowsehostwnd;35;item;id_search_for_artist chitmonitorwnd;37;item;id_search_for_artist clibraryfileview.physical.basic;40;item;id_search_for_artist clibraryfileview.physical;43;item;id_search_for_artist clibraryfileview.virtual.basic;46;item;id_search_for_artist clibraryfileview.virtual;49;item;id_search_for_artist
 msgid "_Music by the same Artist"
 msgstr "同一艺术家的音乐"
 
-#: csearchwnd.basic;29;item;id_search_for_album
-#: csearchwnd;31;item;id_search_for_album
-#: cbrowsehostwnd.basic;33;item;id_search_for_album
-#: cbrowsehostwnd;35;item;id_search_for_album
-#: chitmonitorwnd;37;item;id_search_for_album
-#: clibraryfileview.physical.basic;40;item;id_search_for_album
-#: clibraryfileview.physical;43;item;id_search_for_album
-#: clibraryfileview.virtual.basic;46;item;id_search_for_album
-#: clibraryfileview.virtual;49;item;id_search_for_album
+#: csearchwnd.basic;29;item;id_search_for_album csearchwnd;31;item;id_search_for_album cbrowsehostwnd.basic;33;item;id_search_for_album cbrowsehostwnd;35;item;id_search_for_album chitmonitorwnd;37;item;id_search_for_album clibraryfileview.physical.basic;40;item;id_search_for_album clibraryfileview.physical;43;item;id_search_for_album clibraryfileview.virtual.basic;46;item;id_search_for_album clibraryfileview.virtual;49;item;id_search_for_album
 msgid "Music in the same _Album"
 msgstr "同一专辑的音乐"
 
-#: csearchwnd.basic;29;item;id_search_for_series
-#: csearchwnd;31;item;id_search_for_series
-#: cbrowsehostwnd.basic;33;item;id_search_for_series
-#: cbrowsehostwnd;35;item;id_search_for_series
-#: chitmonitorwnd;37;item;id_search_for_series
-#: clibraryfileview.physical.basic;40;item;id_search_for_series
-#: clibraryfileview.physical;43;item;id_search_for_series
-#: clibraryfileview.virtual.basic;46;item;id_search_for_series
-#: clibraryfileview.virtual;49;item;id_search_for_series
+#: csearchwnd.basic;29;item;id_search_for_series csearchwnd;31;item;id_search_for_series cbrowsehostwnd.basic;33;item;id_search_for_series cbrowsehostwnd;35;item;id_search_for_series chitmonitorwnd;37;item;id_search_for_series clibraryfileview.physical.basic;40;item;id_search_for_series clibraryfileview.physical;43;item;id_search_for_series clibraryfileview.virtual.basic;46;item;id_search_for_series clibraryfileview.virtual;49;item;id_search_for_series
 msgid "_Episodes in the same Series"
 msgstr "同一系列的情节"
 
-#: csearchwnd.basic;30 csearchwnd;32 cbrowsehostwnd.basic;34 cbrowsehostwnd;36
-#: chitmonitorwnd;38 clibraryfileview.physical.basic;41
-#: clibraryfileview.physical;44 clibraryfileview.virtual.basic;47
-#: clibraryfileview.virtual;50
+#: csearchwnd.basic;30 csearchwnd;32 cbrowsehostwnd.basic;34 cbrowsehostwnd;36 chitmonitorwnd;38 clibraryfileview.physical.basic;41 clibraryfileview.physical;44 clibraryfileview.virtual.basic;47 clibraryfileview.virtual;50
 msgid "_Web Services"
 msgstr "网页服务(_W)"
 
-#: csearchwnd.basic;30;item;id_library_bitzi_web
-#: csearchwnd;32;item;id_library_bitzi_web
-#: cbrowsehostwnd.basic;34;item;id_library_bitzi_web
-#: cbrowsehostwnd;36;item;id_library_bitzi_web
-#: chitmonitorwnd;38;item;id_library_bitzi_web
-#: clibraryfileview.physical.basic;41;item;id_library_bitzi_web
-#: clibraryfileview.physical;44;item;id_library_bitzi_web
-#: clibraryfileview.virtual.basic;47;item;id_library_bitzi_web
-#: clibraryfileview.virtual;50;item;id_library_bitzi_web
+#: csearchwnd.basic;30;item;id_library_bitzi_web csearchwnd;32;item;id_library_bitzi_web cbrowsehostwnd.basic;34;item;id_library_bitzi_web cbrowsehostwnd;36;item;id_library_bitzi_web chitmonitorwnd;38;item;id_library_bitzi_web clibraryfileview.physical.basic;41;item;id_library_bitzi_web clibraryfileview.physical;44;item;id_library_bitzi_web clibraryfileview.virtual.basic;47;item;id_library_bitzi_web clibraryfileview.virtual;50;item;id_library_bitzi_web
 msgid "View _Bitzi Ticket"
 msgstr "查看 Bitzi 标签(_B)"
 
-#: csearchwnd;item;id_search_downloadnow
-#: cbrowsehostwnd.basic;item;id_search_downloadnow
-#: cbrowsehostwnd;item;id_search_downloadnow
+#: csearchwnd;item;id_search_downloadnow cbrowsehostwnd.basic;item;id_search_downloadnow cbrowsehostwnd;item;id_search_downloadnow
 msgid "Download _Now"
 msgstr "立即下载"
 
-#: csearchwnd;item;id_security_ban cuploadswnd.upload;item;id_security_ban
-#: cneighbourswnd;item;id_security_ban csearchmonitorwnd;item;id_security_ban
+#: csearchwnd;item;id_security_ban cuploadswnd.upload;item;id_security_ban cneighbourswnd;item;id_security_ban csearchmonitorwnd;item;id_security_ban
 msgid "_Ban User"
 msgstr "禁止用户(_B)"
 
-#: csearchwnd;31;item;id_search_for_this
-#: cbrowsehostwnd;35;item;id_search_for_this
-#: chitmonitorwnd;37;item;id_search_for_this
-#: clibraryfileview.physical.basic;40;item;id_search_for_this
-#: clibraryfileview.physical;43;item;id_search_for_this
-#: clibraryfileview.virtual.basic;46;item;id_search_for_this
-#: clibraryfileview.virtual;49;item;id_search_for_this
+#: csearchwnd;31;item;id_search_for_this cbrowsehostwnd;35;item;id_search_for_this chitmonitorwnd;37;item;id_search_for_this clibraryfileview.physical.basic;40;item;id_search_for_this clibraryfileview.physical;43;item;id_search_for_this clibraryfileview.virtual.basic;46;item;id_search_for_this clibraryfileview.virtual;49;item;id_search_for_this
 msgid "_This File"
 msgstr "此文件"
 
-#: csearchwnd;item;id_search_filter cbrowsehostwnd;item;id_search_filter
-#: chitmonitorwnd;item;id_search_filter
+#: csearchwnd;item;id_search_filter cbrowsehostwnd;item;id_search_filter chitmonitorwnd;item;id_search_filter
 msgid "_Filter Results..."
 msgstr "过滤结果(_F)..."
 
-#: csearchwnd;item;id_search_filter_remove
-#: cbrowsehostwnd;item;id_search_filter_remove
-#: chitmonitorwnd;item;id_search_filter_remove
+#: csearchwnd;item;id_search_filter_remove cbrowsehostwnd;item;id_search_filter_remove chitmonitorwnd;item;id_search_filter_remove
 msgid "_Remove Filter"
 msgstr "移除过滤器(_R)"
 
@@ -1240,13 +980,11 @@ msgstr "移除过滤器(_R)"
 msgid "C_lear Results"
 msgstr "清除结果(_L)"
 
-#: csearchwnd;item;id_search_columns cbrowsehostwnd;item;id_search_columns
-#: chitmonitorwnd;item;id_search_columns
+#: csearchwnd;item;id_search_columns cbrowsehostwnd;item;id_search_columns chitmonitorwnd;item;id_search_columns
 msgid "Edit C_olumns..."
 msgstr "编辑列(_O)..."
 
-#: chitmonitorwnd;item;id_hitmonitor_pause
-#: csearchmonitorwnd;item;id_searchmonitor_pause
+#: chitmonitorwnd;item;id_hitmonitor_pause csearchmonitorwnd;item;id_searchmonitor_pause
 msgid "_Pause Display"
 msgstr "暂停显示(_P)"
 
@@ -1254,46 +992,35 @@ msgstr "暂停显示(_P)"
 msgid "C_lear Display"
 msgstr "清除显示(_L)"
 
-#: cdownloadswnd.download.basic;item;id_downloads_launch_copy
-#: cdownloadswnd.download;item;id_downloads_launch_copy
+#: cdownloadswnd.download.basic;item;id_downloads_launch_copy cdownloadswnd.download;item;id_downloads_launch_copy
 msgid "Previe_w File"
 msgstr "预览文件(_W)"
 
-#: cdownloadswnd.download.basic;item;id_downloads_remote_preview
-#: cdownloadswnd.download;item;id_downloads_remote_preview
+#: cdownloadswnd.download.basic;item;id_downloads_remote_preview cdownloadswnd.download;item;id_downloads_remote_preview
 msgid "R_emote Preview"
 msgstr "远程预览(_E)"
 
-#: cdownloadswnd.download.basic;item;id_downloads_view_reviews
-#: cdownloadswnd.download;item;id_downloads_view_reviews
+#: cdownloadswnd.download.basic;item;id_downloads_view_reviews cdownloadswnd.download;item;id_downloads_view_reviews
 msgid "_View Reviews"
 msgstr "查看评价(_V)"
 
-#: cdownloadswnd.download.basic;item;id_downloads_resume
-#: cdownloadswnd.download;item;id_downloads_resume
+#: cdownloadswnd.download.basic;item;id_downloads_resume cdownloadswnd.download;item;id_downloads_resume
 msgid "_Resume Download"
 msgstr "续传(_R)"
 
-#: cdownloadswnd.download.basic;item;id_downloads_pause
-#: cdownloadswnd.download;item;id_downloads_pause
+#: cdownloadswnd.download.basic;item;id_downloads_pause cdownloadswnd.download;item;id_downloads_pause
 msgid "P_ause Download"
 msgstr "暂停(_A)"
 
-#: cdownloadswnd.download.basic;item;id_downloads_clear_incomplete
-#: cdownloadswnd.download;item;id_downloads_clear_incomplete
+#: cdownloadswnd.download.basic;item;id_downloads_clear_incomplete cdownloadswnd.download;item;id_downloads_clear_incomplete
 msgid "_Cancel Download"
 msgstr "取消下载(_C)"
 
-#: cdownloadswnd.download.basic;item;id_downloads_sources
-#: cdownloadswnd.download;item;id_downloads_sources
+#: cdownloadswnd.download.basic;item;id_downloads_sources cdownloadswnd.download;item;id_downloads_sources
 msgid "_Find More Sources"
 msgstr "查找更多资源(_F)"
 
-#: cdownloadswnd.download.basic;item;id_downloads_help
-#: cdownloadswnd.download;item;id_downloads_help
-#: cdownloadswnd.seeding;item;id_downloads_help
-#: cdownloadswnd.nothing;item;id_downloads_help
-#: cuploadswnd.nothing;item;id_uploads_help
+#: cdownloadswnd.download.basic;item;id_downloads_help cdownloadswnd.download;item;id_downloads_help cdownloadswnd.seeding;item;id_downloads_help cdownloadswnd.nothing;item;id_downloads_help cuploadswnd.nothing;item;id_uploads_help
 msgid "_Help..."
 msgstr "帮助(_H)..."
 
@@ -1301,13 +1028,7 @@ msgstr "帮助(_H)..."
 msgid "Prev_iew Partial File"
 msgstr "预览部分文件(_I)"
 
-#: cdownloadswnd.download;item;id_downloads_enqueue
-#: cdownloadswnd.completed.basic;item;id_downloads_enqueue
-#: cdownloadswnd.completed;item;id_downloads_enqueue
-#: clibraryfileview.physical.basic;item;id_library_enqueue
-#: clibraryfileview.physical;item;id_library_enqueue
-#: clibraryfileview.virtual.basic;item;id_library_enqueue
-#: clibraryfileview.virtual;item;id_library_enqueue
+#: cdownloadswnd.download;item;id_downloads_enqueue cdownloadswnd.completed.basic;item;id_downloads_enqueue cdownloadswnd.completed;item;id_downloads_enqueue clibraryfileview.physical.basic;item;id_library_enqueue clibraryfileview.physical;item;id_library_enqueue clibraryfileview.virtual.basic;item;id_library_enqueue clibraryfileview.virtual;item;id_library_enqueue
 msgid "Add to Pla_ylist"
 msgstr "加入播放列表(_Y)"
 
@@ -1323,13 +1044,11 @@ msgstr "添加资源(_A)..."
 msgid "Monitor _Window"
 msgstr "监视器(_W)"
 
-#: cdownloadswnd.download;39;item;id_downloads_move_up
-#: csecuritywnd;item;id_security_move_up
+#: cdownloadswnd.download;39;item;id_downloads_move_up csecuritywnd;item;id_security_move_up
 msgid "Move _Up"
 msgstr "上移(_U)"
 
-#: cdownloadswnd.download;39;item;id_downloads_move_down
-#: csecuritywnd;item;id_security_move_down
+#: cdownloadswnd.download;39;item;id_downloads_move_down csecuritywnd;item;id_security_move_down
 msgid "Move _Down"
 msgstr "下移(_D)"
 
@@ -1337,14 +1056,7 @@ msgstr "下移(_D)"
 msgid "_Ignore Bandwidth Limit"
 msgstr "忽略带宽限制(_I)"
 
-#: cdownloadswnd.download;item;id_downloads_edit
-#: cdownloadtabbar;item;id_download_group_properties
-#: clibrarytileview;item;id_library_album_properties
-#: clibraryfileview.physical.basic;item;id_library_properties
-#: clibraryfileview.physical;item;id_library_properties
-#: clibraryfileview.virtual.basic;item;id_library_properties
-#: clibraryfileview.virtual;item;id_library_properties
-#: csecuritywnd;item;id_security_edit cdiscoverywnd;item;id_discovery_edit
+#: cdownloadswnd.download;item;id_downloads_edit cdownloadtabbar;item;id_download_group_properties clibrarytileview;item;id_library_album_properties clibraryfileview.physical.basic;item;id_library_properties clibraryfileview.physical;item;id_library_properties clibraryfileview.virtual.basic;item;id_library_properties clibraryfileview.virtual;item;id_library_properties csecuritywnd;item;id_security_edit cdiscoverywnd;item;id_discovery_edit
 msgid "_Properties"
 msgstr "属性(_P)"
 
@@ -1356,29 +1068,19 @@ msgstr "访问(_A)"
 msgid "_Forget"
 msgstr "忽略(_F)"
 
-#: cdownloadswnd.completed.basic;item;id_downloads_launch_complete
-#: cdownloadswnd.completed;item;id_downloads_launch_complete
-#: cdownloadswnd.seeding;item;id_downloads_launch_complete
-#: clibraryfileview.physical.basic;item;id_library_launch
-#: clibraryfileview.physical;item;id_library_launch
-#: clibraryfileview.virtual.basic;item;id_library_launch
-#: clibraryfileview.virtual;item;id_library_launch
+#: cdownloadswnd.completed.basic;item;id_downloads_launch_complete cdownloadswnd.completed;item;id_downloads_launch_complete cdownloadswnd.seeding;item;id_downloads_launch_complete clibraryfileview.physical.basic;item;id_library_launch clibraryfileview.physical;item;id_library_launch clibraryfileview.virtual.basic;item;id_library_launch clibraryfileview.virtual;item;id_library_launch
 msgid "_Open or Play"
 msgstr "打开或播放(_O)"
 
-#: cdownloadswnd.completed.basic;item;id_downloads_clear_complete
-#: cdownloadswnd.completed;item;id_downloads_clear_complete
-#: cuploadswnd.upload;item;id_uploads_clear ctrafficwnd;item;id_traffic_clear
+#: cdownloadswnd.completed.basic;item;id_downloads_clear_complete cdownloadswnd.completed;item;id_downloads_clear_complete cuploadswnd.upload;item;id_uploads_clear ctrafficwnd;item;id_traffic_clear
 msgid "_Clear"
 msgstr "清除(_C)"
 
-#: cdownloadswnd.completed.basic;item;id_downloads_file_delete
-#: cdownloadswnd.completed;item;id_downloads_file_delete
+#: cdownloadswnd.completed.basic;item;id_downloads_file_delete cdownloadswnd.completed;item;id_downloads_file_delete
 msgid "_Delete File"
 msgstr "删除文件(_D)"
 
-#: cdownloadswnd.completed;item;id_downloads_rate
-#: cmedialist;item;id_media_rate
+#: cdownloadswnd.completed;item;id_downloads_rate cmedialist;item;id_media_rate
 msgid "_Rate File..."
 msgstr "文件评级(_R)..."
 
@@ -1386,20 +1088,15 @@ msgstr "文件评级(_R)..."
 msgid "_Stop Seeding"
 msgstr "停止做种(_S)"
 
-#: cdownloadswnd.seeding;item;id_downloads_edit
-#: cmedialist;item;id_media_properties
+#: cdownloadswnd.seeding;item;id_downloads_edit cmedialist;item;id_media_properties
 msgid "_Properties..."
 msgstr "属性(_P)"
 
-#: cdownloadswnd.nothing;item;id_downloads_clear_completed
-#: cuploadswnd.queue;item;id_uploads_clear_completed
-#: cuploadswnd.nothing;item;id_uploads_clear_completed
+#: cdownloadswnd.nothing;item;id_downloads_clear_completed cuploadswnd.queue;item;id_uploads_clear_completed cuploadswnd.nothing;item;id_uploads_clear_completed
 msgid "C_lear Completed"
 msgstr "清除完成文件(_L)"
 
-#: cdownloadswnd.nothing;item;id_downloads_auto_clear
-#: cuploadswnd.queue;item;id_uploads_auto_clear
-#: cuploadswnd.nothing;item;id_uploads_auto_clear
+#: cdownloadswnd.nothing;item;id_downloads_auto_clear cuploadswnd.queue;item;id_uploads_auto_clear cuploadswnd.nothing;item;id_uploads_auto_clear
 msgid "Aut_o Clear"
 msgstr "自动清除(_O)"
 
@@ -1423,18 +1120,15 @@ msgstr "新建群组(_N)..."
 msgid "Remove _Group"
 msgstr "移除群组(_G)"
 
-#: cdownloadtabbar;item;id_download_group_show
-#: cdownloadswnd.filter;item;id_download_group_show
+#: cdownloadtabbar;item;id_download_group_show cdownloadswnd.filter;item;id_download_group_show
 msgid "_Show Groups"
 msgstr "显示群组(_S)"
 
-#: cdownloadswnd.filter;item;id_downloads_filter_all
-#: cuploadswnd.filter;item;id_uploads_filter_all
+#: cdownloadswnd.filter;item;id_downloads_filter_all cuploadswnd.filter;item;id_uploads_filter_all
 msgid "Show _All"
 msgstr "显示全部(_A)"
 
-#: cdownloadswnd.filter;item;id_downloads_filter_active
-#: cuploadswnd.filter;item;id_uploads_filter_active
+#: cdownloadswnd.filter;item;id_downloads_filter_active cuploadswnd.filter;item;id_uploads_filter_active
 msgid "Show A_ctive"
 msgstr "显示活动的(_C)"
 
@@ -1474,33 +1168,15 @@ msgstr "显示 BitTorrent"
 msgid "Show _History"
 msgstr "显示历史"
 
-#: clibrarytree.physical.basic;item;id_library_shared_folder
-#: clibrarytree.physical;item;id_library_shared_folder
-#: clibraryfileview.physical.basic;item;id_library_shared_file
-#: clibraryfileview.physical;item;id_library_shared_file
-#: clibraryfileview.virtual.basic;item;id_library_shared_file
-#: clibraryfileview.virtual;item;id_library_shared_file
+#: clibrarytree.physical.basic;item;id_library_shared_folder clibrarytree.physical;item;id_library_shared_folder clibraryfileview.physical.basic;item;id_library_shared_file clibraryfileview.physical;item;id_library_shared_file clibraryfileview.virtual.basic;item;id_library_shared_file clibraryfileview.virtual;item;id_library_shared_file
 msgid "_Shared"
 msgstr "共享(_S)"
 
-#: clibrarytree.physical.basic;item;id_library_remove
-#: clibrarytree.physical;item;id_library_remove
-#: cmedialist;item;id_media_remove csecuritywnd;item;id_security_remove
-#: cschedulerwnd;item;id_scheduler_remove
-#: cdiscoverywnd;item;id_discovery_remove clibrarysettingspage;control;19
-#: clibrarysettingspage;control;23 cmediasettingspage;control;8
-#: cwebsettingspage;control;13 cwizardsharepage;control;6
-#: cavatarprofilepage;control;6 cfilesourcespage;control;6
-#: cgraphlistdlg;control;4 cgraphitemdlg;control;12 csharemanagerdlg;control;4
-#: cdownloadgroupdlg;control;8
+#: clibrarytree.physical.basic;item;id_library_remove clibrarytree.physical;item;id_library_remove cmedialist;item;id_media_remove csecuritywnd;item;id_security_remove cschedulerwnd;item;id_scheduler_remove cdiscoverywnd;item;id_discovery_remove clibrarysettingspage;control;19 clibrarysettingspage;control;23 cmediasettingspage;control;8 cwebsettingspage;control;13 cwizardsharepage;control;6 cavatarprofilepage;control;6 cfilesourcespage;control;6 cgraphlistdlg;control;4 cgraphitemdlg;control;12 csharemanagerdlg;control;4 cdownloadgroupdlg;control;8
 msgid "_Remove"
 msgstr "移除(_R)"
 
-#: clibrarytree.physical.basic;item;id_shell_menu
-#: clibrarytree.physical;item;id_shell_menu
-#: clibraryfileview.physical;item;id_shell_menu
-#: clibraryfileview.virtual.basic;item;id_shell_menu
-#: clibraryfileview.virtual;item;id_shell_menu
+#: clibrarytree.physical.basic;item;id_shell_menu clibrarytree.physical;item;id_shell_menu clibraryfileview.physical;item;id_shell_menu clibraryfileview.virtual.basic;item;id_shell_menu clibraryfileview.virtual;item;id_shell_menu
 msgid "S_hell menu"
 msgstr "外部菜单(_H)"
 
@@ -1512,43 +1188,27 @@ msgstr "浏览(_E)"
 msgid "S_can"
 msgstr "扫描(_C)"
 
-#: clibrarytree.physical;item;id_library_rebuild
-#: clibrarytree.virtual;item;id_library_rebuild
+#: clibrarytree.physical;item;id_library_rebuild clibrarytree.virtual;item;id_library_rebuild
 msgid "Re_build"
 msgstr "重建(_B)"
 
-#: clibrarytree.physical;item;id_library_folder_file_properties
-#: clibrarytree.virtual.basic;item;id_library_folder_file_properties
-#: clibrarytree.virtual;item;id_library_folder_file_properties
+#: clibrarytree.physical;item;id_library_folder_file_properties clibrarytree.virtual.basic;item;id_library_folder_file_properties clibrarytree.virtual;item;id_library_folder_file_properties
 msgid "File _Properties"
 msgstr "文件属性(_P)"
 
-#: clibrarytree.virtual.basic;item;id_library_folder_enqueue
-#: clibrarytree.virtual;item;id_library_folder_enqueue
-#: clibraryfileview.virtual.basic;item;id_library_folder_enqueue
-#, fuzzy
+#: clibrarytree.virtual.basic;item;id_library_folder_enqueue clibrarytree.virtual;item;id_library_folder_enqueue clibraryfileview.virtual.basic;item;id_library_folder_enqueue
 msgid "Play _Album"
-msgstr "播放专辑"
+msgstr "播放专辑(_P)"
 
-#: clibrarytree.virtual.basic;item;id_library_folder_delete
-#: clibrarytree.virtual;item;id_library_folder_delete
-#: clibrarytileview;item;id_library_album_delete
-#: clibraryfileview.physical.basic;item;id_library_delete
-#: clibraryfileview.physical;item;id_library_delete
-#: clibraryfileview.virtual.basic;item;id_library_delete
-#: clibraryfileview.virtual;item;id_library_delete
-#: cuploadssettingspage;control;21 cfiltersearchdlg;control;28
+#: clibrarytree.virtual.basic;item;id_library_folder_delete clibrarytree.virtual;item;id_library_folder_delete clibrarytileview;item;id_library_album_delete clibraryfileview.physical.basic;item;id_library_delete clibraryfileview.physical;item;id_library_delete clibraryfileview.virtual.basic;item;id_library_delete clibraryfileview.virtual;item;id_library_delete cuploadssettingspage;control;21 cfiltersearchdlg;control;28
 msgid "_Delete"
 msgstr "删除(_D)"
 
-#: clibrarytree.virtual.basic;item;id_library_folder_properties
-#: clibrarytree.virtual;item;id_library_folder_properties
-#, fuzzy
+#: clibrarytree.virtual.basic;item;id_library_folder_properties clibrarytree.virtual;item;id_library_folder_properties
 msgid "Album _Properties"
 msgstr "专辑属性(_A)"
 
-#: clibrarytree.virtual;item;id_library_export_collection
-#: cmedialist;item;id_media_export_collection
+#: clibrarytree.virtual;item;id_library_export_collection cmedialist;item;id_media_export_collection
 msgid "_Export Collection..."
 msgstr "导出收集(_E)..."
 
@@ -1560,70 +1220,47 @@ msgstr "新建文件夹(_N)..."
 msgid "_Open"
 msgstr "打开(_O)"
 
-#: clibraryfileview.physical.basic;41;item;id_library_bitzi_download
-#: clibraryfileview.physical;44;item;id_library_bitzi_download
-#: clibraryfileview.virtual.basic;47;item;id_library_bitzi_download
-#: clibraryfileview.virtual;50;item;id_library_bitzi_download
+#: clibraryfileview.physical.basic;41;item;id_library_bitzi_download clibraryfileview.physical;44;item;id_library_bitzi_download clibraryfileview.virtual.basic;47;item;id_library_bitzi_download clibraryfileview.virtual;50;item;id_library_bitzi_download
 msgid "_Download Metadata"
 msgstr "下载元数据(_D)"
 
-#: clibraryfileview.physical.basic;42 clibraryfileview.physical;45
-#: clibraryfileview.virtual.basic;48 clibraryfileview.virtual;51
+#: clibraryfileview.physical.basic;42 clibraryfileview.physical;45 clibraryfileview.virtual.basic;48 clibraryfileview.virtual;51
 msgid "O_rganise"
 msgstr "O_rganise"
 
-#: clibraryfileview.physical.basic;42;item;id_library_rename
-#: clibraryfileview.physical;45;item;id_library_rename
-#: clibraryfileview.virtual.basic;48;item;id_library_rename
-#: clibraryfileview.virtual;51;item;id_library_rename
+#: clibraryfileview.physical.basic;42;item;id_library_rename clibraryfileview.physical;45;item;id_library_rename clibraryfileview.virtual.basic;48;item;id_library_rename clibraryfileview.virtual;51;item;id_library_rename
 msgid "_Rename File"
 msgstr "重命名文件(_R)"
 
-#: clibraryfileview.physical.basic;42;item;id_library_move
-#: clibraryfileview.physical;45;item;id_library_move
-#: clibraryfileview.virtual.basic;48;item;id_library_move
-#: clibraryfileview.virtual;51;item;id_library_move
+#: clibraryfileview.physical.basic;42;item;id_library_move clibraryfileview.physical;45;item;id_library_move clibraryfileview.virtual.basic;48;item;id_library_move clibraryfileview.virtual;51;item;id_library_move
 msgid "_Move Files..."
 msgstr "移动文件(_M)"
 
-#: clibraryfileview.physical.basic;42;item;id_library_copy
-#: clibraryfileview.physical;45;item;id_library_copy
-#: clibraryfileview.virtual.basic;48;item;id_library_copy
-#: clibraryfileview.virtual;51;item;id_library_copy
+#: clibraryfileview.physical.basic;42;item;id_library_copy clibraryfileview.physical;45;item;id_library_copy clibraryfileview.virtual.basic;48;item;id_library_copy clibraryfileview.virtual;51;item;id_library_copy
 msgid "_Copy Files..."
 msgstr "复制文件(_C)"
 
-#: clibraryfileview.physical.basic;item;id_library_rebuild_ansi
-#: clibraryfileview.physical;item;id_library_rebuild_ansi
-#: clibraryfileview.virtual.basic;item;id_library_rebuild_ansi
-#: clibraryfileview.virtual;item;id_library_rebuild_ansi
+#: clibraryfileview.physical.basic;item;id_library_rebuild_ansi clibraryfileview.physical;item;id_library_rebuild_ansi clibraryfileview.virtual.basic;item;id_library_rebuild_ansi clibraryfileview.virtual;item;id_library_rebuild_ansi
 msgid "_Localise Metadata"
 msgstr "本地化元数据(_L)"
 
-#: clibraryfileview.physical.basic;item;id_library_refresh_metadata
-#: clibraryfileview.physical;item;id_library_refresh_metadata
-#: clibraryfileview.virtual.basic;item;id_library_refresh_metadata
-#: clibraryfileview.virtual;item;id_library_refresh_metadata
+#: clibraryfileview.physical.basic;item;id_library_refresh_metadata clibraryfileview.physical;item;id_library_refresh_metadata clibraryfileview.virtual.basic;item;id_library_refresh_metadata clibraryfileview.virtual;item;id_library_refresh_metadata
 msgid "_Refresh Metadata"
 msgstr "刷新元数据(_R)"
 
-#: clibraryfileview.physical;44;item;id_library_createtorrent
-#: clibraryfileview.virtual;50;item;id_library_createtorrent
+#: clibraryfileview.physical;44;item;id_library_createtorrent clibraryfileview.virtual;50;item;id_library_createtorrent
 msgid "Create ._torrent File"
 msgstr "创建种子文件(_T)"
 
-#: clibraryfileview.physical;item;id_library_columns
-#: clibraryfileview.virtual;item;id_library_columns
+#: clibraryfileview.physical;item;id_library_columns clibraryfileview.virtual;item;id_library_columns
 msgid "Choose _Columns..."
 msgstr "选择列(_C)..."
 
-#: clibraryfileview.virtual.basic;48;item;id_library_unlink
-#: clibraryfileview.virtual;51;item;id_library_unlink
+#: clibraryfileview.virtual.basic;48;item;id_library_unlink clibraryfileview.virtual;51;item;id_library_unlink
 msgid "Remove _Files"
 msgstr "删除文件(_F)"
 
-#: cmediaframe.basic;item;id_media_play cmediaframe;item;id_media_play
-#: cmedialist;item;id_media_select
+#: cmediaframe.basic;item;id_media_play cmediaframe;item;id_media_play cmedialist;item;id_media_select
 msgid "_Play"
 msgstr "播放(_P)"
 
@@ -1643,8 +1280,7 @@ msgstr "打开媒体文件(_O)..."
 msgid "Play_list"
 msgstr "播放列表"
 
-#: cmediaframe.basic;52;item;id_media_previous
-#: cmediaframe;55;item;id_media_previous
+#: cmediaframe.basic;52;item;id_media_previous cmediaframe;55;item;id_media_previous
 msgid "Pre_vious"
 msgstr "上一个(_V)"
 
@@ -1652,20 +1288,15 @@ msgstr "上一个(_V)"
 msgid "_Next"
 msgstr "下一个(_N)"
 
-#: cmediaframe.basic;52;item;id_media_random
-#: cmediaframe;55;item;id_media_random
+#: cmediaframe.basic;52;item;id_media_random cmediaframe;55;item;id_media_random
 msgid "_Random"
 msgstr "随机(_R)"
 
-#: cmediaframe.basic;52;item;id_media_repeat
-#: cmediaframe;55;item;id_media_repeat
+#: cmediaframe.basic;52;item;id_media_repeat cmediaframe;55;item;id_media_repeat
 msgid "R_epeat"
 msgstr "重复(_E)"
 
-#: cmediaframe.basic;52;item;id_media_playlist
-#: cmediaframe.basic;54;item;id_media_playlist
-#: cmediaframe;55;item;id_media_playlist cmediaframe;57;item;id_media_playlist
-#: cmedialist;item;id_media_playlist
+#: cmediaframe.basic;52;item;id_media_playlist cmediaframe.basic;54;item;id_media_playlist cmediaframe;55;item;id_media_playlist cmediaframe;57;item;id_media_playlist cmedialist;item;id_media_playlist
 msgid "Show _Playlist"
 msgstr "显示播放列表(_P)"
 
@@ -1673,51 +1304,35 @@ msgstr "显示播放列表(_P)"
 msgid "Video Si_ze"
 msgstr "视频大小(_Z)"
 
-#: cmediaframe.basic;53;item;id_media_size_one
-#: cmediaframe;56;item;id_media_size_one
-#: cmediaframe.zoom;item;id_media_size_one
+#: cmediaframe.basic;53;item;id_media_size_one cmediaframe;56;item;id_media_size_one cmediaframe.zoom;item;id_media_size_one
 msgid "_Original Size"
 msgstr "原始大小(_O)"
 
-#: cmediaframe.basic;53;item;id_media_size_two
-#: cmediaframe;56;item;id_media_size_two
-#: cmediaframe.zoom;item;id_media_size_two
+#: cmediaframe.basic;53;item;id_media_size_two cmediaframe;56;item;id_media_size_two cmediaframe.zoom;item;id_media_size_two
 msgid "_Double Size"
 msgstr "双倍大小(_D)"
 
-#: cmediaframe.basic;53;item;id_media_size_three
-#: cmediaframe;56;item;id_media_size_three
-#: cmediaframe.zoom;item;id_media_size_three
+#: cmediaframe.basic;53;item;id_media_size_three cmediaframe;56;item;id_media_size_three cmediaframe.zoom;item;id_media_size_three
 msgid "_Triple Size"
 msgstr "三倍大小(_T)"
 
-#: cmediaframe.basic;53;item;id_media_size_fill
-#: cmediaframe;56;item;id_media_size_fill
-#: cmediaframe.zoom;item;id_media_size_fill
+#: cmediaframe.basic;53;item;id_media_size_fill cmediaframe;56;item;id_media_size_fill cmediaframe.zoom;item;id_media_size_fill
 msgid "_Largest"
 msgstr "最大化(_L)"
 
-#: cmediaframe.basic;53;item;id_media_size_distort
-#: cmediaframe;56;item;id_media_size_distort
-#: cmediaframe.zoom;item;id_media_size_distort
+#: cmediaframe.basic;53;item;id_media_size_distort cmediaframe;56;item;id_media_size_distort cmediaframe.zoom;item;id_media_size_distort
 msgid "_Fill Window"
 msgstr "适合窗口(_W)"
 
-#: cmediaframe.basic;53;item;id_media_aspect_default
-#: cmediaframe;56;item;id_media_aspect_default
-#: cmediaframe.zoom;item;id_media_aspect_default
+#: cmediaframe.basic;53;item;id_media_aspect_default cmediaframe;56;item;id_media_aspect_default cmediaframe.zoom;item;id_media_aspect_default
 msgid "Default _Aspect"
 msgstr "默认比例(_A)"
 
-#: cmediaframe.basic;53;item;id_media_aspect_4_3
-#: cmediaframe;56;item;id_media_aspect_4_3
-#: cmediaframe.zoom;item;id_media_aspect_4_3
+#: cmediaframe.basic;53;item;id_media_aspect_4_3 cmediaframe;56;item;id_media_aspect_4_3 cmediaframe.zoom;item;id_media_aspect_4_3
 msgid "_4:3 Ratio (TV)"
 msgstr "4:3 电视比例(_4)"
 
-#: cmediaframe.basic;53;item;id_media_aspect_16_9
-#: cmediaframe;56;item;id_media_aspect_16_9
-#: cmediaframe.zoom;item;id_media_aspect_16_9
+#: cmediaframe.basic;53;item;id_media_aspect_16_9 cmediaframe;56;item;id_media_aspect_16_9 cmediaframe.zoom;item;id_media_aspect_16_9
 msgid "_16:9 (Film)"
 msgstr "16:9 电影比例(_1)"
 
@@ -1729,13 +1344,11 @@ msgstr "设置"
 msgid "Choose _Visualisation..."
 msgstr "选择可视化效果(_V)..."
 
-#: cmediaframe.basic;54;item;id_media_status
-#: cmediaframe;57;item;id_media_status
+#: cmediaframe.basic;54;item;id_media_status cmediaframe;57;item;id_media_status
 msgid "Show _Status Line"
 msgstr "显示状态条(_S)"
 
-#: cmediaframe.basic;54;item;id_media_settings
-#: cmediaframe;57;item;id_media_settings
+#: cmediaframe.basic;54;item;id_media_settings cmediaframe;57;item;id_media_settings
 msgid "_Media Settings..."
 msgstr "媒体设置(_M)..."
 
@@ -1777,7 +1390,7 @@ msgstr "详细模式(_V)"
 
 #: csystemwnd;58;item;id_system_verbose_error
 msgid "_Error"
-msgstr "_Error"
+msgstr "错误(_E)"
 
 #: csystemwnd;58;item;id_system_verbose_warning
 msgid "_Warning"
@@ -1795,8 +1408,7 @@ msgstr "信息(_I)"
 msgid "_Debug"
 msgstr "调试(_D)"
 
-#: csystemwnd;item;id_system_timestamp
-#: cprivatechatframe;item;id_chat_timestamp
+#: csystemwnd;item;id_system_timestamp cprivatechatframe;item;id_chat_timestamp
 msgid "Timestam_p"
 msgstr "时间戳(_P)"
 
@@ -1804,8 +1416,7 @@ msgstr "时间戳(_P)"
 msgid "_Copy"
 msgstr "复制(_C)"
 
-#: csystemwnd;item;id_system_clear
-#: csearchmonitorwnd;item;id_searchmonitor_clear
+#: csystemwnd;item;id_system_clear csearchmonitorwnd;item;id_searchmonitor_clear
 msgid "Clear _Buffer"
 msgstr "清除缓存(_B)"
 
@@ -1827,7 +1438,7 @@ msgstr "edonkey(_E)"
 
 #: cneighbourswnd;59;item;id_network_dc
 msgid "_DC++"
-msgstr ""
+msgstr "DC++(_D)"
 
 #: cneighbourswnd;60
 msgid "_Monitor"
@@ -1899,23 +1510,23 @@ msgstr "拒绝(_D)"
 
 #: cschedulerwnd;item;id_scheduler_add
 msgid "_Add Scheduled Task"
-msgstr ""
+msgstr "添加计划任务(_A)"
 
 #: cschedulerwnd;item;id_scheduler_activate
 msgid "A_ctivate"
-msgstr ""
+msgstr "启用(_C)"
 
 #: cschedulerwnd;item;id_scheduler_deactivate
 msgid "_Deactivate"
-msgstr ""
+msgstr "禁用(_D)"
 
 #: cschedulerwnd;item;id_scheduler_edit
 msgid "_Edit"
-msgstr ""
+msgstr "编辑(_E)"
 
 #: cschedulerwnd;item;id_scheduler_remove_all
 msgid "Remove Al_l"
-msgstr ""
+msgstr "删除所有(_L)"
 
 #: cdiscoverywnd;item;id_discovery_query
 msgid "_Query Now"
@@ -1989,8 +1600,7 @@ msgstr "实际大小(_A)"
 msgid "_Refresh"
 msgstr "刷新(_R)"
 
-#: imageviewer_context;item;imageviewer_close
-#: circtabrclick;item;id_irc_closetab
+#: imageviewer_context;item;imageviewer_close circtabrclick;item;id_irc_closetab
 msgid "_Close"
 msgstr "关闭(_C)"
 
@@ -2004,7 +1614,7 @@ msgstr "查询(_Q)"
 
 #: circuserlist;63 dialog;cdownloadactionspage
 msgid "Actions"
-msgstr "Actions"
+msgstr "动作"
 
 #: circuserlist;63;item;id_irc_time
 msgid "_Time"
@@ -2016,11 +1626,11 @@ msgstr "版本(_V)"
 
 #: circuserlist;63;item;id_irc_browse
 msgid "_Browse"
-msgstr ""
+msgstr "浏览(_B)"
 
 #: circuserlist;64
 msgid "Control"
-msgstr "Control"
+msgstr "控制"
 
 #: circuserlist;64;item;id_irc_ignore
 msgid "_Ignore"
@@ -2100,7 +1710,7 @@ msgstr "点击这里开始！"
 
 #: chomeviewctrl;heading;2000
 msgid "S T A R T   D O W N L O A D"
-msgstr "搜 索   S H A R E A Z A"
+msgstr "开 始 下 载"
 
 #: chomeviewctrl;link;2001
 msgid "Click here to start"
@@ -2112,11 +1722,11 @@ msgstr "正在下载新文件或种子。"
 
 #: chomeviewctrl;heading;3000
 msgid "S E A R C H   F O R   A   F I L E"
-msgstr "升 级   公 告"
+msgstr "搜 索   文 件"
 
 #: chomeviewctrl;heading;4000
 msgid "U P G R A D E   N O T I C E"
-msgstr "警 告   -   您 位 于 防 火 墙 后"
+msgstr "升 级   公 告"
 
 #: chomeviewctrl;link;4002
 msgid "Click here to upgrade"
@@ -2124,10 +1734,9 @@ msgstr "点击这里升级"
 
 #: chomeviewctrl;heading;5000
 msgid "W A R N I N G   -   Y O U   A R E   F I R E W A L L E D"
-msgstr "定 制  S H A R E A Z A"
+msgstr "警 告   -   您 位 于 防 火 墙 后"
 
 #: chomeviewctrl;text;5001
-#, fuzzy
 msgid ""
 "Shareaza has detected that you are behind a NAT router or firewall,\n"
 "\t\t\t\tand are unable to receive connections from the Internet.  "
@@ -2137,22 +1746,23 @@ msgstr ""
 
 #: chomeviewctrl;text;5002
 msgid "This may cause poor download and search performance."
-msgstr " - 更改 Shareaza 的外观"
+msgstr "这可能导致较差的下载和搜索效果。"
 
 #: chomeviewctrl;link;5003 chomeviewctrl;link;6003 chomeviewctrl;link;7003
 msgid "Click here to learn how to configure your router or firewall"
-msgstr "设置向导"
+msgstr "点击这里了解如何设置您的路由器和防火墙"
 
 #: chomeviewctrl;heading;6000
 msgid "W A R N I N G   -   Y O U R   T C P   P O R T   I S   F I R E W A L L E D"
-msgstr "已 启 用 远 程 访 问"
+msgstr "警 告  —— 您 的 TCP 端 口 已 被 阻 止"
 
 #: chomeviewctrl;text;6001
-#, fuzzy
 msgid ""
 "Shareaza has detected that you are behind a NAT router or firewall,\n"
 "\t\t\t\tand are unable to receive TCP connections from the Internet.  "
-msgstr "Shareaza 的远程访问已启用。使用您的网页浏览器控制 Shareaza 于:"
+msgstr ""
+"Shareaza 发现您位于 NAT 路由器或防火墙之后，\n"
+"\t\t\t并且不能从互联网接受 TCP 连接。"
 
 #: chomeviewctrl;text;6002
 msgid "This may cause poor download performance."
@@ -2160,10 +1770,9 @@ msgstr "这可能导致较差的下载效果。"
 
 #: chomeviewctrl;heading;7000
 msgid "W A R N I N G   -   Y O U R   U D P   P O R T   I S   F I R E W A L L E D"
-msgstr "注 意 —— 您 的 UDP 端 口 已 被 阻 止"
+msgstr "警 告  —— 您 的 UDP 端 口 已 被 阻 止"
 
 #: chomeviewctrl;text;7001
-#, fuzzy
 msgid ""
 "Shareaza has detected that you are behind a NAT router or firewall,\n"
 "\t\t\t\tand are unable to receive UDP messages from the Internet.  "
@@ -2177,7 +1786,7 @@ msgstr "这可能导致较差的下载效果。"
 
 #: chomeviewctrl;heading;8000
 msgid "C U S T O M I S E   S H A R E A Z A"
-msgstr "定 制 & S H A R E A Z A"
+msgstr "定 制 S H A R E A Z A"
 
 #: chomeviewctrl;link;8001 dialog;cskinssettingspage
 msgid "Skins"
@@ -2185,7 +1794,7 @@ msgstr "皮肤"
 
 #: chomeviewctrl;text;8002
 msgid " - Change Shareaza's look & feel"
-msgstr " - 更改 Shareaza 的外观"
+msgstr "- 更改 Shareaza 的外观"
 
 #: chomeviewctrl;link;8003
 msgid "Settings Wizard"
@@ -2193,7 +1802,7 @@ msgstr "设置向导"
 
 #: chomeviewctrl;text;8004
 msgid " - Edit Shareaza Settings"
-msgstr " - 编辑 Shareaza 的设置"
+msgstr "- 编辑 Shareaza 的设置"
 
 #: chomeviewctrl;link;8005
 msgid "Quick Help"
@@ -2201,7 +1810,7 @@ msgstr "快速帮助"
 
 #: chomeviewctrl;text;8006
 msgid " - Get some basic help using Shareaza"
-msgstr " - 获取使用 Shareaza 的基本帮助"
+msgstr "- 获取使用 Shareaza 的基本帮助"
 
 #: chomeviewctrl;link;8007
 msgid "Security Filters"
@@ -2209,7 +1818,7 @@ msgstr "安全"
 
 #: chomeviewctrl;text;8008
 msgid " - Add/Remove filters to improve your search results"
-msgstr " - 添加/删除过滤以改进搜索结果"
+msgstr "- 添加/删除过滤以改进搜索结果"
 
 #: chomeviewctrl;heading;9000
 msgid "R E M O T E   A C C E S S   I S   E N A B L E D"
@@ -2221,7 +1830,7 @@ msgstr "Shareaza 远程访问已启用。可以通过浏览器控制 Shareaza �
 
 #: chomeviewctrl;text;9003
 msgid " - or - "
-msgstr " - 或 -"
+msgstr "- 或 -"
 
 #: document;chomedownloadsbox
 msgid "My Downloads"
@@ -2249,7 +1858,7 @@ msgstr "收藏"
 
 #: chomelibrarybox;text;1
 msgid "You have not downloaded any new files recently."
-msgstr "您最近没有下载新的文件。"
+msgstr "您最近没有下载完成的文件。"
 
 #: chomelibrarybox;text;2 chomelibrarybox;text;8
 msgid "%lu"
@@ -2281,7 +1890,7 @@ msgstr "文件。"
 
 #: chomelibrarybox;link;10
 msgid "Click here to hash faster"
-msgstr "点击这里减慢 Hash"
+msgstr "点击这里加快哈希速度"
 
 #: chomelibrarybox;link;11
 msgid "Click here to hash slower"
@@ -2303,18 +1912,15 @@ msgstr "点击这里连接"
 msgid "Gnutella2:"
 msgstr "Gnutella2:"
 
-#: chomeconnectionbox;text;4 chomeconnectionbox;text;10
-#: chomeconnectionbox;text;16 chomeconnectionbox;text;20
+#: chomeconnectionbox;text;4 chomeconnectionbox;text;10 chomeconnectionbox;text;16 chomeconnectionbox;text;20
 msgid "Disconnected"
 msgstr "断开连接"
 
-#: chomeconnectionbox;text;5 chomeconnectionbox;text;11
-#: chomeconnectionbox;text;17 chomeconnectionbox;text;21 string;8070
+#: chomeconnectionbox;text;5 chomeconnectionbox;text;11 chomeconnectionbox;text;17 chomeconnectionbox;text;21 string;8070
 msgid "Connecting..."
 msgstr "连接中..."
 
-#: chomeconnectionbox;text;6 chomeconnectionbox;text;12
-#: chomeconnectionbox;text;18 chomeconnectionbox;text;22 string;8071
+#: chomeconnectionbox;text;6 chomeconnectionbox;text;12 chomeconnectionbox;text;18 chomeconnectionbox;text;22 string;8071
 msgid "Connected"
 msgstr "已连接"
 
@@ -2340,11 +1946,11 @@ msgstr "eDonkey:"
 
 #: chomeconnectionbox;text;19
 msgid "DC++:"
-msgstr ""
+msgstr "您已连接"
 
 #: chomeconnectionbox;text;23
 msgid "You have been connected for"
-msgstr "您已连接"
+msgstr "分钟。"
 
 #: chomeconnectionbox;text;24 chomeconnectionbox;text;26
 msgid "%i"
@@ -2358,8 +1964,7 @@ msgstr "小时"
 msgid "minutes."
 msgstr "分钟。"
 
-#: document;chomeuploadsbox string;window_uploads string;8317
-#: dialog;cuploadssettingspage column;uploads
+#: document;chomeuploadsbox string;window_uploads string;8317 dialog;cuploadssettingspage column;uploads
 msgid "Uploads"
 msgstr "上传"
 
@@ -2415,9 +2020,7 @@ msgstr "其他 Torrent 做种"
 msgid "Seed a torrent"
 msgstr "做种"
 
-#: document;cgeneralsettingsgroup cgeneralsettingsgroup;text;3
-#: dialog;cgeneralsettingsgroup dialog;cgeneralsettingspage
-#: dialog;cfilegeneralpage
+#: document;cgeneralsettingsgroup cgeneralsettingsgroup;text;3 dialog;cgeneralsettingsgroup dialog;cgeneralsettingspage dialog;cfilegeneralpage
 msgid "General"
 msgstr "常规"
 
@@ -2426,7 +2029,6 @@ msgid "Welcome to Shareaza's Settings Manager"
 msgstr "欢迎来到设置管理器"
 
 #: cgeneralsettingsgroup;text;2
-#, fuzzy
 msgid ""
 "The Shareaza Settings Manager allows advanced users to completely customise how\n"
 "\t\t\t\tShareaza works. The settings in the"
@@ -2484,13 +2086,11 @@ msgstr "网页集成:"
 msgid "Integrate Shareaza with your web browser to accept peer-to-peer links and download content."
 msgstr "集成 Shareaza 到浏览器以便允许对等连接和下载。"
 
-#: document;cinternetsettingsgroup cinternetsettingsgroup;text;3
-#: dialog;cinternetsettingsgroup
+#: document;cinternetsettingsgroup cinternetsettingsgroup;text;3 dialog;cinternetsettingsgroup
 msgid "Internet"
 msgstr "互联"
 
 #: cinternetsettingsgroup;text;2
-#, fuzzy
 msgid ""
 "The Shareaza Settings Manager allows advanced users to completely customise \n"
 "\t\t\t\thow Shareaza works. The settings in the"
@@ -2589,7 +2189,6 @@ msgid "Downloads Area"
 msgstr "下载区域"
 
 #: downloadhelp.select;text;2
-#, fuzzy
 msgid ""
 "This is where files currently being downloaded are displayed. You can view\n"
 "\t\t\tindividual sources by expanding each file with the small + on the left."
@@ -2598,7 +2197,6 @@ msgstr ""
 "\t\t左侧的 + 号来展开文件以查看单个资源。"
 
 #: downloadhelp.select;text;3
-#, fuzzy
 msgid ""
 "Drag'n'Drop downloads higher in the list for priority, or onto Download Group \n"
 "\t\t\ttabs for better organisation (in Power Mode)."
@@ -2607,7 +2205,6 @@ msgstr ""
 "\t\t或用上方的下载分组标签以获得更好的管理方式 （在增强模式下）。"
 
 #: downloadhelp.select;text;4
-#, fuzzy
 msgid ""
 "You can also use this command to get help information on a specific download.\n"
 "\t\t\tSimply select a download and choose this Help command again."
@@ -2620,7 +2217,6 @@ msgid "This Torrent is Seeding"
 msgstr "该文件正在做种"
 
 #: downloadhelp.seeding;text;2
-#, fuzzy
 msgid ""
 "Shareaza has verified this complete download, and is actively sharing it\n"
 "\t\t\twith other downloaders through BitTorrent. Please share at least 100%."
@@ -2633,7 +2229,6 @@ msgid "This Download has Completed"
 msgstr "此下载已完成"
 
 #: downloadhelp.completed;text;2
-#, fuzzy
 msgid ""
 "Shareaza has finished downloading this file, and has verified that it\n"
 "\t\t\tis 100% correct. It has also moved the file to your downloads folder."
@@ -2646,7 +2241,6 @@ msgid "This Download is Moving"
 msgstr "此下载正在移动中"
 
 #: downloadhelp.moving;text;2
-#, fuzzy
 msgid ""
 "Shareaza has finished downloading this file, and has verified that\n"
 "\t\t\tit is correct. It is currently being moved and/or unpacked to your downloads folder."
@@ -2659,7 +2253,6 @@ msgid "This Download is Paused"
 msgstr "此下载已暂停"
 
 #: downloadhelp.paused;text;2
-#, fuzzy
 msgid ""
 "You have paused this download. If you want it to resume downloading, you\n"
 "\t\t\tcan click the '"
@@ -2676,7 +2269,6 @@ msgid "The Disk is Full"
 msgstr "磁盘已满"
 
 #: downloadhelp.diskfull;text;2
-#, fuzzy
 msgid ""
 "Shareaza has paused this download automatically because the hard disk\n"
 "\t\t\tappears to be full, or the download file cannot be written to. If you wish\n"
@@ -2694,7 +2286,6 @@ msgid "This Download is Verifying"
 msgstr "此下载正在校验"
 
 #: downloadhelp.verifying;text;2
-#, fuzzy
 msgid ""
 "This download has finished, and Shareaza is now checking it to ensure\n"
 "\t\t\tthat it is exactly the same as the original file. If any damaged parts are\n"
@@ -2708,7 +2299,6 @@ msgid "This Download is Active!"
 msgstr "此下载活动中！"
 
 #: downloadhelp.downloading;text;2
-#, fuzzy
 msgid ""
 "This download is currently in progress. If it is downloading too slowly,\n"
 "\t\t\tyou could try searching the network for more sources with the '"
@@ -2721,7 +2311,6 @@ msgid "Find More Sources"
 msgstr "查找更多资源"
 
 #: downloadhelp.downloading;text;4
-#, fuzzy
 msgid ""
 "' command. If the speed does not \n"
 "\t\t\timprove it may be due to limited upload speeds of the users you are downloading \n"
@@ -2735,7 +2324,6 @@ msgid "This Download is Pending"
 msgstr "此下载等待中"
 
 #: downloadhelp.pending;text;2
-#, fuzzy
 msgid ""
 "This download is waiting for someone to start uploading.\n"
 "\t\t\tShareaza is ready to start downloading this file, but no-one is sending it at\n"
@@ -2756,7 +2344,6 @@ msgid "This Download is Queued"
 msgstr "此下载处于队列中"
 
 #: downloadhelp.queued;text;2
-#, fuzzy
 msgid ""
 "This download is waiting for some of your other downloads to complete.\n"
 "\t\t\tYour download settings limit the number of downloads which may be active at\n"
@@ -2774,7 +2361,6 @@ msgid "This Download is Searching"
 msgstr "正在搜索此下载"
 
 #: downloadhelp.searching;text;2
-#, fuzzy
 msgid ""
 "There are no known sources for this download, so Shareaza is searching\n"
 "\t\t\tall connected P2P networks for new sources. Once sources are found, the\n"
@@ -2790,7 +2376,6 @@ msgid "command."
 msgstr "命令加快此进程。"
 
 #: downloadhelp.searching;text;5
-#, fuzzy
 msgid ""
 "Unfortunately in many cases there may be no users online who have the\n"
 "\t\t\tfile you are looking for. The only course of action here is to wait for\n"
@@ -2806,7 +2391,6 @@ msgid "This Download is Creating"
 msgstr "此下载正被创建"
 
 #: downloadhelp.creating;text;2
-#, fuzzy
 msgid ""
 "Shareaza is pre-allocating a file in which to store this download, to\n"
 "\t\t\tsave time later."
@@ -2817,7 +2401,6 @@ msgid "BitTorrent Tracker Down"
 msgstr "BitTorrent Tracker 故障"
 
 #: downloadhelp.tracker;text;2
-#, fuzzy
 msgid ""
 "The BitTorrent tracker server for this download appears to be\n"
 "\t\t\tdown or malfunctioning. Shareaza is unable to contact it to receive\n"
@@ -2831,7 +2414,6 @@ msgid "Uploads Area"
 msgstr "上传区域"
 
 #: uploadhelp;text;2
-#, fuzzy
 msgid ""
 "This is where queues and uploads are displayed. You can expand each queue\n"
 "\t\t\twith the small + on the left, and filter what is displayed with the button on the\n"
@@ -2850,7 +2432,6 @@ msgid "The amount of free space on one or more drives used by Shareaza is low."
 msgstr "Shareaza 使用的一个或多个分区上的剩余磁盘空间低。"
 
 #: generalhelp.diskspace;text;3
-#, fuzzy
 msgid ""
 "You should always attempt to keep a reasonable amount of disk space free. Programs \n"
 "\t\t\tcan become unstable if the drives become full, and temporary files may be lost. You should \n"
@@ -2870,7 +2451,6 @@ msgid "A disk or directory Shareaza needs cannot be written to."
 msgstr "Shareaza 所需要的磁盘或目录无法写入。"
 
 #: generalhelp.diskwritefail;text;3
-#, fuzzy
 msgid ""
 "A network drive may have been disconnected, or you may not have write permission \n"
 "\t\t\tto a selected directory. Please check directories and permissions, or change the\n"
@@ -2888,7 +2468,6 @@ msgid "Windows reports that there is no internet connection is available."
 msgstr "系统报告无可用的 Internet 连接。"
 
 #: generalhelp.connectionfail;text;3
-#, fuzzy
 msgid ""
 "It is likely that a modem or router has dropped, meaning the internet cannot\n"
 "\t\t\tbe accessed. You may need to manually re-connect or reset your connection."
@@ -2905,7 +2484,6 @@ msgid "Adult content filter enabled"
 msgstr "成人内容过滤已启用"
 
 #: generalhelp.adultfilter;text;2
-#, fuzzy
 msgid ""
 "Please note that (as with any automated filter) it may not be 100% effective at\n"
 "\t\t\tscreening content. It is designed simply to filter out excess unwanted results, rather than \n"
@@ -2923,7 +2501,6 @@ msgid "This torrent appears to have an encoding error"
 msgstr "此 Torrent 文件可能存在编码错误"
 
 #: generalhelp.badtorrentencoding;text;2
-#, fuzzy
 msgid ""
 "Windows has reported a translation fault while decoding text in this torrent. It is\n"
 "\t\t\tpossible that the torrent is corrupt, or just incorrectly encoded. The torrent may\n"
@@ -2934,7 +2511,6 @@ msgstr ""
 "\t\t无法正确显示，但文件仍可以正常下载。"
 
 #: generalhelp.badtorrentencoding;text;3
-#, fuzzy
 msgid ""
 "Most torrent creation programs should allow you to repair this torrent, which\n"
 "\t\t\twill ensure it works properly in all BitTorrent applications."
@@ -2955,7 +2531,6 @@ msgid "Your eDonkey server list is empty"
 msgstr "您的 eDonkey 服务器列表没有内容"
 
 #: generalhelp.donkeyserverlist;text;2
-#, fuzzy
 msgid ""
 "There are no servers in your eDonkey server list. You need to download an\n"
 "\t\t\tup to date server list (met file) to connect to ED2K."
@@ -2964,7 +2539,6 @@ msgstr ""
 "\t\t您需要下载一个较新的服务器列表 (met 文件) 以连接到 ED2K。"
 
 #: generalhelp.donkeyserverlist;text;3
-#, fuzzy
 msgid ""
 "You can download a server list from the ed2k setting page, or the discovery\n"
 "\t\t\tservices window. (Press F9 to open the discovery services window)"
@@ -2975,7 +2549,6 @@ msgid "Limiting uploads may slow downloads"
 msgstr "限制上传可能减慢下载"
 
 #: generalhelp.uploadwarning;text;2
-#, fuzzy
 msgid ""
 "Several networks Shareaza connects to enforce ratios, limit uploads to\n"
 "\t\t\tclients that do not share, or simply preference uploading to known sharers."
@@ -2984,7 +2557,6 @@ msgstr ""
 "\t\t未共享客户端的上传，或简单地优先向已知共享者上传。"
 
 #: generalhelp.uploadwarning;text;3
-#, fuzzy
 msgid ""
 "Fortunately, broadband DSL connections are like a two-lane highway: you have\n"
 "\t\t\tseparate allocations for upload and download. If your client is properly configured, \n"
@@ -2995,7 +2567,6 @@ msgstr ""
 "\t\t的速率上传而同时保持全速下载的能力。"
 
 #: generalhelp.uploadwarning;text;4
-#, fuzzy
 msgid ""
 "By default, your upload limit is set to about 85% of available upstream bandwidth,\n"
 "\t\t\twhile downloads are unlimited. That configuration should give you the fastest possible \n"
@@ -3004,13 +2575,11 @@ msgstr ""
 "在默认设置下，您的上传限制被设定为可用上传带宽的 85%，\n"
 "\t\t而下载未做限制。此设置将给予您最快的可能下载速率。"
 
-#: searchhelp.badsearch1;text;1 searchhelp.badsearch2;text;1
-#: searchhelp.badsearch3;text;1
+#: searchhelp.badsearch1;text;1 searchhelp.badsearch2;text;1 searchhelp.badsearch3;text;1
 msgid "Please re-phrase the search"
 msgstr "请重新定义搜索"
 
 #: searchhelp.badsearch1;text;2
-#, fuzzy
 msgid ""
 "This search is poorly formatted, and may not function correctly. \n"
 "\t\t\tSearches should include several terms where possible, and should specify a schema \n"
@@ -3023,7 +2592,6 @@ msgstr ""
 "\t\t并且您应当避免过度的整体查询。"
 
 #: searchhelp.badsearch1;text;3
-#, fuzzy
 msgid ""
 "Most clients on the network will ignore a search for all MP3 files, for example, \n"
 "\t\t\tbecause it is not specific enough, and would generate too many results."
@@ -3032,7 +2600,6 @@ msgstr ""
 "\t\t因为这样定义地太过宽泛而产生过多的结果。"
 
 #: searchhelp.badsearch2;text;2
-#, fuzzy
 msgid ""
 "This search does not contain enough terms to function properly. All searches need\n"
 "\t\t\ta minimum number of valid, alphabetic characters to be able to start."
@@ -3041,7 +2608,6 @@ msgstr ""
 "\t\t所有的搜索启动需要达到最小字母、字符数的要求。"
 
 #: searchhelp.badsearch2;text;3
-#, fuzzy
 msgid ""
 "While common file extensions (and numbers) can be searched for, you must enter\n"
 "\t\t\tother terms as well when creating the search. Punctuation and wildcards are not used \n"
@@ -3051,14 +2617,12 @@ msgstr ""
 "\t\t您必须同时输入其他项目进行配合。"
 
 #: searchhelp.badsearch3;text;2
-#, fuzzy
 msgid ""
 "This search seems to contain only common file extensions, or no searchable\n"
 "\t\t\twords."
 msgstr "此搜索可能只包含通常的文件扩展名，或没有可搜索的词。"
 
 #: searchhelp.badsearch3;text;3
-#, fuzzy
 msgid ""
 "If you are having trouble creating searches, keep in mind that it's quite similar\n"
 "\t\t\tto a web search. Specific terms or phrases are best- Unique names, titles and\n"
@@ -3068,7 +2632,6 @@ msgstr ""
 "\t\t指定一些最具有唯一性的名称、标题和关键词。"
 
 #: searchhelp.badsearch3;text;4
-#, fuzzy
 msgid ""
 "General terms cannot be searched for efficiently and may result in poor\n"
 "\t\t\tsearch performance, as well as high bandwidth use during searches."
@@ -3085,7 +2648,6 @@ msgid "This search cannot be started"
 msgstr "此搜索不能启动"
 
 #: searchhelp.adultsearch;text;2
-#, fuzzy
 msgid ""
 "The specified search would probably return a large number of results with adult \n"
 "\t\t\tcontent, and this has been turned off in the settings. You should either re-phrase the \n"
@@ -3095,7 +2657,6 @@ msgstr ""
 "\t\t已经在设置中禁用。您可以重新定义搜索内容，或者禁用此类过滤。"
 
 #: searchhelp.adultsearch;text;3
-#, fuzzy
 msgid ""
 "To disable the filter, go into Tools > Settings > General and uncheck the\n"
 "\t\t\tadult content filter."
@@ -3114,7 +2675,6 @@ msgid "This folder should not be shared"
 msgstr "此文件夹不应共享"
 
 #: sharehelp.badshare;text;2
-#, fuzzy
 msgid ""
 "This folder is (or contains) a system folder. Sharing this folder is not\n"
 "\t\t\trecommended, since most of the files in it are of no use to other people."
@@ -3123,7 +2683,6 @@ msgstr ""
 "\t\t因为此文件夹中的大多数文件对他人来说没有任何用处。"
 
 #: sharehelp.badshare;text;3
-#, fuzzy
 msgid ""
 "Folders such as the Windows directory, Program Files, and similar folders\n"
 "\t\t\tdo not usually contain files suitable for sharing. Any files of interest would be in\n"
@@ -3137,14 +2696,12 @@ msgid "inside"
 msgstr "内"
 
 #: sharehelp.badshare;text;5
-#, fuzzy
 msgid ""
 "these folders.\n"
 "\t\t\tPlease share those instead."
 msgstr "的子目录中。请共享这些文件夹。"
 
 #: sharehelp.badshare;text;6
-#, fuzzy
 msgid ""
 "The Shareaza 'incomplete' folder should also not be shared through the\n"
 "\t\t\tlibrary, since attempting to hash downloads in progress may impact on performance."
@@ -3157,60 +2714,56 @@ msgid "Shareaza"
 msgstr "Shareaza"
 
 #: message;afx_ids_idlemessage
-#, fuzzy
 msgid "Ready"
-msgstr "就绪..."
+msgstr "准备就绪"
 
 #: message;afx_ids_mdichild
 msgid "Activate this window"
-msgstr ""
+msgstr "启用此窗口"
 
 #: message;afx_ids_preview_close
 msgid "Close print preview mode"
-msgstr ""
+msgstr "关闭打印预览模式"
 
 #: tip;afx_ids_preview_close
-#, fuzzy
 msgid "Cancel Preview"
-msgstr "保存封面"
+msgstr "取消预览"
 
 #: message;afx_ids_scclose
-#, fuzzy
 msgid "Close the active window and prompts to save the documents"
-msgstr "最大化活动窗口。"
+msgstr "关闭活动窗口并提示保存文档"
 
 #: message;afx_ids_scmaximize
-#, fuzzy
 msgid "Enlarge the window to full size"
-msgstr "最大化活动窗口。"
+msgstr "窗口最大化"
 
 #: message;afx_ids_scminimize
 msgid "Reduce the window to an icon"
-msgstr ""
+msgstr "将窗口缩为图标"
 
 #: message;afx_ids_scmove
 msgid "Change the window position"
-msgstr ""
+msgstr "改变窗口位置"
 
 #: message;afx_ids_scnextwindow
 msgid "Switch to the next document window"
-msgstr ""
+msgstr "切换到下一个文档窗口"
 
 #: message;afx_ids_scprevwindow
 msgid "Switch to the previous document window"
-msgstr ""
+msgstr "切换到上一个文档窗口"
 
 #: message;afx_ids_screstore
 msgid "Restore the window to normal size"
-msgstr ""
+msgstr "将窗口恢复到正常大小"
 
 #: message;afx_ids_scsize
 msgid "Change the window size"
-msgstr ""
+msgstr "改变窗口大小"
 
 #: message;afx_ids_sctasklist
 msgid "Activate Task List"
-msgstr ""
+msgstr "启用任务列表"
 
 #: message;id_browse_files
 msgid "View the user's shared files"
@@ -3301,9 +2854,8 @@ msgid "Advertise the selected GWebCache service to a random existing GWebCache."
 msgstr "通告选择的 G网缓存 服务至一个已存在的随机 G网缓存。"
 
 #: message;id_discovery_blocked
-#, fuzzy
 msgid "Show blocked services in the Discovery window."
-msgstr "显示 G网缓存 服务于探索服务窗口。"
+msgstr "在发现窗口显示被封锁的服务。"
 
 #: message;id_discovery_browse
 msgid "Browse statistics for the selected GWebCache service on the Web."
@@ -3467,7 +3019,7 @@ msgstr "评价此选定的下载。"
 
 #: message;id_downloads_remote_preview
 msgid "Download preview image for the selected download."
-msgstr "Download preview image for the selected download."
+msgstr "为选中的文件下载预览。"
 
 #: message;id_downloads_resume
 msgid "Resume the selected download(s)."
@@ -3494,7 +3046,6 @@ msgid "Add a source URL to the selected download..."
 msgstr "添加一个资源链接到选定的下载..."
 
 #: message;id_downloads_view_reviews
-#, fuzzy
 msgid "View reviews for the selected download."
 msgstr "查看选定下载的评价"
 
@@ -3540,10 +3091,9 @@ msgstr "检查新闻和更新。"
 
 #: message;id_help_version_check
 msgid "Check for new version"
-msgstr ""
+msgstr "检查新版本"
 
-#: message;id_help_web_1 message;id_help_web_2 message;id_help_web_3
-#: message;id_help_web_4 message;id_help_web_5 message;id_help_web_6
+#: message;id_help_web_1 message;id_help_web_2 message;id_help_web_3 message;id_help_web_4 message;id_help_web_5 message;id_help_web_6
 msgid "Visit this website"
 msgstr "访问此网站"
 
@@ -3560,9 +3110,8 @@ msgid "Search the network for the selected term."
 msgstr "在网络上搜索选定的条件。"
 
 #: message;id_hostcache_bt_cache
-#, fuzzy
 msgid "Show BitTorrent cached hosts."
-msgstr "显示 BitTorrent 上传。"
+msgstr "显示 BT 缓存的主机。"
 
 #: message;id_hostcache_connect
 msgid "Connect to the selected host(s)."
@@ -3570,7 +3119,7 @@ msgstr "连接到选定的主机。"
 
 #: message;id_hostcache_dc_cache
 msgid "Show DC++ cached hubs."
-msgstr "Show DC++ cached hubs."
+msgstr "显示 DC++ 缓存的中心。"
 
 #: message;id_hostcache_disconnect
 msgid "Disconnect from the selected neighbour(s)."
@@ -3601,9 +3150,8 @@ msgid "Import a list of known hosts, such as a \"server.met\" file..."
 msgstr "导入知名的主机，比如 \"server.met\" 文件..."
 
 #: message;id_hostcache_kad_cache
-#, fuzzy
 msgid "Show Kademlia cached hosts."
-msgstr "显示 Gnutella1 缓存中的主机。"
+msgstr "显示 KAD 缓存的主机。"
 
 #: message;id_hostcache_priority
 msgid "Try to connect to this server before other servers."
@@ -3614,9 +3162,8 @@ msgid "Remove the selected hosts from the host cache."
 msgstr "移除主机缓存中选定的主机。"
 
 #: message;id_import_downloads
-#, fuzzy
 msgid "Import eMule partial downloads..."
-msgstr "导入 eMule 部分下载(_I)..."
+msgstr "导入电驴部分下载..."
 
 #: message;id_library_add
 msgid "Add a new folder to your library..."
@@ -3727,9 +3274,8 @@ msgid "Refresh the library view."
 msgstr "刷新收藏视图。"
 
 #: message;id_library_refresh_metadata
-#, fuzzy
 msgid "Refresh file metadata"
-msgstr "刷新元数据(_R)"
+msgstr "更新文件元数据"
 
 #: message;id_library_remove
 msgid "Remove the selected shared folders."
@@ -3912,13 +3458,12 @@ msgid "Show or hide the playlist editor."
 msgstr "显示或隐藏播放列表编辑器。"
 
 #: message;id_media_position
-#, fuzzy
 msgid "Seek to a position in the media file."
-msgstr "查询在媒体文件中的位置"
+msgstr "查询在媒体文件中的位置。"
 
 #: tip;id_media_position
 msgid "Seek"
-msgstr "查找"
+msgstr "搜索"
 
 #: message;id_media_previous
 msgid "Skip back to the previous file in the current playlist."
@@ -3981,9 +3526,8 @@ msgid "Show the video at double its original (natural) size."
 msgstr "以双倍大小显示视频。"
 
 #: message;id_media_speed
-#, fuzzy
 msgid "Adjust the speed of the media file."
-msgstr "调整媒体文件的播放速度"
+msgstr "调整媒体文件的播放速度。"
 
 #: tip;id_media_speed column;speed
 msgid "Speed"
@@ -4002,9 +3546,8 @@ msgid "Select an audio visualisation plugin..."
 msgstr "选择音频可视化效果插件..."
 
 #: message;id_media_volume
-#, fuzzy
 msgid "Adjust the audio volume."
-msgstr "调节音量"
+msgstr "调整媒体文件的播放速度。"
 
 #: tip;id_media_volume
 msgid "Volume"
@@ -4020,15 +3563,13 @@ msgstr "关闭监视器窗口。"
 
 #: message;id_musicbrainz_albums
 msgid "Look at all albums for this artist."
-msgstr ""
+msgstr "在所有专辑中查找该艺术家。"
 
 #: message;id_musicbrainz_matches
-#, fuzzy
 msgid "Search for albums matching the selected file."
-msgstr "搜索选定文件的其它副本。"
+msgstr "搜索选中文件的专辑。"
 
-#: message;id_neighbours_chat message;id_search_chat message;id_transfers_chat
-#: message;id_uploads_chat
+#: message;id_neighbours_chat message;id_search_chat message;id_transfers_chat message;id_uploads_chat
 msgid "Open a chat session with the selected user."
 msgstr "与选定的用户进行聊天。"
 
@@ -4066,7 +3607,7 @@ msgstr "浏览到用户，显示其个人资料和共享文件..."
 
 #: message;id_network_chat_to
 msgid "Open a chat session with a user..."
-msgstr ""
+msgstr "开启一个用户会话..."
 
 #: message;id_network_connect
 msgid "Connect to selected networks."
@@ -4078,7 +3619,7 @@ msgstr "手动连接到主机..."
 
 #: message;id_network_dc
 msgid "Connect to the DC++ network."
-msgstr "Connect to the DC++ network."
+msgstr "连接到 DC++ 网络。"
 
 #: message;id_network_disconnect
 msgid "Disconnect from all networks, this will also stop all downloads and uploads."
@@ -4106,54 +3647,47 @@ msgstr "在网络上进行新的搜索..."
 
 #: message;id_next_pane
 msgid "Switch to the next window pane"
-msgstr ""
+msgstr "切换到下一个窗格"
 
 #: tip;id_next_pane
-#, fuzzy
 msgid "Next Pane"
-msgstr "下一个"
+msgstr "下一个窗格"
 
 #: message;id_open_downloads_folder
 msgid "Open my folder of completed Downloads"
-msgstr ""
+msgstr "打开我的已完成下载文件夹"
 
 #: message;id_prev_pane
-#, fuzzy
 msgid "Switch back to the previous window pane"
-msgstr "跳回播放列表中的前个文件"
+msgstr "返回上一个窗格"
 
 #: tip;id_prev_pane
-#, fuzzy
 msgid "Previous Pane"
-msgstr "上一个文件"
+msgstr "上一个窗格"
 
 #: message;id_scheduler_activate
-#, fuzzy
 msgid "Activates selected task(s) from the list."
-msgstr "清除列表中选定的上传。"
+msgstr "从列表中启用选中任务。"
 
 #: message;id_scheduler_add
 msgid "Adds a new task to scheduler list."
-msgstr ""
+msgstr "添加一个新任务到计划列表。"
 
 #: message;id_scheduler_deactivate
-#, fuzzy
 msgid "Deactivates selected tasks."
-msgstr "连接到网络。"
+msgstr "取消选中的任务。"
 
 #: message;id_scheduler_edit
-#, fuzzy
 msgid "Edit the selected task..."
-msgstr "编辑选定的安全策略..."
+msgstr "编辑选中的任务..."
 
 #: message;id_scheduler_remove
-#, fuzzy
 msgid "Removes selected task(s) from the list."
-msgstr "从列表中移除选定的下载。"
+msgstr "从列表中删除选中的任务。"
 
 #: message;id_scheduler_remove_all
 msgid "Removes all scheduled tasks."
-msgstr ""
+msgstr "删除所有计划任务。"
 
 #: message;id_search_clear
 msgid "Clear the search results."
@@ -4265,34 +3799,31 @@ msgstr "重置选定规则的命中计数器。"
 
 #: message;id_sharemonkey_buy
 msgid "Buy it and support the author"
-msgstr ""
+msgstr "购买并支持作者"
 
 #: message;id_sharemonkey_compare
 msgid "Compare prices in different stores"
-msgstr ""
+msgstr "在不同的商店中比较价格"
 
 #: message;id_sharemonkey_download
-#, fuzzy
 msgid "Search for matches"
-msgstr "搜索(_S)"
+msgstr "搜索匹配"
 
 #: message;id_sharemonkey_next
 msgid "Go to the next match"
-msgstr ""
+msgstr "到下一个结果"
 
 #: message;id_sharemonkey_previous
 msgid "Go to the previous match"
-msgstr ""
+msgstr "到上一个结果"
 
 #: message;id_sharemonkey_prices
-#, fuzzy
 msgid "Look at the prices for the current match"
-msgstr "跳回播放列表中的前个文件"
+msgstr "查看当前结果的价格"
 
 #: message;id_sharemonkey_save
-#, fuzzy
 msgid "Save the match in your Library"
-msgstr "显示收藏中的这个文件"
+msgstr "保存结果到库中"
 
 #: message;id_system_clear
 msgid "Clear the status log."
@@ -4300,7 +3831,7 @@ msgstr "清除状态日志。"
 
 #: message;id_system_copy
 msgid "Copy selected line(s) of status log."
-msgstr ""
+msgstr "复制选中的状态日志。"
 
 #: message;id_system_timestamp
 msgid "Record a timestamp for each line."
@@ -4311,28 +3842,24 @@ msgid "Display a detailed system activity log."
 msgstr "显示详细的系统活动日志。"
 
 #: message;id_system_verbose_debug
-#, fuzzy
 msgid "Display all."
-msgstr "显示图例。"
+msgstr "显示所有。"
 
 #: message;id_system_verbose_error
-#, fuzzy
 msgid "Display errors only."
-msgstr "显示图例。"
+msgstr "仅显示错误的。"
 
 #: message;id_system_verbose_info
-#, fuzzy
 msgid "Display infos and above."
-msgstr "显示网格线。"
+msgstr "显示信息并置顶。"
 
 #: message;id_system_verbose_notice
 msgid "Display notices and above."
-msgstr ""
+msgstr "显示通知并置顶。"
 
 #: message;id_system_verbose_warning
-#, fuzzy
 msgid "Display warnings and above."
-msgstr "显示网格线。"
+msgstr "显示警告并置顶。"
 
 #: message;id_tab_connect
 msgid "Connect or disconnect from the network."
@@ -4523,9 +4050,8 @@ msgid "Show or hide the HIT MONITOR window."
 msgstr "显示或隐藏命中监视器窗口。"
 
 #: message;id_view_scheduler
-#, fuzzy
 msgid "Show or hide SCHEDULER window."
-msgstr "显示或隐藏安全窗口。"
+msgstr "显示或隐藏调度程序窗口。"
 
 #: message;id_view_search_monitor
 msgid "Show or hide the SEARCH MONITOR window."
@@ -4560,9 +4086,8 @@ msgid "Choose the web service to get more information about the selected file."
 msgstr "选择一个网页服务以获取关于选中文件的更多信息。"
 
 #: message;id_webservices_musicbrainz
-#, fuzzy
 msgid "Search for the same artist songs using MusicBrainz service."
-msgstr "用 ShareMonkey 服务搜索文件信息。"
+msgstr "通过 MusicBrainz 服务搜索同一艺术家的歌曲。"
 
 #: message;id_webservices_sharemonkey
 msgid "Search for the file infomation using ShareMonkey service."
@@ -4570,11 +4095,11 @@ msgstr "用 ShareMonkey 服务搜索文件信息。"
 
 #: message;id_window_arrange
 msgid "Arrange icons at the bottom of the window"
-msgstr ""
+msgstr "在窗口底部重拍图标"
 
 #: tip;id_window_arrange
 msgid "Arrange Icons"
-msgstr ""
+msgstr "重排图标"
 
 #: message;id_window_cascade
 msgid "Expand all open windows to fill the screen."
@@ -4690,7 +4215,7 @@ msgstr "Shareaza 聊天"
 
 #: string;window_scheduler
 msgid "Scheduler"
-msgstr ""
+msgstr "调度程序"
 
 #: string;7000
 msgid "Are you sure you want to delete this filter ?"
@@ -5030,7 +4555,7 @@ msgstr "文件大小必须为"
 
 #: string;8181
 msgid " to (size from xx TO xx)"
-msgstr ""
+msgstr " 到"
 
 #: string;8208
 msgid "Shareaza is creating hashes for %Iu file(s):"
@@ -5109,9 +4634,8 @@ msgid "Shareaza is checking the download for errors:"
 msgstr "Shareaza 正在检测下载的错误:"
 
 #: string;8243
-#, fuzzy
 msgid "Upload ratio:"
-msgstr "上传区域"
+msgstr "已经上传数量:"
 
 #: string;8244
 msgid "Number of reviews:"
@@ -5346,9 +4870,8 @@ msgid "Are you sure you want to disconnect?"
 msgstr "您确定要断开连接吗？"
 
 #: string;16080
-#, fuzzy
 msgid "Would you like to always connect to this network?"
-msgstr "您还未连接到网络。"
+msgstr "您正运行任务计划在 '只连接 G2 ' 的模式。您是否要关闭该模式？那样所有的活动网络将会被连接。"
 
 #: string;16081
 msgid "Sending query for \"%s\" to %s."
@@ -5487,10 +5010,6 @@ msgstr "和 Gnutella2 的邻居 %s 主机成功的建立连接 (%s)。"
 #: string;16159
 msgid "Closing connection to non-Gnutella2 neighbour %s."
 msgstr "正在关闭到非 Gnutella2 邻居 %s 主机的连接。"
-
-#: string;16191
-msgid "Received a packet from %s for %s which excess query limits, ignoring."
-msgstr ""
 
 #: string;16192
 msgid "Neighbour %s forwarded a packet of excessive size, dropping connection."
@@ -5860,7 +5379,6 @@ msgid "Push connection to %s established, waiting for handshake..."
 msgstr "到 %s 主机的外送连接已经建立，握手中..."
 
 #: string;16329
-#, fuzzy
 msgid "Can't open \"%s\" to upload to host %s due to disk or file error."
 msgstr "不能打开 \"%s\" 以便上传到 %s 主机，磁盘/文件错误。"
 
@@ -6058,7 +5576,7 @@ msgstr "HTTP 保护"
 
 #: string;16378
 msgid "Host \"%s\" sent a 416, without providing available ranges. Closing connection."
-msgstr ""
+msgstr "主机 \"%s\" 发送了一个 416，没有提供可用的范围。关闭连接。"
 
 #: string;16379
 msgid "Library Files"
@@ -6393,13 +5911,7 @@ msgid "Gnutella Packets Lost"
 msgstr "丢失的 Gnutella 数据包"
 
 #: string;16528
-#, fuzzy
-msgid "Gnutella Incoming Queries"
-msgstr "Gnutella 本地查询"
-
-#: string;16529
-#, fuzzy
-msgid "Gnutella Processed Queries"
+msgid "Gnutella Local Queries"
 msgstr "Gnutella 本地查询"
 
 #: string;16532
@@ -6556,8 +6068,7 @@ msgstr "退出(_X)"
 msgid "year old"
 msgstr "岁"
 
-#: string;16811 cconnectionsettingspage;control;3
-#: cconnectionsettingspage;control;12
+#: string;16811 cconnectionsettingspage;control;3 cconnectionsettingspage;control;12
 msgid "Automatic"
 msgstr "自动"
 
@@ -7120,9 +6631,8 @@ msgid "BitTorrent coupling with %s established for \"%s\"."
 msgstr "与 %s 的 BitTorrent 联结已为 \"%s\" 建立。"
 
 #: string;17480
-#, fuzzy
 msgid "BitTorrent coupling with %s requested an inactive file."
-msgstr "与 %s 的 BitTorrent 联结请求了错误的文件。"
+msgstr "BitTorrent 请求耦合非活动的文件 %s 。"
 
 #: string;17481
 msgid "Received BitTorrent descriptor file: \"%s\""
@@ -7183,7 +6693,6 @@ msgid "Unable to create BitTorrent share file \"%s\"."
 msgstr "不能创建 BitTorrent 共享文件 \"%s\"。"
 
 #: string;17494
-#, fuzzy
 msgid "This torrent includes the file \"%s\", but Shareaza cannot find this file in your library. If possible, move the file to a shared folder and try again."
 msgstr "此 Torrent 包含文件 \"%s\"，但 Shareaza 不能在您的收藏夹中找到这个文件。如果可能，移动此文件到与 Torrent 相同的文件中并重试。"
 
@@ -7208,7 +6717,6 @@ msgid "Unable to communicate with tracker"
 msgstr "未能与 Tracker 进行通讯"
 
 #: string;17503
-#, fuzzy
 msgid "Trying next tracker (%i of %i)"
 msgstr "Tracker 通讯失败 - 尝试下一个 Tracker (%i 于 %i)"
 
@@ -7289,19 +6797,16 @@ msgid "You have made changes to the file size. Are you sure you want to change t
 msgstr "BitTorrent 与 %s 的连合未被接受，达到最大连接数。"
 
 #: string;18512
-#, fuzzy
 msgid "Are you sure you want to cancel this download but save incomplete file(s)?"
-msgstr "取消下载，但保存未完成文件。"
+msgstr "您是否确认取消该下载但是保存未下载完成的文件？"
 
 #: string;18513
-#, fuzzy
 msgid "You have typed an %s hash value, however it is invalid. Please check it and try again."
-msgstr "您已经输入了一个 edonkey Hash 值，但它是无效的。请检查并重试。"
+msgstr "你输入了 %s 的哈希值，可是无效。请检查并重试。"
 
 #: string;18514
-#, fuzzy
 msgid "You have provided an %s hash value which is different to the one currently associated with this download. Are you sure you want to change the %s hash now?"
-msgstr "您已经提供了一个 SHA1 Hash 值，但它与当前关联与此下载的值不同。您确定要立即变更此 SHA1 Hash 吗？"
+msgstr "您提供了一个和当前 %s 下载不同的哈希值。您是否确认想要立即改变 %s 的哈希值？"
 
 #: string;19000
 msgid "Remote access is disabled."
@@ -7316,9 +6821,8 @@ msgid "Unable to accept connections, URL unavailable."
 msgstr "未能接受连接，链接不可用。"
 
 #: string;19105
-#, fuzzy
 msgid "Chat!"
-msgstr "聊天"
+msgstr "聊天！"
 
 #: string;20000
 msgid "No URN available"
@@ -7333,6 +6837,8 @@ msgid ""
 "Changing language requires application restart.\\n"
 "Restart now?"
 msgstr ""
+"变更界面方向需要重新启动。\\n"
+"您需要手动启动 Shareaza。立即退出？"
 
 #: string;20005
 msgid "No"
@@ -7371,7 +6877,6 @@ msgid "All"
 msgstr "所有"
 
 #: string;20014
-#, fuzzy
 msgid ""
 "This option uses services provided by ShareMonkey.com for recognising information about selected files.\\n"
 "\\n"
@@ -7379,11 +6884,11 @@ msgid ""
 "\\n"
 "Would you like to proceed?"
 msgstr ""
-"识别和共享选定文件的功能由 Bitzi.com 提供。\\n"
+"该选项使用 ShareMonkey.com 提供的服务来市别选中文件的信息。\\n"
 "\\n"
-"为了到 Bitzi 数据库进行查询，Shareaza 自动转换成 SHA1 Hash。如果涉及隐私，您可能需要查看 Bitzi.com 的隐私申明。\\n"
+"Shareaza 将传送文件细节和您的位置为了查询 ShareMonkey 数据库。如果您担心您的隐私，您可以查阅 ShareMonkey.com 的隐私策略。\\n"
 "\\n"
-"您确定继续吗？"
+"您是否要继续？"
 
 #: string;20101
 msgid "Requesting"
@@ -7573,33 +7078,11 @@ msgstr "艺人"
 msgid "Rating"
 msgstr "分级"
 
-#: string;20237 csettingsheet;control;2 cqueuepropertiesdlg;control;37
-#: cprofilemanagerdlg;control;2 csavefilterasdlg;control;2
-#: cdiscoveryservicedlg;control;5 cfilecopydlg;control;4
-#: cfolderpropertiesdlg;control;7 cgraphlistdlg;control;16
-#: cgraphitemdlg;control;1 cschemacolumnsdlg;control;3
-#: csecureruledlg;control;33 csharemanagerdlg;control;5 cpromotedlg;control;7
-#: cexistingfiledlg;control;8 cclosemodedlg;control;5
-#: cdonkeyserversdlg;control;4 cdownloadgroupdlg;control;1
-#: cmediavisdlg;control;5 cdownloadreviewdlg;control;1
-#: cdecodemetadatadlg;control;8 circinputdlg;control;2
+#: string;20237 csettingsheet;control;2 cqueuepropertiesdlg;control;37 cprofilemanagerdlg;control;2 csavefilterasdlg;control;2 cdiscoveryservicedlg;control;5 cfilecopydlg;control;4 cfolderpropertiesdlg;control;7 cgraphlistdlg;control;16 cgraphitemdlg;control;1 cschemacolumnsdlg;control;3 csecureruledlg;control;33 csharemanagerdlg;control;5 cpromotedlg;control;7 cexistingfiledlg;control;8 cclosemodedlg;control;5 cdonkeyserversdlg;control;4 cdownloadgroupdlg;control;1 cmediavisdlg;control;5 cdownloadreviewdlg;control;1 cdecodemetadatadlg;control;8 circinputdlg;control;2
 msgid "OK"
 msgstr "确定"
 
-#: string;20238 csettingsheet;control;3 cqueuepropertiesdlg;control;38
-#: cprofilemanagerdlg;control;3 cconnecttodlg;control;8 cdownloaddlg;control;5
-#: cnewsearchdlg;control;4 cfiltersearchdlg;control;30
-#: csavefilterasdlg;control;3 cdiscoveryservicedlg;control;6
-#: cfilecopydlg;control;5 cfolderpropertiesdlg;control;8
-#: cgraphlistdlg;control;17 cgraphitemdlg;control;2
-#: cschemacolumnsdlg;control;4 csecureruledlg;control;34
-#: csharemanagerdlg;control;6 curlcopydlg;control;6 curlexportdlg;control;10
-#: curlactiondlg;control;11 cbitzidownloaddlg;control;4
-#: cfilepreviewdlg;control;6 cexistingfiledlg;control;9
-#: cclosemodedlg;control;6 cdonkeyserversdlg;control;5
-#: cdeletefiledlg;control;5 ctorrentseeddlg;control;4
-#: cdownloadgroupdlg;control;2 cmediavisdlg;control;6
-#: cdecodemetadatadlg;control;9 circinputdlg;control;3
+#: string;20238 csettingsheet;control;3 cqueuepropertiesdlg;control;38 cprofilemanagerdlg;control;3 cconnecttodlg;control;8 cdownloaddlg;control;5 cnewsearchdlg;control;4 cfiltersearchdlg;control;30 csavefilterasdlg;control;3 cdiscoveryservicedlg;control;6 cfilecopydlg;control;5 cfolderpropertiesdlg;control;8 cgraphlistdlg;control;17 cgraphitemdlg;control;2 cschemacolumnsdlg;control;4 csecureruledlg;control;34 csharemanagerdlg;control;6 curlcopydlg;control;6 curlexportdlg;control;10 curlactiondlg;control;11 cbitzidownloaddlg;control;4 cfilepreviewdlg;control;6 cexistingfiledlg;control;9 cclosemodedlg;control;6 cdonkeyserversdlg;control;5 cdeletefiledlg;control;5 ctorrentseeddlg;control;4 cdownloadgroupdlg;control;2 cmediavisdlg;control;6 cdecodemetadatadlg;control;9 circinputdlg;control;3
 msgid "Cancel"
 msgstr "取消"
 
@@ -7629,7 +7112,7 @@ msgstr "&记住我的选择"
 
 #: string;20245
 msgid "New Folder"
-msgstr ""
+msgstr "新建文件夹"
 
 #: string;20246
 msgid ""
@@ -7653,85 +7136,101 @@ msgid ""
 "-RegServerPerUser : Register internal components for current user\\n"
 "-UnRegServerPerUser : Un-register internal components for current user"
 msgstr ""
+"命令行选项：\\n"
+"\\n"
+"-tray : 禁用启动画面并使程序缩小到系统栏\\n"
+"-nosplash : 禁用启动画面\\n"
+"-nowarn : 禁用测试（每日构建）版本警告窗口\\n"
+"-wait : 等待其他应用程序实例退出\\n"
+"\\n"
+"界面模式：\\n"
+"\\n"
+"-basic : 以普通模式启动\\n"
+"-tabbed : 以标签模式启动\\n"
+"-windowed : 以视窗模式启动\\n"
+"\\n"
+"系统选项：\\n"
+"\\n"
+"-RegServer : 为所有用户注册内部组件\\n"
+"-UnRegServer : 为所有用户注销内部组件\\n"
+"-RegServerPerUser : 为当前用户注册内部组件\\n"
+"-UnRegServerPerUser : 为当前用户注销内部组件"
 
 #: string;20247
 msgid "Failed to load metadata schemas. Please reinstall application."
-msgstr ""
+msgstr "载入元数据架构失败。请重新安装程序。"
 
 #: string;20248
-#, fuzzy
 msgid "You selected %u files. Are you sure?"
-msgstr "您还未指定任何共享文件夹。您确定吗？"
+msgstr "您选择了 %u 文件。您确定？"
 
 #: string;20249
 msgid "Off"
-msgstr ""
+msgstr "之"
 
 #: string;20250
 msgid "Low"
-msgstr ""
+msgstr "低"
 
 #: string;20251
-#, fuzzy
 msgid "Normal"
-msgstr "普通模式(_O)"
+msgstr "正常"
 
 #: string;20252
 msgid "High"
-msgstr ""
+msgstr "高"
 
 #: string;20253
 msgid "Skin load error: %s. Element: %s"
-msgstr ""
+msgstr "皮肤加载错误：%s. 元素： %s"
 
 #: string;20254
 msgid "Loading skin: %s"
-msgstr ""
+msgstr "正在载入皮肤：%s"
 
 #: string;20255
 msgid "Are you sure you want to remove all scheduled tasks? This cannot be undone."
-msgstr ""
+msgstr "您是否确认删除所有计划任务？该操作无法撤销。"
 
 #: string;20256
-#, fuzzy
 msgid "System: Start Shareaza"
-msgstr "搜索 Shareaza"
+msgstr "系统：启动 Shareaza"
 
 #: string;20257
 msgid "Bandwidth: Full Speed"
-msgstr ""
+msgstr "带宽：全速"
 
 #: string;20258
 msgid "Bandwidth: Reduced Speed"
-msgstr ""
+msgstr "带宽：减速"
 
 #: string;20259
 msgid "Bandwidth: Stop"
-msgstr ""
+msgstr "带宽： 停止"
 
 #: string;20260
 msgid "System: Exit Shareaza"
-msgstr ""
+msgstr "系统： 退出 Shareaza"
 
 #: string;20261
 msgid "System: Disconnect Dial-up Connection"
-msgstr ""
+msgstr "系统： 断开拨号连接"
 
 #: string;20262
 msgid "System: Turn Off the Computer"
-msgstr ""
+msgstr "系统：关闭计算机"
 
 #: string;20265
 msgid "Done"
-msgstr ""
+msgstr "完成"
 
 #: string;20266
 msgid "Waiting..."
-msgstr ""
+msgstr "等待..."
 
 #: string;20267
 msgid "No Tasks Currently Scheduled"
-msgstr ""
+msgstr "当前没有计划的任务"
 
 #: csettingsheet;control;4 cprofilemanagerdlg;control;4
 msgid "Apply"
@@ -7825,8 +7324,7 @@ msgstr "点击最小化时:"
 msgid "Normal|Minimise to Tray"
 msgstr "标准|最小化到系统托盘"
 
-#: clibrarysettingspage;control;1 cmediasettingspage;control;1
-#: cuploadssettingspage;control;1 csecureruledlg;control;22
+#: clibrarysettingspage;control;1 cmediasettingspage;control;1 cuploadssettingspage;control;1 csecureruledlg;control;22
 msgid "_Options:"
 msgstr "选项(_O):"
 
@@ -7874,9 +7372,7 @@ msgstr "立即清除历史"
 msgid "_Safe to Open:"
 msgstr "安全的扩展名(_S):"
 
-#: clibrarysettingspage;control;18 clibrarysettingspage;control;22
-#: cmediasettingspage;control;7 cwebsettingspage;control;12
-#: cfilesourcespage;control;5 cdownloadgroupdlg;control;7
+#: clibrarysettingspage;control;18 clibrarysettingspage;control;22 cmediasettingspage;control;7 cwebsettingspage;control;12 cfilesourcespage;control;5 cdownloadgroupdlg;control;7
 msgid "_Add"
 msgstr "添加(_A)"
 
@@ -8066,19 +7562,19 @@ msgstr "BitTorrent ( .torrent )"
 
 #: cwebsettingspage;control;8
 msgid "DC++ ( dchub: )"
-msgstr ""
+msgstr "下载管理器(_D):"
 
 #: cwebsettingspage;control;9
 msgid "_Download Manager:"
-msgstr "下载管理器(_D):"
+msgstr "使用 Shareaza 管理所有的网页下载:"
 
 #: cwebsettingspage;control;10
 msgid "Use Shareaza to manage all my web downloads:"
-msgstr "使用 Shareaza 管理所有的网页下载:"
+msgstr "使用 Shareaza 管理我的所有网络下载："
 
 #: cwebsettingspage;control;14
 msgid "The download manager plugin will only attempt to download file types listed here.  Other file types will be handled by your web browser.  Shareaza must be running to manage downloads."
-msgstr "下载管理器插件只尝试下载下列文件类型。其他文件类型将由您的网页浏览器处理。Shareaza 只有运行时才能处理这些类型的下载。"
+msgstr "下载管理插件只允许列表中的文件类型。其他文件类型将由您的浏览器控制。Shareaza 必须运行管理器下载。"
 
 #: cconnectionsettingspage;control;1
 msgid "_Inbound Address:"
@@ -8125,21 +7621,18 @@ msgid "Handshake:"
 msgstr "握手:"
 
 #: cdownloadssettingspage;control;1
-#, fuzzy
 msgid "Save Completed Files Here"
 msgstr "在这里保存已完成文件(_C):"
 
 #: cdownloadssettingspage;control;4
 msgid "Scan every completed file with AntiVirus"
-msgstr ""
+msgstr "在这里保存未完成文件(_I):"
 
 #: cdownloadssettingspage;control;5
-#, fuzzy
 msgid "Select AntiVirus:"
-msgstr "选择预设:"
+msgstr "选择防病毒软件："
 
 #: cdownloadssettingspage;control;7
-#, fuzzy
 msgid "Number of Downloads"
 msgstr "下载数值(_N):"
 
@@ -8156,7 +7649,6 @@ msgid "Transfers per File:"
 msgstr "每个文件传送数:"
 
 #: cdownloadssettingspage;control;17
-#, fuzzy
 msgid "Limits"
 msgstr "限制(_L):"
 
@@ -8170,12 +7662,11 @@ msgstr "最大排队长度:"
 
 #: cdownloadssettingspage;control;22
 msgid "Only download and upload to networks which are connected."
-msgstr "只在已连接的网络下载和上传。"
+msgstr "只上传下载到连接的网络。"
 
 #: cdownloadssettingspage;control;23
-#, fuzzy
 msgid "Store Temporary Incomplete Files Here"
-msgstr "在这里保存未完成文件(_I):"
+msgstr "只在已连接的网络下载和上传。"
 
 #: cuploadssettingspage;control;2
 msgid "Share NEW partial downloads"
@@ -8335,27 +7826,27 @@ msgstr "Gnutella"
 
 #: cgnutellasettingspage;control;1
 msgid "Always connect to Gnutella2"
-msgstr "Gnutella2 网络:"
+msgstr "总是连接到 Gnutella2"
 
 #: cgnutellasettingspage;control;2
 msgid "Connect to Gnutella2 today"
-msgstr "总是连接到 Gnutella2"
+msgstr "今天连接到 Gnutella2"
 
 #: cgnutellasettingspage;control;3
 msgid "Optimal|Leaf|Hub"
-msgstr "今天连接到 Gnutella2"
+msgstr "最佳|叶|中心"
 
 #: cgnutellasettingspage;control;4
 msgid "Always connect to Gnutella1"
-msgstr "模式:"
+msgstr "总是连接到 Gnutella1"
 
 #: cgnutellasettingspage;control;5
 msgid "Connect to Gnutella1 today"
-msgstr "最优|子端|集端"
+msgstr "今天连接到 Gnutella1"
 
 #: cgnutellasettingspage;control;6
 msgid "Optimal|Leaf|Ultrapeer"
-msgstr "总是连接到 Gnutella1"
+msgstr "最佳|叶|超级点"
 
 #: cgnutellasettingspage;control;19
 msgid "Hub to Leaf"
@@ -8375,19 +7866,19 @@ msgstr "中心到中心"
 
 #: cgnutellasettingspage;control;24
 msgid "G_2 Connections:"
-msgstr "Gnutella2 Network:"
+msgstr "Gnutella2 连接:"
 
 #: cgnutellasettingspage;control;25
 msgid "Leaf to Hub:"
-msgstr "Mode: "
+msgstr "叶到中心:"
 
 #: cgnutellasettingspage;control;26
 msgid "Hub to Leaf:"
-msgstr "G2 连接(_2):"
+msgstr "中心到叶:"
 
 #: cgnutellasettingspage;control;27
 msgid "Hub to Hub:"
-msgstr "子端到集端:"
+msgstr "中心到中心:"
 
 #: cgnutellasettingspage;control;28
 msgid "Gnutella1 Network:"
@@ -8395,7 +7886,7 @@ msgstr "Gnutella1 网络:"
 
 #: cgnutellasettingspage;control;30
 msgid "G_1 Connections:"
-msgstr "集端到子端:"
+msgstr "Gnutella1 连接:"
 
 #: cgnutellasettingspage;control;31
 msgid "Leaf to Ultrapeer:"
@@ -8503,19 +7994,19 @@ msgstr "%"
 
 #: cbittorrentsettingspage;control;14
 msgid "Prefer torrent sources"
-msgstr "%"
+msgstr " Torrent 资源优先"
 
 #: cbittorrentsettingspage;control;15
 msgid "_EndGame:"
-msgstr " Torrent 资源优先"
+msgstr "最终阶段(_E):"
 
 #: cbittorrentsettingspage;control;16
 msgid "Enable EndGame mode when completing torrents"
-msgstr "最终阶段(_E):"
+msgstr "在完成 Torrent 时启用最终阶段模式"
 
 #: cbittorrentsettingspage;control;17
 msgid "_Store Torrents Here:"
-msgstr "在完成 Torrent 时启用最终阶段模式"
+msgstr "保存种子到(_S):"
 
 #: cbittorrentsettingspage;control;20
 msgid "_Torrent Creator:"
@@ -8537,17 +8028,11 @@ msgstr "Shareaza 通用协议架构浏览:"
 msgid "Skin Information:"
 msgstr "皮肤信息:"
 
-#: cskinssettingspage;control;3 cpluginssettingspage;control;3
-#: ccollectionexportdlg;control;4 ctorrentgeneralpage;control;9
+#: cskinssettingspage;control;3 cpluginssettingspage;control;3 ccollectionexportdlg;control;4 ctorrentgeneralpage;control;9
 msgid "Name:"
 msgstr "名称:"
 
-#: cskinssettingspage;control;4 cskinssettingspage;control;6
-#: cpluginssettingspage;control;4 cfolderscandlg;control;2
-#: cdownloadmonitordlg;control;2 cdownloadmonitordlg;control;7
-#: cdownloadmonitordlg;control;9 cdownloadmonitordlg;control;11
-#: cdownloadmonitordlg;control;13 ccollectionexportdlg;control;5
-#: ccollectionexportdlg;control;7
+#: cskinssettingspage;control;4 cskinssettingspage;control;6 cpluginssettingspage;control;4 cfolderscandlg;control;2 cdownloadmonitordlg;control;2 cdownloadmonitordlg;control;7 cdownloadmonitordlg;control;9 cdownloadmonitordlg;control;11 cdownloadmonitordlg;control;13 ccollectionexportdlg;control;5 ccollectionexportdlg;control;7
 msgid "..."
 msgstr "..."
 
@@ -8555,8 +8040,7 @@ msgstr "..."
 msgid "Author:"
 msgstr "作者:"
 
-#: cskinssettingspage;control;7 cpluginssettingspage;control;5
-#: cadvancedsettingspage;control;7 ccollectionexportdlg;control;8
+#: cskinssettingspage;control;7 cpluginssettingspage;control;5 cadvancedsettingspage;control;7 ccollectionexportdlg;control;8
 msgid "Description:"
 msgstr "描述:"
 
@@ -8596,8 +8080,7 @@ msgstr "赋值:"
 msgid "Upload Queue Properties"
 msgstr "上传队列属性"
 
-#: cqueuepropertiesdlg;control;1 cgraphlistdlg;control;14
-#: cdownloadgroupdlg;control;12
+#: cqueuepropertiesdlg;control;1 cgraphlistdlg;control;14 cdownloadgroupdlg;control;12
 msgid "_Name:"
 msgstr "名称(_N):"
 
@@ -8753,8 +8236,7 @@ msgstr "使用 Shareaza 您没有必要共享任何文件，但是如果用户�
 msgid "Please indicate which folders, if any, you wish to share.  Simply click the Add button to add a new folder."
 msgstr "请指出要共享的一个或多个共享文件。点击添加按钮进行添加新的文件夹。"
 
-#: cwizardsharepage;control;5 cgraphlistdlg;control;2
-#: csharemanagerdlg;control;3
+#: cwizardsharepage;control;5 cgraphlistdlg;control;2 csharemanagerdlg;control;3
 msgid "_Add..."
 msgstr "添加(_A)..."
 
@@ -8864,11 +8346,11 @@ msgstr "导入 edonkey 下载"
 
 #: cdonkeyimportdlg;control;1
 msgid "Shareaza has detected that you have another eDonkey program installed on your computer.  Would you like to import any unfinished downloads into Shareaza?"
-msgstr "Shareaza 发现您的电脑上安装了 edonkey 程序。您想要导入未完成的下载到 Shareaza 吗？"
+msgstr "Shareaza 检测到您已安装了其他的电驴程序〉您是否要导入所有未完成的下载到 Shareaza ？"
 
 #: cdonkeyimportdlg;control;3
 msgid "No|Cancel"
-msgstr "否|取消"
+msgstr "是"
 
 #: dialog;cwizardfinishedpage
 msgid "Welcome to Shareaza (6/6)"
@@ -9112,19 +8594,19 @@ msgstr "下载文件或 Torrent"
 
 #: cdownloaddlg;control;2
 msgid "Downloading any file with Shareaza is easy.  Simply type or paste the URL or URI describing the file into the box below and press Enter."
-msgstr "使用 Shareaza 下载任何文件都很容易。只需要输入或粘贴链接地址或者 URI 描述到以下的方框中，然后按下回车。"
+msgstr "使用 Shareaza 下载任何文件都很容易。只需要输入或粘贴链接地址或者 URI (统一资源标识符）描述到以下的方框中，然后按下回车。"
 
 #: cdownloaddlg;control;6
 msgid "Shareaza can download files from the web (HTTP), and automatically search and download P2P links (Magnet, Gnutella, eDonkey, mP2P)."
-msgstr "Shareaza 可以从 web (HTTP) 下载文件，并且支持自动搜索和下载以下类型的 P2P 链接 (Magnet，Gnutella，edonkey，mP2P)。"
+msgstr "取消"
 
 #: cdownloaddlg;control;7
 msgid "Shareaza can also download BitTorrent files.  A torrent can be described by a .torrent file, or a HTTP link to the .torrent file.  To download a torrent HTTP link, paste it in the box above.  If you already have a .torrent file, click Open Torrent:"
-msgstr "Shareaza 也可以下载 BitTorrent 文件。Torrent 可以被描述成 xyz.torrent 文件，或者到 .torrent 文件的 HTTP 链接。只需粘贴 Torrent 的 HTTP 的地址到上面的方框就可以进行下载。如果已经拥有 .torrent 文件，点击打开 Torrent:"
+msgstr "Shareaza 可以从 web (HTTP) 下载文件，并且支持自动搜索和下载以下类型的 P2P 链接 (Magnet，Gnutella，edonkey，mP2P)。"
 
 #: cdownloaddlg;control;8
 msgid "Open _Torrent..."
-msgstr "打开 Torrent(_T)..."
+msgstr "Shareaza 也可以下载 BitTorrent 文件。Torrent 可以被描述成 xyz.torrent 文件，或者到 .torrent 文件的 HTTP 链接。只需粘贴 Torrent 的 HTTP 的地址到上面的方框就可以进行下载。如果已经拥有 .torrent 文件，点击打开 Torrent:"
 
 #: dialog;cnewsearchdlg
 msgid "New Search|Search Again|Find in Library"
@@ -9532,19 +9014,19 @@ msgstr "插入标记:"
 
 #: curlexportdlg;control;4
 msgid "Tiger Root|SHA1|MD5|ED2K (CMD4)|BitTorrent|Filename|Filename (URI)|Base Filename|File Extension|File Size|File Size (bytes)|Folder Path|Local Host|Local Port|Link|Link (URI)"
-msgstr "Tiger Root|SHA1|MD5|ED2K (CMD4)|BitTorrent|文件名|文件名 (URI)|基础文件名|文件扩展名|文件大小|文件大小 (字节)|文件夹路径|本地主机|本地端口"
+msgstr "插入标记:"
 
 #: curlexportdlg;control;5
 msgid "Select preset:"
-msgstr "选择预设:"
+msgstr "Tiger Root|SHA1|MD5|ED2K (CMD4)|BitTorrent|文件名|文件名 (URI)|基础文件名|文件扩展名|文件大小|文件大小 (字节)|文件夹路径|本地主机|本地端口"
 
 #: curlexportdlg;control;6
 msgid "Magnet|eDonkey|Magnet HTML|eDonkey HTML"
-msgstr "Magnet|eDonkey|Magnet HTML|eDonkey HTML"
+msgstr "选择预设:"
 
 #: curlexportdlg;control;8
 msgid "_Save..."
-msgstr "保存(_S)..."
+msgstr "复制(_C)"
 
 #: dialog;curlactiondlg
 msgid "Shareaza URI Manager"
@@ -9552,15 +9034,15 @@ msgstr "Shareaza URI 管理器"
 
 #: curlactiondlg;control;1
 msgid "You have clicked on a Shareaza-powered URI which links to the following content on the network:"
-msgstr "您点击的 Shareaza URI 链接到以下的网络:"
+msgstr "您点击的 Shareaza URI 将会添加以下探索服务到探索服务缓存。"
 
 #: curlactiondlg;control;2
 msgid "You have clicked on a Shareaza-powered URL which will connect you to the following host or server:"
-msgstr "您点击的 Shareaza 链接将会连接您到以下主机或服务器:"
+msgstr "您点击的 Shareaza URI 链接到以下的网络:"
 
 #: curlactiondlg;control;3
 msgid "You have clicked on a Shareaza-powered URI which will allow you to browse the shared files available on the following host:"
-msgstr "您点击的 Shareaza URI 允许您浏览以下可用主机的共享文件:"
+msgstr "您点击的 Shareaza 链接将会连接您到以下主机或服务器:"
 
 #: curlactiondlg;control;8
 msgid "Please select the action you would like Shareaza to take:"
@@ -9568,23 +9050,23 @@ msgstr "请选择您希望 Shareaza 采取的操作:"
 
 #: curlactiondlg;control;9
 msgid "_Download Now"
-msgstr "立即下载(_D)"
+msgstr "请选择您希望 Shareaza 采取的操作:"
 
 #: curlactiondlg;control;10
 msgid "_Search for File"
-msgstr "搜索文件(_S)"
+msgstr "立即下载(_D)"
 
 #: curlactiondlg;control;12
 msgid "_Remember my selection next time"
-msgstr "记住我的选择(_R)"
+msgstr "取消"
 
 #: curlactiondlg;control;13
 msgid "Open a download _monitor window"
-msgstr "打开下载监视器窗口(_M)"
+msgstr "记住我的选择(_R)"
 
 #: curlactiondlg;control;14
 msgid "You have clicked on a Shareaza-powered URI which will add the following Discovery Service to your Discovery Services cache."
-msgstr "您点击的 Shareaza URI 将会添加以下探索服务到探索服务缓存。"
+msgstr "打开下载监视器窗口(_M)"
 
 #: dialog;cbitzidownloaddlg
 msgid "Downloading Metadata..."
@@ -9620,23 +9102,23 @@ msgstr "您知道 Shareaza 是 100% 免费的软件吗？"
 
 #: cwarningsdlg;control;2
 msgid "Shareaza does NOT contain ANY \"spyware\", \"adware\" or other bundled software. It does NOT display any advertisements or \"popups\", ever.{n}{n}If you ever see advertising or \"popups\" while using Shareaza, be assured that they are NOT coming from this program."
-msgstr "Shareaza 不包含任何 \"间谍软件\"，\"广告软件\"，或者其他任何绑定的软件。它也不会显示任何广告或者 \"弹出窗口\"，{n}{n}如果使用 Shareaza 时，您看到任何\"弹出窗口\"，请确定它们不是来自此程序。"
+msgstr "您知道 Shareaza 是 100% 免费的软件吗？"
 
 #: cwarningsdlg;control;3
 msgid "Unfortunately a lot of other software does come with undesirable adware or spyware, so if you see something suspicious you may wish to check your PC with an advertising or spyware removal program."
-msgstr "不幸的是多数同类软件都隐藏着广告软件或间谍软件，如果您对看到的现象产生怀疑，您可以使用特定的软件检查并且移除广告和间谍软件。"
+msgstr "Shareaza 不包含任何 \"间谍软件\"，\"广告软件\"，或者其他任何绑定的软件。它也不会显示任何广告或者 \"弹出窗口\"，{n}{n}如果使用 Shareaza 时，您看到任何\"弹出窗口\"，请确定它们不是来自此程序。"
 
 #: cwarningsdlg;control;4
 msgid "You should not have had to pay any money to obtain Shareaza. Shareaza can be freely downloaded by anyone from http://shareaza.sourceforge.net/. If you paid someone money for Shareaza, you should demand a full refund immediately."
-msgstr "您不必为获取 Shareaza 而付费。Shareaza 可以从 http://shareaza.sourceforge.net/ 免费下载。如果您付钱给 Shareaza 的某人，您可以要求马上取回。"
+msgstr "不幸的是多数同类软件都隐藏着广告软件或间谍软件，如果您对看到的现象产生怀疑，您可以使用特定的软件检查并且移除广告和间谍软件。"
 
 #: cwarningsdlg;control;5
 msgid "Shareaza respects its users!"
-msgstr "Shareaza 以用户至上！"
+msgstr "您不必为获取 Shareaza 而付费。Shareaza 可以从 http://shareaza.sourceforge.net/ 免费下载。如果您付钱给 Shareaza 的某人，您可以要求马上取回。"
 
 #: cwarningsdlg;control;6 cpromotedlg;control;6
 msgid "http://shareaza.sourceforge.net/"
-msgstr "http://shareaza.sourceforge.net/"
+msgstr "Shareaza 以用户至上！"
 
 #: dialog;cpromotedlg
 msgid "Spread the Word"
@@ -9644,23 +9126,23 @@ msgstr "宣传"
 
 #: cpromotedlg;control;1
 msgid "Help Us Spread the Word"
-msgstr "帮助我们传播"
+msgstr "帮助我们宣传"
 
 #: cpromotedlg;control;2
 msgid "We hope you have enjoyed using Shareaza so far. We believe it is the best file sharing application around."
-msgstr "希望您乐于意使用 Shareaza 。我们坚信它是文件共享软件中的佼佼者。"
+msgstr "帮助我们传播"
 
 #: cpromotedlg;control;3
 msgid "Unfortunately, a lot of file sharers don't know what they're missing!"
-msgstr "遗憾的是，多数文件共享用户还不知道他们错过了什么！"
+msgstr "希望您乐于意使用 Shareaza 。我们坚信它是文件共享软件中的佼佼者。"
 
 #: cpromotedlg;control;4
 msgid "If you know someone who would like Shareaza, whether they're a new user or someone still putting up with an inferior product, why not let them know there is a better alternative?"
-msgstr "如果您知道有人打算使用 Shareaza ，无论他们是新用户还是使用其他比较差的软件的用户，为什么不让他们知道这里有更好的选择呢？"
+msgstr "遗憾的是，多数文件共享用户还不知道他们错过了什么！"
 
 #: cpromotedlg;control;5
 msgid "Chances are they'll be grateful you rescued them!"
-msgstr "机会来自于您的把握！"
+msgstr "如果您知道有人打算使用 Shareaza ，无论他们是新用户还是使用其他比较差的软件的用户，为什么不让他们知道这里有更好的选择呢？"
 
 #: dialog;cexistingfiledlg
 msgid "Existing File"
@@ -9672,23 +9154,23 @@ msgstr "您的收藏中已经存在此文件。您希望怎样做？"
 
 #: cexistingfiledlg;control;5
 msgid "Show me the file in my library"
-msgstr "显示收藏中的这个文件"
+msgstr "您的收藏中已经存在此文件。您希望怎样做？"
 
 #: cexistingfiledlg;control;6
 msgid "Download the file again"
-msgstr "重新下载此文件"
+msgstr "显示收藏中的这个文件"
 
 #: cexistingfiledlg;control;7
 msgid "Don't download this file"
-msgstr "不要下载此文件"
+msgstr "重新下载此文件"
 
 #: cexistingfiledlg;control;10
 msgid "You have downloaded and deleted this file before. What would you like to do?"
-msgstr "您曾经下载并且删除此文件。您打算怎么做？"
+msgstr "取消"
 
 #: cexistingfiledlg;control;11
 msgid "Warning!!! Duplicate files detected. Some malicious software may infect your Library. Make sure that you downloaded this file or placed it manually. Otherwise, shutdown Shareaza and scan your computer with an antivirus program."
-msgstr "警告！！！检测到重复文件。一些恶意软件可能感染您的收藏。请确认您是手动下载或存放此文件。否则，请关闭 Shareaza 并用杀毒软件扫描您的电脑。"
+msgstr "您曾经下载并且删除此文件。您打算怎么做？"
 
 #: dialog;cclosemodedlg
 msgid "Close Button"
@@ -9700,15 +9182,15 @@ msgstr "这是您第一次点击 Shareaza 的关闭按钮。请选择以后点�
 
 #: cclosemodedlg;control;2
 msgid "Minimise to the tray area"
-msgstr "最小化到系统托盘"
+msgstr "这是您第一次点击 Shareaza 的关闭按钮。请选择以后点击关闭按钮时要完成的操作:"
 
 #: cclosemodedlg;control;3
 msgid "Shut down Shareaza immediately"
-msgstr "立即关闭 Shareaza"
+msgstr "最小化到系统托盘"
 
 #: cclosemodedlg;control;4
 msgid "Shut down Shareaza after any downloads and uploads finish"
-msgstr "传送完成后关闭 Shareaza"
+msgstr "立即关闭 Shareaza"
 
 #: dialog;cdonkeyserversdlg
 msgid "Download Server.met File"
@@ -9864,11 +9346,11 @@ msgstr "您已经打开了一个 BitTorrent Torrent 文件。您希望下载它�
 
 #: ctorrentseeddlg;control;3
 msgid "Seed"
-msgstr "做种"
+msgstr "下载"
 
 #: ctorrentseeddlg;control;5
 msgid "To share complete files using BitTorrent they must first be seeded.  Once this process is complete the Torrent will appear as a new item in your download list."
-msgstr "要使用 BitTorrent 共享完整的文件必须先做种子。此过程完成后 Torrent 将在您的下载列表中显示为一个新的项目。"
+msgstr "取消"
 
 #: ctorrentgeneralpage;control;6
 msgid " As needed| When ratio over 100%| Only when requested| Never"
@@ -9972,19 +9454,19 @@ msgstr "现在已存在一个新的 Shareaza 版本。您要升级吗？"
 
 #: cupgradedlg;control;2
 msgid "If you select Upgrade Now, Shareaza will add the upgrade to your download queue and automatically begin downloading it."
-msgstr "如果您选择立即升级，Shareaza 将把此更新添加到您的下载队列中并自动下载。"
+msgstr "现在已存在一个新的 Shareaza 版本。您要升级吗？"
 
 #: cupgradedlg;control;3
 msgid "_Upgrade Now"
-msgstr "立即升级(_U)"
+msgstr "如果您选择立即升级，Shareaza 将把此更新添加到您的下载队列中并自动下载。"
 
 #: cupgradedlg;control;4
 msgid "Don't check for new versions"
-msgstr "不要检测新版本"
+msgstr "立即升级(_U)"
 
 #: cupgradedlg;control;5
 msgid "Don't Upgrade"
-msgstr "不要升级"
+msgstr "不要检测新版本"
 
 #: dialog;cdownloadreviewdlg
 msgid "Download Reviews"
@@ -10019,21 +9501,20 @@ msgid "Action"
 msgstr "操作"
 
 #: cscheduletaskpage;control;10
-#, fuzzy
 msgid "eDoonkey2K"
-msgstr "eDonkey"
+msgstr "电驴"
 
 #: cscheduletaskpage;control;13
 msgid "Select the event type:"
-msgstr ""
+msgstr "选择事件类型："
 
 #: cscheduletaskpage;control;14
 msgid "% of _download under limit"
-msgstr ""
+msgstr "% 下载达到限制(_D)"
 
 #: cscheduletaskpage;control;15
 msgid "% of _upload under limit"
-msgstr ""
+msgstr "% 上传达到限制(_U)"
 
 #: cscheduletaskpage;control;17 column;bandwidth
 msgid "Bandwidth"
@@ -10248,55 +9729,10 @@ msgid "Comments"
 msgstr "注释"
 
 #: column;trigger
-#, fuzzy
 msgid "Trigger"
-msgstr "TigerTree"
+msgstr "触发器"
 
 #: column;nextrun
-#, fuzzy
 msgid "NextRun"
-msgstr "下一个"
-
-#~ msgid "_Play Album"
-#~ msgstr "播放专辑(_P)"
-#~ msgid "This is a pre-release version of Shareaza, and the beta testing period has ended. Please download the full, official release from http://shareaza.sourceforge.net/."
-#~ msgstr "这是 Shareaza 的内部测试版本， beta 测试期已经结束。请下载 http://shareaza.sourceforge.net/ 完整的官方版本。"
-#~ msgid "Torrent Information"
-#~ msgstr "Torrent 信息"
-#~ msgid " to"
-#~ msgstr " 到"
-#~ msgid "Volume uploaded:"
-#~ msgstr "已经上传数量:"
-#~ msgid "You are running the Scheduler in 'G2 only' mode. Would you like to turn this mode off, so that all active networks remain connected?"
-#~ msgstr "您正运行任务计划在 '只连接 G2 ' 的模式。您是否要关闭该模式？那样所有的活动网络将会被连接。"
-#~ msgid "Disabling support for Gnutella-1 protocols may limit your search results, and if you are acting as a hub it may also impact upon the results of other users. Are you sure you want to do this?"
-#~ msgstr "禁用 Gnutella1 协议可能会限制您的搜索结果，并且如果您作为集端它可能还会影响到其他用户的结果。您确定要这样做吗？"
-#~ msgid "All Media Files|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Playlists|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Audio Files|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|Video Files|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|CD Audio Tracks|*.cda|MIDI Files|*.mid;*.rmi;*.midi|All Files|*.*||"
-#~ msgstr "所有媒体文件|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|播放列表文件|*.asx;*.wax;*.m3u;*.wvx;*.wmx|音频文件|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|视频文件|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|CD 音轨|*.cda|MIDI 文件|*.mid;*.rmi;*.midi|所有文件|*.*||"
-#~ msgid "Tracker did not respond- Retrying announce (%i of %i)"
-#~ msgstr "Tracker 未回应 - 重试宣告 (%i 于 %i)"
-#~ msgid "You have typed a SHA1 value, however it is invalid. Please check it and try again."
-#~ msgstr "您已经输入了一个 SHA1 值，但它是无效的。请检查并重试。"
-#~ msgid "You have typed a root tiger-tree value, however it is invalid. Please check it and try again."
-#~ msgstr "您已经输入了一个根 tiger-tree 值，但它是无效的。请检查并重试。"
-#~ msgid "You have provided a root tiger-tree hash value which is different to the one currently associated with this download. Are you sure you want to change the tiger-tree root hash now?"
-#~ msgstr "您已经提供了一个 根 tiger-tree 值，但它与当前关联与此下载的值不同。您确定要立即变更此 tiger-tree Hash 吗？"
-#~ msgid "You have provided an eDonkey hash value which is different to the one currently associated with this download. Are you sure you want to change the eDonkey hash now?"
-#~ msgstr "您已经提供了一个 edonkey Hash 值，但它与当前关联与此下载的值不同。您确定要立即变更此 edonkey Hash 吗？"
-#~ msgid "Changing interface direction requires restart. \\nYou will need to start Shareaza manually. Exit now?"
-#~ msgstr "变更界面方向需要重新启动。\\n您需要手动启动 Shareaza。立即退出？"
-#~ msgid "Sunday"
-#~ msgstr "星期天"
-#~ msgid "Monday"
-#~ msgstr "星期一"
-#~ msgid "Tuesday"
-#~ msgstr "星期二"
-#~ msgid "Wednesday"
-#~ msgstr "星期三"
-#~ msgid "Thursday"
-#~ msgstr "星期四"
-#~ msgid "Friday"
-#~ msgstr "星期五"
-#~ msgid "Saturday"
-#~ msgstr "星期六"
+msgstr "下次运行"
 
