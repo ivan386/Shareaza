@@ -1,7 +1,7 @@
 ; Input defines: ConfigurationName (Debug or Release), PlatformName (Win32, x64, etc.)
 
 ; Change from "Yes" to "No" on the next line if you don't compile an alpha build
-#define alpha "Yes"
+#define alpha "No"
 
 #if VER < 0x05010700
   #error Inno Setup version 5.1.7 or higher is needed for this script
@@ -43,7 +43,7 @@ AllowNoIcons=yes
 OutputDir=setup\builds
 OutputBaseFilename={#output_name}
 SolidCompression=yes
-Compression=lzma/max
+Compression=lzma2/max
 InternalCompressLevel=max
 PrivilegesRequired=poweruser
 ShowLanguageDialog=yes
@@ -187,7 +187,7 @@ Source: "Skins\No Banner\*"; DestDir:  "{app}\Skins\No Banner";  Flags: ignoreve
 ; Source: "Skins\Winter\*";            DestDir: "{app}\Skins\Winter";            Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
 ; Source: "Skins\Valentine\*";         DestDir: "{app}\Skins\Valentine";         Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
 ; Source: "Skins\St. Patrick's Day\*"; DestDir: "{app}\Skins\St. Patrick's Day"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
-Source: "Skins\X-Mas\*";               DestDir: "{app}\Skins\X-Mas";             Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
+; Source: "Skins\X-Mas\*";             DestDir: "{app}\Skins\X-Mas";             Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
 
 ; Templates
 Source: "Templates\*"; DestDir: "{app}\Templates"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
@@ -376,7 +376,7 @@ Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Skins"; ValueType: dword; ValueN
 Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Skins"; ValueType: dword; ValueName: "Winter\Winter.xml";                       ValueData: "0"; Flags: deletevalue uninsdeletevalue
 Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Skins"; ValueType: dword; ValueName: "Valentine\Valentine.xml";                 ValueData: "0"; Flags: deletevalue uninsdeletevalue
 Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Skins"; ValueType: dword; ValueName: "St. Patrick's Day\St. Patrick's Day.xml"; ValueData: "0"; Flags: deletevalue uninsdeletevalue
-Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Skins"; ValueType: dword; ValueName: "X-Mas\X-Mas.xml";                         ValueData: "1"; Flags: deletevalue uninsdeletevalue
+Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Skins"; ValueType: dword; ValueName: "X-Mas\X-Mas.xml";                         ValueData: "0"; Flags: deletevalue uninsdeletevalue
 
 ; Disable extensions for plugins which make trouble
 ; Since it is image services plugin we need to add extensions required for the first run

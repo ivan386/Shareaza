@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkinUpdater", "SkinUpdater.csproj", "{1D1ACC34-60BE-4C54-BB3D-0F176F3097D7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdaterCommon", "..\UpdaterCommon\UpdaterCommon.csproj", "{04497E86-5EE6-4496-AD5B-9B224ACD25BE}"
