@@ -247,6 +247,7 @@
 				PreprocessorDefinitions="NDEBUG;WIN32;_WINDOWS;_SHAREAZA;SHAREAZA_USE_ASM;ZLIB_WINAPI;ZLIB_DLL"
 				StringPooling="true"
 				RuntimeLibrary="0"
+				EnableEnhancedInstructionSet="2"
 				FloatingPointModel="2"
 				DefaultCharIsUnsigned="true"
 				RuntimeTypeInfo="false"
@@ -4346,7 +4347,7 @@
 					>
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;"
+						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;&#x0D;&#x0A;"
 						Outputs="$(InputDir)$(InputFileName).gz"
 					/>
 				</FileConfiguration>
@@ -4355,7 +4356,7 @@
 					>
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;"
+						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;&#x0D;&#x0A;"
 						Outputs="$(InputDir)$(InputFileName).gz"
 					/>
 				</FileConfiguration>
@@ -4364,7 +4365,7 @@
 					>
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;"
+						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;&#x0D;&#x0A;"
 						Outputs="$(InputDir)$(InputFileName).gz"
 					/>
 				</FileConfiguration>
@@ -4373,7 +4374,7 @@
 					>
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;"
+						CommandLine="gzip -c &quot;$(InputDir)$(InputFileName)&quot; &gt;&quot;$(InputDir)$(InputFileName).gz&quot;&#x0D;&#x0A;"
 						Outputs="$(InputDir)$(InputFileName).gz"
 					/>
 				</FileConfiguration>
