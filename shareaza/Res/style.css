@@ -6,10 +6,9 @@
 	color: #000000;
 	font-size: 8pt;
 }
-.headerborder
-{
-	width: 100%;
+body.imgheader {
 	background-image:url(/header_2.png);
+	background-repeat:repeat-x;
 }
 .page
 {
