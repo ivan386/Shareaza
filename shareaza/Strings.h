@@ -1,7 +1,7 @@
 //
 // Strings.h 
 //
-// Copyright (c) Shareaza Development Team, 2010.
+// Copyright (c) Shareaza Development Team, 2010-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -76,3 +76,9 @@ void Split(const CString& strSource, TCHAR cDelimiter, CStringArray& pAddIt, BOO
 
 // StartsWith("hello world", "hello") is true
 BOOL StartsWith(const CString& sInput, LPCTSTR pszText, size_t nLen);
+
+// Load all text from file (Unicode-compatible)
+CString LoadFile(LPCTSTR pszPath);
+
+// Replaces a substring with another (case-insensitive)
+void ReplaceNoCase(CString& sInStr, LPCTSTR pszOldStr, LPCTSTR pszNewStr);

@@ -1,7 +1,7 @@
 //
 // SharedFile.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -111,6 +111,30 @@ public:
 	CSharedSource*	AddAlternateSource(LPCTSTR pszURL, FILETIME* tSeen = NULL);
 	CSharedSource*	AddAlternateSources(LPCTSTR pszURL);
 	CString			GetAlternateSources(CList< CString >* pState, int nMaximum, PROTOCOLID nProtocol);
+
+	// Adds file data to string array using template. Supported template variables:
+	// $meta:name$		- file name
+	// $meta:comments$	- file comments
+	// $meta:hours$		- hours as decimal from file metadata "minutes" or "seconds" field
+	// $meta:minutes$	- minutes as decimal from file metadata "minutes" or "seconds" field
+	// $meta:seconds$	- seconds as  decimal from file metadata "minutes" or "seconds" field
+	// $meta:time$		- time as string "hours:minutes:seconds" from file metadata "minutes" or "seconds" field
+	// $meta:track$		- track as decimal
+	// $meta:*$			- other file metadata fields as is
+	// $meta:sizebytes$	- file size in bytes
+	// $meta:size$		- file size in KB or MB
+	// $meta:sha1$		- file SHA1 hash
+	// $meta:gnutella$	- file SHA1 link (gnutella://)
+	// $meta:tiger$		- file Tiger hash
+	// $meta:bitprint$	- file SHA1.Tiger hash
+	// $meta:ed2khash$	- file ED2K hash
+	// $meta:ed2k$		- file ED2K link (ed2k://|file|)
+	// $meta:md5$		- file MD5 hash
+	// $meta:btih$		- file BitTorrnet info hash
+	// $meta:magnet$	- file magnet-link
+	// $meta:number$	- file number in string array
+	// Unknown variables will be replaced by "N/A" string.
+	BOOL			PrepareDoc(LPCTSTR pszTemplate, CArray< CString >& oDocs);
 
 	inline CString GetNameLC() const
 	{

@@ -1,7 +1,7 @@
 //
 // SharedFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1114,6 +1114,156 @@ BOOL CLibraryFile::OnVerifyDownload(
 	return TRUE;
 }
 
+BOOL CLibraryFile::PrepareDoc(LPCTSTR pszTemplate, CArray< CString >& oDocs)
+{
+	ASSUME_LOCK( Library.m_pSection );
+
+	CString strDoc( pszTemplate );
+
+	if ( m_pMetadata && m_pSchema )
+	{
+		// Should be all meta data replacement
+		CXMLElement* pMetadata = m_pMetadata;
+		for ( POSITION pos = pMetadata->GetAttributeIterator() ; pos ; )
+		{
+			CString str;
+			CXMLNode* pNode = pMetadata->GetNextAttribute( pos );
+			str = pNode->GetName();
+			CString strReplace = pNode->GetValue();
+			if ( str == _T("seconds") || str == _T("minutes") )
+			{
+				double nTotalSecs = ( str == _T("minutes") ) ? 
+					_tstof( (LPCTSTR)strReplace ) * 60 : _tstof( (LPCTSTR)strReplace );
+				int nSecs = int( nTotalSecs );
+				int nHours = nSecs / 3600;
+				nSecs -= nHours * 3600;
+				int nMins = nSecs / 60;
+				nSecs -= nMins * 60;
+
+				str.Format( _T("%d"), nHours );
+				ReplaceNoCase( strDoc, _T("$meta:hours$"), str );
+				str.Format( _T("%d"), nMins );
+				ReplaceNoCase( strDoc, _T("$meta:minutes$"), str );
+				str.Format( _T("%d"), nSecs );
+				ReplaceNoCase( strDoc, _T("$meta:seconds$"), str );
+
+				if ( nHours )
+					str.Format( _T("%d:%d:%.2d"), nHours, nMins, nSecs );
+				else
+					str.Format( _T("%d:%.2d"), nMins, nSecs );
+				ReplaceNoCase( strDoc, _T("$meta:time$"), str );
+			}
+			else if ( str == "track" )
+			{
+				int nTrack = _ttoi( (LPCTSTR)strReplace );
+				str.Format( _T("%d"), nTrack );
+				ReplaceNoCase( strDoc, _T("$meta:track$"), str );
+			}
+			else
+			{
+				CString strOld;
+				strOld.Format( _T("$meta:%s$"), (LPCTSTR)str );
+				ReplaceNoCase( strDoc, strOld, strReplace );
+			}
+		}
+	}
+
+	CString strFileName, strNameURI, strSize, strMagnet;
+
+	if ( m_sName )
+	{
+		strFileName = m_sName;
+		strNameURI = URLEncode( m_sName );
+	}
+
+	if ( m_nSize != SIZE_UNKNOWN )
+	{
+		strSize.Format( _T("%I64u"), m_nSize ); // bytes
+		ReplaceNoCase( strDoc, _T("$meta:sizebytes$"), strSize );
+
+		CString strHumanSize;
+		if ( m_nSize / ( 1024*1024 ) > 1 )
+			strHumanSize.Format( _T("%.2f MB"), (float)m_nSize / 1024 / 1024 );
+		else
+			strHumanSize.Format( _T("%.2f KB"), (float)m_nSize / 1024 );
+		ReplaceNoCase( strDoc, _T("$meta:size$"), strHumanSize ); 
+	}
+
+	if ( m_oSHA1 ) 
+	{
+		strMagnet = _T("xt=urn:sha1:") + m_oSHA1.toString();
+
+		ReplaceNoCase( strDoc, _T("$meta:sha1$"), m_oSHA1.toString() );
+
+		ReplaceNoCase( strDoc, _T("$meta:gnutella$"), _T("gnutella://urn:sha1:") + m_oSHA1.toString() + _T('/') + strNameURI + _T('/') );
+	}
+
+	if ( m_oTiger ) 
+	{
+		strMagnet = _T("xt=urn:tree:tiger/:") + m_oTiger.toString();
+
+		ReplaceNoCase( strDoc, _T("$meta:tiger$"), m_oTiger.toString() );
+	}
+
+	if ( m_oSHA1 && m_oTiger )
+	{
+		strMagnet = _T("xt=urn:bitprint:") + m_oSHA1.toString() + _T('.') + m_oTiger.toString();
+
+		ReplaceNoCase( strDoc, _T("$meta:bitprint$"), m_oSHA1.toString() + _T('.') + m_oTiger.toString() );
+	}
+
+	if ( m_oED2K )
+	{
+		if ( strMagnet.GetLength() ) strMagnet += _T("&amp;");
+		strMagnet += _T("xt=urn:ed2khash:") + m_oED2K.toString();
+
+		ReplaceNoCase( strDoc, _T("$meta:ed2khash$"), m_oED2K.toString() );
+
+		if ( strSize.GetLength() )
+			ReplaceNoCase( strDoc, _T("$meta:ed2k$"), _T("ed2k://|file|") + strNameURI + _T('|') + strSize + _T('|') + m_oED2K.toString() + _T("|/") );
+	}
+
+	if ( m_oMD5 )
+	{
+		if ( strMagnet.GetLength() ) strMagnet += _T("&amp;");
+		strMagnet += _T("xt=urn:md5:") + m_oMD5.toString();
+
+		ReplaceNoCase( strDoc, _T("$meta:md5$"), m_oMD5.toString() );
+	}
+
+	if ( m_oBTH )
+	{
+		if ( strMagnet.GetLength() ) strMagnet += _T("&amp;");
+		strMagnet += _T("xt=urn:btih:") + m_oMD5.toString();
+
+		ReplaceNoCase( strDoc, _T("$meta:btih$"), m_oBTH.toString() );
+	}
+
+	if ( strSize.GetLength() ) strMagnet += _T("&amp;xl=") + strSize;
+	strMagnet = _T("magnet:?") + strMagnet + _T("&amp;dn=") + strNameURI;
+	ReplaceNoCase( strDoc, _T("$meta:magnet$"), strMagnet );
+
+	ReplaceNoCase( strDoc, _T("$meta:name$"), strFileName );
+	if ( ! m_sComments.IsEmpty() ) 
+		ReplaceNoCase( strDoc, _T("$meta:comments$"), m_sComments );
+
+	CString strNumber;
+	strNumber.Format( _T("%d"), oDocs.GetCount() + 1 );
+	ReplaceNoCase( strDoc, _T("$meta:number$"), strNumber );
+
+	// Replace all "$meta:xxx$" which were left in the file to "N/A"
+	while ( LPCTSTR szStart = StrStrI( strDoc, _T("$meta:") ) )
+	{
+		if ( LPCTSTR szEnd = StrChr( szStart + 6, _T('$') ) )
+			strDoc.Replace( CString( szStart, szEnd - szStart + 1 ), _T("N/A") );
+		else
+			break;
+	}
+
+	oDocs.Add( strDoc );
+
+	return TRUE;
+}
 
 //////////////////////////////////////////////////////////////////////
 // CSharedSource construction

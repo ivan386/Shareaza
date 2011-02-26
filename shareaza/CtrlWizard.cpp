@@ -1,7 +1,7 @@
 //
 // CtrlWizard.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -68,68 +68,6 @@ BEGIN_MESSAGE_MAP(CWizardCtrl, CWnd)
 	ON_WM_DESTROY()
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
-
-CString CWizardCtrl::ReadFile(LPCTSTR pszPath)
-{
-	CFile pFile;
-	CString strXML( pszPath );
-
-	if ( ! pFile.Open( strXML, CFile::modeRead ) ) return _T("");
-	
-	DWORD nSource = (DWORD)pFile.GetLength();
-	if ( nSource > 4096*1024 ) return _T("");
-	
-	CHAR* pSource = new CHAR[ nSource ];
-
-	try
-	{
-		pFile.Read( pSource, nSource );
-	}
-	catch ( CException* pException )
-	{
-		if (pFile.m_hFile != CFile::hFileNull) pFile.Close(); //Check if file is still open, if yes close
-		pException->Delete();
-	}
-
-	BYTE* pByte = (BYTE*)pSource;
-	DWORD nByte = nSource;
-	
-	if ( nByte >= 2 && ( ( pByte[0] == 0xFE && pByte[1] == 0xFF ) || ( pByte[0] == 0xFF && pByte[1] == 0xFE ) ) )
-	{
-		nByte = nByte / 2 - 1;
-		
-		if ( pByte[0] == 0xFE && pByte[1] == 0xFF )
-		{
-			pByte += 2;
-			
-			for ( DWORD nSwap = 0 ; nSwap < nByte ; nSwap ++ )
-			{
-				register CHAR nTemp = pByte[ ( nSwap << 1 ) + 0 ];
-				pByte[ ( nSwap << 1 ) + 0 ] = pByte[ ( nSwap << 1 ) + 1 ];
-				pByte[ ( nSwap << 1 ) + 1 ] = nTemp;
-			}
-		}
-		else
-		{
-			pByte += 2; 
-		}
-		
-		CopyMemory( strXML.GetBuffer( nByte ), pByte, nByte * sizeof( TCHAR ) );
-		strXML.ReleaseBuffer( nByte );
-	}
-	else
-	{
-		if ( nByte >= 3 && pByte[0] == 0xEF && pByte[1] == 0xBB && pByte[2] == 0xBF )
-		{
-			pByte += 3; nByte -= 3;
-		}
-		
-		strXML = UTF8Decode( (LPCSTR)pByte, nByte );
-	}
-	
-	delete [] pSource;
-	return strXML;
-}
 
 void CWizardCtrl::Clear()
 {
@@ -337,7 +275,7 @@ void CWizardCtrl::OnShowWindow(BOOL bShow, UINT /*nStatus*/)
 {
 	if ( bShow && m_pControls.IsEmpty() )
 	{
-		CString strXML = ReadFile( (LPCTSTR)m_sXMLPath );
+		CString strXML = LoadFile( m_sXMLPath );
 		if ( strXML.IsEmpty() ) return;
 		
 		CXMLElement* pBase = NULL;
@@ -365,10 +303,14 @@ void CWizardCtrl::OnShowWindow(BOOL bShow, UINT /*nStatus*/)
 		// we need to prepare docs separately
 		if ( m_pFileDocs.GetCount() == 0 )
 		{
+			CString strTemplatePath = m_sXMLPath.Left( m_sXMLPath.ReverseFind( _T('\\') ) + 1 );
+			CString strOddTemplate = LoadFile( strTemplatePath + m_sOddFilePath );
+			CString strEvenTemplate = LoadFile( strTemplatePath + m_sEvenFilePath );
+
 			int nFileCount = 1;
 			for ( std::size_t pos = 0; pos != pList.size(); ++pos )
 			{
-				PrepareDoc( pList[ pos ], nFileCount % 2 == 0 ? m_sEvenFilePath : m_sOddFilePath );
+				pList[ pos ]->PrepareDoc( ( nFileCount & 1 ) ?  strOddTemplate : strEvenTemplate, m_pFileDocs );
 				++nFileCount;
 			}
 		}
@@ -436,6 +378,10 @@ BOOL CWizardCtrl::CollectImages(CXMLElement* pBase)
 BOOL CWizardCtrl::MakeControls(CXMLElement* pBase, std::vector< CLibraryFile* > pList)
 {
 	if ( pBase == NULL ) return FALSE;
+
+	CString strTemplatePath = m_sXMLPath.Left( m_sXMLPath.ReverseFind( _T('\\') ) + 1 );
+	CString strOddTemplate = LoadFile( strTemplatePath + m_sOddFilePath );
+	CString strEvenTemplate = LoadFile( strTemplatePath + m_sEvenFilePath );
 
 	CXMLElement* pTemplate = pBase->GetElementByName( _T("wizardtext"), FALSE );
 
@@ -535,8 +481,8 @@ BOOL CWizardCtrl::MakeControls(CXMLElement* pBase, std::vector< CLibraryFile* > 
 								nFileCount++;
 								if ( strType == "multi-filepicker" ) 
 								{
-									if ( nFileCount > m_pFileDocs.GetCount() ) 
-										PrepareDoc( pList[ pos ], nFileCount % 2 == 0 ? m_sEvenFilePath : m_sOddFilePath );
+									if ( nFileCount > m_pFileDocs.GetCount() )
+										pList[ pos ]->PrepareDoc( ( nFileCount & 1 ) ? strOddTemplate : strEvenTemplate, m_pFileDocs );
 								}
 								else break;
 							} // for
@@ -626,202 +572,6 @@ void CWizardCtrl::Layout()
 
 	pScroll.nMax--;
 	SetScrollInfo( SB_VERT, &pScroll );
-}
-
-// PrepareDoc is used for "multi-filepicker" item processing.
-// Only meta data are replaced from the template file 
-// and the doc is added to the collection.
-
-BOOL CWizardCtrl::PrepareDoc(CLibraryFile* pFile, LPCTSTR pszTemplate)
-{
-	CString strDoc, strReplace, strOld;	
-	CString strTemplate = m_sXMLPath;
-	int nSlash = strTemplate.ReverseFind( '\\' );
-	strTemplate = strTemplate.Left( nSlash + 1 ) + pszTemplate;
-
-	CSingleLock pLock( &Library.m_pSection, TRUE );
-	strDoc = ReadFile( (LPCTSTR)strTemplate );
-
-	if ( strDoc.IsEmpty() ) return FALSE;
-
-	if ( pFile->m_pMetadata != NULL && pFile->m_pSchema != NULL )
-	{
-		// Should be all meta data replacement
-		CXMLElement* pMetadata = pFile->m_pMetadata;
-		for ( POSITION pos = pMetadata->GetAttributeIterator() ; pos ; )
-		{
-			CString str;
-			CXMLNode* pNode = pMetadata->GetNextAttribute( pos );
-			str = pNode->GetName();
-			strReplace = pNode->GetValue();
-			if ( str == _T("seconds") || str == _T("minutes") )
-			{
-				double nTotalSecs = str == _T("minutes") ? 
-					_tstof( (LPCTSTR)strReplace ) * 60 : _tstof( (LPCTSTR)strReplace );
-				int nSecs = int( nTotalSecs );
-				int nHours = nSecs / 3600;
-				nSecs -= nHours * 3600;
-				int nMins = nSecs / 60;
-				nSecs -= nMins * 60;
-
-				str.Format( _T("%d"), nHours );
-				ReplaceNoCase( strDoc, _T("$meta:hours$"), str );
-				str.Format( _T("%d"), nMins );
-				ReplaceNoCase( strDoc, _T("$meta:minutes$"), str );
-				str.Format( _T("%d"), nSecs );
-				ReplaceNoCase( strDoc, _T("$meta:seconds$"), str );
-
-				if ( nHours )
-					str.Format( _T("%d:%d:%.2d"), nHours, nMins, nSecs );
-				else
-					str.Format( _T("%d:%.2d"), nMins, nSecs );
-				ReplaceNoCase( strDoc, _T("$meta:time$"), str );
-			}
-			else if ( str == "track" )
-			{
-				int nTrack = _ttoi( (LPCTSTR)strReplace );
-				str.Format( _T("%d"), nTrack );
-				ReplaceNoCase( strDoc, _T("$meta:track$"), str );
-			}
-			else
-			{
-				strOld.Format( _T("$meta:%s$"), (LPCTSTR)str );
-				ReplaceNoCase( strDoc, strOld, strReplace );
-			}
-		}
-	}
-
-	CString strSHA1, strTiger, strFileName, strNameURI, strSize, strMagnet;
-
-	if ( pFile->m_sName )
-	{
-		strFileName = pFile->m_sName;
-		strNameURI = URLEncode( strFileName );
-	}
-
-	if ( pFile->m_nSize )
-	{
-		strSize.Format( _T("%I64u"), pFile->m_nSize ); // bytes
-		ReplaceNoCase( strDoc, _T("$meta:sizebytes$"), strSize );
-	}
-
-	if ( pFile->m_oSHA1 ) 
-	{
-		strSHA1 = pFile->m_oSHA1.toString();
-		strMagnet = _T("xt=urn:sha1:") + strSHA1;
-
-		ReplaceNoCase( strDoc, _T("$meta:sha1$"), strSHA1 );
-
-		strReplace = _T("gnutella://urn:sha1:") + strSHA1 + '/' + strNameURI + '/';
-		ReplaceNoCase( strDoc, _T("$meta:gnutella$"), strReplace );
-	}
-	if ( pFile->m_oTiger ) 
-	{
-		strTiger = pFile->m_oTiger.toString();
-		strMagnet = _T("xt=urn:tree:tiger/:") + strTiger;
-
-		ReplaceNoCase( strDoc, _T("$meta:tiger$"), strTiger );
-	}
-	if ( pFile->m_oSHA1 && pFile->m_oTiger )
-	{
-		strReplace = strSHA1 + '.' + strTiger;
-		strMagnet = _T("xt=urn:bitprint:") + strReplace;
-
-		ReplaceNoCase( strDoc, _T("$meta:bitprint$"), strReplace );
-	}
-	if ( pFile->m_oED2K )
-	{
-		strReplace = pFile->m_oED2K.toString();
-		if ( strMagnet.GetLength() ) strMagnet += _T("&amp;");
-		strMagnet += _T("xt=urn:ed2khash:") + strReplace;
-
-		ReplaceNoCase( strDoc, _T("$meta:ed2khash$"), strReplace );
-
-		strReplace = _T("ed2k://|file|") + strNameURI + '|' + strSize + '|' + strReplace + _T("|/");
-		if ( strSize.GetLength() ) ReplaceNoCase( strDoc, _T("$meta:ed2k$"), strReplace );
-	}
-	if ( pFile->m_oMD5 )
-	{
-		strReplace = pFile->m_oMD5.toString();
-		if ( strMagnet.GetLength() ) strMagnet += _T("&amp;");
-		strMagnet += _T("xt=urn:md5:") + strReplace;
-
-		ReplaceNoCase( strDoc, _T("$meta:md5$"), strReplace );
-	}
-
-	if ( strSize.GetLength() ) strMagnet += _T("&amp;xl=") + strSize;
-	strMagnet = _T("magnet:?") + strMagnet + _T("&amp;dn=") + strNameURI;
-	ReplaceNoCase( strDoc, _T("$meta:magnet$"), strMagnet );
-
-	if ( pFile->m_nSize )
-	{
-		if ( pFile->m_nSize / ( 1024*1024 ) > 1 )
-			strSize.Format( _T("%.2f MB"), (float)pFile->m_nSize / 1024 / 1024 );
-		else
-			strSize.Format( _T("%.2f KB"), (float)pFile->m_nSize / 1024 );
-		ReplaceNoCase( strDoc, _T("$meta:size$"), strSize ); 
-	}
-
-	ReplaceNoCase( strDoc, _T("$meta:name$"), strFileName );
-	if ( ! pFile->m_sComments.IsEmpty() ) 
-		ReplaceNoCase( strDoc, _T("$meta:comments$"), pFile->m_sComments );
-
-	pLock.Unlock();
-	strReplace.Format( _T("%d"), m_pFileDocs.GetCount() + 1 );
-	ReplaceNoCase( strDoc, _T("$meta:number$"), strReplace );
-
-	// Replace all "$meta:xxx$" which were left in the file to "N/A"
-	while ( LPCTSTR szStart = StrStrI( strDoc, _T("$meta:") ) )
-	{
-		if ( LPCTSTR szEnd = StrChr( szStart + 6, _T('$') ) )
-		{
-			strDoc.Replace( CString( szStart, szEnd - szStart + 1 ), _T("N/A") );
-		}
-		else
-			break;
-	}
-
-	m_pFileDocs.Add( strDoc );
-	return TRUE;
-}
-
-CString CWizardCtrl::ReplaceNoCase(LPCTSTR pszInStr, LPCTSTR pszOldStr, LPCTSTR pszNewStr)
-{
-	CString result( pszInStr );
-	ReplaceNoCase( result, pszOldStr, pszNewStr );
-	return result;
-}
-
-void CWizardCtrl::ReplaceNoCase(CString& sInStr, LPCTSTR pszOldStr, LPCTSTR pszNewStr)
-{
-	DWORD nInLength = sInStr.GetLength();
-	LPCTSTR pszInStr = sInStr;
-	std::vector< TCHAR > result;
-	result.reserve( nInLength );
-	const TCHAR* pNewStrEnd = pszNewStr;
-	while ( *pNewStrEnd ) ++pNewStrEnd;
-
-	TCHAR nOldChar = pszOldStr[ 0 ];
-	for ( DWORD nPos = 0; nPos < nInLength; )
-	{
-		TCHAR nChar = pszInStr[ nPos ];
-		if ( ToLower( nChar ) == nOldChar )
-		{
-			DWORD nOffset = 0;
-			while ( TCHAR nChar2 = pszOldStr[ ++nOffset ] )
-			{
-				if ( nChar2 != ToLower( pszInStr[ nPos + nOffset ] ) ) goto fail;
-			}
-			nPos += nOffset;
-			result.insert( result.end(), pszNewStr, pNewStrEnd );
-		}
-		else
-		{
-fail:		result.push_back( nChar );
-			++nPos;
-		}
-	}
-	sInStr.SetString( &result[ 0 ], static_cast< int >( result.size() ) );
 }
 
 BOOL CWizardCtrl::OnCommand(WPARAM wParam, LPARAM lParam) 

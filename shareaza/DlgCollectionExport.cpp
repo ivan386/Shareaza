@@ -1,7 +1,7 @@
 //
 // DlgCollectionExport.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -42,14 +42,12 @@ static char THIS_FILE[]=__FILE__;
 IMPLEMENT_DYNAMIC(CCollectionExportDlg, CSkinDialog)
 
 BEGIN_MESSAGE_MAP(CCollectionExportDlg, CSkinDialog)
-	//{{AFX_MSG_MAP(CCollectionExportDlg)
 	ON_WM_CTLCOLOR()
 	ON_WM_SETCURSOR()
 	ON_WM_LBUTTONUP()
-	ON_BN_CLICKED(IDOK, OnOK)
-	ON_BN_CLICKED(IDC_TEMPLATES_DELETE, OnTemplatesDeleteOrBack)
-	ON_NOTIFY(LVN_ITEMCHANGED, IDC_TEMPLATES, OnItemChangedTemplates)
-	//}}AFX_MSG_MAP
+	ON_BN_CLICKED(IDOK, &CCollectionExportDlg::OnOK)
+	ON_BN_CLICKED(IDC_TEMPLATES_DELETE, &CCollectionExportDlg::OnTemplatesDeleteOrBack)
+	ON_NOTIFY(LVN_ITEMCHANGED, IDC_TEMPLATES, &CCollectionExportDlg::OnItemChangedTemplates)
 END_MESSAGE_MAP()
 
 
@@ -65,7 +63,7 @@ CCollectionExportDlg::~CCollectionExportDlg()
 void CCollectionExportDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CSkinDialog::DoDataExchange( pDX );
-	//{{AFX_DATA_MAP(CCollectionExportDlg)
+
 	DDX_Control(pDX, IDOK, m_wndOK);
 	DDX_Control(pDX, IDC_STATIC_AUTHOR, m_wndLblAuthor);
 	DDX_Control(pDX, IDC_STATIC_NAME, m_wndLblName);
@@ -77,7 +75,6 @@ void CCollectionExportDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_TEMPLATE_NAME, m_wndName);
 	DDX_Control(pDX, IDC_TEMPLATE_AUTHOR, m_wndAuthor);
 	DDX_Control(pDX, IDC_TEMPLATES, m_wndList);
-	//}}AFX_DATA_MAP
 }
 
 BOOL CCollectionExportDlg::OnInitDialog()
@@ -196,7 +193,7 @@ BOOL CCollectionExportDlg::AddTemplate(LPCTSTR pszPath, LPCTSTR pszName)
 	if ( pszPath ) strXML += pszPath;
 	strXML += pszName;
 
-	strXML = m_wndWizard.ReadFile( (LPCTSTR)strXML );
+	strXML = LoadFile( strXML );
 	if ( strXML.IsEmpty() ) return FALSE;
 
 	CXMLElement* pXML = NULL;
@@ -368,7 +365,7 @@ void CCollectionExportDlg::OnOK()
 
 	if ( m_pFolder && m_pFolder->GetFileCount() )
 	{
-		CXMLElement* pXML = CreateXML( TRUE );
+		CXMLElement* pXML = m_pFolder->CreateXML( TRUE );
 		CString strXML = pXML->ToString( TRUE, TRUE );
 		delete pXML;
 
@@ -405,7 +402,7 @@ void CCollectionExportDlg::OnOK()
 					else
 						strTemplatePath = DirFromPath( m_wndWizard.m_sXMLPath ) +
 							_T("\\") + m_wndWizard.m_sMainFilePath;
-					strSource = m_wndWizard.ReadFile( strTemplatePath );
+					strSource = LoadFile( strTemplatePath );
 				}
 				else continue;
 
@@ -461,13 +458,13 @@ void CCollectionExportDlg::OnOK()
 							// e.g. various bullets may be identical
 							if ( strMap.IsEmpty() || strMap == "s" )
 							{
-								m_wndWizard.ReplaceNoCase( m_wndWizard.m_pFileDocs.GetAt( nPosDocs++ ),
+								ReplaceNoCase( m_wndWizard.m_pFileDocs.GetAt( nPosDocs++ ),
 									str, strNewReplace );
 							}
 							else if ( strMap == "m" ) // individual file doc replacement; multi-file picker
 							{
 								strNewReplace.Replace( '\\', '/' );
-								m_wndWizard.ReplaceNoCase( m_wndWizard.m_pFileDocs.GetAt( nFileID ),
+								ReplaceNoCase( m_wndWizard.m_pFileDocs.GetAt( nFileID ),
 									str, strNewReplace );
 							}
 							// copy selected images
@@ -506,7 +503,7 @@ void CCollectionExportDlg::OnOK()
 					// ordinary template ignores individual file replacements
 					if ( ! strSource.IsEmpty() && strMap.IsEmpty() || strMap == "s" ) 
 					{
-						m_wndWizard.ReplaceNoCase( strSource, str, strReplace );
+						ReplaceNoCase( strSource, str, strReplace );
 					}
 				} // while each wizard row
 				
@@ -517,7 +514,7 @@ void CCollectionExportDlg::OnOK()
 					int nPosDocs2 = 0;
 					while ( nPosDocs2 < m_wndWizard.m_pFileDocs.GetSize() )
 						strResult += m_wndWizard.m_pFileDocs.GetAt( nPosDocs2++ );
-					m_wndWizard.ReplaceNoCase( strSource, _T("$data$"), strResult );
+					ReplaceNoCase( strSource, _T("$data$"), strResult );
 					strResult.Empty();
 					strResult.ReleaseBuffer();
 				}
@@ -579,114 +576,6 @@ void CCollectionExportDlg::OnOK()
 		break;
 	}
 	m_nStep++;
-}
-
-CXMLElement* CCollectionExportDlg::CreateXML(BOOL bMetadataAll)
-{
-	//Collect wizard entries
-	CXMLElement* pRoot = new CXMLElement( NULL, _T("collection") );
-	pRoot->AddAttribute( _T("xmlns"), _T("http://www.shareaza.com/schemas/Collection.xsd") );
-
-	CXMLElement* pProperties = pRoot->AddElement( _T("properties") );
-
-	if ( ! m_pFolder->m_sName.IsEmpty() )
-		pProperties->AddElement( _T("title") )->SetValue( m_pFolder->m_sName );
-	else
-	{
-		pProperties->AddElement( _T("title") )->SetValue( _T("Shareaza Collection") );
-	}
-
-	if ( m_pFolder->m_pXML != NULL && m_pFolder->m_sSchemaURI.GetLength() > 0 )
-	{
-		CXMLElement* pMeta = pProperties->AddElement( _T("metadata") );
-		pMeta->AddAttribute( _T("xmlns:s"), m_pFolder->m_sSchemaURI );
-		pMeta->AddElement( CopyMetadata( m_pFolder->m_pXML ) );
-	}
-	else
-	{
-		CXMLElement* pMounting = pProperties->AddElement( _T("mounting") );
-		CXMLElement* pElement = pMounting->AddElement( _T("parent") );
-		pElement->AddAttribute( _T("uri"), CSchema::uriCollectionsFolder );
-		pElement = pMounting->AddElement( _T("this") );
-		pElement->AddAttribute( _T("uri"), CSchema::uriFolder );
-	}
-
-	CXMLElement* pContents = pRoot->AddElement( _T("contents") );
-
-	for ( POSITION pos = m_pFolder->GetFileIterator() ; pos ; )
-	{
-		CLibraryFile* pFile = m_pFolder->GetNextFile( pos );
-		if ( pFile == NULL ) continue;
-
-		CXMLElement* pFileRoot = pContents->AddElement( _T("file") );
-		
-		if ( pFile->m_oSHA1 && pFile->m_oTiger )
-		{
-			pFileRoot->AddElement( _T("id") )->SetValue(
-				_T("urn:bitprint:") + pFile->m_oSHA1.toString() + '.' +
-				pFile->m_oTiger.toString() );
-		}
-		else if ( pFile->m_oSHA1 )
-		{
-			pFileRoot->AddElement( _T("id") )->SetValue(
-				pFile->m_oSHA1.toUrn() );
-		}
-		else if ( pFile->m_oTiger )
-		{
-			pFileRoot->AddElement( _T("id") )->SetValue(
-				pFile->m_oTiger.toUrn() );
-		}
-        if ( pFile->m_oMD5 )
-		{
-            pFileRoot->AddElement( _T("id") )->SetValue(
-                pFile->m_oMD5.toUrn() );
-		}
-		if ( pFile->m_oED2K )
-		{
-			pFileRoot->AddElement( _T("id") )->SetValue(
-                pFile->m_oED2K.toUrn() );
-		}
-		if ( pFile->m_oBTH )
-		{
-			pFileRoot->AddElement( _T("id") )->SetValue(
-				pFile->m_oBTH.toUrn() );
-		}
-
-		CXMLElement* pDescription = pFileRoot->AddElement( _T("description") );
-		pDescription->AddElement( _T("name") )->SetValue( pFile->m_sName );
-		CString str;
-		str.Format( _T("%I64i"), pFile->GetSize() );
-		pDescription->AddElement( _T("size") )->SetValue( str );
-
-		if ( pFile->m_pMetadata != NULL && bMetadataAll && pFile->m_pSchema != NULL )
-		{
-			CXMLElement* pMetadata = pFileRoot->AddElement( _T("metadata") );
-			pMetadata->AddAttribute( _T("xmlns:s"), pFile->m_pSchema->GetURI() );
-			pMetadata->AddElement( CopyMetadata( pFile->m_pMetadata ) );
-		}
-	}
-
-	return pRoot;
-}
-
-CXMLElement* CCollectionExportDlg::CopyMetadata(CXMLElement* pMetadata)
-{
-	pMetadata = pMetadata->Clone();
-	pMetadata->SetName( _T("s:") + pMetadata->GetName() );
-
-	for ( POSITION pos = pMetadata->GetElementIterator() ; pos ; )
-	{
-		CXMLNode* pNode = pMetadata->GetNextElement( pos );
-		pNode->SetName( _T("s:") + pNode->GetName() );
-	}
-
-	for ( POSITION pos = pMetadata->GetAttributeIterator() ; pos ; )
-	{
-		CXMLNode* pNode = pMetadata->GetNextAttribute( pos );
-		pNode->SetName( _T("s:") + pNode->GetName() );
-	}
-
-	return pMetadata;
 }
 
 void CCollectionExportDlg::OnTemplatesDeleteOrBack()

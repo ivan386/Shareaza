@@ -1,7 +1,7 @@
 //
 // CtrlWizard.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -56,7 +56,6 @@ protected:
 
 // Operations
 protected:
-	CString			ReadFile(LPCTSTR pszFullPath);
 	void			Layout();
 	void			SetFocusTo(CWnd* pCtrl);
 	BOOL			CollectFiles(CXMLElement* pBase);
@@ -67,8 +66,6 @@ protected:
 public:
 	void	ScrollBy(int nDelta);
 	BOOL	OnTab();
-	CString	ReplaceNoCase(LPCTSTR pszInStr, LPCTSTR pszOldStr, LPCTSTR pszNewStr);
-	void	ReplaceNoCase(CString& sInStr, LPCTSTR pszOldStr, LPCTSTR pszNewStr);
 	void	Clear();
 
 // Overrides

@@ -1,7 +1,7 @@
 //
 // AlbumFolder.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -32,13 +32,10 @@ class CXMLElement;
 
 class CAlbumFolder
 {
-// Construction
 public:
 	CAlbumFolder(CAlbumFolder* pParent = NULL, LPCTSTR pszSchemaURI = NULL, LPCTSTR pszName = NULL, BOOL bAutoDelete = FALSE);
 	virtual ~CAlbumFolder();
 
-// Attributes
-public:
 	CString					m_sSchemaURI;
 	CSchemaPtr				m_pSchema;
 	CXMLElement*			m_pXML;
@@ -51,15 +48,6 @@ public:
 	DWORD					m_nSelectCookie;
 	DWORD					m_nListCookie;
 	Hashes::Guid			m_oGUID;
-
-private:
-	CAlbumFolder*			m_pParent;
-	CList< CAlbumFolder* >	m_pFolders;
-	CList< CLibraryFile* >	m_pFiles;
-	CCollectionFile*		m_pCollection;
-
-	CAlbumFolder(const CAlbumFolder&);
-	CAlbumFolder& operator=(const CAlbumFolder&);
 
 // Operations
 public:
@@ -75,7 +63,7 @@ public:
 	CAlbumFolder*	GetTarget(CSchemaMember* pMember, LPCTSTR pszValue) const;
 	CAlbumFolder*	FindCollection(const Hashes::Sha1Hash& oSHA1);
 	CAlbumFolder*	FindFolder(const Hashes::Guid& oGUID);
-public:
+
 	void			AddFile(CLibraryFile* pFile);
 	POSITION		GetFileIterator() const;
 	CLibraryFile*	GetNextFile(POSITION& pos) const;
@@ -84,7 +72,7 @@ public:
 	void			RemoveFile(CLibraryFile* pFile);
 	const CAlbumFolder*	FindFile(const CLibraryFile* pFile) const;
 	int				GetFileList(CLibraryList* pList, BOOL bRecursive) const;
-public:
+
 	void			Delete(BOOL bIfEmpty = FALSE);
 	BOOL			SetMetadata(CXMLElement* pXML);
 	BOOL			MetaFromFile(CLibraryFile* pFile);
@@ -100,4 +88,17 @@ public:
 	bool			OnFolderDelete(CAlbumFolder* pFolder);
 	void			OnFileDelete(CLibraryFile* pFile, BOOL bDeleteGhost = FALSE);
 	void			Clear();
+	CXMLElement*	CreateXML(BOOL bMetadataAll = FALSE) const;
+
+protected:
+	CAlbumFolder*			m_pParent;
+	CList< CAlbumFolder* >	m_pFolders;
+	CList< CLibraryFile* >	m_pFiles;
+	CCollectionFile*		m_pCollection;
+
+	CXMLElement*	CopyMetadata(CXMLElement* pMetadata) const;
+
+private:
+	CAlbumFolder(const CAlbumFolder&);
+	CAlbumFolder& operator=(const CAlbumFolder&);
 };

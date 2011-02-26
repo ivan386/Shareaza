@@ -1,7 +1,7 @@
 //
 // Strings.cpp
 //
-// Copyright (c) Shareaza Development Team, 2010.
+// Copyright (c) Shareaza Development Team, 2010-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -545,4 +545,105 @@ BOOL StartsWith(const CString& sInput, LPCTSTR pszText, size_t nLen)
 {
 	return ( (size_t)sInput.GetLength() >= nLen ) &&
 		! _tcsnicmp( (LPCTSTR)sInput, pszText, nLen );
+}
+
+CString LoadFile(LPCTSTR pszPath)
+{
+	CString strXML;
+
+	CFile pFile;
+	if ( ! pFile.Open( pszPath, CFile::modeRead ) )
+		// File open error
+		return strXML;
+
+	DWORD nByte = (DWORD)pFile.GetLength();
+	if ( nByte > 4096 * 1024 )
+		// Too big file (> 4 MB)
+		return strXML;
+
+	BYTE* pBuf = new BYTE[ nByte ];
+	try
+	{
+		pFile.Read( pBuf, nByte );
+	}
+	catch ( CException* pException )
+	{
+		// File read error
+		pFile.Abort();
+		pException->Delete();
+		delete [] pBuf;
+		return strXML;
+	}
+	pFile.Close();
+
+	BYTE* pByte = pBuf;
+	if ( nByte >= 2 &&
+		( ( pByte[0] == 0xFE && pByte[1] == 0xFF ) ||
+		  ( pByte[0] == 0xFF && pByte[1] == 0xFE ) ) )
+	{
+		nByte = nByte / 2 - 1;
+		if ( pByte[0] == 0xFE && pByte[1] == 0xFF )
+		{
+			pByte += 2;
+			for ( DWORD nSwap = 0 ; nSwap < nByte ; nSwap ++ )
+			{
+				register CHAR nTemp = pByte[ ( nSwap << 1 ) + 0 ];
+				pByte[ ( nSwap << 1 ) + 0 ] = pByte[ ( nSwap << 1 ) + 1 ];
+				pByte[ ( nSwap << 1 ) + 1 ] = nTemp;
+			}
+		}
+		else
+		{
+			pByte += 2; 
+		}
+
+		CopyMemory( strXML.GetBuffer( nByte ), pByte, nByte * sizeof( TCHAR ) );
+		strXML.ReleaseBuffer( nByte );
+	}
+	else
+	{
+		if ( nByte >= 3 && pByte[0] == 0xEF && pByte[1] == 0xBB && pByte[2] == 0xBF )
+		{
+			pByte += 3;
+			nByte -= 3;
+		}
+
+		strXML = UTF8Decode( (LPCSTR)pByte, nByte );
+	}
+	delete [] pBuf;
+
+	return strXML;
+}
+
+void ReplaceNoCase(CString& sInStr, LPCTSTR pszOldStr, LPCTSTR pszNewStr)
+{
+	DWORD nInLength = sInStr.GetLength();
+	LPCTSTR pszInStr = sInStr;
+
+	CString result;
+	result.Preallocate( nInLength );
+
+	TCHAR nOldChar = pszOldStr[ 0 ];
+	for ( DWORD nPos = 0; nPos < nInLength; )
+	{
+		TCHAR nChar = pszInStr[ nPos ];
+		if ( ToLower( nChar ) == nOldChar )
+		{
+			DWORD nOffset = 0;
+			while ( TCHAR nChar2 = pszOldStr[ ++nOffset ] )
+			{
+				if ( nChar2 != ToLower( pszInStr[ nPos + nOffset ] ) ) goto fail;
+			}
+			nPos += nOffset;
+			result.Append( pszNewStr );
+		}
+		else
+		{
+fail:
+			result.AppendChar( nChar );
+			++nPos;
+		}
+	}
+
+	sInStr = result;
 }
