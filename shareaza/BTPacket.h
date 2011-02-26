@@ -1,7 +1,7 @@
 //
 // BTPacket.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -50,8 +50,8 @@ class CBENode;
 // Packet extensions (for BT_PACKET_EXTENSION)
 
 #define BT_EXTENSION_HANDSHAKE		0
-#define BT_EXTENSION_UT_METADATA	1	// Extension for Peers to Send Metadata Files - http://www.bittorrent.org/beps/bep_0009.html 
-#define BT_EXTENSION_UT_PEX			2
+#define BT_EXTENSION_UT_PEX			1
+#define BT_EXTENSION_UT_METADATA	2	// Extension for Peers to Send Metadata Files - http://www.bittorrent.org/beps/bep_0009.html 
 #define BT_EXTENSION_LT_TEX			3	// Tracker exchange extension - http://www.bittorrent.org/beps/bep_0028.html
 
 #define BT_EXTENSION_NOP			255	// Packet without standard header i.e. bencoded data only

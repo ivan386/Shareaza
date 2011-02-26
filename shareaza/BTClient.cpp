@@ -1,7 +1,7 @@
 //
 // BTClient.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1071,32 +1071,43 @@ BOOL CBTClient::OnDHTPort(CBTPacket* pPacket)
 
 void CBTClient::SendExtendedHandshake()
 {
-	CBTPacket* pResponse = CBTPacket::New( BT_PACKET_EXTENSION, BT_EXTENSION_HANDSHAKE );
-	CBENode* pRoot = pResponse->m_pNode.get();
-	ASSERT( pRoot );
-
-	CBENode* pM = pRoot->Add( BT_DICT_EXT_MSG );
-	pM->Add( BT_DICT_UT_PEX )->SetInt( BT_EXTENSION_UT_PEX );
-
-	if (  m_pDownload->IsTorrent() &&
-		! m_pDownload->m_pTorrent.m_bPrivate &&
-		  m_pDownload->m_pTorrent.GetInfoSize() )
+	if ( CBTPacket* pResponse = CBTPacket::New( BT_PACKET_EXTENSION, BT_EXTENSION_HANDSHAKE ) )
 	{
-		pM->Add( BT_DICT_UT_METADATA )->SetInt( BT_EXTENSION_UT_METADATA );
-		pRoot->Add( BT_DICT_METADATA_SIZE )->SetInt( m_pDownload->m_pTorrent.GetInfoSize() );
+		if ( CBENode* pRoot = pResponse->m_pNode.get() )
+		{
+			if ( CBENode* pM = pRoot->Add( BT_DICT_EXT_MSG ) )
+			{
+				pM->Add( BT_DICT_UT_PEX )->SetInt( BT_EXTENSION_UT_PEX );
+
+				if (  m_pDownload->IsTorrent() &&
+					! m_pDownload->m_pTorrent.m_bPrivate )
+				{
+					pM->Add( BT_DICT_UT_METADATA )->SetInt( BT_EXTENSION_UT_METADATA );
+					if ( m_pDownload->m_pTorrent.GetInfoSize() )
+					{
+						pRoot->Add( BT_DICT_METADATA_SIZE )->SetInt( m_pDownload->m_pTorrent.GetInfoSize() );
+					}
+				}
+
+				if (  m_pDownload->IsTorrent() &&
+					! m_pDownload->m_pTorrent.m_bPrivate )
+				{
+					pM->Add( BT_DICT_LT_TEX )->SetInt( BT_EXTENSION_LT_TEX );
+					pRoot->Add( BT_DICT_TRACKERS )->SetString( m_pDownload->m_pTorrent.GetTrackerHash() );
+				}
+
+				pRoot->Add( BT_DICT_PORT )->SetInt( Settings.Connection.InPort );
+				pRoot->Add( BT_DICT_VENDOR )->SetString( Settings.SmartAgent() );
+
+				Send( pResponse, FALSE );
+			}
+			// else Out of Memory
+		}
+		// else Out of Memory
+
+		pResponse->Release();
 	}
-
-	if (  m_pDownload->IsTorrent() &&
-		! m_pDownload->m_pTorrent.m_bPrivate )
-	{
-		pM->Add( BT_DICT_LT_TEX )->SetInt( BT_EXTENSION_LT_TEX );
-		pRoot->Add( BT_DICT_TRACKERS )->SetString( m_pDownload->m_pTorrent.GetTrackerHash() );
-	}
-
-	pRoot->Add( BT_DICT_PORT )->SetInt( Settings.Connection.InPort );
-	pRoot->Add( BT_DICT_VENDOR )->SetString( Settings.SmartAgent() );
-
-	Send( pResponse );
+	// else Out of Memory
 }
 
 BOOL CBTClient::OnExtendedHandshake(CBTPacket* pPacket)
