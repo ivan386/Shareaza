@@ -123,6 +123,7 @@
 				OmitFramePointers="true"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
 				RuntimeLibrary="0"
+				EnableEnhancedInstructionSet="2"
 				RuntimeTypeInfo="false"
 				UsePrecompiledHeader="2"
 				WarningLevel="4"
@@ -226,22 +227,6 @@
 			>
 			<File
 				RelativePath=".\SkinTranslate.rc"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="Examples"
-			>
-			<File
-				RelativePath=".\make po.cmd"
-				>
-			</File>
-			<File
-				RelativePath=".\make pot.cmd"
-				>
-			</File>
-			<File
-				RelativePath=".\make xml.cmd"
 				>
 			</File>
 		</Filter>
