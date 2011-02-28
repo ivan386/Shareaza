@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
 	<!-- Manifest -->
-	<manifest name="Deutsch" author="Jann Röder" updatedBy="OldDeath, Frontier, Jann Röder, ZeRO" description="Shareaza Default German Translation Skin File; based on r8131 of 'default-en.xml'" link="http://shareaza.sourceforge.net/" email="zero9999(at)gmail.com" version="2.4.0.4" type="Language" language="de" prompt="Klicken Sie hier, um Deutsch als Sprache zu wählen." dir="(translation language direction: ltr or rtl)"/>
+	<manifest name="Deutsch" author="Jann Röder" updatedBy="OldDeath, Frontier, Jann Röder, ZeRO, Sebastian Pfeifer" description="Shareaza Default German Translation Skin File; based on r8131 of 'default-en.xml'" link="http://shareaza.sourceforge.net/" email="zero9999(at)gmail.com" version="2.4.0.4" type="Language" language="de" prompt="Klicken Sie hier, um Deutsch als Sprache zu wählen." dir="(translation language direction: ltr or rtl)"/>
 	<!-- Toolbar Definitions -->
 	<toolbars>
 		<!-- MAIN WINDOW -->
@@ -168,7 +168,7 @@
 		<toolbar name="CUploadsWnd">
 			<button id="ID_UPLOADS_LAUNCH" text="Öffnen"/>
 			<separator/>
-			<button id="ID_UPLOADS_START" text="Starten"/>
+			<button id="ID_UPLOADS_START" text="Jetzt starten"/>
 			<button id="ID_UPLOADS_CLEAR" text="Abbrechen"/>
 			<separator/>
 			<button id="ID_BROWSE_LAUNCH" text="Benutzer durchsuchen"/>
@@ -340,8 +340,8 @@
 			<button id="ID_BROWSE_LAUNCH" text="Benutzer durchsuchen"/>
 			<button id="ID_NEIGHBOURS_CHAT" text="Mit Benutzer chatten"/>
 			<rightAlign/>
-			<button id="ID_NETWORK_G2" text="Gnutella2"/>
-			<button id="ID_NETWORK_G1" text="Gnutella1"/>
+			<button id="ID_NETWORK_G2" text="Gnutella 2"/>
+			<button id="ID_NETWORK_G1" text="Gnutella 1"/>
 			<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 			<button id="ID_NETWORK_DC" text="DC++"/>
 			<separator/>
@@ -355,8 +355,8 @@
 			<button id="ID_NEIGHBOURS_CHAT" text="Mit Benutzer chatten"/>
 			<button id="ID_SECURITY_BAN" text="Host bannen"/>
 			<rightAlign/>
-			<button id="ID_NETWORK_G2" text="Gnutella2"/>
-			<button id="ID_NETWORK_G1" text="Gnutella1"/>
+			<button id="ID_NETWORK_G2" text="Gnutella 2"/>
+			<button id="ID_NETWORK_G1" text="Gnutella 1"/>
 			<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 			<button id="ID_NETWORK_DC" text="DC++"/>
 			<separator/>
@@ -378,15 +378,15 @@
 		</toolbar>
 		<!-- SCHEDULER WINDOW -->
 		<toolbar name="CSchedulerWnd">
-			<button id="ID_SCHEDULER_EDIT" text="Edit Task"/>
+			<button id="ID_SCHEDULER_EDIT" text="Aufgabe bearbeiten"/>
 			<separator/>
-			<button id="ID_SCHEDULER_ACTIVATE" text="Activate"/>
-			<button id="ID_SCHEDULER_DEACTIVATE" text="Deactivate"/>
+			<button id="ID_SCHEDULER_ACTIVATE" text="Aktivieren"/>
+			<button id="ID_SCHEDULER_DEACTIVATE" text="Deaktivieren"/>
 			<separator/>
-			<button id="ID_SCHEDULER_ADD" text="Add Task"/>
-			<button id="ID_SCHEDULER_REMOVE" text="Remove Task"/>
+			<button id="ID_SCHEDULER_ADD" text="Aufgabe hinzufügen"/>
+			<button id="ID_SCHEDULER_REMOVE" text="Aufgabe entfernen"/>
 			<separator/>
-			<button id="ID_SCHEDULER_REMOVE_ALL" text="Remove All"/>
+			<button id="ID_SCHEDULER_REMOVE_ALL" text="Alle löschen"/>
 		</toolbar>
 		<!-- HIT MONITOR WINDOW -->
 		<toolbar name="CHitMonitorWnd">
@@ -577,7 +577,7 @@
 				<separator/>
 				<item id="ID_NETWORK_CONNECT_TO" text="Verbinden _mit..." shortcut="Ctrl+T"/>
 				<item id="ID_NETWORK_BROWSE_TO" text="Benutzer _durchsuchen..."/>
-				<item id="ID_NETWORK_CHAT_TO" text="Chat to _User..."/>
+				<item id="ID_NETWORK_CHAT_TO" text="Mit dem _Nutzer chatten"/>
 				<separator/>
 				<item id="ID_NETWORK_AUTO_CLOSE" text="N_ach Transfer beenden"/>
 				<item id="ID_NETWORK_EXIT" text="_Beenden"/>
@@ -587,7 +587,7 @@
 				<item id="ID_TAB_LIBRARY" text="_Bibliothek"/>
 				<item id="ID_TAB_MEDIA" text="_Medienwiedergabe"/>
 				<item id="ID_TAB_SEARCH" text="_Suchen"/>
-				<item id="ID_TAB_TRANSFERS" text="_Transfer"/>
+				<item id="ID_TAB_TRANSFERS" text="_Übertragung"/>
 				<item id="ID_TAB_NETWORK" text="_Netzwerk"/>
 				<item id="ID_TAB_IRC" text="Internet Relay _Chat (IRC)"/>
 				<separator/>
@@ -678,7 +678,7 @@
 				<separator/>
 				<item id="ID_NETWORK_CONNECT_TO" text="Verbinden _mit..." shortcut="Ctrl+T"/>
 				<item id="ID_NETWORK_BROWSE_TO" text="Benutzer _durchsuchen..."/>
-				<item id="ID_NETWORK_CHAT_TO" text="Chat to _User..."/>
+				<item id="ID_NETWORK_CHAT_TO" text="Mit dem _Nutzer chatten"/>
 				<separator/>
 				<menu text="_Netzwerke wählen">
 					<item id="ID_NETWORK_G2" text="Mit _Gnutella2 verbinden"/>
@@ -788,7 +788,7 @@
 			<item id="ID_TAB_LIBRARY" text="_Bibliothek"/>
 			<item id="ID_TAB_MEDIA" text="_Medienwiedergabe"/>
 			<item id="ID_TAB_SEARCH" text="_Suchen"/>
-			<item id="ID_TAB_TRANSFERS" text="_Transfer"/>
+			<item id="ID_TAB_TRANSFERS" text="_Übertragung"/>
 			<item id="ID_TAB_NETWORK" text="_Netzwerk"/>
 			<item id="ID_TAB_IRC" text="Internet Relay _Chat (IRC)"/>
 			<separator/>
@@ -877,7 +877,7 @@
 			<item id="ID_TAB_LIBRARY" text="_Bibliothek"/>
 			<item id="ID_TAB_MEDIA" text="_Medienwiedergabe"/>
 			<item id="ID_TAB_SEARCH" text="_Suchen"/>
-			<item id="ID_TAB_TRANSFERS" text="_Transfer"/>
+			<item id="ID_TAB_TRANSFERS" text="_Übertragung"/>
 			<item id="ID_TAB_NETWORK" text="_Netzwerk"/>
 			<item id="ID_TAB_IRC" text="Internet Relay _Chat (IRC)"/>
 			<separator/>
@@ -1598,7 +1598,7 @@
 				<item id="ID_CHAT_ITALIC" text="_Kursiv"/>
 				<item id="ID_CHAT_UNDERLINE" text="_Unterstrichen"/>
 				<item id="ID_CHAT_COLOUR" text="Farbe"/>
-				<item id="ID_CHAT_EMOTICONS" text="_Emoticons"/>
+				<item id="ID_CHAT_EMOTICONS" text="_Smilies"/>
 			</menu>
 			<separator/>
 			<item id="ID_CHAT_TIMESTAMP" text="Zeitstem_pel"/>
@@ -1618,16 +1618,16 @@
 			<item id="ID_IRC_CLOSETAB" text="_Schließen"/>
 		</menu>
 		<menu name="CIRCUserList">
-			<item id="ID_IRC_WHOIS" text="_Whois"/>
+			<item id="ID_IRC_WHOIS" text="_Wer ist das?"/>
 			<item id="ID_IRC_QUERY" text="_Private Unterhaltung"/>
 			<separator/>
-			<menu text="Actions">
+			<menu text="Aktionen">
 				<item id="ID_IRC_TIME" text="Client-_Zeit anfordern"/>
 				<item id="ID_IRC_VERSION" text="Client-_Version anfordern"/>
-				<item id="ID_IRC_BROWSE" text="_Browse"/>
+				<item id="ID_IRC_BROWSE" text="_Durchsuchen"/>
 			</menu>
 			<separator/>
-			<menu text="Control">
+			<menu text="Steuerung">
 				<item id="ID_IRC_IGNORE" text="_Ignorieren"/>
 				<item id="ID_IRC_UNIGNORE" text="_Nicht mehr ignorieren"/>
 				<item id="ID_IRC_OP" text="_Op"/>
@@ -1935,9 +1935,9 @@
 			<gap size="4"/>
 			<text>Shareazas Browserintegrierung, um P2P-Links und Torrents von Ihrem Webbrowser aus zu benutzen.</text>
 			<newline gap="10"/>
-			<link target="raza:page:CWebSettingsPage" format="b">Web Integration:</link>
+			<link target="raza:page:CWebSettingsPage" format="b">Browserintegration:</link>
 			<gap size="4"/>
-			<text>Integrate Shareaza with your web browser to accept peer-to-peer links and download content.</text>
+			<text>Shareazas Browserintegrierung, um P2P-Links und Torrents von Ihrem Webbrowser aus zu benutzen.</text>
 		</document>
 		<document name="CInternetSettingsGroup" title="Internet" leftMargin="8" topMargin="8">
 			<styles>
@@ -2321,17 +2321,17 @@
 	<commandTips>
 		<tip id="AFX_IDS_APP_TITLE" message="Shareaza"/>
 		<tip id="AFX_IDS_IDLEMESSAGE" message="Fertig..."/>
-		<tip id="AFX_IDS_MDICHILD" message="Activate this window"/>
-		<tip id="AFX_IDS_PREVIEW_CLOSE" message="Close print preview mode" tip="Vorschau speichern"/>
+		<tip id="AFX_IDS_MDICHILD" message="Dieses Fenster aktivieren"/>
+		<tip id="AFX_IDS_PREVIEW_CLOSE" message="Druckvorschau schließen" tip="Vorschau speichern"/>
 		<tip id="AFX_IDS_SCCLOSE" message="Das aktive Fenster maximieren, um das Fenster zu füllen."/>
 		<tip id="AFX_IDS_SCMAXIMIZE" message="Das aktive Fenster maximieren, um das Fenster zu füllen."/>
-		<tip id="AFX_IDS_SCMINIMIZE" message="Reduce the window to an icon"/>
-		<tip id="AFX_IDS_SCMOVE" message="Change the window position"/>
-		<tip id="AFX_IDS_SCNEXTWINDOW" message="Switch to the next document window"/>
-		<tip id="AFX_IDS_SCPREVWINDOW" message="Switch to the previous document window"/>
-		<tip id="AFX_IDS_SCRESTORE" message="Restore the window to normal size"/>
-		<tip id="AFX_IDS_SCSIZE" message="Change the window size"/>
-		<tip id="AFX_IDS_SCTASKLIST" message="Activate Task List"/>
+		<tip id="AFX_IDS_SCMINIMIZE" message="Fenster in die Statusleiste minimieren"/>
+		<tip id="AFX_IDS_SCMOVE" message="Fensterposition verändern"/>
+		<tip id="AFX_IDS_SCNEXTWINDOW" message="Zum nächsten Dokument wechseln"/>
+		<tip id="AFX_IDS_SCPREVWINDOW" message="Zum vorherigem Dokument wechseln"/>
+		<tip id="AFX_IDS_SCRESTORE" message="Fenstergröße auf Standard zurücksetzen"/>
+		<tip id="AFX_IDS_SCSIZE" message="Fenstergröße ändern"/>
+		<tip id="AFX_IDS_SCTASKLIST" message="Aufgabenliste anzeigen"/>
 		<tip id="ID_BROWSE_FILES" message="Die Dateien des Benutzers anzeigen."/>
 		<tip id="ID_BROWSE_LAUNCH" message="Die Dateien und das Profil des markierten Benutzers durchsuchen."/>
 		<tip id="ID_BROWSE_PROFILE" message="Das Profil des Benutzers anzeigen."/>
@@ -2413,13 +2413,13 @@
 		<tip id="ID_HELP_SECURITY" message="Hinweise, wie Sie ihren Computer vor schädlichen Programmen (Viren, Spyware) schützen können."/>
 		<tip id="ID_HELP_TEST" message="Prüfen, ob ihre Konfiguration eingehende Verbindungen zulässt."/>
 		<tip id="ID_HELP_UPDATE" message="Neueste Nachrichten und Updates."/>
-		<tip id="ID_HELP_VERSION_CHECK" message="Check for new version"/>
-		<tip id="ID_HELP_WEB_1" message="Webseite1 besuchen"/>
-		<tip id="ID_HELP_WEB_2" message="Webseite1 besuchen"/>
-		<tip id="ID_HELP_WEB_3" message="Webseite1 besuchen"/>
-		<tip id="ID_HELP_WEB_4" message="Webseite1 besuchen"/>
-		<tip id="ID_HELP_WEB_5" message="Webseite1 besuchen"/>
-		<tip id="ID_HELP_WEB_6" message="Webseite1 besuchen"/>
+		<tip id="ID_HELP_VERSION_CHECK" message="Auf Updates prüfen"/>
+		<tip id="ID_HELP_WEB_1" message="Webseite besuchen"/>
+		<tip id="ID_HELP_WEB_2" message="Webseite besuchen"/>
+		<tip id="ID_HELP_WEB_3" message="Webseite besuchen"/>
+		<tip id="ID_HELP_WEB_4" message="Webseite besuchen"/>
+		<tip id="ID_HELP_WEB_5" message="Webseite besuchen"/>
+		<tip id="ID_HELP_WEB_6" message="Webseite besuchen"/>
 		<tip id="ID_HITMONITOR_CLEAR" message="Den Treffermonitor-Puffer leeren."/>
 		<tip id="ID_HITMONITOR_PAUSE" message="Den Treffermonitor anhalten."/>
 		<tip id="ID_HITMONITOR_SEARCH" message="Das Netzwerk nach dem markierten Ausdruck durchsuchen."/>
@@ -2491,8 +2491,8 @@
 		<tip id="ID_LIBRARY_VIEW_TILE" message="Eine Liste der Alben anzeigen." tip="Ordneransicht"/>
 		<tip id="ID_MEDIA_ADD" message="Der Wiedergabeliste eine Datei hinzufügen..."/>
 		<tip id="ID_MEDIA_ADD_FOLDER" message="Einen Ordner zur Wiedergabeliste hinzufügen..."/>
-		<tip id="ID_MEDIA_ASPECT_16_9" message="Das Seitenverhältnis auf 16:9 stellen."/>
-		<tip id="ID_MEDIA_ASPECT_4_3" message="Das Seitenverhältnis auf 4:3 stellen."/>
+		<tip id="ID_MEDIA_ASPECT_16_9" message="Das Seitenverhältnis auf 16:9 stellen. /nDas 16:9 Seitenverhältnis wird oft für Filme verwendet."/>
+		<tip id="ID_MEDIA_ASPECT_4_3" message="Das Seitenverhältnis auf 4:3 stellen./nDas 4:3 Seitenverhältnis wird oft für Röhrenfernseher verwendet."/>
 		<tip id="ID_MEDIA_ASPECT_DEFAULT" message="Das Originalseitenverhältnis benutzen."/>
 		<tip id="ID_MEDIA_CLEAR" message="Die Wiedergabeliste löschen."/>
 		<tip id="ID_MEDIA_CLOSE" message="Die aktuelle Datei schließen, um Speicher freizugeben."/>
@@ -2537,10 +2537,10 @@
 		<tip id="ID_NEIGHBOURS_VIEW_OUTGOING" message="Ein neues Packet-Dump-Fenster öffnen, um ausgehenden Traffic an diesem Host zu überwachen."/>
 		<tip id="ID_NETWORK_AUTO_CLOSE" message="Shareaza automatisch nach dem Beenden der Transfers beenden."/>
 		<tip id="ID_NETWORK_BROWSE_TO" message="Die freigegebenen Dateien eines Benutzers durchsuchen und dessen Profil anzeigen..."/>
-		<tip id="ID_NETWORK_CHAT_TO" message="Open a chat session with a user..."/>
+		<tip id="ID_NETWORK_CHAT_TO" message="Eine neue Chatsitzung mit einem Nutzer eröffnen"/>
 		<tip id="ID_NETWORK_CONNECT" message="Mit den Netzwerken verbinden"/>
 		<tip id="ID_NETWORK_CONNECT_TO" message="Manuell mit einem Host verbinden..."/>
-		<tip id="ID_NETWORK_DC" message="Connect to the DC++ network."/>
+		<tip id="ID_NETWORK_DC" message="Mit dem DC++ Netzwerk verbinden"/>
 		<tip id="ID_NETWORK_DISCONNECT" message="Die Verbindung mit den Netzwerken trennen"/>
 		<tip id="ID_NETWORK_ED2K" message="Zum eDonkey-Netzwerk verbinden."/>
 		<tip id="ID_NETWORK_EXIT" message="Shareaza beenden"/>
@@ -2551,11 +2551,11 @@
 		<tip id="ID_OPEN_DOWNLOADS_FOLDER" message="Open my folder of completed Downloads"/>
 		<tip id="ID_PREV_PANE" message="Zur vorherigen Datei der Wiedergabeliste zurückspringen." tip="Vorherige Datei"/>
 		<tip id="ID_SCHEDULER_ACTIVATE" message="Markierte(n) Upload(s) von der Liste entfernen."/>
-		<tip id="ID_SCHEDULER_ADD" message="Adds a new task to scheduler list."/>
+		<tip id="ID_SCHEDULER_ADD" message="Neuen geplanten Task hinzufügen."/>
 		<tip id="ID_SCHEDULER_DEACTIVATE" message="Mit den Netzwerken verbinden"/>
 		<tip id="ID_SCHEDULER_EDIT" message="Die markierte Sicherheitsregel bearbeiten..."/>
 		<tip id="ID_SCHEDULER_REMOVE" message="Den markierten Download von der Liste entfernen."/>
-		<tip id="ID_SCHEDULER_REMOVE_ALL" message="Removes all scheduled tasks."/>
+		<tip id="ID_SCHEDULER_REMOVE_ALL" message="Alle geplanten Aufgaben entfernen."/>
 		<tip id="ID_SEARCH_CHAT" message="Eine Chatsitzung mit dem markierten Host beginnen."/>
 		<tip id="ID_SEARCH_CLEAR" message="Die Suchergebnisse entfernen."/>
 		<tip id="ID_SEARCH_COLUMNS" message="Spalten zum Anzeigen der Metadaten auswählen..."/>
@@ -2587,21 +2587,21 @@
 		<tip id="ID_SECURITY_POLICY_DENY" message="Standardmäßig alle Hosts abweisen."/>
 		<tip id="ID_SECURITY_REMOVE" message="Die markierte(n) Sicherheitsregel(n) löschen."/>
 		<tip id="ID_SECURITY_RESET" message="Die Trefferzähler der markierte(n) Sicherheitsregel(n) zurücksetzen."/>
-		<tip id="ID_SHAREMONKEY_BUY" message="Buy it and support the author"/>
-		<tip id="ID_SHAREMONKEY_COMPARE" message="Compare prices in different stores"/>
+		<tip id="ID_SHAREMONKEY_BUY" message="Diese Software kaufen und den Autor unterstützen"/>
+		<tip id="ID_SHAREMONKEY_COMPARE" message="Den Preis bei verschiedenen Anbietern vergleichen"/>
 		<tip id="ID_SHAREMONKEY_DOWNLOAD" message="Danach _suchen"/>
-		<tip id="ID_SHAREMONKEY_NEXT" message="Go to the next match"/>
-		<tip id="ID_SHAREMONKEY_PREVIOUS" message="Go to the previous match"/>
+		<tip id="ID_SHAREMONKEY_NEXT" message="Zum nächsten Treffer"/>
+		<tip id="ID_SHAREMONKEY_PREVIOUS" message="Zum vorherigen Treffer"/>
 		<tip id="ID_SHAREMONKEY_PRICES" message="Zur vorherigen Datei der Wiedergabeliste zurückspringen."/>
 		<tip id="ID_SHAREMONKEY_SAVE" message="Datei in meiner Bibliothek anzeigen"/>
 		<tip id="ID_SYSTEM_CLEAR" message="Den Konsolenpuffer leeren."/>
-		<tip id="ID_SYSTEM_COPY" message="Copy selected line(s) of status log."/>
+		<tip id="ID_SYSTEM_COPY" message="Die kopierte(n) Zeile(n) des Status Logs kopieren."/>
 		<tip id="ID_SYSTEM_TIMESTAMP" message="Für jede Zeile einen Zeitstempel aufzeichnen."/>
 		<tip id="ID_SYSTEM_VERBOSE" message="Ausführliche Meldungen ausgeben."/>
 		<tip id="ID_SYSTEM_VERBOSE_DEBUG" message="Legende anzeigen."/>
 		<tip id="ID_SYSTEM_VERBOSE_ERROR" message="Legende anzeigen."/>
 		<tip id="ID_SYSTEM_VERBOSE_INFO" message="Gitternetz anzeigen."/>
-		<tip id="ID_SYSTEM_VERBOSE_NOTICE" message="Display notices and above."/>
+		<tip id="ID_SYSTEM_VERBOSE_NOTICE" message="Notizen anzeigen."/>
 		<tip id="ID_SYSTEM_VERBOSE_WARNING" message="Gitternetz anzeigen."/>
 		<tip id="ID_TAB_CONNECT" message="Verbindungen zu den Netzwerken herstellen / trennen."/>
 		<tip id="ID_TAB_HOME" message="Zur Homepage zurückkehren"/>
@@ -2664,7 +2664,7 @@
 		<tip id="ID_WEBSERVICES_LIST" message="Wählen Sie einen Internetdienst, um mehr Informationen über die gewählte Datei zu erhalten."/>
 		<tip id="ID_WEBSERVICES_MUSICBRAINZ" message="Mit ShareMonkey nach vorhandenen Datei-Informationen suchen."/>
 		<tip id="ID_WEBSERVICES_SHAREMONKEY" message="Mit ShareMonkey nach vorhandenen Datei-Informationen suchen."/>
-		<tip id="ID_WINDOW_ARRANGE" message="Arrange icons at the bottom of the window" tip="Arrange Icons"/>
+		<tip id="ID_WINDOW_ARRANGE" message="Icons an der Fensteroberseite anordnen" tip="Icons anordnen"/>
 		<tip id="ID_WINDOW_CASCADE" message="Alle offenen Fenster maximieren."/>
 		<tip id="ID_WINDOW_MONITOR" message="Den Bandbreiten-Monitor ein- oder ausblenden."/>
 		<tip id="ID_WINDOW_NAVBAR" message="Die Navigationsleiste ein- oder ausblenden."/>
@@ -2826,7 +2826,7 @@
 		<string id="8293" value="Keine Datei markiert"/>
 		<string id="8294" value="Neue Dateien"/>
 		<string id="8295" value="Diese Datei bewerten"/>
-		<string id="8304" value="N/A"/>
+		<string id="8304" value="Keine Angabe"/>
 		<string id="8306" value="Standort"/>
 		<string id="8307" value="Typ"/>
 		<string id="8308" value="Größe"/>
@@ -2911,7 +2911,7 @@
 		<string id="16157" value="Host %s ist kein Hub, Verbindung wird getrennt."/>
 		<string id="16158" value="Gnutella2-Verbindung mit Host %s erfolgreich hergestellt (%s)."/>
 		<string id="16159" value="Verbindung zu nicht-G2 Host %s wird geschlossen."/>
-		<string id="16191" value="Received a packet from %s for %s which excess query limits, ignoring."/>
+		<string id="16191" value="Habe ein Packet von %s für %s empfangen, was die Richtlinien überschreitet, ignoriere es."/>
 		<string id="16192" value="Host %s hat ein zu großes Paket weitergeleitet, Verbindung getrennt."/>
 		<string id="16193" value="Host %s hat ein Paket mit TTL=0 weitergeleitet, ignoriert."/>
 		<string id="16194" value="Host %s hat ein Paket mit zu hoher TTL weitergeleitet, Paket verworfen (TTL=%i, Hops=%i)."/>
@@ -3052,7 +3052,7 @@
 		<string id="16375" value="Unvollständig"/>
 		<string id="16376" value="Alle Dateien"/>
 		<string id="16377" value="HTTP-Guard"/>
-		<string id="16378" value="Host &quot;%s&quot; sent a 416, without providing available ranges. Closing connection."/>
+		<string id="16378" value="Der Host &quot;%s&quot; hat eine 416 gesendet, ohne die erforderlichen Bereiche zur Verfügung zu stellen. Schließe Verbindung."/>
 		<string id="16379" value="Dateien in der Bibliothek"/>
 		<string id="16384" value="Sind Sie sicher, dass Sie die Datei &quot;%s&quot; ausführen möchten?\n\nManche Dateien können ihren Computer beschädigen. Stellen Sie die Echtheit der Datei sicher, bevor Sie sie ausführen (Virenscan)."/>
 		<string id="16385" value="Sie sind dabei die Metadaten von %i Dateien zu ändern. Wollen Sie fortfahren?"/>
@@ -3394,7 +3394,7 @@
 		<string id="20215" value="Sehr Gut"/>
 		<string id="20216" value="Exzellent"/>
 		<string id="20217" value="Wählen sie den temporären Ordner von eDonkey/eMule:"/>
-		<string id="20230" value="#"/>
+		<string id="20230" value="# (Titel Nummer)"/>
 		<string id="20231" value="Titel"/>
 		<string id="20232" value="Dauer"/>
 		<string id="20233" value="Bitrate"/>
@@ -3409,29 +3409,29 @@
 		<string id="20242" value="Erneut versuchen"/>
 		<string id="20243" value="Fortfahren"/>
 		<string id="20244" value="Auswahl für das nächste Mal merken"/>
-		<string id="20245" value="New Folder"/>
-		<string id="20246" value="Command-line options:\n\n-tray : Disable startup splash screen and send application to tray\n-nosplash : Disable startup splash screen\n-nowarn : Disable alpha (daily builds) version warning dialog\n-wait : Wait for other application instance exit\n\nInterface modes:\n\n-basic : Start application in Basic interface mode\n-tabbed : Start application in Tabbed interface mode\n-windowed : Start application in Windowed interface mode\n\nSystem options:\n\n-RegServer : Register internal components for everyone\n-UnRegServer : Un-register internal components for everyone\n-RegServerPerUser : Register internal components for current user\n-UnRegServerPerUser : Un-register internal components for current user"/>
-		<string id="20247" value="Failed to load metadata schemas. Please reinstall application."/>
+		<string id="20245" value="Neuer Ordner"/>
+		<string id="20246" value="Kommandozeilenoptionen:\n\n-tray: Startbildschirm deaktivieren und die Anwendung direkt minimieren\n-nosplash:  Startbildschirm deaktivieren\n-nowarn: Ignoriere Alpha Versionen\n-wait : Warte auf die anderen Anwedungen vorm beenden\n\nOberflächeneinstellungen:\n\n-basic: Starte die Anwendung im Basis Modus\n-tabbed:Starte die Anwendung im Tab Modus \n-windowed: Starte die Anwendung im Fenstermodus\n\nSystemoptionen:\n\n-RegServer: Komponenten für alle Benutzer registrieren\n-UnRegServer: Komponenten für alle Benutzer entfernen\n-RegServerPerUser:  Komponenten für den jetzigen  Benutzer registrieren\n-UnRegServerPerUser:  Komponenten für den jetzigen  Benutzer entfernen"/>
+		<string id="20247" value="Laden der Metadaten fehlgeschlagen. Bitte installieren sie das Programm neu."/>
 		<string id="20248" value="Sie haben keine Ordner freigegeben.  Sind Sie sicher?"/>
-		<string id="20249" value="Off"/>
-		<string id="20250" value="Low"/>
+		<string id="20249" value="Aus"/>
+		<string id="20250" value="Niedrig"/>
 		<string id="20251" value="No_rmaler Modus"/>
-		<string id="20252" value="High"/>
-		<string id="20253" value="Skin load error: %s. Element: %s"/>
-		<string id="20254" value="Loading skin: %s"/>
-		<string id="20255" value="Are you sure you want to remove all scheduled tasks? This cannot be undone."/>
+		<string id="20252" value="Hoch"/>
+		<string id="20253" value="Fehler beim laden des Designs: %s. Element: %s"/>
+		<string id="20254" value="Lade Skin: %s"/>
+		<string id="20255" value="Sind sie sicher dass sie alle geplanten Aufgaben löschen wollen? Dies kann nicht rückgängig gemacht werden!"/>
 		<string id="20256" value="In den P2P-Netzwerken suchen"/>
-		<string id="20257" value="Bandwidth: Full Speed"/>
-		<string id="20258" value="Bandwidth: Reduced Speed"/>
-		<string id="20259" value="Bandwidth: Stop"/>
-		<string id="20260" value="System: Exit Shareaza"/>
-		<string id="20261" value="System: Disconnect Dial-up Connection"/>
-		<string id="20262" value="System: Turn Off the Computer"/>
+		<string id="20257" value="Bandbreite: Volle Geschwindigkeit"/>
+		<string id="20258" value="Bandbreite: Geschwindigkeit reduzieren"/>
+		<string id="20259" value="Bandbreite: Download stoppen"/>
+		<string id="20260" value="System: Shareaza beenden"/>
+		<string id="20261" value="System: Wählverbindung trennen"/>
+		<string id="20262" value="System: Computer abschalten"/>
 		<string id="20263" value="Aktiv"/>
 		<string id="20264" value="Inaktiv"/>
-		<string id="20265" value="Done"/>
-		<string id="20266" value="Waiting..."/>
-		<string id="20267" value="No Tasks Currently Scheduled"/>
+		<string id="20265" value="Fertig"/>
+		<string id="20266" value="Warte..."/>
+		<string id="20267" value="Keine Aufgaben geplant"/>
 	</strings>
 	<!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 	<!-- Don't edit dialogs manualy! Use DialogScan feature instead -->
@@ -4328,7 +4328,7 @@
 			<control caption="Abbrechen"/>
 		</dialog>
 		<dialog name="CWarningsDlg" cookie="StStStStStStBu" caption="Shareaza respektiert seine Benutzer">
-			<control caption="Wussten Sie, dass Shareaza 100%ig kostenlose Software ist"/>
+			<control caption="Wussten Sie, dass Shareaza 100%ig kostenlose Software ist?"/>
 			<control caption="Shareaza enthält KEINE &quot;spyware&quot;, &quot;adware&quot; oder andere zusätzliche Software. Es zeigt keine Werbung oder &quot;popups&quot; an.{n}{n}Wenn Sie Werbung oder &quot;popups&quot; sehen während Sie Shareaza benutzen, können Sie sicher sein, dass diese nicht von Shareaza stammen."/>
 			<control caption="Leider installieren viele andere Programme unerwünschte Adware oder Spyware. Falls Sie etwas Verdächtiges beobachten, können Sie ihren PC mit einem Anti-Spyware-Programm überprüfen."/>
 			<control caption="Shareaza kostet nichts und kann von jedem kostenlos von http://shareaza.sourceforge.net/ heruntergeladen werden.  Wenn Sie jemandem Geld für Shareaza bezahlt haben, sollten Sie sofort ihr Geld zurückverlangen."/>
@@ -4433,7 +4433,7 @@
 			<control caption="MD5:"/>
 			<control caption="BitTorrent:"/>
 		</dialog>
-		<dialog name="CDownloadActionsPage" cookie="StStStStStEdEdBuBuBuStStSt" caption="Actions">
+		<dialog name="CDownloadActionsPage" cookie="StStStStStEdEdBuBuBuStStSt" caption="Aktionen">
 			<control caption="Datei erneut verifizieren (TTH oder eD2k-Hashset)"/>
 			<control caption="Datei als komplett annehmen und erneut verifizieren"/>
 			<control caption="Alle Quellen vergessen"/>
@@ -4443,7 +4443,7 @@
 			<control/>
 			<control caption="Löschen"/>
 			<control caption="_Aktionen:"/>
-			<control caption="Data _Eraser:"/>
+			<control caption="Daten _löschen:"/>
 			<control caption="Bytes löschen:"/>
 			<control caption="bis"/>
 			<control caption="ACHTUNG: Dieser Dialog stellt erweiterte Funktionen für Poweruser zur Verfügung. Diese Funktionen können und werden Ihre Downloads bei falscher Anwendung beschädigen."/>
@@ -4552,14 +4552,14 @@
 			<control/>
 			<control/>
 			<control/>
-			<control caption="Gnutella1"/>
-			<control caption="Gnutella2"/>
+			<control caption="Gnutella 1"/>
+			<control caption="Gnutella 2"/>
 			<control caption="eDonkey"/>
 			<control caption="DC++"/>
 			<control caption="BitTorrent"/>
-			<control caption="Select the event type:"/>
-			<control caption="% of _download under limit"/>
-			<control caption="% of _upload under limit"/>
+			<control caption="Ereignistyp auswählen:"/>
+			<control caption="% vom _Download unter dem Limit"/>
+			<control caption="% vom _Upload unter dem Limit"/>
 			<control caption="Netzwerke"/>
 			<control caption="Bandbreite"/>
 		</dialog>
@@ -4604,7 +4604,7 @@
 			<column from="Bandwidth" to="Bandbreite"/>
 			<column from="Total" to="Gesamt"/>
 			<column from="Flow" to="Fluss"/>
-			<column from="Leaves" to="Leaves"/>
+			<column from="Leaves" to="Verlässt"/>
 			<column from="Mode" to="Modus"/>
 			<column from="Client" to="Client"/>
 			<column from="Name" to="Name"/>
@@ -4671,7 +4671,7 @@
 			<column from="Criteria" to="Kriterien"/>
 			<column from="Bandwidth" to="Bandbreite"/>
 			<column from="Transfers" to="Transfer"/>
-			<column from="Order" to="#"/>
+			<column from="Order" to="Sortieren"/>
 		</list>
 		<list name="CAdvancedSettingsList">
 			<column from="Setting" to="Einstellung"/>
@@ -4700,7 +4700,7 @@
 			<column from="User" to="Benutzer"/>
 			<column from="Rating" to="Bewertung"/>
 			<column from="Comments" to="Kommentare"/>
-			<column from="Order" to="#"/>
+			<column from="Order" to="Sortieren"/>
 		</list>
 		<list name="CSchedulerWnd">
 			<column from="Action" to="Aktion"/>
