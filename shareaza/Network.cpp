@@ -1482,7 +1482,14 @@ void CNetwork::MapPorts()
 
 			// Retrieve the mappings collection
 			CComPtr< IStaticPortMappingCollection >	pCollection;
-			hr = m_pNat->get_StaticPortMappingCollection( &pCollection );
+			for ( int i = 0; i < 5; ++i )
+			{
+				pCollection.Release();
+				hr = m_pNat->get_StaticPortMappingCollection( &pCollection );
+				if ( SUCCEEDED( hr ) && pCollection )
+					break;
+				Sleep( 1000 );
+			}
 			if ( SUCCEEDED( hr ) && pCollection )
 			{
 				// Retrieve local IP address
@@ -1516,6 +1523,7 @@ void CNetwork::MapPorts()
 							Settings.Connection.RandomPort = bRandomPort;
 							break;
 						}
+						Sleep( 200 );
 
 						// Change port to random
 						nPort = Network.RandomPort();
