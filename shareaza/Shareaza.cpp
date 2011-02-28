@@ -1,7 +1,7 @@
 //
 // Shareaza.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -2978,4 +2978,45 @@ template <>
 __int64 GetRandomNum<__int64>(const __int64& min, const __int64& max)
 {
 	return (__int64)GetRandomNum<unsigned __int64>( min, max );
+}
+
+BOOL AreServiceHealthy(LPCTSTR szService)
+{
+	BOOL bResult = TRUE;	// Ok or unknown state
+
+	// Open a handle to the Service Control Manager database
+	SC_HANDLE schSCManager = OpenSCManager(
+		NULL,				// local machine
+		NULL,				// ServicesActive database
+		GENERIC_READ );		// for enumeration and status lookup
+	if ( schSCManager )
+	{
+		SC_HANDLE schServiceRead = OpenService( schSCManager, szService, GENERIC_READ );
+		if ( schServiceRead )
+		{
+			SERVICE_STATUS_PROCESS ssStatus = {};
+			DWORD nBytesNeeded = 0;
+			if ( QueryServiceStatusEx( schServiceRead, SC_STATUS_PROCESS_INFO,
+				(LPBYTE)&ssStatus, sizeof( SERVICE_STATUS_PROCESS ), &nBytesNeeded ) )
+			{
+				bResult = ( ssStatus.dwCurrentState == SERVICE_RUNNING );
+			}
+			CloseServiceHandle( schServiceRead );
+
+			if ( ! bResult )
+			{
+				SC_HANDLE schServiceStart = OpenService( schSCManager, szService, SERVICE_START );
+				if ( schServiceStart )
+				{
+					// Power users have only right to start service, thus try to start it here
+					bResult = StartService( schServiceStart, 0, NULL );
+
+					CloseServiceHandle( schServiceStart );
+				}
+			}
+		}
+		CloseServiceHandle( schSCManager );
+	}
+
+	return bResult;
 }

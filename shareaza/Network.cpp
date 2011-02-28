@@ -1,7 +1,7 @@
 //
 // Network.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -129,23 +129,6 @@ BOOL CNetwork::Init()
 			theApp.Message( MSG_INFO, _T("Windows Firewall is not available.") );
 	}
 
-	// Create an instance of the NAT UPnP
-	HRESULT hr = m_pNat.CoCreateInstance( __uuidof( UPnPNAT ) );
-	if ( SUCCEEDED( hr ) && m_pNat )
-	{
-		// Retrieve the NAT manager interface and register callbacks
-		hr = m_pNat->get_NATEventManager( &m_pNatManager );
-		if ( SUCCEEDED( hr ) && m_pNatManager )
-		{
-			hr = m_pNatManager->put_ExternalIPAddressCallback(
-				GetInterface( IID_INATExternalIPAddressCallback ) );
-			hr = m_pNatManager->put_NumberOfEntriesCallback(
-				GetInterface( IID_INATNumberOfEntriesCallback ) );
-		}
-	}
-	if ( Settings.Connection.EnableUPnP && ( ! m_pNat || ! m_pNatManager ) )
-		theApp.Message( MSG_INFO, _T("NAT UPnP is not available.") );
-
 	return TRUE;
 }
 
@@ -157,9 +140,6 @@ void CNetwork::Clear()
 	// Remove application from the firewall exception list
 	if ( Settings.Connection.DeleteFirewallException )
 		Firewall->SetupProgram( theApp.m_strBinaryPath, CLIENT_NAME_T, TRUE );
-
-	m_pNatManager.Release();
-	m_pNat.Release();
 
 	Firewall.Free();
 	UPnPFinder.Free();
@@ -680,6 +660,7 @@ bool CNetwork::PreRun()
 	// Act like server application
 	SetThreadExecutionState( ES_SYSTEM_REQUIRED | ES_CONTINUOUS );
 
+	// Map ports using NAT UPnP and Control Point UPnP methods
 	MapPorts();
 
 	// Make sure WinINet is connected (IE is not in offline mode)
@@ -1465,12 +1446,40 @@ void CNetwork::MapPorts()
 
 	m_tUPnPMap = GetTickCount();
 
-	// If it is the first run we will run the UPnP discovery only in the QuickStart Wizard
-	if ( Settings.Connection.EnableUPnP )
+	if ( ! Settings.Connection.EnableUPnP )
+		return;
+
+	m_bUPnPPortsForwarded = TRI_UNKNOWN;
+
+	// UPnP Device Host Service
+	if ( ! AreServiceHealthy( _T("upnphost") ) )
 	{
-		BOOL bSuccess = FALSE;
-		if ( m_pNat && m_pNatManager )
+		theApp.Message( MSG_ERROR, L"UPnP Device Host and SSDP Discovery services are not running, skipping UPnP setup." );
+		m_bUPnPPortsForwarded = TRI_FALSE;
+		return;
+	}
+
+	// Simple Service Discovery Protocol Service
+	AreServiceHealthy( _T("SSDPSRV") );
+
+	BOOL bSuccess = FALSE;
+
+	// (Re)Create an instance of the NAT UPnP
+	theApp.Message( MSG_INFO, L"Trying to setup port mappings using NAT UPnP...");
+	m_pNatManager.Release();
+	m_pNat.Release();
+	hr = m_pNat.CoCreateInstance( __uuidof( UPnPNAT ) );
+	if ( SUCCEEDED( hr ) && m_pNat )
+	{
+		// Retrieve the NAT manager interface and register callbacks
+		hr = m_pNat->get_NATEventManager( &m_pNatManager );
+		if ( SUCCEEDED( hr ) && m_pNatManager )
 		{
+			hr = m_pNatManager->put_ExternalIPAddressCallback(
+				GetInterface( IID_INATExternalIPAddressCallback ) );
+			hr = m_pNatManager->put_NumberOfEntriesCallback(
+				GetInterface( IID_INATNumberOfEntriesCallback ) );
+
 			// Retrieve the mappings collection
 			CComPtr< IStaticPortMappingCollection >	pCollection;
 			hr = m_pNat->get_StaticPortMappingCollection( &pCollection );
@@ -1490,41 +1499,43 @@ void CNetwork::MapPorts()
 					IP_ADAPTER_INFO& pInfo = *(PIP_ADAPTER_INFO)pAdapterInfo.get();
 					CString strLocalIP( (LPCSTR)( pInfo.IpAddressList.IpAddress.String ) );
 
-					if ( Settings.Connection.InPort == 0 ) // random port
-						Settings.Connection.InPort = Network.RandomPort();
+					DWORD nPort = Settings.Connection.InPort;
+					bool bRandomPort = Settings.Connection.RandomPort;
+
+					if ( nPort == 0 ) // random port
+						nPort = Network.RandomPort();
 
 					// Try five times to map both ports
 					for ( int i = 0; i < 5; ++i )
 					{
-						bSuccess = MapPort( pCollection, strLocalIP, Settings.Connection.InPort, L"TCP", CLIENT_NAME_T ) &&
-							MapPort( pCollection, strLocalIP, Settings.Connection.InPort, L"UDP", CLIENT_NAME_T );
+						bSuccess = MapPort( pCollection, strLocalIP, nPort, L"TCP", CLIENT_NAME_T ) &&
+							MapPort( pCollection, strLocalIP, nPort, L"UDP", CLIENT_NAME_T );
 						if ( bSuccess )
+						{
+							Settings.Connection.InPort = nPort;
+							Settings.Connection.RandomPort = bRandomPort;
 							break;
+						}
 
 						// Change port to random
-						Settings.Connection.InPort = Network.RandomPort();
-						Settings.Connection.RandomPort = true;
+						nPort = Network.RandomPort();
+						bRandomPort = true;
 					}
 				}
 			}
 		}
+	}
 
-		if ( bSuccess )
-		{
-			OnMapSuccess();
-		}
-		else
-		{
-			// Using Control Point UPnP methods
-			if ( UPnPFinder->AreServicesHealthy() )
-			{
-				m_bUPnPPortsForwarded = TRI_UNKNOWN;
+	if ( bSuccess )
+	{
+		OnMapSuccess();
+	}
+	else
+	{
+		// Using Control Point UPnP methods
+		theApp.Message( MSG_INFO, L"Trying to setup port mappings using Control Point UPnP...");
 
-				UPnPFinder->StartDiscovery();
-			}
-			else
-				OnMapFailed();
-		}
+		UPnPFinder->StartDiscovery();
 	}
 }
 
@@ -1571,7 +1582,7 @@ void CNetwork::DeletePorts()
 {
 	HRESULT hr;
 
-	if ( Settings.Connection.DeleteUPnPPorts )
+	if ( Settings.Connection.DeleteUPnPPorts && Settings.Connection.InPort )
 	{
 		if ( m_pNat )
 		{
@@ -1594,6 +1605,9 @@ void CNetwork::DeletePorts()
 	m_nUPnPExternalAddress.s_addr = INADDR_ANY;
 	m_bUPnPPortsForwarded = TRI_UNKNOWN;
 	m_tUPnPMap = 0;
+
+	m_pNatManager.Release();
+	m_pNat.Release();
 }
 
 void CNetwork::OnNewExternalIPAddress(const IN_ADDR& pAddress)
@@ -1625,8 +1639,6 @@ void CNetwork::OnMapFailed()
 
 	m_bUPnPPortsForwarded = TRI_FALSE;
 	m_tUPnPMap = GetTickCount();
-
-	Settings.Connection.EnableUPnP = false;
 }
 
 BEGIN_INTERFACE_MAP( CNetwork, CComObject )

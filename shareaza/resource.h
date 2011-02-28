@@ -1255,13 +1255,11 @@
 #define IDS_WIZARD_SHARE_ALREADY        16803
 #define IDS_PROFILE_NO_NICK             16804
 #define IDS_PROFILE_NO_LOCATION         16805
-#define IDS_WIZARD_PORT_FORWARD         16806
 #define IDS_SETTINGS_NEED_BANDWIDTH     16807
 #define IDS_PROFILE_NO_VITALS           16808
 #define IDS_WIZARD_EXIT                 16809
 #define IDS_WIZARD_YEARS_OLD            16810
 #define IDS_SETTINGS_AUTOMATIC_IP       16811
-#define IDS_WIZARD_UPNP_SETUP           16812
 #define IDS_WIZARD_DISCOVERY            16813
 #define IDS_WIZARD_ED2K                 16814
 #define IDS_UPNP_SERVICES_ERROR         16815

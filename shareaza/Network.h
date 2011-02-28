@@ -1,7 +1,7 @@
 //
 // Network.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -170,6 +170,10 @@ protected:
 	void		OnRun();
 	void		PostRun();
 
+	// Create TCP and UDP port mappings
+	void MapPorts();
+	// Remove TCP and UDP port mappings
+	void DeletePorts();
 	// Create port mapping
 	static BOOL MapPort(IStaticPortMappingCollection* pCollection, LPCWSTR szLocalIP, long nPort, LPCWSTR szProtocol, LPCWSTR szDescription);
 
@@ -235,12 +239,11 @@ public:
 	// Safe way to call InternetOpenUrl
 	static HINTERNET InternetOpenUrl(HINTERNET hInternet, LPCWSTR lpszUrl, LPCWSTR lpszHeaders, DWORD dwHeadersLength, DWORD dwFlags);
 
-	// UPnP/NAT Methods
-
-	// Create TCP and UDP port mappings
-	void MapPorts();
-	// Remove TCP and UDP port mappings
-	void DeletePorts();
+	// Update TCP/UDP port mappings using UPnP
+	void UpdatePortMapping()
+	{
+		m_tUPnPMap = 0;
+	}
 	// Got new external IP address. Called by UPnP-services
 	void OnNewExternalIPAddress(const IN_ADDR& pAddress);
 	// UPnP success (called by UPnP-services)

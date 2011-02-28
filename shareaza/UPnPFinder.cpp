@@ -1,7 +1,7 @@
 //
 // UPnPFinder.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -34,7 +34,6 @@ static char THIS_FILE[] = __FILE__;
 CUPnPFinder::CUPnPFinder()
 :	m_pDevices(),
 	m_pServices(),
-	m_bCOM( false ),
 	m_nAsyncFindHandle( 0 ),
 	m_bAsyncFindRunning( false ),
 	m_bADSL( false ),
@@ -45,8 +44,8 @@ CUPnPFinder::CUPnPFinder()
 	m_tLastEvent( GetTickCount() ),
 	m_bInited( false ),
 	m_bSecondTry( false ),
-	m_bDisableWANIPSetup( Settings.Connection.SkipWANIPSetup == TRUE ),
-	m_bDisableWANPPPSetup( Settings.Connection.SkipWANPPPSetup == TRUE )
+	m_bDisableWANIPSetup( false ),
+	m_bDisableWANPPPSetup( false )
 {
 }
 
@@ -54,8 +53,8 @@ bool CUPnPFinder::Init()
 {
 	if ( ! m_bInited )
 	{
-		HRESULT hr = CoInitialize( NULL );
-		m_bCOM = ( hr == S_OK || hr == S_FALSE );
+		m_bDisableWANIPSetup =  Settings.Connection.SkipWANIPSetup;
+		m_bDisableWANPPPSetup = Settings.Connection.SkipWANPPPSetup;
 		m_pDeviceFinder = CreateFinderInstance();
 		m_pServiceCallback = new CServiceCallback( *this );
 		m_pDeviceFinderCallback = new CDeviceFinderCallback( *this );
@@ -80,64 +79,6 @@ CUPnPFinder::~CUPnPFinder()
 {
 	m_pDevices.clear();
 	m_pServices.clear();
-	if ( m_bCOM )
-		CoUninitialize();
-}
-
-// Helper function to check if UPnP Device Host service is healthy
-// Although SSPD service is dependent on this service but sometimes it may lock up.
-// This will result in application lockup when we call any methods of IUPnPDeviceFinder.
-bool CUPnPFinder::AreServicesHealthy()
-{
-	if ( ! Init() )
-		return false;
-
-	// Open a handle to the Service Control Manager database
-	SC_HANDLE schSCManager = OpenSCManager(
-		NULL,				// local machine
-		NULL,				// ServicesActive database
-		GENERIC_READ );		// for enumeration and status lookup
-	if ( schSCManager == NULL )
-		return false;
-
-	SC_HANDLE schService = OpenService( schSCManager, _T("upnphost"), GENERIC_READ );
-	if ( schService == NULL )
-	{
-		CloseServiceHandle( schSCManager );
-		return false;
-	}
-
-	bool bResult = false;
-	SERVICE_STATUS_PROCESS ssStatus;
-	DWORD nBytesNeeded;
-	if ( QueryServiceStatusEx( schService, SC_STATUS_PROCESS_INFO,
-		(LPBYTE)&ssStatus, sizeof(SERVICE_STATUS_PROCESS), &nBytesNeeded ) )
-	{
-		if ( ssStatus.dwCurrentState == SERVICE_RUNNING )
-			bResult = true;
-	}
-	CloseServiceHandle( schService );
-
-	if ( !bResult )
-	{
-		schService = OpenService( schSCManager, _T("upnphost"), SERVICE_START );
-		if ( schService )
-		{
-			// Power users have only right to start service, thus try to start it here
-			if ( StartService( schService, 0, NULL ) )
-				bResult = true;
-			CloseServiceHandle( schService );
-		}
-	}
-	CloseServiceHandle( schSCManager );
-
-	if ( !bResult )
-	{
-		Settings.Connection.EnableUPnP = false;
-		theApp.Message( MSG_ERROR, L"UPnP Device Host service is not running, skipping UPnP setup." );
-	}
-
-	return bResult;
 }
 
 // Helper function for processing the AsyncFind search
@@ -217,9 +158,6 @@ void CUPnPFinder::StartDiscovery(bool bSecondTry)
 
 	if ( ! Init() )
 		return;
-
-	if ( !bSecondTry )
-		theApp.Message( MSG_INFO, L"Trying to setup port mappings using Control Point UPnP...");
 
 	// On tests, in some cases the search for WANConnectionDevice had no results and only a search for InternetGatewayDevice
 	// showed up the UPnP root Device which contained the WANConnectionDevice as a child. I'm not sure if there are cases

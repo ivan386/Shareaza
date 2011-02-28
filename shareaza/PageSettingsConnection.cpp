@@ -1,7 +1,7 @@
 //
 // PageSettingsConnection.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -314,7 +314,7 @@ void CConnectionSettingsPage::OnOK()
 	if ( Settings.Connection.EnableUPnP &&
 		( ! bOldEnableUPnP || nOldInPort != Settings.Connection.InPort ) )
 	{
-		Network.MapPorts();
+		Network.UpdatePortMapping();
 	}
 
 	CSettingsPage::OnOK();
@@ -381,7 +381,7 @@ void CConnectionSettingsPage::OnClickedEnableUpnp()
 		// especially that we would need to wait until this and SSDP
 		// service are started. If the upnphost service can not be started
 		// Shareaza will lock up.
-		if ( ! Network.UPnPFinder->AreServicesHealthy() )
+		if ( ! AreServiceHealthy( _T("upnphost") ) )
 		{
 			CString strMessage;
 			LoadString( strMessage, IDS_UPNP_SERVICES_ERROR );

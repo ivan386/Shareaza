@@ -1,7 +1,7 @@
 //
 // WizardConnectionPage.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -30,7 +30,6 @@
 #include "DlgHelp.h"
 #include "HostCache.h"
 #include "DiscoveryServices.h"
-#include "UPnPFinder.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -41,26 +40,22 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNCREATE(CWizardConnectionPage, CWizardPage)
 
 BEGIN_MESSAGE_MAP(CWizardConnectionPage, CWizardPage)
-	//{{AFX_MSG_MAP(CWizardConnectionPage)
-	ON_CBN_SELCHANGE(IDC_CONNECTION_TYPE, OnSelChangeConnectionType)
-	ON_CBN_EDITCHANGE(IDC_WIZARD_DOWNLOAD_SPEED, OnChangeConnectionSpeed)
-	ON_CBN_SELCHANGE(IDC_WIZARD_DOWNLOAD_SPEED, OnChangeConnectionSpeed)
-	ON_CBN_EDITCHANGE(IDC_WIZARD_UPLOAD_SPEED, OnChangeConnectionSpeed)
-	ON_CBN_SELCHANGE(IDC_WIZARD_UPLOAD_SPEED, OnChangeConnectionSpeed)
-	ON_CBN_SELCHANGE(IDC_WIZARD_UPNP, OnSelChangeUPnP)
+	ON_CBN_SELCHANGE(IDC_CONNECTION_TYPE, &CWizardConnectionPage::OnSelChangeConnectionType)
+	ON_CBN_EDITCHANGE(IDC_WIZARD_DOWNLOAD_SPEED, &CWizardConnectionPage::OnChangeConnectionSpeed)
+	ON_CBN_SELCHANGE(IDC_WIZARD_DOWNLOAD_SPEED, &CWizardConnectionPage::OnChangeConnectionSpeed)
+	ON_CBN_EDITCHANGE(IDC_WIZARD_UPLOAD_SPEED, &CWizardConnectionPage::OnChangeConnectionSpeed)
+	ON_CBN_SELCHANGE(IDC_WIZARD_UPLOAD_SPEED, &CWizardConnectionPage::OnChangeConnectionSpeed)
 	ON_WM_TIMER()
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
-
 
 /////////////////////////////////////////////////////////////////////////////
 // CWizardConnectionPage property page
 
-CWizardConnectionPage::CWizardConnectionPage() : CWizardPage(CWizardConnectionPage::IDD)
-, m_bQueryDiscoveries(false)
-, m_bUpdateDonkeyServers(false)
-, m_bUPnPForward(false)
-, m_nProgressSteps(0)
+CWizardConnectionPage::CWizardConnectionPage()
+	: CWizardPage			( CWizardConnectionPage::IDD )
+	, m_bQueryDiscoveries(false)
+	, m_bUpdateDonkeyServers(false)
+	, m_nProgressSteps(0)
 {
 }
 
@@ -71,14 +66,13 @@ CWizardConnectionPage::~CWizardConnectionPage()
 void CWizardConnectionPage::DoDataExchange(CDataExchange* pDX)
 {
 	CWizardPage::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CWizardConnectionPage)
+
 	DDX_Control(pDX, IDC_CONNECTION_TYPE, m_wndType);
 	DDX_Control(pDX, IDC_WIZARD_DOWNLOAD_SPEED, m_wndDownloadSpeed);
 	DDX_Control(pDX, IDC_WIZARD_UPLOAD_SPEED, m_wndUploadSpeed);
 	DDX_Control(pDX, IDC_WIZARD_UPNP, m_wndUPnP);
 	DDX_Control(pDX, IDC_CONNECTION_PROGRESS, m_wndProgress);
 	DDX_Control(pDX, IDC_CONNECTION_STATUS, m_wndStatus);
-	//}}AFX_DATA_MAP
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -123,12 +117,9 @@ BOOL CWizardConnectionPage::OnInitDialog()
 	strTemp.Format( _T("%lu kbps"), Settings.Connection.OutSpeed );
 	m_wndUploadSpeed.SetWindowText( strTemp );
 
-	LoadString( strTemp, IDS_GENERAL_YES );
-	m_wndUPnP.AddString(strTemp);
-	LoadString( strTemp, IDS_GENERAL_NO );
-	m_wndUPnP.AddString(strTemp);
-	m_wndUPnP.SetCurSel( (Settings.Connection.EnableUPnP) ? 0 : 1 );
-	OnSelChangeUPnP();
+	m_wndUPnP.AddString( LoadString( IDS_GENERAL_YES ) );
+	m_wndUPnP.AddString( LoadString( IDS_GENERAL_NO ) );
+	m_wndUPnP.SetCurSel( Settings.Connection.EnableUPnP ? 0 : 1 );
 
 	// 3 steps with 30 sub-steps each
 	m_wndProgress.SetRange( 0, 90 );
@@ -158,23 +149,17 @@ void CWizardConnectionPage::OnChangeConnectionSpeed()
 	m_wndType.SetCurSel( -1 );
 }
 
-void CWizardConnectionPage::OnSelChangeUPnP()
-{
-		int nIndex = m_wndUPnP.GetCurSel();
-
-		if ( nIndex == 0 )
-			m_bUPnPForward = TRUE;
-		else
-			m_bUPnPForward = FALSE;
-}
-
 LRESULT CWizardConnectionPage::OnWizardNext()
 {
+	CWaitCursor pCursor;
+
 	if ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) return 0;
 
 	DWORD nDownloadSpeed = 0, nUploadSpeed = 0;
 	DWORD nSpeed	= 0;
 	int nIndex		= m_wndType.GetCurSel();
+	
+	Settings.Connection.EnableUPnP = ( m_wndUPnP.GetCurSel() == 0 );
 
 	if ( nIndex >= 0 )
 	{
@@ -250,18 +235,6 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 	m_bQueryDiscoveries = true;
 	m_nProgressSteps += 30;
 
-	CWaitCursor pCursor;
-	if ( m_bUPnPForward )
-	{
-		m_nProgressSteps += 30;	// UPnP device detection
-
-		Settings.Connection.EnableUPnP = true;
-
-		Network.MapPorts();
-	}
-	else
-		Settings.Connection.EnableUPnP = false;
-
 	BeginThread( "WizardConnectionPage" );
 
 	// Disable all navigation buttons while the thread is running
@@ -284,25 +257,6 @@ void CWizardConnectionPage::OnRun()
 	CString strMessage;
 
 	m_wndProgress.PostMessage( PBM_SETRANGE32, 0, (LPARAM)m_nProgressSteps );
-
-	if ( m_bUPnPForward )
-	{
-		LoadString( strMessage, IDS_WIZARD_UPNP_SETUP );
-		m_wndStatus.SetWindowText( strMessage );
-
-		while ( Network.UPnPFinder->IsAsyncFindRunning() )
-		{
-			Sleep( 1000 );
-			if ( nCurrentStep < 30  )
-				nCurrentStep++;
-			else if ( nCurrentStep == 30 )
-				nCurrentStep = 0;
-			m_wndProgress.PostMessage( PBM_SETPOS, nCurrentStep );
-		}
-
-		nCurrentStep = 30;
-		m_wndProgress.PostMessage( PBM_SETPOS, nCurrentStep );
-	}
 
 	if ( m_bUpdateDonkeyServers )
 	{
@@ -370,12 +324,4 @@ void CWizardConnectionPage::OnTimer(UINT_PTR nIDEvent)
 	if ( nIDEvent != 1 ) return;
 
 	CloseThread();
-
-	if ( m_bUPnPForward && Network.m_bUPnPPortsForwarded != TRI_TRUE )
-	{
-		CString strFormat, strMessage;
-		LoadString( strFormat, IDS_WIZARD_PORT_FORWARD );
-		strMessage.Format( strFormat, Settings.Connection.InPort );
-		AfxMessageBox( strMessage, MB_ICONINFORMATION );
-	}
 }

@@ -1,7 +1,7 @@
 //
 // UPnPFinder.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -38,7 +38,6 @@ public:
 	void StartDiscovery(bool bSecondTry=false);
 	void StopAsyncFind();
 	void DeletePorts();
-	bool AreServicesHealthy();
 	void AddDevice(DevicePointer pDevice, bool bAddChilds, int nLevel = 0);
 	void RemoveDevice(CComBSTR bsUDN);
 	bool OnSearchComplete();
@@ -110,7 +109,6 @@ private:
 
 	LONG	m_nAsyncFindHandle;
 	bool	m_bAsyncFindRunning;
-	bool	m_bCOM;
 	bool	m_bPortIsFree;
 	CString m_sLocalIP;
 	CString m_sExternalIP;

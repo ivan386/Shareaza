@@ -1,7 +1,7 @@
 //
 // WizardConnectionPage.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -29,52 +29,35 @@ class CWizardConnectionPage :
 	public CWizardPage,
 	public CThreadImpl
 {
-// Construction
+	DECLARE_DYNCREATE(CWizardConnectionPage)
+
 public:
 	CWizardConnectionPage();
 	virtual ~CWizardConnectionPage();
 
-	DECLARE_DYNCREATE(CWizardConnectionPage)
-
-// Dialog Data
-public:
-	//{{AFX_DATA(CWizardConnectionPage)
 	enum { IDD = IDD_WIZARD_CONNECTION };
-	CComboBox	m_wndType;
-	CComboBox	m_wndDownloadSpeed;
-	CComboBox	m_wndUploadSpeed;
-	CComboBox	m_wndUPnP;
-	CProgressCtrl m_wndProgress;
-	CStatic		m_wndStatus;
-	//}}AFX_DATA
 
-// Operations
 protected:
-	void		OnRun();
+	CComboBox		m_wndType;
+	CComboBox		m_wndDownloadSpeed;
+	CComboBox		m_wndUploadSpeed;
+	CComboBox		m_wndUPnP;
+	CProgressCtrl	m_wndProgress;
+	CStatic			m_wndStatus;
+	bool			m_bQueryDiscoveries;
+	bool			m_bUpdateDonkeyServers;
+	short			m_nProgressSteps;
 
-// Overrides
-public:
+	void OnRun();
 	virtual BOOL OnSetActive();
 	virtual LRESULT OnWizardNext();
 	virtual BOOL OnQueryCancel();
-
-protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-
-// Implementation
-protected:
-	//{{AFX_MSG(CWizardConnectionPage)
 	virtual BOOL OnInitDialog();
+
 	afx_msg void OnSelChangeConnectionType();
 	afx_msg void OnChangeConnectionSpeed();
-	afx_msg void OnSelChangeUPnP();
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
 
-private:
-	bool	m_bQueryDiscoveries;
-	bool	m_bUpdateDonkeyServers;
-	bool	m_bUPnPForward;
-	short	m_nProgressSteps;
+	DECLARE_MESSAGE_MAP()
 };
