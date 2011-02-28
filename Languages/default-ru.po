@@ -38,7 +38,7 @@ msgstr "ryo-oh-ki@narod.ru"
 
 #: manifest-version
 msgid "(shareaza version)"
-msgstr "2.5.3.0"
+msgstr "2.5.4.0"
 
 #: manifest-language
 msgid "(translation language code: en)"
@@ -3143,7 +3143,7 @@ msgstr "Переключиться на это окно"
 
 #: message;afx_ids_preview_close
 msgid "Close print preview mode"
-msgstr ""
+msgstr "Закрыть режим просмотра печати"
 
 #: tip;afx_ids_preview_close
 msgid "Cancel Preview"
@@ -4069,7 +4069,7 @@ msgstr "Начать новый поиск в сети..."
 
 #: message;id_next_pane
 msgid "Switch to the next window pane"
-msgstr ""
+msgstr "Переключиться в другое окно"
 
 #: tip;id_next_pane
 msgid "Next Pane"
@@ -4225,7 +4225,7 @@ msgstr "Купить и поблагодарить автора"
 
 #: message;id_sharemonkey_compare
 msgid "Compare prices in different stores"
-msgstr ""
+msgstr "Сравнить цены в разных магазинах"
 
 #: message;id_sharemonkey_download
 msgid "Search for matches"
@@ -4233,11 +4233,11 @@ msgstr "Искать совпадения"
 
 #: message;id_sharemonkey_next
 msgid "Go to the next match"
-msgstr ""
+msgstr "Перейти к следующему совпадению"
 
 #: message;id_sharemonkey_previous
 msgid "Go to the previous match"
-msgstr ""
+msgstr "Перейти к предыдущему совпадению"
 
 #: message;id_sharemonkey_prices
 msgid "Look at the prices for the current match"

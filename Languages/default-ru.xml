@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
 	<!-- Manifest -->
-	<manifest name="Русский" author="dAbserver" updatedBy="Rolandas Rudomanskis, ryo-oh-ki" description="Shareaza Russian Skin File" link="http://shareaza.sourceforge.net/" email="ryo-oh-ki@narod.ru" version="2.5.3.0" type="Language" language="ru" prompt="Щелкните здесь для смены языка на Русский." dir="ltr"/>
+	<manifest name="Русский" author="dAbserver" updatedBy="Rolandas Rudomanskis, ryo-oh-ki" description="Shareaza Russian Skin File" link="http://shareaza.sourceforge.net/" email="ryo-oh-ki@narod.ru" version="2.5.4.0" type="Language" language="ru" prompt="Щелкните здесь для смены языка на Русский." dir="ltr"/>
 	<!-- Toolbar Definitions -->
 	<toolbars>
 		<!-- MAIN WINDOW -->
@@ -2324,7 +2324,7 @@
 		<tip id="AFX_IDS_APP_TITLE" message="Shareaza"/>
 		<tip id="AFX_IDS_IDLEMESSAGE" message="Готово"/>
 		<tip id="AFX_IDS_MDICHILD" message="Переключиться на это окно"/>
-		<tip id="AFX_IDS_PREVIEW_CLOSE" message="Close print preview mode" tip="Отменить просмотр"/>
+		<tip id="AFX_IDS_PREVIEW_CLOSE" message="Закрыть режим просмотра печати" tip="Отменить просмотр"/>
 		<tip id="AFX_IDS_SCCLOSE" message="Закрыть окно"/>
 		<tip id="AFX_IDS_SCMAXIMIZE" message="Увеличить окно до полного размера"/>
 		<tip id="AFX_IDS_SCMINIMIZE" message="Свернуть окошко в иконку"/>
@@ -2549,7 +2549,7 @@
 		<tip id="ID_NETWORK_G1" message="Соединиться с оригинальной сетью Gnutella."/>
 		<tip id="ID_NETWORK_G2" message="Соединиться с сетью Gnutella2 (рекомендуется)."/>
 		<tip id="ID_NETWORK_SEARCH" message="Начать новый поиск в сети..."/>
-		<tip id="ID_NEXT_PANE" message="Switch to the next window pane" tip="Следующее окно"/>
+		<tip id="ID_NEXT_PANE" message="Переключиться в другое окно" tip="Следующее окно"/>
 		<tip id="ID_OPEN_DOWNLOADS_FOLDER" message="Открыть папку с завершёнными загрузками"/>
 		<tip id="ID_PREV_PANE" message="Перейти к предыдущему окну" tip="Предыдущее окно"/>
 		<tip id="ID_SCHEDULER_ACTIVATE" message="Включить выбранную задачу."/>
@@ -2590,10 +2590,10 @@
 		<tip id="ID_SECURITY_REMOVE" message="Удалить помеченное правило(а) безопасности."/>
 		<tip id="ID_SECURITY_RESET" message="Сбросить счетчики хитов для помеченных правил."/>
 		<tip id="ID_SHAREMONKEY_BUY" message="Купить и поблагодарить автора"/>
-		<tip id="ID_SHAREMONKEY_COMPARE" message="Compare prices in different stores"/>
+		<tip id="ID_SHAREMONKEY_COMPARE" message="Сравнить цены в разных магазинах"/>
 		<tip id="ID_SHAREMONKEY_DOWNLOAD" message="Искать совпадения"/>
-		<tip id="ID_SHAREMONKEY_NEXT" message="Go to the next match"/>
-		<tip id="ID_SHAREMONKEY_PREVIOUS" message="Go to the previous match"/>
+		<tip id="ID_SHAREMONKEY_NEXT" message="Перейти к следующему совпадению"/>
+		<tip id="ID_SHAREMONKEY_PREVIOUS" message="Перейти к предыдущему совпадению"/>
 		<tip id="ID_SHAREMONKEY_PRICES" message="Получить цены для текущего совпадения"/>
 		<tip id="ID_SHAREMONKEY_SAVE" message="Сохранить совпадение в хранилище"/>
 		<tip id="ID_SYSTEM_CLEAR" message="Очистить журнал статуса."/>
