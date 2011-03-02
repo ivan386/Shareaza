@@ -1,7 +1,7 @@
 //
 // DlgURLCopy.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -24,8 +24,11 @@
 #include "ShareazaFile.h"
 #include "CoolInterface.h"
 #include "DlgURLCopy.h"
-#include "Transfer.h"
+#include "Download.h"
+#include "Downloads.h"
 #include "Network.h"
+#include "Transfer.h"
+#include "Transfers.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -114,6 +117,33 @@ void CURLCopyDlg::OnIncludeSelf()
 		strTemp = _T("xt=") + m_pFile->m_oED2K.toUrn();
 		if ( strURN.GetLength() ) strURN += _T("&");
 		strURN += strTemp;
+	}
+
+	if ( m_pFile->m_oMD5 && ! m_pFile->m_oTiger && ! m_pFile->m_oSHA1 && ! m_pFile->m_oED2K )
+	{
+		strTemp = _T("xt=") + m_pFile->m_oMD5.toUrn();
+		if ( strURN.GetLength() ) strURN += _T("&");
+		strURN += strTemp;
+	}
+
+	if ( m_pFile->m_oBTH && ! m_pFile->m_oTiger && ! m_pFile->m_oSHA1 && ! m_pFile->m_oED2K && ! m_pFile->m_oMD5 )
+	{
+		strTemp = _T("xt=") + m_pFile->m_oBTH.toUrn();
+		if ( strURN.GetLength() ) strURN += _T("&");
+		strURN += strTemp;
+		
+		CSingleLock oLock( &Transfers.m_pSection, TRUE );
+		if ( CDownload* pDownload = Downloads.FindByBTH( m_pFile->m_oBTH ) )
+		{
+			if ( pDownload->IsTorrent() )
+			{
+				CString sTracker = URLEncode( pDownload->m_pTorrent.GetTrackerAddress() );
+				if ( sTracker.GetLength() )
+				{
+					strURN += _T("&tr=") + sTracker;
+				}
+			}
+		}
 	}
 
 	m_sMagnet = strURN;
