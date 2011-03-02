@@ -1119,7 +1119,7 @@ BOOL CBTClient::OnExtendedHandshake(CBTPacket* pPacket)
 		if ( CBENode* pUtMetadata = pMetadata->GetNode( BT_DICT_UT_METADATA ) )
 		{
 			m_nUtMetadataID = pUtMetadata->GetInt();
-			if ( m_nUtMetadataID > 0 && ! m_pDownload->m_pTorrent.m_pBlockBTH ) // Send first info request
+			if ( m_nUtMetadataID && ! m_pDownload->m_pTorrent.m_pBlockBTH ) // Send first info request
 			{
 				int nNextPiece = m_pDownload->m_pTorrent.NextInfoPiece();
 				if ( nNextPiece >= 0 )
@@ -1191,9 +1191,9 @@ void CBTClient::SendMetadataRequest(QWORD nPiece)
 
 void CBTClient::SendInfoRequest(QWORD nPiece)
 {
-	ASSERT( m_nUtMetadataID );
+	BYTE nUtMetadataID = m_nUtMetadataID ? m_nUtMetadataID : BT_EXTENSION_UT_METADATA;
 
-	CBTPacket* pResponse = CBTPacket::New( BT_PACKET_EXTENSION, m_nUtMetadataID );
+	CBTPacket* pResponse = CBTPacket::New( BT_PACKET_EXTENSION, nUtMetadataID );
 	CBENode* pRoot = pResponse->m_pNode.get();
 
 	pRoot->Add( BT_DICT_MSG_TYPE )->SetInt( UT_METADATA_REQUEST ); //Request
@@ -1204,6 +1204,8 @@ void CBTClient::SendInfoRequest(QWORD nPiece)
 
 BOOL CBTClient::OnMetadataRequest(CBTPacket* pPacket)
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	const CBENode* pRoot = pPacket->m_pNode.get();
 
 	if ( CBENode* pMsgType = pRoot->GetNode( BT_DICT_MSG_TYPE ) )
@@ -1230,11 +1232,10 @@ BOOL CBTClient::OnMetadataRequest(CBTPacket* pPacket)
 
 				if ( m_nUtMetadataSize && ! m_pDownload->m_pTorrent.m_pBlockBTH )
 				{
-					
 					if ( m_pDownload->m_pTorrent.LoadInfoPiece( pPacket->m_pBuffer, pPacket->m_nLength,
 						 m_nUtMetadataSize, nPiece ) ) // If full info loaded
 					{
-						 m_pDownload->SetTorrent( m_pDownload->m_pTorrent );
+						 m_pDownload->SetTorrent();
 					}
 					else
 					{

@@ -1,7 +1,7 @@
 //
 // DownloadGroup.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -109,6 +109,15 @@ void CDownloadGroup::CopyList(CList< CDownload* >& pList)
 BOOL CDownloadGroup::Link(CDownload* pDownload)
 {
 	ASSUME_LOCK( Transfers.m_pSection );
+
+	if ( DownloadGroups.GetSuperGroup() != this )
+	{
+		if ( POSITION pos = m_pDownloads.Find( pDownload ) )
+		{
+			m_pDownloads.RemoveAt( pos );
+			DownloadGroups.IncBaseCookie();
+		}
+	}
 
 	// Filter by BitTorrent flag
 	if ( m_bTorrent && pDownload->IsTorrent() )

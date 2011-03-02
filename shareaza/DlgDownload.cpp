@@ -1,7 +1,7 @@
 //
 // DlgDownload.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,10 +22,12 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Download.h"
+#include "Downloads.h"
 #include "ShareazaURL.h"
 #include "DlgDownload.h"
 #include "Settings.h"
 #include "SchemaCache.h"
+#include "Transfers.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -67,7 +69,6 @@ BOOL CDownloadDlg::OnInitDialog()
 	CSkinDialog::OnInitDialog();
 
 	SkinMe( NULL, IDR_DOWNLOADSFRAME );
-	m_wndTorrentFile.EnableWindow( m_pDownload == NULL );
 
 	if ( OpenClipboard() )
 	{
@@ -120,7 +121,26 @@ void CDownloadDlg::OnTorrentFile()
 
 	if ( dlg.DoModal() != IDOK ) return;
 
-	theApp.OpenTorrent( dlg.GetPathName(), TRUE );
+	if ( m_pDownload )
+	{
+		CBTInfo pInfo;
+		if ( ! pInfo.LoadTorrentFile( dlg.GetPathName() ) )
+			return;
+
+		CSingleLock pTransfersLock( &Transfers.m_pSection );
+		if ( ! pTransfersLock.Lock( 2000 ) )
+			return;
+
+		if ( Downloads.Check( m_pDownload ) )
+		{
+			m_pDownload->SetTorrent( &pInfo );
+		}
+	}
+	else
+	{
+		// New torrent
+		theApp.OpenTorrent( dlg.GetPathName(), TRUE );
+	}
 
 	EndDialog( IDCANCEL );
 }

@@ -1,7 +1,7 @@
 //
 // Downloads.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -335,18 +335,7 @@ CDownload* CDownloads::Add(const CShareazaURL& oURL)
 
 	if ( oURL.m_pTorrent )
 	{
-		pDownload->SetTorrent( *oURL.m_pTorrent );
-
-		// Add sources from torrents - DWK
-		if ( oURL.m_pTorrent->m_sURLs.GetCount() > 0 )
-		{
-			for ( POSITION pos = oURL.m_pTorrent->m_sURLs.GetHeadPosition() ; pos ; )
-			{
-				CString pCurrentUrl = oURL.m_pTorrent->m_sURLs.GetNext( pos );
-				pDownload->AddSourceURLs( (LPCTSTR)pCurrentUrl , FALSE  );
-			}
-			oURL.m_pTorrent->m_sURLs.RemoveAll();
-		}
+		pDownload->SetTorrent( oURL.m_pTorrent );
 	}
 
 	if ( bNew )
