@@ -91,7 +91,7 @@ int CMonitorBarCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	OnSkinChange();
 
-	SetTimer( 1, 50, NULL );
+	SetTimer( 1, 200, NULL );
 
 	return 0;
 }
