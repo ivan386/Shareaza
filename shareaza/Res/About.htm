@@ -13,48 +13,38 @@
 
 <img src="/header_1.png" width="624" height="172" alt="<% Client %>" />
 
-<div align="center" class="page">
-	<table width="800" border="0">
-	<tr>
-		<td>
-			<h1>This node is powered by <% SmartAgent %></h1>
-			<ul>
-				<li><a href="gnutella:browse:<% ListenIP %>">Browse this node in <% Client %></a></li>
-				<li><a href="/remote/">Remotely access this node</a></li>
-			</ul>
-			<h1>What Is <% Client %>?</h1>
-			<p>
-				<% Client %> is a peer-to-peer client for Windows that allows you to download any file-type found on several popular P2P networks. <% Client %> is <strong>FREE</strong> and contains <strong>NO</strong> spyware or third-party products.
-			</p>
-			<ul>
-				<li><a href="http://shareaza.sourceforge.net/">Visit the <% Client %> Homepage</a></li>
-				<li><a href="http://shareaza.sourceforge.net/?id=download">Get <% Client %> Now</a></li>
-			</ul>
-			<h1>Neighbours</h1>
-		</td>
-	</tr>
-	<tr>
-		<td align="center" valign="top">
-			<table width="630" border="0" cellspacing="0" class="nodeinfo">
-			<tr>
-				<th width="170" align="center" valign="top">Neighbor Address</th>
-				<th width="100" align="center" valign="top">Uptime</th>
-				<th width="100" align="center" valign="top">Mode</th>
-				<th width="170" align="center" valign="top">User Agent</th>
-				<th width="80" align="center" valign="top">&nbsp;</th>
-			</tr>	
-			<% Neighbours 
-			<tr>
-				<td class="lcol"><a href="gnutella:host:%s:%lu">%s:%lu</a></td>
-				<td>%i:%.2i:%.2i</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td class="rcol"><a href="http://%s:%lu/">Browse</a></td>
-			</tr> 
-			%>
-			</table>
-		</td>
-	</tr>
+<div class="page">
+	<h1>This node is powered by <% SmartAgent %></h1>
+	<ul>
+		<li><a href="gnutella:browse:<% ListenIP %>">Browse this node in <% Client %></a></li>
+		<li><a href="/remote/">Remotely access this node</a></li>
+	</ul>
+	<h1>What Is <% Client %>?</h1>
+	<p>
+		<% Client %> is a peer-to-peer client for Windows that allows you to download any file-type found on several popular P2P networks. <% Client %> is <strong>FREE</strong> and contains <strong>NO</strong> spyware or third-party products.
+	</p>
+	<ul>
+		<li><a href="http://shareaza.sourceforge.net/">Visit the <% Client %> Homepage</a></li>
+		<li><a href="http://shareaza.sourceforge.net/?id=download">Get <% Client %> Now</a></li>
+	</ul>
+	<h1>Neighbours</h1>
+	<table width="100%" cellspacing="0" class="nodeinfo">
+		<tr>
+			<th width="170" align="center" valign="top">Neighbor Address</th>
+			<th width="100" align="center" valign="top">Uptime</th>
+			<th width="100" align="center" valign="top">Mode</th>
+			<th width="170" align="center" valign="top">User Agent</th>
+			<th width="80" align="center" valign="top">&nbsp;</th>
+		</tr>	
+		<% Neighbours 
+		<tr>
+			<td class="lcol"><a href="gnutella:host:%s:%lu">%s:%lu</a></td>
+			<td>%i:%.2i:%.2i</td>
+			<td>%s</td>
+			<td>%s</td>
+			<td class="rcol"><a href="http://%s:%lu/">Browse</a></td>
+		</tr> 
+		%>
 	</table>
 </div>
 </body>

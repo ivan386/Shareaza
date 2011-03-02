@@ -5,17 +5,35 @@
 	background-color: #ffffff;
 	color: #000000;
 	font-size: 8pt;
+	text-align: center;		/*	CENTERS .page DIV IN IE 7/8 WHICH IGNORES MARGIN AUTO	*/
 }
 body.imgheader {
 	background-image:url(/header_2.png);
 	background-repeat:repeat-x;
 }
+.imgheader img {
+	position: absolute;
+	left:0px;
+	top: 0px;
+}
+body,td,th {
+	font-family: Tahoma, Verdana, Arial, sans-serif;
+	font-size: 12px; 
+}
+h1 {
+	font-size: 16px;
+}
 .page
 {
-	padding: 20px;
+	margin-top: 172px;
+	width: 780px;
+	margin-left: auto;		/* 	THIS CENTERS IN NON-IE BROWSERS WHICH IGNORE TEXT-ALIGN	*/
+	margin-right: auto;
+	text-align: left;
 }
 .nodeinfo
 {
+	border: 0px;
 	border-bottom: solid #999999 1px;
 }
 th
