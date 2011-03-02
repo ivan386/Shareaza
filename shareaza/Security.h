@@ -23,6 +23,7 @@
 
 class CShareazaFile;
 class CSecureRule;
+class CSecureIPRule;
 class CQuerySearch;
 class CXMLElement;
 
@@ -59,6 +60,10 @@ protected:
 
 	CList< CSecureRule* >		m_pRules;
 	CComplainMap				m_Complains;
+	std::set< DWORD >			m_Cache; // miss cache
+
+	// single IP blocking rules
+	std::map< DWORD, CSecureIPRule* >	m_pIPRules;
 
 // Operations
 public:
@@ -73,12 +78,12 @@ public:
 
 	inline void		Ban(const IN_ADDR* pAddress, int nBanLength, BOOL bMessage = TRUE, LPCTSTR szComment = NULL)
 	{
-		BanHelper( pAddress, NULL, nBanLength, bMessage, szComment );
+		IPBanHelper( pAddress, nBanLength, bMessage, szComment );
 	}
 
-	inline void		Ban(const CShareazaFile* pFile, int nBanLength, BOOL bMessage = TRUE, LPCTSTR szComment = NULL)
+	inline void		Ban(const CShareazaFile* pFile, int nBanLength, LPCTSTR szComment = NULL)
 	{
-		BanHelper( NULL, pFile, nBanLength, bMessage, szComment );
+		FileBanHelper( pFile, nBanLength, szComment );
 	}
 
 	bool			Complain(const IN_ADDR* pAddress, int nBanLength = ban5Mins, int nExpire = 10, int nCount = 3);
@@ -108,7 +113,8 @@ public:
 	BOOL			IsVendorBlocked(const CString& sVendor) const;
 
 protected:
-	void			BanHelper(const IN_ADDR* pAddress, const CShareazaFile* pFile, int nBanLength, BOOL bMessage, LPCTSTR szComment);
+	void			IPBanHelper(const IN_ADDR* pAddress, int nBanLength, BOOL bMessage, LPCTSTR szComment);
+	void			FileBanHelper(const CShareazaFile* pFile, int nBanLength, LPCTSTR szComment);
 	CSecureRule*	GetGUID(const GUID& oGUID) const;
 	CXMLElement*	ToXML(BOOL bRules = TRUE);
 	BOOL			FromXML(CXMLElement* pXML);
@@ -154,6 +160,12 @@ public:
 	BOOL			FromXML(CXMLElement* pXML);
 	CString			ToGnucleusString() const;
 	BOOL			FromGnucleusString(CString& str);
+};
+
+// For now identical to CSecureRule. This will allow lateron to make several security filter classes
+// inherit from CSecureRule.
+class CSecureIPRule : public CSecureRule
+{
 };
 
 // An adult filter class, used in searches, chat, etc
