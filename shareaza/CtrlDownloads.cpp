@@ -1,7 +1,7 @@
 //
 // CtrlDownloads.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1312,7 +1312,10 @@ void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownlo
 		case DOWNLOAD_COLUMN_SIZE:
 			if ( ! pSource->IsIdle() )
 				if ( pSource->GetState() > dtsHeaders && pSource->m_oAvailable.empty() )
-					strText = Settings.SmartVolume( pSource->m_pDownload->m_nSize );
+				{
+					if ( pSource->m_pDownload->m_nSize != SIZE_UNKNOWN )
+						strText = Settings.SmartVolume( pSource->m_pDownload->m_nSize );
+				}
 				else
 					strText = Settings.SmartVolume( pSource->m_oAvailable.length_sum() );
 			break;
