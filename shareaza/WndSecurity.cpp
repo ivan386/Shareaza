@@ -1,7 +1,7 @@
 //
 // WndSecurity.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -47,7 +47,6 @@ const static UINT nImageID[] =
 IMPLEMENT_SERIAL(CSecurityWnd, CPanelWnd, 0)
 
 BEGIN_MESSAGE_MAP(CSecurityWnd, CPanelWnd)
-	//{{AFX_MSG_MAP(CSecurityWnd)
 	ON_WM_CREATE()
 	ON_WM_DESTROY()
 	ON_WM_SIZE()
@@ -74,7 +73,6 @@ BEGIN_MESSAGE_MAP(CSecurityWnd, CPanelWnd)
 	ON_UPDATE_COMMAND_UI(ID_SECURITY_EXPORT, OnUpdateSecurityExport)
 	ON_COMMAND(ID_SECURITY_EXPORT, OnSecurityExport)
 	ON_COMMAND(ID_SECURITY_IMPORT, OnSecurityImport)
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
@@ -143,90 +141,16 @@ void CSecurityWnd::OnDestroy()
 
 void CSecurityWnd::Update(int nColumn, BOOL bSort)
 {
-	CQuickLock oLock( Security.m_pSection );
-
-	CLiveList pLiveList( 6, Security.GetCount() + Security.GetCount() / 4u );
-
-	CLiveItem* pDefault = pLiveList.Add( (LPVOID)0 );
-	pDefault->Set( 0, _T("Default Policy") );
-	pDefault->Set( 1, Security.m_bDenyPolicy ? _T("Deny") : _T("Accept") );
-	pDefault->Set( 3, _T("X") );
-	pDefault->SetImage( 0, Security.m_bDenyPolicy ? 2 : 1 );
-
 	Security.Expire();
 
-	DWORD nNow = static_cast< DWORD >( time( NULL ) );
-	int nCount = 1;
-
-	for ( POSITION pos = Security.GetIterator() ; pos ; nCount++ )
-	{
-		CSecureRule* pRule = Security.GetNext( pos );
-
-		CLiveItem* pItem = pLiveList.Add( pRule );
-
-		pItem->SetImage( 0, pRule->m_nAction );
-
-		if ( pRule->m_nType == CSecureRule::srAddress )
-		{
-			if ( *(DWORD*)pRule->m_nMask == 0xFFFFFFFF )
-			{
-				pItem->Format( 0, _T("%u.%u.%u.%u"),
-					unsigned( pRule->m_nIP[0] ), unsigned( pRule->m_nIP[1] ),
-					unsigned( pRule->m_nIP[2] ), unsigned( pRule->m_nIP[3] ) );
-			}
-			else
-			{
-				pItem->Format( 0, _T("%u.%u.%u.%u/%u.%u.%u.%u"),
-					unsigned( pRule->m_nIP[0] ), unsigned( pRule->m_nIP[1] ),
-					unsigned( pRule->m_nIP[2] ), unsigned( pRule->m_nIP[3] ),
-					unsigned( pRule->m_nMask[0] ), unsigned( pRule->m_nMask[1] ),
-					unsigned( pRule->m_nMask[2] ), unsigned( pRule->m_nMask[3] ) );
-			}
-		}
-		else
-		{
-			pItem->Set( 0, pRule->GetContentWords() );
-		}
-
-		switch ( pRule->m_nAction )
-		{
-		case CSecureRule::srNull:
-			pItem->Set( 1, _T("N/A") );
-			break;
-		case CSecureRule::srAccept:
-			pItem->Set( 1, _T("Accept") );
-			break;
-		case CSecureRule::srDeny:
-			pItem->Set( 1, _T("Deny") );
-			break;
-		}
-
-		if ( pRule->m_nExpire == CSecureRule::srIndefinite )
-		{
-			pItem->Set( 2, _T("Never") );
-		}
-		else if ( pRule->m_nExpire == CSecureRule::srSession )
-		{
-			pItem->Set( 2, _T("Session") );
-		}
-		else if ( pRule->m_nExpire >= nNow )
-		{
-			DWORD nTime = ( pRule->m_nExpire - nNow );
-			pItem->Format( 2, _T("%ud %uh %um"), nTime / 86400u, (nTime % 86400u) / 3600u, ( nTime % 3600u ) / 60u );
-			//pItem->Format( 2, _T("%i:%.2i:%.2i"), nTime / 3600, ( nTime % 3600 ) / 60, nTime % 60 );
-		}
-
-		pItem->Format( 3, _T("%i"), nCount );
-		pItem->Format( 4, _T("%u (%u)"), pRule->m_nToday, pRule->m_nEver );
-		pItem->Set( 5, pRule->m_sComment );
-	}
+	CAutoPtr< CLiveList > pLiveList( Security.GetList() );
 
 	if ( nColumn >= 0 )
 	{
 		SetWindowLongPtr( m_wndList.GetSafeHwnd(), GWLP_USERDATA, 0 - nColumn - 1 );
 	}
 
-	pLiveList.Apply( &m_wndList, bSort );
+	pLiveList->Apply( &m_wndList, bSort );
 
 	tLastUpdate = GetTickCount();				// Update time after it's done doing its work
 }

@@ -1,7 +1,7 @@
 //
 // Security.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,6 +22,7 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Buffer.h"
+#include "LiveList.h"
 #include "Settings.h"
 #include "Security.h"
 #include "ShareazaFile.h"
@@ -87,9 +88,9 @@ CSecureRule* CSecurity::GetGUID(const GUID& pGUID) const
 		if ( pRule->m_pGUID == pGUID ) return pRule;
 	}
 
-	for ( std::map< DWORD, CSecureIPRule* >::const_iterator it = m_pIPRules.begin(); it != m_pIPRules.end(); it++ )
+	for ( CAddressRuleMap::const_iterator i = m_pIPRules.begin(); i != m_pIPRules.end(); ++i )
 	{
-		if( (*it).second->m_pGUID == pGUID ) return (*it).second;
+		if( (*i).second->m_pGUID == pGUID ) return (*i).second;
 	}
 
 	return NULL;
@@ -108,9 +109,9 @@ void CSecurity::Add(CSecureRule* pRule)
 		if ( pRule->m_nType == CSecureRule::srAddress )
 		{
 			pRule->MaskFix();
-			if (pRule->m_nMask[3] == 255 && pRule->m_nMask[2] == 255 && pRule->m_nMask[1] == 255 && pRule->m_nMask[0] == 255)
+			if ( *(DWORD*)pRule->m_nMask == 0xffffffff )
 			{
-				m_Cache.erase( *(DWORD*) pRule->m_nIP );
+				m_Cache.erase( *(DWORD*)pRule->m_nIP );
 			}
 			else
 			{
@@ -121,21 +122,19 @@ void CSecurity::Add(CSecureRule* pRule)
 		pRule->MaskFix();
 
 		// special treatment for single IP security rules
-		if ( pRule->m_nType == CSecureRule::srAddress 
-			&& pRule->m_nMask[3] == 255 
-			&& pRule->m_nMask[2] == 255 
-			&& pRule->m_nMask[1] == 255 
-			&& pRule->m_nMask[0] == 255 )
+		if ( pRule->m_nType == CSecureRule::srAddress &&
+			*(DWORD*)pRule->m_nMask == 0xffffffff )
 		{
-			if( m_pIPRules.find( *(DWORD*) pRule->m_nIP ) == m_pIPRules.end() )
+			CAddressRuleMap::iterator i = m_pIPRules.find( *(DWORD*)pRule->m_nIP );
+			if ( i == m_pIPRules.end() )
 			{
-				m_pIPRules[*(DWORD*) pRule->m_nIP] = (CSecureIPRule*) pRule;
+				m_pIPRules[ *(DWORD*)pRule->m_nIP ] = pRule;
 			}
-			else if( m_pIPRules[*(DWORD*) pRule->m_nIP] != pRule )
+			else if ( (*i).second != pRule )
 			{
 				// replace old rule with new one.
-				CSecureIPRule* pOldRule = m_pIPRules[*(DWORD*) pRule->m_nIP];
-				m_pIPRules[*(DWORD*) pRule->m_nIP] = (CSecureIPRule*) pRule;
+				CSecureRule* pOldRule = (*i).second;
+				(*i).second = pRule;
 				delete pOldRule;
 			}
 		}
@@ -163,26 +162,23 @@ void CSecurity::Remove(CSecureRule* pRule)
 {
 	CQuickLock oLock( m_pSection );
 
-	POSITION pos = m_pRules.Find( pRule );
-	if ( pos )
+	if ( POSITION pos = m_pRules.Find( pRule ) )
 	{
 		m_pRules.RemoveAt( pos );
 	}
 	
 	// this also accounts for double entries.
-	if( pRule->m_nType == CSecureRule::srAddress )
+	if ( pRule->m_nType == CSecureRule::srAddress )
 	{
 		pRule->MaskFix();
 
-		if ( pRule->m_nType == CSecureRule::srAddress 
-			&& pRule->m_nMask[3] == 255 
-			&& pRule->m_nMask[2] == 255 
-			&& pRule->m_nMask[1] == 255 
-			&& pRule->m_nMask[0] == 255 )
+		if ( pRule->m_nType == CSecureRule::srAddress &&
+			*(DWORD*)pRule->m_nMask == 0xffffffff )
 		{
-			if( m_pIPRules.find( *(DWORD*) pRule->m_nIP ) != m_pIPRules.end() )
+			CAddressRuleMap::const_iterator i = m_pIPRules.find( *(DWORD*)pRule->m_nIP );
+			if ( i != m_pIPRules.end() )
 			{
-				m_pIPRules.erase( m_pIPRules.find( *(DWORD*) pRule->m_nIP ) );
+				m_pIPRules.erase( i );
 			}
 		}
 	}
@@ -250,7 +246,7 @@ void CSecurity::Clear()
 //////////////////////////////////////////////////////////////////////
 // CSecurity ban
 
-void CSecurity::FileBanHelper(const CShareazaFile* pFile, int nBanLength, LPCTSTR szComment)
+void CSecurity::Ban(const CShareazaFile* pFile, int nBanLength, BOOL bMessage, LPCTSTR szComment)
 {
 	CQuickLock oLock( m_pSection );
 
@@ -258,15 +254,21 @@ void CSecurity::FileBanHelper(const CShareazaFile* pFile, int nBanLength, LPCTST
 
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
+		POSITION posLast = pos;
 		CSecureRule* pRule = GetNext( pos );
 
-		if ( pFile && pRule->Match( pFile ) )
+		if ( pRule->IsExpired( tNow ) )
+		{
+			m_pRules.RemoveAt( posLast );
+			delete pRule;
+		}
+		else if ( pRule->Match( pFile ) )
 		{
 			if ( pRule->m_nAction == CSecureRule::srDeny )
 			{
 				if ( ( nBanLength == banWeek ) && ( pRule->m_nExpire < tNow + 604000 ) )
 				{
-					pRule->m_nExpire = static_cast< DWORD >( time( NULL ) + 604800 );
+					pRule->m_nExpire = tNow + 604800;
 				}
 				else if ( ( nBanLength == banForever ) && ( pRule->m_nExpire != CSecureRule::srIndefinite ) )
 				{
@@ -287,19 +289,19 @@ void CSecurity::FileBanHelper(const CShareazaFile* pFile, int nBanLength, LPCTST
 		pRule->m_sComment	= _T("Session Ban");
 		break;
 	case ban5Mins:
-		pRule->m_nExpire	= static_cast< DWORD >( time( NULL ) + 300 );
+		pRule->m_nExpire	= tNow + 300;
 		pRule->m_sComment	= _T("Temp Ignore");
 		break;
 	case ban30Mins:
-		pRule->m_nExpire	= static_cast< DWORD >( time( NULL ) + 1800 );
+		pRule->m_nExpire	= tNow + 1800;
 		pRule->m_sComment	= _T("Temp Ignore");
 		break;
 	case ban2Hours:
-		pRule->m_nExpire	= static_cast< DWORD >( time( NULL ) + 7200 );
+		pRule->m_nExpire	= tNow + 7200;
 		pRule->m_sComment	= _T("Temp Ignore");
 		break;
 	case banWeek:
-		pRule->m_nExpire	= static_cast< DWORD >( time( NULL ) + 604800 );
+		pRule->m_nExpire	= tNow + 604800;
 		pRule->m_sComment	= _T("Client Block");
 		break;
 	case banForever:
@@ -327,87 +329,85 @@ void CSecurity::FileBanHelper(const CShareazaFile* pFile, int nBanLength, LPCTST
 	}
 
 	Add( pRule );
+
+	if ( bMessage )
+	{
+		theApp.Message( MSG_NOTICE, IDS_NETWORK_SECURITY_BLOCKED,
+			(LPCTSTR)pFile->m_sName );
+	}
 }
 
-void CSecurity::IPBanHelper(const IN_ADDR* pAddress, int nBanLength, BOOL bMessage, LPCTSTR szComment)
+void CSecurity::Ban(const IN_ADDR* pAddress, int nBanLength, BOOL bMessage, LPCTSTR szComment)
 {
 	CQuickLock oLock( m_pSection );
 
 	DWORD tNow = static_cast< DWORD >( time( NULL ) );
 
-	std::map< DWORD, CSecureIPRule* >::iterator it = m_pIPRules.find( *(DWORD*) pAddress );
-
-	if ( it != m_pIPRules.end() ) //this IP rule already exists in our map
+	CAddressRuleMap::const_iterator i = m_pIPRules.find( *(DWORD*)pAddress );
+	if ( i != m_pIPRules.end() )
 	{
-		CSecureIPRule* pIPRule = (*it).second;
+		CSecureRule* pIPRule = (*i).second;
 
 		if ( pIPRule->m_nAction == CSecureRule::srDeny )
 		{
 			if ( ( nBanLength == banWeek ) && ( pIPRule->m_nExpire < tNow + 604000 ) )
 			{
-				pIPRule->m_nExpire = static_cast< DWORD >( time( NULL ) + 604800 );
+				pIPRule->m_nExpire = tNow + 604800;
 			}
 			else if ( ( nBanLength == banForever ) && ( pIPRule->m_nExpire != CSecureRule::srIndefinite ) )
 			{
 				pIPRule->m_nExpire = CSecureRule::srIndefinite;
 			}
-			else if ( bMessage )
-			{
-				theApp.Message( MSG_NOTICE, IDS_NETWORK_SECURITY_ALREADY_BLOCKED,
-					(LPCTSTR)CString( inet_ntoa( *pAddress ) ) );
-			}
+			return;
 		}
 	}
-	else
+
+	CSecureRule* pIPRule = new CSecureRule();
+	pIPRule->m_nAction	= CSecureRule::srDeny;
+	pIPRule->m_nType	= CSecureRule::srAddress;
+
+	switch ( nBanLength )
 	{
-		CSecureIPRule* pIPRule = new CSecureIPRule();
-		pIPRule->m_nAction	= CSecureRule::srDeny;
-		pIPRule->m_nType		= CSecureRule::srAddress;
+	case banSession:
+		pIPRule->m_nExpire	= CSecureRule::srSession;
+		pIPRule->m_sComment	= _T("Session Ban");
+		break;
+	case ban5Mins:
+		pIPRule->m_nExpire	= tNow + 300;
+		pIPRule->m_sComment	= _T("Temp Ignore");
+		break;
+	case ban30Mins:
+		pIPRule->m_nExpire	= tNow + 1800;
+		pIPRule->m_sComment	= _T("Temp Ignore");
+		break;
+	case ban2Hours:
+		pIPRule->m_nExpire	= tNow + 7200;
+		pIPRule->m_sComment	= _T("Temp Ignore");
+		break;
+	case banWeek:
+		pIPRule->m_nExpire	= tNow + 604800;
+		pIPRule->m_sComment	= _T("Client Block");
+		break;
+	case banForever:
+		pIPRule->m_nExpire	= CSecureRule::srIndefinite;
+		pIPRule->m_sComment	= _T("Ban");
+		break;
+	default:
+		pIPRule->m_nExpire	= CSecureRule::srSession;
+		pIPRule->m_sComment	= _T("Session Ban");
+	}
 
-		switch ( nBanLength )
-		{
-		case banSession:
-			pIPRule->m_nExpire	= CSecureRule::srSession;
-			pIPRule->m_sComment	= _T("Session Ban");
-			break;
-		case ban5Mins:
-			pIPRule->m_nExpire	= static_cast< DWORD >( time( NULL ) + 300 );
-			pIPRule->m_sComment	= _T("Temp Ignore");
-			break;
-		case ban30Mins:
-			pIPRule->m_nExpire	= static_cast< DWORD >( time( NULL ) + 1800 );
-			pIPRule->m_sComment	= _T("Temp Ignore");
-			break;
-		case ban2Hours:
-			pIPRule->m_nExpire	= static_cast< DWORD >( time( NULL ) + 7200 );
-			pIPRule->m_sComment	= _T("Temp Ignore");
-			break;
-		case banWeek:
-			pIPRule->m_nExpire	= static_cast< DWORD >( time( NULL ) + 604800 );
-			pIPRule->m_sComment	= _T("Client Block");
-			break;
-		case banForever:
-			pIPRule->m_nExpire	= CSecureRule::srIndefinite;
-			pIPRule->m_sComment	= _T("Ban");
-			break;
-		default:
-			pIPRule->m_nExpire	= CSecureRule::srSession;
-			pIPRule->m_sComment	= _T("Session Ban");
-		}
+	if ( szComment )
+		pIPRule->m_sComment = szComment;
 
-		if ( szComment )
-			pIPRule->m_sComment = szComment;
+	CopyMemory( pIPRule->m_nIP, pAddress, sizeof pIPRule->m_nIP );
 
-		CopyMemory( pIPRule->m_nIP, pAddress, sizeof pIPRule->m_nIP );
+	Add( pIPRule );
 
-		// Adds the rule either to the map (in case it is a single IP ban) or else to the list 
-		Add( pIPRule );
-
-		if ( bMessage )
-		{
-			theApp.Message( MSG_NOTICE, IDS_NETWORK_SECURITY_BLOCKED,
-				(LPCTSTR)CString( inet_ntoa( *pAddress ) ) );
-		}
+	if ( bMessage )
+	{
+		theApp.Message( MSG_NOTICE, IDS_NETWORK_SECURITY_BLOCKED,
+			(LPCTSTR)CString( inet_ntoa( *pAddress ) ) );
 	}
 }
 
@@ -420,6 +420,7 @@ bool CSecurity::Complain(const IN_ADDR* pAddress, int nBanLength, int nExpire, i
 	CQuickLock oLock( m_pSection );
 
 	DWORD nNow = static_cast< DWORD >( time( NULL ) );
+
 	CComplain* pComplain = NULL;
 	if ( m_Complains.Lookup( pAddress->s_addr, pComplain ) )
 	{
@@ -459,12 +460,13 @@ BOOL CSecurity::IsDenied(const IN_ADDR* pAddress)
 	DWORD nNow = static_cast< DWORD >( time( NULL ) );
 
 	// First check the fast IP lookup map.
-	if( m_pIPRules.find( *(DWORD*) pAddress ) != m_pIPRules.end() )
+	CAddressRuleMap::const_iterator i = m_pIPRules.find( *(DWORD*)pAddress );
+	if ( i != m_pIPRules.end() )
 	{
-		CSecureIPRule* pIPRule = m_pIPRules[*(DWORD*) pAddress];
-		if( pIPRule->IsExpired( nNow ) )
+		CSecureRule* pIPRule = (*i).second;
+		if ( pIPRule->IsExpired( nNow ) )
 		{
-			m_pIPRules.erase( m_pIPRules.find( *(DWORD*) pAddress ) );
+			m_pIPRules.erase( i );
 		}
 		else
 		{
@@ -484,7 +486,7 @@ BOOL CSecurity::IsDenied(const IN_ADDR* pAddress)
 
 	// Second, check the miss cache if the IP has already been checked and found to be OK.
 	// if the address is in cache, it is a miss and no lookup is needed
-	if ( m_Cache.count( *(DWORD*) pAddress ) > 0 )
+	if ( m_Cache.count( *(DWORD*) pAddress ) )
 		return m_bDenyPolicy;
 
 	// Third, check whether the IP is still stored in one of the old rules or the IP range blocking rules.
@@ -525,14 +527,14 @@ BOOL CSecurity::IsDenied(LPCTSTR pszContent)
 {
 	CQuickLock oLock( m_pSection );
 
-	DWORD nNow = static_cast< DWORD >( time( NULL ) );
+	DWORD tNow = static_cast< DWORD >( time( NULL ) );
 
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		POSITION posLast = pos;
 		CSecureRule* pRule = GetNext( pos );
 
-		if ( pRule->IsExpired( nNow ) )
+		if ( pRule->IsExpired( tNow ) )
 		{
 			m_pRules.RemoveAt( posLast );
 			delete pRule;
@@ -543,9 +545,9 @@ BOOL CSecurity::IsDenied(LPCTSTR pszContent)
 			pRule->m_nEver ++;
 
 			if ( pRule->m_nExpire > CSecureRule::srSession &&
-				pRule->m_nExpire < nNow + 300 )
+				pRule->m_nExpire < tNow + 300 )
 				// Add 5 min penalty for early access
-				pRule->m_nExpire = nNow + 300;
+				pRule->m_nExpire = tNow + 300;
 
 			if ( pRule->m_nAction == CSecureRule::srAccept )
 				return FALSE;
@@ -564,14 +566,14 @@ BOOL CSecurity::IsDenied(const CShareazaFile* pFile)
 {
 	CQuickLock oLock( m_pSection );
 
-	DWORD nNow = static_cast< DWORD >( time( NULL ) );
+	DWORD tNow = static_cast< DWORD >( time( NULL ) );
 
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		POSITION posLast = pos;
 		CSecureRule* pRule = GetNext( pos );
 
-		if ( pRule->IsExpired( nNow ) )
+		if ( pRule->IsExpired( tNow ) )
 		{
 			m_pRules.RemoveAt( posLast );
 			delete pRule;
@@ -582,9 +584,9 @@ BOOL CSecurity::IsDenied(const CShareazaFile* pFile)
 			pRule->m_nEver ++;
 
 			if ( pRule->m_nExpire > CSecureRule::srSession &&
-				pRule->m_nExpire < nNow + 300 )
+				pRule->m_nExpire < tNow + 300 )
 				// Add 5 min penalty for early access
-				pRule->m_nExpire = nNow + 300;
+				pRule->m_nExpire = tNow + 300;
 
 			if ( pRule->m_nAction == CSecureRule::srAccept )
 				return FALSE;
@@ -600,14 +602,14 @@ BOOL CSecurity::IsDenied(const CQuerySearch* pQuery, const CString& strContent)
 {
 	CQuickLock oLock( m_pSection );
 
-	DWORD nNow = static_cast< DWORD >( time( NULL ) );
+	DWORD tNow = static_cast< DWORD >( time( NULL ) );
 
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		POSITION posLast = pos;
 		CSecureRule* pRule = GetNext( pos );
 
-		if ( pRule->IsExpired( nNow ) )
+		if ( pRule->IsExpired( tNow ) )
 		{
 			m_pRules.RemoveAt( posLast );
 			delete pRule;
@@ -617,8 +619,10 @@ BOOL CSecurity::IsDenied(const CQuerySearch* pQuery, const CString& strContent)
 			pRule->m_nToday ++;
 			pRule->m_nEver ++;
 
-			if ( pRule->m_nAction == CSecureRule::srAccept ) return FALSE;
-			else if ( pRule->m_nAction == CSecureRule::srDeny ) return TRUE;
+			if ( pRule->m_nAction == CSecureRule::srAccept )
+				return FALSE;
+			else if ( pRule->m_nAction == CSecureRule::srDeny )
+				return TRUE;
 		}
 	}
 
@@ -658,12 +662,15 @@ void CSecurity::Expire()
 		}
 	}
 
-	for ( std::map< DWORD, CSecureIPRule* >::iterator it = m_pIPRules.begin(); it != m_pIPRules.end(); it++ )
+	for ( CAddressRuleMap::const_iterator i = m_pIPRules.begin(); i != m_pIPRules.end(); )
 	{
-		if( (*it).second->IsExpired( nNow ) )
+		if ( (*i).second->IsExpired( nNow ) )
 		{
-			m_pIPRules.erase( it );
-			continue; // to avoid skipping one rule
+			i = m_pIPRules.erase( i );
+		}
+		else
+		{
+			++i;
 		}
 	}
 }
@@ -750,14 +757,12 @@ void CSecurity::Serialize(CArchive& ar)
 
 		for ( POSITION pos = GetIterator() ; pos ; )
 		{
-			CSecureRule* pRule = GetNext( pos );
-			pRule->Serialize( ar, nVersion );
+			GetNext( pos )->Serialize( ar, nVersion );
 		}
 
-		for ( std::map< DWORD, CSecureIPRule* >::iterator it = m_pIPRules.begin(); it != m_pIPRules.end(); it++ )
+		for ( CAddressRuleMap::const_iterator i = m_pIPRules.begin(); i != m_pIPRules.end(); ++i )
 		{
-			CSecureIPRule* pIPRule = (*it).second;
-			pIPRule->Serialize( ar, nVersion );
+			(*i).second->Serialize( ar, nVersion );
 		}
 	}
 	else
@@ -781,13 +786,10 @@ void CSecurity::Serialize(CArchive& ar)
 				pRule->MaskFix();
 
 				// special treatment for single IP security rules
-				if ( pRule->m_nType == CSecureRule::srAddress 
-					&& pRule->m_nMask[3] == 255 
-					&& pRule->m_nMask[2] == 255 
-					&& pRule->m_nMask[1] == 255 
-					&& pRule->m_nMask[0] == 255 )
+				if ( pRule->m_nType == CSecureRule::srAddress &&
+					*(DWORD*)pRule->m_nMask == 0xffffffff )
 				{
-					m_pIPRules[*(DWORD*) pRule->m_nIP] = (CSecureIPRule*) pRule;
+					m_pIPRules[ *(DWORD*)pRule->m_nIP ] = pRule;
 				}
 				else
 				{
@@ -815,9 +817,9 @@ CXMLElement* CSecurity::ToXML(BOOL bRules)
 			pXML->AddElement( GetNext( pos )->ToXML() );
 		}
 
-		for ( std::map< DWORD, CSecureIPRule* >::iterator it = m_pIPRules.begin(); it != m_pIPRules.end(); it++ )
+		for ( CAddressRuleMap::const_iterator i = m_pIPRules.begin(); i != m_pIPRules.end(); ++i )
 		{
-			pXML->AddElement( (*it).second->ToXML() );
+			pXML->AddElement( (*i).second->ToXML() );
 		}
 	}
 
@@ -864,13 +866,10 @@ BOOL CSecurity::FromXML(CXMLElement* pXML)
 					pRule->MaskFix();
 
 					// special treatment for single IP security rules
-					if ( pRule->m_nType == CSecureRule::srAddress 
-						&& pRule->m_nMask[3] == 255 
-						&& pRule->m_nMask[2] == 255 
-						&& pRule->m_nMask[1] == 255 
-						&& pRule->m_nMask[0] == 255 )
+					if ( pRule->m_nType == CSecureRule::srAddress &&
+						*(DWORD*)pRule->m_nMask == 0xffffffff )
 					{
-						m_pIPRules[*(DWORD*) pRule->m_nIP] = (CSecureIPRule*) pRule;
+						m_pIPRules[ *(DWORD*)pRule->m_nIP ] = pRule;
 					}
 					else
 					{
@@ -932,13 +931,10 @@ BOOL CSecurity::Import(LPCTSTR pszFile)
 				pRule->MaskFix();
 
 				// special treatment for single IP security rules
-				if ( pRule->m_nType == CSecureRule::srAddress 
-					&& pRule->m_nMask[3] == 255 
-					&& pRule->m_nMask[2] == 255 
-					&& pRule->m_nMask[1] == 255 
-					&& pRule->m_nMask[0] == 255 )
+				if ( pRule->m_nType == CSecureRule::srAddress &&
+					*(DWORD*)pRule->m_nMask == 0xffffffff )
 				{
-					m_pIPRules[*(DWORD*) pRule->m_nIP] = (CSecureIPRule*) pRule;
+					m_pIPRules[ *(DWORD*) pRule->m_nIP ] = pRule;
 				}
 				else
 				{
@@ -1099,6 +1095,35 @@ BOOL CSecurity::IsVendorBlocked(const CString& sVendor) const
 	return FALSE;
 }
 
+CLiveList* CSecurity::GetList() const
+{
+	CQuickLock oLock( m_pSection );
+
+	CLiveList* pLiveList = new CLiveList( 6, GetCount() + GetCount() / 4u );
+
+	if ( CLiveItem* pDefault = pLiveList->Add( (LPVOID)0 ) )
+	{
+		pDefault->Set( 0, _T("Default Policy") );
+		pDefault->Set( 1, m_bDenyPolicy ? _T("Deny") : _T("Accept") );
+		pDefault->Set( 3, _T("X") );
+		pDefault->SetImage( 0, m_bDenyPolicy ? 2 : 1 );
+	}
+
+	DWORD tNow = static_cast< DWORD >( time( NULL ) );
+
+	int nCount = 1;
+	for ( POSITION pos = GetIterator() ; pos ; ++nCount )
+	{
+		GetNext( pos )->ToList( pLiveList, nCount, tNow );
+	}
+
+	for ( CAddressRuleMap::const_iterator i = m_pIPRules.begin(); i != m_pIPRules.end(); ++i, ++nCount )
+	{
+		(*i).second->ToList( pLiveList, nCount, tNow );
+	}
+
+	return pLiveList;
+}
 
 //////////////////////////////////////////////////////////////////////
 // CSecureRule construction
@@ -1184,28 +1209,14 @@ BOOL CSecureRule::IsExpired(DWORD nNow, BOOL bSession) const
 
 BOOL CSecureRule::Match(const IN_ADDR* pAddress) const
 {
-	if ( m_nType == srAddress && pAddress )
-	{
-		DWORD* pBase = (DWORD*)m_nIP;
-		DWORD* pMask = (DWORD*)m_nMask;
-		DWORD* pTest = (DWORD*)pAddress;
-
-// This only works if IP's are &ed before entered in the list
-		if ( ( ( *pTest ) & ( *pMask ) ) == ( *pBase ) )
-		{
-			return ! IsExpired( (DWORD)time( NULL ) );
-		}
-	}
-	return FALSE;
+	return ( m_nType == srAddress ) && pAddress &&
+		( pAddress->s_addr & *(DWORD*)m_nMask ) == *(DWORD*)m_nIP;
 }
 
 BOOL CSecureRule::Match(LPCTSTR pszContent) const
 {
 	if ( ( m_nType == srContentAny || m_nType == srContentAll ) && pszContent && m_pContent )
 	{
-		if ( IsExpired( (DWORD)time( NULL ) ) )
-			return FALSE;
-
 		for ( LPCTSTR pszFilter = m_pContent ; *pszFilter ; )
 		{
 			BOOL bFound = _tcsistr( pszContent, pszFilter ) != NULL;
@@ -1796,6 +1807,7 @@ BOOL CSecureRule::FromGnucleusString(CString& str)
 
 	return TRUE;
 }
+
 //////////////////////////////////////////////////////////////////////
 // CSecureRule Netmask Fix
 void  CSecureRule::MaskFix()
@@ -1864,6 +1876,64 @@ void  CSecureRule::MaskFix()
 		}
 		m_nIP[ nByte ] = nNetByte;
 	}
+}
+
+void CSecureRule::ToList(CLiveList* pLiveList, int nCount, DWORD tNow) const
+{
+	CLiveItem* pItem = pLiveList->Add( (LPVOID)this );
+
+	pItem->SetImage( 0, m_nAction );
+
+	if ( m_nType == CSecureRule::srAddress )
+	{
+		if ( *(DWORD*)m_nMask == 0xFFFFFFFF )
+		{
+			pItem->Format( 0, _T("%u.%u.%u.%u"),
+				m_nIP[0], m_nIP[1], m_nIP[2], m_nIP[3] );
+		}
+		else
+		{
+			pItem->Format( 0, _T("%u.%u.%u.%u/%u.%u.%u.%u"),
+				m_nIP[0], m_nIP[1], m_nIP[2], m_nIP[3],
+				m_nMask[0], m_nMask[1], m_nMask[2], m_nMask[3] );
+		}
+	}
+	else
+	{
+		pItem->Set( 0, GetContentWords() );
+	}
+
+	switch ( m_nAction )
+	{
+	case CSecureRule::srNull:
+		pItem->Set( 1, _T("N/A") );
+		break;
+	case CSecureRule::srAccept:
+		pItem->Set( 1, _T("Accept") );
+		break;
+	case CSecureRule::srDeny:
+		pItem->Set( 1, _T("Deny") );
+		break;
+	}
+
+	if ( m_nExpire == CSecureRule::srIndefinite )
+	{
+		pItem->Set( 2, _T("Never") );
+	}
+	else if ( m_nExpire == CSecureRule::srSession )
+	{
+		pItem->Set( 2, _T("Session") );
+	}
+	else if ( m_nExpire >= tNow )
+	{
+		DWORD nTime = ( m_nExpire - tNow );
+		pItem->Format( 2, _T("%ud %uh %um"),
+			nTime / 86400u, (nTime % 86400u) / 3600u, ( nTime % 3600u ) / 60u );
+	}
+
+	pItem->Format( 3, _T("%i"), nCount );
+	pItem->Format( 4, _T("%u (%u)"), m_nToday, m_nEver );
+	pItem->Set( 5, m_sComment );
 }
 
 //////////////////////////////////////////////////////////////////////

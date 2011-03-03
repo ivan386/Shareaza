@@ -1,7 +1,7 @@
 //
 // Security.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -21,9 +21,9 @@
 
 #pragma once
 
+class CLiveList;
 class CShareazaFile;
 class CSecureRule;
-class CSecureIPRule;
 class CQuerySearch;
 class CXMLElement;
 
@@ -60,10 +60,13 @@ protected:
 
 	CList< CSecureRule* >		m_pRules;
 	CComplainMap				m_Complains;
-	std::set< DWORD >			m_Cache; // miss cache
+
+	typedef std::set< DWORD > CAddressMap;
+	CAddressMap		m_Cache; // miss cache
 
 	// single IP blocking rules
-	std::map< DWORD, CSecureIPRule* >	m_pIPRules;
+	typedef std::map< DWORD, CSecureRule* > CAddressRuleMap;
+	CAddressRuleMap	m_pIPRules;
 
 // Operations
 public:
@@ -76,15 +79,8 @@ public:
 	void			MoveUp(CSecureRule* pRule);
 	void			MoveDown(CSecureRule* pRule);
 
-	inline void		Ban(const IN_ADDR* pAddress, int nBanLength, BOOL bMessage = TRUE, LPCTSTR szComment = NULL)
-	{
-		IPBanHelper( pAddress, nBanLength, bMessage, szComment );
-	}
-
-	inline void		Ban(const CShareazaFile* pFile, int nBanLength, LPCTSTR szComment = NULL)
-	{
-		FileBanHelper( pFile, nBanLength, szComment );
-	}
+	void			Ban(const IN_ADDR* pAddress, int nBanLength, BOOL bMessage = TRUE, LPCTSTR szComment = NULL);
+	void			Ban(const CShareazaFile* pFile, int nBanLength, BOOL bMessage = TRUE, LPCTSTR szComment = NULL);
 
 	bool			Complain(const IN_ADDR* pAddress, int nBanLength = ban5Mins, int nExpire = 10, int nCount = 3);
 	void			Clear();
@@ -96,6 +92,9 @@ public:
 	BOOL			Load();
 	BOOL			Save();
 	BOOL			Import(LPCTSTR pszFile);
+
+	// Creates new CLiveList object filled by all security rules
+	CLiveList*		GetList() const;
 
 	// Checks the user agent to see if it's a GPL breaker, or other trouble-maker
 	// We don't ban them, but also don't offer leaf slots to them.
@@ -113,8 +112,6 @@ public:
 	BOOL			IsVendorBlocked(const CString& sVendor) const;
 
 protected:
-	void			IPBanHelper(const IN_ADDR* pAddress, int nBanLength, BOOL bMessage, LPCTSTR szComment);
-	void			FileBanHelper(const CShareazaFile* pFile, int nBanLength, LPCTSTR szComment);
 	CSecureRule*	GetGUID(const GUID& oGUID) const;
 	CXMLElement*	ToXML(BOOL bRules = TRUE);
 	BOOL			FromXML(CXMLElement* pXML);
@@ -160,12 +157,9 @@ public:
 	BOOL			FromXML(CXMLElement* pXML);
 	CString			ToGnucleusString() const;
 	BOOL			FromGnucleusString(CString& str);
-};
 
-// For now identical to CSecureRule. This will allow lateron to make several security filter classes
-// inherit from CSecureRule.
-class CSecureIPRule : public CSecureRule
-{
+	// Adds new item to CLiveList object
+	void			ToList(CLiveList* pLiveList, int nCount, DWORD tNow) const;
 };
 
 // An adult filter class, used in searches, chat, etc
