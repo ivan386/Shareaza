@@ -4,8 +4,11 @@
 	padding: 0px;
 	background-color: #ffffff;
 	color: #000000;
-	font-size: 8pt;
 	text-align: center;		/*	CENTERS .page DIV IN IE 7/8 WHICH IGNORES MARGIN AUTO	*/
+}
+body,td,th {
+	font-family: Tahoma, Verdana, Arial, sans-serif;
+	font-size: 12px; 
 }
 body.imgheader {
 	background-image:url(/header_2.png);
@@ -16,12 +19,25 @@ body.imgheader {
 	left:0px;
 	top: 0px;
 }
-body,td,th {
-	font-family: Tahoma, Verdana, Arial, sans-serif;
-	font-size: 12px; 
+h3 {
+	font-size: 12px;
+	padding:0px;
+	margin:0px;
 }
-h1 {
-	font-size: 16px;
+h3.darkgray {
+	background-color: #CCCCCC;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	border: 1px solid #999999;
+	text-align: center;
+}
+p {
+	margin:0px;
+	margin-bottom: 10px;
+	padding:4px;
+	background-color: #F7F7F7;
+	border: 1px solid #999999;
+	border-top:0px;
 }
 .page
 {
@@ -56,4 +72,21 @@ table.nodeinfo tr td
 	padding: 11px 0 10px 12px;
 	text-align: center;
 	font-size: 8pt;
+}
+ul {
+	list-style-type: none;
+	margin:0px;
+	padding:0px;
+	margin-bottom: 40px;
+}
+li {
+	float: left;
+	display: block;
+	width: 386px;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	border: 1px solid #999999;
+	margin-right: 4px;
+	margin-top:2px;
+	text-align: center;
 }
