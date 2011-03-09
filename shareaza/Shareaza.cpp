@@ -485,6 +485,7 @@ int CShareazaApp::ExitInstance()
 	IEProtocol.Close();
 	Skin.Clear();
 	Plugins.Clear();
+	SchemaCache.Clear();
 
 	if ( m_hTheme != NULL )
 		FreeLibrary( m_hTheme );
