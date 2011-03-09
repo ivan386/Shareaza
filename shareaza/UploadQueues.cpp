@@ -1,7 +1,7 @@
 //
 // UploadQueues.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -879,17 +879,36 @@ void CUploadQueues::Validate()
 {
 	CQuickLock oLock( m_pSection );
 
-	CString strQueueName;
-	if ( SelectQueue( PROTOCOL_ED2K, _T("Filename"), 0x00A00000, CUploadQueue::ulqPartial ) == NULL ||
-		 SelectQueue( PROTOCOL_ED2K, _T("Filename"), 0x03200000, CUploadQueue::ulqPartial ) == NULL ||
-		 SelectQueue( PROTOCOL_ED2K, _T("Filename"), 0x1F400000, CUploadQueue::ulqPartial ) == NULL )
+	bool bED2K_NoPartial = 
+		SelectQueue( PROTOCOL_ED2K, _T("Filename"), 1, CUploadQueue::ulqPartial ) == NULL ||
+		SelectQueue( PROTOCOL_ED2K, _T("Filename"), SIZE_UNKNOWN - 1, CUploadQueue::ulqPartial ) == NULL;
+	bool bED2K_NoLibrary = 
+		SelectQueue( PROTOCOL_ED2K, _T("Filename"), 1, CUploadQueue::ulqLibrary ) == NULL ||
+		SelectQueue( PROTOCOL_ED2K, _T("Filename"), SIZE_UNKNOWN - 1, CUploadQueue::ulqLibrary ) == NULL;
+
+	bool bHTTP_NoPartial = 
+		SelectQueue( PROTOCOL_HTTP, _T("Filename"), 1, CUploadQueue::ulqPartial ) == NULL ||
+		SelectQueue( PROTOCOL_HTTP, _T("Filename"), SIZE_UNKNOWN - 1, CUploadQueue::ulqPartial ) == NULL;
+	bool bHTTP_NoLibrary = 
+		SelectQueue( PROTOCOL_HTTP, _T("Filename"), 1, CUploadQueue::ulqLibrary ) == NULL ||
+		SelectQueue( PROTOCOL_HTTP, _T("Filename"), SIZE_UNKNOWN - 1, CUploadQueue::ulqLibrary ) == NULL;
+
+	bool bDC_NoPartial = 
+		SelectQueue( PROTOCOL_DC, _T("Filename"), 1, CUploadQueue::ulqPartial ) == NULL ||
+		SelectQueue( PROTOCOL_DC, _T("Filename"), SIZE_UNKNOWN - 1, CUploadQueue::ulqPartial ) == NULL;
+	bool bDC_NoLibrary = 
+		SelectQueue( PROTOCOL_DC, _T("Filename"), 1, CUploadQueue::ulqLibrary ) == NULL ||
+		SelectQueue( PROTOCOL_DC, _T("Filename"), SIZE_UNKNOWN - 1, CUploadQueue::ulqLibrary ) == NULL;
+
+	if ( bED2K_NoPartial || bED2K_NoLibrary )
 	{
-		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_ED2K_GUARD );
-		CUploadQueue* pQueue		= Create( strQueueName );
-		pQueue->m_nProtocols		= (1<<PROTOCOL_ED2K);
+		CUploadQueue* pQueue		= Create( LoadString ( IDS_UPLOAD_QUEUE_ED2K_GUARD ) );
+		pQueue->m_nProtocols		= ( 1 << PROTOCOL_ED2K );
 		pQueue->m_nMaxTransfers		= 5;
 		pQueue->m_bRotate			= TRUE;
-		pQueue->m_nFileStateFlag	= CUploadQueue::ulqPartial;
+		pQueue->m_nFileStateFlag	= ( bED2K_NoPartial && bED2K_NoLibrary ) ?
+			CUploadQueue::ulqBoth :
+			( bED2K_NoPartial ? CUploadQueue::ulqPartial : CUploadQueue::ulqLibrary );
 
 		if ( Settings.Connection.OutSpeed > 100 )
 		{
@@ -909,45 +928,15 @@ void CUploadQueues::Validate()
 		}
 	}
 
-	if ( SelectQueue( PROTOCOL_ED2K, _T("Filename"), 0x00A00000, CUploadQueue::ulqLibrary ) == NULL ||
-		 SelectQueue( PROTOCOL_ED2K, _T("Filename"), 0x03200000, CUploadQueue::ulqLibrary ) == NULL ||
-		 SelectQueue( PROTOCOL_ED2K, _T("Filename"), 0x1F400000, CUploadQueue::ulqLibrary ) == NULL )
+	if ( bHTTP_NoPartial || bHTTP_NoLibrary )
 	{
-		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_ED2K_GUARD );
-		CUploadQueue* pQueue		= Create( strQueueName );
-		pQueue->m_nProtocols		= (1<<PROTOCOL_ED2K);
+		CUploadQueue* pQueue		= Create( LoadString ( IDS_UPLOAD_QUEUE_HTTP_GUARD ) );
+		pQueue->m_nProtocols		= ( 1 << PROTOCOL_HTTP);
 		pQueue->m_nMaxTransfers		= 5;
 		pQueue->m_bRotate			= TRUE;
-		pQueue->m_nFileStateFlag	= CUploadQueue::ulqLibrary;
-
-		if ( Settings.Connection.OutSpeed > 100 )
-		{
-			pQueue->m_nMinTransfers		= 2;
-			pQueue->m_nBandwidthPoints	= 30;
-			pQueue->m_nCapacity			= 2000;
-			pQueue->m_nRotateTime		= 10*60;
-			pQueue->m_bRewardUploaders	= TRUE;
-		}
-		else
-		{
-			pQueue->m_nMinTransfers		= 1;
-			pQueue->m_nBandwidthPoints	= 20;
-			pQueue->m_nCapacity			= 500;
-			pQueue->m_nRotateTime		= 30*60;
-			pQueue->m_bRewardUploaders	= TRUE;
-		}
-	}
-
-	if ( SelectQueue( PROTOCOL_HTTP, _T("Filename"), 0x00A00000, CUploadQueue::ulqPartial ) == NULL ||
-		 SelectQueue( PROTOCOL_HTTP, _T("Filename"), 0x03200000, CUploadQueue::ulqPartial ) == NULL ||
-		 SelectQueue( PROTOCOL_HTTP, _T("Filename"), 0x1F400000, CUploadQueue::ulqPartial ) == NULL )
-	{
-		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_HTTP_GUARD );
-		CUploadQueue* pQueue		= Create( strQueueName );
-		pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);
-		pQueue->m_nMaxTransfers		= 5;
-		pQueue->m_bRotate			= TRUE;
-		pQueue->m_nFileStateFlag	= CUploadQueue::ulqPartial;
+		pQueue->m_nFileStateFlag	= ( bHTTP_NoPartial && bHTTP_NoLibrary ) ?
+			CUploadQueue::ulqBoth :
+			( bHTTP_NoPartial ? CUploadQueue::ulqPartial : CUploadQueue::ulqLibrary );
 
 		if ( Settings.Connection.OutSpeed > 100 )
 		{
@@ -965,16 +954,15 @@ void CUploadQueues::Validate()
 		}
 	}
 
-	if ( SelectQueue( PROTOCOL_HTTP, _T("Filename"), 0x00A00000, CUploadQueue::ulqLibrary ) == NULL ||
-		 SelectQueue( PROTOCOL_HTTP, _T("Filename"), 0x03200000, CUploadQueue::ulqLibrary ) == NULL ||
-		 SelectQueue( PROTOCOL_HTTP, _T("Filename"), 0x1F400000, CUploadQueue::ulqLibrary ) == NULL )
+	if ( bDC_NoPartial || bDC_NoLibrary )
 	{
-		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_HTTP_GUARD );
-		CUploadQueue* pQueue		= Create( strQueueName );
-		pQueue->m_nProtocols		= (1<<PROTOCOL_HTTP);
+		CUploadQueue* pQueue		= Create( LoadString ( IDS_UPLOAD_QUEUE_DC_GUARD ) );
+		pQueue->m_nProtocols		= ( 1 << PROTOCOL_DC );
 		pQueue->m_nMaxTransfers		= 5;
 		pQueue->m_bRotate			= TRUE;
-		pQueue->m_nFileStateFlag	= CUploadQueue::ulqLibrary;
+		pQueue->m_nFileStateFlag	= ( bDC_NoPartial && bDC_NoLibrary ) ?
+			CUploadQueue::ulqBoth :
+			( bDC_NoPartial ? CUploadQueue::ulqPartial : CUploadQueue::ulqLibrary );
 
 		if ( Settings.Connection.OutSpeed > 100 )
 		{
@@ -999,14 +987,5 @@ void CUploadQueues::Validate()
 	else
 	{
 		m_bDonkeyLimited = FALSE;
-	}
-
-	// Display warning if needed
-	if ( Settings.eDonkey.EnableToday || Settings.eDonkey.EnableAlways )
-	{
-		if ( m_bDonkeyLimited ) 
-			theApp.Message( MSG_NOTICE, _T("eDonkey upload ratio active- Low upload may slow downloads.")  );
-		else
-			theApp.Message( MSG_DEBUG, _T("eDonkey upload ratio is OK.")  );
 	}
 }
