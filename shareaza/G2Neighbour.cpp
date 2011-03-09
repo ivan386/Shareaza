@@ -1,7 +1,7 @@
 //
 // G2Neighbour.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -840,7 +840,10 @@ BOOL CG2Neighbour::OnKHL(CG2Packet* pPacket)
 BOOL CG2Neighbour::ParseKHLPacket(CG2Packet* pPacket, const SOCKADDR_IN* pHost)
 {
 	BOOL bInvalid = FALSE;
-	CG2Neighbour* pOwner = static_cast< CG2Neighbour* >( Neighbours.Get( pHost->sin_addr ) );
+
+	CNeighbour* pNeighbour = Neighbours.Get( pHost->sin_addr );
+	CG2Neighbour* pOwner = ( pNeighbour && pNeighbour->m_nProtocol == PROTOCOL_G2 ) ? 
+		static_cast< CG2Neighbour* >( pNeighbour ) : NULL;
 
 	if ( pPacket->m_bCompound )
 	{
