@@ -1,7 +1,7 @@
 //
 // DownloadWithTiger.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -285,15 +285,21 @@ BOOL CDownloadWithTiger::NeedTigerTree() const
 	return ( m_nSize < SIZE_UNKNOWN && m_pTigerTree.IsAvailable() == FALSE );
 }
 
-BOOL CDownloadWithTiger::SetTigerTree(BYTE* pTiger, DWORD nTiger)
+BOOL CDownloadWithTiger::SetTigerTree(BYTE* pTiger, DWORD nTiger, BOOL bLevel1)
 {
 	CQuickLock oLock( m_pTigerSection );
 
-	if ( m_nSize == SIZE_UNKNOWN ) return FALSE;
-	if ( m_pTigerTree.IsAvailable() ) return TRUE;
+	if ( m_nSize == SIZE_UNKNOWN )
+		return FALSE;
 
-	if ( ! m_pTigerTree.FromBytes( pTiger, nTiger,
-			Settings.Library.TigerHeight, m_nSize ) )
+	if ( m_pTigerTree.IsAvailable() )
+		return TRUE;
+
+	if ( ! ( bLevel1 ?
+		m_pTigerTree.FromBytesLevel1( pTiger, nTiger,
+			Settings.Library.TigerHeight, m_nSize ) :
+		m_pTigerTree.FromBytes( pTiger, nTiger,
+			Settings.Library.TigerHeight, m_nSize ) ) )
 	{
 		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_TIGER_CORRUPT,
 			(LPCTSTR)GetDisplayName() );

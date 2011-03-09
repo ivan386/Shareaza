@@ -1,7 +1,7 @@
 //
 // TigerTree.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -960,7 +960,7 @@ BOOL CTigerTree::FinishFile()
 			if ( pIn[0].bValid && pIn[1].bValid )
 			{
 				Tiger( NULL, TIGER_SIZE * 2, pOut->value, pIn[0].value, pIn[1].value );
-				pOut->bValid = TRUE;
+				pOut->bValid = true;
 			}
 			else if ( pIn[0].bValid )
 			{
@@ -1047,20 +1047,46 @@ BOOL CTigerTree::ToBytes(uint8** ppOutput, uint32* pnOutput, uint32 nHeight)
 
 	if ( nHeight < 1 || nHeight > m_nHeight ) nHeight = m_nHeight;
 
-	uint32 nNodeCount = 1;
-	while ( nHeight-- ) nNodeCount *= 2;
-	nNodeCount --;
+	uint32 nNodeCount = ( ( (uint32)1 ) << nHeight ) - 1;
 
 	nNodeCount	= min( nNodeCount, m_nNodeCount );
 	*pnOutput	= nNodeCount * TIGER_SIZE;
-	*ppOutput	= (uint8*)GlobalAlloc( GPTR, *pnOutput );
+	uint8* pOut = *ppOutput	= (uint8*)GlobalAlloc( GPTR, *pnOutput );
 	if ( ! *ppOutput )
 		return FALSE;
 
 	CTigerNode* pNode = m_pNode;
-	uint8* pOut = *ppOutput;
-
 	for ( uint32 nNode = 0 ; nNode < nNodeCount ; nNode++, pNode++ )
+	{
+		if ( pNode->bValid )
+		{
+			CopyMemory( pOut, pNode->value, TIGER_SIZE );
+			pOut += TIGER_SIZE;
+		}
+		else
+		{
+			*pnOutput -= TIGER_SIZE;
+		}
+	}
+
+	return TRUE;
+}
+
+BOOL CTigerTree::ToBytesLevel1(uint8** ppOutput, uint32* pnOutput)
+{
+	CSectionLock oLock( &m_pSection );
+
+	if ( m_pNode == NULL )
+		return FALSE;
+
+	*pnOutput	= m_nBaseUsed * TIGER_SIZE;
+	uint8* pOut = *ppOutput	= (uint8*)GlobalAlloc( GPTR, *pnOutput );
+	if ( ! *ppOutput )
+		return FALSE;
+
+	CTigerNode* pNode = m_pNode + m_nNodeCount - m_nNodeBase;
+
+	for ( uint32 nNode = 0 ; nNode < m_nBaseUsed ; ++nNode, ++pNode )
 	{
 		if ( pNode->bValid )
 		{
@@ -1089,7 +1115,7 @@ BOOL CTigerTree::FromBytes(const uint8* pInput, uint32 nInput, uint32 nHeight, u
 
 	for ( uint32 nStep = m_nBaseUsed ; nStep ; nStep-- )
 	{
-		pBase[ nStep - 1 ].bValid = TRUE;
+		pBase[ nStep - 1 ].bValid = true;
 	}
 
 	for ( uint32 nCombine = m_nNodeBase ; nCombine > 1 ; nCombine /= 2 )
@@ -1099,7 +1125,7 @@ BOOL CTigerTree::FromBytes(const uint8* pInput, uint32 nInput, uint32 nHeight, u
 
 		for ( uint32 nIterate = nCombine / 2 ; nIterate ; nIterate--, pIn += 2, pOut++ )
 		{
-			if ( pIn[0].bValid ) pOut->bValid = TRUE;
+			if ( pIn[0].bValid ) pOut->bValid = true;
 		}
 
 		pBase -= nCombine / 2;
@@ -1145,6 +1171,37 @@ BOOL CTigerTree::FromBytes(const uint8* pInput, uint32 nInput, uint32 nHeight, u
 	return TRUE;
 }
 
+BOOL CTigerTree::FromBytesLevel1(const uint8* pInput, uint32 nInput, uint32 nHeight, uint64 nLength)
+{
+	CSectionLock oLock( &m_pSection );
+
+	SetupAndAllocate( nHeight, nLength );
+
+	CTigerNode* pBase = m_pNode + m_nNodeCount - m_nNodeBase;
+
+	uint32 nCount = nInput / TIGER_SIZE;
+	if ( nCount != m_nBaseUsed )
+	{
+		// Not a first level
+		Clear();
+		return FALSE;
+	}
+
+	for ( uint32 i = 0; i < m_nBaseUsed; ++i, ++pBase )
+	{
+		CopyMemory( pBase->value, &pInput[ i * TIGER_SIZE ], TIGER_SIZE );
+		pBase->bValid = true;
+	}
+
+	if ( ! CheckIntegrity() )
+	{
+		Clear();
+		return FALSE;
+	}
+
+	return TRUE;
+}
+
 //////////////////////////////////////////////////////////////////////
 // CTigerTree integrity check
 
@@ -1157,12 +1214,10 @@ BOOL CTigerTree::CheckIntegrity()
 	m_nNodeBase = ( m_nNodeCount + 1 ) / 2;
 	CTigerNode* pBase = m_pNode + m_nNodeCount - m_nNodeBase;
 
-	for ( uint32 nCombine = m_nNodeBase ; nCombine > 1 ; nCombine /= 2 )
+	for ( uint32 nCombine = m_nNodeBase ; nCombine > 1 ; )
 	{
 		CTigerNode* pIn		= pBase;
 		CTigerNode* pOut	= pBase - nCombine / 2;
-
-		if ( nCombine == 2 && pOut->bValid == FALSE ) return FALSE;
 
 		for ( uint32 nIterate = nCombine / 2 ; nIterate ; nIterate--, pIn += 2, pOut++ )
 		{
@@ -1170,11 +1225,24 @@ BOOL CTigerTree::CheckIntegrity()
 			{
 				TIGEROOT pTemp;
 				Tiger( NULL, TIGER_SIZE * 2, pTemp.w, pIn[0].value, pIn[1].value );
-				if ( memcmp( pTemp.w, pOut->value, TIGER_SIZE ) ) return FALSE;
+				
+				if ( ! pOut->bValid )
+				{
+					memcpy( pOut->value, pTemp.w, TIGER_SIZE );
+					pOut->bValid = true;
+				}
+				else if ( memcmp( pTemp.w, pOut->value, TIGER_SIZE ) )
+					return FALSE;
 			}
 			else if ( pIn[0].bValid )
 			{
-				if ( memcmp( pIn[0].value, pOut->value, TIGER_SIZE ) ) return FALSE;
+				if ( ! pOut->bValid )
+				{
+					memcpy( pOut->value, pIn[0].value, TIGER_SIZE );
+					pOut->bValid = true;
+				}
+				else if ( memcmp( pIn[0].value, pOut->value, TIGER_SIZE ) )
+					return FALSE;
 			}
 			else
 			{
@@ -1182,7 +1250,11 @@ BOOL CTigerTree::CheckIntegrity()
 			}
 		}
 
-		pBase -= nCombine / 2;
+		if ( nCombine == 2 && ! pOut->bValid )
+			return FALSE;
+
+		nCombine /= 2;
+		pBase -= nCombine;
 	}
 
 	return TRUE;
@@ -1203,7 +1275,7 @@ uint32 CTigerTree::GetHeight() const
 uint32 CTigerTree::GetBlockLength() const
 {
 	CSectionLock oLock( &m_pSection );
-	return 1024 * m_nBlockCount;
+	return BLOCK_SIZE * m_nBlockCount;
 }
 
 uint32 CTigerTree::GetBlockCount() const
@@ -1306,7 +1378,7 @@ void CTigerTree::BlocksToNode()
 	pNode->value[ 0 ]		= m_pStackBase->value[ 0 ];
 	pNode->value[ 1 ]		= m_pStackBase->value[ 1 ];
 	pNode->value[ 2 ]		= m_pStackBase->value[ 2 ];
-	pNode->bValid	= TRUE;
+	pNode->bValid	= true;
 
 	m_nBlockPos		= 0;
 	m_pStackTop		= m_pStackBase;

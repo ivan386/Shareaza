@@ -1,7 +1,7 @@
 //
 // TigerTree.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -60,9 +60,15 @@ public:
 	void	AddToTest(const void* pInput, uint32 nLength);
 	BOOL	FinishBlockTest(uint32 nBlock);
 
-	// To free ppOutput, use the GlobalFree function
+	// Extract hash tree (to free ppOutput use the GlobalFree function)
 	BOOL	ToBytes(uint8** ppOutput, uint32* pnOutput, uint32 nHeight = 0);
-	BOOL	FromBytes(const uint8* pOutput, uint32 nOutput, uint32 nHeight, uint64 nLength);
+	// Extract first level of hash tree (to free ppOutput use the GlobalFree function)
+	BOOL	ToBytesLevel1(uint8** ppOutput, uint32* pnOutput);
+	// Create hash tree from full tree data
+	BOOL	FromBytes(const uint8* pInput, uint32 nInput, uint32 nHeight, uint64 nLength);
+	// Create hash tree from first level of tree data
+	BOOL	FromBytesLevel1(const uint8* pInput, uint32 nInput, uint32 nHeight, uint64 nLength);
+	// Check hash tree integrity (rebuilding missed hashes if needed)
 	BOOL	CheckIntegrity();
 
 	BOOL	IsAvailable() const;

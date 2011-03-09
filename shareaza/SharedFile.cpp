@@ -525,27 +525,42 @@ CString CLibraryFile::GetMetadataWords() const
 
 CTigerTree* CLibraryFile::GetTigerTree()
 {
-	if ( ! m_oTiger ) return NULL;
-	if ( ! m_pFolder ) return NULL;
+	if ( ! m_oTiger )
+		// Not hashed yet
+		return NULL;
 
-	CTigerTree* pTiger = new CTigerTree();
+	if ( ! m_pFolder )
+		// Virtual file
+		return NULL;
 
-	if ( LibraryHashDB.GetTiger( m_nIndex, pTiger ) )
+	CAutoPtr< CTigerTree > pTiger( new CTigerTree() );
+	if ( ! pTiger )
+		// Out of memory
+		return NULL;
+
+	if ( ! LibraryHashDB.GetTiger( m_nIndex, pTiger ) )
+		// Database error
+		return NULL;
+
+	pTiger->SetupParameters( m_nSize );
+
+	Hashes::TigerHash oRoot;
+	pTiger->GetRoot( &oRoot[ 0 ] );
+	oRoot.validate();
+	if ( m_oTiger != oRoot )
 	{
-		Hashes::TigerHash oRoot;
-		pTiger->GetRoot( &oRoot[ 0 ] );
-		oRoot.validate();
-		if ( ! m_oTiger || m_oTiger == oRoot ) return pTiger;
-
+		// Wrong hash
 		LibraryHashDB.DeleteTiger( m_nIndex );
 
 		Library.RemoveFile( this );
 		m_oTiger.clear();
 		Library.AddFile( this );
+
+		return NULL;
 	}
 
-	delete pTiger;
-	return NULL;
+	// OK
+	return pTiger.Detach();
 }
 
 CED2K* CLibraryFile::GetED2K()

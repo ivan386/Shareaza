@@ -1,7 +1,7 @@
 //
 // UploadTransferDC.cpp 
 //
-// Copyright (c) Shareaza Development Team, 2010.
+// Copyright (c) Shareaza Development Team, 2010-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -482,19 +482,27 @@ BOOL CUploadTransferDC::SendFile()
 
 BOOL CUploadTransferDC::RequestTigerTree(CLibraryFile* pFile, QWORD nOffset, QWORD nLength)
 {
-	theApp.Message( MSG_INFO, IDS_UPLOAD_TIGER_SEND,
-		(LPCTSTR)pFile->m_sName, (LPCTSTR)m_sAddress );
+	if ( ! RequestComplete( pFile ) )
+	{
+		ASSERT( FALSE );
+		return FALSE;
+	}
 
-	auto_ptr< CTigerTree > pTigerTree( pFile->GetTigerTree() );
-	BYTE* pSerialTree = NULL;
-	DWORD nSerialTree = 0;
-	if ( ! pTigerTree.get() || ! pTigerTree->ToBytes( &pSerialTree, &nSerialTree ) )
+	theApp.Message( MSG_INFO, IDS_UPLOAD_TIGER_SEND,
+		(LPCTSTR)m_sName, (LPCTSTR)m_sAddress );
+
+	CAutoPtr< CTigerTree > pTigerTree( pFile->GetTigerTree() );
+	if ( ! pTigerTree )
 	{
 		return FALSE;
 	}
 
-	// TODO: Find out and fix TigerTree hashes placement in output buffer
-	nSerialTree = 24; // Root hash only
+	BYTE* pSerialTree = NULL;
+	DWORD nSerialTree = 0;
+	if ( ! pTigerTree->ToBytesLevel1( &pSerialTree, &nSerialTree ) )
+	{
+		return FALSE;
+	}
 
 	if ( nOffset >= nSerialTree )
 		nLength = SIZE_UNKNOWN;
@@ -519,7 +527,6 @@ BOOL CUploadTransferDC::RequestTigerTree(CLibraryFile* pFile, QWORD nOffset, QWO
 	m_nOffset = nOffset;
 	m_nLength = nLength;
 	m_nPosition = 0;
-	m_sName = pFile->m_sName;
 
 	StartSending( upsTigerTree );
 
@@ -534,11 +541,11 @@ BOOL CUploadTransferDC::RequestFileList(BOOL bFile, BOOL bZip, const std::string
 		(LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
 
 	BOOL bBZip = bFile && ( strFilename == "files.xml.bz2" );
-	CString strFile( bFile ? "/" : strFilename.c_str() );
+	m_sName = ( bFile ? "/" : strFilename.c_str() );
 
 	// Create library file list
 	CBuffer pXML;
-	LibraryToFileList( strFile, pXML );
+	LibraryToFileList( m_sName, pXML );
 
 	// TODO: Implement partial request of file list
 	nOffset = 0;
@@ -579,7 +586,6 @@ BOOL CUploadTransferDC::RequestFileList(BOOL bFile, BOOL bZip, const std::string
 	m_nOffset = nOffset;
 	m_nLength = pXML.m_nLength;
 	m_nPosition = 0;
-	m_sName = strFile;
 
 	StartSending( upsBrowse );
 

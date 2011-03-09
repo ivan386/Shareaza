@@ -1,7 +1,7 @@
 //
 // DownloadTransferDC.h 
 //
-// Copyright (c) Shareaza Development Team, 2010.
+// Copyright (c) Shareaza Development Team, 2010-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -52,6 +52,10 @@ public:
 	BOOL			OnError();
 
 protected:
+	QWORD			m_nTigerLength;
+
 	virtual BOOL	SubtractRequested(Fragments::List& ppFragments);
 	BOOL			StartNextFragment();
+	BOOL			ReadContent();
+	BOOL			ReadTiger();
 };

@@ -1,7 +1,7 @@
 //
 // DownloadWithTiger.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -62,7 +62,7 @@ private:
 public:
 	BOOL		GetNextVerifyRange(QWORD& nOffset, QWORD& nLength, BOOL& bSuccess, int nHash = HASH_NULL) const;
 	BOOL		NeedTigerTree() const;
-	BOOL		SetTigerTree(BYTE* pTiger, DWORD nTiger);
+	BOOL		SetTigerTree(BYTE* pTiger, DWORD nTiger, BOOL bLevel1 = FALSE);
 	CTigerTree*	GetTigerTree();
 	BOOL		NeedHashset() const;
 	BOOL		SetHashset(BYTE* pSource, DWORD nSource);

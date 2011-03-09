@@ -1,7 +1,7 @@
 //
 // DCClient.cpp
 //
-// Copyright (c) Shareaza Development Team, 2010.
+// Copyright (c) Shareaza Development Team, 2010-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -801,7 +801,7 @@ BOOL CDCClient::Handshake()
 		Greetings();
 	}
 
-	Write( _P("$Supports MiniSlots XmlBZList ADCGet TTHF ZLIG |") );
+	Write( _P("$Supports MiniSlots XmlBZList ADCGet TTHL TTHF ZLIG |") );
 
 	CString strDirection;
 	strDirection.Format( _T("$Direction %s %u|"),
