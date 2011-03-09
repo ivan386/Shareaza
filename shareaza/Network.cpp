@@ -745,7 +745,7 @@ void CNetwork::OnRun()
 				continue;
 			}
 
-			if ( UPnPFinder->IsAsyncFindRunning() )
+			if ( UPnPFinder && UPnPFinder->IsAsyncFindRunning() )
 			{
 				Sleep( 0 );
 				continue;
@@ -1543,7 +1543,8 @@ void CNetwork::MapPorts()
 		// Using Control Point UPnP methods
 		theApp.Message( MSG_INFO, L"Trying to setup port mappings using Control Point UPnP...");
 
-		UPnPFinder->StartDiscovery();
+		if ( UPnPFinder )
+			UPnPFinder->StartDiscovery();
 	}
 }
 
@@ -1606,8 +1607,11 @@ void CNetwork::DeletePorts()
 		}
 
 		// Legacy way
-		UPnPFinder->StopAsyncFind();
-		UPnPFinder->DeletePorts();
+		if ( UPnPFinder )
+		{
+			UPnPFinder->StopAsyncFind();
+			UPnPFinder->DeletePorts();
+		}
 	}
 
 	m_nUPnPExternalAddress.s_addr = INADDR_ANY;
