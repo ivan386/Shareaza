@@ -240,7 +240,14 @@ void CSecurity::Clear()
 
 	m_pRules.RemoveAll();
 
+	for ( CAddressRuleMap::const_iterator i = m_pIPRules.begin(); i != m_pIPRules.end(); ++i )
+	{
+		delete (*i).second;
+	}
+
 	m_pIPRules.clear();
+
+	m_Cache.clear();
 }
 
 //////////////////////////////////////////////////////////////////////
