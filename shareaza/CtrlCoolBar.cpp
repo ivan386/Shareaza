@@ -1,7 +1,7 @@
 //
 // CtrlCoolBar.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -262,6 +262,8 @@ void CCoolBarCtrl::Copy(CCoolBarCtrl* pOther)
 		CCoolBarItem* pItem = pOther->m_pItems.GetNext( pos );
 		m_pItems.AddTail( new CCoolBarItem( this, pItem ) );
 	}
+
+	Invalidate();
 }
 
 UINT CCoolBarCtrl::ThrowMenu(UINT nID, CMenu* pMenu, CWnd* pParent, BOOL bCommand, BOOL bRight)
