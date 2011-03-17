@@ -1,7 +1,7 @@
 //
 // GProfile.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -59,7 +59,8 @@ public:
 	CG2Packet*		CreateAvatar() const;
 
 protected:
-	CXMLElement*	m_pXML;
+	CAutoPtr< CXMLElement >	m_pXML;			// Real profile
+	CAutoPtr< CXMLElement >	m_pXMLExport;	// Profile for export recreated from m_pXML by GetXML()
 	static LPCTSTR	xmlns;
 
 	// Create BitTorrent GUID from Gnutella GUID

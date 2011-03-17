@@ -1,7 +1,7 @@
 //
 // GProfile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -54,7 +54,6 @@ CGProfile::CGProfile() :
 
 CGProfile::~CGProfile()
 {
-	delete m_pXML;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -70,7 +69,18 @@ BOOL CGProfile::IsValid() const
 
 CXMLElement* CGProfile::GetXML(LPCTSTR pszElement, BOOL bCreate)
 {
-	return pszElement ? m_pXML->GetElementByName( pszElement, bCreate ) : m_pXML;
+	if ( pszElement )
+		return m_pXML->GetElementByName( pszElement, bCreate );
+
+	// Remove "avatar" element
+	m_pXMLExport.Free();
+	m_pXMLExport.Attach( m_pXML->Clone() );
+	if ( CXMLElement* pAvatar = m_pXMLExport->GetElementByName( _T("avatar"), FALSE ) )
+	{
+		pAvatar->Delete();
+	}
+
+	return m_pXMLExport;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -182,8 +192,8 @@ BOOL CGProfile::FromXML(const CXMLElement* pXML)
 	}
 
 	// Replace XML
-	delete m_pXML;
-	m_pXML = const_cast< CXMLElement* >( pXML );
+	m_pXML.Free();
+	m_pXML.Attach( const_cast< CXMLElement* >( pXML ) );
 
 	return TRUE;
 }
