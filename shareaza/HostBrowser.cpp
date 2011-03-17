@@ -1,7 +1,7 @@
 //
 // HostBrowser.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -93,6 +93,24 @@ BOOL CHostBrowser::Browse()
 	CQuickLock oTransfersLock( Transfers.m_pSection );
 
 	m_sAddress = inet_ntoa( m_pAddress );
+
+	switch ( m_nProtocol )
+	{
+	case PROTOCOL_G1:
+		Settings.Gnutella1.EnableToday = true;
+		break;
+	case PROTOCOL_G2:
+		Settings.Gnutella2.EnableToday = true;
+		break;
+	case PROTOCOL_ED2K:
+		Settings.eDonkey.EnableToday = true;
+		break;
+	case PROTOCOL_DC:
+		Settings.DC.EnableToday = true;
+		break;
+	default:
+		;
+	}
 
 	// ED2K Clients have their connection controlled by ED2KClient.
 	// (One connection used for many things)
