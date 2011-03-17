@@ -1,7 +1,7 @@
 //
 // G1Neighbour.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -380,10 +380,13 @@ BOOL CG1Neighbour::SendPing(DWORD dwNow, const Hashes::Guid& oGUID)
 	if ( Settings.Gnutella1.EnableGGEP )
 	{
 		CGGEPBlock pBlock;
-		CGGEPItem* pItem = pBlock.Add( GGEP_HEADER_SUPPORT_CACHE_PONGS );
+		if ( CGGEPItem* pItem = pBlock.Add( GGEP_HEADER_SUPPORT_CACHE_PONGS ) )
+		{
+			pItem->WriteByte( Neighbours.IsG1Ultrapeer() ? G1_SCP_ULTRAPEER : G1_SCP_LEAF );
+		}
 		if ( Settings.Experimental.EnableDIPPSupport )
 		{
-			pItem = pBlock.Add( GGEP_HEADER_SUPPORT_GDNA );
+			pBlock.Add( GGEP_HEADER_SUPPORT_GDNA );
 		}
 		pBlock.Write( pPacket );
 	}

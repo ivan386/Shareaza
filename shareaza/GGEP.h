@@ -1,7 +1,7 @@
 //
 // GGEP.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -70,6 +70,8 @@ const LPCTSTR GGEP_HEADER_SECURE_OOB			= _T("SO");
 const LPCTSTR GGEP_HEADER_MULTICAST_RESPONSE	= _T("MCAST");
 // PushProxy support
 const LPCTSTR GGEP_HEADER_PUSH_PROXY			= _T("PUSH");
+// PushProxy TLS indexes
+const LPCTSTR GGEP_HEADER_PUSH_PROXY_TLS		= _T("PUSH_TLS");
 // AlternateLocation support
 const LPCTSTR GGEP_HEADER_ALTS					= _T("ALT");
 // AlternateLocations that support TLS
@@ -82,6 +84,8 @@ const LPCTSTR GGEP_HEADER_UDP_HOST_CACHE		= _T("UDPHC");
 const LPCTSTR GGEP_HEADER_SUPPORT_CACHE_PONGS	= _T("SCP");
 // Packed IP/Ports
 const LPCTSTR GGEP_HEADER_PACKED_IPPORTS		= _T("IPP");
+// Which packed IP/Ports support TLS
+const LPCTSTR GGEP_HEADER_PACKED_IPPORTS_TLS	= _T("IPP_TLS");
 // Packed UDP Host Caches
 const LPCTSTR GGEP_HEADER_PACKED_HOSTCACHES		= _T("PHC");
 // SHA1 URNs
@@ -104,7 +108,7 @@ const LPCTSTR GGEP_HEADER_NO_PROXY				= _T("NP");
 const LPCTSTR GGEP_HEADER_META					= _T("M");
 // Client locale
 const LPCTSTR GGEP_HEADER_CLIENT_LOCALE			= _T("LOC");
-// Creation time
+// Network wide file creation time (4 bytes)(in seconds)
 const LPCTSTR GGEP_HEADER_CREATE_TIME			= _T("CT");
 // Firewalled Transfer support in Hits
 const LPCTSTR GGEP_HEADER_FW_TRANS				= _T("FW");
@@ -114,8 +118,7 @@ const LPCTSTR GGEP_HEADER_SECURE_BLOCK			= _T("SB");
 const LPCTSTR GGEP_HEADER_SIGNATURE				= _T("SIG");
 // Chat support
 const LPCTSTR GGEP_HEADER_CHAT					= _T("CHAT");
-// Equivalent of GGEP SCP but for GnucDNA peers only
-// Unlike SCP, it's also used as acknowledgment
+// Equivalent of GGEP SCP but for GnucDNA peers only. Unlike SCP, it's also used as acknowledgment
 const LPCTSTR GGEP_HEADER_SUPPORT_GDNA			= _T("DNA");
 // Legacy buggy version of GnucDNA DIPP
 const LPCTSTR GGEP_HEADER_GDNA_PACKED_IPPORTS_x	= _T("DIP");
@@ -125,12 +128,20 @@ const LPCTSTR GGEP_HEADER_GDNA_PACKED_IPPORTS	= _T("DIPP");
 const LPCTSTR GGEP_HEADER_HASH					= _T("H");
 // URN but without "urn:" prefix
 const LPCTSTR GGEP_HEADER_URN					= _T("u");
-// up to 64-bit file size
+// Indicating the size of the file is 64 bit
 const LPCTSTR GGEP_HEADER_LARGE_FILE			= _T("LF");
 // The prefix of the extension header indicating support for partial results
 const LPCTSTR GGEP_HEADER_PARTIAL_RESULT_PREFIX	= _T("PR");
+// Determine if the encoded ranges are unverified
+const LPCTSTR GGEP_HEADER_PARTIAL_RESULT_UNVERIFIED	= _T("PRU");
 // To support queries longer than previous length limit on query string fields
 const LPCTSTR GGEP_HEADER_EXTENDED_QUERY		= _T("XQ");
+// Various information contained in a return path entry GGEP block
+const LPCTSTR GGEP_HEADER_RETURN_PATH_SOURCE	= _T("RPS");
+const LPCTSTR GGEP_HEADER_RETURN_PATH_HOPS		= _T("RPH");
+const LPCTSTR GGEP_HEADER_RETURN_PATH_ME		= _T("RPI");
+const LPCTSTR GGEP_HEADER_RETURN_PATH_TTL		= _T("RPT");
+
 
 class CGGEPBlock;
 class CGGEPItem;
@@ -198,6 +209,9 @@ public:
 	BYTE		ReadByte();
 	void		Write(LPCVOID pData, int nLength);
 	void		WriteByte(BYTE nValue);
+	void		WriteShort(WORD nValue);
+	void		WriteLong(DWORD nValue);
+	void		WriteInt64(QWORD nValue);
 	CString		ToString() const;
 	void		WriteUTF8(const CString& strText);
 

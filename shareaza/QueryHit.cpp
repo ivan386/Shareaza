@@ -1,7 +1,7 @@
 //
 // QueryHit.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -140,6 +140,7 @@ CQueryHit* CQueryHit::FromG1Packet(CG1Packet* pPacket, int* pnHops)
 		DWORD nAddress = pPacket->ReadLongLE();
 		DWORD nSpeed = pPacket->ReadLongLE();
 
+		BOOL bBrowseHost = FALSE;
 		BOOL bBogus = FALSE;
 		while ( nCount-- )
 		{
@@ -161,30 +162,32 @@ CQueryHit* CQueryHit::FromG1Packet(CG1Packet* pPacket, int* pnHops)
 
 		// Read Vendor Code
 		CVendor* pVendor = VendorCache.m_pNull;
-		BYTE nPublicSize = 0;
-		if ( pPacket->GetRemaining() >= 16u + 5u )
+		if ( pPacket->GetRemaining() >= Hashes::Guid::byteCount + 4u )
 		{
 			CHAR szaVendor[ 4 ];
 			pPacket->Read( szaVendor, 4 );
-
 			TCHAR szVendor[ 5 ] = { szaVendor[0], szaVendor[1], szaVendor[2], szaVendor[3], 0 };
 			if ( Security.IsVendorBlocked( szVendor ) )
 			{
 				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet from invalid client") );
 				AfxThrowUserException();
 			}
-
 			pVendor = VendorCache.Lookup( szVendor );
-			if ( ! pVendor )
+			if ( pVendor )
+			{
+				if ( pVendor->m_bBrowseFlag )
+					bBrowseHost = TRUE;
+			}
+			else
 				pVendor = VendorCache.m_pNull;
-			nPublicSize	= pPacket->ReadByte();
 		}
 		
-		BOOL bBrowseHost = FALSE;
-		if ( pVendor && pVendor->m_bBrowseFlag )
-			bBrowseHost = TRUE;
-		
-		if ( pPacket->GetRemaining() < nPublicSize + 16u ) 
+		BYTE nPublicSize = 0;
+		if ( pPacket->GetRemaining() >= Hashes::Guid::byteCount + 1u )
+		{
+			nPublicSize	= pPacket->ReadByte();
+		}
+		if ( pPacket->GetRemaining() < Hashes::Guid::byteCount + nPublicSize ) 
 		{
 			theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet with invalid size of public data") );
 			AfxThrowUserException();
@@ -203,24 +206,25 @@ CQueryHit* CQueryHit::FromG1Packet(CG1Packet* pPacket, int* pnHops)
 		{
 			nXMLSize = pPacket->ReadShortLE();
 			nPublicSize -= 2;
-			if ( nPublicSize + nXMLSize + 16u > pPacket->GetRemaining() ) 
+			if ( nPublicSize + nXMLSize + Hashes::Guid::byteCount > pPacket->GetRemaining() ) 
 			{
 				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet with invalid size of XML data") );
 				AfxThrowUserException();
 			}
 		}
 
+		// Skip extra data
 		while ( nPublicSize-- )
 			pPacket->ReadByte();
 
 		BOOL bChat = FALSE;
 		if ( pVendor && pVendor->m_bChatFlag &&
-			pPacket->GetRemaining() >= 16u + nXMLSize + 1u )
+			pPacket->GetRemaining() >= Hashes::Guid::byteCount + nXMLSize + 1u )
 		{
-			bChat = ( pPacket->PeekByte() == 1 );
+			bChat = ( pPacket->PeekByte() & G1_QHD_CHAT ) != 0;
 		}
 
-		if ( pPacket->GetRemaining() < 16u + nXMLSize )
+		if ( pPacket->GetRemaining() < Hashes::Guid::byteCount + nXMLSize )
 			nXMLSize = 0;
 
 		if ( ( nFlags[0] & G1_QHD_GGEP ) && ( nFlags[1] & G1_QHD_GGEP ) )
@@ -245,7 +249,7 @@ CQueryHit* CQueryHit::FromG1Packet(CG1Packet* pPacket, int* pnHops)
 
 		if ( nXMLSize > 0 )
 		{
-			pPacket->Seek( 16 + nXMLSize, CG1Packet::seekEnd );
+			pPacket->Seek( Hashes::Guid::byteCount + nXMLSize, CG1Packet::seekEnd );
 			pXML = ReadXML( pPacket, nXMLSize );
 			if ( pXML == NULL && nXMLSize > 1 )
 			{
@@ -264,8 +268,8 @@ CQueryHit* CQueryHit::FromG1Packet(CG1Packet* pPacket, int* pnHops)
 		}
 		
 		// Read client ID
-		Hashes::Guid oClientID;		
-		pPacket->Seek( 16, CG1Packet::seekEnd );
+		Hashes::Guid oClientID;
+		pPacket->Seek( Hashes::Guid::byteCount, CG1Packet::seekEnd );
 		pPacket->Read( oClientID );		
 
 		DWORD nIndex = 0;		
@@ -459,7 +463,7 @@ CQueryHit* CQueryHit::FromG2Packet(CG2Packet* pPacket, int* pnHops)
 				break;
 
 			case G2_PACKET_NODE_GUID:
-				if ( nLength == 16 )
+				if ( nLength == Hashes::Guid::byteCount )
 				{
 					pPacket->Read( oClientID );
 					oClientID.validate();
@@ -1106,26 +1110,30 @@ BOOL CQueryHit::CheckValid() const
 {
 	if ( m_sName.GetLength() > 160 )
 	{
-		theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Got bogus hit packet. Too long filename: %d symbols"), m_sName.GetLength() );
+		theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Got bogus hit packet. Too long filename (> 160): %d symbols"), m_sName.GetLength() );
 		return FALSE;
 	}
 
-	int nCurWord = 0, nMaxWord = 0;
+	int nCurWord = 0, nWords = 1;
 	for ( LPCTSTR pszName = m_sName ; *pszName ; pszName++ )
 	{
-		if ( _istgraph( *pszName ) )
+		if ( _istgraph( *pszName ) && *pszName != _T('_') && *pszName != _T('.') && *pszName != _T('[') && *pszName != _T(']') )
 		{
-			nCurWord++;
-			nMaxWord = max( nMaxWord, nCurWord );
+			if ( ++nCurWord > 50 )
+			{
+				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Got bogus hit packet. Too long single word (> 50 symbols): %s"), m_sName );
+				return FALSE;
+			}
 		}
 		else
 		{
 			nCurWord = 0;
+			nWords++;
 		}
 	}
-	if ( nMaxWord > 100 )
+	if ( nWords > 30 )
 	{
-		theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Got bogus hit packet. Too many words: %d"), nMaxWord );
+		theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Got bogus hit packet. Too many words (> 30): %d words in %s"), nWords, m_sName );
 		return FALSE;
 	}
 
@@ -1405,6 +1413,8 @@ void CQueryHit::ParseAttributes(const Hashes::Guid& oClientID, CVendor* pVendor,
 	m_bChat			= bChat;
 	m_bBrowseHost	= bBrowseHost;
 	
+	// Flags: 'I understand' first byte, 'Yes/No' - second byte
+	// REMEMBER THAT THE PUSH BIT IS SET OPPOSITE THAN THE OTHERS
 	if ( nFlags[1] & G1_QHD_PUSH )
 		m_bPush		= ( nFlags[0] & G1_QHD_PUSH ) ? TRI_TRUE : TRI_FALSE;
 	if ( nFlags[0] & G1_QHD_BUSY )
@@ -1413,6 +1423,10 @@ void CQueryHit::ParseAttributes(const Hashes::Guid& oClientID, CVendor* pVendor,
 		m_bStable	= ( nFlags[1] & G1_QHD_STABLE ) ? TRI_TRUE : TRI_FALSE;
 	if ( nFlags[0] & G1_QHD_SPEED )
 		m_bMeasured	= ( nFlags[1] & G1_QHD_SPEED ) ? TRI_TRUE : TRI_FALSE;
+
+#ifdef LAN_MODE
+	m_bPush = TRI_FALSE;	// No push in LAN mode
+#endif // LAN_MODE
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -1989,6 +2003,10 @@ void CQueryHit::ReadEDAddress(CEDPacket* pPacket, const SOCKADDR_IN* pServer)
 	{
 		m_bPush = TRI_FALSE;
 	}
+
+#ifdef LAN_MODE
+	m_bPush = TRI_FALSE;	// No push in LAN mode
+#endif // LAN_MODE
 }
 
 //////////////////////////////////////////////////////////////////////

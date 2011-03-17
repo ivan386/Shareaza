@@ -1,7 +1,7 @@
 //
 // GGEP.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -326,6 +326,21 @@ void CGGEPItem::Write(LPCVOID pData, int nLength)
 void CGGEPItem::WriteByte(BYTE nValue)
 {
 	Write( &nValue, 1 );
+}
+
+void CGGEPItem::WriteShort(WORD nValue)
+{
+	Write( &nValue, 2 );
+}
+
+void CGGEPItem::WriteLong(DWORD nValue)
+{
+	Write( &nValue, 4 );
+}
+
+void CGGEPItem::WriteInt64(QWORD nValue)
+{
+	Write( &nValue, 8 );
 }
 
 void CGGEPItem::WriteUTF8(const CString& strText)

@@ -1,7 +1,7 @@
 //
 // LocalSearch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,41 +22,38 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
-#include "LocalSearch.h"
-#include "QueryHit.h"
-
-#include "Library.h"
-#include "LibraryFolders.h"
-#include "SharedFile.h"
-#include "SharedFolder.h"
 #include "AlbumFolder.h"
-
-#include "QuerySearch.h"
-#include "GProfile.h"
-#include "Network.h"
-#include "Neighbours.h"
+#include "BTClients.h"
+#include "Buffer.h"
 #include "DCNeighbour.h"
-#include "Neighbour.h"
+#include "DCPacket.h"
 #include "Datagrams.h"
+#include "Download.h"
+#include "Downloads.h"
 #include "G1Packet.h"
 #include "G2Packet.h"
-#include "DCPacket.h"
-#include "Buffer.h"
-#include "ZLib.h"
 #include "GGEP.h"
-#include "BTClients.h"
-
-#include "Transfers.h"
-#include "Downloads.h"
-#include "Download.h"
-#include "Uploads.h"
-#include "UploadQueue.h"
-#include "UploadQueues.h"
+#include "GProfile.h"
 #include "ImageServices.h"
-
-#include "XML.h"
+#include "Library.h"
+#include "LibraryFolders.h"
+#include "LocalSearch.h"
+#include "Neighbour.h"
+#include "Neighbours.h"
+#include "Network.h"
+#include "QueryHit.h"
+#include "QuerySearch.h"
 #include "Schema.h"
 #include "SchemaCache.h"
+#include "ShareazaURL.h"
+#include "SharedFile.h"
+#include "SharedFolder.h"
+#include "Transfers.h"
+#include "UploadQueue.h"
+#include "UploadQueues.h"
+#include "Uploads.h"
+#include "XML.h"
+#include "ZLib.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -326,8 +323,11 @@ void CLocalSearch::AddHit< CLibraryFile >(CPacket* pPacket, CSchemaMap& pSchemas
 
 void CLocalSearch::AddHitG1(CG1Packet* pPacket, CSchemaMap& pSchemas, CLibraryFile const * const pFile, int nIndex)
 {
+	QWORD nFileSize = pFile->GetSize();
+
 	pPacket->WriteLongLE( pFile->m_nIndex );
-	pPacket->WriteLongLE( (DWORD)min( pFile->GetSize(), (QWORD)0xFFFFFFFF ) );
+	pPacket->WriteLongLE( (DWORD)min( nFileSize, (QWORD)0xFFFFFFFF ) );
+
 	if ( Settings.Gnutella1.QueryHitUTF8 ) //Support UTF-8 Query
 	{
 		pPacket->WriteStringUTF8( pFile->m_sName );
@@ -339,60 +339,93 @@ void CLocalSearch::AddHitG1(CG1Packet* pPacket, CSchemaMap& pSchemas, CLibraryFi
 
 	if ( pFile->m_oSHA1 )
 	{
-		CString strHash = pFile->m_oSHA1.toUrn();
-		pPacket->WriteString( strHash );
-
-		/*
-		CGGEPBlock pBlock;
-
-		CGGEPItem* pItem = pBlock.Add( GGEP_HEADER_HASH );
-		pItem->WriteByte( 1 );
-		pItem->Write( &pFile->m_pSHA1, 20 );
-
-		pBlock.Write( pPacket );
-		pPacket->WriteByte( 0 );
-		*/
+		pPacket->WriteString( _T("urn:sha1:") + pFile->m_oSHA1.toString(), FALSE );
+		pPacket->WriteByte( G1_PACKET_HIT_SEP );
 	}
-	else if ( pFile->m_oTiger )
+	if ( pFile->m_oTiger )
 	{
-		CString strHash = pFile->m_oTiger.toUrn();
-		pPacket->WriteString( strHash );
+		pPacket->WriteString( _T("urn:ttroot:") + pFile->m_oTiger.toString(), FALSE );
+		pPacket->WriteByte( G1_PACKET_HIT_SEP );
 	}
-	else if ( pFile->m_oED2K )
+	if ( pFile->m_oED2K )
 	{
-		CString strHash = pFile->m_oED2K.toUrn();
-		pPacket->WriteString( strHash );
+		pPacket->WriteString( pFile->m_oED2K.toUrn(), FALSE );
+		pPacket->WriteByte( G1_PACKET_HIT_SEP );
 	}
 	else if ( pFile->m_oBTH )
 	{
-		CString strHash = pFile->m_oBTH.toUrn();
-		pPacket->WriteString( strHash );
+		pPacket->WriteString( pFile->m_oBTH.toUrn(), FALSE );
+		pPacket->WriteByte( G1_PACKET_HIT_SEP );
 	}
 	else if ( pFile->m_oMD5 )
 	{
-		CString strHash = pFile->m_oMD5.toUrn();
-		pPacket->WriteString( strHash );
-	}
-	else
-	{
-		pPacket->WriteByte( 0 );
+		pPacket->WriteString( pFile->m_oMD5.toUrn(), FALSE );
+		pPacket->WriteByte( G1_PACKET_HIT_SEP );
 	}
 
-	if ( pFile->m_pSchema != NULL && pFile->m_pMetadata != NULL && ( ! m_pSearch || m_pSearch->m_bWantXML ) )
+	if ( Settings.Gnutella1.EnableGGEP )
+	{
+		CGGEPBlock pBlock;
+
+		if ( nFileSize >= 0xFFFFFFFF )
+		{
+			if ( CGGEPItem* pItem = pBlock.Add( GGEP_HEADER_LARGE_FILE ) )
+			{
+				pItem->WriteInt64( nFileSize );
+			}
+		}
+
+		if ( pFile->m_pSources.GetCount() )
+		{
+			if ( CGGEPItem* pItem = pBlock.Add( GGEP_HEADER_ALTS ) )
+			{
+				for ( POSITION pos = pFile->m_pSources.GetHeadPosition(); pos; )
+				{
+					CSharedSource* pSource = pFile->m_pSources.GetNext( pos );
+					CShareazaURL oURL( pSource->m_sURL );
+					if ( oURL.m_pAddress.s_addr && oURL.m_nPort &&
+						! Network.IsSelfIP( oURL.m_pAddress ) )
+					{
+						pItem->WriteLong( oURL.m_pAddress.s_addr );
+						pItem->WriteShort( oURL.m_nPort );
+					}
+				}
+			}
+		}
+
+		/*/ Network wide file creation time (seconds)
+		if ( CGGEPItem* pItem = pBlock.Add( GGEP_HEADER_CREATE_TIME ) )
+		{
+			DWORD nCreationTime = 0x488ede96; // test
+			pItem->Write( &nCreationTime, 4 );
+		}
+		*/
+
+		pBlock.Write( pPacket );
+	}
+
+	// End of file
+	pPacket->WriteByte( 0 );
+
+	// Prepare XML
+	if ( pFile->m_pSchema && pFile->m_pMetadata &&
+		( ! m_pSearch || m_pSearch->m_bWantXML ) )
 	{
 		CXMLElement* pGroup = NULL;
  		if ( ! pSchemas.Lookup( pFile->m_pSchema, pGroup ) )
 		{
 			pGroup = pFile->m_pSchema->Instantiate();
+			if ( ! pGroup )
+				return;
 			pSchemas.SetAt( pFile->m_pSchema, pGroup );
 		}
-
-		CString strIndex;
-		strIndex.Format( _T("%lu"), nIndex );
-
-		CXMLElement* pXML = pFile->m_pMetadata->Clone();
-		pXML->AddAttribute( _T("index"), strIndex );
-		pGroup->AddElement( pXML );
+		if ( CXMLElement* pXML = pFile->m_pMetadata->Clone() )
+		{
+			CString strIndex;
+			strIndex.Format( _T("%lu"), nIndex );
+			pXML->AddAttribute( _T("index"), strIndex );
+			pGroup->AddElement( pXML );
+		}
 	}
 }
 
@@ -898,7 +931,7 @@ CG1Packet* CLocalSearch::CreatePacketG1()
 
 	pPacket->WriteByte( 0 ); // Hit count will be set latter
 	pPacket->WriteShortLE( htons( Network.m_pHost.sin_port ) );
-	pPacket->WriteLongLE( Network.m_pHost.sin_addr.S_un.S_addr );
+	pPacket->WriteLongLE( Network.m_pHost.sin_addr.s_addr );
 
 	if ( Uploads.m_bStable )
 	{
@@ -916,7 +949,7 @@ CG2Packet* CLocalSearch::CreatePacketG2()
 {
 	CG2Packet* pPacket = CG2Packet::New( G2_PACKET_HIT, TRUE );
 
-	pPacket->WritePacket( G2_PACKET_NODE_GUID, 16 );
+	pPacket->WritePacket( G2_PACKET_NODE_GUID, Hashes::Guid::byteCount );
 	pPacket->Write( Hashes::Guid( MyProfile.oGUID ) );
 
 	pPacket->WritePacket( G2_PACKET_NODE_ADDRESS, 6 );
@@ -944,7 +977,7 @@ CG2Packet* CLocalSearch::CreatePacketG2()
 					 pNeighbour->m_nProtocol == PROTOCOL_G2 )
 				{
 					pPacket->WritePacket( G2_PACKET_NEIGHBOUR_HUB, 6 );
-					pPacket->WriteLongLE( pNeighbour->m_pHost.sin_addr.S_un.S_addr );
+					pPacket->WriteLongLE( pNeighbour->m_pHost.sin_addr.s_addr );
 					pPacket->WriteShortBE( htons( pNeighbour->m_pHost.sin_port ) );
 				}
 			}
@@ -1021,93 +1054,111 @@ void CLocalSearch::WriteTrailer(CPacket* pPacket, CSchemaMap& pSchemas, BYTE nHi
 
 void CLocalSearch::WriteTrailerG1(CG1Packet* pPacket, CSchemaMap& pSchemas, BYTE nHits)
 {
-	*pPacket->m_pBuffer = nHits;	// Correct the number of files sent
-
-	pPacket->WriteString( _T( VENDOR_CODE ), FALSE );
-
-	BYTE nFlags[2] = { 0, 0 };
-
-	nFlags[0] |= G1_QHD_BUSY|G1_QHD_STABLE|G1_QHD_SPEED;
-	nFlags[1] |= G1_QHD_PUSH;
-
-	if ( Network.IsFirewalled() ) nFlags[0] |= G1_QHD_PUSH;
-	if ( Uploads.m_bStable ) nFlags[1] |= G1_QHD_STABLE;
-	if ( Uploads.m_bStable ) nFlags[1] |= G1_QHD_SPEED;
-	if ( ! UploadQueues.IsTransferAvailable() ) nFlags[1] |= G1_QHD_BUSY;
-
-	if ( Settings.Community.ServeFiles && Settings.Gnutella1.EnableGGEP )
-	{
-		nFlags[0] |= G1_QHD_GGEP;
-		nFlags[1] |= G1_QHD_GGEP;
-	}
-
-	CString strXML;
+	// Prepare XML
+	CStringA sXML;
 	for ( POSITION pos1 = pSchemas.GetStartPosition() ; pos1 ; )
 	{
 		CXMLElement* pGroup;
 		CSchemaPtr pSchema;
 		pSchemas.GetNextAssoc( pos1, pSchema, pGroup );
-		strXML += pGroup->ToString( TRUE );
+		sXML += UTF8Encode( pGroup->ToString( TRUE, FALSE ) );
 		delete pGroup;
 	}
 	pSchemas.RemoveAll();
 
-	DWORD nCompressed	= 0;
-	auto_array< BYTE > pCompressed;
-
-	pPacket->WriteByte( strXML.IsEmpty() ? 2 : 4 );
-	pPacket->WriteByte( nFlags[0] );
-	pPacket->WriteByte( nFlags[1] );
-
-	LPSTR pszXML = NULL;
-	int nXML = 0;
-
-	if ( strXML.GetLength() > 0 )
+	// Compress XML
+	DWORD nXMLLength = sXML.GetLength();
+	DWORD nCompressedXMLLength = 0;
+	auto_array< BYTE > pCompressedXML;
+	if ( nXMLLength )
 	{
-		nXML = WideCharToMultiByte( CP_ACP, 0, strXML, -1, NULL, 0, NULL, NULL );
-		pszXML = new CHAR[ nXML ];
-		WideCharToMultiByte( CP_ACP, 0, strXML, -1, pszXML, nXML, NULL, NULL );
-		if ( nXML > 0 ) nXML --;
-
-		pCompressed = CZLib::Compress( pszXML, nXML, &nCompressed );
-
-		// 9 = "{deflate}", 11 = "{plaintext}"
-		if ( nCompressed + 9 < (DWORD)nXML + 11 && pCompressed.get() != NULL )
-		{
-			pPacket->WriteShortLE( (WORD)( nCompressed + 9 + 1 ) );
-		}
-		else
-		{
-			pPacket->WriteShortLE( WORD( nXML + 11 + 1 ) );
-			pCompressed.reset();
-		}
+		pCompressedXML = CZLib::Compress( (LPCSTR)sXML, nXMLLength, &nCompressedXMLLength );
 	}
 
-	pPacket->WriteByte( Settings.Community.ChatEnable ? 1 : 0 );
-
-	if ( Settings.Community.ServeFiles && Settings.Gnutella1.EnableGGEP )
+	// Flags: 'I understand' first byte, 'Yes/No' - second byte
+	// REMEMBER THAT THE PUSH BIT IS SET OPPOSITE THAN THE OTHERS
+	BYTE nFlags[ 2 ] =
 	{
-		pPacket->WriteByte( GGEP_MAGIC );
-		pPacket->WriteByte( GGEP_HDR_LAST | 2 );
-		pPacket->WriteByte( 'B' );
-		pPacket->WriteByte( 'H' );
-		pPacket->WriteByte( GGEP_LEN_LAST );
+		G1_QHD_BUSY | G1_QHD_STABLE | G1_QHD_SPEED | G1_QHD_GGEP,
+		G1_QHD_PUSH
+	};
+	if ( Network.IsFirewalled() )
+		nFlags[ 0 ] |= G1_QHD_PUSH;
+	if ( Uploads.m_bStable )
+		nFlags[ 1 ] |= G1_QHD_STABLE;
+	if ( Uploads.m_bStable )
+		nFlags[ 1 ] |= G1_QHD_SPEED;
+	if ( ! UploadQueues.IsTransferAvailable() )
+		nFlags[ 1 ] |= G1_QHD_BUSY;
+	if ( Settings.Gnutella1.EnableGGEP )
+		nFlags[ 1 ] |= G1_QHD_GGEP;
+
+	// Correct the number of files sent
+	pPacket->m_pBuffer[ 0 ] = nHits;
+
+	// Write client vendor code
+	pPacket->WriteString( _T(VENDOR_CODE), FALSE );
+
+	// Write public info
+	pPacket->WriteByte( 4 ); // Public size: flags (2 bytes) + xml size (2 bytes)
+	pPacket->WriteByte( nFlags[ 0 ] );
+	pPacket->WriteByte( nFlags[ 1 ] );
+	if ( pCompressedXML.get() && nCompressedXMLLength + 9 < nXMLLength + 2 )
+	{
+		// "{deflate}" (9 bytes) + NUL
+		pPacket->WriteShortLE( (WORD)( nCompressedXMLLength + 9 + 1 ) );
+	}
+	else if ( nXMLLength )
+	{
+		// "{}" (2 bytes) + NUL
+		pPacket->WriteShortLE( WORD( nXMLLength + 2 + 1 ) );
+
+		pCompressedXML.reset();
+		nCompressedXMLLength = 0;
+	}
+	else
+	{
+		// NUL
+		pPacket->WriteShortLE( WORD( 1 ) );
 	}
 
-	if ( pCompressed.get() != NULL )
+	// Write Chat flag
+	pPacket->WriteByte( Settings.Community.ChatEnable ? G1_QHD_CHAT : 0 );
+
+	// Write GGEP block
+	if ( Settings.Gnutella1.EnableGGEP )
+	{
+		CGGEPBlock pBlock;
+
+		// Write Browse flag
+		if ( Settings.Community.ServeFiles )
+		{
+			pBlock.Add( GGEP_HEADER_BROWSE_HOST );
+			pBlock.Add( GGEP_HEADER_CHAT );
+		}
+
+		pBlock.Write( pPacket );
+	}
+
+	// Write XML
+	if ( nCompressedXMLLength )
 	{
 		pPacket->Write( "{deflate}", 9 );
-		pPacket->Write( pCompressed.get(), nCompressed );
+		pPacket->Write( pCompressedXML.get(), nCompressedXMLLength );
 		pPacket->WriteByte( 0 );
 	}
-	else if ( pszXML != NULL )
+	else if ( nXMLLength )
 	{
-		pPacket->Write( "{plaintext}", 11 );
-		pPacket->Write( pszXML, nXML );
+		pPacket->Write( "{}", 2 );
+		pPacket->Write( (LPCSTR)sXML, nXMLLength );
+		pPacket->WriteByte( 0 );
+	}
+	else
+	{
+		pPacket->WriteByte( 0 );
 	}
 
-	if ( pszXML != NULL ) delete [] pszXML;
-
+	// Client GUID
 	pPacket->Write( Hashes::Guid( MyProfile.oGUID ) );
 
 #ifdef _DEBUG

@@ -1,7 +1,7 @@
 //
 // UploadTransferHTTP.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1733,7 +1733,11 @@ BOOL CUploadTransferHTTP::RequestHostBrowse()
 		SendResponse( IDR_HTML_BUSY );
 		return TRUE;
 	}
-	
+
+	StartSending( upsBrowse );
+
+	theApp.Message( MSG_NOTICE, IDS_UPLOAD_BROWSE, (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
+
 	if ( m_bHostBrowse < 2 )
 	{
 		if ( Settings.Community.ServeFiles )
@@ -1799,11 +1803,9 @@ BOOL CUploadTransferHTTP::RequestHostBrowse()
 
 	LogOutgoing();
 
+	CTransfer::OnWrite();
+
 	if ( ! m_bHead ) Write( &pBuffer );
-	
-	StartSending( upsBrowse );
-	
-	theApp.Message( MSG_NOTICE, IDS_UPLOAD_BROWSE, (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
 	
 	CTransfer::OnWrite();
 	
@@ -1826,6 +1828,7 @@ void CUploadTransferHTTP::SendResponse(UINT nResourceID, BOOL bFileHeaders)
 		Write( _T("HTTP/1.1 ") + strResponse );
 
 	SendDefaultHeaders();
+
 	if ( bFileHeaders )
 		SendFileHeaders();
 

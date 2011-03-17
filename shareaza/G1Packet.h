@@ -1,7 +1,7 @@
 //
 // G1Packet.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -207,17 +207,17 @@ inline void CG1Packet::CG1PacketPool::FreePoolImpl(CPacket* pPacket)
 #pragma pack() // Same as pragma pack(pop)
 
 // Gnutella packet type codes, m_nType in the header will be one of these values to show the type
-#define G1_PACKET_PING			0x00 // Ping packet
-#define G1_PACKET_PONG			0x01 // Pong packet, response to a ping
-#define G1_PACKET_BYE			0x02 // Goodbye packet, the remote computer telling us why it's disconnecting
-#define G1_PACKET_QUERY_ROUTE	0x30 // Packet about query routing table (do)
-#define G1_PACKET_VENDOR		0x31 // Vendor-specific packets (do)
+#define G1_PACKET_PING			0x00	// Ping packet
+#define G1_PACKET_PONG			0x01	// Pong packet, response to a ping
+#define G1_PACKET_BYE			0x02	// Goodbye packet, the remote computer telling us why it's disconnecting
+#define G1_PACKET_QUERY_ROUTE	0x30	// Packet about query routing table (do)
+#define G1_PACKET_VENDOR		0x31	// Vendor-specific packets (do)
 #define G1_PACKET_VENDOR_APP	0x32
-#define G1_PACKET_PUSH			0x40 // Packet asking that we push open a connection to a remote computer 
-									 // that can't connect directly to us
-#define G1_PACKET_RUDP			0x41 // Packet used for F2F RUDP transfers
-#define G1_PACKET_QUERY			0x80 // Search query
-#define G1_PACKET_HIT			0x81 // Response to search query, a hit
+#define G1_PACKET_PUSH			0x40	// Packet asking that we push open a connection to a remote computer 
+										// that can't connect directly to us
+#define G1_PACKET_RUDP			0x41	// Packet used for F2F RUDP transfers
+#define G1_PACKET_QUERY			0x80	// Search query
+#define G1_PACKET_HIT			0x81	// Response to search query, a hit
 
 // Packet type indices, another enumeration for Gnutella packets, GnutellaTypeToIndex translates from the byte code to this number
 #define G1_PACKTYPE_UNKNOWN		0
@@ -229,7 +229,7 @@ inline void CG1Packet::CG1PacketPool::FreePoolImpl(CPacket* pPacket)
 #define G1_PACKTYPE_PUSH		6
 #define G1_PACKTYPE_QUERY		7
 #define G1_PACKTYPE_HIT			8
-#define G1_PACKTYPE_MAX			9 // There are 9 packet type indices, with values 0 through 8
+#define G1_PACKTYPE_MAX			9		// There are 9 packet type indices, with values 0 through 8
 
 // MinSpeed Flags (do)
 #define G1_QF_TAG				0x8000	// If the bit 15 is 0, then this is a query with the deprecated minspeed semantic. If the bit 15 is set to 1, then this is a query with the new minimum speed semantic.
@@ -248,7 +248,7 @@ inline void CG1Packet::CG1PacketPool::FreePoolImpl(CPacket* pPacket)
 #define MIN_QK_SIZE_IN_BYTES	4
 #define MAX_QK_SIZE_IN_BYTES	16
 
-// QHD Flags (do)
+// QueryHit Flags (inside Public data)
 #define G1_QHD_PUSH				0x01
 #define G1_QHD_BAD				0x02
 #define G1_QHD_BUSY				0x04
@@ -257,4 +257,11 @@ inline void CG1Packet::CG1PacketPool::FreePoolImpl(CPacket* pPacket)
 #define G1_QHD_GGEP				0x20
 #define G1_QHD_MASK				0x3D
 
-#define G1_PACKET_HIT_SEP		0x1C // Query hit extension separator
+#define G1_QHD_CHAT				0x01	// Chat flag
+
+#define G1_PACKET_HIT_SEP		0x1C	// Query hit extension separator
+
+// Support Cache Pongs(SCP) GGEP
+#define G1_SCP_LEAF				0x00	// If we're requesting leaf hosts
+#define G1_SCP_ULTRAPEER		0x01	// If we're requesting ultrapeer hosts
+#define G1_SCP_TLS				0x02	// If we support incoming TLS

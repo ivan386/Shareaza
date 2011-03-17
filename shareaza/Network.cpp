@@ -1323,22 +1323,24 @@ bool CNetwork::ProcessQueryHits(CNetwork::CJob& oJob)
 
 void CNetwork::UDPHostCache(IN_ADDR* pAddress, WORD nPort)
 {
-	CG1Packet* pPing = CG1Packet::New( G1_PACKET_PING, 1, Hashes::Guid( MyProfile.oGUID ) );
-
-	CGGEPBlock pBlock;
-	CGGEPItem* pItem;
-
-	pItem = pBlock.Add( GGEP_HEADER_SUPPORT_CACHE_PONGS );
-	pItem->WriteByte( Neighbours.IsG1Ultrapeer() ? 1 : 0 );
-
-	pBlock.Write( pPing );
-	Datagrams.Send( pAddress, nPort, pPing, TRUE, NULL, FALSE );
+	if ( CG1Packet* pPing = CG1Packet::New( G1_PACKET_PING, 1, Hashes::Guid( MyProfile.oGUID ) ) )
+	{
+		CGGEPBlock pBlock;
+		if ( CGGEPItem* pItem = pBlock.Add( GGEP_HEADER_SUPPORT_CACHE_PONGS ) )
+		{
+			pItem->WriteByte( Neighbours.IsG1Ultrapeer() ? G1_SCP_ULTRAPEER : G1_SCP_LEAF );
+		}
+		pBlock.Write( pPing );
+		Datagrams.Send( pAddress, nPort, pPing, TRUE, NULL, FALSE );
+	}
 }
 
 void CNetwork::UDPKnownHubCache(IN_ADDR* pAddress, WORD nPort)
 {
-	CG2Packet* pKHLR = CG2Packet::New( G2_PACKET_KHL_REQ );
-	Datagrams.Send( pAddress, nPort, pKHLR, TRUE, NULL, FALSE );
+	if ( CG2Packet* pKHLR = CG2Packet::New( G2_PACKET_KHL_REQ ) )
+	{
+		Datagrams.Send( pAddress, nPort, pKHLR, TRUE, NULL, FALSE );
+	}
 }
 
 SOCKET CNetwork::AcceptSocket(SOCKET hSocket, SOCKADDR_IN* addr, LPCONDITIONPROC lpfnCondition, DWORD_PTR dwCallbackData)
