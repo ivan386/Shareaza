@@ -420,7 +420,7 @@
 			<button id="ID_HOSTCACHE_DC_CACHE" text="DC++ Cache"/>
 		</toolbar>
 		<!-- PRIVATE CHAT FRAME -->
-		<toolbar name="CPrivateChatFrame">
+		<toolbar name="CPrivateChatWnd">
 			<button id="ID_CHAT_BOLD" text="B"/>
 			<button id="ID_CHAT_ITALIC" text="I"/>
 			<button id="ID_CHAT_UNDERLINE" text="U"/>
@@ -1586,7 +1586,7 @@
 			<item id="ID_DISCOVERY_EDIT" text="_Ιδιότητες"/>
 		</menu>
 		<!-- PRIVATE CHAT FRAME -->
-		<menu name="CPrivateChatFrame">
+		<menu name="CPrivateChatWnd">
 			<item id="ID_CHAT_CONNECT" text="_Σύνδεση"/>
 			<item id="ID_CHAT_DISCONNECT" text="_Αποσύνδεση"/>
 			<separator/>
@@ -3058,6 +3058,7 @@
 		<string id="16377" value="HTTP Φρουρός"/>
 		<string id="16378" value="Host &quot;%s&quot; sent a 416, without providing available ranges. Closing connection."/>
 		<string id="16379" value="Αρχεία Βιβλιοθήκης"/>
+		<string id="16380" value="ED2K Φρουρός"/>
 		<string id="16384" value="Θέλετε σίγουρα να ανοίξετε το αρχείο &quot;%s&quot; ;\n\nΜερικά αρχεία μπορεί να είναι βλαβερά για τον υπολογιστή σας! Βεβαιωθείτε ότι ξέρετε τι είναι το αρχείο πριν το ανοίξετε."/>
 		<string id="16385" value="Θέλετε σίγουρα να τροποποιήσετε τα metadata του αρχείου %i;"/>
 		<string id="16386" value="Επεξεργασία των metadata των αρχείων %i."/>
@@ -3146,13 +3147,11 @@
 		<string id="16803" value="Αυτός ο φάκελος είναι ήδη κοινοποιημένος ως τμήμα του κοινοποιημένου φακέλου:\n\n%s"/>
 		<string id="16804" value="Δεν έχετε συμπληρώσει το όνομα στο προφίλ σας. Συνέχεια χωρίς;"/>
 		<string id="16805" value="Δεν έχετε συμπληρώσει την τοποθεσία στο προφίλ σας. Συνέχεια χωρίς;"/>
-		<string id="16806" value="Το Shareaza δεν κατάφερε να ρυθμίσει την προώθηση θύρας στον NAT router ή firewall σας.\n\nΠαρακαλώ ρυθμίστε το δίκτυό σας να προωθεί τις TCP και UDP θύρες %i στον τοπικό υπολογιστή σας."/>
 		<string id="16807" value="Παρακαλώ εισάγετε όριο του εύρους ζώνης που επιθυμείτε &quot;123 kb/s&quot; για kilobits ανά δευτερόλεπτο ή &quot;123 KB/s&quot; για kiloBytes ανά δευτερόλεπτο."/>
 		<string id="16808" value="Δεν έχετε συμπληρώσει την ηλικία ή το φύλο σας. Συνέχεια χωρίς;"/>
 		<string id="16809" value="E&amp;xit"/>
 		<string id="16810" value="ετών"/>
 		<string id="16811" value="Αυτόματα"/>
-		<string id="16812" value="Παρακαλώ περιμένετε: Αναζήτηση συσκευών UPnP και ρύθμισή τους..."/>
 		<string id="16813" value="Παρακαλώ περιμένετε: Ενημέρωση υπηρεσιών ανακάλυψης..."/>
 		<string id="16814" value="Παρακαλώ περιμένετε: Ενημέρωση λίστας ED2K server..."/>
 		<string id="16815" value="Η υπηρεσία Host για συσκευές UPnP δεν τρέχει. Η υπηρεσία απαιτείται για την επίτευξη της ρύθμισης.\nΧρειάζεται να θέσετε τον τύπο εκκίνησης της υπηρεσίας στο αυτόματο."/>

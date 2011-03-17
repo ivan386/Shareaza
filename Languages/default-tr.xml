@@ -420,7 +420,7 @@
 			<button id="ID_HOSTCACHE_DC_CACHE" text="DC++ Cache"/>
 		</toolbar>
 		<!-- PRIVATE CHAT FRAME -->
-		<toolbar name="CPrivateChatFrame">
+		<toolbar name="CPrivateChatWnd">
 			<button id="ID_CHAT_BOLD" text="K"/>
 			<button id="ID_CHAT_ITALIC" text="I"/>
 			<button id="ID_CHAT_UNDERLINE" text="A"/>
@@ -1586,7 +1586,7 @@
 			<item id="ID_DISCOVERY_EDIT" text="İ_leri Düzenleme..."/>
 		</menu>
 		<!-- PRIVATE CHAT FRAME -->
-		<menu name="CPrivateChatFrame">
+		<menu name="CPrivateChatWnd">
 			<item id="ID_CHAT_CONNECT" text="_Bağlan"/>
 			<item id="ID_CHAT_DISCONNECT" text="Bağ_lantı Kes"/>
 			<separator/>
@@ -3026,6 +3026,7 @@
 		<string id="16377" value="HTTP Koruma"/>
 		<string id="16378" value="Host &quot;%s&quot; sent a 416, without providing available ranges. Closing connection."/>
 		<string id="16379" value="Kütüphane Dosyaları"/>
+		<string id="16380" value="eDonkey Koruma"/>
 		<string id="16384" value="&quot;%s&quot; dosyasını atmak istediğinize emin misiniz?\n\nBazı dosyalar bilgisayarınıza zarar verebilir. Dosyayı atmadan önce ne dosyası olduğundan emin olun."/>
 		<string id="16385" value="%i dosyada veri değiştirmek üzeresiniz, devam etmek istediğinize emin misiniz?"/>
 		<string id="16386" value="%i dosyada veri yayınlanıyor."/>
@@ -3114,13 +3115,11 @@
 		<string id="16803" value="Paylaştığınız klasör başka bir paylaşım klasörünün parçasıdır:\n\n%s"/>
 		<string id="16804" value="Profilinizde takma ad girmediniz."/>
 		<string id="16805" value="Kullanıcı profilinize konumunuzu girmediniz.\n\nDiğer kullanıcıların hangi ülkeden oldugunuzu görebilmesi için konumunuzu girmeniz iyi bir fikir. Not: konumunuzu belirtmezseniz, uzlaşmış bilgi edinemezsiniz.\n\nYer belirtmeden devam etmek istediğinize emin misiniz?"/>
-		<string id="16806" value="Güvenlik duvarı ya da NAT yönlendiricide port-forwarding kurmak istediğinizi belirttiniz.\n\nLütfen yerel PC'nizden TCP ve UDP %i portlara gidecek ağı yapılandırın."/>
 		<string id="16807" value="Lütfen &quot;123 kb/s&quot; kilobits saniye ya da &quot;123 KB/s&quot; kilobayt saniye olarak belirlediğiniz bantgenişliği limitinizi yazınız."/>
 		<string id="16808" value="Yaş ve cinsiyetinizi belirlemediniz. Bunları yapmadan devam etmek istediğinize emin misiniz?"/>
 		<string id="16809" value="&amp;Çıkış"/>
 		<string id="16810" value="Yıl"/>
 		<string id="16811" value="Otomatik"/>
-		<string id="16812" value="Lütfen bekleyiniz: Shareaza UPnP cihazları bulmakta ve onları kurmaktatadır..."/>
 		<string id="16813" value="Lütfen bekleyiniz: Keşif servisleri güncellenmektedir..."/>
 		<string id="16814" value="Lütfen bekleyiniz: eDonkey sunucu listesi güncellenmektedir..."/>
 		<string id="16815" value="UPnP Cihazları Host Servisi etkin değildir. Bu hizmet cihazların kurulumu için gereklidir.\nHizmetin başlama biçimini automatiğe ayarlamanız gerekmektedir.utomatic."/>

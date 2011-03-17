@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2010-11-16 14:53+0000\n"
+"POT-Creation-Date: 2011-03-14 05:50+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -554,7 +554,7 @@ msgstr "_Tinklas"
 #: cmainwnd.tabbed;9;item;id_network_connect
 #: cmainwnd.windowed;18;item;id_network_connect
 #: cneighbourswnd;59;item;id_network_connect
-#: cprivatechatframe;item;id_chat_connect
+#: cprivatechatwnd;item;id_chat_connect
 msgid "_Connect"
 msgstr "Jun_gtis"
 
@@ -858,7 +858,7 @@ msgstr "_Apie „Shareaza“..."
 #: cneighbourswnd.basic;item;id_neighbours_disconnect
 #: cneighbourswnd;item;id_neighbours_disconnect
 #: cneighbourswnd;59;item;id_network_disconnect
-#: cprivatechatframe;item;id_chat_disconnect
+#: cprivatechatwnd;item;id_chat_disconnect
 msgid "_Disconnect"
 msgstr "_Atsijungti"
 
@@ -1114,8 +1114,7 @@ msgstr "Kopijuoti _nuorodą..."
 #: cuploadswnd.upload;item;id_browse_launch
 #: cneighbourswnd.basic;item;id_browse_launch
 #: cneighbourswnd;item;id_browse_launch
-#: csearchmonitorwnd;item;id_browse_launch
-#: cprivatechatframe;item;id_chat_browse
+#: csearchmonitorwnd;item;id_browse_launch cprivatechatwnd;item;id_chat_browse
 msgid "_Browse User"
 msgstr "_Rodyti naudotojo duomenis"
 
@@ -1795,8 +1794,7 @@ msgstr "_Informacija"
 msgid "_Debug"
 msgstr "_Derinimas"
 
-#: csystemwnd;item;id_system_timestamp
-#: cprivatechatframe;item;id_chat_timestamp
+#: csystemwnd;item;id_system_timestamp cprivatechatwnd;item;id_chat_timestamp
 msgid "Timestam_p"
 msgstr "_Rodyti laiką"
 
@@ -1945,35 +1943,35 @@ msgstr "Rodyti ser_ver.mets"
 msgid "_Add Service..."
 msgstr "_Pridėti tarnybą..."
 
-#: cprivatechatframe;item;id_chat_priority
+#: cprivatechatwnd;item;id_chat_priority
 msgid "Grant _Priority"
 msgstr "Suteikti _prioritetą"
 
-#: cprivatechatframe;62
+#: cprivatechatwnd;62
 msgid "_Format"
 msgstr "_Formatas"
 
-#: cprivatechatframe;62;item;id_chat_bold
+#: cprivatechatwnd;62;item;id_chat_bold
 msgid "Set _Bold"
 msgstr "_Pusjuodis šriftas"
 
-#: cprivatechatframe;62;item;id_chat_italic
+#: cprivatechatwnd;62;item;id_chat_italic
 msgid "Set _Italic"
 msgstr "_Kursyvas"
 
-#: cprivatechatframe;62;item;id_chat_underline
+#: cprivatechatwnd;62;item;id_chat_underline
 msgid "Set _Underline"
 msgstr "Pabra_ukimas"
 
-#: cprivatechatframe;62;item;id_chat_colour
+#: cprivatechatwnd;62;item;id_chat_colour
 msgid "Set _Colour"
 msgstr "_Spalva"
 
-#: cprivatechatframe;62;item;id_chat_emoticons
+#: cprivatechatwnd;62;item;id_chat_emoticons
 msgid "_Emoticons"
 msgstr "_Emocijų ženklelis"
 
-#: cprivatechatframe;item;id_chat_clear
+#: cprivatechatwnd;item;id_chat_clear
 msgid "C_lear Window"
 msgstr "_Valyti langą"
 
@@ -6089,6 +6087,11 @@ msgstr ""
 msgid "Library Files"
 msgstr "Kolekcijos failai"
 
+#: string;16380
+#, fuzzy
+msgid "DC++ Guard"
+msgstr "eDonkey saugančioji"
+
 #: string;16384
 msgid ""
 "Are you sure you want to launch the file \"%s\" ?\\n"
@@ -6558,16 +6561,6 @@ msgstr ""
 "\\n"
 "Ar tikrai norite tęsti, neįvedę savo vietovės?"
 
-#: string;16806
-msgid ""
-"Shareaza was unable to set up port-forwarding on your NAT router or firewall.\\n"
-"\\n"
-"Please configure your network to forward TCP and UDP ports %i to your local PC."
-msgstr ""
-"Shareaza nesugebėjo nukreipti prievado į Jūsų NAT maršrutizatorių ar užkardą.\\n"
-"\\n"
-"Sukonfigūruokite savo tinklą TCP ir UDP prievado %i nukreipimui į savo vietinį kompiuterį."
-
 #: string;16807
 msgid "Please type the bandwidth limit you wish to set in the form \"123 kb/s\" for kilobits per second, or \"123 KB/s\" for kilobytes per second."
 msgstr "Įveskite norimą greitaveikos limitą „123 kb/s“ pavidalu, jei spartą renkatės kilobitais per sekundę, arba „123 KB/s“, jei renkatės kilobaitais per sekundę."
@@ -6588,10 +6581,6 @@ msgstr "m. amžiaus"
 #: cconnectionsettingspage;control;12
 msgid "Automatic"
 msgstr "Automatinis"
-
-#: string;16812
-msgid "Please wait: Finding UPnP devices and setting them up..."
-msgstr "Prašome palaukti: Ieškomi ir konfigūruojami UPnP įrenginiai..."
 
 #: string;16813
 msgid "Please wait: Updating discovery services..."
@@ -8284,10 +8273,6 @@ msgstr "Įg_alinti:"
 #: cremotesettingspage;control;4
 msgid "Enable Shareaza Remote Access:"
 msgstr "Įgalinti nuotolinę prieigą prie „Shareaza“ programos"
-
-#: cremotesettingspage;control;5 column;url
-msgid "URL"
-msgstr "Nuoroda"
 
 #: cremotesettingspage;control;6
 msgid "_Credentials:"
@@ -10255,6 +10240,10 @@ msgstr "Nuostata"
 msgid "Value"
 msgstr "Reikšmė"
 
+#: column;url
+msgid "URL"
+msgstr "Nuoroda"
+
 #: column;filename
 msgid "Filename"
 msgstr "Failo vardas"
@@ -10285,6 +10274,10 @@ msgstr "Dryžinė maiša"
 msgid "NextRun"
 msgstr "Tolesnis"
 
+#~ msgid "Shareaza was unable to set up port-forwarding on your NAT router or firewall.\\n\\nPlease configure your network to forward TCP and UDP ports %i to your local PC."
+#~ msgstr "Shareaza nesugebėjo nukreipti prievado į Jūsų NAT maršrutizatorių ar užkardą.\\n\\nSukonfigūruokite savo tinklą TCP ir UDP prievado %i nukreipimui į savo vietinį kompiuterį."
+#~ msgid "Please wait: Finding UPnP devices and setting them up..."
+#~ msgstr "Prašome palaukti: Ieškomi ir konfigūruojami UPnP įrenginiai..."
 #~ msgid "_Play Album"
 #~ msgstr "Atv_erti albumą"
 #~ msgid "This is a pre-release version of Shareaza, and the beta testing period has ended. Please download the full, official release from http://shareaza.sourceforge.net/."

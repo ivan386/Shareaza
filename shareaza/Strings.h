@@ -81,4 +81,7 @@ BOOL StartsWith(const CString& sInput, LPCTSTR pszText, size_t nLen);
 CString LoadFile(LPCTSTR pszPath);
 
 // Replaces a substring with another (case-insensitive)
-void ReplaceNoCase(CString& sInStr, LPCTSTR pszOldStr, LPCTSTR pszNewStr);
+BOOL ReplaceNoCase(CString& sInStr, LPCTSTR pszOldStr, LPCTSTR pszNewStr);
+
+// Returns "a.a.a.a:port"
+CString HostToString(const SOCKADDR_IN* pHost);

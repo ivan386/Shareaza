@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2010-11-16 14:53+0000\n"
+"POT-Creation-Date: 2011-03-14 05:50+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -554,7 +554,7 @@ msgstr "_Δίκτυα"
 #: cmainwnd.tabbed;9;item;id_network_connect
 #: cmainwnd.windowed;18;item;id_network_connect
 #: cneighbourswnd;59;item;id_network_connect
-#: cprivatechatframe;item;id_chat_connect
+#: cprivatechatwnd;item;id_chat_connect
 msgid "_Connect"
 msgstr "_Σύνδεση"
 
@@ -858,7 +858,7 @@ msgstr "_Σχετικά με το Shareaza..."
 #: cneighbourswnd.basic;item;id_neighbours_disconnect
 #: cneighbourswnd;item;id_neighbours_disconnect
 #: cneighbourswnd;59;item;id_network_disconnect
-#: cprivatechatframe;item;id_chat_disconnect
+#: cprivatechatwnd;item;id_chat_disconnect
 msgid "_Disconnect"
 msgstr "_Αποσύνδεση"
 
@@ -1114,8 +1114,7 @@ msgstr "Αντι_γραφή URI"
 #: cuploadswnd.upload;item;id_browse_launch
 #: cneighbourswnd.basic;item;id_browse_launch
 #: cneighbourswnd;item;id_browse_launch
-#: csearchmonitorwnd;item;id_browse_launch
-#: cprivatechatframe;item;id_chat_browse
+#: csearchmonitorwnd;item;id_browse_launch cprivatechatwnd;item;id_chat_browse
 msgid "_Browse User"
 msgstr "Περι_ήγηση Χρήστη"
 
@@ -1795,8 +1794,7 @@ msgstr "_Πληροφορίες"
 msgid "_Debug"
 msgstr "_Αποσφαλμάτωση"
 
-#: csystemwnd;item;id_system_timestamp
-#: cprivatechatframe;item;id_chat_timestamp
+#: csystemwnd;item;id_system_timestamp cprivatechatwnd;item;id_chat_timestamp
 msgid "Timestam_p"
 msgstr "_Χρονικές Επισημάνσεις"
 
@@ -1945,35 +1943,35 @@ msgstr "Προβολή Ser_ver.met's"
 msgid "_Add Service..."
 msgstr "_Προσθήκη Υπηρεσίας..."
 
-#: cprivatechatframe;item;id_chat_priority
+#: cprivatechatwnd;item;id_chat_priority
 msgid "Grant _Priority"
 msgstr "Χορήγηση _Προτεραιότητας"
 
-#: cprivatechatframe;62
+#: cprivatechatwnd;62
 msgid "_Format"
 msgstr "_Format"
 
-#: cprivatechatframe;62;item;id_chat_bold
+#: cprivatechatwnd;62;item;id_chat_bold
 msgid "Set _Bold"
 msgstr "Εφαρμογή _Έντονων"
 
-#: cprivatechatframe;62;item;id_chat_italic
+#: cprivatechatwnd;62;item;id_chat_italic
 msgid "Set _Italic"
 msgstr "Εφαρμογή _Πλαγίων"
 
-#: cprivatechatframe;62;item;id_chat_underline
+#: cprivatechatwnd;62;item;id_chat_underline
 msgid "Set _Underline"
 msgstr "Εφαρμογή _Υπογραμμισμένων"
 
-#: cprivatechatframe;62;item;id_chat_colour
+#: cprivatechatwnd;62;item;id_chat_colour
 msgid "Set _Colour"
 msgstr "Αλλαγή _Χρώματος"
 
-#: cprivatechatframe;62;item;id_chat_emoticons
+#: cprivatechatwnd;62;item;id_chat_emoticons
 msgid "_Emoticons"
 msgstr "_Εικονίδια"
 
-#: cprivatechatframe;item;id_chat_clear
+#: cprivatechatwnd;item;id_chat_clear
 msgid "C_lear Window"
 msgstr "_Καθαρισμός Παραθύρου"
 
@@ -6096,6 +6094,11 @@ msgstr ""
 msgid "Library Files"
 msgstr "Αρχεία Βιβλιοθήκης"
 
+#: string;16380
+#, fuzzy
+msgid "DC++ Guard"
+msgstr "ED2K Φρουρός"
+
 #: string;16384
 msgid ""
 "Are you sure you want to launch the file \"%s\" ?\\n"
@@ -6557,16 +6560,6 @@ msgid ""
 "Are you sure you want to continue without entering your location?"
 msgstr "Δεν έχετε συμπληρώσει την τοποθεσία στο προφίλ σας. Συνέχεια χωρίς;"
 
-#: string;16806
-msgid ""
-"Shareaza was unable to set up port-forwarding on your NAT router or firewall.\\n"
-"\\n"
-"Please configure your network to forward TCP and UDP ports %i to your local PC."
-msgstr ""
-"Το Shareaza δεν κατάφερε να ρυθμίσει την προώθηση θύρας στον NAT router ή firewall σας.\\n"
-"\\n"
-"Παρακαλώ ρυθμίστε το δίκτυό σας να προωθεί τις TCP και UDP θύρες %i στον τοπικό υπολογιστή σας."
-
 #: string;16807
 msgid "Please type the bandwidth limit you wish to set in the form \"123 kb/s\" for kilobits per second, or \"123 KB/s\" for kilobytes per second."
 msgstr "Παρακαλώ εισάγετε όριο του εύρους ζώνης που επιθυμείτε \"123 kb/s\" για kilobits ανά δευτερόλεπτο ή \"123 KB/s\" για kiloBytes ανά δευτερόλεπτο."
@@ -6587,10 +6580,6 @@ msgstr "ετών"
 #: cconnectionsettingspage;control;12
 msgid "Automatic"
 msgstr "Αυτόματα"
-
-#: string;16812
-msgid "Please wait: Finding UPnP devices and setting them up..."
-msgstr "Παρακαλώ περιμένετε: Αναζήτηση συσκευών UPnP και ρύθμισή τους..."
 
 #: string;16813
 msgid "Please wait: Updating discovery services..."
@@ -8283,10 +8272,6 @@ msgstr "_Ενεργοποίηση:"
 #: cremotesettingspage;control;4
 msgid "Enable Shareaza Remote Access:"
 msgstr "Ενεργοποίηση Απομακρυσμένης Πρόσβασης Shareaza:"
-
-#: cremotesettingspage;control;5 column;url
-msgid "URL"
-msgstr "URL"
 
 #: cremotesettingspage;control;6
 msgid "_Credentials:"
@@ -10254,6 +10239,10 @@ msgstr "Ρύθμιση"
 msgid "Value"
 msgstr "Τιμή"
 
+#: column;url
+msgid "URL"
+msgstr "URL"
+
 #: column;filename
 msgid "Filename"
 msgstr "Όνομα Αρχείου"
@@ -10284,6 +10273,10 @@ msgstr "TigerTree"
 msgid "NextRun"
 msgstr "Επόμενο"
 
+#~ msgid "Shareaza was unable to set up port-forwarding on your NAT router or firewall.\\n\\nPlease configure your network to forward TCP and UDP ports %i to your local PC."
+#~ msgstr "Το Shareaza δεν κατάφερε να ρυθμίσει την προώθηση θύρας στον NAT router ή firewall σας.\\n\\nΠαρακαλώ ρυθμίστε το δίκτυό σας να προωθεί τις TCP και UDP θύρες %i στον τοπικό υπολογιστή σας."
+#~ msgid "Please wait: Finding UPnP devices and setting them up..."
+#~ msgstr "Παρακαλώ περιμένετε: Αναζήτηση συσκευών UPnP και ρύθμισή τους..."
 #~ msgid "_Play Album"
 #~ msgstr "_Αναπαραγωγή Album"
 #~ msgid "This is a pre-release version of Shareaza, and the beta testing period has ended. Please download the full, official release from http://shareaza.sourceforge.net/."

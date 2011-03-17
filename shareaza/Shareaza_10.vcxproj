@@ -546,6 +546,7 @@
     <ClCompile Include="VendorCache.cpp" />
     <ClCompile Include="VersionChecker.cpp" />
     <ClCompile Include="WindowManager.cpp" />
+    <ClCompile Include="WndPrivateChat.cpp" />
     <ClCompile Include="WorldGPS.cpp" />
     <ClCompile Include="XML.cpp" />
     <ClCompile Include="XMLCOM.cpp" />
@@ -555,7 +556,6 @@
     <ClCompile Include="CtrlBrowseHeader.cpp" />
     <ClCompile Include="CtrlBrowseProfile.cpp" />
     <ClCompile Include="CtrlBrowseTree.cpp" />
-    <ClCompile Include="CtrlChatFrame.cpp" />
     <ClCompile Include="CtrlCoolBar.cpp" />
     <ClCompile Include="CtrlCoolMenuBar.cpp" />
     <ClCompile Include="CtrlCoolTip.cpp" />
@@ -592,7 +592,6 @@
     <ClCompile Include="CtrlMonitorBar.cpp" />
     <ClCompile Include="CtrlNeighbourTip.cpp" />
     <ClCompile Include="CtrlPanel.cpp" />
-    <ClCompile Include="CtrlPrivateChatFrame.cpp" />
     <ClCompile Include="CtrlRichTaskBox.cpp" />
     <ClCompile Include="CtrlSchema.cpp" />
     <ClCompile Include="CtrlSchemaCombo.cpp" />
@@ -942,6 +941,7 @@
     <ClInclude Include="VendorCache.h" />
     <ClInclude Include="VersionChecker.h" />
     <ClInclude Include="WindowManager.h" />
+    <ClInclude Include="WndPrivateChat.h" />
     <ClInclude Include="WorldGPS.h" />
     <ClInclude Include="XML.h" />
     <ClInclude Include="XMLCOM.h" />
@@ -951,7 +951,6 @@
     <ClInclude Include="CtrlBrowseHeader.h" />
     <ClInclude Include="CtrlBrowseProfile.h" />
     <ClInclude Include="CtrlBrowseTree.h" />
-    <ClInclude Include="CtrlChatFrame.h" />
     <ClInclude Include="CtrlCoolBar.h" />
     <ClInclude Include="CtrlCoolMenuBar.h" />
     <ClInclude Include="CtrlCoolTip.h" />
@@ -988,7 +987,6 @@
     <ClInclude Include="CtrlMonitorBar.h" />
     <ClInclude Include="CtrlNeighbourTip.h" />
     <ClInclude Include="CtrlPanel.h" />
-    <ClInclude Include="CtrlPrivateChatFrame.h" />
     <ClInclude Include="CtrlRichTaskBox.h" />
     <ClInclude Include="CtrlSchema.h" />
     <ClInclude Include="CtrlSchemaCombo.h" />

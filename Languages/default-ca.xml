@@ -420,7 +420,7 @@
 			<button id="ID_HOSTCACHE_DC_CACHE" text="DC++ Cache"/>
 		</toolbar>
 		<!-- PRIVATE CHAT FRAME -->
-		<toolbar name="CPrivateChatFrame">
+		<toolbar name="CPrivateChatWnd">
 			<button id="ID_CHAT_BOLD" text="B"/>
 			<button id="ID_CHAT_ITALIC" text="I"/>
 			<button id="ID_CHAT_UNDERLINE" text="U"/>
@@ -1586,7 +1586,7 @@
 			<item id="ID_DISCOVERY_EDIT" text="Edició avançada"/>
 		</menu>
 		<!-- PRIVATE CHAT FRAME -->
-		<menu name="CPrivateChatFrame">
+		<menu name="CPrivateChatWnd">
 			<item id="ID_CHAT_CONNECT" text="_Connecta"/>
 			<item id="ID_CHAT_DISCONNECT" text="_Desconnecta"/>
 			<separator/>
@@ -3047,6 +3047,7 @@
 		<string id="16377" value="Guàrdia HTTP"/>
 		<string id="16378" value="Host &quot;%s&quot; sent a 416, without providing available ranges. Closing connection."/>
 		<string id="16379" value="Fitxers de col·lecció"/>
+		<string id="16380" value="Guàrdia eDonkey"/>
 		<string id="16384" value="Estàs segur(a) que vols executar l'arxiu &quot;%s&quot;?\n\nAlguns arxius poden ser perillosos per a l'ordinador, i es recomana tenir l'antivirus actiu i actualitzat."/>
 		<string id="16385" value="Estàs a punt de modificar la metainformació de %i arxius. Estàs segur(a) en continuar?"/>
 		<string id="16386" value="Editant la metainformació de %i arxius."/>
@@ -3135,13 +3136,11 @@
 		<string id="16803" value="Aquesta carpeta ja està compartida com part de:\n\n%s"/>
 		<string id="16804" value="No s'ha especificat un pseudònim en el teu perfil.\n\nÉs bona idea especificar-ne un, per a que els demés usuaris sàpiguen de forma agradable a qui estan connectats.\n\n¿Estàs segur(a) de continuar sense pseudònim?"/>
 		<string id="16805" value="No ha estat especificada la teva ubicació al teu perfil.\n\nPer a altres usuaris podria ser interessant d'on ets, per a crear un mejor sentit de comunitat.\n\n¿Estàs segur(a) de continuar sense especificar la ubicació?"/>
-		<string id="16806" value="Has seleccionat utilitzar reenviament de ports en el teu NAT router o tallafocs.\n\nSi us Plau configura la teva Xarxa per a reenviar el port TCP %i al teu PC."/>
 		<string id="16807" value="Si us Plau inclou les unitats per al límit de l'ample de banda de la següent forma &quot;123 kb/s&quot; per a kilobits per segon, o &quot;123 KB/s&quot; per a kiloBytes per segon."/>
 		<string id="16808" value="No has seleccionat la teva edat i gènere. Estàs segur/a que vols continuar sense fer Això?"/>
 		<string id="16809" value="Sor&amp;tir"/>
 		<string id="16810" value="anys"/>
 		<string id="16811" value="Automàtic"/>
-		<string id="16812" value="Si us plau, esperi: Cercant dispositius UPnP i configurant-los..."/>
 		<string id="16813" value="Si us plau, esperi: Actualitzant serveis de descobriment..."/>
 		<string id="16814" value="Si us plau, esperi: Actualitzant la llista de servidors d'eDonkey..."/>
 		<string id="16815" value="El servei UPnP Device Host Service no està sent executat. Aquest servei està re requerit per la instal·lació.\nHas de configurar el llançament d'aquest servei del Windows al mode automàtic."/>

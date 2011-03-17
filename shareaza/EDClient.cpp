@@ -1,7 +1,7 @@
 //
 // EDClient.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -74,19 +74,29 @@ CEDClient::CEDClient()
 ,	m_nEmVersion			( 0 )
 ,	m_nEmCompatible			( 0 )
 ,	m_nSoftwareVersion		( 0ul )
-,	m_bEmAICH				( FALSE )		// Not supported
+
+,	m_bEmAICH				( FALSE )
 ,	m_bEmUnicode			( FALSE )
 ,	m_bEmUDPVersion			( FALSE )
 ,	m_bEmDeflate			( FALSE )
-,	m_bEmSecureID			( FALSE )		// Not supported
+,	m_bEmSecureID			( FALSE )
 ,	m_bEmSources			( FALSE )
 ,	m_bEmRequest			( FALSE )
 ,	m_bEmComments			( FALSE )
-,	m_bEmPeerCache			( FALSE )		// Not supported
+,	m_bEmPeerCache			( FALSE )
 ,	m_bEmBrowse				( FALSE )
-,	m_bEmMultiPacket		( FALSE )		// Not supported
+,	m_bEmMultiPacket		( FALSE )
 ,	m_bEmPreview			( FALSE )
-,	m_bEmLargeFile			( FALSE )		// LargeFile support
+
+,	m_bEmSupportsCaptcha	( FALSE )
+,	m_bEmSupportsSourceEx2	( FALSE )
+,	m_bEmRequiresCryptLayer	( FALSE )
+,	m_bEmRequestsCryptLayer	( FALSE )
+,	m_bEmSupportsCryptLayer	( FALSE )
+,	m_bEmExtMultiPacket		( FALSE )
+,	m_bEmLargeFile			( FALSE )
+,	m_nEmKadVersion			( FALSE )
+
 ,	m_bLogin				( FALSE )
 ,	m_nUpSize				( 0ull )
 ,	m_pDownloadTransfer		( NULL )
@@ -265,6 +275,7 @@ void CEDClient::CopyCapabilities(CEDClient* pClient)
 	if ( ! m_nEmVersion )		m_nEmVersion = pClient->m_nEmVersion;
 	if ( ! m_nEmCompatible )	m_nEmCompatible = pClient->m_nEmCompatible;
 	if ( ! m_nSoftwareVersion )	m_nSoftwareVersion = pClient->m_nSoftwareVersion;
+
 	if ( ! m_bEmAICH )			m_bEmAICH = pClient->m_bEmAICH;
 	if ( ! m_bEmUnicode )		m_bEmUnicode = pClient->m_bEmUnicode;
 	if ( ! m_bEmUDPVersion )	m_bEmUDPVersion = pClient->m_bEmUDPVersion;
@@ -276,8 +287,16 @@ void CEDClient::CopyCapabilities(CEDClient* pClient)
 	if ( ! m_bEmPeerCache )		m_bEmPeerCache = pClient->m_bEmPeerCache;
 	if ( ! m_bEmBrowse )		m_bEmBrowse = pClient->m_bEmBrowse;
 	if ( ! m_bEmMultiPacket )	m_bEmMultiPacket = pClient->m_bEmMultiPacket;
-	if ( ! m_bEmPreview )		m_bEmPreview = pClient->m_bEmPreview ;
-	if ( ! m_bEmLargeFile )		m_bEmLargeFile = pClient->m_bEmLargeFile;
+	if ( ! m_bEmPreview )		m_bEmPreview = pClient->m_bEmPreview;
+
+	if ( ! m_bEmSupportsCaptcha )	m_bEmSupportsCaptcha = pClient->m_bEmSupportsCaptcha;
+	if ( ! m_bEmSupportsSourceEx2 )	m_bEmSupportsSourceEx2 = pClient->m_bEmSupportsSourceEx2;
+	if ( ! m_bEmRequiresCryptLayer )m_bEmRequiresCryptLayer = pClient->m_bEmRequiresCryptLayer;
+	if ( ! m_bEmRequestsCryptLayer )m_bEmRequestsCryptLayer = pClient->m_bEmRequestsCryptLayer;
+	if ( ! m_bEmSupportsCryptLayer )m_bEmSupportsCryptLayer = pClient->m_bEmSupportsCryptLayer;
+	if ( ! m_bEmExtMultiPacket )	m_bEmExtMultiPacket = pClient->m_bEmExtMultiPacket;
+	if ( ! m_bEmLargeFile )			m_bEmLargeFile = pClient->m_bEmLargeFile;
+	if ( ! m_nEmKadVersion )		m_nEmKadVersion = pClient->m_nEmKadVersion;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -508,6 +527,7 @@ void CEDClient::NotifyDropped()
 	if ( m_pDownloadTransfer != NULL ) m_pDownloadTransfer->OnDropped();
 	if ( m_pUploadTransfer != NULL ) m_pUploadTransfer->OnDropped();
 	if ( CHostBrowser* pBrowser = GetBrowser() ) pBrowser->OnDropped();
+	ChatCore.OnDropped( this );
 	m_bSeeking = FALSE;
 }
 
@@ -683,7 +703,7 @@ BOOL CEDClient::OnPacket(CEDPacket* pPacket)
 
 		// Chat
 		case ED2K_C2C_MESSAGE:
-			return OnMessage( pPacket );
+			return OnChatMessage( pPacket );
 
 		// Browse us
 		case ED2K_C2C_ASKSHAREDDIRS:
@@ -741,6 +761,12 @@ BOOL CEDClient::OnPacket(CEDPacket* pPacket)
 		case ED2K_C2C_COMPRESSEDPART_I64:
 			if ( m_pDownloadTransfer != NULL ) m_pDownloadTransfer->OnCompressedPart64( pPacket );
 			return TRUE;
+
+		// Chat
+		case ED2K_C2C_CHATCAPTCHAREQ:
+			return OnCaptchaRequest( pPacket );
+		case ED2K_C2C_CHATCAPTCHARES:
+			return OnCaptchaResult( pPacket );
 		}
 	}
 
@@ -826,23 +852,20 @@ void CEDClient::SendHello(BYTE nType)
 
 	// 4 - Feature Versions 1
 	BYTE nExtendedRequests = (BYTE)min ( Settings.eDonkey.ExtendedRequest, (DWORD)ED2K_VERSION_EXTENDEDREQUEST );
-	DWORD nOpt1 =  ( ( ED2K_VERSION_AICH << 29) |					// AICH
-					 ( TRUE << 28) |								// Unicode
-					 ( ED2K_VERSION_UDP << 24) |					// UDP version
-					 ( ED2K_VERSION_COMPRESSION << 20) |			// Compression
-					 ( ED2K_VERSION_SECUREID << 16) |				// Secure ID
-					 ( ED2K_VERSION_SOURCEEXCHANGE << 12) |			// Source exchange
-					 ( nExtendedRequests << 8) |					// Extended requests
-					 ( ED2K_VERSION_COMMENTS << 4) |				// Comments
-					 ( FALSE << 3) |								// Peer Cache
-					 ( FALSE << 2) |								// Browse
-					 ( FALSE << 1) |								// Multipacket
+	DWORD nOpt1 =  ( ( ED2K_VERSION_AICH << 29 ) |					// AICH
+					 ( 1 << 28 ) |									// Unicode
+					 ( ED2K_VERSION_UDP << 24 ) |					// UDP version
+					 ( ED2K_VERSION_COMPRESSION << 20 ) |			// Compression
+					 ( ED2K_VERSION_SECUREID << 16 ) |				// Secure ID
+					 ( ED2K_VERSION_SOURCEEXCHANGE << 12 ) |		// Source exchange
+					 ( nExtendedRequests << 8 ) |					// Extended requests
+					 ( ED2K_VERSION_COMMENTS << 4 ) |				// Comments
 					 ( Settings.Uploads.SharePreviews ? 1 : 0 ) );	// Preview
 	CEDTag( ED2K_CT_FEATUREVERSIONS, nOpt1 ).Write( pPacket );
 
 	// 5 - Feature Versions 2
-	DWORD nOpt2 =  ( ( FALSE << 5 ) |								// Ext Multipacket
-				     ( Settings.eDonkey.LargeFileSupport << 4 ) );	// LargeFile support
+	DWORD nOpt2 =  ( ( 1 << 11 ) |									// Captcha supported
+				     ( Settings.eDonkey.LargeFileSupport << 4 ) );	// LargeFile supported
 	CEDTag( ED2K_CT_MOREFEATUREVERSIONS, nOpt2 ).Write( pPacket );
 
 	// 6 - Software Version
@@ -948,18 +971,25 @@ BOOL CEDClient::OnHello(CEDPacket* pPacket)
 			if ( pTag.m_nType == ED2K_TAG_INT )
 			{
 				m_bEmule = TRUE;
-				m_bEmMultiPacket= (pTag.m_nValue >> 5 ) & 0x01;
-				m_bEmLargeFile	= (pTag.m_nValue >> 4 ) & 0x01;
+				m_bEmSupportsCaptcha	= (pTag.m_nValue >> 11) & 0x01;
+				m_bEmSupportsSourceEx2	= (pTag.m_nValue >> 10) & 0x01;
+				m_bEmRequiresCryptLayer	= (pTag.m_nValue >> 9 ) & 0x01;
+				m_bEmRequestsCryptLayer	= (pTag.m_nValue >> 8 ) & 0x01;
+				m_bEmSupportsCryptLayer	= (pTag.m_nValue >> 7 ) & 0x01;
+				// reserved 1
+				m_bEmExtMultiPacket		= (pTag.m_nValue >> 5 ) & 0x01;
+				m_bEmLargeFile			= (pTag.m_nValue >> 4 ) & 0x01;
+				m_nEmKadVersion			= (pTag.m_nValue) & 0x0f;
 			}
 			break;
-		case ED2K_CT_UNKNOWN1:
-		case ED2K_CT_UNKNOWN2:
+		case ED2K_CT_BUDDYIP:
+		case ED2K_CT_BUDDYUDP:
 		case ED2K_CT_UNKNOWN3:
 			break;
 		default:
 			if ( _tcsicmp( pTag.m_sKey, _T("pr") ) == 0 )
 			{
-				// No idea what this means. Probably from the eDonkey client.
+				// TODO: Detect eDonkeyHybrid client.
 			}
 			else
 			{
@@ -1594,11 +1624,8 @@ BOOL CEDClient::OnQueueRequest(CEDPacket* /*pPacket*/)
 //////////////////////////////////////////////////////////////////////
 // CEDClient Message handler
 
-BOOL CEDClient::OnMessage(CEDPacket* pPacket)
+BOOL CEDClient::OnChatMessage(CEDPacket* pPacket)
 {
-	DWORD nMessageLength;
-	CString sMessage;
-
 	// Check packet has message length
 	if ( pPacket->GetRemaining() < 3 )
 	{
@@ -1607,31 +1634,37 @@ BOOL CEDClient::OnMessage(CEDPacket* pPacket)
 	}
 
 	// Read message length
-	nMessageLength = pPacket->ReadShortLE();
+	DWORD nMessageLength = pPacket->ReadShortLE();
 
 	// Validate message length
-	if ( ( nMessageLength < 1 ) || ( nMessageLength > ED2K_MESSAGE_MAX ) || ( nMessageLength != DWORD( pPacket->GetRemaining() ) ) )
+	if ( nMessageLength < 1 ||
+		 nMessageLength > ED2K_MESSAGE_MAX ||
+		 nMessageLength != pPacket->GetRemaining() )
 	{
 		theApp.Message( MSG_ERROR, _T("Invalid message packet received from %s"), (LPCTSTR)m_sAddress );
 		return TRUE;
 	}
 
 	// Read in message
+	CString sMessage;
 	if ( m_bEmUnicode )
 		sMessage = pPacket->ReadStringUTF8( nMessageLength );
 	else
 		sMessage = pPacket->ReadStringASCII( nMessageLength );
 
-
 	// Check the message is not spam
 	if ( MessageFilter.IsED2KSpam( sMessage ) )
 	{
 		// Block L33cher mods
-		if ( m_pDownloadTransfer == NULL ) Security.Ban( &m_pHost.sin_addr, banSession, FALSE );
+		if ( m_pDownloadTransfer == NULL )
+			Security.Ban( &m_pHost.sin_addr, banSession, FALSE );
 		// Don't display message
 		return TRUE;
 	}
-	if ( MessageFilter.IsFiltered( sMessage ) ) return TRUE;	// General spam filter (if enabled)
+
+	if ( MessageFilter.IsFiltered( sMessage ) )
+		// General spam filter (if enabled)
+		return TRUE;
 
 	// Check chat settings.
 	if ( Settings.Community.ChatEnable && Settings.Community.ChatAllNetworks )
@@ -1644,6 +1677,55 @@ BOOL CEDClient::OnMessage(CEDPacket* pPacket)
 		// Chat is disabled- don't open a chat window. Display in system window instead.
 		theApp.Message( MSG_INFO, _T("Message from %s: %s"), (LPCTSTR)m_sAddress, sMessage );
 	}
+
+	return TRUE;
+}
+
+BOOL CEDClient::OnCaptchaRequest(CEDPacket* pPacket)
+{
+	// Check packet has message length
+	if ( pPacket->GetRemaining() < 128 )
+	{
+		theApp.Message( MSG_ERROR, _T("Empty CAPTHA request packet received from %s"), (LPCTSTR)m_sAddress );
+		return TRUE;
+	}
+
+	// Skip all tags (future use)
+	for ( BYTE nCount = pPacket->ReadByte(); nCount && pPacket->GetRemaining(); --nCount )
+	{
+		CEDTag pTag;
+		if ( ! pTag.Read( pPacket ) )
+		{
+			theApp.Message( MSG_ERROR, _T("Wrong CAPTHA request packet received from %s"), (LPCTSTR)m_sAddress );
+			return TRUE;
+		}
+	}
+
+	// Read image
+	DWORD nSize = pPacket->GetRemaining();
+	if ( nSize > 128 && nSize < 4096)
+	{
+		ChatCore.OnED2KMessage( this, pPacket );
+	}
+	else
+	{
+		theApp.Message( MSG_ERROR, _T("Wrong CAPTHA request packet received from %s"), (LPCTSTR)m_sAddress );
+	}
+
+	return TRUE;
+}
+
+BOOL CEDClient::OnCaptchaResult(CEDPacket* pPacket)
+{
+	// Check packet has message length
+	if ( pPacket->GetRemaining() < 1 )
+	{
+		theApp.Message( MSG_ERROR, _T("Empty CAPTHA result packet received from %s"), (LPCTSTR)m_sAddress );
+		return TRUE;
+	}
+
+	ChatCore.OnED2KMessage( this, pPacket );
+
 	return TRUE;
 }
 

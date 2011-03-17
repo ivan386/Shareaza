@@ -1,7 +1,7 @@
 //
 // ChatCore.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -25,24 +25,18 @@
 
 class CConnection;
 class CChatSession;
+class CEDClient;
+class CEDPacket;
 
 
-class CChatCore :
-	public CThreadImpl
+class CChatCore : public CThreadImpl
 {
-// Construction
 public:
 	CChatCore();
 	virtual ~CChatCore();
 
-// Attributes
-public:
 	CMutex		m_pSection;
-protected:
-	CList< CChatSession* > m_pSessions;
 
-// Operations
-public:
 	POSITION		GetIterator() const;
 	CChatSession*	GetNext(POSITION& pos) const;
 	INT_PTR			GetCount() const { return m_pSessions.GetCount(); }
@@ -50,14 +44,17 @@ public:
 	void			Close();
 	void			OnAccept(CConnection* pConnection, PROTOCOLID nProtocol = PROTOCOL_NULL);
 	BOOL			OnPush(const Hashes::Guid& oGUID, CConnection* pConnection);
+
 	void			OnED2KMessage(CEDClient* pClient, CEDPacket* pPacket);
-	CChatSession*	FindSession(CEDClient* pClient);
-	void			StopThread();
+	void			OnDropped(CEDClient* pClient);
+
 protected:
+	CList< CChatSession* > m_pSessions;
+
+	CChatSession*	FindSession(CEDClient* pClient, BOOL bCreate);
 	void			Add(CChatSession* pSession);
 	void			Remove(CChatSession* pSession);
 	void			StartThread();
-protected:
 	void			OnRun();
 
 	friend class CChatSession;

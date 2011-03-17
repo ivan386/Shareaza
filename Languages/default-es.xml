@@ -420,7 +420,7 @@
 			<button id="ID_HOSTCACHE_DC_CACHE" text="DC++ Cache"/>
 		</toolbar>
 		<!-- PRIVATE CHAT FRAME -->
-		<toolbar name="CPrivateChatFrame">
+		<toolbar name="CPrivateChatWnd">
 			<button id="ID_CHAT_BOLD" text="B"/>
 			<button id="ID_CHAT_ITALIC" text="I"/>
 			<button id="ID_CHAT_UNDERLINE" text="U"/>
@@ -1586,7 +1586,7 @@
 			<item id="ID_DISCOVERY_EDIT" text="Edición avanzada"/>
 		</menu>
 		<!-- PRIVATE CHAT FRAME -->
-		<menu name="CPrivateChatFrame">
+		<menu name="CPrivateChatWnd">
 			<item id="ID_CHAT_CONNECT" text="_Conectar"/>
 			<item id="ID_CHAT_DISCONNECT" text="_Desconectar"/>
 			<separator/>
@@ -3055,6 +3055,7 @@ puede comenzar a transferir en cualquier momento.</text>
 		<string id="16377" value="HTTP Guard"/>
 		<string id="16378" value="Host &quot;%s&quot; sent a 416, without providing available ranges. Closing connection."/>
 		<string id="16379" value="Archivos de Colección"/>
+		<string id="16380" value="eDonkey Guard"/>
 		<string id="16384" value="Estás seguro(a) que quieres ejecutar el archivo &quot;%s&quot;?\n\nAlgunos archivos pueden ser peligrosos para la computadora, es recomendado tener el antivirus funcionando y actualizado."/>
 		<string id="16385" value="Estas a punto de modificar la metadata de %i archivos. ¿Estás seguro(a) en continuar?"/>
 		<string id="16386" value="Editando metadata de %i archivos."/>
@@ -3143,13 +3144,11 @@ puede comenzar a transferir en cualquier momento.</text>
 		<string id="16803" value="Esta carpeta ya está compartida como parte de otra carpeta compartida:\n\n%s"/>
 		<string id="16804" value="No se ha especificado un nick(nombre real/inventado con que figuras en la conexión) en su perfil."/>
 		<string id="16805" value="No ha sido especificada su ubicación en su perfil.\n\nPara otros usuarios podría ser interesante saber donde eres, para crear un mejor sentido de comunidad.\n\n¿Estás seguro(a) de continuar sin especificar tu ubicación?"/>
-		<string id="16806" value="Has seleccionado utilizar reenvio de puertos en tu NAT router o firewall.\n\nPor favor configure su red para reenviar el puerto TCP %i a su PC."/>
 		<string id="16807" value="Por favor incluya la unidades para el límite del ancho de banda de la siguiente forma &quot;123 kb/s&quot; para kilobits por segundo, o &quot;123 KB/s&quot; para kiloBytes por segundo."/>
 		<string id="16808" value="No has seleccionado tu edad y sexo. ¿Estas seguro que deseas continuar sin incluirlo?"/>
 		<string id="16809" value="Sa&amp;lir"/>
 		<string id="16810" value="Años"/>
 		<string id="16811" value="Automatico"/>
-		<string id="16812" value="Por favor espera: Encontrando dispositivos UPnP y configurandolos..."/>
 		<string id="16813" value="Por favor espera: Actualizando servicios de descubrimiento..."/>
 		<string id="16814" value="Please wait: Actualizando lista de servidores eDonkey..."/>
 		<string id="16815" value="El servicio de red para Dispositivo UPnP no está ejecutado. Este servicio es requerido completar la configuración.\nNecesitas completar el inicio del servicio como automático."/>

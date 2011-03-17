@@ -182,7 +182,7 @@ public:
 	BOOL		IsHitAdult(LPCTSTR) const;		// Does this search result have adult content?
 	BOOL		IsSearchFiltered(LPCTSTR) const;// Check if search is filtered
 	BOOL		IsChatFiltered(LPCTSTR) const;	// Check filter for chat
-	BOOL		Censor(TCHAR*) const;			// Censor (remove) bad words from a string
+	BOOL		Censor(CString& sText) const;	// Censor (remove) bad words from a string
 	BOOL		IsChildPornography(LPCTSTR) const;
 private:
 	BOOL		IsFiltered(LPCTSTR) const;

@@ -1,7 +1,7 @@
 //
 // ChatCore.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -72,11 +72,10 @@ BOOL CChatCore::Check(CChatSession* pSession) const
 void CChatCore::OnAccept(CConnection* pConnection, PROTOCOLID nProtocol)
 {
 	CSingleLock pLock( &m_pSection );
-	if ( ! pLock.Lock( 250 ) ) return;
+	if ( ! pLock.Lock( 250 ) )
+		return;
 	
-	CChatSession* pSession = new CChatSession();
-
-	pSession->m_nProtocol = nProtocol;
+	CChatSession* pSession = new CChatSession( nProtocol );
 
 	pSession->AttachTo( pConnection );
 }
@@ -84,8 +83,9 @@ void CChatCore::OnAccept(CConnection* pConnection, PROTOCOLID nProtocol)
 BOOL CChatCore::OnPush(const Hashes::Guid& oGUID, CConnection* pConnection)
 {
 	CSingleLock pLock( &m_pSection );
-	if ( ! pLock.Lock( 250 ) ) return FALSE;
-	
+	if ( ! pLock.Lock( 250 ) )
+		return FALSE;
+
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CChatSession* pSession = GetNext( pos );
@@ -101,29 +101,47 @@ BOOL CChatCore::OnPush(const Hashes::Guid& oGUID, CConnection* pConnection)
 void CChatCore::OnED2KMessage(CEDClient* pClient, CEDPacket* pPacket)
 {
 	ASSERT ( pClient != NULL );
-	// Note: Null packet is valid- in that case we have no pending message, but want to open
-	// a chat window.
+
+	// Note: Null packet is valid - in that case we have no pending message,
+	// but want to open a chat window.
 
 	CSingleLock pLock( &m_pSection );
-	if ( ! pLock.Lock( 250 ) ) return;
-	
-	CChatSession* pSession = FindSession( pClient );
+	if ( ! pLock.Lock( 250 ) )
+		return;
 
-	pSession->OnED2KMessage( pPacket );
+	if ( CChatSession* pSession = FindSession( pClient, TRUE ) )
+	{
+		pSession->OnED2KMessage( pPacket );
+	}
 }
 
-CChatSession* CChatCore::FindSession(CEDClient* pClient)
+void CChatCore::OnDropped(CEDClient* pClient)
 {
-	CChatSession* pSession;
+	ASSERT ( pClient != NULL );
 
+	// Note: Null packet is valid - in that case we have no pending message,
+	// but want to open a chat window.
+
+	CSingleLock pLock( &m_pSection );
+	if ( ! pLock.Lock( 250 ) )
+		return;
+
+	if ( CChatSession* pSession = FindSession( pClient, FALSE ) )
+	{
+		pSession->OnDropped();
+	}
+}
+
+CChatSession* CChatCore::FindSession(CEDClient* pClient, BOOL bCreate)
+{
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
-		pSession = GetNext( pos );
+		CChatSession* pSession = GetNext( pos );
 
 		// If we already have a session
-		if ( ( ( ! pSession->m_oGUID ) || validAndEqual( pSession->m_oGUID, pClient->m_oGUID ) ) &&
-			 ( pSession->m_pHost.sin_addr.S_un.S_addr == pClient->m_pHost.sin_addr.S_un.S_addr ) &&
-			 ( pSession->m_nProtocol == PROTOCOL_ED2K ) )
+		if ( ( ! pSession->m_oGUID || validAndEqual( pSession->m_oGUID, pClient->m_oGUID ) ) &&
+			 pSession->m_pHost.sin_addr.s_addr == pClient->m_pHost.sin_addr.s_addr &&
+			 pSession->m_nProtocol == PROTOCOL_ED2K )
 		{
 			// Update details
 			pSession->m_oGUID		= pClient->m_oGUID;
@@ -142,16 +160,14 @@ CChatSession* CChatCore::FindSession(CEDClient* pClient)
 		}
 	}
 
-	// Create a new chat session
-	pSession = new CChatSession();
+	if ( ! bCreate )
+		return NULL;
 
-	pSession->m_nProtocol	= PROTOCOL_ED2K;
-	pSession->m_hSocket		= INVALID_SOCKET;			// Should always remain invalid- has no real connection
+	// Create a new chat session
+	CChatSession* pSession = new CChatSession( PROTOCOL_ED2K );
 	pSession->m_nState		= cssActive;
 	pSession->m_bConnected	= TRUE;
 	pSession->m_tConnected	= GetTickCount();
-
-	// Set details
 	pSession->m_oGUID		= pClient->m_oGUID;
 	pSession->m_pHost		= pClient->m_pHost;
 	pSession->m_sAddress	= pClient->m_sAddress;
@@ -160,13 +176,10 @@ CChatSession* CChatCore::FindSession(CEDClient* pClient)
 	pSession->m_bUnicode	= pClient->m_bEmUnicode;
 	pSession->m_nClientID	= pClient->m_nClientID;
 	pSession->m_pServer		= pClient->m_pServer;
-
-	pSession->m_bMustPush	= ( ( pClient->m_nClientID > 0 ) && ( pClient->m_nClientID < 16777216 ) );
+	pSession->m_bMustPush	= ( pClient->m_nClientID > 0 && pClient->m_nClientID < 16777216 );
 
 	// Make new input and output buffer objects
 	pSession->CreateBuffers();
-
-	Add( pSession );
 
 	return pSession;
 }
@@ -176,31 +189,39 @@ CChatSession* CChatCore::FindSession(CEDClient* pClient)
 
 void CChatCore::Add(CChatSession* pSession)
 {
-	CSingleLock pLock( &m_pSection, TRUE );
-	if ( m_pSessions.Find( pSession ) == NULL ) m_pSessions.AddTail( pSession );
+	CQuickLock pLock( m_pSection );
+
+	if ( m_pSessions.Find( pSession ) == NULL )
+		m_pSessions.AddTail( pSession );
+
 	if ( pSession->IsValid() )
 		WSAEventSelect( pSession->m_hSocket, GetWakeupEvent(),
 			FD_CONNECT|FD_READ|FD_WRITE|FD_CLOSE );
+
 	StartThread();
 }
 
 void CChatCore::Remove(CChatSession* pSession)
 {
-	CSingleLock pLock( &m_pSection, TRUE );
-	POSITION pos = m_pSessions.Find( pSession );
-	if ( pos != NULL ) m_pSessions.RemoveAt( pos );
+	CQuickLock pLock( m_pSection );
+
+	if ( POSITION pos = m_pSessions.Find( pSession ) )
+		m_pSessions.RemoveAt( pos );
+
 	if ( pSession->IsValid() )
 		WSAEventSelect( pSession->m_hSocket, GetWakeupEvent(), 0 );
 }
 
 void CChatCore::Close()
 {
+	CloseThread();
+
+	CQuickLock pLock( m_pSection );
+
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		GetNext( pos )->Close();
 	}
-	
-	StopThread();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -214,11 +235,6 @@ void CChatCore::StartThread()
 	if ( GetCount() == 0 ) return;
 	
 	BeginThread( "ChatCore" );
-}
-
-void CChatCore::StopThread()
-{
-	CloseThread();
 }
 
 //////////////////////////////////////////////////////////////////////

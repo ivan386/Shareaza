@@ -1,7 +1,7 @@
 //
 // ChatWindows.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -21,16 +21,17 @@
 
 #include "StdAfx.h"
 #include "Shareaza.h"
-#include "ChatWindows.h"
-#include "ChatSession.h"
-#include "CtrlChatFrame.h"
-#include "CtrlPrivateChatFrame.h"
+#include "Settings.h"
 #include "Buffer.h"
+#include "ChatWindows.h"
 #include "EDClient.h"
 #include "EDClients.h"
-#include "Transfers.h"
+#include "GProfile.h"
 #include "Neighbours.h"
 #include "Network.h"
+#include "Transfers.h"
+#include "WndChat.h"
+#include "WndPrivateChat.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -59,7 +60,7 @@ POSITION CChatWindows::GetIterator() const
 	return m_pList.GetHeadPosition();
 }
 
-CChatFrame* CChatWindows::GetNext(POSITION& pos) const
+CChatWnd* CChatWindows::GetNext(POSITION& pos) const
 {
 	return m_pList.GetNext( pos );
 }
@@ -67,69 +68,59 @@ CChatFrame* CChatWindows::GetNext(POSITION& pos) const
 //////////////////////////////////////////////////////////////////////
 // CChatWindows private chat windows
 
-CPrivateChatFrame* CChatWindows::FindPrivate(const Hashes::Guid& oGUID)
+CPrivateChatWnd* CChatWindows::FindPrivate(const Hashes::Guid& oGUID, bool bLive) const
 {
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
-		CPrivateChatFrame* pFrame = static_cast<CPrivateChatFrame*>( GetNext( pos ) );
+		CPrivateChatWnd* pFrame = static_cast<CPrivateChatWnd*>( GetNext( pos ) );
 
-		if ( pFrame->IsKindOf( RUNTIME_CLASS(CPrivateChatFrame) ) )
+		if ( pFrame->IsKindOf( RUNTIME_CLASS(CPrivateChatWnd) ) )
 		{
-			if ( pFrame->m_pSession != NULL &&
-				validAndEqual( pFrame->m_pSession->m_oGUID, oGUID ) ) return pFrame;
+			if ( pFrame->Find( oGUID, bLive ) )
+				return pFrame;
 		}
 	}
 
 	return NULL;
 }
 
-CPrivateChatFrame* CChatWindows::FindPrivate(IN_ADDR* pAddress)
+CPrivateChatWnd* CChatWindows::FindPrivate(const IN_ADDR* pAddress) const
 {
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
-		CPrivateChatFrame* pFrame = static_cast<CPrivateChatFrame*>( GetNext( pos ) );
+		CPrivateChatWnd* pFrame = static_cast<CPrivateChatWnd*>( GetNext( pos ) );
 
-		if ( pFrame->IsKindOf( RUNTIME_CLASS(CPrivateChatFrame) ) )
+		if ( pFrame->IsKindOf( RUNTIME_CLASS(CPrivateChatWnd) ) )
 		{
-			if ( pFrame->m_pSession != NULL )
-			{
-				if ( pFrame->m_pSession->m_pHost.sin_addr.S_un.S_addr == pAddress->S_un.S_addr )
-					return pFrame;	// Regular chat window that matches
-				else if ( ( pFrame->m_pSession->m_bMustPush ) &&
-					( pFrame->m_pSession->m_nProtocol == PROTOCOL_ED2K ) &&
-					( pFrame->m_pSession->m_nClientID == pAddress->S_un.S_addr ) )
-					return pFrame;	// ED2K Low ID chat window that matches
-			}
+			if ( pFrame->Find( pAddress ) )
+				return pFrame;
 		}
 	}
 
 	return NULL;
 }
 
-CPrivateChatFrame* CChatWindows::FindED2KFrame(SOCKADDR_IN* pAddress)
+CPrivateChatWnd* CChatWindows::FindED2KFrame(const SOCKADDR_IN* pAddress) const
 {
 	// For High ID clients
 	CString strHighID;
-
 	strHighID.Format( _T("%s:%hu"), (LPCTSTR)CString( inet_ntoa( pAddress->sin_addr ) ), ntohs( pAddress->sin_port ) );
 
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
-		CPrivateChatFrame* pFrame = static_cast<CPrivateChatFrame*>( GetNext( pos ) );
+		CPrivateChatWnd* pFrame = static_cast<CPrivateChatWnd*>( GetNext( pos ) );
 
-		if ( pFrame->IsKindOf( RUNTIME_CLASS(CPrivateChatFrame) ) )
+		if ( pFrame->IsKindOf( RUNTIME_CLASS(CPrivateChatWnd) ) )
 		{
-			if ( ( strHighID == pFrame->m_sNick ) && ( pFrame->m_pSession == NULL ) )
-			{
+			if ( pFrame->Find( strHighID ) )
 				return pFrame;
-			}
 		}
 	}
 
 	return NULL;
 }
 
-CPrivateChatFrame* CChatWindows::FindED2KFrame(DWORD nClientID, SOCKADDR_IN* pServerAddress)
+CPrivateChatWnd* CChatWindows::FindED2KFrame(DWORD nClientID, const SOCKADDR_IN* pServerAddress) const
 {
 	// For Low ID clients
 
@@ -143,14 +134,12 @@ CPrivateChatFrame* CChatWindows::FindED2KFrame(DWORD nClientID, SOCKADDR_IN* pSe
 
 		for ( POSITION pos = GetIterator() ; pos ; )
 		{
-			CPrivateChatFrame* pFrame = static_cast<CPrivateChatFrame*>( GetNext( pos ) );
+			CPrivateChatWnd* pFrame = static_cast<CPrivateChatWnd*>( GetNext( pos ) );
 
-			if ( pFrame->IsKindOf( RUNTIME_CLASS(CPrivateChatFrame) ) )
+			if ( pFrame->IsKindOf( RUNTIME_CLASS(CPrivateChatWnd) ) )
 			{
-				if ( ( strLowID == pFrame->m_sNick ) && ( pFrame->m_pSession == NULL ) )
-				{
+				if ( pFrame->Find( strLowID ) )
 					return pFrame;
-				}
 			}
 		}
 	}
@@ -158,7 +147,7 @@ CPrivateChatFrame* CChatWindows::FindED2KFrame(DWORD nClientID, SOCKADDR_IN* pSe
 	return NULL;
 }
 
-CPrivateChatFrame* CChatWindows::OpenPrivate(const Hashes::Guid& oGUID, IN_ADDR* pAddress, WORD nPort, BOOL bMustPush, PROTOCOLID nProtocol, IN_ADDR* pServerAddress, WORD nServerPort)
+CPrivateChatWnd* CChatWindows::OpenPrivate(const Hashes::Guid& oGUID, const IN_ADDR* pAddress, WORD nPort, BOOL bMustPush, PROTOCOLID nProtocol, IN_ADDR* pServerAddress, WORD nServerPort)
 {
 	SOCKADDR_IN pHost = {};
 
@@ -178,13 +167,8 @@ CPrivateChatFrame* CChatWindows::OpenPrivate(const Hashes::Guid& oGUID, IN_ADDR*
 	return OpenPrivate( oGUID, &pHost, bMustPush, nProtocol, &pServer );
 }
 
-CPrivateChatFrame* CChatWindows::OpenPrivate(const Hashes::Guid& oGUID, SOCKADDR_IN* pHost, BOOL bMustPush, PROTOCOLID nProtocol, SOCKADDR_IN* pServer)
+CPrivateChatWnd* CChatWindows::OpenPrivate(const Hashes::Guid& oGUID, const SOCKADDR_IN* pHost, BOOL bMustPush, PROTOCOLID nProtocol, SOCKADDR_IN* pServer)
 {
-	CPrivateChatFrame* pFrame = NULL;
-
-	if ( ( nProtocol == PROTOCOL_BT ) || ( nProtocol == PROTOCOL_FTP ) )
-		return NULL;
-
 	if ( ! MyProfile.IsValid() )
 	{
 		CString strMessage;
@@ -194,105 +178,119 @@ CPrivateChatFrame* CChatWindows::OpenPrivate(const Hashes::Guid& oGUID, SOCKADDR
 		return NULL;
 	}
 
-	if ( nProtocol == PROTOCOL_ED2K )
+	switch ( nProtocol )
 	{
-		CEDClient* pClient;
+	case PROTOCOL_G1:
+		Settings.Gnutella1.EnableToday = TRUE;
+		return OpenPrivateGnutella( oGUID, pHost, bMustPush, PROTOCOL_ANY );
 
-		// First, check if it's a low ID user on another server.
-		if ( bMustPush && pServer )
-		{
-			// It's a firewalled user (Low ID). If they are using another server, we
-			// can't (shouldn't) contact them. (It places a heavy load on the ed2k servers)
-			CSingleLock pLock1( &Network.m_pSection );
-			if ( ! pLock1.Lock( 250 ) ) return NULL;
-			if ( Neighbours.Get( pServer->sin_addr ) == NULL ) return NULL;
-			pLock1.Unlock();
-		}
+	case PROTOCOL_G2:
+	case PROTOCOL_HTTP:
+		Settings.Gnutella2.EnableToday = TRUE;
+		return OpenPrivateGnutella( oGUID, pHost, bMustPush, PROTOCOL_ANY );
 
-		// ED2K chat is handled by the EDClient section. (Transfers)
-		// We need to find (or create) an EDClient to handle this chat session, since everything
-		// on ed2k shares a TCP link.
+	case PROTOCOL_ED2K:
+		Settings.eDonkey.EnableToday = TRUE;
+		return OpenPrivateED2K( oGUID, pHost, bMustPush, pServer );
 
-		// First, lock the section to prevent a problem with other threads
-		CSingleLock pLock( &Transfers.m_pSection );
-		if ( ! pLock.Lock( 250 ) ) return NULL;
-
-		// We need to connect to them, so either find or create an EDClient
-		if ( pServer )
-			pClient = EDClients.Connect(pHost->sin_addr.S_un.S_addr, ntohs( pHost->sin_port ), &pServer->sin_addr, ntohs( pServer->sin_port ), oGUID );
-		else
-			pClient = EDClients.Connect(pHost->sin_addr.S_un.S_addr, ntohs( pHost->sin_port ), NULL, 0, oGUID );
-		// If we weren't able to create a client (Low-id and no server), then exit.
-		if ( ! pClient ) return NULL;
-		// Have it connect (if it isn't)
-		if ( ! pClient->m_bConnected ) pClient->Connect();
-		// Tell it to start a chat session as soon as it's able
-		pClient->OpenChat();
-		pLock.Unlock();
-
-		// Check for / make active any existing window
-		pFrame = FindPrivate( &pHost->sin_addr );
-		// Check for an empty frame
-		if ( pFrame == NULL )
-		{
-			if ( bMustPush ) pFrame = FindED2KFrame( pHost->sin_addr.S_un.S_addr, pServer );
-			else pFrame = FindED2KFrame( pHost );
-		}
-		if ( pFrame != NULL )
-		{
-			// Open window if we found one
-			CWnd* pParent = pFrame->GetParent();
-			if ( pParent->IsIconic() ) pParent->ShowWindow( SW_SHOWNORMAL );
-			pParent->BringWindowToTop();
-			pParent->SetForegroundWindow();
-			// And exit
-			return pFrame;
-		}
-		// Open an empty (blank) chat frame. This is totally unnecessary- The EDClient will open
-		// one as required, but it looks better to open one here.
-		pFrame = new CPrivateChatFrame();
-		// Set name (Also used to match incoming connection)
-		if ( bMustPush && pServer ) // Firewalled user (Low ID)
-		{
-			pFrame->m_sNick.Format( _T("%lu@%s:%hu"),
-			pHost->sin_addr.S_un.S_addr,
-			(LPCTSTR)CString( inet_ntoa( pServer->sin_addr ) ),
-			ntohs( pServer->sin_port ) );
-		}
-		else	// Regular user (High ID)
-		{
-			pFrame->m_sNick.Format( _T("%s:%hu"), (LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ), ntohs( pHost->sin_port ) );
-		}
-
-		// Open window
-		CWnd* pParent = pFrame->GetParent();
-		if ( pParent->IsIconic() ) pParent->ShowWindow( SW_SHOWNORMAL );
-		pParent->BringWindowToTop();
-		pParent->SetForegroundWindow();
-		// Put a 'connecting' message in the window
-		CString strMessage, strConnecting;
-		LoadString( strConnecting, IDS_CHAT_CONNECTING_TO );
-		strMessage.Format( strConnecting, pFrame->m_sNick );
-		pFrame->OnStatusMessage( 0, strMessage );
-
-		return pFrame;
+	default:
+		return NULL;
 	}
+}
 
-	if ( oGUID ) pFrame = FindPrivate( oGUID );
+CPrivateChatWnd* CChatWindows::OpenPrivateGnutella(const Hashes::Guid& oGUID, const SOCKADDR_IN* pHost, BOOL bMustPush, PROTOCOLID nProtocol)
+{
+	CPrivateChatWnd* pFrame = NULL;
+	if ( oGUID )
+	{
+		pFrame = FindPrivate( oGUID, false );
+		if ( pFrame == NULL ) pFrame = FindPrivate( oGUID, true );
+	}
 	if ( pFrame == NULL ) pFrame = FindPrivate( &pHost->sin_addr );
 
 	if ( pFrame == NULL )
 	{
-		pFrame = new CPrivateChatFrame();
-		pFrame->Initiate( oGUID, pHost, bMustPush );
+		pFrame = new CPrivateChatWnd();
+		pFrame->Setup( oGUID, pHost, bMustPush, nProtocol );
 	}
 
 	pFrame->PostMessage( WM_COMMAND, ID_CHAT_CONNECT );
 
-	CWnd* pParent = pFrame->GetParent();
-	if ( pParent->IsIconic() ) pParent->ShowWindow( SW_SHOWNORMAL );
-	pParent->BringWindowToTop();
-	pParent->SetForegroundWindow();
+	pFrame->Open();
+
+	return pFrame;
+}
+
+CPrivateChatWnd* CChatWindows::OpenPrivateED2K(const Hashes::Guid& oGUID, const SOCKADDR_IN* pHost, BOOL bMustPush, SOCKADDR_IN* pServer)
+{
+	// First, check if it's a low ID user on another server.
+	if ( bMustPush && pServer )
+	{
+		// It's a firewalled user (Low ID). If they are using another server, we
+		// can't (shouldn't) contact them. (It places a heavy load on the ed2k servers)
+		CSingleLock pLock1( &Network.m_pSection );
+		if ( ! pLock1.Lock( 250 ) ) return NULL;
+		if ( Neighbours.Get( pServer->sin_addr ) == NULL ) return NULL;
+		pLock1.Unlock();
+	}
+
+	// ED2K chat is handled by the EDClient section. (Transfers)
+	// We need to find (or create) an EDClient to handle this chat session, since everything
+	// on ed2k shares a TCP link.
+
+	// First, lock the section to prevent a problem with other threads
+	CSingleLock pLock( &Transfers.m_pSection );
+	if ( ! pLock.Lock( 250 ) ) return NULL;
+
+	// We need to connect to them, so either find or create an EDClient
+	CEDClient* pClient;
+	if ( pServer )
+		pClient = EDClients.Connect(pHost->sin_addr.s_addr, ntohs( pHost->sin_port ), &pServer->sin_addr, ntohs( pServer->sin_port ), oGUID );
+	else
+		pClient = EDClients.Connect(pHost->sin_addr.s_addr, ntohs( pHost->sin_port ), NULL, 0, oGUID );
+	// If we weren't able to create a client (Low-id and no server), then exit.
+	if ( ! pClient ) return NULL;
+	// Have it connect (if it isn't)
+	if ( ! pClient->m_bConnected ) pClient->Connect();
+	// Tell it to start a chat session as soon as it's able
+	pClient->OpenChat();
+	pLock.Unlock();
+
+	// Check for / make active any existing window
+	CPrivateChatWnd* pFrame = FindPrivate( &pHost->sin_addr );
+	// Check for an empty frame
+	if ( pFrame == NULL )
+	{
+		if ( bMustPush ) pFrame = FindED2KFrame( pHost->sin_addr.s_addr, pServer );
+		else pFrame = FindED2KFrame( pHost );
+	}
+	if ( pFrame != NULL )
+	{
+		// Open window if we found one
+		pFrame->Open();
+
+		// And exit
+		return pFrame;
+	}
+
+	// Set name (Also used to match incoming connection)
+	CString sNick;
+	if ( bMustPush && pServer ) // Firewalled user (Low ID)
+	{
+		sNick.Format( _T("%lu@%s:%hu"),
+			pHost->sin_addr.s_addr,
+			(LPCTSTR)CString( inet_ntoa( pServer->sin_addr ) ),
+			ntohs( pServer->sin_port ) );
+	}
+	else	// Regular user (High ID)
+	{
+		sNick.Format( _T("%s:%hu"), (LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ), ntohs( pHost->sin_port ) );
+	}
+
+	// Open an empty (blank) chat frame. This is totally unnecessary- The EDClient will open
+	// one as required, but it looks better to open one here.
+	pFrame = new CPrivateChatWnd();
+	pFrame->Setup( sNick );
 
 	return pFrame;
 }
@@ -300,12 +298,14 @@ CPrivateChatFrame* CChatWindows::OpenPrivate(const Hashes::Guid& oGUID, SOCKADDR
 //////////////////////////////////////////////////////////////////////
 // CChatWindows add and remove
 
-void CChatWindows::Add(CChatFrame* pFrame)
+void CChatWindows::Add(CChatWnd* pFrame)
 {
-	if ( m_pList.Find( pFrame ) == NULL ) m_pList.AddTail( pFrame );
+	if ( m_pList.Find( pFrame ) == NULL )
+		m_pList.AddTail( pFrame );
 }
 
-void CChatWindows::Remove(CChatFrame* pFrame)
+void CChatWindows::Remove(CChatWnd* pFrame)
 {
-	if ( POSITION pos = m_pList.Find( pFrame ) ) m_pList.RemoveAt( pos );
+	if ( POSITION pos = m_pList.Find( pFrame ) )
+		m_pList.RemoveAt( pos );
 }

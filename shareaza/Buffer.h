@@ -1,7 +1,7 @@
 //
 // Buffer.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -75,7 +75,7 @@ public:
 	CString ReadString(const size_t nBytes, const UINT nCodePage = CP_ACP);          // Reads nBytes of ASCII characters as a string
 
 	BOOL	Read(void* pData, const size_t nLength) throw();
-	BOOL    ReadLine(CString& strLine, BOOL bPeek = FALSE, UINT nCodePage = CP_ACP); // Reads until "\r\n"
+	BOOL    ReadLine(CString& strLine, BOOL bPeek = FALSE);		// Reads until "\r\n". Encoding detection.
 	BOOL    StartsWith(LPCSTR pszString, const size_t nLength, const BOOL bRemove = FALSE) throw();// Returns true if the buffer starts with this text
 
 	// Use the buffer with a socket

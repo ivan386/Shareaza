@@ -203,20 +203,31 @@ CStringW UTF8Decode(__in const CStringA& strInput)
 CStringW UTF8Decode(__in_bcount(nInput) LPCSTR psInput, __in int nInput)
 {
 	CStringW strWide;
-	int nWide = ::MultiByteToWideChar( CP_UTF8, 0, psInput, nInput,
-		strWide.GetBuffer( nInput + 1 ), nInput + 1 );
 
-	if ( nWide == 0 && GetLastError() == ERROR_INSUFFICIENT_BUFFER )
+	// Try UTF-8
+	int nWide = ::MultiByteToWideChar( CP_UTF8, MB_ERR_INVALID_CHARS,
+		psInput, nInput, NULL, 0 );
+	if ( nWide > 0 )
 	{
 		nWide = ::MultiByteToWideChar( CP_UTF8, 0, psInput, nInput,
-			NULL, 0 );
-
-		nWide = ::MultiByteToWideChar( CP_UTF8, 0, psInput, nInput,
 			strWide.GetBuffer( nWide ), nWide );
+		strWide.ReleaseBuffer( nWide );
+		return strWide;
 	}
-	strWide.ReleaseBuffer( nWide );
 
-	return strWide;
+	// Try ANSI
+	nWide = ::MultiByteToWideChar( CP_ACP, MB_ERR_INVALID_CHARS,
+		psInput, nInput, NULL, 0 );
+	if ( nWide > 0 )
+	{
+		nWide = ::MultiByteToWideChar( CP_ACP, 0, psInput, nInput,
+			strWide.GetBuffer( nWide ), nWide );
+		strWide.ReleaseBuffer( nWide );
+		return strWide;
+	}
+
+	// As-is
+	return CString( psInput, nInput );
 }
 
 // Encodes unsafe characters in a string, turning "hello world" into "hello%20world", for instance
@@ -615,8 +626,9 @@ CString LoadFile(LPCTSTR pszPath)
 	return strXML;
 }
 
-void ReplaceNoCase(CString& sInStr, LPCTSTR pszOldStr, LPCTSTR pszNewStr)
+BOOL ReplaceNoCase(CString& sInStr, LPCTSTR pszOldStr, LPCTSTR pszNewStr)
 {
+	BOOL bModified = FALSE;
 	DWORD nInLength = sInStr.GetLength();
 	LPCTSTR pszInStr = sInStr;
 
@@ -636,6 +648,7 @@ void ReplaceNoCase(CString& sInStr, LPCTSTR pszOldStr, LPCTSTR pszNewStr)
 			}
 			nPos += nOffset;
 			result.Append( pszNewStr );
+			bModified = TRUE;
 		}
 		else
 		{
@@ -646,4 +659,13 @@ fail:
 	}
 
 	sInStr = result;
+
+	return bModified;
+}
+
+CString HostToString(const SOCKADDR_IN* pHost)
+{
+	CString sHost;
+	sHost.Format( _T("%s:%hu"), CString( inet_ntoa( pHost->sin_addr ) ), ntohs( pHost->sin_port ) );
+	return sHost;
 }

@@ -420,7 +420,7 @@
 			<button id="ID_HOSTCACHE_DC_CACHE" text="DC++ Cache"/>
 		</toolbar>
 		<!-- PRIVATE CHAT FRAME -->
-		<toolbar name="CPrivateChatFrame">
+		<toolbar name="CPrivateChatWnd">
 			<button id="ID_CHAT_BOLD" text="粗"/>
 			<button id="ID_CHAT_ITALIC" text="斜"/>
 			<button id="ID_CHAT_UNDERLINE" text="底"/>
@@ -1586,7 +1586,7 @@
 			<item id="ID_DISCOVERY_EDIT" text="進階編輯..."/>
 		</menu>
 		<!-- PRIVATE CHAT FRAME -->
-		<menu name="CPrivateChatFrame">
+		<menu name="CPrivateChatWnd">
 			<item id="ID_CHAT_CONNECT" text="連線"/>
 			<item id="ID_CHAT_DISCONNECT" text="中斷連線"/>
 			<separator/>
@@ -2995,6 +2995,7 @@
 		<string id="16377" value="HTTP Guard"/>
 		<string id="16378" value="Host &quot;%s&quot; sent a 416, without providing available ranges. Closing connection."/>
 		<string id="16379" value="Library Files"/>
+		<string id="16380" value="eDonkey Guard"/>
 		<string id="16384" value="您確定要執行檔案: &quot;%s&quot; ?\n\n 有些檔案可能對您的檔案造成損害.  執行本檔案前請確定其內容為何."/>
 		<string id="16385" value="您即將修改這個檔案的解釋資料: %i , 您要繼續嗎?"/>
 		<string id="16386" value="正在編輯檔案 %i 的解釋資料."/>
@@ -3083,13 +3084,11 @@
 		<string id="16803" value="您在分享的資料夾已經是另一個分享資料夾的一部份:\n\n%s"/>
 		<string id="16804" value="您還沒有在您的個人檔案裡輸入一個代號."/>
 		<string id="16805" value="您還沒有在你的個人檔案裡輸入地點.\n\n輸入地點是個好點子, 因為其他人可得知你來自於哪個國家. 輸入地點並不會洩露任何資料.\n\n您確定要繼續下一步而不輸入地點嗎?"/>
-		<string id="16806" value="您已經示意要自行設定防火牆或是NAT 路由器的連接埠轉送(Port-Forwarding).\n\n請設定您的網路以轉送TCP 與 UDP 連接埠到 %i 您的本機電腦."/>
 		<string id="16807" value="請以這樣的方式輸入您想要設定的頻寬限制 &quot;123 kb/s&quot; =每秒123 kb, or &quot;123 KB/s&quot; =每秒123KB."/>
 		<string id="16808" value="您還尚未選擇您的年齡與性別. 您確定要跳過這個步驟繼續下一步嗎?"/>
 		<string id="16809" value="離開"/>
 		<string id="16810" value="歲"/>
 		<string id="16811" value="自動"/>
-		<string id="16812" value="Please wait: Finding UPnP devices and setting them up..."/>
 		<string id="16813" value="Please wait: Updating discovery services..."/>
 		<string id="16814" value="Please wait: Updating eDonkey server list..."/>
 		<string id="16815" value="UPnP Device Host Service is not running. This service is required to perform the setup.\nYou need to set the startup type of the service to automatic."/>

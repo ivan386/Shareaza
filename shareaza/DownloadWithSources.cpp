@@ -1,7 +1,7 @@
 //
 // DownloadWithSources.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -773,7 +773,7 @@ CString	CDownloadWithSources::GetTopFailedSources(int nMaximum, PROTOCOLID nProt
 
 				strSources += str;
 				str = pResult->m_sURL.Mid( nPos + 1, nPosSlash - nPos - 1 );
-				if ( str != _T("6346") )
+				if ( _tstoi( str ) != GNUTELLA_DEFAULT_PORT )
 				{
 					strSources += ':';
 					strSources += str;

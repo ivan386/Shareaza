@@ -2182,35 +2182,17 @@ BOOL CAdultFilter::IsChatFiltered(LPCTSTR pszText) const
 	return FALSE;
 }
 
-BOOL CAdultFilter::Censor(TCHAR* pszText) const
+BOOL CAdultFilter::Censor(CString& sText) const
 {
 	BOOL bModified = FALSE;
-	if ( ! pszText ) return FALSE;
-
-	LPCTSTR pszWord;
 
 	// Check and replace blocked words
-	if ( m_pszBlockedWords )
+	for ( LPCTSTR pszWord = m_pszBlockedWords ; pszWord && *pszWord ; )
 	{
-		for ( pszWord = m_pszBlockedWords ; *pszWord ; )
-		{
-			TCHAR* pReplace = (TCHAR*)_tcsistr( pszText, pszWord );
-
-			if ( pReplace != NULL )
-			{
-				TCHAR cExpletives[6] = {'#','@','$','%','&','*'};
-
-				for ( unsigned nLoop = 0 ; nLoop < _tcslen( pszWord ) ; nLoop++ )
-				{
-					*pReplace = cExpletives[ ( nLoop % 6 ) ];
-					pReplace++;
-				}
-
-				bModified = TRUE;
-			}
-
-			pszWord += _tcslen( pszWord ) + 1;
-		}
+		int nWordLen = _tcslen( pszWord );
+		if ( ReplaceNoCase( sText, pszWord, CString( _T('*'), nWordLen ) ) )
+			bModified = TRUE;
+		pszWord += nWordLen + 1;
 	}
 
 	return bModified;

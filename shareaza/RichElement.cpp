@@ -1,7 +1,7 @@
 //
 // RichElement.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -41,23 +41,22 @@ static char THIS_FILE[]=__FILE__;
 // CRichElement construction
 
 CRichElement::CRichElement(int nType, LPCTSTR pszText, LPCTSTR pszLink, DWORD nFlags, int nGroup)
+	: m_pDocument	( NULL )
+	, m_nType		( nType )
+	, m_nFlags		( nFlags )
+	, m_nGroup		( nGroup )
+	, m_hImage		( NULL )
+	, m_nImageIndex ( NULL )
 {
-	m_pDocument	= NULL;
-	m_nType		= nType;
-	m_nFlags	= nFlags;
-	m_nGroup	= nGroup;
-	m_hImage	= NULL;
-	m_nImageIndex = NULL;
-
 	if ( m_nType == retHeading )
 	{
 		m_nType = retText;
 		m_nFlags |= retfHeading;
 	}
 
-	if ( pszText != NULL )
+	if ( pszText )
 	{
-		if ( ( m_nType == retBitmap || m_nType == retIcon ) && HIWORD(pszText) == 0 )
+		if ( ( m_nType == retBitmap || m_nType == retIcon ) && HIWORD( pszText ) == 0 )
 		{
 			m_sText.Format( _T("%Iu"), (size_t)pszText );
 		}
@@ -67,7 +66,29 @@ CRichElement::CRichElement(int nType, LPCTSTR pszText, LPCTSTR pszLink, DWORD nF
 		}
 	}
 
-	if ( pszLink != NULL ) m_sLink = pszLink;
+	if ( pszLink ) m_sLink = pszLink;
+}
+
+CRichElement::CRichElement(HBITMAP hBitmap, LPCTSTR pszLink, DWORD nFlags, int nGroup)
+	: m_pDocument	( NULL )
+	, m_nType		( retBitmap )
+	, m_nFlags		( nFlags )
+	, m_nGroup		( nGroup )
+	, m_hImage		( (HANDLE)hBitmap )
+	, m_nImageIndex ( NULL )
+{
+	if ( pszLink ) m_sLink = pszLink;
+}
+
+CRichElement::CRichElement(HICON hIcon, LPCTSTR pszLink, DWORD nFlags, int nGroup)
+	: m_pDocument	( NULL )
+	, m_nType		( retIcon )
+	, m_nFlags		( nFlags )
+	, m_nGroup		( nGroup )
+	, m_hImage		( (HANDLE)hIcon )
+	, m_nImageIndex ( NULL )
+{
+	if ( pszLink ) m_sLink = pszLink;
 }
 
 CRichElement::~CRichElement()
@@ -240,7 +261,7 @@ void CRichElement::PrePaintIcon(CDC* /*pDC*/)
 //////////////////////////////////////////////////////////////////////
 // CRichElement dimensions
 
-CSize CRichElement::GetSize()
+CSize CRichElement::GetSize() const
 {
 	CSize sz( 0, 0 );
 
@@ -250,7 +271,7 @@ CSize CRichElement::GetSize()
 	}
 	else if ( m_nType == retBitmap && m_hImage != NULL )
 	{
-		BITMAP pInfo;
+		BITMAP pInfo = {};
 		GetObject( (HBITMAP)m_hImage, sizeof(pInfo), &pInfo );
 
 		sz.cx = pInfo.bmWidth;
@@ -259,7 +280,7 @@ CSize CRichElement::GetSize()
 	else if ( m_nType == retIcon )
 	{
 		sz.cx = sz.cy = 16;
-		UINT nID;
+		UINT nID = 0;
 		_stscanf( m_sText, _T("%lu.%i.%i"), &nID, &sz.cx, &sz.cy );
 	}
 	else if ( m_nType == retEmoticon || m_nType == retCmdIcon )

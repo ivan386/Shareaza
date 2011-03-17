@@ -1,7 +1,7 @@
 //
 // RichElement.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_RICHELEMENT_H__6026BA51_4D21_49AC_AB93_96EF387BFFEA__INCLUDED_)
-#define AFX_RICHELEMENT_H__6026BA51_4D21_49AC_AB93_96EF387BFFEA__INCLUDED_
-
 #pragma once
 
 class CRichDocument;
@@ -31,13 +28,12 @@ class CRichViewCtrl;
 
 class CRichElement
 {
-// Construction
 public:
 	CRichElement(int nType = 0, LPCTSTR pszText = NULL, LPCTSTR pszLink = NULL, DWORD nFlags = 0, int nGroup = 0);
+	CRichElement(HBITMAP hBitmap, LPCTSTR pszLink = NULL, DWORD nFlags = 0, int nGroup = 0);
+	CRichElement(HICON hIcon, LPCTSTR pszLink = NULL, DWORD nFlags = 0, int nGroup = 0);
 	virtual ~CRichElement();
 
-// Attributes
-public:
 	CRichDocument*	m_pDocument;
 	int				m_nType;
 	int				m_nGroup;
@@ -48,17 +44,16 @@ public:
 	int				m_nImageIndex;
 	COLORREF		m_cColour;
 
-// Operations
-public:
 	void	Show(BOOL bShow = TRUE);
 	void	SetText(LPCTSTR pszText);
 	void	SetFlags(DWORD nFlags, DWORD nMask = 0xFFFFFFFF);
 	void	Delete();
+
 protected:
 	void	PrePaint(CDC* pDC, BOOL bHover);
 	void	PrePaintBitmap(CDC* pDC);
 	void	PrePaintIcon(CDC* pDC);
-	CSize	GetSize();
+	CSize	GetSize() const;
 
 	friend class CRichFragment;
 	friend class CRichViewCtrl;
@@ -87,5 +82,3 @@ enum
 {
 	reaLeft, reaCenter, reaRight
 };
-
-#endif // !defined(AFX_RICHELEMENT_H__6026BA51_4D21_49AC_AB93_96EF387BFFEA__INCLUDED_)

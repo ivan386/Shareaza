@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2010-11-16 14:53+0000\n"
+"POT-Creation-Date: 2011-03-14 05:50+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -558,7 +558,7 @@ msgstr "網路"
 #: cmainwnd.tabbed;9;item;id_network_connect
 #: cmainwnd.windowed;18;item;id_network_connect
 #: cneighbourswnd;59;item;id_network_connect
-#: cprivatechatframe;item;id_chat_connect
+#: cprivatechatwnd;item;id_chat_connect
 msgid "_Connect"
 msgstr "連線"
 
@@ -863,7 +863,7 @@ msgstr "關於 Shareaza..."
 #: cneighbourswnd.basic;item;id_neighbours_disconnect
 #: cneighbourswnd;item;id_neighbours_disconnect
 #: cneighbourswnd;59;item;id_network_disconnect
-#: cprivatechatframe;item;id_chat_disconnect
+#: cprivatechatwnd;item;id_chat_disconnect
 msgid "_Disconnect"
 msgstr "中斷連線"
 
@@ -1121,8 +1121,7 @@ msgstr "複製 URI"
 #: cuploadswnd.upload;item;id_browse_launch
 #: cneighbourswnd.basic;item;id_browse_launch
 #: cneighbourswnd;item;id_browse_launch
-#: csearchmonitorwnd;item;id_browse_launch
-#: cprivatechatframe;item;id_chat_browse
+#: csearchmonitorwnd;item;id_browse_launch cprivatechatwnd;item;id_chat_browse
 msgid "_Browse User"
 msgstr "瀏覽使用者"
 
@@ -1802,8 +1801,7 @@ msgstr ""
 msgid "_Debug"
 msgstr ""
 
-#: csystemwnd;item;id_system_timestamp
-#: cprivatechatframe;item;id_chat_timestamp
+#: csystemwnd;item;id_system_timestamp cprivatechatwnd;item;id_chat_timestamp
 msgid "Timestam_p"
 msgstr "時間郵戳"
 
@@ -1956,35 +1954,35 @@ msgstr "顯示 Server.met's"
 msgid "_Add Service..."
 msgstr "新增服務..."
 
-#: cprivatechatframe;item;id_chat_priority
+#: cprivatechatwnd;item;id_chat_priority
 msgid "Grant _Priority"
 msgstr "准予優先權"
 
-#: cprivatechatframe;62
+#: cprivatechatwnd;62
 msgid "_Format"
 msgstr ""
 
-#: cprivatechatframe;62;item;id_chat_bold
+#: cprivatechatwnd;62;item;id_chat_bold
 msgid "Set _Bold"
 msgstr ""
 
-#: cprivatechatframe;62;item;id_chat_italic
+#: cprivatechatwnd;62;item;id_chat_italic
 msgid "Set _Italic"
 msgstr ""
 
-#: cprivatechatframe;62;item;id_chat_underline
+#: cprivatechatwnd;62;item;id_chat_underline
 msgid "Set _Underline"
 msgstr ""
 
-#: cprivatechatframe;62;item;id_chat_colour
+#: cprivatechatwnd;62;item;id_chat_colour
 msgid "Set _Colour"
 msgstr ""
 
-#: cprivatechatframe;62;item;id_chat_emoticons
+#: cprivatechatwnd;62;item;id_chat_emoticons
 msgid "_Emoticons"
 msgstr ""
 
-#: cprivatechatframe;item;id_chat_clear
+#: cprivatechatwnd;item;id_chat_clear
 msgid "C_lear Window"
 msgstr "清除視窗"
 
@@ -6004,6 +6002,11 @@ msgstr ""
 msgid "Library Files"
 msgstr ""
 
+#: string;16380
+#, fuzzy
+msgid "DC++ Guard"
+msgstr "eDonkey Guard"
+
 #: string;16384
 msgid ""
 "Are you sure you want to launch the file \"%s\" ?\\n"
@@ -6470,16 +6473,6 @@ msgstr ""
 "\\n"
 "您確定要繼續下一步而不輸入地點嗎?"
 
-#: string;16806
-msgid ""
-"Shareaza was unable to set up port-forwarding on your NAT router or firewall.\\n"
-"\\n"
-"Please configure your network to forward TCP and UDP ports %i to your local PC."
-msgstr ""
-"您已經示意要自行設定防火牆或是NAT 路由器的連接埠轉送(Port-Forwarding).\\n"
-"\\n"
-"請設定您的網路以轉送TCP 與 UDP 連接埠到 %i 您的本機電腦."
-
 #: string;16807
 msgid "Please type the bandwidth limit you wish to set in the form \"123 kb/s\" for kilobits per second, or \"123 KB/s\" for kilobytes per second."
 msgstr "請以這樣的方式輸入您想要設定的頻寬限制 \"123 kb/s\" =每秒123 kb, or \"123 KB/s\" =每秒123KB."
@@ -6500,10 +6493,6 @@ msgstr "歲"
 #: cconnectionsettingspage;control;12
 msgid "Automatic"
 msgstr "自動"
-
-#: string;16812
-msgid "Please wait: Finding UPnP devices and setting them up..."
-msgstr ""
 
 #: string;16813
 msgid "Please wait: Updating discovery services..."
@@ -8201,10 +8190,6 @@ msgstr "啟用:"
 #: cremotesettingspage;control;4
 msgid "Enable Shareaza Remote Access:"
 msgstr "啟用 Shareaza 遠端操控:"
-
-#: cremotesettingspage;control;5 column;url
-msgid "URL"
-msgstr "URL"
 
 #: cremotesettingspage;control;6
 msgid "_Credentials:"
@@ -10177,6 +10162,10 @@ msgstr "設定"
 msgid "Value"
 msgstr "值"
 
+#: column;url
+msgid "URL"
+msgstr "URL"
+
 #: column;filename
 msgid "Filename"
 msgstr "檔案名稱"
@@ -10207,6 +10196,8 @@ msgstr "TigerTree"
 msgid "NextRun"
 msgstr "下一個"
 
+#~ msgid "Shareaza was unable to set up port-forwarding on your NAT router or firewall.\\n\\nPlease configure your network to forward TCP and UDP ports %i to your local PC."
+#~ msgstr "您已經示意要自行設定防火牆或是NAT 路由器的連接埠轉送(Port-Forwarding).\\n\\n請設定您的網路以轉送TCP 與 UDP 連接埠到 %i 您的本機電腦."
 #~ msgid "_Play Album"
 #~ msgstr "播放專輯"
 

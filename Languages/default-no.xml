@@ -420,7 +420,7 @@
 			<button id="ID_HOSTCACHE_DC_CACHE" text="DC++ Cache"/>
 		</toolbar>
 		<!-- PRIVATE CHAT FRAME -->
-		<toolbar name="CPrivateChatFrame">
+		<toolbar name="CPrivateChatWnd">
 			<button id="ID_CHAT_BOLD" text="B"/>
 			<button id="ID_CHAT_ITALIC" text="I"/>
 			<button id="ID_CHAT_UNDERLINE" text="U"/>
@@ -1586,7 +1586,7 @@
 			<item id="ID_DISCOVERY_EDIT" text="Avansert redigering"/>
 		</menu>
 		<!-- PRIVATE CHAT FRAME -->
-		<menu name="CPrivateChatFrame">
+		<menu name="CPrivateChatWnd">
 			<item id="ID_CHAT_CONNECT" text="Koble til"/>
 			<item id="ID_CHAT_DISCONNECT" text="Koble fra"/>
 			<separator/>
@@ -3053,6 +3053,7 @@
 		<string id="16377" value="HTTP Guard"/>
 		<string id="16378" value="Host &quot;%s&quot; sent a 416, without providing available ranges. Closing connection."/>
 		<string id="16379" value="Library Files"/>
+		<string id="16380" value="eDonkey Guard"/>
 		<string id="16384" value="Er du sikker på at du vil åpne denne filen &quot;%s&quot; ?\n\nNoen filer kan være skadelige for pc-en. Forsikre deg om at du vet hva filen er før du åpner den."/>
 		<string id="16385" value="Du prøver å endre metadataene til %i filer, er du sikker på at du vil fortsette?"/>
 		<string id="16386" value="Endrer metadata til %i filer."/>
@@ -3141,13 +3142,11 @@
 		<string id="16803" value="Mappen du deler er allerede delt gjennom en annen delt mappe:\n\n%s"/>
 		<string id="16804" value="Du har ikke valgt et navn i din bruker profil."/>
 		<string id="16805" value="Du har ikke angitt hvor du er fra i bruker profilen din.\n\nDet er en god idé å angi hvor du er fra slik at andre kan se hvor de er koblet til. Dette vil ikke gjøre noe utslag på din sikkerhet.\n\nEr du sikker på at du vil fortsette uten å angi sted?"/>
-		<string id="16806" value="Du har indikert at du vil sette opp port forwarding på din NAT-router eller brannmur.\n\nVennligst sett opp nettverket til å videresende TCP og UDP port %i til din lokale PC."/>
 		<string id="16807" value="Vennligst velg hvilket format du vil ha på grensen for båndbredden  &quot;123 kb/s&quot; for kilobits per sekund, eller &quot;123 KB/s&quot; for kilobytes per sekund."/>
 		<string id="16808" value="Du har ikke valgt alder og kjønn.  Er du sikker på at du vil fortsette?"/>
 		<string id="16809" value="Avslutt"/>
 		<string id="16810" value="år gammel"/>
 		<string id="16811" value="Automatisk"/>
-		<string id="16812" value="Please wait: Finding UPnP devices and setting them up..."/>
 		<string id="16813" value="Please wait: Updating discovery services..."/>
 		<string id="16814" value="Please wait: Updating eDonkey server list..."/>
 		<string id="16815" value="UPnP Device Host Service is not running. This service is required to perform the setup.\nYou need to set the startup type of the service to automatic."/>

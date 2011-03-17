@@ -420,7 +420,7 @@
 			<button id="ID_HOSTCACHE_DC_CACHE" text="DC++ Cache"/>
 		</toolbar>
 		<!-- PRIVATE CHAT FRAME -->
-		<toolbar name="CPrivateChatFrame">
+		<toolbar name="CPrivateChatWnd">
 			<button id="ID_CHAT_BOLD" text="‪B"/>
 			<button id="ID_CHAT_ITALIC" text="‪I"/>
 			<button id="ID_CHAT_UNDERLINE" text="‪U"/>
@@ -1586,7 +1586,7 @@
 			<item id="ID_DISCOVERY_EDIT" text="‪_עריכה מתקדמת"/>
 		</menu>
 		<!-- PRIVATE CHAT FRAME -->
-		<menu name="CPrivateChatFrame">
+		<menu name="CPrivateChatWnd">
 			<item id="ID_CHAT_CONNECT" text="ה_תחבר"/>
 			<item id="ID_CHAT_DISCONNECT" text="הת_נתק"/>
 			<separator/>
@@ -3062,6 +3062,7 @@
 		<string id="16377" value="‪HTTP שומר"/>
 		<string id="16378" value="Host &quot;%s&quot; sent a 416, without providing available ranges. Closing connection."/>
 		<string id="16379" value="Library Files"/>
+		<string id="16380" value="‪השומר של אידונקי"/>
 		<string id="16384" value="‪? &quot;%s&quot; הם הינך בטוח/ה שברצונך להפעיל את הקובץ\n\n.קבצים מסויימים יכולים לפגוע במחשב שלך, אנא וודא איזה קובץ אתה מפעיל"/>
 		<string id="16385" value="‪?קבצים, האם הינך מעוניינ/ת להמשיך %i-ל Meta את/ה עומד/ת לשנות את המידע"/>
 		<string id="16386" value="‪.ל- %i קבצים Meta עורך מידע "/>
@@ -3150,13 +3151,11 @@
 		<string id="16803" value="‪The folder you are sharing is already shared as part of another shared folder:\n\n%s"/>
 		<string id="16804" value="You haven't entered a screen name in your user profile."/>
 		<string id="16805" value="You haven't entered your location in your user profile.\n\nIt's a good idea to enter your location so that other users can see which country you are from.  Note that entering a location does not reveal any compromising information.\n\nAre you sure you want to continue without entering your location?"/>
-		<string id="16806" value="You have indicated that you want to set up port-forwarding on your NAT router or firewall.\n\nPlease configure your network to forward TCP and UDP ports %i to your local PC."/>
 		<string id="16807" value="‪Please type the bandwidth limit you wish to set in the form &quot;123 kb/s&quot; for kilobits per second, or &quot;123 KB/s&quot; for kilobytes per second."/>
 		<string id="16808" value="‪?לא בחרת גיל ומין, אתה בטוח שאתה רוצה להמשיך"/>
 		<string id="16809" value="‪י&amp;ציאה"/>
 		<string id="16810" value="‪בגיל"/>
 		<string id="16811" value="‪אוטומטי"/>
-		<string id="16812" value="Please wait: Finding UPnP devices and setting them up..."/>
 		<string id="16813" value="Please wait: Updating discovery services..."/>
 		<string id="16814" value="Please wait: Updating eDonkey server list..."/>
 		<string id="16815" value="UPnP Device Host Service is not running. This service is required to perform the setup.\nYou need to set the startup type of the service to automatic."/>

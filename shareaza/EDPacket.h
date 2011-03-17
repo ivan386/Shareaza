@@ -1,7 +1,7 @@
 //
 // EDPacket.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -273,26 +273,56 @@ inline void CEDPacket::CEDPacketPool::FreePoolImpl(CPacket* pPacket)
 #define ED2K_C2C_ASKSHAREDDIRSDENIED	0x61    // (null)
 
 // eMule Client - Client TCP
-#define	ED2K_C2C_EMULEINFO				0x01
-#define	ED2K_C2C_EMULEINFOANSWER		0x02
-#define ED2K_C2C_COMPRESSEDPART			0x40
-#define ED2K_C2C_QUEUERANKING			0x60
-#define ED2K_C2C_FILEDESC				0x61
-#define ED2K_C2C_REQUESTSOURCES			0x81
-#define ED2K_C2C_ANSWERSOURCES			0x82
-#define ED2K_C2C_REQUESTPREVIEW			0x90
-#define ED2K_C2C_PREVIEWANWSER			0x91
-
-// eMule Client - Client TCP (64Bit LargeFile support)
-#define ED2K_C2C_COMPRESSEDPART_I64		0xA1
-#define ED2K_C2C_SENDINGPART_I64		0xA2
-#define ED2K_C2C_REQUESTPARTS_I64		0xA3
+#define	ED2K_C2C_EMULEINFO				0x01	//
+#define	ED2K_C2C_EMULEINFOANSWER		0x02	//
+#define ED2K_C2C_COMPRESSEDPART			0x40	// <HASH 16><von 4><size 4><Daten len:size>
+#define ED2K_C2C_QUEUERANKING			0x60	// <RANG 2>
+#define ED2K_C2C_FILEDESC				0x61	// <len 2><NAME len>
+#define ED2K_C2C_REQUESTSOURCES			0x81	// *DEPRECATED* <HASH 16>
+#define ED2K_C2C_ANSWERSOURCES			0x82	// *DEPRECATED*
+#define ED2K_C2C_REQUESTSOURCES2		0x83	// <HASH 16><Version 1><Options 2>
+#define ED2K_C2C_ANSWERSOURCES2			0x84	// <Version 1>[content]
+#define ED2K_C2C_PUBLICKEY				0x85	// <len 1><pubkey len>
+#define ED2K_C2C_SIGNATURE				0x86	// v1: <len 1><signature len>  v2:<len 1><signature len><sigIPused 1>
+#define ED2K_C2C_SECIDENTSTATE			0x87	// <state 1><rndchallenge 4>
+#define ED2K_C2C_REQUESTPREVIEW			0x90	// <HASH 16>
+#define ED2K_C2C_PREVIEWANWSER			0x91	// <HASH 16><frames 1>{frames * <len 4><frame len>}
+#define ED2K_C2C_MULTIPACKET			0x92	// *DEPRECATED*
+#define ED2K_C2C_MULTIPACKETANSWER		0x93	// *DEPRECATED*
+#define ED2K_C2C_PEERCACHE_QUERY		0x94	// *DEPRECATED*
+#define ED2K_C2C_PEERCACHE_ANSWER		0x95	// *DEPRECATED*
+#define ED2K_C2C_PEERCACHE_ACK			0x96	// *DEPRECATED*
+#define ED2K_C2C_PUBLICIP_REQ			0x97
+#define ED2K_C2C_PUBLICIP_ANSWER		0x98
+#define ED2K_C2C_CALLBACK				0x99	// <HASH 16><HASH 16><uint 16>
+#define ED2K_C2C_REASKCALLBACKTCP		0x9A
+#define ED2K_C2C_AICHREQUEST			0x9B	// *DEPRECATED* <HASH 16><uint16><HASH aichhashlen>
+#define ED2K_C2C_AICHANSWER				0x9C	// *DEPRECATED* <HASH 16><uint16><HASH aichhashlen> <data>
+#define ED2K_C2C_AICHFILEHASHANS		0x9D	  
+#define ED2K_C2C_AICHFILEHASHREQ		0x9E
+#define ED2K_C2C_BUDDYPING				0x9F
+#define ED2K_C2C_BUDDYPONG				0xA0
+#define ED2K_C2C_COMPRESSEDPART_I64		0xA1	// 64Bit LargeFile support: <HASH 16><von 8><size 4><Daten len:size>
+#define ED2K_C2C_SENDINGPART_I64		0xA2	// 64Bit LargeFile support: <HASH 16><von 8><bis 8><Daten len:(von-bis)>
+#define ED2K_C2C_REQUESTPARTS_I64		0xA3	// 64Bit LargeFile support: <HASH 16><von[3] 8*3><bis[3] 8*3>
+#define ED2K_C2C_MULTIPACKET_EXT		0xA4	// *DEPRECATED*
+#define ED2K_C2C_CHATCAPTCHAREQ			0xA5	// <tags 1>[tags]<Captcha BITMAP>
+#define ED2K_C2C_CHATCAPTCHARES			0xA6	// <status 1>
+#define ED2K_C2C_FWCHECKUDPREQ			0xA7	// <Inter_Port 2><Extern_Port 2><KadUDPKey 4> *Support required for Kadversion >= 6
+#define ED2K_C2C_KAD_FWTCPCHECK_ACK		0xA8	// (null/reserved), replaces KADEMLIA_FIREWALLED_ACK_RES, *Support required for Kadversion >= 7
+#define ED2K_C2C_MULTIPACKET_EXT2		0xA9	// <FileIdentifier> ...
+#define ED2K_C2C_MULTIPACKETANSWER_EXT2 0xB0	// <FileIdentifier> ...
+#define ED2K_C2C_HASHSETREQUEST2		0xB1	// <FileIdentifier><Options 1>
+#define ED2K_C2C_HASHSETANSWER2			0xB2	// <FileIdentifier><Options 1>[<HashSets> Options]
 
 // Client - Client, UDP
-#define ED2K_C2C_UDP_REASKFILEPING		0x90
-#define ED2K_C2C_UDP_REASKACK			0x91
-#define ED2K_C2C_UDP_FILENOTFOUND		0x92
-#define ED2K_C2C_UDP_QUEUEFULL			0x93
+#define ED2K_C2C_UDP_REASKFILEPING		0x90	// <HASH 16>
+#define ED2K_C2C_UDP_REASKACK			0x91	// <RANG 2>
+#define ED2K_C2C_UDP_FILENOTFOUND		0x92	// (null)
+#define ED2K_C2C_UDP_QUEUEFULL			0x93	// (null)
+#define ED2K_C2C_UDP_REASKCALLBACKUDP	0x94	//
+#define ED2K_C2C_UDP_DIRECTCALLBACKREQ	0x95	// <TCPPort 2><Userhash 16><ConnectionOptions 1>
+#define ED2K_C2C_UDP_PORTTEST			0xFE	// Connection Test
 
 // Values for ED2K_CT_SERVER_FLAGS (server capabilities)
 #define ED2K_SRVCAP_ZLIB				0x0001
@@ -409,11 +439,11 @@ public:
 											//  4 Comments
 											//	1 PeerChache supported
 											//	1 Browse disabled
-											//	1 MultiPacket
+											//	1 MultiPacket - deprecated with FileIdentifiers/MultipacketExt2
 											//  1 Preview
 #define	ED2K_CT_SOFTWAREVERSION		0xFB	// Version of the program.
-#define	ED2K_CT_UNKNOWN1			0xFC
-#define	ED2K_CT_UNKNOWN2			0xFD
+#define	ED2K_CT_BUDDYIP				0xFC	// BUDDY IP
+#define	ED2K_CT_BUDDYUDP			0xFD	// BUDDY Port (hi word - not used, low word - UDP port)
 #define	ED2K_CT_MOREFEATUREVERSIONS	0xFE	// <uint32> Features 2:
 											// 19 Reserved
 											//  1 Direct UDP Callback. Direct callback is only possible if connected to kad, tcp firewalled and verified UDP open (for example on a full cone NAT)
@@ -425,7 +455,7 @@ public:
 											//  1 Reserved (ModBit)
 											//  1 Ext Multipacket (Hash+Size instead of Hash)
 											//  1 Large Files (includes support for 64bit tags)
-											//  4 Kad Version
+											//  4 Kad Version - will go up to version 15 only (may need to add another field at some point in the future)
 #define	ED2K_CT_UNKNOWN3			0xFF
 
 

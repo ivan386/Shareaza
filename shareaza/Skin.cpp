@@ -1,7 +1,7 @@
 //
 // Skin.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -802,12 +802,10 @@ BOOL CSkin::CreateToolBar(LPCTSTR pszName, CCoolBarCtrl* pBar)
 			pChild->ShowWindow( SW_HIDE );
 		}
 	}
-
-	CString strName = pszName;
-
-	pBar->SetWatermark( GetWatermark( strName + _T(".Toolbar") ) );
-
+	pBar->SetWatermark( NULL );
 	pBar->Clear();
+	
+	CString sClassName( pszName );
 
 	ASSERT( Settings.General.GUIMode == GUI_WINDOWED ||
 		Settings.General.GUIMode == GUI_TABBED ||
@@ -816,16 +814,21 @@ BOOL CSkin::CreateToolBar(LPCTSTR pszName, CCoolBarCtrl* pBar)
 	CCoolBarCtrl* pBase = NULL;
 	for ( int nModeTry = 0 ; nModeTry < 3 && pszModeSuffix[ nModeTry ] ; nModeTry++ )
 	{
-		if ( m_pToolbars.Lookup( strName + pszModeSuffix[ nModeTry ], pBase ) )
-			break;
+		CString sName( sClassName + pszModeSuffix[ nModeTry ] );
+		if ( m_pToolbars.Lookup( sName, pBase ) )
+		{
+			if ( HBITMAP hBitmap = GetWatermark( sName + _T(".Toolbar") ) )
+				pBar->SetWatermark( hBitmap );
+			else if ( HBITMAP hBitmap = GetWatermark( sClassName + _T(".Toolbar") ) )
+				pBar->SetWatermark( hBitmap );
+			pBar->Copy( pBase );
+			return TRUE;
+		}
 	}
 
-	if ( pBase == NULL )
-		return FALSE;
+	ASSERT( pBase != NULL );
 
-	pBar->Copy( pBase );
-
-	return TRUE;
+	return FALSE;
 }
 
 CCoolBarCtrl* CSkin::GetToolBar(LPCTSTR pszName) const

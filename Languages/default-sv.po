@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2010-11-16 14:53+0000\n"
+"POT-Creation-Date: 2011-03-14 05:50+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -554,7 +554,7 @@ msgstr "_Nätverk"
 #: cmainwnd.tabbed;9;item;id_network_connect
 #: cmainwnd.windowed;18;item;id_network_connect
 #: cneighbourswnd;59;item;id_network_connect
-#: cprivatechatframe;item;id_chat_connect
+#: cprivatechatwnd;item;id_chat_connect
 msgid "_Connect"
 msgstr "_Anslut"
 
@@ -858,7 +858,7 @@ msgstr "_Om Shareaza"
 #: cneighbourswnd.basic;item;id_neighbours_disconnect
 #: cneighbourswnd;item;id_neighbours_disconnect
 #: cneighbourswnd;59;item;id_network_disconnect
-#: cprivatechatframe;item;id_chat_disconnect
+#: cprivatechatwnd;item;id_chat_disconnect
 msgid "_Disconnect"
 msgstr "_Koppla ifrån"
 
@@ -1114,8 +1114,7 @@ msgstr "Kopiera _URI"
 #: cuploadswnd.upload;item;id_browse_launch
 #: cneighbourswnd.basic;item;id_browse_launch
 #: cneighbourswnd;item;id_browse_launch
-#: csearchmonitorwnd;item;id_browse_launch
-#: cprivatechatframe;item;id_chat_browse
+#: csearchmonitorwnd;item;id_browse_launch cprivatechatwnd;item;id_chat_browse
 msgid "_Browse User"
 msgstr "_Visa användarens filer"
 
@@ -1795,8 +1794,7 @@ msgstr ""
 msgid "_Debug"
 msgstr ""
 
-#: csystemwnd;item;id_system_timestamp
-#: cprivatechatframe;item;id_chat_timestamp
+#: csystemwnd;item;id_system_timestamp cprivatechatwnd;item;id_chat_timestamp
 msgid "Timestam_p"
 msgstr "_Tidsstämpel"
 
@@ -1945,35 +1943,35 @@ msgstr "Visa Ser_ver.mets"
 msgid "_Add Service..."
 msgstr "_Lägg till tjänst…"
 
-#: cprivatechatframe;item;id_chat_priority
+#: cprivatechatwnd;item;id_chat_priority
 msgid "Grant _Priority"
 msgstr "Ge _prioritet"
 
-#: cprivatechatframe;62
+#: cprivatechatwnd;62
 msgid "_Format"
 msgstr ""
 
-#: cprivatechatframe;62;item;id_chat_bold
+#: cprivatechatwnd;62;item;id_chat_bold
 msgid "Set _Bold"
 msgstr ""
 
-#: cprivatechatframe;62;item;id_chat_italic
+#: cprivatechatwnd;62;item;id_chat_italic
 msgid "Set _Italic"
 msgstr ""
 
-#: cprivatechatframe;62;item;id_chat_underline
+#: cprivatechatwnd;62;item;id_chat_underline
 msgid "Set _Underline"
 msgstr ""
 
-#: cprivatechatframe;62;item;id_chat_colour
+#: cprivatechatwnd;62;item;id_chat_colour
 msgid "Set _Colour"
 msgstr ""
 
-#: cprivatechatframe;62;item;id_chat_emoticons
+#: cprivatechatwnd;62;item;id_chat_emoticons
 msgid "_Emoticons"
 msgstr ""
 
-#: cprivatechatframe;item;id_chat_clear
+#: cprivatechatwnd;item;id_chat_clear
 msgid "C_lear Window"
 msgstr "_Rensa fönster"
 
@@ -6084,6 +6082,11 @@ msgstr ""
 msgid "Library Files"
 msgstr "Biblioteksfiler"
 
+#: string;16380
+#, fuzzy
+msgid "DC++ Guard"
+msgstr "eDonkey-vakt"
+
 #: string;16384
 msgid ""
 "Are you sure you want to launch the file \"%s\" ?\\n"
@@ -6555,16 +6558,6 @@ msgstr ""
 "\\n"
 "Är du säker på att du vill fortsätta utan att ange en plats?"
 
-#: string;16806
-msgid ""
-"Shareaza was unable to set up port-forwarding on your NAT router or firewall.\\n"
-"\\n"
-"Please configure your network to forward TCP and UDP ports %i to your local PC."
-msgstr ""
-"Du har angett att du vill sätta upp porteftersändning i din NAT-router eller brandvägg.\\n"
-"\\n"
-"Anpassa ditt nätverk för att eftersända TCP-port %i till din lokala dator."
-
 #: string;16807
 msgid "Please type the bandwidth limit you wish to set in the form \"123 kb/s\" for kilobits per second, or \"123 KB/s\" for kilobytes per second."
 msgstr "Skriv bandbreddsbegräsningen du vill använda på formen \"123 kb/s\" för kbit/s eller \"123 KB/s\" för kbyte/s."
@@ -6585,10 +6578,6 @@ msgstr "år gammal"
 #: cconnectionsettingspage;control;12
 msgid "Automatic"
 msgstr "Automatisk"
-
-#: string;16812
-msgid "Please wait: Finding UPnP devices and setting them up..."
-msgstr "Var god vänta: Hittar och installerar UPnP-enheter..."
 
 #: string;16813
 msgid "Please wait: Updating discovery services..."
@@ -8281,10 +8270,6 @@ msgstr "_Aktivera:"
 #: cremotesettingspage;control;4
 msgid "Enable Shareaza Remote Access:"
 msgstr "Aktivera Shareazas fjärråtkomst:"
-
-#: cremotesettingspage;control;5 column;url
-msgid "URL"
-msgstr "URL"
 
 #: cremotesettingspage;control;6
 msgid "_Credentials:"
@@ -10252,6 +10237,10 @@ msgstr "Inställning"
 msgid "Value"
 msgstr "Värde"
 
+#: column;url
+msgid "URL"
+msgstr "URL"
+
 #: column;filename
 msgid "Filename"
 msgstr "Filnamn"
@@ -10282,6 +10271,10 @@ msgstr "TigerTree"
 msgid "NextRun"
 msgstr "Nästa"
 
+#~ msgid "Shareaza was unable to set up port-forwarding on your NAT router or firewall.\\n\\nPlease configure your network to forward TCP and UDP ports %i to your local PC."
+#~ msgstr "Du har angett att du vill sätta upp porteftersändning i din NAT-router eller brandvägg.\\n\\nAnpassa ditt nätverk för att eftersända TCP-port %i till din lokala dator."
+#~ msgid "Please wait: Finding UPnP devices and setting them up..."
+#~ msgstr "Var god vänta: Hittar och installerar UPnP-enheter..."
 #~ msgid "_Play Album"
 #~ msgstr "_Spella upp album"
 #~ msgid "This is a pre-release version of Shareaza, and the beta testing period has ended. Please download the full, official release from http://shareaza.sourceforge.net/."

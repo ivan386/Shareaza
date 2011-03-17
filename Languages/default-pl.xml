@@ -420,7 +420,7 @@
 			<button id="ID_HOSTCACHE_DC_CACHE" text="DC++ Cache"/>
 		</toolbar>
 		<!-- PRIVATE CHAT FRAME -->
-		<toolbar name="CPrivateChatFrame">
+		<toolbar name="CPrivateChatWnd">
 			<button id="ID_CHAT_BOLD" text="B"/>
 			<button id="ID_CHAT_ITALIC" text="I"/>
 			<button id="ID_CHAT_UNDERLINE" text="U"/>
@@ -1586,7 +1586,7 @@
 			<item id="ID_DISCOVERY_EDIT" text="Zaawansowana edycja... (właściwości?)"/>
 		</menu>
 		<!-- PRIVATE CHAT FRAME -->
-		<menu name="CPrivateChatFrame">
+		<menu name="CPrivateChatWnd">
 			<item id="ID_CHAT_CONNECT" text="Połącz"/>
 			<item id="ID_CHAT_DISCONNECT" text="Rozłącz"/>
 			<separator/>
@@ -3059,6 +3059,7 @@
 		<string id="16377" value="HTTP Guard"/>
 		<string id="16378" value="Host &quot;%s&quot; sent a 416, without providing available ranges. Closing connection."/>
 		<string id="16379" value="Pliki biblioteki"/>
+		<string id="16380" value="eDonkey Guard"/>
 		<string id="16384" value="Are you sure you want to launch the file &quot;%s&quot; ?\n\nSome files can be harmful to your computer.  Ensure you know what the file is before launching it."/>
 		<string id="16385" value="You are about to modify the metadata of %i files, are you sure you want to continue?"/>
 		<string id="16386" value="Editing metadata of %i files."/>
@@ -3147,13 +3148,11 @@
 		<string id="16803" value="The folder you are sharing is already shared as part of another shared folder:\n\n%s"/>
 		<string id="16804" value="You haven't entered a screen name in your user profile."/>
 		<string id="16805" value="You haven't entered your location in your user profile.\n\nIt's a good idea to enter your location so that other users can see which country you are from.  Note that entering a location does not reveal any compromising information.\n\nAre you sure you want to continue without entering your location?"/>
-		<string id="16806" value="Shareaza nie była w stanie ustawić forewardowania portu na Twoim routerze NAT lub firewallu. \n\nProszę skonfiguruj swoją sieć aby przeforewardować porty %i , TCP i UDP, do Twojego lokalnego PC."/>
 		<string id="16807" value="Please type the bandwidth limit you wish to set in the form &quot;123 kb/s&quot; for kilobits per second, or &quot;123 KB/s&quot; for kilobytes per second."/>
 		<string id="16808" value="You have not selected your age and gender.  Are you sure you want to continue without doing this?"/>
 		<string id="16809" value="W&amp;yjście"/>
 		<string id="16810" value="lat"/>
 		<string id="16811" value="Automatycznie"/>
-		<string id="16812" value="Proszę czekać: Szukanie urządzeń UPnP i ustawianie ich..."/>
 		<string id="16813" value="Proszę czekać: Aktualizowanie usług discovery..."/>
 		<string id="16814" value="Proszę czekać: Aktualizowanie listy serwera eDonkey..."/>
 		<string id="16815" value="Usługa UPnP Device Host nie funkcjonuje. Ta usługa jest konieczna do wykonania ustawień.\nTrzeba ustawić sposób uruchomienia usługi na automatyczny."/>

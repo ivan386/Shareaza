@@ -393,7 +393,7 @@
 		<button id="ID_HOSTCACHE_ED2K_CACHE" text="eDonkey Cache"/>
 	</toolbar>
 	<!-- PRIVATE CHAT FRAME -->
-	<toolbar name="CPrivateChatFrame">
+	<toolbar name="CPrivateChatWnd">
 		<button id="ID_CHAT_BOLD" text="B"/>
 		<button id="ID_CHAT_ITALIC" text="I"/>
 		<button id="ID_CHAT_UNDERLINE" text="U"/>
@@ -1446,7 +1446,7 @@
 		<item id="ID_DISCOVERY_EDIT" text="_خصائص"/>
 	</menu>
 	<!-- PRIVATE CHAT FRAME -->
-	<menu name="CPrivateChatFrame">
+	<menu name="CPrivateChatWnd">
 		<item id="ID_CHAT_CONNECT" text="_اتصال"/>
 		<item id="ID_CHAT_DISCONNECT" text="_قطع الاتصال"/>
 		<separator/>

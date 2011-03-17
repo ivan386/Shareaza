@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2010-11-16 14:53+0000\n"
+"POT-Creation-Date: 2011-03-14 05:50+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -554,7 +554,7 @@ msgstr "Sieć"
 #: cmainwnd.tabbed;9;item;id_network_connect
 #: cmainwnd.windowed;18;item;id_network_connect
 #: cneighbourswnd;59;item;id_network_connect
-#: cprivatechatframe;item;id_chat_connect
+#: cprivatechatwnd;item;id_chat_connect
 msgid "_Connect"
 msgstr "Połącz"
 
@@ -858,7 +858,7 @@ msgstr "_O programie Shareaza..."
 #: cneighbourswnd.basic;item;id_neighbours_disconnect
 #: cneighbourswnd;item;id_neighbours_disconnect
 #: cneighbourswnd;59;item;id_network_disconnect
-#: cprivatechatframe;item;id_chat_disconnect
+#: cprivatechatwnd;item;id_chat_disconnect
 msgid "_Disconnect"
 msgstr "Rozłącz"
 
@@ -1114,8 +1114,7 @@ msgstr "Kopiuj _URI"
 #: cuploadswnd.upload;item;id_browse_launch
 #: cneighbourswnd.basic;item;id_browse_launch
 #: cneighbourswnd;item;id_browse_launch
-#: csearchmonitorwnd;item;id_browse_launch
-#: cprivatechatframe;item;id_chat_browse
+#: csearchmonitorwnd;item;id_browse_launch cprivatechatwnd;item;id_chat_browse
 msgid "_Browse User"
 msgstr "Przeglądaj użytkownika"
 
@@ -1795,8 +1794,7 @@ msgstr "Informacja"
 msgid "_Debug"
 msgstr "_Debug"
 
-#: csystemwnd;item;id_system_timestamp
-#: cprivatechatframe;item;id_chat_timestamp
+#: csystemwnd;item;id_system_timestamp cprivatechatwnd;item;id_chat_timestamp
 msgid "Timestam_p"
 msgstr "Znacznik czasu"
 
@@ -1945,35 +1943,35 @@ msgstr "Pokaż Server.met'y"
 msgid "_Add Service..."
 msgstr "Dodaj serwis..."
 
-#: cprivatechatframe;item;id_chat_priority
+#: cprivatechatwnd;item;id_chat_priority
 msgid "Grant _Priority"
 msgstr "Nadaj priorytet"
 
-#: cprivatechatframe;62
+#: cprivatechatwnd;62
 msgid "_Format"
 msgstr "Format"
 
-#: cprivatechatframe;62;item;id_chat_bold
+#: cprivatechatwnd;62;item;id_chat_bold
 msgid "Set _Bold"
 msgstr "Wytłuszczenie"
 
-#: cprivatechatframe;62;item;id_chat_italic
+#: cprivatechatwnd;62;item;id_chat_italic
 msgid "Set _Italic"
 msgstr "Kursywa"
 
-#: cprivatechatframe;62;item;id_chat_underline
+#: cprivatechatwnd;62;item;id_chat_underline
 msgid "Set _Underline"
 msgstr "Podkreślenie"
 
-#: cprivatechatframe;62;item;id_chat_colour
+#: cprivatechatwnd;62;item;id_chat_colour
 msgid "Set _Colour"
 msgstr "Kolor"
 
-#: cprivatechatframe;62;item;id_chat_emoticons
+#: cprivatechatwnd;62;item;id_chat_emoticons
 msgid "_Emoticons"
 msgstr "Emotikony"
 
-#: cprivatechatframe;item;id_chat_clear
+#: cprivatechatwnd;item;id_chat_clear
 msgid "C_lear Window"
 msgstr "Wyczyść okno"
 
@@ -6091,6 +6089,11 @@ msgstr ""
 msgid "Library Files"
 msgstr "Pliki biblioteki"
 
+#: string;16380
+#, fuzzy
+msgid "DC++ Guard"
+msgstr "eDonkey Guard"
+
 #: string;16384
 msgid ""
 "Are you sure you want to launch the file \"%s\" ?\\n"
@@ -6557,16 +6560,6 @@ msgstr ""
 "\\n"
 "Are you sure you want to continue without entering your location?"
 
-#: string;16806
-msgid ""
-"Shareaza was unable to set up port-forwarding on your NAT router or firewall.\\n"
-"\\n"
-"Please configure your network to forward TCP and UDP ports %i to your local PC."
-msgstr ""
-"Shareaza nie była w stanie ustawić forewardowania portu na Twoim routerze NAT lub firewallu. \\n"
-"\\n"
-"Proszę skonfiguruj swoją sieć aby przeforewardować porty %i , TCP i UDP, do Twojego lokalnego PC."
-
 #: string;16807
 msgid "Please type the bandwidth limit you wish to set in the form \"123 kb/s\" for kilobits per second, or \"123 KB/s\" for kilobytes per second."
 msgstr "Please type the bandwidth limit you wish to set in the form \"123 kb/s\" for kilobits per second, or \"123 KB/s\" for kilobytes per second."
@@ -6587,10 +6580,6 @@ msgstr "lat"
 #: cconnectionsettingspage;control;12
 msgid "Automatic"
 msgstr "Automatycznie"
-
-#: string;16812
-msgid "Please wait: Finding UPnP devices and setting them up..."
-msgstr "Proszę czekać: Szukanie urządzeń UPnP i ustawianie ich..."
 
 #: string;16813
 msgid "Please wait: Updating discovery services..."
@@ -8283,10 +8272,6 @@ msgstr "Włącz:"
 #: cremotesettingspage;control;4
 msgid "Enable Shareaza Remote Access:"
 msgstr "Włącz zdalny dostęp do Shareazy:"
-
-#: cremotesettingspage;control;5 column;url
-msgid "URL"
-msgstr "URL"
 
 #: cremotesettingspage;control;6
 msgid "_Credentials:"
@@ -10254,6 +10239,10 @@ msgstr "Ustawienie"
 msgid "Value"
 msgstr "Wartość"
 
+#: column;url
+msgid "URL"
+msgstr "URL"
+
 #: column;filename
 msgid "Filename"
 msgstr "Nazwa pliku"
@@ -10284,6 +10273,10 @@ msgstr "TigerTree"
 msgid "NextRun"
 msgstr "Następny"
 
+#~ msgid "Shareaza was unable to set up port-forwarding on your NAT router or firewall.\\n\\nPlease configure your network to forward TCP and UDP ports %i to your local PC."
+#~ msgstr "Shareaza nie była w stanie ustawić forewardowania portu na Twoim routerze NAT lub firewallu. \\n\\nProszę skonfiguruj swoją sieć aby przeforewardować porty %i , TCP i UDP, do Twojego lokalnego PC."
+#~ msgid "Please wait: Finding UPnP devices and setting them up..."
+#~ msgstr "Proszę czekać: Szukanie urządzeń UPnP i ustawianie ich..."
 #~ msgid "_Play Album"
 #~ msgstr "Odtwarzaj album"
 #~ msgid "This is a pre-release version of Shareaza, and the beta testing period has ended. Please download the full, official release from http://shareaza.sourceforge.net/."

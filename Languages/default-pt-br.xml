@@ -420,7 +420,7 @@
 			<button id="ID_HOSTCACHE_DC_CACHE" text="Cache do DC++"/>
 		</toolbar>
 		<!-- PRIVATE CHAT FRAME -->
-		<toolbar name="CPrivateChatFrame">
+		<toolbar name="CPrivateChatWnd">
 			<button id="ID_CHAT_BOLD" text="N"/>
 			<button id="ID_CHAT_ITALIC" text="I"/>
 			<button id="ID_CHAT_UNDERLINE" text="S"/>
@@ -1586,7 +1586,7 @@
 			<item id="ID_DISCOVERY_EDIT" text="_Propriedades"/>
 		</menu>
 		<!-- PRIVATE CHAT FRAME -->
-		<menu name="CPrivateChatFrame">
+		<menu name="CPrivateChatWnd">
 			<item id="ID_CHAT_CONNECT" text="_Conectar"/>
 			<item id="ID_CHAT_DISCONNECT" text="_Desconectar"/>
 			<separator/>
@@ -3059,6 +3059,7 @@ t		Alternativamente, você pode manualmente iniciar este download com o comando 
 		<string id="16377" value="Proteção HTTP"/>
 		<string id="16378" value="Host &quot;%s&quot; enviou um 416, sem fornecer alcances disponíveis. Fechando conexão."/>
 		<string id="16379" value="Arquivos da Biblioteca"/>
+		<string id="16380" value="Proteção eDonkey"/>
 		<string id="16384" value="Você tem certeza que você quer abrir o arquivo &quot;%s&quot; ?\n\nAlguns arquivos podem danificar seu computador. Certifique-se que você saiba o que o arquivo é antes de executá-lo."/>
 		<string id="16385" value="Você está prestes a modificar a metadata de %i arquivos. Você tem certeza que você quer continuar?"/>
 		<string id="16386" value="Editando metadata de %i arquivos."/>
@@ -3151,13 +3152,11 @@ pasta dos arquivos baixados a sua biblioteca agora?"/>
 		<string id="16803" value="A pasta que você está compartilhando já é compartilhada como parte de outra pasta compartilhada:\n\n%s"/>
 		<string id="16804" value="Você não colocou o seu nome de usuário no Perfil."/>
 		<string id="16805" value="Você não colocou a sua localidade no Perfil.\n\nÉ uma boa idéia colocar uma localidade para os outros usuário saberem de qual país você está falando. Colocar informações sobre a sua localidade não revela nenhuma informação comprometedora.\n\nVocê tem certeza que você quer continuar sem colocar a sua localidade?"/>
-		<string id="16806" value="O Shareaza foi incapaz de configurar para abrir as portas no seu roteador NAT ou firewall.\n\nPor favor configure a sua rede para repassar a porta TCP %i para o seu PC local."/>
 		<string id="16807" value="Por favor digite o limite de banda que você deseja pôr no formulário &quot;123 kb/s&quot; para kilobits por segundo, ou &quot;123 KB/s&quot; para kilobytes por segundo."/>
 		<string id="16808" value="Você não selecionou a sua idade e sexo. Você tem certeza que você quer continuar sem fazer isto?"/>
 		<string id="16809" value="S&amp;air"/>
 		<string id="16810" value="anos de idade"/>
 		<string id="16811" value="Automático"/>
-		<string id="16812" value="Por favor espere: Achando dispositivos UPnP e configurando-os..."/>
 		<string id="16813" value="Por favor espere: Atualizando os serviços de descobrimento..."/>
 		<string id="16814" value="Por favor espere: Atualizando a lista de servidores do eDonkey..."/>
 		<string id="16815" value="O serviço de host de Dispositivo UPnP não está rodando. Este serviço é requerido para fazer a configuração.\nVocê precisa configurar o tipo de inicialização do serviço para automático."/>

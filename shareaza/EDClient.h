@@ -1,7 +1,7 @@
 //
 // EDClient.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -33,20 +33,17 @@ class CUploadTransferED2K;
 
 class CEDClient : public CTransfer
 {
-// Construction
 public:
 	CEDClient();
 
-// Attributes
-public:
 	CEDClient*	m_pEdPrev;
 	CEDClient*	m_pEdNext;
-public:
+
 	Hashes::Guid m_oGUID;
 	DWORD		m_nClientID;
 	WORD		m_nUDP;
 	SOCKADDR_IN	m_pServer;
-public:
+
 	CString		m_sNick;
 	int			m_nVersion;
 	BOOL		m_bEmule;
@@ -54,25 +51,35 @@ public:
 	int			m_nEmVersion;
 	int			m_nEmCompatible;
 	DWORD		m_nSoftwareVersion;
-public:	//Client capabilities
-	BOOL		m_bEmAICH;			// Not supported
+
+	// Client capabilities 1
+	BOOL		m_bEmAICH;					// Not supported
 	BOOL		m_bEmUnicode;
 	BOOL		m_bEmUDPVersion;
 	BOOL		m_bEmDeflate;
-	BOOL		m_bEmSecureID;		// Not supported
+	BOOL		m_bEmSecureID;				// Not supported
 	BOOL		m_bEmSources;
 	BOOL		m_bEmRequest;
 	BOOL		m_bEmComments;
-	BOOL		m_bEmPeerCache;		// Not supported
-	BOOL		m_bEmBrowse;		// Browse supported
-	BOOL		m_bEmMultiPacket;	// Not supported
-	BOOL		m_bEmPreview;		// Preview support
-	BOOL		m_bEmLargeFile;		// Large file support
-public:
-	BOOL		m_bLogin;
-	Hashes::Ed2kHash m_oUpED2K;
-	QWORD		m_nUpSize;
-public:
+	BOOL		m_bEmPeerCache;				// Not supported
+	BOOL		m_bEmBrowse;				// Browse supported
+	BOOL		m_bEmMultiPacket;			// Not supported
+	BOOL		m_bEmPreview;				// Preview supported
+
+	// Client capabilities 2
+	BOOL		m_bEmSupportsCaptcha;
+	BOOL		m_bEmSupportsSourceEx2;		// Not supported
+	BOOL		m_bEmRequiresCryptLayer;	// Not supported
+	BOOL		m_bEmRequestsCryptLayer;	// Not supported
+	BOOL		m_bEmSupportsCryptLayer;	// Not supported
+	BOOL		m_bEmExtMultiPacket;		// Not supported
+	BOOL		m_bEmLargeFile;				// Large file supported
+	BOOL		m_nEmKadVersion;			// Not supported
+
+	BOOL					m_bLogin;
+	Hashes::Ed2kHash		m_oUpED2K;
+	QWORD					m_nUpSize;
+
 	CDownloadTransferED2K*	m_pDownloadTransfer;
 	CUploadTransferED2K*	m_pUploadTransfer;
 	bool					m_bCallbackRequested;
@@ -84,8 +91,6 @@ public:
 
 	DWORD		m_nDirsWaiting;
 
-// Operations
-public:
 	BOOL	ConnectTo(DWORD nClientID, WORD nClientPort, IN_ADDR* pServerAddress, WORD nServerPort, const Hashes::Guid& oGUID);
 	BOOL	Equals(CEDClient* pClient);
 	BOOL	Connect();
@@ -94,7 +99,7 @@ public:
 	void	CopyCapabilities(CEDClient* pClient);
 	void	Send(CEDPacket* pPacket, BOOL bRelease = TRUE);
 	void	OnRunEx(DWORD tNow);
-public:
+
 	BOOL	AttachDownload(CDownloadTransferED2K* pDownload);
 	void	OnDownloadClose();
 	void	OnUploadClose();
@@ -104,6 +109,7 @@ public:
 	inline  void OpenChat() { m_bOpenChat = TRUE; }
 	BOOL	SendCommentsPacket(int nRating, LPCTSTR pszComments);
 	void	SendPreviewRequest(CDownload* pDownload);
+
 protected:
 	virtual ~CEDClient();
 
@@ -120,13 +126,14 @@ protected:
 public:
 	virtual void	AttachTo(CConnection* pConnection);
 	virtual void	Close(UINT nError = 0);
+
 protected:
 	virtual BOOL	OnRun();
 	virtual BOOL	OnConnected();
 	virtual void	OnDropped();
 	virtual BOOL	OnWrite();
 	virtual BOOL	OnRead();
-protected:
+
 	BOOL	OnPacket(CEDPacket* pPacket);
 	void	SendHello(BYTE nType);
 	BOOL	OnHello(CEDPacket* pPacket);
@@ -141,7 +148,9 @@ protected:
 	BOOL	OnRequestPreview(CEDPacket* pPacket);
 	BOOL	OnPreviewAnswer(CEDPacket* pPacket);
 // Chat
-	BOOL	OnMessage(CEDPacket* pPacket);
+	BOOL	OnChatMessage(CEDPacket* pPacket);
+	BOOL	OnCaptchaRequest(CEDPacket* pPacket);
+	BOOL	OnCaptchaResult(CEDPacket* pPacket);
 // Browse us
 	BOOL	OnAskSharedDirs(CEDPacket* pPacket);
 	BOOL	OnViewSharedDir(CEDPacket* pPacket);

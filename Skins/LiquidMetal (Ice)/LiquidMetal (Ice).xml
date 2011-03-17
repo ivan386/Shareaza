@@ -53,7 +53,6 @@
 />
 
 <colourScheme>
-
    <colour name="System.Base.Window"		value="EFF5FF"/>
    <colour name="System.Base.Midtone"		value="e0e9f6"/><!-- Tab-bar Background -->
    <colour name="System.Base.Highlight"		value="275fb0"/> <!-- Library/search selected text, and checks color -->
@@ -66,32 +65,24 @@
    <colour name="System.Back.Selected"		value="F7FAFF"/>
    <colour name="System.Back.Checked"		value="ebf1f9"/>
    <colour name="System.shadow"			value="244A82"/>
-
    <colour name="Dialog.Back"			value="EAEFF6"/> <!-- Settings background -->
-
    <colour name="Panel.Caption.Back"		value="dde7f6"/> <!-- Panel above separaters -->
-
    <colour name="ToolTip.Back"			value="F7FAFF"/> <!--- This is it (progress back) -->
    <colour name="ToolTip.Text"			value="275fb0"/>
-
    <colour name="TaskBox.Caption.Back"		value="244A82"/> <!-- Lower search caption and border -->
    <colour name="TaskBox.Caption.Text"		value="ebf1f9"/> <!-- Search detail Text -->
    <colour name="TaskBox.Caption.Hover"		value="dde7f6"/> <!-- Link Hover Search -->
    <colour name="TaskBox.Client"		value="dde7f6"/> <!-- Search body Back -->
    <colour name="TaskBox.Primary.Text"		value="ebf1f9"/> <!-- Search -->
-
    <colour name="Banner.Back"			value="a6c1e7"/> <!-- Library Banner -->
-
 </colourScheme>
 
 <!-- Command Bar Watermarks -->
 <watermarks>
-
    <watermark target="CCoolMenu"			path="Menu.bmp"/>
    <watermark target="CCoolMenuBar" 			path="Top.bmp"/>
    <watermark target="CWndTabBar" 			path="Bottom.bmp"/>
    <watermark target="CMainWnd.Toolbar" 		path="Bottom.bmp"/>
-
    <watermark target="CHomePanel"			path="Bar.bmp"/>
    <watermark target="CHomePanel.Footer"		path="Bar.bmp"/> <!-- Necessary for this skin...for some reason -->
    <watermark target="CSearchPanel" 			path="Bar.bmp"/>
@@ -105,20 +96,14 @@
    <watermark target="CSearchResultsBox.Caption"	path="BoxTitle.bmp"/>	<!-- results -->
    <watermark target="CSearchSchemaBox.Caption" 	path="BoxTitle.bmp"/>
    <watermark target="CSearchAdvancedBox.Caption" 	path="BoxTitle.bmp"/>
-
 </watermarks>
 
 <windowSkins>
-
    <!-- Main Window -->
    <windowSkin>
-
       <image path="BarSet.bmp"/>
-
       <target window="CMainWnd"/>
-
       <parts>
-
          <part name="TopLeft"		rect="0,0,110,38"/>
          <part name="Top"		rect="112,0,20,38"	mode="stretch"/>
          <part name="TopRight"		rect="120,0,164,38"/>
@@ -137,39 +122,25 @@
          <part name="CloseDown"		rect="62,70,30,30"/>
          <part name="MaximiseDown"	rect="31,70,30,30"/>
          <part name="MinimiseDown"	rect="0,70,30,30"/>
-
       </parts>
-
       <anchors>
-
          <anchor name="System"		rect="7,10,15,15"/>
          <anchor name="Close"		rect="-36,2,30,30"/>
          <anchor name="Maximise"	rect="-72,2,30,30"/>
          <anchor name="Minimise"	rect="-108,2,30,30"/>
-
       </anchors>
-
       <region>
-
          <shape type="roundRect"	rect="0,0,-1,-1"	size="15,15"/>
          <shape type="rectangle"	rect="2,2,3,3"		combine="xor"/>
          <shape type="rectangle"	rect="-4,2,-5,3"	combine="xor"/>
- 
       </region>
-
       <maximiseCrop	rect="0,0,0,0"/>
-
    </windowSkin>
-
    <!-- Child windows, have all three buttons -->
    <windowSkin>
-
       <image path="BarSet.bmp"/>
-
       <target window="CChildWnd"/>
-
       <parts>
-
          <part name="TopLeft"		rect="151,101,9,32"/>
          <part name="Top"		rect="160,101,18,32"/>
          <part name="TopRight"		rect="178,101,106,32"/>
@@ -188,40 +159,26 @@
          <part name="MinimiseDown"	rect="180,39,28,28"/>
          <part name="MaximiseHover"	rect="151,68,28,28"/>
          <part name="MaximiseDown"	rect="180,68,28,28"/>
-
       </parts>
-
       <anchors>
-
          <anchor name="Close"		rect="-33,2,28,28"/>
          <anchor name="Maximise"	rect="-64,2,28,28"/>
          <anchor name="Minimise"	rect="-95,2,28,28"/>
          <anchor name="Icon"		rect="12,8,16,16"/>
-
       </anchors>
-
       <region>
-
          <shape type="RoundRect"	rect="0,0,-1,-1"	size="15,15"/>
          <shape type="rectangle"	rect="2,2,3,3"		combine="xor"/>
          <shape type="rectangle"	rect="-4,2,-5,3"	combine="xor"/>
-
       </region>
-
       <caption align="left" rect="35,1,500,30" fontFace="Arial" fontSize="14" 
          fontWeight="bold" colour="FFFFFF" inactiveColour="EBEAFF" shadowColour="2C2C2C" />
-
    </windowSkin>
-
    <!-- Dialog Windows (i.e. Settings window) -->
    <windowSkin>
-
       <image path="BarSet.bmp"/>
-
       <target window="CDialog"/>
-
       <parts>
-
          <part name="TopLeft"		rect="151,101,9,32"/>
          <part name="Top"		rect="160,101,18,32"/>
          <part name="TopRight"		rect="107,101,43,32"/>
@@ -236,38 +193,24 @@
          <part name="RightTop"		rect="242,39,10,35"/>
          <part name="CloseHover"	rect="93,39,28,28"/>
          <part name="CloseDown"		rect="122,39,28,28"/>
-
       </parts>
-
       <anchors>
-
          <anchor name="Close"		rect="-33,2,28,28"/>
          <anchor name="Icon"		rect="8,8,16,16"/>
-
       </anchors>
-
       <region>
-
          <shape type="roundRect"	rect="0,0,-1,-1"	size="15,15"/>
          <shape type="rectangle"	rect="2,2,3,3"		combine="xor"/>
          <shape type="rectangle"	rect="-4,2,-5,3"	combine="xor"/>
-
       </region>
-
       <caption align="left" rect="35,1,500,30" fontFace="Arial" fontSize="12" 
          fontWeight="bold" colour="FFFFFF" inactiveColour="EBEAFF" shadowColour="2C2C2C" />
-
    </windowSkin>
-
    <!-- This will optimize the Download Monitor window, giving it more options -->
    <windowSkin>
-
    <image path="BarSet.bmp"/>
-
    <target window="CDownloadMonitorDlg"/>
-
       <parts>
-
          <part name="TopLeft"		rect="151,101,9,32"/>
          <part name="Top"		rect="160,101,18,32"/>
          <part name="TopRight"		rect="0,101,106,32"/>
@@ -286,90 +229,53 @@
          <part name="MinimiseDown"	rect="180,39,28,28"/>
          <part name="MaximiseHover"	rect="93,68,28,28"/>
          <part name="MaximiseDown"	rect="122,68,28,28"/>
-
       </parts>
-
       <anchors>
-
          <anchor name="Close"		rect="-33,2,28,28"/>
          <anchor name="Maximise"	rect="-95,2,28,28"/>
          <anchor name="Minimise"	rect="-64,2,28,28"/>
          <anchor name="Icon"		rect="12,8,16,16"/>
-
       </anchors>
-
       <region>
-
          <shape type="roundRect"	rect="0,0,-1,-1"	size="15,15"/>
          <shape type="rectangle"	rect="2,2,3,3"		combine="xor"/>
          <shape type="rectangle"	rect="-4,2,-5,3"	combine="xor"/>
-
       </region>
-
       <caption align="left" rect="35,1,290,30" fontFace="Arial" fontSize="12" 
          fontWeight="bold" colour="FFFFFF" inactiveColour="EBEAFF" shadowColour="2C2C2C" />
-
    </windowSkin>
-
    <!-- Title Panels for those that do not require a close button -->
    <windowSkin>
-
       <image path="TitleBarSet.bmp"/>
-
       <target window="CHomeWnd.Panel"/>
       <target window="CLibraryWnd.Panel"/>
       <target window="CDownloadsWnd.Panel"/>
       <target window="CUploadsWnd.Panel"/>
       <target window="CNeighboursWnd.Panel"/>
       <target window="CSystemWnd.Panel"/>
-
       <parts>
-
          <part name="TopLeft"		rect="92,31,62,30"/>
          <part name="Top"		rect="154,31,10,30"/>
          <part name="TopRight"		rect="164,31,88,30"/>
-
       </parts>
-
       <caption align="left" rect="58,0,500,30" fontFace="Arial" fontSize="16" colour="E4E3F2" inactivecolour="E4E3F2" />
-
    </windowSkin>
-
-
    <!-- Title panels for those that require a close button -->
    <windowSkin>
-
       <image path="TitleBarSet.bmp"/>
-
-      <target window="CMediaWnd.Panel"/>
-      <target window="CSearchWnd.Panel"/>
-      <target window="CSecurityWnd.Panel"/>
-      <target window="CHostCacheWnd.Panel"/>
-      <target window="CDiscoveryWnd.Panel"/>
-      <target window="CPacketWnd.Panel"/>
-      <target window="CSearchMonitorWnd.Panel"/>
-      <target window="CHitMonitorWnd.Panel"/>
-      <target window="CBrowseHostWnd.Panel"/>
-
+      <target window="CChildWnd.Panel"/>
       <parts>
-
          <part name="TopLeft"		rect="92,31,62,30"/>
          <part name="Top"		rect="154,31,10,30"/>
          <part name="TopRight"		rect="164,31,88,30"/>
          <part name="Close"		rect="91,0,90,29"/>
          <part name="CloseDown"		rect="0,0,90,29"/>
          <part name="CloseHover"	rect="0,31,90,29"/>
-
       </parts>
-
       <anchors>
-
          <anchor name="Close"		rect="-90,0,90,29"/>
-
       </anchors>
-
       <caption align="left" rect="58,0,500,30" fontFace="Arial" fontSize="16" colour="E4E3F2" inactivecolour="E4E3F2" />
-
    </windowSkin>
 
 <!-- This will skin the tabs in AFRIKAANS (i.e. "Home" "Library" "Media" "Search" etc.) -->

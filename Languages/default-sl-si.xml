@@ -420,7 +420,7 @@
 			<button id="ID_HOSTCACHE_DC_CACHE" text="DC++ Cache"/>
 		</toolbar>
 		<!-- PRIVATE CHAT FRAME -->
-		<toolbar name="CPrivateChatFrame">
+		<toolbar name="CPrivateChatWnd">
 			<button id="ID_CHAT_BOLD" text="B"/>
 			<button id="ID_CHAT_ITALIC" text="I"/>
 			<button id="ID_CHAT_UNDERLINE" text="U"/>
@@ -1586,7 +1586,7 @@
 			<item id="ID_DISCOVERY_EDIT" text="N_apredno urejanje..."/>
 		</menu>
 		<!-- PRIVATE CHAT FRAME -->
-		<menu name="CPrivateChatFrame">
+		<menu name="CPrivateChatWnd">
 			<item id="ID_CHAT_CONNECT" text="_Poveži se"/>
 			<item id="ID_CHAT_DISCONNECT" text="Pre_kini povezavo"/>
 			<separator/>
@@ -3054,6 +3054,7 @@
 		<string id="16377" value="HTTP zaščitnik"/>
 		<string id="16378" value="Host &quot;%s&quot; sent a 416, without providing available ranges. Closing connection."/>
 		<string id="16379" value="Library Files"/>
+		<string id="16380" value="eDonkey zaščitnik"/>
 		<string id="16384" value="Ste prepričani, da želite zagnati datoteko &quot;%s&quot; ?\n\nNekatere datoteke lahko škodijo vašemu računalniku. Prepričajte se o datoteki predno jo zaženete."/>
 		<string id="16385" value="Pravkar boste spremenili metapodatke %i datotek, ste prepričani, da želite nadaljevati?"/>
 		<string id="16386" value="Urejujem metapodatke v številu datotek: %i."/>
@@ -3142,13 +3143,11 @@
 		<string id="16803" value="Mapa, ki jo delite, je že deljena, kot del druge mape za deljenje:\n\n%s"/>
 		<string id="16804" value="Niste vnesli zaslonskega imena v vaš uporabniški profil."/>
 		<string id="16805" value="Niste vnesli lokacije v vaš uporabniški profil.\n\nVnos lokacije močno priporočamo, saj bodo tako drugi uporabniki vedeli, s katere države prihajate. Vnos lokacije še ne razkrije vaših zasebnih podatkov.\n\nSte prepričani, da želite nadaljevati brez vnosa lokacije?"/>
-		<string id="16806" value="Nakazali ste, da želite nastaviti posredovanje na vratih (port-forwarding) na NAT usmerjevalniku ali požarnem zidu.\n\nNastavite svoje omrežje, da bo posredovalo TCP in UDP varta %i na vaš lokalni PC."/>
 		<string id="16807" value="Vnesite omejitev pasovne širine, ki jo želite nastaviti, in sicer v obliki &quot;123 kb/s&quot; za kilobite na sekundo ali &quot;123 KB/s&quot; za kilobyte na sekundo."/>
 		<string id="16808" value="Niste vnesli starosti in spola. Ste prepričani, da želite nadaljevati brez vnosa teh podatkov?"/>
 		<string id="16809" value="Izhod"/>
 		<string id="16810" value="let (starost)"/>
 		<string id="16811" value="Samodejen"/>
-		<string id="16812" value="Please wait: Finding UPnP devices and setting them up..."/>
 		<string id="16813" value="Please wait: Updating discovery services..."/>
 		<string id="16814" value="Please wait: Updating eDonkey server list..."/>
 		<string id="16815" value="UPnP Device Host Service is not running. This service is required to perform the setup.\nYou need to set the startup type of the service to automatic."/>

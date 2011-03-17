@@ -1,7 +1,7 @@
 //
 // ChatSession.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -27,14 +27,14 @@ class CEDPacket;
 class CEDClient;
 class CG2Packet;
 class CGProfile;
-class CChatFrame;
-class CPrivateChatFrame;
+class CChatWnd;
+class CPrivateChatWnd;
 
 
 class CChatSession : public CConnection
 {
 public:
-	CChatSession(CChatFrame* pFrame = NULL);
+	CChatSession(PROTOCOLID nProtocol = PROTOCOL_ANY, CPrivateChatWnd* pFrame = NULL);
 	virtual ~CChatSession();
 
 	Hashes::Guid	m_oGUID;
@@ -43,33 +43,31 @@ public:
 	CString			m_sUserNick;
 	BOOL			m_bUnicode;		// ED2K Client in UTF-8 format
 	DWORD			m_nClientID;	// ED2K Client ID (if appropriate)
-	SOCKADDR_IN		m_pServer;		// ED2K server (If appropriate)
+	SOCKADDR_IN		m_pServer;		// ED2K server (if appropriate)
 
 	virtual void	AttachTo(CConnection* pConnection);
 	virtual void	Close(UINT nError = 0);
+	virtual void	OnDropped();
 
-	void			Setup(const Hashes::Guid& oGUID, SOCKADDR_IN* pHost, BOOL bMustPush);
 	BOOL			Connect();
 	TRISTATE		GetConnectedState() const;
 	void			OnED2KMessage(CEDPacket* pPacket);
 	BOOL			SendPush(BOOL bAutomatic);
 	BOOL			OnPush(const Hashes::Guid& oGUID, CConnection* pConnection);
-	bool			SendPrivateMessage(bool bAction, const CString& strText);
+	BOOL			SendPrivateMessage(bool bAction, const CString& strText);
 	void			StatusMessage(int nFlags, UINT nID, ...);
 	void			OnOpenWindow();
 	void			OnCloseWindow();
 
 protected:
-	BOOL				m_bOld;
+	TRISTATE			m_bOld;			// Chat version: TRI_TRUE = CHAT/0.1
 	DWORD				m_tPushed;
 	CGProfile*			m_pProfile;
-	CPrivateChatFrame*	m_pWndPrivate;
-	CWnd*				m_pWndPublic;
+	CPrivateChatWnd*	m_pWndPrivate;
 
 	virtual BOOL	OnRun();
 	virtual BOOL	OnConnected();
 	virtual BOOL	OnRead();
-	virtual void	OnDropped();
 	virtual BOOL	OnHeaderLine(CString& strHeader, CString& strValue);
 	virtual BOOL	OnHeadersComplete();
 
@@ -79,12 +77,14 @@ protected:
 	BOOL	ReadText();
 	BOOL	ReadPackets();
 	void	PostOpenWindow();
-	void	Send(CG2Packet* pPacket, BOOL bRelease = TRUE);
+	void	Send(CG2Packet* pPacket);
 	BOOL	SendChatMessage(CEDPacket* pPacket);
-	void	Print(LPCTSTR pszString, size_t nLength);
 	void	MakeActive();
 
 	BOOL	OnChatMessage(CEDPacket* pPacket);
+	BOOL	OnCaptchaRequest(CEDPacket* pPacket);
+	BOOL	OnCaptchaResult(CEDPacket* pPacket);
+
 	BOOL	OnEstablished();
 	BOOL	OnText(const CString& str);
 	BOOL	OnPacket(CG2Packet* pPacket);

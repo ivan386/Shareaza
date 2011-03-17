@@ -420,7 +420,7 @@
 			<button id="ID_HOSTCACHE_DC_CACHE" text="DC++ Cache"/>
 		</toolbar>
 		<!-- PRIVATE CHAT FRAME -->
-		<toolbar name="CPrivateChatFrame">
+		<toolbar name="CPrivateChatWnd">
 			<button id="ID_CHAT_BOLD" text="B"/>
 			<button id="ID_CHAT_ITALIC" text="I"/>
 			<button id="ID_CHAT_UNDERLINE" text="U"/>
@@ -1586,7 +1586,7 @@
 			<item id="ID_DISCOVERY_EDIT" text="_Veti"/>
 		</menu>
 		<!-- PRIVATE CHAT FRAME -->
-		<menu name="CPrivateChatFrame">
+		<menu name="CPrivateChatWnd">
 			<item id="ID_CHAT_CONNECT" text="_Lidhu"/>
 			<item id="ID_CHAT_DISCONNECT" text="_Shkëputu"/>
 			<separator/>
@@ -3059,6 +3059,7 @@
 		<string id="16377" value="HTTP Guard"/>
 		<string id="16378" value="Host &quot;%s&quot; sent a 416, without providing available ranges. Closing connection."/>
 		<string id="16379" value="Library Files"/>
+		<string id="16380" value="eDonkey Guard"/>
 		<string id="16384" value="Are you sure you want to launch the file &quot;%s&quot; ?\n\nSome files can be harmful to your computer. Ensure you know what the file is before launching it."/>
 		<string id="16385" value="You are about to modify the metadata of %i files, are you sure you want to continue?"/>
 		<string id="16386" value="Editing metadata of %i files."/>
@@ -3147,13 +3148,11 @@
 		<string id="16803" value="Dosja që shpërndani shpërndahet që më parë si pjesë e një tjetër dosje të shpërndarë:\n\n%s"/>
 		<string id="16804" value="Në profilin e përdoruesit nuk keni shkruar asnjë emër."/>
 		<string id="16805" value="Në profilin e përdoruesit nuk keni shkruar vendin tuaj.\n\nËshtë mirë që ta shkruani atë që përdoruesit e tjerë ta shohin se nga cili vend jeni.  Vëreni se hyrja e vendit nuk zbulon ndonjë informacion me rrezik.\n\nJe i sigurt se do të vijosh pa shkruar vendin nga je?"/>
-		<string id="16806" value="Shareaza was unable to set up port-forwarding on your NAT router or firewall.\n\nPlease configure your network to forward TCP and UDP ports %i to your local PC."/>
 		<string id="16807" value="Please type the bandwidth limit you wish to set in the form &quot;123 kb/s&quot; for kilobits per second, or &quot;123 KB/s&quot; for kilobytes per second."/>
 		<string id="16808" value="You have not selected your age and gender. Are you sure you want to continue without doing this?"/>
 		<string id="16809" value="D&amp;alje"/>
 		<string id="16810" value="vjeç"/>
 		<string id="16811" value="Automatike"/>
-		<string id="16812" value="Please wait: Finding UPnP devices and setting them up..."/>
 		<string id="16813" value="Please wait: Updating discovery services..."/>
 		<string id="16814" value="Please wait: Updating eDonkey server list..."/>
 		<string id="16815" value="UPnP Device Host Service is not running. This service is required to perform the setup.\nYou need to set the startup type of the service to automatic."/>

@@ -1,7 +1,7 @@
 //
 // Connection.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -122,6 +122,9 @@ CConnection::~CConnection()
 	m_bAutoDelete = FALSE;
 
 	CConnection::Close();
+
+	// Delete and mark null the input and output buffers
+	DestroyBuffers();
 }
 
 void CConnection::LogOutgoing()
@@ -312,9 +315,6 @@ void CConnection::Close(UINT nError)
 	}
 
 	CNetwork::CloseSocket( m_hSocket, false );
-
-	// Delete and mark null the input and output buffers
-	DestroyBuffers();
 
 	// This connection object isn't connected any longer
 	m_bConnected = FALSE;

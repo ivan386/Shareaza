@@ -1,7 +1,7 @@
 //
 // RichDocument.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -102,8 +102,17 @@ CRichElement* CRichDocument::Add(CRichElement* pElement, POSITION posBefore)
 
 CRichElement* CRichDocument::Add(int nType, LPCTSTR pszText, LPCTSTR pszLink, DWORD nFlags, int nGroup, POSITION posBefore)
 {
-	CRichElement* pElement = new CRichElement( nType, pszText, pszLink, nFlags, nGroup );
-	return Add( pElement, posBefore );
+	return Add( new CRichElement( nType, pszText, pszLink, nFlags, nGroup ), posBefore );
+}
+
+CRichElement* CRichDocument::Add(HBITMAP hBitmap, LPCTSTR pszLink, DWORD nFlags, int nGroup, POSITION posBefore )
+{
+	return Add( new CRichElement( hBitmap, pszLink, nFlags, nGroup ), posBefore );
+}
+
+CRichElement* CRichDocument::Add(HICON hIcon, LPCTSTR pszLink, DWORD nFlags, int nGroup, POSITION posBefore )
+{
+	return Add( new CRichElement( hIcon, pszLink, nFlags, nGroup ), posBefore );
 }
 
 void CRichDocument::Remove(CRichElement* pElement)

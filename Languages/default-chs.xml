@@ -420,7 +420,7 @@
 			<button id="ID_HOSTCACHE_DC_CACHE" text="DC++ 缓存"/>
 		</toolbar>
 		<!-- PRIVATE CHAT FRAME -->
-		<toolbar name="CPrivateChatFrame">
+		<toolbar name="CPrivateChatWnd">
 			<button id="ID_CHAT_BOLD" text="B"/>
 			<button id="ID_CHAT_ITALIC" text="I"/>
 			<button id="ID_CHAT_UNDERLINE" text="U"/>
@@ -1586,7 +1586,7 @@
 			<item id="ID_DISCOVERY_EDIT" text="属性(_P)"/>
 		</menu>
 		<!-- PRIVATE CHAT FRAME -->
-		<menu name="CPrivateChatFrame">
+		<menu name="CPrivateChatWnd">
 			<item id="ID_CHAT_CONNECT" text="连接(_C)"/>
 			<item id="ID_CHAT_DISCONNECT" text="断开(_D)"/>
 			<separator/>
@@ -3039,6 +3039,7 @@
 		<string id="16377" value="HTTP 保护"/>
 		<string id="16378" value="主机 &quot;%s&quot; 发送了一个 416，没有提供可用的范围。关闭连接。"/>
 		<string id="16379" value="库文件"/>
+		<string id="16380" value="eDonkey 保护"/>
 		<string id="16384" value="确定要载入 &quot;%s&quot; 此文件吗？\n\n某些文件可能对您的电脑有害。载入文件前最好能确定文件的用途。"/>
 		<string id="16385" value="您将修改 %i 文件的元数据，确定要继续吗？"/>
 		<string id="16386" value="正在修改 %i 的元数据。"/>
@@ -3097,7 +3098,7 @@
 		<string id="16526" value="抛弃的 Gnutella 数据包"/>
 		<string id="16527" value="丢失的 Gnutella 数据包"/>
 		<string id="16528" value="Gnutella 本地查询"/>
-		<string id="16529" value="Gnutella Processed Queries"/>
+		<string id="16529" value="Gnutella 本地查询"/>
 		<string id="16532" value="全部 TCP 接收带宽"/>
 		<string id="16533" value="全部 TCP 传送带宽"/>
 		<string id="16534" value="全部 UDP 接收带宽"/>
@@ -3127,13 +3128,11 @@
 		<string id="16803" value="您共享的文件夹是后面已共享文件夹的一部分:\n\n%s"/>
 		<string id="16804" value="您尚未在您的配置文件中输入屏幕名称。"/>
 		<string id="16805" value="您尚未在您的配置文件中输入您的地址。\n\n输入您的地址是非常有益的，它可以使其他用户看见您来自于何处。注意，输入您的地址并不会暴露任何对您的安全有害的信息。\n\n您确定要继续而不输入您的地址吗？"/>
-		<string id="16806" value="您已表明您希望在您的 NAT 路由或防火墙上设立端口映射。\n\n请配置您的网络将 TCP 和 UDP 端口 %i 映射到您的本地计算机。"/>
 		<string id="16807" value="请输入您希望设置的带宽限制，以格式 &quot;123 kb/s&quot; 千比特每秒，或 &quot;123 KB/s&quot; 千字节每秒。"/>
 		<string id="16808" value="您没有选择您的年龄和性别。您确定要继续而不加理会吗？"/>
 		<string id="16809" value="退出(_X)"/>
 		<string id="16810" value="岁"/>
 		<string id="16811" value="自动"/>
-		<string id="16812" value="请稍候: 查找 UPnP 驱动器并进行设置..."/>
 		<string id="16813" value="请稍候: 更新发现服务器..."/>
 		<string id="16814" value="请稍候: 更新 edonkey 服务器列表..."/>
 		<string id="16815" value="UPnP Device Host 服务未运行。请重新设置该服务。\n您需要将该服务的启动类型设置为&quot;自动&quot;。"/>

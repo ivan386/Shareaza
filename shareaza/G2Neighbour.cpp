@@ -1378,7 +1378,7 @@ BOOL CG2Neighbour::OnProfileChallenge(CG2Packet* /*pPacket*/)
 
 	CG2Packet* pProfile = CG2Packet::New( G2_PACKET_PROFILE_DELIVERY, TRUE );
 
-	CString strXML = MyProfile.GetXML( NULL, TRUE )->ToString( TRUE );
+	CString strXML = MyProfile.GetXML()->ToString( TRUE );
 
 	pProfile->WritePacket( G2_PACKET_XML, pProfile->GetStringLen( strXML ) );
 	pProfile->WriteString( strXML, FALSE );

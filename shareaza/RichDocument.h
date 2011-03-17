@@ -1,7 +1,7 @@
 //
 // RichDocument.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -46,7 +46,6 @@ public:
 	CFont			m_fntBoldUnder;
 	CFont			m_fntHeading;
 	
-public:
 	POSITION		GetIterator() const;
 	CRichElement*	GetNext(POSITION& pos) const;
 	CRichElement*	GetPrev(POSITION& pos) const;
@@ -54,6 +53,8 @@ public:
 	POSITION		Find(CRichElement* pElement) const;
 	CRichElement*	Add(CRichElement* pElement, POSITION posBefore = NULL);
 	CRichElement*	Add(int nType, LPCTSTR pszText, LPCTSTR pszLink = NULL, DWORD nFlags = 0, int nGroup = 0, POSITION posBefore = NULL);
+	CRichElement*	Add(HBITMAP hBitmap, LPCTSTR pszLink = NULL, DWORD nFlags = 0, int nGroup = 0, POSITION posBefore = NULL);
+	CRichElement*	Add(HICON hIcon, LPCTSTR pszLink = NULL, DWORD nFlags = 0, int nGroup = 0, POSITION posBefore = NULL);
 	void			Remove(CRichElement* pElement);
 	void			ShowGroup(int nGroup, BOOL bShow = TRUE);
 	void			ShowGroupRange(int nMin, int nMax, BOOL bShow = TRUE);

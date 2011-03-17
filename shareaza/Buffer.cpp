@@ -1,7 +1,7 @@
 //
 // Buffer.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -312,7 +312,7 @@ BOOL CBuffer::Read(void* pData, const size_t nLength) throw()
 // Takes access to a string, default peek false to move a line from the buffer to the string, and default CP_ACP to read ASCII text
 // Looks for bytes like "line\r\n" in the buffer, and moves them from the buffer to the string, throwing away the "\r\n" part
 // Returns true if a line was found and moved from the buffer to the string, false if there isn't a '\n' in the buffer right now
-BOOL CBuffer::ReadLine(CString& strLine, BOOL bPeek, UINT nCodePage)
+BOOL CBuffer::ReadLine(CString& strLine, BOOL bPeek)
 {
 	// Empty the string, making it blank
 	strLine.Empty();
@@ -331,14 +331,9 @@ BOOL CBuffer::ReadLine(CString& strLine, BOOL bPeek, UINT nCodePage)
 	// If the loop didn't find a '\n' and instead stopped because nLength grew to equal m_nLength
 	if ( nLength >= m_nLength ) return FALSE; // There isn't an '\n' in the buffer, tell the caller we didn't find a complete line
 
-	// Convert the nLength ASCII characters in the buffer into wide characters in strLine
-	int nWide = MultiByteToWideChar( nCodePage, 0, (LPCSTR)m_pBuffer, nLength, NULL, 0 );
-	MultiByteToWideChar( nCodePage, 0, (LPCSTR)m_pBuffer, nLength, strLine.GetBuffer( nWide ), nWide );
-	strLine.ReleaseBuffer( nWide );
+	strLine = UTF8Decode( (LPCSTR)m_pBuffer, nLength );
 
-	// Find the last carriage return '\r' character in the string
-	int nCR = strLine.ReverseFind( '\r' );   // Find the distance to the last \r, "hello\r" would be 5
-	if ( nCR >= 0 ) strLine.Truncate( nCR ); // Cut the string to that length, like "hello"
+	strLine.TrimRight( _T("\r") );
 
 	// Now that the line has been copied into the string, remove it and the '\n' from the buffer
 	if ( ! bPeek )

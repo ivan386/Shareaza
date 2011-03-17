@@ -420,7 +420,7 @@
 			<button id="ID_HOSTCACHE_DC_CACHE" text="DC++ Cache"/>
 		</toolbar>
 		<!-- PRIVATE CHAT FRAME -->
-		<toolbar name="CPrivateChatFrame">
+		<toolbar name="CPrivateChatWnd">
 			<button id="ID_CHAT_BOLD" text="F"/>
 			<button id="ID_CHAT_ITALIC" text="K"/>
 			<button id="ID_CHAT_UNDERLINE" text="U"/>
@@ -1586,7 +1586,7 @@
 			<item id="ID_DISCOVERY_EDIT" text="Download _bearbeiten..."/>
 		</menu>
 		<!-- PRIVATE CHAT FRAME -->
-		<menu name="CPrivateChatFrame">
+		<menu name="CPrivateChatWnd">
 			<item id="ID_CHAT_CONNECT" text="_Verbinden"/>
 			<item id="ID_CHAT_DISCONNECT" text="Verbindung _trennen"/>
 			<separator/>
@@ -3054,6 +3054,7 @@
 		<string id="16377" value="HTTP-Guard"/>
 		<string id="16378" value="Der Host &quot;%s&quot; hat eine 416 gesendet, ohne die erforderlichen Bereiche zur Verfügung zu stellen. Schließe Verbindung."/>
 		<string id="16379" value="Dateien in der Bibliothek"/>
+		<string id="16380" value="eDonkey-Guard"/>
 		<string id="16384" value="Sind Sie sicher, dass Sie die Datei &quot;%s&quot; ausführen möchten?\n\nManche Dateien können ihren Computer beschädigen. Stellen Sie die Echtheit der Datei sicher, bevor Sie sie ausführen (Virenscan)."/>
 		<string id="16385" value="Sie sind dabei die Metadaten von %i Dateien zu ändern. Wollen Sie fortfahren?"/>
 		<string id="16386" value="Metadaten von %i bearbeiten."/>
@@ -3142,13 +3143,11 @@
 		<string id="16803" value="Der Ordner, den Sie freigegeben möchten, ist bereits als Teil eines anderen Ordners freigegeben:\n\n%s"/>
 		<string id="16804" value="Sie haben in ihrem Benutzerprofil keinen Nicknamen angegeben."/>
 		<string id="16805" value="Sie haben in ihrem Profil keinen Standort angegeben.\n\nEs wird empfohlen einen Standort anzugeben, damit andere Benutzer sehen können aus welchem Land Sie kommen. Das Angeben eines Standorts gibt keine wichtigen Informationen preis.\n\nSind Sie sicher, dass Sie ohne einen Standort anzugeben fortfahren möchten?"/>
-		<string id="16806" value="Sie haben angegeben, dass Sie in Ihrem NAT-Router oder Firewall die Port-Freigabe benutzen möchten.\n\nBitte konfigurieren Sie ihr Netzwerk um Port %i (TCP und UDP)an ihren PC weiterzuleiten."/>
 		<string id="16807" value="Bitte geben sie das gewünschte Bandbreitenlimit ein. &quot;123 kb/s&quot; für Kilobits pro Sekunde, oder &quot;123 KB/s&quot; für Kilobytes pro Sekunde."/>
 		<string id="16808" value="Sie haben ihr Alter und Geschlecht nicht angegeben. Sind Sie sicher, dass sie fortfahren möchten?"/>
 		<string id="16809" value="&amp;Schließen"/>
 		<string id="16810" value="Jahre alt"/>
 		<string id="16811" value="Automatisch"/>
-		<string id="16812" value="Bitte warten: UPnP-Geräte werden erkannt und konfiguriert..."/>
 		<string id="16813" value="Bitte warten: Service Provider werden aktualisiert..."/>
 		<string id="16814" value="Bitte warten: eDonkey-Server-Liste wird aktualisiert..."/>
 		<string id="16815" value="SSDP-Host-Service ist nicht gestartet. Dieser Dienst wird benötigt, um die Installation durchzuführen.\nEs ist erforderlich, dass das Merkmal dieses Dienstes auf Automatisch eingestellt ist."/>

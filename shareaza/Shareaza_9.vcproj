@@ -1233,10 +1233,6 @@
 					>
 				</File>
 				<File
-					RelativePath="CtrlChatFrame.cpp"
-					>
-				</File>
-				<File
 					RelativePath="CtrlCoolBar.cpp"
 					>
 				</File>
@@ -1378,10 +1374,6 @@
 				</File>
 				<File
 					RelativePath="CtrlPanel.cpp"
-					>
-				</File>
-				<File
-					RelativePath="CtrlPrivateChatFrame.cpp"
 					>
 				</File>
 				<File
@@ -1738,6 +1730,10 @@
 				</File>
 				<File
 					RelativePath="WndPlugin.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\WndPrivateChat.cpp"
 					>
 				</File>
 				<File
@@ -2822,10 +2818,6 @@
 					>
 				</File>
 				<File
-					RelativePath="CtrlChatFrame.h"
-					>
-				</File>
-				<File
 					RelativePath="CtrlCoolBar.h"
 					>
 				</File>
@@ -2970,10 +2962,6 @@
 					>
 				</File>
 				<File
-					RelativePath="CtrlPrivateChatFrame.h"
-					>
-				</File>
-				<File
 					RelativePath="CtrlRichTaskBox.h"
 					>
 				</File>
@@ -3115,6 +3103,10 @@
 				</File>
 				<File
 					RelativePath="WndPlugin.h"
+					>
+				</File>
+				<File
+					RelativePath=".\WndPrivateChat.h"
 					>
 				</File>
 				<File

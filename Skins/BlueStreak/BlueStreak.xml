@@ -158,13 +158,7 @@
         </windowSkin>
         <windowSkin> 
           <image path="stb_top.bmp"/>
-          <target window="CSecurityWnd.Panel"/>
-          <target window="CHostCacheWnd.Panel"/>
-          <target window="CDiscoveryWnd.Panel"/>
-          <target window="CPacketWnd.Panel"/>
-          <target window="CSearchMonitorWnd.Panel"/>
-          <target window="CHitMonitorWnd.Panel"/>
-          <target window="CBrowseHostWnd.Panel"/>
+          <target window="CChildWnd.Panel"/>
           <parts> 
             <part name="Top" rect="0,2,26,35"/>
             <part name="Close" rect="52,12,40,14"/>

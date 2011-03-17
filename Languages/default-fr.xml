@@ -420,7 +420,7 @@
 			<button id="ID_HOSTCACHE_DC_CACHE" text="DC++ Cache"/>
 		</toolbar>
 		<!-- PRIVATE CHAT FRAME -->
-		<toolbar name="CPrivateChatFrame">
+		<toolbar name="CPrivateChatWnd">
 			<button id="ID_CHAT_BOLD" text="G"/>
 			<button id="ID_CHAT_ITALIC" text="I"/>
 			<button id="ID_CHAT_UNDERLINE" text="S"/>
@@ -1586,7 +1586,7 @@
 			<item id="ID_DISCOVERY_EDIT" text="_Propriétés"/>
 		</menu>
 		<!-- PRIVATE CHAT FRAME -->
-		<menu name="CPrivateChatFrame">
+		<menu name="CPrivateChatWnd">
 			<item id="ID_CHAT_CONNECT" text="Se c_onnecter"/>
 			<item id="ID_CHAT_DISCONNECT" text="Se _déconnecter"/>
 			<separator/>
@@ -3057,6 +3057,7 @@
 		<string id="16377" value="Garde HTTP"/>
 		<string id="16378" value="Host &quot;%s&quot; sent a 416, without providing available ranges. Closing connection."/>
 		<string id="16379" value="Fichiers de la bibliothèque"/>
+		<string id="16380" value="eDonkey garde"/>
 		<string id="16384" value="Voulez-vous vraiment ouvrir fichier « %s » ?\n\nCertains fichiers exécutables peuvent endommager votre système s'ils comportent des virus."/>
 		<string id="16385" value="Vous allez modifier les métadonnées de %i fichiers, voulez-vous continuer ?"/>
 		<string id="16386" value="Édition des métadonnées de %i fichiers."/>
@@ -3145,13 +3146,11 @@
 		<string id="16803" value="Le dossier que vous souhaitez partager l'est déjà car il est contenu dans un dossier précédemment partagé :\n\n%s"/>
 		<string id="16804" value="Vous n'avez pas encore précisé votre nom d'utilisateur dans votre profil utilisateur."/>
 		<string id="16805" value="Vous n'avez pas encore précisé votre résidence dans votre profil utilisateur.\nC'est une bonne idée d'entrer une résidence car cela permet aux autres utilisateurs de voir de quel pays vous êtes. Notez que remplir ce champ ne révèle aucune information compromettante.\n\nÊtes-vous certain de vouloir continuer sans entrer de résidence ?"/>
-		<string id="16806" value="Shareaza n'a pas réussi à configurer votre routeur NAT ou votre pare-feu.\n\nVeillez à configurer votre réseau pour rediriger le port TCP et UDP %i vers votre PC local."/>
 		<string id="16807" value="Merci d'entrer la limite de bande passante que vous voulez appliquer sous la forme « 123 kb/s » pour kilobits par seconde, ou « 123 KB/s » pour kilooctets par seconde."/>
 		<string id="16808" value="Vous n'avez pas encore précisé votre civilité ou votre âge.\n\nÊtes-vous certain de vouloir continuer sans le faire ?"/>
 		<string id="16809" value="&amp;Quitter"/>
 		<string id="16810" value="ans"/>
 		<string id="16811" value="Automatique"/>
-		<string id="16812" value="Veuillez patienter : découverte et réglage des services UPnP ..."/>
 		<string id="16813" value="Veuillez patienter : mise à jour des services de découverte..."/>
 		<string id="16814" value="Veuillez patienter : mise à jour de la liste d'hôtes eDonkey ..."/>
 		<string id="16815" value="Le service UPnP n'est pas actif sur votre ordinateur.\nVeuillez régler le service pour qu'il démarre automatiquement (Windows Service Startup type)."/>

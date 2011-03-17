@@ -420,7 +420,7 @@
 			<button id="ID_HOSTCACHE_DC_CACHE" text="DC++ Cache"/>
 		</toolbar>
 		<!-- PRIVATE CHAT FRAME -->
-		<toolbar name="CPrivateChatFrame">
+		<toolbar name="CPrivateChatWnd">
 			<button id="ID_CHAT_BOLD" text="B"/>
 			<button id="ID_CHAT_ITALIC" text="I"/>
 			<button id="ID_CHAT_UNDERLINE" text="U"/>
@@ -1586,7 +1586,7 @@
 			<item id="ID_DISCOVERY_EDIT" text="Pokročilé _úpravy..."/>
 		</menu>
 		<!-- PRIVATE CHAT FRAME -->
-		<menu name="CPrivateChatFrame">
+		<menu name="CPrivateChatWnd">
 			<item id="ID_CHAT_CONNECT" text="_Připojit"/>
 			<item id="ID_CHAT_DISCONNECT" text="_Odpojit"/>
 			<separator/>
@@ -3060,6 +3060,7 @@
 		<string id="16377" value="Hlídač HTTP"/>
 		<string id="16378" value="Host &quot;%s&quot; sent a 416, without providing available ranges. Closing connection."/>
 		<string id="16379" value="Soubory v knihovně"/>
+		<string id="16380" value="eDonkey Guard"/>
 		<string id="16384" value="Opravdu chcete spustit soubor &quot;%s&quot; ?\n\nNěkteré soubory mohou poškodit váš počítač. Ujistěte se, že víte jaký soubor spouštíte."/>
 		<string id="16385" value="Chystáte se upravit popisky pro %i souborů, opravdu chcete pokračovat?"/>
 		<string id="16386" value="Upravuji popisky %i souborů."/>
@@ -3148,13 +3149,11 @@
 		<string id="16803" value="Část složky je již sdílená jako další sdílený podadresář\n\n%s"/>
 		<string id="16804" value="Nezadali jste přezdívku ve vašem profilu uživatele.\n\nJe dobré zadat alespoň přezdívku, aby ostatí uživatelé mohli vidět kdo se k nim připojil.\n\nOpravdu chcete pokračovat bez zadání jména?"/>
 		<string id="16805" value="Zadejte ve vašem uživatelském profilu umístění vašeho počítače.\n\nJe dobře zadat vaše umístění tak, aby ostatní uživatelé mohli vidět odkud pocházíte.\n\nOpravdu chcete pokračovat bez zadání vašeho umístění?"/>
-		<string id="16806" value="Zadali jste že chcete nastavit přenosový port na vašem firewallu nebo routeru.\n\nProsím nastavte si přenos vaší sítě na port TCP %i ve vašem počítači."/>
 		<string id="16807" value="Prosím zadejte omezení šířky pásma které si přejete nastavit ve tvaru &quot;123 kb/s&quot; pro kilobajty za vteřinu, nebo &quot;123 KB/s&quot; pro kilobajty za vteřinu."/>
 		<string id="16808" value="Nezadali jste váš věk a pohlaví. Opravdu chcete pokračovat bez těchto údajů?"/>
 		<string id="16809" value="K&amp;onec"/>
 		<string id="16810" value="rok starý"/>
 		<string id="16811" value="Automaticky"/>
-		<string id="16812" value="Prosím čekejte, hledám UPnP zařízení a nastavuji je..."/>
 		<string id="16813" value="Prosím čekejte, aktualizuji vyhledávací služby..."/>
 		<string id="16814" value="Prosím čekejte, aktualizuji seznam eDonkey serverů..."/>
 		<string id="16815" value="Služba UPnP zařízení není spuštěna. Tato služba je nutná pro nastavení zařízení.\nNastavte typ spouštění této služby na automatický."/>
