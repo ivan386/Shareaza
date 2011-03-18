@@ -1,7 +1,7 @@
 //
 // DlgDownloadGroup.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -293,36 +293,33 @@ void CDownloadGroupDlg::OnCbnCloseupSchemas()
 	// Remove old schema filters (preserve custom ones)
 	if ( CSchemaPtr pOldSchema = SchemaCache.Get( m_sOldSchemaURI ) )
 	{
-		for ( LPCTSTR start = pOldSchema->m_sTypeFilter; *start; start++ )
+		for ( POSITION pos = pOldSchema->GetFilterIterator(); pos ; )
 		{
-			LPCTSTR c = _tcschr( start, _T('|') );
-			int len = c ? (int) ( c - start ) : (int) _tcslen( start );
-			if ( len > 0 )
+			CString strFilter;
+			BOOL bResult;
+			pOldSchema->GetNextFilter( pos, strFilter, bResult );
+			if ( bResult )
 			{
-				CString strFilter( start, len );
+				strFilter.Insert( 0, _T('.') );
 				while ( POSITION pos = oList.Find( strFilter ) )
 					oList.RemoveAt( pos );
 			}
-			if ( ! c )
-				break;
-			start = c;
 		}
 	}
 
 	// Add new schema filters
 	if ( CSchemaPtr pNewSchema = SchemaCache.Get( m_wndSchemas.GetSelectedURI() ) )
 	{
-		for ( LPCTSTR start = pNewSchema->m_sTypeFilter; *start; start++ )
+		for ( POSITION pos = pNewSchema->GetFilterIterator(); pos ; )
 		{
-			LPCTSTR c = _tcschr( start, _T('|') );
-			int len = c ? (int) ( c - start ) : (int) _tcslen( start );
-			if ( len > 0 )
+			CString strFilter;
+			BOOL bResult;
+			pNewSchema->GetNextFilter( pos, strFilter, bResult );
+			if ( bResult )
 			{
-				oList.AddTail( CString( start, len ) );
+				strFilter.Insert( 0, _T('.') );
+				oList.AddTail( strFilter );
 			}
-			if ( ! c )
-				break;
-			start = c;
 		}
 	}
 

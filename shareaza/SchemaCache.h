@@ -1,7 +1,7 @@
 //
 // SchemaCache.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -26,23 +26,13 @@
 
 class CSchemaCache
 {
-// Construction
 public:
 	CSchemaCache();
 	virtual ~CSchemaCache();
 
-// Attributes
-protected:
-	CMap< CString, const CString&, CSchemaPtr, CSchemaPtr > m_pURIs;
-	CMap< CString, const CString&, CSchemaPtr, CSchemaPtr >	m_pNames;
-
-// Operations
-public:
 	int			Load();
 	void		Clear();
 
-// Inlines
-public:
 	POSITION GetIterator() const
 	{
 		return m_pURIs.GetStartPosition();
@@ -89,7 +79,17 @@ public:
 
 	CString GetFilter(LPCTSTR pszURI) const;
 
+	inline BOOL IsFilter(const CString& sType) const
+	{
+		return ( m_pTypeFilters.PLookup( sType ) != NULL );
+	}
+
 private:
+	typedef CMap< CString, const CString&, CSchemaPtr, CSchemaPtr > CSSMap;
+	CSSMap	m_pURIs;
+	CSSMap	m_pNames;
+	CSSMap	m_pTypeFilters;	// Combined "file type":"schema" map
+
 	CSchemaCache(const CSchemaCache&);
 	CSchemaCache& operator=(const CSchemaCache&);
 };

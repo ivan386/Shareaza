@@ -1,7 +1,7 @@
 //
 // MatchObjects.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -259,7 +259,7 @@ void CMatchList::AddHits(const CQueryHit* pHits, const CQuerySearch* pFilter)
 				}
 				else
 				{
-					pHit->m_bBogus = !pFilter->m_pSchema->FilterType( pHit->m_sName, TRUE );
+					pHit->m_bBogus = ! pFilter->m_pSchema->FilterType( pHit->m_sName );
 				}
 			}
 		}

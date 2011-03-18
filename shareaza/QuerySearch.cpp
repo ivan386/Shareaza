@@ -1,7 +1,7 @@
 //
 // QuerySearch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -77,6 +77,7 @@ CQuerySearch::CQuerySearch(BOOL bGUID) :
 	m_bPartial	( false ),
 	m_bNoProxy	( false ),
 	m_bExtQuery	( false ),
+	m_bDropMe	( false ),
 	m_oWords	(),
 	m_oNegWords	()
 {
@@ -119,7 +120,7 @@ CG1Packet* CQuerySearch::ToG1Packet(DWORD nTTL) const
 	{
 		strQuery = m_sPosKeywords;
 	}
-	else if ( m_pSchema != NULL && m_pXML != NULL )
+	else if ( m_pSchema && m_pXML )
 	{
 		strQuery = m_pSchema->GetIndexedWords( m_pXML->GetFirstElement() );
 		MakeKeywords( strQuery, false );
@@ -705,11 +706,18 @@ BOOL CQuerySearch::ReadG1Packet(CG1Packet* pPacket)
 
 	if ( Settings.Gnutella1.QueryHitUTF8 )
 	{
-		m_sKeywords = m_sSearch	= pPacket->ReadStringUTF8();
+		m_sSearch = pPacket->ReadStringUTF8();
 	}
 	else
 	{
-		m_sKeywords = m_sSearch	= pPacket->ReadStringASCII();
+		m_sSearch = pPacket->ReadStringASCII();
+	}
+
+	if ( ! CheckOverflow( m_sSearch ) )
+	{
+		// Overflow
+		m_bDropMe = true;
+		return TRUE;
 	}
 
 	while ( pPacket->GetRemaining() )
@@ -743,13 +751,7 @@ BOOL CQuerySearch::ReadG1Packet(CG1Packet* pPacket)
 
 	m_bAndG1 = TRUE;
 
-	if ( ! CheckValid( false ) )
-	{
-		theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got invalid query packet") );
-		return FALSE;
-	}
-
-	return TRUE;
+	return CheckValid( false );
 }
 
 void CQuerySearch::ReadGGEP(CG1Packet* pPacket)
@@ -1022,7 +1024,6 @@ BOOL CQuerySearch::ReadG2Packet(CG2Packet* pPacket, const SOCKADDR_IN* pEndpoint
 		else if ( nType == G2_PACKET_DESCRIPTIVE_NAME )
 		{
 			m_sSearch = pPacket->ReadString( nLength );
-			m_sKeywords = m_sSearch;
 		}
 		else if ( nType == G2_PACKET_METADATA )
 		{
@@ -1086,6 +1087,45 @@ BOOL CQuerySearch::ReadG2Packet(CG2Packet* pPacket, const SOCKADDR_IN* pEndpoint
 //////////////////////////////////////////////////////////////////////
 // CQuerySearch validity check
 
+CQuerySearch::CSDMap CQuerySearch::m_oSearchHistory;
+
+#define OVERFLOW_HISTORY	20
+#define OVERFLOW_TIMEOUT	10	// Maximum one same search per 10 seconds
+
+BOOL CQuerySearch::CheckOverflow(const CString& sSearch)
+{
+	if ( sSearch.IsEmpty() )
+		return TRUE;
+
+	DWORD nNow = static_cast< DWORD >( time( NULL ) );
+
+	if ( m_oSearchHistory.GetCount() > OVERFLOW_HISTORY )
+	{
+		for ( const CSDMap::CPair* pData = m_oSearchHistory.PGetFirstAssoc(); pData; pData = m_oSearchHistory.PGetNextAssoc( pData ) )
+		{
+			if ( nNow - pData->value > OVERFLOW_TIMEOUT )
+			{
+				// In range
+				m_oSearchHistory.RemoveKey( pData->key );
+				break;
+			}
+		}
+	}
+
+	if ( const CSDMap::CPair* pData = m_oSearchHistory.PLookup( sSearch ) )
+	{
+		if ( nNow - pData->value < OVERFLOW_TIMEOUT )
+		{
+			// Too often
+			m_oSearchHistory.SetAt( sSearch, nNow );
+			return FALSE;
+		}
+	}
+
+	m_oSearchHistory.SetAt( sSearch, nNow );
+	return TRUE;
+}
+
 BOOL CQuerySearch::CheckValid(bool bExpression)
 {
 	BuildWordList( bExpression );
@@ -1131,39 +1171,21 @@ BOOL CQuerySearch::CheckValid(bool bExpression)
 	}
 
 	if ( m_oKeywordHashList.size() )
-	{
 		return TRUE;
-	}
-	else if ( !m_oWords.empty() )
-	{
-		// Setting up Common keyword list
-		static const LPCTSTR common[] =
-		{
-			L"mp3", L"ogg", L"ac3",
-			L"jpg", L"gif", L"png", L"bmp",
-			L"mpg", L"avi", L"mkv", L"wmv", L"mov", L"ogm", L"mpa", L"mpv", L"m2v", L"mp2",
-			L"exe", L"zip", L"rar", L"iso", L"bin", L"cue", L"img", L"lzh", L"bz2", L"rpm", L"deb",
-			L"dvd", L"mpeg", L"divx", L"xvid", L"mp4",
-			L"xxx", L"sex", L"fuck",
-			L"torrent"
-		};
-		static const size_t commonWords = sizeof common / sizeof common[ 0 ];
 
-		bool bExtendChar;	// flag used for extended char
-		TCHAR szChar;
-		int nLength;
+	if ( ! m_oWords.empty() )
+	{
 		DWORD nValidWords = 0;
 		DWORD nCommonWords = 0;
-		size_t nValidCharacters = 0;
 
 		// Check we aren't just searching for broad terms - set counters, etc
-		for ( const_iterator pWord = begin(); pWord != end(); pWord++ )
+		for ( const_iterator pWord = begin(); pWord != end(); ++pWord )
 		{
-			nValidCharacters = 0;
-			szChar = *(pWord->first);
-			nLength = int(pWord->second);
+			size_t nValidCharacters = 0;
+			TCHAR szChar = *(pWord->first);
+			size_t nLength = pWord->second;
 
-			bExtendChar = false;	//  clear the flag used for extended char
+			bool bExtendChar = false;	//  clear the flag used for extended char
 			// NOTE: because of how oWord act, each keywords in oWords gets sorted in ascending order with HEX code of char,
 			//		thus Extended chars are always located at end of oWords. Which means it is not necessary to Clear the flag
 			//		inside the loop.
@@ -1200,42 +1222,26 @@ BOOL CQuerySearch::CheckValid(bool bExpression)
 			else if ( nLength > 2 )
 			{
 				// char inspection
-				bool bWord =false;
-				bool bDigit =false;
-				bool bMix =false;
-				IsType(&szChar, 0, nLength, bWord, bDigit, bMix);
+				bool bWord, bDigit, bMix;
+				IsType( &szChar, 0, nLength, bWord, bDigit, bMix );
 				if ( bWord || bMix )
 					nValidCharacters = nLength;
 			}
 
 			if ( nValidCharacters > 2 ) // if char is longer than 3byte in utf8 (Gnutella standard)
 			{
-				if ( std::find_if( common, common + commonWords, FindStr( *pWord ) ) != common + commonWords )
-					// if the keyword is matched to one of the common keyword set in common[] array.
-				{
+				if ( SchemaCache.IsFilter( CString( pWord->first, pWord->second ) ) )
 					// Common term. Don't count it as valid keywords, instead count it as common keywords
 					nCommonWords++;
-					DWORD nHash = CQueryHashTable::HashWord( pWord->first, 0, pWord->second, 32 );
-					m_oKeywordHashList.push_back( nHash );
-				}
 				else
-				{
-					// check if it is valid search term.
-					// NOTE: code below will filter and narrowing down more. it has to be in one of the condition
-					//			1. It is 4byte or longer in UTF8 string(Japanese Hiragana/Katakana are both 3 byte char too
-					//				however they are counted as 2byte char)
-					//			2. Query has Schema with it(File type specified)
-					//			3. the string contains extended char(3byte length char used in Asia region )
-					//if ( nValidCharacters > 3 || m_pSchema != NULL || bExtendChar ) nValidWords++;
-
 					nValidWords++;	// count any 3char or longer as valid keywords
-					DWORD nHash = CQueryHashTable::HashWord( pWord->first, 0, pWord->second, 32 );
-					m_oKeywordHashList.push_back( nHash );
-				}
+
+				DWORD nHash = CQueryHashTable::HashWord( pWord->first, 0, pWord->second, 32 );
+				m_oKeywordHashList.push_back( nHash );
 			}
 		}
 
-		if ( m_pSchema != NULL ) // if schema has been selected
+		if ( m_pSchema ) // if schema has been selected
 		{
 			nValidWords += ( nCommonWords > 1 ) ? 1 : 0; // make it accept query, if there are 2 or more different common words.
 		}
@@ -1244,7 +1250,8 @@ BOOL CQuerySearch::CheckValid(bool bExpression)
 			nValidWords += ( nCommonWords > 2 ) ? 1 : 0; // make it accept query, if there are 3 or more different common words.
 		}
 
-		if ( nValidWords ) return TRUE;
+		if ( nValidWords )
+			return TRUE;
 
 #ifdef LAN_MODE
 		return TRUE;
@@ -1252,9 +1259,7 @@ BOOL CQuerySearch::CheckValid(bool bExpression)
 	}
 
 	if ( bHashOk )
-	{
 		return TRUE;
-	}
 
 	m_oKeywordHashList.clear();
 	m_oWords.clear();
@@ -1600,61 +1605,22 @@ void CQuerySearch::BuildWordList(bool bExpression, bool /* bLocal */ )
 	}
 
 	// Split search string to keywords
-	if ( m_sKeywords.IsEmpty() )
-		m_sKeywords = m_sSearch;
-	MakeKeywords( m_sKeywords, bExpression );
+	CString sKeywords = m_sSearch;
 
 	// Split metadata to keywords
-	if ( m_pXML )
+	if ( m_pXML && m_pSchema )
 	{
-		if ( CXMLElement* pXML = m_pXML->GetFirstElement() )
+		CString strWords = m_pSchema->GetIndexedWords( m_pXML->GetFirstElement() );
+		if ( ! strWords.IsEmpty() )
 		{
-			if ( m_pSchema != NULL )
-			{
-				for ( POSITION pos = m_pSchema->GetMemberIterator() ; pos ; )
-				{
-					CSchemaMember* pMember = m_pSchema->GetNextMember( pos );
-
-					if ( pMember->m_bIndexed )
-					{
-						// quick hack for bitrate problem.
-						if ( pMember->m_sName.CompareNoCase( _T("bitrate") ) == 0 )
-						{
-							// do nothing.
-						}
-						else if ( CXMLAttribute* pAttribute = pXML->GetAttribute( pMember->m_sName ) )
-						{
-							ToLower( pAttribute->m_sValue );
-							CString strKeywords = pAttribute->m_sValue;
-							MakeKeywords( strKeywords, bExpression );
-							if ( strKeywords.GetLength() )
-								m_sKeywords += L" " + strKeywords;
-						}
-					}
-					else
-					{
-						if ( CXMLAttribute* pAttribute = pXML->GetAttribute( pMember->m_sName ) )
-						{
-							ToLower( pAttribute->m_sValue );
-							//MakeKeywords( pAttribute->m_sValue, bExpression );
-						}
-					}
-				}
-			}
-			else
-			{
-				for ( POSITION pos = pXML->GetAttributeIterator() ; pos ; )
-				{
-					CXMLAttribute* pAttribute = pXML->GetNextAttribute( pos );
-					ToLower( pAttribute->m_sValue );
-					CString strKeywords = pAttribute->m_sValue;
-					MakeKeywords( strKeywords, bExpression );
-					if ( strKeywords.GetLength() )
-						m_sKeywords += L" " + strKeywords;
-				}
-			}
+			if ( ! sKeywords.IsEmpty() )
+				sKeywords += _T(" ");
+			sKeywords += strWords;
 		}
 	}
+	sKeywords.TrimRight();
+
+	m_sKeywords = MakeKeywords( sKeywords, bExpression );
 
 	// Build word pos/neg tables (m_oWords/m_oNegWords) from m_sKeywords
 	BuildWordTable();
@@ -1672,7 +1638,8 @@ void CQuerySearch::BuildG2PosKeywords()
 	// create string with positive keywords.
 	for ( const_iterator pWord = begin(); pWord != end(); pWord++ )
 	{
-		m_sPosKeywords.AppendFormat( _T("%s "), LPCTSTR( CString( pWord->first, int(pWord->second) ) ) );
+		m_sPosKeywords.Append( pWord->first, int(pWord->second) );
+		m_sPosKeywords += _T(' ');
 	}
 
 	m_sG2Keywords = m_sPosKeywords;	// copy Positive keywords string to G2 keywords string.
@@ -1681,7 +1648,9 @@ void CQuerySearch::BuildG2PosKeywords()
 	// append negative keywords to G2 keywords string.
 	for ( const_iterator pWord = beginNeg(); pWord != endNeg(); pWord++ )
 	{
-		m_sG2Keywords.AppendFormat( _T("-%s "), LPCTSTR( CString( pWord->first, int(pWord->second) ) ) );
+		m_sG2Keywords += _T('-');
+		m_sG2Keywords.Append( pWord->first, int(pWord->second) );
+		m_sG2Keywords += _T(' ');
 	}
 	m_sG2Keywords.TrimRight();		// trim off extra space char at the end of string.
 }
@@ -1693,11 +1662,12 @@ void CQuerySearch::BuildG2PosKeywords()
 //
 // The function splits katakana, hiragana and CJK phrases out of the input string.
 // ToDo: "minus" words and quoted phrases for asian languages may not work correctly in all cases.
-void CQuerySearch::MakeKeywords(CString& strPhrase, bool bExpression)
+CString CQuerySearch::MakeKeywords(const CString& strPhrase, bool bExpression)
 {
-	if ( strPhrase.IsEmpty() ) return;
+	if ( strPhrase.IsEmpty() )
+		return CString();
 
-	CString str( L" " );
+	CString str( _T(" ") );
 	LPCTSTR pszPtr = strPhrase;
 	ScriptType boundary[ 2 ] = { sNone, sNone };
 	int nPos = 0;
@@ -1712,54 +1682,62 @@ void CQuerySearch::MakeKeywords(CString& strPhrase, bool bExpression)
 		boundary[ 1 ] = sNone;
 
 		if ( IsKanji( *pszPtr ) )
-			boundary[ 1 ] = (ScriptType)( boundary[ 1 ] | sKanji);
+			boundary[ 1 ] = (ScriptType)( boundary[ 1 ] | sKanji );
 		if ( IsKatakana( *pszPtr ) )
-			boundary[ 1 ] = (ScriptType)( boundary[ 1 ] | sKatakana);
+			boundary[ 1 ] = (ScriptType)( boundary[ 1 ] | sKatakana );
 		if ( IsHiragana( *pszPtr ) )
-			boundary[ 1 ] = (ScriptType)( boundary[ 1 ] | sHiragana);
+			boundary[ 1 ] = (ScriptType)( boundary[ 1 ] | sHiragana );
 		if ( IsCharacter( *pszPtr ) )
-			boundary[ 1 ] = (ScriptType)( boundary[ 1 ] | sRegular);
+			boundary[ 1 ] = (ScriptType)( boundary[ 1 ] | sRegular );
 		// for now, disable Numeric Detection in order not to split string like "shareaza2" to "shareaza 2"
 		//if ( _istdigit( *pszPtr ) )
 		//	boundary[ 1 ] = (ScriptType)( boundary[ 1 ] | sNumeric);
 
-		if ( ( boundary[ 1 ] & (sHiragana | sKatakana) ) == (sHiragana | sKatakana) && ( boundary[ 0 ] & (sHiragana | sKatakana) ) )
+		if ( ( boundary[ 1 ] & ( sHiragana | sKatakana ) ) == ( sHiragana | sKatakana ) &&
+			 ( boundary[ 0 ] & ( sHiragana | sKatakana ) ) )
 		{
 			boundary[ 1 ] = boundary[ 0 ];
 		}
 
-		bool bCharacter = ( boundary[ 1 ] & sRegular )||
-			bExpression && ( *pszPtr == '-' || *pszPtr == '"' );
-		if ( !( boundary[ 0 ] & sRegular ) && *pszPtr == '-' ) bNegative = TRUE;
-		else if ( *pszPtr == ' ' ) bNegative = FALSE;
+		bool bCharacter = ( boundary[ 1 ] & sRegular ) ||
+			bExpression && ( *pszPtr == _T('-') || *pszPtr == _T('"') );
+
+		if ( !( boundary[ 0 ] & sRegular ) && *pszPtr == _T('-') )
+			bNegative = TRUE;
+		else if ( *pszPtr == _T(' ') )
+			bNegative = FALSE;
 
 		int nDistance = !bCharacter ? 1 : 0;
 
-		if ( !bCharacter || boundary[ 0 ] != boundary[ 1 ] && nPos  )
+		if ( ! bCharacter || boundary[ 0 ] != boundary[ 1 ] && nPos  )
 		{
 			if ( nPos > nPrevWord )
 			{
-				ASSERT( str.GetLength() );
-				TCHAR sz = TCHAR( str.Right( 2 ).GetAt( 0 ) );
-				if ( boundary[ 0 ] && _tcschr( L" -\"", sz ) != NULL &&
-					!_istdigit( TCHAR( str.Right( nPos < 3 ? 1 : 3 ).GetAt( 0 ) ) ) )
+				int len = str.GetLength();
+				ASSERT( len );
+				TCHAR last1 = str.GetAt( len - 1 );
+				TCHAR last2 = ( len > 1 ) ? str.GetAt( len - 2 ) : 0;
+				TCHAR last3 = ( len > 2 ) ? str.GetAt( len - 3 ) : 0;
+				if ( boundary[ 0 ] &&
+					( last2 == _T(' ') || last2 == _T('-') || last2 == _T('"') ) &&
+					! _istdigit( ( nPos < 3 ) ? last1 : last3 ) )
 				{
 					// Join two phrases if the previous was a sigle characters word.
 					// idea of joining single characters breaks GDF compatibility completely,
 					// but because Shareaza 2.2 and above are not really following GDF about
 					// word length limit for ASIAN chars, merging is necessary to be done.
 				}
-				else if ( str.Right( 1 ) != ' ' && bCharacter )
+				else if ( last1 != _T(' ') && bCharacter )
 				{
-					if ( ( str.Right( 1 ) != '-' || str.Right( 1 ) != '"' || *pszPtr == '"' ) &&
-						( !bNegative || !( boundary[ 0 ] & ( sHiragana | sKatakana | sKanji ) ) ) )
-						str.Append( L" " );
+					if ( ( last1 != _T('-') || last1 != _T('"') || *pszPtr == _T('"') ) &&
+						( ! bNegative || ! ( boundary[ 0 ] & ( sHiragana | sKatakana | sKanji ) ) ) )
+						str += _T(' ');
 				}
 				ASSERT( strPhrase.GetLength() > nPos - 1 );
-				if ( _tcschr( L"-", strPhrase.GetAt( nPos - 1 ) ) != NULL && nPos > 1 )
+				if ( strPhrase.GetAt( nPos - 1 ) == _T('-') && nPos > 1 )
 				{
 					ASSERT( strPhrase.GetLength() > nPos - 2 );
-					if ( *pszPtr != ' ' && strPhrase.GetAt( nPos - 2 ) != ' ' )
+					if ( *pszPtr != _T(' ') && strPhrase.GetAt( nPos - 2 ) != _T(' ') )
 					{
 						nPrevWord += nDistance + 1;
 						continue;
@@ -1774,36 +1752,37 @@ void CQuerySearch::MakeKeywords(CString& strPhrase, bool bExpression)
 					str += strPhrase.Mid( nPrevWord, nPos - nPrevWord );
 					if ( boundary[ 1 ] == sNone && !bCharacter || *pszPtr == ' ' || !bExpression ||
 						( ( boundary[ 0 ] & ( sHiragana | sKatakana | sKanji ) ) && !bNegative ) )
-						str.Append( L" " );
+						str += _T(' ');
 					else if ( !bNegative && ( ( boundary[ 0 ] & ( sHiragana | sKatakana | sKanji ) ) ||
 						( boundary[ 0 ] & ( sHiragana | sKatakana | sKanji ) ) !=
 						( boundary[ 1 ] & ( sHiragana | sKatakana | sKanji ) ) ) )
-						str.Append( L" " );
+						str += _T(' ');
 				}
 			}
 			nPrevWord = nPos + nDistance;
 		}
 	}
 
-	ASSERT( !str.IsEmpty() );
-	TCHAR sz = TCHAR( str.Right( 2 ).GetAt( 0 ) );
-	if ( boundary[ 0 ] && _tcschr( L" -\"", sz ) != NULL &&
-		 boundary[ 1 ] )
+	int len = str.GetLength();
+	ASSERT( len );
+	TCHAR last1 = str.GetAt( len - 1 );
+	TCHAR last2 = ( len > 1 ) ? str.GetAt( len - 2 ) : 0;
+	if ( boundary[ 0 ] && boundary[ 1 ] &&
+		( last2 == _T(' ') || last2 == _T('-') || last2 == _T('"') ) )
 	{
 		// Join two phrases if the previous was a sigle characters word.
 		// idea of joining single characters breaks GDF compatibility completely,
 		// but because Shareaza 2.2 and above are not really following GDF about
 		// word length limit for ASIAN chars, merging is necessary to be done.
 	}
-	else if ( str.Right( 1 ) != ' ' && boundary[ 1 ] )
+	else if ( boundary[ 1 ] && last1 != _T(' ') )
 	{
-		if ( ( str.Right( 1 ) != '-' || str.Right( 1 ) != '"' ) && !bNegative )
-			str.Append( L" " );
+		if ( ( last1 != _T('-') || last1 != _T('"') ) && ! bNegative )
+			str += _T(' ');
 	}
 	str += strPhrase.Mid( nPrevWord, nPos - nPrevWord );
 
-	strPhrase = str.TrimLeft().TrimRight( L" -" );
-	return;
+	return str.TrimLeft().TrimRight( L" -" );
 }
 
 // Function makes a set of keywords separated by space
@@ -1845,8 +1824,6 @@ void CQuerySearch::BuildWordTable()
 	// clear word tables.
 	m_oWords.clear();
 	m_oNegWords.clear();
-
-	m_sKeywords.TrimRight();
 
 	if ( m_sKeywords.IsEmpty() )
 		return;

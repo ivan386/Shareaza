@@ -1126,10 +1126,13 @@ BOOL CG2Neighbour::OnQuery(CG2Packet* pPacket)
 	Statistics.Current.Gnutella2.Queries++;
 
 	CQuerySearchPtr pSearch = CQuerySearch::FromPacket( pPacket );
-	if ( ! pSearch )
+	if ( ! pSearch  || pSearch->m_bDropMe )
 	{
-		DEBUG_ONLY( pPacket->Debug( _T("Malformed Query.") ) );
-		theApp.Message( MSG_WARNING, IDS_PROTOCOL_BAD_QUERY, (LPCTSTR)m_sAddress );
+		if ( ! pSearch )
+		{
+			DEBUG_ONLY( pPacket->Debug( _T("Malformed Query.") ) );
+			theApp.Message( MSG_WARNING, IDS_PROTOCOL_BAD_QUERY, (LPCTSTR)m_sAddress );
+		}
 		Statistics.Current.Gnutella2.Dropped++;
 		m_nDropCount++;
 		return TRUE;

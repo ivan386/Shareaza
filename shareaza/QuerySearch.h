@@ -1,7 +1,7 @@
 //
 // QuerySearch.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -78,6 +78,7 @@ public:
 	bool				m_bPartial;		// G1: Partial results support
 	bool				m_bNoProxy;		// G1: Disable OOB proxying
 	bool				m_bExtQuery;	// G1: Extended query (long query)
+	bool				m_bDropMe;		// Silently drop this packet (to avoid overflow) 
 
 	Hash32List			m_oURNs;			// Hashed URNs
 	Hash32List			m_oKeywordHashList;	// list of hashed keywords to BOOST QUery Routing.
@@ -92,17 +93,7 @@ private:
 			return cmp < 0 || cmp == 0 && lhs.second < rhs.second;
 		}
 	};
-	struct FindStr
-	{
-		const WordEntry& m_entry;
-		FindStr(const WordEntry& entry) : m_entry( entry ) {}
-		bool operator()(const LPCTSTR& arg) const
-		{
-			//! \todo verify this - this will succeed for every arg that starts withthe search string
-			//!                     it doesn't have to be an exact match
-			return _tcsnicmp( arg, m_entry.first, m_entry.second ) == 0;
-		}
-	};
+
 public:
 	typedef std::set< WordEntry, CompareWordEntries > WordTable;
 	typedef WordTable::iterator iterator;
@@ -124,8 +115,11 @@ public:
 	const_hash_iterator		keywordBegin() const { return m_oKeywordHashList.begin(); }
 	const_hash_iterator		keywordEnd()   const { return m_oKeywordHashList.end(); }
 private:
-	WordTable m_oWords;
-	WordTable m_oNegWords;
+	WordTable			m_oWords;
+	WordTable			m_oNegWords;
+
+	typedef CMap< CString, const CString&, DWORD, DWORD& > CSDMap;
+	static CSDMap		m_oSearchHistory;
 
 // Packet Operations
 public:
@@ -143,10 +137,10 @@ private:
 public:
 	BOOL					Match(LPCTSTR pszFilename, LPCTSTR pszSchemaURI, CXMLElement* pXML, const CShareazaFile* pFile ) const;
 	TRISTATE				MatchMetadata(LPCTSTR pszSchemaURI, CXMLElement* pXML) const;
-	BOOL					MatchMetadataShallow(LPCTSTR pszSchemaURI, CXMLElement* pXML, bool* bReject=NULL) const;
-	void					BuildWordList(bool bExpression=true, bool bLocal=false);
+	BOOL					MatchMetadataShallow(LPCTSTR pszSchemaURI, CXMLElement* pXML, bool* bReject = NULL) const;
+	void					BuildWordList(bool bExpression = true, bool bLocal=false);
 	void					Serialize(CArchive& ar);
-	BOOL					CheckValid(bool bExpression=true);
+	BOOL					CheckValid(bool bExpression = true);
 	void					PrepareCheck();
 private:
 	void					BuildWordTable();
@@ -158,8 +152,9 @@ private:
 public:
 	static CQuerySearchPtr	FromPacket(CPacket* pPacket, const SOCKADDR_IN* pEndpoint = NULL);
 	static CSearchWnd*		OpenWindow(CQuerySearch* pSearch);
-	static BOOL				WordMatch(LPCTSTR pszString, LPCTSTR pszFind, bool* bReject=NULL);
+	static BOOL				WordMatch(LPCTSTR pszString, LPCTSTR pszFind, bool* bReject = NULL);
 	static BOOL				NumberMatch(const CString& strValue, const CString& strRange);
-	static void				MakeKeywords(CString& strPhrase, bool bExpression=true);
+	static CString			MakeKeywords(const CString& strPhrase, bool bExpression = true);
 	static void				SearchHelp();	// Shows some search help dialogs
+	static BOOL				CheckOverflow(const CString& sSearch);
 };

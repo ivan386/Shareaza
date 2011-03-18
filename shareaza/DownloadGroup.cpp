@@ -207,17 +207,16 @@ void CDownloadGroup::SetSchema(LPCTSTR pszURI, BOOL bRemoveOldFilters)
 		{
 			if ( CSchemaPtr pOldSchema = SchemaCache.Get( m_sSchemaURI ) )
 			{
-				for ( LPCTSTR start = pOldSchema->m_sTypeFilter; *start; start++ )
+				for ( POSITION pos = pOldSchema->GetFilterIterator(); pos ; )
 				{
-					LPCTSTR c = _tcschr( start, _T('|') );
-					int len = c ? (int) ( c - start ) : (int) _tcslen( start );
-					if ( len > 0 )
+					CString strFilter;
+					BOOL bResult;
+					pOldSchema->GetNextFilter( pos, strFilter, bResult );
+					if ( bResult )
 					{
-						RemoveFilter( CString( start, len ) );
+						strFilter.Insert( 0, _T('.') );
+						RemoveFilter( strFilter );
 					}
-					if ( ! c )
-						break;
-					start = c;
 				}
 			}
 		}
@@ -248,17 +247,16 @@ void CDownloadGroup::SetDefaultFilters()
 {
 	if ( CSchemaPtr pSchema = SchemaCache.Get( m_sSchemaURI ) )
 	{
-		for ( LPCTSTR start = pSchema->m_sTypeFilter; *start; start++ )
+		for ( POSITION pos = pSchema->GetFilterIterator(); pos ; )
 		{
-			LPCTSTR c = _tcschr( start, _T('|') );
-			int len = c ? (int) ( c - start ) : (int) _tcslen( start );
-			if ( len > 0 )
+			CString strFilter;
+			BOOL bResult;
+			pSchema->GetNextFilter( pos, strFilter, bResult );
+			if ( bResult )
 			{
-				AddFilter( CString( start, len ) );
+				strFilter.Insert( 0, _T('.') );
+				AddFilter( strFilter );
 			}
-			if ( ! c )
-				break;
-			start = c;
 		}
 	}
 }

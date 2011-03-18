@@ -757,11 +757,14 @@ BOOL CG2Packet::OnQuery(const SOCKADDR_IN* pHost)
 	Statistics.Current.Gnutella2.Queries++;
 
 	CQuerySearchPtr pSearch = CQuerySearch::FromPacket( this, pHost );
-	if ( ! pSearch ||			// Malformed query
+	if ( ! pSearch || pSearch->m_bDropMe ||	// Malformed query
 		 ! pSearch->m_bUDP )	// Forbid query with firewalled return address
 	{
-		DEBUG_ONLY( Debug( _T("Malformed Query.") ) );
-		theApp.Message( MSG_WARNING, IDS_PROTOCOL_BAD_QUERY, (LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ) );
+		if ( ! pSearch || ! pSearch->m_bUDP )
+		{
+			DEBUG_ONLY( Debug( _T("Malformed Query.") ) );
+			theApp.Message( MSG_WARNING, IDS_PROTOCOL_BAD_QUERY, (LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ) );
+		}
 		Statistics.Current.Gnutella2.Dropped++;
 		return FALSE;
 	}

@@ -95,7 +95,6 @@ public:
 	static CQueryHit*	FromEDPacket(CEDPacket* pPacket, const SOCKADDR_IN* pServer, BOOL bUnicode, const Hashes::Guid& pSearchID = Hashes::Guid());
 	static CQueryHit*	FromDCPacket(CDCPacket* pPacket);
 protected:
-	static BOOL			CheckBogus(CQueryHit* pFirstHit);
 	static CXMLElement*	ReadXML(CG1Packet* pPacket, int nSize);
 
 // Operations
@@ -113,10 +112,9 @@ protected:
 	void		ReadGGEP(CG1Packet* pPacket);
 	void		ReadExtension(CG1Packet* pPacket);
 	BOOL		CheckValid() const;
-	bool		ReadG2Packet(CG2Packet* pPacket, DWORD nLength);
+	void		ReadG2Packet(CG2Packet* pPacket, DWORD nLength);
 	void		ReadEDAddress(CEDPacket* pPacket, const SOCKADDR_IN* pServer);
 	BOOL		ParseXML(CXMLElement* pXML, DWORD nRealIndex);
-	BOOL		HasBogusMetadata();
 	BOOL		AutoDetectSchema(LPCTSTR pszInfo);
 	BOOL		AutoDetectAudio(LPCTSTR pszInfo);
 

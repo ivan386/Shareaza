@@ -1,7 +1,7 @@
 //
 // CtrlLibraryFrame.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1196,7 +1196,7 @@ void CLibraryFrame::RunLocalSearch(CQuerySearch* pSearch)
 
 			if ( Settings.Search.SchemaTypes && pSearch->m_pSchema != NULL )
 			{
-				if ( pSearch->m_pSchema->FilterType( pFile->m_sName, TRUE ) == FALSE )
+				if ( ! pSearch->m_pSchema->FilterType( pFile->m_sName ) )
 					pFile = NULL;
 			}
 

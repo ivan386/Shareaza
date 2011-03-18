@@ -1,7 +1,7 @@
 //
 // Schema.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -40,12 +40,14 @@ static char THIS_FILE[]=__FILE__;
 // CSchema construction
 
 CSchema::CSchema()
+	: m_nType			( stFile )
+	, m_nAvailability	( saDefault )
+	, m_bPrivate		( FALSE )
+	, m_nIcon16			( -1 )
+	, m_nIcon32			( -1 )
+	, m_nIcon48			( -1 )
 {
-	m_nType			= stFile;
-	m_nAvailability	= saDefault;
-	m_bPrivate		= FALSE;
-	m_nIcon16		= m_nIcon32 = m_nIcon48 = -1;
-	m_sDonkeyType.Empty();
+	m_pTypeFilters.InitHashTable( 127 );
 }
 
 CSchema::~CSchema()
@@ -55,6 +57,48 @@ CSchema::~CSchema()
 
 //////////////////////////////////////////////////////////////////////
 // CSchema member access
+
+POSITION CSchema::GetFilterIterator() const
+{
+	return m_pTypeFilters.GetStartPosition();
+}
+
+void CSchema::GetNextFilter(POSITION& pos, CString& sType, BOOL& bResult) const
+{
+	m_pTypeFilters.GetNextAssoc( pos, sType, bResult );
+}
+
+BOOL CSchema::FilterType(LPCTSTR pszFile) const
+{
+	if ( m_pTypeFilters.IsEmpty() )
+		return FALSE;
+
+	LPCTSTR pszExt = _tcsrchr( pszFile, _T('.') );
+	if ( pszExt == NULL )
+		return FALSE;
+
+	const CSBMap::CPair* pPair = m_pTypeFilters.PLookup(
+		CString( pszExt + 1 ).MakeLower() );
+
+	return pPair && pPair->value;
+}
+
+CString CSchema::GetFilterSet() const
+{
+	CString sFilters = _T("|");
+	for ( POSITION pos = m_pTypeFilters.GetStartPosition(); pos; )
+	{
+		CString sType;
+		BOOL bResult;
+		m_pTypeFilters.GetNextAssoc( pos, sType, bResult );
+		if ( bResult )
+		{
+			sFilters += sType;
+			sFilters += _T('|');
+		}
+	}
+	return sFilters;
+}
 
 POSITION CSchema::GetMemberIterator() const
 {
@@ -485,12 +529,12 @@ void CSchema::LoadDescriptorTypeFilter(CXMLElement* pElement)
 
 		if ( pType->GetName().CompareNoCase( _T("type") ) == 0 )
 		{
-			CString strType = pType->GetAttributeValue( _T("extension"), _T("") );
-			ToLower( strType );
+			CString strExt = pType->GetAttributeValue( _T("extension") );
+			BOOL bResult = TRUE;
 
-			m_sTypeFilter += _T("|.");
-			m_sTypeFilter += strType;
-			m_sTypeFilter += '|';
+			ASSERT( strExt.GetLength() );
+
+			m_pTypeFilters.SetAt( strExt.MakeLower(), bResult );
 		}
 	}
 }
@@ -723,7 +767,7 @@ CString CSchema::GetIndexedWords(CXMLElement* pXML) const
 			
 			if ( strMember.GetLength() )
 			{
-				if ( str.GetLength() ) str += ' ';
+				if ( str.GetLength() ) str += _T(' ');
 				str += strMember;
 			}
 		}

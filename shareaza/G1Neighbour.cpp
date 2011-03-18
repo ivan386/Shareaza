@@ -1318,13 +1318,16 @@ BOOL CG1Neighbour::OnQuery(CG1Packet* pPacket)
 
 	// Have the CQuerySearch class turn the query search packet into a CQuerySearch object (do)
 	CQuerySearchPtr pSearch = CQuerySearch::FromPacket( pPacket );
-	if ( ! pSearch )
+	if ( ! pSearch || pSearch->m_bDropMe )
 	{
 		// The CQuerySearch class rejected the search, drop the packet
-		theApp.Message( MSG_INFO, IDS_PROTOCOL_BAD_QUERY, (LPCTSTR)m_sAddress );
+		if ( ! pSearch )
+		{
+			theApp.Message( MSG_WARNING, IDS_PROTOCOL_BAD_QUERY, (LPCTSTR)m_sAddress );
+			DEBUG_ONLY( pPacket->Debug( _T("Malformed Query.") ) );
+		}
 		Statistics.Current.Gnutella1.Dropped++;
 		m_nDropCount++;
-		DEBUG_ONLY( pPacket->Debug( _T("Malformed Query.") ) );
 		return TRUE; // Stay connected to the remote computer
 	}
 

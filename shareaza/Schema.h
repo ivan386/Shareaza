@@ -1,7 +1,7 @@
 //
 // Schema.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -33,13 +33,10 @@ typedef const CSchema* CSchemaPtr;
 
 class CSchema  
 {
-// Construction
 public:
 	CSchema();
 	virtual ~CSchema();
 	
-// Attributes
-public:
 	int			m_nType;
 	CString		m_sTitle;
 	CString		m_sPlural;
@@ -47,12 +44,11 @@ public:
 	int			m_nAvailability;
 	BOOL		m_bPrivate;
 	CString		m_sDonkeyType;
-public:
+
 	CList< CSchemaMember* >	m_pMembers;
 	CList< CString >	m_pExtends;
 	CList< CSchemaChild* >	m_pContains;
 	CString		m_sDefaultColumns;
-	CString		m_sTypeFilter;
 	CList< CSchemaBitzi* >	m_pBitziMap;
 	CString		m_sBitziTest;
 	CString		m_sLibraryView;
@@ -60,7 +56,7 @@ public:
 	CString		m_sHeaderSubtitle;
 	CString		m_sTileLine1;
 	CString		m_sTileLine2;
-public:
+
 	CString		m_sIcon;
 	int			m_nIcon16;
 	int			m_nIcon32;
@@ -69,11 +65,11 @@ public:
 	enum { stFile, stFolder };
 	enum { saDefault, saAdvanced, saSystem, saMax };
 
-protected:
-	CString		m_sURI;
-	
-// Operations
-public:
+	POSITION		GetFilterIterator() const;
+	void			GetNextFilter(POSITION& pos, CString& sType, BOOL& bResult) const;
+	BOOL			FilterType(LPCTSTR pszFile) const;
+	CString			GetFilterSet() const;
+
 	POSITION		GetMemberIterator() const;
 	CSchemaMember*	GetNextMember(POSITION& pos) const;
 	CSchemaMember*	GetMember(LPCTSTR pszName) const;
@@ -88,7 +84,12 @@ public:
 	CString			GetIndexedWords(CXMLElement* pXML) const;
 	CString			GetVisibleWords(CXMLElement* pXML) const;
 	void			ResolveTokens(CString& str, CXMLElement* pXML) const;
+
 protected:
+	CString			m_sURI;
+	typedef CMap < CString, const CString&, BOOL, BOOL& > CSBMap;
+	CSBMap			m_pTypeFilters;
+
 	BOOL			LoadSchema(LPCTSTR pszFile);
 	BOOL			LoadPrimary(CXMLElement* pRoot, CXMLElement* pType);
 	CXMLElement*	GetType(CXMLElement* pRoot, LPCTSTR pszName) const;
@@ -127,22 +128,6 @@ public:
 		}
 		return false;
 	}
-
-	inline bool FilterType(LPCTSTR pszFile, bool bDefault = false) const
-	{
-		if ( m_sTypeFilter.IsEmpty() ) return bDefault;
-
-		LPCTSTR pszExt = _tcsrchr( pszFile, '.' );
-		if ( pszExt == NULL ) return false;
-
-		CString strExt = _T("|");
-		strExt += pszExt;
-		strExt += '|';
-		ToLower( strExt );
-
-		return m_sTypeFilter.Find( strExt ) >= 0;
-	}
-
 
 // Common Schemas
 public:

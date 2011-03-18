@@ -348,8 +348,7 @@ BOOL CShareazaApp::InitInstance()
 			};
 			for ( int i = 0; szTypes[ i ]; ++ i )
 				if ( CSchemaPtr pSchema = SchemaCache.Get( szTypes[ i ] ) )
-					sTypeFilter += pSchema->m_sTypeFilter;
-			sTypeFilter.Replace( _T("|."), _T("|") );
+					sTypeFilter += pSchema->GetFilterSet();
 			CSettings::LoadSet( &Settings.MediaPlayer.FileTypes, sTypeFilter );
 		}
 		if ( ! Settings.Library.SafeExecute.size() )
@@ -368,8 +367,7 @@ BOOL CShareazaApp::InitInstance()
 			};
 			for ( int i = 0; szTypes[ i ]; ++ i )
 				if ( CSchemaPtr pSchema = SchemaCache.Get( szTypes[ i ] ) )
-					sTypeFilter += pSchema->m_sTypeFilter;
-			sTypeFilter.Replace( _T("|."), _T("|") );
+					sTypeFilter += pSchema->GetFilterSet();
 			CSettings::LoadSet( &Settings.Library.SafeExecute, sTypeFilter );
 		}
 	SplashStep( L"Vendor Data" );

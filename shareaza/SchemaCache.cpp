@@ -1,7 +1,7 @@
 //
 // SchemaCache.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -44,6 +44,7 @@ CSchemaCache::CSchemaCache()
 	// experimental values
 	m_pURIs.InitHashTable( 61 );
 	m_pNames.InitHashTable( 61 );
+	m_pTypeFilters.InitHashTable( 1021 );
 }
 
 CSchemaCache::~CSchemaCache()
@@ -91,6 +92,17 @@ int CSchemaCache::Load()
 
 			m_pNames.SetAt( strName, pSchema );
 
+			for ( POSITION pos = pSchema->GetFilterIterator(); pos; )
+			{
+				CString sType;
+				BOOL bResult;
+				pSchema->GetNextFilter( pos, sType, bResult );
+				if ( bResult )
+				{
+					m_pTypeFilters.SetAt( sType, pSchema );
+				}
+			}
+
 			++nCount;
 		}
 		else
@@ -111,8 +123,8 @@ int CSchemaCache::Load()
 
 #ifdef _DEBUG
 	__int64 nEndTotal = GetMicroCount();
-	TRACE( _T("Schemas load time : %I64i ms\n"),
-		( nEndTotal - nStartTotal ) / 1000 );
+	TRACE( _T("Schemas load time : %I64i ms. Found %d types.\n"),
+		( nEndTotal - nStartTotal ) / 1000, m_pTypeFilters.GetCount() );
 #endif
 
 	return nCount;
@@ -130,6 +142,7 @@ void CSchemaCache::Clear()
 	
 	m_pURIs.RemoveAll();
 	m_pNames.RemoveAll();
+	m_pTypeFilters.RemoveAll();
 }
 
 CXMLElement* CSchemaCache::Decode(BYTE* szData, DWORD nLength, CSchemaPtr& pSchema)
@@ -255,16 +268,30 @@ CString CSchemaCache::GetFilter(LPCTSTR pszURI) const
 			ASSERT( FALSE );
 			return CString();
 		}
+
 		CString sTypes;
 		if ( CSchemaPtr pSchemaType = Get( pszURIType ) )
 		{
-			sTypes = pSchemaType->m_sTypeFilter;
-			sTypes.Replace( _T("||"), _T(";*") );
-			sTypes.Insert( 1, _T('*') );
+			for ( POSITION pos = pSchemaType->GetFilterIterator(); pos; )
+			{
+				CString sType;
+				BOOL bResult;
+				pSchemaType->GetNextFilter( pos, sType, bResult );
+				if ( bResult )
+				{
+					if ( sTypes.GetLength() )
+						sTypes += _T(";*.");
+					else
+						sTypes += _T("|*.");
+					sTypes += sType;
+				}
+			}
 		}
+
+		if ( sTypes.IsEmpty() )
+			return pSchema->m_sHeaderTitle + _T("|*.*|");
 		else
-			sTypes = _T("|*.*|");
-		return pSchema->m_sHeaderTitle + sTypes;
+			return pSchema->m_sHeaderTitle + sTypes + _T("|");
 	}
 
 	return CString();
