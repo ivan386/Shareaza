@@ -816,7 +816,7 @@ BOOL CUploadTransferHTTP::RequestPartialFile(CDownload* pDownload)
 
 	pDownload->GetAvailableRanges( m_sRanges );
 
-	if ( m_bRange && m_nOffset == 0 && m_nLength == SIZE_UNKNOWN )
+	if ( ! m_bRange || ( m_nOffset == 0 && m_nLength == SIZE_UNKNOWN ) )
 		pDownload->GetRandomRange( m_nOffset, m_nLength );
 
 	if ( m_nLength == SIZE_UNKNOWN )
