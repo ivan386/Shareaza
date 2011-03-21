@@ -534,7 +534,7 @@ void CChatWnd::OnChatEmoticons()
 	if ( UINT nID = m_wndToolBar.ThrowMenu( ID_CHAT_EMOTICONS, pIconMenu, this, TRUE ) )
 	{
 		if ( LPCTSTR pszToken = Emoticons.GetText( nID - 1 ) )
-			InsertText( pszToken );
+			InsertText( CString( _T(" ") ) + pszToken + _T(" ") );
 	}
 }
 
