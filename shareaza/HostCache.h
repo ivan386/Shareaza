@@ -1,7 +1,7 @@
 //
 // HostCache.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -189,7 +189,7 @@ public:
 	void				OnFailure(const IN_ADDR* pAddress, WORD nPort, bool bRemove = true);
 	void				OnFailure(LPCTSTR szAddress, bool bRemove = true);
 	void				OnSuccess(const IN_ADDR* pAddress, WORD nPort, bool bUpdate = true);
-	void				PruneOldHosts();
+	void				PruneOldHosts(DWORD tNow);
 	void				Clear();
 	void				Serialize(CArchive& ar, int nVersion);
 

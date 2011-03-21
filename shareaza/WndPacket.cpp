@@ -251,7 +251,7 @@ void CPacketWnd::SmartDump(const CPacket* pPacket, const SOCKADDR_IN* pAddress, 
 	CString strNow;
 	strNow.Format( _T("%0.2i:%0.2i:%0.2i"),
 		pNow.GetHour(), pNow.GetMinute(), pNow.GetSecond() );
-	CString sAddress( inet_ntoa( pAddress->sin_addr ) );
+	CString sAddress( HostToString( pAddress ) );
 	CString sProtocol( protocolAbbr[ pPacket->m_nProtocol ] );
 
 	pItem->Set( 0, strNow );

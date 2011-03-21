@@ -1,7 +1,7 @@
 //
 // HostCache.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -184,12 +184,13 @@ void CHostCache::Serialize(CArchive& ar)
 void CHostCache::PruneOldHosts()
 {
 	DWORD tNow = static_cast< DWORD >( time( NULL ) );
-	if ( tNow - m_tLastPruneTime > 60 )
+	if ( tNow  > m_tLastPruneTime + 60 ) // Every minute
 	{
 		for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
 		{
-			m_pList.GetNext( pos )->PruneOldHosts();
+			m_pList.GetNext( pos )->PruneOldHosts( tNow );
 		}
+
 		m_tLastPruneTime = tNow;
 	}
 }
@@ -329,25 +330,18 @@ BOOL CHostCacheList::Add(LPCTSTR pszHost, DWORD tSeen, LPCTSTR pszVendor, DWORD 
 {
 	CString strHost( pszHost );
 	
-	strHost.TrimLeft();
-	strHost.TrimRight();
-	
-	int nPos = strHost.ReverseFind( ' ' );
-	
-	if ( nPos > 0 ) 
+	strHost.Trim();
+	int nPos = strHost.ReverseFind( _T(' ') );
+	if ( nPos > 0 )
 	{
 		CString strTime = strHost.Mid( nPos + 1 );
 		strHost = strHost.Left( nPos );
 		strHost.TrimRight();
-		
-		tSeen = TimeFromString( strTime );
 
-		DWORD tNow = static_cast< DWORD >( time( NULL ) );
-		if ( tNow < tSeen ) 
-			tSeen = tNow;
+		tSeen = TimeFromString( strTime );
 	}
 
-	nPos = strHost.Find( ':' );
+	nPos = strHost.Find( _T(':') );
 	if ( nPos < 0 ) return FALSE;
 	
 	int nPort = GNUTELLA_DEFAULT_PORT;
@@ -604,11 +598,9 @@ void CHostCacheList::OnSuccess(const IN_ADDR* pAddress, WORD nPort, bool bUpdate
 //////////////////////////////////////////////////////////////////////
 // CHostCacheList prune old hosts
 
-void CHostCacheList::PruneOldHosts()
+void CHostCacheList::PruneOldHosts(DWORD tNow)
 {
 	CQuickLock oLock( m_pSection );
-
-	DWORD tNow = static_cast< DWORD >( time( NULL ) );
 	
 	for( CHostCacheMap::iterator i = m_Hosts.begin(); i != m_Hosts.end(); )
 	{
@@ -624,7 +616,7 @@ void CHostCacheList::PruneOldHosts()
 
 		// Query acknowledgment prune (G2)
 		else if ( pHost->m_nProtocol == PROTOCOL_G2 && pHost->m_tAck &&
-			tNow - pHost->m_tAck > Settings.Gnutella2.QueryHostDeadline )
+			tNow > pHost->m_tAck + Settings.Gnutella2.QueryHostDeadline )
 		{
 			pHost->m_tAck = 0;
 			if ( pHost->m_nFailures++ > Settings.Connection.FailureLimit )
@@ -1127,7 +1119,7 @@ CHostCacheHost::CHostCacheHost(PROTOCOLID nProtocol) :
 		m_tConnect = tNow - Settings.eDonkey.QueryThrottle + 10;
 		break;
 	default:
-		break;
+		;
 	}
 }
 
@@ -1223,7 +1215,13 @@ void CHostCacheHost::Serialize(CArchive& ar, int nVersion)
 		ar >> m_nPort;
 		
 		ar >> m_tAdded;
+
+		DWORD tNow = static_cast< DWORD >( time( NULL ) );
 		ar >> m_tSeen;
+		if ( m_tSeen > tNow )
+		{
+			m_tSeen = tNow;
+		}
 		ar >> m_tRetryAfter;
 		
 		CHAR szaVendor[4] = { 0, 0, 0, 0 };
@@ -1338,9 +1336,10 @@ bool CHostCacheHost::Update(WORD nPort, DWORD tSeen, LPCTSTR pszVendor, DWORD nU
 		m_nUDPPort = m_nPort = nPort;
 	}
 
-	if ( ! tSeen )
+	DWORD tNow = static_cast< DWORD >( time( NULL ) );
+	if ( ! tSeen || tSeen > tNow )
 	{
-		tSeen = static_cast< DWORD >( time( NULL ) );
+		tSeen = tNow;
 	}
 	if ( m_tSeen < tSeen )
 	{
@@ -1464,7 +1463,7 @@ bool CHostCacheHost::IsExpired(const DWORD tNow) const
 	}
 }
 
-bool CHostCacheHost::IsThrottled(const DWORD tNow) const
+bool CHostCacheHost::IsThrottled(DWORD tNow) const
 {
 	// Don't overload network name resolver
 	if ( m_pAddress.s_addr == INADDR_ANY && Network.GetResolveCount() > 3 )
@@ -1488,14 +1487,14 @@ bool CHostCacheHost::IsThrottled(const DWORD tNow) const
 //////////////////////////////////////////////////////////////////////
 // CHostCacheHost connection test
 
-bool CHostCacheHost::CanConnect(const DWORD tNow) const
+bool CHostCacheHost::CanConnect(DWORD tNow) const
 {
 	// Don't connect to self
 	if ( Settings.Connection.IgnoreOwnIP && Network.IsSelfIP( m_pAddress ) ) return false;
 
 	return
 		// Let failed host rest some time...
-		( ! m_tFailure || ( tNow - m_tFailure >= Settings.Connection.FailurePenalty ) ) &&
+		( ! m_tFailure || ( tNow >= m_tFailure + Settings.Connection.FailurePenalty ) ) &&
 		// ...and we lost no hope on this host...
 		( m_nFailures <= Settings.Connection.FailureLimit ) &&
 		// ...and host isn't expired...
@@ -1522,7 +1521,7 @@ bool CHostCacheHost::CanQuote(const DWORD tNow) const
 // CHostCacheHost query test
 
 // Can we UDP query this host? (G2/ed2k)
-bool CHostCacheHost::CanQuery(const DWORD tNow) const
+bool CHostCacheHost::CanQuery(DWORD tNow) const
 {
 	// eDonkey2000 server
 	switch ( m_nProtocol )
@@ -1535,7 +1534,7 @@ bool CHostCacheHost::CanQuery(const DWORD tNow) const
 		if ( 0 != m_tAck ) return false;
 		
 		// Must be a recently seen (current) host
-		if ( ( tNow - m_tSeen ) > Settings.Gnutella2.HostCurrent ) return false;
+		if ( tNow > m_tSeen + Settings.Gnutella2.HostCurrent ) return false;
 		
 		// Retry After
 		if ( 0 != m_tRetryAfter && tNow < m_tRetryAfter ) return false;
@@ -1547,7 +1546,7 @@ bool CHostCacheHost::CanQuery(const DWORD tNow) const
 		if ( 0 == m_tQuery ) return true;
 		
 		// Don't query too fast
-		return ( tNow - m_tQuery ) >= Settings.Gnutella2.QueryThrottle;
+		return ( tNow >= m_tQuery + Settings.Gnutella2.QueryThrottle );
 
 	case PROTOCOL_ED2K:
 		// Must support ED2K
@@ -1565,7 +1564,7 @@ bool CHostCacheHost::CanQuery(const DWORD tNow) const
 		if ( 0 == m_tQuery ) return true;
 		
 		// Don't query too fast
-		return ( tNow - m_tQuery ) >= Settings.eDonkey.QueryThrottle;
+		return ( tNow >= m_tQuery + Settings.eDonkey.QueryThrottle );
 
 	default:
 		return false;
