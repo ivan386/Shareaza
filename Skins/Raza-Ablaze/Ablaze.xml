@@ -101,15 +101,7 @@
 
 <windowSkin>
 <image path="main.bmp"/>
-<target window="CSearchWnd.Panel"/>
-<target window="CMediaWnd.Panel"/>
-<target window="CSecurityWnd.Panel"/>
-<target window="CHostCacheWnd.Panel"/>
-<target window="CDiscoveryWnd.Panel"/>
-<target window="CPacketWnd.Panel"/>
-<target window="CSearchMonitorWnd.Panel"/>
-<target window="CHitMonitorWnd.Panel"/>
-<target window="CBrowseHostWnd.Panel"/>
+<target window="CChildWnd.Panel"/>
 
 <parts>
 <part name="Top" rect="0,106,140,23"/>
@@ -130,21 +122,20 @@
 <windowSkin>
 
 <image path="main.bmp"/>
-<target window="CChildWnd.Panel"/>
-<target window="CUploadsWnd.Panel"/>
-<target window="CSystemWnd.Panel"/>
-
-<parts>
-<part name="Top" rect="0,106,140,23"/>
-<part name="TopRight" rect="915,106,109,23"/>
-</parts>
-
-<anchors>
-<anchor name="Icon" rect="4,2,16,16"/>
-</anchors>
-
-<caption rect="23,-1,-82,27" fontFace="Arial" fontSize="12" colour="f65a06" inactiveColour="f65a06" fontWeight="bold"/>
-
+	<target window="CHomeWnd.Panel"/>
+	<target window="CLibraryWnd.Panel"/>
+	<target window="CDownloadsWnd.Panel"/>
+	<target window="CUploadsWnd.Panel"/>
+	<target window="CNeighboursWnd.Panel"/>
+	<target window="CSystemWnd.Panel"/>
+	<parts>
+		<part name="Top" rect="0,106,140,23"/>
+		<part name="TopRight" rect="915,106,109,23"/>
+	</parts>
+	<anchors>
+		<anchor name="Icon" rect="4,2,16,16"/>
+	</anchors>
+	<caption rect="23,-1,-82,27" fontFace="Arial" fontSize="12" colour="f65a06" inactiveColour="f65a06" fontWeight="bold"/>
 </windowSkin>
 
 <windowSkin>

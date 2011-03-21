@@ -342,15 +342,7 @@
 
       <image path="TitleBarSet.bmp"/>
 
-      <target window="CMediaWnd.Panel"/>
-      <target window="CSearchWnd.Panel"/>
-      <target window="CSecurityWnd.Panel"/>
-      <target window="CHostCacheWnd.Panel"/>
-      <target window="CDiscoveryWnd.Panel"/>
-      <target window="CPacketWnd.Panel"/>
-      <target window="CSearchMonitorWnd.Panel"/>
-      <target window="CHitMonitorWnd.Panel"/>
-      <target window="CBrowseHostWnd.Panel"/>
+      <target window="CChildWnd.Panel"/>
 
       <parts>
 
