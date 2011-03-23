@@ -4614,6 +4614,7 @@ BEGIN
     ID_LIBRARY_PANEL        "Show or hide the library detail panel."
     ID_LIBRARY_FOLDER_PROPERTIES 
                             "View and edit the properties of the selected album folder..."
+	ID_LIBRARY_FOLDER_DELETE "Delete the selected album folder."
     ID_LIBRARY_FOLDER_NEW   "Create a new album folder here..."
     ID_LIBRARY_UNLINK       "Remove the select files from the current album folder."
     ID_LIBRARY_FOLDER_METADATA 
