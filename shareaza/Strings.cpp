@@ -99,14 +99,17 @@ const CLowerCaseTable ToLower;
 CLowerCaseTable::CLowerCaseTable()
 {
 	for ( size_t i = 0; i < 65536; ++i ) cTable[ i ] = TCHAR( i );
-	CharLowerBuff( cTable, 65536 );
+	VERIFY( CharLowerBuff( cTable, 65536 ) == 65536 );
+	
+	cTable[ 0x0130 ] = 0x0069;	// Turkish Capital I with dot above to Latin Small I
 
-	// Greek Capital Sigma and Greek Small Final Sigma to Greek Small Sigma
-	cTable[ 931 ] = 963;
-	cTable[ 962 ] = 963;
+	cTable[ 0x03A3 ] = 0x03C3;	// Greek Capital Sigma to Greek Small Sigma
+	cTable[ 0x03C2 ] = 0x03C3;	// Greek Small Final Sigma to Greek Small Sigma
 
-	// Turkish Capital I with dot to "i"
-	cTable[ 304 ] = 105;
+	cTable[ 0x0401 ] = 0x0435;	// Russian Capital Io to Russian Small Ie
+	cTable[ 0x0451 ] = 0x0435;	// Russian Small Io to Russian Small Ie
+	cTable[ 0x0419 ] = 0x0438;	// Russian Capital Short I to Russian Small I
+	cTable[ 0x0439 ] = 0x0438;	// Russian Small Short I to Russian Small I
 
 	// Convert fullwidth latin characters to halfwidth
 	for ( size_t i = 65281 ; i < 65313 ; ++i ) cTable[ i ] = TCHAR( i - 65248 );
