@@ -179,12 +179,12 @@ bool CLocalSearch::ExecutePartialFiles(INT_PTR nMaximum, INT_PTR& nHits)
 		// Browse request, or no partials requested, or non Gnutella 2 request
 		return true;
 
-	CList< const CDownload* > oFilesInPacket;
+	CList< CDownload* > oFilesInPacket;
 
 	for ( POSITION pos = Downloads.GetIterator() ;
 		pos && ( ! nMaximum || ( nHits + oFilesInPacket.GetCount() < nMaximum ) ); )
 	{
-		const CDownload* pDownload = Downloads.GetNext( pos );
+		CDownload* pDownload = Downloads.GetNext( pos );
 
 		if ( IsValidForHit( pDownload ) )
 		{
@@ -220,7 +220,7 @@ bool CLocalSearch::ExecuteSharedFiles(INT_PTR nMaximum, INT_PTR& nHits)
 		for ( POSITION pos = pFiles->GetHeadPosition() ;
 			pos && ( ! nMaximum || ( nHits + oFilesInPacket.GetCount() < nMaximum ) ); )
 		{
-			const CLibraryFile* pFile = pFiles->GetNext( pos );
+			CLibraryFile* pFile = pFiles->GetNext( pos );
 
 			if ( IsValidForHit( pFile ) )
 			{
@@ -247,7 +247,7 @@ bool CLocalSearch::ExecuteSharedFiles(INT_PTR nMaximum, INT_PTR& nHits)
 }
 
 template< typename T >
-void CLocalSearch::SendHits(const CList< const T * >& oFiles)
+void CLocalSearch::SendHits(const CList< T* >& oFiles)
 {
 	CPacket* pPacket = NULL;
 	CSchemaMap pSchemas;
@@ -301,7 +301,7 @@ void CLocalSearch::SendHits(const CList< const T * >& oFiles)
 // CLocalSearch add file hit
 
 template<>
-void CLocalSearch::AddHit< CLibraryFile >(CPacket* pPacket, CSchemaMap& pSchemas, const CLibraryFile* pFile, int nIndex)
+void CLocalSearch::AddHit< CLibraryFile >(CPacket* pPacket, CSchemaMap& pSchemas, CLibraryFile* pFile, int nIndex)
 {
 	ASSERT( pPacket != NULL );
 
@@ -321,7 +321,7 @@ void CLocalSearch::AddHit< CLibraryFile >(CPacket* pPacket, CSchemaMap& pSchemas
 	}
 }
 
-void CLocalSearch::AddHitG1(CG1Packet* pPacket, CSchemaMap& pSchemas, CLibraryFile const * const pFile, int nIndex)
+void CLocalSearch::AddHitG1(CG1Packet* pPacket, CSchemaMap& pSchemas, CLibraryFile* pFile, int nIndex)
 {
 	QWORD nFileSize = pFile->GetSize();
 
@@ -337,12 +337,17 @@ void CLocalSearch::AddHitG1(CG1Packet* pPacket, CSchemaMap& pSchemas, CLibraryFi
 		pPacket->WriteString( pFile->m_sName );
 	}
 
-	if ( pFile->m_oSHA1 )
+	if ( pFile->m_oSHA1 && pFile->m_oTiger )
+	{
+		pPacket->WriteString( _T("urn:bitprint:") + pFile->m_oSHA1.toString() + _T('.') + pFile->m_oTiger.toString(), FALSE );
+		pPacket->WriteByte( G1_PACKET_HIT_SEP );
+	}
+	else if ( pFile->m_oSHA1 )
 	{
 		pPacket->WriteString( _T("urn:sha1:") + pFile->m_oSHA1.toString(), FALSE );
 		pPacket->WriteByte( G1_PACKET_HIT_SEP );
 	}
-	if ( pFile->m_oTiger )
+	else if ( pFile->m_oTiger )
 	{
 		pPacket->WriteString( _T("urn:ttroot:") + pFile->m_oTiger.toString(), FALSE );
 		pPacket->WriteByte( G1_PACKET_HIT_SEP );
@@ -352,14 +357,14 @@ void CLocalSearch::AddHitG1(CG1Packet* pPacket, CSchemaMap& pSchemas, CLibraryFi
 		pPacket->WriteString( pFile->m_oED2K.toUrn(), FALSE );
 		pPacket->WriteByte( G1_PACKET_HIT_SEP );
 	}
-	else if ( pFile->m_oBTH )
-	{
-		pPacket->WriteString( pFile->m_oBTH.toUrn(), FALSE );
-		pPacket->WriteByte( G1_PACKET_HIT_SEP );
-	}
-	else if ( pFile->m_oMD5 )
+	if ( pFile->m_oMD5 )
 	{
 		pPacket->WriteString( pFile->m_oMD5.toUrn(), FALSE );
+		pPacket->WriteByte( G1_PACKET_HIT_SEP );
+	}
+	if ( pFile->m_oBTH )
+	{
+		pPacket->WriteString( pFile->m_oBTH.toUrn(), FALSE );
 		pPacket->WriteByte( G1_PACKET_HIT_SEP );
 	}
 
@@ -393,13 +398,14 @@ void CLocalSearch::AddHitG1(CG1Packet* pPacket, CSchemaMap& pSchemas, CLibraryFi
 			}
 		}
 
-		/*/ Network wide file creation time (seconds)
-		if ( CGGEPItem* pItem = pBlock.Add( GGEP_HEADER_CREATE_TIME ) )
+		// Network wide file creation time (seconds)
+		if ( DWORD nCreationTime = pFile->GetCreationTime() )
 		{
-			DWORD nCreationTime = 0x488ede96; // test
-			pItem->Write( &nCreationTime, 4 );
+			if ( CGGEPItem* pItem = pBlock.Add( GGEP_HEADER_CREATE_TIME ) )
+			{
+				pItem->Write( &nCreationTime, 4 );
+			}
 		}
-		*/
 
 		pBlock.Write( pPacket );
 	}
@@ -429,7 +435,7 @@ void CLocalSearch::AddHitG1(CG1Packet* pPacket, CSchemaMap& pSchemas, CLibraryFi
 	}
 }
 
-void CLocalSearch::AddHitG2(CG2Packet* pPacket, CSchemaMap& /*pSchemas*/, CLibraryFile const * const pFile, int /*nIndex*/)
+void CLocalSearch::AddHitG2(CG2Packet* pPacket, CSchemaMap& /*pSchemas*/, CLibraryFile* pFile, int /*nIndex*/)
 {
 	// Pass 1: Calculate child group size
 	// Pass 2: Write the child packet
@@ -664,7 +670,7 @@ void CLocalSearch::AddHitG2(CG2Packet* pPacket, CSchemaMap& /*pSchemas*/, CLibra
 	while( bCalculate );
 }
 
-void CLocalSearch::AddHitDC(CDCPacket* pPacket, CSchemaMap& /*pSchemas*/, CLibraryFile const * const pFile, int /*nIndex*/)
+void CLocalSearch::AddHitDC(CDCPacket* pPacket, CSchemaMap& /*pSchemas*/, CLibraryFile* pFile, int /*nIndex*/)
 {
 	// $SR Nick FileName<0x05>FileSize FreeSlots/TotalSlots<0x05>HubName (HubIP:HubPort)|
 	
@@ -722,7 +728,7 @@ void CLocalSearch::AddHitDC(CDCPacket* pPacket, CSchemaMap& /*pSchemas*/, CLibra
 // CLocalSearch add download hit
 
 template<>
-void CLocalSearch::AddHit< CDownload >(CPacket* pPacket, CSchemaMap& pSchemas, const CDownload* pDownload, int nIndex)
+void CLocalSearch::AddHit< CDownload >(CPacket* pPacket, CSchemaMap& pSchemas, CDownload* pDownload, int nIndex)
 {
 	ASSERT( pPacket != NULL );
 
@@ -742,12 +748,12 @@ void CLocalSearch::AddHit< CDownload >(CPacket* pPacket, CSchemaMap& pSchemas, c
 	}
 }
 
-void CLocalSearch::AddHitG1(CG1Packet* /*pPacket*/, CSchemaMap& /*pSchemas*/, CDownload const * const /*pDownload*/, int /*nIndex*/)
+void CLocalSearch::AddHitG1(CG1Packet* /*pPacket*/, CSchemaMap& /*pSchemas*/, CDownload* /*pDownload*/, int /*nIndex*/)
 {
 	// TODO
 }
 
-void CLocalSearch::AddHitG2(CG2Packet* pPacket, CSchemaMap& /*pSchemas*/, CDownload const * const pDownload, int /*nIndex*/)
+void CLocalSearch::AddHitG2(CG2Packet* pPacket, CSchemaMap& /*pSchemas*/, CDownload* pDownload, int /*nIndex*/)
 {
 	// Pass 1: Calculate child group size
 	// Pass 2: Write the child packet
@@ -900,7 +906,7 @@ void CLocalSearch::AddHitG2(CG2Packet* pPacket, CSchemaMap& /*pSchemas*/, CDownl
 	while( bCalculate );
 }
 
-void CLocalSearch::AddHitDC(CDCPacket* /*pPacket*/, CSchemaMap& /*pSchemas*/, CDownload const * const /*pDownload*/, int /*nIndex*/)
+void CLocalSearch::AddHitDC(CDCPacket* /*pPacket*/, CSchemaMap& /*pSchemas*/, CDownload* /*pDownload*/, int /*nIndex*/)
 {
 	// TODO
 }
@@ -926,8 +932,10 @@ CPacket* CLocalSearch::CreatePacket()
 
 CG1Packet* CLocalSearch::CreatePacketG1()
 {
-	CG1Packet* pPacket = CG1Packet::New( G1_PACKET_HIT,
-		( m_pSearch ? m_pSearch->m_nTTL : Settings.Gnutella1.SearchTTL ), m_oGUID );
+	DWORD nTTL = m_bUDP ? 1 :
+		( m_pSearch ? ( m_pSearch->m_nHops + 2 ) : Settings.Gnutella1.SearchTTL );
+
+	CG1Packet* pPacket = CG1Packet::New( G1_PACKET_HIT, nTTL, m_oGUID );
 
 	pPacket->WriteByte( 0 ); // Hit count will be set latter
 	pPacket->WriteShortLE( htons( Network.m_pHost.sin_port ) );
@@ -1134,7 +1142,14 @@ void CLocalSearch::WriteTrailerG1(CG1Packet* pPacket, CSchemaMap& pSchemas, BYTE
 		if ( Settings.Community.ServeFiles )
 		{
 			pBlock.Add( GGEP_HEADER_BROWSE_HOST );
+		}
+		if ( Settings.Community.ChatEnable )
+		{
 			pBlock.Add( GGEP_HEADER_CHAT );
+		}
+		if ( m_bUDP && m_pSearch->m_nHops == 0 )
+		{
+			pBlock.Add( GGEP_HEADER_MULTICAST_RESPONSE );
 		}
 
 		pBlock.Write( pPacket );

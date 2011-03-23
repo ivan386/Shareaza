@@ -65,19 +65,19 @@ public:
 	BOOL				m_bWantCOM;		// G2: Comments request
 	BOOL				m_bWantPFS;		// G2: Partial Files Search request
 	BOOL				m_bAndG1;
-	BYTE				m_nTTL;			// G1: Suggested TTL for answer
+	BYTE				m_nHops;		// G1: Received packet hops
 	BOOL				m_bUDP;			// G2: Packet received over UDP
-	SOCKADDR_IN			m_pEndpoint;	// G2: Packet received from this host
+	SOCKADDR_IN			m_pEndpoint;	// G1,G2: Packet received from this host
 	DWORD				m_nKey;			// G2: Hub query key
 	bool				m_bFirewall;	// G1: Firewalled host
 	bool				m_bDynamic;		// G1: Leaf Guided Dynamic Query
 	bool				m_bBinHash;		// G1: GGEP "H" allowed
 	bool				m_bOOB;			// G1: Out of Band Query
 	bool				m_bOOBv3;		// G1: OOB v3 Security Token support
-	BYTE				m_nMeta;		// G1: MetaType query mask
 	bool				m_bPartial;		// G1: Partial results support
 	bool				m_bNoProxy;		// G1: Disable OOB proxying
 	bool				m_bExtQuery;	// G1: Extended query (long query)
+	bool				m_bWhatsNew;	// G1: "Whats New?" request
 	bool				m_bDropMe;		// Silently drop this packet (to avoid overflow) 
 
 	Hash32List			m_oURNs;			// Hashed URNs
@@ -128,16 +128,16 @@ public:
 	CEDPacket*				ToEDPacket(BOOL bUDP, DWORD nServerFlags = 0) const;
 	CDCPacket*				ToDCPacket() const;
 private:
-	BOOL					ReadG1Packet(CG1Packet* pPacket);
+	BOOL					ReadG1Packet(CG1Packet* pPacket, const SOCKADDR_IN* pEndpoint = NULL);
 	void					ReadGGEP(CG1Packet* pPacket);
 	void					ReadExtension(CG1Packet* pPacket);
 	BOOL					ReadG2Packet(CG2Packet* pPacket, const SOCKADDR_IN* pEndpoint = NULL);
 
 // Operations
 public:
-	BOOL					Match(LPCTSTR pszFilename, LPCTSTR pszSchemaURI, CXMLElement* pXML, const CShareazaFile* pFile ) const;
-	TRISTATE				MatchMetadata(LPCTSTR pszSchemaURI, CXMLElement* pXML) const;
-	BOOL					MatchMetadataShallow(LPCTSTR pszSchemaURI, CXMLElement* pXML, bool* bReject = NULL) const;
+	BOOL					Match(LPCTSTR pszFilename, LPCTSTR pszSchemaURI, const CXMLElement* pXML, const CShareazaFile* pFile ) const;
+	TRISTATE				MatchMetadata(LPCTSTR pszSchemaURI, const CXMLElement* pXML) const;
+	BOOL					MatchMetadataShallow(LPCTSTR pszSchemaURI, const CXMLElement* pXML, bool* bReject = NULL) const;
 	void					BuildWordList(bool bExpression = true, bool bLocal=false);
 	void					Serialize(CArchive& ar);
 	BOOL					CheckValid(bool bExpression = true);

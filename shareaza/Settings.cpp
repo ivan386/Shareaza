@@ -334,7 +334,7 @@ void CSettings::Load()
 	Add( _T("Gnutella"), _T("DeflateHub2Hub"), &Gnutella.DeflateHub2Hub, true );
 	Add( _T("Gnutella"), _T("DeflateHub2Leaf"), &Gnutella.DeflateHub2Leaf, true );
 	Add( _T("Gnutella"), _T("DeflateLeaf2Hub"), &Gnutella.DeflateLeaf2Hub, false );
-	Add( _T("Gnutella"), _T("HitsPerPacket"), &Gnutella.HitsPerPacket, 10, 1, 1, 10, _T(" files") );
+	Add( _T("Gnutella"), _T("HitsPerPacket"), &Gnutella.HitsPerPacket, 8, 1, 1, 8, _T(" files") );
 	Add( _T("Gnutella"), _T("HostCacheSize"), &Gnutella.HostCacheSize, 1024, 1, 32, 16384, _T(" hosts") );
 	Add( _T("Gnutella"), _T("HostCacheView"), &Gnutella.HostCacheView, PROTOCOL_ED2K );
 	Add( _T("Gnutella"), _T("MaxHits"), &Gnutella.MaxHits, 64, 1, 0, 4096, _T(" files") );
@@ -353,6 +353,7 @@ void CSettings::Load()
 	Add( _T("Gnutella1"), _T("MaxHostsInPongs"), &Gnutella1.MaxHostsInPongs, 10, 1, 5, 30 );
 	Add( _T("Gnutella1"), _T("MaximumQuery"), &Gnutella1.MaximumQuery, 256, 1, 32, 262144 );
 	Add( _T("Gnutella1"), _T("MaximumTTL"), &Gnutella1.MaximumTTL, 10, 1, 1, 10 );
+	Add( _T("Gnutella1"), _T("MCastPingRate"), &Gnutella1.MCastPingRate, 60*1000, 1000, 60, 60*60, _T(" s") );
 	Add( _T("Gnutella1"), _T("NumHubs"), &Gnutella1.NumHubs, 3, 1, 1, 5 );
 	Add( _T("Gnutella1"), _T("NumLeafs"), &Gnutella1.NumLeafs, 50, 1, 5, 1024 );
 	Add( _T("Gnutella1"), _T("NumPeers"), &Gnutella1.NumPeers, 32, 1, 15, 64 ); // For X-Degree
@@ -362,11 +363,11 @@ void CSettings::Load()
 	Add( _T("Gnutella1"), _T("PingRate"), &Gnutella1.PingRate, 30000, 1000, 15, 180, _T(" s") );
 	Add( _T("Gnutella1"), _T("PongCache"), &Gnutella1.PongCache, 10000, 1000, 1, 180, _T(" s") );
 	Add( _T("Gnutella1"), _T("PongCount"), &Gnutella1.PongCount, 10, 1, 1, 64 );
+	Add( _T("Gnutella1"), _T("QueryGlobalThrottle"), &Gnutella1.QueryGlobalThrottle, 60*1000, 1000, 60, 60*60, _T(" s") );
 	Add( _T("Gnutella1"), _T("QueryHitUTF8"), &Gnutella1.QueryHitUTF8, true );
 	Add( _T("Gnutella1"), _T("QuerySearchUTF8"), &Gnutella1.QuerySearchUTF8, true );
 	Add( _T("Gnutella1"), _T("QueryThrottle"), &Gnutella1.QueryThrottle, 120, 1, 30, 60*60, _T(" s") );
 	Add( _T("Gnutella1"), _T("SearchTTL"), &Gnutella1.SearchTTL, 3, 1, 1, 3 );
-	Add( _T("Gnutella1"), _T("StrictPackets"), &Gnutella1.StrictPackets, false );
 	Add( _T("Gnutella1"), _T("TranslateTTL"), &Gnutella1.TranslateTTL, 2, 1, 1, 2 );
 	Add( _T("Gnutella1"), _T("VendorMsg"), &Gnutella1.VendorMsg, true );
 

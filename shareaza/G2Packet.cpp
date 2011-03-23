@@ -1,7 +1,7 @@
 //
 // G2Packet.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -878,9 +878,8 @@ BOOL CG2Packet::OnCommonHit(const SOCKADDR_IN* pHost)
 
 	if ( pHits == NULL )
 	{
+		theApp.Message( MSG_ERROR, IDS_PROTOCOL_BAD_HIT, (LPCTSTR)HostToString( pHost ) );
 		DEBUG_ONLY( Debug( _T("Malformed Hit") ) );
-		theApp.Message( MSG_ERROR, IDS_PROTOCOL_BAD_HIT,
-			(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ) );
 		Statistics.Current.Gnutella2.Dropped++;
 		return FALSE;
 	}
@@ -889,24 +888,21 @@ BOOL CG2Packet::OnCommonHit(const SOCKADDR_IN* pHost)
 	// If it doesn't we'll drop it.
 	if ( pHits->m_pAddress.S_un.S_addr != pHost->sin_addr.S_un.S_addr )
 	{
+		theApp.Message( MSG_ERROR, IDS_PROTOCOL_BAD_HIT, (LPCTSTR)HostToString( pHost ) );
 		DEBUG_ONLY( Debug( _T("Hit sender IP does not match \"Node Address\"") ) );
-		theApp.Message( MSG_ERROR, IDS_PROTOCOL_BAD_HIT,
-			(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ) );
 		Statistics.Current.Gnutella2.Dropped++;
 		pHits->Delete();
-		return FALSE;
+		return TRUE;
 	}
 
 	if ( Security.IsDenied( &pHits->m_pAddress ) )
 	{
-		theApp.Message( MSG_ERROR, IDS_PROTOCOL_BAD_HIT,
-			(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ) );
 		Statistics.Current.Gnutella2.Dropped++;
 		pHits->Delete();
-		return FALSE;
+		return TRUE;
 	}
 
-	if ( !pHits->m_bBogus )
+	if ( ! pHits->m_bBogus )
 	{
 		Network.NodeRoute->Add( pHits->m_oClientID, pHost );
 

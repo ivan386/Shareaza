@@ -1,7 +1,7 @@
 //
 // G1Packet.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -24,14 +24,22 @@
 
 #include "StdAfx.h"
 #include "Shareaza.h"
-#include "Buffer.h"
 #include "Settings.h"
+#include "Buffer.h"
 #include "Datagrams.h"
 #include "DiscoveryServices.h"
 #include "G1Packet.h"
+#include "GProfile.h"
+#include "Handshakes.h"
 #include "HostCache.h"
 #include "LibraryMaps.h"
+#include "LocalSearch.h"
+#include "Neighbour.h"
+#include "Neighbours.h"
 #include "Network.h"
+#include "QueryHit.h"
+#include "QuerySearch.h"
+#include "SearchManager.h"
 #include "Security.h"
 #include "Statistics.h"
 #include "VendorCache.h"
@@ -274,8 +282,7 @@ int CG1Packet::GGEPReadCachedHosts(const CGGEPBlock& pGGEP)
 			WORD nPort = 0;
 			pIPPs->Read( (void*)&nAddress, 4 );
 			pIPPs->Read( (void*)&nPort, 2 );
-			theApp.Message( MSG_DEBUG, _T("Got G1 host %s:%i"), 
-				(LPCTSTR)CString( inet_ntoa( *(IN_ADDR*)&nAddress ) ), nPort ); 
+			DEBUG_ONLY( theApp.Message( MSG_DEBUG, _T("Got G1 host %s:%i"), (LPCTSTR)CString( inet_ntoa( *(IN_ADDR*)&nAddress ) ), nPort ) ); 
 			CHostCacheHostPtr pCachedHost =
 				HostCache.Gnutella1.Add( (IN_ADDR*)&nAddress, nPort );
 			if ( pCachedHost ) nCount++;
@@ -297,8 +304,7 @@ int CG1Packet::GGEPReadCachedHosts(const CGGEPBlock& pGGEP)
 				WORD nPort = 0;
 				pGDNAs->Read( (void*)&nAddress, 4 );
 				pGDNAs->Read( (void*)&nPort, 2 );
-				theApp.Message( MSG_DEBUG, _T("Got GDNA host %s:%i"), 
-					(LPCTSTR)CString( inet_ntoa( *(IN_ADDR*)&nAddress ) ), nPort ); 
+				DEBUG_ONLY( theApp.Message( MSG_DEBUG, _T("Got GDNA host %s:%i"), (LPCTSTR)CString( inet_ntoa( *(IN_ADDR*)&nAddress ) ), nPort ) ); 
 				CHostCacheHostPtr pCachedHost =
 					HostCache.Gnutella1.Add( (IN_ADDR*)&nAddress, nPort );
 				if ( pCachedHost ) nCount++;
@@ -310,103 +316,67 @@ int CG1Packet::GGEPReadCachedHosts(const CGGEPBlock& pGGEP)
 	return nCount;
 }
 
-int CG1Packet::GGEPWriteRandomCache(CGGEPItem* pItem)
+void CG1Packet::GGEPWriteRandomCache(CGGEPBlock& pGGEP, LPCTSTR pszID)
 {
-	if ( !pItem ) return 0;
+	CArray< SOCKADDR_IN > pHosts;
 
-	bool bIPP = false;
-	if ( pItem->IsNamed( GGEP_HEADER_PACKED_IPPORTS ) )
-		bIPP = true;
-	else if ( !pItem->IsNamed( GGEP_HEADER_GDNA_PACKED_IPPORTS ) &&
-		!pItem->IsNamed( GGEP_HEADER_GDNA_PACKED_IPPORTS_x ) )
-	return 0;
-
-	DWORD nCount = min( 50ul,
-		( bIPP ? HostCache.Gnutella1.CountHosts() : HostCache.G1DNA.CountHosts() ) );
-	WORD nPos = 0;
-
-	// Create 5 random positions from 0 to 50 in the descending order
-	std::vector< WORD > pList;
-	pList.reserve( Settings.Gnutella1.MaxHostsInPongs );
-	for ( WORD nNo = 0 ; nNo < Settings.Gnutella1.MaxHostsInPongs ; nNo++ )
-	{
-		pList.push_back( GetRandomNum( 0ui16, 50ui16 ) );
-	}
-	std::sort( pList.begin(), pList.end(), CompareNums() );
-
-	nCount = Settings.Gnutella1.MaxHostsInPongs;
-
-	if ( bIPP )
+	if ( _tcsicmp( pszID, GGEP_HEADER_PACKED_IPPORTS ) == 0 )
 	{
 		CQuickLock oLock( HostCache.Gnutella1.m_pSection );
 
-		for ( CHostCacheIterator i = HostCache.Gnutella1.Begin() ;
-			i != HostCache.Gnutella1.End() && nCount && ! pList.empty() ; ++i )
+		for ( CHostCacheIterator i = HostCache.Gnutella1.Begin();
+			i != HostCache.Gnutella1.End(); ++i )
 		{
 			CHostCacheHostPtr pHost = (*i);
 
-			nPos = pList.back();	// take the smallest value;
-			pList.pop_back();		// remove it
-			for ( ; i != HostCache.Gnutella1.End() && nPos-- ; ++i ) pHost = (*i);
-
 			// We won't provide Shareaza hosts for G1 cache, since users may disable
 			// G1 and it will pollute the host caches ( ??? )
-			if ( i != HostCache.Gnutella1.End() &&
-				pHost->m_nFailures == 0 && pHost->m_bCheckedLocally &&
+			if ( pHost->m_nFailures == 0 &&
+				 pHost->m_bCheckedLocally &&
 				! ( pHost->m_pVendor && pHost->m_pVendor->m_sCode == L"GDNA" ) )
 			{
-				pItem->Write( (void*)&pHost->m_pAddress, 4 );
-				pItem->Write( (void*)&pHost->m_nPort, 2 );
-				theApp.Message( MSG_DEBUG, _T("Sending G1 host through pong (%s:%i)"),
-					(LPCTSTR)CString( inet_ntoa( *(IN_ADDR*)&pHost->m_pAddress ) ), pHost->m_nPort );
-				nCount--;
+				SOCKADDR_IN tmp = { AF_INET, pHost->m_nPort, pHost->m_pAddress };
+				pHosts.Add( tmp );
 			}
-
-			if ( i == HostCache.Gnutella1.End() )
-				break;
 		}
 	}
-	else
+	else if ( _tcsicmp( pszID, GGEP_HEADER_GDNA_PACKED_IPPORTS ) == 0 ||
+			  _tcsicmp( pszID, GGEP_HEADER_GDNA_PACKED_IPPORTS_x ) == 0 )
 	{
 		CQuickLock oLock( HostCache.G1DNA.m_pSection );
 
-		for ( CHostCacheIterator i = HostCache.G1DNA.Begin() ;
-			i != HostCache.G1DNA.End() && nCount && ! pList.empty() ; ++i )
+		for ( CHostCacheIterator i = HostCache.G1DNA.Begin();
+			i != HostCache.G1DNA.End(); ++i )
 		{
 			CHostCacheHostPtr pHost = (*i);
 
-			nPos = pList.back();	// take the smallest value;
-			pList.pop_back();		// remove it
-			for ( ; i != HostCache.G1DNA.End() && nPos-- ; ++i ) pHost = (*i);
-
 			// We won't provide Shareaza hosts for G1 cache, since users may disable
 			// G1 and it will pollute the host caches ( ??? )
-			if ( i != HostCache.G1DNA.End() &&
-				pHost->m_nFailures == 0 && pHost->m_bCheckedLocally &&
+			if (  pHost->m_nFailures == 0 &&
+				  pHost->m_bCheckedLocally &&
 				( pHost->m_pVendor && pHost->m_pVendor->m_sCode == L"GDNA" ) )
 			{
-				pItem->Write( (void*)&pHost->m_pAddress, 4 );
-				pItem->Write( (void*)&pHost->m_nPort, 2 );
-				theApp.Message( MSG_DEBUG, _T("Sending GDNA host through pong (%s:%i)"),
-					(LPCTSTR)CString( inet_ntoa( *(IN_ADDR*)&pHost->m_pAddress ) ), pHost->m_nPort );
-				nCount--;
+				SOCKADDR_IN tmp = { AF_INET, pHost->m_nPort, pHost->m_pAddress };
+				pHosts.Add( tmp );
 			}
-
-			if ( i == HostCache.G1DNA.End() )
-				break;
 		}
 	}
-	return Settings.Gnutella1.MaxHostsInPongs - nCount;
-}
 
-bool CG1Packet::IsOOBEnabled()
-{
-	return ( Network.IsFirewalled( CHECK_UDP ) == FALSE && Settings.Gnutella1.EnableOOB );
-}
+	if ( ! pHosts.GetCount() )
+		return;
 
-bool CG1Packet::IsFirewalled()
-{
-	return ( Network.IsFirewalled( CHECK_TCP ) != FALSE );
+	while ( (DWORD)pHosts.GetCount() > Settings.Gnutella1.MaxHostsInPongs )
+		pHosts.RemoveAt( GetRandomNum( 0, pHosts.GetCount() - 1 ) );
+
+	if ( CGGEPItem* pItem = pGGEP.Add( pszID ) )
+	{
+		for ( int i = 0; i < pHosts.GetCount(); i++ )
+		{
+			pItem->Write( (void*)&pHosts.GetAt( i ).sin_addr.s_addr, 4 );
+			pItem->Write( (void*)&pHosts.GetAt( i ).sin_port, 2 );
+			DEBUG_ONLY( theApp.Message( MSG_DEBUG, _T("Sending G1 host through pong (%s)"), (LPCTSTR)HostToString( &pHosts.GetAt( i ) ) ) );
+		}
+	}
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -428,13 +398,17 @@ BOOL CG1Packet::OnPacket(const SOCKADDR_IN* pHost)
 		return OnPong( pHost );
 	case G1_PACKET_VENDOR:
 		return OnVendor( pHost );
+	case G1_PACKET_QUERY:
+		return OnQuery( pHost );
+	case G1_PACKET_HIT:
+		return OnCommonHit( pHost );
+	case G1_PACKET_PUSH:
+		return OnPush( pHost );
 
 #ifdef _DEBUG
 	default:
 		CString tmp;
-		tmp.Format( _T("Unknown packet from %s:%u."),
-			(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ),
-			htons( pHost->sin_port ) );
+		tmp.Format( _T("Unknown packet from %s."), (LPCTSTR)HostToString( pHost ) );
 		Debug( tmp );
 #endif // _DEBUG
 	}
@@ -449,32 +423,11 @@ BOOL CG1Packet::OnPing(const SOCKADDR_IN* pHost)
 {
 	Statistics.Current.Gnutella1.PingsReceived++;
 
-	CString strAddress( inet_ntoa( pHost->sin_addr ) );
-
-	// A ping packet is just a header, and shouldn't have length, if it does, and settings say to worry about stuff like this
-	if ( m_nLength != 0 && Settings.Gnutella1.StrictPackets )
-	{
-		// Record the error, drop the packet, but stay connected
-		theApp.Message( MSG_ERROR, IDS_PROTOCOL_SIZE_PING, (LPCTSTR)strAddress );
-		Statistics.Current.Gnutella1.Dropped++;
-		return TRUE;
-
-	} // The ping is just a header, or settings don't care, and the length is bigger than settings allow
-	else if ( m_nLength > Settings.Gnutella1.MaximumQuery )
-	{
-		// Record the error, drop the packet, but stay connected
-		theApp.Message( MSG_ERROR, IDS_PROTOCOL_TOO_LARGE, (LPCTSTR)strAddress );
-		Statistics.Current.Gnutella1.Dropped++;
-		return TRUE;
-	}
-
 	bool bSCP = false;
 	bool bDNA = false;
 
-	// If this ping packet strangely has length, and the remote computer does GGEP blocks
-	if ( m_nLength && Settings.Gnutella1.EnableGGEP )
+	if ( Settings.Gnutella1.EnableGGEP )
 	{
-		// There is a GGEP block here, and checking and adjusting the TTL and hops counts worked
 		CGGEPBlock pGGEP;
 		if ( pGGEP.ReadFromPacket( this ) )
 		{
@@ -482,57 +435,77 @@ BOOL CG1Packet::OnPing(const SOCKADDR_IN* pHost)
 			{
 				bSCP = true;
 			}
+
 			if ( CGGEPItem* pItem = pGGEP.Find( GGEP_HEADER_SUPPORT_GDNA ) )
 			{
 				bDNA = true;
 			}
 		}
-		else
-		{
-			// It's not, drop the packet, but stay connected
-			theApp.Message( MSG_ERROR, IDS_PROTOCOL_GGEP_REQUIRED, (LPCTSTR)strAddress );
-			Statistics.Current.Gnutella1.Dropped++;
-			return TRUE;
-		}
 	}
-
-	CGGEPBlock pGGEP;
-	if ( bSCP )
-	{
-		GGEPWriteRandomCache( pGGEP.Add( GGEP_HEADER_PACKED_IPPORTS ) );
-	}
-	if ( Settings.Experimental.EnableDIPPSupport )
-	{
-		if ( bDNA )
-		{
-			GGEPWriteRandomCache( pGGEP.Add( GGEP_HEADER_GDNA_PACKED_IPPORTS ) );
-		}
-	}
-
-	// Make a new pong packet, the response to a ping
-	CG1Packet* pPong = New(	// Gets it quickly from the Gnutella packet pool
-		G1_PACKET_PONG,		// We're making a pong packet
-		m_nHops,			// Give it TTL same as HOP count of received PING packet
-		m_oGUID);			// Give it the same GUID as the ping
 
 	// Get statistics about how many files we are sharing
 	QWORD nMyVolume = 0;
 	DWORD nMyFiles = 0;
 	LibraryMaps.GetStatistics( &nMyFiles, &nMyVolume );
 
-	// Start the pong's payload with the IP address and port number from the Network object (do)
+	// Make a new pong packet, the response to a ping
+	CG1Packet* pPong = New( G1_PACKET_PONG, m_nHops, m_oGUID );
+
 	pPong->WriteShortLE( htons( Network.m_pHost.sin_port ) );
 	pPong->WriteLongLE( Network.m_pHost.sin_addr.S_un.S_addr );
-
-	// Then, write in the information about how many files we are sharing
 	pPong->WriteLongLE( nMyFiles );
 	pPong->WriteLongLE( (DWORD)nMyVolume );
 
-	if ( ! pGGEP.IsEmpty() )
-		pGGEP.Write( pPong );
+	if ( Settings.Gnutella1.EnableGGEP )
+	{
+		CGGEPBlock pGGEP;
 
-	// Send the pong packet to the remote computer we are currently looping on
+		// TODO: Gnutella 1 DHT
+		//if ( Settings.Gnutella1.EnableDHT )
+		//	if ( CGGEPItem* pItem = pGGEP.Add( GGEP_HEADER_DHT_SUPPORT ) )
+		//	{
+		//		pItem->Write( , 3 );
+		//	}
+		//}
+
+		if ( CGGEPItem* pItem = pGGEP.Add( GGEP_HEADER_DAILY_AVERAGE_UPTIME ) )
+		{
+			pItem->WriteVary( Network.GetStableTime() );
+		}
+
+		// TODO: Gnutella 1 Client Locale
+		//if ( CGGEPItem* pItem = pGGEP.Add( GGEP_HEADER_CLIENT_LOCALE ) )
+		//{
+		//	pItem->Write( "en#", 4 );
+		//}
+
+		// TODO: Gnutella 1 TLS
+		//if ( Settings.Gnutella1.EnableTLS )
+		//{
+		//	pGGEP.Add( GGEP_HEADER_TLS_SUPPORT ) );
+		//}
+
+		if ( CGGEPItem* pItem = pGGEP.Add( GGEP_HEADER_VENDOR_INFO ) )
+		{
+			pItem->Write( VENDOR_CODE, 4 );
+			pItem->WriteByte( ( theApp.m_nVersion[ 0 ] << 4 ) | theApp.m_nVersion[ 1 ] );
+		}
+
+		if ( bSCP )
+		{
+			GGEPWriteRandomCache( pGGEP, GGEP_HEADER_PACKED_IPPORTS );
+		}
+
+		if ( bDNA && Settings.Experimental.EnableDIPPSupport )
+		{
+			GGEPWriteRandomCache( pGGEP, GGEP_HEADER_GDNA_PACKED_IPPORTS );
+		}
+
+		pGGEP.Write( pPong );
+	}
+
 	Datagrams.Send( pHost, pPong );
+
 	Statistics.Current.Gnutella1.PongsSent++;
 
 	return TRUE;
@@ -545,90 +518,91 @@ BOOL CG1Packet::OnPong(const SOCKADDR_IN* pHost)
 {
 	Statistics.Current.Gnutella1.PongsReceived++;
 
-	// If the pong is too short, or the pong is too long and settings say we should watch that
-	if ( m_nLength < 14 || ( m_nLength > 14 && Settings.Gnutella1.StrictPackets && ! Settings.Gnutella1.EnableGGEP ) )
+	if ( m_nLength < 14 )
 	{
-		// Pong packets should be 14 bytes long, drop this strangely sized one
-		theApp.Message( MSG_ERROR, IDS_PROTOCOL_SIZE_PONG, (LPCTSTR)inet_ntoa( pHost->sin_addr ) );
+		theApp.Message( MSG_ERROR, IDS_PROTOCOL_SIZE_PONG, (LPCTSTR)HostToString( pHost ) );
 		Statistics.Current.Gnutella1.Dropped++;
-		return TRUE; // Don't disconnect from the remote computer, though
+		return FALSE;
 	}
 
-	// Read information from the pong packet
 	WORD nPort     = ReadShortLE(); // 2 bytes, port number (do) of us? the remote computer? the computer that sent the packet?
 	DWORD nAddress = ReadLongLE();  // 4 bytes, IP address
 	DWORD nFiles   = ReadLongLE();  // 4 bytes, the number of files the source computer is sharing
 	DWORD nVolume  = ReadLongLE();  // 4 bytes, the total size of all those files
-	UNUSED_ALWAYS(nFiles);
-	UNUSED_ALWAYS(nVolume);
 
-	CDiscoveryService* pService = DiscoveryServices.GetByAddress(
-		&(pHost->sin_addr) , ntohs( pHost->sin_port ), CDiscoveryService::dsGnutellaUDPHC );
-
-	// If that IP address is in our list of computers to not talk to, except ones in UHC list in discovery
-	if ( pService == NULL && Security.IsDenied( (IN_ADDR*)&nAddress ) )
+	if ( Security.IsDenied( (IN_ADDR*)&nAddress ) )
 	{
-		// Record the packet as dropped, do nothing else, and leave now
 		Statistics.Current.Gnutella1.Dropped++;
 		return TRUE;
 	}
 
-	// If the pong is bigger than 14 bytes, and the remote compuer told us in the handshake it supports GGEP blocks
+	UNUSED_ALWAYS(nFiles);
+	UNUSED_ALWAYS(nVolume);
+
+	CString strVendorCode;
+	CHAR nVersion[ 4 ] = {};
+	DWORD nUptime = 0;
+	bool bUltrapeer = false;
+	bool bGDNA = false;
+	int nCachedHostsCount = -1;
+
 	if ( m_nLength > 14 && Settings.Gnutella1.EnableGGEP )
 	{
-		// There is a GGEP block here, and checking and adjusting the TTL and hops counts worked
 		CGGEPBlock pGGEP;
 		if ( pGGEP.ReadFromPacket( this ) )
 		{
-			// Read vendor code
-			CString strVendorCode;
+			// Read vendor code			
 			if ( CGGEPItem* pVC = pGGEP.Find( GGEP_HEADER_VENDOR_INFO, 4 ) )
 			{
-				CHAR szaVendor[ 4 ] = {};
-				pVC->Read( szaVendor,4 );
-				TCHAR szVendor[5] = { szaVendor[0], szaVendor[1], szaVendor[2], szaVendor[3], 0 };
-				strVendorCode = szVendor;
-				strVendorCode.Trim();
+				CHAR szaVendor[ 5 ] = {};
+				pVC->Read( szaVendor, 4 );
+				strVendorCode = szaVendor;
+				if ( pVC->m_nLength == 5 )
+				{
+					BYTE nVersionPacked = pVC->ReadByte();
+					nVersion[ 0 ] = ( nVersionPacked >> 4 ) & 0x0f;
+					nVersion[ 1 ] = nVersionPacked & 0x0f;
+				}
 			}
 
 			// Read daily uptime
-			DWORD nUptime = 0;
 			if ( CGGEPItem* pDU = pGGEP.Find( GGEP_HEADER_DAILY_AVERAGE_UPTIME, 1 ) )
 			{
 				pDU->Read( (void*)&nUptime, 4 );
 			}
 
-			// Catch pongs and update host cache only from ultrapeers
 			if ( CGGEPItem* pUP = pGGEP.Find( GGEP_HEADER_UP_SUPPORT ) )
 			{
-				HostCache.Gnutella1.Add( (IN_ADDR*)&nAddress, nPort, 0,
-					( strVendorCode.IsEmpty() ? NULL : (LPCTSTR)strVendorCode ),
-					nUptime );
-
-				if ( CGGEPItem* pGDNA = pGGEP.Find( GGEP_HEADER_SUPPORT_GDNA ) )
-				{
-					HostCache.G1DNA.Add( (IN_ADDR*)&nAddress, nPort, 0,
-						( strVendorCode.IsEmpty() ? NULL : (LPCTSTR)strVendorCode ),
-						nUptime );
-				}
+				bUltrapeer = true;
 			}
 
-			int nCount = GGEPReadCachedHosts( pGGEP );
-
-			// Update Gnutella UDPHC state
-			if ( nCount != -1 && pService )
+			if ( CGGEPItem* pGDNA = pGGEP.Find( GGEP_HEADER_SUPPORT_GDNA ) )
 			{
-				pService->OnSuccess();
-				pService->m_nHosts = nCount;
-				pService->OnCopyGiven();
+				bGDNA = true;
 			}
+
+			nCachedHostsCount = GGEPReadCachedHosts( pGGEP );
 		}
-		else
+	}
+
+	if ( bUltrapeer )
+	{
+		HostCache.Gnutella1.Add( (IN_ADDR*)&nAddress, nPort, 0, strVendorCode, nUptime );
+
+		if ( bGDNA )
+			HostCache.G1DNA.Add( (IN_ADDR*)&nAddress, nPort, 0, strVendorCode, nUptime );
+	}
+
+	// Update Gnutella UDPHC state
+	if ( nCachedHostsCount > 0 )
+	{
+		if ( CDiscoveryService* pService = DiscoveryServices.GetByAddress(
+			&(pHost->sin_addr) , ntohs( pHost->sin_port ),
+			CDiscoveryService::dsGnutellaUDPHC ) )
 		{
-			// It's not, drop the packet, but stay connected
-			theApp.Message( MSG_ERROR, IDS_PROTOCOL_GGEP_REQUIRED, (LPCTSTR)inet_ntoa( pHost->sin_addr ) );
-			Statistics.Current.Gnutella1.Dropped++;
-			return TRUE;
+			pService->OnSuccess();
+			pService->m_nHosts = nCachedHostsCount;
+			pService->OnCopyGiven();
 		}
 	}
 
@@ -637,7 +611,6 @@ BOOL CG1Packet::OnPong(const SOCKADDR_IN* pHost)
 
 BOOL CG1Packet::OnVendor(const SOCKADDR_IN* pHost)
 {
-	// If the packet payload is smaller than 8 bytes, or settings don't allow vendor messages
 	if ( m_nLength < 8 || ! Settings.Gnutella1.VendorMsg )
 	{
 		Statistics.Current.Gnutella1.Dropped++;
@@ -660,12 +633,153 @@ BOOL CG1Packet::OnVendor(const SOCKADDR_IN* pHost)
 
 #ifdef _DEBUG
 	CString tmp;
-	tmp.Format( _T("Received vendor packet from %s:%u Function: %u Version: %u."),
-		(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ), htons( pHost->sin_port ),
-		nFunction, nVersion );
+	tmp.Format( _T("Received vendor packet from %s Function: %u Version: %u."),
+		(LPCTSTR)HostToString( pHost ), nFunction, nVersion );
 	Debug( tmp );
 #endif //_DEBUG
 	pHost;
+
+	return TRUE;
+}
+
+BOOL CG1Packet::OnQuery(const SOCKADDR_IN* pHost)
+{
+	Statistics.Current.Gnutella1.Queries++;
+
+	// if the packet payload is too long
+	if ( m_nLength > Settings.Gnutella1.MaximumQuery )
+	{
+		theApp.Message( MSG_ERROR, IDS_PROTOCOL_TOO_LARGE, (LPCTSTR)HostToString( pHost ) );
+		Statistics.Current.Gnutella1.Dropped++;
+		return FALSE;
+	}
+
+	// if TTL is wrong
+	if ( m_nTTL > 1 )
+	{
+		theApp.Message( MSG_ERROR, IDS_PROTOCOL_HIGH_TTL, (LPCTSTR)HostToString( pHost ), m_nTTL, m_nHops );
+		Statistics.Current.Gnutella1.Dropped++;
+		return TRUE;
+	}
+
+	CQuerySearchPtr pSearch = CQuerySearch::FromPacket( this, pHost );
+	if ( ! pSearch || pSearch->m_bDropMe )
+	{
+		if ( ! pSearch )
+		{
+			theApp.Message( MSG_WARNING, IDS_PROTOCOL_BAD_QUERY, (LPCTSTR)HostToString( pHost ) );
+			DEBUG_ONLY( Debug( _T("Malformed Query.") ) );
+		}
+		Statistics.Current.Gnutella1.Dropped++;
+		return TRUE;
+	}
+
+	Network.OnQuerySearch( new CLocalSearch( pSearch, PROTOCOL_G1 ) );
+
+	Statistics.Current.Gnutella1.QueriesProcessed++;
+
+	return TRUE;
+}
+
+BOOL CG1Packet::OnCommonHit(const SOCKADDR_IN* pHost)
+{
+	if ( m_nLength < 11 + Hashes::Guid::byteCount )
+	{
+		theApp.Message( MSG_ERROR, IDS_PROTOCOL_BAD_HIT, (LPCTSTR)HostToString( pHost ) );
+		Statistics.Current.Gnutella1.Dropped++;
+		return FALSE;
+	}
+
+	// if TTL is wrong
+	if ( m_nTTL > 1 )
+	{
+		theApp.Message( MSG_ERROR, IDS_PROTOCOL_HIGH_TTL, (LPCTSTR)HostToString( pHost ), m_nTTL, m_nHops );
+		Statistics.Current.Gnutella1.Dropped++;
+		return TRUE;
+	}
+
+	int nHops = 0;
+	CQueryHit* pHits = CQueryHit::FromG1Packet( this, &nHops );
+
+	if ( pHits == NULL )
+	{
+		theApp.Message( MSG_ERROR, IDS_PROTOCOL_BAD_HIT, (LPCTSTR)HostToString( pHost ) );
+		DEBUG_ONLY( Debug( _T("Malformed Hit") ) );
+		Statistics.Current.Gnutella1.Dropped++;
+		return TRUE;
+	}
+
+	if ( Security.IsDenied( &pHits->m_pAddress ) )
+	{
+		Statistics.Current.Gnutella1.Dropped++;
+		pHits->Delete();
+		return TRUE;
+	}
+
+	if ( ! pHits->m_bBogus )
+	{
+		// Don't route exceeded hits
+		if ( nHops <= (int)Settings.Gnutella1.MaximumTTL &&
+			SearchManager.OnQueryHits( pHits ) )
+		{
+			Network.RouteHits( pHits, this );
+		}
+	}
+
+	Network.OnQueryHits( pHits );
+
+	return TRUE;
+}
+
+BOOL CG1Packet::OnPush(const SOCKADDR_IN* pHost)
+{
+	if ( m_nLength < 26 )
+	{
+		theApp.Message( MSG_NOTICE, IDS_PROTOCOL_SIZE_PUSH, (LPCTSTR)HostToString( pHost ) );
+		Statistics.Current.Gnutella1.Dropped++;
+		return FALSE;
+	}
+
+	Hashes::Guid oClientID;
+	Read( oClientID );
+	DWORD nFileIndex = ReadLongLE();  // 4 bytes, the file index
+	DWORD nAddress   = ReadLongLE();  // 4 bytes, the IP address of
+	WORD nPort       = ReadShortLE(); // 2 bytes, the port number
+
+	if ( Security.IsDenied( (IN_ADDR*)&nAddress ) )
+	{
+		Statistics.Current.Gnutella1.Dropped++;
+		return TRUE;
+	}
+
+	bool bTLS = false;
+
+	if ( m_nLength > 26 )
+	{
+		CGGEPBlock pGGEP;
+		if ( pGGEP.ReadFromPacket( this ) )
+		{
+			if ( pGGEP.Find( GGEP_HEADER_TLS_SUPPORT ) )
+			{
+				bTLS = true;
+			}
+		}
+	}
+
+	if ( ! nPort || ( m_nHops && ( 
+		Network.IsFirewalledAddress( (IN_ADDR*)&nAddress ) ||
+		Network.IsReserved( (IN_ADDR*)&nAddress ) ) ) )
+	{
+		theApp.Message( MSG_NOTICE, IDS_PROTOCOL_ZERO_PUSH, (LPCTSTR)HostToString( pHost ) );
+		Statistics.Current.Gnutella1.Dropped++;
+		return TRUE;
+	}
+
+	if ( validAndEqual( oClientID, Hashes::Guid( MyProfile.oGUID ) ) )
+	{
+		Handshakes.PushTo( (IN_ADDR*)&nAddress, nPort, nFileIndex );
+		return TRUE;
+	}
 
 	return TRUE;
 }

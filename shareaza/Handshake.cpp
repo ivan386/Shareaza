@@ -1,7 +1,7 @@
 //
 // Handshake.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -157,7 +157,6 @@ BOOL CHandshake::OnRun()
 // Send the remote computer our client index and guid in a header like "GIV index:guid/"
 BOOL CHandshake::OnConnected()
 {
-	// Call CConnection's OnConnected method first, even though it does nothing (do)
 	CConnection::OnConnected();
 
 	// copy Profile's GUID
@@ -173,12 +172,14 @@ BOOL CHandshake::OnConnected()
 		int( oID[8] ),  int( oID[9] ),  int( oID[10] ), int( oID[11] ),
 		int( oID[12] ), int( oID[13] ), int( oID[14] ), int( oID[15] ) );
 
-	// Print the string into the output buffer, and write the output buffer to the remote computer
 	Write( strGIV );
+
+	LogOutgoing();
+
 	OnWrite();
 
-	// Record that we uploaded the giv, and report success
 	theApp.Message( MSG_INFO, IDS_UPLOAD_GIV, (LPCTSTR)m_sAddress );
+
 	return TRUE;
 }
 

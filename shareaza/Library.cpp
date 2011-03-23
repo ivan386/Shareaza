@@ -1,7 +1,7 @@
 //
 // Library.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -255,14 +255,29 @@ CFileList* CLibrary::Search(const CQuerySearch* pSearch, int nMaximum, bool bLoc
 {
 	ASSUME_LOCK( m_pSection );
 
-	CFileList* pHits = LibraryMaps.Search( pSearch, nMaximum, bLocal, bAvailableOnly );
-
-	if ( pHits == NULL && pSearch != NULL )
+	if ( pSearch == NULL )
 	{
-		pHits = LibraryDictionary.Search( pSearch, nMaximum, bLocal, bAvailableOnly );
+		// Host browsing
+		ASSERT( ! bLocal );
+		return LibraryMaps.Browse( nMaximum );
 	}
+	else if ( pSearch->m_bWhatsNew )
+	{
+		// "Whats New" search
+		ASSERT( ! bLocal );
+		return LibraryMaps.WhatsNew( pSearch, nMaximum );
+	}
+	else
+	{
+		// Hash or exactly filename+size search
+		if ( CFileList* pHits = LibraryMaps.LookupFilesByHash( pSearch, ! bLocal, bAvailableOnly, nMaximum ) )
+		{
+			return pHits;
+		}
 
-	return pHits;
+		// Regular keywords search
+		return LibraryDictionary.Search( pSearch, nMaximum, bLocal, bAvailableOnly );
+	}
 }
 
 //////////////////////////////////////////////////////////////////////

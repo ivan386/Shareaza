@@ -73,8 +73,8 @@ BOOL CSchema::FilterType(LPCTSTR pszFile) const
 	if ( m_pTypeFilters.IsEmpty() )
 		return FALSE;
 
-	LPCTSTR pszExt = _tcsrchr( pszFile, _T('.') );
-	if ( pszExt == NULL )
+	LPCTSTR pszExt = PathFindExtension( pszFile );
+	if ( ! *pszExt )
 		return FALSE;
 
 	const CSBMap::CPair* pPair = m_pTypeFilters.PLookup(
@@ -170,9 +170,8 @@ void CSchema::Clear()
 BOOL CSchema::Load(LPCTSTR pszFile)
 {
 	CString strFile( pszFile );
-
-	int nSlash = strFile.Find( '.' );
-	if ( nSlash >= 0 ) strFile = strFile.Left( nSlash );
+	PathRemoveExtension( strFile.GetBuffer() );
+	strFile.ReleaseBuffer();
 
 	if ( ! LoadSchema( strFile + _T(".xsd") ) ) return FALSE;
 	

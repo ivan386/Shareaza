@@ -55,7 +55,22 @@ public:
 		CSchemaPtr pSchema = NULL;
 		return ( m_pURIs.Lookup( strURI, pSchema ) ) ? pSchema : NULL;
 	}
-	
+
+	CSchemaPtr GuessByFilename(LPCTSTR pszFile) const
+	{
+		if ( ! pszFile || ! *pszFile )
+			return NULL;
+
+		LPCTSTR pszExt = PathFindExtension( pszFile );
+		if ( ! *pszExt )
+			return NULL;
+
+		const CSSMap::CPair* pPair = m_pTypeFilters.PLookup(
+			CString( pszExt + 1 ).MakeLower() );
+
+		return pPair ? pPair->value : NULL;
+	}
+
 	CSchemaPtr Guess(LPCTSTR pszName) const
 	{
 		if ( ! pszName || ! *pszName ) return NULL;

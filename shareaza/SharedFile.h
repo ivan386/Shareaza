@@ -70,12 +70,12 @@ public:
 	BOOL			m_bBogus;
 	CList< CSharedSource* >		m_pSources;
 	// Search helper variables
-	mutable DWORD				m_nHitsToday;
-	mutable DWORD				m_nHitsTotal;
-	mutable DWORD				m_nSearchCookie;
-	mutable DWORD				m_nSearchWords;
-	mutable const CLibraryFile*	m_pNextHit;
-	mutable DWORD				m_nCollIndex;
+	DWORD			m_nHitsToday;
+	DWORD			m_nHitsTotal;
+	DWORD			m_nSearchCookie;
+	DWORD			m_nSearchWords;
+	CLibraryFile*	m_pNextHit;
+	DWORD			m_nCollIndex;
 	int				m_nIcon16;
 	BOOL			m_bNewFile;
 
@@ -86,6 +86,11 @@ public:
 	CString			GetSearchName() const;
 	bool			IsShared(bool bIgnoreOverride = false) const;
 	void			SetShared(bool bShared, bool bOverride = false);
+	bool			IsPrivateTorrent() const;
+	// Get network wide file creation time (seconds, as time())
+	DWORD			GetCreationTime();
+	// Set network wide file creation time (seconds, as time())
+	BOOL			SetCreationTime(DWORD tTime);
 	BOOL			CheckFileAttributes(QWORD nSize, BOOL bSharedOnly, BOOL bAvailableOnly) const;
 	inline BOOL		IsSharedOverride() const { return m_bShared != TRI_UNKNOWN; }
 	// Is it a real file (i.e. not a ghost file)?
@@ -155,7 +160,8 @@ public:
 
 protected:
 	TRISTATE		m_bShared;
-	CLibraryFolder*	m_pFolder;				// NULL for Ghost files
+	CLibraryFolder*	m_pFolder;		// NULL for Ghost files
+	DWORD			m_tCreateTime;	// Cached network wide file creation time (seconds, as time())
 
 	void			Serialize(CArchive& ar, int nVersion);
 	BOOL			ThreadScan(CSingleLock& pLock, DWORD nScanCookie, QWORD nSize, FILETIME* pTime/*, LPCTSTR pszMetaData*/);
@@ -205,7 +211,7 @@ protected:
 	friend class CDeleteFileDlg;
 };
 
-typedef CList< const CLibraryFile* > CFileList;
+typedef CList< CLibraryFile* > CFileList;
 typedef CMap< DWORD_PTR, DWORD_PTR, CLibraryFile*, CLibraryFile* > CIndexMap;
 typedef CMap< CString, const CString&, CLibraryFile*, CLibraryFile* > CFileMap;
 

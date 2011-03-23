@@ -95,9 +95,6 @@ CGGEPItem* CGGEPBlock::Find(LPCTSTR pszID, DWORD nMinLength) const
 
 	for ( CGGEPItem* pItem = m_pFirst ; pItem ; pItem = pItem->m_pNext )
 	{
-		// think GGEP is Case sensitive so the original code is wrong
-		//if ( pItem->m_sID.CompareNoCase( pszID ) == 0 && pItem->m_nLength >= nMinLength )
-		//	return pItem;
 		if ( pItem->m_sID.Compare( pszID ) == 0 && pItem->m_nLength >= nMinLength )
 			return pItem;
 	}
@@ -348,6 +345,28 @@ void CGGEPItem::WriteUTF8(const CString& strText)
 	CBuffer pBuffer;
 	pBuffer.Print( strText, CP_UTF8 );
 	Write( pBuffer.m_pBuffer, pBuffer.m_nLength );
+}
+
+void CGGEPItem::WriteVary(QWORD nValue)
+{
+	int nLength;
+	if      ( nValue & 0xff00000000000000ui64 )
+		nLength = 8;
+	else if ( nValue & 0x00ff000000000000ui64 )
+		nLength = 7;
+	else if ( nValue & 0x0000ff0000000000ui64 )
+		nLength = 6;
+	else if ( nValue & 0x000000ff00000000ui64 )
+		nLength = 5;
+	else if ( nValue & 0x00000000ff000000ui64 )
+		nLength = 4;
+	else if ( nValue & 0x0000000000ff0000ui64 )
+		nLength = 3;
+	else if ( nValue & 0x000000000000ff00ui64 )
+		nLength = 2;
+	else
+		nLength = 1;
+	Write( &nValue, nLength );
 }
 
 //////////////////////////////////////////////////////////////////////

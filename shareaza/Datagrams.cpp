@@ -1,7 +1,7 @@
 //
 // Datagrams.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -79,10 +79,12 @@ CDatagrams::~CDatagrams()
 
 BOOL CDatagrams::Listen()
 {
-	if ( IsValid() ) return FALSE;
+	if ( IsValid() )
+		return FALSE;
 
 	m_hSocket = socket( PF_INET, SOCK_DGRAM, IPPROTO_UDP );
-	if ( ! IsValid() ) return FALSE;
+	if ( ! IsValid() )
+		return FALSE;
 
 	const BOOL bEnable = TRUE;
 	VERIFY( setsockopt( m_hSocket, SOL_SOCKET, SO_BROADCAST,
@@ -124,6 +126,15 @@ BOOL CDatagrams::Listen()
 		theApp.Message( MSG_INFO, IDS_NETWORK_LISTENING_UDP,
 			(LPCTSTR)CString( inet_ntoa( saHost.sin_addr ) ), htons( saHost.sin_port ) );
 	}
+
+	// Multi-cast ports:
+	// eD2K: 224.0.0.1:5000
+	// LimeWire: 234.21.81.1:6347
+
+	ip_mreq mr = {};
+	mr.imr_multiaddr.s_addr = inet_addr( DEFAULT_G1_MCAST_ADDRESS );
+	VERIFY( setsockopt( m_hSocket, IPPROTO_IP, IP_ADD_MEMBERSHIP,
+		(char FAR *)&mr, sizeof( mr ) ) == 0 );
 
 	WSAEventSelect( m_hSocket, Network.GetWakeupEvent(), FD_READ );
 
@@ -583,14 +594,9 @@ BOOL CDatagrams::TryRead()
 	m_mInput.nTotal += nLength;
 	Statistics.Current.Bandwidth.Incoming += nLength;
 
-	if ( Security.IsDenied( &pFrom.sin_addr ) )
-		return TRUE;
-
-	if ( Network.IsFirewalledAddress( &pFrom.sin_addr, Settings.Connection.IgnoreOwnUDP ) )
+	if ( Network.IsFirewalledAddress( &pFrom.sin_addr, Settings.Connection.IgnoreOwnUDP ) ||
+		Security.IsDenied( &pFrom.sin_addr ) )
 	{
-		theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING,
-			_T("UDP: Dropped datagram (%i bytes) from %s."),
-			nLength, (LPCTSTR)CString( inet_ntoa( pFrom.sin_addr ) ) );
 		return TRUE;
 	}
 

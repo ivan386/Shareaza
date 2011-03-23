@@ -1,7 +1,7 @@
 //
 // LocalSearch.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -60,14 +60,14 @@ protected:
 
 	bool		ExecuteSharedFiles(INT_PTR nMaximum, INT_PTR& nHits);
 	bool		ExecutePartialFiles(INT_PTR nMaximum, INT_PTR& nHits);
-	template< typename T > void SendHits(const CList< const T * >& oFiles);
-	template< typename T > void AddHit(CPacket* pPacket, CSchemaMap& pSchemas, const T * pHit, int nIndex);
-	void		AddHitG1(CG1Packet* pPacket, CSchemaMap& pSchemas, CLibraryFile const * const pFile, int nIndex);
-	void		AddHitG2(CG2Packet* pPacket, CSchemaMap& pSchemas, CLibraryFile const * const pFile, int nIndex);
-	void		AddHitDC(CDCPacket* pPacket, CSchemaMap& pSchemas, CLibraryFile const * const pFile, int nIndex);
-	void		AddHitG1(CG1Packet* pPacket, CSchemaMap& pSchemas, CDownload const * const pDownload, int nIndex);
-	void		AddHitG2(CG2Packet* pPacket, CSchemaMap& pSchemas, CDownload const * const pDownload, int nIndex);
-	void		AddHitDC(CDCPacket* pPacket, CSchemaMap& pSchemas, CDownload const * const pDownload, int nIndex);
+	template< typename T > void SendHits(const CList< T * >& oFiles);
+	template< typename T > void AddHit(CPacket* pPacket, CSchemaMap& pSchemas, T * pHit, int nIndex);
+	void		AddHitG1(CG1Packet* pPacket, CSchemaMap& pSchemas, CLibraryFile* pFile, int nIndex);
+	void		AddHitG2(CG2Packet* pPacket, CSchemaMap& pSchemas, CLibraryFile* pFile, int nIndex);
+	void		AddHitDC(CDCPacket* pPacket, CSchemaMap& pSchemas, CLibraryFile* pFile, int nIndex);
+	void		AddHitG1(CG1Packet* pPacket, CSchemaMap& pSchemas, CDownload* pDownload, int nIndex);
+	void		AddHitG2(CG2Packet* pPacket, CSchemaMap& pSchemas, CDownload* pDownload, int nIndex);
+	void		AddHitDC(CDCPacket* pPacket, CSchemaMap& pSchemas, CDownload* pDownload, int nIndex);
 	template< typename T > bool IsValidForHit(const T * pHit) const;
 
 	CPacket*	CreatePacket();

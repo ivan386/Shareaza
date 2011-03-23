@@ -1,7 +1,7 @@
 //
 // SchemaMember.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -75,7 +75,7 @@ CString CSchemaMember::GetNextItem(POSITION& pos) const
 //////////////////////////////////////////////////////////////////////
 // CSchemaMember value lookup
 
-CString CSchemaMember::GetValueFrom(CXMLElement* pBase, LPCTSTR pszDefault, BOOL bFormat, BOOL bNoValidation) const
+CString CSchemaMember::GetValueFrom(const CXMLElement* pBase, LPCTSTR pszDefault, BOOL bFormat, BOOL bNoValidation) const
 {
 	// OPTIMIZE: This could all be done with LPCTSTR pointers instead of CString
 	CString strValue;

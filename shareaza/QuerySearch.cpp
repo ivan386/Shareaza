@@ -65,7 +65,7 @@ CQuerySearch::CQuerySearch(BOOL bGUID) :
 	m_bWantCOM	( TRUE ),
 	m_bWantPFS	( TRUE ),
 	m_bAndG1	( Settings.Gnutella1.EnableToday ),
-	m_nTTL		( 0 ),
+	m_nHops		( 0 ),
 	m_bUDP		( FALSE ),
 	m_nKey		( 0 ),
 	m_bFirewall	( false ),
@@ -73,10 +73,10 @@ CQuerySearch::CQuerySearch(BOOL bGUID) :
 	m_bBinHash	( false ),
 	m_bOOB		( false ),
 	m_bOOBv3	( false ),
-	m_nMeta		( 0 ),
 	m_bPartial	( false ),
 	m_bNoProxy	( false ),
 	m_bExtQuery	( false ),
+	m_bWhatsNew	( false ),
 	m_bDropMe	( false ),
 	m_oWords	(),
 	m_oNegWords	()
@@ -91,7 +91,7 @@ CQuerySearch::CQuerySearch(BOOL bGUID) :
 
 CQuerySearch::~CQuerySearch()
 {
-	if ( m_pXML ) delete m_pXML;
+	delete m_pXML;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -103,13 +103,15 @@ CG1Packet* CQuerySearch::ToG1Packet(DWORD nTTL) const
 		( nTTL ? min( nTTL, Settings.Gnutella1.SearchTTL ) : Settings.Gnutella1.SearchTTL ),
 		m_oGUID );
 
+	BOOL bWhatsNew = FALSE;
+	BOOL bOOB = ( Settings.Gnutella1.EnableOOB && ! Network.IsFirewalled( CHECK_UDP ) );
+	BOOL bFirewall = Network.IsFirewalled( CHECK_TCP );
+
 	WORD nFlags = G1_QF_TAG | G1_QF_BIN_HASH | G1_QF_DYNAMIC;
-	if ( CG1Packet::IsFirewalled() )
-	{
+	if ( bFirewall )
 		nFlags |= G1_QF_FIREWALLED;
-		// TODO: nFlags |= G1_QF_FWTRANS;
-	}
-	if ( CG1Packet::IsOOBEnabled() )
+	// TODO: nFlags |= G1_QF_FWTRANS;
+	if ( bOOB )
 		nFlags |= G1_QF_OOB;
 	if ( m_bWantXML )
 		nFlags |= G1_QF_XML;
@@ -134,6 +136,14 @@ CG1Packet* CQuerySearch::ToG1Packet(DWORD nTTL) const
 		if ( nPos > 0 )
 			strQuery = strQuery.Left( nPos );
 	}
+
+	if ( strQuery.IsEmpty() && ! IsHashed() )
+	{
+		// Whats New search
+		bWhatsNew = TRUE;
+		strQuery = _T( WHAT_IS_NEW_QUERY_STRING );
+	}
+
 	if ( ! strQuery.IsEmpty() )
 	{
 		if ( Settings.Gnutella1.QuerySearchUTF8 )
@@ -142,47 +152,50 @@ CG1Packet* CQuerySearch::ToG1Packet(DWORD nTTL) const
 			pPacket->WriteString( strQuery );
 	}
 	else
+	{
+		// Hash search
 		pPacket->WriteString( _T( DEFAULT_URN_QUERY ) );
-
-	bool bSep = false;
+	}
 
 	// HUGE extension
-
-	// Deprecated. Replaced by GGEP_HEADER_HASH (G1_QF_BIN_HASH).
-	/* if ( m_oSHA1 )
+	if ( ! m_bBinHash || ! Settings.Gnutella1.EnableGGEP )
 	{
-		strExtra = m_oSHA1.toUrn();
+		if ( m_oSHA1 && m_oTiger )
+		{
+			pPacket->WriteString( _T("urn:bitprint:") + m_oSHA1.toString() + _T('.') + m_oTiger.toString(), FALSE );
+			pPacket->WriteByte( G1_PACKET_HIT_SEP );
+		}
+		else if ( m_oSHA1 )
+		{
+			pPacket->WriteString( _T("urn:sha1:") + m_oSHA1.toString(), FALSE );
+			pPacket->WriteByte( G1_PACKET_HIT_SEP );
+		}
+		else if ( m_oTiger )
+		{
+			pPacket->WriteString( _T("urn:ttroot:") + m_oTiger.toString(), FALSE );
+			pPacket->WriteByte( G1_PACKET_HIT_SEP );
+		}
+		if ( m_oED2K )
+		{
+			pPacket->WriteString( m_oED2K.toUrn(), FALSE );
+			pPacket->WriteByte( G1_PACKET_HIT_SEP );
+		}
+		if ( m_oMD5 )
+		{
+			pPacket->WriteString( m_oMD5.toUrn(), FALSE );
+			pPacket->WriteByte( G1_PACKET_HIT_SEP );
+		}
+		if ( m_oBTH )
+		{
+			pPacket->WriteString( m_oBTH.toUrn(), FALSE );
+			pPacket->WriteByte( G1_PACKET_HIT_SEP );
+		}
 	}
-	else if ( m_oTiger )
-	{
-		strExtra = m_oTiger.toUrn();
-	}
-	else if ( m_oED2K )
-	{
-		strExtra = m_oED2K.toUrn();
-	}
-	else if ( m_oMD5 )
-	{
-		strExtra = m_oMD5.toUrn();
-	}
-	else if ( m_oBTH )
-	{
-		strExtra = m_oBTH.toUrn();
-	}
-	else
-	{
-		strExtra = _T("urn:");
-	}*/
 
 	// XML extension
 
 	if ( m_pXML )
 	{
-		if ( bSep )
-			pPacket->WriteByte( G1_PACKET_HIT_SEP );
-		else
-			bSep = true;
-
 		pPacket->WriteString( m_pXML->ToString( TRUE ), ! IsHashed() );
 	}
 
@@ -194,13 +207,31 @@ CG1Packet* CQuerySearch::ToG1Packet(DWORD nTTL) const
 
 		// TODO: GGEP_HEADER_QUERY_KEY_SUPPORT + query key
 
-		// TODO: GGEP_HEADER_FEATURE_QUERY
-
 		// TODO: GGEP_HEADER_NO_PROXY
 
-		// TODO: GGEP_HEADER_META
+		if ( m_pSchema )
+		{
+			BYTE nMeta = 0;
+			if ( m_pSchema->CheckURI( CSchema::uriAudio ) )
+				nMeta = GGEP_META_AUDIO;
+			else if ( m_pSchema->CheckURI( CSchema::uriVideo ) )
+				nMeta = GGEP_META_VIDEO;
+			else if ( m_pSchema->CheckURI( CSchema::uriDocument ) )
+				nMeta = GGEP_META_DOCUMENTS;
+			else if ( m_pSchema->CheckURI( CSchema::uriImage ) )
+				nMeta = GGEP_META_IMAGES;
+			else if ( m_pSchema->CheckURI( CSchema::uriApplication ) )
+				nMeta = GGEP_META_WINDOWS;
+			if ( nMeta )
+			{
+				if ( CGGEPItem* pItem = pBlock.Add( GGEP_HEADER_META ) )
+				{
+					pItem->WriteByte( nMeta );
+				}
+			}
+		}
 
-		if ( CG1Packet::IsOOBEnabled() )
+		if ( bOOB )
 		{
 			pBlock.Add( GGEP_HEADER_SECURE_OOB );
 		}
@@ -210,55 +241,51 @@ CG1Packet* CQuerySearch::ToG1Packet(DWORD nTTL) const
 			pBlock.Add( GGEP_HEADER_PARTIAL_RESULT_PREFIX );
 		}
 
+		if ( bWhatsNew )
+		{
+			pBlock.Add( GGEP_HEADER_FEATURE_QUERY );
+		}
+
 		if ( ! strFullQuery.IsEmpty() )
 		{
 			CGGEPItem* pItem = pBlock.Add( GGEP_HEADER_EXTENDED_QUERY );
 			pItem->WriteUTF8( strFullQuery );
 		}
 
-		if ( IsHashed() )
+		if ( m_bBinHash )
 		{
-			if ( m_oSHA1.isValid() )
+			if ( m_oSHA1 && m_oTiger )
 			{
-				if (  m_oTiger.isValid() )
-				{
-					CGGEPItem* pItem = pBlock.Add( GGEP_HEADER_HASH );
-					pItem->WriteByte( GGEP_H_BITPRINT );
-					pItem->Write( &m_oSHA1[ 0 ], 20 );
-					pItem->Write( &m_oTiger[ 0 ], 24 );
-				}
-				else
-				{
-					CGGEPItem* pItem = pBlock.Add( GGEP_HEADER_HASH );
-					pItem->WriteByte( GGEP_H_SHA1 );
-					pItem->Write( &m_oSHA1[ 0 ], 20 );
-				}
+				CGGEPItem* pItem = pBlock.Add( GGEP_HEADER_HASH );
+				pItem->WriteByte( GGEP_H_BITPRINT );
+				pItem->Write( &m_oSHA1[ 0 ], 20 );
+				pItem->Write( &m_oTiger[ 0 ], 24 );
 			}
-			else if ( m_oMD5.isValid() )
+			else if ( m_oSHA1 )
+			{
+				CGGEPItem* pItem = pBlock.Add( GGEP_HEADER_HASH );
+				pItem->WriteByte( GGEP_H_SHA1 );
+				pItem->Write( &m_oSHA1[ 0 ], 20 );
+			}
+			if ( m_oMD5 )
 			{
 				CGGEPItem* pItem = pBlock.Add( GGEP_HEADER_HASH );
 				pItem->WriteByte( GGEP_H_MD5 );
 				pItem->Write( &m_oMD5[ 0 ], 16 );
 			}
-			else if ( m_oED2K.isValid() )
+			if ( m_oED2K )
 			{
 				CGGEPItem* pItem = pBlock.Add( GGEP_HEADER_URN );
 				pItem->WriteUTF8( CString( _T("ed2k:") ) + m_oED2K.toString() );
 			}
-			else if ( m_oBTH.isValid() )
+			if ( m_oBTH )
 			{
 				CGGEPItem* pItem = pBlock.Add( GGEP_HEADER_URN );
 				pItem->WriteUTF8( CString( _T("btih:") ) + m_oBTH.toString() );
 			}
 		}
 
-		if ( ! pBlock.IsEmpty() )
-		{
-			if ( bSep )
-				pPacket->WriteByte( G1_PACKET_HIT_SEP );
-
-			pBlock.Write( pPacket );
-		}
+		pBlock.Write( pPacket );
 	}
 
 	pPacket->WriteByte( 0 );	// Like LimeWire does
@@ -652,7 +679,7 @@ CQuerySearchPtr CQuerySearch::FromPacket(CPacket* pPacket, const SOCKADDR_IN* pE
 	{
 		if ( pPacket->m_nProtocol == PROTOCOL_G1 )
 		{
-			if ( pSearch->ReadG1Packet( (CG1Packet*)pPacket ) )
+			if ( pSearch->ReadG1Packet( (CG1Packet*)pPacket, pEndpoint ) )
 				return pSearch;
 		}
 		else if ( pPacket->m_nProtocol == PROTOCOL_G2 )
@@ -672,9 +699,12 @@ CQuerySearchPtr CQuerySearch::FromPacket(CPacket* pPacket, const SOCKADDR_IN* pE
 //////////////////////////////////////////////////////////////////////
 // CQuerySearch from G1 packet
 
-BOOL CQuerySearch::ReadG1Packet(CG1Packet* pPacket)
+BOOL CQuerySearch::ReadG1Packet(CG1Packet* pPacket, const SOCKADDR_IN* pEndpoint)
 {
-	m_nTTL = pPacket->m_nHops + 2;
+	m_nHops = pPacket->m_nHops;
+
+	if ( pEndpoint )
+		m_pEndpoint = *pEndpoint;
 
 	if ( pPacket->m_nProtocol == PROTOCOL_G2 )
 	{
@@ -747,6 +777,13 @@ BOOL CQuerySearch::ReadG1Packet(CG1Packet* pPacket)
 			// HUGE, XML extensions
 			ReadExtension( pPacket );
 		}
+	}
+
+	// Legacy detection of "Whats New" search
+	if ( m_sSearch.CompareNoCase( _T( WHAT_IS_NEW_QUERY_STRING ) ) == 0 )
+	{
+		m_sSearch.Empty();
+		m_bWhatsNew = true;
 	}
 
 	m_bAndG1 = TRUE;
@@ -844,7 +881,25 @@ void CQuerySearch::ReadGGEP(CG1Packet* pPacket)
 			}
 			else if ( pItemPos->IsNamed( GGEP_HEADER_META ) )
 			{
-				m_nMeta = pItemPos->m_pBuffer[0];
+				switch ( pItemPos->m_pBuffer[0] & 0xfc )
+				{
+				case GGEP_META_AUDIO:
+					m_pSchema = SchemaCache.Get( CSchema::uriAudio );
+					break;
+				case GGEP_META_VIDEO:
+					m_pSchema = SchemaCache.Get( CSchema::uriVideo );
+					break;
+				case GGEP_META_DOCUMENTS:
+					m_pSchema = SchemaCache.Get( CSchema::uriDocument );
+					break;
+				case GGEP_META_IMAGES:
+					m_pSchema = SchemaCache.Get( CSchema::uriImage );
+					break;
+				case GGEP_META_WINDOWS:
+				case GGEP_META_UNIX:
+					m_pSchema = SchemaCache.Get( CSchema::uriApplication );
+					break;
+				}
 			}
 			else if ( pItemPos->IsNamed( GGEP_HEADER_PARTIAL_RESULT_PREFIX ) )
 			{
@@ -857,6 +912,10 @@ void CQuerySearch::ReadGGEP(CG1Packet* pPacket)
 			else if ( pItemPos->IsNamed( GGEP_HEADER_EXTENDED_QUERY ) )
 			{
 				m_bExtQuery = true;
+			}
+			else if ( pItemPos->IsNamed( GGEP_HEADER_FEATURE_QUERY ) )
+			{
+				m_bWhatsNew = true;
 			}
 			else
 				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got query packet with unknown GGEP \"%s\" (%d bytes)"), pItemPos->m_sID, pItemPos->m_nLength );
@@ -1131,9 +1190,12 @@ BOOL CQuerySearch::CheckValid(bool bExpression)
 	BuildWordList( bExpression );
 
 	// Searches by hash are ok
-	bool bHashOk = false;
 	if ( IsHashed() )
 	{
+		if ( m_bWhatsNew )
+			// Invalid hashed "Whats New" search
+			return FALSE;
+
 		if ( m_oURNs.empty() )
 		{
 			if ( m_oSHA1 )
@@ -1166,8 +1228,6 @@ BOOL CQuerySearch::CheckValid(bool bExpression)
 				m_oURNs.push_back( CQueryHashTable::HashWord( strurn, 0, strurn.GetLength(), 32 ) );
 			}
 		}
-
-		bHashOk = true;
 	}
 
 	if ( m_oKeywordHashList.size() )
@@ -1252,25 +1312,29 @@ BOOL CQuerySearch::CheckValid(bool bExpression)
 
 		if ( nValidWords )
 			return TRUE;
-
-#ifdef LAN_MODE
-		return TRUE;
-#endif // LAN_MODE
 	}
 
-	if ( bHashOk )
+	if ( IsHashed() || m_bWhatsNew )
 		return TRUE;
+
+#ifdef LAN_MODE
+
+	return TRUE;
+
+#else // LAN_MODE
 
 	m_oKeywordHashList.clear();
 	m_oWords.clear();
 
 	return FALSE;
+
+#endif // LAN_MODE
 }
 
 //////////////////////////////////////////////////////////////////////
 // CQuerySearch matching
 
-BOOL CQuerySearch::Match(LPCTSTR pszFilename, LPCTSTR pszSchemaURI, CXMLElement* pXML, const CShareazaFile* pFile) const
+BOOL CQuerySearch::Match(LPCTSTR pszFilename, LPCTSTR pszSchemaURI, const CXMLElement* pXML, const CShareazaFile* pFile) const
 {
 	if ( pFile->m_nSize == SIZE_UNKNOWN ||
 		 pFile->m_nSize < m_nMinSize ||
@@ -1285,43 +1349,49 @@ BOOL CQuerySearch::Match(LPCTSTR pszFilename, LPCTSTR pszSchemaURI, CXMLElement*
 		return TRUE;
 	}
 
-	if ( pszSchemaURI && *pszSchemaURI && pXML )
+	if ( pszSchemaURI && *pszSchemaURI )
 	{
-		TRISTATE bResult = MatchMetadata( pszSchemaURI, pXML );
-		if ( bResult != TRI_UNKNOWN && !Settings.Search.SchemaTypes )
-			return ( bResult == TRI_TRUE );
+		if ( m_pSchema && ! m_pSchema->CheckURI( pszSchemaURI ) )
+			return FALSE;
 
-		if ( m_sKeywords.GetLength() > 0 )
+		if ( pXML )
 		{
-			bool bReject = false;
-			if ( MatchMetadataShallow( pszSchemaURI, pXML, &bReject ) )
-			{
-				// If searching in Local library return true
-				if ( ! IsHashed() && ! m_oSimilarED2K )
-					return TRUE;
+			TRISTATE bResult = MatchMetadata( pszSchemaURI, pXML );
+			if ( bResult != TRI_UNKNOWN && !Settings.Search.SchemaTypes )
+				return ( bResult == TRI_TRUE );
 
-				// Otherwise, only return WordMatch when negative terms are used
-				// to filter out filenames from the search window
-				BOOL bNegative = FALSE;
-				if ( m_sKeywords.GetLength() > 1 )
+			if ( m_sKeywords.GetLength() > 0 )
+			{
+				bool bReject = false;
+				if ( MatchMetadataShallow( pszSchemaURI, pXML, &bReject ) )
 				{
-					int nMinusPos = -1;
-					while ( !bNegative )
+					// If searching in Local library return true
+					if ( ! IsHashed() && ! m_oSimilarED2K )
+						return TRUE;
+
+					// Otherwise, only return WordMatch when negative terms are used
+					// to filter out filenames from the search window
+					BOOL bNegative = FALSE;
+					if ( m_sKeywords.GetLength() > 1 )
 					{
-						nMinusPos = m_sKeywords.Find( '-', nMinusPos + 1 );
-						if ( nMinusPos != -1 )
+						int nMinusPos = -1;
+						while ( !bNegative )
 						{
-							bNegative = ( IsCharacter( m_sKeywords.GetAt( nMinusPos + 1 ) ) != 0 );
-							if ( nMinusPos > 0 )
-								bNegative &= ( IsCharacter( m_sKeywords.GetAt( nMinusPos - 1 ) ) == 0 );
+							nMinusPos = m_sKeywords.Find( '-', nMinusPos + 1 );
+							if ( nMinusPos != -1 )
+							{
+								bNegative = ( IsCharacter( m_sKeywords.GetAt( nMinusPos + 1 ) ) != 0 );
+								if ( nMinusPos > 0 )
+									bNegative &= ( IsCharacter( m_sKeywords.GetAt( nMinusPos - 1 ) ) == 0 );
+							}
+							else break;
 						}
-						else break;
 					}
+					return bNegative ? WordMatch( pszFilename, m_sKeywords ) : TRUE;
 				}
-				return bNegative ? WordMatch( pszFilename, m_sKeywords ) : TRUE;
+				else if ( bReject )
+					return FALSE;
 			}
-			else if ( bReject )
-				return FALSE;
 		}
 	}
 
@@ -1332,18 +1402,18 @@ BOOL CQuerySearch::Match(LPCTSTR pszFilename, LPCTSTR pszSchemaURI, CXMLElement*
 	return m_sKeywords.GetLength() && WordMatch( pszFilename, m_sKeywords );
 }
 
-TRISTATE CQuerySearch::MatchMetadata(LPCTSTR pszSchemaURI, CXMLElement* pXML) const
+TRISTATE CQuerySearch::MatchMetadata(LPCTSTR pszSchemaURI, const CXMLElement* pXML) const
 {
 	if ( ! m_pSchema || ! m_pXML ) return TRI_UNKNOWN;
 	if ( ! pszSchemaURI || ! *pszSchemaURI || ! pXML ) return TRI_UNKNOWN;
 	if ( ! m_pSchema->CheckURI( pszSchemaURI ) ) return TRI_FALSE;
 
-	CXMLElement* pRoot = m_pXML->GetFirstElement();
+	const CXMLElement* pRoot = m_pXML->GetFirstElement();
 	int nCount = 0;
 
 	for ( POSITION pos = m_pSchema->GetMemberIterator() ; pos ; )
 	{
-		CSchemaMember* pMember = m_pSchema->GetNextMember( pos );
+		const CSchemaMember* pMember = m_pSchema->GetNextMember( pos );
 
 		CString strSearch = pMember->GetValueFrom( pRoot );
 		CString strTarget = pMember->GetValueFrom( pXML );
@@ -1373,7 +1443,7 @@ TRISTATE CQuerySearch::MatchMetadata(LPCTSTR pszSchemaURI, CXMLElement* pXML) co
 	return ( nCount > 0 ) ? TRI_TRUE : TRI_UNKNOWN;
 }
 
-BOOL CQuerySearch::MatchMetadataShallow(LPCTSTR pszSchemaURI, CXMLElement* pXML, bool* bReject) const
+BOOL CQuerySearch::MatchMetadataShallow(LPCTSTR pszSchemaURI, const CXMLElement* pXML, bool* bReject) const
 {
 	if ( ! pXML || m_sSearch.IsEmpty() ) return FALSE;
 
@@ -1397,7 +1467,7 @@ BOOL CQuerySearch::MatchMetadataShallow(LPCTSTR pszSchemaURI, CXMLElement* pXML,
 	{
 		for ( POSITION pos = pXML->GetAttributeIterator() ; pos ; )
 		{
-			CXMLAttribute* pAttribute = pXML->GetNextAttribute( pos );
+			const CXMLAttribute* pAttribute = pXML->GetNextAttribute( pos );
 
 			CString strTarget = pAttribute->GetValue();
 

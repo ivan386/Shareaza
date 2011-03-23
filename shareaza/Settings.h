@@ -1,7 +1,7 @@
 //
 // Settings.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -359,7 +359,6 @@ public:
 		DWORD		TranslateTTL;
 		DWORD		MaximumTTL;
 		DWORD		MaximumQuery;
-		bool		StrictPackets;
 		bool		EnableGGEP;
 		bool		EnableOOB;
 		bool		VendorMsg;
@@ -373,6 +372,8 @@ public:
 		bool		QueryHitUTF8;				// Use UTF-8 encoding to read Gnutella1 QueryHit packets
 		bool		QuerySearchUTF8;			// Use UTF-8 encoding to create Gnutella1 Query packets
 		DWORD		MaxHostsInPongs;			// The number of hosts included in the response of pings having SCP GGEP block
+		DWORD		MCastPingRate;				// Multicast ping rate (ticks)
+		DWORD		QueryGlobalThrottle;		// Multicast query rate (ticks)
 	} Gnutella1;
 
 	struct sGnutella2

@@ -1,7 +1,7 @@
 //
 // G1Neighbour.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -72,7 +72,7 @@ public:
 	virtual BOOL Send(CPacket* pPacket, BOOL bRelease = TRUE, BOOL bBuffered = FALSE);
 
 	// Ping and Pong packets
-	BOOL SendPing(DWORD dwNow = 0, const Hashes::Guid& oGUID = Hashes::Guid());
+	BOOL SendPing(const Hashes::Guid& oGUID = Hashes::Guid());
 	void OnNewPong(CPongItem* pPong);
 
 	// Query packet
@@ -105,7 +105,7 @@ protected:
 	BOOL OnVendor(CG1Packet* pPacket);
 
 	// Push packet
-	bool OnPush(CG1Packet* pPacket);
+	BOOL OnPush(CG1Packet* pPacket);
 
 	// Query and query hit packets
 	BOOL OnQuery(CG1Packet* pPacket);

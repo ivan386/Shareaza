@@ -1,7 +1,7 @@
 //
 // ManagedSearch.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -94,6 +94,7 @@ public:
 protected:
 	int				m_nPriority;
 	BOOL			m_bActive;
+	DWORD			m_tLastG1;					// Time a G1 multicast search was sent
 	DWORD			m_tLastG2;					// Time a G2 hub was last searched
 	CQuerySearchPtr m_pSearch;					// Search handler	
 	CDwordDwordMap	m_pNodes;					// Pair of IP and query time (s)
@@ -101,6 +102,7 @@ protected:
 	DWORD			m_tExecute;					// Search execute time (ticks)
 
 	BOOL	ExecuteNeighbours(const DWORD tTicks, const DWORD tSecs);
+	BOOL	ExecuteG1Mesh(const DWORD tTicks, const DWORD tSecs);
 	BOOL	ExecuteG2Mesh(const DWORD tTicks, const DWORD tSecs);
 	BOOL	ExecuteDonkeyMesh(const DWORD tTicks, const DWORD tSecs);
 };

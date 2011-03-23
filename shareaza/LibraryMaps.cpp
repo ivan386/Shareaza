@@ -1,7 +1,7 @@
 //
 // LibraryMaps.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -233,10 +233,11 @@ CFileList* CLibraryMaps::LookupFilesByHash(const CShareazaFile* pFilter, BOOL bS
 					}
 					pFiles->AddTail( pFile );
 					if ( nMaximum && pFiles->GetCount() >= nMaximum )
-						return pFiles;
+						break;
 				}
 			}
 		}
+		return pFiles;
 	}
 	else if ( pFilter->m_oED2K )
 	{
@@ -258,12 +259,13 @@ CFileList* CLibraryMaps::LookupFilesByHash(const CShareazaFile* pFilter, BOOL bS
 					}
 					pFiles->AddTail( pFile );
 					if ( nMaximum && pFiles->GetCount() >= nMaximum )
-						return pFiles;
+						break;
 				}
 			}
 		}
+		return pFiles;
 	}
-	else if ( pFilter->m_oTiger.isValid() )
+	else if ( pFilter->m_oTiger )
 	{
 		for ( CLibraryFile* pFile = m_pTigerMap[ pFilter->m_oTiger[ 0 ] & HASH_MASK ] ;
 			pFile ; pFile = pFile->m_pNextTiger )
@@ -283,10 +285,11 @@ CFileList* CLibraryMaps::LookupFilesByHash(const CShareazaFile* pFilter, BOOL bS
 					}
 					pFiles->AddTail( pFile );
 					if ( nMaximum && pFiles->GetCount() >= nMaximum )
-						return pFiles;
+						break;
 				}
 			}
 		}
+		return pFiles;
 	}
 	else if ( pFilter->m_oMD5 )
 	{
@@ -308,10 +311,11 @@ CFileList* CLibraryMaps::LookupFilesByHash(const CShareazaFile* pFilter, BOOL bS
 					}
 					pFiles->AddTail( pFile );
 					if ( nMaximum && pFiles->GetCount() >= nMaximum )
-						return pFiles;
+						break;
 				}
 			}
 		}
+		return pFiles;
 	}
 	else if ( pFilter->m_oBTH )
 	{
@@ -333,19 +337,14 @@ CFileList* CLibraryMaps::LookupFilesByHash(const CShareazaFile* pFilter, BOOL bS
 						pFile->m_nHitsTotal++;
 					}
 					if ( nMaximum && pFiles->GetCount() >= nMaximum )
-						return pFiles;
+						break;
 				}
 			}
 		}
+		return pFiles;
 	}
-
-	if ( ! pFilter->m_oSHA1 &&
-		 ! pFilter->m_oED2K &&
-		 ! pFilter->m_oTiger &&
-		 ! pFilter->m_oMD5 &&
-		 ! pFilter->m_sName.IsEmpty() &&
-		   pFilter->m_nSize != SIZE_UNKNOWN &&
-		   pFilter->m_nSize != 0 )
+	else if ( pFilter->m_sName.GetLength() &&
+		pFilter->m_nSize != SIZE_UNKNOWN && pFilter->m_nSize != 0 )
 	{
 		if ( CLibraryFile* pFile = LibraryMaps.LookupFileByName( pFilter->m_sName, pFilter->m_nSize, bSharedOnly, bAvailableOnly ) )
 		{
@@ -742,35 +741,55 @@ void CLibraryMaps::CullDeletedFiles(CLibraryFile* pMatch)
 //////////////////////////////////////////////////////////////////////
 // CLibraryMaps search
 
-CFileList* CLibraryMaps::Search(const CQuerySearch* pSearch, int nMaximum, BOOL bLocal, BOOL bAvailableOnly)
+CFileList* CLibraryMaps::Browse(int nMaximum) const
 {
 	ASSUME_LOCK( Library.m_pSection );
 
-	if ( pSearch == NULL )
+	CFileList* pHits = NULL;
+	for ( POSITION pos = GetFileIterator() ; pos ; )
 	{
-		// Host browsing
-		CFileList* pHits = NULL;
-		for ( POSITION pos = GetFileIterator() ; pos ; )
+		CLibraryFile* pFile = GetNextFile( pos );
+
+		if ( pFile->IsAvailable() && pFile->IsShared() && pFile->m_oSHA1 )
 		{
-			CLibraryFile* pFile = GetNextFile( pos );
+			if ( ! pHits )
+				pHits = new CFileList;
+			pHits->AddTail( pFile );
+			if ( nMaximum && pHits->GetCount() >= nMaximum )
+				break;
+		}
+	}
+	return pHits;
+}
 
-			if ( pFile->IsAvailable() ) // bAvailableOnly parameter ignored
+CFileList* CLibraryMaps::WhatsNew(const CQuerySearch* pSearch, int nMaximum) const
+{
+	ASSUME_LOCK( Library.m_pSection );
+
+	DWORD tNow = static_cast< DWORD >( time( NULL ) );
+	CFileList* pHits = NULL;
+	for ( POSITION pos = GetFileIterator() ; pos ; )
+	{
+		CLibraryFile* pFile = GetNextFile( pos );
+
+		if ( pFile->IsAvailable() && pFile->IsShared() && pFile->m_oSHA1 &&
+			( ! pSearch->m_pSchema || pSearch->m_pSchema->Equals( pFile->m_pSchema ) ) )
+		{
+			DWORD nTime = pFile->GetCreationTime();
+			if ( nTime && nTime + 12 * 60 * 60 > tNow  ) // 12 hours
 			{
-				if ( bLocal || ( pFile->IsShared() && pFile->m_oSHA1 ) )
-				{
-					if ( ! pHits )
-						pHits = new CFileList( GetFileCount() );
+				pFile->m_nHitsToday++;
+				pFile->m_nHitsTotal++;
 
-					pHits->AddTail( pFile );
-					if ( nMaximum && pHits->GetCount() >= nMaximum )
-						break;
-				}
+				if ( ! pHits )
+					pHits = new CFileList;
+				pHits->AddTail( pFile );
+				if ( nMaximum && pHits->GetCount() >= nMaximum )
+					break;
 			}
 		}
-		return pHits;
 	}
-
-	return LookupFilesByHash( pSearch, ! bLocal, bAvailableOnly, nMaximum );
+	return pHits;
 }
 
 //////////////////////////////////////////////////////////////////////

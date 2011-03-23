@@ -1,7 +1,7 @@
 //
 // NeighboursWithG1.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -25,10 +25,12 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
-#include "Statistics.h"
-#include "Network.h"
-#include "NeighboursWithG1.h"
+#include "Datagrams.h"
 #include "G1Neighbour.h"
+#include "G1Packet.h"
+#include "Network.h"
+#include "Neighbours.h"
+#include "Statistics.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -40,6 +42,7 @@ static char THIS_FILE[]=__FILE__;
 // CNeighboursWithG1 construction
 
 CNeighboursWithG1::CNeighboursWithG1()
+	: m_tLastPingOut	( 0 )
 {
 }
 
@@ -119,6 +122,21 @@ void CNeighboursWithG1::Remove(CNeighbour* pNeighbour)
 	CNeighboursBase::Remove( pNeighbour ); // Also tells the network object to remove the neighbour
 }
 
+void CNeighboursWithG1::OnRun()
+{
+	CNeighboursBase::OnRun();
+
+	if ( Settings.Gnutella1.EnableToday )
+	{
+		DWORD tNow = GetTickCount();
+		if ( tNow > m_tLastPingOut + Settings.Gnutella1.MCastPingRate )
+		{
+			SendPing();
+			m_tLastPingOut = tNow;
+		}
+	}
+}
+
 //////////////////////////////////////////////////////////////////////
 // CNeighboursWithG1 G1 ping handler
 
@@ -132,22 +150,20 @@ void CNeighboursWithG1::OnG1Ping()
 	if ( m_oPongCache.ClearIfOld() )
 	{
 		// Prepare data for a new packet we might send
-		DWORD dwNow = GetTickCount(); // The time now
-		Hashes::Guid oGUID;           // A new GUID for the packet (do)
+		Hashes::Guid oGUID;
 		Network.CreateID( oGUID );
 
 		// Loop for each neighbour we're connected to
 		for ( POSITION pos = GetIterator() ; pos ; )
 		{
 			// Get the neighbour at this position, and move pos to the next one
-			CG1Neighbour* pNeighbour = (CG1Neighbour*)GetNext( pos );
+			CNeighbour* pNeighbour = GetNext( pos );
 
 			// If this neighbour is running a Gnutella program that supports pong caching
 			if ( pNeighbour->m_nProtocol == PROTOCOL_G1 && pNeighbour->m_bPongCaching )
 			{
 				// Send a ping packet to it (do)
-				pNeighbour->SendPing( dwNow, oGUID );
-				Statistics.Current.Gnutella1.PingsSent++;
+				static_cast< CG1Neighbour* >( pNeighbour )->SendPing( oGUID );
 			}
 		}
 	}
@@ -180,5 +196,41 @@ void CNeighboursWithG1::OnG1Pong(CG1Neighbour* pFrom, IN_ADDR* pAddress, WORD nP
 			// Send the pong to this remote computer, if it needs it according to its pong needed array
 			pNeighbour->OnNewPong( pPongCache );
 		}
+	}
+}
+
+void CNeighboursWithG1::SendPing()
+{
+	if ( CG1Packet* pPing = CG1Packet::New( G1_PACKET_PING, 1 ) )
+	{
+		if ( Settings.Gnutella1.EnableGGEP )
+		{
+			CGGEPBlock pBlock;
+			if ( CGGEPItem* pItem = pBlock.Add( GGEP_HEADER_SUPPORT_CACHE_PONGS ) )
+			{
+				pItem->WriteByte( Neighbours.IsG1Ultrapeer() ? GGEP_SCP_ULTRAPEER : GGEP_SCP_LEAF );
+			}
+			pBlock.Write( pPing );
+		}
+
+		SOCKADDR_IN pAddress = { AF_INET };
+		pAddress.sin_addr.s_addr = inet_addr( DEFAULT_G1_MCAST_ADDRESS );
+		pAddress.sin_port = htons( DEFAULT_G1_MCAST_PORT );
+		Datagrams.Send( &pAddress, pPing, TRUE, NULL, FALSE );
+
+		Statistics.Current.Gnutella1.PingsSent++;
+
+		m_tLastPingOut = GetTickCount();
+	}
+}
+
+void CNeighboursWithG1::SendQuery(CQuerySearchPtr pSearch)
+{
+	if ( CG1Packet* pQuery = pSearch->ToG1Packet( 1 ) )
+	{
+		SOCKADDR_IN pAddress = { AF_INET };
+		pAddress.sin_addr.s_addr = inet_addr( DEFAULT_G1_MCAST_ADDRESS );
+		pAddress.sin_port = htons( DEFAULT_G1_MCAST_PORT );
+		Datagrams.Send( &pAddress, pQuery, TRUE, NULL, FALSE );
 	}
 }

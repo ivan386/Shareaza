@@ -1,7 +1,7 @@
 //
 // LibraryDictionary.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -63,7 +63,7 @@ CLibraryDictionary::~CLibraryDictionary()
 //////////////////////////////////////////////////////////////////////
 // CLibraryDictionary add and remove
 
-void CLibraryDictionary::AddFile(const CLibraryFile& oFile)
+void CLibraryDictionary::AddFile(CLibraryFile& oFile)
 {
 	ASSUME_LOCK( Library.m_pSection );
 
@@ -75,7 +75,7 @@ void CLibraryDictionary::AddFile(const CLibraryFile& oFile)
 		m_pTable->AddHashes( oFile );
 }
 
-void CLibraryDictionary::RemoveFile(const CLibraryFile& oFile)
+void CLibraryDictionary::RemoveFile(CLibraryFile& oFile)
 {
 	ASSUME_LOCK( Library.m_pSection );
 
@@ -90,7 +90,7 @@ void CLibraryDictionary::RemoveFile(const CLibraryFile& oFile)
 // CLibraryDictionary process file
 
 void CLibraryDictionary::ProcessFile(
-	const CLibraryFile& oFile, bool bAdd, bool bCanUpload)
+	CLibraryFile& oFile, bool bAdd, bool bCanUpload)
 {
 	ProcessPhrase( oFile, oFile.GetSearchName(), bAdd, bCanUpload );
 	ProcessPhrase( oFile, oFile.GetMetadataWords(), bAdd, bCanUpload );
@@ -100,7 +100,7 @@ void CLibraryDictionary::ProcessFile(
 // CLibraryDictionary phrase parser
 
 void CLibraryDictionary::ProcessPhrase(
-	const CLibraryFile& oFile, const CString& strPhrase, bool bAdd,
+	CLibraryFile& oFile, const CString& strPhrase, bool bAdd,
 	bool bCanUpload)
 {
 	if ( strPhrase.IsEmpty() )
@@ -118,7 +118,7 @@ void CLibraryDictionary::ProcessPhrase(
 // CLibraryDictionary word add and remove
 
 void CLibraryDictionary::ProcessWord(
-	const CLibraryFile& oFile, const CString& strWord, bool bAdd,
+	CLibraryFile& oFile, const CString& strWord, bool bAdd,
 	bool bCanUpload)
 {
 	ASSUME_LOCK( Library.m_pSection );
@@ -293,7 +293,7 @@ CFileList* CLibraryDictionary::Search(
 		return NULL;
 
 	++m_nSearchCookie;
-	const CLibraryFile* pHit = NULL;
+	CLibraryFile* pHit = NULL;
 
 	CQuerySearch::const_iterator pWordEntry = pSearch->begin();
 	const CQuerySearch::const_iterator pLastWordEntry = pSearch->end();
@@ -308,7 +308,7 @@ CFileList* CLibraryDictionary::Search(
 		{
 			for ( POSITION pos = pList->GetHeadPosition() ; pos ; )
 			{
-				const CLibraryFile* pFile = pList->GetNext( pos );
+				CLibraryFile* pFile = pList->GetNext( pos );
 
 				if ( bAvailableOnly && ! pFile->IsAvailable() )
 					continue;
@@ -359,7 +359,7 @@ CFileList* CLibraryDictionary::Search(
 
 			if ( pHit->m_nCollIndex )
 			{
-				const CLibraryFile* pCollection = LibraryMaps.LookupFile(
+				CLibraryFile* pCollection = LibraryMaps.LookupFile(
 					pHit->m_nCollIndex, !bLocal, bAvailableOnly );
 
 				if ( pCollection )

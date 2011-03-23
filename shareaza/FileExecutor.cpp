@@ -1,7 +1,7 @@
 //
 // FileExecutor.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -133,21 +133,14 @@ void CFileExecutor::DetectFileType(LPCTSTR pszFile, LPCTSTR szType, bool& bVideo
 	if ( GetFileAttributes( pszFile ) & FILE_ATTRIBUTE_DIRECTORY )
 		return;
 
-	CSchemaPtr pSchema;
-	if ( ( pSchema = SchemaCache.Get( CSchema::uriAudio ) ) != NULL &&
-		pSchema->FilterType( szType ) )
+	if ( CSchemaPtr pSchema = SchemaCache.GuessByFilename( szType ) )
 	{
-		bAudio = true;
-	}
-	else if ( ( pSchema = SchemaCache.Get( CSchema::uriVideo ) ) != NULL &&
-		pSchema->FilterType( szType ) )
-	{
-		bVideo = true;
-	}
-	else if ( ( pSchema = SchemaCache.Get( CSchema::uriImage ) ) != NULL &&
-		pSchema->FilterType( szType ) )
-	{
-		bImage = true;
+		if ( pSchema->CheckURI( CSchema::uriAudio ) )
+			bAudio = true;
+		else if ( pSchema->CheckURI( CSchema::uriVideo ) )
+			bVideo = true;
+		else if ( pSchema->CheckURI( CSchema::uriImage ) )
+			bImage = true;
 	}
 
 	// Detect type by MIME "Content Type"
@@ -173,8 +166,7 @@ void CFileExecutor::DetectFileType(LPCTSTR pszFile, LPCTSTR szType, bool& bVideo
 	if ( ! bAudio && ! bVideo && ! bImage )
 	{
 		CQuickLock oLock( Library.m_pSection );
-		CLibraryFile* pFile = LibraryMaps.LookupFileByPath( pszFile );
-		if ( pFile )
+		if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( pszFile ) )
 		{
 			if ( pFile->IsSchemaURI( CSchema::uriAudio ) )
 				bAudio = true;

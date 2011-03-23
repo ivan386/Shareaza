@@ -1,7 +1,7 @@
 //
 // WndSearchMonitor.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -211,9 +211,9 @@ void CSearchMonitorWnd::OnQuerySearch(const CQuerySearch* pSearch)
 
 	CLiveItem* pItem = new CLiveItem( 4, NULL );
 
-	CString strSearch	= pSearch->m_sSearch;
-	CString strSchema	= _T("None");
-	CString strURN		= _T("None");
+	CString strSearch = pSearch->m_sSearch;
+	CString strSchema;
+	CString strURN;
 	CString strNode;
 	if ( pSearch->m_pEndpoint.sin_addr.s_addr )
 		strNode.Format( _T("%hs:%u"),
@@ -247,17 +247,23 @@ void CSearchMonitorWnd::OnQuerySearch(const CQuerySearch* pSearch)
 	{
 		strURN = pSearch->m_oMD5.toShortUrn();
 	}
+	else
+		strURN = _T("None");
+
+	if ( pSearch->m_bWhatsNew )
+		strSearch = _T("What's New?");
 
 	if ( pSearch->m_pXML )
 	{
-		strSearch += ' ';
+		strSearch += _T('«');
 		strSearch += pSearch->m_pXML->GetRecursiveWords();
-		
-		strSchema = pSearch->m_pXML->GetAttributeValue( CXMLAttribute::schemaName, _T("") );
-		
-		int nSlash = strSchema.ReverseFind( '/' );
-		if ( nSlash > 0 ) strSchema = strSchema.Mid( nSlash + 1 );
+		strSearch += _T('»');
 	}
+
+	if ( pSearch->m_pSchema )
+		strSchema = pSearch->m_pSchema->m_sTitle;
+	else
+		strSchema = _T("None");
 
 	pItem->Set( 0, strSearch );
 	pItem->Set( 1, strURN );

@@ -1328,7 +1328,7 @@ void CNetwork::UDPHostCache(IN_ADDR* pAddress, WORD nPort)
 		CGGEPBlock pBlock;
 		if ( CGGEPItem* pItem = pBlock.Add( GGEP_HEADER_SUPPORT_CACHE_PONGS ) )
 		{
-			pItem->WriteByte( Neighbours.IsG1Ultrapeer() ? G1_SCP_ULTRAPEER : G1_SCP_LEAF );
+			pItem->WriteByte( Neighbours.IsG1Ultrapeer() ? GGEP_SCP_ULTRAPEER : GGEP_SCP_LEAF );
 		}
 		pBlock.Write( pPing );
 		Datagrams.Send( pAddress, nPort, pPing, TRUE, NULL, FALSE );

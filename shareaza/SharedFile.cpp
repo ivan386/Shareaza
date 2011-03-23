@@ -99,11 +99,15 @@ CLibraryFile::CLibraryFile(CLibraryFolder* pFolder, LPCTSTR pszName) :
 ,	m_nCollIndex		( 0ul )
 ,	m_nIcon16			( -1 )
 ,	m_bNewFile			( FALSE )
+,	m_tCreateTime		( 0 )
 {
 	ZeroMemory( &m_pTime, sizeof(m_pTime) );
 	ZeroMemory( &m_pMetadataTime, sizeof(m_pMetadataTime) );
 	if ( pszName )
+	{
 		m_sName = pszName;
+		m_pSchema = SchemaCache.GuessByFilename( m_sName );
+	}
 	if ( pFolder )
 		m_sPath = pFolder->m_sPath;
 
@@ -160,7 +164,7 @@ CString CLibraryFile::GetSearchName() const
 
 	if ( m_pFolder && m_pFolder->m_pParent )
 	{
-		for ( CLibraryFolder* pFolder = m_pFolder ; ; pFolder = pFolder->m_pParent )
+		for ( const CLibraryFolder* pFolder = m_pFolder ; ; pFolder = pFolder->m_pParent )
 		{
 			if ( pFolder->m_pParent == NULL )
 			{
@@ -177,7 +181,7 @@ CString CLibraryFile::GetSearchName() const
 	else
 	{
 		ASSERT( m_pFolder->m_sPath.GetLength() > nBase );
-		str = m_pFolder->m_sPath.Mid( nBase + 1 ) + '\\' + m_sName;
+		str = m_pFolder->m_sPath.Mid( nBase + 1 ) + _T('\\') + m_sName;
 	}
 
 	ToLower( str );
@@ -196,10 +200,7 @@ bool CLibraryFile::IsShared(bool bIgnoreOverride) const
 		return false;
 
 	// Don't share private torrents
-	if ( m_pSchema != NULL &&
-		m_pSchema->CheckURI( CSchema::uriBitTorrent ) &&
-		m_pMetadata != NULL &&
-		m_pMetadata->GetAttributeValue( L"privateflag", L"true" ).CompareNoCase( L"true" ) == 0 )
+	if ( IsPrivateTorrent() )
 		return false;
 
 	// Use override shared flag of file
@@ -219,10 +220,7 @@ void CLibraryFile::SetShared(bool bShared, bool bOverride)
 		bNewShare = TRI_FALSE;
 
 	// Don't share private torrents
-	if ( m_pSchema != NULL &&
-		m_pSchema->CheckURI( CSchema::uriBitTorrent ) &&
-		m_pMetadata != NULL &&
-		m_pMetadata->GetAttributeValue( L"privateflag", L"true" ).CompareNoCase( L"true" ) == 0 )
+	if ( IsPrivateTorrent() )
 		bNewShare = TRI_FALSE;
 
 	bool bFolderShared = ! m_pFolder || m_pFolder->IsShared();
@@ -240,6 +238,64 @@ void CLibraryFile::SetShared(bool bShared, bool bOverride)
 
 		LibraryDictionary.Invalidate();
 	}
+}
+
+bool CLibraryFile::IsPrivateTorrent() const
+{
+	return ( m_pSchema && m_pMetadata &&
+		m_pSchema->CheckURI( CSchema::uriBitTorrent ) &&
+		m_pMetadata->GetAttributeValue( _T("privateflag"), _T("true") ).CompareNoCase( _T("true") ) == 0 );
+}
+
+DWORD CLibraryFile::GetCreationTime()
+{
+	if ( m_tCreateTime )
+		return m_tCreateTime;
+
+	if ( m_pFolder && m_pFolder->IsOffline() )
+		return 0;
+
+	HANDLE hFile = CreateFile( GetPath(), FILE_READ_ATTRIBUTES,
+		FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, NULL,
+		OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
+	if ( hFile == INVALID_HANDLE_VALUE )
+		return 0;
+
+	FILETIME ftLastWriteTime;
+	BOOL bResult = GetFileTime( hFile, NULL, NULL, &ftLastWriteTime );
+
+	CloseHandle( hFile );
+
+	if ( ! bResult )
+		return 0;
+
+	return m_tCreateTime = ( ( MAKEQWORD( ftLastWriteTime.dwLowDateTime,
+		ftLastWriteTime.dwHighDateTime ) ) / 10000000ui64 - 11644473600ui64 );
+}
+
+BOOL CLibraryFile::SetCreationTime(DWORD tTime)
+{
+	if ( tTime > static_cast< DWORD >( time( NULL ) ) )
+		return FALSE;
+
+	m_tCreateTime = tTime;
+
+	if ( m_pFolder && m_pFolder->IsOffline() )
+		return FALSE;
+
+	HANDLE hFile = CreateFile( GetPath(), FILE_WRITE_ATTRIBUTES,
+		FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, NULL,
+		OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
+	if ( hFile == INVALID_HANDLE_VALUE )
+		return FALSE;
+
+	QWORD t = ( (QWORD)m_tCreateTime + 11644473600ui64 ) * 10000000ui64;
+	FILETIME ftLastWriteTime = { (DWORD)t, (DWORD)( t >> 32 ) };
+	BOOL bResult = SetFileTime( hFile, NULL, NULL, &ftLastWriteTime );
+
+	CloseHandle( hFile );
+
+	return bResult;
 }
 
 BOOL CLibraryFile::CheckFileAttributes(QWORD nSize, BOOL bSharedOnly, BOOL bAvailableOnly) const
@@ -305,10 +361,9 @@ BOOL CLibraryFile::Rebuild()
 	m_oED2K.clear();
 	m_nVirtualBase = m_nVirtualSize = 0;
 
-	if ( m_pMetadata != NULL && m_bMetadataAuto )
+	if ( m_pMetadata && m_bMetadataAuto )
 	{
 		delete m_pMetadata;
-		m_pSchema	= NULL;
 		m_pMetadata	= NULL;
 	}
 
@@ -445,6 +500,10 @@ BOOL CLibraryFile::SetMetadata(CXMLElement*& pXML, BOOL bMerge, BOOL bOverwrite)
 		{
 			// Then try short version, for example <video ... />
 			pSchema = SchemaCache.Guess( pXML->GetName() );
+			if ( pSchema == NULL )
+			{
+				pSchema = SchemaCache.GuessByFilename( m_sName );
+			}
 			if ( pSchema )
 			{
 				// Recreate full XML
@@ -471,6 +530,10 @@ BOOL CLibraryFile::SetMetadata(CXMLElement*& pXML, BOOL bMerge, BOOL bOverwrite)
 			m_pMetadata->Equals( pXML->GetFirstElement() ) )
 			// No need
 			return TRUE;
+	}
+	else
+	{
+		pSchema = SchemaCache.GuessByFilename( m_sName );
 	}
 
 	Library.RemoveFile( this );
@@ -855,6 +918,8 @@ void CLibraryFile::Serialize(CArchive& ar, int nVersion)
 				}
 			}
 			m_pMetadata = new CXMLElement();
+			if ( ! m_pMetadata )
+				AfxThrowMemoryException();
 			m_pMetadata->Serialize( ar );
 			m_pSchema = SchemaCache.Get( strURI );
 			if ( m_pSchema == NULL )
@@ -862,6 +927,11 @@ void CLibraryFile::Serialize(CArchive& ar, int nVersion)
 				delete m_pMetadata;
 				m_pMetadata = NULL;
 			}
+			// else schema URI changed
+		}
+		if ( m_pSchema == NULL )
+		{
+			m_pSchema = SchemaCache.GuessByFilename( m_sName );
 		}
 
 		if ( nVersion >= 13 )
@@ -1459,12 +1529,15 @@ STDMETHODIMP CLibraryFile::XLibraryFile::get_Metadata(ISXMLElement FAR* FAR* ppX
 
 	CQuickLock oLock( Library.m_pSection );
 
-	if ( pThis->m_pSchema == NULL || pThis->m_pMetadata == NULL ) return S_OK;
+	if ( pThis->m_pSchema == NULL ) return S_OK;
 
 	CXMLElement* pXML	= pThis->m_pSchema->Instantiate( TRUE );
 	*ppXML				= (ISXMLElement*)CXMLCOM::Wrap( pXML, IID_ISXMLElement );
 
-	pXML->AddElement( pThis->m_pMetadata->Clone() );
+	if ( pThis->m_pMetadata )
+	{
+		pXML->AddElement( pThis->m_pMetadata->Clone() );
+	}
 
 	return S_OK;
 }

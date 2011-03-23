@@ -1,7 +1,7 @@
 //
 // SchemaMember.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -18,9 +18,6 @@
 // along with Shareaza; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-
-#if !defined(AFX_SCHEMAMEMBER_H__0168BCBB_F511_4752_A529_78BF75A74777__INCLUDED_)
-#define AFX_SCHEMAMEMBER_H__0168BCBB_F511_4752_A529_78BF75A74777__INCLUDED_
 
 #pragma once
 
@@ -69,7 +66,7 @@ public:
 	POSITION	GetItemIterator() const;
 	CString		GetNextItem(POSITION& pos) const;
 	INT_PTR		GetItemCount() const { return m_pItems.GetCount(); }
-	CString		GetValueFrom(CXMLElement* pElement, LPCTSTR pszDefault = NULL, BOOL bFormat = FALSE, BOOL bNoValidation = FALSE) const;
+	CString		GetValueFrom(const CXMLElement* pElement, LPCTSTR pszDefault = NULL, BOOL bFormat = FALSE, BOOL bNoValidation = FALSE) const;
 	void		SetValueTo(CXMLElement* pBase, LPCTSTR pszValue);
 protected:
 	BOOL		LoadSchema(CXMLElement* pRoot, CXMLElement* pElement);
@@ -88,5 +85,3 @@ enum
 {
 	smfNone, smfTimeMMSS, smfBitrate, smfFrequency, smfTimeHHMMSSdec
 };
-
-#endif // !defined(AFX_SCHEMAMEMBER_H__0168BCBB_F511_4752_A529_78BF75A74777__INCLUDED_)
