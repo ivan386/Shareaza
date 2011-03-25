@@ -75,8 +75,8 @@ void CConnection::AttachTo(CConnection* pConnection)
 	ASSERT( pConnection != NULL );						// Make sure we got a CConnection object
 	ASSERT( AfxIsValidAddress( pConnection, sizeof( *pConnection ) ) );
 	ASSERT( pConnection->IsValid() );					// And make sure its socket exists
-	ASSERT( m_pInput == NULL );
-	ASSERT( m_pOutput == NULL );
+
+	DestroyBuffers();
 
 	CQuickLock oOutputLock( *pConnection->m_pOutputSection );
 	CQuickLock oInputLock( *pConnection->m_pInputSection );
