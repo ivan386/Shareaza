@@ -1,7 +1,7 @@
 //
 // stdafx.h
 //
-// Copyright (c) Shareaza Development Team, 2009.
+// Copyright (c) Shareaza Development Team, 2009-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,7 +22,11 @@
 #pragma once
 
 #define WIN32_LEAN_AND_MEAN
+#define VC_EXTRALEAN
 
-#include <windows.h>
+#define _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES 1		// Enable secure template overloads
+#define _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES_COUNT 1	// Enable secure template overloads
+
+#include <afxwin.h>
 #include <tchar.h>
 #include <stdio.h>

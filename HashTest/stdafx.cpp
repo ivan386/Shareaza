@@ -1,7 +1,7 @@
 //
 // stdafx.cpp
 //
-// Copyright (c) Shareaza Development Team, 2009.
+// Copyright (c) Shareaza Development Team, 2009-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
