@@ -1,7 +1,7 @@
 //
 // MatchObjects.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -267,7 +267,7 @@ public:
 	LPCTSTR		GetBestCountry() const;
 
 	// Get schema of best Hit
-	LPCTSTR		GetBestSchemaURI() const;
+	CSchemaPtr	GetBestSchema() const;
 	
 	// Get measured of best Hit
 	TRISTATE	GetBestMeasured() const;

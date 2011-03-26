@@ -1,7 +1,7 @@
 //
 // Packet.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -61,7 +61,7 @@ public:
 	BOOL  m_bBigEndian; // True if the bytes of the packet are in big endian format, which is the default
 
 	// Set the position a given distance forwards from the start, or backwards from the end
-	enum { seekStart, seekEnd };
+	enum { seekStart, seekEnd, seekCurrent };
 
 public:
 
@@ -114,10 +114,6 @@ public:
 	virtual void SmartDump(const SOCKADDR_IN* pAddress, BOOL bUDP, BOOL bOutgoing, DWORD_PTR nNeighbourUnique = 0) const;
 
 public:
-
-	// Compute the SHA hash of the bytes of the packet
-	virtual BOOL	GetRazaHash(Hashes::Sha1Hash& oHash, DWORD nLength = 0xFFFFFFFF) const;
-
 	// Does nothing (do)
 	void			RazaSign();
 	BOOL			RazaVerify() const;

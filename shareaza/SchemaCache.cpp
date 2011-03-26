@@ -145,107 +145,36 @@ void CSchemaCache::Clear()
 	m_pTypeFilters.RemoveAll();
 }
 
-CXMLElement* CSchemaCache::Decode(BYTE* szData, DWORD nLength, CSchemaPtr& pSchema)
+bool CSchemaCache::Normalize(CSchemaPtr& pSchema, CXMLElement*& pXML) const
 {
-	auto_array< BYTE > pTmp;
-	if ( nLength >= 9 && _strnicmp( (LPCSTR)szData, "{deflate}", 9 ) == 0 )
-	{
-		// Deflate data
-		DWORD nRealSize;
-		pTmp = CZLib::Decompress( (LPCSTR)szData + 9, nLength - 9, &nRealSize );
-		if ( ! pTmp.get() )
-			// Invalid data
-			return NULL;
-		szData = pTmp.get();
-		nLength = nRealSize;
-	}
-	else if ( nLength >= 11 && _strnicmp( (LPCSTR)szData, "{plaintext}", 11 ) == 0 )
-	{
-		// Plain text with long header
-		szData += 11;
-		nLength -= 11;
-	}
-	else if ( nLength >= 2 && _strnicmp( (LPCSTR)szData, "{}", 2 ) == 0 )
-	{
-		// Plain text with short header
-		szData += 2;
-		nLength -= 2;
-	}
+	pSchema = NULL;
 
-	// Fix <tag attribute="valueZ/> -> <tag attribute="value"/>
-	for ( DWORD i = 1; i + 2 < nLength ; i++ )
-		if ( szData[ i ] == 0 && szData[ i + 1 ] == '/' && szData[ i + 2 ] == '>' )
-			szData[ i ] = '\"';
-
-	// Decode XML
-	CXMLElement* pXML = CXMLElement::FromBytes( szData, nLength, FALSE );
-	if ( ! pXML )
-		// Reconstruct XML from non-XML legacy data
-		pXML = AutoDetectSchema( CString( (LPCSTR)szData, nLength ) );
 	if ( pXML )
 	{
-		pSchema = Get( pXML->GetAttributeValue( CXMLAttribute::schemaName, NULL ) );
+		pSchema = SchemaCache.Get( pXML->GetAttributeValue( CXMLAttribute::schemaName ) );
 		if ( ! pSchema )
 		{
 			// Schemas do not match by URN, get first element to compare
 			// with names map of schemas (which are singulars)
 			if ( CXMLElement* pElement = pXML->GetFirstElement() )
 			{
-				pSchema = SchemaCache.Guess( pElement->GetName() );
+				pSchema = Guess( pElement->GetName() );
+				if ( pSchema )
+				{
+					// Strip envelope
+					pElement->Detach();
+					pXML->Delete();
+					pXML = pElement;
+				}
 			}
-			else // has no plural envelope
+			if ( ! pSchema ) // has no plural envelope
 			{
-				pSchema = SchemaCache.Guess( pXML->GetName() );
-			}
-			if ( ! pSchema )
-			{
-				pXML->Delete();
-				pXML = NULL;
+				pSchema = Guess( pXML->GetName() );
 			}
 		}
 	}
 
-	return pXML;
-}
-
-CXMLElement* CSchemaCache::AutoDetectSchema(LPCTSTR pszInfo)
-{
-	if ( _tcsstr( pszInfo, _T(" Kbps") ) != NULL &&
-		 _tcsstr( pszInfo, _T(" kHz ") ) != NULL )
-	{
-		return AutoDetectAudio( pszInfo );
-	}
-
-	return NULL;
-}
-
-CXMLElement* CSchemaCache::AutoDetectAudio(LPCTSTR pszInfo)
-{
-	int nBitrate	= 0;
-	int nFrequency	= 0;
-	int nMinutes	= 0;
-	int nSeconds	= 0;
-	BOOL bVariable	= FALSE;
-
-	if ( _stscanf( pszInfo, _T("%i Kbps %i kHz %i:%i"), &nBitrate, &nFrequency,
-		&nMinutes, &nSeconds ) != 4 )
-	{
-		bVariable = TRUE;
-		if ( _stscanf( pszInfo, _T("%i Kbps(VBR) %i kHz %i:%i"), &nBitrate, &nFrequency,
-			&nMinutes, &nSeconds ) != 4 )
-			return NULL;
-	}
-
-	CXMLElement* pXML = new CXMLElement( NULL, _T("audio") );
-
-	CString strValue;
-	strValue.Format( _T("%lu"), nMinutes * 60 + nSeconds );
-	pXML->AddAttribute( _T("seconds"), strValue );
-
-	strValue.Format( bVariable ? _T("%lu~") : _T("%lu"), nBitrate );
-	pXML->AddAttribute( _T("bitrate"), strValue );
-
-	return pXML;
+	return ( pSchema != NULL );
 }
 
 CString CSchemaCache::GetFilter(LPCTSTR pszURI) const

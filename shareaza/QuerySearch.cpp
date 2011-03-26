@@ -196,7 +196,8 @@ CG1Packet* CQuerySearch::ToG1Packet(DWORD nTTL) const
 
 	if ( m_pXML )
 	{
-		pPacket->WriteString( m_pXML->ToString( TRUE ), ! IsHashed() );
+		pPacket->WriteString( m_pXML->ToString( TRUE ), FALSE );
+		pPacket->WriteByte( G1_PACKET_HIT_SEP );
 	}
 
 	// GGEP extension (last)
@@ -288,7 +289,8 @@ CG1Packet* CQuerySearch::ToG1Packet(DWORD nTTL) const
 		pBlock.Write( pPacket );
 	}
 
-	pPacket->WriteByte( 0 );	// Like LimeWire does
+	// End of hit
+	pPacket->WriteByte( 0 );
 
 	return pPacket;
 }
@@ -772,10 +774,15 @@ BOOL CQuerySearch::ReadG1Packet(CG1Packet* pPacket, const SOCKADDR_IN* pEndpoint
 			// Skip extra null or separate byte
 			pPacket->ReadByte();
 		}
-		else
+		else if ( nPeek == 'u' )
 		{
-			// HUGE, XML extensions
-			ReadExtension( pPacket );
+			// HUGE extensions
+			pPacket->ReadHUGE( this );
+		}
+		else if ( nPeek == '<' || nPeek == '{' )
+		{
+			// XML extensions
+			pPacket->ReadXML( m_pSchema, m_pXML );
 		}
 	}
 
@@ -929,61 +936,6 @@ void CQuerySearch::ReadGGEP(CG1Packet* pPacket)
 	}
 	else
 		DEBUG_ONLY( pPacket->Debug( _T("Malformed GGEP.") ) );
-}
-
-void CQuerySearch::ReadExtension(CG1Packet* pPacket)
-{
-	// Find length of extension (till packet end or G1_PACKET_HIT_SEP byte)
-	DWORD nLength = 0;
-	DWORD nRemaining = pPacket->GetRemaining();
-	const BYTE* pData = pPacket->GetCurrent();
-	for ( ; *pData != G1_PACKET_HIT_SEP &&
-		nLength < nRemaining; pData++, nLength++ );
-
-	// Read extension
-	auto_array< BYTE > pszData( new BYTE[ nLength + 1] );
-	pPacket->Read( pszData.get(), nLength );
-	pszData[ nLength ] = 0;
-
-	// Skip G1_PACKET_HIT_SEP byte
-	if ( nLength != nRemaining )
-		pPacket->ReadByte();
-
-	if ( nLength >= 4 && _strnicmp( (LPCSTR)pszData.get(), "urn:", 4 ) == 0 )
-	{
-		CString strURN( pszData.get() );
-
-		Hashes::Sha1Hash	oSHA1;
-		Hashes::TigerHash	oTiger;
-		Hashes::Ed2kHash	oED2K;
-		Hashes::BtHash		oBTH;
-		Hashes::Md5Hash		oMD5;
-
-		if ( strURN.GetLength() == 4 );			// Got empty urn
-		else if ( oSHA1.fromUrn(  strURN ) );	// Got SHA1
-		else if ( oTiger.fromUrn( strURN ) );	// Got Tiger
-		else if ( oED2K.fromUrn(  strURN ) );	// Got ED2K
-		else if ( oMD5.fromUrn(   strURN ) );	// Got MD5
-		else if ( oBTH.fromUrn(   strURN ) );	// Got BTH base32
-		else if ( oBTH.fromUrn< Hashes::base16Encoding >( strURN ) );	// Got BTH base16
-		else
-			theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got query packet with unknown URN \"%s\" (%d bytes)"), strURN, nLength );
-
-		if ( oSHA1  && ! m_oSHA1 )  m_oSHA1  = oSHA1;
-		if ( oTiger && ! m_oTiger ) m_oTiger = oTiger;
-		if ( oED2K  && ! m_oED2K )  m_oED2K  = oED2K;
-		if ( oBTH   && ! m_oBTH )   m_oBTH   = oBTH;
-		if ( oMD5   && ! m_oMD5 )   m_oMD5   = oMD5;
-	}
-	else if ( nLength && ! m_pXML )
-	{
-		m_pSchema = NULL;
-		m_pXML = SchemaCache.Decode( pszData.get(), nLength, m_pSchema );
-		if ( ! m_pXML )
-			theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got query packet with malformed XML \"%hs\" (%d bytes)"), pszData.get(), nLength );
-	}
-	else
-		theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got query packet with unknown part \"%hs\" (%d bytes)"), pszData.get(), nLength );
 }
 
 //////////////////////////////////////////////////////////////////////

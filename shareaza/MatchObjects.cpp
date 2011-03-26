@@ -245,15 +245,15 @@ void CMatchList::AddHits(const CQueryHit* pHits, const CQuerySearch* pFilter)
 			if ( BOOL bName = _tcsistr( pFilter->m_sKeywords, pHit->m_sName ) == 0 )
 				pHit->m_bExactMatch = TRUE;
 
-			pHit->m_bMatched = pFilter->Match(
-				pHit->m_sName, pHit->m_sSchemaURI, pHit->m_pXML, pHit );
+			pHit->m_bMatched = pFilter->Match( pHit->m_sName,
+				( pHit->m_pSchema ? pHit->m_pSchema->GetURI() : NULL ), pHit->m_pXML, pHit );
 
 			// ToDo: Change to pHit->m_bMatched when we will be able to get folder name
 			// from hits. Raza sends hits if folder name matches the search keywords too.
 			// For now, just move such files to bogus.
 			if ( Settings.Search.SchemaTypes && pFilter->m_pSchema )
 			{
-				if ( !pHit->m_bMatched && pFilter->m_pSchema->CheckURI( pHit->m_sSchemaURI ) )
+				if ( !pHit->m_bMatched && pFilter->m_pSchema->Equals( pHit->m_pSchema ) )
 				{
 					pHit->m_bBogus = TRUE;
 				}
@@ -1775,7 +1775,7 @@ void CMatchFile::Added(CQueryHit* pHit)
 	BOOL bSchema;
 
 	if ( m_pList->m_pSchema &&
-		 ( bSchema = m_pList->m_pSchema->CheckURI( pHit->m_sSchemaURI ) || pHit->m_oSHA1 ) != FALSE )
+		 ( bSchema = m_pList->m_pSchema->Equals( pHit->m_pSchema ) || pHit->m_oSHA1 ) != FALSE )
 	{
 		if ( m_pColumns == NULL )
 		{
@@ -2262,7 +2262,7 @@ CSchemaPtr CMatchFile::GetHitsSchema() const
 	CSchemaPtr pSchema = NULL;
 	for ( CQueryHit* pHit = m_pHits ; pHit ; pHit = pHit->m_pNext )
 	{
-		pSchema = SchemaCache.Get( pHit->m_sSchemaURI );
+		pSchema = pHit->m_pSchema;
 		if ( pSchema ) break;
 	}
 	return pSchema;
@@ -2277,7 +2277,7 @@ CSchemaPtr CMatchFile::AddHitsToMetadata(CMetaList& oMetadata) const
 
 		for ( CQueryHit* pHit = m_pHits ; pHit ; pHit = pHit->m_pNext )
 		{
-			if ( pHit->m_pXML && pSchema->CheckURI( pHit->m_sSchemaURI ) )
+			if ( pHit->m_pXML && pSchema->Equals( pHit->m_pSchema ) )
 			{
 				oMetadata.Combine( pHit->m_pXML );
 			}
@@ -2388,9 +2388,9 @@ LPCTSTR CMatchFile::GetBestCountry() const
 	return ( m_pBest ? m_pBest->m_sCountry : _T("") );
 }
 
-LPCTSTR CMatchFile::GetBestSchemaURI() const
+CSchemaPtr CMatchFile::GetBestSchema() const
 {
-	return ( m_pBest ? m_pBest->m_sSchemaURI : _T("") );
+	return ( m_pBest ? m_pBest->m_pSchema : NULL );
 }
 
 TRISTATE CMatchFile::GetBestMeasured() const

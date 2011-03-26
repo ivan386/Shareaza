@@ -40,9 +40,11 @@
 #include "QueryHit.h"
 #include "QuerySearch.h"
 #include "SearchManager.h"
+#include "SchemaCache.h"
 #include "Security.h"
 #include "Statistics.h"
 #include "VendorCache.h"
+#include "XML.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -183,26 +185,6 @@ void CG1Packet::CacheHash()
 
 	// If the last bit in the hash is 0, make it a 1
 	m_nHash |= 1;
-}
-
-// Takes the number of bytes in the packet to hash, or leave that blank to hash all of them
-// Computes the SHA hash of the packet
-// Returns true and writes the hash under pHash, or returns false on error
-BOOL CG1Packet::GetRazaHash(Hashes::Sha1Hash& oHash, DWORD nLength) const
-{
-	// If the caller didn't specify a length, use the length of the packet
-	if ( nLength == 0xFFFFFFFF ) nLength = m_nLength;
-	if ( (DWORD)m_nLength < nLength ) return FALSE; // Make sure the caller didn't ask for more than that
-
-	// Hash the data, writing the hash under pHash, and report success
-	CSHA pSHA;                             // Make a local CSHA object which will compute the hash
-	pSHA.Add( &m_oGUID[ 0 ], Hashes::Guid::byteCount ); // Start by hashing the GUID of the packet
-	pSHA.Add( &m_nType, sizeof(m_nType) ); // Then throw in the type byte
-	pSHA.Add( m_pBuffer, nLength );        // After that, hash the bytes of the packet
-	pSHA.Finish();                         // Tell the object that is all
-	pSHA.GetHash( &oHash[ 0 ] );           // Have the object write the hash under pHash
-	oHash.validate();
-	return TRUE;                           // Report success
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -377,6 +359,176 @@ void CG1Packet::GGEPWriteRandomCache(CGGEPBlock& pGGEP, LPCTSTR pszID)
 			DEBUG_ONLY( theApp.Message( MSG_DEBUG, _T("Sending G1 host through pong (%s)"), (LPCTSTR)HostToString( &pHosts.GetAt( i ) ) ) );
 		}
 	}
+}
+
+bool CG1Packet::ReadHUGE(CShareazaFile* pFile)
+{
+	DWORD rem = GetRemaining();
+	if ( rem == 0 )
+		// End of packet
+		return false;
+
+	const BYTE* p = GetCurrent();
+	ASSERT( *p == 'u' );
+
+	// Find length of extension (till packet end, G1_PACKET_HIT_SEP or null bytes)
+	DWORD len = 0;
+	for ( ; *p != G1_PACKET_HIT_SEP && *p && len < rem; ++p, ++len );
+
+	p = GetCurrent();
+	Seek( len, seekCurrent );
+
+	if ( len < 4 || memcmp( p, "urn:", 4 ) != 0 )
+		// Too short or unknown prefix
+		return false;
+
+	if ( len < 16 )
+		// Just a flag that host want a HUGE
+		return true;
+
+	Hashes::Sha1Hash	oSHA1;
+	Hashes::TigerHash	oTiger;
+	Hashes::Ed2kHash	oED2K;
+	Hashes::BtHash		oBTH;
+	Hashes::Md5Hash		oMD5;
+
+	CString strURN( (LPCSTR)p, len );
+
+	if ( oSHA1.fromUrn(  strURN ) )			// Got SHA1
+		pFile->m_oSHA1  = oSHA1;
+	else if ( oTiger.fromUrn( strURN ) )	// Got Tiger
+		pFile->m_oTiger = oTiger;
+	else if ( oED2K.fromUrn(  strURN ) )	// Got ED2K
+		pFile->m_oED2K  = oED2K;
+	else if ( oMD5.fromUrn(   strURN ) )	// Got MD5
+		pFile->m_oMD5   = oMD5;
+	else if ( oBTH.fromUrn(   strURN ) )	// Got BTH base32
+		pFile->m_oBTH   = oBTH;
+	else if ( oBTH.fromUrn< Hashes::base16Encoding >( strURN ) )	// Got BTH base16
+		pFile->m_oBTH   = oBTH;
+	else
+		theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got packet with unknown HUGE \"%s\" (%d bytes)"), strURN, len );
+
+	return true;
+}
+
+bool CG1Packet::ReadXML(CSchemaPtr& pSchema, CXMLElement*& pXML)
+{
+	DWORD rem = GetRemaining();
+	if ( rem == 0 )
+		// End of packet
+		return false;
+
+	const BYTE* p = GetCurrent();
+	ASSERT( *p == '<' || *p == '{' );
+
+	// Find length of extension (till packet end, G1_PACKET_HIT_SEP or null bytes)
+	DWORD len = 0;
+	for ( ; *p != G1_PACKET_HIT_SEP && *p && len < rem; ++p, ++len );
+
+	p = GetCurrent();
+	Seek( len, seekCurrent );
+
+	auto_array< BYTE > pTmp;
+	if ( len >= 9 && memcmp( p, "{deflate}", 9 ) == 0 )
+	{
+		// Compressed text
+		p += 9;
+		len -= 9;
+
+		// Deflate data
+		DWORD nRealSize;
+		pTmp = CZLib::Decompress( p, len, &nRealSize );
+		if ( ! pTmp.get() )
+			// Invalid data
+			return NULL;
+		p = pTmp.get();
+		len = nRealSize;
+	}
+	else if ( len >= 11 && memcmp( p, "{plaintext}", 11 ) == 0 )
+	{
+		// Plain text with long header
+		p += 11;
+		len -= 11;
+	}
+	else if ( len >= 2 && memcmp( p, "{}", 2 ) == 0 )
+	{
+		// Plain text with short header
+		p += 2;
+		len -= 2;
+	}
+
+	if ( len < 2 )
+		// Too short
+		return false;
+
+	CString strXML( UTF8Decode( (LPCSTR)p, len ) );
+
+	// Fix <tag attribute="valueZ/> -> <tag attribute="value"/>
+	//for ( DWORD i = 1; i + 2 < len ; ++i )
+	//	if ( szXML[ i ] == 0 && szXML[ i + 1 ] == '/' && szXML[ i + 2 ] == '>' )
+	//		szXML[ i ] = '\"';
+
+	// Decode XML
+	pXML = CXMLElement::FromString( strXML );
+	if ( ! pXML )
+		// Reconstruct XML from non-XML legacy data
+		pXML = AutoDetectSchema( strXML );
+
+	if ( SchemaCache.Normalize( pSchema, pXML ) )
+		return true;
+
+	// Invalid XML
+	if ( pXML )
+	{
+		pXML->Delete();
+		pXML = NULL;
+	}
+
+	return false;
+}
+
+CXMLElement* CG1Packet::AutoDetectSchema(LPCTSTR pszInfo)
+{
+	if ( _tcsstr( pszInfo, _T(" Kbps") ) != NULL &&
+		 _tcsstr( pszInfo, _T(" kHz ") ) != NULL )
+	{
+		return AutoDetectAudio( pszInfo );
+	}
+
+	return NULL;
+}
+
+CXMLElement* CG1Packet::AutoDetectAudio(LPCTSTR pszInfo)
+{
+	int nBitrate	= 0;
+	int nFrequency	= 0;
+	int nMinutes	= 0;
+	int nSeconds	= 0;
+	BOOL bVariable	= FALSE;
+
+	if ( _stscanf( pszInfo, _T("%i Kbps %i kHz %i:%i"), &nBitrate, &nFrequency,
+		&nMinutes, &nSeconds ) != 4 )
+	{
+		bVariable = TRUE;
+		if ( _stscanf( pszInfo, _T("%i Kbps(VBR) %i kHz %i:%i"), &nBitrate, &nFrequency,
+			&nMinutes, &nSeconds ) != 4 )
+			return NULL;
+	}
+
+	if ( CXMLElement* pXML = new CXMLElement( NULL, _T("audio") ) )
+	{
+		CString strValue;
+		strValue.Format( _T("%lu"), nMinutes * 60 + nSeconds );
+		pXML->AddAttribute( _T("seconds"), strValue );
+
+		strValue.Format( bVariable ? _T("%lu~") : _T("%lu"), nBitrate );
+		pXML->AddAttribute( _T("bitrate"), strValue );
+
+		return pXML;
+	}
+
+	return NULL;
 }
 
 //////////////////////////////////////////////////////////////////////

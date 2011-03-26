@@ -1,7 +1,7 @@
 //
 // QueryHit.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -21,6 +21,7 @@
 
 #pragma once
 
+#include "Schema.h"
 #include "ShareazaFile.h"
 
 class CVendor;
@@ -71,8 +72,7 @@ public:
 	int				m_nUpQueue;
 	BOOL			m_bCollection;
 public:
-	CString			m_sSchemaURI;
-	CString			m_sSchemaPlural;
+	CSchemaPtr		m_pSchema;
 	CXMLElement*	m_pXML;
 	int				m_nRating;
 	CString			m_sComments;
@@ -110,13 +110,10 @@ protected:
 	void		ParseAttributes(const Hashes::Guid& pClientID, CVendor* pVendor, BYTE* nFlags, BOOL bChat, BOOL bBrowseHost);
 	void		ReadG1Packet(CG1Packet* pPacket);
 	void		ReadGGEP(CG1Packet* pPacket);
-	void		ReadExtension(CG1Packet* pPacket);
 	BOOL		CheckValid() const;
 	void		ReadG2Packet(CG2Packet* pPacket, DWORD nLength);
 	void		ReadEDAddress(CEDPacket* pPacket, const SOCKADDR_IN* pServer);
 	BOOL		ParseXML(CXMLElement* pXML, DWORD nRealIndex);
-	BOOL		AutoDetectSchema(LPCTSTR pszInfo);
-	BOOL		AutoDetectAudio(LPCTSTR pszInfo);
 
 // Inlines
 public:

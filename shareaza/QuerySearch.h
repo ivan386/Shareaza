@@ -130,7 +130,6 @@ public:
 private:
 	BOOL					ReadG1Packet(CG1Packet* pPacket, const SOCKADDR_IN* pEndpoint = NULL);
 	void					ReadGGEP(CG1Packet* pPacket);
-	void					ReadExtension(CG1Packet* pPacket);
 	BOOL					ReadG2Packet(CG2Packet* pPacket, const SOCKADDR_IN* pEndpoint = NULL);
 
 // Operations

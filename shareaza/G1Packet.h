@@ -26,6 +26,8 @@
 
 #include "Packet.h"
 #include "GGEP.h"
+#include "Schema.h"
+
 
 #pragma pack(1)
 
@@ -65,30 +67,23 @@ public:
 						// used by the packet itself
 	DWORD m_nHash;      // Used by CacheHash, but doesn't seem to ever get a hash written into it (do)
 
-public:
-
 	// Change the packet's TTL and hop counts
 	BOOL Hop(); // Make sure the TTL is 2 or more, and then make it one less and the hops count one more
 
 	// Hash the packet
-	void         CacheHash();                                       // Calculate a simple hash of the packet payload in m_nHash
-    // ????????????????????????????????? redefinition of default Parameter!!!
-	virtual BOOL GetRazaHash(Hashes::Sha1Hash& oHash, DWORD nLength = 0) const; // Compute the SHA hash of the packet GUID, 
-																				// type byte, and payload
+	void CacheHash();
 
 	// Get the packet's type, GUID, and all its bytes
-	virtual CString GetType()                  const; // Returns a pointer to a text literal like "Ping" or "Pong"
-	CString         GetGUID()                  const; // Returns the packet's GUID encoded into text in base 16
+	virtual CString GetType() const;
+	CString         GetGUID() const;
 
 	virtual void	Reset();
 	virtual void    ToBuffer(CBuffer* pBuffer, bool bTCP = true) const; // Adds the Gnutella packet header and payload into the given CBuffer object
 
 #ifdef _DEBUG
 	// Record information about the packet for debugging purposes
-	virtual void Debug(LPCTSTR pszReason) const; // Writes debug information about the packet into the Shareaza.log file
+	virtual void Debug(LPCTSTR pszReason) const;
 #endif // _DEBUG
-
-public:
 
 	// Convert between the various ways the program expresses packet types, like ping and pong
 	static int     GnutellaTypeToIndex(BYTE nType); // Turn a type byte, like 0x30, into index 4, both describe a query route packet
@@ -101,6 +96,15 @@ public:
 	// Received SCP GGEP, send 5 random hosts from the cache
 	// Since we do not provide leaves, ignore the preference data
 	static void GGEPWriteRandomCache(CGGEPBlock& pGGEP, LPCTSTR pszID);
+
+	// Read Gnutella HUGE extension
+	bool ReadHUGE(CShareazaFile* pFile);
+	// Read Gnutella XML extension
+	bool ReadXML(CSchemaPtr& pSchema, CXMLElement*& pXML);
+
+	// Decode metadata and Schema from text or XML deflated or plain
+	static CXMLElement* AutoDetectSchema(LPCTSTR pszInfo);
+	static CXMLElement* AutoDetectAudio(LPCTSTR pszInfo);
 
 protected:
 
@@ -229,13 +233,13 @@ inline void CG1Packet::CG1PacketPool::FreePoolImpl(CPacket* pPacket)
 #define G1_PACKTYPE_MAX			9		// There are 9 packet type indices, with values 0 through 8
 
 // MinSpeed Flags (do)
-#define G1_QF_TAG				0x8000	// If the bit 15 is 0, then this is a query with the deprecated minspeed semantic. If the bit 15 is set to 1, then this is a query with the new minimum speed semantic.
-#define G1_QF_FIREWALLED		0x4000	// Firewalled indicator. This flag can be used by the remote servent to avoid returning queryHits if it is itself firewalled, as the requesting servent won't be able to download the files.
-#define G1_QF_XML				0x2000	// XML Metadata. Set this bit to 1 if you want the servent to receive XML Metadata. This flag has been set to spare bandwidth, returning metadata in queryHits only if the requester asks for it.
-#define G1_QF_DYNAMIC			0x1000	// Leaf Guided Dynamic Query. When the bit is set to 1, this means that the query is sent by a leaf which wants to control the dynamic query mechanism. This is part of the Leaf guidance of dynamic queries proposal. This information is only used by the ultrapeers shielding this leave if they implement leaf guidance of dynamic queries.
-#define G1_QF_BIN_HASH			0x0800	// GGEP "H" allowed. If this bit is set to 1, then the sender is able to parse the GGEP "H" extension which is a replacement for the legacy HUGE GEM extension. This is meant to start replacing the GEM mechanism with GGEP extensions, as GEM extensions are now deprecated.
-#define G1_QF_OOB				0x0400	// OOB v2. Out of Band Query. This flag is used to recognize a Query which was sent using the Out Of Band query extension.
-#define G1_QF_FWTRANS			0x0200	// Firewalled transfers supported.
+#define G1_QF_TAG				0x80	// If the bit 15 is 0, then this is a query with the deprecated minspeed semantic. If the bit 15 is set to 1, then this is a query with the new minimum speed semantic.
+#define G1_QF_FIREWALLED		0x40	// Firewalled indicator. This flag can be used by the remote servent to avoid returning queryHits if it is itself firewalled, as the requesting servent won't be able to download the files.
+#define G1_QF_XML				0x20	// XML Metadata. Set this bit to 1 if you want the servent to receive XML Metadata. This flag has been set to spare bandwidth, returning metadata in queryHits only if the requester asks for it.
+#define G1_QF_DYNAMIC			0x10	// Leaf Guided Dynamic Query. When the bit is set to 1, this means that the query is sent by a leaf which wants to control the dynamic query mechanism. This is part of the Leaf guidance of dynamic queries proposal. This information is only used by the ultrapeers shielding this leave if they implement leaf guidance of dynamic queries.
+#define G1_QF_BIN_HASH			0x08	// GGEP "H" allowed. If this bit is set to 1, then the sender is able to parse the GGEP "H" extension which is a replacement for the legacy HUGE GEM extension. This is meant to start replacing the GEM mechanism with GGEP extensions, as GEM extensions are now deprecated.
+#define G1_QF_OOB				0x04	// OOB v2. Out of Band Query. This flag is used to recognize a Query which was sent using the Out Of Band query extension.
+#define G1_QF_FWTRANS			0x02	// Firewalled transfers supported.
 
 #define OLD_LW_MAX_QUERY_FIELD_LEN	30
 #define WHAT_IS_NEW_QUERY_STRING	"whatisnewxoxo"

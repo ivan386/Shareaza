@@ -1,7 +1,7 @@
 //
 // QueryHashTable.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -57,7 +57,6 @@ public:
 protected:
 	// Split word to keywords (Katakana/Hiragana/Kanji helper)
 	static void		MakeKeywords(const CString& strWord, WORD nWordType, CStringList& oKeywords);
-	static DWORD	HashNumber(DWORD nNumber, int nBits);
 
 // Operations
 public:
@@ -71,19 +70,16 @@ public:
 	void	AddFile(const CShareazaFile& oFile);
 	// Add file hashes
 	void	AddHashes(const CShareazaFile& oFile);
-	// Add string with steaming
-	void	AddString(const CString& strString);
 	// Add string exactly
 	void	AddExactString(const CString& strString);
-	bool	CheckString(const CString& strString) const;
 	bool	Check(const CQuerySearch* pSearch) const;
+	// Hash string (MUST BE LOWERCASED)
+	DWORD	HashWord(LPCTSTR pszString, size_t nStart, size_t nLength) const;
 	bool	CheckHash(const DWORD nHash) const;
 	int		GetPercent() const;
 	void	Draw(HDC hDC, const RECT* pRC);
 protected:
 	bool	OnReset(CPacket* pPacket);
 	bool	OnPatch(CPacket* pPacket);
-	void	Add(LPCTSTR pszString, size_t nStart, size_t nLength);
-	void	AddExact(LPCTSTR pszString, size_t nStart, size_t nLength);
 	bool	PatchToOldShareaza(const CQueryHashTable* pTarget, CNeighbour* pNeighbour);
 };

@@ -1,7 +1,7 @@
 //
 // RelatedSearch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -54,7 +54,7 @@ CRelatedSearch::CRelatedSearch(CMatchFile* pFile)
 		m_oMD5		= pFile->m_oMD5;
 		m_sName		= pFile->m_sName;
 
-		m_pSchema	= SchemaCache.Get( pFile->GetBestSchemaURI() );
+		m_pSchema	= pFile->GetBestSchema();
 		m_pXML		= NULL;
 		m_bXML		= FALSE;
 

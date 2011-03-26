@@ -1,7 +1,7 @@
 //
 // Packet.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -96,10 +96,14 @@ void CPacket::Seek(DWORD nPosition, int nRelative)
 		m_nPosition = min( m_nLength, nPosition );
 
 	} // Set the position backwards from the end
-	else
+	else if ( nRelative == seekEnd )
 	{
 		// Move the position in the object to m_nLength - nPosition from the start, which is nPosition from the end
 		m_nPosition = min( m_nLength, m_nLength - nPosition );
+	}
+	else if ( nRelative == seekCurrent )
+	{
+		m_nPosition = min( m_nLength, m_nPosition + nPosition );
 	}
 }
 
@@ -385,29 +389,6 @@ void CPacket::SmartDump(const SOCKADDR_IN* pAddress, BOOL bUDP, BOOL bOutgoing, 
 	{
 		theApp.m_pPacketWnd->SmartDump( this, pAddress, bUDP, bOutgoing, nNeighbourUnique );
 	}
-}
-
-//////////////////////////////////////////////////////////////////////
-// CPacket RAZA signatures
-
-// Takes the number of bytes in this packet to hash
-// Computs the SHA hash of those bytes
-// Writes the hash under the given pointer and returns true, or false on error
-BOOL CPacket::GetRazaHash(Hashes::Sha1Hash& oHash, DWORD nLength) const
-{
-	// If the caller didn't specify a length, we'll hash all the bytes in the packet
-	if ( nLength == 0xFFFFFFFF ) nLength = m_nLength;
-
-	// Make sure the caller didn't ask to hash more bytes than the packet contains
-	if ( (DWORD)m_nLength < nLength ) return FALSE;
-
-	// Make a new local CSHA object to use to hash the data
-	CSHA pSHA;
-	pSHA.Add( m_pBuffer, nLength ); // Add the bytes of the packet to those it needs to hash
-	pSHA.Finish();                  // Tell it that's all we have
-	pSHA.GetHash( &oHash[ 0 ] );    // Ask it to write the hash under the pHash pointer
-	oHash.validate();
-	return TRUE;                    // Report success
 }
 
 // Does nothing, and is not overriden by any inheritng class (do)

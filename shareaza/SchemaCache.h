@@ -87,17 +87,15 @@ public:
 		return m_pNames.Lookup( strName, pSchema ) ? pSchema : NULL;
 	}
 
-	// Decode metadata and Schema from text or XML deflated or plain
-	CXMLElement* Decode(BYTE* pszData, DWORD nLength, CSchemaPtr& pSchema);
-	static CXMLElement* AutoDetectSchema(LPCTSTR pszInfo);
-	static CXMLElement* AutoDetectAudio(LPCTSTR pszInfo);
-
 	CString GetFilter(LPCTSTR pszURI) const;
 
 	inline BOOL IsFilter(const CString& sType) const
 	{
 		return ( m_pTypeFilters.PLookup( sType ) != NULL );
 	}
+
+	// Detect schema and normilize resulting XML
+	bool Normalize(CSchemaPtr& pSchema, CXMLElement*& pXML) const;
 
 private:
 	typedef CMap< CString, const CString&, CSchemaPtr, CSchemaPtr > CSSMap;

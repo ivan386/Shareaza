@@ -63,10 +63,6 @@ CQueryHit::CQueryHit(PROTOCOLID nProtocol, const Hashes::Guid& oSearchID) :
 	m_bChat			( FALSE ),
 	m_bBrowseHost	( FALSE ),	
 	m_nGroup		( 0 ),
-//	m_bSHA1			( FALSE ),
-//	m_bTiger		( FALSE ),
-//	m_bED2K			( FALSE ),
-//	m_bBTH			( FALSE ),
 	m_nIndex		( 0 ),
 	m_bSize			( FALSE ),
 	m_nHitSources	( 0 ),
@@ -75,6 +71,7 @@ CQueryHit::CQueryHit(PROTOCOLID nProtocol, const Hashes::Guid& oSearchID) :
 	m_nUpSlots		( 0 ),
 	m_nUpQueue		( 0 ),	
 	m_bCollection	( FALSE ),	
+	m_pSchema		( NULL ),
 	m_pXML			( NULL ),
 	m_nRating		( 0 ),	
 	m_bBogus		( FALSE ),
@@ -91,6 +88,7 @@ CQueryHit::CQueryHit(PROTOCOLID nProtocol, const Hashes::Guid& oSearchID) :
 
 CQueryHit::CQueryHit(const CQueryHit& pHit) :
 	m_pNext			( NULL ),
+	m_pSchema		( NULL ),
 	m_pXML			( NULL )
 {
 	*this = pHit;
@@ -1081,10 +1079,15 @@ void CQueryHit::ReadG1Packet(CG1Packet* pPacket)
 			pPacket->ReadByte();
 			break;
 		}
-		else
+		else if ( nPeek == 'u' )
 		{
-			// HUGE, XML extensions
-			ReadExtension( pPacket );
+			// HUGE extensions
+			pPacket->ReadHUGE( this );
+		}
+		else if ( nPeek == '<' || nPeek == '{' )
+		{
+			// XML extensions
+			pPacket->ReadXML( m_pSchema, m_pXML );
 		}
 	}
 }
@@ -1228,66 +1231,6 @@ void CQueryHit::ReadGGEP(CG1Packet* pPacket)
 	}
 }
 
-void CQueryHit::ReadExtension(CG1Packet* pPacket)
-{
-	// Find length of extension (till packet end, G1_PACKET_HIT_SEP or null bytes)
-	DWORD nLength = 0;
-	DWORD nRemaining = pPacket->GetRemaining();
-	const BYTE* pData = pPacket->GetCurrent();
-	for ( ; *pData != G1_PACKET_HIT_SEP && *pData != 0 &&
-		nLength < nRemaining; pData++, nLength++ );
-
-	// Read extension
-	auto_array< BYTE > pszData( new BYTE[ nLength + 1] );
-	pPacket->Read( pszData.get(), nLength );
-	pszData[ nLength ] = 0;
-
-	// Skip G1_PACKET_HIT_SEP byte
-	if ( *pData == G1_PACKET_HIT_SEP )
-		pPacket->ReadByte();
-
-	if ( nLength >= 4 && _strnicmp( (LPCSTR)pszData.get(), "urn:", 4 ) == 0 )
-	{
-		CString strURN( pszData.get() );
-
-		Hashes::Sha1Hash	oSHA1;
-		Hashes::TigerHash	oTiger;
-		Hashes::Ed2kHash	oED2K;
-		Hashes::BtHash		oBTH;
-		Hashes::Md5Hash		oMD5;
-
-		if ( strURN.GetLength() == 4 );			// Got empty urn
-		else if ( oSHA1.fromUrn(  strURN ) );	// Got SHA1
-		else if ( oTiger.fromUrn( strURN ) );	// Got Tiger
-		else if ( oED2K.fromUrn(  strURN ) );	// Got ED2K
-		else if ( oMD5.fromUrn(   strURN ) );	// Got MD5
-		else if ( oBTH.fromUrn(   strURN ) );	// Got BTH base32
-		else if ( oBTH.fromUrn< Hashes::base16Encoding >( strURN ) );	// Got BTH base16
-		else
-			theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet with unknown URN \"%s\" (%d bytes)"), strURN, nLength );
-
-		if ( oSHA1  && ! m_oSHA1 )  m_oSHA1  = oSHA1;
-		if ( oTiger && ! m_oTiger ) m_oTiger = oTiger;
-		if ( oED2K  && ! m_oED2K )  m_oED2K  = oED2K;
-		if ( oBTH   && ! m_oBTH )   m_oBTH   = oBTH;
-		if ( oMD5   && ! m_oMD5 )   m_oMD5   = oMD5;
-	}
-	else if ( nLength && ! m_pXML )
-	{
-		CSchemaPtr pSchema = NULL;
-		m_pXML = SchemaCache.Decode( pszData.get(), nLength, pSchema );
-		if ( m_pXML )
-		{
-			m_sSchemaPlural	= pSchema->m_sPlural;
-			m_sSchemaURI = pSchema->GetURI();
-		}
-		else
-			theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet with malformed XML \"%hs\" (%d bytes)"), pszData.get(), nLength );
-	}
-	else
-		theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet with unknown part \"%hs\" (%d bytes)"), pszData.get(), nLength );
-}
-
 //////////////////////////////////////////////////////////////////////
 // CQueryHit G1 attributes suffix
 
@@ -1418,33 +1361,18 @@ void CQueryHit::ReadG2Packet(CG2Packet* pPacket, DWORD nLength)
 					theApp.Message( MSG_DEBUG, _T("[G2] Hit Error: Got too short metadata (%s)"), (LPCTSTR)strXML );
 					AfxThrowUserException();
 				}
-				if ( CXMLElement* pXML = CXMLElement::FromString( strXML ) )
+				if ( m_pXML )
 				{
-					if ( CXMLAttribute* pURI = pXML->GetAttribute( CXMLAttribute::schemaName ) )
-					{
-						m_sSchemaPlural		= pXML->GetName();
-						m_sSchemaURI		= pURI->GetValue();
-						CXMLElement* pChild	= pXML->GetFirstElement();						
-						if ( pChild != NULL && m_sSchemaPlural.GetLength() > 0 &&
-							m_sSchemaURI.GetLength() > 0 )
-						{
-							m_pXML->Delete();
-							m_pXML = pChild->Detach();
-						}
-					}
-					else if ( CSchemaPtr pSchema = SchemaCache.Guess( pXML->GetName() ) )
+					theApp.Message( MSG_DEBUG, _T("[G2] Hit Error: Got extra metadata (%s)"), (LPCTSTR)strXML );
+				}
+				else if ( ( m_pXML = CXMLElement::FromString( strXML ) ) != NULL )
+				{
+					if ( ! SchemaCache.Normalize( m_pSchema, m_pXML ) )
 					{
 						m_pXML->Delete();
-						m_sSchemaPlural	= pSchema->m_sPlural;
-						m_sSchemaURI	= pSchema->GetURI();
-						m_pXML			= pXML;
-						pXML			= NULL;
-					}
-					else
-					{
+						m_pXML = NULL;
 						theApp.Message( MSG_DEBUG, _T("[G2] Hit Error: Got unknown metadata schema (%s)"), (LPCTSTR)strXML );
 					}
-					pXML->Delete();
 				}
 				else
 				{
@@ -1731,118 +1659,55 @@ void CQueryHit::ReadEDPacket(CEDPacket* pPacket, const SOCKADDR_IN* pServer, BOO
 		m_nSize = SIZE_UNKNOWN;
 	}
 
-	// Verify and set metadata
-	CString strType;
-
 	// Check we have a valid name
 	if ( m_sName.GetLength() )
 	{
-		int nExtPos = m_sName.ReverseFind( '.' );
-		if ( nExtPos != -1 ) 
+		// Determine type
+		m_pSchema = SchemaCache.GuessByFilename( m_sName );
+		if ( m_pSchema )
 		{
-			strType = m_sName.Mid( nExtPos );
-			ToLower( strType );
+			if ( m_pXML ) m_pXML->Delete();
+			m_pXML = new CXMLElement( NULL, m_pSchema->m_sSingular );
+
+			if ( m_pSchema->CheckURI( CSchema::uriAudio ) )
+			{
+				// Audio
+				if ( nLength > 0 )
+				{
+					strLength.Format( _T("%lu"), nLength );
+					m_pXML->AddAttribute( _T("seconds"), strLength );
+				}
+				if ( strBitrate.GetLength() )
+				{
+					m_pXML->AddAttribute( _T("bitrate"), strBitrate );
+				}/*
+				if ( strCodec.GetLength() )
+				{
+					m_pXML->AddAttribute( _T("codec"), strCodec );
+				}*/
+			}
+			else if ( m_pSchema->CheckURI( CSchema::uriVideo ) )
+			{
+				// Video
+				if ( nLength > 0 )
+				{
+					strLength.Format( _T("%.3f"), (double)nLength / (double)60 );
+					m_pXML->AddAttribute( _T("minutes"), strLength );
+				}/*
+				if ( strBitrate.GetLength() )
+				{
+					m_pXML->AddAttribute( _T("bitrate"), strBitrate );
+				}*/
+				if ( strCodec.GetLength() )
+				{
+					m_pXML->AddAttribute( _T("codec"), strCodec );
+				}
+			}
 		}
 	}
 	else
 	{
 		m_bBogus = TRUE;
-	}
-
-	// If we can determine type, we can add metadata
-	if ( strType.GetLength() )
-	{
-		// Determine type
-		CSchemaPtr pSchema = NULL;
-
-		if ( ( pSchema = SchemaCache.Get( CSchema::uriAudio ) ) != NULL &&
-			 pSchema->FilterType( strType ) )
-		{	// Audio
-			m_sSchemaURI = CSchema::uriAudio;
-
-			// Add metadata
-			if ( nLength > 0 )
-			{
-				strLength.Format( _T("%lu"), nLength );
-				if ( m_pXML == NULL ) m_pXML = new CXMLElement( NULL, _T("audio") );
-				m_pXML->AddAttribute( _T("seconds"), strLength );
-			}
-			if ( strBitrate.GetLength() )
-			{
-				if ( m_pXML == NULL ) m_pXML = new CXMLElement( NULL, _T("audio") );
-				m_pXML->AddAttribute( _T("bitrate"), strBitrate );
-			}/*
-			if ( strCodec.GetLength() )
-			{
-				m_sSchemaURI = CSchema::uriVideo;
-				if ( m_pXML == NULL ) m_pXML = new CXMLElement( NULL, _T("audio") );
-				m_pXML->AddAttribute( _T("codec"), strCodec );
-			}*/
-		}
-		else if ( ( pSchema = SchemaCache.Get( CSchema::uriVideo ) ) != NULL &&
-				  pSchema->FilterType( strType ) )
-		{	// Video
-			m_sSchemaURI = CSchema::uriVideo;
-
-			// Add metadata
-			if ( nLength > 0 )
-			{
-				double nMins = (double)nLength / (double)60;	
-				strLength.Format( _T("%.3f"), nMins );
-				if ( m_pXML == NULL ) m_pXML = new CXMLElement( NULL, _T("video") );
-				m_pXML->AddAttribute( _T("minutes"), strLength );
-			}/*
-			if ( strBitrate.GetLength() )
-			{
-				if ( m_pXML == NULL ) m_pXML = new CXMLElement( NULL, _T("video") );
-				m_pXML->AddAttribute( _T("bitrate"), strBitrate );
-			}*/
-			if ( strCodec.GetLength() )
-			{
-				if ( m_pXML == NULL ) m_pXML = new CXMLElement( NULL, _T("video") );
-				m_pXML->AddAttribute( _T("codec"), strCodec );
-			}
-		}
-		else if ( ( pSchema = SchemaCache.Get( CSchema::uriApplication ) ) != NULL &&
-				  pSchema->FilterType( strType ) )
-		{	// Application
-			m_sSchemaURI = CSchema::uriApplication;
-		}
-		else if ( ( pSchema = SchemaCache.Get( CSchema::uriImage ) ) != NULL && 
-					pSchema->FilterType( strType ) )
-		{	// Image
-			m_sSchemaURI = CSchema::uriImage;
-		}
-		else if ( ( pSchema = SchemaCache.Get( CSchema::uriBook ) ) != NULL && 
-					pSchema->FilterType( strType ) )
-		{	// eBook
-			m_sSchemaURI = CSchema::uriBook;
-		}
-		else if ( ( pSchema = SchemaCache.Get( CSchema::uriDocument ) ) != NULL && 
-					pSchema->FilterType( strType ) )
-		{	// Document
-			m_sSchemaURI = CSchema::uriDocument;
-		}
-		else if ( ( pSchema = SchemaCache.Get( CSchema::uriPresentation ) ) != NULL && 
-					pSchema->FilterType( strType ) )
-		{	// Presentation
-			m_sSchemaURI = CSchema::uriPresentation;
-		}
-		else if ( ( pSchema = SchemaCache.Get( CSchema::uriSpreadsheet ) ) != NULL && 
-					pSchema->FilterType( strType ) )
-		{	// Spreadsheet
-			m_sSchemaURI = CSchema::uriSpreadsheet;
-		}
-		else if ( ( pSchema = SchemaCache.Get( CSchema::uriROM ) ) != NULL && 
-					pSchema->FilterType( strType ) )
-		{	// ROM Image
-			m_sSchemaURI = CSchema::uriROM;
-		}
-		else if ( ( pSchema = SchemaCache.Get( CSchema::uriCollection ) ) != NULL && 
-					pSchema->FilterType( strType ) )
-		{	// Collection
-			m_sSchemaURI = CSchema::uriCollection;
-		}
 	}
 }
 
@@ -1956,37 +1821,29 @@ void CQueryHit::Resolve()
 
 BOOL CQueryHit::ParseXML(CXMLElement* pMetaData, DWORD nRealIndex)
 {
-	CString strRealIndex;
-	strRealIndex.Format( _T("%i"), nRealIndex );
-
-	for ( POSITION pos1 = pMetaData->GetElementIterator() ; pos1 && ! m_pXML ; )
+	for ( POSITION pos1 = pMetaData->GetElementIterator() ; pos1 ; )
 	{
 		CXMLElement* pXML = pMetaData->GetNextElement( pos1 );
 
 		for ( POSITION pos2 = pXML->GetElementIterator() ; pos2 ; )
 		{
-			CXMLElement* pHit		= pXML->GetNextElement( pos2 );
-			CXMLAttribute* pIndex	= pHit->GetAttribute( _T("index") );
+			CXMLElement* pHit = pXML->GetNextElement( pos2 );
 
-			if ( pIndex != NULL && pIndex->GetValue() == strRealIndex )
-			{
-				m_sSchemaPlural	= pXML->GetName();
-				m_sSchemaURI	= pXML->GetAttributeValue( CXMLAttribute::schemaName, _T("") );
-
-				if ( m_sSchemaPlural.GetLength() > 0 && m_sSchemaURI.GetLength() > 0 )
+			CString sIndex = pHit->GetAttributeValue( _T("index"), _T("-1") );
+			if ( _tstoi( sIndex ) == (int)nRealIndex )
+			{ 
+				if ( m_pXML ) m_pXML->Delete();
+				m_pXML = NULL;
+				if ( SchemaCache.Normalize( m_pSchema, pHit ) )
 				{
-					if ( m_pXML )
-						delete m_pXML;
 					m_pXML = pHit->Detach();
-					pIndex->Delete();
 				}
-
-				break;
+				return TRUE;
 			}
 		}
 	}
 
-	return m_pXML != NULL;
+	return FALSE;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -2020,8 +1877,7 @@ CQueryHit& CQueryHit::operator=(const CQueryHit& pOther)
 	m_nUpSlots		= pOther.m_nUpSlots;
 	m_nUpQueue		= pOther.m_nUpQueue;
 	m_bCollection	= pOther.m_bCollection;
-	m_sSchemaURI	= pOther.m_sSchemaURI;
-	m_sSchemaPlural	= pOther.m_sSchemaPlural;
+	m_pSchema		= pOther.m_pSchema;
 	if ( m_pXML ) delete m_pXML;
 	m_pXML			= pOther.m_pXML ? pOther.m_pXML->Clone() : NULL;
 	m_nRating		= pOther.m_nRating;
@@ -2121,10 +1977,9 @@ void CQueryHit::Serialize(CArchive& ar, int nVersion)
 		ar << m_sPreview;
 		ar << m_bCollection;
 
-		if ( m_pXML == NULL ) m_sSchemaURI.Empty();
-		ar << m_sSchemaURI;
-		ar << m_sSchemaPlural;
-		if ( m_sSchemaURI.GetLength() ) m_pXML->Serialize( ar );
+		ar << ( ( m_pSchema && m_pXML ) ? m_pSchema->GetURI() : CString() );
+		ar << ( ( m_pSchema && m_pXML ) ? m_pSchema->m_sPlural : CString() );
+		if ( m_pSchema && m_pXML ) m_pXML->Serialize( ar );
 		ar << m_nRating;
 		ar << m_sComments;
 
@@ -2192,11 +2047,12 @@ void CQueryHit::Serialize(CArchive& ar, int nVersion)
 		ar >> m_sPreview;
 		if ( nVersion >= 11 ) ar >> m_bCollection;
 		
-		ar >> m_sSchemaURI;
-		ar >> m_sSchemaPlural;
-		
-		if ( m_sSchemaURI.GetLength() )
+		CString sSchemaURI, sSchemaPlural;
+		ar >> sSchemaURI;
+		ar >> sSchemaPlural; // unused
+		if ( sSchemaURI.GetLength() )
 		{
+			m_pSchema = SchemaCache.Get( sSchemaURI );
 			m_pXML = new CXMLElement();
 			m_pXML->Serialize( ar );
 		}

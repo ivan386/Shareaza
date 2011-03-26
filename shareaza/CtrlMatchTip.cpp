@@ -1,7 +1,7 @@
 //
 // CtrlMatchTip.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -379,13 +379,13 @@ void CMatchTipCtrl::LoadFromHit()
 		m_sQueue.Empty();
 	}
 
-	m_pSchema = SchemaCache.Get( m_pHit->m_sSchemaURI );
+	m_pSchema = m_pHit->m_pSchema;
 
 	m_pMetadata.Setup( m_pSchema );
 
 	if ( m_pSchema != NULL )
 	{
-		if ( m_pHit->m_pXML && m_pSchema->CheckURI( m_pHit->m_sSchemaURI ) )
+		if ( m_pHit->m_pXML && m_pSchema->Equals( m_pHit->m_pSchema ) )
 		{
 			m_pMetadata.Combine( m_pHit->m_pXML );
 		}

@@ -334,17 +334,11 @@ BOOL CDownloadWithSources::AddSourceHit(const CQueryHit* pHit, BOOL bForce)
 	
 	if ( Settings.Downloads.Metadata && m_pXML == NULL )
 	{
-		if ( pHit->m_pXML != NULL && pHit->m_sSchemaPlural.GetLength() )
+		if ( pHit->m_pXML && pHit->m_pSchema )
 		{
-			m_pXML = new CXMLElement( NULL, pHit->m_sSchemaPlural );
-			m_pXML->AddAttribute( _T("xmlns:xsi"), CXMLAttribute::xmlnsInstance );
-			m_pXML->AddAttribute( CXMLAttribute::schemaName, pHit->m_sSchemaURI );
+			m_pXML = pHit->m_pSchema->Instantiate( TRUE );
 			m_pXML->AddElement( pHit->m_pXML->Clone() );
-			
-			if ( CSchemaPtr pSchema = SchemaCache.Get( pHit->m_sSchemaURI ) )
-			{
-				pSchema->Validate( m_pXML, TRUE );
-			}
+			pHit->m_pSchema->Validate( m_pXML, TRUE );
 		}
 	}
 

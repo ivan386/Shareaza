@@ -1,7 +1,7 @@
 //
 // QueryHashTable.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1108,77 +1108,12 @@ void CQueryHashTable::AddHashes(const CShareazaFile& oFile)
 	}
 }
 
-void CQueryHashTable::AddString(const CString& strString)
-{
-	if ( ! m_pHash )
-		return;
-
-	Add( strString, 0, strString.GetLength() );
-}
-
 void CQueryHashTable::AddExactString(const CString& strString)
 {
-	if ( ! m_pHash )
+	if ( ! m_pHash || strString.IsEmpty() )
 		return;
 
-	AddExact( strString, 0, strString.GetLength() );
-}
-
-void CQueryHashTable::Add(LPCTSTR pszString, size_t nStart, size_t nLength)
-{
-	const bool bWord = IsWord( pszString, nStart, nLength );
-	if ( ! nLength || ! bWord && nLength < 4 )
-		return;
-
-	DWORD tNow = GetTickCount();
-
-	//TRACE( _T("[QHT] \"%hs\"\n"), (LPCSTR)CT2A( CString( pszString + nStart, nLength ) ) );
-	DWORD nHash	= HashWord( pszString, nStart, nLength, m_nBits );
-	BYTE* pHash	= m_pHash + ( nHash >> 3 );
-	BYTE nMask	= BYTE( 1 << ( nHash & 7 ) );
-	if ( *pHash & nMask )
-	{
-		m_nCookie = tNow;
-		++m_nCount;
-		*pHash &= ~nMask;
-	}
-
-	if ( ! bWord )
-		return;
-
-	if ( nLength >= 5 )
-	{
-		//TRACE( _T("[QHT] \"%hs\"\n"), (LPCSTR)CT2A( CString( pszString + nStart, nLength - 1 ) ) );
-		nHash	= HashWord( pszString, nStart, nLength - 1, m_nBits );
-		pHash	= m_pHash + ( nHash >> 3 );
-		nMask	= BYTE( 1 << ( nHash & 7 ) );
-		if ( *pHash & nMask )
-		{
-			m_nCookie = tNow;
-			++m_nCount;
-			*pHash &= ~nMask;
-		}
-
-		//TRACE( _T("[QHT] \"%hs\"\n"), (LPCSTR)CT2A( CString( pszString + nStart, nLength - 2 ) ) );
-		nHash	= HashWord( pszString, nStart, nLength - 2, m_nBits );
-		pHash	= m_pHash + ( nHash >> 3 );
-		nMask	= BYTE( 1 << ( nHash & 7 ) );
-		if ( *pHash & nMask )
-		{
-			m_nCookie = tNow;
-			++m_nCount;
-			*pHash &= ~nMask;
-		}
-	}
-}
-
-void CQueryHashTable::AddExact(LPCTSTR pszString, size_t nStart, size_t nLength)
-{
-	if ( ! nLength )
-		return;
-	
-	//TRACE( _T("[QHT] \"%hs\"\n"), (LPCSTR)CT2A( CString( pszString + nStart, nLength ) ) );
-	DWORD nHash	= HashWord( pszString, nStart, nLength, m_nBits );
+	DWORD nHash	= HashWord( strString, 0, strString.GetLength() );
 	BYTE* pHash	= m_pHash + ( nHash >> 3 );
 	BYTE nMask	= BYTE( 1 << ( nHash & 7 ) );
 	if ( *pHash & nMask )
@@ -1189,16 +1124,9 @@ void CQueryHashTable::AddExact(LPCTSTR pszString, size_t nStart, size_t nLength)
 	}
 }
 
-bool CQueryHashTable::CheckString(const CString& strString) const
+DWORD CQueryHashTable::HashWord(LPCTSTR pszString, size_t nStart, size_t nLength) const
 {
-	if ( !m_bLive || !m_pHash || strString.IsEmpty() )
-		return true;
-
-	DWORD nHash	= HashWord( strString, 0, strString.GetLength(), m_nBits );
-	BYTE* pHash	= m_pHash + ( nHash >> 3 );
-	BYTE nMask	= BYTE( 1 << ( nHash & 7 ) );
-
-	return ! ( *pHash & nMask );
+	return HashWord( pszString, nStart, nLength, m_nBits );
 }
 
 bool CQueryHashTable::CheckHash(const DWORD nHash) const
@@ -1267,23 +1195,11 @@ DWORD CQueryHashTable::HashWord(LPCTSTR pszString, size_t nStart, size_t nLength
 	for ( pszString += nStart; nLength ; --nLength, ++pszString )
 	{
 		// A known bad using of tolower() with unicode chars but as is...
-		int nValue = tolower( *pszString ) & 0xFF;
-
-		nValue <<= ( nByte * 8 );
+		nNumber ^= ( tolower( *pszString ) & 0xFF ) << ( nByte * 8 );
 		nByte = ( nByte + 1 ) & 3;
-
-		nNumber ^= nValue;
 	}
 
-	return HashNumber( nNumber, nBits );
-}
-
-DWORD CQueryHashTable::HashNumber(DWORD nNumber, int nBits)
-{
-	unsigned __int64 nProduct	= (unsigned __int64)nNumber * (unsigned __int64)0x4F1BBCDC;
-	unsigned __int64 nHash		= nProduct << 32;
-	nHash >>= ( 32 + ( 32 - nBits ) );
-	return (DWORD)nHash;
+	return ( nNumber * 0x4F1BBCDC ) >> ( 32 - nBits );
 }
 
 //////////////////////////////////////////////////////////////////////
