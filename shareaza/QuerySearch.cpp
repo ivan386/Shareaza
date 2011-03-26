@@ -769,11 +769,6 @@ BOOL CQuerySearch::ReadG1Packet(CG1Packet* pPacket, const SOCKADDR_IN* pEndpoint
 
 			break;
 		}
-		else if ( nPeek == 0 || nPeek == G1_PACKET_HIT_SEP )
-		{
-			// Skip extra null or separate byte
-			pPacket->ReadByte();
-		}
 		else if ( nPeek == 'u' )
 		{
 			// HUGE extensions
@@ -783,6 +778,10 @@ BOOL CQuerySearch::ReadG1Packet(CG1Packet* pPacket, const SOCKADDR_IN* pEndpoint
 		{
 			// XML extensions
 			pPacket->ReadXML( m_pSchema, m_pXML );
+		}
+		else
+		{
+			pPacket->ReadByte();
 		}
 	}
 

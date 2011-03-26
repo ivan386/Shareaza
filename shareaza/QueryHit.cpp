@@ -1068,11 +1068,6 @@ void CQueryHit::ReadG1Packet(CG1Packet* pPacket)
 			// GGEP extension
 			ReadGGEP( pPacket );
 		}
-		else if ( nPeek == G1_PACKET_HIT_SEP )
-		{
-			// Skip extra separator byte
-			pPacket->ReadByte();
-		}
 		else if ( nPeek == 0 )
 		{
 			// End of hit
@@ -1088,6 +1083,10 @@ void CQueryHit::ReadG1Packet(CG1Packet* pPacket)
 		{
 			// XML extensions
 			pPacket->ReadXML( m_pSchema, m_pXML );
+		}
+		else
+		{
+			pPacket->ReadByte();
 		}
 	}
 }
