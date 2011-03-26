@@ -1,7 +1,7 @@
 //
 // Handshakes.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -370,19 +370,8 @@ BOOL CHandshakes::AcceptConnection()
 	// We've listened for and accepted one more stable connection
 	InterlockedIncrement( (PLONG)&m_nStableCount ); // Use an interlocked function to do this in a thread-safe way
 
-	// If the remote computer's IP address is blocked or banned
-	if ( Security.IsDenied( &pHost.sin_addr ) )
-	{
-		CNetwork::CloseSocket( hSocket, true );
-
-		// Report that this connection was denied for security reasons
-		theApp.Message( MSG_ERROR, IDS_NETWORK_SECURITY_DENIED, (LPCTSTR)CString( inet_ntoa( pHost.sin_addr ) ) );
-	}
-	else // The IP address is not blocked
-	{
-		// Make a new handshake object with the received socket and IP address, and add it to the list
-		CreateHandshake( hSocket, &pHost );
-	}
+	// Make a new handshake object with the received socket and IP address, and add it to the list
+	CreateHandshake( hSocket, &pHost );
 
 	// Report success
 	return TRUE;
