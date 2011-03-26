@@ -332,7 +332,7 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 	}
 	else if ( m_bClientExtended )
 	{
-		// Assume certain capabilitites for various Shareaza versions
+		// Assume certain capabilities for various Shareaza versions
 		m_nGnutella |= 3;
 		if ( m_sUserAgent == _T("Shareaza 1.4.0.0") ) m_bQueueMe = TRUE;
 
@@ -346,33 +346,18 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 			return FALSE;
 		}
 	}
+	else if ( _tcsistr( m_sUserAgent, _T("limewire") ) != NULL || // LimeWire(FrostWire)
+			  _tcsistr( m_sUserAgent, _T("phex") ) != NULL )
+	{
+		// Assume Gnutella1 ONLY capability for certain user-agents
+		m_nGnutella = 1;
+	}
 	else if ( _tcsistr( m_sUserAgent, _T("trustyfiles") ) != NULL ||
 			  _tcsistr( m_sUserAgent, _T("gnucdna") ) != NULL ||
 			  _tcsistr( m_sUserAgent, _T("adagio") ) != NULL )
 	{
 		// Assume Gnutella2 capability for certain user-agents
 		m_nGnutella |= 3;
-	}
-	else if ( m_nGnutella & 2 )
-	{
-		// Check for clients spoofing a G2 header
-		if ( _tcsistr( m_sUserAgent, _T("phex") ) != NULL )
-		{
-			// This is actually a G1-only client sending a fake header, so they can download 
-			// from (but not upload to) clients that are only connected to G2. 
-			m_nGnutella = 1;
-			
-			if ( ! Settings.Gnutella1.EnableToday )
-			{
-				// Terminate the connection and do not try to download from them.
-				SendResponse( IDR_HTML_FILENOTFOUND );
-				theApp.Message( MSG_ERROR, _T("Client %s has a fake G2 header, banning"), (LPCTSTR)m_sAddress );
-
-				Security.Ban( &m_pHost.sin_addr, banWeek, FALSE );
-				Remove( FALSE );
-				return FALSE;
-			}
-		}
 	}
 
 	CBuffer pResponse;
@@ -753,6 +738,8 @@ BOOL CUploadTransferHTTP::RequestSharedFile(CLibraryFile* pFile, CSingleLock& oL
 	if ( ! IsHashed() )
 		m_sLocations.Empty();
 
+	if ( m_nOffset == SIZE_UNKNOWN )
+		m_nOffset = 0;
 	if ( m_nLength == SIZE_UNKNOWN )
 		m_nLength = m_nSize - m_nOffset;
 
@@ -819,6 +806,8 @@ BOOL CUploadTransferHTTP::RequestPartialFile(CDownload* pDownload)
 	if ( ! m_bRange || ( m_nOffset == 0 && m_nLength == SIZE_UNKNOWN ) )
 		pDownload->GetRandomRange( m_nOffset, m_nLength );
 
+	if ( m_nOffset == SIZE_UNKNOWN )
+		m_nOffset = 0;
 	if ( m_nLength == SIZE_UNKNOWN )
 		m_nLength = m_nSize - m_nOffset;
 
@@ -1734,10 +1723,6 @@ BOOL CUploadTransferHTTP::RequestHostBrowse()
 		return TRUE;
 	}
 
-	StartSending( upsBrowse );
-
-	theApp.Message( MSG_NOTICE, IDS_UPLOAD_BROWSE, (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
-
 	if ( m_bHostBrowse < 2 )
 	{
 		if ( Settings.Community.ServeFiles )
@@ -1807,7 +1792,9 @@ BOOL CUploadTransferHTTP::RequestHostBrowse()
 
 	if ( ! m_bHead ) Write( &pBuffer );
 	
-	CTransfer::OnWrite();
+	StartSending( upsBrowse );
+
+	theApp.Message( MSG_NOTICE, IDS_UPLOAD_BROWSE, (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
 	
 	return TRUE;
 }
