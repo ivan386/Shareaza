@@ -348,7 +348,7 @@ void CG1Packet::GGEPWriteRandomCache(CGGEPBlock& pGGEP, LPCTSTR pszID)
 		return;
 
 	while ( (DWORD)pHosts.GetCount() > Settings.Gnutella1.MaxHostsInPongs )
-		pHosts.RemoveAt( GetRandomNum( 0, pHosts.GetCount() - 1 ) );
+		pHosts.RemoveAt( GetRandomNum( 0, (int)pHosts.GetCount() - 1 ) );
 
 	if ( CGGEPItem* pItem = pGGEP.Add( pszID ) )
 	{

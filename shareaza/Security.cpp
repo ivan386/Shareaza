@@ -2189,7 +2189,7 @@ BOOL CAdultFilter::Censor(CString& sText) const
 	// Check and replace blocked words
 	for ( LPCTSTR pszWord = m_pszBlockedWords ; pszWord && *pszWord ; )
 	{
-		int nWordLen = _tcslen( pszWord );
+		int nWordLen = (int)_tcslen( pszWord );
 		if ( ReplaceNoCase( sText, pszWord, CString( _T('*'), nWordLen ) ) )
 			bModified = TRUE;
 		pszWord += nWordLen + 1;

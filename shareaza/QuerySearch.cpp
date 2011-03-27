@@ -1241,7 +1241,7 @@ BOOL CQuerySearch::CheckValid(bool bExpression)
 
 			if ( nValidCharacters > 2 ) // if char is longer than 3byte in utf8 (Gnutella standard)
 			{
-				if ( SchemaCache.IsFilter( CString( pWord->first, pWord->second ) ) )
+				if ( SchemaCache.IsFilter( CString( pWord->first, (int)pWord->second ) ) )
 					// Common term. Don't count it as valid keywords, instead count it as common keywords
 					nCommonWords++;
 				else
