@@ -35,6 +35,7 @@
 #include "UploadFile.h"
 #include "UploadQueue.h"
 #include "UploadQueues.h"
+#include "XML.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -599,7 +600,7 @@ void CUploadTransferDC::LibraryToFileList(const CString& strRoot, CBuffer& pXML)
 	CString strFileListing;
 	strFileListing.Format( _T("<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>\r\n")
 		_T("<FileListing Version=\"1\" Base=\"%s\" Generator=\"%s\">\r\n"),
-		strRoot, theApp.m_sSmartAgent );
+		CXMLNode::ValueToString( strRoot ), CXMLNode::ValueToString( theApp.m_sSmartAgent ) );
 	pXML.Print( strFileListing, CP_UTF8 );
 
 	if ( strRoot == _T("/") )
@@ -626,7 +627,7 @@ void CUploadTransferDC::FolderToFileList(const CLibraryFolder* pFolder, CBuffer&
 
 	CString strFolder;
 	strFolder.Format( _T("<Directory Name=\"%s\">\r\n"),
-		pFolder->m_sName );
+		CXMLNode::ValueToString( pFolder->m_sName ) );
 	pXML.Print( strFolder, CP_UTF8 );
 
 	for ( POSITION pos = pFolder->GetFolderIterator() ; pos ; )
@@ -649,6 +650,6 @@ void CUploadTransferDC::FileToFileList(const CLibraryFile* pFile, CBuffer& pXML)
 
 	CString strFile;
 	strFile.Format( _T("<File Name=\"%s\" Size=\"%I64u\" TTH=\"%s\"/>\r\n"),
-		pFile->m_sName, pFile->m_nSize, pFile->m_oTiger.toString() );
+		CXMLNode::ValueToString( pFile->m_sName ), pFile->m_nSize, pFile->m_oTiger.toString() );
 	pXML.Print( strFile, CP_UTF8 );
 }

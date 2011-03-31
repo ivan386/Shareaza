@@ -1,7 +1,7 @@
 //
 // XML.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -57,7 +57,7 @@ public:
 	CString			GetValue() const;
 	void			SetValue(LPCTSTR pszValue);
 	static CString	StringToValue(LPCTSTR& pszXML, int nLength);
-	static void		ValueToString(const CString& strValue, CString& strXML);
+	static CString 	ValueToString(const CString& strValue);
 	static void		UniformString(CString& str);
 
 	friend class	CXMLElement;
