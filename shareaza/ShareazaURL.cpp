@@ -1,7 +1,7 @@
 //
 // ShareazaURL.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -177,19 +177,19 @@ BOOL CShareazaURL::Parse(LPCTSTR pszURL, BOOL bResolve)
 
 BOOL CShareazaURL::ParseRoot(LPCTSTR pszURL, BOOL bResolve)
 {
-	if ( _tcsncmp( pszURL, _T("http://"), 7 ) == 0 )		// http://
+	if ( _tcsncmp( pszURL, _T("http://"), 7 ) == 0 )
 	{
 		return ParseHTTP( pszURL, bResolve );
 	}
-	else if ( _tcsncmp( pszURL, _T("ftp://"), 6 ) == 0 )	// ftp://
+	else if ( _tcsncmp( pszURL, _T("ftp://"), 6 ) == 0 )
 	{
 		return ParseFTP( pszURL, bResolve );
 	}
-	else if ( _tcsnicmp( pszURL, _T("ed2kftp://"), 10 ) == 0 )	// ed2kftp://
+	else if ( _tcsnicmp( pszURL, _T("ed2kftp://"), 10 ) == 0 )
 	{
 		return ParseED2KFTP( pszURL, bResolve );
 	}
-	else if ( _tcsnicmp( pszURL, _T("btc://"), 6 ) == 0 )	// btc://
+	else if ( _tcsnicmp( pszURL, _T("btc://"), 6 ) == 0 )
 	{
 		return ParseBTC( pszURL, bResolve );
 	}
@@ -247,16 +247,13 @@ BOOL CShareazaURL::ParseRoot(LPCTSTR pszURL, BOOL bResolve)
 	{
 		return ParseShareaza( pszURL );
 	}
-	else if ( _tcsnicmp( pszURL, _T("dchub://"), 8 ) == 0 )	// dchub://1.2.3.4:411
+	else if ( _tcsnicmp( pszURL, _T("dchub://"), 8 ) == 0 )
 	{
-		SkipSlashes( pszURL, 8 );
-		m_nPort = DC_DEFAULT_PORT;
-		m_nProtocol	= PROTOCOL_DC;
-		return ParseShareazaHost( pszURL, FALSE );
+		return ParseDCHub( pszURL, bResolve );
 	}
 	else if ( _tcsnicmp( pszURL, _T("dcfile://"), 8 ) == 0 )
 	{
-		return ParseDC( pszURL, FALSE );
+		return ParseDCFile( pszURL, bResolve );
 	}
 
 	Clear();
@@ -470,7 +467,23 @@ BOOL CShareazaURL::ParseED2KFTP(LPCTSTR pszURL, BOOL bResolve)
 //////////////////////////////////////////////////////////////////////
 // CShareazaURL DC
 
-BOOL CShareazaURL::ParseDC(LPCTSTR pszURL, BOOL bResolve)
+BOOL CShareazaURL::ParseDCHub(LPCTSTR pszURL, BOOL /*bResolve*/)
+{
+	Clear();
+
+	m_nPort = DC_DEFAULT_PORT;
+
+	SkipSlashes( pszURL, 8 );
+
+	if ( ! ParseShareazaHost( pszURL, FALSE ) )
+		return FALSE;
+
+	m_nProtocol = PROTOCOL_DC;
+
+	return TRUE;
+}
+
+BOOL CShareazaURL::ParseDCFile(LPCTSTR pszURL, BOOL bResolve)
 {
 	Clear();
 
@@ -607,10 +620,12 @@ BOOL CShareazaURL::ParseMagnet(LPCTSTR pszURL)
 			else if (	_tcsnicmp( strValue, _T("http://"), 7 ) == 0 ||
 						_tcsnicmp( strValue, _T("http%3A//"), 9 ) == 0 ||
 						_tcsnicmp( strValue, _T("ftp://"), 6 ) == 0 ||
-						_tcsnicmp( strValue, _T("ftp%3A//"), 8 ) == 0 )
+						_tcsnicmp( strValue, _T("ftp%3A//"), 8 ) == 0 ||
+						_tcsnicmp( strValue, _T("dchub://"), 8 ) == 0 ||
+						_tcsnicmp( strValue, _T("dchub%3A//"), 8 ) == 0 )
 			{
 				strValue.Replace( _T(" "), _T("%20") );
-				strValue.Replace( _T("p%3A//"), _T("p://") );
+				strValue.Replace( _T("%3A//"), _T("://") );
 
 				if ( _tcsicmp( strKey, _T("xt") ) == 0 )
 				{

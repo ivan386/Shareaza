@@ -327,16 +327,12 @@ CString URLDecode(LPCTSTR pszInput)
 // Decodes a properly formatted URI, then UTF-8 decodes it
 CString URLDecodeANSI(LPCTSTR pszInput)
 {
-	// Setup local variables useful for the conversion
 	TCHAR szHex[3] = { 0, 0, 0 };	// A 3 character long array filled with 3 null terminators
-	CString strOutput;				// The output string, which starts out blank
+	CStringA strOutput;				// The output string, which starts out blank
 	int nHex;						// The hex code of the character we found
 
-	// Allocate a new CHAR array big enough to hold the input characters and a null terminator
-	LPSTR pszBytes = new CHAR[ _tcslen( pszInput ) + 1 ];
-
-	// Point the output string pointer at this array
-	LPSTR pszOutput = pszBytes;
+	int nLength = (int)_tcslen( pszInput );
+	LPSTR pszOutput = strOutput.GetBuffer( nLength + 1 );
 
 	// Loop for each character of input text
 	for ( ; *pszInput ; pszInput++ )
@@ -344,26 +340,67 @@ CString URLDecodeANSI(LPCTSTR pszInput)
 		// We hit a %, which might be the start of something like %20
 		if ( *pszInput == '%' )
 		{
-			// Copy characters like "20" into szHex, making sure neither are null
-			if ( ( szHex[0] = pszInput[1] ) == 0 ) break;
-			if ( ( szHex[1] = pszInput[2] ) == 0 ) break;
-
-			// Read the text like "20" as a number, and store it in nHex
-			if ( _stscanf( szHex, _T("%x"), &nHex ) != 1 ) break;
-			if ( nHex < 1 ) break; // Make sure the number isn't 0 or negative
-
-			// That number is the code of a character, copy it into the output string
-			*pszOutput++ = CHAR( nHex ); // And then move the output pointer to the next spot
-
-			// Move the input pointer past the two characters of the "20"
-			pszInput += 2;
-
+			if ( ( szHex[0] = pszInput[1] ) != 0 &&
+				 ( szHex[1] = pszInput[2] ) != 0 &&
+				 _stscanf( szHex, _T("%x"), &nHex ) == 1 &&
+				 nHex > 0 )
+			{
+				*pszOutput++ = (CHAR)nHex;
+				pszInput += 2;
+			}
+			else
+			{
+				*pszOutput++ = '%';
+			}
 		} // We hit a +, which is shorthand for space
 		else if ( *pszInput == '+' )
 		{
 			// Add a space to the output text, and move the pointer forward
 			*pszOutput++ = ' ';
-
+		}
+		else if ( *pszInput == '&' )
+		{
+			if ( _tcsnicmp( pszInput + 1, _T("amp;"), 4 ) == 0 )
+			{
+				*pszOutput++ = '&';
+				pszInput += 4;
+			}
+			else if ( _tcsnicmp( pszInput + 1, _T("lt;"), 3 ) == 0 )
+			{
+				*pszOutput++ = '<';
+				pszInput += 3;
+			}
+			else if ( _tcsnicmp( pszInput + 1, _T("gt;"), 3 ) == 0 )
+			{
+				*pszOutput++ = '>';
+				pszInput += 3;
+			}
+			else if ( _tcsnicmp( pszInput + 1, _T("quot;"), 5 ) == 0 )
+			{
+				*pszOutput++ = '\"';
+				pszInput += 5;
+			}
+			else if ( _tcsnicmp( pszInput + 1, _T("apos;"), 5 ) == 0 )
+			{
+				*pszOutput++ = '\'';
+				pszInput += 5;
+			}
+			else if ( _tcsnicmp( pszInput + 1, _T("nbsp;"), 5 ) == 0 )
+			{
+				*pszOutput++ = ' ';
+				pszInput += 5;
+			}
+			else if ( pszInput[ 1 ] == '#' &&
+				_stscanf( pszInput + 2, _T("%lu;"), &nHex ) == 1 &&
+				nHex > 0 )
+			{
+				*pszOutput++ = (CHAR)nHex;
+				while ( *pszInput && *pszInput != ';' ) ++pszInput;
+			}
+			else
+			{
+				*pszOutput++ = '&';
+			}
 		} // The input pointer is just on a normal character
 		else
 		{
@@ -372,63 +409,87 @@ CString URLDecodeANSI(LPCTSTR pszInput)
 		}
 	}
 
-	// Cap off the output text with a null terminator
 	*pszOutput = 0;
-
-	// Copy the text from pszBytes into strOutput, converting it into Unicode
-	int nLength = MultiByteToWideChar( CP_UTF8, 0, pszBytes, -1, NULL, 0 );
-	MultiByteToWideChar( CP_UTF8, 0, pszBytes, -1, strOutput.GetBuffer( nLength ), nLength );
-
-	// Close the output string, we are done editing its buffer directly
 	strOutput.ReleaseBuffer();
-
-	// Free the memory we allocated above
-	delete [] pszBytes;
-
-	// Return the output string
-	return strOutput;
+	return UTF8Decode( strOutput );
 }
 
 // Decodes encoded characters in a unicode string
 CString URLDecodeUnicode(LPCTSTR pszInput)
 {
-	// Setup local variables useful for the conversion
 	TCHAR szHex[3] = { 0, 0, 0 };	// A 3 character long array filled with 3 null terminators
 	CString strOutput;				// The output string, which starts out blank
 	int nHex;						// The hex code of the character we found
 
-	// Allocate a new CHAR array big enough to hold the input characters and a null terminator
-	LPTSTR pszBytes = strOutput.GetBuffer( static_cast< int >( _tcslen( pszInput ) ) );
+	int nLength = (int)_tcslen( pszInput );
+	LPTSTR pszOutput = strOutput.GetBuffer( nLength + 1 );
 
-	// Point the output string pointer at this array
-	LPTSTR pszOutput = pszBytes;
-
-	// Loop for each character of input text
-	for ( ; *pszInput ; pszInput++ )
+	for ( ; *pszInput ; ++pszInput )
 	{
 		// We hit a %, which might be the start of something like %20
 		if ( *pszInput == '%' )
 		{
-			// Copy characters like "20" into szHex, making sure neither are null
-			if ( ( szHex[0] = pszInput[1] ) == 0 ) break;
-			if ( ( szHex[1] = pszInput[2] ) == 0 ) break;
-
-			// Read the text like "20" as a number, and store it in nHex
-			if ( _stscanf( szHex, _T("%x"), &nHex ) != 1 ) break;
-			if ( nHex < 1 ) break; // Make sure the number isn't 0 or negative
-
-			// That number is the code of a character, copy it into the output string
-			*pszOutput++ = WCHAR( nHex ); // And then move the output pointer to the next spot
-
-			// Move the input pointer past the two characters of the "20"
-			pszInput += 2;
-
+			if ( ( szHex[0] = pszInput[1] ) != 0 &&
+				( szHex[1] = pszInput[2] ) != 0 &&
+				_stscanf( szHex, _T("%x"), &nHex ) == 1 &&
+				nHex > 0 )
+			{
+				*pszOutput++ = (TCHAR)nHex;
+				pszInput += 2;
+			}
+			else
+			{
+				*pszOutput++ = '%';
+			}
 		} // We hit a +, which is shorthand for space
 		else if ( *pszInput == '+' )
 		{
 			// Add a space to the output text, and move the pointer forward
 			*pszOutput++ = ' ';
-
+		}
+		else if ( *pszInput == '&' )
+		{
+			if ( _tcsnicmp( pszInput + 1, _T("amp;"), 4 ) == 0 )
+			{
+				*pszOutput++ = '&';
+				pszInput += 4;
+			}
+			else if ( _tcsnicmp( pszInput + 1, _T("lt;"), 3 ) == 0 )
+			{
+				*pszOutput++ = '<';
+				pszInput += 3;
+			}
+			else if ( _tcsnicmp( pszInput + 1, _T("gt;"), 3 ) == 0 )
+			{
+				*pszOutput++ = '>';
+				pszInput += 3;
+			}
+			else if ( _tcsnicmp( pszInput + 1, _T("quot;"), 5 ) == 0 )
+			{
+				*pszOutput++ = '\"';
+				pszInput += 5;
+			}
+			else if ( _tcsnicmp( pszInput + 1, _T("apos;"), 5 ) == 0 )
+			{
+				*pszOutput++ = '\'';
+				pszInput += 5;
+			}
+			else if ( _tcsnicmp( pszInput + 1, _T("nbsp;"), 5 ) == 0 )
+			{
+				*pszOutput++ = ' ';
+				pszInput += 5;
+			}
+			else if ( pszInput[ 1 ] == '#' &&
+				_stscanf( pszInput + 2, _T("%lu;"), &nHex ) == 1 &&
+				nHex > 0 )
+			{
+				*pszOutput++ = (TCHAR)nHex;
+				while ( *pszInput && *pszInput != ';' ) ++pszInput;
+			}
+			else
+			{
+				*pszOutput++ = '&';
+			}
 		} // The input pointer is just on a normal character
 		else
 		{
@@ -437,10 +498,9 @@ CString URLDecodeUnicode(LPCTSTR pszInput)
 		}
 	}
 
-	// Close and return the string
-	*pszOutput = 0;            // End the output text with a null terminator
-	strOutput.ReleaseBuffer(); // Release direct access to the buffer of the CString object
-	return strOutput;          // Return the string
+	*pszOutput = 0;
+	strOutput.ReleaseBuffer();
+	return strOutput;
 }
 
 LPCTSTR _tcsistr(LPCTSTR pszString, LPCTSTR pszSubString)

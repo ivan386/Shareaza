@@ -1,7 +1,7 @@
 //
 // ShareazaURL.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -71,8 +71,13 @@ protected:
 	BOOL	ParseRoot(LPCTSTR pszURL, BOOL bResolve);
 	BOOL	ParseHTTP(LPCTSTR pszURL, BOOL bResolve);
 	BOOL	ParseFTP(LPCTSTR pszURL, BOOL bResolve);
+	// ed2kftp://[client_id@]address:port/md4_hash/size/
 	BOOL	ParseED2KFTP(LPCTSTR pszURL, BOOL bResolve);
-	BOOL	ParseDC(LPCTSTR pszURL, BOOL bResolve);
+	// dchub://address:port
+	BOOL	ParseDCHub(LPCTSTR pszURL, BOOL bResolve);
+	// dcfile://address:port/login/TTH:tiger_hash/size/
+	BOOL	ParseDCFile(LPCTSTR pszURL, BOOL bResolve);
+	// btc://address:port/[node_guid]/btih_hash/
 	BOOL	ParseBTC(LPCTSTR pszURL, BOOL bResolve);
 	BOOL	ParseMagnet(LPCTSTR pszURL);
 	BOOL	ParseShareaza(LPCTSTR pszURL);

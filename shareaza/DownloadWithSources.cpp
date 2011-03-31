@@ -390,9 +390,11 @@ BOOL CDownloadWithSources::AddSourceBT(const Hashes::BtGuid& oGUID, const IN_ADD
 
 BOOL CDownloadWithSources::AddSourceURL(LPCTSTR pszURL, BOOL bURN, FILETIME* pLastSeen, int nRedirectionCount, BOOL bFailed)
 {
-	if ( pszURL == NULL ) return FALSE;
-	if ( *pszURL == 0 ) return FALSE;
-	if ( nRedirectionCount > 5 ) return FALSE; // No more than 5 redirections
+	if ( pszURL == NULL || *pszURL == 0 )
+		return FALSE;
+
+	if ( nRedirectionCount > 5 )
+		return FALSE; // No more than 5 redirections
 	
 	BOOL bHashAuth = FALSE;
 	BOOL bValidated = FALSE;
@@ -404,12 +406,26 @@ BOOL CDownloadWithSources::AddSourceURL(LPCTSTR pszURL, BOOL bURN, FILETIME* pLa
 		pszURL++;
 	}
 	
-	if ( ! pURL.Parse( pszURL ) ) return FALSE;
-	
+	if ( ! pURL.Parse( pszURL ) )
+		return FALSE;	// Wrong URL
+
+	if ( pURL.m_nAction == CShareazaURL::uriHost &&
+		 pURL.m_nProtocol == PROTOCOL_DC )
+	{
+		// Connect to specified DC++ hub for future searches
+		Network.ConnectTo( pURL.m_sName, pURL.m_nPort, PROTOCOL_DC );
+		return FALSE;
+	}
+
+	if ( pURL.m_nAction != CShareazaURL::uriDownload &&
+		 pURL.m_nAction != CShareazaURL::uriSource )
+		return FALSE;	// Wrong URL type
+
 	if ( bURN )
 	{
 		if ( Network.IsFirewalledAddress( &pURL.m_pAddress, TRUE ) || 
-			 Network.IsReserved( &pURL.m_pAddress ) ) return FALSE;
+			 Network.IsReserved( &pURL.m_pAddress ) )
+			 return FALSE;
 	}
 
 	CQuickLock pLock( Transfers.m_pSection );
