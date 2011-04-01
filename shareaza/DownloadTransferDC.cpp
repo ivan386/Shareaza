@@ -294,13 +294,11 @@ BOOL CDownloadTransferDC::ReadTiger()
 		// Not yet
 		return TRUE;
 
-	if ( ! m_pDownload->SetTigerTree( pInput->m_pBuffer, pInput->m_nLength, TRUE ) )
-		// Wrong hash
-		return FALSE;
+	BOOL bTiger = m_pDownload->SetTigerTree( pInput->m_pBuffer, pInput->m_nLength, TRUE );
 
 	pInput->Clear();
 
-	return StartNextFragment();
+	return bTiger ? StartNextFragment() : FALSE;
 }
 
 BOOL CDownloadTransferDC::OnDownload(const std::string& strType, const std::string& strFilename, QWORD nOffset, QWORD nLength, const std::string& strOptions)
