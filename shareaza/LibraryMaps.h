@@ -38,6 +38,8 @@ public:
 	POSITION		GetFileIterator() const;
 	CLibraryFile*	GetNextFile(POSITION& pos) const;
 	INT_PTR			GetFileCount() const { return m_pIndexMap.GetCount(); }
+	INT_PTR			GetNameCount() const { return m_pNameMap.GetCount(); }
+	INT_PTR			GetPathCount() const { return m_pPathMap.GetCount(); }
 	void			GetStatistics(DWORD* pnFiles, QWORD* pnVolume);
 
 	CLibraryFile*	LookupFile(DWORD_PTR nIndex, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE) const;
@@ -90,7 +92,6 @@ protected:
 
 	friend class CLibrary;
 	friend class CLibraryBuilder;
-	friend class CLibraryFile;
 };
 
 extern CLibraryMaps LibraryMaps;

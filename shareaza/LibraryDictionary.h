@@ -42,6 +42,8 @@ public:
 	CFileList*				Search(const CQuerySearch* pSearch, int nMaximum = 0, bool bLocal = false, bool bAvailableOnly = true);
 	void					Serialize(CArchive& ar, int nVersion);
 
+	INT_PTR					GetWordCount() const { return m_oWordMap.GetCount(); }
+
 private:
 	typedef CMap< CString, const CString&, CFileList*, CFileList*& > CWordMap;
 

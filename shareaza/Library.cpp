@@ -350,6 +350,10 @@ BOOL CLibrary::Load()
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 
+#ifdef _DEBUG
+	__int64 nStart = GetMicroCount();
+#endif
+
 	FILETIME pFileTime1 = { 0, 0 }, pFileTime2 = { 0, 0 };
 	CFile pFile1, pFile2;
 	BOOL bFile1, bFile2;
@@ -415,6 +419,16 @@ BOOL CLibrary::Load()
 	LibraryFolders.CreateAlbumTree();
 	LibraryHashDB.Create();
 	LibraryBuilder.BoostPriority( Settings.Library.HighPriorityHash );
+
+#ifdef _DEBUG
+	__int64 nEnd = GetMicroCount();
+	theApp.Message( MSG_DEBUG, _T("Library load time : %I64i ms. Files: %d, Keywords: %d, Names: %d, Paths: %d\n"),
+		( nEnd - nStart ) / 1000,
+		LibraryMaps.GetFileCount(),
+		LibraryDictionary.GetWordCount(),
+		LibraryMaps.GetNameCount(),
+		LibraryMaps.GetPathCount() );
+#endif
 
 	Update();
 
