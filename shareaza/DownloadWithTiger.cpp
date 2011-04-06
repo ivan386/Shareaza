@@ -296,9 +296,6 @@ BOOL CDownloadWithTiger::SetTigerTree(BYTE* pTiger, DWORD nTiger, BOOL bLevel1)
 		return TRUE;
 
 	DWORD nHeight = Settings.Library.TigerHeight;
-	if ( nTiger == Hashes::TigerHash::byteCount && m_nSize < 64 * 1024 )
-		// Allow use of 1-height TigerTree for files less than 64KB
-		nHeight = 1;
 
 	if ( ! ( bLevel1 ?
 		m_pTigerTree.FromBytesLevel1( pTiger, nTiger, nHeight, m_nSize ) :

@@ -1175,11 +1175,20 @@ BOOL CTigerTree::FromBytesLevel1(const uint8* pInput, uint32 nInput, uint32 nHei
 {
 	CSectionLock oLock( &m_pSection );
 
-	SetupAndAllocate( nHeight, nLength );
+	uint32 nCount = nInput / TIGER_SIZE;
+	if ( nInput % TIGER_SIZE != 0 )
+	{
+		// Not a full level
+		Clear();
+		return FALSE;
+	}
+	uint32 nCountHeight = 1;
+	for ( uint32 nStep = 1 ; nStep < nCount ; nStep *= 2 ) nCountHeight++;
+
+	SetupAndAllocate( min( nCountHeight, nHeight ), nLength );
 
 	CTigerNode* pBase = m_pNode + m_nNodeCount - m_nNodeBase;
 
-	uint32 nCount = nInput / TIGER_SIZE;
 	if ( nCount != m_nBaseUsed )
 	{
 		// Not a first level
