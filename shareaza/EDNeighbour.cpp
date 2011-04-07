@@ -1,7 +1,7 @@
 //
 // EDNeighbour.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -360,10 +360,9 @@ BOOL CEDNeighbour::OnIdChange(CEDPacket* pPacket)
 
 	if ( ! CEDPacket::IsLowID( m_nClientID ) )
 	{
-		if ( Settings.Connection.InHost.IsEmpty() )
-		{
-			Network.m_pHost.sin_addr.S_un.S_addr = m_nClientID;
-		}
+		IN_ADDR pMyAddress;
+		pMyAddress.s_addr = m_nClientID;
+		Network.AcquireLocalAddress( pMyAddress );
 	}
 	else
 	{

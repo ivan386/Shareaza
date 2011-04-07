@@ -386,11 +386,12 @@ int CMainWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	// Status Bar
 
-	UINT wID[2] = { ID_SEPARATOR, ID_SEPARATOR };
+	const UINT wID[ 3 ] = { ID_SEPARATOR, ID_SEPARATOR, ID_SEPARATOR };
 	if ( ! m_wndStatusBar.Create( this ) ) return -1;
-	m_wndStatusBar.SetIndicators( wID, 2 );
+	m_wndStatusBar.SetIndicators( wID, _countof( wID ) );
 	m_wndStatusBar.SetPaneInfo( 0, ID_SEPARATOR, SBPS_STRETCH, 0 );
-	m_wndStatusBar.SetPaneInfo( 1, ID_SEPARATOR, SBPS_NORMAL, 210 );
+	m_wndStatusBar.SetPaneInfo( 1, ID_SEPARATOR, SBPS_NORMAL, 200 );
+	m_wndStatusBar.SetPaneInfo( 2, ID_SEPARATOR, SBPS_NORMAL, 200 );
 
 	EnableDocking( CBRS_ALIGN_ANY );
 
@@ -1459,6 +1460,16 @@ void CMainWnd::UpdateMessages()
 		m_wndStatusBar.GetPaneText( 1, strOld );
 		if ( strOld != strStatusbar )
 			m_wndStatusBar.SetPaneText( 1, strStatusbar );
+	}
+
+	// StatusBar pane 2
+	{
+		CString strStatusbar( HostToString( &Network.m_pHost ) );	
+
+		CString strOld;
+		m_wndStatusBar.GetPaneText( 2, strOld );
+		if ( strOld != strStatusbar )
+			m_wndStatusBar.SetPaneText( 2, strStatusbar );
 	}
 
 	// Tray

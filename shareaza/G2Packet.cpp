@@ -1402,8 +1402,7 @@ BOOL CG2Packet::OnKHLA(const SOCKADDR_IN* pHost)
 		{
 			IN_ADDR pMyAddress;
 			pMyAddress.s_addr = ReadLongLE();
-			if ( Network.m_pHost.sin_addr.s_addr == 0 )
-				Network.AcquireLocalAddress( pMyAddress );
+			Network.AcquireLocalAddress( pMyAddress );
 		}
 
 		m_nPosition = nNext;

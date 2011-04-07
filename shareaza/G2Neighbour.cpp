@@ -971,8 +971,7 @@ BOOL CG2Neighbour::ParseKHLPacket(CG2Packet* pPacket, const SOCKADDR_IN* pHost)
 			{
 				IN_ADDR pMyAddress;
 				pMyAddress.s_addr = pPacket->ReadLongLE();
-				if ( Network.m_pHost.sin_addr.s_addr == 0 )
-					Network.AcquireLocalAddress( pMyAddress );
+				Network.AcquireLocalAddress( pMyAddress );
 			}
 			else
 				bInvalid = TRUE;
