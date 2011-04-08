@@ -1,7 +1,7 @@
 //
 // Downloads.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -63,7 +63,7 @@ private:
 
 // Operations
 public:
-	CDownload*	Add();
+	CDownload*	Add(BOOL bAddToHead = FALSE);
 	CDownload*	Add(CQueryHit* pHit, BOOL bAddToHead = FALSE);
 	CDownload*	Add(CMatchFile* pFile, BOOL bAddToHead = FALSE);
 	CDownload*	Add(const CShareazaURL& oURL);

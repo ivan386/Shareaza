@@ -4109,6 +4109,9 @@ BEGIN
                             "Cannot send message, a connection has not been established yet."
     IDS_CHAT_NEED_PROFILE   "You have not yet filled in your user profile. You must provide a profile before you can chat with other users.\n\nWould you like to fill in your profile now?"
     IDS_CHAT_PRIORITY_GRANTED "Granted upload priority to host %s."
+	IDS_CHAT_CAPTCHA_REQUEST "Solve this CAPTCHA please:"
+	IDS_CHAT_CAPTCHA_WRONG  "Wrong CAPTCHA."
+	IDS_CHAT_CAPTCHA_ACCEPTED "CAPTCHA accepted."
 END
 
 STRINGTABLE 

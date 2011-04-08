@@ -22,7 +22,6 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "DCClient.h"
-#include "DCClients.h"
 #include "Library.h"
 #include "SharedFolder.h"
 #include "LibraryFolders.h"
@@ -61,16 +60,18 @@ CUploadTransferDC::~CUploadTransferDC()
 	ASSERT( m_pClient == NULL );
 }
 
+BOOL CUploadTransferDC::IsIdle() const
+{
+	return ( m_nState < upsUploading );
+}
+
 void CUploadTransferDC::Close(UINT nError)
 {
-	if ( m_pClient != NULL )
+	if ( CDCClient* pClient = m_pClient )
 	{
-		if ( m_nState >= upsUploading )
-		{
-			m_pClient->Close();
-		}
-		m_pClient->OnUploadClose();
 		m_pClient = NULL;
+
+		pClient->OnUploadClose();
 	}
 
 	Cleanup();

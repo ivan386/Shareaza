@@ -128,12 +128,20 @@ void CDownloads::StopTrying(bool bIsTorrent)
 //////////////////////////////////////////////////////////////////////
 // CDownloads add an empty download (privileged)
 
-CDownload* CDownloads::Add()
+CDownload* CDownloads::Add(BOOL bAddToHead)
 {
 	ASSUME_LOCK( Transfers.m_pSection );
 
 	CDownload* pDownload = new CDownload();
-	m_pList.AddTail( pDownload );
+	if ( ! pDownload )
+		// Out of memory
+		return NULL;
+
+	if ( bAddToHead )
+		m_pList.AddHead( pDownload );
+	else
+		m_pList.AddTail( pDownload );
+
 	return pDownload;
 }
 
@@ -168,11 +176,9 @@ CDownload* CDownloads::Add(CQueryHit* pHit, BOOL bAddToHead)
 	}
 	else
 	{
-		pDownload = new CDownload();
-		pDownload->AddSourceHit( pHit, TRUE );
+		pDownload = Add( bAddToHead );
 
-		if ( bAddToHead ) m_pList.AddHead( pDownload );
-		else m_pList.AddTail( pDownload );
+		pDownload->AddSourceHit( pHit, TRUE );
 
 		theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_ADDED,
 			(LPCTSTR)pDownload->GetDisplayName(), pDownload->GetSourceCount() );
@@ -222,9 +228,7 @@ CDownload* CDownloads::Add(CMatchFile* pFile, BOOL bAddToHead)
 	}
 	else
 	{
-		pDownload = new CDownload();
-		if ( bAddToHead ) m_pList.AddHead( pDownload );
-		else m_pList.AddTail( pDownload );
+		pDownload = Add( bAddToHead );
 
 		pFile->AddHitsToDownload( pDownload, TRUE );
 
@@ -280,7 +284,7 @@ CDownload* CDownloads::Add(const CShareazaURL& oURL)
 		bNew = FALSE;
 	}
 	else
-		pDownload = new CDownload();
+		pDownload = Add();
 
 	if ( ! pDownload->m_oSHA1 && oURL.m_oSHA1 )
 	{
@@ -327,7 +331,7 @@ CDownload* CDownloads::Add(const CShareazaURL& oURL)
 		{
 			if ( oURL.m_nAction == CShareazaURL::uriSource )
 			{
-				delete pDownload;
+				Remove( pDownload );
 				return NULL;
 			}
 		}
@@ -340,8 +344,6 @@ CDownload* CDownloads::Add(const CShareazaURL& oURL)
 
 	if ( bNew )
 	{
-		m_pList.AddTail( pDownload );
-
 		theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_ADDED,
 			(LPCTSTR)pDownload->GetDisplayName(), pDownload->GetEffectiveSourceCount() );
 
@@ -519,8 +521,7 @@ void CDownloads::Remove(CDownload* pDownload)
 {
 	ASSUME_LOCK( Transfers.m_pSection );
 
-	POSITION pos = m_pList.Find( pDownload );
-	if ( pos != NULL )
+	if ( POSITION pos = m_pList.Find( pDownload ) )
 		m_pList.RemoveAt( pos );
 
 	delete pDownload;
@@ -1213,7 +1214,7 @@ void CDownloads::Load()
 			strPath.Format( _T("%s\\%s"),
 				(LPCTSTR)Settings.Downloads.IncompletePath, pFind.cFileName );
 
-			auto_ptr< CDownload > pDownload( new CDownload() );
+			CDownload* pDownload = new CDownload();
 			if ( pDownload->Load( strPath ) )
 			{
 				if ( pDownload->IsSeeding() )
@@ -1229,7 +1230,7 @@ void CDownloads::Load()
 					pDownload->m_bComplete = true;
 					pDownload->m_bVerify = TRI_TRUE;
 				}
-				m_pList.AddTail( pDownload.release() );
+				m_pList.AddTail( pDownload );
 			}
 			else
 			{
@@ -1238,6 +1239,7 @@ void CDownloads::Load()
 				DeleteFileEx( strPath, FALSE, TRUE, TRUE );
 				DeleteFileEx( strPath + _T(".sav"), FALSE, FALSE, TRUE );
 				DeleteFileEx( strPath + _T(".png"), FALSE, FALSE, TRUE );
+				delete pDownload;
 			}
 		}
 		while ( FindNextFile( hSearch, &pFind ) );
@@ -1380,8 +1382,7 @@ void CDownloads::SerializeCompound(CArchive& ar)
 
 	for ( DWORD_PTR nCount = ar.ReadCount() ; nCount > 0 ; nCount-- )
 	{
-		CDownload* pDownload = new CDownload();
-		m_pList.AddTail( pDownload );
+		CDownload* pDownload = Add();
 		pDownload->Serialize( ar, nVersion );
 	}
 }

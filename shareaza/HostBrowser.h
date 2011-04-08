@@ -1,7 +1,7 @@
 //
 // HostBrowser.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,23 +22,23 @@
 #pragma once
 
 #include "Transfer.h"
-#include "zlib.h"
 
+class CBrowseHostWnd;
+class CBuffer;
+class CEDPacket;
 class CG1Packet;
 class CG2Packet;
-class CEDPacket;
 class CGProfile;
-class CBuffer;
-class CVendor;
-class CBrowseHostWnd;
+class CLibraryFile;
 class CQueryHit;
+class CVendor;
+class CXMLElement;
 
 
 class CHostBrowser : public CTransfer
 {
 public:
-	CHostBrowser(CBrowseHostWnd* pNotify = NULL, PROTOCOLID nProtocol = PROTOCOL_ANY, IN_ADDR* pAddress = NULL, WORD nPort = 0,
-		BOOL bMustPush = FALSE, const Hashes::Guid& pClientID = Hashes::Guid());
+	CHostBrowser(CBrowseHostWnd* pNotify = NULL, PROTOCOLID nProtocol = PROTOCOL_ANY, IN_ADDR* pAddress = NULL, WORD nPort = 0, BOOL bMustPush = FALSE, const Hashes::Guid& pClientID = Hashes::Guid(), const CString& sNick = CString());
 	virtual ~CHostBrowser();
 
 public:
@@ -62,12 +62,13 @@ public:
 	DWORD			m_nReceived;
 	CBuffer*		m_pBuffer;
 	z_streamp		m_pInflate;
+	CString			m_sNick;
 
 	enum { hbsNull, hbsConnecting, hbsRequesting, hbsHeaders, hbsContent };
 
 // Operations
 public:
-	void		Serialize(CArchive& ar);
+	void		Serialize(CArchive& ar, int nVersion /* BROWSER_SER_VERSION */);
 	BOOL		Browse();
 	void		Stop(BOOL bCompleted = FALSE);
 	BOOL		IsBrowsing() const;
@@ -78,6 +79,7 @@ public:
 	virtual void	OnDropped();
 	virtual BOOL	OnHeadersComplete();
 	virtual BOOL	OnPush(const Hashes::Guid& oClientID, CConnection* pConnection);
+	virtual BOOL	OnNewFile(CLibraryFile* pFile);
 
 protected:
 	CBrowseHostWnd*	m_pNotify;
@@ -93,6 +95,8 @@ protected:
 	BOOL		OnPacket(CG1Packet* pPacket);
 	BOOL		OnPacket(CG2Packet* pPacket);
 	void		OnProfilePacket(CG2Packet* pPacket);
+	BOOL		LoadDC(LPCTSTR pszFile, CQueryHit*& pHits);
+	BOOL		LoadDCDirectory(CXMLElement* pRoot, CQueryHit*& pHits);
 
 	virtual BOOL	OnRead();
 	virtual BOOL	OnHeaderLine(CString& strHeader, CString& strValue);

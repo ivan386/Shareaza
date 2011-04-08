@@ -80,6 +80,12 @@ public:
 	bool				m_bWhatsNew;	// G1: "Whats New?" request
 	bool				m_bDropMe;		// Silently drop this packet (to avoid overflow) 
 
+	CString				m_sUserHub;		// DC: Hub name of passive user
+	CString				m_sUserNick;	// DC: Nick of passive user
+	SOCKADDR_IN			m_pMyHub;		// DC: Hub address
+	CString				m_sMyHub;		// DC: Hub name
+	CString				m_sMyNick;		// DC: Nick
+
 	Hash32List			m_oURNs;			// Hashed URNs
 	Hash32List			m_oKeywordHashList;	// list of hashed keywords to BOOST QUery Routing.
 
@@ -131,6 +137,7 @@ private:
 	BOOL					ReadG1Packet(CG1Packet* pPacket, const SOCKADDR_IN* pEndpoint = NULL);
 	void					ReadGGEP(CG1Packet* pPacket);
 	BOOL					ReadG2Packet(CG2Packet* pPacket, const SOCKADDR_IN* pEndpoint = NULL);
+	BOOL					ReadDCPacket(CDCPacket* pPacket, const SOCKADDR_IN* pEndpoint = NULL);
 
 // Operations
 public:
@@ -149,7 +156,7 @@ private:
 
 // Utilities
 public:
-	static CQuerySearchPtr	FromPacket(CPacket* pPacket, const SOCKADDR_IN* pEndpoint = NULL);
+	static CQuerySearchPtr	FromPacket(CPacket* pPacket, const SOCKADDR_IN* pEndpoint = NULL, BOOL bGUID = FALSE);
 	static CSearchWnd*		OpenWindow(CQuerySearch* pSearch);
 	static BOOL				WordMatch(LPCTSTR pszString, LPCTSTR pszFind, bool* bReject = NULL);
 	static BOOL				NumberMatch(const CString& strValue, const CString& strRange);

@@ -21,6 +21,10 @@
 
 #pragma once
 
+#define MATCHLIST_SER_VERSION	15
+// History:
+// 15 - added CQueryHit::m_sNick for DC++ hits (ryo-oh-ki)
+
 #include "ShareazaFile.h"
 #include "Schema.h"
 
@@ -124,7 +128,7 @@ public:
 	void		UpdateRange(DWORD nMin = 0, DWORD nMax = 0xFFFFFFFF);
 	void		ClearUpdated();
 	void		ClearNew();
-	void		Serialize(CArchive& ar);
+	void		Serialize(CArchive& ar, int nVersion = MATCHLIST_SER_VERSION);
 	void		SanityCheck();
 
 	CBaseMatchWnd* GetParent() const
@@ -189,7 +193,7 @@ public:
 	BOOL		Expand(BOOL bExpand = TRUE);
 	inline int	Compare(CMatchFile* pFile) const;
 	CString		GetURN() const;
-	void		Serialize(CArchive& ar, int nVersion);
+	void		Serialize(CArchive& ar, int nVersion /* MATCHLIST_SER_VERSION */);
 	void		Ban(int nBanLength);	// Ban by hashes and by hit host IPs
 	
 	inline DWORD GetFilteredCount()

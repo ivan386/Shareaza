@@ -24,6 +24,7 @@
 #include "ThreadImpl.h"
 
 class CBuffer;
+class CConnection;
 class CFirewall;
 class CG2Packet;
 class CLocalSearch;
@@ -214,6 +215,9 @@ public:
 	BOOL		SendPush(const Hashes::Guid& oGUID, DWORD nIndex = 0);
 	BOOL		RouteHits(CQueryHit* pHits, CPacket* pPacket);
 	void		OnWinsock(WPARAM wParam, LPARAM lParam);
+
+	// Handle push for downloads, chats and browsers
+	BOOL		OnPush(const Hashes::Guid& oGUID, CConnection* pConnection);
 
 	// Add query search to queue
 	void		OnQuerySearch(CLocalSearch* pSearch);

@@ -51,7 +51,8 @@ static char THIS_FILE[]=__FILE__;
 // CBTClient construction
 
 CBTClient::CBTClient()
-	: m_bExtended			( FALSE )
+	: CTransfer				( PROTOCOL_BT )
+	, m_bExtended			( FALSE )
 	, m_pUploadTransfer		( NULL )
 	, m_bSeeder				( FALSE )
 	, m_bPrefersEncryption	( FALSE )

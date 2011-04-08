@@ -21,6 +21,8 @@
 
 #include "StdAfx.h"
 #include "Shareaza.h"
+#include "Settings.h"
+#include "DCNeighbour.h"
 #include "EDClient.h"
 #include "ChatSession.h"
 #include "ChatCore.h"
@@ -53,16 +55,19 @@ CChatCore::~CChatCore()
 
 POSITION CChatCore::GetIterator() const
 {
+	ASSUME_LOCK( m_pSection );
 	return m_pSessions.GetHeadPosition();
 }
 
 CChatSession* CChatCore::GetNext(POSITION& pos) const
 {
+	ASSUME_LOCK( m_pSection );
 	return m_pSessions.GetNext( pos );
 }
 
 BOOL CChatCore::Check(CChatSession* pSession) const
 {
+	ASSUME_LOCK( m_pSection );
 	return m_pSessions.Find( pSession ) != NULL;
 }
 
@@ -98,42 +103,56 @@ BOOL CChatCore::OnPush(const Hashes::Guid& oGUID, CConnection* pConnection)
 //////////////////////////////////////////////////////////////////////
 // CChatCore ED2K chat handling
 
-void CChatCore::OnED2KMessage(CEDClient* pClient, CEDPacket* pPacket)
+template<>
+CChatSession* CChatCore::FindSession< CDCNeighbour >(const CDCNeighbour* pClient, BOOL bCreate)
 {
-	ASSERT ( pClient != NULL );
+	ASSUME_LOCK( m_pSection );
 
-	// Note: Null packet is valid - in that case we have no pending message,
-	// but want to open a chat window.
-
-	CSingleLock pLock( &m_pSection );
-	if ( ! pLock.Lock( 250 ) )
-		return;
-
-	if ( CChatSession* pSession = FindSession( pClient, TRUE ) )
+	for ( POSITION pos = GetIterator() ; pos ; )
 	{
-		pSession->OnED2KMessage( pPacket );
+		CChatSession* pSession = GetNext( pos );
+
+		// If we already have a session
+		if ( pSession->m_pHost.sin_addr.s_addr == pClient->m_pHost.sin_addr.s_addr &&
+			 pSession->m_nProtocol == pClient->m_nProtocol )
+		{
+			// Update details
+			pSession->m_oGUID		= pClient->m_oGUID;
+			pSession->m_pHost		= pClient->m_pHost;
+			pSession->m_sAddress	= pClient->m_sAddress;
+			pSession->m_sNick		= pClient->m_sServerName;
+			pSession->m_sUserAgent	= pClient->m_sUserAgent;
+
+			// return existing session
+			return pSession;
+		}
 	}
+
+	if ( ! bCreate )
+		return NULL;
+
+	// Create a new chat session
+	CChatSession* pSession = new CChatSession( pClient->m_nProtocol );
+	pSession->m_nState		= cssActive;
+	pSession->m_bConnected	= TRUE;
+	pSession->m_tConnected	= GetTickCount();
+	pSession->m_oGUID		= pClient->m_oGUID;
+	pSession->m_pHost		= pClient->m_pHost;
+	pSession->m_sAddress	= pClient->m_sAddress;
+	pSession->m_sNick		= pClient->m_sServerName;
+	pSession->m_sUserAgent	= pClient->m_sUserAgent;
+
+	// Make new input and output buffer objects
+	pSession->CreateBuffers();
+
+	return pSession;
 }
 
-void CChatCore::OnDropped(CEDClient* pClient)
+template<>
+CChatSession* CChatCore::FindSession< CEDClient >(const CEDClient* pClient, BOOL bCreate)
 {
-	ASSERT ( pClient != NULL );
+	ASSUME_LOCK( m_pSection );
 
-	// Note: Null packet is valid - in that case we have no pending message,
-	// but want to open a chat window.
-
-	CSingleLock pLock( &m_pSection );
-	if ( ! pLock.Lock( 250 ) )
-		return;
-
-	if ( CChatSession* pSession = FindSession( pClient, FALSE ) )
-	{
-		pSession->OnDropped();
-	}
-}
-
-CChatSession* CChatCore::FindSession(CEDClient* pClient, BOOL bCreate)
-{
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CChatSession* pSession = GetNext( pos );
@@ -141,13 +160,13 @@ CChatSession* CChatCore::FindSession(CEDClient* pClient, BOOL bCreate)
 		// If we already have a session
 		if ( ( ! pSession->m_oGUID || validAndEqual( pSession->m_oGUID, pClient->m_oGUID ) ) &&
 			 pSession->m_pHost.sin_addr.s_addr == pClient->m_pHost.sin_addr.s_addr &&
-			 pSession->m_nProtocol == PROTOCOL_ED2K )
+			 pSession->m_nProtocol == pClient->m_nProtocol )
 		{
 			// Update details
 			pSession->m_oGUID		= pClient->m_oGUID;
 			pSession->m_pHost		= pClient->m_pHost;
 			pSession->m_sAddress	= pClient->m_sAddress;
-			pSession->m_sUserNick	= pClient->m_sNick;
+			pSession->m_sNick		= pClient->m_sNick;
 			pSession->m_sUserAgent	= pClient->m_sUserAgent;
 			pSession->m_bUnicode	= pClient->m_bEmUnicode;
 			pSession->m_nClientID	= pClient->m_nClientID;
@@ -164,14 +183,14 @@ CChatSession* CChatCore::FindSession(CEDClient* pClient, BOOL bCreate)
 		return NULL;
 
 	// Create a new chat session
-	CChatSession* pSession = new CChatSession( PROTOCOL_ED2K );
+	CChatSession* pSession = new CChatSession( pClient->m_nProtocol );
 	pSession->m_nState		= cssActive;
 	pSession->m_bConnected	= TRUE;
 	pSession->m_tConnected	= GetTickCount();
 	pSession->m_oGUID		= pClient->m_oGUID;
 	pSession->m_pHost		= pClient->m_pHost;
 	pSession->m_sAddress	= pClient->m_sAddress;
-	pSession->m_sUserNick	= pClient->m_sNick;
+	pSession->m_sNick		= pClient->m_sNick;
 	pSession->m_sUserAgent	= pClient->m_sUserAgent;
 	pSession->m_bUnicode	= pClient->m_bEmUnicode;
 	pSession->m_nClientID	= pClient->m_nClientID;

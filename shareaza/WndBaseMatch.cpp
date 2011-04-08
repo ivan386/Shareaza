@@ -592,8 +592,11 @@ void CBaseMatchWnd::OnBrowseLaunch()
 
 	if ( CQueryHit* pHit = m_pMatches->GetSelectedHit() )
 	{
-		new CBrowseHostWnd( pHit->m_nProtocol, &pHit->m_pAddress, pHit->m_nPort,
-			pHit->m_bPush == TRI_TRUE, pHit->m_oClientID );
+		SOCKADDR_IN pAddress = { AF_INET };
+		pAddress.sin_port = htons( pHit->m_nPort );
+		pAddress.sin_addr = pHit->m_pAddress;
+		new CBrowseHostWnd( pHit->m_nProtocol, &pAddress,
+			pHit->m_bPush == TRI_TRUE, pHit->m_oClientID, pHit->m_sNick  );
 	}
 }
 

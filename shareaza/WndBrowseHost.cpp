@@ -1,7 +1,7 @@
 //
 // WndBrowseHost.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -63,21 +63,14 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CBrowseHostWnd construction
 
-CBrowseHostWnd::CBrowseHostWnd(PROTOCOLID nProtocol, SOCKADDR_IN* pAddress, const Hashes::Guid& oClientID) :
-	m_pBrowser( NULL ),
-	m_bOnFiles( FALSE ),
-	m_bAutoBrowse( TRUE )
-{
-	m_pBrowser = new CHostBrowser( this, nProtocol, &pAddress->sin_addr, htons( pAddress->sin_port ), FALSE, oClientID );
-	Create( IDR_BROWSEHOSTFRAME );
-}
-
-CBrowseHostWnd::CBrowseHostWnd(PROTOCOLID nProtocol, IN_ADDR* pAddress, WORD nPort, BOOL bMustPush, const Hashes::Guid& oClientID) :
+CBrowseHostWnd::CBrowseHostWnd(PROTOCOLID nProtocol, SOCKADDR_IN* pAddress, BOOL bMustPush, const Hashes::Guid& oClientID, const CString& sNick) :
 	m_pBrowser( NULL ),
 	m_bOnFiles( FALSE ),
 	m_bAutoBrowse( pAddress != NULL )
 {
-	m_pBrowser = new CHostBrowser( this, nProtocol, pAddress, nPort, bMustPush, oClientID );
+	m_pBrowser = new CHostBrowser( this, nProtocol, ( pAddress ? &pAddress->sin_addr : NULL ),
+		( pAddress ? htons( pAddress->sin_port ) : 0 ), bMustPush, oClientID, sNick );
+
 	Create( IDR_BROWSEHOSTFRAME );
 }
 
@@ -403,13 +396,16 @@ BOOL CBrowseHostWnd::OnPush(const Hashes::Guid& oClientID, CConnection* pConnect
 	return m_pBrowser != NULL && m_pBrowser->OnPush( oClientID, pConnection );
 }
 
+BOOL CBrowseHostWnd::OnNewFile(CLibraryFile* pFile)
+{
+	return m_pBrowser != NULL && m_pBrowser->OnNewFile( pFile );
+}
+
 /////////////////////////////////////////////////////////////////////////////
 // CBrowseHostWnd serialize
 
-void CBrowseHostWnd::Serialize(CArchive& ar)
+void CBrowseHostWnd::Serialize(CArchive& ar, int nVersion /* BROWSER_SER_VERSION */)
 {
-	int nVersion = 1;
-
 	if ( ar.IsStoring() )
 	{
 		ar << nVersion;
@@ -419,16 +415,16 @@ void CBrowseHostWnd::Serialize(CArchive& ar)
 	else
 	{
 		ar >> nVersion;
-		if ( nVersion != 1 ) AfxThrowUserException();
+		if ( nVersion < 1 || nVersion > BROWSER_SER_VERSION ) AfxThrowUserException();
 
 		ar >> m_bOnFiles;
 	}
 
-	CBaseMatchWnd::Serialize(ar);
+	CBaseMatchWnd::Serialize( ar );
 
-	m_pBrowser->Serialize( ar );
-	m_wndProfile.Serialize( ar );
-	m_wndFrame.Serialize( ar );
+	m_pBrowser->Serialize( ar, nVersion );
+	m_wndProfile.Serialize( ar, nVersion  );
+	m_wndFrame.Serialize( ar, nVersion );
 
 	if ( ar.IsLoading() )
 	{

@@ -1151,10 +1151,8 @@ void CMatchList::ClearNew()
 //////////////////////////////////////////////////////////////////////
 // CMatchList serialize
 
-void CMatchList::Serialize(CArchive& ar)
+void CMatchList::Serialize(CArchive& ar, int nVersion /* MATCHLIST_SER_VERSION */)
 {
-	int nVersion = 14;
-
 	if ( ar.IsStoring() )
 	{
 		ar << nVersion;
@@ -1188,7 +1186,7 @@ void CMatchList::Serialize(CArchive& ar)
 	else
 	{
 		ar >> nVersion;
-		if ( nVersion < 8 ) AfxThrowUserException();
+		if ( nVersion < 8 || nVersion > MATCHLIST_SER_VERSION ) AfxThrowUserException();
 
 		ar >> m_sFilter;
 		ar >> m_bFilterBusy;
@@ -2067,7 +2065,7 @@ CString CMatchFile::GetURN() const
 //////////////////////////////////////////////////////////////////////
 // CMatchFile serialize
 
-void CMatchFile::Serialize(CArchive& ar, int nVersion)
+void CMatchFile::Serialize(CArchive& ar, int nVersion /* MATCHLIST_SER_VERSION */)
 {
 	if ( ar.IsStoring() )
 	{

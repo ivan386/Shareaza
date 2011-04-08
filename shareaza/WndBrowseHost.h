@@ -1,7 +1,7 @@
 //
 // WndBrowseHost.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -29,13 +29,15 @@
 class CHostBrowser;
 class CG2Packet;
 
+#define BROWSER_SER_VERSION 2
+// History:
+// 2 - added CHostBrowser::m_sNick (ryo-oh-ki)
 
 class CBrowseHostWnd : public CBaseMatchWnd
 {
 // Construction
 public:
-	CBrowseHostWnd(PROTOCOLID nProtocol, SOCKADDR_IN* pHost, const Hashes::Guid& pClientID = Hashes::Guid());
-	CBrowseHostWnd(PROTOCOLID nProtocol = PROTOCOL_ANY, IN_ADDR* pAddress = NULL, WORD nPort = 0, BOOL bMustPush = FALSE, const Hashes::Guid& pClientID = Hashes::Guid());
+	CBrowseHostWnd(PROTOCOLID nProtocol = PROTOCOL_ANY, SOCKADDR_IN* pHost = NULL, BOOL bMustPush = FALSE, const Hashes::Guid& pClientID = Hashes::Guid(), const CString& sNick = CString());
 	virtual ~CBrowseHostWnd();
 
 	DECLARE_DYNCREATE(CBrowseHostWnd)
@@ -53,7 +55,7 @@ protected:
 
 // Operations
 public:
-	void			Serialize(CArchive& ar);
+	void			Serialize(CArchive& ar, int nVersion = BROWSER_SER_VERSION);
 	virtual void	OnSkinChange();
 	virtual void	OnProfileReceived();
 	virtual BOOL	OnQueryHits(const CQueryHit* pHits);
@@ -61,6 +63,7 @@ public:
 	virtual void	OnPhysicalTree(CG2Packet* pPacket);
 	virtual void	OnVirtualTree(CG2Packet* pPacket);
 	virtual BOOL	OnPush(const Hashes::Guid& pClientID, CConnection* pConnection);
+	virtual BOOL	OnNewFile(CLibraryFile* pFile);
 	virtual void	UpdateMessages(BOOL bActive = TRUE);
 
 // Implementation

@@ -1,7 +1,7 @@
 //
 // DCPacket.h
 //
-// Copyright (c) Shareaza Development Team, 2010.
+// Copyright (c) Shareaza Development Team, 2010-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -23,6 +23,7 @@
 
 #include "Packet.h"
 
+
 class CDCPacket : public CPacket
 {
 protected:
@@ -30,8 +31,12 @@ protected:
 	virtual ~CDCPacket();
 
 public:
+	virtual CString GetType() const;
+	virtual CString ToHex()   const;
+	virtual CString ToASCII() const;
 	virtual void Reset();
 	virtual void ToBuffer(CBuffer* pBuffer, bool bTCP = true) const;
+	static	CDCPacket*	ReadBuffer(CBuffer* pBuffer);
 
 #ifdef _DEBUG
 	virtual void Debug(LPCTSTR pszReason) const; // Writes debug information about the packet into the Shareaza.log file

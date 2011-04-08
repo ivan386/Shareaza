@@ -73,9 +73,12 @@ public:
 
 public:
 
-	// Packet position and length
-	void Seek(DWORD nPosition, int nRelative = seekStart); // Set the position the given distance from the given end
-	void Shorten(DWORD nLength);                           // Shorten the packet to the given number of bytes
+	// Set the position the given distance from the given end
+	void Seek(DWORD nPosition, int nRelative = seekStart);	
+	// Shorten the packet to the given number of bytes
+	void Shorten(DWORD nLength);
+	// Remove data from packet start
+	void Remove(DWORD nLength);
 
 	virtual CString ReadString(UINT cp, DWORD nMaximum = 0xFFFFFFFF);
 

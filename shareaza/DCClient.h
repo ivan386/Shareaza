@@ -28,12 +28,15 @@ class CUploadTransferDC;
 
 // Class for DC++ remote client connection.
 // This class uses fictive CUploadTransferDC and CDownloadTransferDC classes 
-// to mimic download and upload connecions like CEDClient.
+// to mimic download and upload connections like CEDClient.
 
 class CDCClient : public CTransfer
 {
 public:
 	CDCClient(LPCTSTR szNick = NULL);
+	virtual ~CDCClient();
+
+	Hashes::Guid	m_oGUID;				// GUID to identify callback connections
 
 	virtual BOOL	ConnectTo(const IN_ADDR* pAddress, WORD nPort);
 	virtual void	AttachTo(CConnection* pConnection);
@@ -42,6 +45,8 @@ public:
 
 	// Re-connect
 	BOOL			Connect();
+	// Connect to user on specified hub (hub will be connected forcebly if not yet)
+	BOOL			Connect(const IN_ADDR* pHubAddress, WORD nHubPort, LPCTSTR szNick);
 	// Attach download transfer
 	void			AttachDownload(CDownloadTransferDC* pTransfer);
 	// When download transfer closed
@@ -52,31 +57,35 @@ public:
 	BOOL			Handshake();
 	// Send command
 	BOOL			SendCommand(const CString& strSend);
-	// Test if clients describes same remote computer
-	BOOL			Equals(const CDCClient* pClient) const;
 	// Merge all useful data from old to current client and then destroy it
 	void			Merge(CDCClient* pClient);
 	// Destroy this object
 	void			Remove();
 	// Check if client on-line
 	BOOL			IsOnline() const;
+	// Check if client busy downloading something (not in command mode)
+	BOOL			IsDownloading() const;
+	// Check if client busy uploading something (not in command mode)
+	BOOL			IsUploading() const;
+	// Check if client does nothing (no upload, no download)
+	BOOL			IsIdle() const;
+	// Accept push connection
+	BOOL			OnPush();
 
 protected:
-	Hashes::Guid			m_oGUID;				// GUID to identify callback connections
-	CString					m_sNick;				// User nick
-	CString					m_sRemoteNick;			// Remote user nick
+	CString			m_sNick;				// User nick
+	CString			m_sRemoteNick;			// Remote user nick
 	CDownloadTransferDC*	m_pDownloadTransfer;	// Download stream
 	CUploadTransferDC*		m_pUploadTransfer;		// Upload stream
-	std::string				m_strKey;				// Key calculated for remote client lock
-	BOOL					m_bExtended;			// Using extended protocol
-	CStringList				m_oFeatures;			// Remote client supported features
-	TRISTATE				m_bDirection;			// Got $Direction command: TRI_TRUE - remote client want download, TRI_FALSE - upload.
-	BOOL					m_bNumberSent;			// My $Direction number sent
-	int						m_nNumber;				// My $Direction number (0...0x7fff)
-	int						m_nRemoteNumber;		// Remote client $Direction number (0...0x7fff), -1 - unknown.
-	BOOL					m_bLogin;				// Got $Lock command
-
-	virtual ~CDCClient();
+	std::string		m_strKey;				// Key calculated for remote client lock
+	BOOL			m_bExtended;			// Using extended protocol
+	CStringList		m_oFeatures;			// Remote client supported features
+	TRISTATE		m_bDirection;			// Got $Direction command: TRI_TRUE - remote client want download, TRI_FALSE - upload.
+	BOOL			m_bNumberSent;			// My $Direction number sent
+	int				m_nNumber;				// My $Direction number (0...0x7fff)
+	int				m_nRemoteNumber;		// Remote client $Direction number (0...0x7fff), -1 - unknown.
+	BOOL			m_bLogin;				// Got $Lock command
+	BOOL			m_bKey;					// Got $Key command
 
 	virtual BOOL	OnConnected();
 	virtual void	OnDropped();
@@ -87,8 +96,6 @@ protected:
 	BOOL			ReadCommand(std::string& strLine);
 	// Got DC++ command
 	BOOL			OnCommand(const std::string& strCommand, const std::string& strParams);
-	// Got chat message
-	BOOL			OnChat(const std::string& strMessage);
 	// Got $MyNick command
 	BOOL			OnMyNick(const std::string& strParams);
 	// Got $Lock command
@@ -121,4 +128,6 @@ protected:
 	void			DetachDownload();
 	// Close upload
 	void			DetachUpload();
+	// Start download
+	BOOL			StartDownload();
 };

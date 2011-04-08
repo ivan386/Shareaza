@@ -574,7 +574,7 @@ void CBrowseFrameCtrl::OnLibraryTreeVirtual()
 /////////////////////////////////////////////////////////////////////////////
 // CBrowseFrameCtrl serialize
 
-void CBrowseFrameCtrl::Serialize(CArchive& ar)
+void CBrowseFrameCtrl::Serialize(CArchive& ar, int /*nVersion*/ /* BROWSER_SER_VERSION */)
 {
 	CSingleLock lRoot( m_wndTree.SyncRoot(), TRUE );
 	DWORD nBuffer = 0;

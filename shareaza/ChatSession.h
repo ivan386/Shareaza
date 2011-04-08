@@ -23,12 +23,41 @@
 
 #include "Connection.h"
 
+class CDCPacket;
+class CDCClient;
 class CEDPacket;
 class CEDClient;
 class CG2Packet;
 class CGProfile;
 class CChatWnd;
 class CPrivateChatWnd;
+
+
+enum MessageType
+{
+	cmtNull,
+	cmtMessage,	// Chat message
+	cmtAction,	// Chat action
+	cmtStatus,	// Regular status message (gray)
+	cmtError,	// Error message (red)
+	cmtInfo,	// Informational message (black)
+	cmtProfile	// Profile received
+};
+
+class CChatMessage
+{
+public:
+	CChatMessage()
+		: m_bType( cmtNull ), m_hBitmap( NULL ) {}
+
+	CChatMessage(MessageType bType, const CString& sFrom, const CString& sMessage, HBITMAP hBitmap)
+		: m_bType( bType ), m_sFrom( sFrom ), m_sMessage( sMessage ), m_hBitmap( hBitmap ) {}
+
+	MessageType	m_bType;
+	CString		m_sFrom;
+	CString		m_sMessage;
+	HBITMAP		m_hBitmap;
+};
 
 
 class CChatSession : public CConnection
@@ -40,7 +69,7 @@ public:
 	Hashes::Guid	m_oGUID;
 	int				m_nState;
 	BOOL			m_bMustPush;
-	CString			m_sUserNick;
+	CString			m_sNick;
 	BOOL			m_bUnicode;		// ED2K Client in UTF-8 format
 	DWORD			m_nClientID;	// ED2K Client ID (if appropriate)
 	SOCKADDR_IN		m_pServer;		// ED2K server (if appropriate)
@@ -51,11 +80,10 @@ public:
 
 	BOOL			Connect();
 	TRISTATE		GetConnectedState() const;
-	void			OnED2KMessage(CEDPacket* pPacket);
+	void			OnMessage(CPacket* pPacket);
 	BOOL			SendPush(BOOL bAutomatic);
 	BOOL			OnPush(const Hashes::Guid& oGUID, CConnection* pConnection);
 	BOOL			SendPrivateMessage(bool bAction, const CString& strText);
-	void			StatusMessage(int nFlags, UINT nID, ...);
 	void			OnOpenWindow();
 	void			OnCloseWindow();
 
@@ -71,28 +99,42 @@ protected:
 	virtual BOOL	OnHeaderLine(CString& strHeader, CString& strValue);
 	virtual BOOL	OnHeadersComplete();
 
+	void	StatusMessage(MessageType bType, UINT nID, ...);
+	void	NotifyMessage(MessageType bType, const CString& sFrom, const CString& sMessage = CString(), HBITMAP hBitmap = NULL);
+	void	NotifyMessage(const CString& sFrom, const CString& sMessage);
+
+	// G1/G2
+
 	BOOL	ReadHandshake();
-	BOOL	ReadPacketsED2K();
-	BOOL	SendPacketsED2K();
-	BOOL	ReadText();
-	BOOL	ReadPackets();
-	void	PostOpenWindow();
 	void	Send(CG2Packet* pPacket);
-	BOOL	SendChatMessage(CEDPacket* pPacket);
-	void	MakeActive();
-
-	BOOL	OnChatMessage(CEDPacket* pPacket);
-	BOOL	OnCaptchaRequest(CEDPacket* pPacket);
-	BOOL	OnCaptchaResult(CEDPacket* pPacket);
-
-	BOOL	OnEstablished();
-	BOOL	OnText(const CString& str);
 	BOOL	OnPacket(CG2Packet* pPacket);
 	BOOL	OnProfileChallenge(CG2Packet* pPacket);
 	BOOL	OnProfileDelivery(CG2Packet* pPacket);
 	BOOL	OnChatRequest(CG2Packet* pPacket);
 	BOOL	OnChatAnswer(CG2Packet* pPacket);
 	BOOL	OnChatMessage(CG2Packet* pPacket);
+
+	// DC++
+
+	BOOL	ReadPacketsDC();
+	BOOL	SendPacketsDC();
+	BOOL	Send(CDCPacket* pPacket);
+	BOOL	OnChatMessage(CDCPacket* pPacket);
+
+	// ED2K
+
+	BOOL	ReadPacketsED2K();
+	BOOL	SendPacketsED2K();
+	BOOL	Send(CEDPacket* pPacket);
+	BOOL	OnChatMessage(CEDPacket* pPacket);
+	BOOL	OnCaptchaRequest(CEDPacket* pPacket);
+	BOOL	OnCaptchaResult(CEDPacket* pPacket);
+
+	BOOL	ReadText();
+	BOOL	ReadPackets();
+	void	PostOpenWindow();
+	void	MakeActive();
+	BOOL	OnEstablished();
 };
 
 enum
@@ -100,3 +142,6 @@ enum
 	cssNull, cssConnecting, cssRequest1, cssHeaders1, cssRequest2, cssHeaders2,
 	cssRequest3, cssHeaders3, cssHandshake, cssActive, cssAway
 };
+
+
+#define WM_CHAT_MESSAGE				(WM_APP+70)	// (WPARAM: unused, LPARAM: CChatMessage* pMsg)

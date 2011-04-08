@@ -43,6 +43,9 @@ public:
 	// Got $ADCGET command
 	BOOL			OnUpload(const std::string& strType, const std::string& strFilename, QWORD nOffset, QWORD nLength, const std::string& strOptions);
 
+	// Check if transfer idle
+	BOOL			IsIdle() const;
+
 protected:
 	DWORD			m_tRankingCheck;	// The time the queue position was last checked
 

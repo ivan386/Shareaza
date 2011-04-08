@@ -68,7 +68,7 @@ protected:
 
 // Operations
 public:
-	void	Serialize(CArchive& ar);
+	void	Serialize(CArchive& ar, int nVersion /* BROWSER_SER_VERSION */);
 	void	OnSkinChange();
 	void	Update(CHostBrowser* pBrowser);
 	void	OnHeadPacket(CG2Packet* pPacket);

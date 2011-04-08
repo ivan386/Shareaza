@@ -485,7 +485,7 @@ void CBrowseProfileCtrl::OnClickView(NMHDR* pNotify, LRESULT* /*pResult*/)
 /////////////////////////////////////////////////////////////////////////////
 // CBrowseProfileCtrl serialize
 
-void CBrowseProfileCtrl::Serialize(CArchive& ar)
+void CBrowseProfileCtrl::Serialize(CArchive& ar, int /*nVersion*/ /* BROWSER_SER_VERSION */)
 {
 	m_imgHead.Serialize( ar );
 

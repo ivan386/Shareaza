@@ -380,11 +380,7 @@ BOOL CManagedSearch::ExecuteNeighbours(const DWORD tTicks, const DWORD tSecs)
 					}
 					break;
 				case PROTOCOL_DC:
-					if ( ! m_pSearch->m_oTiger )
-					{
-						// Save GUID of latest text search
-						SearchManager.m_oLastSearch = m_pSearch->m_oGUID;
-					}
+					SearchManager.m_oLastSearch = m_pSearch->m_oGUID;
 					break;
 				default:
 					;

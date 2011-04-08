@@ -59,15 +59,7 @@ protected:
 	afx_msg void OnChatBrowse();
 	afx_msg void OnUpdateChatPriority(CCmdUI* pCmdUI);
 	afx_msg void OnChatPriority();
-	afx_msg LRESULT OnProfileReceived(WPARAM wParam, LPARAM lParam);
 	afx_msg LRESULT OnRemoteMessage(WPARAM wParam, LPARAM lParam);
-	afx_msg LRESULT OnStatusMessage(WPARAM wParam, LPARAM lParam);
-	afx_msg LRESULT OnBitmapMessage(WPARAM wParam, LPARAM lParam);
 
 	DECLARE_MESSAGE_MAP()
 };
-
-#define WM_CHAT_PROFILE_RECEIVED	(WM_APP+70)	// (WPARAM: unused, LPARAM: unused)
-#define WM_CHAT_REMOTE_MESSAGE		(WM_APP+71)	// (WPARAM: bool bAction, LPARAM: CString* psText)
-#define WM_CHAT_STATUS_MESSAGE		(WM_APP+72)	// (WPARAM: int nFlags, LPARAM: CString* psText)
-#define WM_CHAT_BITMAP_MESSAGE		(WM_APP+73)	// (WPARAM: unused, LPARAM: HBITMAP hBitmap)

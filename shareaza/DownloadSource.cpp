@@ -107,15 +107,6 @@ CDownloadSource::CDownloadSource(const CDownload* pDownload, const CQueryHit* pH
 			m_sURL.Format( _T("%s%I64i/"), (LPCTSTR)strTemp, pDownload->m_nSize );
 		}
 	}
-	else if ( pHit->m_nProtocol == PROTOCOL_DC )
-	{
-		// Generate source GUID form source nick
-		CMD5 pMD5;
-		pMD5.Add( (LPCTSTR)m_sNick, m_sNick.GetLength() * sizeof( TCHAR ) );
-		pMD5.Finish();
-		pMD5.GetHash( &m_oGUID[ 0 ] );
-		m_oGUID.validate();
-	}
 
 	ResolveURL();
 
@@ -293,20 +284,34 @@ BOOL CDownloadSource::ResolveURL()
 	m_nProtocol	= pURL.m_nProtocol;
 	m_pAddress	= pURL.m_pAddress;
 	m_nPort		= pURL.m_nPort;
+	m_sName		= pURL.m_sName;
 	
-	if ( m_nProtocol == PROTOCOL_ED2K ||
-		 m_nProtocol == PROTOCOL_DC )
+	switch ( m_nProtocol )
 	{
+	case PROTOCOL_ED2K:
 		m_pServerAddress	= pURL.m_pServerAddress;
 		m_nServerPort		= pURL.m_nServerPort;
-		if ( m_nServerPort ) m_bPushOnly = TRUE;
-	}
-	else if ( m_nProtocol == PROTOCOL_BT )
-	{
+		if ( m_nServerPort )
+			m_bPushOnly		= TRUE;
+		break;
+
+	case PROTOCOL_DC:
+		m_pServerAddress	= pURL.m_pServerAddress;
+		m_nServerPort		= pURL.m_nServerPort;
+		m_sNick				= pURL.m_sLogin;
+		m_bPushOnly			= TRUE;
+		CDCClients::CreateGUID( m_sNick, m_oGUID );
+		break;
+
+	case PROTOCOL_BT:
 		if ( pURL.m_oBTC )
 		{
 			m_oGUID = transformGuid( pURL.m_oBTC );
 		}
+		break;
+
+	default:
+		;
 	}
 	
 	m_sCountry		= theApp.GetCountryCode( m_pAddress );
@@ -652,9 +657,7 @@ void CDownloadSource::OnFailure(BOOL bNondestructive, DWORD nRetryAfter)
 
 DWORD CDownloadSource::CalcFailureDelay(DWORD nRetryAfter) const
 {
-	DWORD nDelayFactor = max( ( m_nBusyCount != 0 ) ? (m_nBusyCount - 1) : 0, m_nFailures );
-
-	DWORD nDelay = Settings.Downloads.RetryDelay * ( 1u << nDelayFactor );
+	DWORD nDelay;
 
 	if ( nRetryAfter != 0 )
 	{
@@ -662,19 +665,21 @@ DWORD CDownloadSource::CalcFailureDelay(DWORD nRetryAfter) const
 	}
 	else
 	{
+		DWORD nDelayFactor = max( ( m_nBusyCount ? m_nBusyCount - 1 : 0 ), m_nFailures );
+		nDelay = Settings.Downloads.RetryDelay * ( 1u << nDelayFactor );
 		if ( nDelayFactor < 20 )
 		{
-			if ( nDelay > 3600000 ) nDelay = 3600000;
+			if ( nDelay > 3600000 )
+				nDelay = 3600000;
 		}
 		else  // I think it is nasty to set 1 Day delay
 		{
-			if ( nDelay > 86400000 ) nDelay = 86400000; 
+			if ( nDelay > 86400000 )
+				nDelay = 86400000; 
 		}
 	}
 
-	nDelay += GetTickCount();
-
-	return nDelay;
+	return nDelay + GetTickCount();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -832,7 +837,7 @@ BOOL CDownloadSource::CheckHash(const Hashes::Md5Hash& oMD5)
 
 BOOL CDownloadSource::PushRequest()
 {
-	BOOL bSuccess = FALSE;
+	BOOL bSuccess;
 
 	switch ( m_nProtocol )
 	{
@@ -840,16 +845,16 @@ BOOL CDownloadSource::PushRequest()
 		return FALSE;
 
 	case PROTOCOL_DC:
-		if ( m_pServerAddress.s_addr == INADDR_ANY || m_nServerPort == 0 )
-			return FALSE;
-		if ( m_sNick.IsEmpty() )
-			return FALSE;
-		if ( DCClients.Connect( m_pServerAddress, m_nServerPort, m_sNick, bSuccess ) )
+		if ( DCClients.Connect( &m_pServerAddress, m_nServerPort, m_sNick, bSuccess ) )
 		{
 			if ( bSuccess )
 			{
 				theApp.Message( MSG_INFO, IDS_DOWNLOAD_PUSH_SENT, (LPCTSTR)m_pDownload->m_sName );
 				m_tAttempt = GetTickCount() + Settings.Downloads.PushTimeout;
+			}
+			else
+			{
+				m_tAttempt = GetTickCount() + Settings.Downloads.RetryDelay;
 			}
 			return TRUE;
 		}

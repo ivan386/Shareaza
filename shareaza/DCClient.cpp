@@ -44,6 +44,7 @@ static char THIS_FILE[]=__FILE__;
 
 CDCClient::CDCClient(LPCTSTR szNick)
 	: CTransfer				( PROTOCOL_DC )
+	, m_sNick				( DCClients.CreateNick( szNick ) )
 	, m_bExtended			( FALSE )
 	, m_pDownloadTransfer	( NULL )
 	, m_pUploadTransfer		( NULL )
@@ -52,10 +53,10 @@ CDCClient::CDCClient(LPCTSTR szNick)
 	, m_nNumber				( GenerateNumber() )
 	, m_nRemoteNumber		( -1 )
 	, m_bLogin				( FALSE )
+	, m_bKey				( FALSE )
 {
 	TRACE( "[DC++] Creating client 0x%08x\n", (LPVOID)this );
 
-	if ( szNick ) m_sNick = szNick;
 	m_sUserAgent = protocolNames[ m_nProtocol ];
 	m_mInput.pLimit = &Settings.Bandwidth.Request;
 	m_mOutput.pLimit = &Settings.Bandwidth.Request;
@@ -70,11 +71,6 @@ CDCClient::~CDCClient()
 	ASSERT( m_pDownloadTransfer == NULL );
 
 	DCClients.Remove( this );
-}
-
-BOOL CDCClient::Equals(const CDCClient* pClient) const
-{
-	return validAndEqual( m_oGUID, pClient->m_oGUID );
 }
 
 void CDCClient::Merge(CDCClient* pClient)
@@ -132,22 +128,54 @@ BOOL CDCClient::CanUpload() const
 
 BOOL CDCClient::Connect()
 {
-	// Notify client via neighbours
+	m_tRequest	= GetTickCount();
+
+	DCClients.Add( this );
+
 	CSingleLock oLock( &Network.m_pSection );
-	if ( oLock.Lock( 250 ) )
+	if ( ! oLock.Lock( 250 ) )
+		return FALSE;
+
+	if ( CDCNeighbour* pNeighbour = DCClients.GetHub( m_sRemoteNick ) )
 	{
-		for ( POSITION pos = Neighbours.GetIterator(); pos; )
-		{
-			CNeighbour* pNeighbour = Neighbours.GetNext( pos );
-			if ( pNeighbour->m_nProtocol == m_nProtocol )
-			{
-				// TODO: Check for present nick
-				static_cast< CDCNeighbour*>( pNeighbour )->ConnectToMe( m_sRemoteNick );
-			}
-		}
+		return pNeighbour->ConnectToMe( m_sRemoteNick );
 	}
 
-	return TRUE;
+	return FALSE;
+}
+
+BOOL CDCClient::Connect(const IN_ADDR* pHubAddress, WORD nHubPort, LPCTSTR szNick)
+{
+	m_tRequest	= GetTickCount();
+
+	m_sRemoteNick = szNick;
+	DCClients.CreateGUID( m_sRemoteNick, m_oGUID );
+
+	DCClients.Add( this );
+
+	// Get existing hub
+	if ( CDCNeighbour* pNeighbour = DCClients.GetHub( pHubAddress, nHubPort ) )
+	{
+		return pNeighbour->ConnectToMe( m_sRemoteNick );
+	}
+
+	CSingleLock oLock( &Network.m_pSection );
+	if ( ! oLock.Lock( 250 ) )
+		return FALSE;
+
+	// Connect to new hub
+	if ( CDCNeighbour* pNeighbour = new CDCNeighbour() )
+	{
+		if ( pNeighbour->ConnectTo( pHubAddress, nHubPort, FALSE ) )
+		{
+			return FALSE;
+		}
+
+		// Can't connect
+		pNeighbour->Close();
+	}
+
+	return FALSE;
 }
 
 BOOL CDCClient::ConnectTo(const IN_ADDR* pAddress, WORD nPort)
@@ -208,6 +236,30 @@ BOOL CDCClient::IsOnline() const
 	return m_bConnected && m_bLogin;
 }
 
+BOOL CDCClient::IsDownloading() const
+{
+	return m_pDownloadTransfer &&
+		( m_pDownloadTransfer->m_nState == dtsDownloading ||
+		  m_pDownloadTransfer->m_nState == dtsTiger );
+}
+
+BOOL CDCClient::IsUploading() const
+{
+	return m_pUploadTransfer &&
+		m_pUploadTransfer->m_nState >= upsUploading;
+}
+
+BOOL CDCClient::IsIdle() const
+{
+	return ( ! m_pDownloadTransfer || m_pDownloadTransfer->IsIdle() ) &&
+		   ( ! m_pUploadTransfer   || m_pUploadTransfer->IsIdle() );
+}
+
+BOOL CDCClient::OnPush()
+{
+	return Network.OnPush( m_oGUID, this );
+}
+
 BOOL CDCClient::OnConnected()
 {
 	if ( ! CTransfer::OnConnected() )
@@ -254,10 +306,12 @@ BOOL CDCClient::OnRun()
 
 	if ( ! m_pDownloadTransfer && ! m_pUploadTransfer && ! IsValid() )
 	{
-		// Delete unused client
-		Remove();
-
-		return FALSE;
+		if ( GetTickCount() > m_tRequest + Settings.Downloads.PushTimeout )
+		{
+			// Delete unused client
+			Remove();
+			return FALSE;
+		}
 	}
 
 	return TRUE;
@@ -271,9 +325,7 @@ BOOL CDCClient::OnRead()
 	for ( ;; )
 	{
 		// Download mode
-		if ( m_pDownloadTransfer &&
-			( m_pDownloadTransfer->m_nState == dtsDownloading ||
-			  m_pDownloadTransfer->m_nState == dtsTiger ) )
+		if ( IsDownloading() )
 		{
 			return m_pDownloadTransfer->OnRead();
 		}
@@ -397,23 +449,12 @@ BOOL CDCClient::OnCommand(const std::string& strCommand, const std::string& strP
 	return OnWrite();
 }
 
-BOOL CDCClient::OnChat(const std::string& /*strMessage*/)
-{
-	return TRUE;
-}
-
 BOOL CDCClient::OnMyNick(const std::string& strParams)
 {
 	// $MyNick RemoteNick|
 
-	m_sRemoteNick = strParams.c_str();
-
-	// Create GUID from remote nick
-	CMD5 pMD5;
-	pMD5.Add( (LPCTSTR)m_sRemoteNick, m_sRemoteNick.GetLength() * sizeof( TCHAR ) );
-	pMD5.Finish();
-	pMD5.GetHash( &m_oGUID[ 0 ] );
-	m_oGUID.validate();
+	m_sRemoteNick = UTF8Decode( strParams.c_str() );
+	DCClients.CreateGUID( m_sRemoteNick, m_oGUID );
 
 	return ! DCClients.Merge( this );
 }
@@ -461,7 +502,7 @@ BOOL CDCClient::OnLock(const std::string& strParams)
 
 	if ( ! m_bInitiated )
 	{
-		Downloads.OnPush( m_oGUID, this );
+		Network.OnPush( m_oGUID, this );
 	}
 
 	return TRUE;
@@ -500,14 +541,24 @@ BOOL CDCClient::OnKey(const std::string& strParams)
 		return FALSE;
 
 	// Right key
+	m_bKey = TRUE;
+
 	if ( m_bInitiated )
+		return Handshake();
+
+	return StartDownload();
+}
+
+BOOL CDCClient::StartDownload()
+{
+	if ( ! m_bKey )
+		// Need a key
 		return Handshake();
 
 	if ( CanDownload() )
 	{
 		// Start download
 		DetachUpload();
-
 		return m_pDownloadTransfer->OnConnected();
 	}
 
@@ -756,24 +807,44 @@ void CDCClient::AttachDownload(CDownloadTransferDC* pTransfer)
 			}
 		}
 	}
-	if ( m_sNick.IsEmpty() )
-		m_sNick = DCClients.GetDefaultNick();
+	m_sNick = DCClients.CreateNick( m_sNick );
 
-	Handshake();
+	StartDownload();
 }
 
 void CDCClient::OnDownloadClose()
 {
+	BOOL bDownloading = IsDownloading();
+	BOOL bIdle = IsIdle();
+
 	m_pDownloadTransfer = NULL;
 
 	m_mInput.pLimit = &Settings.Bandwidth.Request;
+
+	if ( bDownloading )
+	{
+		// Bad close
+		Close();
+	}
+	else if ( bIdle )
+	{
+		// Grace close - lets start next download if any
+		Network.OnPush( m_oGUID, this );
+	}
 }
 
 void CDCClient::OnUploadClose()
 {
+	BOOL bUploading = IsUploading();
+
 	m_pUploadTransfer = NULL;
 
 	m_mOutput.pLimit = &Settings.Bandwidth.Request;
+
+	if ( bUploading )
+	{
+		Close();
+	}
 }
 
 void CDCClient::DetachDownload()
@@ -801,7 +872,7 @@ BOOL CDCClient::Handshake()
 		Greetings();
 	}
 
-	Write( _P("$Supports MiniSlots XmlBZList ADCGet TTHL TTHF ZLIG |") );
+	Write( _P(DC_CLIENT_SUPPORTS) );
 
 	CString strDirection;
 	strDirection.Format( _T("$Direction %s %u|"),

@@ -22,11 +22,10 @@
 #pragma once
 
 #include "ThreadImpl.h"
+#include "ChatSession.h"
 
-class CConnection;
-class CChatSession;
 class CEDClient;
-class CEDPacket;
+class CPacket;
 
 
 class CChatCore : public CThreadImpl
@@ -35,7 +34,7 @@ public:
 	CChatCore();
 	virtual ~CChatCore();
 
-	CMutex		m_pSection;
+	CMutexEx		m_pSection;
 
 	POSITION		GetIterator() const;
 	CChatSession*	GetNext(POSITION& pos) const;
@@ -45,15 +44,43 @@ public:
 	void			OnAccept(CConnection* pConnection, PROTOCOLID nProtocol = PROTOCOL_NULL);
 	BOOL			OnPush(const Hashes::Guid& oGUID, CConnection* pConnection);
 
-	void			OnED2KMessage(CEDClient* pClient, CEDPacket* pPacket);
-	void			OnDropped(CEDClient* pClient);
+	template< typename T > void OnMessage(const T* pClient, CPacket* pPacket = NULL)
+	{
+		if ( ! Settings.Community.ChatEnable ||
+			 ! Settings.Community.ChatAllNetworks )
+			 // Chat disabled
+			 return;
+
+		CSingleLock pLock( &m_pSection );
+		if ( pLock.Lock( 250 ) )
+		{
+			if ( CChatSession* pSession = FindSession< T >( pClient, TRUE ) )
+			{
+				pSession->OnMessage( pPacket );
+			}
+		}
+	}
+
+	template< typename T > void OnDropped(const T* pClient)
+	{
+		CSingleLock pLock( &m_pSection );
+		if ( pLock.Lock( 250 ) )
+		{
+			if ( CChatSession* pSession = FindSession< T >( pClient, FALSE ) )
+			{
+				pSession->OnDropped();
+			}
+		}
+	}
 
 protected:
 	CList< CChatSession* > m_pSessions;
 
-	CChatSession*	FindSession(CEDClient* pClient, BOOL bCreate);
+	template< typename T > CChatSession* FindSession(const T* pClient, BOOL bCreate);
+
 	void			Add(CChatSession* pSession);
 	void			Remove(CChatSession* pSession);
+
 	void			StartThread();
 	void			OnRun();
 

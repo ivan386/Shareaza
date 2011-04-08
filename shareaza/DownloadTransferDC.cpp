@@ -23,7 +23,6 @@
 #include "Shareaza.h"
 #include "Settings.h"
 #include "DCClient.h"
-#include "DCClients.h"
 #include "DCNeighbour.h"
 #include "Download.h"
 #include "DownloadTransfer.h"
@@ -54,6 +53,11 @@ CDownloadTransferDC::CDownloadTransferDC(CDownloadSource* pSource, CDCClient* pC
 CDownloadTransferDC::~CDownloadTransferDC()
 {
 	ASSERT( m_pClient == NULL );
+}
+
+BOOL CDownloadTransferDC::IsIdle() const
+{
+	return ( m_nState >= dtsBusy );
 }
 
 void CDownloadTransferDC::AttachTo(CConnection* pConnection)
@@ -102,10 +106,11 @@ void CDownloadTransferDC::Close(TRISTATE bKeepSource, DWORD nRetryAfter)
 {
 	ASSUME_LOCK( Transfers.m_pSection );
 
-	if ( m_pClient != NULL )
+	if ( CDCClient* pClient = m_pClient )
 	{
-		m_pClient->OnDownloadClose();
 		m_pClient = NULL;
+
+		pClient->OnDownloadClose();
 	}
 
 	CDownloadTransfer::Close( bKeepSource, nRetryAfter );
@@ -278,6 +283,12 @@ BOOL CDownloadTransferDC::ReadContent()
 	{
 		m_pSource->AddFragment( m_nOffset, m_nLength );
 
+		if ( m_pDownload->m_nSize == SIZE_UNKNOWN )
+		{
+			m_pDownload->m_nSize = m_nLength;
+			m_pDownload->MakeComplete();
+		}
+
 		return StartNextFragment();
 	}
 
@@ -310,34 +321,40 @@ BOOL CDownloadTransferDC::OnDownload(const std::string& strType, const std::stri
 
 	BOOL bZip = ( strOptions.find("ZL1") != std::string::npos );
 
-	if ( strFilename.substr( 0, 4 ) != "TTH/" )
-	{
-		// Unsupported hash
-		return FALSE;
-	}
+	m_nLength = min( nLength, m_nLength );
 
-	Hashes::TigerHash oTiger;
-	if ( ! oTiger.fromString( CA2W( strFilename.substr( 4 ).c_str() ) ) )
+	if ( strFilename.substr( 0, 4 ) == "TTH/" )
 	{
-		// Invalid TigerTree hash encoding
-		return FALSE;
-	}
+		Hashes::TigerHash oTiger;
+		if ( ! oTiger.fromString( CA2W( strFilename.substr( 4 ).c_str() ) ) )
+		{
+			// Invalid TigerTree hash encoding
+			Close( TRI_FALSE );
+			return FALSE;
+		}
 
-	if ( ! m_pDownload || m_pDownload->m_oTiger != oTiger )
-	{
-		// Wrong file
-		return FALSE;
+		if ( m_pDownload && ! validAndEqual( m_pDownload->m_oTiger, oTiger ) )
+		{
+			// Wrong file
+			Close( TRI_FALSE );
+			return FALSE;
+		}
 	}
 
 	if ( strType == "file" )
 	{
-		if ( m_nLength != nLength || m_nOffset != nOffset || bZip )
+		if ( m_nOffset != nOffset || bZip )
 		{
 			// Invalid parameters
+			Close( TRI_FALSE );
 			return FALSE;
 		}
 
 		SetState( dtsDownloading );
+
+		m_pSource->SetLastSeen();
+		m_pSource->m_nFailures = 0;
+		m_pSource->m_nBusyCount = 0;
 
 		return TRUE;
 	}
@@ -346,6 +363,7 @@ BOOL CDownloadTransferDC::OnDownload(const std::string& strType, const std::stri
 		if ( nOffset != 0 || nLength == 0 || nLength == SIZE_UNKNOWN || bZip )
 		{
 			// Invalid parameters
+			Close( TRI_FALSE );
 			return FALSE;
 		}
 
@@ -353,10 +371,15 @@ BOOL CDownloadTransferDC::OnDownload(const std::string& strType, const std::stri
 
 		SetState( dtsTiger );
 
+		m_pSource->SetLastSeen();
+		m_pSource->m_nFailures = 0;
+		m_pSource->m_nBusyCount = 0;
+
 		return TRUE;
 	}
 
 	// Unsupported
+	Close( TRI_FALSE );
 	return FALSE;
 }
 
@@ -424,16 +447,36 @@ BOOL CDownloadTransferDC::StartNextFragment()
 	m_nOffset = SIZE_UNKNOWN;
 	m_nPosition = 0;
 
-	if ( m_pDownload->NeedTigerTree() )
+	CString sName;
+	if ( m_pDownload->m_oTiger )
+		sName = _T("TTH/") + m_pDownload->m_oTiger.toString();
+	else
+		sName = m_pSource->m_sName;
+
+	if ( m_pDownload->m_nSize == SIZE_UNKNOWN )
 	{
-		// Requesting TigerTree
-		CString strRequest;
-		strRequest.Format( _T("$ADCGET tthl TTH/%s 0 -1|"),
-			(LPCTSTR)m_pDownload->m_oTiger.toString() );
-		m_pClient->SendCommand( strRequest );
+		m_nOffset = 0;
+		m_nLength = SIZE_UNKNOWN;
 
 		SetState( dtsRequesting );
 		m_tRequest = GetTickCount();
+
+		m_pClient->SendCommand( _T("$ADCGET file ") + sName + _T(" 0 -1|") );
+
+		theApp.Message( MSG_INFO, IDS_DOWNLOAD_FRAGMENT_REQUEST,
+			0ui64, 0ui64, (LPCTSTR)m_pDownload->GetDisplayName(), (LPCTSTR)m_sAddress );
+		return TRUE;
+	}
+	else if ( m_pDownload->m_oTiger && m_pDownload->NeedTigerTree() )
+	{
+		// Requesting TigerTree
+		m_nOffset = 0;
+		m_nLength = SIZE_UNKNOWN;
+
+		SetState( dtsRequesting );
+		m_tRequest = GetTickCount();
+
+		m_pClient->SendCommand( _T("$ADCGET tthl ") + sName + _T(" 0 -1|") );
 
 		theApp.Message( MSG_INFO, IDS_DOWNLOAD_TIGER_REQUEST,
 			(LPCTSTR)m_pDownload->GetDisplayName(), (LPCTSTR)m_sAddress );
@@ -444,25 +487,23 @@ BOOL CDownloadTransferDC::StartNextFragment()
 		// Downloading
 		ChunkifyRequest( &m_nOffset, &m_nLength, Settings.Downloads.ChunkSize, TRUE );
 
-		CString strRequest;
-		strRequest.Format( _T("$ADCGET file TTH/%s %I64u %I64u|"),
-			(LPCTSTR)m_pDownload->m_oTiger.toString(), m_nOffset, m_nLength );
-		m_pClient->SendCommand( strRequest );
-
 		SetState( dtsRequesting );
 		m_tRequest = GetTickCount();
 
-		m_pSource->SetLastSeen();
+		CString sRequest;
+		sRequest.Format( _T("$ADCGET file %s %I64u %I64u|"), (LPCTSTR)sName, m_nOffset, m_nLength );
+		m_pClient->SendCommand( sRequest );
 
 		theApp.Message( MSG_INFO, IDS_DOWNLOAD_FRAGMENT_REQUEST,
-			m_nOffset, m_nOffset + m_nLength - 1,
-			(LPCTSTR)m_pDownload->GetDisplayName(), (LPCTSTR)m_sAddress );
+			m_nOffset, m_nOffset + m_nLength - 1, (LPCTSTR)m_pDownload->GetDisplayName(), (LPCTSTR)m_sAddress );
 		return TRUE;
 	}
 	else
 	{
 		if ( m_pSource )
 			m_pSource->SetAvailableRanges( NULL );
+
+		SetState( dtsBusy );
 
 		theApp.Message( MSG_INFO, IDS_DOWNLOAD_FRAGMENT_END, (LPCTSTR)m_sAddress );
 		Close( TRI_TRUE );

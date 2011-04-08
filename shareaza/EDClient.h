@@ -97,7 +97,7 @@ public:
 	void	Remove();
 	void	Merge(CEDClient* pClient);
 	void	CopyCapabilities(CEDClient* pClient);
-	void	Send(CEDPacket* pPacket, BOOL bRelease = TRUE);
+	void	Send(CPacket* pPacket, BOOL bRelease = TRUE);
 	void	OnRunEx(DWORD tNow);
 
 	BOOL	AttachDownload(CDownloadTransferED2K* pDownload);

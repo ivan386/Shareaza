@@ -56,7 +56,7 @@ protected:
 
 // Operations
 public:
-	void			Serialize(CArchive& ar);
+	void			Serialize(CArchive& ar, int nVersion /* BROWSER_SER_VERSION */);
 	virtual BOOL	Create(CWnd* pParentWnd, CMatchCtrl* pMatch);
 	void			OnSkinChange();
 	void			OnPhysicalTree(CG2Packet* pPacket);

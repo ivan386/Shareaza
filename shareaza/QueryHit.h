@@ -102,7 +102,7 @@ public:
 	CQueryHit&	operator=(const CQueryHit& pOther);
 	void		Delete();
 	int			GetRating();
-	void		Serialize(CArchive& ar, int nVersion);
+	void		Serialize(CArchive& ar, int nVersion /* MATCHLIST_SER_VERSION */);
 	void		Ban(int nBanLength);	// Ban by host IP only
 	void		Resolve();
 	void		ReadEDPacket(CEDPacket* pPacket, const SOCKADDR_IN* pServer, BOOL bUnicode);

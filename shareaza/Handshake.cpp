@@ -28,7 +28,6 @@
 #include "Handshakes.h"
 #include "Handshake.h"
 #include "Neighbours.h"
-#include "Downloads.h"
 #include "Uploads.h"
 #include "UploadTransfer.h"
 #include "ChatCore.h"
@@ -422,36 +421,8 @@ BOOL CHandshake::OnAcceptGive()
 // Returns true or false
 BOOL CHandshake::OnPush(const Hashes::Guid& oGUID)
 {
-	// Make sure the socket is valid
-	if ( ! IsValid() ) return FALSE;
+	if ( ! IsValid() )
+		return FALSE;
 
-	// Look for the remote computer's GUID in our list of downloads and the chat interface
-	if ( Downloads.OnPush( oGUID, this ) ) return TRUE; // Return true if it's found
-	if ( ChatCore.OnPush( oGUID, this ) ) return TRUE;
-
-	// Make sure this is the only thread doing this right now
-	CSingleLock pWindowLock( &theApp.m_pSection );
-	if ( pWindowLock.Lock( 250 ) ) // Don't wait here for more than a quarter second, Lock will return false and so will OnPush
-	{
-		// Access granted, get a pointer to the windowing system
-		if ( CMainWnd* pMainWnd = theApp.SafeMainWnd() )
-		{
-			// Get a pointer to the main Shareaza window
-			CWindowManager* pWindows	= &pMainWnd->m_pWindows;
-			CChildWnd* pChildWnd		= NULL;
-
-			// Loop through all of Shareaza's child windows
-			while ( ( pChildWnd = pWindows->Find( NULL, pChildWnd ) ) != NULL )
-			{
-				// If a child window recognizes this push request, return true
-				if ( pChildWnd->OnPush( oGUID, this ) ) return TRUE;
-			}
-		}
-
-		// Let other threads use theApp.m_pSection
-		pWindowLock.Unlock();
-	}
-
-	// No child window recognized a push request, or we waited more than a quarter second and gave up
-	return FALSE;
+	return Network.OnPush( oGUID, this );
 }

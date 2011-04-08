@@ -672,7 +672,10 @@ void CLocalSearch::AddHitG2(CG2Packet* pPacket, CSchemaMap& /*pSchemas*/, CLibra
 
 void CLocalSearch::AddHitDC(CDCPacket* pPacket, CSchemaMap& /*pSchemas*/, CLibraryFile* pFile, int /*nIndex*/)
 {
+	// Active user:
 	// $SR Nick FileName<0x05>FileSize FreeSlots/TotalSlots<0x05>HubName (HubIP:HubPort)|
+	// Passive user:
+	// $SR Nick FileName<0x05>FileSize FreeSlots/TotalSlots<0x05>HubName (HubIP:HubPort)<0x05>User|
 	
 	if ( ! m_pSearch )
 		return;
@@ -683,42 +686,32 @@ void CLocalSearch::AddHitDC(CDCPacket* pPacket, CSchemaMap& /*pSchemas*/, CLibra
 	int nActiveSlots = pQueue ? pQueue->GetActiveCount() : 0;
 	int nFreeSlots = nTotalSlots > nActiveSlots ? ( nTotalSlots - nActiveSlots ) : 0;
 
-	CString sHubName = _T("Hub"), sNick = _T("User");
-	{
-		// Retrieving user and hub names
-		CQuickLock oLock( Network.m_pSection );
-		if ( CNeighbour* pNeighbour = Neighbours.Get( m_pSearch->m_pEndpoint.sin_addr ) )
-		{
-			if ( pNeighbour->m_nProtocol == m_nProtocol )
-			{
-				CDCNeighbour* pDCNeighbour = static_cast< CDCNeighbour* >( pNeighbour );
-				sNick = pDCNeighbour->m_sNick;
-				sHubName = pDCNeighbour->m_sServerName;
-			}
-		}
-	}
+	CString sHubName;
 	if ( pFile->m_oTiger )
-	{
 		// It's TTH search
 		sHubName = _T("TTH:") + pFile->m_oTiger.toString();
-	}
-
-	CString strAnswer;
+	else
+		sHubName = m_pSearch->m_sMyHub;
 
 	CBuffer pAnswer;
 	pAnswer.Add( _P("$SR ") );
-	pAnswer.Print( sNick );
+	pAnswer.Print( m_pSearch->m_sMyNick );
 	pAnswer.Add( _P(" ") );
 	pAnswer.Print( pFile->m_sName );
 	pAnswer.Add( _P("\x05") );
-	strAnswer.Format( _T("%I64u %d/%d"), pFile->m_nSize, nFreeSlots, nTotalSlots );
-	pAnswer.Print( strAnswer );
+	CString strSize;
+	strSize.Format( _T("%I64u %d/%d"), pFile->m_nSize, nFreeSlots, nTotalSlots );
+	pAnswer.Print( strSize );
 	pAnswer.Add( _P("\x05") );
-	strAnswer.Format( _T("%s (%s:%u)"),
-		(LPCTSTR)sHubName,
-		(LPCTSTR)CString( inet_ntoa( m_pSearch->m_pEndpoint.sin_addr ) ),
-		ntohs( m_pSearch->m_pEndpoint.sin_port ) );
-	pAnswer.Print( strAnswer );
+	pAnswer.Print( sHubName );
+	pAnswer.Add( _P(" (") );
+	pAnswer.Print( HostToString( &m_pSearch->m_pMyHub ) );
+	pAnswer.Add( _P(")") );
+	if ( ! m_pSearch->m_sUserNick.IsEmpty() )
+	{
+		pAnswer.Add( _P("\x05") );
+		pAnswer.Print( m_pSearch->m_sUserNick );
+	}
 	pAnswer.Add( _P("|") );
 
 	pPacket->Write( pAnswer.m_pBuffer, pAnswer.m_nLength );

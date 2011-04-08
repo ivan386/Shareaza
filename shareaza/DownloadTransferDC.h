@@ -50,6 +50,8 @@ public:
 	BOOL			OnBusy();
 	// Got $Error command
 	BOOL			OnError();
+	// Check if transfer idle
+	BOOL			IsIdle() const;
 
 protected:
 	QWORD			m_nTigerLength;

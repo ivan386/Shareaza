@@ -293,7 +293,9 @@ BOOL CDownloadWithTransfers::StartNewTransfer(DWORD tNow)
 		{
 			// ED2K use (Ratio) is maxed out, no point in starting new transfers
 		}
-		else if ( pSource->m_bPushOnly == FALSE || pSource->m_nProtocol == PROTOCOL_ED2K )
+		else if ( pSource->m_bPushOnly == FALSE ||
+			pSource->m_nProtocol == PROTOCOL_ED2K ||
+			pSource->m_nProtocol == PROTOCOL_DC )
 		{
 			if ( pSource->m_tAttempt == 0 )
 			{
@@ -305,7 +307,10 @@ BOOL CDownloadWithTransfers::StartNewTransfer(DWORD tNow)
 			}
 			else if ( pSource->m_tAttempt > 0 && pSource->m_tAttempt <= tNow )
 			{
-				if ( pConnectHead == NULL && pSource->CanInitiate( bConnected, FALSE ) ) pConnectHead = pSource;
+				if ( pConnectHead == NULL && pSource->CanInitiate( bConnected, FALSE ) )
+				{
+					pConnectHead = pSource;
+				}
 			}
 		}
 		else if ( Network.GetStableTime() >= 15 )

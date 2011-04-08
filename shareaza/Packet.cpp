@@ -116,6 +116,24 @@ void CPacket::Shorten(DWORD nLength)
 	m_nPosition	= min( m_nPosition, m_nLength ); // Make sure this doesn't move our position beyond the bytes of the packet
 }
 
+void CPacket::Remove(DWORD nLength)
+{
+	if ( nLength >= m_nLength )
+	{
+		m_nPosition = 0;
+		m_nLength = 0;
+	}
+	else if ( nLength )
+	{
+		if ( m_nPosition > nLength )
+			m_nPosition -= nLength;
+		else
+			m_nPosition = 0;
+		m_nLength -= nLength;
+		MoveMemory( m_pBuffer, m_pBuffer + nLength, m_nLength );
+	}
+}
+
 //////////////////////////////////////////////////////////////////////
 // CPacket strings
 

@@ -65,7 +65,8 @@ static char THIS_FILE[]=__FILE__;
 // CEDClient construction
 
 CEDClient::CEDClient()
-:	m_pEdPrev				( NULL )
+:	CTransfer				( PROTOCOL_ED2K )
+,	m_pEdPrev				( NULL )
 ,	m_pEdNext				( NULL )
 ,	m_nClientID				( 0ul )
 ,	m_nUDP					( 0u )
@@ -302,7 +303,7 @@ void CEDClient::CopyCapabilities(CEDClient* pClient)
 //////////////////////////////////////////////////////////////////////
 // CEDClient send a packet
 
-void CEDClient::Send(CEDPacket* pPacket, BOOL bRelease)
+void CEDClient::Send(CPacket* pPacket, BOOL bRelease)
 {
 	if ( pPacket != NULL )
 	{
@@ -443,7 +444,7 @@ BOOL CEDClient::OnRun()
 		if ( m_bOpenChat )
 		{
 			// Open a chat window.
-			if ( Settings.Community.ChatEnable ) ChatCore.OnED2KMessage( this, NULL );
+			ChatCore.OnMessage( this );
 			m_bOpenChat = FALSE;
 		}
 		else if ( tNow - m_mInput.tLast > Settings.Connection.TimeoutTraffic &&
@@ -1666,17 +1667,7 @@ BOOL CEDClient::OnChatMessage(CEDPacket* pPacket)
 		// General spam filter (if enabled)
 		return TRUE;
 
-	// Check chat settings.
-	if ( Settings.Community.ChatEnable && Settings.Community.ChatAllNetworks )
-	{
-		// Chat is enabled, open/update a chat window
-		ChatCore.OnED2KMessage( this, pPacket );
-	}
-	else
-	{
-		// Chat is disabled- don't open a chat window. Display in system window instead.
-		theApp.Message( MSG_INFO, _T("Message from %s: %s"), (LPCTSTR)m_sAddress, sMessage );
-	}
+	ChatCore.OnMessage( this, pPacket );
 
 	return TRUE;
 }
@@ -1705,7 +1696,7 @@ BOOL CEDClient::OnCaptchaRequest(CEDPacket* pPacket)
 	DWORD nSize = pPacket->GetRemaining();
 	if ( nSize > 128 && nSize < 4096)
 	{
-		ChatCore.OnED2KMessage( this, pPacket );
+		ChatCore.OnMessage( this, pPacket );
 	}
 	else
 	{
@@ -1724,7 +1715,7 @@ BOOL CEDClient::OnCaptchaResult(CEDPacket* pPacket)
 		return TRUE;
 	}
 
-	ChatCore.OnED2KMessage( this, pPacket );
+	ChatCore.OnMessage( this, pPacket );
 
 	return TRUE;
 }

@@ -26,6 +26,7 @@
 #include "DCClient.h"
 #include "DCClients.h"
 #include "DCNeighbour.h"
+#include "Downloads.h"
 #include "DownloadSource.h"
 #include "DownloadTransfer.h"
 #include "DownloadTransferDC.h"
@@ -33,6 +34,7 @@
 #include "Neighbours.h"
 #include "Network.h"
 #include "TRansfers.h"
+#include "ShareazaURL.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -58,8 +60,11 @@ void CDCClients::Clear()
 	while ( ! m_pList.IsEmpty() )
 	{
 		CDCClient* pClient = m_pList.GetHead();
+
 		oLock.Unlock();
+
 		pClient->Remove();
+		
 		oLock.Lock();
 	}
 }
@@ -90,9 +95,11 @@ int CDCClients::GetCount() const
 void CDCClients::OnRun()
 {
 	CSingleLock oLock( &m_pSection, TRUE );
+
 	for ( POSITION pos = m_pList.GetHeadPosition(); pos; )
 	{
 		CDCClient* pClient = m_pList.GetNext( pos );
+
 		if ( ! pClient->IsValid() )
 		{
 			oLock.Unlock();
@@ -100,7 +107,7 @@ void CDCClients::OnRun()
 			{
 				CSingleLock oTransfersLock( &Transfers.m_pSection, FALSE );
 				if ( ! oTransfersLock.Lock( 250 ) )
-					break;
+					return;
 
 				pClient->OnRun();
 			}
@@ -110,58 +117,160 @@ void CDCClients::OnRun()
 	}
 }
 
-CString CDCClients::GetDefaultNick() const
+CString CDCClients::CreateNick(LPCTSTR szNick)
 {
-	CString sNick = MyProfile.GetNick();
-	if ( sNick.GetLength() < 3 )
-		sNick.Format( CLIENT_NAME_T _T("%04u"), GetRandomNum( 0, 9999 ) );
-	else
-	{
-		sNick.Replace( _T(' '), _T('_') );
-		sNick.Replace( _T('&'), _T('_') );
-		sNick.Replace( _T('|'), _T('_') );
-		sNick.Replace( _T('$'), _T('_') );
-		sNick.Replace( _T('<'), _T('_') );
-		sNick.Replace( _T('>'), _T('_') );
-		sNick = sNick.Left( 32 );
-	}
+	CString sNick = ( szNick && *szNick )? szNick : MyProfile.GetNick();
 
-	return sNick;
+	// Replace bad symbols
+	sNick.Replace( _T(' '), _T('_') );
+	sNick.Replace( _T('|'), _T('_') );
+	sNick.Replace( _T('&'), _T('_') );
+	sNick.Replace( _T('$'), _T('_') );
+
+	// Generate nick if not set yet
+	if ( sNick.IsEmpty() )
+		sNick.Format( CLIENT_NAME_T _T("%04u"), GetRandomNum( 0, 9999 ) );
+
+	// Minimum length is 2
+	while ( sNick.GetLength() < 2 ) sNick += _T("_");
+
+	// Maximum length is 32
+	return sNick.Left( 32 );
 }
 
-BOOL CDCClients::Connect(const IN_ADDR& pHubAddress, WORD nHubPort, const CString& sNick, BOOL& bSuccess)
+CDCClient* CDCClients::GetClient(const CString& sNick) const
+{
+	ASSUME_LOCK( m_pSection );
+
+	if ( sNick.IsEmpty() )
+		return NULL;
+
+	Hashes::Guid oGUID;
+	CDCClients::CreateGUID( sNick, oGUID );
+
+	for ( POSITION pos = m_pList.GetHeadPosition(); pos; )
+	{
+		CDCClient* pClient = m_pList.GetNext( pos );
+
+		if ( validAndEqual( pClient->m_oGUID, oGUID ) )
+		{
+			return pClient;
+		}
+	}
+	return NULL;
+}
+
+CDCNeighbour* CDCClients::GetHub(const CString& sNick) const
+{
+	ASSUME_LOCK( Network.m_pSection );
+
+	for ( POSITION pos = Neighbours.GetIterator(); pos; )
+	{
+		CNeighbour* pNeighbour = Neighbours.GetNext( pos );
+
+		if ( pNeighbour->m_nProtocol == PROTOCOL_DC )
+		{
+			if ( static_cast< CDCNeighbour*>( pNeighbour )->GetUser( sNick ) )
+			{
+				return static_cast< CDCNeighbour*>( pNeighbour );
+			}
+		}
+	}
+	return NULL;
+}
+
+CDCNeighbour* CDCClients::GetHub(const IN_ADDR* pHubAddress, WORD nHubPort) const
+{
+	ASSUME_LOCK( Network.m_pSection );
+
+	for ( POSITION pos = Neighbours.GetIterator(); pos; )
+	{
+		CNeighbour* pNeighbour = Neighbours.GetNext( pos );
+
+		if ( pNeighbour->m_nProtocol == PROTOCOL_DC )
+		{
+			if ( pNeighbour->m_pHost.sin_addr.s_addr == pHubAddress->s_addr &&
+				 pNeighbour->m_pHost.sin_port == htons( nHubPort ) )
+			{
+				return static_cast< CDCNeighbour*>( pNeighbour );
+			}
+		}
+	}
+	return NULL;
+}
+
+void CDCClients::CreateGUID(const CString& sNick, Hashes::Guid& oGUID)
+{
+	CMD5 pMD5;
+	pMD5.Add( (LPCTSTR)sNick, sNick.GetLength() * sizeof( TCHAR ) );
+	pMD5.Finish();
+	pMD5.GetHash( &oGUID[ 0 ] );
+	oGUID.validate();
+}
+
+BOOL CDCClients::ConnectTo(const IN_ADDR* pAddress, WORD nPort, const CString& sNick, const CString& sRemoteNick)
+{
+	CSingleLock oDCLock( &m_pSection, FALSE );
+	if ( ! oDCLock.Lock( 250 ) )
+		// DC++ core overload
+		return FALSE;
+
+	// Try existing client first
+	if ( CDCClient* pClient = GetClient( sRemoteNick ) )
+	{
+		if ( pClient->IsValid() )
+			// Already connected
+			return TRUE;
+
+		return pClient->ConnectTo( pAddress, nPort );
+	}
+
+	// Create new one
+	if ( CDCClient* pClient = new CDCClient( sNick ) )
+	{
+		return pClient->ConnectTo( pAddress, nPort );
+	}
+
+	return FALSE;
+}
+
+BOOL CDCClients::Connect(const IN_ADDR* pHubAddress, WORD nHubPort, const CString& sRemoteNick, BOOL& bSuccess)
 {
 	bSuccess = FALSE;
 
-	CSingleLock oLock( &Network.m_pSection );
-	if ( ! oLock.Lock( 250 ) )
+	if ( pHubAddress->s_addr == INADDR_ANY || nHubPort == 0 || sRemoteNick.IsEmpty() )
+		return FALSE;
+
+	CSingleLock oNetLock( &Network.m_pSection, FALSE );
+	if ( ! oNetLock.Lock( 250 ) )
 		// Network core overload
 		return FALSE;
 
-	// Get existing hub
-	CNeighbour* pNeighbour = Neighbours.Get( pHubAddress );
-	if ( ! pNeighbour )
-	{
-		// Connect to new hub
-		pNeighbour = new CDCNeighbour();
-		if ( ! pNeighbour )
-			// Out of memory
-			return FALSE;
-
-		if ( ! pNeighbour->ConnectTo( &pHubAddress, nHubPort, FALSE ) )
-		{
-			// Can't connect
-			pNeighbour->Close();
-			return FALSE;
-		}
-	}
-
-	if ( pNeighbour->m_nProtocol != PROTOCOL_DC )
-		// Hmmm...
+	CSingleLock oDCLock( &m_pSection, FALSE );
+	if ( ! oDCLock.Lock( 250 ) )
+		// DC++ core overload
 		return FALSE;
 
-	// Ask (via this hub) source for call-back connection
-	bSuccess = static_cast< CDCNeighbour* >( pNeighbour )->ConnectToMe( sNick );
+	// Check existing clients
+	CDCClient* pClient = GetClient( sRemoteNick );
+	if ( pClient && pClient->IsValid() )
+	{
+		// Check if client can process new transfer requests
+		if ( pClient->IsIdle() )
+		{
+			// Lets start new download using this already connected client
+			pClient->OnPush();
+		}
+		return TRUE;
+	}
+
+	if ( ! pClient )
+		pClient = new CDCClient();
+	if ( ! pClient )
+		// Out of memory
+		return FALSE;
+
+	bSuccess = pClient->Connect( pHubAddress, nHubPort, sRemoteNick );
 
 	return TRUE;
 }
@@ -175,15 +284,18 @@ BOOL CDCClients::OnAccept(CConnection* pConnection)
 		return FALSE;
 	}
 
-	CSingleLock oTransfersLock( &Transfers.m_pSection );
-	if ( ! oTransfersLock.Lock( 250 ) )
+	CSingleLock oTranLock( &Transfers.m_pSection );
+	if ( ! oTranLock.Lock( 250 ) )
 	{
 		theApp.Message( MSG_ERROR, _T("Rejecting DC++ connection from %s, network core overloaded."),
 			(LPCTSTR)pConnection->m_sAddress );
 		return FALSE;
 	}
 
-	CQuickLock oLock( m_pSection );
+	CSingleLock oDCLock( &m_pSection, FALSE );
+	if ( ! oDCLock.Lock( 250 ) )
+		// DC++ core overload
+		return FALSE;
 
 	CDCClient* pClient = new CDCClient();
 	if ( ! pClient )
@@ -205,7 +317,7 @@ BOOL CDCClients::Merge(CDCClient* pClient)
 	{
 		CDCClient* pOther = m_pList.GetNext( pos );
 
-		if ( pOther != pClient && pOther->Equals( pClient ) )
+		if ( pOther != pClient && validAndEqual( pOther->m_oGUID, pClient->m_oGUID ) )
 		{
 			pClient->Merge( pOther );
 			return TRUE;
@@ -215,7 +327,7 @@ BOOL CDCClients::Merge(CDCClient* pClient)
 	return FALSE;
 }
 
-std::string CDCClients::MakeKey(const std::string& aLock) const
+std::string CDCClients::MakeKey(const std::string& aLock)
 {
 	if ( aLock.size() < 3 )
 		return std::string();
@@ -240,7 +352,7 @@ std::string CDCClients::MakeKey(const std::string& aLock) const
 	return KeySubst( &temp[ 0 ], aLock.size(), extra );
 }
 
-std::string CDCClients::KeySubst(const BYTE* aKey, size_t len, size_t n) const
+std::string CDCClients::KeySubst(const BYTE* aKey, size_t len, size_t n)
 {
 	auto_array< BYTE > temp( new BYTE[ len + n * 9 ] );
 	size_t j = 0;	
@@ -267,7 +379,7 @@ std::string CDCClients::KeySubst(const BYTE* aKey, size_t len, size_t n) const
 	return std::string( (const char*)&temp[ 0 ], j );
 }
 
-BOOL CDCClients::IsExtra(BYTE b) const
+BOOL CDCClients::IsExtra(BYTE b)
 {
 	return ( b == 0 || b == 5 || b == 124 || b == 96 || b == 126 || b == 36 );
 }

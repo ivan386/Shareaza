@@ -1,7 +1,7 @@
 //
 // DCNeighbour.h
 //
-// Copyright (c) Shareaza Development Team, 20010.
+// Copyright (c) Shareaza Development Team, 2010-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -23,6 +23,19 @@
 
 #include "Neighbour.h"
 
+class CDCPacket;
+
+
+class CDCUser
+{
+public:
+	typedef CMap< CString, const CString&, CDCUser*, CDCUser* > Map;
+
+	CString			m_sNick;
+	CString			m_sDescription;
+};
+
+
 
 class CDCNeighbour : public CNeighbour
 {
@@ -32,29 +45,34 @@ public:
 
 	virtual BOOL	ConnectTo(const IN_ADDR* pAddress, WORD nPort, BOOL bAutomatic);
 	virtual BOOL	Send(CPacket* pPacket, BOOL bRelease = TRUE, BOOL bBuffered = FALSE);
+	virtual DWORD	GetUserCount() const { return m_oUsers.GetCount(); }
 
 	// Send $ConnectToMe command
 	BOOL			ConnectToMe(const CString& sNick);
 
+	// Find user
+	CDCUser*		GetUser(const CString& sNick) const;
+
 	CString			m_sNick;		// User nick on this hub
+	BOOL			m_bNickValid;	// User nick was accepted
 	BOOL			m_bExtended;	// Using extended protocol
 	CStringList		m_oFeatures;	// Remote client supported features
 
 protected:
+	CDCUser::Map	m_oUsers;		// Hub user list
+
+	void			RemoveAllUsers();
+
 	virtual BOOL	OnConnected();
 	virtual void	OnDropped();
 	virtual BOOL	OnRead();
 
-	// Read single command from input buffer
-	BOOL			ReadCommand(std::string& strLine);
 	// Got DC++ command
-	BOOL			OnCommand(const std::string& strCommand, const std::string& strParams);
+	BOOL			OnPacket(CDCPacket* pPacket);
 	// Got $Lock command
-	BOOL			OnLock(const std::string& strLock);
+	BOOL			OnLock(LPSTR szLock);
 	// Got $Hello command
 	BOOL			OnHello();
-	// Got chat message
-	BOOL			OnChat(const std::string& strMessage);
 	// Got search request
-	BOOL			OnSearch(const IN_ADDR* pAddress, WORD nPort, std::string& strSearch);
+	BOOL			OnQuery(CDCPacket* pPacket);
 };

@@ -1497,10 +1497,13 @@ void CDownloadsWnd::OnBrowseLaunch()
 
 			if ( pSource->m_bSelected )
 			{
+				SOCKADDR_IN pAddress = { AF_INET };
+				pAddress.sin_port = htons( pSource->m_nPort );
+				pAddress.sin_addr = pSource->m_pAddress;
 				if ( pSource->m_nProtocol == PROTOCOL_HTTP || pSource->m_nProtocol == PROTOCOL_ED2K )	// Many HTTP clients support this
-					new CBrowseHostWnd( pSource->m_nProtocol, &pSource->m_pAddress, pSource->m_nPort, pSource->m_bPushOnly, pSource->m_oGUID );
+					new CBrowseHostWnd( pSource->m_nProtocol, &pAddress, pSource->m_bPushOnly, pSource->m_oGUID );
 				else if ( pSource->m_bClientExtended )			// Over other protocols, you can only contact non-push G2 clients
-					new CBrowseHostWnd( pSource->m_nProtocol, &pSource->m_pAddress, pSource->m_nPort, FALSE, Hashes::Guid() );
+					new CBrowseHostWnd( pSource->m_nProtocol, &pAddress, FALSE, Hashes::Guid() );
 			}
 		}
 	}

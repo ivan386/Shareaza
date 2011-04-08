@@ -380,18 +380,23 @@ void CNeighboursWnd::OnNeighboursCopy()
 
 void CNeighboursWnd::OnUpdateNeighboursChat(CCmdUI* pCmdUI)
 {
-	if ( m_wndList.GetSelectedCount() == 1 && Settings.Community.ChatEnable )
+	if ( m_wndList.GetSelectedCount() && Settings.Community.ChatEnable )
 	{
 		CSingleLock pNetworkLock( &Network.m_pSection );
 		if ( pNetworkLock.Lock( 500 ) )
 		{
-			CNeighbour* pNeighbour = GetItem( m_wndList.GetNextItem( -1, LVNI_SELECTED ) );
-			if ( pNeighbour &&
-				( pNeighbour->m_nProtocol == PROTOCOL_G1 ||
-				  pNeighbour->m_nProtocol == PROTOCOL_G2 ) )
+			if ( CNeighbour* pNeighbour = GetItem( m_wndList.GetNextItem( -1, LVNI_SELECTED ) ) )
 			{
-				pCmdUI->Enable( TRUE );
-				return;
+				switch ( pNeighbour->m_nProtocol )
+				{
+				case PROTOCOL_G1:
+				case PROTOCOL_G2:
+				case PROTOCOL_DC:
+					pCmdUI->Enable( TRUE );
+					return;
+				default:
+					;
+				}
 			}
 		}
 	}
@@ -400,17 +405,29 @@ void CNeighboursWnd::OnUpdateNeighboursChat(CCmdUI* pCmdUI)
 
 void CNeighboursWnd::OnNeighboursChat()
 {
-	CSingleLock pLock( &Network.m_pSection, TRUE );
-
-	for ( int nItem = -1 ; ( nItem = m_wndList.GetNextItem( nItem, LVNI_SELECTED ) ) >= 0 ; )
+	if ( m_wndList.GetSelectedCount() && Settings.Community.ChatEnable )
 	{
-		if ( CNeighbour* pNeighbour = GetItem( nItem ) )
+		CSingleLock pLock( &Network.m_pSection, TRUE );
+
+		for ( int nItem = -1 ; ( nItem = m_wndList.GetNextItem( nItem, LVNI_SELECTED ) ) >= 0 ; )
 		{
-			if ( pNeighbour->m_nProtocol == PROTOCOL_G1 ||
-				 pNeighbour->m_nProtocol == PROTOCOL_G2 )
+			if ( CNeighbour* pNeighbour = GetItem( nItem ) )
 			{
-				ChatWindows.OpenPrivate( pNeighbour->m_oGUID,
-					&pNeighbour->m_pHost, FALSE, pNeighbour->m_nProtocol );
+				switch ( pNeighbour->m_nProtocol )
+				{
+				case PROTOCOL_G1:
+				case PROTOCOL_G2:
+					ChatWindows.OpenPrivate( pNeighbour->m_oGUID,
+						&pNeighbour->m_pHost, FALSE, pNeighbour->m_nProtocol );
+					break;
+
+				case PROTOCOL_DC:
+					ChatCore.OnMessage( static_cast< CDCNeighbour*>( pNeighbour ) );
+					break;
+
+				default:
+					;
+				}
 			}
 		}
 	}
@@ -473,7 +490,7 @@ void CNeighboursWnd::OnBrowseLaunch()
 
 			pLock.Unlock();
 
-			new CBrowseHostWnd( nProtocol, &pAddress, oGUID );
+			new CBrowseHostWnd( nProtocol, &pAddress, FALSE, oGUID );
 		}
 	}
 }

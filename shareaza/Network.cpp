@@ -21,6 +21,7 @@
 
 #include "StdAfx.h"
 #include "Shareaza.h"
+#include "ChatCore.h"
 #include "CrawlSession.h"
 #include "Datagrams.h"
 #include "DiscoveryServices.h"
@@ -1109,6 +1110,30 @@ BOOL CNetwork::RouteHits(CQueryHit* pHits, CPacket* pPacket)
 
 //////////////////////////////////////////////////////////////////////
 // CNetwork common handler functions
+
+BOOL CNetwork::OnPush(const Hashes::Guid& oGUID, CConnection* pConnection)
+{
+	if ( Downloads.OnPush( oGUID, pConnection ) )
+		return TRUE;
+
+	if ( ChatCore.OnPush( oGUID, pConnection ) )
+		return TRUE;
+
+	CSingleLock oAppLock( &theApp.m_pSection );
+	if ( ! oAppLock.Lock( 250 ) )
+		return FALSE;
+
+	if ( CMainWnd* pMainWnd = theApp.SafeMainWnd() )
+	{
+		CChildWnd* pChildWnd = NULL;
+		while ( ( pChildWnd = pMainWnd->m_pWindows.Find( NULL, pChildWnd ) ) != NULL )
+		{
+			pChildWnd->OnPush( oGUID, pConnection );
+		}
+	}
+
+	return FALSE;
+}
 
 void CNetwork::OnQuerySearch(CLocalSearch* pSearch)
 {

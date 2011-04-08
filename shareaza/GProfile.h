@@ -46,7 +46,7 @@ public:
 	// Save local profile to file
 	BOOL			Save();
 	// Load/Save browsed host profile
-	void			Serialize(CArchive& ar);
+	void			Serialize(CArchive& ar, int nVersion /* BROWSER_SER_VERSION */);
 
 	BOOL			IsValid() const;
 
