@@ -1,7 +1,7 @@
 //
 // LibraryHistory.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -68,7 +68,6 @@ protected:
 	CList< CLibraryRecent* > m_pList;
 
 	CLibraryRecent*	GetByPath(LPCTSTR pszPath) const;
-//	void			ClearTodays();
 	void			Prune();
 };
 
@@ -77,7 +76,6 @@ class CLibraryRecent : public CShareazaFile
 {
 public:
 	FILETIME					m_tAdded;
-//	BOOL						m_bToday;
 	CLibraryFile*				m_pFile;
 	CString						m_sSources;
     Hashes::Sha1ManagedHash		m_oSHA1;
