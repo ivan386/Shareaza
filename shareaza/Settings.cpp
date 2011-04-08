@@ -518,7 +518,7 @@ void CSettings::Load()
 	Add( _T("Downloads"), _T("StaggardStart"), &Downloads.StaggardStart, false );
 	Add( _T("Downloads"), _T("StartDroppingFailedSourcesNumber"), &Downloads.StartDroppingFailedSourcesNumber, 20, 1, 0, 50 );
 	Add( _T("Downloads"), _T("StarveGiveUp"), &Downloads.StarveGiveUp, 3, 1, 3, 120, _T(" h") );
-	Add( _T("Downloads"), _T("StarveTimeout"), &Downloads.StarveTimeout, 45*60, 60, 45, 24*60, _T(" m") );
+	Add( _T("Downloads"), _T("StarveTimeout"), &Downloads.StarveTimeout, 45*60*1000, 60*1000, 45, 24*60, _T(" m") );
 	Add( _T("Downloads"), _T("TorrentPath"), &Downloads.TorrentPath );
 	Add( _T("Downloads"), _T("VerifyED2K"), &Downloads.VerifyED2K, true );
 	Add( _T("Downloads"), _T("VerifyFiles"), &Downloads.VerifyFiles, true );
@@ -857,7 +857,6 @@ void CSettings::SmartUpgrade()
 		if ( General.SmartVersion < 29 )
 		{
 			Downloads.MinSources	= 1;		// Lower Max value- should reset it in case
-			Downloads.StarveTimeout = 2700;		// Increased due to ed2k queues (Tripping too often)
 
 			Gnutella2.RequeryDelay	= 4*3600;	// Longer delay between sending same search to G2 hub
 		}

@@ -1,7 +1,7 @@
 //
 // DownloadWithFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -39,11 +39,11 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithFile construction
 
-CDownloadWithFile::CDownloadWithFile() :
-	m_bVerify		( TRI_UNKNOWN )
-,	m_tReceived		( GetTickCount() )
-,	m_pFile			( new CFragmentedFile )
-,	m_nFileError	( ERROR_SUCCESS )
+CDownloadWithFile::CDownloadWithFile()
+	: m_bVerify		( TRI_UNKNOWN )
+	, m_tReceived	( GetTickCount() - Settings.Downloads.StarveTimeout + Settings.Connection.TimeoutTraffic )
+	, m_pFile		( new CFragmentedFile )
+	, m_nFileError	( ERROR_SUCCESS )
 {
 	m_pFile->SetDownload( static_cast< CDownload*>( this ) );
 }
@@ -350,8 +350,9 @@ float CDownloadWithFile::GetProgress() const
 {
 	if ( m_nSize == 0 || m_nSize == SIZE_UNKNOWN ) return 0;
 	if ( IsMoving() ) return m_pTask->GetProgress();
-	if ( m_nSize == GetVolumeComplete() ) return 100.0f;
-	return float( GetVolumeComplete() * 10000 / m_nSize ) / 100.0f;
+	QWORD nComplete = GetVolumeComplete();
+	if ( m_nSize == nComplete ) return 100.0f;
+	return float( nComplete * 10000 / m_nSize ) / 100.0f;
 }
 
 QWORD CDownloadWithFile::GetVolumeComplete() const
@@ -359,7 +360,11 @@ QWORD CDownloadWithFile::GetVolumeComplete() const
 	if ( m_pFile.get() )
 	{
 		if ( m_pFile->IsValid() )
-			return m_pFile->GetCompleted();
+		{
+			QWORD nCompleted = m_pFile->GetCompleted();
+			if ( nCompleted != SIZE_UNKNOWN )
+				return nCompleted;
+		}
 		else
 			return 0;
 	}

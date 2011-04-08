@@ -1013,7 +1013,7 @@ void CDownloadWithSources::InternalRemove(const CDownloadSource* pSource)
 		m_nDCSourceCount--;
 		break;
 	default:
-		ASSERT( FALSE );
+		;
 	}
 }
 

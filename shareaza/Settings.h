@@ -508,7 +508,7 @@ public:
 		DWORD		ConnectThrottle;			// Delay between download attempts. (Very important for routers)
 		DWORD		QueueLimit;					// Longest queue to wait in. (0 to disable. This should be >800 or 0 to get good performance from ed2k)
 		DWORD		SearchPeriod;
-		DWORD		StarveTimeout;
+		DWORD		StarveTimeout;				// How long (in ticks) Shareaza will starve without new downloaded data before its try to search for more sources
 		DWORD		StarveGiveUp;				// How long (in hours) before Shareaza will give up and try another download if it gets no data. (+ 0-9 h, depending on sources)
 		DWORD		RetryDelay;
 		DWORD		PushTimeout;
