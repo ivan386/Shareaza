@@ -1,7 +1,7 @@
 //
 // CtrlNeighbourTip.cpp : implementation file
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -132,17 +132,12 @@ void CNeighbourTipCtrl::OnCalcSize(CDC* pDC)
 
 		m_sz.cy += TIP_RULE;
 	}
-	else if ( pNeighbour->m_nProtocol == PROTOCOL_ED2K )
+	else if ( ! pNeighbour->m_sServerName.IsEmpty() )
 	{
-		str = ((CEDNeighbour*)pNeighbour)->m_sServerName;
-
-		if ( str.GetLength() )
-		{
-			pDC->SelectObject( &CoolInterface.m_fntNormal );
-			AddSize( pDC, str );
-			m_sz.cy += TIP_TEXTHEIGHT;
-			m_sz.cy += TIP_RULE;
-		}
+		pDC->SelectObject( &CoolInterface.m_fntNormal );
+		AddSize( pDC, pNeighbour->m_sServerName );
+		m_sz.cy += TIP_TEXTHEIGHT;
+		m_sz.cy += TIP_RULE;
 	}
 
 	pDC->SelectObject( &CoolInterface.m_fntBold );
@@ -203,17 +198,12 @@ void CNeighbourTipCtrl::OnPaint(CDC* pDC)
 		}
 		DrawRule( pDC, &pt );
 	}
-	else if ( pNeighbour->m_nProtocol == PROTOCOL_ED2K )
+	else if ( ! pNeighbour->m_sServerName.IsEmpty() )
 	{
-		str = ((CEDNeighbour*)pNeighbour)->m_sServerName;
-
-		if ( str.GetLength() )
-		{
-			pDC->SelectObject( &CoolInterface.m_fntBold );
-			DrawText( pDC, &pt, str );
-			pt.y += TIP_TEXTHEIGHT;
-			DrawRule( pDC, &pt );
-		}
+		pDC->SelectObject( &CoolInterface.m_fntBold );
+		DrawText( pDC, &pt, pNeighbour->m_sServerName );
+		pt.y += TIP_TEXTHEIGHT;
+		DrawRule( pDC, &pt );
 	}
 
 	CRect rcProtocol( m_sz.cx - 32 - 4, pt.y + 4, m_sz.cx - 4, pt.y + 32 + 4 );
@@ -303,6 +293,9 @@ void CNeighbourTipCtrl::OnPaint(CDC* pDC)
 				}
 			}
 			break;
+		case PROTOCOL_DC:
+			LoadString( str, IDS_NEIGHBOUR_DCHUB );
+			break;
 		default:
 			LoadString( str, IDS_NEIGHBOUR_HANDSHAKE );
 			break;
@@ -361,8 +354,9 @@ void CNeighbourTipCtrl::OnPaint(CDC* pDC)
 		DrawText( pDC, &pt, str, 128 );
 		if ( nCompOut > 0 ) str.Format( _T("%.2f%%"), nCompOut * 100.0 ); else str.Empty();
 		DrawText( pDC, &pt, str, 128 + 80 );
-		pt.y += TIP_TEXTHEIGHT;
 	}
+
+	pt.y += TIP_TEXTHEIGHT;
 
 	pt.y += TIP_TEXTHEIGHT;
 
