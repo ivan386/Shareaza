@@ -263,15 +263,6 @@ void CChatWnd::AddBitmap(HBITMAP hBitmap)
 	m_wndView.InvalidateIfModified();
 }
 
-void CChatWnd::AddText(LPCTSTR pszText)
-{
-	AddTimestamp();
-
-	m_pContent.Add( retText, pszText );
-	m_pContent.Add( retNewline, NEWLINE_FORMAT );
-	m_wndView.InvalidateIfModified();
-}
-
 void CChatWnd::AddText(bool bAction, bool bOutgoing, LPCTSTR pszNick, LPCTSTR pszBody)
 {
 	AddTimestamp();
@@ -281,7 +272,7 @@ void CChatWnd::AddText(bool bAction, bool bOutgoing, LPCTSTR pszNick, LPCTSTR ps
 	m_pContent.Add( retText, str, NULL, retfBold | retfColour )->m_cColour
 		= ( bOutgoing ? CoolInterface.m_crChatIn : CoolInterface.m_crChatOut );
 
-	Emoticons.FormatText( &m_pContent, pszBody );
+	Emoticons.FormatText( &m_pContent, pszBody, TRUE );
 
 	m_pContent.Add( retNewline, NEWLINE_FORMAT );
 	m_wndView.InvalidateIfModified();

@@ -55,7 +55,6 @@ private:
 protected:
 	void AddLogin(LPCTSTR pszText);
 	void AddBitmap(HBITMAP hBitmap);
-	void AddText(LPCTSTR pszText);
 	void AddText(bool bAction, bool bOutgoing, LPCTSTR pszNick, LPCTSTR pszBody);
 	void OnMessage(bool bAction, const CString& sChatID, bool bOutgoing, const CString& sFrom, const CString& sTo, const CString& sText);
 

@@ -578,8 +578,6 @@ BOOL CChatSession::OnChatMessage(CDCPacket* pPacket)
 	// Note: The message packet has already been validated by the DCClient or DCNeighbour.
 
 	CString sMsg( UTF8Decode( (LPCSTR)&pPacket->m_pBuffer[ 1 ], pPacket->m_nLength - 2 ) );
-
-	sMsg.Replace( _T("\r"), _T("\r\n") ); // CR -> CRLF
 	
 	int nPos = sMsg.Find( _T('>') );
 
