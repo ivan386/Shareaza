@@ -1,7 +1,7 @@
 //
 // Neighbour.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -126,6 +126,7 @@ protected:
 	z_streamp	m_pZSOutput;	// Pointer to the zlib z_stream structure for compression
 	BOOL		m_bZFlush;		// True to flush the compressed output buffer to the remote computer
 	DWORD		m_tZOutput;		// The time that Zlib last compressed something
+	BOOL		m_bZInputEOS;	// Got End Of Stream while decompressing incoming data
 
 // Operations
 public:

@@ -1,7 +1,7 @@
 //
 // ZLib.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -24,6 +24,7 @@
 
 #include "StdAfx.h"
 #include "Shareaza.h"
+#include "Settings.h"
 #include "ZLib.h"
 
 #ifdef _DEBUG
@@ -45,7 +46,8 @@ auto_array< BYTE > CZLib::Compress(LPCVOID pInput, DWORD nInput, DWORD* pnOutput
 	}
 
 	// Compress the data at pInput into pBuffer, putting how many bytes it wrote under pnOutput
-	int nRes = compress( pBuffer.get(), pnOutput, (const BYTE *)pInput, nInput );
+	int nRes = compress2( pBuffer.get(), pnOutput, (const BYTE *)pInput, nInput,
+		Settings.Connection.ZLibCompressionLevel );
 	if ( nRes != Z_OK )
 	{
 		// The compress function reported error

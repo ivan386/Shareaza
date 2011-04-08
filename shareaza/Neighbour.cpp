@@ -1,7 +1,7 @@
 //
 // Neighbour.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -55,50 +55,50 @@ static char THIS_FILE[]=__FILE__;
 // Make a new CNeighbour object for a certain network
 // Takes a protocol ID, like PROTOCOL_G1
 CNeighbour::CNeighbour(PROTOCOLID nProtocol) :
-	CConnection( nProtocol ),
-	m_nRunCookie( 0 ),
+	CConnection		( nProtocol ),
+	m_nRunCookie	( 0 ),
 	// Set null and default values for connection state, software vendor, guid, and user profile
-	m_nState( nrsNull ),		// No state now, soon we'll connect and do the handshake
-	m_pVendor( NULL ),			// We don't know what brand software the remote computer is running yet
-	m_pProfile( NULL ),			// No profile on the person running the remote computer yet
+	m_nState		( nrsNull ),// No state now, soon we'll connect and do the handshake
+	m_pVendor		( NULL ),	// We don't know what brand software the remote computer is running yet
+	m_pProfile		( NULL ),	// No profile on the person running the remote computer yet
 	// Set handshake values to defaults
-	m_bAutomatic( FALSE ),		// Automatic setting used to maintain the connection
-	m_nNodeType( ntNode ),		// Start out assuming that we and the remote computer are both hubs
-	m_bQueryRouting( FALSE ),	// Don't start query routing or pong caching yet
-	m_bPongCaching( FALSE ),	//
-	m_bVendorMsg( FALSE ),		// The remote computer hasn't told us it supports the vendor-specific messages yet
-	m_bGGEP( FALSE ),			// The remote computer hasn't told us it supports the GGEP block yet
-	m_bBadClient( FALSE ),		//
-	m_nDegree( (DWORD)-1 ),
-	m_nMaxTTL( (DWORD)-1 ),
-	m_bDynamicQuerying( FALSE ),
+	m_bAutomatic	( FALSE ),	// Automatic setting used to maintain the connection
+	m_nNodeType		( ntNode ),	// Start out assuming that we and the remote computer are both hubs
+	m_bQueryRouting	( FALSE ),	// Don't start query routing or pong caching yet
+	m_bPongCaching	( FALSE ),	//
+	m_bVendorMsg	( FALSE ),	// The remote computer hasn't told us it supports the vendor-specific messages yet
+	m_bGGEP			( FALSE ),	// The remote computer hasn't told us it supports the GGEP block yet
+	m_bBadClient	( FALSE ),	//
+	m_nDegree		( (DWORD)-1 ),
+	m_nMaxTTL		( (DWORD)-1 ),
+	m_bDynamicQuerying		( FALSE ),
 	m_bUltrapeerQueryRouting( FALSE ),
-	m_sLocalePref( _T("") ),
-	m_bRequeries( TRUE ),
-	m_bExtProbes( FALSE ),
+	m_bRequeries	( TRUE ),
+	m_bExtProbes	( FALSE ),
 	// Start out time variables as 0
-	m_tLastQuery( 0 ),			// We'll set these to the current tick or seconds count when we get a query or packet
-	m_tLastPacket( 0 ),			//
+	m_tLastQuery	( 0 ),		// We'll set these to the current tick or seconds count when we get a query or packet
+	m_tLastPacket	( 0 ),		//
 	// Zero packet and file counts
-	m_nInputCount( 0 ),
-	m_nOutputCount( 0 ),
-	m_nDropCount( 0 ),
-	m_nLostCount( 0 ),
-	m_nOutbound( 0 ),
-	m_nFileCount( 0 ),
-	m_nFileVolume( 0 ),
+	m_nInputCount	( 0 ),
+	m_nOutputCount	( 0 ),
+	m_nDropCount	( 0 ),
+	m_nLostCount	( 0 ),
+	m_nOutbound		( 0 ),
+	m_nFileCount	( 0 ),
+	m_nFileVolume	( 0 ),
 	// The local and remote query tables aren't set up yet, make the pointers to them start out null
-	m_pQueryTableLocal( NULL ),
-	m_pQueryTableRemote( NULL ),
+	m_pQueryTableLocal	( NULL ),
+	m_pQueryTableRemote	( NULL ),
 	// Null pointers and zero counts for zlib compression
-	m_pZInput( NULL ),
-	m_pZOutput( NULL ),
-	m_nZInput( 0 ),
-	m_nZOutput( 0 ),
-	m_pZSInput( NULL ),
-	m_pZSOutput( NULL ),
-	m_bZFlush( FALSE ),
-	m_tZOutput( 0 )
+	m_pZInput		( NULL ),
+	m_pZOutput		( NULL ),
+	m_nZInput		( 0 ),
+	m_nZOutput		( 0 ),
+	m_pZSInput		( NULL ),
+	m_pZSOutput		( NULL ),
+	m_bZFlush		( FALSE ),
+	m_tZOutput		( 0 ),
+	m_bZInputEOS	( FALSE )
 {
 	m_bAutoDelete = TRUE;
 }
@@ -146,6 +146,7 @@ CNeighbour::CNeighbour(PROTOCOLID nProtocol, CNeighbour* pBase)
 	, m_pZSOutput				( NULL )
 	, m_bZFlush					( pBase->m_bZFlush )
 	, m_tZOutput				( pBase->m_tZOutput )
+	, m_bZInputEOS				( pBase->m_bZInputEOS )
 {
 	AttachTo( pBase );
 
@@ -355,25 +356,28 @@ void CNeighbour::OnDropped()
 BOOL CNeighbour::OnRead()
 {
 	// Read the bytes waiting in our end of the socket into the input buffer
-	CConnection::OnRead();
+	if ( ! CConnection::OnRead() )
+		return FALSE;
 
 	CLockedBuffer pInput( GetInput() );
 
 	// If compression is off, we're done, return true now
 	// Otherwise, compression is on, the bytes we read into the input buffer are compressed, and we have to decompress them
-	if ( m_pZInput == NULL || pInput->m_nLength == 0 ) return TRUE;
+	if ( m_pZInput == NULL || pInput->m_nLength == 0 )
+		return TRUE;
 
 	// Store original buffer size
 	DWORD nLength = m_pZInput->m_nLength;
 
 	// Try to decompress the stream
-	pInput->InflateStreamTo( *m_pZInput, m_pZSInput );
+	m_bZInputEOS = FALSE;
+	bool bSuccess = pInput->InflateStreamTo( *m_pZInput, m_pZSInput, &m_bZInputEOS );
 
 	// Calculate how much was decompressed
 	m_nZInput += m_pZInput->m_nLength - nLength;
 
 	// Report success
-	return TRUE;
+	return bSuccess ? TRUE : FALSE;
 }
 
 // Compress data and send it to the connected computer
@@ -393,7 +397,7 @@ BOOL CNeighbour::OnWrite()
 	{
 		// Zero the z_stream structure and set it up for compression
 		ZeroMemory( pStream, sizeof(z_stream) );
-		if ( deflateInit( pStream, 6 ) != Z_OK )
+		if ( deflateInit( pStream, Settings.Connection.ZLibCompressionLevel ) != Z_OK )
 		{
 			// There was an error setting up zlib, clean up and leave now
 			delete pStream;

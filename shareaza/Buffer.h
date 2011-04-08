@@ -88,7 +88,7 @@ public:
 #ifdef ZLIB_H
 	BOOL	Deflate(BOOL bIfSmaller = FALSE);						// Compress the data in this buffer
 	BOOL	Inflate();												// Decompress the data in this buffer in place
-	bool	InflateStreamTo(CBuffer& oBuffer, z_streamp& pStream);	// Decompress the data in this buffer into another buffer
+	bool	InflateStreamTo(CBuffer& oBuffer, z_streamp& pStream, BOOL* bEndOfStream = NULL);	// Decompress the data in this buffer into another buffer
 	void	InflateStreamCleanup(z_streamp& pStream) const;			// Stop stream decompression and cleanup
 	BOOL	Ungzip();												// Delete the gzip header and then remove the compression
 #endif // ZLIB_H

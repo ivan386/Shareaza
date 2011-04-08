@@ -668,16 +668,16 @@ BOOL CBuffer::Ungzip()
 // Side Effect: This function allocates a new z_stream structure that gets
 // cleaned up when the stream is finished. Call InflateStreamCleanup() to close
 // the stream and delete the z_stream structure before the stream has finished.
-bool CBuffer::InflateStreamTo( CBuffer& oBuffer, z_streamp& pStream )
+bool CBuffer::InflateStreamTo(CBuffer& oBuffer, z_streamp& pStream, BOOL* pbEndOfStream)
 {
 	// Report success if there was nothing to decompress
-	if ( !m_nLength )
+	if ( ! m_nLength )
 		return true;
 
 	// Check if a z_stream structure has been allocated
-	if ( !pStream )
+	if ( ! pStream )
 	{
-		// Create a new z_stream sructure to store state information
+		// Create a new z_stream structure to store state information
 		pStream = new z_stream;
 
 		// Initialise it to zero
@@ -705,7 +705,7 @@ bool CBuffer::InflateStreamTo( CBuffer& oBuffer, z_streamp& pStream )
 		size_t nLength = max( GetBufferFree(), ZLIB_CHUNK_SIZE );
 
 		// Make sure the receiving buffer is large enough to hold at least 1KB
-		if ( !oBuffer.EnsureBuffer( nLength ) )
+		if ( ! oBuffer.EnsureBuffer( nLength ) )
 			break;
 
 		// Tell the z_stream structure where to work
@@ -749,12 +749,13 @@ bool CBuffer::InflateStreamTo( CBuffer& oBuffer, z_streamp& pStream )
 	if ( nResult == Z_BUF_ERROR )
 		nResult = Z_OK;
 
-	// Check if the stream needs to be closed.
+	// Check if the stream needs to be closed
 	if ( nResult != Z_OK )
-		// Close ZLib
 		InflateStreamCleanup( pStream );
 
-	// Report result
+	if ( pbEndOfStream )
+		*pbEndOfStream = ( nResult == Z_STREAM_END );
+
 	return ( nResult == Z_OK || nResult == Z_STREAM_END );
 }
 
