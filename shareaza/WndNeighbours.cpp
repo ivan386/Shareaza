@@ -1,7 +1,7 @@
 //
 // WndNeighbours.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,31 +22,30 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
-#include "Network.h"
-#include "Neighbours.h"
+#include "ChatCore.h"
+#include "ChatWindows.h"
+#include "CoolInterface.h"
+#include "DCNeighbour.h"
+#include "DlgSettingsManager.h"
+#include "DlgURLCopy.h"
+#include "EDNeighbour.h"
+#include "EDPacket.h"
+#include "Flags.h"
 #include "G1Neighbour.h"
 #include "G2Neighbour.h"
-#include "EDNeighbour.h"
-#include "DCNeighbour.h"
-#include "EDPacket.h"
-#include "HostCache.h"
-#include "Security.h"
-#include "LiveList.h"
 #include "GProfile.h"
-#include "ChatWindows.h"
+#include "HostCache.h"
+#include "LiveList.h"
+#include "Neighbours.h"
+#include "Network.h"
+#include "Security.h"
 #include "Skin.h"
-
+#include "WindowManager.h"
+#include "WndBrowseHost.h"
 #include "WndMain.h"
 #include "WndNeighbours.h"
 #include "WndPacket.h"
-#include "WndBrowseHost.h"
-#include "DlgURLCopy.h"
-#include "DlgSettingsManager.h"
-#include "CoolInterface.h"
-#include "WindowManager.h"
 #include "WndSystem.h"
-
-#include "Flags.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -57,7 +56,6 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_SERIAL(CNeighboursWnd, CPanelWnd, 0)
 
 BEGIN_MESSAGE_MAP(CNeighboursWnd, CPanelWnd)
-	//{{AFX_MSG_MAP(CNeighboursWnd)
 	ON_WM_CREATE()
 	ON_WM_SIZE()
 	ON_WM_TIMER()
@@ -84,7 +82,6 @@ BEGIN_MESSAGE_MAP(CNeighboursWnd, CPanelWnd)
 	ON_UPDATE_COMMAND_UI(ID_NEIGHBOURS_COPY, OnUpdateNeighboursCopy)
 	ON_COMMAND(ID_NEIGHBOURS_COPY, OnNeighboursCopy)
 	ON_COMMAND(ID_NEIGHBOURS_SETTINGS, OnNeighboursSettings)
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
@@ -215,40 +212,15 @@ void CNeighboursWnd::Update()
 		{
 			pItem->SetImage( 0, pNeighbour->m_nProtocol );
 
-			if ( pNeighbour->m_nProtocol == PROTOCOL_G2 )
+			if ( pNeighbour->GetUserCount() )
 			{
-				const CG2Neighbour* pG2 = static_cast< const CG2Neighbour* >( pNeighbour );
-
-				if ( pG2->m_nLeafCount > 0 )
+				if ( pNeighbour->GetUserLimit() )
 				{
-					if ( pG2->m_nLeafLimit > 0 )
-					{
-						pItem->Format( 7, _T("%u/%u"), pG2->m_nLeafCount, pG2->m_nLeafLimit );
-					}
-					else
-					{
-						pItem->Format( 7, _T("%u"), pG2->m_nLeafCount );
-					}
+					pItem->Format( 7, _T("%u/%u"), pNeighbour->GetUserCount(), pNeighbour->GetUserLimit() );
 				}
-				else if ( pG2->m_nNodeType != ntLeaf )
+				else
 				{
-					pItem->Set( 7, _T("?") );
-				}
-			}
-			else if ( pNeighbour->m_nProtocol == PROTOCOL_ED2K )
-			{
-				const CEDNeighbour* pED2K = static_cast< const CEDNeighbour* >( pNeighbour );
-
-				if ( pED2K->m_nClientID )
-				{
-					if ( pED2K->m_nUserLimit )
-					{
-						pItem->Format( 7, _T("%u/%u"), pED2K->m_nUserCount, pED2K->m_nUserLimit );
-					}
-					else
-					{
-						pItem->Format( 7, _T("%u"), pED2K->m_nUserCount );
-					}
+					pItem->Format( 7, _T("%u"), pNeighbour->GetUserCount() );
 				}
 			}
 		}
@@ -399,7 +371,7 @@ void CNeighboursWnd::OnNeighboursCopy()
 	}
 	else if ( pNeighbour->m_nProtocol == PROTOCOL_DC )
 	{
-		strURL.Format( _T("dchub://%s:%u"),
+		strURL.Format( _T("dchub://%s:%u/"),
 			(LPCTSTR)pNeighbour->m_sAddress, htons( pNeighbour->m_pHost.sin_port ) );
 	}
 

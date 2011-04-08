@@ -1,7 +1,7 @@
 //
 // G2Neighbour.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -38,6 +38,8 @@ public:
 
 	virtual BOOL	Send(CPacket* pPacket, BOOL bRelease = TRUE, BOOL bBuffered = FALSE);
 	virtual BOOL	SendQuery(const CQuerySearch* pSearch, CPacket* pPacket, BOOL bLocal);
+	virtual DWORD	GetUserCount() const { return m_nLeafCount; }
+	virtual DWORD	GetUserLimit() const { return m_nLeafLimit; }
 
 	BOOL			OnPing(CG2Packet* pPacket, BOOL bTCP = TRUE);
 	BOOL			OnPong(CG2Packet* pPacket, BOOL bTCP = TRUE);

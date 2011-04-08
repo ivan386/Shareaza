@@ -130,13 +130,17 @@ protected:
 
 // Operations
 public:
-	virtual BOOL ConnectTo(const IN_ADDR* pAddress, WORD nPort, BOOL bAutomatic);
-	virtual BOOL Send(CPacket* pPacket, BOOL bRelease = TRUE, BOOL bBuffered = FALSE);
-	virtual void Close(UINT nError = IDS_CONNECTION_CLOSED);
+	virtual BOOL	ConnectTo(const IN_ADDR* pAddress, WORD nPort, BOOL bAutomatic);
+	virtual BOOL	Send(CPacket* pPacket, BOOL bRelease = TRUE, BOOL bBuffered = FALSE);
+	virtual void	Close(UINT nError = IDS_CONNECTION_CLOSED);
 	// Send the buffer then close the socket, record the error given
-	virtual void DelayClose(UINT nError);
+	virtual void	DelayClose(UINT nError);
 	// Validate query
-	virtual BOOL SendQuery(const CQuerySearch* pSearch, CPacket* pPacket, BOOL bLocal);
+	virtual BOOL	SendQuery(const CQuerySearch* pSearch, CPacket* pPacket, BOOL bLocal);
+	// Returns hub/server leaf/user count
+	virtual DWORD	GetUserCount() const { return 0; }
+	// Returns hub/server leaf/user limit
+	virtual DWORD	GetUserLimit() const { return 0; }
 
 protected:
 	virtual BOOL OnRun();

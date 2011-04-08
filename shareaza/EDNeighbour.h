@@ -1,7 +1,7 @@
 //
 // EDNeighbour.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -67,6 +67,8 @@ private:
 public:
 	virtual BOOL	ConnectTo(const IN_ADDR* pAddress, WORD nPort, BOOL bAutomatic);
 	virtual BOOL	Send(CPacket* pPacket, BOOL bRelease = TRUE, BOOL bBuffered = FALSE);
+	virtual DWORD	GetUserCount() const { return m_nUserCount; }
+	virtual DWORD	GetUserLimit() const { return m_nUserLimit; }
 protected:
 	virtual BOOL	SendQuery(const CQuerySearch* pSearch, CPacket* pPacket, BOOL bLocal);
 	virtual BOOL	OnRun();

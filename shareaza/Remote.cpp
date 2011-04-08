@@ -1,7 +1,7 @@
 //
 // Remote.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1354,39 +1354,17 @@ void CRemote::PageNetworkNetwork(int nID, bool* pbConnect, LPCTSTR pszName)
 		}
 		Add( _T("row_time"), str );
 
-		if ( pNeighbour->m_nProtocol == PROTOCOL_G2 )
+		if ( pNeighbour->GetUserCount() )
 		{
-			const CG2Neighbour* pG2 = static_cast< const CG2Neighbour* >( pNeighbour );
-			
-			if ( pG2->m_nLeafCount )
+			if ( pNeighbour->GetUserLimit() )
 			{
-				if ( pG2->m_nLeafLimit )
-				{
-					str.Format( _T("%i/%i"), pG2->m_nLeafCount, pG2->m_nLeafLimit );
-				}
-				else
-				{
-					str.Format( _T("%i"), pG2->m_nLeafCount );
-				}				
-				Add( _T("row_leaves"), str );
+				str.Format( _T("%i/%i"), pNeighbour->GetUserCount(), pNeighbour->GetUserLimit() );
 			}
-		}
-		else if ( pNeighbour->m_nProtocol == PROTOCOL_ED2K )
-		{
-			const CEDNeighbour* pED2K = static_cast< const CEDNeighbour* >( pNeighbour );
-			
-			if ( pED2K->m_nClientID )
+			else
 			{
-				if ( pED2K->m_nUserLimit )
-				{
-					str.Format( _T("%i/%i"), pED2K->m_nUserCount, pED2K->m_nUserLimit );
-				}
-				else
-				{
-					str.Format( _T("%i"), pED2K->m_nUserCount );
-				}
-				Add( _T("row_leaves"), str );
-			}
+				str.Format( _T("%i"), pNeighbour->GetUserCount() );
+			}				
+			Add( _T("row_leaves"), str );
 		}
 
 		Add( _T("row_caption"), pNeighbour->m_sAddress + _T(" - ") + Neighbours.GetNick( pNeighbour ) );
