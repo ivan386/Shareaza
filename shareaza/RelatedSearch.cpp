@@ -116,7 +116,7 @@ CRelatedSearch::~CRelatedSearch()
 
 BOOL CRelatedSearch::CanSearchForThis()
 {
-	return IsHashed();
+	return HasHash();
 }
 
 BOOL CRelatedSearch::RunSearchForThis()

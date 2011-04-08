@@ -735,7 +735,7 @@ BOOL CUploadTransferHTTP::RequestSharedFile(CLibraryFile* pFile, CSingleLock& oL
 	m_bTigerTree	= bool( m_oTiger );
 	m_bMetadata		= ( pFile->m_pMetadata != NULL && ( pFile->m_bMetadataAuto == FALSE || pFile->m_nVirtualSize > 0 ) );
 
-	if ( ! IsHashed() )
+	if ( ! HasHash() )
 		m_sLocations.Empty();
 
 	if ( m_nOffset == SIZE_UNKNOWN )
@@ -1190,7 +1190,7 @@ BOOL CUploadTransferHTTP::OpenFileSendHeaders()
 		Write( _P("Content-Encoding: backwards\r\n") );
 	}
 	
-	if ( IsHashed() ) SendFileHeaders();
+	if ( HasHash() ) SendFileHeaders();
 	
 	Write( _P("\r\n") );
 

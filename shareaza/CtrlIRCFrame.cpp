@@ -1,7 +1,7 @@
 //
 // CtrlIRCFrame.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -2206,7 +2206,7 @@ void CIRCFrame::OnRichDblClk(NMHDR* /* pNMHDR */, LRESULT* pResult)
 	}
 	else if ( oURL.Parse( strText, FALSE ) )			// URL
 	{
-		if ( oURL.m_nAction == CShareazaURL::uriDownload && ! oURL.IsHashed() )
+		if ( oURL.m_nAction == CShareazaURL::uriDownload && ! oURL.HasHash() )
 			ShellExecute( GetSafeHwnd(), _T("open"), oURL.m_sURL, NULL, NULL, SW_SHOWNORMAL );
 		else
 			PostMainWndMessage( WM_URL, (WPARAM)new CShareazaURL( oURL ) );

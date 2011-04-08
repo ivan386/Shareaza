@@ -95,28 +95,29 @@ void CLibrary::AddFile(CLibraryFile* pFile)
 {
 	LibraryMaps.OnFileAdd( pFile );
 
-	if ( pFile->m_oSHA1 )
+	if ( pFile->HasHash() )
 	{
 		LibraryDictionary.AddFile( *pFile );
 	}
 
 	if ( pFile->IsAvailable() )
 	{
-		if ( pFile->m_oSHA1 || pFile->m_oTiger || pFile->m_oMD5 || pFile->m_oED2K || pFile->m_oBTH )
+		if ( pFile->IsHashed() )
 		{
 			LibraryHistory.Submit( pFile );
-			GetAlbumRoot()->OrganiseFile( pFile );
-		}
 
-		if ( ! pFile->IsHashed() )
+			GetAlbumRoot()->OrganiseFile( pFile );
+
+			if ( pFile->IsNewFile() ) // the new file was hashed
+			{
+				pFile->m_bNewFile = FALSE;
+
+				CheckDuplicates( pFile ); // check for duplicates
+			}
+		}
+		else
 		{
 			LibraryBuilder.Add( pFile ); // hash the file and add it again
-		}
-		else if ( pFile->IsNewFile() ) // the new file was hashed
-		{
-			pFile->m_bNewFile = FALSE;
-
-			CheckDuplicates( pFile ); // check for duplicates
 		}
 	}
 	else

@@ -979,7 +979,7 @@ BOOL CQueryHit::CheckValid() const
 		return FALSE;
 	}
 
-	if ( ! IsHashed() )
+	if ( ! HasHash() )
 	{
 		theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Got bogus hit packet from %s. No hash. File \"%s\"."), (LPCTSTR)CString( inet_ntoa( m_pAddress ) ), m_sName );
 		return FALSE;
@@ -1486,7 +1486,7 @@ void CQueryHit::ReadG2Packet(CG2Packet* pPacket, DWORD nLength)
 		pPacket->m_nPosition = nSkip;
 	}
 
-	if ( ! IsHashed() )
+	if ( ! HasHash() )
 		AfxThrowUserException();
 }
 

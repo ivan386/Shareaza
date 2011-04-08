@@ -137,7 +137,7 @@ CG1Packet* CQuerySearch::ToG1Packet(DWORD nTTL) const
 			strQuery = strQuery.Left( nPos );
 	}
 
-	if ( strQuery.IsEmpty() && ! IsHashed() )
+	if ( strQuery.IsEmpty() && ! HasHash() )
 	{
 		// Whats New search
 		bWhatsNew = TRUE;
@@ -357,7 +357,7 @@ CG2Packet* CQuerySearch::ToG2Packet(SOCKADDR_IN* pUDP, DWORD nKey) const
 		pPacket->Write( m_oBTH );
 	}
 
-	if ( ! IsHashed() && ! m_sG2Keywords.IsEmpty() )
+	if ( ! HasHash() && ! m_sG2Keywords.IsEmpty() )
 	{
 		// Randomly select keywords or exact search string
 		if ( m_sSearch.IsEmpty() || GetRandomNum( FALSE, TRUE ) )
@@ -1141,7 +1141,7 @@ BOOL CQuerySearch::CheckValid(bool bExpression)
 	BuildWordList( bExpression );
 
 	// Searches by hash are ok
-	if ( IsHashed() )
+	if ( HasHash() )
 	{
 		if ( m_bWhatsNew )
 			// Invalid hashed "Whats New" search
@@ -1265,7 +1265,7 @@ BOOL CQuerySearch::CheckValid(bool bExpression)
 			return TRUE;
 	}
 
-	if ( IsHashed() || m_bWhatsNew )
+	if ( HasHash() || m_bWhatsNew )
 		return TRUE;
 
 #ifdef LAN_MODE
@@ -1317,7 +1317,7 @@ BOOL CQuerySearch::Match(LPCTSTR pszFilename, LPCTSTR pszSchemaURI, const CXMLEl
 				if ( MatchMetadataShallow( pszSchemaURI, pXML, &bReject ) )
 				{
 					// If searching in Local library return true
-					if ( ! IsHashed() && ! m_oSimilarED2K )
+					if ( ! HasHash() && ! m_oSimilarED2K )
 						return TRUE;
 
 					// Otherwise, only return WordMatch when negative terms are used

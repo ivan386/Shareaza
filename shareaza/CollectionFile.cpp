@@ -1,7 +1,7 @@
 //
 // ColletionFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -597,7 +597,7 @@ BOOL CCollectionFile::File::Parse(CXMLElement* pRoot)
 		m_oTiger.fromString( pRoot->GetAttributeValue( _T("TTH") ) );
 	}
 
-	return IsHashed();
+	return HasHash();
 }
 
 BOOL CCollectionFile::File::Parse(CFile& pFile)
@@ -648,7 +648,7 @@ BOOL CCollectionFile::File::Parse(LPCTSTR szText)
 		pURL.m_nAction == CShareazaURL::uriDownload &&
 		pURL.m_sName.GetLength() &&
 		pURL.m_nSize != SIZE_UNKNOWN && pURL.m_nSize != 0 &&
-		pURL.IsHashed() )
+		pURL.HasHash() )
 	{
 		m_sName = pURL.m_sName;
 		if ( pURL.m_oSHA1 )

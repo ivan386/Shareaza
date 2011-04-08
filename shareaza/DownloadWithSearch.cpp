@@ -1,7 +1,7 @@
 //
 // DownloadWithSearch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -56,7 +56,7 @@ CDownloadWithSearch::~CDownloadWithSearch()
 
 BOOL CDownloadWithSearch::FindSourcesAllowed(DWORD tNow) const
 {
-	if ( tNow > m_tSearchTime && tNow - m_tSearchTime > 15*1000 )
+	if ( tNow > m_tSearchTime + 15*1000 )
 		return TRUE;
 	else
 		return FALSE;
@@ -72,7 +72,7 @@ BOOL CDownloadWithSearch::FindMoreSources()
 	if ( CanSearch() )
 	{
 		DWORD tNow = GetTickCount();
-		if ( tNow - m_tSearchTime > ( Settings.Downloads.SearchPeriod / 4 ) )
+		if ( tNow > m_tSearchTime + Settings.Downloads.SearchPeriod / 4 )
 		{
 			m_tSearchTime = tNow;
 			if ( IsSearching() ) m_pSearch->Stop();
@@ -94,14 +94,14 @@ void CDownloadWithSearch::RunSearch(DWORD tNow)
 		return;
 	}
 	
-	if ( tNow > m_tSearchTime && tNow - m_tSearchTime < Settings.Downloads.SearchPeriod )
+	if ( tNow < m_tSearchTime + Settings.Downloads.SearchPeriod )
 	{
 		StartManualSearch();
 	}
-	else if ( tNow > m_tSearchCheck && tNow - m_tSearchCheck >= 1000 )
+	else if ( tNow > m_tSearchCheck + 1000 )
 	{
 		BOOL bFewSources = GetEffectiveSourceCount() < Settings.Downloads.MinSources;
-		BOOL bDataStarve = ( tNow > m_tReceived ? tNow - m_tReceived : 0 ) > Settings.Downloads.StarveTimeout * 1000;
+		BOOL bDataStarve = tNow > m_tReceived + Settings.Downloads.StarveTimeout;
 		
 		m_tSearchCheck = tNow;
 		
@@ -153,7 +153,7 @@ BOOL CDownloadWithSearch::CanSearch() const
 
 	if ( Settings.Gnutella1.EnableToday && m_oSHA1 )
 		return TRUE;
-	if ( Settings.Gnutella2.EnableToday && IsHashed() )
+	if ( Settings.Gnutella2.EnableToday && HasHash() )
 		return TRUE;
 	if (  Settings.eDonkey.EnableToday && m_oED2K )
 		return TRUE;

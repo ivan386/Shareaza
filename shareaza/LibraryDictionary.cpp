@@ -82,7 +82,7 @@ void CLibraryDictionary::RemoveFile(CLibraryFile& oFile)
 	ProcessFile( oFile, false, oFile.IsShared() );
 
 	// Always invalidate the table when removing a hashed file
-	if ( oFile.IsHashed() )
+	if ( oFile.HasHash() )
 		Invalidate();
 }
 

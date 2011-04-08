@@ -688,7 +688,7 @@ BOOL CShareazaURL::ParseMagnet(LPCTSTR pszURL)
 	
 	delete pTorrent;
 
-	if ( IsHashed() || m_sURL.GetLength() )
+	if ( HasHash() || m_sURL.GetLength() )
 	{
 		m_nAction = uriDownload;
 		return TRUE;
@@ -860,7 +860,7 @@ BOOL CShareazaURL::ParseShareazaFile(LPCTSTR pszURL)
 		}
 	}
 
-	if ( IsHashed() || m_sURL.GetLength() )
+	if ( HasHash() || m_sURL.GetLength() )
 	{
 		m_nAction = uriDownload;
 		return TRUE;

@@ -1,7 +1,7 @@
 //
 // Download.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -279,7 +279,7 @@ bool CDownload::IsShared() const
 {
 	return m_bShared ||
 		( Settings.Gnutella1.EnableToday && m_oSHA1 ) ||
-		( Settings.Gnutella2.EnableToday && IsHashed() ) ||
+		( Settings.Gnutella2.EnableToday && HasHash() ) ||
 		( Settings.eDonkey.EnableToday && m_oED2K ) ||
 		( Settings.DC.EnableToday && m_oTiger ) ||
 		( Settings.BitTorrent.EnableToday && IsTorrent() && ( IsSeeding() || IsStarted() ) );

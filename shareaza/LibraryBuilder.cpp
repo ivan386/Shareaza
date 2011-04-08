@@ -1,7 +1,7 @@
 //
 // LibraryBuilder.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -617,10 +617,10 @@ bool CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile)
 		pFile->SetShared( false );
 	}
 
-	Library.AddFile( pFile );
-
 	if ( pDownload )
 		pFile->UpdateMetadata( pDownload );
+
+	Library.AddFile( pFile );
 
 	oLibraryLock.Unlock();
 
