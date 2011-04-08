@@ -239,7 +239,7 @@ CString URLEncode(LPCTSTR pszInputT)
 {
 	// Setup two strings, one with all the hexidecimal digits, the other with all the characters to find and encode
 	static LPCTSTR pszHex	= _T("0123456789ABCDEF");	// A string with all the hexidecimal digits
-	static LPCSTR pszUnsafe	= "<>\"#%{}|\\^~[]+?&@=:,";	// A string with all the characters unsafe for a URL
+	static LPCSTR pszUnsafe	= "<>\"#%{}|\\^~[]+?&@=:,$";// A string with all the characters unsafe for a URL
 
 	// The output string starts blank
 	CString strOutput;
@@ -303,6 +303,16 @@ CString URLEncode(LPCTSTR pszInputT)
 
 	// Return the URL-encoded, %20-filled text
 	return strOutput;
+}
+
+CString URLDecode(__in_bcount(nInput) LPCSTR psInput, __in int nInput)
+{
+	return URLDecode( (LPCTSTR)UTF8Decode( psInput, nInput ) );
+}
+
+CString URLDecode(__in const CStringA& strInput)
+{
+	return URLDecode( (LPCTSTR)UTF8Decode( strInput ) );
 }
 
 // Decodes unsafe characters in a string, turning "hello%20world" into "hello world", for instance
