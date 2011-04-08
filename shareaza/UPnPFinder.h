@@ -44,14 +44,15 @@ public:
 	bool Init();
 	inline bool IsAsyncFindRunning()
 	{
-		if ( m_pDeviceFinder && m_bAsyncFindRunning && GetTickCount() - m_tLastEvent > 20000 )
+		if ( m_pDeviceFinder && m_bAsyncFindRunning )
 		{
-			m_pDeviceFinder->CancelAsyncFind( m_nAsyncFindHandle );
-			m_bAsyncFindRunning = false;
+			if ( GetTickCount() > m_tLastEvent + 20*1000 ) // Timeout 20 seconds
+			{
+				m_pDeviceFinder->CancelAsyncFind( m_nAsyncFindHandle );
+				m_bAsyncFindRunning = false;
+			}
+			SafeMessageLoop();
 		}
-
-		SafeMessageLoop();
-
 		return m_bAsyncFindRunning;
 	}
 
