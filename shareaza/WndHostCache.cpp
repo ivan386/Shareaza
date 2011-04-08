@@ -1,7 +1,7 @@
 //
 // WndHostCache.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -531,7 +531,7 @@ void CHostCacheWnd::OnNeighboursCopy()
 	}
 	else if ( pHost->m_nProtocol == PROTOCOL_DC )
 	{
-		strURL.Format( _T("dchub://%s:%u"),
+		strURL.Format( _T("dchub://%s:%u/"),
 			(LPCTSTR)pHost->Address(), pHost->m_nUDPPort );
 	}
 

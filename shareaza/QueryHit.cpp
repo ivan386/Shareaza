@@ -1787,10 +1787,12 @@ void CQueryHit::Resolve()
 	}
 	else if ( m_nProtocol == PROTOCOL_DC )
 	{
-		m_sURL.Format( _T("dcfile://%s:%u/%s/TTH:%s/%I64u/"),
-			(LPCTSTR)CString( inet_ntoa( m_pAddress ) ), m_nPort,
+		m_sURL.Format( _T("dchub://%s@%s:%u/TTH:%s/%I64u/"),
 			(LPCTSTR)URLEncode( m_sNick ),
-			(LPCTSTR)m_oTiger.toString(), m_bSize ? m_nSize : 0 );
+			(LPCTSTR)CString( inet_ntoa( m_pAddress ) ),
+			m_nPort,
+			(LPCTSTR)m_oTiger.toString(),
+			m_bSize ? m_nSize : 0 );
 		return;
 	}
 

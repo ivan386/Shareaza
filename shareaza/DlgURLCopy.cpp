@@ -172,12 +172,18 @@ void CURLCopyDlg::OnIncludeSelf()
 
 	m_sMagnet = _T("magnet:?") + m_sMagnet;
 
+	CString strSelf = m_pFile->GetURL( Network.m_pHost.sin_addr,
+		htons( Network.m_pHost.sin_port ) );
+
 	if ( bIncludeSelf )
 	{
-		CString strURL = m_pFile->GetURL( Network.m_pHost.sin_addr,
-			htons( Network.m_pHost.sin_port ) );
-		if ( strURL.GetLength() )
-			m_sMagnet += _T("&xs=") + URLEncode( strURL );
+		if ( strSelf.GetLength() )
+			m_sMagnet += _T("&xs=") + URLEncode( strSelf );
+	}
+	else
+	{
+		if ( m_pFile->m_sURL.GetLength() )
+			m_sMagnet += _T("&xs=") + URLEncode( m_pFile->m_sURL );
 	}
 
 	if ( m_pFile->m_oED2K &&
@@ -191,26 +197,17 @@ void CURLCopyDlg::OnIncludeSelf()
 
 		if ( bIncludeSelf )
 		{
-			CString strURL2;
-
-			strURL2.Format ( _T("%s:%i"),
-					(LPCTSTR)CString( inet_ntoa( Network.m_pHost.sin_addr ) ),
-					htons( Network.m_pHost.sin_port ) );
-
-			m_sED2K += _T("|sources,")
-					+ strURL2
-					+ _T("|/");
+			m_sED2K += _T("|sources,") + HostToString( &Network.m_pHost ) + _T("|/");
 		}
 	}
 
-	if ( m_pFile->m_sURL.GetLength() )
+	if ( bIncludeSelf )
+	{
+		m_sHost = strSelf;
+	}
+	else if ( m_pFile->m_sURL.GetLength() )
 	{
 		m_sHost = m_pFile->m_sURL;
-	}
-	else if ( bIncludeSelf )
-	{
-		m_sHost = m_pFile->GetURL( Network.m_pHost.sin_addr,
-			htons( Network.m_pHost.sin_port ) );
 	}
 	else
 	{

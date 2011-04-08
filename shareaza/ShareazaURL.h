@@ -73,10 +73,9 @@ protected:
 	BOOL	ParseFTP(LPCTSTR pszURL, BOOL bResolve);
 	// ed2kftp://[client_id@]address:port/md4_hash/size/
 	BOOL	ParseED2KFTP(LPCTSTR pszURL, BOOL bResolve);
-	// dchub://address:port
+	// dchub://[login@]address:port/[filepath]
+	// where {filepath} can be a regular path or "files.xml.bz2" or "TTH:tiger_hash/size/"
 	BOOL	ParseDCHub(LPCTSTR pszURL, BOOL bResolve);
-	// dcfile://address:port/login/TTH:tiger_hash/size/
-	BOOL	ParseDCFile(LPCTSTR pszURL, BOOL bResolve);
 	// btc://address:port/[node_guid]/btih_hash/
 	BOOL	ParseBTC(LPCTSTR pszURL, BOOL bResolve);
 	BOOL	ParseMagnet(LPCTSTR pszURL);
