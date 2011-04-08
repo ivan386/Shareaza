@@ -654,6 +654,18 @@ library Shareaza
 	};
 
 	//
+	// Library Plugin
+	//
+
+	[ uuid(8065EF37-F0EA-4898-BBBD-D37798DE83CC), oleautomation ]
+	interface ILibraryPlugin : IUnknown
+	{
+		// Shareaza got new library file (return S_OK to cancel event route)
+		HRESULT OnNewFile(
+			[in] ILibraryFile* pFile );		// Library file
+	};
+
+	//
 	// Web Object Models
 	//
 

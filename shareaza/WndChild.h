@@ -1,7 +1,7 @@
 //
 // WndChild.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -24,13 +24,14 @@
 #include "CtrlCoolBar.h"
 #include "LiveListSizer.h"
 
-class CMainWnd;
-class CWindowManager;
-class CQuerySearch;
-class CQueryHit;
 class CBuffer;
 class CConnection;
+class CLibraryFile;
+class CMainWnd;
+class CQueryHit;
+class CQuerySearch;
 class CSkinWindow;
+class CWindowManager;
 
 
 class CChildWnd : public CMDIChildWnd
@@ -58,11 +59,19 @@ public:
 	void			SizeListAndBar(CWnd* pList, CWnd* pBar);
 	void			RemoveSkin();
 
+	// Notify window about skin change
 	virtual void	OnSkinChange();
-	virtual void	OnQuerySearch(const CQuerySearch* pSearch);
-	virtual BOOL	OnQueryHits(const CQueryHit* pHits);
-	virtual void	SanityCheck();
-	virtual BOOL	OnPush(const Hashes::Guid& pClientID, CConnection* pConnection);
+	// Notify window about arrived query search
+	virtual void	OnQuerySearch(const CQuerySearch* /*pSearch*/) {}
+	// Notify window about arrived query hits
+	virtual BOOL	OnQueryHits(const CQueryHit* /*pHits*/) { return FALSE; }
+	// Notify window about security rules changed
+	virtual void	SanityCheck() {}
+	// Notify window about new push connection available
+	virtual BOOL	OnPush(const Hashes::Guid& /*pClientID*/, CConnection* /*pConnection*/) { return FALSE; }
+	// Notify window about new library file (return TRUE to cancel event route)
+	virtual BOOL	OnNewFile(CLibraryFile* /*pFile*/) { return FALSE; }
+
 	virtual HRESULT	GetGenericView(IGenericView** ppView);
 	virtual BOOL	DestroyWindow();
 

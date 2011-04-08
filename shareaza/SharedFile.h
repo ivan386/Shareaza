@@ -99,7 +99,7 @@ public:
 	BOOL			IsSchemaURI(LPCTSTR pszURI) const;
 	BOOL			IsRated() const;		// File rated (or commented)
 	BOOL			IsRatedOnly() const;	// File rated but have no metadata
-	BOOL			IsHashed() const;
+	BOOL			IsHashed() const;		// File fully hashed
 	BOOL			IsNewFile() const;
 	BOOL			IsReadable() const;
 	BOOL			Rebuild();

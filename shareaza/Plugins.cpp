@@ -1,7 +1,7 @@
 //
 // Plugins.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -23,6 +23,7 @@
 #include "Shareaza.h"
 #include "Settings.h"
 #include "Plugins.h"
+#include "SharedFile.h"
 #include "Application.h"
 #include "CtrlCoolBar.h"
 #include "WndPlugin.h"
@@ -605,6 +606,26 @@ BOOL CPlugins::OnChatMessage(LPCTSTR pszChatID, BOOL bOutgoing, LPCTSTR pszFrom,
 	return TRUE;
 }
 
+BOOL CPlugins::OnNewFile(CLibraryFile* pFile)
+{
+	ILibraryFile* pIFile = (ILibraryFile*)pFile->GetInterface( IID_ILibraryFile );
+
+	for ( POSITION pos = GetIterator() ; pos ; )
+	{
+		CPlugin* pPlugin = GetNext( pos );
+
+		if ( pPlugin->m_pLibrary ) 
+		{
+			if ( pPlugin->m_pLibrary->OnNewFile( pIFile ) == S_OK )
+			{
+				return TRUE;
+			}
+		}
+	}
+
+	return FALSE;
+}
+
 //////////////////////////////////////////////////////////////////////
 // CPlugin construction
 
@@ -655,12 +676,21 @@ BOOL CPlugin::Start()
 	hr = m_pPlugin->QueryInterface( IID_IExecutePlugin, (void**)&m_pExecute );
 	ASSERT( ! m_pChat );
 	hr = m_pPlugin->QueryInterface( IID_IChatPlugin, (void**)&m_pChat );
+	ASSERT( ! m_pLibrary );
+	hr = m_pPlugin->QueryInterface( IID_ILibraryPlugin, (void**)&m_pLibrary );
 
 	return TRUE;
 }
 
 void CPlugin::Stop()
 {
+	__try
+	{
+		m_pLibrary.Release();
+	}
+	__except( EXCEPTION_EXECUTE_HANDLER )
+	{
+	}
 	__try
 	{
 		m_pChat.Release();

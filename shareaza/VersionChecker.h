@@ -1,7 +1,7 @@
 //
 // VersionChecker.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -23,9 +23,10 @@
 
 #include "HttpRequest.h"
 
+class CLibraryFile;
 
-class CVersionChecker :
-	public CThreadImpl
+
+class CVersionChecker : public CThreadImpl
 {
 // Construction
 public:
@@ -49,8 +50,7 @@ public:
 	static void ClearVersionCheck();
 	void		ForceCheck();
 	void		SetNextCheck(int nDays);
-    BOOL		CheckUpgradeHash(const Hashes::Sha1Hash& oHash, LPCTSTR pszPath);
-	BOOL		CheckUpgradeHash();
+    BOOL		CheckUpgradeHash(const CLibraryFile* pFile = NULL);
 
 	inline bool	IsUpgradeAvailable() const throw()
 	{

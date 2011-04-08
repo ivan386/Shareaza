@@ -1,7 +1,7 @@
 //
 // Plugins.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -23,8 +23,9 @@
 
 #include "ThreadImpl.h"
 
-class CPlugin;
 class CChildWnd;
+class CLibraryFile;
+class CPlugin;
 
 
 class CPlugins : public CThreadImpl
@@ -70,6 +71,9 @@ public:
 	// IChatPlugin mirroring
 	BOOL		OnChatMessage(LPCTSTR pszChatID, BOOL bOutgoing, LPCTSTR pszFrom, LPCTSTR pszTo, LPCTSTR pszMessage);
 
+	// ILibraryPlugin mirroring
+	BOOL		OnNewFile(CLibraryFile* pFile);
+
 	inline POSITION GetIterator() const
 	{
 		return m_pList.GetHeadPosition();
@@ -114,6 +118,7 @@ public:
 	CComPtr< ICommandPlugin >	m_pCommand;
 	CComPtr< IExecutePlugin >	m_pExecute;
 	CComPtr< IChatPlugin >		m_pChat;
+	CComPtr< ILibraryPlugin >	m_pLibrary;
 
 	BOOL		Start();
 	void		Stop();

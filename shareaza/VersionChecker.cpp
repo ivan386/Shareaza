@@ -1,7 +1,7 @@
 //
 // VersionChecker.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,13 +22,13 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
-#include "VersionChecker.h"
+#include "DiscoveryServices.h"
+#include "GProfile.h"
 #include "Library.h"
+#include "Network.h"
 #include "SharedFile.h"
 #include "Transfer.h"
-#include "Network.h"
-#include "GProfile.h"
-#include "DiscoveryServices.h"
+#include "VersionChecker.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -264,24 +264,7 @@ void CVersionChecker::SetNextCheck(int nDays)
 //////////////////////////////////////////////////////////////////////
 // CVersionChecker check if a download is an upgrade
 
-BOOL CVersionChecker::CheckUpgradeHash(const Hashes::Sha1Hash& oHash, LPCTSTR pszPath)
-{
-	if ( IsUpgradeAvailable() )
-	{
-		if ( oHash.toString() == Settings.VersionCheck.UpgradeSHA1 )
-		{
-			if ( _tcsstr( pszPath, _T(".exe") ) )
-			{
-				m_sUpgradePath = pszPath;
-				PostMainWndMessage( WM_VERSIONCHECK, VC_UPGRADE );
-				return TRUE;
-			}
-		}
-	}
-	return FALSE;
-}
-
-BOOL CVersionChecker::CheckUpgradeHash()
+BOOL CVersionChecker::CheckUpgradeHash(const CLibraryFile* pFile)
 {
 	if ( IsUpgradeAvailable() )
 	{
@@ -289,15 +272,15 @@ BOOL CVersionChecker::CheckUpgradeHash()
 		if ( oSHA1.fromString( Settings.VersionCheck.UpgradeSHA1 ) )
 		{
 			CQuickLock oLock( Library.m_pSection );
-			CLibraryFile* pFile = LibraryMaps.LookupFileBySHA1( oSHA1 );
-			if ( pFile )
+			if ( ! pFile )
+				pFile = LibraryMaps.LookupFileBySHA1( oSHA1 );
+
+			if ( pFile && validAndEqual( pFile->m_oSHA1, oSHA1 ) &&
+				_tcsicmp( PathFindExtension( pFile->GetPath() ), _T(".exe") ) )
 			{
-				if ( _tcsstr( pFile->GetPath(), _T(".exe") ) )
-				{
-					m_sUpgradePath = pFile->GetPath();
-					PostMainWndMessage( WM_VERSIONCHECK, VC_UPGRADE );
-					return TRUE;
-				}
+				m_sUpgradePath = pFile->GetPath();
+				PostMainWndMessage( WM_VERSIONCHECK, VC_UPGRADE );
+				return TRUE;
 			}
 		}
 	}

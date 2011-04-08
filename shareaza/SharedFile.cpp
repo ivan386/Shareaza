@@ -31,6 +31,9 @@
 #include "LibraryFolders.h"
 #include "LibraryHistory.h"
 #include "HashDatabase.h"
+#include "Plugins.h"
+#include "WndChild.h"
+#include "WndMain.h"
 
 #include "Network.h"
 #include "Download.h"
@@ -1148,7 +1151,8 @@ BOOL CLibraryFile::OnVerifyDownload(
 	const Hashes::Md5ManagedHash& oMD5,
 	LPCTSTR pszSources)
 {
-	if ( ! m_pFolder ) return FALSE;
+	ASSERT( IsAvailable() );
+	ASSERT( IsHashed() );
 
 	if ( Settings.Downloads.VerifyFiles && m_bVerify == TRI_UNKNOWN && m_nVirtualSize == 0 )
 	{
@@ -1189,12 +1193,26 @@ BOOL CLibraryFile::OnVerifyDownload(
 		}
 	}
 
-	if ( m_oSHA1 && m_nVirtualSize == 0 )
+	AddAlternateSources( pszSources );
+
+	// Notify library plugins
+	if ( Plugins.OnNewFile( this ) )
+		return TRUE;
+
+	// Notify all windows about this file
+	if ( CMainWnd* pMainWnd = theApp.SafeMainWnd() )
 	{
-		VersionChecker.CheckUpgradeHash( m_oSHA1, GetPath() );
+		CChildWnd* pChildWnd = NULL;
+		while ( ( pChildWnd = pMainWnd->m_pWindows.Find( NULL, pChildWnd ) ) != NULL )
+		{
+			if ( pChildWnd->OnNewFile( this ) )
+				return TRUE;
+		}
 	}
 
-	AddAlternateSources( pszSources );
+	// Notify version checker
+	if ( VersionChecker.CheckUpgradeHash( this ) )
+		return TRUE;
 
 	return TRUE;
 }

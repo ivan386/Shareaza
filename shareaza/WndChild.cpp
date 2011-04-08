@@ -1,7 +1,7 @@
 //
 // WndChild.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -23,10 +23,10 @@
 #include "Shareaza.h"
 #include "Settings.h"
 #include "CoolInterface.h"
-#include "WndChild.h"
-#include "WndMain.h"
 #include "Skin.h"
 #include "SkinWindow.h"
+#include "WndChild.h"
+#include "WndMain.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -511,24 +511,6 @@ void CChildWnd::OnSkinChange()
 		if ( m_pSkin )
 			m_pSkin->OnSize( this );
 	}
-}
-
-void CChildWnd::OnQuerySearch(const CQuerySearch* /*pSearch*/)
-{
-}
-
-BOOL CChildWnd::OnQueryHits(const CQueryHit* /*pHits*/)
-{
-	return FALSE;
-}
-
-void CChildWnd::SanityCheck()
-{
-}
-
-BOOL CChildWnd::OnPush(const Hashes::Guid& /*oClientID*/, CConnection* /*pConnection*/)
-{
-	return FALSE;
 }
 
 HRESULT CChildWnd::GetGenericView(IGenericView** ppView)
