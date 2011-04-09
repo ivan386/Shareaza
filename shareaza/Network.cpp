@@ -246,6 +246,8 @@ BOOL CNetwork::IsFirewalled(int nCheck) const
 #else // LAN_MODE
 	if ( Settings.Connection.FirewallState == CONNECTION_OPEN )	// CHECK_BOTH, CHECK_TCP, CHECK_UDP
 		return FALSE;		// We know we are not firewalled on both TCP and UDP
+	else if ( nCheck == CHECK_IP )
+		return IsFirewalledAddress( &Network.m_pHost.sin_addr ) || IsReserved( &Network.m_pHost.sin_addr );
 	else if ( Settings.Connection.FirewallState == CONNECTION_OPEN_TCPONLY && nCheck == CHECK_TCP )
 		return FALSE;		// We know we are not firewalled on TCP port
 	else if ( Settings.Connection.FirewallState == CONNECTION_OPEN_UDPONLY && nCheck == CHECK_UDP )

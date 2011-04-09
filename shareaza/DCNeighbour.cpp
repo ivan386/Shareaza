@@ -711,7 +711,7 @@ BOOL CDCNeighbour::OnHello()
 		// Client version
 		(LPCTSTR)theApp.m_sVersion,
 		// User is in active(A), passive(P), or SOCKS5(5) mode 
-		( Network.IsFirewalled( CHECK_BOTH ) ? _T('P') : _T('A') ),
+		( Network.IsFirewalled( CHECK_IP ) ? _T('P') : _T('A') ),
 		// Number of connected hubs as regular user
 		Neighbours.GetCount( PROTOCOL_DC, nrsConnected, ntHub ),
 		// Number of connected hubs as VIP

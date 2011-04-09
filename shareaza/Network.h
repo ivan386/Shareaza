@@ -39,7 +39,7 @@ class CUPnPFinder;
 
 enum // It is used from CNetwork::IsFirewalled
 {
-	CHECK_BOTH, CHECK_TCP, CHECK_UDP
+	CHECK_BOTH, CHECK_TCP, CHECK_UDP, CHECK_IP
 };
 
 class CNetwork : public CComObject, public CThreadImpl
