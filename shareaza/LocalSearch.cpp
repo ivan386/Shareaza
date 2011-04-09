@@ -707,7 +707,7 @@ void CLocalSearch::AddHitDC(CDCPacket* pPacket, CSchemaMap& /*pSchemas*/, CLibra
 	pAnswer.Add( _P(" (") );
 	pAnswer.Print( HostToString( &m_pSearch->m_pMyHub ) );
 	pAnswer.Add( _P(")") );
-	if ( ! m_pSearch->m_sUserNick.IsEmpty() )
+	if ( ! m_pSearch->m_bUDP )
 	{
 		pAnswer.Add( _P("\x05") );
 		pAnswer.Print( m_pSearch->m_sUserNick );

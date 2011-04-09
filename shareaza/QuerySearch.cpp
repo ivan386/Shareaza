@@ -1161,14 +1161,12 @@ BOOL CQuerySearch::ReadDCPacket(CDCPacket* pPacket, const SOCKADDR_IN* pEndpoint
 	{
 		// Passive user request (send answer via TCP)
 		m_bUDP = FALSE;
-		m_sUserHub = UTF8Decode( szAddress );
 		m_sUserNick = UTF8Decode( szPort );
 	}
 	else
 	{
 		// Active user request (send answer via UDP)
 		m_bUDP = TRUE;
-		m_sUserHub.Empty();
 		m_sUserNick.Empty();
 		m_pEndpoint.sin_addr = nAddress;
 		m_pEndpoint.sin_port = htons( (WORD)nPort );

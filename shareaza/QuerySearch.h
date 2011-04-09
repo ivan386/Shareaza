@@ -80,7 +80,6 @@ public:
 	bool				m_bWhatsNew;	// G1: "Whats New?" request
 	bool				m_bDropMe;		// Silently drop this packet (to avoid overflow) 
 
-	CString				m_sUserHub;		// DC: Hub name of passive user
 	CString				m_sUserNick;	// DC: Nick of passive user
 	SOCKADDR_IN			m_pMyHub;		// DC: Hub address
 	CString				m_sMyHub;		// DC: Hub name
