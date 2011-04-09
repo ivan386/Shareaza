@@ -538,15 +538,15 @@ BOOL CDCNeighbour::OnPacket(CDCPacket* pPacket)
 		// User address
 		// $UserIP MyNick IP|
 
-		if ( LPSTR szNick = szParams )
+		if ( LPSTR szMyNick = szParams )
 		{
-			if ( LPSTR szAddress = strchr( szParams, ' ' ) )
+			if ( LPSTR szAddress = strchr( szMyNick, ' ' ) )
 			{
 				*szAddress++ = 0;
 
-				CString sNick( UTF8Decode( szNick ) );
+				CString sNick( UTF8Decode( szMyNick ) );
 
-				if ( m_sNick == sNick && m_bNickValid )
+				if ( m_bNickValid && m_sNick == sNick )
 				{
 					IN_ADDR nAddress;
 					nAddress.s_addr = inet_addr( szAddress );
@@ -564,6 +564,28 @@ BOOL CDCNeighbour::OnPacket(CDCPacket* pPacket)
 		ASSERT( m_pZInput == NULL );
 		m_pZInput  = new CBuffer();
 		return TRUE;
+	}
+	else if ( strcmp( szCommand, "$RevConnectToMe" ) == 0 )
+	{
+		// Callback connection request
+		// $RevConnectToMe RemoteNick MyNick|
+
+		if ( LPSTR szRemoteNick = szParams )
+		{
+			if ( LPSTR szMyNick = strchr( szRemoteNick, ' ' ) )
+			{
+				*szMyNick++ = 0;
+
+				CString sNick( UTF8Decode( szMyNick ) );
+				CString sRemoteNick( UTF8Decode( szRemoteNick ) );
+
+				if ( m_bNickValid && m_sNick == sNick )
+				{
+					ConnectToMe( sRemoteNick );
+				}
+				return TRUE;
+			}
+		}
 	}
 
 	// Unknown command - ignoring
