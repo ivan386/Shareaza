@@ -609,7 +609,7 @@ BOOL CDatagrams::TryRead()
 			strText += ( ( m_pReadBuffer[ i ] < ' ' ) ? '.' : (char)m_pReadBuffer[ i ] );
 		}
 		theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING,
-			_T("UDP: Recieved unknown packet (%i bytes) from %s: "),
+			_T("UDP: Recieved unknown packet (%i bytes) from %s: %s"),
 			nLength, (LPCTSTR)CString( inet_ntoa( pFrom.sin_addr ) ), strText );
 		return TRUE;
 	}
