@@ -309,7 +309,13 @@ BOOL CDownloadTransferDC::ReadTiger()
 
 	pInput->Clear();
 
-	return bTiger ? StartNextFragment() : FALSE;
+	if ( ! bTiger )
+	{
+		Close( TRI_FALSE );
+		return FALSE;
+	}
+
+	return StartNextFragment();
 }
 
 BOOL CDownloadTransferDC::OnDownload(const std::string& strType, const std::string& strFilename, QWORD nOffset, QWORD nLength, const std::string& strOptions)

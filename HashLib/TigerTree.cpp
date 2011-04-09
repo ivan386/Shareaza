@@ -1185,7 +1185,7 @@ BOOL CTigerTree::FromBytesLevel1(const uint8* pInput, uint32 nInput, uint32 nHei
 	uint32 nCountHeight = 1;
 	for ( uint32 nStep = 1 ; nStep < nCount ; nStep *= 2 ) nCountHeight++;
 
-	SetupAndAllocate( min( nCountHeight, nHeight ), nLength );
+	SetupAndAllocate( nCountHeight, nLength );
 
 	CTigerNode* pBase = m_pNode + m_nNodeCount - m_nNodeBase;
 
