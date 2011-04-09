@@ -406,6 +406,10 @@ BOOL CNetwork::AcquireLocalAddress(LPCTSTR pszHeader)
 
 BOOL CNetwork::AcquireLocalAddress(const IN_ADDR& pAddress)
 {
+	if ( pAddress.s_addr == INADDR_ANY ||
+		 pAddress.s_addr == INADDR_NONE )
+		return FALSE;
+
 	if ( IsFirewalledAddress( &pAddress ) )
 		return FALSE;
 
