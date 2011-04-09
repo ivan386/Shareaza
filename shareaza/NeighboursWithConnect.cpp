@@ -1,7 +1,7 @@
 //
 // NeighboursWithConnect.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1007,10 +1007,10 @@ void CNeighboursWithConnect::Maintain()
 		if ( nCount[ nProtocol ][ ntHub ] < nLimit[ nProtocol ][ ntHub ] )
 		{
 			// Don't try to connect to G1 right away, wait a few seconds to reduce the number of connections
-			if ( nProtocol == PROTOCOL_G1 && Settings.Gnutella2.EnableToday )
+			if ( nProtocol != PROTOCOL_G2 && Settings.Gnutella2.EnableToday )
 			{
-				// Wait 4 seconds before trying G1
-				if ( ! Network.ReadyToTransfer( tTimer ) ) return;
+				if ( ! Network.ReadyToTransfer( tTimer ) )
+					return;
 			}
 
 			// Get a pointer to the host cache for the given protocol
@@ -1018,24 +1018,30 @@ void CNeighboursWithConnect::Maintain()
 
 			// We are going to try to connect to a computer running Gnutella or Gnutella2 software
 			DWORD nAttempt;
-			if ( nProtocol != PROTOCOL_ED2K )
+			if ( nProtocol == PROTOCOL_ED2K )
+			{
+				// For ed2k we try one attempt at a time to begin with, but we can step up to
+				// 2 at a time after a few seconds if the FastConnect option is selected.
+				if ( Settings.eDonkey.FastConnect && Network.ReadyToTransfer( tTimer ) )
+					nAttempt = 2;
+				else
+					nAttempt = 1;
+			}
+			else if ( nProtocol == PROTOCOL_DC )
+			{
+				// DC++ Slow connecting
+				nAttempt = 1;
+			}
+			else
 			{
 				// For Gnutella and Gnutella2, try connection to the number of free slots multiplied by the connect factor from settings
 				nAttempt = ( nLimit[ nProtocol ][ ntHub ] - nCount[ nProtocol ][ ntHub ] );
 				nAttempt *=  Settings.Gnutella.ConnectFactor;
 			}
-			else
-			{
-				// For ed2k we try one attempt at a time to begin with, but we can step up to
-				// 2 at a time after a few seconds if the FastConnect option is selected.
-				if ( ( Settings.eDonkey.FastConnect ) && ( Network.ReadyToTransfer( tTimer ) ) )
-					nAttempt = 2;
-				else
-					nAttempt = 1;
-			}
+
 
 			// Lower the needed hub number to avoid hitting Windows XP Service Pack 2's half open connection limit
-			nAttempt = min(nAttempt, ( Settings.Downloads.MaxConnectingSources - 2 ) );
+			nAttempt = min( nAttempt, ( Settings.Downloads.MaxConnectingSources - 2 ) );
 		
 			CQuickLock oLock( pCache->m_pSection );
 
@@ -1102,7 +1108,7 @@ void CNeighboursWithConnect::Maintain()
 					}
 
 					// If settings wants to limit how frequently this method can run
-					if ( Settings.Connection.ConnectThrottle != 0 )
+					if ( Settings.Connection.ConnectThrottle )
 					{
 						// Save the time we last made a connection as now, and leave
 						Network.m_tLastConnect = tTimer;
