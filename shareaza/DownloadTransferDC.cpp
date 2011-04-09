@@ -57,7 +57,7 @@ CDownloadTransferDC::~CDownloadTransferDC()
 
 BOOL CDownloadTransferDC::IsIdle() const
 {
-	return ( m_nState >= dtsBusy );
+	return ( m_nState == dtsBusy );
 }
 
 void CDownloadTransferDC::AttachTo(CConnection* pConnection)

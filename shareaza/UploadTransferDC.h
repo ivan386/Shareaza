@@ -48,6 +48,8 @@ public:
 
 protected:
 	DWORD			m_tRankingCheck;	// The time the queue position was last checked
+	BOOL			m_bGet;				// Client uses $Get
+	CBuffer			m_pXML;				// Cached library file list
 
 	// Check the client's Q rank. Start upload or send notification if required
 	BOOL			CheckRanking();

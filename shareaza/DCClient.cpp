@@ -423,6 +423,14 @@ BOOL CDCClient::OnCommand(const std::string& strCommand, const std::string& strP
 	{
 		return OnADCSnd( strParams );
 	}
+	else if ( strCommand == "$Get" )
+	{
+		return OnGet( strParams );
+	}
+	else if ( strCommand == "$Send" )
+	{
+		return OnSend( strParams );
+	}
 	else if ( strCommand == "$MaxedOut" )
 	{
 		return OnMaxedOut( strParams );
@@ -431,7 +439,7 @@ BOOL CDCClient::OnCommand(const std::string& strCommand, const std::string& strP
 	{
 		return OnError( strParams );
 	}
-	else if ( strCommand == "$Get" ||
+	else if (
 		strCommand == "$GetZBlock" ||
 		strCommand == "$UGetBlock" ||
 		strCommand == "$UGetZBlock" ||
@@ -502,6 +510,12 @@ BOOL CDCClient::OnLock(const std::string& strParams)
 
 	if ( ! m_bInitiated )
 	{
+		if ( m_pDownloadTransfer )
+		{
+			if ( StartDownload() )
+				return TRUE;
+		}
+
 		Network.OnPush( m_oGUID, this );
 	}
 
@@ -705,10 +719,12 @@ BOOL CDCClient::OnADCSnd(const std::string& strParams)
 		strLength = strParams.substr( nPos3 + 1, nPos4 - nPos3 - 1 );
 		strOptions = strParams.substr( nPos4 + 1 );
 	}
+
 	QWORD nOffset;
 	if ( sscanf_s( strOffset.c_str(), "%I64u", &nOffset ) != 1 )
 		// Invalid command
 		return FALSE;
+
 	QWORD nLength;
 	if ( sscanf_s( strLength.c_str(), "%I64d", &nLength ) != 1 )
 		// Invalid command
@@ -726,6 +742,60 @@ BOOL CDCClient::OnADCSnd(const std::string& strParams)
 	TRACE( "[DC++] Got $ADCSND but can't download!\n" );
 
 	return FALSE;
+}
+
+BOOL CDCClient::OnGet(const std::string& strParams)
+{
+	// $Get Filename$Offset|
+	// Offset counted from 1.
+
+	std::string::size_type nPos1 = strParams.find( '$' );
+	if ( nPos1 == std::string::npos )
+		// Invalid command
+		return FALSE;
+	std::string strFilename = strParams.substr( 0, nPos1 );
+	std::string strOffset = strParams.substr( nPos1 + 1 );
+
+	QWORD nOffset;
+	if ( sscanf_s( strOffset.c_str(), "%I64u", &nOffset ) != 1 || nOffset < 1 )
+		// Invalid command
+		return FALSE;
+	nOffset--;
+
+	if ( CanUpload() )
+	{
+		// Start uploading...
+		DetachDownload();
+
+		if ( ! m_pUploadTransfer )
+			m_pUploadTransfer = new CUploadTransferDC( this );
+		if ( ! m_pUploadTransfer )
+			// Out of memory
+			return FALSE;
+
+		m_pUploadTransfer->m_sNick = m_sRemoteNick;
+
+		// Start upload
+		return m_pUploadTransfer->OnUpload( "get", strFilename, nOffset, SIZE_UNKNOWN, "" );
+	}
+
+	// Unexpected request
+	DetachUpload();
+
+	TRACE( "[DC++] Got $Get but can't uplod!\n" );
+
+	return FALSE;
+}
+
+BOOL CDCClient::OnSend(const std::string& strParams)
+{
+	// $Send|
+
+	if ( ! m_pUploadTransfer || ! strParams.empty() )
+		return FALSE;
+
+	// Start upload
+	return m_pUploadTransfer->OnUpload( "send", "", SIZE_UNKNOWN, SIZE_UNKNOWN, "" );
 }
 
 BOOL CDCClient::OnMaxedOut(const std::string& strParams)

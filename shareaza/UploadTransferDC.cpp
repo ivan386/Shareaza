@@ -51,6 +51,7 @@ CUploadTransferDC::CUploadTransferDC(CDCClient* pClient)
 	: CUploadTransfer	( PROTOCOL_DC )
 	, m_pClient			( pClient )
 	, m_tRankingCheck	( 0 )
+	, m_bGet			( FALSE )
 {
 	ASSERT( pClient != NULL );
 }
@@ -258,31 +259,29 @@ BOOL CUploadTransferDC::OnUpload(const std::string& strType, const std::string& 
 
 	if ( strType == "tthl" )
 	{
-		if ( strFilename.substr( 0, 4 ) != "TTH/" )
-		{
-			// Invalid hash prefix
-			return FALSE;
-		}
+		m_bGet = FALSE;
 
-		Hashes::TigerHash oTiger;
-		if ( ! oTiger.fromString( CA2W( strFilename.substr( 4 ).c_str() ) ) )
+		if ( strFilename.substr( 0, 4 ) == "TTH/" )
 		{
-			// Invalid TigerTree hash encoding
-			return FALSE;
-		}
-
-		CSingleLock oLock( &Library.m_pSection );
-		if ( oLock.Lock( 1000 ) )
-		{
-			if ( CLibraryFile* pFile = LibraryMaps.LookupFileByTiger( oTiger, TRUE, TRUE ) )
+			Hashes::TigerHash oTiger;
+			if ( oTiger.fromString( CA2W( strFilename.substr( 4 ).c_str() ) ) )
 			{
-				if ( RequestTigerTree( pFile, nOffset, nLength ) )
-					return TRUE;
+				CSingleLock oLock( &Library.m_pSection );
+				if ( oLock.Lock( 1000 ) )
+				{
+					if ( CLibraryFile* pFile = LibraryMaps.LookupFileByTiger( oTiger, TRUE, TRUE ) )
+					{
+						if ( RequestTigerTree( pFile, nOffset, nLength ) )
+							return TRUE;
+					}
+				}
 			}
 		}
 	}
-	else if ( strType == "file" )
+	else if ( strType == "file" || strType =="get" )
 	{
+		m_bGet = ( strType == "get" );
+
 		if ( strFilename == "files.xml" || strFilename == "files.xml.bz2" )
 		{
 			if ( RequestFileList( TRUE, bZip, strFilename, nOffset, nLength ) )
@@ -293,25 +292,50 @@ BOOL CUploadTransferDC::OnUpload(const std::string& strType, const std::string& 
 			Hashes::TigerHash oTiger;
 			if ( ! oTiger.fromString( CA2W( strFilename.substr( 4 ).c_str() ) ) )
 			{
-				// Invalid TigerTree hash encoding
-				return FALSE;
-			}
-
-			CSingleLock oLock( &Library.m_pSection );
-			if ( oLock.Lock( 1000 ) )
-			{
-				if ( CLibraryFile* pFile = LibraryMaps.LookupFileByTiger( oTiger, TRUE, TRUE ) )
+				CSingleLock oLock( &Library.m_pSection );
+				if ( oLock.Lock( 1000 ) )
 				{
-					if ( RequestFile( pFile, nOffset, nLength ) )
-						return TRUE;
+					if ( CLibraryFile* pFile = LibraryMaps.LookupFileByTiger( oTiger, TRUE, TRUE ) )
+					{
+						if ( RequestFile( pFile, nOffset, nLength ) )
+							return TRUE;
+					}
 				}
 			}
 		}
 	}
 	else if ( strType == "list" )
 	{
+		m_bGet = FALSE;
+
 		if ( RequestFileList( FALSE, bZip, strFilename, nOffset, nLength ) )
 			return TRUE;
+	}
+	else if ( strType == "send" )
+	{
+		if ( m_bGet )
+		{
+			if ( m_pXML.GetCount() )
+			{
+				// Send cached file list
+				m_bGet = FALSE;
+
+				StartSending( upsBrowse );
+
+				m_pClient->Write( &m_pXML );
+
+				m_pXML.Clear();
+
+				return TRUE;
+			}
+			else
+			{
+				// Send already requested file
+				if ( SendFile() )
+					return TRUE;
+			}
+		}
+		// else $Send without $Get
 	}
 	else
 	{
@@ -357,6 +381,8 @@ BOOL CUploadTransferDC::CheckRanking()
 
 BOOL CUploadTransferDC::RequestFile(CLibraryFile* pFile, QWORD nOffset, QWORD nLength)
 {
+	m_pXML.Clear();
+
 	if ( ! RequestComplete( pFile ) )
 	{
 		ASSERT( FALSE );
@@ -411,7 +437,11 @@ BOOL CUploadTransferDC::RequestFile(CLibraryFile* pFile, QWORD nOffset, QWORD nL
 	if ( nPosition == 0 )
 	{
 		// Ready to send
-		return SendFile();
+		if ( m_bGet)
+			// Wait for $Send
+			return TRUE;
+		else
+			return SendFile();
 	}
 	else if ( nPosition > 0 )
 	{
@@ -458,11 +488,16 @@ BOOL CUploadTransferDC::SendFile()
 		return FALSE;
 	}
 
-	CString sAnswer;
-	sAnswer.Format( _T("$ADCSND file TTH/%s %I64u %I64u|"),
-		m_oTiger.toString(), m_nOffset, m_nLength );
+	if ( m_bGet )
+		m_bGet = FALSE;
+	else
+	{
+		CString sAnswer;
+		sAnswer.Format( _T("$ADCSND file TTH/%s %I64u %I64u|"),
+			m_oTiger.toString(), m_nOffset, m_nLength );
 
-	m_pClient->SendCommand( sAnswer );
+		m_pClient->SendCommand( sAnswer );
+	}
 
 	StartSending( upsUploading );
 
@@ -484,6 +519,8 @@ BOOL CUploadTransferDC::SendFile()
 
 BOOL CUploadTransferDC::RequestTigerTree(CLibraryFile* pFile, QWORD nOffset, QWORD nLength)
 {
+	m_pXML.Clear();
+
 	if ( ! RequestComplete( pFile ) )
 	{
 		ASSERT( FALSE );
@@ -539,40 +576,54 @@ BOOL CUploadTransferDC::RequestTigerTree(CLibraryFile* pFile, QWORD nOffset, QWO
 
 BOOL CUploadTransferDC::RequestFileList(BOOL bFile, BOOL bZip, const std::string& strFilename, QWORD nOffset, QWORD nLength)
 {
-	theApp.Message( MSG_NOTICE, IDS_UPLOAD_BROWSE,
-		(LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
+	m_pXML.Clear();
+
+	theApp.Message( MSG_NOTICE, IDS_UPLOAD_BROWSE, (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
 
 	BOOL bBZip = bFile && ( strFilename == "files.xml.bz2" );
 	m_sName = ( bFile ? "/" : strFilename.c_str() );
 
 	// Create library file list
-	CBuffer pXML;
-	LibraryToFileList( m_sName, pXML );
+	LibraryToFileList( m_sName, m_pXML );
 
 	// TODO: Implement partial request of file list
 	nOffset = 0;
-	nLength = pXML.m_nLength;
+	nLength = m_pXML.m_nLength;
 
 	if ( bBZip )
 	{
 		// BZip it
-		if ( ! pXML.BZip() )
+		if ( ! m_pXML.BZip() )
 		{
 			// Out of memory
 			return FALSE;
 		}
 		bZip = FALSE;
-		nLength = pXML.m_nLength;
+		nLength = m_pXML.m_nLength;
 	}
 
 	if ( bZip )
 	{
 		// Zip it
-		if ( ! pXML.Deflate() )
+		if ( ! m_pXML.Deflate() )
 		{
 			// Out of memory
 			return FALSE;
 		}
+	}
+
+	m_nOffset = nOffset;
+	m_nLength = m_pXML.m_nLength;
+	m_nPosition = 0;
+
+	if ( m_bGet )
+	{
+		CString sAnswer;
+		sAnswer.Format( _T("$FileLength %I64u|"), nLength );
+
+		m_pClient->SendCommand( sAnswer );
+
+		return TRUE;
 	}
 
 	CString sAnswer;
@@ -582,14 +633,11 @@ BOOL CUploadTransferDC::RequestFileList(BOOL bFile, BOOL bZip, const std::string
 
 	m_pClient->SendCommand( sAnswer );
 
-	m_pClient->Write( &pXML );
-
-	// Start upload
-	m_nOffset = nOffset;
-	m_nLength = pXML.m_nLength;
-	m_nPosition = 0;
-
 	StartSending( upsBrowse );
+
+	m_pClient->Write( &m_pXML );
+
+	m_pXML.Clear();
 
 	return TRUE;
 }

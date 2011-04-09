@@ -110,6 +110,10 @@ protected:
 	BOOL			OnADCGet(const std::string& strParams);
 	// Got $ADCSND command
 	BOOL			OnADCSnd(const std::string& strParams);
+	// Got $Get command
+	BOOL			OnGet(const std::string& strParams);
+	// Got $Send command
+	BOOL			OnSend(const std::string& strParams);
 	// Got $MaxedOut command
 	BOOL			OnMaxedOut(const std::string& strParams);
 	// Got $Error command
