@@ -626,6 +626,10 @@ void CSettings::Load()
 	if ( Downloads.CollectionPath.IsEmpty() )
 		Downloads.CollectionPath = General.UserPath + _T("\\Collections");
 
+	CString sTorrent;
+	GetFullPathName( BitTorrent.TorrentCreatorPath, MAX_PATH, sTorrent.GetBuffer( MAX_PATH ), NULL );
+	sTorrent.ReleaseBuffer();
+	BitTorrent.TorrentCreatorPath = sTorrent;
 	if ( BitTorrent.TorrentCreatorPath.IsEmpty() || ! PathFileExists( BitTorrent.TorrentCreatorPath ) )
 		BitTorrent.TorrentCreatorPath = General.Path + _T("\\TorrentWizard.exe");
 
