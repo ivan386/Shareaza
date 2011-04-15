@@ -1,7 +1,7 @@
 //
 // WizardSheet.h
 //
-// Copyright (c) Shareaza Development Team, 2007-2009.
+// Copyright (c) Shareaza Development Team, 2007-2011.
 // This file is part of Shareaza Torrent Wizard (shareaza.sourceforge.net).
 //
 // Shareaza Torrent Wizard is free software; you can redistribute it
@@ -33,7 +33,6 @@ public:
 
 	CRect			m_rcPage;
 
-	static BOOL		Run(CWnd* pParent = NULL);
 	CWizardPage*	GetPage(CRuntimeClass* pClass);
 	void			DoReset();
 
@@ -55,28 +54,26 @@ class CWizardPage : public CPropertyPage
 	DECLARE_DYNCREATE(CWizardPage)
 
 public:
-	CWizardPage(UINT nID = 0);
+	CWizardPage(UINT nID = 0, LPCTSTR szHelp = NULL);
 
-// Attributes
-public:
+	CString		m_sHelp;
 	COLORREF	m_crWhite;
 	CBrush		m_brWhite;
 
-// Operations
-public:
+	void			Next();
 	CWizardSheet*	GetSheet();
 	CWizardPage*	GetPage(CRuntimeClass* pClass);
 	void			SetWizardButtons(DWORD dwFlags);
 	void			StaticReplace(LPCTSTR pszSearch, LPCTSTR pszReplace);
 
-// Implementation
 protected:
-	//{{AFX_MSG(CWizardPage)
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+	afx_msg LRESULT OnPressButton(WPARAM wParam, LPARAM lParam);
 
+	DECLARE_MESSAGE_MAP()
 };
 
 #define GET_PAGE(gpClass, gpVar)	gpClass * gpVar = ( gpClass * )GetPage( RUNTIME_CLASS( gpClass ) )
+
+#define WM_PRESSBUTTON (WM_APP + 100)

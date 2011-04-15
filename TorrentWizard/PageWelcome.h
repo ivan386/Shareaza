@@ -1,7 +1,7 @@
 //
 // PageWelcome.h
 //
-// Copyright (c) Shareaza Development Team, 2007.
+// Copyright (c) Shareaza Development Team, 2007-2011.
 // This file is part of Shareaza Torrent Wizard (shareaza.sourceforge.net).
 //
 // Shareaza Torrent Wizard is free software; you can redistribute it
@@ -19,49 +19,28 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_PAGEWELCOME_H__8EF056B1_B633_4CA7_AC46_A99B4A7C9A4F__INCLUDED_)
-#define AFX_PAGEWELCOME_H__8EF056B1_B633_4CA7_AC46_A99B4A7C9A4F__INCLUDED_
-
 #pragma once
 
 #include "WizardSheet.h"
 
+
 class CWelcomePage : public CWizardPage
 {
-// Construction
 public:
 	CWelcomePage();
-	virtual ~CWelcomePage();
 
 	DECLARE_DYNCREATE(CWelcomePage)
 
-// Dialog Data
-public:
-	//{{AFX_DATA(CWelcomePage)
 	enum { IDD = IDD_WELCOME_PAGE };
-	int		m_nType;
-	//}}AFX_DATA
 
-// Overrides
-public:
-	//{{AFX_VIRTUAL(CWelcomePage)
-	public:
+	int		m_nType;
+
 	virtual void OnReset();
 	virtual BOOL OnSetActive();
 	virtual LRESULT OnWizardNext();
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
 
-// Implementation
 protected:
-	//{{AFX_MSG(CWelcomePage)
-	//}}AFX_MSG
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 
 	DECLARE_MESSAGE_MAP()
-
 };
-
-//{{AFX_INSERT_LOCATION}}
-
-#endif // !defined(AFX_PAGEWELCOME_H__8EF056B1_B633_4CA7_AC46_A99B4A7C9A4F__INCLUDED_)

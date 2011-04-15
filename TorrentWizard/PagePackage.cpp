@@ -1,7 +1,7 @@
 //
 // PagePackage.cpp
 //
-// Copyright (c) Shareaza Development Team, 2007.
+// Copyright (c) Shareaza Development Team, 2007-2011.
 // This file is part of Shareaza Torrent Wizard (shareaza.sourceforge.net).
 //
 // Shareaza Torrent Wizard is free software; you can redistribute it
@@ -32,36 +32,29 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNCREATE(CPackagePage, CWizardPage)
 
 BEGIN_MESSAGE_MAP(CPackagePage, CWizardPage)
-	//{{AFX_MSG_MAP(CPackagePage)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_FILE_LIST, OnItemChangedFileList)
 	ON_BN_CLICKED(IDC_ADD_FOLDER, OnAddFolder)
 	ON_BN_CLICKED(IDC_ADD_FILE, OnAddFile)
 	ON_BN_CLICKED(IDC_REMOVE_FILE, OnRemoveFile)
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
 /////////////////////////////////////////////////////////////////////////////
 // CPackagePage property page
 
-CPackagePage::CPackagePage() : CWizardPage(CPackagePage::IDD)
+CPackagePage::CPackagePage()
+	: CWizardPage(CPackagePage::IDD, _T("package"))
+	, m_hImageList( NULL )
 {
-	//{{AFX_DATA_INIT(CPackagePage)
-	//}}AFX_DATA_INIT
-	m_hImageList = NULL;
 }
 
-CPackagePage::~CPackagePage()
-{
-}
 
 void CPackagePage::DoDataExchange(CDataExchange* pDX)
 {
 	CWizardPage::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CPackagePage)
+
 	DDX_Control(pDX, IDC_REMOVE_FILE, m_wndRemove);
 	DDX_Control(pDX, IDC_FILE_LIST, m_wndList);
-	//}}AFX_DATA_MAP
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -86,8 +79,41 @@ void CPackagePage::OnReset()
 
 BOOL CPackagePage::OnSetActive() 
 {
-	m_wndRemove.EnableWindow( m_wndList.GetSelectedCount() > 0 );
 	SetWizardButtons( PSWIZB_BACK | PSWIZB_NEXT );
+
+	if ( ! theApp.m_sCommandLineSourceFile.IsEmpty() )
+	{
+		CStringList oDirs;
+		oDirs.AddTail( theApp.m_sCommandLineSourceFile );
+		theApp.m_sCommandLineSourceFile.Empty();
+
+		while ( ! oDirs.IsEmpty() )
+		{
+			CString strFolder = oDirs.RemoveHead() + _T("\\");
+			CFileFind finder;
+			BOOL bWorking = finder.FindFile( strFolder + _T("*.*") );
+			while ( bWorking )
+			{
+				bWorking = finder.FindNextFile();
+				if ( ! finder.IsDots() && ! finder.IsHidden() )
+				{
+					CString sFilename = strFolder + finder.GetFileName();
+					if ( finder.IsDirectory() )
+						oDirs.AddTail( sFilename );
+					else
+						AddFile( sFilename );
+				}
+			}
+		}
+
+		if ( m_wndList.GetItemCount() > 0 )
+			Next();
+	}
+
+	m_wndRemove.EnableWindow( m_wndList.GetSelectedCount() > 0 );
+
+	UpdateData( FALSE );
+
 	return CWizardPage::OnSetActive();
 }
 
@@ -109,9 +135,9 @@ LRESULT CPackagePage::OnWizardNext()
 
 void CPackagePage::OnItemChangedFileList(NMHDR* /*pNMHDR*/, LRESULT* pResult) 
 {
-//	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
-	*pResult = 0;
 	m_wndRemove.EnableWindow( m_wndList.GetSelectedCount() > 0 );
+
+	*pResult = 0;
 }
 
 void CPackagePage::OnAddFolder() 

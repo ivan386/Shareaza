@@ -24,9 +24,6 @@
     <ClCompile Include="CmdLine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PageCommandline.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="PageComment.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -72,9 +69,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CmdLine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PageCommandline.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PageComment.h">

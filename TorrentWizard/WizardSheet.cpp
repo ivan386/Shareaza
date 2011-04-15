@@ -1,7 +1,7 @@
 //
 // WizardSheet.cpp
 //
-// Copyright (c) Shareaza Development Team, 2007-2009.
+// Copyright (c) Shareaza Development Team, 2007-2011.
 // This file is part of Shareaza Torrent Wizard (shareaza.sourceforge.net).
 //
 // Shareaza Torrent Wizard is free software; you can redistribute it
@@ -23,15 +23,6 @@
 #include "TorrentWizard.h"
 #include "WizardSheet.h"
 
-#include "PageWelcome.h"
-#include "PageSingle.h"
-#include "PagePackage.h"
-#include "PageTracker.h"
-#include "PageComment.h"
-#include "PageOutput.h"
-#include "PageFinished.h"
-#include "PageCommandline.h"
-
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
@@ -50,43 +41,6 @@ BEGIN_MESSAGE_MAP(CWizardSheet, CPropertySheet)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
-// CWizardSheet run wizard
-
-BOOL CWizardSheet::Run(CWnd* pParent)
-{
-	CWizardSheet		pSheet( pParent, 0 );
-	CWelcomePage		pWelcome;
-	CSinglePage			pSingle;
-	CPackagePage		pPackage;
-	CTrackerPage		pTracker;
-	CCommentPage		pComment;
-	COutputPage			pOutput;
-	CFinishedPage		pFinished;
-	CCommandlinePage	pCommandline;
-
-	if ( theApp.m_bCommandLine ) 
-	{
-		pSheet.AddPage( &pCommandline );
-	}
-	else
-	{
-		pSheet.AddPage( &pWelcome );
-		pSheet.AddPage( &pSingle );
-		pSheet.AddPage( &pPackage );
-		pSheet.AddPage( &pTracker );
-		pSheet.AddPage( &pOutput );
-		pSheet.AddPage( &pComment );
-		pSheet.AddPage( &pFinished );
-	}
-
-
-	if ( pSheet.DoModal() != IDOK ) return FALSE;
-	
-	return TRUE;
-}
-
-
-/////////////////////////////////////////////////////////////////////////////
 // CWizardSheet construction
 
 CWizardSheet::CWizardSheet(CWnd *pParentWnd, UINT iSelectPage)
@@ -96,6 +50,7 @@ CWizardSheet::CWizardSheet(CWnd *pParentWnd, UINT iSelectPage)
 	m_psh.dwFlags &= ~PSP_HASHELP;
 
 	Construct( _T(""), pParentWnd, iSelectPage );
+
 	SetWizardMode();
 }
 
@@ -137,26 +92,37 @@ BOOL CWizardSheet::OnInitDialog()
 	
 	ModifyStyle( 0, WS_MINIMIZEBOX );
 	
+	// "Back" button
 	GetDlgItem( 0x3023 )->GetWindowRect( &rc );
 	ScreenToClient( &rc );
 	rc.OffsetRect( 16 - rc.left, -1 );
 	GetDlgItem( 0x3023 )->MoveWindow( &rc );
 	
+	// "Next" button
 	GetDlgItem( 0x3024 )->GetWindowRect( &rc );
 	ScreenToClient( &rc );
 	rc.OffsetRect( 100 - rc.left, -1 );
 	GetDlgItem( 0x3024 )->MoveWindow( &rc );
+
+	// "Ready" button
 	GetDlgItem( 0x3025 )->MoveWindow( &rc );
 	
+	// "Cancel" button
 	GetDlgItem( 2 )->GetWindowRect( &rc );
 	ScreenToClient( &rc );
 	rc.OffsetRect( 414 - rc.left, -1 );
 	GetDlgItem( 2 )->MoveWindow( &rc );
-	GetDlgItem( 2 )->SetWindowText( _T("E&xit") );
-	
-	if ( GetDlgItem( 0x0009 ) ) GetDlgItem( 0x0009 )->ShowWindow( SW_HIDE );
+
+	// "Help" button
+	GetDlgItem( 0x0009 )->GetWindowRect( &rc );
+	ScreenToClient( &rc );
+	rc.OffsetRect( 414 - rc.left - 84, -1 );
+	GetDlgItem( 0x0009 )->MoveWindow( &rc );
+
+	// Horizontal line
 	if ( GetDlgItem( 0x3026 ) ) GetDlgItem( 0x3026 )->ShowWindow( SW_HIDE );
-	
+	if ( GetDlgItem( 0x3027 ) ) GetDlgItem( 0x3027 )->ShowWindow( SW_HIDE );
+
 	return TRUE;
 }
 
@@ -250,7 +216,9 @@ void CWizardSheet::OnPaint()
 
 	rcHeader.left += 180;
 	CFont* pOldFont = (CFont*)dc.SelectObject( &theApp.m_fntHeader );
-	dc.DrawText( theApp.m_sName, &rcHeader, DT_VCENTER | DT_CENTER | DT_SINGLELINE );
+	CString sName;
+	sName.LoadString( IDR_MAINFRAME );
+	dc.DrawText( sName, &rcHeader, DT_VCENTER | DT_CENTER | DT_SINGLELINE );
 
 	rcHeader.left = rcHeader.right - 50;
 	rcHeader.bottom = rcHeader.top + 20;
@@ -268,12 +236,15 @@ IMPLEMENT_DYNCREATE(CWizardPage, CPropertyPage)
 BEGIN_MESSAGE_MAP(CWizardPage, CPropertyPage)
 	ON_WM_SIZE()
 	ON_WM_CTLCOLOR()
+	ON_MESSAGE(WM_PRESSBUTTON, OnPressButton)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CWizardPage construction
 
-CWizardPage::CWizardPage(UINT nID) : CPropertyPage( nID )
+CWizardPage::CWizardPage(UINT nID, LPCTSTR szHelp)
+	: CPropertyPage( nID )
+	, m_sHelp( szHelp )
 {
 	m_crWhite = RGB( 255, 255, 255 );
 	m_brWhite.CreateSolidBrush( m_crWhite );
@@ -307,6 +278,22 @@ void CWizardPage::OnSize(UINT nType, int cx, int cy)
 
 /////////////////////////////////////////////////////////////////////////////
 // CWizardPage operations
+
+void CWizardPage::Next()
+{
+	PostMessage( WM_PRESSBUTTON, PSBTN_NEXT );
+}
+
+LRESULT CWizardPage::OnPressButton(WPARAM wParam, LPARAM /*lParam*/)
+{
+	UpdateWindow();
+
+	Sleep( 250 );
+
+	GetSheet()->PressButton( (int)wParam );
+
+	return 0;
+}
 
 CWizardSheet* CWizardPage::GetSheet()
 {

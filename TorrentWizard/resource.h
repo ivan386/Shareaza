@@ -9,7 +9,6 @@
 #define IDD_OUTPUT_PAGE                 111
 #define IDD_FINISHED_PAGE               112
 #define IDD_COMMENT_PAGE                113
-#define IDD_COMMANDLINE_PAGE            114
 #define IDR_MAINFRAME                   128
 #define IDB_WIZARD                      130
 #define IDC_TYPE_SINGLE                 1000

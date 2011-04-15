@@ -1,7 +1,7 @@
 //
 // PageOutput.cpp
 //
-// Copyright (c) Shareaza Development Team, 2007.
+// Copyright (c) Shareaza Development Team, 2007-2011.
 // This file is part of Shareaza Torrent Wizard (shareaza.sourceforge.net).
 //
 // Shareaza Torrent Wizard is free software; you can redistribute it
@@ -45,19 +45,20 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // COutputPage property page
 
-COutputPage::COutputPage() :
-  CWizardPage(COutputPage::IDD)
-, m_bAutoPieces( TRUE )
-, m_nPieceIndex( 0 )
-, m_bSHA1( TRUE )
-, m_bED2K( TRUE )
-, m_bMD5( TRUE )
+COutputPage::COutputPage()
+	: CWizardPage(COutputPage::IDD, _T("save"))
+	, m_bAutoPieces( TRUE )
+	, m_nPieceIndex( 0 )
+	, m_bSHA1( TRUE )
+	, m_bED2K( TRUE )
+	, m_bMD5( TRUE )
 {
 }
 
 void COutputPage::DoDataExchange(CDataExchange* pDX)
 {
 	CWizardPage::DoDataExchange(pDX);
+
 	DDX_Control(pDX, IDC_TORRENT_NAME, m_wndName);
 	DDX_Control(pDX, IDC_FOLDER, m_wndFolders);
 	DDX_CBString(pDX, IDC_FOLDER, m_sFolder);
@@ -108,8 +109,10 @@ void COutputPage::OnReset()
 
 BOOL COutputPage::OnSetActive() 
 {
+	SetWizardButtons( PSWIZB_BACK | PSWIZB_NEXT );
+
 	GET_PAGE( CWelcomePage, pWelcome );
-	
+
 	if ( pWelcome->m_nType == 0 )
 	{
 		GET_PAGE( CSinglePage, pSingle );
@@ -168,10 +171,17 @@ BOOL COutputPage::OnSetActive()
 			m_sName += _T(".torrent");
 		}
 	}
-	
+
+	if ( ! theApp.m_sCommandLineDestination.IsEmpty() )
+	{
+		m_sFolder = theApp.m_sCommandLineDestination;
+		theApp.m_sCommandLineDestination.Empty();
+
+		Next();
+	}
+
 	UpdateData( FALSE );
-	
-	SetWizardButtons( PSWIZB_BACK | PSWIZB_NEXT );
+		
 	return CWizardPage::OnSetActive();
 }
 
@@ -259,9 +269,7 @@ LRESULT COutputPage::OnWizardNext()
 		return -1;
 	}
 
-	if ( m_sName.Find( _T(".torrent") ) < 0 &&
-		 m_sName.Find( _T(".TORRENT") ) < 0 &&
-		 m_sName.Find( _T(".Torrent") ) < 0 )
+	if ( _tcsicmp( PathFindExtension( m_sName ), _T(".torrent") ) != 0 )
 	{
 		UINT nResp = AfxMessageBox( IDS_OUTPUT_EXTENSION, MB_ICONQUESTION|MB_YESNOCANCEL );
 		

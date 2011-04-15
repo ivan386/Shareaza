@@ -84,14 +84,6 @@ BEGIN
         TOPMARGIN, 7
         BOTTOMMARGIN, 218
     END
-
-    IDD_COMMANDLINE_PAGE, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 315
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 218
-    END
 END
 #endif    // APSTUDIO_INVOKED
 
@@ -218,28 +210,6 @@ BEGIN
     LTEXT           "When you have finished, or if you do not wish to add comments to this Torrent, click the Next button to choose where to save your completed Torrent file.",IDC_STATIC,15,180,300,20
 END
 
-IDD_COMMANDLINE_PAGE DIALOGEX 0, 0, 322, 225
-STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
-CAPTION "Shareaza Torrent Wizard - Creating Torrent"
-FONT 8, "Tahoma", 0, 0, 0x0
-BEGIN
-    LTEXT           "Creating Torrent File",IDC_TITLE,15,15,300,10
-    LTEXT           "The Torrent Wizard is processing the files you selected and creating a Torrent file:",IDC_STATIC,15,35,300,10
-    LTEXT           "The Torrent Wizard has finished creating your Torrent file!  The finished file has been saved as:",IDC_DONE_1,15,105,300,20,NOT WS_VISIBLE
-    CONTROL         "Progress1",IDC_PROGRESS,"msctls_progress32",WS_BORDER,15,60,305,10
-    LTEXT           "File:",IDC_STATIC,15,76,30,10
-    CONTROL         "Ready",IDC_FILE_NAME,"Static",SS_LEFTNOWORDWRAP | WS_GROUP,50,76,265,10
-    PUSHBUTTON      "&Abort",IDC_ABORT,270,130,45,15,NOT WS_VISIBLE
-    CONTROL         "Slider1",IDC_SPEED_SLIDER,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | NOT WS_VISIBLE | WS_TABSTOP,45,130,135,15
-    LTEXT           "You can change the speed of the Torrent creation process to reduce CPU usage if you want to use other applications while the process completes.",IDC_SPEED_MESSAGE,15,105,300,20,NOT WS_VISIBLE
-    RTEXT           "Slow",IDC_SPEED_SLOW,15,130,25,15,SS_CENTERIMAGE | NOT WS_VISIBLE
-    LTEXT           "Fast",IDC_SPEED_FAST,185,130,25,15,SS_CENTERIMAGE | NOT WS_VISIBLE
-    EDITTEXT        IDC_TORRENT_NAME,15,130,300,12,ES_AUTOHSCROLL | ES_READONLY | NOT WS_VISIBLE
-    PUSHBUTTON      "&Open",IDC_TORRENT_OPEN,220,150,45,15,NOT WS_VISIBLE
-    PUSHBUTTON      "&Seed",IDC_TORRENT_SEED,270,150,45,15,NOT WS_VISIBLE
-    LTEXT           "Click Finish to close the Torrent Wizard.",IDC_DONE_2,15,185,300,20,NOT WS_VISIBLE
-END
-
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -325,7 +295,7 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,0,2,1
+ FILEVERSION 1,1,0,0
  PRODUCTVERSION 2,5,4,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
@@ -341,12 +311,11 @@ BEGIN
     BEGIN
         BLOCK "000004b0"
         BEGIN
-            VALUE "Comments", "Shareaza Torrent Wizard"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Torrent Wizard"
-            VALUE "FileVersion", "1, 0, 2, 1"
+            VALUE "FileVersion", "1, 1, 0, 0"
             VALUE "InternalName", "TorrentWizard"
-            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2003-2010. All rights reserved."
+            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2003-2011. All rights reserved."
             VALUE "OriginalFilename", "TorrentWizard.exe"
             VALUE "ProductName", "Shareaza"
             VALUE "ProductVersion", "2, 5, 4, 0"
@@ -382,6 +351,11 @@ BEGIN
     IDS_BUILDER_CANT_OPEN   "Unable to open ""%s"" while building Torrent."
     IDS_BUILDER_CANT_SAVE   "Unable to save Torrent file ""%s""."
     IDS_OUTPUT_EXTENSION    "The Torrent filename you selected does not end with "".torrent"".  Would you like to add it automatically?"
+END
+
+STRINGTABLE 
+BEGIN
+    IDR_MAINFRAME           "Torrent Wizard"
 END
 
 #endif    // Neutral resources

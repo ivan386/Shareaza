@@ -1,7 +1,7 @@
 //
 // PageComment.h : header file
 //
-// Copyright (c) Shareaza Development Team, 2007.
+// Copyright (c) Shareaza Development Team, 2007-2011.
 // This file is part of Shareaza Torrent Wizard (shareaza.sourceforge.net).
 //
 // Shareaza Torrent Wizard is free software; you can redistribute it
@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_PAGECOMMENT_H__F1FF05AD_7932_427B_BBF3_6809860BEF0A__INCLUDED_)
-#define AFX_PAGECOMMENT_H__F1FF05AD_7932_427B_BBF3_6809860BEF0A__INCLUDED_
-
 #pragma once
 
 #include "WizardSheet.h"
@@ -29,42 +26,22 @@
 
 class CCommentPage : public CWizardPage
 {
-// Construction
 public:
 	CCommentPage();
-	virtual ~CCommentPage();
 
 	DECLARE_DYNCREATE(CCommentPage)
 
-// Dialog Data
-public:
-	//{{AFX_DATA(CCommentPage)
 	enum { IDD = IDD_COMMENT_PAGE };
+
 	CString	m_sComment;
-	//}}AFX_DATA
 
-
-// Overrides
-public:
-	//{{AFX_VIRTUAL(CCommentPage)
-	public:
 	virtual void OnReset();
 	virtual BOOL OnSetActive();
 	virtual LRESULT OnWizardBack();
 	virtual LRESULT OnWizardNext();
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
 
-// Implementation
 protected:
-	//{{AFX_MSG(CCommentPage)
-	//}}AFX_MSG
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 
 	DECLARE_MESSAGE_MAP()
-
 };
-
-//{{AFX_INSERT_LOCATION}}
-
-#endif // !defined(AFX_PAGECOMMENT_H__F1FF05AD_7932_427B_BBF3_6809860BEF0A__INCLUDED_)

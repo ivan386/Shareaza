@@ -1,7 +1,7 @@
 //
 // TorrentWizard.cpp
 //
-// Copyright (c) Shareaza Development Team, 2003-2009.
+// Copyright (c) Shareaza Development Team, 2003-2011.
 // This file is part of Shareaza Torrent Wizard (shareaza.sourceforge.net).
 //
 // Shareaza Torrent Wizard is free software; you can redistribute it
@@ -24,6 +24,14 @@
 #include "WizardSheet.h"
 #include "CmdLine.h"
 
+#include "PageWelcome.h"
+#include "PageSingle.h"
+#include "PagePackage.h"
+#include "PageTracker.h"
+#include "PageComment.h"
+#include "PageOutput.h"
+#include "PageFinished.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
@@ -40,14 +48,15 @@ CTorrentWizardApp theApp;
 /////////////////////////////////////////////////////////////////////////////
 // CTorrentWizardApp construction
 
-CTorrentWizardApp::CTorrentWizardApp() :
-	m_sName( _T("Torrent Wizard") )
+CTorrentWizardApp::CTorrentWizardApp()
 {
 }
 
 void CTorrentWizardApp::OnHelp()
 {
-	ShellExecute( NULL, NULL, _T("http://shareaza.sourceforge.net/?id=torrentwizard/home"), NULL, NULL, SW_SHOWNORMAL );
+	ShellExecute( NULL, NULL, _T("http://shareaza.sourceforge.net/?id=torrentwizard/") +
+		static_cast< CWizardPage* >( m_pSheet->GetActivePage() )->m_sHelp,
+		NULL, NULL, SW_SHOWNORMAL );
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -61,20 +70,41 @@ BOOL CTorrentWizardApp::InitInstance()
 	cmdInfo.GetOption( _T("sourcefile"), m_sCommandLineSourceFile );
 	cmdInfo.GetOption( _T("destination"), m_sCommandLineDestination );
 	cmdInfo.GetOption( _T("tracker"), m_sCommandLineTracker );
+	cmdInfo.GetOption( _T("comment"), m_sCommandLineComment );
 
-	if( ( m_sCommandLineSourceFile.GetLength() > 0 ) && 
-		( m_sCommandLineDestination.GetLength() > 0 ) && 
-		( m_sCommandLineTracker.GetLength() > 0 ) )
-		m_bCommandLine = TRUE;
-	else
-		m_bCommandLine = FALSE;
+	if ( m_sCommandLineSourceFile.GetLength() > 0 && 
+		 m_sCommandLineDestination.GetLength() > 0 && 
+		 m_sCommandLineTracker.GetLength() > 0 )
+	{
+		if ( m_sCommandLineComment.IsEmpty() )
+			m_sCommandLineComment = _T("http://shareaza.sourceforge.net/");
+	}
 
 	SetRegistryKey( _T("Shareaza") );
 	
 	InitEnvironment();
 	InitResources();
-	
-	CWizardSheet::Run();
+
+	CWizardSheet	pSheet;
+	CWelcomePage	pWelcome;
+	CSinglePage		pSingle;
+	CPackagePage	pPackage;
+	CTrackerPage	pTracker;
+	CCommentPage	pComment;
+	COutputPage		pOutput;
+	CFinishedPage	pFinished;
+
+	m_pSheet = &pSheet;
+
+	pSheet.AddPage( &pWelcome );
+	pSheet.AddPage( &pSingle );
+	pSheet.AddPage( &pPackage );
+	pSheet.AddPage( &pTracker );
+	pSheet.AddPage( &pOutput );
+	pSheet.AddPage( &pComment );
+	pSheet.AddPage( &pFinished );
+
+	pSheet.DoModal();
 	
 	return FALSE;
 }

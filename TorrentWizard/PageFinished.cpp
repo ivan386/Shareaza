@@ -1,7 +1,7 @@
 //
 // PageFinished.cpp
 //
-// Copyright (c) Shareaza Development Team, 2007.
+// Copyright (c) Shareaza Development Team, 2007-2011.
 // This file is part of Shareaza Torrent Wizard (shareaza.sourceforge.net).
 //
 // Shareaza Torrent Wizard is free software; you can redistribute it
@@ -39,36 +39,33 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNCREATE(CFinishedPage, CWizardPage)
 
 BEGIN_MESSAGE_MAP(CFinishedPage, CWizardPage)
-	//{{AFX_MSG_MAP(CFinishedPage)
 	ON_BN_CLICKED(IDC_ABORT, OnAbort)
 	ON_BN_CLICKED(IDC_TORRENT_COPY, OnTorrentCopy)
 	ON_BN_CLICKED(IDC_TORRENT_OPEN, OnTorrentOpen)
 	ON_BN_CLICKED(IDC_TORRENT_SEED, OnTorrentSeed)
 	ON_WM_TIMER()
 	ON_WM_HSCROLL()
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
 /////////////////////////////////////////////////////////////////////////////
 // CFinishedPage property page
 
-CFinishedPage::CFinishedPage() : CWizardPage(CFinishedPage::IDD)
+CFinishedPage::CFinishedPage()
+	: CWizardPage(CFinishedPage::IDD, _T("create"))
+	, m_pBuilder( NULL )
 {
-	//{{AFX_DATA_INIT(CFinishedPage)
-	//}}AFX_DATA_INIT
-	m_pBuilder = NULL;
 }
 
 CFinishedPage::~CFinishedPage()
 {
-	if ( m_pBuilder ) delete m_pBuilder;
+	delete m_pBuilder;
 }
 
 void CFinishedPage::DoDataExchange(CDataExchange* pDX)
 {
 	CWizardPage::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CFinishedPage)
+
 	DDX_Control(pDX, IDC_ABORT, m_wndAbort);
 	DDX_Control(pDX, IDC_TORRENT_NAME, m_wndTorrentName);
 	DDX_Control(pDX, IDC_TORRENT_COPY, m_wndTorrentCopy);
@@ -82,7 +79,6 @@ void CFinishedPage::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_FILE_NAME, m_wndFileName);
 	DDX_Control(pDX, IDC_DONE_2, m_wndDone2);
 	DDX_Control(pDX, IDC_DONE_1, m_wndDone1);
-	//}}AFX_DATA_MAP
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -99,6 +95,7 @@ BOOL CFinishedPage::OnInitDialog()
 BOOL CFinishedPage::OnSetActive() 
 {
 	SetTimer( 2, 25, NULL );
+
 	return CWizardPage::OnSetActive();
 }
 
@@ -158,7 +155,7 @@ void CFinishedPage::Start()
 	m_wndProgress.SetPos( 0 );
 	m_wndProgress.SetRange( 0, 1 );
 
-	SetWizardButtons( 0 );
+	SetWizardButtons( PSWIZB_DISABLEDFINISH );
 }
 
 void CFinishedPage::OnTimer(UINT_PTR nIDEvent) 
@@ -229,6 +226,8 @@ void CFinishedPage::OnTimer(UINT_PTR nIDEvent)
 	
 	m_wndDone2.ShowWindow( SW_SHOW );
 	
+	GetSheet()->GetDlgItem( 2 )->EnableWindow( FALSE );
+
 	SetWizardButtons( PSWIZB_BACK | PSWIZB_FINISH );
 }
 

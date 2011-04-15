@@ -271,7 +271,6 @@
     <ClCompile Include="..\shareaza\Buffer.cpp" />
     <ClCompile Include="..\shareaza\Strings.cpp" />
     <ClCompile Include="CmdLine.cpp" />
-    <ClCompile Include="PageCommandline.cpp" />
     <ClCompile Include="PageComment.cpp" />
     <ClCompile Include="PageFinished.cpp" />
     <ClCompile Include="PageOutput.cpp" />
@@ -294,7 +293,6 @@
     <ClInclude Include="..\shareaza\Buffer.h" />
     <ClInclude Include="..\shareaza\Strings.h" />
     <ClInclude Include="CmdLine.h" />
-    <ClInclude Include="PageCommandline.h" />
     <ClInclude Include="PageComment.h" />
     <ClInclude Include="PageFinished.h" />
     <ClInclude Include="PageOutput.h" />

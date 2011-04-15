@@ -1,7 +1,7 @@
 //
 // PageWelcome.cpp
 //
-// Copyright (c) Shareaza Development Team, 2007.
+// Copyright (c) Shareaza Development Team, 2007-2011.
 // This file is part of Shareaza Torrent Wizard (shareaza.sourceforge.net).
 //
 // Shareaza Torrent Wizard is free software; you can redistribute it
@@ -32,31 +32,22 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNCREATE(CWelcomePage, CWizardPage)
 
 BEGIN_MESSAGE_MAP(CWelcomePage, CWizardPage)
-	//{{AFX_MSG_MAP(CWelcomePage)
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
-
 
 /////////////////////////////////////////////////////////////////////////////
 // CWelcomePage property page
 
-CWelcomePage::CWelcomePage() : CWizardPage(CWelcomePage::IDD)
-{
-	//{{AFX_DATA_INIT(CWelcomePage)
-	m_nType = 0;
-	//}}AFX_DATA_INIT
-}
-
-CWelcomePage::~CWelcomePage()
+CWelcomePage::CWelcomePage()
+	: CWizardPage(CWelcomePage::IDD, _T("type") )
+	, m_nType( 0 )
 {
 }
 
 void CWelcomePage::DoDataExchange(CDataExchange* pDX)
 {
 	CWizardPage::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CWelcomePage)
+
 	DDX_Radio(pDX, IDC_TYPE_SINGLE, m_nType);
-	//}}AFX_DATA_MAP
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -65,12 +56,24 @@ void CWelcomePage::DoDataExchange(CDataExchange* pDX)
 void CWelcomePage::OnReset()
 {
 	m_nType = 0;
+
 	UpdateData( FALSE );
 }
 
 BOOL CWelcomePage::OnSetActive() 
 {
 	SetWizardButtons( PSWIZB_NEXT );
+	GetSheet()->GetDlgItem( 2 )->EnableWindow( TRUE );
+
+	if ( ! theApp.m_sCommandLineSourceFile.IsEmpty() )
+	{
+		m_nType = PathIsDirectory( theApp.m_sCommandLineSourceFile ) ? 1 : 0;
+
+		Next();
+	}
+
+	UpdateData( FALSE );
+
 	return CWizardPage::OnSetActive();
 }
 
@@ -86,4 +89,3 @@ LRESULT CWelcomePage::OnWizardNext()
 	
 	return m_nType ? IDD_PACKAGE_PAGE : IDD_SINGLE_PAGE;
 }
-

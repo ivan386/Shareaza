@@ -1,7 +1,7 @@
 //
 // PageComment.cpp
 //
-// Copyright (c) Shareaza Development Team, 2007.
+// Copyright (c) Shareaza Development Team, 2007-2011.
 // This file is part of Shareaza Torrent Wizard (shareaza.sourceforge.net).
 //
 // Shareaza Torrent Wizard is free software; you can redistribute it
@@ -32,31 +32,22 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNCREATE(CCommentPage, CWizardPage)
 
 BEGIN_MESSAGE_MAP(CCommentPage, CWizardPage)
-	//{{AFX_MSG_MAP(CCommentPage)
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
 /////////////////////////////////////////////////////////////////////////////
 // CCommentPage property page
 
-CCommentPage::CCommentPage() : CWizardPage(CCommentPage::IDD)
-{
-	//{{AFX_DATA_INIT(CCommentPage)
-	m_sComment = _T("");
-	//}}AFX_DATA_INIT
-}
-
-CCommentPage::~CCommentPage()
+CCommentPage::CCommentPage()
+	: CWizardPage(CCommentPage::IDD, _T("comment"))
 {
 }
 
 void CCommentPage::DoDataExchange(CDataExchange* pDX)
 {
 	CWizardPage::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CCommentPage)
+
 	DDX_Text(pDX, IDC_COMMENT, m_sComment);
-	//}}AFX_DATA_MAP
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -64,12 +55,22 @@ void CCommentPage::DoDataExchange(CDataExchange* pDX)
 
 void CCommentPage::OnReset() 
 {
-	// Nothing here
 }
 
 BOOL CCommentPage::OnSetActive() 
 {
 	SetWizardButtons( PSWIZB_BACK | PSWIZB_NEXT );
+
+	if ( ! theApp.m_sCommandLineComment.IsEmpty() )
+	{
+		m_sComment = theApp.m_sCommandLineComment;
+		theApp.m_sCommandLineComment.Empty();
+
+		Next();
+	}
+
+	UpdateData( FALSE );
+
 	return CWizardPage::OnSetActive();
 }
 

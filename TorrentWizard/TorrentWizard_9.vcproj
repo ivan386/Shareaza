@@ -402,10 +402,6 @@
 				>
 			</File>
 			<File
-				RelativePath="PageCommandline.cpp"
-				>
-			</File>
-			<File
 				RelativePath="PageComment.cpp"
 				>
 			</File>
@@ -504,10 +500,6 @@
 				>
 			</File>
 			<File
-				RelativePath="PageCommandline.h"
-				>
-			</File>
-			<File
 				RelativePath="PageComment.h"
 				>
 			</File>
@@ -579,6 +571,10 @@
 			</File>
 			<File
 				RelativePath="Res\Uninstall.ICO"
+				>
+			</File>
+			<File
+				RelativePath=".\Res\Wizard.bmp"
 				>
 			</File>
 			<File

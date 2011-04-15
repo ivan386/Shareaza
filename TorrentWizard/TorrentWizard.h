@@ -1,7 +1,7 @@
 //
 // TorrentWizard.h
 //
-// Copyright (c) Shareaza Development Team, 2007-2009.
+// Copyright (c) Shareaza Development Team, 2007-2011.
 // This file is part of Shareaza Torrent Wizard (shareaza.sourceforge.net).
 //
 // Shareaza Torrent Wizard is free software; you can redistribute it
@@ -22,15 +22,15 @@
 #pragma once
 
 #include "Resource.h"
+#include "WizardSheet.h"
+
 
 class CTorrentWizardApp : public CWinApp
 {
 public:
 	CTorrentWizardApp();
 
-public:
 	CString		m_sPath;
-	CString		m_sName;
 	CString		m_sVersion;
 	WORD		m_nVersion[4];
 	CFont		m_fntNormal;
@@ -39,12 +39,14 @@ public:
 	CFont		m_fntHeader;
 	CFont		m_fntTiny;
 
-	BOOL		m_bCommandLine;
 	CString		m_sCommandLineSourceFile;
 	CString		m_sCommandLineDestination;
 	CString		m_sCommandLineTracker;
+	CString		m_sCommandLineComment;
 	
 protected:
+	CWizardSheet*	m_pSheet;
+
 	void		InitEnvironment();
 	void		InitResources();
 	

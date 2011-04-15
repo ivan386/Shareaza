@@ -1,7 +1,7 @@
 //
 // PageTracker.cpp
 //
-// Copyright (c) Shareaza Development Team, 2007.
+// Copyright (c) Shareaza Development Team, 2007-2011.
 // This file is part of Shareaza Torrent Wizard (shareaza.sourceforge.net).
 //
 // Shareaza Torrent Wizard is free software; you can redistribute it
@@ -39,7 +39,8 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CTrackerPage property page
 
-CTrackerPage::CTrackerPage() : CWizardPage(CTrackerPage::IDD)
+CTrackerPage::CTrackerPage()
+	: CWizardPage(CTrackerPage::IDD, _T("tracker"))
 {
 }
 
@@ -80,6 +81,17 @@ BOOL CTrackerPage::OnInitDialog()
 BOOL CTrackerPage::OnSetActive() 
 {
 	SetWizardButtons( PSWIZB_BACK | PSWIZB_NEXT );
+
+	if ( ! theApp.m_sCommandLineTracker.IsEmpty() )
+	{
+		m_sTracker = theApp.m_sCommandLineTracker;
+		theApp.m_sCommandLineTracker.Empty();
+
+		UpdateData( FALSE );
+
+		Next();
+	}
+
 	return CWizardPage::OnSetActive();
 }
 
