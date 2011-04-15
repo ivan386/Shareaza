@@ -1,7 +1,7 @@
 //
 // DlgMessage.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -474,7 +474,5 @@ INT_PTR MsgBox(LPCTSTR lpszText, UINT nType, UINT /*nIDHelp*/, DWORD* pnDefault)
 
 INT_PTR MsgBox(UINT nIDPrompt, UINT nType, UINT nIDHelp, DWORD* pnDefault)
 {
-	CString strText;
-	Skin.LoadString( strText, nIDPrompt );
-	return MsgBox( (LPCTSTR)strText, nType, nIDHelp, pnDefault );
+	return MsgBox( LoadString( nIDPrompt ), nType, nIDHelp, pnDefault );
 }

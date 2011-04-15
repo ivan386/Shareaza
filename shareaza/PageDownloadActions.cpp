@@ -1,7 +1,7 @@
 //
 // PageDownloadActions.cpp
 //
-// Copyright (c) Shareaza Development Team, 2008-2009.
+// Copyright (c) Shareaza Development Team, 2008-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -166,8 +166,7 @@ void CDownloadActionsPage::OnErase()
 		 _stscanf( m_sEraseTo, _T("%I64i"), &nTo ) != 1 ||
 		 nTo < nFrom )
 	{
-		LoadString( strMessage, IDS_DOWNLOAD_EDIT_BAD_RANGE );
-		AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
+		AfxMessageBox( IDS_DOWNLOAD_EDIT_BAD_RANGE, MB_ICONEXCLAMATION );
 		return;
 	}
 
@@ -182,24 +181,20 @@ void CDownloadActionsPage::OnErase()
 	{
 		pDownload->ClearVerification();
 		pLock.Unlock();
-		CString strFormat;
-		LoadString( strFormat, IDS_DOWNLOAD_EDIT_ERASED );
-		strMessage.Format( strFormat, nErased );
+		CString strMessage;
+		strMessage.Format( LoadString( IDS_DOWNLOAD_EDIT_ERASED ), nErased );
 		AfxMessageBox( strMessage, MB_ICONINFORMATION );
 	}
 	else
 	{
 		pLock.Unlock();
-		LoadString( strMessage, IDS_DOWNLOAD_EDIT_CANT_ERASE );
-		AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
+		AfxMessageBox( IDS_DOWNLOAD_EDIT_CANT_ERASE, MB_ICONEXCLAMATION );
 	}
 }
 
 void CDownloadActionsPage::OnForgetVerify()
 {
-	CString strMessage;
-	LoadString( strMessage, IDS_DOWNLOAD_EDIT_FORGET_VERIFY );
-	if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) != IDYES ) return;
+	if ( AfxMessageBox( IDS_DOWNLOAD_EDIT_FORGET_VERIFY, MB_ICONQUESTION|MB_YESNO ) != IDYES ) return;
 
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 	CDownload* pDownload = ((CDownloadSheet*)GetParent())->m_pDownload;
@@ -210,9 +205,7 @@ void CDownloadActionsPage::OnForgetVerify()
 
 void CDownloadActionsPage::OnForgetSources()
 {
-	CString strMessage;
-	LoadString( strMessage, IDS_DOWNLOAD_EDIT_FORGET_SOURCES );
-	if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) != IDYES ) return;
+	if ( AfxMessageBox( IDS_DOWNLOAD_EDIT_FORGET_SOURCES, MB_ICONQUESTION|MB_YESNO ) != IDYES ) return;
 
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 	CDownload* pDownload = ((CDownloadSheet*)GetParent())->m_pDownload;
@@ -233,17 +226,13 @@ void CDownloadActionsPage::OnCompleteVerify()
 		! pDownload->IsTorrent() )
 	{
 		pLock.Unlock();
-		CString strMessage;
-		LoadString( strMessage, IDS_DOWNLOAD_EDIT_COMPLETE_NOHASH );
-		AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
+		AfxMessageBox( IDS_DOWNLOAD_EDIT_COMPLETE_NOHASH, MB_ICONEXCLAMATION );
 		return;
 	}
 	else
 	{
 		pLock.Unlock();
-		CString strMessage;
-        LoadString( strMessage, IDS_DOWNLOAD_EDIT_COMPLETE_VERIFY );
-		if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) != IDYES ) return;
+		if ( AfxMessageBox( IDS_DOWNLOAD_EDIT_COMPLETE_VERIFY, MB_ICONQUESTION|MB_YESNO ) != IDYES ) return;
 	}
 
 	pLock.Lock();
@@ -256,27 +245,24 @@ void CDownloadActionsPage::OnCompleteVerify()
 
 void CDownloadActionsPage::OnMergeAndVerify()
 {
-	CString strMessage, strFormat;
-
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 	CDownload* pDownload = ((CDownloadSheet*)GetParent())->m_pDownload;
 	if ( ! Downloads.Check( pDownload ) ||
-		pDownload->IsCompleted() ||
-		pDownload->IsTasking() ||
+		  pDownload->IsCompleted() ||
+		  pDownload->IsTasking() ||
 		! pDownload->PrepareFile() )
 	{
 		// Download almost completed
 		pLock.Unlock();
 		return;
 	}
-	if ( pDownload->NeedTigerTree() &&
-		 pDownload->NeedHashset() &&
+	if (  pDownload->NeedTigerTree() &&
+		  pDownload->NeedHashset() &&
 		! pDownload->IsTorrent() )
 	{
 		// No hashsets
 		pLock.Unlock();
-		LoadString( strMessage, IDS_DOWNLOAD_EDIT_COMPLETE_NOHASH );
-		AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
+		AfxMessageBox( IDS_DOWNLOAD_EDIT_COMPLETE_NOHASH, MB_ICONEXCLAMATION );
 		return;
 	}
 	const Fragments::List oList( pDownload->GetEmptyFragmentList() );
@@ -289,8 +275,7 @@ void CDownloadActionsPage::OnMergeAndVerify()
 	if ( ! Downloads.Check( pDownload ) || pDownload->IsTasking() )
 	{
 		pLock.Unlock();
-		strMessage = _T("The selected download item currently has some Task attached, please wait and do it later.");
-		AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
+		AfxMessageBox( IDS_DOWNLOAD_EDIT_BUSY, MB_ICONEXCLAMATION );
 		return;
 	}
 
@@ -299,21 +284,43 @@ void CDownloadActionsPage::OnMergeAndVerify()
 	// Select file
 	CString strExt( PathFindExtension( pDownload->m_sName ) );
 	if ( ! strExt.IsEmpty() ) strExt = strExt.Mid( 1 );
+
 	CFileDialog dlgSelectFile( TRUE, strExt, pDownload->m_sName,
-		OFN_HIDEREADONLY | OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST | OFN_NOCHANGEDIR,
-		NULL, this );
+		OFN_HIDEREADONLY | OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST | OFN_NOCHANGEDIR |
+		OFN_ALLOWMULTISELECT, NULL, this );
+
+	CAutoPtr< TCHAR > szFiles( new TCHAR[ 2048 ] );
+	*szFiles = 0;
+	dlgSelectFile.GetOFN().lpstrFile = szFiles;
+	dlgSelectFile.GetOFN().nMaxFile = 2048;
+
 	if ( dlgSelectFile.DoModal() == IDOK )
 	{
 		pLock.Lock();
 		if ( ! Downloads.Check( pDownload ) || pDownload->IsTasking() )
 		{
 			pLock.Unlock();
-			strMessage = _T("The selected download item currently has some Task attached, please wait and do it later.");
-			AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
+			AfxMessageBox( IDS_DOWNLOAD_EDIT_BUSY, MB_ICONEXCLAMATION );
 			return;
 		}
 
-		CDownloadTask::MergeFile( pDownload, dlgSelectFile.GetPathName() );
+		CList< CString > oFiles;
+		CString sFolder = (LPCTSTR)szFiles;
+		for ( LPCTSTR szFile = szFiles; *szFile ; )
+		{
+			szFile += _tcslen( szFile ) + 1;
+			if ( *szFile )
+				// Folder + files
+				oFiles.AddTail( sFolder + _T("\\") + szFile );
+			else
+				// Single file
+				oFiles.AddTail( sFolder );
+		}
+
+		if ( oFiles.GetCount() )
+		{
+			CDownloadTask::MergeFile( pDownload, &oFiles );
+		}
 
 		pLock.Unlock();
 	}
@@ -321,9 +328,7 @@ void CDownloadActionsPage::OnMergeAndVerify()
 
 void CDownloadActionsPage::OnCancelDownload()
 {
-	CString strMessage;
-	LoadString( strMessage, IDS_DOWNLOAD_EDIT_CANCEL_DOWNLOAD );
-	if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) != IDYES ) return;
+	if ( AfxMessageBox( IDS_DOWNLOAD_EDIT_CANCEL_DOWNLOAD, MB_ICONQUESTION|MB_YESNO ) != IDYES ) return;
 
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 	CDownload* pDownload = ((CDownloadSheet*)GetParent())->m_pDownload;

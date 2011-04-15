@@ -1,7 +1,7 @@
 //
 // DownloadTask.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -45,8 +45,7 @@ class CDownloadTask : public CRazaThread
 public:
 	static void			Copy(CDownload* pDownload);
 	static void			PreviewRequest(CDownload* pDownload, LPCTSTR szURL);
-	static void			MergeFile(CDownload* pDownload, LPCTSTR szPath,
-		BOOL bValidation = TRUE, const Fragments::List* pGaps = NULL);
+	static void			MergeFile(CDownload* pDownload, CList< CString >* pFiles, BOOL bValidation = TRUE, const Fragments::List* pGaps = NULL);
 
 	bool				HasSucceeded() const;
 	void				Abort();
@@ -71,7 +70,7 @@ protected:
 	DWORD				m_nFileError;
 	CDownload*			m_pDownload;
 	QWORD				m_nSize;
-	CString				m_sMergeFilename;	// Source filename
+	CList< CString >	m_oMergeFiles;		// Source filenames
 	Fragments::List		m_oMergeGaps;		// Missed ranges in source file
 	BOOL				m_bMergeValidation;	// Run validation after merging
 	POSITION			m_posTorrentFile;	// Torrent file list current position
@@ -89,6 +88,7 @@ protected:
 	void				RunCopy();
 	void				RunPreviewRequest();
 	void				RunMerge();
+	void				RunMergeSingle(CDownload* pDownload, LPCTSTR szFilename, BOOL bMergeValidation, const Fragments::List& oMissedGaps);
 	BOOL				CopyFile(HANDLE hSource, LPCTSTR pszTarget, QWORD nLength);
 	void				CreatePathForFile(const CString& strBase, const CString& strPath);
 	BOOL				MakeBatchTorrent();

@@ -4257,6 +4257,7 @@ BEGIN
                             "You have typed an %s hash value, however it is invalid. Please check it and try again."
     IDS_DOWNLOAD_EDIT_CHANGE_HASH 
                             "You have provided an %s hash value which is different to the one currently associated with this download. Are you sure you want to change the %s hash now?"
+    IDS_DOWNLOAD_EDIT_BUSY  "The selected download item currently has some Task attached, please wait and do it later."
 END
 
 STRINGTABLE 
