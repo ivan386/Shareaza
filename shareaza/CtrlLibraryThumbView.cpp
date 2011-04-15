@@ -1,7 +1,7 @@
 //
 // CtrlLibraryThumbView.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -44,7 +44,6 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNCREATE(CLibraryThumbView, CLibraryFileView)
 
 BEGIN_MESSAGE_MAP(CLibraryThumbView, CLibraryFileView)
-	//{{AFX_MSG_MAP(CLibraryThumbView)
 	ON_WM_CREATE()
 	ON_WM_DESTROY()
 	ON_WM_SIZE()
@@ -60,7 +59,6 @@ BEGIN_MESSAGE_MAP(CLibraryThumbView, CLibraryFileView)
 	ON_WM_TIMER()
 	ON_WM_SETFOCUS()
 	ON_WM_GETDLGCODE()
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 #define CX	( (int)Settings.Library.ThumbSize + 32 )
@@ -120,7 +118,7 @@ void CLibraryThumbView::OnDestroy()
 
 void CLibraryThumbView::Update()
 {
-	CSingleLock pLock( &m_pSection, TRUE );
+	CSingleLock pLock( &Library.m_pSection, TRUE );
 
 	CSchemaPtr pSchema	= SchemaCache.Get( Settings.Library.FilterURI );
 	DWORD nCookie		= GetFolderCookie();
@@ -534,7 +532,7 @@ void CLibraryThumbView::ScrollTo(int nPosition)
 
 void CLibraryThumbView::OnTimer(UINT_PTR /*nIDEvent*/)
 {
-	CSingleLock pLock( &m_pSection, TRUE );
+	CSingleLock pLock( &Library.m_pSection, TRUE );
 
 	if ( m_nInvalidate && ( GetAsyncKeyState( VK_LBUTTON ) & 0x8000 ) == 0 )
 	{
@@ -545,7 +543,7 @@ void CLibraryThumbView::OnTimer(UINT_PTR /*nIDEvent*/)
 
 void CLibraryThumbView::OnPaint()
 {
-	CSingleLock pLock( &m_pSection, TRUE );
+	CSingleLock pLock( &Library.m_pSection, TRUE );
 	CPaintDC dc( this );
 
 	CRect rcClient;
@@ -825,7 +823,7 @@ void CLibraryThumbView::StartThread()
 	if ( IsThreadAlive() )
 		return;
 
-	CSingleLock pLock( &m_pSection, TRUE );
+	CSingleLock pLock( &Library.m_pSection, TRUE );
 
 	CLibraryThumbItem** pList = m_pList;
 	int nCount = 0;
@@ -856,7 +854,7 @@ void CLibraryThumbView::OnRun()
 		DWORD nIndex = 0;
 		CString strPath;
 		{
-			CQuickLock pLock( m_pSection );
+			CQuickLock pLock( Library.m_pSection );
 
 			for ( int i = 0 ; i < m_nCount && IsThreadEnabled(); ++i )
 			{
@@ -900,7 +898,7 @@ void CLibraryThumbView::OnRun()
 
 		// Save thumbnail to item
 		{
-			CQuickLock pLock( m_pSection );
+			CQuickLock pLock( Library.m_pSection );
 
 			for ( int i = 0 ; i < m_nCount ; ++i )
 			{

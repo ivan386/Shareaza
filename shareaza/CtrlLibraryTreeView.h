@@ -1,7 +1,7 @@
 //
 // CtrlLibraryTreeView.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -150,6 +150,8 @@ protected:
 	afx_msg void OnLibraryExportCollection();
 	afx_msg void OnSetFocus(CWnd* pOldWnd);
 	afx_msg UINT OnGetDlgCode();
+	afx_msg void OnUpdateLibraryCreateTorrent(CCmdUI* pCmdUI);
+	afx_msg void OnLibraryCreateTorrent();
 
 	DECLARE_MESSAGE_MAP()
 	DECLARE_DROP()

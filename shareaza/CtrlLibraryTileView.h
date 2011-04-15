@@ -1,7 +1,7 @@
 //
 // CtrlLibraryTileView.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,27 +19,22 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_CTRLLIBRARYTILEVIEW_H__C409D195_CBAA_45F3_9757_AF8F0D67174C__INCLUDED_)
-#define AFX_CTRLLIBRARYTILEVIEW_H__C409D195_CBAA_45F3_9757_AF8F0D67174C__INCLUDED_
-
 #pragma once
 
 #include "CtrlLibraryView.h"
 
 class CAlbumFolder;
 
+
 class CLibraryTileItem
 {
-// Construction
 public:
 	CLibraryTileItem(CAlbumFolder* pFolder)
-	: m_pAlbum( pFolder ), m_nCookie( ~0ul ), m_bSelected()
+		: m_pAlbum( pFolder ), m_nCookie( ~0ul ), m_bSelected()
 	{
 		Update();
 	}
 
-// Attributes
-public:
 	CAlbumFolder*	m_pAlbum;
 	DWORD			m_nCookie;
 	CString			m_sTitle;
@@ -50,24 +45,22 @@ public:
 	bool			m_bSelected;
 	bool			m_bCollection;
 
-// Operations
-public:
 	bool	Update();
 	void	Paint(CDC* pDC, const CRect& rcBlock, CDC* pMemDC);
-private:
-	void	DrawText(CDC* pDC, const CRect* prcClip, int nX, int nY, const CString& strText, CRect* prcUnion = NULL);
 
+protected:
+	void	DrawText(CDC* pDC, const CRect* prcClip, int nX, int nY, const CString& strText, CRect* prcUnion = NULL);
 };
 
 
 class CLibraryTileView : public CLibraryView
 {
-// Construction
+	DECLARE_DYNAMIC(CLibraryTileView)
+
 public:
 	CLibraryTileView();
 
-// Attributes
-private:
+protected:
 	typedef boost::ptr_list< CLibraryTileItem > Container;
 	typedef Container::iterator iterator;
 	typedef Container::const_iterator const_iterator;
@@ -87,7 +80,6 @@ private:
 	bool empty() const { return m_oList.empty(); }
 	iterator erase(iterator item) { return m_oList.erase( item ); }
 
-	mutable CMutex			m_pSection;
 	CSize					m_szBlock;
 	int						m_nColumns;
 	int						m_nRows;
@@ -100,15 +92,14 @@ private:
 	BOOL					m_bDrag;
 	CPoint					m_ptDrag;
 
-// Operations
-public:
-	virtual BOOL				CheckAvailable(CLibraryTreeItem* pSel);
-	virtual void				Update();
-	virtual BOOL				Select(DWORD nObject);
-	virtual void				SelectAll();
-	virtual CLibraryListItem	DropHitTest(const CPoint& point);
-	virtual HBITMAP				CreateDragImage(const CPoint& ptMouse, CPoint& ptMiddle);
-private:
+	virtual BOOL		Create(CWnd* pParentWnd);
+	virtual BOOL		CheckAvailable(CLibraryTreeItem* pSel);
+	virtual void		Update();
+	virtual BOOL		Select(DWORD nObject);
+	virtual void		SelectAll();
+	virtual CLibraryListItem DropHitTest(const CPoint& point);
+	virtual HBITMAP		CreateDragImage(const CPoint& ptMouse, CPoint& ptMiddle);
+
 	void				clear();
 //	int					GetTileIndex(CLibraryTileItem* pTile) const;
 	bool				Select(iterator pTile, TRISTATE bSelect = TRI_TRUE);
@@ -125,6 +116,7 @@ private:
 			return _tcsicoll( lhs.m_sTitle, rhs.m_sTitle ) < 0;
 		}
 	};
+
 	void				UpdateScroll();
 	void				ScrollBy(int nDelta);
 	void				ScrollTo(int nDelta);
@@ -132,15 +124,6 @@ private:
 	virtual DWORD_PTR	HitTestIndex(const CPoint& point) const;
 	bool				GetItemRect(iterator pTile, CRect* pRect);
 
-// Overrides
-public:
-	//{{AFX_VIRTUAL(CLibraryTileView)
-	virtual BOOL Create(CWnd* pParentWnd);
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
-	//{{AFX_MSG(CLibraryTileView)
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnDestroy();
 	afx_msg void OnSize(UINT nType, int cx, int cy);
@@ -162,12 +145,6 @@ protected:
 	afx_msg void OnUpdateLibraryAlbumProperties(CCmdUI* pCmdUI);
 	afx_msg void OnLibraryAlbumProperties();
 	afx_msg UINT OnGetDlgCode();
-	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()
-
 };
-
-//{{AFX_INSERT_LOCATION}}
-
-#endif // !defined(AFX_CTRLLIBRARYTILEVIEW_H__C409D195_CBAA_45F3_9757_AF8F0D67174C__INCLUDED_)

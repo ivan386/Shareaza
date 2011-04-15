@@ -1,7 +1,7 @@
 //
 // CtrlLibraryTreeView.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -95,6 +95,8 @@ BEGIN_MESSAGE_MAP(CLibraryTreeView, CWnd)
 	ON_COMMAND(ID_LIBRARY_EXPORT_COLLECTION, OnLibraryExportCollection)
 	ON_WM_SETFOCUS()
 	ON_WM_GETDLGCODE()
+	ON_UPDATE_COMMAND_UI(ID_LIBRARY_CREATETORRENT, OnUpdateLibraryCreateTorrent)
+	ON_COMMAND(ID_LIBRARY_CREATETORRENT, OnLibraryCreateTorrent)
 END_MESSAGE_MAP()
 
 #define ITEM_HEIGHT	17
@@ -2161,4 +2163,36 @@ void CLibraryTreeView::OnSetFocus(CWnd* pOldWnd)
 UINT CLibraryTreeView::OnGetDlgCode()
 {
 	return DLGC_WANTARROWS;
+}
+
+void CLibraryTreeView::OnUpdateLibraryCreateTorrent(CCmdUI* pCmdUI)
+{
+	pCmdUI->Enable( ! m_bVirtual &&
+		! Settings.BitTorrent.TorrentCreatorPath.IsEmpty() &&
+		GetSelectedCount() == 1 );
+}
+
+void CLibraryTreeView::OnLibraryCreateTorrent()
+{
+	CSingleLock pLock( &Library.m_pSection, TRUE );
+
+	if ( CLibraryTreeItem* pItem = GetFirstSelected() )
+	{
+		CString sPath = pItem->m_pPhysical->m_sPath;
+		pLock.Unlock();
+
+		if ( sPath.GetLength() > 0 )
+		{
+			CString sCommandLine = _T(" -sourcefile \"") + sPath +
+				_T("\" -destination \"") + Settings.Downloads.TorrentPath +
+				_T("\" -tracker \"" + Settings.BitTorrent.DefaultTracker +
+				_T("\"") );
+
+			ShellExecute( GetSafeHwnd(), _T("open"),
+				Settings.BitTorrent.TorrentCreatorPath, sCommandLine,
+				Settings.Downloads.TorrentPath,
+				SW_SHOWNORMAL );
+		}
+
+	}
 }

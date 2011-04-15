@@ -471,7 +471,7 @@ void CSettings::Load()
 	Add( _T("BitTorrent"), _T("RequestSize"), &BitTorrent.RequestSize, 16*Kilo, Kilo, 8, 128, _T(" KB") );
 	Add( _T("BitTorrent"), _T("SourceExchangePeriod"), &BitTorrent.SourceExchangePeriod, 10, 1, 1, 60*5, _T(" m") );
 	Add( _T("BitTorrent"), _T("TorrentCodePage"), &BitTorrent.TorrentCodePage, 0, 1, 0, 9999999 );
-	Add( _T("BitTorrent"), _T("TorrentCreatorPath"), &BitTorrent.TorrentCreatorPath, _T("TorrentWizard.exe") );
+	Add( _T("BitTorrent"), _T("TorrentCreatorPath"), &BitTorrent.TorrentCreatorPath );
 	Add( _T("BitTorrent"), _T("TrackerKey"), &BitTorrent.TrackerKey, true );
 	Add( _T("BitTorrent"), _T("UploadCount"), &BitTorrent.UploadCount, 4, 1, 2, 16 );
 
@@ -625,6 +625,9 @@ void CSettings::Load()
 		Downloads.TorrentPath = General.UserPath + _T("\\Torrents");
 	if ( Downloads.CollectionPath.IsEmpty() )
 		Downloads.CollectionPath = General.UserPath + _T("\\Collections");
+
+	if ( BitTorrent.TorrentCreatorPath.IsEmpty() || ! PathFileExists( BitTorrent.TorrentCreatorPath ) )
+		BitTorrent.TorrentCreatorPath = General.Path + _T("\\TorrentWizard.exe");
 
 	Live.FirstRun = General.FirstRun;
 	General.FirstRun = false;

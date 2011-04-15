@@ -1,7 +1,7 @@
 //
 // CtrlLibraryFileView.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -470,14 +470,11 @@ void CLibraryFileView::OnLibraryBitziWeb()
 	}
 }
 
-
 void CLibraryFileView::OnUpdateLibraryCreateTorrent(CCmdUI* pCmdUI)
 {
-	if ( m_bGhostFolder )
-		pCmdUI->Enable( FALSE );
-	else
-		pCmdUI->Enable( GetSelectedCount() == 1 && ( Settings.BitTorrent.DefaultTracker.GetLength() > 5 )
-						&& ( Settings.BitTorrent.TorrentCreatorPath.GetLength() > 5 ) );
+	pCmdUI->Enable( ! m_bGhostFolder &&
+		! Settings.BitTorrent.TorrentCreatorPath.IsEmpty() &&
+		GetSelectedCount() == 1 );
 }
 
 void CLibraryFileView::OnLibraryCreateTorrent()
@@ -486,18 +483,19 @@ void CLibraryFileView::OnLibraryCreateTorrent()
 
 	if ( CLibraryFile* pFile = GetSelectedFile() )
 	{
-		CString sCommandLine, sPath = pFile->GetPath();
+		CString sPath = pFile->GetPath();
 		pLock.Unlock();
 
 		if ( sPath.GetLength() > 0 )
 		{
-			sCommandLine = _T(" -sourcefile \"") + sPath +
+			CString sCommandLine = _T(" -sourcefile \"") + sPath +
 				_T("\" -destination \"") + Settings.Downloads.TorrentPath +
 				_T("\" -tracker \"" + Settings.BitTorrent.DefaultTracker +
 				_T("\"") );
 
 			ShellExecute( GetSafeHwnd(), _T("open"),
-				Settings.BitTorrent.TorrentCreatorPath, sCommandLine, NULL,
+				Settings.BitTorrent.TorrentCreatorPath, sCommandLine,
+				Settings.Downloads.TorrentPath,
 				SW_SHOWNORMAL );
 		}
 

@@ -1,7 +1,7 @@
 //
 // CtrlLibraryTileView.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -39,8 +39,9 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
+IMPLEMENT_DYNAMIC(CLibraryTileView, CLibraryView)
+
 BEGIN_MESSAGE_MAP(CLibraryTileView, CLibraryView)
-	//{{AFX_MSG_MAP(CLibraryTileView)
 	ON_WM_CREATE()
 	ON_WM_DESTROY()
 	ON_WM_SIZE()
@@ -62,7 +63,6 @@ BEGIN_MESSAGE_MAP(CLibraryTileView, CLibraryView)
 	ON_UPDATE_COMMAND_UI(ID_LIBRARY_ALBUM_PROPERTIES, OnUpdateLibraryAlbumProperties)
 	ON_COMMAND(ID_LIBRARY_ALBUM_PROPERTIES, OnLibraryAlbumProperties)
 	ON_WM_GETDLGCODE()
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
@@ -78,7 +78,7 @@ CLibraryTileView::CLibraryTileView()
 
 void CLibraryTileView::clear()
 {
-	CSingleLock oLock( &m_pSection, TRUE );
+	CSingleLock oLock( &Library.m_pSection, TRUE );
 
 	m_oList.clear();
 
@@ -144,7 +144,7 @@ BOOL CLibraryTileView::CheckAvailable(CLibraryTreeItem* pSel)
 
 void CLibraryTileView::Update()
 {
-	CSingleLock oLock( &m_pSection, TRUE );
+	CSingleLock oLock( &Library.m_pSection, TRUE );
 
 	CLibraryTreeItem* pFolders	= GetFolderSelection();
 	CAlbumFolder* pFolder		= NULL;
@@ -240,7 +240,7 @@ BOOL CLibraryTileView::Select(DWORD /*nObject*/)
 
 void CLibraryTileView::SelectAll()
 {
-	CSingleLock oLock( &m_pSection, TRUE );
+	CSingleLock oLock( &Library.m_pSection, TRUE );
 
 	for ( iterator pItem = begin(); pItem != end(); ++pItem )
 	{
@@ -255,7 +255,7 @@ void CLibraryTileView::SelectAll()
 /*
 int CLibraryTileView::GetTileIndex(CLibraryTileItem* pTile) const
 {
-	CSingleLock oLock( &m_pSection, TRUE );
+	CSingleLock oLock( &Library.m_pSection, TRUE );
 
 	CLibraryTileItem** pList = m_pList;
 
@@ -269,7 +269,7 @@ int CLibraryTileView::GetTileIndex(CLibraryTileItem* pTile) const
 
 bool CLibraryTileView::Select(iterator pTile, TRISTATE bSelect)
 {
-	CSingleLock oLock( &m_pSection, TRUE );
+	CSingleLock oLock( &Library.m_pSection, TRUE );
 
 	switch ( bSelect )
 	{
@@ -304,7 +304,7 @@ bool CLibraryTileView::Select(iterator pTile, TRISTATE bSelect)
 
 bool CLibraryTileView::DeselectAll(iterator pTile)
 {
-	CSingleLock oLock( &m_pSection, TRUE );
+	CSingleLock oLock( &Library.m_pSection, TRUE );
 
 	bool bChanged = false;
 
@@ -388,7 +388,7 @@ bool CLibraryTileView::SelectTo(iterator pTile)
 
 void CLibraryTileView::SelectTo(int nDelta)
 {
-	CSingleLock oLock( &m_pSection, TRUE );
+	CSingleLock oLock( &Library.m_pSection, TRUE );
 
 	if ( empty() ) return;
 
@@ -439,7 +439,7 @@ void CLibraryTileView::OnSize(UINT nType, int cx, int cy)
 {
 	CLibraryView::OnSize( nType, cx, cy );
 
-	CSingleLock oLock( &m_pSection, TRUE );
+	CSingleLock oLock( &Library.m_pSection, TRUE );
 
 	m_nColumns	= cx / m_szBlock.cx;
 	m_nRows		= cy / m_szBlock.cy + 1;
@@ -451,7 +451,7 @@ void CLibraryTileView::OnSize(UINT nType, int cx, int cy)
 
 void CLibraryTileView::UpdateScroll()
 {
-	CSingleLock oLock( &m_pSection, TRUE );
+	CSingleLock oLock( &Library.m_pSection, TRUE );
 
 	if ( m_nColumns == 0 ) return;
 
@@ -474,7 +474,7 @@ void CLibraryTileView::UpdateScroll()
 
 void CLibraryTileView::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* /*pScrollBar*/)
 {
-	CSingleLock oLock( &m_pSection, TRUE );
+	CSingleLock oLock( &Library.m_pSection, TRUE );
 
 	CRect rc;
 	GetClientRect( &rc );
@@ -513,7 +513,7 @@ BOOL CLibraryTileView::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 	if ( CLibraryView::OnMouseWheel( nFlags, zDelta, pt ) )
 		return TRUE;
 
-	CSingleLock oLock( &m_pSection, TRUE );
+	CSingleLock oLock( &Library.m_pSection, TRUE );
 
 	ScrollBy( zDelta * -m_szBlock.cy / WHEEL_DELTA / 2 );
 	return TRUE;
@@ -521,14 +521,14 @@ BOOL CLibraryTileView::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 
 void CLibraryTileView::ScrollBy(int nDelta)
 {
-	CSingleLock oLock( &m_pSection, TRUE );
+	CSingleLock oLock( &Library.m_pSection, TRUE );
 
 	ScrollTo( max( 0, m_nScroll + nDelta ) );
 }
 
 void CLibraryTileView::ScrollTo(int nPosition)
 {
-	CSingleLock oLock( &m_pSection, TRUE );
+	CSingleLock oLock( &Library.m_pSection, TRUE );
 
 	if ( nPosition == m_nScroll ) return;
 	m_nScroll = nPosition;
@@ -539,7 +539,7 @@ void CLibraryTileView::ScrollTo(int nPosition)
 
 void CLibraryTileView::OnPaint()
 {
-	CSingleLock oLock( &m_pSection, TRUE );
+	CSingleLock oLock( &Library.m_pSection, TRUE );
 
 	CPaintDC dc( this );
 
@@ -592,7 +592,7 @@ void CLibraryTileView::OnPaint()
 
 CLibraryTileView::iterator CLibraryTileView::HitTest(const CPoint& point)
 {
-	CSingleLock oLock( &m_pSection, TRUE );
+	CSingleLock oLock( &Library.m_pSection, TRUE );
 
 	CRect rcClient;
 	GetClientRect( &rcClient );
@@ -625,7 +625,7 @@ DWORD_PTR CLibraryTileView::HitTestIndex(const CPoint& point) const
 
 CLibraryListItem CLibraryTileView::DropHitTest( const CPoint& point )
 {
-	CSingleLock oLock( &m_pSection, TRUE );
+	CSingleLock oLock( &Library.m_pSection, TRUE );
 
 	const_iterator pTile = HitTest( point );
 	if ( pTile != end() )
@@ -637,7 +637,7 @@ CLibraryListItem CLibraryTileView::DropHitTest( const CPoint& point )
 
 bool CLibraryTileView::GetItemRect(iterator pTile, CRect* pRect)
 {
-	CSingleLock oLock( &m_pSection, TRUE );
+	CSingleLock oLock( &Library.m_pSection, TRUE );
 
 	CRect rcClient;
 	GetClientRect( &rcClient );
@@ -668,7 +668,7 @@ bool CLibraryTileView::GetItemRect(iterator pTile, CRect* pRect)
 
 void CLibraryTileView::OnLButtonDown(UINT nFlags, CPoint point)
 {
-	CSingleLock oLock( &m_pSection, TRUE );
+	CSingleLock oLock( &Library.m_pSection, TRUE );
 
 	iterator pHit = HitTest( point );
 
@@ -687,7 +687,7 @@ void CLibraryTileView::OnLButtonDown(UINT nFlags, CPoint point)
 
 void CLibraryTileView::OnMouseMove(UINT nFlags, CPoint point)
 {
-	CSingleLock oLock( &m_pSection, TRUE );
+	CSingleLock oLock( &Library.m_pSection, TRUE );
 
 	if ( m_bDrag && ( nFlags & MK_LBUTTON ) )
 	{
@@ -707,7 +707,7 @@ void CLibraryTileView::OnMouseMove(UINT nFlags, CPoint point)
 
 void CLibraryTileView::OnLButtonUp(UINT nFlags, CPoint /*point*/)
 {
-	CSingleLock oLock( &m_pSection, TRUE );
+	CSingleLock oLock( &Library.m_pSection, TRUE );
 
 	m_bDrag = FALSE;
 
@@ -724,7 +724,7 @@ void CLibraryTileView::OnLButtonDblClk(UINT /*nFlags*/, CPoint /*point*/)
 
 void CLibraryTileView::OnRButtonDown(UINT nFlags, CPoint point)
 {
-	CSingleLock oLock( &m_pSection, TRUE );
+	CSingleLock oLock( &Library.m_pSection, TRUE );
 
 	iterator pHit = HitTest( point );
 
@@ -737,7 +737,7 @@ void CLibraryTileView::OnRButtonDown(UINT nFlags, CPoint point)
 
 void CLibraryTileView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
-	CSingleLock oLock( &m_pSection, TRUE );
+	CSingleLock oLock( &Library.m_pSection, TRUE );
 
 	switch ( nChar )
 	{
@@ -781,7 +781,7 @@ void CLibraryTileView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 
 void CLibraryTileView::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
-	CSingleLock oLock( &m_pSection, TRUE );
+	CSingleLock oLock( &Library.m_pSection, TRUE );
 
 	if ( _istalnum( TCHAR( nChar ) ) )
 	{
@@ -815,7 +815,7 @@ void CLibraryTileView::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
 
 HBITMAP CLibraryTileView::CreateDragImage(const CPoint& ptMouse, CPoint& ptMiddle)
 {
-	CSingleLock oLock( &m_pSection, TRUE );
+	CSingleLock oLock( &Library.m_pSection, TRUE );
 
 	CRect rcClient, rcOne, rcAll( 32000, 32000, -32000, -32000 );
 

@@ -1,7 +1,7 @@
 //
 // CtrlLibraryThumbView.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_CTRLLIBRARYTHUMBVIEW_H__700A82CF_4E9C_4BE0_9EBA_DF2E49AC378F__INCLUDED_)
-#define AFX_CTRLLIBRARYTHUMBVIEW_H__700A82CF_4E9C_4BE0_9EBA_DF2E49AC378F__INCLUDED_
-
 #pragma once
 
 #include "CtrlLibraryFileView.h"
@@ -34,15 +31,12 @@ class CLibraryThumbView :
 	public CLibraryFileView,
 	public CThreadImpl
 {
-// Construction
+	DECLARE_DYNCREATE(CLibraryThumbView)
+
 public:
 	CLibraryThumbView();
 
-	DECLARE_DYNCREATE(CLibraryThumbView)
-
-// Attributes
 protected:
-	CCriticalSection	m_pSection;
 	DWORD				m_nInvalidate;
 	int					m_nColumns;
 	int					m_nRows;
@@ -57,44 +51,30 @@ protected:
 	BOOL				m_bDrag;
 	CPoint				m_ptDrag;
 
-// Operations
-public:
+	virtual BOOL		Create(CWnd* pParentWnd);
 	virtual void		Update();
 	virtual BOOL		Select(DWORD nObject);
 	virtual void		SelectAll();
 	virtual DWORD_PTR	HitTestIndex(const CPoint& point) const;
 	virtual HBITMAP		CreateDragImage(const CPoint& ptMouse, CPoint& ptMiddle);
-protected:
+
 	void				Clear();
 	int					GetThumbIndex(CLibraryThumbItem* pThumb) const;
 	BOOL				Select(CLibraryThumbItem* pThumb, TRISTATE bSelect = TRI_TRUE);
 	BOOL				DeselectAll(CLibraryThumbItem* pThumb = NULL);
 	BOOL				SelectTo(CLibraryThumbItem* pThumb);
 	void				SelectTo(int nDelta);
-protected:
 	void				UpdateScroll();
 	void				ScrollBy(int nDelta);
 	void				ScrollTo(int nDelta);
 	CLibraryThumbItem*	HitTest(const CPoint& point) const;
 	BOOL				GetItemRect(CLibraryThumbItem* pThumb, CRect* pRect);
-protected:
-	void		StartThread();
-	void		StopThread();
-	void		OnRun();
+	void				StartThread();
+	void				StopThread();
+	void				OnRun();
 
-protected:
-	static int	SortList(LPCVOID pA, LPCVOID pB);
+	static int			SortList(LPCVOID pA, LPCVOID pB);
 
-// Overrides
-public:
-	//{{AFX_VIRTUAL(CLibraryThumbView)
-	protected:
-	virtual BOOL Create(CWnd* pParentWnd);
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
-	//{{AFX_MSG(CLibraryThumbView)
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnDestroy();
 	afx_msg void OnSize(UINT nType, int cx, int cy);
@@ -109,7 +89,6 @@ protected:
 	afx_msg void OnLButtonDblClk(UINT nFlags, CPoint point);
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg UINT OnGetDlgCode();
-	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()
 };
@@ -117,18 +96,14 @@ protected:
 
 class CLibraryThumbItem
 {
-// Construction
 public:
 	CLibraryThumbItem(CLibraryFile* pFile);
 	virtual ~CLibraryThumbItem();
 
-// Attributes
-public:
 	DWORD	m_nIndex;
 	DWORD	m_nCookie;
 	CString	m_sText;
 	BOOL	m_bShared;
-public:
 	BOOL	m_bSelected;
 	int		m_nThumb;
 	CBitmap	m_bmThumb;
@@ -136,13 +111,7 @@ public:
 
 	enum { thumbWaiting, thumbValid, thumbError };
 
-// Operations
 public:
 	BOOL	Update(CLibraryFile* pFile);
 	void	Paint(CDC* pDC, const CRect& rcBlock);
-
 };
-
-//{{AFX_INSERT_LOCATION}}
-
-#endif // !defined(AFX_CTRLLIBRARYTHUMBVIEW_H__700A82CF_4E9C_4BE0_9EBA_DF2E49AC378F__INCLUDED_)

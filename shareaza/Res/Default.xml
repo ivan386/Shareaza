@@ -1170,6 +1170,8 @@
 			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDERS" text="Share _Files..."/>
+			<separator/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="Create ._torrent File"/>
 		</menu>
 		<menu name="CLibraryTree.Physical">
 			<item id="ID_LIBRARY_EXPLORE" text="_Explore"/>
@@ -1180,6 +1182,8 @@
 			<item id="ID_LIBRARY_SCAN" text="S_can"/>
 			<item id="ID_LIBRARY_REBUILD" text="Re_build"/>
 			<item id="ID_LIBRARY_FOLDERS" text="Share _Files..."/>
+			<separator/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="Create ._torrent File"/>
 			<separator/>
 			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 			<separator/>
