@@ -22,6 +22,7 @@
 #pragma once
 
 #include "Connection.h"
+#include "WndPrivateChat.h"
 
 class CDCPacket;
 class CDCClient;
@@ -29,35 +30,6 @@ class CEDPacket;
 class CEDClient;
 class CG2Packet;
 class CGProfile;
-class CChatWnd;
-class CPrivateChatWnd;
-
-
-enum MessageType
-{
-	cmtNull,
-	cmtMessage,	// Chat message
-	cmtAction,	// Chat action
-	cmtStatus,	// Regular status message (gray)
-	cmtError,	// Error message (red)
-	cmtInfo,	// Informational message (black)
-	cmtProfile	// Profile received
-};
-
-class CChatMessage
-{
-public:
-	CChatMessage()
-		: m_bType( cmtNull ), m_hBitmap( NULL ) {}
-
-	CChatMessage(MessageType bType, const CString& sFrom, const CString& sMessage, HBITMAP hBitmap)
-		: m_bType( bType ), m_sFrom( sFrom ), m_sMessage( sMessage ), m_hBitmap( hBitmap ) {}
-
-	MessageType	m_bType;
-	CString		m_sFrom;
-	CString		m_sMessage;
-	HBITMAP		m_hBitmap;
-};
 
 
 class CChatSession : public CConnection
@@ -66,8 +38,13 @@ public:
 	CChatSession(PROTOCOLID nProtocol = PROTOCOL_ANY, CPrivateChatWnd* pFrame = NULL);
 	virtual ~CChatSession();
 
+	enum
+	{
+		cssNull, cssConnecting, cssRequest1, cssHeaders1, cssRequest2, cssHeaders2,
+		cssRequest3, cssHeaders3, cssHandshake, cssActive
+	};
+
 	Hashes::Guid	m_oGUID;
-	int				m_nState;
 	BOOL			m_bMustPush;
 	CString			m_sNick;
 	BOOL			m_bUnicode;		// ED2K Client in UTF-8 format
@@ -77,21 +54,30 @@ public:
 	virtual void	AttachTo(CConnection* pConnection);
 	virtual void	Close(UINT nError = 0);
 	virtual void	OnDropped();
+	virtual void	AddUser(CChatUser* pUser);
+	virtual void	DeleteUser(CString* pUser);
 
 	BOOL			Connect();
 	TRISTATE		GetConnectedState() const;
+	void			MakeActive(BOOL bAddUsers = TRUE);
 	void			OnMessage(CPacket* pPacket);
 	BOOL			SendPush(BOOL bAutomatic);
 	BOOL			OnPush(const Hashes::Guid& oGUID, CConnection* pConnection);
 	BOOL			SendPrivateMessage(bool bAction, const CString& strText);
 	void			OnOpenWindow();
 	void			OnCloseWindow();
+	inline bool		IsOnline() const
+	{
+		return ( m_nState > cssConnecting );
+	}
 
 protected:
-	TRISTATE			m_bOld;			// Chat version: TRI_TRUE = CHAT/0.1
-	DWORD				m_tPushed;
-	CGProfile*			m_pProfile;
-	CPrivateChatWnd*	m_pWndPrivate;
+	int				m_nState;
+	TRISTATE		m_bOld;			// Chat version: TRI_TRUE = CHAT/0.1
+	DWORD			m_tPushed;
+	CGProfile*		m_pProfile;
+	CPrivateChatWnd* m_pWndPrivate;
+	CList< MSG >	m_pMessages;	// Undelivered messages queue
 
 	virtual BOOL	OnRun();
 	virtual BOOL	OnConnected();
@@ -99,49 +85,40 @@ protected:
 	virtual BOOL	OnHeaderLine(CString& strHeader, CString& strValue);
 	virtual BOOL	OnHeadersComplete();
 
+	void	Command(UINT nCommand);
 	void	StatusMessage(MessageType bType, UINT nID, ...);
 	void	NotifyMessage(MessageType bType, const CString& sFrom, const CString& sMessage = CString(), HBITMAP hBitmap = NULL);
-	void	NotifyMessage(const CString& sFrom, const CString& sMessage);
+	void	ProcessMessages();
+	void	ClearMessages();
 
 	// G1/G2
 
 	BOOL	ReadHandshake();
+	BOOL	ReadG2();
 	void	Send(CG2Packet* pPacket);
-	BOOL	OnPacket(CG2Packet* pPacket);
+	BOOL	OnEstablished();
 	BOOL	OnProfileChallenge(CG2Packet* pPacket);
 	BOOL	OnProfileDelivery(CG2Packet* pPacket);
 	BOOL	OnChatRequest(CG2Packet* pPacket);
 	BOOL	OnChatAnswer(CG2Packet* pPacket);
 	BOOL	OnChatMessage(CG2Packet* pPacket);
 
+	BOOL	ReadG1();
+	void	OnChatMessage(const CString& sFrom, const CString& sMessage);
+
 	// DC++
 
-	BOOL	ReadPacketsDC();
-	BOOL	SendPacketsDC();
+	BOOL	ReadDC();
+	BOOL	SendDC();
 	BOOL	Send(CDCPacket* pPacket);
 	BOOL	OnChatMessage(CDCPacket* pPacket);
 
 	// ED2K
 
-	BOOL	ReadPacketsED2K();
-	BOOL	SendPacketsED2K();
+	BOOL	ReadED2K();
+	BOOL	SendED2K();
 	BOOL	Send(CEDPacket* pPacket);
 	BOOL	OnChatMessage(CEDPacket* pPacket);
 	BOOL	OnCaptchaRequest(CEDPacket* pPacket);
 	BOOL	OnCaptchaResult(CEDPacket* pPacket);
-
-	BOOL	ReadText();
-	BOOL	ReadPackets();
-	void	PostOpenWindow();
-	void	MakeActive();
-	BOOL	OnEstablished();
 };
-
-enum
-{
-	cssNull, cssConnecting, cssRequest1, cssHeaders1, cssRequest2, cssHeaders2,
-	cssRequest3, cssHeaders3, cssHandshake, cssActive, cssAway
-};
-
-
-#define WM_CHAT_MESSAGE				(WM_APP+70)	// (WPARAM: unused, LPARAM: CChatMessage* pMsg)

@@ -577,9 +577,8 @@ BOOL CDCClient::StartDownload()
 	}
 
 	// Can't download
-	DetachDownload();
+	Close();
 
-	// Waiting for next remote command
 	return TRUE;
 }
 

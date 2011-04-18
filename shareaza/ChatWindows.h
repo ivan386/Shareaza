@@ -40,7 +40,7 @@ public:
 	void				Add(CChatWnd* pFrame);
 	void				Remove(CChatWnd* pFrame);
 	CPrivateChatWnd*	FindPrivate(const Hashes::Guid& oGUID, bool bLive) const;
-	CPrivateChatWnd*	FindPrivate(const IN_ADDR* pAddress) const;
+	CPrivateChatWnd*	FindPrivate(const SOCKADDR_IN* pAddress) const;
 	CPrivateChatWnd*	FindED2KFrame(const SOCKADDR_IN* pAddress) const;
 	CPrivateChatWnd*	FindED2KFrame(DWORD nClientID, const SOCKADDR_IN* pServerAddress) const;
 

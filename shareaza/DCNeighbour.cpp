@@ -65,7 +65,7 @@ void CDCNeighbour::RemoveAllUsers()
 	for ( POSITION pos = m_oUsers.GetStartPosition(); pos; )
 	{
 		CString sNick;
-		CDCUser* pUser;
+		CChatUser* pUser;
 		m_oUsers.GetNextAssoc( pos, sNick, pUser );
 		delete pUser;
 	}
@@ -96,10 +96,23 @@ BOOL CDCNeighbour::ConnectToMe(const CString& sNick)
 	return TRUE;
 }
 
-CDCUser* CDCNeighbour::GetUser(const CString& sNick) const
+CChatUser* CDCNeighbour::GetUser(const CString& sNick) const
 {
-	CDCUser* pUser;
+	CChatUser* pUser;
 	return m_oUsers.Lookup( sNick, pUser ) ? pUser : NULL;
+}
+
+void CDCNeighbour::OnChatOpen(CChatSession* pSession)
+{
+	// (Re)fill chat user list
+	for ( POSITION pos = m_oUsers.GetStartPosition(); pos ; )
+	{
+		CString sNick;
+		CChatUser* pUser;
+		m_oUsers.GetNextAssoc( pos, sNick, pUser );
+
+		pSession->AddUser( new CChatUser( *pUser ) );
+	}
 }
 
 BOOL CDCNeighbour::ConnectTo(const IN_ADDR* pAddress, WORD nPort, BOOL bAutomatic)
@@ -244,6 +257,12 @@ BOOL CDCNeighbour::OnPacket(CDCPacket* pPacket)
 
 			if ( nNickLen > 0 && m_sNick != sNick )
 			{
+				if ( GetUser( sNick ) == NULL )
+				{
+					// Add user
+					ChatCore.OnAddUser( this, new CChatUser( cutUser, sNick ) );
+				}
+
 				ChatCore.OnMessage( this, pPacket );
 			}
 		}
@@ -296,14 +315,18 @@ BOOL CDCNeighbour::OnPacket(CDCPacket* pPacket)
 					*szConnection++ = 0;
 					CString sNick( UTF8Decode( szNick ) );
 
-					CDCUser* pUser;
+					CChatUser* pUser;
 					if ( ! m_oUsers.Lookup( sNick, pUser ) )
 					{
-						pUser = new CDCUser;
+						pUser = new CChatUser;
 						m_oUsers.SetAt( sNick, pUser );
 					}
+					pUser->m_bType = ( sNick == m_sNick ) ? cutMe : cutUser;
 					pUser->m_sNick = sNick;
 					pUser->m_sDescription = UTF8Decode( szDescription );
+
+					// Notify chat window
+					ChatCore.OnAddUser( this, new CChatUser( *pUser ) );
 				}
 			}
 		}
@@ -316,12 +339,15 @@ BOOL CDCNeighbour::OnPacket(CDCPacket* pPacket)
 		// $Quit nick|
 
 		CString sNick = UTF8Decode( szParams );
-		CDCUser* pUser;
+		CChatUser* pUser;
 		if ( m_oUsers.Lookup( sNick, pUser ) )
 		{
 			m_oUsers.RemoveKey( sNick );
 			delete pUser;
 		}
+
+		// Notify chat window
+		ChatCore.OnDeleteUser( this, new CString( sNick ) );
 
 		return TRUE;
 	}
@@ -664,12 +690,12 @@ BOOL CDCNeighbour::OnLock(LPSTR szLock)
 	}
 
 	m_bNickValid = FALSE;
-	/*
+	
 	if ( CHostCacheHostPtr pServer = HostCache.DC.Find( &m_pHost.sin_addr ) )
 	{
 		m_sNick = pServer->m_sUser;
 	}
-	*/
+	
 	m_sNick = DCClients.CreateNick( m_sNick );
 
 	if ( CDCPacket* pPacket = CDCPacket::New() )

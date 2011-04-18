@@ -1,7 +1,7 @@
 //
 // WndPrivateChat.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -39,13 +39,16 @@ public:
 	void	Setup(const Hashes::Guid& oGUID, const SOCKADDR_IN* pHost, BOOL bMustPush, PROTOCOLID nProtocol);
 
 	BOOL	Accept(CChatSession* pSession);
-	BOOL	Find(const IN_ADDR* pAddress) const;
+	BOOL	Find(const SOCKADDR_IN* pAddress) const;
 	BOOL	Find(const Hashes::Guid& oGUID, bool bLive) const;
 	BOOL	Find(const CString& sNick) const;
 
 protected:
 	CChatSession*	m_pSession;
 	CString			m_sNick;
+
+	virtual CString GetChatID() const;
+	virtual CString GetCaption() const;
 
 	virtual BOOL OnLocalMessage(bool bAction, const CString& sText);
 	virtual BOOL OnLocalCommand(const CString& sCommand, const CString& sArgs);
@@ -59,7 +62,6 @@ protected:
 	afx_msg void OnChatBrowse();
 	afx_msg void OnUpdateChatPriority(CCmdUI* pCmdUI);
 	afx_msg void OnChatPriority();
-	afx_msg LRESULT OnRemoteMessage(WPARAM wParam, LPARAM lParam);
 
 	DECLARE_MESSAGE_MAP()
 };

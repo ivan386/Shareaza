@@ -320,6 +320,7 @@ void CSettings::Load()
 	Add( _T("Community"), _T("ServeFiles"), &Community.ServeFiles, true );
 	Add( _T("Community"), _T("ServeProfile"), &Community.ServeProfile, true );
 	Add( _T("Community"), _T("Timestamp"), &Community.Timestamp, true );
+	Add( _T("Community"), _T("UserPanelSize"), &Community.UserPanelSize, 200, 1, 0, 1024, _T(" px") );
 
 	Add( _T("Discovery"), _T("AccessThrottle"), &Discovery.AccessThrottle, 60*60, 60, 1, 180, _T(" m") );
 	Add( _T("Discovery"), _T("BootstrapCount"), &Discovery.BootstrapCount, 10, 1, 0, 20 );

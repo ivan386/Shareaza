@@ -73,6 +73,34 @@ public:
 		}
 	}
 
+	template< typename T > void OnAddUser(const T* pClient, CChatUser* pUser)
+	{
+		CSingleLock pLock( &m_pSection );
+		if ( pLock.Lock( 250 ) )
+		{
+			if ( CChatSession* pSession = FindSession< T >( pClient, FALSE ) )
+			{
+				pSession->AddUser( pUser );
+				return;
+			}
+		}
+		delete pUser;
+	}
+
+	template< typename T > void OnDeleteUser(const T* pClient, CString* pUser)
+	{
+		CSingleLock pLock( &m_pSection );
+		if ( pLock.Lock( 250 ) )
+		{
+			if ( CChatSession* pSession = FindSession< T >( pClient, FALSE ) )
+			{
+				pSession->DeleteUser( pUser );
+				return;
+			}
+		}
+		delete pUser;
+	}
+
 protected:
 	CList< CChatSession* > m_pSessions;
 

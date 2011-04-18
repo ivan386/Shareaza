@@ -314,6 +314,7 @@ public:
 		bool		ServeProfile;
 		bool		ServeFiles;
 		DWORD		AwayMessageIdleTime;		// Time in secs of idle system time before showing away message
+		DWORD		UserPanelSize;				// Width of chat users panel (pixels)
 	} Community;
 
 	struct sDiscovery

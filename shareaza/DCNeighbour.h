@@ -22,19 +22,10 @@
 #pragma once
 
 #include "Neighbour.h"
+#include "WndChat.h"
 
+class CChatSession;
 class CDCPacket;
-
-
-class CDCUser
-{
-public:
-	typedef CMap< CString, const CString&, CDCUser*, CDCUser* > Map;
-
-	CString			m_sNick;
-	CString			m_sDescription;
-};
-
 
 
 class CDCNeighbour : public CNeighbour
@@ -51,7 +42,10 @@ public:
 	BOOL			ConnectToMe(const CString& sNick);
 
 	// Find user
-	CDCUser*		GetUser(const CString& sNick) const;
+	CChatUser*		GetUser(const CString& sNick) const;
+
+	// Chat window was (re)opened
+	void			OnChatOpen(CChatSession* pSession);
 
 	CString			m_sNick;		// User nick on this hub
 	BOOL			m_bNickValid;	// User nick was accepted
@@ -59,7 +53,7 @@ public:
 	CStringList		m_oFeatures;	// Remote client supported features
 
 protected:
-	CDCUser::Map	m_oUsers;		// Hub user list
+	CChatUser::Map	m_oUsers;		// Hub user list
 
 	void			RemoveAllUsers();
 

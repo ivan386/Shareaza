@@ -46,6 +46,12 @@ BEGIN_MESSAGE_MAP(CChatWnd, CPanelWnd)
 	ON_WM_DESTROY()
 	ON_WM_CONTEXTMENU()
 	ON_WM_SIZE()
+	ON_WM_PAINT()
+	ON_WM_MEASUREITEM()
+	ON_WM_DRAWITEM()
+	ON_WM_SETFOCUS()
+	ON_WM_LBUTTONDOWN()
+	ON_WM_SETCURSOR()
 	ON_UPDATE_COMMAND_UI(ID_CHAT_BOLD, &CChatWnd::OnUpdateChatBold)
 	ON_COMMAND(ID_CHAT_BOLD, &CChatWnd::OnChatBold)
 	ON_UPDATE_COMMAND_UI(ID_CHAT_ITALIC, &CChatWnd::OnUpdateChatItalic)
@@ -55,20 +61,27 @@ BEGIN_MESSAGE_MAP(CChatWnd, CPanelWnd)
 	ON_COMMAND(ID_CHAT_COLOUR, &CChatWnd::OnChatColour)
 	ON_COMMAND(ID_CHAT_CLEAR, &CChatWnd::OnChatClear)
 	ON_COMMAND(ID_CHAT_EMOTICONS, &CChatWnd::OnChatEmoticons)
-	ON_WM_MEASUREITEM()
-	ON_WM_DRAWITEM()
-	ON_WM_SETFOCUS()
 	ON_NOTIFY(RVN_CLICK, IDC_CHAT_TEXT, &CChatWnd::OnClickView)
 	ON_UPDATE_COMMAND_UI(ID_CHAT_TIMESTAMP, &CChatWnd::OnUpdateChatTimestamp)
 	ON_COMMAND(ID_CHAT_TIMESTAMP, &CChatWnd::OnChatTimestamp)
+	ON_MESSAGE(WM_CHAT_MESSAGE, &CChatWnd::OnChatMessage)
+	ON_MESSAGE(WM_CHAT_ADD_USER, &CChatWnd::OnChatAddUser)
+	ON_MESSAGE(WM_CHAT_DELETE_USER, &CChatWnd::OnChatDeleteUser)
 	ON_COMMAND_RANGE(1, 200, &CChatWnd::OnEmoticons)
 END_MESSAGE_MAP()
+
+#define NEWLINE_FORMAT	_T("2")
+#define EDIT_HISTORY	256
+#define EDIT_HEIGHT		32
+#define TOOLBAR_HEIGHT	30
+#define SPLIT_SIZE		6
 
 /////////////////////////////////////////////////////////////////////////////
 // CChatWnd construction
 
 CChatWnd::CChatWnd()
 	: m_nHistory	( 0 )
+	, m_nUsersSize	( Settings.Community.UserPanelSize )
 {
 }
 
@@ -404,21 +417,32 @@ int CChatWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CPanelWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
 
-	CRect rc;
-	GetClientRect( &rc );
+	m_gdiImageList.Create( 16, 16, ILC_COLOR32|ILC_MASK, 2, 0 ) ||
+	m_gdiImageList.Create( 16, 16, ILC_COLOR24|ILC_MASK, 2, 0 ) ||
+	m_gdiImageList.Create( 16, 16, ILC_COLOR16|ILC_MASK, 2, 0 );
+	AddIcon( IDI_USER_ME, m_gdiImageList );
+	AddIcon( IDI_USER, m_gdiImageList );
 
-	m_wndView.Create( WS_CHILD|WS_VISIBLE, rc, this, IDC_CHAT_TEXT );
+	CRect rc( 0, 0, 0, 0 );
+
+	if ( ! m_wndView.Create( WS_CHILD | WS_VISIBLE| WS_CLIPSIBLINGS | WS_VSCROLL, rc, this, IDC_CHAT_TEXT ) ) return -1;
 	m_wndView.SetDocument( &m_pContent );
 	m_wndView.SetSelectable( TRUE );
 	m_wndView.SetFollowBottom( TRUE );
 
-	m_pContent.m_szMargin = CSize( 8, 4 );
+	if ( ! m_wndUsers.Create( WS_CHILD | WS_VSCROLL | WS_TABSTOP | WS_VISIBLE | WS_VSCROLL | LVS_SINGLESEL | LVS_REPORT | LVS_NOCOLUMNHEADER | LVS_SORTASCENDING | LVS_NOLABELWRAP | WS_CLIPSIBLINGS, rc, this, IDC_CHAT_USERS ) )  return -1;
+	m_wndUsers.SetExtendedStyle( m_wndUsers.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_DOUBLEBUFFER );
+	m_wndUsers.SetFont( &theApp.m_gdiFont );
+	m_wndUsers.InsertColumn( 0, _T("Name") );
+	m_wndUsers.SetImageList( &m_gdiImageList, LVSIL_SMALL );
 
-	if ( ! m_wndToolBar.Create( this, WS_CHILD|WS_VISIBLE|CBRS_NOALIGN, AFX_IDW_TOOLBAR ) ) return -1;
+	if ( ! m_wndToolBar.Create( this, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | CBRS_NOALIGN, AFX_IDW_TOOLBAR ) ) return -1;
 	m_wndToolBar.SetBarStyle( m_wndToolBar.GetBarStyle() | CBRS_TOOLTIPS | CBRS_BORDER_TOP | CBRS_BORDER_BOTTOM );
 
-	if ( ! m_wndEdit.Create( WS_CHILD|WS_VISIBLE|ES_MULTILINE|ES_AUTOVSCROLL, rc, this, IDC_CHAT_EDIT ) ) return -1;
+	if ( ! m_wndEdit.Create( WS_CHILD | WS_VISIBLE | WS_TABSTOP | WS_GROUP | WS_CLIPSIBLINGS | ES_MULTILINE | ES_AUTOVSCROLL, rc, this, IDC_CHAT_EDIT ) ) return -1;
 	m_wndEdit.SetFont( &theApp.m_gdiFont );
+
+	m_pContent.m_szMargin = CSize( 8, 4 );
 
 	ChatWindows.Add( this );
 
@@ -429,6 +453,10 @@ int CChatWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 void CChatWnd::OnDestroy()
 {
+	DeleteAllUsers();
+
+	Settings.Community.UserPanelSize = m_nUsersSize;
+
 	SaveState( _T("CChatWnd") );
 
 	ChatWindows.Remove( this );
@@ -448,15 +476,23 @@ BOOL CChatWnd::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* p
 
 void CChatWnd::OnSize(UINT nType, int cx, int cy)
 {
-	CPanelWnd::OnSize( nType, cx, cy );
+	if ( nType != 1982 ) CPanelWnd::OnSize( nType, cx, cy );
 
 	CRect rc;
 	GetClientRect( &rc );
 
-	HDWP hDWP = BeginDeferWindowPos( 3 );
+	if ( rc.Width() < m_nUsersSize + SPLIT_SIZE )
+	{
+		m_nUsersSize = max( 0, rc.Width() - SPLIT_SIZE );
+	}
+
+	HDWP hDWP = BeginDeferWindowPos( 4 );
 
 	DeferWindowPos( hDWP, m_wndView, NULL, rc.left, rc.top,
-		rc.Width(), rc.Height() - TOOLBAR_HEIGHT - EDIT_HEIGHT, SWP_NOZORDER );
+		rc.Width() - m_nUsersSize - SPLIT_SIZE, rc.Height() - TOOLBAR_HEIGHT - EDIT_HEIGHT, SWP_NOZORDER );
+
+	DeferWindowPos( hDWP, m_wndUsers, NULL, rc.left + rc.Width() - m_nUsersSize, rc.top,
+		m_nUsersSize, rc.Height() - TOOLBAR_HEIGHT - EDIT_HEIGHT, SWP_NOZORDER );
 
 	DeferWindowPos( hDWP, m_wndToolBar, NULL,
 		rc.left, rc.bottom - TOOLBAR_HEIGHT - EDIT_HEIGHT,
@@ -466,6 +502,26 @@ void CChatWnd::OnSize(UINT nType, int cx, int cy)
 		rc.Width(), EDIT_HEIGHT, SWP_NOZORDER );
 
 	EndDeferWindowPos( hDWP );
+
+	m_wndUsers.SetColumnWidth( 0, m_nUsersSize - GetSystemMetrics( SM_CXVSCROLL ) );
+}
+
+void CChatWnd::OnPaint()
+{
+	CPaintDC dc( this );
+
+	CRect rcClient;
+	GetClientRect( &rcClient );
+
+	CRect rc( rcClient.right - m_nUsersSize - SPLIT_SIZE,
+			  rcClient.top,
+			  rcClient.right - m_nUsersSize,
+			  rcClient.bottom - TOOLBAR_HEIGHT - EDIT_HEIGHT );
+
+	dc.FillSolidRect( rc.left, rc.top, 1, rc.Height(), CoolInterface.m_crResizebarEdge );
+	dc.FillSolidRect( rc.left + 1, rc.top, 1, rc.Height(), CoolInterface.m_crResizebarHighlight );
+	dc.FillSolidRect( rc.right - 1, rc.top, 1, rc.Height(), CoolInterface.m_crResizebarShadow );
+	dc.FillSolidRect( rc.left + 2, rc.top, rc.Width() - 3, rc.Height(),	CoolInterface.m_crResizebarFace );
 }
 
 void CChatWnd::OnUpdateChatBold(CCmdUI* pCmdUI)
@@ -593,4 +649,208 @@ void CChatWnd::OnClickView(NMHDR* pNotify, LRESULT* /*pResult*/)
 void CChatWnd::OnEmoticons(UINT /*nID*/)
 {
 	// Used to enable emoticons menu items
+}
+
+BOOL CChatWnd::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
+{
+	CPoint point;
+	GetCursorPos( &point );
+
+	CRect rcClient;
+	GetClientRect( &rcClient );
+	ClientToScreen( &rcClient );
+
+	CRect rc( rcClient.right - m_nUsersSize - SPLIT_SIZE,
+		rcClient.top,
+		rcClient.right - m_nUsersSize,
+		rcClient.bottom - TOOLBAR_HEIGHT - EDIT_HEIGHT );
+
+	if ( rc.PtInRect( point ) )
+	{
+		SetCursor( AfxGetApp()->LoadStandardCursor( IDC_SIZEWE ) );
+		return TRUE;
+	}
+
+	return CPanelWnd::OnSetCursor( pWnd, nHitTest, message );
+}
+
+void CChatWnd::OnLButtonDown(UINT nFlags, CPoint point)
+{
+	CRect rcClient;
+	GetClientRect( &rcClient );
+
+	CRect rc( rcClient.right - m_nUsersSize - SPLIT_SIZE,
+		rcClient.top,
+		rcClient.right - m_nUsersSize,
+		rcClient.bottom - TOOLBAR_HEIGHT - EDIT_HEIGHT );
+
+	if ( rc.PtInRect( point ) )
+	{
+		DoSizeView();
+		return;
+	}
+
+	CPanelWnd::OnLButtonDown( nFlags, point );
+}
+
+BOOL CChatWnd::DoSizeView()
+{
+	MSG* pMsg = &AfxGetThreadState()->m_msgCur;
+
+	CRect rcClient;
+	GetClientRect( &rcClient );
+	ClientToScreen( &rcClient );
+	ClipCursor( &rcClient );
+	SetCapture();
+
+	GetClientRect( &rcClient );
+
+	int nOffset = 0xFFFF;
+
+	while ( GetAsyncKeyState( VK_LBUTTON ) & 0x8000 )
+	{
+		while ( ::PeekMessage( pMsg, NULL, WM_MOUSEFIRST, WM_MOUSELAST, PM_REMOVE ) );
+
+		if ( ! AfxGetThread()->PumpMessage() )
+		{
+			AfxPostQuitMessage( 0 );
+			break;
+		}
+
+		CPoint point;
+		GetCursorPos( &point );
+		ScreenToClient( &point );
+		
+		int nSplit = rcClient.right - point.x;
+
+		if ( nOffset == 0xFFFF ) nOffset = m_nUsersSize - nSplit;
+		nSplit += nOffset;
+
+		nSplit = max( nSplit, 0 );
+		nSplit = min( nSplit, (int)rcClient.right - SPLIT_SIZE );
+
+		if ( nSplit < 8 )
+			nSplit = 0;
+		if ( nSplit > rcClient.right - SPLIT_SIZE - 8 )
+			nSplit = rcClient.right - SPLIT_SIZE;
+
+		if ( nSplit != m_nUsersSize )
+		{
+			m_nUsersSize = nSplit;
+			OnSize( 1982, 0, 0 );
+			Invalidate();
+		}
+	}
+
+	ReleaseCapture();
+	ClipCursor( NULL );
+
+	return TRUE;
+}
+
+LRESULT CChatWnd::OnChatMessage(WPARAM /*wParam*/, LPARAM lParam)
+{
+	CAutoPtr< CChatMessage > pMsg( (CChatMessage*)lParam );
+
+	if ( pMsg->m_bType == cmtProfile )
+	{
+		SetWindowText( GetCaption() );
+		Open();
+		SetAlert();
+		CChatWnd::AddLogin( pMsg->m_sFrom );
+		return 0;
+	}
+
+	if ( pMsg->m_hBitmap )
+	{
+		SetAlert();
+		CChatWnd::AddBitmap( pMsg->m_hBitmap );
+		return 0;
+	}
+
+	if ( pMsg->m_bType == cmtStatus ||
+		pMsg->m_bType == cmtError ||
+		pMsg->m_bType == cmtInfo )
+	{
+		if ( pMsg->m_bType == cmtError )
+			SetAlert();
+		SetWindowText( GetCaption() );
+		CChatWnd::OnStatusMessage( (int)pMsg->m_bType - 3, pMsg->m_sMessage );
+		return 0;
+	}
+
+	CChatWnd::OnMessage( ( pMsg->m_bType == cmtAction ), GetChatID(), false,
+		pMsg->m_sFrom, MyProfile.GetNick(), pMsg->m_sMessage );
+
+	return 0;
+}
+
+LRESULT CChatWnd::OnChatAddUser(WPARAM /*wParam*/, LPARAM lParam)
+{
+	CAutoPtr< CChatUser > pUser( (CChatUser*)lParam );
+
+	LVFINDINFO lvfi = { LVFI_STRING, pUser->m_sNick };
+	int index = -1;
+	for (;;)
+	{
+		index = m_wndUsers.FindItem( &lvfi, index );
+		if ( index == -1 )
+			break;
+
+		CChatUser* pCurrent = (CChatUser*)m_wndUsers.GetItemData( index );
+		if ( pCurrent->m_bType == pUser->m_bType )
+		{
+			// Update existing user
+			pCurrent->m_sDescription = pUser->m_sDescription;
+
+			// TODO: Other user properties
+
+			return 0;
+		}
+	}
+
+	// New User
+	int i = m_wndUsers.InsertItem( 0, pUser->m_sNick, pUser->m_bType );
+	m_wndUsers.SetItemData( i, (DWORD_PTR)pUser.Detach() );
+
+	return 0;
+}
+
+LRESULT CChatWnd::OnChatDeleteUser(WPARAM /*wParam*/, LPARAM lParam)
+{
+	CAutoPtr< CString > psNick( (CString*)lParam );
+
+	if ( ! psNick )
+	{
+		DeleteAllUsers();
+		return 0;
+	}
+
+	LVFINDINFO lvfi = { LVFI_STRING, *psNick };
+	int index = -1;
+	for (;;)
+	{
+		index = m_wndUsers.FindItem( &lvfi, index );
+		if ( index == -1 )
+			break;
+
+		CChatUser* pCurrent = (CChatUser*)m_wndUsers.GetItemData( index );
+		if ( pCurrent->m_bType != cutMe ) // Except me
+		{
+			delete pCurrent;
+			m_wndUsers.DeleteItem( index );
+		}
+	}
+
+	return 0;
+}
+
+void CChatWnd::DeleteAllUsers()
+{
+	int nCount = m_wndUsers.GetItemCount();
+	for ( int i = 0; i < nCount; ++i )
+	{
+		delete (CChatUser*)m_wndUsers.GetItemData( i );
+	}
+	m_wndUsers.DeleteAllItems();
 }

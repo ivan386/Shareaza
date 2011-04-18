@@ -84,7 +84,7 @@ CPrivateChatWnd* CChatWindows::FindPrivate(const Hashes::Guid& oGUID, bool bLive
 	return NULL;
 }
 
-CPrivateChatWnd* CChatWindows::FindPrivate(const IN_ADDR* pAddress) const
+CPrivateChatWnd* CChatWindows::FindPrivate(const SOCKADDR_IN* pAddress) const
 {
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
@@ -206,7 +206,7 @@ CPrivateChatWnd* CChatWindows::OpenPrivateGnutella(const Hashes::Guid& oGUID, co
 		pFrame = FindPrivate( oGUID, false );
 		if ( pFrame == NULL ) pFrame = FindPrivate( oGUID, true );
 	}
-	if ( pFrame == NULL ) pFrame = FindPrivate( &pHost->sin_addr );
+	if ( pFrame == NULL ) pFrame = FindPrivate( pHost );
 
 	if ( pFrame == NULL )
 	{
@@ -257,7 +257,7 @@ CPrivateChatWnd* CChatWindows::OpenPrivateED2K(const Hashes::Guid& oGUID, const 
 	pLock.Unlock();
 
 	// Check for / make active any existing window
-	CPrivateChatWnd* pFrame = FindPrivate( &pHost->sin_addr );
+	CPrivateChatWnd* pFrame = FindPrivate( pHost );
 	// Check for an empty frame
 	if ( pFrame == NULL )
 	{

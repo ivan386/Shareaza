@@ -28,6 +28,59 @@
 #include "CtrlCoolBar.h"
 
 
+enum MessageType
+{
+	cmtNull,
+	cmtMessage,	// Chat message
+	cmtAction,	// Chat action
+	cmtStatus,	// Regular status message (gray)
+	cmtError,	// Error message (red)
+	cmtInfo,	// Informational message (black)
+	cmtProfile	// Profile received
+};
+
+enum UserType
+{
+	cutMe,
+	cutUser,
+	cutOperator
+};
+
+
+class CChatMessage
+{
+public:
+	CChatMessage(MessageType bType = cmtNull, const CString& sFrom = CString(), const CString& sMessage = CString(), HBITMAP hBitmap = NULL)
+		: m_bType( bType ), m_sFrom( sFrom ), m_sMessage( sMessage ), m_hBitmap( hBitmap ) {}
+
+	CChatMessage(const CChatMessage& pMsg)
+		: m_bType( pMsg.m_bType ), m_sFrom( pMsg.m_sFrom ), m_sMessage( pMsg.m_sMessage ), m_hBitmap( pMsg.m_hBitmap ) {}
+
+	MessageType	m_bType;
+	CString		m_sFrom;
+	CString		m_sMessage;
+	HBITMAP		m_hBitmap;
+};
+
+
+class CChatUser
+{
+public:
+	CChatUser(UserType bType = cutUser, const CString& sNick = CString(), const CString& sDescription = CString())
+		: m_bType( bType ), m_sNick( sNick ), m_sDescription( sDescription ) {}
+
+	CChatUser(const CChatUser& pUser)
+		: m_bType( pUser.m_bType ), m_sNick( pUser.m_sNick ), m_sDescription( pUser.m_sDescription ) {}
+
+	typedef CMap< CString, const CString&, CChatUser*, CChatUser* > Map;
+	typedef CList< CChatUser > List;
+
+	UserType	m_bType;
+	CString		m_sNick;
+	CString		m_sDescription;
+};
+
+
 class CChatWnd : public CPanelWnd
 {
 	DECLARE_DYNAMIC(CChatWnd)
@@ -39,10 +92,13 @@ public:
 	void Open();
 
 private:
+	CImageList			m_gdiImageList;
 	CCoolBarCtrl		m_wndToolBar;
 	CRichDocument		m_pContent;
 	CRichViewCtrl		m_wndView;
 	CEdit				m_wndEdit;
+	CListCtrl			m_wndUsers;		// Chat users list
+	int					m_nUsersSize;	// Width of chat users panel (pixels)
 	CArray< CString >	m_pHistory;
 	int					m_nHistory;
 
@@ -53,10 +109,15 @@ private:
 	BOOL OnLocalText(const CString& sText);
 
 protected:
+	virtual CString GetChatID() const = 0;
+	virtual CString GetCaption() const = 0;
+
 	void AddLogin(LPCTSTR pszText);
 	void AddBitmap(HBITMAP hBitmap);
 	void AddText(bool bAction, bool bOutgoing, LPCTSTR pszNick, LPCTSTR pszBody);
 	void OnMessage(bool bAction, const CString& sChatID, bool bOutgoing, const CString& sFrom, const CString& sTo, const CString& sText);
+	BOOL DoSizeView();
+	void DeleteAllUsers();
 
 	virtual void OnSkinChange();
 
@@ -71,6 +132,7 @@ protected:
 	afx_msg void OnDestroy();
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
+	afx_msg void OnPaint();
 	afx_msg void OnUpdateChatBold(CCmdUI* pCmdUI);
 	afx_msg void OnChatBold();
 	afx_msg void OnUpdateChatItalic(CCmdUI* pCmdUI);
@@ -87,14 +149,19 @@ protected:
 	afx_msg void OnUpdateChatTimestamp(CCmdUI* pCmdUI);
 	afx_msg void OnChatTimestamp();
 	afx_msg void OnEmoticons(UINT nID);
+	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+	afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);
+	afx_msg LRESULT OnChatMessage(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnChatAddUser(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnChatDeleteUser(WPARAM wParam, LPARAM lParam);
 
 	DECLARE_MESSAGE_MAP()
 };
 
 #define IDC_CHAT_TEXT	100
 #define IDC_CHAT_EDIT	101
+#define IDC_CHAT_USERS	102
 
-#define NEWLINE_FORMAT	_T("2")
-#define EDIT_HISTORY	256
-#define EDIT_HEIGHT		32
-#define TOOLBAR_HEIGHT	30
+#define WM_CHAT_MESSAGE				(WM_APP+70)	// (WPARAM: unused, LPARAM: CChatMessage* pMsg)
+#define WM_CHAT_ADD_USER			(WM_APP+71)	// (WPARAM: unused, LPARAM: CChatUser* pAddUser)
+#define WM_CHAT_DELETE_USER			(WM_APP+72)	// (WPARAM: unused, LPARAM: CString* pDeleteUser). pDeleteUser == NULL - delete all users.

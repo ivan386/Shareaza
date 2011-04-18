@@ -200,6 +200,8 @@
 #define IDI_CONTACT_MSN                 344
 #define IDI_COMPUTER                    345
 #define IDB_IRCICONS                    346
+#define IDI_USER                        347
+#define IDI_USER_ME                     348
 #define IDR_CHANSFRAME                  991
 #define IDD_DOWNLOAD_ACTIONS            993
 #define IDR_USERSFRAME                  995
@@ -1944,7 +1946,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        347
+#define _APS_NEXT_RESOURCE_VALUE        349
 #define _APS_NEXT_COMMAND_VALUE         33329
 #define _APS_NEXT_CONTROL_VALUE         1621
 #define _APS_NEXT_SYMED_VALUE           104

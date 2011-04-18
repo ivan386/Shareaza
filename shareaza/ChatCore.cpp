@@ -133,9 +133,6 @@ CChatSession* CChatCore::FindSession< CDCNeighbour >(const CDCNeighbour* pClient
 
 	// Create a new chat session
 	CChatSession* pSession = new CChatSession( pClient->m_nProtocol );
-	pSession->m_nState		= cssActive;
-	pSession->m_bConnected	= TRUE;
-	pSession->m_tConnected	= GetTickCount();
 	pSession->m_oGUID		= pClient->m_oGUID;
 	pSession->m_pHost		= pClient->m_pHost;
 	pSession->m_sAddress	= pClient->m_sAddress;
@@ -144,6 +141,8 @@ CChatSession* CChatCore::FindSession< CDCNeighbour >(const CDCNeighbour* pClient
 
 	// Make new input and output buffer objects
 	pSession->CreateBuffers();
+
+	pSession->MakeActive( FALSE );
 
 	return pSession;
 }
@@ -184,9 +183,6 @@ CChatSession* CChatCore::FindSession< CEDClient >(const CEDClient* pClient, BOOL
 
 	// Create a new chat session
 	CChatSession* pSession = new CChatSession( pClient->m_nProtocol );
-	pSession->m_nState		= cssActive;
-	pSession->m_bConnected	= TRUE;
-	pSession->m_tConnected	= GetTickCount();
 	pSession->m_oGUID		= pClient->m_oGUID;
 	pSession->m_pHost		= pClient->m_pHost;
 	pSession->m_sAddress	= pClient->m_sAddress;
@@ -199,6 +195,8 @@ CChatSession* CChatCore::FindSession< CEDClient >(const CEDClient* pClient, BOOL
 
 	// Make new input and output buffer objects
 	pSession->CreateBuffers();
+
+	pSession->MakeActive();
 
 	return pSession;
 }

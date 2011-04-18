@@ -38,7 +38,6 @@
 #include "Neighbours.h"
 #include "Network.h"
 #include "Transfers.h"
-#include "WndPrivateChat.h"
 #include "XML.h"
 
 #ifdef _DEBUG
@@ -72,6 +71,8 @@ CChatSession::~CChatSession()
 {
 	ASSERT( ! IsValid() );
 
+	ClearMessages();
+
 	delete m_pProfile;
 
 	ChatCore.Remove( this );
@@ -88,10 +89,13 @@ BOOL CChatSession::Connect()
 	if ( m_nState > cssNull )
 		return FALSE;
 
-	if ( m_nProtocol == PROTOCOL_ED2K || m_nProtocol == PROTOCOL_DC )
+	if ( m_nProtocol == PROTOCOL_ED2K )
 	{
-		// ED2K Clients have their connection controlled by ED2KClient. (One connection used for many things)
 		return Send( (CEDPacket*)NULL );
+	}
+	else if ( m_nProtocol == PROTOCOL_DC )
+	{
+		return Send( (CDCPacket*)NULL );
 	}
 
 	if ( m_bMustPush )
@@ -128,33 +132,47 @@ TRISTATE CChatSession::GetConnectedState() const
 }
 
 //////////////////////////////////////////////////////////////////////
-// CChatSession handle an incoming ED2K Message
+// CChatSession handle an incoming DC++ or ED2K packets
 
 void CChatSession::OnMessage(CPacket* pPacket)
 {
-	// Open a window (if one is not already open)
-	PostOpenWindow();
+	MakeActive( FALSE );
 
 	// Put the packet into the input buffer so it can be 'received' (and displayed) later.
 	if ( pPacket && IsInputExist() )
 	{
 		pPacket->ToBuffer( GetInput() );
 	}
-
-	MakeActive();
 }
 
 //////////////////////////////////////////////////////////////////////
 // If this client wasn't active, it is now.
 
-void CChatSession::MakeActive()
+void CChatSession::MakeActive(BOOL bAddUsers)
 {
+	CQuickLock pLock( ChatCore.m_pSection );
+
 	if ( m_nState != cssActive )
 	{
+		m_nState = cssActive;
+
+		m_bConnected	= TRUE;
+		m_tConnected = GetTickCount();
+
 		StatusMessage( cmtInfo, IDS_CHAT_PRIVATE_ONLINE, (LPCTSTR)m_sNick );
 
-		m_nState = cssActive;
-		m_tConnected = GetTickCount();
+		PlaySound( _T("RAZA_IncomingChat"), NULL, SND_APPLICATION|SND_ALIAS|SND_ASYNC );
+
+		if ( bAddUsers )
+		{
+			AddUser( new CChatUser( cutMe, MyProfile.GetNick() ) );
+			AddUser( new CChatUser( cutUser, m_sNick ) );
+		}
+
+		if ( ! m_pWndPrivate )
+		{
+			PostMainWndMessage( WM_OPENCHAT, (WPARAM)this );
+		}
 	}
 }
 
@@ -233,6 +251,9 @@ void CChatSession::Close(UINT nError)
 		StatusMessage( cmtStatus, IDS_CHAT_CLOSED );
 	}
 
+	// Delete all users
+	DeleteUser( NULL );
+
 	CConnection::Close( nError );
 
 	if ( m_pWndPrivate == NULL )
@@ -303,13 +324,15 @@ void CChatSession::OnDropped()
 
 BOOL CChatSession::OnRun()
 {
+	ProcessMessages();
+
 	if ( m_nProtocol == PROTOCOL_ED2K )
 	{
-		return ( ReadPacketsED2K() && SendPacketsED2K() );
+		return ( ReadED2K() && SendED2K() );
 	}
-	if (  m_nProtocol == PROTOCOL_DC )
+	else if (  m_nProtocol == PROTOCOL_DC )
 	{
-		return ( ReadPacketsDC() && SendPacketsDC() );
+		return ( ReadDC() && SendDC() );
 	}
 	else if ( m_nState > cssNull && m_nState < cssActive )
 	{
@@ -350,18 +373,17 @@ BOOL CChatSession::OnRead()
 		return ReadHeaders();
 	case cssHandshake:
 	case cssActive:
-	case cssAway:
 		if ( m_nProtocol == PROTOCOL_G2 )
-			return ReadPackets();
+			return ReadG2();
 		else
-			return ReadText();
+			return ReadG1();
 	}
 
 	return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////
-// CChatSession handshake processer
+// CChatSession handshake processor
 
 BOOL CChatSession::ReadHandshake()
 {
@@ -408,7 +430,7 @@ BOOL CChatSession::ReadHandshake()
 }
 
 //////////////////////////////////////////////////////////////////////
-// CChatSession header processer
+// CChatSession header processor
 
 BOOL CChatSession::OnHeaderLine(CString& strHeader, CString& strValue)
 {
@@ -492,21 +514,18 @@ BOOL CChatSession::OnHeadersComplete()
 
 BOOL CChatSession::OnEstablished()
 {
-	ASSERT ( m_nProtocol != PROTOCOL_ED2K && m_nProtocol != PROTOCOL_DC );
-
 	m_tConnected = GetTickCount();
 
-	if (  m_nProtocol == PROTOCOL_G2  )
+	if (  m_nProtocol == PROTOCOL_G2 )
 	{
 		StatusMessage( cmtStatus, IDS_CHAT_HANDSHAKE_G2 );
 		Send( CG2Packet::New( G2_PACKET_PROFILE_CHALLENGE ) );
 	}
-	else
+	else if (  m_nProtocol == PROTOCOL_G1 )
 	{
-		m_nState = cssActive;
-		NotifyMessage( cmtProfile, m_sNick );
+		MakeActive();
+
 		StatusMessage( cmtInfo, IDS_CHAT_HANDSHAKE_G1, ( m_bOld == TRI_TRUE ) ? _T("0.1") : _T("0.2") );
-		PostOpenWindow();
 	}
 
 	return TRUE;
@@ -515,12 +534,12 @@ BOOL CChatSession::OnEstablished()
 //////////////////////////////////////////////////////////////////////
 // CChatSession DC++ packet interface
 
-BOOL CChatSession::ReadPacketsDC()
+BOOL CChatSession::ReadDC()
 {
-	BOOL bSuccess = TRUE;
-
+	ASSERT( m_nProtocol == PROTOCOL_DC );
 	ASSERT( IsInputExist() );
 
+	BOOL bSuccess = TRUE;
 	while ( CDCPacket* pPacket = CDCPacket::ReadBuffer( GetInput() ) )
 	{
 		bSuccess = OnChatMessage( pPacket );
@@ -532,8 +551,9 @@ BOOL CChatSession::ReadPacketsDC()
 	return bSuccess;
 }
 
-BOOL CChatSession::SendPacketsDC()
+BOOL CChatSession::SendDC()
 {
+	ASSERT( m_nProtocol == PROTOCOL_DC );
 	ASSERT( IsOutputExist() );
 
 	while ( CDCPacket* pPacket = CDCPacket::ReadBuffer( GetOutput() ) )
@@ -559,7 +579,7 @@ BOOL CChatSession::Send(CDCPacket* pPacket)
 	{
 		if ( CNeighbour* pClient = Neighbours.Get( m_pHost.sin_addr ) )
 		{
-			MakeActive();
+			MakeActive( FALSE );
 
 			return pClient->Send( pPacket );
 		}
@@ -581,7 +601,7 @@ BOOL CChatSession::OnChatMessage(CDCPacket* pPacket)
 	
 	int nPos = sMsg.Find( _T('>') );
 
-	NotifyMessage( sMsg.Left( nPos ), sMsg.Mid( nPos + 1 ).TrimLeft() );
+	OnChatMessage( sMsg.Left( nPos ), sMsg.Mid( nPos + 1 ).TrimLeft() );
 
 	return TRUE;
 }
@@ -593,12 +613,12 @@ BOOL CChatSession::OnChatMessage(CDCPacket* pPacket)
 // SendPacketsED2K(). Those functions are called by the OnRun(), since there isn't a valid
 // connection/socket associated with an ED2K client chat session. (It's handled by the EDClient)
 
-BOOL CChatSession::ReadPacketsED2K()
+BOOL CChatSession::ReadED2K()
 {
-	BOOL bSuccess = TRUE;
-
+	ASSERT( m_nProtocol == PROTOCOL_ED2K );
 	ASSERT( IsInputExist() );
 
+	BOOL bSuccess = TRUE;
 	while ( CEDPacket* pPacket = CEDPacket::ReadBuffer( GetInput() ) )
 	{
 		try
@@ -633,8 +653,9 @@ BOOL CChatSession::ReadPacketsED2K()
 	return bSuccess;
 }
 
-BOOL CChatSession::SendPacketsED2K()
+BOOL CChatSession::SendED2K()
 {
+	ASSERT( m_nProtocol == PROTOCOL_ED2K );
 	ASSERT( IsOutputExist() );
 
 	while ( CEDPacket* pPacket = CEDPacket::ReadBuffer( GetOutput() ) )
@@ -671,7 +692,7 @@ BOOL CChatSession::Send(CEDPacket* pPacket)
 	{
 		if ( pClient->IsOnline() )	// We found a client that's ready to go
 		{
-			MakeActive();
+			MakeActive( FALSE );
 
 			// Send the packet to the ed2k client, and report the packet should be removed
 			pClient->Send( pPacket );
@@ -747,7 +768,7 @@ BOOL CChatSession::OnChatMessage(CEDPacket* pPacket)
 	// Read message length
 	DWORD nMessageLength = pPacket->ReadShortLE();
 
-	NotifyMessage( m_sNick, m_bUnicode ? pPacket->ReadStringUTF8( nMessageLength ) :
+	OnChatMessage( m_sNick, m_bUnicode ? pPacket->ReadStringUTF8( nMessageLength ) :
 		pPacket->ReadStringASCII( nMessageLength ) );
 
 	return TRUE;
@@ -792,19 +813,21 @@ BOOL CChatSession::OnCaptchaResult(CEDPacket* pPacket)
 //////////////////////////////////////////////////////////////////////
 // CChatSession text interface
 
-BOOL CChatSession::ReadText()
+BOOL CChatSession::ReadG1()
 {
+	ASSERT( m_nProtocol == PROTOCOL_G1 );
+
 	CString strLine;
 
 	while ( Read( strLine, FALSE ) )
 	{
-		NotifyMessage( m_sNick, strLine );
+		OnChatMessage( m_sNick, strLine );
 	}
 
 	return TRUE;
 }
 
-void CChatSession::NotifyMessage(const CString& sFrom, const CString& sMessage)
+void CChatSession::OnChatMessage(const CString& sFrom, const CString& sMessage)
 {
 	if ( m_bOld == TRI_TRUE )
 	{
@@ -860,8 +883,10 @@ void CChatSession::Send(CG2Packet* pPacket)
 	OnWrite();
 }
 
-BOOL CChatSession::ReadPackets()
+BOOL CChatSession::ReadG2()
 {
+	ASSERT( m_nProtocol == PROTOCOL_G2 );
+
 	CLockedBuffer pInput( GetInput() );
 
 	BOOL bSuccess = TRUE;
@@ -914,7 +939,34 @@ BOOL CChatSession::ReadPackets()
 
 		try
 		{
-			bSuccess = OnPacket( pPacket );
+			switch( pPacket->m_nType )
+			{
+			case G2_PACKET_CHAT_MESSAGE:
+				bSuccess = OnChatMessage( pPacket );
+				break;
+
+			case G2_PACKET_PROFILE_CHALLENGE:
+				bSuccess = OnProfileChallenge( pPacket );
+				break;
+
+			case G2_PACKET_PROFILE_DELIVERY:
+				bSuccess = OnProfileDelivery( pPacket );
+				break;
+
+			case G2_PACKET_CHAT_REQUEST:
+				bSuccess = OnChatRequest( pPacket );
+				break;
+
+			case G2_PACKET_CHAT_ANSWER:
+				bSuccess = OnChatAnswer( pPacket );
+				break;
+#ifdef _DEBUG
+			default:
+				CString tmp;
+				tmp.Format( _T("Unknown chat packet from %s."), (LPCTSTR)HostToString( &m_pHost ) );
+				pPacket->Debug( tmp );
+#endif // _DEBUG
+			}
 		}
 		catch ( CException* pException )
 		{
@@ -928,35 +980,6 @@ BOOL CChatSession::ReadPackets()
 	if ( ! bSuccess ) Close();
 
 	return bSuccess;
-}
-
-//////////////////////////////////////////////////////////////////////
-// CChatSession Gnutella2 packet handlers
-
-BOOL CChatSession::OnPacket(CG2Packet* pPacket)
-{
-	switch( pPacket->m_nType )
-	{
-	case G2_PACKET_CHAT_MESSAGE:
-		return OnChatMessage( pPacket );
-	case G2_PACKET_PROFILE_CHALLENGE:
-		return OnProfileChallenge( pPacket );
-	case G2_PACKET_PROFILE_DELIVERY:
-		return OnProfileDelivery( pPacket );
-	case G2_PACKET_CHAT_REQUEST:
-		return OnChatRequest( pPacket );
-	case G2_PACKET_CHAT_ANSWER:
-		return OnChatAnswer( pPacket );
-
-#ifdef _DEBUG
-	default:
-		CString tmp;
-		tmp.Format( _T("Unknown chat packet from %s."), (LPCTSTR)HostToString( &m_pHost ) );
-		pPacket->Debug( tmp );
-#endif // _DEBUG
-	}
-
-	return TRUE;
 }
 
 BOOL CChatSession::OnProfileChallenge(CG2Packet* /*pPacket*/)
@@ -1076,8 +1099,6 @@ BOOL CChatSession::OnChatRequest(CG2Packet* pPacket)
 		{
 			pAnswer->WritePacket( G2_PACKET_CHAT_ACCEPT, 0 );
 		}
-
-		PostOpenWindow();
 	}
 	else
 	{
@@ -1115,11 +1136,7 @@ BOOL CChatSession::OnChatAnswer(CG2Packet* pPacket)
 			break;
 
 		case G2_PACKET_CHAT_ACCEPT:
-			if ( m_nState != cssActive )
-			{
-				StatusMessage( cmtInfo, IDS_CHAT_PRIVATE_ONLINE, (LPCTSTR)m_sNick );
-				m_nState = cssActive;
-			}
+			MakeActive();
 			break;
 
 		case G2_PACKET_CHAT_DENY:
@@ -1128,9 +1145,8 @@ BOOL CChatSession::OnChatAnswer(CG2Packet* pPacket)
 			break;
 
 		case G2_PACKET_CHAT_AWAY:
-			m_nState = cssAway;
-			StatusMessage( cmtError, IDS_CHAT_PRIVATE_AWAY, (LPCTSTR)m_sNick,
-				pPacket->ReadString( nLength ) );
+			MakeActive();
+			StatusMessage( cmtError, IDS_CHAT_PRIVATE_AWAY, (LPCTSTR)m_sNick, pPacket->ReadString( nLength ) );
 			break;
 		}
 		pPacket->m_nPosition = nOffset;
@@ -1238,8 +1254,7 @@ BOOL CChatSession::SendPrivateMessage(bool bAction, const CString& strText)
 	if ( GetConnectedState() != TRI_TRUE )
 	{
 		StatusMessage( cmtError, IDS_CHAT_NOT_CONNECTED_1 );
-		if ( m_pWndPrivate )
-			m_pWndPrivate->PostMessage( WM_COMMAND, ID_CHAT_CONNECT );
+		Command( ID_CHAT_CONNECT );
 		return FALSE;
 	}
 
@@ -1309,34 +1324,90 @@ void CChatSession::StatusMessage(MessageType bType, UINT nID, ...)
 
 void CChatSession::NotifyMessage(MessageType bType, const CString& sFrom, const CString& sMessage, HBITMAP hBitmap)
 {
-	if ( m_pWndPrivate )
+	CQuickLock oLock( ChatCore.m_pSection );
+
+	MSG oMsg = { NULL, WM_CHAT_MESSAGE, 0, (LPARAM)new CChatMessage( bType, sFrom, sMessage, hBitmap ) };
+	m_pMessages.AddTail( oMsg );
+}
+
+void CChatSession::AddUser(CChatUser* pUser)
+{
+	CQuickLock oLock( ChatCore.m_pSection );
+
+	MSG oMsg = { NULL, WM_CHAT_ADD_USER, 0, (LPARAM)pUser };
+	m_pMessages.AddTail( oMsg );
+}
+
+void CChatSession::DeleteUser(CString* pUser)
+{
+	CQuickLock oLock( ChatCore.m_pSection );
+
+	MSG oMsg = { NULL, WM_CHAT_DELETE_USER, 0, (LPARAM)pUser };
+	m_pMessages.AddTail( oMsg );
+}
+
+void CChatSession::Command(UINT nCommand)
+{
+	CQuickLock oLock( ChatCore.m_pSection );
+
+	MSG oMsg = { NULL, WM_COMMAND, nCommand };
+	m_pMessages.AddTail( oMsg );
+}
+
+void CChatSession::ProcessMessages()
+{
+	if ( ! m_pWndPrivate )
+		return;
+
+	CQuickLock oLock( ChatCore.m_pSection );
+
+	if ( ! m_pWndPrivate )
+		return;
+
+	while ( ! m_pMessages.IsEmpty() )
 	{
-		m_pWndPrivate->PostMessage( WM_CHAT_MESSAGE, 0,
-			(LPARAM)new CChatMessage( bType, sFrom, sMessage, hBitmap ) );
+		MSG oMsg = m_pMessages.RemoveHead();
+		m_pWndPrivate->PostMessage( oMsg.message, oMsg.wParam, oMsg.lParam );
 	}
-	else
+}
+
+void CChatSession::ClearMessages()
+{
+	CQuickLock oLock( ChatCore.m_pSection );
+
+	while ( ! m_pMessages.IsEmpty() )
 	{
-		if ( hBitmap ) DeleteObject( hBitmap );
+		MSG oMsg = m_pMessages.RemoveHead();
+		switch ( oMsg.message )
+		{
+		case WM_CHAT_MESSAGE:
+			if ( CChatMessage* pMsg = (CChatMessage*)oMsg.lParam )
+			{
+				if ( pMsg->m_hBitmap ) DeleteObject( pMsg->m_hBitmap );
+				delete pMsg;
+			}
+			break;
+
+		case WM_CHAT_ADD_USER:
+			delete (CChatUser*)oMsg.lParam;
+			break;
+
+		case WM_CHAT_DELETE_USER:
+			delete (CString*)oMsg.lParam;
+			break;
+		}
 	}
 }
 
 //////////////////////////////////////////////////////////////////////
 // CChatSession chat window interface
 
-void CChatSession::PostOpenWindow()
-{
-	CQuickLock oLock( ChatCore.m_pSection );
-
-	if ( m_pWndPrivate != NULL ) return;
-
-	PostMainWndMessage( WM_OPENCHAT, (WPARAM)this );
-}
-
 void CChatSession::OnOpenWindow()
 {
 	CQuickLock oLock( ChatCore.m_pSection );
 
-	if ( m_pWndPrivate != NULL ) return;
+	if ( m_pWndPrivate != NULL )
+		return;
 
 	if ( m_oGUID )
 	{
@@ -1346,7 +1417,7 @@ void CChatSession::OnOpenWindow()
 	}
 	else
 	{
-		m_pWndPrivate = ChatWindows.FindPrivate( &m_pHost.sin_addr );
+		m_pWndPrivate = ChatWindows.FindPrivate( &m_pHost );
 	}
 
 	if ( ( m_pWndPrivate == NULL ) && ( m_nProtocol == PROTOCOL_ED2K ) )
@@ -1368,18 +1439,33 @@ void CChatSession::OnOpenWindow()
 		m_pWndPrivate->Accept( this );
 	}
 
-	NotifyMessage( cmtProfile, m_sNick );
+	if ( m_nProtocol == PROTOCOL_DC )
+	{
+		CSingleLock pLock( &Network.m_pSection );
+		if ( pLock.Lock( 250 ) )
+		{
+			if ( CNeighbour* pClient = Neighbours.Get( m_pHost.sin_addr ) )
+			{
+				if ( pClient->m_nProtocol == PROTOCOL_DC )
+				{
+					static_cast< CDCNeighbour* >( pClient )->OnChatOpen( this );
+				}
+			}
+		}
 
-	StatusMessage( cmtInfo, IDS_CHAT_PRIVATE_ONLINE, (LPCTSTR)m_sNick );
-
-	PlaySound( _T("RAZA_IncomingChat"), NULL, SND_APPLICATION|SND_ALIAS|SND_ASYNC );
-
-	m_nState = cssActive;
+		MakeActive( FALSE );
+	}
+	else
+	{
+		MakeActive();
+	}
 }
 
 void CChatSession::OnCloseWindow()
 {
 	CQuickLock oLock( ChatCore.m_pSection );
+
+	ClearMessages();
 
 	m_pWndPrivate = NULL;
 
