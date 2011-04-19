@@ -1,7 +1,7 @@
 //
 // CtrlMediaList.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -97,6 +97,19 @@ CMediaListCtrl::CMediaListCtrl()
 
 CMediaListCtrl::~CMediaListCtrl()
 {
+}
+
+UINT CMediaListCtrl::GetSelectedCount() const
+{
+	static DWORD tLastUpdate = 0;
+	static UINT nCount = 0;
+	DWORD tNow = GetTickCount();
+	if ( tNow > tLastUpdate + 250 || tNow < tLastUpdate )
+	{
+		tLastUpdate = tNow;
+		nCount = CListCtrl::GetSelectedCount();
+	}
+	return nCount;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -599,7 +612,7 @@ void CMediaListCtrl::OnLButtonUp(UINT nFlags, CPoint point)
 BOOL CMediaListCtrl::AreSelectedFilesInLibrary()
 {
 	CQuickLock oLock( Library.m_pSection );
-	if ( GetSelectedCount() > 0 )
+	if ( GetSelectedCount() )
 	{
 		// If at least one selected file is in the library then enable
 		for ( int nItem = -1 ; ( nItem = GetNextItem( nItem, LVIS_SELECTED ) ) >= 0 ; )
@@ -722,7 +735,7 @@ void CMediaListCtrl::OnMediaAddFolder()
 
 void CMediaListCtrl::OnUpdateMediaRemove(CCmdUI* pCmdUI) 
 {
-	pCmdUI->Enable( GetSelectedCount() > 0 );
+	pCmdUI->Enable( GetSelectedCount() );
 }
 
 void CMediaListCtrl::OnMediaRemove() 

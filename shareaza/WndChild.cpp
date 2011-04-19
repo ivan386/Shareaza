@@ -95,6 +95,24 @@ BOOL CChildWnd::Create(UINT nID, BOOL bVisible)
 		WS_CLIPCHILDREN | WS_CLIPSIBLINGS );
 }
 
+void CChildWnd::GetWindowText(CString& rString) const
+{
+	if ( m_sCaption.IsEmpty() )
+	{
+		CMDIChildWnd::GetWindowText( m_sCaption );
+	}
+	rString = m_sCaption;
+}
+
+void CChildWnd::SetWindowText(LPCTSTR lpszString)
+{
+	if ( m_sCaption != lpszString )
+	{
+		m_sCaption = lpszString;
+		CMDIChildWnd::SetWindowText( lpszString );
+	}
+}
+
 CMainWnd* CChildWnd::GetMainWnd()
 {
 	if ( ! m_pMainWndCache )

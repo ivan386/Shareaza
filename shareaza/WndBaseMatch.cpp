@@ -982,7 +982,7 @@ void CBaseMatchWnd::OnTimer(UINT_PTR nIDEvent)
 			}
 		}
 
-		BOOL bActive = ( GetMDIFrame()->MDIGetActive() == this );
+		BOOL bActive = ( GetMainWnd()->MDIGetActive() == this );
 
 		if ( bActive )
 		{

@@ -1,7 +1,7 @@
 //
 // LiveList.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -268,29 +268,33 @@ BOOL CLiveItem::Update(CListCtrl* pCtrl, int nItem, int nColumns)
 	ASSERT_VALID( this );
 	ASSERT_VALID( pCtrl );
 
+	TCHAR buf[ MAX_PATH ];
 	BOOL bModified = FALSE;
 
-	LV_ITEM pItem = {};
-	pItem.mask		= LVIF_PARAM|LVIF_IMAGE|LVIF_STATE;
-	pItem.iItem		= nItem;
-	pItem.stateMask	= LVIS_OVERLAYMASK|LVIS_STATEIMAGEMASK;
+	LV_ITEM pMainItem = {
+		LVIF_PARAM | LVIF_IMAGE | LVIF_STATE,
+		nItem,
+		0,
+		0,
+		LVIS_OVERLAYMASK|LVIS_STATEIMAGEMASK
+	};
 
-	if ( ! pCtrl->GetItem( &pItem ) || pItem.lParam != (LPARAM)m_nParam )
+	if ( ! pCtrl->GetItem( &pMainItem ) || pMainItem.lParam != (LPARAM)m_nParam )
 		return FALSE;
 
-	if ( ( pItem.state & (LVIS_OVERLAYMASK|LVIS_STATEIMAGEMASK) ) != ( INDEXTOOVERLAYMASK( m_nMaskOverlay ) | INDEXTOSTATEIMAGEMASK( m_nMaskState ) ) )
+	if ( ( pMainItem.state & (LVIS_OVERLAYMASK|LVIS_STATEIMAGEMASK) ) != ( INDEXTOOVERLAYMASK( m_nMaskOverlay ) | INDEXTOSTATEIMAGEMASK( m_nMaskState ) ) )
 	{
-		pItem.state		= INDEXTOOVERLAYMASK( m_nMaskOverlay ) | INDEXTOSTATEIMAGEMASK( m_nMaskState );
-		pItem.stateMask	= LVIS_OVERLAYMASK | LVIS_STATEIMAGEMASK;
+		pMainItem.state		= INDEXTOOVERLAYMASK( m_nMaskOverlay ) | INDEXTOSTATEIMAGEMASK( m_nMaskState );
+		pMainItem.stateMask	= LVIS_OVERLAYMASK | LVIS_STATEIMAGEMASK;
 		bModified = TRUE;
 	}
 
 	if ( bModified )
-		VERIFY( pCtrl->SetItem( &pItem ) );
+		VERIFY( pCtrl->SetItem( &pMainItem ) );
 
-	for ( pItem.iSubItem = 0 ; pItem.iSubItem < nColumns ; pItem.iSubItem++ )
+	for ( int i = 0 ; i < nColumns ; ++i )
 	{
-		pItem.mask = LVIF_IMAGE|LVIF_TEXT;
+		LV_ITEM pItem = { LVIF_IMAGE | LVIF_TEXT, nItem, i, 0, 0, buf, MAX_PATH };
 		if ( ! pCtrl->GetItem( &pItem ) )
 			return FALSE;
 

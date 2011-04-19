@@ -1,7 +1,7 @@
 //
 // CtrlMediaFrame.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -2001,7 +2001,7 @@ BOOL CMediaFrame::UpdateState()
 		}
 		int nPosition = (int)( m_nPosition / TIME_FACTOR );
 
-		m_wndPosition.EnableWindow( TRUE );
+		if ( ! m_wndPosition.IsWindowEnabled() ) m_wndPosition.EnableWindow( TRUE );
 		m_wndPosition.SetRangeMax( (int)nLength );
 		m_wndPosition.SetPos( (int)nPosition );
 
@@ -2013,7 +2013,7 @@ BOOL CMediaFrame::UpdateState()
 			return FALSE;
 		}
 		m_wndSpeed.SetPos( (int)( nSpeed * 100 ) );
-		m_wndSpeed.EnableWindow( TRUE );
+		if ( ! m_wndSpeed.IsWindowEnabled() ) m_wndSpeed.EnableWindow( TRUE );
 
 		if ( ! m_bMute )
 		{
@@ -2036,9 +2036,9 @@ BOOL CMediaFrame::UpdateState()
 		if ( m_nState != smsNull && m_wndList.GetCount() == 0 ) Cleanup();
 		m_wndPosition.SetPos( 0 );
 		m_wndPosition.SetRange( 0, 0 );
-		m_wndPosition.EnableWindow( FALSE );
+		if ( m_wndPosition.IsWindowEnabled() ) m_wndPosition.EnableWindow( FALSE );
 		m_wndSpeed.SetPos( 100 );
-		m_wndSpeed.EnableWindow( FALSE );
+		if ( m_wndSpeed.IsWindowEnabled() ) m_wndSpeed.EnableWindow( FALSE );
 	}
 
 	m_wndVolume.SetPos( (int)( Settings.MediaPlayer.Volume * 100 ) );

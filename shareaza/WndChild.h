@@ -48,6 +48,8 @@ public:
 	BOOL			m_bPanelMode;
 	BOOL			m_bAlert;
 
+	void			GetWindowText(CString& rString) const;
+	void			SetWindowText(LPCTSTR lpszString);
 	CMainWnd*		GetMainWnd();
 	CWindowManager*	GetManager();
 	BOOL			IsActive(BOOL bFocused = FALSE);
@@ -76,6 +78,7 @@ public:
 	virtual BOOL	DestroyWindow();
 
 private:
+	mutable CString		m_sCaption;
 	CMainWnd*			m_pMainWndCache;
 	static CChildWnd*	m_pCmdMsg;
 

@@ -1,7 +1,7 @@
 //
 // CtrlMediaFrame.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -23,6 +23,41 @@
 
 #include "CtrlCoolBar.h"
 #include "CtrlMediaList.h"
+
+class CLazySliderCtrl : public CSliderCtrl
+{
+public:
+	CLazySliderCtrl() : m_nPos( -1 ), m_nMin( -1 ), m_nMax( -1 ) {}
+
+	int GetPos() const
+	{
+		if ( m_nPos == -1 )
+			m_nPos = CSliderCtrl::GetPos();
+		return m_nPos;
+	}
+
+	void SetPos(_In_ int nPos)
+	{
+		if ( m_nPos != nPos )
+		{
+			m_nPos = nPos;
+			CSliderCtrl::SetPos( nPos );
+		}
+	}
+
+	void SetRange(_In_ int nMin, _In_ int nMax, _In_ BOOL bRedraw = FALSE)
+	{
+		if ( m_nMin != nMin || m_nMax != nMax )
+		{
+			m_nMin = nMin;
+			m_nMax = nMax;
+			CSliderCtrl::SetRange( nMin, nMax, bRedraw );
+		}
+	}
+
+private:
+	mutable int m_nPos, m_nMin, m_nMax;
+};
 
 class CMediaFrame : public CWnd
 {
@@ -93,9 +128,9 @@ protected:
 	CMediaListCtrl	m_wndList;
 	CCoolBarCtrl	m_wndListBar;
 	CCoolBarCtrl	m_wndToolBar;
-	CSliderCtrl		m_wndPosition;
-	CSliderCtrl		m_wndSpeed;
-	CSliderCtrl		m_wndVolume;
+	CLazySliderCtrl	m_wndPosition;
+	CLazySliderCtrl	m_wndSpeed;
+	CLazySliderCtrl	m_wndVolume;
 
 	BOOL			m_bFullScreen;
 	DWORD			m_tBarTime;

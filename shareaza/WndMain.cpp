@@ -323,6 +323,68 @@ BOOL CMainWnd::Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD dwSty
 		WS_EX_APPWINDOW, pContext );
 }
 
+CMDIChildWnd* CMainWnd::MDIGetActive(BOOL* pbMaximized) const
+{
+	if ( m_hWnd == NULL ) return NULL;
+
+	static DWORD tLastUpdate = 0;
+	static CMDIChildWnd* pActive = NULL;
+	DWORD tNow = GetTickCount();
+	if ( ( pActive && ! ::IsWindow( pActive->GetSafeHwnd() ) ) || tNow > tLastUpdate + 250 || tNow < tLastUpdate )
+	{
+		tLastUpdate = tNow;
+		pActive = CMDIFrameWnd::MDIGetActive( pbMaximized );
+	}
+	return pActive;
+}
+
+BOOL CMainWnd::PreTranslateMessage(MSG* pMsg)
+{
+	// check for special cancel modes for ComboBoxes
+	if (pMsg->message == WM_LBUTTONDOWN || pMsg->message == WM_NCLBUTTONDOWN)
+		AfxCancelModes(pMsg->hwnd);    // filter clicks
+
+	// allow tooltip messages to be filtered
+	if (CWnd::PreTranslateMessage(pMsg))
+		return TRUE;
+
+//#ifndef _AFX_NO_OLE_SUPPORT
+//	// allow hook to consume message
+//	if (m_pNotifyHook != NULL && m_pNotifyHook->OnPreTranslateMessage(pMsg))
+//		return TRUE;
+//#endif
+
+	CMDIChildWnd* pActiveChild = MDIGetActive();
+
+	// current active child gets first crack at it
+	if (pActiveChild != NULL && pActiveChild->PreTranslateMessage(pMsg))
+		return TRUE;
+
+	if (pMsg->message >= WM_KEYFIRST && pMsg->message <= WM_KEYLAST)
+	{
+		// translate accelerators for frame and any children
+		if (m_hAccelTable != NULL &&
+			::TranslateAccelerator(m_hWnd, m_hAccelTable, pMsg))
+		{
+			return TRUE;
+		}
+
+		// special processing for MDI accelerators last
+		// and only if it is not in SDI mode (print preview)
+		if (GetActiveView() == NULL)
+		{
+			if (pMsg->message == WM_KEYDOWN || pMsg->message == WM_SYSKEYDOWN)
+			{
+				// the MDICLIENT window may translate it
+				if (::TranslateMDISysAccel(m_hWndMDIClient, pMsg))
+					return TRUE;
+			}
+		}
+	}
+
+	return FALSE;
+}
+
 BOOL CMainWnd::OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* /* pContext */)
 {
 	// Bypass menu creation
@@ -693,7 +755,17 @@ BOOL CMainWnd::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* p
 			return TRUE;
 	}
 
-	return CMDIFrameWnd::OnCmdMsg( nID, nCode, pExtra, pHandlerInfo );
+	CMDIChildWnd* pActiveChild = MDIGetActive();
+	// pump through active child FIRST
+	if ( pActiveChild != NULL )
+	{
+		CPushRoutingFrame push(this);
+		if ( pActiveChild->OnCmdMsg( nID, nCode, pExtra, pHandlerInfo ) )
+			return TRUE;
+	}
+
+	// then pump through normal frame
+	return CFrameWnd::OnCmdMsg(nID, nCode, pExtra, pHandlerInfo);
 }
 
 BOOL CMainWnd::OnCommand(WPARAM wParam, LPARAM lParam)
@@ -2929,15 +3001,10 @@ LRESULT CMainWnd::OnSanityCheck(WPARAM /*wParam*/, LPARAM /*lParam*/)
 
 	// TODO: Uploads.SanityCheck();
 
-	CQuickLock pLock( theApp.m_pSection );
-	if ( CMainWnd* pMainWnd = theApp.SafeMainWnd() )
+	CChildWnd* pChildWnd = NULL;
+	while ( ( pChildWnd = m_pWindows.Find( NULL, pChildWnd ) ) != NULL )
 	{
-		CWindowManager* pWindows = &pMainWnd->m_pWindows;
-		CChildWnd* pChildWnd = NULL;
-		while ( ( pChildWnd = pWindows->Find( NULL, pChildWnd ) ) != NULL )
-		{
-			pChildWnd->SanityCheck();
-		}
+		pChildWnd->SanityCheck();
 	}
 
 	return 0L;

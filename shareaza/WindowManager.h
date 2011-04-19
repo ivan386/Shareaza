@@ -1,7 +1,7 @@
 //
 // WindowManager.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -21,7 +21,8 @@
 
 #pragma once
 
-#include "WndChild.h"
+class CMainWnd;
+class CChildWnd;
 
 
 class CWindowManager : public CWnd
@@ -29,15 +30,15 @@ class CWindowManager : public CWnd
 	DECLARE_DYNCREATE(CWindowManager)
 
 public:
-	CWindowManager(CMDIFrameWnd* pParent = NULL);
+	CWindowManager();
 	virtual ~CWindowManager();
 
-	CMDIFrameWnd*		m_pParent;
+	CMainWnd*	m_pParent;
 	CList< CChildWnd* >	m_pWindows;
-	CRect				m_rcSize;
-	BOOL				m_bIgnoreActivate;
+	CRect		m_rcSize;
+	BOOL		m_bIgnoreActivate;
 
-	void		SetOwner(CMDIFrameWnd* pParent);
+	void		SetOwner(CMainWnd* pParent);
 	CChildWnd*	GetActive() const;
 	POSITION	GetIterator() const;
 	CChildWnd*	GetNext(POSITION& pos) const;

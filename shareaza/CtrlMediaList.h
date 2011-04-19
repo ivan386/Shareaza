@@ -1,7 +1,7 @@
 //
 // CtrlMediaList.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -43,6 +43,7 @@ public:
 	BOOL	SaveTextList(LPCTSTR pszFile);
 	int		GetCount();
 	void	Clear();
+	UINT	GetSelectedCount() const;
 	int		GetCurrent();
 	void	SetCurrent(int nCurrent);
 	int		GetNext(BOOL bSet = TRUE);

@@ -44,6 +44,7 @@ protected:
 
 	void		 Update();
 	CNeighbour*	 GetItem(int nItem);
+	UINT		 GetSelectedCount() const;
 	void		 OpenPacketWnd(BOOL bIncoming, BOOL bOutgoing);
 	void		 DrawEmptyMessage(CDC* pDC);
 	virtual void OnSkinChange();

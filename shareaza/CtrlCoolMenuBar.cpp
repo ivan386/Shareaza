@@ -1,7 +1,7 @@
 //
 // CtrlCoolMenuBar.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -25,10 +25,8 @@
 #include "CoolInterface.h"
 #include "CoolMenu.h"
 #include "CtrlCoolMenuBar.h"
-
-#ifdef _SHAREAZA
+#include "WndMain.h"
 #include "WndChild.h"
-#endif
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -37,7 +35,6 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 BEGIN_MESSAGE_MAP(CCoolMenuBarCtrl, CCoolBarCtrl)
-	//{{AFX_MSG_MAP(CCoolMenuBarCtrl)
 	ON_WM_LBUTTONDOWN()
 	ON_WM_TIMER()
 	ON_WM_MEASUREITEM()
@@ -45,7 +42,6 @@ BEGIN_MESSAGE_MAP(CCoolMenuBarCtrl, CCoolBarCtrl)
 	ON_WM_INITMENUPOPUP()
 	ON_WM_MENUSELECT()
 	ON_WM_ENTERIDLE()
-	//}}AFX_MSG_MAP
 	ON_WM_ENTERMENULOOP()
 	ON_WM_EXITMENULOOP()
 END_MESSAGE_MAP()
@@ -215,7 +211,7 @@ void CCoolMenuBarCtrl::UpdateWindowMenu(CMenu* pMenu)
 		}
 	}
 
-	CMDIFrameWnd* pFrame = (CMDIFrameWnd*)AfxGetMainWnd();
+	CMainWnd* pFrame = theApp.SafeMainWnd();
 	if ( ! pFrame->IsKindOf( RUNTIME_CLASS(CMDIFrameWnd) ) ) return;
 
     CWnd* pClient = pFrame->GetWindow( GW_CHILD );
@@ -236,14 +232,12 @@ void CCoolMenuBarCtrl::UpdateWindowMenu(CMenu* pMenu)
 		CWnd* pWnd = pClient->GetDlgItem( nID );
 		if ( ! pWnd ) break;
 
-#ifdef _SHAREAZA
 		CChildWnd* pChildWnd = (CChildWnd*)pWnd;
 		if ( pChildWnd->m_bTabMode )
 		{
 			nIndex--;
 			continue;
 		}
-#endif
 
 		if ( bSeparator )
 		{

@@ -1,7 +1,7 @@
 //
 // WindowManager.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -30,6 +30,7 @@
 #include "WndBrowseHost.h"
 #include "WndDownloads.h"
 #include "WndHome.h"
+#include "WndMain.h"
 #include "WndNeighbours.h"
 #include "WndSearch.h"
 #include "WndSystem.h"
@@ -54,11 +55,11 @@ END_MESSAGE_MAP()
 //////////////////////////////////////////////////////////////////////
 // CWindowManager construction
 
-CWindowManager::CWindowManager(CMDIFrameWnd* pParent)
-	: m_pParent( NULL )
-	, m_bIgnoreActivate( FALSE )
+CWindowManager::CWindowManager()
+	: m_pParent			( NULL )
+	, m_rcSize			( 0, 0, 0, 0 )
+	, m_bIgnoreActivate	( FALSE )
 {
-	if ( pParent ) SetOwner( pParent );
 }
 
 CWindowManager::~CWindowManager()
@@ -68,7 +69,7 @@ CWindowManager::~CWindowManager()
 //////////////////////////////////////////////////////////////////////
 // CWindowManager owner
 
-void CWindowManager::SetOwner(CMDIFrameWnd* pParent)
+void CWindowManager::SetOwner(CMainWnd* pParent)
 {
 	m_pParent = pParent;
 	SubclassWindow( m_pParent->m_hWndMDIClient );

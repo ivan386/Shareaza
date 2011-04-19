@@ -1,7 +1,7 @@
 //
 // WndMain.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -44,6 +44,9 @@ public:
 	virtual ~CMainWnd();
 
 	CWindowManager		m_pWindows;
+
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
+	virtual CMDIChildWnd* MDIGetActive(BOOL* pbMaximized = NULL) const;
 
 	// Set GUI mode GUI_WINDOWED, GUI_TABBED or GUI_BASIC
 	void		SetGUIMode(int nMode, BOOL bSaveState = TRUE);
