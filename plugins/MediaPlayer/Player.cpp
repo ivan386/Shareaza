@@ -1,7 +1,7 @@
 //
 // Player.cpp : Implementation of CPlayer
 //
-// Copyright (c) Nikolay Raspopov, 2009-2010.
+// Copyright (c) Nikolay Raspopov, 2009-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -716,21 +716,22 @@ STDMETHODIMP CPlayer::GetState(
 
 	switch ( state )
 	{
-	case wmppsReady:			// Opened
-	case wmppsTransitioning:	// Starting play
-	case wmppsMediaEnded:
-	case wmppsReconnecting:
+	case wmppsUndefined:		// Windows Media Player is in an undefined state
+	case wmppsMediaEnded:		// The end of the media item has been reached
+	case wmppsTransitioning:	// Preparing new media item
+	case wmppsReady:			// Ready to begin playing
+	case wmppsReconnecting:		// Trying to reconnect for streaming data
+	case wmppsStopped:			// Playback is stopped
   		*pnState = smsOpen;
 		break;
-	case wmppsStopped:
-	case wmppsPlaying:			// Playing
-	case wmppsWaiting:
-	case wmppsScanForward:
-	case wmppsScanReverse:
-	case wmppsBuffering:
+	case wmppsPlaying:			// Stream is playing
+	case wmppsScanForward:		// Stream is scanning forward
+	case wmppsScanReverse:		// Stream is scanning in reverse
+	case wmppsBuffering:		// Stream is being buffered
+	case wmppsWaiting:			// Stream is being buffered
 		*pnState = smsPlaying;
 		break;
-	case wmppsPaused:			// Paused
+	case wmppsPaused:			// Playback is paused
 		*pnState = smsPaused;
 		break;
 	}

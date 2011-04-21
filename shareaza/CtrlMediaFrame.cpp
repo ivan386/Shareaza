@@ -1970,6 +1970,7 @@ BOOL CMediaFrame::UpdateState()
 {
 	HRESULT hr;
 
+	MediaState nOldState = m_nState;
 	m_nState = smsNull;
 
 	if ( m_pPlayer )
@@ -2026,7 +2027,7 @@ BOOL CMediaFrame::UpdateState()
 			}
 		}
 
-		if ( m_nState == smsPlaying && nPosition >= nLength && nPosition != 0 )
+		if ( nOldState == smsPlaying && m_nState == smsOpen )
 		{
 			m_wndList.GetNext();
 		}
@@ -2111,7 +2112,7 @@ void CMediaFrame::OnNewCurrent(NMHDR* /*pNotify*/, LRESULT* pResult)
 				m_bLastNotPlayed = ( nCurrent == m_wndList.GetItemCount() - 2 );
 			UpdateState();
 		}
-		else if ( bCorrupted ) // file was corrupted, move to the next file
+		else if ( m_pPlayer && bCorrupted ) // file was corrupted, move to the next file
 		{
 			nCurrent = m_wndList.GetNext( FALSE );
 			if ( m_wndList.GetItemCount() != 1 )
