@@ -125,6 +125,7 @@
 // WIN32
 //
 
+#include <dde.h>			// DDE
 #include <ddeml.h>			// DDE
 #include <exdispid.h>		// Internet Explorer DISPIDs
 #include <iphlpapi.h>		// IP Stack

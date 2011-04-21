@@ -202,6 +202,9 @@ CShareazaApp::CShareazaApp() :
 ,	m_pfnSHGetFolderPathW	( NULL )
 ,	m_pfnSHGetKnownFolderPath( NULL )
 
+,	m_hUser32				( NULL )
+,	m_pfnChangeWindowMessageFilter( NULL )
+
 ,	m_hGeoIP				( NULL )
 ,	m_pGeoIP				( NULL )
 ,	m_pfnGeoIP_delete		( NULL )
@@ -493,6 +496,9 @@ int CShareazaApp::ExitInstance()
 
 	if ( m_hShlWapi != NULL )
 		FreeLibrary( m_hShlWapi );
+
+	if ( m_hUser32 != NULL )
+		FreeLibrary( m_hUser32 );
 
 	FreeCountry();
 
@@ -941,6 +947,26 @@ void CShareazaApp::InitResources()
 	{
 		(FARPROC&)m_pfnSHGetFolderPathW = GetProcAddress( m_hShell32, "SHGetFolderPathW" );
 		(FARPROC&)m_pfnSHGetKnownFolderPath = GetProcAddress( m_hShell32, "SHGetKnownFolderPath" );
+	}
+
+	if ( ( m_hUser32 = LoadLibrary( _T("user32.dll") ) ) != NULL )
+	{
+		(FARPROC&)m_pfnChangeWindowMessageFilter = GetProcAddress( m_hUser32, "ChangeWindowMessageFilter" );
+	}
+
+	// Windows Vista: Enable drag-n-drop and window control operations from application with lower security level
+	if ( theApp.m_pfnChangeWindowMessageFilter )
+	{
+		VERIFY( theApp.m_pfnChangeWindowMessageFilter( WM_DDE_INITIATE, MSGFLT_ADD ) );
+		/*VERIFY( theApp.m_pfnChangeWindowMessageFilter( WM_USER, MSGFLT_ADD ) );
+		VERIFY( theApp.m_pfnChangeWindowMessageFilter( WM_NCACTIVATE, MSGFLT_ADD ) );
+		VERIFY( theApp.m_pfnChangeWindowMessageFilter( WM_ACTIVATEAPP, MSGFLT_ADD ) );
+		VERIFY( theApp.m_pfnChangeWindowMessageFilter( WM_ACTIVATETOPLEVEL, MSGFLT_ADD ) );
+		VERIFY( theApp.m_pfnChangeWindowMessageFilter( WM_DROPFILES, MSGFLT_ADD ) );
+		VERIFY( theApp.m_pfnChangeWindowMessageFilter( WM_COPYGLOBALDATA, MSGFLT_ADD ) );
+		VERIFY( theApp.m_pfnChangeWindowMessageFilter( WM_COPYDATA, MSGFLT_ADD ) );
+		VERIFY( theApp.m_pfnChangeWindowMessageFilter( WM_COMMAND, MSGFLT_ADD ) );
+		VERIFY( theApp.m_pfnChangeWindowMessageFilter( WM_CLOSE, MSGFLT_ADD ) );*/
 	}
 
 	LoadCountry();

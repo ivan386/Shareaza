@@ -129,6 +129,9 @@ public:
 	HINSTANCE			m_hShell32;
 	HRESULT		(WINAPI *m_pfnSHGetFolderPathW)(HWND hwnd, int csidl, HANDLE hToken, DWORD dwFlags, LPWSTR pszPath);
 	HRESULT		(WINAPI *m_pfnSHGetKnownFolderPath)(REFKNOWNFOLDERID rfid, DWORD dwFlags, HANDLE hToken, PWSTR *ppszPath);
+	
+	HINSTANCE			m_hUser32;
+	BOOL		(WINAPI *m_pfnChangeWindowMessageFilter)(UINT message, DWORD dwFlag);
 
 	// GeoIP - IP to Country lookup
 	HINSTANCE			m_hGeoIP;
@@ -399,6 +402,7 @@ __int64 GetRandomNum<__int64>(const __int64& min, const __int64& max);
 #define ID_PLUGIN_FIRST	27000
 #define ID_PLUGIN_LAST	27999
 
+#define WM_COPYGLOBALDATA	0x0049			// Undocumented way for drag-n-drop
 
 #define PANEL_WIDTH			200				// Left panel default size in pixels (Home, Search, IRC tabs)
 #define THUMB_STORE_SIZE	128				// Thumbnail dimensions (128x128 px)
