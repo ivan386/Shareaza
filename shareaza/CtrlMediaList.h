@@ -43,7 +43,7 @@ public:
 	BOOL	SaveTextList(LPCTSTR pszFile);
 	int		GetCount();
 	void	Clear();
-	UINT	GetSelectedCount() const;
+	UINT	GetSelectedCount();
 	int		GetCurrent();
 	void	SetCurrent(int nCurrent);
 	int		GetNext(BOOL bSet = TRUE);
@@ -56,6 +56,8 @@ protected:
 	int				m_nDragDrop;
 	BOOL			m_bCreateDragImage;
 	CLibraryTipCtrl	m_wndTip;
+	DWORD			m_tLastUpdate;
+	UINT			m_nSelectedCount;
 
 	int		Add(LPCTSTR pszPath, int nItem = -1);
 	void	Remove(int nItem);

@@ -1,7 +1,7 @@
 //
 // CtrlCoolBar.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -59,6 +59,7 @@ protected:
 	COLORREF		m_crBack;
 	BOOL			m_bRecalc;
 	BOOL			m_bDropEnabled;
+	DWORD			m_tLastUpdate;
 
 // Operations
 public:

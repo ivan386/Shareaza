@@ -224,15 +224,14 @@ void CCoolMenuBarCtrl::UpdateWindowMenu(CMenu* pMenu)
 
 	if ( pClient == NULL ) return;
 
-	CMDIChildWnd* pActive = pFrame->MDIGetActive();
+	CMDIChildWnd* pActive = pFrame->m_pWindows.GetActive();
 	BOOL bSeparator = TRUE;
 
 	for ( UINT nIndex = 1, nID = AFX_IDM_FIRST_MDICHILD ; nIndex <= 10 ; nIndex++, nID++ )
 	{
-		CWnd* pWnd = pClient->GetDlgItem( nID );
-		if ( ! pWnd ) break;
+		CChildWnd* pChildWnd = (CChildWnd*)pClient->GetDlgItem( nID );
+		if ( ! pChildWnd ) break;
 
-		CChildWnd* pChildWnd = (CChildWnd*)pWnd;
 		if ( pChildWnd->m_bTabMode )
 		{
 			nIndex--;
@@ -246,11 +245,11 @@ void CCoolMenuBarCtrl::UpdateWindowMenu(CMenu* pMenu)
 		}
 
 		CString strMenu, strWindow;
-		pWnd->GetWindowText( strWindow );
+		pChildWnd->GetWindowText( strWindow );
 
 		strMenu.Format( _T("&%i %s"), nIndex, (LPCTSTR)strWindow );
 
-		pMenu->AppendMenu( MF_STRING | ( pWnd == pActive ? MF_CHECKED : 0 ),
+		pMenu->AppendMenu( MF_STRING | ( pChildWnd == pActive ? MF_CHECKED : 0 ),
 			nID, strMenu );
 	}
 }

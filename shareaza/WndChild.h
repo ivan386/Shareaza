@@ -48,7 +48,7 @@ public:
 	BOOL			m_bPanelMode;
 	BOOL			m_bAlert;
 
-	void			GetWindowText(CString& rString) const;
+	void			GetWindowText(CString& rString);
 	void			SetWindowText(LPCTSTR lpszString);
 	CMainWnd*		GetMainWnd();
 	CWindowManager*	GetManager();
@@ -78,9 +78,9 @@ public:
 	virtual BOOL	DestroyWindow();
 
 private:
-	mutable CString		m_sCaption;
-	CMainWnd*			m_pMainWndCache;
-	static CChildWnd*	m_pCmdMsg;
+	CString			m_sCaption;
+	CMainWnd*		m_pMainWndCache;
+	static CChildWnd* m_pCmdMsg;
 
 protected:
 	UINT			m_nResID;

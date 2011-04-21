@@ -982,7 +982,7 @@ void CBaseMatchWnd::OnTimer(UINT_PTR nIDEvent)
 			}
 		}
 
-		BOOL bActive = ( GetMainWnd()->MDIGetActive() == this );
+		BOOL bActive = ( GetMainWnd()->m_pWindows.GetActive() == this );
 
 		if ( bActive )
 		{

@@ -325,7 +325,7 @@ BOOL CMainWnd::Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD dwSty
 
 CMDIChildWnd* CMainWnd::MDIGetActive(BOOL* pbMaximized) const
 {
-	if ( m_hWnd == NULL ) return NULL;
+	if ( m_hWnd == NULL || m_pWindows.IsEmpty() ) return NULL;
 
 	static DWORD tLastUpdate = 0;
 	static CMDIChildWnd* pActive = NULL;
@@ -746,7 +746,8 @@ BOOL CMainWnd::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* p
 {
 	if ( m_wndMonitorBar.m_hWnd != NULL )
 	{
-		if ( m_wndMonitorBar.OnCmdMsg( nID, nCode, pExtra, pHandlerInfo ) ) return TRUE;
+		if ( m_wndMonitorBar.OnCmdMsg( nID, nCode, pExtra, pHandlerInfo ) )
+			return TRUE;
 	}
 
 	if ( CMediaFrame::g_pMediaFrame != NULL )
@@ -910,11 +911,6 @@ void CMainWnd::OnTimer(UINT_PTR nIDEvent)
 		DeleteTray();
 	}
 
-	// Menu Bar
-
-	if ( m_wndMenuBar.IsWindowVisible() == FALSE )
-		ShowControlBar( &m_wndMenuBar, TRUE, FALSE );
-
 	// Update messages
 	UpdateMessages();
 
@@ -994,16 +990,15 @@ void CMainWnd::DeleteTray()
 
 void CMainWnd::CloseToTray()
 {
-	if ( m_bTrayHide ) return;
-
-	ShowWindow( SW_HIDE );
+	if ( ! IsIconic() ) SendMessage( WM_SYSCOMMAND, SC_MINIMIZE );
+	if ( IsWindowVisible() ) ShowWindow( SW_HIDE );
 
 	m_bTrayHide = TRUE;
 }
 
 void CMainWnd::OpenFromTray(int nShowCmd)
 {
-	if ( m_bTrayHide ) ShowWindow( nShowCmd );
+	if ( ! IsWindowVisible() ) ShowWindow( nShowCmd );
 	if ( IsIconic() ) SendMessage( WM_SYSCOMMAND, SC_RESTORE );
 
 	SetForegroundWindow();
@@ -1436,10 +1431,16 @@ LRESULT CMainWnd::OnSetMessageString(WPARAM wParam, LPARAM lParam)
 {
 	if ( wParam == AFX_IDS_IDLEMESSAGE )
 	{
-		CString strOld;
-		m_wndStatusBar.GetWindowText( strOld );
-		if ( strOld != m_sMsgStatus ) m_wndStatusBar.SetWindowText( m_sMsgStatus );
-		m_nIDLastMessage = m_nIDTracking = static_cast< UINT >( wParam );
+		if ( IsForegroundWindow() )
+		{
+			CString strOld;
+			m_wndStatusBar.GetPaneText( 0, strOld );
+			if ( strOld != m_sMsgStatus )
+				m_wndStatusBar.SetPaneText( 0, m_sMsgStatus );
+		}
+
+		m_nIDLastMessage = m_nIDTracking = AFX_IDS_IDLEMESSAGE;
+
 		return 0;
 	}
 	else
@@ -1460,6 +1461,7 @@ void CMainWnd::GetMessageString(UINT nID, CString& rMessage) const
 void CMainWnd::UpdateMessages()
 {
 	// StatusBar
+	if ( IsForegroundWindow() )
 	{
 		CString strMessage;
 
@@ -1508,18 +1510,19 @@ void CMainWnd::UpdateMessages()
 			strMessage += Settings.VersionCheck.Quote;
 		}
 
+		m_sMsgStatus = strMessage;
+
 		if ( m_nIDLastMessage == AFX_IDS_IDLEMESSAGE )
 		{
 			CString strOld;
-			m_wndStatusBar.GetWindowText( strOld );
-			if ( strOld != strMessage )
-				m_wndStatusBar.SetWindowText( strMessage );
+			m_wndStatusBar.GetPaneText( 0, strOld );
+			if ( strOld != m_sMsgStatus )
+				m_wndStatusBar.SetPaneText( 0, m_sMsgStatus );
 		}
-
-		m_sMsgStatus = strMessage;
 	}
 
 	// StatusBar pane 1
+	if ( IsForegroundWindow() )
 	{
 		CString strStatusbar;
 		strStatusbar.Format( LoadString( IDS_STATUS_BAR_BANDWIDTH ),
@@ -1535,6 +1538,7 @@ void CMainWnd::UpdateMessages()
 	}
 
 	// StatusBar pane 2
+	if ( IsForegroundWindow() )
 	{
 		CString strStatusbar( HostToString( &Network.m_pHost ) );	
 
@@ -1703,7 +1707,7 @@ void CMainWnd::OnNetworkSearch()
 {
 	if ( ! Network.IsWellConnected() ) Network.Connect( TRUE );
 
-	if ( Settings.Search.SearchPanel && ! m_bTrayHide && ! IsIconic() )
+	if ( Settings.Search.SearchPanel && IsForegroundWindow() )
 	{
 		m_pWindows.OpenNewSearchWindow();
 		m_wndTabBar.OnSkinChange();
@@ -2869,7 +2873,7 @@ void CMainWnd::OnHelpTorrent()
 
 void CMainWnd::OnHelpWarnings()
 {
-	if ( IsWindowEnabled() && IsWindowVisible() && ! IsIconic() )
+	if ( IsWindowEnabled() && IsForegroundWindow() )
 	{
 		Settings.Windows.RunWarnings = true;
 		CWarningsDlg dlg;
@@ -2879,7 +2883,7 @@ void CMainWnd::OnHelpWarnings()
 
 void CMainWnd::OnHelpPromote()
 {
-	if ( IsWindowEnabled() && IsWindowVisible() && ! IsIconic() )
+	if ( IsWindowEnabled() && IsForegroundWindow() )
 	{
 		Settings.Windows.RunPromote = true;
 		CPromoteDlg dlg;

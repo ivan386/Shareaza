@@ -33,13 +33,9 @@ public:
 	CWindowManager();
 	virtual ~CWindowManager();
 
-	CMainWnd*	m_pParent;
-	CList< CChildWnd* >	m_pWindows;
-	CRect		m_rcSize;
-	BOOL		m_bIgnoreActivate;
-
 	void		SetOwner(CMainWnd* pParent);
 	CChildWnd*	GetActive() const;
+	BOOL		IsEmpty() const { return m_pWindows.IsEmpty(); }
 	POSITION	GetIterator() const;
 	CChildWnd*	GetNext(POSITION& pos) const;
 	BOOL		Check(CChildWnd* pChild) const;
@@ -61,6 +57,11 @@ public:
 	void		PostSkinRemove();
 
 protected:
+	CMainWnd*	m_pParent;
+	CRect		m_rcSize;
+	BOOL		m_bIgnoreActivate;
+	CList< CChildWnd* >	m_pWindows;
+
 	void		Add(CChildWnd* pChild);
 	void		Remove(CChildWnd* pChild);
 	void		ActivateGrouped(CChildWnd* pExcept);

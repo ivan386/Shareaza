@@ -92,6 +92,8 @@ END_MESSAGE_MAP()
 CMediaListCtrl::CMediaListCtrl()
 	: m_pDragImage		( NULL )
 	, m_bCreateDragImage( FALSE )
+	, m_tLastUpdate		( 0 )
+	, m_nSelectedCount	( 0 )
 {
 }
 
@@ -99,17 +101,15 @@ CMediaListCtrl::~CMediaListCtrl()
 {
 }
 
-UINT CMediaListCtrl::GetSelectedCount() const
+UINT CMediaListCtrl::GetSelectedCount()
 {
-	static DWORD tLastUpdate = 0;
-	static UINT nCount = 0;
 	DWORD tNow = GetTickCount();
-	if ( tNow > tLastUpdate + 250 || tNow < tLastUpdate )
+	if ( tNow > m_tLastUpdate + 250 || tNow < m_tLastUpdate )
 	{
-		tLastUpdate = tNow;
-		nCount = CListCtrl::GetSelectedCount();
+		m_tLastUpdate = tNow;
+		m_nSelectedCount = CListCtrl::GetSelectedCount();
 	}
-	return nCount;
+	return m_nSelectedCount;
 }
 
 /////////////////////////////////////////////////////////////////////////////

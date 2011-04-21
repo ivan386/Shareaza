@@ -441,33 +441,19 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 			if ( oLock.Lock( 1000 ) )
 			{
 				if ( CLibraryFile* pFile = LibraryMaps.LookupFileByURN( pszURN, TRUE, TRUE ) )
-				{
-					if ( UploadQueues.CanUpload( PROTOCOL_HTTP, pFile, TRUE ) )
-					{
-						// Have the file, but the network is disabled (503 Service Unavailable response).
-						// We handle them in CDownloadTransferHTTP::ReadResponseLine.
-						// Adjust Retry-After header in SendDefaultHeaders() if you change the ban period 
-						SendResponse( IDR_HTML_DISABLED );
-						theApp.Message( MSG_ERROR, IDS_UPLOAD_DISABLED, (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
-						Security.Ban( &m_pHost.sin_addr, ban2Hours, FALSE ); // Anti-hammer protection if client doesn't understand 403
-						Remove( FALSE );
-						return FALSE;
-					}
-				}
-				// Network is disabled, but we don't have the file anyway.
-				SendResponse( IDR_HTML_FILENOTFOUND );
+					SendResponse( IDR_HTML_DISABLED );
+				else
+					// Network is disabled, but we don't have the file anyway.
+					SendResponse( IDR_HTML_FILENOTFOUND );
 			}
 			else
-			{
 				SendResponse( IDR_HTML_BUSY );
-			}
 		}
 		else
-		{
 			SendResponse( IDR_HTML_DISABLED );
-		}
+
 		theApp.Message( MSG_ERROR, IDS_UPLOAD_DISABLED, (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
-		Security.Ban( &m_pHost.sin_addr, ban2Hours, FALSE ); // Anti-hammer protection if client doesn't understand 403
+		Security.Ban( &m_pHost.sin_addr, ban30Mins, FALSE ); // Anti-hammer protection if client doesn't understand 403
 		Remove( FALSE );
 		return FALSE;
 	}

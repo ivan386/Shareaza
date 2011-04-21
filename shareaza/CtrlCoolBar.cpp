@@ -35,7 +35,6 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNAMIC(CCoolBarCtrl, CControlBar)
 
 BEGIN_MESSAGE_MAP(CCoolBarCtrl, CControlBar)
-	//{{AFX_MSG_MAP(CCoolBarCtrl)
 	ON_WM_CREATE()
 	ON_WM_DESTROY()
 	ON_WM_TIMER()
@@ -46,7 +45,6 @@ BEGIN_MESSAGE_MAP(CCoolBarCtrl, CControlBar)
 	ON_WM_LBUTTONUP()
 	ON_WM_LBUTTONDBLCLK()
 	ON_WM_RBUTTONDOWN()
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 #define DEFAULT_HEIGHT		30
@@ -64,22 +62,23 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CCoolBar construction
 
-CCoolBarCtrl::CCoolBarCtrl() :
-	m_bStretch( FALSE ),
-	m_nHeight( DEFAULT_HEIGHT ),
-	m_bGripper( FALSE ),
-	m_bBold( FALSE ),
-	m_bDragForward( FALSE ),
-	m_pSyncObject( NULL ),
-	m_dwHoverTime( 0 ),
-	m_bBuffered( FALSE ),
-	m_bMenuGray( FALSE ),
-	m_pDown( NULL ),
-	m_pHot( NULL ),
-	m_bTimer( FALSE ),
-	m_crBack( 0 ),
-	m_bRecalc( FALSE ),
-	m_bDropEnabled( FALSE )
+CCoolBarCtrl::CCoolBarCtrl()
+	: m_bStretch( FALSE )
+	, m_nHeight( DEFAULT_HEIGHT )
+	, m_bGripper( FALSE )
+	, m_bBold( FALSE )
+	, m_bDragForward( FALSE )
+	, m_pSyncObject( NULL )
+	, m_dwHoverTime( 0 )
+	, m_bBuffered( FALSE )
+	, m_bMenuGray( FALSE )
+	, m_pDown( NULL )
+	, m_pHot( NULL )
+	, m_bTimer( FALSE )
+	, m_crBack( 0 )
+	, m_bRecalc( FALSE )
+	, m_bDropEnabled( FALSE )
+	, m_tLastUpdate	( 0 )
 {
 }
 
@@ -709,6 +708,11 @@ HBRUSH CCoolBarCtrl::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 
 void CCoolBarCtrl::OnUpdateCmdUI(CFrameWnd* pTarget, BOOL bDisableIfNoHndler)
 {
+	DWORD tNow = GetTickCount();
+	if ( tNow < m_tLastUpdate + 250 || tNow < m_tLastUpdate )
+		return;
+	m_tLastUpdate = tNow;
+
 	UINT nIndex		= 0;
 	BOOL bDirty		= FALSE;
 	BOOL bLocked	= FALSE;
