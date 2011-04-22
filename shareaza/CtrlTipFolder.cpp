@@ -1,7 +1,7 @@
 //
 // CtrlTipFolder.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -46,6 +46,7 @@ END_MESSAGE_MAP()
 
 CFolderTipCtrl::CFolderTipCtrl()
 	: m_pLibraryFolder( NULL )
+	, m_nKeyWidth( 0 )
 {
 }
 
@@ -66,8 +67,16 @@ BOOL CFolderTipCtrl::OnPrepare()
 	m_sName		= m_pLibraryFolder->m_sName;
 	m_sPath		= m_pLibraryFolder->m_sPath;
 
+	LoadString( m_sFilesTitle, IDS_TIP_TOTAL_FILES );
 	m_sFiles.Format( _T("%lu"), m_pLibraryFolder->m_nFiles );
+
+	LoadString( m_sVolumeTitle, IDS_TIP_TOTAL_VOLUME );
 	m_sVolume = Settings.SmartVolume( m_pLibraryFolder->m_nVolume );
+
+	LoadString( m_sFreeTitle, IDS_TIP_FREE_SPACE );
+	ULARGE_INTEGER nFree = {}, nNull = {};
+	GetDiskFreeSpaceEx( m_sPath, &nFree, &nNull, &nNull );
+	m_sFree = Settings.SmartVolume( (QWORD)nFree.QuadPart );
 
 	QWORD nTotal;
 	LibraryMaps.GetStatistics( NULL, &nTotal );
@@ -91,16 +100,35 @@ void CFolderTipCtrl::OnCalcSize(CDC* pDC)
 {
 	AddSize( pDC, m_sName );
 	m_sz.cy += TIP_TEXTHEIGHT;
+
 	pDC->SelectObject( &CoolInterface.m_fntNormal );
 	AddSize( pDC, m_sPath );
+	m_sz.cy += TIP_TEXTHEIGHT;
 
 	m_sz.cy += TIP_RULE;
 
-	AddSize( pDC, m_sFiles, 150 );
-	AddSize( pDC, m_sVolume, 150 );
-	AddSize( pDC, m_sPercentage, 40 );
+	AddSize( pDC, m_sFiles, 40 );
+	m_sz.cy += TIP_TEXTHEIGHT;
 
-	m_sz.cy += TIP_TEXTHEIGHT * 4;
+	AddSize( pDC, m_sVolume, 40 );
+	m_sz.cy += TIP_TEXTHEIGHT;
+
+	AddSize( pDC, m_sPercentage, 40 );
+	m_sz.cy += TIP_TEXTHEIGHT;
+
+	m_sz.cy += TIP_RULE;
+
+	AddSize( pDC, m_sFree, 40 );
+	m_sz.cy += TIP_TEXTHEIGHT;
+
+	m_nKeyWidth = 0;
+
+	m_nKeyWidth = max( m_nKeyWidth, GetSize( pDC, m_sFilesTitle ) );
+	m_nKeyWidth = max( m_nKeyWidth, GetSize( pDC, m_sVolumeTitle ) );
+	m_nKeyWidth = max( m_nKeyWidth, GetSize( pDC, m_sFreeTitle ) );
+
+	if ( m_nKeyWidth ) m_nKeyWidth += TIP_GAP;
+	if ( m_nKeyWidth ) m_sz.cx += m_nKeyWidth;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -112,6 +140,7 @@ void CFolderTipCtrl::OnPaint(CDC* pDC)
 
 	DrawText( pDC, &pt, m_sName );
 	pt.y += TIP_TEXTHEIGHT;
+
 	pDC->SelectObject( &CoolInterface.m_fntNormal );
 	DrawText( pDC, &pt, m_sPath );
 	pt.y += TIP_TEXTHEIGHT;
@@ -121,16 +150,23 @@ void CFolderTipCtrl::OnPaint(CDC* pDC)
 	CoolInterface.Draw( pDC, IDI_FOLDER_OPEN, 32, pt.x, pt.y, CoolInterface.m_crTipBack );
 	pDC->ExcludeClipRect( pt.x, pt.y, pt.x + 32, pt.y + 32 );
 
-	CString strText;
-	LoadString( strText, IDS_TIP_TOTAL_FILES );
-	DrawText( pDC, &pt, strText, 40 );
-	DrawText( pDC, &pt, m_sFiles, 150 );
+	DrawText( pDC, &pt, m_sFilesTitle, 40 );
+	DrawText( pDC, &pt, m_sFiles, 40 + m_nKeyWidth );
 	pt.y += TIP_TEXTHEIGHT;
-	LoadString( strText, IDS_TIP_TOTAL_VOLUME );
-	DrawText( pDC, &pt, strText, 40 );
-	DrawText( pDC, &pt, m_sVolume, 150 );
+
+	DrawText( pDC, &pt, m_sVolumeTitle, 40 );
+	DrawText( pDC, &pt, m_sVolume, 40 + m_nKeyWidth );
 	pt.y += TIP_TEXTHEIGHT;
-	DrawText( pDC, &pt, m_sPercentage, 40 );
+
+	DrawText( pDC, &pt, m_sPercentage, 40 + m_nKeyWidth );
+	pt.y += TIP_TEXTHEIGHT;
+
+	pt.x += 40;
+	DrawRule( pDC, &pt, TRUE );
+	pt.x -= 40;
+
+	DrawText( pDC, &pt, m_sFreeTitle, 40 );
+	DrawText( pDC, &pt, m_sFree, 40 + m_nKeyWidth );
 	pt.y += TIP_TEXTHEIGHT;
 }
 

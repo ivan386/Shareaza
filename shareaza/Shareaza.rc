@@ -3488,6 +3488,7 @@ STRINGTABLE
 BEGIN
     IDS_TIP_FILE_UNSTABLE   "Sources for this file may be unstable"
     IDS_TIP_UNTRUSTED       "Untrusted"
+	IDS_TIP_FREE_SPACE      "Free:"
 END
 
 STRINGTABLE 

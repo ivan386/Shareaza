@@ -1,7 +1,7 @@
 //
 // CtrlCoolTip.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -57,6 +57,7 @@ protected:
 	void	ShowImpl(bool bChanged = false);
 	void	CalcSizeHelper();
 	void	AddSize(CDC* pDC, LPCTSTR pszText, int nBase = 0);
+	int		GetSize(CDC* pDC, LPCTSTR pszText) const;
 	void	GetPaintRect(RECT* pRect);
 	void	DrawText(CDC* pDC, POINT* pPoint, LPCTSTR pszText, int nBase);
 	void	DrawText(CDC* pDC, POINT* pPoint, LPCTSTR pszText, SIZE* pTextMaxSize = NULL);

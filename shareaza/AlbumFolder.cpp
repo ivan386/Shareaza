@@ -321,11 +321,48 @@ CLibraryFile* CAlbumFolder::GetNextFile(POSITION& pos) const
 	return m_pFiles.GetNext( pos );
 }
 
-DWORD CAlbumFolder::GetFileCount() const
+DWORD CAlbumFolder::GetFileCount(BOOL bRecursive) const
 {
 	ASSUME_LOCK( Library.m_pSection );
 
-	return (DWORD)m_pFiles.GetCount();
+	DWORD nCount = (DWORD)m_pFiles.GetCount();
+
+	if ( bRecursive )
+	{
+		for ( POSITION pos = GetFolderIterator() ; pos ; )
+		{
+			const CAlbumFolder* pFolder = GetNextFolder( pos );
+			nCount += pFolder->GetFileCount( bRecursive );
+		}
+	}
+
+	return nCount;
+}
+
+QWORD CAlbumFolder::GetFileVolume(BOOL bRecursive) const
+{
+	if ( CheckURI( m_sSchemaURI, CSchema::uriGhostFolder ) )
+		// Skip ghost folder files
+		return 0;
+
+	QWORD nVolume = 0;
+
+	for ( POSITION pos = GetFileIterator() ; pos ; )
+	{
+		const CLibraryFile* pFile = GetNextFile( pos );
+		nVolume += pFile->m_nSize;
+	}
+
+	if ( bRecursive )
+	{
+		for ( POSITION pos = GetFolderIterator() ; pos ; )
+		{
+			const CAlbumFolder* pFolder = GetNextFolder( pos );
+			nVolume += pFolder->GetFileVolume( bRecursive );
+		}
+	}
+
+	return nVolume;
 }
 
 DWORD CAlbumFolder::GetSharedCount(BOOL bRecursive) const

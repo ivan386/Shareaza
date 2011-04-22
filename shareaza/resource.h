@@ -963,6 +963,7 @@
 #define IDS_TIP_FILE_FIREWALLED         8335
 #define IDS_TIP_FILE_UNSTABLE           8336
 #define IDS_TIP_UNTRUSTED               8337
+#define IDS_TIP_FREE_SPACE              8338
 #define IDR_HTML_ABOUT                  12001
 #define IDR_HTML_FILENOTFOUND           12002
 #define IDR_HTML_HASHMISMATCH           12003

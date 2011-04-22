@@ -67,8 +67,9 @@ public:
 	void			AddFile(CLibraryFile* pFile);
 	POSITION		GetFileIterator() const;
 	CLibraryFile*	GetNextFile(POSITION& pos) const;
-	DWORD			GetFileCount() const;
-	DWORD			GetSharedCount(BOOL bRecursive) const;
+	DWORD			GetFileCount(BOOL bRecursive = FALSE) const;
+	QWORD			GetFileVolume(BOOL bRecursive = FALSE) const;
+	DWORD			GetSharedCount(BOOL bRecursive = FALSE) const;
 	void			RemoveFile(CLibraryFile* pFile);
 	const CAlbumFolder*	FindFile(const CLibraryFile* pFile) const;
 	int				GetFileList(CLibraryList* pList, BOOL bRecursive) const;

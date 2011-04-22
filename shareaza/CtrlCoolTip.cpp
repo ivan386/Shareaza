@@ -1,7 +1,7 @@
 //
 // CtrlCoolTip.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -214,11 +214,16 @@ void CCoolTipCtrl::CalcSizeHelper()
 
 void CCoolTipCtrl::AddSize(CDC* pDC, LPCTSTR pszText, int nBase)
 {
+	m_sz.cx = max( m_sz.cx, (LONG)GetSize( pDC, pszText ) + nBase );
+}
+
+int CCoolTipCtrl::GetSize(CDC* pDC, LPCTSTR pszText) const
+{
 	DWORD dwFlags = ( Settings.General.LanguageRTL ? DT_RTLREADING : 0 ) |
 		DT_SINGLELINE | DT_NOPREFIX;
 	CRect rcText( 0, 0, 0, 0 );
 	pDC->DrawText( pszText, -1, &rcText, dwFlags | DT_CALCRECT );
-	m_sz.cx = max( m_sz.cx, (LONG)rcText.Width() + nBase );
+	return rcText.Width();
 }
 
 void CCoolTipCtrl::GetPaintRect(RECT* pRect)

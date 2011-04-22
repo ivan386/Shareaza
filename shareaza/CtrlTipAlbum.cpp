@@ -1,7 +1,7 @@
 //
 // CtrlTipAlbum.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -48,7 +48,6 @@ END_MESSAGE_MAP()
 CAlbumTipCtrl::CAlbumTipCtrl()
 	: m_pAlbumFolder( NULL )
 	, m_nIcon32( 0 )
-	, m_nIcon48( 0 )
 	, m_bCollection( FALSE )
 	, m_nKeyWidth( 0 )
 	, m_crLight( CCoolInterface::CalculateColour( CoolInterface.m_crTipBack, RGB( 255, 255, 255 ), 128 ) )
@@ -74,8 +73,13 @@ BOOL CAlbumTipCtrl::OnPrepare()
 	m_sName	= m_pAlbumFolder->m_sName;
 	m_sType	= _T("Virtual Folder");
 
+	LoadString( m_sFilesTitle, IDS_TIP_TOTAL_FILES );
+	m_sFiles.Format( _T("%lu"), m_pAlbumFolder->GetFileCount( TRUE ) );
+
+	LoadString( m_sVolumeTitle, IDS_TIP_TOTAL_VOLUME );
+	m_sVolume = Settings.SmartVolume( m_pAlbumFolder->GetFileVolume( TRUE ) );
+
 	m_nIcon32 = 0;
-	m_nIcon48 = 0;
 	m_bCollection = bool( m_pAlbumFolder->m_oCollSHA1 );
 	
 	// Metadata
@@ -94,7 +98,6 @@ BOOL CAlbumTipCtrl::OnPrepare()
 		else
 			m_sType += _T(" ") + strText;
 
-		m_nIcon48	= m_pAlbumFolder->m_pSchema->m_nIcon48;
 		m_nIcon32	= m_pAlbumFolder->m_pSchema->m_nIcon32;
 
 		if ( m_pAlbumFolder->m_pXML != NULL )
@@ -117,21 +120,32 @@ void CAlbumTipCtrl::OnCalcSize(CDC* pDC)
 {
 	AddSize( pDC, m_sName );
 	m_sz.cy += TIP_TEXTHEIGHT;
+
 	pDC->SelectObject( &CoolInterface.m_fntNormal );
 	AddSize( pDC, m_sType );
 	m_sz.cy += TIP_TEXTHEIGHT;
 
 	m_sz.cy += TIP_RULE;
 
-	int nMetaHeight = static_cast< int >( m_pMetadata.GetCount() * TIP_TEXTHEIGHT );
+	m_sz.cy += TIP_TEXTHEIGHT;
+	m_sz.cy += TIP_TEXTHEIGHT;
+
+	m_sz.cy += TIP_RULE;
+
+	m_sz.cy += max( (LONG)m_pMetadata.GetCount() * TIP_TEXTHEIGHT, (LONG)32 );
+
 	int nValueWidth = 0;
 	m_nKeyWidth = 0;
-
 	m_pMetadata.ComputeWidth( pDC, m_nKeyWidth, nValueWidth );
 
+	m_nKeyWidth = max( m_nKeyWidth, GetSize( pDC, m_sFilesTitle ) );
+	nValueWidth = max( nValueWidth, GetSize( pDC, m_sFiles ) );
+
+	m_nKeyWidth = max( m_nKeyWidth, GetSize( pDC, m_sVolumeTitle ) );
+	nValueWidth = max( nValueWidth, GetSize( pDC, m_sVolume ) );
+
 	if ( m_nKeyWidth ) m_nKeyWidth += TIP_GAP;
-	m_sz.cx = max( m_sz.cx, (LONG)m_nKeyWidth + nValueWidth + 102 );
-	m_sz.cy += max( nMetaHeight, 96 );
+	m_sz.cx = max( m_sz.cx, (LONG)m_nKeyWidth + nValueWidth + 40 + 2 );
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -143,60 +157,42 @@ void CAlbumTipCtrl::OnPaint(CDC* pDC)
 
 	DrawText( pDC, &pt, m_sName );
 	pt.y += TIP_TEXTHEIGHT;
+
 	pDC->SelectObject( &CoolInterface.m_fntNormal );
 	DrawText( pDC, &pt, m_sType );
 	pt.y += TIP_TEXTHEIGHT;
 
 	DrawRule( pDC, &pt );
 
-	CRect rcThumb( pt.x, pt.y, pt.x + 96, pt.y + 96 );
-	CRect rcWork( &rcThumb );
-	DrawThumb( pDC, rcWork );
-	pDC->ExcludeClipRect( &rcThumb );
-
-	int nCount = 0;
+	if ( m_nIcon32 >= 0 )
+	{
+		ShellIcons.Draw( pDC, m_nIcon32, 32, pt.x, pt.y, CoolInterface.m_crTipBack );
+		if ( m_bCollection )
+			CoolInterface.Draw( pDC, IDI_COLLECTION_MASK, 16, pt.x, pt.y, CoolInterface.m_crTipBack );
+		pDC->ExcludeClipRect( pt.x, pt.y, pt.x + 32, pt.y + 32 );
+	}
 
 	for ( POSITION pos = m_pMetadata.GetIterator() ; pos ; )
 	{
 		CMetaItem* pItem = m_pMetadata.GetNext( pos );
 
-		DrawText( pDC, &pt, pItem->m_sKey + ':', 100 );
-		DrawText( pDC, &pt, pItem->m_sValue, 100 + m_nKeyWidth );
+		DrawText( pDC, &pt, pItem->m_sKey + ':', 40 );
+		DrawText( pDC, &pt, pItem->m_sValue, 40 + m_nKeyWidth );
 		pt.y += TIP_TEXTHEIGHT;
-
-		if ( ++nCount == 5 )
-		{
-			pt.x += 98; pt.y -= 2;
-			DrawRule( pDC, &pt, TRUE );
-			pt.x -= 98; pt.y -= 2;
-		}
 	}
-}
 
-void CAlbumTipCtrl::DrawThumb(CDC* pDC, CRect& rcThumb)
-{
-	pDC->Draw3dRect( &rcThumb, CoolInterface.m_crTipBorder, CoolInterface.m_crTipBorder );
-	rcThumb.DeflateRect( 1, 1 );
-
-	CPoint pt(	( rcThumb.left + rcThumb.right ) / 2 - 24,
-				( rcThumb.top + rcThumb.bottom ) / 2 - 24 );
-
-	if ( m_nIcon48 >= 0 )
+	if ( m_pMetadata.GetIterator() )
 	{
-		ShellIcons.Draw( pDC, m_nIcon48, 48, pt.x, pt.y, m_crLight );
-		if ( m_bCollection )
-			CoolInterface.Draw( pDC, IDI_COLLECTION_MASK, 16, pt.x, pt.y );
-		pDC->ExcludeClipRect( pt.x, pt.y, pt.x + 48, pt.y + 48 );
-	}
-	else if ( m_nIcon32 >= 0 )
-	{
-		pt.x += 8; pt.y += 8;
-		ShellIcons.Draw( pDC, m_nIcon32, 32, pt.x, pt.y );
-		if ( m_bCollection )
-			CoolInterface.Draw( pDC, IDI_COLLECTION_MASK, 16, pt.x, pt.y );
-		pDC->ExcludeClipRect( pt.x, pt.y, pt.x + 32, pt.y + 32 );
+		pt.x += 40;
+		DrawRule( pDC, &pt, TRUE );
+		pt.x -= 40;
 	}
 
-	pDC->FillSolidRect( &rcThumb, m_crLight );
+	DrawText( pDC, &pt, m_sFilesTitle, 40 );
+	DrawText( pDC, &pt, m_sFiles, 40 + m_nKeyWidth );
+	pt.y += TIP_TEXTHEIGHT;
+
+	DrawText( pDC, &pt, m_sVolumeTitle, 40 );
+	DrawText( pDC, &pt, m_sVolume, 40 + m_nKeyWidth );
+	pt.y += TIP_TEXTHEIGHT;
 }
-

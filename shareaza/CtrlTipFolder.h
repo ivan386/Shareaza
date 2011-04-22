@@ -1,7 +1,7 @@
 //
 // CtrlTipFolder.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -44,9 +44,14 @@ protected:
 	CLibraryFolder* m_pLibraryFolder;
 	CString		m_sName;
 	CString		m_sPath;
+	CString		m_sFilesTitle;
 	CString		m_sFiles;
+	CString		m_sVolumeTitle;
 	CString		m_sVolume;
+	CString		m_sFreeTitle;
+	CString		m_sFree;
 	CString		m_sPercentage;
+	int			m_nKeyWidth;
 
 	virtual BOOL OnPrepare();
 	virtual void OnCalcSize(CDC* pDC);

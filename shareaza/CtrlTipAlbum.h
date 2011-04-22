@@ -1,7 +1,7 @@
 //
 // CtrlTipAlbum.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -45,8 +45,11 @@ protected:
 	CAlbumFolder*	m_pAlbumFolder;
 	CString			m_sName;
 	CString			m_sType;
+	CString			m_sFilesTitle;
+	CString			m_sFiles;
+	CString			m_sVolumeTitle;
+	CString			m_sVolume;
 	int				m_nIcon32;
-	int				m_nIcon48;
 	BOOL			m_bCollection;
 	CMetaList		m_pMetadata;
 	int				m_nKeyWidth;
@@ -55,8 +58,6 @@ protected:
 	virtual BOOL OnPrepare();
 	virtual void OnCalcSize(CDC* pDC);
 	virtual void OnPaint(CDC* pDC);
-
-	void		DrawThumb(CDC* pDC, CRect& rcThumb);
 
 	DECLARE_MESSAGE_MAP()
 };
