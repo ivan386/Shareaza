@@ -250,6 +250,7 @@ BOOL CShareazaApp::InitInstance()
 	SetRegistryKey( _T(CLIENT_NAME) );
 
 	AfxOleInit();									// Initializes OLE support for the application.
+	CoInitializeSecurity( NULL, -1, NULL, NULL, RPC_C_AUTHN_LEVEL_PKT, RPC_C_IMP_LEVEL_IMPERSONATE, NULL, EOAC_NONE, NULL );
 //	m_pFontManager = new CFontManager();
 	AfxEnableControlContainer( /*m_pFontManager*/); // Enable support for containment of OLE controls.
 	InitResources();								// Loads theApp settings.
@@ -958,15 +959,11 @@ void CShareazaApp::InitResources()
 	if ( theApp.m_pfnChangeWindowMessageFilter )
 	{
 		VERIFY( theApp.m_pfnChangeWindowMessageFilter( WM_DDE_INITIATE, MSGFLT_ADD ) );
-		/*VERIFY( theApp.m_pfnChangeWindowMessageFilter( WM_USER, MSGFLT_ADD ) );
-		VERIFY( theApp.m_pfnChangeWindowMessageFilter( WM_NCACTIVATE, MSGFLT_ADD ) );
-		VERIFY( theApp.m_pfnChangeWindowMessageFilter( WM_ACTIVATEAPP, MSGFLT_ADD ) );
-		VERIFY( theApp.m_pfnChangeWindowMessageFilter( WM_ACTIVATETOPLEVEL, MSGFLT_ADD ) );
 		VERIFY( theApp.m_pfnChangeWindowMessageFilter( WM_DROPFILES, MSGFLT_ADD ) );
 		VERIFY( theApp.m_pfnChangeWindowMessageFilter( WM_COPYGLOBALDATA, MSGFLT_ADD ) );
 		VERIFY( theApp.m_pfnChangeWindowMessageFilter( WM_COPYDATA, MSGFLT_ADD ) );
 		VERIFY( theApp.m_pfnChangeWindowMessageFilter( WM_COMMAND, MSGFLT_ADD ) );
-		VERIFY( theApp.m_pfnChangeWindowMessageFilter( WM_CLOSE, MSGFLT_ADD ) );*/
+		VERIFY( theApp.m_pfnChangeWindowMessageFilter( WM_CLOSE, MSGFLT_ADD ) );
 	}
 
 	LoadCountry();
