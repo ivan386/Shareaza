@@ -290,7 +290,7 @@ BOOL CUploadTransferDC::OnUpload(const std::string& strType, const std::string& 
 		else if ( strFilename.substr( 0, 4 ) == "TTH/" )
 		{
 			Hashes::TigerHash oTiger;
-			if ( ! oTiger.fromString( CA2W( strFilename.substr( 4 ).c_str() ) ) )
+			if ( oTiger.fromString( CA2W( strFilename.substr( 4 ).c_str() ) ) )
 			{
 				CSingleLock oLock( &Library.m_pSection );
 				if ( oLock.Lock( 1000 ) )
