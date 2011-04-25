@@ -516,7 +516,10 @@ BOOL CDCClient::OnLock(const std::string& strParams)
 				return TRUE;
 		}
 
-		Network.OnPush( m_oGUID, this );
+		if ( Network.OnPush( m_oGUID, this ) )
+			return TRUE;
+
+		return Handshake();
 	}
 
 	return TRUE;
