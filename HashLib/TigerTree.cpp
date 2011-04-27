@@ -1171,7 +1171,7 @@ BOOL CTigerTree::FromBytes(const uint8* pInput, uint32 nInput, uint32 nHeight, u
 	return TRUE;
 }
 
-BOOL CTigerTree::FromBytesLevel1(const uint8* pInput, uint32 nInput, uint32 nHeight, uint64 nLength)
+BOOL CTigerTree::FromBytesLevel1(const uint8* pInput, uint32 nInput, uint64 nLength)
 {
 	CSectionLock oLock( &m_pSection );
 

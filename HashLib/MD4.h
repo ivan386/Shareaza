@@ -1,7 +1,7 @@
 //
 // MD4.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -25,7 +25,7 @@ class HASHLIB_API CMD4
 {
 public:
 	CMD4();
-	virtual ~CMD4() {}
+	~CMD4() {}
 
 	void Reset();
 	void Add(const void* pData, size_t nLength);

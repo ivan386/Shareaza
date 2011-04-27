@@ -33,7 +33,7 @@ class HASHLIB_API CTigerTree
 {
 public:
 	CTigerTree();
-	virtual ~CTigerTree();
+	~CTigerTree();
 
 	void	SetupAndAllocate(uint32 nHeight, uint64 nLength);
 	void	SetupParameters(uint64 nLength);
@@ -67,7 +67,7 @@ public:
 	// Create hash tree from full tree data
 	BOOL	FromBytes(const uint8* pInput, uint32 nInput, uint32 nHeight, uint64 nLength);
 	// Create hash tree from first level of tree data
-	BOOL	FromBytesLevel1(const uint8* pInput, uint32 nInput, uint32 nHeight, uint64 nLength);
+	BOOL	FromBytesLevel1(const uint8* pInput, uint32 nInput, uint64 nLength);
 	// Check hash tree integrity (rebuilding missed hashes if needed)
 	BOOL	CheckIntegrity();
 

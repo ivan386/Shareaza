@@ -1,7 +1,7 @@
 //
 // SHA.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -25,7 +25,7 @@ class HASHLIB_API CSHA
 {
 public:
 	CSHA();
-	virtual ~CSHA() {}
+	~CSHA() {}
 
 	void Reset();
 	void Add(const void* pData, size_t nLength);

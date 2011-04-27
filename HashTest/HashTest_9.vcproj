@@ -21,7 +21,7 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
+			OutputDirectory="..\HashLib\$(PlatformName)\$(ConfigurationName)"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
 			ConfigurationType="1"
 			UseOfMFC="1"
@@ -89,13 +89,12 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Copy HashLib..."
-				CommandLine="copy /b /y &quot;..\HashLib\$(PlatformName)\$(ConfigurationName)\HashLib.dll&quot; &quot;$(PlatformName)\$(ConfigurationName)\&quot;"
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
 			Name="Debug|x64"
-			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
+			OutputDirectory="..\HashLib\$(PlatformName)\$(ConfigurationName)"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
 			ConfigurationType="1"
 			CharacterSet="1"
@@ -162,13 +161,12 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Copy HashLib..."
-				CommandLine="copy /b /y &quot;..\HashLib\$(PlatformName)\$(ConfigurationName)\HashLib.dll&quot; &quot;$(PlatformName)\$(ConfigurationName)\&quot;"
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
+			OutputDirectory="..\HashLib\$(PlatformName)\$(ConfigurationName)"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
 			ConfigurationType="1"
 			UseOfMFC="1"
@@ -243,13 +241,12 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Copy HashLib..."
-				CommandLine="copy /b /y &quot;..\HashLib\$(PlatformName)\$(ConfigurationName)\HashLib.dll&quot; &quot;$(PlatformName)\$(ConfigurationName)\&quot;"
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
 			Name="Release|x64"
-			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
+			OutputDirectory="..\HashLib\$(PlatformName)\$(ConfigurationName)"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
 			ConfigurationType="1"
 			CharacterSet="1"
@@ -323,8 +320,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Copy HashLib..."
-				CommandLine="copy /b /y &quot;..\HashLib\$(PlatformName)\$(ConfigurationName)\HashLib.dll&quot; &quot;$(PlatformName)\$(ConfigurationName)\&quot;"
+				CommandLine=""
 			/>
 		</Configuration>
 	</Configurations>

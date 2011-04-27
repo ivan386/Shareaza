@@ -1,7 +1,7 @@
 //
 // ED2K.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -27,7 +27,7 @@ class HASHLIB_API CED2K
 {
 public:
 	CED2K();
-	virtual ~CED2K();
+	~CED2K();
 
 	void	Clear();
 	void	Save(uchar* pBuf) const;

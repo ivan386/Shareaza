@@ -1,7 +1,7 @@
 //
 // MD5.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -25,7 +25,7 @@ class HASHLIB_API CMD5
 {
 public:
 	CMD5();
-	virtual ~CMD5() {}
+	~CMD5() {}
 
 	void Reset();
 	void Add(const void* pData, size_t nLength);
