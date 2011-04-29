@@ -393,6 +393,7 @@ void CNeighboursWnd::OnNeighboursCopy()
 
 void CNeighboursWnd::OnUpdateNeighboursChat(CCmdUI* pCmdUI)
 {
+	BOOL bEnable = FALSE;
 	if ( GetSelectedCount() && Settings.Community.ChatEnable )
 	{
 		CSingleLock pNetworkLock( &Network.m_pSection );
@@ -400,20 +401,14 @@ void CNeighboursWnd::OnUpdateNeighboursChat(CCmdUI* pCmdUI)
 		{
 			if ( CNeighbour* pNeighbour = GetItem( m_wndList.GetNextItem( -1, LVNI_SELECTED ) ) )
 			{
-				switch ( pNeighbour->m_nProtocol )
-				{
-				case PROTOCOL_G1:
-				case PROTOCOL_G2:
-				case PROTOCOL_DC:
-					pCmdUI->Enable( TRUE );
-					return;
-				default:
-					;
-				}
+				bEnable = (
+					pNeighbour->m_nProtocol == PROTOCOL_G1 ||
+					pNeighbour->m_nProtocol == PROTOCOL_G2 ||
+					pNeighbour->m_nProtocol == PROTOCOL_DC );
 			}
 		}
 	}
-	pCmdUI->Enable( FALSE );
+	pCmdUI->Enable( bEnable );
 }
 
 void CNeighboursWnd::OnNeighboursChat()
@@ -470,22 +465,21 @@ void CNeighboursWnd::OnSecurityBan()
 
 void CNeighboursWnd::OnUpdateBrowseLaunch(CCmdUI* pCmdUI)
 {
+	BOOL bEnable = FALSE;
 	if ( GetSelectedCount() == 1 )
 	{
 		CSingleLock pNetworkLock( &Network.m_pSection );
 		if ( pNetworkLock.Lock( 500 ) )
 		{
-			CNeighbour* pNeighbour = GetItem( m_wndList.GetNextItem( -1, LVNI_SELECTED ) );
-			if ( pNeighbour &&
-				( pNeighbour->m_nProtocol == PROTOCOL_G1 ||
-				  pNeighbour->m_nProtocol == PROTOCOL_G2 ) )
+			if ( CNeighbour* pNeighbour = GetItem( m_wndList.GetNextItem( -1, LVNI_SELECTED ) ) )
 			{
-				pCmdUI->Enable( TRUE );
-				return;
+				bEnable = (
+					pNeighbour->m_nProtocol == PROTOCOL_G1 ||
+					pNeighbour->m_nProtocol == PROTOCOL_G2 );
 			}
 		}
 	}
-	pCmdUI->Enable( FALSE );
+	pCmdUI->Enable( bEnable );
 }
 
 void CNeighboursWnd::OnBrowseLaunch()

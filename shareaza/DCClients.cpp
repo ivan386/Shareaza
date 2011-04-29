@@ -1,7 +1,7 @@
 //
 // DCClients.cpp
 //
-// Copyright (c) Shareaza Development Team, 2010.
+// Copyright (c) Shareaza Development Team, 2010-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -208,7 +208,7 @@ void CDCClients::CreateGUID(const CString& sNick, Hashes::Guid& oGUID)
 	oGUID.validate();
 }
 
-BOOL CDCClients::ConnectTo(const IN_ADDR* pAddress, WORD nPort, const CString& sNick, const CString& sRemoteNick)
+BOOL CDCClients::ConnectTo(const IN_ADDR* pAddress, WORD nPort, CDCNeighbour* pHub, const CString& sRemoteNick)
 {
 	CSingleLock oDCLock( &m_pSection, FALSE );
 	if ( ! oDCLock.Lock( 250 ) )
@@ -226,7 +226,7 @@ BOOL CDCClients::ConnectTo(const IN_ADDR* pAddress, WORD nPort, const CString& s
 	}
 
 	// Create new one
-	if ( CDCClient* pClient = new CDCClient( sNick ) )
+	if ( CDCClient* pClient = new CDCClient( &pHub->m_pHost.sin_addr, ntohs( pHub->m_pHost.sin_port ), pHub->m_sNick, sRemoteNick ) )
 	{
 		return pClient->ConnectTo( pAddress, nPort );
 	}
@@ -265,12 +265,12 @@ BOOL CDCClients::Connect(const IN_ADDR* pHubAddress, WORD nHubPort, const CStrin
 	}
 
 	if ( ! pClient )
-		pClient = new CDCClient();
+		pClient = new CDCClient( pHubAddress, nHubPort, NULL, sRemoteNick );
 	if ( ! pClient )
 		// Out of memory
 		return FALSE;
 
-	bSuccess = pClient->Connect( pHubAddress, nHubPort, sRemoteNick );
+	bSuccess = pClient->Connect();
 
 	return TRUE;
 }

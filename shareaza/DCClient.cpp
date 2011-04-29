@@ -35,6 +35,7 @@
 #include "Settings.h"
 #include "UploadTransfer.h"
 #include "UploadTransferDC.h"
+#include "VendorCache.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -42,7 +43,7 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
-CDCClient::CDCClient(LPCTSTR szNick)
+CDCClient::CDCClient(const IN_ADDR* pHubAddress, WORD nHubPort, LPCTSTR szNick, LPCTSTR szRemoteNick)
 	: CTransfer				( PROTOCOL_DC )
 	, m_sNick				( DCClients.CreateNick( szNick ) )
 	, m_bExtended			( FALSE )
@@ -57,9 +58,19 @@ CDCClient::CDCClient(LPCTSTR szNick)
 {
 	TRACE( "[DC++] Creating client 0x%08x\n", (LPVOID)this );
 
-	m_sUserAgent = protocolNames[ m_nProtocol ];
 	m_mInput.pLimit = &Settings.Bandwidth.Request;
 	m_mOutput.pLimit = &Settings.Bandwidth.Request;
+
+	ZeroMemory( &m_pServer, sizeof( m_pServer ) );
+	m_pServer.sin_family = AF_INET;
+	if ( pHubAddress ) m_pServer.sin_addr = *pHubAddress;
+	if ( nHubPort ) m_pServer.sin_port = htons( nHubPort );
+
+	if ( szRemoteNick && *szRemoteNick )
+	{
+		m_sRemoteNick = szRemoteNick;
+		DCClients.CreateGUID( m_sRemoteNick, m_oGUID );
+	}
 }
 
 CDCClient::~CDCClient()
@@ -71,6 +82,30 @@ CDCClient::~CDCClient()
 	ASSERT( m_pDownloadTransfer == NULL );
 
 	DCClients.Remove( this );
+}
+
+CString CDCClient::GetUserAgent()
+{
+	if ( ! m_sUserAgent.IsEmpty() )
+		return m_sUserAgent;
+
+	CSingleLock oLock( &Network.m_pSection, TRUE );
+
+	// Get existing hub by address
+	CDCNeighbour* pNeighbour = DCClients.GetHub( &m_pServer.sin_addr, ntohs( m_pServer.sin_port ) );
+	if ( ! pNeighbour )
+		// Get existing hub by user name
+		pNeighbour = DCClients.GetHub( m_sRemoteNick );
+	if ( pNeighbour )
+	{
+		if ( CChatUser* pUser = pNeighbour->GetUser( m_sRemoteNick ) )
+		{
+			m_sUserAgent = pUser->m_sUserAgent;
+			m_bClientExtended = VendorCache.IsExtended( m_sUserAgent );
+		}
+	}
+
+	return m_sUserAgent.IsEmpty() ? protocolNames[ m_nProtocol ] : m_sUserAgent;
 }
 
 void CDCClient::Merge(CDCClient* pClient)
@@ -136,37 +171,25 @@ BOOL CDCClient::Connect()
 	if ( ! oLock.Lock( 250 ) )
 		return FALSE;
 
-	if ( CDCNeighbour* pNeighbour = DCClients.GetHub( m_sRemoteNick ) )
+	// Get existing hub by address
+	CDCNeighbour* pNeighbour = DCClients.GetHub( &m_pServer.sin_addr, ntohs( m_pServer.sin_port ) );
+	if ( ! pNeighbour )
+		// Get existing hub by user name
+		pNeighbour = DCClients.GetHub( m_sRemoteNick );
+	if ( pNeighbour )
 	{
+		if ( CChatUser* pUser = pNeighbour->GetUser( m_sRemoteNick ) )
+		{
+			m_sUserAgent = pUser->m_sUserAgent;
+			m_bClientExtended = VendorCache.IsExtended( m_sUserAgent );
+		}
 		return pNeighbour->ConnectToMe( m_sRemoteNick );
 	}
-
-	return FALSE;
-}
-
-BOOL CDCClient::Connect(const IN_ADDR* pHubAddress, WORD nHubPort, LPCTSTR szNick)
-{
-	m_tRequest	= GetTickCount();
-
-	m_sRemoteNick = szNick;
-	DCClients.CreateGUID( m_sRemoteNick, m_oGUID );
-
-	DCClients.Add( this );
-
-	// Get existing hub
-	if ( CDCNeighbour* pNeighbour = DCClients.GetHub( pHubAddress, nHubPort ) )
-	{
-		return pNeighbour->ConnectToMe( m_sRemoteNick );
-	}
-
-	CSingleLock oLock( &Network.m_pSection );
-	if ( ! oLock.Lock( 250 ) )
-		return FALSE;
 
 	// Connect to new hub
 	if ( CDCNeighbour* pNeighbour = new CDCNeighbour() )
 	{
-		if ( pNeighbour->ConnectTo( pHubAddress, nHubPort, FALSE ) )
+		if ( pNeighbour->ConnectTo( &m_pServer.sin_addr, ntohs( m_pServer.sin_port ), FALSE ) )
 		{
 			return FALSE;
 		}
@@ -487,12 +510,12 @@ BOOL CDCClient::OnLock(const std::string& strParams)
 	{
 		// Good way
 		strLock = strParams.substr( 0, nPos );
-		std::string strUserAgent = strParams.substr( nPos + 4 );
-		nPos = strUserAgent.find( "Ref=" );
-		if ( nPos != std::string::npos )
-			m_sUserAgent = strUserAgent.substr( 0, nPos ).c_str();
-		else
-			m_sUserAgent = strUserAgent.c_str();
+		//std::string strUserAgent = strParams.substr( nPos + 4 );
+		//nPos = strUserAgent.find( "Ref=" );
+		//if ( nPos != std::string::npos )
+		//	sPk = strUserAgent.substr( 0, nPos ).c_str();
+		//else
+		//	sPk = strUserAgent.c_str();
 	}
 	else
 	{
@@ -677,7 +700,7 @@ BOOL CDCClient::OnADCGet(const std::string& strParams)
 			// Out of memory
 			return FALSE;
 
-		m_pUploadTransfer->m_sNick = m_sRemoteNick;
+		m_pUploadTransfer->m_sRemoteNick = m_sRemoteNick;
 
 		// Start upload
 		return m_pUploadTransfer->OnUpload( strType, strFilename, nOffset, nLength, strOptions );
@@ -775,7 +798,7 @@ BOOL CDCClient::OnGet(const std::string& strParams)
 			// Out of memory
 			return FALSE;
 
-		m_pUploadTransfer->m_sNick = m_sRemoteNick;
+		m_pUploadTransfer->m_sRemoteNick = m_sRemoteNick;
 
 		// Start upload
 		return m_pUploadTransfer->OnUpload( "get", strFilename, nOffset, SIZE_UNKNOWN, "" );
@@ -853,7 +876,9 @@ BOOL CDCClient::Greetings()
 
 	Write( _P("$Lock ") );
 	Write( sLock.c_str(), sLock.size() );
-	Write( _P(" Pk=" CLIENT_NAME "|") );
+	Write( _P(" Pk=" CLIENT_NAME "/") );
+	Write( theApp.m_sVersion );
+	Write( _P("|") );
 
 	return TRUE;
 }

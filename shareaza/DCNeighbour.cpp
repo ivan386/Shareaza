@@ -211,6 +211,58 @@ BOOL CDCNeighbour::Send(CPacket* pPacket, BOOL bRelease, BOOL /*bBuffered*/)
 	return TRUE;
 }
 
+BOOL CDCNeighbour::SendUserInfo()
+{
+	// $MyINFO $ALL nick description<tag>$ $connection$e-mail$sharesize$|
+
+	DWORD nUploadSlots = 0;
+	if ( CUploadQueue* pQueue = UploadQueues.SelectQueue( PROTOCOL_DC, NULL, 0, CUploadQueue::ulqBoth, NULL ) )
+	{
+		nUploadSlots = pQueue->m_nMaxTransfers;
+	}
+
+	QWORD nMyVolume = 0;
+	LibraryMaps.GetStatistics( NULL, &nMyVolume );
+
+	CString sInfo;
+	sInfo.Format( _T("$MyINFO $ALL %s %s<%s V:%s,M:%c,H:%u/%u/%u,S:%u>$ $%.2f%c$%s$%I64u$|"),
+		// Registered nick
+		(LPCTSTR)m_sNick,
+		// Description
+		WEB_SITE_T,
+		// Client name
+		CLIENT_NAME_T,
+		// Client version
+		(LPCTSTR)theApp.m_sVersion,
+		// User is in active(A), passive(P), or SOCKS5(5) mode 
+		( Network.IsFirewalled( CHECK_IP ) ? _T('P') : _T('A') ),
+		// Number of connected hubs as regular user
+		Neighbours.GetCount( PROTOCOL_DC, nrsConnected, ntHub ),
+		// Number of connected hubs as VIP
+		0,
+		// Number of connected hubs as operator
+		0,
+		// Number of upload slots
+		nUploadSlots,
+		// Upload speed (Mbit/s)
+		(float)Settings.Bandwidth.Uploads * Bytes / ( Kilobits * Kilobits ),
+		// User status: Normal(1), Away(2,3), Server(4,5), Server Away(6,7)
+		1,
+		// E-mail
+		(LPCTSTR)MyProfile.GetContact( _T("Email") ),
+		// Share size (bytes)
+		nMyVolume << 10 );
+
+	if ( CDCPacket* pPacket = CDCPacket::New() )
+	{
+		pPacket->WriteString( sInfo, FALSE );
+
+		return Send( pPacket );
+	}
+
+	return FALSE;
+}
+
 BOOL CDCNeighbour::OnConnected()
 {
 	if ( ! CNeighbour::OnConnected() )
@@ -242,55 +294,37 @@ BOOL CDCNeighbour::OnPacket(CDCPacket* pPacket)
 {
 	if ( pPacket->m_nLength < 2  )
 	{
-		// Ping, i.e. received only one char "|"
-		return TRUE;
+		return OnPing();
 	}
 	else if ( *pPacket->m_pBuffer == '<' )
 	{
-		// Chat message
-		// <Nick> Message|
-
-		if ( LPCSTR szMessage = strchr( (LPCSTR)pPacket->m_pBuffer, '>' ) )
-		{
-			int nNickLen = szMessage - (LPCSTR)pPacket->m_pBuffer - 1;
-			CString sNick( UTF8Decode( (LPCSTR)&pPacket->m_pBuffer[ 1 ], nNickLen ) );
-
-			if ( nNickLen > 0 && m_sNick != sNick )
-			{
-				if ( GetUser( sNick ) == NULL )
-				{
-					// Add user
-					ChatCore.OnAddUser( this, new CChatUser( cutUser, sNick ) );
-				}
-
-				ChatCore.OnMessage( this, pPacket );
-			}
-		}
-		return TRUE;
+		return OnChat( pPacket );
 	}
 	else if ( *pPacket->m_pBuffer != '$' )
 	{
-		// Unknown message
-
-		theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING, _T("%s >> UNKNOWN MESSAGE: %s"),
-			(LPCTSTR)HostToString( &m_pHost ),
-			(LPCTSTR)CString( (LPCSTR)pPacket->m_pBuffer, (int)pPacket->m_nLength ) );
-
-		return TRUE;
+		return OnUnknown( pPacket );
 	}
 
-	LPCSTR szCommand = (LPCSTR)pPacket->m_pBuffer;
-	
-	if ( strncmp( szCommand, _P("$Search ") ) == 0 )
+	if ( pPacket->Compare( _P("$Search ") ) )
 	{
-		// Search request
-		// $Search SenderIP:SenderPort (F|T)?(F|T)?Size?Type?String|
-
 		return OnQuery( pPacket );
+	}
+	else if ( pPacket->Compare( _P("$To: ") ) )
+	{
+		return OnChatPrivate( pPacket );
+	}
+	else if ( pPacket->Compare( _P("$HubTopic ") ) )
+	{
+		return OnHubTopic( pPacket );
+	}
+	else if ( pPacket->Compare( _P("$HubName" ) ) )
+	{
+		return OnHubName( pPacket );
 	}
 
 	// Convert '|' to '\0' (make ASCIIZ)
 	pPacket->m_pBuffer[ pPacket->m_nLength - 1 ] = 0;
+	LPCSTR szCommand = (LPCSTR)pPacket->m_pBuffer;
 
 	// Split off parameters
 	LPSTR szParams = strchr( (LPSTR)pPacket->m_pBuffer, ' ' );
@@ -301,321 +335,62 @@ BOOL CDCNeighbour::OnPacket(CDCPacket* pPacket)
 
 	if ( strcmp( szCommand, "$MyINFO" ) == 0 )
 	{
-		// User info
-		// $MyINFO $ALL nick description<tag>$ $connection$e-mail$sharesize$|
-
-		if ( strncmp( szParams, _P("$ALL ") ) == 0 )
-		{
-			LPSTR szNick = szParams + 5;
-			if ( LPSTR szDescription = strchr( szNick, ' ' ) )
-			{
-				*szDescription++ = 0;
-				if ( LPSTR szConnection = strchr( szDescription, '$' ) )
-				{
-					*szConnection++ = 0;
-					CString sNick( UTF8Decode( szNick ) );
-
-					CChatUser* pUser;
-					if ( ! m_oUsers.Lookup( sNick, pUser ) )
-					{
-						pUser = new CChatUser;
-						m_oUsers.SetAt( sNick, pUser );
-					}
-					pUser->m_bType = ( sNick == m_sNick ) ? cutMe : cutUser;
-					pUser->m_sNick = sNick;
-					pUser->m_sDescription = UTF8Decode( szDescription );
-
-					// Notify chat window
-					ChatCore.OnAddUser( this, new CChatUser( *pUser ) );
-				}
-			}
-		}
-
-		return TRUE;
+		return OnUserInfo( szParams );
 	}
 	else if ( strcmp( szCommand, "$Quit" ) == 0 )
 	{
-		// User leave hub
-		// $Quit nick|
-
-		CString sNick = UTF8Decode( szParams );
-		CChatUser* pUser;
-		if ( m_oUsers.Lookup( sNick, pUser ) )
-		{
-			m_oUsers.RemoveKey( sNick );
-			delete pUser;
-		}
-
-		// Notify chat window
-		ChatCore.OnDeleteUser( this, new CString( sNick ) );
-
-		return TRUE;
-	}
-	else if ( strcmp( szCommand, "$To:" ) == 0 )
-	{
-		// Private chat message
-		// $To: my_nick From: nick$<nick> message|
-
-		if ( LPCSTR szChat = strchr( szParams, '$' ) )
-		{
-			if ( szChat[ 1 ] == '<' )
-			{
-				if ( LPCSTR szMessage = strchr( szChat, '>' ) )
-				{
-					// Cut off chat packet and restore ending "|"
-					pPacket->Remove( szChat - (LPCSTR)pPacket->m_pBuffer + 1 );
-					pPacket->m_pBuffer[ pPacket->m_nLength - 1 ] = '|';
-
-					ChatCore.OnMessage( this, pPacket );
-				}
-			}
-		}
-		return TRUE;
+		return OnQuit( szParams );
 	}
 	else if ( strcmp( szCommand, "$Lock" ) == 0 )
 	{
-		// $Lock [EXTENDEDPROTOCOL]Challenge Pk=Vendor|
-
-		if  ( LPSTR szLock = szParams )
-		{
-			m_bExtended = ( strncmp( szParams, _P("EXTENDEDPROTOCOL") ) == 0 );
-
-			if ( LPSTR szUserAgent = strstr( szParams, " Pk=" ) )
-			{
-				// Good way
-				*szUserAgent = 0;
-				szUserAgent += 4;
-				m_sUserAgent = UTF8Decode( szUserAgent );
-			}
-			else
-			{
-				// Bad way
-				if ( LPSTR szUserAgent = strchr( szParams, ' ' ) )
-				{
-					*szUserAgent++ = 0;
-					m_sUserAgent = UTF8Decode( szUserAgent );
-				}
-			}
-			return OnLock( szLock );
-		}
+		return OnLock( szParams );
 	}
 	else if ( strcmp( szCommand, "$Supports" ) == 0 )
 	{
-		// $Supports [option1]...[optionN]|
-
-		m_bExtended = TRUE;
-
-		m_oFeatures.RemoveAll();
-		for ( CString strFeatures( szParams ); ! strFeatures.IsEmpty(); )
-		{
-			CString strFeature = strFeatures.SpanExcluding( _T(" ") );
-			strFeatures = strFeatures.Mid( strFeature.GetLength() + 1 );
-			if ( strFeature.IsEmpty() )
-				continue;
-			if ( m_oFeatures.Find( strFeature ) == NULL )
-			{
-				m_oFeatures.AddTail( strFeature );
-			}				
-		}
-
-		return TRUE;
+		return OnSupports( szParams );
 	}
 	else if ( strcmp( szCommand, "$Hello" ) == 0 )
 	{
-		// User logged-in
-		// $Hello Nick|
-
-		m_nState = nrsConnected;
-
-		m_bNickValid = TRUE;
-		m_sNick = UTF8Decode( szParams );
-
-		if ( CHostCacheHostPtr pServer = HostCache.DC.Find( &m_pHost.sin_addr ) )
-		{
-			pServer->m_sUser = m_sNick;
-		}
-
-		return OnHello();
-	}
-	else if ( strcmp( szCommand, "$HubName" ) == 0 )
-	{
-		// Name of hub
-		// $HubName Title [Description]|
-
-		if ( LPSTR szHubName = szParams )
-		{
-			if ( LPSTR szHubInfo = strchr( szHubName, ' ' ) )
-			{
-				*szHubInfo++ = 0;
-			}
-
-			m_sServerName = UTF8Decode( szHubName );
-
-			if ( CHostCacheHostPtr pServer = HostCache.DC.Find( &m_pHost.sin_addr ) )
-			{
-				pServer->m_sName = m_sServerName;
-			}
-
-			ChatCore.OnMessage( this );
-
-			return TRUE;
-		}
+		return OnHello( szParams );
 	}
 	else if ( strcmp( szCommand, "$OpList" ) == 0 )
 	{
-		// Hub operators list
-		// $OpList operator1|
-
-		return TRUE;
+		return OnOpList( szParams );
 	}
 	else if ( strcmp( szCommand, "$ConnectToMe" ) == 0 )
 	{
-		// Client connection request
-		// $ConnectToMe MyNick SenderIp:SenderPort|
-		// or
-		// $ConnectToMe SenderNick MyNick SenderIp:SenderPort|
-
-		if ( LPSTR szSenderNick = szParams )
-		{
-			if ( LPSTR szMyNick = strchr( szSenderNick, ' ' ) )
-			{
-				*szMyNick++ = 0;
-				LPSTR szAddress = strchr( szMyNick, ' ' );
-				if ( szAddress )
-				{
-					*szAddress++ = 0;
-				}
-				else
-				{
-					szAddress = szMyNick;
-					szMyNick = szSenderNick;
-					szSenderNick = "";
-				}
-
-				CString sMyNick( UTF8Decode( szMyNick) );
-				CString sSenderNick( UTF8Decode( szSenderNick ) );
-
-				if ( LPSTR szPort = strchr( szAddress, ':' ) )
-				{
-					*szPort++ = 0;
-					int nPort = atoi( szPort );
-					IN_ADDR nAddress;
-					nAddress.s_addr = inet_addr( szAddress );
-					if ( m_sNick == sMyNick )
-					{
-						// Ok
-						DCClients.ConnectTo( &nAddress, (WORD)nPort, m_sNick, sSenderNick );
-					}
-					else
-					{
-						// Wrong nick, bad IP
-					}
-				}
-			}
-			return TRUE;
-		}
+		return OnConnectToMe( szParams );
 	}
 	else if ( strcmp( szCommand, "$ForceMove " ) == 0 )
 	{
-		// User redirection
-		// $ForceMove IP:Port|
-
-		if ( LPSTR szAddress = szParams )
-		{
-			int nPort = DC_DEFAULT_PORT;
-			if ( LPSTR szPort = strchr( szAddress, ':' ) )
-			{
-				*szPort++ = 0;
-				nPort = atoi( szPort );
-			}
-
-			Network.ConnectTo( UTF8Decode( szAddress ), nPort, PROTOCOL_DC );
-
-			return TRUE;
-		}
+		return OnForceMove( szParams );
 	}
-	else if ( strcmp( szCommand, "$ValidateDenide" ) == 0 ||
-		// TODO: Add registered user support - for now just change nick
-		strcmp( szCommand, "$GetPass" ) == 0 )
+	else if ( strcmp( szCommand, "$ValidateDenide" ) == 0 )
 	{
-		// Bad user nick
-		// $ValidateDenide Nick|
-
-		m_bNickValid = FALSE;
-		m_sNick.Format( CLIENT_NAME_T _T("%04u"), GetRandomNum( 0, 9999 ) );
-
-		if ( CHostCacheHostPtr pServer = HostCache.DC.Find( &m_pHost.sin_addr ) )
-		{
-			pServer->m_sUser = m_sNick;
-		}
-
-		if ( CDCPacket* pPacket = CDCPacket::New() )
-		{
-			pPacket->Write( _P("$ValidateNick ") );
-			pPacket->WriteString( m_sNick, FALSE );
-			pPacket->Write( _P("|") );
-			Send( pPacket );
-		}
-
-		return TRUE;
+		return OnValidateDenide();
+	}
+	else if ( strcmp( szCommand, "$GetPass" ) == 0 )
+	{
+		return OnGetPass();
 	}
 	else if ( strcmp( szCommand, "$UserIP" ) == 0 )
 	{
-		// User address
-		// $UserIP MyNick IP|
-
-		if ( LPSTR szMyNick = szParams )
-		{
-			if ( LPSTR szAddress = strchr( szMyNick, ' ' ) )
-			{
-				*szAddress++ = 0;
-
-				CString sNick( UTF8Decode( szMyNick ) );
-
-				if ( m_bNickValid && m_sNick == sNick )
-				{
-					IN_ADDR nAddress;
-					nAddress.s_addr = inet_addr( szAddress );
-					Network.AcquireLocalAddress( nAddress );
-				}
-				return TRUE;
-			}
-		}
+		return OnUserIP( szParams );
 	}
 	else if ( strcmp( szCommand, "$ZOn" ) == 0 )
 	{
-		// ZLib stream compression enabled
-		// $ZOn|
-
-		ASSERT( m_pZInput == NULL );
-		m_pZInput  = new CBuffer();
-		return TRUE;
+		return OnZOn();
 	}
 	else if ( strcmp( szCommand, "$RevConnectToMe" ) == 0 )
 	{
-		// Callback connection request
-		// $RevConnectToMe RemoteNick MyNick|
-
-		if ( LPSTR szRemoteNick = szParams )
-		{
-			if ( LPSTR szMyNick = strchr( szRemoteNick, ' ' ) )
-			{
-				*szMyNick++ = 0;
-
-				CString sNick( UTF8Decode( szMyNick ) );
-				CString sRemoteNick( UTF8Decode( szRemoteNick ) );
-
-				if ( m_bNickValid && m_sNick == sNick )
-				{
-					ConnectToMe( sRemoteNick );
-				}
-				return TRUE;
-			}
-		}
+		return OnRevConnectToMe( szParams );
 	}
 
-	// Unknown command - ignoring
+	return OnUnknown( pPacket );
+}
 
+BOOL CDCNeighbour::OnUnknown(CDCPacket* pPacket)
+{
 	theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING, _T("%s >> UNKNOWN COMMAND: %s"),
 		(LPCTSTR)HostToString( &m_pHost ),
 		(LPCTSTR)CString( (LPCSTR)pPacket->m_pBuffer, (int)pPacket->m_nLength ) );
@@ -623,8 +398,70 @@ BOOL CDCNeighbour::OnPacket(CDCPacket* pPacket)
 	return TRUE;
 }
 
+BOOL CDCNeighbour::OnPing()
+{
+	// Ping
+	// |
+
+	return TRUE;
+}
+
+BOOL CDCNeighbour::OnChat(CDCPacket* pPacket)
+{
+	// Chat message
+	// <Nick> Message|
+
+	if ( LPCSTR szMessage = strchr( (LPCSTR)pPacket->m_pBuffer, '>' ) )
+	{
+		int nNickLen = szMessage - (LPCSTR)pPacket->m_pBuffer - 1;
+		CString sNick( UTF8Decode( (LPCSTR)&pPacket->m_pBuffer[ 1 ], nNickLen ) );
+
+		if ( nNickLen > 0 && m_sNick != sNick )
+		{
+			if ( GetUser( sNick ) == NULL )
+			{
+				// Add user
+				ChatCore.OnAddUser( this, new CChatUser( cutUser, sNick ) );
+			}
+
+			ChatCore.OnMessage( this, pPacket );
+		}
+	}
+
+	return TRUE;
+}
+
+BOOL CDCNeighbour::OnChatPrivate(CDCPacket* pPacket)
+{
+	// Private chat message
+	// $To: my_nick From: nick$<nick> message|
+
+	int nChat = pPacket->Find( '$', 5 );
+	if ( nChat != -1 )
+	{
+		nChat++;
+		if ( pPacket->GetAt( nChat ) == '<' )
+		{
+			int nMessage = pPacket->Find( '>', nChat );
+			if ( nMessage != -1 )
+			{
+				// Cut off chat message and restore ending "|"
+				pPacket->Remove( nChat );
+
+				// TODO: Implement DC++ private chat - for now just show privates as regular chat
+
+				ChatCore.OnMessage( this, pPacket );
+			}
+		}
+	}
+	return TRUE;
+}
+
 BOOL CDCNeighbour::OnQuery(CDCPacket* pPacket)
 {
+	// Search request
+	// $Search SenderIP:SenderPort (F|T)?(F|T)?Size?Type?String|
+
 	CQuerySearchPtr pSearch = CQuerySearch::FromPacket( pPacket, NULL, TRUE );
 	if ( ! pSearch  || pSearch->m_bDropMe )
 	{
@@ -659,44 +496,447 @@ BOOL CDCNeighbour::OnQuery(CDCPacket* pPacket)
 	return TRUE;
 }
 
-BOOL CDCNeighbour::OnLock(LPSTR szLock)
+BOOL CDCNeighbour::OnLock(LPSTR szParams)
 {
-	if ( m_nState < nrsHandshake2 )
-	{
-		m_nState = nrsHandshake2;	// Waiting for $Hello
-	}
+	// $Lock [EXTENDEDPROTOCOL]Challenge Pk=Vendor|
 
-	if ( m_nNodeType == ntHub )
+	if  ( LPSTR szLock = szParams )
 	{
-		HostCache.DC.Add( &m_pHost.sin_addr, htons( m_pHost.sin_port ) );
-	}
+		m_bExtended = ( strncmp( szParams, _P("EXTENDEDPROTOCOL") ) == 0 );
 
-	if ( m_bExtended )
-	{
+		if ( LPSTR szUserAgent = strstr( szParams, " Pk=" ) )
+		{
+			// Good way
+			*szUserAgent = 0;
+			szUserAgent += 4;
+			m_sUserAgent = UTF8Decode( szUserAgent );
+		}
+		else
+		{
+			// Bad way
+			if ( LPSTR szUserAgent = strchr( szParams, ' ' ) )
+			{
+				*szUserAgent++ = 0;
+				m_sUserAgent = UTF8Decode( szUserAgent );
+			}
+		}
+
+		if ( m_nState < nrsHandshake2 )
+		{
+			m_nState = nrsHandshake2;	// Waiting for $Hello
+		}
+
+		if ( m_nNodeType == ntHub )
+		{
+			HostCache.DC.Add( &m_pHost.sin_addr, htons( m_pHost.sin_port ) );
+		}
+
+		if ( m_bExtended )
+		{
+			if ( CDCPacket* pPacket = CDCPacket::New() )
+			{
+				pPacket->Write( _P(DC_HUB_SUPPORTS) );
+				Send( pPacket );
+			}
+		}
+
+		std::string strKey = DCClients.MakeKey( szLock );
 		if ( CDCPacket* pPacket = CDCPacket::New() )
 		{
-			pPacket->Write( _P(DC_HUB_SUPPORTS) );
+			pPacket->Write( _P("$Key ") );
+			pPacket->Write( strKey.c_str(), (DWORD)strKey.size() );
+			pPacket->Write( _P("|") );
+			Send( pPacket );
+		}
+
+		m_bNickValid = FALSE;
+		
+		if ( CHostCacheHostPtr pServer = HostCache.DC.Find( &m_pHost.sin_addr ) )
+		{
+			m_sNick = pServer->m_sUser;
+		}
+		
+		m_sNick = DCClients.CreateNick( m_sNick );
+
+		if ( CDCPacket* pPacket = CDCPacket::New() )
+		{
+			pPacket->Write( _P("$ValidateNick ") );
+			pPacket->WriteString( m_sNick, FALSE );
+			pPacket->Write( _P("|") );
 			Send( pPacket );
 		}
 	}
 
-	std::string strKey = DCClients.MakeKey( szLock );
+	return TRUE;
+}
+
+BOOL CDCNeighbour::OnSupports(LPSTR szParams)
+{
+	// $Supports [option1]...[optionN]|
+
+	m_bExtended = TRUE;
+
+	m_oFeatures.RemoveAll();
+	for ( CString strFeatures( szParams ); ! strFeatures.IsEmpty(); )
+	{
+		CString strFeature = strFeatures.SpanExcluding( _T(" ") );
+		strFeatures = strFeatures.Mid( strFeature.GetLength() + 1 );
+		if ( strFeature.IsEmpty() )
+			continue;
+		if ( m_oFeatures.Find( strFeature ) == NULL )
+		{
+			m_oFeatures.AddTail( strFeature );
+		}				
+	}
+
+	return TRUE;
+}
+
+BOOL CDCNeighbour::OnHello(LPSTR szNick)
+{
+	// User logged-in
+	// $Hello Nick|
+
+	m_nState = nrsConnected;
+
+	m_bNickValid = TRUE;
+	m_sNick = UTF8Decode( szNick );
+
+	if ( CHostCacheHostPtr pServer = HostCache.DC.Find( &m_pHost.sin_addr ) )
+	{
+		pServer->m_sUser = m_sNick;
+		HostCache.DC.m_nCookie++;
+	}
+
+	// NMDC version
 	if ( CDCPacket* pPacket = CDCPacket::New() )
 	{
-		pPacket->Write( _P("$Key ") );
-		pPacket->Write( strKey.c_str(), (DWORD)strKey.size() );
-		pPacket->Write( _P("|") );
+		pPacket->Write( _P("$Version 1,0091|") );
 		Send( pPacket );
 	}
 
-	m_bNickValid = FALSE;
-	
+	SendUserInfo();
+
+	// Request nick list
+	if ( CDCPacket* pPacket = CDCPacket::New() )
+	{
+		pPacket->Write( _P("$GetNickList|") );
+		Send( pPacket );
+	}
+
+	return TRUE;
+}
+
+BOOL CDCNeighbour::OnHubName(CDCPacket *pPacket)
+{
+	// Name of hub
+	// $HubName Title [Description]|
+
+	CString sDescription;
+	int nHubInfo = pPacket->Find( ' ', 9 );
+	if ( nHubInfo != -1 )
+	{
+		m_sServerName = UTF8Decode( (LPCSTR)&pPacket->m_pBuffer[ 9 ], nHubInfo - 9 );
+		sDescription = UTF8Decode( (LPCSTR)&pPacket->m_pBuffer[ nHubInfo + 1 ], pPacket->m_nLength - nHubInfo - 2 ).TrimLeft( _T(" -") );
+	}
+	else
+		m_sServerName = UTF8Decode( (LPCSTR)&pPacket->m_pBuffer[ 9 ], pPacket->m_nLength - 9 - 1 );
+
 	if ( CHostCacheHostPtr pServer = HostCache.DC.Find( &m_pHost.sin_addr ) )
 	{
-		m_sNick = pServer->m_sUser;
+		pServer->m_sName = m_sServerName;
+		pServer->m_sDescription = sDescription;
+		HostCache.DC.m_nCookie++;
 	}
-	
-	m_sNick = DCClients.CreateNick( m_sNick );
+
+	ChatCore.OnMessage( this, pPacket );
+
+	return TRUE;
+}
+
+BOOL CDCNeighbour::OnHubTopic(CDCPacket* pPacket)
+{
+	// Topic of hub
+	// $HubTopic topic|
+
+	ChatCore.OnMessage( this, pPacket );
+
+	return TRUE;
+}
+
+BOOL CDCNeighbour::OnOpList(LPSTR /*szParams*/)
+{
+	// Hub operators list
+	// $OpList operator1|
+
+	// TODO: Implement DC++ operator list
+
+	return TRUE;
+}
+
+BOOL CDCNeighbour::OnUserInfo(LPSTR szInfo)
+{
+	// User info
+	// $MyINFO $ALL nick description<tag>$ $connection$e-mail$sharesize$|
+
+	if ( strncmp( szInfo, _P("$ALL ") ) == 0 )
+	{
+		LPSTR szNick = szInfo + 5;
+		if ( LPSTR szDescription = strchr( szNick, ' ' ) )
+		{
+			*szDescription++ = 0;
+
+			CString sNick( UTF8Decode( szNick ) );
+
+			CChatUser* pUser;
+			if ( ! m_oUsers.Lookup( sNick, pUser ) )
+			{
+				pUser = new CChatUser;
+				m_oUsers.SetAt( sNick, pUser );
+			}
+			pUser->m_bType = ( sNick == m_sNick ) ? cutMe : cutUser;
+			pUser->m_sNick = sNick;
+
+			if ( LPSTR szConnection = strchr( szDescription, '$' ) )
+			{
+				*szConnection++ = 0;
+
+				if ( LPSTR szVendor = strchr( szDescription, '<' ) )
+				{
+					if ( *(szConnection - 2) == '>' )
+					{
+						*szVendor++ = 0;
+						*(szConnection - 2) = 0;
+
+						CStringA sVersion;
+						if ( LPSTR szTags = strchr( szVendor, ' ' ) )
+						{
+							*szTags++ = 0;
+
+							for ( CStringA sTags( szTags ); ! sTags.IsEmpty(); )
+							{
+								CStringA sTag = sTags.SpanExcluding( "," );
+								sTags = sTags.Mid( sTag.GetLength() + 1 );
+								if ( sTag.IsEmpty() )
+									continue;
+								int nPos = sTag.Find( ':' );
+								if ( nPos > 0 )
+								{
+									CStringA sTagName = sTag.Left( nPos );
+									sTag = sTag.Mid( nPos + 1 );
+
+									if ( sTagName == "V" )
+									{
+										// Version
+
+										sVersion = sTag;
+									}
+									else if ( sTagName == "M" )
+									{
+										// Mode
+									}
+									else if ( sTagName == "H" )
+									{
+										// Hubs
+									}
+									else if ( sTagName == "S" )
+									{
+										// Slots
+									}
+								}
+							}
+						}
+
+						pUser->m_sUserAgent = UTF8Decode( szVendor );
+						if ( ! sVersion.IsEmpty() )
+							pUser->m_sUserAgent += _T(" ") + UTF8Decode( sVersion );
+					}
+				}
+			}
+
+			pUser->m_sDescription = UTF8Decode( szDescription );
+
+			if ( m_nNodeType == ntHub )
+			{
+				HostCache.DC.Add( &m_pHost.sin_addr, htons( m_pHost.sin_port ), 0, 0, 0, GetUserCount() );
+			}
+
+			// Notify chat window
+			ChatCore.OnAddUser( this, new CChatUser( *pUser ) );
+		}
+	}
+
+	return TRUE;
+}
+
+BOOL CDCNeighbour::OnQuit(LPSTR szNick)
+{
+	// User leave hub
+	// $Quit nick|
+
+	if ( szNick )
+	{
+		CString sNick = UTF8Decode( szNick );
+		CChatUser* pUser;
+		if ( m_oUsers.Lookup( sNick, pUser ) )
+		{
+			m_oUsers.RemoveKey( sNick );
+			delete pUser;
+		}
+
+		if ( m_nNodeType == ntHub )
+		{
+			HostCache.DC.Add( &m_pHost.sin_addr, htons( m_pHost.sin_port ), 0, 0, 0, GetUserCount() );
+		}
+
+		// Notify chat window
+		ChatCore.OnDeleteUser( this, new CString( sNick ) );
+	}
+
+	return TRUE;
+}
+
+BOOL CDCNeighbour::OnUserIP(LPSTR szIP)
+{
+	// User address
+	// $UserIP MyNick IP|
+
+	if ( LPSTR szMyNick = szIP )
+	{
+		if ( LPSTR szAddress = strchr( szMyNick, ' ' ) )
+		{
+			*szAddress++ = 0;
+
+			CString sNick( UTF8Decode( szMyNick ) );
+
+			if ( m_bNickValid && m_sNick == sNick )
+			{
+				IN_ADDR nAddress;
+				nAddress.s_addr = inet_addr( szAddress );
+				Network.AcquireLocalAddress( nAddress );
+			}
+		}
+	}
+
+	return TRUE;
+}
+
+BOOL CDCNeighbour::OnConnectToMe(LPSTR szParams)
+{
+	// Client connection request
+	// $ConnectToMe MyNick SenderIp:SenderPort|
+	// or
+	// $ConnectToMe SenderNick MyNick SenderIp:SenderPort|
+
+	if ( LPSTR szSenderNick = szParams )
+	{
+		if ( LPSTR szMyNick = strchr( szSenderNick, ' ' ) )
+		{
+			*szMyNick++ = 0;
+			LPSTR szAddress = strchr( szMyNick, ' ' );
+			if ( szAddress )
+			{
+				*szAddress++ = 0;
+			}
+			else
+			{
+				szAddress = szMyNick;
+				szMyNick = szSenderNick;
+				szSenderNick = "";
+			}
+
+			CString sMyNick( UTF8Decode( szMyNick) );
+			CString sSenderNick( UTF8Decode( szSenderNick ) );
+
+			if ( LPSTR szPort = strchr( szAddress, ':' ) )
+			{
+				*szPort++ = 0;
+				int nPort = atoi( szPort );
+				IN_ADDR nAddress;
+				nAddress.s_addr = inet_addr( szAddress );
+				if ( m_sNick == sMyNick )
+				{
+					// Ok
+					DCClients.ConnectTo( &nAddress, (WORD)nPort, this, sSenderNick );
+				}
+				else
+				{
+					// Wrong nick, bad IP
+				}
+			}
+		}
+	}
+
+	return TRUE;
+}
+
+BOOL CDCNeighbour::OnForceMove(LPSTR szParams)
+{
+	// User redirection
+	// $ForceMove IP:Port|
+
+	if ( LPSTR szAddress = szParams )
+	{
+		int nPort = DC_DEFAULT_PORT;
+		if ( LPSTR szPort = strchr( szAddress, ':' ) )
+		{
+			*szPort++ = 0;
+			nPort = atoi( szPort );
+		}
+
+		Network.ConnectTo( UTF8Decode( szAddress ), nPort, PROTOCOL_DC );
+	}
+
+	return TRUE;
+}
+
+BOOL CDCNeighbour::OnRevConnectToMe(LPSTR szParams)
+{
+	// Callback connection request
+	// $RevConnectToMe RemoteNick MyNick|
+
+	if ( LPSTR szRemoteNick = szParams )
+	{
+		if ( LPSTR szMyNick = strchr( szRemoteNick, ' ' ) )
+		{
+			*szMyNick++ = 0;
+
+			CString sNick( UTF8Decode( szMyNick ) );
+			CString sRemoteNick( UTF8Decode( szRemoteNick ) );
+
+			if ( m_bNickValid && m_sNick == sNick )
+			{
+				ConnectToMe( sRemoteNick );
+			}
+		}
+	}
+
+	return TRUE;
+}
+
+BOOL CDCNeighbour::OnZOn()
+{
+	// ZLib stream compression enabled
+	// $ZOn|
+
+	ASSERT( m_pZInput == NULL );
+	m_pZInput  = new CBuffer();
+
+	return TRUE;
+}
+
+BOOL CDCNeighbour::OnValidateDenide()
+{
+	// Bad user nick
+	// $ValidateDenide[ Nick]|
+
+	m_bNickValid = FALSE;
+	m_sNick.Format( CLIENT_NAME_T _T("%04u"), GetRandomNum( 0, 9999 ) );
+
+	if ( CHostCacheHostPtr pServer = HostCache.DC.Find( &m_pHost.sin_addr ) )
+	{
+		pServer->m_sUser = m_sNick;
+	}
 
 	if ( CDCPacket* pPacket = CDCPacket::New() )
 	{
@@ -709,75 +949,12 @@ BOOL CDCNeighbour::OnLock(LPSTR szLock)
 	return TRUE;
 }
 
-BOOL CDCNeighbour::OnHello()
+BOOL CDCNeighbour::OnGetPass()
 {
-	// NMDC version
-	if ( CDCPacket* pPacket = CDCPacket::New() )
-	{
-		pPacket->Write( _P("$Version 1,0091|") );
-		Send( pPacket );
-	}
+	// Password request
+	// $GetPass|
 
-	// $MyINFO $ALL nick description<tag>$ $connection$e-mail$sharesize$|
+	// TODO: Implement DC++ registered user support - for now just change nick
 
-	CUploadQueue* pQueue = UploadQueues.SelectQueue(
-		PROTOCOL_DC, NULL, 0, CUploadQueue::ulqBoth, NULL );
-
-	QWORD nMyVolume = 0;
-	LibraryMaps.GetStatistics( NULL, &nMyVolume );
-
-	CString sInfo;
-	sInfo.Format( _T("$MyINFO $ALL %s %s<%s V:%s,M:%c,H:%u/%u/%u,S:%u>$ $%.2f%c$%s$%I64u$|"),
-		// Registered nick
-		(LPCTSTR)m_sNick,
-		// Description
-		WEB_SITE_T,
-		// Client name
-		CLIENT_NAME_T,
-		// Client version
-		(LPCTSTR)theApp.m_sVersion,
-		// User is in active(A), passive(P), or SOCKS5(5) mode 
-		( Network.IsFirewalled( CHECK_IP ) ? _T('P') : _T('A') ),
-		// Number of connected hubs as regular user
-		Neighbours.GetCount( PROTOCOL_DC, nrsConnected, ntHub ),
-		// Number of connected hubs as VIP
-		0,
-		// Number of connected hubs as operator
-		0,
-		// Number of upload slots
-		( pQueue ? pQueue->m_nMaxTransfers : 0 ),
-		// Upload speed (Mbit/s)
-		(float)Settings.Bandwidth.Uploads * Bytes / ( Kilobits * Kilobits ),
-		// User status: Normal(1), Away(2,3), Server(4,5), Server Away(6,7)
-		1,
-		// E-mail
-		(LPCTSTR)MyProfile.GetContact( _T("Email") ),
-		// Share size (bytes)
-		nMyVolume << 10 );
-	if ( CDCPacket* pPacket = CDCPacket::New() )
-	{
-		pPacket->WriteString( sInfo, FALSE );
-		Send( pPacket );
-	}
-
-	/*/ Switch to compression stream
-	if ( ! m_pZOutput && m_oFeatures.Find( _T("ZPipe0") ) )
-	{
-		if ( CDCPacket* pPacket = CDCPacket::New() )
-		{
-			pPacket->Write( _P("$ZOn|") );
-			Send( pPacket );
-
-			m_pZOutput  = new CBuffer();
-		}
-	}*/
-
-	// Request nick list
-	if ( CDCPacket* pPacket = CDCPacket::New() )
-	{
-		pPacket->Write( _P("$GetNickList|") );
-		Send( pPacket );
-	}
-
-	return TRUE;
+	return OnValidateDenide();
 }

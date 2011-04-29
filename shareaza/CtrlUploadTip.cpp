@@ -1,7 +1,7 @@
 //
 // CtrlUploadTip.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -126,8 +126,8 @@ void CUploadTipCtrl::OnPaint(CDC* pDC)
 
 void CUploadTipCtrl::OnCalcSize(CDC* pDC, CUploadTransfer* pUpload)
 {
-	if ( pUpload->m_sNick.GetLength() > 0 )
-		m_sAddress = pUpload->m_sNick + _T(" (") +
+	if ( pUpload->m_sRemoteNick.GetLength() > 0 )
+		m_sAddress = pUpload->m_sRemoteNick + _T(" (") +
 			CString( inet_ntoa( pUpload->m_pHost.sin_addr ) ) + _T(")");
 	else
 		m_sAddress = inet_ntoa( pUpload->m_pHost.sin_addr );

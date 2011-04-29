@@ -752,35 +752,43 @@ LRESULT CChatWnd::OnChatMessage(WPARAM /*wParam*/, LPARAM lParam)
 {
 	CAutoPtr< CChatMessage > pMsg( (CChatMessage*)lParam );
 
-	if ( pMsg->m_bType == cmtProfile )
+	if ( pMsg->m_hBitmap )
 	{
-		SetWindowText( GetCaption() );
+		CChatWnd::AddBitmap( pMsg->m_hBitmap );
+	}
+
+	switch ( pMsg->m_bType )
+	{
+	case cmtProfile:
 		Open();
 		SetAlert();
 		CChatWnd::AddLogin( pMsg->m_sFrom );
-		return 0;
-	}
+		break;
 
-	if ( pMsg->m_hBitmap )
-	{
+	case cmtError:
 		SetAlert();
-		CChatWnd::AddBitmap( pMsg->m_hBitmap );
-		return 0;
+	case cmtStatus:
+	case cmtInfo:
+		CChatWnd::OnStatusMessage( (int)pMsg->m_bType - (int)cmtStatus, pMsg->m_sMessage );
+		break;
+
+	case cmtMessage:
+		CChatWnd::OnMessage( false, GetChatID(), false, pMsg->m_sFrom, MyProfile.GetNick(), pMsg->m_sMessage );
+		break;
+
+	case cmtAction:
+		CChatWnd::OnMessage( false, GetChatID(), false, pMsg->m_sFrom, MyProfile.GetNick(), pMsg->m_sMessage );
+		break;
+
+	case cmtCaption:
+		m_sCaption = _T(" : ") + pMsg->m_sMessage;
+		break;
+
+	default:
+		;
 	}
 
-	if ( pMsg->m_bType == cmtStatus ||
-		pMsg->m_bType == cmtError ||
-		pMsg->m_bType == cmtInfo )
-	{
-		if ( pMsg->m_bType == cmtError )
-			SetAlert();
-		SetWindowText( GetCaption() );
-		CChatWnd::OnStatusMessage( (int)pMsg->m_bType - 3, pMsg->m_sMessage );
-		return 0;
-	}
-
-	CChatWnd::OnMessage( ( pMsg->m_bType == cmtAction ), GetChatID(), false,
-		pMsg->m_sFrom, MyProfile.GetNick(), pMsg->m_sMessage );
+	SetWindowText( GetCaption() + m_sCaption );
 
 	return 0;
 }

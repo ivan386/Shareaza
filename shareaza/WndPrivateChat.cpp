@@ -86,15 +86,12 @@ CString CPrivateChatWnd::GetCaption() const
 	strCaption += m_sNick;
 	if ( m_pSession )
 	{
-		CString strAddress;
-		strAddress.Format( _T(" (%s)"),
-			(LPCTSTR)HostToString( &m_pSession->m_pHost ) );
 		if ( Settings.General.LanguageRTL ) strCaption += _T("\x200F");
-		strCaption += strAddress;
+		strCaption += _T(" (") + HostToString( &m_pSession->m_pHost ) + _T(")");
 		if ( ! m_pSession->m_sUserAgent.IsEmpty() )
 		{
 			if ( Settings.General.LanguageRTL ) strCaption += _T("\x200F");
-			strCaption = strCaption + _T(" - ") + m_pSession->m_sUserAgent;
+			strCaption += _T(" ") + m_pSession->m_sUserAgent;
 		}
 	}
 	return strCaption;
@@ -173,17 +170,18 @@ BOOL CPrivateChatWnd::Find(const CString& sNick) const
 
 void CPrivateChatWnd::OnDestroy()
 {
+	CChatWnd::OnDestroy();
+
 	{
 		CQuickLock pLock( ChatCore.m_pSection );
 
-		if ( m_pSession != NULL )
+		if ( CChatSession* pSession = m_pSession )
 		{
-			m_pSession->OnCloseWindow();
 			m_pSession = NULL;
+
+			pSession->OnCloseWindow();
 		}
 	}
-
-	CChatWnd::OnDestroy();
 }
 
 BOOL CPrivateChatWnd::OnLocalMessage(bool bAction, const CString& sText)
@@ -254,12 +252,12 @@ void CPrivateChatWnd::OnChatDisconnect()
 
 void CPrivateChatWnd::OnUpdateChatBrowse(CCmdUI* pCmdUI)
 {
-	pCmdUI->Enable( m_pSession != NULL );
+	pCmdUI->Enable( m_pSession && m_pSession->m_nProtocol != PROTOCOL_DC );
 }
 
 void CPrivateChatWnd::OnChatBrowse()
 {
-	if ( m_pSession )
+	if ( m_pSession && m_pSession->m_nProtocol != PROTOCOL_DC )
 	{
 		new CBrowseHostWnd( m_pSession->m_nProtocol,
 			&m_pSession->m_pHost, FALSE, m_pSession->m_oGUID, m_pSession->m_sNick );
@@ -268,7 +266,7 @@ void CPrivateChatWnd::OnChatBrowse()
 
 void CPrivateChatWnd::OnUpdateChatPriority(CCmdUI* pCmdUI)
 {
-	pCmdUI->Enable( m_pSession && m_pSession->GetConnectedState() == TRI_TRUE );
+	pCmdUI->Enable( m_pSession && m_pSession->m_nProtocol != PROTOCOL_DC && m_pSession->GetConnectedState() == TRI_TRUE );
 }
 
 void CPrivateChatWnd::OnChatPriority()

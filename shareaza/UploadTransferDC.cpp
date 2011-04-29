@@ -54,6 +54,9 @@ CUploadTransferDC::CUploadTransferDC(CDCClient* pClient)
 	, m_bGet			( FALSE )
 {
 	ASSERT( pClient != NULL );
+
+	m_pServer = pClient->m_pServer;
+	m_sRemoteNick = pClient->m_sRemoteNick;
 }
 
 CUploadTransferDC::~CUploadTransferDC()
@@ -245,7 +248,7 @@ BOOL CUploadTransferDC::OnUpload(const std::string& strType, const std::string& 
 
 	ClearRequest();
 
-	m_sUserAgent = m_pClient->m_sUserAgent;
+	m_sUserAgent = m_pClient->GetUserAgent();
 	m_pHost = m_pClient->m_pHost;
 	m_sAddress = m_pClient->m_sAddress;
 	UpdateCountry();

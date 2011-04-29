@@ -134,6 +134,34 @@ void CPacket::Remove(DWORD nLength)
 	}
 }
 
+BOOL CPacket::Compare(const void* szString, DWORD nLength, DWORD nOffset) const
+{
+	if ( nOffset + nLength > m_nLength )
+		return FALSE;
+
+	return ( memcmp( m_pBuffer + nOffset, szString, nLength ) == 0 );
+}
+
+int CPacket::Find(BYTE c, DWORD nOffset) const
+{
+	if ( nOffset >= m_nLength )
+		return -1;
+
+	BYTE* p = (BYTE*)memchr( m_pBuffer + nOffset, c, m_nLength - nOffset );
+	if ( ! p )
+		return -1;
+
+	return (int)( p - m_pBuffer );
+}
+
+BYTE CPacket::GetAt(DWORD nOffset) const
+{
+	if ( nOffset >= m_nLength )
+		return 0;
+
+	return m_pBuffer[ nOffset ];
+}
+
 //////////////////////////////////////////////////////////////////////
 // CPacket strings
 

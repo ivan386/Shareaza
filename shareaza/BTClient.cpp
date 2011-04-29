@@ -827,7 +827,7 @@ void CBTClient::DetermineUserAgent()
 	if ( m_pUploadTransfer != NULL )
 	{
 		m_pUploadTransfer->m_sUserAgent = m_sUserAgent;
-		if ( strNick.GetLength() ) m_pUploadTransfer->m_sNick = strNick;
+		if ( strNick.GetLength() ) m_pUploadTransfer->m_sRemoteNick = strNick;
 		m_pUploadTransfer->m_bClientExtended = m_bClientExtended;
 	}
 }

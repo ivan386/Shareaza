@@ -1,7 +1,7 @@
 //
 // WndUploads.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -319,17 +319,16 @@ void CUploadsWnd::Prepare()
 			{
 				m_bSelUpload = TRUE;
 
-				if ( pTransfer->m_bClientExtended )
+				if ( pTransfer->m_bClientExtended || pTransfer->m_nProtocol == PROTOCOL_ED2K )
 				{
 					m_bSelChat = TRUE;
 					m_bSelBrowse = TRUE;
 				}
-				else if ( pTransfer->m_nProtocol == PROTOCOL_ED2K )
+				else if ( pTransfer->m_nProtocol == PROTOCOL_DC )
 				{
-					m_bSelChat = TRUE;
-					CUploadTransferED2K* pTransferED2K = static_cast< CUploadTransferED2K* >( pTransfer );
-					if ( pTransferED2K->m_pClient && pTransferED2K->m_pClient->m_bEmBrowse )
-						m_bSelBrowse = TRUE;
+					// TODO: Implement DC++ private chat
+					// m_bSelChat = TRUE;
+					m_bSelBrowse = TRUE;
 				}
 
 				if ( pTransfer->m_pQueue != NULL )
@@ -505,19 +504,37 @@ void CUploadsWnd::OnUpdateUploadsChat(CCmdUI* pCmdUI)
 void CUploadsWnd::OnUploadsChat()
 {
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
+	CList< CUploadFile* > pList;
 
 	for ( POSITION pos = UploadFiles.GetIterator() ; pos ; )
 	{
 		CUploadFile* pFile = UploadFiles.GetNext( pos );
+		if ( IsSelected( pFile ) ) pList.AddTail( pFile );
+	}
 
-		if ( IsSelected( pFile ) && pFile->GetActive() != NULL )
+	while ( ! pList.IsEmpty() )
+	{
+		CUploadFile* pFile = pList.RemoveHead();
+
+		if ( UploadFiles.Check( pFile ) )
 		{
-			if ( pFile->GetActive()->m_nProtocol == PROTOCOL_HTTP )		// HTTP chat. (G2, G1)
-				ChatWindows.OpenPrivate( Hashes::Guid(), &pFile->GetActive()->m_pHost, FALSE, PROTOCOL_HTTP );
-			else if ( pFile->GetActive()->m_bClientExtended )			// Client accepts G2 chat
-				ChatWindows.OpenPrivate( Hashes::Guid(), &pFile->GetActive()->m_pHost, FALSE, PROTOCOL_G2 );
-			else if ( pFile->GetActive()->m_nProtocol == PROTOCOL_ED2K )// ED2K chat.
-				ChatWindows.OpenPrivate( Hashes::Guid(), &pFile->GetActive()->m_pHost, FALSE, PROTOCOL_ED2K );
+			if ( CUploadTransfer* pTransfer = pFile->GetActive() )
+			{
+				PROTOCOLID nProtocol = pTransfer->m_nProtocol;
+				SOCKADDR_IN pAddress = pTransfer->m_pHost;
+				CString sNick = pTransfer->m_sRemoteNick;
+				BOOL bClientExtended = pTransfer->m_bClientExtended;
+				pLock.Unlock();
+
+				if ( nProtocol == PROTOCOL_HTTP )		// HTTP chat. (G2, G1)
+					ChatWindows.OpenPrivate( Hashes::Guid(), &pAddress, FALSE, PROTOCOL_HTTP );
+				else if ( bClientExtended )				// Client accepts G2 chat
+					ChatWindows.OpenPrivate( Hashes::Guid(), &pAddress, FALSE, PROTOCOL_G2 );
+				else if ( nProtocol == PROTOCOL_ED2K )	// ED2K chat.
+					ChatWindows.OpenPrivate( Hashes::Guid(), &pAddress, FALSE, PROTOCOL_ED2K );
+
+				pLock.Lock();
+			}
 		}
 	}
 }
@@ -565,7 +582,7 @@ void CUploadsWnd::OnUpdateBrowseLaunch(CCmdUI* pCmdUI)
 void CUploadsWnd::OnBrowseLaunch()
 {
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
-	CList<CUploadFile*> pList;
+	CList< CUploadFile* > pList;
 
 	for ( POSITION pos = UploadFiles.GetIterator() ; pos ; )
 	{
@@ -577,14 +594,20 @@ void CUploadsWnd::OnBrowseLaunch()
 	{
 		CUploadFile* pFile = pList.RemoveHead();
 
-		if ( UploadFiles.Check( pFile ) && pFile->GetActive() != NULL )
+		if ( UploadFiles.Check( pFile ) )
 		{
-			CUploadTransfer* pTransfer = pFile->GetActive();
-			PROTOCOLID nProtocol = pTransfer->m_nProtocol;
-			SOCKADDR_IN pAddress = pTransfer->m_pHost;
-			pLock.Unlock();
-			new CBrowseHostWnd( nProtocol, &pAddress );
-			pLock.Lock();
+			if ( CUploadTransfer* pTransfer = pFile->GetActive() )
+			{
+				PROTOCOLID nProtocol = pTransfer->m_nProtocol;
+				SOCKADDR_IN pAddress = ( nProtocol == PROTOCOL_DC ) ? pTransfer->m_pServer : pTransfer->m_pHost;
+				BOOL bPush = ( nProtocol == PROTOCOL_DC );
+				CString sNick = pTransfer->m_sRemoteNick;
+				pLock.Unlock();
+
+				new CBrowseHostWnd( nProtocol, &pAddress, bPush, Hashes::Guid(), sNick );
+
+				pLock.Lock();
+			}
 		}
 	}
 }

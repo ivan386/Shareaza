@@ -296,7 +296,7 @@ BOOL CUploadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 				strHeader.CompareNoCase( _T("X-Name") ) == 0 ||
 				strHeader.CompareNoCase( _T("X-UserName") ) == 0 )
 	{
-		m_sNick = URLDecode( strValue );
+		m_sRemoteNick = URLDecode( strValue );
 	}
 	else if ( strHeader.CompareNoCase( _T("X-Features") ) == 0 )
 	{

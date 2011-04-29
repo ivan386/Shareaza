@@ -1,7 +1,7 @@
 //
 // CtrlUploads.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1020,10 +1020,10 @@ void CUploadsCtrl::PaintFile(CDC& dc, const CRect& rcRow, CUploadQueue* /*pQueue
 		case UPLOAD_COLUMN_USER:
 			if ( pTransfer == NULL )
 				strText.Empty();
-			else if ( pTransfer->m_sNick.IsEmpty() )
+			else if ( pTransfer->m_sRemoteNick.IsEmpty() )
 				strText = pTransfer->m_sAddress;
 			else
-				strText = pTransfer->m_sNick + _T(" (") + pTransfer->m_sAddress + _T(")");
+				strText = pTransfer->m_sRemoteNick + _T(" (") + pTransfer->m_sAddress + _T(")");
 			break;
 			
 		case UPLOAD_COLUMN_SIZE:

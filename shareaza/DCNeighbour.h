@@ -63,10 +63,47 @@ protected:
 
 	// Got DC++ command
 	BOOL			OnPacket(CDCPacket* pPacket);
-	// Got $Lock command
-	BOOL			OnLock(LPSTR szLock);
-	// Got $Hello command
-	BOOL			OnHello();
+	// Got ping
+	BOOL			OnPing();
+	// Got chat message
+	BOOL			OnChat(CDCPacket* pPacket);
+	// Got private chat message
+	BOOL			OnChatPrivate(CDCPacket* pPacket);
 	// Got search request
 	BOOL			OnQuery(CDCPacket* pPacket);
+	// Got $Lock command
+	BOOL			OnLock(LPSTR szParams);
+	// Got $Supports command
+	BOOL			OnSupports(LPSTR szParams);
+	// Got $Hello command
+	BOOL			OnHello(LPSTR szNick);
+	// Got $HubName command
+	BOOL			OnHubName(CDCPacket* pPacket);
+	// Got $HubTopic command
+	BOOL			OnHubTopic(CDCPacket* pPacket);
+	// Got $OpList command
+	BOOL			OnOpList(LPSTR szParams);
+	// Got $MyINFO command
+	BOOL			OnUserInfo(LPSTR szInfo);
+	// Got $Quit command
+	BOOL			OnQuit(LPSTR szNick);
+	// Got $UserIP command
+	BOOL			OnUserIP(LPSTR szIP);
+	// Got $ConnectToMe command
+	BOOL			OnConnectToMe(LPSTR szParams);
+	// Got $ForceMove command
+	BOOL			OnForceMove(LPSTR szParams);
+	// Got $RevConnectToMe command
+	BOOL			OnRevConnectToMe(LPSTR szParams);
+	// Got $ZOn command
+	BOOL			OnZOn();
+	// Got $ValidateDenide command
+	BOOL			OnValidateDenide();
+	// Got $GetPass command
+	BOOL			OnGetPass();
+	// Got unknown message
+	BOOL			OnUnknown(CDCPacket* pPacket);
+
+	// Send $MyINFO command
+	BOOL			SendUserInfo();
 };

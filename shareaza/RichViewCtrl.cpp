@@ -1,7 +1,7 @@
 //
 // RichViewCtrl.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -617,7 +617,7 @@ void CRichViewCtrl::Layout(CDC* pDC, CRect* pRect)
 
 		for ( int nChar = 0 ; nChar <= pElement->m_sText.GetLength() ; nChar++, pszText++ )
 		{
-			if ( *pszText != ' ' && *pszText != '\t' && *pszText != 0 ) continue;
+			if ( *pszText > ' ' ) continue;
 
 			if ( nChar > nWordStart || *pszText == 0 )
 			{

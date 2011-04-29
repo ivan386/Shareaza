@@ -1,7 +1,7 @@
 //
 // UploadTransfer.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -42,7 +42,6 @@ public:
 public:
 	CUploadQueue*	m_pQueue;		// Queue reference
 	CUploadFile*	m_pBaseFile;	// Reference file
-	CString			m_sNick;		// User Nick
 	DWORD			m_nUserRating;	// Has the downloader uploaded anything?
 
 	QWORD			m_nFileBase;	// Base offset in requested file

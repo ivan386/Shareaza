@@ -1,7 +1,7 @@
 //
 // WndDownloads.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -590,10 +590,16 @@ void CDownloadsWnd::Prepare()
 					m_bSelIdleSource = TRUE;
 				else
 					m_bSelActiveSource = TRUE;
-				if ( pSource->m_bClientExtended || pSource->m_nProtocol == PROTOCOL_ED2K  )
+				if ( pSource->m_bClientExtended || pSource->m_nProtocol == PROTOCOL_ED2K )
 				{
 					m_bSelBrowse = TRUE;
 					m_bSelChat = TRUE;
+				}
+				else if ( pSource->m_nProtocol == PROTOCOL_DC )
+				{
+					// TODO: Implement DC++ private chat
+					// m_bSelChat = TRUE;
+					m_bSelBrowse = TRUE;
 				}
 				if ( ! pSource->m_bPushOnly ) m_bSelSourceAcceptConnections = TRUE;
 			}

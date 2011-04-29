@@ -1,7 +1,7 @@
 //
 // Transfer.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -26,12 +26,14 @@
 class CBuffer;
 
 
-class CTransfer : public CConnection
+class CTransfer abstract : public CConnection
 {
 public:
 	CTransfer(PROTOCOLID nProtocol = PROTOCOL_ANY);
 	virtual ~CTransfer();
 
+	SOCKADDR_IN			m_pServer;			// Reference server (ED2K, DC++)
+	CString				m_sRemoteNick;		// Remote user nick
 	DWORD				m_nRunCookie;
 	CList< CString >	m_pSourcesSent;
 	CArray< CString >	m_pHeaderName;

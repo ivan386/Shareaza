@@ -254,6 +254,18 @@ void CChatSession::Close(UINT nError)
 	// Delete all users
 	DeleteUser( NULL );
 
+	if ( m_nProtocol == PROTOCOL_DC )
+	{
+		CSingleLock pLock( &Network.m_pSection );
+		if ( pLock.Lock( 250 ) )
+		{
+			if ( CNeighbour* pNeighbour = Neighbours.Get( m_pHost.sin_addr ) )
+			{
+				pNeighbour->Close();
+			}
+		}
+	}
+
 	CConnection::Close( nError );
 
 	if ( m_pWndPrivate == NULL )
@@ -311,7 +323,7 @@ void CChatSession::OnDropped()
 		StatusMessage( cmtError, IDS_CHAT_CANT_CONNECT, (LPCTSTR)HostToString( &m_pHost ) );
 		if ( m_tPushed == 0 && SendPush( TRUE ) ) return;
 	}
-	else
+	else if ( m_nState != cssNull )
 	{
 		StatusMessage( cmtError, IDS_CHAT_DROPPED, (LPCTSTR)HostToString( &m_pHost ) );
 	}
@@ -577,19 +589,30 @@ BOOL CChatSession::Send(CDCPacket* pPacket)
 	CSingleLock pLock( &Network.m_pSection );
 	if ( pLock.Lock( 250 ) )
 	{
-		if ( CNeighbour* pClient = Neighbours.Get( m_pHost.sin_addr ) )
+		if ( CNeighbour* pNeighbour = Neighbours.Get( m_pHost.sin_addr ) )
 		{
 			MakeActive( FALSE );
-
-			return pClient->Send( pPacket );
+			return pPacket ? pNeighbour->Send( pPacket ) : TRUE;
+		}
+		else if ( m_nState == cssConnecting )
+		{
+			// Still connecting...
+			return TRUE;
+		}
+		else if ( Neighbours.ConnectTo( m_pHost.sin_addr, ntohs( m_pHost.sin_port ), PROTOCOL_DC ) )
+		{
+			m_nState = cssConnecting;
+			m_tConnected = GetTickCount();
+			StatusMessage( cmtStatus, IDS_CHAT_CONNECTING_TO, (LPCTSTR)HostToString( &m_pHost ) );
 		}
 		else
 		{
-			StatusMessage( cmtError, IDS_CHAT_CANT_CONNECT, (LPCTSTR)HostToString( &m_pHost ) );
 			m_nState = cssNull;
+			StatusMessage( cmtError, IDS_CHAT_CANT_CONNECT, (LPCTSTR)HostToString( &m_pHost ) );
 			return TRUE;
 		}
 	}
+
 	return FALSE;
 }
 
@@ -597,11 +620,22 @@ BOOL CChatSession::OnChatMessage(CDCPacket* pPacket)
 {
 	// Note: The message packet has already been validated by the DCClient or DCNeighbour.
 
-	CString sMsg( UTF8Decode( (LPCSTR)&pPacket->m_pBuffer[ 1 ], pPacket->m_nLength - 2 ) );
-	
-	int nPos = sMsg.Find( _T('>') );
-
-	OnChatMessage( sMsg.Left( nPos ), sMsg.Mid( nPos + 1 ).TrimLeft() );
+	if ( *pPacket->m_pBuffer == '<' )
+	{
+		CString sMsg( UTF8Decode( (LPCSTR)&pPacket->m_pBuffer[ 1 ], pPacket->m_nLength - 1 - 1 ) );
+		int nPos = sMsg.Find( _T('>') );
+		OnChatMessage( sMsg.Left( nPos ), sMsg.Mid( nPos + 2 ) );
+	}
+	else if ( pPacket->Compare( _P("$HubTopic ") ) )
+	{
+		CString sTopic( UTF8Decode( (LPCSTR)&pPacket->m_pBuffer[ 10 ], pPacket->m_nLength - 10 - 1 ) );
+		NotifyMessage( cmtCaption, m_sNick, sTopic );
+	}
+	else if ( pPacket->Compare( _P("$HubName ") ) )
+	{
+		CString sTopic( UTF8Decode( (LPCSTR)&pPacket->m_pBuffer[ 9 ], pPacket->m_nLength - 9 - 1 ) );
+		NotifyMessage( cmtCaption, m_sNick, sTopic );
+	}
 
 	return TRUE;
 }
@@ -1465,14 +1499,11 @@ void CChatSession::OnCloseWindow()
 {
 	CQuickLock oLock( ChatCore.m_pSection );
 
+	ChatCore.Remove( this );
+
 	ClearMessages();
 
 	m_pWndPrivate = NULL;
 
 	Close();
-
-	if ( m_nProtocol == PROTOCOL_ED2K || m_nProtocol == PROTOCOL_DC )
-	{
-		delete this;
-	}
 }

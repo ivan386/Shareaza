@@ -51,7 +51,7 @@ public:
 	// Initiate connection to hub
 	BOOL 		Connect(const IN_ADDR* pHubAddress, WORD nHubPort, const CString& sRemoteNick, BOOL& bSuccess);
 	// Initiate connection to client
-	BOOL		ConnectTo(const IN_ADDR* pAddress, WORD nPort, const CString& sNick, const CString& sRemoteNick);
+	BOOL		ConnectTo(const IN_ADDR* pAddress, WORD nPort, CDCNeighbour* pHub, const CString& sRemoteNick);
 	// Accept incoming TCP connection
 	BOOL		OnAccept(CConnection* pConnection);
 	// Merge same connections into one

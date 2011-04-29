@@ -36,7 +36,8 @@ enum MessageType
 	cmtStatus,	// Regular status message (gray)
 	cmtError,	// Error message (red)
 	cmtInfo,	// Informational message (black)
-	cmtProfile	// Profile received
+	cmtProfile,	// Profile received
+	cmtCaption	// Set chat window caption
 };
 
 enum UserType
@@ -70,7 +71,7 @@ public:
 		: m_bType( bType ), m_sNick( sNick ), m_sDescription( sDescription ) {}
 
 	CChatUser(const CChatUser& pUser)
-		: m_bType( pUser.m_bType ), m_sNick( pUser.m_sNick ), m_sDescription( pUser.m_sDescription ) {}
+		: m_bType( pUser.m_bType ), m_sNick( pUser.m_sNick ), m_sDescription( pUser.m_sDescription ), m_sUserAgent( pUser.m_sUserAgent ) {}
 
 	typedef CMap< CString, const CString&, CChatUser*, CChatUser* > Map;
 	typedef CList< CChatUser > List;
@@ -78,6 +79,7 @@ public:
 	UserType	m_bType;
 	CString		m_sNick;
 	CString		m_sDescription;
+	CString		m_sUserAgent;
 };
 
 
@@ -101,6 +103,7 @@ private:
 	int					m_nUsersSize;	// Width of chat users panel (pixels)
 	CArray< CString >	m_pHistory;
 	int					m_nHistory;
+	CString				m_sCaption;
 
 	void MoveHistory(int nDelta);
 	BOOL IsInRange(LPCTSTR pszToken);

@@ -1,7 +1,7 @@
 //
 // DownloadTransfer.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -30,7 +30,7 @@ class CDownloadSource;
 
 typedef std::pair< QWORD, QWORD >	blockPair;
 
-class CDownloadTransfer : public CTransfer
+class CDownloadTransfer abstract : public CTransfer
 {
 // Construction
 public:

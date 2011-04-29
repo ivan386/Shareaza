@@ -67,6 +67,15 @@ void CDownloadTransferDC::AttachTo(CConnection* pConnection)
 
 	m_pClient = static_cast< CDCClient* >( pConnection );
 
+	m_sUserAgent	= m_pClient->GetUserAgent();
+	m_pHost			= m_pClient->m_pHost;
+	m_sAddress		= m_pClient->m_sAddress;
+	UpdateCountry();
+
+	m_pSource->m_sServer		= m_sUserAgent;
+	m_pSource->m_sCountry		= m_sCountry;
+	m_pSource->m_sCountryName	= m_sCountryName;
+
 	m_pClient->AttachDownload( this );
 }
 
@@ -143,7 +152,7 @@ BOOL CDownloadTransferDC::OnConnected()
 	ASSERT( m_pClient != NULL );
 	ASSERT( m_pSource != NULL );
 
-	m_sUserAgent	= m_pClient->m_sUserAgent;
+	m_sUserAgent	= m_pClient->GetUserAgent();
 	m_pHost			= m_pClient->m_pHost;
 	m_sAddress		= m_pClient->m_sAddress;
 	UpdateCountry();

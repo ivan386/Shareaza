@@ -1,7 +1,7 @@
 //
 // UploadTransferED2K.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -65,7 +65,7 @@ CUploadTransferED2K::CUploadTransferED2K(CEDClient* pClient)
 
 	m_sUserAgent		= pClient->m_sUserAgent;
 	m_bClientExtended	= pClient->m_bClientExtended;
-	m_sNick				= pClient->m_sNick;
+	m_sRemoteNick		= pClient->m_sNick;
 	m_nState			= upsReady;
 
 	m_pClient->m_mOutput.pLimit = &m_nBandwidth;

@@ -1,7 +1,7 @@
 //
 // DCClient.h
 //
-// Copyright (c) Shareaza Development Team, 2010.
+// Copyright (c) Shareaza Development Team, 2010-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -23,6 +23,7 @@
 
 #include "Transfer.h"
 
+class CDCNeighbour;
 class CDownloadTransferDC;
 class CUploadTransferDC;
 
@@ -33,7 +34,7 @@ class CUploadTransferDC;
 class CDCClient : public CTransfer
 {
 public:
-	CDCClient(LPCTSTR szNick = NULL);
+	CDCClient(const IN_ADDR* pHubAddress = NULL, WORD nHubPort = 0, LPCTSTR szNick = NULL, LPCTSTR szRemoteNick = NULL);
 	virtual ~CDCClient();
 
 	Hashes::Guid	m_oGUID;				// GUID to identify callback connections
@@ -43,10 +44,10 @@ public:
 	virtual void	Close(UINT nError = 0);
 	virtual BOOL	OnRun();
 
+	// Detect remote user agent
+	CString			GetUserAgent();
 	// Re-connect
 	BOOL			Connect();
-	// Connect to user on specified hub (hub will be connected forcebly if not yet)
-	BOOL			Connect(const IN_ADDR* pHubAddress, WORD nHubPort, LPCTSTR szNick);
 	// Attach download transfer
 	void			AttachDownload(CDownloadTransferDC* pTransfer);
 	// When download transfer closed
@@ -74,7 +75,6 @@ public:
 
 protected:
 	CString			m_sNick;				// User nick
-	CString			m_sRemoteNick;			// Remote user nick
 	CDownloadTransferDC*	m_pDownloadTransfer;	// Download stream
 	CUploadTransferDC*		m_pUploadTransfer;		// Upload stream
 	std::string		m_strKey;				// Key calculated for remote client lock

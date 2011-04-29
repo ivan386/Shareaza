@@ -1181,8 +1181,8 @@ void CRemote::PageUploads()
 				if ( pTransfer != NULL )
 				{
 					Add( _T("file_address"), pTransfer->m_sAddress );
-					Add( _T("file_nick"), pTransfer->m_sNick );
-					Add( _T("file_user"), pTransfer->m_sAddress + _T(" - ") + pTransfer->m_sNick );
+					Add( _T("file_nick"), pTransfer->m_sRemoteNick );
+					Add( _T("file_user"), pTransfer->m_sAddress + _T(" - ") + pTransfer->m_sRemoteNick );
 					Add( _T("file_agent"), pTransfer->m_sUserAgent );
 				}
 				

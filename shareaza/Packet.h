@@ -79,6 +79,12 @@ public:
 	void Shorten(DWORD nLength);
 	// Remove data from packet start
 	void Remove(DWORD nLength);
+	// Compare (case-sensetive) content of packet buffer with string at specified offset
+	BOOL Compare(const void* szString, DWORD nLength, DWORD nOffset = 0) const;
+	// Find character inside packet buffer. Returns character offset or -1 if not found.
+	int Find(BYTE c, DWORD nOffset = 0) const;
+	// Get character at specified (range-safe) offset from packet buffer
+	BYTE GetAt(DWORD nOffset) const;
 
 	virtual CString ReadString(UINT cp, DWORD nMaximum = 0xFFFFFFFF);
 
