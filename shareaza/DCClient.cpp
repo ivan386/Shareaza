@@ -297,6 +297,8 @@ BOOL CDCClient::OnConnected()
 
 void CDCClient::OnDropped()
 {
+	BOOL bTransfer = ( m_pDownloadTransfer || m_pUploadTransfer );
+
 	if ( m_pDownloadTransfer )
 	{
 		m_pDownloadTransfer->OnDropped();
@@ -307,7 +309,18 @@ void CDCClient::OnDropped()
 		m_pUploadTransfer->OnDropped();
 	}
 
-	Close();
+	if ( bTransfer )
+	{
+		Close();
+	}
+	else if ( m_nState == nrsConnecting )
+	{
+		Close( IDS_CONNECTION_REFUSED );
+	}
+	else
+	{
+		Close( IDS_CONNECTION_DROPPED );
+	}
 }
 
 BOOL CDCClient::OnRun()
