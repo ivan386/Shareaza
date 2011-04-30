@@ -460,7 +460,10 @@ BOOL CDCNeighbour::OnChatPrivate(CDCPacket* pPacket)
 BOOL CDCNeighbour::OnQuery(CDCPacket* pPacket)
 {
 	// Search request
+	// Active user
 	// $Search SenderIP:SenderPort (F|T)?(F|T)?Size?Type?String|
+	// Passive user
+	// $Search Hub:Nick (F|T)?(F|T)?Size?Type?String|
 
 	CQuerySearchPtr pSearch = CQuerySearch::FromPacket( pPacket, NULL, TRUE );
 	if ( ! pSearch  || pSearch->m_bDropMe )

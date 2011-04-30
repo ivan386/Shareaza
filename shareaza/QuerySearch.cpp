@@ -626,7 +626,10 @@ BOOL CQuerySearch::WriteHashesToEDPacket(CEDPacket* pPacket, BOOL bUDP) const
 
 CDCPacket* CQuerySearch::ToDCPacket() const
 {
-	// $Search Ip:Port (F|T)?(F|T)?Size?Type?String|
+	// Active user
+	// $Search SenderIP:SenderPort (F|T)?(F|T)?Size?Type?String|
+	// Passive user
+	// $Search Hub:Nick (F|T)?(F|T)?Size?Type?String|
 
 	int nType = 1;
 	if ( m_oTiger )
@@ -660,10 +663,17 @@ CDCPacket* CQuerySearch::ToDCPacket() const
 	strSearch.Replace( _T(' '), _T('$') );
 	strSearch.Replace( _T('|'), _T('$') );
 
+	CString strAddress;
+	if ( Network.IsFirewalled( CHECK_IP ) )
+		// Passive search
+		strAddress = _T("Hub:") + m_sMyNick;
+	else
+		// Active search
+		strAddress = HostToString( &Network.m_pHost );
+
 	CString strQuery;
-	strQuery.Format( _T("$Search %s:%u %c?%c?%I64u?%d?%s|"),
-		(LPCTSTR)CString( inet_ntoa( Network.m_pHost.sin_addr ) ),
-		ntohs( Network.m_pHost.sin_port ),
+	strQuery.Format( _T("$Search %s %c?%c?%I64u?%d?%s|"),
+		(LPCTSTR)strAddress,
 		( bSizeRestriced ? _T('T') : _T('F') ),
 		( bIsMaxSize ? _T('T') : _T('F') ),
 		( bSizeRestriced ? ( bIsMaxSize ? m_nMaxSize : m_nMinSize ) : 0ull ),
