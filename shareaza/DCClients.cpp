@@ -179,26 +179,6 @@ CDCNeighbour* CDCClients::GetHub(const CString& sNick) const
 	return NULL;
 }
 
-CDCNeighbour* CDCClients::GetHub(const IN_ADDR* pHubAddress, WORD nHubPort) const
-{
-	ASSUME_LOCK( Network.m_pSection );
-
-	for ( POSITION pos = Neighbours.GetIterator(); pos; )
-	{
-		CNeighbour* pNeighbour = Neighbours.GetNext( pos );
-
-		if ( pNeighbour->m_nProtocol == PROTOCOL_DC )
-		{
-			if ( pNeighbour->m_pHost.sin_addr.s_addr == pHubAddress->s_addr &&
-				 pNeighbour->m_pHost.sin_port == htons( nHubPort ) )
-			{
-				return static_cast< CDCNeighbour*>( pNeighbour );
-			}
-		}
-	}
-	return NULL;
-}
-
 void CDCClients::CreateGUID(const CString& sNick, Hashes::Guid& oGUID)
 {
 	CMD5 pMD5;

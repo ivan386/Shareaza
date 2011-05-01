@@ -91,14 +91,24 @@ CString CDCClient::GetUserAgent()
 
 	CSingleLock oLock( &Network.m_pSection, TRUE );
 
+	CDCNeighbour* pDCNeighbour = NULL;
+
 	// Get existing hub by address
-	CDCNeighbour* pNeighbour = DCClients.GetHub( &m_pServer.sin_addr, ntohs( m_pServer.sin_port ) );
-	if ( ! pNeighbour )
-		// Get existing hub by user name
-		pNeighbour = DCClients.GetHub( m_sRemoteNick );
-	if ( pNeighbour )
+	if ( CNeighbour* pNeighbour = Neighbours.Get( m_pServer.sin_addr ) )
 	{
-		if ( CChatUser* pUser = pNeighbour->GetUser( m_sRemoteNick ) )
+		if ( pNeighbour->m_nProtocol == PROTOCOL_DC )
+		{
+			pDCNeighbour = static_cast< CDCNeighbour* >( pNeighbour );
+		}
+	}
+
+	// Get existing hub by user name
+	if ( ! pDCNeighbour )
+		pDCNeighbour = DCClients.GetHub( m_sRemoteNick );
+
+	if ( pDCNeighbour )
+	{
+		if ( CChatUser* pUser = pDCNeighbour->GetUser( m_sRemoteNick ) )
 		{
 			m_sUserAgent = pUser->m_sUserAgent;
 			m_bClientExtended = VendorCache.IsExtended( m_sUserAgent );
@@ -171,31 +181,46 @@ BOOL CDCClient::Connect()
 	if ( ! oLock.Lock( 250 ) )
 		return FALSE;
 
+	CDCNeighbour* pDCNeighbour = NULL;
+
 	// Get existing hub by address
-	CDCNeighbour* pNeighbour = DCClients.GetHub( &m_pServer.sin_addr, ntohs( m_pServer.sin_port ) );
-	if ( ! pNeighbour )
-		// Get existing hub by user name
-		pNeighbour = DCClients.GetHub( m_sRemoteNick );
-	if ( pNeighbour )
+	if ( CNeighbour* pNeighbour = Neighbours.Get( m_pServer.sin_addr ) )
 	{
-		if ( CChatUser* pUser = pNeighbour->GetUser( m_sRemoteNick ) )
+		if ( pNeighbour->m_nProtocol == PROTOCOL_DC )
+		{
+			pDCNeighbour = static_cast< CDCNeighbour* >( pNeighbour );
+		}
+		else
+		{
+			// Multi-protocol hub?
+			return FALSE;
+		}
+	}
+
+	// Get existing hub by user name
+	if ( ! pDCNeighbour )
+		pDCNeighbour = DCClients.GetHub( m_sRemoteNick );
+
+	if ( pDCNeighbour )
+	{
+		if ( CChatUser* pUser = pDCNeighbour->GetUser( m_sRemoteNick ) )
 		{
 			m_sUserAgent = pUser->m_sUserAgent;
 			m_bClientExtended = VendorCache.IsExtended( m_sUserAgent );
 		}
-		return pNeighbour->ConnectToMe( m_sRemoteNick );
+		return pDCNeighbour->ConnectToMe( m_sRemoteNick );
 	}
 
 	// Connect to new hub
-	if ( CDCNeighbour* pNeighbour = new CDCNeighbour() )
+	if ( CDCNeighbour* pDCNeighbour = new CDCNeighbour() )
 	{
-		if ( pNeighbour->ConnectTo( &m_pServer.sin_addr, ntohs( m_pServer.sin_port ), FALSE ) )
+		if ( pDCNeighbour->ConnectTo( &m_pServer.sin_addr, ntohs( m_pServer.sin_port ), FALSE ) )
 		{
 			return FALSE;
 		}
 
 		// Can't connect
-		pNeighbour->Close();
+		pDCNeighbour->Close();
 	}
 
 	return FALSE;

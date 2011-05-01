@@ -46,8 +46,6 @@ public:
 	CDCClient*	GetClient(const CString& sNick) const;
 	// Find hub by user nick
 	CDCNeighbour* GetHub(const CString& sNick) const;
-	// Find hub by address
-	CDCNeighbour* GetHub(const IN_ADDR* pHubAddress, WORD nHubPort) const;
 	// Initiate connection to hub
 	BOOL 		Connect(const IN_ADDR* pHubAddress, WORD nHubPort, const CString& sRemoteNick, BOOL& bSuccess);
 	// Initiate connection to client
