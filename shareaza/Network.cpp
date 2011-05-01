@@ -174,6 +174,8 @@ BOOL CNetwork::IsSelfIP(const IN_ADDR& nAddress) const
 	{
 		return TRUE;
 	}
+
+	CQuickLock oHALock( m_pHASection );
 	return ( m_pHostAddresses.Find( nAddress.s_addr ) != NULL );
 }
 
@@ -412,14 +414,20 @@ BOOL CNetwork::AcquireLocalAddress(const IN_ADDR& pAddress)
 		 pAddress.s_addr == INADDR_NONE )
 		return FALSE;
 
-	if ( IsFirewalledAddress( &pAddress ) )
-		return FALSE;
+	CQuickLock oHALock( m_pHASection );
 
 	// Add new address to address list
 	if ( ! m_pHostAddresses.Find( pAddress.s_addr ) )
 		m_pHostAddresses.AddTail( pAddress.s_addr );
 
-	m_pHost.sin_addr = pAddress;
+	if ( IsFirewalledAddress( &pAddress ) )
+		return FALSE;
+
+	// Allow real IP only
+	if ( m_pHost.sin_addr.s_addr != pAddress.s_addr )
+	{
+		m_pHost.sin_addr.s_addr = pAddress.s_addr;
+	}
 
 	return TRUE;
 }
@@ -436,7 +444,7 @@ void CNetwork::CreateID(Hashes::Guid& oID)
 //////////////////////////////////////////////////////////////////////
 // CNetwork name resolution
 
-BOOL CNetwork::Resolve(LPCTSTR pszHost, int nPort, SOCKADDR_IN* pHost, BOOL bNames) const
+BOOL CNetwork::Resolve(LPCTSTR pszHost, int nPort, SOCKADDR_IN* pHost, BOOL bNames)
 {
 	ZeroMemory( pHost, sizeof(*pHost) );
 	pHost->sin_family	= PF_INET;
@@ -667,9 +675,6 @@ bool CNetwork::PreRun()
 	// Act like server application
 	SetThreadExecutionState( ES_SYSTEM_REQUIRED | ES_CONTINUOUS );
 
-	// Map ports using NAT UPnP and Control Point UPnP methods
-	MapPorts();
-
 	// Make sure WinINet is connected (IE is not in offline mode)
 	if ( Settings.Connection.ForceConnectedState )
 	{
@@ -689,17 +694,23 @@ bool CNetwork::PreRun()
 
 	m_bConnected = true;
 
+	Resolve( Settings.Connection.InHost, Settings.Connection.InPort, &m_pHost );
+
+	// Get host name
 	gethostname( m_sHostName.GetBuffer( 255 ), 255 );
 	m_sHostName.ReleaseBuffer();
-	if( hostent* h = gethostbyname( m_sHostName ) )
+
+	// Get all IPs
+	if ( hostent* h = gethostbyname( m_sHostName ) )
 	{
 		for ( char** p = h->h_addr_list ; p && *p ; p++ )
 		{
-			m_pHostAddresses.AddTail( *(ULONG*)*p );
+			AcquireLocalAddress( *(IN_ADDR*)*p );
 		}
 	}
 
-	Resolve( Settings.Connection.InHost, Settings.Connection.InPort, &m_pHost );
+	// Map ports using NAT UPnP and Control Point UPnP methods and acquire external IP on success
+	MapPorts();
 
 	if ( /*IsFirewalled()*/Settings.Connection.FirewallState == CONNECTION_FIREWALLED ) // Temp disable
 		theApp.Message( MSG_INFO, IDS_NETWORK_FIREWALLED );
@@ -807,11 +818,12 @@ void CNetwork::PostRun()
 
 	ClearJobs();
 
-	m_pHostAddresses.RemoveAll();
-
 	DiscoveryServices.Stop();
 
 	DeletePorts();
+
+	CQuickLock oHALock( m_pHASection );
+	m_pHostAddresses.RemoveAll();
 
 	// Act like regular application
 	SetThreadExecutionState( ES_CONTINUOUS );

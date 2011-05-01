@@ -69,6 +69,7 @@ public:
 
 protected:
 	CStringA		m_sHostName;
+	mutable CCriticalSection	m_pHASection;
 	CList< ULONG >	m_pHostAddresses;
 	DWORD			m_nSequence;
 	CComPtr< IUPnPNAT >			m_pNat;			// NAT UPnP
@@ -201,7 +202,7 @@ public:
 	BOOL		AcquireLocalAddress(SOCKET hSocket);
 	BOOL		AcquireLocalAddress(LPCTSTR pszHeader);
 	BOOL		AcquireLocalAddress(const IN_ADDR& pAddress);
-	BOOL		Resolve(LPCTSTR pszHost, int nPort, SOCKADDR_IN* pHost, BOOL bNames = TRUE) const;
+	static BOOL	Resolve(LPCTSTR pszHost, int nPort, SOCKADDR_IN* pHost, BOOL bNames = TRUE);
 	BOOL		AsyncResolve(LPCTSTR pszAddress, WORD nPort, PROTOCOLID nProtocol, BYTE nCommand);
 	// Pending network name resolves queue size
 	UINT		GetResolveCount() const;
