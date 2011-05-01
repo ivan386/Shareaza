@@ -330,7 +330,7 @@ CMDIChildWnd* CMainWnd::MDIGetActive(BOOL* pbMaximized) const
 	static DWORD tLastUpdate = 0;
 	static CMDIChildWnd* pActive = NULL;
 	DWORD tNow = GetTickCount();
-	if ( ( pActive && ! ::IsWindow( pActive->GetSafeHwnd() ) ) || tNow > tLastUpdate + 250 || tNow < tLastUpdate )
+	if ( ! m_pWindows.Check( pActive ) || tNow > tLastUpdate + 250 || tNow < tLastUpdate )
 	{
 		tLastUpdate = tNow;
 		pActive = CMDIFrameWnd::MDIGetActive( pbMaximized );
