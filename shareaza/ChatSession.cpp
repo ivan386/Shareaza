@@ -69,6 +69,8 @@ CChatSession::CChatSession(PROTOCOLID nProtocol, CPrivateChatWnd* pFrame)
 
 CChatSession::~CChatSession()
 {
+	CQuickLock pLock( ChatCore.m_pSection );
+
 	ASSERT( ! IsValid() );
 
 	ClearMessages();
