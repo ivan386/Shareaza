@@ -100,7 +100,7 @@ BOOL CNetwork::Init()
 			break;
 		if ( i == 2 )
 			return FALSE;
-		WSACleanup();
+		Cleanup();
 	}
 
 	// Setup Windows Firewall for Shareaza itself and for UPnP service
@@ -148,7 +148,7 @@ void CNetwork::Clear()
 	QueryRoute.Free();
 	NodeRoute.Free();
 
-	WSACleanup();
+	Cleanup();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -1482,6 +1482,17 @@ HINTERNET CNetwork::InternetOpenUrl(HINTERNET hInternet, LPCWSTR lpszUrl, LPCWST
 	__except( EXCEPTION_EXECUTE_HANDLER )
 	{
 		return NULL;
+	}
+}
+
+void CNetwork::Cleanup()
+{
+	__try	// Fix against stupid firewalls like (iS3 Anti-Spyware or Norman Virus Control)
+	{
+		WSACleanup();
+	}
+	__except( EXCEPTION_EXECUTE_HANDLER )
+	{
 	}
 }
 
