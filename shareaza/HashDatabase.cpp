@@ -1,7 +1,7 @@
 //
 // HashDatabase.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -37,12 +37,12 @@ CHashDatabase LibraryHashDB;
 // CHashDatabase construction
 
 CHashDatabase::CHashDatabase()
+	: m_bOpen	( FALSE )
+	, m_nOffset	( 0 )
+	, m_pIndex	( NULL )
+	, m_nIndex	( 0 )
+	, m_nBuffer	( 0 )
 {
-	m_bOpen		= FALSE;
-	m_nOffset	= 0;
-	m_pIndex	= NULL;
-	m_nIndex	= 0;
-	m_nBuffer	= 0;
 }
 
 CHashDatabase::~CHashDatabase()
@@ -63,60 +63,76 @@ BOOL CHashDatabase::Create()
 
 	if ( m_pFile.Open( m_sPath, CFile::modeReadWrite ) )
 	{
-		CHAR szID[8];
-		m_pFile.Read( szID, 8 );
-
-		if ( memcmp( szID, "HFDB1000", 8 ) && memcmp( szID, "HFDB1001", 8 ) )
+		try
 		{
-			m_pFile.Close();
-			return FALSE;
-		}
-
-		m_pFile.Read( &m_nOffset, 4 );
-		m_pFile.Read( &m_nIndex, 4 );
-		m_pFile.Seek( m_nOffset, 0 );
-
-		for ( m_nBuffer = m_nIndex ; m_nBuffer & 63 ; m_nBuffer++ );
-		m_pIndex = new HASHDB_INDEX[ m_nBuffer ];
-
-		if ( memcmp( szID, "HFDB1001", 8 ) == 0 )
-		{
-			m_pFile.Read( m_pIndex, sizeof(HASHDB_INDEX) * m_nIndex );
-		}
-		else if ( memcmp( szID, "HFDB1000", 8 ) == 0 )
-		{
-			HASHDB_INDEX_1000 pIndex1;
-
-			for ( DWORD nIndex = 0 ; nIndex < m_nIndex ; nIndex++ )
+			CHAR szID[8];
+			m_pFile.Read( szID, 8 );
+			if ( memcmp( szID, "HFDB1000", 8 ) == 0 || memcmp( szID, "HFDB1001", 8 ) == 0 )
 			{
-				m_pFile.Read( &pIndex1, sizeof(pIndex1) );
-				m_pIndex[ nIndex ].nIndex	= pIndex1.nIndex;
-				m_pIndex[ nIndex ].nType	= HASH_TIGERTREE;
-				m_pIndex[ nIndex ].nOffset	= pIndex1.nOffset;
-				m_pIndex[ nIndex ].nLength	= pIndex1.nLength;
+				m_pFile.Read( &m_nOffset, 4 );
+				m_pFile.Read( &m_nIndex, 4 );
+				m_pFile.Seek( m_nOffset, 0 );
+
+				for ( m_nBuffer = m_nIndex ; m_nBuffer & 63 ; m_nBuffer++ );
+				m_pIndex = new HASHDB_INDEX[ m_nBuffer ];
+
+				if ( memcmp( szID, "HFDB1001", 8 ) == 0 )
+				{
+					m_pFile.Read( m_pIndex, sizeof(HASHDB_INDEX) * m_nIndex );
+				}
+				else
+				{
+					HASHDB_INDEX_1000 pIndex1;
+
+					for ( DWORD nIndex = 0 ; nIndex < m_nIndex ; nIndex++ )
+					{
+						m_pFile.Read( &pIndex1, sizeof(pIndex1) );
+						m_pIndex[ nIndex ].nIndex	= pIndex1.nIndex;
+						m_pIndex[ nIndex ].nType	= HASH_TIGERTREE;
+						m_pIndex[ nIndex ].nOffset	= pIndex1.nOffset;
+						m_pIndex[ nIndex ].nLength	= pIndex1.nLength;
+					}
+				}
+				m_bOpen = TRUE;
+				return TRUE;
 			}
+
+			// Wrong Magic
+			m_pFile.Close();
 		}
-		else
+		catch ( CException* pException )
 		{
-			ASSERT( FALSE );
+			m_pFile.Abort();
+			pException->Delete();
+			theApp.Message( MSG_ERROR, _T("Hash Database load error: %s"), m_sPath );
 		}
 	}
-	else
+
+	Close();
+
+	if ( m_pFile.Open( m_sPath, CFile::modeReadWrite | CFile::modeCreate ) )
 	{
-		if ( ! m_pFile.Open( m_sPath, CFile::modeReadWrite | CFile::modeCreate ) )
+		try
 		{
-			return FALSE;
-		}
+			m_nOffset = 16;
+			m_pFile.Write( "HFDB1001", 8 );
+			m_pFile.Write( &m_nOffset, 4 );
+			m_pFile.Write( &m_nIndex, 4 );
+			m_pFile.Flush();
 
-		m_nOffset = 16;
-		m_pFile.Write( "HFDB1001", 8 );
-		m_pFile.Write( &m_nOffset, 4 );
-		m_pFile.Write( &m_nIndex, 4 );
+			m_bOpen = TRUE;
+
+			return TRUE;
+		}
+		catch ( CException* pException )
+		{
+			m_pFile.Abort();
+			pException->Delete();
+		}
 	}
 
-	m_bOpen = TRUE;
-
-	return TRUE;
+	theApp.Message( MSG_ERROR, _T("Hash Database create error: %s"), m_sPath );
+	return FALSE;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -126,8 +142,20 @@ void CHashDatabase::Close()
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 
-	if ( m_pIndex != NULL ) delete [] m_pIndex;
-	if ( m_pFile.m_hFile != CFile::hFileNull ) m_pFile.Close();
+	delete [] m_pIndex;
+
+	if ( m_pFile.m_hFile != CFile::hFileNull )
+	{
+		try
+		{
+			m_pFile.Close();
+		}
+		catch ( CException* pException )
+		{
+			m_pFile.Abort();
+			pException->Delete();
+		}
+	}
 
 	m_bOpen		= FALSE;
 	m_nOffset	= 0;
@@ -247,13 +275,15 @@ BOOL CHashDatabase::Commit()
 		m_pFile.Seek( m_nOffset, 0 );
 		m_pFile.Write( m_pIndex, sizeof(HASHDB_INDEX) * m_nIndex );
 		m_pFile.Flush();
-		return TRUE;
 	}
 	catch ( CException* pException )
 	{
+		m_pFile.Abort();
 		pException->Delete();
 		return FALSE;
 	}
+
+	return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -297,11 +327,24 @@ BOOL CHashDatabase::GetTiger(DWORD nIndex, CTigerTree* pTree)
 	try
 	{
 		m_pFile.Seek( pIndex->nOffset, 0 );
+
 		CArchive ar( &m_pFile, CArchive::load, 32768 );	// 32 KB buffer
-		Serialize( ar, pTree );
+		try
+		{
+			Serialize( ar, pTree );
+			ar.Close();
+		}
+		catch ( CException* pException )
+		{
+			ar.Abort();
+			m_pFile.Abort();
+			pException->Delete();
+			return FALSE;
+		}
 	}
 	catch ( CException* pException )
 	{
+		m_pFile.Abort();
 		pException->Delete();
 		return FALSE;
 	}
@@ -357,13 +400,16 @@ BOOL CHashDatabase::StoreTiger(DWORD nIndex, CTigerTree* pTree)
 		catch ( CException* pException )
 		{
 			ar.Abort();
+			m_pFile.Abort();
 			pException->Delete();
 			return FALSE;
 		}
+
 		m_pFile.Flush();
 	}
 	catch ( CException* pException )
 	{
+		m_pFile.Abort();
 		pException->Delete();
 		return FALSE;
 	}
@@ -396,11 +442,24 @@ BOOL CHashDatabase::GetED2K(DWORD nIndex, CED2K* pSet)
 	try
 	{
 		m_pFile.Seek( pIndex->nOffset, 0 );
+
 		CArchive ar( &m_pFile, CArchive::load, 32768 );	// 32 KB buffer
-		Serialize( ar, pSet );
+		try
+		{
+			Serialize( ar, pSet );
+			ar.Close();
+		}
+		catch ( CException* pException )
+		{
+			ar.Abort();
+			m_pFile.Abort();
+			pException->Delete();
+			return FALSE;
+		}
 	}
 	catch ( CException* pException )
 	{
+		m_pFile.Abort();
 		pException->Delete();
 		return FALSE;
 	}
@@ -456,13 +515,16 @@ BOOL CHashDatabase::StoreED2K(DWORD nIndex, CED2K* pSet)
 		catch ( CException* pException )
 		{
 			ar.Abort();
+			m_pFile.Abort();
 			pException->Delete();
 			return FALSE;
 		}
+
 		m_pFile.Flush();
 	}
 	catch ( CException* pException )
 	{
+		m_pFile.Abort();
 		pException->Delete();
 		return FALSE;
 	}
