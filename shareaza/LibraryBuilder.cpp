@@ -413,7 +413,15 @@ void CLibraryBuilder::OnRun()
 				{
 					nAttempts = 0;
 					SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
-					ExtractMetadata( nIndex, sPath, hFile );
+
+					try
+					{
+						ExtractMetadata( nIndex, sPath, hFile );
+					}
+					catch ( CException* pException )
+					{
+						pException->Delete();
+					}
 
 					ExtractPluginMetadata( nIndex, sPath );
 
@@ -1115,7 +1123,15 @@ bool CLibraryBuilder::RefreshMetadata(const CString& sPath)
 	if ( hFile != INVALID_HANDLE_VALUE )
 	{
 		SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
-		bResult |= ExtractMetadata( nIndex, sPath, hFile );
+
+		try
+		{
+			bResult |= ExtractMetadata( nIndex, sPath, hFile );
+		}
+		catch ( CException* pException )
+		{
+			pException->Delete();
+		}
 
 		CloseHandle( hFile );
 	}
