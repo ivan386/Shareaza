@@ -1342,7 +1342,6 @@
     <None Include="Res\SmallStar.bmp" />
     <None Include="Res\SortAsc.bmp" />
     <None Include="Res\SortDesc.bmp" />
-    <None Include="Res\Splash.png" />
     <None Include="Res\Star.ico" />
     <None Include="Res\System.ico" />
     <None Include="Res\TaskBoxCaption.bmp" />
