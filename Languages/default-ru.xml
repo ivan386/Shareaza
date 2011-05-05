@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
 	<!-- Manifest -->
-	<manifest name="Русский" author="dAbserver" updatedBy="Rolandas Rudomanskis, ryo-oh-ki" description="Shareaza Russian Skin File" link="http://shareaza.sourceforge.net/" email="ryo-oh-ki@narod.ru" version="2.5.4.0" type="Language" language="ru" prompt="Щелкните здесь для смены языка на Русский." dir="ltr"/>
+	<manifest name="Русский" author="dAbserver" updatedBy="Rolandas Rudomanskis, ryo-oh-ki" description="Shareaza Russian Skin File" link="http://shareaza.sourceforge.net/" email="ryo-oh-ki@narod.ru" version="2.5.5.0" type="Language" language="ru" prompt="Щелкните здесь для смены языка на Русский." dir="ltr"/>
 	<!-- Toolbar Definitions -->
 	<toolbars>
 		<!-- MAIN WINDOW -->
@@ -184,6 +184,8 @@
 			<button id="ID_LIBRARY_TREE_PHYSICAL" text="Папки"/>
 			<button id="ID_LIBRARY_TREE_VIRTUAL" text="Органайзер"/>
 		</toolbar>
+		<toolbar name="CLibraryTree.Physical">
+		</toolbar>
 		<toolbar name="CLibraryTree.Virtual">
 			<button id="ID_LIBRARY_FOLDERS" text="Общий доступ..."/>
 		</toolbar>
@@ -208,6 +210,12 @@
 		<toolbar name="CLibraryHomeView.Virtual">
 			<button id="ID_LIBRARY_FOLDER_NEW" text="Создать альбом..."/>
 			<button id="ID_LIBRARY_ALBUM_DELETE" text="Удалить альбом"/>
+			<rightAlign/>
+			<separator/>
+			<control id="IDC_SEARCH_BOX" width="120"/>
+			<button id="ID_LIBRARY_SEARCH_QUICK" text="Найти"/>
+		</toolbar>
+		<toolbar name="CLibraryTileView.Physical">
 			<rightAlign/>
 			<separator/>
 			<control id="IDC_SEARCH_BOX" width="120"/>
@@ -270,6 +278,8 @@
 			<separator/>
 			<control id="IDC_SEARCH_BOX" width="120"/>
 			<button id="ID_LIBRARY_SEARCH_QUICK" text="Найти"/>
+		</toolbar>
+		<toolbar name="CLibraryCollectionView.Physical">
 		</toolbar>
 		<toolbar name="CLibraryCollectionView.Virtual">
 			<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Играть альбом"/>
@@ -1177,6 +1187,8 @@
 			<item id="ID_SHELL_MENU" text="Меню Windows"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDERS" text="Общий _доступ..."/>
+			<separator/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="_Создать .torrent файл"/>
 		</menu>
 		<menu name="CLibraryTree.Physical">
 			<item id="ID_LIBRARY_EXPLORE" text="_Проводник"/>
@@ -1187,6 +1199,8 @@
 			<item id="ID_LIBRARY_SCAN" text="С_канирование"/>
 			<item id="ID_LIBRARY_REBUILD" text="_Перестройка"/>
 			<item id="ID_LIBRARY_FOLDERS" text="Общий _доступ..."/>
+			<separator/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="_Создать .torrent файл"/>
 			<separator/>
 			<item id="ID_SHELL_MENU" text="Меню Windows"/>
 			<separator/>
@@ -2452,6 +2466,7 @@
 		<tip id="ID_LIBRARY_ENQUEUE" message="Добавить помеченный файл(ы) в Ваш список воспроизведения."/>
 		<tip id="ID_LIBRARY_EXPLORE" message="Открыть помеченную папку(и)."/>
 		<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Экспортировать помеченную папку альбома в файл коллекции..."/>
+		<tip id="ID_LIBRARY_FOLDER_DELETE" message="Удалить помеченную папку альбома."/>
 		<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Загрузить все файлы выбранной коллекции."/>
 		<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Добавить все файлы, находящиеся в помеченной папке(ах) альбома, в Ваш список воспроизведения."/>
 		<tip id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" message="Просмотр и правка свойств всех файлов, находящихся в помеченной папке(ах)..."/>
@@ -2861,6 +2876,7 @@
 		<string id="8335" value="Источники этого файла находятся за брандмауэром"/>
 		<string id="8336" value="Источники этого файла могут раздавать нестабильно"/>
 		<string id="8337" value="Недоверяемый"/>
+		<string id="8338" value="Свободно:"/>
 		<string id="13000" value="Уверены, что хотите удалить выбранные правила безопасности? Действие будет необратимое."/>
 		<string id="13001" value="Файлы, открытые для общего доступа"/>
 		<string id="16063" value="После 10 попыток переадресация порта при помощи UPnP, была неуспешна."/>
@@ -3215,6 +3231,9 @@
 		<string id="17041" value="Не могу послать сообщение, соединение пока не установлено."/>
 		<string id="17042" value="Вы ещё не заполнили своего профиля пользователя.  Вы должны его заполнить, прежде чем беседовать с другими пользователями.\n\nХотите ли заполнить свой профиль сейчас?"/>
 		<string id="17043" value="Предоставлен приоритет загрузки для хоста %s."/>
+		<string id="17044" value="Решите эту КАПЧУ пожалуйста:"/>
+		<string id="17045" value="Неверная КАПЧА."/>
+		<string id="17046" value="Верная КАПЧА."/>
 		<string id="17100" value="Gnutella: Связь партнер к партнеру"/>
 		<string id="17101" value="Gnutella: Связь ветвь к ведущему"/>
 		<string id="17102" value="Gnutella: Связь ведущий к ветви"/>
@@ -3246,6 +3265,7 @@
 		<string id="17128" value="eDonkey сервер"/>
 		<string id="17129" value="eDonkey (низкий ID)"/>
 		<string id="17130" value="eDonkey (высокий ID)"/>
+		<string id="17131" value="DC++ Хаб"/>
 		<string id="17216" value="Инициализация соединения с eDonkey сервером %s..."/>
 		<string id="17217" value="Соединение с eDonkey сервером %s установлено, посылаю подтверждение..."/>
 		<string id="17218" value="ED2K[%s] %s"/>
@@ -3329,6 +3349,7 @@
 		<string id="18512" value="Вы уверены что хотите отменить загрузку с сохранением неполных файлов?"/>
 		<string id="18513" value="Вы ввели неправильное значение eDonkey хеша.  Проверьте и попробуйте снова."/>
 		<string id="18514" value="Вы ввели значение %s хеша, не совпадающее с текущим значением у загрузки. Уверены, что хотите изменить%s хеш сейчас?"/>
+		<string id="18515" value="Над выбранной загрузкой уже выполняется операция, попытайтесь снова чуть позже."/>
 		<string id="19000" value="Удаленный доступ отключен."/>
 		<string id="19001" value="Вы должны выбрать имя пользователя и пароль."/>
 		<string id="19002" value="Невозможно принять соединений, ссылка недоступна."/>

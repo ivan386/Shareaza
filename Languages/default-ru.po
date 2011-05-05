@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2011-03-14 05:50+0000\n"
+"POT-Creation-Date: 2011-05-03 13:54+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -38,7 +38,7 @@ msgstr "ryo-oh-ki@narod.ru"
 
 #: manifest-version
 msgid "(shareaza version)"
-msgstr "2.5.4.0"
+msgstr "2.5.5.0"
 
 #: manifest-language
 msgid "(translation language code: en)"
@@ -1503,6 +1503,13 @@ msgstr "_Удалить"
 msgid "S_hell menu"
 msgstr "Меню Windows"
 
+#: clibrarytree.physical.basic;item;id_library_createtorrent
+#: clibrarytree.physical;item;id_library_createtorrent
+#: clibraryfileview.physical;44;item;id_library_createtorrent
+#: clibraryfileview.virtual;50;item;id_library_createtorrent
+msgid "Create ._torrent File"
+msgstr "_Создать .torrent файл"
+
 #: clibrarytree.physical;item;id_library_explore
 msgid "_Explore"
 msgstr "_Проводник"
@@ -1603,11 +1610,6 @@ msgstr "_Локализировать метаданные"
 #: clibraryfileview.virtual;item;id_library_refresh_metadata
 msgid "_Refresh Metadata"
 msgstr "_Обновить метаданные"
-
-#: clibraryfileview.physical;44;item;id_library_createtorrent
-#: clibraryfileview.virtual;50;item;id_library_createtorrent
-msgid "Create ._torrent File"
-msgstr "_Создать .torrent файл"
 
 #: clibraryfileview.physical;item;id_library_columns
 #: clibraryfileview.virtual;item;id_library_columns
@@ -3588,7 +3590,7 @@ msgstr "Импорт частичных загрузок eMule..."
 msgid "Add a new folder to your library..."
 msgstr "Добавить новую папку в Ваше хранилище..."
 
-#: message;id_library_album_delete
+#: message;id_library_album_delete message;id_library_folder_delete
 msgid "Delete the selected album folder."
 msgstr "Удалить помеченную папку альбома."
 
@@ -5213,6 +5215,10 @@ msgstr "Источники этого файла могут раздавать �
 msgid "Untrusted"
 msgstr "Недоверяемый"
 
+#: string;8338
+msgid "Free:"
+msgstr "Свободно:"
+
 #: string;13000
 msgid "Are you sure you want to delete the selected security rules? This cannot be undone."
 msgstr "Уверены, что хотите удалить выбранные правила безопасности? Действие будет необратимое."
@@ -6775,6 +6781,18 @@ msgstr ""
 msgid "Granted upload priority to host %s."
 msgstr "Предоставлен приоритет загрузки для хоста %s."
 
+#: string;17044
+msgid "Solve this CAPTCHA please:"
+msgstr "Решите эту КАПЧУ пожалуйста:"
+
+#: string;17045
+msgid "Wrong CAPTCHA."
+msgstr "Неверная КАПЧА."
+
+#: string;17046
+msgid "CAPTCHA accepted."
+msgstr "Верная КАПЧА."
+
 #: string;17100
 msgid "Gnutella: Peer-to-Peer Connection"
 msgstr "Gnutella: Связь партнер к партнеру"
@@ -6898,6 +6916,10 @@ msgstr "eDonkey (низкий ID)"
 #: string;17130
 msgid "eDonkey (HighID)"
 msgstr "eDonkey (высокий ID)"
+
+#: string;17131
+msgid "DC++ Hub Connection"
+msgstr "DC++ Хаб"
 
 #: string;17216
 msgid "Initiating connection to eDonkey server at %s..."
@@ -7236,6 +7258,10 @@ msgstr "Вы ввели неправильное значение eDonkey хеш
 #: string;18514
 msgid "You have provided an %s hash value which is different to the one currently associated with this download. Are you sure you want to change the %s hash now?"
 msgstr "Вы ввели значение %s хеша, не совпадающее с текущим значением у загрузки. Уверены, что хотите изменить%s хеш сейчас?"
+
+#: string;18515
+msgid "The selected download item currently has some Task attached, please wait and do it later."
+msgstr "Над выбранной загрузкой уже выполняется операция, попытайтесь снова чуть позже."
 
 #: string;19000
 msgid "Remote access is disabled."
