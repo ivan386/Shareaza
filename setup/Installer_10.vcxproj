@@ -60,13 +60,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Platform)\$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Platform)\$(Configuration)\</IntDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\</IntDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Platform)\$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Platform)\$(Configuration)\</IntDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -80,27 +80,23 @@
     </Midl>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <CustomBuild Include="scripts\main_9.iss">
+    <CustomBuild Include="scripts\main_10.iss">
       <FileType>Document</FileType>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Performing Installer Build</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"%ProgramFiles%\Inno Setup 5\ISCC.exe" "%(FullPath)" "/dConfigurationName=$(Configuration)" "/dPlatformName=$(Platform)" /v9
 </Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\shareaza\$(Platform)\$(Configuration)\Shareaza.exe;%(AdditionalInputs)</AdditionalInputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\builds\Preprocessed.iss;%(Outputs)</Outputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Installer Build</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"%ProgramFiles%\Inno Setup 5\ISCC.exe" "%(FullPath)" "/dConfigurationName=$(Configuration)" "/dPlatformName=$(Platform)" /v9
 </Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\shareaza\$(Platform)\$(Configuration)\Shareaza.exe;%(AdditionalInputs)</AdditionalInputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\builds\Preprocessed.iss;%(Outputs)</Outputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Performing Installer Build</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"%ProgramFiles%\Inno Setup 5\ISCC.exe" "%(FullPath)" "/dConfigurationName=$(Configuration)" "/dPlatformName=$(Platform)" /v9
 </Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\shareaza\$(Platform)\$(Configuration)\Shareaza.exe;%(AdditionalInputs)</AdditionalInputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\builds\Preprocessed.iss;%(Outputs)</Outputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing Installer Build</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"%ProgramFiles%\Inno Setup 5\ISCC.exe" "%(FullPath)" "/dConfigurationName=$(Configuration)" "/dPlatformName=$(Platform)" /v9
 </Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\shareaza\$(Platform)\$(Configuration)\Shareaza.exe;%(AdditionalInputs)</AdditionalInputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\builds\Preprocessed.iss;%(Outputs)</Outputs>
     </CustomBuild>
     <None Include="scripts\readme.txt" />
