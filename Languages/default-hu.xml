@@ -184,6 +184,8 @@
 			<button id="ID_LIBRARY_TREE_PHYSICAL" text="Mappák"/>
 			<button id="ID_LIBRARY_TREE_VIRTUAL" text="Rendező"/>
 		</toolbar>
+		<toolbar name="CLibraryTree.Physical">
+		</toolbar>
 		<toolbar name="CLibraryTree.Virtual">
 			<button id="ID_LIBRARY_FOLDERS" text="Fájlok megosztása..."/>
 		</toolbar>
@@ -208,6 +210,12 @@
 		<toolbar name="CLibraryHomeView.Virtual">
 			<button id="ID_LIBRARY_FOLDER_NEW" text="Album létrehozása..."/>
 			<button id="ID_LIBRARY_ALBUM_DELETE" text="Album törlése"/>
+			<rightAlign/>
+			<separator/>
+			<control id="IDC_SEARCH_BOX" width="120"/>
+			<button id="ID_LIBRARY_SEARCH_QUICK" text="Keres"/>
+		</toolbar>
+		<toolbar name="CLibraryTileView.Physical">
 			<rightAlign/>
 			<separator/>
 			<control id="IDC_SEARCH_BOX" width="120"/>
@@ -270,6 +278,8 @@
 			<separator/>
 			<control id="IDC_SEARCH_BOX" width="120"/>
 			<button id="ID_LIBRARY_SEARCH_QUICK" text="Keres"/>
+		</toolbar>
+		<toolbar name="CLibraryCollectionView.Physical">
 		</toolbar>
 		<toolbar name="CLibraryCollectionView.Virtual">
 			<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Album lejátszása"/>
@@ -1177,6 +1187,8 @@
 			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDERS" text="_Fájlok megosztása..."/>
+			<separator/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="._torrent fájl készítése"/>
 		</menu>
 		<menu name="CLibraryTree.Physical">
 			<item id="ID_LIBRARY_EXPLORE" text="_Intézőben megnyit"/>
@@ -1187,6 +1199,8 @@
 			<item id="ID_LIBRARY_SCAN" text="_Beolvas"/>
 			<item id="ID_LIBRARY_REBUILD" text="Ú_jraépít"/>
 			<item id="ID_LIBRARY_FOLDERS" text="_Fájlok megosztása..."/>
+			<separator/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="._torrent fájl készítése"/>
 			<separator/>
 			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 			<separator/>
@@ -2428,6 +2442,7 @@
 		<tip id="ID_LIBRARY_ENQUEUE" message="A kiválasztott fájl(ok) hozzáadása a lejátszólistához."/>
 		<tip id="ID_LIBRARY_EXPLORE" message="Megnyitja a kiválasztott mappá(k)at."/>
 		<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Az albummappák, mint gyűjteményfájl exportálása..."/>
+		<tip id="ID_LIBRARY_FOLDER_DELETE" message="Törli a kiválasztott mappát."/>
 		<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Minden fájl letöltése a gyűjteményben."/>
 		<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Minden fájl hozzáadása a lejátszólistához."/>
 		<tip id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" message="Minden fájl tulajdonságának szerkesztése..."/>
@@ -2837,6 +2852,7 @@
 		<string id="8335" value="A források ehhez a fájlhoz passzívak"/>
 		<string id="8336" value="A források ehhez a fájlhoz bizonytalanok"/>
 		<string id="8337" value="Megbízhatatlan"/>
+		<string id="8338" value="Készült:"/>
 		<string id="13000" value="Biztosan törölni akarja a kiválasztott biztonsági szabályokat? Később már nem lehet visszavonni."/>
 		<string id="13001" value="Az interneten megosztott fájlok"/>
 		<string id="16063" value="Az UPnP port hozzárendelés a 10 próbálkozás után sem sikerült."/>
@@ -3191,6 +3207,9 @@
 		<string id="17041" value="Nem tudok üzenetet küldeni, még nem jött létre a kapcsolat."/>
 		<string id="17042" value="Nem töltötte ki az adatlapját. Csevegés előtt ki kell töltenie.\n\nMost akarja kitölteni?"/>
 		<string id="17043" value="Feltöltési elsőbbség megadva: %s."/>
+		<string id="17044" value="Solve this CAPTCHA please:"/>
+		<string id="17045" value="Wrong CAPTCHA."/>
+		<string id="17046" value="CAPTCHA accepted."/>
 		<string id="17100" value="Gnutella: Peer-to-Peer kapcsolat"/>
 		<string id="17101" value="Gnutella: Leaf-to-Ultrapeer kapcsolat"/>
 		<string id="17102" value="Gnutella: Ultrapeer-to-Leaf kapcsolat"/>
@@ -3222,6 +3241,7 @@
 		<string id="17128" value="eDonkey szerver"/>
 		<string id="17129" value="eDonkey (LowID)"/>
 		<string id="17130" value="eDonkey (HighID)"/>
+		<string id="17131" value="Kapcsolat"/>
 		<string id="17216" value="eDonkey szerverhez való kapcsolódás: %s..."/>
 		<string id="17217" value="eDonkey szerverhez kapcsolódva: %s, viszontválasz..."/>
 		<string id="17218" value="ED2K[%s] %s"/>
@@ -3305,6 +3325,7 @@
 		<string id="18512" value="Biztos, hogy minden letöltést törölni akar a csoportból?"/>
 		<string id="18513" value="A beírt eDonkey érték érvénytelen. Ellenőrizze és próbálja meg újra."/>
 		<string id="18514" value="Egy más SHA1 hash értéket adott meg, ami különbözik a jelenlegitől.  Biztos ki akarja cserélni?"/>
+		<string id="18515" value="The selected download item currently has some Task attached, please wait and do it later."/>
 		<string id="19000" value="Távoli használat kikapcsolva."/>
 		<string id="19001" value="Egy felhasználónevet és egy jelszót kell választania."/>
 		<string id="19002" value="Nem tudom fogadni a kapcsolatokat, URL érvénytelen."/>

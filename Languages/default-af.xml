@@ -184,6 +184,8 @@
 			<button id="ID_LIBRARY_TREE_PHYSICAL" text="Gidse"/>
 			<button id="ID_LIBRARY_TREE_VIRTUAL" text="Organiseerder"/>
 		</toolbar>
+		<toolbar name="CLibraryTree.Physical">
+		</toolbar>
 		<toolbar name="CLibraryTree.Virtual">
 			<button id="ID_LIBRARY_FOLDERS" text="Deel Lêers..."/>
 		</toolbar>
@@ -208,6 +210,12 @@
 		<toolbar name="CLibraryHomeView.Virtual">
 			<button id="ID_LIBRARY_FOLDER_NEW" text="Skep Album..."/>
 			<button id="ID_LIBRARY_ALBUM_DELETE" text="Verwyder Album"/>
+			<rightAlign/>
+			<separator/>
+			<control id="IDC_SEARCH_BOX" width="120"/>
+			<button id="ID_LIBRARY_SEARCH_QUICK" text="Soek"/>
+		</toolbar>
+		<toolbar name="CLibraryTileView.Physical">
 			<rightAlign/>
 			<separator/>
 			<control id="IDC_SEARCH_BOX" width="120"/>
@@ -270,6 +278,8 @@
 			<separator/>
 			<control id="IDC_SEARCH_BOX" width="120"/>
 			<button id="ID_LIBRARY_SEARCH_QUICK" text="Soek"/>
+		</toolbar>
+		<toolbar name="CLibraryCollectionView.Physical">
 		</toolbar>
 		<toolbar name="CLibraryCollectionView.Virtual">
 			<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Speel Album"/>
@@ -1177,6 +1187,8 @@
 			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDERS" text="Deel _Lêers..."/>
+			<separator/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="Skep .torrent Lêer"/>
 		</menu>
 		<menu name="CLibraryTree.Physical">
 			<item id="ID_LIBRARY_EXPLORE" text="_Verken"/>
@@ -1187,6 +1199,8 @@
 			<item id="ID_LIBRARY_SCAN" text="D_eursoek"/>
 			<item id="ID_LIBRARY_REBUILD" text="_Herbou"/>
 			<item id="ID_LIBRARY_FOLDERS" text="Deel _Lêers..."/>
+			<separator/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="Skep .torrent Lêer"/>
 			<separator/>
 			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 			<separator/>
@@ -2459,6 +2473,7 @@
 		<tip id="ID_LIBRARY_ENQUEUE" message="Voeg die geselekteerde lêer(s) by jou medialys."/>
 		<tip id="ID_LIBRARY_EXPLORE" message="Open die geselekteerde gids(e)."/>
 		<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Voer die geselekteerde albumgids na 'n versamelingslêer uit..."/>
+		<tip id="ID_LIBRARY_FOLDER_DELETE" message="Skrap die geselekteerde albumgids."/>
 		<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Laai alle lêers in die geselekteerde versameling af."/>
 		<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Voeg al die lêers in die geselekteerde albumgidse(s) by jou medialys."/>
 		<tip id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" message="Vertoon en verander die kenmerke van al die lêers in die geselekteerde gids(e)..."/>
@@ -2868,6 +2883,7 @@
 		<string id="8335" value="Bronne vir hierdie lêer is agter 'n netskans"/>
 		<string id="8336" value="Bronne vir hierdie lêer mag onstabiel wees"/>
 		<string id="8337" value="Untrusted"/>
+		<string id="8338" value="Geskep:"/>
 		<string id="13000" value="Are you sure you want to delete the selected security rules? This cannot be undone."/>
 		<string id="13001" value="Files shared over the Internet"/>
 		<string id="16063" value="UPnP port mapping failed after 10 attempts."/>
@@ -3222,6 +3238,9 @@
 		<string id="17041" value="Kan nie die boodskap stuur nie, aangesien 'n konneksie nog nie bewerkstellig is nie."/>
 		<string id="17042" value="Jy het nog nie jou gebruikersprofiel ingevul nie.  Jy moet jou profiel invul voordat jy kan gesels met ander gebruikers.\n\nWil jy nou jou profiel invul?"/>
 		<string id="17043" value="Oplaaiprioriteit goedgekeur vir gasheer %s."/>
+		<string id="17044" value="Solve this CAPTCHA please:"/>
+		<string id="17045" value="Wrong CAPTCHA."/>
+		<string id="17046" value="CAPTCHA accepted."/>
 		<string id="17100" value="Gnutella: Peer-tot-Peer Konneksie"/>
 		<string id="17101" value="Gnutella: Leaf-tot-Ultrapeer Konneksie"/>
 		<string id="17102" value="Gnutella: Ultrapeer-tot-Leaf Konneksie"/>
@@ -3253,6 +3272,7 @@
 		<string id="17128" value="eDonkey2000 Bediener"/>
 		<string id="17129" value="eDonkey2000 (LowID)"/>
 		<string id="17130" value="eDonkey2000 (HighID)"/>
+		<string id="17131" value="Konneksie"/>
 		<string id="17216" value="Konneksie aan eDonkey2000 bediener by %s word geïnisieer..."/>
 		<string id="17217" value="Gekonnekteer aan eDonkey2000 bediener %s, besig om blad te skud..."/>
 		<string id="17218" value="ED2K[%s] %s"/>
@@ -3336,6 +3356,7 @@
 		<string id="18512" value="Is jy seker jy wil al die aflaaie in hierdie groep kanselleer?"/>
 		<string id="18513" value="Jy het 'n eDonkey2000 hash-waarde ingetik, maar dit is foutief. Kontroleer dit asseblief en probeer weer."/>
 		<string id="18514" value="Jy het 'n SHA1-hashwaarde verskaf wat verskil van die huidige een vir hierdie aflaai. Is jy seker jy wil die SHA1-hash verander?"/>
+		<string id="18515" value="The selected download item currently has some Task attached, please wait and do it later."/>
 		<string id="19000" value="Web toegang is afgeskakel."/>
 		<string id="19001" value="Jy moet 'n gebruikersnaam en wagwoord kies."/>
 		<string id="19002" value="Kan nie konneksies ontvang nie, URL nie beskikbaar."/>

@@ -184,6 +184,8 @@
 			<button id="ID_LIBRARY_TREE_PHYSICAL" text="Dosje"/>
 			<button id="ID_LIBRARY_TREE_VIRTUAL" text="Organizuesi"/>
 		</toolbar>
+		<toolbar name="CLibraryTree.Physical">
+		</toolbar>
 		<toolbar name="CLibraryTree.Virtual">
 			<button id="ID_LIBRARY_FOLDERS" text="Shpërnda skeda..."/>
 		</toolbar>
@@ -208,6 +210,12 @@
 		<toolbar name="CLibraryHomeView.Virtual">
 			<button id="ID_LIBRARY_FOLDER_NEW" text="Krijo Album..."/>
 			<button id="ID_LIBRARY_ALBUM_DELETE" text="Fshije Albumin"/>
+			<rightAlign/>
+			<separator/>
+			<control id="IDC_SEARCH_BOX" width="120"/>
+			<button id="ID_LIBRARY_SEARCH_QUICK" text="Gjej"/>
+		</toolbar>
+		<toolbar name="CLibraryTileView.Physical">
 			<rightAlign/>
 			<separator/>
 			<control id="IDC_SEARCH_BOX" width="120"/>
@@ -270,6 +278,8 @@
 			<separator/>
 			<control id="IDC_SEARCH_BOX" width="120"/>
 			<button id="ID_LIBRARY_SEARCH_QUICK" text="Gjej"/>
+		</toolbar>
+		<toolbar name="CLibraryCollectionView.Physical">
 		</toolbar>
 		<toolbar name="CLibraryCollectionView.Virtual">
 			<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Luaj Albumin"/>
@@ -1177,6 +1187,8 @@
 			<item id="ID_SHELL_MENU" text="Meny b_azë"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDERS" text="_Skedat e Shpërndara..."/>
+			<separator/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="Krijo Skedë _.torrent"/>
 		</menu>
 		<menu name="CLibraryTree.Physical">
 			<item id="ID_LIBRARY_EXPLORE" text="_Eksploro"/>
@@ -1187,6 +1199,8 @@
 			<item id="ID_LIBRARY_SCAN" text="S_kano"/>
 			<item id="ID_LIBRARY_REBUILD" text="Ri_ndërto"/>
 			<item id="ID_LIBRARY_FOLDERS" text="_Skedat e Shpërndara..."/>
+			<separator/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="Krijo Skedë _.torrent"/>
 			<separator/>
 			<item id="ID_SHELL_MENU" text="Meny b_azë"/>
 			<separator/>
@@ -2455,6 +2469,7 @@
 		<tip id="ID_LIBRARY_ENQUEUE" message="Shton skedën e zgjedhur në listën me mediat."/>
 		<tip id="ID_LIBRARY_EXPLORE" message="Hap dosjen e zgjedhur."/>
 		<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Eksporton dosjen e zgjedhur me albume tek një skedëkoleksion..."/>
+		<tip id="ID_LIBRARY_FOLDER_DELETE" message="Fshin dosjen e zgjedhur me albume."/>
 		<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Shkarkon tërë skedat në koleksionin e zgjedhur."/>
 		<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Shton në listë çdo skedë në dosjen e zgjedhur me albume."/>
 		<tip id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" message="Tregon dhe editon vetitë e tërë skedave në dosjen e zgjedhur..."/>
@@ -2864,6 +2879,7 @@
 		<string id="8335" value="Burimet për këtë skedë kanë fajruoll"/>
 		<string id="8336" value="Burimet për këtë skedë mund të jenë të paqëndrueshme"/>
 		<string id="8337" value="I pasigurt"/>
+		<string id="8338" value="Krijimi:"/>
 		<string id="13000" value="Je i sigurt për fshirjen e rregullave të zgjedhur të sigurisë?  Kjo nuk mund të kthehet."/>
 		<string id="13001" value="Skedat që shpërndahen në Internet"/>
 		<string id="16063" value="Përcjellja UPnP e portit dështoi pas 10 orvatjesh."/>
@@ -3218,6 +3234,9 @@
 		<string id="17041" value="Cannot send message, a connection has not been established yet."/>
 		<string id="17042" value="You have not yet filled in your user profile. You must provide a profile before you can chat with other users.\n\nWould you like to fill in your profile now?"/>
 		<string id="17043" value="Granted upload priority to host %s."/>
+		<string id="17044" value="Solve this CAPTCHA please:"/>
+		<string id="17045" value="Wrong CAPTCHA."/>
+		<string id="17046" value="CAPTCHA accepted."/>
 		<string id="17100" value="Gnutella: Peer-to-Peer Connection"/>
 		<string id="17101" value="Gnutella: Leaf-to-Ultrapeer Connection"/>
 		<string id="17102" value="Gnutella: Ultrapeer-to-Leaf Connection"/>
@@ -3249,6 +3268,7 @@
 		<string id="17128" value="eDonkey Server"/>
 		<string id="17129" value="eDonkey (LowID)"/>
 		<string id="17130" value="eDonkey (HighID)"/>
+		<string id="17131" value="Lidhje"/>
 		<string id="17216" value="Initiating connection to eDonkey server at %s..."/>
 		<string id="17217" value="Connected to eDonkey server %s, handshaking..."/>
 		<string id="17218" value="ED2K[%s] %s"/>
@@ -3332,6 +3352,7 @@
 		<string id="18512" value="Anulo shkarkimin por ruaj skedat e papërfunduara:"/>
 		<string id="18513" value="Shkruat një vlerë hashi për eDonkey, gjithsesi nuk ka vlerë.  Të lutem rishikoje dhe provoje përsëri."/>
 		<string id="18514" value="Dhatë një vlerë hashi SHA1 që ndryshon nga ajo që aktualisht shoqërohet me këtë shkarkesë.  Je i sigurt se tani do të ndryshosh hashin SHA1?"/>
+		<string id="18515" value="The selected download item currently has some Task attached, please wait and do it later."/>
 		<string id="19000" value="Aksesi në largësi është çaktivizuar."/>
 		<string id="19001" value="Duhet të zgjidhet një emër përdoruesi dhe fjalëkalimi."/>
 		<string id="19002" value="Nuk mund të pranoj lidhjet, URLi pa vlerë."/>

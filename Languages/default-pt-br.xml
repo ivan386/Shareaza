@@ -184,6 +184,8 @@
 			<button id="ID_LIBRARY_TREE_PHYSICAL" text="Pastas"/>
 			<button id="ID_LIBRARY_TREE_VIRTUAL" text="Organizador"/>
 		</toolbar>
+		<toolbar name="CLibraryTree.Physical">
+		</toolbar>
 		<toolbar name="CLibraryTree.Virtual">
 			<button id="ID_LIBRARY_FOLDERS" text="Compartilhar Arquivos..."/>
 		</toolbar>
@@ -208,6 +210,12 @@
 		<toolbar name="CLibraryHomeView.Virtual">
 			<button id="ID_LIBRARY_FOLDER_NEW" text="Criar Álbum..."/>
 			<button id="ID_LIBRARY_ALBUM_DELETE" text="Apagar Álbum"/>
+			<rightAlign/>
+			<separator/>
+			<control id="IDC_SEARCH_BOX" width="120"/>
+			<button id="ID_LIBRARY_SEARCH_QUICK" text="Achar"/>
+		</toolbar>
+		<toolbar name="CLibraryTileView.Physical">
 			<rightAlign/>
 			<separator/>
 			<control id="IDC_SEARCH_BOX" width="120"/>
@@ -270,6 +278,8 @@
 			<separator/>
 			<control id="IDC_SEARCH_BOX" width="120"/>
 			<button id="ID_LIBRARY_SEARCH_QUICK" text="Achar"/>
+		</toolbar>
+		<toolbar name="CLibraryCollectionView.Physical">
 		</toolbar>
 		<toolbar name="CLibraryCollectionView.Virtual">
 			<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Tocar Álbum"/>
@@ -1177,6 +1187,8 @@
 			<item id="ID_SHELL_MENU" text="M_enu do shell"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDERS" text="Compartilhar _Arquivos..."/>
+			<separator/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="Criar _Arquivo .torrent"/>
 		</menu>
 		<menu name="CLibraryTree.Physical">
 			<item id="ID_LIBRARY_EXPLORE" text="_Explorar"/>
@@ -1187,6 +1199,8 @@
 			<item id="ID_LIBRARY_SCAN" text="E_scanear"/>
 			<item id="ID_LIBRARY_REBUILD" text="Re_construir"/>
 			<item id="ID_LIBRARY_FOLDERS" text="Compartilhar _Arquivos..."/>
+			<separator/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="Criar _Arquivo .torrent"/>
 			<separator/>
 			<item id="ID_SHELL_MENU" text="M_enu do shell"/>
 			<separator/>
@@ -2455,6 +2469,7 @@ t		Alternativamente, você pode manualmente iniciar este download com o comando 
 		<tip id="ID_LIBRARY_ENQUEUE" message="Adicionar o(s) arquivo(s) selecionado(s) a sua lista de execuções de mídia."/>
 		<tip id="ID_LIBRARY_EXPLORE" message="Abrir a(s) pasta(s) selecionada(s)."/>
 		<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Exportar a pasta do álbum selecionado para os arquivos de coleção..."/>
+		<tip id="ID_LIBRARY_FOLDER_DELETE" message="Apagar a pasta do álbum selecionada."/>
 		<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Baixar todos os arquivos na coleção selecionada."/>
 		<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Adicionar cada arquivo na pasta do álbum selecionado para a sua lista de execuções."/>
 		<tip id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" message="Ver e editar as propriedades de todos os arquivos na(s) pasta(s) selecionada(s)..."/>
@@ -2864,6 +2879,7 @@ t		Alternativamente, você pode manualmente iniciar este download com o comando 
 		<string id="8335" value="As fontes para este arquivo estão atrás de um firewall"/>
 		<string id="8336" value="As fontes para este arquivo podem ser instáveis"/>
 		<string id="8337" value="Não confiável"/>
+		<string id="8338" value="Criado:"/>
 		<string id="13000" value="Você tem certeza de que você quer apagar as regras de segurança selecionadas?  Isto não pode ser desfeito."/>
 		<string id="13001" value="Arquivos compartilhados pela Internet"/>
 		<string id="16063" value="O mapamento de portas UPnP falhou após 10 tentativas."/>
@@ -3222,6 +3238,9 @@ pasta dos arquivos baixados a sua biblioteca agora?"/>
 		<string id="17041" value="Incapaz de mandar mensagem, uma conexão ainda não foi estabelecida."/>
 		<string id="17042" value="Você ainda não preencheu o seu perfil de usuário. Você deve prover um perfil antes que você possa conversar com outros usuários.\n\nVocê gostaria de preencher o seu perfil agora?"/>
 		<string id="17043" value="Garantida a prioridade de upload para o host %s."/>
+		<string id="17044" value="Solve this CAPTCHA please:"/>
+		<string id="17045" value="Wrong CAPTCHA."/>
+		<string id="17046" value="CAPTCHA accepted."/>
 		<string id="17100" value="Gnutella: Conexão Peer-para-Peer"/>
 		<string id="17101" value="Gnutella: Conexão Leaf-para-Ultrapeer"/>
 		<string id="17102" value="Gnutella: Conexão Ultrapeer-para-Leaf"/>
@@ -3253,6 +3272,7 @@ pasta dos arquivos baixados a sua biblioteca agora?"/>
 		<string id="17128" value="Servidor eDonkey"/>
 		<string id="17129" value="eDonkey (ID Baixa)"/>
 		<string id="17130" value="eDonkey (ID Alta)"/>
+		<string id="17131" value="Conexão"/>
 		<string id="17216" value="Iniciando conexão com o servidor eDonkey em %s..."/>
 		<string id="17217" value="Conectado no servidor eDonkey %s, inicializando..."/>
 		<string id="17218" value="ED2K[%s] %s"/>
@@ -3336,6 +3356,7 @@ pasta dos arquivos baixados a sua biblioteca agora?"/>
 		<string id="18512" value="Você tem certeza que você quer cancelar este download mas salvar o(s) arquivo(s) incompleto(s)?"/>
 		<string id="18513" value="Você digitou um valor de hash %s, contudo, é inválido. Por favor verifique-o e tente de novo."/>
 		<string id="18514" value="Você forneceu um valor de hash %s o qual é diferente do que está atualmente associado com este download. Você tem certeza que você quer mudar o valor de hash %s agora?"/>
+		<string id="18515" value="The selected download item currently has some Task attached, please wait and do it later."/>
 		<string id="19000" value="O acesso remoto está desativado."/>
 		<string id="19001" value="Você deve escolher um nome de usuário e senha."/>
 		<string id="19002" value="Incapaz de aceitar conexões, URL indisponível."/>

@@ -184,6 +184,8 @@
 			<button id="ID_LIBRARY_TREE_PHYSICAL" text="Mappar"/>
 			<button id="ID_LIBRARY_TREE_VIRTUAL" text="Organiserare"/>
 		</toolbar>
+		<toolbar name="CLibraryTree.Physical">
+		</toolbar>
 		<toolbar name="CLibraryTree.Virtual">
 			<button id="ID_LIBRARY_FOLDERS" text="Dela ut filer…"/>
 		</toolbar>
@@ -208,6 +210,12 @@
 		<toolbar name="CLibraryHomeView.Virtual">
 			<button id="ID_LIBRARY_FOLDER_NEW" text="Skapa album…"/>
 			<button id="ID_LIBRARY_ALBUM_DELETE" text="Radera album"/>
+			<rightAlign/>
+			<separator/>
+			<control id="IDC_SEARCH_BOX" width="120"/>
+			<button id="ID_LIBRARY_SEARCH_QUICK" text="Sök"/>
+		</toolbar>
+		<toolbar name="CLibraryTileView.Physical">
 			<rightAlign/>
 			<separator/>
 			<control id="IDC_SEARCH_BOX" width="120"/>
@@ -270,6 +278,8 @@
 			<separator/>
 			<control id="IDC_SEARCH_BOX" width="120"/>
 			<button id="ID_LIBRARY_SEARCH_QUICK" text="Sök"/>
+		</toolbar>
+		<toolbar name="CLibraryCollectionView.Physical">
 		</toolbar>
 		<toolbar name="CLibraryCollectionView.Virtual">
 			<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Spela upp album"/>
@@ -1177,6 +1187,8 @@
 			<item id="ID_SHELL_MENU" text="S_kalmeny"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDERS" text="Dela ut _filer..."/>
+			<separator/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="Skapa .torrent-fil"/>
 		</menu>
 		<menu name="CLibraryTree.Physical">
 			<item id="ID_LIBRARY_EXPLORE" text="_Utforska"/>
@@ -1187,6 +1199,8 @@
 			<item id="ID_LIBRARY_SCAN" text="_Granska"/>
 			<item id="ID_LIBRARY_REBUILD" text="_Bygg upp igen"/>
 			<item id="ID_LIBRARY_FOLDERS" text="Dela ut _filer..."/>
+			<separator/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="Skapa .torrent-fil"/>
 			<separator/>
 			<item id="ID_SHELL_MENU" text="S_kalmeny"/>
 			<separator/>
@@ -2450,6 +2464,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<tip id="ID_LIBRARY_ENQUEUE" message="Lägg till de valda filerna till den spellista."/>
 		<tip id="ID_LIBRARY_EXPLORE" message="Öppna de valda mappen/mapparna."/>
 		<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Exportera den valda albummappen som en samlingsfil…"/>
+		<tip id="ID_LIBRARY_FOLDER_DELETE" message="Radera de valda albummapparna."/>
 		<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Ladda ned alla filer i den valda samlingen."/>
 		<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Lägg till alla filer i de valda albummapparna till din spellista."/>
 		<tip id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" message="Visa och ändra egenskaperna för alla filer i de valda mapparna."/>
@@ -2859,6 +2874,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<string id="8335" value="Källor för den här filen sitter bakom brandvägg"/>
 		<string id="8336" value="Källor för den här filen är instabila"/>
 		<string id="8337" value="Opålitlig"/>
+		<string id="8338" value="Skapad:"/>
 		<string id="13000" value="Är du säker p å att du vill radera de valda säkerhetsreglerna? Detta kan inte ångras."/>
 		<string id="13001" value="Filer delade över Internet"/>
 		<string id="16063" value="UPnP portmapping misslyckades efter 10 försök."/>
@@ -3213,6 +3229,9 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<string id="17041" value="Kan inte skicka meddelande eftersom en anslutning inte har upprättats ännu."/>
 		<string id="17042" value="Du har inte fyllt i din användarprofil. Du måste göra detta innan du kan chatta med andra.\n\nVill du fylla i din profil nu?"/>
 		<string id="17043" value="Beviljade uppladdningsprioritet till värd %s."/>
+		<string id="17044" value="Solve this CAPTCHA please:"/>
+		<string id="17045" value="Wrong CAPTCHA."/>
+		<string id="17046" value="CAPTCHA accepted."/>
 		<string id="17100" value="Gnutella: Like-till-like-anslutning"/>
 		<string id="17101" value="Gnutella: Löv-till-ultralike-anslutning"/>
 		<string id="17102" value="Gnutella: Ultralike-till-löv-anslutning"/>
@@ -3244,6 +3263,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<string id="17128" value="eDonkey-server"/>
 		<string id="17129" value="eDonkey (LowID)"/>
 		<string id="17130" value="eDonkey (HighID)"/>
+		<string id="17131" value="Anslutning"/>
 		<string id="17216" value="Initierar en anslutning till eDonkey-server vid %s…"/>
 		<string id="17217" value="Ansluten till eDonkey-server %s, skakar hand…"/>
 		<string id="17218" value="ED2K[%s] %s"/>
@@ -3327,6 +3347,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<string id="18512" value="Är du säker på att du vill avbryta alla nedladdningar i denna grupp?"/>
 		<string id="18513" value="Du har skrivit ett felaktigt eDonkey hashset-värde. Kontrollera det och försök igen."/>
 		<string id="18514" value="Du har anget ett annat SHA1-värde än det som för tillfället är associerat med denna nedladdning. Är du säker på att du vill ändra det?"/>
+		<string id="18515" value="The selected download item currently has some Task attached, please wait and do it later."/>
 		<string id="19000" value="Fjärråtkomst är avstängd."/>
 		<string id="19001" value="Du måste välja ett användarnamn och lösenord."/>
 		<string id="19002" value="Kan inte acceptera anslutningar. URL otillgänlig."/>

@@ -184,6 +184,8 @@
 			<button id="ID_LIBRARY_TREE_PHYSICAL" text="Carpetas"/>
 			<button id="ID_LIBRARY_TREE_VIRTUAL" text="Organizador"/>
 		</toolbar>
+		<toolbar name="CLibraryTree.Physical">
+		</toolbar>
 		<toolbar name="CLibraryTree.Virtual">
 			<button id="ID_LIBRARY_FOLDERS" text="Compartir Carpetas..."/>
 		</toolbar>
@@ -208,6 +210,12 @@
 		<toolbar name="CLibraryHomeView.Virtual">
 			<button id="ID_LIBRARY_FOLDER_NEW" text="Crear Album..."/>
 			<button id="ID_LIBRARY_ALBUM_DELETE" text="Borrar Album"/>
+			<rightAlign/>
+			<separator/>
+			<control id="IDC_SEARCH_BOX" width="120"/>
+			<button id="ID_LIBRARY_SEARCH_QUICK" text="Buscar"/>
+		</toolbar>
+		<toolbar name="CLibraryTileView.Physical">
 			<rightAlign/>
 			<separator/>
 			<control id="IDC_SEARCH_BOX" width="120"/>
@@ -270,6 +278,8 @@
 			<separator/>
 			<control id="IDC_SEARCH_BOX" width="120"/>
 			<button id="ID_LIBRARY_SEARCH_QUICK" text="Buscar"/>
+		</toolbar>
+		<toolbar name="CLibraryCollectionView.Physical">
 		</toolbar>
 		<toolbar name="CLibraryCollectionView.Virtual">
 			<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Reproducir Album"/>
@@ -1177,6 +1187,8 @@
 			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDERS" text="_Compartir Carpetas..."/>
+			<separator/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="Crear Archivo .torrent"/>
 		</menu>
 		<menu name="CLibraryTree.Physical">
 			<item id="ID_LIBRARY_EXPLORE" text="_Explorar"/>
@@ -1187,6 +1199,8 @@
 			<item id="ID_LIBRARY_SCAN" text="Es_canear"/>
 			<item id="ID_LIBRARY_REBUILD" text="Re_hacer"/>
 			<item id="ID_LIBRARY_FOLDERS" text="_Compartir Carpetas..."/>
+			<separator/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="Crear Archivo .torrent"/>
 			<separator/>
 			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 			<separator/>
@@ -2449,6 +2463,7 @@
 		<tip id="ID_LIBRARY_ENQUEUE" message="Agregar al reproductor de media."/>
 		<tip id="ID_LIBRARY_EXPLORE" message="Abrir las carpetas seleccionadas."/>
 		<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Exportar esta carpeta a un archivo de Colección..."/>
+		<tip id="ID_LIBRARY_FOLDER_DELETE" message="Borrar la carpeta virtual o album."/>
 		<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Bajar todos los archivos de la Colección seleccionada."/>
 		<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Agregar los archivos seleccionados a la lista de reproducción."/>
 		<tip id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" message="Ver o editar las propiedaes de la carpeta..."/>
@@ -2858,6 +2873,7 @@
 		<string id="8335" value="Las fuentes estan firewalled"/>
 		<string id="8336" value="Las fuentes pueden ser inestables"/>
 		<string id="8337" value="No confiado"/>
+		<string id="8338" value="Creado:"/>
 		<string id="13000" value="Are you sure you want to delete the selected security rules? This cannot be undone."/>
 		<string id="13001" value="Files shared over the Internet"/>
 		<string id="16063" value="UPnP port mapping failed after 10 attempts."/>
@@ -3212,6 +3228,9 @@
 		<string id="17041" value="El mensaje no pudo ser enviado, porque la comunicación no ha sido establecida."/>
 		<string id="17042" value="Todavía no ha llenado tu perfil su usuario. Es necesario que lo llene, para poder platicar con otros.\n\n¿Quieres hacerlo ahora?"/>
 		<string id="17043" value="Se le dio prioridad a %s para descargar archivos."/>
+		<string id="17044" value="Solve this CAPTCHA please:"/>
+		<string id="17045" value="Wrong CAPTCHA."/>
+		<string id="17046" value="CAPTCHA accepted."/>
 		<string id="17100" value="Gnutella: Conexión Peer-to-Peer"/>
 		<string id="17101" value="Gnutella: Conexión Leaf-to-Ultrapeer"/>
 		<string id="17102" value="Gnutella: Conexión Ultrapeer-to-Leaf"/>
@@ -3243,6 +3262,7 @@
 		<string id="17128" value="Servidor eDonkey2000"/>
 		<string id="17129" value="eDonkey2000 (LowID)"/>
 		<string id="17130" value="eDonkey2000 (HighID)"/>
+		<string id="17131" value="Conexión"/>
 		<string id="17216" value="Iniciando conexión a servidor eDonkey2000 en %s..."/>
 		<string id="17217" value="Conectado en servidor eDonkey2000 %s, handshaking..."/>
 		<string id="17218" value="ED2K[%s] %s"/>
@@ -3326,6 +3346,7 @@
 		<string id="18512" value="¿Estás seguro que deseas cancelar/abortar todas las descargas en este grupo?"/>
 		<string id="18513" value="El valor del hash de eDonkey2000 asignado no es válido."/>
 		<string id="18514" value="¿Estás seguro de cambiar el SHA1?"/>
+		<string id="18515" value="The selected download item currently has some Task attached, please wait and do it later."/>
 		<string id="19000" value="El Acceso Remoto esta deshabilitado."/>
 		<string id="19001" value="Debes Seleccionar un nombre de usuario y contraseña."/>
 		<string id="19002" value="No se puede aceptar conexiones, URL no disponible."/>

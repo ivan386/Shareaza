@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
 	<!-- Manifest -->
-	<manifest name="Español" author="ramdomcrazy" updatedBy="Biasoli" description="Shareaza Default International Spanish Skin File" link="http://shareaza.sourceforge.net/" email="ramdomcrazy(at)users.sourceforge.net" version="2.4.0.0" type="Language" language="es" prompt="Seleccione aquí para usar Shareaza en Español Internacional" dir="(translation language direction: ltr or rtl)"/>
+	<manifest name="Español" author="ramdomcrazy" updatedBy="acerswap" description="Shareaza Default International Spanish Skin File" link="http://shareaza.sourceforge.net/" email="ramdomcrazy(at)users.sourceforge.net" version="2.5.5.0" type="Language" language="es" prompt="Seleccione aquí para usar Shareaza en Español Internacional" dir="ltr"/>
 	<!-- Toolbar Definitions -->
 	<toolbars>
 		<!-- MAIN WINDOW -->
@@ -184,6 +184,8 @@
 			<button id="ID_LIBRARY_TREE_PHYSICAL" text="Carpetas"/>
 			<button id="ID_LIBRARY_TREE_VIRTUAL" text="Organizador"/>
 		</toolbar>
+		<toolbar name="CLibraryTree.Physical">
+		</toolbar>
 		<toolbar name="CLibraryTree.Virtual">
 			<button id="ID_LIBRARY_FOLDERS" text="Compartir archivos..."/>
 		</toolbar>
@@ -208,6 +210,12 @@
 		<toolbar name="CLibraryHomeView.Virtual">
 			<button id="ID_LIBRARY_FOLDER_NEW" text="Crear álbum..."/>
 			<button id="ID_LIBRARY_ALBUM_DELETE" text="Borrar álbum"/>
+			<rightAlign/>
+			<separator/>
+			<control id="IDC_SEARCH_BOX" width="120"/>
+			<button id="ID_LIBRARY_SEARCH_QUICK" text="Buscar"/>
+		</toolbar>
+		<toolbar name="CLibraryTileView.Physical">
 			<rightAlign/>
 			<separator/>
 			<control id="IDC_SEARCH_BOX" width="120"/>
@@ -270,6 +278,8 @@
 			<separator/>
 			<control id="IDC_SEARCH_BOX" width="120"/>
 			<button id="ID_LIBRARY_SEARCH_QUICK" text="Buscar"/>
+		</toolbar>
+		<toolbar name="CLibraryCollectionView.Physical">
 		</toolbar>
 		<toolbar name="CLibraryCollectionView.Virtual">
 			<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Reproducir álbum"/>
@@ -1177,6 +1187,8 @@
 			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDERS" text="_Compartir archivos..."/>
+			<separator/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="Crear archivo .torrent"/>
 		</menu>
 		<menu name="CLibraryTree.Physical">
 			<item id="ID_LIBRARY_EXPLORE" text="_Explorar"/>
@@ -1187,6 +1199,8 @@
 			<item id="ID_LIBRARY_SCAN" text="Es_canear"/>
 			<item id="ID_LIBRARY_REBUILD" text="Re_hacer"/>
 			<item id="ID_LIBRARY_FOLDERS" text="_Compartir archivos..."/>
+			<separator/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="Crear archivo .torrent"/>
 			<separator/>
 			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 			<separator/>
@@ -2451,6 +2465,7 @@ puede comenzar a transferir en cualquier momento.</text>
 		<tip id="ID_LIBRARY_ENQUEUE" message="Agregar al reproductor de media."/>
 		<tip id="ID_LIBRARY_EXPLORE" message="Abrir las carpetas seleccionadas."/>
 		<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Exportar esta carpeta a un archivo de Colección..."/>
+		<tip id="ID_LIBRARY_FOLDER_DELETE" message="Borrar la carpeta virtual o album."/>
 		<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Bajar todos los archivos de la Colección seleccionada."/>
 		<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Agregar los archivos seleccionados a la lista de reproducción."/>
 		<tip id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" message="Ver y editar las propiedades de la carpeta..."/>
@@ -2860,6 +2875,7 @@ puede comenzar a transferir en cualquier momento.</text>
 		<string id="8335" value="Las fuentes estan firewalled"/>
 		<string id="8336" value="Las fuentes pueden ser inestables"/>
 		<string id="8337" value="No confiado"/>
+		<string id="8338" value="Free:"/>
 		<string id="13000" value="Estas seguro que quieres borrar las reglas de seguridad seleccionadas? Esto no se puede deshacer."/>
 		<string id="13001" value="Archivos compartidos a través de Internet"/>
 		<string id="16063" value="Mapeo del puerto UPnP falló después de 10 intentos."/>
@@ -3214,6 +3230,9 @@ puede comenzar a transferir en cualquier momento.</text>
 		<string id="17041" value="El mensaje no pudo ser enviado, porque la comunicación no ha sido establecida."/>
 		<string id="17042" value="Todavía no ha llenado tu perfil su usuario. Es necesario que lo llene, para poder platicar con otros.\n\n¿Quieres hacerlo ahora?"/>
 		<string id="17043" value="Se le dio prioridad a %s para descargar archivos."/>
+		<string id="17044" value="Solve this CAPTCHA please:"/>
+		<string id="17045" value="Wrong CAPTCHA."/>
+		<string id="17046" value="CAPTCHA accepted."/>
 		<string id="17100" value="Gnutella: Conexión Peer-to-Peer"/>
 		<string id="17101" value="Gnutella: Conexión Leaf-to-Ultrapeer"/>
 		<string id="17102" value="Gnutella: Conexión Ultrapeer-to-Leaf"/>
@@ -3245,6 +3264,7 @@ puede comenzar a transferir en cualquier momento.</text>
 		<string id="17128" value="Servidor eDonkey"/>
 		<string id="17129" value="eDonkey (LowID)"/>
 		<string id="17130" value="eDonkey (HighID)"/>
+		<string id="17131" value="DC++ Hub Connection"/>
 		<string id="17216" value="Iniciando conexión a servidor eDonkey en %s..."/>
 		<string id="17217" value="Conectado en servidor eDonkey %s, Negociando conexión (handshaking)..."/>
 		<string id="17218" value="ED2K[%s] %s"/>
@@ -3328,6 +3348,7 @@ puede comenzar a transferir en cualquier momento.</text>
 		<string id="18512" value="¿Estás seguro que deseas cancelar/abortar todas las descargas en este grupo?"/>
 		<string id="18513" value="El valor del hash de eDonkey asignado no es válido. Por favor, revíselo e intentelo de nuevo."/>
 		<string id="18514" value="¿Estás seguro de cambiar el SHA1?"/>
+		<string id="18515" value="The selected download item currently has some Task attached, please wait and do it later."/>
 		<string id="19000" value="El Acceso Remoto esta deshabilitado."/>
 		<string id="19001" value="Debes Seleccionar un nombre de usuario y contraseña."/>
 		<string id="19002" value="No se puede aceptar conexiones, URL no disponible."/>
@@ -3457,7 +3478,7 @@ puede comenzar a transferir en cualquier momento.</text>
 			<control caption="_Buscar:"/>
 			<control caption="Expandir multiples fuentes por defecto"/>
 			<control caption="Cambiar a vista de transferencias en descarga"/>
-			<control caption="Esconder la barra de al lado al empezar la busqueda"/>
+			<control caption="Esconder la barra lateral al empezar la busqueda"/>
 			<control caption="Filtrar contenido de adultos en las búsquedas"/>
 			<control caption="T_ooltips(mensajes emergentes):"/>
 			<control/>
@@ -3488,7 +3509,7 @@ puede comenzar a transferir en cualquier momento.</text>
 			<control/>
 			<control caption="dias"/>
 			<control caption="Borrar historial"/>
-			<control caption="_Seguros de abrir:"/>
+			<control caption="Extensiones _seguras:"/>
 			<control/>
 			<control caption="_Agregar"/>
 			<control caption="_Eliminar"/>
@@ -3500,7 +3521,7 @@ puede comenzar a transferir en cualquier momento.</text>
 			<control/>
 			<control/>
 			<control caption="Crear huellas de archivos (ghost files) cuando sean borrados"/>
-			<control caption="Smart video series detection"/>
+			<control caption="Deteccion inteligente de videos en serie"/>
 		</dialog>
 		<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="Reproductor">
 			<control caption="_Opciones:"/>
@@ -3513,9 +3534,9 @@ puede comenzar a transferir en cualquier momento.</text>
 			<control caption="_Eliminar"/>
 			<control caption="Plugin de _Visualización de Audio:"/>
 			<control caption="_Seleccionar Plugin..."/>
-			<control caption="Programador de _Media"/>
-			<control caption="Seleccionar un programa de medios:"/>
-			<control caption="Nota: Seleccionar un programa de medios externo va a automaticamente deshabilitar todos los Plugins de Visualización y de Medios!"/>
+			<control caption="Reproductor _multimedia"/>
+			<control caption="Seleccionar un programa reproductor:"/>
+			<control caption="Nota: Seleccionar un programa externo deshabilitará todos los Plugins de Visualización y de Medios!"/>
 		</dialog>
 		<dialog name="CCommunitySettingsPage" cookie="BuStBuBuBuBuBuBu" caption="Comunidad">
 			<control caption="Mi _Perfil:"/>
@@ -3528,37 +3549,37 @@ puede comenzar a transferir en cualquier momento.</text>
 			<control caption="Censurar cosas obscenas en chat"/>
 		</dialog>
 		<dialog name="CIRCSettingsPage" cookie="BuBuBuEdStBuStCoBuBuStBuStBuStBuStBuStBuStBuStEdStEdStEdStEdStEdStEd" caption="Chat">
-			<control caption="Client _Options:"/>
-			<control caption="Show chat integration"/>
-			<control caption="Flood protection:"/>
+			<control caption="_Opciones del Cliente:"/>
+			<control caption="Mostrar integracion en el chat"/>
+			<control caption="Proteccion contra flooding:"/>
 			<control/>
-			<control caption="lines per second"/>
-			<control caption="Show timestamp"/>
-			<control caption="Screen Font:"/>
+			<control caption="lineas por segundo"/>
+			<control caption="Mostrar hora de envio"/>
+			<control caption="Tipo de letra:"/>
 			<control/>
-			<control caption="_Colors:"/>
+			<control caption="_Colores:"/>
 			<control/>
-			<control caption="Server messages"/>
+			<control caption="Mensajes del servidor"/>
 			<control/>
-			<control caption="Topics"/>
+			<control caption="Temas"/>
 			<control/>
-			<control caption="Channel Actions"/>
+			<control caption="Acciones del Canal"/>
 			<control/>
-			<control caption="Notices"/>
+			<control caption="Avisos"/>
 			<control/>
-			<control caption="Chat background"/>
+			<control caption="Color del fondo"/>
 			<control/>
-			<control caption="Text"/>
-			<control caption="Connection _Settings:"/>
+			<control caption="Texto"/>
+			<control caption="Dato_s de conexión:"/>
 			<control caption="Nickname:"/>
 			<control/>
-			<control caption="User name:"/>
+			<control caption="Nombre de usuario:"/>
 			<control/>
-			<control caption="Alternate Nickname:"/>
+			<control caption="Nickname alternativo:"/>
 			<control/>
-			<control caption="Real name:"/>
+			<control caption="Nombre real:"/>
 			<control/>
-			<control caption="Server:"/>
+			<control caption="Servidor:"/>
 			<control/>
 			<control caption="Puerto:"/>
 			<control/>
@@ -3613,7 +3634,7 @@ puede comenzar a transferir en cualquier momento.</text>
 			<control caption="_Carpeta de archivos completados:"/>
 			<control/>
 			<control/>
-			<control caption="Scan every completed file with AntiVirus"/>
+			<control caption="Escanear con el antivirus cada archivo completado"/>
 			<control caption="Predefinidos:"/>
 			<control/>
 			<control caption="_Número de descargas:"/>
@@ -3662,7 +3683,7 @@ puede comenzar a transferir en cualquier momento.</text>
 		</dialog>
 		<dialog name="CRemoteSettingsPage" cookie="BuStBuBuStBuStEdStEd" caption="Acceso Remoto">
 			<control caption="_Guía:"/>
-			<control caption="El Acceso Remoto de Shareaza te permite dejar Shareaza corriendo en tu PC, y controlarlo usando un navegador. Vas a necesitar habilitar aceptar conexiones entrantes para usar esta característica (Ej: Configurar tu router, etc)."/>
+			<control caption="El Acceso Remoto de Shareaza te permite dejar Shareaza ejecutandose en tu PC, y controlarlo usando un navegador. Vas a necesitar habilitar aceptar conexiones entrantes para usar esta característica (Ej: Configurar tu router, etc)."/>
 			<control caption="_Habilitar:"/>
 			<control caption="Habilitar Acceso Remoto de Shareaza:"/>
 			<control/>
@@ -3688,40 +3709,40 @@ puede comenzar a transferir en cualquier momento.</text>
 			<control caption="Configurar Gnutella"/>
 		</dialog>
 		<dialog name="CGnutellaSettingsPage" cookie="BuBuCoBuBuCoEdmsEdmsEdmsEdmsEdmsEdmsBuBuBuBuStBuStStStBuStBuStStStBu" caption="Gnutella">
-			<control caption=" Red Gnutella2:"/>
 			<control caption="Siempre conectar a Gnutella2"/>
-			<control caption="Conectar a Gnutella2 en esta sesión"/>
-			<control caption="Modo:"/>
+			<control caption="Conectar a Gnutella2 en esta sesion"/>
 			<control caption="Optimo|Leaf|Hub"/>
-			<control caption="Conexiones G_2:"/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control/>
-			<control caption="Modo:"/>
+			<control caption="Siempre conectar a Gnutella1"/>
+			<control caption="Conectar a Gnutella1 en esta sesion"/>
 			<control caption="Optimo|Leaf|Ultrapeer"/>
-			<control caption="Conexiones G_1:"/>
-			<control caption="Red Gnutella2:"/>
-			<control caption="Mode: "/>
-			<control caption="G_2 Connections:"/>
-			<control caption="Ultrapeer a Leaf:"/>
-			<control caption="Hub to Leaf:"/>
-			<control caption="Hub to Hub:"/>
-			<control caption="Peer a Peer:"/>
-			<control caption="Mode: "/>
-			<control caption="G_1 Connections:"/>
-			<control caption="_Compresión de Enlace:"/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
 			<control caption="Hub a Leaf"/>
 			<control caption="Leaf a Hub"/>
 			<control caption="Hub a Hub"/>
+			<control caption="Red Gnutella2:"/>
+			<control caption="Modo:"/>
+			<control caption="Conexiones a G_2:"/>
+			<control caption="Leaf a Hub:"/>
+			<control caption="Hub a Leaf:"/>
+			<control caption="Hub a Hub:"/>
+			<control caption="Red Gnutella1:"/>
+			<control caption="Modo:"/>
+			<control caption="Conexiones a G_1:"/>
+			<control caption="Leaf a Ultrapeer:"/>
+			<control caption="Ultrapeer a Leaf:"/>
+			<control caption="Peer a Peer:"/>
+			<control caption="Compresion del en_lace:"/>
 		</dialog>
 		<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuBuStEdmsStBuStBu" caption="eDonkey">
 			<control caption="Red de _eDonkey:"/>
@@ -3800,7 +3821,7 @@ puede comenzar a transferir en cualquier momento.</text>
 			<control/>
 			<control/>
 			<control/>
-			<control caption="Set Default"/>
+			<control caption="Valor por defecto"/>
 			<control caption="Configuración:"/>
 			<control caption="Valor:"/>
 			<control caption="Descripción:"/>
@@ -3845,7 +3866,7 @@ puede comenzar a transferir en cualquier momento.</text>
 			<control/>
 			<control caption="Aceptar"/>
 			<control caption="Cancelar"/>
-			<control caption="Dar premio a usuarios que suben"/>
+			<control caption="Favorecer a los usuarios que mas suben"/>
 		</dialog>
 		<dialog name="CWizardWelcomePage" cookie="StStStStStStStStStStStSt" caption="Bienvenido a Shareaza">
 			<control caption="Bienvenido a Shareaza!"/>
@@ -3898,7 +3919,7 @@ puede comenzar a transferir en cualquier momento.</text>
 			<control/>
 			<control caption="y tengo:"/>
 			<control caption=" (escoge)"/>
-			<control caption=" (escoge)| jovén| jovencita| hombre| mujer"/>
+			<control caption=" (escoge)| joven| jovencita| hombre| mujer"/>
 			<control caption="de:"/>
 			<control/>
 			<control/>
@@ -3952,7 +3973,7 @@ puede comenzar a transferir en cualquier momento.</text>
 			<control caption="Nombre real:"/>
 			<control/>
 			<control/>
-			<control caption="_Vitales:"/>
+			<control caption="_Acerca de ti:"/>
 			<control caption="|Hombre|Mujer"/>
 			<control caption="Sexo:"/>
 			<control/>
@@ -4421,35 +4442,35 @@ puede comenzar a transferir en cualquier momento.</text>
 			<control/>
 			<control/>
 			<control/>
-			<control caption="WARNING: This dialog provides advanced download editing features for power users which if used incorrectly can and probably will cause corruption."/>
-			<control caption="Filename and Si_ze:"/>
+			<control caption="ADVERTENCIA: Estas opciones para usuarios avanzados permiten editar parametros de descarga que pueden corromper las descargas si no se usan con cuidado."/>
+			<control caption="Nombre y tamaño del archiv_o:"/>
 			<control caption="Nombre de archivo:"/>
 			<control caption="File size (Byte):"/>
 			<control caption="_URNs:"/>
 			<control caption="_Acciones:"/>
 			<control caption="Olvidar el estado de verificación actual (y reverificar)"/>
-			<control caption="Asumir completados y reverificar (para recuperar descargas)"/>
+			<control caption="Asumir que ha completado y reverificar (para recuperar descargas)"/>
 			<control caption="Olvidar todas las fuentes"/>
 			<control caption="Juntar con archivo local y verificar"/>
-			<control caption="Cancelar download but save incomplete file(s)"/>
+			<control caption="Cancelar la descarga pero grabar el archivo(s) incompleto"/>
 		</dialog>
 		<dialog name="CDownloadActionsPage" cookie="StStStStStEdEdBuBuBuStStSt" caption="Actions">
-			<control caption="Forget current verification status and reverify"/>
-			<control caption="Assume file is 100% complete and reverify"/>
-			<control caption="Forget all known sources"/>
-			<control caption="Merge with local file and verify"/>
-			<control caption="Cancel download but save incomplete file(s)"/>
+			<control caption="Olvidar el estado de verificacion y reverificar"/>
+			<control caption="Asumir que ha completado y reverificar"/>
+			<control caption="Olvidar todas las fuentes"/>
+			<control caption="Juntar con archivo local y verificar"/>
+			<control caption="Cancelar la descarga pero grabar el archivo(s) incompleto"/>
 			<control/>
 			<control/>
-			<control caption="Erase"/>
-			<control caption="_Actions:"/>
-			<control caption="Data _Eraser:"/>
-			<control caption="Byte range:"/>
-			<control caption="to"/>
-			<control caption="WARNING: This dialog provides advanced download editing features for power users which if used incorrectly can and probably will cause corruption."/>
+			<control caption="Borrar"/>
+			<control caption="_Acciones:"/>
+			<control caption="Borrador de _datos:"/>
+			<control caption="Rango de bytes:"/>
+			<control caption="hasta"/>
+			<control caption="ADVERTENCIA: Estas opciones para usuarios avanzados permiten editar parametros de descarga que pueden corromper las descargas si no se usan con cuidado."/>
 		</dialog>
 		<dialog name="CTorrentSeedDlg" cookie="StBuBuBuStms" caption="Abrir Archivo Torrent">
-			<control caption="Has abierto un archivo Torrent.  ¿Deseas volver a bajar sus componentes?, o ¿volverlo a compartir?"/>
+			<control caption="Has abierto un archivo Torrent.  ¿Deseas volver a bajar sus componentes o volverlo a compartir?"/>
 			<control caption="Descargar archivo"/>
 			<control caption="Compartir"/>
 			<control caption="Cancelar"/>
@@ -4485,9 +4506,9 @@ puede comenzar a transferir en cualquier momento.</text>
 			<control caption="_Refrescar"/>
 			<control/>
 			<control caption="Completados (Seeds):"/>
-			<control caption="_Current Tracker:"/>
+			<control caption="Tracker a_ctual:"/>
 			<control caption="Incompleto:"/>
-			<control caption="Incomplete:"/>
+			<control caption="Incompleto:"/>
 			<control caption="_Actualizar"/>
 		</dialog>
 		<dialog name="CDownloadGroupDlg" cookie="BuBuEdCoBuCoBuBuEdBuBuBuBuBuBu" caption="Propiedades del Grupo de Descarga">
@@ -4503,9 +4524,9 @@ puede comenzar a transferir en cualquier momento.</text>
 			<control/>
 			<control/>
 			<control caption="_Nombre:"/>
-			<control caption="_Filters:"/>
-			<control caption="_Completed File Folder:"/>
-			<control caption="_Type of file:"/>
+			<control caption="_Filtros:"/>
+			<control caption="_Carpeta de archivos completados:"/>
+			<control caption="_Tipo de archivo:"/>
 		</dialog>
 		<dialog name="CMediaVisDlg" cookie="BuSyCoBuBuBu" caption="Selecciona Visualización">
 			<control caption="Selecciona una visualización de la lista:"/>
@@ -4542,7 +4563,7 @@ puede comenzar a transferir en cualquier momento.</text>
 			<control/>
 			<control caption="Aceptar"/>
 			<control caption="Cancelar"/>
-			<control caption="Add a channel name:|Enter kick/ban reason:"/>
+			<control caption="Añadir un nombre para el canal:|Introducir la razon del kick/ban:"/>
 		</dialog>
 		<dialog name="CScheduleTaskPage" cookie="StCoBuEdmsEdmsBuBuBuBuBuStStStBuBu" caption="Acción">
 			<control/>
@@ -4557,11 +4578,11 @@ puede comenzar a transferir en cualquier momento.</text>
 			<control caption="eDonkey"/>
 			<control caption="DC++"/>
 			<control caption="BitTorrent"/>
-			<control caption="Select the event type:"/>
-			<control caption="% of _download under limit"/>
-			<control caption="% of _upload under limit"/>
+			<control caption="Seleccionar el tipo de evento:"/>
+			<control caption="% limite de _descarga"/>
+			<control caption="% limite de s_ubida"/>
 			<control caption="Redes"/>
-			<control caption="Banda Ancha"/>
+			<control caption="Ancho de banda"/>
 		</dialog>
 	</dialogs>
 	<!-- Columns Definitions -->
@@ -4601,7 +4622,7 @@ puede comenzar a transferir en cualquier momento.</text>
 			<column from="Port" to="Puerto"/>
 			<column from="Time" to="Tiempo"/>
 			<column from="Packets" to="Paquetes"/>
-			<column from="Bandwidth" to="Banda Ancha"/>
+			<column from="Bandwidth" to="Ancho de banda"/>
 			<column from="Total" to="Total"/>
 			<column from="Flow" to="Flow"/>
 			<column from="Leaves" to="Leaves"/>
@@ -4669,7 +4690,7 @@ puede comenzar a transferir en cualquier momento.</text>
 		<list name="CUploadQueueList">
 			<column from="Name" to="Nombre"/>
 			<column from="Criteria" to="Criterio"/>
-			<column from="Bandwidth" to="Banda Ancha"/>
+			<column from="Bandwidth" to="Ancho de banda"/>
 			<column from="Transfers" to="Transferencias"/>
 			<column from="Order" to="Ordenar"/>
 		</list>
@@ -4689,7 +4710,7 @@ puede comenzar a transferir en cualquier momento.</text>
 			<column from="Filename" to="Nombre de archivo"/>
 			<column from="Size" to="Tamaño"/>
 			<column from="Status" to="Estado"/>
-			<column from="Priority" to="Priority"/>
+			<column from="Priority" to="Prioridad"/>
 		</list>
 		<list name="CTorrentTrackerList">
 			<column from="Tracker" to="Rastreador(Tracker)"/>

@@ -184,6 +184,8 @@
 			<button id="ID_LIBRARY_TREE_PHYSICAL" text="Mappen"/>
 			<button id="ID_LIBRARY_TREE_VIRTUAL" text="Organiseren"/>
 		</toolbar>
+		<toolbar name="CLibraryTree.Physical">
+		</toolbar>
 		<toolbar name="CLibraryTree.Virtual">
 			<button id="ID_LIBRARY_FOLDERS" text="Bestanden delen..."/>
 		</toolbar>
@@ -208,6 +210,12 @@
 		<toolbar name="CLibraryHomeView.Virtual">
 			<button id="ID_LIBRARY_FOLDER_NEW" text="Album maken..."/>
 			<button id="ID_LIBRARY_ALBUM_DELETE" text="Album verwijderen"/>
+			<rightAlign/>
+			<separator/>
+			<control id="IDC_SEARCH_BOX" width="120"/>
+			<button id="ID_LIBRARY_SEARCH_QUICK" text="Zoeken"/>
+		</toolbar>
+		<toolbar name="CLibraryTileView.Physical">
 			<rightAlign/>
 			<separator/>
 			<control id="IDC_SEARCH_BOX" width="120"/>
@@ -270,6 +278,8 @@
 			<separator/>
 			<control id="IDC_SEARCH_BOX" width="120"/>
 			<button id="ID_LIBRARY_SEARCH_QUICK" text="Zoeken"/>
+		</toolbar>
+		<toolbar name="CLibraryCollectionView.Physical">
 		</toolbar>
 		<toolbar name="CLibraryCollectionView.Virtual">
 			<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Album afspelen"/>
@@ -1177,6 +1187,8 @@
 			<item id="ID_SHELL_MENU" text="Conte_xtmenu"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDERS" text="_Bestanden delen..."/>
+			<separator/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="._Torrent maken"/>
 		</menu>
 		<menu name="CLibraryTree.Physical">
 			<item id="ID_LIBRARY_EXPLORE" text="_Verkennen"/>
@@ -1187,6 +1199,8 @@
 			<item id="ID_LIBRARY_SCAN" text="_Scannen"/>
 			<item id="ID_LIBRARY_REBUILD" text="_Herbouwen"/>
 			<item id="ID_LIBRARY_FOLDERS" text="_Bestanden delen..."/>
+			<separator/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="._Torrent maken"/>
 			<separator/>
 			<item id="ID_SHELL_MENU" text="Conte_xtmenu"/>
 			<separator/>
@@ -2454,6 +2468,7 @@
 		<tip id="ID_LIBRARY_ENQUEUE" message="Voeg de geselecteerde bestanden toe aan je afspeellijst."/>
 		<tip id="ID_LIBRARY_EXPLORE" message="De geselecteerde mappen openen."/>
 		<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Exporteer de geselecteerde albummap naar een collectie bestand..."/>
+		<tip id="ID_LIBRARY_FOLDER_DELETE" message="Verwijder het geselecteerde album."/>
 		<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Download alle bestanden in de geselecteerde collectie."/>
 		<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Alle bestanden uit het geselecteerde album toevoegen aan je afspeellijst."/>
 		<tip id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" message="Toon en wijzig de eigenschappen van alle bestanden in de geselecteerde mappen..."/>
@@ -2863,6 +2878,7 @@
 		<string id="8335" value="Bronnen voor dit bestand zitten achter een firewall"/>
 		<string id="8336" value="Bronnen voor dit bestand kunnen instabiel zijn"/>
 		<string id="8337" value="Niet betrouwbaar"/>
+		<string id="8338" value="Gemaakt:"/>
 		<string id="13000" value="Ben je zeker dat je deze veiligheidsregels wilt verwijderen? Dit kan niet ongedaan worden gemaakt."/>
 		<string id="13001" value="Bestanden gedeeld over het internet"/>
 		<string id="16063" value="Je router automatisch instellen mislukte na 10 pogingen."/>
@@ -3217,6 +3233,9 @@
 		<string id="17041" value="Kan geen boodschap sturen, er is nog geen verbinding aangemaakt."/>
 		<string id="17042" value="Je hebt je gebruikersprofiel nog niet ingevuld. Je moet zorgen voor een profiel voordat je kunt chatten met andere gebruikers.\n\nWil je nu je profiel invullen?"/>
 		<string id="17043" value="Uploadvoorrang is verleend aan gastheer %s."/>
+		<string id="17044" value="Solve this CAPTCHA please:"/>
+		<string id="17045" value="Wrong CAPTCHA."/>
+		<string id="17046" value="CAPTCHA accepted."/>
 		<string id="17100" value="Gnutella: Peer-naar-peer verbinding"/>
 		<string id="17101" value="Gnutella: Leaf-naar-ultrapeer verbinding"/>
 		<string id="17102" value="Gnutella: Ultrapeer-naar-leaf verbinding"/>
@@ -3248,6 +3267,7 @@
 		<string id="17128" value="eDonkey Server"/>
 		<string id="17129" value="eDonkey (LowID)"/>
 		<string id="17130" value="eDonkey (HighID)"/>
+		<string id="17131" value="Netwerk"/>
 		<string id="17216" value="Verbinding met eDonkey Server &quot;%s&quot; wordt aangemaakt..."/>
 		<string id="17217" value="Verbonden met eDonkey Server %s, bezig met handschudden..."/>
 		<string id="17218" value="ED2K [%s] %s"/>
@@ -3331,6 +3351,7 @@
 		<string id="18512" value="Annuleer download maar bewaar incomplete bestand(en)"/>
 		<string id="18513" value="Je hebt een eDonkey hash waarde ingevoerd, maar het is ongeldig. Controleer het en probeer het nog een keer."/>
 		<string id="18514" value="Je hebt een SHA1 hash waarde ingegeven die anders is als degene die momenteel met deze download is geassocieerd. Weet je zeker dat je de SHA1 hash nu wilt veranderen?"/>
+		<string id="18515" value="The selected download item currently has some Task attached, please wait and do it later."/>
 		<string id="19000" value="Web Interface is uitgeschakeld."/>
 		<string id="19001" value="Je moet een gebruikersnaam en wachtwoord kiezen."/>
 		<string id="19002" value="Niet mogelijk om verbindingen te accepteren, de URL is niet beschikbaar."/>

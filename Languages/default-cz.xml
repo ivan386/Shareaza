@@ -184,6 +184,8 @@
 			<button id="ID_LIBRARY_TREE_PHYSICAL" text="Složky"/>
 			<button id="ID_LIBRARY_TREE_VIRTUAL" text="Organizér"/>
 		</toolbar>
+		<toolbar name="CLibraryTree.Physical">
+		</toolbar>
 		<toolbar name="CLibraryTree.Virtual">
 			<button id="ID_LIBRARY_FOLDERS" text="Sdílené soubory..."/>
 		</toolbar>
@@ -208,6 +210,12 @@
 		<toolbar name="CLibraryHomeView.Virtual">
 			<button id="ID_LIBRARY_FOLDER_NEW" text="Vytvořit album..."/>
 			<button id="ID_LIBRARY_ALBUM_DELETE" text="Vymazat album"/>
+			<rightAlign/>
+			<separator/>
+			<control id="IDC_SEARCH_BOX" width="120"/>
+			<button id="ID_LIBRARY_SEARCH_QUICK" text="Najít"/>
+		</toolbar>
+		<toolbar name="CLibraryTileView.Physical">
 			<rightAlign/>
 			<separator/>
 			<control id="IDC_SEARCH_BOX" width="120"/>
@@ -270,6 +278,8 @@
 			<separator/>
 			<control id="IDC_SEARCH_BOX" width="120"/>
 			<button id="ID_LIBRARY_SEARCH_QUICK" text="Najít"/>
+		</toolbar>
+		<toolbar name="CLibraryCollectionView.Physical">
 		</toolbar>
 		<toolbar name="CLibraryCollectionView.Virtual">
 			<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Přehrát album"/>
@@ -1177,6 +1187,8 @@
 			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDERS" text="Sdílené _soubory..."/>
+			<separator/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="Vytvořit soubor .torrent"/>
 		</menu>
 		<menu name="CLibraryTree.Physical">
 			<item id="ID_LIBRARY_EXPLORE" text="_Průzkumník"/>
@@ -1187,6 +1199,8 @@
 			<item id="ID_LIBRARY_SCAN" text="Pro_hlédnout"/>
 			<item id="ID_LIBRARY_REBUILD" text="O_bnovit"/>
 			<item id="ID_LIBRARY_FOLDERS" text="Sdílené _soubory..."/>
+			<separator/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="Vytvořit soubor .torrent"/>
 			<separator/>
 			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 			<separator/>
@@ -2456,6 +2470,7 @@
 		<tip id="ID_LIBRARY_ENQUEUE" message="Přidat vybraný soubor(y) do vašeho playlistu."/>
 		<tip id="ID_LIBRARY_EXPLORE" message="Otevřít označenou složku(y)."/>
 		<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Exportovat označené album do složky se sbírkou souborů..."/>
+		<tip id="ID_LIBRARY_FOLDER_DELETE" message="Vymazat označené album ve složce."/>
 		<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Stáhnout všechny soubory v označené sbírce."/>
 		<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Přidat všechny soubory ve vybraném albu složky k vašemu playlistu."/>
 		<tip id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" message="Prohlížet a editovat vlastnosti všech souborů ve vybrané složce..."/>
@@ -2865,6 +2880,7 @@
 		<string id="8335" value="Zdroje pro tento soubor jsou za firewallem"/>
 		<string id="8336" value="Zdroje pro tento soubor mohou být nestabilní"/>
 		<string id="8337" value="Nedůvěryhodný"/>
+		<string id="8338" value="Vytvořit:"/>
 		<string id="13000" value="Checte smazat vybraná bezpoečnostní pravidla? Tato operace je nevratná."/>
 		<string id="13001" value="Soubory sdílené v Internetu"/>
 		<string id="16063" value="Mapování UPnP portu selhalo po 10 pokusech."/>
@@ -3219,6 +3235,9 @@
 		<string id="17041" value="Nelze poslat zprávu, spojení ještě nebylo navázáno."/>
 		<string id="17042" value="Ještě jste nevyplnili váš profil uživatele. Nejprve musíte poskytnout váš profil, teprve potom si můžete povídat s dalšími uživateli.\n\nChcete hned vyplnit váš profil?"/>
 		<string id="17043" value="Udělení přednosti odesílání pro hosta %s."/>
+		<string id="17044" value="Solve this CAPTCHA please:"/>
+		<string id="17045" value="Wrong CAPTCHA."/>
+		<string id="17046" value="CAPTCHA accepted."/>
 		<string id="17100" value="Gnutella: Připojení Peer-to-Peer"/>
 		<string id="17101" value="Gnutella: Připojení Leaf-to-Ultrapeer"/>
 		<string id="17102" value="Gnutella: Připojení Ultrapeer-to-Leaf"/>
@@ -3250,6 +3269,7 @@
 		<string id="17128" value="Server eDonkey"/>
 		<string id="17129" value="eDonkey (LowID)"/>
 		<string id="17130" value="eDonkey (HighID)"/>
+		<string id="17131" value="Připojení"/>
 		<string id="17216" value="Zavádí se spojení se serverem eDonkey u %s..."/>
 		<string id="17217" value="Připojuji k serveru eDonkey server %s, komunikuji..."/>
 		<string id="17218" value="ED2K[%s] %s"/>
@@ -3333,6 +3353,7 @@
 		<string id="18512" value="Opravdu chcete zrušit/přerušit všechna stahování v této skupině?"/>
 		<string id="18513" value="Zadali jste eDonkey hash, který je nesprávný. Prosím překontrolujte to a zkuste znovu."/>
 		<string id="18514" value="Zadali jste hodnotu SHA1 hash která je odlišná od aktuální hodnoty. Opravdu teď chcete změnit SHA1 hash?"/>
+		<string id="18515" value="The selected download item currently has some Task attached, please wait and do it later."/>
 		<string id="19000" value="Vzdálený přístup je vypnutý."/>
 		<string id="19001" value="Musíte zadat uživatelské jméno a heslo."/>
 		<string id="19002" value="Nelze přijmout spojení, URL je nedostupné."/>

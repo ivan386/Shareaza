@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2011-03-14 05:50+0000\n"
+"POT-Creation-Date: 2011-05-03 13:54+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -1503,6 +1503,13 @@ msgstr "移除(_R)"
 msgid "S_hell menu"
 msgstr "外部菜单(_H)"
 
+#: clibrarytree.physical.basic;item;id_library_createtorrent
+#: clibrarytree.physical;item;id_library_createtorrent
+#: clibraryfileview.physical;44;item;id_library_createtorrent
+#: clibraryfileview.virtual;50;item;id_library_createtorrent
+msgid "Create ._torrent File"
+msgstr "创建种子文件(_T)"
+
 #: clibrarytree.physical;item;id_library_explore
 msgid "_Explore"
 msgstr "浏览(_E)"
@@ -1603,11 +1610,6 @@ msgstr "本地化元数据(_L)"
 #: clibraryfileview.virtual;item;id_library_refresh_metadata
 msgid "_Refresh Metadata"
 msgstr "刷新元数据(_R)"
-
-#: clibraryfileview.physical;44;item;id_library_createtorrent
-#: clibraryfileview.virtual;50;item;id_library_createtorrent
-msgid "Create ._torrent File"
-msgstr "创建种子文件(_T)"
 
 #: clibraryfileview.physical;item;id_library_columns
 #: clibraryfileview.virtual;item;id_library_columns
@@ -3564,7 +3566,7 @@ msgstr "导入电驴部分下载..."
 msgid "Add a new folder to your library..."
 msgstr "添加新的文件夹到您的收藏..."
 
-#: message;id_library_album_delete
+#: message;id_library_album_delete message;id_library_folder_delete
 msgid "Delete the selected album folder."
 msgstr "删除选定的专辑文件夹。"
 
@@ -5189,6 +5191,11 @@ msgstr "此文件来源可能不稳定"
 msgid "Untrusted"
 msgstr "未受信任"
 
+#: string;8338
+#, fuzzy
+msgid "Free:"
+msgstr "已经创建:"
+
 #: string;13000
 msgid "Are you sure you want to delete the selected security rules? This cannot be undone."
 msgstr "您是否确定要删除选中的安全规则？该操作无法还原。"
@@ -6744,6 +6751,18 @@ msgstr ""
 msgid "Granted upload priority to host %s."
 msgstr "确定 %s 主机的上传优先级。"
 
+#: string;17044
+msgid "Solve this CAPTCHA please:"
+msgstr ""
+
+#: string;17045
+msgid "Wrong CAPTCHA."
+msgstr ""
+
+#: string;17046
+msgid "CAPTCHA accepted."
+msgstr ""
+
 #: string;17100
 msgid "Gnutella: Peer-to-Peer Connection"
 msgstr "Gnutella:对等连接"
@@ -6867,6 +6886,11 @@ msgstr "edonkey (LowID)"
 #: string;17130
 msgid "eDonkey (HighID)"
 msgstr "edonkey (HighID)"
+
+#: string;17131
+#, fuzzy
+msgid "DC++ Hub Connection"
+msgstr "连接"
 
 #: string;17216
 msgid "Initiating connection to eDonkey server at %s..."
@@ -7205,6 +7229,10 @@ msgstr "你输入了 %s 的哈希值，可是无效。请检查并重试。"
 #: string;18514
 msgid "You have provided an %s hash value which is different to the one currently associated with this download. Are you sure you want to change the %s hash now?"
 msgstr "您提供了一个和当前 %s 下载不同的哈希值。您是否确认想要立即改变 %s 的哈希值？"
+
+#: string;18515
+msgid "The selected download item currently has some Task attached, please wait and do it later."
+msgstr ""
 
 #: string;19000
 msgid "Remote access is disabled."

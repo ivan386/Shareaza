@@ -184,6 +184,8 @@
 			<button id="ID_LIBRARY_TREE_PHYSICAL" text="物理フォルダ"/>
 			<button id="ID_LIBRARY_TREE_VIRTUAL" text="仮想フォルダ"/>
 		</toolbar>
+		<toolbar name="CLibraryTree.Physical">
+		</toolbar>
 		<toolbar name="CLibraryTree.Virtual">
 			<button id="ID_LIBRARY_FOLDERS" text="共有ファイル..."/>
 		</toolbar>
@@ -208,6 +210,12 @@
 		<toolbar name="CLibraryHomeView.Virtual">
 			<button id="ID_LIBRARY_FOLDER_NEW" text="アルバムを作成..."/>
 			<button id="ID_LIBRARY_ALBUM_DELETE" text="アルバムを削除"/>
+			<rightAlign/>
+			<separator/>
+			<control id="IDC_SEARCH_BOX" width="120"/>
+			<button id="ID_LIBRARY_SEARCH_QUICK" text="検索"/>
+		</toolbar>
+		<toolbar name="CLibraryTileView.Physical">
 			<rightAlign/>
 			<separator/>
 			<control id="IDC_SEARCH_BOX" width="120"/>
@@ -270,6 +278,8 @@
 			<separator/>
 			<control id="IDC_SEARCH_BOX" width="120"/>
 			<button id="ID_LIBRARY_SEARCH_QUICK" text="検索"/>
+		</toolbar>
+		<toolbar name="CLibraryCollectionView.Physical">
 		</toolbar>
 		<toolbar name="CLibraryCollectionView.Virtual">
 			<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="アルバムを再生"/>
@@ -1177,6 +1187,8 @@
 			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDERS" text="共有ファイル(_F)..."/>
+			<separator/>
+			<item id="ID_LIBRARY_CREATETORRENT" text=".torrentファイルを作成"/>
 		</menu>
 		<menu name="CLibraryTree.Physical">
 			<item id="ID_LIBRARY_EXPLORE" text="エクスプローラ(_E)"/>
@@ -1187,6 +1199,8 @@
 			<item id="ID_LIBRARY_SCAN" text="スキャン(_C)"/>
 			<item id="ID_LIBRARY_REBUILD" text="再構成(_B)"/>
 			<item id="ID_LIBRARY_FOLDERS" text="共有ファイル(_F)..."/>
+			<separator/>
+			<item id="ID_LIBRARY_CREATETORRENT" text=".torrentファイルを作成"/>
 			<separator/>
 			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 			<separator/>
@@ -2448,6 +2462,7 @@
 		<tip id="ID_LIBRARY_ENQUEUE" message="選択したファイルをメディア再生リストに追加します"/>
 		<tip id="ID_LIBRARY_EXPLORE" message="選択したフォルダを開きます"/>
 		<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="選択したアルバムフォルダをコレクションファイルにエクスポートします..."/>
+		<tip id="ID_LIBRARY_FOLDER_DELETE" message="選択したアルバムフォルダを削除します"/>
 		<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="選択したコレクション内の全てのファイルをダウンロードします"/>
 		<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="選択したアルバムフォルダ内の全てのファイルを再生リストに追加します"/>
 		<tip id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" message="選択したフォルダ内の全てのファイルのプロパティを表示・編集します..."/>
@@ -2857,6 +2872,7 @@
 		<string id="8335" value="このファイル用のソースはファイアーウォールされています"/>
 		<string id="8336" value="このファイル用のソースは不安定である可能性があります"/>
 		<string id="8337" value="未検証"/>
+		<string id="8338" value="作成:"/>
 		<string id="13000" value="Are you sure you want to delete the selected security rules? This cannot be undone."/>
 		<string id="13001" value="Files shared over the Internet"/>
 		<string id="16063" value="UPnP port mapping failed after 10 attempts."/>
@@ -3211,6 +3227,9 @@
 		<string id="17041" value="接続がまだ確立していない為メッセージを送信できませんでした"/>
 		<string id="17042" value="ユーザプロフィールが記入されていません。 チャットする前にあなたのプロフィールを公開しなければなりません\n\n今すぐプロフィールを記入しますか?"/>
 		<string id="17043" value="ホスト %s にアップロード優先権を与えました"/>
+		<string id="17044" value="Solve this CAPTCHA please:"/>
+		<string id="17045" value="Wrong CAPTCHA."/>
+		<string id="17046" value="CAPTCHA accepted."/>
 		<string id="17100" value="Gnutella: ピア・ツー・ピア 接続"/>
 		<string id="17101" value="Gnutella: リーフ→ウルトラピア 接続"/>
 		<string id="17102" value="Gnutella: ウルトラピア→リーフ 接続"/>
@@ -3242,6 +3261,7 @@
 		<string id="17128" value="eDonkey2000サーバ"/>
 		<string id="17129" value="eDonkey2000(LowID)"/>
 		<string id="17130" value="eDonkey2000(HighID)"/>
+		<string id="17131" value="接続"/>
 		<string id="17216" value="%s でeDonkey2000サーバーへの接続を開始しています..."/>
 		<string id="17217" value="eDonkey2000サーバー %s へ接続しました。ハンドシェイクしています..."/>
 		<string id="17218" value="ED2K[%s] %s"/>
@@ -3325,6 +3345,7 @@
 		<string id="18512" value="このグループの全てのダウンロードをキャンセル/中止してよろしいですか?"/>
 		<string id="18513" value="eDonkey2000ハッシュ値を入力しましたが、この値は無効です。正確な値かどうか確認して再試行して下さい"/>
 		<string id="18514" value="現在このダウンロードと関連づけられているものとは異なるSHA1ハッシュ値を与えました。 本当にSHA1ハッシュを変更して宜しいですか?"/>
+		<string id="18515" value="The selected download item currently has some Task attached, please wait and do it later."/>
 		<string id="19000" value="リモートアクセスが無効になりました"/>
 		<string id="19001" value="ユーザー名とパスワードを入力しなければなりません"/>
 		<string id="19002" value="接続を受け付けることができません。URLが利用不能です"/>

@@ -184,6 +184,8 @@
 			<button id="ID_LIBRARY_TREE_PHYSICAL" text="Aplankai"/>
 			<button id="ID_LIBRARY_TREE_VIRTUAL" text="Katalogai"/>
 		</toolbar>
+		<toolbar name="CLibraryTree.Physical">
+		</toolbar>
 		<toolbar name="CLibraryTree.Virtual">
 			<button id="ID_LIBRARY_FOLDERS" text="Bendrinti failus..."/>
 		</toolbar>
@@ -208,6 +210,12 @@
 		<toolbar name="CLibraryHomeView.Virtual">
 			<button id="ID_LIBRARY_FOLDER_NEW" text="Sukurti albumą..."/>
 			<button id="ID_LIBRARY_ALBUM_DELETE" text="Šalinti albumą"/>
+			<rightAlign/>
+			<separator/>
+			<control id="IDC_SEARCH_BOX" width="120"/>
+			<button id="ID_LIBRARY_SEARCH_QUICK" text="Ieškoti"/>
+		</toolbar>
+		<toolbar name="CLibraryTileView.Physical">
 			<rightAlign/>
 			<separator/>
 			<control id="IDC_SEARCH_BOX" width="120"/>
@@ -270,6 +278,8 @@
 			<separator/>
 			<control id="IDC_SEARCH_BOX" width="120"/>
 			<button id="ID_LIBRARY_SEARCH_QUICK" text="Ieškoti"/>
+		</toolbar>
+		<toolbar name="CLibraryCollectionView.Physical">
 		</toolbar>
 		<toolbar name="CLibraryCollectionView.Virtual">
 			<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Atverti albumą"/>
@@ -1177,6 +1187,8 @@
 			<item id="ID_SHELL_MENU" text="Aplinkos _meniu"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDERS" text="_Bendrinti failus..."/>
+			<separator/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="Sukurti .torrent failą"/>
 		</menu>
 		<menu name="CLibraryTree.Physical">
 			<item id="ID_LIBRARY_EXPLORE" text="P_eržvelgti"/>
@@ -1187,6 +1199,8 @@
 			<item id="ID_LIBRARY_SCAN" text="S_kenuoti"/>
 			<item id="ID_LIBRARY_REBUILD" text="Per_daryti"/>
 			<item id="ID_LIBRARY_FOLDERS" text="_Bendrinti failus..."/>
+			<separator/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="Sukurti .torrent failą"/>
 			<separator/>
 			<item id="ID_SHELL_MENU" text="Aplinkos _meniu"/>
 			<separator/>
@@ -2447,6 +2461,7 @@
 		<tip id="ID_LIBRARY_ENQUEUE" message="Įtraukti pasirinktą failą(-us) į grojaraštį."/>
 		<tip id="ID_LIBRARY_EXPLORE" message="Atverti pasirinktą aplanką(-us)."/>
 		<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Eksportuoti pasirinktą albumo aplanką į rinkinio failų komplektą..."/>
+		<tip id="ID_LIBRARY_FOLDER_DELETE" message="Pašalinti pasirinktą albumo katalogą."/>
 		<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Parsisiųsti visus failus iš pasirinkto rinkinio."/>
 		<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Įtraukti visus failus iš pasirinkto albumo katalogo(-ų) į grojaraštį."/>
 		<tip id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" message="Peržiūrėti ir taisyti visų failų ypatybes pasirinktame aplanke(-uose)..."/>
@@ -2856,6 +2871,7 @@
 		<string id="8335" value="Šio failo šaltiniai yra už užkardos"/>
 		<string id="8336" value="Šio failo šaltiniai gali siųsti nestabiliai"/>
 		<string id="8337" value="Patikimas"/>
+		<string id="8338" value="Sukurtas:"/>
 		<string id="13000" value="Ar tikrai norite ištrinti pasirinktas saugos taisykles? Šio žingsnio negalėsite atšaukti."/>
 		<string id="13001" value="Failai, bendrinami internetu"/>
 		<string id="16063" value="Prievado peradresavimas naudojant UPnP buvo nesėkmingas po 10 bandymų."/>
@@ -3210,6 +3226,9 @@
 		<string id="17041" value="Neįmanoma nusiųsti žinutės, ryšys dar nėra užmegztas."/>
 		<string id="17042" value="Jūs dar neužpildėte savo profilio. Jūs privalote pateikti savo profilį naudotojams prieš kalbantis su jais.\n\nAr norėtumėte dabar užpildyti savo profilį?"/>
 		<string id="17043" value="Suteikta išsiuntimo pirmenybė adresatui %s."/>
+		<string id="17044" value="Solve this CAPTCHA please:"/>
+		<string id="17045" value="Wrong CAPTCHA."/>
+		<string id="17046" value="CAPTCHA accepted."/>
 		<string id="17100" value="Gnutella: Ryšys partneris-partneris"/>
 		<string id="17101" value="Gnutella: Ryšys atšaka-vedantysis"/>
 		<string id="17102" value="Gnutella: Ryšys vedantysis-atšaka"/>
@@ -3241,6 +3260,7 @@
 		<string id="17128" value="eDonkey serveris"/>
 		<string id="17129" value="eDonkey (žemas ID)"/>
 		<string id="17130" value="eDonkey (aukštas ID)"/>
+		<string id="17131" value="Susijungimai"/>
 		<string id="17216" value="Užmezgamas ryšys su eDonkey serveriu %s..."/>
 		<string id="17217" value="Ryšys su eDonkey serveriu %s užmegztas, patvirtinama..."/>
 		<string id="17218" value="ED2K[%s] %s"/>
@@ -3324,6 +3344,7 @@
 		<string id="18512" value="Atšaukti siuntimą bet išsaugoti dalinį failą(-us)"/>
 		<string id="18513" value="Jūs įrašėte eDonkey maišos reikšmę, tačiau ji yra neteisinga. Pasitikrinkite ir mėginkite dar kartą."/>
 		<string id="18514" value="Jūs pateikėte SHA1 maišos reikšmę, kuri skiriasi nuo reikšmės, priskirtos šiam parsisiunčiamam failui. Ar tikrai įsitikinę, kad norite pakeisti SHA1 maišą?"/>
+		<string id="18515" value="The selected download item currently has some Task attached, please wait and do it later."/>
 		<string id="19000" value="Nuotolinė prieiga neįgalinta."/>
 		<string id="19001" value="Jūs privalote įrašyti naudotojo vardą ir slaptažodį."/>
 		<string id="19002" value="Neįmanoma priimti susijungimų, nuoroda nepasiekiama."/>

@@ -184,6 +184,8 @@
 			<button id="ID_LIBRARY_TREE_PHYSICAL" text="Mapper"/>
 			<button id="ID_LIBRARY_TREE_VIRTUAL" text="Organisert"/>
 		</toolbar>
+		<toolbar name="CLibraryTree.Physical">
+		</toolbar>
 		<toolbar name="CLibraryTree.Virtual">
 			<button id="ID_LIBRARY_FOLDERS" text="Del filer..."/>
 		</toolbar>
@@ -208,6 +210,12 @@
 		<toolbar name="CLibraryHomeView.Virtual">
 			<button id="ID_LIBRARY_FOLDER_NEW" text="Ny mappe"/>
 			<button id="ID_LIBRARY_ALBUM_DELETE" text="Slett mappe"/>
+			<rightAlign/>
+			<separator/>
+			<control id="IDC_SEARCH_BOX" width="120"/>
+			<button id="ID_LIBRARY_SEARCH_QUICK" text="Søk"/>
+		</toolbar>
+		<toolbar name="CLibraryTileView.Physical">
 			<rightAlign/>
 			<separator/>
 			<control id="IDC_SEARCH_BOX" width="120"/>
@@ -270,6 +278,8 @@
 			<separator/>
 			<control id="IDC_SEARCH_BOX" width="120"/>
 			<button id="ID_LIBRARY_SEARCH_QUICK" text="Søk"/>
+		</toolbar>
+		<toolbar name="CLibraryCollectionView.Physical">
 		</toolbar>
 		<toolbar name="CLibraryCollectionView.Virtual">
 			<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Spill av..."/>
@@ -1177,6 +1187,8 @@
 			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDERS" text="Del filer"/>
+			<separator/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="Lag .torrent"/>
 		</menu>
 		<menu name="CLibraryTree.Physical">
 			<item id="ID_LIBRARY_EXPLORE" text="Utforsk"/>
@@ -1187,6 +1199,8 @@
 			<item id="ID_LIBRARY_SCAN" text="Skann"/>
 			<item id="ID_LIBRARY_REBUILD" text="Oppdater"/>
 			<item id="ID_LIBRARY_FOLDERS" text="Del filer"/>
+			<separator/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="Lag .torrent"/>
 			<separator/>
 			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 			<separator/>
@@ -2449,6 +2463,7 @@
 		<tip id="ID_LIBRARY_ENQUEUE" message="Legg til valgte filer i din spilleliste."/>
 		<tip id="ID_LIBRARY_EXPLORE" message="Åpne valgte mappe."/>
 		<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Lagre valgte mappe til en samle-fil..."/>
+		<tip id="ID_LIBRARY_FOLDER_DELETE" message="Slett valgte mappe."/>
 		<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Last ned alle filene i valgte gruppe."/>
 		<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Legg til alle filene i valgte mappe til din spilleliste."/>
 		<tip id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" message="Vis og endre egenskapene til alle filene i valgte mappe(er)..."/>
@@ -2858,6 +2873,7 @@
 		<string id="8335" value="Kilder til denne filen er bak brannmurer"/>
 		<string id="8336" value="Kilder til denne filen kan være ustabile"/>
 		<string id="8337" value="Untrusted"/>
+		<string id="8338" value="Laget:"/>
 		<string id="13000" value="Are you sure you want to delete the selected security rules? This cannot be undone."/>
 		<string id="13001" value="Files shared over the Internet"/>
 		<string id="16063" value="UPnP port mapping failed after 10 attempts."/>
@@ -3212,6 +3228,9 @@
 		<string id="17041" value="Kan ikke sende melding, har ikke koblet til ennå."/>
 		<string id="17042" value="Du har ikke fylt inn brukerprofilen din ennå. Du må ha en profil for å kunne chatte med andre brukere.\n\nVil du fylle inn profilen din nå?"/>
 		<string id="17043" value="Gir prioritet til vert %s."/>
+		<string id="17044" value="Solve this CAPTCHA please:"/>
+		<string id="17045" value="Wrong CAPTCHA."/>
+		<string id="17046" value="CAPTCHA accepted."/>
 		<string id="17100" value="Gnutella: Peer-to-Peer kobling"/>
 		<string id="17101" value="Gnutella: Leaf-to-Ultrapeer kobling"/>
 		<string id="17102" value="Gnutella: Ultrapeer-to-Leaf kobling"/>
@@ -3243,6 +3262,7 @@
 		<string id="17128" value="eDonkey2000 Server"/>
 		<string id="17129" value="eDonkey2000 (LowID)"/>
 		<string id="17130" value="eDonkey2000 (HighID)"/>
+		<string id="17131" value="Tilkobling"/>
 		<string id="17216" value="Starter kobling til eDonkey2000-tjener ved %s..."/>
 		<string id="17217" value="Koblet til eDonkey2000 tjener %s, starter håndtrykk..."/>
 		<string id="17218" value="ED2K[%s] %s"/>
@@ -3326,6 +3346,7 @@
 		<string id="18512" value="Er du sikker p at du vil avbryte alle nedlastningene i denne gruppen?"/>
 		<string id="18513" value="Du har skrevet inn en ugyldig eDonkey2000 hash-verdi. Vennligst sjekk verdien og prøv på nytt."/>
 		<string id="18514" value="Du har gitt en SHA1 hash-verdi som er forskjellig fra den som er asossiert med denne nedlastingen. Er du sikker på at du vil endre SHA1 hashen nå?"/>
+		<string id="18515" value="The selected download item currently has some Task attached, please wait and do it later."/>
 		<string id="19000" value="Fjern konsoll er AV."/>
 		<string id="19001" value="Du må velge et brukernavn og et passord."/>
 		<string id="19002" value="Klarte ikke  motta tilkoblinger, URL ikke tilgjengelig."/>

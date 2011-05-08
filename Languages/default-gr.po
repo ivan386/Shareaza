@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2011-03-14 05:50+0000\n"
+"POT-Creation-Date: 2011-05-03 13:54+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -1503,6 +1503,13 @@ msgstr "Α_φαίρεση"
 msgid "S_hell menu"
 msgstr "S_hell menu"
 
+#: clibrarytree.physical.basic;item;id_library_createtorrent
+#: clibrarytree.physical;item;id_library_createtorrent
+#: clibraryfileview.physical;44;item;id_library_createtorrent
+#: clibraryfileview.virtual;50;item;id_library_createtorrent
+msgid "Create ._torrent File"
+msgstr "Δημιουργία Αρχείου .torrent"
+
 #: clibrarytree.physical;item;id_library_explore
 msgid "_Explore"
 msgstr "_Εξερεύνηση"
@@ -1605,11 +1612,6 @@ msgstr "_Localise Metadata"
 #: clibraryfileview.virtual;item;id_library_refresh_metadata
 msgid "_Refresh Metadata"
 msgstr "_Ανανέωση Metadata"
-
-#: clibraryfileview.physical;44;item;id_library_createtorrent
-#: clibraryfileview.virtual;50;item;id_library_createtorrent
-msgid "Create ._torrent File"
-msgstr "Δημιουργία Αρχείου .torrent"
 
 #: clibraryfileview.physical;item;id_library_columns
 #: clibraryfileview.virtual;item;id_library_columns
@@ -3647,7 +3649,7 @@ msgstr "Εισαγωγή _ημιτελών αρχείων του eMule..."
 msgid "Add a new folder to your library..."
 msgstr "Προσθήκη νέου φακέλου στη Βιβλιοθήκη..."
 
-#: message;id_library_album_delete
+#: message;id_library_album_delete message;id_library_folder_delete
 msgid "Delete the selected album folder."
 msgstr "Διαγραφή επιλεγμένου album."
 
@@ -5293,6 +5295,11 @@ msgstr "Οι πηγές αυτού του αρχείου δείχνουν αστ
 msgid "Untrusted"
 msgstr "Αφερέγγυο"
 
+#: string;8338
+#, fuzzy
+msgid "Free:"
+msgstr "Δημιουργημένο:"
+
 #: string;13000
 msgid "Are you sure you want to delete the selected security rules? This cannot be undone."
 msgstr "Θέλετε σίγουρα να διαγράψετε τους επιλεγμένους κανόνες ασφαλείας; Αυτό δεν μπορεί να αναιρεθεί!"
@@ -6851,6 +6858,18 @@ msgstr ""
 msgid "Granted upload priority to host %s."
 msgstr "Χορήγηση προτεραιότητας αποστολής στον host %s."
 
+#: string;17044
+msgid "Solve this CAPTCHA please:"
+msgstr ""
+
+#: string;17045
+msgid "Wrong CAPTCHA."
+msgstr ""
+
+#: string;17046
+msgid "CAPTCHA accepted."
+msgstr ""
+
 #: string;17100
 msgid "Gnutella: Peer-to-Peer Connection"
 msgstr "Gnutella: Σύνδεση Peer-σε-Peer"
@@ -6974,6 +6993,11 @@ msgstr "ED2K (LowID)"
 #: string;17130
 msgid "eDonkey (HighID)"
 msgstr "ED2K (HighID)"
+
+#: string;17131
+#, fuzzy
+msgid "DC++ Hub Connection"
+msgstr "Σύνδεση"
 
 #: string;17216
 msgid "Initiating connection to eDonkey server at %s..."
@@ -7318,6 +7342,10 @@ msgstr "Εισάγατε μη έγκυρο ED2K hash. Παρακαλώ ελέγ�
 #, fuzzy
 msgid "You have provided an %s hash value which is different to the one currently associated with this download. Are you sure you want to change the %s hash now?"
 msgstr "Εισάγατε ένα SHA1 διαφορετικό από το τρέχον της λήψης! Θέλετε σίγουρα να το αλλάξετε τώρα;"
+
+#: string;18515
+msgid "The selected download item currently has some Task attached, please wait and do it later."
+msgstr ""
 
 #: string;19000
 msgid "Remote access is disabled."

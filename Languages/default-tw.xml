@@ -184,6 +184,8 @@
 			<button id="ID_LIBRARY_TREE_PHYSICAL" text="資料夾"/>
 			<button id="ID_LIBRARY_TREE_VIRTUAL" text="組織器(Organizer)"/>
 		</toolbar>
+		<toolbar name="CLibraryTree.Physical">
+		</toolbar>
 		<toolbar name="CLibraryTree.Virtual">
 			<button id="ID_LIBRARY_FOLDERS" text="分享檔案..."/>
 		</toolbar>
@@ -208,6 +210,12 @@
 		<toolbar name="CLibraryHomeView.Virtual">
 			<button id="ID_LIBRARY_FOLDER_NEW" text="新增專輯..."/>
 			<button id="ID_LIBRARY_ALBUM_DELETE" text="刪除專輯"/>
+			<rightAlign/>
+			<separator/>
+			<control id="IDC_SEARCH_BOX" width="120"/>
+			<button id="ID_LIBRARY_SEARCH_QUICK" text="尋找"/>
+		</toolbar>
+		<toolbar name="CLibraryTileView.Physical">
 			<rightAlign/>
 			<separator/>
 			<control id="IDC_SEARCH_BOX" width="120"/>
@@ -270,6 +278,8 @@
 			<separator/>
 			<control id="IDC_SEARCH_BOX" width="120"/>
 			<button id="ID_LIBRARY_SEARCH_QUICK" text="尋找"/>
+		</toolbar>
+		<toolbar name="CLibraryCollectionView.Physical">
 		</toolbar>
 		<toolbar name="CLibraryCollectionView.Virtual">
 			<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="播放專輯"/>
@@ -1177,6 +1187,8 @@
 			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDERS" text="分享檔案..."/>
+			<separator/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="製作 .torrent 檔"/>
 		</menu>
 		<menu name="CLibraryTree.Physical">
 			<item id="ID_LIBRARY_EXPLORE" text="探索"/>
@@ -1187,6 +1199,8 @@
 			<item id="ID_LIBRARY_SCAN" text="掃瞄"/>
 			<item id="ID_LIBRARY_REBUILD" text="重建"/>
 			<item id="ID_LIBRARY_FOLDERS" text="分享檔案..."/>
+			<separator/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="製作 .torrent 檔"/>
 			<separator/>
 			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 			<separator/>
@@ -2391,6 +2405,7 @@
 		<tip id="ID_LIBRARY_ENQUEUE" message="新增選擇的檔案至多媒體播放清單."/>
 		<tip id="ID_LIBRARY_EXPLORE" message="開啟選擇的資料夾."/>
 		<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="匯出選擇的專輯資料夾至一個組檔..."/>
+		<tip id="ID_LIBRARY_FOLDER_DELETE" message="刪除選擇的專輯資料夾."/>
 		<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="下載選擇的組檔裡所有的檔案."/>
 		<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="新增選擇的專輯裡所有的檔案到您的播放清單."/>
 		<tip id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" message="顯示並編輯選擇的資料夾裡所有檔案的屬性..."/>
@@ -2800,6 +2815,7 @@
 		<string id="8335" value="這個檔案的來源受到防火牆保護"/>
 		<string id="8336" value="這個檔案的來源可能不穩定"/>
 		<string id="8337" value="不可靠的"/>
+		<string id="8338" value="Created:"/>
 		<string id="13000" value="Are you sure you want to delete the selected security rules? This cannot be undone."/>
 		<string id="13001" value="Files shared over the Internet"/>
 		<string id="16063" value="UPnP port mapping failed after 10 attempts."/>
@@ -3154,6 +3170,9 @@
 		<string id="17041" value="無法送出訊息, 連線尚未建立."/>
 		<string id="17042" value="您還沒有輸入個人檔案的資料. 您必須提供個人檔案才能與其他人聊天.\n\n您現在要輸入個人檔案嗎?"/>
 		<string id="17043" value="已授與主機 %s 上傳優先權."/>
+		<string id="17044" value="Solve this CAPTCHA please:"/>
+		<string id="17045" value="Wrong CAPTCHA."/>
+		<string id="17046" value="CAPTCHA accepted."/>
 		<string id="17100" value="Gnutella: P2P 連線"/>
 		<string id="17101" value="Gnutella: 葉節點對超級用戶 連線"/>
 		<string id="17102" value="Gnutella: 超級用戶對葉節點 連線"/>
@@ -3185,6 +3204,7 @@
 		<string id="17128" value="eDonkey2000 伺服器"/>
 		<string id="17129" value="eDonkey2000 (低 ID)"/>
 		<string id="17130" value="eDonkey2000 (高 ID)"/>
+		<string id="17131" value="Connection"/>
 		<string id="17216" value="正在啟始連線至 eDonkey2000 伺服器於 %s..."/>
 		<string id="17217" value="已連線至 eDonkey2000 伺服器 %s, 信號交換中..."/>
 		<string id="17218" value="ED2K[%s] %s"/>
@@ -3268,6 +3288,7 @@
 		<string id="18512" value="您確定取消/放棄這個群組裡所有的下載嗎?"/>
 		<string id="18513" value="您鍵入的 eDonkey2000 切細值無效. 請檢查後再試一次."/>
 		<string id="18514" value="您提供的 SHA1 切細值不同於這個下載的切細值. 您現在確定要更改 SHA1 切細嗎?"/>
+		<string id="18515" value="The selected download item currently has some Task attached, please wait and do it later."/>
 		<string id="19000" value="遠端操控已經停用"/>
 		<string id="19001" value="您必須選擇一個使用者名稱與密碼"/>
 		<string id="19002" value="無法接受連線, 沒有可用的URL."/>

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza 2.5.3.0\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2011-03-14 05:50+0000\n"
+"POT-Creation-Date: 2011-05-03 13:54+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Felipe\n"
@@ -1504,6 +1504,13 @@ msgstr "_Remover"
 msgid "S_hell menu"
 msgstr "M_enu do shell"
 
+#: clibrarytree.physical.basic;item;id_library_createtorrent
+#: clibrarytree.physical;item;id_library_createtorrent
+#: clibraryfileview.physical;44;item;id_library_createtorrent
+#: clibraryfileview.virtual;50;item;id_library_createtorrent
+msgid "Create ._torrent File"
+msgstr "Criar _Arquivo .torrent"
+
 #: clibrarytree.physical;item;id_library_explore
 msgid "_Explore"
 msgstr "_Explorar"
@@ -1604,11 +1611,6 @@ msgstr "_Localizar Metadata"
 #: clibraryfileview.virtual;item;id_library_refresh_metadata
 msgid "_Refresh Metadata"
 msgstr "_Atualizar Metadata"
-
-#: clibraryfileview.physical;44;item;id_library_createtorrent
-#: clibraryfileview.virtual;50;item;id_library_createtorrent
-msgid "Create ._torrent File"
-msgstr "Criar _Arquivo .torrent"
 
 #: clibraryfileview.physical;item;id_library_columns
 #: clibraryfileview.virtual;item;id_library_columns
@@ -3592,7 +3594,7 @@ msgstr "Importar downloads parciais do eMule..."
 msgid "Add a new folder to your library..."
 msgstr "Adicionar uma nova pasta a sua biblioteca..."
 
-#: message;id_library_album_delete
+#: message;id_library_album_delete message;id_library_folder_delete
 msgid "Delete the selected album folder."
 msgstr "Apagar a pasta do álbum selecionada."
 
@@ -5217,6 +5219,11 @@ msgstr "As fontes para este arquivo podem ser instáveis"
 msgid "Untrusted"
 msgstr "Não confiável"
 
+#: string;8338
+#, fuzzy
+msgid "Free:"
+msgstr "Criado:"
+
 #: string;13000
 msgid "Are you sure you want to delete the selected security rules? This cannot be undone."
 msgstr "Você tem certeza de que você quer apagar as regras de segurança selecionadas?  Isto não pode ser desfeito."
@@ -6779,6 +6786,18 @@ msgstr ""
 msgid "Granted upload priority to host %s."
 msgstr "Garantida a prioridade de upload para o host %s."
 
+#: string;17044
+msgid "Solve this CAPTCHA please:"
+msgstr ""
+
+#: string;17045
+msgid "Wrong CAPTCHA."
+msgstr ""
+
+#: string;17046
+msgid "CAPTCHA accepted."
+msgstr ""
+
 #: string;17100
 msgid "Gnutella: Peer-to-Peer Connection"
 msgstr "Gnutella: Conexão Peer-para-Peer"
@@ -6902,6 +6921,11 @@ msgstr "eDonkey (ID Baixa)"
 #: string;17130
 msgid "eDonkey (HighID)"
 msgstr "eDonkey (ID Alta)"
+
+#: string;17131
+#, fuzzy
+msgid "DC++ Hub Connection"
+msgstr "Conexão"
 
 #: string;17216
 msgid "Initiating connection to eDonkey server at %s..."
@@ -7240,6 +7264,10 @@ msgstr "Você digitou um valor de hash %s, contudo, é inválido. Por favor veri
 #: string;18514
 msgid "You have provided an %s hash value which is different to the one currently associated with this download. Are you sure you want to change the %s hash now?"
 msgstr "Você forneceu um valor de hash %s o qual é diferente do que está atualmente associado com este download. Você tem certeza que você quer mudar o valor de hash %s agora?"
+
+#: string;18515
+msgid "The selected download item currently has some Task attached, please wait and do it later."
+msgstr ""
 
 #: string;19000
 msgid "Remote access is disabled."

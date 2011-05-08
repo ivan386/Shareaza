@@ -184,6 +184,8 @@
 			<button id="ID_LIBRARY_TREE_PHYSICAL" text="Foldery"/>
 			<button id="ID_LIBRARY_TREE_VIRTUAL" text="Organizator"/>
 		</toolbar>
+		<toolbar name="CLibraryTree.Physical">
+		</toolbar>
 		<toolbar name="CLibraryTree.Virtual">
 			<button id="ID_LIBRARY_FOLDERS" text="Udostępnij pliki..."/>
 		</toolbar>
@@ -208,6 +210,12 @@
 		<toolbar name="CLibraryHomeView.Virtual">
 			<button id="ID_LIBRARY_FOLDER_NEW" text="Stwórz album..."/>
 			<button id="ID_LIBRARY_ALBUM_DELETE" text="Usuń album"/>
+			<rightAlign/>
+			<separator/>
+			<control id="IDC_SEARCH_BOX" width="120"/>
+			<button id="ID_LIBRARY_SEARCH_QUICK" text="Znajdź"/>
+		</toolbar>
+		<toolbar name="CLibraryTileView.Physical">
 			<rightAlign/>
 			<separator/>
 			<control id="IDC_SEARCH_BOX" width="120"/>
@@ -270,6 +278,8 @@
 			<separator/>
 			<control id="IDC_SEARCH_BOX" width="120"/>
 			<button id="ID_LIBRARY_SEARCH_QUICK" text="Znajdź"/>
+		</toolbar>
+		<toolbar name="CLibraryCollectionView.Physical">
 		</toolbar>
 		<toolbar name="CLibraryCollectionView.Virtual">
 			<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Odtwórz album"/>
@@ -1177,6 +1187,8 @@
 			<item id="ID_SHELL_MENU" text="menu interpretera poleceń (Shella)"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDERS" text="Udostępnij pliki..."/>
+			<separator/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="Stwórz plik .torrent"/>
 		</menu>
 		<menu name="CLibraryTree.Physical">
 			<item id="ID_LIBRARY_EXPLORE" text="Przeglądaj"/>
@@ -1187,6 +1199,8 @@
 			<item id="ID_LIBRARY_SCAN" text="Skanuj"/>
 			<item id="ID_LIBRARY_REBUILD" text="Odbuduj ponownie"/>
 			<item id="ID_LIBRARY_FOLDERS" text="Udostępnij pliki..."/>
+			<separator/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="Stwórz plik .torrent"/>
 			<separator/>
 			<item id="ID_SHELL_MENU" text="menu interpretera poleceń (Shella)"/>
 			<separator/>
@@ -2455,6 +2469,7 @@
 		<tip id="ID_LIBRARY_ENQUEUE" message="Dodaj zaznaczony(e) plik(i) do listy odtwarzania."/>
 		<tip id="ID_LIBRARY_EXPLORE" message="Otwórz zaznaczony(e) folder(y)."/>
 		<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Eksportuj zaznaczony folder albumu do plików (w) kolekcji..."/>
+		<tip id="ID_LIBRARY_FOLDER_DELETE" message="Usuń zaznaczony folder albumu."/>
 		<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Pobierz wszystkie pliki z zaznaczonej kolekcji."/>
 		<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Dodaj wszystkie pliki z zaznaczonego(onych) folderu(ów) albumu do listy odtwarzania."/>
 		<tip id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" message="Pokaż i edytuj właściwości wszystkich plików w zaznaczonym(ych) folderze(ach)..."/>
@@ -2864,6 +2879,7 @@
 		<string id="8335" value="Źródła dla tego pliku są za firewalllem"/>
 		<string id="8336" value="Źródła dla tego pliku moga być niestabilne"/>
 		<string id="8337" value="Untrusted, nie zaufany"/>
+		<string id="8338" value="Stworzony:"/>
 		<string id="13000" value="Czy jesteś pewny, że chcesz usunąć zaznaczone reguły bezpieczeństwa? To jest nieodwracalne."/>
 		<string id="13001" value="Files shared over the Internet"/>
 		<string id="16063" value="Po 10 próbach mapowanie UPnP portu nie powiodło się."/>
@@ -3218,6 +3234,9 @@
 		<string id="17041" value="Nie można wysłać wiadomości, ponieważ połączenie nie zostało jeszcze nawiązane."/>
 		<string id="17042" value="You have not yet filled in your user profile.  You must provide a profile before you can chat with other users.\n\nWould you like to fill in your profile now?"/>
 		<string id="17043" value="Granted upload priority to host %s."/>
+		<string id="17044" value="Solve this CAPTCHA please:"/>
+		<string id="17045" value="Wrong CAPTCHA."/>
+		<string id="17046" value="CAPTCHA accepted."/>
 		<string id="17100" value="Gnutella: Peer-to-Peer Connection"/>
 		<string id="17101" value="Gnutella: Leaf-to-Ultrapeer Connection"/>
 		<string id="17102" value="Gnutella: Ultrapeer-to-Leaf Connection"/>
@@ -3249,6 +3268,7 @@
 		<string id="17128" value="Serwer eDonkey"/>
 		<string id="17129" value="eDonkey (LowID)"/>
 		<string id="17130" value="eDonkey (HighID)"/>
+		<string id="17131" value="Połączenie"/>
 		<string id="17216" value="Nawiązywanie połączenia z serwerem edonkey w %s..."/>
 		<string id="17217" value="Podłączony do serwera eDonkey %s, witanie..."/>
 		<string id="17218" value="ED2K[%s] %s"/>
@@ -3332,6 +3352,7 @@
 		<string id="18512" value="Czy jesteś pewien(a), że chcesz anulować/abort wszystkie pobierania w tej grupie?"/>
 		<string id="18513" value="Wpisałeś wartośc hasha eDonkey, jednakże jest on nieprawidłowa. Proszę sprawdzić i spróbować ponownie."/>
 		<string id="18514" value="You have provided a SHA1 hash value which is different to the one currently associated with this download.  Are you sure you want to change the SHA1 hash now?"/>
+		<string id="18515" value="The selected download item currently has some Task attached, please wait and do it later."/>
 		<string id="19000" value="Zdalny dostęp jest wyłączony."/>
 		<string id="19001" value="Musisz wybrać nazwę użytkownika i hasło."/>
 		<string id="19002" value="Unable to accept connections, URL unavailable."/>

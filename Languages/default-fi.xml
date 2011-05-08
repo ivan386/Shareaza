@@ -184,6 +184,8 @@
 			<button id="ID_LIBRARY_TREE_PHYSICAL" text="Kansiot"/>
 			<button id="ID_LIBRARY_TREE_VIRTUAL" text="Järjestelijä"/>
 		</toolbar>
+		<toolbar name="CLibraryTree.Physical">
+		</toolbar>
 		<toolbar name="CLibraryTree.Virtual">
 			<button id="ID_LIBRARY_FOLDERS" text="Jaa tiedostoja..."/>
 		</toolbar>
@@ -208,6 +210,12 @@
 		<toolbar name="CLibraryHomeView.Virtual">
 			<button id="ID_LIBRARY_FOLDER_NEW" text="Luo Albumi"/>
 			<button id="ID_LIBRARY_ALBUM_DELETE" text="Poista Albumi"/>
+			<rightAlign/>
+			<separator/>
+			<control id="IDC_SEARCH_BOX" width="120"/>
+			<button id="ID_LIBRARY_SEARCH_QUICK" text="Etsi"/>
+		</toolbar>
+		<toolbar name="CLibraryTileView.Physical">
 			<rightAlign/>
 			<separator/>
 			<control id="IDC_SEARCH_BOX" width="120"/>
@@ -270,6 +278,8 @@
 			<separator/>
 			<control id="IDC_SEARCH_BOX" width="120"/>
 			<button id="ID_LIBRARY_SEARCH_QUICK" text="Etsi"/>
+		</toolbar>
+		<toolbar name="CLibraryCollectionView.Physical">
 		</toolbar>
 		<toolbar name="CLibraryCollectionView.Virtual">
 			<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Toista Albumi"/>
@@ -1177,6 +1187,8 @@
 			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDERS" text="Jaa _Tiedostoja"/>
+			<separator/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="Luo .torrent Tiedosto"/>
 		</menu>
 		<menu name="CLibraryTree.Physical">
 			<item id="ID_LIBRARY_EXPLORE" text="_Selaa"/>
@@ -1187,6 +1199,8 @@
 			<item id="ID_LIBRARY_SCAN" text="S_kannaa"/>
 			<item id="ID_LIBRARY_REBUILD" text="Ra_kenna Uudelleen"/>
 			<item id="ID_LIBRARY_FOLDERS" text="Jaa _Tiedostoja"/>
+			<separator/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="Luo .torrent Tiedosto"/>
 			<separator/>
 			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 			<separator/>
@@ -2452,6 +2466,7 @@
 		<tip id="ID_LIBRARY_ENQUEUE" message="Add the selected file(s) to your media playlist."/>
 		<tip id="ID_LIBRARY_EXPLORE" message="Open the selected folder(s)."/>
 		<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Export the selected album folder to collection files..."/>
+		<tip id="ID_LIBRARY_FOLDER_DELETE" message="Delete the selected album folder."/>
 		<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Download all files in the selected collection."/>
 		<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Add every file in the selected album folder(s) to your playlist."/>
 		<tip id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" message="View and edit the properties of all files in the selected folder(s)..."/>
@@ -2861,6 +2876,7 @@
 		<string id="8335" value="Sources for this file are firewalled"/>
 		<string id="8336" value="Sources for this file may be unstable"/>
 		<string id="8337" value="Untrusted"/>
+		<string id="8338" value="Hae:"/>
 		<string id="13000" value="Are you sure you want to delete the selected security rules? This cannot be undone."/>
 		<string id="13001" value="Files shared over the Internet"/>
 		<string id="16063" value="UPnP port mapping failed after 10 attempts."/>
@@ -3215,6 +3231,9 @@
 		<string id="17041" value="Cannot send message, a connection has not been established yet."/>
 		<string id="17042" value="You have not yet filled in your user profile. You must provide a profile before you can chat with other users.\n\nWould you like to fill in your profile now?"/>
 		<string id="17043" value="Granted upload priority to host %s."/>
+		<string id="17044" value="Solve this CAPTCHA please:"/>
+		<string id="17045" value="Wrong CAPTCHA."/>
+		<string id="17046" value="CAPTCHA accepted."/>
 		<string id="17100" value="Gnutella: Peer-to-Peer Connection"/>
 		<string id="17101" value="Gnutella: Leaf-to-Ultrapeer Connection"/>
 		<string id="17102" value="Gnutella: Ultrapeer-to-Leaf Connection"/>
@@ -3246,6 +3265,7 @@
 		<string id="17128" value="eDonkey Server"/>
 		<string id="17129" value="eDonkey (LowID)"/>
 		<string id="17130" value="eDonkey (HighID)"/>
+		<string id="17131" value="Yhteys"/>
 		<string id="17216" value="Initiating connection to eDonkey server at %s..."/>
 		<string id="17217" value="Connected to eDonkey server %s, handshaking..."/>
 		<string id="17218" value="ED2K[%s] %s"/>
@@ -3329,6 +3349,7 @@
 		<string id="18512" value="Are you sure you want to cancel this download but save incomplete file(s)?"/>
 		<string id="18513" value="You have typed an %s hash value, however it is invalid. Please check it and try again."/>
 		<string id="18514" value="You have provided an %s hash value which is different to the one currently associated with this download. Are you sure you want to change the %s hash now?"/>
+		<string id="18515" value="The selected download item currently has some Task attached, please wait and do it later."/>
 		<string id="19000" value="Remote access is disabled."/>
 		<string id="19001" value="You must choose a username and password."/>
 		<string id="19002" value="Unable to accept connections, URL unavailable."/>

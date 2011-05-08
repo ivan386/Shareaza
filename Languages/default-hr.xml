@@ -184,6 +184,8 @@
 			<button id="ID_LIBRARY_TREE_PHYSICAL" text="Mape"/>
 			<button id="ID_LIBRARY_TREE_VIRTUAL" text="Posloženo"/>
 		</toolbar>
+		<toolbar name="CLibraryTree.Physical">
+		</toolbar>
 		<toolbar name="CLibraryTree.Virtual">
 			<button id="ID_LIBRARY_FOLDERS" text="Podjeli ...."/>
 		</toolbar>
@@ -208,6 +210,12 @@
 		<toolbar name="CLibraryHomeView.Virtual">
 			<button id="ID_LIBRARY_FOLDER_NEW" text="Napravi Album..."/>
 			<button id="ID_LIBRARY_ALBUM_DELETE" text="Obriši Album"/>
+			<rightAlign/>
+			<separator/>
+			<control id="IDC_SEARCH_BOX" width="120"/>
+			<button id="ID_LIBRARY_SEARCH_QUICK" text="Traži"/>
+		</toolbar>
+		<toolbar name="CLibraryTileView.Physical">
 			<rightAlign/>
 			<separator/>
 			<control id="IDC_SEARCH_BOX" width="120"/>
@@ -270,6 +278,8 @@
 			<separator/>
 			<control id="IDC_SEARCH_BOX" width="120"/>
 			<button id="ID_LIBRARY_SEARCH_QUICK" text="Traži"/>
+		</toolbar>
+		<toolbar name="CLibraryCollectionView.Physical">
 		</toolbar>
 		<toolbar name="CLibraryCollectionView.Virtual">
 			<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Pokreni Album"/>
@@ -1177,6 +1187,8 @@
 			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDERS" text="Podjeli..."/>
+			<separator/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="Napravi .torrent Datoteku"/>
 		</menu>
 		<menu name="CLibraryTree.Physical">
 			<item id="ID_LIBRARY_EXPLORE" text="Istraži"/>
@@ -1187,6 +1199,8 @@
 			<item id="ID_LIBRARY_SCAN" text="Skeniraj"/>
 			<item id="ID_LIBRARY_REBUILD" text="O_bnovi"/>
 			<item id="ID_LIBRARY_FOLDERS" text="Podjeli..."/>
+			<separator/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="Napravi .torrent Datoteku"/>
 			<separator/>
 			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 			<separator/>
@@ -2448,6 +2462,7 @@
 		<tip id="ID_LIBRARY_ENQUEUE" message="Dodaj označeno u moju media playlistu."/>
 		<tip id="ID_LIBRARY_EXPLORE" message="Otvori odabranu(e) mapu(e)."/>
 		<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Spremi označenu mapu albuma kao kolekciju..."/>
+		<tip id="ID_LIBRARY_FOLDER_DELETE" message="Obriši odabranu mapu albuma."/>
 		<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Skini sve datoteke u odabranoj kolekciji."/>
 		<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Add every file in the selected album folder(s) to your playlist."/>
 		<tip id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" message="View and edit the properties of all files in the selected folder(s)..."/>
@@ -2857,6 +2872,7 @@
 		<string id="8335" value="Svi izvori ove datoteke su iza vatrozida"/>
 		<string id="8336" value="Svi izvori ove datoteke su nestabilni"/>
 		<string id="8337" value="Untrusted"/>
+		<string id="8338" value="Created:"/>
 		<string id="13000" value="Are you sure you want to delete the selected security rules? This cannot be undone."/>
 		<string id="13001" value="Files shared over the Internet"/>
 		<string id="16063" value="UPnP port mapping failed after 10 attempts."/>
@@ -3211,6 +3227,9 @@
 		<string id="17041" value="Ne mogu poslati poruku, veza još uvijek nije uspostavljena..."/>
 		<string id="17042" value="Niste još ispunili vaš profil.Morate ispuniti profil ako želite pričati sa ostalim korisnicima.\n\nŽelita li to sad učiniti?"/>
 		<string id="17043" value="Dan prioritet skidanja %s u."/>
+		<string id="17044" value="Solve this CAPTCHA please:"/>
+		<string id="17045" value="Wrong CAPTCHA."/>
+		<string id="17046" value="CAPTCHA accepted."/>
 		<string id="17100" value="Gnutella: Peer-to-Peer Veza"/>
 		<string id="17101" value="Gnutella: Leaf-to-Ultrapeer Veza"/>
 		<string id="17102" value="Gnutella: Ultrapeer-to-Leaf Veza"/>
@@ -3242,6 +3261,7 @@
 		<string id="17128" value="eDonkey2000 Server"/>
 		<string id="17129" value="eDonkey2000 (LowID)"/>
 		<string id="17130" value="eDonkey2000 (HighID)"/>
+		<string id="17131" value="Spajam"/>
 		<string id="17216" value="Initiating connection to eDonkey2000 server at %s..."/>
 		<string id="17217" value="Spojeno to eDonkey2000 server %s, handshaking..."/>
 		<string id="17218" value="ED2K[%s] %s"/>
@@ -3325,6 +3345,7 @@
 		<string id="18512" value="Jeste li sigurni da želite poništiti/prekinuti sva skidanja u ovoj groupi?"/>
 		<string id="18513" value="You have typed an eDonkey2000 hash value, however it is invalid.Please check it and try again."/>
 		<string id="18514" value="You have provided a SHA1 hash value which is different to the one currently associated with this download.Are you sure you want to change the SHA1 hash now?"/>
+		<string id="18515" value="The selected download item currently has some Task attached, please wait and do it later."/>
 		<string id="19000" value="Pristup na daljinu je onemogučen."/>
 		<string id="19001" value="Morate odabrati ime i lozinku"/>
 		<string id="19002" value="U nemogučnosti sam primati veze, URL je nedostupan."/>

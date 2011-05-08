@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2011-03-14 05:50+0000\n"
+"POT-Creation-Date: 2011-05-03 13:54+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -1503,6 +1503,13 @@ msgstr "_Poista"
 msgid "S_hell menu"
 msgstr "S_hell menu"
 
+#: clibrarytree.physical.basic;item;id_library_createtorrent
+#: clibrarytree.physical;item;id_library_createtorrent
+#: clibraryfileview.physical;44;item;id_library_createtorrent
+#: clibraryfileview.virtual;50;item;id_library_createtorrent
+msgid "Create ._torrent File"
+msgstr "Luo .torrent Tiedosto"
+
 #: clibrarytree.physical;item;id_library_explore
 msgid "_Explore"
 msgstr "_Selaa"
@@ -1605,11 +1612,6 @@ msgstr "_Paikallista Metadata"
 #: clibraryfileview.virtual;item;id_library_refresh_metadata
 msgid "_Refresh Metadata"
 msgstr "_Refresh Metadata"
-
-#: clibraryfileview.physical;44;item;id_library_createtorrent
-#: clibraryfileview.virtual;50;item;id_library_createtorrent
-msgid "Create ._torrent File"
-msgstr "Luo .torrent Tiedosto"
 
 #: clibraryfileview.physical;item;id_library_columns
 #: clibraryfileview.virtual;item;id_library_columns
@@ -3600,7 +3602,7 @@ msgstr ""
 msgid "Add a new folder to your library..."
 msgstr ""
 
-#: message;id_library_album_delete
+#: message;id_library_album_delete message;id_library_folder_delete
 msgid "Delete the selected album folder."
 msgstr ""
 
@@ -5223,6 +5225,11 @@ msgstr ""
 msgid "Untrusted"
 msgstr ""
 
+#: string;8338
+#, fuzzy
+msgid "Free:"
+msgstr "Hae:"
+
 #: string;13000
 msgid "Are you sure you want to delete the selected security rules? This cannot be undone."
 msgstr ""
@@ -6704,6 +6711,18 @@ msgstr ""
 msgid "Granted upload priority to host %s."
 msgstr ""
 
+#: string;17044
+msgid "Solve this CAPTCHA please:"
+msgstr ""
+
+#: string;17045
+msgid "Wrong CAPTCHA."
+msgstr ""
+
+#: string;17046
+msgid "CAPTCHA accepted."
+msgstr ""
+
 #: string;17100
 msgid "Gnutella: Peer-to-Peer Connection"
 msgstr ""
@@ -6827,6 +6846,11 @@ msgstr ""
 #: string;17130
 msgid "eDonkey (HighID)"
 msgstr ""
+
+#: string;17131
+#, fuzzy
+msgid "DC++ Hub Connection"
+msgstr "Yhteys"
 
 #: string;17216
 msgid "Initiating connection to eDonkey server at %s..."
@@ -7161,6 +7185,10 @@ msgstr ""
 
 #: string;18514
 msgid "You have provided an %s hash value which is different to the one currently associated with this download. Are you sure you want to change the %s hash now?"
+msgstr ""
+
+#: string;18515
+msgid "The selected download item currently has some Task attached, please wait and do it later."
 msgstr ""
 
 #: string;19000

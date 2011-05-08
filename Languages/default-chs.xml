@@ -184,6 +184,8 @@
 			<button id="ID_LIBRARY_TREE_PHYSICAL" text="目录"/>
 			<button id="ID_LIBRARY_TREE_VIRTUAL" text="类别"/>
 		</toolbar>
+		<toolbar name="CLibraryTree.Physical">
+		</toolbar>
 		<toolbar name="CLibraryTree.Virtual">
 			<button id="ID_LIBRARY_FOLDERS" text="共享文件..."/>
 		</toolbar>
@@ -208,6 +210,12 @@
 		<toolbar name="CLibraryHomeView.Virtual">
 			<button id="ID_LIBRARY_FOLDER_NEW" text="创建专辑..."/>
 			<button id="ID_LIBRARY_ALBUM_DELETE" text="删除专辑"/>
+			<rightAlign/>
+			<separator/>
+			<control id="IDC_SEARCH_BOX" width="120"/>
+			<button id="ID_LIBRARY_SEARCH_QUICK" text="查找"/>
+		</toolbar>
+		<toolbar name="CLibraryTileView.Physical">
 			<rightAlign/>
 			<separator/>
 			<control id="IDC_SEARCH_BOX" width="120"/>
@@ -270,6 +278,8 @@
 			<separator/>
 			<control id="IDC_SEARCH_BOX" width="120"/>
 			<button id="ID_LIBRARY_SEARCH_QUICK" text="查找"/>
+		</toolbar>
+		<toolbar name="CLibraryCollectionView.Physical">
 		</toolbar>
 		<toolbar name="CLibraryCollectionView.Virtual">
 			<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="播放专辑"/>
@@ -1177,6 +1187,8 @@
 			<item id="ID_SHELL_MENU" text="外部菜单(_H)"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDERS" text="共享文件(_F)..."/>
+			<separator/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="创建种子文件(_T)"/>
 		</menu>
 		<menu name="CLibraryTree.Physical">
 			<item id="ID_LIBRARY_EXPLORE" text="浏览(_E)"/>
@@ -1187,6 +1199,8 @@
 			<item id="ID_LIBRARY_SCAN" text="扫描(_C)"/>
 			<item id="ID_LIBRARY_REBUILD" text="重建(_B)"/>
 			<item id="ID_LIBRARY_FOLDERS" text="共享文件(_F)..."/>
+			<separator/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="创建种子文件(_T)"/>
 			<separator/>
 			<item id="ID_SHELL_MENU" text="外部菜单(_H)"/>
 			<separator/>
@@ -2435,6 +2449,7 @@
 		<tip id="ID_LIBRARY_ENQUEUE" message="添加选定的文件到播放列表。"/>
 		<tip id="ID_LIBRARY_EXPLORE" message="打开选定的文件夹。"/>
 		<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="将选定的专辑文件夹导出到一个收集文件中..."/>
+		<tip id="ID_LIBRARY_FOLDER_DELETE" message="删除选定的专辑文件夹。"/>
 		<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="下载选定收集中的所有文件。"/>
 		<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="添加选定专辑文件夹中所有文件到播放列表。"/>
 		<tip id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" message="查看和编辑选定文件夹中所有文件的属性..."/>
@@ -2844,6 +2859,7 @@
 		<string id="8335" value="此文件来源有防火墙"/>
 		<string id="8336" value="此文件来源可能不稳定"/>
 		<string id="8337" value="未受信任"/>
+		<string id="8338" value="已经创建:"/>
 		<string id="13000" value="您是否确定要删除选中的安全规则？该操作无法还原。"/>
 		<string id="13001" value="通过互联网分享文件"/>
 		<string id="16063" value="UPnP 端口映射失败超过10次。"/>
@@ -3198,6 +3214,9 @@
 		<string id="17041" value="不能发送消息，尚未建立连接。"/>
 		<string id="17042" value="您还未填写个人资料。在与其他用户聊天之前您必须提供个人资料。\n\n您要立即填写个人资料吗？"/>
 		<string id="17043" value="确定 %s 主机的上传优先级。"/>
+		<string id="17044" value="Solve this CAPTCHA please:"/>
+		<string id="17045" value="Wrong CAPTCHA."/>
+		<string id="17046" value="CAPTCHA accepted."/>
 		<string id="17100" value="Gnutella:对等连接"/>
 		<string id="17101" value="Gnutella:子端到超对等连接"/>
 		<string id="17102" value="Gnutella:超对等到子端连接"/>
@@ -3229,6 +3248,7 @@
 		<string id="17128" value="edonkey 服务器"/>
 		<string id="17129" value="edonkey (LowID)"/>
 		<string id="17130" value="edonkey (HighID)"/>
+		<string id="17131" value="连接"/>
 		<string id="17216" value="初始化连接到 edonkey 服务器 %s..."/>
 		<string id="17217" value="连接到 edonkey 服务器 %s，握手中..."/>
 		<string id="17218" value="ED2K[%s] %s"/>
@@ -3312,6 +3332,7 @@
 		<string id="18512" value="您是否确认取消该下载但是保存未下载完成的文件？"/>
 		<string id="18513" value="你输入了 %s 的哈希值，可是无效。请检查并重试。"/>
 		<string id="18514" value="您提供了一个和当前 %s 下载不同的哈希值。您是否确认想要立即改变 %s 的哈希值？"/>
+		<string id="18515" value="The selected download item currently has some Task attached, please wait and do it later."/>
 		<string id="19000" value="远程访问已禁用。"/>
 		<string id="19001" value="您必须选择一个用户名和密码。"/>
 		<string id="19002" value="未能接受连接，链接不可用。"/>

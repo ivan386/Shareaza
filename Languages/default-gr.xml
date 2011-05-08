@@ -184,6 +184,8 @@
 			<button id="ID_LIBRARY_TREE_PHYSICAL" text="Φυσική Δομή"/>
 			<button id="ID_LIBRARY_TREE_VIRTUAL" text="Εικονική Δομή"/>
 		</toolbar>
+		<toolbar name="CLibraryTree.Physical">
+		</toolbar>
 		<toolbar name="CLibraryTree.Virtual">
 			<button id="ID_LIBRARY_FOLDERS" text="Κοινοποιημένοι Φάκελοι..."/>
 		</toolbar>
@@ -208,6 +210,12 @@
 		<toolbar name="CLibraryHomeView.Virtual">
 			<button id="ID_LIBRARY_FOLDER_NEW" text="Δημιουργία Album..."/>
 			<button id="ID_LIBRARY_ALBUM_DELETE" text="Διαγραφή Album"/>
+			<rightAlign/>
+			<separator/>
+			<control id="IDC_SEARCH_BOX" width="120"/>
+			<button id="ID_LIBRARY_SEARCH_QUICK" text="Εύρεση"/>
+		</toolbar>
+		<toolbar name="CLibraryTileView.Physical">
 			<rightAlign/>
 			<separator/>
 			<control id="IDC_SEARCH_BOX" width="120"/>
@@ -270,6 +278,8 @@
 			<separator/>
 			<control id="IDC_SEARCH_BOX" width="120"/>
 			<button id="ID_LIBRARY_SEARCH_QUICK" text="Εύρεση"/>
+		</toolbar>
+		<toolbar name="CLibraryCollectionView.Physical">
 		</toolbar>
 		<toolbar name="CLibraryCollectionView.Virtual">
 			<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Αναπαραγωγή Album"/>
@@ -1177,6 +1187,8 @@
 			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDERS" text="Κοινοποιημένοι _Φάκελοι..."/>
+			<separator/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="Δημιουργία Αρχείου .torrent"/>
 		</menu>
 		<menu name="CLibraryTree.Physical">
 			<item id="ID_LIBRARY_EXPLORE" text="_Εξερεύνηση"/>
@@ -1187,6 +1199,8 @@
 			<item id="ID_LIBRARY_SCAN" text="_Σάρωση"/>
 			<item id="ID_LIBRARY_REBUILD" text="Ανα_δόμηση"/>
 			<item id="ID_LIBRARY_FOLDERS" text="Κοινοποιημένοι _Φάκελοι..."/>
+			<separator/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="Δημιουργία Αρχείου .torrent"/>
 			<separator/>
 			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 			<separator/>
@@ -2454,6 +2468,7 @@
 		<tip id="ID_LIBRARY_ENQUEUE" message="Προσθήκη επιλεγμένων αρχείων στη Λίστα Αναπαραγωγής."/>
 		<tip id="ID_LIBRARY_EXPLORE" message="Άνοιγμα επιλεγμένων φακέλων."/>
 		<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Εξαγωγή επιλεγμένων album σε αρχεία συλλογής..."/>
+		<tip id="ID_LIBRARY_FOLDER_DELETE" message="Διαγραφή επιλεγμένου album."/>
 		<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Λήψη όλων των αρχείων στην επιλεγμένη συλλογή."/>
 		<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Προσθήκη αρχείων επιλεγμένων album στη Λίστα Αναπαραγωγής."/>
 		<tip id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" message="Προβολή και επεξεργασία ιδιοτήτων όλων των αρχείων στους επιλεγμένους φακέλους..."/>
@@ -2863,6 +2878,7 @@
 		<string id="8335" value="Οι πηγές αυτού του αρχείου είναι πίσω απο firewall"/>
 		<string id="8336" value="Οι πηγές αυτού του αρχείου δείχνουν ασταθείς"/>
 		<string id="8337" value="Αφερέγγυο"/>
+		<string id="8338" value="Δημιουργημένο:"/>
 		<string id="13000" value="Θέλετε σίγουρα να διαγράψετε τους επιλεγμένους κανόνες ασφαλείας; Αυτό δεν μπορεί να αναιρεθεί!"/>
 		<string id="13001" value="Αρχεία κοινοποιημένα στο Διαδίκτυο"/>
 		<string id="16063" value="Η αντιστοίχηση θυρών UPnP εγκαταλήφθηκε μετά από 10 προσπάθειες."/>
@@ -3217,6 +3233,9 @@
 		<string id="17041" value="Αδυναμία αποστολής μηνύματος, λόγω έλλειψης σύνδεσης."/>
 		<string id="17042" value="Δεν έχετε συμπληρώσει ακόμη το προφίλ σας. Πρέπει να δώσετε ένα προφίλ για να συνομιλήσετε με άλλους χρήστες.\n\nΘέλετε να συμπληρώσετε το προφίλ σας τώρα;"/>
 		<string id="17043" value="Χορήγηση προτεραιότητας αποστολής στον host %s."/>
+		<string id="17044" value="Solve this CAPTCHA please:"/>
+		<string id="17045" value="Wrong CAPTCHA."/>
+		<string id="17046" value="CAPTCHA accepted."/>
 		<string id="17100" value="Gnutella: Σύνδεση Peer-σε-Peer"/>
 		<string id="17101" value="Gnutella: Σύνδεση Φύλλου-σε-Ultrapeer "/>
 		<string id="17102" value="Gnutella: Σύνδεση Ultrapeer-σε-Φύλλο"/>
@@ -3248,6 +3267,7 @@
 		<string id="17128" value="Server του ED2K"/>
 		<string id="17129" value="ED2K (LowID)"/>
 		<string id="17130" value="ED2K (HighID)"/>
+		<string id="17131" value="Σύνδεση"/>
 		<string id="17216" value="Εγκαινίαση σύνδεσης με server του ED2K στο %s..."/>
 		<string id="17217" value="Ενωμένο στον server %s του ED2K, χειραψία..."/>
 		<string id="17218" value="ED2K[%s] %s"/>
@@ -3331,6 +3351,7 @@
 		<string id="18512" value="Θέλετε σίγουρα να διαγράψετε όλες τις λήψεις σε αυτήν την ομάδα;"/>
 		<string id="18513" value="Εισάγατε μη έγκυρο ED2K hash. Παρακαλώ ελέγξτε το και ξαναπροσπαθήστε."/>
 		<string id="18514" value="Εισάγατε ένα SHA1 διαφορετικό από το τρέχον της λήψης! Θέλετε σίγουρα να το αλλάξετε τώρα;"/>
+		<string id="18515" value="The selected download item currently has some Task attached, please wait and do it later."/>
 		<string id="19000" value="Η απομακρυσμένη πρόσβαση είναι απενεργοποιημένη."/>
 		<string id="19001" value="Πρέπει να διαλέξετε ένα όνομα και έναν κωδικό."/>
 		<string id="19002" value="Αδυναμία υποδοχής συνδέσεων, μη διαθέσιμο URL."/>

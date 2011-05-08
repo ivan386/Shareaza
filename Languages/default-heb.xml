@@ -184,6 +184,8 @@
 			<button id="ID_LIBRARY_TREE_PHYSICAL" text="‪תקיות"/>
 			<button id="ID_LIBRARY_TREE_VIRTUAL" text="‪ארגונית"/>
 		</toolbar>
+		<toolbar name="CLibraryTree.Physical">
+		</toolbar>
 		<toolbar name="CLibraryTree.Virtual">
 			<button id="ID_LIBRARY_FOLDERS" text="‪...שתף קבצים"/>
 		</toolbar>
@@ -208,6 +210,12 @@
 		<toolbar name="CLibraryHomeView.Virtual">
 			<button id="ID_LIBRARY_FOLDER_NEW" text="‪...צור אלבום"/>
 			<button id="ID_LIBRARY_ALBUM_DELETE" text="‪מחק אלבום"/>
+			<rightAlign/>
+			<separator/>
+			<control id="IDC_SEARCH_BOX" width="120"/>
+			<button id="ID_LIBRARY_SEARCH_QUICK" text="‪חפש"/>
+		</toolbar>
+		<toolbar name="CLibraryTileView.Physical">
 			<rightAlign/>
 			<separator/>
 			<control id="IDC_SEARCH_BOX" width="120"/>
@@ -270,6 +278,8 @@
 			<separator/>
 			<control id="IDC_SEARCH_BOX" width="120"/>
 			<button id="ID_LIBRARY_SEARCH_QUICK" text="‪חפש"/>
+		</toolbar>
+		<toolbar name="CLibraryCollectionView.Physical">
 		</toolbar>
 		<toolbar name="CLibraryCollectionView.Virtual">
 			<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="‪נגן אלבום"/>
@@ -1177,6 +1187,8 @@
 			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDERS" text="שתף _קבצים..."/>
+			<separator/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="‪.torrent צור קובץ"/>
 		</menu>
 		<menu name="CLibraryTree.Physical">
 			<item id="ID_LIBRARY_EXPLORE" text="‪_סייר"/>
@@ -1187,6 +1199,8 @@
 			<item id="ID_LIBRARY_SCAN" text="‪סריקה"/>
 			<item id="ID_LIBRARY_REBUILD" text="‪בנה מחדש"/>
 			<item id="ID_LIBRARY_FOLDERS" text="שתף _קבצים..."/>
+			<separator/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="‪.torrent צור קובץ"/>
 			<separator/>
 			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 			<separator/>
@@ -2458,6 +2472,7 @@
 		<tip id="ID_LIBRARY_ENQUEUE" message="הוסף את הקבצים הנבחרים לרשימת ההשמעה"/>
 		<tip id="ID_LIBRARY_EXPLORE" message="פתח את הספריות הנבחרות"/>
 		<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="יצא את תקיית האלבום הנבחר לקבצי אוסף..."/>
+		<tip id="ID_LIBRARY_FOLDER_DELETE" message="מחק את תיקיית האלבום הנבחרת"/>
 		<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="הורד את כל הקבצים באוסף הנבחר"/>
 		<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="הוסף כל קובץ בתקית/ות האלבום הנבחרת/ות לרשימת השמע שלך."/>
 		<tip id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" message="הצג וערוך את מאפייני כל הקבצים בתקיה/ות הנבחרת/ות..."/>
@@ -2867,6 +2882,7 @@
 		<string id="8335" value="‪המקורות לקובץ כרגע מוגנים בחומת אש"/>
 		<string id="8336" value="‪המקורות לקובץ כרגע במצב לא יציב"/>
 		<string id="8337" value="Untrusted"/>
+		<string id="8338" value=":נוצר"/>
 		<string id="13000" value="Are you sure you want to delete the selected security rules? This cannot be undone."/>
 		<string id="13001" value="Files shared over the Internet"/>
 		<string id="16063" value="UPnP port mapping failed after 10 attempts."/>
@@ -3221,6 +3237,9 @@
 		<string id="17041" value="‪Cannot send message, a connection has not been established yet."/>
 		<string id="17042" value="‪You have not yet filled in your user profile.  You must provide a profile before you can chat with other users.\n\nWould you like to fill in your profile now?"/>
 		<string id="17043" value=".%s הוענקה עדיפות העלאה למשתמש בכתובת"/>
+		<string id="17044" value="Solve this CAPTCHA please:"/>
+		<string id="17045" value="Wrong CAPTCHA."/>
+		<string id="17046" value="CAPTCHA accepted."/>
 		<string id="17100" value="‪Gnutella: Peer-to-Peer Connection"/>
 		<string id="17101" value="‪Gnutella: Leaf-to-Ultrapeer Connection"/>
 		<string id="17102" value="‪Gnutella: Ultrapeer-to-Leaf Connection"/>
@@ -3252,6 +3271,7 @@
 		<string id="17128" value="‪אי-דונקי 2000 Server"/>
 		<string id="17129" value="‪אי-דונקי 2000 (LowID)"/>
 		<string id="17130" value="‪אי-דונקי 2000 (HighID)"/>
+		<string id="17131" value="חיבור"/>
 		<string id="17216" value="‪Initiating connection to eDonkey2000 server at %s..."/>
 		<string id="17217" value="‪Connected to eDonkey2000 server %s, handshaking..."/>
 		<string id="17218" value="‪ED2K[%s] %s"/>
@@ -3335,6 +3355,7 @@
 		<string id="18512" value="‪?האם אתה בטוח שברצונך לבטל או להפסיק את כל ההורדות בקבוצה"/>
 		<string id="18513" value="‪You have typed an eDonkey2000 hash value, however it is invalid.  Please check it and try again."/>
 		<string id="18514" value="‪You have provided a SHA1 hash value which is different to the one currently associated with this download.  Are you sure you want to change the SHA1 hash now?"/>
+		<string id="18515" value="The selected download item currently has some Task attached, please wait and do it later."/>
 		<string id="19000" value="‪גישה מרחוק לא מאופשרת"/>
 		<string id="19001" value="‪.אתה חייב לבחור שם משתמש וסיסמא"/>
 		<string id="19002" value="‪לא מצליח לקבל התקשרויות, כתובת האינטרנט לא זמינה"/>

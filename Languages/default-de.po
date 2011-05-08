@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2011-03-14 05:50+0000\n"
+"POT-Creation-Date: 2011-05-03 13:54+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -26,7 +26,7 @@ msgstr "OldDeath, Frontier, Jann Röder, ZeRO, Sebastian Pfeifer"
 
 #: manifest-description
 msgid "(translation description: Shareaza English Skin File)"
-msgstr "Shareaza Default German Translation Skin File; based on r8131 of 'default-en.xml'"
+msgstr "Shareaza Default German Translation Skin File; based on r8936 of 'default-en.xml'"
 
 #: manifest-link
 msgid "(translation URL: http://shareaza.sourceforge.net/)"
@@ -34,11 +34,11 @@ msgstr "http://shareaza.sourceforge.net/"
 
 #: manifest-email
 msgid "(author e-mail)"
-msgstr "zero9999(at)gmail.com"
+msgstr "old_death{_ädt_}users.sourceforge.net"
 
 #: manifest-version
 msgid "(shareaza version)"
-msgstr "2.4.0.4"
+msgstr "2.5.5.0"
 
 #: manifest-language
 msgid "(translation language code: en)"
@@ -50,7 +50,7 @@ msgstr "Klicken Sie hier, um Deutsch als Sprache zu wählen."
 
 #: manifest-dir
 msgid "(translation language direction: ltr or rtl)"
-msgstr "(translation language direction: ltr or rtl)"
+msgstr "ltr"
 
 #: button;id_network_connect button;id_tab_connect button;id_irc_connect
 #: button;id_chat_connect string;8069 cconnecttodlg;control;7
@@ -117,7 +117,7 @@ msgstr "Filter:"
 #: csearchwnd.full;label-tip;1 cbrowsehostwnd.basic;label-tip;1
 #: cbrowsehostwnd;label-tip;1 chitmonitorwnd;label-tip;1
 msgid "Type some words to filter the results with"
-msgstr "Schreiben Sie ein paar Wörter, um die Ergebnisse zu filtern"
+msgstr "Geben Sie ein paar Wörter ein, um mit deren Hilfe die Ergebnisse zu filtern..."
 
 #: button;id_search_filter_raw
 msgid "More..."
@@ -199,7 +199,7 @@ msgstr "Download / Torrent hinzufügen..."
 
 #: button;id_downloads_clear_completed button;id_uploads_clear_completed
 msgid "Clear Completed"
-msgstr "Aufräumen"
+msgstr "Beendete entfernen"
 
 #: button;id_downloads_edit button;id_library_properties
 msgid "Properties"
@@ -208,7 +208,7 @@ msgstr "Info"
 #: button;id_downloads_filter_menu button;id_uploads_filter_menu
 #: cfiltersearchdlg;control;29
 msgid "Filter"
-msgstr "Downloadfilter"
+msgstr "Filtern"
 
 #: button;id_uploads_start
 msgid "Start Now"
@@ -265,7 +265,7 @@ msgstr "Kopieren"
 #: button;id_library_delete cskinssettingspage;control;9
 #: cdeletefiledlg;control;3
 msgid "Delete"
-msgstr "löschen"
+msgstr "Löschen"
 
 #: button;id_library_folder_enqueue
 msgid "Play Album"
@@ -277,7 +277,7 @@ msgstr "Alle Dateien herunterladen"
 
 #: button;id_media_play
 msgid "Play   "
-msgstr "Wiedergabe"
+msgstr "Play"
 
 #: button;id_media_pause button;id_hitmonitor_pause tip;id_media_pause
 msgid "Pause"
@@ -334,7 +334,7 @@ msgstr "Speichern"
 
 #: tip;id_irc_connect
 msgid "Connect to IRC"
-msgstr "Mit dem IRC-Server verbinden"
+msgstr "Mit IRC-Server verbinden"
 
 #: button;id_irc_disconnect button;id_neighbours_disconnect
 #: button;id_hostcache_disconnect button;id_chat_disconnect string;8072
@@ -355,11 +355,11 @@ msgstr "IRC-Einstellungen konfigurieren"
 
 #: button;id_network_g2 cscheduletaskpage;control;9
 msgid "Gnutella2"
-msgstr "Gnutella 2"
+msgstr "Gnutella2"
 
 #: button;id_network_g1 cscheduletaskpage;control;8
 msgid "Gnutella1"
-msgstr "Gnutella 1"
+msgstr "gnutella"
 
 #: button;id_network_ed2k dialog;cdonkeysettingspage
 msgid "eDonkey"
@@ -447,7 +447,7 @@ msgstr "G2-Cache"
 
 #: button;id_hostcache_g1_cache
 msgid "G1 Cache"
-msgstr "G1-Cache"
+msgstr "gnutella-Cache"
 
 #: button;id_hostcache_ed2k_cache
 msgid "eDonkey Cache"
@@ -572,7 +572,7 @@ msgstr "Mit _Gnutella2 verbinden"
 #: cmainwnd.tabbed;9;10;item;id_network_g1
 #: cmainwnd.windowed;18;19;item;id_network_g1
 msgid "Connect to Gnutella_1"
-msgstr "Mit Gnutella_1 verbinden"
+msgstr "Mit Gnutell_a verbinden"
 
 #: cmainwnd.basic;1;2;item;id_network_ed2k
 #: cmainwnd.tabbed;9;10;item;id_network_ed2k
@@ -788,7 +788,7 @@ msgstr "Shareaza-_FAQ"
 #: cmainwnd.basic;6;item;id_help_test cmainwnd.tabbed;15;item;id_help_test
 #: cmainwnd.windowed;23;item;id_help_test
 msgid "_Connection Test"
-msgstr "Verbindungstest"
+msgstr "_Verbindungstest"
 
 #: cmainwnd.basic;6;7 cmainwnd.tabbed;15;16 cmainwnd.windowed;23;24
 msgid "_Guides"
@@ -820,7 +820,7 @@ msgstr "_Codec-Hilfe"
 
 #: cmainwnd.basic;6;8 cmainwnd.tabbed;15;17 cmainwnd.windowed;23;25
 msgid "_Websites"
-msgstr "_Websites"
+msgstr "_Webseiten"
 
 #: cmainwnd.basic;6;8;item;id_help_homepage
 #: cmainwnd.tabbed;15;17;item;id_help_homepage
@@ -832,19 +832,19 @@ msgstr "_Shareaza's Homepage"
 #: cmainwnd.tabbed;15;17;item;id_help_forums
 #: cmainwnd.windowed;23;25;item;id_help_forums
 msgid "Shareaza _Forums"
-msgstr "Shareaza-_Forum"
+msgstr "Shareaza-_Foren"
 
 #: cmainwnd.basic;6;8;item;id_help_web_6
 #: cmainwnd.tabbed;15;17;item;id_help_web_6
 #: cmainwnd.windowed;23;25;item;id_help_web_6
 msgid "Shareaza S_kin Site"
-msgstr "Shareazas S_kin-Seite"
+msgstr "Shareaza's S_kin-Seite"
 
 #: cmainwnd.basic;6;item;id_help_version_check
 #: cmainwnd.tabbed;15;item;id_help_version_check
 #: cmainwnd.windowed;23;item;id_help_version_check
 msgid "Check for new _version"
-msgstr "Auf neuere _Version prüfen"
+msgstr "Auf _Updates prüfen"
 
 #: cmainwnd.basic;6;item;id_help_about cmainwnd.tabbed;15;item;id_help_about
 #: cmainwnd.windowed;23;item;id_help_about
@@ -986,7 +986,7 @@ msgstr "Neue _Suche..."
 
 #: cmainwnd.windowed;18;item;id_network_auto_close
 msgid "Close _After Transfers"
-msgstr "N_ach Transfer beenden"
+msgstr "N_ach Downloadende beenden"
 
 #: cmainwnd.windowed;20;item;id_tab_irc
 msgid "IR_C Chat"
@@ -1345,7 +1345,7 @@ msgstr "G_eschwindigkeitslimit aufheben"
 #: clibraryfileview.virtual;item;id_library_properties
 #: csecuritywnd;item;id_security_edit cdiscoverywnd;item;id_discovery_edit
 msgid "_Properties"
-msgstr "Download _bearbeiten..."
+msgstr "Ei_genschaften..."
 
 #: cdownloadswnd.source;item;id_transfers_connect
 msgid "_Access"
@@ -1388,7 +1388,7 @@ msgstr "_Seeden beenden"
 #: cdownloadswnd.seeding;item;id_downloads_edit
 #: cmedialist;item;id_media_properties
 msgid "_Properties..."
-msgstr "_Eigenschaften..."
+msgstr "Ei_genschaften..."
 
 #: cdownloadswnd.nothing;item;id_downloads_clear_completed
 #: cuploadswnd.queue;item;id_uploads_clear_completed
@@ -1430,24 +1430,24 @@ msgstr "Gruppen a_nzeigen"
 #: cdownloadswnd.filter;item;id_downloads_filter_all
 #: cuploadswnd.filter;item;id_uploads_filter_all
 msgid "Show _All"
-msgstr "_Alle Downloads anzeigen"
+msgstr "_Alle anzeigen"
 
 #: cdownloadswnd.filter;item;id_downloads_filter_active
 #: cuploadswnd.filter;item;id_uploads_filter_active
 msgid "Show A_ctive"
-msgstr "A_ktive Downloads anzeigen"
+msgstr "A_ktive anzeigen"
 
 #: cdownloadswnd.filter;item;id_downloads_filter_queued
 msgid "Show P_ending"
-msgstr "_Wartende Downloads anzeigen"
+msgstr "_Wartende anzeigen"
 
 #: cdownloadswnd.filter;item;id_downloads_filter_sources
 msgid "Show _No Sources"
-msgstr "Downloads ohne Quellen anz_eigen"
+msgstr "Quellenlose anz_eigen"
 
 #: cdownloadswnd.filter;item;id_downloads_filter_paused
 msgid "Show _Paused"
-msgstr "A_ngehaltene Downloads anzeigen"
+msgstr "Pausierte a_nzeigen"
 
 #: cdownloadswnd.filter;item;id_downloads_show_sources
 msgid "Show All _Sources"
@@ -1502,6 +1502,13 @@ msgstr "_Entfernen"
 #: clibraryfileview.virtual;item;id_shell_menu
 msgid "S_hell menu"
 msgstr "_Kontextmenü"
+
+#: clibrarytree.physical.basic;item;id_library_createtorrent
+#: clibrarytree.physical;item;id_library_createtorrent
+#: clibraryfileview.physical;44;item;id_library_createtorrent
+#: clibraryfileview.virtual;50;item;id_library_createtorrent
+msgid "Create ._torrent File"
+msgstr "._torrent-Datei erstellen"
 
 #: clibrarytree.physical;item;id_library_explore
 msgid "_Explore"
@@ -1603,11 +1610,6 @@ msgstr "_Metadaten lokalisieren"
 #: clibraryfileview.virtual;item;id_library_refresh_metadata
 msgid "_Refresh Metadata"
 msgstr "Metadaten _aktualisieren"
-
-#: clibraryfileview.physical;44;item;id_library_createtorrent
-#: clibraryfileview.virtual;50;item;id_library_createtorrent
-msgid "Create ._torrent File"
-msgstr "._torrent-Datei erstellen"
 
 #: clibraryfileview.physical;item;id_library_columns
 #: clibraryfileview.virtual;item;id_library_columns
@@ -1883,15 +1885,15 @@ msgstr "E_xportieren..."
 
 #: csecuritywnd;61
 msgid "Default P_olicy"
-msgstr "_Standardregel"
+msgstr "_Standardverhalten"
 
 #: csecuritywnd;61;item;id_security_policy_accept
 msgid "_Accept"
-msgstr "_Erlaubt"
+msgstr "_Alles Erlauben"
 
 #: csecuritywnd;61;item;id_security_policy_deny
 msgid "_Deny"
-msgstr "_Verweigert"
+msgstr "_Alles Verweigern"
 
 #: cschedulerwnd;item;id_scheduler_add
 msgid "_Add Scheduled Task"
@@ -1899,19 +1901,19 @@ msgstr "_Add Scheduled Task"
 
 #: cschedulerwnd;item;id_scheduler_activate
 msgid "A_ctivate"
-msgstr "A_ctivate"
+msgstr "A_ktivieren"
 
 #: cschedulerwnd;item;id_scheduler_deactivate
 msgid "_Deactivate"
-msgstr "_Deactivate"
+msgstr "_Deaktivieren"
 
 #: cschedulerwnd;item;id_scheduler_edit
 msgid "_Edit"
-msgstr "_Edit"
+msgstr "_Editieren"
 
 #: cschedulerwnd;item;id_scheduler_remove_all
 msgid "Remove Al_l"
-msgstr "Remove Al_l"
+msgstr "Al_le entferen"
 
 #: cdiscoverywnd;item;id_discovery_query
 msgid "_Query Now"
@@ -1951,7 +1953,7 @@ msgstr "_Format"
 
 #: cprivatechatwnd;62;item;id_chat_bold
 msgid "Set _Bold"
-msgstr "_Fett"
+msgstr "F_ett"
 
 #: cprivatechatwnd;62;item;id_chat_italic
 msgid "Set _Italic"
@@ -1963,7 +1965,7 @@ msgstr "_Unterstrichen"
 
 #: cprivatechatwnd;62;item;id_chat_colour
 msgid "Set _Colour"
-msgstr "Farbe"
+msgstr "F_arbe"
 
 #: cprivatechatwnd;62;item;id_chat_emoticons
 msgid "_Emoticons"
@@ -1992,11 +1994,11 @@ msgstr "_Schließen"
 
 #: circuserlist;item;id_irc_whois
 msgid "_Whois"
-msgstr "_Wer ist das?"
+msgstr "_Whois?"
 
 #: circuserlist;item;id_irc_query
 msgid "_Query"
-msgstr "_Private Unterhaltung"
+msgstr "_Anfragen"
 
 #: circuserlist;63 dialog;cdownloadactionspage
 msgid "Actions"
@@ -2136,7 +2138,7 @@ msgstr "Das kann ihre Suchergebnisse und Downloads verschlechtern."
 
 #: chomeviewctrl;link;5003 chomeviewctrl;link;6003 chomeviewctrl;link;7003
 msgid "Click here to learn how to configure your router or firewall"
-msgstr "Klicken Sie hier um herauszufinden, wie Sie ihre Firewall bzw. ihren Router für Shareaza konfigurieren müssen"
+msgstr "Klicken Sie hier um herauszufinden, wie Sie ihre Firewall bzw. ihren Router für Shareaza konfigurieren können"
 
 #: chomeviewctrl;heading;6000
 msgid "W A R N I N G   -   Y O U R   T C P   P O R T   I S   F I R E W A L L E D"
@@ -2164,7 +2166,7 @@ msgid ""
 "\t\t\t\tand are unable to receive UDP messages from the Internet.  "
 msgstr ""
 "Shareaza hat festgestellt, dass sich Ihr PC hinter einem NAT-Router und/oder einer Firewall befindet\n"
-"\t\t\t\tund keine UDP-Daten aus dem Internet empfangen kann.  "
+"\t\t\t\tund keine UDP-Pakete aus dem Internet empfangen kann.  "
 
 #: chomeviewctrl;text;7002
 msgid "This may cause poor search performance."
@@ -2323,7 +2325,7 @@ msgstr "%i Leaves"
 
 #: chomeconnectionbox;text;9
 msgid "Gnutella1:"
-msgstr "Gnutella1:"
+msgstr "gnutella:"
 
 #: chomeconnectionbox;text;13
 msgid "%i ultrapeers"
@@ -2424,53 +2426,53 @@ msgstr "Willkommen bei den allgemeinen Shareaza-Einstellungen"
 msgid ""
 "The Shareaza Settings Manager allows advanced users to completely customise how\n"
 "\t\t\t\tShareaza works. The settings in the"
-msgstr ""
-"In dieser Sektion kann das Verhalten von Shareaza gegenüber dem \n"
-"\t\tBenutzer angepasst werden."
+msgstr "In der Sektion"
 
 #: cgeneralsettingsgroup;text;4
 msgid "section relate to the user experience."
-msgstr "Einstellungen zur Benutzeroberfläche wie Tooltips, Verhalten beim Minimieren, Zahlenformate, Meldungen, etc."
+msgstr ""
+"kann das Verhalten von Shareaza gegenüber dem \n"
+"\t\tBenutzer angepasst werden."
 
 #: cgeneralsettingsgroup;link;5
 msgid "General:"
-msgstr "Bibliothek:"
+msgstr "Allgemein:"
 
 #: cgeneralsettingsgroup;text;6
 msgid "Common user interface settings like tooltips, minimise behaviour, number formats, prompts, etc."
-msgstr "Einstellungen zur integrierten Medienbibliothek und zum Dateimanagement."
+msgstr "Einstellungen zur Benutzeroberfläche wie Tooltips, Verhalten beim Minimieren, Zahlenformate, Meldungen, etc."
 
 #: cgeneralsettingsgroup;link;7
 msgid "Library:"
-msgstr "Medienwiedergabe:"
+msgstr "Bibliothek:"
 
 #: cgeneralsettingsgroup;text;8
 msgid "Presentation, access, and management of the file library."
-msgstr "Auswahl des Medienwiedergabe-Plugins oder eines externen Wiedergabeprogrammes."
+msgstr "Einstellungen zur integrierten Medienbibliothek und zum Dateimanagement."
 
 #: cgeneralsettingsgroup;link;9
 msgid "Media Player:"
-msgstr "Community:"
+msgstr "Medienwiedergabe:"
 
 #: cgeneralsettingsgroup;text;10
 msgid "When and where to use the built-in Shareaza Media Centre."
-msgstr "Ihr Profil, welches in den P2P Netzwerken angezeigt wird, sowie Chat und Instant Messaging-Einstellungen."
+msgstr "Auswahl und konfiguration des Medienwiedergabe-Plugins oder eines externen Wiedergabeprogrammes."
 
 #: cgeneralsettingsgroup;link;11
 msgid "Community:"
-msgstr "IRC:"
+msgstr "Community:"
 
 #: cgeneralsettingsgroup;text;12
 msgid "Your profile, chat and instant messaging settings."
-msgstr "Darstellungs-, Verbindungs- und Nutzereinstellungen des integrierten Internet Relay Chats."
+msgstr "Ihr Profil, welches in den P2P Netzwerken angezeigt wird, sowie Chat und Instant Messaging-Einstellungen."
 
 #: cgeneralsettingsgroup;link;13
 msgid "Chat:"
-msgstr "Web:"
+msgstr "IRC:"
 
 #: cgeneralsettingsgroup;text;14
 msgid "IRC chatroom visual appearances and connection settings."
-msgstr "Shareazas Browserintegrierung, um P2P-Links und Torrents von Ihrem Webbrowser aus zu benutzen."
+msgstr "Darstellungs-, Verbindungs- und Nutzereinstellungen des integrierten Internet Relay Chats."
 
 #: cgeneralsettingsgroup;link;15
 msgid "Web Integration:"
@@ -2490,44 +2492,44 @@ msgid ""
 "The Shareaza Settings Manager allows advanced users to completely customise \n"
 "\t\t\t\thow Shareaza works. The settings in the"
 msgstr ""
-"In dieser Sektion können Sie festlegen, wie sich Shareaza in P2P-Netzwerken verhält. \n"
-"\t\tDiese Einstellungen sind für schnelles Herunterladen und gute Suchresultate besonders wichtig."
+"Der Shareaza Einstellungs-Manager erlaubt es, Shareaza Ihren Wuenschen \n"
+"\t\t\t\tanzupassen. Die Einstellungen in der"
 
 #: cinternetsettingsgroup;text;4
 msgid "section control how Shareaza interacts with other nodes within distributed peer-to-peer networks."
-msgstr "Geschwindigkeit und Eigenschaften ihrer Internetanbindung."
+msgstr "-Sektion kontrollieren wie Shareaza mit anderen Teilnehmern der unterstützten Netzwerke interagiert."
 
 #: cinternetsettingsgroup;link;5 cconnectionsettingspage;control;21
 msgid "Connection:"
-msgstr "Downloads:"
+msgstr "Verbindung:"
 
 #: cinternetsettingsgroup;text;6
 msgid "The speeds and capabilities of your Internet connection."
-msgstr "Anzahl gleichzeitiger Downloads und Transfers, Hash-Verifizierung, Timeouts und Management."
+msgstr "Geschwindigkeit und Eigenschaften ihrer Internetanbindung."
 
 #: cinternetsettingsgroup;link;7
 msgid "Downloads:"
-msgstr "Uploads:"
+msgstr "Downloads:"
 
 #: cinternetsettingsgroup;text;8
 msgid "Download throughput, scheduling, verification, timeouts and management."
-msgstr "Uploadkapazität, Warteschlangen, Bannen, Timeouts und spezielle Freigaben."
+msgstr "Anzahl gleichzeitiger Downloads und Transfers, Hash-Verifizierung, Timeouts und Management."
 
 #: cinternetsettingsgroup;link;9
 msgid "Uploads:"
-msgstr "Remote-Zugriff:"
+msgstr "Uploads:"
 
 #: cinternetsettingsgroup;text;10
 msgid "Upload capacity, queuing, banning, timeouts and special requests."
-msgstr "Shareaza konfigurieren, um die Fernsteuerung über einen Webbrowser zu ermöglichen."
+msgstr "Uploadkapazität, Warteschlangen, Bannen, Timeouts und spezielle Freigaben."
 
 #: cinternetsettingsgroup;link;11
 msgid "Remote:"
-msgstr "Zeitsteuerung:"
+msgstr "Remote-Zugriff:"
 
 #: cinternetsettingsgroup;text;12
 msgid "Set up the ability to control Shareaza remotely through a web browser."
-msgstr "Downloadgeschwindigkeiten zeitweise automatisch drosseln und wieder hochfahren."
+msgstr "Shareaza konfigurieren, um die Fernsteuerung über einen Webbrowser zu ermöglichen."
 
 #: cbrowsehostprofile.1;heading;2000
 msgid "'s Profile"
@@ -2559,7 +2561,7 @@ msgstr ","
 
 #: cbrowsehostprofile.1;text;2010
 msgid "Contact Information"
-msgstr "Kontakt"
+msgstr "Kontaktinformationen"
 
 #: cbrowsehostprofile.1;text;2017
 msgid "Interests"
@@ -2615,7 +2617,7 @@ msgstr "Dieser Torrent ist am Seeden"
 msgid ""
 "Shareaza has verified this complete download, and is actively sharing it\n"
 "\t\t\twith other downloaders through BitTorrent. Please share at least 100%."
-msgstr "Shareaza hat nach dem Abschluss dieses Download sichergestellt, dass die Datei(en) fehlerfrei übertragen wurde(n), und verteilt die Daten nun an andere interessierte Nutzer über das BitTorrent Protokoll. Nach Erreichen einer gewissen hochgeladenen Datenmenge wird der Torrent dann automatisch entfernt (siehe für die Konfiguration dieser Datenmenge (in % der heruntergeladenen Datenmenge) in den Einstellungen unter"
+msgstr "Shareaza hat nach dem Abschluss dieses Download sichergestellt, dass die Datei(en) fehlerfrei übertragen wurde(n), und verteilt die Daten nun an andere interessierte Nutzer über das BitTorrent Protokoll. Nach Erreichen einer gewissen hochgeladenen Datenmenge wird der Torrent dann automatisch entfernt (siehe für die Konfiguration dieser Datenmenge (in % der heruntergeladenen Datenmenge) in den Einstellungen unter BitTorrent.)"
 
 #: downloadhelp.completed;text;1
 msgid "This Download has Completed"
@@ -2649,7 +2651,7 @@ msgstr "Dieser Download ist pausiert"
 msgid ""
 "You have paused this download. If you want it to resume downloading, you\n"
 "\t\t\tcan click the '"
-msgstr "Sie haben diesen Download angehalten.  Wenn Sie das Herunterladen fortsetzen möchten, können Sie den"
+msgstr "Sie haben diesen Download angehalten. Wenn Sie das Herunterladen fortsetzen möchten, können Sie den"
 
 #: downloadhelp.paused;text;4
 msgid "' command."
@@ -2668,7 +2670,7 @@ msgid ""
 "\t\t\tdownload."
 msgstr ""
 "Shareaza hat diesen Download automatisch angehalten, weil die Festplatte voll zu sein scheint\n"
-"\t\toder die Datei nicht geschrieben werden kann.  Wenn Sie den Download fortsetzen möchten,\n"
+"\t\toder die Datei nicht geschrieben werden kann. Wenn Sie den Download fortsetzen möchten,\n"
 "\t\tmachen Sie bitte etwas Platz auf ihrer Festplatte und / oder prüfen Sie, ob auf das Verzeichnis\n"
 "\t\tfür unvollständige Dateien zugegriffen werden kann und nehmen Sie dann den\n"
 "\t\tDownload wieder auf."
@@ -2990,18 +2992,18 @@ msgid ""
 "\t\t\t(file type). Furthermore, searches must not be limited to numbers or negative\n"
 "\t\t\tterms only, and you should avoid overly general queries."
 msgstr ""
-"Die Suche ist schlecht formuliert und wird nicht richtig funktionieren.\n"
+"Diese Suche ist schlecht formuliert und wird nicht richtig funktionieren.\n"
 "\t\tDie Suche sollte, falls möglich, mehrere Wörter und/oder ein Schema beinhalten.\n"
-"\t\tSo sollten sie nicht nur aus\n"
-"\t\tZahlen bestehen oder zu Allgemein sein."
+"\t\tAuch sollten sie nicht nur aus ausgeschlossenen Wörtern oder Zahlen bestehen \n"
+"\t\\oder zu Allgemein sein. Auch zu kurze Suchanfragen können nicht behandelt werden."
 
 #: searchhelp.badsearch1;text;3
 msgid ""
 "Most clients on the network will ignore a search for all MP3 files, for example, \n"
 "\t\t\tbecause it is not specific enough, and would generate too many results."
 msgstr ""
-"Die meisten Clients im Netzwerk\n"
-"\t\tignorieren zum Beispiel die Suche nach allen MP3-Dateien."
+"Die meisten Clients im Netzwerk ignorieren zum Beispiel die Suche nach allen\n"
+"\t\t MP3-Dateien, da diese nicht spezifisch genug ist und zu viele Resultate generiert."
 
 #: searchhelp.badsearch2;text;2
 msgid ""
@@ -3044,12 +3046,12 @@ msgid ""
 "General terms cannot be searched for efficiently and may result in poor\n"
 "\t\t\tsearch performance, as well as high bandwidth use during searches."
 msgstr ""
-"Nach allgemeinen Ausdrücken kann nicht effizient gesucht werden und kann zu schlechter Suchleistung und\n"
-"\t\thohem Bandbreitenbedarf während des Suchens führen."
+"Suchen nach allgemeinen Ausdrücken sind nicht effizient möglich und können zu \n"
+"\t\tschlechter Suchleistung und hohem Bandbreitenbedarf während des Suchens führen."
 
 #: searchhelp.badsearch3;text;5
 msgid "Further help is available on the Shareaza web site."
-msgstr "Weitere Informationen finden Sie auf der Shareaza Webseite."
+msgstr "Weitere Hilfe finden Sie auf der Shareaza Webseite."
 
 #: searchhelp.adultsearch;text;1
 msgid "This search cannot be started"
@@ -3090,8 +3092,8 @@ msgid ""
 "This folder is (or contains) a system folder. Sharing this folder is not\n"
 "\t\t\trecommended, since most of the files in it are of no use to other people."
 msgstr ""
-"Dieser Ordner ist (oder enthält) einen Systemordner. Dieser Ordner sollte nicht freigegeben werden, weil\n"
-"\t\tmeisten Dateien darin für andere Leute keinen Nutzen haben."
+"Dieser Ordner ist (oder enthält) einen Systemordner. Dieser Ordner sollte nicht freigegeben\n"
+"\t\twerden, da die meisten Dateien darin für andere Leute keinen Nutzen haben."
 
 #: sharehelp.badshare;text;3
 msgid ""
@@ -3099,8 +3101,8 @@ msgid ""
 "\t\t\tdo not usually contain files suitable for sharing. Any files of interest would be in\n"
 "\t\t\tsub-folders located"
 msgstr ""
-"Ordner, wie das Windowsverzeichnis, Programme und ähnliche Ordner\n"
-"\t\tenthalten normalerweise keine zur Freigabe geeigneten Dateien. Interessante Dateien befinden sich höchstens"
+"Ordner, wie das Windowsverzeichnis, Programme und ähnliche Ordner enthalten \n"
+"\t\tnormalerweise keine zur Freigabe geeigneten Dateien. Interessante Dateien befinden sich höchstens"
 
 #: sharehelp.badshare;text;4
 msgid "inside"
@@ -3140,15 +3142,15 @@ msgstr "Druckvorschau schließen"
 
 #: tip;afx_ids_preview_close
 msgid "Cancel Preview"
-msgstr "Vorschau speichern"
+msgstr "Vorschau abbrechen"
 
 #: message;afx_ids_scclose
 msgid "Close the active window and prompts to save the documents"
-msgstr "Das aktive Fenster maximieren, um das Fenster zu füllen."
+msgstr "Aktives Fenster schließen und Speicheraufforderung für offene Dokumente anzeigen"
 
 #: message;afx_ids_scmaximize
 msgid "Enlarge the window to full size"
-msgstr "Das aktive Fenster maximieren, um das Fenster zu füllen."
+msgstr "Fenster bildschirmfüllend maximieren"
 
 #: message;afx_ids_scminimize
 msgid "Reduce the window to an icon"
@@ -3156,7 +3158,7 @@ msgstr "Fenster in die Statusleiste minimieren"
 
 #: message;afx_ids_scmove
 msgid "Change the window position"
-msgstr "Fensterposition verändern"
+msgstr "Fensterposition ändern"
 
 #: message;afx_ids_scnextwindow
 msgid "Switch to the next document window"
@@ -3176,7 +3178,7 @@ msgstr "Fenstergröße ändern"
 
 #: message;afx_ids_sctasklist
 msgid "Activate Task List"
-msgstr "Aufgabenliste anzeigen"
+msgstr "Aufgabenliste aktivieren"
 
 #: message;id_browse_files
 msgid "View the user's shared files"
@@ -3184,7 +3186,7 @@ msgstr "Die Dateien des Benutzers anzeigen."
 
 #: message;id_browse_launch
 msgid "Browse the selected user's profile and shared files."
-msgstr "Die Dateien und das Profil des markierten Benutzers durchsuchen."
+msgstr "Die Dateien und das Profil des markierten Nutzers durchsuchen."
 
 #: message;id_browse_profile
 msgid "Browse the user's profile."
@@ -3216,11 +3218,11 @@ msgstr "Eine Textfarbe wählen (Ctrl+K)"
 
 #: message;id_chat_connect
 msgid "Connect to the chat session."
-msgstr "Zum Chatten verbinden.."
+msgstr "Zum Chatten verbinden."
 
 #: message;id_chat_disconnect
 msgid "Disconnect the chat session."
-msgstr "Chatverbindung beenden."
+msgstr "Chatsitzung beenden."
 
 #: message;id_chat_emoticons
 msgid "Insert an emoticon."
@@ -3236,7 +3238,7 @@ msgstr "Diesem Benutzer Uploadpriorität gewähren."
 
 #: message;id_chat_timestamp
 msgid "Show the time when each message was received."
-msgstr "Zeit anzeigen, zu der eine Nachricht empfangen wurde."
+msgstr "Zeitstempel für Nachrichten anzeigen."
 
 #: message;id_chat_underline
 msgid "Apply underline formatting (Ctrl+U)"
@@ -3244,7 +3246,7 @@ msgstr "Unterstrichen (Ctrl+U)"
 
 #: message;id_child_close
 msgid "Close the active window."
-msgstr "Das aktive Fenster schließen."
+msgstr "Aktives Fenster schließen."
 
 #: message;id_child_maximise
 msgid "Enlarge the active window to fill the window."
@@ -3264,15 +3266,15 @@ msgstr "Einen neuen Service-Provider hinzufügen..."
 
 #: message;id_discovery_advertise
 msgid "Advertise the selected GWebCache service to a random existing GWebCache."
-msgstr "Den markierten GWebCache mit einem zufälligen, anderen GWebCache bekannt machen."
+msgstr "Den markierten GWebCache einem zufälligen anderen GWebCache bekannt machen."
 
 #: message;id_discovery_blocked
 msgid "Show blocked services in the Discovery window."
-msgstr "GWebCache-Dienste im Service Provider-Fenster anzeigen."
+msgstr "Blockierte GWebCache-Dienste im Service Provider-Fenster anzeigen."
 
 #: message;id_discovery_browse
 msgid "Browse statistics for the selected GWebCache service on the Web."
-msgstr "Die Statistikseite des markierten GWebCache-Service anzeigen."
+msgstr "Die Statistikseite des markierten GWebCache-Services anzeigen."
 
 #: message;id_discovery_edit
 msgid "View the properties for the selected discovery service."
@@ -3440,7 +3442,7 @@ msgstr "Markierte(n) Download(s) fortsetzen."
 
 #: message;id_downloads_settings
 msgid "Configure download settings..."
-msgstr "Downloadeinstellungen  anpassen..."
+msgstr "Downloadeinstellungen anpassen..."
 
 #: message;id_downloads_share
 msgid "Share this partially downloaded file with other users."
@@ -3460,7 +3462,7 @@ msgstr "Quellen aus einer URL zum markierten Download hinzufügen..."
 
 #: message;id_downloads_view_reviews
 msgid "View reviews for the selected download."
-msgstr "Rezensionen für den markierten Download anzeigen"
+msgstr "Rezensionen für den markierten Download anzeigen."
 
 #: message;id_help_about
 msgid "Display the Shareaza about dialog..."
@@ -3496,7 +3498,7 @@ msgstr "Hinweise, wie Sie ihren Computer vor schädlichen Programmen (Viren, Spy
 
 #: message;id_help_test
 msgid "Run the connection test."
-msgstr "Prüfen, ob ihre Konfiguration eingehende Verbindungen zulässt."
+msgstr "Den Shareaza-Verbindungstest ausführen."
 
 #: message;id_help_update
 msgid "Check for news and updates."
@@ -3525,7 +3527,7 @@ msgstr "Das Netzwerk nach dem markierten Ausdruck durchsuchen."
 
 #: message;id_hostcache_bt_cache
 msgid "Show BitTorrent cached hosts."
-msgstr "BitTorrent-Uploads anzeigen."
+msgstr "Bekannte BitTorrent-Hosts anzeigen."
 
 #: message;id_hostcache_connect
 msgid "Connect to the selected host(s)."
@@ -3533,11 +3535,11 @@ msgstr "Mit markierten Host(s) verbinden."
 
 #: message;id_hostcache_dc_cache
 msgid "Show DC++ cached hubs."
-msgstr "Show DC++ cached hubs."
+msgstr "Bekannte DC++-Hubs anzeigen."
 
 #: message;id_hostcache_disconnect
 msgid "Disconnect from the selected neighbour(s)."
-msgstr "Verbindung zu markierten Host(s) beenden."
+msgstr "Verbindung zu markierten Host(s) schließen."
 
 #: message;id_hostcache_ed2k_cache
 msgid "Show eDonkey servers."
@@ -3545,11 +3547,11 @@ msgstr "eDonkey-Server anzeigen."
 
 #: message;id_hostcache_ed2k_download
 msgid "Download an eDonkey \"server.met\" file..."
-msgstr "Eine \"server.met\"-Datei für eDonkey herunterladen..."
+msgstr "Eine eDonkey - \"server.met\" - Datei herunterladen..."
 
 #: message;id_hostcache_g1_cache
 msgid "Show Gnutella1 cached hosts."
-msgstr "Gecachte Hosts anzeigen (G1)."
+msgstr "Gecachte Hosts anzeigen (gnutella)."
 
 #: message;id_hostcache_g2_cache
 msgid "Show Gnutella2 cached hosts."
@@ -3557,7 +3559,7 @@ msgstr "Gecachte Hosts anzeigen (G2)."
 
 #: message;id_hostcache_g2_horizon
 msgid "Show Gnutella2 horizon hubs."
-msgstr "Horizont anzeigen (G2)."
+msgstr "Gnutella2-Hub-Horizont anzeigen."
 
 #: message;id_hostcache_import
 msgid "Import a list of known hosts, such as a \"server.met\" file..."
@@ -3565,15 +3567,15 @@ msgstr "Eine Liste bekannter Hosts importieren, z.B. eine \"server.met\" - Datei
 
 #: message;id_hostcache_kad_cache
 msgid "Show Kademlia cached hosts."
-msgstr "Gecachte Hosts anzeigen (G1)."
+msgstr "Gecachte Hosts anzeigen (Kademlia)."
 
 #: message;id_hostcache_priority
 msgid "Try to connect to this server before other servers."
-msgstr "Zuerst versuchen, zu diesem Server verbinden, bevor andere versucht werden."
+msgstr "Zuerst versuchen, mit diesem Server zu verbinden, bevor andere versucht werden."
 
 #: message;id_hostcache_remove
 msgid "Remove the selected hosts from the host cache."
-msgstr "Die ausgewählten Hosts vom Hostcache entfernen."
+msgstr "Die ausgewählten Hosts aus dem Hostcache entfernen."
 
 #: message;id_import_downloads
 msgid "Import eMule partial downloads..."
@@ -3583,13 +3585,13 @@ msgstr "Laufende eMule-Downloads _importieren..."
 msgid "Add a new folder to your library..."
 msgstr "Ihrer Bibliothek einen neuen Ordner hinzufügen..."
 
-#: message;id_library_album_delete
+#: message;id_library_album_delete message;id_library_folder_delete
 msgid "Delete the selected album folder."
 msgstr "Das markierte Album löschen."
 
 #: message;id_library_album_open
 msgid "Open the selected album folder."
-msgstr "Das Album öffnen."
+msgstr "Das ausgewählte Album öffnen."
 
 #: message;id_library_album_properties message;id_library_folder_properties
 msgid "View and edit the properties of the selected album folder..."
@@ -3605,7 +3607,7 @@ msgstr "Das Bitzi(TM)-Ticket für die markierte Datei im Browser anzeigen."
 
 #: message;id_library_columns message;id_search_columns
 msgid "Select metadata columns to be displayed..."
-msgstr "Spalten zum Anzeigen der Metadaten auswählen..."
+msgstr "Anzeigende Metadaten-Spalten auswählen..."
 
 #: message;id_library_copy
 msgid "Copy the selected files to another library folder..."
@@ -3613,7 +3615,7 @@ msgstr "Die markierten Dateien in einen anderen Ordner kopieren..."
 
 #: message;id_library_createtorrent
 msgid "Create a .torrent for this file to upload to a website."
-msgstr "Einen .torrent für diese Datei erstellen, um sie auf eine Webseite hochzuladen."
+msgstr "Einen .torrent für diese Datei erstellen, um ihn auf eine Webseite hochzuladen."
 
 #: message;id_library_delete
 msgid "Delete the selected files permanently."
@@ -3625,7 +3627,7 @@ msgstr "Die markierte(n) Datei(en) in die Wiedergabeliste aufnehmen."
 
 #: message;id_library_explore
 msgid "Open the selected folder(s)."
-msgstr "Den markierten Ordner öffnen."
+msgstr "Den / Die markierten Ordner öffnen."
 
 #: message;id_library_export_collection
 msgid "Export the selected album folder to collection files..."
@@ -3649,7 +3651,7 @@ msgstr "Gemeinsame Metadaten des Albums für alle Dateien übernehmen."
 
 #: message;id_library_folder_new
 msgid "Create a new album folder here..."
-msgstr "Ein neues Album erstellen..."
+msgstr "Einen neuen Album-Ordner erstellen..."
 
 #: message;id_library_folders
 msgid "Manage the physical folders in your library..."
@@ -3657,7 +3659,7 @@ msgstr "Die Ordner auf ihrer Festplatte verwalten..."
 
 #: message;id_library_hash_priority
 msgid "Boost the speed of file scanning and hashing."
-msgstr "Das markierte Objekt sofort hashen."
+msgstr "Die Scan- und Hashgeschwindigkeit erhöhen."
 
 #: message;id_library_move
 msgid "Move the selected files to another library folder..."
@@ -3701,7 +3703,7 @@ msgstr "Die markierte Datei umbenennen."
 
 #: message;id_library_scan
 msgid "Scan the selected folders or files for changes."
-msgstr "Markierten Ordner scannen."
+msgstr "Markierte(n) Ordner /  Datei(en) nach Änderungen scannen."
 
 #: message;id_library_search message;id_library_search_quick
 msgid "Search your file library..."
@@ -3709,7 +3711,7 @@ msgstr "In Ihrer Bibliothek suchen..."
 
 #: message;id_library_seed_torrent message;id_tools_seedtorrent
 msgid "Seed the selected Torrent on BitTorrent."
-msgstr "Den markierten Torrent \"seeden\"."
+msgstr "Den markierten Torrent seeden."
 
 #: message;id_library_select_all
 msgid "Select and view all folders in your library."
@@ -3717,15 +3719,15 @@ msgstr "Alle Ordner in der Bibliothek auswählen und anzeigen."
 
 #: message;id_library_shared_file
 msgid "Share or unshare the selected files."
-msgstr "Markiertes Objekt freigeben / nicht freigeben."
+msgstr "Markierte Datei(en) freigeben / nicht freigeben."
 
 #: message;id_library_shared_folder
 msgid "Share or unshare the selected folder(s)."
-msgstr "Den markierten Ordner freigeben / nicht freigeben."
+msgstr "Den / Die markierten Ordner freigeben / nicht freigeben."
 
 #: message;id_library_tree_physical
 msgid "View the physical folders in your library."
-msgstr "Die Ordner auf ihrer Festplatte anzeigen."
+msgstr "Die physikalischen Ordner ihrer Bibliothek anzeigen."
 
 #: message;id_library_tree_virtual
 msgid "Organise your library."
@@ -3773,7 +3775,7 @@ msgstr "Übersicht"
 
 #: message;id_library_view_icon
 msgid "Show files as icons"
-msgstr "Dateien mit Symbolen anzeigen"
+msgstr "Dateien als Symbole anzeigen"
 
 #: tip;id_library_view_icon
 msgid "Icon View"
@@ -3813,11 +3815,11 @@ msgstr "Einen Ordner zur Wiedergabeliste hinzufügen..."
 
 #: message;id_media_aspect_16_9
 msgid "Lock video to 16:9 aspect ratio, suitable for film."
-msgstr "Das Seitenverhältnis auf 16:9 stellen. /nDas 16:9 Seitenverhältnis wird oft für Filme verwendet."
+msgstr "Das Seitenverhältnis auf 16:9 stellen."
 
 #: message;id_media_aspect_4_3
 msgid "Lock video to 4:3 aspect ratio, suitable for TV."
-msgstr "Das Seitenverhältnis auf 4:3 stellen./nDas 4:3 Seitenverhältnis wird oft für Röhrenfernseher verwendet."
+msgstr "Das Seitenverhältnis auf 4:3 stellen."
 
 #: message;id_media_aspect_default
 msgid "Use the video's default aspect ratio."
@@ -3825,7 +3827,7 @@ msgstr "Das Originalseitenverhältnis benutzen."
 
 #: message;id_media_clear
 msgid "Clear (empty) the playlist."
-msgstr "Die Wiedergabeliste löschen."
+msgstr "Die Wiedergabeliste leeren / löschen."
 
 #: message;id_media_close
 msgid "Close the current media file, freeing up memory."
@@ -3833,7 +3835,7 @@ msgstr "Die aktuelle Datei schließen, um Speicher freizugeben."
 
 #: message;id_media_export_collection
 msgid "Save the playlist as a collection file..."
-msgstr "Die Wiedergabeliste als Rich-Collection-Datei speichern..."
+msgstr "Die Wiedergabeliste als Collection-Datei speichern..."
 
 #: message;id_media_fullscreen
 msgid "Toggle full-screen video mode."
@@ -3845,7 +3847,7 @@ msgstr "Audiowiedergabe stummschalten"
 
 #: message;id_media_next
 msgid "Skip ahead to the next file in the current playlist."
-msgstr "Die nächste Datei in der Wiedergabeliste wiedergeben."
+msgstr "Zur nächsten Datei der Wiedergabeliste vorspringen."
 
 #: tip;id_media_next
 msgid "Next File"
@@ -3853,7 +3855,7 @@ msgstr "Nächste Datei"
 
 #: message;id_media_open
 msgid "Open and play a media file or playlist..."
-msgstr "Eine Datei oder eine Wiedergabeliste öffnen und abspielen..."
+msgstr "Eine Datei oder Wiedergabeliste öffnen und abspielen..."
 
 #: message;id_media_pause
 msgid "Pause playback of the media file."
@@ -3929,7 +3931,7 @@ msgstr "Wählen Sie die Größe des Videos entsprechend des Seitenverhältnisses
 
 #: message;id_media_size_one
 msgid "Show the video at its original (natural) size."
-msgstr "Das Video in der Originalgröße anzeigen."
+msgstr "Das Video in Originalgröße anzeigen."
 
 #: message;id_media_size_three
 msgid "Show the video at triple its original (natural) size."
@@ -3941,7 +3943,7 @@ msgstr "Das Video in doppelter Größe anzeigen."
 
 #: message;id_media_speed
 msgid "Adjust the speed of the media file."
-msgstr "Abspielgeschwindigkeit anpassen"
+msgstr "Abspielgeschwindigkeit anpassen."
 
 #: tip;id_media_speed column;speed
 msgid "Speed"
@@ -3986,11 +3988,11 @@ msgstr "Andere Kopien der markierten Datei suchen."
 #: message;id_neighbours_chat message;id_search_chat message;id_transfers_chat
 #: message;id_uploads_chat
 msgid "Open a chat session with the selected user."
-msgstr "Eine Chatsitzung mit dem markierten Host beginnen."
+msgstr "Eine Chatsitzung mit dem markierten Nutzer beginnen."
 
 #: message;id_neighbours_copy
 msgid "Copy a URI to access the selected host."
-msgstr "Eine URL kopieren, um auf den markierten Host zuzugreifen."
+msgstr "Eine URI kopieren, um auf den markierten Host zuzugreifen."
 
 #: message;id_neighbours_disconnect
 msgid "Disconnect the selected neighbour(s)."
@@ -4022,11 +4024,11 @@ msgstr "Die freigegebenen Dateien eines Benutzers durchsuchen und dessen Profil 
 
 #: message;id_network_chat_to
 msgid "Open a chat session with a user..."
-msgstr "Eine neue Chatsitzung mit einem Nutzer eröffnen"
+msgstr "Eine neue Chatsitzung mit einem Nutzer eröffnen..."
 
 #: message;id_network_connect
 msgid "Connect to selected networks."
-msgstr "Mit den Netzwerken verbinden"
+msgstr "Mit den Netzwerken verbinden."
 
 #: message;id_network_connect_to
 msgid "Manually connect to a host..."
@@ -4034,11 +4036,11 @@ msgstr "Manuell mit einem Host verbinden..."
 
 #: message;id_network_dc
 msgid "Connect to the DC++ network."
-msgstr "Mit dem DC++ Netzwerk verbinden"
+msgstr "Mit dem DC++ Netzwerk verbinden."
 
 #: message;id_network_disconnect
 msgid "Disconnect from all networks, this will also stop all downloads and uploads."
-msgstr "Die Verbindung mit den Netzwerken trennen"
+msgstr "Die Verbindung mit den Netzwerken trennen."
 
 #: message;id_network_ed2k
 msgid "Connect to the eDonkey network."
@@ -4050,11 +4052,11 @@ msgstr "Shareaza beenden"
 
 #: message;id_network_g1
 msgid "Connect to the original Gnutella network."
-msgstr "Zum Gnutella1-Netzwerk verbinden."
+msgstr "Mit dem gnutella-Netzwerk verbinden."
 
 #: message;id_network_g2
 msgid "Connect to the Gnutella2 network (highly recommended)."
-msgstr "Zum Gnutella2-Netzwerk verbinden (empfohlen)."
+msgstr "Mit dem Gnutella2-Netzwerk verbinden (empfohlen)."
 
 #: message;id_network_search
 msgid "Start a new search of the network..."
@@ -4062,27 +4064,27 @@ msgstr "Eine neue Suche starten..."
 
 #: message;id_next_pane
 msgid "Switch to the next window pane"
-msgstr "Switch to the next window pane"
+msgstr "Zur nächsten Fenstersektion wechseln"
 
 #: tip;id_next_pane
 msgid "Next Pane"
-msgstr "Next in Line"
+msgstr "Nächste Fenstersektion"
 
 #: message;id_open_downloads_folder
 msgid "Open my folder of completed Downloads"
-msgstr "Open my folder of completed Downloads"
+msgstr "Öffne das Verzeichnis der abgeschlossenen Downloads."
 
 #: message;id_prev_pane
 msgid "Switch back to the previous window pane"
-msgstr "Zur vorherigen Datei der Wiedergabeliste zurückspringen."
+msgstr "Zur vorherigen Fenstersektion wechseln"
 
 #: tip;id_prev_pane
 msgid "Previous Pane"
-msgstr "Vorherige Datei"
+msgstr "Vorherige Fenstersektion"
 
 #: message;id_scheduler_activate
 msgid "Activates selected task(s) from the list."
-msgstr "Markierte(n) Upload(s) von der Liste entfernen."
+msgstr "Markierte(n) Task(s) aus der Liste entfernen."
 
 #: message;id_scheduler_add
 msgid "Adds a new task to scheduler list."
@@ -4090,15 +4092,15 @@ msgstr "Neuen geplanten Task hinzufügen."
 
 #: message;id_scheduler_deactivate
 msgid "Deactivates selected tasks."
-msgstr "Mit den Netzwerken verbinden"
+msgstr "Markierte(n) Task(s) deaktivieren."
 
 #: message;id_scheduler_edit
 msgid "Edit the selected task..."
-msgstr "Die markierte Sicherheitsregel bearbeiten..."
+msgstr "Den markierten Task bearbeiten..."
 
 #: message;id_scheduler_remove
 msgid "Removes selected task(s) from the list."
-msgstr "Den markierten Download von der Liste entfernen."
+msgstr "Den / die markierten Aufgabe(n) aus der Liste entfernen."
 
 #: message;id_scheduler_remove_all
 msgid "Removes all scheduled tasks."
@@ -4114,7 +4116,7 @@ msgstr "Detailierte Informationen über die markierte Datei anzeigen."
 
 #: message;id_search_download
 msgid "Download the selected file(s)."
-msgstr "Die markierten(n) Datei(en) herunterladen."
+msgstr "Die markierte(n) Datei(en) herunterladen."
 
 #: message;id_search_downloadnow
 msgid "Download the selected file(s) with priority."
@@ -4122,7 +4124,7 @@ msgstr "Die markierte(n) Datei(en) mit hoher Priorität herunterladen."
 
 #: message;id_search_filter message;id_search_filter_raw
 msgid "Filter the search results by certain words and conditions..."
-msgstr "Die Suchergebnisse nach bestimmten Wörtern filtern..."
+msgstr "Die Suchergebnisse nach bestimmten Wörtern und Bedingungen filtern..."
 
 #: message;id_search_filter_remove
 msgid "Remove filtering from the results."
@@ -4134,7 +4136,7 @@ msgstr "Nach Musikdateien aus dem gleichen Album wie der markierten Datei suchen
 
 #: message;id_search_for_artist
 msgid "Search for music files by the same artist as the selected file."
-msgstr "Nach Musikdateien vom gleichen Kûnstler wie der markierten Datei suchen."
+msgstr "Nach Musikdateien vom gleichen Künstler wie der markierten Datei suchen."
 
 #: message;id_search_for_series
 msgid "Search for video files in the same series as the selected file."
@@ -4142,7 +4144,7 @@ msgstr "Nach Folgen der gleichen Fernsehserie suchen."
 
 #: message;id_search_for_similar
 msgid "Search for files which are similar to the selected file."
-msgstr "Nach Dateien suchen, die einen ähnlichen Namen haben"
+msgstr "Nach Dateien mit ähnlichem Namen suchen."
 
 #: message;id_search_for_this
 msgid "Search for other copies of the selected file."
@@ -4150,7 +4152,7 @@ msgstr "Andere Kopien der markierten Datei suchen."
 
 #: message;id_search_panel
 msgid "Display the quick search panel on the left of the Search window."
-msgstr "Die Suchleiste auf der linken Seite des Shareaza Fensters anzeigen"
+msgstr "Die Suchleiste auf der linken Seite des Such-Fensters anzeigen."
 
 #: message;id_search_search
 msgid "Search the network again..."
@@ -4166,7 +4168,7 @@ msgstr "Suchmonitor-Puffer leeren."
 
 #: message;id_searchmonitor_pause
 msgid "Pause search monitoring."
-msgstr "Den Suchmonitor anhalten"
+msgstr "Den Suchmonitor anhalten."
 
 #: message;id_security_add
 msgid "Add a new rule to the security chain..."
@@ -4182,7 +4184,7 @@ msgstr "Die markierte Sicherheitsregel bearbeiten..."
 
 #: message;id_security_export
 msgid "Export the selected security rules to a file..."
-msgstr "Die markierten Regeln in eine Datei exportieren..."
+msgstr "Die markierten Sicherheitsregeln in eine Datei exportieren..."
 
 #: message;id_security_import
 msgid "Import security rules from a file..."
@@ -4198,11 +4200,11 @@ msgstr "Die Priorität dieser Regel erhöhen."
 
 #: message;id_security_policy_accept
 msgid "Set the default security policy to allow all hosts."
-msgstr "Standardmäßig alle Hosts zulassen."
+msgstr "Standardverhalten auf \"Alle Hosts zulassen\" setzen."
 
 #: message;id_security_policy_deny
 msgid "Set the default security policy to deny all hosts."
-msgstr "Standardmäßig alle Hosts abweisen."
+msgstr "Standardverhalten auf \"Alle Hosts abweisen\" setzen."
 
 #: message;id_security_remove
 msgid "Remove the selected security rules."
@@ -4234,11 +4236,11 @@ msgstr "Zum vorherigen Treffer"
 
 #: message;id_sharemonkey_prices
 msgid "Look at the prices for the current match"
-msgstr "Zur vorherigen Datei der Wiedergabeliste zurückspringen."
+msgstr "Preis für diesen Treffer anzeigen."
 
 #: message;id_sharemonkey_save
 msgid "Save the match in your Library"
-msgstr "Datei in meiner Bibliothek anzeigen"
+msgstr "Datei in meiner Bibliothek abspeichern."
 
 #: message;id_system_clear
 msgid "Clear the status log."
@@ -4250,7 +4252,7 @@ msgstr "Die kopierte(n) Zeile(n) des Status Logs kopieren."
 
 #: message;id_system_timestamp
 msgid "Record a timestamp for each line."
-msgstr "Für jede Zeile einen Zeitstempel aufzeichnen."
+msgstr "Für jede Zeile einen Zeitstempel anzeigen."
 
 #: message;id_system_verbose
 msgid "Display a detailed system activity log."
@@ -4258,23 +4260,23 @@ msgstr "Ausführliche Meldungen ausgeben."
 
 #: message;id_system_verbose_debug
 msgid "Display all."
-msgstr "Legende anzeigen."
+msgstr "Alle anzeigen."
 
 #: message;id_system_verbose_error
 msgid "Display errors only."
-msgstr "Legende anzeigen."
+msgstr "Nur Fehlermeldungen anzeigen."
 
 #: message;id_system_verbose_info
 msgid "Display infos and above."
-msgstr "Gitternetz anzeigen."
+msgstr "Informationsmeldungen (und höher) anzeigen."
 
 #: message;id_system_verbose_notice
 msgid "Display notices and above."
-msgstr "Notizen anzeigen."
+msgstr "Notizen (und höher) anzeigen."
 
 #: message;id_system_verbose_warning
 msgid "Display warnings and above."
-msgstr "Gitternetz anzeigen."
+msgstr "Warnungen (und höher) anzeigen."
 
 #: message;id_tab_connect
 msgid "Connect or disconnect from the network."
@@ -4282,7 +4284,7 @@ msgstr "Verbindungen zu den Netzwerken herstellen / trennen."
 
 #: message;id_tab_home
 msgid "Return to the Shareaza Home page"
-msgstr "Zur Homepage zurückkehren"
+msgstr "Shareaza Homepage anzeigen."
 
 #: message;id_tab_irc
 msgid "Show the IRC Chat window."
@@ -4310,7 +4312,7 @@ msgstr "Uploads und Downloads überwachen."
 
 #: message;id_tools_download
 msgid "Start downloading a new file or BitTorrent torrent..."
-msgstr "Eine neue Datei oder ein Torrent herunterladen..."
+msgstr "Eine neue Datei oder einen Torrent herunterladen..."
 
 #: message;id_tools_language
 msgid "Select the language you wish to use Shareaza in..."
@@ -4322,7 +4324,7 @@ msgstr "Ihr Benutzerprofil bearbeiten..."
 
 #: message;id_tools_reskin
 msgid "Reload and apply your current skin selection."
-msgstr "Den aktuellen Skin neu laden und anwenden."
+msgstr "Das aktuelle Skin neu laden und anwenden."
 
 #: message;id_tools_settings
 msgid "Configure Shareaza settings..."
@@ -4330,7 +4332,7 @@ msgstr "Shareaza konfigurieren..."
 
 #: message;id_tools_skin
 msgid "Choose a different skin for Shareaza to use..."
-msgstr "Einen anderen Skin für Shareaza wählen..."
+msgstr "Ein anderes Skin für Shareaza wählen..."
 
 #: message;id_tools_wizard
 msgid "Open the Shareaza QuickStart wizard..."
@@ -4362,15 +4364,15 @@ msgstr "Ein neues Diagrammfenster öffnen..."
 
 #: message;id_transfers_connect
 msgid "Access the selected download source(s) and attempt to download."
-msgstr "Versuchen, von der/den markierte(n) Quelle(n) runterzuladen ."
+msgstr "Versuchen, von der/den markierte(n) Quelle(n) runterzuladen."
 
 #: message;id_transfers_disconnect
 msgid "Disconnect the selected download transfer(s)."
-msgstr "Markierten Transfer abbrechen."
+msgstr "Markierte(n) Transfer(s) abbrechen."
 
 #: message;id_transfers_forget
 msgid "Disconnect and forget the selected download source(s)."
-msgstr "Markierten Transfer abbrechen und Quelle vergessen."
+msgstr "Transfer(s) abbrechen und Quelle(n) vergessen."
 
 #: message;id_tray_open
 msgid "Open the Shareaza window."
@@ -4378,11 +4380,11 @@ msgstr "Das Shareaza-Fenster öffnen."
 
 #: message;id_uploads_auto_clear
 msgid "Automatically clear uploads which have been completed."
-msgstr "Beendete Uploads automatisch entfernen"
+msgstr "Beendete Uploads automatisch entfernen."
 
 #: message;id_uploads_clear
 msgid "Clear the selected upload(s) from the list."
-msgstr "Markierte(n) Upload(s) von der Liste entfernen."
+msgstr "Upload(s) von der Liste entfernen."
 
 #: message;id_uploads_clear_completed
 msgid "Clear uploads which have been completed."
@@ -4390,7 +4392,7 @@ msgstr "Beendete Uploads entfernen."
 
 #: message;id_uploads_disconnect
 msgid "Disconnect the selected upload transfer(s)."
-msgstr "Den markierten Upload abbrechen."
+msgstr "Den / die markierten Upload(s) abbrechen."
 
 #: message;id_uploads_filter_active
 msgid "Show all uploads which are actively sending."
@@ -4398,7 +4400,7 @@ msgstr "Aktive Uploads anzeigen."
 
 #: message;id_uploads_filter_all
 msgid "Show all uploads."
-msgstr "Alle Uploads und Uploadwarteschlange anzeigen."
+msgstr "Alle Uploads incl. der Warteschlangen anzeigen."
 
 #: message;id_uploads_filter_history
 msgid "Show uploads which are no longer connected."
@@ -4426,7 +4428,7 @@ msgstr "Uploads konfigurieren..."
 
 #: message;id_uploads_start
 msgid "Start the selected queued upload(s)."
-msgstr "Upload zum markierten Client starten"
+msgstr "Upload zu dem / den markierten Client(s) starten."
 
 #: message;id_view_basic
 msgid "Use Shareaza in Basic mode."
@@ -4502,7 +4504,7 @@ msgstr "Wählen Sie einen Internetdienst, um mehr Informationen über die gewäh
 
 #: message;id_webservices_musicbrainz
 msgid "Search for the same artist songs using MusicBrainz service."
-msgstr "Mit ShareMonkey nach vorhandenen Datei-Informationen suchen."
+msgstr "Mit MusicBrainz nach vorhandenen Datei-Informationen suchen."
 
 #: message;id_webservices_sharemonkey
 msgid "Search for the file infomation using ShareMonkey service."
@@ -4510,7 +4512,7 @@ msgstr "Mit ShareMonkey nach vorhandenen Datei-Informationen suchen."
 
 #: message;id_window_arrange
 msgid "Arrange icons at the bottom of the window"
-msgstr "Icons an der Fensteroberseite anordnen"
+msgstr "Icons an der Fensterunterseite anordnen"
 
 #: tip;id_window_arrange
 msgid "Arrange Icons"
@@ -4570,7 +4572,7 @@ msgstr "Im Maximum-Modus wird die genutzte Bandbreite nie den eingegebenen Wert 
 
 #: tip;idc_regexp
 msgid "Enter regular expressions in perl syntax.{n}The search keywords can be specified in a form of <n>, where n is number between 1 and 9. If you want to put all keywords each after other, use <_> markup."
-msgstr "Regulären Ausdruck in perl eingeben.{n}Das Suchwort kann in folgender Form definiert werden <n>, wobei n eine Zahl zwischen 1 und 9 ist. Wenn Sie alle Suchworte nacheinander durchsuchen wollen, benutzen Sie <_> markieren."
+msgstr "Regulären Ausdruck in Perl-Syntax eingeben.{n}Das Suchwort kann in der Form <n> definiert werden, wobei n eine Zahl zwischen 1 und 9 ist. Wenn Sie alle Suchworte nacheinander durchsuchen wollen, benutzen Sie <_>."
 
 #: tip;idc_share_partials
 msgid "This setting has no effect on downloads previously started, also this setting is ignored if the file have the eDonkey hash and the eDonkey network is enabled or if it is a torrent.{n}However this setting isn't ignored if the download is paused.{n}{n}ATTENTION: Use this option only in case of real necessity, if you abuse of the option you may be banned."
@@ -4626,7 +4628,7 @@ msgstr "Shareaza Hilfe"
 
 #: string;window_irc
 msgid "Shareaza Chat"
-msgstr "Shareaza Internet Relay Chat"
+msgstr "Shareaza IRC Chat"
 
 #: string;window_scheduler
 msgid "Scheduler"
@@ -4634,7 +4636,7 @@ msgstr "Scheduler"
 
 #: string;7000
 msgid "Are you sure you want to delete this filter ?"
-msgstr "Sind Sie sicher, dass Sie diesen Filter löschen möchten ?"
+msgstr "Sind Sie sicher, dass Sie diesen Filter löschen möchten?"
 
 #: string;7001
 msgid "&Schemas"
@@ -4704,11 +4706,11 @@ msgstr ""
 
 #: string;8005
 msgid "(closing after transfers)"
-msgstr " (Nach Transfer schließen)"
+msgstr " (Nach Transfers schließen)"
 
 #: string;8006
 msgid "You're not connected. Click the Connect button to get started."
-msgstr "Sie sind nicht verbunden.  Klicken Sie auf \"Verbinden\" um Verbindungen zu den gewählten Netzwerken herzustellen."
+msgstr "Sie sind nicht verbunden. Klicken Sie auf \"Verbinden\" um Verbindungen zu den gewählten Netzwerken herzustellen."
 
 #: string;8007
 msgid "There are no active searches. Click here to search for files."
@@ -4720,17 +4722,17 @@ msgid ""
 "\\n"
 "If you select Yes, Shareaza will close temporarily while the upgrade is installed."
 msgstr ""
-"Die neuste Shareaza-Version wurde heruntergeladen (%s).  Wollen Sie das Update jetzt installieren?\\n"
+"Die neuste Shareaza-Version wurde heruntergeladen (%s). Wollen Sie das Update jetzt installieren?\\n"
 "\\n"
-"Wenn Sie auf Ja klicken wird Shareaza kurzzeitig beendet, um das Update zu installieren."
+"Wenn Sie auf \"Ja\" klicken wird Shareaza kurzzeitig beendet, um das Update zu installieren."
 
 #: string;8009
 msgid "Are you sure you want to delete the \"%s\" skin? This cannot be undone."
-msgstr "Wollen Sie den Skin \"%s\" wirklich löschen?  Dies kann nicht rückgängig gemacht werden."
+msgstr "Wollen Sie das Skin \"%s\" wirklich löschen?  Dies kann nicht rückgängig gemacht werden."
 
 #: string;8011
 msgid "Changing view will close any windows you have open. Would you like to change now?"
-msgstr "Das Wechseln der Ansicht schließt alle offenen Fenster.  Wollen Sie die Ansicht jetzt wechseln?"
+msgstr "Das Wechseln der Ansicht schließt alle offenen Fenster. Wollen Sie die Ansicht jetzt wechseln?"
 
 #: string;8013
 msgid "No new Shareaza version detected."
@@ -4742,15 +4744,15 @@ msgstr "Download-Eigenschaften"
 
 #: string;8060
 msgid "Hub/Ultrapeer mode with %lu neighbour(s). %s in local library."
-msgstr "Hub/Ultrapeer-Modus mit %lu Leaves.  %s in ihrer Bibliothek."
+msgstr "Hub/Ultrapeer-Modus mit %lu Nachbarn. %s in ihrer Bibliothek."
 
 #: string;8061
 msgid "Ultrapeer mode with %lu neighbour(s). %s in local library."
-msgstr "Ultrapeer-Modus mit %lu Leaves.  %s in ihrer Bibliothek."
+msgstr "Ultrapeer-Modus mit %lu Nachbarn. %s in ihrer Bibliothek."
 
 #: string;8062
 msgid "Hub mode with %lu neighbour(s). %s in local library."
-msgstr "Hub-Modus mit %lu Leaves.  %s in ihrer Bibliothek."
+msgstr "Hub-Modus mit %lu Nachbarn. %s in ihrer Bibliothek."
 
 #: string;8063
 msgid "Connected. %s in local library."
@@ -4758,7 +4760,7 @@ msgstr "Verbunden. %s in lokaler Bibliothek."
 
 #: string;8064
 msgid "Connected to %lu neighbour(s). %s in local library."
-msgstr "Verbunden mit %lu Host(s), %s in der lokalen Bibliothek."
+msgstr "Verbunden mit %lu Host(s). %s in der lokalen Bibliothek."
 
 #: string;8065
 msgid "Connecting to the network..."
@@ -4778,7 +4780,7 @@ msgstr "[H:%I64i] %s ein : %s aus [D:%I64i/U:%I64i]"
 
 #: string;8096
 msgid "This area shows more information about files you select."
-msgstr "Keine Datei markiert"
+msgstr "Dieser Bereich zeigt mehr Informationen über ausgewählte Dateien."
 
 #: string;8097
 msgid "One source is available (%s)."
@@ -4810,7 +4812,7 @@ msgstr "Vorschau anzeigen"
 
 #: string;8104
 msgid "Previewing..."
-msgstr "laden..."
+msgstr "Laden..."
 
 #: string;8105
 msgid "Unable to download preview content from \"%s\"."
@@ -4850,7 +4852,7 @@ msgstr "Keine Metadaten"
 
 #: string;8136
 msgid "Plain Text Search"
-msgstr "Textsuche"
+msgstr "Volltextsuche"
 
 #: string;8137
 msgid "No Schema Columns"
@@ -4878,7 +4880,7 @@ msgstr "Jeder Dateityp"
 
 #: string;8148
 msgid "Type your search here:"
-msgstr "Geben Sie hier ihre Suche ein:"
+msgstr "Geben Sie ihre Suche hier ein:"
 
 #: string;8149
 msgid "Look for this type of file:"
@@ -4894,7 +4896,7 @@ msgstr "Gefunden:"
 
 #: string;8152
 msgid "%lu hubs, %lu leaves"
-msgstr "%lu nodes, %lu leaves"
+msgstr "%lu Hubs, %lu Leaves"
 
 #: string;8153
 msgid "Not currently searching"
@@ -5050,7 +5052,7 @@ msgstr "Shareaza überprüft den Download auf Fehler:"
 
 #: string;8243
 msgid "Upload ratio:"
-msgstr "Uploadfenster"
+msgstr "Uploadrate:"
 
 #: string;8244
 msgid "Number of reviews:"
@@ -5090,7 +5092,7 @@ msgstr "Diese Datei bewerten"
 
 #: string;8304
 msgid "N/A"
-msgstr "Keine Angabe"
+msgstr "N/A"
 
 #: string;8307 column;type
 msgid "Type"
@@ -5118,15 +5120,15 @@ msgstr "Diese Datei befindet sich bereits in Ihrer Downloadliste."
 
 #: string;8313
 msgid "This file appears to be spam."
-msgstr "Diese Datei scheint SPAM zu sein."
+msgstr "Diese Datei scheint Spam zu sein."
 
 #: string;8314
 msgid "You have downloaded and deleted this file before."
-msgstr "Sie haben diese Datei schon einmal heruntergeladen und gelöscht."
+msgstr "Sie haben diese Datei bereits einmal heruntergeladen und gelöscht."
 
 #: string;8315
 msgid "Blacklisted:"
-msgstr "Gesperrte Liste: "
+msgstr "Gebannt: "
 
 #: string;8316 column;hits
 msgid "Hits"
@@ -5138,7 +5140,7 @@ msgstr "Seit Programmstart: %lu , Gesamt: %lu "
 
 #: string;8319
 msgid "No Hashset"
-msgstr " (Kein Hashset)"
+msgstr "Kein Hashset"
 
 #: string;8320 cwizardconnectionpage;control;10
 msgid "Status:"
@@ -5162,7 +5164,7 @@ msgstr "Aktiv"
 
 #: string;8326
 msgid "Next in Line"
-msgstr "Next in Line"
+msgstr "Nächster"
 
 #: string;8327
 msgid "Total Files:"
@@ -5206,7 +5208,11 @@ msgstr "Quellen für diese Datei können instabil sein"
 
 #: string;8337
 msgid "Untrusted"
-msgstr "nicht vertraut"
+msgstr "Nicht vertraut"
+
+#: string;8338
+msgid "Free:"
+msgstr "Frei:"
 
 #: string;13000
 msgid "Are you sure you want to delete the selected security rules? This cannot be undone."
@@ -5269,6 +5275,7 @@ msgid "Security manager denied connection from %s."
 msgstr "Der Sicherheitsmanager hat die Verbindung von %s verweigert."
 
 #: string;16076
+#, fuzzy
 msgid "Security manager barred a connection to %s."
 msgstr "Der Sicherheitsmanager hat eine Verbindung zu %s verhindert."
 
@@ -5286,7 +5293,7 @@ msgstr "Sind Sie sicher, dass Sie die Verbindung trennen möchten?"
 
 #: string;16080
 msgid "Would you like to always connect to this network?"
-msgstr "Sie sind mit keinem Netzwerk verbunden."
+msgstr "Wollen Sie sich immer mit diesem Netzwerk verbinden?"
 
 #: string;16081
 msgid "Sending query for \"%s\" to %s."
@@ -5300,19 +5307,19 @@ msgid ""
 "\\n"
 "Do you really want to do this, despite these disadvantages?"
 msgstr ""
-"Das Erzwingen des HUB-Modus kann negative Auswirkungen auf das Netzwerk und die Ausführgeschwindigkeit von Shareaza haben. Es ist generell besser Shareaza diese Entscheidung selbst treffen zu lassen.\\n"
+"Das Erzwingen des Hub-Modus kann negative Auswirkungen auf das Netzwerk und die Ausführgeschwindigkeit von Shareaza haben. Es ist generell besser Shareaza diese Entscheidung selbst treffen zu lassen.\\n"
 "\\n"
-"Der Hub Modus führt NICHT zu besseren Suchergebnissen, und hat auch keine anderen Vorteile für Sie.\\n"
+"Der Hub Modus führt NICHT zu besseren Suchergebnissen und bietet auch ansonsten keine anderen Vorteile für Sie.\\n"
 "\\n"
 "Sind Sie SICHER, dass Sie das wollen?"
 
 #: string;16085
 msgid "Gnutella2 is Shareaza's premiere network. Disabling support for it may severely limit both the number and quality of your search results. Are you SURE you want to do this?"
-msgstr "Gnutella2 ist Shareazas Hauptnetzwerk.  Wenn sie die Unterstützung für Gnutella2 deaktivieren, könnten sich die Anzahl und die Qualität Ihrer Suchergebnisse stark verschlechtern.  Sind Sie SICHER, dass Sie das wollen?"
+msgstr "Gnutella2 ist Shareazas Hauptnetzwerk. Wenn sie die Unterstützung für Gnutella2 deaktivieren, könnten sich die Anzahl und die Qualität Ihrer Suchergebnisse stark verschlechtern. Sind Sie SICHER, dass Sie das wollen?"
 
 #: string;16087
 msgid "Your outgoing bandwidth is too low to enable this network"
-msgstr "Ihre Uploadbandbreite reicht nicht aus, um dieses Netzwerk zu aktivieren"
+msgstr "Ihre Uploadbandbreite reicht nicht aus, um dieses Netzwerk zu aktivieren."
 
 #: string;16128
 msgid "Accepted an incoming connection from %s port %i."
@@ -5364,7 +5371,7 @@ msgstr "Host %s hat die Verbindung beendet (%i : %s)."
 
 #: string;16141
 msgid "Closed connection with neighbour %s because it is not a hub."
-msgstr "Verbindung mit Host %s beendet, weil er kein Hub ist."
+msgstr "Verbindung mit Host %s beendet, da er kein Hub ist."
 
 #: string;16144
 msgid "Timed out handshaking with %s."
@@ -5512,15 +5519,15 @@ msgstr "Download von \"%s\" abgeschlossen."
 
 #: string;16258
 msgid "Pausing download of \"%s\"."
-msgstr "Download \"%s\" angehalten."
+msgstr "Download von \"%s\" angehalten."
 
 #: string;16259
 msgid "Resuming download of \"%s\"."
-msgstr "Download \"%s\" wiederaufgenommen."
+msgstr "Download von \"%s\" wiederaufgenommen."
 
 #: string;16260
 msgid "Cleared download \"%s\"."
-msgstr "Download \"%s\" entfernt."
+msgstr "\"%s\" aus Downloadliste entfernt."
 
 #: string;16261
 msgid "Creating file \"%s\" for download."
@@ -5532,7 +5539,7 @@ msgstr "Fehler beim Erstellen der lokalen Datei \"%s\" für Download, abgebroche
 
 #: string;16263
 msgid "Unable to open local file \"%s\" for download, aborting."
-msgstr "Fehler beim Öffnen der lokalen Datei \"%s\" für Download, abgebrochen ."
+msgstr "Fehler beim Öffnen der lokalen Datei \"%s\" für Download, abgebrochen."
 
 #: string;16264
 msgid "Initiating a connection to %s port %i to download \"%s\"..."
@@ -5654,7 +5661,7 @@ msgstr "\"%s\" nach \"%s\" verschoben, Download komplett."
 
 #: string;16292
 msgid "Couldn't move download \"%s\" to \"%s\". Check that the incomplete file is not in use, and that your downloads folder exists and is writable."
-msgstr "Der Download \"%s\" konnte nicht verschoben werden.  Überprüfen Sie ob die unvollständige Datei nicht in Gebrauch ist, und ob ihr Downloadverzeichnis existiert bzw. beschreibbar ist."
+msgstr "Der Download \"%s\" konnte nicht nach \"%s\" verschoben werden. Überprüfen Sie dass die unvollständige Datei nicht in Gebrauch ist, und ob ihr Downloadverzeichnis existiert bzw. beschreibbar ist."
 
 #: string;16293
 msgid "Resolving \"%s\" to download \"%s\"..."
@@ -5682,7 +5689,7 @@ msgstr "Download Host %s hat keine freien Slots: Warteschlange auf Position #%i 
 
 #: string;16299
 msgid "Are you sure you want to clear all paused downloads? Once a download has been cleared from the Downloads window, it cannot be resumed."
-msgstr "Wollen Sie wirklich alle angehaltenen Downloads entfernen?  Wenn ein Download von der Downloadliste entfernt wurde, kann er nicht wieder aufgenommen werden."
+msgstr "Wollen Sie wirklich alle angehaltenen Downloads entfernen? Wenn ein Download von der Downloadliste entfernt wurde, kann er nicht wieder aufgenommen werden."
 
 #: string;16300
 msgid "Are you sure you want to delete the download \"%s\"?"
@@ -5734,7 +5741,7 @@ msgstr "eDonkey-Hash für \"%s\" von %s anfordern..."
 
 #: string;16312
 msgid "Received an invalid eDonkey hashset from %s, dropping source."
-msgstr "Ungültiger eDonkey-Hash von %s empfangen, Quelle entfernt."
+msgstr "Ungültige eDonkey-Hash von %s empfangen, Quelle entfernt."
 
 #: string;16313
 msgid "Received eDonkey hashset for \"%s\", minimum verifiable chunk %s."
@@ -5750,7 +5757,7 @@ msgstr "Kann Kompression (inflate) für Download \"%s\" nicht aktivieren."
 
 #: string;16316
 msgid "Timed out waiting for queue update from eDonkey download host %s for file \"%s\"."
-msgstr "Zeitüberschreitung für Warteschlangenaktualisierung von eDonkey0-Host %s für Datei \"%s\"."
+msgstr "Zeitüberschreitung für Warteschlangenaktualisierung von eDonkey-Host %s für Datei \"%s\"."
 
 #: string;16317
 msgid "Staying in queue for \"%s\"."
@@ -5998,16 +6005,15 @@ msgstr "HTTP-Guard"
 
 #: string;16378
 msgid "Host \"%s\" sent a 416, without providing available ranges. Closing connection."
-msgstr "Der Host \"%s\" hat eine 416 gesendet, ohne die erforderlichen Bereiche zur Verfügung zu stellen. Schließe Verbindung."
+msgstr "Der Host \"%s\" hat mit 416 geantwortet, ohne die erforderlichen Bereiche zur Verfügung zu stellen. Schließe Verbindung."
 
 #: string;16379
 msgid "Library Files"
 msgstr "Dateien in der Bibliothek"
 
 #: string;16380
-#, fuzzy
 msgid "DC++ Guard"
-msgstr "eDonkey-Guard"
+msgstr "DC++-Guard"
 
 #: string;16384
 msgid ""
@@ -6099,7 +6105,7 @@ msgstr ""
 
 #: string;16396
 msgid "Your downloads folder has been added to your library. Would you like to share it too?"
-msgstr "Ihr Downloadverzeichnis wurde zu ihrer Bibliothek hinzugefügt.  Wollen Sie es auch freigeben?"
+msgstr "Ihr Downloadverzeichnis wurde zu ihrer Bibliothek hinzugefügt. Wollen Sie es auch freigeben?"
 
 #: string;16397
 msgid ""
@@ -6189,7 +6195,7 @@ msgstr ""
 
 #: string;16407
 msgid "Would you like to prevent this collection from prompting you to download anything else?"
-msgstr "Keine weiteren Downloads von dieser Kollektion."
+msgstr "Wollen sie weiteren Download-Anfragen von dieser Kollektion verhindern?"
 
 #: string;16408
 msgid "Copy &URI"
@@ -6247,7 +6253,7 @@ msgstr "Verbindung mit %s wurde unterbrochen."
 
 #: string;16452
 msgid "Unrecognised command \"%s\"."
-msgstr "Unbekanntes Kommando \"%s\"."
+msgstr "Unbekannter Befehl \"%s\"."
 
 #: string;16453
 msgid "Connecting to %s for chat..."
@@ -6343,11 +6349,11 @@ msgstr "Verlorene Gnutella-Pakete"
 
 #: string;16528
 msgid "Gnutella Incoming Queries"
-msgstr "Lokale Gnutella-Anfragen"
+msgstr "Eingehende Gnutella-Anfragen"
 
 #: string;16529
 msgid "Gnutella Processed Queries"
-msgstr "Lokale Gnutella-Anfragen"
+msgstr "Bearbeitete Gnutella-Anfragen"
 
 #: string;16532
 msgid "Total TCP Receive Bandwidth"
@@ -6407,7 +6413,7 @@ msgstr "&Durchsuchen"
 
 #: string;16776 string;17020
 msgid "Add"
-msgstr "Hinzu"
+msgstr "Hinzufügen"
 
 #: string;16777 cdownloadeditpage;control;16
 msgid "Filename:"
@@ -6447,7 +6453,7 @@ msgstr "Sie haben Ihre Verbindungsgeschwindigkeit noch nicht angegeben. Bevor Si
 
 #: string;16802
 msgid "You have not specified any folders to share. Are you sure?"
-msgstr "Sie haben keine Ordner freigegeben.  Sind Sie sicher?"
+msgstr "Sie haben keine Ordner freigegeben. Sind Sie sicher, dass Sie fortfahren wollen?"
 
 #: string;16803
 msgid ""
@@ -6455,7 +6461,7 @@ msgid ""
 "\\n"
 "%s"
 msgstr ""
-"Der Ordner, den Sie freigegeben möchten, ist bereits als Teil eines anderen Ordners freigegeben:\\n"
+"Der Ordner, den Sie freigegeben möchten, ist bereits als Teil des folgenden Ordners freigegeben:\\n"
 "\\n"
 "%s"
 
@@ -6511,8 +6517,8 @@ msgid ""
 "UPnP Device Host Service is not running. This service is required to perform the setup.\\n"
 "You need to set the startup type of the service to automatic."
 msgstr ""
-"SSDP-Host-Service ist nicht gestartet. Dieser Dienst wird benötigt, um die Installation durchzuführen.\\n"
-"Es ist erforderlich, dass das Merkmal dieses Dienstes auf Automatisch eingestellt ist."
+"UPnP-Host-Service ist nicht gestartet. Dieser Dienst wird benötigt, um die Installation durchzuführen.\\n"
+"Es ist erforderlich, dass der Startup-Typ dieses Dienstes auf Automatisch eingestellt ist."
 
 #: string;16816
 msgid ""
@@ -6572,7 +6578,7 @@ msgstr "GWebCache \"%s\" an einen zufälligen GWebCache übertragen..."
 
 #: string;16928
 msgid "Initiating a connection to %s to browse user..."
-msgstr "Herstellen einer Verbindung zu %s für Durchsuchen  ..."
+msgstr "Herstellen einer Verbindung zum Durchsuchen  von %s..."
 
 #: string;16929
 msgid "Unable to initiate a connection to %s to browse user."
@@ -6592,39 +6598,39 @@ msgstr "Dateilistenanforderung an %s gesendet..."
 
 #: string;16933
 msgid "Browse host %s responded with an invalid HTTP response."
-msgstr "\"Durchsuchen\" Host %s hat mit einer ungültigen HTTP-Meldung geantwortet."
+msgstr " Durchsuchen: Host %s hat mit einer ungültigen HTTP-Meldung geantwortet."
 
 #: string;16934
 msgid "Browse host %s responded with code %s (%s)."
-msgstr "\"Durchsuchen\" Host %s hat mit Code %s geantwortet (%s)."
+msgstr "Durchsuchen: Host %s hat mit Code %s geantwortet (%s)."
 
 #: string;16935
 msgid "Browse host %s responded with an unrecognised response, and may not support user/host browsing."
-msgstr "\"Durchsuchen\" Host %s hat eine unbekannte Nachricht übertragen, \"Durchsuchen\" wird möglicherweise nicht unterstützt."
+msgstr "Durchsuchen: Host %s hat eine unbekannte Nachricht übertragen, \"Durchsuchen\" wird möglicherweise nicht unterstützt."
 
 #: string;16936
 msgid "Receiving content from browse host %s (%s)"
-msgstr "Herunterladen von \"Durchsuchen\" Host %s (%s)."
+msgstr "Herunterladen des Inhalts des durchsuchten Hosts %s (%s)."
 
 #: string;16938
 msgid "Error decoding Gnutella packets from browse host %s."
-msgstr "Ein Fehler ist bei der Dekodierung der Gnutella-Pakete von \"Durchsuchen\" bei Host %s aufgetreten."
+msgstr "Ein Fehler ist bei der Dekodierung der Gnutella-Pakete bim Durchsuchen von Host %s aufgetreten."
 
 #: string;16939
 msgid "Finished browsing user %s, %i files found."
-msgstr "Dateiliste heruntergeladen %s, %i Dateien gefunden."
+msgstr "Dateiliste von Host %s heruntergeladen, %i Dateien gefunden."
 
 #: string;16940
 msgid "Browse user connection to %s was dropped."
-msgstr "\"Durchsuchen\" Verbindung zu %s wurde unterbrochen."
+msgstr "Durchsuchen-Verbindung zu %s wurde unterbrochen."
 
 #: string;16941
 msgid "Closing browse user connection %s due to lack of traffic."
-msgstr "\"Durchsuchen\" Verbindung zu %s mangels Aktivität beendet."
+msgstr "Durchsuchen-Verbindung zu %s mangels Aktivität beendet."
 
 #: string;16942
 msgid "Closing browse user connection to %s."
-msgstr "\"Durchsuchen\" Verbindung zu %s wird beendet."
+msgstr "Durchsuchen-Verbindung zu %s wird getrennt."
 
 #: string;16943
 msgid "Browsing %s"
@@ -6656,7 +6662,7 @@ msgstr "Ein Teil dieser Datei kann nicht abgespielt werden. Möglicherweise mûs
 
 #: string;16997
 msgid "There is no file playing. Double-click a media file in your library to play it."
-msgstr "Es wird keine Datei wiedergegeben. Doppelklicken Sie eine Datei in Ihrer Bibliothek an, um sie abzuspielen."
+msgstr "Es wird keine Datei wiedergegeben. Doppelklicken Sie auf eine Datei in Ihrer Bibliothek, um diese abzuspielen."
 
 #: string;16998
 msgid "S     H     A     R     E     A     Z     A           M     E     D     I     A           S     Y     S     T     E     M"
@@ -6752,7 +6758,7 @@ msgstr "Kann keine Push-Verbindung von %s anfordern, keine Route verfügbar."
 
 #: string;17040
 msgid "Cannot send message, you are not connected. Shareaza is trying to connect..."
-msgstr "Nachricht konnte nicht gesendet werden. Sie sind nicht verbunden.  Verbinden..."
+msgstr "Nachricht konnte nicht gesendet werden. Sie sind nicht verbunden. Verbinden..."
 
 #: string;17041
 msgid "Cannot send message, a connection has not been established yet."
@@ -6772,29 +6778,41 @@ msgstr ""
 msgid "Granted upload priority to host %s."
 msgstr "Upload-Priorität für Host %s erhöht."
 
+#: string;17044
+msgid "Solve this CAPTCHA please:"
+msgstr "Lösen Sie dieses CAPTCHA bitte:"
+
+#: string;17045
+msgid "Wrong CAPTCHA."
+msgstr "Lösen falsch."
+
+#: string;17046
+msgid "CAPTCHA accepted."
+msgstr "Lösen akzeptiert."
+
 #: string;17100
 msgid "Gnutella: Peer-to-Peer Connection"
 msgstr "Gnutella: Peer-to-Peer-Verbindung"
 
 #: string;17101
 msgid "Gnutella: Leaf-to-Ultrapeer Connection"
-msgstr "Gnutella: Leaf-to-Ultrapeer-Verbindung"
+msgstr "Gnutella: Leaf-zu-Ultrapeer-Verbindung"
 
 #: string;17102
 msgid "Gnutella: Ultrapeer-to-Leaf Connection"
-msgstr "Gnutella: Ultrapeer-to-Leaf-Verbindung"
+msgstr "Gnutella: Ultrapeer-zu-Leaf-Verbindung"
 
 #: string;17103
 msgid "Gnutella II: Hub-to-Hub Connection"
-msgstr "Gnutella II: Hub-to-Hub-Verbindung"
+msgstr "Gnutella II: Hub-zu-Hub-Verbindung"
 
 #: string;17104
 msgid "Gnutella II: Leaf-to-Hub Connection"
-msgstr "Gnutella II: Leaf-to-Hub-Verbindung"
+msgstr "Gnutella II: Leaf-zu-Hub-Verbindung"
 
 #: string;17105
 msgid "Gnutella II: Hub-to-Leaf Connection"
-msgstr "Gnutella II: Hub-to-Leaf-Verbindung"
+msgstr "Gnutella II: Hub-zu-Leaf-Verbindung"
 
 #: string;17106
 msgid "eDonkey Server Connection (LOWID: %lu)"
@@ -6802,7 +6820,7 @@ msgstr "eDonkey-Server-Verbindung (LowID: %lu)"
 
 #: string;17107
 msgid "eDonkey Server Connection"
-msgstr "eDonkey-Serververbindung"
+msgstr "eDonkey-Server-Verbindung"
 
 #: string;17108
 msgid "Handshake"
@@ -6895,6 +6913,10 @@ msgstr "eDonkey (LowID)"
 #: string;17130
 msgid "eDonkey (HighID)"
 msgstr "eDonkey (HighID)"
+
+#: string;17131
+msgid "DC++ Hub Connection"
+msgstr "DC++ Hub-Verbindung"
 
 #: string;17216
 msgid "Initiating connection to eDonkey server at %s..."
@@ -7120,11 +7142,11 @@ msgstr "Kann BitTorrent-Freigabedatei für \"%s\" nicht erstellen."
 
 #: string;17494
 msgid "This torrent includes the file \"%s\", but Shareaza cannot find this file in your library. If possible, move the file to a shared folder and try again."
-msgstr "Dieser Torrent enthält die Datei \"%s\". Shareaza kann die Datei in ihrer Bibliothek aber nicht finden.  Verschieben Sie die Datei in den selben Ordner wie das Torrent und versuchen Sie es erneut."
+msgstr "Dieser Torrent enthält die Datei \"%s\". Shareaza kann die Datei in ihrer Bibliothek aber nicht finden. Verschieben Sie die Datei in den selben Ordner wie das Torrent und versuchen Sie es erneut."
 
 #: string;17495
 msgid "This torrent includes the file \"%s\" which should be %s, however your version of the file is %s."
-msgstr "Dieser Torrent enthält die Datei \"%s\" die %s groß sein sollte, die Größe ihrer Datei ist %s."
+msgstr "Dieser Torrent enthält die Datei \"%s\" die %s groß sein sollte, die Größe ihrer Datei ist jedoch %s."
 
 #: string;17496
 msgid "An error occurred while copying from \"%s\" to a BitTorrent share file."
@@ -7234,6 +7256,10 @@ msgstr "Sie haben einen ungültigen eD2k-Hash angegeben. Bitte überprüfen Sie 
 msgid "You have provided an %s hash value which is different to the one currently associated with this download. Are you sure you want to change the %s hash now?"
 msgstr "Sie haben einen SHA1-Hash eingegeben, der sich von dem unterscheidet, der zur Zeit mit diesem Download verknüpft ist. Sind Sie sicher, dass Sie den SHA1-Hash jetzt ändern wollen?"
 
+#: string;18515
+msgid "The selected download item currently has some Task attached, please wait and do it later."
+msgstr "Der ausgewählte Download ist gerade in Bearbeitung. Bitte versuchen Sie es später erneut."
+
 #: string;19000
 msgid "Remote access is disabled."
 msgstr "Remote-Zugriff ist deaktiviert."
@@ -7263,8 +7289,8 @@ msgid ""
 "Changing language requires application restart.\\n"
 "Restart now?"
 msgstr ""
-"Changing language requires application restart.\\n"
-"Restart now?"
+"Das Ändern der Sprache erfordert einen Neustart der Anwendung.\\n"
+"Jetzt neu starten?"
 
 #: string;20005
 msgid "No"
@@ -7310,10 +7336,10 @@ msgid ""
 "\\n"
 "Would you like to proceed?"
 msgstr ""
-"Diese Option benutzt Dienste, die von Bitzi.com zur Verfügung gestellt werden, um Information über Dateien zu sammeln und zugänglich zu machen.\\n"
+"Diese Option benutzt Dienste, die von ShareMonkey.com zur Verfügung gestellt werden, um Information über Dateien zu sammeln und zugänglich zu machen.\\n"
 "\\n"
-"Shareaza wird den SHA1-Hashwert für die ausgewählte(n) Datei(en) übertragen, um die Bitzi-Datenbank abzufragen.\\n"
-"Wenn Sie sich Sorgen um ihre Privatsphäre machen, können Sie die \"Bitzi.com privacy policy\" lesen.\\n"
+"Shareaza wird den SHA1-Hashwert für die ausgewählte(n) Datei(en) übertragen, um die ShareMonkey-Datenbank abzufragen.\\n"
+"Wenn Sie sich Sorgen um ihre Privatsphäre machen, können Sie die \"ShareMonkey.com privacy policy\" lesen.\\n"
 "\\n"
 "Wollen Sie fortfahren?"
 
@@ -7363,7 +7389,7 @@ msgstr "Verschieben"
 
 #: string;20114
 msgid "Paused"
-msgstr "Pause"
+msgstr "Pausiert"
 
 #: string;20115
 msgid "File Error"
@@ -7391,7 +7417,7 @@ msgstr "Torrent"
 
 #: string;20123
 msgid "Tracker Down"
-msgstr "Kein Seeder"
+msgstr "Tracker Down"
 
 #: string;20124
 msgid "(No Sources)"
@@ -7588,30 +7614,30 @@ msgstr ""
 "Kommandozeilenoptionen:\\n"
 "\\n"
 "-tray: Startbildschirm deaktivieren und die Anwendung direkt minimieren\\n"
-"-nosplash:  Startbildschirm deaktivieren\\n"
-"-nowarn: Ignoriere Alpha Versionen\\n"
-"-wait : Warte auf die anderen Anwedungen vorm beenden\\n"
+"-nosplash: Startup-Bildschirm deaktivieren\\n"
+"-nowarn: Alpha-Versions-Warnung deaktivieren\\n"
+"-wait : Auf das Beenden einer anderen Shareaza Instanz vor Start warten\\n"
 "\\n"
-"Oberflächeneinstellungen:\\n"
+"Ansichtsmodi:\\n"
 "\\n"
-"-basic: Starte die Anwendung im Basis Modus\\n"
-"-tabbed:Starte die Anwendung im Tab Modus \\n"
-"-windowed: Starte die Anwendung im Fenstermodus\\n"
+"-basic: Anwendung im Vereinfachten Modus starten\\n"
+"-tabbed: Anwendung im Tab-Modus starten\\n"
+"-windowed: Anwendung im Fenstermodus starten\\n"
 "\\n"
 "Systemoptionen:\\n"
 "\\n"
-"-RegServer: Komponenten für alle Benutzer registrieren\\n"
-"-UnRegServer: Komponenten für alle Benutzer entfernen\\n"
-"-RegServerPerUser:  Komponenten für den jetzigen  Benutzer registrieren\\n"
-"-UnRegServerPerUser:  Komponenten für den jetzigen  Benutzer entfernen"
+"-RegServer: Interne Komponenten für alle Benutzer registrieren\\n"
+"-UnRegServer: Interne Komponenten für alle Benutzer entfernen\\n"
+"-RegServerPerUser:  Interne Komponenten für den jetzigen  Benutzer registrieren\\n"
+"-UnRegServerPerUser:  Interne Komponenten für den jetzigen  Benutzer entfernen"
 
 #: string;20247
 msgid "Failed to load metadata schemas. Please reinstall application."
-msgstr "Laden der Metadaten fehlgeschlagen. Bitte installieren sie das Programm neu."
+msgstr "Laden der Metadaten-Schemata fehlgeschlagen. Bitte installieren Sie das Programm neu."
 
 #: string;20248
 msgid "You selected %u files. Are you sure?"
-msgstr "Sie haben keine Ordner freigegeben.  Sind Sie sicher?"
+msgstr "Sie haben %u Dateien ausgewählt. Sind Sie sicher?"
 
 #: string;20249
 msgid "Off"
@@ -7623,7 +7649,7 @@ msgstr "Niedrig"
 
 #: string;20251
 msgid "Normal"
-msgstr "No_rmaler Modus"
+msgstr "Normal"
 
 #: string;20252
 msgid "High"
@@ -7631,7 +7657,7 @@ msgstr "Hoch"
 
 #: string;20253
 msgid "Skin load error: %s. Element: %s"
-msgstr "Fehler beim laden des Designs: %s. Element: %s"
+msgstr "Fehler beim laden des Skins: %s. Element: %s"
 
 #: string;20254
 msgid "Loading skin: %s"
@@ -7643,7 +7669,7 @@ msgstr "Sind sie sicher dass sie alle geplanten Aufgaben löschen wollen? Dies k
 
 #: string;20256
 msgid "System: Start Shareaza"
-msgstr "In den P2P-Netzwerken suchen"
+msgstr "System: Shareaza starten"
 
 #: string;20257
 msgid "Bandwidth: Full Speed"
@@ -7846,11 +7872,11 @@ msgstr "Intellig. Episodenerkennung"
 
 #: cmediasettingspage;control;3
 msgid "Use the Shareaza Media Player to PLAY the file types listed below"
-msgstr "Di_e Medienwiedergabe benutzen um folgende Dateitypen wiederzugeben"
+msgstr "Shareaza-Plugin benutzen um folgende Dateitypen wiederzugeben"
 
 #: cmediasettingspage;control;4
 msgid "Use the Shareaza Media Player to ENQUEUE the file types listed below"
-msgstr "_Die Wiedergabeliste für folgende Dateitypen benutzen"
+msgstr "Folgende Dateitypen in die Wiedergabeliste des Shareaza-Plugin hängen"
 
 #: cmediasettingspage;control;5
 msgid "File _Types:"
@@ -7894,7 +7920,7 @@ msgstr "Chat mit Gnutella-Clients aktivieren"
 
 #: ccommunitysettingspage;control;6
 msgid "Enable chat over other protocols (where possible)"
-msgstr "Chat mit eDonkey-Clients aktivieren"
+msgstr "Chat über andere Protokolle aktivieren"
 
 #: ccommunitysettingspage;control;7
 msgid "Filter chat messages for spam"
@@ -8126,7 +8152,7 @@ msgstr "Unvollst. Dateien freigeben"
 
 #: cuploadssettingspage;control;3
 msgid "Limit sharing in hub mode"
-msgstr "Freig. im HUB-Modus einschr."
+msgstr "Freig. im Hub-Modus einschr."
 
 #: cuploadssettingspage;control;4
 msgid "Share preview files"
@@ -8178,7 +8204,7 @@ msgstr "B_earbeiten"
 
 #: cuploadssettingspage;control;22
 msgid "(changes take effect immediately)"
-msgstr "Änderungen treten sofort in Kraft"
+msgstr "(Änderungen treten sofort in Kraft)"
 
 #: dialog;cremotesettingspage
 msgid "Remote Access"
@@ -8218,7 +8244,7 @@ msgstr "Netzwerke"
 
 #: cnetworkssettingspage;control;1
 msgid "Shareaza is a general-purpose file-sharing application that can access many P2P networks at the same time.  On this page you can select which P2P networks you want to connect to, and then adjust specific settings for each network."
-msgstr "Shareaza ist ein Allround-File-Sharing-Programm, das auf mehrere P2P-Netzwerke gleichzeitig zugreifen kann. Hier können Sie einstellen, welche Netzwerke Sie verwenden möchten und können netzwerkspezifische Einstellungen vornehmen."
+msgstr "Shareaza ist ein Allround-File-Sharing-Programm, das auf mehrere P2P-Netzwerke gleichzeitig zugreifen kann. Hier können Sie einstellen, welche Netzwerke Sie verwenden möchten und netzwerkspezifische Einstellungen vornehmen."
 
 #: cnetworkssettingspage;control;2 cgnutellasettingspage;control;22
 msgid "Gnutella2 Network:"
@@ -8254,19 +8280,19 @@ msgstr "eDonkey konfigurieren"
 
 #: cnetworkssettingspage;control;10
 msgid "Original Gnutella Network:"
-msgstr "Gnutella1-Netzwerk:"
+msgstr "gnutella-Netzwerk:"
 
 #: cnetworkssettingspage;control;11 cwizardnetworkspage;control;7
 msgid "Although the original Gnutella network is less feature-rich than Gnutella2, and has fewer files than eDonkey, it remains a valuable resource."
-msgstr "Obwohl das ursprüngliche Gnutella-Netzwerk weniger Funktionen als Gnutella2 und weniger Dateien als eDonkey hat, bleibt es eine wertvolle Resource."
+msgstr "Obwohl das ursprüngliche gnutella-Netzwerk weniger Funktionen als Gnutella2 und weniger Dateien als eDonkey hat, bleibt es eine wertvolle Resource."
 
 #: cnetworkssettingspage;control;12 cwizardnetworkspage;control;6
 msgid "Connect to Original Gnutella"
-msgstr "Gnutella1 verwenden"
+msgstr "gnutella verwenden"
 
 #: cnetworkssettingspage;control;13
 msgid "Configure Gnutella1"
-msgstr "Gnutella1 konfigurieren"
+msgstr "gnutella konfigurieren"
 
 #: dialog;cgnutellasettingspage
 msgid "Gnutella"
@@ -8286,11 +8312,11 @@ msgstr "Optimal|Leaf|Hub"
 
 #: cgnutellasettingspage;control;4
 msgid "Always connect to Gnutella1"
-msgstr "Immer zu Gnutella1 verbinden"
+msgstr "Immer zu gnutella verbinden"
 
 #: cgnutellasettingspage;control;5
 msgid "Connect to Gnutella1 today"
-msgstr "Heute zu Gnutella1 verbinden"
+msgstr "Heute zu gnutella verbinden"
 
 #: cgnutellasettingspage;control;6
 msgid "Optimal|Leaf|Ultrapeer"
@@ -8330,7 +8356,7 @@ msgstr "Hub zu Hub:"
 
 #: cgnutellasettingspage;control;28
 msgid "Gnutella1 Network:"
-msgstr "Gnutella1-Netzwerk:"
+msgstr "gnutella-Netzwerk:"
 
 #: cgnutellasettingspage;control;30
 msgid "G_1 Connections:"
@@ -8458,7 +8484,7 @@ msgstr "Torrents hier _speichern:"
 
 #: cbittorrentsettingspage;control;20
 msgid "_Torrent Creator:"
-msgstr "._torrent-Erstellungsprogramm"
+msgstr "._torrent-Erstellungsprogramm:"
 
 #: cbittorrentsettingspage;control;23
 msgid "Default Tracker: "
@@ -8626,7 +8652,7 @@ msgstr "Wenn Sie Shareaza oder einen anderen P2P-Client noch nie benutzt haben, 
 
 #: cwizardwelcomepage;control;3
 msgid "If you're a more advanced user, you can access the full range of Shareaza's options via the Tools menu.  Click Exit to close the wizard at any time."
-msgstr "Wenn Sie ein fortgeschrittener Benutzer sind, können Sie alle Einstellungen unter Extras -> Einstellungen verändern.  Klicken Sie auf Schließen, um den Assistenten zu beenden."
+msgstr "Wenn Sie ein fortgeschrittener Benutzer sind, können Sie alle Einstellungen unter Extras -> Einstellungen verändern. Klicken Sie auf Schließen, um den Assistenten zu beenden."
 
 #: cwizardwelcomepage;control;4
 msgid "This wizard will assist you to:"
@@ -8863,7 +8889,7 @@ msgstr "_Persönliche Daten:"
 
 #: cidentityprofilepage;control;8
 msgid "Male|Female"
-msgstr "|männlich|weiblich"
+msgstr "männlich|weiblich"
 
 #: cidentityprofilepage;control;9
 msgid "Gender:"
@@ -9027,11 +9053,11 @@ msgstr "Sprache wählen"
 
 #: dialog;cconnecttodlg
 msgid "Connect To|Browse User|Chat to User"
-msgstr "Verbinden mit|Benutzer durchsuchen"
+msgstr "Verbinden mit|Benutzer durchsuchen|Mit Benutzer Chatten"
 
 #: cconnecttodlg;control;1
 msgid "Initiate a new connection to host or server:|Browse this user:|Chat to this user:"
-msgstr "Verbinden mit:|Benutzer durchsuchen:"
+msgstr "Verbinden mit:|Benutzer durchsuchen:|Mit Benutzer Chatten:"
 
 #: cconnecttodlg;control;4
 msgid "Network _Protocol:"
@@ -9039,7 +9065,7 @@ msgstr "_Netzwerkprotokoll:"
 
 #: cconnecttodlg;control;5
 msgid "Gnutella1  (auto)|Gnutella2  (auto)|eDonkey2000"
-msgstr "Gnutella1 (auto)|Gnutella2 (auto)|eDonkey"
+msgstr "Gnutella1 (auto)|Gnutella2 (auto)|eDonkey2000"
 
 #: cconnecttodlg;control;6
 msgid "_Suppress Ultrapeer"
@@ -9051,11 +9077,11 @@ msgstr "Datei oder Torrent herunterladen"
 
 #: cdownloaddlg;control;2
 msgid "Downloading any file with Shareaza is easy.  Simply type or paste the URL or URI describing the file into the box below and press Enter."
-msgstr "Das Herunterladen von Dateien mit Shareaza ist einfach. Geben Sie die URL oder URI in das Textfeld ein und drücken Sie <Enter>."
+msgstr "Das Herunterladen von Dateien mit Shareaza ist einfach. Geben Sie die URL oder URI in das Textfeld ein und drücken Sie [Enter]."
 
 #: cdownloaddlg;control;6
 msgid "Shareaza can download files from the web (HTTP), and automatically search and download P2P links (Magnet, Gnutella, eDonkey, mP2P)."
-msgstr "Shareaza kann Dateien aus dem Internet herunterladen (HTTP) und automatisch nach P2P-Links suchen und diese herunterladen (Magnet, Gnutella, eDonkey, mP2P)."
+msgstr "Shareaza kann Dateien aus dem Internet herunterladen (HTTP) und automatisch nach P2P-Links suchen und auch diese herunterladen (Magnet, Gnutella, eDonkey, mP2P)."
 
 #: cdownloaddlg;control;7
 msgid "Shareaza can also download BitTorrent files.  A torrent can be described by a .torrent file, or a HTTP link to the .torrent file.  To download a torrent HTTP link, paste it in the box above.  If you already have a .torrent file, click Open Torrent:"
@@ -9079,7 +9105,7 @@ msgstr "Nur Ergebnisse, die folgende _Wörter enthalten:"
 
 #: cfiltersearchdlg;control;3 csecureruledlg;control;21
 msgid "Reg. Exp."
-msgstr "RegEx"
+msgstr "Reg. Exp."
 
 #: cfiltersearchdlg;control;4
 msgid "( you can also exclude words with -word )"
@@ -9115,19 +9141,19 @@ msgstr "Kein freier Uploadslot"
 
 #: cfiltersearchdlg;control;16
 msgid "Non-matching files"
-msgstr "Push/LowID-Hosts"
+msgstr "Unpassende Ergebnisse"
 
 #: cfiltersearchdlg;control;17
 msgid "Firewalled/push hosts"
-msgstr "Instabile Hosts"
+msgstr "Push/LowID-Hosts"
 
 #: cfiltersearchdlg;control;18
 msgid "Files you have already"
-msgstr "Unpassende Ergebnisse"
+msgstr "Lokal vorhand. Dateien"
 
 #: cfiltersearchdlg;control;19
 msgid "Unstable hosts"
-msgstr "Lokal vorhand. Dateien"
+msgstr "Instabile Hosts"
 
 #: cfiltersearchdlg;control;20
 msgid "Bogus results"
@@ -9147,7 +9173,7 @@ msgstr "Spamverdacht"
 
 #: cfiltersearchdlg;control;24
 msgid "Filters:"
-msgstr "Filtern"
+msgstr "Filter:"
 
 #: cfiltersearchdlg;control;26
 msgid "Set as default"
@@ -9339,7 +9365,7 @@ msgstr "ms"
 
 #: dialog;cgraphitemdlg
 msgid "Graph Item Properties"
-msgstr "Eigenschaften von Graph-Element"
+msgstr "Graph-Element-Eigenschaften"
 
 #: cgraphitemdlg;control;3
 msgid "_Source:"
@@ -9371,7 +9397,7 @@ msgstr "Wählen Sie ein Schema aus der Liste und anschließend die gewünschten 
 
 #: dialog;csecureruledlg
 msgid "Security Rule"
-msgstr "Regel"
+msgstr "Sicherheitsregel"
 
 #: csecureruledlg;control;1
 msgid "_Rule:"
@@ -9443,7 +9469,7 @@ msgstr "Ordner verwalten"
 
 #: csharemanagerdlg;control;1
 msgid "This is a list of folders in your library.  You can add and remove folders using the buttons on the left.  When you add a new folder it is initially shared with other users, however you can unshare it from the Shareaza library if you wish."
-msgstr "Das ist eine Liste der Ordner Ihrer Bibliothek. Sie können mit den Buttons links Ordner hinzufügen oder entfernen. Wenn Sie einen neuen Ordner hinzufügen, wird er standardmäßig freigegeben. Sie können die Freigabe in der Bibliothek jedoch auch aufheben."
+msgstr "Das ist eine Liste der Ordner Ihrer Bibliothek. Sie können mit den Buttons links Ordner hinzufügen oder entfernen. Wenn Sie einen neuen Ordner hinzufügen, wird er standardmäßig freigegeben. Sie können die Freigabe in der Bibliothek jedoch wieder aufheben."
 
 #: dialog;curlcopydlg
 msgid "Copy URI"
@@ -9471,7 +9497,7 @@ msgstr "Einfügen:"
 
 #: curlexportdlg;control;4
 msgid "Tiger Root|SHA1|MD5|ED2K (CMD4)|BitTorrent|Filename|Filename (URI)|Base Filename|File Extension|File Size|File Size (bytes)|Folder Path|Local Host|Local Port|Link|Link (URI)"
-msgstr "Tiger Root|SHA1|MD5|eD2k (CMD4)|Dateiname|Dateiname (URI)|Basis Dateiname|Dateierweiterung|Dateigröße|Dateigröße (bytes)|Verzeichnispfad|Lokaler Host|Lokaler Port"
+msgstr "Tiger Root|SHA1|MD5|eD2k (CMD4)|BitTorrent|Dateiname|Dateiname (URI)|Basis Dateiname|Dateierweiterung|Dateigröße|Dateigröße (bytes)|Verzeichnispfad|Lokaler Host|Lokaler Port|Link|Link (URI)"
 
 #: curlexportdlg;control;5
 msgid "Select preset:"
@@ -9559,7 +9585,7 @@ msgstr "Wussten Sie, dass Shareaza 100%ig kostenlose Software ist?"
 
 #: cwarningsdlg;control;2
 msgid "Shareaza does NOT contain ANY \"spyware\", \"adware\" or other bundled software. It does NOT display any advertisements or \"popups\", ever.{n}{n}If you ever see advertising or \"popups\" while using Shareaza, be assured that they are NOT coming from this program."
-msgstr "Shareaza enthält KEINE \"spyware\", \"adware\" oder andere zusätzliche Software. Es zeigt keine Werbung oder \"popups\" an.{n}{n}Wenn Sie Werbung oder \"popups\" sehen während Sie Shareaza benutzen, können Sie sicher sein, dass diese nicht von Shareaza stammen."
+msgstr "Shareaza enthält KEINE weder Spy-, noch Adware und auch keine Software Dritter. Es zeigt weder Werbung oder Popups an.{n}{n}Sollten Sie Werbung oder Popups sehen, während Sie Shareaza benutzen, können Sie sicher sein, dass diese nicht von Shareaza stammen."
 
 #: cwarningsdlg;control;3
 msgid "Unfortunately a lot of other software does come with undesirable adware or spyware, so if you see something suspicious you may wish to check your PC with an advertising or spyware removal program."
@@ -9567,7 +9593,7 @@ msgstr "Leider installieren viele andere Programme unerwünschte Adware oder Spy
 
 #: cwarningsdlg;control;4
 msgid "You should not have had to pay any money to obtain Shareaza. Shareaza can be freely downloaded by anyone from http://shareaza.sourceforge.net/. If you paid someone money for Shareaza, you should demand a full refund immediately."
-msgstr "Shareaza kostet nichts und kann von jedem kostenlos von http://shareaza.sourceforge.net/ heruntergeladen werden.  Wenn Sie jemandem Geld für Shareaza bezahlt haben, sollten Sie sofort ihr Geld zurückverlangen."
+msgstr "Shareaza ist kostenlos und kann von jedem auf http://shareaza.sourceforge.net/ heruntergeladen werden. Wenn Sie jemandem Geld für Shareaza bezahlt haben, sollten Sie dieses sofort zurückverlangen."
 
 #: cwarningsdlg;control;5
 msgid "Shareaza respects its users!"
@@ -9587,19 +9613,19 @@ msgstr "Empfehlen Sie Shareaza ihren Freunden und Bekannten!"
 
 #: cpromotedlg;control;2
 msgid "We hope you have enjoyed using Shareaza so far. We believe it is the best file sharing application around."
-msgstr "Wir hoffen, dass ihnen Shareaza gefällt. Wir glauben, dass Shareaza das beste Filesharing-Programm auf dem Markt ist."
+msgstr "Wir hoffen, dass ihnen Shareaza gefällt. Wir glauben, dass Shareaza eines der besten Filesharing-Programm auf dem Markt ist."
 
 #: cpromotedlg;control;3
 msgid "Unfortunately, a lot of file sharers don't know what they're missing!"
-msgstr "Leider wissen viele nicht, was sie verpassen!"
+msgstr "Leider benutzen viele Leute nur schlechte oder sogar gar keine Filesharing-Programme."
 
 #: cpromotedlg;control;4
 msgid "If you know someone who would like Shareaza, whether they're a new user or someone still putting up with an inferior product, why not let them know there is a better alternative?"
-msgstr "Wenn Sie also jemanden kennen, dem Shareaza auch gefallen könnte, empfehlen Sie Shareaza doch weiter."
+msgstr "Wenn Sie also jemanden kennen, dem Shareaza auch gefallen könnte, empfehlen Sie es doch weiter. Wir bedanken uns im Voraus!"
 
 #: cpromotedlg;control;5
 msgid "Chances are they'll be grateful you rescued them!"
-msgstr "Ihre Freunde werden ihnen dankbar sein!"
+msgstr " - Und Ihre Freunde sicherlich auch."
 
 #: dialog;cexistingfiledlg
 msgid "Existing File"
@@ -9627,7 +9653,7 @@ msgstr "Sie haben diese Datei schon einmal heruntergeladen und gelöscht. Was m�
 
 #: cexistingfiledlg;control;11
 msgid "Warning!!! Duplicate files detected. Some malicious software may infect your Library. Make sure that you downloaded this file or placed it manually. Otherwise, shutdown Shareaza and scan your computer with an antivirus program."
-msgstr "Achtung. Doppelte Dateien erkannt! Installierte Programme könnten Ihre Bibliothek gefährden. Sind Sie sicher, dass Sie diese Datei herunterladen möchten ? Haben Sie diese Datei manuell eingefügt ? Wenn Sie unsicher sind, schalten Sie ihren Computer aus und überprüfen sie diesen mit einem Anitivirusprogramm."
+msgstr "Achtung!!! Mehrfach-Dateien erkannt! Bösartige Programme könnten Ihre Bibliothek infiziert haben. Stellen Sie sicher dass Sie diese Dateien selbst heruntergeladen oder in Ihrer Bibliothek eingefügt haben. Ist dem nicht so überprüfen Sie ihren Computer mit einem Anitivirenprogramm."
 
 #: dialog;cclosemodedlg
 msgid "Close Button"
@@ -9635,7 +9661,7 @@ msgstr "Schließen"
 
 #: cclosemodedlg;control;1
 msgid "This is the first time you have clicked Shareaza's close button. Please choose what action you would like Shareaza to take when clicking the close button from now on:"
-msgstr "Sie haben auf das Schließen-Symbol geklickt.  Bitte wählen Sie die Aktion aus, die in Zukunft bei einem Klick auf das Schließen-Symbol ausgefûhrt werden soll:"
+msgstr "Sie haben zum ersten Mal auf das Schließen-Symbol geklickt. Bitte wählen Sie die Aktion aus, die in Zukunft bei einem Klick auf das Schließen-Symbol ausgefûhrt werden soll:"
 
 #: cclosemodedlg;control;2
 msgid "Minimise to the tray area"
@@ -9667,7 +9693,7 @@ msgstr "Alle löschen"
 
 #: cdeletefiledlg;control;7
 msgid "Shareaza can remember this file and warn you if you come across it again in another search.  It will create a ghost file with your comments and rating."
-msgstr "Shareaza kann sich diese Datei merken und Sie darauf hinweisen, wenn sie in einer Suche auftaucht. Sie können eine Ghost-Datei mit  Kommentaren und Bewertung erstellen."
+msgstr "Shareaza kann sich diese Datei merken und Sie darauf hinweisen, wenn sie in einer Suche auftaucht. Sie können eine Ghost-Datei mit Kommentaren und Bewertung erstellen."
 
 #: cdeletefiledlg;control;8
 msgid "Create a ghost file"
@@ -9799,7 +9825,7 @@ msgstr ".torrent-Datei öffnen"
 
 #: ctorrentseeddlg;control;1
 msgid "You have opened a BitTorrent torrent file.  Would you like to download its contents, or re-seed it?"
-msgstr "Sie haben eine .torrent-Datei geöffnet. Wollen Sie den Inhalt herunterladen oder wollen Sie den Torrent \"seeden\""
+msgstr "Sie haben eine .torrent-Datei geöffnet. Soll der Inhalt herunterladen oder der Torrent \"geseedet\" werden?"
 
 #: ctorrentseeddlg;control;3
 msgid "Seed"
@@ -9907,7 +9933,7 @@ msgstr "Update verfügbar"
 
 #: cupgradedlg;control;1
 msgid "A new version of Shareaza is now available. Would you like to upgrade?"
-msgstr "Eine neue Version von Shareaza ist verfügbar.  Möchten Sie aktualisieren?"
+msgstr "Eine neue Version von Shareaza ist verfügbar. Möchten Sie aktualisieren?"
 
 #: cupgradedlg;control;2
 msgid "If you select Upgrade Now, Shareaza will add the upgrade to your download queue and automatically begin downloading it."
@@ -9983,7 +10009,7 @@ msgstr "Dateiname"
 
 #: column;extension
 msgid "Extension"
-msgstr "Typ"
+msgstr "Dateiendung"
 
 #: column;modified
 msgid "Modified"
@@ -10195,10 +10221,40 @@ msgstr "TigerTree"
 
 #: column;nextrun
 msgid "NextRun"
-msgstr "Vor"
+msgstr "Nächste Ausführung"
 
-#~ msgid "Shareaza was unable to set up port-forwarding on your NAT router or firewall.\\n\\nPlease configure your network to forward TCP and UDP ports %i to your local PC."
-#~ msgstr "Sie haben angegeben, dass Sie in Ihrem NAT-Router oder Firewall die Port-Freigabe benutzen möchten.\\n\\nBitte konfigurieren Sie ihr Netzwerk um Port %i (TCP und UDP)an ihren PC weiterzuleiten."
-#~ msgid "Please wait: Finding UPnP devices and setting them up..."
-#~ msgstr "Bitte warten: UPnP-Geräte werden erkannt und konfiguriert..."
+#~ msgid ""
+#~ "Shareaza detected an error while importing a security hash rule. Plz "
+#~ "check the contained hashes for consitancy."
+#~ msgstr ""
+#~ "Shareaza detected an error while importing a security hash rule. Plz "
+#~ "check the contained hashes for consitancy."
+#~ msgid ""
+#~ "Couldn't import a security hash rule from XML. Most probably, the rule is "
+#~ "invalid."
+#~ msgstr ""
+#~ "Couldn't import a security hash rule from XML. Most probably, the rule is "
+#~ "invalid."
+#~ msgid ""
+#~ "Couldn't import a security rule from XML. Most probably, the rule is "
+#~ "invalid."
+#~ msgstr ""
+#~ "Couldn't import a security rule from XML. Most probably, the rule is "
+#~ "invalid."
+#~ msgid ""
+#~ "Coulnd't import a security rule from a Gnucleus security file. Plz check "
+#~ "the rule for validity."
+#~ msgstr ""
+#~ "Coulnd't import a security rule from a Gnucleus security file. Plz check "
+#~ "the rule for validity."
+#~ msgid "Error: Couldn't load a security rule from file."
+#~ msgstr "Error: Couldn't load a security rule from file."
+#~ msgid ""
+#~ "The specified file cannot be banned. It is either invalid or non-existing."
+#~ msgstr ""
+#~ "The specified file cannot be banned. It is either invalid or non-existing."
+#~ msgid "The specified IP cannot be banned, as it is invalid."
+#~ msgstr "The specified IP cannot be banned, as it is invalid."
+#~ msgid "Browsing host %s has been blocked by security manager."
+#~ msgstr "Browsing host %s has been blocked by security manager."
 

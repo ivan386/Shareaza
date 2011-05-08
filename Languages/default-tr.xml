@@ -184,6 +184,8 @@
 			<button id="ID_LIBRARY_TREE_PHYSICAL" text="Klasörler"/>
 			<button id="ID_LIBRARY_TREE_VIRTUAL" text="Düzenleyen"/>
 		</toolbar>
+		<toolbar name="CLibraryTree.Physical">
+		</toolbar>
 		<toolbar name="CLibraryTree.Virtual">
 			<button id="ID_LIBRARY_FOLDERS" text="Dosya Paylaşımı..."/>
 		</toolbar>
@@ -208,6 +210,12 @@
 		<toolbar name="CLibraryHomeView.Virtual">
 			<button id="ID_LIBRARY_FOLDER_NEW" text="Albüm Yarat..."/>
 			<button id="ID_LIBRARY_ALBUM_DELETE" text="Albüm Sil"/>
+			<rightAlign/>
+			<separator/>
+			<control id="IDC_SEARCH_BOX" width="120"/>
+			<button id="ID_LIBRARY_SEARCH_QUICK" text="Bul"/>
+		</toolbar>
+		<toolbar name="CLibraryTileView.Physical">
 			<rightAlign/>
 			<separator/>
 			<control id="IDC_SEARCH_BOX" width="120"/>
@@ -270,6 +278,8 @@
 			<separator/>
 			<control id="IDC_SEARCH_BOX" width="120"/>
 			<button id="ID_LIBRARY_SEARCH_QUICK" text="Bul"/>
+		</toolbar>
+		<toolbar name="CLibraryCollectionView.Physical">
 		</toolbar>
 		<toolbar name="CLibraryCollectionView.Virtual">
 			<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Albüm Oynat"/>
@@ -1177,6 +1187,8 @@
 			<item id="ID_SHELL_MENU" text="İş_letim Sistemi Menüsü"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDERS" text="Dosya _Paylaşımı..."/>
+			<separator/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="._torrent Dosyası Oluştur"/>
 		</menu>
 		<menu name="CLibraryTree.Physical">
 			<item id="ID_LIBRARY_EXPLORE" text="_Araştır"/>
@@ -1187,6 +1199,8 @@
 			<item id="ID_LIBRARY_SCAN" text="_Tarama"/>
 			<item id="ID_LIBRARY_REBUILD" text="_Yenilenme"/>
 			<item id="ID_LIBRARY_FOLDERS" text="Dosya _Paylaşımı..."/>
+			<separator/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="._torrent Dosyası Oluştur"/>
 			<separator/>
 			<item id="ID_SHELL_MENU" text="İş_letim Sistemi Menüsü"/>
 			<separator/>
@@ -2422,6 +2436,7 @@
 		<tip id="ID_LIBRARY_ENQUEUE" message="Seçilmiş dosyaları ortam oynatma listene ekle."/>
 		<tip id="ID_LIBRARY_EXPLORE" message="Seçilmiş dosyaları aç."/>
 		<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Seçilmiş albüm klasörlerini, bir kolleksiyon dosyasına gönder..."/>
+		<tip id="ID_LIBRARY_FOLDER_DELETE" message="Seçilmiş albüm klasörlerini sil."/>
 		<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Kolleksiyondaki seçilmiş tüm dosyaları indir."/>
 		<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Seçilmiş albüm klasöründeki tüm dosyaları ortam oynatma listesine ekle."/>
 		<tip id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" message="Seçilmiş klasördeki tüm dosyaların özelliklerini göster ve yayınla..."/>
@@ -2831,6 +2846,7 @@
 		<string id="8335" value="Bu dosya için kaynaklar güvenlik duvarı arkasında"/>
 		<string id="8336" value="Bu dosya için kaynaklar değişken olabilir"/>
 		<string id="8337" value="Güvenliği garanti olmayan"/>
+		<string id="8338" value="Yaratıldı:"/>
 		<string id="13000" value="Seçilen güvenlik kuralını silmek istediğinizden emin misiniz? Geri dönüş mümkün olmayacaktır."/>
 		<string id="13001" value="İnternet üzerinden paylaşılan dosyalar"/>
 		<string id="16063" value="UPnP port açılışı 10 denemeye rağmen başarısız olmuştur."/>
@@ -3185,6 +3201,9 @@
 		<string id="17041" value="Henüz bir bağlantı kurulmadı, mesaj gönderemezsiniz."/>
 		<string id="17042" value="Kullanıcı profilinizi henüz doldurmadınız.  Diğer kullanıcılarla sohbet etmeden önce bir profil sağlamalısınız.\n\nProfilinizi şimdi doldurmak ister misiniz?"/>
 		<string id="17043" value="%s hosta aktarım önceliği verdi."/>
+		<string id="17044" value="Solve this CAPTCHA please:"/>
+		<string id="17045" value="Wrong CAPTCHA."/>
+		<string id="17046" value="CAPTCHA accepted."/>
 		<string id="17100" value="Gnutella: Peer-to-Peer Bağlantısı"/>
 		<string id="17101" value="Gnutella: Leaf-to-Ultrapeer Bağlantısı"/>
 		<string id="17102" value="Gnutella: Ultrapeer-to-Leaf Bağlantısı"/>
@@ -3216,6 +3235,7 @@
 		<string id="17128" value="eDonkey2000 Sunucu"/>
 		<string id="17129" value="eDonkey2000 (LowID)"/>
 		<string id="17130" value="eDonkey2000 (HighID)"/>
+		<string id="17131" value="Bağlantı"/>
 		<string id="17216" value="%s deki eDonkey2000 sunucusuna bağlantı başlatılıyor..."/>
 		<string id="17217" value="%s eDonkey2000 sunucusna bağlanıldı, anlaşılıyor..."/>
 		<string id="17218" value="ED2K[%s] %s"/>
@@ -3299,6 +3319,7 @@
 		<string id="18512" value="Bu gruptaki tüm indirmeleri iptal etmek/durdurmak istediğinize emin misiniz?"/>
 		<string id="18513" value="Geçersiz bir eDonkey2000 hash değeri yazdınız. Lütfen kontrol edin ve tekrar deneyin."/>
 		<string id="18514" value="Bu indirme ile güncel olarak birleşmiş farklı SHA1 hash  değeri sağlanır. Şimdi SHA1 hash'i değiştirmek istediğinizden amin misiniz?"/>
+		<string id="18515" value="The selected download item currently has some Task attached, please wait and do it later."/>
 		<string id="19000" value="Uzaktan erişim engellendi."/>
 		<string id="19001" value="Bir kullanıcı adı ve şifresi seçmelisiniz."/>
 		<string id="19002" value="Bağlantı onaylanılamaz, URL kullanılamaz."/>

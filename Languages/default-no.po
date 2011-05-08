@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2011-03-14 05:50+0000\n"
+"POT-Creation-Date: 2011-05-03 13:54+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -1503,6 +1503,13 @@ msgstr "Fjern"
 msgid "S_hell menu"
 msgstr "S_hell menu"
 
+#: clibrarytree.physical.basic;item;id_library_createtorrent
+#: clibrarytree.physical;item;id_library_createtorrent
+#: clibraryfileview.physical;44;item;id_library_createtorrent
+#: clibraryfileview.virtual;50;item;id_library_createtorrent
+msgid "Create ._torrent File"
+msgstr "Lag .torrent"
+
 #: clibrarytree.physical;item;id_library_explore
 msgid "_Explore"
 msgstr "Utforsk"
@@ -1605,11 +1612,6 @@ msgstr "Lokaliser metadata"
 #: clibraryfileview.virtual;item;id_library_refresh_metadata
 msgid "_Refresh Metadata"
 msgstr "_Refresh Metadata"
-
-#: clibraryfileview.physical;44;item;id_library_createtorrent
-#: clibraryfileview.virtual;50;item;id_library_createtorrent
-msgid "Create ._torrent File"
-msgstr "Lag .torrent"
 
 #: clibraryfileview.physical;item;id_library_columns
 #: clibraryfileview.virtual;item;id_library_columns
@@ -3632,7 +3634,7 @@ msgstr "Del NYE delvise nedlastinger"
 msgid "Add a new folder to your library..."
 msgstr "Legg til ny mappe i mine filer..."
 
-#: message;id_library_album_delete
+#: message;id_library_album_delete message;id_library_folder_delete
 msgid "Delete the selected album folder."
 msgstr "Slett valgte mappe."
 
@@ -5276,6 +5278,11 @@ msgstr "Kilder til denne filen kan være ustabile"
 msgid "Untrusted"
 msgstr ""
 
+#: string;8338
+#, fuzzy
+msgid "Free:"
+msgstr "Laget:"
+
 #: string;13000
 msgid "Are you sure you want to delete the selected security rules? This cannot be undone."
 msgstr ""
@@ -6834,6 +6841,18 @@ msgstr ""
 msgid "Granted upload priority to host %s."
 msgstr "Gir prioritet til vert %s."
 
+#: string;17044
+msgid "Solve this CAPTCHA please:"
+msgstr ""
+
+#: string;17045
+msgid "Wrong CAPTCHA."
+msgstr ""
+
+#: string;17046
+msgid "CAPTCHA accepted."
+msgstr ""
+
 #: string;17100
 msgid "Gnutella: Peer-to-Peer Connection"
 msgstr "Gnutella: Peer-to-Peer kobling"
@@ -6957,6 +6976,11 @@ msgstr "eDonkey2000 (LowID)"
 #: string;17130
 msgid "eDonkey (HighID)"
 msgstr "eDonkey2000 (HighID)"
+
+#: string;17131
+#, fuzzy
+msgid "DC++ Hub Connection"
+msgstr "Tilkobling"
 
 #: string;17216
 msgid "Initiating connection to eDonkey server at %s..."
@@ -7300,6 +7324,10 @@ msgstr "Du har skrevet inn en ugyldig eDonkey2000 hash-verdi. Vennligst sjekk ve
 #, fuzzy
 msgid "You have provided an %s hash value which is different to the one currently associated with this download. Are you sure you want to change the %s hash now?"
 msgstr "Du har gitt en SHA1 hash-verdi som er forskjellig fra den som er asossiert med denne nedlastingen. Er du sikker på at du vil endre SHA1 hashen nå?"
+
+#: string;18515
+msgid "The selected download item currently has some Task attached, please wait and do it later."
+msgstr ""
 
 #: string;19000
 msgid "Remote access is disabled."

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2011-03-14 05:50+0000\n"
+"POT-Creation-Date: 2011-05-03 13:54+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -1503,6 +1503,13 @@ msgstr "_Odstrani"
 msgid "S_hell menu"
 msgstr "S_hell menu"
 
+#: clibrarytree.physical.basic;item;id_library_createtorrent
+#: clibrarytree.physical;item;id_library_createtorrent
+#: clibraryfileview.physical;44;item;id_library_createtorrent
+#: clibraryfileview.virtual;50;item;id_library_createtorrent
+msgid "Create ._torrent File"
+msgstr "Ustvari datoteko tipa .torrent"
+
 #: clibrarytree.physical;item;id_library_explore
 msgid "_Explore"
 msgstr "_Razišči"
@@ -1605,11 +1612,6 @@ msgstr "_Lokaliziraj metapodatke"
 #: clibraryfileview.virtual;item;id_library_refresh_metadata
 msgid "_Refresh Metadata"
 msgstr "_Refresh Metadata"
-
-#: clibraryfileview.physical;44;item;id_library_createtorrent
-#: clibraryfileview.virtual;50;item;id_library_createtorrent
-msgid "Create ._torrent File"
-msgstr "Ustvari datoteko tipa .torrent"
 
 #: clibraryfileview.physical;item;id_library_columns
 #: clibraryfileview.virtual;item;id_library_columns
@@ -3636,7 +3638,7 @@ msgstr "Deli NOVE delne prenose"
 msgid "Add a new folder to your library..."
 msgstr "Dodaj novo mapo v svojo knjižnico..."
 
-#: message;id_library_album_delete
+#: message;id_library_album_delete message;id_library_folder_delete
 msgid "Delete the selected album folder."
 msgstr "Zbriši izbrano albumsko mapo."
 
@@ -5282,6 +5284,11 @@ msgstr "Viri za to datoteko so morda nestabilni"
 msgid "Untrusted"
 msgstr "Ni vreden zaupanja"
 
+#: string;8338
+#, fuzzy
+msgid "Free:"
+msgstr "Ustvarjen:"
+
 #: string;13000
 msgid "Are you sure you want to delete the selected security rules? This cannot be undone."
 msgstr ""
@@ -6840,6 +6847,18 @@ msgstr ""
 msgid "Granted upload priority to host %s."
 msgstr "Potrjena prednost za nalaganje do gostitelja %s."
 
+#: string;17044
+msgid "Solve this CAPTCHA please:"
+msgstr ""
+
+#: string;17045
+msgid "Wrong CAPTCHA."
+msgstr ""
+
+#: string;17046
+msgid "CAPTCHA accepted."
+msgstr ""
+
 #: string;17100
 msgid "Gnutella: Peer-to-Peer Connection"
 msgstr "Gnutella: P2P povezava"
@@ -6963,6 +6982,11 @@ msgstr "eDonkey2000 (LowID)"
 #: string;17130
 msgid "eDonkey (HighID)"
 msgstr "eDonkey2000 (HighID)"
+
+#: string;17131
+#, fuzzy
+msgid "DC++ Hub Connection"
+msgstr "Povezava"
 
 #: string;17216
 msgid "Initiating connection to eDonkey server at %s..."
@@ -7307,6 +7331,10 @@ msgstr "Vpisali ste eDonkey2000 zgostitveno vrednost (hash value), ki pa je žal
 #, fuzzy
 msgid "You have provided an %s hash value which is different to the one currently associated with this download. Are you sure you want to change the %s hash now?"
 msgstr "Podali ste zgostitveno vrednost SHA1 (hash value), ki se razlikuje od tiste, ki je trenutno povezana s tem prenosom. Ste prepričani, da želite spremeniti zgostitveno vrednost SHA1?"
+
+#: string;18515
+msgid "The selected download item currently has some Task attached, please wait and do it later."
+msgstr ""
 
 #: string;19000
 msgid "Remote access is disabled."
