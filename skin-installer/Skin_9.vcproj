@@ -20,7 +20,7 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
+			OutputDirectory="$(SolutionDir)\$(PlatformName)\$(ConfigurationName)"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
 			ConfigurationType="1"
 			UseOfATL="0"
@@ -99,12 +99,12 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Performing registration"
-				CommandLine="if exist &quot;..\zlib\$(PlatformName)\$(ConfigurationName)\zlibwapi.dll&quot; goto zlib1&#x0D;&#x0A;copy &quot;..\zlib\$(PlatformName)\Release\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;goto zlib2&#x0D;&#x0A;:zlib1&#x0D;&#x0A;copy &quot;..\zlib\$(PlatformName)\$(ConfigurationName)\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;:zlib2&#x0D;&#x0A;&quot;$(TargetPath)&quot; /installsilent&#x0D;&#x0A;"
+				CommandLine="&quot;$(TargetPath)&quot; /installsilent"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Debug|x64"
-			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
+			OutputDirectory="$(SolutionDir)\$(PlatformName)\$(ConfigurationName)"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
 			ConfigurationType="1"
 			UseOfATL="0"
@@ -182,12 +182,12 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Performing registration"
-				CommandLine="if exist &quot;..\zlib\$(PlatformName)\$(ConfigurationName)\zlibwapi.dll&quot; goto zlib1&#x0D;&#x0A;copy &quot;..\zlib\$(PlatformName)\Release\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;goto zlib2&#x0D;&#x0A;:zlib1&#x0D;&#x0A;copy &quot;..\zlib\$(PlatformName)\$(ConfigurationName)\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;:zlib2&#x0D;&#x0A;&quot;$(TargetPath)&quot; /installsilent&#x0D;&#x0A;"
+				CommandLine="&quot;$(TargetPath)&quot; /installsilent"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
+			OutputDirectory="$(SolutionDir)\$(PlatformName)\$(ConfigurationName)"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
 			ConfigurationType="1"
 			UseOfATL="0"
@@ -273,12 +273,12 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Performing registration"
-				CommandLine="if exist &quot;..\zlib\$(PlatformName)\$(ConfigurationName)\zlibwapi.dll&quot; goto zlib1&#x0D;&#x0A;copy &quot;..\zlib\$(PlatformName)\Release\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;goto zlib2&#x0D;&#x0A;:zlib1&#x0D;&#x0A;copy &quot;..\zlib\$(PlatformName)\$(ConfigurationName)\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;:zlib2&#x0D;&#x0A;&quot;$(TargetPath)&quot; /installsilent&#x0D;&#x0A;"
+				CommandLine="&quot;$(TargetPath)&quot; /installsilent"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Release|x64"
-			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
+			OutputDirectory="$(SolutionDir)\$(PlatformName)\$(ConfigurationName)"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
 			ConfigurationType="1"
 			UseOfATL="0"
@@ -363,7 +363,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Performing registration"
-				CommandLine="if exist &quot;..\zlib\$(PlatformName)\$(ConfigurationName)\zlibwapi.dll&quot; goto zlib1&#x0D;&#x0A;copy &quot;..\zlib\$(PlatformName)\Release\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;goto zlib2&#x0D;&#x0A;:zlib1&#x0D;&#x0A;copy &quot;..\zlib\$(PlatformName)\$(ConfigurationName)\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;:zlib2&#x0D;&#x0A;&quot;$(TargetPath)&quot; /installsilent&#x0D;&#x0A;"
+				CommandLine="&quot;$(TargetPath)&quot; /installsilent"
 			/>
 		</Configuration>
 	</Configurations>

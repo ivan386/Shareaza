@@ -21,7 +21,7 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
+			OutputDirectory="$(SolutionDir)\$(PlatformName)\$(ConfigurationName)"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
 			ConfigurationType="1"
 			UseOfMFC="1"
@@ -31,7 +31,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Pre-Building..."
-				CommandLine="Pre-Build.cmd $(PlatformName) $(ConfigurationName)"
+				CommandLine="cscript.exe //E:jscript //nologo revision.js"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -113,7 +113,7 @@
 		</Configuration>
 		<Configuration
 			Name="Debug|x64"
-			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
+			OutputDirectory="$(SolutionDir)\$(PlatformName)\$(ConfigurationName)"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
 			ConfigurationType="1"
 			UseOfMFC="1"
@@ -123,7 +123,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Pre-Building..."
-				CommandLine="Pre-Build.cmd $(PlatformName) $(ConfigurationName)"
+				CommandLine="cscript.exe //E:jscript //nologo revision.js"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -207,7 +207,7 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
+			OutputDirectory="$(SolutionDir)\$(PlatformName)\$(ConfigurationName)"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
 			ConfigurationType="1"
 			UseOfMFC="1"
@@ -218,7 +218,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Pre-Building..."
-				CommandLine="Pre-Build.cmd $(PlatformName) $(ConfigurationName)"
+				CommandLine="cscript.exe //E:jscript //nologo revision.js"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -309,7 +309,7 @@
 		</Configuration>
 		<Configuration
 			Name="Release|x64"
-			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
+			OutputDirectory="$(SolutionDir)\$(PlatformName)\$(ConfigurationName)"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
 			ConfigurationType="1"
 			UseOfMFC="1"
@@ -320,7 +320,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Pre-Building..."
-				CommandLine="Pre-Build.cmd $(PlatformName) $(ConfigurationName)"
+				CommandLine="cscript.exe //E:jscript //nologo revision.js"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -2096,6 +2096,10 @@
 			</File>
 			<File
 				RelativePath="Buffer.h"
+				>
+			</File>
+			<File
+				RelativePath="..\build.h"
 				>
 			</File>
 			<File
@@ -4436,10 +4440,6 @@
 				>
 			</File>
 		</Filter>
-		<File
-			RelativePath=".\Pre-Build.cmd"
-			>
-		</File>
 		<File
 			RelativePath="revision.js"
 			>

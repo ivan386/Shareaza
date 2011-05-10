@@ -1,7 +1,6 @@
 ; Input defines: ConfigurationName (Debug or Release), PlatformName (Win32, x64, etc.)
 
-; Change from "Yes" to "No" on the next line if you don't compile an alpha build
-#define alpha "Yes"
+#include "..\build.h"
 
 #if VER < 0x05010700
   #error Inno Setup version 5.1.7 or higher is needed for this script
@@ -23,10 +22,10 @@
 #define Description   internal_name + " Ultimate File Sharing"
 #define date          GetDateTimeString('yyyy/mm/dd', '-', '')
 
-#if alpha == "Yes"
-  #define output_name internal_name + "_" + version + "_" + PlatformName + "_" + ConfigurationName + "_" + date
-#else
+#if RELEASE_BUILD == 1
   #define output_name internal_name + "_" + version + "_" + PlatformName
+#else
+  #define output_name internal_name + "_" + version + "_" + PlatformName + "_" + ConfigurationName + "_" + date
 #endif
 
 [Setup]
@@ -84,7 +83,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"
 Name: "quicklaunch"; Description: "{cm:CreateQuickLaunchIcon}"
 ;Name: "firewall"; Description: "{cm:tasks_firewall}"; MinVersion: 0,5.01sp2
 Name: "upnp"; Description: "{cm:tasks_upnp}"; MinVersion: 0,5.01; Check: CanUserModifyServices; Flags: unchecked
-#if alpha == "No"
+#if RELEASE_BUILD == 1
 Name: "deleteoldsetup"; Description: "{cm:tasks_deleteoldsetup}"; Check: EnableDeleteOldSetup
 #endif
 Name: "resetdiscoveryhostcache"; Description: "{cm:tasks_resetdiscoveryhostcache}"; Flags: unchecked
@@ -157,7 +156,8 @@ Source: "vc10\{#PlatformName}\{#ConfigurationName}\ZIPBuilder.dll";             
 #if ConfigurationName == "Debug"
 
 ; Main files
-Source: "vc10\{#PlatformName}\{#ConfigurationName}\*.pdb"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "vc10\{#PlatformName}\{#ConfigurationName}\Shareaza.pdb"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "vc10\{#PlatformName}\{#ConfigurationName}\BugTrap.pdb"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 
 #endif
 

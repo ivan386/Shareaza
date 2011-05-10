@@ -26,9 +26,7 @@
 
 #pragma once
 
-#ifndef RELEASE_BUILD
-#define RELEASE_BUILD 0 // Set "1" for release and "0" for alpha, beta, etc. daily builds
-#endif
+#include "..\build.h"
 
 //
 // Configuration
