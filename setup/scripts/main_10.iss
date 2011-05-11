@@ -95,7 +95,7 @@ Source: "vc10\{#PlatformName}\{#ConfigurationName}\Skin.exe"; DestDir: "{app}"; 
 Source: "vc10\{#PlatformName}\{#ConfigurationName}\TorrentWizard.exe"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 
 ; Save/Restore scripts
-Source: "setup\builds\SaveSettings.bat";    DestDir: "{app}"; DestName: "SaveSettings.bat";    Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist
+Source: "setup\builds\SaveSettings.bat"; DestDir: "{app}"; DestName: "SaveSettings.bat";    Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist
 Source: "setup\builds\RestoreSettings.bat"; DestDir: "{app}"; DestName: "RestoreSettings.bat"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist
 
 ; ZLib
@@ -106,11 +106,7 @@ Source: "vc10\{#PlatformName}\{#ConfigurationName}\bzlib.dll"; DestDir: "{app}";
 
 ; BugTrap
 Source: "vc10\{#PlatformName}\{#ConfigurationName}\BugTrap.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-#if PlatformName == "Win32"
-Source: "BugTrap\dbghelp.dll";     DestDir: "{app}"; DestName: "dbghelp.dll"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-#elif PlatformName == "x64"
-Source: "BugTrap\dbghelp-x64.dll"; DestDir: "{app}"; DestName: "dbghelp.dll"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-#endif
+Source: "vc10\{#PlatformName}\{#ConfigurationName}\dbghelp.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 
 ; HashLib
 Source: "vc10\{#PlatformName}\{#ConfigurationName}\HashLib.dll"; DestDir: "{app}"; DestName: "HashLib.dll"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
@@ -126,31 +122,31 @@ Source: "vc10\{#PlatformName}\{#ConfigurationName}\GeoIP.dll"; DestDir: "{app}";
 Source: "GeoIP\GeoIP.dat"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 
 ; Plugins
-Source: "vc10\{#PlatformName}\{#ConfigurationName}\7ZipBuilder.dll";                 DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
-Source: "vc10\{#PlatformName}\{#ConfigurationName}\7zxr.dll";                        DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-Source: "vc10\{#PlatformName}\{#ConfigurationName}\DocumentReader.dll";           DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
-Source: "vc10\{#PlatformName}\{#ConfigurationName}\GFLImageServices.dll";       DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
-Source: "vc10\{#PlatformName}\{#ConfigurationName}\libgfl290.dll";              DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-Source: "vc10\{#PlatformName}\{#ConfigurationName}\GFLLibraryBuilder.dll";     DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
-Source: "vc10\{#PlatformName}\{#ConfigurationName}\ImageViewer.dll";                 DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
-Source: "vc10\{#PlatformName}\{#ConfigurationName}\MediaImageServices.exe";   DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "vc10\{#PlatformName}\{#ConfigurationName}\7ZipBuilder.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "vc10\{#PlatformName}\{#ConfigurationName}\7zxr.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "vc10\{#PlatformName}\{#ConfigurationName}\DocumentReader.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "vc10\{#PlatformName}\{#ConfigurationName}\GFLImageServices.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "vc10\{#PlatformName}\{#ConfigurationName}\libgfl340.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "vc10\{#PlatformName}\{#ConfigurationName}\GFLLibraryBuilder.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "vc10\{#PlatformName}\{#ConfigurationName}\ImageViewer.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "vc10\{#PlatformName}\{#ConfigurationName}\MediaImageServices.exe"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 Source: "vc10\{#PlatformName}\{#ConfigurationName}\MediaLibraryBuilder.exe"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-Source: "vc10\{#PlatformName}\{#ConfigurationName}\MediaPlayer.exe";                 DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-Source: "vc10\{#PlatformName}\{#ConfigurationName}\Preview.dll";                         DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
-Source: "vc10\{#PlatformName}\{#ConfigurationName}\RARBuilder.dll";                   DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "vc10\{#PlatformName}\{#ConfigurationName}\MediaPlayer.exe"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "vc10\{#PlatformName}\{#ConfigurationName}\Preview.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "vc10\{#PlatformName}\{#ConfigurationName}\RARBuilder.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
 #if PlatformName == "Win32"
-Source: "plugins\RARBuilder\unrar.dll";                                                             DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "vc10\{#PlatformName}\{#ConfigurationName}\unrar.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 #elif PlatformName == "x64"
-Source: "plugins\RARBuilder\unrar64.dll";                                                           DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "vc10\{#PlatformName}\{#ConfigurationName}\unrar64.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 #endif
-Source: "vc10\{#PlatformName}\{#ConfigurationName}\RatDVDReader.dll";               DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
-Source: "vc10\Win32\{#ConfigurationName}\RazaWebHook32.dll";                         DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly uninsrestartdelete sortfilesbyextension regserver noregerror
-Source: "vc10\x64\{#ConfigurationName}\RazaWebHook64.dll";                           DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly uninsrestartdelete sortfilesbyextension regserver noregerror
-Source: "vc10\{#PlatformName}\{#ConfigurationName}\SkinScanSKS.dll";                 DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
-Source: "vc10\{#PlatformName}\{#ConfigurationName}\SWFPlugin.dll";                     DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
-Source: "vc10\{#PlatformName}\{#ConfigurationName}\VirusTotal.dll";                   DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
-Source: "vc10\{#PlatformName}\{#ConfigurationName}\WindowsThumbnail.exe";       DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-Source: "vc10\{#PlatformName}\{#ConfigurationName}\ZIPBuilder.dll";                   DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "vc10\{#PlatformName}\{#ConfigurationName}\RatDVDReader.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "vc10\Win32\{#ConfigurationName}\RazaWebHook32.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly uninsrestartdelete sortfilesbyextension regserver noregerror
+Source: "vc10\x64\{#ConfigurationName}\RazaWebHook64.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly uninsrestartdelete sortfilesbyextension regserver noregerror
+Source: "vc10\{#PlatformName}\{#ConfigurationName}\SkinScanSKS.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "vc10\{#PlatformName}\{#ConfigurationName}\SWFPlugin.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "vc10\{#PlatformName}\{#ConfigurationName}\VirusTotal.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "vc10\{#PlatformName}\{#ConfigurationName}\WindowsThumbnail.exe"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "vc10\{#PlatformName}\{#ConfigurationName}\ZIPBuilder.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
 
 ;--== Debug Databases ==--
 #if ConfigurationName == "Debug"
@@ -176,7 +172,7 @@ Source: "Skins\CleanBlue\*";  DestDir: "{app}\Skins\CleanBlue";  Flags: ignoreve
 Source: "Skins\Corona\*";     DestDir: "{app}\Skins\Corona";     Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
 Source: "Skins\Shareaza2\*";  DestDir: "{app}\Skins\Shareaza2";  Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
 Source: "Skins\ShareazaOS\*"; DestDir: "{app}\Skins\ShareazaOS"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
-Source: "Skins\No Banner\*"; DestDir:  "{app}\Skins\No Banner";  Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
+Source: "Skins\No Banner\*";  DestDir: "{app}\Skins\No Banner";  Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
 
 ; Thematic skins
 ; Source: "Skins\Halloween\*";         DestDir: "{app}\Skins\Halloween";         Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"

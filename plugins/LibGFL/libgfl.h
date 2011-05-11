@@ -24,6 +24,10 @@
 extern "C" {
 #endif
 
+#if defined(_WIN32) && !defined(WIN32)
+	#define WIN32
+#endif
+
 #if defined( WIN32 ) || defined ( __BORLANDC__ )
 	#ifdef __BORLANDC__
 		#pragma option -a8  /* switch to 8-bytes alignment */
@@ -44,12 +48,13 @@ extern "C" {
 	#define GFLAPI
 #endif
 
-#define GFL_VERSION  "2.90"
+#define GFL_VERSION  "3.40"
+#define GFL_VERSION_ 0x0340
 
 #define GFL_FALSE    0
 #define GFL_TRUE     1
 
-#if defined(WIN32)
+#if defined(WIN32) && !defined(__MINGW32__)
     #include <basetsd.h>
 
     typedef INT8     GFL_INT8;
@@ -270,6 +275,19 @@ typedef GFL_BOOL (GFLAPI *GFL_WANTCANCEL_CALLBACK)(void* user_params);
 
 typedef GFL_ERROR (GFLAPI *GFL_VIRTUAL_SAVE_CALLBACK)(void** pBuffer, GFL_INT32 line, GFL_INT32 nbline, void* user_params); 
 
+typedef struct {
+		GFL_BITMAP_TYPE  Type; 
+		GFL_ORIGIN       Origin; 
+		GFL_INT32        Width; 
+		GFL_INT32        Height; 
+		GFL_UINT32       BytesPerLine; 
+		GFL_INT16        LinePadding; 
+		GFL_UINT16       BitsPerComponent; 
+		GFL_UINT16       ComponentsPerPixel;
+		GFL_UINT16       BytesPerPixel; 
+	} GFL_LOAD_INFO_CB; 
+typedef GFL_ERROR (GFLAPI *GFL_VIRTUAL_LOAD_CALLBACK)(const void* pBuffer, GFL_INT32 line, GFL_INT32 nbline, const GFL_LOAD_INFO_CB* info, void* user_params); 
+
 /*
  *  LOAD_PARAMS Flags
  */
@@ -306,6 +324,9 @@ typedef struct {
 
 		GFL_WANTCANCEL_CALLBACK WantCancel; 
 		void * WantCancelParams; 
+
+		GFL_VIRTUAL_LOAD_CALLBACK SetLine; 
+		void* SetLineParams; 
 
 	} GFL_LOAD_CALLBACKS; 
 
@@ -368,18 +389,17 @@ typedef struct {
 		GFL_UINT8        CameraRawUseAutomaticBalance; 
 		GFL_UINT8        CameraRawUseCameraBalance; 
 		GFL_UINT8        CameraRawHighlight; 
-		GFL_UINT8        Reserved4; 
+		GFL_UINT8        CameraRawAutoBright; 
 		float            CameraRawGamma; 
 		float            CameraRawBrightness; 
 		float            CameraRawRedScaling; 
 		float            CameraRawBlueScaling; 
-		float            CameraRawFilterDomain; 
-		float            CameraRawFilterRange; 
+		//float            CameraRawFilterDomain; 
+		//float            CameraRawFilterRange; 
 		
 		GFL_LOAD_CALLBACKS Callbacks; 
 		
 		void           * UserParams; 
-		
 	} GFL_LOAD_PARAMS; 
 
 /*
@@ -413,7 +433,9 @@ typedef struct {
 #define GFL_BYTE_ORDER_LSBF			1
 #define GFL_BYTE_ORDER_MSBF			2
 		GFL_UINT8        DpxByteOrder; 
-		GFL_UINT8        Reserved3; 
+		GFL_UINT8        CompressRatio; /* JPEG2000 */
+		GFL_UINT32       MaxFileSize;   /* JPEG2000 */
+
 		GFL_UINT16     * LutData; /* RRRR.../GGGG..../BBBB.....*/
 		const char     * LutFilename; 
 
@@ -474,6 +496,8 @@ typedef struct {
 		char             CompressionDescription[64]; 
 		GFL_INT32        XOffset; 
 		GFL_INT32        YOffset; 
+
+		void*            ExtraInfos; 
 	} GFL_FILE_INFORMATION; 
 
 #define GFL_READ	0x01
@@ -540,8 +564,8 @@ typedef struct {
 /* 
  *  EXIF
  */
-#define GFL_EXIF_MAIN_IFD								0x0001
-#define GFL_EXIF_IFD_0									0x0002
+#define GFL_EXIF_IFD_0									0x0001
+#define GFL_EXIF_MAIN_IFD								0x0002
 #define GFL_EXIF_INTEROPERABILITY_IFD		0x0004
 #define GFL_EXIF_IFD_THUMBNAIL					0x0008
 #define GFL_EXIF_GPS_IFD								0x0010
@@ -707,6 +731,8 @@ extern GFLEXTERN const char * GFLAPI gflGetLabelForColorModel( GFL_COLORMODEL co
 
 extern GFLEXTERN GFL_ERROR GFLAPI gflGetFileInformation( const char* filename, GFL_INT32 index, GFL_FILE_INFORMATION *info ); 
 
+extern GFLEXTERN GFL_ERROR GFLAPI gflGetFileInformationEx( const char* filename, GFL_INT32 index, GFL_FILE_INFORMATION *info, GFL_UINT32 load_infos ); 
+
 extern GFLEXTERN GFL_ERROR GFLAPI gflGetFileInformationFromHandle( GFL_HANDLE handle, GFL_INT32 index, const GFL_LOAD_CALLBACKS* callbacks, GFL_FILE_INFORMATION* info ); 
 
 extern GFLEXTERN GFL_ERROR GFLAPI gflGetFileInformationFromMemory( const GFL_UINT8* data, GFL_UINT32 data_length, GFL_INT32 index, GFL_FILE_INFORMATION* info ); 
@@ -785,6 +811,10 @@ extern GFLEXTERN GFL_BITMAP* GFLAPI gflCloneBitmap( const GFL_BITMAP* bitmap );
 
 extern GFLEXTERN void GFLAPI gflBitmapSetName( GFL_BITMAP* bitmap, const char* name ); 
 
+extern GFLEXTERN GFL_INT32 GFLAPI gflGetExtraInfosCount( const GFL_FILE_INFORMATION* info ); 
+
+extern GFLEXTERN void GFLAPI gflGetExtraInfos( const GFL_FILE_INFORMATION* info, GFL_INT32 idx, char** name, char** value ); 
+
 /*
  * ~~ METADATA
  */
@@ -809,11 +839,21 @@ extern GFLEXTERN GFL_BOOL GFLAPI gflBitmapGetXMP( const GFL_BITMAP* bitmap, GFL_
 
 extern GFLEXTERN void GFLAPI gflBitmapSetEXIFThumbnail( GFL_BITMAP* bitmap, const GFL_BITMAP* thumb_bitmap ); 
 
+extern GFL_BOOL GFLAPI gflGetEXIFDPI( const GFL_BITMAP* bitmap, GFL_INT32 * xdpi, GFL_INT32 * ydpi ); 
+
 /*
  * ~~ EXIF function without loading bitmap
  */
 
 extern GFLEXTERN GFL_EXIF_DATA* GFLAPI gflLoadEXIF( const char* filename, GFL_UINT32 flags ); 
+
+extern GFLEXTERN GFL_BOOL GFLAPI gflHasEXIF( const char* filename);
+
+extern GFLEXTERN GFL_EXIF_DATAEX* GFLAPI gflLoadEXIF2( const char* filename, GFL_UINT32 flags );
+
+extern GFLEXTERN GFL_BOOL GFLAPI gflHasIPTC( const char* filename );
+
+extern GFLEXTERN GFL_BOOL GFLAPI gflHasICCProfile( const char* filename );
 
 /*
  * ~~ 
@@ -830,6 +870,8 @@ extern GFLEXTERN void GFLAPI gflFreeIPTC( GFL_IPTC_DATA* iptc_data );
 extern GFLEXTERN GFL_ERROR GFLAPI gflSetIPTCValue( GFL_IPTC_DATA* iptc_data, GFL_UINT32 id, const char* value ); 
 
 extern GFLEXTERN GFL_ERROR GFLAPI gflRemoveIPTCValue( GFL_IPTC_DATA* iptc_data, GFL_UINT32 id ); 
+
+extern GFLEXTERN GFL_ERROR GFLAPI gflClearIPTCKeywords( GFL_IPTC_DATA* iptc_data ); 
 
 /*
  * ~~ IPTC function without loading bitmap
@@ -877,23 +919,25 @@ extern GFLEXTERN void GFLAPI gflBitmapSetEXIFValueInt2( GFL_EXIF_DATAEX* exif, G
 
 extern GFLEXTERN void GFLAPI gflBitmapSetEXIFValueRational2( GFL_EXIF_DATAEX* exif, GFL_UINT16 ifd, GFL_UINT16 tag, GFL_UINT32 p, GFL_UINT32 q ); 
 
+extern GFLEXTERN void GFLAPI gflBitmapSetEXIFValueRationalArray2( GFL_EXIF_DATAEX* exif, GFL_UINT16 ifd, GFL_UINT16 tag, const GFL_UINT32* pq, GFL_INT32 count ); 
+
 /*
  * ~~ COMMENT function without loading bitmap
  */
 
-extern GFLEXTERN GFL_ERROR GFLAPI gflJPEGGetComment( const char* filename, char* comment, int max_size ); 
+extern GFLEXTERN GFL_ERROR GFLAPI gflJPEGGetComment( const char* filename, char* comment, GFL_INT32 max_size ); 
 
 extern GFLEXTERN GFL_ERROR GFLAPI gflJPEGSetComment( const char* filename, const char* comment ); 
 
-extern GFLEXTERN GFL_ERROR GFLAPI gflPNGGetComment( const char* filename, char* comment, int max_size ); 
+extern GFLEXTERN GFL_ERROR GFLAPI gflPNGGetComment( const char* filename, char* comment, GFL_INT32 max_size ); 
 
 extern GFLEXTERN GFL_ERROR GFLAPI gflPNGSetComment( const char* filename, const char* comment ); 
 
 /* UNICODE */
 #ifdef WIN32
-extern GFLEXTERN GFL_ERROR GFLAPI gflJPEGGetCommentW( const wchar_t* filename, char* comment, int max_size ); 
+extern GFLEXTERN GFL_ERROR GFLAPI gflJPEGGetCommentW( const wchar_t* filename, char* comment, GFL_INT32 max_size ); 
 extern GFLEXTERN GFL_ERROR GFLAPI gflJPEGSetCommentW( const wchar_t* filename, const char* comment ); 
-extern GFLEXTERN GFL_ERROR GFLAPI gflPNGGetCommentW( const wchar_t* filename, char* comment, int max_size ); 
+extern GFLEXTERN GFL_ERROR GFLAPI gflPNGGetCommentW( const wchar_t* filename, char* comment, GFL_INT32 max_size ); 
 extern GFLEXTERN GFL_ERROR GFLAPI gflPNGSetCommentW( const wchar_t* filename, const char* comment ); 
 #endif
 
@@ -1027,6 +1071,18 @@ extern GFLEXTERN GFL_ERROR GFLAPI gflBitbltEx        ( const GFL_BITMAP* src, co
 extern GFLEXTERN GFL_ERROR GFLAPI gflMerge           ( GFL_BITMAP const *src[], const GFL_POINT origin[], const GFL_UINT32 opacity[], GFL_INT32 num_bitmap, GFL_BITMAP** dst ); 
 extern GFLEXTERN GFL_ERROR GFLAPI gflCombineAlpha    ( GFL_BITMAP* src, GFL_BITMAP** dst, const GFL_COLOR* color ); 
 extern GFLEXTERN GFL_ERROR GFLAPI gflSetTransparentColor( GFL_BITMAP* src, GFL_BITMAP** dst, const GFL_COLOR * mask_color, const GFL_COLOR* back_color ); 
+
+/*
+ * ~
+ */
+
+extern GFLEXTERN GFL_ERROR GFLAPI gflSaveBitmapBegin			( void** ptr, const char* filename, const GFL_BITMAP*, const GFL_SAVE_PARAMS* ); 
+extern GFLEXTERN GFL_ERROR GFLAPI gflSaveBitmapEnd				( void* _ptr ); 
+extern GFLEXTERN GFL_ERROR GFLAPI gflSaveBitmapWriteLine	( void* _ptr, GFL_UINT8* buffer ); 
+
+extern GFLEXTERN GFL_ERROR GFLAPI gflLoadBitmapBegin			( void** ptr, const char* filename, GFL_BITMAP**, const GFL_LOAD_PARAMS*, GFL_FILE_INFORMATION* ); 
+extern GFLEXTERN GFL_ERROR GFLAPI gflLoadBitmapEnd				( void* _ptr ); 
+extern GFLEXTERN GFL_ERROR GFLAPI gflLoadBitmapReadLine		( void* _ptr, GFL_UINT8* buffer ); 
 
 #if defined( WIN32 ) || defined ( __BORLANDC__ )
 	#ifdef __BORLANDC__

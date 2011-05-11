@@ -28,6 +28,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				Description="Pre-Building..."
+				CommandLine="copy &quot;dbghelp.dll&quot; &quot;$(TargetDir)dbghelp.dll&quot; /b /y"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -104,6 +106,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				Description="Pre-Building..."
+				CommandLine="copy &quot;dbghelp-x64.dll&quot; &quot;$(TargetDir)dbghelp.dll&quot; /b /y"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -187,6 +191,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				Description="Pre-Building..."
+				CommandLine="copy &quot;dbghelp.dll&quot; &quot;$(TargetDir)\dbghelp.dll&quot; /b /y"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -272,6 +278,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				Description="Pre-Building..."
+				CommandLine="copy &quot;dbghelp-x64.dll&quot; &quot;$(TargetDir)\dbghelp.dll&quot; /b /y"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"

@@ -31,7 +31,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Pre-Building..."
-				CommandLine="xcopy &quot;..\LibGFL\$(ConfigurationName)$(PlatformName)\*.dll&quot; &quot;$(TargetDir)&quot; /y"
+				CommandLine="copy &quot;..\LibGFL\libW\*.dll&quot; &quot;$(TargetDir)&quot; /b /y"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -87,7 +87,7 @@
 				IgnoreImportLibrary="true"
 				AdditionalDependencies="libgfl.lib"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="..\LibGFL\$(ConfigurationName)$(PlatformName)"
+				AdditionalLibraryDirectories="..\LibGFL\libW"
 				ModuleDefinitionFile="GFLLibraryBuilder.def"
 				GenerateDebugInformation="true"
 				SubSystem="2"
@@ -131,7 +131,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Pre-Building..."
-				CommandLine="xcopy &quot;..\LibGFL\$(ConfigurationName)$(PlatformName)\*.dll&quot; &quot;$(TargetDir)&quot; /y"
+				CommandLine="copy &quot;..\LibGFL\lib64W\*.dll&quot; &quot;$(TargetDir)&quot; /b /y"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -186,7 +186,7 @@
 				IgnoreImportLibrary="true"
 				AdditionalDependencies="libgfl.lib"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="..\LibGFL\$(ConfigurationName)$(PlatformName)"
+				AdditionalLibraryDirectories="..\LibGFL\lib64W"
 				ModuleDefinitionFile="GFLLibraryBuilder.def"
 				GenerateDebugInformation="true"
 				SubSystem="2"
@@ -230,7 +230,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Pre-Building..."
-				CommandLine="xcopy &quot;..\LibGFL\$(ConfigurationName)$(PlatformName)\*.dll&quot; &quot;$(TargetDir)&quot; /y"
+				CommandLine="copy &quot;..\LibGFL\libW\*.dll&quot; &quot;$(TargetDir)&quot; /b /y"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -290,7 +290,7 @@
 				IgnoreImportLibrary="true"
 				AdditionalDependencies="libgfl.lib"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="..\LibGFL\$(ConfigurationName)$(PlatformName)"
+				AdditionalLibraryDirectories="..\LibGFL\libW"
 				ModuleDefinitionFile="GFLLibraryBuilder.def"
 				GenerateDebugInformation="false"
 				SubSystem="2"
@@ -338,7 +338,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Pre-Building..."
-				CommandLine="xcopy &quot;..\LibGFL\$(ConfigurationName)$(PlatformName)\*.dll&quot; &quot;$(TargetDir)&quot; /y"
+				CommandLine="copy &quot;..\LibGFL\lib64W\*.dll&quot; &quot;$(TargetDir)&quot; /b /y"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -399,7 +399,7 @@
 				IgnoreImportLibrary="true"
 				AdditionalDependencies="libgfl.lib"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="..\LibGFL\$(ConfigurationName)$(PlatformName)"
+				AdditionalLibraryDirectories="..\LibGFL\lib64W"
 				ModuleDefinitionFile="GFLLibraryBuilder.def"
 				GenerateDebugInformation="false"
 				SubSystem="2"
