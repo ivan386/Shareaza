@@ -418,12 +418,6 @@ BOOL CDCNeighbour::OnChat(CDCPacket* pPacket)
 
 		if ( nNickLen > 0 && m_sNick != sNick )
 		{
-			if ( GetUser( sNick ) == NULL )
-			{
-				// Add user
-				ChatCore.OnAddUser( this, new CChatUser( cutUser, sNick ) );
-			}
-
 			ChatCore.OnMessage( this, pPacket );
 		}
 	}

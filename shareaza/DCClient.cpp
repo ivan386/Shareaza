@@ -220,7 +220,7 @@ BOOL CDCClient::Connect()
 		}
 
 		// Can't connect
-		pDCNeighbour->Close();
+		delete pDCNeighbour;
 	}
 
 	return FALSE;
