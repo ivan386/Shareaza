@@ -1181,14 +1181,16 @@
 		</menu>
 		<!-- LIBRARY FRAME -->
 		<menu name="CLibraryTree.Physical.Basic">
-			<item id="ID_LIBRARY_SHARED_FOLDER" text="分享的"/>
+			<item id="ID_LIBRARY_EXPLORE" text="探索"/>
 			<item id="ID_LIBRARY_REMOVE" text="移除"/>
 			<separator/>
-			<item id="ID_SHELL_MENU" text="S_hell menu"/>
+			<item id="ID_LIBRARY_SHARED_FOLDER" text="分享的"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDERS" text="分享檔案..."/>
 			<separator/>
-			<item id="ID_LIBRARY_CREATETORRENT" text="製作 .torrent 檔"/>
+			<item id="ID_LIBRARY_FOLDER_CREATETORRENT" text="製作 .torrent 檔"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CLibraryTree.Physical">
 			<item id="ID_LIBRARY_EXPLORE" text="探索"/>
@@ -1200,7 +1202,7 @@
 			<item id="ID_LIBRARY_REBUILD" text="重建"/>
 			<item id="ID_LIBRARY_FOLDERS" text="分享檔案..."/>
 			<separator/>
-			<item id="ID_LIBRARY_CREATETORRENT" text="製作 .torrent 檔"/>
+			<item id="ID_LIBRARY_FOLDER_CREATETORRENT" text="製作 .torrent 檔"/>
 			<separator/>
 			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 			<separator/>

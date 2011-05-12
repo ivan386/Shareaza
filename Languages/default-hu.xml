@@ -1181,14 +1181,16 @@
 		</menu>
 		<!-- LIBRARY FRAME -->
 		<menu name="CLibraryTree.Physical.Basic">
-			<item id="ID_LIBRARY_SHARED_FOLDER" text="_Megosztott"/>
+			<item id="ID_LIBRARY_EXPLORE" text="_Intézőben megnyit"/>
 			<item id="ID_LIBRARY_REMOVE" text="_Eltávolít"/>
 			<separator/>
-			<item id="ID_SHELL_MENU" text="S_hell menu"/>
+			<item id="ID_LIBRARY_SHARED_FOLDER" text="_Megosztott"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDERS" text="_Fájlok megosztása..."/>
 			<separator/>
-			<item id="ID_LIBRARY_CREATETORRENT" text="._torrent fájl készítése"/>
+			<item id="ID_LIBRARY_FOLDER_CREATETORRENT" text="._torrent fájl készítése"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CLibraryTree.Physical">
 			<item id="ID_LIBRARY_EXPLORE" text="_Intézőben megnyit"/>
@@ -1200,7 +1202,7 @@
 			<item id="ID_LIBRARY_REBUILD" text="Ú_jraépít"/>
 			<item id="ID_LIBRARY_FOLDERS" text="_Fájlok megosztása..."/>
 			<separator/>
-			<item id="ID_LIBRARY_CREATETORRENT" text="._torrent fájl készítése"/>
+			<item id="ID_LIBRARY_FOLDER_CREATETORRENT" text="._torrent fájl készítése"/>
 			<separator/>
 			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 			<separator/>

@@ -1181,14 +1181,16 @@
 		</menu>
 		<!-- LIBRARY FRAME -->
 		<menu name="CLibraryTree.Physical.Basic">
-			<item id="ID_LIBRARY_SHARED_FOLDER" text="_Sdílené"/>
+			<item id="ID_LIBRARY_EXPLORE" text="_Průzkumník"/>
 			<item id="ID_LIBRARY_REMOVE" text="Odst_ranit"/>
 			<separator/>
-			<item id="ID_SHELL_MENU" text="S_hell menu"/>
+			<item id="ID_LIBRARY_SHARED_FOLDER" text="_Sdílené"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDERS" text="Sdílené _soubory..."/>
 			<separator/>
-			<item id="ID_LIBRARY_CREATETORRENT" text="Vytvořit soubor .torrent"/>
+			<item id="ID_LIBRARY_FOLDER_CREATETORRENT" text="Vytvořit soubor .torrent"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CLibraryTree.Physical">
 			<item id="ID_LIBRARY_EXPLORE" text="_Průzkumník"/>
@@ -1200,7 +1202,7 @@
 			<item id="ID_LIBRARY_REBUILD" text="O_bnovit"/>
 			<item id="ID_LIBRARY_FOLDERS" text="Sdílené _soubory..."/>
 			<separator/>
-			<item id="ID_LIBRARY_CREATETORRENT" text="Vytvořit soubor .torrent"/>
+			<item id="ID_LIBRARY_FOLDER_CREATETORRENT" text="Vytvořit soubor .torrent"/>
 			<separator/>
 			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 			<separator/>

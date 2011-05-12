@@ -1181,14 +1181,16 @@
 		</menu>
 		<!-- LIBRARY FRAME -->
 		<menu name="CLibraryTree.Physical.Basic">
-			<item id="ID_LIBRARY_SHARED_FOLDER" text="Delt"/>
+			<item id="ID_LIBRARY_EXPLORE" text="Utforsk"/>
 			<item id="ID_LIBRARY_REMOVE" text="Fjern"/>
 			<separator/>
-			<item id="ID_SHELL_MENU" text="S_hell menu"/>
+			<item id="ID_LIBRARY_SHARED_FOLDER" text="Delt"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDERS" text="Del filer"/>
 			<separator/>
-			<item id="ID_LIBRARY_CREATETORRENT" text="Lag .torrent"/>
+			<item id="ID_LIBRARY_FOLDER_CREATETORRENT" text="Lag .torrent"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CLibraryTree.Physical">
 			<item id="ID_LIBRARY_EXPLORE" text="Utforsk"/>
@@ -1200,7 +1202,7 @@
 			<item id="ID_LIBRARY_REBUILD" text="Oppdater"/>
 			<item id="ID_LIBRARY_FOLDERS" text="Del filer"/>
 			<separator/>
-			<item id="ID_LIBRARY_CREATETORRENT" text="Lag .torrent"/>
+			<item id="ID_LIBRARY_FOLDER_CREATETORRENT" text="Lag .torrent"/>
 			<separator/>
 			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 			<separator/>

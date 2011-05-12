@@ -1181,14 +1181,16 @@
 		</menu>
 		<!-- LIBRARY FRAME -->
 		<menu name="CLibraryTree.Physical.Basic">
-			<item id="ID_LIBRARY_SHARED_FOLDER" text="_Condivisi"/>
+			<item id="ID_LIBRARY_EXPLORE" text="_Esplora"/>
 			<item id="ID_LIBRARY_REMOVE" text="_Rimuovi"/>
 			<separator/>
-			<item id="ID_SHELL_MENU" text="Menu s_hell"/>
+			<item id="ID_LIBRARY_SHARED_FOLDER" text="_Condivisi"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDERS" text="Condividi file..."/>
 			<separator/>
-			<item id="ID_LIBRARY_CREATETORRENT" text="Crea file ._torrent"/>
+			<item id="ID_LIBRARY_FOLDER_CREATETORRENT" text="Crea file ._torrent"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="Menu s_hell"/>
 		</menu>
 		<menu name="CLibraryTree.Physical">
 			<item id="ID_LIBRARY_EXPLORE" text="_Esplora"/>
@@ -1200,7 +1202,7 @@
 			<item id="ID_LIBRARY_REBUILD" text="Ricos_truisci"/>
 			<item id="ID_LIBRARY_FOLDERS" text="Condividi file..."/>
 			<separator/>
-			<item id="ID_LIBRARY_CREATETORRENT" text="Crea file ._torrent"/>
+			<item id="ID_LIBRARY_FOLDER_CREATETORRENT" text="Crea file ._torrent"/>
 			<separator/>
 			<item id="ID_SHELL_MENU" text="Menu s_hell"/>
 			<separator/>

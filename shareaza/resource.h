@@ -1863,6 +1863,7 @@
 #define ID_MEDIA_MUTE                   33113
 #define ID_WINDOW_REMOTE                33114
 #define ID_UPLOADS_FILTER_TORRENT       33115
+#define ID_LIBRARY_FOLDER_CREATETORRENT 33116
 #define ID_TOOLS_SEEDTORRENT            33117
 #define ID_TOOLS_RESEEDTORRENT          33118
 #define ID_HELP_FORUMS                  33120

@@ -401,6 +401,7 @@
 	<resource code="33113" id="ID_MEDIA_MUTE"/>
 	<resource code="33114" id="ID_WINDOW_REMOTE"/>
 	<resource code="33115" id="ID_UPLOADS_FILTER_TORRENT"/>
+	<resource code="33116" id="ID_LIBRARY_FOLDER_CREATETORRENT"/>
 	<resource code="33117" id="ID_TOOLS_SEEDTORRENT"/>
 	<resource code="33118" id="ID_TOOLS_RESEEDTORRENT"/>
 	<resource code="33120" id="ID_HELP_FORUMS"/>

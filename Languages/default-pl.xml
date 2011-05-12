@@ -1181,14 +1181,16 @@
 		</menu>
 		<!-- LIBRARY FRAME -->
 		<menu name="CLibraryTree.Physical.Basic">
-			<item id="ID_LIBRARY_SHARED_FOLDER" text="Udostępnione"/>
+			<item id="ID_LIBRARY_EXPLORE" text="Przeglądaj"/>
 			<item id="ID_LIBRARY_REMOVE" text="Usuń"/>
 			<separator/>
-			<item id="ID_SHELL_MENU" text="menu interpretera poleceń (Shella)"/>
+			<item id="ID_LIBRARY_SHARED_FOLDER" text="Udostępnione"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDERS" text="Udostępnij pliki..."/>
 			<separator/>
-			<item id="ID_LIBRARY_CREATETORRENT" text="Stwórz plik .torrent"/>
+			<item id="ID_LIBRARY_FOLDER_CREATETORRENT" text="Stwórz plik .torrent"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="menu interpretera poleceń (Shella)"/>
 		</menu>
 		<menu name="CLibraryTree.Physical">
 			<item id="ID_LIBRARY_EXPLORE" text="Przeglądaj"/>
@@ -1200,7 +1202,7 @@
 			<item id="ID_LIBRARY_REBUILD" text="Odbuduj ponownie"/>
 			<item id="ID_LIBRARY_FOLDERS" text="Udostępnij pliki..."/>
 			<separator/>
-			<item id="ID_LIBRARY_CREATETORRENT" text="Stwórz plik .torrent"/>
+			<item id="ID_LIBRARY_FOLDER_CREATETORRENT" text="Stwórz plik .torrent"/>
 			<separator/>
 			<item id="ID_SHELL_MENU" text="menu interpretera poleceń (Shella)"/>
 			<separator/>

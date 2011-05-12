@@ -1181,14 +1181,16 @@
 		</menu>
 		<!-- LIBRARY FRAME -->
 		<menu name="CLibraryTree.Physical.Basic">
-			<item id="ID_LIBRARY_SHARED_FOLDER" text="‪_משותף"/>
+			<item id="ID_LIBRARY_EXPLORE" text="‪_סייר"/>
 			<item id="ID_LIBRARY_REMOVE" text="‪_הסר"/>
 			<separator/>
-			<item id="ID_SHELL_MENU" text="S_hell menu"/>
+			<item id="ID_LIBRARY_SHARED_FOLDER" text="‪_משותף"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDERS" text="שתף _קבצים..."/>
 			<separator/>
-			<item id="ID_LIBRARY_CREATETORRENT" text="‪.torrent צור קובץ"/>
+			<item id="ID_LIBRARY_FOLDER_CREATETORRENT" text="‪.torrent צור קובץ"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CLibraryTree.Physical">
 			<item id="ID_LIBRARY_EXPLORE" text="‪_סייר"/>
@@ -1200,7 +1202,7 @@
 			<item id="ID_LIBRARY_REBUILD" text="‪בנה מחדש"/>
 			<item id="ID_LIBRARY_FOLDERS" text="שתף _קבצים..."/>
 			<separator/>
-			<item id="ID_LIBRARY_CREATETORRENT" text="‪.torrent צור קובץ"/>
+			<item id="ID_LIBRARY_FOLDER_CREATETORRENT" text="‪.torrent צור קובץ"/>
 			<separator/>
 			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 			<separator/>

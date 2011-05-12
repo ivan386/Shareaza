@@ -1181,14 +1181,16 @@
 		</menu>
 		<!-- LIBRARY FRAME -->
 		<menu name="CLibraryTree.Physical.Basic">
-			<item id="ID_LIBRARY_SHARED_FOLDER" text="_Gedeel"/>
+			<item id="ID_LIBRARY_EXPLORE" text="_Verken"/>
 			<item id="ID_LIBRARY_REMOVE" text="_Verwyder"/>
 			<separator/>
-			<item id="ID_SHELL_MENU" text="S_hell menu"/>
+			<item id="ID_LIBRARY_SHARED_FOLDER" text="_Gedeel"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDERS" text="Deel _Lêers..."/>
 			<separator/>
-			<item id="ID_LIBRARY_CREATETORRENT" text="Skep .torrent Lêer"/>
+			<item id="ID_LIBRARY_FOLDER_CREATETORRENT" text="Skep .torrent Lêer"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CLibraryTree.Physical">
 			<item id="ID_LIBRARY_EXPLORE" text="_Verken"/>
@@ -1200,7 +1202,7 @@
 			<item id="ID_LIBRARY_REBUILD" text="_Herbou"/>
 			<item id="ID_LIBRARY_FOLDERS" text="Deel _Lêers..."/>
 			<separator/>
-			<item id="ID_LIBRARY_CREATETORRENT" text="Skep .torrent Lêer"/>
+			<item id="ID_LIBRARY_FOLDER_CREATETORRENT" text="Skep .torrent Lêer"/>
 			<separator/>
 			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 			<separator/>

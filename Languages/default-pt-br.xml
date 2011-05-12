@@ -1181,14 +1181,16 @@
 		</menu>
 		<!-- LIBRARY FRAME -->
 		<menu name="CLibraryTree.Physical.Basic">
-			<item id="ID_LIBRARY_SHARED_FOLDER" text="_Compartilhado"/>
+			<item id="ID_LIBRARY_EXPLORE" text="_Explorar"/>
 			<item id="ID_LIBRARY_REMOVE" text="_Remover"/>
 			<separator/>
-			<item id="ID_SHELL_MENU" text="M_enu do shell"/>
+			<item id="ID_LIBRARY_SHARED_FOLDER" text="_Compartilhado"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDERS" text="Compartilhar _Arquivos..."/>
 			<separator/>
-			<item id="ID_LIBRARY_CREATETORRENT" text="Criar _Arquivo .torrent"/>
+			<item id="ID_LIBRARY_FOLDER_CREATETORRENT" text="Criar _Arquivo .torrent"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="M_enu do shell"/>
 		</menu>
 		<menu name="CLibraryTree.Physical">
 			<item id="ID_LIBRARY_EXPLORE" text="_Explorar"/>
@@ -1200,7 +1202,7 @@
 			<item id="ID_LIBRARY_REBUILD" text="Re_construir"/>
 			<item id="ID_LIBRARY_FOLDERS" text="Compartilhar _Arquivos..."/>
 			<separator/>
-			<item id="ID_LIBRARY_CREATETORRENT" text="Criar _Arquivo .torrent"/>
+			<item id="ID_LIBRARY_FOLDER_CREATETORRENT" text="Criar _Arquivo .torrent"/>
 			<separator/>
 			<item id="ID_SHELL_MENU" text="M_enu do shell"/>
 			<separator/>

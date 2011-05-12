@@ -1181,14 +1181,16 @@
 		</menu>
 		<!-- LIBRARY FRAME -->
 		<menu name="CLibraryTree.Physical.Basic">
-			<item id="ID_LIBRARY_SHARED_FOLDER" text="_Shpërndahet"/>
+			<item id="ID_LIBRARY_EXPLORE" text="_Eksploro"/>
 			<item id="ID_LIBRARY_REMOVE" text="_Fshije"/>
 			<separator/>
-			<item id="ID_SHELL_MENU" text="Meny b_azë"/>
+			<item id="ID_LIBRARY_SHARED_FOLDER" text="_Shpërndahet"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDERS" text="_Skedat e Shpërndara..."/>
 			<separator/>
-			<item id="ID_LIBRARY_CREATETORRENT" text="Krijo Skedë _.torrent"/>
+			<item id="ID_LIBRARY_FOLDER_CREATETORRENT" text="Krijo Skedë _.torrent"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="Meny b_azë"/>
 		</menu>
 		<menu name="CLibraryTree.Physical">
 			<item id="ID_LIBRARY_EXPLORE" text="_Eksploro"/>
@@ -1200,7 +1202,7 @@
 			<item id="ID_LIBRARY_REBUILD" text="Ri_ndërto"/>
 			<item id="ID_LIBRARY_FOLDERS" text="_Skedat e Shpërndara..."/>
 			<separator/>
-			<item id="ID_LIBRARY_CREATETORRENT" text="Krijo Skedë _.torrent"/>
+			<item id="ID_LIBRARY_FOLDER_CREATETORRENT" text="Krijo Skedë _.torrent"/>
 			<separator/>
 			<item id="ID_SHELL_MENU" text="Meny b_azë"/>
 			<separator/>

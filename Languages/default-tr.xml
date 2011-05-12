@@ -1181,14 +1181,16 @@
 		</menu>
 		<!-- LIBRARY FRAME -->
 		<menu name="CLibraryTree.Physical.Basic">
-			<item id="ID_LIBRARY_SHARED_FOLDER" text="_Paylaşılanlar"/>
+			<item id="ID_LIBRARY_EXPLORE" text="_Araştır"/>
 			<item id="ID_LIBRARY_REMOVE" text="_Kaldır"/>
 			<separator/>
-			<item id="ID_SHELL_MENU" text="İş_letim Sistemi Menüsü"/>
+			<item id="ID_LIBRARY_SHARED_FOLDER" text="_Paylaşılanlar"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDERS" text="Dosya _Paylaşımı..."/>
 			<separator/>
-			<item id="ID_LIBRARY_CREATETORRENT" text="._torrent Dosyası Oluştur"/>
+			<item id="ID_LIBRARY_FOLDER_CREATETORRENT" text="._torrent Dosyası Oluştur"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="İş_letim Sistemi Menüsü"/>
 		</menu>
 		<menu name="CLibraryTree.Physical">
 			<item id="ID_LIBRARY_EXPLORE" text="_Araştır"/>
@@ -1200,7 +1202,7 @@
 			<item id="ID_LIBRARY_REBUILD" text="_Yenilenme"/>
 			<item id="ID_LIBRARY_FOLDERS" text="Dosya _Paylaşımı..."/>
 			<separator/>
-			<item id="ID_LIBRARY_CREATETORRENT" text="._torrent Dosyası Oluştur"/>
+			<item id="ID_LIBRARY_FOLDER_CREATETORRENT" text="._torrent Dosyası Oluştur"/>
 			<separator/>
 			<item id="ID_SHELL_MENU" text="İş_letim Sistemi Menüsü"/>
 			<separator/>

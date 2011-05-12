@@ -1181,14 +1181,16 @@
 		</menu>
 		<!-- LIBRARY FRAME -->
 		<menu name="CLibraryTree.Physical.Basic">
-			<item id="ID_LIBRARY_SHARED_FOLDER" text="共享(_S)"/>
+			<item id="ID_LIBRARY_EXPLORE" text="浏览(_E)"/>
 			<item id="ID_LIBRARY_REMOVE" text="移除(_R)"/>
 			<separator/>
-			<item id="ID_SHELL_MENU" text="外部菜单(_H)"/>
+			<item id="ID_LIBRARY_SHARED_FOLDER" text="共享(_S)"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDERS" text="共享文件(_F)..."/>
 			<separator/>
-			<item id="ID_LIBRARY_CREATETORRENT" text="创建种子文件(_T)"/>
+			<item id="ID_LIBRARY_FOLDER_CREATETORRENT" text="创建种子文件(_T)"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="外部菜单(_H)"/>
 		</menu>
 		<menu name="CLibraryTree.Physical">
 			<item id="ID_LIBRARY_EXPLORE" text="浏览(_E)"/>
@@ -1200,7 +1202,7 @@
 			<item id="ID_LIBRARY_REBUILD" text="重建(_B)"/>
 			<item id="ID_LIBRARY_FOLDERS" text="共享文件(_F)..."/>
 			<separator/>
-			<item id="ID_LIBRARY_CREATETORRENT" text="创建种子文件(_T)"/>
+			<item id="ID_LIBRARY_FOLDER_CREATETORRENT" text="创建种子文件(_T)"/>
 			<separator/>
 			<item id="ID_SHELL_MENU" text="外部菜单(_H)"/>
 			<separator/>

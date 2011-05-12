@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2011-05-03 13:54+0000\n"
+"POT-Creation-Date: 2011-05-12 14:23+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -1473,14 +1473,10 @@ msgstr "‪BitTorrent הצג"
 msgid "Show _History"
 msgstr "‪הצג היסטוריה"
 
-#: clibrarytree.physical.basic;item;id_library_shared_folder
-#: clibrarytree.physical;item;id_library_shared_folder
-#: clibraryfileview.physical.basic;item;id_library_shared_file
-#: clibraryfileview.physical;item;id_library_shared_file
-#: clibraryfileview.virtual.basic;item;id_library_shared_file
-#: clibraryfileview.virtual;item;id_library_shared_file
-msgid "_Shared"
-msgstr "‪_משותף"
+#: clibrarytree.physical.basic;item;id_library_explore
+#: clibrarytree.physical;item;id_library_explore
+msgid "_Explore"
+msgstr "‪_סייר"
 
 #: clibrarytree.physical.basic;item;id_library_remove
 #: clibrarytree.physical;item;id_library_remove
@@ -1495,6 +1491,22 @@ msgstr "‪_משותף"
 msgid "_Remove"
 msgstr "‪_הסר"
 
+#: clibrarytree.physical.basic;item;id_library_shared_folder
+#: clibrarytree.physical;item;id_library_shared_folder
+#: clibraryfileview.physical.basic;item;id_library_shared_file
+#: clibraryfileview.physical;item;id_library_shared_file
+#: clibraryfileview.virtual.basic;item;id_library_shared_file
+#: clibraryfileview.virtual;item;id_library_shared_file
+msgid "_Shared"
+msgstr "‪_משותף"
+
+#: clibrarytree.physical.basic;item;id_library_folder_createtorrent
+#: clibrarytree.physical;item;id_library_folder_createtorrent
+#: clibraryfileview.physical;44;item;id_library_createtorrent
+#: clibraryfileview.virtual;50;item;id_library_createtorrent
+msgid "Create ._torrent File"
+msgstr "‪.torrent צור קובץ"
+
 #: clibrarytree.physical.basic;item;id_shell_menu
 #: clibrarytree.physical;item;id_shell_menu
 #: clibraryfileview.physical;item;id_shell_menu
@@ -1502,17 +1514,6 @@ msgstr "‪_הסר"
 #: clibraryfileview.virtual;item;id_shell_menu
 msgid "S_hell menu"
 msgstr "S_hell menu"
-
-#: clibrarytree.physical.basic;item;id_library_createtorrent
-#: clibrarytree.physical;item;id_library_createtorrent
-#: clibraryfileview.physical;44;item;id_library_createtorrent
-#: clibraryfileview.virtual;50;item;id_library_createtorrent
-msgid "Create ._torrent File"
-msgstr "‪.torrent צור קובץ"
-
-#: clibrarytree.physical;item;id_library_explore
-msgid "_Explore"
-msgstr "‪_סייר"
 
 #: clibrarytree.physical;item;id_library_scan
 msgid "S_can"

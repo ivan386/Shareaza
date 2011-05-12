@@ -1181,14 +1181,16 @@
 		</menu>
 		<!-- LIBRARY FRAME -->
 		<menu name="CLibraryTree.Physical.Basic">
-			<item id="ID_LIBRARY_SHARED_FOLDER" text="_Κοινοποιημένο"/>
+			<item id="ID_LIBRARY_EXPLORE" text="_Εξερεύνηση"/>
 			<item id="ID_LIBRARY_REMOVE" text="Α_φαίρεση"/>
 			<separator/>
-			<item id="ID_SHELL_MENU" text="S_hell menu"/>
+			<item id="ID_LIBRARY_SHARED_FOLDER" text="_Κοινοποιημένο"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDERS" text="Κοινοποιημένοι _Φάκελοι..."/>
 			<separator/>
-			<item id="ID_LIBRARY_CREATETORRENT" text="Δημιουργία Αρχείου .torrent"/>
+			<item id="ID_LIBRARY_FOLDER_CREATETORRENT" text="Δημιουργία Αρχείου .torrent"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CLibraryTree.Physical">
 			<item id="ID_LIBRARY_EXPLORE" text="_Εξερεύνηση"/>
@@ -1200,7 +1202,7 @@
 			<item id="ID_LIBRARY_REBUILD" text="Ανα_δόμηση"/>
 			<item id="ID_LIBRARY_FOLDERS" text="Κοινοποιημένοι _Φάκελοι..."/>
 			<separator/>
-			<item id="ID_LIBRARY_CREATETORRENT" text="Δημιουργία Αρχείου .torrent"/>
+			<item id="ID_LIBRARY_FOLDER_CREATETORRENT" text="Δημιουργία Αρχείου .torrent"/>
 			<separator/>
 			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 			<separator/>

@@ -1181,14 +1181,16 @@
 		</menu>
 		<!-- LIBRARY FRAME -->
 		<menu name="CLibraryTree.Physical.Basic">
-			<item id="ID_LIBRARY_SHARED_FOLDER" text="共有(_S)"/>
+			<item id="ID_LIBRARY_EXPLORE" text="エクスプローラ(_E)"/>
 			<item id="ID_LIBRARY_REMOVE" text="削除(_R)"/>
 			<separator/>
-			<item id="ID_SHELL_MENU" text="S_hell menu"/>
+			<item id="ID_LIBRARY_SHARED_FOLDER" text="共有(_S)"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDERS" text="共有ファイル(_F)..."/>
 			<separator/>
-			<item id="ID_LIBRARY_CREATETORRENT" text=".torrentファイルを作成"/>
+			<item id="ID_LIBRARY_FOLDER_CREATETORRENT" text=".torrentファイルを作成"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CLibraryTree.Physical">
 			<item id="ID_LIBRARY_EXPLORE" text="エクスプローラ(_E)"/>
@@ -1200,7 +1202,7 @@
 			<item id="ID_LIBRARY_REBUILD" text="再構成(_B)"/>
 			<item id="ID_LIBRARY_FOLDERS" text="共有ファイル(_F)..."/>
 			<separator/>
-			<item id="ID_LIBRARY_CREATETORRENT" text=".torrentファイルを作成"/>
+			<item id="ID_LIBRARY_FOLDER_CREATETORRENT" text=".torrentファイルを作成"/>
 			<separator/>
 			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 			<separator/>

@@ -1181,14 +1181,16 @@
 		</menu>
 		<!-- LIBRARY FRAME -->
 		<menu name="CLibraryTree.Physical.Basic">
-			<item id="ID_LIBRARY_SHARED_FOLDER" text="_Jagatud"/>
+			<item id="ID_LIBRARY_EXPLORE" text="_Vaata Faile"/>
 			<item id="ID_LIBRARY_REMOVE" text="_Eemalda"/>
 			<separator/>
-			<item id="ID_SHELL_MENU" text="S_hell menu"/>
+			<item id="ID_LIBRARY_SHARED_FOLDER" text="_Jagatud"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDERS" text="Jaga _Faile..."/>
 			<separator/>
-			<item id="ID_LIBRARY_CREATETORRENT" text="Loo .torrent Fail"/>
+			<item id="ID_LIBRARY_FOLDER_CREATETORRENT" text="Loo .torrent Fail"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CLibraryTree.Physical">
 			<item id="ID_LIBRARY_EXPLORE" text="_Vaata Faile"/>
@@ -1200,7 +1202,7 @@
 			<item id="ID_LIBRARY_REBUILD" text="_Taasloo sisu"/>
 			<item id="ID_LIBRARY_FOLDERS" text="Jaga _Faile..."/>
 			<separator/>
-			<item id="ID_LIBRARY_CREATETORRENT" text="Loo .torrent Fail"/>
+			<item id="ID_LIBRARY_FOLDER_CREATETORRENT" text="Loo .torrent Fail"/>
 			<separator/>
 			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 			<separator/>

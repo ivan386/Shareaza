@@ -1181,14 +1181,16 @@
 		</menu>
 		<!-- LIBRARY FRAME -->
 		<menu name="CLibraryTree.Physical.Basic">
-			<item id="ID_LIBRARY_SHARED_FOLDER" text="_Freigegeben"/>
+			<item id="ID_LIBRARY_EXPLORE" text="Im Explorer _öffnen"/>
 			<item id="ID_LIBRARY_REMOVE" text="_Entfernen"/>
 			<separator/>
-			<item id="ID_SHELL_MENU" text="_Kontextmenü"/>
+			<item id="ID_LIBRARY_SHARED_FOLDER" text="_Freigegeben"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDERS" text="Dateien _freigeben..."/>
 			<separator/>
-			<item id="ID_LIBRARY_CREATETORRENT" text="._torrent-Datei erstellen"/>
+			<item id="ID_LIBRARY_FOLDER_CREATETORRENT" text="._torrent-Datei erstellen"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="_Kontextmenü"/>
 		</menu>
 		<menu name="CLibraryTree.Physical">
 			<item id="ID_LIBRARY_EXPLORE" text="Im Explorer _öffnen"/>
@@ -1200,7 +1202,7 @@
 			<item id="ID_LIBRARY_REBUILD" text="Ne_u einlesen"/>
 			<item id="ID_LIBRARY_FOLDERS" text="Dateien _freigeben..."/>
 			<separator/>
-			<item id="ID_LIBRARY_CREATETORRENT" text="._torrent-Datei erstellen"/>
+			<item id="ID_LIBRARY_FOLDER_CREATETORRENT" text="._torrent-Datei erstellen"/>
 			<separator/>
 			<item id="ID_SHELL_MENU" text="_Kontextmenü"/>
 			<separator/>

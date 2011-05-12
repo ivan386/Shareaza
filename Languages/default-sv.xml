@@ -1181,14 +1181,16 @@
 		</menu>
 		<!-- LIBRARY FRAME -->
 		<menu name="CLibraryTree.Physical.Basic">
-			<item id="ID_LIBRARY_SHARED_FOLDER" text="_Utdelad"/>
+			<item id="ID_LIBRARY_EXPLORE" text="_Utforska"/>
 			<item id="ID_LIBRARY_REMOVE" text="_Radera"/>
 			<separator/>
-			<item id="ID_SHELL_MENU" text="S_kalmeny"/>
+			<item id="ID_LIBRARY_SHARED_FOLDER" text="_Utdelad"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDERS" text="Dela ut _filer..."/>
 			<separator/>
-			<item id="ID_LIBRARY_CREATETORRENT" text="Skapa .torrent-fil"/>
+			<item id="ID_LIBRARY_FOLDER_CREATETORRENT" text="Skapa .torrent-fil"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_kalmeny"/>
 		</menu>
 		<menu name="CLibraryTree.Physical">
 			<item id="ID_LIBRARY_EXPLORE" text="_Utforska"/>
@@ -1200,7 +1202,7 @@
 			<item id="ID_LIBRARY_REBUILD" text="_Bygg upp igen"/>
 			<item id="ID_LIBRARY_FOLDERS" text="Dela ut _filer..."/>
 			<separator/>
-			<item id="ID_LIBRARY_CREATETORRENT" text="Skapa .torrent-fil"/>
+			<item id="ID_LIBRARY_FOLDER_CREATETORRENT" text="Skapa .torrent-fil"/>
 			<separator/>
 			<item id="ID_SHELL_MENU" text="S_kalmeny"/>
 			<separator/>

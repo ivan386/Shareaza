@@ -1181,14 +1181,16 @@
 		</menu>
 		<!-- LIBRARY FRAME -->
 		<menu name="CLibraryTree.Physical.Basic">
-			<item id="ID_LIBRARY_SHARED_FOLDER" text="_Deljeno"/>
+			<item id="ID_LIBRARY_EXPLORE" text="_Razišči"/>
 			<item id="ID_LIBRARY_REMOVE" text="_Odstrani"/>
 			<separator/>
-			<item id="ID_SHELL_MENU" text="S_hell menu"/>
+			<item id="ID_LIBRARY_SHARED_FOLDER" text="_Deljeno"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDERS" text="_Deli datoteke z drugimi"/>
 			<separator/>
-			<item id="ID_LIBRARY_CREATETORRENT" text="Ustvari datoteko tipa .torrent"/>
+			<item id="ID_LIBRARY_FOLDER_CREATETORRENT" text="Ustvari datoteko tipa .torrent"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CLibraryTree.Physical">
 			<item id="ID_LIBRARY_EXPLORE" text="_Razišči"/>
@@ -1200,7 +1202,7 @@
 			<item id="ID_LIBRARY_REBUILD" text="_Zgradi ponovno (rebuild)"/>
 			<item id="ID_LIBRARY_FOLDERS" text="_Deli datoteke z drugimi"/>
 			<separator/>
-			<item id="ID_LIBRARY_CREATETORRENT" text="Ustvari datoteko tipa .torrent"/>
+			<item id="ID_LIBRARY_FOLDER_CREATETORRENT" text="Ustvari datoteko tipa .torrent"/>
 			<separator/>
 			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 			<separator/>

@@ -1181,14 +1181,16 @@
 		</menu>
 		<!-- LIBRARY FRAME -->
 		<menu name="CLibraryTree.Physical.Basic">
-			<item id="ID_LIBRARY_SHARED_FOLDER" text="_Delen"/>
+			<item id="ID_LIBRARY_EXPLORE" text="_Verkennen"/>
 			<item id="ID_LIBRARY_REMOVE" text="Ver_wijderen"/>
 			<separator/>
-			<item id="ID_SHELL_MENU" text="Conte_xtmenu"/>
+			<item id="ID_LIBRARY_SHARED_FOLDER" text="_Delen"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDERS" text="_Bestanden delen..."/>
 			<separator/>
-			<item id="ID_LIBRARY_CREATETORRENT" text="._Torrent maken"/>
+			<item id="ID_LIBRARY_FOLDER_CREATETORRENT" text="._Torrent maken"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="Conte_xtmenu"/>
 		</menu>
 		<menu name="CLibraryTree.Physical">
 			<item id="ID_LIBRARY_EXPLORE" text="_Verkennen"/>
@@ -1200,7 +1202,7 @@
 			<item id="ID_LIBRARY_REBUILD" text="_Herbouwen"/>
 			<item id="ID_LIBRARY_FOLDERS" text="_Bestanden delen..."/>
 			<separator/>
-			<item id="ID_LIBRARY_CREATETORRENT" text="._Torrent maken"/>
+			<item id="ID_LIBRARY_FOLDER_CREATETORRENT" text="._Torrent maken"/>
 			<separator/>
 			<item id="ID_SHELL_MENU" text="Conte_xtmenu"/>
 			<separator/>

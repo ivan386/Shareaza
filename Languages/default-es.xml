@@ -1181,14 +1181,16 @@
 		</menu>
 		<!-- LIBRARY FRAME -->
 		<menu name="CLibraryTree.Physical.Basic">
-			<item id="ID_LIBRARY_SHARED_FOLDER" text="_Compartido"/>
+			<item id="ID_LIBRARY_EXPLORE" text="_Explorar"/>
 			<item id="ID_LIBRARY_REMOVE" text="_Eliminar"/>
 			<separator/>
-			<item id="ID_SHELL_MENU" text="S_hell menu"/>
+			<item id="ID_LIBRARY_SHARED_FOLDER" text="_Compartido"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDERS" text="_Compartir archivos..."/>
 			<separator/>
-			<item id="ID_LIBRARY_CREATETORRENT" text="Crear archivo .torrent"/>
+			<item id="ID_LIBRARY_FOLDER_CREATETORRENT" text="Crear archivo .torrent"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CLibraryTree.Physical">
 			<item id="ID_LIBRARY_EXPLORE" text="_Explorar"/>
@@ -1200,7 +1202,7 @@
 			<item id="ID_LIBRARY_REBUILD" text="Re_hacer"/>
 			<item id="ID_LIBRARY_FOLDERS" text="_Compartir archivos..."/>
 			<separator/>
-			<item id="ID_LIBRARY_CREATETORRENT" text="Crear archivo .torrent"/>
+			<item id="ID_LIBRARY_FOLDER_CREATETORRENT" text="Crear archivo .torrent"/>
 			<separator/>
 			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 			<separator/>

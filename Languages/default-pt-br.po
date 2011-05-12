@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza 2.5.3.0\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2011-05-03 13:54+0000\n"
+"POT-Creation-Date: 2011-05-12 14:23+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Felipe\n"
@@ -1474,14 +1474,10 @@ msgstr "Mostrar _BitTorrent"
 msgid "Show _History"
 msgstr "Mostrar _Histórico"
 
-#: clibrarytree.physical.basic;item;id_library_shared_folder
-#: clibrarytree.physical;item;id_library_shared_folder
-#: clibraryfileview.physical.basic;item;id_library_shared_file
-#: clibraryfileview.physical;item;id_library_shared_file
-#: clibraryfileview.virtual.basic;item;id_library_shared_file
-#: clibraryfileview.virtual;item;id_library_shared_file
-msgid "_Shared"
-msgstr "_Compartilhado"
+#: clibrarytree.physical.basic;item;id_library_explore
+#: clibrarytree.physical;item;id_library_explore
+msgid "_Explore"
+msgstr "_Explorar"
 
 #: clibrarytree.physical.basic;item;id_library_remove
 #: clibrarytree.physical;item;id_library_remove
@@ -1496,6 +1492,22 @@ msgstr "_Compartilhado"
 msgid "_Remove"
 msgstr "_Remover"
 
+#: clibrarytree.physical.basic;item;id_library_shared_folder
+#: clibrarytree.physical;item;id_library_shared_folder
+#: clibraryfileview.physical.basic;item;id_library_shared_file
+#: clibraryfileview.physical;item;id_library_shared_file
+#: clibraryfileview.virtual.basic;item;id_library_shared_file
+#: clibraryfileview.virtual;item;id_library_shared_file
+msgid "_Shared"
+msgstr "_Compartilhado"
+
+#: clibrarytree.physical.basic;item;id_library_folder_createtorrent
+#: clibrarytree.physical;item;id_library_folder_createtorrent
+#: clibraryfileview.physical;44;item;id_library_createtorrent
+#: clibraryfileview.virtual;50;item;id_library_createtorrent
+msgid "Create ._torrent File"
+msgstr "Criar _Arquivo .torrent"
+
 #: clibrarytree.physical.basic;item;id_shell_menu
 #: clibrarytree.physical;item;id_shell_menu
 #: clibraryfileview.physical;item;id_shell_menu
@@ -1503,17 +1515,6 @@ msgstr "_Remover"
 #: clibraryfileview.virtual;item;id_shell_menu
 msgid "S_hell menu"
 msgstr "M_enu do shell"
-
-#: clibrarytree.physical.basic;item;id_library_createtorrent
-#: clibrarytree.physical;item;id_library_createtorrent
-#: clibraryfileview.physical;44;item;id_library_createtorrent
-#: clibraryfileview.virtual;50;item;id_library_createtorrent
-msgid "Create ._torrent File"
-msgstr "Criar _Arquivo .torrent"
-
-#: clibrarytree.physical;item;id_library_explore
-msgid "_Explore"
-msgstr "_Explorar"
 
 #: clibrarytree.physical;item;id_library_scan
 msgid "S_can"

@@ -1181,14 +1181,16 @@
 		</menu>
 		<!-- LIBRARY FRAME -->
 		<menu name="CLibraryTree.Physical.Basic">
-			<item id="ID_LIBRARY_SHARED_FOLDER" text="_Jaettu"/>
+			<item id="ID_LIBRARY_EXPLORE" text="_Selaa"/>
 			<item id="ID_LIBRARY_REMOVE" text="_Poista"/>
 			<separator/>
-			<item id="ID_SHELL_MENU" text="S_hell menu"/>
+			<item id="ID_LIBRARY_SHARED_FOLDER" text="_Jaettu"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDERS" text="Jaa _Tiedostoja"/>
 			<separator/>
-			<item id="ID_LIBRARY_CREATETORRENT" text="Luo .torrent Tiedosto"/>
+			<item id="ID_LIBRARY_FOLDER_CREATETORRENT" text="Luo .torrent Tiedosto"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CLibraryTree.Physical">
 			<item id="ID_LIBRARY_EXPLORE" text="_Selaa"/>
@@ -1200,7 +1202,7 @@
 			<item id="ID_LIBRARY_REBUILD" text="Ra_kenna Uudelleen"/>
 			<item id="ID_LIBRARY_FOLDERS" text="Jaa _Tiedostoja"/>
 			<separator/>
-			<item id="ID_LIBRARY_CREATETORRENT" text="Luo .torrent Tiedosto"/>
+			<item id="ID_LIBRARY_FOLDER_CREATETORRENT" text="Luo .torrent Tiedosto"/>
 			<separator/>
 			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 			<separator/>
