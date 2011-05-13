@@ -1,7 +1,7 @@
 //
 // WndPacket.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,14 +22,14 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
-#include "Network.h"
-#include "Neighbours.h"
-#include "Neighbour.h"
-#include "WndPacket.h"
 #include "CoolInterface.h"
 #include "CoolMenu.h"
 #include "LiveList.h"
+#include "Neighbour.h"
+#include "Neighbours.h"
+#include "Network.h"
 #include "Skin.h"
+#include "WndPacket.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -37,10 +37,21 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
+#define ID_PAUSE		1
+#define ID_TCP			2
+#define ID_UDP			3
+#define ID_NONE			999
+#define ID_BASE_IN		1000
+#define ID_BASE_OUT		2000
+#define ID_BASE_G1		3000
+#define ID_BASE_G2		3100
+#define ID_BASE_ED2K	3200
+#define ID_BASE_BT		3300
+#define ID_BASE_DC		3400
+
 IMPLEMENT_SERIAL(CPacketWnd, CPanelWnd, 0)
 
 BEGIN_MESSAGE_MAP(CPacketWnd, CPanelWnd)
-	//{{AFX_MSG_MAP(CPacketWnd)
 	ON_WM_CREATE()
 	ON_WM_SIZE()
 	ON_NOTIFY(NM_CUSTOMDRAW, IDC_PACKETS, OnCustomDrawList)
@@ -50,8 +61,7 @@ BEGIN_MESSAGE_MAP(CPacketWnd, CPanelWnd)
 	ON_UPDATE_COMMAND_UI(ID_SYSTEM_CLEAR, OnUpdateSystemClear)
 	ON_WM_DESTROY()
 	ON_WM_TIMER()
-	//}}AFX_MSG_MAP
-	ON_UPDATE_COMMAND_UI_RANGE(1, 3200, OnUpdateBlocker)
+	ON_UPDATE_COMMAND_UI_RANGE(ID_PAUSE, ID_BASE_DC, OnUpdateBlocker)
 END_MESSAGE_MAP()
 
 G2_PACKET CPacketWnd::m_nG2[nTypeG2Size] = {
@@ -83,9 +93,20 @@ G2_PACKET CPacketWnd::m_nG2[nTypeG2Size] = {
 // CPacketWnd construction
 
 CPacketWnd::CPacketWnd(CChildWnd* pOwner)
+	: m_pOwner			( pOwner )
+	, m_nInputFilter	( 0 )
+	, m_nOutputFilter	( 0 )
+	, m_bPaused			( TRUE )
+	, m_bTCP			( TRUE )
+	, m_bUDP			( TRUE )
+	, m_bTypeED			( TRUE )
+	, m_bTypeBT			( TRUE )
+	, m_bTypeDC			( TRUE )
+	, m_pCoolMenu		( NULL )
 {
-	m_pOwner	= pOwner;
-	m_bPaused	= TRUE;
+	for ( int nType = 0 ; nType < nTypeG1Size ; nType++ ) m_bTypeG1[ nType ] = TRUE;
+	for ( int nType = 0 ; nType < nTypeG2Size ; nType++ ) m_bTypeG2[ nType ] = TRUE;
+
 	Create( IDR_PACKETFRAME );
 }
 
@@ -120,15 +141,7 @@ int CPacketWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	LoadState();
 
-	m_pCoolMenu		= NULL;
-	m_nInputFilter	= 0;
-	m_nOutputFilter	= 0;
-	m_bPaused		= FALSE;
-
-	for ( int nType = 0 ; nType < nTypeG1Size ; nType++ ) m_bTypeG1[ nType ] = TRUE;
-	for ( int nType = 0 ; nType < nTypeG2Size ; nType++ ) m_bTypeG2[ nType ] = TRUE;
-	m_bTypeED = TRUE;
-
+	m_bPaused = FALSE;
 	SetTimer( 2, 500, NULL );
 
 	theApp.m_pPacketWnd = this;
@@ -190,6 +203,17 @@ void CPacketWnd::SmartDump(const CPacket* pPacket, const SOCKADDR_IN* pAddress, 
 	if ( m_bPaused || m_hWnd == NULL )
 		return;
 
+	if ( bUDP )
+	{
+		if ( ! m_bUDP )
+			return;
+	}
+	else
+	{
+		if ( ! m_bTCP )
+			return;
+	}
+
 	if ( nNeighbourUnique )
 	{
 		if ( bOutgoing )
@@ -239,6 +263,16 @@ void CPacketWnd::SmartDump(const CPacket* pPacket, const SOCKADDR_IN* pAddress, 
 	case PROTOCOL_ED2K:
 		// TODO: Filter ED2K packets
 		if ( ! m_bTypeED )
+			return;
+
+	case PROTOCOL_BT:
+		// TODO: Filter BitTorrent packets
+		if ( ! m_bTypeBT )
+			return;
+
+	case PROTOCOL_DC:
+		// TODO: Filter DC++ packets
+		if ( ! m_bTypeDC )
 			return;
 
 	default:
@@ -347,11 +381,11 @@ void CPacketWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 {
 	CSingleLock pLock( &Network.m_pSection, TRUE );
 
-	CMenu pMenu, pHosts[2], pTypes1, pTypes2, pTypes3;
+	CMenu pMenu, pProtocols, pHosts[2], pTypesG1, pTypesG2, pTypesED, pTypesBT, pTypesDC;
 
 	for ( int nGroup = 0 ; nGroup < 2 ; nGroup++ )
 	{
-		UINT nID = nGroup ? 2000 : 1000;
+		UINT nID = nGroup ? ID_BASE_OUT : ID_BASE_IN;
 
 		pHosts[nGroup].CreatePopupMenu();
 
@@ -359,53 +393,57 @@ void CPacketWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 		AddNeighbour( pHosts, nGroup, nID++, 0, _T("Any Neighbour") );
 		pHosts[nGroup].AppendMenu( MF_SEPARATOR, ID_SEPARATOR );
 
+		BOOL bEmpty = TRUE;
 		for ( POSITION pos = Neighbours.GetIterator() ; pos ; nID++ )
 		{
 			CNeighbour* pNeighbour = Neighbours.GetNext( pos );
 			if ( pNeighbour->m_nState < nrsConnected ) continue;
 			AddNeighbour( pHosts, nGroup, nID, (DWORD_PTR)pNeighbour, pNeighbour->m_sAddress );
+			bEmpty = FALSE;
 		}
 
-		if ( ( nID % 1000 ) == 2 )
-			pHosts[nGroup].AppendMenu( MF_STRING|MF_GRAYED, 999, _T("No Neighbours") );
+		if ( bEmpty )
+			pHosts[nGroup].AppendMenu( MF_STRING|MF_GRAYED, ID_NONE, _T("No Neighbours") );
 	}
-	
-	pTypes1.CreatePopupMenu();
 
+	pProtocols.CreatePopupMenu();
+	pProtocols.AppendMenu( MF_STRING | ( m_bTCP ? MF_CHECKED : 0 ), ID_TCP, _T("TCP") );
+	pProtocols.AppendMenu( MF_STRING | ( m_bUDP ? MF_CHECKED : 0 ), ID_UDP, _T("UDP") );
+
+	pTypesG1.CreatePopupMenu();
 	for ( int nType = 0 ; nType < nTypeG1Size ; nType++ )
 	{
-		if ( m_bTypeG1[ nType ] )
-			pTypes1.AppendMenu( MF_STRING|MF_CHECKED, 3000 + nType, CG1Packet::m_pszPackets[ nType ] );
-		else
-			pTypes1.AppendMenu( MF_STRING, 3000 + nType, CG1Packet::m_pszPackets[ nType ] );
+		pTypesG1.AppendMenu( MF_STRING | ( m_bTypeG1[ nType ] ? MF_CHECKED : 0 ), ID_BASE_G1 + nType, CG1Packet::m_pszPackets[ nType ] );
 	}
 
-	pTypes2.CreatePopupMenu();
-
+	pTypesG2.CreatePopupMenu();
 	for ( int nType = 0 ; nType < nTypeG2Size ; nType++ )
 	{
 		CStringA tmp;
 		tmp.Append( (LPCSTR)&m_nG2[ nType ], G2_TYPE_LEN( m_nG2[ nType ] ) );
-		if ( m_bTypeG2[ nType ] )
-			pTypes2.AppendMenu( MF_STRING|MF_CHECKED, 3100 + nType, CString( tmp ) );
-		else
-			pTypes2.AppendMenu( MF_STRING, 3100 + nType, CString( tmp ) );
+		pTypesG2.AppendMenu( MF_STRING | (m_bTypeG2[ nType ] ? MF_CHECKED : 0 ), ID_BASE_G2 + nType, CString( tmp ) );
 	}
 
-	pTypes3.CreatePopupMenu();
-	if ( m_bTypeED )
-			pTypes3.AppendMenu( MF_STRING|MF_CHECKED, 3200, CString( "All" ) );
-		else
-			pTypes3.AppendMenu( MF_STRING, 3200, CString( "All" ) );
+	pTypesED.CreatePopupMenu();
+	pTypesED.AppendMenu( MF_STRING | ( m_bTypeED ? MF_CHECKED : 0 ), ID_BASE_ED2K, _T("All") );
+
+	pTypesBT.CreatePopupMenu();
+	pTypesBT.AppendMenu( MF_STRING | ( m_bTypeBT ? MF_CHECKED : 0 ), ID_BASE_BT, _T("All") );
+
+	pTypesDC.CreatePopupMenu();
+	pTypesDC.AppendMenu( MF_STRING | ( m_bTypeDC ? MF_CHECKED : 0 ), ID_BASE_DC, _T("All") );
 
 	pMenu.CreatePopupMenu();
 	pMenu.AppendMenu( MF_STRING|MF_POPUP, (UINT_PTR)pHosts[0].GetSafeHmenu(), _T("Incoming") );
 	pMenu.AppendMenu( MF_STRING|MF_POPUP, (UINT_PTR)pHosts[1].GetSafeHmenu(), _T("Outgoing") );
-	pMenu.AppendMenu( MF_STRING|MF_POPUP, (UINT_PTR)pTypes1.GetSafeHmenu(), _T("G1 Types") );
-	pMenu.AppendMenu( MF_STRING|MF_POPUP, (UINT_PTR)pTypes2.GetSafeHmenu(), _T("G2 Types") );
-	pMenu.AppendMenu( MF_STRING|MF_POPUP, (UINT_PTR)pTypes3.GetSafeHmenu(), _T("ED2K Types") );
+	pMenu.AppendMenu( MF_STRING|MF_POPUP, (UINT_PTR)pProtocols.GetSafeHmenu(), _T("Protocols") );
+	pMenu.AppendMenu( MF_STRING|MF_POPUP, (UINT_PTR)pTypesG1.GetSafeHmenu(), protocolAbbr[ PROTOCOL_G1 ] );
+	pMenu.AppendMenu( MF_STRING|MF_POPUP, (UINT_PTR)pTypesG2.GetSafeHmenu(), protocolAbbr[ PROTOCOL_G2 ] );
+	pMenu.AppendMenu( MF_STRING|MF_POPUP, (UINT_PTR)pTypesED.GetSafeHmenu(), protocolAbbr[ PROTOCOL_ED2K ] );
+	pMenu.AppendMenu( MF_STRING|MF_POPUP, (UINT_PTR)pTypesBT.GetSafeHmenu(), protocolAbbr[ PROTOCOL_BT ] );
+	pMenu.AppendMenu( MF_STRING|MF_POPUP, (UINT_PTR)pTypesDC.GetSafeHmenu(), protocolAbbr[ PROTOCOL_DC ] );
 	pMenu.AppendMenu( MF_SEPARATOR, ID_SEPARATOR );
-	pMenu.AppendMenu( MF_STRING | ( m_bPaused ? MF_CHECKED : 0 ), 1, _T("&Pause Display") );
+	pMenu.AppendMenu( MF_STRING | ( m_bPaused ? MF_CHECKED : 0 ), ID_PAUSE, _T("&Pause Display") );
 	pMenu.AppendMenu( MF_STRING, ID_SYSTEM_CLEAR, _T("&Clear Buffer") );
 
 	m_pCoolMenu = new CCoolMenu();
@@ -422,9 +460,19 @@ void CPacketWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 
 	DWORD_PTR* pModify = NULL;
 
-	if ( nCmd == 1 )
+	if ( nCmd == ID_PAUSE )
 	{
 		m_bPaused = ! m_bPaused;
+		return;
+	}
+	else if ( nCmd == ID_TCP )
+	{
+		m_bTCP = ! m_bTCP;
+		return;
+	}
+	else if ( nCmd == ID_UDP )
+	{
+		m_bUDP = ! m_bUDP;
 		return;
 	}
 	else if ( nCmd == ID_SYSTEM_CLEAR )
@@ -432,9 +480,9 @@ void CPacketWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 		m_wndList.DeleteAllItems();
 		return;
 	}
-	else if ( nCmd >= 3000 && nCmd < 3000 + nTypeG1Size )
+	else if ( nCmd >= ID_BASE_G1 && nCmd < ID_BASE_G1 + nTypeG1Size )
 	{
-		nCmd -= 3000;
+		nCmd -= ID_BASE_G1;
 
 		if ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 )
 		{
@@ -450,9 +498,9 @@ void CPacketWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 
 		return;
 	}
-	else if ( nCmd >= 3100 && nCmd < 3100 + nTypeG2Size )
+	else if ( nCmd >= ID_BASE_G2 && nCmd < ID_BASE_G2 + nTypeG2Size )
 	{
-		nCmd -= 3100;
+		nCmd -= ID_BASE_G2;
 
 		if ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 )
 		{
@@ -468,9 +516,9 @@ void CPacketWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 
 		return;
 	}
-	else if ( nCmd == 3200 )
+	else if ( nCmd == ID_BASE_ED2K )
 	{
-		nCmd -= 3200;
+		nCmd -= ID_BASE_ED2K;
 
 		if ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 )
 		{
@@ -483,15 +531,45 @@ void CPacketWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 
 		return;
 	}
-	else if ( nCmd >= 1000 && nCmd < 2000 )
+	else if ( nCmd == ID_BASE_BT )
+	{
+		nCmd -= ID_BASE_BT;
+
+		if ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 )
+		{
+			m_bTypeBT = ( nCmd == nCmd ) ? TRUE : FALSE;
+		}
+		else
+		{
+			m_bTypeBT = ! m_bTypeBT;
+		}
+
+		return;
+	}
+	else if ( nCmd == ID_BASE_DC )
+	{
+		nCmd -= ID_BASE_DC;
+
+		if ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 )
+		{
+			m_bTypeDC = ( nCmd == nCmd ) ? TRUE : FALSE;
+		}
+		else
+		{
+			m_bTypeDC = ! m_bTypeDC;
+		}
+
+		return;
+	}
+	else if ( nCmd >= ID_BASE_IN && nCmd < ID_BASE_OUT )
 	{
 		pModify = &m_nInputFilter;
-		nCmd -= 1000;
+		nCmd -= ID_BASE_IN;
 	}
-	else if ( nCmd >= 2000 && nCmd < 3000 )
+	else if ( nCmd >= ID_BASE_OUT && nCmd < ID_BASE_G1 )
 	{
 		pModify = &m_nOutputFilter;
-		nCmd -= 2000;
+		nCmd -= ID_BASE_OUT;
 	}
 	else
 	{
@@ -546,13 +624,13 @@ void CPacketWnd::OnDrawItem(int /*nIDCtl*/, LPDRAWITEMSTRUCT lpDrawItemStruct)
 
 void CPacketWnd::OnUpdateBlocker(CCmdUI* pCmdUI)
 {
-	if ( m_pCoolMenu ) pCmdUI->Enable( pCmdUI->m_nID != 999 );
-	else pCmdUI->ContinueRouting();
+	if ( m_pCoolMenu )
+		pCmdUI->Enable( pCmdUI->m_nID != ID_NONE );
+	else
+		pCmdUI->ContinueRouting();
 }
 
 void CPacketWnd::OnUpdateSystemClear(CCmdUI* pCmdUI) 
 {
 	pCmdUI->Enable( TRUE );	
 }
-
-

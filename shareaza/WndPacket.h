@@ -1,7 +1,7 @@
 //
 // WndPacket.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -53,9 +53,13 @@ public:
 	BOOL				m_bPaused;
 
 protected:
+	BOOL				m_bTCP;
+	BOOL				m_bUDP;
 	BOOL				m_bTypeG1[nTypeG1Size];
 	BOOL				m_bTypeG2[nTypeG2Size];
 	BOOL				m_bTypeED;
+	BOOL				m_bTypeBT;
+	BOOL				m_bTypeDC;
 	CListCtrl			m_wndList;
 	CImageList			m_gdiImageList;
 	CLiveListSizer		m_pSizer;
