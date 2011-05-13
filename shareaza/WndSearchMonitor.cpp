@@ -22,14 +22,15 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
-#include "QuerySearch.h"
-#include "WndSearchMonitor.h"
-#include "WndSearch.h"
+#include "CoolInterface.h"
 #include "LiveList.h"
-#include "XML.h"
-#include "Skin.h"
+#include "QuerySearch.h"
 #include "Security.h"
+#include "Skin.h"
 #include "WndBrowseHost.h"
+#include "WndSearch.h"
+#include "WndSearchMonitor.h"
+#include "XML.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -37,10 +38,15 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
+const static UINT nImageID[] =
+{
+	IDR_SEARCHMONITORFRAME,
+	NULL
+};
+
 IMPLEMENT_SERIAL(CSearchMonitorWnd, CPanelWnd, 0)
 
 BEGIN_MESSAGE_MAP(CSearchMonitorWnd, CPanelWnd)
-	//{{AFX_MSG_MAP(CSearchMonitorWnd)
 	ON_WM_CREATE()
 	ON_WM_SIZE()
 	ON_WM_DESTROY()
@@ -56,7 +62,7 @@ BEGIN_MESSAGE_MAP(CSearchMonitorWnd, CPanelWnd)
 	ON_COMMAND(ID_BROWSE_LAUNCH, OnBrowseLaunch)
 	ON_NOTIFY(LVN_COLUMNCLICK, IDC_SEARCHES, OnDblClkList)
 	ON_WM_TIMER()
-	//}}AFX_MSG_MAP
+	ON_NOTIFY(NM_CUSTOMDRAW, IDC_SEARCHES, OnCustomDrawList)
 END_MESSAGE_MAP()
 
 
@@ -64,12 +70,9 @@ END_MESSAGE_MAP()
 // CSearchMonitorWnd construction
 
 CSearchMonitorWnd::CSearchMonitorWnd()
+	: m_bPaused	( FALSE )
 {
 	Create( IDR_SEARCHMONITORFRAME );
-}
-
-CSearchMonitorWnd::~CSearchMonitorWnd()
-{
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -79,29 +82,21 @@ int CSearchMonitorWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CPanelWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
 	
-	m_wndList.Create( WS_VISIBLE|LVS_ICON|LVS_AUTOARRANGE|LVS_REPORT|LVS_SHOWSELALWAYS,
+	m_wndList.Create( WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_CHILD | WS_VISIBLE |
+		LVS_AUTOARRANGE | LVS_REPORT | LVS_SHOWSELALWAYS,
 		rectDefault, this, IDC_SEARCHES );
-
 	m_pSizer.Attach( &m_wndList );
 	
-	m_wndList.SendMessage( LVM_SETEXTENDEDLISTVIEWSTYLE,
-		LVS_EX_DOUBLEBUFFER|LVS_EX_FULLROWSELECT|LVS_EX_HEADERDRAGDROP|LVS_EX_LABELTIP,
-		LVS_EX_DOUBLEBUFFER|LVS_EX_FULLROWSELECT|LVS_EX_HEADERDRAGDROP|LVS_EX_LABELTIP );
-	
-	VERIFY( m_gdiImageList.Create( 16, 16, ILC_MASK|ILC_COLOR32, 1, 1 ) );
-	AddIcon( IDR_SEARCHMONITORFRAME , m_gdiImageList );
-	m_wndList.SetImageList( &m_gdiImageList, LVSIL_SMALL );
+	m_wndList.SetExtendedStyle(
+		LVS_EX_DOUBLEBUFFER|LVS_EX_FULLROWSELECT|LVS_EX_HEADERDRAGDROP|LVS_EX_LABELTIP|LVS_EX_SUBITEMIMAGES );
 
 	m_wndList.InsertColumn( 0, _T("Search"), LVCFMT_LEFT, 200, -1 );
 	m_wndList.InsertColumn( 1, _T("URN"), LVCFMT_LEFT, 400, 0 );
 	m_wndList.InsertColumn( 2, _T("Schema"), LVCFMT_LEFT, 100, 1 );
 	m_wndList.InsertColumn( 3, _T("Endpoint"), LVCFMT_LEFT, 100, 2 );
-
-	m_wndList.SetFont( &theApp.m_gdiFont );
 	
 	LoadState( _T("CSearchMonitorWnd"), TRUE );
 	
-	m_bPaused = FALSE;
 	SetTimer( 2, 250, NULL );
 
 	return 0;
@@ -131,7 +126,16 @@ void CSearchMonitorWnd::OnDestroy()
 void CSearchMonitorWnd::OnSkinChange()
 {
 	CPanelWnd::OnSkinChange();
+
+	// Columns
 	Settings.LoadList( _T("CSearchMonitorWnd"), &m_wndList );
+
+	// Fonts
+	m_wndList.SetFont( &theApp.m_gdiFont );
+
+	// Icons
+	CoolInterface.LoadIconsTo( m_gdiImageList, nImageID );
+	m_wndList.SetImageList( &m_gdiImageList, LVSIL_SMALL );
 }
 
 void CSearchMonitorWnd::OnSize(UINT nType, int cx, int cy) 
@@ -345,4 +349,11 @@ void CSearchMonitorWnd::OnBrowseLaunch()
 		pHost.sin_port = htons( (WORD)_tstoi( strNode.Mid( nPos + 1 ) ) );
 		new CBrowseHostWnd( PROTOCOL_ANY, &pHost );
 	}
+}
+
+void CSearchMonitorWnd::OnCustomDrawList(NMHDR* /*pNMHDR*/, LRESULT* pResult)
+{
+	//NMLVCUSTOMDRAW* pDraw = (NMLVCUSTOMDRAW*)pNMHDR;
+
+	*pResult = CDRF_DODEFAULT;
 }

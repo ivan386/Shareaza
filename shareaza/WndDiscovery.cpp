@@ -1,7 +1,7 @@
 //
 // WndDiscovery.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,12 +22,13 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
-#include "Network.h"
+#include "CoolInterface.h"
 #include "DiscoveryServices.h"
-#include "LiveList.h"
-#include "WndDiscovery.h"
 #include "DlgDiscoveryService.h"
+#include "LiveList.h"
+#include "Network.h"
 #include "Skin.h"
+#include "WndDiscovery.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -35,10 +36,20 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
+const static UINT nImageID[] =
+{
+	IDR_HOSTCACHEFRAME,
+	IDI_DISCOVERY_GRAY,
+	IDR_DISCOVERYFRAME,
+	IDI_WEB_URL,
+	IDI_DISCOVERY_BLUE,
+	IDI_FIREWALLED,
+	NULL
+};
+
 IMPLEMENT_SERIAL(CDiscoveryWnd, CPanelWnd, 0)
 
 BEGIN_MESSAGE_MAP(CDiscoveryWnd, CPanelWnd)
-	//{{AFX_MSG_MAP(CDiscoveryWnd)
 	ON_WM_CREATE()
 	ON_WM_DESTROY()
 	ON_WM_SIZE()
@@ -65,21 +76,19 @@ BEGIN_MESSAGE_MAP(CDiscoveryWnd, CPanelWnd)
 	ON_COMMAND(ID_DISCOVERY_ADVERTISE, OnDiscoveryAdvertise)
 	ON_UPDATE_COMMAND_UI(ID_DISCOVERY_BROWSE, OnUpdateDiscoveryBrowse)
 	ON_COMMAND(ID_DISCOVERY_BROWSE, OnDiscoveryBrowse)
-
-	//}}AFX_MSG_MAP
+	ON_NOTIFY(NM_CUSTOMDRAW, IDC_SERVICES, OnCustomDrawList)
 END_MESSAGE_MAP()
-
 
 /////////////////////////////////////////////////////////////////////////////
 // CDiscoveryWnd construction
 
 CDiscoveryWnd::CDiscoveryWnd()
+	: m_bShowGnutella	( TRUE )
+	, m_bShowWebCache	( TRUE )
+	, m_bShowServerMet	( TRUE )
+	, m_bShowBlocked	( TRUE )
 {
 	Create( IDR_DISCOVERYFRAME );
-}
-
-CDiscoveryWnd::~CDiscoveryWnd()
-{
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -89,22 +98,13 @@ int CDiscoveryWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CPanelWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
 	
-	m_wndList.Create( WS_VISIBLE|LVS_ICON|LVS_AUTOARRANGE|LVS_REPORT|LVS_SHOWSELALWAYS,
+	m_wndList.Create( WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_CHILD | WS_VISIBLE |
+		LVS_AUTOARRANGE | LVS_REPORT | LVS_SHOWSELALWAYS,
 		rectDefault, this, IDC_SERVICES );
 	m_pSizer.Attach( &m_wndList );
 	
-	m_wndList.SendMessage( LVM_SETEXTENDEDLISTVIEWSTYLE,
-		LVS_EX_DOUBLEBUFFER|LVS_EX_FULLROWSELECT|LVS_EX_HEADERDRAGDROP|LVS_EX_LABELTIP,
-		LVS_EX_DOUBLEBUFFER|LVS_EX_FULLROWSELECT|LVS_EX_HEADERDRAGDROP|LVS_EX_LABELTIP );
-	
-	m_gdiImageList.Create( 16, 16, ILC_MASK|ILC_COLOR32, 4, 1 );
-	AddIcon( IDR_HOSTCACHEFRAME, m_gdiImageList );
-	AddIcon( IDI_DISCOVERY_GRAY, m_gdiImageList );
-	AddIcon( IDR_DISCOVERYFRAME, m_gdiImageList );
-	AddIcon( IDI_WEB_URL, m_gdiImageList );
-	AddIcon( IDI_DISCOVERY_BLUE, m_gdiImageList );
-	AddIcon( IDI_FIREWALLED, m_gdiImageList );
-	m_wndList.SetImageList( &m_gdiImageList, LVSIL_SMALL );
+	m_wndList.SetExtendedStyle(
+		LVS_EX_DOUBLEBUFFER|LVS_EX_FULLROWSELECT|LVS_EX_HEADERDRAGDROP|LVS_EX_LABELTIP|LVS_EX_SUBITEMIMAGES );
 
 	m_wndList.InsertColumn( 0, _T("Address"), LVCFMT_LEFT, 260, -1 );
 	m_wndList.InsertColumn( 1, _T("Type"), LVCFMT_CENTER, 80, 0 );
@@ -117,18 +117,10 @@ int CDiscoveryWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndList.InsertColumn( 8, _T("Updates"), LVCFMT_CENTER, 55, 7 );
 	m_wndList.InsertColumn( 9, _T("Failures"), LVCFMT_CENTER, 55, 8 );
 	m_wndList.InsertColumn( 10, _T("Pong"), LVCFMT_CENTER, 150, 9 );
-
-	m_wndList.SetFont( &theApp.m_gdiFont );
 	
 	LoadState( _T("CDiscoveryWnd"), TRUE );
 
-	m_bShowGnutella		= TRUE;
-	m_bShowWebCache		= TRUE;
-	m_bShowServerMet	= TRUE;
-	m_bShowBlocked		= TRUE;
-
-	CWaitCursor pCursor;
-	Update();
+	PostMessage( WM_TIMER, 1 );
 	
 	return 0;
 }
@@ -256,7 +248,16 @@ CDiscoveryService* CDiscoveryWnd::GetItem(int nItem)
 void CDiscoveryWnd::OnSkinChange()
 {
 	CPanelWnd::OnSkinChange();
+
+	// Columns
 	Settings.LoadList( _T("CDiscoveryWnd"), &m_wndList, 3 );
+
+	// Fonts
+	m_wndList.SetFont( &theApp.m_gdiFont );
+
+	// Icons
+	CoolInterface.LoadIconsTo( m_gdiImageList, nImageID );
+	m_wndList.SetImageList( &m_gdiImageList, LVSIL_SMALL );
 }
 
 void CDiscoveryWnd::OnSize(UINT nType, int cx, int cy) 
@@ -268,7 +269,7 @@ void CDiscoveryWnd::OnSize(UINT nType, int cx, int cy)
 
 void CDiscoveryWnd::OnTimer(UINT_PTR nIDEvent) 
 {
-	if ( ( nIDEvent == 1 ) && ( IsPartiallyVisible() ) ) Update();
+	if ( nIDEvent == 1 ) Update();
 }
 
 void CDiscoveryWnd::OnDblClkList(NMHDR* /*pNMHDR*/, LRESULT* pResult)
@@ -470,4 +471,11 @@ void CDiscoveryWnd::OnDiscoveryAdd()
 	CDiscoveryServiceDlg dlg;
 
 	if ( dlg.DoModal() == IDOK ) Update();
+}
+
+void CDiscoveryWnd::OnCustomDrawList(NMHDR* /*pNMHDR*/, LRESULT* pResult)
+{
+	//NMLVCUSTOMDRAW* pDraw = (NMLVCUSTOMDRAW*)pNMHDR;
+
+	*pResult = CDRF_DODEFAULT;
 }

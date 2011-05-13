@@ -1,7 +1,7 @@
 //
 // WndDiscovery.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_WNDDISCOVERY_H__F98780CE_5C8F_4933_A252_022FA84F706A__INCLUDED_)
-#define AFX_WNDDISCOVERY_H__F98780CE_5C8F_4933_A252_022FA84F706A__INCLUDED_
-
 #pragma once
 
 #include "WndPanel.h"
@@ -31,15 +28,12 @@ class CDiscoveryService;
 
 class CDiscoveryWnd : public CPanelWnd
 {
-// Construction
-public:
-	CDiscoveryWnd();
-	virtual ~CDiscoveryWnd();
-
 	DECLARE_SERIAL(CDiscoveryWnd)
 
-// Attributes
 public:
+	CDiscoveryWnd();
+
+protected:
 	CListCtrl		m_wndList;
 	CImageList		m_gdiImageList;
 	CLiveListSizer	m_pSizer;
@@ -48,20 +42,10 @@ public:
 	BOOL			m_bShowServerMet;
 	BOOL			m_bShowBlocked;
 
-// Operations
-public:
-	void				Update();
-	CDiscoveryService*	GetItem(int nItem);
-	void				OnSkinChange();
+	void			Update();
+	CDiscoveryService* GetItem(int nItem);
+	virtual void	OnSkinChange();
 
-// Overrides
-public:
-	//{{AFX_VIRTUAL(CDiscoveryWnd)
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
-	//{{AFX_MSG(CDiscoveryWnd)
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnDestroy();
 	afx_msg void OnSize(UINT nType, int cx, int cy);
@@ -88,15 +72,9 @@ protected:
 	afx_msg void OnDiscoveryAdvertise();
 	afx_msg void OnUpdateDiscoveryBrowse(CCmdUI* pCmdUI);
 	afx_msg void OnDiscoveryBrowse();
-
-	//}}AFX_MSG
+	afx_msg void OnCustomDrawList(NMHDR* pNMHDR, LRESULT* pResult);
 
 	DECLARE_MESSAGE_MAP()
-
 };
 
-//{{AFX_INSERT_LOCATION}}
-
 #define IDC_SERVICES	100
-
-#endif // !defined(AFX_WNDDISCOVERY_H__F98780CE_5C8F_4933_A252_022FA84F706A__INCLUDED_)
