@@ -1,6 +1,6 @@
 ; Input defines: ConfigurationName (Debug or Release), PlatformName (Win32, x64, etc.)
 
-#include "..\build.h"
+#include SourcePath + "..\..\build.h"
 
 #if VER < 0x05010700
   #error Inno Setup version 5.1.7 or higher is needed for this script
@@ -10,7 +10,7 @@
 #endif
 
 ; Project definitions
-#define shareaza      "..\vc9\" + PlatformName + "\" + ConfigurationName + "\Shareaza.exe"
+#define shareaza      SourcePath + "..\..\vc9\" + PlatformName + "\" + ConfigurationName + "\Shareaza.exe"
 #define internal_name GetStringFileInfo(shareaza, INTERNAL_NAME)
 #if ConfigurationName == "Debug"
   #define name internal_name + " Debug build"
