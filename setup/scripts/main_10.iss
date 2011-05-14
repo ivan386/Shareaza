@@ -123,7 +123,11 @@ Source: "GeoIP\GeoIP.dat"; DestDir: "{app}"; Flags: overwritereadonly replacesam
 
 ; Plugins
 Source: "vc10\{#PlatformName}\{#ConfigurationName}\7ZipBuilder.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
-Source: "vc10\{#PlatformName}\{#ConfigurationName}\7zxr.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+#if PlatformName == "Win32"
+Source: "vc10\{#PlatformName}\{#ConfigurationName}\7zxa.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+#elif PlatformName == "x64"
+Source: "vc10\{#PlatformName}\{#ConfigurationName}\7zxa64.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+#endif
 Source: "vc10\{#PlatformName}\{#ConfigurationName}\DocumentReader.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
 Source: "vc10\{#PlatformName}\{#ConfigurationName}\GFLImageServices.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
 Source: "vc10\{#PlatformName}\{#ConfigurationName}\libgfl340.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
@@ -415,6 +419,7 @@ Type: files; Name: "{app}\vc2.dll"
 ; Clean up old files from Shareaza
 Type: files; Name: "{app}\*.pdb"
 Type: files; Name: "{app}\zlib*.dll"
+Type: files; Name: "{app}\7zx*.dll"
 Type: files; Name: "{app}\RazaWebHook.dll"
 Type: files; Name: "{app}\MediaImageServices.dll"
 Type: files; Name: "{app}\MediaLibraryBuilder.dll"

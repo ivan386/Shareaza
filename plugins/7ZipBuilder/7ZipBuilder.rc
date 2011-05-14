@@ -27,7 +27,7 @@ LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,1,0,0
+ FILEVERSION 1,1,0,1
  PRODUCTVERSION 2,5,4,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
@@ -46,9 +46,9 @@ BEGIN
             VALUE "Comments", "Extract metadata from 7-Zip archives."
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "7-Zip Builder"
-            VALUE "FileVersion", "1, 1, 0, 0"
+            VALUE "FileVersion", "1, 1, 0, 1"
             VALUE "InternalName", "7ZipBuilder"
-            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2008-2010. All rights reserved."
+            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2008-2011. All rights reserved."
             VALUE "OriginalFilename", "7ZipBuilder.dll"
             VALUE "ProductName", "Shareaza"
             VALUE "ProductVersion", "2, 5, 4, 0"

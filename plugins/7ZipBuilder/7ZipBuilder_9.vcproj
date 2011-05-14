@@ -30,8 +30,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				Description="Pre-Building..."
-				CommandLine="copy &quot;7zxr.dll&quot; &quot;$(TargetDir)&quot; /b /y"
+				CommandLine=""
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -114,7 +113,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine=""
+				Description="Copy 7zxa.dll..."
+				CommandLine="copy &quot;7zxa.dll&quot; &quot;$(TargetDir)&quot; /b /y"
 			/>
 		</Configuration>
 		<Configuration
@@ -128,8 +128,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				Description="Pre-Building..."
-				CommandLine="copy &quot;7zxr.dll&quot; &quot;$(TargetDir)&quot; /b /y"
+				CommandLine=""
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -211,7 +210,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine=""
+				Description="Copy 7zxa64.dll..."
+				CommandLine="copy &quot;7zxa64.dll&quot; &quot;$(TargetDir)&quot; /b /y"
 			/>
 		</Configuration>
 		<Configuration
@@ -226,8 +226,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				Description="Pre-Building..."
-				CommandLine="copy &quot;7zxr.dll&quot; &quot;$(TargetDir)&quot; /b /y"
+				CommandLine=""
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -316,7 +315,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine=""
+				Description="Copy 7zxa.dll..."
+				CommandLine="copy &quot;7zxa.dll&quot; &quot;$(TargetDir)&quot; /b /y"
 			/>
 		</Configuration>
 		<Configuration
@@ -331,8 +331,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				Description="Pre-Building..."
-				CommandLine="copy &quot;7zxr.dll&quot; &quot;$(TargetDir)&quot; /b /y"
+				CommandLine=""
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -421,7 +420,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine=""
+				Description="Copy 7zxa64.dll..."
+				CommandLine="copy &quot;7zxa64.dll&quot; &quot;$(TargetDir)&quot; /b /y"
 			/>
 		</Configuration>
 	</Configurations>

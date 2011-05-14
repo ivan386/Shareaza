@@ -1,7 +1,7 @@
 //
 // 7ZipBuilder.cpp : Implementation of DLL Exports.
 //
-// Copyright (c) Shareaza Development Team, 2007.
+// Copyright (c) Shareaza Development Team, 2007-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -52,7 +52,12 @@ CModule::~CModule()
 
 bool CModule::Load7zxr()
 {
-	m_h7zxr = LoadLibrary( _T("7zxr.dll") );
+#ifdef _WIN64
+	LPCTSTR sz7zxr = _T("7zxa64.dll");
+#else
+	LPCTSTR sz7zxr = _T("7zxa.dll");
+#endif
+	m_h7zxr = LoadLibrary( sz7zxr );
 	if ( ! m_h7zxr )
 	{
 		TCHAR szPath[ MAX_PATH ] = {};
@@ -60,7 +65,7 @@ bool CModule::Load7zxr()
 		LPTSTR c = _tcsrchr( szPath, _T('\\') );
 		if ( ! c )
 			return false;
-		lstrcpy( c + 1, _T("7zxr.dll") );
+		lstrcpy( c + 1, sz7zxr );
 		m_h7zxr = LoadLibrary( szPath );
 		if ( ! m_h7zxr )
 		{
@@ -68,7 +73,7 @@ bool CModule::Load7zxr()
 			c = _tcsrchr( szPath, _T('\\') );
 			if ( ! c )
 				return false;
-			lstrcpy( c + 1, _T("7zxr.dll") );
+			lstrcpy( c + 1, sz7zxr );
 			m_h7zxr = LoadLibrary( szPath );
 			if ( ! m_h7zxr )
 				return false;
