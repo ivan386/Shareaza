@@ -31,7 +31,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Pre-Building..."
-				CommandLine="copy &quot;..\LibGFL\libW\*.dll&quot; &quot;$(TargetDir)&quot; /b /y"
+				CommandLine="xcopy &quot;..\LibGFL\libW\*.dll&quot; &quot;$(TargetDir)&quot; /y"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -131,7 +131,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Pre-Building..."
-				CommandLine="copy &quot;..\LibGFL\lib64W\*.dll&quot; &quot;$(TargetDir)&quot; /b /y"
+				CommandLine="xcopy &quot;..\LibGFL\lib64W\*.dll&quot; &quot;$(TargetDir)&quot; /y"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -230,7 +230,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Pre-Building..."
-				CommandLine="copy &quot;..\LibGFL\libW\*.dll&quot; &quot;$(TargetDir)&quot; /b /y"
+				CommandLine="xcopy &quot;..\LibGFL\libW\*.dll&quot; &quot;$(TargetDir)&quot; /y"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -338,7 +338,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Pre-Building..."
-				CommandLine="copy &quot;..\LibGFL\lib64W\*.dll&quot; &quot;$(TargetDir)&quot; /b /y"
+				CommandLine="xcopy &quot;..\LibGFL\lib64W\*.dll&quot; &quot;$(TargetDir)&quot; /y"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"

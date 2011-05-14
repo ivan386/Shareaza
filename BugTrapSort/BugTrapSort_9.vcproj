@@ -18,7 +18,7 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
+			OutputDirectory="$(SolutionDir)\$(PlatformName)\$(ConfigurationName)"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
 			ConfigurationType="1"
 			UseOfATL="1"
@@ -26,8 +26,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				Description="Copy ZLib..."
-				CommandLine="copy /b /y &quot;$(ProjectDir)..\zlib\$(OutDir)\zlibwapi.dll&quot; &quot;$(TargetDir)&quot;"
+				CommandLine=""
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -94,7 +93,7 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
+			OutputDirectory="$(SolutionDir)\$(PlatformName)\$(ConfigurationName)"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
 			ConfigurationType="1"
 			UseOfATL="1"
@@ -103,8 +102,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				Description="Copy ZLib..."
-				CommandLine="copy /b /y &quot;$(ProjectDir)..\zlib\$(OutDir)\zlibwapi.dll&quot; &quot;$(TargetDir)&quot;"
+				CommandLine=""
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
