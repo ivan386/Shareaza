@@ -65,7 +65,7 @@ ArchitecturesInstallIn64BitMode=x64
 #endif
 
 ; Set the CVS root as source dir (up 2 levels)
-SourceDir=..\..
+SourceDir={#SourcePath}..\..
 
 VersionInfoVersion={#version}
 VersionInfoDescription={#Description}
@@ -953,7 +953,7 @@ End;
 { Pull in custom wizard pages }
 #include "pages.iss"
 
-#expr SaveToFile("builds\Preprocessed.iss")
+#expr SaveToFile(SourcePath + "..\builds\Preprocessed.iss")
 
 
 
