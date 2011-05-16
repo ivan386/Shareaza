@@ -128,6 +128,7 @@ struct std::less< IN_ADDR > : public std::binary_function< IN_ADDR, IN_ADDR, boo
 
 typedef std::multimap< IN_ADDR, CHostCacheHostPtr > CHostCacheMap;
 typedef std::pair< IN_ADDR, CHostCacheHostPtr > CHostCacheMapPair;
+typedef CHostCacheMap::iterator CHostCacheMapItr;
 
 template<>
 struct std::less< CHostCacheHostPtr > : public std::binary_function< CHostCacheHostPtr, CHostCacheHostPtr, bool>
@@ -182,8 +183,8 @@ public:
 	// Add host in form "IP:Port SeenTime"
 	BOOL				Add(LPCTSTR pszHost, DWORD tSeen = 0, LPCTSTR pszVendor = NULL, DWORD nUptime = 0, DWORD nCurrentLeaves = 0, DWORD nLeafLimit = 0);
 	void				Update(CHostCacheHostPtr pHost, WORD nPort = 0, DWORD tSeen = 0, LPCTSTR pszVendor = NULL, DWORD nUptime = 0, DWORD nCurrentLeaves = 0, DWORD nLeafLimit = 0);
-	bool				Remove(CHostCacheHostPtr pHost);
-	bool				Remove(const IN_ADDR* pAddress);
+	CHostCacheMapItr	Remove(CHostCacheHostPtr pHost);
+	CHostCacheMapItr	Remove(const IN_ADDR* pAddress);
 	void				SanityCheck();
 	void				OnResolve(LPCTSTR szAddress, const IN_ADDR* pAddress, WORD nPort);
 	void				OnFailure(const IN_ADDR* pAddress, WORD nPort, bool bRemove = true);

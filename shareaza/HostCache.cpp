@@ -287,7 +287,7 @@ void CHostCacheList::Clear()
 {
 	CQuickLock oLock( m_pSection );
 
-	for( CHostCacheMap::const_iterator i = m_Hosts.begin(); i != m_Hosts.end(); ++i )
+	for( CHostCacheMapItr i = m_Hosts.begin(); i != m_Hosts.end(); ++i )
 	{
 		delete (*i).second;
 	}
@@ -442,58 +442,51 @@ void CHostCacheList::Update(CHostCacheHostPtr pHost, WORD nPort, DWORD tSeen, LP
 //////////////////////////////////////////////////////////////////////
 // CHostCacheList host remove
 
-bool CHostCacheList::Remove(CHostCacheHostPtr pHost)
+CHostCacheMapItr CHostCacheList::Remove(CHostCacheHostPtr pHost)
 {
 	CQuickLock oLock( m_pSection );
 
-	for( CHostCacheMap::iterator i = m_Hosts.begin(); i != m_Hosts.end(); ++i )
-	{
-		if ( (*i).second == pHost )
-		{
-			m_HostsTime.erase(
-				std::find( m_HostsTime.begin(), m_HostsTime.end(), pHost ) );
-			m_Hosts.erase( i );
-			delete pHost;
-			m_nCookie++;
-			return true;
-		}
-	}
-	return false;
+	CHostCacheIterator j = std::find( m_HostsTime.begin(), m_HostsTime.end(), pHost );
+	if ( j == m_HostsTime.end() )
+		// Wrong cache
+		return m_Hosts.end();
+	m_HostsTime.erase( j );
+
+	CHostCacheMapItr i = std::find_if( m_Hosts.begin(), m_Hosts.end(), std::bind2nd( is_host(), pHost ) );
+	ASSERT( i != m_Hosts.end() );
+	i = m_Hosts.erase( i );
+
+	delete pHost;
+	m_nCookie++;
+
+	ASSERT( m_Hosts.size() == m_HostsTime.size() );
+
+	return i;
 }
 
-bool CHostCacheList::Remove(const IN_ADDR* pAddress)
+CHostCacheMapItr CHostCacheList::Remove(const IN_ADDR* pAddress)
 {
 	CQuickLock oLock( m_pSection );
 
-	CHostCacheMap::iterator i = m_Hosts.find( *pAddress );
-	if ( i != m_Hosts.end() )
-	{
-		CHostCacheHostPtr pHost = (*i).second;
-		m_HostsTime.erase(
-			std::find( m_HostsTime.begin(), m_HostsTime.end(), pHost ) );
-		m_Hosts.erase( i );
-		delete pHost;
-		m_nCookie++;
-		return true;
-	}
-	return false;
+	CHostCacheMapItr i = m_Hosts.find( *pAddress );
+	if ( i == m_Hosts.end() )
+		// Wrong cache/address
+		return m_Hosts.end();
+
+	return Remove( (*i).second );
 }
 
 void CHostCacheList::SanityCheck()
 {
 	CQuickLock oLock( m_pSection );
 
-	for( CHostCacheMap::iterator i = m_Hosts.begin(); i != m_Hosts.end(); )
+	for( CHostCacheMapItr i = m_Hosts.begin(); i != m_Hosts.end(); )
 	{
 		CHostCacheHostPtr pHost = (*i).second;
 		if ( Security.IsDenied( &pHost->m_pAddress ) ||
 			( pHost->m_pVendor && Security.IsVendorBlocked( pHost->m_pVendor->m_sCode ) ) )
 		{
-			m_HostsTime.erase(
-				std::find( m_HostsTime.begin(), m_HostsTime.end(), pHost ) );
-			i = m_Hosts.erase( i );
-			delete pHost;
-			m_nCookie++;
+			i = Remove( pHost );
 		}
 		else
 			++i;
@@ -545,7 +538,7 @@ void CHostCacheList::OnFailure(const IN_ADDR* pAddress, WORD nPort, bool bRemove
 
 		if ( pHost->m_bPriority )
 			return;
-		if ( bRemove || pHost->m_nFailures >= Settings.Connection.FailureLimit )
+		if ( bRemove || pHost->m_nFailures > Settings.Connection.FailureLimit )
 			Remove( pHost );
 		else
 		{
@@ -566,7 +559,7 @@ void CHostCacheList::OnFailure(LPCTSTR szAddress, bool bRemove)
 		pHost->m_nFailures++;
 		if ( pHost->m_bPriority )
 			return;
-		if ( bRemove || pHost->m_nFailures >= Settings.Connection.FailureLimit )
+		if ( bRemove || pHost->m_nFailures > Settings.Connection.FailureLimit )
 			Remove( pHost );
 		else
 		{
@@ -602,36 +595,26 @@ void CHostCacheList::PruneOldHosts(DWORD tNow)
 {
 	CQuickLock oLock( m_pSection );
 	
-	for( CHostCacheMap::iterator i = m_Hosts.begin(); i != m_Hosts.end(); )
+	for( CHostCacheMapItr i = m_Hosts.begin(); i != m_Hosts.end(); )
 	{
 		CHostCacheHostPtr pHost = (*i).second;
 
-		bool bRemove = false;
-
-		if ( !pHost->m_bPriority && ( pHost->IsExpired( tNow )
-			|| pHost->m_nFailures > Settings.Connection.FailureLimit ) )
-		{
-			bRemove = true;
-		}
-
 		// Query acknowledgment prune (G2)
-		else if ( pHost->m_nProtocol == PROTOCOL_G2 && pHost->m_tAck &&
-			tNow > pHost->m_tAck + Settings.Gnutella2.QueryHostDeadline )
+		if ( pHost->m_nProtocol == PROTOCOL_G2 &&
+			 pHost->m_tAck &&
+			 tNow > pHost->m_tAck + Settings.Gnutella2.QueryHostDeadline )
 		{
 			pHost->m_tAck = 0;
-			if ( pHost->m_nFailures++ > Settings.Connection.FailureLimit )
-			{
-				bRemove = true;
-			}
+
+			m_nCookie++;
+			pHost->m_nFailures++;
 		}
 
-		if ( bRemove )
+		if ( ! pHost->m_bPriority &&
+			 ( pHost->m_nFailures > Settings.Connection.FailureLimit ||
+			   pHost->IsExpired( tNow ) ) )
 		{
-			m_HostsTime.erase(
-				std::find( m_HostsTime.begin(), m_HostsTime.end(), pHost ) );
-			i = m_Hosts.erase( i );
-			delete pHost;
-			m_nCookie++;
+			i = Remove( pHost );
 		}
 		else
 			++i;
@@ -688,7 +671,7 @@ void CHostCacheList::Serialize(CArchive& ar, int nVersion)
 	if ( ar.IsStoring() )
 	{
 		ar.WriteCount( GetCount() );
-		for( CHostCacheMap::const_iterator i = m_Hosts.begin(); i != m_Hosts.end(); ++i )
+		for( CHostCacheMapItr i = m_Hosts.begin(); i != m_Hosts.end(); ++i )
 		{
 			CHostCacheHostPtr pHost = (*i).second;
 			pHost->Serialize( ar, nVersion );
@@ -1498,7 +1481,7 @@ bool CHostCacheHost::CanConnect(DWORD tNow) const
 		// ...and we lost no hope on this host...
 		( m_nFailures <= Settings.Connection.FailureLimit ) &&
 		// ...and host isn't expired...
-		( ! IsExpired( tNow ) ) &&
+		( m_bPriority || ! IsExpired( tNow ) ) &&
 		// ...and make sure we reconnect not too fast...
 		( ! IsThrottled( tNow ) );
 		// ...then we can connect!
