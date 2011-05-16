@@ -1,7 +1,7 @@
 //
 // LiveList.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -170,6 +170,7 @@ public:
 	CLiveItemPtr Add(LPVOID pParam);	
 	void Apply();
 	void Sort(int nColumn = -1);
+	void ClearSelection();
 
 	DWORD_PTR GetItemData(int nItem) const;
 	UINT GetItemOverlayMask(int nItem) const;

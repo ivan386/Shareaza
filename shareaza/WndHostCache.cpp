@@ -107,7 +107,8 @@ int CHostCacheWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if ( ! m_wndToolBar.Create( this, WS_CHILD|WS_VISIBLE|CBRS_NOALIGN, AFX_IDW_TOOLBAR ) ) return -1;
 	m_wndToolBar.SetBarStyle( m_wndToolBar.GetBarStyle() | CBRS_TOOLTIPS | CBRS_BORDER_TOP );
 
-	m_wndList.Create( WS_VISIBLE|LVS_ICON|LVS_AUTOARRANGE|LVS_REPORT|LVS_SHOWSELALWAYS,
+	m_wndList.Create( WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_CHILD | WS_VISIBLE |
+		LVS_AUTOARRANGE | LVS_REPORT | LVS_SHOWSELALWAYS,
 		rectDefault, this, IDC_HOSTS,
 #ifdef _DEBUG
 		14
@@ -558,6 +559,8 @@ void CHostCacheWnd::OnHostCacheRemove()
 	}
 
 	HostCache.CheckMinimumED2KServers();
+
+	m_wndList.ClearSelection();
 
 	Update();
 }

@@ -100,7 +100,7 @@ int CDiscoveryWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	
 	m_wndList.Create( WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_CHILD | WS_VISIBLE |
 		LVS_AUTOARRANGE | LVS_REPORT | LVS_SHOWSELALWAYS,
-		rectDefault, this, IDC_SERVICES );
+		rectDefault, this, IDC_SERVICES, 11 );
 	m_pSizer.Attach( &m_wndList );
 	
 	m_wndList.SetExtendedStyle(
@@ -144,8 +144,6 @@ void CDiscoveryWnd::Update()
 	if ( ! pLock.Lock( 250 ) )
 		return;
 
-	CLiveList pLiveList( 11 );
-
 	for ( POSITION pos = DiscoveryServices.GetIterator() ; pos ; )
 	{
 		CDiscoveryService* pService = DiscoveryServices.GetNext( pos );
@@ -155,14 +153,14 @@ void CDiscoveryWnd::Update()
 		if ( pService->m_nType == CDiscoveryService::dsGnutella )
 		{
 			if ( ! m_bShowGnutella ) continue;
-			pItem = pLiveList.Add( pService );
+			pItem = m_wndList.Add( pService );
 			pItem->Set( 1, _T("Bootstrap") );
 			pItem->SetImage( 0, 0 );
 		}
 		else if ( pService->m_nType == CDiscoveryService::dsWebCache )
 		{
 			if ( ! m_bShowWebCache ) continue;
-			pItem = pLiveList.Add( pService );
+			pItem = m_wndList.Add( pService );
 			pItem->Set( 1, _T("GWebCache") );
 			if ( pService->m_bGnutella2 && pService->m_bGnutella1 )
 			{
@@ -181,14 +179,14 @@ void CDiscoveryWnd::Update()
 		else if ( pService->m_nType == CDiscoveryService::dsServerMet )
 		{
 			if ( ! m_bShowServerMet ) continue;
-			pItem = pLiveList.Add( pService );
+			pItem = m_wndList.Add( pService );
 			pItem->Set( 1, _T("Server.met") );
 			pItem->SetImage( 0, 3 );
 		}
 		else if ( pService->m_nType == CDiscoveryService::dsBlocked )
 		{
 			if ( ! m_bShowBlocked ) continue;
-			pItem = pLiveList.Add( pService );
+			pItem = m_wndList.Add( pService );
 			pItem->Set( 1, _T("Blocked") );
 			pItem->SetImage( 0, 5 );
 		}
@@ -231,7 +229,7 @@ void CDiscoveryWnd::Update()
 		}
 	}
 	
-	pLiveList.Apply( &m_wndList, TRUE );
+	m_wndList.Apply();
 }
 
 CDiscoveryService* CDiscoveryWnd::GetItem(int nItem)
@@ -397,6 +395,8 @@ void CDiscoveryWnd::OnDiscoveryRemove()
 	}
 
 	DiscoveryServices.CheckMinimumServices();
+	
+	m_wndList.ClearSelection();
 
 	Update();
 }

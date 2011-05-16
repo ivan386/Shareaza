@@ -34,7 +34,7 @@ public:
 	CDiscoveryWnd();
 
 protected:
-	CListCtrl		m_wndList;
+	CLiveListCtrl	m_wndList;
 	CImageList		m_gdiImageList;
 	CLiveListSizer	m_pSizer;
 	BOOL			m_bShowGnutella;
