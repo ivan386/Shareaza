@@ -153,9 +153,14 @@ void CNeighbourTipCtrl::OnCalcSize(CDC* pDC)
 
 	if ( pNeighbour->m_sUserAgent.GetLength() )
 	{
-		AddSize( pDC, pNeighbour->m_sUserAgent );
-		m_sz.cy += TIP_TEXTHEIGHT;
+		str = pNeighbour->m_sUserAgent;
 	}
+	else
+	{
+		str = protocolNames[ pNeighbour->m_nProtocol ];
+	}
+	AddSize( pDC, str );
+	m_sz.cy += TIP_TEXTHEIGHT;
 
 	m_sz.cy += TIP_TEXTHEIGHT;
 	m_sz.cy += TIP_RULE;
