@@ -94,8 +94,8 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <PreBuildEvent>
-      <Message>Pre-Building...</Message>
-      <Command>copy "7zxr.dll" "$(TargetDir)" /b /y</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
     <Midl>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -143,14 +143,14 @@
       </OutputFile>
     </Bscmake>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>copy "7zxa.dll" "$(TargetDir)" /b /y</Command>
+      <Message>Copy 7zxa.dll...</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <PreBuildEvent>
-      <Message>Pre-Building...</Message>
-      <Command>copy "7zxr.dll" "$(TargetDir)" /b /y</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
     <Midl>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -198,14 +198,14 @@
       </OutputFile>
     </Bscmake>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>copy "7zxa64.dll" "$(TargetDir)" /b /y</Command>
+      <Message>Copy 7zxa64.dll...</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <PreBuildEvent>
-      <Message>Pre-Building...</Message>
-      <Command>copy "7zxr.dll" "$(TargetDir)" /b /y</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
     <Midl>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -259,14 +259,14 @@
       </OutputFile>
     </Bscmake>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>copy "7zxa.dll" "$(TargetDir)" /b /y</Command>
+      <Message>Copy 7zxa.dll...</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <PreBuildEvent>
-      <Message>Pre-Building...</Message>
-      <Command>copy "7zxr.dll" "$(TargetDir)" /b /y</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
     <Midl>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -320,8 +320,8 @@
       </OutputFile>
     </Bscmake>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>copy "7zxa64.dll" "$(TargetDir)" /b /y</Command>
+      <Message>Copy 7zxa64.dll...</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

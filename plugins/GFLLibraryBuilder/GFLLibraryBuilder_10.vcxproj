@@ -95,7 +95,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <PreBuildEvent>
       <Message>Pre-Building...</Message>
-      <Command>copy "..\LibGFL\libW\*.dll" "$(TargetDir)" /b /y</Command>
+      <Command>xcopy "..\LibGFL\libW\*.dll" "$(TargetDir)" /y</Command>
     </PreBuildEvent>
     <Midl>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -152,7 +152,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <PreBuildEvent>
       <Message>Pre-Building...</Message>
-      <Command>copy "..\LibGFL\lib64W\*.dll" "$(TargetDir)" /b /y</Command>
+      <Command>xcopy "..\LibGFL\lib64W\*.dll" "$(TargetDir)" /y</Command>
     </PreBuildEvent>
     <Midl>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -208,7 +208,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <PreBuildEvent>
       <Message>Pre-Building...</Message>
-      <Command>copy "..\LibGFL\libW\*.dll" "$(TargetDir)" /b /y</Command>
+      <Command>xcopy "..\LibGFL\libW\*.dll" "$(TargetDir)" /y</Command>
     </PreBuildEvent>
     <Midl>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -271,7 +271,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <PreBuildEvent>
       <Message>Pre-Building...</Message>
-      <Command>copy "..\LibGFL\lib64W\*.dll" "$(TargetDir)" /b /y</Command>
+      <Command>xcopy "..\LibGFL\lib64W\*.dll" "$(TargetDir)" /y</Command>
     </PreBuildEvent>
     <Midl>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>

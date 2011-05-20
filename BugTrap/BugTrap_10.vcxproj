@@ -107,9 +107,15 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PreBuildEvent>
-      <Command>copy "dbghelp.dll" "$(TargetDir)dbghelp.dll" /b /y</Command>
-      <Message>Pre-Building...</Message>
+      <Command>
+      </Command>
     </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>copy "dbghelp.dll" "$(TargetDir)dbghelp.dll" /b /y</Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>Copy dbghelp.dll...</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Midl>
@@ -146,11 +152,16 @@
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <PreBuildEvent />
+    <PostBuildEvent>
       <Command>copy "dbghelp-x64.dll" "$(TargetDir)dbghelp.dll" /b /y</Command>
-    </PreBuildEvent>
-    <PreBuildEvent>
-      <Message>Pre-Building...</Message>
-    </PreBuildEvent>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>Copy dbghelp.dll...</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -182,9 +193,15 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PreBuildEvent>
-      <Command>copy "dbghelp.dll" "$(TargetDir)dbghelp.dll" /b /y</Command>
-      <Message>Pre-Building...</Message>
+      <Command>
+      </Command>
     </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>copy "dbghelp.dll" "$(TargetDir)dbghelp.dll" /b /y</Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>Copy dbghelp.dll...</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Midl>
@@ -228,11 +245,16 @@
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <PreBuildEvent />
+    <PostBuildEvent>
       <Command>copy "dbghelp-x64.dll" "$(TargetDir)dbghelp.dll" /b /y</Command>
-    </PreBuildEvent>
-    <PreBuildEvent>
-      <Message>Pre-Building...</Message>
-    </PreBuildEvent>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>Copy dbghelp.dll...</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AboutDlg.cpp" />

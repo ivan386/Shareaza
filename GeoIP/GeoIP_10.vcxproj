@@ -104,11 +104,10 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PreBuildEvent>
-      <Command>copy "GeoIP.dat" "$(TargetDir)" /b /y</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
-    <PreBuildEvent>
-      <Message>Pre-Building...</Message>
-    </PreBuildEvent>
+    <PreBuildEvent />
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <CustomBuildStep>
@@ -134,11 +133,10 @@
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PreBuildEvent>
-      <Command>copy "GeoIP.dat" "$(TargetDir)" /b /y</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
-    <PreBuildEvent>
-      <Message>Pre-Building...</Message>
-    </PreBuildEvent>
+    <PreBuildEvent />
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <CustomBuildStep>
@@ -169,11 +167,10 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PreBuildEvent>
-      <Command>copy "GeoIP.dat" "$(TargetDir)" /b /y</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
-    <PreBuildEvent>
-      <Message>Pre-Building...</Message>
-    </PreBuildEvent>
+    <PreBuildEvent />
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <CustomBuildStep>
@@ -204,11 +201,10 @@
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PreBuildEvent>
-      <Command>copy "GeoIP.dat" "$(TargetDir)" /b /y</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
-    <PreBuildEvent>
-      <Message>Pre-Building...</Message>
-    </PreBuildEvent>
+    <PreBuildEvent />
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="GeoIP.c" />

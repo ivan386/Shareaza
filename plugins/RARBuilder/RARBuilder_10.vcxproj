@@ -93,10 +93,7 @@
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <PreBuildEvent>
-      <Message>Pre-Building...</Message>
-      <Command>copy "unrar.dll" "$(TargetDir)" /b /y</Command>
-    </PreBuildEvent>
+    <PreBuildEvent />
     <Midl>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\..\shareaza;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -143,15 +140,12 @@
       </OutputFile>
     </Bscmake>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>copy "unrar.dll" "$(TargetDir)" /b /y</Command>
+      <Message>Copy unrar.dll...</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <PreBuildEvent>
-      <Message>Pre-Building...</Message>
-      <Command>copy "unrar64.dll" "$(TargetDir)" /b /y</Command>
-    </PreBuildEvent>
+    <PreBuildEvent />
     <Midl>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\..\shareaza;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -198,15 +192,12 @@
       </OutputFile>
     </Bscmake>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>copy "unrar64.dll" "$(TargetDir)" /b /y</Command>
+      <Message>Copy unrar64.dll...</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <PreBuildEvent>
-      <Message>Pre-Building...</Message>
-      <Command>copy "unrar.dll" "$(TargetDir)" /b /y</Command>
-    </PreBuildEvent>
+    <PreBuildEvent />
     <Midl>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\..\shareaza;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -259,15 +250,12 @@
       </OutputFile>
     </Bscmake>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>copy "unrar.dll" "$(TargetDir)" /b /y</Command>
+      <Message>Copy unrar.dll...</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <PreBuildEvent>
-      <Message>Pre-Building...</Message>
-      <Command>copy "unrar64.dll" "$(TargetDir)" /b /y</Command>
-    </PreBuildEvent>
+    <PreBuildEvent />
     <Midl>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\..\shareaza;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -320,8 +308,8 @@
       </OutputFile>
     </Bscmake>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>copy "unrar64.dll" "$(TargetDir)" /b /y</Command>
+      <Message>Copy unrar64.dll...</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
