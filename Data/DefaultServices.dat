@@ -1,6 +1,10 @@
 M http://cache.leite.us/
-M http://gwc.lame.net/gwcii.php
+M http://gofoxy.net/gwc/cgi-bin/fc
+M http://gwc.gofoxy.net:2108/gwc/cgi-bin/fc
 M http://gwc.marksieklucki.com/skulls.php
+M http://gwebcache.ns1.net/
+M http://tenafly5k.com/gwc/skulls.php
+M http://witch.frodoslair.net/gwc/Beacon2/gwc.php
 
 2 http://cache.ce3c.be/
 2 http://cache.trillinux.org/g2/bazooka.php
@@ -13,53 +17,33 @@ M http://gwc.marksieklucki.com/skulls.php
 2 http://gwc2.wodi.org/skulls.php
 2 http://karma.cloud.bishopston.net:33559/
 2 http://midian.jayl.de/g2/bazooka.php
+2 http://silvers.zyns.com/gwc/dkac.php
 
-1 http://drei.gtkg.net:8080/gwc/
-1 http://ein.gtkg.net:8080/gwc/
-1 http://gwc.dietpac.com:8080/
-1 http://gwc.glucolene.com:8080/
-1 http://leet.gtkg.org:8080/gwc/
-1 http://secondary.udp-host-cache.com:8080/gwc/
-1 http://sissy.gtkg.org:8080/gwc/
-1 http://tertiary.udp-host-cache.com:8080/gwc/
-1 http://zwei.gtkg.net:8080/gwc/
+1 http://beacon.numberzero.org/gwc.php
 
-U uhc:drei.gtkg.net:62666
-U uhc:ein.gtkg.net:60666
-U uhc:leet.gtkg.org:1337
-U uhc:sissy.gtkg.org:51557
-U uhc:secondary.udp-host-cache.com:9999
-U uhc:tertiary.udp-host-cache.com:9999
-U uhc:uhc.udp-host-cache.com:9999
-U uhc:uhc2.limewire.com:20181
-U uhc:uhc3.limewire.com:51180
 U uhc:yin.cloud.bishopston.net:33558
-U uhc:zwei.gtkg.net:61666
 
 D http://peerates.net/servers.php
 D http://www.gruk.org/server.met
 
 X http://bootdesu.appspot.com/
 X http://cache.trillinux.org.nyud.net:8090/g2/bazooka.php
+X http://fascination77.free.fr/cachechu/
 X http://fischaleck.net/cache/mcache.php
-X http://gwc.divergentlogic.net/skulls.php
 X http://gwc.frodoslair.net/skulls/skulls
 X http://gwc.frodoslair.net/skulls/skulls.php
-X http://gwebcache.ns1.net/
 X http://www.ak-electron.eu/Beacon2/gwc.php
-X http://www.delelisten.no/GWC6/
 X http://www.lo7.wroc.pl/~stash/old-g2-moved/bazooka.php
 
 # Duplicates:
 X http://jayl.de/gweb/g2/bazooka.php
-X http://gwc.gofoxy.net:2108/gwc/cgi-bin/fc
 X http://gwc.iblinx.com:2108/gwc/cgi-bin/fc
 X http://www.gofoxy.net/gwc/cgi-bin/fc
 X http://www.myfoxy.net/gwc/cgi-bin/fc
 
 #
 # Keep these comments at the end
-# Last updated Sep 2010
+# Last updated May 2011
 #
 # Make sure the different lists are kept sorted in alphabetical order.
 #
@@ -75,5 +59,5 @@ X http://www.myfoxy.net/gwc/cgi-bin/fc
 #
 # Web Cache Trackers:
 # Gnutella - Specification 1 Protocol : http://gcachescan.jonatkins.com/
-# (Gnutella / Gnutella2) - Specification 2 Protocol: http://kevogod.trillinux.org/
+# (Gnutella / Gnutella2) - Specification 2 Protocol: http://gwebcaches.pongwar.com/
 # Get latest version at http://shareaza.svn.sourceforge.net/viewvc/*checkout*/shareaza/trunk/Data/DefaultServices.dat
