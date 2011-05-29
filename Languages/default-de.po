@@ -34,7 +34,7 @@ msgstr "http://shareaza.sourceforge.net/"
 
 #: manifest-email
 msgid "(author e-mail)"
-msgstr "old_death{_ädt_}users.sourceforge.net"
+msgstr "old_death {_ädt_} users * sourceforge * net"
 
 #: manifest-version
 msgid "(shareaza version)"
@@ -1890,11 +1890,11 @@ msgstr "_Standardverhalten"
 
 #: csecuritywnd;61;item;id_security_policy_accept
 msgid "_Accept"
-msgstr "_Alles Erlauben"
+msgstr "Alles _Erlauben"
 
 #: csecuritywnd;61;item;id_security_policy_deny
 msgid "_Deny"
-msgstr "_Alles Verweigern"
+msgstr "Alles _Verweigern"
 
 #: cschedulerwnd;item;id_scheduler_add
 msgid "_Add Scheduled Task"
@@ -9102,7 +9102,7 @@ msgstr "Ergebnisse filtern"
 
 #: cfiltersearchdlg;control;1
 msgid "Only show matches which include the _words:"
-msgstr "Nur Ergebnisse, die folgende _Wörter enthalten:"
+msgstr "Suchfilter"
 
 #: cfiltersearchdlg;control;3 csecureruledlg;control;21
 msgid "Reg. Exp."
@@ -9114,7 +9114,7 @@ msgstr "( Sie können Wörter mit \"-Wort\" ausschließen )"
 
 #: cfiltersearchdlg;control;5
 msgid "And are of _size:"
-msgstr "Und folgende _Größe haben:"
+msgstr "Dateigröße"
 
 #: cfiltersearchdlg;control;6
 msgid "Minimum:"
@@ -9134,7 +9134,7 @@ msgstr "Quelle(n)."
 
 #: cfiltersearchdlg;control;14
 msgid "_Hide:"
-msgstr "_Ausblenden:"
+msgstr "Ausblenden"
 
 #: cfiltersearchdlg;control;15
 msgid "Busy hosts"
@@ -9174,7 +9174,7 @@ msgstr "Spamverdacht"
 
 #: cfiltersearchdlg;control;24
 msgid "Filters:"
-msgstr "Filter:"
+msgstr "Benutzerdefinierte Filter"
 
 #: cfiltersearchdlg;control;26
 msgid "Set as default"
@@ -9182,7 +9182,7 @@ msgstr "Als Standard"
 
 #: cfiltersearchdlg;control;27
 msgid "_Save as"
-msgstr "_Speichern als..."
+msgstr "Speichern als..."
 
 #: dialog;csavefilterasdlg
 msgid "Save filter as"
@@ -9402,7 +9402,7 @@ msgstr "Sicherheitsregel"
 
 #: csecureruledlg;control;1
 msgid "_Rule:"
-msgstr "_Regel:"
+msgstr "Regel"
 
 #: csecureruledlg;control;3
 msgid "Network (IP) Address|Content Filter"
@@ -9414,7 +9414,7 @@ msgstr "Kommentar:"
 
 #: csecureruledlg;control;6
 msgid "_Network Address:"
-msgstr "_Netzwerkadresse:"
+msgstr "Netzwerkadresse"
 
 #: csecureruledlg;control;7
 msgid "IP Address:"
@@ -9426,7 +9426,7 @@ msgstr "Netzmaske:"
 
 #: csecureruledlg;control;17
 msgid "_Content Filter:"
-msgstr "_Inhaltsfilter:"
+msgstr "Inhaltsfilter"
 
 #: csecureruledlg;control;19
 msgid "Match Any"
@@ -9454,15 +9454,16 @@ msgstr "Nie (Unbegrenzt)|Bei Programmende|Nach:"
 
 #: csecureruledlg;control;28
 msgid "d"
-msgstr "T"
+msgstr "d"
 
 #: csecureruledlg;control;30
 msgid "h"
-msgstr "S"
+msgstr "h"
 
 #: csecureruledlg;control;32
+#, fuzzy
 msgid "m"
-msgstr "M"
+msgstr "ms"
 
 #: dialog;csharemanagerdlg
 msgid "Shared Folder Manager"
@@ -10086,7 +10087,7 @@ msgstr "Modus"
 
 #: column;address/content
 msgid "Address/Content"
-msgstr "Adresse/Inhalt"
+msgstr "Adresse / Inhalt"
 
 #: column;expires
 msgid "Expires"
@@ -10224,20 +10225,50 @@ msgstr "TigerTree"
 msgid "NextRun"
 msgstr "Nächste Ausführung"
 
-#~ msgid "Shareaza detected an error while importing a security hash rule. Plz check the contained hashes for consitancy."
-#~ msgstr "Shareaza detected an error while importing a security hash rule. Plz check the contained hashes for consitancy."
-#~ msgid "Couldn't import a security hash rule from XML. Most probably, the rule is invalid."
-#~ msgstr "Couldn't import a security hash rule from XML. Most probably, the rule is invalid."
-#~ msgid "Couldn't import a security rule from XML. Most probably, the rule is invalid."
-#~ msgstr "Couldn't import a security rule from XML. Most probably, the rule is invalid."
-#~ msgid "Coulnd't import a security rule from a Gnucleus security file. Plz check the rule for validity."
-#~ msgstr "Coulnd't import a security rule from a Gnucleus security file. Plz check the rule for validity."
-#~ msgid "Error: Couldn't load a security rule from file."
-#~ msgstr "Error: Couldn't load a security rule from file."
-#~ msgid "The specified file cannot be banned. It is either invalid or non-existing."
-#~ msgstr "The specified file cannot be banned. It is either invalid or non-existing."
+#~ msgid ""
+#~ "Shareaza detected an error while importing a security hash rule. Plz "
+#~ "check the contained hashes for consitancy."
+#~ msgstr ""
+#~ "Shareaza hat während dem Importieren einer Sicherheits-Hash-Regel einen "
+#~ "Fehler entdeckt. Bitte überprüfen Sie die zu importierenden Regeln."
+#~ msgid ""
+#~ "Couldn't import a security hash rule from XML. Most probably, the rule is "
+#~ "invalid."
+#~ msgstr ""
+#~ "Eine Hash-Regel konnte nicht aus der XML-Datei importiert werden. "
+#~ "Wahrscheinlich ist die Regeldefinition in der Datei fehlerhaft."
+#~ msgid ""
+#~ "Couldn't import a security rule from XML. Most probably, the rule is "
+#~ "invalid."
+#~ msgstr ""
+#~ "Eine Sicherheitsregel konnte nicht aus der XML-Datei importiert werden. "
+#~ "Wahrscheinlich ist die Regeldefinition in der Datei fehlerhaft."
+#~ msgid ""
+#~ "Coulnd't import a security rule from a Gnucleus security file. Plz check "
+#~ "the rule for validity."
+#~ msgstr ""
+#~ "Eine Sicherheitsregel konnte nicht aus der Gnucleus-Datei importiert "
+#~ "werden. Bitte überprüfen Sie die Datei auf Fehler."
+#~ msgid ""
+#~ "Error: Couldn't load a security rule from the database. Plz check your "
+#~ "disk drive for errors."
+#~ msgstr ""
+#~ "Fehler: Eine Sicherheitsregel konnte nicht aus der Sicherheitsdatanbank "
+#~ "geladen werden. Bitte überprüfen Sie Ihre Festplatte auf Fehler."
+#~ msgid "The specified file is already banned by existing security rules."
+#~ msgstr ""
+#~ "Die spezifizierte Datei wird bereits durch existierende Sicherheitsregeln "
+#~ "blockiert."
+#~ msgid ""
+#~ "The specified file cannot be banned. It is either invalid or non-existing."
+#~ msgstr ""
+#~ "Die spezifizierte Datei konnte nicht gebannt werden. Sie ist entweder "
+#~ "ungültig oder nicht existent."
 #~ msgid "The specified IP cannot be banned, as it is invalid."
-#~ msgstr "The specified IP cannot be banned, as it is invalid."
-#~ msgid "Browsing host %s has been blocked by security manager."
-#~ msgstr "Browsing host %s has been blocked by security manager."
+#~ msgstr ""
+#~ "Die spezifizierte IP konnte nicht gebannt werden, da sie ungültig ist."
+#~ msgid "Browsing host %s has been blocked by the Security Manager."
+#~ msgstr "Der Sicherheitsmanager verhinderte das Durchsuchen des Hosts %s."
+#~ msgid "min"
+#~ msgstr "min"
 

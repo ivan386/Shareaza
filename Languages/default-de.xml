@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
 	<!-- Manifest -->
-	<manifest name="Deutsch" author="Jann Röder" updatedBy="OldDeath, Frontier, Jann Röder, ZeRO, Sebastian Pfeifer" description="Shareaza Default German Translation Skin File; based on r8936 of 'default-en.xml'" link="http://shareaza.sourceforge.net/" email="old_death{_ädt_}users.sourceforge.net" version="2.5.5.0" type="Language" language="de" prompt="Klicken Sie hier, um Deutsch als Sprache zu wählen." dir="ltr"/>
+	<manifest name="Deutsch" author="Jann Röder" updatedBy="OldDeath, Frontier, Jann Röder, ZeRO, Sebastian Pfeifer" description="Shareaza Default German Translation Skin File; based on r8936 of 'default-en.xml'" link="http://shareaza.sourceforge.net/" email="old_death {_ädt_} users * sourceforge * net" version="2.5.5.0" type="Language" language="de" prompt="Klicken Sie hier, um Deutsch als Sprache zu wählen." dir="ltr"/>
 	<!-- Toolbar Definitions -->
 	<toolbars>
 		<!-- MAIN WINDOW -->
@@ -1567,8 +1567,8 @@
 			<item id="ID_SECURITY_EXPORT" text="E_xportieren..."/>
 			<separator/>
 			<menu text="_Standardverhalten">
-				<item id="ID_SECURITY_POLICY_ACCEPT" text="_Alles Erlauben"/>
-				<item id="ID_SECURITY_POLICY_DENY" text="_Alles Verweigern"/>
+				<item id="ID_SECURITY_POLICY_ACCEPT" text="Alles _Erlauben"/>
+				<item id="ID_SECURITY_POLICY_DENY" text="Alles _Verweigern"/>
 			</menu>
 			<separator/>
 			<item id="ID_SECURITY_EDIT" text="Ei_genschaften..."/>
@@ -4078,11 +4078,11 @@
 			<control caption="Abbrechen"/>
 		</dialog>
 		<dialog name="CFilterSearchDlg" cookie="BuEdBuStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuBuBuCoBuBuBuBuBu" caption="Ergebnisse filtern">
-			<control caption="Nur Ergebnisse, die folgende _Wörter enthalten:"/>
+			<control caption="Suchfilter"/>
 			<control/>
 			<control caption="Reg. Exp."/>
 			<control caption="( Sie können Wörter mit &quot;-Wort&quot; ausschließen )"/>
-			<control caption="Und folgende _Größe haben:"/>
+			<control caption="Dateigröße"/>
 			<control caption="Minimum:"/>
 			<control/>
 			<control caption="Maximum:"/>
@@ -4091,7 +4091,7 @@
 			<control/>
 			<control/>
 			<control caption="Quelle(n)."/>
-			<control caption="_Ausblenden:"/>
+			<control caption="Ausblenden"/>
 			<control caption="Kein freier Uploadslot"/>
 			<control caption="Unpassende Ergebnisse"/>
 			<control caption="Push/LowID-Hosts"/>
@@ -4101,10 +4101,10 @@
 			<control caption="DRM-gesch. Dateien"/>
 			<control caption="Erotikfilter"/>
 			<control caption="Spamverdacht"/>
-			<control caption="Filter:"/>
+			<control caption="Benutzerdefinierte Filter"/>
 			<control/>
 			<control caption="Als Standard"/>
-			<control caption="_Speichern als..."/>
+			<control caption="Speichern als..."/>
 			<control caption="_Löschen"/>
 			<control caption="Filtern"/>
 			<control caption="Abbrechen"/>
@@ -4254,12 +4254,12 @@
 			<control caption="Wählen Sie ein Schema aus der Liste und anschließend die gewünschten Felder."/>
 		</dialog>
 		<dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuBuStCoStCoEdStEdStEdStBuBu" caption="Sicherheitsregel">
-			<control caption="_Regel:"/>
+			<control caption="Regel"/>
 			<control caption="Typ:"/>
 			<control caption="IP-Adresse|Inhaltsfilter"/>
 			<control caption="Kommentar:"/>
 			<control/>
-			<control caption="_Netzwerkadresse:"/>
+			<control caption="Netzwerkadresse"/>
 			<control caption="IP-Adresse:"/>
 			<control/>
 			<control/>
@@ -4270,7 +4270,7 @@
 			<control/>
 			<control/>
 			<control/>
-			<control caption="_Inhaltsfilter:"/>
+			<control caption="Inhaltsfilter"/>
 			<control/>
 			<control caption="logisch UND"/>
 			<control caption="logisch ODER"/>
@@ -4281,11 +4281,11 @@
 			<control caption="Läuft ab:"/>
 			<control caption="Nie (Unbegrenzt)|Bei Programmende|Nach:"/>
 			<control/>
-			<control caption="T"/>
+			<control caption="d"/>
 			<control/>
-			<control caption="S"/>
+			<control caption="h"/>
 			<control/>
-			<control caption="M"/>
+			<control caption="ms"/>
 			<control caption="OK"/>
 			<control caption="Abbrechen"/>
 		</dialog>
@@ -4633,7 +4633,7 @@
 			<column from="Country" to="Land"/>
 		</list>
 		<list name="CSecurityWnd">
-			<column from="Address / Content" to="Adresse/Inhalt"/>
+			<column from="Address / Content" to="Adresse / Inhalt"/>
 			<column from="Action" to="Aktion"/>
 			<column from="Expires" to="Läuft ab"/>
 			<column from="Precedence" to="Priorität"/>
