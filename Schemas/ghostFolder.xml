@@ -6,7 +6,7 @@ Shareaza Catalan Schemas File translated by Daniel Olivares Giménez; Equip de t
 Shareaza Chinese Simplified Schemas File translated by Sanley; John
 Shareaza Chinese Traditional Schemas File translated by James Bond
 Shareaza Czech Schemas File translated by Odin
-Shareaza German Schemas File translated by Spooky; jlh
+Shareaza German Schemas File translated by Spooky; jlh; OldDeath
 Shareaza Estonian Schemas File translated by Janza
 Shareaza Spanish Schemas File translated by Unknown
 Shareaza Spanish (Mexico) Schemas File translated by Help
@@ -103,7 +103,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="chs">回收文件</title>
                <title language="cht">鬼檔案</title>
                <title language="cz">Smazané soubory</title>
-               <title language="de">Verwalten der Geister-Dateien</title>
+               <title language="de">Geister-Dateien</title>
                <title language="ee">Varifailid</title>
                <title language="es">Ghost Files</title>
                <title language="es-mx">Ghost Files</title>

@@ -6,7 +6,7 @@ Shareaza Catalan Schemas File translated by Daniel Olivares Giménez; Equip de t
 Shareaza Chinese Simplified Schemas File translated by Sanley; John
 Shareaza Chinese Traditional Schemas File translated by James Bond
 Shareaza Czech Schemas File translated by Odin
-Shareaza German Schemas File translated by Spooky; jlh
+Shareaza German Schemas File translated by Spooky; jlh; OldDeath
 Shareaza Estonian Schemas File translated by Janza
 Shareaza Spanish Schemas File translated by Unknown
 Shareaza Spanish (Mexico) Schemas File translated by Help
@@ -132,7 +132,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="chs">我最喜欢的文件</title>
                <title language="cht">我的最愛檔案</title>
                <title language="cz">Moje oblíbené</title>
-               <title language="de">Favoriten</title>
+               <title language="de">Meine Favoriten</title>
                <title language="ee">Minu Lemmikfailid</title>
                <title language="es">Mis Archivos Favoritos</title>
                <title language="es-mx">Mis Archivos Favoritos</title>
@@ -159,7 +159,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="chs">此文件夹中包含了您向浏览您的收藏那个的用户所推荐的您最喜欢的文件。</subtitle>
                <subtitle language="cht">這個資料夾包含了最愛的檔案 Shareaza 將推薦給其他瀏覽您收藏的使用者.</subtitle>
                <subtitle language="cz">Tato složka obsahuje vaše oblíbené položky, které bude Shareaza doporučovat ostatním uživatelům, kteří si prohlíží vaše sdílené soubory.</subtitle>
-               <subtitle language="de">Dieser Ordner enthält empfohlene Dateien, die Benutzer sehen können, die ihre Freigaben durchsuchen.</subtitle>
+               <subtitle language="de">Dieser Ordner enthält Dateien, die anderen Benutzern beim Durchsuchen Ihrer Freigaben empfohlen werden.</subtitle>
                <subtitle language="ee">See kaust sisaldab sinu Lemmik faile, mida Shareaza soovitab sinu profiili vaatajatele.</subtitle>
                <subtitle language="es">Esta carpeta contiene archivos favoritos que Shareaza recomienda a otros usuarios que navegan por tu librería</subtitle>
                <subtitle language="es-mx">Esta carpeta contiene archivos favoritos que Shareaza recomienda a otros usuarios que navegan por tu librería</subtitle>

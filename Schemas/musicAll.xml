@@ -6,7 +6,7 @@ Shareaza Catalan Schemas File translated by Daniel Olivares Giménez; Equip de t
 Shareaza Chinese Simplified Schemas File translated by Sanley; John
 Shareaza Chinese Traditional Schemas File translated by James Bond
 Shareaza Czech Schemas File translated by Odin
-Shareaza German Schemas File translated by Spooky; jlh
+Shareaza German Schemas File translated by Spooky; jlh; OldDeath
 Shareaza Estonian Schemas File translated by Janza
 Shareaza Spanish Schemas File translated by Unknown
 Shareaza Spanish (Mexico) Schemas File translated by Help
@@ -127,13 +127,13 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="sr">Sva Muzika</title>
                <title language="sv">All musik</title>
                <title language="tr">Tüm Müzikler</title>
-               <subtitle language="en">This folder contains every music file in your library.</subtitle>
+               <subtitle language="en">This folder contains every audio file in your library.</subtitle>
                <subtitle language="af">Hierdie gids bevat alle musieklêers in jou biblioteek.</subtitle>
                <subtitle language="ca">Aquesta carpeta conté tota la música de la teva col·lecció.</subtitle>
                <subtitle language="chs">此文件夹包含您收藏中的所有音乐。</subtitle>
                <subtitle language="cht">這個資料夾包含了在您的收藏中所有的音樂檔案.</subtitle>
                <subtitle language="cz">Tato složka obsahuje všechnu hudbu v knihovně.</subtitle>
-               <subtitle language="de">Dieser Ordner enthält alle Musikdateien in ihrer Bibliothek.</subtitle>
+               <subtitle language="de">Dieser Ordner enthält alle Audiodateien Ihrer Bibliothek.</subtitle>
                <subtitle language="ee">See kaust sisaldab kõiki sinu raamatukogus olevaid laule.</subtitle>
                <subtitle language="es">Esta carpeta contiene toda la música de tu librería.</subtitle>
                <subtitle language="es-mx">Esta carpeta contiene toda la música de tu librería.</subtitle>

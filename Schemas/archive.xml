@@ -3,10 +3,10 @@
 <!--
 Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
 Shareaza Catalan Schemas File translated by Daniel Olivares Giménez; Equip de traduccions de FeshoCAT
-Shareaza Chinese Simplified Schemas File translated by Sanley; John
+Shareaza Chinese Simplified Schemas File translated by Sanley, John
 Shareaza Chinese Traditional Schemas File translated by James Bond
 Shareaza Czech Schemas File translated by Odin
-Shareaza German Schemas File translated by Spooky; jlh
+Shareaza German Schemas File translated by Spooky, jlh, OldDeath
 Shareaza Estonian Schemas File translated by Janza
 Shareaza Spanish Schemas File translated by Unknown
 Shareaza Spanish (Mexico) Schemas File translated by Help
@@ -16,16 +16,16 @@ Shareaza Hebrew Schemas File translated by _peer_ (H.L)
 Shareaza Croatian Schemas File translated by Biza
 Shareaza Hungarian Schemas File translated by Yuri
 Shareaza Italian Schemas File translated by ale5000
-Shareaza Japanese Schemas File translated by DukeDog; CyberBob
+Shareaza Japanese Schemas File translated by DukeDog, CyberBob
 Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
-Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); Jonne; Neglacio
-Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
-Shareaza Portuguese (Brasil) Schemas File translated by Lukas Taves (LightHeaven); Felipe
-Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
+Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog), Jonne, Neglacio
+Shareaza Norwegian Schemas File translated by Tom Seland (seli), vnmartinsen
+Shareaza Portuguese (Brasil) Schemas File translated by Lukas Taves (LightHeaven), Felipe
+Shareaza Russian Schemas File translated by dAbserver, Rolandas Rudomanskis
 Shareaza Slovenian Schemas File translated by Martin McDowell
 Shareaza Albanian Schemas File translated by Besmir Godole
 Shareaza Serbian Schemas File translated by Woodstoock
-Shareaza Swedish Schemas File translated by Marcus Ehrenlans; Printz; DanielB
+Shareaza Swedish Schemas File translated by Marcus Ehrenlans, Printz, DanielB
 Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları, zigotozor
 -->
 
@@ -38,7 +38,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları, zi
                <title language="chs">档案</title>
                <title language="cht">Archive</title>
                <title language="cz">Archive</title>
-               <title language="de">Archive</title>
+               <title language="de">Archiv</title>
                <title language="ee">Archive</title>
                <title language="es">Archive</title>
                <title language="es-mx">Archive</title>
@@ -98,7 +98,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları, zi
                        <title language="chs">文件夹</title>
                        <title language="cht">Folders</title>
                        <title language="cz">Folders</title>
-                       <title language="de">Folders</title>
+                       <title language="de">Ordner</title>
                        <title language="ee">Folders</title>
                        <title language="es">Folders</title>
                        <title language="es-mx">Folders</title>
@@ -127,7 +127,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları, zi
                        <title language="chs">文件</title>
                        <title language="cht">Files</title>
                        <title language="cz">Files</title>
-                       <title language="de">Files</title>
+                       <title language="de">Dateien</title>
                        <title language="ee">Files</title>
                        <title language="es">Files</title>
                        <title language="es-mx">Files</title>
@@ -244,7 +244,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları, zi
                        <title language="chs">加密</title>
                        <title language="cht">Encrypted</title>
                        <title language="cz">Encrypted</title>
-                       <title language="de">Encrypted</title>
+                       <title language="de">Verschlüsselt</title>
                        <title language="ee">Encrypted</title>
                        <title language="es">Encrypted</title>
                        <title language="es-mx">Encrypted</title>
@@ -274,7 +274,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları, zi
                        <title language="chs">解包大小</title>
                        <title language="cht">Unpacked Size</title>
                        <title language="cz">Unpacked Size</title>
-                       <title language="de">Unpacked Size</title>
+                       <title language="de">Entpackte Größe</title>
                        <title language="ee">Unpacked Size</title>
                        <title language="es">Unpacked Size</title>
                        <title language="es-mx">Unpacked Size</title>
@@ -308,6 +308,106 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları, zi
                <type extension="jar"/>
                <type extension="gz"/>
                <type extension="gzip"/>
+               <type extension="r00"/>
+               <type extension="r01"/>
+               <type extension="r02"/>
+               <type extension="r03"/>
+               <type extension="r04"/>
+               <type extension="r05"/>
+               <type extension="r06"/>
+               <type extension="r07"/>
+               <type extension="r08"/>
+               <type extension="r09"/>
+               <type extension="r10"/>
+               <type extension="r11"/>
+               <type extension="r12"/>
+               <type extension="r13"/>
+               <type extension="r14"/>
+               <type extension="r15"/>
+               <type extension="r16"/>
+               <type extension="r17"/>
+               <type extension="r18"/>
+               <type extension="r19"/>
+               <type extension="r20"/>
+               <type extension="r21"/>
+               <type extension="r22"/>
+               <type extension="r23"/>
+               <type extension="r24"/>
+               <type extension="r25"/>
+               <type extension="r26"/>
+               <type extension="r27"/>
+               <type extension="r28"/>
+               <type extension="r29"/>
+               <type extension="r30"/>
+               <type extension="r31"/>
+               <type extension="r32"/>
+               <type extension="r33"/>
+               <type extension="r34"/>
+               <type extension="r35"/>
+               <type extension="r36"/>
+               <type extension="r37"/>
+               <type extension="r38"/>
+               <type extension="r39"/>
+               <type extension="r40"/>
+               <type extension="r41"/>
+               <type extension="r42"/>
+               <type extension="r43"/>
+               <type extension="r44"/>
+               <type extension="r45"/>
+               <type extension="r46"/>
+               <type extension="r47"/>
+               <type extension="r48"/>
+               <type extension="r49"/>
+               <type extension="r50"/>
+               <type extension="r51"/>
+               <type extension="r52"/>
+               <type extension="r53"/>
+               <type extension="r54"/>
+               <type extension="r55"/>
+               <type extension="r56"/>
+               <type extension="r57"/>
+               <type extension="r58"/>
+               <type extension="r59"/>
+               <type extension="r60"/>
+               <type extension="r61"/>
+               <type extension="r62"/>
+               <type extension="r63"/>
+               <type extension="r64"/>
+               <type extension="r65"/>
+               <type extension="r66"/>
+               <type extension="r67"/>
+               <type extension="r68"/>
+               <type extension="r69"/>
+               <type extension="r70"/>
+               <type extension="r71"/>
+               <type extension="r72"/>
+               <type extension="r73"/>
+               <type extension="r74"/>
+               <type extension="r75"/>
+               <type extension="r76"/>
+               <type extension="r77"/>
+               <type extension="r78"/>
+               <type extension="r79"/>
+               <type extension="r80"/>
+               <type extension="r81"/>
+               <type extension="r82"/>
+               <type extension="r83"/>
+               <type extension="r84"/>
+               <type extension="r85"/>
+               <type extension="r86"/>
+               <type extension="r87"/>
+               <type extension="r88"/>
+               <type extension="r89"/>
+               <type extension="r90"/>
+               <type extension="r91"/>
+               <type extension="r92"/>
+               <type extension="r93"/>
+               <type extension="r94"/>
+               <type extension="r95"/>
+               <type extension="r96"/>
+               <type extension="r97"/>
+               <type extension="r98"/>
+               <type extension="r99"/>
                <type extension="rar"/>
                <type extension="tar"/>
                <type extension="tar.gz"/>

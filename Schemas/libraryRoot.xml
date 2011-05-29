@@ -6,7 +6,7 @@ Shareaza Catalan Schemas File translated by Daniel Olivares Giménez; Equip de t
 Shareaza Chinese Simplified Schemas File translated by Sanley; John
 Shareaza Chinese Traditional Schemas File translated by James Bond
 Shareaza Czech Schemas File translated by Odin
-Shareaza German Schemas File translated by Spooky; jlh
+Shareaza German Schemas File translated by Spooky; jlh; OldDeath
 Shareaza Estonian Schemas File translated by Janza
 Shareaza Spanish Schemas File translated by Unknown
 Shareaza Spanish (Mexico) Schemas File translated by Help
@@ -99,7 +99,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="chs">所有人</title>
                        <title language="cht">所有人</title>
                        <title language="cz">Majitel</title>
-                       <title language="de">Besitzer</title>
+                       <title language="de">Eigentümer</title>
                        <title language="ee">Omanik</title>
                        <title language="es">Dueño</title>
                        <title language="es-mx">Dueño</title>
@@ -161,7 +161,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="chs">欢迎来到您的库！</title>
                <title language="cht">歡迎來到您的收藏!</title>
                <title language="cz">Vítejte v knihovně!</title>
-               <title language="de">Willkommen in ihrer Bibliothek!</title>
+               <title language="de">Willkommen in Ihrer Bibliothek!</title>
                <title language="ee">Teretulemast  Minu Raamatukokku!</title>
                <title language="es">¡Bienvenido a Mi Librería!</title>
                <title language="es-mx">¡Bienvenido a Mi Librería!</title>
@@ -188,7 +188,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="chs">您总计有 {totalFiles} 个文件，共计 {totalVolume} 位于您的库中。</subtitle>
                <subtitle language="cht">您有 {totalFiles} 個檔案，總計大小 {totalVolume} 在您的收藏.</subtitle>
                <subtitle language="cz">V knihovně máte celkem {totalFiles} souborů o celkové velikosti {totalVolume}.</subtitle>
-               <subtitle language="de">Sie haben {totalFiles} Dateien in ihrer Bibliothek, die {totalVolume} belegen.</subtitle>
+               <subtitle language="de">Sie haben {totalFiles} Dateien in Ihrer Bibliothek, die {totalVolume} belegen.</subtitle>
                <subtitle language="ee">Sul on {totalFiles} faili, kokku {totalVolume} sinu raamatukogus.</subtitle>
                <subtitle language="es">Tienes {totalFiles} archivos  en tu librería y {totalVolume} de espacio.</subtitle>
                <subtitle language="es-mx">Tienes {totalFiles} archivos  en tu librería y {totalVolume} de espacio.</subtitle>

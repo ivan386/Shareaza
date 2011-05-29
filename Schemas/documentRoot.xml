@@ -6,7 +6,7 @@ Shareaza Catalan Schemas File translated by Daniel Olivares Giménez; Equip de t
 Shareaza Chinese Simplified Schemas File translated by Sanley; John
 Shareaza Chinese Traditional Schemas File translated by James Bond
 Shareaza Czech Schemas File translated by Odin
-Shareaza German Schemas File translated by Spooky; jlh
+Shareaza German Schemas File translated by Spooky; jlh; OldDeath
 Shareaza Estonian Schemas File translated by Janza
 Shareaza Spanish Schemas File translated by Unknown
 Shareaza Spanish (Mexico) Schemas File translated by Help
@@ -106,7 +106,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="chs">欢迎来到我的文档！</title>
                <title language="cht">歡迎來到我的文件!</title>
                <title language="cz">Moje dokumenty</title>
-               <title language="de">Willkommen zu Meine Dokumente!</title>
+               <title language="de">Willkommen in Eigene Dokumente!</title>
                <title language="ee">Teretulemast   Minu Dokumentidesse!</title>
                <title language="es">¡Bienvenido a Mis documentos!</title>
                <title language="es-mx">¡Bienvenido a Mis documentos!</title>
@@ -133,7 +133,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="chs">这些文件夹包含您所有的文档。</subtitle>
                <subtitle language="cht">這些文件夾包含您所有的文件</subtitle>
                <subtitle language="cz">Tyto složky obsahují všechny dokumenty v knihovně.</subtitle>
-               <subtitle language="de">Diese Ordner enthalten alle ihre Dokumente.</subtitle>
+               <subtitle language="de">Diese Ordner enthalten alle Ihre Dokumente.</subtitle>
                <subtitle language="ee">Need kaustad sisaldavad kõiki sinu Dokumente</subtitle>
                <subtitle language="es">Estas carpetas contienen todos tus documentos.</subtitle>
                <subtitle language="es-mx">Estas carpetas contienen todos tus documentos.</subtitle>

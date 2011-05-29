@@ -6,7 +6,7 @@ Shareaza Catalan Schemas File translated by Daniel Olivares Giménez; Equip de t
 Shareaza Chinese Simplified Schemas File translated by Sanley; John
 Shareaza Chinese Traditional Schemas File translated by James Bond
 Shareaza Czech Schemas File translated by Odin
-Shareaza German Schemas File translated by Spooky; jlh
+Shareaza German Schemas File translated by Spooky; jlh; OldDeath
 Shareaza Estonian Schemas File translated by Janza
 Shareaza Spanish Schemas File translated by Unknown
 Shareaza Spanish (Mexico) Schemas File translated by Help
@@ -39,7 +39,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="chs">图片相册</title>
                <title language="cht">圖片相簿</title>
                <title language="cz">Album obrázků</title>
-               <title language="de">Bilderalbum</title>
+               <title language="de">Fotoalbum</title>
                <title language="ee">Piltide Album</title>
                <title language="es">Album de Imágenes</title>
                <title language="es-mx">Album de Imágenes</title>
@@ -131,7 +131,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="chs">类型</title>
                        <title language="cht">類型</title>
                        <title language="cz">Typ</title>
-                       <title language="de">Art</title>
+                       <title language="de">Typ</title>
                        <title language="ee">Tüüp</title>
                        <title language="es">Arte</title>
                        <title language="es-mx">Arte</title>
@@ -212,7 +212,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="tr">Koleksiyoncu</title>
                </member>
                <member name="distributer" search="indexed">
-                       <title language="en">Distributer</title>
+                       <title language="en">Distributor</title>
                        <title language="af">Verspreider</title>
                        <title language="ca">Distribuïdor</title>
                        <title language="chs">内容提供商</title>
@@ -241,13 +241,13 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="tr">Dağıtıcı</title>
                </member>
                <member name="distributerLink">
-                      <title language="en">Distributer Link</title>
+                      <title language="en">Distributor Link</title>
                       <title language="af">Verspreider Skakel</title>
                       <title language="ca">Enllaç del distribuïdor</title>
                       <title language="chs">促销链接</title>
                       <title language="cht">經銷商連結</title>
                       <title language="cz">Odkaz na distributora</title>
-                      <title language="de">Link zum Herausgeber</title>
+                      <title language="de">Link des Herausgebers</title>
                       <title language="ee">Levitaja Link</title>
                       <title language="es">Link del Distribuidor</title>
                       <title language="es-mx">Link del Distribuidor</title>
@@ -276,7 +276,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="chs">发行组织</title>
                        <title language="cht">釋放團體</title>
                        <title language="cz">Vydala skupina:</title>
-                       <title language="de">Release Group</title>
+                       <title language="de">Releasegruppe</title>
                        <title language="ee">Väljalaske Grupp</title>
                        <title language="es">Release Group</title>
                        <title language="es-mx">Release Group</title>
@@ -305,7 +305,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="chs">发行组织链接</title>
                        <title language="cht">釋放團體連結</title>
                        <title language="cz">Odkaz na vydavatele:</title>
-                       <title language="de">Release Group Link</title>
+                       <title language="de">Link der Releasegruppe</title>
                        <title language="ee">Väljalaske Grupi Link</title>
                        <title language="es">Release Group Link</title>
                        <title language="es-mx">Release Group Link</title>

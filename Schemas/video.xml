@@ -6,7 +6,7 @@ Shareaza Catalan Schemas File translated by Daniel Olivares Giménez; Equip de t
 Shareaza Chinese Simplified Schemas File translated by Sanley; John
 Shareaza Chinese Traditional Schemas File translated by James Bond
 Shareaza Czech Schemas File translated by Odin
-Shareaza German Schemas File translated by Spooky; jlh
+Shareaza German Schemas File translated by Spooky; jlh; OldDeath
 Shareaza Estonian Schemas File translated by Janza
 Shareaza Spanish Schemas File translated by Unknown
 Shareaza Spanish (Mexico) Schemas File translated by Help
@@ -99,7 +99,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="chs">类型</title>
                        <title language="cht">類型</title>
                        <title language="cz">Typ</title>
-                       <title language="de">Art</title>
+                       <title language="de">Typ</title>
                        <title language="ee">Tüüp</title>
                        <title language="es">Arte</title>
                        <title language="es-mx">Arte</title>
@@ -248,7 +248,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="chs">原始发行日期</title>
                        <title language="cht">原始的發表日期</title>
                        <title language="cz">Původní datum vysílání</title>
-                       <title language="de">Erstmalige Ausstrahlung</title>
+                       <title language="de">Erstausstrahlung</title>
                        <title language="ee">Väljalaske Aeg</title>
                        <title language="es">Fecha Original al aire</title>
                        <title language="es-mx">Fecha Original al aire</title>
@@ -511,7 +511,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="chs">演员</title>
                        <title language="cht">演員</title>
                        <title language="cz">Herci</title>
-                       <title language="de">Schauspieler</title>
+                       <title language="de">Darsteller</title>
                        <title language="ee">Näitlejad</title>
                        <title language="es">Actores</title>
                        <title language="es-mx">Actores</title>
@@ -540,7 +540,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="chs">IMDB 链接</title>
                        <title language="cht">IMDB 連結</title>
                        <title language="cz">IMDB odkaz</title>
-                       <title language="de">IMDB Link</title>
+                       <title language="de">IMDB-Link</title>
                        <title language="ee">IMDB Link</title>
                        <title language="es">IMDB Link</title>
                        <title language="es-mx">IMDB Link</title>
@@ -1001,7 +1001,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="tr">P2P Yayın Tarihi</title>
                </member>
                <member name="Distributer" search="indexed">
-                       <title language="en">Distributer</title>
+                       <title language="en">Distributor</title>
                        <title language="af">Verspreider</title>
                        <title language="ca">Distribuïdor</title>
                        <title language="chs">内容提供商</title>
@@ -1030,13 +1030,13 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="tr">Dağıtıcı</title>
                </member>
                <member name="DistributerLink">
-                       <title language="en">Distributer Link</title>
+                       <title language="en">Distributor Link</title>
                        <title language="af">Verspreider Skakel</title>
                        <title language="ca">Enllaç del distribuïdor</title>
                        <title language="chs">促销链接</title>
                        <title language="cht">經銷商連結</title>
                        <title language="cz">Odkaz na distributora</title>
-                       <title language="de">Link zum Herausgeber</title>
+                       <title language="de">Link des Herausgebers</title>
                        <title language="ee">Levitaja Link</title>
                        <title language="es">Link del Distribuidor</title>
                        <title language="es-mx">Link del Distribuidor</title>
@@ -1065,7 +1065,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="chs">发行组织</title>
                        <title language="cht">釋放團體</title>
                        <title language="cz">Vydala skupina:</title>
-                       <title language="de">Release Group</title>
+                       <title language="de">Releasegruppe</title>
                        <title language="ee">Väljalaske Grupp</title>
                        <title language="es">Release Group</title>
                        <title language="es-mx">Release Group</title>
@@ -1094,7 +1094,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="chs">发行组织链接</title>
                        <title language="cht">釋放團體連結</title>
                        <title language="cz">Odkaz na vydavatele:</title>
-                       <title language="de">Release Group Link</title>
+                       <title language="de">Link der Releasegruppe</title>
                        <title language="ee">Väljalaske Grupi Link</title>
                        <title language="es">Release Group Link</title>
                        <title language="es-mx">Release Group Link</title>

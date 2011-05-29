@@ -6,7 +6,7 @@ Shareaza Catalan Schemas File translated by Daniel Olivares Giménez; Equip de t
 Shareaza Chinese Simplified Schemas File translated by Sanley; John
 Shareaza Chinese Traditional Schemas File translated by James Bond
 Shareaza Czech Schemas File translated by Odin
-Shareaza German Schemas File translated by Spooky; jlh
+Shareaza German Schemas File translated by Spooky; jlh; OldDeath
 Shareaza Estonian Schemas File translated by Janza
 Shareaza Spanish Schemas File translated by Unknown
 Shareaza Spanish (Mexico) Schemas File translated by Help
@@ -133,7 +133,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="chs">这些文件夹包含您所有的书籍。</subtitle>
                <subtitle language="cht">這些資料夾包含了您所有的書籍.</subtitle>
                <subtitle language="cz">Tyto složky obsahují všechny knihy v knihovně.</subtitle>
-               <subtitle language="de">Diese Ordner enthalten alle ihre Bücher.</subtitle>
+               <subtitle language="de">Diese Ordner enthalten alle Ihre Bücher.</subtitle>
                <subtitle language="ee">Need kaustad sisaldavad kõiki sinu Raamatuid</subtitle>
                <subtitle language="es">Estas carpetas contienen todos tus libros</subtitle>
                <subtitle language="es-mx">Estas carpetas contienen todos tus libros</subtitle>

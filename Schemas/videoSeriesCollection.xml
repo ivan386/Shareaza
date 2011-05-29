@@ -6,7 +6,7 @@ Shareaza Catalan Schemas File translated by Daniel Olivares Giménez; Equip de t
 Shareaza Chinese Simplified Schemas File translated by Sanley; John
 Shareaza Chinese Traditional Schemas File translated by James Bond
 Shareaza Czech Schemas File translated by Odin
-Shareaza German Schemas File translated by Spooky; jlh
+Shareaza German Schemas File translated by Spooky; jlh; OldDeath
 Shareaza Estonian Schemas File translated by Janza
 Shareaza Spanish Schemas File translated by Unknown
 Shareaza Spanish (Mexico) Schemas File translated by Help
@@ -133,7 +133,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="chs">此文件夹包含您收藏中电视系列的清单。</subtitle>
                <subtitle language="cht">這個資料夾包含了在您的收藏中一個 TV 系列清單.</subtitle>
                <subtitle language="cz">Tato složka obsahuje seznam TV seriálů, které máte v knihovně.</subtitle>
-               <subtitle language="de">Dieser Ordner enthält eine Liste der Fernsehserien in ihrer Bibliothek.</subtitle>
+               <subtitle language="de">Dieser Ordner enthält eine Liste der Fernsehserien Ihrer Bibliothek.</subtitle>
                <subtitle language="ee">See kaust sisaldab nimekirja TV sarjadest sinu raamatukogus</subtitle>
                <subtitle language="es">Esta carpeta contiene una lista de Series de TV que tienes en tu librería</subtitle>
                <subtitle language="es-mx">Esta carpeta contiene una lista de Series de TV que tienes en tu librería</subtitle>

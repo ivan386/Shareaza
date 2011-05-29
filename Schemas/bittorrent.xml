@@ -6,7 +6,7 @@ Shareaza Catalan Schemas File translated by Daniel Olivares Giménez; Equip de t
 Shareaza Chinese Simplified Schemas File translated by Sanley; John
 Shareaza Chinese Traditional Schemas File translated by James Bond
 Shareaza Czech Schemas File translated by Odin
-Shareaza German Schemas File translated by Spooky; jlh
+Shareaza German Schemas File translated by Spooky; jlh; OldDeath
 Shareaza Estonian Schemas File translated by Janza
 Shareaza Spanish Schemas File translated by Unknown
 Shareaza Spanish (Mexico) Schemas File translated by Help
@@ -69,7 +69,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="chs">信息哈希</title>
                        <title language="cht">Info Hash</title>
                        <title language="cz">Hash</title>
-                       <title language="de">Info Hash</title>
+                       <title language="de">Info-Hash</title>
                        <title language="ee">Info Hash</title>
                        <title language="es">Info Hash</title>
                        <title language="es-mx">Info Hash</title>
@@ -129,7 +129,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="chs">编码</title>
                        <title language="cht">Encoding</title>
                        <title language="cz">Kódování</title>
-                       <title language="de">Encoding</title>
+                       <title language="de">Kodierung</title>
                        <title language="ee">Encoding</title>
                        <title language="es">Encoding</title>
                        <title language="es-mx">Encoding</title>
@@ -159,7 +159,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="chs">创建媒体日期</title>
                        <title language="cht">Creation Date</title>
                        <title language="cz">Datum vytvoření:</title>
-                       <title language="de">Creation Date</title>
+                       <title language="de">Erstellungsdatum</title>
                        <title language="ee">Creation Date</title>
                        <title language="es">Creation Date</title>
                        <title language="es-mx">Creation Date</title>
@@ -189,7 +189,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="chs">制作人</title>
                        <title language="cht">Created By</title>
                        <title language="cz">Vytvořil:</title>
-                       <title language="de">Created By</title>
+                       <title language="de">Erstellt von</title>
                        <title language="ee">Created By</title>
                        <title language="es">Created By</title>
                        <title language="es-mx">Created By</title>
