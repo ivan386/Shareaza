@@ -2733,6 +2733,15 @@
     <None Include="Res\style.css.gz">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="Res\ContactJabber.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Res\user.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Res\user_me.ico">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="Res\About.htm">

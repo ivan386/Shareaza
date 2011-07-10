@@ -142,6 +142,7 @@
 				PreprocessorDefinitions="WIN64;_DEBUG;_WINDOWS;_CRT_NONSTDC_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_WARNINGS"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
+				EnableFunctionLevelLinking="true"
 				FloatingPointModel="2"
 				RuntimeTypeInfo="false"
 				UsePrecompiledHeader="2"
@@ -230,7 +231,6 @@
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_CRT_NONSTDC_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_WARNINGS"
 				StringPooling="true"
 				RuntimeLibrary="0"
-				EnableEnhancedInstructionSet="2"
 				FloatingPointModel="2"
 				RuntimeTypeInfo="false"
 				UsePrecompiledHeader="2"
@@ -570,11 +570,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\shareaza\Res\Wizard.bmp"
+				RelativePath=".\Res\Wizard.bmp"
 				>
 			</File>
 			<File
-				RelativePath=".\Res\Wizard.bmp"
+				RelativePath="..\shareaza\Res\Wizard.bmp"
 				>
 			</File>
 		</Filter>
