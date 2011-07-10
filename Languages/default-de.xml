@@ -530,8 +530,8 @@
 					<item id="ID_VIEW_SCHEDULER" text="Sch_eduler"/>
 				</menu>
 				<separator/>
-				<item id="ID_VIEW_BASIC" text="_Normalmodus"/>
-				<item id="ID_VIEW_TABBED" text="_Powermodus"/>
+				<item id="ID_VIEW_BASIC" text="_Vereinfachter Modus"/>
+				<item id="ID_VIEW_TABBED" text="_Power-Modus"/>
 			</menu>
 			<menu text="_Extras">
 				<item id="ID_LIBRARY_FOLDERS" text="Dateien _freigeben..."/>
@@ -719,7 +719,7 @@
 				<item id="ID_VIEW_SEARCH_MONITOR" text="S_uchmonitor" shortcut="Ctrl+F2"/>
 				<item id="ID_VIEW_RESULTS_MONITOR" text="_Treffermonitor" shortcut="Ctrl+F3"/>
 				<separator/>
-				<item id="ID_VIEW_BASIC" text="_Normalmodus"/>
+				<item id="ID_VIEW_BASIC" text="_Vereinfachter Modus"/>
 				<item id="ID_VIEW_TABBED" text="T_ab-Modus"/>
 				<item id="ID_VIEW_WINDOWED" text="_Fenster-Modus"/>
 			</menu>
@@ -2661,7 +2661,7 @@
 		<tip id="ID_UPLOADS_LAUNCH" message="Die markierte(n) Datei(en) öffnen."/>
 		<tip id="ID_UPLOADS_SETTINGS" message="Uploads konfigurieren..."/>
 		<tip id="ID_UPLOADS_START" message="Upload zu dem / den markierten Client(s) starten."/>
-		<tip id="ID_VIEW_BASIC" message="Shareaza im Normalmodus verwenden und erweiterte Funktionen ausblenden."/>
+		<tip id="ID_VIEW_BASIC" message="Shareaza im vereinfachten Modus verwenden und erweiterte Funktionen ausblenden."/>
 		<tip id="ID_VIEW_DISCOVERY" message="Das Service-Provider-Fenster ein- oder ausblenden."/>
 		<tip id="ID_VIEW_DOWNLOADS" message="Das Download-Fenster ein- oder ausblenden."/>
 		<tip id="ID_VIEW_HOSTS" message="Das Host-Cache-Fenster ein- oder ausblenden."/>
@@ -3928,10 +3928,10 @@
 		<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBu" caption="Willkommen bei Shareaza [Schritt 2 von 7]">
 			<control caption="Shareaza bietet eine flexible Benutzeroberfläche. Sie können also wählen, was Ihnen am angenehmsten ist. Sie können diese Optionen jederzeit ändern."/>
 			<control caption="Bitte wählen Sie eine Benutzeroberfläche:"/>
-			<control caption="Normalmodus"/>
-			<control caption="Powermodus"/>
+			<control caption="Vereinfachter Modus"/>
+			<control caption="Power-Modus"/>
 			<control caption="Simple, einfach zu bedienende Menüs und Buttons."/>
-			<control caption="Der Powermodus bietet viele zusätzliche Befehle, Fenster, usw."/>
+			<control caption="Der Power-Modus bietet viele zusätzliche Befehle, Fenster, usw."/>
 			<control caption="Einfache Download-Fortschrittsanzeigen verwenden. (Verringert CPU-Last)"/>
 			<control caption="Shareaza mit .torrent-Dateien verknüpfen."/>
 		</dialog>
@@ -4285,7 +4285,7 @@
 			<control/>
 			<control caption="h"/>
 			<control/>
-			<control caption="ms"/>
+			<control caption="min"/>
 			<control caption="OK"/>
 			<control caption="Abbrechen"/>
 		</dialog>
@@ -4626,7 +4626,7 @@
 			<column from="Bandwidth" to="Bandbreite"/>
 			<column from="Total" to="Gesamt"/>
 			<column from="Flow" to="Fluss"/>
-			<column from="Leaves" to="Verlässt"/>
+			<column from="Leaves" to="Leaves"/>
 			<column from="Mode" to="Modus"/>
 			<column from="Client" to="Client"/>
 			<column from="Name" to="Name"/>
