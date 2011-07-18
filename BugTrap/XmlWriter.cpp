@@ -173,7 +173,7 @@ BOOL CXmlWriter::WriteBase64(const BYTE* pBytes, DWORD dwNumBytes)
 			for (DWORD dwBytePos = 0; dwBytePos < 4; ++dwBytePos)
 			{
 				BYTE bValue = (BYTE)(dwAccumulator >> 26); // Extract the following 6 bits from the 32-bit accumulator
-				_ASSERTE(bValue >= 0 && bValue < countof(s_arrBase64EncodingTable));
+				_ASSERTE(bValue < countof(s_arrBase64EncodingTable));
 				if (! m_EncStream.WriteByte(s_arrBase64EncodingTable[bValue]))
 					return FALSE;
 				dwAccumulator <<= 6; // Prepare next 6 bits
@@ -194,7 +194,7 @@ BOOL CXmlWriter::WriteBase64(const BYTE* pBytes, DWORD dwNumBytes)
 		for (DWORD dwBytePos = 0; dwBytePos < dwOutputBytes; ++dwBytePos)
 		{
 			BYTE bValue = (BYTE)(dwAccumulator >> 26); // Extract the following 6 bits from the 32-bit accumulator
-			_ASSERTE(bValue >= 0 && bValue < countof(s_arrBase64EncodingTable));
+			_ASSERTE(bValue < countof(s_arrBase64EncodingTable));
 			if (! m_EncStream.WriteByte(s_arrBase64EncodingTable[bValue]))
 				return FALSE;
 			dwAccumulator <<= 6; // Prepare next 6 bits

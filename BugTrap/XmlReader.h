@@ -897,7 +897,7 @@ inline void CXmlReader::CXmlInputStream::UnsafeWriteChar(TCHAR chValue)
  */
 inline void CXmlReader::CXmlInputStream::UnsafeWriteChar(const TCHAR arrChar[2], size_t nCharSize)
 {
-	_ASSERTE(nCharSize >= 0 && nCharSize < 2);
+	_ASSERTE(nCharSize < 2);
 	UnsafeWriteChar(arrChar[0]);
 	if (nCharSize > 1)
 		UnsafeWriteChar(arrChar[1]);
@@ -919,7 +919,7 @@ inline void CXmlReader::CXmlInputStream::UnsafePutCharBack(TCHAR chValue)
  */
 inline void CXmlReader::CXmlInputStream::UnsafePutCharBack(const TCHAR arrChar[2], size_t nCharSize)
 {
-	_ASSERTE(nCharSize >= 0 && nCharSize < 2);
+	_ASSERTE(nCharSize < 2);
 	if (nCharSize > 1)
 		UnsafePutCharBack(arrChar[1]);
 	UnsafePutCharBack(arrChar[0]);
@@ -943,8 +943,8 @@ inline void CXmlReader::CXmlInputStream::UnsafePutCharsBack(const TCHAR* pChars,
 {
 	if (nNumChars > 0)
 	{
-		for (size_t nCharPos = nNumChars - 1; nCharPos >= 0; --nCharPos)
-			UnsafePutCharBack(pChars[nCharPos]);
+		for (size_t nCharPos = 0; nCharPos < nNumChars; ++nCharPos)
+			UnsafePutCharBack(pChars[nNumChars - 1 - nCharPos]);
 	}
 }
 

@@ -47,8 +47,10 @@ static BOOL TransferStatusPane_OnInitDialog(HWND hwnd, HWND hwndFocus, LPARAM /*
 	hwndFocus;
 
 	CStrStream Stream(1024);
-	TCHAR szMessageText[128];
-	HICON hIcon;
+	TCHAR szErrorMessageTemplate[256] = {};
+	TCHAR szErrorMessage[256] = {};
+	TCHAR szMessageText[128] = {};
+	HICON hIcon = NULL;
 
 	DWORD dwErrorCode = g_pTransferThreadParams->GetErrorCode();
 	if (dwErrorCode == ERROR_SUCCESS)
@@ -65,9 +67,7 @@ static BOOL TransferStatusPane_OnInitDialog(HWND hwnd, HWND hwndFocus, LPARAM /*
 		PCTSTR pszErrorMessage = g_pTransferThreadParams->GetErrorMessage();
 		if (pszErrorMessage == NULL)
 		{
-			TCHAR szErrorMessageTemplate[256];
 			LoadString(g_hInstance, IDS_UNDEFINED_ERROR_EX, szErrorMessageTemplate, countof(szErrorMessageTemplate));
-			TCHAR szErrorMessage[256];
 			_stprintf_s(szErrorMessage, countof(szErrorMessage), szErrorMessageTemplate, dwErrorCode);
 			pszErrorMessage = szErrorMessage;
 		}

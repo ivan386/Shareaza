@@ -151,7 +151,7 @@ BOOL CMapiSession::Logon(HWND hwndParent, BOOL bNewSession)
 		flags |= MAPI_NEW_SESSION;
 
 	// First try to acquire a new MAPI session using the supplied settings using the MAPILogon() function
-	m_ulLastError = m_pfnMAPILogon((ULONG)hwndParent, NULL, NULL, flags, 0, &m_hSession);
+	m_ulLastError = m_pfnMAPILogon((ULONG_PTR)hwndParent, NULL, NULL, flags, 0, &m_hSession);
 	return (m_ulLastError == SUCCESS_SUCCESS);
 }
 
@@ -369,11 +369,10 @@ BOOL CMapiSession::Send(const CMapiMessage& rMessage, BOOL bShowMessageEditor, H
 	}
 
 	// Setup the sender
+	MapiRecipDesc recipOrigin = {};
 	const CStrHolder& strFrom = rMessage.GetFrom();
 	if (! strFrom.IsEmpty())
 	{
-		MapiRecipDesc recipOrigin;
-		ZeroMemory(&recipOrigin, sizeof(recipOrigin));
 		InitRecipient(MAPI_ORIG, recipOrigin, strFrom);
 		mapiMessage.lpOriginator = &recipOrigin;
 	}
@@ -492,7 +491,7 @@ BOOL CMapiSession::Send(const CMapiMessage& rMessage, BOOL bShowMessageEditor, H
 	}
 
 	// Do the actual send using MAPISendMail()
-	m_ulLastError = m_pfnMAPISendMail(m_hSession, (ULONG)hwndParent, &mapiMessage, flags, 0);
+	m_ulLastError = m_pfnMAPISendMail(m_hSession, (ULONG_PTR)hwndParent, &mapiMessage, flags, 0);
 
 	// Tidy up the attachments
 	if (nNumAttachments)

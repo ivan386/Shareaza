@@ -124,7 +124,7 @@ void DisplayWaitBanner(HWND hwnd)
  */
 void ValidateScrollInfo(SCROLLINFO* pSInfo)
 {
-	_ASSERTE(pSInfo->nMax >= 0 && pSInfo->nPage >= 0);
+	_ASSERTE(pSInfo->nMax >= 0);
 	if ((UINT)pSInfo->nMax + 1 <= pSInfo->nPage)
 		pSInfo->nMax = pSInfo->nPage = 0;
 	if (pSInfo->nPos < 0)
@@ -282,7 +282,7 @@ size_t GetCanonicalAppName(PTSTR pszAppName, size_t nBufferSize, BOOL bAllowSpac
 			{
 				/*if (*arrCharType & C1_SPACE)
 					pszAppName[nDstPos++] = _T('_');*/
-				nSrcPos += (DWORD)nCharSize;
+				nSrcPos += nCharSize;
 			}
 		}
 		pszAppName[nDstPos] = _T('\0');

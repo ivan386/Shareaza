@@ -148,6 +148,7 @@ static BOOL MachineStateDlg_OnInitDialog(HWND hwnd, HWND hwndFocus, LPARAM lPara
 	LoadString(g_hInstance, IDS_COLUMN_BASE, szColumnTitle, countof(szColumnTitle));
 	ListView_InsertColumn(hwndModuleList, CID_MODULE_BASE, &lvc);
 
+	TCHAR szProcessID[64];
 	CEnumProcess::CProcessEntry ProcEntry;
 	if (g_pEnumProc->GetProcessFirst(ProcEntry))
 	{
@@ -157,7 +158,6 @@ static BOOL MachineStateDlg_OnInitDialog(HWND hwnd, HWND hwndFocus, LPARAM lPara
 		int iItemPos = 0;
 		do
 		{
-			TCHAR szProcessID[64];
 			_ultot_s(ProcEntry.m_dwProcessID, szProcessID, countof(szProcessID), 10);
 			lvi.iItem = iItemPos;
 			lvi.pszText = szProcessID;
@@ -217,6 +217,8 @@ static void MachineStateDlg_OnGetMinMaxInfo(HWND hwnd, PMINMAXINFO pMinMaxInfo)
  */
 static LRESULT MachineStateDlg_OnNotify(HWND hwnd, int idCtrl, LPNMHDR pnmh)
 {
+	TCHAR szMessage[100];
+
 	switch (pnmh->code)
 	{
 	case LVN_ITEMCHANGED:
@@ -261,7 +263,6 @@ static LRESULT MachineStateDlg_OnNotify(HWND hwnd, int idCtrl, LPNMHDR pnmh)
 					}
 					else
 					{
-						TCHAR szMessage[100];
 						LoadString(g_hInstance, IDS_ERROR_NOT_AVAILABLE, szMessage, countof(szMessage));
 						lvi.iItem = 0;
 						lvi.pszText = szMessage;

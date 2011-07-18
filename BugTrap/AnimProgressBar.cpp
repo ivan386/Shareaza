@@ -90,11 +90,11 @@ void CAnimProgressBar::SetTimeout(DWORD dwTimeout)
  */
 void CAnimProgressBar::DrawAnimProgressBar(HDC hdc, const RECT* prcPaint) const
 {
+	RECT rcPaintClient = {};
 	if (prcPaint == NULL)
 	{
-		RECT rcClient;
-		GetClientRect(m_hwnd, &rcClient);
-		prcPaint = &rcClient;
+		GetClientRect(m_hwnd, &rcPaintClient);
+		prcPaint = &rcPaintClient;
 	}
 	if (IsRectEmpty(prcPaint))
 		return;
