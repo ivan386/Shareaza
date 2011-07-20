@@ -156,6 +156,8 @@ void CShareazaCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag, BOO
 /////////////////////////////////////////////////////////////////////////////
 // CShareazaApp
 
+IMPLEMENT_DYNAMIC(CShareazaApp, CWinApp)
+
 BEGIN_MESSAGE_MAP(CShareazaApp, CWinApp)
 END_MESSAGE_MAP()
 
@@ -616,7 +618,7 @@ BOOL CShareazaApp::ParseCommandLine()
 	return TRUE;
 }
 
-void CShareazaApp::WinHelp(DWORD /*dwData*/, UINT /*nCmd*/)
+void CShareazaApp::WinHelp(DWORD_PTR /*dwData*/, UINT /*nCmd*/)
 {
 	// Suppress F1
 }

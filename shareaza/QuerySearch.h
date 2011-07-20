@@ -88,19 +88,7 @@ public:
 	Hash32List			m_oURNs;			// Hashed URNs
 	Hash32List			m_oKeywordHashList;	// list of hashed keywords to BOOST QUery Routing.
 
-private:
-	typedef std::pair< LPCTSTR, size_t > WordEntry;
-	struct CompareWordEntries
-	{
-		bool operator()(const WordEntry& lhs, const WordEntry& rhs) const
-		{
-			int cmp = _tcsnicmp( lhs.first, rhs.first, min( lhs.second, rhs.second ) );
-			return cmp < 0 || cmp == 0 && lhs.second < rhs.second;
-		}
-	};
-
 public:
-	typedef std::set< WordEntry, CompareWordEntries > WordTable;
 	typedef WordTable::iterator iterator;
 	typedef WordTable::const_iterator const_iterator;
 	typedef Hash32List::iterator hash_iterator;
@@ -148,9 +136,6 @@ public:
 	BOOL					CheckValid(bool bExpression = true);
 	void					PrepareCheck();
 private:
-	void					BuildWordTable();
-	void					BuildG2PosKeywords();
-	void					SlideKeywords(CString& strPhrase);
 	BOOL					WriteHashesToEDPacket(CEDPacket* pPacket, BOOL bUDP) const;
 
 // Utilities
@@ -159,7 +144,6 @@ public:
 	static CSearchWnd*		OpenWindow(CQuerySearch* pSearch);
 	static BOOL				WordMatch(LPCTSTR pszString, LPCTSTR pszFind, bool* bReject = NULL);
 	static BOOL				NumberMatch(const CString& strValue, const CString& strRange);
-	static CString			MakeKeywords(const CString& strPhrase, bool bExpression = true);
 	static void				SearchHelp();	// Shows some search help dialogs
 	static BOOL				CheckOverflow(const CString& sSearch);
 };

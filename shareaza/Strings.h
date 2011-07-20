@@ -21,12 +21,25 @@
 
 #pragma once
 
+#include <set>
+
+
 bool IsCharacter(WCHAR nChar);
 bool IsHiragana(WCHAR nChar);
 bool IsKatakana(WCHAR nChar);
 bool IsKanji(WCHAR nChar);
 bool IsWord(LPCTSTR pszString, size_t nStart, size_t nLength);
 void IsType(LPCTSTR pszString, size_t nStart, size_t nLength, bool& bWord, bool& bDigit, bool& bMix);
+
+typedef enum
+{
+	sNone		= 0,
+	sNumeric	= 1,
+	sRegular	= 2,
+	sKanji		= 4,
+	sHiragana	= 8,
+	sKatakana	= 16
+} ScriptType;
 
 class CLowerCaseTable
 {
@@ -87,3 +100,27 @@ BOOL ReplaceNoCase(CString& sInStr, LPCTSTR pszOldStr, LPCTSTR pszNewStr);
 
 // Returns "a.a.a.a:port"
 CString HostToString(const SOCKADDR_IN* pHost);
+
+// Function is used to split a phrase in asian languages to separate keywords
+// to ease keyword matching, allowing user to type as in the natural language.
+// Spacebar key is not a convenient way to separate keywords with IME, and user
+// may not know how application is keywording their files.
+//
+// The function splits katakana, hiragana and CJK phrases out of the input string.
+// ToDo: "minus" words and quoted phrases for asian languages may not work correctly in all cases.
+CString MakeKeywords(const CString& strPhrase, bool bExpression = true);
+
+typedef std::pair< LPCTSTR, size_t > WordEntry;
+
+struct CompareWordEntries : public std::binary_function< WordEntry, WordEntry, bool >
+{
+	bool operator()(const WordEntry& lhs, const WordEntry& rhs) const
+	{
+		int cmp = _tcsnicmp( lhs.first, rhs.first, min( lhs.second, rhs.second ) );
+		return ( cmp < 0 || cmp == 0 && lhs.second < rhs.second );
+	}
+};
+
+typedef std::set< WordEntry, CompareWordEntries > WordTable;
+
+void BuildWordTable(LPCTSTR pszWord, WordTable& oWords, WordTable& oNegWords);

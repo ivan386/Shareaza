@@ -71,9 +71,11 @@ private:
 
 class CShareazaApp : public CWinApp
 {
+	DECLARE_DYNAMIC(CShareazaApp)
+
 public:
 	CShareazaApp();
-	~CShareazaApp();
+	virtual ~CShareazaApp();
 
 	HANDLE				m_pMutex;
 	CMutex				m_pSection;
@@ -203,7 +205,7 @@ protected:
 
 	virtual BOOL		InitInstance();
 	virtual int			ExitInstance();
-	virtual void		WinHelp(DWORD dwData, UINT nCmd = HELP_CONTEXT);
+	virtual void		WinHelp(DWORD_PTR dwData, UINT nCmd = HELP_CONTEXT);
 	virtual BOOL		Register();
 	virtual BOOL		Unregister();
 
@@ -313,16 +315,6 @@ BOOL IsUserUsingFullscreen();
 
 // Start Windows service
 BOOL AreServiceHealthy(LPCTSTR szService);
-
-typedef enum
-{
-	sNone = 0,
-	sNumeric = 1,
-	sRegular = 2,
-	sKanji = 4,
-	sHiragana = 8,
-	sKatakana = 16
-} ScriptType;
 
 struct CompareNums
 {

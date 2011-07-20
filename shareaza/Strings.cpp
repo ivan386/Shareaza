@@ -352,7 +352,7 @@ CString URLDecodeANSI(LPCTSTR pszInput)
 		{
 			if ( ( szHex[0] = pszInput[1] ) != 0 &&
 				 ( szHex[1] = pszInput[2] ) != 0 &&
-				 _stscanf( szHex, _T("%x"), &nHex ) == 1 &&
+				 _stscanf_s( szHex, _T("%x"), &nHex ) == 1 &&
 				 nHex > 0 )
 			{
 				*pszOutput++ = (CHAR)nHex;
@@ -401,7 +401,7 @@ CString URLDecodeANSI(LPCTSTR pszInput)
 				pszInput += 5;
 			}
 			else if ( pszInput[ 1 ] == '#' &&
-				_stscanf( pszInput + 2, _T("%lu;"), &nHex ) == 1 &&
+				_stscanf_s( &pszInput[ 2 ], _T("%lu;"), &nHex ) == 1 &&
 				nHex > 0 )
 			{
 				*pszOutput++ = (CHAR)nHex;
@@ -441,7 +441,7 @@ CString URLDecodeUnicode(LPCTSTR pszInput)
 		{
 			if ( ( szHex[0] = pszInput[1] ) != 0 &&
 				( szHex[1] = pszInput[2] ) != 0 &&
-				_stscanf( szHex, _T("%x"), &nHex ) == 1 &&
+				_stscanf_s( szHex, _T("%x"), &nHex ) == 1 &&
 				nHex > 0 )
 			{
 				*pszOutput++ = (TCHAR)nHex;
@@ -490,7 +490,7 @@ CString URLDecodeUnicode(LPCTSTR pszInput)
 				pszInput += 5;
 			}
 			else if ( pszInput[ 1 ] == '#' &&
-				_stscanf( pszInput + 2, _T("%lu;"), &nHex ) == 1 &&
+				_stscanf_s( &pszInput[ 2 ], _T("%lu;"), &nHex ) == 1 &&
 				nHex > 0 )
 			{
 				*pszOutput++ = (TCHAR)nHex;
@@ -671,7 +671,7 @@ CString LoadFile(LPCTSTR pszPath)
 			pByte += 2;
 			for ( DWORD nSwap = 0 ; nSwap < nByte ; nSwap ++ )
 			{
-				register CHAR nTemp = pByte[ ( nSwap << 1 ) + 0 ];
+				register BYTE nTemp = pByte[ ( nSwap << 1 ) + 0 ];
 				pByte[ ( nSwap << 1 ) + 0 ] = pByte[ ( nSwap << 1 ) + 1 ];
 				pByte[ ( nSwap << 1 ) + 1 ] = nTemp;
 			}
@@ -739,6 +739,200 @@ fail:
 CString HostToString(const SOCKADDR_IN* pHost)
 {
 	CString sHost;
-	sHost.Format( _T("%s:%hu"), CString( inet_ntoa( pHost->sin_addr ) ), ntohs( pHost->sin_port ) );
+	sHost.Format( _T("%s:%hu"), (LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ), ntohs( pHost->sin_port ) );
 	return sHost;
+}
+
+CString MakeKeywords(const CString& strPhrase, bool bExpression)
+{
+	if ( strPhrase.IsEmpty() )
+		return CString();
+
+	CString str( _T(" ") );
+	LPCTSTR pszPtr = strPhrase;
+	ScriptType boundary[ 2 ] = { sNone, sNone };
+	int nPos = 0;
+	int nPrevWord = 0;
+	BOOL bNegative = FALSE;
+
+	for ( ; *pszPtr ; nPos++, pszPtr++ )
+	{
+		// boundary[ 0 ] -- previous character;
+		// boundary[ 1 ] -- current character;
+		boundary[ 0 ] = boundary[ 1 ];
+		boundary[ 1 ] = sNone;
+
+		if ( IsKanji( *pszPtr ) )
+			boundary[ 1 ] = (ScriptType)( boundary[ 1 ] | sKanji );
+		if ( IsKatakana( *pszPtr ) )
+			boundary[ 1 ] = (ScriptType)( boundary[ 1 ] | sKatakana );
+		if ( IsHiragana( *pszPtr ) )
+			boundary[ 1 ] = (ScriptType)( boundary[ 1 ] | sHiragana );
+		if ( IsCharacter( *pszPtr ) )
+			boundary[ 1 ] = (ScriptType)( boundary[ 1 ] | sRegular );
+		// for now, disable Numeric Detection in order not to split string like "shareaza2" to "shareaza 2"
+		//if ( _istdigit( *pszPtr ) )
+		//	boundary[ 1 ] = (ScriptType)( boundary[ 1 ] | sNumeric);
+
+		if ( ( boundary[ 1 ] & ( sHiragana | sKatakana ) ) == ( sHiragana | sKatakana ) &&
+			 ( boundary[ 0 ] & ( sHiragana | sKatakana ) ) )
+		{
+			boundary[ 1 ] = boundary[ 0 ];
+		}
+
+		bool bCharacter = ( boundary[ 1 ] & sRegular ) ||
+			bExpression && ( *pszPtr == _T('-') || *pszPtr == _T('"') );
+
+		if ( !( boundary[ 0 ] & sRegular ) && *pszPtr == _T('-') )
+			bNegative = TRUE;
+		else if ( *pszPtr == _T(' ') )
+			bNegative = FALSE;
+
+		int nDistance = !bCharacter ? 1 : 0;
+
+		if ( ! bCharacter || boundary[ 0 ] != boundary[ 1 ] && nPos  )
+		{
+			if ( nPos > nPrevWord )
+			{
+				int len = str.GetLength();
+				ASSERT( len );
+				TCHAR last1 = str.GetAt( len - 1 );
+				TCHAR last2 = ( len > 1 ) ? str.GetAt( len - 2 ) : _T('\0');
+				TCHAR last3 = ( len > 2 ) ? str.GetAt( len - 3 ) : _T('\0');
+				if ( boundary[ 0 ] &&
+					( last2 == _T(' ') || last2 == _T('-') || last2 == _T('"') ) &&
+					! _istdigit( ( nPos < 3 ) ? last1 : last3 ) )
+				{
+					// Join two phrases if the previous was a single characters word.
+					// idea of joining single characters breaks GDF compatibility completely,
+					// but because Shareaza 2.2 and above are not really following GDF about
+					// word length limit for ASIAN chars, merging is necessary to be done.
+				}
+				else if ( last1 != _T(' ') && bCharacter )
+				{
+					if ( ( last1 == _T('-') || last1 == _T('"') || *pszPtr == _T('"') ) &&
+						( ! bNegative || ! ( boundary[ 0 ] & ( sHiragana | sKatakana | sKanji ) ) ) )
+						str += _T(' ');
+				}
+				ASSERT( strPhrase.GetLength() > nPos - 1 );
+				if ( strPhrase.GetAt( nPos - 1 ) == _T('-') && nPos > 1 )
+				{
+					ASSERT( strPhrase.GetLength() > nPos - 2 );
+					if ( *pszPtr != _T(' ') && strPhrase.GetAt( nPos - 2 ) != _T(' ') )
+					{
+						nPrevWord += nDistance + 1;
+						continue;
+					}
+					else
+					{
+						str += strPhrase.Mid( nPrevWord, nPos - nDistance - nPrevWord );
+					}
+				}
+				else
+				{
+					str += strPhrase.Mid( nPrevWord, nPos - nPrevWord );
+					if ( boundary[ 1 ] == sNone && !bCharacter || *pszPtr == ' ' || !bExpression ||
+						( ( boundary[ 0 ] & ( sHiragana | sKatakana | sKanji ) ) && !bNegative ) )
+						str += _T(' ');
+					else if ( !bNegative && ( ( boundary[ 0 ] & ( sHiragana | sKatakana | sKanji ) ) ||
+						( boundary[ 0 ] & ( sHiragana | sKatakana | sKanji ) ) !=
+						( boundary[ 1 ] & ( sHiragana | sKatakana | sKanji ) ) ) )
+						str += _T(' ');
+				}
+			}
+			nPrevWord = nPos + nDistance;
+		}
+	}
+
+	int len = str.GetLength();
+	ASSERT( len );
+	TCHAR last1 = str.GetAt( len - 1 );
+	TCHAR last2 = ( len > 1 ) ? str.GetAt( len - 2 ) : _T('\0');
+	if ( boundary[ 0 ] && boundary[ 1 ] &&
+		( last2 == _T(' ') || last2 == _T('-') || last2 == _T('"') ) )
+	{
+		// Join two phrases if the previous was a single characters word.
+		// idea of joining single characters breaks GDF compatibility completely,
+		// but because Shareaza 2.2 and above are not really following GDF about
+		// word length limit for ASIAN chars, merging is necessary to be done.
+	}
+	else if ( boundary[ 1 ] && last1 != _T(' ') )
+	{
+		if ( ( last1 == _T('-') || last1 == _T('"') ) && ! bNegative )
+			str += _T(' ');
+	}
+	str += strPhrase.Mid( nPrevWord, nPos - nPrevWord );
+
+	return str.TrimLeft().TrimRight( L" -" );
+}
+
+void BuildWordTable(LPCTSTR pszWord, WordTable& oWords, WordTable& oNegWords)
+{
+	// clear word tables.
+	oWords.clear();
+	oNegWords.clear();
+
+	LPCTSTR pszPtr	= pszWord;
+	BOOL bQuote		= FALSE;
+	BOOL bNegate	= FALSE;
+	BOOL bSpace		= TRUE;
+
+	for ( ; *pszPtr ; pszPtr++ )
+	{
+		if ( IsCharacter( *pszPtr ) )
+		{
+			bSpace = FALSE;
+		}
+		else
+		{
+			if ( pszWord < pszPtr )
+			{
+				if ( bNegate )
+				{
+					oNegWords.insert( std::make_pair( pszWord, pszPtr - pszWord ) );
+				}
+				else
+				{
+					bool bWord = false, bDigit = false, bMix = false;
+					IsType( pszWord, 0, pszPtr - pszWord, bWord, bDigit, bMix );
+					if ( ( bWord || bMix ) || ( bDigit && pszPtr - pszWord > 3 ) )
+						oWords.insert( std::make_pair( pszWord, pszPtr - pszWord ) );
+				}
+			}
+
+			pszWord = pszPtr + 1;
+
+			if ( *pszPtr == '\"' )
+			{
+				bQuote = ! bQuote;
+				bSpace = TRUE;
+			}
+			else if ( *pszPtr == '-' && pszPtr[1] != ' ' && bSpace && ! bQuote )
+			{
+				bNegate = TRUE;
+				bSpace = FALSE;
+			}
+			else
+			{
+				bSpace = ( *pszPtr == ' ' );
+			}
+
+			if ( bNegate && ! bQuote && *pszPtr != '-' ) bNegate = FALSE;
+		}
+	}
+
+	if ( pszWord < pszPtr )
+	{
+		if ( bNegate )
+		{
+			oNegWords.insert( std::make_pair( pszWord, pszPtr - pszWord ) );
+		}
+		else
+		{
+			bool bWord = false, bDigit = false, bMix = false;
+			IsType( pszWord, 0, pszPtr - pszWord, bWord, bDigit, bMix );
+			if ( ( bWord || bMix ) || ( bDigit && pszPtr - pszWord > 3 ) )
+				oWords.insert( std::make_pair( pszWord, pszPtr - pszWord ) );
+		}
+	}
 }
