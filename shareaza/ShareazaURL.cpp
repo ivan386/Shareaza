@@ -438,7 +438,7 @@ BOOL CShareazaURL::ParseED2KFTP(LPCTSTR pszURL, BOOL bResolve)
 	}
 
 	SOCKADDR_IN saHost;
-	BOOL bResult = Network.Resolve( m_sAddress, ED2K_DEFAULT_PORT, &saHost, bResolve );
+	BOOL bResult = Network.Resolve( m_sAddress, protocolPorts[ PROTOCOL_ED2K ], &saHost, bResolve );
 
 	if ( bPush )
 	{
@@ -486,7 +486,7 @@ BOOL CShareazaURL::ParseDCHub(LPCTSTR pszURL, BOOL bResolve)
 	{
 		// Short version - hub address only
 		m_sAddress.Empty();
-		m_nPort = DC_DEFAULT_PORT;
+		m_nPort = protocolPorts[ PROTOCOL_DC ];
 		if ( ! ParseShareazaHost( pszURL + 8, FALSE ) )
 			return FALSE;
 		m_nProtocol = PROTOCOL_DC;
@@ -514,7 +514,7 @@ BOOL CShareazaURL::ParseDCHub(LPCTSTR pszURL, BOOL bResolve)
 	}
 
 	SOCKADDR_IN saHost = {};
-	BOOL bResult = Network.Resolve( m_sAddress, DC_DEFAULT_PORT, &saHost, bResolve );
+	BOOL bResult = Network.Resolve( m_sAddress, protocolPorts[ PROTOCOL_DC ], &saHost, bResolve );
 
 	m_pServerAddress	= saHost.sin_addr;
 	m_nServerPort		= htons( saHost.sin_port );
@@ -555,7 +555,7 @@ BOOL CShareazaURL::ParseBTC(LPCTSTR pszURL, BOOL bResolve)
 	if ( !m_oBTH.fromString( strURL ) ) return FALSE;
 
 	SOCKADDR_IN saHost;
-	BOOL bResult = Network.Resolve( m_sAddress, ED2K_DEFAULT_PORT, &saHost, bResolve );
+	BOOL bResult = Network.Resolve( m_sAddress, protocolPorts[ PROTOCOL_BT ], &saHost, bResolve );
 
 	m_pAddress	= saHost.sin_addr;
 	m_nPort		= htons( saHost.sin_port );
@@ -1021,7 +1021,7 @@ BOOL CShareazaURL::ParseDonkeyFile(LPCTSTR pszURL)
 
 		// Now we have the source in x.x.x.x:port format.
 		CString strEDFTP;
-		strEDFTP.Format( _T("ed2kftp://%s/%s/%I64i/"), strPart, (LPCTSTR)m_oED2K.toString(), m_nSize );
+		strEDFTP.Format( _T("ed2kftp://%s/%s/%I64u/"), strPart, (LPCTSTR)m_oED2K.toString(), m_nSize );
 		SafeString( strEDFTP );
 		if ( m_sURL.GetLength() ) m_sURL += _T(", ");
 		m_sURL += strEDFTP;

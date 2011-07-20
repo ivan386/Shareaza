@@ -386,10 +386,10 @@ void CShakeNeighbour::SendPublicHeaders()
 		Write( _P("X-Dynamic-Querying: 0.1\r\n") );
 		Write( _P("X-Ext-Probes: 0.1\r\n") );
 		
-		strHeader.Format( _T("X-Degree: %d\r\n"), Settings.Gnutella1.NumPeers );
+		strHeader.Format( _T("X-Degree: %u\r\n"), Settings.Gnutella1.NumPeers );
 		Write( strHeader );
 
-		strHeader.Format( _T("X-Max-TTL: %d\r\n"), Settings.Gnutella1.SearchTTL );
+		strHeader.Format( _T("X-Max-TTL: %u\r\n"), Settings.Gnutella1.SearchTTL );
 		Write( strHeader );
 	}
 }
@@ -729,7 +729,7 @@ BOOL CShakeNeighbour::OnHeaderLine(CString& strHeader, CString& strValue)
 		if ( nColon > 0 ) // There is a colon and it's not at the start of the text
 		{
 			// Save the default Gnutella port, 6346, in nPort to use it if we can't read the port number from the header value text
-			int nPort = GNUTELLA_DEFAULT_PORT;
+			int nPort = protocolPorts[ PROTOCOL_G2 ];
 
 			// Mid clips the strValue text from beyond the colon to the end
 			// _stscanf is like scanf, and %1u means read the text as a long unsigned number

@@ -349,6 +349,8 @@ extern const LPCTSTR protocolNames[];
 extern const LPCTSTR protocolAbbr[];
 // Protocol resource IDs (for icons)
 extern const UINT protocolIDs[];
+// Protocol default ports
+extern const WORD protocolPorts[];
 
 inline PROTOCOLID& operator++(PROTOCOLID& arg)
 {

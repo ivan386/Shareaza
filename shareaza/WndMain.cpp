@@ -1211,7 +1211,7 @@ LRESULT CMainWnd::OnSkinChanged(WPARAM /*wParam*/, LPARAM /*lParam*/)
 		m_brshDockbar.DeleteObject();
 		m_brshDockbar.CreateSolidBrush( CoolInterface.m_crMidtone );
 		SetClassLongPtr( pDockBar->GetSafeHwnd(), GCLP_HBRBACKGROUND,
-			(LONG)(LONG_PTR)(HBRUSH)m_brshDockbar );
+			(LONG_PTR)(HBRUSH)m_brshDockbar );
 	}
 
 	m_pSkin = Skin.GetWindowSkin( this );
@@ -1678,7 +1678,7 @@ void CMainWnd::LocalSystemChecks()
 	if ( Settings.Live.DefaultED2KServersLoaded == FALSE )
 	{
 		Settings.Live.DefaultED2KServersLoaded  = TRUE;
-		HostCache.CheckMinimumED2KServers();
+		HostCache.CheckMinimumServers( PROTOCOL_ED2K );
 	}
 
 	if ( ( Settings.Live.DonkeyServerWarning == FALSE ) && ( Settings.eDonkey.EnableToday ) )
@@ -2809,7 +2809,7 @@ void CMainWnd::OnHelpFaq()
 void CMainWnd::OnHelpConnectiontest()
 {
 	CString strWebSite;
-	strWebSite.Format( _T("%shelp/test/?port=%d&lang=%s&Version=%s"),
+	strWebSite.Format( _T("%shelp/test/?port=%u&lang=%s&Version=%s"),
 		WEB_SITE_T, Settings.Connection.InPort,
 		(LPCTSTR)Settings.General.Language, (LPCTSTR)theApp.m_sVersion );
 	ShellExecute( GetSafeHwnd(), _T("open"), strWebSite,

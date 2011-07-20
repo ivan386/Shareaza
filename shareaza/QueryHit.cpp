@@ -666,7 +666,7 @@ CQueryHit* CQueryHit::FromG2Packet(CG2Packet* pPacket, int* pnHops)
 	{
 		// Now add all hub list to the route cache
 		for ( NodeIter iter = pTestNodeList.begin( ) ; 
-			  iter != pTestNodeList.end( ) ; iter++ )
+			  iter != pTestNodeList.end( ) ; ++iter )
 		{
 			SOCKADDR_IN pHub = { AF_INET };
 			pHub.sin_addr.s_addr = iter->first;
@@ -821,7 +821,7 @@ CQueryHit* CQueryHit::FromDCPacket(CDCPacket* pPacket)
 		return NULL;
 
 	IN_ADDR nHubAddress = {};
-	int nHubPort = DC_DEFAULT_PORT;
+	int nHubPort = protocolPorts[ PROTOCOL_DC ];
 	if ( *szAddress == '(' )
 	{
 		if ( *++szAddress != ')' )

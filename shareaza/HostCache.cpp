@@ -97,7 +97,14 @@ BOOL CHostCache::Load()
 		pException->Delete();
 	}
 
-	if ( eDonkey.GetNewest() == NULL ) CheckMinimumED2KServers();
+	if ( Gnutella2.IsEmpty() ) CheckMinimumServers( PROTOCOL_G2 );
+#ifdef LAN_MODE
+	if ( Gnutella1.IsEmpty() ) CheckMinimumServers( PROTOCOL_G1 );
+	if ( eDonkey.IsEmpty() ) CheckMinimumServers( PROTOCOL_ED2K );
+	if ( BitTorrent.IsEmpty() ) CheckMinimumServers( PROTOCOL_BT );
+	if ( Kademlia.IsEmpty() ) CheckMinimumServers( PROTOCOL_KAD );
+	if ( DC.IsEmpty() ) CheckMinimumServers( PROTOCOL_DC );
+#endif // LAN_MODE
 
 	return TRUE;
 }
@@ -326,7 +333,7 @@ CHostCacheHostPtr CHostCacheList::Add(const IN_ADDR* pAddress, WORD nPort, DWORD
 	return AddInternal( pAddress, nPort, tSeen, pszVendor, nUptime, nCurrentLeaves, nLeafLimit, szAddress );
 }
 
-BOOL CHostCacheList::Add(LPCTSTR pszHost, DWORD tSeen, LPCTSTR pszVendor, DWORD nUptime, DWORD nCurrentLeaves, DWORD nLeafLimit)
+CHostCacheHostPtr CHostCacheList::Add(LPCTSTR pszHost, DWORD tSeen, LPCTSTR pszVendor, DWORD nUptime, DWORD nCurrentLeaves, DWORD nLeafLimit)
 {
 	CString strHost( pszHost );
 	
@@ -341,18 +348,23 @@ BOOL CHostCacheList::Add(LPCTSTR pszHost, DWORD tSeen, LPCTSTR pszVendor, DWORD 
 		tSeen = TimeFromString( strTime );
 	}
 
+	WORD nPort = protocolPorts[ m_nProtocol ];
 	nPos = strHost.Find( _T(':') );
-	if ( nPos < 0 ) return FALSE;
-	
-	int nPort = GNUTELLA_DEFAULT_PORT;
-	if ( _stscanf( strHost.Mid( nPos + 1 ), _T("%i"), &nPort ) != 1 ||
-		nPort <= 0 || nPort >= 65536 ) return FALSE;
-	strHost = strHost.Left( nPos );
-	
+	if ( nPos > 0 )
+	{
+		int n = 0;
+		if ( _stscanf( strHost.Mid( nPos + 1 ), _T("%i"), &n ) == 1 &&
+			n > 0 && n <= USHRT_MAX )
+		{
+			nPort = (WORD)n;
+		}
+		strHost = strHost.Left( nPos );
+	}
+
 	DWORD nAddress = inet_addr( CT2CA( (LPCTSTR)strHost ) );
 	if ( nAddress == INADDR_NONE ) return FALSE;
 
-	return ( Add( (IN_ADDR*)&nAddress, (WORD)nPort, tSeen, pszVendor, nUptime, nCurrentLeaves, nLeafLimit ) != NULL );
+	return Add( (IN_ADDR*)&nAddress, nPort, tSeen, pszVendor, nUptime, nCurrentLeaves, nLeafLimit );
 }
 
 // This function actually add the remote client to the host cache. Private, but used by the public 
@@ -800,7 +812,7 @@ int CHostCache::ImportHubList(CFile* pFile)
 			int nUsers = _tstoi( pHub->GetAttributeValue( _T("Users") ) );
 			int nMaxusers = _tstoi( pHub->GetAttributeValue( _T("Maxusers") ) );
 
-			CHostCacheHostPtr pServer = DC.Add( NULL, DC_DEFAULT_PORT, 0,
+			CHostCacheHostPtr pServer = DC.Add( NULL, protocolPorts[ PROTOCOL_DC ], 0,
 				protocolNames[ PROTOCOL_DC ], 0, nUsers, nMaxusers, sAddress );
 			if ( pServer )
 			{
@@ -941,18 +953,21 @@ int CHostCache::ImportNodes(CFile* pFile)
 }
 
 //////////////////////////////////////////////////////////////////////
-// CHostCache Check Minimum ED2K Servers
+// CHostCache Check Minimum Servers
 
-bool CHostCache::CheckMinimumED2KServers()
+bool CHostCache::CheckMinimumServers(PROTOCOLID nProtocol)
 {
-#ifndef LAN_MODE
-	if ( ! EnoughED2KServers() )
-	{
-		// Load default ed2k server list (if necessary)
-		LoadDefaultED2KServers();
+	if ( EnoughServers( nProtocol ) )
+		return true;
 
-		// Get the server list from eMule (mods) if possible
-		const LPCTSTR sServerMetPathes[ 8 ] = {
+	// Load default server list (if necessary)
+	LoadDefaultServers( nProtocol );
+
+	// Get the server list from eMule (mods) if possible
+	if ( nProtocol == PROTOCOL_ED2K )
+	{
+		const LPCTSTR sServerMetPathes[ 8 ] =
+		{
 			{ _T("\\eMule\\config\\server.met") },
 			{ _T("\\eMule\\server.met") },
 			{ _T("\\Neo Mule\\config\\server.met") },
@@ -968,87 +983,102 @@ bool CHostCache::CheckMinimumED2KServers()
 		sRootPathes[ 1 ] = theApp.GetLocalAppDataFolder();
 		sRootPathes[ 2 ] = theApp.GetAppDataFolder();
 
-		for ( int i = 0; i < _countof( sRootPathes ); i++ )
-			for ( int j = 0; j < _countof( sServerMetPathes ); j++ )
+		for ( int i = 0; i < _countof( sRootPathes ); ++i )
+			for ( int j = 0; j < _countof( sServerMetPathes ); ++j )
 				Import( sRootPathes[ i ] + sServerMetPathes[ j ], TRUE );
-
-		// Get server list from Web
-		if ( ! EnoughED2KServers() )
-			DiscoveryServices.Execute( TRUE, PROTOCOL_ED2K, TRUE );
-
-		return false;
 	}
-#endif // LAN_MODE
-	return true;
+
+	if ( EnoughServers( nProtocol ) )
+		return true;
+
+	// Get server list from Web
+	DiscoveryServices.Execute( TRUE, nProtocol, TRUE );
+
+	return false;
 }
 
 //////////////////////////////////////////////////////////////////////
-// CHostCache Default ED2K servers import
+// CHostCache Default servers import
 
-int CHostCache::LoadDefaultED2KServers()
+int CHostCache::LoadDefaultServers(PROTOCOLID nProtocol)
 {
-	CFile pFile;
 	int nServers = 0;
 	CString strFile = Settings.General.Path + _T("\\Data\\DefaultServers.dat");
 
-	// Ignore too old file
-	if ( ! IsFileNewerThan( strFile, 90ull * 24 * 60 * 60 * 1000 ) ) // 90 days
-		return 0;
-
-	if ( pFile.Open( strFile, CFile::modeRead ) )			// Load default list from file if possible
+	CStdioFile pFile;
+	if ( pFile.Open( strFile, CFile::modeRead | CFile::shareDenyWrite ) )
 	{
-		theApp.Message( MSG_NOTICE, _T("Loading default ED2K server list") );
+		theApp.Message( MSG_NOTICE, _T("Loading default server list") );
 
-		try
+		for (;;)
 		{
 			CString strLine;
-			CBuffer pBuffer;
-			TCHAR cType;
+			if ( ! pFile.ReadString( strLine ) )
+				// End of file
+				break;
 
-			pBuffer.EnsureBuffer( (DWORD)pFile.GetLength() );
-			pBuffer.m_nLength = (DWORD)pFile.GetLength();
-			pFile.Read( pBuffer.m_pBuffer, pBuffer.m_nLength );
-			pFile.Close();
+			strLine.Trim( _T(" \t\r\n") );
+			if ( strLine.GetLength() < 9 )
+				 // Blank comment line
+				continue;
 
-			while ( pBuffer.ReadLine( strLine ) )
+			LPCTSTR szServer = strLine;
+			if ( *szServer == _T('#') )
+				// Comment line
+				continue;
+
+			BOOL bPriority = FALSE;
+			if ( *szServer == _T('P') )
 			{
-				if ( strLine.GetLength() < 7 ) continue; // Blank comment line
-
-				cType = strLine.GetAt( 0 );
-
-				if ( cType != '#' )
-				{
-					CString strServer = strLine.Right( strLine.GetLength() - 2 );
-
-					int nIP[4], nPort;
-
-					if ( _stscanf( strServer, _T("%i.%i.%i.%i:%i"), &nIP[0], &nIP[1], &nIP[2], &nIP[3],	&nPort ) == 5 )
-					{
-						IN_ADDR pAddress;
-						pAddress.S_un.S_un_b.s_b1 = (BYTE)nIP[0];
-						pAddress.S_un.S_un_b.s_b2 = (BYTE)nIP[1];
-						pAddress.S_un.S_un_b.s_b3 = (BYTE)nIP[2];
-						pAddress.S_un.S_un_b.s_b4 = (BYTE)nIP[3];
-
-						CHostCacheHostPtr pServer = eDonkey.Add( &pAddress, (WORD)nPort );
-
-						if ( pServer )
-						{
-							if ( cType == 'P' )
-								pServer->m_bPriority = TRUE;
-							else
-								pServer->m_bPriority = FALSE;
-
-							nServers++;
-						}
-					}
-				}
+				bPriority = TRUE;
+				++szServer;
 			}
-		}
-		catch ( CException* pException )
-		{
-			if (pFile.m_hFile != CFile::hFileNull) pFile.Close(); // Check if file is still open, if yes close
-			pException->Delete();
+
+			CHostCacheList* pCache = NULL;
+			switch ( *szServer )
+			{
+			case _T('L'):
+				pCache = &Gnutella1;
+				++szServer;
+				break;
+			case _T('G'):
+				pCache = &Gnutella2;
+				++szServer;
+				break;
+			case _T(' '):	// compatibility
+			case _T('E'):	// new way
+				pCache = &eDonkey;
+				++szServer;
+				break;
+			case _T('B'):
+				pCache = &BitTorrent;
+				++szServer;
+				break;
+			case _T('K'):
+				pCache = &Kademlia;
+				++szServer;
+				break;
+			case _T('D'):
+				pCache = &DC;
+				++szServer;
+				break;
+			}
+			if ( ! pCache )
+				// Unknown protocol
+				continue;
+
+			if ( ! ( nProtocol == PROTOCOL_ANY || nProtocol == pCache->m_nProtocol ) )
+				// Unneeded protocol
+				continue;
+
+			for ( ; *szServer == _T(' '); ++szServer );
+
+			CQuickLock oLock( pCache->m_pSection );
+			if ( CHostCacheHostPtr pServer = pCache->Add( szServer ) )
+			{
+				pServer->m_bPriority = bPriority;
+				nServers++;
+			}
 		}
 	}
 

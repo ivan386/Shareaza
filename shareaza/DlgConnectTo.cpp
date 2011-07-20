@@ -55,7 +55,7 @@ END_MESSAGE_MAP()
 CConnectToDlg::CConnectToDlg(CWnd* pParent, Type nType)
 	: CSkinDialog	( CConnectToDlg::IDD, pParent )
 	, m_bNoUltraPeer( FALSE )
-	, m_nPort		( GNUTELLA_DEFAULT_PORT )
+	, m_nPort		( protocolPorts[ PROTOCOL_G2 ] )
 	, m_nProtocol	( PROTOCOL_G2 )
 	, m_nType		( nType )
 {
@@ -119,11 +119,11 @@ BOOL CConnectToDlg::OnInitDialog()
 			pData->sHost.Trim( _T(" \t\r\n:\"") );
 			ToLower( pData->sHost );
 
-			strItem.Format( _T("%.3Ii.Port"), nItem + 1 );
-			pData->nPort = theApp.GetProfileInt( CONNECT_SECTION, strItem, GNUTELLA_DEFAULT_PORT );
-
-			strItem.Format( _T("%.3Ii.Protocol"), nItem + 1 );
+			strItem.Format( _T("%.3i.Protocol"), nItem + 1 );
 			pData->nProtocol = (PROTOCOLID)theApp.GetProfileInt( CONNECT_SECTION, strItem, PROTOCOL_G2 );
+
+			strItem.Format( _T("%.3i.Port"), nItem + 1 );
+			pData->nPort = theApp.GetProfileInt( CONNECT_SECTION, strItem, protocolPorts[ pData->nProtocol ] );
 
 			// Validation
 			if ( pData->sHost.GetLength() &&

@@ -927,7 +927,7 @@ BOOL CDiscoveryServices::Execute(BOOL bDiscovery, PROTOCOLID nProtocol, USHORT n
 			( nProtocol == PROTOCOL_NULL || nProtocol == PROTOCOL_ED2K ) &&
 			Settings.eDonkey.MetAutoQuery &&
 			( m_tMetQueried == 0 || tNow - m_tMetQueried >= 60 * 60 ) &&
-			( nForceDiscovery == 1 || !HostCache.EnoughED2KServers() );
+			( nForceDiscovery == 1 || !HostCache.EnoughServers( PROTOCOL_ED2K ) );
 #endif // LAN_MODE
 
 		if ( bEdRequired )
@@ -1761,7 +1761,7 @@ BOOL CDiscoveryServices::RunWebCacheUpdate()
 	{
 		if ( ! Network.IsListening() ) return TRUE;
 
-		strURL.Format( _T("%s?ip=%s:%hu&x.leaves=%i&uptime=%i&x.max=%i"),
+		strURL.Format( _T("%s?ip=%s:%hu&x.leaves=%u&uptime=%u&x.max=%u"),
 			(LPCTSTR)m_pWebCache->m_sAddress,
 			(LPCTSTR)CString( inet_ntoa( Network.m_pHost.sin_addr ) ),
 			htons( Network.m_pHost.sin_port ),
@@ -2107,7 +2107,7 @@ BOOL CDiscoveryService::ResolveGnutella()
 		nSkip = 15;
 		m_bGnutella1 = TRUE;
 		m_bGnutella2 = FALSE;
-		nPort = GNUTELLA_DEFAULT_PORT;
+		nPort = protocolPorts[ PROTOCOL_G1 ];
 	}
 	else if ( _tcsnicmp( strHost, _T("gnutella2:host:"), 15 ) == 0 )
 	{
@@ -2115,7 +2115,7 @@ BOOL CDiscoveryService::ResolveGnutella()
 		nSkip = 15;
 		m_bGnutella1 = FALSE;
 		m_bGnutella2 = TRUE;
-		nPort = GNUTELLA_DEFAULT_PORT;
+		nPort = protocolPorts[ PROTOCOL_G2 ];
 	}
 	else if ( _tcsnicmp( strHost, _T("uhc:"), 4 ) == 0 )
 	{
@@ -2131,7 +2131,7 @@ BOOL CDiscoveryService::ResolveGnutella()
 		nSkip = 5;
 		m_bGnutella1 = FALSE;
 		m_bGnutella2 = TRUE;
-		nPort = GNUTELLA_DEFAULT_PORT;
+		nPort = protocolPorts[ PROTOCOL_G2 ];
 	}
 
 	if (m_nSubType == dsOldBootStrap)

@@ -279,7 +279,7 @@ void CSettings::Load()
 	Add( _T("Connection"), _T("IgnoreOwnUDP"), &Connection.IgnoreOwnUDP, true );
 	Add( _T("Connection"), _T("InBind"), &Connection.InBind, false );
 	Add( _T("Connection"), _T("InHost"), &Connection.InHost );
-	Add( _T("Connection"), _T("InPort"), &Connection.InPort, GNUTELLA_DEFAULT_PORT, 1, 1, 65535 );
+	Add( _T("Connection"), _T("InPort"), &Connection.InPort, protocolPorts[ PROTOCOL_G2 ], 1, 1, 65535 );
 #ifdef LAN_MODE
 	Add( _T("Connection"), _T("InSpeed"), &Connection.InSpeed, 40960 );
 	Add( _T("Connection"), _T("OutSpeed"), &Connection.OutSpeed, 40960 );
@@ -590,7 +590,7 @@ void CSettings::Load()
 		Item* pItem = m_pItems.GetNext( pos );
 		pItem->Load();
 		CString strPath;
-		if ( _tcslen( pItem->m_szSection ) > 0 )
+		if ( *pItem->m_szSection )
 			strPath.AppendFormat( L"%s.%s", pItem->m_szSection, pItem->m_szName );
 		else
 			strPath.AppendFormat( L"General.%s", pItem->m_szName );
@@ -823,7 +823,7 @@ void CSettings::SmartUpgrade()
 			// Remove dots
 			string_set tmp;
 			for ( string_set::const_iterator i = Library.SafeExecute.begin() ;
-				i != Library.SafeExecute.end(); i++ )
+				i != Library.SafeExecute.end(); ++i )
 			{
 				tmp.insert( ( (*i).GetAt( 0 ) == _T('.') ) ? (*i).Mid( 1 ) : (*i) );
 			}
@@ -1466,7 +1466,7 @@ const CString CSettings::SmartSpeed(QWORD nVolume, int nVolumeUnits, bool bTrunc
 
 	// bits - Bytes
 	case 1:
-		strVolume.Format( _T("%I64i %s"), nVolume, strUnit );
+		strVolume.Format( _T("%I64u %s"), nVolume, strUnit );
 		break;
 
 	// Kilobits - KiloBytes
@@ -1509,7 +1509,7 @@ const CString CSettings::SmartVolume(QWORD nVolume, int nVolumeUnits, bool bTrun
 	case Bytes:
 		if ( nVolume < Kilo )						// bits - Bytes
 		{
-			strVolume.Format( _T("%I64i %s"), nVolume, strUnit );
+			strVolume.Format( _T("%I64u %s"), nVolume, strUnit );
 			break;
 		}
 		else if ( nVolume < 10 * Kilo )				// 10 Kilobits - KiloBytes
@@ -1527,7 +1527,7 @@ const CString CSettings::SmartVolume(QWORD nVolume, int nVolumeUnits, bool bTrun
 	case Kilobits:
 	case KiloBytes:
 		if ( nVolume < Kilo )			// Kilo
-			strVolume.Format( _T("%I64i K%s"), nVolume, strUnit );
+			strVolume.Format( _T("%I64u K%s"), nVolume, strUnit );
 		else if ( nVolume < fMega )		// Mega
 		{
 			if ( !bTruncate )
@@ -1737,7 +1737,7 @@ CString CSettings::SaveSet(const string_set* pSet)
 		return CString();
 
 	CString tmp( _T("|") );
-	for( string_set::const_iterator i = pSet->begin(); i != pSet->end(); i++ )
+	for( string_set::const_iterator i = pSet->begin(); i != pSet->end(); ++i )
 	{
 		tmp += *i;
 		tmp += _T('|');

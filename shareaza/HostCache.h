@@ -181,7 +181,7 @@ public:
 
 	CHostCacheHostPtr	Add(const IN_ADDR* pAddress, WORD nPort, DWORD tSeen = 0, LPCTSTR pszVendor = NULL, DWORD nUptime = 0, DWORD nCurrentLeaves = 0, DWORD nLeafLimit = 0, LPCTSTR szAddress = NULL);
 	// Add host in form "IP:Port SeenTime"
-	BOOL				Add(LPCTSTR pszHost, DWORD tSeen = 0, LPCTSTR pszVendor = NULL, DWORD nUptime = 0, DWORD nCurrentLeaves = 0, DWORD nLeafLimit = 0);
+	CHostCacheHostPtr 	Add(LPCTSTR pszHost, DWORD tSeen = 0, LPCTSTR pszVendor = NULL, DWORD nUptime = 0, DWORD nCurrentLeaves = 0, DWORD nLeafLimit = 0);
 	void				Update(CHostCacheHostPtr pHost, WORD nPort = 0, DWORD tSeen = 0, LPCTSTR pszVendor = NULL, DWORD nUptime = 0, DWORD nCurrentLeaves = 0, DWORD nLeafLimit = 0);
 	CHostCacheMapItr	Remove(CHostCacheHostPtr pHost);
 	CHostCacheMapItr	Remove(const IN_ADDR* pAddress);
@@ -212,16 +212,6 @@ public:
 	inline CHostCacheRIterator REnd() const throw()
 	{
 		return m_HostsTime.rend();
-	}
-
-	inline CHostCacheHostPtr GetNewest() const throw()
-	{
-		return IsEmpty() ? NULL : *Begin();
-	}
-
-	inline CHostCacheHostPtr GetOldest() const throw()
-	{
-		return IsEmpty() ? NULL : *( End()-- );
 	}
 
 	inline bool IsEmpty() const throw()
@@ -329,7 +319,7 @@ public:
 	// Import Kademlia nodes .dat-file. Returns imported host count.
 	int					ImportNodes(CFile* pFile);
 
-	bool				CheckMinimumED2KServers();
+	bool				CheckMinimumServers(PROTOCOLID nProtocol);
 	CHostCacheHostPtr	Find(const IN_ADDR* pAddress) const;
 	CHostCacheHostPtr	Find(LPCTSTR szAddress) const;
 	BOOL				Check(const CHostCacheHostPtr pHost) const;
@@ -341,12 +331,33 @@ public:
 							  PROTOCOLID nProtocol=PROTOCOL_NULL, bool bUpdate=true);
 	void				PruneOldHosts();
 
-	inline bool EnoughED2KServers() const throw()
+	inline bool EnoughServers(PROTOCOLID nProtocol) const
 	{
-		return ( eDonkey.CountHosts( TRUE ) >= 8 );
+		return ( ForProtocol( nProtocol )->CountHosts( TRUE ) > 0 );
 	}
 
-	inline CHostCacheList* ForProtocol(PROTOCOLID nProtocol) throw()
+	inline CHostCacheList* ForProtocol(PROTOCOLID nProtocol)
+	{
+		switch ( nProtocol )
+		{
+		case PROTOCOL_G1:
+			return &Gnutella1;
+		case PROTOCOL_G2:
+			return &Gnutella2;
+		case PROTOCOL_ED2K:
+			return &eDonkey;
+		case PROTOCOL_BT:
+			return &BitTorrent;
+		case PROTOCOL_KAD:
+			return &Kademlia;
+		case PROTOCOL_DC:
+			return &DC;
+		default:
+			return NULL;
+		}
+	}
+
+	inline const CHostCacheList* ForProtocol(PROTOCOLID nProtocol) const
 	{
 		switch ( nProtocol )
 		{
@@ -374,7 +385,7 @@ protected:
 
 	void				Serialize(CArchive& ar);
 	void				Clear();
-	int					LoadDefaultED2KServers();
+	int					LoadDefaultServers(PROTOCOLID nProtocol);
 };
 
 extern CHostCache HostCache;

@@ -263,7 +263,7 @@ void CWizardConnectionPage::OnRun()
 		LoadString( strMessage, IDS_WIZARD_ED2K );
 		m_wndStatus.SetWindowText( strMessage );
 
-		HostCache.CheckMinimumED2KServers();
+		HostCache.CheckMinimumServers( PROTOCOL_ED2K );
 		nCurrentStep +=30;
 		m_wndProgress.PostMessage( PBM_SETPOS, nCurrentStep );
 	}

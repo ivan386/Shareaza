@@ -681,7 +681,7 @@ BOOL CConnection::OnHeaderLine(CString& strHeader, CString& strValue)
 		if ( ! m_bInitiated && nColon > 0 )
 		{
 			// Read the number after the colon into nPort
-			int nPort = GNUTELLA_DEFAULT_PORT; // Start out nPort as the default value, 6346
+			int nPort = protocolPorts[ PROTOCOL_G2 ];
 			if ( _stscanf( strValue.Mid( nColon + 1 ), _T("%lu"), &nPort ) == 1 // Make sure 1 number was found
 				&& nPort != 0 ) // Make sure the found number isn't 0
 			{
@@ -765,7 +765,7 @@ void CConnection::SendHTML(UINT nResourceID)
 	CStringA strBodyUTF8 = UTF8Encode( strBody );
 
 	CString strLength;
-	strLength.Format( _T("Content-Length: %lu\r\n\r\n"), strBodyUTF8.GetLength() );
+	strLength.Format( _T("Content-Length: %i\r\n\r\n"), strBodyUTF8.GetLength() );
 	Write( strLength );
 
 	LogOutgoing();

@@ -35,7 +35,7 @@ public:
 	CPrivateChatWnd*	OpenPrivate(const Hashes::Guid& oGUID, const SOCKADDR_IN* pHost, BOOL bMustPush = FALSE, PROTOCOLID nProtocol = PROTOCOL_NULL, SOCKADDR_IN* pServer = NULL);
 
 	// Start new or reopen existing chat session (nPort and nServerPort must be in host byte order)
-	CPrivateChatWnd*	OpenPrivate(const Hashes::Guid& oGUID, const IN_ADDR* pAddress, WORD nPort = GNUTELLA_DEFAULT_PORT, BOOL bMustPush = FALSE, PROTOCOLID nProtocol = PROTOCOL_NULL, IN_ADDR* pServerAddress = NULL, WORD nServerPort = 0);
+	CPrivateChatWnd*	OpenPrivate(const Hashes::Guid& oGUID, const IN_ADDR* pAddress, WORD nPort = protocolPorts[ PROTOCOL_G2 ], BOOL bMustPush = FALSE, PROTOCOLID nProtocol = PROTOCOL_NULL, IN_ADDR* pServerAddress = NULL, WORD nServerPort = 0);
 
 	void				Add(CChatWnd* pFrame);
 	void				Remove(CChatWnd* pFrame);

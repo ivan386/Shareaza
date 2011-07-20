@@ -558,7 +558,7 @@ void CHostCacheWnd::OnHostCacheRemove()
 		}
 	}
 
-	HostCache.CheckMinimumED2KServers();
+	HostCache.CheckMinimumServers( m_nMode ? m_nMode : PROTOCOL_G2 );
 
 	m_wndList.ClearSelection();
 

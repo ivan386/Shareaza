@@ -68,6 +68,21 @@ const UINT protocolIDs[] =
 	NULL
 };
 
+// Protocol default ports
+const WORD protocolPorts[] =
+{
+	6346,	// Unknown
+	6346,	// Gnutella
+	6346,	// Gnutella2
+	4661,	// eDonkey2000
+	80,		// HTTP
+	21,		// FTP
+	6881,	// BitTorrent
+	4662,	// Kademlia
+	411,	// DC++
+	0
+};
+
 __int64 GetMicroCount()
 {
 	static __int64 Freq = 0;

@@ -874,7 +874,7 @@ BOOL CDCNeighbour::OnForceMove(LPSTR szParams)
 
 	if ( LPSTR szAddress = szParams )
 	{
-		int nPort = DC_DEFAULT_PORT;
+		int nPort = protocolPorts[ PROTOCOL_DC ];
 		if ( LPSTR szPort = strchr( szAddress, ':' ) )
 		{
 			*szPort++ = 0;
@@ -928,7 +928,7 @@ BOOL CDCNeighbour::OnValidateDenide()
 	// $ValidateDenide[ Nick]|
 
 	m_bNickValid = FALSE;
-	m_sNick.Format( CLIENT_NAME_T _T("%04u"), GetRandomNum( 0, 9999 ) );
+	m_sNick.Format( CLIENT_NAME_T _T("%04u"), GetRandomNum( 0u, 9999u ) );
 
 	if ( CHostCacheHostPtr pServer = HostCache.DC.Find( &m_pHost.sin_addr ) )
 	{
