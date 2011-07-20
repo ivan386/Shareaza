@@ -428,7 +428,7 @@ void CLocalSearch::AddHitG1(CG1Packet* pPacket, CSchemaMap& pSchemas, CLibraryFi
 		if ( CXMLElement* pXML = pFile->m_pMetadata->Clone() )
 		{
 			CString strIndex;
-			strIndex.Format( _T("%lu"), nIndex );
+			strIndex.Format( _T("%d"), nIndex );
 			pXML->AddAttribute( _T("index"), strIndex );
 			pGroup->AddElement( pXML );
 		}

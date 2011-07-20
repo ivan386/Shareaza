@@ -836,16 +836,16 @@ BOOL CAlbumFolder::OrganiseFile(CLibraryFile* pFile)
 
 		AddFile( pFile );
 
-		if ( _tcsistr( m_sName, _T("soundtrack") ) != NULL ||
-			 _tcsistr( m_sName, _T("ost") ) != NULL )
-		{
-			// TODO: Scrap artist specific info !
+		//if ( _tcsistr( m_sName, _T("soundtrack") ) != NULL ||
+		//	 _tcsistr( m_sName, _T("ost") ) != NULL )
+		//{
+		//	// TODO: Scrap artist specific info !
+		//	MetaFromFile( pFile );
+		//}
+		//else
+		//{
 			MetaFromFile( pFile );
-		}
-		else
-		{
-			MetaFromFile( pFile );
-		}
+		//}
 
 		return TRUE;
 	}
@@ -1397,7 +1397,7 @@ CXMLElement* CAlbumFolder::CreateXML(BOOL bMetadataAll) const
 		pDescription->AddElement( _T("name") )->SetValue( pFile->m_sName );
 
 		CString str;
-		str.Format( _T("%I64i"), pFile->GetSize() );
+		str.Format( _T("%I64u"), pFile->GetSize() );
 		pDescription->AddElement( _T("size") )->SetValue( str );
 
 		if ( bMetadataAll && pFile->m_pMetadata && pFile->m_pSchema )

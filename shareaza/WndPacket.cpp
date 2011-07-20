@@ -522,7 +522,7 @@ void CPacketWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 
 		if ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 )
 		{
-			m_bTypeED = ( nCmd == nCmd ) ? TRUE : FALSE;
+			m_bTypeED = TRUE;
 		}
 		else
 		{
@@ -537,7 +537,7 @@ void CPacketWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 
 		if ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 )
 		{
-			m_bTypeBT = ( nCmd == nCmd ) ? TRUE : FALSE;
+			m_bTypeBT = TRUE;
 		}
 		else
 		{
@@ -552,7 +552,7 @@ void CPacketWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 
 		if ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 )
 		{
-			m_bTypeDC = ( nCmd == nCmd ) ? TRUE : FALSE;
+			m_bTypeDC = TRUE;
 		}
 		else
 		{

@@ -123,8 +123,8 @@ BOOL CIdentityProfilePage::OnInitDialog()
 
 		int nAge = 0;
 
-		if ( _stscanf( m_sAge, _T("%lu"), &nAge ) == 1 && nAge > 0 )
-			m_sAge.Format( _T("%lu"), nAge );
+		if ( _stscanf( m_sAge, _T("%i"), &nAge ) == 1 && nAge > 0 )
+			m_sAge.Format( _T("%i"), nAge );
 		else
 			m_sAge.Empty();
 	}
@@ -171,8 +171,8 @@ void CIdentityProfilePage::OnOK()
 	{
 		int nAge = 0;
 
-		if ( _stscanf( m_sAge, _T("%lu"), &nAge ) == 1 && nAge > 0 )
-			m_sAge.Format( _T("%lu"), nAge );
+		if ( _stscanf( m_sAge, _T("%i"), &nAge ) == 1 && nAge > 0 )
+			m_sAge.Format( _T("%i"), nAge );
 		else
 			m_sAge.Empty();
 

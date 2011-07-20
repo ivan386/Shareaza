@@ -154,7 +154,7 @@ BOOL CConnectionSettingsPage::OnInitDialog()
 			if ( GetIfEntry( &ifRow ) != NO_ERROR || ifRow.dwAdminStatus != MIB_IF_ADMIN_STATUS_UP )
 				continue;
 
-			strIP.Format( L"%d.%d.%d.%d", ( ip & 0x0000ff ),
+			strIP.Format( L"%u.%u.%u.%u", ( ip & 0x0000ff ),
 				( ( ip & 0x00ff00 ) >> 8 ), ( ( ip & 0xff0000 ) >> 16 ),
 				( ip >> 24 ) );
 

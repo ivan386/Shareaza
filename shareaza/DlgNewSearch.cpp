@@ -210,7 +210,8 @@ void CNewSearchDlg::OnOK()
 
 	CSchemaPtr pSchema = m_wndSchemas.GetSelected();
 
-	if ( m_pSearch->m_pXML != NULL ) delete m_pSearch->m_pXML;
+	if ( m_pSearch->m_pXML )
+		m_pSearch->m_pXML->Delete();
 
 	m_pSearch->m_pSchema	= NULL;
 	m_pSearch->m_pXML		= NULL;

@@ -149,8 +149,8 @@ CString CSchemaMember::GetValueFrom(const CXMLElement* pBase, LPCTSTR pszDefault
 		{
 			float nMinutes = 0;
 			if ( _stscanf( strValue, L"%f", &nMinutes ) == 1 )
-				strValue.Format( L"%.2u:%.2u:%.2u", (int)nMinutes / 60,
-					(int)nMinutes % 60, (int)( ( nMinutes - (int)nMinutes ) * 60 ) );
+				strValue.Format( L"%.2u:%.2u:%.2u", (DWORD)nMinutes / 60,
+					(DWORD)nMinutes % 60, (DWORD)( ( nMinutes - (DWORD)nMinutes ) * 60 ) );
 			else
 				strValue = ( pszDefault ? pszDefault : _T("") );
 		}
@@ -183,24 +183,24 @@ void CSchemaMember::SetValueTo(CXMLElement* pBase, LPCTSTR pszValue)
 {
 	if ( CXMLElement* pElement = pBase->GetElementByName( m_sName ) )
 	{
-		if ( m_bElement && pszValue != NULL && _tcslen( pszValue ) > 0 )
+		if ( m_bElement && pszValue != NULL && *pszValue )
 			pElement->SetValue( pszValue );
 		else
 			pElement->Delete();
 	}
-	else if ( m_bElement && pszValue != NULL && _tcslen( pszValue ) > 0 )
+	else if ( m_bElement && pszValue != NULL && *pszValue )
 	{
 		pBase->AddElement( m_sName )->SetValue( pszValue );
 	}
 	
 	if ( CXMLAttribute* pAttribute = pBase->GetAttribute( m_sName ) )
 	{
-		if ( ! m_bElement && pszValue != NULL && _tcslen( pszValue ) > 0 )
+		if ( ! m_bElement && pszValue != NULL && *pszValue )
 			pAttribute->SetValue( pszValue );
 		else
 			pAttribute->Delete();
 	}
-	else if ( ! m_bElement && pszValue != NULL && _tcslen( pszValue ) > 0 )
+	else if ( ! m_bElement && pszValue != NULL && *pszValue )
 	{
 		pBase->AddAttribute( m_sName, pszValue );
 	}

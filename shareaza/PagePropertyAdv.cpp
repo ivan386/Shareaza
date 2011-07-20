@@ -83,7 +83,7 @@ void CPropertyPageAdv::OnPaint()
 
 		TCHAR szClass[16];
 		GetClassName( pWnd->GetSafeHwnd(), szClass, 16 );
-		if ( _tcsicmp( szClass, _T("STATIC") ) ) continue;
+		if ( _tcsicmp( szClass, _T("STATIC") ) != 0 ) continue;
 
 		CString str;
 		CRect rc;

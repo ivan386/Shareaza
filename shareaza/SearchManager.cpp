@@ -304,7 +304,7 @@ BOOL CSearchManager::OnQueryHits(const CQueryHit* pHits)
 
 		while ( pHits != NULL )
 		{
-			pSearch->m_nHits ++;
+			++pSearch->m_nHits;
 			pHits = pHits->m_pNext;
 		}
 

@@ -519,7 +519,7 @@ CXMLElement* CG1Packet::AutoDetectAudio(LPCTSTR pszInfo)
 	if ( CXMLElement* pXML = new CXMLElement( NULL, _T("audio") ) )
 	{
 		CString strValue;
-		strValue.Format( _T("%lu"), nMinutes * 60 + nSeconds );
+		strValue.Format( _T("%i"), nMinutes * 60 + nSeconds );
 		pXML->AddAttribute( _T("seconds"), strValue );
 
 		strValue.Format( bVariable ? _T("%lu~") : _T("%lu"), nBitrate );

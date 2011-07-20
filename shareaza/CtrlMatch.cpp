@@ -974,7 +974,7 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 						int nAltSources = pFile->m_nSources - pFile->m_nFiltered;
 						if ( nAltSources > 0 )
 						{
-							strText.Format( _T("%u %s+%u"), pFile->m_nFiltered, (LPCTSTR)strSource, nAltSources );
+							strText.Format( _T("%u %s+%u"), pFile->m_nFiltered, (LPCTSTR)strSource, (DWORD)nAltSources );
 						}
 						else
 						{
@@ -998,7 +998,7 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 				int nAltSources = pFile->m_nSources - pFile->m_nFiltered;
 				if ( nAltSources > 0 )
 				{
-					strText.Format( _T("%u %s+%u"), pFile->m_nFiltered, (LPCTSTR)strSource, nAltSources );
+					strText.Format( _T("%u %s+%u"), pFile->m_nFiltered, (LPCTSTR)strSource, (DWORD)nAltSources );
 				}
 				else
 				{

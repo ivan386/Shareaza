@@ -194,7 +194,6 @@ static void SaveLogLinkEntries(bool bCrash)
 	for (size_t iLogLinkPos = 0; iLogLinkPos < iNumLogLinks; ++iLogLinkPos)
 	{
 		CLogLink* pLogLink = g_arrLogLinks[iLogLinkPos];
-		_ASSERTE(pLogLink != NULL);
 		pLogLink->SaveEntries(bCrash);
 	}
 }
@@ -210,7 +209,6 @@ static void SaveLogFiles(bool bCrash)
 	for (size_t iLogFilePos = 0; iLogFilePos < iNumLogFiles; ++iLogFilePos)
 	{
 		CLogFile* pLogFile = g_arrLogFiles[iLogFilePos];
-		_ASSERTE(pLogFile != NULL);
 		pLogFile->SaveEntries(bCrash);
 		pLogFile->Close();
 	}
@@ -295,7 +293,6 @@ static inline CLogFile* EnterLogFunction(INT_PTR iHandle)
  */
 static inline void LeaveLogFunction(CLogFile* pLogFile)
 {
-	_ASSERTE(pLogFile != NULL);
 	pLogFile->ReleaseObject();
 	LeaveLogFunction();
 }
@@ -846,7 +843,6 @@ static size_t FindLogLink(PCTSTR pszLogFile)
 		for (size_t nItemPos = 0; nItemPos < nItemCount; ++nItemPos)
 		{
 			CLogLink* pLogLink = g_arrLogLinks[nItemPos];
-			_ASSERTE(pLogLink != NULL);
 			if (_tcsicmp(pLogLink->GetLogFileName(), szLogFileName) == 0)
 				return nItemPos;
 		}
@@ -879,7 +875,6 @@ extern "C" BUGTRAP_API DWORD APIENTRY BT_GetLogFileEntry(INT_PTR nLogFileIndexOr
 			return ERROR_NOT_FOUND;
 	}
 	CLogLink* pLogLink = g_arrLogLinks[(size_t)nLogFileIndexOrName];
-	_ASSERTE(pLogLink != NULL);
 	BUGTRAP_LOGTYPE eLogType = pLogLink->GetLogType();
 	if (pLogEntry != NULL)
 	{
@@ -1668,7 +1663,6 @@ extern "C" BUGTRAP_API LPTOP_LEVEL_EXCEPTION_FILTER APIENTRY BT_InstallSehFilter
 {
 	// Setup unhandled exception handler.
 	PFSetUnhandledExceptionFilter pfnSetUnhandledExceptionFilter = GetOriginalSUEF();
-	_ASSERTE(pfnSetUnhandledExceptionFilter != NULL);
 	LPTOP_LEVEL_EXCEPTION_FILTER pfnOldExceptionFilter = (*pfnSetUnhandledExceptionFilter)(BT_SehFilter);
 	if (pfnOldExceptionFilter != BT_SehFilter)
 		g_pfnOldExceptionFilter = pfnOldExceptionFilter;
@@ -1683,7 +1677,6 @@ extern "C" BUGTRAP_API void APIENTRY BT_UninstallSehFilter(void)
 	RestoreSUEF(NULL);
 	// Restore unhandled exception handler.
 	PFSetUnhandledExceptionFilter pfnSetUnhandledExceptionFilter = GetOriginalSUEF();
-	_ASSERTE(pfnSetUnhandledExceptionFilter != NULL);
 	(*pfnSetUnhandledExceptionFilter)(g_pfnOldExceptionFilter);
 	g_pfnOldExceptionFilter = NULL;
 }

@@ -155,7 +155,6 @@ inline void CUTF8EncStream::SetOutputStream(COutputStream* pOutputStream)
  */
 inline bool CUTF8EncStream::WriteAscii(PCSTR pszString)
 {
-	_ASSERTE(m_pOutputStream != NULL);
 	size_t nLength = strlen(pszString);
 	return (m_pOutputStream->WriteBytes((const BYTE*)pszString, nLength) == nLength);
 }
@@ -167,7 +166,6 @@ inline bool CUTF8EncStream::WriteAscii(PCSTR pszString)
  */
 inline bool CUTF8EncStream::WriteBytes(const BYTE* pBytes, size_t nCount)
 {
-	_ASSERTE(m_pOutputStream != NULL);
 	return (m_pOutputStream->WriteBytes(pBytes, nCount) == nCount);
 }
 
@@ -178,7 +176,6 @@ inline bool CUTF8EncStream::WriteBytes(const BYTE* pBytes, size_t nCount)
  */
 inline bool CUTF8EncStream::WriteByte(BYTE bValue, size_t nCount)
 {
-	_ASSERTE(m_pOutputStream != NULL);
 	return (m_pOutputStream->WriteByte(bValue, nCount) == nCount);
 }
 
@@ -188,7 +185,6 @@ inline bool CUTF8EncStream::WriteByte(BYTE bValue, size_t nCount)
  */
 inline bool CUTF8EncStream::WriteByte(BYTE bValue)
 {
-	_ASSERTE(m_pOutputStream != NULL);
 	return m_pOutputStream->WriteByte(bValue);
 }
 
@@ -207,9 +203,8 @@ inline void CUTF8EncStream::Reset(void)
  */
 inline bool CUTF8EncStream::Write(const CUTF8EncStream& rEncStream)
 {
-	_ASSERTE(m_pOutputStream != NULL);
 	_ASSERTE(rEncStream.m_pStream != NULL);
-	return (m_pOutputStream->WriteStream(rEncStream.m_pStream) >= 0);
+	return (m_pOutputStream->WriteStream(rEncStream.m_pStream) != MAXSIZE_T);
 }
 
 // Other encoding/decoding functions.
@@ -479,7 +474,6 @@ inline bool CDecInputStream::SetDecoder(CBaseDecoder* pDecoder)
  */
 inline bool CDecInputStream::GetName(PTSTR pszName, size_t nNameSize) const
 {
-	_ASSERTE(m_pInputStream != NULL);
 	return m_pInputStream->GetName(pszName, nNameSize);
 }
 

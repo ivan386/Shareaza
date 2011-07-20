@@ -590,12 +590,11 @@ BOOL CBTInfo::LoadInfoPiece(BYTE *pPiece, DWORD nPieceSize, DWORD nInfoSize, DWO
 
 int CBTInfo::NextInfoPiece() const
 {
-	if( m_pSource.m_nLength == 0 )
+	if ( m_pSource.m_nLength == 0 )
 		return 0; 
-	else if( ( m_pSource.m_nLength - m_nInfoStart ) > 0 && ! m_nInfoSize )
-	{
+	else if ( m_pSource.m_nLength > m_nInfoStart && ! m_nInfoSize )
 		return ( m_pSource.m_nLength - m_nInfoStart ) / MAX_PIECE_SIZE;
-	}
+
 	return -1;
 }
 
@@ -603,7 +602,7 @@ DWORD CBTInfo::GetInfoPiece(DWORD nPiece, BYTE **pInfoPiece) const
 {
 	DWORD nPiceStart = MAX_PIECE_SIZE * nPiece;
 	if ( m_nInfoSize && m_nInfoStart &&
-		m_pSource.m_nLength - m_nInfoStart > m_nInfoSize &&
+		m_pSource.m_nLength > m_nInfoStart + m_nInfoSize &&
 		nPiceStart < m_nInfoSize )
 	{
 		*pInfoPiece = &m_pSource.m_pBuffer[ m_nInfoStart + nPiceStart ];
@@ -1500,7 +1499,7 @@ CString CBTInfo::GetTrackerHash() const
 	for ( int i = 0; i < nCount; ++i )
 		oAddr.insert( m_oTrackers[ i ].m_sAddress );
 	CStringA sAddress;
-	for( string_set::const_iterator i = oAddr.begin(); i != oAddr.end(); i++ )
+	for( string_set::const_iterator i = oAddr.begin(); i != oAddr.end(); ++i )
 		sAddress += CT2A( (*i) );
 
 	// Get SHA1 of it

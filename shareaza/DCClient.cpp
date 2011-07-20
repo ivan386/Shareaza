@@ -1010,7 +1010,7 @@ BOOL CDCClient::Handshake()
 	Write( _P(DC_CLIENT_SUPPORTS) );
 
 	CString strDirection;
-	strDirection.Format( _T("$Direction %s %u|"),
+	strDirection.Format( _T("$Direction %s %i|"),
 		( m_pDownloadTransfer ? _T("Download") : _T("Upload") ),
 		 m_nNumber );
 	Write( strDirection );

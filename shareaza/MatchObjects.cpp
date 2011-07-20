@@ -726,7 +726,7 @@ bool CMatchList::CreateRegExpFilter(CString strPattern, CString& strFilter)
 					if ( bAll )
 					{
 						// Add all keywords at the "<_>" position
-						for ( ; itWord != itWordEnd ; itWord++ )
+						for ( ; itWord != itWordEnd ; ++itWord )
 						{
 							strNewPattern.AppendFormat( L"%s\\s*",
 								(LPCTSTR)CString( itWord->first, int(itWord->second) ) );

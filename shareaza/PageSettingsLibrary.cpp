@@ -116,13 +116,13 @@ BOOL CLibrarySettingsPage::OnInitDialog()
 	m_sCollectionPath	= Settings.Downloads.CollectionPath;
 
 	for ( string_set::const_iterator i = Settings.Library.SafeExecute.begin() ;
-		i != Settings.Library.SafeExecute.end(); i++ )
+		i != Settings.Library.SafeExecute.end(); ++i )
 	{
 		m_wndSafeList.AddString( *i );
 	}
 
 	for ( string_set::const_iterator i = Settings.Library.PrivateTypes.begin() ;
-		i != Settings.Library.PrivateTypes.end(); i++ )
+		i != Settings.Library.PrivateTypes.end(); ++i )
 	{
 		m_wndPrivateList.AddString( *i );
 	}

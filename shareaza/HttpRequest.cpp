@@ -83,7 +83,7 @@ BOOL CHttpRequest::SetURL(LPCTSTR pszURL)
 {
 	if ( IsPending() ) 
 		return FALSE;
-	if ( pszURL == NULL || _tcsncmp( pszURL, _T("http"), 4 ) ) return FALSE;
+	if ( pszURL == NULL || _tcsncmp( pszURL, _T("http"), 4 ) != 0 ) return FALSE;
 	m_sURL = pszURL;
 	return TRUE;
 }

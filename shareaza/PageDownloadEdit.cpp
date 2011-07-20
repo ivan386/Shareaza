@@ -92,7 +92,7 @@ BOOL CDownloadEditPage::OnInitDialog()
 	m_sName = pDownload->m_sName;
 	m_sDiskName = pDownload->m_sPath;
 	if ( pDownload->m_nSize != SIZE_UNKNOWN )
-		m_sFileSize.Format( _T("%I64i"), pDownload->m_nSize );
+		m_sFileSize.Format( _T("%I64u"), pDownload->m_nSize );
 
 	if ( pDownload->m_oSHA1 )
 		m_sSHA1 = pDownload->m_oSHA1.toString();

@@ -1695,7 +1695,7 @@ BOOL CMediaFrame::Prepare()
 
 	ModifyStyleEx( WS_EX_LAYOUTRTL, 0, 0 );
 
-	hr = m_pPlayer->Create( (DOUBLE)(DWORD_PTR)GetSafeHwnd() );
+	hr = m_pPlayer->Create( (LONG_PTR)GetSafeHwnd() );
 	if ( FAILED( hr ) )
 		return FALSE;
 

@@ -294,7 +294,7 @@ void CDownloadMonitorDlg::OnTimer(UINT_PTR /*nIDEvent*/)
 
 	if ( m_bTray )
 	{
-		if ( _tcsncmp( m_pTray.szTip, strText, _countof( m_pTray.szTip ) - 1 ) )
+		if ( _tcsncmp( m_pTray.szTip, strText, _countof( m_pTray.szTip ) - 1 ) != 0 )
 		{
 			m_pTray.uFlags = NIF_TIP;
 			_tcsncpy( m_pTray.szTip, strText, _countof( m_pTray.szTip ) - 1 );

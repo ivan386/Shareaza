@@ -49,7 +49,6 @@ void CImageView::InitVars(void)
  */
 void CImageView::DrawImageView(HDC hdc, const RECT* prcPaint)
 {
-	_ASSERTE(g_pResManager != NULL);
 	RECT rcClient;
 	GetClientRect(m_hwnd, &rcClient);
 	if (prcPaint == NULL)
@@ -241,7 +240,6 @@ LRESULT CALLBACK CImageView::ImageViewWndProc(HWND hwnd, UINT uMsg, WPARAM wPara
 	LONG lWindowStyle;
 
 	CImageView* _this  = (CImageView*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
-	_ASSERTE(_this != NULL);
 	switch(uMsg)
 	{
 	case WM_LBUTTONDOWN:

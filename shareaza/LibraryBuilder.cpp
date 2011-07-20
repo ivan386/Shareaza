@@ -272,7 +272,7 @@ DWORD CLibraryBuilder::GetNextFileToHash(CString& sPath)
 			GetSystemTimeAsFileTime( &ftCurrentTime );
 			QWORD nCurrentTime = MAKEQWORD( ftCurrentTime.dwLowDateTime,
 				ftCurrentTime.dwHighDateTime );
-			for ( CFileInfoList::iterator i = m_pFiles.begin(); i != m_pFiles.end(); i++ )
+			for ( CFileInfoList::iterator i = m_pFiles.begin(); i != m_pFiles.end(); ++i )
 			{
 				if ( (*i).nNextAccessTime < nCurrentTime )
 				{
@@ -754,7 +754,7 @@ bool CLibraryBuilder::DetectVirtualID3v2(HANDLE hFile, QWORD& nOffset, QWORD& nL
 	if ( nRead != sizeof(pHeader) )
 		return false;
 
-	if ( strncmp( pHeader.szTag, ID3V2_TAG, 3 ) )
+	if ( strncmp( pHeader.szTag, ID3V2_TAG, 3 ) != 0 )
 		return false;
 	if ( pHeader.nMajorVersion < 2 || pHeader.nMajorVersion > 4 )
 		return false;
@@ -964,8 +964,6 @@ bool CLibraryBuilder::DetectVirtualLAME(HANDLE hFile, QWORD& nOffset, QWORD& nLe
 
 	LAME_FRAME pFrame = { 0 };
 	const LAME_FRAME pEmtyRef = { 0 };
-	const char cEncoder[ 5 ] = "LAME";
-	const char cXing[ 5 ] = "Xing";
 	bool bChanged = false;
 
 	if ( !ReadFile( hFile, &pFrame, sizeof(pFrame), &nRead, NULL ) || nRead != sizeof(pFrame) )
@@ -985,13 +983,13 @@ bool CLibraryBuilder::DetectVirtualLAME(HANDLE hFile, QWORD& nOffset, QWORD& nLe
 			nLength--;
 		}
 	}
-	else if ( memcmp( &pFrame, cXing, 4 ) == 0 )
+	else if ( memcmp( &pFrame, "Xing", 4 ) == 0 ) // Xing encoder
 	{
 		bChanged = true;
 		nOffset += nFrameSize;
 		nLength -= nFrameSize;
 	}
-	else if ( memcmp( pFrame.ClassID, cEncoder, 4 ) == 0 ) // LAME encoder
+	else if ( memcmp( pFrame.ClassID, "LAME", 4 ) == 0 ) // LAME encoder
 	{
 		bChanged = true;
 		DWORD nMusicLength = swapEndianess( pFrame.MusicLength ) - nFrameSize; // Minus the first frame
@@ -1090,7 +1088,7 @@ bool CLibraryBuilder::DetectVirtualLAME(HANDLE hFile, QWORD& nOffset, QWORD& nLe
 	if ( !ReadFile( hFile, pFrame.ClassID, 9, &nRead, NULL ) || nRead != 9 )
 		return bChanged;
 
-	if ( memcmp( pFrame.ClassID, cEncoder, 4 ) == 0 ) 
+	if ( memcmp( pFrame.ClassID, "LAME", 4 ) == 0 ) 
 	{
 		bChanged = true;
 		nLength -= 8;

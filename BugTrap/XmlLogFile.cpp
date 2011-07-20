@@ -193,7 +193,6 @@ BOOL CXmlLogFile::SaveEntries(BOOL /*bCrash*/)
 	{
 		CXmlLogEntry* pXmlLogEntry = (CXmlLogEntry*)pLogEntry;
 		PTCHAR pchPointer = pXmlLogEntry->m_pchData;
-		_ASSERTE(pchPointer != NULL);
 		PCTSTR pszLogLevel = pchPointer;
 		pchPointer += _tcslen(pchPointer) + 1;
 		PCTSTR pszTimeStatistics = pchPointer;
@@ -235,7 +234,6 @@ CXmlLogFile::CXmlLogEntry* CXmlLogFile::AllocLogEntry(const CBaseLogRecord& rLog
 	if (pLogEntry)
 	{
 		PTCHAR pchPointer = pLogEntry->m_pchData;
-		_ASSERTE(pchPointer != NULL);
 
 		_tcscpy_s(pchPointer, dwLogLevelSize, pszLogLevel);
 		pchPointer += dwLogLevelSize;

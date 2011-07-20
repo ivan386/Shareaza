@@ -1868,11 +1868,11 @@ int CIRCFrame::ParseMessageID()
 				nMessageType = ID_MESSAGE_SERVER_MSG;
 			else if ( nServerErrNum > 400 ) 
 				nMessageType = ID_MESSAGE_SERVER_ERROR;
-			else if ( nServerErrNum == 5 || nServerErrNum == 318 || nServerErrNum == 351 || 
+			else if ( nServerErrNum == 5 || nServerErrNum == 351 || 
 				nServerErrNum == 369 || nServerErrNum == 342 || 
 				nServerErrNum == 331 || nServerErrNum == 321 || 
 				nServerErrNum == 317 || nServerErrNum == 318 || 
-					  nServerErrNum > 299  && nServerErrNum < 304 ) 
+				( nServerErrNum > 299 && nServerErrNum < 304 ) ) 
 				nMessageType = ID_MESSAGE_IGNORE;
 			else if ( nServerErrNum == 301 ) 
 				nMessageType = ID_MESSAGE_USER_AWAY;

@@ -139,7 +139,6 @@ CWaitDialog::CWaitDialog(HWND hwndParent)
 UINT CALLBACK CWaitDialog::WaitThreadProc(PVOID pParam)
 {
 	CWaitDialog* _this = (CWaitDialog*)pParam;
-	_ASSERT(_this != NULL);
 
 	HCURSOR hOldCursor = SetCursor(g_pResManager->m_hWaitCursor);
 

@@ -141,8 +141,8 @@ void CSkinsSettingsPage::EnumerateSkins(LPCTSTR pszPath)
 				EnumerateSkins( strPath );
 			}
 			else if (	_tcsistr( pFind.cFileName, _T(".xml") ) != NULL &&
-						_tcsicmp( pFind.cFileName, _T("Definitions.xml") ) &&
-						_tcsnicmp( pFind.cFileName, _T("Default-"), 8 ) )
+						_tcsicmp( pFind.cFileName, _T("Definitions.xml") ) != 0 &&
+						_tcsnicmp( pFind.cFileName, _T("Default-"), 8 ) != 0 )
 			{
 				AddSkin( pszPath, pFind.cFileName );
 			}

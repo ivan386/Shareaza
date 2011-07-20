@@ -547,7 +547,7 @@ void CMediaListCtrl::OnMouseMove(UINT nFlags, CPoint point)
 	{
 		DWORD_PTR nFile = nHit >= 0 ? GetItemData( nHit ) : 0;
 
-		if ( nFile > 0 && ! Library.LookupFile( static_cast< DWORD >( nFile ) ) ) nFile = 0;
+		if ( nFile > 0 && ! Library.LookupFile( nFile ) ) nFile = 0;
 
 		if ( nFile > 0 )
 		{

@@ -349,7 +349,7 @@ STDMETHODIMP CLibraryCollectionView::External::XView::Hover(BSTR sURN)
 
 	pView->m_nWebIndex = 0;
 
-	if ( sURN != NULL && wcslen( sURN ) != 0 )
+	if ( sURN != NULL && SysStringLen( sURN ) != 0 )
 	{
 		if ( pThis->m_pView->m_pCollection->FindByURN( CString( sURN ) ) != NULL )
 		{

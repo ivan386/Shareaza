@@ -231,7 +231,7 @@ BOOL CTrafficWnd::Serialize(BOOL bSave)
 	WINDOWPLACEMENT pPos = { sizeof(WINDOWPLACEMENT) };
 
 	CString strFile;
-	strFile.Format( _T("%s\\Data\\Graph%.4i.dat"),
+	strFile.Format( _T("%s\\Data\\Graph%.4u.dat"),
 		(LPCTSTR)Settings.General.UserPath, m_nUnique );
 
 	CFile pFile;

@@ -57,7 +57,6 @@ static void MachineInfoDlg_OnCommand(HWND hwnd, int id, HWND hwndCtl, UINT codeN
 static BOOL MachineInfoDlg_OnInitDialog(HWND hwnd, HWND hwndFocus, LPARAM lParam)
 {
 	lParam; hwndFocus;
-	_ASSERTE(g_pResManager != NULL);
 	if (g_pResManager->m_hBigAppIcon)
 		SendMessage(hwnd, WM_SETICON, ICON_BIG, (LPARAM)g_pResManager->m_hBigAppIcon);
 	if (g_pResManager->m_hSmallAppIcon)
@@ -69,7 +68,6 @@ static BOOL MachineInfoDlg_OnInitDialog(HWND hwnd, HWND hwndFocus, LPARAM lParam
 	CStrStream Stream(8 * 1024);
 
 	hwndCtl = GetDlgItem(hwnd, IDC_CPU_TEXT);
-	_ASSERTE(g_pResManager != NULL);
 	if (g_pResManager->m_hFixedFont)
 		SetWindowFont(hwndCtl, g_pResManager->m_hFixedFont, FALSE);
 	Stream.Reset();
@@ -77,21 +75,18 @@ static BOOL MachineInfoDlg_OnInitDialog(HWND hwnd, HWND hwndFocus, LPARAM lParam
 	SetWindowText(hwndCtl, Stream);
 
 	hwndCtl = GetDlgItem(hwnd, IDC_OS_TEXT);
-	_ASSERTE(g_pResManager != NULL);
 	if (g_pResManager->m_hFixedFont)
 		SetWindowFont(hwndCtl, g_pResManager->m_hFixedFont, FALSE);
 	CSymEngine::GetOsString(szTempBuf, countof(szTempBuf));
 	SetWindowText(hwndCtl, szTempBuf);
 
 	hwndCtl = GetDlgItem(hwnd, IDC_MEM_TEXT);
-	_ASSERTE(g_pResManager != NULL);
 	if (g_pResManager->m_hFixedFont)
 		SetWindowFont(hwndCtl, g_pResManager->m_hFixedFont, FALSE);
 	CSymEngine::GetMemString(szTempBuf, countof(szTempBuf));
 	SetWindowText(hwndCtl, szTempBuf);
 
 	hwndCtl = GetDlgItem(hwnd, IDC_ENVIRONMENT);
-	_ASSERTE(g_pResManager != NULL);
 	if (g_pResManager->m_hFixedFont)
 		SetWindowFont(hwndCtl, g_pResManager->m_hFixedFont, FALSE);
 	Stream.Reset();
@@ -116,7 +111,6 @@ static HBRUSH MachineInfoDlg_OnCtlColor(HWND hwnd, HDC hdc, HWND hwndChild, int 
 		int nChildID = GetDlgCtrlID(hwndChild);
 		if (nChildID == IDC_ENVIRONMENT)
 		{
-			_ASSERTE(g_pResManager != NULL);
 			SetBkColor(hdc, GetSysColor(COLOR_BTNHIGHLIGHT));
 			return g_pResManager->m_hbrControlLight;
 		}

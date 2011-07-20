@@ -1083,7 +1083,7 @@ BOOL CSecurity::IsAgentBlocked(const CString& sUserAgent) const
 
 	// Loop through the list of programs to block
 	for ( string_set::const_iterator i = Settings.Uploads.BlockAgents.begin() ;
-		i != Settings.Uploads.BlockAgents.end(); i++ )
+		i != Settings.Uploads.BlockAgents.end(); ++i )
 	{
 		if ( _tcsistr( sUserAgent, *i ) )							return TRUE;
 	}
@@ -1258,7 +1258,7 @@ BOOL CSecureRule::Match(const CShareazaFile* pFile) const
 			{
 				CString strExtension;
 				pszExt++;
-				strExtension.Format( _T("size:%s:%I64i"), pszExt, pFile->m_nSize );
+				strExtension.Format( _T("size:%s:%I64u"), pszExt, pFile->m_nSize );
 				if ( Match( strExtension ) )
 					return TRUE;
 			}
@@ -1749,9 +1749,9 @@ CString CSecureRule::ToGnucleusString() const
 	}
 	else
 	{
-		int nFrom[4], nTo[4];
+		BYTE nFrom[4], nTo[4];
 
-		for ( int nByte = 0 ; nByte < 4 ; nByte++ )
+		for ( int nByte = 0 ; nByte < 4 ; ++nByte )
 		{
 			nFrom[ nByte ]	= m_nIP[ nByte ] & m_nMask[ nByte ];
 			nTo[ nByte ]	= m_nIP[ nByte ] | ( ~m_nMask[ nByte ] );

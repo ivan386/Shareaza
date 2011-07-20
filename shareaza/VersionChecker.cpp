@@ -276,7 +276,7 @@ BOOL CVersionChecker::CheckUpgradeHash(const CLibraryFile* pFile)
 				pFile = LibraryMaps.LookupFileBySHA1( oSHA1 );
 
 			if ( pFile && validAndEqual( pFile->m_oSHA1, oSHA1 ) &&
-				_tcsicmp( PathFindExtension( pFile->GetPath() ), _T(".exe") ) )
+				_tcsicmp( PathFindExtension( pFile->GetPath() ), _T(".exe") ) == 0 )
 			{
 				m_sUpgradePath = pFile->GetPath();
 				PostMainWndMessage( WM_VERSIONCHECK, VC_UPGRADE );

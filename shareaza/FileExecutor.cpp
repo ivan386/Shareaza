@@ -337,10 +337,10 @@ BOOL CFileExecutor::Execute(LPCTSTR pszFile, LPCTSTR pszExt)
 
 	// Handle video and audio files by external player
 	CString sCustomPlayer = GetCustomPlayer();
+	TCHAR pszShortPath[ MAX_PATH ];
 	if ( ! bShiftKey && ( bVideo || bAudio ) && ! sCustomPlayer.IsEmpty() )
 	{
 		// Prepare file path for execution
-		TCHAR pszShortPath[ MAX_PATH ];
 		if ( Settings.MediaPlayer.ShortPaths )
 		{
 			if ( GetShortPathName( pszFile, pszShortPath, MAX_PATH ) )
@@ -659,7 +659,7 @@ BOOL CFileExecutor::ShowBitziTicket(DWORD nIndex)
 	strURL.Replace( _T("(ED2K)"), pFile->m_oED2K.toString() );
 	strURL.Replace( _T("(AGENT)"), URLEncode( Settings.SmartAgent() ) );
 
-	str.Format( _T("%I64i"), pFile->GetSize() );
+	str.Format( _T("%I64u"), pFile->GetSize() );
 	strURL.Replace( _T("(SIZE)"), str );
 
 

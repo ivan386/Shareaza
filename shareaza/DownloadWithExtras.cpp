@@ -266,7 +266,7 @@ CDownloadReview* CDownloadWithExtras::FindReview(IN_ADDR* pIP) const
 CDownloadReview* CDownloadWithExtras::FindReview(LPCTSTR pszUserName) const
 {
 	CDownloadReview *pReview = m_pReviewFirst;
-	if ( _tcsclen( pszUserName ) == 0 ) return NULL;
+	if ( ! *pszUserName ) return NULL;
 
 	while ( pReview )
 	{

@@ -60,24 +60,25 @@ size_t COutputStream::WriteByte(unsigned char bValue, size_t nCount)
  */
 size_t COutputStream::WriteStream(CInputStream* pInputStream)
 {
+	unsigned char arrBuffer[1024];
 	size_t nNumWritten = 0;
 	for (;;)
 	{
-		unsigned char arrBuffer[1024];
 		size_t nNumRead = pInputStream->ReadBytes(arrBuffer, sizeof(arrBuffer));
-		if (nNumRead == 0 || nNumRead == MAXSIZE_T)
-			goto end;
+		if ( nNumRead == 0 )
+			return nNumWritten;
+		if ( nNumRead == MAXSIZE_T )
+			return MAXSIZE_T;
 		unsigned char* pBuffer = arrBuffer;
 		while (nNumRead > 0)
 		{
 			size_t nNumWrittenTemp = WriteBytes(pBuffer, nNumRead);
-			if (nNumWrittenTemp == 0 || nNumWrittenTemp == MAXSIZE_T)
-				goto end;
+			if ( nNumWrittenTemp != nNumRead )
+				return MAXSIZE_T;
 			nNumRead -= nNumWrittenTemp;
 			nNumWritten += nNumWrittenTemp;
 			pBuffer += nNumWrittenTemp;
 		}
 	}
-end:
 	return nNumWritten;
 }

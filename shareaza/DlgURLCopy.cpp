@@ -152,8 +152,7 @@ void CURLCopyDlg::OnIncludeSelf()
 	{
 		CString strSize;
 
-		strSize.Format( _T("xl=%I64i"),
-			m_pFile->m_nSize );
+		strSize.Format( _T("xl=%I64u"), m_pFile->m_nSize );
 
 		if ( m_sMagnet.GetLength() ) m_sMagnet += _T("&");
 		m_sMagnet += strSize;
@@ -190,7 +189,7 @@ void CURLCopyDlg::OnIncludeSelf()
 		( m_pFile->m_nSize != 0 && m_pFile->m_nSize != SIZE_UNKNOWN ) &&
 		m_pFile->m_sName.GetLength() )
 	{
-		m_sED2K.Format( _T("ed2k://|file|%s|%I64i|%s|/"),
+		m_sED2K.Format( _T("ed2k://|file|%s|%I64u|%s|/"),
 			(LPCTSTR)URLEncode( m_pFile->m_sName ),
 			m_pFile->m_nSize,
 			(LPCTSTR)m_pFile->m_oED2K.toString() );

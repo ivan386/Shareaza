@@ -449,7 +449,7 @@ void CEmoticons::FormatText(CRichDocument* pDocument, LPCTSTR pszBody, BOOL bNew
 
 		if ( pszEmoticon == pszBody )
 		{
-			str.Format( _T("%lu"), nEmoticon );
+			str.Format( _T("%i"), nEmoticon );
 			pDocument->Add( retEmoticon, str );
 			pszBody += _tcslen( GetText( nEmoticon ) );
 			continue;

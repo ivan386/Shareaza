@@ -247,7 +247,7 @@ void CCoolMenuBarCtrl::UpdateWindowMenu(CMenu* pMenu)
 		CString strMenu, strWindow;
 		pChildWnd->GetWindowText( strWindow );
 
-		strMenu.Format( _T("&%i %s"), nIndex, (LPCTSTR)strWindow );
+		strMenu.Format( _T("&%u %s"), nIndex, (LPCTSTR)strWindow );
 
 		pMenu->AppendMenu( MF_STRING | ( pChildWnd == pActive ? MF_CHECKED : 0 ),
 			nID, strMenu );

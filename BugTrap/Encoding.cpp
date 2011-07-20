@@ -91,7 +91,6 @@ static DWORD GetUnicodeValue(const TCHAR* pchValue, size_t& nCharSize)
  */
 bool CUTF8EncStream::WriteUTF8Bin(DWORD dwUnicodeChar)
 {
-	_ASSERTE(m_pOutputStream != NULL);
 	if (dwUnicodeChar <= ASCII_MAX)
 	{
 		// 7-bit ASCII data is stored as-is
@@ -143,7 +142,6 @@ bool CUTF8EncStream::WriteUTF8Bin(DWORD dwUnicodeChar)
  */
 bool CUTF8EncStream::WriteUTF8Hex(DWORD dwUnicodeChar)
 {
-	_ASSERTE(m_pOutputStream != NULL);
 	CHAR szHexValue[16];
 	size_t nLength;
 	if (dwUnicodeChar <= ASCII_MAX)
@@ -703,7 +701,6 @@ size_t GetCharSizeInUTF8(const TCHAR* pchValue, size_t& nCharSize)
  */
 size_t GetStringSizeInUTF8(PCTSTR pszString)
 {
-	_ASSERTE(pszString != NULL);
 	size_t nUTF8StringSize = 0;
 	while (*pszString)
 	{
@@ -766,7 +763,6 @@ void CDecInputStream::SetInputStream(CInputStream* pInputStream)
  */
 size_t CDecInputStream::FillBuffer(size_t nNumBytes)
 {
-	_ASSERTE(m_pInputStream != NULL);
 	size_t nBytesLeft = m_nInputBufferLength - m_nInputBufferPos;
 	if (nBytesLeft < nNumBytes && ! m_bEndOfFile)
 	{
@@ -798,7 +794,6 @@ size_t CDecInputStream::ReadChar(TCHAR arrChar[2])
 	if (nBytesLeft == 0 || nBytesLeft == MAXSIZE_T)
 		return nBytesLeft;
 	size_t nNumBytesInChar, nCharSize;
-	_ASSERTE(m_pDecoder != NULL);
 	nNumBytesInChar = m_pDecoder->DecodeChar(m_arrInputBuffer + m_nInputBufferPos, nBytesLeft, arrChar, nCharSize);
 	if (nCharSize > 0)
 		m_nInputBufferPos += nNumBytesInChar;
@@ -849,7 +844,6 @@ bool CDecInputStream::ReadPreamble(TEXT_ENCODING& eEncoding)
  */
 size_t CStrInputStream::ReadChar(TCHAR arrChar[2])
 {
-	_ASSERTE(m_pStrStream != NULL);
 	size_t nLength = m_pStrStream->GetLength();
 	if (m_nPosition >= nLength)
 		return 0;

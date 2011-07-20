@@ -826,7 +826,7 @@ CPoint CRichViewCtrl::PositionToPoint(RICHPOSITION& pos) const
 	BOOL bOverload = pos.nFragment >= m_pFragments.GetSize();
 
 	const CRichFragment* pFragment = m_pFragments.GetAt(
-		bOverload ? m_pFragments.GetSize() - 1 : pos.nFragment );
+		bOverload ? (int)m_pFragments.GetSize() - 1 : pos.nFragment );
 
 	pt.x = pFragment->m_pt.x;
 	pt.y += pFragment->m_pt.y;

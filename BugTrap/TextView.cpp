@@ -53,7 +53,6 @@ void CTextView::InitVars(void)
  */
 void CTextView::DrawTextView(HDC hdc, const RECT* prcPaint)
 {
-	_ASSERTE(g_pResManager != NULL);
 	RECT rcClient = {};
 	if (prcPaint == NULL)
 	{
@@ -299,7 +298,6 @@ LRESULT CALLBACK CTextView::TextViewWndProc(HWND hwnd, UINT uMsg, WPARAM wParam,
 	LONG lWindowStyle;
 
 	CTextView* _this  = (CTextView*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
-	_ASSERTE(_this != NULL);
 	switch(uMsg)
 	{
 	case WM_LBUTTONDOWN:

@@ -179,7 +179,7 @@ LRESULT CPanelWnd::OnSetText(WPARAM /*wParam*/, LPARAM /*lParam*/)
 	}
 	else
 	{
-		return static_cast< DWORD >( Default() );
+		return Default();
 	}
 }
 

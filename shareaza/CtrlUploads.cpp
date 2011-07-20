@@ -761,12 +761,33 @@ void CUploadsCtrl::OnPaint()
 	CFont* pfOld = (CFont*)dc.SelectObject( &CoolInterface.m_fntNormal );
 	BOOL bFocus = ( GetFocus() == this );
 
-		for ( POSITION posQueue = GetQueueIterator() ; posQueue && rcItem.top < rcClient.bottom ; )
+	for ( POSITION posQueue = GetQueueIterator() ; posQueue && rcItem.top < rcClient.bottom ; )
+	{
+		CUploadQueue* pQueue = GetNextQueue( posQueue );
+		
+		POSITION posFile = GetFileIterator( pQueue );
+		if ( posFile == NULL ) continue;
+		
+		if ( nScroll > 0 )
 		{
-			CUploadQueue* pQueue = GetNextQueue( posQueue );
-			
-			POSITION posFile = GetFileIterator( pQueue );
-			if ( posFile == NULL ) continue;
+			nScroll --;
+		}
+		else
+		{
+			if ( rcItem.bottom > rcClient.top )
+				PaintQueue( dc, rcItem, pQueue, bFocus && ( m_nFocus == nIndex ) );
+			rcItem.OffsetRect( 0, ITEM_HEIGHT );
+		}
+		
+		nIndex ++;
+		
+		if ( ! pQueue->m_bExpanded ) continue;
+		
+		while ( posFile && rcItem.top < rcClient.bottom )
+		{
+			int nPosition;
+			CUploadFile* pFile = GetNextFile( pQueue, posFile, &nPosition );
+			if ( pFile == NULL ) continue;
 			
 			if ( nScroll > 0 )
 			{
@@ -774,34 +795,15 @@ void CUploadsCtrl::OnPaint()
 			}
 			else
 			{
-				PaintQueue( dc, rcItem, pQueue, bFocus && ( m_nFocus == nIndex ) );
+				if ( rcItem.bottom > rcClient.top )
+					PaintFile( dc, rcItem, pQueue, pFile, nPosition, bFocus && ( m_nFocus == nIndex ) );
 				rcItem.OffsetRect( 0, ITEM_HEIGHT );
 			}
 			
 			nIndex ++;
-			
-			if ( ! pQueue->m_bExpanded ) continue;
-			
-			while ( posFile && rcItem.top < rcClient.bottom && rcItem.top < rcClient.bottom )
-			{
-				int nPosition;
-				CUploadFile* pFile = GetNextFile( pQueue, posFile, &nPosition );
-				if ( pFile == NULL ) continue;
-				
-				if ( nScroll > 0 )
-				{
-					nScroll --;
-				}
-				else
-				{
-					PaintFile( dc, rcItem, pQueue, pFile, nPosition, bFocus && ( m_nFocus == nIndex ) );
-					rcItem.OffsetRect( 0, ITEM_HEIGHT );
-				}
-				
-				nIndex ++;
-			}
 		}
-	
+	}
+
 	pUploadQueuesLock.Unlock();
 	pTransfersLock.Unlock();
 	
@@ -1078,7 +1080,7 @@ void CUploadsCtrl::PaintFile(CDC& dc, const CRect& rcRow, CUploadQueue* /*pQueue
 			if ( pTransfer != NULL ) strText = pTransfer->m_sUserAgent;
 			break;
 		case UPLOAD_COLUMN_RATING:
-			strText.Format(_T("%d"), pTransfer->m_nUserRating );
+			strText.Format(_T("%u"), pTransfer->m_nUserRating );
 			break;
 		case UPLOAD_COLUMN_COUNTRY:
 			dc.FillSolidRect( rcCell.left, rcCell.top, 20, rcCell.Height(), crBack );

@@ -76,7 +76,6 @@ void CHyperLink::DrawHyperLink(HDC hdc) const
 	TCHAR szLinkText[MAX_PATH];
 	GetWindowText(m_hwnd, szLinkText, countof(szLinkText));
 	SetBkColor(hdc, GetSysColor(COLOR_BTNFACE));
-	_ASSERTE(g_pResManager != NULL);
 	HFONT hOldFont = g_pResManager->m_hUnderlinedFont ? SelectFont(hdc, g_pResManager->m_hUnderlinedFont) : NULL;
 	HWND hwndParent = GetParent(m_hwnd);
 	HBRUSH hBrush = hwndParent ? FORWARD_WM_CTLCOLORSTATIC(hwndParent, hdc, m_hwnd, SendMessage) : NULL;
@@ -105,7 +104,6 @@ void CHyperLink::DoAction(void) const
 {
 	if (*m_szLinkURL)
 	{
-		_ASSERTE(g_pResManager != NULL);
 		if (g_pResManager->m_hAppStartingCursor)
 			SetCursor(g_pResManager->m_hAppStartingCursor);
 		ShellExecute(NULL, _T("open"), m_szLinkURL, NULL, NULL, SW_SHOWDEFAULT);
@@ -140,13 +138,11 @@ LRESULT CALLBACK CHyperLink::HyperLinkWndProc(HWND hwnd, UINT uMsg, WPARAM wPara
 	HDC hdc;
 
 	CHyperLink* _this  = (CHyperLink*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
-	_ASSERTE(_this != NULL);
 	switch(uMsg)
 	{
 	case WM_NCHITTEST:
 		return HTCLIENT;
 	case WM_SETCURSOR:
-		_ASSERTE(g_pResManager != NULL);
 		hCursor = g_pResManager->m_hArrowCursor;
 		if (g_pResManager->m_hHandCursor)
 		{
@@ -354,7 +350,6 @@ void CHyperLink::Detach(void)
 void CHyperLink::GetHyperLinkSize(SIZE& size) const
 {
 	HDC hdc = GetDC(m_hwnd);
-	_ASSERTE(g_pResManager != NULL);
 	HFONT hOldFont = NULL;
 	if (g_pResManager->m_hUnderlinedFont)
 		hOldFont = SelectFont(hdc, g_pResManager->m_hUnderlinedFont);

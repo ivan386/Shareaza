@@ -493,7 +493,7 @@ void CCollectionFile::Render(CString& strBuffer) const
 		(LPCTSTR)GetTitle() );
 
 	DWORD i = 1;
-	for ( POSITION pos = GetFileIterator(); pos; )
+	for ( POSITION pos = GetFileIterator(); pos; ++i )
 	{
 		CCollectionFile::File* pFile = GetNextFile( pos );
 
@@ -520,10 +520,10 @@ void CCollectionFile::Render(CString& strBuffer) const
 		}
 
 		CString strTemp;
-		strTemp.Format( _T("<tr><td class=\"num\">%d</td>")
+		strTemp.Format( _T("<tr><td class=\"num\">%u</td>")
 			_T("<td class=\"url\" onclick=\"if ( ! window.external.open('%s') ) window.external.download('%s');\" onmouseover=\"window.external.hover('%s');\" onmouseout=\"window.external.hover('');\">%s</td>")
 			_T("<td class=\"size\">%s</td></tr>\n"),
-			i++, (LPCTSTR)strURN, (LPCTSTR)strURN, (LPCTSTR)strURN, (LPCTSTR)pFile->m_sName,
+			i, (LPCTSTR)strURN, (LPCTSTR)strURN, (LPCTSTR)strURN, (LPCTSTR)pFile->m_sName,
 			(LPCTSTR)Settings.SmartVolume( pFile->m_nSize ) );
 		strBuffer += strTemp;
 	}

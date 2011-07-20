@@ -160,7 +160,6 @@ static HBRUSH SimpleDlg_OnCtlColor(HWND hwnd, HDC hdc, HWND hwndChild, int type)
 			nChildID == IDC_INTRO1 ||
 			nChildID == IDC_INTRO2)
 		{
-			_ASSERTE(g_pResManager != NULL);
 			SetBkColor(hdc, GetSysColor(COLOR_WINDOW));
 			return g_pResManager->m_hbrWindowBrush;
 		}

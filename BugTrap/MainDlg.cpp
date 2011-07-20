@@ -121,7 +121,6 @@ static void SaveReport(HWND hwndParent)
 static void InitReg(HWND hwnd)
 {
 	HWND hwndReg = GetDlgItem(hwnd, IDC_REGISTER);
-	_ASSERTE(g_pResManager != NULL);
 	if (g_pResManager->m_hFixedFont)
 		SetWindowFont(hwndReg, g_pResManager->m_hFixedFont, FALSE);
 #if defined _WIN64
@@ -409,7 +408,6 @@ static HBRUSH MainDlg_OnCtlColor(HWND hwnd, HDC hdc, HWND hwndChild, int type)
 			nChildID == IDC_URL ||
 			nChildID == IDC_URL_PREFIX)
 		{
-			_ASSERTE(g_pResManager != NULL);
 			SetBkColor(hdc, GetSysColor(COLOR_WINDOW));
 			return g_pResManager->m_hbrWindowBrush;
 		}

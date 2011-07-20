@@ -680,13 +680,16 @@ int CLibraryDetailView::ListCompare(LPCVOID pA, LPCVOID pB)
 				CSchemaMember* pMember = m_pThis->m_pColumns.GetAt( pos );
 
 				CString strA, strB;
-				if ( pfA->m_pMetadata ) strA = pMember->GetValueFrom( pfA->m_pMetadata, NULL, TRUE );
-				if ( pfB->m_pMetadata ) strB = pMember->GetValueFrom( pfB->m_pMetadata, NULL, TRUE );
+				if ( pfA->m_pMetadata )
+					strA = pMember->GetValueFrom( pfA->m_pMetadata, NULL, TRUE );
+				if ( pfB->m_pMetadata )
+					strB = pMember->GetValueFrom( pfB->m_pMetadata, NULL, TRUE );
 
-				if ( *(LPCTSTR)strA && *(LPCTSTR)strB &&
-					( ((LPCTSTR)strA)[ _tcslen( strA ) - 1 ] == 'k' || ((LPCTSTR)strA)[ _tcslen( strA ) - 1 ] == '~' )
-					&&
-					( ((LPCTSTR)strB)[ _tcslen( strB ) - 1 ] == 'k' || ((LPCTSTR)strB)[ _tcslen( strB ) - 1 ] == '~' ) )
+				int lenA = strA.GetLength();
+				int lenB = strB.GetLength();
+				if ( lenA && lenB &&
+					( strA.GetAt( lenA - 1 ) == _T('k') || strA.GetAt( lenA - 1 ) == _T('~') ) &&
+					( strB.GetAt( lenB - 1 ) == _T('k') || strB.GetAt( lenB - 1 ) == _T('~') ) )
 				{
 					nTest = CLiveList::SortProc( strA, strB, TRUE );
 				}

@@ -38,7 +38,6 @@ CInMemLogFile::CInMemLogFile(DWORD dwInitialLogSizeInBytes)
  */
 void CInMemLogFile::AddToHead(CLogEntry* pLogEntry)
 {
-	_ASSERTE(pLogEntry != NULL);
 	pLogEntry->m_pPrevEntry = NULL;
 	pLogEntry->m_pNextEntry = m_pFirstEntry;
 	if (m_pFirstEntry)
@@ -56,7 +55,6 @@ void CInMemLogFile::AddToHead(CLogEntry* pLogEntry)
  */
 void CInMemLogFile::AddToTail(CLogEntry* pLogEntry)
 {
-	_ASSERTE(pLogEntry != NULL);
 	pLogEntry->m_pPrevEntry = m_pLastEntry;
 	pLogEntry->m_pNextEntry = NULL;
 	if (m_pLastEntry)
@@ -71,7 +69,6 @@ void CInMemLogFile::AddToTail(CLogEntry* pLogEntry)
 
 void CInMemLogFile::DeleteHead(void)
 {
-	_ASSERTE(m_pFirstEntry != NULL);
 	CLogEntry* pLogEntry = m_pFirstEntry;
 	m_pFirstEntry = pLogEntry->m_pNextEntry;
 	if (m_pFirstEntry)
@@ -85,7 +82,6 @@ void CInMemLogFile::DeleteHead(void)
 
 void CInMemLogFile::DeleteTail(void)
 {
-	_ASSERTE(m_pLastEntry != NULL);
 	CLogEntry* pLogEntry = m_pLastEntry;
 	m_pLastEntry = pLogEntry->m_pPrevEntry;
 	if (m_pLastEntry)

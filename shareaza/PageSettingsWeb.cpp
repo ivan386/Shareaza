@@ -98,7 +98,7 @@ BOOL CWebSettingsPage::OnInitDialog()
 	m_bWebHook		= Settings.Downloads.WebHookEnable;
 
 	for ( string_set::const_iterator i = Settings.Downloads.WebHookExtensions.begin() ;
-		i != Settings.Downloads.WebHookExtensions.end(); i++ )
+		i != Settings.Downloads.WebHookExtensions.end(); ++i )
 	{
 		m_wndExtensions.AddString( (*i) );
 	}

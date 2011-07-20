@@ -34,7 +34,6 @@ void CXmlWriter::InitVars(void)
  */
 BOOL CXmlWriter::WriteBinHex(const BYTE* pBytes, DWORD dwNumBytes)
 {
-	_ASSERTE(dwNumBytes == 0 || pBytes != NULL);
 	_ASSERTE(m_eWriterState == WS_ELEMENT || m_eWriterState == WS_ATTRUBUTE);
 	if (m_eWriterState != WS_ELEMENT && m_eWriterState != WS_ATTRUBUTE)
 		return FALSE;
@@ -60,7 +59,6 @@ BOOL CXmlWriter::WriteBinHex(const BYTE* pBytes, DWORD dwNumBytes)
  */
 BOOL CXmlWriter::WriteEscaped(PCTSTR pszString, DWORD dwEscapeFlags)
 {
-	_ASSERTE(pszString != NULL);
 	DWORD dwPosition = 0;
 	while (pszString[dwPosition] != _T('\0'))
 	{
@@ -136,7 +134,6 @@ BOOL CXmlWriter::WriteEscaped(PCTSTR pszString, DWORD dwEscapeFlags)
  */
 BOOL CXmlWriter::WriteBase64(const BYTE* pBytes, DWORD dwNumBytes)
 {
-	_ASSERTE(dwNumBytes == 0 || pBytes != NULL);
 	_ASSERTE(m_eWriterState == WS_ELEMENT || m_eWriterState == WS_ATTRUBUTE);
 	if (m_eWriterState != WS_ELEMENT && m_eWriterState != WS_ATTRUBUTE)
 		return FALSE;

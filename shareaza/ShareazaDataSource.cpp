@@ -368,7 +368,7 @@ HRESULT CShareazaDataSource::DoDragDropHelper(const T* pList, HBITMAP pImage, co
 			if ( SUCCEEDED( hr ) )
 			{
 				// Prepare IDragSourceHelper handler
-				hr = Add( pIDataObject, pImage, ptOffset );
+				Add( pIDataObject, pImage, ptOffset );
 
 				// Send data object to thread
 				IStream* pStream = NULL;
@@ -1452,7 +1452,7 @@ void CShareazaDataSource::FillBuffer(const CLibraryList* pList, LPTSTR& buf_HDRO
 					{
 						CString sTemp;
 						sTemp.Format(
-							_T("magnet:?xt=urn:bitprint:%s.%s&xt=%s&xl=%I64i&dn=%s"),
+							_T("magnet:?xt=urn:bitprint:%s.%s&xt=%s&xl=%I64u&dn=%s"),
 							pFile->m_oSHA1.toString(),
 							pFile->m_oTiger.toString(),
 							pFile->m_oED2K.toUrn(),

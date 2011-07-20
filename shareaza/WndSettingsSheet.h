@@ -1,7 +1,7 @@
 //
 // WndSettingsSheet.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -51,7 +51,6 @@ protected:
 	CButton			m_wndApply;
 	BOOL			m_bModified;
 protected:
-	DLGTEMPLATE*	m_pTemplate;
 	CString			m_sCaption;
 	int				m_nListWidth;
 	int				m_nListMargin;

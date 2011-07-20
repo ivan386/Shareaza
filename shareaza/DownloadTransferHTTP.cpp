@@ -332,11 +332,11 @@ BOOL CDownloadTransferHTTP::SendRequest()
 	{
 		if ( m_nOffset + m_nLength == m_pDownload->m_nSize )
 		{
-			strLine.Format( _T("Range: bytes=%I64i-\r\n"), m_nOffset );
+			strLine.Format( _T("Range: bytes=%I64u-\r\n"), m_nOffset );
 		}
 		else
 		{
-			strLine.Format( _T("Range: bytes=%I64i-%I64i\r\n"), m_nOffset, m_nOffset + m_nLength - 1 );
+			strLine.Format( _T("Range: bytes=%I64u-%I64u\r\n"), m_nOffset, m_nOffset + m_nLength - 1 );
 		}
 		Write( strLine );
 	}
@@ -439,7 +439,7 @@ BOOL CDownloadTransferHTTP::SendRequest()
 				{
 					strLine = m_pDownload->GetURL( Network.m_pHost.sin_addr,
 						htons( Network.m_pHost.sin_port ) ) + _T(" ") +
-						TimeToString( static_cast< DWORD >( time( NULL ) - 180 ) );
+						TimeToString( time( NULL ) - 180 );
 					Write( _P("Alt-Location: ") );
 				}
 				Write( strLine );
@@ -865,10 +865,10 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 					// "/gnutella/thex/v1?urn:tree:tiger/:{TIGER_ROOT}&depth={TIGER_HEIGHT}&ed2k={0/1}"
 					// in case if "X-Thex-URI" and "X-TigerTree-Path" headers
 					// will be absent (perfect workaround for "silent" Sareaza 2.2.0.0)
-					m_sTigerTree.Format( L"/gnutella/thex/v1?%s&depth=%d&ed2k=%d",
+					m_sTigerTree.Format( L"/gnutella/thex/v1?%s&depth=%u&ed2k=%d",
 						(LPCTSTR)oTiger.toUrn(),
 						Settings.Library.TigerHeight,
-						Settings.Downloads.VerifyED2K );
+						( Settings.Downloads.VerifyED2K ? 1 : 0 ) );
 				}
 				m_bHashMatch = m_bHashMatch || oSHA1 || oTiger || oED2K || oBTH || oMD5;
 				continue;

@@ -222,7 +222,7 @@ LRESULT CWizardProfilePage::OnWizardNext()
 		if ( m_nAge > 0 )
 		{
 			CString strAge;
-			strAge.Format( _T("%i"), m_wndAge.GetItemData( m_nAge ) );
+			strAge.Format( _T("%u"), (DWORD)m_wndAge.GetItemData( m_nAge ) );
 			pVitals->AddAttribute( _T("age"), strAge );
 		}
 		else

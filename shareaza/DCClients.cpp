@@ -129,7 +129,7 @@ CString CDCClients::CreateNick(LPCTSTR szNick)
 
 	// Generate nick if not set yet
 	if ( sNick.IsEmpty() )
-		sNick.Format( CLIENT_NAME_T _T("%04u"), GetRandomNum( 0, 9999 ) );
+		sNick.Format( CLIENT_NAME_T _T("%04u"), GetRandomNum( 0u, 9999u ) );
 
 	// Minimum length is 2
 	while ( sNick.GetLength() < 2 ) sNick += _T("_");

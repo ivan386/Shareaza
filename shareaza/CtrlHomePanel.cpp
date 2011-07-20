@@ -1284,9 +1284,9 @@ void CHomeConnectionBox::Update()
 		}
 	}
 	
-	str.Format( _T("%I64i "), Statistics.Today.Timer.Connected / ( 60 * 60 ) );
+	str.Format( _T("%I64u "), Statistics.Today.Timer.Connected / ( 60 * 60 ) );
 	if ( m_pdConnectedHours ) m_pdConnectedHours->SetText( str );
-	str.Format( _T("%I64i "), ( Statistics.Today.Timer.Connected / 60 ) % 60 );
+	str.Format( _T("%I64u "), ( Statistics.Today.Timer.Connected / 60 ) % 60 );
 	if ( m_pdConnectedMinutes ) m_pdConnectedMinutes->SetText( str );
 	
 	CRichTaskBox::Update();

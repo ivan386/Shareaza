@@ -380,7 +380,7 @@ void CLanguageDlg::OnLButtonDown(UINT /*nFlags*/, CPoint /*point*/)
 
 void CLanguageDlg::OnLButtonUp(UINT /*nFlags*/, CPoint /*point*/)
 {
-	int nSelected = m_nDown && ( m_nDown == m_nHover ) ? m_nDown : 0;
+	int nSelected = ( m_nDown && m_nDown == m_nHover ) ? m_nDown : 0;
 
 	m_nDown = m_nHover = 0;
 
@@ -519,8 +519,8 @@ void CLanguageDlg::Enumerate(LPCTSTR pszPath)
 				Enumerate( strPath );
 			}
 			else if (	_tcsistr( pFind.cFileName, _T(".xml") ) != NULL &&
-						_tcsicmp( pFind.cFileName, _T("Definitions.xml") ) &&
-						_tcsicmp( pFind.cFileName, _T("Default-en.xml") ) )
+						_tcsicmp( pFind.cFileName, _T("Definitions.xml") ) != 0 &&
+						_tcsicmp( pFind.cFileName, _T("Default-en.xml") ) != 0 )
 			{
 				AddSkin( pszPath, pFind.cFileName );
 			}

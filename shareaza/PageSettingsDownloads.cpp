@@ -145,7 +145,7 @@ BOOL CDownloadsSettingsPage::OnInitDialog()
 	m_wndIncompletePath.SetIcon( IDI_BROWSE );
 
 	if ( Settings.Downloads.QueueLimit )
-		m_sQueueLimit.Format( _T("%d"), Settings.Downloads.QueueLimit );
+		m_sQueueLimit.Format( _T("%u"), Settings.Downloads.QueueLimit );
 	else
 		m_sQueueLimit = _T("MAX");
 
@@ -318,7 +318,7 @@ void CDownloadsSettingsPage::OnOK()
 
 	// Redraw the text in the queue limit box (in case the limit changed)
 	if ( Settings.Downloads.QueueLimit > 0 )
-		m_sQueueLimit.Format( _T("%d"), Settings.Downloads.QueueLimit );
+		m_sQueueLimit.Format( _T("%u"), Settings.Downloads.QueueLimit );
 	else
 		m_sQueueLimit = _T("MAX");
 
@@ -426,10 +426,7 @@ void CDownloadsSettingsPage::OnShowWindow(BOOL bShow, UINT nStatus)
 
 bool CDownloadsSettingsPage::IsLimited(CString& strText) const
 {
-	if ( ( _tcslen( strText ) == 0 ) ||
-		 ( _tcsistr( strText, _T("MAX") ) != NULL ) ||
-		 ( _tcsistr( strText, _T("NONE") ) != NULL ) )
-		return false;
-	else
-		return true;
+	return ! ( ( strText.GetLength() == 0 ) ||
+		( _tcsistr( strText, _T("MAX") ) != NULL ) ||
+		( _tcsistr( strText, _T("NONE") ) != NULL ) );
 }

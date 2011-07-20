@@ -320,7 +320,7 @@ void CQueuePropertiesDlg::OnHScroll(UINT /*nSBCode*/, UINT /*nPos*/, CScrollBar*
 	DWORD nBandwidth = nLimit * nLocalPoints / max( 1, nTotalPoints );
 
 	CString str;
-	str.Format( _T("%u%% (%lu/%lu)"), ( 100 * nBandwidth ) / nLimit,
+	str.Format( _T("%u%% (%i/%i)"), ( 100 * nBandwidth ) / nLimit,
 		nLocalPoints, nTotalPoints );
 
 	m_wndBandwidthPoints.SetWindowText( str );

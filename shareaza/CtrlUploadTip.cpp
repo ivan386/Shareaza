@@ -224,7 +224,7 @@ void CUploadTipCtrl::OnPaint(CDC* pDC, CUploadTransfer* pUpload)
 	}
 	else if ( nQueue > 0 )
 	{
-		strStatus.Format( _T("%s: %i %s %i"),
+		strStatus.Format( _T("%s: %i %s %u"),
 			(LPCTSTR)pUpload->m_pQueue->m_sName,
 			nQueue, (LPCTSTR)strOf, pUpload->m_pQueue->GetQueuedCount() );
 	}

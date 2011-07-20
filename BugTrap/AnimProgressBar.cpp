@@ -209,7 +209,6 @@ LRESULT CALLBACK CAnimProgressBar::AnimProgressBarWndProc(HWND hwnd, UINT uMsg, 
 	HDC hdc;
 
 	CAnimProgressBar* _this  = (CAnimProgressBar*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
-	_ASSERTE(_this != NULL);
 	switch(uMsg)
 	{
 	case WM_ERASEBKGND:

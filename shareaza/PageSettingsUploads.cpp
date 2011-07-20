@@ -130,7 +130,7 @@ BOOL CUploadsSettingsPage::OnInitDialog()
 	Settings.SetRange( &Settings.Uploads.MaxPerHost, m_wndMaxPerHost );
 
 	for ( string_set::const_iterator i = Settings.Uploads.BlockAgents.begin() ;
-		i != Settings.Uploads.BlockAgents.end(); i++ )
+		i != Settings.Uploads.BlockAgents.end(); ++i )
 	{
 		m_wndAgentList.AddString( *i );
 	}
@@ -457,10 +457,7 @@ void CUploadsSettingsPage::OnShowWindow(BOOL bShow, UINT nStatus)
 
 bool CUploadsSettingsPage::IsLimited(CString& strText) const
 {
-	if ( ( _tcslen( strText ) == 0 ) ||
-		 ( _tcsistr( strText, _T("MAX") ) != NULL ) ||
-		 ( _tcsistr( strText, _T("NONE") ) != NULL ) )
-		return false;
-	else
-		return true;
+	return ! ( ( strText.GetLength() == 0 ) ||
+		( _tcsistr( strText, _T("MAX") ) != NULL ) ||
+		( _tcsistr( strText, _T("NONE") ) != NULL ) );
 }

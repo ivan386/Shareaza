@@ -45,11 +45,11 @@ public:
 	SOCKADDR_IN	m_pServer;
 
 	CString		m_sNick;
-	int			m_nVersion;
+	DWORD		m_nVersion;
 	BOOL		m_bEmule;
 
-	int			m_nEmVersion;
-	int			m_nEmCompatible;
+	DWORD		m_nEmVersion;
+	DWORD		m_nEmCompatible;
 	DWORD		m_nSoftwareVersion;
 
 	// Client capabilities 1

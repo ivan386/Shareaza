@@ -326,8 +326,8 @@ BOOL CFragmentedFile::Open(const CBTInfo& oInfo, const BOOL bWrite,
 		else if ( bWrite )
 		{
 			// Generate new filename (inside incomplete folder)
-			strSource.Format( _T("%s\\%s_%d.partial"),
-				(LPCTSTR)Settings.Downloads.IncompletePath, (LPCTSTR)sUniqueName, i );
+			strSource.Format( _T("%s\\%s_%u.partial"),
+				(LPCTSTR)Settings.Downloads.IncompletePath, (LPCTSTR)sUniqueName, (DWORD)i );
 		}
 		else
 		{

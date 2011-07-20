@@ -649,8 +649,8 @@ void CCoolMenu::DoExplorerMenu(HWND hwnd, const CStringList& oFiles, POINT point
 	{
 		if ( pContextMenu1 )
 		{
-			hr = pContextMenu1.QueryInterface( &m_pContextMenu2 );
-			hr = pContextMenu1.QueryInterface( &m_pContextMenu3 );
+			pContextMenu1.QueryInterface( &m_pContextMenu2 );
+			pContextMenu1.QueryInterface( &m_pContextMenu3 );
 		}
 
 		::SetForegroundWindow( hwnd );

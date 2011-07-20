@@ -244,7 +244,7 @@ void CURLExportDlg::MakeURL(const CShareazaFile* pFile, CString& strLine)
 	if ( pFile->m_nSize != 0 && pFile->m_nSize != SIZE_UNKNOWN )
 	{
 		strLine.Replace( _T("[Size]"), Settings.SmartVolume( pFile->m_nSize ) );
-		strItem.Format( _T("%I64i"), pFile->m_nSize );
+		strItem.Format( _T("%I64u"), pFile->m_nSize );
 		strLine.Replace( _T("[ByteSize]"), strItem );
 	}
 	else

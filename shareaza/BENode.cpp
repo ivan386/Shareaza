@@ -345,12 +345,12 @@ const CString CBENode::Encode() const
 				sOutput += ( ( ( (LPSTR)m_pValue )[ n ] < ' ' ) ?
 				'.' : ( (LPSTR)m_pValue )[ n ] );
 			sOutput += _T('\"');
-			sTmp.Format( _T("[%I64i]"), m_nValue );
+			sTmp.Format( _T("[%I64u]"), m_nValue );
 			sOutput += sTmp;
 		}
 		break;
 	case beInt:
-		sTmp.Format( _T("%I64i"), m_nValue );
+		sTmp.Format( _T("%I64u"), m_nValue );
 		sOutput += sTmp;
 		break;
 	case beList:

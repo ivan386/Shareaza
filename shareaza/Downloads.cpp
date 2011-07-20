@@ -460,8 +460,8 @@ int CDownloads::GetActiveTorrentCount() const
 
 INT_PTR CDownloads::GetCount(BOOL bActiveOnly) const
 {
-	if ( !bActiveOnly )
-		return (DWORD)m_pList.GetCount();
+	if ( ! bActiveOnly )
+		return m_pList.GetCount();
 
 	INT_PTR nCount = 0;
 

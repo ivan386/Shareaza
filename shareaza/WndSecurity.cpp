@@ -438,7 +438,7 @@ void CSecurityWnd::OnSecurityExport()
 		strText = pXML->ToString( TRUE, TRUE );
 
 		int nBytes = WideCharToMultiByte( CP_ACP, 0, strText, strText.GetLength(), NULL, 0, NULL, NULL );
-		auto_ptr< CHAR > pBytes( new CHAR[ nBytes ] );
+		auto_array< CHAR > pBytes( new CHAR[ nBytes ] );
 		WideCharToMultiByte( CP_ACP, 0, strText, strText.GetLength(), pBytes.get(), nBytes, NULL, NULL );
 		pFile.Write( pBytes.get(), nBytes );
 	}

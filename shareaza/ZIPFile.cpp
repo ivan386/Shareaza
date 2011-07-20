@@ -189,11 +189,14 @@ typedef struct
 
 BOOL CZIPFile::LocateCentralDirectory()
 {
-	BYTE pBuffer[4096];
+	auto_array< BYTE > pBuffer( new BYTE[ 4096 ] );
+	if ( ! pBuffer.get() )
+		return FALSE;
+
 	DWORD nBuffer = 0;
 
 	SetFilePointer( m_hFile, -4096, NULL, FILE_END );
-	if ( ! ReadFile( m_hFile, pBuffer, 4096, &nBuffer, NULL ) )
+	if ( ! ReadFile( m_hFile, pBuffer.get(), 4096, &nBuffer, NULL ) )
 		return FALSE;
 	if ( nBuffer < sizeof(ZIP_DIRECTORY_LOC) )
 		return FALSE;
@@ -202,7 +205,7 @@ BOOL CZIPFile::LocateCentralDirectory()
 
 	for ( DWORD nScan = 4 ; nScan < nBuffer ; nScan++ )
 	{
-		DWORD* pnSignature = (DWORD*)( pBuffer + nBuffer - nScan  );
+		DWORD* pnSignature = (DWORD*)( pBuffer.get() + nBuffer - nScan  );
 
 		if ( *pnSignature == 0x06054b50 )
 		{

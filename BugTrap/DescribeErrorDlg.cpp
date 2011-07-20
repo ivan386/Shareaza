@@ -108,7 +108,6 @@ static BOOL DescribeErrorDlg_OnInitDialog(HWND hwnd, HWND hwndFocus, LPARAM lPar
 {
 	lParam; hwndFocus;
 	HWND hwndCtl;
-	_ASSERTE(g_pResManager != NULL);
 	if (g_pResManager->m_hBigAppIcon)
 		SendMessage(hwnd, WM_SETICON, ICON_BIG, (LPARAM)g_pResManager->m_hBigAppIcon);
 	if (g_pResManager->m_hSmallAppIcon)

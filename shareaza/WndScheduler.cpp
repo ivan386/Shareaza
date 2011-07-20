@@ -341,9 +341,8 @@ CString CSchedulerWnd::GetItem(int nItem)
 {
 	if ( nItem > -1 )
 	{
-		DWORD_PTR nNumber = m_wndList.GetItemData( nItem );
 		CString sTaskName;
-		sTaskName.Format( _T("%s.%04d"), CLIENT_NAME_T, nNumber );
+		sTaskName.Format( _T("%s.%04u"), CLIENT_NAME_T, (DWORD)m_wndList.GetItemData( nItem ) );
 		return sTaskName;
 	}
 	return CString();

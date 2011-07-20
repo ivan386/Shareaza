@@ -1,7 +1,7 @@
 //
 // RegExp.cpp
 //
-// Copyright (c) Shareaza Development Team, 2010.
+// Copyright (c) Shareaza Development Team, 2010-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -70,15 +70,16 @@ REGEXP_API size_t Split(LPCTSTR szRegExp, LPCTSTR szContent, LPTSTR* pszResult)
 			{
 				len += results.str( i ).size() + 1;
 			}
-			LPTSTR p = (LPTSTR)GlobalAlloc( GPTR, len * sizeof( wchar_t ) );
-
-			*pszResult = p;
-			for ( size_t i = 0; i < nCount; ++i )
+			if ( LPTSTR p = (LPTSTR)GlobalAlloc( GPTR, len * sizeof( wchar_t ) ) )
 			{
-				wcscpy_s( p, len - ( p - *pszResult ), results.str( i ).c_str() );
-				p += results.str( i ).size() + 1;
+				*pszResult = p;
+				for ( size_t i = 0; i < nCount; ++i )
+				{
+					wcscpy_s( p, len - ( p - *pszResult ), results.str( i ).c_str() );
+					p += results.str( i ).size() + 1;
+				}
+				return nCount;
 			}
-			return nCount;
 		}
 	}
 	catch (...)

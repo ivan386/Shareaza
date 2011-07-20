@@ -150,12 +150,11 @@ BOOL CWizardSheet::OnChildNotify(UINT message, WPARAM wParam, LPARAM lParam, LRE
 
 		GetClassName( pWnd->GetSafeHwnd(), szName, 32 );
 
-		if ( !_tcscmp( szName, _T("Static") ) )
+		if ( _tcscmp( szName, _T("Static") ) == 0 )
 		{
 			pWnd->SetFont( &theApp.m_fntNormal, FALSE );
-			
 		}
-		else if ( _tcscmp( szName, _T("RICHEDIT") ) )
+		else if ( _tcscmp( szName, _T("RICHEDIT") ) != 0 )
 		{
 			pWnd->SetFont( &theApp.m_fntNormal, TRUE );
 		}
@@ -317,7 +316,7 @@ void CWizardPage::StaticReplace(LPCTSTR pszSearch, LPCTSTR pszReplace)
 		TCHAR szName[32];
 		GetClassName( pChild->GetSafeHwnd(), szName, 32 );
 		
-		if ( _tcscmp( szName, _T("Static") ) ) continue;
+		if ( _tcscmp( szName, _T("Static") ) != 0 ) continue;
 		
 		CString strText;
 		pChild->GetWindowText( strText );
