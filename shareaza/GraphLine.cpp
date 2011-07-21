@@ -343,7 +343,7 @@ void CLineGraph::PaintLegend(CDC* pDC, CRect* pRect)
 
 		CString strText;
 		if ( pItem->m_nMultiplier != 1.0f )
-			strText.Format( L"%s (\x00D7%f)", pItem->m_sName, pItem->m_nMultiplier );
+			strText.Format( L"%s (\x00D7%f)", (LPCTSTR)pItem->m_sName, pItem->m_nMultiplier );
 		else
 			strText = pItem->m_sName;
 

@@ -426,7 +426,7 @@ BOOL CSymEngine::CScreenShot::WriteScreenShot(PCTSTR pszFileName)
 			return FALSE;
 		TCHAR szFileName[MAX_PATH];
 		if (m_dwNumMonitors > 1)
-			_stprintf_s(szFileName, countof(szFileName), _T("%s%d.bmp"), pszFileName, dwMonitorNumber + 1);
+			_stprintf_s(szFileName, countof(szFileName), _T("%s%u.bmp"), pszFileName, dwMonitorNumber + 1);
 		else
 			_stprintf_s(szFileName, countof(szFileName), _T("%s.bmp"), pszFileName);
 		HANDLE hFile = CreateFile(szFileName, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);

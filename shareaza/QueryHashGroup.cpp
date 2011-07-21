@@ -63,7 +63,6 @@ CQueryHashGroup::~CQueryHashGroup()
 
 void CQueryHashGroup::Add(CQueryHashTable* pTable)
 {
-	ASSERT( pTable != NULL );
 	ASSERT( pTable->m_pGroup == NULL );
 	ASSERT( m_pTables.Find( pTable ) == NULL );
 
@@ -79,7 +78,6 @@ void CQueryHashGroup::Add(CQueryHashTable* pTable)
 
 void CQueryHashGroup::Remove(CQueryHashTable* pTable)
 {
-	ASSERT( pTable != NULL );
 	ASSERT( pTable->m_pGroup == this );
 
 	POSITION pos = m_pTables.Find( pTable );

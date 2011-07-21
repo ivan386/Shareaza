@@ -568,7 +568,6 @@ CEDPacket* CQuerySearch::ToEDPacket(BOOL bUDP, DWORD nServerFlags) const
 
 BOOL CQuerySearch::WriteHashesToEDPacket(CEDPacket* pPacket, BOOL bUDP) const
 {
-	ASSERT ( pPacket != NULL );
 	ASSERT ( ( pPacket->m_nType == bUDP ) ? ED2K_C2SG_GETSOURCES2 : ED2K_C2S_GETSOURCES );
 
 	CSingleLock pLock( &Transfers.m_pSection );
@@ -678,7 +677,7 @@ CDCPacket* CQuerySearch::ToDCPacket() const
 		( bIsMaxSize ? _T('T') : _T('F') ),
 		( bSizeRestriced ? ( bIsMaxSize ? m_nMaxSize : m_nMinSize ) : 0ull ),
 		nType, 
-		( m_oTiger ? ( _T("TTH:") + m_oTiger.toString() ) : strSearch ) );
+		(LPCTSTR)( m_oTiger ? ( _T("TTH:") + m_oTiger.toString() ) : strSearch ) );
 
 	pPacket->WriteString( strQuery, FALSE );
 

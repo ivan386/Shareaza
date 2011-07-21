@@ -97,7 +97,7 @@ public:
 	END_MSG_MAP()
 };
 
-HRESULT CreateSWF (HWND hWnd, IUnknown** ppControl) throw ()
+HRESULT CreateSWF (HWND hWnd, IUnknown** ppControl)
 {
 	HRESULT hr;
 	__try {
@@ -109,7 +109,7 @@ HRESULT CreateSWF (HWND hWnd, IUnknown** ppControl) throw ()
 	return hr;
 }
 
-DWORD WINAPI LoadSWF (LPVOID filename) throw ()
+unsigned WINAPI LoadSWF (void* filename)
 {
 	DWORD dwBegin = GetTickCount();
 	HRESULT hr = CoInitializeEx (NULL, COINIT_APARTMENTTHREADED);
@@ -169,7 +169,7 @@ DWORD WINAPI LoadSWF (LPVOID filename) throw ()
 											// long get_TotalFrames ()
 											dispparams.cArgs = 0;
 											VariantInit (&varResult);	
-											hr = pIDispatch->Invoke (0x7c, IID_NULL, 0, DISPATCH_PROPERTYGET,
+											pIDispatch->Invoke (0x7c, IID_NULL, 0, DISPATCH_PROPERTYGET,
 												&dispparams, &varResult, NULL, NULL);	
 											ATLTRACE( _T("Complete. Frames: %d\n"), varResult.lVal);
 											// void GotoFrame (dwFrameNumber)
@@ -247,8 +247,7 @@ STDMETHODIMP CSWFReader::LoadFromFile (
 	HRESULT hr = E_FAIL;
 
 	// Changing threading model
-	DWORD dwID;
-	HANDLE hThread = CreateThread (NULL, 0, LoadSWF, (LPVOID) sFile, 0, &dwID);
+	HANDLE hThread = (HANDLE)_beginthreadex(NULL, 0, LoadSWF, (LPVOID)sFile, 0, NULL);
 	WaitForSingleObject (hThread, INFINITE);
 	CloseHandle (hThread);
 

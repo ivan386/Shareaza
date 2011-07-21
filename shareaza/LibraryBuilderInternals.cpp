@@ -888,8 +888,9 @@ bool CLibraryBuilderInternals::ScanMP3Frame(CXMLElement* pXML, HANDLE hFile, DWO
 			nBaseChannel = nChannelTable[nChannels];
 			strBaseSoundType = strSoundType[nChannels];
 
-			nFrameSize = ( nLayer == 3 ) ? ( 12 * nBitrate / nFrequency + bPadding ) * 4
-				: ( 144 * nBitrate / nFrequency + bPadding );
+			nFrameSize = ( nLayer == 3 ) ?
+				( 12 * nBitrate / nFrequency + ( bPadding ? 1 : 0 ) ) * 4 :
+				( 144 * nBitrate / nFrequency + ( bPadding ? 1 : 0 ) );
 
 			if ( !nFrameSize )
 				return false;
@@ -3914,7 +3915,7 @@ bool CLibraryBuilderInternals::ReadCHM(DWORD nIndex, HANDLE hFile, LPCTSTR pszPa
 	nCwc = GetLocaleInfo( nLCID, LOCALE_IDEFAULTANSICODEPAGE, pszBuffer, nLength );
 	if ( nCwc > 0 )
 	{
-		CString strTemp = pszBuffer;
+		strTemp = pszBuffer;
 		strTemp = strTemp.Left( nCwc - 1 );
 		_stscanf( strTemp, _T("%lu"), &charSet );
 		if ( TranslateCharsetInfo( (LPDWORD)charSet, &csInfo, TCI_SRCCODEPAGE ) )

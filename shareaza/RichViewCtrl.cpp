@@ -522,8 +522,6 @@ void CRichViewCtrl::ClearFragments()
 
 void CRichViewCtrl::Layout(CDC* pDC, CRect* pRect)
 {
-	ASSERT( m_pDocument != NULL );
-
 	CSingleLock pLock( &m_pDocument->m_pSection, TRUE );
 
 	ClearFragments();

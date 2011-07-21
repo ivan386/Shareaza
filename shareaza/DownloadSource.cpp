@@ -166,8 +166,6 @@ CDownloadSource::CDownloadSource(const CDownload* pDownload,
 {
 	Construct( pDownload );
 
-	ASSERT( pAddress != NULL );
-
 	if ( oGUID )
 	{
 		m_sURL.Format( _T("btc://%s:%i/%s/%s/"),

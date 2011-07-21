@@ -105,7 +105,6 @@ CLibraryBuilder::~CLibraryBuilder()
 
 bool CLibraryBuilder::Add(CLibraryFile* pFile)
 {
-	ASSERT( pFile );
 	ASSERT( pFile->m_nIndex );
 
 	if ( pFile->IsReadable() )

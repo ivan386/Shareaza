@@ -96,7 +96,6 @@ void CGProfile::Create()
 	oGUID = tmp;
 
 	CXMLElement* pGnutella = m_pXML->GetElementByName( _T("gnutella"), TRUE );
-	ASSERT( pGnutella );
 	VERIFY( pGnutella->AddAttribute( _T("guid"), tmp.toString() ) ) ;
 
 	CreateBT();
@@ -114,7 +113,6 @@ void CGProfile::CreateBT()
 	oGUIDBT = tmp_bt;
 
 	CXMLElement* pBitTorrent = m_pXML->GetElementByName( _T("bittorrent"), TRUE );
-	ASSERT( pBitTorrent );
 	VERIFY( pBitTorrent->AddAttribute( _T("guid"), tmp_bt.toString() ) );
 }
 

@@ -42,11 +42,11 @@ CString SmartVolume(ULONGLONG nVolume)
 	CString strVolume;
 
 	if ( nVolume < Kilo )					// Bytes
-		strVolume.Format( _T("%I64i B"), nVolume );
+		strVolume.Format( _T("%I64u B"), nVolume );
 	else if ( nVolume < 10 * Kilo )			// 1..10 Kilo
 		strVolume.Format( _T("%.2f KB"), nVolume / fKilo );
 	else if ( nVolume < Mega )				// 10..1024 Kilo
-		strVolume.Format( _T("%I64i KB"), nVolume / Kilo );
+		strVolume.Format( _T("%I64u KB"), nVolume / Kilo );
 	else if ( nVolume < 100 * Mega )		// 1..100 Mega
 		strVolume.Format( _T("%.2f MB"), nVolume / fMega );
 	else if ( nVolume < Giga )				// 100..1024 Mega
@@ -89,7 +89,7 @@ CString URLEncode(LPCTSTR pszInputT)
 	LPTSTR pszOutput = strOutput.GetBuffer( ( nUTF8 - 1 ) * 3 + 1 );
 	for ( ; *pszInput ; pszInput++ )
 	{
-		if ( *pszInput <= 32 || *pszInput > 127 || strchr( pszUnsafe, *pszInput ) != NULL )
+		if ( *pszInput <= 32 || strchr( pszUnsafe, *pszInput ) != NULL )
 		{
 			*pszOutput++ = _T('%');
 			*pszOutput++ = pszHex[ ( *pszInput >> 4 ) & 0x0F ];
@@ -277,7 +277,7 @@ HRESULT CPlugin::Export(IGenericView* pGenericView, LONG nCount)
 		_T("\t\t<a href=\"http://shareaza.sourceforge.net/\"><div class=\"hd\"></div></a>\r\n");
 
 	CAtlMap< CComBSTR, bool > oSHA1Map, oTigerMap, oED2KMap, oMD5Map;
-	int n = 0;
+	int n = 1;
 	for ( LONG i = 0; i < nCount; ++i )
 	{
 		CComVariant pItem;
@@ -319,7 +319,8 @@ HRESULT CPlugin::Export(IGenericView* pGenericView, LONG nCount)
 		str.Format( _T("\t\t<div class=\"f%d\">")
 			_T("<span class=\"f_\">%d</span>")
 			_T("<span class=\"fn\"><a href=\"magnet:?"),
-			( n & 1 ), ++n );
+			( n & 1 ), n );
+		++ n;
 		sHTML += str;
 
 		if ( bstrSHA1.Length() && bstrTiger.Length() )
@@ -351,7 +352,7 @@ HRESULT CPlugin::Export(IGenericView* pGenericView, LONG nCount)
 		hr = pShareazaFile->get_Size( &nSize );
 		ATLASSERT( SUCCEEDED( hr ) );
 
-		str.Format( _T("dn=%s&amp;xl=%I64i\">%s</a></span>")
+		str.Format( _T("dn=%s&amp;xl=%I64u\">%s</a></span>")
 			_T("<span class=\"fs\">%s</span></div>\r\n"),
 			URLEncode( bstrName ), nSize, bstrName, SmartVolume( nSize ) );
 		sHTML += str;

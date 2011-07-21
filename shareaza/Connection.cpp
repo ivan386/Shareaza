@@ -72,7 +72,6 @@ void CConnection::AttachTo(CConnection* pConnection)
 {
 	// Make sure the socket isn't valid yet
 	ASSERT( ! IsValid() );								// Make sure the socket here isn't valid yet
-	ASSERT( pConnection != NULL );						// Make sure we got a CConnection object
 	ASSERT( AfxIsValidAddress( pConnection, sizeof( *pConnection ) ) );
 	ASSERT( pConnection->IsValid() );					// And make sure its socket exists
 

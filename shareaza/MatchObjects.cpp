@@ -693,79 +693,78 @@ bool CMatchList::CreateRegExpFilter(CString strPattern, CString& strFilter)
 	bool bReplaced = false;
 
 	CSearchWnd* pParent = static_cast< CSearchWnd* >( GetParent() );
-	ASSERT( pParent );
+	if ( ! pParent )
+		return false;
 	CQuerySearchPtr pQuery = pParent->GetLastSearch();
+	if ( ! pQuery )
+		return false;
 
-	if ( pQuery )
+	LPCTSTR pszPattern = strPattern.GetBuffer();
+	int nTotal = 0;
+
+	while ( *pszPattern )
 	{
-		LPCTSTR pszPattern = strPattern.GetBuffer();
-		int nTotal = 0;
-
-		while ( *pszPattern )
+		if ( *pszPattern == '<' )
 		{
-			if ( *pszPattern == '<' )
+			pszPattern++;
+			bool bEnds = false;
+			bool bAll = *pszPattern == '_';
+
+			for ( ; *pszPattern ; pszPattern++ )
 			{
-				pszPattern++;
-				bool bEnds = false;
-				bool bAll = *pszPattern == '_';
-
-				for ( ; *pszPattern ; pszPattern++ )
+				if ( *pszPattern == '>' )
 				{
-					if ( *pszPattern == '>' )
-					{
-						bEnds = true;
-						break;
-					}
+					bEnds = true;
+					break;
 				}
+			}
 
-				if ( bEnds )
+			if ( bEnds )
+			{
+				CQuerySearch::const_iterator itWord = pQuery->begin();
+				CQuerySearch::const_iterator itWordEnd = pQuery->end();
+
+				if ( bAll )
 				{
-					CQuerySearch::const_iterator itWord = pQuery->begin();
-					CQuerySearch::const_iterator itWordEnd = pQuery->end();
-
-					if ( bAll )
+					// Add all keywords at the "<_>" position
+					for ( ; itWord != itWordEnd ; ++itWord )
 					{
-						// Add all keywords at the "<_>" position
-						for ( ; itWord != itWordEnd ; ++itWord )
+						strNewPattern.AppendFormat( L"%s\\s*",
+							(LPCTSTR)CString( itWord->first, int(itWord->second) ) );
+					}
+					bReplaced = true;
+				}
+				else
+				{
+					pszPattern--; // Go back
+					int nNumber = 0;
+
+					// Numbers from 1 to 9, no more
+					if ( _stscanf( &pszPattern[0], L"%i", &nNumber ) != 1 )
+						nNumber = ++nTotal;
+
+					for ( int nWord = 1 ; itWord != itWordEnd ; itWord++, nWord++ )
+					{
+						if ( nWord == nNumber )
 						{
 							strNewPattern.AppendFormat( L"%s\\s*",
 								(LPCTSTR)CString( itWord->first, int(itWord->second) ) );
+							bReplaced = true;
+							break;
 						}
-						bReplaced = true;
 					}
-					else
-					{
-						pszPattern--; // Go back
-						int nNumber = 0;
-
-						// Numbers from 1 to 9, no more
-						if ( _stscanf( &pszPattern[0], L"%i", &nNumber ) != 1 )
-							nNumber = ++nTotal;
-
-						for ( int nWord = 1 ; itWord != itWordEnd ; itWord++, nWord++ )
-						{
-							if ( nWord == nNumber )
-							{
-								strNewPattern.AppendFormat( L"%s\\s*",
-									(LPCTSTR)CString( itWord->first, int(itWord->second) ) );
-								bReplaced = true;
-								break;
-							}
-						}
-						pszPattern++; // return to the last position
-					}
+					pszPattern++; // return to the last position
 				}
-				else
-					return false; // no closing '>'
 			}
 			else
-			{
-				strNewPattern += *pszPattern; // not replacing
-			}
-			pszPattern++;
+				return false; // no closing '>'
 		}
+		else
+		{
+			strNewPattern += *pszPattern; // not replacing
+		}
+		pszPattern++;
 	}
-	else return false;
 
 	strFilter = strNewPattern;
 

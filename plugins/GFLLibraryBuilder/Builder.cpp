@@ -84,10 +84,10 @@ STDMETHODIMP CBuilder::Process (
 	if (err == GFL_NO_ERROR) {
 		CString tmp;
 		
-		tmp.Format (_T("%lu"), inf.Height);
+		tmp.Format (_T("%d"), inf.Height);
 		pISXMLAttributes->Add (CComBSTR ("height"), CComBSTR (tmp));
 		
-		tmp.Format (_T("%lu"), inf.Width);
+		tmp.Format (_T("%d"), inf.Width);
 		pISXMLAttributes->Add (CComBSTR ("width"), CComBSTR (tmp));
 
 		pISXMLAttributes->Add (CComBSTR ("description"), CComBSTR (inf.Description));

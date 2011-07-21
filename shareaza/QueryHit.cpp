@@ -875,7 +875,7 @@ CQueryHit* CQueryHit::FromDCPacket(CDCPacket* pPacket)
 	LPCSTR szNameOnly = strrchr( szFileName, '\\' );
 	if ( ! szNameOnly )
 	{
-		LPCSTR szNameOnly = strrchr( szFileName, '/' );
+		szNameOnly = strrchr( szFileName, '/' );
 		if ( ! szNameOnly )
 			szNameOnly = szFileName;
 		else

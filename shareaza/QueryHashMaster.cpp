@@ -71,7 +71,6 @@ void CQueryHashMaster::Create()
 void CQueryHashMaster::Add(CQueryHashTable* pTable)
 {
 	ASSERT( m_nPerGroup > 0 );
-	ASSERT( pTable != NULL );
 	ASSERT( pTable->m_nHash > 0 );
 	ASSERT( pTable->m_pGroup == NULL );
 
@@ -99,7 +98,6 @@ void CQueryHashMaster::Add(CQueryHashTable* pTable)
 
 void CQueryHashMaster::Remove(CQueryHashTable* pTable)
 {
-	ASSERT( pTable != NULL );
 	if ( pTable->m_pGroup == NULL ) return;
 
 	CQueryHashGroup* pGroup = pTable->m_pGroup;

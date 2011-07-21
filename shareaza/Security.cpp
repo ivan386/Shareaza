@@ -337,11 +337,8 @@ void CSecurity::Ban(const CShareazaFile* pFile, int nBanLength, BOOL bMessage, L
 
 	Add( pRule );
 
-	if ( bMessage )
-	{
-		theApp.Message( MSG_NOTICE, IDS_NETWORK_SECURITY_BLOCKED,
-			(LPCTSTR)pFile->m_sName );
-	}
+	if ( bMessage && pFile )
+		theApp.Message( MSG_NOTICE, IDS_NETWORK_SECURITY_BLOCKED, (LPCTSTR)pFile->m_sName );
 }
 
 void CSecurity::Ban(const IN_ADDR* pAddress, int nBanLength, BOOL bMessage, LPCTSTR szComment)

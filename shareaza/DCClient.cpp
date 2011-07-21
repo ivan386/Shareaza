@@ -212,7 +212,8 @@ BOOL CDCClient::Connect()
 	}
 
 	// Connect to new hub
-	if ( CDCNeighbour* pDCNeighbour = new CDCNeighbour() )
+	pDCNeighbour = new CDCNeighbour();
+	if ( pDCNeighbour )
 	{
 		if ( pDCNeighbour->ConnectTo( &m_pServer.sin_addr, ntohs( m_pServer.sin_port ), FALSE ) )
 		{

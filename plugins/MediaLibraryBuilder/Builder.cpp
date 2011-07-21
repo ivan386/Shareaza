@@ -191,9 +191,9 @@ HRESULT CBuilder::SafeProcess(BSTR sFile, ISXMLElement* pXML)
 					int nHeight = pVih->bmiHeader.biHeight;				    
 					if (nHeight < 0)
 						nHeight = -nHeight;
-					tmp.Format (_T("%lu"), nWidth);
+					tmp.Format (_T("%d"), nWidth);
 					pISXMLAttributes->Add (CComBSTR ("width"), CComBSTR (tmp));
-					tmp.Format (_T("%lu"), nHeight);
+					tmp.Format (_T("%d"), nHeight);
 					pISXMLAttributes->Add (CComBSTR ("height"), CComBSTR (tmp));
 
 					if ( mt.cbFormat )

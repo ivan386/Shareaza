@@ -349,8 +349,6 @@ void CLibraryRecent::Serialize(CArchive& ar, int /*nVersion*/)
 {
 	if ( ar.IsStoring() )
 	{
-		ASSERT( m_pFile != NULL );
-
 		ar.Write( &m_tAdded, sizeof(FILETIME) );
 		ar << m_pFile->m_nIndex;
 	}

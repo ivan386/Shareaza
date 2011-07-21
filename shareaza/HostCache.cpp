@@ -432,7 +432,6 @@ void CHostCacheList::Update(CHostCacheHostPtr pHost, WORD nPort, DWORD tSeen, LP
 {
 	CQuickLock oLock( m_pSection );
 
-	ASSERT( pHost );
 	ASSERT( m_Hosts.size() == m_HostsTime.size() );
 
 	// Update host

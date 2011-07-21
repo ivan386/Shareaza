@@ -326,7 +326,7 @@ BOOL CEDPartImporter::ImportFile(LPCTSTR pszPath, LPCTSTR pszFile)
 	if ( strPartName.IsEmpty() )
 		strPath.Format( _T("%s\\%s.part"), pszPath, pszFile );
 	else
-		strPath.Format( _T("%s\\%s"), pszPath, strPartName );
+		strPath.Format( _T("%s\\%s"), pszPath, (LPCTSTR)strPartName );
 
 	CFile pData;
 	if ( ! pData.Open( strPath, CFile::modeRead ) )

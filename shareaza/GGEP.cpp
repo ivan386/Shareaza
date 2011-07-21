@@ -510,7 +510,6 @@ BOOL CGGEPItem::Encode()
 
 BOOL CGGEPItem::Decode()
 {
-	ASSERT( m_pBuffer );
 	ASSERT( m_nLength );
 
 	// Calculate decoded data size

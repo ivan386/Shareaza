@@ -1157,7 +1157,7 @@ STDMETHODIMP CDocReader::GetOOThumbnail(BSTR bsFile, IMAGESERVICEDATA* pParams, 
 						llMove.QuadPart = 0;
 
 						// Go to the beginning of the stream
-						hr = FileStream->Seek( llMove, STREAM_SEEK_SET, NULL );
+						FileStream->Seek( llMove, STREAM_SEEK_SET, NULL );
 						
 						// Read byte array from the stream
 						BYTE* pData = NULL;
@@ -2416,7 +2416,7 @@ HRESULT CDocReader::CDocumentProperties::
     CDocProperty* pitem;
 	VARIANT vtTmp;
 
-	TRACE1("CSummaryProperties::ReadProperty(id=%d)\n", pid);
+	TRACE1("CSummaryProperties::ReadProperty(id=%u)\n", pid);
 	ASSERT(ppv); *ppv = NULL;
 
     CHECK_FLAG_RETURN(m_fDeadObj, E_INVALIDOBJECT);
@@ -2459,7 +2459,7 @@ HRESULT CDocReader::CDocumentProperties::
 	VARIANT vtItem; 
 
  // Going to add property to list. Make sure we allow writes, and make sure prop list exists...
-	TRACE1("CSummaryProperties::WriteProperty(id=%d)\n", pid);
+	TRACE1("CSummaryProperties::WriteProperty(id=%u)\n", pid);
     CHECK_NULL_RETURN(ppPropList,  E_POINTER);
     CHECK_FLAG_RETURN(m_fDeadObj,  E_INVALIDOBJECT);
     CHECK_FLAG_RETURN(m_fReadOnly, E_DOCUMENTREADONLY);
@@ -2509,7 +2509,7 @@ HRESULT CDocReader::CDocumentProperties::
     ULONG cSaved, cTotalItems = 0;
 
  // We don't need to do save if in read-only mode...
-	TRACE1("CSummaryProperties::SaveProperties(Commit=%d)\n", (ULONG)fCommitChanges);
+	TRACE1("CSummaryProperties::SaveProperties(Commit=%u)\n", (ULONG)fCommitChanges);
     CHECK_FLAG_RETURN(m_fReadOnly, E_DOCUMENTREADONLY);
 
  // Save the Summary properties..

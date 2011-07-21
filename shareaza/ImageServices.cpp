@@ -196,9 +196,6 @@ BOOL CImageServices::LoadFromFileHelper(IImageServicePlugin* pService, CImageFil
 
 BOOL CImageServices::PostLoad(CImageFile* pFile, const IMAGESERVICEDATA* pParams, SAFEARRAY* pArray)
 {
-	ASSERT( pFile );
-	ASSERT( pParams );
-
 	pFile->m_bScanned		= TRUE;
 	pFile->m_nWidth			= pParams->nWidth;
 	pFile->m_nHeight		= pParams->nHeight;

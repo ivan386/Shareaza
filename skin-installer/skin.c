@@ -33,7 +33,7 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPWSTR cmdParam, int c
 	szXML     = NULL;
 	bRunningOnNT = ( ( GetVersion() & 0x80000000 ) != 0x80000000 );
 
-	if (wcslen(cmdParam)==0)
+	if ( *cmdParam == 0 )
 		MessageBox(NULL,L"Shareaza Skin Installer " VERSION L"\n\nDouble-click on a Shareaza Skin File to use the Shareaza Skin Installer.",L"Shareaza Skin Installer",MB_OK | MB_ICONINFORMATION);
 	else if (!_wcsicmp(cmdParam, L"/install") || !_wcsicmp(cmdParam, L"/installsilent"))
 		rtn = CreateSkinKeys();

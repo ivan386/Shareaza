@@ -291,8 +291,6 @@ BOOL CDCClients::Merge(CDCClient* pClient)
 {
 	CQuickLock oLock( m_pSection );
 
-	ASSERT( pClient != NULL );
-
 	for ( POSITION pos = m_pList.GetHeadPosition(); pos; )
 	{
 		CDCClient* pOther = m_pList.GetNext( pos );
