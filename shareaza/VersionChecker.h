@@ -52,6 +52,9 @@ public:
 	void		SetNextCheck(int nDays);
     BOOL		CheckUpgradeHash(const CLibraryFile* pFile = NULL);
 
+	// Test if available version is newer than current
+	static BOOL	IsVersionNewer();
+
 	inline bool	IsUpgradeAvailable() const throw()
 	{
 		return ! Settings.VersionCheck.UpgradePrompt.IsEmpty();

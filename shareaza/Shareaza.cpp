@@ -807,7 +807,7 @@ void CShareazaApp::InitResources()
 		}
 	}
 
-	m_sVersion.Format( _T("%i.%i.%i.%i"),
+	m_sVersion.Format( _T("%u.%u.%u.%u"),
 		m_nVersion[0], m_nVersion[1],
 		m_nVersion[2], m_nVersion[3] );
 

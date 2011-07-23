@@ -73,12 +73,26 @@ void CVersionChecker::ClearVersionCheck()
 	Settings.VersionCheck.UpgradeVersion.Empty();
 }
 
+BOOL CVersionChecker::IsVersionNewer()
+{
+	WORD nVersion[ 4 ];
+	return ( _stscanf_s( Settings.VersionCheck.UpgradeVersion, _T("%hu.%hu.%hu.%hu"),
+		&nVersion[ 0 ], &nVersion[ 1 ], &nVersion[ 2 ], &nVersion[ 3 ] ) == 4 ) &&
+		( theApp.m_nVersion[ 0 ] < nVersion[ 0 ] ||
+		( theApp.m_nVersion[ 0 ] == nVersion[ 0 ] &&
+		( theApp.m_nVersion[ 1 ] < nVersion[ 1 ] ||
+		( theApp.m_nVersion[ 1 ] == nVersion[ 1 ] &&
+		( theApp.m_nVersion[ 2 ] < nVersion[ 2 ] ||
+		( theApp.m_nVersion[ 2 ] == nVersion[ 2 ] &&
+		( theApp.m_nVersion[ 3 ] < nVersion[ 3 ] ) ) ) ) ) ) );
+}
+
 //////////////////////////////////////////////////////////////////////
 // CVersionChecker time check
 
 BOOL CVersionChecker::NeedToCheck()
 {
-	if ( theApp.m_sVersion.Compare( Settings.VersionCheck.UpgradeVersion ) >= 0 ) // user manually upgraded
+	if ( ! IsVersionNewer() ) // user manually upgraded
 	{
 		ClearVersionCheck();
 	}
@@ -222,6 +236,11 @@ void CVersionChecker::ProcessResponse()
 	{
 		ClearVersionCheck();
 	}
+
+	if ( ! IsVersionNewer() )
+	{
+		ClearVersionCheck();
+	}
 	
 	if ( m_pResponse.Lookup( _T("AddDiscovery"), strValue ) )
 	{
@@ -268,14 +287,18 @@ BOOL CVersionChecker::CheckUpgradeHash(const CLibraryFile* pFile)
 {
 	if ( IsUpgradeAvailable() )
 	{
-		Hashes::Sha1Hash oSHA1;
-		if ( oSHA1.fromString( Settings.VersionCheck.UpgradeSHA1 ) )
+		CShareazaFile oFilter;
+		if ( oFilter.m_oSHA1.fromString( Settings.VersionCheck.UpgradeSHA1 ) )
 		{
+			oFilter.m_nSize = _tstoi64( Settings.VersionCheck.UpgradeSize );
+
 			CQuickLock oLock( Library.m_pSection );
 			if ( ! pFile )
-				pFile = LibraryMaps.LookupFileBySHA1( oSHA1 );
+				pFile = LibraryMaps.LookupFileByHash( &oFilter, FALSE, TRUE );
 
-			if ( pFile && validAndEqual( pFile->m_oSHA1, oSHA1 ) &&
+			if ( pFile &&
+				validAndEqual( pFile->m_oSHA1, oFilter.m_oSHA1 ) &&
+				 pFile->m_nSize == oFilter.m_nSize &&
 				_tcsicmp( PathFindExtension( pFile->GetPath() ), _T(".exe") ) == 0 )
 			{
 				m_sUpgradePath = pFile->GetPath();
