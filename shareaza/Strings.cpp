@@ -155,22 +155,49 @@ TCHAR CLowerCaseTable::operator()(TCHAR cLookup) const
 
 CString& CLowerCaseTable::operator()(CString& strSource) const
 {
-	const int nLength = strSource.GetLength();
-	LPTSTR str = strSource.GetBuffer();
+	register const int nLength = strSource.GetLength();
+	register LPTSTR str = strSource.GetBuffer();
 	for ( int i = 0; i < nLength; ++i, ++str )
 	{
-		TCHAR cLookup = *str;
-		if ( cLookup <= 127 )
-		{
-			// A..Z -> a..z
-			if ( cLookup >= _T('A') && cLookup <= _T('Z') )
-				*str = (TCHAR)( cLookup + 32 );
-		}
-		else
-			*str = cTable[ cLookup ];
+		register TCHAR l = *str;
+		register TCHAR r = ToLower( l );
+		if ( l != r ) *str = r;
 	}
 	strSource.ReleaseBuffer( nLength );
+	return strSource;
+}
 
+CString& CLowerCaseTable::Clean(CString& strSource) const
+{
+	register const int nLength = strSource.GetLength();
+	register LPTSTR str = strSource.GetBuffer();
+	for ( int i = 0; i < nLength; ++i, ++str )
+	{
+		register TCHAR l = *str;
+		switch ( l )
+		{
+		case _T('_'):
+		case _T('.'):
+		case _T('+'):
+			*str = _T(' ');
+			break;
+
+		case _T('['):
+		case _T('{'):
+			*str = _T('(');
+			break;
+
+		case _T(']'):
+		case _T('}'):
+			*str = _T(')');
+			break;
+
+		default:
+			register TCHAR r = ToLower( l );
+			if ( l != r ) *str = r;
+		}
+	}
+	strSource.ReleaseBuffer( nLength );
 	return strSource;
 }
 

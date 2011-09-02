@@ -153,6 +153,7 @@ public:
 	virtual ~CMatchFile();
 	
 public:
+	CString		m_sCompareName;			// File name for comparing (clean, lowercase)
 	CMatchList*	m_pList;
 	DWORD		m_nTotal;
 	DWORD		m_nFiltered;

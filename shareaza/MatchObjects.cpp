@@ -1524,7 +1524,9 @@ void CMatchFile::RefreshStatus()
 		if ( nVote > nBestVote )
 		{
 			nBestVote = nVote;
-			m_sName = pHit->m_sName;
+			m_sName = pHit->m_sName;			
+			m_sCompareName = m_sName;
+			ToLower.Clean( m_sCompareName );
 			m_sURL = pHit->m_sURL;
 		}
 
@@ -1917,7 +1919,7 @@ int CMatchFile::Compare(CMatchFile* pFile) const
 	switch ( m_pList->m_nSortColumn )
 	{
 	case MATCH_COL_NAME:
-		x = _tcsicoll( m_sName, pFile->m_sName );
+		x = m_sCompareName.Compare( pFile->m_sCompareName );
 		break;
 
 	case MATCH_COL_TYPE:
@@ -2012,7 +2014,7 @@ int CMatchFile::Compare(CMatchFile* pFile) const
 
 	if ( x == 0 && m_pList->m_nSortColumn != MATCH_COL_NAME )
 	{
-		x = _tcsicoll( m_sName, pFile->m_sName );
+		x = m_sCompareName.Compare( pFile->m_sCompareName );
 		if ( x == 0 && m_pList->m_nSortColumn != MATCH_COL_COUNT )
 		{
 			x = ( m_nSources == pFile->m_nSources ) ? 0 : ( ( m_nSources > pFile->m_nSources ) ? -1 : 1 );

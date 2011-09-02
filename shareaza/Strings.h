@@ -48,6 +48,10 @@ public:
 	TCHAR operator()(TCHAR cLookup) const;
 	CString& operator()(CString& strSource) const;
 
+	// Convert string to lower case and do character substitutes:
+	// ".", "_" and "+" to " "; "[" and "{" to "("; "]" and "}" to ")".
+	CString& Clean(CString& strSource) const;
+
 private:
 	TCHAR cTable[ 65536 ];
 
@@ -101,13 +105,13 @@ BOOL ReplaceNoCase(CString& sInStr, LPCTSTR pszOldStr, LPCTSTR pszNewStr);
 // Returns "a.a.a.a:port"
 CString HostToString(const SOCKADDR_IN* pHost);
 
-// Function is used to split a phrase in asian languages to separate keywords
+// Function is used to split a phrase in Asian languages to separate keywords
 // to ease keyword matching, allowing user to type as in the natural language.
 // Spacebar key is not a convenient way to separate keywords with IME, and user
 // may not know how application is keywording their files.
 //
-// The function splits katakana, hiragana and CJK phrases out of the input string.
-// ToDo: "minus" words and quoted phrases for asian languages may not work correctly in all cases.
+// The function splits katakana, Hiragana and CJK phrases out of the input string.
+// ToDo: "minus" words and quoted phrases for Asian languages may not work correctly in all cases.
 CString MakeKeywords(const CString& strPhrase, bool bExpression = true);
 
 typedef std::pair< LPCTSTR, size_t > WordEntry;
