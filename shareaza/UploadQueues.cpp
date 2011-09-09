@@ -548,6 +548,21 @@ void CUploadQueues::CreateDefault()
 	Clear();
 	CString strQueueName;
 
+#ifdef LAN_MODE
+	{
+		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_COMPLETE );
+		pQueue						= Create( strQueueName );
+		pQueue->m_nBandwidthPoints	= 40;
+		pQueue->m_nProtocols		= 0;
+		pQueue->m_nFileStateFlag	= CUploadQueue::ulqBoth;
+		pQueue->m_nCapacity			= 1000;
+		pQueue->m_nMinTransfers		= 4;
+		pQueue->m_nMaxTransfers		= 6;
+		pQueue->m_bRotate			= TRUE;
+		pQueue->m_nRotateTime		= 2*60;
+		pQueue->m_bRewardUploaders	= TRUE;
+	}
+#else // LAN_MODE
 	if ( Settings.Connection.OutSpeed > 1200 )  // 1200 Kb/s (Massive connection)
 	{
 		LoadString ( strQueueName, IDS_UPLOAD_QUEUE_ED2K_PARTIALS );
@@ -868,6 +883,7 @@ void CUploadQueues::CreateDefault()
 		pQueue->m_nRotateTime		= 20*60;
 		pQueue->m_bRewardUploaders	= FALSE;
 	}
+#endif	// LAN_MODE
 
 	Save();
 }

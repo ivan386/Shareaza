@@ -211,8 +211,13 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 		return -1;
 	}
 
+#ifdef LAN_MODE
+	Settings.Connection.InSpeed = 40960;
+	Settings.Connection.OutSpeed = 40960;
+#else  // LAN_MODE
 	Settings.Connection.InSpeed = nDownloadSpeed;
 	Settings.Connection.OutSpeed = nUploadSpeed;
+#endif // LAN_MODE
 
 	// Set upload limit to 90% of capacity, trimmed down to the nearest KB.
 	Settings.Bandwidth.Uploads = ( ( ( Settings.Connection.OutSpeed *
