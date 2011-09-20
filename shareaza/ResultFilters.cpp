@@ -1,7 +1,7 @@
 //
 // ResultFilters.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,10 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-///////////////////////////////////////////////////
-// ResultFilters
-// Save the filters used for results
-
 #include "stdafx.h"
 #include "Shareaza.h"
 #include "Settings.h"
@@ -34,24 +30,31 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
-CResultFilters::CResultFilters(void)
-: m_pFilters( NULL )
-, m_nFilters( 0 )
-, m_nDefault( NONE )
+CResultFilters::CResultFilters()
+	: m_pFilters( NULL )
+	, m_nFilters( 0 )
+	, m_nDefault( NONE )
 {
 }
 
-CResultFilters::~CResultFilters(void)
+CResultFilters::~CResultFilters()
+{
+	Clear();
+}
+
+void CResultFilters::Clear()
 {
 	if ( m_pFilters )
 	{
 		for ( DWORD i = 0; i < m_nFilters; i++ )
 		{
-			delete m_pFilters[i];
+			delete m_pFilters[ i ];
+			m_pFilters[ i ] = NULL;
 		}
 	}
 
 	delete [] ( m_pFilters );
+	m_pFilters = NULL;
 }
 
 void CResultFilters::Serialize(CArchive & ar)
@@ -133,48 +136,24 @@ void CResultFilters::Remove(DWORD index)
 	}
 }
 
-void CResultFilters::Load()
+BOOL CResultFilters::Load()
 {
 	// Delete old content first
-	if ( m_pFilters )
-	{
-		for ( DWORD i = 0; i < m_nFilters; i++ )
-		{
-			delete m_pFilters[i];
-		}
-	}
-	delete [] ( m_pFilters );
+	Clear();
 	
-	CString strFile = Settings.General.UserPath + _T("\\Data\\Filters.dat");
-	CFile f;
-	if ( f.Open( strFile, CFile::modeRead ) )
-	{
-		try
-		{
-			CArchive ar( &f, CArchive::load );	// 4 KB buffer
-			Serialize( ar );
-		}
-		catch ( CException* pException )
-		{
-			pException->Delete();
-		}
-	}
-}
-
-BOOL CResultFilters::Save()
-{
 	CString strFile = Settings.General.UserPath + _T("\\Data\\Filters.dat");
 
 	CFile pFile;
-	if ( ! pFile.Open( strFile, CFile::modeCreate | CFile::modeWrite ) )
+	if ( ! pFile.Open( strFile, CFile::modeRead | CFile::shareDenyWrite | CFile::osSequentialScan ) )
 		return FALSE;
 
 	try
 	{
-		CArchive ar( &pFile, CArchive::store );	// 4 KB buffer
+		CArchive ar( &pFile, CArchive::load );	// 4 KB buffer
 		try
 		{
 			Serialize( ar );
+
 			ar.Close();
 		}
 		catch ( CException* pException )
@@ -182,6 +161,7 @@ BOOL CResultFilters::Save()
 			ar.Abort();
 			pFile.Abort();
 			pException->Delete();
+			theApp.Message( MSG_ERROR, _T("Failed to load result filters: %s"), strFile );
 			return FALSE;
 		}
 		pFile.Close();
@@ -190,6 +170,63 @@ BOOL CResultFilters::Save()
 	{
 		pFile.Abort();
 		pException->Delete();
+		theApp.Message( MSG_ERROR, _T("Failed to load result filters: %s"), strFile );
+		return FALSE;
+	}
+
+	return TRUE;
+}
+
+BOOL CResultFilters::Save()
+{
+	CString strTemp = Settings.General.UserPath + _T("\\Data\\Filters.tmp");
+	CString strFile = Settings.General.UserPath + _T("\\Data\\Filters.dat");
+
+	if ( m_nFilters == 0 )
+	{
+		DeleteFile( strFile );
+		return TRUE;
+	}
+
+	CFile pFile;
+	if ( ! pFile.Open( strTemp, CFile::modeWrite | CFile::modeCreate | CFile::shareExclusive | CFile::osSequentialScan ) )
+	{
+		DeleteFile( strTemp );
+		theApp.Message( MSG_ERROR, _T("Failed to save result filters: %s"), strTemp );
+		return FALSE;
+	}
+
+	try
+	{
+		CArchive ar( &pFile, CArchive::store );	// 4 KB buffer
+		try
+		{
+			Serialize( ar );
+
+			ar.Close();
+		}
+		catch ( CException* pException )
+		{
+			ar.Abort();
+			pFile.Abort();
+			pException->Delete();
+			theApp.Message( MSG_ERROR, _T("Failed to save result filters: %s"), strTemp );
+			return FALSE;
+		}
+		pFile.Close();
+	}
+	catch ( CException* pException )
+	{
+		pFile.Abort();
+		pException->Delete();
+		theApp.Message( MSG_ERROR, _T("Failed to save result filters: %s"), strTemp );
+		return FALSE;
+	}
+
+	if ( ! MoveFileEx( strTemp, strFile, MOVEFILE_COPY_ALLOWED | MOVEFILE_REPLACE_EXISTING ) )
+	{
+		DeleteFile( strTemp );
+		theApp.Message( MSG_ERROR, _T("Failed to save result filters: %s"), strFile );
 		return FALSE;
 	}
 

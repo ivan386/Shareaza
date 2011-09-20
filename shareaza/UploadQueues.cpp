@@ -430,33 +430,47 @@ void CUploadQueues::Clear()
 
 BOOL CUploadQueues::Load()
 {
-	CQuickLock oLock( m_pSection );
-	CFile pFile;
+	{
+		CQuickLock oLock( m_pSection );
 
-	LoadString( m_pTorrentQueue->m_sName, IDS_UPLOAD_QUEUE_TORRENT );
-	LoadString( m_pHistoryQueue->m_sName, IDS_UPLOAD_QUEUE_HISTORY );
+		LoadString( m_pTorrentQueue->m_sName, IDS_UPLOAD_QUEUE_TORRENT );
+		LoadString( m_pHistoryQueue->m_sName, IDS_UPLOAD_QUEUE_HISTORY );
+	}
 
 	CString strFile = Settings.General.UserPath + _T("\\Data\\UploadQueues.dat");
 
-	if ( ! pFile.Open( strFile, CFile::modeRead ) )
+	CFile pFile;
+	if ( pFile.Open( strFile, CFile::modeRead | CFile::shareDenyWrite | CFile::osSequentialScan ) )
 	{
-		CreateDefault();
-		return FALSE;
-	}
+		try
+		{
+			CArchive ar( &pFile, CArchive::load );	// 4 KB buffer
+			try
+			{
+				CQuickLock oLock( m_pSection );
 
-	try
-	{
-		CArchive ar( &pFile, CArchive::load );	// 4 KB buffer
-		Serialize( ar );
-		ar.Close();
+				Serialize( ar );
+
+				ar.Close();
+			}
+			catch ( CException* pException )
+			{
+				ar.Abort();
+				pFile.Abort();
+				pException->Delete();
+				theApp.Message( MSG_ERROR, _T("Failed to load upload queues: %s"), strFile );
+			}
+			pFile.Close();
+		}
+		catch ( CException* pException )
+		{
+			pFile.Abort();
+			pException->Delete();
+			theApp.Message( MSG_ERROR, _T("Failed to load upload queues: %s"), strFile );
+		}
 	}
-	catch ( CException* pException )
-	{
-		pFile.Close();
-		pException->Delete();
-		CreateDefault();
-		return FALSE;
-	}
+	else
+		theApp.Message( MSG_ERROR, _T("Failed to load upload queues: %s"), strFile );
 
 	if ( GetCount() == 0 ) CreateDefault();
 
@@ -467,20 +481,26 @@ BOOL CUploadQueues::Load()
 
 BOOL CUploadQueues::Save()
 {
-	CQuickLock oLock( m_pSection );
-
+	CString strTemp = Settings.General.UserPath + _T("\\Data\\UploadQueues.tmp");
 	CString strFile = Settings.General.UserPath + _T("\\Data\\UploadQueues.dat");
 
 	CFile pFile;
-	if ( ! pFile.Open( strFile, CFile::modeWrite|CFile::modeCreate ) )
+	if ( ! pFile.Open( strTemp, CFile::modeWrite | CFile::modeCreate | CFile::shareExclusive | CFile::osSequentialScan ) )
+	{
+		DeleteFile( strTemp );
+		theApp.Message( MSG_ERROR, _T("Failed to save upload queues: %s"), strTemp );
 		return FALSE;
+	}
 
 	try
 	{
 		CArchive ar( &pFile, CArchive::store );	// 4 KB buffer
 		try
 		{
+			CQuickLock oLock( m_pSection );
+
 			Serialize( ar );
+
 			ar.Close();
 		}
 		catch ( CException* pException )
@@ -488,6 +508,8 @@ BOOL CUploadQueues::Save()
 			ar.Abort();
 			pFile.Abort();
 			pException->Delete();
+			DeleteFile( strTemp );
+			theApp.Message( MSG_ERROR, _T("Failed to save upload queues: %s"), strTemp );
 			return FALSE;
 		}
 		pFile.Close();
@@ -496,6 +518,15 @@ BOOL CUploadQueues::Save()
 	{
 		pFile.Abort();
 		pException->Delete();
+		DeleteFile( strTemp );
+		theApp.Message( MSG_ERROR, _T("Failed to save upload queues: %s"), strTemp );
+		return FALSE;
+	}
+
+	if ( ! MoveFileEx( strTemp, strFile, MOVEFILE_COPY_ALLOWED | MOVEFILE_REPLACE_EXISTING ) )
+	{
+		DeleteFile( strTemp );
+		theApp.Message( MSG_ERROR, _T("Failed to save upload queues: %s"), strFile );
 		return FALSE;
 	}
 
@@ -542,6 +573,8 @@ void CUploadQueues::Serialize(CArchive& ar)
 void CUploadQueues::CreateDefault()
 {
 	CQuickLock oLock( m_pSection );
+
+	theApp.Message( MSG_NOTICE, _T("Creating default upload queues") );
 
 	CUploadQueue* pQueue = NULL;
 

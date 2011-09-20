@@ -1,7 +1,7 @@
 //
 // DiscoveryServices.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -408,38 +408,40 @@ void CDiscoveryServices::Stop()
 
 BOOL CDiscoveryServices::Load()
 {
-	CSingleLock pLock( &Network.m_pSection, FALSE );
-	if ( ! pLock.Lock( 250 ) )
-		return FALSE;
-
-	CFile pFile;
-
 	CString strFile = Settings.General.UserPath + _T("\\Data\\Discovery.dat");
 
-	// Load the services from disk
-	if ( ! pFile.Open( strFile, CFile::modeRead ) )
+	CFile pFile;
+	if ( pFile.Open( strFile, CFile::modeRead | CFile::shareDenyWrite | CFile::osSequentialScan ) )
 	{
-		AddDefaults();
-		Save();
-		return FALSE;
-	}
+		try
+		{
+			CArchive ar( &pFile, CArchive::load, 16384 );	// 16 KB buffer
+			try
+			{
+				CQuickLock pLock( Network.m_pSection );
 
-	try
-	{
-		CArchive ar( &pFile, CArchive::load, 16384 );	// 16 KB buffer
-		Serialize( ar );
-	}
-	catch ( CException* pException )
-	{
-		pException->Delete();
-		pFile.Close();
-		Clear();
-		AddDefaults();
-		Save();
-		return FALSE;
-	}
+				Serialize( ar );
 
-	pFile.Close();
+				ar.Close();
+			}
+			catch ( CException* pException )
+			{
+				ar.Abort();
+				pFile.Abort();
+				pException->Delete();
+				theApp.Message( MSG_ERROR, _T("Failed to load discovery service list: %s"), strFile );
+			}
+			pFile.Close();
+		}
+		catch ( CException* pException )
+		{
+			pFile.Abort();
+			pException->Delete();
+			theApp.Message( MSG_ERROR, _T("Failed to load discovery service list: %s"), strFile );
+		}
+	}
+	else
+		theApp.Message( MSG_ERROR, _T("Failed to load discovery service list: %s"), strFile );
 
 	// Check we have the minimum number of services (in case of file corruption, etc)
 	if ( ! EnoughServices() )
@@ -453,22 +455,26 @@ BOOL CDiscoveryServices::Load()
 
 BOOL CDiscoveryServices::Save()
 {
-	CSingleLock pLock( &Network.m_pSection, FALSE );
-	if ( ! pLock.Lock( 250 ) )
-		return FALSE;
-
+	CString strTemp = Settings.General.UserPath + _T("\\Data\\Discovery.tmp");
 	CString strFile = Settings.General.UserPath + _T("\\Data\\Discovery.dat");
 
 	CFile pFile;
-	if ( ! pFile.Open( strFile, CFile::modeWrite | CFile::modeCreate ) )
+	if ( ! pFile.Open( strTemp, CFile::modeWrite | CFile::modeCreate | CFile::shareExclusive | CFile::osSequentialScan ) )
+	{
+		DeleteFile( strTemp );
+		theApp.Message( MSG_ERROR, _T("Failed to save discovery service list: %s"), strTemp );
 		return FALSE;
+	}
 
 	try
 	{
 		CArchive ar( &pFile, CArchive::store, 16384 );	// 16 KB buffer
 		try
 		{
+			CQuickLock pLock( Network.m_pSection );
+
 			Serialize( ar );
+
 			ar.Close();
 		}
 		catch ( CException* pException )
@@ -476,6 +482,8 @@ BOOL CDiscoveryServices::Save()
 			ar.Abort();
 			pFile.Abort();
 			pException->Delete();
+			DeleteFile( strTemp );
+			theApp.Message( MSG_ERROR, _T("Failed to save discovery service list: %s"), strTemp );
 			return FALSE;
 		}
 		pFile.Close();
@@ -484,6 +492,15 @@ BOOL CDiscoveryServices::Save()
 	{
 		pFile.Abort();
 		pException->Delete();
+		DeleteFile( strTemp );
+		theApp.Message( MSG_ERROR, _T("Failed to save discovery service list: %s"), strTemp );
+		return FALSE;
+	}
+
+	if ( ! MoveFileEx( strTemp, strFile, MOVEFILE_COPY_ALLOWED | MOVEFILE_REPLACE_EXISTING ) )
+	{
+		DeleteFile( strTemp );
+		theApp.Message( MSG_ERROR, _T("Failed to save discovery service list: %s"), strFile );
 		return FALSE;
 	}
 
@@ -657,7 +674,7 @@ void CDiscoveryServices::AddDefaults()
 void CDiscoveryServices::MergeURLs()
 {
 	CArray< CDiscoveryService* > G1URLs, G2URLs, MultiURLs, OtherURLs;
-	theApp.Message( MSG_DEBUG, _T("CDiscoveryServices::MergeURLs(): Checking the discovery service WebCache URLs") );
+
 	//Building the arrays...
 	for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
 	{
@@ -682,6 +699,7 @@ void CDiscoveryServices::MergeURLs()
 			OtherURLs.Add( pService );	//Ignore anything other than a GWC and pass off into the 'otherURLs array'.
 		}
 	}
+
 	if ( !MultiURLs.IsEmpty() )
 	{
 		for ( int index = 0; index < MultiURLs.GetCount(); index++ )
@@ -766,6 +784,7 @@ void CDiscoveryServices::MergeURLs()
 			}
 		}
 	}
+
 	if ( !G1URLs.IsEmpty() || !G2URLs.IsEmpty() || !MultiURLs.IsEmpty() || !OtherURLs.IsEmpty() )
 	{
 		//Updating the list...
@@ -798,13 +817,6 @@ void CDiscoveryServices::MergeURLs()
 				m_pList.AddTail( OtherURLs.GetAt(  other_index ) );
 			}
 		}
-		//The Discovery Service list is now rebuilt with the updated listing.
-		theApp.Message( MSG_DEBUG, _T("CDiscoveryServices::MergeURLs(): Completed Successfully") );
-	}
-	else
-	{
-		//The Discovery Service list is empty.
-		theApp.Message( MSG_ERROR, _T("CDiscoveryServices::MergeURLs(): detected an empty discovery service list") );
 	}
 }
 

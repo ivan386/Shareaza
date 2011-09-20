@@ -452,37 +452,60 @@ void CWindowManager::SaveWindowStates() const
 //////////////////////////////////////////////////////////////////////
 // CWindowManager search load and save
 
-void CWindowManager::LoadSearchWindows()
+BOOL CWindowManager::LoadSearchWindows()
 {
 	CString strFile = Settings.General.UserPath + _T("\\Data\\Searches.dat");
 
+	CFile pFile;
+	if ( ! pFile.Open( strFile, CFile::modeRead | CFile::shareDenyWrite | CFile::osSequentialScan ) )
+		return FALSE;
+
 	try
 	{
-		CFile pFile;
-		if ( ! pFile.Open( strFile, CFile::modeRead ) )
-			return;
-
 		CArchive ar( &pFile, CArchive::load, 262144 );	// 256 KB buffer
-		while ( ar.ReadCount() == 1 )
+		try
 		{
-			CSearchWnd* pWnd = new CSearchWnd();
-			pWnd->Serialize( ar );
+			while ( ar.ReadCount() == 1 )
+			{
+				CSearchWnd* pWnd = new CSearchWnd();
+				pWnd->Serialize( ar );
+			}
+			ar.Close();
 		}
+		catch ( CException* pException )
+		{
+			ar.Abort();
+			pFile.Abort();
+			pException->Delete();
+			theApp.Message( MSG_ERROR, _T("Failed to load search windows: %s"), strFile );
+			return FALSE;
+		}
+		pFile.Close();
 	}
 	catch ( CException* pException )
 	{
+		pFile.Abort();
 		pException->Delete();
+		theApp.Message( MSG_ERROR, _T("Failed to load search windows: %s"), strFile );
+		return FALSE;
 	}
+
+	return TRUE;
 }
 
 BOOL CWindowManager::SaveSearchWindows() const
 {
+	CString strTemp = Settings.General.UserPath + _T("\\Data\\Searches.tmp");
 	CString strFile = Settings.General.UserPath + _T("\\Data\\Searches.dat");
 	int nCount = 0;
 
 	CFile pFile;
-	if ( ! pFile.Open( strFile, CFile::modeWrite | CFile::modeCreate ) )
+	if ( ! pFile.Open( strTemp, CFile::modeWrite | CFile::modeCreate | CFile::shareExclusive | CFile::osSequentialScan ) )
+	{
+		DeleteFile( strTemp );
+		theApp.Message( MSG_ERROR, _T("Failed to save search windows: %s"), strTemp );
 		return FALSE;
+	}
 
 	try
 	{
@@ -508,6 +531,8 @@ BOOL CWindowManager::SaveSearchWindows() const
 			ar.Abort();
 			pFile.Abort();
 			pException->Delete();
+			DeleteFile( strTemp );
+			theApp.Message( MSG_ERROR, _T("Failed to save search windows: %s"), strTemp );
 			return FALSE;
 		}
 		pFile.Close();
@@ -516,11 +541,25 @@ BOOL CWindowManager::SaveSearchWindows() const
 	{
 		pFile.Abort();
 		pException->Delete();
+		DeleteFile( strTemp );
+		theApp.Message( MSG_ERROR, _T("Failed to save search windows: %s"), strTemp );
 		return FALSE;
 	}
 
 	if ( ! nCount )
-		DeleteFileEx( strFile, FALSE, FALSE, FALSE );
+	{
+		DeleteFile( strTemp );
+		DeleteFile( strFile );
+	}
+	else
+	{
+		if ( ! MoveFileEx( strTemp, strFile, MOVEFILE_COPY_ALLOWED | MOVEFILE_REPLACE_EXISTING ) )
+		{
+			DeleteFile( strTemp );
+			theApp.Message( MSG_ERROR, _T("Failed to save search windows: %s"), strFile );
+			return FALSE;
+		}
+	}
 
 	return TRUE;
 }
@@ -528,37 +567,60 @@ BOOL CWindowManager::SaveSearchWindows() const
 //////////////////////////////////////////////////////////////////////
 // CWindowManager browse host load and save
 
-void CWindowManager::LoadBrowseHostWindows()
+BOOL CWindowManager::LoadBrowseHostWindows()
 {
 	CString strFile = Settings.General.UserPath + _T("\\Data\\BrowseHosts.dat");
 
+	CFile pFile;
+	if ( ! pFile.Open( strFile, CFile::modeRead | CFile::shareDenyWrite | CFile::osSequentialScan ) )
+		return FALSE;
+
 	try
 	{
-		CFile pFile;
-		if ( ! pFile.Open( strFile, CFile::modeRead ) )
-			return;
-
 		CArchive ar( &pFile, CArchive::load, 262144 );	// 256 KB buffer
-		while ( ar.ReadCount() == 1 )
+		try
 		{
-			CBrowseHostWnd* pWnd = new CBrowseHostWnd();
-			pWnd->Serialize( ar );
+			while ( ar.ReadCount() == 1 )
+			{
+				CBrowseHostWnd* pWnd = new CBrowseHostWnd();
+				pWnd->Serialize( ar );
+			}
+			ar.Close();
 		}
+		catch ( CException* pException )
+		{
+			ar.Abort();
+			pFile.Abort();
+			pException->Delete();
+			theApp.Message( MSG_ERROR, _T("Failed to load browse host windows: %s"), strFile );
+			return FALSE;
+		}
+		pFile.Close();
 	}
 	catch ( CException* pException )
 	{
+		pFile.Abort();
 		pException->Delete();
+		theApp.Message( MSG_ERROR, _T("Failed to load browse host windows: %s"), strFile );
+		return FALSE;
 	}
+
+	return TRUE;
 }
 
 BOOL CWindowManager::SaveBrowseHostWindows() const
 {
+	CString strTemp = Settings.General.UserPath + _T("\\Data\\BrowseHosts.tmp");
 	CString strFile = Settings.General.UserPath + _T("\\Data\\BrowseHosts.dat");
 	int nCount = 0;
 
 	CFile pFile;
-	if ( ! pFile.Open( strFile, CFile::modeWrite | CFile::modeCreate ) )
+	if ( ! pFile.Open( strTemp, CFile::modeWrite | CFile::modeCreate | CFile::shareExclusive | CFile::osSequentialScan ) )
+	{
+		DeleteFile( strTemp );
+		theApp.Message( MSG_ERROR, _T("Failed to save browse host windows: %s"), strTemp );
 		return FALSE;
+	}
 
 	try
 	{
@@ -583,6 +645,8 @@ BOOL CWindowManager::SaveBrowseHostWindows() const
 			ar.Abort();
 			pFile.Abort();
 			pException->Delete();
+			DeleteFile( strTemp );
+			theApp.Message( MSG_ERROR, _T("Failed to save browse host windows: %s"), strTemp );
 			return FALSE;
 		}
 		pFile.Close();
@@ -591,11 +655,25 @@ BOOL CWindowManager::SaveBrowseHostWindows() const
 	{
 		pFile.Abort();
 		pException->Delete();
+		DeleteFile( strTemp );
+		theApp.Message( MSG_ERROR, _T("Failed to save browse host windows: %s"), strTemp );
 		return FALSE;
 	}
 
 	if ( ! nCount )
-		DeleteFileEx( strFile, FALSE, FALSE, FALSE );
+	{
+		DeleteFile( strTemp );
+		DeleteFile( strFile );
+	}
+	else
+	{
+		if ( ! MoveFileEx( strTemp, strFile, MOVEFILE_COPY_ALLOWED | MOVEFILE_REPLACE_EXISTING ) )
+		{
+			DeleteFile( strTemp );
+			theApp.Message( MSG_ERROR, _T("Failed to save browse host windows: %s"), strFile );
+			return FALSE;
+		}
+	}
 
 	return TRUE;
 }

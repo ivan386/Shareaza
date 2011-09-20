@@ -48,9 +48,9 @@ public:
 	void		SetGUIMode(int nMode, BOOL bSaveState = TRUE);
 	void		LoadWindowStates();
 	void		SaveWindowStates() const;
-	void		LoadSearchWindows();
+	BOOL		LoadSearchWindows();
 	BOOL		SaveSearchWindows() const;
-	void		LoadBrowseHostWindows();
+	BOOL		LoadBrowseHostWindows();
 	BOOL		SaveBrowseHostWindows() const;
 	void		OpenNewSearchWindow();
 	void		PostSkinChange();

@@ -684,46 +684,71 @@ void CSecurity::Expire()
 
 BOOL CSecurity::Load()
 {
-	CQuickLock oLock( m_pSection );
-
-	CFile pFile;
-
 	CString strFile = Settings.General.UserPath + _T("\\Data\\Security.dat");
 
-	if ( ! pFile.Open( strFile, CFile::modeRead ) ) return FALSE;
-
-	try
+	CFile pFile;
+	if ( pFile.Open( strFile, CFile::modeRead | CFile::shareDenyWrite | CFile::osSequentialScan ) )
 	{
-		CArchive ar( &pFile, CArchive::load, 131072 );	// 128 KB buffer
-		Serialize( ar );
-		ar.Close();
-	}
-	catch ( CException* pException )
-	{
-		pException->Delete();
-	}
+		try
+		{
+			CArchive ar( &pFile, CArchive::load, 131072 );	// 128 KB buffer
+			try
+			{
+				CQuickLock oLock( m_pSection );
 
-	pFile.Close();
+				Serialize( ar );
+
+				ar.Close();
+			}
+			catch ( CException* pException )
+			{
+				ar.Abort();
+				pFile.Abort();
+				pException->Delete();
+				theApp.Message( MSG_ERROR, _T("Failed to load security rules: %s"), strFile );
+				return FALSE;
+			}
+			pFile.Close();
+		}
+		catch ( CException* pException )
+		{
+			pFile.Abort();
+			pException->Delete();
+			theApp.Message( MSG_ERROR, _T("Failed to load security rules: %s"), strFile );
+			return FALSE;
+		}
+	}
+	else
+	{
+		theApp.Message( MSG_ERROR, _T("Failed to load security rules: %s"), strFile );
+		return FALSE;
+	}
 
 	return TRUE;
 }
 
 BOOL CSecurity::Save()
 {
-	CQuickLock oLock( m_pSection );
-
+	CString strTemp = Settings.General.UserPath + _T("\\Data\\Security.tmp");
 	CString strFile = Settings.General.UserPath + _T("\\Data\\Security.dat");
 
 	CFile pFile;
-	if ( ! pFile.Open( strFile, CFile::modeWrite|CFile::modeCreate ) )
+	if ( ! pFile.Open( strTemp, CFile::modeWrite | CFile::modeCreate | CFile::shareExclusive | CFile::osSequentialScan ) )
+	{
+		DeleteFile( strTemp );
+		theApp.Message( MSG_ERROR, _T("Failed to save security rules: %s"), strTemp );
 		return FALSE;
+	}
 
 	try
 	{
 		CArchive ar( &pFile, CArchive::store, 131072 );	// 128 KB buffer
 		try
 		{
+			CQuickLock oLock( m_pSection );
+
 			Serialize( ar );
+
 			ar.Close();
 		}
 		catch ( CException* pException )
@@ -731,6 +756,8 @@ BOOL CSecurity::Save()
 			ar.Abort();
 			pFile.Abort();
 			pException->Delete();
+			DeleteFile( strTemp );
+			theApp.Message( MSG_ERROR, _T("Failed to save security rules: %s"), strTemp );
 			return FALSE;
 		}
 		pFile.Close();
@@ -739,6 +766,15 @@ BOOL CSecurity::Save()
 	{
 		pFile.Abort();
 		pException->Delete();
+		DeleteFile( strTemp );
+		theApp.Message( MSG_ERROR, _T("Failed to save security rules: %s"), strTemp );
+		return FALSE;
+	}
+
+	if ( ! MoveFileEx( strTemp, strFile, MOVEFILE_COPY_ALLOWED | MOVEFILE_REPLACE_EXISTING ) )
+	{
+		DeleteFile( strTemp );
+		theApp.Message( MSG_ERROR, _T("Failed to save security rules: %s"), strFile );
 		return FALSE;
 	}
 

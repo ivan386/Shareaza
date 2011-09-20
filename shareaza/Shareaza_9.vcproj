@@ -3816,6 +3816,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Res\ContactJabber.ico"
+				>
+			</File>
+			<File
 				RelativePath="Res\ContactMSN.ico"
 				>
 			</File>
@@ -4413,6 +4417,14 @@
 			</File>
 			<File
 				RelativePath="Res\Uploads.ico"
+				>
+			</File>
+			<File
+				RelativePath=".\Res\user.ico"
+				>
+			</File>
+			<File
+				RelativePath=".\Res\user_me.ico"
 				>
 			</File>
 			<File

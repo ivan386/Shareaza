@@ -78,53 +78,73 @@ void CHostCache::Clear()
 
 BOOL CHostCache::Load()
 {
-	CQuickLock oLock( m_pSection );
-
 	CString strFile = Settings.General.UserPath + _T("\\Data\\HostCache.dat");
-	CFile pFile;
-	
-	Clear();
-	
-	if ( ! pFile.Open( strFile, CFile::modeRead ) ) return FALSE;
-	
-	try
-	{
-		CArchive ar( &pFile, CArchive::load, 262144 );	// 256 KB buffer
-		Serialize( ar );
-	}
-	catch ( CException* pException )
-	{
-		pException->Delete();
-	}
 
-	if ( Gnutella2.IsEmpty() ) CheckMinimumServers( PROTOCOL_G2 );
-#ifdef LAN_MODE
-	if ( Gnutella1.IsEmpty() ) CheckMinimumServers( PROTOCOL_G1 );
-	if ( eDonkey.IsEmpty() ) CheckMinimumServers( PROTOCOL_ED2K );
-	if ( BitTorrent.IsEmpty() ) CheckMinimumServers( PROTOCOL_BT );
-	if ( Kademlia.IsEmpty() ) CheckMinimumServers( PROTOCOL_KAD );
-	if ( DC.IsEmpty() ) CheckMinimumServers( PROTOCOL_DC );
-#endif // LAN_MODE
+	CFile pFile;
+	if ( pFile.Open( strFile, CFile::modeRead | CFile::shareDenyWrite | CFile::osSequentialScan ) )
+	{
+		try
+		{
+			CArchive ar( &pFile, CArchive::load, 262144 );	// 256 KB buffer
+			try
+			{
+				CQuickLock oLock( m_pSection );
+
+				Serialize( ar );
+
+				ar.Close();
+			}
+			catch ( CException* pException )
+			{
+				ar.Abort();
+				pFile.Abort();
+				pException->Delete();
+				theApp.Message( MSG_ERROR, _T("Failed to load host cache: %s"), strFile );
+			}
+			pFile.Close();
+		}
+		catch ( CException* pException )
+		{
+			pFile.Abort();
+			pException->Delete();
+			theApp.Message( MSG_ERROR, _T("Failed to load host cache: %s"), strFile );
+		}
+	}
+	else
+		theApp.Message( MSG_ERROR, _T("Failed to load host cache: %s"), strFile );
+
+	if ( Gnutella2.IsEmpty() )	CheckMinimumServers( PROTOCOL_G2 );
+	if ( Gnutella1.IsEmpty() )	CheckMinimumServers( PROTOCOL_G1 );
+	if ( eDonkey.IsEmpty() )	CheckMinimumServers( PROTOCOL_ED2K );
+	if ( BitTorrent.IsEmpty() )	CheckMinimumServers( PROTOCOL_BT );
+	if ( Kademlia.IsEmpty() )	CheckMinimumServers( PROTOCOL_KAD );
+	if ( DC.IsEmpty() )			CheckMinimumServers( PROTOCOL_DC );
 
 	return TRUE;
 }
 
 BOOL CHostCache::Save()
 {
-	CQuickLock oLock( m_pSection );
-
+	CString strTemp = Settings.General.UserPath + _T("\\Data\\HostCache.tmp");
 	CString strFile = Settings.General.UserPath + _T("\\Data\\HostCache.dat");
 
 	CFile pFile;
-	if ( ! pFile.Open( strFile, CFile::modeWrite | CFile::modeCreate ) )
+	if ( ! pFile.Open( strTemp, CFile::modeWrite | CFile::modeCreate | CFile::shareExclusive | CFile::osSequentialScan ) )
+	{
+		DeleteFile( strTemp );
+		theApp.Message( MSG_ERROR, _T("Failed to save host cache: %s"), strTemp );
 		return FALSE;
+	}
 
 	try
 	{
 		CArchive ar( &pFile, CArchive::store, 262144 );	// 256 KB buffer
 		try
 		{
+			CQuickLock oLock( m_pSection );
+
 			Serialize( ar );
+
 			ar.Close();
 		}
 		catch ( CException* pException )
@@ -132,6 +152,8 @@ BOOL CHostCache::Save()
 			ar.Abort();
 			pFile.Abort();
 			pException->Delete();
+			DeleteFile( strTemp );
+			theApp.Message( MSG_ERROR, _T("Failed to save host cache: %s"), strTemp );
 			return FALSE;
 		}
 		pFile.Close();
@@ -140,6 +162,15 @@ BOOL CHostCache::Save()
 	{
 		pFile.Abort();
 		pException->Delete();
+		DeleteFile( strTemp );
+		theApp.Message( MSG_ERROR, _T("Failed to save host cache: %s"), strTemp );
+		return FALSE;
+	}
+
+	if ( ! MoveFileEx( strTemp, strFile, MOVEFILE_COPY_ALLOWED | MOVEFILE_REPLACE_EXISTING ) )
+	{
+		DeleteFile( strTemp );
+		theApp.Message( MSG_ERROR, _T("Failed to save host cache: %s"), strFile );
 		return FALSE;
 	}
 
@@ -725,26 +756,26 @@ int CHostCache::Import(LPCTSTR pszFile, BOOL bFreshOnly)
 		return 0;
 
 	CFile pFile;
-	if ( ! pFile.Open( pszFile, CFile::modeRead ) )
+	if ( ! pFile.Open( pszFile, CFile::modeRead | CFile::shareDenyWrite | CFile::osSequentialScan ) )
 		return 0;
 
 	int nImported = 0;
 
 	if ( _tcsicmp( szExt, _T(".bz2") ) == 0 )
 	{
-		theApp.Message( MSG_NOTICE, _T("Importing HubList file: %s ..."), pszFile );
+		theApp.Message( MSG_NOTICE, _T("Importing HubList file: %s"), pszFile );
 
 		nImported = ImportHubList( &pFile );
 	}
 	else if ( _tcsicmp( szExt, _T(".met") ) == 0 )
 	{
-		theApp.Message( MSG_NOTICE, _T("Importing MET file: %s ..."), pszFile );
+		theApp.Message( MSG_NOTICE, _T("Importing MET file: %s"), pszFile );
 
 		nImported = ImportMET( &pFile );
 	}
 	else if ( _tcsicmp( szExt, _T(".dat") ) == 0 )
 	{
-		theApp.Message( MSG_NOTICE, _T("Importing Nodes file: %s ..."), pszFile );
+		theApp.Message( MSG_NOTICE, _T("Importing Nodes file: %s"), pszFile );
 
 		nImported = ImportNodes( &pFile );
 	}
@@ -811,6 +842,7 @@ int CHostCache::ImportHubList(CFile* pFile)
 			int nUsers = _tstoi( pHub->GetAttributeValue( _T("Users") ) );
 			int nMaxusers = _tstoi( pHub->GetAttributeValue( _T("Maxusers") ) );
 
+			CQuickLock oLock( DC.m_pSection );
 			CHostCacheHostPtr pServer = DC.Add( NULL, protocolPorts[ PROTOCOL_DC ], 0,
 				protocolNames[ PROTOCOL_DC ], 0, nUsers, nMaxusers, sAddress );
 			if ( pServer )
@@ -848,6 +880,7 @@ int CHostCache::ImportMET(CFile* pFile)
 		if ( pFile->Read( &nPort, sizeof(nPort) ) != sizeof(nPort) ) break;
 		if ( pFile->Read( &nTags, sizeof(nTags) ) != sizeof(nTags) ) break;
 		
+		CQuickLock oLock( eDonkey.m_pSection );
 		CHostCacheHostPtr pServer = eDonkey.Add( &pAddress, nPort );
 		
 		while ( nTags-- > 0 )
@@ -936,6 +969,7 @@ int CHostCache::ImportNodes(CFile* pFile)
 		}
 		if ( nType < 4 )
 		{
+			CQuickLock oLock( Kademlia.m_pSection );
 			CHostCacheHostPtr pCache = Kademlia.Add( &pAddress, nTCPPort );
 			if ( pCache )
 			{
@@ -956,6 +990,12 @@ int CHostCache::ImportNodes(CFile* pFile)
 
 bool CHostCache::CheckMinimumServers(PROTOCOLID nProtocol)
 {
+#ifdef LAN_MODE
+	if ( nProtocol != PROTOCOL_G2 )
+		// Skip everything except G2 in LAN_MODE
+		return true;
+#endif // LAN_MODE
+
 	if ( EnoughServers( nProtocol ) )
 		return true;
 
@@ -1005,9 +1045,9 @@ int CHostCache::LoadDefaultServers(PROTOCOLID nProtocol)
 	CString strFile = Settings.General.Path + _T("\\Data\\DefaultServers.dat");
 
 	CStdioFile pFile;
-	if ( pFile.Open( strFile, CFile::modeRead | CFile::shareDenyWrite ) )
+	if ( pFile.Open( strFile, CFile::modeRead | CFile::shareDenyWrite | CFile::osSequentialScan ) )
 	{
-		theApp.Message( MSG_NOTICE, _T("Loading default server list") );
+		theApp.Message( MSG_NOTICE, _T("Loading default server list for %s: %s"), protocolNames[ nProtocol ], strFile );
 
 		for (;;)
 		{
