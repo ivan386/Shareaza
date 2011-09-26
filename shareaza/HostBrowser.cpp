@@ -200,6 +200,9 @@ BOOL CHostBrowser::Browse()
 	delete m_pProfile;
 	m_pProfile = NULL;
 
+	// Make sure the window text is updated after the window state has been set to "connecting".
+	m_pNotify->UpdateMessages();
+
 	return TRUE;
 }
 
