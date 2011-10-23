@@ -2331,7 +2331,10 @@ static PTOP_LEVEL_EXCEPTION_FILTER WINAPI DummySetUnhandledExceptionFilter(PTOP_
 
 static HMODULE WINAPI DummyLoadLibraryW(LPCWSTR lpLibFileName)
 {
-	HMODULE hModule = g_LoadLibrary.GetOriginalProcAddress()( lpLibFileName );
+	PFLoadLibraryW pLoadLibrary = g_LoadLibrary.GetOriginalProcAddress();
+	if ( pLoadLibrary == DummyLoadLibraryW )
+		return NULL;
+	HMODULE hModule = pLoadLibrary( lpLibFileName );
 	if ( hModule )
 	{
 		OverrideSUEF( hModule );
@@ -2341,7 +2344,10 @@ static HMODULE WINAPI DummyLoadLibraryW(LPCWSTR lpLibFileName)
 
 static HMODULE WINAPI DummyLoadLibraryExW(LPCWSTR lpLibFileName, HANDLE hFile, DWORD dwFlags)
 {
-	HMODULE hModule = g_LoadLibraryEx.GetOriginalProcAddress()( lpLibFileName, hFile, dwFlags );
+	PFLoadLibraryExW pLoadLibraryEx = g_LoadLibraryEx.GetOriginalProcAddress();
+	if ( pLoadLibraryEx == DummyLoadLibraryExW )
+		return NULL;
+	HMODULE hModule = pLoadLibraryEx( lpLibFileName, hFile, dwFlags );
 	if ( hModule )
 	{
 		OverrideSUEF( hModule );
