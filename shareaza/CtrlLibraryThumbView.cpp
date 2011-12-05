@@ -846,6 +846,8 @@ void CLibraryThumbView::StopThread()
 
 void CLibraryThumbView::OnRun()
 {
+	CSingleLock oLock( &Library.m_pSection, FALSE );
+
 	while ( IsThreadEnabled() )
 	{
 		// Get next file without thumbnail
@@ -853,32 +855,26 @@ void CLibraryThumbView::OnRun()
 		bool bWaiting = false;
 		DWORD nIndex = 0;
 		CString strPath;
+
+		if ( ! oLock.Lock( 100 ) )
+			// Library is busy
+			continue;
+
+		for ( int i = 0 ; i < m_nCount; ++i )
 		{
-			CQuickLock pLock( Library.m_pSection );
-
-			for ( int i = 0 ; i < m_nCount && IsThreadEnabled(); ++i )
+			if ( m_pList[ i ]->m_nThumb == CLibraryThumbItem::thumbWaiting )
 			{
-				if ( m_pList[ i ]->m_nThumb == CLibraryThumbItem::thumbWaiting )
+				bWaiting = true;		
+				if ( CLibraryFile* pFile = Library.LookupFile( m_pList[ i ]->m_nIndex ) )
 				{
-					bWaiting = true;
-
-					CSingleLock oLock( &Library.m_pSection, FALSE );
-					if ( oLock.Lock( 100 ) )
-					{
-						if ( CLibraryFile* pFile = Library.LookupFile( m_pList[ i ]->m_nIndex ) )
-						{
-							nIndex	= pFile->m_nIndex;
-							strPath	= pFile->GetPath();
-							oLock.Unlock();
-							break;
-						}
-						oLock.Unlock();
-					}
-					else
-						break;
+					nIndex	= pFile->m_nIndex;
+					strPath	= pFile->GetPath();
+					break;
 				}
 			}
 		}
+
+		oLock.Unlock();
 
 		if ( ! bWaiting )
 			// Complete
@@ -896,30 +892,32 @@ void CLibraryThumbView::OnRun()
 		CImageFile pFile;
 		BOOL bSuccess = CThumbCache::Cache( strPath, &pFile );
 
+		if ( ! oLock.Lock( 100 ) )
+			// Library is busy
+			continue;
+
 		// Save thumbnail to item
+		for ( int i = 0 ; i < m_nCount ; ++i )
 		{
-			CQuickLock pLock( Library.m_pSection );
-
-			for ( int i = 0 ; i < m_nCount ; ++i )
+			if ( m_pList[ i ]->m_nIndex == nIndex )
 			{
-				if ( m_pList[ i ]->m_nIndex == nIndex )
+				if ( m_pList[ i ]->m_bmThumb.m_hObject )
+					m_pList[ i ]->m_bmThumb.DeleteObject();
+
+				if ( bSuccess )
 				{
-					if ( m_pList[ i ]->m_bmThumb.m_hObject )
-						m_pList[ i ]->m_bmThumb.DeleteObject();
-
-					if ( bSuccess )
-					{
-						m_pList[ i ]->m_bmThumb.Attach( pFile.CreateBitmap() );
-						m_pList[ i ]->m_nThumb = CLibraryThumbItem::thumbValid;
-					}
-					else
-						m_pList[ i ]->m_nThumb = CLibraryThumbItem::thumbError;
-
-					m_nInvalidate++;
-					break;
+					m_pList[ i ]->m_bmThumb.Attach( pFile.CreateBitmap() );
+					m_pList[ i ]->m_nThumb = CLibraryThumbItem::thumbValid;
 				}
+				else
+					m_pList[ i ]->m_nThumb = CLibraryThumbItem::thumbError;
+
+				m_nInvalidate++;
+				break;
 			}
 		}
+
+		oLock.Unlock();
 	}
 }
 
