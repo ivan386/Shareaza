@@ -549,11 +549,7 @@ BOOL CChildWnd::PreTranslateMessage(MSG* pMsg)
 	if ( ( pMsg->message == WM_KEYDOWN ||
 		   pMsg->message == WM_KEYUP ||
 		   pMsg->message == WM_CHAR ) &&
-		( pMsg->wParam == VK_UP ||
-		  pMsg->wParam == VK_DOWN ||
-		  pMsg->wParam == VK_LEFT ||
-		  pMsg->wParam == VK_RIGHT ||
-		  pMsg->wParam == VK_TAB ) )
+		(  pMsg->wParam  == VK_TAB ) )
 	{
 		if ( IsDialogMessage( pMsg ) )
 			return TRUE;

@@ -1,7 +1,7 @@
 //
 // WndPlugin.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -35,13 +35,11 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-IMPLEMENT_DYNAMIC(CPluginWnd, CPanelWnd)
+IMPLEMENT_DYNCREATE(CPluginWnd, CPanelWnd)
 
 BEGIN_MESSAGE_MAP(CPluginWnd, CPanelWnd)
-	//{{AFX_MSG_MAP(CPluginWnd)
 	ON_WM_CREATE()
 	ON_WM_SIZE()
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 BEGIN_INTERFACE_MAP(CPluginWnd, CPanelWnd)
@@ -53,23 +51,20 @@ END_INTERFACE_MAP()
 // CPluginWnd construction
 
 CPluginWnd::CPluginWnd(LPCTSTR pszName, IPluginWindowOwner* pOwner)
+	: m_pOwner	( pOwner )
+	, m_sName	( pszName )
+	, m_pHandled( NULL )
+	, m_nHandled( 0 )
+	, m_pToolbar( NULL )
+	, m_bAccel	( TRUE )
 {
-	m_pOwner	= pOwner;
-	m_sName		= pszName;
-	m_pHandled	= NULL;
-	m_nHandled	= NULL;
-	m_pToolbar	= NULL;
-	m_bAccel	= TRUE;
-
-	m_pOwner->AddRef();
 	InternalAddRef();
 }
 
 CPluginWnd::~CPluginWnd()
 {
-	m_pOwner->Release();
-	if ( m_pHandled ) delete [] m_pHandled;
-	if ( m_pToolbar ) delete m_pToolbar;
+	delete [] m_pHandled;
+	delete m_pToolbar;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -77,7 +72,7 @@ CPluginWnd::~CPluginWnd()
 
 BOOL CPluginWnd::PreTranslateMessage(MSG* pMsg)
 {
-	if ( m_bAccel && pMsg->message >= WM_KEYFIRST && pMsg->message <= WM_KEYLAST )
+	if ( m_bAccel && pMsg->message >= WM_KEYFIRST && pMsg->message <= WM_KEYLAST && m_pOwner )
 	{
 		HRESULT hr = m_pOwner->OnTranslate( pMsg );
 		if ( S_OK == hr ) return TRUE;
@@ -97,7 +92,7 @@ LRESULT CPluginWnd::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 		if ( *pHandled++ == message )
 		{
 			LRESULT lResult;
-			if ( S_OK == m_pOwner->OnMessage( message, wParam, lParam, &lResult ) )
+			if ( m_pOwner && S_OK == m_pOwner->OnMessage( message, wParam, lParam, &lResult ) )
 				return lResult;
 			break;
 		}
@@ -108,7 +103,7 @@ LRESULT CPluginWnd::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 
 int CPluginWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
-	if ( CMDIChildWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
+	if ( CPanelWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
 
 	m_bAlert = 1982;
 	OnSkinChange();
@@ -164,15 +159,13 @@ void CPluginWnd::OnSkinChange()
 		if ( m_pSkin ) m_pSkin->OnSize( this );
 
 		LRESULT lResult = 0;
-		m_pOwner->OnMessage( WM_SKINCHANGED, 0, 0, &lResult );
+		if ( m_pOwner ) m_pOwner->OnMessage( WM_SKINCHANGED, 0, 0, &lResult );
 	}
 }
 
 HRESULT CPluginWnd::GetGenericView(IGenericView** ppView)
 {
-	if ( m_pOwner == NULL ) return S_FALSE;
-	return SUCCEEDED( m_pOwner->QueryInterface( IID_IGenericView, (void**)ppView ) ) ?
-		S_OK : S_FALSE;
+	return ( m_pOwner && SUCCEEDED( m_pOwner->QueryInterface( IID_IGenericView, (void**)ppView ) ) ) ? S_OK : S_FALSE;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -185,6 +178,8 @@ STDMETHODIMP CPluginWnd::XPluginWindow::ListenForSingleMessage(UINT nMessage)
 	METHOD_PROLOGUE( CPluginWnd, PluginWindow )
 
 	UINT* pHandled = new UINT[ pThis->m_nHandled + 1 ];
+	if ( ! pHandled ) return E_OUTOFMEMORY;
+
 	if ( pThis->m_pHandled )
 	{
 		CopyMemory( pHandled, pThis->m_pHandled, sizeof(UINT) * pThis->m_nHandled );
@@ -208,6 +203,8 @@ STDMETHODIMP CPluginWnd::XPluginWindow::ListenForMultipleMessages(SAFEARRAY FAR*
 	nCount++;
 
 	UINT* pHandled = new UINT[ pThis->m_nHandled + nCount ];
+	if ( ! pHandled ) return E_OUTOFMEMORY;
+
 	if ( pThis->m_pHandled )
 	{
 		CopyMemory( pHandled, pThis->m_pHandled, sizeof(UINT) * pThis->m_nHandled );
@@ -230,8 +227,7 @@ STDMETHODIMP CPluginWnd::XPluginWindow::Create1(BSTR bsCaption, HICON hIcon, VAR
 	pThis->m_bPanelMode	= ( Settings.General.GUIMode != GUI_WINDOWED && ( bPanel == VARIANT_TRUE ) );
 	pThis->m_bTabMode	= ( pThis->m_bPanelMode && ( bTabbed == VARIANT_TRUE ) );
 
-	if ( ! pThis->CMDIChildWnd::Create( NULL, NULL,
-		WS_CHILD|WS_OVERLAPPEDWINDOW|WS_CLIPCHILDREN ) ) return E_FAIL;
+	if ( ! pThis->Create( 0, FALSE ) ) return E_FAIL;
 
 	if ( hIcon != NULL ) pThis->SetIcon( hIcon, FALSE );
 	pThis->SetWindowText( CString( bsCaption ) );

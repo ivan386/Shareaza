@@ -46,20 +46,16 @@ static char THIS_FILE[]=__FILE__;
 // CImageWindow construction
 
 CImageWindow::CImageWindow()
+	: m_pPlugin		( NULL )	// Reference to the plugin that owns us
+	, m_pNext		( NULL )	// Next CImageWindow in the linked list of open windows
+	, m_hBitmap		( NULL )	// A HBITMAP bitmap image handle
+	, m_hIcon		( NULL )	// A HICON icon for the window
+	, m_bFullSize	( FALSE )	// Are we in "full size" mode, or fit-to-window mode?
+	, m_bDrag		( FALSE )	// Are we dragging?
+	, m_ptOffset	()			// Offset coordinates when dragged
+	, m_nZoomFactor	( 1.0f )	// Zoom factor (scale)
+	, m_nZoomIndex	( 0 )		// Zoom index (control)
 {
-	m_pPlugin		= NULL;		// Reference to the plugin that owns us
-	m_pNext			= NULL;		// Next CImageWindow in the linked list of open windows
-	
-	m_pszFile		= NULL;		// The file we are displaying
-	m_hBitmap		= NULL;		// A HBITMAP bitmap image handle
-	m_hIcon			= NULL;		// A HICON icon for the window
-	
-	m_bFullSize		= FALSE;	// Are we in "full size" mode, or fit-to-window mode?
-	m_bDrag			= FALSE;	// Are we dragging?
-	m_ptOffset.x	= 0;		// Offset coordinates when dragged
-	m_ptOffset.y	= 0;		// Offset coordinates when dragged
-	m_nZoomFactor	= 1.0f;		// Zoom factor (scale)
-	m_nZoomIndex	= 0;		// Zoom index (control)
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -75,7 +71,6 @@ CImageWindow::~CImageWindow()
 	
 	if ( m_hIcon != NULL ) DestroyIcon( m_hIcon );
 	if ( m_hBitmap != NULL ) DeleteObject( m_hBitmap );
-	if ( m_pszFile != NULL ) free( m_pszFile );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -89,18 +84,20 @@ BOOL CImageWindow::Create(CImageViewerPlugin* pPlugin, LPCTSTR pszFile)
 	
 	m_pPlugin		= pPlugin;
 	m_pApplication	= pPlugin->m_pApplication;
-	m_pszFile		= _tcsdup( pszFile );
+	m_sFile			= pszFile;
 	
 	// Get an IUserInterface pointer from the IApplication
 
-	CComPtr<IUserInterface> pUI;
+	CComPtr< IUserInterface > pUI;
 	m_pApplication->get_UserInterface( &pUI );
+	if ( ! pUI ) return FALSE;
 	
 	// Tell the GUI manager to create a new window called "ImageViewerWindow".
 	// We pass "this" as the IPluginWindowOwner, and store the IPluginWindow in m_pWindow.
 	
 	pUI->NewWindow( L"ImageViewerWindow", this, &m_pWindow );
-	
+	if ( ! m_pWindow ) return FALSE;
+
 	// Request notifications for a number of messages.
 	
 	m_pWindow->ListenForSingleMessage( WM_DESTROY );
@@ -115,35 +112,11 @@ BOOL CImageWindow::Create(CImageViewerPlugin* pPlugin, LPCTSTR pszFile)
 	m_pWindow->ListenForSingleMessage( WM_LBUTTONUP );
 	m_pWindow->ListenForSingleMessage( WM_SETCURSOR );
 	m_pWindow->ListenForSingleMessage( WM_TIMER );
-	
-	// Ask the Windows Shell for the appropriate small icon for this filename
-	
-	SHFILEINFO pInfo;
-	ZeroMemory( &pInfo, sizeof(pInfo) );
-	SHGetFileInfo( m_pszFile, 0, &pInfo, sizeof(pInfo), SHGFI_ICON|SHGFI_SMALLICON );
-	
-	if ( pInfo.hIcon != NULL )
-	{
-		// Got it, store it
-		m_hIcon = pInfo.hIcon;
-	}
-	else
-	{
-		// No icon, load a default from our resources
-		m_hIcon = (HICON)LoadImage( _AtlBaseModule.GetResourceInstance(),
-			MAKEINTRESOURCE(IDI_IMAGE), IMAGE_ICON, 16, 16, 0 );
-	}
-	
-	// Create a caption showing only the filename part of the path, plus " : Image Viewer"
-	
-	LPCTSTR pszName = _tcsrchr( pszFile, '\\' );
-	CComBSTR bsFile( pszName ? pszName + 1 : m_pszFile );
-	bsFile.Append( _T(" : Image Viewer") );
-	
+
 	// Physically create the window using create method one, i.e. passing a caption and icon directly.
 	// Set panel/tabbed mode to false because we want a "normal" window.
 	
-	m_pWindow->Create1( bsFile, m_hIcon, VARIANT_FALSE, VARIANT_FALSE );
+	m_pWindow->Create1( CComBSTR( L"Image Viewer" ), NULL, VARIANT_FALSE, VARIANT_FALSE );
 	
 	// Get the HWND and assign it to the CWindow parent class' m_hWnd member, so we can call the
 	// Win32 API wrappers.
@@ -154,7 +127,7 @@ BOOL CImageWindow::Create(CImageViewerPlugin* pPlugin, LPCTSTR pszFile)
 	// commands we registered in the plugin.  Pass NULL for the HWND and IToolbar outputs, as we don't
 	// want them.  The default position for the toolbar is "on the bottom".
 	
-	m_pWindow->AddToolbar( L"ImageViewer_Toolbar", 0, NULL, NULL );
+	m_pWindow->AddToolbar( CComBSTR( L"ImageViewer_Toolbar" ), 0, NULL, NULL );
 	
 	// Possible improvement: Accept the HWND of the toolbar above and get its height manually,
 	// instead of assuming toolbars are always 28 pixels high (could change in the future).
@@ -176,27 +149,52 @@ BOOL CImageWindow::Refresh()
 	
 	KillTimer( 2 );
 	
-	// Check if we have an image loaded already
-	
-	BOOL bLoaded = ( m_hBitmap != NULL );
-	
-	if ( bLoaded )
-	{
-		// If so, delete it
-		DeleteObject( m_hBitmap );
-		m_hBitmap = NULL;
-	}
-	
 	// Try to load the image, and convert it to RGB colour if it is not already
-	
-	if ( m_pImage.Load( m_pszFile ) &&
+
+	BOOL bResult = FALSE;
+
+	if ( m_pImage.Load( m_sFile ) &&
 		 m_pImage.EnsureRGB( BACKGROUND_COLOUR ) )
 	{
+		bResult = TRUE;
+
+		// Ask the Windows Shell for the appropriate small icon for this filename
+		SHFILEINFO pInfo = {};
+		SHGetFileInfo( m_sFile, 0, &pInfo, sizeof( pInfo ), SHGFI_ICON | SHGFI_SMALLICON );
+		if ( m_hIcon )
+		{
+			DestroyIcon( m_hIcon );
+			m_hIcon = NULL;
+		}
+		if ( pInfo.hIcon != NULL )
+		{
+			// Got it, store it
+			m_hIcon = pInfo.hIcon;
+		}
+		else
+		{
+			// No icon, load a default from our resources
+			m_hIcon = (HICON)LoadImage( _AtlBaseModule.GetResourceInstance(),
+				MAKEINTRESOURCE( IDI_IMAGE ), IMAGE_ICON, 16, 16, 0 );
+		}
+		SetIcon( m_hIcon, FALSE );
+		
+		// Create a caption showing only the filename part of the path, plus " : Image Viewer"
+		CString sTitle = PathFindFileName( m_sFile );
+		sTitle +=_T(" : Image Viewer");
+		SetWindowText( sTitle );
+	
+		if ( m_hBitmap )
+		{
+			DeleteObject( m_hBitmap );
+			m_hBitmap = NULL;
+		}
+
 		// If this is the first load, resize the window
-		if ( bLoaded == FALSE ) ResizeWindow();
+		ResizeWindow();
 		
 		// If we need to create a scaled HBITMAP, do so
-		if ( m_hBitmap == NULL ) RescaleImage();
+		RescaleImage();
 		
 		// If the image is partially loaded, set a timer to refresh it later.  We use timer ID 2,
 		// because Shareaza sends a global heartbeat on timer ID 1.
@@ -214,8 +212,8 @@ BOOL CImageWindow::Refresh()
 	// Restore the old cursor
 	
 	SetCursor( hCursor );
-	
-	return TRUE;
+
+	return bResult;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -473,10 +471,9 @@ LRESULT CImageWindow::OnPaint(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*
 	{
 		// If there is no image, we couldn't load it.  Display an error message instead.
 		
-		TCHAR szText[ MAX_PATH + 16 ];
-		lstrcpy( szText, _T("Unable to load: ") );
-		lstrcat( szText, m_pszFile );
-		ExtTextOut( hDC, 6, 6, ETO_OPAQUE, &rcClient, szText, lstrlen( szText ), NULL );
+		CString sText = _T("Unable to load: ");
+		sText += m_sFile;
+		ExtTextOut( hDC, 6, 6, ETO_OPAQUE, &rcClient, sText, sText.GetLength(), NULL );
 		rcClient.top += 24;
 		ExtTextOut( hDC, 6, 30, ETO_OPAQUE, &rcClient, 
 					_T("Hold Shift key to open in the default application."), 
@@ -491,8 +488,38 @@ LRESULT CImageWindow::OnPaint(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*
 
 LRESULT CImageWindow::OnKeyDown(UINT /*uMsg*/, WPARAM wParam, LPARAM /*lParam*/, BOOL& /*bHandled*/)
 {
+	switch ( wParam )
+	{
 	// Close if ESCAPE is hit
-	if ( wParam == VK_ESCAPE ) PostMessage( WM_CLOSE );
+	case VK_ESCAPE:
+		PostMessage( WM_CLOSE );
+		break;
+
+	// View first file
+	case VK_HOME:
+		OnFirst();
+		break;
+
+	// View last file
+	case VK_END:
+		OnLast();
+		break;
+
+	// View next file
+	case VK_DOWN:
+	case VK_RIGHT:
+	case VK_NEXT:
+		OnNext();
+		break;
+
+	// View previous file
+	case VK_UP:
+	case VK_LEFT:
+	case VK_PRIOR:
+		OnPrevious();
+		break;
+	}
+
 	return 0;
 }
 
@@ -751,4 +778,155 @@ void CImageWindow::OnActualSize()
 	m_nZoomIndex	= 0;
 	
 	RescaleImage();
+}
+
+void CImageWindow::OnFirst()
+{
+	HCURSOR hCursor = SetCursor( LoadCursor( NULL, IDC_WAIT ) );
+
+	LPCTSTR szFile = m_sFile;
+	LPCTSTR szFileName = PathFindFileName( szFile );
+	CString sSearchDir = m_sFile.Left( szFileName - szFile );
+
+	WIN32_FIND_DATA wfd = {};
+	HANDLE hFind = FindFirstFile( sSearchDir + _T("*.*"), &wfd );
+	if ( hFind != INVALID_HANDLE_VALUE )
+	{
+		do
+		{
+			if ( ( wfd.dwFileAttributes & ( FILE_ATTRIBUTE_DIRECTORY | FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM ) ) == 0 )
+			{
+				m_sFile = sSearchDir + wfd.cFileName;
+				if ( Refresh() )
+					// First file successfully loaded
+					break;
+			}
+		}
+		while ( FindNextFile( hFind, &wfd ) );
+
+		FindClose( hFind );
+	}
+
+	SetCursor( hCursor );
+}
+
+void CImageWindow::OnLast()
+{
+	HCURSOR hCursor = SetCursor( LoadCursor( NULL, IDC_WAIT ) );
+
+	CAtlList< CString > sPrevFiles;
+
+	LPCTSTR szFile = m_sFile;
+	LPCTSTR szFileName = PathFindFileName( szFile );
+	CString sSearchDir = m_sFile.Left( szFileName - szFile );
+
+	WIN32_FIND_DATA wfd = {};
+	HANDLE hFind = FindFirstFile( sSearchDir + _T("*.*"), &wfd );
+	if ( hFind != INVALID_HANDLE_VALUE )
+	{
+		do
+		{
+			if ( ( wfd.dwFileAttributes & ( FILE_ATTRIBUTE_DIRECTORY | FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM ) ) == 0 )
+			{
+				sPrevFiles.AddHead( sSearchDir + wfd.cFileName );
+			}
+		}
+		while ( FindNextFile( hFind, &wfd ) );
+
+		FindClose( hFind );
+	}
+
+	for ( POSITION pos = sPrevFiles.GetHeadPosition(); pos ; )
+	{
+		m_sFile = sPrevFiles.GetNext( pos );
+		if ( Refresh() )
+			// Last file successfully loaded
+			break;
+	}
+
+	SetCursor( hCursor );
+}
+
+void CImageWindow::OnNext()
+{
+	HCURSOR hCursor = SetCursor( LoadCursor( NULL, IDC_WAIT ) );
+
+	BOOL bFound = FALSE;
+
+	LPCTSTR szFile = m_sFile;
+	LPCTSTR szFileName = PathFindFileName( szFile );
+	CString sSearchDir = m_sFile.Left( szFileName - szFile );
+
+	WIN32_FIND_DATA wfd = {};
+	HANDLE hFind = FindFirstFile( sSearchDir + _T("*.*"), &wfd );
+	if ( hFind != INVALID_HANDLE_VALUE )
+	{
+		do
+		{
+			if ( ( wfd.dwFileAttributes & ( FILE_ATTRIBUTE_DIRECTORY | FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM ) ) == 0 )
+			{
+				if ( bFound )
+				{
+					m_sFile = sSearchDir + wfd.cFileName;
+					if ( Refresh() )
+						// Next file successfully loaded
+						break;
+				}
+
+				if ( _tcsicmp( szFileName, wfd.cFileName ) == 0 )
+				{
+					bFound = TRUE;
+				}
+			}
+		}
+		while ( FindNextFile( hFind, &wfd ) );
+
+		FindClose( hFind );
+	}
+
+	SetCursor( hCursor );
+}
+
+void CImageWindow::OnPrevious()
+{
+	HCURSOR hCursor = SetCursor( LoadCursor( NULL, IDC_WAIT ) );
+
+	CAtlList< CString > sPrevFiles;
+
+	LPCTSTR szFile = m_sFile;
+	LPCTSTR szFileName = PathFindFileName( szFile );
+	CString sSearchDir = m_sFile.Left( szFileName - szFile );
+
+	WIN32_FIND_DATA wfd = {};
+	HANDLE hFind = FindFirstFile( sSearchDir + _T("*.*"), &wfd );
+	if ( hFind != INVALID_HANDLE_VALUE )
+	{
+		do
+		{
+			if ( ( wfd.dwFileAttributes & ( FILE_ATTRIBUTE_DIRECTORY | FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM ) ) == 0 )
+			{
+				if ( _tcsicmp( szFileName, wfd.cFileName ) == 0 )
+				{
+					for ( POSITION pos = sPrevFiles.GetHeadPosition(); pos ; )
+					{
+						m_sFile = sPrevFiles.GetNext( pos );
+						if ( Refresh() )
+							// Previous file successfully loaded
+							break;
+					}
+
+					break;
+				}
+				else
+				{
+					sPrevFiles.AddHead( sSearchDir + wfd.cFileName );
+				}
+			}
+		}
+		while ( FindNextFile( hFind, &wfd ) );
+
+		FindClose( hFind );
+	}
+
+	SetCursor( hCursor );
 }

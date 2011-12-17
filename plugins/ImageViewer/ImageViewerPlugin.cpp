@@ -317,7 +317,7 @@ BOOL CImageViewerPlugin::OpenNewWindow(LPCTSTR pszFilePath)
 	CImageWindow* pWindow;
 	for ( pWindow = m_pWindow ; pWindow ; pWindow = pWindow->m_pNext )
 	{
-		if ( lstrcmpi( pWindow->m_pszFile, pszFilePath ) == 0 )
+		if ( pWindow->m_sFile.CompareNoCase( pszFilePath ) == 0 )
 		{
 			// Got a match, break out of the loop.
 			break;

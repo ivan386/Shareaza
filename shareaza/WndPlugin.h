@@ -1,7 +1,7 @@
 //
 // WndPlugin.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_WNDPLUGIN_H__ED4EF23F_A534_4A1C_B657_CE776DE55F93__INCLUDED_)
-#define AFX_WNDPLUGIN_H__ED4EF23F_A534_4A1C_B657_CE776DE55F93__INCLUDED_
-
 #pragma once
 
 #include "WndPanel.h"
@@ -29,16 +26,15 @@
 
 class CPluginWnd : public CPanelWnd
 {
-// Construction
 public:
-	CPluginWnd(LPCTSTR pszName = NULL, IPluginWindowOwner* pOwner = NULL);
+	CPluginWnd(LPCTSTR pszName = _T(""), IPluginWindowOwner* pOwner = NULL);
 	virtual ~CPluginWnd();
 
-	DECLARE_DYNAMIC(CPluginWnd)
+	DECLARE_DYNCREATE(CPluginWnd)
 
-// Attributes
-public:
-	IPluginWindowOwner*	m_pOwner;
+	CComPtr< IPluginWindowOwner > m_pOwner;
+
+protected:
 	CString				m_sName;
 	UINT*				m_pHandled;
 	DWORD				m_nHandled;
@@ -46,29 +42,15 @@ public:
 	int					m_nToolbar;
 	BOOL				m_bAccel;
 
-// Operations
-public:
-	virtual void	OnSkinChange();
-	virtual HRESULT	GetGenericView(IGenericView** ppView);
-
-// Overrides
-public:
-	//{{AFX_VIRTUAL(CPluginWnd)
-	public:
+	virtual void OnSkinChange();
+	virtual HRESULT GetGenericView(IGenericView** ppView);
 	virtual LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam);
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
-	//}}AFX_VIRTUAL
 
-// Implementation
-protected:
-	//{{AFX_MSG(CPluginWnd)
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
 
 // IPluginWindow
-protected:
 	BEGIN_INTERFACE_PART(PluginWindow, IPluginWindow)
 		STDMETHOD(ListenForSingleMessage)(UINT nMessage);
 		STDMETHOD(ListenForMultipleMessages)(SAFEARRAY FAR* pMessages);
@@ -85,8 +67,5 @@ protected:
 
 	DECLARE_INTERFACE_MAP()
 
+	DECLARE_MESSAGE_MAP()
 };
-
-//{{AFX_INSERT_LOCATION}}
-
-#endif // !defined(AFX_WNDPLUGIN_H__ED4EF23F_A534_4A1C_B657_CE776DE55F93__INCLUDED_)
