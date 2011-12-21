@@ -572,7 +572,7 @@ void CDownloadWithTorrent::SendStarted(DWORD nNumWant)
 	m_nTorrentDownloaded = m_nTorrentUploaded = 0ull;
 
 	// Create and run tracker request
-	new CBTTrackerRequest( this, _T("started"), nNumWant, TRUE );
+	new CBTTrackerRequest( this, BTE_TRACKER_STARTED, nNumWant );
 }
 
 void CDownloadWithTorrent::SendUpdate(DWORD nNumWant)
@@ -592,7 +592,7 @@ void CDownloadWithTorrent::SendUpdate(DWORD nNumWant)
 	m_tTorrentTracker += Settings.BitTorrent.DefaultTrackerPeriod;
 
 	// Create and run tracker request
-	new CBTTrackerRequest( this, NULL, nNumWant, TRUE );
+	new CBTTrackerRequest( this, BTE_TRACKER_UPDATE, nNumWant );
 }
 
 void CDownloadWithTorrent::SendCompleted()
@@ -608,7 +608,7 @@ void CDownloadWithTorrent::SendCompleted()
 	theApp.Message( MSG_DEBUG, _T("[BT] Sending completed tracker announce for %s"), m_pTorrent.m_sName );
 
 	// Create and run tracker request
-	new CBTTrackerRequest( this, _T("completed"), 0ul, TRUE );
+	new CBTTrackerRequest( this, BTE_TRACKER_COMPLETED );
 }
 
 void CDownloadWithTorrent::SendStopped()
@@ -627,7 +627,7 @@ void CDownloadWithTorrent::SendStopped()
 	m_bTorrentStarted = m_bTorrentRequested = FALSE;
 
 	// Create and run tracker request
-	new CBTTrackerRequest( this, _T("stopped"), 0ul, FALSE );
+	new CBTTrackerRequest( this, BTE_TRACKER_STOPPED );
 }
 
 //////////////////////////////////////////////////////////////////////

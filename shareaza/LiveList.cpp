@@ -165,18 +165,17 @@ CLiveItem::~CLiveItem()
 //////////////////////////////////////////////////////////////////////
 // CLiveItem set
 
-void CLiveItem::Set(int nColumn, LPCTSTR pszText)
+void CLiveItem::Set(int nColumn, const CString& sText)
 {
 	ASSERT_VALID( this );
-	ASSERT( pszText );
 	ASSERT( nColumn >= 0 && nColumn < m_pColumn.GetSize() );
 
-	if ( m_pColumn[ nColumn ] != pszText )
+	if ( m_pColumn[ nColumn ] != sText )
 	{
 		m_bModified = true;
 		m_nModified = m_nModified | ( 1 << nColumn );
 	}
-	m_pColumn[ nColumn ] = pszText;
+	m_pColumn[ nColumn ] = sText;
 }
 
 void CLiveItem::SetImage(int nColumn, int nImage)
@@ -268,7 +267,6 @@ BOOL CLiveItem::Update(CListCtrl* pCtrl, int nItem, int nColumns)
 	ASSERT_VALID( this );
 	ASSERT_VALID( pCtrl );
 
-	TCHAR buf[ MAX_PATH ];
 	BOOL bModified = FALSE;
 
 	LV_ITEM pMainItem = {
@@ -292,10 +290,13 @@ BOOL CLiveItem::Update(CListCtrl* pCtrl, int nItem, int nColumns)
 	if ( bModified )
 		VERIFY( pCtrl->SetItem( &pMainItem ) );
 
+	CString buf;
 	for ( int i = 0 ; i < nColumns ; ++i )
 	{
-		LV_ITEM pItem = { LVIF_IMAGE | LVIF_TEXT, nItem, i, 0, 0, buf, MAX_PATH };
-		if ( ! pCtrl->GetItem( &pItem ) )
+		LV_ITEM pItem = { LVIF_IMAGE | LVIF_TEXT, nItem, i, 0, 0, buf.GetBuffer( 1024 ), 1024 };
+		BOOL bResult = pCtrl->GetItem( &pItem );
+		buf.ReleaseBuffer();
+		if ( ! bResult )
 			return FALSE;
 
 		pItem.mask = 0;

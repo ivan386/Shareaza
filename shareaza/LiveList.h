@@ -43,7 +43,7 @@ public:
 	}
 #endif
 
-	void	Set(int nColumn, LPCTSTR pszText);
+	void	Set(int nColumn, const CString& sText);
 	void	SetImage(int nColumn, int nImage);
 	void	SetMaskOverlay(UINT nMaskOverlay);
 	void	Format(int nColumn, LPCTSTR pszFormat, ...);

@@ -1,7 +1,7 @@
 //
 // Transfers.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,6 +22,9 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
+#include "Datagrams.h"
+#include "Handshakes.h"
+#include "Network.h"
 #include "Transfers.h"
 #include "Transfer.h"
 #include "TransferFile.h"
@@ -134,7 +137,7 @@ void CTransfers::OnRun()
 	{
 		Doze( Settings.General.MinTransfersRest );
 
-		if ( ! theApp.m_bLive )
+		if ( ! theApp.m_bLive || ! Handshakes.IsValid() || ! Datagrams.IsValid() )
 		{
 			Sleep( 0 );
 			continue;

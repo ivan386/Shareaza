@@ -29,6 +29,7 @@
 #include "Datagram.h"
 #include "DatagramPart.h"
 #include "BTPacket.h"
+#include "BTTrackerRequest.h"
 #include "G1Packet.h"
 #include "G2Packet.h"
 #include "EDPacket.h"
@@ -736,6 +737,24 @@ BOOL CDatagrams::OnDatagram(const SOCKADDR_IN* pHost, const BYTE* pBuffer, DWORD
 			m_nInPackets++;
 
 			bHandled = pPacket->OnPacket( pHost );
+
+			pPacket->Release();
+
+			if ( bHandled )
+				return TRUE;
+		}
+	}
+
+	// Detect BitTorrent UDP tracker packets
+	if ( nLength > 7 )
+	{
+		if ( CBTTrackerPacket* pPacket = CBTTrackerPacket::New( pBuffer, nLength ) )
+		{
+			m_nInPackets++;
+
+			bHandled = pPacket->OnPacket( pHost );
+
+			pPacket->Release();
 
 			if ( bHandled )
 				return TRUE;
