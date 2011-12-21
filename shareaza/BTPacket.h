@@ -182,7 +182,7 @@ inline void CBTPacket::CBTPacketPool::FreePoolImpl(CPacket* pPacket)
 	delete [] (CBTPacket*)pPacket;
 }
 
-#pragma pack(1)
+#pragma pack(push,1)
 
 typedef struct
 {
@@ -192,4 +192,4 @@ typedef struct
 	DWORD	nOffset;
 } BT_PIECE_HEADER;
 
-#pragma pack()
+#pragma pack(pop)

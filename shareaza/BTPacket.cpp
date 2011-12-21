@@ -1,7 +1,7 @@
 //
 // BTPacket.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -28,6 +28,7 @@
 #include "Datagrams.h"
 #include "GProfile.h"
 #include "HostCache.h"
+#include "Network.h"
 #include "Statistics.h"
 
 #ifdef _DEBUG
@@ -344,6 +345,16 @@ BOOL CBTPacket::OnPacket(const SOCKADDR_IN* pHost)
 	{
 		pCache->m_sName = CBTClient::GetAzureusStyleUserAgent(
 			(LPBYTE)pVersion->m_pValue, 4 );
+	}
+
+	CBENode* pYourIP = m_pNode->GetNode( BT_DICT_YOURIP );
+	if ( pYourIP && pYourIP->IsType( CBENode::beString ) )
+	{
+		if ( pYourIP->m_nValue == 4 )
+		{
+			// IPv4
+			Network.AcquireLocalAddress( *(IN_ADDR*)pYourIP->m_pValue );
+		}
 	}
 
 	CString sType = pType->GetString();

@@ -1,7 +1,7 @@
 //
 // BENode.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -337,6 +337,7 @@ const CString CBENode::Encode() const
 	case beNull:
 		sOutput += _T("(null)");
 		break;
+
 	case beString:
 		{
 			sOutput += _T('\"');
@@ -349,37 +350,40 @@ const CString CBENode::Encode() const
 			sOutput += sTmp;
 		}
 		break;
+
 	case beInt:
 		sTmp.Format( _T("%I64u"), m_nValue );
 		sOutput += sTmp;
 		break;
+
 	case beList:
-		sOutput += _T("{ ");
+		sOutput += _T("{");
 		{
 			CBENode** pNode = (CBENode**)m_pValue;
 			for (QWORD n = 0 ; n < m_nValue ; n++, pNode++ )
 			{
 				if ( n )
-					sOutput += _T(", ");
+					sOutput += _T(",");
 				sOutput += (*pNode)->Encode();
 			}
 		}
-		sOutput += _T(" }");
+		sOutput += _T("}");
 		break;
+
 	case beDict:
-		sOutput += _T("{ ");
+		sOutput += _T("{");
 		{
 			CBENode** pNode = (CBENode**)m_pValue;
 			for (QWORD n = 0 ; n < m_nValue ; n++, pNode += 2 )
 			{
 				if ( n )
-					sOutput += _T(", ");
-				sTmp.Format( _T("\"%hs\" = "), (LPCSTR)pNode[ 1 ] );
+					sOutput += _T(",");
+				sTmp.Format( _T("\"%hs\"="), (LPCSTR)pNode[ 1 ] );
 				sOutput += sTmp;
 				sOutput += (*pNode)->Encode();
 			}
 		}
-		sOutput += _T(" }");
+		sOutput += _T("}");
 		break;
 	}
 	return sOutput;

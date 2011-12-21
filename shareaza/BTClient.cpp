@@ -33,6 +33,7 @@
 #include "DownloadTransferBT.h"
 #include "Downloads.h"
 #include "GProfile.h"
+#include "Network.h"
 #include "ShareazaURL.h"
 #include "Statistics.h"
 #include "Transfers.h"
@@ -1114,6 +1115,16 @@ void CBTClient::SendExtendedHandshake()
 BOOL CBTClient::OnExtendedHandshake(CBTPacket* pPacket)
 {
 	const CBENode* pRoot = pPacket->m_pNode.get();
+	
+	CBENode* pYourIP = pRoot->GetNode( BT_DICT_YOURIP );
+	if ( pYourIP && pYourIP->IsType( CBENode::beString ) )
+	{
+		if ( pYourIP->m_nValue == 4 )
+		{
+			// IPv4
+			Network.AcquireLocalAddress( *(IN_ADDR*)pYourIP->m_pValue );
+		}
+	}
 
 	if ( CBENode* pMetadata = pRoot->GetNode( BT_DICT_EXT_MSG ) )
 	{
