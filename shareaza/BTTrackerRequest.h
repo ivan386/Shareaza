@@ -264,7 +264,7 @@ public:
 	CBTTrackerRequest* Lookup(DWORD nTransactionID) const;
 
 protected:
-	typedef CMap< WORD, WORD, CBTTrackerRequest*, CBTTrackerRequest* > CBTTrackerRequestMap;
+	typedef CMap< DWORD, DWORD, CBTTrackerRequest*, CBTTrackerRequest* > CBTTrackerRequestMap;
 
 	mutable CCriticalSection	m_pSection;
 	CBTTrackerRequestMap		m_pTrackerRequests;	// Tracker ID to tracker pointer map

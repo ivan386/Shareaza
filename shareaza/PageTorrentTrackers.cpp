@@ -1,7 +1,7 @@
 //
 // PageTorrentTrackers.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -55,8 +55,7 @@ END_MESSAGE_MAP()
 // CTorrentTrackersPage property page
 
 CTorrentTrackersPage::CTorrentTrackersPage() : 
-	CPropertyPageAdv( CTorrentTrackersPage::IDD ),
-	m_pDownload( NULL )
+	CPropertyPageAdv( CTorrentTrackersPage::IDD )
 {
 }
 
@@ -83,15 +82,12 @@ BOOL CTorrentTrackersPage::OnInitDialog()
 	if ( ! CPropertyPageAdv::OnInitDialog() )
 		return FALSE;
 	
-	CSingleLock oLock( &Transfers.m_pSection );
-	if ( ! oLock.Lock( 250 ) )
-		return FALSE;
+	ASSUME_LOCK( Transfers.m_pSection );
 
-	m_pDownload = ((CDownloadSheet*)GetParent())->m_pDownload;
-	if ( ! Downloads.Check( m_pDownload ) || ! m_pDownload->IsTorrent() )
-		return FALSE;
+	CDownload* pDownload = ((CDownloadSheet*)GetParent())->GetDownload();
+	ASSERT( pDownload && pDownload->IsTorrent() );
 
-	CBTInfo& oInfo = m_pDownload->m_pTorrent;
+	CBTInfo& oInfo = pDownload->m_pTorrent;
 
 	m_sTracker = oInfo.GetTrackerAddress();
 	int nCount = oInfo.GetTrackerCount();
@@ -230,10 +226,12 @@ BOOL CTorrentTrackersPage::OnApply()
 	if ( ! oLock.Lock( 250 ) )
 		return FALSE;
 
-	if ( ! Downloads.Check( m_pDownload ) || ! m_pDownload->IsTorrent() )
-		return FALSE;
+	CDownloadSheet* pSheet = (CDownloadSheet*)GetParent();
+	CDownload* pDownload = pSheet->GetDownload();
+	if ( ! pDownload )
+		return CPropertyPageAdv::OnApply();
 
-	CBTInfo& oInfo = m_pDownload->m_pTorrent;
+	CBTInfo& oInfo = pDownload->m_pTorrent;
 
 	int nTrackerMode = m_wndTrackerMode.GetCurSel();
 	bool bAddressChanged = oInfo.GetTrackerAddress() != m_sTracker;
@@ -245,13 +243,15 @@ BOOL CTorrentTrackersPage::OnApply()
 		GetDlgItem( IDC_TORRENT_TRACKER )->SetFocus();
 
 		// Display warning
-		CString strMessage;
-		LoadString( strMessage, IDS_BT_TRACK_CHANGE );
-		if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) != IDYES )
+		if ( AfxMessageBox( IDS_BT_TRACK_CHANGE, MB_ICONQUESTION | MB_YESNO ) != IDYES )
 			return FALSE;
 
 		if ( ! oLock.Lock( 250 ) )
 			return FALSE;
+
+		pDownload = pSheet->GetDownload();
+		if ( ! pDownload )
+			return CPropertyPageAdv::OnApply();
 
 		if ( bAddressChanged )
 			oInfo.SetTracker( m_sTracker );
@@ -267,7 +267,9 @@ void CTorrentTrackersPage::OnRun()
 	CSingleLock oLock( &Transfers.m_pSection );
 	if ( oLock.Lock( 250 ) )
 	{
-		if ( Downloads.Check( m_pDownload ) && m_pDownload->IsTorrent() )
+		CDownloadSheet* pSheet = (CDownloadSheet*)GetParent();
+		CDownload* pDownload = pSheet->GetDownload();
+		if ( pDownload )
 		{
 			m_pRequest.Clear();
 
@@ -278,9 +280,9 @@ void CTorrentTrackersPage::OnRun()
 				strURL = strURL.TrimRight( _T('&') ) +
 					( ( strURL.Find( _T('?') ) != -1 ) ? _T('&') : _T('?') ) +
 					_T("info_hash=") +
-						CBTTrackerRequest::Escape( m_pDownload->m_pTorrent.m_oBTH ) +
+						CBTTrackerRequest::Escape( pDownload->m_pTorrent.m_oBTH ) +
 					_T("&peer_id=") +
-						CBTTrackerRequest::Escape( m_pDownload->m_pPeerID );
+						CBTTrackerRequest::Escape( pDownload->m_pPeerID );
 
 				oLock.Unlock();
 
@@ -303,11 +305,18 @@ void CTorrentTrackersPage::OnRun()
 							theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING,
 								_T("[BT] Recieved BitTorrent tracker response: %s"), pNode->Encode() );
 
-							if ( OnTree( pNode ) )
+							if ( oLock.Lock( 250 ) )
 							{
-								delete pNode;
-								PostMessage( WM_TIMER, 3 );
-								return;
+								pDownload = pSheet->GetDownload();
+								if ( pDownload )
+								{
+									if ( OnTree( pDownload, pNode ) )
+									{
+										delete pNode;
+										PostMessage( WM_TIMER, 3 );
+										return;
+									}
+								}
 							}
 							
 							delete pNode;
@@ -321,24 +330,16 @@ void CTorrentTrackersPage::OnRun()
 	PostMessage( WM_TIMER, 2 );
 }
 
-BOOL CTorrentTrackersPage::OnTree(CBENode* pNode)
+BOOL CTorrentTrackersPage::OnTree(CDownload* pDownload, CBENode* pNode)
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	if ( ! pNode->IsType( CBENode::beDict ) ) return FALSE;
 	
 	CBENode* pFiles = pNode->GetNode( "files" );
 	if ( ! pFiles->IsType( CBENode::beDict ) ) return FALSE;
 
-	LPBYTE nKey;
-	{
-		CSingleLock oLock( &Transfers.m_pSection );
-		if ( ! oLock.Lock( 250 ) )
-			return FALSE;
-
-		if ( ! Downloads.Check( m_pDownload ) || ! m_pDownload->IsTorrent() )
-			return FALSE;
-
-		nKey = &m_pDownload->m_pTorrent.m_oBTH[ 0 ];
-	}
+	LPBYTE nKey = &pDownload->m_pTorrent.m_oBTH[ 0 ];
 
     CBENode* pFile = pFiles->GetNode( nKey, Hashes::BtHash::byteCount );
 	if ( ! pFile->IsType( CBENode::beDict ) ) return FALSE;	
@@ -373,10 +374,11 @@ void CTorrentTrackersPage::OnEnChangeTorrentTracker()
 	if ( ! oLock.Lock( 250 ) )
 		return;
  
-	if ( ! Downloads.Check( m_pDownload ) || m_pDownload->IsMoving() )
+	CDownload* pDownload = ((CDownloadSheet*)GetParent())->GetDownload();
+	if ( ! pDownload )
 		return;
 
-	CBTInfo& oInfo = m_pDownload->m_pTorrent;
+	CBTInfo& oInfo = pDownload->m_pTorrent;
 
 	if ( m_sTracker != oInfo.GetTrackerAddress() )
 		m_wndTrackerMode.SetCurSel( CBTInfo::tSingle );

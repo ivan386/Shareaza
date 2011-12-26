@@ -1,7 +1,7 @@
 //
 // PageDownloadActions.h
 //
-// Copyright (c) Shareaza Development Team, 2008.
+// Copyright (c) Shareaza Development Team, 2008-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -46,6 +46,7 @@ protected:
 	CStatic m_wndCancelDownload;
 
 	virtual void DoDataExchange(CDataExchange* pDX);
+	virtual BOOL OnInitDialog();
 
 	void OnForgetVerify();
 	void OnForgetSources();

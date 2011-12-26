@@ -1319,8 +1319,7 @@ void CDownloadsWnd::OnDownloadsEdit()
 		if ( pDownload->m_bSelected && ! pDownload->IsMoving() &&
 			( ! pDownload->IsCompleted() || pDownload->IsSeeding() ) )
 		{
-			CDownloadSheet dlg( pDownload );
-			pLock.Unlock();
+			CDownloadSheet dlg( pLock, pDownload );
 			dlg.DoModal();
 			break;
 		}

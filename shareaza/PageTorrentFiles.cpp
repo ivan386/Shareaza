@@ -73,13 +73,10 @@ BOOL CTorrentFilesPage::OnInitDialog()
 	if ( ! CPropertyPageAdv::OnInitDialog() )
 		return FALSE;
 
-	CSingleLock oLock( &Transfers.m_pSection );
-	if ( ! oLock.Lock( 250 ) )
-		return FALSE;
+	ASSUME_LOCK( Transfers.m_pSection );
 
-	CDownload* pDownload = ((CDownloadSheet*)GetParent())->m_pDownload;
-	if ( ! Downloads.Check( pDownload ) || ! pDownload->IsTorrent() )
-		return FALSE;
+	CDownload* pDownload = ((CDownloadSheet*)GetParent())->GetDownload();
+	ASSERT( pDownload && pDownload->IsTorrent() );
 
 	bool bCompleted = pDownload->IsCompleted();
 
@@ -140,9 +137,10 @@ BOOL CTorrentFilesPage::OnApply()
 	if ( ! oLock.Lock( 250 ) )
 		return FALSE;
 
-	CDownload* pDownload = ((CDownloadSheet*)GetParent())->m_pDownload;
-	if ( ! Downloads.Check( pDownload ) || ! pDownload->IsTorrent() )
-		return FALSE;
+	CDownload* pDownload = ((CDownloadSheet*)GetParent())->GetDownload();
+	if ( ! pDownload )
+		// Invalid download
+		return CPropertyPageAdv::OnApply();
 
 	if ( ! pDownload->IsCompleted() )
 	{
@@ -174,8 +172,9 @@ void CTorrentFilesPage::Update()
 	if ( ! oLock.Lock( 250 ) )
 		return;
 
-	CDownload* pDownload = ((CDownloadSheet*)GetParent())->m_pDownload;
-	if ( ! Downloads.Check( pDownload ) || ! pDownload->IsTorrent() )
+	CDownload* pDownload = ((CDownloadSheet*)GetParent())->GetDownload();
+	if ( ! pDownload )
+		// Invalid download
 		return;
 
 	if ( CComPtr< CFragmentedFile > pFragFile = pDownload->GetFile() )
@@ -201,11 +200,16 @@ void CTorrentFilesPage::OnDestroy()
 void CTorrentFilesPage::OnNMDblclkTorrentFiles(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>(pNMHDR);
-
-	CSingleLock oLock( &Transfers.m_pSection, TRUE );
-	CDownload* pDownload = ((CDownloadSheet*)GetParent())->m_pDownload;
-	if ( Downloads.Check( pDownload ) )
-		pDownload->Launch( pNMItemActivate->iItem, &oLock, FALSE );
-
 	*pResult = 0;
+
+	CSingleLock oLock( &Transfers.m_pSection );
+	if ( ! oLock.Lock( 250 ) )
+		return;
+
+	CDownload* pDownload = ((CDownloadSheet*)GetParent())->GetDownload();
+	if ( ! pDownload )
+		// Invalid download
+		return;
+
+	pDownload->Launch( pNMItemActivate->iItem, &oLock, FALSE );
 }

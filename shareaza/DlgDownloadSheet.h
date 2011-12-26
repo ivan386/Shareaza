@@ -1,7 +1,7 @@
 //
 // DlgDownloadSheet.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -30,13 +30,15 @@ class CDownloadSheet : public CPropertySheetAdv
 	DECLARE_DYNAMIC(CDownloadSheet)
 
 public:
-	CDownloadSheet(CDownload* pDownload);
+	CDownloadSheet(CSingleLock& pLock, CDownload* pDownload);
 
-	CDownload*		m_pDownload;
+	CDownload*		GetDownload() const;
 
-	virtual INT_PTR DoModal(int nPage = -1);
+	virtual INT_PTR DoModal();
 
 protected:
+	CSingleLock&	m_pLock;			// Transfers.m_pSection
+	CDownload*		m_pDownload;
 	CString			m_sDownloadTitle;
 	CString			m_sActionsTitle;
 	CString			m_sGeneralTitle;

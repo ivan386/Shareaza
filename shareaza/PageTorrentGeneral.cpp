@@ -1,7 +1,7 @@
 //
 // PageTorrentGeneral.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -75,13 +75,10 @@ BOOL CTorrentGeneralPage::OnInitDialog()
 	if ( ! CPropertyPageAdv::OnInitDialog() )
 		return FALSE;
 
-	CSingleLock oLock( &Transfers.m_pSection );
-	if ( ! oLock.Lock( 250 ) )
-		return FALSE;
+	ASSUME_LOCK( Transfers.m_pSection );
 
-	CDownload* pDownload = ((CDownloadSheet*)GetParent())->m_pDownload;
-	if ( ! Downloads.Check( pDownload ) || ! pDownload->IsTorrent() )
-		return FALSE;
+	CDownload* pDownload = ((CDownloadSheet*)GetParent())->GetDownload();
+	ASSERT( pDownload && pDownload->IsTorrent() );
 
 	CBTInfo& oInfo = pDownload->m_pTorrent;
 
@@ -133,9 +130,10 @@ BOOL CTorrentGeneralPage::OnApply()
 	if ( ! oLock.Lock( 250 ) )
 		return FALSE;
 
-	CDownload* pDownload = ((CDownloadSheet*)GetParent())->m_pDownload;
-	if ( ! Downloads.Check( pDownload ) || ! pDownload->IsTorrent() )
-		return FALSE;
+	CDownload* pDownload = ((CDownloadSheet*)GetParent())->GetDownload();
+	if ( ! pDownload )
+		// Invalid download
+		return CPropertyPageAdv::OnApply();
 	
 	CBTInfo& oInfo = pDownload->m_pTorrent;
 

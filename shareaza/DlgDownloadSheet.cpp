@@ -1,7 +1,7 @@
 //
 // DlgDownloadSheet.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -23,12 +23,13 @@
 #include "Shareaza.h"
 #include "CoolInterface.h"
 #include "DlgDownloadSheet.h"
-
+#include "Downloads.h"
 #include "PageDownloadEdit.h"
 #include "PageDownloadActions.h"
 #include "PageTorrentGeneral.h"
 #include "PageTorrentFiles.h"
 #include "PageTorrentTrackers.h"
+#include "Transfers.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -45,21 +46,32 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CDownloadSheet
 
-CDownloadSheet::CDownloadSheet(CDownload* pDownload) : 
-	m_pDownload( pDownload ),
-	m_sDownloadTitle( L"General" ),
-	m_sActionsTitle( L"Actions" ),
-	m_sGeneralTitle( L"Torrent" ),
-	m_sFilesTitle( L"Files" ),
-	m_sTrackersTitle( L"Trackers" )
+CDownloadSheet::CDownloadSheet(CSingleLock& pLock, CDownload* pDownload)
+	: m_pLock			( pLock )
+	, m_pDownload		( pDownload )
+	, m_sDownloadTitle	( L"General" )
+	, m_sActionsTitle	( L"Actions" )
+	, m_sGeneralTitle	( L"Torrent" )
+	, m_sFilesTitle		( L"Files" )
+	, m_sTrackersTitle	( L"Trackers" )
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+}
+
+CDownload* CDownloadSheet::GetDownload() const
+{
+	ASSUME_LOCK( Transfers.m_pSection );
+
+	return ( Downloads.Check( m_pDownload ) && ! m_pDownload->IsMoving() ) ? m_pDownload : NULL;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // CDownloadSheet operations
 
-INT_PTR CDownloadSheet::DoModal(int nPage)
+INT_PTR CDownloadSheet::DoModal()
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	CDownloadEditPage		pDownload;
 	CDownloadActionsPage	pActions;
 	CTorrentGeneralPage		pGeneral;
@@ -84,8 +96,6 @@ INT_PTR CDownloadSheet::DoModal(int nPage)
 		AddPage( &pTrackers );
 	}
 
-	m_psh.nStartPage = nPage;
-
 	return CPropertySheetAdv::DoModal();
 }
 
@@ -99,9 +109,7 @@ BOOL CDownloadSheet::OnInitDialog()
 	SetFont( &CoolInterface.m_fntNormal );
 	SetIcon( theApp.LoadIcon( IDI_PROPERTIES ), TRUE );
 
-	CString strCaption;
-	LoadString( strCaption, IDS_DOWNLOAD_PROPERTIES );
-	SetWindowText( strCaption );
+	SetWindowText( LoadString( IDS_DOWNLOAD_PROPERTIES ) );
 
 	if ( GetDlgItem( IDOK ) )
 	{
@@ -114,6 +122,14 @@ BOOL CDownloadSheet::OnInitDialog()
 
 	if ( GetDlgItem( 0x3021 ) ) GetDlgItem( 0x3021 )->ShowWindow( SW_HIDE );
 	if ( GetDlgItem( 0x0009 ) ) GetDlgItem( 0x0009 )->ShowWindow( SW_HIDE );
+
+	// Forcibly create all pages under protection of Transfers.m_pSection
+	for ( int i = GetPageCount() - 1; i >= 0; --i )
+	{
+		SetActivePage( i );
+	}
+
+	m_pLock.Unlock();
 
 	return bResult;
 }

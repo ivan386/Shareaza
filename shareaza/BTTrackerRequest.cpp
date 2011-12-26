@@ -30,7 +30,6 @@
 #include "Datagrams.h"
 #include "Downloads.h"
 #include "Download.h"
-#include "ShareazaURL.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -220,32 +219,24 @@ BOOL CBTTrackerPacket::OnPacket(const SOCKADDR_IN* pHost)
 {
 	SmartDump( pHost, TRUE, FALSE );
 
-	CSingleLock oLock( &Transfers.m_pSection, FALSE );
-	if ( oLock.Lock( 100 ) )
+	if ( CBTTrackerRequest* pRequest = TrackerRequests.Lookup( m_nTransactionID ) )
 	{
-		if ( CBTTrackerRequest* pRequest = TrackerRequests.Lookup( m_nTransactionID ) )
+		switch ( m_nAction )
 		{
-			switch ( m_nAction )
-			{
-			case BTA_TRACKER_CONNECT:
-				// Assume UDP is stable
-				Datagrams.SetStable();
+		case BTA_TRACKER_CONNECT:
+			return pRequest->OnConnect( this );
 
-				m_nConnectionID = ReadInt64();
-				return pRequest->OnConnect( this );
+		case BTA_TRACKER_ANNOUNCE:
+			return pRequest->OnAnnounce( this );
 
-			case BTA_TRACKER_ANNOUNCE:
-				return pRequest->OnAnnounce( this );
+		case BTA_TRACKER_SCRAPE:
+			return pRequest->OnScrape( this );
 
-			case BTA_TRACKER_SCRAPE:
-				return pRequest->OnScrape( this );
+		case BTA_TRACKER_ERROR:
+			return pRequest->OnError( this );
 
-			case BTA_TRACKER_ERROR:
-				return pRequest->OnError( this );
-
-			default:
-				ASSERT( FALSE );
-			}
+		default:
+			ASSERT( FALSE );
 		}
 	}
 
@@ -638,7 +629,7 @@ void CBTTrackerRequest::ProcessUDP()
 
 	if ( ! bSuccess )
 	{
-		// Connecion errors
+		// Connection errors
 		CSingleLock oLock( &Transfers.m_pSection, FALSE );
 		while ( ! oLock.Lock( 100 ) ) { if ( WaitForSingleObject( m_pCancel, 0 ) != WAIT_TIMEOUT ) return; }
 		m_pDownload->OnTrackerEvent( false, LoadString( IDS_BT_TRACKER_DOWN ) );
@@ -647,7 +638,13 @@ void CBTTrackerRequest::ProcessUDP()
 
 BOOL CBTTrackerRequest::OnConnect(CBTTrackerPacket* pPacket)
 {
-	m_nConnectionID = pPacket->m_nConnectionID;
+	CSingleLock oLock( &Transfers.m_pSection, FALSE );
+	while ( ! oLock.Lock( 100 ) ) { if ( WaitForSingleObject( m_pCancel, 0 ) != WAIT_TIMEOUT ) return TRUE; }
+
+	// Assume UDP is stable
+	Datagrams.SetStable();
+
+	m_nConnectionID = pPacket->m_nConnectionID = pPacket->ReadInt64();
 
 	if ( CBTTrackerPacket* pResponse = CBTTrackerPacket::New( BTA_TRACKER_ANNOUNCE, m_nTransactionID, m_nConnectionID ) )
 	{
@@ -669,7 +666,7 @@ BOOL CBTTrackerRequest::OnConnect(CBTTrackerPacket* pPacket)
 			pResponse->WriteInt64( nLeft );
 			pResponse->WriteInt64( m_pDownload->m_nTorrentUploaded );
 			pResponse->WriteLongBE( m_nEvent );
-			pResponse->WriteLongBE( 0 );			// Owr IP (same)
+			pResponse->WriteLongBE( 0 );			// Own IP (same)
 			pResponse->WriteLongBE( 0 );			// Key
 			pResponse->WriteLongBE( m_nNumWant ? m_nNumWant : (DWORD)-1 );
 			pResponse->WriteShortBE( nPort );
@@ -703,6 +700,9 @@ BOOL CBTTrackerRequest::OnConnect(CBTTrackerPacket* pPacket)
 
 BOOL CBTTrackerRequest::OnAnnounce(CBTTrackerPacket* pPacket)
 {
+	CSingleLock oLock( &Transfers.m_pSection, FALSE );
+	while ( ! oLock.Lock( 100 ) ) { if ( WaitForSingleObject( m_pCancel, 0 ) != WAIT_TIMEOUT ) return TRUE; }
+
 	int nCount = 0;
 
 	DWORD nInterval = pPacket->ReadLongBE();
@@ -730,6 +730,9 @@ BOOL CBTTrackerRequest::OnAnnounce(CBTTrackerPacket* pPacket)
 
 BOOL CBTTrackerRequest::OnScrape(CBTTrackerPacket* pPacket)
 {
+	CSingleLock oLock( &Transfers.m_pSection, FALSE );
+	while ( ! oLock.Lock( 100 ) ) { if ( WaitForSingleObject( m_pCancel, 0 ) != WAIT_TIMEOUT ) return TRUE; }
+
 	// Assume only one scrape
 	if ( pPacket->GetRemaining() >= sizeof( bt_scrape_t ) )
 	{
@@ -748,6 +751,9 @@ BOOL CBTTrackerRequest::OnScrape(CBTTrackerPacket* pPacket)
 
 BOOL CBTTrackerRequest::OnError(CBTTrackerPacket* pPacket)
 {
+	CSingleLock oLock( &Transfers.m_pSection, FALSE );
+	while ( ! oLock.Lock( 100 ) ) { if ( WaitForSingleObject( m_pCancel, 0 ) != WAIT_TIMEOUT ) return TRUE; }
+
 	CString strErrorMsg = pPacket->ReadStringUTF8();
 
 	CString strError;

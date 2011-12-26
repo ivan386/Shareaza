@@ -1,7 +1,7 @@
 //
 // PageTorrentTrackers.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -47,10 +47,9 @@ protected:
 	CHttpRequest	m_pRequest;
 	int				m_nComplete;
 	int				m_nIncomplete;
-	CDownload*		m_pDownload;
 
 	void OnRun();
-	BOOL OnTree(CBENode* pNode);
+	BOOL OnTree(CDownload* pDownload, CBENode* pNode);
 
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	virtual BOOL OnInitDialog();
