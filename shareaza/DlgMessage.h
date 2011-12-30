@@ -1,7 +1,7 @@
 //
 // DlgMessage.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2011.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -36,8 +36,10 @@ public:
 	enum { IDD = IDD_MESSAGE };
 
 	DWORD	m_nType;		// Message box type
+	DWORD	m_nIDHelp;		// The Help context ID for the message (0 - default)
 	CString	m_sText;		// Message box text
 	DWORD*	m_pnDefault;	// Message box variable
+	DWORD	m_nTimer;		// Time to auto-press default button (0 - disabled)
 
 	virtual INT_PTR DoModal();
 
@@ -50,15 +52,21 @@ protected:
 	CButton m_pButton2;
 	CButton m_pButton3;
 	BOOL	m_bRemember;	// Remember my selection next time
+	int		m_nDefButton;	// Default button number (1, 2 or 3)
 
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	virtual BOOL OnInitDialog();
 	virtual void OnOK();
 	virtual void OnCancel();
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
+
+	void UpdateTimer();
+	void StopTimer();
 
 	afx_msg void OnBnClickedButton1();
 	afx_msg void OnBnClickedButton2();
 	afx_msg void OnBnClickedButton3();
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 
 	DECLARE_MESSAGE_MAP()
 };

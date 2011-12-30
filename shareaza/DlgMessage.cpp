@@ -26,21 +26,26 @@
 #include "DlgMessage.h"
 #include "Skin.h"
 
+
 // CMessageDlg dialog
 
 IMPLEMENT_DYNAMIC(CMessageDlg, CSkinDialog)
 
 CMessageDlg::CMessageDlg(CWnd* pParent /*=NULL*/)
-	: CSkinDialog( CMessageDlg::IDD, pParent )
-	, m_nType( MB_OK )
-	, m_bRemember( FALSE )
-	, m_pnDefault( NULL )
+	: CSkinDialog	( CMessageDlg::IDD, pParent )
+	, m_nType		( MB_OK )
+	, m_nIDHelp		( 0 )
+	, m_bRemember	( FALSE )
+	, m_pnDefault	( NULL )
+	, m_nDefButton	( 0 )
+	, m_nTimer		( 0 )
 {
 }
 
 void CMessageDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CSkinDialog::DoDataExchange(pDX);
+
 	DDX_Control(pDX, IDC_INFO_ICON, m_Icon);
 	DDX_Control(pDX, IDC_INFO_TEXT, m_pText );
 	DDX_Control(pDX, IDC_INFO_SPLIT, m_pSplit );
@@ -192,39 +197,42 @@ BOOL CMessageDlg::OnInitDialog()
 	switch ( m_nType & MB_DEFMASK )
 	{
 	case MB_DEFBUTTON1:
-		switch ( nButtons )
-		{
-		case 1:
-			m_pButton1.SetButtonStyle( m_pButton1.GetButtonStyle() | BS_DEFPUSHBUTTON );
-			m_pButton1.SetFocus();
-			break;
-		case 2:
-			m_pButton2.SetButtonStyle( m_pButton2.GetButtonStyle() | BS_DEFPUSHBUTTON );
-			m_pButton2.SetFocus();
-			break;
-		case 3:
-			m_pButton3.SetButtonStyle( m_pButton3.GetButtonStyle() | BS_DEFPUSHBUTTON );
-			m_pButton3.SetFocus();
-			break;
-		}
+		m_nDefButton = nButtons;
 		break;
+
 	case MB_DEFBUTTON2:
 		switch ( nButtons )
 		{
 		case 1:
 		case 2:
-			m_pButton1.SetButtonStyle( m_pButton1.GetButtonStyle() | BS_DEFPUSHBUTTON );
-			m_pButton1.SetFocus();
+			m_nDefButton = 1;
 			break;
 		case 3:
-			m_pButton2.SetButtonStyle( m_pButton2.GetButtonStyle() | BS_DEFPUSHBUTTON );
-			m_pButton2.SetFocus();
+			m_nDefButton = 2;
 			break;
 		}
 		break;
+
 	case MB_DEFBUTTON3:
+		m_nDefButton = 1;
+		break;
+	}
+
+	switch ( m_nDefButton )
+	{
+	case 1:
 		m_pButton1.SetButtonStyle( m_pButton1.GetButtonStyle() | BS_DEFPUSHBUTTON );
 		m_pButton1.SetFocus();
+		break;
+
+	case 2:
+		m_pButton2.SetButtonStyle( m_pButton2.GetButtonStyle() | BS_DEFPUSHBUTTON );
+		m_pButton2.SetFocus();
+		break;
+
+	case 3:
+		m_pButton3.SetButtonStyle( m_pButton3.GetButtonStyle() | BS_DEFPUSHBUTTON );
+		m_pButton3.SetFocus();
 		break;
 	}
 
@@ -234,15 +242,23 @@ BOOL CMessageDlg::OnInitDialog()
 	m_pSplit.ShowWindow( m_pnDefault ? SW_NORMAL : SW_HIDE );
 	m_pDefault.ShowWindow( m_pnDefault ? SW_NORMAL : SW_HIDE );
 
+	if ( m_nTimer > 0 )
+	{
+		SetTimer( 1, 1000, NULL );
+	}
+
 	return FALSE;
 }
 
 void CMessageDlg::OnOK()
 {
+	StopTimer();
 }
 
 void CMessageDlg::OnCancel()
 {
+	StopTimer();
+
 	switch ( m_nType & MB_TYPEMASK )
 	{
 	case MB_OK:
@@ -267,6 +283,7 @@ BEGIN_MESSAGE_MAP(CMessageDlg, CSkinDialog)
 	ON_BN_CLICKED(IDC_INFO_BUTTON1, &CMessageDlg::OnBnClickedButton1)
 	ON_BN_CLICKED(IDC_INFO_BUTTON2, &CMessageDlg::OnBnClickedButton2)
 	ON_BN_CLICKED(IDC_INFO_BUTTON3, &CMessageDlg::OnBnClickedButton3)
+	ON_WM_TIMER()
 END_MESSAGE_MAP()
 
 // CMessageDlg message handlers
@@ -274,6 +291,8 @@ END_MESSAGE_MAP()
 void CMessageDlg::OnBnClickedButton1()
 {
 	UpdateData();
+
+	StopTimer();
 
 	switch ( m_nType & MB_TYPEMASK )
 	{
@@ -301,6 +320,8 @@ void CMessageDlg::OnBnClickedButton2()
 {
 	UpdateData();
 
+	StopTimer();
+
 	switch ( m_nType & MB_TYPEMASK )
 	{
 	case MB_OKCANCEL:
@@ -325,6 +346,8 @@ void CMessageDlg::OnBnClickedButton2()
 void CMessageDlg::OnBnClickedButton3()
 {
 	UpdateData();
+
+	StopTimer();
 
 	switch ( m_nType & MB_TYPEMASK )
 	{
@@ -463,16 +486,100 @@ INT_PTR CMessageDlg::DoModal()
 	return nResult;
 }
 
-INT_PTR MsgBox(LPCTSTR lpszText, UINT nType, UINT /*nIDHelp*/, DWORD* pnDefault)
+void CMessageDlg::OnTimer(UINT_PTR nIDEvent)
 {
-	CMessageDlg dlg;
-	dlg.m_nType = nType;
-	dlg.m_sText = lpszText;
-	dlg.m_pnDefault = pnDefault;
-	return dlg.DoModal();
+	if ( nIDEvent == 1 )
+	{
+		if ( m_nTimer ) m_nTimer--;
+
+		UpdateTimer();
+
+		if ( ! m_nTimer )
+		{
+			// Press the button
+			switch ( m_nDefButton )
+			{
+			case 1:
+				OnBnClickedButton1();
+				break;
+
+			case 2:
+				OnBnClickedButton2();
+				break;
+
+			case 3:
+				OnBnClickedButton3();
+				break;
+			}
+		}
+
+		return;
+	}
+
+	CSkinDialog::OnTimer( nIDEvent );
 }
 
-INT_PTR MsgBox(UINT nIDPrompt, UINT nType, UINT nIDHelp, DWORD* pnDefault)
+void CMessageDlg::UpdateTimer()
 {
-	return MsgBox( LoadString( nIDPrompt ), nType, nIDHelp, pnDefault );
+	CButton* pButton = NULL;
+	switch ( m_nDefButton )
+	{
+	case 1:
+		pButton = &m_pButton1;
+		break;
+
+	case 2:
+		pButton = &m_pButton2;
+		break;
+
+	case 3:
+		pButton = &m_pButton3;
+		break;
+	}
+
+	CString sText;
+	pButton->GetWindowText( sText );
+	int nPos = sText.Find( _T(" (") );
+	if ( nPos != -1 )
+	{
+		sText = sText.Left( nPos );
+	}
+
+	if ( m_nTimer > 0 )
+	{
+		CString sNewText;
+		sNewText.Format( _T("%s (%u)"), sText, m_nTimer );
+		pButton->SetWindowText( sNewText );
+	}
+	else
+	{
+		pButton->SetWindowText( sText );
+	}
+
+	pButton->UpdateWindow();
+}
+
+void CMessageDlg::StopTimer()
+{
+	m_nTimer = 0;
+	KillTimer( 1 );
+	UpdateTimer();
+}
+
+BOOL CMessageDlg::PreTranslateMessage(MSG* pMsg)
+{
+	if ( pMsg->message == WM_LBUTTONDOWN ||
+		 pMsg->message == WM_NCLBUTTONDOWN ||
+		 pMsg->message == WM_RBUTTONDOWN ||
+		 pMsg->message == WM_NCRBUTTONDOWN ||
+		 pMsg->message == WM_KEYDOWN ||
+		 pMsg->message == WM_SYSKEYDOWN )
+	{
+		if ( m_nTimer )
+		{
+			StopTimer();
+		}
+	}
+
+	return CSkinDialog::PreTranslateMessage(pMsg);
 }

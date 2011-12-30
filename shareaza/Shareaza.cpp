@@ -29,6 +29,7 @@
 #include "DDEServer.h"
 #include "DiscoveryServices.h"
 #include "DlgDeleteFile.h"
+#include "DlgMessage.h"
 #include "DownloadGroups.h"
 #include "Downloads.h"
 #include "EDClients.h"
@@ -291,24 +292,26 @@ BOOL CShareazaApp::InitInstance()
 	COleDateTimeSpan tTimeOut( 7, 0, 0, 0);			// Daily builds
 	if ( ( tCompileTime + tTimeOut )  < tCurrent )
 	{
-		if ( AfxMessageBox(
+		if ( MsgBox(
 			_T("This is a pre-release version of ") CLIENT_NAME_T _T(", and the beta testing period has ended.  ")
-			_T("Please download the full, official release from ") WEB_SITE_T _T("."), MB_ICONQUESTION|MB_OK ) != IDOK )
+			_T("Please download the full, official release from ") WEB_SITE_T _T("."), MB_ICONQUESTION|MB_OK, 0, NULL, 30 ) != IDOK )
 			return FALSE;
 	}
 
 	// Alpha warning. Remember to remove this section for final releases and public betas.
 	if ( ! m_cmdInfo.m_bNoAlphaWarning && m_cmdInfo.m_bShowSplash )
-	if ( AfxMessageBox(
-		_T("WARNING: This is an ALPHA TEST version of ") CLIENT_NAME_T _T(".\n\n")
-		_T("It is NOT FOR GENERAL USE, and is only for testing specific features in a controlled ")
-		_T("environment. It will frequently stop running, or display debug information to assist testing.\n\n")
-		_T("If you wish to actually use this software, you should download ")
-		_T("the current stable release from ") WEB_SITE_T _T("\n")
-		_T("If you continue past this point, you may experience system instability, lose downloads, ")
-		_T("or corrupt system files. Corrupted downloads/files may not be recoverable. ")
-		_T("Do you wish to continue?"), MB_ICONEXCLAMATION|MB_YESNO ) == IDNO )
-		return FALSE;
+	{
+		if ( MsgBox(
+			_T("WARNING: This is an ALPHA TEST version of ") CLIENT_NAME_T _T(".\n\n")
+			_T("It is NOT FOR GENERAL USE, and is only for testing specific features in a controlled ")
+			_T("environment. It will frequently stop running, or display debug information to assist testing.\n\n")
+			_T("If you wish to actually use this software, you should download ")
+			_T("the current stable release from ") WEB_SITE_T _T("\n")
+			_T("If you continue past this point, you may experience system instability, lose downloads, ")
+			_T("or corrupt system files. Corrupted downloads/files may not be recoverable. ")
+			_T("Do you wish to continue?"), MB_ICONEXCLAMATION|MB_YESNO, 0, NULL, 30 ) == IDNO )
+			return FALSE;
+	}
 #endif // RELEASE_BUILD
 
 	m_bInteractive = true;
@@ -3043,4 +3046,20 @@ BOOL AreServiceHealthy(LPCTSTR szService)
 	}
 
 	return bResult;
+}
+
+INT_PTR MsgBox(LPCTSTR lpszText, UINT nType, UINT nIDHelp, DWORD* pnDefault, DWORD nTimer)
+{
+	CMessageDlg dlg;
+	dlg.m_nType = nType;
+	dlg.m_nIDHelp = nIDHelp;
+	dlg.m_sText = lpszText;
+	dlg.m_pnDefault = pnDefault;
+	dlg.m_nTimer = nTimer;
+	return dlg.DoModal();
+}
+
+INT_PTR MsgBox(UINT nIDPrompt, UINT nType, UINT nIDHelp, DWORD* pnDefault, DWORD nTimer)
+{
+	return MsgBox( LoadString( nIDPrompt ), nType, nIDHelp, pnDefault, nTimer );
 }
