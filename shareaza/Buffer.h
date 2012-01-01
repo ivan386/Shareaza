@@ -1,7 +1,7 @@
 //
 // Buffer.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -23,11 +23,6 @@
 // http://shareazasecurity.be/wiki/index.php?title=Developers.Code.CBuffer
 
 #pragma once
-
-// Produces two arguments divided by comma, where first argument is a string itself
-// and second argument is a string length without null terminator
-#define _P(x)	(x),((sizeof(x))/sizeof((x)[0])-1)
-#define _PT(x)	_P(_T(x))
 
 
 // A buffer of memory that takes care of allocating and freeing itself, and has methods for compression and encoding

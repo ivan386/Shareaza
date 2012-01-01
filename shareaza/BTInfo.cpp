@@ -1,7 +1,7 @@
 //
 // BTInfo.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -788,15 +788,12 @@ BOOL CBTInfo::LoadTorrentTree(const CBENode* pRoot)
 						CString strTracker = pTracker->GetString();
 
 						// Check tracker is valid
-						if ( _tcsncicmp( (LPCTSTR)strTracker, _T("http://"), 7 ) == 0 )
+						if ( StartsWith( strTracker, _PT("http://") ) ||
+							 StartsWith( strTracker, _PT("udp://") ) )
 						{
 							// Store HTTP tracker
 							pTrackers.AddTail( strTracker );
 						}
-						//else if ( _tcsncicmp( (LPCTSTR)strTracker, _T("udp://"), 6 ) == 0 )
-						//{
-							// TODO: UDP tracker
-						//}
 						//else unknown tracker
 					}
 				}
@@ -846,7 +843,8 @@ BOOL CBTInfo::LoadTorrentTree(const CBENode* pRoot)
 		CString strTracker = pAnnounce->GetString();
 
 		// Store it if it's valid. (Some torrents have invalid trackers)
-		if ( _tcsncicmp( (LPCTSTR)strTracker, _T("http://"), 7 ) == 0 )
+		if ( StartsWith( strTracker, _PT("http://") ) ||
+			 StartsWith( strTracker, _PT("udp://") ) )
 		{
 			// Announce node is ignored by multi-tracker torrents
 			if ( m_oTrackers.IsEmpty() )
@@ -856,14 +854,7 @@ BOOL CBTInfo::LoadTorrentTree(const CBENode* pRoot)
 				SetTracker( strTracker );
 			}
 		}
-		// else if ( _tcsncicmp( (LPCTSTR)strTracker, _T("udp://"), 6 ) == 0 )
-		//{
-			// TODO: UDP Tracker
-		//}
-		//else
-		//{
-			// TODO: Torrents should always have a valid announce node.
-		//}
+		//else unknown tracker
 	}
 
 	// Get the private flag (if present)

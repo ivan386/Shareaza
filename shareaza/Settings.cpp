@@ -1,7 +1,7 @@
 //
 // Settings.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -455,7 +455,7 @@ void CSettings::Load()
 	Add( _T("BitTorrent"), _T("AutoSeed"), &BitTorrent.AutoSeed, true );
 	Add( _T("BitTorrent"), _T("BandwidthPercentage"), &BitTorrent.BandwidthPercentage, 80, 1, 50, 95, _T(" %") );
 	Add( _T("BitTorrent"), _T("ClearRatio"), &BitTorrent.ClearRatio, 120, 1, 100, 999, _T(" %") );
-	Add( _T("BitTorrent"), _T("DefaultTracker"), &BitTorrent.DefaultTracker, _T("http://tracker.openbittorrent.com/announce") );
+	Add( _T("BitTorrent"), _T("DefaultTracker"), &BitTorrent.DefaultTracker, _T("udp://tracker.openbittorrent.com:80") );
 	Add( _T("BitTorrent"), _T("DefaultTrackerPeriod"), &BitTorrent.DefaultTrackerPeriod, 5*60000, 60000, 5, 120, _T(" m") );
 	Add( _T("BitTorrent"), _T("EnableAlways"), &BitTorrent.EnableAlways, true );
 	Add( _T("BitTorrent"), _T("DhtPruneTime"), &BitTorrent.DhtPruneTime, 30*60, 60, 10, 7*24*60*60, _T(" m") );
@@ -632,7 +632,14 @@ void CSettings::Load()
 	sTorrent.ReleaseBuffer();
 	BitTorrent.TorrentCreatorPath = sTorrent;
 	if ( BitTorrent.TorrentCreatorPath.IsEmpty() || ! PathFileExists( BitTorrent.TorrentCreatorPath ) )
+	{
 		BitTorrent.TorrentCreatorPath = General.Path + _T("\\TorrentWizard.exe");
+	}
+	if ( ! ( StartsWith( BitTorrent.DefaultTracker, _PT("http://") ) ||
+			 StartsWith( BitTorrent.DefaultTracker, _PT("udp://") ) ) )
+	{
+		SetDefault( &BitTorrent.DefaultTracker );
+	}
 
 	Live.FirstRun = General.FirstRun;
 	General.FirstRun = false;

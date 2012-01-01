@@ -1,7 +1,7 @@
 //
 // PageTracker.cpp
 //
-// Copyright (c) Shareaza Development Team, 2007-2011.
+// Copyright (c) Shareaza Development Team, 2007-2012.
 // This file is part of Shareaza Torrent Wizard (shareaza.sourceforge.net).
 //
 // Shareaza Torrent Wizard is free software; you can redistribute it
@@ -71,7 +71,9 @@ BOOL CTrackerPage::OnInitDialog()
 	
 	m_sTracker = theApp.GetProfileString( _T("Trackers"), _T("Last") );
 	if ( m_sTracker.IsEmpty() )
-		m_sTracker = _T("http://tracker.openbittorrent.com/announce");
+	{
+		m_sTracker = _T("udp://tracker.openbittorrent.com:80");
+	}
 
 	UpdateData( FALSE );
 
@@ -119,7 +121,8 @@ LRESULT CTrackerPage::OnWizardNext()
 {
 	UpdateData( TRUE );
 
-	if ( m_sTracker.IsEmpty() || m_sTracker.Find( _T("http") ) != 0 )
+	if ( ! ( StartsWith( m_sTracker, _PT("http://") ) ||
+			 StartsWith( m_sTracker, _PT("udp://") ) ) )
 	{
 		if ( IDYES != AfxMessageBox( IDS_TRACKER_NEED_URL, MB_ICONQUESTION|MB_YESNO ) )
 		{

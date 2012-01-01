@@ -1,7 +1,7 @@
 //
 // PageSettingsBitTorrent.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -46,7 +46,6 @@ END_MESSAGE_MAP()
 
 CBitTorrentSettingsPage::CBitTorrentSettingsPage() : CSettingsPage(CBitTorrentSettingsPage::IDD)
 {
-	//{{AFX_DATA_INIT(CBitTorrentSettingsPage)
 	m_bTorrentInterface	= FALSE;
 	m_bEndGame			= FALSE;
 	m_nLinks			= 0;
@@ -57,7 +56,6 @@ CBitTorrentSettingsPage::CBitTorrentSettingsPage() : CSettingsPage(CBitTorrentSe
 	m_sTracker			= _T("");
 	m_sTorrentPath		= _T("");
 	m_sMakerPath		= _T("");
-	//}}AFX_DATA_INIT
 }
 
 CBitTorrentSettingsPage::~CBitTorrentSettingsPage()
@@ -67,7 +65,7 @@ CBitTorrentSettingsPage::~CBitTorrentSettingsPage()
 void CBitTorrentSettingsPage::DoDataExchange(CDataExchange* pDX)
 {
 	CSettingsPage::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CBitTorrentSettingsPage)
+
 	DDX_Check(pDX, IDC_TORRENT_INTERFACE, m_bTorrentInterface);
 	DDX_Check(pDX, IDC_TORRENT_ENDGAME, m_bEndGame);
 	DDX_Text(pDX, IDC_TORRENT_CLIENTLINKS, m_nLinks);
@@ -84,7 +82,6 @@ void CBitTorrentSettingsPage::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_TORRENTS_FOLDER, m_sTorrentPath);
 	DDX_Control(pDX, IDC_TORRENTS_TORRENTMAKERBROWSE, m_wndMakerPath);
 	DDX_Text(pDX, IDC_TORRENTS_TORRENTMAKER, m_sMakerPath);
-	//}}AFX_DATA_MAP
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -204,14 +201,11 @@ void CBitTorrentSettingsPage::OnOK()
 	Settings.Downloads.TorrentPath			= m_sTorrentPath;
 	Settings.BitTorrent.TorrentCreatorPath	= m_sMakerPath;
 
-	/*
-	// Redraw the GUI to make torrents box show/hide if we need to
-	if ( bRedraw )
+	if ( ! ( StartsWith( Settings.BitTorrent.DefaultTracker, _PT("http://") ) ||
+			 StartsWith( Settings.BitTorrent.DefaultTracker, _PT("udp://") ) ) )
 	{
-		CMainWnd* pMainWnd = (CMainWnd*)AfxGetMainWnd();
-		pMainWnd->SetGUIMode( Settings.General.GUIMode, FALSE );
+		Settings.SetDefault( &Settings.BitTorrent.DefaultTracker );
 	}
-	*/
 
 	CSettingsPage::OnOK();
 }

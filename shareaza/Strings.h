@@ -1,7 +1,7 @@
 //
 // Strings.h 
 //
-// Copyright (c) Shareaza Development Team, 2010-2011.
+// Copyright (c) Shareaza Development Team, 2010-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -23,6 +23,11 @@
 
 #include <set>
 
+
+// Produces two arguments divided by comma, where first argument is a string itself
+// and second argument is a string length without null terminator
+#define _P(x)	(x),((sizeof(x))/sizeof((x)[0])-1)
+#define _PT(x)	_P(_T(x))
 
 bool IsCharacter(WCHAR nChar);
 bool IsHiragana(WCHAR nChar);
