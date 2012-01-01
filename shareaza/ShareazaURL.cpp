@@ -1,7 +1,7 @@
 //
 // ShareazaURL.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -617,6 +617,8 @@ BOOL CShareazaURL::ParseMagnet(LPCTSTR pszURL)
 			}
 			else if (	_tcsnicmp( strValue, _T("http://"), 7 ) == 0 ||
 						_tcsnicmp( strValue, _T("http%3A//"), 9 ) == 0 ||
+						_tcsnicmp( strValue, _T("udp://"), 6 ) == 0 ||
+						_tcsnicmp( strValue, _T("udp%3A//"), 8 ) == 0 ||
 						_tcsnicmp( strValue, _T("ftp://"), 6 ) == 0 ||
 						_tcsnicmp( strValue, _T("ftp%3A//"), 8 ) == 0 ||
 						_tcsnicmp( strValue, _T("dchub://"), 8 ) == 0 ||

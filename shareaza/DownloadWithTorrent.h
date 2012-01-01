@@ -1,7 +1,7 @@
 //
 // DownloadWithTorrent.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -31,7 +31,7 @@ class CBTClient;
 class CBTPacket;
 
 
-class CDownloadWithTorrent : public CDownloadWithFile
+class CDownloadWithTorrent : public CDownloadWithFile, public CTrackerEvent
 {
 // Construction
 protected:
@@ -76,7 +76,7 @@ public:
 	float			GetRatio() const;
 	BOOL			UploadExists(in_addr* pIP) const;
 	BOOL			UploadExists(const Hashes::BtGuid& oGUID) const;
-	void			OnTrackerEvent(bool bSuccess, LPCTSTR pszReason, LPCTSTR pszTip = NULL);
+	virtual void	OnTrackerEvent(bool bSuccess, LPCTSTR pszReason, LPCTSTR pszTip, CBTTrackerRequest* pEvent);
 	void			ChokeTorrent(DWORD tNow = 0);
 	CDownloadTransferBT*	CreateTorrentTransfer(CBTClient* pClient);
 	CBTPacket*		CreateBitfieldPacket();
@@ -84,6 +84,14 @@ public:
 	BOOL			SetTorrent(const CBTInfo* pTorrent = NULL);
 	// Generate Peer ID
 	BOOL			GenerateTorrentDownloadID();
+	
+	// Add tracker request for counting
+	void			AddRequest(CBTTrackerRequest* pRequest);
+	// Remove tracker request
+	void			RemoveRequest(CBTTrackerRequest* pRequest);
+	// Cancel tracker request
+	void			CancelRequest(CBTTrackerRequest* pRequest);
+
 protected:
 	bool			RunTorrent(DWORD tNow);
 	void			SendCompleted();
@@ -99,10 +107,4 @@ private:
 	void			SendUpdate(DWORD nNumWant);
 	void			SendStopped();
 	TCHAR			GenerateCharacter() const;
-	// Add tracker request for counting
-	void			Add(CBTTrackerRequest* pRequest);
-	// Remove tracker request
-	void			Remove(CBTTrackerRequest* pRequest);
-
-	friend class CBTTrackerRequest;	// Add(),Remove()
 };

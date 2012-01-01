@@ -1,7 +1,7 @@
 //
 // BTTrackerRequest.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -219,6 +219,10 @@ BOOL CBTTrackerPacket::OnPacket(const SOCKADDR_IN* pHost)
 {
 	SmartDump( pHost, TRUE, FALSE );
 
+	CSingleLock oLock( &Transfers.m_pSection, FALSE );
+	if ( ! oLock.Lock( 250 ) )
+		return FALSE;
+
 	if ( CBTTrackerRequest* pRequest = TrackerRequests.Lookup( m_nTransactionID ) )
 	{
 		switch ( m_nAction )
@@ -246,17 +250,23 @@ BOOL CBTTrackerPacket::OnPacket(const SOCKADDR_IN* pHost)
 /////////////////////////////////////////////////////////////////////////////
 // CBTTrackerRequest construction
 
-CBTTrackerRequest::CBTTrackerRequest(CDownloadWithTorrent* pDownload, DWORD nEvent, DWORD nNumWant)
+CBTTrackerRequest::CBTTrackerRequest(CDownload* pDownload, DWORD nEvent, DWORD nNumWant, CTrackerEvent* pOnTrackerEvent)
 	: m_bHTTP			( false )
 	, m_pDownload		( pDownload )
+	, m_sName			( pDownload->GetDisplayName() )
 	, m_pCancel			( FALSE, TRUE )
 	, m_nEvent			( nEvent )
 	, m_nNumWant		( nNumWant )
 	, m_nConnectionID	( 0 )
 	, m_nTransactionID	( 0 )
+	, m_pOnTrackerEvent	( pOnTrackerEvent )
+	, m_nSeeders		( 0 )
+	, m_nDownloaded		( 0 )
+	, m_nLeechers		( 0 )
 {
-	ASSERT( nEvent <= BTE_TRACKER_STOPPED );
-	ASSERT( m_pDownload != NULL );
+	ASSUME_LOCK( Transfers.m_pSection );
+	ASSERT( nEvent <= BTE_TRACKER_SCRAPE );
+	ASSERT( m_pDownload );
 	ASSERT( m_pDownload->IsTorrent() ); 
 
 	ZeroMemory( &m_pHost, sizeof( m_pHost ) );
@@ -265,7 +275,7 @@ CBTTrackerRequest::CBTTrackerRequest(CDownloadWithTorrent* pDownload, DWORD nEve
 	// Generate unique transaction ID
 	m_nTransactionID = TrackerRequests.Add( this );
 
-	m_pDownload->Add( this );
+	m_pDownload->AddRequest( this );
 
 	CString strAddress = m_pDownload->m_pTorrent.GetTrackerAddress();
 
@@ -275,46 +285,62 @@ CBTTrackerRequest::CBTTrackerRequest(CDownloadWithTorrent* pDownload, DWORD nEve
 
 		m_bHTTP = true;
 
-		QWORD nLeft = m_pDownload->GetVolumeRemaining();
-		if ( nLeft == SIZE_UNKNOWN )
-			nLeft = 0;
-
-		m_sURL.Format( _T("%s%cinfo_hash=%s&peer_id=%s&port=%u&uploaded=%I64u&downloaded=%I64u&left=%I64u&compact=1"),
-			(LPCTSTR)strAddress.TrimRight( _T('&') ),
-			( ( strAddress.Find( _T('?') ) != -1 ) ? _T('&') : _T('?') ),
-			(LPCTSTR)Escape( m_pDownload->m_oBTH ),
-			(LPCTSTR)Escape( m_pDownload->m_pPeerID ),
-			Network.m_pHost.sin_port ? (DWORD)htons( Network.m_pHost.sin_port ) : Settings.Connection.InPort,
-			m_pDownload->m_nTorrentUploaded,
-			m_pDownload->m_nTorrentDownloaded,
-			nLeft );
-
-		// If an event was specified, add it.
-		if ( m_nEvent != BTE_TRACKER_UPDATE )
+		if ( m_nEvent == BTE_TRACKER_SCRAPE )
 		{
-			// Valid events: started, completed, stopped
-			m_sURL += _T("&event=");
-			m_sURL += szEvents[ m_nEvent ];
-
-			// If event is 'started' and the IP is valid, add it.
-			if ( m_nEvent == BTE_TRACKER_STARTED && Network.m_pHost.sin_addr.s_addr != INADDR_ANY )
-			{	
-				// Note: Some trackers ignore this value and take the IP the request came from. (Usually the same)
-				m_sURL += _T("&ip=");
-				m_sURL += inet_ntoa( Network.m_pHost.sin_addr );
+			if ( strAddress.Replace( _T("/announce"), _T("/scrape") ) == 1 )
+			{
+				m_sURL.Format( _T("%s%cinfo_hash=%s&peer_id=%s"),
+					(LPCTSTR)strAddress.TrimRight( _T('&') ),
+					( ( strAddress.Find( _T('?') ) != -1 ) ? _T('&') : _T('?') ),
+					(LPCTSTR)Escape( m_pDownload->m_oBTH ),
+					(LPCTSTR)Escape( m_pDownload->m_pPeerID ) );
+			}
+			else
+			{
+				// Scrape not supported
 			}
 		}
+		else
+		{	
+			QWORD nLeft = m_pDownload->GetVolumeRemaining();
+			if ( nLeft == SIZE_UNKNOWN )
+				nLeft = 0;
 
-		// Add the # of peers to request
-		CString strNumWant;
-		strNumWant.Format( _T("&numwant=%u"), m_nNumWant );
-		m_sURL += strNumWant;
+			m_sURL.Format( _T("%s%cinfo_hash=%s&peer_id=%s&port=%u&uploaded=%I64u&downloaded=%I64u&left=%I64u&compact=1"),
+				(LPCTSTR)strAddress.TrimRight( _T('&') ),
+				( ( strAddress.Find( _T('?') ) != -1 ) ? _T('&') : _T('?') ),
+				(LPCTSTR)Escape( m_pDownload->m_oBTH ),
+				(LPCTSTR)Escape( m_pDownload->m_pPeerID ),
+				( Network.m_pHost.sin_port ? (DWORD)htons( Network.m_pHost.sin_port ) : Settings.Connection.InPort ),
+				m_pDownload->m_nTorrentUploaded,
+				m_pDownload->m_nTorrentDownloaded,
+				nLeft );
+
+			// If an event was specified, add it.
+			if ( m_nEvent != BTE_TRACKER_UPDATE )
+			{
+				// Valid events: started, completed, stopped
+				m_sURL += _T("&event=");
+				m_sURL += szEvents[ m_nEvent ];
+
+				// If event is 'started' and the IP is valid, add it.
+				if ( m_nEvent == BTE_TRACKER_STARTED && Network.m_pHost.sin_addr.s_addr != INADDR_ANY )
+				{	
+					// Note: Some trackers ignore this value and take the IP the request came from. (Usually the same)
+					m_sURL += _T("&ip=");
+					m_sURL += inet_ntoa( Network.m_pHost.sin_addr );
+				}
+			}
+
+			// Add the # of peers to request
+			CString strNumWant;
+			strNumWant.Format( _T("&numwant=%u"), m_nNumWant );
+			m_sURL += strNumWant;
+		}
 
 		// If the TrackerKey is true and we have a valid key, then use it.
-		if ( ( m_pDownload->m_sKey.GetLength() > 4 ) && ( Settings.BitTorrent.TrackerKey ) )
+		if ( ! m_sURL.IsEmpty() && ! m_pDownload->m_sKey.IsEmpty() && Settings.BitTorrent.TrackerKey )
 		{	
-			ASSERT ( m_pDownload->m_sKey.GetLength() < 20 );		//Key too long
-
 			m_sURL += _T("&key=");
 			m_sURL += m_pDownload->m_sKey;
 		}	
@@ -330,9 +356,7 @@ CBTTrackerRequest::CBTTrackerRequest(CDownloadWithTorrent* pDownload, DWORD nEve
 			m_sURL = m_sURL.Left( nSlash );
 		}
 	}
-
-	theApp.Message( MSG_DEBUG | MSG_FACILITY_OUTGOING,
-		_T("[BT] Sending BitTorrent tracker announce: %s"), m_sURL );
+	// else Unsupported protocol
 
 	BeginThread( "BT Tracker Request", ThreadStart, this );
 }
@@ -341,7 +365,10 @@ CBTTrackerRequest::~CBTTrackerRequest()
 {
 	TrackerRequests.Remove( m_nTransactionID );
 
-	m_pDownload->Remove( this );
+	if ( m_pDownload )
+	{
+		m_pDownload->RemoveRequest( this );
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -421,16 +448,58 @@ UINT CBTTrackerRequest::ThreadStart(LPVOID pParam)
 
 void CBTTrackerRequest::OnRun()
 {
-	if ( m_bHTTP )
+	if ( ! m_sURL.IsEmpty() )
 	{
-		ProcessHTTP();
-	}
-	else
-	{
-		ProcessUDP();
+		switch ( m_nEvent )
+		{
+		case BTE_TRACKER_STARTED:
+			theApp.Message( MSG_DEBUG, _T("[BT] Sending initial tracker announce for %s"), m_sName );
+			break;
+
+		case BTE_TRACKER_UPDATE:
+			theApp.Message( MSG_DEBUG, _T("[BT] Sending update tracker announce for %s"), m_sName );
+			break;
+
+		case BTE_TRACKER_COMPLETED:
+			theApp.Message( MSG_DEBUG, _T("[BT] Sending completed tracker announce for %s"), m_sName );
+			break;
+
+		case BTE_TRACKER_STOPPED:
+			theApp.Message( MSG_DEBUG, _T("[BT] Sending final tracker announce for %s"), m_sName );
+			break;
+
+		case BTE_TRACKER_SCRAPE:
+			theApp.Message( MSG_DEBUG, _T("[BT] Sending tracker scrape for %s"), m_sName );
+			break;
+		}
+
+		theApp.Message( MSG_DEBUG | MSG_FACILITY_OUTGOING, _T("[BT] Sending BitTorrent tracker request: %s"), m_sURL );
+
+		if ( m_bHTTP )
+		{
+			ProcessHTTP();
+		}
+		else
+		{
+			ProcessUDP();
+		}
 	}
 
 	delete this;
+}
+
+void CBTTrackerRequest::OnTrackerEvent(bool bSuccess, LPCTSTR pszReason, LPCTSTR pszTip)
+{
+	theApp.Message( ( bSuccess ? MSG_INFO : MSG_ERROR ), _T("%s"), pszReason );
+
+	CSingleLock oLock( &Transfers.m_pSection, FALSE );
+	while ( ! oLock.Lock( 100 ) ) { if ( IsCanceled() ) return; }
+	if ( ! Downloads.Check( m_pDownload ) ) return;
+
+	if ( m_pOnTrackerEvent )
+	{
+		m_pOnTrackerEvent->OnTrackerEvent( bSuccess, pszReason, pszTip, this );
+	}
 }
 
 void CBTTrackerRequest::ProcessHTTP()
@@ -455,22 +524,23 @@ void CBTTrackerRequest::ProcessHTTP()
 		return;
 
 	CSingleLock oLock( &Transfers.m_pSection, FALSE );
-	while ( ! oLock.Lock( 100 ) ) { if ( WaitForSingleObject( m_pCancel, 0 ) != WAIT_TIMEOUT ) return; }
+	while ( ! oLock.Lock( 100 ) ) { if ( IsCanceled() ) return; }
+	if ( ! Downloads.Check( m_pDownload ) ) return;
 
 	// Abort if the download has been paused after the request was sent but
 	// before a reply was received
-	if ( ! m_pDownload->m_bTorrentRequested )
+	if ( ! m_pDownload->m_bTorrentRequested && m_nEvent != BTE_TRACKER_SCRAPE )
 		return;
 
 	if ( ! bSuccess )
 	{
-		m_pDownload->OnTrackerEvent( false, LoadString( IDS_BT_TRACKER_DOWN ) );
+		OnTrackerEvent( false, LoadString( IDS_BT_TRACKER_DOWN ) );
 		return;
 	}
 
 	if ( ! m_pRequest->InflateResponse() )
 	{
-		m_pDownload->OnTrackerEvent( false, LoadString( IDS_BT_TRACK_PARSE_ERROR ) );
+		OnTrackerEvent( false, LoadString( IDS_BT_TRACK_PARSE_ERROR ) );
 		return;
 	}
 
@@ -478,13 +548,13 @@ void CBTTrackerRequest::ProcessHTTP()
 
 	if ( pBuffer == NULL )
 	{
-		m_pDownload->OnTrackerEvent( false, LoadString( IDS_BT_TRACKER_DOWN ) );
+		OnTrackerEvent( false, LoadString( IDS_BT_TRACKER_DOWN ) );
 		return;
 	}
 
 	if ( pBuffer->m_pBuffer == NULL )
 	{
-		m_pDownload->OnTrackerEvent( false, LoadString(IDS_BT_TRACK_PARSE_ERROR ) );
+		OnTrackerEvent( false, LoadString( IDS_BT_TRACK_PARSE_ERROR ) );
 		return;
 	}
 
@@ -497,12 +567,12 @@ void CBTTrackerRequest::ProcessHTTP()
 	else if ( pRoot && pRoot->IsType( CBENode::beString ) )
 	{
 		CString strError;
-		strError.Format( LoadString( IDS_BT_TRACK_ERROR ), m_pDownload->GetDisplayName(), pRoot->GetString() );
-		m_pDownload->OnTrackerEvent( false, strError, pRoot->GetString() );
+		strError.Format( LoadString( IDS_BT_TRACK_ERROR ), m_sName, pRoot->GetString() );
+		OnTrackerEvent( false, strError, pRoot->GetString() );
 	}
 	else
 	{
-		m_pDownload->OnTrackerEvent( false, LoadString( IDS_BT_TRACK_PARSE_ERROR ) );
+		OnTrackerEvent( false, LoadString( IDS_BT_TRACK_PARSE_ERROR ) );
 
 		CString strData( (const char*)pBuffer->m_pBuffer, pBuffer->m_nLength );
 		theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING,
@@ -514,6 +584,8 @@ void CBTTrackerRequest::ProcessHTTP()
 
 void CBTTrackerRequest::Process(const CBENode* pRoot)
 {
+	int nCount = 0;
+
 	theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING,
 		_T("[BT] Recieved BitTorrent tracker response: %s"), pRoot->Encode() );
 
@@ -521,101 +593,138 @@ void CBTTrackerRequest::Process(const CBENode* pRoot)
 	if ( const CBENode* pError = pRoot->GetNode( BT_DICT_FAILURE ) )
 	{
 		CString strError;
-		strError.Format( LoadString( IDS_BT_TRACK_ERROR ), m_pDownload->GetDisplayName(), pError->GetString() );
-		m_pDownload->OnTrackerEvent( false, strError, pError->GetString() );
+		strError.Format( LoadString( IDS_BT_TRACK_ERROR ), m_sName, pError->GetString() );
+		OnTrackerEvent( false, strError, pError->GetString() );
 		return;
 	}
 
-	// Get the interval (next tracker contact)
-	const CBENode* pInterval = pRoot->GetNode( BT_DICT_INTERVAL );
-	if ( ! pInterval->IsType( CBENode::beInt ) )
+	if ( m_nEvent == BTE_TRACKER_SCRAPE )
 	{
-		m_pDownload->OnTrackerEvent( false, LoadString( IDS_BT_TRACK_PARSE_ERROR ) );
-		return;
-	}
-	QWORD nInterval = pInterval->GetInt();
-
-	// Verify interval is valid
-	nInterval = max( nInterval, 60ull * 2ull );
-	nInterval = min( nInterval, 60ull * 60ull );
-
-	// nInterval is now between 120 - 3600 so this cast is safe
-	m_pDownload->m_tTorrentTracker = static_cast< DWORD >( nInterval ) * 1000ul;
-	m_pDownload->m_tTorrentTracker += GetTickCount();
-	m_pDownload->m_bTorrentStarted = TRUE;
-
-	// Get list of peers
-	const CBENode* pPeers = pRoot->GetNode( BT_DICT_PEERS );
-	int nCount = 0;
-
-	if ( pPeers->IsType( CBENode::beList ) )
-	{
-		for ( int nPeer = 0 ; nPeer < pPeers->GetCount() ; nPeer++ )
+		if ( ! pRoot->IsType( CBENode::beDict ) )
 		{
-			const CBENode* pPeer = pPeers->GetNode( nPeer );
-			if ( ! pPeer->IsType( CBENode::beDict ) )
-				continue;
+			OnTrackerEvent( false, LoadString( IDS_BT_TRACK_PARSE_ERROR ) );
+			return;
+		}
 
-			const CBENode* pID = pPeer->GetNode( BT_DICT_PEER_ID );
+		const CBENode* pFiles = pRoot->GetNode( BT_DICT_FILES );
+		if ( ! pFiles || ! pFiles->IsType( CBENode::beDict ) )
+		{
+			OnTrackerEvent( false, LoadString( IDS_BT_TRACK_PARSE_ERROR ) );
+			return;
+		}
 
-			const CBENode* pIP = pPeer->GetNode( BT_DICT_PEER_IP );
-			if ( ! pIP->IsType( CBENode::beString ) )
-				continue;
+		const LPBYTE nKey = &m_pDownload->m_pTorrent.m_oBTH[ 0 ];
 
-			const CBENode* pPort = pPeer->GetNode( BT_DICT_PEER_PORT );
-			if ( ! pPort->IsType( CBENode::beInt ) )
-				continue;
+		const CBENode* pFile = pFiles->GetNode( nKey, Hashes::BtHash::byteCount );
+		if ( ! pFile || ! pFile->IsType( CBENode::beDict ) )	
+		{
+			OnTrackerEvent( false, LoadString( IDS_BT_TRACK_PARSE_ERROR ) );
+			return;
+		}
 
-			SOCKADDR_IN saPeer = {};
-			if ( ! Network.Resolve( pIP->GetString(), (int)pPort->GetInt(), &saPeer ) )
-				continue;
+		// Since we read QWORDs, make sure we won't get negative values;
+		// Some buggy trackers send very huge numbers, so let's leave them as
+		// the max int.
 
-			if ( pID->IsType( CBENode::beString ) && pID->m_nValue == Hashes::BtGuid::byteCount )
-			{
-				Hashes::BtGuid tmp( *static_cast< Hashes::BtGuid::RawStorage* >(
-					pID->m_pValue ) );
-				if ( validAndUnequal( tmp, m_pDownload->m_pPeerID ) )
-					nCount += m_pDownload->AddSourceBT( tmp,
-						&saPeer.sin_addr, ntohs( saPeer.sin_port ) );
-			}
-			else
-			{
-				// Self IP is checked later although if bound to 0.0.0.0
-				// this will add self too
-				nCount += m_pDownload->AddSourceBT( Hashes::BtGuid(),
-					&saPeer.sin_addr, ntohs( saPeer.sin_port ) );
-			}
+		const CBENode* pComplete = pFile->GetNode( BT_DICT_COMPLETE );
+		if ( pComplete && pComplete->IsType( CBENode::beInt ) )
+		{
+			m_nSeeders = (DWORD)( pComplete->GetInt() & ~0xFFFF0000 );
+		}
+
+		const CBENode* pIncomplete = pFile->GetNode( BT_DICT_INCOMPLETE );
+		if ( pIncomplete && pIncomplete->IsType( CBENode::beInt ) )
+		{
+			m_nLeechers = (DWORD)( pIncomplete->GetInt() & ~0xFFFF0000 );
+		}
+
+		const CBENode* pDownloaded = pFile->GetNode( BT_DICT_DOWNLOADED );
+		if ( pDownloaded && pDownloaded->IsType( CBENode::beInt ) )
+		{
+			m_nDownloaded = (DWORD)( pDownloaded->GetInt() & ~0xFFFF0000 );
 		}
 	}
-	else if ( pPeers->IsType( CBENode::beString ) )
+	else
 	{
-		if ( 0 == ( pPeers->m_nValue % 6 ) )
+		// Get the interval (next tracker contact)
+		DWORD nInterval = 0;
+		const CBENode* pInterval = pRoot->GetNode( BT_DICT_INTERVAL );
+		if ( pInterval && pInterval->IsType( CBENode::beInt ) )
 		{
-			const BYTE* pPointer = (const BYTE*)pPeers->m_pValue;
+			nInterval = (DWORD)pInterval->GetInt();
+		}
 
-			for ( int nPeer = (int)pPeers->m_nValue / 6 ; nPeer > 0 ; nPeer --, pPointer += 6 )
+		nInterval = min( max( nInterval, 60ul * 2ul ), 60ul * 60ul );
+		m_pDownload->m_tTorrentTracker = GetTickCount() + nInterval * 1000;
+		m_pDownload->m_bTorrentStarted = TRUE;
+
+		// Get list of peers
+		const CBENode* pPeers = pRoot->GetNode( BT_DICT_PEERS );
+
+		if ( pPeers && pPeers->IsType( CBENode::beList ) )
+		{
+			for ( int nPeer = 0 ; nPeer < pPeers->GetCount() ; nPeer++ )
 			{
-				const IN_ADDR* pAddress = (const IN_ADDR*)pPointer;
-				WORD nPort = *(const WORD*)( pPointer + 4 );
+				const CBENode* pPeer = pPeers->GetNode( nPeer );
+				if ( ! pPeer || ! pPeer->IsType( CBENode::beDict ) )
+					continue;
 
-				nCount += m_pDownload->AddSourceBT( Hashes::BtGuid(), pAddress, ntohs( nPort ) );
+				const CBENode* pID = pPeer->GetNode( BT_DICT_PEER_ID );
+
+				const CBENode* pIP = pPeer->GetNode( BT_DICT_PEER_IP );
+				if ( ! pIP || ! pIP->IsType( CBENode::beString ) )
+					continue;
+
+				const CBENode* pPort = pPeer->GetNode( BT_DICT_PEER_PORT );
+				if ( ! pPort || ! pPort->IsType( CBENode::beInt ) )
+					continue;
+
+				SOCKADDR_IN saPeer = {};
+				if ( ! Network.Resolve( pIP->GetString(), (int)pPort->GetInt(), &saPeer ) )
+					continue;
+
+				if ( pID && pID->IsType( CBENode::beString ) && pID->m_nValue == Hashes::BtGuid::byteCount )
+				{
+					Hashes::BtGuid tmp( *static_cast< const Hashes::BtGuid::RawStorage* >( pID->m_pValue ) );
+					if ( validAndUnequal( tmp, m_pDownload->m_pPeerID ) )
+						nCount += m_pDownload->AddSourceBT( tmp, &saPeer.sin_addr, ntohs( saPeer.sin_port ) );
+				}
+				else
+				{
+					// Self IP is checked later although if bound to 0.0.0.0
+					// this will add self too
+					nCount += m_pDownload->AddSourceBT( Hashes::BtGuid(), &saPeer.sin_addr, ntohs( saPeer.sin_port ) );
+				}
+			}
+		}
+		else if ( pPeers && pPeers->IsType( CBENode::beString ) )
+		{
+			if ( 0 == ( pPeers->m_nValue % 6 ) )
+			{
+				const BYTE* pPointer = (const BYTE*)pPeers->m_pValue;
+
+				for ( int nPeer = (int)pPeers->m_nValue / 6 ; nPeer > 0 ; nPeer --, pPointer += 6 )
+				{
+					const IN_ADDR* pAddress = (const IN_ADDR*)pPointer;
+					WORD nPort = *(const WORD*)( pPointer + 4 );
+
+					nCount += m_pDownload->AddSourceBT( Hashes::BtGuid(), pAddress, ntohs( nPort ) );
+				}
 			}
 		}
 	}
 
 	// Okay, clear any errors and continue
 	CString strError;
-	strError.Format( LoadString( IDS_BT_TRACK_SUCCESS ), m_pDownload->GetDisplayName(), nCount );
-	m_pDownload->OnTrackerEvent( true, strError );
+	strError.Format( LoadString( IDS_BT_TRACK_SUCCESS ), m_sName, nCount );
+	OnTrackerEvent( true, strError );
 }
 
 void CBTTrackerRequest::ProcessUDP()
 {
 	if ( ! Network.Resolve( m_sURL, INTERNET_DEFAULT_HTTP_PORT, &m_pHost, TRUE ) )
 	{
-		CSingleLock oLock( &Transfers.m_pSection, FALSE );
-		while ( ! oLock.Lock( 100 ) ) { if ( WaitForSingleObject( m_pCancel, 0 ) != WAIT_TIMEOUT ) return; }
-		m_pDownload->OnTrackerEvent( false, LoadString( IDS_BT_TRACKER_DOWN ) );
+		OnTrackerEvent( false, LoadString( IDS_BT_TRACKER_DOWN ) );
 		return;
 	}
 
@@ -630,23 +739,22 @@ void CBTTrackerRequest::ProcessUDP()
 	if ( ! bSuccess )
 	{
 		// Connection errors
-		CSingleLock oLock( &Transfers.m_pSection, FALSE );
-		while ( ! oLock.Lock( 100 ) ) { if ( WaitForSingleObject( m_pCancel, 0 ) != WAIT_TIMEOUT ) return; }
-		m_pDownload->OnTrackerEvent( false, LoadString( IDS_BT_TRACKER_DOWN ) );
+		OnTrackerEvent( false, LoadString( IDS_BT_TRACKER_DOWN ) );
 	}
 }
 
 BOOL CBTTrackerRequest::OnConnect(CBTTrackerPacket* pPacket)
 {
-	CSingleLock oLock( &Transfers.m_pSection, FALSE );
-	while ( ! oLock.Lock( 100 ) ) { if ( WaitForSingleObject( m_pCancel, 0 ) != WAIT_TIMEOUT ) return TRUE; }
+	ASSUME_LOCK( Transfers.m_pSection );
+	if ( IsCanceled() || ! Downloads.Check( m_pDownload ) ) return TRUE;
 
 	// Assume UDP is stable
 	Datagrams.SetStable();
 
 	m_nConnectionID = pPacket->m_nConnectionID = pPacket->ReadInt64();
 
-	if ( CBTTrackerPacket* pResponse = CBTTrackerPacket::New( BTA_TRACKER_ANNOUNCE, m_nTransactionID, m_nConnectionID ) )
+	if ( CBTTrackerPacket* pResponse = CBTTrackerPacket::New(
+		( ( m_nEvent == BTE_TRACKER_SCRAPE ) ? BTA_TRACKER_SCRAPE : BTA_TRACKER_ANNOUNCE ), m_nTransactionID, m_nConnectionID ) )
 	{
 		if ( m_nEvent == BTE_TRACKER_SCRAPE )
 		{
@@ -684,14 +792,14 @@ BOOL CBTTrackerRequest::OnConnect(CBTTrackerPacket* pPacket)
 		else
 		{
 			// Network error
-			m_pDownload->OnTrackerEvent( false, LoadString( IDS_BT_TRACKER_DOWN ) );
+			OnTrackerEvent( false, LoadString( IDS_BT_TRACKER_DOWN ) );
 			Cancel();
 		}
 	}
 	else
 	{
 		// Out of memory
-		m_pDownload->OnTrackerEvent( false, LoadString( IDS_BT_TRACKER_DOWN ) );
+		OnTrackerEvent( false, LoadString( IDS_BT_TRACKER_DOWN ) );
 		Cancel();
 	}
 
@@ -700,8 +808,13 @@ BOOL CBTTrackerRequest::OnConnect(CBTTrackerPacket* pPacket)
 
 BOOL CBTTrackerRequest::OnAnnounce(CBTTrackerPacket* pPacket)
 {
-	CSingleLock oLock( &Transfers.m_pSection, FALSE );
-	while ( ! oLock.Lock( 100 ) ) { if ( WaitForSingleObject( m_pCancel, 0 ) != WAIT_TIMEOUT ) return TRUE; }
+	ASSUME_LOCK( Transfers.m_pSection );
+	if ( IsCanceled() || ! Downloads.Check( m_pDownload ) ) return TRUE;
+
+	// Abort if the download has been paused after the request was sent but
+	// before a reply was received
+	if ( ! m_pDownload->m_bTorrentRequested )
+		return TRUE;
 
 	int nCount = 0;
 
@@ -721,8 +834,8 @@ BOOL CBTTrackerRequest::OnAnnounce(CBTTrackerPacket* pPacket)
 	}
 
 	CString strError;
-	strError.Format( LoadString( IDS_BT_TRACK_SUCCESS ), m_pDownload->GetDisplayName(), nCount );
-	m_pDownload->OnTrackerEvent( true, strError );
+	strError.Format( LoadString( IDS_BT_TRACK_SUCCESS ), m_sName, nCount );
+	OnTrackerEvent( true, strError );
 	Cancel();
 
 	return TRUE;
@@ -730,8 +843,8 @@ BOOL CBTTrackerRequest::OnAnnounce(CBTTrackerPacket* pPacket)
 
 BOOL CBTTrackerRequest::OnScrape(CBTTrackerPacket* pPacket)
 {
-	CSingleLock oLock( &Transfers.m_pSection, FALSE );
-	while ( ! oLock.Lock( 100 ) ) { if ( WaitForSingleObject( m_pCancel, 0 ) != WAIT_TIMEOUT ) return TRUE; }
+	ASSUME_LOCK( Transfers.m_pSection );
+	if ( IsCanceled() || ! Downloads.Check( m_pDownload ) ) return TRUE;
 
 	// Assume only one scrape
 	if ( pPacket->GetRemaining() >= sizeof( bt_scrape_t ) )
@@ -742,8 +855,8 @@ BOOL CBTTrackerRequest::OnScrape(CBTTrackerPacket* pPacket)
 	}
 
 	CString strError;
-	strError.Format( LoadString( IDS_BT_TRACK_SUCCESS ), m_pDownload->GetDisplayName(), 0 );
-	m_pDownload->OnTrackerEvent( true, strError );
+	strError.Format( LoadString( IDS_BT_TRACK_SUCCESS ), m_sName, 0 );
+	OnTrackerEvent( true, strError );
 	Cancel();
 
 	return TRUE;
@@ -751,14 +864,14 @@ BOOL CBTTrackerRequest::OnScrape(CBTTrackerPacket* pPacket)
 
 BOOL CBTTrackerRequest::OnError(CBTTrackerPacket* pPacket)
 {
-	CSingleLock oLock( &Transfers.m_pSection, FALSE );
-	while ( ! oLock.Lock( 100 ) ) { if ( WaitForSingleObject( m_pCancel, 0 ) != WAIT_TIMEOUT ) return TRUE; }
+	ASSUME_LOCK( Transfers.m_pSection );
+	if ( IsCanceled() || ! Downloads.Check( m_pDownload ) ) return TRUE;
 
 	CString strErrorMsg = pPacket->ReadStringUTF8();
 
 	CString strError;
-	strError.Format( LoadString( IDS_BT_TRACK_ERROR ), m_pDownload->GetDisplayName(), strErrorMsg );
-	m_pDownload->OnTrackerEvent( false, strError, strErrorMsg );
+	strError.Format( LoadString( IDS_BT_TRACK_ERROR ), m_sName, strErrorMsg );
+	OnTrackerEvent( false, strError, strErrorMsg );
 	Cancel();
 
 	return TRUE;

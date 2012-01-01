@@ -1,7 +1,7 @@
 //
 // PageTorrentTrackers.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -21,13 +21,11 @@
 
 #pragma once
 
-#include "ThreadImpl.h"
 #include "PagePropertyAdv.h"
-#include "HttpRequest.h"
+#include "BTTrackerRequest.h"
 
-class CTorrentTrackersPage :
-	public CPropertyPageAdv,
-	public CThreadImpl
+
+class CTorrentTrackersPage : public CPropertyPageAdv, public CTrackerEvent
 {
 public:
 	CTorrentTrackersPage();
@@ -38,22 +36,20 @@ public:
 	enum { IDD = IDD_TORRENT_TRACKERS };
 
 protected:
-	CString			m_sTracker;
-	CButton			m_wndRefresh;
-	CEdit			m_wndComplete;
-	CEdit			m_wndIncomplete;
-	CComboBox		m_wndTrackerMode;
-	CListCtrl		m_wndTrackers;
-	CHttpRequest	m_pRequest;
-	int				m_nComplete;
-	int				m_nIncomplete;
-
-	void OnRun();
-	BOOL OnTree(CDownload* pDownload, CBENode* pNode);
+	CString				m_sTracker;
+	CButton				m_wndRefresh;
+	CEdit				m_wndComplete;
+	CEdit				m_wndIncomplete;
+	CComboBox			m_wndTrackerMode;
+	CListCtrl			m_wndTrackers;
+	DWORD				m_nComplete;
+	DWORD				m_nIncomplete;
+	CBTTrackerRequest*	m_pRequest;
 
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	virtual BOOL OnInitDialog();
 	virtual BOOL OnApply();
+	virtual void OnTrackerEvent(bool bSuccess, LPCTSTR pszReason, LPCTSTR pszTip, CBTTrackerRequest* pEvent);
 
 	afx_msg void OnTorrentRefresh();
 	afx_msg void OnTimer(UINT_PTR nIDEvent);

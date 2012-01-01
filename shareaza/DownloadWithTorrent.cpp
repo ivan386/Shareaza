@@ -1,7 +1,7 @@
 //
 // DownloadWithTorrent.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -124,21 +124,34 @@ bool CDownloadWithTorrent::IsSingleFileTorrent() const
 	return IsTorrent() && ( m_pTorrent.GetCount() == 1 );
 }
 
-void CDownloadWithTorrent::Add(CBTTrackerRequest* pRequest)
+void CDownloadWithTorrent::AddRequest(CBTTrackerRequest* pRequest)
 {
 	CQuickLock oLock( m_pRequestsSection );
 
-	ASSERT( m_pRequests.Find( pRequest ) == NULL );
-	m_pRequests.AddTail( pRequest );
+	if( m_pRequests.Find( pRequest ) == NULL )
+	{
+		m_pRequests.AddTail( pRequest );
+	}
 }
 
-void CDownloadWithTorrent::Remove(CBTTrackerRequest* pRequest)
+void CDownloadWithTorrent::RemoveRequest(CBTTrackerRequest* pRequest)
 {
 	CQuickLock oLock( m_pRequestsSection );
 
-	POSITION pos = m_pRequests.Find( pRequest );
-	ASSERT( pos != NULL );
-	m_pRequests.RemoveAt( pos );
+	if ( POSITION pos = m_pRequests.Find( pRequest ) )
+	{
+		m_pRequests.RemoveAt( pos );
+	}
+}
+
+void CDownloadWithTorrent::CancelRequest(CBTTrackerRequest* pRequest)
+{
+	CQuickLock oLock( m_pRequestsSection );
+
+	if ( POSITION pos = m_pRequests.Find( pRequest ) )
+	{
+		pRequest->Cancel();
+	}
 }
 
 TCHAR CDownloadWithTorrent::GenerateCharacter() const
@@ -562,9 +575,6 @@ void CDownloadWithTorrent::SendStarted(DWORD nNumWant)
 	if ( ! m_pTorrent.HasTracker() )
 		return;
 
-	// Log the 'start' event
-	theApp.Message( MSG_DEBUG, _T("[BT] Sending initial tracker announce for %s"), m_pTorrent.m_sName );
-
 	// Record that the start request has been sent
 	m_bTorrentRequested = TRUE;
 	m_tTorrentTracker = m_tTorrentSources = GetTickCount();
@@ -572,7 +582,7 @@ void CDownloadWithTorrent::SendStarted(DWORD nNumWant)
 	m_nTorrentDownloaded = m_nTorrentUploaded = 0ull;
 
 	// Create and run tracker request
-	new CBTTrackerRequest( this, BTE_TRACKER_STARTED, nNumWant );
+	new CBTTrackerRequest( static_cast< CDownload* >( this ), BTE_TRACKER_STARTED, nNumWant, this );
 }
 
 void CDownloadWithTorrent::SendUpdate(DWORD nNumWant)
@@ -584,15 +594,12 @@ void CDownloadWithTorrent::SendUpdate(DWORD nNumWant)
 	if ( ! m_pTorrent.HasTracker() )
 		return;
 
-	// Log the 'update' event
-	theApp.Message( MSG_DEBUG, _T("[BT] Sending update tracker announce for %s"), m_pTorrent.m_sName );
-
 	// Record that an update has been sent
 	m_tTorrentTracker = m_tTorrentSources = GetTickCount();
 	m_tTorrentTracker += Settings.BitTorrent.DefaultTrackerPeriod;
 
 	// Create and run tracker request
-	new CBTTrackerRequest( this, BTE_TRACKER_UPDATE, nNumWant );
+	new CBTTrackerRequest( static_cast< CDownload* >( this ), BTE_TRACKER_UPDATE, nNumWant, this );
 }
 
 void CDownloadWithTorrent::SendCompleted()
@@ -604,11 +611,8 @@ void CDownloadWithTorrent::SendCompleted()
 	if ( ! m_pTorrent.HasTracker() )
 		return;
 
-	// Log the 'complete' event
-	theApp.Message( MSG_DEBUG, _T("[BT] Sending completed tracker announce for %s"), m_pTorrent.m_sName );
-
 	// Create and run tracker request
-	new CBTTrackerRequest( this, BTE_TRACKER_COMPLETED );
+	new CBTTrackerRequest( static_cast< CDownload* >( this ), BTE_TRACKER_COMPLETED, 0, this );
 }
 
 void CDownloadWithTorrent::SendStopped()
@@ -620,20 +624,17 @@ void CDownloadWithTorrent::SendStopped()
 	if ( ! m_pTorrent.HasTracker() )
 		return;
 
-	// Log the 'stop' event
-	theApp.Message( MSG_DEBUG, _T("[BT] Sending final tracker announce for %s"), m_pTorrent.m_sName );
-
 	// Update download to indicate it has been stopped
 	m_bTorrentStarted = m_bTorrentRequested = FALSE;
 
 	// Create and run tracker request
-	new CBTTrackerRequest( this, BTE_TRACKER_STOPPED );
+	new CBTTrackerRequest( static_cast< CDownload* >( this ), BTE_TRACKER_STOPPED, 0, this );
 }
 
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithTorrent tracker event handler
 
-void CDownloadWithTorrent::OnTrackerEvent(bool bSuccess, LPCTSTR pszReason, LPCTSTR pszTip)
+void CDownloadWithTorrent::OnTrackerEvent(bool bSuccess, LPCTSTR pszReason, LPCTSTR pszTip, CBTTrackerRequest* /*pEvent*/)
 {
 	DWORD tNow = GetTickCount();
 
@@ -643,8 +644,6 @@ void CDownloadWithTorrent::OnTrackerEvent(bool bSuccess, LPCTSTR pszReason, LPCT
 		m_bTorrentTrackerError = FALSE;
 		m_sTorrentTrackerError.Empty();
 		m_pTorrent.SetTrackerSucceeded(tNow);
-
-		theApp.Message( MSG_INFO, _T("%s"), pszReason );
 
 		// Lock on this tracker if we were searching for one
 		if ( m_pTorrent.GetTrackerMode() == CBTInfo::tMultiFinding )
@@ -662,8 +661,6 @@ void CDownloadWithTorrent::OnTrackerEvent(bool bSuccess, LPCTSTR pszReason, LPCT
 		m_bTorrentRequested = m_bTorrentStarted = FALSE;
 		m_tTorrentTracker = tNow + GetRetryTime();
 		m_pTorrent.SetTrackerRetry( m_tTorrentTracker );
-
-		theApp.Message( MSG_ERROR, _T("%s"), pszReason );
 
 		if ( m_pTorrent.IsMultiTracker() )
 		{

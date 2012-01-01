@@ -1,7 +1,7 @@
 //
 // BTTrackerRequest.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -24,8 +24,10 @@
 #include "Packet.h"
 #include "HttpRequest.h"
 
-class CDownloadWithTorrent;
 class CBENode;
+class CBTTrackerPacket;
+class CBTTrackerRequest;
+class CDownload;
 
 
 #pragma warning(push)
@@ -199,6 +201,18 @@ inline void CBTTrackerPacket::CBTTrackerPacketPool::FreePoolImpl(CPacket* pPacke
 	delete [] (CBTTrackerPacket*)pPacket;
 }
 
+
+//
+// BitTorrent tracker request event notification interface
+//
+
+class CTrackerEvent
+{
+public:
+	virtual void OnTrackerEvent(bool bSuccess, LPCTSTR pszReason, LPCTSTR pszTip, CBTTrackerRequest* pEvent) = 0;
+};
+
+
 //
 // BitTorrent tracker request
 //
@@ -206,20 +220,31 @@ inline void CBTTrackerPacket::CBTTrackerPacketPool::FreePoolImpl(CPacket* pPacke
 class CBTTrackerRequest // TODO: Redo to smart object
 {
 public:
-	CBTTrackerRequest(CDownloadWithTorrent* pDownload, DWORD nEvent, DWORD nNumWant = 0);
+	CBTTrackerRequest(CDownload* pDownload, DWORD nEvent, DWORD nNumWant, CTrackerEvent* pOnTrackerEvent);
 	~CBTTrackerRequest();
+
+	DWORD						m_nSeeders;			// Scrape
+	DWORD						m_nDownloaded;		// Scrape
+	DWORD						m_nLeechers;		// Scrape
 
     static CString Escape(const Hashes::BtHash& oBTH);
     static CString Escape(const Hashes::BtGuid& oGUID);
 
-	void Cancel()
+	inline void Cancel()
 	{
+		m_pOnTrackerEvent = NULL; // Disable notification
+
 		m_pCancel.SetEvent();
 
 		if ( m_pRequest )
 		{
 			m_pRequest->Cancel();
 		}
+	}
+
+	inline bool IsCanceled() const
+	{
+		return ( WaitForSingleObject( m_pCancel, 0 ) != WAIT_TIMEOUT );
 	}
 
 	BOOL OnConnect(CBTTrackerPacket* pPacket);
@@ -231,22 +256,22 @@ protected:
 	bool						m_bHTTP;			// HTTP - TRUE, UDP - FALSE.
 	CString						m_sURL;				// Tracker URL
 	SOCKADDR_IN					m_pHost;			// Resolved tracker address (UDP)
-	CDownloadWithTorrent*		m_pDownload;		// Handle of owner download
+	CDownload*					m_pDownload;		// Handle of owner download
+	CString						m_sName;			// Name of download
 	CAutoPtr< CHttpRequest >	m_pRequest;			// HTTP request object
 	DWORD						m_nEvent;			// Tracker event (update, announce, etc.)
 	DWORD						m_nNumWant;			// Number of peers wanted
 	QWORD						m_nConnectionID;	// UDP tracker connection ID
 	DWORD						m_nTransactionID;	// UDP tracker transaction ID
 	CEvent						m_pCancel;			// Cancel flag
-	DWORD						m_nSeeders;
-	DWORD						m_nDownloaded;
-	DWORD						m_nLeechers;
+	CTrackerEvent*				m_pOnTrackerEvent;	// Callback
 
 	void ProcessHTTP();
 	void ProcessUDP();
 	void Process(const CBENode* pRoot);
 	static UINT	ThreadStart(LPVOID pParam);
 	void OnRun();
+	void OnTrackerEvent(bool bSuccess, LPCTSTR pszReason, LPCTSTR pszTip = NULL);
 };
 
 //
