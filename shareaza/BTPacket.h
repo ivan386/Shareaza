@@ -68,14 +68,18 @@ class CBENode;
 
 const LPCSTR BT_DICT_ADDED			= "added";
 const LPCSTR BT_DICT_ADDED_F		= "added.f";
-const LPCSTR BT_DICT_DATA			= "a";
+const LPCSTR BT_DICT_ANNOUNCE_PEER	= "announce_peer";
 const LPCSTR BT_DICT_COMPLETE		= "complete";
+const LPCSTR BT_DICT_DATA			= "a";
 const LPCSTR BT_DICT_DOWNLOADED		= "downloaded";
 const LPCSTR BT_DICT_DROPPED		= "dropped";
 const LPCSTR BT_DICT_ERROR			= "e";
+const LPCSTR BT_DICT_ERROR_LONG		= "error";
+const LPCSTR BT_DICT_EXT_MSG		= "m";					// Dictionary of supported extension messages
 const LPCSTR BT_DICT_FAILURE		= "failure reason";
 const LPCSTR BT_DICT_FILES			= "files";
-const LPCSTR BT_DICT_EXT_MSG		= "m";					// Dictionary of supported extension messages
+const LPCSTR BT_DICT_FIND_NODE		= "find_node";
+const LPCSTR BT_DICT_GET_PEERS		= "get_peers";
 const LPCSTR BT_DICT_ID				= "id";
 const LPCSTR BT_DICT_INCOMPLETE		= "incomplete";
 const LPCSTR BT_DICT_INTERVAL		= "interval";
@@ -85,27 +89,28 @@ const LPCSTR BT_DICT_MSG_TYPE		= "msg_type";
 const LPCSTR BT_DICT_NAME			= "name";
 const LPCSTR BT_DICT_NICKNAME		= "nickname";
 const LPCSTR BT_DICT_NODES			= "nodes";
+const LPCSTR BT_DICT_PEERS			= "peers";
 const LPCSTR BT_DICT_PEER_ID		= "peer id";
 const LPCSTR BT_DICT_PEER_IP		= "ip";
 const LPCSTR BT_DICT_PEER_PORT		= "port";
 const LPCSTR BT_DICT_PEER_URL		= "url";
-const LPCSTR BT_DICT_PEERS			= "peers";
 const LPCSTR BT_DICT_PIECE			= "piece";
+const LPCSTR BT_DICT_PING			= "ping";
 const LPCSTR BT_DICT_PORT			= "p";					// Local TCP listen port
 const LPCSTR BT_DICT_QUERY			= "q";
 const LPCSTR BT_DICT_RESPONSE		= "r";
 const LPCSTR BT_DICT_SRC_EXCHANGE	= "source-exchange";
 const LPCSTR BT_DICT_TOKEN			= "token";
 const LPCSTR BT_DICT_TOTAL_SIZE		= "total_size";
-const LPCSTR BT_DICT_TRANSACT_ID	= "t";
 const LPCSTR BT_DICT_TRACKERS		= "tr";					// Tracker List hash
+const LPCSTR BT_DICT_TRANSACT_ID	= "t";
 const LPCSTR BT_DICT_TYPE			= "y";
-const LPCSTR BT_DICT_YOURIP			= "yourip";				// External IP (IPv4 or IPv6)
 const LPCSTR BT_DICT_USER_AGENT		= "user-agent";
-const LPCSTR BT_DICT_UT_PEX			= "ut_pex";
 const LPCSTR BT_DICT_UT_METADATA	= "ut_metadata";
-const LPCSTR BT_DICT_VENDOR			= "v";					// Client name and version (as a utf-8 string)
+const LPCSTR BT_DICT_UT_PEX			= "ut_pex";
 const LPCSTR BT_DICT_VALUES			= "values";
+const LPCSTR BT_DICT_VENDOR			= "v";					// Client name and version (as a utf-8 string)
+const LPCSTR BT_DICT_YOURIP			= "yourip";				// External IP (IPv4 or IPv6)
 
 //
 // Packet
@@ -166,8 +171,8 @@ public:
 	// Packet handler
 	virtual BOOL OnPacket(const SOCKADDR_IN* pHost);
 
-	BOOL OnPing(const SOCKADDR_IN* pHost);
-	BOOL OnError(const SOCKADDR_IN* pHost);
+//	BOOL OnPing(const SOCKADDR_IN* pHost);
+//	BOOL OnError(const SOCKADDR_IN* pHost);
 
 	friend class CBTPacket::CBTPacketPool;
 
@@ -198,3 +203,13 @@ typedef struct
 } BT_PIECE_HEADER;
 
 #pragma pack(pop)
+
+
+namespace DHT
+{
+void Connect();
+void Disconnect();
+void Search(const Hashes::BtHash& oBTH);
+void OnRun();
+void OnPacket(const SOCKADDR_IN* pHost, CBTPacket* pPacket);
+};

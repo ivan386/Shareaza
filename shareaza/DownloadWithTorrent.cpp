@@ -571,15 +571,17 @@ void CDownloadWithTorrent::SendStarted(DWORD nNumWant)
 	if ( ! Network.IsConnected() || ! Settings.BitTorrent.EnableToday )
 		return;
 
-	// Return if there is no tracker
-	if ( ! m_pTorrent.HasTracker() )
-		return;
-
 	// Record that the start request has been sent
 	m_bTorrentRequested = TRUE;
 	m_tTorrentTracker = m_tTorrentSources = GetTickCount();
 	m_tTorrentTracker += Settings.BitTorrent.DefaultTrackerPeriod;
 	m_nTorrentDownloaded = m_nTorrentUploaded = 0ull;
+
+	DHT::Search( m_oBTH );
+
+	// Return if there is no tracker
+	if ( ! m_pTorrent.HasTracker() )
+		return;
 
 	// Create and run tracker request
 	new CBTTrackerRequest( static_cast< CDownload* >( this ), BTE_TRACKER_STARTED, nNumWant, this );
@@ -590,13 +592,15 @@ void CDownloadWithTorrent::SendUpdate(DWORD nNumWant)
 	if ( ! Network.IsConnected() || ! Settings.BitTorrent.EnableToday )
 		return;
 
-	// Return if there is no tracker
-	if ( ! m_pTorrent.HasTracker() )
-		return;
-
 	// Record that an update has been sent
 	m_tTorrentTracker = m_tTorrentSources = GetTickCount();
 	m_tTorrentTracker += Settings.BitTorrent.DefaultTrackerPeriod;
+
+	DHT::Search( m_oBTH );
+
+	// Return if there is no tracker
+	if ( ! m_pTorrent.HasTracker() )
+		return;
 
 	// Create and run tracker request
 	new CBTTrackerRequest( static_cast< CDownload* >( this ), BTE_TRACKER_UPDATE, nNumWant, this );

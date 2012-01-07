@@ -1,7 +1,7 @@
 //
 // BENode.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -363,7 +363,7 @@ const CString CBENode::Encode() const
 			for (QWORD n = 0 ; n < m_nValue ; n++, pNode++ )
 			{
 				if ( n )
-					sOutput += _T(",");
+					sOutput += _T(", ");
 				sOutput += (*pNode)->Encode();
 			}
 		}
@@ -377,8 +377,8 @@ const CString CBENode::Encode() const
 			for (QWORD n = 0 ; n < m_nValue ; n++, pNode += 2 )
 			{
 				if ( n )
-					sOutput += _T(",");
-				sTmp.Format( _T("\"%hs\"="), (LPCSTR)pNode[ 1 ] );
+					sOutput += _T(", ");
+				sTmp.Format( _T("%hs="), (LPCSTR)pNode[ 1 ] );
 				sOutput += sTmp;
 				sOutput += (*pNode)->Encode();
 			}
