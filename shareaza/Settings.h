@@ -1,7 +1,7 @@
 //
 // Settings.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -488,7 +488,8 @@ public:
 		DWORD		BandwidthPercentage;		// Percentage of bandwidth to use when BT active.
 		bool		TrackerKey;					// Send a key (random value) to trackers
 		bool		PreferenceBTSources;		// Preference downloading from BT sources where appropriate
-		DWORD		DhtPruneTime;
+		DWORD		HostExpire;					// DHT hosts expiration time (seconds)
+		bool		EnableDHT;					// Enable DHT protocol
 	} BitTorrent;
 
 	struct sDownloads
@@ -501,8 +502,8 @@ public:
 		DWORD		SparseThreshold;			// NTFS 'sparse files' are not used on files below this size. (0 = Disable)
 		DWORD		MaxAllowedFailures;
 		DWORD		MaxFiles;					// How many files download at once
-		DWORD		MaxTransfers;				// How many total tranfers take place
-		DWORD		MaxFileTransfers;			// How mnay transfers are allowed per file
+		DWORD		MaxTransfers;				// How many total transfers take place
+		DWORD		MaxFileTransfers;			// How many transfers are allowed per file
 		DWORD		MaxFileSearches;			// Number number of files over the download limit that prepare to start. (Search, etc)
 		DWORD		MaxConnectingSources;		// The maximum number of sources that can be in the 'connecting' state. (Important for XPsp2)
 		DWORD		MinSources;					// The minimum number of sources a download has before Shareaza regards it as having a problem
@@ -564,7 +565,7 @@ public:
 		bool		DynamicPreviews;
 		DWORD		PreviewQuality;
 		DWORD		PreviewTransfers;
-		bool		AllowBackwards;				// Allow data to be sent from end of range to begining where supported
+		bool		AllowBackwards;				// Allow data to be sent from end of range to beginning where supported
 		bool		HubUnshare;
 		string_set	BlockAgents;
 		bool		AutoClear;					// Automatically clear completed uploads ('Completed' queue)

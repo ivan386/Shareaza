@@ -443,11 +443,11 @@ void CSettings::Load()
 	Add( _T("eDonkey"), _T("StatsGlobalThrottle"), &eDonkey.StatsGlobalThrottle, 30*60*1000, 60*1000, 30, 120, _T(" m") );
 	Add( _T("eDonkey"), _T("StatsServerThrottle"), &eDonkey.StatsServerThrottle, 7*24*60*60, 24*60*60, 7, 28, _T(" d") );
 
-	Add( _T("DC"), _T("EnableAlways"), &DC.EnableAlways, false );
-	Add( _T("DC"), _T("QueryThrottle"), &DC.QueryThrottle, 2*60, 1, 30, 60*60, _T(" s") );
-	Add( _T("DC"), _T("NumServers"), &DC.NumServers, 1, 1, 0, 5 );
-	Add( _T("DC"), _T("ReAskTime"), &DC.ReAskTime, 60*1000, 1000, 30, 60*60, _T(" s") );
 	Add( _T("DC"), _T("DequeueTime"), &DC.DequeueTime, 5*60*1000, 1000, 2*60, 60*60, _T(" s") );
+	Add( _T("DC"), _T("EnableAlways"), &DC.EnableAlways, false );
+	Add( _T("DC"), _T("NumServers"), &DC.NumServers, 1, 1, 0, 5 );
+	Add( _T("DC"), _T("QueryThrottle"), &DC.QueryThrottle, 2*60, 1, 30, 60*60, _T(" s") );
+	Add( _T("DC"), _T("ReAskTime"), &DC.ReAskTime, 60*1000, 1000, 30, 60*60, _T(" s") );
 
 	Add( _T("BitTorrent"), _T("AdvancedInterface"), &BitTorrent.AdvancedInterface, false );
 	Add( _T("BitTorrent"), _T("AdvancedInterfaceSet"), &BitTorrent.AdvancedInterfaceSet, false );
@@ -457,12 +457,12 @@ void CSettings::Load()
 	Add( _T("BitTorrent"), _T("ClearRatio"), &BitTorrent.ClearRatio, 120, 1, 100, 999, _T(" %") );
 	Add( _T("BitTorrent"), _T("DefaultTracker"), &BitTorrent.DefaultTracker, _T("udp://tracker.openbittorrent.com:80") );
 	Add( _T("BitTorrent"), _T("DefaultTrackerPeriod"), &BitTorrent.DefaultTrackerPeriod, 5*60000, 60000, 5, 120, _T(" m") );
-	Add( _T("BitTorrent"), _T("EnableAlways"), &BitTorrent.EnableAlways, true );
-	Add( _T("BitTorrent"), _T("DhtPruneTime"), &BitTorrent.DhtPruneTime, 30*60, 60, 10, 7*24*60*60, _T(" m") );
 	Add( _T("BitTorrent"), _T("DownloadConnections"), &BitTorrent.DownloadConnections, 40, 1, 1, 800 );
 	Add( _T("BitTorrent"), _T("DownloadTorrents"), &BitTorrent.DownloadTorrents, 3, 1, 1, 10 );
+	Add( _T("BitTorrent"), _T("EnableAlways"), &BitTorrent.EnableAlways, true );
+	Add( _T("BitTorrent"), _T("EnableDHT"), &BitTorrent.EnableDHT, true );
 	Add( _T("BitTorrent"), _T("Endgame"), &BitTorrent.Endgame, true );
-	Add( _T("BitTorrent"), _T("UtPexPeriod"), &BitTorrent.UtPexPeriod, 60*1000, 1000, 10, 60*10, _T(" s") );
+	Add( _T("BitTorrent"), _T("HostExpire"), &BitTorrent.HostExpire, 2*24*60*60, 24*60*60, 1, 100, _T(" d") );
 	Add( _T("BitTorrent"), _T("LinkPing"), &BitTorrent.LinkPing, 120*1000, 1000, 10, 60*10, _T(" s") );
 	Add( _T("BitTorrent"), _T("LinkTimeout"), &BitTorrent.LinkTimeout, 180*1000, 1000, 10, 60*10, _T(" s") );
 	Add( _T("BitTorrent"), _T("PreferenceBTSources"), &BitTorrent.PreferenceBTSources, true );
@@ -475,6 +475,7 @@ void CSettings::Load()
 	Add( _T("BitTorrent"), _T("TorrentCreatorPath"), &BitTorrent.TorrentCreatorPath );
 	Add( _T("BitTorrent"), _T("TrackerKey"), &BitTorrent.TrackerKey, true );
 	Add( _T("BitTorrent"), _T("UploadCount"), &BitTorrent.UploadCount, 4, 1, 2, 16 );
+	Add( _T("BitTorrent"), _T("UtPexPeriod"), &BitTorrent.UtPexPeriod, 60*1000, 1000, 10, 60*10, _T(" s") );
 
 	Add( _T("Downloads"), _T("AllowBackwards"), &Downloads.AllowBackwards, true );
 	Add( _T("Downloads"), _T("AutoClear"), &Downloads.AutoClear, false );

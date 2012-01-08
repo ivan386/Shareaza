@@ -32,6 +32,7 @@
 #include "HostCache.h"
 #include "Network.h"
 #include "Security.h"
+#include "Settings.h"
 #include "Statistics.h"
 #include "Transfers.h"
 
@@ -149,6 +150,9 @@ void Connect()
 {
 	ASSUME_LOCK( Network.m_pSection );
 
+	if ( ! Settings.BitTorrent.EnableDHT )
+		return;
+
 	Hashes::BtGuid oID = MyProfile.oGUIDBT;
 	if ( dht_init( 0, -1, &oID[ 0 ], theApp.m_pBTVersion ) >= 0 )
 	{
@@ -197,6 +201,9 @@ void Disconnect()
 // Search for hash
 void Search(const Hashes::BtHash& oBTH)
 {
+	if ( ! Settings.BitTorrent.EnableDHT )
+		return;
+
 	CSingleLock oLock( &Network.m_pSection, FALSE );
 	if ( oLock.Lock( 250 ) )
 	{
@@ -209,6 +216,9 @@ void OnRun()
 {
 	ASSUME_LOCK( Network.m_pSection );
 
+	if ( ! Settings.BitTorrent.EnableDHT )
+		return;
+
 	time_t tosleep = 0;
 	dht_periodic( NULL, 0, NULL, 0, &tosleep, OnEvent, NULL );
 }
@@ -217,6 +227,9 @@ void OnRun()
 void OnPacket(const SOCKADDR_IN* pHost, CBTPacket* pPacket)
 {
 	ASSUME_LOCK( Network.m_pSection );
+
+	if ( ! Settings.BitTorrent.EnableDHT )
+		return;
 
 	CBuffer pBufffer;
 	pPacket->ToBuffer( &pBufffer, false );

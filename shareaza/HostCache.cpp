@@ -1,7 +1,7 @@
 //
 // HostCache.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1507,7 +1507,7 @@ bool CHostCacheHost::IsExpired(const DWORD tNow) const
 	case PROTOCOL_DC:
 		return false;	// Never
 	case PROTOCOL_BT:
-		return m_tSeen && ( tNow > m_tSeen + Settings.BitTorrent.DhtPruneTime );
+		return m_tSeen && ( tNow > m_tSeen + Settings.BitTorrent.HostExpire );
 	case PROTOCOL_KAD:
 		return m_tSeen && ( tNow > m_tSeen + 24 * 60 * 60 ); // TODO: Add Kademlia setting
 	default:
