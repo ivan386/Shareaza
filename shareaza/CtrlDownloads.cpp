@@ -1,7 +1,7 @@
 //
 // CtrlDownloads.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1747,15 +1747,11 @@ void CDownloadsCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		SelectTo( max( 0, nMax - 1 ) );
 		return;
 	case VK_UP:
-		if ( bControl )
-			MoveSelected( -1 );
-		else
+		if ( ! bControl )
 			SelectTo( m_nFocus - 1 );
 		return;
 	case VK_DOWN:
-		if ( bControl )
-			MoveSelected( 1 );
-		else
+		if ( ! bControl )
 			SelectTo( m_nFocus + 1 );
 		return;
 	case VK_PRIOR:

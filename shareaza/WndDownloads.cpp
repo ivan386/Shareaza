@@ -1,7 +1,7 @@
 //
 // WndDownloads.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -452,10 +452,27 @@ BOOL CDownloadsWnd::PreTranslateMessage(MSG* pMsg)
 {
 	if ( pMsg->message == WM_KEYDOWN )
 	{
-		if ( pMsg->wParam == VK_TAB )
+		switch ( pMsg->wParam )
 		{
+		case VK_TAB:
 			GetManager()->Open( RUNTIME_CLASS(CUploadsWnd) );
 			return TRUE;
+
+		case VK_UP:
+			if ( ( GetAsyncKeyState( VK_CONTROL ) & 0x8000 ) != 0 )
+			{
+				OnDownloadsMoveUp();
+				return TRUE;
+			}
+			break;
+
+		case VK_DOWN:
+			if ( ( GetAsyncKeyState( VK_CONTROL ) & 0x8000 ) != 0 )
+			{
+				OnDownloadsMoveDown();
+				return TRUE;
+			}
+			break;
 		}
 	}
 
