@@ -66,7 +66,7 @@ size_t COutputStream::WriteStream(CInputStream* pInputStream)
 	{
 		size_t nNumRead = pInputStream->ReadBytes(arrBuffer, sizeof(arrBuffer));
 		if ( nNumRead == 0 )
-			return nNumWritten;
+			break;
 		if ( nNumRead == MAXSIZE_T )
 			return MAXSIZE_T;
 		unsigned char* pBuffer = arrBuffer;
