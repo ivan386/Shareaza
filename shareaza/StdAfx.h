@@ -143,6 +143,8 @@
 #include <wininet.h>		// Internet
 #include <winioctl.h>		// Sparse files support
 #include <winsock2.h>		// Windows sockets V2
+#include <ws2tcpip.h> 
+#include <wspiapi.h>
 #include <winsvc.h>			// Services (excluded by VC_EXTRALEAN)
 
 // Work-around for Microsoft double declaration
