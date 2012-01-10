@@ -3,7 +3,7 @@
 //
 //	Created by:		Rolandas Rudomanskis
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -115,7 +115,7 @@ protected:
 
 			// Internal Functions
 			HRESULT LoadProperties(IPropertySetStorage* pPropSS, BOOL fIsReadOnly, dsoFileOpenOptions dwFlags);
-			HRESULT ReadProperty(CDocProperty* pPropList, PROPID pid, VARTYPE vt, void** ppv);
+			HRESULT ReadProperty(CDocProperty* pPropList, PROPID pid, VARTYPE vt, void* pv);
 			HRESULT WriteProperty(CDocProperty** ppPropList, PROPID pid, VARTYPE vt, void* pv);
 			CDocProperty* GetPropertyFromList(CDocProperty* plist, PROPID id, BOOL fAppendNew);
 			HRESULT SaveProperties(BOOL fCommitChanges);
