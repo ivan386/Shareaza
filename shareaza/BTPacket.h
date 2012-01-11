@@ -25,6 +25,17 @@
 
 class CBENode;
 
+// http://wiki.theory.org/BitTorrentSpecification
+
+#define BT_PROTOCOL_HEADER			"\023BitTorrent protocol"
+#define BT_PROTOCOL_HEADER_LEN		20
+
+// Protocol flags					   7 6 5 4 3 2 1 0
+#define BT_FLAG_EXTENSION			0x0000100000000000ui64
+#define BT_FLAG_DHT_PORT			0x0100000000000000ui64
+#define BT_FLAG_FAST_PEERS			0x0400000000000000ui64
+#define BT_FLAG_NAT_TRAVERSAL		0x0800000000000000ui64
+
 //
 // Packet Types
 //
@@ -210,6 +221,7 @@ namespace DHT
 void Connect();
 void Disconnect();
 void Search(const Hashes::BtHash& oBTH);
+void Ping(const SOCKADDR_IN* pHost);
 void OnRun();
 void OnPacket(const SOCKADDR_IN* pHost, CBTPacket* pPacket);
 };

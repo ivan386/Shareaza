@@ -1,7 +1,7 @@
 //
 // BTClient.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -54,6 +54,7 @@ static char THIS_FILE[]=__FILE__;
 CBTClient::CBTClient()
 	: CTransfer				( PROTOCOL_BT )
 	, m_bExtended			( FALSE )
+	, m_bDHTPort			( FALSE )
 	, m_pUploadTransfer		( NULL )
 	, m_bSeeder				( FALSE )
 	, m_bPrefersEncryption	( FALSE )
@@ -344,11 +345,9 @@ void CBTClient::SendHandshake(BOOL bPart1, BOOL bPart2)
 	
 	if ( bPart1 )
 	{
-		DWORD dwFlags = 0;
+		const QWORD nFlags = BT_FLAG_EXTENSION | BT_FLAG_DHT_PORT;
 		Write( _P(BT_PROTOCOL_HEADER) );
-		Write( &dwFlags, 4 );
-		dwFlags = 0x1000;
-		Write( &dwFlags, 4 );
+		Write( &nFlags, 8 );
 		Write( m_pDownload->m_oBTH );
 	}
 	
@@ -375,10 +374,12 @@ BOOL CBTClient::OnHandshake1()
 		Close( IDS_HANDSHAKE_FAIL );
 		return FALSE;
 	}
+	Remove( BT_PROTOCOL_HEADER_LEN );
 
-	m_bExtended = PeekAt( BT_PROTOCOL_HEADER_LEN + 5 ) & 0x10;
-
-	Bypass( BT_PROTOCOL_HEADER_LEN + 8 );
+	QWORD nFlags = 0;
+	Read( &nFlags, 8 );
+	m_bExtended = ( nFlags & BT_FLAG_EXTENSION ) != 0;
+	m_bDHTPort = ( nFlags & BT_FLAG_DHT_PORT ) != 0;
 
 	// Read in the file ID
 	Hashes::BtHash oFileHash;
@@ -529,6 +530,9 @@ BOOL CBTClient::OnHandshake2()
 
 	if ( m_bExtended )
 		SendExtendedHandshake();
+
+	if ( m_bDHTPort )
+		SendDHTPort();
 
 	if ( m_bClientExtended )
 		SendBeHandshake();
@@ -1056,14 +1060,24 @@ BOOL CBTClient::OnSourceRequest(CBTPacket* /*pPacket*/)
 //////////////////////////////////////////////////////////////////////
 // CBTClient DHT
 
+void CBTClient::SendDHTPort()
+{
+	if ( CBTPacket* pResponse = CBTPacket::New( BT_PACKET_DHT_PORT ) )
+	{
+		pResponse->WriteShortBE( Network.GetPort() );
+
+		Send( pResponse );
+	}
+}
+
 BOOL CBTClient::OnDHTPort(CBTPacket* pPacket)
 {
 	if ( pPacket && pPacket->GetRemaining() == 2 )
 	{
-//		WORD nPort = pPacket->ReadShortBE();
-//		SOCKADDR_IN addr = m_pHost;
-//		addr.sin_port = nPort;
-//		Datagrams.DHTPing( &addr );
+		// Test this node via UDP
+		SOCKADDR_IN addr = m_pHost;
+		addr.sin_port = pPacket->ReadShortLE();
+		DHT::Ping( &addr );
 	}
 	return TRUE;
 }
@@ -1098,7 +1112,7 @@ void CBTClient::SendExtendedHandshake()
 					pRoot->Add( BT_DICT_TRACKERS )->SetString( m_pDownload->m_pTorrent.GetTrackerHash() );
 				}
 
-				pRoot->Add( BT_DICT_PORT )->SetInt( Settings.Connection.InPort );
+				pRoot->Add( BT_DICT_PORT )->SetInt( Network.GetPort() );
 				pRoot->Add( BT_DICT_VENDOR )->SetString( Settings.SmartAgent() );
 
 				Send( pResponse, FALSE );

@@ -1,7 +1,7 @@
 //
 // Handshake.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -25,22 +25,23 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
-#include "Handshakes.h"
-#include "Handshake.h"
-#include "Neighbours.h"
-#include "Uploads.h"
-#include "UploadTransfer.h"
-#include "ChatCore.h"
-#include "Network.h"
-#include "Buffer.h"
-#include "GProfile.h"
 #include "BTClients.h"
+#include "BTPacket.h"
+#include "Buffer.h"
+#include "ChatCore.h"
 #include "DCClients.h"
 #include "DCPacket.h"
 #include "EDClients.h"
 #include "EDPacket.h"
-#include "WndMain.h"
+#include "GProfile.h"
+#include "Handshake.h"
+#include "Handshakes.h"
+#include "Neighbours.h"
+#include "Network.h"
+#include "UploadTransfer.h"
+#include "Uploads.h"
 #include "WndChat.h"
+#include "WndMain.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE

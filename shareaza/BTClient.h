@@ -1,7 +1,7 @@
 //
 // BTClient.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -41,6 +41,7 @@ public:
 public:
     Hashes::BtGuid          m_oGUID;
 	BOOL					m_bExtended;		// Extension Protocol support
+	BOOL					m_bDHTPort;			// DHT Port support
 	CUploadTransferBT*		m_pUploadTransfer;
 	BOOL					m_bSeeder;
 	BOOL					m_bPrefersEncryption;
@@ -90,6 +91,7 @@ public:
 	BOOL			OnBeHandshake(CBTPacket* pPacket);			// Process Shareaza client handshake
 	void			SendSourceRequest();						// Send Shareaza client source request
 	BOOL			OnSourceRequest(CBTPacket* pPacket);		// Process Shareaza client source request
+	void			SendDHTPort();
 	BOOL			OnDHTPort(CBTPacket* pPacket);
 	void			Choke();
 	void			UnChoke();

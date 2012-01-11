@@ -1,7 +1,7 @@
 //
 // Connection.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -196,6 +196,13 @@ public:
 		m_pInput->Read( &oHash[ 0 ], oHash.byteCount );
 	}
 
+	inline BOOL Read(void* pData, const size_t nLength) throw()
+	{
+		CQuickLock oInputLock( *m_pInputSection );
+
+		return m_pInput->Read( pData, nLength );
+	}
+
 	inline BOOL Read(CString& strData, BOOL bPeek = FALSE) throw()
 	{
 		CQuickLock oInputLock( *m_pInputSection );
@@ -203,7 +210,7 @@ public:
 		return m_pInput->ReadLine( strData, bPeek );
 	}
 
-	inline void Bypass(const size_t nLength) throw()
+	inline void Remove(const size_t nLength) throw()
 	{
 		CQuickLock oInputLock( *m_pInputSection );
 

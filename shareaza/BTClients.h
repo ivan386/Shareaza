@@ -1,7 +1,7 @@
 //
 // BTClients.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -27,26 +27,18 @@ class CBTClient;
 
 class CBTClients
 {
-// Construction
 public:
 	CBTClients();
-	virtual ~CBTClients();
+	~CBTClients();
 
-// Attributes
-protected:
-	CList< CBTClient* >	m_pList;
-	CMutex				m_pListSection;	// m_pList guard
-
-// Operations
-public:
 	void		Clear();
 	BOOL		OnAccept(CConnection* pConnection);
-
-protected:
 	void		Add(CBTClient* pClient);
 	void		Remove(CBTClient* pClient);
 
-	friend class CBTClient;
+protected:
+	CList< CBTClient* >	m_pList;
+	CMutex				m_pListSection;	// m_pList guard
 
 private:
 	CBTClients(const CBTClients&);
@@ -54,6 +46,3 @@ private:
 };
 
 extern CBTClients BTClients;
-
-#define BT_PROTOCOL_HEADER			"\023BitTorrent protocol"
-#define BT_PROTOCOL_HEADER_LEN		20

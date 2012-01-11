@@ -542,7 +542,6 @@ void CNetwork::ClearResolve()
 	m_pLookups.RemoveAll();
 }
 
-//////////////////////////////////////////////////////////////////////
 // CNetwork firewalled address checking
 
 BOOL CNetwork::IsFirewalledAddress(const IN_ADDR* pAddress, BOOL bIncludeSelf) const
@@ -565,6 +564,13 @@ BOOL CNetwork::IsFirewalledAddress(const IN_ADDR* pAddress, BOOL bIncludeSelf) c
 	if ( ( pAddress->S_un.S_addr & 0xFF ) == 0x7F ) return TRUE;		// 127.0.0.0/8
 	return FALSE;
 #endif // LAN_MODE
+}
+
+// Get external incoming port (in host byte order)
+
+WORD CNetwork::GetPort() const
+{
+	return m_pHost.sin_port ? ntohs( m_pHost.sin_port ) : (WORD)Settings.Connection.InPort;
 }
 
 // Returns TRUE if the IP address is reserved.

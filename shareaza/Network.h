@@ -1,7 +1,7 @@
 //
 // Network.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -48,7 +48,7 @@ class CNetwork : public CComObject, public CThreadImpl
 
 public:
 	CNetwork();
-	virtual ~CNetwork();
+	~CNetwork();
 
 // Attributes
 public:
@@ -210,6 +210,7 @@ public:
 	WORD		RandomPort() const;
 	void		CreateID(Hashes::Guid& oID);
 	BOOL		IsFirewalledAddress(const IN_ADDR* pAddress, BOOL bIncludeSelf = FALSE) const;
+	WORD		GetPort() const;
 
 	BOOL		GetNodeRoute(const Hashes::Guid& oGUID, CNeighbour** ppNeighbour, SOCKADDR_IN* pEndpoint);
 	BOOL		RoutePacket(CG2Packet* pPacket);

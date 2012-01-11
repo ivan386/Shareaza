@@ -311,7 +311,7 @@ CBTTrackerRequest::CBTTrackerRequest(CDownload* pDownload, DWORD nEvent, DWORD n
 				( ( strAddress.Find( _T('?') ) != -1 ) ? _T('&') : _T('?') ),
 				(LPCTSTR)Escape( m_pDownload->m_oBTH ),
 				(LPCTSTR)Escape( m_pDownload->m_pPeerID ),
-				( Network.m_pHost.sin_port ? (DWORD)htons( Network.m_pHost.sin_port ) : Settings.Connection.InPort ),
+				Network.GetPort(),
 				m_pDownload->m_nTorrentUploaded,
 				m_pDownload->m_nTorrentDownloaded,
 				nLeft );
@@ -766,7 +766,7 @@ BOOL CBTTrackerRequest::OnConnect(CBTTrackerPacket* pPacket)
 			if ( nLeft == SIZE_UNKNOWN )
 				nLeft = 0;
 
-			WORD nPort = Network.m_pHost.sin_port ? (DWORD)htons( Network.m_pHost.sin_port ) : Settings.Connection.InPort;
+			WORD nPort = Network.GetPort();
 
 			pResponse->Write( m_pDownload->m_oBTH );
 			pResponse->Write( m_pDownload->m_pPeerID );
