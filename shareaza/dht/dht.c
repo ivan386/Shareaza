@@ -77,7 +77,9 @@ THE SOFTWARE.
 
 #ifdef WIN32
 
+#ifndef EAFNOSUPPORT
 #define EAFNOSUPPORT WSAEAFNOSUPPORT
+#endif
 //static int
 //set_nonblocking(int fd, int nonblocking)
 //{
@@ -96,13 +98,11 @@ random(void)
     return rand();
 }
 
-
 #if defined(_MSC_VER)
 
 // Define gettimeofday() undefined in Win32
 
 #define DELTA_EPOCH_IN_MICROSECS  11644473600000000Ui64
- 
 
 struct timeval64 {
 	__int64    tv_sec;         /* seconds */
@@ -132,7 +132,7 @@ gettimeofday(struct timeval64 *tv, struct timezone *tz)
         tmpres |= ft.dwLowDateTime;
 
         /*converting file time to unix epoch*/
-        tmpres -= DELTA_EPOCH_IN_MICROSECS; 
+        tmpres -= DELTA_EPOCH_IN_MICROSECS;
         tmpres /= 10Ui64;  /*convert into microseconds*/
         tv->tv_sec = (tmpres / 1000000Ui64);
         tv->tv_usec = (tmpres % 1000000Ui64);
@@ -1611,7 +1611,6 @@ dump_bucket(FILE *f, struct bucket *b)
         fprintf(f, "\n");
         n = n->next;
     }
-
 }
 
 void

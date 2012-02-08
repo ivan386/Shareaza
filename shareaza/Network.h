@@ -56,7 +56,7 @@ public:
 	CAutoPtr< CRouteCache >	QueryRoute;
 	CAutoPtr< CQueryKeys >	QueryKeys;
 	CAutoPtr< CUPnPFinder >	UPnPFinder;			// Control Point UPnP
-	CAutoPtr< CFirewall >	Firewall;			// Windows Firewall	
+	CAutoPtr< CFirewall >	Firewall;			// Windows Firewall
 
 	CMutexEx		m_pSection;
 	SOCKADDR_IN		m_pHost;					// Structure (Windows Sockets) which holds address of the local machine
@@ -206,7 +206,7 @@ public:
 	BOOL		AsyncResolve(LPCTSTR pszAddress, WORD nPort, PROTOCOLID nProtocol, BYTE nCommand);
 	// Pending network name resolves queue size
 	UINT		GetResolveCount() const;
-	BOOL		IsReserved(const IN_ADDR* pAddress, bool bCheckLocal=true) const;
+	BOOL		IsReserved(const IN_ADDR* pAddress) const;
 	WORD		RandomPort() const;
 	void		CreateID(Hashes::Guid& oID);
 	BOOL		IsFirewalledAddress(const IN_ADDR* pAddress, BOOL bIncludeSelf = FALSE) const;

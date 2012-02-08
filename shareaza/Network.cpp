@@ -579,7 +579,7 @@ WORD CNetwork::GetPort() const
 // http://www.cymru.com/Documents/bogon-bn-nonagg.txt
 // and http://www.iana.org/assignments/ipv4-address-space
 
-BOOL CNetwork::IsReserved(const IN_ADDR* pAddress, bool bCheckLocal) const
+BOOL CNetwork::IsReserved(const IN_ADDR* pAddress) const
 {
 	char *ip = (char*)&(pAddress->s_addr);
 	unsigned char i1 = ip[ 0 ], i2 = ip[ 1 ], i3 = ip[ 2 ], i4 = ip[ 3 ];
@@ -595,31 +595,20 @@ BOOL CNetwork::IsReserved(const IN_ADDR* pAddress, bool bCheckLocal) const
 		case 55:        // misc. USA Armed forces
 		case 127:       // 127/8 is reserved for loopback
 			return TRUE;
-		case 10:        // Private addresses
-			return bCheckLocal && Settings.Connection.IgnoreLocalIP;
 		default:
 			break;
 	}
 
-	// 172.16.0.0/12 is reserved for private nets by RFC1819
-	if ( i1 == 172 && i2 >= 16 && i2 <= 31 )
-		return bCheckLocal && Settings.Connection.IgnoreLocalIP;
-
-	// 192.168.0.0/16 is reserved for private nets by RFC1819
 	// 192.0.2.0/24 is reserved for documentation and examples
 	// 192.88.99.0/24 is used as 6to4 Relay anycast prefix by RFC3068
 	if ( i1 == 192 )
 	{
-		if ( i2 == 168 ) return bCheckLocal && Settings.Connection.IgnoreLocalIP;
 		if ( i2 == 0 && i3 == 2 ) return TRUE;
 		if ( i2 == 88 && i3 == 99 ) return TRUE;
 	}
 
 	// 198.18.0.0/15 is used for benchmark tests by RFC2544
 	if ( i1 == 198 && i2 == 18 && i3 >= 1 && i3 <= 64 ) return TRUE;
-
-	// reserved for DHCP clients seeking addresses, not routable outside LAN
-	if ( i1 == 169 && i2 == 254 ) return TRUE;
 
 	// 204.152.64.0/23 is some Sun proprietary clustering thing
 	if ( i1 == 204 && i2 == 152 && ( i3 == 64 || i3 == 65 ) )
@@ -868,7 +857,7 @@ void CNetwork::OnWinsock(WPARAM wParam, LPARAM lParam)
 			}
 		}
 	}
-	else 
+	else
 	{
 		if ( pResolve->m_nCommand == 0 )
 		{
@@ -1425,7 +1414,6 @@ int CNetwork::SendTo(SOCKET s, const char* buf, int len, const SOCKADDR_IN* pTo)
 	}
 }
 
-
 int CNetwork::Recv(SOCKET s, char* buf, int len)
 {
 	__try	// Fix against stupid firewalls like (iS3 Anti-Spyware or Norman Virus Control)
@@ -1528,11 +1516,11 @@ void CNetwork::MapPorts()
 			{
 				// Retrieve local IP address
 				ULONG ulOutBufLen = sizeof( IP_ADAPTER_INFO );
-				auto_array< char > pAdapterInfo( new char[ ulOutBufLen ] );			
+				auto_array< char > pAdapterInfo( new char[ ulOutBufLen ] );
 				ULONG ret = GetAdaptersInfo( (PIP_ADAPTER_INFO)pAdapterInfo.get(), &ulOutBufLen );
-				if ( ret == ERROR_BUFFER_OVERFLOW ) 
+				if ( ret == ERROR_BUFFER_OVERFLOW )
 				{
-					pAdapterInfo.reset( new char[ ulOutBufLen ] ); 
+					pAdapterInfo.reset( new char[ ulOutBufLen ] );
 					ret = GetAdaptersInfo( (PIP_ADAPTER_INFO)pAdapterInfo.get(), &ulOutBufLen );
 				}
 				if ( ret == NO_ERROR )
@@ -1664,7 +1652,7 @@ void CNetwork::OnNewExternalIPAddress(const IN_ADDR& pAddress)
 	{
 		theApp.Message( MSG_INFO, _T("UPnP gateway device reports external IP address: %s"),
 			(LPCTSTR)CA2CT( inet_ntoa( pAddress ) ) );
-		
+
 		m_nUPnPExternalAddress = pAddress;
 
 		AcquireLocalAddress( pAddress );
