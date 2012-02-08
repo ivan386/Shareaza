@@ -1,7 +1,7 @@
 //
 // HostCache.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -239,7 +239,7 @@ public:
 		if ( ! szAddress || ! *szAddress )
 			return NULL;
 		CQuickLock oLock( m_pSection );
-		CHostCacheMap::const_iterator i = 
+		CHostCacheMap::const_iterator i =
 			std::find_if( m_Hosts.begin(), m_Hosts.end(),
 			std::bind2nd( is_address(), szAddress ) );
 		return ( i != m_Hosts.end() ) ? (*i).second : NULL;
@@ -289,7 +289,6 @@ protected:
 	CHostCacheMap				m_Hosts;		// Hosts map (sorted by IP)
 	CHostCacheIndex				m_HostsTime;	// Host index (sorted from newer to older)
 
-	CHostCacheHostPtr	AddInternal(const IN_ADDR* pAddress, WORD nPort, DWORD tSeen, LPCTSTR pszVendor, DWORD nUptime, DWORD nCurrentLeaves, DWORD nLeafLimit, LPCTSTR szAddress);
 	void				PruneHosts();
 };
 
@@ -325,9 +324,9 @@ public:
 	BOOL				Check(const CHostCacheHostPtr pHost) const;
 	void				Remove(CHostCacheHostPtr pHost);
 	void				SanityCheck();
-	void				OnFailure(const IN_ADDR* pAddress, WORD nPort, 
+	void				OnFailure(const IN_ADDR* pAddress, WORD nPort,
 							  PROTOCOLID nProtocol=PROTOCOL_NULL, bool bRemove=true);
-	void				OnSuccess(const IN_ADDR* pAddress, WORD nPort, 
+	void				OnSuccess(const IN_ADDR* pAddress, WORD nPort,
 							  PROTOCOLID nProtocol=PROTOCOL_NULL, bool bUpdate=true);
 	void				PruneOldHosts();
 

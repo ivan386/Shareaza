@@ -185,7 +185,7 @@ void CHostCache::Serialize(CArchive& ar)
 	{
 		ar << nVersion;
 		ar.WriteCount( m_pList.GetCount() );
-		
+
 		for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
 		{
 			CHostCacheList* pCache = m_pList.GetNext( pos );
@@ -197,12 +197,12 @@ void CHostCache::Serialize(CArchive& ar)
 	{
 		ar >> nVersion;
 		if ( nVersion < 6 ) return;
-		
+
 		for ( DWORD_PTR nCount = ar.ReadCount() ; nCount > 0 ; nCount-- )
 		{
 			PROTOCOLID nProtocol;
 			ar >> nProtocol;
-			
+
 			for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
 			{
 				CHostCacheList* pCache = m_pList.GetNext( pos );
@@ -338,36 +338,10 @@ void CHostCacheList::Clear()
 //////////////////////////////////////////////////////////////////////
 // CHostCacheList host add
 
-CHostCacheHostPtr CHostCacheList::Add(const IN_ADDR* pAddress, WORD nPort, DWORD tSeen, LPCTSTR pszVendor, DWORD nUptime, DWORD nCurrentLeaves, DWORD nLeafLimit, LPCTSTR szAddress)
-{
-	ASSERT( pAddress || szAddress );
-
-	// Don't add invalid addresses
-	if ( ! nPort )
-		return NULL;
-	if ( pAddress && ! pAddress->S_un.S_un_b.s_b1 )
-		return NULL;
-
-	// Don't add own firewalled IPs
-	if ( pAddress && Network.IsFirewalledAddress( pAddress, TRUE ) )
-		return NULL;
-
-	// check against IANA Reserved address.
-	if ( pAddress && Network.IsReserved( pAddress ) )
-		return NULL;
-
-	// Check security settings, don't add blocked IPs
-	if ( pAddress && Security.IsDenied( pAddress ) )
-		return NULL;
-
-	// Try adding it to the cache. (duplicates will be rejected)
-	return AddInternal( pAddress, nPort, tSeen, pszVendor, nUptime, nCurrentLeaves, nLeafLimit, szAddress );
-}
-
 CHostCacheHostPtr CHostCacheList::Add(LPCTSTR pszHost, DWORD tSeen, LPCTSTR pszVendor, DWORD nUptime, DWORD nCurrentLeaves, DWORD nLeafLimit)
 {
 	CString strHost( pszHost );
-	
+
 	strHost.Trim();
 	int nPos = strHost.ReverseFind( _T(' ') );
 	if ( nPos > 0 )
@@ -375,35 +349,19 @@ CHostCacheHostPtr CHostCacheList::Add(LPCTSTR pszHost, DWORD tSeen, LPCTSTR pszV
 		CString strTime = strHost.Mid( nPos + 1 );
 		strHost = strHost.Left( nPos );
 		strHost.TrimRight();
-
 		tSeen = TimeFromString( strTime );
 	}
 
-	WORD nPort = protocolPorts[ m_nProtocol ];
-	nPos = strHost.Find( _T(':') );
-	if ( nPos > 0 )
-	{
-		int n = 0;
-		if ( _stscanf( strHost.Mid( nPos + 1 ), _T("%i"), &n ) == 1 &&
-			n > 0 && n <= USHRT_MAX )
-		{
-			nPort = (WORD)n;
-		}
-		strHost = strHost.Left( nPos );
-	}
-
-	DWORD nAddress = inet_addr( CT2CA( (LPCTSTR)strHost ) );
-	if ( nAddress == INADDR_NONE ) return FALSE;
-
-	return Add( (IN_ADDR*)&nAddress, nPort, tSeen, pszVendor, nUptime, nCurrentLeaves, nLeafLimit );
+	return Add( NULL, 0, tSeen, pszVendor, nUptime, nCurrentLeaves, nLeafLimit, strHost );
 }
 
-// This function actually add the remote client to the host cache. Private, but used by the public 
-// functions. No security checking, etc.
-CHostCacheHostPtr CHostCacheList::AddInternal(const IN_ADDR* pAddress, WORD nPort, DWORD tSeen, LPCTSTR pszVendor, DWORD nUptime, DWORD nCurrentLeaves, DWORD nLeafLimit, LPCTSTR szAddress)
+CHostCacheHostPtr CHostCacheList::Add(const IN_ADDR* pAddress, WORD nPort, DWORD tSeen, LPCTSTR pszVendor, DWORD nUptime, DWORD nCurrentLeaves, DWORD nLeafLimit, LPCTSTR szAddress)
 {
 	ASSERT( pAddress || szAddress );
-	ASSERT( nPort );
+
+	if ( ! nPort )
+		// Use default port
+		nPort = protocolPorts[ m_nProtocol ];
 
 	SOCKADDR_IN saHost;
 	if ( ! pAddress )
@@ -411,12 +369,37 @@ CHostCacheHostPtr CHostCacheList::AddInternal(const IN_ADDR* pAddress, WORD nPor
 		// Try to quick resolve dotted IP address
 		if (  ! Network.Resolve( szAddress, nPort, &saHost, FALSE ) )
 			// Cannot resolve
-			return FALSE;
+			return NULL;
 
 		pAddress = &saHost.sin_addr;
 		nPort = ntohs( saHost.sin_port );
 		if ( pAddress->s_addr != INADDR_ANY )
+		{
 			szAddress = NULL;
+			// Don't add invalid addresses
+			if ( ! pAddress->S_un.S_un_b.s_b1 ||
+			// Don't add own firewalled IPs
+				Network.IsFirewalledAddress( pAddress, TRUE ) ||
+			// check against IANA Reserved address.
+				Network.IsReserved( pAddress ) ||
+			// Check security settings, don't add blocked IPs
+				Security.IsDenied( pAddress ) )
+				// Bad IP
+				return NULL;
+		}
+	}
+	else
+	{
+		// Don't add invalid addresses
+		if ( ! pAddress->S_un.S_un_b.s_b1 ||
+		// Don't add own firewalled IPs
+			Network.IsFirewalledAddress( pAddress, TRUE ) ||
+		// check against IANA Reserved address.
+			Network.IsReserved( pAddress ) ||
+		// Check security settings, don't add blocked IPs
+			Security.IsDenied( pAddress ) )
+			// Bad IP
+			return NULL;
 	}
 
 	CQuickLock oLock( m_pSection );
@@ -540,6 +523,19 @@ void CHostCacheList::OnResolve(LPCTSTR szAddress, const IN_ADDR* pAddress, WORD 
 	CQuickLock oLock( m_pSection );
 
 	CHostCacheHostPtr pHost = Find( szAddress );
+
+	// Don't add own firewalled IPs
+	if ( Network.IsFirewalledAddress( pAddress, TRUE ) ||
+	// check against IANA Reserved address.
+		Network.IsReserved( pAddress ) ||
+	// Check security settings, don't add blocked IPs
+		Security.IsDenied( pAddress ) )
+	{
+		if ( pHost )
+			Remove( pHost );
+		return;
+	}
+
 	if ( pHost )
 	{
 		// Remove from old place
@@ -553,12 +549,12 @@ void CHostCacheList::OnResolve(LPCTSTR szAddress, const IN_ADDR* pAddress, WORD 
 		// Add to new place
 		m_Hosts.insert( CHostCacheMapPair( pHost->m_pAddress, pHost ) );
 
+		m_nCookie++;
+
 		ASSERT( m_Hosts.size() == m_HostsTime.size() );
 	}
 	else
-	{
 		Add( pAddress, nPort, 0, 0, 0, 0, 0, szAddress );
-	}
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -636,7 +632,7 @@ void CHostCacheList::OnSuccess(const IN_ADDR* pAddress, WORD nPort, bool bUpdate
 void CHostCacheList::PruneOldHosts(DWORD tNow)
 {
 	CQuickLock oLock( m_pSection );
-	
+
 	for( CHostCacheMapItr i = m_Hosts.begin(); i != m_Hosts.end(); )
 	{
 		CHostCacheHostPtr pHost = (*i).second;
@@ -701,7 +697,6 @@ void CHostCacheList::PruneHosts()
 
 	ASSERT( m_Hosts.size() == m_HostsTime.size() );
 }
-
 
 //////////////////////////////////////////////////////////////////////
 // CHostCacheList serialize
@@ -779,7 +774,7 @@ int CHostCache::Import(LPCTSTR pszFile, BOOL bFreshOnly)
 
 		nImported = ImportNodes( &pFile );
 	}
-	
+
 	Save();
 
 	return nImported;
@@ -864,31 +859,31 @@ int CHostCache::ImportMET(CFile* pFile)
 	if ( nVersion != 0xE0 &&
 		 nVersion != ED2K_MET &&
 		 nVersion != ED2K_MET_I64TAGS ) return 0;
-	
+
 	int nServers = 0;
 	DWORD nCount = 0;
-	
+
 	pFile->Read( &nCount, sizeof(nCount) );
-	
+
 	while ( nCount-- > 0 )
 	{
 		IN_ADDR pAddress;
 		WORD nPort;
 		DWORD nTags;
-		
+
 		if ( pFile->Read( &pAddress, sizeof(pAddress) ) != sizeof(pAddress) ) break;
 		if ( pFile->Read( &nPort, sizeof(nPort) ) != sizeof(nPort) ) break;
 		if ( pFile->Read( &nTags, sizeof(nTags) ) != sizeof(nTags) ) break;
-		
+
 		CQuickLock oLock( eDonkey.m_pSection );
 		CHostCacheHostPtr pServer = eDonkey.Add( &pAddress, nPort );
-		
+
 		while ( nTags-- > 0 )
 		{
 			CEDTag pTag;
 			if ( ! pTag.Read( pFile ) ) break;
 			if ( pServer == NULL ) continue;
-			
+
 			if ( pTag.Check( ED2K_ST_SERVERNAME, ED2K_TAG_STRING ) )
 			{
 				pServer->m_sName = pTag.m_sValue;
@@ -910,10 +905,10 @@ int CHostCache::ImportMET(CFile* pFile)
 				pServer->m_nUDPFlags = (DWORD)pTag.m_nValue;
 			}
 		}
-		
+
 		nServers++;
 	}
-	
+
 	return nServers;
 }
 
@@ -1197,11 +1192,11 @@ void CHostCacheHost::Serialize(CArchive& ar, int nVersion)
 	{
 		ar.Write( &m_pAddress, sizeof(m_pAddress) );
 		ar << m_nPort;
-		
+
 		ar << m_tAdded;
 		ar << m_tSeen;
 		ar << m_tRetryAfter;
-		
+
 		if ( m_pVendor != NULL && m_pVendor->m_sCode.GetLength() == 4 )
 		{
 			ar << (CHAR)m_pVendor->m_sCode.GetAt( 0 );
@@ -1214,7 +1209,7 @@ void CHostCacheHost::Serialize(CArchive& ar, int nVersion)
 			CHAR cZero = 0;
 			ar << cZero;
 		}
-		
+
 		ar << m_sName;
 		if ( m_sName.GetLength() ) ar << m_sDescription;
 
@@ -1226,7 +1221,7 @@ void CHostCacheHost::Serialize(CArchive& ar, int nVersion)
 		ar << m_nTCPFlags;
 		ar << m_nUDPFlags;
 		ar << m_tStats;
-		
+
 		ar << m_nKeyValue;
 		if ( m_nKeyValue != 0 )
 		{
@@ -1265,7 +1260,7 @@ void CHostCacheHost::Serialize(CArchive& ar, int nVersion)
 	{
 		ReadArchive( ar, &m_pAddress, sizeof(m_pAddress) );
 		ar >> m_nPort;
-		
+
 		ar >> m_tAdded;
 
 		DWORD tNow = static_cast< DWORD >( time( NULL ) );
@@ -1275,22 +1270,22 @@ void CHostCacheHost::Serialize(CArchive& ar, int nVersion)
 			m_tSeen = tNow;
 		}
 		ar >> m_tRetryAfter;
-		
+
 		CHAR szaVendor[4] = { 0, 0, 0, 0 };
 		ar >> szaVendor[0];
-		
+
 		if ( szaVendor[0] )
 		{
 			ReadArchive( ar, szaVendor + 1, 3 );
 			TCHAR szVendor[5] = { szaVendor[0], szaVendor[1], szaVendor[2], szaVendor[3], 0 };
 			m_pVendor = VendorCache.Lookup( szVendor );
 		}
-		
+
 		if ( nVersion >= 10 )
 		{
 			ar >> m_sName;
 			if ( m_sName.GetLength() ) ar >> m_sDescription;
-			
+
 			ar >> m_nUserCount;
 			ar >> m_nUserLimit;
 			ar >> m_bPriority;
@@ -1317,7 +1312,7 @@ void CHostCacheHost::Serialize(CArchive& ar, int nVersion)
 				}
 			}
 		}
-		
+
 		ar >> m_nKeyValue;
 		if ( m_nKeyValue != 0 )
 		{
@@ -1581,22 +1576,22 @@ bool CHostCacheHost::CanQuery(DWORD tNow) const
 	case PROTOCOL_G2:
 		// Must support G2
 		if ( ! Settings.Gnutella2.EnableToday ) return false;
-		
+
 		// Must not be waiting for an ack
 		if ( 0 != m_tAck ) return false;
-		
+
 		// Must be a recently seen (current) host
 		if ( tNow > m_tSeen + Settings.Gnutella2.HostCurrent ) return false;
-		
+
 		// Retry After
 		if ( 0 != m_tRetryAfter && tNow < m_tRetryAfter ) return false;
 
 		// Online
 		if ( ! Network.IsConnected() ) return false;
-		
+
 		// If haven't queried yet, its ok
 		if ( 0 == m_tQuery ) return true;
-		
+
 		// Don't query too fast
 		return ( tNow >= m_tQuery + Settings.Gnutella2.QueryThrottle );
 
@@ -1605,16 +1600,16 @@ bool CHostCacheHost::CanQuery(DWORD tNow) const
 		if ( ! Settings.eDonkey.EnableToday ) return false;
 
 		if ( ! Settings.eDonkey.ServerWalk ) return false;
-		
+
 		// Retry After
 		if ( 0 != m_tRetryAfter && tNow < m_tRetryAfter ) return false;
 
 		// Online
 		if ( ! Network.IsConnected() ) return false;
-		
+
 		// If haven't queried yet, its ok
 		if ( 0 == m_tQuery ) return true;
-		
+
 		// Don't query too fast
 		return ( tNow >= m_tQuery + Settings.eDonkey.QueryThrottle );
 
