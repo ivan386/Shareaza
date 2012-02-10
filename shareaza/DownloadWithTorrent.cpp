@@ -577,7 +577,7 @@ void CDownloadWithTorrent::SendStarted(DWORD nNumWant)
 	m_tTorrentTracker += Settings.BitTorrent.DefaultTrackerPeriod;
 	m_nTorrentDownloaded = m_nTorrentUploaded = 0ull;
 
-	DHT::Search( m_oBTH );
+	DHT.Search( m_oBTH );
 
 	// Return if there is no tracker
 	if ( ! m_pTorrent.HasTracker() )
@@ -596,7 +596,7 @@ void CDownloadWithTorrent::SendUpdate(DWORD nNumWant)
 	m_tTorrentTracker = m_tTorrentSources = GetTickCount();
 	m_tTorrentTracker += Settings.BitTorrent.DefaultTrackerPeriod;
 
-	DHT::Search( m_oBTH );
+	DHT.Search( m_oBTH );
 
 	// Return if there is no tracker
 	if ( ! m_pTorrent.HasTracker() )

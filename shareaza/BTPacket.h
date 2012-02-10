@@ -62,7 +62,7 @@ class CBENode;
 
 #define BT_EXTENSION_HANDSHAKE		0
 #define BT_EXTENSION_UT_PEX			1
-#define BT_EXTENSION_UT_METADATA	2	// Extension for Peers to Send Metadata Files - http://www.bittorrent.org/beps/bep_0009.html 
+#define BT_EXTENSION_UT_METADATA	2	// Extension for Peers to Send Metadata Files - http://www.bittorrent.org/beps/bep_0009.html
 #define BT_EXTENSION_LT_TEX			3	// Tracker exchange extension - http://www.bittorrent.org/beps/bep_0028.html
 
 #define BT_EXTENSION_NOP			255	// Packet without standard header i.e. bencoded data only
@@ -215,13 +215,37 @@ typedef struct
 
 #pragma pack(pop)
 
+//
+// BitTorrent DHT
+//
 
-namespace DHT
+class CDHT
 {
-void Connect();
-void Disconnect();
-void Search(const Hashes::BtHash& oBTH);
-void Ping(const SOCKADDR_IN* pHost);
-void OnRun();
-void OnPacket(const SOCKADDR_IN* pHost, CBTPacket* pPacket);
+public:
+	CDHT();
+
+	// Initialize DHT library and load initial hosts
+	void Connect();
+
+	// Save hosts from DHT library to host cache and shutdown
+	void Disconnect();
+
+	// Search for hash (and announce it if needed)
+	void Search(const Hashes::BtHash& oBTH, bool bAnnounce = true);
+
+	// Ping this host
+	void Ping(const SOCKADDR_IN* pHost);
+
+	// Run this periodically
+	void OnRun();
+
+	// Packet processor
+	void OnPacket(const SOCKADDR_IN* pHost, CBTPacket* pPacket);
+
+protected:
+	bool	m_bConnected;
+
+	static void OnEvent(void* closure, int evt, unsigned char* info_hash, void* data, size_t data_len);
 };
+
+extern CDHT DHT;

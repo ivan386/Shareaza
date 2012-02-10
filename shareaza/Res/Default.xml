@@ -354,6 +354,7 @@
 			<button id="ID_NETWORK_G1" text="Gnutella1"/>
 			<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 			<button id="ID_NETWORK_DC" text="DC++"/>
+			<button id="ID_NETWORK_BT" text="BitTorrent"/>
 			<separator/>
 			<button id="ID_NEIGHBOURS_SETTINGS" text="Settings"/>
 		</toolbar>
@@ -369,6 +370,7 @@
 			<button id="ID_NETWORK_G1" text="Gnutella1"/>
 			<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 			<button id="ID_NETWORK_DC" text="DC++"/>
+			<button id="ID_NETWORK_BT" text="BitTorrent"/>
 			<separator/>
 			<button id="ID_NEIGHBOURS_SETTINGS" text="Settings"/>
 		</toolbar>
@@ -506,6 +508,7 @@
 					<item id="ID_NETWORK_G1" text="Connect to Gnutella_1"/>
 					<item id="ID_NETWORK_ED2K" text="Connect to _eDonkey"/>
 					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
+					<item id="ID_NETWORK_BT" text="Connect to _BitTorrent"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_AUTO_CLOSE" text="Exit _After Transfers"/>
@@ -583,6 +586,7 @@
 					<item id="ID_NETWORK_G1" text="Connect to Gnutella_1"/>
 					<item id="ID_NETWORK_ED2K" text="Connect to _eDonkey"/>
 					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
+					<item id="ID_NETWORK_BT" text="Connect to _BitTorrent"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_CONNECT_TO" text="Connect _To..." shortcut="Ctrl+T"/>
@@ -695,6 +699,7 @@
 					<item id="ID_NETWORK_G1" text="Connect to Gnutella_1"/>
 					<item id="ID_NETWORK_ED2K" text="Connect to _eDonkey"/>
 					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
+					<item id="ID_NETWORK_BT" text="Connect to _BitTorrent"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_AUTO_CLOSE" text="Close _After Transfers"/>
@@ -1507,6 +1512,7 @@
 				<item id="ID_NETWORK_G1" text="Gnutella_1"/>
 				<item id="ID_NETWORK_ED2K" text="_eDonkey"/>
 				<item id="ID_NETWORK_DC" text="_DC++"/>
+				<item id="ID_NETWORK_BT" text="_BitTorrent"/>
 			</menu>
 			<menu text="_Monitor">
 				<item id="ID_NEIGHBOURS_VIEW_ALL" text="View _All Traffic"/>

@@ -36,14 +36,13 @@
 #include "Statistics.h"
 #include "Transfers.h"
 
-
 #ifdef _DEBUG
 #undef THIS_FILE
 static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
-using namespace DHT;
+CDHT DHT;
 
 extern "C"
 {
@@ -51,6 +50,8 @@ extern "C"
 	#include "dht/dht.h"
 	#include "dht/dht.c"
 	#pragma warning(pop)
+
+	// Callback functions:
 
 	int dht_blacklisted(const struct sockaddr *sa, int salen)
 	{
@@ -90,46 +91,10 @@ extern "C"
 			// IPv6 not supported
 			return -1;
 
+		// TODO: Remove extra copy
 		CBTPacket* pPacket = CBTPacket::New( BT_PACKET_EXTENSION, BT_EXTENSION_NOP, (const BYTE*)buf, len );
 
 		return Datagrams.Send( (SOCKADDR_IN*)to, pPacket ) ?  len : -1;
-	}
-
-	void OnEvent(void * /*closure*/, int event, unsigned char *info_hash, void *data, size_t data_len)
-	{
-		Hashes::BtHash oHash;
-		CopyMemory( &oHash[ 0 ], info_hash, Hashes::BtHash::byteCount );
-		oHash.validate();
-
-		ATLTRACE( "DHT> %s %d %u bytes\n", (LPCSTR)CT2CA( oHash.toString() ), event, data_len );
-
-		switch ( event )
-		{
-		case DHT_EVENT_VALUES:
-			{
-				CSingleLock oLock( &Transfers.m_pSection, FALSE );
-				if ( oLock.Lock( 250 ) )
-				{
-					if ( CDownload* pDownload = Downloads.FindByBTH( oHash ) )
-					{
-						ATLTRACE( "DHT> %s %s\n", (LPCSTR)CT2CA( pDownload->m_oBTH.toString() ), (LPCSTR)CT2CA( pDownload->m_sName ) );
-
-						size_t nCount = data_len / 6;
-						for ( size_t i = 0; i < nCount; ++i )
-						{
-							const char* p = &((const char*)data)[ i * 6 ];
-							pDownload->AddSourceBT( Hashes::BtGuid(), (IN_ADDR*)p, ntohs( *(WORD*)(p + 4) ) );
-						}
-					}
-				}
-			}
-			break;
-		case DHT_EVENT_VALUES6:
-		case DHT_EVENT_SEARCH_DONE:
-		case DHT_EVENT_SEARCH_DONE6:
-		default:
-			break;
-		}
 	}
 
 	void dht_new_node(const unsigned char *id, const struct sockaddr *sa, int salen, int confirm)
@@ -157,15 +122,16 @@ extern "C"
 	}
 }
 
-namespace DHT
+CDHT::CDHT()
+	: m_bConnected( false )
 {
+}
 
-// Initialize DHT library and load initial hosts
-void Connect()
+void CDHT::Connect()
 {
 	ASSUME_LOCK( Network.m_pSection );
 
-	if ( ! Settings.BitTorrent.EnableDHT )
+	if ( m_bConnected || ! Settings.BitTorrent.EnableToday || ! Settings.BitTorrent.EnableDHT )
 		return;
 
 	Hashes::BtGuid oID = MyProfile.oGUIDBT;
@@ -185,51 +151,55 @@ void Connect()
 				nCount++;
 			}
 		}
+
+		m_bConnected = true;
 	}
 }
 
-// Save hosts from DHT library to host cache and shutdown
-void Disconnect()
+void CDHT::Disconnect()
 {
 	ASSUME_LOCK( Network.m_pSection );
 
-	int nCount = 100, nZero = 0;
-	CAutoVectorPtr< SOCKADDR_IN > pHosts( new SOCKADDR_IN[ nCount ] );
-	CAutoVectorPtr< unsigned char > pIDs( new unsigned char[ nCount * Hashes::BtGuid::byteCount ] );
-	if ( dht_get_nodes( pHosts, pIDs, &nCount, NULL, NULL, &nZero ) >= 0 )
+	if ( m_bConnected )
 	{
-		CQuickLock oLock( HostCache.BitTorrent.m_pSection );
-
-		for ( int i = 0; i < nCount; ++i )
+		int nCount = 100, nZero = 0;
+		CAutoVectorPtr< SOCKADDR_IN > pHosts( new SOCKADDR_IN[ nCount ] );
+		CAutoVectorPtr< unsigned char > pIDs( new unsigned char[ nCount * Hashes::BtGuid::byteCount ] );
+		if ( dht_get_nodes( pHosts, pIDs, &nCount, NULL, NULL, &nZero ) >= 0 )
 		{
-			if ( CHostCacheHostPtr pCache = HostCache.BitTorrent.Add( &pHosts[ i ].sin_addr, pHosts[ i].sin_port ) )
+			CQuickLock oLock( HostCache.BitTorrent.m_pSection );
+
+			for ( int i = 0; i < nCount; ++i )
 			{
-				pCache->m_bDHT = TRUE;
-				CopyMemory( &pCache->m_oBtGUID[ 0 ], &pIDs[ i * Hashes::BtGuid::byteCount ], Hashes::BtGuid::byteCount );
-				pCache->m_oBtGUID.validate();
+				if ( CHostCacheHostPtr pCache = HostCache.BitTorrent.Add( &pHosts[ i ].sin_addr, pHosts[ i].sin_port ) )
+				{
+					pCache->m_bDHT = TRUE;
+					CopyMemory( &pCache->m_oBtGUID[ 0 ], &pIDs[ i * Hashes::BtGuid::byteCount ], Hashes::BtGuid::byteCount );
+					pCache->m_oBtGUID.validate();
+				}
 			}
 		}
+		dht_uninit();
+
+		m_bConnected = false;
 	}
-	dht_uninit();
 }
 
-// Search for hash
-void Search(const Hashes::BtHash& oBTH)
+void CDHT::Search(const Hashes::BtHash& oBTH, bool bAnnounce)
 {
-	if ( ! Settings.BitTorrent.EnableDHT )
+	if ( ! m_bConnected || ! Settings.BitTorrent.EnableToday || ! Settings.BitTorrent.EnableDHT )
 		return;
 
 	CSingleLock oLock( &Network.m_pSection, FALSE );
 	if ( oLock.Lock( 250 ) )
 	{
-		dht_search( &oBTH[ 0 ], Network.GetPort(), AF_INET, OnEvent, NULL );
+		dht_search( &oBTH[ 0 ], ( bAnnounce ? Network.GetPort() : 0 ), AF_INET, &CDHT::OnEvent, NULL );
 	}
 }
 
-// Ping this host
-void Ping(const SOCKADDR_IN* pHost)
+void CDHT::Ping(const SOCKADDR_IN* pHost)
 {
-	if ( ! Settings.BitTorrent.EnableDHT )
+	if ( ! m_bConnected || ! Settings.BitTorrent.EnableToday || ! Settings.BitTorrent.EnableDHT )
 		return;
 
 	CSingleLock oLock( &Network.m_pSection, FALSE );
@@ -239,39 +209,84 @@ void Ping(const SOCKADDR_IN* pHost)
 	}
 }
 
-// Run this periodically
-void OnRun()
+void CDHT::OnRun()
 {
 	ASSUME_LOCK( Network.m_pSection );
 
-	if ( ! Settings.BitTorrent.EnableDHT )
+	if ( ! Settings.BitTorrent.EnableToday || ! Settings.BitTorrent.EnableDHT )
+	{
+		if ( m_bConnected )
+		{
+			Disconnect();
+		}
 		return;
+	}
+	else
+	{
+		if ( ! m_bConnected )
+		{
+			Connect();
+		}
+	}
 
 	time_t tosleep = 0;
-	dht_periodic( NULL, 0, NULL, 0, &tosleep, OnEvent, NULL );
+	dht_periodic( NULL, 0, NULL, 0, &tosleep, &CDHT::OnEvent, NULL );
 }
 
-// Packet processor
-void OnPacket(const SOCKADDR_IN* pHost, CBTPacket* pPacket)
+void CDHT::OnPacket(const SOCKADDR_IN* pHost, CBTPacket* pPacket)
 {
 	ASSUME_LOCK( Network.m_pSection );
 
-	if ( ! Settings.BitTorrent.EnableDHT )
+	if ( ! m_bConnected || ! Settings.BitTorrent.EnableToday || ! Settings.BitTorrent.EnableDHT )
 		return;
 
+	// TODO: Remove extra copy
 	CBuffer pBufffer;
 	pPacket->ToBuffer( &pBufffer, false );
 	pBufffer.Add( "", 1 );	// zero terminated
 
 	time_t tosleep = 0;
-	dht_periodic( pBufffer.m_pBuffer, pBufffer.m_nLength - 1, (sockaddr*)pHost, sizeof( SOCKADDR_IN ), &tosleep, OnEvent, NULL );
+	dht_periodic( pBufffer.m_pBuffer, pBufffer.m_nLength - 1, (sockaddr*)pHost, sizeof( SOCKADDR_IN ), &tosleep, &CDHT::OnEvent, NULL );
 }
 
-}; // DHT
+void CDHT::OnEvent(void* /*closure*/, int evt, unsigned char* info_hash, void* data, size_t data_len)
+{
+	Hashes::BtHash oHash;
+	CopyMemory( &oHash[ 0 ], info_hash, Hashes::BtHash::byteCount );
+	oHash.validate();
 
+	ATLTRACE( "DHT> %s %d %u bytes\n", (LPCSTR)CT2CA( oHash.toString() ), evt, data_len );
+
+	switch ( evt )
+	{
+	case DHT_EVENT_VALUES:
+		{
+			CSingleLock oLock( &Transfers.m_pSection, FALSE );
+			if ( oLock.Lock( 250 ) )
+			{
+				if ( CDownload* pDownload = Downloads.FindByBTH( oHash ) )
+				{
+					ATLTRACE( "DHT> %s %s\n", (LPCSTR)CT2CA( pDownload->m_oBTH.toString() ), (LPCSTR)CT2CA( pDownload->m_sName ) );
+
+					size_t nCount = data_len / 6;
+					for ( size_t i = 0; i < nCount; ++i )
+					{
+						const char* p = &((const char*)data)[ i * 6 ];
+						pDownload->AddSourceBT( Hashes::BtGuid(), (IN_ADDR*)p, ntohs( *(WORD*)(p + 4) ) );
+					}
+				}
+			}
+		}
+		break;
+	case DHT_EVENT_VALUES6:
+	case DHT_EVENT_SEARCH_DONE:
+	case DHT_EVENT_SEARCH_DONE6:
+	default:
+		break;
+	}
+}
 
 CBTPacket::CBTPacketPool CBTPacket::POOL;
-
 
 //////////////////////////////////////////////////////////////////////
 // CBTPacket construction
@@ -417,7 +432,7 @@ CBTPacket* CBTPacket::ReadBuffer(CBuffer* pBuffer)
 
 		if ( bValid )
 			pBuffer->Remove( sizeof( DWORD ) );		// remove size marker
-	} 
+	}
 	while ( bKeepAlive && bValid && nLength == 0 );
 
 	CBTPacket* pPacket = NULL;
@@ -596,7 +611,7 @@ BOOL CBTPacket::OnPacket(const SOCKADDR_IN* pHost)
 		}
 	}
 
-	DHT::OnPacket( pHost, this );
+	DHT.OnPacket( pHost, this );
 
 	return TRUE;
 /*
