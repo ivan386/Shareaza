@@ -1,7 +1,7 @@
 //
 // MatchObjects.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1524,7 +1524,7 @@ void CMatchFile::RefreshStatus()
 		if ( nVote > nBestVote )
 		{
 			nBestVote = nVote;
-			m_sName = pHit->m_sName;			
+			m_sName = pHit->m_sName;
 			m_sCompareName = m_sName;
 			ToLower.Clean( m_sCompareName );
 			m_sURL = pHit->m_sURL;
@@ -2576,7 +2576,7 @@ void CMatchFile::SanityCheck()
 	{
 		CQueryHit* pNext = pHit->m_pNext;
 
-		if ( Security.IsDenied( &pHit->m_pAddress ) )
+		if ( Security.IsDenied( &pHit->m_pAddress ) || Security.IsDenied( this ) )
 		{
 			// Exclude from hits list
 			if ( pHitPrev )
