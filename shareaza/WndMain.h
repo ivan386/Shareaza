@@ -1,7 +1,7 @@
 //
 // WndMain.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -276,6 +276,8 @@ protected:
 	afx_msg void OnNetworkED2K();
 	afx_msg void OnUpdateNetworkDC(CCmdUI* pCmdUI);
 	afx_msg void OnNetworkDC();
+	afx_msg void OnUpdateNetworkBT(CCmdUI* pCmdUI);
+	afx_msg void OnNetworkBT();
 	afx_msg void OnUpdateViewBasic(CCmdUI* pCmdUI);
 	afx_msg void OnViewBasic();
 	afx_msg void OnUpdateLibraryHashPriority(CCmdUI* pCmdUI);

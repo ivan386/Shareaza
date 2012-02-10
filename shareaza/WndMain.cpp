@@ -1,7 +1,7 @@
 //
 // WndMain.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -260,6 +260,8 @@ BEGIN_MESSAGE_MAP(CMainWnd, CMDIFrameWnd)
 	ON_COMMAND(ID_NETWORK_ED2K, OnNetworkED2K)
 	ON_UPDATE_COMMAND_UI(ID_NETWORK_DC, OnUpdateNetworkDC)
 	ON_COMMAND(ID_NETWORK_DC, OnNetworkDC)
+	ON_UPDATE_COMMAND_UI(ID_NETWORK_BT, OnUpdateNetworkBT)
+	ON_COMMAND(ID_NETWORK_BT, OnNetworkBT)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_BASIC, OnUpdateViewBasic)
 	ON_COMMAND(ID_VIEW_BASIC, OnViewBasic)
 	ON_UPDATE_COMMAND_UI(ID_LIBRARY_HASH_PRIORITY, OnUpdateLibraryHashPriority)
@@ -668,13 +670,14 @@ void CMainWnd::RemoveSkin()
 	m_wndNavBar.RemoveSkin();
 }
 
-// TODO: Replace this with OnQueryEndSession()
 void CMainWnd::OnEndSession(BOOL bEnding)
 {
-	CMDIFrameWnd::OnEndSession( bEnding );
-
 	if ( bEnding )
+	{
+		AfxOleSetUserCtrl( TRUE );    // keeps from randomly shutting down
+
 		SendMessage( WM_CLOSE );
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -912,9 +915,6 @@ void CMainWnd::OnTimer(UINT_PTR nIDEvent)
 		DeleteTray();
 	}
 
-	// Update messages
-	UpdateMessages();
-
 	if ( tNow - tLast5SecInterval > 5 )
 	{
 		tLast5SecInterval = tNow;
@@ -932,7 +932,12 @@ void CMainWnd::OnTimer(UINT_PTR nIDEvent)
 			// Network / disk space / directory checks
 			LocalSystemChecks();
 		}
+
+		m_bTrayUpdate = TRUE;
 	}
+
+	// Update messages
+	UpdateMessages();
 }
 
 void CMainWnd::OnActivate(UINT nState, CWnd* pWndOther, BOOL bMinimized)
@@ -1561,14 +1566,11 @@ void CMainWnd::UpdateMessages()
 			Settings.SmartSpeed( CGraphItem::GetValue( GRC_TOTAL_BANDWIDTH_OUT ), bits ),
 			CGraphItem::GetValue( GRC_DOWNLOADS_TRANSFERS ),
 			CGraphItem::GetValue( GRC_UPLOADS_TRANSFERS ) );
-
-		if ( strTip != m_pTray.szTip )
-		{
-			m_pTray.uFlags = NIF_TIP;
-			_tcsncpy( m_pTray.szTip, strTip, _countof( m_pTray.szTip ) - 1 );
-			m_pTray.szTip[ _countof( m_pTray.szTip ) - 1 ] = _T('\0');
-			m_bTrayIcon = Shell_NotifyIcon( NIM_MODIFY, &m_pTray );
-		}
+		
+		m_pTray.uFlags = NIF_TIP;
+		_tcsncpy( m_pTray.szTip, strTip, _countof( m_pTray.szTip ) - 1 );
+		m_pTray.szTip[ _countof( m_pTray.szTip ) - 1 ] = _T('\0');
+		m_bTrayIcon = Shell_NotifyIcon( NIM_MODIFY, &m_pTray );
 	}
 }
 
@@ -1915,11 +1917,16 @@ void CMainWnd::OnNetworkED2K()
 void CMainWnd::OnUpdateNetworkDC(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck( Settings.DC.EnableToday );
+#ifdef LAN_MODE
+	pCmdUI->Enable( FALSE );
+#else // LAN_MODE
 	pCmdUI->Enable( Settings.GetOutgoingBandwidth() >= 2 );
+#endif // LAN_MODE
 }
 
 void CMainWnd::OnNetworkDC()
 {
+#ifndef LAN_MODE
 	Settings.DC.EnableToday = !Settings.DC.EnableToday;
 
 	if ( Settings.DC.EnableToday )
@@ -1937,6 +1944,40 @@ void CMainWnd::OnNetworkDC()
 		if ( !Network.IsConnected() )
 			Network.Connect( TRUE );
 	}
+#endif // LAN_MODE
+}
+
+void CMainWnd::OnUpdateNetworkBT(CCmdUI* pCmdUI)
+{
+	pCmdUI->SetCheck( Settings.BitTorrent.EnableToday );
+#ifdef LAN_MODE
+	pCmdUI->Enable( FALSE );
+#else // LAN_MODE
+	pCmdUI->Enable( Settings.GetOutgoingBandwidth() >= 2 );
+#endif // LAN_MODE
+}
+
+void CMainWnd::OnNetworkBT()
+{
+#ifndef LAN_MODE
+	Settings.BitTorrent.EnableToday = !Settings.BitTorrent.EnableToday;
+
+	if ( Settings.BitTorrent.EnableToday )
+	{
+		if ( ! Settings.BitTorrent.EnableAlways )
+		{
+			CString strMessage;
+			LoadString( strMessage, IDS_NETWORK_ALWAYS );
+			if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) == IDYES )
+			{
+				Settings.BitTorrent.EnableAlways = true;
+			}
+		}
+
+		if ( !Network.IsConnected() )
+			Network.Connect( TRUE );
+	}
+#endif // LAN_MODE
 }
 
 void CMainWnd::OnUpdateNetworkAutoClose(CCmdUI* pCmdUI)
