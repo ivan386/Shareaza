@@ -42,6 +42,15 @@ enum // It is used from CNetwork::IsFirewalled
 	CHECK_BOTH, CHECK_TCP, CHECK_UDP, CHECK_IP
 };
 
+enum // AsyncResolver command
+{
+	RESOLVE_ONLY,				// Resolve and update host cache
+	RESOLVE_CONNECT_ULTRAPEER,	// Resolve, update host cache and connect as ultrapeer
+	RESOLVE_CONNECT,			// Resolve, update host cache and connect
+	RESOLVE_DISCOVERY,			// Resolve and update discovery services
+	RESOLVE_BITTORENT			// Resolve and send DHT ping
+};
+
 class CNetwork : public CComObject, public CThreadImpl
 {
 	DECLARE_DYNCREATE(CNetwork)
@@ -226,9 +235,6 @@ public:
 
 	// Add query hit to queue
 	void		OnQueryHits(CQueryHit* pHits);
-
-	void		UDPHostCache(IN_ADDR* pAddress, WORD nPort);
-	void		UDPKnownHubCache(IN_ADDR* pAddress, WORD nPort);
 
 	// Safe way to accept socket
 	static SOCKET AcceptSocket(SOCKET hSocket, SOCKADDR_IN* addr, LPCONDITIONPROC lpfnCondition, DWORD_PTR dwCallbackData = 0);

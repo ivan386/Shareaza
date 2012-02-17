@@ -60,6 +60,7 @@ extern "C"
 			return 1;
 
 		const SOCKADDR_IN* pHost = (const SOCKADDR_IN*)sa;
+
 		return ( pHost->sin_port == 0 ||
 			Network.IsFirewalledAddress( &pHost->sin_addr, Settings.Connection.IgnoreOwnIP ) ||
 			Network.IsReserved( &pHost->sin_addr ) ||
@@ -91,34 +92,12 @@ extern "C"
 			// IPv6 not supported
 			return -1;
 
+		const SOCKADDR_IN* pHost = (const SOCKADDR_IN*)to;
+
 		// TODO: Remove extra copy
 		CBTPacket* pPacket = CBTPacket::New( BT_PACKET_EXTENSION, BT_EXTENSION_NOP, (const BYTE*)buf, len );
 
-		return Datagrams.Send( (SOCKADDR_IN*)to, pPacket ) ?  len : -1;
-	}
-
-	void dht_new_node(const unsigned char *id, const struct sockaddr *sa, int salen, int confirm)
-	{
-		if ( salen != sizeof( SOCKADDR_IN ) )
-			// IPv6 not supported
-			return;
-
-		const SOCKADDR_IN* pHost = (const SOCKADDR_IN*)sa;
-
-		CQuickLock oLock( HostCache.BitTorrent.m_pSection );
-
-		if ( CHostCacheHostPtr pCache = HostCache.BitTorrent.Add( &pHost->sin_addr, htons( pHost->sin_port ) ) )
-		{
-			pCache->m_bDHT = TRUE;
-			if ( confirm == 2 )
-				pCache->m_bCheckedLocally = TRUE;
-			pCache->m_tFailure = 0;
-			pCache->m_nFailures = 0;
-			CopyMemory( &pCache->m_oBtGUID[ 0 ], id, Hashes::BtGuid::byteCount );
-			pCache->m_oBtGUID.validate();
-
-			HostCache.BitTorrent.m_nCookie++;
-		}
+		return Datagrams.Send( pHost, pPacket ) ?  len : -1;
 	}
 }
 
@@ -144,7 +123,7 @@ void CDHT::Connect()
 		{
 			CHostCacheHostPtr pCache = (*i);
 
-			if ( pCache->m_bDHT && pCache->m_oBtGUID )
+			if ( pCache->m_oBtGUID )
 			{
 				SOCKADDR_IN sa = { AF_INET, htons( pCache->m_nPort ), pCache->m_pAddress };
 				dht_insert_node( &pCache->m_oBtGUID[ 0 ], (sockaddr*)&sa, sizeof( SOCKADDR_IN ) );
@@ -173,7 +152,6 @@ void CDHT::Disconnect()
 			{
 				if ( CHostCacheHostPtr pCache = HostCache.BitTorrent.Add( &pHosts[ i ].sin_addr, pHosts[ i].sin_port ) )
 				{
-					pCache->m_bDHT = TRUE;
 					CopyMemory( &pCache->m_oBtGUID[ 0 ], &pIDs[ i * Hashes::BtGuid::byteCount ], Hashes::BtGuid::byteCount );
 					pCache->m_oBtGUID.validate();
 				}
@@ -197,16 +175,32 @@ void CDHT::Search(const Hashes::BtHash& oBTH, bool bAnnounce)
 	}
 }
 
-void CDHT::Ping(const SOCKADDR_IN* pHost)
+bool CDHT::Ping(const IN_ADDR* pAddress, WORD nPort)
 {
 	if ( ! m_bConnected || ! Settings.BitTorrent.EnableToday || ! Settings.BitTorrent.EnableDHT )
-		return;
+		return false;
 
-	CSingleLock oLock( &Network.m_pSection, FALSE );
-	if ( oLock.Lock( 250 ) )
+	CSingleLock oNetworkLock( &Network.m_pSection, FALSE );
+	if ( ! oNetworkLock.Lock( 250 ) )
+		return false;
+	
 	{
-		dht_ping_node( (sockaddr*)pHost, sizeof( SOCKADDR_IN ) );
+		CSingleLock oLock( &HostCache.BitTorrent.m_pSection, FALSE );
+		if ( oLock.Lock( 250 ) )
+		{
+			if ( CHostCacheHostPtr pCache = HostCache.BitTorrent.Add( pAddress, nPort ) )
+			{
+				pCache->m_tConnect = static_cast< DWORD >( time( NULL ) );
+				if ( pCache->m_tAck == 0 )
+					pCache->m_tAck = pCache->m_tConnect;
+
+				HostCache.BitTorrent.m_nCookie++;
+			}
+		}
 	}
+
+	SOCKADDR_IN sa = { AF_INET, htons( nPort ), *pAddress };
+	return dht_ping_node( (sockaddr*)&sa, sizeof( sa ) ) != -1;
 }
 
 void CDHT::OnRun()
@@ -226,6 +220,29 @@ void CDHT::OnRun()
 		if ( ! m_bConnected )
 		{
 			Connect();
+		}
+	}
+
+	int nNodes = dht_nodes( AF_INET, NULL, NULL, NULL, NULL );
+	if ( nNodes == 0 )
+	{
+		// Need a node
+		CSingleLock oLock( &HostCache.BitTorrent.m_pSection, FALSE );
+		if ( oLock.Lock( 250 ) )
+		{
+			DWORD tNow = static_cast< DWORD >( time( NULL ) );
+
+			// Ping most recent node
+			for ( CHostCacheIterator i = HostCache.BitTorrent.Begin(); i != HostCache.BitTorrent.End(); ++i )
+			{
+				CHostCacheHostPtr pCache = (*i);
+
+				if ( pCache->CanConnect( tNow ) )
+				{
+					pCache->ConnectTo( TRUE );
+					break;
+				}
+			}
 		}
 	}
 
@@ -249,25 +266,70 @@ void CDHT::OnPacket(const SOCKADDR_IN* pHost, CBTPacket* pPacket)
 	dht_periodic( pBufffer.m_pBuffer, pBufffer.m_nLength - 1, (sockaddr*)pHost, sizeof( SOCKADDR_IN ), &tosleep, &CDHT::OnEvent, NULL );
 }
 
-void CDHT::OnEvent(void* /*closure*/, int evt, unsigned char* info_hash, void* data, size_t data_len)
+void CDHT::OnEvent(void* /*closure*/, int evt, const unsigned char* info_hash, const void* data, size_t data_len)
 {
-	Hashes::BtHash oHash;
-	CopyMemory( &oHash[ 0 ], info_hash, Hashes::BtHash::byteCount );
-	oHash.validate();
-
-	ATLTRACE( "DHT> %s %d %u bytes\n", (LPCSTR)CT2CA( oHash.toString() ), evt, data_len );
-
 	switch ( evt )
 	{
+	case DHT_EVENT_ADDED:
+	case DHT_EVENT_SENT:
+		if ( data_len == sizeof( SOCKADDR_IN ) )
+		{
+			const SOCKADDR_IN* pHost = (const SOCKADDR_IN*)data;
+
+			CQuickLock oLock( HostCache.BitTorrent.m_pSection );
+
+			// Node just added
+			if ( CHostCacheHostPtr pCache = HostCache.BitTorrent.Add( &pHost->sin_addr, htons( pHost->sin_port ) ) )
+			{
+				CopyMemory( &pCache->m_oBtGUID[ 0 ], info_hash, Hashes::BtGuid::byteCount );
+				pCache->m_oBtGUID.validate();
+
+				HostCache.BitTorrent.m_nCookie++;
+			}
+		}
+		break;
+
+	case DHT_EVENT_REPLY:
+		if ( data_len == sizeof( SOCKADDR_IN ) )
+		{
+			const SOCKADDR_IN* pHost = (const SOCKADDR_IN*)data;
+
+			CQuickLock oLock( HostCache.BitTorrent.m_pSection );
+
+			// Got reply from node
+			if ( CHostCacheHostPtr pCache = HostCache.BitTorrent.OnSuccess( &pHost->sin_addr, htons( pHost->sin_port ) ) )
+			{
+				pCache->m_tAck = 0;
+
+				HostCache.BitTorrent.m_nCookie++;
+			}
+		}
+		break;
+
+	case DHT_EVENT_REMOVED:
+		if ( data_len == sizeof( SOCKADDR_IN ) )
+		{
+			const SOCKADDR_IN* pHost = (const SOCKADDR_IN*)data;
+			
+			CQuickLock oLock( HostCache.BitTorrent.m_pSection );
+
+			HostCache.BitTorrent.Remove( &pHost->sin_addr );
+
+			HostCache.BitTorrent.m_nCookie++;
+		}
+		break;
+
 	case DHT_EVENT_VALUES:
 		{
 			CSingleLock oLock( &Transfers.m_pSection, FALSE );
 			if ( oLock.Lock( 250 ) )
 			{
+				Hashes::BtHash oHash;
+				CopyMemory( &oHash[ 0 ], info_hash, Hashes::BtHash::byteCount );
+				oHash.validate();
+
 				if ( CDownload* pDownload = Downloads.FindByBTH( oHash ) )
 				{
-					ATLTRACE( "DHT> %s %s\n", (LPCSTR)CT2CA( pDownload->m_oBTH.toString() ), (LPCSTR)CT2CA( pDownload->m_sName ) );
-
 					size_t nCount = data_len / 6;
 					for ( size_t i = 0; i < nCount; ++i )
 					{
@@ -580,16 +642,14 @@ BOOL CBTPacket::OnPacket(const SOCKADDR_IN* pHost)
 	if ( ! m_pNode->IsType( CBENode::beDict ) )
 		return FALSE;
 
+	if ( ! Settings.BitTorrent.EnableToday || ! Settings.BitTorrent.EnableDHT )
+		return TRUE;
+
 	{
 		CQuickLock oLock( HostCache.BitTorrent.m_pSection );
 
-		if ( CHostCacheHostPtr pCache = HostCache.BitTorrent.Add( &pHost->sin_addr, htons( pHost->sin_port ) ) )
+		if ( CHostCacheHostPtr pCache = HostCache.BitTorrent.OnSuccess( &pHost->sin_addr, htons( pHost->sin_port ) ) )
 		{
-			pCache->m_bDHT = TRUE;
-			pCache->m_tFailure = 0;
-			pCache->m_nFailures = 0;
-			pCache->m_bCheckedLocally = TRUE;
-
 			// Get version
 			const CBENode* pVersion = m_pNode->GetNode( BT_DICT_VENDOR );
 			if ( pVersion && pVersion->IsType( CBENode::beString ) )

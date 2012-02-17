@@ -68,7 +68,7 @@ public:
 	DWORD		m_tAdded;			// Time when host was constructed (in ticks)
 	DWORD		m_tRetryAfter;		// G2 retry time according G2_PACKET_RETRY_AFTER packet (in seconds)
 	DWORD		m_tConnect;			// TCP last connect time (in seconds)
-	DWORD		m_tQuery;			// G2 / ED2K query time (in seconds)
+	DWORD		m_tQuery;			// G2 / ED2K / BitTorrent query time (in seconds)
 	DWORD		m_tAck;				// Time when we sent something requires acknowledgment (0 - not required)
 	DWORD		m_tStats;			// ED2K stats UDP request
 	DWORD		m_tFailure;			// Last failure time
@@ -81,7 +81,7 @@ public:
 	DWORD		m_nKeyHost;			// G2 query key host
 
 	// Attributes: DHT
-	BOOL			m_bDHT;			// Host is DHT capable
+	BOOL			m_bDHT;			// Host is DHT capable (UNUSED)
 	Hashes::BtGuid	m_oBtGUID;		// Host GUID (160 bit)
 	CArray< BYTE >	m_Token;		// Host access token
 
@@ -180,8 +180,8 @@ public:
 	mutable CMutex		m_pSection;
 
 	CHostCacheHostPtr	Add(const IN_ADDR* pAddress, WORD nPort, DWORD tSeen = 0, LPCTSTR pszVendor = NULL, DWORD nUptime = 0, DWORD nCurrentLeaves = 0, DWORD nLeafLimit = 0, LPCTSTR szAddress = NULL);
-	// Add host in form "IP:Port SeenTime"
-	CHostCacheHostPtr 	Add(LPCTSTR pszHost, DWORD tSeen = 0, LPCTSTR pszVendor = NULL, DWORD nUptime = 0, DWORD nCurrentLeaves = 0, DWORD nLeafLimit = 0);
+	// Add host in form of "{IP|FQDN}[:Port][ SeenTime]"
+	CHostCacheHostPtr 	Add(LPCTSTR pszHost, WORD nPort = 0, DWORD tSeen = 0, LPCTSTR pszVendor = NULL, DWORD nUptime = 0, DWORD nCurrentLeaves = 0, DWORD nLeafLimit = 0);
 	void				Update(CHostCacheHostPtr pHost, WORD nPort = 0, DWORD tSeen = 0, LPCTSTR pszVendor = NULL, DWORD nUptime = 0, DWORD nCurrentLeaves = 0, DWORD nLeafLimit = 0);
 	CHostCacheMapItr	Remove(CHostCacheHostPtr pHost);
 	CHostCacheMapItr	Remove(const IN_ADDR* pAddress);
@@ -189,7 +189,7 @@ public:
 	void				OnResolve(LPCTSTR szAddress, const IN_ADDR* pAddress, WORD nPort);
 	void				OnFailure(const IN_ADDR* pAddress, WORD nPort, bool bRemove = true);
 	void				OnFailure(LPCTSTR szAddress, bool bRemove = true);
-	void				OnSuccess(const IN_ADDR* pAddress, WORD nPort, bool bUpdate = true);
+	CHostCacheHostPtr 	OnSuccess(const IN_ADDR* pAddress, WORD nPort, bool bUpdate = true);
 	void				PruneOldHosts(DWORD tNow);
 	void				Clear();
 	void				Serialize(CArchive& ar, int nVersion);
@@ -259,32 +259,6 @@ public:
 			std::bind2nd( good_host(), bCountUncheckedLocally ) );
 	}
 
-	inline CHostCacheHostPtr GetForDHTQuery() const throw()
-	{
-		const DWORD tNow = static_cast< DWORD >( time( NULL ) );
-		for ( CHostCacheIterator it = m_HostsTime.begin();
-			it != m_HostsTime.end(); ++it )
-		{
-			CHostCacheHostPtr pHost = (*it);
-			if ( pHost->CanQuery( tNow ) && pHost->m_bDHT && pHost->m_oBtGUID )
-				return pHost;
-		}
-		return NULL;
-	}
-
-	inline CHostCacheHostPtr GetOldestForQuery() const throw()
-	{
-		const DWORD tNow = static_cast< DWORD >( time( NULL ) );
-		for ( CHostCacheRIterator it = m_HostsTime.rbegin();
-			it != m_HostsTime.rend(); ++it )
-		{
-			CHostCacheHostPtr pHost = (*it);
-			if ( pHost->CanQuery( tNow ) )
-				return pHost;
-		}
-		return NULL;
-	}
-
 protected:
 	CHostCacheMap				m_Hosts;		// Hosts map (sorted by IP)
 	CHostCacheIndex				m_HostsTime;	// Host index (sorted from newer to older)
@@ -324,10 +298,9 @@ public:
 	BOOL				Check(const CHostCacheHostPtr pHost) const;
 	void				Remove(CHostCacheHostPtr pHost);
 	void				SanityCheck();
-	void				OnFailure(const IN_ADDR* pAddress, WORD nPort,
-							  PROTOCOLID nProtocol=PROTOCOL_NULL, bool bRemove=true);
-	void				OnSuccess(const IN_ADDR* pAddress, WORD nPort,
-							  PROTOCOLID nProtocol=PROTOCOL_NULL, bool bUpdate=true);
+	void				OnResolve(PROTOCOLID nProtocol, LPCTSTR szAddress, const IN_ADDR* pAddress = NULL, WORD nPort = 0);
+	void				OnFailure(const IN_ADDR* pAddress, WORD nPort, PROTOCOLID nProtocol = PROTOCOL_NULL, bool bRemove = true);
+	void				OnSuccess(const IN_ADDR* pAddress, WORD nPort, PROTOCOLID nProtocol = PROTOCOL_NULL, bool bUpdate = true);
 	void				PruneOldHosts();
 
 	inline bool EnoughServers(PROTOCOLID nProtocol) const

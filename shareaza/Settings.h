@@ -490,6 +490,8 @@ public:
 		bool		PreferenceBTSources;		// Preference downloading from BT sources where appropriate
 		DWORD		HostExpire;					// DHT hosts expiration time (seconds)
 		bool		EnableDHT;					// Enable DHT protocol
+		DWORD		ConnectThrottle;			// Throttle for DHT request (sec)
+		DWORD		QueryHostDeadline;			// Time to wait for DHT reply (sec)
 	} BitTorrent;
 
 	struct sDownloads

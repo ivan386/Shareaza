@@ -21,6 +21,7 @@
 
 #include "StdAfx.h"
 #include "Shareaza.h"
+#include "BTPacket.h"
 #include "ChatCore.h"
 #include "CrawlSession.h"
 #include "Datagrams.h"
@@ -354,8 +355,6 @@ void CNetwork::Disconnect()
 
 BOOL CNetwork::ConnectTo(LPCTSTR pszAddress, int nPort, PROTOCOLID nProtocol, BOOL bNoUltraPeer)
 {
-	CSingleLock pLock( &m_pSection, TRUE );
-
 	if ( ! IsConnected() && ! Connect() )
 		return FALSE;
 
@@ -364,7 +363,7 @@ BOOL CNetwork::ConnectTo(LPCTSTR pszAddress, int nPort, PROTOCOLID nProtocol, BO
 		nPort = protocolPorts[ ( nProtocol == PROTOCOL_ANY ) ? PROTOCOL_NULL : nProtocol ];
 	}
 
-	return AsyncResolve( pszAddress, (WORD)nPort, nProtocol, bNoUltraPeer ? 2 : 1 );
+	return AsyncResolve( pszAddress, (WORD)nPort, nProtocol, bNoUltraPeer ? RESOLVE_CONNECT : RESOLVE_CONNECT_ULTRAPEER );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -804,90 +803,61 @@ void CNetwork::PostRun()
 
 void CNetwork::OnWinsock(WPARAM wParam, LPARAM lParam)
 {
-	auto_ptr< ResolveStruct > pResolve( GetResolve( (HANDLE)wParam ) );
+	auto_ptr< const ResolveStruct > pResolve( GetResolve( (HANDLE)wParam ) );
 	if ( ! pResolve.get() )
 		// Out of memory
 		return;
 
-	CHostCacheList* pCache = HostCache.ForProtocol( pResolve->m_nProtocol );
-
-	CQuickLock oNetworkLock( m_pSection );
-
 	if ( WSAGETASYNCERROR( lParam ) == 0 )
 	{
-		IN_ADDR& pAddress = *(IN_ADDR*)pResolve->m_pHost.h_addr;
+		const IN_ADDR* pAddress = (const IN_ADDR*)pResolve->m_pHost.h_addr;
 
-		if ( pResolve->m_nCommand == 0 )
+		switch ( pResolve->m_nCommand )
 		{
-			if ( pCache )
-				pCache->OnResolve( pResolve->m_sAddress, &pAddress, pResolve->m_nPort );
-		}
-		else if ( pResolve->m_nCommand == 1 || pResolve->m_nCommand == 2 )
-		{
-			if ( pCache )
-				pCache->OnResolve( pResolve->m_sAddress, &pAddress, pResolve->m_nPort );
+		case RESOLVE_ONLY:
+			HostCache.OnResolve( pResolve->m_nProtocol, pResolve->m_sAddress, pAddress, pResolve->m_nPort );
+			break;
 
-			BOOL bNoUltraPeer = ( pResolve->m_nCommand == 2 );
+		case RESOLVE_CONNECT_ULTRAPEER:
+		case RESOLVE_CONNECT:
+			HostCache.OnResolve( pResolve->m_nProtocol, pResolve->m_sAddress, pAddress, pResolve->m_nPort );
+			Neighbours.ConnectTo( *pAddress, pResolve->m_nPort, pResolve->m_nProtocol, FALSE, ( pResolve->m_nCommand == RESOLVE_CONNECT ) );
+			break;
 
-			Neighbours.ConnectTo( pAddress, pResolve->m_nPort, pResolve->m_nProtocol, FALSE, bNoUltraPeer );
-		}
-		else if ( pResolve->m_nCommand == 3 )
-		{
-			// code to invoke UDPHC/UDPKHL Sender.
-			if ( pResolve->m_nProtocol == PROTOCOL_G1 ||
-				 pResolve->m_nProtocol == PROTOCOL_G2 )
-			{
-				CString strAddress = ( ( pResolve->m_nProtocol == PROTOCOL_G1 ) ?
-					L"uhc:" : L"ukhl:" ) + pResolve->m_sAddress;
-				CDiscoveryService* pService = DiscoveryServices.GetByAddress( strAddress );
-				if ( pService == NULL )
-				{
-					strAddress.AppendFormat(_T(":%u"), pResolve->m_nPort );
-					pService = DiscoveryServices.GetByAddress( strAddress );
-				}
-				if ( pService != NULL )
-				{
-					pService->m_pAddress = pAddress;
-					pService->m_nPort = pResolve->m_nPort;
-				}
-				if ( pResolve->m_nProtocol == PROTOCOL_G1 )
-					UDPHostCache((IN_ADDR*)pResolve->m_pHost.h_addr, pResolve->m_nPort);
-				else
-					UDPKnownHubCache( &pAddress, pResolve->m_nPort );
-			}
+		case RESOLVE_DISCOVERY:
+			DiscoveryServices.OnResolve( pResolve->m_nProtocol, pResolve->m_sAddress, pAddress, pResolve->m_nPort );
+			break;
+
+		case RESOLVE_BITTORENT:
+			HostCache.OnResolve( pResolve->m_nProtocol, pResolve->m_sAddress, pAddress, pResolve->m_nPort );
+			DHT.Ping( pAddress, pResolve->m_nPort );
+			break;
+
+		default:
+			;
 		}
 	}
 	else
 	{
-		if ( pResolve->m_nCommand == 0 )
-		{
-			theApp.Message( MSG_ERROR, IDS_NETWORK_RESOLVE_FAIL, pResolve->m_sAddress );
-		}
-		else if ( pResolve->m_nCommand == 1 || pResolve->m_nCommand == 2 )
-		{
-			theApp.Message( MSG_ERROR, IDS_NETWORK_RESOLVE_FAIL, pResolve->m_sAddress );
+		theApp.Message( MSG_ERROR, IDS_NETWORK_RESOLVE_FAIL, pResolve->m_sAddress );
 
-			if ( pCache )
-				pCache->OnFailure( pResolve->m_sAddress, false );
-		}
-		else if ( pResolve->m_nCommand == 3 )
+		switch ( pResolve->m_nCommand )
 		{
-			if ( pResolve->m_nProtocol == PROTOCOL_G1 ||
-				 pResolve->m_nProtocol == PROTOCOL_G2 )
-			{
-				CString strAddress = ( ( pResolve->m_nProtocol == PROTOCOL_G1 ) ?
-					L"uhc:" : L"ukhl:" ) + pResolve->m_sAddress;
-				CDiscoveryService* pService = DiscoveryServices.GetByAddress( strAddress );
-				if ( pService == NULL )
-				{
-					strAddress.AppendFormat(_T(":%u"), pResolve->m_nPort );
-					pService = DiscoveryServices.GetByAddress( strAddress );
-				}
-				if ( pService != NULL )
-				{
-					pService->OnFailure();
-				}
-			}
+		case RESOLVE_ONLY:
+			break;
+
+		case RESOLVE_CONNECT_ULTRAPEER:
+		case RESOLVE_CONNECT:
+		case RESOLVE_BITTORENT:
+			HostCache.OnResolve( pResolve->m_nProtocol, pResolve->m_sAddress );
+			break;
+
+		case RESOLVE_DISCOVERY:
+			DiscoveryServices.OnResolve( pResolve->m_nProtocol, pResolve->m_sAddress );
+			break;
+
+		default:
+			;
 		}
 	}
 }
@@ -1329,28 +1299,6 @@ bool CNetwork::ProcessQueryHits(CNetwork::CJob& oJob)
 	}
 
 	return true;
-}
-
-void CNetwork::UDPHostCache(IN_ADDR* pAddress, WORD nPort)
-{
-	if ( CG1Packet* pPing = CG1Packet::New( G1_PACKET_PING, 1, Hashes::Guid( MyProfile.oGUID ) ) )
-	{
-		CGGEPBlock pBlock;
-		if ( CGGEPItem* pItem = pBlock.Add( GGEP_HEADER_SUPPORT_CACHE_PONGS ) )
-		{
-			pItem->WriteByte( Neighbours.IsG1Ultrapeer() ? GGEP_SCP_ULTRAPEER : GGEP_SCP_LEAF );
-		}
-		pBlock.Write( pPing );
-		Datagrams.Send( pAddress, nPort, pPing, TRUE, NULL, FALSE );
-	}
-}
-
-void CNetwork::UDPKnownHubCache(IN_ADDR* pAddress, WORD nPort)
-{
-	if ( CG2Packet* pKHLR = CG2Packet::New( G2_PACKET_KHL_REQ ) )
-	{
-		Datagrams.Send( pAddress, nPort, pKHLR, TRUE, NULL, FALSE );
-	}
 }
 
 SOCKET CNetwork::AcceptSocket(SOCKET hSocket, SOCKADDR_IN* addr, LPCONDITIONPROC lpfnCondition, DWORD_PTR dwCallbackData)

@@ -1,7 +1,7 @@
 //
 // DiscoveryServices.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,18 +22,20 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
-#include "DiscoveryServices.h"
-#include "Network.h"
-#include "HostCache.h"
-#include "Neighbours.h"
-#include "Neighbour.h"
-#include "Packet.h"
-#include "G2Packet.h"
 #include "Buffer.h"
 #include "Datagrams.h"
+#include "DiscoveryServices.h"
+#include "G1Packet.h"
+#include "G2Packet.h"
+#include "GProfile.h"
+#include "HostCache.h"
 #include "Kademlia.h"
-#include "VendorCache.h"
+#include "Neighbour.h"
+#include "Neighbours.h"
+#include "Network.h"
+#include "Packet.h"
 #include "Security.h"
+#include "VendorCache.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -1979,6 +1981,59 @@ BOOL CDiscoveryServices::Execute(CDiscoveryService* pService, Mode nMode)
 	return FALSE;
 }
 
+void CDiscoveryServices::OnResolve(PROTOCOLID nProtocol, LPCTSTR szAddress, const IN_ADDR* pAddress, WORD nPort)
+{
+	// code to invoke UDPHC/UDPKHL Sender.
+	if ( nProtocol == PROTOCOL_G1 || nProtocol == PROTOCOL_G2 )
+	{
+		CString strAddress( ( nProtocol == PROTOCOL_G1 ) ? _T("uhc:") : _T("ukhl:") );
+		strAddress += szAddress;
+
+		CDiscoveryService* pService = GetByAddress( strAddress );
+		if ( pService == NULL )
+		{
+			strAddress.AppendFormat( _T(":%u"), nPort );
+			pService = GetByAddress( strAddress );
+		}
+
+		if ( pAddress )
+		{
+			if ( pService != NULL )
+			{
+				pService->m_pAddress = *pAddress;
+				pService->m_nPort = nPort;
+			}
+
+			if (nProtocol == PROTOCOL_G1 )
+			{
+				if ( CG1Packet* pPing = CG1Packet::New( G1_PACKET_PING, 1, Hashes::Guid( MyProfile.oGUID ) ) )
+				{
+					CGGEPBlock pBlock;
+					if ( CGGEPItem* pItem = pBlock.Add( GGEP_HEADER_SUPPORT_CACHE_PONGS ) )
+					{
+						pItem->WriteByte( Neighbours.IsG1Ultrapeer() ? GGEP_SCP_ULTRAPEER : GGEP_SCP_LEAF );
+					}
+					pBlock.Write( pPing );
+					Datagrams.Send( pAddress, nPort, pPing, TRUE, NULL, FALSE );
+				}
+			}
+			else
+			{
+				if ( CG2Packet* pKHLR = CG2Packet::New( G2_PACKET_KHL_REQ ) )
+				{
+					Datagrams.Send( pAddress, nPort, pKHLR, TRUE, NULL, FALSE );
+				}
+			}
+		}
+		else
+		{
+			if ( pService != NULL )
+			{
+				pService->OnFailure();
+			}
+		}
+	}
+}
 
 //////////////////////////////////////////////////////////////////////
 // CDiscoveryService construction
@@ -2152,7 +2207,7 @@ BOOL CDiscoveryService::ResolveGnutella()
 		if ( nPos >= 0 && _stscanf( strHost.Mid( nPos + 1 ), _T("%i"), &nPort ) == 1 )
 			strHost = strHost.Left( nPos );
 
-		if ( Network.AsyncResolve( strHost, (WORD)nPort, PROTOCOL_G1, 0 ) )
+		if ( Network.AsyncResolve( strHost, (WORD)nPort, PROTOCOL_G1, RESOLVE_ONLY ) )
 		{
 			OnSuccess();
 			return TRUE;
@@ -2165,7 +2220,7 @@ BOOL CDiscoveryService::ResolveGnutella()
 		if ( nPos >= 0 && _stscanf( strHost.Mid( nPos + 1 ), _T("%i"), &nPort ) == 1 )
 			strHost = strHost.Left( nPos );
 
-		if ( Network.AsyncResolve( strHost, (WORD)nPort, PROTOCOL_G1, 1 ) )
+		if ( Network.AsyncResolve( strHost, (WORD)nPort, PROTOCOL_G1, RESOLVE_CONNECT_ULTRAPEER ) )
 		{
 			OnAccess();
 			return TRUE;
@@ -2178,7 +2233,7 @@ BOOL CDiscoveryService::ResolveGnutella()
 		if ( nPos >= 0 && _stscanf( strHost.Mid( nPos + 1 ), _T("%i"), &nPort ) == 1 )
 			strHost = strHost.Left( nPos );
 
-		if ( Network.AsyncResolve( strHost, (WORD)nPort, PROTOCOL_G2, 1 ) )
+		if ( Network.AsyncResolve( strHost, (WORD)nPort, PROTOCOL_G2, RESOLVE_CONNECT_ULTRAPEER ) )
 		{
 			OnAccess();
 			return TRUE;
@@ -2191,7 +2246,7 @@ BOOL CDiscoveryService::ResolveGnutella()
 		if ( nPos >= 0 && _stscanf( strHost.Mid( nPos + 1 ), _T("%i"), &nPort ) == 1 )
 			strHost = strHost.Left( nPos );
 
-		if ( Network.AsyncResolve( strHost, (WORD)nPort, PROTOCOL_G1, 3 ) )
+		if ( Network.AsyncResolve( strHost, (WORD)nPort, PROTOCOL_G1, RESOLVE_DISCOVERY ) )
 		{
 			OnAccess();
 			return TRUE;
@@ -2204,7 +2259,7 @@ BOOL CDiscoveryService::ResolveGnutella()
 		if ( nPos >= 0 && _stscanf( strHost.Mid( nPos + 1 ), _T("%i"), &nPort ) == 1 )
 			strHost = strHost.Left( nPos );
 
-		if ( Network.AsyncResolve( strHost, (WORD)nPort, PROTOCOL_G2, 3 ) )
+		if ( Network.AsyncResolve( strHost, (WORD)nPort, PROTOCOL_G2, RESOLVE_DISCOVERY ) )
 		{
 			OnAccess();
 			return TRUE;

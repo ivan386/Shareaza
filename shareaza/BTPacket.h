@@ -234,7 +234,7 @@ public:
 	void Search(const Hashes::BtHash& oBTH, bool bAnnounce = true);
 
 	// Ping this host
-	void Ping(const SOCKADDR_IN* pHost);
+	bool Ping(const IN_ADDR* pAddress, WORD nPort);
 
 	// Run this periodically
 	void OnRun();
@@ -245,7 +245,7 @@ public:
 protected:
 	bool	m_bConnected;
 
-	static void OnEvent(void* closure, int evt, unsigned char* info_hash, void* data, size_t data_len);
+	static void OnEvent(void* closure, int evt, const unsigned char* info_hash, const void* data, size_t data_len);
 };
 
 extern CDHT DHT;

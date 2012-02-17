@@ -22,6 +22,7 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Buffer.h"
+#include "BTPacket.h"
 #include "DiscoveryServices.h"
 #include "EDPacket.h"
 #include "HostCache.h"
@@ -284,6 +285,21 @@ void CHostCache::SanityCheck()
 	}
 }
 
+void CHostCache::OnResolve(PROTOCOLID nProtocol, LPCTSTR szAddress, const IN_ADDR* pAddress, WORD nPort)
+{
+	if ( CHostCacheList* pCache = HostCache.ForProtocol( nProtocol ) )
+	{
+		if ( pAddress )
+		{
+			pCache->OnResolve( szAddress, pAddress, nPort );
+		}
+		else
+		{
+			pCache->OnFailure( szAddress, false );
+		}
+	}
+}
+
 void CHostCache::OnFailure(const IN_ADDR* pAddress, WORD nPort, PROTOCOLID nProtocol, bool bRemove)
 {
 	for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
@@ -338,7 +354,7 @@ void CHostCacheList::Clear()
 //////////////////////////////////////////////////////////////////////
 // CHostCacheList host add
 
-CHostCacheHostPtr CHostCacheList::Add(LPCTSTR pszHost, DWORD tSeen, LPCTSTR pszVendor, DWORD nUptime, DWORD nCurrentLeaves, DWORD nLeafLimit)
+CHostCacheHostPtr CHostCacheList::Add(LPCTSTR pszHost, WORD nPort, DWORD tSeen, LPCTSTR pszVendor, DWORD nUptime, DWORD nCurrentLeaves, DWORD nLeafLimit)
 {
 	CString strHost( pszHost );
 
@@ -352,7 +368,7 @@ CHostCacheHostPtr CHostCacheList::Add(LPCTSTR pszHost, DWORD tSeen, LPCTSTR pszV
 		tSeen = TimeFromString( strTime );
 	}
 
-	return Add( NULL, 0, tSeen, pszVendor, nUptime, nCurrentLeaves, nLeafLimit, strHost );
+	return Add( NULL, nPort, tSeen, pszVendor, nUptime, nCurrentLeaves, nLeafLimit, strHost );
 }
 
 CHostCacheHostPtr CHostCacheList::Add(const IN_ADDR* pAddress, WORD nPort, DWORD tSeen, LPCTSTR pszVendor, DWORD nUptime, DWORD nCurrentLeaves, DWORD nLeafLimit, LPCTSTR szAddress)
@@ -610,7 +626,7 @@ void CHostCacheList::OnFailure(LPCTSTR szAddress, bool bRemove)
 //////////////////////////////////////////////////////////////////////
 // CHostCacheList failure processor
 
-void CHostCacheList::OnSuccess(const IN_ADDR* pAddress, WORD nPort, bool bUpdate)
+CHostCacheHostPtr CHostCacheList::OnSuccess(const IN_ADDR* pAddress, WORD nPort, bool bUpdate)
 {
 	CQuickLock oLock( m_pSection );
 
@@ -624,6 +640,7 @@ void CHostCacheList::OnSuccess(const IN_ADDR* pAddress, WORD nPort, bool bUpdate
 		if ( bUpdate )
 			Update( pHost, nPort );
 	}
+	return pHost;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -637,15 +654,30 @@ void CHostCacheList::PruneOldHosts(DWORD tNow)
 	{
 		CHostCacheHostPtr pHost = (*i).second;
 
-		// Query acknowledgment prune (G2)
-		if ( pHost->m_nProtocol == PROTOCOL_G2 &&
-			 pHost->m_tAck &&
-			 tNow > pHost->m_tAck + Settings.Gnutella2.QueryHostDeadline )
+		switch ( pHost->m_nProtocol )
 		{
-			pHost->m_tAck = 0;
+		case PROTOCOL_G2:
+			if ( pHost->m_tAck && tNow > pHost->m_tAck + Settings.Gnutella2.QueryHostDeadline )
+			{
+				pHost->m_tAck = 0;
 
-			m_nCookie++;
-			pHost->m_nFailures++;
+				m_nCookie++;
+				pHost->m_nFailures++;
+			}
+			break;
+
+		case PROTOCOL_BT:
+			if ( pHost->m_tAck && tNow > pHost->m_tAck + Settings.BitTorrent.QueryHostDeadline )
+			{
+				pHost->m_tAck = 0;
+
+				m_nCookie++;
+				pHost->m_nFailures++;
+			}
+			break;
+
+		default:
+			;
 		}
 
 		if ( ! pHost->m_bPriority &&
@@ -1449,12 +1481,18 @@ bool CHostCacheHost::ConnectTo(BOOL bAutomatic)
 			return Network.ConnectTo( m_sAddress, m_nPort, m_nProtocol, FALSE ) != FALSE;
 		}
 
+	case PROTOCOL_BT:
+		if ( m_pAddress.s_addr != INADDR_ANY )
+			return DHT.Ping( &m_pAddress, m_nPort );
+		else
+		{
+			m_tConnect += 30; // Throttle for 30 seconds
+			return Network.AsyncResolve( m_sAddress, m_nPort, m_nProtocol, RESOLVE_BITTORENT ) != FALSE;	
+		}
+
 	case PROTOCOL_KAD:
 		{
-			SOCKADDR_IN pHost = {};
-			pHost.sin_family = AF_INET;
-			pHost.sin_addr.s_addr = m_pAddress.s_addr;
-			pHost.sin_port = htons( m_nUDPPort );
+			SOCKADDR_IN pHost = { AF_INET, htons( m_nUDPPort ), m_pAddress };
 			Kademlia.Bootstrap( &pHost );
 		}
 		break;
@@ -1526,6 +1564,8 @@ bool CHostCacheHost::IsThrottled(DWORD tNow) const
 		return ( tNow < m_tConnect + Settings.Gnutella.ConnectThrottle );
 	case PROTOCOL_ED2K:
 		return ( tNow < m_tConnect + Settings.eDonkey.QueryThrottle );
+	case PROTOCOL_BT:
+		return ( tNow < m_tConnect + Settings.BitTorrent.ConnectThrottle );
 	default:
 		return false;
 	}
@@ -1570,7 +1610,6 @@ bool CHostCacheHost::CanQuote(const DWORD tNow) const
 // Can we UDP query this host? (G2/ed2k)
 bool CHostCacheHost::CanQuery(DWORD tNow) const
 {
-	// eDonkey2000 server
 	switch ( m_nProtocol )
 	{
 	case PROTOCOL_G2:

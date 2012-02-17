@@ -1075,9 +1075,7 @@ BOOL CBTClient::OnDHTPort(CBTPacket* pPacket)
 	if ( pPacket && pPacket->GetRemaining() == 2 )
 	{
 		// Test this node via UDP
-		SOCKADDR_IN addr = m_pHost;
-		addr.sin_port = pPacket->ReadShortLE();
-		DHT.Ping( &addr );
+		DHT.Ping( &m_pHost.sin_addr, pPacket->ReadShortBE() );
 	}
 	return TRUE;
 }

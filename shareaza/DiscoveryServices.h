@@ -1,7 +1,7 @@
 //
 // DiscoveryServices.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -123,6 +123,7 @@ public:
 	BOOL				Execute(BOOL bDiscovery, PROTOCOLID nProtocol, USHORT nForceDiscovery);
 	void				Stop();
 	BOOL				Execute(CDiscoveryService* pService, Mode nMode);
+	void				OnResolve(PROTOCOLID nProtocol, LPCTSTR szAddress, const IN_ADDR* pAddress = NULL, WORD nPort = 0);
 
 protected:
 	void				Remove(CDiscoveryService* pService, BOOL bCheck = TRUE);
