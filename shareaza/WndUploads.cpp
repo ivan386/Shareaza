@@ -1,7 +1,7 @@
 //
 // WndUploads.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -171,6 +171,8 @@ void CUploadsWnd::OnSkinChange()
 
 void CUploadsWnd::OnTimer(UINT_PTR nIDEvent)
 {
+	DWORD tNow = GetTickCount();
+
 	// Reset Selection Timer event (posted by ctrluploads)
 	if ( nIDEvent == 5 ) m_tSel	= 0;
 
@@ -180,19 +182,20 @@ void CUploadsWnd::OnTimer(UINT_PTR nIDEvent)
 		CSingleLock pLock( &Transfers.m_pSection );
 		if ( ! pLock.Lock( 10 ) ) return;
 
-		DWORD tNow = GetTickCount();
-		BOOL bCull = Uploads.GetCount( NULL ) > 75;
-
+		DWORD nCount = 0;
 		for ( POSITION pos = Uploads.GetIterator() ; pos ; )
 		{
 			CUploadTransfer* pUpload = Uploads.GetNext( pos );
-
-			if ( pUpload->m_nState == upsNull &&
-				 tNow - pUpload->m_tConnected > Settings.Uploads.ClearDelay )
+			if ( pUpload->m_nState == upsNull )
 			{
-				if ( Settings.Uploads.AutoClear || pUpload->m_nUploaded == 0 || bCull )
+				nCount++;
+				if ( tNow > pUpload->m_tConnected + Settings.Uploads.ClearDelay )
 				{
-					pUpload->Remove( FALSE );
+					if ( Settings.Uploads.AutoClear || pUpload->m_nUploaded == 0 || nCount > 25 )
+					{
+						nCount--;
+						pUpload->Remove( FALSE );
+					}
 				}
 			}
 		}
@@ -201,10 +204,8 @@ void CUploadsWnd::OnTimer(UINT_PTR nIDEvent)
 	// Update event (2 second timer)
 	if ( nIDEvent == 2 )
 	{
-		DWORD tNow = GetTickCount();
-
 		// If the window is visible or hasn't been updated in 10 seconds
-		if ( ( IsWindowVisible() && IsActive( FALSE ) ) || ( ( tNow - m_tLastUpdate ) > 10*1000 ) )
+		if ( ( IsWindowVisible() && IsActive( FALSE ) ) || ( tNow > m_tLastUpdate + 10*1000 ) )
 		{
 			m_wndUploads.Update();
 			m_tLastUpdate = tNow;
