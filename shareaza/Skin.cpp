@@ -1,7 +1,7 @@
 //
 // Skin.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1248,46 +1248,32 @@ BOOL CSkin::Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID, CToolTipCtrl*
 
 	if ( Settings.General.DialogScan )
 	{
-		CFile pFile;
+		CStdioFile pFile;
 
-		if ( pFile.Open( _T("\\Dialog.xml"), CFile::modeReadWrite ) )
+		if ( pFile.Open( theApp.GetDocumentsFolder() + _T("\\Dialog.xml"), CFile::modeReadWrite ) )
 		{
 			pFile.Seek( 0, CFile::end );
 		}
-		else if ( ! pFile.Open( _T("\\Dialog.xml"), CFile::modeWrite|CFile::modeCreate ) )
+		else if ( ! pFile.Open( theApp.GetDocumentsFolder() + _T("\\Dialog.xml"), CFile::modeWrite|CFile::modeCreate ) )
 		{
 			return FALSE;
 		}
-		else
-			pFile.Write( "<dialogs>\r\n", 11 );
 
-		pFile.Write( "\t<dialog name=\"", 15 );
-		int nBytes = WideCharToMultiByte( CP_ACP, 0, strName, strName.GetLength(), NULL, 0, NULL, NULL );
-		LPSTR pBytes = new CHAR[nBytes];
-		WideCharToMultiByte( CP_ACP, 0, strName, strName.GetLength(), pBytes, nBytes, NULL, NULL );
-		pFile.Write( pBytes, nBytes );
-		delete [] pBytes;
+		pFile.WriteString( _T("\t\t<dialog name=\"") );
+		pFile.WriteString( strName );
 
-		pFile.Write( "\" cookie=\"", 10 );
-		nBytes = WideCharToMultiByte( CP_ACP, 0, strCaption, strCaption.GetLength(), NULL, 0, NULL, NULL );
-		pBytes = new CHAR[nBytes];
-		WideCharToMultiByte( CP_ACP, 0, strCaption, strCaption.GetLength(), pBytes, nBytes, NULL, NULL );
-		pFile.Write( pBytes, nBytes );
-		delete [] pBytes;
+		pFile.WriteString( _T("\" cookie=\"") );
+		pFile.WriteString( strCaption );
 
-		pFile.Write( "\" caption=\"", 11 );
+		pFile.WriteString( _T("\" caption=\"") );
 		pDialog->GetWindowText( strCaption );
 		strCaption.Replace( _T("\n"), _T("{n}") );
 		strCaption.Replace( _T("\r"), _T("") );
 		strCaption.Replace( _T("&"), _T("_") );
 		strCaption = CXMLNode::ValueToString( strCaption );
-		nBytes = WideCharToMultiByte( CP_ACP, 0, strCaption, strCaption.GetLength(), NULL, 0, NULL, NULL );
-		pBytes = new CHAR[nBytes];
-		WideCharToMultiByte( CP_ACP, 0, strCaption, strCaption.GetLength(), pBytes, nBytes, NULL, NULL );
-		pFile.Write( pBytes, nBytes );
-		delete [] pBytes;
+		pFile.WriteString( strCaption );
 
-		pFile.Write( "\">\r\n", 4 );
+		pFile.WriteString( _T("\">\n") );
 
 		for ( CWnd* pWnd = pDialog->GetWindow( GW_CHILD ) ; pWnd ; pWnd = pWnd->GetNextWindow() )
 		{
@@ -1337,23 +1323,17 @@ BOOL CSkin::Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID, CToolTipCtrl*
 				strCaption.Replace( _T("\r"), _T("") );
 				strCaption.Replace( _T("&"), _T("_") );
 				strCaption = CXMLNode::ValueToString( strCaption );
-				pFile.Write( "\t\t<control caption=\"", 20 );
-				int nBytes = WideCharToMultiByte( CP_ACP, 0, strCaption, strCaption.GetLength(), NULL, 0, NULL, NULL );
-				LPSTR pBytes = new CHAR[nBytes];
-				WideCharToMultiByte( CP_ACP, 0, strCaption, strCaption.GetLength(), pBytes, nBytes, NULL, NULL );
-				pFile.Write( pBytes, nBytes );
-				delete [] pBytes;
-
-				pFile.Write( "\"/>\r\n", 5 );
+				pFile.WriteString( _T("\t\t\t<control caption=\"") );
+				pFile.WriteString( strCaption );
+				pFile.WriteString( _T("\"/>\n") );
 			}
 			else
 			{
-				pFile.Write( "\t\t<control/>\r\n", 10+4 );
+				pFile.WriteString( _T("\t\t\t<control/>\n") );
 			}
 		}
 
-		pFile.Write( "\t</dialog>\r\n", 12 );
-		pFile.Close();
+		pFile.WriteString( _T("\t\t</dialog>\n") );
 
 		return TRUE;
 	}
