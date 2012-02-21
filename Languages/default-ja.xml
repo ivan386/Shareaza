@@ -354,6 +354,7 @@
 			<button id="ID_NETWORK_G1" text="Gnutella1"/>
 			<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
 			<button id="ID_NETWORK_DC" text="DC++"/>
+			<button id="ID_NETWORK_BT" text="BitTorrent"/>
 			<separator/>
 			<button id="ID_NEIGHBOURS_SETTINGS" text="設定"/>
 		</toolbar>
@@ -369,6 +370,7 @@
 			<button id="ID_NETWORK_G1" text="Gnutella1"/>
 			<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
 			<button id="ID_NETWORK_DC" text="DC++"/>
+			<button id="ID_NETWORK_BT" text="BitTorrent"/>
 			<separator/>
 			<button id="ID_NEIGHBOURS_SETTINGS" text="設定"/>
 		</toolbar>
@@ -506,6 +508,7 @@
 					<item id="ID_NETWORK_G1" text="Gnutella1へ接続(_1)"/>
 					<item id="ID_NETWORK_ED2K" text="eDonkey2000へ接続(_E)"/>
 					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
+					<item id="ID_NETWORK_BT" text="Connect to _BitTorrent"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_AUTO_CLOSE" text="転送後に終了(_A)"/>
@@ -543,7 +546,7 @@
 				<item id="ID_TOOLS_PROFILE" text="プロフィールを編集(_P)..."/>
 				<item id="ID_TOOLS_WIZARD" text="クイックスタートウィザード(_W)..."/>
 				<separator/>
-				<item id="ID_TOOLS_SETTINGS" text="Shareaza設定(_S)..."/>
+				<item id="ID_TOOLS_SETTINGS" text="Shareaza設定(_S)..." shortcut="Ctrl+P"/>
 			</menu>
 			<menu text="ヘルプ(_H)">
 				<item id="ID_HELP_FAQ" text="Shareaza FAQ(_F)"/>
@@ -583,6 +586,7 @@
 					<item id="ID_NETWORK_G1" text="Gnutella1へ接続(_1)"/>
 					<item id="ID_NETWORK_ED2K" text="eDonkey2000へ接続(_E)"/>
 					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
+					<item id="ID_NETWORK_BT" text="Connect to _BitTorrent"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_CONNECT_TO" text="接続先(_T)..." shortcut="Ctrl+T"/>
@@ -641,7 +645,7 @@
 				<item id="ID_TOOLS_PROFILE" text="プロフィールを編集(_P)..."/>
 				<item id="ID_TOOLS_WIZARD" text="クイックスタートウィザード(_W)..."/>
 				<separator/>
-				<item id="ID_TOOLS_SETTINGS" text="Shareaza設定(_S)..."/>
+				<item id="ID_TOOLS_SETTINGS" text="Shareaza設定(_S)..." shortcut="Ctrl+P"/>
 			</menu>
 			<menu text="ウィンドウ(_W)">
 				<item id="ID_WINDOW_NAVBAR" text="ナビゲーションバーを表示(_N)"/>
@@ -695,6 +699,7 @@
 					<item id="ID_NETWORK_G1" text="Gnutella1へ接続(_1)"/>
 					<item id="ID_NETWORK_ED2K" text="eDonkey2000へ接続(_E)"/>
 					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
+					<item id="ID_NETWORK_BT" text="Connect to _BitTorrent"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_AUTO_CLOSE" text="転送後に終了(_A)"/>
@@ -735,7 +740,7 @@
 				<item id="ID_TOOLS_PROFILE" text="プロフィールを編集(_P)..."/>
 				<separator/>
 				<item id="ID_TOOLS_WIZARD" text="クイックスタートウィザード(_W)..."/>
-				<item id="ID_TOOLS_SETTINGS" text="Shareaza設定(_S)..."/>
+				<item id="ID_TOOLS_SETTINGS" text="Shareaza設定(_S)..." shortcut="Ctrl+P"/>
 			</menu>
 			<menu text="ウィンドウ(_W)">
 				<item id="ID_WINDOW_CASCADE" text="全画面(_F)"/>
@@ -1524,6 +1529,7 @@
 				<item id="ID_NETWORK_G1" text="Gnutella_1"/>
 				<item id="ID_NETWORK_ED2K" text="_eDonkey"/>
 				<item id="ID_NETWORK_DC" text="_DC++"/>
+				<item id="ID_NETWORK_BT" text="_BitTorrent"/>
 			</menu>
 			<menu text="_Monitor">
 				<item id="ID_NEIGHBOURS_VIEW_ALL" text="View _All Traffic"/>
@@ -2552,6 +2558,7 @@
 		<tip id="ID_NEIGHBOURS_VIEW_OUTGOING" message="この近隣への出力転送をモニタリングする新しいパケットダンプウィンドウを開きます"/>
 		<tip id="ID_NETWORK_AUTO_CLOSE" message="転送終了後に自動的にShareazaを終了します"/>
 		<tip id="ID_NETWORK_BROWSE_TO" message="プロフィールと共有ファイルを表示する為にユーザを参照します..."/>
+		<tip id="ID_NETWORK_BT" message="Connect to the BitTorrent network."/>
 		<tip id="ID_NETWORK_CHAT_TO" message="Open a chat session with a user..."/>
 		<tip id="ID_NETWORK_CONNECT" message="ネットワークに接続します"/>
 		<tip id="ID_NETWORK_CONNECT_TO" message="手動でホストに接続します..."/>
@@ -3743,51 +3750,52 @@
 			<control caption="リーフ → ハブ"/>
 			<control caption="ハブ → ハブ"/>
 		</dialog>
-		<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuBuStEdmsStBuStBu" caption="eDonkey2000">
-			<control caption="eDonkey2000ネットワーク(_E):"/>
+		<dialog name="CDonkeySettingsPage" cookie="BuBuBuEdmsBuEdmsBuBuBuStStBuStStBuSt" caption="eDonkey2000">
 			<control caption="今回eDonkey2000に接続"/>
 			<control caption="常時eDonkey2000に接続"/>
-			<control caption="グローバル検索(_G):"/>
 			<control caption="サーバーキャッシュ内の既知のリモートサーバーを検索:"/>
-			<control caption="検索を終了するタイミング:"/>
 			<control/>
 			<control/>
-			<control caption="検索結果"/>
 			<control caption="Receive and update server list from the connected server"/>
+			<control/>
+			<control/>
+			<control caption="ダウンロード..."/>
+			<control caption="eDonkey2000ネットワーク(_E):"/>
+			<control caption="グローバル検索(_G):"/>
+			<control caption="検索を終了するタイミング:"/>
+			<control caption="検索結果"/>
 			<control caption="クライアントリンク接続(_C):"/>
 			<control caption="最大接続数:"/>
-			<control/>
-			<control/>
 			<control caption="eDonkeyクライアント"/>
 			<control caption="eDonkey2000ツール(_T):"/>
 			<control caption="ウェブからeDonkey2000サーバーリストをダウンロード:"/>
-			<control caption="ダウンロード..."/>
 		</dialog>
-		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuEdmsStBuBuBuBuEdBuBuEdBuStEd" caption="BitTorrent">
-			<control caption="インターフェース(_I):"/>
-			<control caption="追加のBitTorrentインターフェースを表示する"/>
-			<control caption="ダウンロード接続数(_D):"/>
+		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsEdmsBuEdmsBuBuEdBuEdBuEdBuBuBuStStStStBu" caption="BitTorrent">
+			<control caption="Always connect to BitTorrent"/>
+			<control caption="Connect to BitTorrent today"/>
+			<control caption="Enable BitTorrent DHT"/>
 			<control/>
 			<control/>
-			<control caption="同時Torrent数"/>
 			<control/>
 			<control/>
-			<control caption="クライアント接続数"/>
 			<control caption=" 次の共有比率になればダウンロードしたTorrentを自動クリアする:"/>
 			<control/>
 			<control/>
-			<control caption="%"/>
 			<control caption=" Torrentソースを優先する"/>
-			<control caption="EndGame(_E):"/>
 			<control caption="Torrent完了時にEndGameモードを有効にする"/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control caption="_BitTorrent Network:"/>
+			<control caption="ダウンロード接続数(_D):"/>
 			<control caption="Torrentの保存先(_S):"/>
-			<control/>
-			<control/>
-			<control caption="Torrent Creator(_T)"/>
-			<control/>
-			<control/>
+			<control caption="同時Torrent数"/>
+			<control caption="クライアント接続数"/>
+			<control caption="%"/>
 			<control caption="デフォルトのトラッカー: "/>
-			<control/>
+			<control caption="Torrent Creator(_T)"/>
 		</dialog>
 		<dialog name="CProtocolsSettingsPage" cookie="BuSy" caption="プロトコル">
 			<control caption="Shareaza一般プロトコル構造エクスプローラ:"/>

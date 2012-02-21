@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2011-05-12 14:23+0000\n"
+"POT-Creation-Date: 2012-02-21 11:51+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: (translation author)\n"
 "Language-Team: Shareaza Development Team\n"
@@ -356,6 +356,10 @@ msgstr ""
 msgid "DC++"
 msgstr ""
 
+#: button;id_network_bt dialog;cbittorrentsettingspage cscheduletaskpage;control;12
+msgid "BitTorrent"
+msgstr ""
+
 #: button;id_network_connect_to button;id_hostcache_connect
 msgid "Connect To"
 msgstr ""
@@ -554,6 +558,10 @@ msgstr ""
 
 #: cmainwnd.basic;1;2;item;id_network_dc cmainwnd.tabbed;9;10;item;id_network_dc cmainwnd.windowed;18;19;item;id_network_dc
 msgid "Connect to _DC++"
+msgstr ""
+
+#: cmainwnd.basic;1;2;item;id_network_bt cmainwnd.tabbed;9;10;item;id_network_bt cmainwnd.windowed;18;19;item;id_network_bt
+msgid "Connect to _BitTorrent"
 msgstr ""
 
 #: cmainwnd.basic;1;item;id_network_auto_close cmainwnd.tabbed;9;item;id_network_auto_close cmainwnd.tray;item;id_network_auto_close cremotewnd;item;id_network_auto_close
@@ -1438,6 +1446,10 @@ msgstr ""
 
 #: cneighbourswnd;59;item;id_network_dc
 msgid "_DC++"
+msgstr ""
+
+#: cneighbourswnd;59;item;id_network_bt
+msgid "_BitTorrent"
 msgstr ""
 
 #: cneighbourswnd;60
@@ -3382,6 +3394,10 @@ msgstr ""
 
 #: message;id_network_browse_to
 msgid "Browse a user, showing their profile and shared files..."
+msgstr ""
+
+#: message;id_network_bt
+msgid "Connect to the BitTorrent network."
 msgstr ""
 
 #: message;id_network_chat_to
@@ -7477,115 +7493,115 @@ msgid "_Link Compression:"
 msgstr ""
 
 #: cdonkeysettingspage;control;1
-msgid "_eDonkey Network:"
-msgstr ""
-
-#: cdonkeysettingspage;control;2
 msgid "Always connect to eDonkey"
 msgstr ""
 
-#: cdonkeysettingspage;control;3
+#: cdonkeysettingspage;control;2
 msgid "Connect to eDonkey today"
 msgstr ""
 
-#: cdonkeysettingspage;control;4
-msgid "_Global Searching:"
-msgstr ""
-
-#: cdonkeysettingspage;control;5
+#: cdonkeysettingspage;control;3
 msgid "Search known remote servers in the server cache:"
 msgstr ""
 
 #: cdonkeysettingspage;control;6
-msgid "Stop searching after:"
-msgstr ""
-
-#: cdonkeysettingspage;control;9
-msgid "search results."
-msgstr ""
-
-#: cdonkeysettingspage;control;10
 msgid "Receive and update server list from the connected server"
 msgstr ""
 
-#: cdonkeysettingspage;control;11
-msgid "_Client Link Connections:"
-msgstr ""
-
-#: cdonkeysettingspage;control;12
-msgid "Connect to no more than:"
-msgstr ""
-
-#: cdonkeysettingspage;control;15
-msgid "other eDonkey clients."
-msgstr ""
-
-#: cdonkeysettingspage;control;16
-msgid "eDonkey _Tools:"
-msgstr ""
-
-#: cdonkeysettingspage;control;17
-msgid "Download eDonkey server list from the web:"
-msgstr ""
-
-#: cdonkeysettingspage;control;18
+#: cdonkeysettingspage;control;9
 msgid "Download..."
 msgstr ""
 
-#: dialog;cbittorrentsettingspage cscheduletaskpage;control;12
-msgid "BitTorrent"
+#: cdonkeysettingspage;control;10
+msgid "_eDonkey Network:"
+msgstr ""
+
+#: cdonkeysettingspage;control;11
+msgid "_Global Searching:"
+msgstr ""
+
+#: cdonkeysettingspage;control;12
+msgid "Stop searching after:"
+msgstr ""
+
+#: cdonkeysettingspage;control;13
+msgid "search results."
+msgstr ""
+
+#: cdonkeysettingspage;control;14
+msgid "_Client Link Connections:"
+msgstr ""
+
+#: cdonkeysettingspage;control;15
+msgid "Connect to no more than:"
+msgstr ""
+
+#: cdonkeysettingspage;control;16
+msgid "other eDonkey clients."
+msgstr ""
+
+#: cdonkeysettingspage;control;17
+msgid "eDonkey _Tools:"
+msgstr ""
+
+#: cdonkeysettingspage;control;18
+msgid "Download eDonkey server list from the web:"
 msgstr ""
 
 #: cbittorrentsettingspage;control;1
-msgid "_Interface:"
+msgid "Always connect to BitTorrent"
 msgstr ""
 
 #: cbittorrentsettingspage;control;2
-msgid "Display additional BitTorrent interface elements"
+msgid "Connect to BitTorrent today"
 msgstr ""
 
 #: cbittorrentsettingspage;control;3
-msgid "_Download Connections:"
+msgid "Enable BitTorrent DHT"
 msgstr ""
 
-#: cbittorrentsettingspage;control;6
-msgid "Torrents at once"
-msgstr ""
-
-#: cbittorrentsettingspage;control;9
-msgid "Client connections"
-msgstr ""
-
-#: cbittorrentsettingspage;control;10
+#: cbittorrentsettingspage;control;8
 msgid "Clear downloaded torrents     When the share ratio reaches:"
 msgstr ""
 
-#: cbittorrentsettingspage;control;13
-msgid "%"
-msgstr ""
-
-#: cbittorrentsettingspage;control;14
+#: cbittorrentsettingspage;control;11
 msgid "Prefer torrent sources"
 msgstr ""
 
-#: cbittorrentsettingspage;control;15
-msgid "_EndGame:"
-msgstr ""
-
-#: cbittorrentsettingspage;control;16
+#: cbittorrentsettingspage;control;12
 msgid "Enable EndGame mode when completing torrents"
 msgstr ""
 
-#: cbittorrentsettingspage;control;17
-msgid "_Store Torrents Here:"
+#: cbittorrentsettingspage;control;18
+msgid "_BitTorrent Network:"
+msgstr ""
+
+#: cbittorrentsettingspage;control;19
+msgid "_Download Connections:"
 msgstr ""
 
 #: cbittorrentsettingspage;control;20
-msgid "_Torrent Creator:"
+msgid "_Store Torrents Here:"
+msgstr ""
+
+#: cbittorrentsettingspage;control;21
+msgid "Torrents at once"
+msgstr ""
+
+#: cbittorrentsettingspage;control;22
+msgid "Client connections"
 msgstr ""
 
 #: cbittorrentsettingspage;control;23
+msgid "%"
+msgstr ""
+
+#: cbittorrentsettingspage;control;24
 msgid "Default Tracker: "
+msgstr ""
+
+#: cbittorrentsettingspage;control;25
+msgid "_Torrent Creator:"
 msgstr ""
 
 #: dialog;cprotocolssettingspage

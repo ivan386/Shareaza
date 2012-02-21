@@ -354,6 +354,7 @@
 			<button id="ID_NETWORK_G1" text="Gnutella1"/>
 			<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
 			<button id="ID_NETWORK_DC" text="DC++"/>
+			<button id="ID_NETWORK_BT" text="BitTorrent"/>
 			<separator/>
 			<button id="ID_NEIGHBOURS_SETTINGS" text="設定"/>
 		</toolbar>
@@ -369,6 +370,7 @@
 			<button id="ID_NETWORK_G1" text="Gnutella1"/>
 			<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
 			<button id="ID_NETWORK_DC" text="DC++"/>
+			<button id="ID_NETWORK_BT" text="BitTorrent"/>
 			<separator/>
 			<button id="ID_NEIGHBOURS_SETTINGS" text="設定"/>
 		</toolbar>
@@ -506,6 +508,7 @@
 					<item id="ID_NETWORK_G1" text="連線至 Gnutella1"/>
 					<item id="ID_NETWORK_ED2K" text="連線至 eDonkey"/>
 					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
+					<item id="ID_NETWORK_BT" text="Connect to _BitTorrent"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_AUTO_CLOSE" text="傳輸後離開"/>
@@ -543,7 +546,7 @@
 				<item id="ID_TOOLS_PROFILE" text="編輯我的個人檔案..."/>
 				<item id="ID_TOOLS_WIZARD" text="快速啟動精靈"/>
 				<separator/>
-				<item id="ID_TOOLS_SETTINGS" text="Shareaza 設定"/>
+				<item id="ID_TOOLS_SETTINGS" text="Shareaza 設定" shortcut="Ctrl+P"/>
 			</menu>
 			<menu text="說明">
 				<item id="ID_HELP_FAQ" text="Shareaza 常見答客問"/>
@@ -583,6 +586,7 @@
 					<item id="ID_NETWORK_G1" text="連線至 Gnutella1"/>
 					<item id="ID_NETWORK_ED2K" text="連線至 eDonkey"/>
 					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
+					<item id="ID_NETWORK_BT" text="Connect to _BitTorrent"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_CONNECT_TO" text="連線至..." shortcut="Ctrl+T"/>
@@ -641,7 +645,7 @@
 				<item id="ID_TOOLS_PROFILE" text="編輯我的個人檔案..."/>
 				<item id="ID_TOOLS_WIZARD" text="快速啟動精靈"/>
 				<separator/>
-				<item id="ID_TOOLS_SETTINGS" text="Shareaza 設定"/>
+				<item id="ID_TOOLS_SETTINGS" text="Shareaza 設定" shortcut="Ctrl+P"/>
 			</menu>
 			<menu text="視窗">
 				<item id="ID_WINDOW_NAVBAR" text="顯示導覽列"/>
@@ -695,6 +699,7 @@
 					<item id="ID_NETWORK_G1" text="連線至 Gnutella1"/>
 					<item id="ID_NETWORK_ED2K" text="連線至 eDonkey"/>
 					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
+					<item id="ID_NETWORK_BT" text="Connect to _BitTorrent"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_AUTO_CLOSE" text="傳輸後關閉"/>
@@ -735,7 +740,7 @@
 				<item id="ID_TOOLS_PROFILE" text="編輯我的個人檔案..."/>
 				<separator/>
 				<item id="ID_TOOLS_WIZARD" text="快速啟動精靈"/>
-				<item id="ID_TOOLS_SETTINGS" text="Shareaza 設定"/>
+				<item id="ID_TOOLS_SETTINGS" text="Shareaza 設定" shortcut="Ctrl+P"/>
 			</menu>
 			<menu text="視窗">
 				<item id="ID_WINDOW_CASCADE" text="全螢幕"/>
@@ -1524,6 +1529,7 @@
 				<item id="ID_NETWORK_G1" text="Gnutella_1"/>
 				<item id="ID_NETWORK_ED2K" text="_eDonkey"/>
 				<item id="ID_NETWORK_DC" text="_DC++"/>
+				<item id="ID_NETWORK_BT" text="_BitTorrent"/>
 			</menu>
 			<menu text="監視器">
 				<item id="ID_NEIGHBOURS_VIEW_ALL" text="View _All Traffic"/>
@@ -2495,6 +2501,7 @@
 		<tip id="ID_NEIGHBOURS_VIEW_OUTGOING" message="開啟一個新的封包傾印視窗用於監控輸出至這個鄰居的流量."/>
 		<tip id="ID_NETWORK_AUTO_CLOSE" message="在傳輸完成後自動關閉 Shareaza."/>
 		<tip id="ID_NETWORK_BROWSE_TO" message="瀏覽一位使用者, 顯示他們的個人檔案與分享的檔案..."/>
+		<tip id="ID_NETWORK_BT" message="Connect to the BitTorrent network."/>
 		<tip id="ID_NETWORK_CHAT_TO" message="與選擇的使用者開啟聊天會期."/>
 		<tip id="ID_NETWORK_CONNECT" message="連線至網路."/>
 		<tip id="ID_NETWORK_CONNECT_TO" message="手動連線至主機..."/>
@@ -3686,51 +3693,52 @@
 			<control caption="葉節點對結點"/>
 			<control caption="結點對結點"/>
 		</dialog>
-		<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuBuStEdmsStBuStBu" caption="eDonkey2000">
-			<control caption="eDonkey2000 網路:"/>
+		<dialog name="CDonkeySettingsPage" cookie="BuBuBuEdmsBuEdmsBuBuBuStStBuStStBuSt" caption="eDonkey2000">
 			<control caption="本次連線至 eDonkey 2000 網路"/>
 			<control caption="自動連線"/>
-			<control caption="全球搜尋:"/>
 			<control caption="從伺服器快取搜尋已知的遠端伺服器:"/>
-			<control caption="在...之後停止搜尋:"/>
 			<control/>
 			<control/>
-			<control caption="搜尋結果."/>
 			<control caption="从连接接收和更新服务器列表"/>
+			<control/>
+			<control/>
+			<control caption="下載..."/>
+			<control caption="eDonkey2000 網路:"/>
+			<control caption="全球搜尋:"/>
+			<control caption="在...之後停止搜尋:"/>
+			<control caption="搜尋結果."/>
 			<control caption="客戶端連結的連線:"/>
 			<control caption="....的連線數不超過:"/>
-			<control/>
-			<control/>
 			<control caption="其他的 eDonkey 客戶端."/>
 			<control caption="eDonkey2000 工具箱:"/>
 			<control caption="從網際網路下載 eDonkey2000 伺服器清單:"/>
-			<control caption="下載..."/>
 		</dialog>
-		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuEdmsStBuBuBuBuEdBuBuEdBuStEd" caption="BitTorrent">
-			<control caption="介面:"/>
-			<control caption="顯示額外的 BitTorrent 介面要素"/>
-			<control caption="下載連線:"/>
+		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsEdmsBuEdmsBuBuEdBuEdBuEdBuBuBuStStStStBu" caption="BitTorrent">
+			<control caption="Always connect to BitTorrent"/>
+			<control caption="Connect to BitTorrent today"/>
+			<control caption="Enable BitTorrent DHT"/>
 			<control/>
 			<control/>
-			<control caption="同時進行...個 Torrent"/>
 			<control/>
 			<control/>
-			<control caption="客戶端連線"/>
 			<control caption=" 清除下載的 torrents        在分享率達到後"/>
 			<control/>
 			<control/>
-			<control caption="%"/>
 			<control caption=" 偏好 torrent 來源"/>
-			<control caption="終場模式:"/>
 			<control caption="在 torrent 即將完成時啟用終場模式"/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control caption="_BitTorrent Network:"/>
+			<control caption="下載連線:"/>
 			<control caption="Torrents 存放於此:"/>
-			<control/>
-			<control/>
-			<control caption="Torrent 製作程式"/>
-			<control/>
-			<control/>
+			<control caption="同時進行...個 Torrent"/>
+			<control caption="客戶端連線"/>
+			<control caption="%"/>
 			<control caption="預設伺服器: "/>
-			<control/>
+			<control caption="Torrent 製作程式"/>
 		</dialog>
 		<dialog name="CProtocolsSettingsPage" cookie="BuSy" caption="協定">
 			<control caption="Shareaza 通用結構協定探索器:"/>

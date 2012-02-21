@@ -354,6 +354,7 @@
 			<button id="ID_NETWORK_G1" text="Gnutella1"/>
 			<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
 			<button id="ID_NETWORK_DC" text="DC++"/>
+			<button id="ID_NETWORK_BT" text="BitTorrent"/>
 			<separator/>
 			<button id="ID_NEIGHBOURS_SETTINGS" text="Innstillinger"/>
 		</toolbar>
@@ -369,6 +370,7 @@
 			<button id="ID_NETWORK_G1" text="Gnutella1"/>
 			<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
 			<button id="ID_NETWORK_DC" text="DC++"/>
+			<button id="ID_NETWORK_BT" text="BitTorrent"/>
 			<separator/>
 			<button id="ID_NEIGHBOURS_SETTINGS" text="Innstillinger"/>
 		</toolbar>
@@ -506,6 +508,7 @@
 					<item id="ID_NETWORK_G1" text="Koble til Gnutella1"/>
 					<item id="ID_NETWORK_ED2K" text="Koble til eDonkey2000"/>
 					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
+					<item id="ID_NETWORK_BT" text="Connect to _BitTorrent"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_AUTO_CLOSE" text="Avslutt etter overføringer"/>
@@ -543,7 +546,7 @@
 				<item id="ID_TOOLS_PROFILE" text="Endre min profil"/>
 				<item id="ID_TOOLS_WIZARD" text="Innstillingsveiviser"/>
 				<separator/>
-				<item id="ID_TOOLS_SETTINGS" text="Innstillinger"/>
+				<item id="ID_TOOLS_SETTINGS" text="Innstillinger" shortcut="Ctrl+P"/>
 			</menu>
 			<menu text="_Hjelp">
 				<item id="ID_HELP_FAQ" text="Shareaza FAQ"/>
@@ -583,6 +586,7 @@
 					<item id="ID_NETWORK_G1" text="Koble til Gnutella1"/>
 					<item id="ID_NETWORK_ED2K" text="Koble til eDonkey2000"/>
 					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
+					<item id="ID_NETWORK_BT" text="Connect to _BitTorrent"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_CONNECT_TO" text="Koble til..." shortcut="Ctrl+T"/>
@@ -641,7 +645,7 @@
 				<item id="ID_TOOLS_PROFILE" text="Endre min profil"/>
 				<item id="ID_TOOLS_WIZARD" text="Innstillingsveiviser"/>
 				<separator/>
-				<item id="ID_TOOLS_SETTINGS" text="Innstillinger"/>
+				<item id="ID_TOOLS_SETTINGS" text="Innstillinger" shortcut="Ctrl+P"/>
 			</menu>
 			<menu text="_Vindu">
 				<item id="ID_WINDOW_NAVBAR" text="Vis navigasjonslinje"/>
@@ -695,6 +699,7 @@
 					<item id="ID_NETWORK_G1" text="Koble til Gnutella1"/>
 					<item id="ID_NETWORK_ED2K" text="Koble til eDonkey2000"/>
 					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
+					<item id="ID_NETWORK_BT" text="Connect to _BitTorrent"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_AUTO_CLOSE" text="Avslutt etter overføringer"/>
@@ -735,7 +740,7 @@
 				<item id="ID_TOOLS_PROFILE" text="Endre min profil"/>
 				<separator/>
 				<item id="ID_TOOLS_WIZARD" text="Innstillingsveiviser"/>
-				<item id="ID_TOOLS_SETTINGS" text="Innstillinger"/>
+				<item id="ID_TOOLS_SETTINGS" text="Innstillinger" shortcut="Ctrl+P"/>
 			</menu>
 			<menu text="_Vindu">
 				<item id="ID_WINDOW_CASCADE" text="_Full Screen"/>
@@ -1524,6 +1529,7 @@
 				<item id="ID_NETWORK_G1" text="Gnutella_1"/>
 				<item id="ID_NETWORK_ED2K" text="_eDonkey"/>
 				<item id="ID_NETWORK_DC" text="_DC++"/>
+				<item id="ID_NETWORK_BT" text="_BitTorrent"/>
 			</menu>
 			<menu text="_Monitor">
 				<item id="ID_NEIGHBOURS_VIEW_ALL" text="View _All Traffic"/>
@@ -2553,6 +2559,7 @@
 		<tip id="ID_NEIGHBOURS_VIEW_OUTGOING" message="Åpne et nytt pakkedump-vindu for å overvåke utgående trafikk til denne naboen."/>
 		<tip id="ID_NETWORK_AUTO_CLOSE" message="Automatisk lukk Shareaza når overføringene er ferdige."/>
 		<tip id="ID_NETWORK_BROWSE_TO" message="Utforsk en bruker og vis profil og delte filer..."/>
+		<tip id="ID_NETWORK_BT" message="Connect to the BitTorrent network."/>
 		<tip id="ID_NETWORK_CHAT_TO" message="Open a chat session with a user..."/>
 		<tip id="ID_NETWORK_CONNECT" message="Koble til nettverket."/>
 		<tip id="ID_NETWORK_CONNECT_TO" message="Manuelt koble til en vert..."/>
@@ -3744,51 +3751,52 @@
 			<control caption="Leaf til Hub"/>
 			<control caption="Hub til Hub"/>
 		</dialog>
-		<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuBuStEdmsStBuStBu" caption="eDonkey2000">
-			<control caption="eDonkey2000 nettverket:"/>
+		<dialog name="CDonkeySettingsPage" cookie="BuBuBuEdmsBuEdmsBuBuBuStStBuStStBuSt" caption="eDonkey2000">
 			<control caption="Koble til eDonkey2000 i dag"/>
 			<control caption="Koble til automatisk hver gang"/>
-			<control caption="_Globalt søk:"/>
 			<control caption="Søk kjente fjern-servere i server-cachen:"/>
-			<control caption="Stopp søket etter"/>
 			<control/>
 			<control/>
-			<control caption="søkeresultater"/>
 			<control caption="Receive and update server list from the connected server"/>
+			<control/>
+			<control/>
+			<control caption="Last ned..."/>
+			<control caption="eDonkey2000 nettverket:"/>
+			<control caption="_Globalt søk:"/>
+			<control caption="Stopp søket etter"/>
+			<control caption="søkeresultater"/>
 			<control caption="_Klientkoblinger:"/>
 			<control caption="Koble til maksimalt:"/>
-			<control/>
-			<control/>
 			<control caption="andre eDonkey-klienter."/>
 			<control caption="eDonkey2000 _verktøy:"/>
 			<control caption="Last ned eDonkey2000 serverliste fra nettet:"/>
-			<control caption="Last ned..."/>
 		</dialog>
-		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuEdmsStBuBuBuBuEdBuBuEdBuStEd" caption="BitTorrent">
-			<control caption="Grensesnitt:"/>
-			<control caption="Vis flere BitTorrent grensesnitts-elementer"/>
-			<control caption="Nedlastingskoblinger:"/>
+		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsEdmsBuEdmsBuBuEdBuEdBuEdBuBuBuStStStStBu" caption="BitTorrent">
+			<control caption="Always connect to BitTorrent"/>
+			<control caption="Connect to BitTorrent today"/>
+			<control caption="Enable BitTorrent DHT"/>
 			<control/>
 			<control/>
-			<control caption="_Samtidige torrenter"/>
 			<control/>
 			<control/>
-			<control caption="Klienttilkoblinger"/>
 			<control caption=" Fjern nedlastede torrenter        Når delingsraten når"/>
 			<control/>
 			<control/>
-			<control caption="%"/>
 			<control caption=" Foretrekk torrent-kilder"/>
-			<control caption="_EndGame:"/>
 			<control caption="Skru på EndGame-modus når torrenter blir ferdige"/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control caption="_BitTorrent Network:"/>
+			<control caption="Nedlastingskoblinger:"/>
 			<control caption="Lagre Torrenter her:"/>
-			<control/>
-			<control/>
-			<control caption="Program for å lage torrenter"/>
-			<control/>
-			<control/>
+			<control caption="_Samtidige torrenter"/>
+			<control caption="Klienttilkoblinger"/>
+			<control caption="%"/>
 			<control caption="_Standard Tracker:"/>
-			<control/>
+			<control caption="Program for å lage torrenter"/>
 		</dialog>
 		<dialog name="CProtocolsSettingsPage" cookie="BuSy" caption="Protokoller">
 			<control caption="Shareaza Common Architecture protokollutforsker:"/>

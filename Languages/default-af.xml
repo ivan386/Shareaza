@@ -354,6 +354,7 @@
 			<button id="ID_NETWORK_G1" text="Gnutella1"/>
 			<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
 			<button id="ID_NETWORK_DC" text="DC++"/>
+			<button id="ID_NETWORK_BT" text="BitTorrent"/>
 			<separator/>
 			<button id="ID_NEIGHBOURS_SETTINGS" text="Settings"/>
 		</toolbar>
@@ -369,6 +370,7 @@
 			<button id="ID_NETWORK_G1" text="Gnutella1"/>
 			<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
 			<button id="ID_NETWORK_DC" text="DC++"/>
+			<button id="ID_NETWORK_BT" text="BitTorrent"/>
 			<separator/>
 			<button id="ID_NEIGHBOURS_SETTINGS" text="Settings"/>
 		</toolbar>
@@ -506,6 +508,7 @@
 					<item id="ID_NETWORK_G1" text="Konnekteer aan Gnutella_1"/>
 					<item id="ID_NETWORK_ED2K" text="Konnekteer aan _eDonkey2000"/>
 					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
+					<item id="ID_NETWORK_BT" text="Connect to _BitTorrent"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_AUTO_CLOSE" text="Verlaat Shareaza _Na Oordragte"/>
@@ -543,7 +546,7 @@
 				<item id="ID_TOOLS_PROFILE" text="Verander My _Profiel..."/>
 				<item id="ID_TOOLS_WIZARD" text="SnelBegin _Assistent..."/>
 				<separator/>
-				<item id="ID_TOOLS_SETTINGS" text="_Shareaza Verstellings..."/>
+				<item id="ID_TOOLS_SETTINGS" text="_Shareaza Verstellings..." shortcut="Ctrl+P"/>
 			</menu>
 			<menu text="_Hulp">
 				<item id="ID_HELP_FAQ" text="Shareaza _Algemene Vrae"/>
@@ -583,6 +586,7 @@
 					<item id="ID_NETWORK_G1" text="Konnekteer aan Gnutella_1"/>
 					<item id="ID_NETWORK_ED2K" text="Konnekteer aan _eDonkey2000"/>
 					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
+					<item id="ID_NETWORK_BT" text="Connect to _BitTorrent"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_CONNECT_TO" text="Konnekteer _Aan..." shortcut="Ctrl+T"/>
@@ -641,7 +645,7 @@
 				<item id="ID_TOOLS_PROFILE" text="Verander My _Profiel..."/>
 				<item id="ID_TOOLS_WIZARD" text="SnelBegin _Assistent..."/>
 				<separator/>
-				<item id="ID_TOOLS_SETTINGS" text="_Shareaza Verstellings..."/>
+				<item id="ID_TOOLS_SETTINGS" text="_Shareaza Verstellings..." shortcut="Ctrl+P"/>
 			</menu>
 			<menu text="_Venster">
 				<item id="ID_WINDOW_NAVBAR" text="Vertoon _Navigasiebalk"/>
@@ -695,6 +699,7 @@
 					<item id="ID_NETWORK_G1" text="Konnekteer aan Gnutella_1"/>
 					<item id="ID_NETWORK_ED2K" text="Konnekteer aan _eDonkey2000"/>
 					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
+					<item id="ID_NETWORK_BT" text="Connect to _BitTorrent"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_AUTO_CLOSE" text="Verlaat Shareaza _Na Oordragte"/>
@@ -735,7 +740,7 @@
 				<item id="ID_TOOLS_PROFILE" text="Verander My _Profiel..."/>
 				<separator/>
 				<item id="ID_TOOLS_WIZARD" text="SnelBegin _Assistent..."/>
-				<item id="ID_TOOLS_SETTINGS" text="_Shareaza Verstellings..."/>
+				<item id="ID_TOOLS_SETTINGS" text="_Shareaza Verstellings..." shortcut="Ctrl+P"/>
 			</menu>
 			<menu text="_Venster">
 				<item id="ID_WINDOW_CASCADE" text="_Full Screen"/>
@@ -1524,6 +1529,7 @@
 				<item id="ID_NETWORK_G1" text="Gnutella_1"/>
 				<item id="ID_NETWORK_ED2K" text="_eDonkey2000"/>
 				<item id="ID_NETWORK_DC" text="_DC++"/>
+				<item id="ID_NETWORK_BT" text="_BitTorrent"/>
 			</menu>
 			<menu text="_Monitor">
 				<item id="ID_NEIGHBOURS_VIEW_ALL" text="Vertoon _Alle Dataverkeer"/>
@@ -2563,6 +2569,7 @@
 		<tip id="ID_NEIGHBOURS_VIEW_OUTGOING" message="Open 'n nuwe Pakkie Storting venster wat uitgaande data na hierdie gasheer monitor."/>
 		<tip id="ID_NETWORK_AUTO_CLOSE" message="Verlaat Shareaza outomaties as die huidige oordragte voltooi is."/>
 		<tip id="ID_NETWORK_BROWSE_TO" message="Blaai deur 'n gebruiker se profiel en gedeelde lêers..."/>
+		<tip id="ID_NETWORK_BT" message="Connect to the BitTorrent network."/>
 		<tip id="ID_NETWORK_CHAT_TO" message="Open a chat session with a user..."/>
 		<tip id="ID_NETWORK_CONNECT" message="Konnekteer aan die netwerk."/>
 		<tip id="ID_NETWORK_CONNECT_TO" message="Konnekteer met die hand aan 'n gasheer..."/>
@@ -3754,51 +3761,52 @@
 			<control caption="Leaf na Hub"/>
 			<control caption="Hub na Hub"/>
 		</dialog>
-		<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuBuStEdmsStBuStBu" caption="eDonkey2000">
-			<control caption="_eDonkey2000 Netwerk:"/>
+		<dialog name="CDonkeySettingsPage" cookie="BuBuBuEdmsBuEdmsBuBuBuStStBuStStBuSt" caption="eDonkey2000">
 			<control caption="Konnekteer aan eDonkey2000"/>
 			<control caption="Konnekteer elke sessie"/>
-			<control caption="_Globale Soek:"/>
 			<control caption="Soek bekende afgeleë bedieners in die bedienerskasgeheue:"/>
-			<control caption="Staak soektog na:"/>
 			<control/>
 			<control/>
-			<control caption="soekresultate."/>
 			<control caption="Update server list"/>
+			<control/>
+			<control/>
+			<control caption="Laai Af..."/>
+			<control caption="_eDonkey2000 Netwerk:"/>
+			<control caption="_Globale Soek:"/>
+			<control caption="Staak soektog na:"/>
+			<control caption="soekresultate."/>
 			<control caption="_Kliëntkoppeling Konneksies:"/>
 			<control caption="Konnekteer aan nie meer as:"/>
-			<control/>
-			<control/>
 			<control caption="ander eDonkey kliënte."/>
 			<control caption="eDonkey2000 _Opsies:"/>
 			<control caption="Laai eDonkey2000 bedienerlys van die web af:"/>
-			<control caption="Laai Af..."/>
 		</dialog>
-		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuEdmsStBuBuBuBuEdBuBuEdBuStEd" caption="BitTorrent">
-			<control caption="_Koppelvlak:"/>
-			<control caption="Vertoon ekstra BitTorrent koppelvlak-elemente"/>
-			<control caption="_Aflaai Koppellings:"/>
+		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsEdmsBuEdmsBuBuEdBuEdBuEdBuBuBuStStStStBu" caption="BitTorrent">
+			<control caption="Always connect to BitTorrent"/>
+			<control caption="Connect to BitTorrent today"/>
+			<control caption="Enable BitTorrent DHT"/>
 			<control/>
 			<control/>
-			<control caption="Torrents maksimum op 'n slag"/>
 			<control/>
 			<control/>
-			<control caption="Kliënt koppellings"/>
 			<control caption=" Verwyder voltooide torrents        Wanneer die deelverhouding bereik word"/>
 			<control/>
 			<control/>
-			<control caption="%"/>
 			<control caption="Prefer torrent sources"/>
-			<control caption="_EndGame:"/>
 			<control caption="Skakel 'Endgame'-modus aan wanneer torrent-lêers voltooi word"/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control caption="_BitTorrent Network:"/>
+			<control caption="_Aflaai Koppellings:"/>
 			<control caption="_Stoor Torrents Hier:"/>
-			<control/>
-			<control/>
-			<control caption="_Torrent Skepper"/>
-			<control/>
-			<control/>
+			<control caption="Torrents maksimum op 'n slag"/>
+			<control caption="Kliënt koppellings"/>
+			<control caption="%"/>
 			<control caption="_Verstek Verwyser: "/>
-			<control/>
+			<control caption="_Torrent Skepper"/>
 		</dialog>
 		<dialog name="CProtocolsSettingsPage" cookie="BuSy" caption="Protokolle">
 			<control caption="Shareaza Algemene Argitektuur Protokolverkenner:"/>

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2011-05-12 14:23+0000\n"
+"POT-Creation-Date: 2012-02-21 11:51+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -369,6 +369,11 @@ msgstr "eDonkey"
 msgid "DC++"
 msgstr ""
 
+#: button;id_network_bt dialog;cbittorrentsettingspage
+#: cscheduletaskpage;control;12
+msgid "BitTorrent"
+msgstr ""
+
 #: button;id_network_connect_to button;id_hostcache_connect
 msgid "Connect To"
 msgstr "Yhdistä..."
@@ -585,6 +590,12 @@ msgstr "Yhdistä _eDonkey2000"
 #: cmainwnd.windowed;18;19;item;id_network_dc
 msgid "Connect to _DC++"
 msgstr "Connect to _DC++"
+
+#: cmainwnd.basic;1;2;item;id_network_bt
+#: cmainwnd.tabbed;9;10;item;id_network_bt
+#: cmainwnd.windowed;18;19;item;id_network_bt
+msgid "Connect to _BitTorrent"
+msgstr ""
 
 #: cmainwnd.basic;1;item;id_network_auto_close
 #: cmainwnd.tabbed;9;item;id_network_auto_close
@@ -1828,6 +1839,10 @@ msgstr ""
 
 #: cneighbourswnd;59;item;id_network_dc
 msgid "_DC++"
+msgstr ""
+
+#: cneighbourswnd;59;item;id_network_bt
+msgid "_BitTorrent"
 msgstr ""
 
 #: cneighbourswnd;60
@@ -4044,6 +4059,10 @@ msgstr ""
 msgid "Browse a user, showing their profile and shared files..."
 msgstr ""
 
+#: message;id_network_bt
+msgid "Connect to the BitTorrent network."
+msgstr ""
+
 #: message;id_network_chat_to
 msgid "Open a chat session with a user..."
 msgstr ""
@@ -4692,9 +4711,7 @@ msgid "This template does not have any customizations."
 msgstr ""
 
 #: string;7102
-msgid ""
-"Are you sure you want to delete the \"%s\" template?\\n"
-"This cannot be undone."
+msgid "Are you sure you want to delete the \"%s\" template?\\nThis cannot be undone."
 msgstr ""
 
 #: string;8000 dialog;csettingsheet
@@ -4714,12 +4731,7 @@ msgid "Edit My Profile"
 msgstr ""
 
 #: string;8004
-msgid ""
-"!Welcome to Shareaza (version) !\\n"
-".\\n"
-"Shareaza is completely free software.\\n"
-"Please use it responsibly and respect intellectual property law.\\n"
-"."
+msgid "!Welcome to Shareaza (version) !\\n.\\nShareaza is completely free software.\\nPlease use it responsibly and respect intellectual property law.\\n."
 msgstr ""
 
 #: string;8005
@@ -4735,10 +4747,7 @@ msgid "There are no active searches. Click here to search for files."
 msgstr ""
 
 #: string;8008
-msgid ""
-"Shareaza has finished downloading the next Shareaza version (%s). Would you like to upgrade now?\\n"
-"\\n"
-"If you select Yes, Shareaza will close temporarily while the upgrade is installed."
+msgid "Shareaza has finished downloading the next Shareaza version (%s). Would you like to upgrade now?\\n\\nIf you select Yes, Shareaza will close temporarily while the upgrade is installed."
 msgstr ""
 
 #: string;8009
@@ -5316,12 +5325,7 @@ msgid "Sending query for \"%s\" to %s."
 msgstr ""
 
 #: string;16083
-msgid ""
-"Forcing your PC into hub mode may have adverse effects on performance and the P2P network. It is generally better to allow Shareaza to decide whether or not hub mode should be used.\\n"
-"\\n"
-"Hub mode does NOT produce better search results, or have any other advantages for you.\\n"
-"\\n"
-"Do you really want to do this, despite these disadvantages?"
+msgid "Forcing your PC into hub mode may have adverse effects on performance and the P2P network. It is generally better to allow Shareaza to decide whether or not hub mode should be used.\\n\\nHub mode does NOT produce better search results, or have any other advantages for you.\\n\\nDo you really want to do this, despite these disadvantages?"
 msgstr ""
 
 #: string;16085
@@ -5621,10 +5625,7 @@ msgid "Download host %s is busy, retrying in %i seconds."
 msgstr ""
 
 #: string;16281
-msgid ""
-"Are you sure you want to clear \"%s\"?\\n"
-"\\n"
-"Once a download has been cleared from the Downloads window, it cannot be resumed later."
+msgid "Are you sure you want to clear \"%s\"?\\n\\nOnce a download has been cleared from the Downloads window, it cannot be resumed later."
 msgstr ""
 
 #: string;16282
@@ -6025,10 +6026,7 @@ msgid "DC++ Guard"
 msgstr "DC++ Cache"
 
 #: string;16384
-msgid ""
-"Are you sure you want to launch the file \"%s\" ?\\n"
-"\\n"
-"Some files can be harmful to your computer. Ensure you know what the file is before launching it."
+msgid "Are you sure you want to launch the file \"%s\" ?\\n\\nSome files can be harmful to your computer. Ensure you know what the file is before launching it."
 msgstr ""
 
 #: string;16385
@@ -6044,26 +6042,15 @@ msgid "The file \"%s\" has not yet been hashed. Please wait for the file to be h
 msgstr ""
 
 #: string;16388
-msgid ""
-"This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n"
-"\\n"
-"Shareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database. If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n"
-"\\n"
-"Would you like to proceed?"
+msgid "This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n\\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database. If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n\\nWould you like to proceed?"
 msgstr ""
 
 #: string;16389
-msgid ""
-"Are you sure you want to permanently delete the %i selected file(s) ?\\n"
-"\\n"
-"The files will be moved to your \"recycle bin\" if it is enabled."
+msgid "Are you sure you want to permanently delete the %i selected file(s) ?\\n\\nThe files will be moved to your \"recycle bin\" if it is enabled."
 msgstr ""
 
 #: string;16390
-msgid ""
-"You have not yet selected a media player to enqueue files with, such as Nullsoft Winamp. Would you like to select one now?\\n"
-"\\n"
-"Shareaza will pass the name of the file to your selected program with the \"/ADD\" argument."
+msgid "You have not yet selected a media player to enqueue files with, such as Nullsoft Winamp. Would you like to select one now?\\n\\nShareaza will pass the name of the file to your selected program with the \"/ADD\" argument."
 msgstr ""
 
 #: string;16391
@@ -6083,12 +6070,7 @@ msgid "Would you like to remove the \"potentially unsafe\" attribute from this f
 msgstr ""
 
 #: string;16395
-msgid ""
-"Your downloaded files folder \"%s\" is not yet in your library.\\n"
-"\\n"
-"Including your downloaded files folder in your library makes it easier to view and organise new downloads, and lets you take advantage of advanced Shareaza features such as download verification and automatic upgrading. Placing downloaded files in your library does not necessarily require you to share them: you can choose whether or not to share files independently.\\n"
-"\\n"
-"Would you like to add your downloaded files folder to your library now?"
+msgid "Your downloaded files folder \"%s\" is not yet in your library.\\n\\nIncluding your downloaded files folder in your library makes it easier to view and organise new downloads, and lets you take advantage of advanced Shareaza features such as download verification and automatic upgrading. Placing downloaded files in your library does not necessarily require you to share them: you can choose whether or not to share files independently.\\n\\nWould you like to add your downloaded files folder to your library now?"
 msgstr ""
 
 #: string;16396
@@ -6096,35 +6078,19 @@ msgid "Your downloads folder has been added to your library. Would you like to s
 msgstr ""
 
 #: string;16397
-msgid ""
-"Are you sure you want to delete the %i selected album folder(s) ?\\n"
-"\\n"
-"Note that this action does not delete the files within the album folders, only the folders themselves."
+msgid "Are you sure you want to delete the %i selected album folder(s) ?\\n\\nNote that this action does not delete the files within the album folders, only the folders themselves."
 msgstr ""
 
 #: string;16398
-msgid ""
-"Shareaza could not rename:\\n"
-"\\n"
-"%s\\n"
-"to\\n"
-"%s"
+msgid "Shareaza could not rename:\\n\\n%s\\nto\\n%s"
 msgstr ""
 
 #: string;16399
-msgid ""
-"Shareaza could not delete the file:\\n"
-"\\n"
-"%s"
+msgid "Shareaza could not delete the file:\\n\\n%s"
 msgstr ""
 
 #: string;16400
-msgid ""
-"Target file exists:\\n"
-"\\n"
-"%s\\n"
-"\\n"
-"Would you like to overwrite it?"
+msgid "Target file exists:\\n\\n%s\\n\\nWould you like to overwrite it?"
 msgstr ""
 
 #: string;16401
@@ -6132,12 +6098,7 @@ msgid "Show All File Types"
 msgstr ""
 
 #: string;16402
-msgid ""
-"Shareaza received a collection file:\\n"
-"\\n"
-"\"%s\"\\n"
-"\\n"
-"This file does not appear to be a valid collection file."
+msgid "Shareaza received a collection file:\\n\\n\"%s\"\\n\\nThis file does not appear to be a valid collection file."
 msgstr ""
 
 #: string;16403
@@ -6149,10 +6110,7 @@ msgid "Shareaza was unable to install the collection file \"%s\" by copying it t
 msgstr ""
 
 #: string;16406
-msgid ""
-"Would you like to download all files in this collection?\\n"
-"\\n"
-"Choose Cancel to stop any further prompts."
+msgid "Would you like to download all files in this collection?\\n\\nChoose Cancel to stop any further prompts."
 msgstr ""
 
 #: string;16407
@@ -6168,18 +6126,11 @@ msgid "Export &URIs..."
 msgstr ""
 
 #: string;16410
-msgid ""
-"A subfolder of the selected folder \"%s\" is already part of your library.\\n"
-"Adding this folder will cause re-hashing of some files.\\n"
-"\\n"
-"Do you want to continue ?"
+msgid "A subfolder of the selected folder \"%s\" is already part of your library.\\nAdding this folder will cause re-hashing of some files.\\n\\nDo you want to continue ?"
 msgstr ""
 
 #: string;16411
-msgid ""
-"Unable to move the file %s. The file may be in use by another application.\\n"
-"\\n"
-"Do you wish to try to copy this file instead?"
+msgid "Unable to move the file %s. The file may be in use by another application.\\n\\nDo you wish to try to copy this file instead?"
 msgstr ""
 
 #: string;16412
@@ -6411,10 +6362,7 @@ msgid "You have not specified any folders to share. Are you sure?"
 msgstr ""
 
 #: string;16803
-msgid ""
-"The folder you are sharing is already shared as part of another shared folder:\\n"
-"\\n"
-"%s"
+msgid "The folder you are sharing is already shared as part of another shared folder:\\n\\n%s"
 msgstr ""
 
 #: string;16804
@@ -6422,12 +6370,7 @@ msgid "You haven't entered a screen name in your user profile."
 msgstr ""
 
 #: string;16805
-msgid ""
-"You haven't entered your location in your user profile.\\n"
-"\\n"
-"It's a good idea to enter your location so that other users can see which country you are from. Note that entering a location does not reveal any compromising information.\\n"
-"\\n"
-"Are you sure you want to continue without entering your location?"
+msgid "You haven't entered your location in your user profile.\\n\\nIt's a good idea to enter your location so that other users can see which country you are from. Note that entering a location does not reveal any compromising information.\\n\\nAre you sure you want to continue without entering your location?"
 msgstr ""
 
 #: string;16807
@@ -6460,21 +6403,15 @@ msgid "Please wait: Updating eDonkey server list..."
 msgstr ""
 
 #: string;16815
-msgid ""
-"UPnP Device Host Service is not running. This service is required to perform the setup.\\n"
-"You need to set the startup type of the service to automatic."
+msgid "UPnP Device Host Service is not running. This service is required to perform the setup.\\nYou need to set the startup type of the service to automatic."
 msgstr ""
 
 #: string;16816
-msgid ""
-"The eDonkey network uses large queues with long wait times. By limiting the maximum queue position you will accept so strictly, you may have trouble getting downloads to begin.\\n"
-"Are you sure you want to limit what queue positions you will accept?"
+msgid "The eDonkey network uses large queues with long wait times. By limiting the maximum queue position you will accept so strictly, you may have trouble getting downloads to begin.\\nAre you sure you want to limit what queue positions you will accept?"
 msgstr ""
 
 #: string;16817
-msgid ""
-"Windows doesn't support paths longer than 256 characters.\\n"
-"Please select a folder with a shorter path."
+msgid "Windows doesn't support paths longer than 256 characters.\\nPlease select a folder with a shorter path."
 msgstr ""
 
 #: string;16818
@@ -6702,10 +6639,7 @@ msgid "Cannot send message, a connection has not been established yet."
 msgstr ""
 
 #: string;17042
-msgid ""
-"You have not yet filled in your user profile. You must provide a profile before you can chat with other users.\\n"
-"\\n"
-"Would you like to fill in your profile now?"
+msgid "You have not yet filled in your user profile. You must provide a profile before you can chat with other users.\\n\\nWould you like to fill in your profile now?"
 msgstr ""
 
 #: string;17043
@@ -7046,10 +6980,7 @@ msgid "Established BitTorrent coupling with %s, handshaking..."
 msgstr ""
 
 #: string;17488
-msgid ""
-"You have changed the tracker URL for this torrent. Are you sure you want to save this change?\\n"
-"\\n"
-"An invalid tracker URL may prevent further downloading."
+msgid "You have changed the tracker URL for this torrent. Are you sure you want to save this change?\\n\\nAn invalid tracker URL may prevent further downloading."
 msgstr ""
 
 #: string;17489
@@ -7218,9 +7149,7 @@ msgid "of (e.g. 1 of 10)"
 msgstr ""
 
 #: string;20003
-msgid ""
-"Changing language requires application restart.\\n"
-"Restart now?"
+msgid "Changing language requires application restart.\\nRestart now?"
 msgstr ""
 
 #: string;20005
@@ -7260,12 +7189,7 @@ msgid "All"
 msgstr ""
 
 #: string;20014
-msgid ""
-"This option uses services provided by ShareMonkey.com for recognising information about selected files.\\n"
-"\\n"
-"Shareaza will transmit file details and your location in order to query the ShareMonkey database.  If you are concerned about privacy, you may wish to consult the ShareMonkey.com privacy policy.\\n"
-"\\n"
-"Would you like to proceed?"
+msgid "This option uses services provided by ShareMonkey.com for recognising information about selected files.\\n\\nShareaza will transmit file details and your location in order to query the ShareMonkey database.  If you are concerned about privacy, you may wish to consult the ShareMonkey.com privacy policy.\\n\\nWould you like to proceed?"
 msgstr ""
 
 #: string;20101
@@ -7515,26 +7439,7 @@ msgid "New Folder"
 msgstr ""
 
 #: string;20246
-msgid ""
-"Command-line options:\\n"
-"\\n"
-"-tray : Disable startup splash screen and send application to tray\\n"
-"-nosplash : Disable startup splash screen\\n"
-"-nowarn : Disable alpha (daily builds) version warning dialog\\n"
-"-wait : Wait for other application instance exit\\n"
-"\\n"
-"Interface modes:\\n"
-"\\n"
-"-basic : Start application in Basic interface mode\\n"
-"-tabbed : Start application in Tabbed interface mode\\n"
-"-windowed : Start application in Windowed interface mode\\n"
-"\\n"
-"System options:\\n"
-"\\n"
-"-RegServer : Register internal components for everyone\\n"
-"-UnRegServer : Un-register internal components for everyone\\n"
-"-RegServerPerUser : Register internal components for current user\\n"
-"-UnRegServerPerUser : Un-register internal components for current user"
+msgid "Command-line options:\\n\\n-tray : Disable startup splash screen and send application to tray\\n-nosplash : Disable startup splash screen\\n-nowarn : Disable alpha (daily builds) version warning dialog\\n-wait : Wait for other application instance exit\\n\\nInterface modes:\\n\\n-basic : Start application in Basic interface mode\\n-tabbed : Start application in Tabbed interface mode\\n-windowed : Start application in Windowed interface mode\\n\\nSystem options:\\n\\n-RegServer : Register internal components for everyone\\n-UnRegServer : Un-register internal components for everyone\\n-RegServerPerUser : Register internal components for current user\\n-UnRegServerPerUser : Un-register internal components for current user"
 msgstr ""
 
 #: string;20247
@@ -8288,115 +8193,115 @@ msgid "_Link Compression:"
 msgstr ""
 
 #: cdonkeysettingspage;control;1
-msgid "_eDonkey Network:"
-msgstr ""
-
-#: cdonkeysettingspage;control;2
 msgid "Always connect to eDonkey"
 msgstr ""
 
-#: cdonkeysettingspage;control;3
+#: cdonkeysettingspage;control;2
 msgid "Connect to eDonkey today"
 msgstr ""
 
-#: cdonkeysettingspage;control;4
-msgid "_Global Searching:"
-msgstr ""
-
-#: cdonkeysettingspage;control;5
+#: cdonkeysettingspage;control;3
 msgid "Search known remote servers in the server cache:"
 msgstr ""
 
 #: cdonkeysettingspage;control;6
-msgid "Stop searching after:"
-msgstr ""
-
-#: cdonkeysettingspage;control;9
-msgid "search results."
-msgstr ""
-
-#: cdonkeysettingspage;control;10
 msgid "Receive and update server list from the connected server"
 msgstr ""
 
-#: cdonkeysettingspage;control;11
-msgid "_Client Link Connections:"
-msgstr ""
-
-#: cdonkeysettingspage;control;12
-msgid "Connect to no more than:"
-msgstr ""
-
-#: cdonkeysettingspage;control;15
-msgid "other eDonkey clients."
-msgstr ""
-
-#: cdonkeysettingspage;control;16
-msgid "eDonkey _Tools:"
-msgstr ""
-
-#: cdonkeysettingspage;control;17
-msgid "Download eDonkey server list from the web:"
-msgstr ""
-
-#: cdonkeysettingspage;control;18
+#: cdonkeysettingspage;control;9
 msgid "Download..."
 msgstr ""
 
-#: dialog;cbittorrentsettingspage cscheduletaskpage;control;12
-msgid "BitTorrent"
+#: cdonkeysettingspage;control;10
+msgid "_eDonkey Network:"
+msgstr ""
+
+#: cdonkeysettingspage;control;11
+msgid "_Global Searching:"
+msgstr ""
+
+#: cdonkeysettingspage;control;12
+msgid "Stop searching after:"
+msgstr ""
+
+#: cdonkeysettingspage;control;13
+msgid "search results."
+msgstr ""
+
+#: cdonkeysettingspage;control;14
+msgid "_Client Link Connections:"
+msgstr ""
+
+#: cdonkeysettingspage;control;15
+msgid "Connect to no more than:"
+msgstr ""
+
+#: cdonkeysettingspage;control;16
+msgid "other eDonkey clients."
+msgstr ""
+
+#: cdonkeysettingspage;control;17
+msgid "eDonkey _Tools:"
+msgstr ""
+
+#: cdonkeysettingspage;control;18
+msgid "Download eDonkey server list from the web:"
 msgstr ""
 
 #: cbittorrentsettingspage;control;1
-msgid "_Interface:"
+msgid "Always connect to BitTorrent"
 msgstr ""
 
 #: cbittorrentsettingspage;control;2
-msgid "Display additional BitTorrent interface elements"
+msgid "Connect to BitTorrent today"
 msgstr ""
 
 #: cbittorrentsettingspage;control;3
-msgid "_Download Connections:"
+msgid "Enable BitTorrent DHT"
 msgstr ""
 
-#: cbittorrentsettingspage;control;6
-msgid "Torrents at once"
-msgstr ""
-
-#: cbittorrentsettingspage;control;9
-msgid "Client connections"
-msgstr ""
-
-#: cbittorrentsettingspage;control;10
+#: cbittorrentsettingspage;control;8
 msgid "Clear downloaded torrents     When the share ratio reaches:"
 msgstr ""
 
-#: cbittorrentsettingspage;control;13
-msgid "%"
-msgstr ""
-
-#: cbittorrentsettingspage;control;14
+#: cbittorrentsettingspage;control;11
 msgid "Prefer torrent sources"
 msgstr ""
 
-#: cbittorrentsettingspage;control;15
-msgid "_EndGame:"
-msgstr ""
-
-#: cbittorrentsettingspage;control;16
+#: cbittorrentsettingspage;control;12
 msgid "Enable EndGame mode when completing torrents"
 msgstr ""
 
-#: cbittorrentsettingspage;control;17
-msgid "_Store Torrents Here:"
+#: cbittorrentsettingspage;control;18
+msgid "_BitTorrent Network:"
+msgstr ""
+
+#: cbittorrentsettingspage;control;19
+msgid "_Download Connections:"
 msgstr ""
 
 #: cbittorrentsettingspage;control;20
-msgid "_Torrent Creator:"
+msgid "_Store Torrents Here:"
+msgstr ""
+
+#: cbittorrentsettingspage;control;21
+msgid "Torrents at once"
+msgstr ""
+
+#: cbittorrentsettingspage;control;22
+msgid "Client connections"
 msgstr ""
 
 #: cbittorrentsettingspage;control;23
+msgid "%"
+msgstr ""
+
+#: cbittorrentsettingspage;control;24
 msgid "Default Tracker: "
+msgstr ""
+
+#: cbittorrentsettingspage;control;25
+msgid "_Torrent Creator:"
 msgstr ""
 
 #: dialog;cprotocolssettingspage
@@ -10136,4 +10041,3 @@ msgstr "Seuraava"
 
 #~ msgid "_Play Album"
 #~ msgstr "_Toista Albumit"
-

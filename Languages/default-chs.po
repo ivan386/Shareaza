@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2011-05-12 14:23+0000\n"
+"POT-Creation-Date: 2012-02-21 11:51+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -369,6 +369,11 @@ msgstr "eDonkey"
 msgid "DC++"
 msgstr "DC++"
 
+#: button;id_network_bt dialog;cbittorrentsettingspage
+#: cscheduletaskpage;control;12
+msgid "BitTorrent"
+msgstr "BitTorrent"
+
 #: button;id_network_connect_to button;id_hostcache_connect
 msgid "Connect To"
 msgstr "连接到"
@@ -585,6 +590,12 @@ msgstr "连接到 edonkey(_E)"
 #: cmainwnd.windowed;18;19;item;id_network_dc
 msgid "Connect to _DC++"
 msgstr "连接至 DC++(_D)"
+
+#: cmainwnd.basic;1;2;item;id_network_bt
+#: cmainwnd.tabbed;9;10;item;id_network_bt
+#: cmainwnd.windowed;18;19;item;id_network_bt
+msgid "Connect to _BitTorrent"
+msgstr ""
 
 #: cmainwnd.basic;1;item;id_network_auto_close
 #: cmainwnd.tabbed;9;item;id_network_auto_close
@@ -1827,6 +1838,10 @@ msgstr "edonkey(_E)"
 #: cneighbourswnd;59;item;id_network_dc
 msgid "_DC++"
 msgstr "DC++(_D)"
+
+#: cneighbourswnd;59;item;id_network_bt
+msgid "_BitTorrent"
+msgstr ""
 
 #: cneighbourswnd;60
 msgid "_Monitor"
@@ -4004,6 +4019,10 @@ msgstr "传送完毕后自动关闭 Shareaza。"
 msgid "Browse a user, showing their profile and shared files..."
 msgstr "浏览到用户，显示其个人资料和共享文件..."
 
+#: message;id_network_bt
+msgid "Connect to the BitTorrent network."
+msgstr ""
+
 #: message;id_network_chat_to
 msgid "Open a chat session with a user..."
 msgstr "开启一个用户会话..."
@@ -4649,12 +4668,8 @@ msgid "This template does not have any customizations."
 msgstr "此模板无任何自定义设置。"
 
 #: string;7102
-msgid ""
-"Are you sure you want to delete the \"%s\" template?\\n"
-"This cannot be undone."
-msgstr ""
-"您确定要删除 \"%s\" 模板？\\n"
-"此操作无法恢复。"
+msgid "Are you sure you want to delete the \"%s\" template?\\nThis cannot be undone."
+msgstr "您确定要删除 \"%s\" 模板？\\n此操作无法恢复。"
 
 #: string;8000 dialog;csettingsheet
 msgid "Shareaza Settings"
@@ -4673,18 +4688,8 @@ msgid "Edit My Profile"
 msgstr "编辑个人资料"
 
 #: string;8004
-msgid ""
-"!Welcome to Shareaza (version) !\\n"
-".\\n"
-"Shareaza is completely free software.\\n"
-"Please use it responsibly and respect intellectual property law.\\n"
-"."
-msgstr ""
-"!欢迎使用 Shareaza (version) !\\n"
-".\\n"
-"Shareaza 是完全免费的软件。\\n"
-"请遵照知识产权法负责使用。\\n"
-"."
+msgid "!Welcome to Shareaza (version) !\\n.\\nShareaza is completely free software.\\nPlease use it responsibly and respect intellectual property law.\\n."
+msgstr "!欢迎使用 Shareaza (version) !\\n.\\nShareaza 是完全免费的软件。\\n请遵照知识产权法负责使用。\\n."
 
 #: string;8005
 msgid "(closing after transfers)"
@@ -4699,14 +4704,8 @@ msgid "There are no active searches. Click here to search for files."
 msgstr "没有活动的搜索。请单击搜索开始。"
 
 #: string;8008
-msgid ""
-"Shareaza has finished downloading the next Shareaza version (%s). Would you like to upgrade now?\\n"
-"\\n"
-"If you select Yes, Shareaza will close temporarily while the upgrade is installed."
-msgstr ""
-"Shareaza 已经完成下载新的 Shareaza 版本 (%s)。您要立即升级吗？\\n"
-"\\n"
-"如果您选择是，Shareaza 将暂时关闭并安装升级程序。"
+msgid "Shareaza has finished downloading the next Shareaza version (%s). Would you like to upgrade now?\\n\\nIf you select Yes, Shareaza will close temporarily while the upgrade is installed."
+msgstr "Shareaza 已经完成下载新的 Shareaza 版本 (%s)。您要立即升级吗？\\n\\n如果您选择是，Shareaza 将暂时关闭并安装升级程序。"
 
 #: string;8009
 msgid "Are you sure you want to delete the \"%s\" skin? This cannot be undone."
@@ -5282,18 +5281,8 @@ msgid "Sending query for \"%s\" to %s."
 msgstr "为 \"%s\" 发送查询到 %s。"
 
 #: string;16083
-msgid ""
-"Forcing your PC into hub mode may have adverse effects on performance and the P2P network. It is generally better to allow Shareaza to decide whether or not hub mode should be used.\\n"
-"\\n"
-"Hub mode does NOT produce better search results, or have any other advantages for you.\\n"
-"\\n"
-"Do you really want to do this, despite these disadvantages?"
-msgstr ""
-"强制您的电脑进入集端模式可能会对机器性能以及 P2P 网络产生负面效用。总体来说更好的方法是让 Shareaza 决定是否使用结端模式。\\n"
-"\\n"
-"Hub 模式并不会对您产生更好的搜索效果，或是任何其他的优越性。\\n"
-"\\n"
-"尽管存在这些缺点，您还是想这样做吗？"
+msgid "Forcing your PC into hub mode may have adverse effects on performance and the P2P network. It is generally better to allow Shareaza to decide whether or not hub mode should be used.\\n\\nHub mode does NOT produce better search results, or have any other advantages for you.\\n\\nDo you really want to do this, despite these disadvantages?"
+msgstr "强制您的电脑进入集端模式可能会对机器性能以及 P2P 网络产生负面效用。总体来说更好的方法是让 Shareaza 决定是否使用结端模式。\\n\\nHub 模式并不会对您产生更好的搜索效果，或是任何其他的优越性。\\n\\n尽管存在这些缺点，您还是想这样做吗？"
 
 #: string;16085
 msgid "Gnutella2 is Shareaza's premiere network. Disabling support for it may severely limit both the number and quality of your search results. Are you SURE you want to do this?"
@@ -5592,10 +5581,7 @@ msgid "Download host %s is busy, retrying in %i seconds."
 msgstr "下载主机 %s 过于繁忙，请等待 %i 秒后再试。"
 
 #: string;16281
-msgid ""
-"Are you sure you want to clear \"%s\"?\\n"
-"\\n"
-"Once a download has been cleared from the Downloads window, it cannot be resumed later."
+msgid "Are you sure you want to clear \"%s\"?\\n\\nOnce a download has been cleared from the Downloads window, it cannot be resumed later."
 msgstr "您确定要清除 \"%s\" 吗？一旦从下载窗口中清除后，以后将不能重新开始。"
 
 #: string;16282
@@ -5996,14 +5982,8 @@ msgid "DC++ Guard"
 msgstr "eDonkey 保护"
 
 #: string;16384
-msgid ""
-"Are you sure you want to launch the file \"%s\" ?\\n"
-"\\n"
-"Some files can be harmful to your computer. Ensure you know what the file is before launching it."
-msgstr ""
-"确定要载入 \"%s\" 此文件吗？\\n"
-"\\n"
-"某些文件可能对您的电脑有害。载入文件前最好能确定文件的用途。"
+msgid "Are you sure you want to launch the file \"%s\" ?\\n\\nSome files can be harmful to your computer. Ensure you know what the file is before launching it."
+msgstr "确定要载入 \"%s\" 此文件吗？\\n\\n某些文件可能对您的电脑有害。载入文件前最好能确定文件的用途。"
 
 #: string;16385
 msgid "You are about to modify the metadata of %i files, are you sure you want to continue?"
@@ -6018,38 +5998,16 @@ msgid "The file \"%s\" has not yet been hashed. Please wait for the file to be h
 msgstr "文件 \"%s\" 未被 Hash。请等待文件被 Hash，稍后再试。"
 
 #: string;16388
-msgid ""
-"This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n"
-"\\n"
-"Shareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database. If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n"
-"\\n"
-"Would you like to proceed?"
-msgstr ""
-"识别和共享选定文件的功能由 Bitzi.com 提供。\\n"
-"\\n"
-"为了到 Bitzi 数据库进行查询，Shareaza 自动转换成 SHA1 Hash。如果涉及隐私，您可能需要查看 Bitzi.com 的隐私申明。\\n"
-"\\n"
-"您确定继续吗？"
+msgid "This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n\\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database. If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n\\nWould you like to proceed?"
+msgstr "识别和共享选定文件的功能由 Bitzi.com 提供。\\n\\n为了到 Bitzi 数据库进行查询，Shareaza 自动转换成 SHA1 Hash。如果涉及隐私，您可能需要查看 Bitzi.com 的隐私申明。\\n\\n您确定继续吗？"
 
 #: string;16389
-msgid ""
-"Are you sure you want to permanently delete the %i selected file(s) ?\\n"
-"\\n"
-"The files will be moved to your \"recycle bin\" if it is enabled."
-msgstr ""
-"确定要永久删除选定的 %i 文件吗？ \\n"
-"\\n"
-"如果您确定，文件将会被移动到 \"回收站\"。"
+msgid "Are you sure you want to permanently delete the %i selected file(s) ?\\n\\nThe files will be moved to your \"recycle bin\" if it is enabled."
+msgstr "确定要永久删除选定的 %i 文件吗？ \\n\\n如果您确定，文件将会被移动到 \"回收站\"。"
 
 #: string;16390
-msgid ""
-"You have not yet selected a media player to enqueue files with, such as Nullsoft Winamp. Would you like to select one now?\\n"
-"\\n"
-"Shareaza will pass the name of the file to your selected program with the \"/ADD\" argument."
-msgstr ""
-"您还没有选定文件将被加入的媒体播放器，比如 winamp。您要选择一个吗？\\n"
-"\\n"
-"Shareaza 会用 \"/ADD\" 把文件名传值过去。"
+msgid "You have not yet selected a media player to enqueue files with, such as Nullsoft Winamp. Would you like to select one now?\\n\\nShareaza will pass the name of the file to your selected program with the \"/ADD\" argument."
+msgstr "您还没有选定文件将被加入的媒体播放器，比如 winamp。您要选择一个吗？\\n\\nShareaza 会用 \"/ADD\" 把文件名传值过去。"
 
 #: string;16391
 msgid "You're not connected to the network."
@@ -6068,88 +6026,36 @@ msgid "Would you like to remove the \"potentially unsafe\" attribute from this f
 msgstr "确定要移除 \"可能不安全\" 的文件吗？"
 
 #: string;16395
-msgid ""
-"Your downloaded files folder \"%s\" is not yet in your library.\\n"
-"\\n"
-"Including your downloaded files folder in your library makes it easier to view and organise new downloads, and lets you take advantage of advanced Shareaza features such as download verification and automatic upgrading. Placing downloaded files in your library does not necessarily require you to share them: you can choose whether or not to share files independently.\\n"
-"\\n"
-"Would you like to add your downloaded files folder to your library now?"
-msgstr ""
-"您的下载完成文件夹不在收藏中。\\n"
-"\\n"
-"将下载完成文件夹包括在收藏中，查看和管理将更加容易，还可以使用 Shareaza 的验证功能和自动更新。共享放在收藏中下载文件是不必要的。您可以单独选择是否共享文件。\\n"
-"\\n"
-"确定马上把下载文件加入收藏中吗？"
+msgid "Your downloaded files folder \"%s\" is not yet in your library.\\n\\nIncluding your downloaded files folder in your library makes it easier to view and organise new downloads, and lets you take advantage of advanced Shareaza features such as download verification and automatic upgrading. Placing downloaded files in your library does not necessarily require you to share them: you can choose whether or not to share files independently.\\n\\nWould you like to add your downloaded files folder to your library now?"
+msgstr "您的下载完成文件夹不在收藏中。\\n\\n将下载完成文件夹包括在收藏中，查看和管理将更加容易，还可以使用 Shareaza 的验证功能和自动更新。共享放在收藏中下载文件是不必要的。您可以单独选择是否共享文件。\\n\\n确定马上把下载文件加入收藏中吗？"
 
 #: string;16396
 msgid "Your downloads folder has been added to your library. Would you like to share it too?"
 msgstr "下载文件夹已经被添加到收藏中。您想要共享吗？"
 
 #: string;16397
-msgid ""
-"Are you sure you want to delete the %i selected album folder(s) ?\\n"
-"\\n"
-"Note that this action does not delete the files within the album folders, only the folders themselves."
-msgstr ""
-"您确定要删除 %i 个选定的专辑文件夹吗？\\n"
-"\\n"
-"注意: 仅仅是删除文件夹本身，并不包括专辑文件夹。"
+msgid "Are you sure you want to delete the %i selected album folder(s) ?\\n\\nNote that this action does not delete the files within the album folders, only the folders themselves."
+msgstr "您确定要删除 %i 个选定的专辑文件夹吗？\\n\\n注意: 仅仅是删除文件夹本身，并不包括专辑文件夹。"
 
 #: string;16398
-msgid ""
-"Shareaza could not rename:\\n"
-"\\n"
-"%s\\n"
-"to\\n"
-"%s"
-msgstr ""
-"Shareaza 不能把 \\n"
-"\\n"
-"%s\\n"
-" 更名为 \\n"
-"%s"
+msgid "Shareaza could not rename:\\n\\n%s\\nto\\n%s"
+msgstr "Shareaza 不能把 \\n\\n%s\\n 更名为 \\n%s"
 
 #: string;16399
-msgid ""
-"Shareaza could not delete the file:\\n"
-"\\n"
-"%s"
-msgstr ""
-"Shareaza 不能删除 \\n"
-"\\n"
-"%s"
+msgid "Shareaza could not delete the file:\\n\\n%s"
+msgstr "Shareaza 不能删除 \\n\\n%s"
 
 #: string;16400
-msgid ""
-"Target file exists:\\n"
-"\\n"
-"%s\\n"
-"\\n"
-"Would you like to overwrite it?"
-msgstr ""
-"目标文件已存在:\\n"
-"\\n"
-"%s\\n"
-"\\n"
-"您要覆盖吗？"
+msgid "Target file exists:\\n\\n%s\\n\\nWould you like to overwrite it?"
+msgstr "目标文件已存在:\\n\\n%s\\n\\n您要覆盖吗？"
 
 #: string;16401
 msgid "Show All File Types"
 msgstr "显示所有文件类型"
 
 #: string;16402
-msgid ""
-"Shareaza received a collection file:\\n"
-"\\n"
-"\"%s\"\\n"
-"\\n"
-"This file does not appear to be a valid collection file."
-msgstr ""
-"Shareaza 已经收到一个收集文件:\\r\\n"
-"\\r\\n"
-"\"%s\"\\r\\n"
-"\\r\\n"
-"此文件可能不是一个有效的收集文件。"
+msgid "Shareaza received a collection file:\\n\\n\"%s\"\\n\\nThis file does not appear to be a valid collection file."
+msgstr "Shareaza 已经收到一个收集文件:\\r\\n\\r\\n\"%s\"\\r\\n\\r\\n此文件可能不是一个有效的收集文件。"
 
 #: string;16403
 msgid "Shareaza has added the collection file \"%s\" to your library."
@@ -6160,14 +6066,8 @@ msgid "Shareaza was unable to install the collection file \"%s\" by copying it t
 msgstr "Shareaza 不能安装收集文件 \"%s\" 通过复制它到文件夹 \"%s\"。"
 
 #: string;16406
-msgid ""
-"Would you like to download all files in this collection?\\n"
-"\\n"
-"Choose Cancel to stop any further prompts."
-msgstr ""
-"您要下载此收集中的所有文件吗？\\r\\n"
-"\\r\\n"
-"选择取消以停止任何进一步的提示。"
+msgid "Would you like to download all files in this collection?\\n\\nChoose Cancel to stop any further prompts."
+msgstr "您要下载此收集中的所有文件吗？\\r\\n\\r\\n选择取消以停止任何进一步的提示。"
 
 #: string;16407
 msgid "Would you like to prevent this collection from prompting you to download anything else?"
@@ -6182,26 +6082,12 @@ msgid "Export &URIs..."
 msgstr "导出 URI(_U)..."
 
 #: string;16410
-msgid ""
-"A subfolder of the selected folder \"%s\" is already part of your library.\\n"
-"Adding this folder will cause re-hashing of some files.\\n"
-"\\n"
-"Do you want to continue ?"
-msgstr ""
-"选定文件夹的子目录 \"%s\" 已经是您收藏的一部分。\\n"
-"添加此文件夹将导致重新 Hash 某些文件。\\n"
-"\\n"
-"您希望继续吗？"
+msgid "A subfolder of the selected folder \"%s\" is already part of your library.\\nAdding this folder will cause re-hashing of some files.\\n\\nDo you want to continue ?"
+msgstr "选定文件夹的子目录 \"%s\" 已经是您收藏的一部分。\\n添加此文件夹将导致重新 Hash 某些文件。\\n\\n您希望继续吗？"
 
 #: string;16411
-msgid ""
-"Unable to move the file %s. The file may be in use by another application.\\n"
-"\\n"
-"Do you wish to try to copy this file instead?"
-msgstr ""
-"不能移动文件 %s。此文件可能正在被其他程序使用。\\n"
-"\\n"
-"您希望以复制方式来替代移动吗？"
+msgid "Unable to move the file %s. The file may be in use by another application.\\n\\nDo you wish to try to copy this file instead?"
+msgstr "不能移动文件 %s。此文件可能正在被其他程序使用。\\n\\n您希望以复制方式来替代移动吗？"
 
 #: string;16412
 msgid "Ghost File"
@@ -6434,32 +6320,16 @@ msgid "You have not specified any folders to share. Are you sure?"
 msgstr "您还未指定任何共享文件夹。您确定吗？"
 
 #: string;16803
-msgid ""
-"The folder you are sharing is already shared as part of another shared folder:\\n"
-"\\n"
-"%s"
-msgstr ""
-"您共享的文件夹是后面已共享文件夹的一部分:\\n"
-"\\n"
-"%s"
+msgid "The folder you are sharing is already shared as part of another shared folder:\\n\\n%s"
+msgstr "您共享的文件夹是后面已共享文件夹的一部分:\\n\\n%s"
 
 #: string;16804
 msgid "You haven't entered a screen name in your user profile."
 msgstr "您尚未在您的配置文件中输入屏幕名称。"
 
 #: string;16805
-msgid ""
-"You haven't entered your location in your user profile.\\n"
-"\\n"
-"It's a good idea to enter your location so that other users can see which country you are from. Note that entering a location does not reveal any compromising information.\\n"
-"\\n"
-"Are you sure you want to continue without entering your location?"
-msgstr ""
-"您尚未在您的配置文件中输入您的地址。\\n"
-"\\n"
-"输入您的地址是非常有益的，它可以使其他用户看见您来自于何处。注意，输入您的地址并不会暴露任何对您的安全有害的信息。\\n"
-"\\n"
-"您确定要继续而不输入您的地址吗？"
+msgid "You haven't entered your location in your user profile.\\n\\nIt's a good idea to enter your location so that other users can see which country you are from. Note that entering a location does not reveal any compromising information.\\n\\nAre you sure you want to continue without entering your location?"
+msgstr "您尚未在您的配置文件中输入您的地址。\\n\\n输入您的地址是非常有益的，它可以使其他用户看见您来自于何处。注意，输入您的地址并不会暴露任何对您的安全有害的信息。\\n\\n您确定要继续而不输入您的地址吗？"
 
 #: string;16807
 msgid "Please type the bandwidth limit you wish to set in the form \"123 kb/s\" for kilobits per second, or \"123 KB/s\" for kilobytes per second."
@@ -6491,28 +6361,16 @@ msgid "Please wait: Updating eDonkey server list..."
 msgstr "请稍候: 更新 edonkey 服务器列表..."
 
 #: string;16815
-msgid ""
-"UPnP Device Host Service is not running. This service is required to perform the setup.\\n"
-"You need to set the startup type of the service to automatic."
-msgstr ""
-"UPnP Device Host 服务未运行。请重新设置该服务。\\n"
-"您需要将该服务的启动类型设置为\"自动\"。"
+msgid "UPnP Device Host Service is not running. This service is required to perform the setup.\\nYou need to set the startup type of the service to automatic."
+msgstr "UPnP Device Host 服务未运行。请重新设置该服务。\\n您需要将该服务的启动类型设置为\"自动\"。"
 
 #: string;16816
-msgid ""
-"The eDonkey network uses large queues with long wait times. By limiting the maximum queue position you will accept so strictly, you may have trouble getting downloads to begin.\\n"
-"Are you sure you want to limit what queue positions you will accept?"
-msgstr ""
-"eDonkey 网络使用需要等待很长时间的队列。限制最大可接受的队列位置如果非常严格的话，您可能难以开始下载。\\n"
-"您确定要限制您能接受的队列位置吗？"
+msgid "The eDonkey network uses large queues with long wait times. By limiting the maximum queue position you will accept so strictly, you may have trouble getting downloads to begin.\\nAre you sure you want to limit what queue positions you will accept?"
+msgstr "eDonkey 网络使用需要等待很长时间的队列。限制最大可接受的队列位置如果非常严格的话，您可能难以开始下载。\\n您确定要限制您能接受的队列位置吗？"
 
 #: string;16817
-msgid ""
-"Windows doesn't support paths longer than 256 characters.\\n"
-"Please select a folder with a shorter path."
-msgstr ""
-"Windows 系统不支持超过 256 个字符的文件路径。\\n"
-"请选择一个较短路径的文件夹。"
+msgid "Windows doesn't support paths longer than 256 characters.\\nPlease select a folder with a shorter path."
+msgstr "Windows 系统不支持超过 256 个字符的文件路径。\\n请选择一个较短路径的文件夹。"
 
 #: string;16818
 msgid "The complete and incomplete folders should not be the same"
@@ -6739,14 +6597,8 @@ msgid "Cannot send message, a connection has not been established yet."
 msgstr "不能发送消息，尚未建立连接。"
 
 #: string;17042
-msgid ""
-"You have not yet filled in your user profile. You must provide a profile before you can chat with other users.\\n"
-"\\n"
-"Would you like to fill in your profile now?"
-msgstr ""
-"您还未填写个人资料。在与其他用户聊天之前您必须提供个人资料。\\n"
-"\\n"
-"您要立即填写个人资料吗？"
+msgid "You have not yet filled in your user profile. You must provide a profile before you can chat with other users.\\n\\nWould you like to fill in your profile now?"
+msgstr "您还未填写个人资料。在与其他用户聊天之前您必须提供个人资料。\\n\\n您要立即填写个人资料吗？"
 
 #: string;17043
 msgid "Granted upload priority to host %s."
@@ -7086,14 +6938,8 @@ msgid "Established BitTorrent coupling with %s, handshaking..."
 msgstr "与 %s 建立 BitTorrent 联结，握手中..."
 
 #: string;17488
-msgid ""
-"You have changed the tracker URL for this torrent. Are you sure you want to save this change?\\n"
-"\\n"
-"An invalid tracker URL may prevent further downloading."
-msgstr ""
-"您已经更改此 Torrent 的 Tracker 的链接。您确定您希望保存此更改吗？\\n"
-"\\n"
-"一个无效的 Tracker 链接可能会妨碍进一步下载。"
+msgid "You have changed the tracker URL for this torrent. Are you sure you want to save this change?\\n\\nAn invalid tracker URL may prevent further downloading."
+msgstr "您已经更改此 Torrent 的 Tracker 的链接。您确定您希望保存此更改吗？\\n\\n一个无效的 Tracker 链接可能会妨碍进一步下载。"
 
 #: string;17489
 msgid "BitTorrent coupling with %s is extended protocol, identified \"%s\"."
@@ -7260,12 +7106,8 @@ msgid "of (e.g. 1 of 10)"
 msgstr "于 (例如: 1 于 10)"
 
 #: string;20003
-msgid ""
-"Changing language requires application restart.\\n"
-"Restart now?"
-msgstr ""
-"变更界面方向需要重新启动。\\n"
-"您需要手动启动 Shareaza。立即退出？"
+msgid "Changing language requires application restart.\\nRestart now?"
+msgstr "变更界面方向需要重新启动。\\n您需要手动启动 Shareaza。立即退出？"
 
 #: string;20005
 msgid "No"
@@ -7304,18 +7146,8 @@ msgid "All"
 msgstr "所有"
 
 #: string;20014
-msgid ""
-"This option uses services provided by ShareMonkey.com for recognising information about selected files.\\n"
-"\\n"
-"Shareaza will transmit file details and your location in order to query the ShareMonkey database.  If you are concerned about privacy, you may wish to consult the ShareMonkey.com privacy policy.\\n"
-"\\n"
-"Would you like to proceed?"
-msgstr ""
-"该选项使用 ShareMonkey.com 提供的服务来市别选中文件的信息。\\n"
-"\\n"
-"Shareaza 将传送文件细节和您的位置为了查询 ShareMonkey 数据库。如果您担心您的隐私，您可以查阅 ShareMonkey.com 的隐私策略。\\n"
-"\\n"
-"您是否要继续？"
+msgid "This option uses services provided by ShareMonkey.com for recognising information about selected files.\\n\\nShareaza will transmit file details and your location in order to query the ShareMonkey database.  If you are concerned about privacy, you may wish to consult the ShareMonkey.com privacy policy.\\n\\nWould you like to proceed?"
+msgstr "该选项使用 ShareMonkey.com 提供的服务来市别选中文件的信息。\\n\\nShareaza 将传送文件细节和您的位置为了查询 ShareMonkey 数据库。如果您担心您的隐私，您可以查阅 ShareMonkey.com 的隐私策略。\\n\\n您是否要继续？"
 
 #: string;20101
 msgid "Requesting"
@@ -7564,46 +7396,8 @@ msgid "New Folder"
 msgstr "新建文件夹"
 
 #: string;20246
-msgid ""
-"Command-line options:\\n"
-"\\n"
-"-tray : Disable startup splash screen and send application to tray\\n"
-"-nosplash : Disable startup splash screen\\n"
-"-nowarn : Disable alpha (daily builds) version warning dialog\\n"
-"-wait : Wait for other application instance exit\\n"
-"\\n"
-"Interface modes:\\n"
-"\\n"
-"-basic : Start application in Basic interface mode\\n"
-"-tabbed : Start application in Tabbed interface mode\\n"
-"-windowed : Start application in Windowed interface mode\\n"
-"\\n"
-"System options:\\n"
-"\\n"
-"-RegServer : Register internal components for everyone\\n"
-"-UnRegServer : Un-register internal components for everyone\\n"
-"-RegServerPerUser : Register internal components for current user\\n"
-"-UnRegServerPerUser : Un-register internal components for current user"
-msgstr ""
-"命令行选项：\\n"
-"\\n"
-"-tray : 禁用启动画面并使程序缩小到系统栏\\n"
-"-nosplash : 禁用启动画面\\n"
-"-nowarn : 禁用测试（每日构建）版本警告窗口\\n"
-"-wait : 等待其他应用程序实例退出\\n"
-"\\n"
-"界面模式：\\n"
-"\\n"
-"-basic : 以普通模式启动\\n"
-"-tabbed : 以标签模式启动\\n"
-"-windowed : 以视窗模式启动\\n"
-"\\n"
-"系统选项：\\n"
-"\\n"
-"-RegServer : 为所有用户注册内部组件\\n"
-"-UnRegServer : 为所有用户注销内部组件\\n"
-"-RegServerPerUser : 为当前用户注册内部组件\\n"
-"-UnRegServerPerUser : 为当前用户注销内部组件"
+msgid "Command-line options:\\n\\n-tray : Disable startup splash screen and send application to tray\\n-nosplash : Disable startup splash screen\\n-nowarn : Disable alpha (daily builds) version warning dialog\\n-wait : Wait for other application instance exit\\n\\nInterface modes:\\n\\n-basic : Start application in Basic interface mode\\n-tabbed : Start application in Tabbed interface mode\\n-windowed : Start application in Windowed interface mode\\n\\nSystem options:\\n\\n-RegServer : Register internal components for everyone\\n-UnRegServer : Un-register internal components for everyone\\n-RegServerPerUser : Register internal components for current user\\n-UnRegServerPerUser : Un-register internal components for current user"
+msgstr "命令行选项：\\n\\n-tray : 禁用启动画面并使程序缩小到系统栏\\n-nosplash : 禁用启动画面\\n-nowarn : 禁用测试（每日构建）版本警告窗口\\n-wait : 等待其他应用程序实例退出\\n\\n界面模式：\\n\\n-basic : 以普通模式启动\\n-tabbed : 以标签模式启动\\n-windowed : 以视窗模式启动\\n\\n系统选项：\\n\\n-RegServer : 为所有用户注册内部组件\\n-UnRegServer : 为所有用户注销内部组件\\n-RegServerPerUser : 为当前用户注册内部组件\\n-UnRegServerPerUser : 为当前用户注销内部组件"
 
 #: string;20247
 msgid "Failed to load metadata schemas. Please reinstall application."
@@ -8353,116 +8147,116 @@ msgid "_Link Compression:"
 msgstr "链接压缩：(_L)"
 
 #: cdonkeysettingspage;control;1
-msgid "_eDonkey Network:"
-msgstr "eDonkey 网络(_E):"
-
-#: cdonkeysettingspage;control;2
 msgid "Always connect to eDonkey"
 msgstr "连接到 eDonkey 今天"
 
-#: cdonkeysettingspage;control;3
+#: cdonkeysettingspage;control;2
 msgid "Connect to eDonkey today"
 msgstr "自动连接到每个会话"
 
-#: cdonkeysettingspage;control;4
-msgid "_Global Searching:"
-msgstr "全局搜索(_G):"
-
-#: cdonkeysettingspage;control;5
+#: cdonkeysettingspage;control;3
 msgid "Search known remote servers in the server cache:"
 msgstr "在服务器缓存中搜索已知远程服务器:"
 
 #: cdonkeysettingspage;control;6
-msgid "Stop searching after:"
-msgstr "搜索停止于:"
-
-#: cdonkeysettingspage;control;9
-msgid "search results."
-msgstr "个搜索结果。"
-
-#: cdonkeysettingspage;control;10
 msgid "Receive and update server list from the connected server"
 msgstr "从连接接收和更新服务器列表"
 
-#: cdonkeysettingspage;control;11
-msgid "_Client Link Connections:"
-msgstr "客户端链接连接(_C):"
-
-#: cdonkeysettingspage;control;12
-msgid "Connect to no more than:"
-msgstr "连接不多于:"
-
-#: cdonkeysettingspage;control;15
-msgid "other eDonkey clients."
-msgstr "其他 eDonkey 客户端。"
-
-#: cdonkeysettingspage;control;16
-msgid "eDonkey _Tools:"
-msgstr "eDonkey 工具(_T):"
-
-#: cdonkeysettingspage;control;17
-msgid "Download eDonkey server list from the web:"
-msgstr "导入 eDonkey/eMule 未完成下载 (.part):"
-
-#: cdonkeysettingspage;control;18
+#: cdonkeysettingspage;control;9
 msgid "Download..."
 msgstr "导入..."
 
-#: dialog;cbittorrentsettingspage cscheduletaskpage;control;12
-msgid "BitTorrent"
-msgstr "BitTorrent"
+#: cdonkeysettingspage;control;10
+msgid "_eDonkey Network:"
+msgstr "eDonkey 网络(_E):"
+
+#: cdonkeysettingspage;control;11
+msgid "_Global Searching:"
+msgstr "全局搜索(_G):"
+
+#: cdonkeysettingspage;control;12
+msgid "Stop searching after:"
+msgstr "搜索停止于:"
+
+#: cdonkeysettingspage;control;13
+msgid "search results."
+msgstr "个搜索结果。"
+
+#: cdonkeysettingspage;control;14
+msgid "_Client Link Connections:"
+msgstr "客户端链接连接(_C):"
+
+#: cdonkeysettingspage;control;15
+msgid "Connect to no more than:"
+msgstr "连接不多于:"
+
+#: cdonkeysettingspage;control;16
+msgid "other eDonkey clients."
+msgstr "其他 eDonkey 客户端。"
+
+#: cdonkeysettingspage;control;17
+msgid "eDonkey _Tools:"
+msgstr "eDonkey 工具(_T):"
+
+#: cdonkeysettingspage;control;18
+msgid "Download eDonkey server list from the web:"
+msgstr "导入 eDonkey/eMule 未完成下载 (.part):"
 
 #: cbittorrentsettingspage;control;1
-msgid "_Interface:"
-msgstr "界面(_I):"
+msgid "Always connect to BitTorrent"
+msgstr ""
 
 #: cbittorrentsettingspage;control;2
-msgid "Display additional BitTorrent interface elements"
-msgstr "显示 BitTorrent 额外的界面元素"
+msgid "Connect to BitTorrent today"
+msgstr ""
 
 #: cbittorrentsettingspage;control;3
-msgid "_Download Connections:"
-msgstr "下载连接(_D):"
+msgid "Enable BitTorrent DHT"
+msgstr ""
 
-#: cbittorrentsettingspage;control;6
-msgid "Torrents at once"
-msgstr "个 Torrent 一次"
-
-#: cbittorrentsettingspage;control;9
-msgid "Client connections"
-msgstr "个客户端连接"
-
-#: cbittorrentsettingspage;control;10
+#: cbittorrentsettingspage;control;8
 msgid "Clear downloaded torrents     When the share ratio reaches:"
 msgstr " 清除已下载的 Torrent        当共享比率达到"
 
-#: cbittorrentsettingspage;control;13
-msgid "%"
-msgstr "%"
-
-#: cbittorrentsettingspage;control;14
+#: cbittorrentsettingspage;control;11
 msgid "Prefer torrent sources"
 msgstr " Torrent 资源优先"
 
-#: cbittorrentsettingspage;control;15
-msgid "_EndGame:"
-msgstr "最终阶段(_E):"
-
-#: cbittorrentsettingspage;control;16
+#: cbittorrentsettingspage;control;12
 msgid "Enable EndGame mode when completing torrents"
 msgstr "在完成 Torrent 时启用最终阶段模式"
 
-#: cbittorrentsettingspage;control;17
+#: cbittorrentsettingspage;control;18
+msgid "_BitTorrent Network:"
+msgstr ""
+
+#: cbittorrentsettingspage;control;19
+msgid "_Download Connections:"
+msgstr "下载连接(_D):"
+
+#: cbittorrentsettingspage;control;20
 msgid "_Store Torrents Here:"
 msgstr "保存种子到(_S):"
 
-#: cbittorrentsettingspage;control;20
-msgid "_Torrent Creator:"
-msgstr "制作种子(_T)"
+#: cbittorrentsettingspage;control;21
+msgid "Torrents at once"
+msgstr "个 Torrent 一次"
+
+#: cbittorrentsettingspage;control;22
+msgid "Client connections"
+msgstr "个客户端连接"
 
 #: cbittorrentsettingspage;control;23
+msgid "%"
+msgstr "%"
+
+#: cbittorrentsettingspage;control;24
 msgid "Default Tracker: "
 msgstr "默认 Tracker: "
+
+#: cbittorrentsettingspage;control;25
+msgid "_Torrent Creator:"
+msgstr "制作种子(_T)"
 
 #: dialog;cprotocolssettingspage
 msgid "Protocols"
@@ -10197,8 +9991,17 @@ msgstr "触发器"
 msgid "NextRun"
 msgstr "下次运行"
 
+#~ msgid "_Interface:"
+#~ msgstr "界面(_I):"
+
+#~ msgid "Display additional BitTorrent interface elements"
+#~ msgstr "显示 BitTorrent 额外的界面元素"
+
+#~ msgid "_EndGame:"
+#~ msgstr "最终阶段(_E):"
+
 #~ msgid "Shareaza was unable to set up port-forwarding on your NAT router or firewall.\\n\\nPlease configure your network to forward TCP and UDP ports %i to your local PC."
 #~ msgstr "您已表明您希望在您的 NAT 路由或防火墙上设立端口映射。\\n\\n请配置您的网络将 TCP 和 UDP 端口 %i 映射到您的本地计算机。"
+
 #~ msgid "Please wait: Finding UPnP devices and setting them up..."
 #~ msgstr "请稍候: 查找 UPnP 驱动器并进行设置..."
-

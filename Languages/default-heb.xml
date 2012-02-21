@@ -354,6 +354,7 @@
 			<button id="ID_NETWORK_G1" text="‪גנוטלה 1"/>
 			<button id="ID_NETWORK_ED2K" text="‪אי-דונקי 2000"/>
 			<button id="ID_NETWORK_DC" text="DC++"/>
+			<button id="ID_NETWORK_BT" text="ביט-טורנט"/>
 			<separator/>
 			<button id="ID_NEIGHBOURS_SETTINGS" text="הגדרות"/>
 		</toolbar>
@@ -369,6 +370,7 @@
 			<button id="ID_NETWORK_G1" text="‪גנוטלה 1"/>
 			<button id="ID_NETWORK_ED2K" text="‪אי-דונקי 2000"/>
 			<button id="ID_NETWORK_DC" text="DC++"/>
+			<button id="ID_NETWORK_BT" text="ביט-טורנט"/>
 			<separator/>
 			<button id="ID_NEIGHBOURS_SETTINGS" text="הגדרות"/>
 		</toolbar>
@@ -506,6 +508,7 @@
 					<item id="ID_NETWORK_G1" text="‪התחבר אל גנוטלה _1"/>
 					<item id="ID_NETWORK_ED2K" text="‪התחבר אל _אי-דונקי"/>
 					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
+					<item id="ID_NETWORK_BT" text="Connect to _BitTorrent"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_AUTO_CLOSE" text="‪צא ב_סיום העברות"/>
@@ -543,7 +546,7 @@
 				<item id="ID_TOOLS_PROFILE" text="‪_ערוך את הפרופיל שלי..."/>
 				<item id="ID_TOOLS_WIZARD" text="‪_אשף הפעלה מהירה..."/>
 				<separator/>
-				<item id="ID_TOOLS_SETTINGS" text="ה_גדרות שרזה..."/>
+				<item id="ID_TOOLS_SETTINGS" text="ה_גדרות שרזה..." shortcut="Ctrl+P"/>
 			</menu>
 			<menu text="_עזרה">
 				<item id="ID_HELP_FAQ" text="_שאלות נפוצות על שרזה"/>
@@ -583,6 +586,7 @@
 					<item id="ID_NETWORK_G1" text="‪התחבר אל גנוטלה _1"/>
 					<item id="ID_NETWORK_ED2K" text="‪התחבר אל _אי-דונקי"/>
 					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
+					<item id="ID_NETWORK_BT" text="Connect to _BitTorrent"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_CONNECT_TO" text="_התחבר אל..." shortcut="Ctrl+T"/>
@@ -641,7 +645,7 @@
 				<item id="ID_TOOLS_PROFILE" text="‪_ערוך את הפרופיל שלי..."/>
 				<item id="ID_TOOLS_WIZARD" text="‪_אשף הפעלה מהירה..."/>
 				<separator/>
-				<item id="ID_TOOLS_SETTINGS" text="ה_גדרות שרזה..."/>
+				<item id="ID_TOOLS_SETTINGS" text="ה_גדרות שרזה..." shortcut="Ctrl+P"/>
 			</menu>
 			<menu text="‪_חלון">
 				<item id="ID_WINDOW_NAVBAR" text="‪הצג סרגל _ניווט"/>
@@ -695,6 +699,7 @@
 					<item id="ID_NETWORK_G1" text="‪התחבר אל גנוטלה _1"/>
 					<item id="ID_NETWORK_ED2K" text="‪התחבר אל _אי-דונקי"/>
 					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
+					<item id="ID_NETWORK_BT" text="Connect to _BitTorrent"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_AUTO_CLOSE" text="‪_סגור בסיום העברות"/>
@@ -735,7 +740,7 @@
 				<item id="ID_TOOLS_PROFILE" text="‪_ערוך את הפרופיל שלי..."/>
 				<separator/>
 				<item id="ID_TOOLS_WIZARD" text="‪_אשף הפעלה מהירה..."/>
-				<item id="ID_TOOLS_SETTINGS" text="ה_גדרות שרזה..."/>
+				<item id="ID_TOOLS_SETTINGS" text="ה_גדרות שרזה..." shortcut="Ctrl+P"/>
 			</menu>
 			<menu text="‪_חלון">
 				<item id="ID_WINDOW_CASCADE" text="מסך מלא_"/>
@@ -1524,6 +1529,7 @@
 				<item id="ID_NETWORK_G1" text="‪גנוטלה 1"/>
 				<item id="ID_NETWORK_ED2K" text="‪אידונקי 2000"/>
 				<item id="ID_NETWORK_DC" text="_DC++"/>
+				<item id="ID_NETWORK_BT" text="_BitTorrent"/>
 			</menu>
 			<menu text="‪מוניטור">
 				<item id="ID_NEIGHBOURS_VIEW_ALL" text="‪הצג את כל תעבורת הרשת"/>
@@ -2562,6 +2568,7 @@
 		<tip id="ID_NEIGHBOURS_VIEW_OUTGOING" message="Open a new Packet Dump window monitoring outgoing traffic to this neighbour."/>
 		<tip id="ID_NETWORK_AUTO_CLOSE" message="סגור אוטמטית את שרזה כשהעברות יסתיימו"/>
 		<tip id="ID_NETWORK_BROWSE_TO" message="סייר במשתמש, וצפה בפרופיל ובקבציו המשותפים"/>
+		<tip id="ID_NETWORK_BT" message="Connect to the BitTorrent network."/>
 		<tip id="ID_NETWORK_CHAT_TO" message="Open a chat session with a user..."/>
 		<tip id="ID_NETWORK_CONNECT" message="התחבר לרשת"/>
 		<tip id="ID_NETWORK_CONNECT_TO" message="התחבר באופן ידני למשתמש..."/>
@@ -3753,51 +3760,52 @@
 			<control caption="קו ענף אל מוקד"/>
 			<control caption="מוקד אל מוקד"/>
 		</dialog>
-		<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuBuStEdmsStBuStBu" caption="‪אי-דונקי 2000">
-			<control caption=":רשת אידונקי"/>
+		<dialog name="CDonkeySettingsPage" cookie="BuBuBuEdmsBuEdmsBuBuBuStStBuStStBuSt" caption="‪אי-דונקי 2000">
 			<control caption="התחבר לרשת אידונקי"/>
 			<control caption="חיבור אוטמטי בכל הפעלה"/>
-			<control caption=":חיפוש גלובלי"/>
 			<control caption=":חפש שרתים מרוחקים ברשימות של אידונקי"/>
-			<control caption="עצור לחפש לאחר"/>
 			<control/>
 			<control/>
-			<control caption="תוצאות חיפוש"/>
 			<control caption="Receive and update server list from the connected server"/>
+			<control/>
+			<control/>
+			<control caption="...הורד"/>
+			<control caption=":רשת אידונקי"/>
+			<control caption=":חיפוש גלובלי"/>
+			<control caption="עצור לחפש לאחר"/>
+			<control caption="תוצאות חיפוש"/>
 			<control caption=":חיבורי קישור מהתוכנה"/>
 			<control caption="אל תתחבר ליותר מאשר"/>
-			<control/>
-			<control/>
 			<control caption=".משתמשי אידונקי אחרים"/>
 			<control caption=":כלים של אי-דונקי 2000"/>
 			<control caption="הורד רשימת שרתים של אידונקי מהרשת"/>
-			<control caption="...הורד"/>
 		</dialog>
-		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuEdmsStBuBuBuBuEdBuBuEdBuStEd" caption="ביט-טורנט">
-			<control caption=":ממשק"/>
-			<control caption="הצג תוספי ממשק לאלמנטים של ביט-טורנט"/>
-			<control caption=":הגדרות הורדה בביט-טורנט"/>
+		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsEdmsBuEdmsBuBuEdBuEdBuEdBuBuBuStStStStBu" caption="ביט-טורנט">
+			<control caption="Always connect to BitTorrent"/>
+			<control caption="Connect to BitTorrent today"/>
+			<control caption="Enable BitTorrent DHT"/>
 			<control/>
 			<control/>
-			<control caption="טורנטים בו זמנית"/>
 			<control/>
 			<control/>
-			<control caption="מקסימום חיבורים"/>
 			<control caption=" נקה טורנטים שהורדו            כשרמת השיתוף תגיע אל"/>
 			<control/>
 			<control/>
-			<control caption="%"/>
 			<control caption=" תן עדיפות למקורות של טורנטים"/>
-			<control caption=":EndGame (האצה)"/>
 			<control caption="כשמסיימים הורדת טורנטים EndGame אפשר אופציית"/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control caption="_BitTorrent Network:"/>
+			<control caption=":הגדרות הורדה בביט-טורנט"/>
 			<control caption=":אכסן טורנטים כאן"/>
-			<control/>
-			<control/>
-			<control caption=":יוצר הטורנט"/>
-			<control/>
-			<control/>
+			<control caption="טורנטים בו זמנית"/>
+			<control caption="מקסימום חיבורים"/>
+			<control caption="%"/>
 			<control caption=" :עוקב הטורנטים"/>
-			<control/>
+			<control caption=":יוצר הטורנט"/>
 		</dialog>
 		<dialog name="CProtocolsSettingsPage" cookie="BuSy" caption="פרוטוקולים">
 			<control caption=":סייר ארכיטקטורת פרוטוקול משותף של שרזה"/>

@@ -354,6 +354,7 @@
 			<button id="ID_NETWORK_G1" text="Gnutella1"/>
 			<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 			<button id="ID_NETWORK_DC" text="DC++"/>
+			<button id="ID_NETWORK_BT" text="BitTorrent"/>
 			<separator/>
 			<button id="ID_NEIGHBOURS_SETTINGS" text="Ayarlar"/>
 		</toolbar>
@@ -369,6 +370,7 @@
 			<button id="ID_NETWORK_G1" text="Gnutella1"/>
 			<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 			<button id="ID_NETWORK_DC" text="DC++"/>
+			<button id="ID_NETWORK_BT" text="BitTorrent"/>
 			<separator/>
 			<button id="ID_NEIGHBOURS_SETTINGS" text="Ayarlar"/>
 		</toolbar>
@@ -506,6 +508,7 @@
 					<item id="ID_NETWORK_G1" text="Bağlan Gnutella_1"/>
 					<item id="ID_NETWORK_ED2K" text="Bağlan _eDonkey2000"/>
 					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
+					<item id="ID_NETWORK_BT" text="Connect to _BitTorrent"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_AUTO_CLOSE" text="Çıkış _Transferden Sonra"/>
@@ -543,7 +546,7 @@
 				<item id="ID_TOOLS_PROFILE" text="Pro_fili Düzenle..."/>
 				<item id="ID_TOOLS_WIZARD" text="_Hızlı Başlat Sihirbazı..."/>
 				<separator/>
-				<item id="ID_TOOLS_SETTINGS" text="_Shareaza Ayarları..."/>
+				<item id="ID_TOOLS_SETTINGS" text="_Shareaza Ayarları..." shortcut="Ctrl+P"/>
 			</menu>
 			<menu text="_Yardım">
 				<item id="ID_HELP_FAQ" text="Shareaza _SSS"/>
@@ -583,6 +586,7 @@
 					<item id="ID_NETWORK_G1" text="Bağlan Gnutella_1"/>
 					<item id="ID_NETWORK_ED2K" text="Bağlan _eDonkey2000"/>
 					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
+					<item id="ID_NETWORK_BT" text="Connect to _BitTorrent"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_CONNECT_TO" text="B_ağlan..." shortcut="Ctrl+T"/>
@@ -641,7 +645,7 @@
 				<item id="ID_TOOLS_PROFILE" text="Pro_fili Düzenle..."/>
 				<item id="ID_TOOLS_WIZARD" text="_Hızlı Başlat Sihirbazı..."/>
 				<separator/>
-				<item id="ID_TOOLS_SETTINGS" text="_Shareaza Ayarları..."/>
+				<item id="ID_TOOLS_SETTINGS" text="_Shareaza Ayarları..." shortcut="Ctrl+P"/>
 			</menu>
 			<menu text="_Pencere">
 				<item id="ID_WINDOW_NAVBAR" text="_Kaydırma Çubuğunu Göster"/>
@@ -695,6 +699,7 @@
 					<item id="ID_NETWORK_G1" text="Bağlan Gnutella_1"/>
 					<item id="ID_NETWORK_ED2K" text="Bağlan _eDonkey2000"/>
 					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
+					<item id="ID_NETWORK_BT" text="Connect to _BitTorrent"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_AUTO_CLOSE" text="Kapat _Transferden Sonra"/>
@@ -735,7 +740,7 @@
 				<item id="ID_TOOLS_PROFILE" text="Pro_fili Düzenle..."/>
 				<separator/>
 				<item id="ID_TOOLS_WIZARD" text="_Hızlı Başlat Sihirbazı..."/>
-				<item id="ID_TOOLS_SETTINGS" text="_Shareaza Ayarları..."/>
+				<item id="ID_TOOLS_SETTINGS" text="_Shareaza Ayarları..." shortcut="Ctrl+P"/>
 			</menu>
 			<menu text="_Pencere">
 				<item id="ID_WINDOW_CASCADE" text="_Tam Ekran"/>
@@ -1524,6 +1529,7 @@
 				<item id="ID_NETWORK_G1" text="Gnutella_1"/>
 				<item id="ID_NETWORK_ED2K" text="_eDonkey2000"/>
 				<item id="ID_NETWORK_DC" text="_DC++"/>
+				<item id="ID_NETWORK_BT" text="_BitTorrent"/>
 			</menu>
 			<menu text="Ek_ran">
 				<item id="ID_NEIGHBOURS_VIEW_ALL" text="_Tüm Aktarımları Görüntüle"/>
@@ -2526,6 +2532,7 @@
 		<tip id="ID_NEIGHBOURS_VIEW_OUTGOING" message="Açık yeni bir çöp kutusu penceresi komşulara giden trafiği görüntülüyor."/>
 		<tip id="ID_NETWORK_AUTO_CLOSE" message="Aktarım tamamlandığında Shareaza'yı otomatik olarak kapat."/>
 		<tip id="ID_NETWORK_BROWSE_TO" message="Kullanıcı ara, profili ve paylaşım dosyalarını göster..."/>
+		<tip id="ID_NETWORK_BT" message="Connect to the BitTorrent network."/>
 		<tip id="ID_NETWORK_CHAT_TO" message="Open a chat session with a user..."/>
 		<tip id="ID_NETWORK_CONNECT" message="Ağa bağlan."/>
 		<tip id="ID_NETWORK_CONNECT_TO" message="Hosta elle bağlan..."/>
@@ -3717,51 +3724,52 @@
 			<control caption="Leaf - Hub"/>
 			<control caption="Hub - Hub"/>
 		</dialog>
-		<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuBuStEdmsStBuStBu" caption="eDonkey">
-			<control caption="_eDonkey2000 Ağı:"/>
+		<dialog name="CDonkeySettingsPage" cookie="BuBuBuEdmsBuEdmsBuBuBuStStBuStStBuSt" caption="eDonkey">
 			<control caption="Bugün eDonkey2000'e Bağlan"/>
 			<control caption="Her oturumda otomatik bağlan"/>
-			<control caption="_Ayrıntılı Aranıyor:"/>
 			<control caption="Server belleğinde, uzaktaki bilinmeyen sunucuları ara:"/>
-			<control caption="Sonra aramayı durdur:"/>
 			<control/>
 			<control/>
-			<control caption="Sonuçları ara."/>
 			<control caption="Bağlanılmış olunan sunucudan sunucu listesi al ve listeyi güncelle"/>
+			<control/>
+			<control/>
+			<control caption="İndir..."/>
+			<control caption="_eDonkey2000 Ağı:"/>
+			<control caption="_Ayrıntılı Aranıyor:"/>
+			<control caption="Sonra aramayı durdur:"/>
+			<control caption="Sonuçları ara."/>
 			<control caption="_İstemci Bağlantıları:"/>
 			<control caption="Daha fazla bağlanma:"/>
-			<control/>
-			<control/>
 			<control caption="Diğer eDonkey istemcileri."/>
 			<control caption="eDonkey2000 _Araçları:"/>
 			<control caption="Webden eDonkey2000 server listesini indir:"/>
-			<control caption="İndir..."/>
 		</dialog>
-		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuEdmsStBuBuBuBuEdBuBuEdBuStEd" caption="BitTorrent">
-			<control caption="_Arayüz:"/>
-			<control caption="BitTorrent ek arayüz elemanları görüntüle"/>
-			<control caption="_İndirme Bağlantıları:"/>
+		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsEdmsBuEdmsBuBuEdBuEdBuEdBuBuBuStStStStBu" caption="BitTorrent">
+			<control caption="Always connect to BitTorrent"/>
+			<control caption="Connect to BitTorrent today"/>
+			<control caption="Enable BitTorrent DHT"/>
 			<control/>
 			<control/>
-			<control caption="İlk olarak Torrentlar"/>
 			<control/>
 			<control/>
-			<control caption="İstemci bağlantıları"/>
 			<control caption=" Paylaşım oranları genişletildiğinde  Torrent indirmelerini temizle"/>
 			<control/>
 			<control/>
-			<control caption="%"/>
 			<control caption=" Torrent kaynakları tercih et"/>
-			<control caption="_EndGame:"/>
 			<control caption="Torrentlar tamamlandığında EndGame modunu etkinleşir"/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control caption="_BitTorrent Network:"/>
+			<control caption="_İndirme Bağlantıları:"/>
 			<control caption="Torrentlar burada _saklanıyor:"/>
-			<control/>
-			<control/>
-			<control caption="_Torrent Yaratıcısı"/>
-			<control/>
-			<control/>
+			<control caption="İlk olarak Torrentlar"/>
+			<control caption="İstemci bağlantıları"/>
+			<control caption="%"/>
 			<control caption="Varsayılan Tracker: "/>
-			<control/>
+			<control caption="_Torrent Yaratıcısı"/>
 		</dialog>
 		<dialog name="CProtocolsSettingsPage" cookie="BuSy" caption="Protokoller">
 			<control caption="Shareaza Genel Mimarlık Protokol Araştırıcısı:"/>

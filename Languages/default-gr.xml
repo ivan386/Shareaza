@@ -354,6 +354,7 @@
 			<button id="ID_NETWORK_G1" text="Gnutella"/>
 			<button id="ID_NETWORK_ED2K" text="ED2K"/>
 			<button id="ID_NETWORK_DC" text="DC++"/>
+			<button id="ID_NETWORK_BT" text="BitTorrent"/>
 			<separator/>
 			<button id="ID_NEIGHBOURS_SETTINGS" text="Ρυθμίσεις"/>
 		</toolbar>
@@ -369,6 +370,7 @@
 			<button id="ID_NETWORK_G1" text="Gnutella"/>
 			<button id="ID_NETWORK_ED2K" text="ED2K"/>
 			<button id="ID_NETWORK_DC" text="DC++"/>
+			<button id="ID_NETWORK_BT" text="BitTorrent"/>
 			<separator/>
 			<button id="ID_NEIGHBOURS_SETTINGS" text="Ρυθμίσεις"/>
 		</toolbar>
@@ -506,6 +508,7 @@
 					<item id="ID_NETWORK_G1" text="Σύνδεση στο _Gnutella"/>
 					<item id="ID_NETWORK_ED2K" text="Σύνδεση στο _ED2K"/>
 					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
+					<item id="ID_NETWORK_BT" text="Connect to _BitTorrent"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_AUTO_CLOSE" text="Έξοδος _Μετά τις Μεταφορές"/>
@@ -543,7 +546,7 @@
 				<item id="ID_TOOLS_PROFILE" text="Επεξεργασία _Προφίλ..."/>
 				<item id="ID_TOOLS_WIZARD" text="Οδηγός Σύντομης _Εκκίνησης..."/>
 				<separator/>
-				<item id="ID_TOOLS_SETTINGS" text="_Ρυθμίσεις Shareaza..."/>
+				<item id="ID_TOOLS_SETTINGS" text="_Ρυθμίσεις Shareaza..." shortcut="Ctrl+P"/>
 			</menu>
 			<menu text="_Βοήθεια">
 				<item id="ID_HELP_FAQ" text="Συχνές _Ερωτήσεις"/>
@@ -583,6 +586,7 @@
 					<item id="ID_NETWORK_G1" text="Σύνδεση στο _Gnutella"/>
 					<item id="ID_NETWORK_ED2K" text="Σύνδεση στο _ED2K"/>
 					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
+					<item id="ID_NETWORK_BT" text="Connect to _BitTorrent"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_CONNECT_TO" text="Σύνδεση _ με..." shortcut="Ctrl+T"/>
@@ -641,7 +645,7 @@
 				<item id="ID_TOOLS_PROFILE" text="Επεξεργασία _Προφίλ..."/>
 				<item id="ID_TOOLS_WIZARD" text="Οδηγός Σύντομης _Εκκίνησης..."/>
 				<separator/>
-				<item id="ID_TOOLS_SETTINGS" text="_Ρυθμίσεις Shareaza..."/>
+				<item id="ID_TOOLS_SETTINGS" text="_Ρυθμίσεις Shareaza..." shortcut="Ctrl+P"/>
 			</menu>
 			<menu text="_Window">
 				<item id="ID_WINDOW_NAVBAR" text="Μεγάλη Μπάρα _Πλοήγησης"/>
@@ -695,6 +699,7 @@
 					<item id="ID_NETWORK_G1" text="Σύνδεση στο _Gnutella"/>
 					<item id="ID_NETWORK_ED2K" text="Σύνδεση στο _ED2K"/>
 					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
+					<item id="ID_NETWORK_BT" text="Connect to _BitTorrent"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_AUTO_CLOSE" text="Έξοδος _Μετά τις Μεταφορές"/>
@@ -735,7 +740,7 @@
 				<item id="ID_TOOLS_PROFILE" text="Επεξεργασία _Προφίλ..."/>
 				<separator/>
 				<item id="ID_TOOLS_WIZARD" text="Οδηγός Σύντομης _Εκκίνησης..."/>
-				<item id="ID_TOOLS_SETTINGS" text="_Ρυθμίσεις Shareaza..."/>
+				<item id="ID_TOOLS_SETTINGS" text="_Ρυθμίσεις Shareaza..." shortcut="Ctrl+P"/>
 			</menu>
 			<menu text="_Window">
 				<item id="ID_WINDOW_CASCADE" text="_Πλήρης Οθόνη"/>
@@ -1524,6 +1529,7 @@
 				<item id="ID_NETWORK_G1" text="Gnutella"/>
 				<item id="ID_NETWORK_ED2K" text="ED2K"/>
 				<item id="ID_NETWORK_DC" text="_DC++"/>
+				<item id="ID_NETWORK_BT" text="_BitTorrent"/>
 			</menu>
 			<menu text="_Εποπτεία">
 				<item id="ID_NEIGHBOURS_VIEW_ALL" text="Προβολή _Όλων"/>
@@ -2558,6 +2564,7 @@
 		<tip id="ID_NEIGHBOURS_VIEW_OUTGOING" message="Άνοιγμα νέου παραθύρου εποπτείας δραστηριότητας εξερχομένης προς αυτόν τον γείτονα."/>
 		<tip id="ID_NETWORK_AUTO_CLOSE" message="Αυτόματο κλείσιμο του Shareaza όταν ολοκληρωθούν οι μεταφορές."/>
 		<tip id="ID_NETWORK_BROWSE_TO" message="Περιήγηση στο προφίλ και τα κοινοποιημένα αρχεία ενός χρήστη..."/>
+		<tip id="ID_NETWORK_BT" message="Connect to the BitTorrent network."/>
 		<tip id="ID_NETWORK_CHAT_TO" message="Open a chat session with a user..."/>
 		<tip id="ID_NETWORK_CONNECT" message="Σύνδεση στα επιλεγμένα δίκτυα."/>
 		<tip id="ID_NETWORK_CONNECT_TO" message="Χειροκίνητη σύνδεση σε έναν host..."/>
@@ -3749,51 +3756,52 @@
 			<control caption="Φύλλου σε  Κόμβο"/>
 			<control caption="Κόμβου σε Κόμβο"/>
 		</dialog>
-		<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuBuStEdmsStBuStBu" caption="ED2K">
-			<control caption="Δίκτυο _ED2K:"/>
+		<dialog name="CDonkeySettingsPage" cookie="BuBuBuEdmsBuEdmsBuBuBuStStBuStStBuSt" caption="ED2K">
 			<control caption="Πάντα σύνδεση στο ED2K"/>
 			<control caption="Σύνδεση στο ED2K σήμερα"/>
-			<control caption="_Παγκόσμια Αναζήτηση:"/>
 			<control caption="Αναζήτηση στους γνωστούς απομακρυσμένους servers στη server cache:"/>
-			<control caption="Διακοπή αναζήτ. μετά από:"/>
 			<control/>
 			<control/>
-			<control caption="αποτελέσματα αναζήτησης."/>
 			<control caption="Παραλαβή και ενημέρωση λίστας servers από τον ενωμένο server"/>
+			<control/>
+			<control/>
+			<control caption="Λήψη..."/>
+			<control caption="Δίκτυο _ED2K:"/>
+			<control caption="_Παγκόσμια Αναζήτηση:"/>
+			<control caption="Διακοπή αναζήτ. μετά από:"/>
+			<control caption="αποτελέσματα αναζήτησης."/>
 			<control caption="_Client Link Συνδέσεις:"/>
 			<control caption="Σύνδεση σε έως:"/>
-			<control/>
-			<control/>
 			<control caption="ED2K clients."/>
 			<control caption="_Εργαλεία ED2K:"/>
 			<control caption="Λήψη λίστας servers του ED2K από τον Ιστό:"/>
-			<control caption="Λήψη..."/>
 		</dialog>
-		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuEdmsStBuBuBuBuEdBuBuEdBuStEd" caption="BitTorrent">
-			<control caption="_Περιβάλλον:"/>
-			<control caption="Προβολή επιπρόσθετων στοιχείων περιβάλλοντος για BitTorrent"/>
-			<control caption="Συνδέσεις _Λήψης:"/>
+		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsEdmsBuEdmsBuBuEdBuEdBuEdBuBuBuStStStStBu" caption="BitTorrent">
+			<control caption="Always connect to BitTorrent"/>
+			<control caption="Connect to BitTorrent today"/>
+			<control caption="Enable BitTorrent DHT"/>
 			<control/>
 			<control/>
-			<control caption="Ταυτόχρονα Torrents"/>
 			<control/>
 			<control/>
-			<control caption="Συνδέσεις Client"/>
 			<control caption=" Απόσυρση ληφθέντων torrents με αναλογία ανταλλαγής &gt;"/>
 			<control/>
 			<control/>
-			<control caption="%"/>
 			<control caption="Προτίμηση πηγών torrent"/>
-			<control caption="_Παιχνίδι Τέλους:"/>
 			<control caption="Με την ολοκλήρωση ενός torrent, ενεργ. λειτουργίας Παιχνιδιού Τέλους"/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control caption="_BitTorrent Network:"/>
+			<control caption="Συνδέσεις _Λήψης:"/>
 			<control caption="_Αποθήκευση Torrents Σε:"/>
-			<control/>
-			<control/>
-			<control caption="_Δημιουργία Torrent"/>
-			<control/>
-			<control/>
+			<control caption="Ταυτόχρονα Torrents"/>
+			<control caption="Συνδέσεις Client"/>
+			<control caption="%"/>
 			<control caption="Προεπιλογή Tracker: "/>
-			<control/>
+			<control caption="_Δημιουργία Torrent"/>
 		</dialog>
 		<dialog name="CProtocolsSettingsPage" cookie="BuSy" caption="Πρωτόκολλα">
 			<control caption="Παράθεση Πρωτοκόλλων του Shareaza:"/>

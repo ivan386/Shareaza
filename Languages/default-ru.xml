@@ -354,6 +354,7 @@
 			<button id="ID_NETWORK_G1" text="Gnutella1"/>
 			<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 			<button id="ID_NETWORK_DC" text="DC++"/>
+			<button id="ID_NETWORK_BT" text="BitTorrent"/>
 			<separator/>
 			<button id="ID_NEIGHBOURS_SETTINGS" text="Настройки"/>
 		</toolbar>
@@ -369,6 +370,7 @@
 			<button id="ID_NETWORK_G1" text="Gnutella1"/>
 			<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 			<button id="ID_NETWORK_DC" text="DC++"/>
+			<button id="ID_NETWORK_BT" text="BitTorrent"/>
 			<separator/>
 			<button id="ID_NEIGHBOURS_SETTINGS" text="Настройки"/>
 		</toolbar>
@@ -506,6 +508,7 @@
 					<item id="ID_NETWORK_G1" text="Соединиться с Gnutella_1"/>
 					<item id="ID_NETWORK_ED2K" text="Соединиться с _eDonkey"/>
 					<item id="ID_NETWORK_DC" text="Соединить с _DC++"/>
+					<item id="ID_NETWORK_BT" text="Соединить с _BitTorrent"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_AUTO_CLOSE" text="Выйти _после пересылок"/>
@@ -543,7 +546,7 @@
 				<item id="ID_TOOLS_PROFILE" text="Редактировать _профиль..."/>
 				<item id="ID_TOOLS_WIZARD" text="_Мастер быстрого старта"/>
 				<separator/>
-				<item id="ID_TOOLS_SETTINGS" text="_Установки Shareaza..."/>
+				<item id="ID_TOOLS_SETTINGS" text="_Установки Shareaza..." shortcut="Ctrl+P"/>
 			</menu>
 			<menu text="_Помощь">
 				<item id="ID_HELP_FAQ" text="_ЧаВо Shareaza"/>
@@ -583,6 +586,7 @@
 					<item id="ID_NETWORK_G1" text="Соединиться с Gnutella_1"/>
 					<item id="ID_NETWORK_ED2K" text="Соединиться с _eDonkey"/>
 					<item id="ID_NETWORK_DC" text="Соединить с _DC++"/>
+					<item id="ID_NETWORK_BT" text="Соединить с _BitTorrent"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_CONNECT_TO" text="Соедини_ться с..." shortcut="Ctrl+T"/>
@@ -641,7 +645,7 @@
 				<item id="ID_TOOLS_PROFILE" text="Редактировать _профиль..."/>
 				<item id="ID_TOOLS_WIZARD" text="_Мастер быстрого старта"/>
 				<separator/>
-				<item id="ID_TOOLS_SETTINGS" text="_Установки Shareaza..."/>
+				<item id="ID_TOOLS_SETTINGS" text="_Установки Shareaza..." shortcut="Ctrl+P"/>
 			</menu>
 			<menu text="_Окна">
 				<item id="ID_WINDOW_NAVBAR" text="Показывать _навигационную полоску"/>
@@ -695,6 +699,7 @@
 					<item id="ID_NETWORK_G1" text="Соединиться с Gnutella_1"/>
 					<item id="ID_NETWORK_ED2K" text="Соединиться с _eDonkey"/>
 					<item id="ID_NETWORK_DC" text="Соединить с _DC++"/>
+					<item id="ID_NETWORK_BT" text="Соединить с _BitTorrent"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_AUTO_CLOSE" text="_Закрыть после пересылок"/>
@@ -735,7 +740,7 @@
 				<item id="ID_TOOLS_PROFILE" text="Редактировать _профиль..."/>
 				<separator/>
 				<item id="ID_TOOLS_WIZARD" text="_Мастер быстрого старта"/>
-				<item id="ID_TOOLS_SETTINGS" text="_Установки Shareaza..."/>
+				<item id="ID_TOOLS_SETTINGS" text="_Установки Shareaza..." shortcut="Ctrl+P"/>
 			</menu>
 			<menu text="_Окна">
 				<item id="ID_WINDOW_CASCADE" text="Во весь _экран"/>
@@ -1524,6 +1529,7 @@
 				<item id="ID_NETWORK_G1" text="Gnutella_1"/>
 				<item id="ID_NETWORK_ED2K" text="_eDonkey"/>
 				<item id="ID_NETWORK_DC" text="_DC++"/>
+				<item id="ID_NETWORK_BT" text="_BitTorrent"/>
 			</menu>
 			<menu text="_Монитор">
 				<item id="ID_NEIGHBOURS_VIEW_ALL" text="Смотреть весь _трафик"/>
@@ -2556,6 +2562,7 @@
 		<tip id="ID_NEIGHBOURS_VIEW_OUTGOING" message="Открыть новое окно Дампа Пакетов для мониторинга исходящего трафика от этого хоста."/>
 		<tip id="ID_NETWORK_AUTO_CLOSE" message="Автоматически выходить из Shareaza по окончанию пересылок."/>
 		<tip id="ID_NETWORK_BROWSE_TO" message="Просмотр профиля и файлов пользователя..."/>
+		<tip id="ID_NETWORK_BT" message="Соединить с сетью BitTorrent."/>
 		<tip id="ID_NETWORK_CHAT_TO" message="Открыть чат сессию с хостом..."/>
 		<tip id="ID_NETWORK_CONNECT" message="Соединиться с выбранными сетями."/>
 		<tip id="ID_NETWORK_CONNECT_TO" message="Вручную присоединиться к хосту..."/>
@@ -3747,51 +3754,52 @@
 			<control caption="Узел к Узлу:"/>
 			<control caption="_Компрессия в каналах связи:"/>
 		</dialog>
-		<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuBuStEdmsStBuStBu" caption="eDonkey">
-			<control caption="_Сеть eDonkey:"/>
+		<dialog name="CDonkeySettingsPage" cookie="BuBuBuEdmsBuEdmsBuBuBuStStBuStStBuSt" caption="eDonkey">
 			<control caption="Всегда соединяться с eDonkey"/>
 			<control caption="Соединиться с eDonkey сегодня"/>
-			<control caption="_Глобальный поиск:"/>
 			<control caption="Искать по списку известных серверов:"/>
-			<control caption="Останов поиска после:"/>
 			<control/>
 			<control/>
-			<control caption="результатов."/>
 			<control caption="Получать и обновлять список серверов с сервера"/>
+			<control/>
+			<control/>
+			<control caption="Загрузить..."/>
+			<control caption="_Сеть eDonkey:"/>
+			<control caption="_Глобальный поиск:"/>
+			<control caption="Останов поиска после:"/>
+			<control caption="результатов."/>
 			<control caption="С_оединения с клиентами:"/>
 			<control caption="Соединять не более чем с:"/>
-			<control/>
-			<control/>
 			<control caption="eDonkey-клиентами."/>
 			<control caption="eDonkey _утилиты:"/>
 			<control caption="Загрузить список серверов из интернета:"/>
-			<control caption="Загрузить..."/>
 		</dialog>
-		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuEdmsStBuBuBuBuEdBuBuEdBuStEd" caption="BitTorrent">
-			<control caption="_Интерфейс:"/>
-			<control caption="Показывать дополнительные элементы BitTorrent интерфейса"/>
-			<control caption="_Соединений для загрузки:"/>
+		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsEdmsBuEdmsBuBuEdBuEdBuEdBuBuBuStStStStBu" caption="BitTorrent">
+			<control caption="Всегда соединяться с BitTorrent"/>
+			<control caption="Соединиться с BitTorrent сегодня"/>
+			<control caption="Использовать BitTorrent DHT"/>
 			<control/>
 			<control/>
-			<control caption="_Торрентов одновременно"/>
 			<control/>
 			<control/>
-			<control caption="Клиентских соединений"/>
 			<control caption="Остановить раздачу торрентов при достижении ими:"/>
 			<control/>
 			<control/>
-			<control caption="%"/>
 			<control caption=" Предпочитать источники торрентов"/>
-			<control caption="_Режим &quot;Конец Игры&quot;:"/>
 			<control caption="Использовать режим &quot;Конец Игры&quot; при завершении торрентов"/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control caption="_Сеть BitTorrent:"/>
+			<control caption="_Соединений для загрузки:"/>
 			<control caption="_Держать торренты в папке:"/>
-			<control/>
-			<control/>
-			<control caption="_Программа для создания торрентов:"/>
-			<control/>
-			<control/>
+			<control caption="_Торрентов одновременно"/>
+			<control caption="Клиентских соединений"/>
+			<control caption="%"/>
 			<control caption="Трекер: "/>
-			<control/>
+			<control caption="_Программа для создания торрентов:"/>
 		</dialog>
 		<dialog name="CProtocolsSettingsPage" cookie="BuSy" caption="Протоколы">
 			<control caption="Shareaza обозреватель протоколов общей архитектуры:"/>

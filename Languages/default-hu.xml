@@ -354,6 +354,7 @@
 			<button id="ID_NETWORK_G1" text="Gnutella1"/>
 			<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 			<button id="ID_NETWORK_DC" text="DC++"/>
+			<button id="ID_NETWORK_BT" text="BitTorrent"/>
 			<separator/>
 			<button id="ID_NEIGHBOURS_SETTINGS" text="Settings"/>
 		</toolbar>
@@ -369,6 +370,7 @@
 			<button id="ID_NETWORK_G1" text="Gnutella1"/>
 			<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 			<button id="ID_NETWORK_DC" text="DC++"/>
+			<button id="ID_NETWORK_BT" text="BitTorrent"/>
 			<separator/>
 			<button id="ID_NEIGHBOURS_SETTINGS" text="Settings"/>
 		</toolbar>
@@ -506,6 +508,7 @@
 					<item id="ID_NETWORK_G1" text="Kapcsolódás a Gnutella_1-hez"/>
 					<item id="ID_NETWORK_ED2K" text="Kapcsolódás az _eDonkey-hoz"/>
 					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
+					<item id="ID_NETWORK_BT" text="Connect to _BitTorrent"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_AUTO_CLOSE" text="_Forgalom után kilépés"/>
@@ -543,7 +546,7 @@
 				<item id="ID_TOOLS_PROFILE" text="_Saját adatlap szerkesztése..."/>
 				<item id="ID_TOOLS_WIZARD" text="_Gyors beállítás..."/>
 				<separator/>
-				<item id="ID_TOOLS_SETTINGS" text="_Beállítások..."/>
+				<item id="ID_TOOLS_SETTINGS" text="_Beállítások..." shortcut="Ctrl+P"/>
 			</menu>
 			<menu text="Súgó">
 				<item id="ID_HELP_FAQ" text="Shareaza GYIK"/>
@@ -583,6 +586,7 @@
 					<item id="ID_NETWORK_G1" text="Kapcsolódás a Gnutella_1-hez"/>
 					<item id="ID_NETWORK_ED2K" text="Kapcsolódás az _eDonkey-hoz"/>
 					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
+					<item id="ID_NETWORK_BT" text="Connect to _BitTorrent"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_CONNECT_TO" text="_Manuális kapcsolódás..." shortcut="Ctrl+T"/>
@@ -641,7 +645,7 @@
 				<item id="ID_TOOLS_PROFILE" text="_Saját adatlap szerkesztése..."/>
 				<item id="ID_TOOLS_WIZARD" text="_Gyors beállítás..."/>
 				<separator/>
-				<item id="ID_TOOLS_SETTINGS" text="_Beállítások..."/>
+				<item id="ID_TOOLS_SETTINGS" text="_Beállítások..." shortcut="Ctrl+P"/>
 			</menu>
 			<menu text="_Ablak">
 				<item id="ID_WINDOW_NAVBAR" text="_Navigációs gombok megjelenítése"/>
@@ -695,6 +699,7 @@
 					<item id="ID_NETWORK_G1" text="Kapcsolódás a Gnutella_1-hez"/>
 					<item id="ID_NETWORK_ED2K" text="Kapcsolódás az _eDonkey-hoz"/>
 					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
+					<item id="ID_NETWORK_BT" text="Connect to _BitTorrent"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_AUTO_CLOSE" text="_Forgalom után kilépés"/>
@@ -735,7 +740,7 @@
 				<item id="ID_TOOLS_PROFILE" text="_Saját adatlap szerkesztése..."/>
 				<separator/>
 				<item id="ID_TOOLS_WIZARD" text="_Gyors beállítás..."/>
-				<item id="ID_TOOLS_SETTINGS" text="_Beállítások..."/>
+				<item id="ID_TOOLS_SETTINGS" text="_Beállítások..." shortcut="Ctrl+P"/>
 			</menu>
 			<menu text="_Ablak">
 				<item id="ID_WINDOW_CASCADE" text="_Teljes nézet"/>
@@ -1524,6 +1529,7 @@
 				<item id="ID_NETWORK_G1" text="Gnutella_1"/>
 				<item id="ID_NETWORK_ED2K" text="_eDonkey"/>
 				<item id="ID_NETWORK_DC" text="_DC++"/>
+				<item id="ID_NETWORK_BT" text="_BitTorrent"/>
 			</menu>
 			<menu text="_Monitor">
 				<item id="ID_NEIGHBOURS_VIEW_ALL" text="_Minden forgalom"/>
@@ -2532,6 +2538,7 @@
 		<tip id="ID_NEIGHBOURS_VIEW_OUTGOING" message="Nyit egy új Csomagforgalom ablakot ennek a szomszédnak, ami a kimenő forgalmat mutatja."/>
 		<tip id="ID_NETWORK_AUTO_CLOSE" message="Bezárja a programot a forgalom végeztével."/>
 		<tip id="ID_NETWORK_BROWSE_TO" message="Fájllista letöltése, adatlap megtekintése..."/>
+		<tip id="ID_NETWORK_BT" message="Connect to the BitTorrent network."/>
 		<tip id="ID_NETWORK_CHAT_TO" message="Open a chat session with a user..."/>
 		<tip id="ID_NETWORK_CONNECT" message="Kapcsolódás a kiválasztott hálózatokhoz."/>
 		<tip id="ID_NETWORK_CONNECT_TO" message="Manuálisan kapcsolódik egy kiszolgálóhoz..."/>
@@ -3723,51 +3730,52 @@
 			<control caption="Leaf a Hubhoz"/>
 			<control caption="Hub a Hubhoz"/>
 		</dialog>
-		<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuBuStEdmsStBuStBu" caption="eDonkey">
-			<control caption="_eDonkey hálózat"/>
+		<dialog name="CDonkeySettingsPage" cookie="BuBuBuEdmsBuEdmsBuBuBuStStBuStStBuSt" caption="eDonkey">
 			<control caption="Egyszer kapcsolódjon az eD2k-hez"/>
 			<control caption="Mindig kapcsolódjon"/>
-			<control caption="_Globális keresés"/>
 			<control caption="Ismert szervereken való keresés a Kiszolgálók listájából:"/>
-			<control caption="Keresés befejezése"/>
 			<control/>
 			<control/>
-			<control caption="eredmény után."/>
 			<control caption="Szerverlista lekérése a kapcsolatban lévő szervertől"/>
+			<control/>
+			<control/>
+			<control caption="Letöltés..."/>
+			<control caption="_eDonkey hálózat"/>
+			<control caption="_Globális keresés"/>
+			<control caption="Keresés befejezése"/>
+			<control caption="eredmény után."/>
 			<control caption="_Kliens kapcsolódása"/>
 			<control caption="Maximum"/>
-			<control/>
-			<control/>
 			<control caption="másik klienshez kapcsolódhat."/>
 			<control caption="eDonkey e_szközök"/>
 			<control caption="eDonkey szerverlista letöltése az internetről:"/>
-			<control caption="Letöltés..."/>
 		</dialog>
-		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuEdmsStBuBuBuBuEdBuBuEdBuStEd" caption="BitTorrent">
-			<control caption="_Felhasználói felület"/>
-			<control caption="További BitTorrent elemek megjelenítése"/>
-			<control caption="_Letöltési kapcsolatok"/>
+		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsEdmsBuEdmsBuBuEdBuEdBuEdBuBuBuStStStStBu" caption="BitTorrent">
+			<control caption="Always connect to BitTorrent"/>
+			<control caption="Connect to BitTorrent today"/>
+			<control caption="Enable BitTorrent DHT"/>
 			<control/>
 			<control/>
-			<control caption="torrent letöltése egyszerre"/>
 			<control/>
 			<control/>
-			<control caption="kliens kapcsolódhat hozzám egyszerre"/>
 			<control caption=" Letöltött torrentek törlése, ha a megosztási arány ezt eléri:"/>
 			<control/>
 			<control/>
-			<control caption="%"/>
 			<control caption=" Előbb a torrentforrásokat használja"/>
-			<control caption="EndGame"/>
 			<control caption="A letöltés végének gyorsítása (EndGame mód)"/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control caption="_BitTorrent Network:"/>
+			<control caption="_Letöltési kapcsolatok"/>
 			<control caption="_Torrentfájlok mappája"/>
-			<control/>
-			<control/>
-			<control caption="T_orrentkészítő program"/>
-			<control/>
-			<control/>
+			<control caption="torrent letöltése egyszerre"/>
+			<control caption="kliens kapcsolódhat hozzám egyszerre"/>
+			<control caption="%"/>
 			<control caption="Alapértelm. tracker: "/>
-			<control/>
+			<control caption="T_orrentkészítő program"/>
 		</dialog>
 		<dialog name="CProtocolsSettingsPage" cookie="BuSy" caption="Protokollok">
 			<control caption="A Shareaza által támogatott protokollok"/>

@@ -354,6 +354,7 @@
 			<button id="ID_NETWORK_G1" text="Gnutella1"/>
 			<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 			<button id="ID_NETWORK_DC" text="DC++"/>
+			<button id="ID_NETWORK_BT" text="BitTorrent"/>
 			<separator/>
 			<button id="ID_NEIGHBOURS_SETTINGS" text="设置"/>
 		</toolbar>
@@ -369,6 +370,7 @@
 			<button id="ID_NETWORK_G1" text="Gnutella1"/>
 			<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 			<button id="ID_NETWORK_DC" text="DC++"/>
+			<button id="ID_NETWORK_BT" text="BitTorrent"/>
 			<separator/>
 			<button id="ID_NEIGHBOURS_SETTINGS" text="设置"/>
 		</toolbar>
@@ -506,6 +508,7 @@
 					<item id="ID_NETWORK_G1" text="连接到 Gnutella1(_1)"/>
 					<item id="ID_NETWORK_ED2K" text="连接到 edonkey(_E)"/>
 					<item id="ID_NETWORK_DC" text="连接至 DC++(_D)"/>
+					<item id="ID_NETWORK_BT" text="Connect to _BitTorrent"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_AUTO_CLOSE" text="传送后退出(_A)"/>
@@ -543,7 +546,7 @@
 				<item id="ID_TOOLS_PROFILE" text="编辑个人资料(_P)..."/>
 				<item id="ID_TOOLS_WIZARD" text="快速启动向导(_W)..."/>
 				<separator/>
-				<item id="ID_TOOLS_SETTINGS" text="Shareaza 设置(_S)..."/>
+				<item id="ID_TOOLS_SETTINGS" text="Shareaza 设置(_S)..." shortcut="Ctrl+P"/>
 			</menu>
 			<menu text="帮助(_H)">
 				<item id="ID_HELP_FAQ" text="Shareaza 常见问题(_F)"/>
@@ -583,6 +586,7 @@
 					<item id="ID_NETWORK_G1" text="连接到 Gnutella1(_1)"/>
 					<item id="ID_NETWORK_ED2K" text="连接到 edonkey(_E)"/>
 					<item id="ID_NETWORK_DC" text="连接至 DC++(_D)"/>
+					<item id="ID_NETWORK_BT" text="Connect to _BitTorrent"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_CONNECT_TO" text="连接到(_T)..." shortcut="Ctrl+T"/>
@@ -641,7 +645,7 @@
 				<item id="ID_TOOLS_PROFILE" text="编辑个人资料(_P)..."/>
 				<item id="ID_TOOLS_WIZARD" text="快速启动向导(_W)..."/>
 				<separator/>
-				<item id="ID_TOOLS_SETTINGS" text="Shareaza 设置(_S)..."/>
+				<item id="ID_TOOLS_SETTINGS" text="Shareaza 设置(_S)..." shortcut="Ctrl+P"/>
 			</menu>
 			<menu text="窗口(_W)">
 				<item id="ID_WINDOW_NAVBAR" text="显示导航栏(_N)"/>
@@ -695,6 +699,7 @@
 					<item id="ID_NETWORK_G1" text="连接到 Gnutella1(_1)"/>
 					<item id="ID_NETWORK_ED2K" text="连接到 edonkey(_E)"/>
 					<item id="ID_NETWORK_DC" text="连接至 DC++(_D)"/>
+					<item id="ID_NETWORK_BT" text="Connect to _BitTorrent"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_AUTO_CLOSE" text="传送后关闭(_A)"/>
@@ -735,7 +740,7 @@
 				<item id="ID_TOOLS_PROFILE" text="编辑个人资料(_P)..."/>
 				<separator/>
 				<item id="ID_TOOLS_WIZARD" text="快速启动向导(_W)..."/>
-				<item id="ID_TOOLS_SETTINGS" text="Shareaza 设置(_S)..."/>
+				<item id="ID_TOOLS_SETTINGS" text="Shareaza 设置(_S)..." shortcut="Ctrl+P"/>
 			</menu>
 			<menu text="窗口(_W)">
 				<item id="ID_WINDOW_CASCADE" text="全屏(_F)"/>
@@ -1524,6 +1529,7 @@
 				<item id="ID_NETWORK_G1" text="Gnutella1(_1)"/>
 				<item id="ID_NETWORK_ED2K" text="edonkey(_E)"/>
 				<item id="ID_NETWORK_DC" text="DC++(_D)"/>
+				<item id="ID_NETWORK_BT" text="_BitTorrent"/>
 			</menu>
 			<menu text="监视器(_M)">
 				<item id="ID_NEIGHBOURS_VIEW_ALL" text="查看全部通讯量(_A)"/>
@@ -2539,6 +2545,7 @@
 		<tip id="ID_NEIGHBOURS_VIEW_OUTGOING" message="打开此邻居的传出通讯数据包转储监视器。"/>
 		<tip id="ID_NETWORK_AUTO_CLOSE" message="传送完毕后自动关闭 Shareaza。"/>
 		<tip id="ID_NETWORK_BROWSE_TO" message="浏览到用户，显示其个人资料和共享文件..."/>
+		<tip id="ID_NETWORK_BT" message="Connect to the BitTorrent network."/>
 		<tip id="ID_NETWORK_CHAT_TO" message="开启一个用户会话..."/>
 		<tip id="ID_NETWORK_CONNECT" message="连接到网络。"/>
 		<tip id="ID_NETWORK_CONNECT_TO" message="手动连接到主机..."/>
@@ -3730,51 +3737,52 @@
 			<control caption="集端到集端:"/>
 			<control caption="链接压缩：(_L)"/>
 		</dialog>
-		<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuBuStEdmsStBuStBu" caption="eDonkey">
-			<control caption="eDonkey 网络(_E):"/>
+		<dialog name="CDonkeySettingsPage" cookie="BuBuBuEdmsBuEdmsBuBuBuStStBuStStBuSt" caption="eDonkey">
 			<control caption="连接到 eDonkey 今天"/>
 			<control caption="自动连接到每个会话"/>
-			<control caption="全局搜索(_G):"/>
 			<control caption="在服务器缓存中搜索已知远程服务器:"/>
-			<control caption="搜索停止于:"/>
 			<control/>
 			<control/>
-			<control caption="个搜索结果。"/>
 			<control caption="从连接接收和更新服务器列表"/>
+			<control/>
+			<control/>
+			<control caption="导入..."/>
+			<control caption="eDonkey 网络(_E):"/>
+			<control caption="全局搜索(_G):"/>
+			<control caption="搜索停止于:"/>
+			<control caption="个搜索结果。"/>
 			<control caption="客户端链接连接(_C):"/>
 			<control caption="连接不多于:"/>
-			<control/>
-			<control/>
 			<control caption="其他 eDonkey 客户端。"/>
 			<control caption="eDonkey 工具(_T):"/>
 			<control caption="导入 eDonkey/eMule 未完成下载 (.part):"/>
-			<control caption="导入..."/>
 		</dialog>
-		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuEdmsStBuBuBuBuEdBuBuEdBuStEd" caption="BitTorrent">
-			<control caption="界面(_I):"/>
-			<control caption="显示 BitTorrent 额外的界面元素"/>
-			<control caption="下载连接(_D):"/>
+		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsEdmsBuEdmsBuBuEdBuEdBuEdBuBuBuStStStStBu" caption="BitTorrent">
+			<control caption="Always connect to BitTorrent"/>
+			<control caption="Connect to BitTorrent today"/>
+			<control caption="Enable BitTorrent DHT"/>
 			<control/>
 			<control/>
-			<control caption="个 Torrent 一次"/>
 			<control/>
 			<control/>
-			<control caption="个客户端连接"/>
 			<control caption=" 清除已下载的 Torrent        当共享比率达到"/>
 			<control/>
 			<control/>
-			<control caption="%"/>
 			<control caption=" Torrent 资源优先"/>
-			<control caption="最终阶段(_E):"/>
 			<control caption="在完成 Torrent 时启用最终阶段模式"/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control caption="_BitTorrent Network:"/>
+			<control caption="下载连接(_D):"/>
 			<control caption="保存种子到(_S):"/>
-			<control/>
-			<control/>
-			<control caption="制作种子(_T)"/>
-			<control/>
-			<control/>
+			<control caption="个 Torrent 一次"/>
+			<control caption="个客户端连接"/>
+			<control caption="%"/>
 			<control caption="默认 Tracker: "/>
-			<control/>
+			<control caption="制作种子(_T)"/>
 		</dialog>
 		<dialog name="CProtocolsSettingsPage" cookie="BuSy" caption="协议">
 			<control caption="Shareaza 通用协议架构浏览:"/>

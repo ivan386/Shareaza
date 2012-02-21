@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2011-05-12 14:23+0000\n"
+"POT-Creation-Date: 2012-02-21 11:51+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -369,6 +369,11 @@ msgstr "eDonkey"
 msgid "DC++"
 msgstr ""
 
+#: button;id_network_bt dialog;cbittorrentsettingspage
+#: cscheduletaskpage;control;12
+msgid "BitTorrent"
+msgstr "BitTorrent"
+
 #: button;id_network_connect_to button;id_hostcache_connect
 msgid "Connect To"
 msgstr "Connectar A..."
@@ -585,6 +590,12 @@ msgstr "Connecta a _eDonkey"
 #: cmainwnd.windowed;18;19;item;id_network_dc
 msgid "Connect to _DC++"
 msgstr "Connect to _DC++"
+
+#: cmainwnd.basic;1;2;item;id_network_bt
+#: cmainwnd.tabbed;9;10;item;id_network_bt
+#: cmainwnd.windowed;18;19;item;id_network_bt
+msgid "Connect to _BitTorrent"
+msgstr ""
 
 #: cmainwnd.basic;1;item;id_network_auto_close
 #: cmainwnd.tabbed;9;item;id_network_auto_close
@@ -1828,6 +1839,10 @@ msgstr "_eDonkey"
 
 #: cneighbourswnd;59;item;id_network_dc
 msgid "_DC++"
+msgstr ""
+
+#: cneighbourswnd;59;item;id_network_bt
+msgid "_BitTorrent"
 msgstr ""
 
 #: cneighbourswnd;60
@@ -4080,6 +4095,10 @@ msgstr "Tanca automàticament el Shareaza quan finalitzen totes les transferènc
 msgid "Browse a user, showing their profile and shared files..."
 msgstr "Explora l'usuari, mostra els seus arxius compartits i perfil..."
 
+#: message;id_network_bt
+msgid "Connect to the BitTorrent network."
+msgstr ""
+
 #: message;id_network_chat_to
 msgid "Open a chat session with a user..."
 msgstr ""
@@ -4741,12 +4760,8 @@ msgid "This template does not have any customizations."
 msgstr "Aquesta plantilla no té cap personalització."
 
 #: string;7102
-msgid ""
-"Are you sure you want to delete the \"%s\" template?\\n"
-"This cannot be undone."
-msgstr ""
-"Està segur de que vol eliminar la plantilla \"%s\" ?\\n"
-"Açò no podrà ser revertit."
+msgid "Are you sure you want to delete the \"%s\" template?\\nThis cannot be undone."
+msgstr "Està segur de que vol eliminar la plantilla \"%s\" ?\\nAçò no podrà ser revertit."
 
 #: string;8000 dialog;csettingsheet
 msgid "Shareaza Settings"
@@ -4765,18 +4780,8 @@ msgid "Edit My Profile"
 msgstr "Edita el meu perfil"
 
 #: string;8004
-msgid ""
-"!Welcome to Shareaza (version) !\\n"
-".\\n"
-"Shareaza is completely free software.\\n"
-"Please use it responsibly and respect intellectual property law.\\n"
-"."
-msgstr ""
-"Benvingut/uda a Shareaza! (versió) !\\n"
-".\\n"
-"Shareaza és programari completament lliure!.\\n"
-"Si us plau, utilitza'l amb responsabilitat i respetant les lleis de propietat intelectual.\\n"
-"."
+msgid "!Welcome to Shareaza (version) !\\n.\\nShareaza is completely free software.\\nPlease use it responsibly and respect intellectual property law.\\n."
+msgstr "Benvingut/uda a Shareaza! (versió) !\\n.\\nShareaza és programari completament lliure!.\\nSi us plau, utilitza'l amb responsabilitat i respetant les lleis de propietat intelectual.\\n."
 
 #: string;8005
 msgid "(closing after transfers)"
@@ -4791,14 +4796,8 @@ msgid "There are no active searches. Click here to search for files."
 msgstr "No hi ha cerques actives. Fes clic aquí per a començar."
 
 #: string;8008
-msgid ""
-"Shareaza has finished downloading the next Shareaza version (%s). Would you like to upgrade now?\\n"
-"\\n"
-"If you select Yes, Shareaza will close temporarily while the upgrade is installed."
-msgstr ""
-"Shareaza ha acabat de baixar la versió (%s) de Shareaza. Vols actualitzar ara?\\n"
-"\\n"
-"Si selecciones sí, Shareaza es tancarà temporalment per a poder instal·lar la nova versió."
+msgid "Shareaza has finished downloading the next Shareaza version (%s). Would you like to upgrade now?\\n\\nIf you select Yes, Shareaza will close temporarily while the upgrade is installed."
+msgstr "Shareaza ha acabat de baixar la versió (%s) de Shareaza. Vols actualitzar ara?\\n\\nSi selecciones sí, Shareaza es tancarà temporalment per a poder instal·lar la nova versió."
 
 #: string;8009
 msgid "Are you sure you want to delete the \"%s\" skin? This cannot be undone."
@@ -5376,18 +5375,8 @@ msgid "Sending query for \"%s\" to %s."
 msgstr "Enviant petició per a \"%s\" a %s."
 
 #: string;16083
-msgid ""
-"Forcing your PC into hub mode may have adverse effects on performance and the P2P network. It is generally better to allow Shareaza to decide whether or not hub mode should be used.\\n"
-"\\n"
-"Hub mode does NOT produce better search results, or have any other advantages for you.\\n"
-"\\n"
-"Do you really want to do this, despite these disadvantages?"
-msgstr ""
-"Forçant el teu PC en mode hub pots obtenir conseqüències en el rendiment i a la Xarxa P2P. És millor deixar a Shareaza escollir entre els modes hub o leaf.\\n"
-"\\n"
-"El mode Hub no dóna millors resultats de cerques ni cap altre avantatge per a tu.\\n"
-"\\n"
-"Estàs segur que vols fer això?"
+msgid "Forcing your PC into hub mode may have adverse effects on performance and the P2P network. It is generally better to allow Shareaza to decide whether or not hub mode should be used.\\n\\nHub mode does NOT produce better search results, or have any other advantages for you.\\n\\nDo you really want to do this, despite these disadvantages?"
+msgstr "Forçant el teu PC en mode hub pots obtenir conseqüències en el rendiment i a la Xarxa P2P. És millor deixar a Shareaza escollir entre els modes hub o leaf.\\n\\nEl mode Hub no dóna millors resultats de cerques ni cap altre avantatge per a tu.\\n\\nEstàs segur que vols fer això?"
 
 #: string;16085
 msgid "Gnutella2 is Shareaza's premiere network. Disabling support for it may severely limit both the number and quality of your search results. Are you SURE you want to do this?"
@@ -5686,14 +5675,8 @@ msgid "Download host %s is busy, retrying in %i seconds."
 msgstr "L'usuari %s està ocupat, reintentant en %i segons."
 
 #: string;16281
-msgid ""
-"Are you sure you want to clear \"%s\"?\\n"
-"\\n"
-"Once a download has been cleared from the Downloads window, it cannot be resumed later."
-msgstr ""
-"Estàs segur(a) d'esborrar la transferència de %s?\\n"
-"\\n"
-"Una vegada que aquesta sigui eliminada, és imposible continuar-la."
+msgid "Are you sure you want to clear \"%s\"?\\n\\nOnce a download has been cleared from the Downloads window, it cannot be resumed later."
+msgstr "Estàs segur(a) d'esborrar la transferència de %s?\\n\\nUna vegada que aquesta sigui eliminada, és imposible continuar-la."
 
 #: string;16282
 msgid "Aborting download of \"%s\" from %s (%s), network disabled."
@@ -6094,14 +6077,8 @@ msgid "DC++ Guard"
 msgstr "Guàrdia eDonkey"
 
 #: string;16384
-msgid ""
-"Are you sure you want to launch the file \"%s\" ?\\n"
-"\\n"
-"Some files can be harmful to your computer. Ensure you know what the file is before launching it."
-msgstr ""
-"Estàs segur(a) que vols executar l'arxiu \"%s\"?\\n"
-"\\n"
-"Alguns arxius poden ser perillosos per a l'ordinador, i es recomana tenir l'antivirus actiu i actualitzat."
+msgid "Are you sure you want to launch the file \"%s\" ?\\n\\nSome files can be harmful to your computer. Ensure you know what the file is before launching it."
+msgstr "Estàs segur(a) que vols executar l'arxiu \"%s\"?\\n\\nAlguns arxius poden ser perillosos per a l'ordinador, i es recomana tenir l'antivirus actiu i actualitzat."
 
 #: string;16385
 msgid "You are about to modify the metadata of %i files, are you sure you want to continue?"
@@ -6116,38 +6093,16 @@ msgid "The file \"%s\" has not yet been hashed. Please wait for the file to be h
 msgstr "l'arxiu %s no ha estat escanejat.  Per favor, espera a que sigui escanejat i intenta-ho més tard."
 
 #: string;16388
-msgid ""
-"This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n"
-"\\n"
-"Shareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database. If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n"
-"\\n"
-"Would you like to proceed?"
-msgstr ""
-"Aquesta opció utilitza un servei ofrerit per Bitzi, per a adquirir metainformació de l'arxiu.\\n"
-"\\n"
-"Shareaza enviarà una petita informació sobre la marca digital 'bitprint' de l'arxiu per a que Bitzi el pugui reconèixer. Si tens algun dubte sobre la privacitat d'aquest servei, visita bitzi.com per a més informació.\\n"
-"\\n"
-"Vols continuar?"
+msgid "This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n\\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database. If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n\\nWould you like to proceed?"
+msgstr "Aquesta opció utilitza un servei ofrerit per Bitzi, per a adquirir metainformació de l'arxiu.\\n\\nShareaza enviarà una petita informació sobre la marca digital 'bitprint' de l'arxiu per a que Bitzi el pugui reconèixer. Si tens algun dubte sobre la privacitat d'aquest servei, visita bitzi.com per a més informació.\\n\\nVols continuar?"
 
 #: string;16389
-msgid ""
-"Are you sure you want to permanently delete the %i selected file(s) ?\\n"
-"\\n"
-"The files will be moved to your \"recycle bin\" if it is enabled."
-msgstr ""
-"Estàs segur(a) d'esborrar els %i arxiu(s) seleccionats de forma permanent ?\\n"
-"\\n"
-"Es portaran a la Paperera de reciclatge si està activada."
+msgid "Are you sure you want to permanently delete the %i selected file(s) ?\\n\\nThe files will be moved to your \"recycle bin\" if it is enabled."
+msgstr "Estàs segur(a) d'esborrar els %i arxiu(s) seleccionats de forma permanent ?\\n\\nEs portaran a la Paperera de reciclatge si està activada."
 
 #: string;16390
-msgid ""
-"You have not yet selected a media player to enqueue files with, such as Nullsoft Winamp. Would you like to select one now?\\n"
-"\\n"
-"Shareaza will pass the name of the file to your selected program with the \"/ADD\" argument."
-msgstr ""
-"No has seleccionat un reproductor per als arxius de multimèdia. Vols seleccionar-ne un ara?\\n"
-"\\n"
-"L'arxiu serà passat amb l'argument \"/ADD\"."
+msgid "You have not yet selected a media player to enqueue files with, such as Nullsoft Winamp. Would you like to select one now?\\n\\nShareaza will pass the name of the file to your selected program with the \"/ADD\" argument."
+msgstr "No has seleccionat un reproductor per als arxius de multimèdia. Vols seleccionar-ne un ara?\\n\\nL'arxiu serà passat amb l'argument \"/ADD\"."
 
 #: string;16391
 msgid "You're not connected to the network."
@@ -6166,86 +6121,36 @@ msgid "Would you like to remove the \"potentially unsafe\" attribute from this f
 msgstr "Vols treure l'atribut \"potencialment insegur\" d'aquest arxiu?"
 
 #: string;16395
-msgid ""
-"Your downloaded files folder \"%s\" is not yet in your library.\\n"
-"\\n"
-"Including your downloaded files folder in your library makes it easier to view and organise new downloads, and lets you take advantage of advanced Shareaza features such as download verification and automatic upgrading. Placing downloaded files in your library does not necessarily require you to share them: you can choose whether or not to share files independently.\\n"
-"\\n"
-"Would you like to add your downloaded files folder to your library now?"
-msgstr ""
-"La teva carpeta d'arxius descarregats \"%s\" encara no es troba a la col·lecció.\\n"
-"\\n"
-"Incloent-hi la teva carpeta d'arxius descarregats en la col·lecció fa més fàcil veure i organitzar les noves descàrregues, i altres opcions avançades i característiques de Shareaza com la verificació de descàrregues i actualitzacions automàtiques.  Posant els arxius descarregats a la col·lecció no necesàriament requereix que els comparteixis: pots elegir si vols o no compartir els arxius independentment.\\n"
-"\\n"
-"Vols afegir la teva carpeta de descàrregues a la  col·lecció ara?"
+msgid "Your downloaded files folder \"%s\" is not yet in your library.\\n\\nIncluding your downloaded files folder in your library makes it easier to view and organise new downloads, and lets you take advantage of advanced Shareaza features such as download verification and automatic upgrading. Placing downloaded files in your library does not necessarily require you to share them: you can choose whether or not to share files independently.\\n\\nWould you like to add your downloaded files folder to your library now?"
+msgstr "La teva carpeta d'arxius descarregats \"%s\" encara no es troba a la col·lecció.\\n\\nIncloent-hi la teva carpeta d'arxius descarregats en la col·lecció fa més fàcil veure i organitzar les noves descàrregues, i altres opcions avançades i característiques de Shareaza com la verificació de descàrregues i actualitzacions automàtiques.  Posant els arxius descarregats a la col·lecció no necesàriament requereix que els comparteixis: pots elegir si vols o no compartir els arxius independentment.\\n\\nVols afegir la teva carpeta de descàrregues a la  col·lecció ara?"
 
 #: string;16396
 msgid "Your downloads folder has been added to your library. Would you like to share it too?"
 msgstr "La carpeta d'arxius descarregats ha estat afegida a la col·lecció. Vols compartir-la també?"
 
 #: string;16397
-msgid ""
-"Are you sure you want to delete the %i selected album folder(s) ?\\n"
-"\\n"
-"Note that this action does not delete the files within the album folders, only the folders themselves."
-msgstr ""
-"Estàs segur(a) de esborrar %i carpetes virtuals amb informació sobre àlbums?\\n"
-"\\n"
-"Això no esborra els arxius físicament del disc dur, sols esborra la carpeta seleccionada de la col·lecció."
+msgid "Are you sure you want to delete the %i selected album folder(s) ?\\n\\nNote that this action does not delete the files within the album folders, only the folders themselves."
+msgstr "Estàs segur(a) de esborrar %i carpetes virtuals amb informació sobre àlbums?\\n\\nAixò no esborra els arxius físicament del disc dur, sols esborra la carpeta seleccionada de la col·lecció."
 
 #: string;16398
-msgid ""
-"Shareaza could not rename:\\n"
-"\\n"
-"%s\\n"
-"to\\n"
-"%s"
-msgstr ""
-"Shareaza no ha pogut reanomenar:\\n"
-"\\n"
-"%s\\n"
-"a\\n"
-"%s"
+msgid "Shareaza could not rename:\\n\\n%s\\nto\\n%s"
+msgstr "Shareaza no ha pogut reanomenar:\\n\\n%s\\na\\n%s"
 
 #: string;16399
-msgid ""
-"Shareaza could not delete the file:\\n"
-"\\n"
-"%s"
-msgstr ""
-"Shareaza no ha pogut esborrar l'arxiu:\\n"
-"\\n"
-"%s"
+msgid "Shareaza could not delete the file:\\n\\n%s"
+msgstr "Shareaza no ha pogut esborrar l'arxiu:\\n\\n%s"
 
 #: string;16400
-msgid ""
-"Target file exists:\\n"
-"\\n"
-"%s\\n"
-"\\n"
-"Would you like to overwrite it?"
-msgstr ""
-"l'arxiu:n%s existeix.\\n"
-"\\n"
-"Vols reescriu-re'l?"
+msgid "Target file exists:\\n\\n%s\\n\\nWould you like to overwrite it?"
+msgstr "l'arxiu:n%s existeix.\\n\\nVols reescriu-re'l?"
 
 #: string;16401
 msgid "Show All File Types"
 msgstr "Mostra tots els tipus"
 
 #: string;16402
-msgid ""
-"Shareaza received a collection file:\\n"
-"\\n"
-"\"%s\"\\n"
-"\\n"
-"This file does not appear to be a valid collection file."
-msgstr ""
-"Shareaza ha rebut un arxiu de col·lecció:\\n"
-"\\n"
-"\"%s\"\\n"
-"\\n"
-"Aquest arxiu no sembla ser un arxiu de col·lecció vàlid."
+msgid "Shareaza received a collection file:\\n\\n\"%s\"\\n\\nThis file does not appear to be a valid collection file."
+msgstr "Shareaza ha rebut un arxiu de col·lecció:\\n\\n\"%s\"\\n\\nAquest arxiu no sembla ser un arxiu de col·lecció vàlid."
 
 #: string;16403
 msgid "Shareaza has added the collection file \"%s\" to your library."
@@ -6256,14 +6161,8 @@ msgid "Shareaza was unable to install the collection file \"%s\" by copying it t
 msgstr "Shareaza no ha pogut instal·lar l'arxiu de col·lecció \"%s\" per copiar-lo a la carpeta \"%s\"."
 
 #: string;16406
-msgid ""
-"Would you like to download all files in this collection?\\n"
-"\\n"
-"Choose Cancel to stop any further prompts."
-msgstr ""
-"Vols descarregar tots els arxius d'aquesta col·lecció?\\n"
-"\\n"
-"Tria cancel·lar per a evitar futurs avissos."
+msgid "Would you like to download all files in this collection?\\n\\nChoose Cancel to stop any further prompts."
+msgstr "Vols descarregar tots els arxius d'aquesta col·lecció?\\n\\nTria cancel·lar per a evitar futurs avissos."
 
 #: string;16407
 msgid "Would you like to prevent this collection from prompting you to download anything else?"
@@ -6278,26 +6177,12 @@ msgid "Export &URIs..."
 msgstr "Exportar &URIs..."
 
 #: string;16410
-msgid ""
-"A subfolder of the selected folder \"%s\" is already part of your library.\\n"
-"Adding this folder will cause re-hashing of some files.\\n"
-"\\n"
-"Do you want to continue ?"
-msgstr ""
-"Una subcarpeta de la carpeta seleccionada \"%s\" ja és actualment part de la col·lecció.\\n"
-"Afegir aquesta carpeta causarà una reverificació dels arxius.\\n"
-"\\n"
-"De segur que dessitja continuar?"
+msgid "A subfolder of the selected folder \"%s\" is already part of your library.\\nAdding this folder will cause re-hashing of some files.\\n\\nDo you want to continue ?"
+msgstr "Una subcarpeta de la carpeta seleccionada \"%s\" ja és actualment part de la col·lecció.\\nAfegir aquesta carpeta causarà una reverificació dels arxius.\\n\\nDe segur que dessitja continuar?"
 
 #: string;16411
-msgid ""
-"Unable to move the file %s. The file may be in use by another application.\\n"
-"\\n"
-"Do you wish to try to copy this file instead?"
-msgstr ""
-"No es pogué moure el fitxer %s. L'arxiu potser està sent utilitzat per altra aplicació.\\n"
-"\\n"
-"Dessitja provar a copiar l'arxiu?"
+msgid "Unable to move the file %s. The file may be in use by another application.\\n\\nDo you wish to try to copy this file instead?"
+msgstr "No es pogué moure el fitxer %s. L'arxiu potser està sent utilitzat per altra aplicació.\\n\\nDessitja provar a copiar l'arxiu?"
 
 #: string;16412
 msgid "Ghost File"
@@ -6530,37 +6415,16 @@ msgid "You have not specified any folders to share. Are you sure?"
 msgstr "No has especificat cap carpeta per a compartir. Recorda que la qualitat de la Xarxa està basada a la quantitat d'arxius que els demés comparteixen, per tant si comparteixes les teves carpetes, la Xarxa tindrà més contingut.  ¿Estàs segur(a) de no compartir les teves carpetes?"
 
 #: string;16803
-msgid ""
-"The folder you are sharing is already shared as part of another shared folder:\\n"
-"\\n"
-"%s"
-msgstr ""
-"Aquesta carpeta ja està compartida com part de:\\n"
-"\\n"
-"%s"
+msgid "The folder you are sharing is already shared as part of another shared folder:\\n\\n%s"
+msgstr "Aquesta carpeta ja està compartida com part de:\\n\\n%s"
 
 #: string;16804
 msgid "You haven't entered a screen name in your user profile."
-msgstr ""
-"No s'ha especificat un pseudònim en el teu perfil.\\n"
-"\\n"
-"És bona idea especificar-ne un, per a que els demés usuaris sàpiguen de forma agradable a qui estan connectats.\\n"
-"\\n"
-"¿Estàs segur(a) de continuar sense pseudònim?"
+msgstr "No s'ha especificat un pseudònim en el teu perfil.\\n\\nÉs bona idea especificar-ne un, per a que els demés usuaris sàpiguen de forma agradable a qui estan connectats.\\n\\n¿Estàs segur(a) de continuar sense pseudònim?"
 
 #: string;16805
-msgid ""
-"You haven't entered your location in your user profile.\\n"
-"\\n"
-"It's a good idea to enter your location so that other users can see which country you are from. Note that entering a location does not reveal any compromising information.\\n"
-"\\n"
-"Are you sure you want to continue without entering your location?"
-msgstr ""
-"No ha estat especificada la teva ubicació al teu perfil.\\n"
-"\\n"
-"Per a altres usuaris podria ser interessant d'on ets, per a crear un mejor sentit de comunitat.\\n"
-"\\n"
-"¿Estàs segur(a) de continuar sense especificar la ubicació?"
+msgid "You haven't entered your location in your user profile.\\n\\nIt's a good idea to enter your location so that other users can see which country you are from. Note that entering a location does not reveal any compromising information.\\n\\nAre you sure you want to continue without entering your location?"
+msgstr "No ha estat especificada la teva ubicació al teu perfil.\\n\\nPer a altres usuaris podria ser interessant d'on ets, per a crear un mejor sentit de comunitat.\\n\\n¿Estàs segur(a) de continuar sense especificar la ubicació?"
 
 #: string;16807
 msgid "Please type the bandwidth limit you wish to set in the form \"123 kb/s\" for kilobits per second, or \"123 KB/s\" for kilobytes per second."
@@ -6592,28 +6456,16 @@ msgid "Please wait: Updating eDonkey server list..."
 msgstr "Si us plau, esperi: Actualitzant la llista de servidors d'eDonkey..."
 
 #: string;16815
-msgid ""
-"UPnP Device Host Service is not running. This service is required to perform the setup.\\n"
-"You need to set the startup type of the service to automatic."
-msgstr ""
-"El servei UPnP Device Host Service no està sent executat. Aquest servei està re requerit per la instal·lació.\\n"
-"Has de configurar el llançament d'aquest servei del Windows al mode automàtic."
+msgid "UPnP Device Host Service is not running. This service is required to perform the setup.\\nYou need to set the startup type of the service to automatic."
+msgstr "El servei UPnP Device Host Service no està sent executat. Aquest servei està re requerit per la instal·lació.\\nHas de configurar el llançament d'aquest servei del Windows al mode automàtic."
 
 #: string;16816
-msgid ""
-"The eDonkey network uses large queues with long wait times. By limiting the maximum queue position you will accept so strictly, you may have trouble getting downloads to begin.\\n"
-"Are you sure you want to limit what queue positions you will accept?"
-msgstr ""
-"La Xarxa eDonkey utilitza llargues cues amb temps llargs d' espera. Limitant la teva màxima cua de posició pots tenir problemes per a iniciar les descàrregues.\\n"
-"Estàs segur/a que vols limitar les posicions de cua que acceptaràs?"
+msgid "The eDonkey network uses large queues with long wait times. By limiting the maximum queue position you will accept so strictly, you may have trouble getting downloads to begin.\\nAre you sure you want to limit what queue positions you will accept?"
+msgstr "La Xarxa eDonkey utilitza llargues cues amb temps llargs d' espera. Limitant la teva màxima cua de posició pots tenir problemes per a iniciar les descàrregues.\\nEstàs segur/a que vols limitar les posicions de cua que acceptaràs?"
 
 #: string;16817
-msgid ""
-"Windows doesn't support paths longer than 256 characters.\\n"
-"Please select a folder with a shorter path."
-msgstr ""
-"El Windows no suporta rutes de carpetes més llargues de 256 caracters.\\n"
-"Per favor, seleccioni una carpeta amb una ruta més curta."
+msgid "Windows doesn't support paths longer than 256 characters.\\nPlease select a folder with a shorter path."
+msgstr "El Windows no suporta rutes de carpetes més llargues de 256 caracters.\\nPer favor, seleccioni una carpeta amb una ruta més curta."
 
 #: string;16818
 msgid "The complete and incomplete folders should not be the same"
@@ -6840,14 +6692,8 @@ msgid "Cannot send message, a connection has not been established yet."
 msgstr "El missatge no ha pogut ser enviat, perquè la comunicació no ha estat establerta."
 
 #: string;17042
-msgid ""
-"You have not yet filled in your user profile. You must provide a profile before you can chat with other users.\\n"
-"\\n"
-"Would you like to fill in your profile now?"
-msgstr ""
-"encara no has omplert el teu perfil d'usuari. És necessari que l'ompli, per a poder parlar amb altres.\\n"
-"\\n"
-"Ho vols fer?"
+msgid "You have not yet filled in your user profile. You must provide a profile before you can chat with other users.\\n\\nWould you like to fill in your profile now?"
+msgstr "encara no has omplert el teu perfil d'usuari. És necessari que l'ompli, per a poder parlar amb altres.\\n\\nHo vols fer?"
 
 #: string;17043
 msgid "Granted upload priority to host %s."
@@ -7188,14 +7034,8 @@ msgid "Established BitTorrent coupling with %s, handshaking..."
 msgstr "La connexió BitTorrent amb %s ha estat establerta %s, negociant..."
 
 #: string;17488
-msgid ""
-"You have changed the tracker URL for this torrent. Are you sure you want to save this change?\\n"
-"\\n"
-"An invalid tracker URL may prevent further downloading."
-msgstr ""
-"Ha canviat l'adreça del rastrejador d'aquest torrent. Estàs segur/a?\\n"
-"\\n"
-"Indicant un rastrejador invàlid pots fer que aquest arxiu no sigui descarregat."
+msgid "You have changed the tracker URL for this torrent. Are you sure you want to save this change?\\n\\nAn invalid tracker URL may prevent further downloading."
+msgstr "Ha canviat l'adreça del rastrejador d'aquest torrent. Estàs segur/a?\\n\\nIndicant un rastrejador invàlid pots fer que aquest arxiu no sigui descarregat."
 
 #: string;17489
 msgid "BitTorrent coupling with %s is extended protocol, identified \"%s\"."
@@ -7368,9 +7208,7 @@ msgid "of (e.g. 1 of 10)"
 msgstr "de"
 
 #: string;20003
-msgid ""
-"Changing language requires application restart.\\n"
-"Restart now?"
+msgid "Changing language requires application restart.\\nRestart now?"
 msgstr ""
 
 #: string;20005
@@ -7411,18 +7249,8 @@ msgstr "Todo"
 
 #: string;20014
 #, fuzzy
-msgid ""
-"This option uses services provided by ShareMonkey.com for recognising information about selected files.\\n"
-"\\n"
-"Shareaza will transmit file details and your location in order to query the ShareMonkey database.  If you are concerned about privacy, you may wish to consult the ShareMonkey.com privacy policy.\\n"
-"\\n"
-"Would you like to proceed?"
-msgstr ""
-"Aquesta opció utilitza un servei ofrerit per Bitzi, per a adquirir metainformació de l'arxiu.\\n"
-"\\n"
-"Shareaza enviarà una petita informació sobre la marca digital 'bitprint' de l'arxiu per a que Bitzi el pugui reconèixer. Si tens algun dubte sobre la privacitat d'aquest servei, visita bitzi.com per a més informació.\\n"
-"\\n"
-"Vols continuar?"
+msgid "This option uses services provided by ShareMonkey.com for recognising information about selected files.\\n\\nShareaza will transmit file details and your location in order to query the ShareMonkey database.  If you are concerned about privacy, you may wish to consult the ShareMonkey.com privacy policy.\\n\\nWould you like to proceed?"
+msgstr "Aquesta opció utilitza un servei ofrerit per Bitzi, per a adquirir metainformació de l'arxiu.\\n\\nShareaza enviarà una petita informació sobre la marca digital 'bitprint' de l'arxiu per a que Bitzi el pugui reconèixer. Si tens algun dubte sobre la privacitat d'aquest servei, visita bitzi.com per a més informació.\\n\\nVols continuar?"
 
 #: string;20101
 msgid "Requesting"
@@ -7671,26 +7499,7 @@ msgid "New Folder"
 msgstr ""
 
 #: string;20246
-msgid ""
-"Command-line options:\\n"
-"\\n"
-"-tray : Disable startup splash screen and send application to tray\\n"
-"-nosplash : Disable startup splash screen\\n"
-"-nowarn : Disable alpha (daily builds) version warning dialog\\n"
-"-wait : Wait for other application instance exit\\n"
-"\\n"
-"Interface modes:\\n"
-"\\n"
-"-basic : Start application in Basic interface mode\\n"
-"-tabbed : Start application in Tabbed interface mode\\n"
-"-windowed : Start application in Windowed interface mode\\n"
-"\\n"
-"System options:\\n"
-"\\n"
-"-RegServer : Register internal components for everyone\\n"
-"-UnRegServer : Un-register internal components for everyone\\n"
-"-RegServerPerUser : Register internal components for current user\\n"
-"-UnRegServerPerUser : Un-register internal components for current user"
+msgid "Command-line options:\\n\\n-tray : Disable startup splash screen and send application to tray\\n-nosplash : Disable startup splash screen\\n-nowarn : Disable alpha (daily builds) version warning dialog\\n-wait : Wait for other application instance exit\\n\\nInterface modes:\\n\\n-basic : Start application in Basic interface mode\\n-tabbed : Start application in Tabbed interface mode\\n-windowed : Start application in Windowed interface mode\\n\\nSystem options:\\n\\n-RegServer : Register internal components for everyone\\n-UnRegServer : Un-register internal components for everyone\\n-RegServerPerUser : Register internal components for current user\\n-UnRegServerPerUser : Un-register internal components for current user"
 msgstr ""
 
 #: string;20247
@@ -8449,116 +8258,116 @@ msgid "_Link Compression:"
 msgstr "Concentrador a Concentrador"
 
 #: cdonkeysettingspage;control;1
-msgid "_eDonkey Network:"
-msgstr "Xarxa _eDonkey:"
-
-#: cdonkeysettingspage;control;2
 msgid "Always connect to eDonkey"
 msgstr "Connecta a eDonkey per aquesta sessió"
 
-#: cdonkeysettingspage;control;3
+#: cdonkeysettingspage;control;2
 msgid "Connect to eDonkey today"
 msgstr "Connecta sempre a eDonkey"
 
-#: cdonkeysettingspage;control;4
-msgid "_Global Searching:"
-msgstr "Cerques _globals:"
-
-#: cdonkeysettingspage;control;5
+#: cdonkeysettingspage;control;3
 msgid "Search known remote servers in the server cache:"
 msgstr "Cerca servidors coneguts (del caxè):"
 
 #: cdonkeysettingspage;control;6
-msgid "Stop searching after:"
-msgstr "Atura després de:"
-
-#: cdonkeysettingspage;control;9
-msgid "search results."
-msgstr "resultats."
-
-#: cdonkeysettingspage;control;10
 msgid "Receive and update server list from the connected server"
 msgstr "Rebre i actualitzar la llista de servidors des dels servidors connectats."
 
-#: cdonkeysettingspage;control;11
-msgid "_Client Link Connections:"
-msgstr "Límit de _connexions amb altres clients:"
-
-#: cdonkeysettingspage;control;12
-msgid "Connect to no more than:"
-msgstr "No connectar amb més de:"
-
-#: cdonkeysettingspage;control;15
-msgid "other eDonkey clients."
-msgstr "clients de eDonkey a la vegada."
-
-#: cdonkeysettingspage;control;16
-msgid "eDonkey _Tools:"
-msgstr "_Eines d'eDonkey:"
-
-#: cdonkeysettingspage;control;17
-msgid "Download eDonkey server list from the web:"
-msgstr "Descarrega una llista de servidors de eDonkey de la web:"
-
-#: cdonkeysettingspage;control;18
+#: cdonkeysettingspage;control;9
 msgid "Download..."
 msgstr "Descarrega..."
 
-#: dialog;cbittorrentsettingspage cscheduletaskpage;control;12
-msgid "BitTorrent"
-msgstr "BitTorrent"
+#: cdonkeysettingspage;control;10
+msgid "_eDonkey Network:"
+msgstr "Xarxa _eDonkey:"
+
+#: cdonkeysettingspage;control;11
+msgid "_Global Searching:"
+msgstr "Cerques _globals:"
+
+#: cdonkeysettingspage;control;12
+msgid "Stop searching after:"
+msgstr "Atura després de:"
+
+#: cdonkeysettingspage;control;13
+msgid "search results."
+msgstr "resultats."
+
+#: cdonkeysettingspage;control;14
+msgid "_Client Link Connections:"
+msgstr "Límit de _connexions amb altres clients:"
+
+#: cdonkeysettingspage;control;15
+msgid "Connect to no more than:"
+msgstr "No connectar amb més de:"
+
+#: cdonkeysettingspage;control;16
+msgid "other eDonkey clients."
+msgstr "clients de eDonkey a la vegada."
+
+#: cdonkeysettingspage;control;17
+msgid "eDonkey _Tools:"
+msgstr "_Eines d'eDonkey:"
+
+#: cdonkeysettingspage;control;18
+msgid "Download eDonkey server list from the web:"
+msgstr "Descarrega una llista de servidors de eDonkey de la web:"
 
 #: cbittorrentsettingspage;control;1
-msgid "_Interface:"
-msgstr "_Interface:"
+msgid "Always connect to BitTorrent"
+msgstr ""
 
 #: cbittorrentsettingspage;control;2
-msgid "Display additional BitTorrent interface elements"
-msgstr "Mostra elements addicionals BitTorrent en la interfície"
+msgid "Connect to BitTorrent today"
+msgstr ""
 
 #: cbittorrentsettingspage;control;3
-msgid "_Download Connections:"
-msgstr "_Connexions de descàrrega:"
+msgid "Enable BitTorrent DHT"
+msgstr ""
 
-#: cbittorrentsettingspage;control;6
-msgid "Torrents at once"
-msgstr "Torrents al mateix temps"
-
-#: cbittorrentsettingspage;control;9
-msgid "Client connections"
-msgstr "Connexions de clients"
-
-#: cbittorrentsettingspage;control;10
+#: cbittorrentsettingspage;control;8
 msgid "Clear downloaded torrents     When the share ratio reaches:"
 msgstr " Neteja els torrents descarregats  quan la ràtio de compartició sigui 1"
 
-#: cbittorrentsettingspage;control;13
-msgid "%"
-msgstr "%"
-
-#: cbittorrentsettingspage;control;14
+#: cbittorrentsettingspage;control;11
 msgid "Prefer torrent sources"
 msgstr " Prefereix fonts torrent"
 
-#: cbittorrentsettingspage;control;15
-msgid "_EndGame:"
-msgstr "_EndGame:"
-
-#: cbittorrentsettingspage;control;16
+#: cbittorrentsettingspage;control;12
 msgid "Enable EndGame mode when completing torrents"
 msgstr "Habilita el mode EndGame al completar torrents"
 
-#: cbittorrentsettingspage;control;17
+#: cbittorrentsettingspage;control;18
+msgid "_BitTorrent Network:"
+msgstr ""
+
+#: cbittorrentsettingspage;control;19
+msgid "_Download Connections:"
+msgstr "_Connexions de descàrrega:"
+
+#: cbittorrentsettingspage;control;20
 msgid "_Store Torrents Here:"
 msgstr "_Desa els torrents aquí "
 
-#: cbittorrentsettingspage;control;20
-msgid "_Torrent Creator:"
-msgstr "_Creador de Torrents"
+#: cbittorrentsettingspage;control;21
+msgid "Torrents at once"
+msgstr "Torrents al mateix temps"
+
+#: cbittorrentsettingspage;control;22
+msgid "Client connections"
+msgstr "Connexions de clients"
 
 #: cbittorrentsettingspage;control;23
+msgid "%"
+msgstr "%"
+
+#: cbittorrentsettingspage;control;24
 msgid "Default Tracker: "
 msgstr "_Rastrejador per defecte (\"Tracker\"):"
+
+#: cbittorrentsettingspage;control;25
+msgid "_Torrent Creator:"
+msgstr "_Creador de Torrents"
 
 #: dialog;cprotocolssettingspage
 msgid "Protocols"
@@ -10296,50 +10105,80 @@ msgstr "TigerTree"
 msgid "NextRun"
 msgstr "Següent"
 
+#~ msgid "_Interface:"
+#~ msgstr "_Interface:"
+
+#~ msgid "Display additional BitTorrent interface elements"
+#~ msgstr "Mostra elements addicionals BitTorrent en la interfície"
+
+#~ msgid "_EndGame:"
+#~ msgstr "_EndGame:"
+
 #~ msgid "Shareaza was unable to set up port-forwarding on your NAT router or firewall.\\n\\nPlease configure your network to forward TCP and UDP ports %i to your local PC."
 #~ msgstr "Has seleccionat utilitzar reenviament de ports en el teu NAT router o tallafocs.\\n\\nSi us Plau configura la teva Xarxa per a reenviar el port TCP %i al teu PC."
+
 #~ msgid "Please wait: Finding UPnP devices and setting them up..."
 #~ msgstr "Si us plau, esperi: Cercant dispositius UPnP i configurant-los..."
+
 #~ msgid "_Play Album"
 #~ msgstr "_Reprodueix àlbum"
+
 #~ msgid "This is a pre-release version of Shareaza, and the beta testing period has ended. Please download the full, official release from http://shareaza.sourceforge.net/."
 #~ msgstr "Aquesta és una versió pre-llançament de Shareaza, i el període de proves (Beta) s'ha acabat. Si us plau, descarrega la versió completa de http://shareaza.sourceforge.net/."
+
 #~ msgid "Torrent Information"
 #~ msgstr "Informació del Torrent"
+
 #~ msgid " to"
 #~ msgstr "  a"
+
 #~ msgid "Volume uploaded:"
 #~ msgstr "Volum pujat:"
+
 #~ msgid "You are running the Scheduler in 'G2 only' mode. Would you like to turn this mode off, so that all active networks remain connected?"
 #~ msgstr "You are running the Scheduler in 'G2 only' mode. Would you like to turn this mode off, so that all active networks remain connected?"
+
 #~ msgid "Disabling support for Gnutella-1 protocols may limit your search results, and if you are acting as a hub it may also impact upon the results of other users. Are you sure you want to do this?"
 #~ msgstr "Deshabilitant el suport per al protocol Gnutella-1 limitarà els teus resultats de cerca, i si estàs actuant com a hub podrà afectar als resultats d'altres persones. Estàs segur que vols fer això?"
+
 #~ msgid "All Media Files|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Playlists|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Audio Files|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|Video Files|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|CD Audio Tracks|*.cda|MIDI Files|*.mid;*.rmi;*.midi|All Files|*.*||"
 #~ msgstr "Tots els arxius de Media|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Playlists|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Audio Files|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|Video Files|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|CD Audio Tracks|*.cda|MIDI Files|*.mid;*.rmi;*.midi|All Files|*.*||"
+
 #~ msgid "Tracker did not respond- Retrying announce (%i of %i)"
 #~ msgstr "El Tracker no respongué. Reintentant l'anunci (%i de %i)"
+
 #~ msgid "You have typed a SHA1 value, however it is invalid. Please check it and try again."
 #~ msgstr "El valor de SHA1 que li ha asignat a la descàrrega no és vàlid.  Per favor , comprova-ho."
+
 #~ msgid "You have typed a root tiger-tree value, however it is invalid. Please check it and try again."
 #~ msgstr "El valor de root tiger-tree asignat no és vàlid."
+
 #~ msgid "You have provided a root tiger-tree hash value which is different to the one currently associated with this download. Are you sure you want to change the tiger-tree root hash now?"
 #~ msgstr "Estàs canviant el root tiger-tree a un diferent a l'associat amb aquesta descàrrega. Vols continuar?"
+
 #~ msgid "You have provided an eDonkey hash value which is different to the one currently associated with this download. Are you sure you want to change the eDonkey hash now?"
 #~ msgstr "Estàs canviant el hash eDonkey a un diferent a l'associat amb aquesta descàrrega. Vols continuar?"
+
 #~ msgid "Changing interface direction requires restart. \\nYou will need to start Shareaza manually. Exit now?"
 #~ msgstr "El canvi de direcció de la interfície requereix un reinici de l'aplicació. \\nVols sortir ara? (Necessitaràs tornar a inciar Shareaza manualment)"
+
 #~ msgid "Sunday"
 #~ msgstr "Diumenge"
+
 #~ msgid "Monday"
 #~ msgstr "Dilluns"
+
 #~ msgid "Tuesday"
 #~ msgstr "Dimarts"
+
 #~ msgid "Wednesday"
 #~ msgstr "Dimecres"
+
 #~ msgid "Thursday"
 #~ msgstr "Dijous"
+
 #~ msgid "Friday"
 #~ msgstr "Divendres"
+
 #~ msgid "Saturday"
 #~ msgstr "Dissabte"
-

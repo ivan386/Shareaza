@@ -354,6 +354,7 @@
 			<button id="ID_NETWORK_G1" text="Gnutella1"/>
 			<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 			<button id="ID_NETWORK_DC" text="DC++"/>
+			<button id="ID_NETWORK_BT" text="BitTorrent"/>
 			<separator/>
 			<button id="ID_NEIGHBOURS_SETTINGS" text="Settings"/>
 		</toolbar>
@@ -369,6 +370,7 @@
 			<button id="ID_NETWORK_G1" text="Gnutella1"/>
 			<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 			<button id="ID_NETWORK_DC" text="DC++"/>
+			<button id="ID_NETWORK_BT" text="BitTorrent"/>
 			<separator/>
 			<button id="ID_NEIGHBOURS_SETTINGS" text="Settings"/>
 		</toolbar>
@@ -506,6 +508,7 @@
 					<item id="ID_NETWORK_G1" text="Connecta a Gnutella_1"/>
 					<item id="ID_NETWORK_ED2K" text="Connecta a _eDonkey"/>
 					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
+					<item id="ID_NETWORK_BT" text="Connect to _BitTorrent"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_AUTO_CLOSE" text="_Surt després de les transferències"/>
@@ -543,7 +546,7 @@
 				<item id="ID_TOOLS_PROFILE" text="_Edita el meu perfil..."/>
 				<item id="ID_TOOLS_WIZARD" text="_Configuració ràpida..."/>
 				<separator/>
-				<item id="ID_TOOLS_SETTINGS" text="_Configuració del Shareaza..."/>
+				<item id="ID_TOOLS_SETTINGS" text="_Configuració del Shareaza..." shortcut="Ctrl+P"/>
 			</menu>
 			<menu text="_Ajuda">
 				<item id="ID_HELP_FAQ" text="Guia d'usuaris de Shareaza"/>
@@ -583,6 +586,7 @@
 					<item id="ID_NETWORK_G1" text="Connecta a Gnutella_1"/>
 					<item id="ID_NETWORK_ED2K" text="Connecta a _eDonkey"/>
 					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
+					<item id="ID_NETWORK_BT" text="Connect to _BitTorrent"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_CONNECT_TO" text="Connecta _a..." shortcut="Ctrl+T"/>
@@ -641,7 +645,7 @@
 				<item id="ID_TOOLS_PROFILE" text="_Edita el meu perfil..."/>
 				<item id="ID_TOOLS_WIZARD" text="_Configuració ràpida..."/>
 				<separator/>
-				<item id="ID_TOOLS_SETTINGS" text="_Configuració del Shareaza..."/>
+				<item id="ID_TOOLS_SETTINGS" text="_Configuració del Shareaza..." shortcut="Ctrl+P"/>
 			</menu>
 			<menu text="_Finestra">
 				<item id="ID_WINDOW_NAVBAR" text="Mostra la _barra de navegació"/>
@@ -695,6 +699,7 @@
 					<item id="ID_NETWORK_G1" text="Connecta a Gnutella_1"/>
 					<item id="ID_NETWORK_ED2K" text="Connecta a _eDonkey"/>
 					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
+					<item id="ID_NETWORK_BT" text="Connect to _BitTorrent"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_AUTO_CLOSE" text="Tanca _després de les transferències"/>
@@ -735,7 +740,7 @@
 				<item id="ID_TOOLS_PROFILE" text="_Edita el meu perfil..."/>
 				<separator/>
 				<item id="ID_TOOLS_WIZARD" text="_Configuració ràpida..."/>
-				<item id="ID_TOOLS_SETTINGS" text="_Configuració del Shareaza..."/>
+				<item id="ID_TOOLS_SETTINGS" text="_Configuració del Shareaza..." shortcut="Ctrl+P"/>
 			</menu>
 			<menu text="_Finestra">
 				<item id="ID_WINDOW_CASCADE" text="_Pantalla completa"/>
@@ -1524,6 +1529,7 @@
 				<item id="ID_NETWORK_G1" text="Gnutella_1"/>
 				<item id="ID_NETWORK_ED2K" text="_eDonkey"/>
 				<item id="ID_NETWORK_DC" text="_DC++"/>
+				<item id="ID_NETWORK_BT" text="_BitTorrent"/>
 			</menu>
 			<menu text="_Monitor">
 				<item id="ID_NEIGHBOURS_VIEW_ALL" text="Mostra _tot el trànsit"/>
@@ -2547,6 +2553,7 @@
 		<tip id="ID_NEIGHBOURS_VIEW_OUTGOING" message="Obre un monitor de paquets per al trànsit sortint d'aquest veí."/>
 		<tip id="ID_NETWORK_AUTO_CLOSE" message="Tanca automàticament el Shareaza quan finalitzen totes les transferències."/>
 		<tip id="ID_NETWORK_BROWSE_TO" message="Explora l'usuari, mostra els seus arxius compartits i perfil..."/>
+		<tip id="ID_NETWORK_BT" message="Connect to the BitTorrent network."/>
 		<tip id="ID_NETWORK_CHAT_TO" message="Open a chat session with a user..."/>
 		<tip id="ID_NETWORK_CONNECT" message="Connecta a les xarxes seleccionades."/>
 		<tip id="ID_NETWORK_CONNECT_TO" message="Connecta manualment al servidor..."/>
@@ -3738,51 +3745,52 @@
 			<control caption="Leaf a Concentrador"/>
 			<control caption="Concentrador a Concentrador"/>
 		</dialog>
-		<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuBuStEdmsStBuStBu" caption="eDonkey">
-			<control caption="Xarxa _eDonkey:"/>
+		<dialog name="CDonkeySettingsPage" cookie="BuBuBuEdmsBuEdmsBuBuBuStStBuStStBuSt" caption="eDonkey">
 			<control caption="Connecta a eDonkey per aquesta sessió"/>
 			<control caption="Connecta sempre a eDonkey"/>
-			<control caption="Cerques _globals:"/>
 			<control caption="Cerca servidors coneguts (del caxè):"/>
-			<control caption="Atura després de:"/>
 			<control/>
 			<control/>
-			<control caption="resultats."/>
 			<control caption="Rebre i actualitzar la llista de servidors des dels servidors connectats."/>
+			<control/>
+			<control/>
+			<control caption="Descarrega..."/>
+			<control caption="Xarxa _eDonkey:"/>
+			<control caption="Cerques _globals:"/>
+			<control caption="Atura després de:"/>
+			<control caption="resultats."/>
 			<control caption="Límit de _connexions amb altres clients:"/>
 			<control caption="No connectar amb més de:"/>
-			<control/>
-			<control/>
 			<control caption="clients de eDonkey a la vegada."/>
 			<control caption="_Eines d'eDonkey:"/>
 			<control caption="Descarrega una llista de servidors de eDonkey de la web:"/>
-			<control caption="Descarrega..."/>
 		</dialog>
-		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuEdmsStBuBuBuBuEdBuBuEdBuStEd" caption="BitTorrent">
-			<control caption="_Interface:"/>
-			<control caption="Mostra elements addicionals BitTorrent en la interfície"/>
-			<control caption="_Connexions de descàrrega:"/>
+		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsEdmsBuEdmsBuBuEdBuEdBuEdBuBuBuStStStStBu" caption="BitTorrent">
+			<control caption="Always connect to BitTorrent"/>
+			<control caption="Connect to BitTorrent today"/>
+			<control caption="Enable BitTorrent DHT"/>
 			<control/>
 			<control/>
-			<control caption="Torrents al mateix temps"/>
 			<control/>
 			<control/>
-			<control caption="Connexions de clients"/>
 			<control caption=" Neteja els torrents descarregats  quan la ràtio de compartició sigui 1"/>
 			<control/>
 			<control/>
-			<control caption="%"/>
 			<control caption=" Prefereix fonts torrent"/>
-			<control caption="_EndGame:"/>
 			<control caption="Habilita el mode EndGame al completar torrents"/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control caption="_BitTorrent Network:"/>
+			<control caption="_Connexions de descàrrega:"/>
 			<control caption="_Desa els torrents aquí "/>
-			<control/>
-			<control/>
-			<control caption="_Creador de Torrents"/>
-			<control/>
-			<control/>
+			<control caption="Torrents al mateix temps"/>
+			<control caption="Connexions de clients"/>
+			<control caption="%"/>
 			<control caption="_Rastrejador per defecte (&quot;Tracker&quot;):"/>
-			<control/>
+			<control caption="_Creador de Torrents"/>
 		</dialog>
 		<dialog name="CProtocolsSettingsPage" cookie="BuSy" caption="Protocols">
 			<control caption="Explorador d'arquitectures comuns dels protocols de Shareaza:"/>

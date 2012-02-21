@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2011-05-12 14:23+0000\n"
+"POT-Creation-Date: 2012-02-21 11:51+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -369,6 +369,11 @@ msgstr "eDonkey"
 msgid "DC++"
 msgstr "DC++"
 
+#: button;id_network_bt dialog;cbittorrentsettingspage
+#: cscheduletaskpage;control;12
+msgid "BitTorrent"
+msgstr "BitTorrent"
+
 #: button;id_network_connect_to button;id_hostcache_connect
 msgid "Connect To"
 msgstr "Jungtis prie..."
@@ -585,6 +590,12 @@ msgstr "Jungtis prie _eDonkey"
 #: cmainwnd.windowed;18;19;item;id_network_dc
 msgid "Connect to _DC++"
 msgstr "Connect to _DC++"
+
+#: cmainwnd.basic;1;2;item;id_network_bt
+#: cmainwnd.tabbed;9;10;item;id_network_bt
+#: cmainwnd.windowed;18;19;item;id_network_bt
+msgid "Connect to _BitTorrent"
+msgstr ""
 
 #: cmainwnd.basic;1;item;id_network_auto_close
 #: cmainwnd.tabbed;9;item;id_network_auto_close
@@ -1829,6 +1840,10 @@ msgstr "_eDonkey"
 #: cneighbourswnd;59;item;id_network_dc
 msgid "_DC++"
 msgstr "_DC++"
+
+#: cneighbourswnd;59;item;id_network_bt
+msgid "_BitTorrent"
+msgstr ""
 
 #: cneighbourswnd;60
 msgid "_Monitor"
@@ -4084,6 +4099,10 @@ msgstr "Automatiškai išeiti iš „Shareaza“ programos, kai bus baigti visi 
 msgid "Browse a user, showing their profile and shared files..."
 msgstr "Peržiūrėti naudotojo profilį ir bendrintus failus..."
 
+#: message;id_network_bt
+msgid "Connect to the BitTorrent network."
+msgstr ""
+
 #: message;id_network_chat_to
 msgid "Open a chat session with a user..."
 msgstr ""
@@ -4745,12 +4764,8 @@ msgid "This template does not have any customizations."
 msgstr "Šiame šablone nėra derinimo."
 
 #: string;7102
-msgid ""
-"Are you sure you want to delete the \"%s\" template?\\n"
-"This cannot be undone."
-msgstr ""
-"Ar tikrai norite pašalinti šabloną „%s“?\\n"
-"Šio žingsnio negalėsite atšaukti."
+msgid "Are you sure you want to delete the \"%s\" template?\\nThis cannot be undone."
+msgstr "Ar tikrai norite pašalinti šabloną „%s“?\\nŠio žingsnio negalėsite atšaukti."
 
 #: string;8000 dialog;csettingsheet
 msgid "Shareaza Settings"
@@ -4769,18 +4784,8 @@ msgid "Edit My Profile"
 msgstr "Taisyti savo profilį"
 
 #: string;8004
-msgid ""
-"!Welcome to Shareaza (version) !\\n"
-".\\n"
-"Shareaza is completely free software.\\n"
-"Please use it responsibly and respect intellectual property law.\\n"
-"."
-msgstr ""
-"!Sveiki! Čia „Shareaza“ (version) !\\n"
-".\\n"
-"„Shareaza“ - visiškai nemokamas programinis produktas.\\n"
-"Naudokitės juo atsakingai ir paisykite intelektualios nuosavybės įstatymo.\\n"
-"."
+msgid "!Welcome to Shareaza (version) !\\n.\\nShareaza is completely free software.\\nPlease use it responsibly and respect intellectual property law.\\n."
+msgstr "!Sveiki! Čia „Shareaza“ (version) !\\n.\\n„Shareaza“ - visiškai nemokamas programinis produktas.\\nNaudokitės juo atsakingai ir paisykite intelektualios nuosavybės įstatymo.\\n."
 
 #: string;8005
 msgid "(closing after transfers)"
@@ -4795,14 +4800,8 @@ msgid "There are no active searches. Click here to search for files."
 msgstr "Nėra aktyvių paieškos procesų. Pradėkite paiešką paspaudę čia."
 
 #: string;8008
-msgid ""
-"Shareaza has finished downloading the next Shareaza version (%s). Would you like to upgrade now?\\n"
-"\\n"
-"If you select Yes, Shareaza will close temporarily while the upgrade is installed."
-msgstr ""
-"„Shareaza“ baigė parsisiųsti naujesnę „Shareaza“ versiją (%s). Ar norite dabar atnaujinti?\\n"
-"\\n"
-"Jei pasirinksite „Taip“, „Shareaza“ laikinai baigs savo darbą, kol vyks atnaujinimas."
+msgid "Shareaza has finished downloading the next Shareaza version (%s). Would you like to upgrade now?\\n\\nIf you select Yes, Shareaza will close temporarily while the upgrade is installed."
+msgstr "„Shareaza“ baigė parsisiųsti naujesnę „Shareaza“ versiją (%s). Ar norite dabar atnaujinti?\\n\\nJei pasirinksite „Taip“, „Shareaza“ laikinai baigs savo darbą, kol vyks atnaujinimas."
 
 #: string;8009
 msgid "Are you sure you want to delete the \"%s\" skin? This cannot be undone."
@@ -5380,18 +5379,8 @@ msgid "Sending query for \"%s\" to %s."
 msgstr "Siunčiama užklausa failui „%s“ adresatui %s."
 
 #: string;16083
-msgid ""
-"Forcing your PC into hub mode may have adverse effects on performance and the P2P network. It is generally better to allow Shareaza to decide whether or not hub mode should be used.\\n"
-"\\n"
-"Hub mode does NOT produce better search results, or have any other advantages for you.\\n"
-"\\n"
-"Do you really want to do this, despite these disadvantages?"
-msgstr ""
-"Dirbtinis Jūsų kompiuterio veiksenos pakeitimas į mazgo veikseną gali sukelti nepageidaujamą poveikį našumui ir P2P tinklui. Geriau leisti, kad „Shareaza“ pati nuspręstų, ar tapti mazgu, ar ne.\\n"
-"\\n"
-"Mazgo veiksena NEDUODA daugiau radinių ir nesuteikia Jums jokių pranašumų.\\n"
-"\\n"
-"Ar tikrai norite tęsti, nežiūrint į visas kliūtis, kurias tai gali sukelti?"
+msgid "Forcing your PC into hub mode may have adverse effects on performance and the P2P network. It is generally better to allow Shareaza to decide whether or not hub mode should be used.\\n\\nHub mode does NOT produce better search results, or have any other advantages for you.\\n\\nDo you really want to do this, despite these disadvantages?"
+msgstr "Dirbtinis Jūsų kompiuterio veiksenos pakeitimas į mazgo veikseną gali sukelti nepageidaujamą poveikį našumui ir P2P tinklui. Geriau leisti, kad „Shareaza“ pati nuspręstų, ar tapti mazgu, ar ne.\\n\\nMazgo veiksena NEDUODA daugiau radinių ir nesuteikia Jums jokių pranašumų.\\n\\nAr tikrai norite tęsti, nežiūrint į visas kliūtis, kurias tai gali sukelti?"
 
 #: string;16085
 msgid "Gnutella2 is Shareaza's premiere network. Disabling support for it may severely limit both the number and quality of your search results. Are you SURE you want to do this?"
@@ -5690,21 +5679,12 @@ msgid "Download host %s is busy, retrying in %i seconds."
 msgstr "Adresatas %s yra užimtas, parsisiuntimą bus bandoma kartoti už %i sekundžių."
 
 #: string;16281
-msgid ""
-"Are you sure you want to clear \"%s\"?\\n"
-"\\n"
-"Once a download has been cleared from the Downloads window, it cannot be resumed later."
-msgstr ""
-"Ar tikrai norite ištrinti failą „%s“?\\n"
-"\\n"
-"Jei failą pašalinsite iš atsisiuntimų lango failų sąrašo, Jūs negalėsite vėliau tęsti parsisiuntimo."
+msgid "Are you sure you want to clear \"%s\"?\\n\\nOnce a download has been cleared from the Downloads window, it cannot be resumed later."
+msgstr "Ar tikrai norite ištrinti failą „%s“?\\n\\nJei failą pašalinsite iš atsisiuntimų lango failų sąrašo, Jūs negalėsite vėliau tęsti parsisiuntimo."
 
 #: string;16282
 msgid "Aborting download of \"%s\" from %s (%s), network disabled."
-msgstr ""
-"Ar tikrai norite vykdyti atsisiųstą failą „%s“ ?\\n"
-"\\n"
-"Kai kurie failai gali pakenkti Jūsų kompiuteriui. Įsitikinkite, kas tai per failas, prieš vykdydami jį."
+msgstr "Ar tikrai norite vykdyti atsisiųstą failą „%s“ ?\\n\\nKai kurie failai gali pakenkti Jūsų kompiuteriui. Įsitikinkite, kas tai per failas, prieš vykdydami jį."
 
 #: string;16283
 msgid "The file \"%s\" is already being downloaded, adding sources."
@@ -6101,14 +6081,8 @@ msgid "DC++ Guard"
 msgstr "eDonkey saugančioji"
 
 #: string;16384
-msgid ""
-"Are you sure you want to launch the file \"%s\" ?\\n"
-"\\n"
-"Some files can be harmful to your computer. Ensure you know what the file is before launching it."
-msgstr ""
-"Ar tikrai norite vykdyti failą „%s“ ?\\n"
-"\\n"
-"Kai kurie failai gali pakenkti Jūsų kompiuteriui. Įsitikinkite, kas tai per failas, prieš vykdydami jį."
+msgid "Are you sure you want to launch the file \"%s\" ?\\n\\nSome files can be harmful to your computer. Ensure you know what the file is before launching it."
+msgstr "Ar tikrai norite vykdyti failą „%s“ ?\\n\\nKai kurie failai gali pakenkti Jūsų kompiuteriui. Įsitikinkite, kas tai per failas, prieš vykdydami jį."
 
 #: string;16385
 msgid "You are about to modify the metadata of %i files, are you sure you want to continue?"
@@ -6123,38 +6097,16 @@ msgid "The file \"%s\" has not yet been hashed. Please wait for the file to be h
 msgstr "Failo „%s“ maiša (tapatybės kodas) dar nebuvo apskaičiuota. Palaukite, kol ji bus apskaičiuota, ir po to mėginkite dar kartą."
 
 #: string;16388
-msgid ""
-"This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n"
-"\\n"
-"Shareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database. If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n"
-"\\n"
-"Would you like to proceed?"
-msgstr ""
-"Šios parinkties naudojimas reikalauja Bitzi.com paslaugos pasirinktiems failams atpažinti ir dalintis su kitais failo informacija.\\n"
-"\\n"
-"Shareaza persiųs pasirinkto failo(-ų) SHA1 maišą(-as), kuri reikalinga(-os) užklausoms Bitzi duomenų bazėje. Jei Jums svarbus slaptumas, Jūs galbūt norėsite susipažinti su Bitzi.com privatumo laidavimo dokumentu.\\n"
-"\\n"
-"Ar norite tęsti?"
+msgid "This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n\\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database. If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n\\nWould you like to proceed?"
+msgstr "Šios parinkties naudojimas reikalauja Bitzi.com paslaugos pasirinktiems failams atpažinti ir dalintis su kitais failo informacija.\\n\\nShareaza persiųs pasirinkto failo(-ų) SHA1 maišą(-as), kuri reikalinga(-os) užklausoms Bitzi duomenų bazėje. Jei Jums svarbus slaptumas, Jūs galbūt norėsite susipažinti su Bitzi.com privatumo laidavimo dokumentu.\\n\\nAr norite tęsti?"
 
 #: string;16389
-msgid ""
-"Are you sure you want to permanently delete the %i selected file(s) ?\\n"
-"\\n"
-"The files will be moved to your \"recycle bin\" if it is enabled."
-msgstr ""
-"Ar tikrai norite visam laikui ištrinti %i pasirinktus failus(-ą)?\\n"
-"\\n"
-"Failai bus patalpintos į „Šiukšliadėžę“, jei ji yra įgalinta."
+msgid "Are you sure you want to permanently delete the %i selected file(s) ?\\n\\nThe files will be moved to your \"recycle bin\" if it is enabled."
+msgstr "Ar tikrai norite visam laikui ištrinti %i pasirinktus failus(-ą)?\\n\\nFailai bus patalpintos į „Šiukšliadėžę“, jei ji yra įgalinta."
 
 #: string;16390
-msgid ""
-"You have not yet selected a media player to enqueue files with, such as Nullsoft Winamp. Would you like to select one now?\\n"
-"\\n"
-"Shareaza will pass the name of the file to your selected program with the \"/ADD\" argument."
-msgstr ""
-"Jūs dar nenurodėte grotuvo programos, pvz., Nullsoft WinAmp, į kurio grojaraštį norite įtraukti savo failus. Ar norite dabar jį nurodyti?\\n"
-"\\n"
-"Shareaza perduos failo pavadinimą Jūsų pasirinktai programai kartu su „/ADD“ argumentu."
+msgid "You have not yet selected a media player to enqueue files with, such as Nullsoft Winamp. Would you like to select one now?\\n\\nShareaza will pass the name of the file to your selected program with the \"/ADD\" argument."
+msgstr "Jūs dar nenurodėte grotuvo programos, pvz., Nullsoft WinAmp, į kurio grojaraštį norite įtraukti savo failus. Ar norite dabar jį nurodyti?\\n\\nShareaza perduos failo pavadinimą Jūsų pasirinktai programai kartu su „/ADD“ argumentu."
 
 #: string;16391
 msgid "You're not connected to the network."
@@ -6173,88 +6125,36 @@ msgid "Would you like to remove the \"potentially unsafe\" attribute from this f
 msgstr "Ar norėtumėte pašalinti „galimai nesaugus“ požymį nuo šio failo?"
 
 #: string;16395
-msgid ""
-"Your downloaded files folder \"%s\" is not yet in your library.\\n"
-"\\n"
-"Including your downloaded files folder in your library makes it easier to view and organise new downloads, and lets you take advantage of advanced Shareaza features such as download verification and automatic upgrading. Placing downloaded files in your library does not necessarily require you to share them: you can choose whether or not to share files independently.\\n"
-"\\n"
-"Would you like to add your downloaded files folder to your library now?"
-msgstr ""
-"Jūsų parsisiųstų failų aplankas „%s“ dar nėra įtrauktas į Jūsų kolekciją.\\n"
-"\\n"
-"Įtraukę parsisiųstų failų aplanką į savo kolekciją, Jūs galėsite lengviau tvarkyti ir peržiūrėti naujai parsisiųstus failus, o taip pat pasinaudoti tokiomis papildomomis Shareaza funkcijomis, kaip failų patikra ir savaiminis Shareaza atnaujinimas. Parsisiųstų failų laikymas Jūsų kolekcijoje nereikalauja, kad Jūs jas bendrintumėte: Jūs galite pasirinkti kiekvienam failui atskirai, ar jį bendrinti ar ne.\\n"
-"\\n"
-"Ar norėtumėte dabar įtraukti parsisiųstų failų aplanką į savo kolekciją?"
+msgid "Your downloaded files folder \"%s\" is not yet in your library.\\n\\nIncluding your downloaded files folder in your library makes it easier to view and organise new downloads, and lets you take advantage of advanced Shareaza features such as download verification and automatic upgrading. Placing downloaded files in your library does not necessarily require you to share them: you can choose whether or not to share files independently.\\n\\nWould you like to add your downloaded files folder to your library now?"
+msgstr "Jūsų parsisiųstų failų aplankas „%s“ dar nėra įtrauktas į Jūsų kolekciją.\\n\\nĮtraukę parsisiųstų failų aplanką į savo kolekciją, Jūs galėsite lengviau tvarkyti ir peržiūrėti naujai parsisiųstus failus, o taip pat pasinaudoti tokiomis papildomomis Shareaza funkcijomis, kaip failų patikra ir savaiminis Shareaza atnaujinimas. Parsisiųstų failų laikymas Jūsų kolekcijoje nereikalauja, kad Jūs jas bendrintumėte: Jūs galite pasirinkti kiekvienam failui atskirai, ar jį bendrinti ar ne.\\n\\nAr norėtumėte dabar įtraukti parsisiųstų failų aplanką į savo kolekciją?"
 
 #: string;16396
 msgid "Your downloads folder has been added to your library. Would you like to share it too?"
 msgstr "Jūsų parsisiųstų failų aplankas įtrauktas į kolekciją. Ar norėtumėte jį irgi bendrinti?"
 
 #: string;16397
-msgid ""
-"Are you sure you want to delete the %i selected album folder(s) ?\\n"
-"\\n"
-"Note that this action does not delete the files within the album folders, only the folders themselves."
-msgstr ""
-"Ar tikrai norite pašalinti %i pasirinktą albumo katalogą(-us)?\\n"
-"\\n"
-"Įsidėmėkite, kad šis veiksmas neištrins failų, esančių albumų kataloguose, tiktai pačius katalogus."
+msgid "Are you sure you want to delete the %i selected album folder(s) ?\\n\\nNote that this action does not delete the files within the album folders, only the folders themselves."
+msgstr "Ar tikrai norite pašalinti %i pasirinktą albumo katalogą(-us)?\\n\\nĮsidėmėkite, kad šis veiksmas neištrins failų, esančių albumų kataloguose, tiktai pačius katalogus."
 
 #: string;16398
-msgid ""
-"Shareaza could not rename:\\n"
-"\\n"
-"%s\\n"
-"to\\n"
-"%s"
-msgstr ""
-"„Shareaza“ negalėjo pervadinti:\\n"
-"\\n"
-"%s\\n"
-"į\\n"
-"%s"
+msgid "Shareaza could not rename:\\n\\n%s\\nto\\n%s"
+msgstr "„Shareaza“ negalėjo pervadinti:\\n\\n%s\\nį\\n%s"
 
 #: string;16399
-msgid ""
-"Shareaza could not delete the file:\\n"
-"\\n"
-"%s"
-msgstr ""
-"„Shareaza“ negalėjo ištrinti failo:\\n"
-"\\n"
-"%s"
+msgid "Shareaza could not delete the file:\\n\\n%s"
+msgstr "„Shareaza“ negalėjo ištrinti failo:\\n\\n%s"
 
 #: string;16400
-msgid ""
-"Target file exists:\\n"
-"\\n"
-"%s\\n"
-"\\n"
-"Would you like to overwrite it?"
-msgstr ""
-"Paskirties failas tokiu pavadinimu jau yra:\\n"
-"\\n"
-"„%s“\\n"
-"\\n"
-"Ar norite ją perrašyti?"
+msgid "Target file exists:\\n\\n%s\\n\\nWould you like to overwrite it?"
+msgstr "Paskirties failas tokiu pavadinimu jau yra:\\n\\n„%s“\\n\\nAr norite ją perrašyti?"
 
 #: string;16401
 msgid "Show All File Types"
 msgstr "Rodyti visų tipų failus"
 
 #: string;16402
-msgid ""
-"Shareaza received a collection file:\\n"
-"\\n"
-"\"%s\"\\n"
-"\\n"
-"This file does not appear to be a valid collection file."
-msgstr ""
-"„Shareaza“ parsisiuntė rinkinio failą:\\n"
-"\\n"
-"„%s“\\n"
-"\\n"
-"Turbūt jis nėra teisingas rinkinio failas."
+msgid "Shareaza received a collection file:\\n\\n\"%s\"\\n\\nThis file does not appear to be a valid collection file."
+msgstr "„Shareaza“ parsisiuntė rinkinio failą:\\n\\n„%s“\\n\\nTurbūt jis nėra teisingas rinkinio failas."
 
 #: string;16403
 msgid "Shareaza has added the collection file \"%s\" to your library."
@@ -6265,14 +6165,8 @@ msgid "Shareaza was unable to install the collection file \"%s\" by copying it t
 msgstr "„Shareaza“ negalėjo įdiegti rinkinio failo „%s“ kopijavimo į aplanką „%s“ būdu."
 
 #: string;16406
-msgid ""
-"Would you like to download all files in this collection?\\n"
-"\\n"
-"Choose Cancel to stop any further prompts."
-msgstr ""
-"Ar norite parsisiųsti visus failus iš šio rinkinio?\\n"
-"\\n"
-"Pasirinkite „Atšaukti“, jei norite, kad toliau nebūtų klausiama."
+msgid "Would you like to download all files in this collection?\\n\\nChoose Cancel to stop any further prompts."
+msgstr "Ar norite parsisiųsti visus failus iš šio rinkinio?\\n\\nPasirinkite „Atšaukti“, jei norite, kad toliau nebūtų klausiama."
 
 #: string;16407
 msgid "Would you like to prevent this collection from prompting you to download anything else?"
@@ -6287,27 +6181,12 @@ msgid "Export &URIs..."
 msgstr "Eksportuoti &nuorodas..."
 
 #: string;16410
-msgid ""
-"A subfolder of the selected folder \"%s\" is already part of your library.\\n"
-"Adding this folder will cause re-hashing of some files.\\n"
-"\\n"
-"Do you want to continue ?"
-msgstr ""
-"Pasirinkto aplanko „%s“ poaplankis jau yra Jūsų kolekcijoje.\\n"
-"Pridėjus šį aplanką, kai kurių failų maišos bus perskaičiuotos.\\n"
-"\\n"
-"\\n"
-"\\n"
-"Ar norite tęsti?"
+msgid "A subfolder of the selected folder \"%s\" is already part of your library.\\nAdding this folder will cause re-hashing of some files.\\n\\nDo you want to continue ?"
+msgstr "Pasirinkto aplanko „%s“ poaplankis jau yra Jūsų kolekcijoje.\\nPridėjus šį aplanką, kai kurių failų maišos bus perskaičiuotos.\\n\\n\\n\\nAr norite tęsti?"
 
 #: string;16411
-msgid ""
-"Unable to move the file %s. The file may be in use by another application.\\n"
-"\\n"
-"Do you wish to try to copy this file instead?"
-msgstr ""
-"Neįmanoma perkelti failo „%s“. Failą turbūt naudoja kita programa.\\n"
-"Ar norėtumėte šį failą nukopijuoti užuot perkėlus?"
+msgid "Unable to move the file %s. The file may be in use by another application.\\n\\nDo you wish to try to copy this file instead?"
+msgstr "Neįmanoma perkelti failo „%s“. Failą turbūt naudoja kita programa.\\nAr norėtumėte šį failą nukopijuoti užuot perkėlus?"
 
 #: string;16412
 msgid "Ghost File"
@@ -6540,34 +6419,16 @@ msgid "You have not specified any folders to share. Are you sure?"
 msgstr "Jūs nenurodėte, kokius aplankus bendrinti. Ar tikrai tęsti?"
 
 #: string;16803
-msgid ""
-"The folder you are sharing is already shared as part of another shared folder:\\n"
-"\\n"
-"%s"
-msgstr ""
-"Aplankas, kurį norite bendrinti, aplankų medyje yra žemiau kito, jau bendrinto, aplanko:\\n"
-"\\n"
-"%s"
+msgid "The folder you are sharing is already shared as part of another shared folder:\\n\\n%s"
+msgstr "Aplankas, kurį norite bendrinti, aplankų medyje yra žemiau kito, jau bendrinto, aplanko:\\n\\n%s"
 
 #: string;16804
 msgid "You haven't entered a screen name in your user profile."
 msgstr "Jūs neįvedėte slapyvardžio savo profilyje."
 
 #: string;16805
-msgid ""
-"You haven't entered your location in your user profile.\\n"
-"\\n"
-"It's a good idea to enter your location so that other users can see which country you are from. Note that entering a location does not reveal any compromising information.\\n"
-"\\n"
-"Are you sure you want to continue without entering your location?"
-msgstr ""
-"Jūs neįvedėte vietovės savo profilyje.\\n"
-"\\n"
-"Savo vietovės įvedimo tikslas - leisti kitiems naudotojams matyti, iš kur Jūs esate.\\n"
-"\\n"
-"Įsidėmėkite, kad įvedę vietovę Jūs neatskleisite jokios konfidencialios informacijos.\\n"
-"\\n"
-"Ar tikrai norite tęsti, neįvedę savo vietovės?"
+msgid "You haven't entered your location in your user profile.\\n\\nIt's a good idea to enter your location so that other users can see which country you are from. Note that entering a location does not reveal any compromising information.\\n\\nAre you sure you want to continue without entering your location?"
+msgstr "Jūs neįvedėte vietovės savo profilyje.\\n\\nSavo vietovės įvedimo tikslas - leisti kitiems naudotojams matyti, iš kur Jūs esate.\\n\\nĮsidėmėkite, kad įvedę vietovę Jūs neatskleisite jokios konfidencialios informacijos.\\n\\nAr tikrai norite tęsti, neįvedę savo vietovės?"
 
 #: string;16807
 msgid "Please type the bandwidth limit you wish to set in the form \"123 kb/s\" for kilobits per second, or \"123 KB/s\" for kilobytes per second."
@@ -6599,28 +6460,16 @@ msgid "Please wait: Updating eDonkey server list..."
 msgstr "Prašome palaukti: Atnaujinamas eDonkey serverių sąrašas..."
 
 #: string;16815
-msgid ""
-"UPnP Device Host Service is not running. This service is required to perform the setup.\\n"
-"You need to set the startup type of the service to automatic."
-msgstr ""
-"UPnP Device Host tarnyba neveikia. Ši tarnyba yra reikalinga derinimo atlikimui.\\n"
-"Jums reikėtų nustatyti šios tarnybos startavimo tipą į automatinį."
+msgid "UPnP Device Host Service is not running. This service is required to perform the setup.\\nYou need to set the startup type of the service to automatic."
+msgstr "UPnP Device Host tarnyba neveikia. Ši tarnyba yra reikalinga derinimo atlikimui.\\nJums reikėtų nustatyti šios tarnybos startavimo tipą į automatinį."
 
 #: string;16816
-msgid ""
-"The eDonkey network uses large queues with long wait times. By limiting the maximum queue position you will accept so strictly, you may have trouble getting downloads to begin.\\n"
-"Are you sure you want to limit what queue positions you will accept?"
-msgstr ""
-"eDonkey tinkle naudojamos didelės eilės, ir jose laukiama ilgai. Sumažinę eilės dydį Jūs priimsite susijungimus labai griežtomis sąlygomis ir galite turėti problemų su atsisiuntimu.\\n"
-"Ar įsitikinę, kad norite apriboti eilės numerius?"
+msgid "The eDonkey network uses large queues with long wait times. By limiting the maximum queue position you will accept so strictly, you may have trouble getting downloads to begin.\\nAre you sure you want to limit what queue positions you will accept?"
+msgstr "eDonkey tinkle naudojamos didelės eilės, ir jose laukiama ilgai. Sumažinę eilės dydį Jūs priimsite susijungimus labai griežtomis sąlygomis ir galite turėti problemų su atsisiuntimu.\\nAr įsitikinę, kad norite apriboti eilės numerius?"
 
 #: string;16817
-msgid ""
-"Windows doesn't support paths longer than 256 characters.\\n"
-"Please select a folder with a shorter path."
-msgstr ""
-"Windows nepalaiko kelių, ilgesnių už 256 simbolius.\\n"
-"Pasirinkite aplanką, kurio kelias yra trumpesnis."
+msgid "Windows doesn't support paths longer than 256 characters.\\nPlease select a folder with a shorter path."
+msgstr "Windows nepalaiko kelių, ilgesnių už 256 simbolius.\\nPasirinkite aplanką, kurio kelias yra trumpesnis."
 
 #: string;16818
 msgid "The complete and incomplete folders should not be the same"
@@ -6847,14 +6696,8 @@ msgid "Cannot send message, a connection has not been established yet."
 msgstr "Neįmanoma nusiųsti žinutės, ryšys dar nėra užmegztas."
 
 #: string;17042
-msgid ""
-"You have not yet filled in your user profile. You must provide a profile before you can chat with other users.\\n"
-"\\n"
-"Would you like to fill in your profile now?"
-msgstr ""
-"Jūs dar neužpildėte savo profilio. Jūs privalote pateikti savo profilį naudotojams prieš kalbantis su jais.\\n"
-"\\n"
-"Ar norėtumėte dabar užpildyti savo profilį?"
+msgid "You have not yet filled in your user profile. You must provide a profile before you can chat with other users.\\n\\nWould you like to fill in your profile now?"
+msgstr "Jūs dar neužpildėte savo profilio. Jūs privalote pateikti savo profilį naudotojams prieš kalbantis su jais.\\n\\nAr norėtumėte dabar užpildyti savo profilį?"
 
 #: string;17043
 msgid "Granted upload priority to host %s."
@@ -7195,14 +7038,8 @@ msgid "Established BitTorrent coupling with %s, handshaking..."
 msgstr "Užmegztas ryšys su BitTorrent klientu %s, patvirtinama..."
 
 #: string;17488
-msgid ""
-"You have changed the tracker URL for this torrent. Are you sure you want to save this change?\\n"
-"\\n"
-"An invalid tracker URL may prevent further downloading."
-msgstr ""
-"Jūs pakeitėte šio torrent failo seklio nuorodą. Ar tikrai norite palikti šį pakeitimą?\\n"
-"\\n"
-"Neteisinga seklio nuoroda gali neleisti toliau vykdyti parsisiuntimo."
+msgid "You have changed the tracker URL for this torrent. Are you sure you want to save this change?\\n\\nAn invalid tracker URL may prevent further downloading."
+msgstr "Jūs pakeitėte šio torrent failo seklio nuorodą. Ar tikrai norite palikti šį pakeitimą?\\n\\nNeteisinga seklio nuoroda gali neleisti toliau vykdyti parsisiuntimo."
 
 #: string;17489
 msgid "BitTorrent coupling with %s is extended protocol, identified \"%s\"."
@@ -7375,9 +7212,7 @@ msgid "of (e.g. 1 of 10)"
 msgstr "iš"
 
 #: string;20003
-msgid ""
-"Changing language requires application restart.\\n"
-"Restart now?"
+msgid "Changing language requires application restart.\\nRestart now?"
 msgstr ""
 
 #: string;20005
@@ -7418,18 +7253,8 @@ msgstr "Visi"
 
 #: string;20014
 #, fuzzy
-msgid ""
-"This option uses services provided by ShareMonkey.com for recognising information about selected files.\\n"
-"\\n"
-"Shareaza will transmit file details and your location in order to query the ShareMonkey database.  If you are concerned about privacy, you may wish to consult the ShareMonkey.com privacy policy.\\n"
-"\\n"
-"Would you like to proceed?"
-msgstr ""
-"Šios parinkties naudojimas reikalauja Bitzi.com paslaugos pasirinktiems failams atpažinti ir dalintis su kitais failo informacija.\\n"
-"\\n"
-"Shareaza persiųs pasirinkto failo(-ų) SHA1 maišą(-as), kuri reikalinga(-os) užklausoms Bitzi duomenų bazėje. Jei Jums svarbus slaptumas, Jūs galbūt norėsite susipažinti su Bitzi.com privatumo laidavimo dokumentu.\\n"
-"\\n"
-"Ar norite tęsti?"
+msgid "This option uses services provided by ShareMonkey.com for recognising information about selected files.\\n\\nShareaza will transmit file details and your location in order to query the ShareMonkey database.  If you are concerned about privacy, you may wish to consult the ShareMonkey.com privacy policy.\\n\\nWould you like to proceed?"
+msgstr "Šios parinkties naudojimas reikalauja Bitzi.com paslaugos pasirinktiems failams atpažinti ir dalintis su kitais failo informacija.\\n\\nShareaza persiųs pasirinkto failo(-ų) SHA1 maišą(-as), kuri reikalinga(-os) užklausoms Bitzi duomenų bazėje. Jei Jums svarbus slaptumas, Jūs galbūt norėsite susipažinti su Bitzi.com privatumo laidavimo dokumentu.\\n\\nAr norite tęsti?"
 
 #: string;20101
 msgid "Requesting"
@@ -7678,26 +7503,7 @@ msgid "New Folder"
 msgstr ""
 
 #: string;20246
-msgid ""
-"Command-line options:\\n"
-"\\n"
-"-tray : Disable startup splash screen and send application to tray\\n"
-"-nosplash : Disable startup splash screen\\n"
-"-nowarn : Disable alpha (daily builds) version warning dialog\\n"
-"-wait : Wait for other application instance exit\\n"
-"\\n"
-"Interface modes:\\n"
-"\\n"
-"-basic : Start application in Basic interface mode\\n"
-"-tabbed : Start application in Tabbed interface mode\\n"
-"-windowed : Start application in Windowed interface mode\\n"
-"\\n"
-"System options:\\n"
-"\\n"
-"-RegServer : Register internal components for everyone\\n"
-"-UnRegServer : Un-register internal components for everyone\\n"
-"-RegServerPerUser : Register internal components for current user\\n"
-"-UnRegServerPerUser : Un-register internal components for current user"
+msgid "Command-line options:\\n\\n-tray : Disable startup splash screen and send application to tray\\n-nosplash : Disable startup splash screen\\n-nowarn : Disable alpha (daily builds) version warning dialog\\n-wait : Wait for other application instance exit\\n\\nInterface modes:\\n\\n-basic : Start application in Basic interface mode\\n-tabbed : Start application in Tabbed interface mode\\n-windowed : Start application in Windowed interface mode\\n\\nSystem options:\\n\\n-RegServer : Register internal components for everyone\\n-UnRegServer : Un-register internal components for everyone\\n-RegServerPerUser : Register internal components for current user\\n-UnRegServerPerUser : Un-register internal components for current user"
 msgstr ""
 
 #: string;20247
@@ -8456,116 +8262,116 @@ msgid "_Link Compression:"
 msgstr "_Duomenų suspaudimas jungtyse:"
 
 #: cdonkeysettingspage;control;1
-msgid "_eDonkey Network:"
-msgstr "_eDonkey tinklas:"
-
-#: cdonkeysettingspage;control;2
 msgid "Always connect to eDonkey"
 msgstr "Visada jungtis prie eDonkey"
 
-#: cdonkeysettingspage;control;3
+#: cdonkeysettingspage;control;2
 msgid "Connect to eDonkey today"
 msgstr "Jungtis prie eDonkey šiandien"
 
-#: cdonkeysettingspage;control;4
-msgid "_Global Searching:"
-msgstr "_Globalinė paieška:"
-
-#: cdonkeysettingspage;control;5
+#: cdonkeysettingspage;control;3
 msgid "Search known remote servers in the server cache:"
 msgstr "Ieškoti žinomų nutolusių serverių serverio laikinojoje talpykloje:"
 
 #: cdonkeysettingspage;control;6
-msgid "Stop searching after:"
-msgstr "Stabdyti paieška po:"
-
-#: cdonkeysettingspage;control;9
-msgid "search results."
-msgstr "radinių(-io)."
-
-#: cdonkeysettingspage;control;10
 msgid "Receive and update server list from the connected server"
 msgstr "Gauti ir atnaujinti serverių sąrašą iš susijungusio serverio"
 
-#: cdonkeysettingspage;control;11
-msgid "_Client Link Connections:"
-msgstr "_Kliento susijungimai:"
-
-#: cdonkeysettingspage;control;12
-msgid "Connect to no more than:"
-msgstr "Jungtis nedaugiau kaip prie:"
-
-#: cdonkeysettingspage;control;15
-msgid "other eDonkey clients."
-msgstr "kitų eDonkey klientų(-o)."
-
-#: cdonkeysettingspage;control;16
-msgid "eDonkey _Tools:"
-msgstr "eDonkey į_rankiai:"
-
-#: cdonkeysettingspage;control;17
-msgid "Download eDonkey server list from the web:"
-msgstr "eDonkey serverių sąrašo parsisiuntimas iš interneto:"
-
-#: cdonkeysettingspage;control;18
+#: cdonkeysettingspage;control;9
 msgid "Download..."
 msgstr "Parsisiųsti..."
 
-#: dialog;cbittorrentsettingspage cscheduletaskpage;control;12
-msgid "BitTorrent"
-msgstr "BitTorrent"
+#: cdonkeysettingspage;control;10
+msgid "_eDonkey Network:"
+msgstr "_eDonkey tinklas:"
+
+#: cdonkeysettingspage;control;11
+msgid "_Global Searching:"
+msgstr "_Globalinė paieška:"
+
+#: cdonkeysettingspage;control;12
+msgid "Stop searching after:"
+msgstr "Stabdyti paieška po:"
+
+#: cdonkeysettingspage;control;13
+msgid "search results."
+msgstr "radinių(-io)."
+
+#: cdonkeysettingspage;control;14
+msgid "_Client Link Connections:"
+msgstr "_Kliento susijungimai:"
+
+#: cdonkeysettingspage;control;15
+msgid "Connect to no more than:"
+msgstr "Jungtis nedaugiau kaip prie:"
+
+#: cdonkeysettingspage;control;16
+msgid "other eDonkey clients."
+msgstr "kitų eDonkey klientų(-o)."
+
+#: cdonkeysettingspage;control;17
+msgid "eDonkey _Tools:"
+msgstr "eDonkey į_rankiai:"
+
+#: cdonkeysettingspage;control;18
+msgid "Download eDonkey server list from the web:"
+msgstr "eDonkey serverių sąrašo parsisiuntimas iš interneto:"
 
 #: cbittorrentsettingspage;control;1
-msgid "_Interface:"
-msgstr "_Sąsaja:"
+msgid "Always connect to BitTorrent"
+msgstr ""
 
 #: cbittorrentsettingspage;control;2
-msgid "Display additional BitTorrent interface elements"
-msgstr "Rodyti papildomus BitTorrent sąsajos elementus"
+msgid "Connect to BitTorrent today"
+msgstr ""
 
 #: cbittorrentsettingspage;control;3
-msgid "_Download Connections:"
-msgstr "_Atsisiuntimų susijungimai:"
+msgid "Enable BitTorrent DHT"
+msgstr ""
 
-#: cbittorrentsettingspage;control;6
-msgid "Torrents at once"
-msgstr "Torrent failų per kartą"
-
-#: cbittorrentsettingspage;control;9
-msgid "Client connections"
-msgstr "Klientų susijungimų"
-
-#: cbittorrentsettingspage;control;10
+#: cbittorrentsettingspage;control;8
 msgid "Clear downloaded torrents     When the share ratio reaches:"
 msgstr " Valyti atsiųstus torrent,    kai bendrinimo santykis pasiekia"
 
-#: cbittorrentsettingspage;control;13
-msgid "%"
-msgstr "%"
-
-#: cbittorrentsettingspage;control;14
+#: cbittorrentsettingspage;control;11
 msgid "Prefer torrent sources"
 msgstr " Teikti pirmenybę torrent šaltiniams"
 
-#: cbittorrentsettingspage;control;15
-msgid "_EndGame:"
-msgstr "_EndGame (paspartinimas):"
-
-#: cbittorrentsettingspage;control;16
+#: cbittorrentsettingspage;control;12
 msgid "Enable EndGame mode when completing torrents"
 msgstr "Įgalinti BitTorrent „EndGame“ veikseną baigiant siųstis failus"
 
-#: cbittorrentsettingspage;control;17
+#: cbittorrentsettingspage;control;18
+msgid "_BitTorrent Network:"
+msgstr ""
+
+#: cbittorrentsettingspage;control;19
+msgid "_Download Connections:"
+msgstr "_Atsisiuntimų susijungimai:"
+
+#: cbittorrentsettingspage;control;20
 msgid "_Store Torrents Here:"
 msgstr "_Laikyti torrent failus čia:"
 
-#: cbittorrentsettingspage;control;20
-msgid "_Torrent Creator:"
-msgstr "_Torrent failų kūrimo programa"
+#: cbittorrentsettingspage;control;21
+msgid "Torrents at once"
+msgstr "Torrent failų per kartą"
+
+#: cbittorrentsettingspage;control;22
+msgid "Client connections"
+msgstr "Klientų susijungimų"
 
 #: cbittorrentsettingspage;control;23
+msgid "%"
+msgstr "%"
+
+#: cbittorrentsettingspage;control;24
 msgid "Default Tracker: "
 msgstr "Numatytasis seklys: "
+
+#: cbittorrentsettingspage;control;25
+msgid "_Torrent Creator:"
+msgstr "_Torrent failų kūrimo programa"
 
 #: dialog;cprotocolssettingspage
 msgid "Protocols"
@@ -10303,50 +10109,80 @@ msgstr "Dryžinė maiša"
 msgid "NextRun"
 msgstr "Tolesnis"
 
+#~ msgid "_Interface:"
+#~ msgstr "_Sąsaja:"
+
+#~ msgid "Display additional BitTorrent interface elements"
+#~ msgstr "Rodyti papildomus BitTorrent sąsajos elementus"
+
+#~ msgid "_EndGame:"
+#~ msgstr "_EndGame (paspartinimas):"
+
 #~ msgid "Shareaza was unable to set up port-forwarding on your NAT router or firewall.\\n\\nPlease configure your network to forward TCP and UDP ports %i to your local PC."
 #~ msgstr "Shareaza nesugebėjo nukreipti prievado į Jūsų NAT maršrutizatorių ar užkardą.\\n\\nSukonfigūruokite savo tinklą TCP ir UDP prievado %i nukreipimui į savo vietinį kompiuterį."
+
 #~ msgid "Please wait: Finding UPnP devices and setting them up..."
 #~ msgstr "Prašome palaukti: Ieškomi ir konfigūruojami UPnP įrenginiai..."
+
 #~ msgid "_Play Album"
 #~ msgstr "Atv_erti albumą"
+
 #~ msgid "This is a pre-release version of Shareaza, and the beta testing period has ended. Please download the full, official release from http://shareaza.sourceforge.net/."
 #~ msgstr "Tai priešišleidžiamoji „Shareaza“ versija, beta testavimo periodas baigėsi. Parsisiųskite pilną oficialią programos laidą iš http://shareaza.sourceforge.net/."
+
 #~ msgid "Torrent Information"
 #~ msgstr "Torrent informacija"
+
 #~ msgid " to"
 #~ msgstr " iki"
+
 #~ msgid "Volume uploaded:"
 #~ msgstr "Išsiunt. santykis:"
+
 #~ msgid "You are running the Scheduler in 'G2 only' mode. Would you like to turn this mode off, so that all active networks remain connected?"
 #~ msgstr "Jūsų planuotojas veikia tik G2 tinklo veiksenoje. Ar norite išjungti šią veikseną, kad visi aktyvūs tinklai liktų prijungti?"
+
 #~ msgid "Disabling support for Gnutella-1 protocols may limit your search results, and if you are acting as a hub it may also impact upon the results of other users. Are you sure you want to do this?"
 #~ msgstr "Atjungus Gnutella-1 protokolų palaikymą, radinių gali sumažėti, ir, jei Jūs veiksite kaip mazgas, tai gali paveikti ir kitų naudotojų paiešką. Ar tikrai norite tęsti?"
+
 #~ msgid "All Media Files|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Playlists|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Audio Files|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|Video Files|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|CD Audio Tracks|*.cda|MIDI Files|*.mid;*.rmi;*.midi|All Files|*.*||"
 #~ msgstr "Visi grotuvo failai|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Grojaraščiai|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Garso failai|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|Vaizdo failai|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|CD garso takeliai|*.cda|MIDI failai|*.mid;*.rmi;*.midi|Visi failai|*.*||"
+
 #~ msgid "Tracker did not respond- Retrying announce (%i of %i)"
 #~ msgstr "Seklys neatsakė — anonsavimas kartojamas (%i iš %i)."
+
 #~ msgid "You have typed a SHA1 value, however it is invalid. Please check it and try again."
 #~ msgstr "Jūs įrašėte SHA1 reikšmę, tačiau ji yra neteisinga. Pasitikrinkite ir mėginkite dar kartą."
+
 #~ msgid "You have typed a root tiger-tree value, however it is invalid. Please check it and try again."
 #~ msgstr "Jūs įrašėte šakninę dryžinės maišos (tiger-tree) reikšmę, tačiau ji yra neteisinga. Pasitikrinkite ir mėginkite dar kartą."
+
 #~ msgid "You have provided a root tiger-tree hash value which is different to the one currently associated with this download. Are you sure you want to change the tiger-tree root hash now?"
 #~ msgstr "Jūs pateikėte šakninę dryžinės (tiger-tree) maišos reikšmę, kuri skiriasi nuo reikšmės, priskirtos šiam parsisiunčiamam failui. Ar tikrai įsitikinę, kad norite pakeisti šakninę dryžinę maišą?"
+
 #~ msgid "You have provided an eDonkey hash value which is different to the one currently associated with this download. Are you sure you want to change the eDonkey hash now?"
 #~ msgstr "Jūs pateikėte eDonkey maišos reikšmę, kuri skiriasi nuo reikšmės, priskirtos šiam parsisiunčiamam failui. Ar tikrai įsitikinę, kad norite pakeisti eDonkey maišą?"
+
 #~ msgid "Changing interface direction requires restart. \\nYou will need to start Shareaza manually. Exit now?"
 #~ msgstr "Sąsajos krypties pakeitimui reikalinga startuoti iš naujo. \\nJums reikės paleisti „Shareaza“ programą rankiniu būdu. Ar baigti darbą dabar?"
+
 #~ msgid "Sunday"
 #~ msgstr "Sekmadienis"
+
 #~ msgid "Monday"
 #~ msgstr "Pirmadienis"
+
 #~ msgid "Tuesday"
 #~ msgstr "Antradienis"
+
 #~ msgid "Wednesday"
 #~ msgstr "Trečiadienis"
+
 #~ msgid "Thursday"
 #~ msgstr "Ketvirtadienis"
+
 #~ msgid "Friday"
 #~ msgstr "Penktadienis"
+
 #~ msgid "Saturday"
 #~ msgstr "Šeštadienis"
-

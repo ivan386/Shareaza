@@ -354,6 +354,7 @@
 			<button id="ID_NETWORK_G1" text="Gnutella1"/>
 			<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
 			<button id="ID_NETWORK_DC" text="DC++"/>
+			<button id="ID_NETWORK_BT" text="BitTorrent"/>
 			<separator/>
 			<button id="ID_NEIGHBOURS_SETTINGS" text="Подешавања"/>
 		</toolbar>
@@ -369,6 +370,7 @@
 			<button id="ID_NETWORK_G1" text="Gnutella1"/>
 			<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
 			<button id="ID_NETWORK_DC" text="DC++"/>
+			<button id="ID_NETWORK_BT" text="BitTorrent"/>
 			<separator/>
 			<button id="ID_NEIGHBOURS_SETTINGS" text="Подешавања"/>
 		</toolbar>
@@ -506,6 +508,7 @@
 					<item id="ID_NETWORK_G1" text="SПовежи се на Gnutellu_1"/>
 					<item id="ID_NETWORK_ED2K" text="Повежи се на _eDonkey2000"/>
 					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
+					<item id="ID_NETWORK_BT" text="Connect to _BitTorrent"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_AUTO_CLOSE" text="Изађи _након преузимања"/>
@@ -543,7 +546,7 @@
 				<item id="ID_TOOLS_PROFILE" text="Измени Мој _профил ..."/>
 				<item id="ID_TOOLS_WIZARD" text="QuickStart _ чаробњак..."/>
 				<separator/>
-				<item id="ID_TOOLS_SETTINGS" text="_Shareazin подешавања ..."/>
+				<item id="ID_TOOLS_SETTINGS" text="_Shareazin подешавања ..." shortcut="Ctrl+P"/>
 			</menu>
 			<menu text="Pomoć">
 				<item id="ID_HELP_FAQ" text="Shareazin _FAQ"/>
@@ -583,6 +586,7 @@
 					<item id="ID_NETWORK_G1" text="SПовежи се на Gnutellu_1"/>
 					<item id="ID_NETWORK_ED2K" text="Повежи се на _eDonkey2000"/>
 					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
+					<item id="ID_NETWORK_BT" text="Connect to _BitTorrent"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_CONNECT_TO" text="Повежи се на ..." shortcut="Ctrl+T"/>
@@ -641,7 +645,7 @@
 				<item id="ID_TOOLS_PROFILE" text="Измени Мој _профил ..."/>
 				<item id="ID_TOOLS_WIZARD" text="QuickStart _ чаробњак..."/>
 				<separator/>
-				<item id="ID_TOOLS_SETTINGS" text="_Shareazin подешавања ..."/>
+				<item id="ID_TOOLS_SETTINGS" text="_Shareazin подешавања ..." shortcut="Ctrl+P"/>
 			</menu>
 			<menu text="Prozori">
 				<item id="ID_WINDOW_NAVBAR" text="Прикажи _навигациону траку"/>
@@ -695,6 +699,7 @@
 					<item id="ID_NETWORK_G1" text="SПовежи се на Gnutellu_1"/>
 					<item id="ID_NETWORK_ED2K" text="Повежи се на _eDonkey2000"/>
 					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
+					<item id="ID_NETWORK_BT" text="Connect to _BitTorrent"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_AUTO_CLOSE" text="Затвори _након преузимања"/>
@@ -735,7 +740,7 @@
 				<item id="ID_TOOLS_PROFILE" text="Измени Мој _профил ..."/>
 				<separator/>
 				<item id="ID_TOOLS_WIZARD" text="QuickStart _ чаробњак..."/>
-				<item id="ID_TOOLS_SETTINGS" text="_Shareazin подешавања ..."/>
+				<item id="ID_TOOLS_SETTINGS" text="_Shareazin подешавања ..." shortcut="Ctrl+P"/>
 			</menu>
 			<menu text="Prozori">
 				<item id="ID_WINDOW_CASCADE" text="_Цео екран"/>
@@ -1524,6 +1529,7 @@
 				<item id="ID_NETWORK_G1" text="Gnutella_1"/>
 				<item id="ID_NETWORK_ED2K" text="_eDonkey"/>
 				<item id="ID_NETWORK_DC" text="_DC++"/>
+				<item id="ID_NETWORK_BT" text="_BitTorrent"/>
 			</menu>
 			<menu text="_Monitor">
 				<item id="ID_NEIGHBOURS_VIEW_ALL" text="View _All Traffic"/>
@@ -2554,6 +2560,7 @@
 		<tip id="ID_NEIGHBOURS_VIEW_OUTGOING" message="Open a new Packet Dump window monitoring outgoing traffic to this neighbour."/>
 		<tip id="ID_NETWORK_AUTO_CLOSE" message="Automatski zatvori Shareazu kada se završi razmena."/>
 		<tip id="ID_NETWORK_BROWSE_TO" message="Istraži korisnika, pokaži njihov profil i deljene datoteke..."/>
+		<tip id="ID_NETWORK_BT" message="Connect to the BitTorrent network."/>
 		<tip id="ID_NETWORK_CHAT_TO" message="Open a chat session with a user..."/>
 		<tip id="ID_NETWORK_CONNECT" message="Spoji se na mrežu."/>
 		<tip id="ID_NETWORK_CONNECT_TO" message="Spoji se ručno na host..."/>
@@ -3745,51 +3752,52 @@
 			<control caption="Leaf u Hub"/>
 			<control caption="Hub u Hub"/>
 		</dialog>
-		<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuBuStEdmsStBuStBu" caption="eDonkey2000">
-			<control caption="_eDonkey2000 Mreža:"/>
+		<dialog name="CDonkeySettingsPage" cookie="BuBuBuEdmsBuEdmsBuBuBuStStBuStStBuSt" caption="eDonkey2000">
 			<control caption="Spoji se na eDonkey2000"/>
 			<control caption="Spoji se svaki put(Automatski)"/>
-			<control caption="Kod pretraživanja:"/>
 			<control caption="Traži samo u poznatim serverima u server cachu:"/>
-			<control caption="Zaustavi potragu nakon:"/>
 			<control/>
 			<control/>
-			<control caption="rezultata potrage."/>
 			<control caption="_Client Link Veze:"/>
+			<control/>
+			<control/>
+			<control caption="Download..."/>
+			<control caption="_eDonkey2000 Mreža:"/>
+			<control caption="Kod pretraživanja:"/>
+			<control caption="Zaustavi potragu nakon:"/>
+			<control caption="rezultata potrage."/>
 			<control caption="Ne spajaj se na više od:"/>
 			<control caption="Connect to no more than:"/>
-			<control/>
-			<control/>
 			<control caption="eDonkey2000 Ala_ti:"/>
 			<control caption="Skini eDonkey2000 listu servera sa neta:"/>
 			<control caption="Skini..."/>
-			<control caption="Download..."/>
 		</dialog>
-		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuEdmsStBuBuBuBuEdBuBuEdBuStEd" caption="BitTorrent">
-			<control caption="Izgled(interface):"/>
-			<control caption="Prikaži dodatne BitTorrent elemente"/>
-			<control caption="Podešavanja ski_danja:"/>
+		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsEdmsBuEdmsBuBuEdBuEdBuEdBuBuBuStStStStBu" caption="BitTorrent">
+			<control caption="Always connect to BitTorrent"/>
+			<control caption="Connect to BitTorrent today"/>
+			<control caption="Enable BitTorrent DHT"/>
 			<control/>
 			<control/>
-			<control caption="Istovremenih Torrenta"/>
 			<control/>
 			<control/>
-			<control caption="Klijent veze"/>
 			<control caption=" Ukloni skinunte torrente        Kada omer deljenja dođe do"/>
 			<control/>
 			<control/>
-			<control caption="%"/>
 			<control caption=" Preferiraj torrent izvore"/>
-			<control caption="_EndGame:"/>
 			<control caption="Omogući EndGame način prilikom dovršenja torrentsa"/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control caption="_BitTorrent Network:"/>
+			<control caption="Podešavanja ski_danja:"/>
 			<control caption="Ovde _Sačuvaj Torrente::"/>
-			<control/>
-			<control/>
-			<control caption="_Torrent Creator"/>
-			<control/>
-			<control/>
+			<control caption="Istovremenih Torrenta"/>
+			<control caption="Klijent veze"/>
+			<control caption="%"/>
 			<control caption="Default Tracker:"/>
-			<control/>
+			<control caption="_Torrent Creator"/>
 		</dialog>
 		<dialog name="CProtocolsSettingsPage" cookie="BuSy" caption="Protokoli">
 			<control caption="Shareaza Common Architecture Protocol Explorer:"/>

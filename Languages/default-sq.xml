@@ -354,6 +354,7 @@
 			<button id="ID_NETWORK_G1" text="Gnutella1"/>
 			<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 			<button id="ID_NETWORK_DC" text="DC++"/>
+			<button id="ID_NETWORK_BT" text="BitTorrent"/>
 			<separator/>
 			<button id="ID_NEIGHBOURS_SETTINGS" text="Vendosje"/>
 		</toolbar>
@@ -369,6 +370,7 @@
 			<button id="ID_NETWORK_G1" text="Gnutella1"/>
 			<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 			<button id="ID_NETWORK_DC" text="DC++"/>
+			<button id="ID_NETWORK_BT" text="BitTorrent"/>
 			<separator/>
 			<button id="ID_NEIGHBOURS_SETTINGS" text="Vendosje"/>
 		</toolbar>
@@ -506,6 +508,7 @@
 					<item id="ID_NETWORK_G1" text="Lidhu te Gnutella_1"/>
 					<item id="ID_NETWORK_ED2K" text="Lidhu te _eDonkey"/>
 					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
+					<item id="ID_NETWORK_BT" text="Connect to _BitTorrent"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_AUTO_CLOSE" text="Dil _Pas Transferimit"/>
@@ -543,7 +546,7 @@
 				<item id="ID_TOOLS_PROFILE" text="Edito _Profilin Tim..."/>
 				<item id="ID_TOOLS_WIZARD" text="_Udhërrëfyesi i Shpejtë..."/>
 				<separator/>
-				<item id="ID_TOOLS_SETTINGS" text="Vendosjet e _Shareaza-s..."/>
+				<item id="ID_TOOLS_SETTINGS" text="Vendosjet e _Shareaza-s..." shortcut="Ctrl+P"/>
 			</menu>
 			<menu text="_Ndihmë">
 				<item id="ID_HELP_FAQ" text="_PBSH për Shareaza-n"/>
@@ -583,6 +586,7 @@
 					<item id="ID_NETWORK_G1" text="Lidhu te Gnutella_1"/>
 					<item id="ID_NETWORK_ED2K" text="Lidhu te _eDonkey"/>
 					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
+					<item id="ID_NETWORK_BT" text="Connect to _BitTorrent"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_CONNECT_TO" text="Lidhu _Te..." shortcut="Ctrl+T"/>
@@ -641,7 +645,7 @@
 				<item id="ID_TOOLS_PROFILE" text="Edito _Profilin Tim..."/>
 				<item id="ID_TOOLS_WIZARD" text="_Udhërrëfyesi i Shpejtë..."/>
 				<separator/>
-				<item id="ID_TOOLS_SETTINGS" text="Vendosjet e _Shareaza-s..."/>
+				<item id="ID_TOOLS_SETTINGS" text="Vendosjet e _Shareaza-s..." shortcut="Ctrl+P"/>
 			</menu>
 			<menu text="_Dritare">
 				<item id="ID_WINDOW_NAVBAR" text="Trego Brezin e _Lundrimit"/>
@@ -695,6 +699,7 @@
 					<item id="ID_NETWORK_G1" text="Lidhu te Gnutella_1"/>
 					<item id="ID_NETWORK_ED2K" text="Lidhu te _eDonkey"/>
 					<item id="ID_NETWORK_DC" text="Connect to _DC++"/>
+					<item id="ID_NETWORK_BT" text="Connect to _BitTorrent"/>
 				</menu>
 				<separator/>
 				<item id="ID_NETWORK_AUTO_CLOSE" text="Mbylle _Pas Transferimit"/>
@@ -735,7 +740,7 @@
 				<item id="ID_TOOLS_PROFILE" text="Edito _Profilin Tim..."/>
 				<separator/>
 				<item id="ID_TOOLS_WIZARD" text="_Udhërrëfyesi i Shpejtë..."/>
-				<item id="ID_TOOLS_SETTINGS" text="Vendosjet e _Shareaza-s..."/>
+				<item id="ID_TOOLS_SETTINGS" text="Vendosjet e _Shareaza-s..." shortcut="Ctrl+P"/>
 			</menu>
 			<menu text="_Dritare">
 				<item id="ID_WINDOW_CASCADE" text="_Ekran i Plotë"/>
@@ -1524,6 +1529,7 @@
 				<item id="ID_NETWORK_G1" text="Gnutella_1"/>
 				<item id="ID_NETWORK_ED2K" text="_eDonkey"/>
 				<item id="ID_NETWORK_DC" text="_DC++"/>
+				<item id="ID_NETWORK_BT" text="_BitTorrent"/>
 			</menu>
 			<menu text="_Monitori">
 				<item id="ID_NEIGHBOURS_VIEW_ALL" text="Shiko _Tërë Trafikun"/>
@@ -2559,6 +2565,7 @@
 		<tip id="ID_NEIGHBOURS_VIEW_OUTGOING" message="Hap dritaren e re Skuta Pakete për monitorimin e trafikut dalës nga fqinji."/>
 		<tip id="ID_NETWORK_AUTO_CLOSE" message="Shareaza do të mbyllet automatikisht kur transferimi të përfundojë."/>
 		<tip id="ID_NETWORK_BROWSE_TO" message="Shfleton një përdorues, duke shfaqur profilin dhe skedat që shpërndan..."/>
+		<tip id="ID_NETWORK_BT" message="Connect to the BitTorrent network."/>
 		<tip id="ID_NETWORK_CHAT_TO" message="Open a chat session with a user..."/>
 		<tip id="ID_NETWORK_CONNECT" message="Lidhet në rrjet."/>
 		<tip id="ID_NETWORK_CONNECT_TO" message="Lidhet me porosi në host..."/>
@@ -3750,51 +3757,52 @@
 			<control caption="Pikë në Pikë:"/>
 			<control caption="Ngjeshje e _Linkut:"/>
 		</dialog>
-		<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuBuStEdmsStBuStBu" caption="eDonkey">
-			<control caption="Rrjeti _eDonkey:"/>
+		<dialog name="CDonkeySettingsPage" cookie="BuBuBuEdmsBuEdmsBuBuBuStStBuStStBuSt" caption="eDonkey">
 			<control caption="Lidhu përherë te eDonkey"/>
 			<control caption="Lidhu sot te eDonkey"/>
-			<control caption="Kërkim _Global:"/>
 			<control caption="Kërko serverat e njohur të largët në depon e serverave:"/>
-			<control caption="Ndale kërkimin pas:"/>
 			<control/>
 			<control/>
-			<control caption="rezultate kërkimi."/>
 			<control caption="Merre dhe ridato server-listën nga serveri i lidhur"/>
+			<control/>
+			<control/>
+			<control caption="Shkarko..."/>
+			<control caption="Rrjeti _eDonkey:"/>
+			<control caption="Kërkim _Global:"/>
+			<control caption="Ndale kërkimin pas:"/>
+			<control caption="rezultate kërkimi."/>
 			<control caption="Linku i Lidhjeve të _Klientit:"/>
 			<control caption="Mos u lidh te më tepër se:"/>
-			<control/>
-			<control/>
 			<control caption="klientë të tjerë në eDonkey."/>
 			<control caption="_Mjetet e eDonkey:"/>
 			<control caption="Shkarko server-listën e eDonkey në rrjet:"/>
-			<control caption="Shkarko..."/>
 		</dialog>
-		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuEdmsStBuBuBuBuEdBuBuEdBuStEd" caption="BitTorrent">
-			<control caption="_Ndërfaqe:"/>
-			<control caption="Trego elemente shtesë në ndërfaqen BitTorrent"/>
-			<control caption="Lidhjet e _Shkarkimit:"/>
+		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsEdmsBuEdmsBuBuEdBuEdBuEdBuBuBuStStStStBu" caption="BitTorrent">
+			<control caption="Always connect to BitTorrent"/>
+			<control caption="Connect to BitTorrent today"/>
+			<control caption="Enable BitTorrent DHT"/>
 			<control/>
 			<control/>
-			<control caption="Torrente përnjëherë"/>
 			<control/>
 			<control/>
-			<control caption="Lidhje me klientë"/>
 			<control caption="Pastro torrentin e shkarkuar     Kur raporti i shpërndarjes arrin:"/>
 			<control/>
 			<control/>
-			<control caption="%"/>
 			<control caption="Pëlqe burimet e torrentit"/>
-			<control caption="_FundLojë:"/>
 			<control caption="Lejo mënyrën FundLojë kur përfundon torrenti"/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control/>
+			<control caption="_BitTorrent Network:"/>
+			<control caption="Lidhjet e _Shkarkimit:"/>
 			<control caption="_Depozito Këtu Torrentet:"/>
-			<control/>
-			<control/>
-			<control caption="Krijuesi i _Torrenteve"/>
-			<control/>
-			<control/>
+			<control caption="Torrente përnjëherë"/>
+			<control caption="Lidhje me klientë"/>
+			<control caption="%"/>
 			<control caption="Gjurmuesi Tipik:"/>
-			<control/>
+			<control caption="Krijuesi i _Torrenteve"/>
 		</dialog>
 		<dialog name="CProtocolsSettingsPage" cookie="BuSy" caption="Protokolle">
 			<control caption="Eksploruesi i Protokollit Arkitekturor të Zakontë i Shareaza-s:"/>
