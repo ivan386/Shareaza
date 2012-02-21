@@ -32,6 +32,7 @@
 #include "Downloads.h"
 #include "FragmentedFile.h"
 #include "GProfile.h"
+#include "HostCache.h"
 #include "Library.h"
 #include "LibraryFolders.h"
 #include "Network.h"
@@ -397,17 +398,16 @@ BOOL CDownloadWithTorrent::SetTorrent(const CBTInfo* pTorrent)
 		m_pTorrent.SaveTorrentFile( Settings.Downloads.TorrentPath );
 	}
 
-	if ( ! Settings.BitTorrent.AdvancedInterfaceSet )
-	{
-		// If this is the first time the user has downloaded a torrent, turn the extra interface on.
-		Settings.BitTorrent.AdvancedInterfaceSet	= TRUE;
-		Settings.BitTorrent.AdvancedInterface		= TRUE;
-	}
-
 	// Add sources from torrents - DWK
 	for ( POSITION pos = m_pTorrent.m_sURLs.GetHeadPosition() ; pos ; )
 	{
 		AddSourceURLs( m_pTorrent.m_sURLs.GetNext( pos ) );
+	}
+
+	// Add DHT nodes to host cache
+	for ( POSITION pos = m_pTorrent.m_oNodes.GetHeadPosition() ; pos ; )
+	{
+		HostCache.BitTorrent.Add( m_pTorrent.m_oNodes.GetNext( pos ) );
 	}
 
 	SetModified();

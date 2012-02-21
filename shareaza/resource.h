@@ -542,6 +542,7 @@
 #define IDC_FILTER_LIST                 1331
 #define IDC_FILTER_ADD                  1332
 #define IDC_FILTER_REMOVE               1333
+#define IDC_ENABLE_DHT                  1334
 #define IDC_TORRENT_NAME                1335
 #define IDC_TORRENT_UPLOADTOTAL         1336
 #define IDC_TORRENT_FILES               1337

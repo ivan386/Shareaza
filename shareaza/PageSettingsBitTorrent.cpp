@@ -35,27 +35,27 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNCREATE(CBitTorrentSettingsPage, CSettingsPage)
 
 BEGIN_MESSAGE_MAP(CBitTorrentSettingsPage, CSettingsPage)
-	ON_BN_CLICKED(IDC_TORRENT_AUTOCLEAR, OnTorrentsAutoClear)
-	ON_BN_CLICKED(IDC_TORRENTS_BROWSE, OnTorrentsBrowse)
-	ON_BN_CLICKED(IDC_TORRENTS_TORRENTMAKERBROWSE, OnMakerBrowse)
+	ON_BN_CLICKED(IDC_TORRENT_AUTOCLEAR, &CBitTorrentSettingsPage::OnTorrentsAutoClear)
+	ON_BN_CLICKED(IDC_TORRENTS_BROWSE, &CBitTorrentSettingsPage::OnTorrentsBrowse)
+	ON_BN_CLICKED(IDC_TORRENTS_TORRENTMAKERBROWSE, &CBitTorrentSettingsPage::OnMakerBrowse)
 END_MESSAGE_MAP()
 
 
 /////////////////////////////////////////////////////////////////////////////
 // CBitTorrentSettingsPage property page
 
-CBitTorrentSettingsPage::CBitTorrentSettingsPage() : CSettingsPage(CBitTorrentSettingsPage::IDD)
+CBitTorrentSettingsPage::CBitTorrentSettingsPage()
+	: CSettingsPage		( CBitTorrentSettingsPage::IDD )
+	, m_bEnableToday	( FALSE )
+	, m_bEnableAlways	( FALSE )
+	, m_bEnableDHT		( FALSE )
+	, m_bEndGame		( FALSE )
+	, m_nLinks			( 0 )
+	, m_nDownloads		( 0 )
+	, m_bAutoClear		( FALSE )
+	, m_nClearPercentage( 0 )
+	, m_bPrefBTSources	( TRUE )
 {
-	m_bTorrentInterface	= FALSE;
-	m_bEndGame			= FALSE;
-	m_nLinks			= 0;
-	m_nDownloads		= 0;
-	m_bAutoClear		= FALSE;
-	m_nClearPercentage	= 0;
-	m_bPrefBTSources	= TRUE;
-	m_sTracker			= _T("");
-	m_sTorrentPath		= _T("");
-	m_sMakerPath		= _T("");
 }
 
 CBitTorrentSettingsPage::~CBitTorrentSettingsPage()
@@ -66,7 +66,9 @@ void CBitTorrentSettingsPage::DoDataExchange(CDataExchange* pDX)
 {
 	CSettingsPage::DoDataExchange(pDX);
 
-	DDX_Check(pDX, IDC_TORRENT_INTERFACE, m_bTorrentInterface);
+	DDX_Check(pDX, IDC_ENABLE_TODAY, m_bEnableToday);
+	DDX_Check(pDX, IDC_ENABLE_ALWAYS, m_bEnableAlways);
+	DDX_Check(pDX, IDC_ENABLE_DHT, m_bEnableDHT);
 	DDX_Check(pDX, IDC_TORRENT_ENDGAME, m_bEndGame);
 	DDX_Text(pDX, IDC_TORRENT_CLIENTLINKS, m_nLinks);
 	DDX_Control(pDX, IDC_TORRENT_LINKS_SPIN, m_wndLinksSpin);
@@ -90,7 +92,10 @@ void CBitTorrentSettingsPage::DoDataExchange(CDataExchange* pDX)
 BOOL CBitTorrentSettingsPage::OnInitDialog()
 {
 	CSettingsPage::OnInitDialog();
-	m_bTorrentInterface = Settings.BitTorrent.AdvancedInterface;
+
+	m_bEnableToday		= Settings.BitTorrent.EnableToday;
+	m_bEnableAlways		= Settings.BitTorrent.EnableAlways;
+	m_bEnableDHT		= Settings.BitTorrent.EnableDHT;
 	m_bEndGame			= Settings.BitTorrent.Endgame;
 	m_nLinks			= Settings.BitTorrent.DownloadConnections;
 	m_sTracker			= Settings.BitTorrent.DefaultTracker;
@@ -168,7 +173,6 @@ void CBitTorrentSettingsPage::OnMakerBrowse()
 
 void CBitTorrentSettingsPage::OnOK()
 {
-	BOOL bRedraw = FALSE;
 	UpdateData( TRUE );
 
 	m_nClearPercentage = min (m_nClearPercentage, 999);
@@ -188,9 +192,9 @@ void CBitTorrentSettingsPage::OnOK()
 
 	UpdateData( FALSE );
 
-	if ( Settings.BitTorrent.AdvancedInterface != ( m_bTorrentInterface != FALSE ) ) bRedraw = TRUE;
-
-	Settings.BitTorrent.AdvancedInterface	= m_bTorrentInterface != FALSE;
+	Settings.BitTorrent.EnableToday			= m_bEnableToday != FALSE;
+	Settings.BitTorrent.EnableAlways		= m_bEnableAlways != FALSE;
+	Settings.BitTorrent.EnableDHT			= m_bEnableDHT != FALSE;
 	Settings.BitTorrent.Endgame				= m_bEndGame != FALSE;
 	Settings.BitTorrent.DownloadConnections	= m_nLinks;
 	Settings.BitTorrent.DownloadTorrents	= m_nDownloads;

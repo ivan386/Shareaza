@@ -1,7 +1,7 @@
 //
 // CtrlHomePanel.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -136,7 +136,7 @@ int CHomePanel::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	{
 		AddBox( &m_boxUploads );
 #ifndef LAN_MODE
-		if ( Settings.BitTorrent.AdvancedInterface ) AddBox( &m_boxTorrents );
+		AddBox( &m_boxTorrents );
 #endif // LAN_MODE
 	}
 	

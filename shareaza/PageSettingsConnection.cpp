@@ -1,7 +1,7 @@
 //
 // PageSettingsConnection.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -297,8 +297,9 @@ void CConnectionSettingsPage::OnOK()
 	UpdateData();
 
 	// Warn the user about upload limiting and ed2k/BT downloads
-	if ( !Settings.Live.UploadLimitWarning &&
-		( Settings.eDonkey.EnableToday || Settings.eDonkey.EnableAlways || Settings.BitTorrent.AdvancedInterface || Settings.BitTorrent.AdvancedInterfaceSet ) )
+	if ( ! Settings.Live.UploadLimitWarning &&
+		( Settings.eDonkey.EnableToday    || Settings.eDonkey.EnableAlways ||
+		  Settings.BitTorrent.EnableToday || Settings.BitTorrent.EnableAlways ) )
 	{
 		QWORD nDownload = max( Settings.Bandwidth.Downloads, Settings.Connection.InSpeed * Kilobits / Bytes );
 		QWORD nUpload   = Settings.Connection.OutSpeed * Kilobits / Bytes;

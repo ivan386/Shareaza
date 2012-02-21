@@ -22,11 +22,9 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Buffer.h"
-#include "BTPacket.h"
 #include "DiscoveryServices.h"
 #include "EDPacket.h"
 #include "HostCache.h"
-#include "Kademlia.h"
 #include "Neighbours.h"
 #include "Network.h"
 #include "Security.h"
@@ -287,16 +285,11 @@ void CHostCache::SanityCheck()
 
 void CHostCache::OnResolve(PROTOCOLID nProtocol, LPCTSTR szAddress, const IN_ADDR* pAddress, WORD nPort)
 {
-	if ( CHostCacheList* pCache = HostCache.ForProtocol( nProtocol ) )
+	for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
 	{
-		if ( pAddress )
-		{
+		CHostCacheList* pCache = m_pList.GetNext( pos );
+		if ( nProtocol == PROTOCOL_NULL || nProtocol == pCache->m_nProtocol )
 			pCache->OnResolve( szAddress, pAddress, nPort );
-		}
-		else
-		{
-			pCache->OnFailure( szAddress, false );
-		}
 	}
 }
 
@@ -384,14 +377,17 @@ CHostCacheHostPtr CHostCacheList::Add(const IN_ADDR* pAddress, WORD nPort, DWORD
 	{
 		// Try to quick resolve dotted IP address
 		if (  ! Network.Resolve( szAddress, nPort, &saHost, FALSE ) )
-			// Cannot resolve
+			// Bad address
 			return NULL;
 
 		pAddress = &saHost.sin_addr;
 		nPort = ntohs( saHost.sin_port );
+
 		if ( pAddress->s_addr != INADDR_ANY )
 		{
+			// It's dotted IP address
 			szAddress = NULL;
+
 			// Don't add invalid addresses
 			if ( ! pAddress->S_un.S_un_b.s_b1 ||
 			// Don't add own firewalled IPs
@@ -536,41 +532,51 @@ void CHostCacheList::SanityCheck()
 
 void CHostCacheList::OnResolve(LPCTSTR szAddress, const IN_ADDR* pAddress, WORD nPort)
 {
-	CQuickLock oLock( m_pSection );
-
-	CHostCacheHostPtr pHost = Find( szAddress );
-
-	// Don't add own firewalled IPs
-	if ( Network.IsFirewalledAddress( pAddress, TRUE ) ||
-	// check against IANA Reserved address.
-		Network.IsReserved( pAddress ) ||
-	// Check security settings, don't add blocked IPs
-		Security.IsDenied( pAddress ) )
+	if ( pAddress )
 	{
+		CQuickLock oLock( m_pSection );
+
+		CHostCacheHostPtr pHost = Find( szAddress );
+
+		// Don't add own firewalled IPs
+		if ( Network.IsFirewalledAddress( pAddress, TRUE ) ||
+		// check against IANA Reserved address.
+			Network.IsReserved( pAddress ) ||
+		// Check security settings, don't add blocked IPs
+			Security.IsDenied( pAddress ) )
+		{
+			if ( pHost )
+				Remove( pHost );
+			return;
+		}
+
 		if ( pHost )
-			Remove( pHost );
-		return;
-	}
+		{
+			// Remove from old place
+			m_Hosts.erase( std::find_if( m_Hosts.begin(), m_Hosts.end(),
+				std::bind2nd( is_host(), pHost ) ) );
 
-	if ( pHost )
-	{
-		// Remove from old place
-		m_Hosts.erase( std::find_if( m_Hosts.begin(), m_Hosts.end(),
-			std::bind2nd( is_host(), pHost ) ) );
+			pHost->m_pAddress = *pAddress;
+			pHost->m_nPort = nPort;
+			pHost->m_sCountry = theApp.GetCountryCode( pHost->m_pAddress );
 
-		pHost->m_pAddress = *pAddress;
-		pHost->m_nPort = nPort;
-		pHost->m_sCountry = theApp.GetCountryCode( pHost->m_pAddress );
+			// Add to new place
+			m_Hosts.insert( CHostCacheMapPair( pHost->m_pAddress, pHost ) );
 
-		// Add to new place
-		m_Hosts.insert( CHostCacheMapPair( pHost->m_pAddress, pHost ) );
+			m_nCookie++;
 
-		m_nCookie++;
-
-		ASSERT( m_Hosts.size() == m_HostsTime.size() );
+			ASSERT( m_Hosts.size() == m_HostsTime.size() );
+		}
+		else
+		{
+			// New host
+			pHost = Add( pAddress, nPort, 0, 0, 0, 0, 0, szAddress );
+		}
 	}
 	else
-		Add( pAddress, nPort, 0, 0, 0, 0, 0, szAddress );
+	{
+		OnFailure( szAddress, false );
+	}
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -581,24 +587,20 @@ void CHostCacheList::OnFailure(const IN_ADDR* pAddress, WORD nPort, bool bRemove
 	CQuickLock oLock( m_pSection );
 
 	CHostCacheHostPtr pHost = Find( pAddress );
+
 	if ( pHost && ( ! nPort || pHost->m_nPort == nPort ) )
 	{
 		m_nCookie++;
 		pHost->m_nFailures++;
+		pHost->m_tFailure = static_cast< DWORD >( time( NULL ) );
+		pHost->m_bCheckedLocally = TRUE;
 
 		if ( ! pHost->m_sAddress.IsEmpty() )
 			// Clear current IP address to re-resolve name later
 			pHost->m_pAddress.s_addr = INADDR_ANY;
 
-		if ( pHost->m_bPriority )
-			return;
-		if ( bRemove || pHost->m_nFailures > Settings.Connection.FailureLimit )
+		if ( ! pHost->m_bPriority && ( bRemove || pHost->m_nFailures > Settings.Connection.FailureLimit ) )
 			Remove( pHost );
-		else
-		{
-			pHost->m_tFailure = static_cast< DWORD >( time( NULL ) );
-			pHost->m_bCheckedLocally = TRUE;
-		}
 	}
 }
 
@@ -607,19 +609,19 @@ void CHostCacheList::OnFailure(LPCTSTR szAddress, bool bRemove)
 	CQuickLock oLock( m_pSection );
 
 	CHostCacheHostPtr pHost = Find( szAddress );
+
+	if ( ! pHost )
+		// New host (for resolver)
+		pHost = Add( szAddress );
+
 	if ( pHost )
 	{
 		m_nCookie++;
 		pHost->m_nFailures++;
-		if ( pHost->m_bPriority )
-			return;
-		if ( bRemove || pHost->m_nFailures > Settings.Connection.FailureLimit )
+		pHost->m_tFailure = static_cast< DWORD >( time( NULL ) );
+
+		if ( ! pHost->m_bPriority && ( bRemove || pHost->m_nFailures > Settings.Connection.FailureLimit ) )
 			Remove( pHost );
-		else
-		{
-			pHost->m_tFailure = static_cast< DWORD >( time( NULL ) );
-			pHost->m_bCheckedLocally = TRUE;
-		}
 	}
 }
 
@@ -1467,41 +1469,11 @@ bool CHostCacheHost::ConnectTo(BOOL bAutomatic)
 {
 	m_tConnect = static_cast< DWORD >( time( NULL ) );
 
-	switch( m_nProtocol )
-	{
-	case PROTOCOL_G1:
-	case PROTOCOL_G2:
-	case PROTOCOL_ED2K:
-	case PROTOCOL_DC:
-		if ( m_pAddress.s_addr != INADDR_ANY )
-			return Neighbours.ConnectTo( m_pAddress, m_nPort, m_nProtocol, bAutomatic, FALSE ) != NULL;
-		else
-		{
-			m_tConnect += 30; // Throttle for 30 seconds
-			return Network.ConnectTo( m_sAddress, m_nPort, m_nProtocol, FALSE ) != FALSE;
-		}
-
-	case PROTOCOL_BT:
-		if ( m_pAddress.s_addr != INADDR_ANY )
-			return DHT.Ping( &m_pAddress, m_nPort );
-		else
-		{
-			m_tConnect += 30; // Throttle for 30 seconds
-			return Network.AsyncResolve( m_sAddress, m_nPort, m_nProtocol, RESOLVE_BITTORENT ) != FALSE;	
-		}
-
-	case PROTOCOL_KAD:
-		{
-			SOCKADDR_IN pHost = { AF_INET, htons( m_nUDPPort ), m_pAddress };
-			Kademlia.Bootstrap( &pHost );
-		}
-		break;
-
-	default:
-		ASSERT( FALSE );
-	}
-
-	return false;
+	if ( m_pAddress.s_addr != INADDR_ANY )
+		return Neighbours.ConnectTo( m_pAddress, m_nPort, m_nProtocol, bAutomatic ) != NULL;
+	
+	m_tConnect += 30; // Throttle for 30 seconds
+	return Network.ConnectTo( m_sAddress, m_nPort, m_nProtocol ) != FALSE;
 }
 
 //////////////////////////////////////////////////////////////////////

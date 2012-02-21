@@ -1,7 +1,7 @@
 //
 // BTInfo.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -101,6 +101,7 @@ public:
 // Attributes
 public:
 	CStringList m_sURLs;				// Add sources from torrents - DWK
+	CStringList	m_oNodes;				// DHT nodes list
 	DWORD		m_nBlockSize;
 	DWORD		m_nBlockCount;
 	Hashes::BtPureHash* m_pBlockBTH;
@@ -195,6 +196,8 @@ public:
 	}
 
 	void SetTracker(const CString& sTracker);
+
+	void SetNode(const CString& sNode);
 
 	inline int GetTrackerMode() const
 	{

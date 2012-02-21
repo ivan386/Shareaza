@@ -1,7 +1,7 @@
 //
 // DlgURLAction.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -25,6 +25,7 @@
 #include "ShareazaURL.h"
 #include "Download.h"
 #include "Downloads.h"
+#include "HostCache.h"
 #include "Transfers.h"
 #include "Network.h"
 #include "Library.h"
@@ -109,8 +110,7 @@ BOOL CURLActionDlg::OnInitDialog()
 
 	CString strMessage;
 
-	if ( m_pURL->m_nAction == CShareazaURL::uriHost ||
-		 m_pURL->m_nAction == CShareazaURL::uriDonkeyServer )
+	if ( m_pURL->m_nAction == CShareazaURL::uriHost )
 	{
 		LoadString(m_sNameTitle, IDS_URL_HOST );
 		LoadString(m_sHashTitle, IDS_URL_PORT );
@@ -125,7 +125,9 @@ BOOL CURLActionDlg::OnInitDialog()
 		m_wndDownload.SetWindowText( strMessage );
 		m_wndDownload.SetFocus();
 
-		if ( m_pURL->m_nAction == CShareazaURL::uriHost )
+		if ( m_pURL->m_nProtocol != PROTOCOL_ED2K &&
+			 m_pURL->m_nProtocol != PROTOCOL_BT &&
+			 m_pURL->m_nProtocol != PROTOCOL_KAD )
 		{
 			LoadString(strMessage, IDS_URL_BROWSE );
 			m_wndSearch.SetWindowText( strMessage );
@@ -323,10 +325,6 @@ void CURLActionDlg::OnUrlDownload()
 	else if ( m_pURL->m_nAction == CShareazaURL::uriHost )
 	{
 		Network.ConnectTo( m_pURL->m_sName, m_pURL->m_nPort, m_pURL->m_nProtocol );
-	}
-	else if ( m_pURL->m_nAction == CShareazaURL::uriDonkeyServer )
-	{
-		Network.ConnectTo( m_pURL->m_sName, m_pURL->m_nPort, PROTOCOL_ED2K );
 	}
 	else if ( m_pURL->m_nAction == CShareazaURL::uriBrowse )
 	{

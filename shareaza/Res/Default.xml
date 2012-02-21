@@ -546,7 +546,7 @@
 				<item id="ID_TOOLS_PROFILE" text="Edit My _Profile..."/>
 				<item id="ID_TOOLS_WIZARD" text="QuickStart _Wizard..."/>
 				<separator/>
-				<item id="ID_TOOLS_SETTINGS" text="_Shareaza Settings..."/>
+				<item id="ID_TOOLS_SETTINGS" text="_Shareaza Settings..." shortcut="Ctrl+P"/>
 			</menu>
 			<menu text="_Help">
 				<item id="ID_HELP_FAQ" text="Shareaza _FAQ"/>
@@ -645,7 +645,7 @@
 				<item id="ID_TOOLS_PROFILE" text="Edit My _Profile..."/>
 				<item id="ID_TOOLS_WIZARD" text="QuickStart _Wizard..."/>
 				<separator/>
-				<item id="ID_TOOLS_SETTINGS" text="_Shareaza Settings..."/>
+				<item id="ID_TOOLS_SETTINGS" text="_Shareaza Settings..." shortcut="Ctrl+P"/>
 			</menu>
 			<menu text="_Window">
 				<item id="ID_WINDOW_NAVBAR" text="Show _Navigation Bar"/>
@@ -740,7 +740,7 @@
 				<item id="ID_TOOLS_PROFILE" text="Edit My _Profile..."/>
 				<separator/>
 				<item id="ID_TOOLS_WIZARD" text="QuickStart _Wizard..."/>
-				<item id="ID_TOOLS_SETTINGS" text="_Shareaza Settings..."/>
+				<item id="ID_TOOLS_SETTINGS" text="_Shareaza Settings..." shortcut="Ctrl+P"/>
 			</menu>
 			<menu text="_Window">
 				<item id="ID_WINDOW_CASCADE" text="_Full Screen"/>

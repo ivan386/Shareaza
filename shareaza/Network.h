@@ -47,8 +47,7 @@ enum // AsyncResolver command
 	RESOLVE_ONLY,				// Resolve and update host cache
 	RESOLVE_CONNECT_ULTRAPEER,	// Resolve, update host cache and connect as ultrapeer
 	RESOLVE_CONNECT,			// Resolve, update host cache and connect
-	RESOLVE_DISCOVERY,			// Resolve and update discovery services
-	RESOLVE_BITTORENT			// Resolve and send DHT ping
+	RESOLVE_DISCOVERY			// Resolve and update discovery services
 };
 
 class CNetwork : public CComObject, public CThreadImpl

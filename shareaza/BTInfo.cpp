@@ -26,7 +26,6 @@
 #include "BTInfo.h"
 #include "Buffer.h"
 #include "DownloadTask.h"
-#include "HostCache.h"
 #include "Library.h"
 #include "SharedFile.h"
 #include "SharedFolder.h"
@@ -229,6 +228,10 @@ CBTInfo& CBTInfo::operator=(const CBTInfo& oSource)
 	m_oTrackers.RemoveAll();
 	for ( INT_PTR i = 0; i < oSource.m_oTrackers.GetCount(); ++i )
 		m_oTrackers.Add( oSource.m_oTrackers[ i ] );
+
+	m_oNodes.RemoveAll();
+	for ( POSITION pos = oSource.m_oNodes.GetHeadPosition(); pos; )
+		m_oNodes.AddTail( oSource.m_oNodes.GetNext( pos ) );
 
 	m_nTrackerIndex		= oSource.m_nTrackerIndex;
 	m_nTrackerMode		= oSource.m_nTrackerMode;
@@ -779,7 +782,9 @@ BOOL CBTInfo::LoadTorrentTree(const CBENode* pRoot)
 				const CBENode* pPort = pNode->GetNode( 1 );
 				if ( pHost && pHost->IsType( CBENode::beString ) && pPort && pPort->IsType( CBENode::beInt ) )
 				{
-					HostCache.BitTorrent.Add( pHost->GetString(), (WORD)pPort->GetInt() );
+					CString sHost;
+					sHost.Format( _T("%s:%u"), pHost->GetString(), (WORD)pPort->GetInt() );
+					m_oNodes.AddTail( sHost );
 				}
 			}
 		}
@@ -1473,6 +1478,11 @@ void CBTInfo::OnTrackerFailure()
 void CBTInfo::SetTracker(const CString& sTracker)
 {
 	m_nTrackerIndex = AddTracker( CBTTracker( sTracker ) );
+}
+
+void CBTInfo::SetNode(const CString& sNode)
+{
+	m_oNodes.AddTail( sNode );
 }
 
 void CBTInfo::SetTrackerMode(int nTrackerMode)

@@ -1,7 +1,7 @@
 //
 // WizardSheet.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -83,7 +83,6 @@ BOOL CWizardSheet::RunWizard(CWnd* pParent)
 	if ( pInterface.m_bExpert && Settings.General.GUIMode == GUI_BASIC )
 	{
 		Settings.General.GUIMode = GUI_TABBED;
-		Settings.BitTorrent.AdvancedInterface = TRUE;
 		pMainWnd->SetGUIMode( Settings.General.GUIMode, FALSE );
 	}
 	else if ( ! pInterface.m_bExpert && Settings.General.GUIMode != GUI_BASIC )

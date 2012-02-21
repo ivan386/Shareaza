@@ -1,7 +1,7 @@
 //
 // CtrlMatch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -733,15 +733,11 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 		if ( CoolInterface.m_crSearchCollection ) crWnd = crBack = CoolInterface.m_crSearchCollection ;
 		else crWnd = crBack = CCoolInterface::CalculateColour( crBack, RGB( 0, 0, 255 ), 25 );
 	}
-	else if ( Settings.BitTorrent.AdvancedInterface && pFile->m_bTorrent )
-	{	// Pale red background for torrents, if the extra torrent options are enabled
+	else if ( pFile->m_bTorrent )
+	{	// Pale red background for torrents
 		if ( CoolInterface.m_crSearchTorrent ) crWnd = crBack = CoolInterface.m_crSearchTorrent ;
 		else crWnd = crBack = CCoolInterface::CalculateColour( crBack, RGB( 255, 0, 0 ), 10 );
-	}/*
-	else if ( pFile->m_bDRM )
-	{	// Pale gree background if DRM
-		crWnd = crBack = CCoolInterface::CalculateColour( crBack, RGB( 0, 255, 0 ), 10 );
-	}*/
+	}
 	else if ( ( pFile->m_nRated > 1 ) && ( ( pFile->m_nRating / pFile->m_nRated ) >= 5 ) )
 	{	// Gold highlight for highly rated files
 		if ( CoolInterface.m_crSearchHighrated ) crWnd = crBack = CoolInterface.m_crSearchHighrated ;

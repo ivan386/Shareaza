@@ -1,7 +1,7 @@
 //
 // PageSettingsBitTorrent.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -39,7 +39,9 @@ public:
 	virtual BOOL OnSetActive();
 
 protected:
-	BOOL			m_bTorrentInterface;
+	BOOL			m_bEnableToday;
+	BOOL			m_bEnableAlways;
+	BOOL			m_bEnableDHT;
 	BOOL			m_bEndGame;
 	CSpinButtonCtrl	m_wndLinksSpin;
 	int				m_nLinks;

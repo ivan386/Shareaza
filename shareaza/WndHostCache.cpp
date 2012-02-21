@@ -1,7 +1,7 @@
 //
 // WndHostCache.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -359,32 +359,18 @@ void CHostCacheWnd::OnNcMouseMove(UINT /*nHitTest*/, CPoint /*point*/)
 
 void CHostCacheWnd::OnUpdateHostCacheConnect(CCmdUI* pCmdUI)
 {
-	pCmdUI->Enable( ( m_wndList.GetSelectedCount() > 0 ) &&
-		( m_nMode == PROTOCOL_NULL ||
-		m_nMode == PROTOCOL_G1 ||
-		m_nMode == PROTOCOL_G2 ||
-		m_nMode == PROTOCOL_ED2K ||
-		m_nMode == PROTOCOL_KAD ||
-		m_nMode == PROTOCOL_DC ) );
+	pCmdUI->Enable( ( m_wndList.GetSelectedCount() > 0 ) );
 }
 
 void CHostCacheWnd::OnHostCacheConnect()
 {
-	if ( m_nMode == PROTOCOL_NULL ||
-		m_nMode == PROTOCOL_G1 ||
-		m_nMode == PROTOCOL_G2 ||
-		m_nMode == PROTOCOL_ED2K ||
-		m_nMode == PROTOCOL_KAD ||
-		m_nMode == PROTOCOL_DC )
+	POSITION pos = m_wndList.GetFirstSelectedItemPosition();
+	while ( pos )
 	{
-		POSITION pos = m_wndList.GetFirstSelectedItemPosition();
-		while ( pos )
+		int nItem = m_wndList.GetNextSelectedItem( pos );
+		if ( CHostCacheHostPtr pHost = GetItem( nItem ) )
 		{
-			int nItem = m_wndList.GetNextSelectedItem( pos );
-			if ( CHostCacheHostPtr pHost = GetItem( nItem ) )
-			{
-				pHost->ConnectTo();
-			}
+			pHost->ConnectTo();
 		}
 	}
 }
@@ -533,6 +519,11 @@ void CHostCacheWnd::OnNeighboursCopy()
 	else if ( pHost->m_nProtocol == PROTOCOL_DC )
 	{
 		strURL.Format( _T("dchub://%s:%u/"),
+			(LPCTSTR)pHost->Address(), pHost->m_nUDPPort );
+	}
+	else if ( pHost->m_nProtocol == PROTOCOL_DC )
+	{
+		strURL.Format( _T("shareaza:btnode:%s:%u"),
 			(LPCTSTR)pHost->Address(), pHost->m_nUDPPort );
 	}
 

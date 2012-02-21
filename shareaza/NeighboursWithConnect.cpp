@@ -1,7 +1,7 @@
 //
 // NeighboursWithConnect.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,17 +22,20 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
-#include "Network.h"
-#include "Datagrams.h"
-#include "Security.h"
-#include "HostCache.h"
-#include "Downloads.h"
-#include "DiscoveryServices.h"
-#include "NeighboursWithConnect.h"
-#include "ShakeNeighbour.h"
-#include "EDNeighbour.h"
+#include "BTPacket.h"
 #include "DCNeighbour.h"
+#include "Datagrams.h"
+#include "Datagrams.h"
+#include "DiscoveryServices.h"
+#include "Downloads.h"
+#include "EDNeighbour.h"
+#include "HostCache.h"
+#include "Kademlia.h"
 #include "Neighbours.h"
+#include "NeighboursWithConnect.h"
+#include "Network.h"
+#include "Security.h"
+#include "ShakeNeighbour.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -136,6 +139,15 @@ CNeighbour* CNeighboursWithConnect::ConnectTo(
 			CloseDonkeys();
 			break;
 
+		case PROTOCOL_BT:
+			Settings.BitTorrent.EnableToday = TRUE;
+			Settings.BitTorrent.EnableDHT = TRUE;
+			break;
+
+		case PROTOCOL_KAD:
+			Settings.eDonkey.EnableToday = TRUE;
+			break;
+
 		case PROTOCOL_DC:
 			Settings.DC.EnableToday = TRUE;
 			break;
@@ -150,32 +162,52 @@ CNeighbour* CNeighboursWithConnect::ConnectTo(
 		return NULL;
 
 	// The computer at the IP address we have is running eDonkey2000 software
-	if ( nProtocol == PROTOCOL_ED2K )
+	switch ( nProtocol )
 	{
-		auto_ptr< CEDNeighbour > pNeighbour( new CEDNeighbour() );
-		if ( pNeighbour->ConnectTo( &pAddress, nPort, bAutomatic ) )
+	case PROTOCOL_ED2K:
 		{
-			return pNeighbour.release();
-		}
-	}
-	else if ( nProtocol == PROTOCOL_DC )
-	{
-		auto_ptr< CDCNeighbour > pNeighbour( new CDCNeighbour() );
-		if ( pNeighbour->ConnectTo( &pAddress, nPort, bAutomatic ) )
-		{
-			return pNeighbour.release();
-		}
-	}
-	else
-	{
-		auto_ptr< CShakeNeighbour > pNeighbour( new CShakeNeighbour() );
-		if ( pNeighbour->ConnectTo( &pAddress, nPort, bAutomatic, bNoUltraPeer ) )
-		{
-			if ( Settings.Gnutella.SpecifyProtocol )
+			auto_ptr< CEDNeighbour > pNeighbour( new CEDNeighbour() );
+			if ( pNeighbour->ConnectTo( &pAddress, nPort, bAutomatic ) )
 			{
-				pNeighbour->m_nProtocol = nProtocol;
+				return pNeighbour.release();
 			}
-			return pNeighbour.release();
+		}
+		break;
+
+	case PROTOCOL_BT:
+		{
+			DHT.Ping( &pAddress, nPort );
+		}
+		break;
+
+	case PROTOCOL_KAD:
+		{
+			SOCKADDR_IN pHost = { AF_INET, htons( nPort ), pAddress };
+			Kademlia.Bootstrap( &pHost );
+		}
+		break;
+
+	case PROTOCOL_DC:
+		{
+			auto_ptr< CDCNeighbour > pNeighbour( new CDCNeighbour() );
+			if ( pNeighbour->ConnectTo( &pAddress, nPort, bAutomatic ) )
+			{
+				return pNeighbour.release();
+			}
+		}
+		break;
+
+	default:
+		{
+			auto_ptr< CShakeNeighbour > pNeighbour( new CShakeNeighbour() );
+			if ( pNeighbour->ConnectTo( &pAddress, nPort, bAutomatic, bNoUltraPeer ) )
+			{
+				if ( Settings.Gnutella.SpecifyProtocol )
+				{
+					pNeighbour->m_nProtocol = nProtocol;
+				}
+				return pNeighbour.release();
+			}
 		}
 	}
 
@@ -421,6 +453,19 @@ DWORD CNeighboursWithConnect::IsG2HubCapable(BOOL bIgnoreTime, BOOL bDebug) cons
 		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("G1 not enabled") );
 	}
 
+	// Not connected to eDonkey2000
+	if ( ! Settings.eDonkey.EnableToday ) 
+	{
+		nRating++;
+		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("eDonkey not enabled") );
+	}
+
+	// The user has never used BitTorrent, so that won't be taking up any bandwidth
+	if ( ! Settings.BitTorrent.EnableToday )
+	{
+		nRating++;
+		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("BitTorrent not enabled") );
+	}
 
 	if ( bDebug )
 	{
@@ -589,18 +634,18 @@ DWORD CNeighboursWithConnect::IsG1UltrapeerCapable(BOOL bIgnoreTime, BOOL bDebug
 		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("G2 not enabled") );
 	}
 
-	// We'll be a better Gnutella ultrapeer if the program isn't connected to the other networks
-	if ( !Settings.eDonkey.EnableToday ) // Not connected to eDonkey2000
+	// Not connected to eDonkey2000
+	if ( ! Settings.eDonkey.EnableToday )
 	{
 		nRating++;
 		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("eDonkey not enabled") );
 	}
 
 	// The user has never used BitTorrent, so that won't be taking up any bandwidth
-	if ( ! Settings.BitTorrent.AdvancedInterfaceSet )
+	if ( ! Settings.BitTorrent.EnableToday )
 	{
 		nRating++;
-		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("BT is not in use") );
+		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("BitTorrent not enabled") );
 	}
 
 	// If debug mode is enabled, display the ultrapeer rating in the system window log (do)

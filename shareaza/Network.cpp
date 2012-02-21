@@ -355,12 +355,24 @@ void CNetwork::Disconnect()
 
 BOOL CNetwork::ConnectTo(LPCTSTR pszAddress, int nPort, PROTOCOLID nProtocol, BOOL bNoUltraPeer)
 {
-	if ( ! IsConnected() && ! Connect() )
-		return FALSE;
-
 	if ( nPort <= 0 || nPort > USHRT_MAX )
 	{
 		nPort = protocolPorts[ ( nProtocol == PROTOCOL_ANY ) ? PROTOCOL_NULL : nProtocol ];
+	}
+
+	// Try to quick resolve dotted IP address
+	SOCKADDR_IN saHost;
+	if ( ! Resolve( pszAddress, nPort, &saHost, FALSE ) )
+		// Bad address
+		return FALSE;
+
+	if ( saHost.sin_addr.s_addr != INADDR_ANY )
+	{
+		// It's dotted IP address
+		HostCache.ForProtocol( nProtocol )->Add( &saHost.sin_addr, ntohs( saHost.sin_port ) );
+
+		Neighbours.ConnectTo( saHost.sin_addr, ntohs( saHost.sin_port ), nProtocol, FALSE, bNoUltraPeer );
+		return TRUE;
 	}
 
 	return AsyncResolve( pszAddress, (WORD)nPort, nProtocol, bNoUltraPeer ? RESOLVE_CONNECT : RESOLVE_CONNECT_ULTRAPEER );
@@ -828,11 +840,6 @@ void CNetwork::OnWinsock(WPARAM wParam, LPARAM lParam)
 			DiscoveryServices.OnResolve( pResolve->m_nProtocol, pResolve->m_sAddress, pAddress, pResolve->m_nPort );
 			break;
 
-		case RESOLVE_BITTORENT:
-			HostCache.OnResolve( pResolve->m_nProtocol, pResolve->m_sAddress, pAddress, pResolve->m_nPort );
-			DHT.Ping( pAddress, pResolve->m_nPort );
-			break;
-
 		default:
 			;
 		}
@@ -848,7 +855,6 @@ void CNetwork::OnWinsock(WPARAM wParam, LPARAM lParam)
 
 		case RESOLVE_CONNECT_ULTRAPEER:
 		case RESOLVE_CONNECT:
-		case RESOLVE_BITTORENT:
 			HostCache.OnResolve( pResolve->m_nProtocol, pResolve->m_sAddress );
 			break;
 

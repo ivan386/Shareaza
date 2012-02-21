@@ -1,7 +1,7 @@
 //
 // ShareazaURL.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -28,36 +28,30 @@ class CBTInfo;
 
 class CShareazaURL : public CShareazaFile
 {
-// Construction
 public:
 	CShareazaURL(LPCTSTR pszURL = NULL);
 	CShareazaURL(CBTInfo* pTorrent);
 	CShareazaURL(const CShareazaURL& pURL);
 	virtual ~CShareazaURL();
 
-// Attributes
-public:
 	enum URI_TYPE
 	{
-		uriNull, uriSource, uriDownload, uriSearch, uriHost, uriBrowse,
-		uriDonkeyServer, uriDiscovery
+		uriNull, uriSource, uriDownload, uriSearch, uriHost, uriBrowse, uriDiscovery
 	};
 
-	PROTOCOLID	m_nProtocol;
-	URI_TYPE	m_nAction;
-	CBTInfo*	m_pTorrent;
-	CString		m_sAddress;
-	IN_ADDR		m_pAddress;
-	WORD		m_nPort;
-	IN_ADDR		m_pServerAddress;
-	WORD		m_nServerPort;
-	BOOL		m_bSize;
-	CString		m_sLogin;
-	CString		m_sPassword;
-	Hashes::BtGuid m_oBTC;
+	PROTOCOLID			m_nProtocol;
+	URI_TYPE			m_nAction;
+	CAutoPtr< CBTInfo >	m_pTorrent;
+	CString				m_sAddress;
+	IN_ADDR				m_pAddress;
+	WORD				m_nPort;
+	IN_ADDR				m_pServerAddress;
+	WORD				m_nServerPort;
+	BOOL				m_bSize;
+	CString				m_sLogin;
+	CString				m_sPassword;
+	Hashes::BtGuid		m_oBTC;
 
-// Operations
-public:
 	// Parse URL list
 	BOOL	Parse(const CString& sText, CList< CString >& pURLs, BOOL bResolve = FALSE);
 	// Parse single URL
@@ -69,27 +63,43 @@ protected:
 	void	Clear();
 
 	BOOL	ParseRoot(LPCTSTR pszURL, BOOL bResolve);
+	// http://[user[:password]@]host[:port]/[filepath], where {filepath} is a regular path or "/uri-res/N2R?hash"
 	BOOL	ParseHTTP(LPCTSTR pszURL, BOOL bResolve);
+	// ftp://[user[:password]@]host[:port][/path]
 	BOOL	ParseFTP(LPCTSTR pszURL, BOOL bResolve);
-	// ed2kftp://[client_id@]address:port/md4_hash/size/
+	// ed2kftp://[client_id@]address:port/{md4_hash}/{size}/
 	BOOL	ParseED2KFTP(LPCTSTR pszURL, BOOL bResolve);
-	// dchub://[login@]address:port/[filepath]
-	// where {filepath} can be a regular path or "files.xml.bz2" or "TTH:tiger_hash/size/"
+	// dchub://[login@]address:port/[filepath], where {filepath} can be a regular path or "files.xml.bz2" or "TTH:tiger_hash/size/"
 	BOOL	ParseDCHub(LPCTSTR pszURL, BOOL bResolve);
-	// btc://address:port/[node_guid]/btih_hash/
+	// btc://address:port/[{node_guid}]/{btih_hash}/
 	BOOL	ParseBTC(LPCTSTR pszURL, BOOL bResolve);
+	// magnet:?{params}
 	BOOL	ParseMagnet(LPCTSTR pszURL);
+	// Host
+	//	shareaza:[//]{verb}{[user@]address[:port]}, where {verb} is "" (empty), "host:", "hub:", "server:", "browse:" or "btnode:"
+	// WebCache
+	//	shareaza:[//]gwc:{url}[?nets={net_list}], where {net_list} is "gnutella" or "gnutella2"
+	// ServerMet
+	//	shareaza:[//]meturl:{url}
+	// Discovery
+	//	shareaza:[//]{verb}{url}, where {verb} is "uhc:", "ukhl:", "gnutella1:host:" or "gnutella2:host:"
+	// URL
+	//	shareaza:[//]url:{nested_url}
 	BOOL	ParseShareaza(LPCTSTR pszURL);
-	BOOL	ParseShareazaHost(LPCTSTR pszURL, BOOL bBrows);
+	BOOL	ParseShareazaHost(LPCTSTR pszURL, BOOL bBrowse = FALSE);
 	BOOL	ParseShareazaFile(LPCTSTR pszURL);
+	BOOL	ParseDiscovery(LPCTSTR pszURL, int nType);
+	// ed2k://|file|{name}|{size}|{md4_hash}|/
+	// ed2k://|server|{address}|{port}|/
+	// ed2k://|search|{query}|/
 	BOOL	ParseDonkey(LPCTSTR pszURL);
 	BOOL	ParseDonkeyFile(LPCTSTR pszURL);
 	BOOL	ParseDonkeyServer(LPCTSTR pszURL);
+	// mp2p://[|]file|{name}|{size}|{sha1_hash}/
 	BOOL	ParsePiolet(LPCTSTR pszURL);
 	BOOL	ParsePioletFile(LPCTSTR pszURL);
-	BOOL	ParseDiscovery(LPCTSTR pszURL, int nType);
 
-	static void	SkipSlashes(LPCTSTR& pszURL, int nAdd = 0);
+	static LPCTSTR SkipSlashes(LPCTSTR pszURL, int nAdd = 0);
 	static void	SafeString(CString& strInput);
 
 // Registration Operations
