@@ -1,7 +1,7 @@
 //
 // CtrlLibraryTreeView.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1373,12 +1373,12 @@ BOOL CLibraryTreeView::Update(CLibraryFolder* pFolder, CLibraryTreeItem* pItem, 
 			if ( pFolder->m_sPath.Find( _T(":\\") ) == 1 || pFolder->m_sPath.GetLength() == 2 )
 			{
 				CString strDrive;
-				strDrive.Format( _T("(%c:) "), pFolder->m_sPath[0] );
-				strName = strDrive + strName;
+				strDrive.Format( _T(" (%C:)"), pFolder->m_sPath[0] );
+				strName += strDrive;
 			}
 			else
 			{
-				strName = _T("(Net) ") + strName;
+				strName += _T(" (Net)");
 			}
 		}
 		pItem = pParent->addItem( strName );
