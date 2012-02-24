@@ -155,7 +155,8 @@ protected:
 		void*	m_pData;
 		int		m_nStage;
 	};
-	CList< CJob > m_oJobs;
+	CCriticalSection	m_pJobSection;	// m_oJobs synchronization
+	CList< CJob >		m_oJobs;
 
 	// Process asynchronous jobs (hits, searches, etc.)
 	void		RunJobs();

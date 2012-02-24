@@ -756,14 +756,15 @@ void CNetwork::OnRun()
 				continue;
 			}
 
-			if ( m_pSection.Lock() )
+			CSingleLock oLock( &m_pSection, FALSE );
+			if ( oLock.Lock( 100 ) )
 			{
 				Datagrams.OnRun();
 				SearchManager.OnRun();
 				QueryHashMaster.Build();
 				CrawlSession.OnRun();
 
-				m_pSection.Unlock();
+				oLock.Unlock();
 			}
 
 			Neighbours.OnRun();
@@ -1098,7 +1099,7 @@ BOOL CNetwork::OnPush(const Hashes::Guid& oGUID, CConnection* pConnection)
 
 void CNetwork::OnQuerySearch(CLocalSearch* pSearch)
 {
-	CQuickLock oLock( m_pSection );
+	CQuickLock oLock( m_pJobSection );
 
 	// TODO: Add overload protection code
 
@@ -1107,7 +1108,7 @@ void CNetwork::OnQuerySearch(CLocalSearch* pSearch)
 
 void CNetwork::OnQueryHits(CQueryHit* pHits)
 {
-	CQuickLock oLock( m_pSection );
+	CQuickLock oLock( m_pJobSection );
 
 	// TODO: Add overload protection code
 
@@ -1116,38 +1117,37 @@ void CNetwork::OnQueryHits(CQueryHit* pHits)
 
 void CNetwork::RunJobs()
 {
-	// Quick check to avoid locking
-	if ( m_oJobs.IsEmpty() )
-		return;
-
 	// Spend here no more than 250 ms at once
-	DWORD nBegin = GetTickCount();
-	CSingleLock oLock( &m_pSection, FALSE );
-	if ( ! oLock.Lock( 250 ) )
-		return;
-	while ( ! m_oJobs.IsEmpty() && GetTickCount() - nBegin < 250 )
+	DWORD nStop = GetTickCount() + 250;
+
+	CSingleLock oJobLock( &m_pJobSection, TRUE );
+
+	while ( ! m_oJobs.IsEmpty() && GetTickCount() < nStop )
 	{
 		CJob oJob = m_oJobs.RemoveHead();
+		oJobLock.Unlock();
 
-		oLock.Unlock();
+		bool bKeep = true;
+		CSingleLock oNetworkLock( &m_pSection, FALSE );
+		if ( oNetworkLock.Lock( 250 ) )
+		{		
+			switch ( oJob.GetType() )
+			{
+			case CJob::Hit:
+				bKeep = ProcessQueryHits( oJob );
+				break;
 
-		bool bKeep = false;
-		switch ( oJob.GetType() )
-		{
-		case CJob::Hit:
-			bKeep = ProcessQueryHits( oJob );
-			break;
+			case CJob::Search:
+				bKeep = ProcessQuerySearch( oJob );
+				break;
 
-		case CJob::Search:
-			bKeep = ProcessQuerySearch( oJob );
-			break;
-
-		default:
-			ASSERT( FALSE );
+			default:
+				;
+			}
+			oNetworkLock.Unlock();
 		}
 
-		oLock.Lock();
-
+		oJobLock.Lock();
 		if ( bKeep )
 		{
 			// Go to next iteration
@@ -1158,7 +1158,7 @@ void CNetwork::RunJobs()
 
 void CNetwork::ClearJobs()
 {
-	CQuickLock oLock( m_pSection );
+	CQuickLock oLock( m_pJobSection );
 
 	while ( ! m_oJobs.IsEmpty() )
 	{
