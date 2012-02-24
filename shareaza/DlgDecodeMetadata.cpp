@@ -1,7 +1,7 @@
 //
 // DlgDecodeMetadata.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -40,7 +40,7 @@ BEGIN_MESSAGE_MAP(CDecodeMetadataDlg, CSkinDialog)
 	ON_CBN_SELCHANGE(IDC_CODEPAGES, OnSelchangeCodepages)
 END_MESSAGE_MAP()
 
-const unsigned CDecodeMetadataDlg::codePages[] =
+const UINT CDecodeMetadataDlg::codePages[] =
 {
 	// arabic, baltic, centr. european, chinese simplified, chinese traditional
 	1256, 1257, 1250, 936,  950,
@@ -51,10 +51,9 @@ const unsigned CDecodeMetadataDlg::codePages[] =
 /////////////////////////////////////////////////////////////////////////////
 // CDecodeMetadataDlg dialog
 
-CDecodeMetadataDlg::CDecodeMetadataDlg(CWnd* pParent) : CSkinDialog(CDecodeMetadataDlg::IDD, pParent)
-, m_nMethod( 0 )
-, m_sPreview1( L"" )
-, m_sPreview2( L"" )
+CDecodeMetadataDlg::CDecodeMetadataDlg(CWnd* pParent)
+	: CSkinDialog( CDecodeMetadataDlg::IDD, pParent )
+	, m_nMethod( 0 )
 {
 }
 
@@ -75,6 +74,16 @@ BOOL CDecodeMetadataDlg::OnInitDialog()
 	CSkinDialog::OnInitDialog();
 	
 	SkinMe( _T("CDecodeMetadataDlg"), IDI_WORLD );
+
+	UINT nID = GetACP();
+	for ( int i = 0; i < _countof( codePages ); ++i )
+	{
+		if ( codePages[ i ] == nID )
+		{
+			m_wndCodepages.SetCurSel( i );
+			break;
+		}
+	}
 
 	if ( !m_pFiles.IsEmpty() ) 
 	{
@@ -106,48 +115,50 @@ void CDecodeMetadataDlg::OnOK()
 	UpdateData();
 
 	unsigned nCodePage = m_wndCodepages.GetCurSel();
-	nCodePage = nCodePage < 13 ? codePages[ nCodePage ] : 1252; // english
+	nCodePage = ( nCodePage < _countof( codePages ) ) ? codePages[ nCodePage ] : 1252; // english
 
 	// close dialog and perform decoding in background
 	CSkinDialog::OnOK();
 
+	CProgressDialog dlgProgress( LoadString( ID_LIBRARY_REBUILD_ANSI ) + _T("...") );
+	DWORD nCompleted = 0, nTotal = m_pFiles.GetCount();
+
 	for ( POSITION posFiles = m_pFiles.GetHeadPosition() ; posFiles ; )
 	{
 		DWORD nIndex = m_pFiles.GetNext( posFiles );
-		
-		CXMLElement* pXML;
-		CLibraryFile* pFile;
-
-		{
-			CQuickLock oLock( Library.m_pSection );
-
-			if ( m_pFiles.IsEmpty() ) break;
-
-			pFile = Library.LookupFile( nIndex );
-			if ( !pFile || !pFile->m_pMetadata || !pFile->m_pSchema ) continue;
-
-			pXML = pFile->m_pMetadata->Clone();
-		}
-
-		for ( POSITION posXML = pXML->GetAttributeIterator() ; posXML ; )
-		{
-			CXMLAttribute* pAttribute = pXML->GetNextAttribute( posXML );
-
-			CString strAttribute = pAttribute->GetValue();
-			GetEncodedText( strAttribute, m_nMethod );
-			pAttribute->SetValue( strAttribute );
-		}
 
 		CQuickLock oLock( Library.m_pSection );
-		// make a clean copy of schema with namespace included
-		CXMLElement* pContainer	= pFile->m_pSchema->Instantiate( TRUE );
-		if ( pContainer )
+
+		if ( m_pFiles.IsEmpty() )
+			break;
+
+		CLibraryFile* pFile = Library.LookupFile( nIndex );
+		if ( pFile && pFile->m_pMetadata && pFile->m_pSchema )
 		{
-			// append modified metadata
-			/*CXMLElement* pMetadata	=*/ pContainer->AddElement( pXML );
-			// save metadata by creating XML file
-			pFile->SetMetadata( pContainer );
-			delete pContainer;
+			dlgProgress.Progress( pFile->GetPath(), nCompleted++, nTotal );
+
+			if ( CXMLElement* pXML = pFile->m_pMetadata->Clone() )
+			{
+				for ( POSITION posXML = pXML->GetAttributeIterator() ; posXML ; )
+				{
+					CXMLAttribute* pAttribute = pXML->GetNextAttribute( posXML );
+
+					CString strAttribute = pAttribute->GetValue();
+					GetEncodedText( strAttribute, m_nMethod );
+					pAttribute->SetValue( strAttribute );
+				}
+
+				// make a clean copy of schema with namespace included
+				if ( CXMLElement* pContainer = pFile->m_pSchema->Instantiate( TRUE ) )
+				{
+					// append modified metadata
+					pContainer->AddElement( pXML );
+					// save metadata by creating XML file
+					pFile->SetMetadata( pContainer );
+
+					delete pContainer;
+				}
+			}
 		}
 	}
 
@@ -162,7 +173,7 @@ void CDecodeMetadataDlg::GetEncodedText(CString& strText, int nMethod) const
 	int nWide = 0;
 
 	unsigned nCodePage = m_wndCodepages.GetCurSel();
-	nCodePage = nCodePage < 13 ? codePages[ nCodePage ] : 1252; // english
+	nCodePage = ( nCodePage < _countof( codePages ) ) ? codePages[ nCodePage ] : 1252; // english
 
 	if ( nMethod == 0 )
 	{

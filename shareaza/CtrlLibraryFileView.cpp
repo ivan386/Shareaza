@@ -1,7 +1,7 @@
 //
 // CtrlLibraryFileView.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -624,11 +624,17 @@ void CLibraryFileView::OnLibraryRefreshMetadata()
 {
 	CQuickLock pLock( Library.m_pSection );
 
-	POSITION posSel = StartSelectedFileLoop();
+	CProgressDialog dlgProgress( LoadString( ID_LIBRARY_REFRESH_METADATA ) + _T("...") );
+	DWORD nCompleted = 0, nTotal = GetSelectedCount();
 
+	POSITION posSel = StartSelectedFileLoop();
 	while ( CLibraryFile* pFile = GetNextSelectedFile( posSel ) )
 	{
-		LibraryBuilder.RefreshMetadata( pFile->GetPath() );
+		CString sPath = pFile->GetPath();
+
+		dlgProgress.Progress( sPath, nCompleted++, nTotal );
+
+		LibraryBuilder.RefreshMetadata( sPath );
 	}
 }
 
