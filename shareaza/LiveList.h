@@ -1,7 +1,7 @@
 //
 // LiveList.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -108,7 +108,7 @@ public:
 	static CImageList*	CreateDragImage(CListCtrl* pList, const CPoint& ptMouse);
 
 protected:
-	typedef CMap< DWORD_PTR, DWORD_PTR, CLiveItem*, CLiveItem*& > CLiveItemMap;
+	typedef CMap< DWORD_PTR, const DWORD_PTR&, CLiveItem*, CLiveItem*& > CLiveItemMap;
 
 	int					m_nColumns;
 	CLiveItemMap		m_pItems;

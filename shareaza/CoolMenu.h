@@ -1,7 +1,7 @@
 //
 // CoolMenu.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -73,17 +73,14 @@ protected:
 	CSize		m_czWatermark;
 	HBITMAP		m_hOldMark;
 protected:
-	BOOL		m_bEnable;
-	BOOL		m_bUnhook;
 	CString		m_sFilterString;
 	CString		m_sOldFilterString;
 
 // Border Hook
 public:
 	void			EnableHook();
-	static void		EnableHook(BOOL bEnable);
+	static void		EnableHook(bool bEnable);
 	static void		RegisterEdge(int nLeft, int nTop, int nLength);
-	static BOOL		IsModernVersion();
 protected:
 	static LRESULT	CALLBACK MsgHook(int nCode, WPARAM wParam, LPARAM lParam);
 	static LRESULT	CALLBACK MenuProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);

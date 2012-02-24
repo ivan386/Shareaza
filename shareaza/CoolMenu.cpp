@@ -1,7 +1,7 @@
 //
 // CoolMenu.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -34,8 +34,6 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
-#define CM_ICONWIDTH		16
-#define CM_ICONHEIGHT		16
 
 CCoolMenu CoolMenu;
 
@@ -43,9 +41,7 @@ CCoolMenu CoolMenu;
 //////////////////////////////////////////////////////////////////////
 // CCoolMenu construction
 
-CCoolMenu::CCoolMenu() :
-	m_bEnable( TRUE ),
-	m_bUnhook( FALSE )
+CCoolMenu::CCoolMenu()
 {
 }
 
@@ -60,21 +56,7 @@ void CCoolMenu::Clear()
 	SafeRelease( m_pContextMenuCache );
 
 	SetWatermark( NULL );
-	if ( m_bUnhook ) EnableHook( FALSE );
-}
-
-//////////////////////////////////////////////////////////////////////
-// CCoolMenu modern version check
-
-BOOL CCoolMenu::IsModernVersion()
-{
-	OSVERSIONINFO pVersion;
-	pVersion.dwOSVersionInfoSize = sizeof(pVersion);
-	GetVersionEx( &pVersion );
-
-	return Settings.Interface.CoolMenuEnable &&
-		( pVersion.dwMajorVersion >= 5 ||
-		( pVersion.dwMajorVersion == 4 && pVersion.dwMinorVersion >= 10 ) );
+	EnableHook( false );
 }
 
 void CCoolMenu::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
@@ -129,7 +111,9 @@ void CCoolMenu::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
 
 BOOL CCoolMenu::AddMenu(CMenu* pMenu, BOOL bChild)
 {
-	if ( ! m_bEnable ) return FALSE;
+	EnableHook();
+
+	if ( ! Settings.Interface.CoolMenuEnable ) return FALSE;
 
 	for ( int i = 0 ; i < (int)pMenu->GetMenuItemCount() ; i++ )
 	{
@@ -587,17 +571,10 @@ int		CCoolMenu::m_nEdgeSize	= 0;
 
 void CCoolMenu::EnableHook()
 {
-	ASSERT( m_hMsgHook == NULL );
-	ASSERT( m_bUnhook == FALSE );
-
-	m_bEnable = IsModernVersion();
-	if ( ! m_bEnable ) return;
-
-	m_bUnhook = TRUE;
-	EnableHook( TRUE );
+	EnableHook( Settings.Interface.CoolMenuEnable );
 }
 
-void CCoolMenu::EnableHook(BOOL bEnable)
+void CCoolMenu::EnableHook(bool bEnable)
 {
 	if ( bEnable == ( m_hMsgHook != NULL ) ) return;
 
