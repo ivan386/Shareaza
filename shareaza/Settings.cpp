@@ -187,6 +187,7 @@ void CSettings::Load()
 	Add( _T("Library"), _T("TigerHeight"), &Library.TigerHeight, 9, 1, 1, 64 );
 	Add( _T("Library"), _T("TreeSize"), &Library.TreeSize, 200, 1, 0, 1024, _T(" px") );
 	Add( _T("Library"), _T("UseCustomFolders"), &Library.UseCustomFolders, true );
+	Add( _T("Library"), _T("UseWindowsLibrary"), &Library.UseWindowsLibrary, true );
 	Add( _T("Library"), _T("UseFolderGUID"), &Library.UseFolderGUID, true );
 	Add( _T("Library"), _T("VirtualFiles"), &Library.VirtualFiles, false );
 	Add( _T("Library"), _T("WatchFolders"), &Library.WatchFolders, true );

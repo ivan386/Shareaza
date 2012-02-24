@@ -1272,11 +1272,11 @@ DWORD CNeighboursWithConnect::CalculateSystemPerformanceScore(BOOL bDebug) const
 	}
 
 	// Having more CPUs has significant effect on performance
-	if ( theApp.m_SysInfo.dwNumberOfProcessors > 1 )
+	if ( System.dwNumberOfProcessors > 1 )
 	{
-		nRating += theApp.m_SysInfo.dwNumberOfProcessors / 2;
+		nRating += System.dwNumberOfProcessors / 2;
 		if ( bDebug )
-			theApp.Message( MSG_DEBUG, _T("Number of processors: %u"), theApp.m_SysInfo.dwNumberOfProcessors );
+			theApp.Message( MSG_DEBUG, _T("Number of processors: %u"), System.dwNumberOfProcessors );
 	}
 
 	// 64-bit

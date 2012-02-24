@@ -1,7 +1,7 @@
 //
 // CtrlIRCFrame.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1531,7 +1531,7 @@ void CIRCFrame::ActivateMessageByID(CIRCNewMessage& oNewMessage, int nMessageTyp
 			strReply.Format( _T("/NOTICE %s :\x01VERSION %s:%s:Microsoft Windows %u.%u\x01"),
 				(LPCTSTR)m_pWords.GetAt( 0 ), _T(CLIENT_NAME),
 				(LPCTSTR)theApp.m_sVersionLong,
-				theApp.m_nWindowsVersion, theApp.m_nWindowsVersionMinor );
+				Windows.dwMajorVersion, Windows.dwMinorVersion );
 			OnLocalText( strReply );
 			oNewMessage.Add( _T("* ") + m_pWords.GetAt( 0 ) + _T(" just VERSIONed you."), m_sStatus, ID_COLOR_SERVERMSG );
 			return;

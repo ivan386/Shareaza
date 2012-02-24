@@ -1,7 +1,7 @@
 //
 // LibraryFolders.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -36,6 +36,7 @@
 #include "SharedFile.h"
 #include "SharedFolder.h"
 #include "ShellIcons.h"
+#include "Skin.h"
 #include "XML.h"
 
 #ifdef _DEBUG
@@ -193,6 +194,8 @@ CLibraryFolder* CLibraryFolders::AddFolder(LPCTSTR pszPath)
 
 	Library.Update( true );
 
+	Maintain();
+
 	return pFolder;
 }
 
@@ -313,6 +316,8 @@ BOOL CLibraryFolders::RemoveFolder(CLibraryFolder* pFolder)
 	m_pFolders.RemoveAt( pos );
 
 	Library.Update( true );
+
+	Maintain();
 
 	return TRUE;
 }
@@ -711,8 +716,6 @@ void CLibraryFolders::Serialize(CArchive& ar, int nVersion)
 			CLibraryFolder* pFolder = new CLibraryFolder( NULL );
 			pFolder->Serialize( ar, nVersion );
 			m_pFolders.AddTail( pFolder );
-
-			pFolder->Maintain( TRUE );
 		}
 	}
 
@@ -724,9 +727,31 @@ void CLibraryFolders::Maintain()
 {
 	CQuickLock oLock( Library.m_pSection );
 
+	CComPtr< IShellLibrary > pIShellLib;
+	if ( ( Windows.dwMajorVersion > 6 || ( Windows.dwMajorVersion == 6 && Windows.dwMinorVersion >= 1 ) ) && Settings.Library.UseWindowsLibrary )
+		pIShellLib.CoCreateInstance( CLSID_ShellLibrary );
+
 	for ( POSITION pos = GetFolderIterator() ; pos ; )
 	{
-		GetNextFolder( pos )->Maintain( TRUE );
+		CLibraryFolder* pFolder = GetNextFolder( pos );
+		
+		pFolder->Maintain( TRUE );
+
+		if ( pIShellLib )
+		{
+			CComPtr< IShellItem > psiFolder;
+			SHCreateItemFromParsingName( (LPCWSTR)CT2W( pFolder->m_sPath ), NULL, IID_PPV_ARGS( &psiFolder ) );
+			if ( psiFolder )
+				pIShellLib->AddFolder( psiFolder );
+		}
+	}
+
+	if ( pIShellLib )
+	{
+		pIShellLib->SetIcon( (LPCWSTR)CT2W( Skin.GetImagePath( IDR_LIBRARYFRAME ) ) );
+
+		CComPtr< IShellItem > psiLibrary;
+		pIShellLib->SaveInKnownFolder( FOLDERID_UsersLibraries, CLIENT_NAME_T, LSF_OVERRIDEEXISTING, &psiLibrary );
 	}
 }
 

@@ -1,7 +1,7 @@
 //
 // Shareaza.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -162,7 +162,9 @@ IMPLEMENT_DYNAMIC(CShareazaApp, CWinApp)
 BEGIN_MESSAGE_MAP(CShareazaApp, CWinApp)
 END_MESSAGE_MAP()
 
-CShareazaApp theApp;
+CShareazaApp		theApp;
+OSVERSIONINFOEX		Windows = { sizeof( OSVERSIONINFOEX ) };
+SYSTEM_INFO			System = {};
 
 /////////////////////////////////////////////////////////////////////////////
 // CShareazaApp construction
@@ -179,8 +181,6 @@ CShareazaApp::CShareazaApp() :
 ,	m_bIsWin2000			( false )
 ,	m_bIsVistaOrNewer		( false )
 ,	m_bLimitedConnections	( true )
-,	m_nWindowsVersion		( 0ul )
-,	m_nWindowsVersionMinor	( 0ul )
 ,	m_bMenuWasVisible		( FALSE )
 ,	m_nLastInput			( 0ul )
 ,	m_hHookKbd				( NULL )
@@ -217,8 +217,12 @@ CShareazaApp::CShareazaApp() :
 ,	m_hLibGFL				( NULL )
 
 ,	m_dlgSplash				( NULL )
-,	m_SysInfo				()
+
 {
+	// Determine the version of Windows
+	GetVersionEx( (OSVERSIONINFO*)&Windows );
+	GetSystemInfo( (SYSTEM_INFO*)&System );
+
 	ZeroMemory( m_nVersion, sizeof( m_nVersion ) );
 	ZeroMemory( m_pBTVersion, sizeof( m_pBTVersion ) );
 
@@ -840,54 +844,38 @@ void CShareazaApp::InitResources()
 	m_pBTVersion[ 2 ] = (BYTE)m_nVersion[ 0 ];
 	m_pBTVersion[ 3 ] = (BYTE)m_nVersion[ 1 ];
 
-	// Determine the version of Windows
-	OSVERSIONINFOEX pVersion = { sizeof( OSVERSIONINFOEX ) };
-	GetVersionEx( (OSVERSIONINFO*)&pVersion );
-	GetSystemInfo( &m_SysInfo );
-
 	// Determine if it's a server
-	m_bIsServer = pVersion.wProductType != VER_NT_WORKSTATION;
-
-	// Get Major version
-	// Windows 2000 (Major Version == 5) does not support some functions
-	m_nWindowsVersion = pVersion.dwMajorVersion;
-
-	// Get Minor version
-	//	Major version == 5
-	//		Win2000 = 0, WinXP = 1, WinXP64 = 2, Server2003 = 2
-	//	Major version == 6
-	//		Vista = 0, Server2008 = 0, Windows7 = 1
-	m_nWindowsVersionMinor = pVersion.dwMinorVersion;
+	m_bIsServer = Windows.wProductType != VER_NT_WORKSTATION;
 
 	// Most supported windows versions have network limiting
 	m_bLimitedConnections = true;
-	TCHAR* sp = _tcsstr( pVersion.szCSDVersion, _T("Service Pack") );
+	TCHAR* sp = _tcsstr( Windows.szCSDVersion, _T("Service Pack") );
 
 	// Set some variables for different Windows OSes
-	if ( m_nWindowsVersion == 5 )
+	if ( Windows.dwMajorVersion == 5 )
 	{
-		if ( m_nWindowsVersionMinor == 0 )		// Windows 2000
+		if ( Windows.dwMinorVersion == 0 )		// Windows 2000
 			m_bIsWin2000 = true;
-		else if ( m_nWindowsVersionMinor == 1 )	// Windows XP
+		else if ( Windows.dwMinorVersion == 1 )	// Windows XP
 		{
 			// 10 Half-open concurrent TCP connections limit was introduced in SP2
 			// Windows Server will never compare this value though.
 			if ( !sp || sp[ 13 ] == '1' )
 				m_bLimitedConnections = false;
 		}
-		else if ( m_nWindowsVersionMinor == 2 )	// Windows 2003 or Windows XP64
+		else if ( Windows.dwMinorVersion == 2 )	// Windows 2003 or Windows XP64
 		{
 			if ( !sp )
 				m_bLimitedConnections = false;
 		}
 	}
-	else if ( m_nWindowsVersion >= 6 ) 
+	else if ( Windows.dwMajorVersion >= 6 ) 
 	{
 		// Used for GUI improvement
 		m_bIsVistaOrNewer = true;
 		bool bCanBeRegistryPatched = true;
 
-		if ( m_nWindowsVersionMinor == 0 )
+		if ( Windows.dwMinorVersion == 0 )
 		{
 			if ( !sp || sp[ 13 ] == '1' )
 			{
@@ -922,8 +910,7 @@ void CShareazaApp::InitResources()
 
 	// Windows Small Business Server allows 74 simultaneous
 	// connections and any full Server version allows unlimited connections
-	if ( pVersion.wProductType == VER_NT_SERVER && 
-		( pVersion.wSuiteMask & VER_SUITE_SMALLBUSINESS ) == 0 )
+	if ( Windows.wProductType == VER_NT_SERVER && ( Windows.wSuiteMask & VER_SUITE_SMALLBUSINESS ) == 0 )
 		m_bLimitedConnections = false;
 
 	// Get pointers to some functions that require Windows Vista or greater
@@ -1102,7 +1089,7 @@ void CShareazaApp::ShowStartupText()
 	}
 
 	CString strCPU;
-	strCPU.Format( _T("\n%u x CPU. Features:"), m_SysInfo.dwNumberOfProcessors );
+	strCPU.Format( _T("\n%u x CPU. Features:"), System.dwNumberOfProcessors );
 	if ( Machine::SupportsMMX() )
 		strCPU += _T(" MMX");
 	if ( Machine::SupportsSSE() )
@@ -3062,4 +3049,34 @@ INT_PTR MsgBox(LPCTSTR lpszText, UINT nType, UINT nIDHelp, DWORD* pnDefault, DWO
 INT_PTR MsgBox(UINT nIDPrompt, UINT nType, UINT nIDHelp, DWORD* pnDefault, DWORD nTimer)
 {
 	return MsgBox( LoadString( nIDPrompt ), nType, nIDHelp, pnDefault, nTimer );
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// CProgressDialog
+
+CProgressDialog::CProgressDialog(LPCTSTR szTitle)
+{
+	if ( SUCCEEDED( CoCreateInstance( CLSID_ProgressDialog ) ) )
+	{
+		p->SetTitle( CLIENT_NAME_T );
+		p->SetLine( 1, szTitle, FALSE, NULL );
+		p->StartProgressDialog( theApp.SafeMainWnd()->GetSafeHwnd(), NULL, PROGDLG_NOCANCEL | PROGDLG_AUTOTIME, NULL );
+	}
+}
+
+CProgressDialog::~CProgressDialog()
+{
+	if ( p )
+	{
+		p->StopProgressDialog();
+	}
+}
+
+void CProgressDialog::Progress(LPCTSTR szText, DWORD nCompleted, DWORD nTotal)
+{
+	if ( p )
+	{
+		p->SetLine( 2,  szText, TRUE, NULL );
+		p->SetProgress( nCompleted, nTotal );
+	}
 }

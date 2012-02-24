@@ -1255,9 +1255,12 @@ LRESULT CMainWnd::OnSkinChanged(WPARAM /*wParam*/, LPARAM /*lParam*/)
 	UnlockWindowUpdate();
 	UpdateWindow();
 
-	// Update shell icons
-	LibraryFolders.Maintain();
-	CShareazaURL::Register();
+	if ( theApp.m_bLive )
+	{
+		// Update shell icons
+		LibraryFolders.Maintain();
+		CShareazaURL::Register();
+	}
 
 	return 0;
 }

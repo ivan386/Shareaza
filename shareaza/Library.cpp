@@ -1,7 +1,7 @@
 //
 // Library.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -140,6 +140,8 @@ void CLibrary::RemoveFile(CLibraryFile* pFile)
 
 void CLibrary::CheckDuplicates(const CLibraryFile* pFile, bool bForce) const
 {
+	ASSUME_LOCK( m_pSection );
+
 	long nCount = 0;
 
 	// malicious software are usually small, we won't search duplicates
@@ -174,8 +176,6 @@ void CLibrary::CheckDuplicates(const CLibraryFile* pFile, bool bForce) const
 		// warn the user
 		CExistingFileDlg dlg( pFile, NULL, true );
 		Settings.Live.MaliciousWarning = TRUE;
-
-		m_pSection.Unlock();
 
 		dlg.DoModal();
 
@@ -418,6 +418,8 @@ BOOL CLibrary::Load()
 	}
 
 	LibraryFolders.CreateAlbumTree();
+	LibraryFolders.Maintain();
+
 	LibraryHashDB.Create();
 	LibraryBuilder.BoostPriority( Settings.Library.HighPriorityHash );
 

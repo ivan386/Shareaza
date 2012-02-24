@@ -158,6 +158,7 @@ public:
 		bool		UseFolderGUID;				// Save/Load folder GUID using NTFS stream
 		bool		MarkFileAsDownload;			// Mark downloaded file using NTFS stream as Internet Explorer
 		bool		UseCustomFolders;			// Use desktop.ini
+		bool		UseWindowsLibrary;			// Use Windows 7 Library
 		bool		ScanAPE;					// Enable .ape,.mac,.apl metadata extraction by internals
 		bool		ScanASF;					// Enable .asf,.wma,.wmv metadata extraction by internals
 		bool		ScanAVI;					// Enable .avi metadata extraction by internals

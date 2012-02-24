@@ -1,7 +1,7 @@
 //
 // Shareaza.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -99,14 +99,11 @@ public:
 	bool				m_bIsWin2000;				// Is OS Windows 2000
 	bool				m_bIsVistaOrNewer;			// Is OS Vista or newer
 	bool				m_bLimitedConnections;		// Networking is limited (XP SP2)
-	DWORD				m_nWindowsVersion;			// Windows version
-	DWORD				m_nWindowsVersionMinor;		// Windows minor version
 	BOOL				m_bMenuWasVisible;			// For the menus in media player window
 	DWORD				m_nLastInput;				// Time of last input event (in secs)
 	HHOOK				m_hHookKbd;
 	HHOOK				m_hHookMouse;
 	CPacketWnd*			m_pPacketWnd;				// Packet Window (NULL - not opened)
-	SYSTEM_INFO			m_SysInfo;					// System Information
 	CShareazaCommandLineInfo m_cmdInfo;				// Command-line options
 
 	// Cryptography Context handle
@@ -223,7 +220,19 @@ private:
 	CShareazaApp& operator=(const CShareazaApp&);
 };
 
-extern CShareazaApp theApp;
+extern CShareazaApp			theApp;						// Shareaza Application
+extern OSVERSIONINFOEX		Windows;					// Windows Version
+extern SYSTEM_INFO			System;						// System Information
+
+
+class CProgressDialog : public CComPtr< IProgressDialog >
+{
+public:
+	CProgressDialog(LPCTSTR szTitle);
+	virtual ~CProgressDialog();
+
+	void Progress(LPCTSTR szText, DWORD nCompleted, DWORD nTotal);
+};
 
 //
 // Utility Functions
