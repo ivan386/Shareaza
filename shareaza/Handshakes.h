@@ -1,7 +1,7 @@
 //
 // Handshakes.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -37,7 +37,7 @@ public:
 	void Disconnect();					// Stop listening
 
 	BOOL PushTo(IN_ADDR* pAddress, WORD nPort, DWORD nIndex = 0);	// Connect to the given IP
-	BOOL IsConnectedTo(const IN_ADDR* pAddress) const;					// Looks for the IP in the handshake objects list
+	BOOL IsConnectedTo(const IN_ADDR* pAddress) const;				// Looks for the IP in the handshake objects list
 
 protected:
 	DWORD m_nStableCount;				// The number of connections our listening socket has received
@@ -46,13 +46,11 @@ protected:
 	CList< CHandshake* > m_pList;		// The list of pointers to CHandshake objects
 	mutable CMutex m_pSection;			// Use to make sure only one thread accesses the list at a time
 
-	void Substitute(CHandshake* pOld, CHandshake* pNew);	// Replace an old CHandshake object in the list with a new one
-	void Remove(CHandshake* pHandshake);					// Remove a CHandshake object from the list
-
+	void Add(CHandshake* pHandshake);	// Add a CHandshake object to the list
+	void Remove(CHandshake* pHandshake);// Remove a CHandshake object from the list
 	void OnRun();						// Accept incoming connections from remote computers
 	void RunHandshakes();				// Send and receive data with each remote computer in the list
 	BOOL AcceptConnection();			// Accept a connection, making a new CHandshake object in the list for it
-	void CreateHandshake(SOCKET hSocket, SOCKADDR_IN* pHost);	// Make the new CHandshake object for the new connection
 	void RunStableUpdate();				// Update the discovery services (do)
 
 	// Tell WSAAccept if we want to accept a connection from a computer that just called us

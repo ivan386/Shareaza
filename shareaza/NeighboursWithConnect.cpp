@@ -127,29 +127,28 @@ CNeighbour* CNeighboursWithConnect::ConnectTo(
 		switch ( nProtocol )
 		{
 		case PROTOCOL_G1:
-			Settings.Gnutella1.EnableToday = TRUE;
+			Settings.Gnutella1.EnableToday = true;
 			break;
 
 		case PROTOCOL_G2:
-			Settings.Gnutella2.EnableToday = TRUE;
+			Settings.Gnutella2.EnableToday = true;
 			break;
 
 		case PROTOCOL_ED2K:
-			Settings.eDonkey.EnableToday = TRUE;
+			Settings.eDonkey.EnableToday = true;
 			CloseDonkeys();
 			break;
 
 		case PROTOCOL_BT:
-			Settings.BitTorrent.EnableToday = TRUE;
-			Settings.BitTorrent.EnableDHT = TRUE;
+			Settings.BitTorrent.EnableToday = true;
 			break;
 
 		case PROTOCOL_KAD:
-			Settings.eDonkey.EnableToday = TRUE;
+			Settings.eDonkey.EnableToday = true;
 			break;
 
 		case PROTOCOL_DC:
-			Settings.DC.EnableToday = TRUE;
+			Settings.DC.EnableToday = true;
 			break;
 
 		default:
@@ -221,30 +220,32 @@ CNeighbour* CNeighboursWithConnect::ConnectTo(
 // Takes a pointer to the CHandshake object the program made when it accepted the new connection from the listening socket
 // Makes a new CShakeNeighbour object, and calls AttachTo to have it take this incoming connection
 // Returns a pointer to the CShakeNeighbour object
-CNeighbour* CNeighboursWithConnect::OnAccept(CConnection* pConnection)
+BOOL CNeighboursWithConnect::OnAccept(CConnection* pConnection)
 {
 	CSingleLock pLock( &Network.m_pSection );
-	if ( ! pLock.Lock( 250 ) )
+	if ( pLock.Lock( 250 ) )
 	{
-		theApp.Message( MSG_ERROR, _T("Rejecting Gnutella connection from %s, network core overloaded."), (LPCTSTR)pConnection->m_sAddress );
-		return NULL;
-	}
+		if ( Neighbours.Get( pConnection->m_pHost.sin_addr ) )
+		{
+			pConnection->Write( _P("GNUTELLA/0.6 503 Duplicate connection\r\n\r\n") );
+			pConnection->LogOutgoing();
+			pConnection->DelayClose( IDS_CONNECTION_ALREADY_REFUSE );
+			return TRUE;
+		}
 
-	if ( Neighbours.Get( pConnection->m_pHost.sin_addr ) )
-	{
-		// Duplicate connection
-		theApp.Message( MSG_ERROR, IDS_CONNECTION_ALREADY_REFUSE, (LPCTSTR)pConnection->m_sAddress );
-		return NULL;
+		if ( CShakeNeighbour* pNeighbour = new CShakeNeighbour() )
+		{
+			pNeighbour->AttachTo( pConnection );
+			return FALSE;
+		}
 	}
+	else
+		theApp.Message( MSG_ERROR, _T("Rejecting %s connection from %s, network core overloaded."), _T("neighbour"), (LPCTSTR)pConnection->m_sAddress );
 
-	if ( CShakeNeighbour* pNeighbour = new CShakeNeighbour() )
-	{
-		pNeighbour->AttachTo( pConnection );
-		return pNeighbour;
-	}
-
-	// Out of memory
-	return NULL;
+	pConnection->Write( _P("GNUTELLA/0.6 503 Busy\r\n\r\n") );
+	pConnection->LogOutgoing();
+	pConnection->DelayClose( IDS_CONNECTION_CLOSED );
+	return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -319,13 +320,13 @@ DWORD CNeighboursWithConnect::IsG2HubCapable(BOOL bIgnoreTime, BOOL bDebug) cons
 	DWORD nRating = 0; // We'll make this number bigger if we find signs we can be a hub
 
 	// If the caller wants us to report debugging information, start out with a header line
-	if ( bDebug ) theApp.Message( MSG_DEBUG, _T("Is Gnutella2 hub capable?") );
+	if ( bDebug ) theApp.Message( MSG_DEBUG, _T("Is %s hub capable?"), protocolNames[ PROTOCOL_G2 ] );
 
 	// We can't be a Gnutella2 hub if the user has not chosen to connect to Gnutella2 in the program settings
 	if ( !Network.IsConnected() || !Settings.Gnutella2.EnableToday )
 	{
 		// Finish the lines of debugging information, and report no, we can't be a hub
-		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: G2 not enabled") );
+		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: %s not enabled"), protocolNames[ PROTOCOL_G2 ] );
 		return FALSE;
 	}
 
@@ -446,25 +447,28 @@ DWORD CNeighboursWithConnect::IsG2HubCapable(BOOL bIgnoreTime, BOOL bDebug) cons
 	nRating = 1 + CalculateSystemPerformanceScore(bDebug); // The higher it is, the better a hub we can be
 
 
-	// The program is not connected to the Gnutella network
 	if ( ! Settings.Gnutella1.EnableToday )
 	{
 		nRating++;
-		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("G1 not enabled") );
+		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("%s not enabled"), protocolNames[ PROTOCOL_G1 ] );
 	}
 
-	// Not connected to eDonkey2000
 	if ( ! Settings.eDonkey.EnableToday ) 
 	{
 		nRating++;
-		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("eDonkey not enabled") );
+		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("%s not enabled"), protocolNames[ PROTOCOL_ED2K ]);
 	}
 
-	// The user has never used BitTorrent, so that won't be taking up any bandwidth
 	if ( ! Settings.BitTorrent.EnableToday )
 	{
 		nRating++;
-		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("BitTorrent not enabled") );
+		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("%s not enabled"), protocolNames[ PROTOCOL_BT ] );
+	}
+
+	if ( ! Settings.DC.EnableToday )
+	{
+		nRating++;
+		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("%s not enabled"), protocolNames[ PROTOCOL_DC ] );
 	}
 
 	if ( bDebug )
@@ -503,12 +507,12 @@ DWORD CNeighboursWithConnect::IsG1UltrapeerCapable(BOOL bIgnoreTime, BOOL bDebug
 	DWORD nRating = 0; // If we can be an ultrapeer, we'll set this to 1, and then make it higher if we'd be an even better ultrapeer
 
 	// If the caller requested we write out debugging information, start out by titling that the messages that follow come from this method
-	if ( bDebug ) theApp.Message( MSG_DEBUG, _T("Is Gnutella ultrapeer capable?") );
+	if ( bDebug ) theApp.Message( MSG_DEBUG, _T("Is %s ultrapeer capable?"), protocolNames[ PROTOCOL_G1 ] );
 
 	// We can't be a Gnutella ultrapeer if we're not connected to the Gnutella network
 	if ( !Network.IsConnected() || !Settings.Gnutella1.EnableToday )
 	{
-		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: Gnutella1 not enabled") );
+		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: %s not enabled"), protocolNames[ PROTOCOL_G1 ] );
 		return FALSE;
 	}
 
@@ -547,14 +551,14 @@ DWORD CNeighboursWithConnect::IsG1UltrapeerCapable(BOOL bIgnoreTime, BOOL bDebug
 			// ToDo: Check what sort of machine could handle being both a Gnutella ultrapeer and a Gnutella2 hub at the same time
 
 			// Report the reason we can't be an ultrapeer, and return no
-			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: Acting as a G2 hub") );
+			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: Acting as a %s hub"), protocolNames[ PROTOCOL_G2 ] );
 			return FALSE;
 
 		} // We aren't a Gnutella2 hub right now
 		else
 		{
 			// Make a note we passed this test, and keep going
-			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("OK: not a G2 hub") );
+			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("OK: not a %s hub"), protocolNames[ PROTOCOL_G2 ] );
 		}
 
 		MEMORYSTATUSEX pMemory = { sizeof( MEMORYSTATUSEX ) };
@@ -631,21 +635,25 @@ DWORD CNeighboursWithConnect::IsG1UltrapeerCapable(BOOL bIgnoreTime, BOOL bDebug
 	if ( ! Settings.Gnutella2.EnableToday )
 	{
 		nRating++;
-		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("G2 not enabled") );
+		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("%s not enabled"), protocolNames[ PROTOCOL_G2 ] );
 	}
 
-	// Not connected to eDonkey2000
 	if ( ! Settings.eDonkey.EnableToday )
 	{
 		nRating++;
-		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("eDonkey not enabled") );
+		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("%s not enabled"), protocolNames[ PROTOCOL_ED2K] );
 	}
 
-	// The user has never used BitTorrent, so that won't be taking up any bandwidth
 	if ( ! Settings.BitTorrent.EnableToday )
 	{
 		nRating++;
-		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("BitTorrent not enabled") );
+		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("%s not enabled"), protocolNames[ PROTOCOL_BT ] );
+	}
+
+	if ( ! Settings.DC.EnableToday )
+	{
+		nRating++;
+		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("%s not enabled"), protocolNames[ PROTOCOL_DC ] );
 	}
 
 	// If debug mode is enabled, display the ultrapeer rating in the system window log (do)

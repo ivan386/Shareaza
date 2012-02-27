@@ -1,7 +1,7 @@
 //
 // ChatCore.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -21,12 +21,13 @@
 
 #include "StdAfx.h"
 #include "Shareaza.h"
-#include "Settings.h"
+#include "Buffer.h"
+#include "ChatCore.h"
+#include "ChatSession.h"
 #include "DCNeighbour.h"
 #include "EDClient.h"
-#include "ChatSession.h"
-#include "ChatCore.h"
-#include "Buffer.h"
+#include "GProfile.h"
+#include "Settings.h"
 
 
 #ifdef _DEBUG
@@ -74,15 +75,34 @@ BOOL CChatCore::Check(CChatSession* pSession) const
 //////////////////////////////////////////////////////////////////////
 // CChatCore accept new connections
 
-void CChatCore::OnAccept(CConnection* pConnection, PROTOCOLID nProtocol)
+BOOL CChatCore::OnAccept(CConnection* pConnection)
 {
-	CSingleLock pLock( &m_pSection );
-	if ( ! pLock.Lock( 250 ) )
-		return;
-	
-	CChatSession* pSession = new CChatSession( nProtocol );
+	if ( ! Settings.Community.ChatEnable || ! MyProfile.IsValid() )
+	{
+		theApp.Message( MSG_ERROR, _T("Rejecting incoming connection from %s, chat disabled."), (LPCTSTR)pConnection->m_sAddress );
 
-	pSession->AttachTo( pConnection );
+		pConnection->Write( _P("CHAT/0.2 503 Unavailable\r\n\r\n") );
+		pConnection->LogOutgoing();
+		pConnection->DelayClose( IDS_CONNECTION_CLOSED );
+		return TRUE;
+	}
+
+	CSingleLock pLock( &m_pSection );
+	if ( pLock.Lock( 250 ) )
+	{
+		if ( CChatSession* pSession = new CChatSession( PROTOCOL_NULL ) )
+		{
+			pSession->AttachTo( pConnection );
+			return FALSE;
+		}
+	}
+	else
+		theApp.Message( MSG_ERROR, _T("Rejecting %s connection from %s, network core overloaded."), _T("chat"), (LPCTSTR)pConnection->m_sAddress );
+
+	pConnection->Write( _P("CHAT/0.2 503 Busy\r\n\r\n") );
+	pConnection->LogOutgoing();
+	pConnection->DelayClose( IDS_CONNECTION_CLOSED );
+	return TRUE;
 }
 
 BOOL CChatCore::OnPush(const Hashes::Guid& oGUID, CConnection* pConnection)

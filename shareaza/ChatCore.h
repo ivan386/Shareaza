@@ -1,7 +1,7 @@
 //
 // ChatCore.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -41,7 +41,7 @@ public:
 	INT_PTR			GetCount() const { return m_pSessions.GetCount(); }
 	BOOL			Check(CChatSession* pSession) const;
 	void			Close();
-	void			OnAccept(CConnection* pConnection, PROTOCOLID nProtocol = PROTOCOL_NULL);
+	BOOL			OnAccept(CConnection* pConnection);
 	BOOL			OnPush(const Hashes::Guid& oGUID, CConnection* pConnection);
 
 	template< typename T > void OnMessage(const T* pClient, CPacket* pPacket = NULL)

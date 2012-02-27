@@ -1,7 +1,7 @@
 //
 // DCClients.cpp
 //
-// Copyright (c) Shareaza Development Team, 2010-2011.
+// Copyright (c) Shareaza Development Team, 2010-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -259,32 +259,28 @@ BOOL CDCClients::OnAccept(CConnection* pConnection)
 {
 	if ( ! Network.IsConnected() || ( Settings.Connection.RequireForTransfers && ! Settings.DC.EnableToday ) )
 	{
-		theApp.Message( MSG_ERROR, _T("Refusing DC++ client link from %s because network is disabled."),
-			(LPCTSTR)pConnection->m_sAddress );
+		theApp.Message( MSG_ERROR, _T("Refusing %s client link from %s because network is disabled."), protocolNames[ PROTOCOL_DC ], (LPCTSTR)pConnection->m_sAddress );
 		return FALSE;
 	}
 
-	CSingleLock oTranLock( &Transfers.m_pSection );
-	if ( ! oTranLock.Lock( 250 ) )
+	CSingleLock oTransfersLock( &Transfers.m_pSection );
+	if ( oTransfersLock.Lock( 250 ) )
 	{
-		theApp.Message( MSG_ERROR, _T("Rejecting DC++ connection from %s, network core overloaded."),
-			(LPCTSTR)pConnection->m_sAddress );
-		return FALSE;
+		CSingleLock oDCLock( &m_pSection );
+		if ( oDCLock.Lock( 250 ) )
+		{
+			if ( CDCClient* pClient = new CDCClient() )
+			{
+				pClient->AttachTo( pConnection );
+			}
+		}
+		else
+			theApp.Message( MSG_ERROR, _T("Rejecting %s connection from %s, network core overloaded."), protocolNames[ PROTOCOL_DC ], (LPCTSTR)pConnection->m_sAddress );
 	}
+	else
+		theApp.Message( MSG_ERROR, _T("Rejecting %s connection from %s, network core overloaded."), protocolNames[ PROTOCOL_DC ], (LPCTSTR)pConnection->m_sAddress );
 
-	CSingleLock oDCLock( &m_pSection, FALSE );
-	if ( ! oDCLock.Lock( 250 ) )
-		// DC++ core overload
-		return FALSE;
-
-	CDCClient* pClient = new CDCClient();
-	if ( ! pClient )
-		// Out of memory
-		return FALSE;
-
-	pClient->AttachTo( pConnection );
-
-	return TRUE;
+	return FALSE;
 }
 
 BOOL CDCClients::Merge(CDCClient* pClient)

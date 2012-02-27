@@ -58,8 +58,6 @@ protected:
 
 	BOOL		m_bAutoDelete;				// Delete this object in Close() method
 
-	void LogOutgoing();
-
 private:
 	CCriticalSectionPtr	m_pInputSection;
 	CBuffer*			m_pInput;			// Data from the remote computer, will be compressed if the remote computer is sending compressed data
@@ -94,6 +92,7 @@ public:
 	BOOL SendMyAddress();	// If we are listening on a port, tell the other computer our IP address and port number
 	void UpdateCountry();	// Call whenever the IP address is set
 	void SendHTML(UINT nResourceID);
+	void LogOutgoing();
 
 	// True if the socket is valid, false if its closed
 	inline BOOL IsValid() const throw()

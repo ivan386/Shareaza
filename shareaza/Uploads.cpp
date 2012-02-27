@@ -1,7 +1,7 @@
 //
 // Uploads.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -383,37 +383,46 @@ void CUploads::OnRun()
 BOOL CUploads::OnAccept(CConnection* pConnection)
 {
 	CSingleLock oTransfersLock( &Transfers.m_pSection );
-	if ( ! oTransfersLock.Lock( 250 ) )
+	if ( oTransfersLock.Lock( 250 ) )
 	{
-		theApp.Message( MSG_ERROR, _T("Rejecting incoming connection from %s, network core overloaded."), (LPCTSTR)pConnection->m_sAddress );
-		return FALSE;
-	}
-
-	if ( pConnection->StartsWith( _P("GET /remote/") ) ||
-		// The user entered the remote page into a browser, but forgot the trailing '/'
-		 pConnection->StartsWith( _P("GET /remote HTTP") ) )
-	{
-		if ( ! Settings.Remote.Enable )
+		if ( pConnection->StartsWith( _P("GET /remote/") ) ||
+			// The user entered the remote page into a browser, but forgot the trailing '/'
+			 pConnection->StartsWith( _P("GET /remote HTTP") ) )
 		{
+			if ( Settings.Remote.Enable )
+			{
+				if ( new CRemote( pConnection ) )
+				{
+					return FALSE;
+				}
+			}
+			
 			theApp.Message( MSG_ERROR, _T("Rejecting incoming connection from %s, remote interface disabled."), (LPCTSTR)pConnection->m_sAddress );
+
+			pConnection->SendHTML( IDR_HTML_FILENOTFOUND );
+			pConnection->DelayClose( IDS_CONNECTION_CLOSED );
+			return TRUE;
+		}
+
+		if ( CUploadTransfer* pUpload = new CUploadTransferHTTP() )
+		{
+			for ( POSITION pos = GetIterator() ; pos ; )
+			{
+				CUploadTransfer* pTest = GetNext( pos );
+				if ( pTest->m_pHost.sin_addr.S_un.S_addr == pConnection->m_pHost.sin_addr.S_un.S_addr )
+				{
+					pTest->m_bLive = FALSE;
+				}
+			}
+			pUpload->AttachTo( pConnection );
 			return FALSE;
 		}
-
-		new CRemote( pConnection );
-		return TRUE;
 	}
+	else
+		theApp.Message( MSG_ERROR, _T("Rejecting %s connection from %s, network core overloaded."), _T("incoming"), (LPCTSTR)pConnection->m_sAddress );
 
-	CUploadTransfer* pUpload = new CUploadTransferHTTP();
-	for ( POSITION pos = GetIterator() ; pos ; )
-	{
-		CUploadTransfer* pTest = GetNext( pos );
-		if ( pTest->m_pHost.sin_addr.S_un.S_addr ==
-			 pConnection->m_pHost.sin_addr.S_un.S_addr )
-		{
-			pTest->m_bLive = FALSE;
-		}
-	}
-	pUpload->AttachTo( pConnection );
+	pConnection->SendHTML( IDR_HTML_BUSY );
+	pConnection->DelayClose( IDS_CONNECTION_CLOSED );
 	return TRUE;
 }
 

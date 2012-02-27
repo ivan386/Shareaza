@@ -1,7 +1,7 @@
 //
 // NeighboursWithConnect.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -38,7 +38,7 @@ public:
 
 	// Connect to a computer at an IP address, and accept a connection from a computer that has connected to us
 	CNeighbour* ConnectTo(const IN_ADDR& pAddress, WORD nPort, PROTOCOLID nProtocol, BOOL bAutomatic = FALSE, BOOL bNoUltraPeer = FALSE);
-	CNeighbour* OnAccept(CConnection* pConnection);
+	BOOL OnAccept(CConnection* pConnection);
 
 	virtual void Close();
 	virtual void OnRun();

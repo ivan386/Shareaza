@@ -1,7 +1,7 @@
 //
 // Handshake.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -66,5 +66,4 @@ protected:
 	// Receive push requests
 	BOOL OnAcceptGive();       // The remote computer said GIV, see if we were expecting it
 	BOOL OnAcceptPush();       // The remote computer said PUSH, see if we were expecting it
-	BOOL OnPush(const Hashes::Guid& oGUID); // See if a child window recognizes the guid
 };

@@ -1,7 +1,7 @@
 //
 // EDClients.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -370,45 +370,45 @@ void CEDClients::OnRun()
 
 BOOL CEDClients::OnAccept(CConnection* pConnection)
 {
-	ASSERT( pConnection != NULL );
-
-	if ( !Network.IsConnected() || ( Settings.Connection.RequireForTransfers && !Settings.eDonkey.EnableToday ) )
+	if ( ! Network.IsConnected() || ( Settings.Connection.RequireForTransfers && ! Settings.eDonkey.EnableToday ) )
 	{
-		theApp.Message( MSG_ERROR, IDS_ED2K_CLIENT_DISABLED,
-			(LPCTSTR)pConnection->m_sAddress );
+		theApp.Message( MSG_ERROR, IDS_ED2K_CLIENT_DISABLED, (LPCTSTR)pConnection->m_sAddress );
 		return FALSE;
 	}
 
-	CSingleLock pLock( &Transfers.m_pSection );
-	if ( ! pLock.Lock( 250 ) )
+	CSingleLock oTransfersLock( &Transfers.m_pSection );
+	if ( oTransfersLock.Lock( 250 ) )
 	{
-		theApp.Message( MSG_ERROR, _T("Rejecting ED2K connection from %s, network core overloaded."),
-			(LPCTSTR)pConnection->m_sAddress );
-		return FALSE;
-	}
-
-	CQuickLock oLock( m_pSection );
-
-	if ( IsFull() )
-	{
-		// Even if we're full, we still need to accept connections from clients we have queued, etc
-		if ( ( GetByIP( &pConnection->m_pHost.sin_addr ) == NULL ) || ( IsOverloaded() ) )
+		CSingleLock oEDClientsLock( &m_pSection );
+		if ( oEDClientsLock.Lock( 250 ) )
 		{
-			theApp.Message( MSG_ERROR, _T("Rejecting ED2K connection from %s, max client connections reached."),
-				(LPCTSTR)pConnection->m_sAddress );
-			return FALSE;
+			if ( IsFull() )
+			{
+				// Even if we're full, we still need to accept connections from clients we have queued, etc
+				if ( ( GetByIP( &pConnection->m_pHost.sin_addr ) == NULL ) || ( IsOverloaded() ) )
+				{
+					theApp.Message( MSG_ERROR, _T("Rejecting %s connection from %s, max client connections reached."), protocolNames[ PROTOCOL_ED2K ], (LPCTSTR)pConnection->m_sAddress );
+					return FALSE;
+				}
+				else
+				{
+					theApp.Message( MSG_DEBUG, _T("Accepting %s connection from %s despite client connection limit."), protocolNames[ PROTOCOL_ED2K ], (LPCTSTR)pConnection->m_sAddress );
+				}
+			}
+
+			if ( CEDClient* pClient = new CEDClient() )
+			{
+				pClient->AttachTo( pConnection );
+			}
 		}
 		else
-		{
-			theApp.Message( MSG_DEBUG, _T("Accepting ED2K connection from %s despite client connection limit."),
-				(LPCTSTR)pConnection->m_sAddress );
-		}
+			theApp.Message( MSG_ERROR, _T("Rejecting %s connection from %s, network core overloaded."), protocolNames[ PROTOCOL_ED2K ], (LPCTSTR)pConnection->m_sAddress );
 	}
+	else
+		theApp.Message( MSG_ERROR, _T("Rejecting %s connection from %s, network core overloaded."), protocolNames[ PROTOCOL_ED2K ], (LPCTSTR)pConnection->m_sAddress );
 
-	CEDClient* pClient = new CEDClient();
-	pClient->AttachTo( pConnection );
 
-	return TRUE;
+	return FALSE;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -421,8 +421,7 @@ BOOL CEDClients::OnPacket(const SOCKADDR_IN* pHost, CEDPacket* pPacket)
 	CSingleLock pLock( &Transfers.m_pSection );
 	if ( ! pLock.Lock( 250 ) )
 	{
-		theApp.Message( MSG_DEBUG, _T("Rejecting ed2k UDP from %s, network core overloaded."),
-			(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)pHost->sin_addr ) ) );
+		theApp.Message( MSG_ERROR, _T("Rejecting %s connection from %s, network core overloaded."), protocolNames[ PROTOCOL_ED2K ], (LPCTSTR)CString( inet_ntoa( (IN_ADDR&)pHost->sin_addr ) ) );
 		return FALSE;
 	}
 

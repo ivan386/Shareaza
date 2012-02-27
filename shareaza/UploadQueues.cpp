@@ -1,7 +1,7 @@
 //
 // UploadQueues.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -115,24 +115,24 @@ int CUploadQueues::GetPosition(CUploadTransfer* pUpload, BOOL bStart)
 	CSingleLock oLock1( &Network.m_pSection );
 	if ( oLock1.Lock( 250 ) )
 	{
-		CQuickLock oLock2( m_pSection );
-
-		if ( Check( pUpload->m_pQueue ) )
+		CSingleLock oLock2( &m_pSection );
+		if ( oLock2.Lock( 250 ) )
 		{
-			return pUpload->m_pQueue->GetPosition( pUpload, bStart );
+			if ( Check( pUpload->m_pQueue ) )
+			{
+				return pUpload->m_pQueue->GetPosition( pUpload, bStart );
+			}
+			else
+			{
+				pUpload->m_pQueue = NULL;
+			}
 		}
 		else
-		{
-			pUpload->m_pQueue = NULL;
-		}
+			theApp.Message( MSG_ERROR, _T("Rejecting %s connection from %s, network core overloaded."), _T("upload"), (LPCTSTR)pUpload->m_sAddress );
 	}
 	else
-	{
-		theApp.Message( MSG_ERROR, _T("Rejecting upload connection from %s, network core overloaded."),
-			(LPCTSTR)pUpload->m_sAddress );
-	}
+		theApp.Message( MSG_ERROR, _T("Rejecting %s connection from %s, network core overloaded."), _T("upload"), (LPCTSTR)pUpload->m_sAddress );
 
-	// Upload has no valid queue, or network core overloaded, or shutdown
 	return -1;
 }
 

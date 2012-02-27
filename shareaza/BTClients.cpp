@@ -1,7 +1,7 @@
 //
 // BTClients.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -70,23 +70,22 @@ BOOL CBTClients::OnAccept(CConnection* pConnection)
 {
 	if ( ! Network.IsConnected() || ( Settings.Connection.RequireForTransfers && ! Settings.BitTorrent.EnableToday ) )
 	{
-		theApp.Message( MSG_ERROR, IDS_BT_CLIENT_DROP_CONNECTED,
-			(LPCTSTR)pConnection->m_sAddress );
+		theApp.Message( MSG_ERROR, IDS_BT_CLIENT_DROP_CONNECTED, (LPCTSTR)pConnection->m_sAddress );
 		return FALSE;
 	}
 
 	CSingleLock pLock( &Transfers.m_pSection );
-	if ( ! pLock.Lock( 250 ) )
+	if ( pLock.Lock( 250 ) )
 	{
-		theApp.Message( MSG_ERROR, _T("Rejecting BitTorrent connection from %s, network core overloaded."),
-			(LPCTSTR)pConnection->m_sAddress );
-		return FALSE;
+		if ( CBTClient* pClient = new CBTClient() )
+		{
+			pClient->AttachTo( pConnection );
+		}
 	}
+	else
+		theApp.Message( MSG_ERROR, _T("Rejecting %s connection from %s, network core overloaded."), protocolNames[ PROTOCOL_BT ], (LPCTSTR)pConnection->m_sAddress );
 
-	CBTClient* pClient = new CBTClient();
-	pClient->AttachTo( pConnection );
-
-	return TRUE;
+	return FALSE;
 }
 
 //////////////////////////////////////////////////////////////////////

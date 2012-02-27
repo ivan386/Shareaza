@@ -216,16 +216,14 @@ BOOL CHandshake::OnRead()
 		 PeekAt( 5 ) == ED2K_C2C_HELLO			&& // 5 bytes in is "01", a hello for that network
 		 PeekAt( 6 ) == 0x10 )					   // And after that is "10"
 	{
-		EDClients.OnAccept( this );
-		return FALSE; // Done sorting the handshake
+		return EDClients.OnAccept( this );
 	}
 
 	// See if the remote computer is speaking BitTorrent
 	if ( nLength >= BT_PROTOCOL_HEADER_LEN && // We have at least 20 bytes
 		 StartsWith( BT_PROTOCOL_HEADER, BT_PROTOCOL_HEADER_LEN ) ) // They are "\023BitTorrent protocol"
 	{
-		BTClients.OnAccept( this );
-		return FALSE; // Done sorting the handshake
+		return BTClients.OnAccept( this );
 	}
 
 	// See if the remote computer is speaking DC++
@@ -233,8 +231,7 @@ BOOL CHandshake::OnRead()
 		 PeekAt( 0 ) == '$' &&
 		 PeekAt( nLength - 1 ) == '|' )
 	{
-		DCClients.OnAccept( this );
-		return FALSE; // Done sorting the handshake
+		return DCClients.OnAccept( this );
 	}
 
 	// With eDonkey2000 and BitTorrent out of the way, now we can look for text-based handshakes
@@ -263,37 +260,26 @@ BOOL CHandshake::OnRead()
 		     StartsWith( _P("HEAD ") ) )
 	{
 		// The remote computer wants a file from us, accept the connection as an upload
-		Uploads.OnAccept( this );
+		return Uploads.OnAccept( this );
 	}
 	else if ( StartsWith( _P("GNUTELLA") ) )
 	{
 		// Gnutella handshake
-		Neighbours.OnAccept( this );
+		return Neighbours.OnAccept( this );
 	}
 	else if ( StartsWith( _P("PUSH ") ) )
 	{
 		// Gnutella2-style push
-		OnAcceptPush();
+		return OnAcceptPush();
 	}
 	else if ( StartsWith( _P("GIV ") ) )
 	{
 		// Gnutella giv
-		OnAcceptGive();
+		return OnAcceptGive();
 	}
 	else if ( StartsWith( _P("CHAT") ) )
 	{
-		// If the user has setup a valid profile and enabeled chat in the program settings
-		if ( MyProfile.IsValid() && Settings.Community.ChatEnable )
-		{
-			// Have the chat system accept this connection
-			ChatCore.OnAccept( this );
-		}
-		else
-		{
-			// Otherwise, tell the other computer we can't chat
-			Write( _P("CHAT/0.2 404 Unavailable\r\n\r\n") );
-			OnWrite();
-		}
+		return ChatCore.OnAccept( this );
 	}
 	else
 	{
@@ -313,41 +299,44 @@ BOOL CHandshake::OnRead()
 // Returns true or false
 BOOL CHandshake::OnAcceptPush()
 {
-	// Make a string for the header line, and variables to hold the GUID in string and binary forms
-	CString strLine, strGUID;
-	Hashes::Guid oGUID;
+	// The first line should be like "PUSH guid:GUIDinHEXguidINhexGUIDinHEXguidI", which has 10 characters before the 32 for the guid
+	CString strLine;
+	if ( ! Read( strLine ) )
+		return TRUE;
 
-	// Read the first line from the input buffer, this doesn't remove it so we can call it over and over again
-	if ( ! Read( strLine ) ) return FALSE;
-
-	// Make sure the line has the format "PUSH guid:GUIDinHEXguidINhexGUIDinHEXguidI", which has 10 characters before the 32 for the guid
 	if ( strLine.GetLength() != 10 + 32 )
 	{
-		// Report the bad push and return reporting error
-		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_BAD_PUSH, (LPCTSTR)CString( inet_ntoa( m_pHost.sin_addr ) ) );
-		return FALSE;
+		Write( _P("GNUTELLA/0.6 503 Bad push\r\n\r\n") );
+		LogOutgoing();
+		DelayClose( IDS_DOWNLOAD_BAD_PUSH );
+		return TRUE;
 	}
 
 	// Read the 16 hexadecimal digits of the GUID, copying it into pGUID
+	CString strGUID;
+	Hashes::Guid oGUID;
 	for ( int nByte = 0 ; nByte < 16 ; nByte++ )
 	{
 		int nValue;
 		if ( _stscanf( strLine.Mid( 10 + nByte * 2, 2 ), _T("%X"), &nValue ) != 1 )
 		{
-			theApp.Message( MSG_ERROR, IDS_DOWNLOAD_BAD_PUSH, (LPCTSTR)CString( inet_ntoa( m_pHost.sin_addr ) ) );
-			return FALSE;
+			Write( _P("GNUTELLA/0.6 503 Bad push\r\n\r\n") );
+			LogOutgoing();
+			DelayClose( IDS_DOWNLOAD_BAD_PUSH );
+			return TRUE;
 		}
 		oGUID[ nByte ] = (BYTE)nValue;
 	}
 	oGUID.validate();
 
 	// If a child window recognizes the GUID, accept the push
-	if ( OnPush( oGUID ) )
-		return TRUE;
+	if ( Network.OnPush( oGUID, this ) )
+		return FALSE;
 
-	// Record the fact that we got a push we knew nothing about, and return false to not accept it
-	theApp.Message( MSG_ERROR, IDS_DOWNLOAD_UNKNOWN_PUSH, (LPCTSTR)CString( inet_ntoa( m_pHost.sin_addr ) ), _T("Gnutella2") );
-	return FALSE;
+	Write( _P("GNUTELLA/0.6 503 Unknown push\r\n\r\n") );
+	LogOutgoing();
+	DelayClose( IDS_DOWNLOAD_UNKNOWN_PUSH );
+	return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -358,17 +347,15 @@ BOOL CHandshake::OnAcceptPush()
 // Returns true or false
 BOOL CHandshake::OnAcceptGive()
 {
-	// Local variables for the searching and parsing
-	CString strLine, strClient, strFile;	// Strings for the whole line, the client guid hexidecimal characters, and the file name within it
-	DWORD nFileIndex = 0xFFFFFFFF;			// Start out the file index as -1 to detect if we were able to read it
-	Hashes::Guid oClientID;					// We will translate the GUID into binary here
-	int nPos;								// The distance from the start of the string to a colon or slash we will look for
-
 	// The first line should be like "GIV 124:d51dff817f895598ff0065537c09d503/my%20song.mp3"
-	if ( ! Read( strLine ) ) return FALSE; // If the line isn't all there yet, return false to try again later
+	CString strLine;
+	if ( ! Read( strLine ) ) 
+		return TRUE;
 
 	// If there is a slash in the line
-	if ( ( nPos = strLine.Find( '/' ) ) > 0 ) // Find returns the 0-based index in the string, -1 if not found
+	CString strClient, strFile;
+	int nPos = strLine.Find( _T('/') );
+	if ( nPos > 0 )
 	{
 		// Clip out the part of the line after the slash, URL decode it to turn %20 into spaces, and save that in strFile
 		strFile	= URLDecode( strLine.Mid( nPos + 1 ) );	// Mid takes part after the slash
@@ -376,7 +363,9 @@ BOOL CHandshake::OnAcceptGive()
 	}
 
 	// If there is a colon in the line more than 4 character widths in, like "GIV 123:client32characterslong----------"
-	if ( ( nPos = strLine.Find( ':' ) ) > 4 )
+	DWORD nFileIndex = 0xFFFFFFFF;
+	nPos = strLine.Find( _T(':') );
+	if ( nPos > 4 )
 	{
 		// Read the number before and text after the colon
 		strClient	= strLine.Mid( nPos + 1 );			// Clip out just the "client" part of the example shown above
@@ -387,43 +376,34 @@ BOOL CHandshake::OnAcceptGive()
 	// If there was no colon and the file index was not read, or the client text isn't exactly 32 characters long
 	if ( nFileIndex == 0xFFFFFFFF || strClient.GetLength() != 32 )
 	{
-		// Make a record of this bad push and leave now
-		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_BAD_PUSH, (LPCTSTR)CString( inet_ntoa( m_pHost.sin_addr ) ) );
-		return FALSE;
+		Write( _P("GNUTELLA/0.6 503 Bad push\r\n\r\n") );
+		LogOutgoing();
+		DelayClose( IDS_DOWNLOAD_BAD_PUSH );
+		return TRUE;
 	}
 
 	// The client id text is a 16-byte guid written in 32 characters with text like "00" through "ff" for each byte, read it into pClientID
+	Hashes::Guid oGUID;
 	for ( int nByte = 0 ; nByte < 16 ; nByte++ )
 	{
 		// Convert one set of characters like "00" or "ff" into that byte in pClientID
 		if ( _stscanf( strClient.Mid( nByte * 2, 2 ), _T("%X"), &nPos ) != 1 )
 		{
-			theApp.Message( MSG_ERROR, IDS_DOWNLOAD_BAD_PUSH, (LPCTSTR)CString( inet_ntoa( m_pHost.sin_addr ) ) );
-			return FALSE;
+			Write( _P("GNUTELLA/0.6 503 Bad push\r\n\r\n") );
+			LogOutgoing();
+			DelayClose( IDS_DOWNLOAD_BAD_PUSH );
+			return TRUE;
 		}
-		oClientID[ nByte ] = (BYTE)nPos;
+		oGUID[ nByte ] = (BYTE)nPos;
 	}
-	oClientID.validate();
+	oGUID.validate();
 
 	// If a child window recognizes this guid, return true
-	if ( OnPush( oClientID ) )
-		return TRUE;
-
-	// Log this unexpected push, and return false
-	theApp.Message( MSG_ERROR, IDS_DOWNLOAD_UNKNOWN_PUSH, (LPCTSTR)CString( inet_ntoa( m_pHost.sin_addr ) ) );
-	return FALSE;
-}
-
-//////////////////////////////////////////////////////////////////////
-// CHandshake accept a push from a GUID
-
-// Takes the GUID of a remote computer which has sent us a Gnutella2-style PUSH handshake
-// Sees if any child windows recognize the GUID
-// Returns true or false
-BOOL CHandshake::OnPush(const Hashes::Guid& oGUID)
-{
-	if ( ! IsValid() )
+	if ( Network.OnPush( oGUID, this ) )
 		return FALSE;
 
-	return Network.OnPush( oGUID, this );
+	Write( _P("GNUTELLA/0.6 503 Unknown push\r\n\r\n") );
+	LogOutgoing();
+	DelayClose( IDS_DOWNLOAD_UNKNOWN_PUSH );
+	return TRUE;
 }
