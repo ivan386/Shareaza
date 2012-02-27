@@ -711,7 +711,6 @@ void CDiscoveryServices::MergeURLs()
 				//Checking for identical duplicate.
 				if ( MultiURLs.GetAt( index )->m_sAddress == MultiURLs.GetAt( dup_index )->m_sAddress && index != dup_index )
 				{
-					theApp.Message( MSG_NOTICE, _T("CDiscoveryServices::MergeURLs(): Removed %s from the multi list"), (LPCTSTR)MultiURLs.GetAt( dup_index )->m_sAddress );
 					MultiURLs.RemoveAt( dup_index );
 				}
 			}
@@ -722,7 +721,6 @@ void CDiscoveryServices::MergeURLs()
 				{
 					if ( MultiURLs.GetAt( index )->m_sAddress == G1URLs.GetAt( index2 )->m_sAddress )
 					{
-						theApp.Message( MSG_NOTICE, _T("CDiscoveryServices::MergeURLs(): Removed %s from the Gnutella list"), (LPCTSTR)G1URLs.GetAt( index2 )->m_sAddress );
 						G1URLs.RemoveAt( index2 );
 					}
 				}
@@ -734,7 +732,6 @@ void CDiscoveryServices::MergeURLs()
 				{
 					if ( MultiURLs.GetAt( index )->m_sAddress == G2URLs.GetAt( index3 )->m_sAddress )
 					{
-						theApp.Message( MSG_NOTICE, _T("CDiscoveryServices::MergeURLs(): Removed %s from the Gnutella2 list"), (LPCTSTR)G2URLs.GetAt( index3 )->m_sAddress );
 						G2URLs.RemoveAt( index3 );
 					}
 				}
@@ -750,7 +747,6 @@ void CDiscoveryServices::MergeURLs()
 				//Checking for identical duplicate.
 				if ( G1URLs.GetAt( index4 )->m_sAddress == G1URLs.GetAt( dup_index2 )->m_sAddress && index4 != dup_index2 )
 				{
-					theApp.Message( MSG_NOTICE, _T("CDiscoveryServices::MergeURLs(): Removed %s from the Gnutella list"), (LPCTSTR)G1URLs.GetAt( dup_index2 )->m_sAddress );
 					G1URLs.RemoveAt( dup_index2 );
 				}
 			}
@@ -764,7 +760,6 @@ void CDiscoveryServices::MergeURLs()
 						CDiscoveryService* pService = G1URLs[index4];
 						pService->m_bGnutella2 = true;
 						G1URLs[index4] = pService;
-						theApp.Message( MSG_NOTICE, _T("CDiscoveryServices::MergeURLs(): Merged %s into the multi list"), (LPCTSTR)G2URLs.GetAt( index5 )->m_sAddress );
 						G2URLs.RemoveAt( index5 );
 					}
 				}
@@ -780,7 +775,6 @@ void CDiscoveryServices::MergeURLs()
 				//Checking for identical duplicate
 				if ( G2URLs.GetAt( index6 )->m_sAddress == G2URLs.GetAt( dup_index3 )->m_sAddress && index6 != dup_index3 )
 				{
-					theApp.Message( MSG_NOTICE, _T("CDiscoveryServices::MergeURLs(): Removed %s from the Gnutella2 list"), (LPCTSTR)G2URLs.GetAt( dup_index3 )->m_sAddress );
 					G2URLs.RemoveAt( dup_index3 );
 				}
 			}

@@ -1,7 +1,7 @@
 //
 // Scheduler.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -45,37 +45,37 @@ void CScheduler::Execute(const CString& sTaskData)
 		 nAction == BANDWIDTH_REDUCEDSPEED )
 	{
 		if ( nEnabled & 1 )
-			Settings.Gnutella1.EnableToday = TRUE;
+			Settings.Gnutella1.EnableToday = true;
 		else if ( nDisabled & 1 )
-			Settings.Gnutella1.EnableToday = FALSE;
+			Settings.Gnutella1.EnableToday = false;
 		else
 			Settings.Gnutella1.EnableToday = Settings.Gnutella1.EnableAlways;
 		
 		if ( nEnabled & 2 )
-			Settings.Gnutella2.EnableToday = TRUE;
+			Settings.Gnutella2.EnableToday = true;
 		else if ( nDisabled & 2 )
-			Settings.Gnutella2.EnableToday = FALSE;
+			Settings.Gnutella2.EnableToday = false;
 		else
 			Settings.Gnutella2.EnableToday = Settings.Gnutella2.EnableAlways;
 		
 		if ( nEnabled & 4 )
-			Settings.eDonkey.EnableToday = TRUE;
+			Settings.eDonkey.EnableToday = true;
 		else if ( nDisabled & 4 )
-			Settings.eDonkey.EnableToday = FALSE;
+			Settings.eDonkey.EnableToday = false;
 		else
 			Settings.eDonkey.EnableToday = Settings.eDonkey.EnableAlways;
 		
 		if ( nEnabled & 8 )
-			Settings.DC.EnableToday = TRUE;
+			Settings.DC.EnableToday = true;
 		else if ( nDisabled & 8 )
-			Settings.DC.EnableToday = FALSE;
+			Settings.DC.EnableToday = false;
 		else
 			Settings.DC.EnableToday = Settings.DC.EnableAlways;
 		
 		if ( nEnabled & 16 )
-			Settings.BitTorrent.EnableToday = TRUE;
+			Settings.BitTorrent.EnableToday = true;
 		else if ( nDisabled & 16 )
-			Settings.BitTorrent.EnableToday = FALSE;
+			Settings.BitTorrent.EnableToday = false;
 		else
 			Settings.BitTorrent.EnableToday = Settings.BitTorrent.EnableAlways;
 	}
@@ -113,21 +113,21 @@ void CScheduler::Execute(const CString& sTaskData)
 
 	case BANDWIDTH_STOP:
 		Settings.Live.BandwidthScale	= 0;
-		Settings.Gnutella1.EnableToday	= FALSE;
-		Settings.Gnutella2.EnableToday	= FALSE;
-		Settings.eDonkey.EnableToday	= FALSE;
-		Settings.DC.EnableToday			= FALSE;
-		Settings.BitTorrent.EnableToday	= FALSE;
+		Settings.Gnutella1.EnableToday	= false;
+		Settings.Gnutella2.EnableToday	= false;
+		Settings.eDonkey.EnableToday	= false;
+		Settings.DC.EnableToday			= false;
+		Settings.BitTorrent.EnableToday	= false;
 		if ( Network.IsConnected() ) Network.Disconnect();
 		break;
 
 	case SYSTEM_DIALUP_DC:
 		Settings.Live.BandwidthScale	= 0;
-		Settings.Gnutella1.EnableToday	= FALSE;
-		Settings.Gnutella2.EnableToday	= FALSE;
-		Settings.eDonkey.EnableToday	= FALSE;
-		Settings.DC.EnableToday			= FALSE;
-		Settings.BitTorrent.EnableToday	= FALSE;
+		Settings.Gnutella1.EnableToday	= false;
+		Settings.Gnutella2.EnableToday	= false;
+		Settings.eDonkey.EnableToday	= false;
+		Settings.DC.EnableToday			= false;
+		Settings.BitTorrent.EnableToday	= false;
 		if ( Network.IsConnected() ) Network.Disconnect();
 		HangUpConnection();
 		break;

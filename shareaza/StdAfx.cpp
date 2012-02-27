@@ -1,7 +1,7 @@
 //
 // StdAfx.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -30,7 +30,7 @@ static char THIS_FILE[] = __FILE__;
 const LPCTSTR protocolNames[] =
 {
 	_T(""),
-	_T("Gnutella"),
+	_T("Gnutella1"),
 	_T("Gnutella2"),
 	_T("eDonkey2000"),
 	_T("HTTP"),

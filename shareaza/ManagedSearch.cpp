@@ -1,7 +1,7 @@
 //
 // ManagedSearch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -408,7 +408,7 @@ BOOL CManagedSearch::ExecuteG1Mesh(const DWORD /*tTicks*/, const DWORD /*tSecs*/
 {
 	ASSUME_LOCK( SearchManager.m_pSection );
 
-	theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Multicast querying Gnutella 1 neighbours") );
+	theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Multicast querying %s neighbours"), protocolNames[ PROTOCOL_G1 ] );
 
 	Neighbours.SendQuery( m_pSearch );
 

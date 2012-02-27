@@ -1,7 +1,7 @@
 //
 // EDNeighbour.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -501,9 +501,10 @@ BOOL CEDNeighbour::OnServerIdent(CEDPacket* pPacket)
 	}
 
 	if ( *m_oGUID.begin() == 0x2A2A2A2A )
-		m_sUserAgent = _T("eFarm Server");
+		m_sUserAgent = _T("eFarm");
 	else
-		m_sUserAgent = _T("eDonkey2000 Server");
+		m_sUserAgent = protocolNames[ PROTOCOL_ED2K ];
+	m_sUserAgent += _T(" Server");
 
 	CQuickLock oLock( HostCache.eDonkey.m_pSection );
 

@@ -1500,7 +1500,8 @@ void CMainWnd::UpdateMessages()
 			// If G1, G2, eDonkey are disabled and only BitTorrent is enabled say connected
 			if( ! Settings.Gnutella1.EnableToday &&
 				! Settings.Gnutella2.EnableToday &&
-				! Settings.eDonkey.EnableToday )
+				! Settings.eDonkey.EnableToday &&
+				! Settings.DC.EnableToday )
 			{
 				strMessage.Format( LoadString( IDS_STATUS_BAR_CONNECTED_SIMPLE ),
 					Settings.SmartVolume( nLocalVolume, KiloBytes ) );

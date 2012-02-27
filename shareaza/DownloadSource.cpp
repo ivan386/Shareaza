@@ -1,7 +1,7 @@
 //
 // DownloadSource.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -151,7 +151,7 @@ CDownloadSource::CDownloadSource(const CDownload* pDownload, DWORD nClientID,
 
 	m_bED2K		= TRUE;
 	m_oGUID		= oGUID;
-	m_sServer	= _T("eDonkey2000");
+	m_sServer	= protocolNames[ PROTOCOL_ED2K ];
 
 	ResolveURL();
 }

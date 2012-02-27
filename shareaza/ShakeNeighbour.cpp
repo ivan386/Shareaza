@@ -1006,7 +1006,7 @@ BOOL CShakeNeighbour::OnHeadersComplete()
 BOOL CShakeNeighbour::OnHeadersCompleteG2()
 {
 	// Report that a set of Gnutella2 headers from a remote computer are complete
-	theApp.Message( MSG_DEBUG, _T("Headers Complete: G2 client") );
+	theApp.Message( MSG_DEBUG, _T("Headers Complete: %s client"), protocolNames[ PROTOCOL_G2 ] );
 
 	if ( m_bUltraPeerSet == TRI_TRUE )
 	{
@@ -1219,7 +1219,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG2()
 BOOL CShakeNeighbour::OnHeadersCompleteG1()
 {
 	// Report that a set of Gnutella headers from a remote computer are complete
-	theApp.Message( MSG_DEBUG, _T("Headers Complete: G1 client") );
+	theApp.Message( MSG_DEBUG, _T("Headers Complete: %s client"), protocolNames[ PROTOCOL_G1 ] );
 
 	if ( m_bUltraPeerSet == TRI_TRUE )
 	{

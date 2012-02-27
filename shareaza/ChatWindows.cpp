@@ -1,7 +1,7 @@
 //
 // ChatWindows.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -181,16 +181,16 @@ CPrivateChatWnd* CChatWindows::OpenPrivate(const Hashes::Guid& oGUID, const SOCK
 	switch ( nProtocol )
 	{
 	case PROTOCOL_G1:
-		Settings.Gnutella1.EnableToday = TRUE;
+		Settings.Gnutella1.EnableToday = true;
 		return OpenPrivateGnutella( oGUID, pHost, bMustPush, PROTOCOL_ANY );
 
 	case PROTOCOL_G2:
 	case PROTOCOL_HTTP:
-		Settings.Gnutella2.EnableToday = TRUE;
+		Settings.Gnutella2.EnableToday = true;
 		return OpenPrivateGnutella( oGUID, pHost, bMustPush, PROTOCOL_ANY );
 
 	case PROTOCOL_ED2K:
-		Settings.eDonkey.EnableToday = TRUE;
+		Settings.eDonkey.EnableToday = true;
 		return OpenPrivateED2K( oGUID, pHost, bMustPush, pServer );
 
 	default:

@@ -1,7 +1,7 @@
 //
 // Remote.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1257,9 +1257,11 @@ void CRemote::PageNetwork()
 	Add( _T("random"), str );
 	Output( _T("networkHeader") );
 	
-	PageNetworkNetwork( PROTOCOL_G2, &Settings.Gnutella2.EnableToday, _T("Gnutella2") );
-	PageNetworkNetwork( PROTOCOL_G1, &Settings.Gnutella1.EnableToday, _T("Gnutella1") );
-	PageNetworkNetwork( PROTOCOL_ED2K, &Settings.eDonkey.EnableToday, _T("eDonkey") );
+	PageNetworkNetwork( PROTOCOL_G2, &Settings.Gnutella2.EnableToday, protocolNames[ PROTOCOL_G2 ] );
+	PageNetworkNetwork( PROTOCOL_G1, &Settings.Gnutella1.EnableToday, protocolNames[ PROTOCOL_G1 ] );
+	PageNetworkNetwork( PROTOCOL_ED2K, &Settings.eDonkey.EnableToday, protocolNames[ PROTOCOL_ED2K ] );
+	PageNetworkNetwork( PROTOCOL_BT, &Settings.BitTorrent.EnableToday, protocolNames[ PROTOCOL_BT ] );
+	PageNetworkNetwork( PROTOCOL_DC, &Settings.DC.EnableToday, protocolNames[ PROTOCOL_DC ] );
 	
 	Output( _T("networkFooter") );
 }

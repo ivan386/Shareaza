@@ -1,7 +1,7 @@
 //
 // G2Neighbour.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -987,7 +987,7 @@ BOOL CG2Neighbour::ParseKHLPacket(CG2Packet* pPacket, const SOCKADDR_IN* pHost)
 		bInvalid = TRUE;
 
 	if ( bInvalid )
-		theApp.Message( MSG_ERROR, _T("G2: Invalid KHL packet received from %s"),
+		theApp.Message( MSG_ERROR, _T("[G2] Invalid KHL packet received from %s"),
 			(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ) );
 
 	return TRUE;

@@ -655,8 +655,8 @@ void CSettings::Load()
 	Gnutella1.EnableToday		= Gnutella1.EnableAlways;
 	Gnutella2.EnableToday		= Gnutella2.EnableAlways;
 	eDonkey.EnableToday			= eDonkey.EnableAlways;
-	DC.EnableToday				= DC.EnableAlways;
 	BitTorrent.EnableToday		= BitTorrent.EnableAlways;
+	DC.EnableToday				= DC.EnableAlways;
 
 	// Make sure some needed paths exist
 	CreateDirectory( General.Path + _T("\\Data") );
@@ -699,12 +699,10 @@ void CSettings::Load()
 	// Set ed2k and G1
 	if ( GetOutgoingBandwidth() < 2 )
 	{
-		DC.EnableToday			= false;
-		DC.EnableAlways			= false;
-		eDonkey.EnableToday		= false;
-		eDonkey.EnableAlways	= false;
-		Gnutella1.EnableToday	= false;
-		Gnutella1.EnableAlways	= false;
+		Gnutella1.EnableToday = Gnutella1.EnableAlways = false;
+		eDonkey.EnableToday = eDonkey.EnableAlways = false;
+		BitTorrent.EnableToday = BitTorrent.EnableAlways = false;
+		DC.EnableToday = DC.EnableAlways = false;
 	}
 	// Set number of torrents
 	BitTorrent.DownloadTorrents = min( BitTorrent.DownloadTorrents, ( GetOutgoingBandwidth() / 2u + 2u ) );
@@ -739,10 +737,11 @@ void CSettings::Load()
 
 #ifdef LAN_MODE
 	Connection.IgnoreLocalIP = false;
+	Gnutella1.EnableToday = Gnutella1.EnableAlways = false;
 	Gnutella2.EnableToday = Gnutella2.EnableAlways = true;
 	eDonkey.EnableToday = eDonkey.EnableAlways = false;
-	Gnutella1.EnableToday = Gnutella1.EnableAlways = false;
 	BitTorrent.EnableToday = BitTorrent.EnableAlways = false;
+	DC.EnableToday = DC.EnableAlways = false;
 	Gnutella.MaxHits = 0;
 #endif // LAN_MODE
 

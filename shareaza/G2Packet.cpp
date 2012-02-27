@@ -1,7 +1,7 @@
 //
 // G2Packet.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1075,7 +1075,7 @@ BOOL CG2Packet::OnPush(const SOCKADDR_IN* pHost)
 
 	if ( ! SkipCompound( nLength, 6 ) )
 	{
-		theApp.Message( MSG_ERROR, _T("G2UDP: Invalid PUSH packet received from %s"), 
+		theApp.Message( MSG_ERROR, _T("[G2] Invalid PUSH packet received from %s"), 
 			(LPCTSTR)inet_ntoa( pHost->sin_addr ) );
 		Statistics.Current.Gnutella2.Dropped++;
 		return FALSE;
