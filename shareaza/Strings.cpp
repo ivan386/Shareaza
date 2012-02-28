@@ -1,7 +1,7 @@
 //
 // Strings.cpp
 //
-// Copyright (c) Shareaza Development Team, 2010-2011.
+// Copyright (c) Shareaza Development Team, 2010-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -623,16 +623,22 @@ LPCTSTR _tcsnistr(LPCTSTR pszString, LPCTSTR pszSubString, size_t nlen)
 	}
 }
 
-__int64 atoin(__in_bcount(nLen) const char* pszString, __in size_t nLen)
+bool atoin(__in_bcount(nLen) const char* pszString, __in size_t nLen, __int64& nNum)
 {
-	__int64 nNum = 0;
+	bool bNeg = false;
+	nNum = 0;
 	for ( size_t i = 0; i < nLen; ++i )
 	{
-		if ( pszString[ i ] < '0' || pszString[ i ] > '9' )
-			return -1;
-		nNum = nNum * 10 + ( pszString[ i ] - '0' );
+		if ( pszString[ i ] >= '0' && pszString[ i ] <= '9' )
+			nNum = nNum * 10 + ( pszString[ i ] - '0' );
+		else if ( i == 0 && nLen > 1 && pszString[ i ] == '-' )
+			bNeg = true;
+		else
+			return false;
 	}
-	return nNum;
+	if ( bNeg )
+		nNum = - nNum;
+	return true;
 }
 
 void Split(const CString& strSource, TCHAR cDelimiter, CStringArray& pAddIt, BOOL bAddFirstEmpty)

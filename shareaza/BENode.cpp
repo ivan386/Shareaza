@@ -460,8 +460,8 @@ void CBENode::Decode(LPCBYTE& pInput, DWORD& nInput, DWORD nSize)
 
 		if ( nSeek >= 40 ) AfxThrowUserException();
 
-		__int64 nValue = atoin( (LPCSTR)pInput, nSeek );
-		if ( nValue == -1 )
+		__int64 nValue;
+		if ( ! atoin( (LPCSTR)pInput, nSeek, nValue ) )
 			AfxThrowUserException();
 		m_nValue = (QWORD)nValue;
 
@@ -535,8 +535,8 @@ int CBENode::DecodeLen(LPCBYTE& pInput, DWORD& nInput)
 
 	if ( nSeek >= 32 )
 		AfxThrowUserException();
-	__int64 nLen = atoin( (LPCSTR)pInput, nSeek );
-	if ( nLen == -1 )
+	__int64 nLen;
+	if ( ! atoin( (LPCSTR)pInput, nSeek, nLen ) || nLen < 0 )
 		AfxThrowUserException();
 	INC( nSeek + 1 );
 

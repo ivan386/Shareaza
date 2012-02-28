@@ -92,8 +92,8 @@ CString URLDecodeUnicode(LPCTSTR pszInput);
 LPCTSTR _tcsistr(LPCTSTR pszString, LPCTSTR pszSubString);
 LPCTSTR _tcsnistr(LPCTSTR pszString, LPCTSTR pszSubString, size_t nlen);
 
-// Convert string to integer (64-bit, decimal only, no sign, no spaces allowed). Returns -1 on error.
-__int64 atoin(__in_bcount(nLen) const char* pszString, __in size_t nLen);
+// Convert string to integer (64-bit, decimal only, with sign, no spaces allowed). Returns false on error.
+bool atoin(__in_bcount(nLen) const char* pszString, __in size_t nLen, __int64& nNum);
 
 // Split string using delimiter to string array
 void Split(const CString& strSource, TCHAR cDelimiter, CStringArray& pAddIt, BOOL bAddFirstEmpty = FALSE);

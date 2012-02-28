@@ -660,7 +660,10 @@ BOOL CBTInfo::LoadTorrentBuffer(const CBuffer* pBuffer)
 {
 	auto_ptr< CBENode > pNode ( CBENode::Decode( pBuffer ) );
 	if ( ! pNode.get() )
+	{
+		theApp.Message( MSG_ERROR, _T("[BT] Failed to decode torrent data: %s"), pBuffer->ReadString( (size_t)-1 ) );
 		return FALSE;
+	}
  
 	return LoadTorrentTree( pNode.get() );
 }
