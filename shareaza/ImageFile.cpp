@@ -1,7 +1,7 @@
 //
 // ImageFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -641,29 +641,29 @@ BOOL CImageFile::SwapRGB()
 
 HBITMAP CImageFile::LoadBitmapFromFile(LPCTSTR pszFile)
 {
-	if ( _tcsicmp( PathFindExtension( pszFile ), _T(".bmp") ) == 0 )
-		return (HBITMAP)LoadImage( NULL, pszFile, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE );
+	if ( HBITMAP hBitmap = (HBITMAP)LoadImage( NULL, pszFile, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE  ) )
+		return hBitmap;
 
 	CImageFile pFile;
-	return ( pFile.LoadFromFile( pszFile, FALSE, FALSE ) && pFile.EnsureRGB() ) ?
-		pFile.CreateBitmap() : NULL;
+	if ( pFile.LoadFromFile( pszFile, FALSE, FALSE ) && pFile.EnsureRGB() )
+		return pFile.CreateBitmap();
+
+	return NULL;
 }
+
+static const LPCTSTR pTypes[] = { RT_PNG, RT_JPEG };
 
 HBITMAP CImageFile::LoadBitmapFromResource(UINT nResourceID, HINSTANCE hInstance)
 {
-	HBITMAP hBitmap = (HBITMAP)LoadImage( hInstance,
-		MAKEINTRESOURCE( nResourceID ), IMAGE_BITMAP, 0, 0, 0 );
-	if ( ! hBitmap )
+	if ( HBITMAP hBitmap = (HBITMAP)LoadImage( hInstance, MAKEINTRESOURCE( nResourceID ), IMAGE_BITMAP, 0, 0, 0 ) )
+		return hBitmap;
+
+	for ( int i = 0; i < _countof( pTypes ); ++i )
 	{
 		CImageFile pFile;
-		hBitmap = ( pFile.LoadFromResource( hInstance, nResourceID, RT_PNG ) &&
-			pFile.EnsureRGB() ) ? pFile.CreateBitmap() : NULL;
+		if ( pFile.LoadFromResource( hInstance, nResourceID, pTypes[ i ] ) && pFile.EnsureRGB() )
+			return pFile.CreateBitmap();
 	}
-	if ( ! hBitmap )
-	{
-		CImageFile pFile;
-		hBitmap = ( pFile.LoadFromResource( hInstance, nResourceID, RT_JPEG ) &&
-			pFile.EnsureRGB() ) ? pFile.CreateBitmap() : NULL;
-	}
-	return hBitmap;
+
+	return NULL;
 }

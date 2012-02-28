@@ -270,6 +270,18 @@ BOOL CShareazaApp::InitInstance()
 	LoadStdProfileSettings();	// Load MRU file list and last preview state.
 	EnableShellOpen();			// Enable open data files when user double-click the files from within the Windows File Manager.
 	Settings.Load();			// Loads settings. Depends on InitResources().
+
+	// Test and re-register plugins
+	CComPtr< IUnknown > pTest( Plugins.GetPlugin( _T("ImageService"), _T(".png") ) );
+	if ( Settings.Live.FirstRun || ! pTest )
+	{
+		pTest.Release();
+		if ( ! Plugins.Register( Settings.General.Path ) )
+		{
+			Plugins.Register( m_strBinaryPath.Left( m_strBinaryPath.ReverseFind( _T('\\') ) ) );
+		}
+	}
+
 	InitFonts();				// Loads default fonts. Depends on Settings.Load().
 	Skin.CreateDefault();		// Loads colors, fonts and language. Depends on InitFonts().
 
@@ -339,8 +351,6 @@ BOOL CShareazaApp::InitInstance()
 		CThumbCache::InitDatabase();
 	SplashStep( L"P2P URIs" );
 		CShareazaURL::Register( TRUE, TRUE );
-		if ( Settings.Live.FirstRun )
-			Plugins.Register();
 	SplashStep( L"Shell Icons" );
 		ShellIcons.Clear();
 	SplashStep( L"Metadata Schemas" );
@@ -437,8 +447,6 @@ BOOL CShareazaApp::InitInstance()
 
 	ProcessShellCommand( m_cmdInfo );
 
-//	afxMemDF = allocMemDF | delayFreeMemDF | checkAlwaysMemDF;
-
 	return TRUE;
 }
 
@@ -484,6 +492,7 @@ int CShareazaApp::ExitInstance()
 		}
 
 		SplashStep( L"Finalizing" );
+		HostCache.Clear();
 		Downloads.Clear( true );
 		Library.Clear();
 		CoolMenu.Clear();

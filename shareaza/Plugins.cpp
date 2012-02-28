@@ -1,7 +1,7 @@
 //
 // Plugins.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -21,7 +21,6 @@
 
 #include "StdAfx.h"
 #include "Shareaza.h"
-#include "Settings.h"
 #include "Plugins.h"
 #include "SharedFile.h"
 #include "Application.h"
@@ -45,14 +44,17 @@ CPlugins::CPlugins() :
 	ZeroMemory( &m_inCLSID, sizeof( m_inCLSID ) );
 }
 
-void CPlugins::Register()
+BOOL CPlugins::Register(const CString& sGeneralPath)
 {
+	Clear();
+
+	BOOL bError = FALSE;
 	CList< HINSTANCE > oModules; // Cache
 
 	LPCTSTR szParam = AfxGetPerUserRegistration() ? _T("/RegServerPerUser") : _T("/RegServer");
 
 	CFileFind finder;
-	BOOL bWorking = finder.FindFile( Settings.General.Path + _T("\\*.*") );
+	BOOL bWorking = finder.FindFile( sGeneralPath + _T("\\*.*") );
 	while ( bWorking )
 	{
 		bWorking = finder.FindNextFile();
@@ -88,6 +90,8 @@ void CPlugins::Register()
 
 				oModules.AddTail( hDll );
 			}
+			else
+				bError = TRUE;
 		}
 		else if ( sExt.CompareNoCase( _T(".exe") ) == 0 )
 		{
@@ -113,6 +117,8 @@ void CPlugins::Register()
 
 	for ( POSITION pos = oModules.GetHeadPosition(); pos; )
 		FreeLibrary( oModules.GetNext( pos ) );
+
+	return ! bError;
 }
 
 //////////////////////////////////////////////////////////////////////

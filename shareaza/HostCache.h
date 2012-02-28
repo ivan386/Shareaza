@@ -282,6 +282,7 @@ public:
 
 	BOOL				Load();
 	BOOL				Save();
+	void				Clear();
 
 	// Import DC++, ED2K or Kademlia file. Returns imported host count.
 	int					Import(LPCTSTR pszFile, BOOL bFreshOnly = FALSE);
@@ -356,7 +357,6 @@ protected:
 	DWORD						m_tLastPruneTime;
 
 	void				Serialize(CArchive& ar);
-	void				Clear();
 	int					LoadDefaultServers(PROTOCOLID nProtocol);
 };
 

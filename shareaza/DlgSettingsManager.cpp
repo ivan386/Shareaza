@@ -1,7 +1,7 @@
 //
 // DlgSettingsManager.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -110,50 +110,50 @@ INT_PTR CSettingsManagerDlg::DoModal(LPCTSTR pszWindow)
 {
 	BOOL bAdvanced			= Settings.General.GUIMode != GUI_BASIC;
 
-	CRichSettingsPage		gGeneral( _T("CGeneralSettingsGroup") );
-	CGeneralSettingsPage	pGeneral;
-	CLibrarySettingsPage	pLibrary;
-	CMediaSettingsPage		pMedia;
-	CCommunitySettingsPage	pCommunity;
-	CWebSettingsPage		pWeb;
-	CRichSettingsPage		gInternet( _T("CInternetSettingsGroup") );
-	CConnectionSettingsPage	pConnection;
-	CDownloadsSettingsPage	pDownloads;
-	CUploadsSettingsPage	pUploads;
-	CRemoteSettingsPage		pRemote;
-	CNetworksSettingsPage	gNetworks;
-	CGnutellaSettingsPage	pGnutella;
-	CDonkeySettingsPage		pDonkey;
-	CBitTorrentSettingsPage	pTorrent;
-	CSkinsSettingsPage		pSkins;
-	CPluginsSettingsPage	pPlugins;
-	CAdvancedSettingsPage	pAdvanced;
-	CIRCSettingsPage		pIRC;
+	CAutoPtr< CRichSettingsPage > gGeneral( new CRichSettingsPage( _T("CGeneralSettingsGroup") ) );
+	CAutoPtr< CGeneralSettingsPage > pGeneral( new CGeneralSettingsPage );
+	CAutoPtr< CLibrarySettingsPage > pLibrary( new CLibrarySettingsPage );
+	CAutoPtr< CMediaSettingsPage > pMedia( new CMediaSettingsPage );
+	CAutoPtr< CCommunitySettingsPage > pCommunity( new CCommunitySettingsPage );
+	CAutoPtr< CWebSettingsPage > pWeb( new CWebSettingsPage );
+	CAutoPtr< CRichSettingsPage > gInternet( new CRichSettingsPage( _T("CInternetSettingsGroup") ) );
+	CAutoPtr< CConnectionSettingsPage > pConnection( new CConnectionSettingsPage );
+	CAutoPtr< CDownloadsSettingsPage > pDownloads( new CDownloadsSettingsPage );
+	CAutoPtr< CUploadsSettingsPage > pUploads( new CUploadsSettingsPage );
+	CAutoPtr< CRemoteSettingsPage > pRemote( new CRemoteSettingsPage );
+	CAutoPtr< CNetworksSettingsPage > gNetworks( new CNetworksSettingsPage );
+	CAutoPtr< CGnutellaSettingsPage > pGnutella( new CGnutellaSettingsPage );
+	CAutoPtr< CDonkeySettingsPage > pDonkey( new CDonkeySettingsPage );
+	CAutoPtr< CBitTorrentSettingsPage > pTorrent( new CBitTorrentSettingsPage );
+	CAutoPtr< CSkinsSettingsPage > pSkins( new CSkinsSettingsPage );
+	CAutoPtr< CPluginsSettingsPage > pPlugins( new CPluginsSettingsPage );
+	CAutoPtr< CAdvancedSettingsPage > pAdvanced( new CAdvancedSettingsPage );
+	CAutoPtr< CIRCSettingsPage > pIRC( new CIRCSettingsPage );
 
-	AddGroup( &gGeneral );
-	AddPage( &pGeneral );
-	AddPage( &pLibrary );
-	AddPage( &pMedia );
-	AddPage( &pCommunity );
-	AddPage( &pIRC );
-	AddPage( &pWeb );
-	AddGroup( &gInternet );
-	AddPage( &pConnection );
-	AddPage( &pDownloads );
-	AddPage( &pUploads );
-	AddPage( &pRemote );
+	AddGroup( gGeneral );
+	AddPage( pGeneral );
+	AddPage( pLibrary );
+	AddPage( pMedia );
+	AddPage( pCommunity );
+	AddPage( pIRC );
+	AddPage( pWeb );
+	AddGroup( gInternet );
+	AddPage( pConnection );
+	AddPage( pDownloads );
+	AddPage( pUploads );
+	AddPage( pRemote );
 	if ( bAdvanced )
 	{
-		AddGroup( &gNetworks );
-		AddPage( &pGnutella );
+		AddGroup( gNetworks );
+		AddPage( pGnutella );
 #ifndef LAN_MODE
-		AddPage( &pDonkey );
-		AddPage( &pTorrent );
+		AddPage( pDonkey );
+		AddPage( pTorrent );
 #endif
 	}
-	AddGroup( &pSkins );
-	AddGroup( &pPlugins );
-	if ( bAdvanced ) AddGroup( &pAdvanced );
+	AddGroup( pSkins );
+	AddGroup( pPlugins );
+	if ( bAdvanced ) AddGroup( pAdvanced );
 
 	if ( pszWindow != NULL )
 	{

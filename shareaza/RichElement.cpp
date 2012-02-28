@@ -1,7 +1,7 @@
 //
 // RichElement.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -236,12 +236,7 @@ void CRichElement::PrePaintBitmap(CDC* /*pDC*/)
 	}
 	else
 	{
-		CImageFile pFile;
-
-		CString strFile = Settings.General.Path + '\\' + m_sText;
-		if ( ! pFile.LoadFromFile( strFile ) ) return;
-		if ( ! pFile.EnsureRGB() ) return;
-		m_hImage = pFile.CreateBitmap();
+		m_hImage = CImageFile::LoadBitmapFromFile( Settings.General.Path + '\\' + m_sText );
 	}
 }
 
