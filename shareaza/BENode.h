@@ -1,7 +1,7 @@
 //
 // BENode.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -36,7 +36,7 @@ public:
 public:
 	int			m_nType;
 	LPVOID		m_pValue;
-	QWORD		m_nValue;
+	__int64		m_nValue;
 	QWORD		m_nPosition;
 	QWORD		m_nSize;
 
@@ -69,13 +69,13 @@ public:
 		return m_nType == nType;
 	}
 
-	inline QWORD GetInt() const
+	inline __int64 GetInt() const
 	{
 		if ( m_nType != beInt ) return 0;
 		return m_nValue;
 	}
 
-	inline void SetInt(QWORD nValue)
+	inline void SetInt(__int64 nValue)
 	{
 		Clear();
 		m_nType		= beInt;
@@ -103,7 +103,7 @@ public:
 	{
 		Clear();
 		m_nType		= beString;
-		m_nValue	= (QWORD)nLength;
+		m_nValue	= (__int64)nLength;
 		m_pValue	= new BYTE[ nLength + ( bNull ? 1 : 0 ) ];
 		CopyMemory( m_pValue, pString, nLength + ( bNull ? 1 : 0 ) );
 	}
@@ -134,7 +134,7 @@ public:
 	{
 		if ( m_nType != beList && m_nType != beDict ) return NULL;
 		if ( m_nType == beDict ) nItem *= 2;
-		if ( nItem < 0 || nItem >= (int)m_nValue ) return NULL;
+		if ( nItem < 0 || nItem >= m_nValue ) return NULL;
 		return *( (CBENode**)m_pValue + nItem );
 	}
 

@@ -889,7 +889,7 @@ BOOL CBTInfo::LoadTorrentTree(const CBENode* pRoot)
 	// Get the private flag (if present)
 	const CBENode* pPrivate = pInfo->GetNode( "private" );
 	if ( ( pPrivate ) &&  ( pPrivate->IsType( CBENode::beInt )  ) )
-		m_bPrivate = pPrivate->GetInt() > 0;
+		m_bPrivate = ( pPrivate->GetInt() != 0 );
 
 	// Get the name
 	m_sName = pInfo->GetStringFromSubNode( "name", m_nEncoding );
@@ -968,7 +968,7 @@ BOOL CBTInfo::LoadTorrentTree(const CBENode* pRoot)
 	{
 		if ( ! pSingleLength->IsType( CBENode::beInt ) )
 			return FALSE;
-		m_nSize = pSingleLength->GetInt();
+		m_nSize = (QWORD)pSingleLength->GetInt();
 		if ( ! m_nSize )
 			return FALSE;
 
@@ -1022,7 +1022,7 @@ BOOL CBTInfo::LoadTorrentTree(const CBENode* pRoot)
 
 			const CBENode* pLength = pFile->GetNode( "length" );
 			if ( ! pLength || ! pLength->IsType( CBENode::beInt ) ) return FALSE;
-			pBTFile->m_nSize = pLength->GetInt();
+			pBTFile->m_nSize = (QWORD)pLength->GetInt();
 
 			pBTFile->m_nOffset = nOffset;
 

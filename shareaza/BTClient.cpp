@@ -988,7 +988,7 @@ BOOL CBTClient::OnBeHandshake(CBTPacket* pPacket)
 
 	if ( const CBENode* pExchange = pRoot->GetNode( BT_DICT_SRC_EXCHANGE ) )
 	{
-		m_nSrcExchangeID = pExchange->GetInt();
+		m_nSrcExchangeID = (QWORD)pExchange->GetInt();
 
 		SendSourceRequest();
 	}
@@ -1142,7 +1142,7 @@ BOOL CBTClient::OnExtendedHandshake(CBTPacket* pPacket)
 	{
 		if ( CBENode* pUtMetadata = pMetadata->GetNode( BT_DICT_UT_METADATA ) )
 		{
-			m_nUtMetadataID = pUtMetadata->GetInt();
+			m_nUtMetadataID = (QWORD)pUtMetadata->GetInt();
 			if ( m_nUtMetadataID && ! m_pDownload->m_pTorrent.m_pBlockBTH ) // Send first info request
 			{
 				int nNextPiece = m_pDownload->m_pTorrent.NextInfoPiece();
@@ -1152,13 +1152,13 @@ BOOL CBTClient::OnExtendedHandshake(CBTPacket* pPacket)
 		}
 		if ( CBENode* pUtMetadataSize = pRoot->GetNode( BT_DICT_METADATA_SIZE ) )
 		{
-			m_nUtMetadataSize = pUtMetadataSize->GetInt();
+			m_nUtMetadataSize = (QWORD)pUtMetadataSize->GetInt();
 		}
 
 		if ( CBENode* pUtPex = pMetadata->GetNode( BT_DICT_UT_PEX ) )
 		{
 			QWORD nOldUtPexID = m_nUtPexID;
-			m_nUtPexID = pUtPex->GetInt();
+			m_nUtPexID = (QWORD)pUtPex->GetInt();
 			if ( ! nOldUtPexID && m_nUtPexID )
 			{
 				SendUtPex();
@@ -1168,7 +1168,7 @@ BOOL CBTClient::OnExtendedHandshake(CBTPacket* pPacket)
 
 		if ( CBENode* pLtTex = pMetadata->GetNode( BT_DICT_LT_TEX ) )
 		{
-			m_nLtTexID = pLtTex->GetInt();
+			m_nLtTexID = (QWORD)pLtTex->GetInt();
 		}
 		if ( CBENode* pLtTexTrackers = pRoot->GetNode( BT_DICT_TRACKERS ) )
 		{
@@ -1236,8 +1236,8 @@ BOOL CBTClient::OnMetadataRequest(CBTPacket* pPacket)
 	{
 		if ( CBENode* pPiece = pRoot->GetNode( BT_DICT_PIECE ) )
 		{
-			QWORD nMsgType	= pMsgType->GetInt();
-			QWORD nPiece	= pPiece->GetInt();
+			QWORD nMsgType	= (QWORD)pMsgType->GetInt();
+			QWORD nPiece	= (QWORD)pPiece->GetInt();
 
 			if ( nMsgType == UT_METADATA_REQUEST )
 			{
@@ -1248,7 +1248,7 @@ BOOL CBTClient::OnMetadataRequest(CBTPacket* pPacket)
 			{
 				if ( CBENode* pTotalSize = pRoot->GetNode( BT_DICT_TOTAL_SIZE ) )
 				{
-					QWORD nTotalSize = pTotalSize->GetInt();
+					QWORD nTotalSize = (QWORD)pTotalSize->GetInt();
 					ASSERT( ! ( m_nUtMetadataSize && m_nUtMetadataSize != nTotalSize ) );
 					if ( ! m_nUtMetadataSize )
 						m_nUtMetadataSize = nTotalSize;
