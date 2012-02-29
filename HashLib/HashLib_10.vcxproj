@@ -45,6 +45,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -107,6 +108,10 @@
       <BaseAddress>0x29100000</BaseAddress>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
+    <MASM>
+      <WarningLevel>2</WarningLevel>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+    </MASM>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Midl>
@@ -133,6 +138,10 @@
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
+    <MASM>
+      <WarningLevel>2</WarningLevel>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+    </MASM>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -162,6 +171,10 @@
       <BaseAddress>0x29100000</BaseAddress>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
+    <MASM>
+      <WarningLevel>2</WarningLevel>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+    </MASM>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Midl>
@@ -193,6 +206,10 @@
       <TargetMachine>MachineX64</TargetMachine>
       <SetChecksum>true</SetChecksum>
     </Link>
+    <MASM>
+      <WarningLevel>2</WarningLevel>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+    </MASM>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ED2K.cpp" />
@@ -209,70 +226,26 @@
     <ClCompile Include="TigerTree.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="MD4_asm.asm">
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ml.exe /c /Cx /coff /Zi /nologo /Fo "$(ProjectDir)$(IntDir)%(Filename).obj" "%(FullPath)"
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)$(IntDir)%(Filename).obj;%(Outputs)</Outputs>
+    <MASM Include="MD4_asm.asm">
+      <FileType>Document</FileType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">ml.exe /c /Cx /coff /Zi /nologo /Fo "$(ProjectDir)$(IntDir)%(Filename).obj" "%(FullPath)"
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)$(IntDir)%(Filename).obj;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ml.exe /c /Cx /coff /Zi /nologo /Fo "$(ProjectDir)$(IntDir)%(Filename).obj" "%(FullPath)"
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)$(IntDir)%(Filename).obj;%(Outputs)</Outputs>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">ml.exe /c /Cx /coff /Zi /nologo /Fo "$(ProjectDir)$(IntDir)%(Filename).obj" "%(FullPath)"
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)$(IntDir)%(Filename).obj;%(Outputs)</Outputs>
-    </CustomBuild>
-    <CustomBuild Include="MD5_asm.asm">
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ml.exe /c /Cx /coff /Zi /nologo /Fo "$(ProjectDir)$(IntDir)%(Filename).obj" "%(FullPath)"
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)$(IntDir)%(Filename).obj;%(Outputs)</Outputs>
+    </MASM>
+    <MASM Include="MD5_asm.asm">
+      <FileType>Document</FileType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">ml.exe /c /Cx /coff /Zi /nologo /Fo "$(ProjectDir)$(IntDir)%(Filename).obj" "%(FullPath)"
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)$(IntDir)%(Filename).obj;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ml.exe /c /Cx /coff /Zi /nologo /Fo "$(ProjectDir)$(IntDir)%(Filename).obj" "%(FullPath)"
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)$(IntDir)%(Filename).obj;%(Outputs)</Outputs>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">ml.exe /c /Cx /coff /Zi /nologo /Fo "$(ProjectDir)$(IntDir)%(Filename).obj" "%(FullPath)"
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)$(IntDir)%(Filename).obj;%(Outputs)</Outputs>
-    </CustomBuild>
-    <CustomBuild Include="SHA_asm.asm">
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ml.exe /c /Cx /coff /Zi /nologo /Fo "$(ProjectDir)$(IntDir)%(Filename).obj" "%(FullPath)"
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)$(IntDir)%(Filename).obj;%(Outputs)</Outputs>
+    </MASM>
+    <MASM Include="SHA_asm.asm">
+      <FileType>Document</FileType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">ml.exe /c /Cx /coff /Zi /nologo /Fo "$(ProjectDir)$(IntDir)%(Filename).obj" "%(FullPath)"
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)$(IntDir)%(Filename).obj;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ml.exe /c /Cx /coff /Zi /nologo /Fo "$(ProjectDir)$(IntDir)%(Filename).obj" "%(FullPath)"
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)$(IntDir)%(Filename).obj;%(Outputs)</Outputs>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">ml.exe /c /Cx /coff /Zi /nologo /Fo "$(ProjectDir)$(IntDir)%(Filename).obj" "%(FullPath)"
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)$(IntDir)%(Filename).obj;%(Outputs)</Outputs>
-    </CustomBuild>
-    <CustomBuild Include="Tiger_asm.asm">
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ml.exe /c /Cx /coff /Zi /nologo /Fo "$(ProjectDir)$(IntDir)%(Filename).obj" "%(FullPath)"
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)$(IntDir)%(Filename).obj;%(Outputs)</Outputs>
+    </MASM>
+    <MASM Include="Tiger_asm.asm">
+      <FileType>Document</FileType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">ml.exe /c /Cx /coff /Zi /nologo /Fo "$(ProjectDir)$(IntDir)%(Filename).obj" "%(FullPath)"
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)$(IntDir)%(Filename).obj;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ml.exe /c /Cx /coff /Zi /nologo /Fo "$(ProjectDir)$(IntDir)%(Filename).obj" "%(FullPath)"
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)$(IntDir)%(Filename).obj;%(Outputs)</Outputs>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">ml.exe /c /Cx /coff /Zi /nologo /Fo "$(ProjectDir)$(IntDir)%(Filename).obj" "%(FullPath)"
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)$(IntDir)%(Filename).obj;%(Outputs)</Outputs>
-    </CustomBuild>
+    </MASM>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ED2K.h" />
@@ -290,5 +263,6 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.targets" />
   </ImportGroup>
 </Project>

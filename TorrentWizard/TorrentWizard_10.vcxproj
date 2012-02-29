@@ -44,8 +44,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-  <ImportGroup Label="ExtensionSettings">
-  </ImportGroup>
+  <ImportGroup Label="ExtensionSettings" />
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
@@ -121,6 +120,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
+      <DelayLoadDLLs>version.dll;msimg32.dll;comdlg32.dll;comctl32.dll;winspool.drv;advapi32.dll;shell32.dll;shlwapi.dll;ole32.dll;oleaut32.dll;oleacc.dll;oledlg.dll;ws2_32.dll;gdiplus.dll;imm32.dll;winmm.dll</DelayLoadDLLs>
     </Link>
     <Manifest />
     <Bscmake>
@@ -156,6 +156,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX64</TargetMachine>
+      <DelayLoadDLLs>version.dll;msimg32.dll;comdlg32.dll;comctl32.dll;winspool.drv;advapi32.dll;shell32.dll;shlwapi.dll;ole32.dll;oleaut32.dll;oleacc.dll;oledlg.dll;ws2_32.dll;gdiplus.dll;imm32.dll;winmm.dll</DelayLoadDLLs>
     </Link>
     <Manifest />
     <Bscmake>
@@ -194,6 +195,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <SetChecksum>true</SetChecksum>
       <TargetMachine>MachineX86</TargetMachine>
+      <DelayLoadDLLs>version.dll;msimg32.dll;comdlg32.dll;comctl32.dll;winspool.drv;advapi32.dll;shell32.dll;shlwapi.dll;ole32.dll;oleaut32.dll;oleacc.dll;oledlg.dll;ws2_32.dll;gdiplus.dll;imm32.dll;winmm.dll</DelayLoadDLLs>
     </Link>
     <Manifest />
     <Bscmake>
@@ -234,6 +236,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <SetChecksum>true</SetChecksum>
       <TargetMachine>MachineX64</TargetMachine>
+      <DelayLoadDLLs>version.dll;msimg32.dll;comdlg32.dll;comctl32.dll;winspool.drv;advapi32.dll;shell32.dll;shlwapi.dll;ole32.dll;oleaut32.dll;oleacc.dll;oledlg.dll;ws2_32.dll;gdiplus.dll;imm32.dll;winmm.dll</DelayLoadDLLs>
     </Link>
     <Manifest />
     <Bscmake>
@@ -297,6 +300,5 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <ImportGroup Label="ExtensionTargets">
-  </ImportGroup>
+  <ImportGroup Label="ExtensionTargets" />
 </Project>

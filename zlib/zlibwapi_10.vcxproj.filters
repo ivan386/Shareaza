@@ -86,6 +86,12 @@
     <MASM Include="inffas32.asm">
       <Filter>Source Files</Filter>
     </MASM>
+    <MASM Include="gvmat64.asm">
+      <Filter>Source Files</Filter>
+    </MASM>
+    <MASM Include="inffasx64.asm">
+      <Filter>Source Files</Filter>
+    </MASM>
   </ItemGroup>
   <ItemGroup>
     <None Include="zlib.def">
@@ -146,13 +152,5 @@
     <ResourceCompile Include="zlibwapi.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <CustomBuild Include="gvmat64.asm">
-      <Filter>Source Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="inffasx64.asm">
-      <Filter>Source Files</Filter>
-    </CustomBuild>
   </ItemGroup>
 </Project>

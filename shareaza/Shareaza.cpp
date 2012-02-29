@@ -949,6 +949,7 @@ void CShareazaApp::InitResources()
 	{
 		(FARPROC&)m_pfnSHGetFolderPathW = GetProcAddress( m_hShell32, "SHGetFolderPathW" );
 		(FARPROC&)m_pfnSHGetKnownFolderPath = GetProcAddress( m_hShell32, "SHGetKnownFolderPath" );
+		(FARPROC&)m_pfnSHCreateItemFromParsingName = GetProcAddress( m_hShell32, "SHCreateItemFromParsingName" );
 	}
 
 	if ( ( m_hUser32 = LoadLibrary( _T("user32.dll") ) ) != NULL )

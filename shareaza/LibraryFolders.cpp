@@ -737,10 +737,10 @@ void CLibraryFolders::Maintain()
 		
 		pFolder->Maintain( TRUE );
 
-		if ( pIShellLib )
+		if ( pIShellLib && theApp.m_pfnSHCreateItemFromParsingName )
 		{
 			CComPtr< IShellItem > psiFolder;
-			SHCreateItemFromParsingName( (LPCWSTR)CT2W( pFolder->m_sPath ), NULL, IID_PPV_ARGS( &psiFolder ) );
+			theApp.m_pfnSHCreateItemFromParsingName( (LPCWSTR)CT2W( pFolder->m_sPath ), NULL, IID_PPV_ARGS( &psiFolder ) );
 			if ( psiFolder )
 				pIShellLib->AddFolder( psiFolder );
 		}
