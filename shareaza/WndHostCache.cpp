@@ -139,7 +139,7 @@ int CHostCacheWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 #endif
 
 	LoadState();
-	
+
 	PostMessage( WM_TIMER, 1 );
 
 	return 0;
@@ -521,7 +521,7 @@ void CHostCacheWnd::OnNeighboursCopy()
 		strURL.Format( _T("dchub://%s:%u/"),
 			(LPCTSTR)pHost->Address(), pHost->m_nUDPPort );
 	}
-	else if ( pHost->m_nProtocol == PROTOCOL_DC )
+	else if ( pHost->m_nProtocol == PROTOCOL_BT )
 	{
 		strURL.Format( _T("shareaza:btnode:%s:%u"),
 			(LPCTSTR)pHost->Address(), pHost->m_nUDPPort );
