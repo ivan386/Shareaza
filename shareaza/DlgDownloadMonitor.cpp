@@ -1,7 +1,7 @@
 //
 // DlgDownloadMonitor.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -151,7 +151,7 @@ void CDownloadMonitorDlg::OnSkinChange(BOOL bSet)
 		}
 		else
 		{
-			pDlg->m_pSkin = NULL;
+			pDlg->RemoveSkin();
 		}
 	}
 }

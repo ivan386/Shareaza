@@ -1193,6 +1193,9 @@ LRESULT CMainWnd::OnSkinChanged(WPARAM /*wParam*/, LPARAM /*lParam*/)
 
 	LockWindowUpdate();
 
+	if ( m_pSkin )
+		CoolInterface.EnableTheme( this, TRUE );
+
 	RemoveSkin();
 
 	m_wndMenuBar.SetMenu( NULL );
@@ -1221,7 +1224,8 @@ LRESULT CMainWnd::OnSkinChanged(WPARAM /*wParam*/, LPARAM /*lParam*/)
 
 	m_pSkin = Skin.GetWindowSkin( this );
 
-	CoolInterface.EnableTheme( this, ( m_pSkin == NULL ) );
+	if ( m_pSkin )
+		CoolInterface.EnableTheme( this, FALSE );
 
 	SetWindowRgn( NULL, TRUE );
 

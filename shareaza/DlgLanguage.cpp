@@ -1,7 +1,7 @@
 //
 // DlgLanguage.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -121,10 +121,7 @@ BOOL CLanguageDlg::OnInitDialog()
 	pScroll.nPage	= m_nRows + 1;
 	SetScrollInfo( SB_VERT, &pScroll, TRUE );
 
-	if ( m_pSkin )
-		m_pSkin->CalcWindowRect( &rc );
-	else
-		CalcWindowRect( &rc, adjustBorder );
+	CalcWindowRect( &rc );
 
 	rc.OffsetRect(	GetSystemMetrics( SM_CXSCREEN ) / 2 -  rc.Width() / 2 - rc.left,
 					GetSystemMetrics( SM_CYSCREEN ) / 2 - rc.Height() / 2 - rc.top );

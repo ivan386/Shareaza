@@ -102,7 +102,7 @@ void CSettingsManagerDlg::OnSkinChange(BOOL bSet)
 	}
 	else
 	{
-		m_pThis->m_pSkin = NULL;
+		m_pThis->RemoveSkin();
 	}
 }
 
