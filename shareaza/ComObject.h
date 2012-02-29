@@ -1,7 +1,7 @@
 //
 // ComObject.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -24,21 +24,13 @@
 
 class CComObject : public CCmdTarget
 {
+	DECLARE_DYNAMIC(CComObject)
+
 public:
-	CComObject();
-	virtual ~CComObject();
-
-	DECLARE_DYNCREATE(CComObject)
-
 	BOOL		EnableDispatch(REFIID pIID);
 	LPUNKNOWN	GetInterface(REFIID pIID, BOOL bAddRef = FALSE);
 	LPDISPATCH	GetDispatch(BOOL bAddRef = FALSE);
 
-protected:
-	const CLSID*	m_pCLSID;
-	CMap< LPUNKNOWN, LPUNKNOWN, const IID*, const IID* > m_pDispatchMap;
-
-public:
 	STDMETHOD_(ULONG, ComAddRef)(LPUNKNOWN);
 	STDMETHOD_(ULONG, ComRelease)(LPUNKNOWN);
 	STDMETHOD(ComQueryInterface)(LPUNKNOWN, REFIID, LPVOID*);
@@ -48,6 +40,13 @@ public:
 	STDMETHOD(ComInvoke)(LPUNKNOWN, DISPID, REFIID, LCID, WORD, DISPPARAMS FAR*, VARIANT FAR*, EXCEPINFO FAR*, UINT FAR*);
 
 	DECLARE_OLETYPELIB(CComObject)
+
+protected:
+	CComObject();
+	virtual ~CComObject();
+
+	const CLSID*	m_pCLSID;
+	CMap< LPUNKNOWN, LPUNKNOWN, const IID*, const IID* > m_pDispatchMap;
 
 private:
 	CComObject(const CComObject&);

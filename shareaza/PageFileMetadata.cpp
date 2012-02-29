@@ -1,7 +1,7 @@
 //
 // PageFileMetadata.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -37,18 +37,18 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNCREATE(CFileMetadataPage, CFilePropertiesPage)
 
 BEGIN_MESSAGE_MAP(CFileMetadataPage, CFilePropertiesPage)
-	//{{AFX_MSG_MAP(CFileMetadataPage)
 	ON_CBN_SELCHANGE(IDC_SCHEMAS, OnSelChangeSchemas)
 	ON_CBN_CLOSEUP(IDC_SCHEMAS, OnCloseUpSchemas)
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
 /////////////////////////////////////////////////////////////////////////////
 // CFileMetadataPage property page
 
-CFileMetadataPage::CFileMetadataPage() : CFilePropertiesPage(CFileMetadataPage::IDD),
-m_pXML(NULL), m_pSchemaContainer(NULL)
+CFileMetadataPage::CFileMetadataPage()
+	: CFilePropertiesPage(CFileMetadataPage::IDD)
+	, m_pXML(NULL)
+	, m_pSchemaContainer(NULL)
 {
 }
 
@@ -61,9 +61,8 @@ CFileMetadataPage::~CFileMetadataPage()
 void CFileMetadataPage::DoDataExchange(CDataExchange* pDX)
 {
 	CFilePropertiesPage::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CFileMetadataPage)
+
 	DDX_Control(pDX, IDC_SCHEMAS, m_wndSchemas);
-	//}}AFX_DATA_MAP
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -73,7 +72,7 @@ BOOL CFileMetadataPage::OnInitDialog()
 {
 	CFilePropertiesPage::OnInitDialog();
 
-	CLibraryList* pFiles = GetList();
+	CLibraryListPtr pFiles( GetList() );
 
 	CRect rcClient, rcCombo;
 	CString strText;
@@ -264,8 +263,9 @@ void CFileMetadataPage::OnCloseUpSchemas()
 
 void CFileMetadataPage::OnOK()
 {
-	CLibraryList* pFiles = GetList();
-	if ( pFiles == NULL ) return;
+	CLibraryListPtr pFiles( GetList() );
+
+	if ( ! pFiles ) return;
 
 	if ( pFiles->GetCount() >= 10 )
 	{

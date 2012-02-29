@@ -1,7 +1,7 @@
 //
 // ShareazaDataSource.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1367,9 +1367,9 @@ void CShareazaDataSource::GetTotalLength(const CLibraryList* pList, size_t& size
 				if ( pAlbum && bRoot &&
 					! CheckURI( pAlbum->m_sSchemaURI, CSchema::uriGhostFolder ) )
 				{
-					CLibraryList List;
-					pAlbum->GetFileList( &List, TRUE );
-					GetTotalLength( &List, size_HDROP, size_Archive, size_Files, FALSE );
+					CLibraryListPtr pList( new CLibraryList() );
+					pAlbum->GetFileList( pList, TRUE );
+					GetTotalLength( pList, size_HDROP, size_Archive, size_Files, FALSE );
 
 					size_Archive++;
 				}
@@ -1410,9 +1410,9 @@ void CShareazaDataSource::GetTotalLength(const CLibraryTreeItem* pSelFirst, size
 			! CheckURI( pItem->m_pVirtual->m_sSchemaURI, CSchema::uriGhostFolder ) )
 		{
 			// Add all files within virtual folder (recursively)
-			CLibraryList List;
-			pItem->m_pVirtual->GetFileList( &List, TRUE );
-			GetTotalLength( &List, size_HDROP, size_Archive, size_Files, FALSE );
+			CLibraryListPtr pList( new CLibraryList() );
+			pItem->m_pVirtual->GetFileList( pList, TRUE );
+			GetTotalLength( pList, size_HDROP, size_Archive, size_Files, FALSE );
 
 			// Add virtual folder
 			size_Archive++;
@@ -1487,9 +1487,9 @@ void CShareazaDataSource::FillBuffer(const CLibraryList* pList, LPTSTR& buf_HDRO
 				if ( pAlbum && bRoot &&
 					! CheckURI( pAlbum->m_sSchemaURI, CSchema::uriGhostFolder ) )
 				{
-					CLibraryList List;
-					pAlbum->GetFileList( &List, TRUE );
-					FillBuffer( &List, buf_HDROP, buf_Archive, buf_Files, buf_Text, FALSE, pAlbum->m_oGUID );
+					CLibraryListPtr pList( new CLibraryList() );
+					pAlbum->GetFileList( pList, TRUE );
+					FillBuffer( pList, buf_HDROP, buf_Archive, buf_Files, buf_Text, FALSE, pAlbum->m_oGUID );
 
 					pAlbum->Serialize( buf_Archive, LIBRARY_SER_VERSION );
 				}
@@ -1531,9 +1531,9 @@ void CShareazaDataSource::FillBuffer(const CLibraryTreeItem* pSelFirst, LPTSTR& 
 			! CheckURI( pItem->m_pVirtual->m_sSchemaURI, CSchema::uriGhostFolder ) )
 		{
 			// Add all files within virtual folder (recursively)
-			CLibraryList List;
-			pItem->GetFileList( &List, TRUE );
-			FillBuffer( &List, buf_HDROP, buf_Archive, buf_Files, buf_Text, FALSE, pItem->m_pVirtual->m_oGUID );
+			CLibraryListPtr pList( new CLibraryList() );
+			pItem->GetFileList( pList, TRUE );
+			FillBuffer( pList, buf_HDROP, buf_Archive, buf_Files, buf_Text, FALSE, pItem->m_pVirtual->m_oGUID );
 
 			// Add virtual folder
 			pItem->m_pVirtual->Serialize( buf_Archive, LIBRARY_SER_VERSION );

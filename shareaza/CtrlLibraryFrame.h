@@ -1,7 +1,7 @@
 //
 // CtrlLibraryFrame.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -70,7 +70,7 @@ public:
 		return m_wndTree.GetFirstSelected();
 	}
 
-	inline const CLibraryList* GetViewSelection() const
+	inline CLibraryList* GetViewSelection() const
 	{
 		return m_pViewSelection;
 	}
@@ -133,9 +133,9 @@ protected:
 	BOOL				m_bUpdating;
 	DWORD				m_nLibraryCookie;
 	DWORD				m_nFolderCookie;
-	const CLibraryList*	m_pViewSelection;
+	CLibraryListPtr		m_pViewSelection;
 	BOOL				m_bViewSelection;
-	CLibraryList		m_pViewEmpty;
+	CLibraryListPtr		m_pViewEmpty;
 
 	CString				m_sDynamicBarName;
 	BOOL				m_bShowDynamicBar;

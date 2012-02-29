@@ -1,7 +1,7 @@
 //
 // DlgFilePropertiesSheet.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -32,7 +32,7 @@ class CFilePropertiesSheet : public CPropertySheetAdv
 public:
 	CFilePropertiesSheet(CLibraryListItem oObject = CLibraryListItem());
 
-	CLibraryList	m_pList;
+	CLibraryListPtr	m_pList;
 
 	void	Add(CLibraryListItem oObject);
 	void	Add(const CLibraryList* pList);

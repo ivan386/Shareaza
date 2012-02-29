@@ -1,7 +1,7 @@
 //
 // CtrlLibraryFrame.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -88,15 +88,20 @@ END_MESSAGE_MAP()
 // CLibraryFrame construction
 
 CLibraryFrame::CLibraryFrame()
-: m_pView( NULL )
-, m_pPanel( NULL )
-, m_nTreeSize( Settings.Library.TreeSize )
-, m_nPanelSize( Settings.Library.PanelSize )
-, m_bPanelShow( Settings.Library.ShowPanel )
-, m_nHeaderSize( 0 )
-, m_bUpdating( FALSE )
-, m_bShowDynamicBar( TRUE )
-, m_bDynamicBarHidden( TRUE )
+	: m_pView				( NULL )
+	, m_pPanel				( NULL )
+	, m_nTreeSize			( Settings.Library.TreeSize )
+	, m_nPanelSize			( Settings.Library.PanelSize )
+	, m_bPanelShow			( Settings.Library.ShowPanel )
+	, m_nHeaderSize			( 0 )
+	, m_bUpdating			( FALSE )
+	, m_nTreeTypesHeight	( 0 )
+	, m_nLibraryCookie		( 0 )
+	, m_nFolderCookie		( 0 )
+	, m_bViewSelection		( FALSE )
+	, m_bShowDynamicBar		( TRUE )
+	, m_bDynamicBarHidden	( TRUE )
+	, m_pViewEmpty			( new CLibraryList() )
 {
 	m_pViews.AddTail( new CLibraryDetailView() );
 	m_pViews.AddTail( new CLibraryListView() );
@@ -859,12 +864,12 @@ void CLibraryFrame::UpdatePanel(BOOL bForce)
 		return;
 
 	m_bViewSelection = FALSE;
-	m_pViewSelection = HasView() ? m_pView->GetSelection() : &m_pViewEmpty;
+	m_pViewSelection = HasView() ? m_pView->GetSelection() : m_pViewEmpty;
 
 	if ( m_bPanelShow )
 	{
 		CLibraryTreeItem* pFolders = m_wndTree.GetFirstSelected();
-		const CLibraryList* pFiles = GetViewSelection();
+		CLibraryListPtr pFiles( GetViewSelection() );
 
 		BOOL bMetaPanelAvailable = ( pFolders != NULL );
 		BOOL bHistoryPanelAvailable = ( LibraryHistory.GetCount() > 0 );
@@ -1221,7 +1226,7 @@ void CLibraryFrame::OnSetFocus(CWnd* pOldWnd)
 
 void CLibraryFrame::OnUpdateShowWebServices(CCmdUI* pCmdUI)
 {
-	m_bShowDynamicBar = m_pViewSelection != NULL && m_pViewSelection->GetCount() == 1;
+	m_bShowDynamicBar = m_pViewSelection && m_pViewSelection->GetCount() == 1;
 
 	if ( !m_bShowDynamicBar )
 		SetDynamicBar( NULL );

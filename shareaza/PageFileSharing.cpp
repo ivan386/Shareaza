@@ -1,7 +1,7 @@
 //
 // PageFileSharing.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -38,10 +38,8 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNCREATE(CFileSharingPage, CFilePropertiesPage)
 
 BEGIN_MESSAGE_MAP(CFileSharingPage, CFilePropertiesPage)
-	//{{AFX_MSG_MAP(CFileSharingPage)
 	ON_BN_CLICKED(IDC_SHARE_OVERRIDE_0, OnShareOverride0)
 	ON_BN_CLICKED(IDC_SHARE_OVERRIDE_1, OnShareOverride1)
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
@@ -61,14 +59,13 @@ CFileSharingPage::~CFileSharingPage()
 void CFileSharingPage::DoDataExchange(CDataExchange* pDX)
 {
 	CFilePropertiesPage::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CFileSharingPage)
+
 	DDX_Control(pDX, IDC_FILE_TAGS, m_wndTags);
 	DDX_Control(pDX, IDC_FILE_SHARE, m_wndShare);
 	DDX_Control(pDX, IDC_FILE_NETWORKS, m_wndNetworks);
 	DDX_Radio(pDX, IDC_SHARE_OVERRIDE_0, m_bOverride);
 	DDX_Check(pDX, IDC_FILE_SHARE, m_bShare);
 	DDX_CBString(pDX, IDC_FILE_TAGS, m_sTags);
-	//}}AFX_DATA_MAP
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -115,18 +112,21 @@ BOOL CFileSharingPage::OnInitDialog()
 			m_bShare	= pSingleFile->IsShared();
 			m_sTags		= pSingleFile->m_sShareTags;
 		}
-		else if ( CLibraryList* pList = GetList() )
+		else		
 		{
-			for ( POSITION pos = pList->GetIterator() ; pos ; )
+			CLibraryListPtr pList( GetList() );
+			if ( pList )
 			{
-				if ( CLibraryFile* pFile = pList->GetNextFile( pos ) )
+				for ( POSITION pos = pList->GetIterator() ; pos ; )
 				{
-					m_bOverride	= pFile->IsSharedOverride();
-					m_bShare	= pFile->IsShared();
-					m_sTags		= pFile->m_sShareTags;
+					if ( CLibraryFile* pFile = pList->GetNextFile( pos ) )
+					{
+						m_bOverride	= pFile->IsSharedOverride();
+						m_bShare	= pFile->IsShared();
+						m_sTags		= pFile->m_sShareTags;
+					}
 				}
 			}
-
 		}
 	}
 
@@ -164,7 +164,8 @@ void CFileSharingPage::OnOK()
 {
 	UpdateData();
 
-	if ( CLibraryList* pList = GetList() )
+	CLibraryListPtr pList( GetList() );
+	if ( pList )
 	{
 		CQuickLock oLock( Library.m_pSection );
 

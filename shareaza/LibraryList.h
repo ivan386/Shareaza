@@ -1,7 +1,7 @@
 //
 // LibraryList.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -21,9 +21,11 @@
 
 #pragma once
 
+class CLibraryList;
 class CLibraryFile;
 class CLibraryFolder;
 class CAlbumFolder;
+
 
 class CLibraryListItem
 {
@@ -55,16 +57,17 @@ protected:
 	};
 };
 
+
+typedef CComObjectPtr< CLibraryList > CLibraryListPtr;
+
+
 class CLibraryList : public CComObject
 {
-	DECLARE_DYNCREATE(CLibraryList)
+	DECLARE_DYNAMIC(CLibraryList)
 
-// Attributes
-protected:
-	CList < CLibraryListItem, CLibraryListItem > m_List;
-
-// Operations
 public:
+	CLibraryList();
+
 	inline INT_PTR GetCount() const
 	{
 		return m_List.GetCount();
@@ -175,4 +178,13 @@ public:
 		STDMETHOD(Clone)(IEnumVARIANT** ppenum);
 		POSITION m_pos;
 	END_INTERFACE_PART(EnumVARIANT)
+
+protected:
+	virtual ~CLibraryList();
+
+	CList < CLibraryListItem, CLibraryListItem > m_List;
+
+private:
+	CLibraryList(const CLibraryList&);
+	CLibraryList& operator=(const CLibraryList&);
 };

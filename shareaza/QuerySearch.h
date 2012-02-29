@@ -1,7 +1,7 @@
 //
 // QuerySearch.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -39,10 +39,10 @@ typedef CComObjectPtr< CQuerySearch > CQuerySearchPtr;
 
 class CQuerySearch : public CShareazaFile
 {
-// Construction
+	DECLARE_DYNAMIC(CQuerySearch)
+
 public:
 	CQuerySearch(BOOL bGUID = TRUE);
-	virtual ~CQuerySearch();
 
 	typedef std::vector<DWORD>					Hash32List;
 
@@ -146,4 +146,11 @@ public:
 	static BOOL				NumberMatch(const CString& strValue, const CString& strRange);
 	static void				SearchHelp();	// Shows some search help dialogs
 	static BOOL				CheckOverflow(const CString& sSearch);
+
+protected:
+	virtual ~CQuerySearch();
+
+private:
+	CQuerySearch(const CQuerySearch&);
+	CQuerySearch& operator=(const CQuerySearch&);
 };

@@ -1,7 +1,7 @@
 //
 // ComObject.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -29,7 +29,7 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-IMPLEMENT_DYNCREATE(CComObject, CCmdTarget)
+IMPLEMENT_DYNAMIC(CComObject, CCmdTarget)
 
 IMPLEMENT_OLETYPELIB(CComObject, LIBID_Shareaza, 1, 0)
 

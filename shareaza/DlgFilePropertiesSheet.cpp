@@ -1,7 +1,7 @@
 //
 // DlgFilePropertiesSheet.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -45,15 +45,16 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CFilePropertiesSheet
 
-CFilePropertiesSheet::CFilePropertiesSheet(CLibraryListItem oObject) : 
-	m_sGeneralTitle( L"General" ),
-	m_sMetadataTitle( L"Metadata" ),
-	m_sCommentsTitle( L"My Review" ),
-	m_sSharingTitle( L"Sharing" ),
-	m_sSourcesTitle( L"Sources" )
+CFilePropertiesSheet::CFilePropertiesSheet(CLibraryListItem oObject)
+	: m_sGeneralTitle	( L"General" )
+	, m_sMetadataTitle	( L"Metadata" )
+	, m_sCommentsTitle	( L"My Review" )
+	, m_sSharingTitle	( L"Sharing" )
+	, m_sSourcesTitle	( L"Sources" )
+	, m_pList			( new CLibraryList() )
 {
 	if ( oObject.Type != CLibraryListItem::Empty )
-		m_pList.AddTail( oObject );
+		m_pList->AddTail( oObject );
 }
 
 
@@ -62,12 +63,12 @@ CFilePropertiesSheet::CFilePropertiesSheet(CLibraryListItem oObject) :
 
 void CFilePropertiesSheet::Add(CLibraryListItem oObject)
 {
-	m_pList.CheckAndAdd( oObject );
+	m_pList->CheckAndAdd( oObject );
 }
 
 void CFilePropertiesSheet::Add(const CLibraryList* pList)
 {
-	m_pList.Merge( pList );
+	m_pList->Merge( pList );
 }
 
 INT_PTR CFilePropertiesSheet::DoModal(int nPage)
@@ -80,7 +81,7 @@ INT_PTR CFilePropertiesSheet::DoModal(int nPage)
 
 	CString strTabLabel;
 
-	switch ( m_pList.GetCount() )
+	switch ( m_pList->GetCount() )
 	{
 	case 0:
 		return IDCANCEL;

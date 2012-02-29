@@ -1,7 +1,7 @@
 //
 // WndLibrary.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -39,13 +39,11 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_SERIAL(CLibraryWnd, CPanelWnd, 0)
 
 BEGIN_MESSAGE_MAP(CLibraryWnd, CPanelWnd)
-	//{{AFX_MSG_MAP(CLibraryWnd)
 	ON_WM_CREATE()
 	ON_WM_DESTROY()
 	ON_WM_SIZE()
 	ON_WM_MDIACTIVATE()
 	ON_WM_TIMER()
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
@@ -157,7 +155,7 @@ void CLibraryWnd::OnSkinChange()
 HRESULT CLibraryWnd::GetGenericView(IGenericView** ppView)
 {
 	if ( m_wndFrame.m_hWnd == NULL ) return S_FALSE;
-	CLibraryList* pList = const_cast< CLibraryList* >( m_wndFrame.GetViewSelection() );
+	CLibraryListPtr pList( m_wndFrame.GetViewSelection() );
 	*ppView = (IGenericView*)pList->GetInterface( IID_IGenericView, TRUE );
 	return S_OK;
 }
@@ -292,7 +290,7 @@ BOOL CLibraryWnd::OnCollection(const CString& sPath)
 HRESULT CLibraryWnd::GetGenericView(IGenericView** ppView)
 {
 	if ( m_wndFrame.m_hWnd == NULL ) return S_FALSE;
-	CLibraryList* pList = m_wndFrame.GetViewSelection();
+	CLibraryListPtr pList( m_wndFrame.GetViewSelection() );
 	*ppView = (IGenericView*)pList->GetInterface( IID_IGenericView, TRUE );
 	return S_OK;
 }

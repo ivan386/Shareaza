@@ -1990,16 +1990,16 @@ void CLibraryTreeView::OnLibraryRebuild()
 	CSingleLock oLock( &Library.m_pSection );
 	if ( !oLock.Lock( 50 ) ) return;
 
-	CLibraryList pList;
+	CLibraryListPtr pList( new CLibraryList() );
 
 	for ( CLibraryTreeItem* pItem = m_pSelFirst ; pItem ; pItem = pItem->m_pSelNext )
 	{
-		pItem->GetFileList( &pList, TRUE );
+		pItem->GetFileList( pList, TRUE );
 	}
 
-	for ( POSITION pos = pList.GetIterator() ; pos ; )
+	for ( POSITION pos = pList->GetIterator() ; pos ; )
 	{
-		if ( CLibraryFile* pFile = pList.GetNextFile( pos ) )
+		if ( CLibraryFile* pFile = pList->GetNextFile( pos ) )
 		{
 			pFile->Rebuild();
 		}
@@ -2043,17 +2043,17 @@ void CLibraryTreeView::OnUpdateLibraryFolderFileProperties(CCmdUI* pCmdUI)
 void CLibraryTreeView::OnLibraryFolderFileProperties()
 {
 	CSingleLock pLock( &Library.m_pSection, TRUE );
-	CLibraryList pList;
+	CLibraryListPtr pList( new CLibraryList() );
 
 	for ( CLibraryTreeItem* pItem = m_pSelFirst ; pItem ; pItem = pItem->m_pSelNext )
 	{
-		pItem->GetFileList( &pList, TRUE );
+		pItem->GetFileList( pList, TRUE );
 	}
 
 	pLock.Unlock();
 
 	CFilePropertiesSheet dlg;
-	dlg.Add( &pList );
+	dlg.Add( pList );
 	dlg.DoModal();
 }
 

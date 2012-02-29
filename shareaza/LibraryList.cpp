@@ -1,7 +1,7 @@
 //
 // LibraryList.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -154,12 +154,21 @@ CLibraryListItem& CLibraryListItem::operator = (const CLibraryListItem& val)
 //////////////////////////////////////////////////////////////////////
 // CLibraryList
 
-IMPLEMENT_DYNCREATE(CLibraryList, CComObject)
+IMPLEMENT_DYNAMIC(CLibraryList, CComObject)
 
 BEGIN_INTERFACE_MAP(CLibraryList, CComObject)
 	INTERFACE_PART(CLibraryList, IID_IGenericView, GenericView)
 	INTERFACE_PART(CLibraryList, IID_IEnumVARIANT, EnumVARIANT)
 END_INTERFACE_MAP()
+
+CLibraryList::CLibraryList()
+{
+	m_dwRef = 0;
+}
+
+CLibraryList::~CLibraryList()
+{
+}
 
 //////////////////////////////////////////////////////////////////////
 // CLibraryList file access

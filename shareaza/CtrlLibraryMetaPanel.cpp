@@ -1,7 +1,7 @@
 //
 // CtrlLibraryMetaPanel.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -75,7 +75,7 @@ CLibraryMetaPanel::~CLibraryMetaPanel()
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryMetaPanel operations
 
-const CLibraryList* CLibraryMetaPanel::GetViewSelection() const
+CLibraryList* CLibraryMetaPanel::GetViewSelection() const
 {
 	if ( ! m_hWnd )
 		return NULL;
@@ -93,7 +93,7 @@ void CLibraryMetaPanel::Update()
 	CSingleLock pLock1( &Library.m_pSection, TRUE );
 	CSingleLock pLock2( &m_pSection, TRUE );
 
-	const CLibraryList* pSel = GetViewSelection();
+	CLibraryListPtr pSel( GetViewSelection() );
 	m_nSelected = pSel ? static_cast< int >( pSel->GetCount() ) : 0;
 
 	// Show info for library files only
@@ -483,9 +483,9 @@ void CLibraryMetaPanel::OnLButtonUp(UINT nFlags, CPoint point)
 	}
 	else if ( m_nSelected > 0 && m_rcRating.PtInRect( point ) )
 	{
-		const CLibraryList* pList = GetViewSelection();
+		CLibraryListPtr pList( GetViewSelection() );
 
-		if ( pList != NULL && pList->GetCount() > 0 )
+		if ( pList && pList->GetCount() > 0 )
 		{
 			CFilePropertiesSheet dlg;
 			dlg.Add( pList );

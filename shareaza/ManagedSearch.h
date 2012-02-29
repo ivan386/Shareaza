@@ -1,7 +1,7 @@
 //
 // ManagedSearch.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -33,9 +33,10 @@ typedef CComObjectPtr< CManagedSearch > CSearchPtr;
 
 class CManagedSearch : public CComObject
 {
+	DECLARE_DYNAMIC(CManagedSearch)
+
 public:
 	CManagedSearch(CQuerySearch* pSearch = NULL, int nPriority = 0);
-	virtual ~CManagedSearch();
 
 	typedef CMap< DWORD, DWORD, DWORD, DWORD > CDwordDwordMap;
 	
@@ -92,6 +93,8 @@ public:
 	DWORD			m_tMoreResults;				// Time more results were requested from an ed2k server
 
 protected:
+	virtual ~CManagedSearch();
+
 	int				m_nPriority;
 	BOOL			m_bActive;
 	DWORD			m_tLastG1;					// Time a G1 multicast search was sent
@@ -105,4 +108,8 @@ protected:
 	BOOL	ExecuteG1Mesh(const DWORD tTicks, const DWORD tSecs);
 	BOOL	ExecuteG2Mesh(const DWORD tTicks, const DWORD tSecs);
 	BOOL	ExecuteDonkeyMesh(const DWORD tTicks, const DWORD tSecs);
+
+private:
+	CManagedSearch(const CManagedSearch&);
+	CManagedSearch& operator=(const CManagedSearch&);
 };

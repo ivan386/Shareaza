@@ -395,29 +395,29 @@ void CLibraryFileView::OnLibraryDelete()
 {
 	CSingleLock pTransfersLock( &Transfers.m_pSection, TRUE ); // Can clear uploads and downloads
 	CSingleLock pLibraryLock( &Library.m_pSection, TRUE );
-	CLibraryList pList;
+	CLibraryListPtr pList( new CLibraryList() );
 
 	POSITION posSel = StartSelectedFileLoop();
 
 	while ( CLibraryFile* pFile = GetNextSelectedFile( posSel, FALSE, ! m_bGhostFolder ) )
 	{
-		pList.AddTail( pFile );
+		pList->AddTail( pFile );
 	}
 
-	while ( !pList.IsEmpty() )
+	while ( ! pList->IsEmpty() )
 	{
-		CLibraryFile* pFile = Library.LookupFile( pList.GetHead(), FALSE, ! m_bGhostFolder );
+		CLibraryFile* pFile = Library.LookupFile( pList->GetHead(), FALSE, ! m_bGhostFolder );
 		if ( pFile == NULL )
 		{
-			pList.RemoveHead(); // Remove item from list to avoid endless loop
+			pList->RemoveHead(); // Remove item from list to avoid endless loop
 			continue;
 		}
 
 		if ( m_bGhostFolder )
 		{
-			for ( INT_PTR nProcess = pList.GetCount() ; nProcess > 0 && pList.GetCount() > 0 ; nProcess-- )
+			for ( INT_PTR nProcess = pList->GetCount() ; nProcess > 0 && pList->GetCount() > 0 ; nProcess-- )
 			{
-				if ( ( pFile = Library.LookupFile( pList.RemoveHead() ) ) != NULL )
+				if ( ( pFile = Library.LookupFile( pList->RemoveHead() ) ) != NULL )
 				{
 					pFile->Delete( TRUE );
 				}
@@ -429,7 +429,7 @@ void CLibraryFileView::OnLibraryDelete()
 			dlg.m_sName	= pFile->m_sName;
 			dlg.m_sComments = pFile->m_sComments;
 			dlg.m_nRateValue = pFile->m_nRating;
-			dlg.m_bAll	= pList.GetCount() > 1;
+			dlg.m_bAll	= pList->GetCount() > 1;
 
 			pLibraryLock.Unlock();
 			pTransfersLock.Unlock();
@@ -439,9 +439,9 @@ void CLibraryFileView::OnLibraryDelete()
 			pTransfersLock.Lock();
 			pLibraryLock.Lock();
 
-			for ( INT_PTR nProcess = dlg.m_bAll ? pList.GetCount() : 1 ; nProcess > 0 && pList.GetCount() > 0 ; nProcess-- )
+			for ( INT_PTR nProcess = dlg.m_bAll ? pList->GetCount() : 1 ; nProcess > 0 && pList->GetCount() > 0 ; nProcess-- )
 			{
-				if ( ( pFile = Library.LookupFile( pList.RemoveHead(), FALSE, TRUE ) ) != NULL )
+				if ( ( pFile = Library.LookupFile( pList->RemoveHead(), FALSE, TRUE ) ) != NULL )
 				{
 					dlg.Apply( pFile );
 					pFile->Delete();

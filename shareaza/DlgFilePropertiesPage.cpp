@@ -1,7 +1,7 @@
 //
 // DlgFilePropertiesPage.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -37,8 +37,6 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNAMIC(CFilePropertiesPage, CPropertyPageAdv)
 
 BEGIN_MESSAGE_MAP(CFilePropertiesPage, CPropertyPageAdv)
-	//{{AFX_MSG_MAP(CFilePropertiesPage)
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
@@ -47,8 +45,6 @@ END_MESSAGE_MAP()
 
 CFilePropertiesPage::CFilePropertiesPage(UINT nIDD) : CPropertyPageAdv( nIDD )
 {
-	//{{AFX_DATA_INIT(CFilePropertiesPage)
-	//}}AFX_DATA_INIT
 }
 
 CFilePropertiesPage::~CFilePropertiesPage()
@@ -58,8 +54,6 @@ CFilePropertiesPage::~CFilePropertiesPage()
 void CFilePropertiesPage::DoDataExchange(CDataExchange* pDX)
 {
 	CPropertyPageAdv::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CFilePropertiesPage)
-	//}}AFX_DATA_MAP
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -67,7 +61,7 @@ void CFilePropertiesPage::DoDataExchange(CDataExchange* pDX)
 
 CLibraryFile* CFilePropertiesPage::GetFile()
 {
-	CLibraryList* pList = GetList();
+	CLibraryListPtr pList( GetList() );
 	if ( pList->GetCount() != 1 ) return NULL;
 	CQuickLock oLock( Library.m_pSection );
 	CLibraryFile* pFile = Library.LookupFile( pList->GetHead() );
@@ -79,7 +73,7 @@ CLibraryFile* CFilePropertiesPage::GetFile()
 CLibraryList* CFilePropertiesPage::GetList() const
 {
 	CFilePropertiesSheet* pSheet = (CFilePropertiesSheet*)GetParent();
-	return &pSheet->m_pList;
+	return pSheet->m_pList;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -112,7 +106,8 @@ BOOL CFilePropertiesPage::OnInitDialog()
 	else
 	{
 		oLock.Unlock();
-		if ( CLibraryList* pList = GetList() )
+		CLibraryListPtr pList( GetList() );
+		if ( pList )
 		{
 			if ( CWnd* pNameWnd = GetDlgItem( IDC_FILE_NAME ) )
 			{

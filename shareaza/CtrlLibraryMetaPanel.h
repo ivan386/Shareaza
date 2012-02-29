@@ -1,7 +1,7 @@
 //
 // CtrlLibraryMetaPanel.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -65,7 +65,7 @@ protected:
 	CString			m_sThumbnailURL;	// Use this URL to load thumbnail instead
 	CString			m_sThumb;			// Loaded thumbnail file path or URL
 
-	const CLibraryList*	GetViewSelection() const;
+	CLibraryList*	GetViewSelection() const;
 
 	void	DrawText(CDC* pDC, int nX, int nY, LPCTSTR pszText, RECT* pRect = NULL, int nMaxWidth = -1);
 

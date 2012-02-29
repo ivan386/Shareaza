@@ -44,6 +44,7 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
+IMPLEMENT_DYNAMIC(CManagedSearch, CComObject)
 
 //////////////////////////////////////////////////////////////////////
 // CManagedSearch construction

@@ -1,7 +1,7 @@
 //
 // PageFileComments.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -37,10 +37,8 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNCREATE(CFileCommentsPage, CFilePropertiesPage)
 
 BEGIN_MESSAGE_MAP(CFileCommentsPage, CFilePropertiesPage)
-	//{{AFX_MSG_MAP(CFileCommentsPage)
 	ON_WM_MEASUREITEM()
 	ON_WM_DRAWITEM()
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
@@ -60,12 +58,11 @@ CFileCommentsPage::~CFileCommentsPage()
 void CFileCommentsPage::DoDataExchange(CDataExchange* pDX)
 {
 	CFilePropertiesPage::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CFileCommentsPage)
+
 	DDX_Control(pDX, IDC_FILE_COMMENTS, m_wndComments);
 	DDX_Control(pDX, IDC_FILE_RATING, m_wndRating);
 	DDX_Text(pDX, IDC_FILE_COMMENTS, m_sComments);
 	DDX_CBIndex(pDX, IDC_FILE_RATING, m_nRating);
-	//}}AFX_DATA_MAP
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -75,8 +72,8 @@ BOOL CFileCommentsPage::OnInitDialog()
 {
 	CFilePropertiesPage::OnInitDialog();
 
-	CLibraryList* pFiles = GetList();
-	if ( pFiles == NULL ) return TRUE;
+	CLibraryListPtr pFiles( GetList() );
+	if ( ! pFiles ) return TRUE;
 
 	if ( pFiles->GetCount() == 1 )
 	{
@@ -187,9 +184,9 @@ void CFileCommentsPage::OnOK()
 	m_sComments.TrimLeft();
 	m_sComments.TrimRight();
 
-	CLibraryList* pFiles = GetList();
+	CLibraryListPtr pFiles( GetList() );
 
-	if ( pFiles == NULL || pFiles->GetCount() == 1 )
+	if ( ! pFiles || pFiles->GetCount() == 1 )
 	{
 		CQuickLock oLock( Library.m_pSection );
 		if ( CLibraryFile* pFile = GetFile() )

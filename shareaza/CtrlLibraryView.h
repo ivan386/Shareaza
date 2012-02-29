@@ -1,7 +1,7 @@
 //
 // CtrlLibraryView.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -44,9 +44,9 @@ public:
 	BOOL				m_bGhostFolder;
 	CLibraryListItem	m_oDropItem;
 
-	const CLibraryList* GetSelection() const
+	inline CLibraryList* GetSelection() const
 	{
-		return &m_pSelection;
+		return m_pSelection;
 	}
 
 	virtual BOOL				Create(CWnd* pParentWnd);
@@ -64,7 +64,7 @@ public:
 	virtual DWORD_PTR			HitTestIndex(const CPoint& point) const = 0;
 
 private:
-	CLibraryList		m_pSelection;
+	CLibraryListPtr		m_pSelection;
 
 protected:
 	void				PostUpdate();
