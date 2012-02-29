@@ -119,7 +119,6 @@ protected:
 	CCoolBarCtrl		m_wndViewBottom;
 	CCoolBarCtrl		m_wndBottomDynamic;
 	CAutocompleteEdit	m_wndSearch;
-	CButton				m_wndSaveOption;
 	CLibraryViewList	m_pViews;
 	CLibraryView*		m_pView;
 	CLibraryMetaPanel	m_pMetaPanel;

@@ -2608,13 +2608,6 @@
 		<tip id="ID_SECURITY_POLICY_DENY" message="Nustatyti, kad saugos politika, draudžianti visų adresatų prieigą, būtų numatytąja."/>
 		<tip id="ID_SECURITY_REMOVE" message="Pašalinti pasirinktą(-as) saugos taisyklę(-es)."/>
 		<tip id="ID_SECURITY_RESET" message="Apnulinti pasirinktų saugos taisyklių kreipinių skaitliukus."/>
-		<tip id="ID_SHAREMONKEY_BUY" message="Buy it and support the author"/>
-		<tip id="ID_SHAREMONKEY_COMPARE" message="Compare prices in different stores"/>
-		<tip id="ID_SHAREMONKEY_DOWNLOAD" message="_Ieškoti šito"/>
-		<tip id="ID_SHAREMONKEY_NEXT" message="Go to the next match"/>
-		<tip id="ID_SHAREMONKEY_PREVIOUS" message="Go to the previous match"/>
-		<tip id="ID_SHAREMONKEY_PRICES" message="Pereiti prie ankstesnio failo veikiančiame grojaraštyje."/>
-		<tip id="ID_SHAREMONKEY_SAVE" message="Parodyti failą mano kolekcijoje"/>
 		<tip id="ID_SYSTEM_CLEAR" message="Valyti būsenos žurnalą."/>
 		<tip id="ID_SYSTEM_COPY" message="Copy selected line(s) of status log."/>
 		<tip id="ID_SYSTEM_TIMESTAMP" message="Registruoti laiką kiekvienoje eilutėje."/>
@@ -2684,7 +2677,6 @@
 		<tip id="ID_VIEW_WINDOWED" message="Perjunkite „Shareaza“ į langų veikseną, skirtą patyrusiems naudotojams."/>
 		<tip id="ID_WEBSERVICES_LIST" message="Pasirinkite paslaugą internete ir gaukite daugiau informacijos apie pasirinktą failą."/>
 		<tip id="ID_WEBSERVICES_MUSICBRAINZ" message="Ieškokite failo informacijos naudodamiesi ShareMonkey tarnyba."/>
-		<tip id="ID_WEBSERVICES_SHAREMONKEY" message="Ieškokite failo informacijos naudodamiesi ShareMonkey tarnyba."/>
 		<tip id="ID_WINDOW_ARRANGE" message="Arrange icons at the bottom of the window" tip="Arrange Icons"/>
 		<tip id="ID_WINDOW_CASCADE" message="Išdidinti visus atvertus langus, užpildant visą ekraną."/>
 		<tip id="ID_WINDOW_MONITOR" message="Rodyti ar paslėpti siuntimo srauto monitorių."/>

@@ -2613,13 +2613,6 @@
 		<tip id="ID_SECURITY_POLICY_DENY" message="وضع نهج الأمان الإفتراضي لحظر كافة المضيفين"/>
 		<tip id="ID_SECURITY_REMOVE" message="إزالة قواعد الأمان المحددة"/>
 		<tip id="ID_SECURITY_RESET" message="إستعادة عدد الضربات مع القواعد المحددة"/>
-		<tip id="ID_SHAREMONKEY_BUY" message="Buy it and support the author"/>
-		<tip id="ID_SHAREMONKEY_COMPARE" message="Compare prices in different stores"/>
-		<tip id="ID_SHAREMONKEY_DOWNLOAD" message="_بحث لهذا"/>
-		<tip id="ID_SHAREMONKEY_NEXT" message="Go to the next match"/>
-		<tip id="ID_SHAREMONKEY_PREVIOUS" message="Go to the previous match"/>
-		<tip id="ID_SHAREMONKEY_PRICES" message="الرجوع إلى الملف السابق في قائمة التشغيل الحالية"/>
-		<tip id="ID_SHAREMONKEY_SAVE" message="إظهار الملف في مكتبتي"/>
 		<tip id="ID_SYSTEM_CLEAR" message="مسح سجل الحالة"/>
 		<tip id="ID_SYSTEM_COPY" message="Copy selected line(s) of status log."/>
 		<tip id="ID_SYSTEM_TIMESTAMP" message="تسجيل طابع الوقت لكل سطر"/>
@@ -2689,7 +2682,6 @@
 		<tip id="ID_VIEW_WINDOWED" message="إستخدام Shareaza في نمط النوافذ"/>
 		<tip id="ID_WEBSERVICES_LIST" message="إختيار خدمة الويب للحصول على مزيد من المعلومات حول الملف المحدد"/>
 		<tip id="ID_WEBSERVICES_MUSICBRAINZ" message="البحث عن معلومات الملف باستعمال خدمة ShareMonkey"/>
-		<tip id="ID_WEBSERVICES_SHAREMONKEY" message="البحث عن معلومات الملف باستعمال خدمة ShareMonkey"/>
 		<tip id="ID_WINDOW_ARRANGE" message="Arrange icons at the bottom of the window" tip="Arrange Icons"/>
 		<tip id="ID_WINDOW_CASCADE" message="توسيع كافة النوافذ المفتوحة إلى ملء الشاشة"/>
 		<tip id="ID_WINDOW_MONITOR" message="إظهار أو إخفاء نافذة مراقب نطاق العرض"/>

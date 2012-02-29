@@ -1058,10 +1058,6 @@
 				>
 			</File>
 			<File
-				RelativePath="ShareMonkeyData.cpp"
-				>
-			</File>
-			<File
 				RelativePath="ShellIcons.cpp"
 				>
 			</File>
@@ -2660,10 +2656,6 @@
 			</File>
 			<File
 				RelativePath="SharedFolder.h"
-				>
-			</File>
-			<File
-				RelativePath="ShareMonkeyData.h"
 				>
 			</File>
 			<File

@@ -2614,13 +2614,6 @@
 		<tip id="ID_SECURITY_POLICY_DENY" message="Régler la politique de sécurité par défaut pour refuser tous les hôtes."/>
 		<tip id="ID_SECURITY_REMOVE" message="Supprimer cette sélection de règles de sécurité."/>
 		<tip id="ID_SECURITY_RESET" message="Remettre le compteur d'accès à zéro pour cette sélection de règles."/>
-		<tip id="ID_SHAREMONKEY_BUY" message="Buy it and support the author"/>
-		<tip id="ID_SHAREMONKEY_COMPARE" message="Compare prices in different stores"/>
-		<tip id="ID_SHAREMONKEY_DOWNLOAD" message="_Rechercher ceci"/>
-		<tip id="ID_SHAREMONKEY_NEXT" message="Go to the next match"/>
-		<tip id="ID_SHAREMONKEY_PREVIOUS" message="Go to the previous match"/>
-		<tip id="ID_SHAREMONKEY_PRICES" message="Revenir au fichier précédent dans la liste de lecture actuelle."/>
-		<tip id="ID_SHAREMONKEY_SAVE" message="Voir le fichier de ma bibliothèque"/>
 		<tip id="ID_SYSTEM_CLEAR" message="Nettoyer le journal de statut."/>
 		<tip id="ID_SYSTEM_COPY" message="Copy selected line(s) of status log."/>
 		<tip id="ID_SYSTEM_TIMESTAMP" message="Enregistrer l'horodatage pour chaque ligne."/>
@@ -2690,7 +2683,6 @@
 		<tip id="ID_VIEW_WINDOWED" message="Utiliser Shareaza en mode expert fenêtré."/>
 		<tip id="ID_WEBSERVICES_LIST" message="Choisir le service Web pour chercher des informations supplémentaires sur le fichier sélectionné."/>
 		<tip id="ID_WEBSERVICES_MUSICBRAINZ" message="Chercher des informations sur le fichier en utilisant le service Sharemonkey."/>
-		<tip id="ID_WEBSERVICES_SHAREMONKEY" message="Chercher des informations sur le fichier en utilisant le service Sharemonkey."/>
 		<tip id="ID_WINDOW_ARRANGE" message="Arrange icons at the bottom of the window" tip="Arrange Icons"/>
 		<tip id="ID_WINDOW_CASCADE" message="Arranger les fenêtres ouvertes en cascade."/>
 		<tip id="ID_WINDOW_MONITOR" message="Afficher ou masquer le moniteur de bande passante."/>

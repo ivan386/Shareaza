@@ -202,9 +202,6 @@ void CSettings::Load()
 	Add( _T("WebServices"), _T("BitziWebSubmit"), &WebServices.BitziWebSubmit, _T("http://bitzi.com/lookup/(SHA1).(TTH)?fl=(SIZE)&ff=(FIRST20)&fn=(NAME)&tag.ed2k.ed2khash=(ED2K)&(INFO)&a=(AGENT)&v=Q0.4&ref=shareaza") );
 	Add( _T("WebServices"), _T("BitziWebView"), &WebServices.BitziWebView, _T("http://bitzi.com/lookup/(URN)?v=detail&ref=shareaza") );
 	Add( _T("WebServices"), _T("BitziXML"), &WebServices.BitziXML, _T("http://bitzi.com/rdf/(SHA1)") );
-	Add( _T("WebServices"), _T("ShareMonkeyCid"), &WebServices.ShareMonkeyCid );
-	Add( _T("WebServices"), _T("ShareMonkeyOkay"), &WebServices.ShareMonkeyOkay, false, true );
-	Add( _T("WebServices"), _T("ShareMonkeySaveThumbnail"), &WebServices.ShareMonkeySaveThumbnail, false, true );
 
 	Add( _T("Search"), _T("AdultFilter"), &Search.AdultFilter, false );
 	Add( _T("Search"), _T("AdvancedPanel"), &Search.AdvancedPanel, true );
@@ -227,7 +224,6 @@ void CSettings::Load()
 	Add( _T("Search"), _T("ShowNames"), &Search.ShowNames, true );
 	Add( _T("Search"), _T("SpamFilterThreshold"), &Search.SpamFilterThreshold, 20, 1, 0, 100, _T("%") );
 	Add( _T("Search"), _T("SwitchToTransfers"), &Search.SwitchToTransfers, true );
-	Add( _T("Search"), _T("ShareMonkeyBaseURL"), &Search.ShareMonkeyBaseURL, _T("http://tools.sharemonkey.com/xml/") );
 	Add( _T("Search"), _T("ClearPrevious"), &Search.ClearPrevious, 0, 1, 0, 2 );
 	Add( _T("Search"), _T("SanityCheck"), &Search.SanityCheck, true );
 	Add( _T("Search"), _T("AutoPreview"), &Search.AutoPreview, true );
@@ -1098,14 +1094,12 @@ void CSettings::SmartUpgrade()
 		if ( General.SmartVersion < 55 ) // Migrate values to other section
 		{
 			WebServices.BitziOkay		= theApp.GetProfileInt( L"Library", L"BitziOkay", false ) != 0;
-			WebServices.ShareMonkeyCid	= theApp.GetProfileString( L"", L"ShareMonkeyCid", L"" );
 
 			// Delete old values
 			theApp.WriteProfileString( L"Library", L"BitziAgent", NULL );
 			theApp.WriteProfileString( L"Library", L"BitziWebSubmit", NULL );
 			theApp.WriteProfileString( L"Library", L"BitziWebView", NULL );
 			theApp.WriteProfileString( L"Library", L"BitziXML", NULL );
-			theApp.WriteProfileString( L"", L"ShareMonkeyCid", NULL );
 			theApp.WriteProfileString( L"Library", L"BitziWebView", NULL );
 			SHDeleteValue( HKEY_CURRENT_USER,
 				_T(REGISTRY_KEY) _T("\\Library"), _T("BitziOkay") );

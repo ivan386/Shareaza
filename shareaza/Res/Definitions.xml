@@ -452,14 +452,6 @@
 	<resource code="33229" id="ID_TAB_IRC"/>
 	<resource code="33230" id="ID_IRC_BROWSE"/>
 	<resource code="33300" id="ID_WEBSERVICES_LIST"/>
-	<resource code="33301" id="ID_WEBSERVICES_SHAREMONKEY"/>
-	<resource code="33302" id="ID_SHAREMONKEY_DOWNLOAD"/>
-	<resource code="33303" id="ID_SHAREMONKEY_SAVE"/>
-	<resource code="33304" id="ID_SHAREMONKEY_PREVIOUS"/>
-	<resource code="33305" id="ID_SHAREMONKEY_NEXT"/>
-	<resource code="33306" id="ID_SHAREMONKEY_PRICES"/>
-	<resource code="33307" id="ID_SHAREMONKEY_COMPARE"/>
-	<resource code="33308" id="ID_SHAREMONKEY_BUY"/>
 	<resource code="33309" id="ID_WEBSERVICES_MUSICBRAINZ"/>
 	<resource code="33310" id="ID_MUSICBRAINZ_MATCHES"/>
 	<resource code="33311" id="ID_MUSICBRAINZ_ALBUMS"/>
@@ -468,7 +460,6 @@
 	<resource code="33314" id="ID_SYSTEM_VERBOSE_NOTICE"/>
 	<resource code="33315" id="ID_SYSTEM_VERBOSE_INFO"/>
 	<resource code="33316" id="ID_SYSTEM_VERBOSE_DEBUG"/>
-	<resource code="33317" id="ID_SHAREMONKEY_SAVE_OPTION"/>
 	<resource code="33318" id="ImageViewer_BestFit"/>
 	<resource code="33319" id="ImageViewer_ActualSize"/>
 	<resource code="33320" id="ImageViewer_Refresh"/>

@@ -2617,13 +2617,6 @@
 		<tip id="ID_SECURITY_POLICY_DENY" message="Nastavit standardní zabezpečení odepření pro všechny hosty."/>
 		<tip id="ID_SECURITY_REMOVE" message="Odstranit označené pravidlo zabezpečení."/>
 		<tip id="ID_SECURITY_RESET" message="Ihned resetovat a počítat s pravidly výběru."/>
-		<tip id="ID_SHAREMONKEY_BUY" message="Buy it and support the author"/>
-		<tip id="ID_SHAREMONKEY_COMPARE" message="Compare prices in different stores"/>
-		<tip id="ID_SHAREMONKEY_DOWNLOAD" message="_Pátrat po tomto"/>
-		<tip id="ID_SHAREMONKEY_NEXT" message="Go to the next match"/>
-		<tip id="ID_SHAREMONKEY_PREVIOUS" message="Go to the previous match"/>
-		<tip id="ID_SHAREMONKEY_PRICES" message="Přeskočit zpět na předchozího soubor v aktuálním playlistu."/>
-		<tip id="ID_SHAREMONKEY_SAVE" message="Ukázat mi soubor z knihovny"/>
 		<tip id="ID_SYSTEM_CLEAR" message="Vymazat stav záznamu."/>
 		<tip id="ID_SYSTEM_COPY" message="Copy selected line(s) of status log."/>
 		<tip id="ID_SYSTEM_TIMESTAMP" message="Zaznamenat časovou značku pro každou linku."/>
@@ -2693,7 +2686,6 @@
 		<tip id="ID_VIEW_WINDOWED" message="Používat Shareazu ve speciálním režimu oken."/>
 		<tip id="ID_WEBSERVICES_LIST" message="Choose the web service to get more information about the selected file."/>
 		<tip id="ID_WEBSERVICES_MUSICBRAINZ" message="Search for the same artist songs using MusicBrainz service."/>
-		<tip id="ID_WEBSERVICES_SHAREMONKEY" message="Search for the file infomation using ShareMonkey service."/>
 		<tip id="ID_WINDOW_ARRANGE" message="Arrange icons at the bottom of the window" tip="Arrange Icons"/>
 		<tip id="ID_WINDOW_CASCADE" message="Rozložit všechna otevřená okna a zaplnit obrazovku."/>
 		<tip id="ID_WINDOW_MONITOR" message="Ukázat se nebo skrýt monitorování šířky pásma."/>

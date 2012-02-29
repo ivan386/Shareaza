@@ -2583,13 +2583,6 @@
 		<tip id="ID_SECURITY_POLICY_DENY" message="Tanınmayan tüm hostlar için varsayılan güvenlik politikasını kümele."/>
 		<tip id="ID_SECURITY_REMOVE" message="Seçilen güvenlik kurallarını kaldır."/>
 		<tip id="ID_SECURITY_RESET" message="Güvenlik kurallarında ulaşılan sayıları sıfırla."/>
-		<tip id="ID_SHAREMONKEY_BUY" message="Buy it and support the author"/>
-		<tip id="ID_SHAREMONKEY_COMPARE" message="Compare prices in different stores"/>
-		<tip id="ID_SHAREMONKEY_DOWNLOAD" message="_Bunu Ara"/>
-		<tip id="ID_SHAREMONKEY_NEXT" message="Go to the next match"/>
-		<tip id="ID_SHAREMONKEY_PREVIOUS" message="Go to the previous match"/>
-		<tip id="ID_SHAREMONKEY_PRICES" message="Yürürlükteki oynatma dosyasındaki bir önceki dosyaya geri dön."/>
-		<tip id="ID_SHAREMONKEY_SAVE" message="Kütüphanemdeki dosyaları göster"/>
 		<tip id="ID_SYSTEM_CLEAR" message="Durum günlüğünü temizle."/>
 		<tip id="ID_SYSTEM_COPY" message="Copy selected line(s) of status log."/>
 		<tip id="ID_SYSTEM_TIMESTAMP" message="Her hat için zamanı kaydet."/>
@@ -2659,7 +2652,6 @@
 		<tip id="ID_VIEW_WINDOWED" message="Shareaza'yı güçlü Window modunda kullan."/>
 		<tip id="ID_WEBSERVICES_LIST" message="Seçilen dosya hakkında daha fazla bilgi edinmek için kullanılacak Web servisini berlirle."/>
 		<tip id="ID_WEBSERVICES_MUSICBRAINZ" message="Dosyayı Sharemonkey servisinde ara."/>
-		<tip id="ID_WEBSERVICES_SHAREMONKEY" message="Dosyayı Sharemonkey servisinde ara."/>
 		<tip id="ID_WINDOW_ARRANGE" message="Arrange icons at the bottom of the window" tip="Arrange Icons"/>
 		<tip id="ID_WINDOW_CASCADE" message="Tüm açık pencereleri ekranı kaplayacak şekilde genişlet."/>
 		<tip id="ID_WINDOW_MONITOR" message="Görüntü bant genişliğini göster/gizle."/>

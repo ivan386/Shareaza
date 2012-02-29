@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2012-02-21 11:51+0000\n"
+"POT-Creation-Date: 2012-02-29 19:32+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -4215,34 +4215,6 @@ msgstr "清除选定的安全策略。"
 msgid "Reset the hit counts on the selected rules."
 msgstr "重置选定规则的命中计数器。"
 
-#: message;id_sharemonkey_buy
-msgid "Buy it and support the author"
-msgstr "购买并支持作者"
-
-#: message;id_sharemonkey_compare
-msgid "Compare prices in different stores"
-msgstr "在不同的商店中比较价格"
-
-#: message;id_sharemonkey_download
-msgid "Search for matches"
-msgstr "搜索匹配"
-
-#: message;id_sharemonkey_next
-msgid "Go to the next match"
-msgstr "到下一个结果"
-
-#: message;id_sharemonkey_previous
-msgid "Go to the previous match"
-msgstr "到上一个结果"
-
-#: message;id_sharemonkey_prices
-msgid "Look at the prices for the current match"
-msgstr "查看当前结果的价格"
-
-#: message;id_sharemonkey_save
-msgid "Save the match in your Library"
-msgstr "保存结果到库中"
-
 #: message;id_system_clear
 msgid "Clear the status log."
 msgstr "清除状态日志。"
@@ -4506,10 +4478,6 @@ msgstr "选择一个网页服务以获取关于选中文件的更多信息。"
 #: message;id_webservices_musicbrainz
 msgid "Search for the same artist songs using MusicBrainz service."
 msgstr "通过 MusicBrainz 服务搜索同一艺术家的歌曲。"
-
-#: message;id_webservices_sharemonkey
-msgid "Search for the file infomation using ShareMonkey service."
-msgstr "用 ShareMonkey 服务搜索文件信息。"
 
 #: message;id_window_arrange
 msgid "Arrange icons at the bottom of the window"
@@ -9990,6 +9958,30 @@ msgstr "触发器"
 #: column;nextrun
 msgid "NextRun"
 msgstr "下次运行"
+
+#~ msgid "Buy it and support the author"
+#~ msgstr "购买并支持作者"
+
+#~ msgid "Compare prices in different stores"
+#~ msgstr "在不同的商店中比较价格"
+
+#~ msgid "Search for matches"
+#~ msgstr "搜索匹配"
+
+#~ msgid "Go to the next match"
+#~ msgstr "到下一个结果"
+
+#~ msgid "Go to the previous match"
+#~ msgstr "到上一个结果"
+
+#~ msgid "Look at the prices for the current match"
+#~ msgstr "查看当前结果的价格"
+
+#~ msgid "Save the match in your Library"
+#~ msgstr "保存结果到库中"
+
+#~ msgid "Search for the file infomation using ShareMonkey service."
+#~ msgstr "用 ShareMonkey 服务搜索文件信息。"
 
 #~ msgid "_Interface:"
 #~ msgstr "界面(_I):"

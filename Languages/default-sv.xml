@@ -2611,13 +2611,6 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<tip id="ID_SECURITY_POLICY_DENY" message="Sätt förvald säkerhetspolicy till att neka alla värdar."/>
 		<tip id="ID_SECURITY_REMOVE" message="Radera den valda säkerhetspolicyn."/>
 		<tip id="ID_SECURITY_RESET" message="Återställ träffräknaren för de valda reglerna."/>
-		<tip id="ID_SHAREMONKEY_BUY" message="Buy it and support the author"/>
-		<tip id="ID_SHAREMONKEY_COMPARE" message="Compare prices in different stores"/>
-		<tip id="ID_SHAREMONKEY_DOWNLOAD" message="_Sök efter detta"/>
-		<tip id="ID_SHAREMONKEY_NEXT" message="Go to the next match"/>
-		<tip id="ID_SHAREMONKEY_PREVIOUS" message="Go to the previous match"/>
-		<tip id="ID_SHAREMONKEY_PRICES" message="Byt till den föregående filen i spellistan."/>
-		<tip id="ID_SHAREMONKEY_SAVE" message="Visa filen i mitt bibliotek"/>
 		<tip id="ID_SYSTEM_CLEAR" message="Rensa statusloggen."/>
 		<tip id="ID_SYSTEM_COPY" message="Copy selected line(s) of status log."/>
 		<tip id="ID_SYSTEM_TIMESTAMP" message="Gör en tidsstämpel för varje rad."/>
@@ -2687,7 +2680,6 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<tip id="ID_VIEW_WINDOWED" message="Använd Shareaza i expertläge."/>
 		<tip id="ID_WEBSERVICES_LIST" message="Välj webbtjänsten för att ta reda på mer information om den valda filen."/>
 		<tip id="ID_WEBSERVICES_MUSICBRAINZ" message="Sök efter filinformation med tjänsten ShareMonkey."/>
-		<tip id="ID_WEBSERVICES_SHAREMONKEY" message="Sök efter filinformation med tjänsten ShareMonkey."/>
 		<tip id="ID_WINDOW_ARRANGE" message="Arrange icons at the bottom of the window" tip="Arrange Icons"/>
 		<tip id="ID_WINDOW_CASCADE" message="Expandera öppna fönster så att de visas på skärmen."/>
 		<tip id="ID_WINDOW_MONITOR" message="Visa eller dälj bandbreddsmonitorn"/>

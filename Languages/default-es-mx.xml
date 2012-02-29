@@ -2610,13 +2610,6 @@
 		<tip id="ID_SECURITY_POLICY_DENY" message="Negar todas las conexiones."/>
 		<tip id="ID_SECURITY_REMOVE" message="Eliminar esta regla de seguridad."/>
 		<tip id="ID_SECURITY_RESET" message="Reiniciar contadores."/>
-		<tip id="ID_SHAREMONKEY_BUY" message="Buy it and support the author"/>
-		<tip id="ID_SHAREMONKEY_COMPARE" message="Compare prices in different stores"/>
-		<tip id="ID_SHAREMONKEY_DOWNLOAD" message="_Buscar Esto"/>
-		<tip id="ID_SHAREMONKEY_NEXT" message="Go to the next match"/>
-		<tip id="ID_SHAREMONKEY_PREVIOUS" message="Go to the previous match"/>
-		<tip id="ID_SHAREMONKEY_PRICES" message="Ir al archivo anterior."/>
-		<tip id="ID_SHAREMONKEY_SAVE" message="Ubicarlo en Mi Colección"/>
 		<tip id="ID_SYSTEM_CLEAR" message="Borra la historia de estado."/>
 		<tip id="ID_SYSTEM_COPY" message="Copy selected line(s) of status log."/>
 		<tip id="ID_SYSTEM_TIMESTAMP" message="Dejar estampa del tiempo en la historia."/>
@@ -2686,7 +2679,6 @@
 		<tip id="ID_VIEW_WINDOWED" message="Usar el modo Ventanas, para usuarios con experiencia."/>
 		<tip id="ID_WEBSERVICES_LIST" message="Choose the web service to get more information about the selected file."/>
 		<tip id="ID_WEBSERVICES_MUSICBRAINZ" message="Search for the same artist songs using MusicBrainz service."/>
-		<tip id="ID_WEBSERVICES_SHAREMONKEY" message="Search for the file infomation using ShareMonkey service."/>
 		<tip id="ID_WINDOW_ARRANGE" message="Arrange icons at the bottom of the window" tip="Arrange Icons"/>
 		<tip id="ID_WINDOW_CASCADE" message="Llenar la pantalla."/>
 		<tip id="ID_WINDOW_MONITOR" message="Mostrar u ocultar monitor de ancho de banda/controles del reproductor."/>

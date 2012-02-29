@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2012-02-21 11:51+0000\n"
+"POT-Creation-Date: 2012-02-29 19:32+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -4295,37 +4295,6 @@ msgstr "Fjern valgte sikkerhetsregler."
 msgid "Reset the hit counts on the selected rules."
 msgstr "Fjern treffresultat til valgte regler."
 
-#: message;id_sharemonkey_buy
-msgid "Buy it and support the author"
-msgstr ""
-
-#: message;id_sharemonkey_compare
-msgid "Compare prices in different stores"
-msgstr ""
-
-#: message;id_sharemonkey_download
-#, fuzzy
-msgid "Search for matches"
-msgstr "Søk etter dette"
-
-#: message;id_sharemonkey_next
-msgid "Go to the next match"
-msgstr ""
-
-#: message;id_sharemonkey_previous
-msgid "Go to the previous match"
-msgstr ""
-
-#: message;id_sharemonkey_prices
-#, fuzzy
-msgid "Look at the prices for the current match"
-msgstr "Gå tilbake til forrige fil i denne spillelisten."
-
-#: message;id_sharemonkey_save
-#, fuzzy
-msgid "Save the match in your Library"
-msgstr "Vis filen i mine filer"
-
 #: message;id_system_clear
 msgid "Clear the status log."
 msgstr "Oppdater stausloggen."
@@ -4593,10 +4562,6 @@ msgstr ""
 
 #: message;id_webservices_musicbrainz
 msgid "Search for the same artist songs using MusicBrainz service."
-msgstr ""
-
-#: message;id_webservices_sharemonkey
-msgid "Search for the file infomation using ShareMonkey service."
 msgstr ""
 
 #: message;id_window_arrange
@@ -10099,6 +10064,18 @@ msgstr "TigerTree"
 #, fuzzy
 msgid "NextRun"
 msgstr "Neste"
+
+#, fuzzy
+#~ msgid "Search for matches"
+#~ msgstr "Søk etter dette"
+
+#, fuzzy
+#~ msgid "Look at the prices for the current match"
+#~ msgstr "Gå tilbake til forrige fil i denne spillelisten."
+
+#, fuzzy
+#~ msgid "Save the match in your Library"
+#~ msgstr "Vis filen i mine filer"
 
 #~ msgid "_Interface:"
 #~ msgstr "Grensesnitt:"

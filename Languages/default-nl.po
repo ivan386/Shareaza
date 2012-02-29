@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2012-02-21 11:51+0000\n"
+"POT-Creation-Date: 2012-02-29 19:32+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -4312,37 +4312,6 @@ msgstr "Verwijder de geselecteerde beveiligingsregel."
 msgid "Reset the hit counts on the selected rules."
 msgstr "De tellers terugzetten voor de geselecteerde regels."
 
-#: message;id_sharemonkey_buy
-msgid "Buy it and support the author"
-msgstr ""
-
-#: message;id_sharemonkey_compare
-msgid "Compare prices in different stores"
-msgstr ""
-
-#: message;id_sharemonkey_download
-#, fuzzy
-msgid "Search for matches"
-msgstr "Dit _zoeken"
-
-#: message;id_sharemonkey_next
-msgid "Go to the next match"
-msgstr ""
-
-#: message;id_sharemonkey_previous
-msgid "Go to the previous match"
-msgstr ""
-
-#: message;id_sharemonkey_prices
-#, fuzzy
-msgid "Look at the prices for the current match"
-msgstr "Ga terug naar het vorige bestand van de afspeellijst."
-
-#: message;id_sharemonkey_save
-#, fuzzy
-msgid "Save the match in your Library"
-msgstr "Het bestand laten zien in mijn bibliotheek"
-
 #: message;id_system_clear
 msgid "Clear the status log."
 msgstr "Het statuslog wissen."
@@ -4611,10 +4580,6 @@ msgstr "Kies de web service om meer informatie te krijgen over het geselecteerde
 #: message;id_webservices_musicbrainz
 #, fuzzy
 msgid "Search for the same artist songs using MusicBrainz service."
-msgstr "Zoek naar informatie van het bestand door ShareMonkey service te gebruiken."
-
-#: message;id_webservices_sharemonkey
-msgid "Search for the file infomation using ShareMonkey service."
 msgstr "Zoek naar informatie van het bestand door ShareMonkey service te gebruiken."
 
 #: message;id_window_arrange
@@ -10118,6 +10083,21 @@ msgstr "TigerTree"
 #, fuzzy
 msgid "NextRun"
 msgstr "Volgende"
+
+#, fuzzy
+#~ msgid "Search for matches"
+#~ msgstr "Dit _zoeken"
+
+#, fuzzy
+#~ msgid "Look at the prices for the current match"
+#~ msgstr "Ga terug naar het vorige bestand van de afspeellijst."
+
+#, fuzzy
+#~ msgid "Save the match in your Library"
+#~ msgstr "Het bestand laten zien in mijn bibliotheek"
+
+#~ msgid "Search for the file infomation using ShareMonkey service."
+#~ msgstr "Zoek naar informatie van het bestand door ShareMonkey service te gebruiken."
 
 #~ msgid "_Interface:"
 #~ msgstr "_Omgeving:"

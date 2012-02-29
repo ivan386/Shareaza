@@ -2611,13 +2611,6 @@
 		<tip id="ID_SECURITY_POLICY_DENY" message="Standardverhalten auf &quot;Alle Hosts abweisen&quot; setzen."/>
 		<tip id="ID_SECURITY_REMOVE" message="Die markierte(n) Sicherheitsregel(n) löschen."/>
 		<tip id="ID_SECURITY_RESET" message="Die Trefferzähler der markierte(n) Sicherheitsregel(n) zurücksetzen."/>
-		<tip id="ID_SHAREMONKEY_BUY" message="Diese Software kaufen und den Autor unterstützen"/>
-		<tip id="ID_SHAREMONKEY_COMPARE" message="Den Preis bei verschiedenen Anbietern vergleichen"/>
-		<tip id="ID_SHAREMONKEY_DOWNLOAD" message="Danach _suchen"/>
-		<tip id="ID_SHAREMONKEY_NEXT" message="Zum nächsten Treffer"/>
-		<tip id="ID_SHAREMONKEY_PREVIOUS" message="Zum vorherigen Treffer"/>
-		<tip id="ID_SHAREMONKEY_PRICES" message="Preis für diesen Treffer anzeigen."/>
-		<tip id="ID_SHAREMONKEY_SAVE" message="Datei in meiner Bibliothek abspeichern."/>
 		<tip id="ID_SYSTEM_CLEAR" message="Den Konsolenpuffer leeren."/>
 		<tip id="ID_SYSTEM_COPY" message="Die kopierte(n) Zeile(n) des Status Logs kopieren."/>
 		<tip id="ID_SYSTEM_TIMESTAMP" message="Für jede Zeile einen Zeitstempel anzeigen."/>
@@ -2687,7 +2680,6 @@
 		<tip id="ID_VIEW_WINDOWED" message="Shareaza im Fenster-Modus benutzen."/>
 		<tip id="ID_WEBSERVICES_LIST" message="Wählen Sie einen Internetdienst, um mehr Informationen über die gewählte Datei zu erhalten."/>
 		<tip id="ID_WEBSERVICES_MUSICBRAINZ" message="Mit MusicBrainz nach vorhandenen Datei-Informationen suchen."/>
-		<tip id="ID_WEBSERVICES_SHAREMONKEY" message="Mit ShareMonkey nach vorhandenen Datei-Informationen suchen."/>
 		<tip id="ID_WINDOW_ARRANGE" message="Icons an der Fensterunterseite anordnen" tip="Icons anordnen"/>
 		<tip id="ID_WINDOW_CASCADE" message="Alle offenen Fenster maximieren."/>
 		<tip id="ID_WINDOW_MONITOR" message="Den Bandbreiten-Monitor ein- oder ausblenden."/>

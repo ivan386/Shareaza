@@ -2609,13 +2609,6 @@
 		<tip id="ID_SECURITY_POLICY_DENY" message="Keela vaikimisi reeglina kõik serverid."/>
 		<tip id="ID_SECURITY_REMOVE" message="Eemalda valitud turvareegel."/>
 		<tip id="ID_SECURITY_RESET" message="Nulli löögilugeja valitud reeglil."/>
-		<tip id="ID_SHAREMONKEY_BUY" message="Buy it and support the author"/>
-		<tip id="ID_SHAREMONKEY_COMPARE" message="Compare prices in different stores"/>
-		<tip id="ID_SHAREMONKEY_DOWNLOAD" message="_Otsi Seda"/>
-		<tip id="ID_SHAREMONKEY_NEXT" message="Go to the next match"/>
-		<tip id="ID_SHAREMONKEY_PREVIOUS" message="Go to the previous match"/>
-		<tip id="ID_SHAREMONKEY_PRICES" message="Hüppa tagasi, eelmisele failile playlistis ."/>
-		<tip id="ID_SHAREMONKEY_SAVE" message="Näita seda faili Raamatukogus"/>
 		<tip id="ID_SYSTEM_CLEAR" message="Puhasta oleku logi."/>
 		<tip id="ID_SYSTEM_COPY" message="Copy selected line(s) of status log."/>
 		<tip id="ID_SYSTEM_TIMESTAMP" message="Salvesta iga rea jaoks ajamärk."/>
@@ -2685,7 +2678,6 @@
 		<tip id="ID_VIEW_WINDOWED" message="Kasuta Shareaza Akende vaadet."/>
 		<tip id="ID_WEBSERVICES_LIST" message="Choose the web service to get more information about the selected file."/>
 		<tip id="ID_WEBSERVICES_MUSICBRAINZ" message="Search for the same artist songs using MusicBrainz service."/>
-		<tip id="ID_WEBSERVICES_SHAREMONKEY" message="Search for the file infomation using ShareMonkey service."/>
 		<tip id="ID_WINDOW_ARRANGE" message="Arrange icons at the bottom of the window" tip="Arrange Icons"/>
 		<tip id="ID_WINDOW_CASCADE" message="Laienda kõik avatud aknad tervele ekraanile."/>
 		<tip id="ID_WINDOW_MONITOR" message="Näita või peida liikluse jälgijat."/>

@@ -1468,7 +1468,6 @@
 #define IDS_GENERAL_NEXT                20011
 #define IDS_GENERAL_FINISH              20012
 #define IDS_GENERAL_ALL                 20013
-#define IDS_SHAREMONKEY_MESSAGE         20014
 #define IDS_STATUS_CONNECTING           20100
 #define IDS_STATUS_REQUESTING           20101
 #define IDS_STATUS_RESPONSE             20102
@@ -1915,14 +1914,6 @@
 #define ID_TAB_IRC                      33229
 #define ID_IRC_BROWSE                   33230
 #define ID_WEBSERVICES_LIST             33300
-#define ID_WEBSERVICES_SHAREMONKEY      33301
-#define ID_SHAREMONKEY_DOWNLOAD         33302
-#define ID_SHAREMONKEY_SAVE             33303
-#define ID_SHAREMONKEY_PREVIOUS         33304
-#define ID_SHAREMONKEY_NEXT             33305
-#define ID_SHAREMONKEY_PRICES           33306
-#define ID_SHAREMONKEY_COMPARE          33307
-#define ID_SHAREMONKEY_BUY              33308
 #define ID_WEBSERVICES_MUSICBRAINZ      33309
 #define ID_MUSICBRAINZ_MATCHES          33310
 #define ID_MUSICBRAINZ_ALBUMS           33311
@@ -1931,7 +1922,6 @@
 #define ID_SYSTEM_VERBOSE_NOTICE        33314
 #define ID_SYSTEM_VERBOSE_INFO          33315
 #define ID_SYSTEM_VERBOSE_DEBUG         33316
-#define ID_SHAREMONKEY_SAVE_OPTION      33317
 #define ImageViewer_BestFit             33318
 #define ImageViewer_ActualSize          33319
 #define ImageViewer_Refresh             33320

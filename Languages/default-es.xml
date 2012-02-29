@@ -2612,13 +2612,6 @@ puede comenzar a transferir en cualquier momento.</text>
 		<tip id="ID_SECURITY_POLICY_DENY" message="Negar todas las conexiones."/>
 		<tip id="ID_SECURITY_REMOVE" message="Eliminar esta regla de seguridad."/>
 		<tip id="ID_SECURITY_RESET" message="Reiniciar contadores."/>
-		<tip id="ID_SHAREMONKEY_BUY" message="Cómpralo para apoyar al autor"/>
-		<tip id="ID_SHAREMONKEY_COMPARE" message="Compara precios en distintas tiendas"/>
-		<tip id="ID_SHAREMONKEY_DOWNLOAD" message="Buscar coincidencias"/>
-		<tip id="ID_SHAREMONKEY_NEXT" message="Ir a la siguiente coincidencia"/>
-		<tip id="ID_SHAREMONKEY_PREVIOUS" message="Ir a la anterior coincidencia"/>
-		<tip id="ID_SHAREMONKEY_PRICES" message="Ir al archivo anterior."/>
-		<tip id="ID_SHAREMONKEY_SAVE" message="Ubicarlo en Mi Colección"/>
 		<tip id="ID_SYSTEM_CLEAR" message="Borra la historia de estado."/>
 		<tip id="ID_SYSTEM_COPY" message="Copy selected line(s) of status log."/>
 		<tip id="ID_SYSTEM_TIMESTAMP" message="Dejar una marca temporal en cada linea."/>
@@ -2688,7 +2681,6 @@ puede comenzar a transferir en cualquier momento.</text>
 		<tip id="ID_VIEW_WINDOWED" message="Usar el modo Ventanas, para usuarios con experiencia."/>
 		<tip id="ID_WEBSERVICES_LIST" message="Selecciona el servicio web para obtener mas informacion sobre el archivo seleccionado."/>
 		<tip id="ID_WEBSERVICES_MUSICBRAINZ" message="Buscar canciones del mismo artista usando el servicio MusicBrainz."/>
-		<tip id="ID_WEBSERVICES_SHAREMONKEY" message="Buscar informacion del archivo usando el servicio ShareMonkey."/>
 		<tip id="ID_WINDOW_ARRANGE" message="Ordenar iconos en la parte inferior de la ventana" tip="Ordenar iconos"/>
 		<tip id="ID_WINDOW_CASCADE" message="Llenar la pantalla (con las ventanas abiertas)."/>
 		<tip id="ID_WINDOW_MONITOR" message="Mostrar u ocultar monitor de ancho de banda/controles del reproductor."/>

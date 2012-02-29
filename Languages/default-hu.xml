@@ -2589,13 +2589,6 @@
 		<tip id="ID_SECURITY_POLICY_DENY" message="Beállítja az alapértelmezett biztonsági szabályt, ami mindenhol tiltva van."/>
 		<tip id="ID_SECURITY_REMOVE" message="A kiválasztott biztonsági szabály eltávolítása."/>
 		<tip id="ID_SECURITY_RESET" message="A kiválasztott biztonsági szabály számlálójának nullázása."/>
-		<tip id="ID_SHAREMONKEY_BUY" message="Buy it and support the author"/>
-		<tip id="ID_SHAREMONKEY_COMPARE" message="Compare prices in different stores"/>
-		<tip id="ID_SHAREMONKEY_DOWNLOAD" message="K_eresés"/>
-		<tip id="ID_SHAREMONKEY_NEXT" message="Go to the next match"/>
-		<tip id="ID_SHAREMONKEY_PREVIOUS" message="Go to the previous match"/>
-		<tip id="ID_SHAREMONKEY_PRICES" message="Visszamegy az előző fájlra."/>
-		<tip id="ID_SHAREMONKEY_SAVE" message="Mutassa meg a fájlt a Könyvtárban"/>
 		<tip id="ID_SYSTEM_CLEAR" message="A napló törlése."/>
 		<tip id="ID_SYSTEM_COPY" message="Copy selected line(s) of status log."/>
 		<tip id="ID_SYSTEM_TIMESTAMP" message="Minden sorhoz időbélyeget ad."/>
@@ -2665,7 +2658,6 @@
 		<tip id="ID_VIEW_WINDOWED" message="A Shareaza használata ablakos nézetben."/>
 		<tip id="ID_WEBSERVICES_LIST" message="Kattintson a webszolgáltatásra, hogy több információt tudjon meg a fájlról."/>
 		<tip id="ID_WEBSERVICES_MUSICBRAINZ" message="A ShareMonkey segítségével több információt tudhat meg a fájlról."/>
-		<tip id="ID_WEBSERVICES_SHAREMONKEY" message="A ShareMonkey segítségével több információt tudhat meg a fájlról."/>
 		<tip id="ID_WINDOW_ARRANGE" message="Arrange icons at the bottom of the window" tip="Arrange Icons"/>
 		<tip id="ID_WINDOW_CASCADE" message="Minden ablak teljes méretűvé alakítása."/>
 		<tip id="ID_WINDOW_MONITOR" message="A sávszélfigyelő elrejtése, megjelenítése."/>

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2012-02-21 11:51+0000\n"
+"POT-Creation-Date: 2012-02-29 19:32+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -4234,34 +4234,6 @@ msgstr "Die markierte(n) Sicherheitsregel(n) löschen."
 msgid "Reset the hit counts on the selected rules."
 msgstr "Die Trefferzähler der markierte(n) Sicherheitsregel(n) zurücksetzen."
 
-#: message;id_sharemonkey_buy
-msgid "Buy it and support the author"
-msgstr "Diese Software kaufen und den Autor unterstützen"
-
-#: message;id_sharemonkey_compare
-msgid "Compare prices in different stores"
-msgstr "Den Preis bei verschiedenen Anbietern vergleichen"
-
-#: message;id_sharemonkey_download
-msgid "Search for matches"
-msgstr "Danach _suchen"
-
-#: message;id_sharemonkey_next
-msgid "Go to the next match"
-msgstr "Zum nächsten Treffer"
-
-#: message;id_sharemonkey_previous
-msgid "Go to the previous match"
-msgstr "Zum vorherigen Treffer"
-
-#: message;id_sharemonkey_prices
-msgid "Look at the prices for the current match"
-msgstr "Preis für diesen Treffer anzeigen."
-
-#: message;id_sharemonkey_save
-msgid "Save the match in your Library"
-msgstr "Datei in meiner Bibliothek abspeichern."
-
 #: message;id_system_clear
 msgid "Clear the status log."
 msgstr "Den Konsolenpuffer leeren."
@@ -4525,10 +4497,6 @@ msgstr "Wählen Sie einen Internetdienst, um mehr Informationen über die gewäh
 #: message;id_webservices_musicbrainz
 msgid "Search for the same artist songs using MusicBrainz service."
 msgstr "Mit MusicBrainz nach vorhandenen Datei-Informationen suchen."
-
-#: message;id_webservices_sharemonkey
-msgid "Search for the file infomation using ShareMonkey service."
-msgstr "Mit ShareMonkey nach vorhandenen Datei-Informationen suchen."
 
 #: message;id_window_arrange
 msgid "Arrange icons at the bottom of the window"
@@ -10004,6 +9972,30 @@ msgstr "TigerTree"
 #: column;nextrun
 msgid "NextRun"
 msgstr "Nächste Ausführung"
+
+#~ msgid "Buy it and support the author"
+#~ msgstr "Diese Software kaufen und den Autor unterstützen"
+
+#~ msgid "Compare prices in different stores"
+#~ msgstr "Den Preis bei verschiedenen Anbietern vergleichen"
+
+#~ msgid "Search for matches"
+#~ msgstr "Danach _suchen"
+
+#~ msgid "Go to the next match"
+#~ msgstr "Zum nächsten Treffer"
+
+#~ msgid "Go to the previous match"
+#~ msgstr "Zum vorherigen Treffer"
+
+#~ msgid "Look at the prices for the current match"
+#~ msgstr "Preis für diesen Treffer anzeigen."
+
+#~ msgid "Save the match in your Library"
+#~ msgstr "Datei in meiner Bibliothek abspeichern."
+
+#~ msgid "Search for the file infomation using ShareMonkey service."
+#~ msgstr "Mit ShareMonkey nach vorhandenen Datei-Informationen suchen."
 
 #~ msgid "Shareaza detected an error while importing a security hash rule. Plz check the contained hashes for consitancy."
 #~ msgstr "Eine Hash-Regel konnte nicht aus der XML-Datei importiert werden. Wahrscheinlich ist die Regeldefinition in der Datei fehlerhaft."

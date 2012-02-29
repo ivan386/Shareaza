@@ -2596,13 +2596,6 @@
 		<tip id="ID_SECURITY_POLICY_DENY" message="使用默认的安全策略拒绝主机。"/>
 		<tip id="ID_SECURITY_REMOVE" message="清除选定的安全策略。"/>
 		<tip id="ID_SECURITY_RESET" message="重置选定规则的命中计数器。"/>
-		<tip id="ID_SHAREMONKEY_BUY" message="购买并支持作者"/>
-		<tip id="ID_SHAREMONKEY_COMPARE" message="在不同的商店中比较价格"/>
-		<tip id="ID_SHAREMONKEY_DOWNLOAD" message="搜索匹配"/>
-		<tip id="ID_SHAREMONKEY_NEXT" message="到下一个结果"/>
-		<tip id="ID_SHAREMONKEY_PREVIOUS" message="到上一个结果"/>
-		<tip id="ID_SHAREMONKEY_PRICES" message="查看当前结果的价格"/>
-		<tip id="ID_SHAREMONKEY_SAVE" message="保存结果到库中"/>
 		<tip id="ID_SYSTEM_CLEAR" message="清除状态日志。"/>
 		<tip id="ID_SYSTEM_COPY" message="复制选中的状态日志。"/>
 		<tip id="ID_SYSTEM_TIMESTAMP" message="记录每行的时间戳。"/>
@@ -2672,7 +2665,6 @@
 		<tip id="ID_VIEW_WINDOWED" message="使用 Shareaza 增强窗口模式。"/>
 		<tip id="ID_WEBSERVICES_LIST" message="选择一个网页服务以获取关于选中文件的更多信息。"/>
 		<tip id="ID_WEBSERVICES_MUSICBRAINZ" message="通过 MusicBrainz 服务搜索同一艺术家的歌曲。"/>
-		<tip id="ID_WEBSERVICES_SHAREMONKEY" message="用 ShareMonkey 服务搜索文件信息。"/>
 		<tip id="ID_WINDOW_ARRANGE" message="在窗口底部重拍图标" tip="重排图标"/>
 		<tip id="ID_WINDOW_CASCADE" message="扩展所有打开的窗口适配屏幕。"/>
 		<tip id="ID_WINDOW_MONITOR" message="显示或隐藏带宽监视器。"/>

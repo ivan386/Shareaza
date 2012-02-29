@@ -2613,13 +2613,6 @@
 		<tip id="ID_SECURITY_POLICY_DENY" message="Установить политику безопасности по умочанию на отказ допуска всем хостам."/>
 		<tip id="ID_SECURITY_REMOVE" message="Удалить помеченное правило(а) безопасности."/>
 		<tip id="ID_SECURITY_RESET" message="Сбросить счетчики хитов для помеченных правил."/>
-		<tip id="ID_SHAREMONKEY_BUY" message="Купить и поблагодарить автора"/>
-		<tip id="ID_SHAREMONKEY_COMPARE" message="Сравнить цены в разных магазинах"/>
-		<tip id="ID_SHAREMONKEY_DOWNLOAD" message="Искать совпадения"/>
-		<tip id="ID_SHAREMONKEY_NEXT" message="Перейти к следующему совпадению"/>
-		<tip id="ID_SHAREMONKEY_PREVIOUS" message="Перейти к предыдущему совпадению"/>
-		<tip id="ID_SHAREMONKEY_PRICES" message="Получить цены для текущего совпадения"/>
-		<tip id="ID_SHAREMONKEY_SAVE" message="Сохранить совпадение в хранилище"/>
 		<tip id="ID_SYSTEM_CLEAR" message="Очистить журнал статуса."/>
 		<tip id="ID_SYSTEM_COPY" message="Копировать выделенные строки."/>
 		<tip id="ID_SYSTEM_TIMESTAMP" message="Добавлять штамп времени в каждую строчку."/>
@@ -2689,7 +2682,6 @@
 		<tip id="ID_VIEW_WINDOWED" message="Переключить Shareaza в оконный режим для опытных."/>
 		<tip id="ID_WEBSERVICES_LIST" message="Выберите сервис для получения более полной информации о файле."/>
 		<tip id="ID_WEBSERVICES_MUSICBRAINZ" message="Поиск информации о файле при помощи службы MusicBrainz."/>
-		<tip id="ID_WEBSERVICES_SHAREMONKEY" message="Поиск информации о файле при помощи службы ShareMonkey."/>
 		<tip id="ID_WINDOW_ARRANGE" message="Выстроить иконки внизу окошка" tip="Выстроить иконки"/>
 		<tip id="ID_WINDOW_CASCADE" message="Расширить все открытые окна, чтобы заполнить экран."/>
 		<tip id="ID_WINDOW_MONITOR" message="Показать или скрыть монитор пропускной способности."/>

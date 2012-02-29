@@ -4287,7 +4287,6 @@ BEGIN
     IDS_GENERAL_NEXT        "&Next"
     IDS_GENERAL_FINISH      "Finish"
     IDS_GENERAL_ALL         "All"
-    IDS_SHAREMONKEY_MESSAGE "This option uses services provided by ShareMonkey.com for recognising information about selected files.\n\nShareaza will transmit file details and your location in order to query the ShareMonkey database.  If you are concerned about privacy, you may wish to consult the ShareMonkey.com privacy policy.\n\nWould you like to proceed?"
 END
 
 STRINGTABLE
@@ -4828,15 +4827,6 @@ END
 STRINGTABLE
 BEGIN
     ID_WEBSERVICES_LIST     "Choose the web service to get more information about the selected file."
-    ID_WEBSERVICES_SHAREMONKEY 
-                            "Search for the file infomation using ShareMonkey service."
-    ID_SHAREMONKEY_DOWNLOAD "Search for matches"
-    ID_SHAREMONKEY_SAVE     "Save the match in your Library"
-    ID_SHAREMONKEY_PREVIOUS "Go to the previous match"
-    ID_SHAREMONKEY_NEXT     "Go to the next match"
-    ID_SHAREMONKEY_PRICES   "Look at the prices for the current match"
-    ID_SHAREMONKEY_COMPARE  "Compare prices in different stores"
-    ID_SHAREMONKEY_BUY      "Buy it and support the author"
     ID_WEBSERVICES_MUSICBRAINZ 
                             "Search for the same artist songs using MusicBrainz service."
     ID_MUSICBRAINZ_MATCHES  "Search for albums matching the selected file."

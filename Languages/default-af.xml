@@ -2620,13 +2620,6 @@
 		<tip id="ID_SECURITY_POLICY_DENY" message="Stel die standaard sekuriteitsbeleid in sodat alle gashere geweier word."/>
 		<tip id="ID_SECURITY_REMOVE" message="Verwyder die geselekteerde sekuriteitsreëls."/>
 		<tip id="ID_SECURITY_RESET" message="Herstel die trefteller van die geselekteerde reëls."/>
-		<tip id="ID_SHAREMONKEY_BUY" message="Buy it and support the author"/>
-		<tip id="ID_SHAREMONKEY_COMPARE" message="Compare prices in different stores"/>
-		<tip id="ID_SHAREMONKEY_DOWNLOAD" message="_Soek vir Hierdie"/>
-		<tip id="ID_SHAREMONKEY_NEXT" message="Go to the next match"/>
-		<tip id="ID_SHAREMONKEY_PREVIOUS" message="Go to the previous match"/>
-		<tip id="ID_SHAREMONKEY_PRICES" message="Gaan terug na die vorige medialêer in die huidige medialys."/>
-		<tip id="ID_SHAREMONKEY_SAVE" message="Wys my die lêer in my biblioteek"/>
 		<tip id="ID_SYSTEM_CLEAR" message="Maak die statuslog skoon."/>
 		<tip id="ID_SYSTEM_COPY" message="Copy selected line(s) of status log."/>
 		<tip id="ID_SYSTEM_TIMESTAMP" message="Hou rekord van die tyd van elke lyn."/>
@@ -2696,7 +2689,6 @@
 		<tip id="ID_VIEW_WINDOWED" message="Gebruik Shareaza in  kragtige Venstermodus."/>
 		<tip id="ID_WEBSERVICES_LIST" message="Choose the web service to get more information about the selected file."/>
 		<tip id="ID_WEBSERVICES_MUSICBRAINZ" message="Search for the file infomation using ShareMonkey service."/>
-		<tip id="ID_WEBSERVICES_SHAREMONKEY" message="Search for the file infomation using ShareMonkey service."/>
 		<tip id="ID_WINDOW_ARRANGE" message="Arrange icons at the bottom of the window" tip="Arrange Icons"/>
 		<tip id="ID_WINDOW_CASCADE" message="Vergroot alle aktiewe vensters om die skerm te vul."/>
 		<tip id="ID_WINDOW_MONITOR" message="Vertoon of verwyder die die bandwydte-monitor."/>

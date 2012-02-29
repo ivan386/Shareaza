@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2012-02-21 11:51+0000\n"
+"POT-Creation-Date: 2012-02-29 19:32+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -4305,37 +4305,6 @@ msgstr "הסר את חוקי האבטחה הנבחרים"
 msgid "Reset the hit counts on the selected rules."
 msgstr "אפס את המונה לחוקי אבטחה הנבחרים"
 
-#: message;id_sharemonkey_buy
-msgid "Buy it and support the author"
-msgstr ""
-
-#: message;id_sharemonkey_compare
-msgid "Compare prices in different stores"
-msgstr ""
-
-#: message;id_sharemonkey_download
-#, fuzzy
-msgid "Search for matches"
-msgstr "‪חיפוש עבור"
-
-#: message;id_sharemonkey_next
-msgid "Go to the next match"
-msgstr ""
-
-#: message;id_sharemonkey_previous
-msgid "Go to the previous match"
-msgstr ""
-
-#: message;id_sharemonkey_prices
-#, fuzzy
-msgid "Look at the prices for the current match"
-msgstr "דלג לקובץ הקודם ברשימת ההשמעה הנוכחית"
-
-#: message;id_sharemonkey_save
-#, fuzzy
-msgid "Save the match in your Library"
-msgstr "הצג לי את הקובץ שבספריה שלי"
-
 #: message;id_system_clear
 msgid "Clear the status log."
 msgstr "נקה את רישום המצב"
@@ -4604,10 +4573,6 @@ msgstr "Choose the web service to get more information about the selected file."
 #: message;id_webservices_musicbrainz
 #, fuzzy
 msgid "Search for the same artist songs using MusicBrainz service."
-msgstr "Search for the file infomation using ShareMonkey service."
-
-#: message;id_webservices_sharemonkey
-msgid "Search for the file infomation using ShareMonkey service."
 msgstr "Search for the file infomation using ShareMonkey service."
 
 #: message;id_window_arrange
@@ -10111,6 +10076,21 @@ msgstr "‪TigerTree"
 #, fuzzy
 msgid "NextRun"
 msgstr "‪הבא"
+
+#, fuzzy
+#~ msgid "Search for matches"
+#~ msgstr "‪חיפוש עבור"
+
+#, fuzzy
+#~ msgid "Look at the prices for the current match"
+#~ msgstr "דלג לקובץ הקודם ברשימת ההשמעה הנוכחית"
+
+#, fuzzy
+#~ msgid "Save the match in your Library"
+#~ msgstr "הצג לי את הקובץ שבספריה שלי"
+
+#~ msgid "Search for the file infomation using ShareMonkey service."
+#~ msgstr "Search for the file infomation using ShareMonkey service."
 
 #~ msgid "_Interface:"
 #~ msgstr ":ממשק"

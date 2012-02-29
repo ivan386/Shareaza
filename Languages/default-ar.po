@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2012-02-21 11:51+0000\n"
+"POT-Creation-Date: 2012-02-29 19:32+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -4307,37 +4307,6 @@ msgstr "إزالة قواعد الأمان المحددة"
 msgid "Reset the hit counts on the selected rules."
 msgstr "إستعادة عدد الضربات مع القواعد المحددة"
 
-#: message;id_sharemonkey_buy
-msgid "Buy it and support the author"
-msgstr ""
-
-#: message;id_sharemonkey_compare
-msgid "Compare prices in different stores"
-msgstr ""
-
-#: message;id_sharemonkey_download
-#, fuzzy
-msgid "Search for matches"
-msgstr "_بحث لهذا"
-
-#: message;id_sharemonkey_next
-msgid "Go to the next match"
-msgstr ""
-
-#: message;id_sharemonkey_previous
-msgid "Go to the previous match"
-msgstr ""
-
-#: message;id_sharemonkey_prices
-#, fuzzy
-msgid "Look at the prices for the current match"
-msgstr "الرجوع إلى الملف السابق في قائمة التشغيل الحالية"
-
-#: message;id_sharemonkey_save
-#, fuzzy
-msgid "Save the match in your Library"
-msgstr "إظهار الملف في مكتبتي"
-
 #: message;id_system_clear
 msgid "Clear the status log."
 msgstr "مسح سجل الحالة"
@@ -4606,10 +4575,6 @@ msgstr "إختيار خدمة الويب للحصول على مزيد من ال�
 #: message;id_webservices_musicbrainz
 #, fuzzy
 msgid "Search for the same artist songs using MusicBrainz service."
-msgstr "البحث عن معلومات الملف باستعمال خدمة ShareMonkey"
-
-#: message;id_webservices_sharemonkey
-msgid "Search for the file infomation using ShareMonkey service."
 msgstr "البحث عن معلومات الملف باستعمال خدمة ShareMonkey"
 
 #: message;id_window_arrange
@@ -10113,6 +10078,21 @@ msgstr "TigerTree"
 #, fuzzy
 msgid "NextRun"
 msgstr "التالي"
+
+#, fuzzy
+#~ msgid "Search for matches"
+#~ msgstr "_بحث لهذا"
+
+#, fuzzy
+#~ msgid "Look at the prices for the current match"
+#~ msgstr "الرجوع إلى الملف السابق في قائمة التشغيل الحالية"
+
+#, fuzzy
+#~ msgid "Save the match in your Library"
+#~ msgstr "إظهار الملف في مكتبتي"
+
+#~ msgid "Search for the file infomation using ShareMonkey service."
+#~ msgstr "البحث عن معلومات الملف باستعمال خدمة ShareMonkey"
 
 #~ msgid "_Interface:"
 #~ msgstr ":_الواجهة"

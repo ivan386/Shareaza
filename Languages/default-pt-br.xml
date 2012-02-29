@@ -2616,13 +2616,6 @@ t		Alternativamente, você pode manualmente iniciar este download com o comando 
 		<tip id="ID_SECURITY_POLICY_DENY" message="Definir política padrão pra negar todos os hosts."/>
 		<tip id="ID_SECURITY_REMOVE" message="Remover a regras de segurança selecionadas."/>
 		<tip id="ID_SECURITY_RESET" message="Reiniciar as contagens de acerto das regras de segurança selecionadas."/>
-		<tip id="ID_SHAREMONKEY_BUY" message="Compre e ajude o autor"/>
-		<tip id="ID_SHAREMONKEY_COMPARE" message="Compare os preços em lojas diferentes"/>
-		<tip id="ID_SHAREMONKEY_DOWNLOAD" message="Procurar combinações"/>
-		<tip id="ID_SHAREMONKEY_NEXT" message="Ir para a próxima combinação"/>
-		<tip id="ID_SHAREMONKEY_PREVIOUS" message="Ir para a combinação anterior"/>
-		<tip id="ID_SHAREMONKEY_PRICES" message="Olhar os preços para a combinação atual"/>
-		<tip id="ID_SHAREMONKEY_SAVE" message="Salvar a combinação na sua Biblioteca"/>
 		<tip id="ID_SYSTEM_CLEAR" message="Limpar o log do status."/>
 		<tip id="ID_SYSTEM_COPY" message="Copiar a(s) linha(s) selecionada(s) do log do status."/>
 		<tip id="ID_SYSTEM_TIMESTAMP" message="Registra um horário para cada linha."/>
@@ -2692,7 +2685,6 @@ t		Alternativamente, você pode manualmente iniciar este download com o comando 
 		<tip id="ID_VIEW_WINDOWED" message="Usar Shareaza no modo de Janelas."/>
 		<tip id="ID_WEBSERVICES_LIST" message="Escolha o serviço da web para obter mais informação sobre o arquivo selecionado."/>
 		<tip id="ID_WEBSERVICES_MUSICBRAINZ" message="Procurar pelas canções do(a) mesmo(a) artista usando o serviço MusicBrainz."/>
-		<tip id="ID_WEBSERVICES_SHAREMONKEY" message="Procurar por informação sobre o arquivo usando o serviço ShareMonkey."/>
 		<tip id="ID_WINDOW_ARRANGE" message="Organizar ícones no fundo da janela" tip="Organizar ícones"/>
 		<tip id="ID_WINDOW_CASCADE" message="Expandir todas as janelas abertas para preencher a tela."/>
 		<tip id="ID_WINDOW_MONITOR" message="Mostrar ou esconder o monitor de banda."/>

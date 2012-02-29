@@ -2615,13 +2615,6 @@
 		<tip id="ID_SECURITY_POLICY_DENY" message="Imposta come predefinito la regola di sicurezza di rifiutare ogni host."/>
 		<tip id="ID_SECURITY_REMOVE" message="Rimuovi le regole di sicurezza selezionate."/>
 		<tip id="ID_SECURITY_RESET" message="Azzera il conteggio delle richieste nelle regole selezionate."/>
-		<tip id="ID_SHAREMONKEY_BUY" message="Buy it and support the author"/>
-		<tip id="ID_SHAREMONKEY_COMPARE" message="Compare prices in different stores"/>
-		<tip id="ID_SHAREMONKEY_DOWNLOAD" message="Cerca questo"/>
-		<tip id="ID_SHAREMONKEY_NEXT" message="Go to the next match"/>
-		<tip id="ID_SHAREMONKEY_PREVIOUS" message="Go to the previous match"/>
-		<tip id="ID_SHAREMONKEY_PRICES" message="Passa al file precedente nella playlist corrente."/>
-		<tip id="ID_SHAREMONKEY_SAVE" message="Mostrami il file nella libreria"/>
 		<tip id="ID_SYSTEM_CLEAR" message="Azzera il log di stato."/>
 		<tip id="ID_SYSTEM_COPY" message="Copy selected line(s) of status log."/>
 		<tip id="ID_SYSTEM_TIMESTAMP" message="Registra un orario per ciascuna linea."/>
@@ -2691,7 +2684,6 @@
 		<tip id="ID_VIEW_WINDOWED" message="Utilizza Shareaza nella modalità a finestre."/>
 		<tip id="ID_WEBSERVICES_LIST" message="Scegli il servizio web per avere maggiori informazioni sul file selezionato."/>
 		<tip id="ID_WEBSERVICES_MUSICBRAINZ" message="Cerca le informazioni sul file utilizzando il servizio ShareMonkey."/>
-		<tip id="ID_WEBSERVICES_SHAREMONKEY" message="Cerca le informazioni sul file utilizzando il servizio ShareMonkey."/>
 		<tip id="ID_WINDOW_ARRANGE" message="Arrange icons at the bottom of the window" tip="Arrange Icons"/>
 		<tip id="ID_WINDOW_CASCADE" message="Espandi tutte le finestre aperte fino a riempire lo schermo."/>
 		<tip id="ID_WINDOW_MONITOR" message="Mostra o nascondi il monitor di banda."/>

@@ -2616,13 +2616,6 @@
 		<tip id="ID_SECURITY_POLICY_DENY" message="Vendos dëftesën e sigurisë tipike për të mohuar tërë hostet."/>
 		<tip id="ID_SECURITY_REMOVE" message="Fshin rregullin e zgjedhur të sigurisë."/>
 		<tip id="ID_SECURITY_RESET" message="Rivendos numërimin e hiteve në rregullin e zgjedhur."/>
-		<tip id="ID_SHAREMONKEY_BUY" message="Buy it and support the author"/>
-		<tip id="ID_SHAREMONKEY_COMPARE" message="Compare prices in different stores"/>
-		<tip id="ID_SHAREMONKEY_DOWNLOAD" message="_Kërko për Këtë"/>
-		<tip id="ID_SHAREMONKEY_NEXT" message="Go to the next match"/>
-		<tip id="ID_SHAREMONKEY_PREVIOUS" message="Go to the previous match"/>
-		<tip id="ID_SHAREMONKEY_PRICES" message="Kalon pas në skedën tjetër të listës aktuale."/>
-		<tip id="ID_SHAREMONKEY_SAVE" message="Më trego skedën në librarinë time"/>
 		<tip id="ID_SYSTEM_CLEAR" message="Pastron ditarin e statusit."/>
 		<tip id="ID_SYSTEM_COPY" message="Copy selected line(s) of status log."/>
 		<tip id="ID_SYSTEM_TIMESTAMP" message="Regjistron shtypjen e kohës për secilën vijë."/>
@@ -2692,7 +2685,6 @@
 		<tip id="ID_VIEW_WINDOWED" message="Përdor Shareaza-n në mënyrë të avancuar me Dritare."/>
 		<tip id="ID_WEBSERVICES_LIST" message="Zgjedh shërbimin e rrjetit për të marrë më shumë informacion për skedën e zgjedhur."/>
 		<tip id="ID_WEBSERVICES_MUSICBRAINZ" message="Kërkon për informacionin e skedës duke përdorur shërbimin ShareMonkey."/>
-		<tip id="ID_WEBSERVICES_SHAREMONKEY" message="Kërkon për informacionin e skedës duke përdorur shërbimin ShareMonkey."/>
 		<tip id="ID_WINDOW_ARRANGE" message="Arrange icons at the bottom of the window" tip="Arrange Icons"/>
 		<tip id="ID_WINDOW_CASCADE" message="Zgjeron tërë dritaret e hapura që ekrani të mbushet."/>
 		<tip id="ID_WINDOW_MONITOR" message="Tregon ose fsheh monitorin e shtrirjes së bandës."/>

@@ -2604,13 +2604,6 @@
 		<tip id="ID_SECURITY_POLICY_DENY" message="Canvia la política de seguretat per defecte a denegar totes les connexions."/>
 		<tip id="ID_SECURITY_REMOVE" message="Esborra aquesta norma de seguretat."/>
 		<tip id="ID_SECURITY_RESET" message="Reinicia els compadors de les regles de seguretat seleccionades."/>
-		<tip id="ID_SHAREMONKEY_BUY" message="Buy it and support the author"/>
-		<tip id="ID_SHAREMONKEY_COMPARE" message="Compare prices in different stores"/>
-		<tip id="ID_SHAREMONKEY_DOWNLOAD" message="_Cerca això"/>
-		<tip id="ID_SHAREMONKEY_NEXT" message="Go to the next match"/>
-		<tip id="ID_SHAREMONKEY_PREVIOUS" message="Go to the previous match"/>
-		<tip id="ID_SHAREMONKEY_PRICES" message="Va a l'arxiu anterior de la llista de reproducció."/>
-		<tip id="ID_SHAREMONKEY_SAVE" message="Localitza'l en la col·lecció"/>
 		<tip id="ID_SYSTEM_CLEAR" message="Esborra la història d'estat."/>
 		<tip id="ID_SYSTEM_COPY" message="Copy selected line(s) of status log."/>
 		<tip id="ID_SYSTEM_TIMESTAMP" message="Enregistra el temps a cada línia."/>
@@ -2680,7 +2673,6 @@
 		<tip id="ID_VIEW_WINDOWED" message="Usa el mode en finestres."/>
 		<tip id="ID_WEBSERVICES_LIST" message="Choose the web service to get more information about the selected file."/>
 		<tip id="ID_WEBSERVICES_MUSICBRAINZ" message="Search for the file infomation using ShareMonkey service."/>
-		<tip id="ID_WEBSERVICES_SHAREMONKEY" message="Search for the file infomation using ShareMonkey service."/>
 		<tip id="ID_WINDOW_ARRANGE" message="Arrange icons at the bottom of the window" tip="Arrange Icons"/>
 		<tip id="ID_WINDOW_CASCADE" message="Mostra totes les finestres en forma de cascada a la pantalla."/>
 		<tip id="ID_WINDOW_MONITOR" message="Mostra o oculta el monitor d'ample de banda."/>

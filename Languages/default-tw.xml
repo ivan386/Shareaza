@@ -2552,13 +2552,6 @@
 		<tip id="ID_SECURITY_POLICY_DENY" message="將預設的安全性方針設定成拒絕所有的主機."/>
 		<tip id="ID_SECURITY_REMOVE" message="移除選擇的安全性規則."/>
 		<tip id="ID_SECURITY_RESET" message="Reset the hit counts on the selected rules."/>
-		<tip id="ID_SHAREMONKEY_BUY" message="Buy it and support the author"/>
-		<tip id="ID_SHAREMONKEY_COMPARE" message="Compare prices in different stores"/>
-		<tip id="ID_SHAREMONKEY_DOWNLOAD" message="尋找這個"/>
-		<tip id="ID_SHAREMONKEY_NEXT" message="Go to the next match"/>
-		<tip id="ID_SHAREMONKEY_PREVIOUS" message="Go to the previous match"/>
-		<tip id="ID_SHAREMONKEY_PRICES" message="回到這個播放清單的上一個檔案."/>
-		<tip id="ID_SHAREMONKEY_SAVE" message="在我的收藏顯示這個檔案"/>
 		<tip id="ID_SYSTEM_CLEAR" message="清除狀態記錄."/>
 		<tip id="ID_SYSTEM_COPY" message="Copy selected line(s) of status log."/>
 		<tip id="ID_SYSTEM_TIMESTAMP" message="為每一列附上時間郵戳."/>
@@ -2628,7 +2621,6 @@
 		<tip id="ID_VIEW_WINDOWED" message="使用 Shareaza 的進階視窗模式."/>
 		<tip id="ID_WEBSERVICES_LIST" message="Choose the web service to get more information about the selected file."/>
 		<tip id="ID_WEBSERVICES_MUSICBRAINZ" message="Search for the same artist songs using MusicBrainz service."/>
-		<tip id="ID_WEBSERVICES_SHAREMONKEY" message="Search for the file infomation using ShareMonkey service."/>
 		<tip id="ID_WINDOW_ARRANGE" message="Arrange icons at the bottom of the window" tip="Arrange Icons"/>
 		<tip id="ID_WINDOW_CASCADE" message="擴大所有開啟的視窗填滿螢幕."/>
 		<tip id="ID_WINDOW_MONITOR" message="顯示或隱藏 頻寬監視器."/>

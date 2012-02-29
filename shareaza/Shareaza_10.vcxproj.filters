@@ -486,9 +486,6 @@
     <ClCompile Include="SharedFolder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ShareMonkeyData.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ShellIcons.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -1594,9 +1591,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SharedFolder.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ShareMonkeyData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Shell.h">

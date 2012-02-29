@@ -2615,13 +2615,6 @@
 		<tip id="ID_SECURITY_POLICY_DENY" message="Ρύθμιση προεπιλεγμένης πολιτικής ασφαλείας σε άρνηση όλων των hosts."/>
 		<tip id="ID_SECURITY_REMOVE" message="Αφαίρεση επιλεγμένων κανόνων ασφαλείας."/>
 		<tip id="ID_SECURITY_RESET" message="Μηδενισμός των μετρητών εφαρμογής των επιλεγμένων κανόνων."/>
-		<tip id="ID_SHAREMONKEY_BUY" message="Buy it and support the author"/>
-		<tip id="ID_SHAREMONKEY_COMPARE" message="Compare prices in different stores"/>
-		<tip id="ID_SHAREMONKEY_DOWNLOAD" message="Ανα_ζήτηση για Αυτό"/>
-		<tip id="ID_SHAREMONKEY_NEXT" message="Go to the next match"/>
-		<tip id="ID_SHAREMONKEY_PREVIOUS" message="Go to the previous match"/>
-		<tip id="ID_SHAREMONKEY_PRICES" message="Μετάβαση στο προηγούμενο αρχείο στη Λίστα Αναπαραγωγής."/>
-		<tip id="ID_SHAREMONKEY_SAVE" message="Μετάβαση στο αρχείο στη Βιβλιοθήκη"/>
 		<tip id="ID_SYSTEM_CLEAR" message="Καθαρισμός του ιστορικού κατάστασης."/>
 		<tip id="ID_SYSTEM_COPY" message="Copy selected line(s) of status log."/>
 		<tip id="ID_SYSTEM_TIMESTAMP" message="Καταγραφή χρονικής επισήμανσης σε κάθε γραμμή."/>
@@ -2691,7 +2684,6 @@
 		<tip id="ID_VIEW_WINDOWED" message="Εμφάνιση του Shareaza σε μορφή Παραθύρων."/>
 		<tip id="ID_WEBSERVICES_LIST" message="Επιλέξτε μια υπηρεσία ιστού από την οποία να λάβετε πληροφορίες για το επιλεγμένο αρχείο."/>
 		<tip id="ID_WEBSERVICES_MUSICBRAINZ" message="Αναζήτηση πληροφοριών για το αρχείο χρησιμοποιώντας την υπηρεσία ShareMonkey."/>
-		<tip id="ID_WEBSERVICES_SHAREMONKEY" message="Αναζήτηση πληροφοριών για το αρχείο χρησιμοποιώντας την υπηρεσία ShareMonkey."/>
 		<tip id="ID_WINDOW_ARRANGE" message="Arrange icons at the bottom of the window" tip="Arrange Icons"/>
 		<tip id="ID_WINDOW_CASCADE" message="Παράθεση όλων τα ανοικτών παραθύρων αλληλοεπικαλυπτόμενων, το ένα ελαφρώς κάτω και δεξιά από το άλλο."/>
 		<tip id="ID_WINDOW_MONITOR" message="Εναλλαγή παραθύρου εποπτείας εύρους ζώνης."/>

@@ -472,7 +472,6 @@
     <ClCompile Include="ShareazaURL.cpp" />
     <ClCompile Include="SharedFile.cpp" />
     <ClCompile Include="SharedFolder.cpp" />
-    <ClCompile Include="ShareMonkeyData.cpp" />
     <ClCompile Include="ShellIcons.cpp" />
     <ClCompile Include="Skin.cpp" />
     <ClCompile Include="SkinWindow.cpp" />
@@ -869,7 +868,6 @@
     <ClInclude Include="ShareazaURL.h" />
     <ClInclude Include="SharedFile.h" />
     <ClInclude Include="SharedFolder.h" />
-    <ClInclude Include="ShareMonkeyData.h" />
     <ClInclude Include="Shell.h" />
     <ClInclude Include="ShellIcons.h" />
     <ClInclude Include="Skin.h" />

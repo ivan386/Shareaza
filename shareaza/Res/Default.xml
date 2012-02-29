@@ -446,28 +446,6 @@
 			<button id="ID_CHAT_DISCONNECT" text="Disconnect"/>
 		</toolbar>
 		<!-- WEBSERVICES -->
-		<toolbar name="WebServices.ShareMonkey">
-			<button id="ID_SHAREMONKEY_DOWNLOAD" text="Get Data"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PREVIOUS" text="Previous"/>
-			<button id="ID_SHAREMONKEY_NEXT" text="Next"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PRICES" text="Get Prices"/>
-			<button id="ID_SHAREMONKEY_COMPARE" text="Compare"/>
-			<button id="ID_SHAREMONKEY_BUY" text="Buy It"/>
-		</toolbar>
-		<toolbar name="WebServices.ShareMonkey.WithSave">
-			<button id="ID_SHAREMONKEY_DOWNLOAD" text="Get Data"/>
-			<button id="ID_SHAREMONKEY_SAVE" text="Save"/>
-			<control id="ID_SHAREMONKEY_SAVE_OPTION" text="Save Preview" width="100" checked="true"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PREVIOUS" text="Previous"/>
-			<button id="ID_SHAREMONKEY_NEXT" text="Next"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PRICES" text="Get Prices"/>
-			<button id="ID_SHAREMONKEY_COMPARE" text="Compare"/>
-			<button id="ID_SHAREMONKEY_BUY" text="Buy It"/>
-		</toolbar>
 		<toolbar name="WebServices.MusicBrainz">
 			<button id="ID_MUSICBRAINZ_MATCHES" text="View Album Matches"/>
 			<button id="ID_MUSICBRAINZ_ALBUMS" text="View All Albums"/>
@@ -1641,7 +1619,6 @@
 		<menu name="WebServices.List.Menu">
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Bitzi"/>
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
-			<item id="ID_WEBSERVICES_SHAREMONKEY" text="_ShareMonkey"/>
 		</menu>
 	</menus>
 	<!-- Watermarks -->
@@ -2506,8 +2483,7 @@
 	<!-- Command Images -->
 	<commandImages>
 		<bitmap id="IDB_MENUBAR">
-			<!-- ID_SHAREMONKEY_SAVE_OPTION is not used but required to display the check box -->
-			<image id="ID_CHECKMARK" id1="ID_SHAREMONKEY_SAVE_OPTION"/>
+			<image id="ID_CHECKMARK"/>
 			<image id="ID_NETWORK_SEARCH" id1="ID_TAB_SEARCH"/>
 			<image id="ID_NETWORK_CONNECT" id1="ID_TAB_CONNECT" id2="ID_CHAT_CONNECT" id3="ID_IRC_CONNECT"/>
 			<image id="ID_NETWORK_DISCONNECT" id1="ID_CHAT_DISCONNECT" id2="ID_IRC_DISCONNECT"/>
@@ -2553,8 +2529,8 @@
 			<image id="ID_DOWNLOADS_RATE" id1="ID_MEDIA_RATE"/>
 			<image id="ID_DOWNLOADS_MOVE_UP" id1="ID_CHAT_PRIORITY" id2="ID_SECURITY_MOVE_UP"/>
 			<image id="ID_DOWNLOADS_MOVE_DOWN" id1="ID_SECURITY_MOVE_DOWN"/>
-			<image id="ID_LIBRARY_ENQUEUE" id1="ID_SHAREMONKEY_BUY"/>
-			<image id="ID_LIBRARY_URL" id1="ID_SHAREMONKEY_COMPARE"/>
+			<image id="ID_LIBRARY_ENQUEUE"/>
+			<image id="ID_LIBRARY_URL"/>
 			<image id="ID_LIBRARY_RENAME"/>
 			<image id="ID_LIBRARY_MOVE"/>
 			<image id="ID_LIBRARY_COPY" id1="ID_SYSTEM_COPY"/>
@@ -2606,12 +2582,12 @@
 			<image id="ID_TOOLS_DOWNLOAD"/>
 			<image id="ID_TOOLS_LANGUAGE" id1="ID_LIBRARY_REBUILD_ANSI"/>
 			<!-- Messy Now -->
-			<image id="ID_SHAREMONKEY_DOWNLOAD"/>
+			<image id=""/>
 			<image id="ID_TAB_HOME" id1="ID_LIBRARY_VIEW_HOME"/>
 			<image id="ID_LIBRARY_TREE_PHYSICAL" id1="ID_LIBRARY_VIEW_TILE"/>
 			<image id="ID_LIBRARY_TREE_VIRTUAL"/>
 			<image id="ID_MONITOR_CLOSE"/>
-			<image id="ID_LIBRARY_VIEW_DETAIL" id1="ID_SHAREMONKEY_PRICES"/>
+			<image id="ID_LIBRARY_VIEW_DETAIL"/>
 			<image id="ID_LIBRARY_VIEW_ICON"/>
 			<image id="ID_LIBRARY_VIEW_LIST"/>
 			<image id="ID_LIBRARY_VIEW_THUMBNAIL" id1="ID_DOWNLOADS_REMOTE_PREVIEW"/>
@@ -2621,8 +2597,8 @@
 			<image id="ID_VIEW_MEDIA" id1="ID_TAB_MEDIA"/>
 			<image id="ID_MEDIA_PLAY" id1="ID_MEDIA_SELECT" id2="ID_LIBRARY_LAUNCH" id3="ID_DOWNLOADS_LAUNCH" id4="ID_UPLOADS_LAUNCH" id5="ID_DOWNLOADS_LAUNCH_COMPLETE" id6="ID_LIBRARY_FOLDER_ENQUEUE" id7="ID_DOWNLOADS_LAUNCH_COPY" id8="ID_SCHEDULER_ACTIVATE"/>
 			<image id="ID_MEDIA_STOP"  id1="ID_SCHEDULER_DEACTIVATE"/>
-			<image id="ID_MEDIA_PREVIOUS" id1="ID_SHAREMONKEY_PREVIOUS"/>
-			<image id="ID_MEDIA_NEXT" id1="ID_SHAREMONKEY_NEXT"/>
+			<image id="ID_MEDIA_PREVIOUS"/>
+			<image id="ID_MEDIA_NEXT"/>
 			<image id="ID_MEDIA_PAUSE"/>
 			<image id="ID_MEDIA_OPEN" id1="ID_SECURITY_IMPORT" id2="ID_LIBRARY_UNLINK" id4="ID_IMPORT_DOWNLOADS"/>
 			<image id="ID_MEDIA_SAVE" id1="ID_SECURITY_EXPORT"/>
@@ -2634,7 +2610,7 @@
 			<image id="ID_MEDIA_VIS"/>
 			<!-- Back to Messy -->
 			<image id="ID_LIBRARY_FOLDER_PROPERTIES" id1="ID_LIBRARY_ALBUM_PROPERTIES" id2="ID_DOWNLOADS_FILTER_MENU" id3="ID_UPLOADS_FILTER_MENU"/>
-			<image id="ID_SHAREMONKEY_SAVE"/>
+			<image id=""/>
 			<image id="ID_TOOLS_PROFILE" id1="ID_BROWSE_PROFILE"/>
 			<image id="ID_CHAT_EMOTICONS"/>
 			<image id="ID_LIBRARY_VIEW_ALBUM" id1="ID_MUSICBRAINZ_ALBUMS"/>

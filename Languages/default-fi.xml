@@ -2613,13 +2613,6 @@
 		<tip id="ID_SECURITY_POLICY_DENY" message="Set the default security policy to deny all hosts."/>
 		<tip id="ID_SECURITY_REMOVE" message="Remove the selected security rules."/>
 		<tip id="ID_SECURITY_RESET" message="Reset the hit counts on the selected rules."/>
-		<tip id="ID_SHAREMONKEY_BUY" message="Buy it and support the author"/>
-		<tip id="ID_SHAREMONKEY_COMPARE" message="Compare prices in different stores"/>
-		<tip id="ID_SHAREMONKEY_DOWNLOAD" message="_Etsi Tätä"/>
-		<tip id="ID_SHAREMONKEY_NEXT" message="Go to the next match"/>
-		<tip id="ID_SHAREMONKEY_PREVIOUS" message="Go to the previous match"/>
-		<tip id="ID_SHAREMONKEY_PRICES" message="Look at the prices for the current match"/>
-		<tip id="ID_SHAREMONKEY_SAVE" message="Save the match in your Library"/>
 		<tip id="ID_SYSTEM_CLEAR" message="Clear the status log."/>
 		<tip id="ID_SYSTEM_COPY" message="Copy selected line(s) of status log."/>
 		<tip id="ID_SYSTEM_TIMESTAMP" message="Record a timestamp for each line."/>
@@ -2689,7 +2682,6 @@
 		<tip id="ID_VIEW_WINDOWED" message="Use Shareaza in power Windowed mode."/>
 		<tip id="ID_WEBSERVICES_LIST" message="Choose the web service to get more information about the selected file."/>
 		<tip id="ID_WEBSERVICES_MUSICBRAINZ" message="Search for the same artist songs using MusicBrainz service."/>
-		<tip id="ID_WEBSERVICES_SHAREMONKEY" message="Search for the file infomation using ShareMonkey service."/>
 		<tip id="ID_WINDOW_ARRANGE" message="Arrange icons at the bottom of the window" tip="Arrange Icons"/>
 		<tip id="ID_WINDOW_CASCADE" message="Expand all open windows to fill the screen."/>
 		<tip id="ID_WINDOW_MONITOR" message="Show or hide the bandwidth monitor."/>

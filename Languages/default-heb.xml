@@ -2619,13 +2619,6 @@
 		<tip id="ID_SECURITY_POLICY_DENY" message="Set the default security policy to deny all hosts."/>
 		<tip id="ID_SECURITY_REMOVE" message="הסר את חוקי האבטחה הנבחרים"/>
 		<tip id="ID_SECURITY_RESET" message="אפס את המונה לחוקי אבטחה הנבחרים"/>
-		<tip id="ID_SHAREMONKEY_BUY" message="Buy it and support the author"/>
-		<tip id="ID_SHAREMONKEY_COMPARE" message="Compare prices in different stores"/>
-		<tip id="ID_SHAREMONKEY_DOWNLOAD" message="‪חיפוש עבור"/>
-		<tip id="ID_SHAREMONKEY_NEXT" message="Go to the next match"/>
-		<tip id="ID_SHAREMONKEY_PREVIOUS" message="Go to the previous match"/>
-		<tip id="ID_SHAREMONKEY_PRICES" message="דלג לקובץ הקודם ברשימת ההשמעה הנוכחית"/>
-		<tip id="ID_SHAREMONKEY_SAVE" message="הצג לי את הקובץ שבספריה שלי"/>
 		<tip id="ID_SYSTEM_CLEAR" message="נקה את רישום המצב"/>
 		<tip id="ID_SYSTEM_COPY" message="Copy selected line(s) of status log."/>
 		<tip id="ID_SYSTEM_TIMESTAMP" message="הצג זמן/שעה לכל שורה"/>
@@ -2695,7 +2688,6 @@
 		<tip id="ID_VIEW_WINDOWED" message="התשמש בשרזה במצב מתקדם של חלונות"/>
 		<tip id="ID_WEBSERVICES_LIST" message="Choose the web service to get more information about the selected file."/>
 		<tip id="ID_WEBSERVICES_MUSICBRAINZ" message="Search for the file infomation using ShareMonkey service."/>
-		<tip id="ID_WEBSERVICES_SHAREMONKEY" message="Search for the file infomation using ShareMonkey service."/>
 		<tip id="ID_WINDOW_ARRANGE" message="Arrange icons at the bottom of the window" tip="Arrange Icons"/>
 		<tip id="ID_WINDOW_CASCADE" message="הרחב את כל החלונות בכדי להתאים למסך"/>
 		<tip id="ID_WINDOW_MONITOR" message="הראה או הסתר את מוניטור רוחב הפס"/>
