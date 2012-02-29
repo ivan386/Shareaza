@@ -1,7 +1,7 @@
 //
 // HashTest.cpp
 //
-// Copyright (c) Shareaza Development Team, 2009-2011.
+// Copyright (c) Shareaza Development Team, 2009-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -162,7 +162,7 @@ int _tmain(int /*argc*/, _TCHAR* /*argv*/[])
 	SetThreadPriority( GetCurrentThread(), THREAD_PRIORITY_HIGHEST );
 
 	{
-		__int64 nBest = 0, nError = 0;
+		__int64 nBest = -1, nError = 0, nFast = 0, n = 0;
 		do
 		{
 			__int64 nWorst = 0;
@@ -172,7 +172,7 @@ int _tmain(int /*argc*/, _TCHAR* /*argv*/[])
 				const __int64 nBegin = GetMicroCount();
 				DWORD foo = HashWord( (LPCTSTR)pBuffer, 0, nBlock / sizeof( TCHAR ) - 1, 20 );
 				__int64 nTime = GetMicroCount() - nBegin;
-				if ( i == 0 || nTime < nBest )
+				if ( nBest < 0 || nTime < nBest )
 					nBest = nTime;
 				if ( i == 0 || nTime > nWorst )
 					nWorst = nTime;
@@ -184,14 +184,16 @@ int _tmain(int /*argc*/, _TCHAR* /*argv*/[])
 			}
 			nError = ( 100 * ( nWorst - nBest ) ) / nWorst;
 			const __int64 nSpeed = ( nBlock * 1000000 ) / nBest;
+			if ( nFast < nSpeed )
+				nFast = nSpeed;
 			_tprintf( _T("%3I64d ms (inaccuracy %2I64d%%), %3I64d MB/s        \r"),
-				nBest / 1000, nError, nSpeed / ( 1024 * 1024 ) );
-		} while ( nError > 9 );
+				nBest / 1000, nError, nFast / ( 1024 * 1024 ) );
+		} while ( nError > 5 && n++ < 10 );
 	}
 	_tprintf( _T("\n") );
 
 	{
-		__int64 nBest = 0, nError = 0;
+		__int64 nBest = -1, nError = 0, nFast = 0, n = 0;
 		do
 		{
 			__int64 nWorst = 0;
@@ -203,21 +205,23 @@ int _tmain(int /*argc*/, _TCHAR* /*argv*/[])
 				pMD4.Add( pBuffer, nBlock );
 				pMD4.Finish();
 				__int64 nTime = GetMicroCount() - nBegin;
-				if ( i == 0 || nTime < nBest )
+				if ( nBest < 0 || nTime < nBest )
 					nBest = nTime;
 				if ( i == 0 || nTime > nWorst )
 					nWorst = nTime;
 			}
 			nError = ( 100 * ( nWorst - nBest ) ) / nWorst;
 			const __int64 nSpeed = ( nBlock * 1000000 ) / nBest;
+			if ( nFast < nSpeed )
+				nFast = nSpeed;
 			_tprintf( _T("%3I64d ms (inaccuracy %2I64d%%), %3I64d MB/s        \r"),
-				nBest / 1000, nError, nSpeed / ( 1024 * 1024 ) );
-		} while ( nError > 9 );
+				nBest / 1000, nError, nFast / ( 1024 * 1024 ) );
+		} while ( nError > 5 && n++ < 10 );
 	}
 	_tprintf( _T("\n") );
 
 	{
-		__int64 nBest = 0, nError = 0;
+		__int64 nBest = -1, nError = 0, nFast = 0, n = 0;
 		do
 		{
 			__int64 nWorst = 0;
@@ -229,21 +233,23 @@ int _tmain(int /*argc*/, _TCHAR* /*argv*/[])
 				pMD5.Add( pBuffer, nBlock );
 				pMD5.Finish();
 				__int64 nTime = GetMicroCount() - nBegin;
-				if ( i == 0 || nTime < nBest )
+				if ( nBest < 0 || nTime < nBest )
 					nBest = nTime;
 				if ( i == 0 || nTime > nWorst )
 					nWorst = nTime;
 			}
 			nError = ( 100 * ( nWorst - nBest ) ) / nWorst;
 			const __int64 nSpeed = ( nBlock * 1000000 ) / nBest;
+			if ( nFast < nSpeed )
+				nFast = nSpeed;
 			_tprintf( _T("%3I64d ms (inaccuracy %2I64d%%), %3I64d MB/s        \r"),
-				nBest / 1000, nError, nSpeed / ( 1024 * 1024 ) );
-		} while ( nError > 9 );
+				nBest / 1000, nError, nFast / ( 1024 * 1024 ) );
+		} while ( nError > 5 && n++ < 10 );
 	}
 	_tprintf( _T("\n") );
 
 	{
-		__int64 nBest = 0, nError = 0;
+		__int64 nBest = -1, nError = 0, nFast = 0, n = 0;
 		do
 		{
 			__int64 nWorst = 0;
@@ -255,16 +261,18 @@ int _tmain(int /*argc*/, _TCHAR* /*argv*/[])
 				pSHA.Add( pBuffer, nBlock );
 				pSHA.Finish();
 				__int64 nTime = GetMicroCount() - nBegin;
-				if ( i == 0 || nTime < nBest )
+				if ( nBest < 0 || nTime < nBest )
 					nBest = nTime;
 				if ( i == 0 || nTime > nWorst )
 					nWorst = nTime;
 			}
 			nError = ( 100 * ( nWorst - nBest ) ) / nWorst;
 			const __int64 nSpeed = ( nBlock * 1000000 ) / nBest;
+			if ( nFast < nSpeed )
+				nFast = nSpeed;
 			_tprintf( _T("%3I64d ms (inaccuracy %2I64d%%), %3I64d MB/s        \r"),
-				nBest / 1000, nError, nSpeed / ( 1024 * 1024 ) );
-		} while ( nError > 9 );
+				nBest / 1000, nError, nFast / ( 1024 * 1024 ) );
+		} while ( nError > 5 && n++ < 10 );
 	}
 	_tprintf( _T("\n") );
 
