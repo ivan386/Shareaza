@@ -401,7 +401,6 @@
     <ClCompile Include="MatchListView.cpp" />
     <ClCompile Include="MatchObjects.cpp" />
     <ClCompile Include="MetaList.cpp" />
-    <ClCompile Include="MetaPanel.cpp" />
     <ClCompile Include="Neighbour.cpp" />
     <ClCompile Include="Neighbours.cpp" />
     <ClCompile Include="NeighboursBase.cpp" />
@@ -819,7 +818,6 @@
     <ClInclude Include="MatchListView.h" />
     <ClInclude Include="MatchObjects.h" />
     <ClInclude Include="MetaList.h" />
-    <ClInclude Include="MetaPanel.h" />
     <ClInclude Include="MinMax.hpp" />
     <ClInclude Include="Neighbour.h" />
     <ClInclude Include="Neighbours.h" />

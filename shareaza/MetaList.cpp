@@ -1,7 +1,7 @@
 //
 // MetaList.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -21,12 +21,16 @@
 
 #include "StdAfx.h"
 #include "Shareaza.h"
+#include "CoolInterface.h"
 #include "MetaList.h"
 #include "Schema.h"
 #include "SchemaMember.h"
-#include "XML.h"
+#include "Settings.h"
 #include "Library.h"
 #include "LibraryFolders.h"
+#include "WndLibrary.h"
+#include "WndMain.h"
+#include "XML.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -34,19 +38,23 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
-CString g_strMultiple; // Translation string
+#define METAPANEL_KEY_WIDTH 120
+#define MUSICBRAINZ_HEIGHT 31
+#define MUSICBRAINZ_WIDTH 200
+
 
 //////////////////////////////////////////////////////////////////////
 // CMetaList construction
 
 CMetaList::CMetaList()
+	: m_nHeight( 0 )
 {
-	LoadString( g_strMultiple, IDS_MULTIPLE );
+	m_bmMusicBrainz.LoadBitmap( IDB_MUSICBRAINZ_LOGO );
 }
 
 CMetaList::~CMetaList()
 {
-	CMetaList::Clear();
+	Clear();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -91,11 +99,12 @@ CMetaItem* CMetaList::Find(LPCTSTR pszKey) const
 
 BOOL CMetaList::IsMusicBrainz() const
 {
+	CString strMultiple = LoadString( IDS_MULTIPLE );
+
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CMetaItem* pItem = GetNext( pos );
-		if ( pItem->m_pMember && pItem->m_sValue.GetLength() && 
-			 pItem->m_sValue != g_strMultiple )
+		if ( pItem->m_pMember && pItem->m_sValue.GetLength() && pItem->m_sValue != strMultiple )
 		{
 			if ( pItem->m_pMember->m_sName == L"mbalbumid" ||
 				 pItem->m_pMember->m_sName == L"mbartistid" ||
@@ -142,7 +151,7 @@ void CMetaList::Shuffle()
 void CMetaList::Setup(CSchemaPtr pSchema, BOOL bClear)
 {
 	if ( bClear ) 
-		CMetaList::Clear();
+		Clear();
 	if ( ! pSchema ) return;
 	
 	for ( POSITION pos = pSchema->GetMemberIterator() ; pos ; )
@@ -162,13 +171,13 @@ void CMetaList::Setup(CSchemaPtr pSchema, BOOL bClear)
 ///////////////////////////////////////////////////////////////////////////
 // Overwrites metadata list with a specified list keeping old members intact
 // Doesn't verify schema members, just creates key-value pairs
-void CMetaList::Setup(CMetaList* pMetaList)
+void CMetaList::Setup(const CMetaList* pMetaList)
 {
 	if ( pMetaList == NULL ) return;
 
 	for ( POSITION posOther = pMetaList->GetIterator() ; posOther ; )
 	{
-		CMetaItem* pItemOther = pMetaList->GetNext( posOther );
+		const CMetaItem* pItemOther = pMetaList->GetNext( posOther );
 		CMetaItem* pItem = Find( pItemOther->m_sKey );
 
 		if ( pItem == NULL )
@@ -193,7 +202,7 @@ void CMetaList::Setup(CMetaList* pMetaList)
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CMetaItem* pItem = GetNext( pos );
-		CMetaItem* pItemOther = pMetaList->Find( pItem->m_sKey );
+		const CMetaItem* pItemOther = pMetaList->Find( pItem->m_sKey );
 		if ( pItemOther == NULL )
 		{
 			pItem->m_sValue.Empty();
@@ -206,7 +215,7 @@ void CMetaList::Setup(CMetaList* pMetaList)
 //////////////////////////////////////////////////////////////////////
 // CMetaList combination
 
-void CMetaList::Combine(CXMLElement* pXML)
+void CMetaList::Combine(const CXMLElement* pXML)
 {
 	if ( pXML == NULL ) return;
 	
@@ -322,7 +331,7 @@ CMetaItem* CMetaList::HitTest(const CPoint& point, BOOL bLinksOnly)
 		CMetaItem* pItem = GetNext( pos );
 		if ( pItem->m_pMember && pItem->m_pMember->m_bHidden ) continue;
 
-		if ( pItem->m_rect.PtInRect( point ) )
+		if ( pItem->PtInRect( point ) )
 		{
 			if ( bLinksOnly && ! pItem->m_bLink ) return NULL;
 			return pItem;
@@ -347,25 +356,230 @@ BOOL CMetaList::OnSetCursor(CWnd* pWnd)
 	return TRUE;
 }
 
+int CMetaList::Layout(CDC* pDC, int nWidth)
+{
+	int nSmall	= ( nWidth >= 400 ) ? nWidth / 2 - METAPANEL_KEY_WIDTH - 3 : 0;
+	int nLarge	= nWidth - METAPANEL_KEY_WIDTH - 3;
+
+	m_nHeight = 0;
+
+	CFont* pOld = (CFont*)pDC->SelectObject( &CoolInterface.m_fntNormal );
+
+	for ( POSITION pos = GetIterator() ; pos ; )
+	{
+		CMetaItem* pItem = GetNext( pos );
+		if ( pItem->m_pMember && pItem->m_pMember->m_bHidden ) continue;
+
+		CSize sz = pDC->GetTextExtent( pItem->GetDisplayValue() );
+
+		if ( sz.cx <= nSmall )
+		{
+			pItem->m_bFullWidth	= FALSE;
+			pItem->m_nHeight	= 18;
+
+			if ( CMetaItem* pNext = GetNext( pos ) )
+			{	
+				while ( pNext && pNext->m_pMember && pNext->m_pMember->m_bHidden )
+					pNext = GetNext( pos );
+
+				if ( pNext == NULL )
+				{
+					pItem->m_bFullWidth = TRUE;
+					m_nHeight += 20;
+					break;
+				}
+
+				sz = pDC->GetTextExtent( pNext->GetDisplayValue() );
+
+				if ( sz.cx <= nSmall )
+				{
+					pNext->m_bFullWidth	= FALSE;
+					pNext->m_nHeight	= 18;
+				}
+				else if ( pos )
+				{
+					pItem->m_bFullWidth = TRUE;
+					m_pItems.GetPrev( pos );
+				}
+				else
+				{
+					pItem->m_bFullWidth = TRUE;
+					pos = m_pItems.GetTailPosition();
+				}
+			}
+			else
+			{
+				pItem->m_bFullWidth = TRUE;
+			}
+
+			m_nHeight += 20;
+		}
+		else
+		{
+			if ( sz.cx > nLarge )
+			{
+				CRect rcText( 0, 0, nLarge, 0xFFFF );
+				Skin.DrawWrappedText( pDC, &rcText, pItem->GetDisplayValue(), NULL, FALSE );
+				pItem->m_bFullWidth	= TRUE+TRUE;
+				pItem->m_nHeight	= rcText.top + 4;
+				m_nHeight += pItem->m_nHeight + 2;
+			}
+			else
+			{
+				pItem->m_bFullWidth = TRUE;
+				pItem->m_nHeight	= 18;
+				m_nHeight += 20;
+			}
+		}
+	}
+
+	pDC->SelectObject( pOld );
+
+	return m_nHeight;
+}
+
+void CMetaList::Paint(CDC* pDC, const CRect* prcArea)
+{
+	CRect rcWork( prcArea );
+
+	if ( m_bMusicBrainz )
+	{
+		pDC->FillSolidRect( rcWork.left, rcWork.top, rcWork.Width(), MUSICBRAINZ_HEIGHT + 4,
+			CoolInterface.m_crWindow );
+
+		CDC dcMem;
+		dcMem.CreateCompatibleDC( pDC );
+
+		CBitmap* pOld = (CBitmap*)dcMem.SelectObject( &m_bmMusicBrainz );
+		pDC->BitBlt( rcWork.left, rcWork.top, MUSICBRAINZ_WIDTH, MUSICBRAINZ_HEIGHT,
+			&dcMem, 0, 0, SRCCOPY );
+		pDC->ExcludeClipRect( rcWork.left, rcWork.top, rcWork.right, rcWork.top + MUSICBRAINZ_HEIGHT + 4 );
+
+		dcMem.SelectObject( pOld );
+
+		rcWork.top += MUSICBRAINZ_HEIGHT + 4;
+	}
+
+	POSITION pos = GetIterator();
+	DWORD dwFlags = ( Settings.General.LanguageRTL ? ETO_RTLREADING : 0 );
+
+	for ( int nRow = 0 ; pos ; nRow++ )
+	{
+		pDC->SetBkColor( Skin.m_crSchemaRow[ nRow & 1 ] );
+		int nHeight = 0;
+
+		for ( int nColumn = 0 ; nColumn < 2 && pos ; nColumn++ )
+		{
+			CMetaItem* pItem = GetNext( pos );
+
+			CRect rcValue( rcWork.left, rcWork.top, rcWork.left, rcWork.top + pItem->m_nHeight );
+
+			if ( pItem->m_bFullWidth )
+			{
+				if ( nColumn > 0 )
+				{
+					if ( pos ) m_pItems.GetPrev( pos ); else pos = m_pItems.GetTailPosition();
+					break;
+				}
+
+				rcValue.right	= rcWork.right;
+			}
+			else
+			{
+				rcValue.left	+= nColumn * rcWork.Width() / 2 + 1;
+				rcValue.right	+= ( nColumn + 1 ) * rcWork.Width() / 2 - 1;
+			}
+
+			CRect rcKey( rcValue.left, rcValue.top, rcValue.left + METAPANEL_KEY_WIDTH, rcValue.bottom );
+			rcValue.left = rcKey.right;
+
+			pDC->SetTextColor( CoolInterface.m_crText );
+			pDC->SelectObject( &CoolInterface.m_fntBold );
+
+			CString strKey( pItem->m_sKey );
+			strKey.TrimRight( L" \x00A0" );
+			pDC->ExtTextOut( rcKey.left + 3, rcKey.top + 2, ETO_CLIPPED|ETO_OPAQUE, &rcKey, strKey + ':', NULL );
+
+			if ( pItem->m_bLink )
+			{
+				pDC->SetTextColor( CoolInterface.m_crTextLink );
+				pDC->SelectObject( &CoolInterface.m_fntUnder );
+			}
+			else
+			{
+				pDC->SelectObject( &CoolInterface.m_fntNormal );
+			}
+
+			if ( pItem->m_bFullWidth == 2 )
+			{
+				CRect rcText( &rcValue );
+				rcText.DeflateRect( 3, 2 );
+				Skin.DrawWrappedText( pDC, &rcText, pItem->GetDisplayValue(), NULL, TRUE );
+				pDC->ExtTextOut( rcValue.left, rcValue.top, ETO_OPAQUE|dwFlags, &rcValue, NULL, 0, NULL );
+				pItem->CopyRect( &rcValue );
+			}
+			else
+			{
+				pDC->ExtTextOut( rcValue.left + 3, rcValue.top + 2, ETO_CLIPPED|ETO_OPAQUE|dwFlags,
+					&rcValue, pItem->GetDisplayValue(), NULL );
+
+				pItem->CopyRect( &rcValue );
+
+				pItem->right = pItem->left + 6 +
+					pDC->GetTextExtent( pItem->GetDisplayValue() ).cx;
+			}
+
+			pDC->ExcludeClipRect( &rcKey );
+			pDC->ExcludeClipRect( &rcValue );
+
+			nHeight = pItem->m_nHeight;
+			if ( pItem->m_bFullWidth ) break;
+		}
+
+		rcWork.top += nHeight + 2;
+	}
+}
+
+BOOL CMetaList::OnClick(const CPoint& point)
+{
+	if ( CMetaItem* pItem = HitTest( point, TRUE ) )
+	{
+		CQuickLock oLock( Library.m_pSection );
+
+		if ( CAlbumFolder* pFolder = pItem->GetLinkTarget() )
+		{
+			CMainWnd* pMainWnd = (CMainWnd*)AfxGetMainWnd();
+			if ( CLibraryWnd* pLibraryWnd = (CLibraryWnd*)pMainWnd->m_pWindows.Open( RUNTIME_CLASS(CLibraryWnd) ) )
+			{
+				CLibraryFrame* pFrame = &pLibraryWnd->m_wndFrame;
+				ASSERT_KINDOF(CLibraryFrame, pFrame );
+				pFrame->Display( pFolder );
+				return TRUE;
+			}
+		}
+	}
+
+	return FALSE;
+}
 
 //////////////////////////////////////////////////////////////////////
 // CMetaItem construction
 
 CMetaItem::CMetaItem(CSchemaMember* pMember)
-: m_rect( 0, 0, 0, 0 )
-, m_pMember( pMember )
-, m_bLink( FALSE )
-, m_bValueDefined( FALSE )
-, m_sKey( pMember ? m_pMember->m_sTitle : L"" )
-, m_bFullWidth( FALSE )
-, m_nHeight( 0 )
+	: CRect()
+	, m_pMember( pMember )
+	, m_bLink( FALSE )
+	, m_bValueDefined( FALSE )
+	, m_sKey( pMember ? pMember->m_sTitle : L"" )
+	, m_bFullWidth( FALSE )
+	, m_nHeight( 0 )
 {
 }
 
 //////////////////////////////////////////////////////////////////////
 // CMetaItem combination
 
-BOOL CMetaItem::Combine(CXMLElement* pXML)
+BOOL CMetaItem::Combine(const CXMLElement* pXML)
 {
 	if ( ! m_pMember ) 
 		return FALSE;
@@ -379,7 +593,7 @@ BOOL CMetaItem::Combine(CXMLElement* pXML)
 	}
 	else if ( m_sValue != strValue )
 	{
-		m_sValue = g_strMultiple;
+		m_sValue = LoadString( IDS_MULTIPLE );
 	}
 	
 	m_bValueDefined = TRUE;
@@ -395,7 +609,7 @@ BOOL CMetaItem::Combine(CXMLElement* pXML)
 
 void CMetaItem::Vote()
 {
-	if ( m_sValue != g_strMultiple ) return;
+	if ( m_sValue != LoadString( IDS_MULTIPLE ) ) return;
 	
 	int nBest = 0;
 	

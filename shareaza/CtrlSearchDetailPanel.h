@@ -1,7 +1,7 @@
 //
 // CtrlSearchDetailPanel.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,7 +22,7 @@
 #pragma once
 
 #include "CtrlPanel.h"
-#include "MetaPanel.h"
+#include "MetaList.h"
 #include "RichDocument.h"
 #include "RichViewCtrl.h"
 #include "HttpRequest.h"
@@ -89,7 +89,7 @@ protected:
 	int					m_nIcon32;
 	int					m_nRating;
 	CSchemaPtr			m_pSchema;
-	CMetaPanel			m_pMetadata;
+	CMetaList			m_pMetadata;
 	CList< Review* >	m_pReviews;
 	CCriticalSection	m_pSection;
 	BOOL				m_bCanPreview;

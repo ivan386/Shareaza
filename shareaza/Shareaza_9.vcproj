@@ -818,10 +818,6 @@
 				>
 			</File>
 			<File
-				RelativePath="MetaPanel.cpp"
-				>
-			</File>
-			<File
 				RelativePath="Neighbour.cpp"
 				>
 			</File>
@@ -2460,10 +2456,6 @@
 			</File>
 			<File
 				RelativePath="MetaList.h"
-				>
-			</File>
-			<File
-				RelativePath="MetaPanel.h"
 				>
 			</File>
 			<File

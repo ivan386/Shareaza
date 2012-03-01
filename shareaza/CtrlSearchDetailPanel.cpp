@@ -1,7 +1,7 @@
 //
 // CtrlSearchDetailPanel.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -29,7 +29,6 @@
 #include "Schema.h"
 #include "SchemaCache.h"
 #include "Library.h"
-
 #include "CoolInterface.h"
 #include "ImageServices.h"
 #include "ImageFile.h"
@@ -422,7 +421,7 @@ void CSearchDetailPanel::OnLButtonUp(UINT nFlags, CPoint point)
 	
 	if ( m_bValid && m_pReviews.GetCount() > 0 && m_rcStatus.PtInRect( point ) )
 	{
-		int nHeight = 54 + m_pMetadata.m_nHeight;
+		int nHeight = 54 + m_pMetadata.GetHeight();
 		SetScrollPos( SB_VERT, nHeight );
 		OnVScroll( SB_THUMBPOSITION, nHeight, NULL );
 		Invalidate();

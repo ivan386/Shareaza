@@ -734,7 +734,7 @@ void CLibraryFrame::SetPanel(CPanelCtrl* pPanel)
 		pOld->DestroyWindow();
 }
 
-CMetaPanel*	CLibraryFrame::GetPanelData()
+CMetaList*	CLibraryFrame::GetPanelData()
 {
 	if ( ! HasPanel() ) return NULL; // Panel is hidden
 
@@ -749,7 +749,7 @@ CMetaPanel*	CLibraryFrame::GetPanelData()
 	return NULL;
 }
 
-void CLibraryFrame::SetPanelData(CMetaPanel* pPanel)
+void CLibraryFrame::SetPanelData(CMetaList* pPanel)
 {
 	if ( ! HasPanel() ) return; // Panel is hidden
 

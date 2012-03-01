@@ -22,7 +22,7 @@
 #pragma once
 
 #include "CtrlPanel.h"
-#include "MetaPanel.h"
+
 
 class CSchema;
 class CLibraryFile;
@@ -40,8 +40,8 @@ public:
 
 	virtual void Update();
 
-	BOOL		SetServicePanel(CMetaPanel* pPanel);
-	CMetaPanel*	GetServicePanel();
+	BOOL		SetServicePanel(CMetaList* pPanel);
+	CMetaList*	GetServicePanel();
 
 protected:
 	int				m_nSelected;
@@ -55,14 +55,13 @@ protected:
 	int				m_nIcon48;
 	int				m_nRating;
 	CSchemaPtr		m_pSchema;
-	CMetaPanel*		m_pMetadata;
-	CMetaPanel*		m_pServiceData;
+	CMetaList*		m_pMetadata;
+	CMetaList*		m_pServiceData;
 	CRect			m_rcFolder;
 	CRect			m_rcRating;
 	CCriticalSection	m_pSection;
 	BOOL			m_bForceUpdate;
 	CBitmap			m_bmThumb;
-	CString			m_sThumbnailURL;	// Use this URL to load thumbnail instead
 	CString			m_sThumb;			// Loaded thumbnail file path or URL
 
 	CLibraryList*	GetViewSelection() const;

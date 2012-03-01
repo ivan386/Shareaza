@@ -192,9 +192,13 @@ void CLibraryFileView::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 		}
 	}
 
-	CString strName( m_pszToolBar );
-	strName += Settings.Library.ShowVirtual ? _T(".Virtual") : _T(".Physical");
-	Skin.TrackPopupMenu( strName, point, ID_LIBRARY_LAUNCH, oFiles );
+	// If no files were selected then try folder itself
+	if ( oFiles.GetCount() == 0 )
+		if ( CLibraryTreeItem* pRoot = GetFolderSelection() )
+			if ( pRoot->m_pPhysical )
+				oFiles.AddTail( pRoot->m_pPhysical->m_sPath );
+
+	Skin.TrackPopupMenu( CString( m_pszToolBar ) + ( Settings.Library.ShowVirtual ? _T(".Virtual") : _T(".Physical") ), point, ID_LIBRARY_LAUNCH, oFiles );
 }
 
 void CLibraryFileView::OnMouseMove(UINT nFlags, CPoint point)
@@ -818,8 +822,7 @@ void CLibraryFileView::ClearServicePages()
 {
 	for ( POSITION pos = m_pServiceDataPages.GetHeadPosition() ; pos ; )
 	{
-		CMetaPanel* pPanelData = m_pServiceDataPages.GetNext( pos );
-		delete pPanelData;
+		delete m_pServiceDataPages.GetNext( pos );
 	}
 
 	m_pServiceDataPages.RemoveAll();
@@ -1008,7 +1011,7 @@ LRESULT CLibraryFileView::OnServiceDone(WPARAM wParam, LPARAM lParam)
 	strStatus.TrimRight( ':' );
 
 	LPCTSTR pszMessage = (LPCTSTR)lParam;
-	CMetaPanel* pPanelData = (CMetaPanel*)wParam;
+	CMetaList* pPanelData = (CMetaList*)wParam;
 
 	m_bServiceFailed = FALSE;
 

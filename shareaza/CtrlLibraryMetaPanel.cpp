@@ -60,7 +60,7 @@ END_MESSAGE_MAP()
 // CLibraryMetaPanel construction
 
 CLibraryMetaPanel::CLibraryMetaPanel()
-:	m_pMetadata( new CMetaPanel() )
+:	m_pMetadata( new CMetaList() )
 ,	m_pServiceData( NULL )
 ,	m_bForceUpdate( FALSE )
 {
@@ -221,8 +221,7 @@ void CLibraryMetaPanel::Update()
 
 	SetScrollInfo( SB_VERT, &pInfo, TRUE );
 
-	if ( m_bForceUpdate || ( m_sThumbnailURL.IsEmpty() ? ( m_sThumb != m_sPath ) :
-		( m_sThumb != m_sThumbnailURL ) ) )
+	if ( m_bForceUpdate || ( m_sThumb != m_sPath ) )
 	{
 		m_bForceUpdate = FALSE;
 
@@ -406,11 +405,10 @@ void CLibraryMetaPanel::DrawText(CDC* pDC, int nX, int nY, LPCTSTR pszText, RECT
 	if ( pRect != NULL ) CopyMemory( pRect, &rc, sizeof(RECT) );
 }
 
-BOOL CLibraryMetaPanel::SetServicePanel(CMetaPanel* pPanel)
+BOOL CLibraryMetaPanel::SetServicePanel(CMetaList* pPanel)
 {
 	m_pSection.Lock();
 
-	m_sThumbnailURL = pPanel ? pPanel->m_sThumbnailURL : CString();
 	m_pServiceData = pPanel;
 
 	m_pSection.Unlock();
@@ -420,7 +418,7 @@ BOOL CLibraryMetaPanel::SetServicePanel(CMetaPanel* pPanel)
 	return TRUE;
 }
 
-CMetaPanel* CLibraryMetaPanel::GetServicePanel()
+CMetaList* CLibraryMetaPanel::GetServicePanel()
 {
 	if ( m_pServiceData )
 		return m_pServiceData;
@@ -524,31 +522,20 @@ void CLibraryMetaPanel::OnRun()
 	while ( IsThreadEnabled() )
 	{	
 		CString strPath = m_sPath;
-		CString strURL = m_sThumbnailURL;
 
-		if ( strPath.IsEmpty() && strURL.IsEmpty() )
+		if ( strPath.IsEmpty() )
 			break;
 
 		m_pSection.Unlock();
 
 		CImageFile pFile;
-		BOOL bSuccess;
-		if ( strURL.IsEmpty() )
-		{
-			bSuccess = CThumbCache::Cache( strPath, &pFile );
-		}
-		else
-		{
-			bSuccess = pFile.LoadFromURL( strURL ) && pFile.EnsureRGB();
-		}
+		BOOL bSuccess = CThumbCache::Cache( strPath, &pFile );
 
 		m_pSection.Lock();
 
 		// If nothing changes
-		if ( ( m_sPath == strPath ) && ( m_sThumbnailURL == strURL ) )
+		if ( m_sPath == strPath )
 		{
-			m_sThumb = strURL.IsEmpty() ? strPath : strURL;
-
 			if ( bSuccess )
 			{
 				if ( m_bmThumb.m_hObject )

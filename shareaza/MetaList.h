@@ -1,7 +1,7 @@
 //
 // MetaList.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -38,17 +38,20 @@ public:
 // Attributes
 protected:
 	CList< CMetaItem* >	m_pItems;
-	BOOL	m_bMusicBrainz;
+	BOOL				m_bMusicBrainz;
+	CBitmap				m_bmMusicBrainz;
+	int					m_nHeight;
 
 // Operations
 public:
+	void		Clear();
 	CMetaItem*	Add(LPCTSTR pszKey, LPCTSTR pszValue);
 	CMetaItem*	Find(LPCTSTR pszKey) const;
 	void		Remove(LPCTSTR pszKey);
 	void		Shuffle();
 	void		Setup(CSchemaPtr pSchema, BOOL bClear = TRUE);
-	void		Setup(CMetaList* pMetaList);					// For copying data from the external list
-	void		Combine(CXMLElement* pXML);
+	void		Setup(const CMetaList* pMetaList);				// For copying data from the external list
+	void		Combine(const CXMLElement* pXML);
 	void		Vote();
 	void		CreateLinks();
 	void		Clean(int nMaxLength = 128);
@@ -56,11 +59,9 @@ public:
 	CMetaItem*	HitTest(const CPoint& point, BOOL bLinksOnly = FALSE);
 	BOOL		OnSetCursor(CWnd* pWnd);
 	BOOL		IsMusicBrainz() const;
-
-	virtual BOOL IsWorking() const { return FALSE; }
-	virtual void Start() {}
-	virtual void Stop() {}
-	virtual void Clear();
+	void		Paint(CDC* pDC, const CRect* prcArea);
+	int			Layout(CDC* pDC, int nWidth);
+	BOOL		OnClick(const CPoint& point);
 
 // Inline Operations
 public:
@@ -84,11 +85,16 @@ public:
 		return m_pItems.IsEmpty() ? NULL : m_pItems.GetHead();
 	}
 
+	inline int GetHeight() const
+	{
+		return m_nHeight;
+	}
+
 	INT_PTR	GetCount(BOOL bVisibleOnly) const;
 };
 
 
-class CMetaItem
+class CMetaItem : public CRect
 {
 // Construction
 public:
@@ -101,31 +107,20 @@ public:
 	CString			m_sValue;
 	BOOL			m_bValueDefined;
 	CMap< CString, const CString&, int, int > m_pVote;
-public:
-	CRect			m_rect;
 	BOOL			m_bLink;
 	CString			m_sLink;
 	CString			m_sLinkName;
-public:
 	BOOL			m_bFullWidth;
 	int				m_nHeight;
 	
 // Operations
 public:
-	BOOL			Combine(CXMLElement* pXML);
+	BOOL			Combine(const CXMLElement* pXML);
 	void			Vote();
 	BOOL			Limit(int nMaxLength);
 	BOOL			CreateLink();
 	CAlbumFolder*	GetLinkTarget(BOOL bHTTP = TRUE) const;
 	CString			GetMusicBrainzLink() const;
-
-	inline void SetRect(int x1, int y1, int x2, int y2)
-	{
-		m_rect.left		= x1;
-		m_rect.top		= y1;
-		m_rect.right	= x2;
-		m_rect.bottom	= y2;
-	}
 
 	inline CString GetDisplayValue() const
 	{

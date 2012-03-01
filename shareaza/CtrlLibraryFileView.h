@@ -1,7 +1,7 @@
 //
 // CtrlLibraryFileView.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -24,7 +24,8 @@
 #include "CtrlLibraryView.h"
 
 class CLibraryFile;
-class CMetaPanel;
+class CMetaList;
+
 
 class CLibraryFileView : public CLibraryView
 {
@@ -40,7 +41,7 @@ protected:
 	BOOL				m_bEditing;
 	BOOL				m_bRequestingService;
 	INT_PTR				m_nCurrentPage;
-	CList<CMetaPanel*>	m_pServiceDataPages;
+	CList<CMetaList*>	m_pServiceDataPages;
 	BOOL				m_bServiceFailed;
 
 protected:
