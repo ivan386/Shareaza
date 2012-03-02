@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2012-02-29 19:32+0000\n"
+"POT-Creation-Date: 2012-03-02 16:08+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -303,11 +303,11 @@ msgstr "Αυξομείωση έντασης ήχου"
 msgid "Open File"
 msgstr "Άνοιγμα"
 
-#: button;id_media_previous button;id_sharemonkey_previous
+#: button;id_media_previous
 msgid "Previous"
 msgstr "Προηγούμενο"
 
-#: button;id_media_next button;id_sharemonkey_next string;20135
+#: button;id_media_next string;20135
 msgid "Next"
 msgstr "Επόμενο"
 
@@ -328,7 +328,7 @@ msgstr "Αυξομείωση της ταχύτητας αναπαραγωγής"
 msgid "Clear"
 msgstr "Καθαρισμός"
 
-#: button;id_media_save button;id_sharemonkey_save
+#: button;id_media_save
 msgid "Save"
 msgstr "Αποθήκευση"
 
@@ -489,26 +489,6 @@ msgstr "C"
 #: button;id_chat_priority
 msgid "Grant Priority"
 msgstr "Χορήγηση Προτεραιότητας"
-
-#: button;id_sharemonkey_download
-msgid "Get Data"
-msgstr "Λήψη Δεδομένων"
-
-#: button;id_sharemonkey_prices
-msgid "Get Prices"
-msgstr "Λήψη Τιμών"
-
-#: button;id_sharemonkey_compare
-msgid "Compare"
-msgstr "Σύγκριση"
-
-#: button;id_sharemonkey_buy
-msgid "Buy It"
-msgstr "Αγορά"
-
-#: control;id_sharemonkey_save_option
-msgid "Save Preview"
-msgstr "Αποθήκευση Προεπισκόπησης"
 
 #: button;id_musicbrainz_matches
 msgid "View Album Matches"
@@ -1211,6 +1191,7 @@ msgstr "_Υπηρεσίες Ιστού"
 #: clibraryfileview.physical;44;item;id_library_bitzi_web
 #: clibraryfileview.virtual.basic;47;item;id_library_bitzi_web
 #: clibraryfileview.virtual;50;item;id_library_bitzi_web
+#: webservices.list.menu;item;id_library_bitzi_web
 msgid "View _Bitzi Ticket"
 msgstr "Προβολή _Bitzi Ticket"
 
@@ -1306,6 +1287,18 @@ msgstr "Εύρεση _Επιπλέον Πηγών"
 #: cuploadswnd.nothing;item;id_uploads_help
 msgid "_Help..."
 msgstr "_Βοήθεια..."
+
+#: cdownloadswnd.download.basic;item;id_shell_menu
+#: cdownloadswnd.download;item;id_shell_menu
+#: cdownloadswnd.completed.basic;item;id_shell_menu
+#: cdownloadswnd.completed;item;id_shell_menu
+#: clibrarytree.physical.basic;item;id_shell_menu
+#: clibrarytree.physical;item;id_shell_menu
+#: clibraryfileview.physical;item;id_shell_menu
+#: clibraryfileview.virtual.basic;item;id_shell_menu
+#: clibraryfileview.virtual;item;id_shell_menu
+msgid "S_hell menu"
+msgstr "S_hell menu"
 
 #: cdownloadswnd.download;item;id_downloads_launch
 msgid "Prev_iew Partial File"
@@ -1518,14 +1511,6 @@ msgstr "_Κοινοποιημένο"
 msgid "Create ._torrent File"
 msgstr "Δημιουργία Αρχείου .torrent"
 
-#: clibrarytree.physical.basic;item;id_shell_menu
-#: clibrarytree.physical;item;id_shell_menu
-#: clibraryfileview.physical;item;id_shell_menu
-#: clibraryfileview.virtual.basic;item;id_shell_menu
-#: clibraryfileview.virtual;item;id_shell_menu
-msgid "S_hell menu"
-msgstr "S_hell menu"
-
 #: clibrarytree.physical;item;id_library_scan
 msgid "S_can"
 msgstr "_Σάρωση"
@@ -1582,8 +1567,15 @@ msgstr "_Άνοιγμα"
 #: clibraryfileview.physical;44;item;id_library_bitzi_download
 #: clibraryfileview.virtual.basic;47;item;id_library_bitzi_download
 #: clibraryfileview.virtual;50;item;id_library_bitzi_download
+#: webservices.list.menu;item;id_library_bitzi_download
 msgid "_Download Metadata"
 msgstr "Λήψη _Metadata"
+
+#: clibraryfileview.physical.basic;41;item;id_webservices_musicbrainz
+#: clibraryfileview.physical;44;item;id_webservices_musicbrainz
+#: webservices.list.menu;item;id_webservices_musicbrainz
+msgid "_MusicBrainz"
+msgstr "_MusicBrainz"
 
 #: clibraryfileview.physical.basic;42 clibraryfileview.physical;45
 #: clibraryfileview.virtual.basic;48 clibraryfileview.virtual;51
@@ -2085,18 +2077,6 @@ msgstr "Αποπομπή+Αποκλεισμός"
 #: circuserlist;64;item;id_irc_bankickwhy
 msgid "Kick+Ban (why?)"
 msgstr "Αποπομπή+Αποκλεισμός (γιατί;)"
-
-#: webservices.list.menu;item;id_library_bitzi_download
-msgid "_Bitzi"
-msgstr "_Bitzi"
-
-#: webservices.list.menu;item;id_webservices_musicbrainz
-msgid "_MusicBrainz"
-msgstr "_MusicBrainz"
-
-#: webservices.list.menu;item;id_webservices_sharemonkey
-msgid "_ShareMonkey"
-msgstr "_ShareMonkey"
 
 #: chomeviewctrl;heading;1000
 msgid "G E T   C O N N E C T E D"
@@ -7224,11 +7204,6 @@ msgstr "Τέλος"
 msgid "All"
 msgstr "Όλα"
 
-#: string;20014
-#, fuzzy
-msgid "This option uses services provided by ShareMonkey.com for recognising information about selected files.\\n\\nShareaza will transmit file details and your location in order to query the ShareMonkey database.  If you are concerned about privacy, you may wish to consult the ShareMonkey.com privacy policy.\\n\\nWould you like to proceed?"
-msgstr "Αυτή η επιλογή χρησιμοποιεί υπηρεσίες παρεχόμενες από το Bitzi.com προς αναγνώριση και κοινοποίηση πληροφοριών για τα επιλεγμένα αρχεία.\\n\\nΤο Shareaza θα αποστείλει το SHA1 hash code για τα επιλεγμένα αρχεία, προκειμένου να ρωτήσει τη βάση δεδομένων του Bitzi. Αν ανησυχείται για την ιδιωτικότητά σας, συμβουλευτείτε την πολιτική ιδιωτικότητας του Bitzi.com.\\n\\nΘέλετε να συνεχίσετε;"
-
 #: string;20101
 msgid "Requesting"
 msgstr "Αίτηση..."
@@ -10081,6 +10056,31 @@ msgstr "TigerTree"
 #, fuzzy
 msgid "NextRun"
 msgstr "Επόμενο"
+
+#~ msgid "Get Data"
+#~ msgstr "Λήψη Δεδομένων"
+
+#~ msgid "Get Prices"
+#~ msgstr "Λήψη Τιμών"
+
+#~ msgid "Compare"
+#~ msgstr "Σύγκριση"
+
+#~ msgid "Buy It"
+#~ msgstr "Αγορά"
+
+#~ msgid "Save Preview"
+#~ msgstr "Αποθήκευση Προεπισκόπησης"
+
+#~ msgid "_Bitzi"
+#~ msgstr "_Bitzi"
+
+#~ msgid "_ShareMonkey"
+#~ msgstr "_ShareMonkey"
+
+#, fuzzy
+#~ msgid "This option uses services provided by ShareMonkey.com for recognising information about selected files.\\n\\nShareaza will transmit file details and your location in order to query the ShareMonkey database.  If you are concerned about privacy, you may wish to consult the ShareMonkey.com privacy policy.\\n\\nWould you like to proceed?"
+#~ msgstr "Αυτή η επιλογή χρησιμοποιεί υπηρεσίες παρεχόμενες από το Bitzi.com προς αναγνώριση και κοινοποίηση πληροφοριών για τα επιλεγμένα αρχεία.\\n\\nΤο Shareaza θα αποστείλει το SHA1 hash code για τα επιλεγμένα αρχεία, προκειμένου να ρωτήσει τη βάση δεδομένων του Bitzi. Αν ανησυχείται για την ιδιωτικότητά σας, συμβουλευτείτε την πολιτική ιδιωτικότητας του Bitzi.com.\\n\\nΘέλετε να συνεχίσετε;"
 
 #, fuzzy
 #~ msgid "Search for matches"

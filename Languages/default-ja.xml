@@ -446,28 +446,6 @@
 			<button id="ID_CHAT_DISCONNECT" text="切断"/>
 		</toolbar>
 		<!-- WEBSERVICES -->
-		<toolbar name="WebServices.ShareMonkey">
-			<button id="ID_SHAREMONKEY_DOWNLOAD" text="Get Data"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PREVIOUS" text="前へ"/>
-			<button id="ID_SHAREMONKEY_NEXT" text="次へ"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PRICES" text="Get Prices"/>
-			<button id="ID_SHAREMONKEY_COMPARE" text="Compare"/>
-			<button id="ID_SHAREMONKEY_BUY" text="Buy It"/>
-		</toolbar>
-		<toolbar name="WebServices.ShareMonkey.WithSave">
-			<button id="ID_SHAREMONKEY_DOWNLOAD" text="Get Data"/>
-			<button id="ID_SHAREMONKEY_SAVE" text="保存"/>
-			<control id="ID_SHAREMONKEY_SAVE_OPTION" text="Save Preview" width="100" checked="true"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PREVIOUS" text="前へ"/>
-			<button id="ID_SHAREMONKEY_NEXT" text="次へ"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PRICES" text="Get Prices"/>
-			<button id="ID_SHAREMONKEY_COMPARE" text="Compare"/>
-			<button id="ID_SHAREMONKEY_BUY" text="Buy It"/>
-		</toolbar>
 		<toolbar name="WebServices.MusicBrainz">
 			<button id="ID_MUSICBRAINZ_MATCHES" text="View Album Matches"/>
 			<button id="ID_MUSICBRAINZ_ALBUMS" text="View All Albums"/>
@@ -1061,6 +1039,8 @@
 			<item id="ID_DOWNLOADS_COPY" text="URIをコピー(_U)"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_HELP" text="ヘルプ(_H)..."/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Download">
 			<item id="ID_DOWNLOADS_LAUNCH_COPY" text="Previe_w File"/>
@@ -1087,9 +1067,12 @@
 				<item id="ID_DOWNLOADS_MOVE_DOWN" text="下に移動(_D)"/>
 				<item id="ID_DOWNLOADS_BOOST" text="帯域制限を無視(_I)"/>
 			</menu>
+			<separator/>
 			<item id="ID_DOWNLOADS_HELP" text="ヘルプ(_H)..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_EDIT" text="高度な編集(_E)..."/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Source">
 			<item id="ID_TRANSFERS_CONNECT" text="アクセス(_A)"/>
@@ -1107,6 +1090,8 @@
 			<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="クリア(_C)"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_FILE_DELETE" text="削除(_D)"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Completed">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="開く・再生(_O)"/>
@@ -1117,6 +1102,8 @@
 			<separator/>
 			<item id="ID_DOWNLOADS_FILE_DELETE" text="削除(_D)"/>
 			<item id="ID_DOWNLOADS_RATE" text="ファイルを評価(_R)..."/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Seeding">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="開く・再生(_O)"/>
@@ -1259,6 +1246,7 @@
 			<menu text="ウェブサービス(_W)">
 				<item id="ID_LIBRARY_BITZI_WEB" text="Bitzi Ticketを表示(_B)"/>
 				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="メタデータをダウンロード(_D)"/>
+				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="構成(_R)">
 				<item id="ID_LIBRARY_RENAME" text="ファイル名変更(_R)"/>
@@ -1290,6 +1278,7 @@
 			<menu text="ウェブサービス(_W)">
 				<item id="ID_LIBRARY_BITZI_WEB" text="Bitzi Ticketを表示(_B)"/>
 				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="メタデータをダウンロード(_D)"/>
+				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text=".torrentファイルを作成"/>
 			</menu>
@@ -1665,9 +1654,9 @@
 			</menu>
 		</menu>
 		<menu name="WebServices.List.Menu">
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Bitzi"/>
+			<item id="ID_LIBRARY_BITZI_WEB" text="Bitzi Ticketを表示(_B)"/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="メタデータをダウンロード(_D)"/>
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
-			<item id="ID_WEBSERVICES_SHAREMONKEY" text="_ShareMonkey"/>
 		</menu>
 	</menus>
 	<!-- Documents -->
@@ -3366,7 +3355,6 @@
 		<string id="20011" value="次へ(&amp;N)"/>
 		<string id="20012" value="Finish"/>
 		<string id="20013" value="全て"/>
-		<string id="20014" value="このオプション選択されたファイルに関する識別・共有情報が提供されるBitzi.comのサービスを使用します\n\nShareazaは選択したファイルのためにBitziデータベースにSHA1ハッシュコードを送信して問い合わせます。 プライバシーが心配ならBitzi.comプライバシーポリシーを参照できます\n\n続けて宜しいですか?"/>
 		<string id="20100" value="接続中"/>
 		<string id="20101" value="要求中"/>
 		<string id="20102" value="応答"/>

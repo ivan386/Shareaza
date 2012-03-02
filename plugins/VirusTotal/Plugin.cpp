@@ -1,7 +1,7 @@
 //
 // Plugin.cpp : Implementation of CPlugin
 //
-// Copyright (c) Nikolay Raspopov, 2009-2010.
+// Copyright (c) Nikolay Raspopov, 2009-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -183,7 +183,7 @@ STDMETHODIMP CPlugin::InsertCommands()
 	if ( SUCCEEDED( m_pUserInterface->GetMenu( CComBSTR( L"WebServices.List.Menu" ),
 		VARIANT_FALSE, &pListMenu ) ) && pListMenu )
 	{
-		InsertCommand( pListMenu, 1, m_nCmdCheck, VIRUSTOTAL_CHECK );
+		InsertCommand( pListMenu, 2, m_nCmdCheck, VIRUSTOTAL_CHECK );
 	}
 
 	return E_FAIL;

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2012-02-29 19:32+0000\n"
+"POT-Creation-Date: 2012-03-02 16:08+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -303,11 +303,11 @@ msgstr "Ajustar el volumen"
 msgid "Open File"
 msgstr "Abrir archivo"
 
-#: button;id_media_previous button;id_sharemonkey_previous
+#: button;id_media_previous
 msgid "Previous"
 msgstr "Anterior"
 
-#: button;id_media_next button;id_sharemonkey_next string;20135
+#: button;id_media_next string;20135
 msgid "Next"
 msgstr "Siguiente"
 
@@ -328,7 +328,7 @@ msgstr "Ajustar la velocidad de reproducción (pitch)"
 msgid "Clear"
 msgstr "Limpiar"
 
-#: button;id_media_save button;id_sharemonkey_save
+#: button;id_media_save
 msgid "Save"
 msgstr "Guardar"
 
@@ -489,26 +489,6 @@ msgstr "C"
 #: button;id_chat_priority
 msgid "Grant Priority"
 msgstr "Dar prioridad"
-
-#: button;id_sharemonkey_download
-msgid "Get Data"
-msgstr "Obtener datos"
-
-#: button;id_sharemonkey_prices
-msgid "Get Prices"
-msgstr "Premiar"
-
-#: button;id_sharemonkey_compare
-msgid "Compare"
-msgstr "Comparar"
-
-#: button;id_sharemonkey_buy
-msgid "Buy It"
-msgstr "Comprar"
-
-#: control;id_sharemonkey_save_option
-msgid "Save Preview"
-msgstr "Guardar previsualizacion"
 
 #: button;id_musicbrainz_matches
 msgid "View Album Matches"
@@ -1211,6 +1191,7 @@ msgstr "_Web Services"
 #: clibraryfileview.physical;44;item;id_library_bitzi_web
 #: clibraryfileview.virtual.basic;47;item;id_library_bitzi_web
 #: clibraryfileview.virtual;50;item;id_library_bitzi_web
+#: webservices.list.menu;item;id_library_bitzi_web
 msgid "View _Bitzi Ticket"
 msgstr "Ver _Bitzi Ticket"
 
@@ -1306,6 +1287,18 @@ msgstr "_Buscar más fuentes"
 #: cuploadswnd.nothing;item;id_uploads_help
 msgid "_Help..."
 msgstr "_Ayuda..."
+
+#: cdownloadswnd.download.basic;item;id_shell_menu
+#: cdownloadswnd.download;item;id_shell_menu
+#: cdownloadswnd.completed.basic;item;id_shell_menu
+#: cdownloadswnd.completed;item;id_shell_menu
+#: clibrarytree.physical.basic;item;id_shell_menu
+#: clibrarytree.physical;item;id_shell_menu
+#: clibraryfileview.physical;item;id_shell_menu
+#: clibraryfileview.virtual.basic;item;id_shell_menu
+#: clibraryfileview.virtual;item;id_shell_menu
+msgid "S_hell menu"
+msgstr "S_hell menu"
 
 #: cdownloadswnd.download;item;id_downloads_launch
 msgid "Prev_iew Partial File"
@@ -1518,14 +1511,6 @@ msgstr "_Compartido"
 msgid "Create ._torrent File"
 msgstr "Crear archivo .torrent"
 
-#: clibrarytree.physical.basic;item;id_shell_menu
-#: clibrarytree.physical;item;id_shell_menu
-#: clibraryfileview.physical;item;id_shell_menu
-#: clibraryfileview.virtual.basic;item;id_shell_menu
-#: clibraryfileview.virtual;item;id_shell_menu
-msgid "S_hell menu"
-msgstr "S_hell menu"
-
 #: clibrarytree.physical;item;id_library_scan
 msgid "S_can"
 msgstr "Es_canear"
@@ -1580,8 +1565,15 @@ msgstr "_Abrir"
 #: clibraryfileview.physical;44;item;id_library_bitzi_download
 #: clibraryfileview.virtual.basic;47;item;id_library_bitzi_download
 #: clibraryfileview.virtual;50;item;id_library_bitzi_download
+#: webservices.list.menu;item;id_library_bitzi_download
 msgid "_Download Metadata"
 msgstr "_Descargar metadata"
+
+#: clibraryfileview.physical.basic;41;item;id_webservices_musicbrainz
+#: clibraryfileview.physical;44;item;id_webservices_musicbrainz
+#: webservices.list.menu;item;id_webservices_musicbrainz
+msgid "_MusicBrainz"
+msgstr "_MusicBrainz"
 
 #: clibraryfileview.physical.basic;42 clibraryfileview.physical;45
 #: clibraryfileview.virtual.basic;48 clibraryfileview.virtual;51
@@ -2083,18 +2075,6 @@ msgstr "Expulsar+bloquear"
 #: circuserlist;64;item;id_irc_bankickwhy
 msgid "Kick+Ban (why?)"
 msgstr "Expulsar+bloquear (¿por qué?)"
-
-#: webservices.list.menu;item;id_library_bitzi_download
-msgid "_Bitzi"
-msgstr "_Bitzi"
-
-#: webservices.list.menu;item;id_webservices_musicbrainz
-msgid "_MusicBrainz"
-msgstr "_MusicBrainz"
-
-#: webservices.list.menu;item;id_webservices_sharemonkey
-msgid "_ShareMonkey"
-msgstr "_ShareMonkey"
 
 #: chomeviewctrl;heading;1000
 msgid "G E T   C O N N E C T E D"
@@ -7131,10 +7111,6 @@ msgstr "Finalizar"
 msgid "All"
 msgstr "Todo"
 
-#: string;20014
-msgid "This option uses services provided by ShareMonkey.com for recognising information about selected files.\\n\\nShareaza will transmit file details and your location in order to query the ShareMonkey database.  If you are concerned about privacy, you may wish to consult the ShareMonkey.com privacy policy.\\n\\nWould you like to proceed?"
-msgstr "Esto usa un servicio ofrecido por Bitzi.com, para adquirir metadata acerca del archivo.\\n\\nShareaza va a enviar una pequeña información sobre la huella digital 'bitprint' del archivo para que Bitzi lo pueda reconocer. Si tienes alguna duda sobre la privacidad de este servicio, visita bitzi.com para más información.\\n\\n¿Quieres continuar?"
-
 #: string;20101
 msgid "Requesting"
 msgstr "Pidiendo"
@@ -9976,6 +9952,30 @@ msgstr "Trigger"
 #: column;nextrun
 msgid "NextRun"
 msgstr "Siguiente"
+
+#~ msgid "Get Data"
+#~ msgstr "Obtener datos"
+
+#~ msgid "Get Prices"
+#~ msgstr "Premiar"
+
+#~ msgid "Compare"
+#~ msgstr "Comparar"
+
+#~ msgid "Buy It"
+#~ msgstr "Comprar"
+
+#~ msgid "Save Preview"
+#~ msgstr "Guardar previsualizacion"
+
+#~ msgid "_Bitzi"
+#~ msgstr "_Bitzi"
+
+#~ msgid "_ShareMonkey"
+#~ msgstr "_ShareMonkey"
+
+#~ msgid "This option uses services provided by ShareMonkey.com for recognising information about selected files.\\n\\nShareaza will transmit file details and your location in order to query the ShareMonkey database.  If you are concerned about privacy, you may wish to consult the ShareMonkey.com privacy policy.\\n\\nWould you like to proceed?"
+#~ msgstr "Esto usa un servicio ofrecido por Bitzi.com, para adquirir metadata acerca del archivo.\\n\\nShareaza va a enviar una pequeña información sobre la huella digital 'bitprint' del archivo para que Bitzi lo pueda reconocer. Si tienes alguna duda sobre la privacidad de este servicio, visita bitzi.com para más información.\\n\\n¿Quieres continuar?"
 
 #~ msgid "Buy it and support the author"
 #~ msgstr "Cómpralo para apoyar al autor"

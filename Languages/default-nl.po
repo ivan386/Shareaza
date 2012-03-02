@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2012-02-29 19:32+0000\n"
+"POT-Creation-Date: 2012-03-02 16:08+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -303,11 +303,11 @@ msgstr "Het geluidsvolume aanpassen"
 msgid "Open File"
 msgstr "Bestand openen"
 
-#: button;id_media_previous button;id_sharemonkey_previous
+#: button;id_media_previous
 msgid "Previous"
 msgstr "Vorige"
 
-#: button;id_media_next button;id_sharemonkey_next string;20135
+#: button;id_media_next string;20135
 msgid "Next"
 msgstr "Volgende"
 
@@ -328,7 +328,7 @@ msgstr "De snelheid van het mediabestand aanpassen"
 msgid "Clear"
 msgstr "Wissen"
 
-#: button;id_media_save button;id_sharemonkey_save
+#: button;id_media_save
 msgid "Save"
 msgstr "Opslaan"
 
@@ -489,26 +489,6 @@ msgstr "C"
 #: button;id_chat_priority
 msgid "Grant Priority"
 msgstr "Voorrang geven"
-
-#: button;id_sharemonkey_download
-msgid "Get Data"
-msgstr "Verkrijg Data"
-
-#: button;id_sharemonkey_prices
-msgid "Get Prices"
-msgstr "Verkrijg Prijzen"
-
-#: button;id_sharemonkey_compare
-msgid "Compare"
-msgstr "Vergelijken"
-
-#: button;id_sharemonkey_buy
-msgid "Buy It"
-msgstr "Buy It"
-
-#: control;id_sharemonkey_save_option
-msgid "Save Preview"
-msgstr "Voorvertoning Opslaan"
 
 #: button;id_musicbrainz_matches
 msgid "View Album Matches"
@@ -1211,6 +1191,7 @@ msgstr "_Internetdiensten"
 #: clibraryfileview.physical;44;item;id_library_bitzi_web
 #: clibraryfileview.virtual.basic;47;item;id_library_bitzi_web
 #: clibraryfileview.virtual;50;item;id_library_bitzi_web
+#: webservices.list.menu;item;id_library_bitzi_web
 msgid "View _Bitzi Ticket"
 msgstr "_Bitzi Ticket bekijken"
 
@@ -1306,6 +1287,18 @@ msgstr "Meer bronnen _zoeken"
 #: cuploadswnd.nothing;item;id_uploads_help
 msgid "_Help..."
 msgstr "_Help..."
+
+#: cdownloadswnd.download.basic;item;id_shell_menu
+#: cdownloadswnd.download;item;id_shell_menu
+#: cdownloadswnd.completed.basic;item;id_shell_menu
+#: cdownloadswnd.completed;item;id_shell_menu
+#: clibrarytree.physical.basic;item;id_shell_menu
+#: clibrarytree.physical;item;id_shell_menu
+#: clibraryfileview.physical;item;id_shell_menu
+#: clibraryfileview.virtual.basic;item;id_shell_menu
+#: clibraryfileview.virtual;item;id_shell_menu
+msgid "S_hell menu"
+msgstr "Conte_xtmenu"
 
 #: cdownloadswnd.download;item;id_downloads_launch
 msgid "Prev_iew Partial File"
@@ -1518,14 +1511,6 @@ msgstr "_Delen"
 msgid "Create ._torrent File"
 msgstr "._Torrent maken"
 
-#: clibrarytree.physical.basic;item;id_shell_menu
-#: clibrarytree.physical;item;id_shell_menu
-#: clibraryfileview.physical;item;id_shell_menu
-#: clibraryfileview.virtual.basic;item;id_shell_menu
-#: clibraryfileview.virtual;item;id_shell_menu
-msgid "S_hell menu"
-msgstr "Conte_xtmenu"
-
 #: clibrarytree.physical;item;id_library_scan
 msgid "S_can"
 msgstr "_Scannen"
@@ -1582,8 +1567,15 @@ msgstr "_Openen"
 #: clibraryfileview.physical;44;item;id_library_bitzi_download
 #: clibraryfileview.virtual.basic;47;item;id_library_bitzi_download
 #: clibraryfileview.virtual;50;item;id_library_bitzi_download
+#: webservices.list.menu;item;id_library_bitzi_download
 msgid "_Download Metadata"
 msgstr "Metadata _downloaden"
+
+#: clibraryfileview.physical.basic;41;item;id_webservices_musicbrainz
+#: clibraryfileview.physical;44;item;id_webservices_musicbrainz
+#: webservices.list.menu;item;id_webservices_musicbrainz
+msgid "_MusicBrainz"
+msgstr "_MusicBrainz"
 
 #: clibraryfileview.physical.basic;42 clibraryfileview.physical;45
 #: clibraryfileview.virtual.basic;48 clibraryfileview.virtual;51
@@ -2085,18 +2077,6 @@ msgstr "Kick+Ban"
 #: circuserlist;64;item;id_irc_bankickwhy
 msgid "Kick+Ban (why?)"
 msgstr "Kick+Ban (waarom?)"
-
-#: webservices.list.menu;item;id_library_bitzi_download
-msgid "_Bitzi"
-msgstr "_Bitzi"
-
-#: webservices.list.menu;item;id_webservices_musicbrainz
-msgid "_MusicBrainz"
-msgstr "_MusicBrainz"
-
-#: webservices.list.menu;item;id_webservices_sharemonkey
-msgid "_ShareMonkey"
-msgstr "_ShareMonkey"
 
 #: chomeviewctrl;heading;1000
 msgid "G E T   C O N N E C T E D"
@@ -7226,11 +7206,6 @@ msgstr "Beëindig"
 msgid "All"
 msgstr "Alles"
 
-#: string;20014
-#, fuzzy
-msgid "This option uses services provided by ShareMonkey.com for recognising information about selected files.\\n\\nShareaza will transmit file details and your location in order to query the ShareMonkey database.  If you are concerned about privacy, you may wish to consult the ShareMonkey.com privacy policy.\\n\\nWould you like to proceed?"
-msgstr "Deze optie gebruikt diensten die zijn verstrekt door Bitzi.com voor het herkennen en delen van informatie over de geselecteerde bestanden.\\n\\nShareaza geeft de SHA1 hash-code door voor de geselecteerde bestand(en) om de Bitzi gegevensbank op te vragen. Als je je zorgen maakt over privacy, kun je de privacypolis van Bitzi.com raadplegen.\\n\\nWil je verdergaan?"
-
 #: string;20101
 msgid "Requesting"
 msgstr "Toelating vragen..."
@@ -10083,6 +10058,31 @@ msgstr "TigerTree"
 #, fuzzy
 msgid "NextRun"
 msgstr "Volgende"
+
+#~ msgid "Get Data"
+#~ msgstr "Verkrijg Data"
+
+#~ msgid "Get Prices"
+#~ msgstr "Verkrijg Prijzen"
+
+#~ msgid "Compare"
+#~ msgstr "Vergelijken"
+
+#~ msgid "Buy It"
+#~ msgstr "Buy It"
+
+#~ msgid "Save Preview"
+#~ msgstr "Voorvertoning Opslaan"
+
+#~ msgid "_Bitzi"
+#~ msgstr "_Bitzi"
+
+#~ msgid "_ShareMonkey"
+#~ msgstr "_ShareMonkey"
+
+#, fuzzy
+#~ msgid "This option uses services provided by ShareMonkey.com for recognising information about selected files.\\n\\nShareaza will transmit file details and your location in order to query the ShareMonkey database.  If you are concerned about privacy, you may wish to consult the ShareMonkey.com privacy policy.\\n\\nWould you like to proceed?"
+#~ msgstr "Deze optie gebruikt diensten die zijn verstrekt door Bitzi.com voor het herkennen en delen van informatie over de geselecteerde bestanden.\\n\\nShareaza geeft de SHA1 hash-code door voor de geselecteerde bestand(en) om de Bitzi gegevensbank op te vragen. Als je je zorgen maakt over privacy, kun je de privacypolis van Bitzi.com raadplegen.\\n\\nWil je verdergaan?"
 
 #, fuzzy
 #~ msgid "Search for matches"

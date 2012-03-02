@@ -446,28 +446,6 @@
 			<button id="ID_CHAT_DISCONNECT" text="Prekini povezavo"/>
 		</toolbar>
 		<!-- WEBSERVICES -->
-		<toolbar name="WebServices.ShareMonkey">
-			<button id="ID_SHAREMONKEY_DOWNLOAD" text="Get Data"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PREVIOUS" text="Prejšnji"/>
-			<button id="ID_SHAREMONKEY_NEXT" text="Naslednji"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PRICES" text="Get Prices"/>
-			<button id="ID_SHAREMONKEY_COMPARE" text="Compare"/>
-			<button id="ID_SHAREMONKEY_BUY" text="Buy It"/>
-		</toolbar>
-		<toolbar name="WebServices.ShareMonkey.WithSave">
-			<button id="ID_SHAREMONKEY_DOWNLOAD" text="Get Data"/>
-			<button id="ID_SHAREMONKEY_SAVE" text="Shrani"/>
-			<control id="ID_SHAREMONKEY_SAVE_OPTION" text="Save Preview" width="100" checked="true"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PREVIOUS" text="Prejšnji"/>
-			<button id="ID_SHAREMONKEY_NEXT" text="Naslednji"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PRICES" text="Get Prices"/>
-			<button id="ID_SHAREMONKEY_COMPARE" text="Compare"/>
-			<button id="ID_SHAREMONKEY_BUY" text="Buy It"/>
-		</toolbar>
 		<toolbar name="WebServices.MusicBrainz">
 			<button id="ID_MUSICBRAINZ_MATCHES" text="View Album Matches"/>
 			<button id="ID_MUSICBRAINZ_ALBUMS" text="View All Albums"/>
@@ -1061,6 +1039,8 @@
 			<item id="ID_DOWNLOADS_COPY" text="Kopiraj _URI"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_HELP" text="_Pomoč..."/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Download">
 			<item id="ID_DOWNLOADS_LAUNCH_COPY" text="Previe_w File"/>
@@ -1087,9 +1067,12 @@
 				<item id="ID_DOWNLOADS_MOVE_DOWN" text="Premakni _dol"/>
 				<item id="ID_DOWNLOADS_BOOST" text="Prezri _omejitev pasovne širine"/>
 			</menu>
+			<separator/>
 			<item id="ID_DOWNLOADS_HELP" text="_Pomoč..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_EDIT" text="N_apredno urejanje..."/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Source">
 			<item id="ID_TRANSFERS_CONNECT" text="_Dostop"/>
@@ -1107,6 +1090,8 @@
 			<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Počisti"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_FILE_DELETE" text="_Briši datoteko"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Completed">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Odpri ali predvajaj"/>
@@ -1117,6 +1102,8 @@
 			<separator/>
 			<item id="ID_DOWNLOADS_FILE_DELETE" text="_Briši datoteko"/>
 			<item id="ID_DOWNLOADS_RATE" text="_Oceni datoteko..."/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Seeding">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Odpri ali predvajaj"/>
@@ -1259,6 +1246,7 @@
 			<menu text="_Spletne storitve">
 				<item id="ID_LIBRARY_BITZI_WEB" text="Poglej _Bitzi karto"/>
 				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Prenesi metapodatke"/>
+				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="_Organiziraj">
 				<item id="ID_LIBRARY_RENAME" text="_Preimenuj datoteko"/>
@@ -1290,6 +1278,7 @@
 			<menu text="_Spletne storitve">
 				<item id="ID_LIBRARY_BITZI_WEB" text="Poglej _Bitzi karto"/>
 				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Prenesi metapodatke"/>
+				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="Ustvari datoteko tipa .torrent"/>
 			</menu>
@@ -1665,9 +1654,9 @@
 			</menu>
 		</menu>
 		<menu name="WebServices.List.Menu">
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Bitzi"/>
+			<item id="ID_LIBRARY_BITZI_WEB" text="Poglej _Bitzi karto"/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Prenesi metapodatke"/>
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
-			<item id="ID_WEBSERVICES_SHAREMONKEY" text="_ShareMonkey"/>
 		</menu>
 	</menus>
 	<!-- Documents -->
@@ -3368,7 +3357,6 @@
 		<string id="20011" value="&amp;Next"/>
 		<string id="20012" value="Finish"/>
 		<string id="20013" value="Vse"/>
-		<string id="20014" value="Ta možnost uporablja storitve, ki jih zagotavlja Bitzi.com za prepoznavanje in deljenje informacij o izbranih datotekah.\n\nShareaza bo prenesla SHA1 izvleček (hash code) za izbrane datoteke z namenom poizvedbe po Bitzi podatkovni zbirki. Če ste zaskrbljeni glede zasebnosti, vam svetujemo, da si ogledate izjavo o varovanju zasebnosti na Bitzi.com.\n\nŽelite nadaljevati?"/>
 		<string id="20100" value="Povezujem"/>
 		<string id="20101" value="Naprošam"/>
 		<string id="20102" value="Odgovor"/>

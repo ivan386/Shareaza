@@ -446,28 +446,6 @@
 			<button id="ID_CHAT_DISCONNECT" text="Koppla från"/>
 		</toolbar>
 		<!-- WEBSERVICES -->
-		<toolbar name="WebServices.ShareMonkey">
-			<button id="ID_SHAREMONKEY_DOWNLOAD" text="Get Data"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PREVIOUS" text="Föregående"/>
-			<button id="ID_SHAREMONKEY_NEXT" text="Nästa"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PRICES" text="Get Prices"/>
-			<button id="ID_SHAREMONKEY_COMPARE" text="Compare"/>
-			<button id="ID_SHAREMONKEY_BUY" text="Buy It"/>
-		</toolbar>
-		<toolbar name="WebServices.ShareMonkey.WithSave">
-			<button id="ID_SHAREMONKEY_DOWNLOAD" text="Get Data"/>
-			<button id="ID_SHAREMONKEY_SAVE" text="Spara"/>
-			<control id="ID_SHAREMONKEY_SAVE_OPTION" text="Save Preview" width="100" checked="true"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PREVIOUS" text="Föregående"/>
-			<button id="ID_SHAREMONKEY_NEXT" text="Nästa"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PRICES" text="Get Prices"/>
-			<button id="ID_SHAREMONKEY_COMPARE" text="Compare"/>
-			<button id="ID_SHAREMONKEY_BUY" text="Buy It"/>
-		</toolbar>
 		<toolbar name="WebServices.MusicBrainz">
 			<button id="ID_MUSICBRAINZ_MATCHES" text="View Album Matches"/>
 			<button id="ID_MUSICBRAINZ_ALBUMS" text="View All Albums"/>
@@ -1061,6 +1039,8 @@
 			<item id="ID_DOWNLOADS_COPY" text="Kopiera _URI"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_HELP" text="_Hjälp…"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_kalmeny"/>
 		</menu>
 		<menu name="CDownloadsWnd.Download">
 			<item id="ID_DOWNLOADS_LAUNCH_COPY" text="Previe_w File"/>
@@ -1087,9 +1067,12 @@
 				<item id="ID_DOWNLOADS_MOVE_DOWN" text="Flytta _ned"/>
 				<item id="ID_DOWNLOADS_BOOST" text="_Ignorera bandbreddsbegränsning"/>
 			</menu>
+			<separator/>
 			<item id="ID_DOWNLOADS_HELP" text="_Hjälp…"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_EDIT" text="Avancerad _redigering…"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_kalmeny"/>
 		</menu>
 		<menu name="CDownloadsWnd.Source">
 			<item id="ID_TRANSFERS_CONNECT" text="_Åtkomst"/>
@@ -1107,6 +1090,8 @@
 			<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Rensa"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_FILE_DELETE" text="_Radera fil"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_kalmeny"/>
 		</menu>
 		<menu name="CDownloadsWnd.Completed">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Öppna eller spela upp"/>
@@ -1117,6 +1102,8 @@
 			<separator/>
 			<item id="ID_DOWNLOADS_FILE_DELETE" text="_Radera fil"/>
 			<item id="ID_DOWNLOADS_RATE" text="_Betygsätt fil…"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_kalmeny"/>
 		</menu>
 		<menu name="CDownloadsWnd.Seeding">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Öppna eller spela upp"/>
@@ -1259,6 +1246,7 @@
 			<menu text="_Webbtjänster">
 				<item id="ID_LIBRARY_BITZI_WEB" text="Visa _Bitzibiljett"/>
 				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Ladda ned metadata"/>
+				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="O_rganisera">
 				<item id="ID_LIBRARY_RENAME" text="_Byt namn på fil"/>
@@ -1290,6 +1278,7 @@
 			<menu text="_Webbtjänster">
 				<item id="ID_LIBRARY_BITZI_WEB" text="Visa _Bitzibiljett"/>
 				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Ladda ned metadata"/>
+				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="Skapa .torrent-fil"/>
 			</menu>
@@ -1665,9 +1654,9 @@
 			</menu>
 		</menu>
 		<menu name="WebServices.List.Menu">
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Bitzi"/>
+			<item id="ID_LIBRARY_BITZI_WEB" text="Visa _Bitzibiljett"/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Ladda ned metadata"/>
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
-			<item id="ID_WEBSERVICES_SHAREMONKEY" text="_ShareMonkey"/>
 		</menu>
 	</menus>
 	<!-- Documents -->
@@ -3368,7 +3357,6 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<string id="20011" value="&amp;Framåt"/>
 		<string id="20012" value="Avsluta"/>
 		<string id="20013" value="Alla"/>
-		<string id="20014" value="Detta val använder tjänster tillhandahållna av Bitzi.com för igenkänning och utdelning av information om valda filer.\n\nShareaza kommer att överföra SHA1-granskningskoden för de valda filerna för att begära information från Bitzidatabasen. Om du är rädd om din integritet kan du välja att läsa integritetspolicyn för Bitzi.com.\n\nVill du fortsätta?"/>
 		<string id="20100" value="ANsluter"/>
 		<string id="20101" value="Efterfrågar"/>
 		<string id="20102" value="Svar"/>

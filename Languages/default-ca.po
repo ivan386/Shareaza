@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2012-02-29 19:32+0000\n"
+"POT-Creation-Date: 2012-03-02 16:08+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -303,11 +303,11 @@ msgstr "Ajusta el volum"
 msgid "Open File"
 msgstr "Obre arxiu"
 
-#: button;id_media_previous button;id_sharemonkey_previous
+#: button;id_media_previous
 msgid "Previous"
 msgstr "Anterior"
 
-#: button;id_media_next button;id_sharemonkey_next string;20135
+#: button;id_media_next string;20135
 msgid "Next"
 msgstr "Següent"
 
@@ -328,7 +328,7 @@ msgstr "Ajusta la velocitat de reproducció"
 msgid "Clear"
 msgstr "Neteja"
 
-#: button;id_media_save button;id_sharemonkey_save
+#: button;id_media_save
 msgid "Save"
 msgstr "Enregistra"
 
@@ -489,26 +489,6 @@ msgstr "C"
 #: button;id_chat_priority
 msgid "Grant Priority"
 msgstr "Dóna prioritat"
-
-#: button;id_sharemonkey_download
-msgid "Get Data"
-msgstr "Get Data"
-
-#: button;id_sharemonkey_prices
-msgid "Get Prices"
-msgstr "Get Prices"
-
-#: button;id_sharemonkey_compare
-msgid "Compare"
-msgstr "Compare"
-
-#: button;id_sharemonkey_buy
-msgid "Buy It"
-msgstr "Buy It"
-
-#: control;id_sharemonkey_save_option
-msgid "Save Preview"
-msgstr "Save Preview"
 
 #: button;id_musicbrainz_matches
 msgid "View Album Matches"
@@ -1211,6 +1191,7 @@ msgstr "Serveis _Web"
 #: clibraryfileview.physical;44;item;id_library_bitzi_web
 #: clibraryfileview.virtual.basic;47;item;id_library_bitzi_web
 #: clibraryfileview.virtual;50;item;id_library_bitzi_web
+#: webservices.list.menu;item;id_library_bitzi_web
 msgid "View _Bitzi Ticket"
 msgstr "Veure tiquet _Bitzi"
 
@@ -1306,6 +1287,18 @@ msgstr "_Cerca més fonts"
 #: cuploadswnd.nothing;item;id_uploads_help
 msgid "_Help..."
 msgstr "_Ajuda..."
+
+#: cdownloadswnd.download.basic;item;id_shell_menu
+#: cdownloadswnd.download;item;id_shell_menu
+#: cdownloadswnd.completed.basic;item;id_shell_menu
+#: cdownloadswnd.completed;item;id_shell_menu
+#: clibrarytree.physical.basic;item;id_shell_menu
+#: clibrarytree.physical;item;id_shell_menu
+#: clibraryfileview.physical;item;id_shell_menu
+#: clibraryfileview.virtual.basic;item;id_shell_menu
+#: clibraryfileview.virtual;item;id_shell_menu
+msgid "S_hell menu"
+msgstr "S_hell menu"
 
 #: cdownloadswnd.download;item;id_downloads_launch
 msgid "Prev_iew Partial File"
@@ -1518,14 +1511,6 @@ msgstr "_Compartit"
 msgid "Create ._torrent File"
 msgstr "Crea arxiu .torrent"
 
-#: clibrarytree.physical.basic;item;id_shell_menu
-#: clibrarytree.physical;item;id_shell_menu
-#: clibraryfileview.physical;item;id_shell_menu
-#: clibraryfileview.virtual.basic;item;id_shell_menu
-#: clibraryfileview.virtual;item;id_shell_menu
-msgid "S_hell menu"
-msgstr "S_hell menu"
-
 #: clibrarytree.physical;item;id_library_scan
 msgid "S_can"
 msgstr "Es_caneja"
@@ -1582,8 +1567,15 @@ msgstr "_Obre"
 #: clibraryfileview.physical;44;item;id_library_bitzi_download
 #: clibraryfileview.virtual.basic;47;item;id_library_bitzi_download
 #: clibraryfileview.virtual;50;item;id_library_bitzi_download
+#: webservices.list.menu;item;id_library_bitzi_download
 msgid "_Download Metadata"
 msgstr "_Descarrega la metainformació"
+
+#: clibraryfileview.physical.basic;41;item;id_webservices_musicbrainz
+#: clibraryfileview.physical;44;item;id_webservices_musicbrainz
+#: webservices.list.menu;item;id_webservices_musicbrainz
+msgid "_MusicBrainz"
+msgstr "_MusicBrainz"
 
 #: clibraryfileview.physical.basic;42 clibraryfileview.physical;45
 #: clibraryfileview.virtual.basic;48 clibraryfileview.virtual;51
@@ -2085,18 +2077,6 @@ msgstr "Kick+Ban"
 #: circuserlist;64;item;id_irc_bankickwhy
 msgid "Kick+Ban (why?)"
 msgstr "Kick+Ban (why?)"
-
-#: webservices.list.menu;item;id_library_bitzi_download
-msgid "_Bitzi"
-msgstr "_Bitzi"
-
-#: webservices.list.menu;item;id_webservices_musicbrainz
-msgid "_MusicBrainz"
-msgstr "_MusicBrainz"
-
-#: webservices.list.menu;item;id_webservices_sharemonkey
-msgid "_ShareMonkey"
-msgstr "_ShareMonkey"
 
 #: chomeviewctrl;heading;1000
 msgid "G E T   C O N N E C T E D"
@@ -7212,11 +7192,6 @@ msgstr "Finalitza"
 msgid "All"
 msgstr "Todo"
 
-#: string;20014
-#, fuzzy
-msgid "This option uses services provided by ShareMonkey.com for recognising information about selected files.\\n\\nShareaza will transmit file details and your location in order to query the ShareMonkey database.  If you are concerned about privacy, you may wish to consult the ShareMonkey.com privacy policy.\\n\\nWould you like to proceed?"
-msgstr "Aquesta opció utilitza un servei ofrerit per Bitzi, per a adquirir metainformació de l'arxiu.\\n\\nShareaza enviarà una petita informació sobre la marca digital 'bitprint' de l'arxiu per a que Bitzi el pugui reconèixer. Si tens algun dubte sobre la privacitat d'aquest servei, visita bitzi.com per a més informació.\\n\\nVols continuar?"
-
 #: string;20101
 msgid "Requesting"
 msgstr "Demanant"
@@ -10069,6 +10044,31 @@ msgstr "TigerTree"
 #, fuzzy
 msgid "NextRun"
 msgstr "Següent"
+
+#~ msgid "Get Data"
+#~ msgstr "Get Data"
+
+#~ msgid "Get Prices"
+#~ msgstr "Get Prices"
+
+#~ msgid "Compare"
+#~ msgstr "Compare"
+
+#~ msgid "Buy It"
+#~ msgstr "Buy It"
+
+#~ msgid "Save Preview"
+#~ msgstr "Save Preview"
+
+#~ msgid "_Bitzi"
+#~ msgstr "_Bitzi"
+
+#~ msgid "_ShareMonkey"
+#~ msgstr "_ShareMonkey"
+
+#, fuzzy
+#~ msgid "This option uses services provided by ShareMonkey.com for recognising information about selected files.\\n\\nShareaza will transmit file details and your location in order to query the ShareMonkey database.  If you are concerned about privacy, you may wish to consult the ShareMonkey.com privacy policy.\\n\\nWould you like to proceed?"
+#~ msgstr "Aquesta opció utilitza un servei ofrerit per Bitzi, per a adquirir metainformació de l'arxiu.\\n\\nShareaza enviarà una petita informació sobre la marca digital 'bitprint' de l'arxiu per a que Bitzi el pugui reconèixer. Si tens algun dubte sobre la privacitat d'aquest servei, visita bitzi.com per a més informació.\\n\\nVols continuar?"
 
 #, fuzzy
 #~ msgid "Search for matches"

@@ -446,28 +446,6 @@
 			<button id="ID_CHAT_DISCONNECT" text="Atsijungti"/>
 		</toolbar>
 		<!-- WEBSERVICES -->
-		<toolbar name="WebServices.ShareMonkey">
-			<button id="ID_SHAREMONKEY_DOWNLOAD" text="Gauti duomenis"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PREVIOUS" text="Ankstesnis"/>
-			<button id="ID_SHAREMONKEY_NEXT" text="Tolesnis"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PRICES" text="gauti kainas"/>
-			<button id="ID_SHAREMONKEY_COMPARE" text="Palyginti"/>
-			<button id="ID_SHAREMONKEY_BUY" text="Pirkti"/>
-		</toolbar>
-		<toolbar name="WebServices.ShareMonkey.WithSave">
-			<button id="ID_SHAREMONKEY_DOWNLOAD" text="Gauti duomenis"/>
-			<button id="ID_SHAREMONKEY_SAVE" text="Išsaugoti"/>
-			<control id="ID_SHAREMONKEY_SAVE_OPTION" text="Išsaugoti paveikslą" width="100" checked="true"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PREVIOUS" text="Ankstesnis"/>
-			<button id="ID_SHAREMONKEY_NEXT" text="Tolesnis"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PRICES" text="gauti kainas"/>
-			<button id="ID_SHAREMONKEY_COMPARE" text="Palyginti"/>
-			<button id="ID_SHAREMONKEY_BUY" text="Pirkti"/>
-		</toolbar>
 		<toolbar name="WebServices.MusicBrainz">
 			<button id="ID_MUSICBRAINZ_MATCHES" text="Peržiūrėti rastus albumus"/>
 			<button id="ID_MUSICBRAINZ_ALBUMS" text="Peržiūrėti visus albumus"/>
@@ -1061,6 +1039,8 @@
 			<item id="ID_DOWNLOADS_COPY" text="Kopijuoti _nuorodą..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_HELP" text="Ži_nynas..."/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="Aplinkos _meniu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Download">
 			<item id="ID_DOWNLOADS_LAUNCH_COPY" text="_Peržiūra"/>
@@ -1087,9 +1067,12 @@
 				<item id="ID_DOWNLOADS_MOVE_DOWN" text="Žem_yn"/>
 				<item id="ID_DOWNLOADS_BOOST" text="Nepaisyti _greitaveikos limito"/>
 			</menu>
+			<separator/>
 			<item id="ID_DOWNLOADS_HELP" text="Ži_nynas..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_EDIT" text="Sa_vybės"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="Aplinkos _meniu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Source">
 			<item id="ID_TRANSFERS_CONNECT" text="_Užklausti šaltinio"/>
@@ -1107,6 +1090,8 @@
 			<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Valyti"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_FILE_DELETE" text="Šalinti _failus"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="Aplinkos _meniu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Completed">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="A_tverti ar vykdyti"/>
@@ -1117,6 +1102,8 @@
 			<separator/>
 			<item id="ID_DOWNLOADS_FILE_DELETE" text="Šalinti _failus"/>
 			<item id="ID_DOWNLOADS_RATE" text="Įve_rtinti failą..."/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="Aplinkos _meniu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Seeding">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="A_tverti ar vykdyti"/>
@@ -1259,6 +1246,7 @@
 			<menu text="P_aslaugos internete">
 				<item id="ID_LIBRARY_BITZI_WEB" text="Peržiūrėti _Bitzi etiketę"/>
 				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Parsisiųsti meta duomenis"/>
+				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="_Organizuoti">
 				<item id="ID_LIBRARY_RENAME" text="_Pervadinti failą"/>
@@ -1290,6 +1278,7 @@
 			<menu text="P_aslaugos internete">
 				<item id="ID_LIBRARY_BITZI_WEB" text="Peržiūrėti _Bitzi etiketę"/>
 				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Parsisiųsti meta duomenis"/>
+				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="Sukurti .torrent failą"/>
 			</menu>
@@ -1665,9 +1654,9 @@
 			</menu>
 		</menu>
 		<menu name="WebServices.List.Menu">
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Bitzi"/>
+			<item id="ID_LIBRARY_BITZI_WEB" text="Peržiūrėti _Bitzi etiketę"/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Parsisiųsti meta duomenis"/>
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
-			<item id="ID_WEBSERVICES_SHAREMONKEY" text="_ShareMonkey"/>
 		</menu>
 	</menus>
 	<!-- Documents -->
@@ -3365,7 +3354,6 @@
 		<string id="20011" value="&amp;Toliau"/>
 		<string id="20012" value="Baigti"/>
 		<string id="20013" value="Visi"/>
-		<string id="20014" value="Šios parinkties naudojimas reikalauja Bitzi.com paslaugos pasirinktiems failams atpažinti ir dalintis su kitais failo informacija.\n\nShareaza persiųs pasirinkto failo(-ų) SHA1 maišą(-as), kuri reikalinga(-os) užklausoms Bitzi duomenų bazėje. Jei Jums svarbus slaptumas, Jūs galbūt norėsite susipažinti su Bitzi.com privatumo laidavimo dokumentu.\n\nAr norite tęsti?"/>
 		<string id="20100" value="Jungiamasi"/>
 		<string id="20101" value="Užklausiama"/>
 		<string id="20102" value="Atsakas"/>

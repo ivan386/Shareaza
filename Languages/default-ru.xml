@@ -446,28 +446,6 @@
 			<button id="ID_CHAT_DISCONNECT" text="Отключиться"/>
 		</toolbar>
 		<!-- WEBSERVICES -->
-		<toolbar name="WebServices.ShareMonkey">
-			<button id="ID_SHAREMONKEY_DOWNLOAD" text="Получить"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PREVIOUS" text="Предыдущий"/>
-			<button id="ID_SHAREMONKEY_NEXT" text="Следующий"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PRICES" text="Цены"/>
-			<button id="ID_SHAREMONKEY_COMPARE" text="Сравнить"/>
-			<button id="ID_SHAREMONKEY_BUY" text="Купить"/>
-		</toolbar>
-		<toolbar name="WebServices.ShareMonkey.WithSave">
-			<button id="ID_SHAREMONKEY_DOWNLOAD" text="Получить"/>
-			<button id="ID_SHAREMONKEY_SAVE" text="Сохранить"/>
-			<control id="ID_SHAREMONKEY_SAVE_OPTION" text="Сохранить просмотр" width="100" checked="true"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PREVIOUS" text="Предыдущий"/>
-			<button id="ID_SHAREMONKEY_NEXT" text="Следующий"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PRICES" text="Цены"/>
-			<button id="ID_SHAREMONKEY_COMPARE" text="Сравнить"/>
-			<button id="ID_SHAREMONKEY_BUY" text="Купить"/>
-		</toolbar>
 		<toolbar name="WebServices.MusicBrainz">
 			<button id="ID_MUSICBRAINZ_MATCHES" text="Похожие альбомы"/>
 			<button id="ID_MUSICBRAINZ_ALBUMS" text="Все альбомы"/>
@@ -1061,6 +1039,8 @@
 			<item id="ID_DOWNLOADS_COPY" text="_Копировать ссылку..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_HELP" text="_Справка..."/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="Меню Windows"/>
 		</menu>
 		<menu name="CDownloadsWnd.Download">
 			<item id="ID_DOWNLOADS_LAUNCH_COPY" text="_Просмотр"/>
@@ -1087,9 +1067,12 @@
 				<item id="ID_DOWNLOADS_MOVE_DOWN" text="В_низ"/>
 				<item id="ID_DOWNLOADS_BOOST" text="Снять _лимит трафика"/>
 			</menu>
+			<separator/>
 			<item id="ID_DOWNLOADS_HELP" text="_Справка..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_EDIT" text="_Свойства"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="Меню Windows"/>
 		</menu>
 		<menu name="CDownloadsWnd.Source">
 			<item id="ID_TRANSFERS_CONNECT" text="_Соединить"/>
@@ -1107,6 +1090,8 @@
 			<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="У_брать"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_FILE_DELETE" text="_Удалить файл"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="Меню Windows"/>
 		</menu>
 		<menu name="CDownloadsWnd.Completed">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Открыть"/>
@@ -1117,6 +1102,8 @@
 			<separator/>
 			<item id="ID_DOWNLOADS_FILE_DELETE" text="_Удалить файл"/>
 			<item id="ID_DOWNLOADS_RATE" text="_Оценка файла..."/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="Меню Windows"/>
 		</menu>
 		<menu name="CDownloadsWnd.Seeding">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Открыть"/>
@@ -1259,6 +1246,7 @@
 			<menu text="_Сервис">
 				<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
 				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Загрузить метаданные"/>
+				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="О_перации">
 				<item id="ID_LIBRARY_RENAME" text="_Переименовать файл"/>
@@ -1290,6 +1278,7 @@
 			<menu text="_Сервис">
 				<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
 				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Загрузить метаданные"/>
+				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="_Создать .torrent файл"/>
 			</menu>
@@ -1665,9 +1654,9 @@
 			</menu>
 		</menu>
 		<menu name="WebServices.List.Menu">
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Bitzi"/>
+			<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Загрузить метаданные"/>
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
-			<item id="ID_WEBSERVICES_SHAREMONKEY" text="_ShareMonkey"/>
 		</menu>
 	</menus>
 	<!-- Documents -->
@@ -3370,7 +3359,6 @@
 		<string id="20011" value="&amp;Далее"/>
 		<string id="20012" value="Закончить"/>
 		<string id="20013" value="Все"/>
-		<string id="20014" value="Эта опция использует службу, предоставленную ShareMonkey.com для получения и обмена информацией о помеченных файлах.\n\nShareaza перешлет описания помеченного файла(ов) для того, чтобы запросить базу данных ShareMonkey.  Если Вы заинтересованы в секретности, наверное, Вы захотите познакомиться с политикой конфиденциальности ShareMonkey.com.\n\nХотите ли продолжать?"/>
 		<string id="20100" value="Соединение"/>
 		<string id="20101" value="Запрос"/>
 		<string id="20102" value="Ответ"/>

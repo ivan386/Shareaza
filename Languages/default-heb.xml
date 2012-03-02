@@ -446,28 +446,6 @@
 			<button id="ID_CHAT_DISCONNECT" text="התנתק"/>
 		</toolbar>
 		<!-- WEBSERVICES -->
-		<toolbar name="WebServices.ShareMonkey">
-			<button id="ID_SHAREMONKEY_DOWNLOAD" text="השג מידע"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PREVIOUS" text="‪הקודם"/>
-			<button id="ID_SHAREMONKEY_NEXT" text="‪הבא"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PRICES" text="השג מחירים"/>
-			<button id="ID_SHAREMONKEY_COMPARE" text="השווה"/>
-			<button id="ID_SHAREMONKEY_BUY" text="קנה"/>
-		</toolbar>
-		<toolbar name="WebServices.ShareMonkey.WithSave">
-			<button id="ID_SHAREMONKEY_DOWNLOAD" text="השג מידע"/>
-			<button id="ID_SHAREMONKEY_SAVE" text="‪שמור"/>
-			<control id="ID_SHAREMONKEY_SAVE_OPTION" text="Save Preview" width="100" checked="true"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PREVIOUS" text="‪הקודם"/>
-			<button id="ID_SHAREMONKEY_NEXT" text="‪הבא"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PRICES" text="השג מחירים"/>
-			<button id="ID_SHAREMONKEY_COMPARE" text="השווה"/>
-			<button id="ID_SHAREMONKEY_BUY" text="קנה"/>
-		</toolbar>
 		<toolbar name="WebServices.MusicBrainz">
 			<button id="ID_MUSICBRAINZ_MATCHES" text="הצג "/>
 			<button id="ID_MUSICBRAINZ_ALBUMS" text="הצג את כל האלבומים"/>
@@ -1061,6 +1039,8 @@
 			<item id="ID_DOWNLOADS_COPY" text="‪...URI העתק"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_HELP" text="‪...ע_זרה"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Download">
 			<item id="ID_DOWNLOADS_LAUNCH_COPY" text="Previe_w File"/>
@@ -1087,9 +1067,12 @@
 				<item id="ID_DOWNLOADS_MOVE_DOWN" text="‪העבר מטה"/>
 				<item id="ID_DOWNLOADS_BOOST" text="‪התעלם מהגבלת רוחב פס"/>
 			</menu>
+			<separator/>
 			<item id="ID_DOWNLOADS_HELP" text="‪...ע_זרה"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_EDIT" text="‪_עריכה מתקדמת"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Source">
 			<item id="ID_TRANSFERS_CONNECT" text="‪_כניסה"/>
@@ -1107,6 +1090,8 @@
 			<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="‪_נקה"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_FILE_DELETE" text="‪_מחק קובץ"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Completed">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="‪_פתח או הפעל"/>
@@ -1117,6 +1102,8 @@
 			<separator/>
 			<item id="ID_DOWNLOADS_FILE_DELETE" text="‪_מחק קובץ"/>
 			<item id="ID_DOWNLOADS_RATE" text="‪...דרג קובץ"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Seeding">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="‪_פתח או הפעל"/>
@@ -1259,6 +1246,7 @@
 			<menu text="‪שירותי רשת">
 				<item id="ID_LIBRARY_BITZI_WEB" text="‪Bitzi הראה כרטיס"/>
 				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="‪Metadata הורד"/>
+				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="‪אירגון">
 				<item id="ID_LIBRARY_RENAME" text="‪שנה שם קובץ"/>
@@ -1290,6 +1278,7 @@
 			<menu text="‪שירותי רשת">
 				<item id="ID_LIBRARY_BITZI_WEB" text="‪Bitzi הראה כרטיס"/>
 				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="‪Metadata הורד"/>
+				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="‪.torrent צור קובץ"/>
 			</menu>
@@ -1665,9 +1654,9 @@
 			</menu>
 		</menu>
 		<menu name="WebServices.List.Menu">
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Bitzi"/>
+			<item id="ID_LIBRARY_BITZI_WEB" text="‪Bitzi הראה כרטיס"/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="‪Metadata הורד"/>
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
-			<item id="ID_WEBSERVICES_SHAREMONKEY" text="_ShareMonkey"/>
 		</menu>
 	</menus>
 	<!-- Documents -->
@@ -3376,7 +3365,6 @@
 		<string id="20011" value="&amp;Next"/>
 		<string id="20012" value="Finish"/>
 		<string id="20013" value="All"/>
-		<string id="20014" value="‪This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\n\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database.  If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\n\nWould you like to proceed?"/>
 		<string id="20100" value="‪מתחבר"/>
 		<string id="20101" value="‪מבקש"/>
 		<string id="20102" value="‪תגובה"/>

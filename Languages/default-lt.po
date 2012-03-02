@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2012-02-29 19:32+0000\n"
+"POT-Creation-Date: 2012-03-02 16:08+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -303,11 +303,11 @@ msgstr "Derinti garsumą"
 msgid "Open File"
 msgstr "Atverti failą"
 
-#: button;id_media_previous button;id_sharemonkey_previous
+#: button;id_media_previous
 msgid "Previous"
 msgstr "Ankstesnis"
 
-#: button;id_media_next button;id_sharemonkey_next string;20135
+#: button;id_media_next string;20135
 msgid "Next"
 msgstr "Tolesnis"
 
@@ -328,7 +328,7 @@ msgstr "Derinti grotuvo failo atlikimo spartą"
 msgid "Clear"
 msgstr "Valyti"
 
-#: button;id_media_save button;id_sharemonkey_save
+#: button;id_media_save
 msgid "Save"
 msgstr "Išsaugoti"
 
@@ -489,26 +489,6 @@ msgstr "C"
 #: button;id_chat_priority
 msgid "Grant Priority"
 msgstr "Suteikti prioritetą"
-
-#: button;id_sharemonkey_download
-msgid "Get Data"
-msgstr "Gauti duomenis"
-
-#: button;id_sharemonkey_prices
-msgid "Get Prices"
-msgstr "gauti kainas"
-
-#: button;id_sharemonkey_compare
-msgid "Compare"
-msgstr "Palyginti"
-
-#: button;id_sharemonkey_buy
-msgid "Buy It"
-msgstr "Pirkti"
-
-#: control;id_sharemonkey_save_option
-msgid "Save Preview"
-msgstr "Išsaugoti paveikslą"
 
 #: button;id_musicbrainz_matches
 msgid "View Album Matches"
@@ -1211,6 +1191,7 @@ msgstr "P_aslaugos internete"
 #: clibraryfileview.physical;44;item;id_library_bitzi_web
 #: clibraryfileview.virtual.basic;47;item;id_library_bitzi_web
 #: clibraryfileview.virtual;50;item;id_library_bitzi_web
+#: webservices.list.menu;item;id_library_bitzi_web
 msgid "View _Bitzi Ticket"
 msgstr "Peržiūrėti _Bitzi etiketę"
 
@@ -1306,6 +1287,18 @@ msgstr "Rasti _daugiau šaltinių"
 #: cuploadswnd.nothing;item;id_uploads_help
 msgid "_Help..."
 msgstr "Ži_nynas..."
+
+#: cdownloadswnd.download.basic;item;id_shell_menu
+#: cdownloadswnd.download;item;id_shell_menu
+#: cdownloadswnd.completed.basic;item;id_shell_menu
+#: cdownloadswnd.completed;item;id_shell_menu
+#: clibrarytree.physical.basic;item;id_shell_menu
+#: clibrarytree.physical;item;id_shell_menu
+#: clibraryfileview.physical;item;id_shell_menu
+#: clibraryfileview.virtual.basic;item;id_shell_menu
+#: clibraryfileview.virtual;item;id_shell_menu
+msgid "S_hell menu"
+msgstr "Aplinkos _meniu"
 
 #: cdownloadswnd.download;item;id_downloads_launch
 msgid "Prev_iew Partial File"
@@ -1518,14 +1511,6 @@ msgstr "_Bendrintas"
 msgid "Create ._torrent File"
 msgstr "Sukurti .torrent failą"
 
-#: clibrarytree.physical.basic;item;id_shell_menu
-#: clibrarytree.physical;item;id_shell_menu
-#: clibraryfileview.physical;item;id_shell_menu
-#: clibraryfileview.virtual.basic;item;id_shell_menu
-#: clibraryfileview.virtual;item;id_shell_menu
-msgid "S_hell menu"
-msgstr "Aplinkos _meniu"
-
 #: clibrarytree.physical;item;id_library_scan
 msgid "S_can"
 msgstr "S_kenuoti"
@@ -1582,8 +1567,15 @@ msgstr "_Atverti"
 #: clibraryfileview.physical;44;item;id_library_bitzi_download
 #: clibraryfileview.virtual.basic;47;item;id_library_bitzi_download
 #: clibraryfileview.virtual;50;item;id_library_bitzi_download
+#: webservices.list.menu;item;id_library_bitzi_download
 msgid "_Download Metadata"
 msgstr "_Parsisiųsti meta duomenis"
+
+#: clibraryfileview.physical.basic;41;item;id_webservices_musicbrainz
+#: clibraryfileview.physical;44;item;id_webservices_musicbrainz
+#: webservices.list.menu;item;id_webservices_musicbrainz
+msgid "_MusicBrainz"
+msgstr "_MusicBrainz"
 
 #: clibraryfileview.physical.basic;42 clibraryfileview.physical;45
 #: clibraryfileview.virtual.basic;48 clibraryfileview.virtual;51
@@ -2085,18 +2077,6 @@ msgstr "Išspirti+Užkirsti prieigą"
 #: circuserlist;64;item;id_irc_bankickwhy
 msgid "Kick+Ban (why?)"
 msgstr "Išspirti+Užkirsti prieigą (kodėl?)"
-
-#: webservices.list.menu;item;id_library_bitzi_download
-msgid "_Bitzi"
-msgstr "_Bitzi"
-
-#: webservices.list.menu;item;id_webservices_musicbrainz
-msgid "_MusicBrainz"
-msgstr "_MusicBrainz"
-
-#: webservices.list.menu;item;id_webservices_sharemonkey
-msgid "_ShareMonkey"
-msgstr "_ShareMonkey"
 
 #: chomeviewctrl;heading;1000
 msgid "G E T   C O N N E C T E D"
@@ -7216,11 +7196,6 @@ msgstr "Baigti"
 msgid "All"
 msgstr "Visi"
 
-#: string;20014
-#, fuzzy
-msgid "This option uses services provided by ShareMonkey.com for recognising information about selected files.\\n\\nShareaza will transmit file details and your location in order to query the ShareMonkey database.  If you are concerned about privacy, you may wish to consult the ShareMonkey.com privacy policy.\\n\\nWould you like to proceed?"
-msgstr "Šios parinkties naudojimas reikalauja Bitzi.com paslaugos pasirinktiems failams atpažinti ir dalintis su kitais failo informacija.\\n\\nShareaza persiųs pasirinkto failo(-ų) SHA1 maišą(-as), kuri reikalinga(-os) užklausoms Bitzi duomenų bazėje. Jei Jums svarbus slaptumas, Jūs galbūt norėsite susipažinti su Bitzi.com privatumo laidavimo dokumentu.\\n\\nAr norite tęsti?"
-
 #: string;20101
 msgid "Requesting"
 msgstr "Užklausiama"
@@ -10073,6 +10048,31 @@ msgstr "Dryžinė maiša"
 #, fuzzy
 msgid "NextRun"
 msgstr "Tolesnis"
+
+#~ msgid "Get Data"
+#~ msgstr "Gauti duomenis"
+
+#~ msgid "Get Prices"
+#~ msgstr "gauti kainas"
+
+#~ msgid "Compare"
+#~ msgstr "Palyginti"
+
+#~ msgid "Buy It"
+#~ msgstr "Pirkti"
+
+#~ msgid "Save Preview"
+#~ msgstr "Išsaugoti paveikslą"
+
+#~ msgid "_Bitzi"
+#~ msgstr "_Bitzi"
+
+#~ msgid "_ShareMonkey"
+#~ msgstr "_ShareMonkey"
+
+#, fuzzy
+#~ msgid "This option uses services provided by ShareMonkey.com for recognising information about selected files.\\n\\nShareaza will transmit file details and your location in order to query the ShareMonkey database.  If you are concerned about privacy, you may wish to consult the ShareMonkey.com privacy policy.\\n\\nWould you like to proceed?"
+#~ msgstr "Šios parinkties naudojimas reikalauja Bitzi.com paslaugos pasirinktiems failams atpažinti ir dalintis su kitais failo informacija.\\n\\nShareaza persiųs pasirinkto failo(-ų) SHA1 maišą(-as), kuri reikalinga(-os) užklausoms Bitzi duomenų bazėje. Jei Jums svarbus slaptumas, Jūs galbūt norėsite susipažinti su Bitzi.com privatumo laidavimo dokumentu.\\n\\nAr norite tęsti?"
 
 #, fuzzy
 #~ msgid "Search for matches"

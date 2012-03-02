@@ -446,28 +446,6 @@
 			<button id="ID_CHAT_DISCONNECT" text="قطع الإتصال"/>
 		</toolbar>
 		<!-- WEBSERVICES -->
-		<toolbar name="WebServices.ShareMonkey">
-			<button id="ID_SHAREMONKEY_DOWNLOAD" text="جلب البيانات"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PREVIOUS" text="السابق"/>
-			<button id="ID_SHAREMONKEY_NEXT" text="التالي"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PRICES" text="جلب الأسعار"/>
-			<button id="ID_SHAREMONKEY_COMPARE" text="مقارنة"/>
-			<button id="ID_SHAREMONKEY_BUY" text="الشراء"/>
-		</toolbar>
-		<toolbar name="WebServices.ShareMonkey.WithSave">
-			<button id="ID_SHAREMONKEY_DOWNLOAD" text="جلب البيانات"/>
-			<button id="ID_SHAREMONKEY_SAVE" text="حفظ"/>
-			<control id="ID_SHAREMONKEY_SAVE_OPTION" text="حفظ المعاينة" width="100" checked="true"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PREVIOUS" text="السابق"/>
-			<button id="ID_SHAREMONKEY_NEXT" text="التالي"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PRICES" text="جلب الأسعار"/>
-			<button id="ID_SHAREMONKEY_COMPARE" text="مقارنة"/>
-			<button id="ID_SHAREMONKEY_BUY" text="الشراء"/>
-		</toolbar>
 		<toolbar name="WebServices.MusicBrainz">
 			<button id="ID_MUSICBRAINZ_MATCHES" text="عرض مطابقات الألبوم"/>
 			<button id="ID_MUSICBRAINZ_ALBUMS" text="عرض كافة الألبومات"/>
@@ -1061,6 +1039,8 @@
 			<item id="ID_DOWNLOADS_COPY" text="نسخ _رابط"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_HELP" text="_تعليمات..."/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="قائمة ال_قشرة"/>
 		</menu>
 		<menu name="CDownloadsWnd.Download">
 			<item id="ID_DOWNLOADS_LAUNCH_COPY" text="Previe_w File"/>
@@ -1087,9 +1067,12 @@
 				<item id="ID_DOWNLOADS_MOVE_DOWN" text="نقل _للاسفل"/>
 				<item id="ID_DOWNLOADS_BOOST" text="السرعة _زيادة"/>
 			</menu>
+			<separator/>
 			<item id="ID_DOWNLOADS_HELP" text="_تعليمات..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_EDIT" text="تحرير _متقدم..."/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="قائمة ال_قشرة"/>
 		</menu>
 		<menu name="CDownloadsWnd.Source">
 			<item id="ID_TRANSFERS_CONNECT" text="الوصول"/>
@@ -1107,6 +1090,8 @@
 			<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_إزالة"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_FILE_DELETE" text="_حذف الملف"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="قائمة ال_قشرة"/>
 		</menu>
 		<menu name="CDownloadsWnd.Completed">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_فتح او تشغيل"/>
@@ -1117,6 +1102,8 @@
 			<separator/>
 			<item id="ID_DOWNLOADS_FILE_DELETE" text="_حذف الملف"/>
 			<item id="ID_DOWNLOADS_RATE" text="_تصنيف الملف..."/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="قائمة ال_قشرة"/>
 		</menu>
 		<menu name="CDownloadsWnd.Seeding">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_فتح او تشغيل"/>
@@ -1259,6 +1246,7 @@
 			<menu text="_خدمات الانترنت">
 				<item id="ID_LIBRARY_BITZI_WEB" text="عرض ب_طافة Bitzi"/>
 				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_تحميل ملف تعريف"/>
+				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="ت_نظيم">
 				<item id="ID_LIBRARY_RENAME" text="_اعادة تسمية ملف"/>
@@ -1290,6 +1278,7 @@
 			<menu text="_خدمات الانترنت">
 				<item id="ID_LIBRARY_BITZI_WEB" text="عرض ب_طافة Bitzi"/>
 				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_تحميل ملف تعريف"/>
+				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="إنشاء ملف torrent"/>
 			</menu>
@@ -1665,9 +1654,9 @@
 			</menu>
 		</menu>
 		<menu name="WebServices.List.Menu">
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Bitzi"/>
+			<item id="ID_LIBRARY_BITZI_WEB" text="عرض ب_طافة Bitzi"/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_تحميل ملف تعريف"/>
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
-			<item id="ID_WEBSERVICES_SHAREMONKEY" text="_ShareMonkey"/>
 		</menu>
 	</menus>
 	<!-- Documents -->
@@ -3370,7 +3359,6 @@
 		<string id="20011" value="&amp;Next"/>
 		<string id="20012" value="Finish"/>
 		<string id="20013" value="All"/>
-		<string id="20014" value="This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\n\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database.  If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\n\nWould you like to proceed?"/>
 		<string id="20100" value="Connecting"/>
 		<string id="20101" value="Requesting"/>
 		<string id="20102" value="Response"/>

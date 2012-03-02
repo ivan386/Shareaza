@@ -446,28 +446,6 @@
 			<button id="ID_CHAT_DISCONNECT" text="Disconnect"/>
 		</toolbar>
 		<!-- WEBSERVICES -->
-		<toolbar name="WebServices.ShareMonkey">
-			<button id="ID_SHAREMONKEY_DOWNLOAD" text="Get Data"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PREVIOUS" text="Vorige"/>
-			<button id="ID_SHAREMONKEY_NEXT" text="Volgende"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PRICES" text="Get Prices"/>
-			<button id="ID_SHAREMONKEY_COMPARE" text="Compare"/>
-			<button id="ID_SHAREMONKEY_BUY" text="Buy It"/>
-		</toolbar>
-		<toolbar name="WebServices.ShareMonkey.WithSave">
-			<button id="ID_SHAREMONKEY_DOWNLOAD" text="Get Data"/>
-			<button id="ID_SHAREMONKEY_SAVE" text="Stoor"/>
-			<control id="ID_SHAREMONKEY_SAVE_OPTION" text="Save Preview" width="100" checked="true"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PREVIOUS" text="Vorige"/>
-			<button id="ID_SHAREMONKEY_NEXT" text="Volgende"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PRICES" text="Get Prices"/>
-			<button id="ID_SHAREMONKEY_COMPARE" text="Compare"/>
-			<button id="ID_SHAREMONKEY_BUY" text="Buy It"/>
-		</toolbar>
 		<toolbar name="WebServices.MusicBrainz">
 			<button id="ID_MUSICBRAINZ_MATCHES" text="View Album Matches"/>
 			<button id="ID_MUSICBRAINZ_ALBUMS" text="View All Albums"/>
@@ -1061,6 +1039,8 @@
 			<item id="ID_DOWNLOADS_COPY" text="Kopieer _URI"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_HELP" text="_Hulp..."/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Download">
 			<item id="ID_DOWNLOADS_LAUNCH_COPY" text="Previe_w File"/>
@@ -1087,9 +1067,12 @@
 				<item id="ID_DOWNLOADS_MOVE_DOWN" text="Skuif _Af"/>
 				<item id="ID_DOWNLOADS_BOOST" text="_Ignoreer Bandwydte Beperkings"/>
 			</menu>
+			<separator/>
 			<item id="ID_DOWNLOADS_HELP" text="_Hulp..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_EDIT" text="_Properties"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Source">
 			<item id="ID_TRANSFERS_CONNECT" text="_Konnekteer"/>
@@ -1107,6 +1090,8 @@
 			<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Maak Skoon"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_FILE_DELETE" text="_Skrap Lêer"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Completed">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Open of Speel"/>
@@ -1117,6 +1102,8 @@
 			<separator/>
 			<item id="ID_DOWNLOADS_FILE_DELETE" text="_Skrap Lêer"/>
 			<item id="ID_DOWNLOADS_RATE" text="_Gradeer Lêer..."/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Seeding">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Open of Speel"/>
@@ -1259,6 +1246,7 @@
 			<menu text="_Web Dienste">
 				<item id="ID_LIBRARY_BITZI_WEB" text="Vertoon _Bitzi Ticket"/>
 				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Laai Metadata Af"/>
+				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="O_rganiseer">
 				<item id="ID_LIBRARY_RENAME" text="_Hernoem Lêer"/>
@@ -1290,6 +1278,7 @@
 			<menu text="_Web Dienste">
 				<item id="ID_LIBRARY_BITZI_WEB" text="Vertoon _Bitzi Ticket"/>
 				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Laai Metadata Af"/>
+				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="Skep .torrent Lêer"/>
 			</menu>
@@ -1665,9 +1654,9 @@
 			</menu>
 		</menu>
 		<menu name="WebServices.List.Menu">
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Bitzi"/>
+			<item id="ID_LIBRARY_BITZI_WEB" text="Vertoon _Bitzi Ticket"/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Laai Metadata Af"/>
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
-			<item id="ID_WEBSERVICES_SHAREMONKEY" text="_ShareMonkey"/>
 		</menu>
 	</menus>
 	<!-- Documents -->
@@ -3377,7 +3366,6 @@
 		<string id="20011" value="&amp;Next"/>
 		<string id="20012" value="Finish"/>
 		<string id="20013" value="All"/>
-		<string id="20014" value="Hierdie opsie gebruik dienste verskaf deur Bitzi.com vir herkenning en deel van inligting oor sekere lêers.\n\nShareaza sal die SHA1 hash-kode vir die geselekteerde lêer(s) stuur sodat die Bitzi databasis geraadpleeg kan word.  As jy bekommerd is oor privaatheid, kan jy gerus die Bitzi.com privaatheidsbeleid lees.\n\nWil jy voortgaan?"/>
 		<string id="20100" value="Konnekteer"/>
 		<string id="20101" value="Stuur Versoek"/>
 		<string id="20102" value="Ontvang Antwoord"/>

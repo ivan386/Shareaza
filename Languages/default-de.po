@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2012-02-29 19:32+0000\n"
+"POT-Creation-Date: 2012-03-02 16:08+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -303,11 +303,11 @@ msgstr "Lautstärke anpassen"
 msgid "Open File"
 msgstr "Datei öffnen"
 
-#: button;id_media_previous button;id_sharemonkey_previous
+#: button;id_media_previous
 msgid "Previous"
 msgstr "Zurück"
 
-#: button;id_media_next button;id_sharemonkey_next string;20135
+#: button;id_media_next string;20135
 msgid "Next"
 msgstr "Vor"
 
@@ -328,7 +328,7 @@ msgstr "Abspielgeschwindigkeit anpassen"
 msgid "Clear"
 msgstr "Aufräumen"
 
-#: button;id_media_save button;id_sharemonkey_save
+#: button;id_media_save
 msgid "Save"
 msgstr "Speichern"
 
@@ -489,26 +489,6 @@ msgstr "C"
 #: button;id_chat_priority
 msgid "Grant Priority"
 msgstr "Priorität erhöhen"
-
-#: button;id_sharemonkey_download
-msgid "Get Data"
-msgstr "Daten holen"
-
-#: button;id_sharemonkey_prices
-msgid "Get Prices"
-msgstr "Preisanfrage"
-
-#: button;id_sharemonkey_compare
-msgid "Compare"
-msgstr "Vergleichen"
-
-#: button;id_sharemonkey_buy
-msgid "Buy It"
-msgstr "Kaufen"
-
-#: control;id_sharemonkey_save_option
-msgid "Save Preview"
-msgstr "Vorschau speichern"
 
 #: button;id_musicbrainz_matches
 msgid "View Album Matches"
@@ -1211,6 +1191,7 @@ msgstr "_Web Dienste"
 #: clibraryfileview.physical;44;item;id_library_bitzi_web
 #: clibraryfileview.virtual.basic;47;item;id_library_bitzi_web
 #: clibraryfileview.virtual;50;item;id_library_bitzi_web
+#: webservices.list.menu;item;id_library_bitzi_web
 msgid "View _Bitzi Ticket"
 msgstr "Bitzi-_Ticket anzeigen"
 
@@ -1306,6 +1287,18 @@ msgstr "_Zusätzliche Quellen suchen"
 #: cuploadswnd.nothing;item;id_uploads_help
 msgid "_Help..."
 msgstr "_Hilfe..."
+
+#: cdownloadswnd.download.basic;item;id_shell_menu
+#: cdownloadswnd.download;item;id_shell_menu
+#: cdownloadswnd.completed.basic;item;id_shell_menu
+#: cdownloadswnd.completed;item;id_shell_menu
+#: clibrarytree.physical.basic;item;id_shell_menu
+#: clibrarytree.physical;item;id_shell_menu
+#: clibraryfileview.physical;item;id_shell_menu
+#: clibraryfileview.virtual.basic;item;id_shell_menu
+#: clibraryfileview.virtual;item;id_shell_menu
+msgid "S_hell menu"
+msgstr "_Kontextmenü"
 
 #: cdownloadswnd.download;item;id_downloads_launch
 msgid "Prev_iew Partial File"
@@ -1518,14 +1511,6 @@ msgstr "_Freigegeben"
 msgid "Create ._torrent File"
 msgstr "._torrent-Datei erstellen"
 
-#: clibrarytree.physical.basic;item;id_shell_menu
-#: clibrarytree.physical;item;id_shell_menu
-#: clibraryfileview.physical;item;id_shell_menu
-#: clibraryfileview.virtual.basic;item;id_shell_menu
-#: clibraryfileview.virtual;item;id_shell_menu
-msgid "S_hell menu"
-msgstr "_Kontextmenü"
-
 #: clibrarytree.physical;item;id_library_scan
 msgid "S_can"
 msgstr "S_cannen"
@@ -1580,8 +1565,15 @@ msgstr "_Öffnen"
 #: clibraryfileview.physical;44;item;id_library_bitzi_download
 #: clibraryfileview.virtual.basic;47;item;id_library_bitzi_download
 #: clibraryfileview.virtual;50;item;id_library_bitzi_download
+#: webservices.list.menu;item;id_library_bitzi_download
 msgid "_Download Metadata"
 msgstr "Meta_daten suchen"
+
+#: clibraryfileview.physical.basic;41;item;id_webservices_musicbrainz
+#: clibraryfileview.physical;44;item;id_webservices_musicbrainz
+#: webservices.list.menu;item;id_webservices_musicbrainz
+msgid "_MusicBrainz"
+msgstr "_MusicBrainz"
 
 #: clibraryfileview.physical.basic;42 clibraryfileview.physical;45
 #: clibraryfileview.virtual.basic;48 clibraryfileview.virtual;51
@@ -2083,18 +2075,6 @@ msgstr "Hinauswerfen & Verbannen"
 #: circuserlist;64;item;id_irc_bankickwhy
 msgid "Kick+Ban (why?)"
 msgstr "Hinausw. & Verb. (mit Grund)"
-
-#: webservices.list.menu;item;id_library_bitzi_download
-msgid "_Bitzi"
-msgstr "_Bitzi"
-
-#: webservices.list.menu;item;id_webservices_musicbrainz
-msgid "_MusicBrainz"
-msgstr "_MusicBrainz"
-
-#: webservices.list.menu;item;id_webservices_sharemonkey
-msgid "_ShareMonkey"
-msgstr "_ShareMonkey"
 
 #: chomeviewctrl;heading;1000
 msgid "G E T   C O N N E C T E D"
@@ -7127,10 +7107,6 @@ msgstr "Abschließen"
 msgid "All"
 msgstr "Alle"
 
-#: string;20014
-msgid "This option uses services provided by ShareMonkey.com for recognising information about selected files.\\n\\nShareaza will transmit file details and your location in order to query the ShareMonkey database.  If you are concerned about privacy, you may wish to consult the ShareMonkey.com privacy policy.\\n\\nWould you like to proceed?"
-msgstr "Diese Option benutzt Dienste, die von ShareMonkey.com zur Verfügung gestellt werden, um Information über Dateien zu sammeln und zugänglich zu machen.\\n\\nShareaza wird den SHA1-Hashwert für die ausgewählte(n) Datei(en) übertragen, um die ShareMonkey-Datenbank abzufragen.\\nWenn Sie sich Sorgen um ihre Privatsphäre machen, können Sie die \"ShareMonkey.com privacy policy\" lesen.\\n\\nWollen Sie fortfahren?"
-
 #: string;20101
 msgid "Requesting"
 msgstr "Anfordern"
@@ -9972,6 +9948,30 @@ msgstr "TigerTree"
 #: column;nextrun
 msgid "NextRun"
 msgstr "Nächste Ausführung"
+
+#~ msgid "Get Data"
+#~ msgstr "Daten holen"
+
+#~ msgid "Get Prices"
+#~ msgstr "Preisanfrage"
+
+#~ msgid "Compare"
+#~ msgstr "Vergleichen"
+
+#~ msgid "Buy It"
+#~ msgstr "Kaufen"
+
+#~ msgid "Save Preview"
+#~ msgstr "Vorschau speichern"
+
+#~ msgid "_Bitzi"
+#~ msgstr "_Bitzi"
+
+#~ msgid "_ShareMonkey"
+#~ msgstr "_ShareMonkey"
+
+#~ msgid "This option uses services provided by ShareMonkey.com for recognising information about selected files.\\n\\nShareaza will transmit file details and your location in order to query the ShareMonkey database.  If you are concerned about privacy, you may wish to consult the ShareMonkey.com privacy policy.\\n\\nWould you like to proceed?"
+#~ msgstr "Diese Option benutzt Dienste, die von ShareMonkey.com zur Verfügung gestellt werden, um Information über Dateien zu sammeln und zugänglich zu machen.\\n\\nShareaza wird den SHA1-Hashwert für die ausgewählte(n) Datei(en) übertragen, um die ShareMonkey-Datenbank abzufragen.\\nWenn Sie sich Sorgen um ihre Privatsphäre machen, können Sie die \"ShareMonkey.com privacy policy\" lesen.\\n\\nWollen Sie fortfahren?"
 
 #~ msgid "Buy it and support the author"
 #~ msgstr "Diese Software kaufen und den Autor unterstützen"

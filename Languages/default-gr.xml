@@ -446,28 +446,6 @@
 			<button id="ID_CHAT_DISCONNECT" text="Αποσύνδεση"/>
 		</toolbar>
 		<!-- WEBSERVICES -->
-		<toolbar name="WebServices.ShareMonkey">
-			<button id="ID_SHAREMONKEY_DOWNLOAD" text="Λήψη Δεδομένων"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PREVIOUS" text="Προηγούμενο"/>
-			<button id="ID_SHAREMONKEY_NEXT" text="Επόμενο"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PRICES" text="Λήψη Τιμών"/>
-			<button id="ID_SHAREMONKEY_COMPARE" text="Σύγκριση"/>
-			<button id="ID_SHAREMONKEY_BUY" text="Αγορά"/>
-		</toolbar>
-		<toolbar name="WebServices.ShareMonkey.WithSave">
-			<button id="ID_SHAREMONKEY_DOWNLOAD" text="Λήψη Δεδομένων"/>
-			<button id="ID_SHAREMONKEY_SAVE" text="Αποθήκευση"/>
-			<control id="ID_SHAREMONKEY_SAVE_OPTION" text="Αποθήκευση Προεπισκόπησης" width="100" checked="true"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PREVIOUS" text="Προηγούμενο"/>
-			<button id="ID_SHAREMONKEY_NEXT" text="Επόμενο"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PRICES" text="Λήψη Τιμών"/>
-			<button id="ID_SHAREMONKEY_COMPARE" text="Σύγκριση"/>
-			<button id="ID_SHAREMONKEY_BUY" text="Αγορά"/>
-		</toolbar>
 		<toolbar name="WebServices.MusicBrainz">
 			<button id="ID_MUSICBRAINZ_MATCHES" text="Προβολή Όμοιων Album"/>
 			<button id="ID_MUSICBRAINZ_ALBUMS" text="Προβολή Όλων των Album"/>
@@ -1061,6 +1039,8 @@
 			<item id="ID_DOWNLOADS_COPY" text="Αντι_γραφή URI"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_HELP" text="_Βοήθεια..."/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Download">
 			<item id="ID_DOWNLOADS_LAUNCH_COPY" text="Previe_w File"/>
@@ -1087,9 +1067,12 @@
 				<item id="ID_DOWNLOADS_MOVE_DOWN" text="Μετακίνηση _Κάτω"/>
 				<item id="ID_DOWNLOADS_BOOST" text="_Αγνόηση Ορίου Ταχύτητας"/>
 			</menu>
+			<separator/>
 			<item id="ID_DOWNLOADS_HELP" text="_Βοήθεια..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_EDIT" text="_Ιδιότητες"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Source">
 			<item id="ID_TRANSFERS_CONNECT" text="_Σύνδεση"/>
@@ -1107,6 +1090,8 @@
 			<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Απόσυρση"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_FILE_DELETE" text="_Διαγραφή Αρχείου!"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Completed">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Άνοιγμα"/>
@@ -1117,6 +1102,8 @@
 			<separator/>
 			<item id="ID_DOWNLOADS_FILE_DELETE" text="_Διαγραφή Αρχείου!"/>
 			<item id="ID_DOWNLOADS_RATE" text="_Κριτική Αρχείου..."/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Seeding">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Άνοιγμα"/>
@@ -1259,6 +1246,7 @@
 			<menu text="_Υπηρεσίες Ιστού">
 				<item id="ID_LIBRARY_BITZI_WEB" text="Προβολή _Bitzi Ticket"/>
 				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Λήψη _Metadata"/>
+				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="_Οργάνωση">
 				<item id="ID_LIBRARY_RENAME" text="_Μετονομασία Αρχείου"/>
@@ -1290,6 +1278,7 @@
 			<menu text="_Υπηρεσίες Ιστού">
 				<item id="ID_LIBRARY_BITZI_WEB" text="Προβολή _Bitzi Ticket"/>
 				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Λήψη _Metadata"/>
+				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="Δημιουργία Αρχείου .torrent"/>
 			</menu>
@@ -1665,9 +1654,9 @@
 			</menu>
 		</menu>
 		<menu name="WebServices.List.Menu">
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Bitzi"/>
+			<item id="ID_LIBRARY_BITZI_WEB" text="Προβολή _Bitzi Ticket"/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Λήψη _Metadata"/>
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
-			<item id="ID_WEBSERVICES_SHAREMONKEY" text="_ShareMonkey"/>
 		</menu>
 	</menus>
 	<!-- Documents -->
@@ -3372,7 +3361,6 @@
 		<string id="20011" value="&amp;Επόμενο"/>
 		<string id="20012" value="Τέλος"/>
 		<string id="20013" value="Όλα"/>
-		<string id="20014" value="Αυτή η επιλογή χρησιμοποιεί υπηρεσίες παρεχόμενες από το Bitzi.com προς αναγνώριση και κοινοποίηση πληροφοριών για τα επιλεγμένα αρχεία.\n\nΤο Shareaza θα αποστείλει το SHA1 hash code για τα επιλεγμένα αρχεία, προκειμένου να ρωτήσει τη βάση δεδομένων του Bitzi. Αν ανησυχείται για την ιδιωτικότητά σας, συμβουλευτείτε την πολιτική ιδιωτικότητας του Bitzi.com.\n\nΘέλετε να συνεχίσετε;"/>
 		<string id="20100" value="Σύνδεση..."/>
 		<string id="20101" value="Αίτηση..."/>
 		<string id="20102" value="Απάντηση"/>

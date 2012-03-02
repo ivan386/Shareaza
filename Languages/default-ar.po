@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2012-02-29 19:32+0000\n"
+"POT-Creation-Date: 2012-03-02 16:08+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -303,11 +303,11 @@ msgstr "ضبط التحكم بالصوت"
 msgid "Open File"
 msgstr "فتح ملف"
 
-#: button;id_media_previous button;id_sharemonkey_previous
+#: button;id_media_previous
 msgid "Previous"
 msgstr "السابق"
 
-#: button;id_media_next button;id_sharemonkey_next string;20135
+#: button;id_media_next string;20135
 msgid "Next"
 msgstr "التالي"
 
@@ -328,7 +328,7 @@ msgstr "التحكم بسرعة قرائة ملف الوسائط المتعدد�
 msgid "Clear"
 msgstr "إزالة"
 
-#: button;id_media_save button;id_sharemonkey_save
+#: button;id_media_save
 msgid "Save"
 msgstr "حفظ"
 
@@ -489,26 +489,6 @@ msgstr "ل"
 #: button;id_chat_priority
 msgid "Grant Priority"
 msgstr "أولوية المحادثة"
-
-#: button;id_sharemonkey_download
-msgid "Get Data"
-msgstr "جلب البيانات"
-
-#: button;id_sharemonkey_prices
-msgid "Get Prices"
-msgstr "جلب الأسعار"
-
-#: button;id_sharemonkey_compare
-msgid "Compare"
-msgstr "مقارنة"
-
-#: button;id_sharemonkey_buy
-msgid "Buy It"
-msgstr "الشراء"
-
-#: control;id_sharemonkey_save_option
-msgid "Save Preview"
-msgstr "حفظ المعاينة"
 
 #: button;id_musicbrainz_matches
 msgid "View Album Matches"
@@ -1211,6 +1191,7 @@ msgstr "_خدمات الانترنت"
 #: clibraryfileview.physical;44;item;id_library_bitzi_web
 #: clibraryfileview.virtual.basic;47;item;id_library_bitzi_web
 #: clibraryfileview.virtual;50;item;id_library_bitzi_web
+#: webservices.list.menu;item;id_library_bitzi_web
 msgid "View _Bitzi Ticket"
 msgstr "عرض ب_طافة Bitzi"
 
@@ -1306,6 +1287,18 @@ msgstr "_إيجاد المزيد من المصادر"
 #: cuploadswnd.nothing;item;id_uploads_help
 msgid "_Help..."
 msgstr "_تعليمات..."
+
+#: cdownloadswnd.download.basic;item;id_shell_menu
+#: cdownloadswnd.download;item;id_shell_menu
+#: cdownloadswnd.completed.basic;item;id_shell_menu
+#: cdownloadswnd.completed;item;id_shell_menu
+#: clibrarytree.physical.basic;item;id_shell_menu
+#: clibrarytree.physical;item;id_shell_menu
+#: clibraryfileview.physical;item;id_shell_menu
+#: clibraryfileview.virtual.basic;item;id_shell_menu
+#: clibraryfileview.virtual;item;id_shell_menu
+msgid "S_hell menu"
+msgstr "قائمة ال_قشرة"
 
 #: cdownloadswnd.download;item;id_downloads_launch
 msgid "Prev_iew Partial File"
@@ -1518,14 +1511,6 @@ msgstr "_مشاركة"
 msgid "Create ._torrent File"
 msgstr "إنشاء ملف torrent"
 
-#: clibrarytree.physical.basic;item;id_shell_menu
-#: clibrarytree.physical;item;id_shell_menu
-#: clibraryfileview.physical;item;id_shell_menu
-#: clibraryfileview.virtual.basic;item;id_shell_menu
-#: clibraryfileview.virtual;item;id_shell_menu
-msgid "S_hell menu"
-msgstr "قائمة ال_قشرة"
-
 #: clibrarytree.physical;item;id_library_scan
 msgid "S_can"
 msgstr "ف_حص"
@@ -1582,8 +1567,15 @@ msgstr "_فتح"
 #: clibraryfileview.physical;44;item;id_library_bitzi_download
 #: clibraryfileview.virtual.basic;47;item;id_library_bitzi_download
 #: clibraryfileview.virtual;50;item;id_library_bitzi_download
+#: webservices.list.menu;item;id_library_bitzi_download
 msgid "_Download Metadata"
 msgstr "_تحميل ملف تعريف"
+
+#: clibraryfileview.physical.basic;41;item;id_webservices_musicbrainz
+#: clibraryfileview.physical;44;item;id_webservices_musicbrainz
+#: webservices.list.menu;item;id_webservices_musicbrainz
+msgid "_MusicBrainz"
+msgstr "_MusicBrainz"
 
 #: clibraryfileview.physical.basic;42 clibraryfileview.physical;45
 #: clibraryfileview.virtual.basic;48 clibraryfileview.virtual;51
@@ -2085,18 +2077,6 @@ msgstr "طرد+حظر"
 #: circuserlist;64;item;id_irc_bankickwhy
 msgid "Kick+Ban (why?)"
 msgstr "طرد+حظر , لماذا ؟"
-
-#: webservices.list.menu;item;id_library_bitzi_download
-msgid "_Bitzi"
-msgstr "_Bitzi"
-
-#: webservices.list.menu;item;id_webservices_musicbrainz
-msgid "_MusicBrainz"
-msgstr "_MusicBrainz"
-
-#: webservices.list.menu;item;id_webservices_sharemonkey
-msgid "_ShareMonkey"
-msgstr "_ShareMonkey"
 
 #: chomeviewctrl;heading;1000
 msgid "G E T   C O N N E C T E D"
@@ -7221,11 +7201,6 @@ msgstr "Finish"
 msgid "All"
 msgstr "All"
 
-#: string;20014
-#, fuzzy
-msgid "This option uses services provided by ShareMonkey.com for recognising information about selected files.\\n\\nShareaza will transmit file details and your location in order to query the ShareMonkey database.  If you are concerned about privacy, you may wish to consult the ShareMonkey.com privacy policy.\\n\\nWould you like to proceed?"
-msgstr "This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n\\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database.  If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n\\nWould you like to proceed?"
-
 #: string;20101
 msgid "Requesting"
 msgstr "Requesting"
@@ -10078,6 +10053,31 @@ msgstr "TigerTree"
 #, fuzzy
 msgid "NextRun"
 msgstr "التالي"
+
+#~ msgid "Get Data"
+#~ msgstr "جلب البيانات"
+
+#~ msgid "Get Prices"
+#~ msgstr "جلب الأسعار"
+
+#~ msgid "Compare"
+#~ msgstr "مقارنة"
+
+#~ msgid "Buy It"
+#~ msgstr "الشراء"
+
+#~ msgid "Save Preview"
+#~ msgstr "حفظ المعاينة"
+
+#~ msgid "_Bitzi"
+#~ msgstr "_Bitzi"
+
+#~ msgid "_ShareMonkey"
+#~ msgstr "_ShareMonkey"
+
+#, fuzzy
+#~ msgid "This option uses services provided by ShareMonkey.com for recognising information about selected files.\\n\\nShareaza will transmit file details and your location in order to query the ShareMonkey database.  If you are concerned about privacy, you may wish to consult the ShareMonkey.com privacy policy.\\n\\nWould you like to proceed?"
+#~ msgstr "This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\\n\\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database.  If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\\n\\nWould you like to proceed?"
 
 #, fuzzy
 #~ msgid "Search for matches"

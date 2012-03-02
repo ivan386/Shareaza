@@ -446,28 +446,6 @@
 			<button id="ID_CHAT_DISCONNECT" text="Koble fra"/>
 		</toolbar>
 		<!-- WEBSERVICES -->
-		<toolbar name="WebServices.ShareMonkey">
-			<button id="ID_SHAREMONKEY_DOWNLOAD" text="Get Data"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PREVIOUS" text="Tilbake"/>
-			<button id="ID_SHAREMONKEY_NEXT" text="Neste"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PRICES" text="Get Prices"/>
-			<button id="ID_SHAREMONKEY_COMPARE" text="Compare"/>
-			<button id="ID_SHAREMONKEY_BUY" text="Buy It"/>
-		</toolbar>
-		<toolbar name="WebServices.ShareMonkey.WithSave">
-			<button id="ID_SHAREMONKEY_DOWNLOAD" text="Get Data"/>
-			<button id="ID_SHAREMONKEY_SAVE" text="Lagre"/>
-			<control id="ID_SHAREMONKEY_SAVE_OPTION" text="Save Preview" width="100" checked="true"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PREVIOUS" text="Tilbake"/>
-			<button id="ID_SHAREMONKEY_NEXT" text="Neste"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PRICES" text="Get Prices"/>
-			<button id="ID_SHAREMONKEY_COMPARE" text="Compare"/>
-			<button id="ID_SHAREMONKEY_BUY" text="Buy It"/>
-		</toolbar>
 		<toolbar name="WebServices.MusicBrainz">
 			<button id="ID_MUSICBRAINZ_MATCHES" text="View Album Matches"/>
 			<button id="ID_MUSICBRAINZ_ALBUMS" text="View All Albums"/>
@@ -1061,6 +1039,8 @@
 			<item id="ID_DOWNLOADS_COPY" text="Kopier URI"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_HELP" text="Hjelp..."/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Download">
 			<item id="ID_DOWNLOADS_LAUNCH_COPY" text="Forhåndsvis kopi"/>
@@ -1087,9 +1067,12 @@
 				<item id="ID_DOWNLOADS_MOVE_DOWN" text="Flytt ned"/>
 				<item id="ID_DOWNLOADS_BOOST" text="Ignorer hastighetsinnstillinger"/>
 			</menu>
+			<separator/>
 			<item id="ID_DOWNLOADS_HELP" text="Hjelp..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_EDIT" text="Avansert redigering"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Source">
 			<item id="ID_TRANSFERS_CONNECT" text="Start"/>
@@ -1107,6 +1090,8 @@
 			<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Fjern"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_FILE_DELETE" text="Slett fil"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Completed">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Åpne eller spill av"/>
@@ -1117,6 +1102,8 @@
 			<separator/>
 			<item id="ID_DOWNLOADS_FILE_DELETE" text="Slett fil"/>
 			<item id="ID_DOWNLOADS_RATE" text="Gi karakter"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Seeding">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Åpne eller spill av"/>
@@ -1259,6 +1246,7 @@
 			<menu text="_Web søk">
 				<item id="ID_LIBRARY_BITZI_WEB" text="Søk med Bitzi Ticket"/>
 				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Hent Metadata"/>
+				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="Organisert">
 				<item id="ID_LIBRARY_RENAME" text="Gi nytt navn"/>
@@ -1290,6 +1278,7 @@
 			<menu text="_Web søk">
 				<item id="ID_LIBRARY_BITZI_WEB" text="Søk med Bitzi Ticket"/>
 				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Hent Metadata"/>
+				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="Lag .torrent"/>
 			</menu>
@@ -1665,9 +1654,9 @@
 			</menu>
 		</menu>
 		<menu name="WebServices.List.Menu">
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Bitzi"/>
+			<item id="ID_LIBRARY_BITZI_WEB" text="Søk med Bitzi Ticket"/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Hent Metadata"/>
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
-			<item id="ID_WEBSERVICES_SHAREMONKEY" text="_ShareMonkey"/>
 		</menu>
 	</menus>
 	<!-- Documents -->
@@ -3367,7 +3356,6 @@
 		<string id="20011" value="&amp;Next"/>
 		<string id="20012" value="Finish"/>
 		<string id="20013" value="Match alle"/>
-		<string id="20014" value="Dette valget bruker Bitzi.com for å finne informasjon om valgte filer.\n\nShareaza sender SHA1 hash koden til den valgte filen for å søke i Bitzi databasen. Hvis du er redd for å dele slik informasjon, kan du lese Bitzi.com's retningslinjer for personopplysninger.\n\nVil du fortsette?"/>
 		<string id="20100" value="Oppretter kobling"/>
 		<string id="20101" value="Anmoder"/>
 		<string id="20102" value="Respons"/>

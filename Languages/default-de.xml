@@ -446,28 +446,6 @@
 			<button id="ID_CHAT_DISCONNECT" text="Verbindung trennen"/>
 		</toolbar>
 		<!-- WEBSERVICES -->
-		<toolbar name="WebServices.ShareMonkey">
-			<button id="ID_SHAREMONKEY_DOWNLOAD" text="Daten holen"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PREVIOUS" text="Zurück"/>
-			<button id="ID_SHAREMONKEY_NEXT" text="Vor"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PRICES" text="Preisanfrage"/>
-			<button id="ID_SHAREMONKEY_COMPARE" text="Vergleichen"/>
-			<button id="ID_SHAREMONKEY_BUY" text="Kaufen"/>
-		</toolbar>
-		<toolbar name="WebServices.ShareMonkey.WithSave">
-			<button id="ID_SHAREMONKEY_DOWNLOAD" text="Daten holen"/>
-			<button id="ID_SHAREMONKEY_SAVE" text="Speichern"/>
-			<control id="ID_SHAREMONKEY_SAVE_OPTION" text="Vorschau speichern" width="100" checked="true"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PREVIOUS" text="Zurück"/>
-			<button id="ID_SHAREMONKEY_NEXT" text="Vor"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PRICES" text="Preisanfrage"/>
-			<button id="ID_SHAREMONKEY_COMPARE" text="Vergleichen"/>
-			<button id="ID_SHAREMONKEY_BUY" text="Kaufen"/>
-		</toolbar>
 		<toolbar name="WebServices.MusicBrainz">
 			<button id="ID_MUSICBRAINZ_MATCHES" text="Treffer anzeigen"/>
 			<button id="ID_MUSICBRAINZ_ALBUMS" text="Alle Alben ansehen"/>
@@ -1061,6 +1039,8 @@
 			<item id="ID_DOWNLOADS_COPY" text="_URI kopieren"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_HELP" text="_Hilfe..."/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="_Kontextmenü"/>
 		</menu>
 		<menu name="CDownloadsWnd.Download">
 			<item id="ID_DOWNLOADS_LAUNCH_COPY" text="_Vorschau"/>
@@ -1087,9 +1067,12 @@
 				<item id="ID_DOWNLOADS_MOVE_DOWN" text="Nach _unten"/>
 				<item id="ID_DOWNLOADS_BOOST" text="G_eschwindigkeitslimit aufheben"/>
 			</menu>
+			<separator/>
 			<item id="ID_DOWNLOADS_HELP" text="_Hilfe..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_EDIT" text="Ei_genschaften..."/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="_Kontextmenü"/>
 		</menu>
 		<menu name="CDownloadsWnd.Source">
 			<item id="ID_TRANSFERS_CONNECT" text="_Starten"/>
@@ -1107,6 +1090,8 @@
 			<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Download _entfernen"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_FILE_DELETE" text="_Datei löschen"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="_Kontextmenü"/>
 		</menu>
 		<menu name="CDownloadsWnd.Completed">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Öffnen"/>
@@ -1117,6 +1102,8 @@
 			<separator/>
 			<item id="ID_DOWNLOADS_FILE_DELETE" text="_Datei löschen"/>
 			<item id="ID_DOWNLOADS_RATE" text="D_atei bewerten..."/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="_Kontextmenü"/>
 		</menu>
 		<menu name="CDownloadsWnd.Seeding">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Öffnen"/>
@@ -1259,6 +1246,7 @@
 			<menu text="_Web Dienste">
 				<item id="ID_LIBRARY_BITZI_WEB" text="Bitzi-_Ticket anzeigen"/>
 				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Meta_daten suchen"/>
+				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="_Verwalten">
 				<item id="ID_LIBRARY_RENAME" text="Datei _umbenennen"/>
@@ -1290,6 +1278,7 @@
 			<menu text="_Web Dienste">
 				<item id="ID_LIBRARY_BITZI_WEB" text="Bitzi-_Ticket anzeigen"/>
 				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Meta_daten suchen"/>
+				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="._torrent-Datei erstellen"/>
 			</menu>
@@ -1665,9 +1654,9 @@
 			</menu>
 		</menu>
 		<menu name="WebServices.List.Menu">
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Bitzi"/>
+			<item id="ID_LIBRARY_BITZI_WEB" text="Bitzi-_Ticket anzeigen"/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Meta_daten suchen"/>
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
-			<item id="ID_WEBSERVICES_SHAREMONKEY" text="_ShareMonkey"/>
 		</menu>
 	</menus>
 	<!-- Documents -->
@@ -3368,7 +3357,6 @@
 		<string id="20011" value="&amp;Weiter"/>
 		<string id="20012" value="Abschließen"/>
 		<string id="20013" value="Alle"/>
-		<string id="20014" value="Diese Option benutzt Dienste, die von ShareMonkey.com zur Verfügung gestellt werden, um Information über Dateien zu sammeln und zugänglich zu machen.\n\nShareaza wird den SHA1-Hashwert für die ausgewählte(n) Datei(en) übertragen, um die ShareMonkey-Datenbank abzufragen.\nWenn Sie sich Sorgen um ihre Privatsphäre machen, können Sie die &quot;ShareMonkey.com privacy policy&quot; lesen.\n\nWollen Sie fortfahren?"/>
 		<string id="20100" value="Verbinden..."/>
 		<string id="20101" value="Anfordern"/>
 		<string id="20102" value="Antwort"/>

@@ -446,28 +446,6 @@
 			<button id="ID_CHAT_DISCONNECT" text="Katkesta ühendus"/>
 		</toolbar>
 		<!-- WEBSERVICES -->
-		<toolbar name="WebServices.ShareMonkey">
-			<button id="ID_SHAREMONKEY_DOWNLOAD" text="Get Data"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PREVIOUS" text="Eelmine"/>
-			<button id="ID_SHAREMONKEY_NEXT" text="Järgmine"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PRICES" text="Get Prices"/>
-			<button id="ID_SHAREMONKEY_COMPARE" text="Compare"/>
-			<button id="ID_SHAREMONKEY_BUY" text="Buy It"/>
-		</toolbar>
-		<toolbar name="WebServices.ShareMonkey.WithSave">
-			<button id="ID_SHAREMONKEY_DOWNLOAD" text="Get Data"/>
-			<button id="ID_SHAREMONKEY_SAVE" text="Salvesta"/>
-			<control id="ID_SHAREMONKEY_SAVE_OPTION" text="Save Preview" width="100" checked="true"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PREVIOUS" text="Eelmine"/>
-			<button id="ID_SHAREMONKEY_NEXT" text="Järgmine"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PRICES" text="Get Prices"/>
-			<button id="ID_SHAREMONKEY_COMPARE" text="Compare"/>
-			<button id="ID_SHAREMONKEY_BUY" text="Buy It"/>
-		</toolbar>
 		<toolbar name="WebServices.MusicBrainz">
 			<button id="ID_MUSICBRAINZ_MATCHES" text="View Album Matches"/>
 			<button id="ID_MUSICBRAINZ_ALBUMS" text="View All Albums"/>
@@ -1061,6 +1039,8 @@
 			<item id="ID_DOWNLOADS_COPY" text="Kopeeri _URI"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_HELP" text="_Abi..."/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Download">
 			<item id="ID_DOWNLOADS_LAUNCH_COPY" text="Previe_w File"/>
@@ -1087,9 +1067,12 @@
 				<item id="ID_DOWNLOADS_MOVE_DOWN" text="Lii_gu Alla"/>
 				<item id="ID_DOWNLOADS_BOOST" text="_Eira Piiranguid"/>
 			</menu>
+			<separator/>
 			<item id="ID_DOWNLOADS_HELP" text="_Abi..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_EDIT" text="_Muuda Omadusi..."/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Source">
 			<item id="ID_TRANSFERS_CONNECT" text="_Ligipääs"/>
@@ -1107,6 +1090,8 @@
 			<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="P_uhasta"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_FILE_DELETE" text="_Kustuta Fail"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Completed">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Ava"/>
@@ -1117,6 +1102,8 @@
 			<separator/>
 			<item id="ID_DOWNLOADS_FILE_DELETE" text="_Kustuta Fail"/>
 			<item id="ID_DOWNLOADS_RATE" text="_Hinda Fail..."/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Seeding">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Ava"/>
@@ -1259,6 +1246,7 @@
 			<menu text="_Weebiteenused">
 				<item id="ID_LIBRARY_BITZI_WEB" text="Vaata _Bitzist"/>
 				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Tõmba Andmebaas"/>
+				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="Ko_rrasta">
 				<item id="ID_LIBRARY_RENAME" text="_Nimeta Ümber"/>
@@ -1290,6 +1278,7 @@
 			<menu text="_Weebiteenused">
 				<item id="ID_LIBRARY_BITZI_WEB" text="Vaata _Bitzist"/>
 				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Tõmba Andmebaas"/>
+				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="Loo .torrent Fail"/>
 			</menu>
@@ -1665,9 +1654,9 @@
 			</menu>
 		</menu>
 		<menu name="WebServices.List.Menu">
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Bitzi"/>
+			<item id="ID_LIBRARY_BITZI_WEB" text="Vaata _Bitzist"/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Tõmba Andmebaas"/>
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
-			<item id="ID_WEBSERVICES_SHAREMONKEY" text="_ShareMonkey"/>
 		</menu>
 	</menus>
 	<!-- Documents -->
@@ -3366,7 +3355,6 @@
 		<string id="20011" value="&amp;Next"/>
 		<string id="20012" value="Finish"/>
 		<string id="20013" value="Kõik"/>
-		<string id="20014" value="See võimalus kasutab teenuseid, mida pakub Bitzi.com failide tuvastamise ja jagamiste kohta.\n\nShareaza võtab SHA1 koodi, valitud failide kohta Bitzi andmebaasist.  Kui oled mures oma turvalisuse pärast, siis võid tutvuda Bitzi.com privaatsus poliitikaga.\n\nKas tahad jätkata?"/>
 		<string id="20100" value="Ühendan"/>
 		<string id="20101" value="Saadan Päringu"/>
 		<string id="20102" value="Vastus"/>

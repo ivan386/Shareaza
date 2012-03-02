@@ -446,28 +446,6 @@
 			<button id="ID_CHAT_DISCONNECT" text="Odpojit"/>
 		</toolbar>
 		<!-- WEBSERVICES -->
-		<toolbar name="WebServices.ShareMonkey">
-			<button id="ID_SHAREMONKEY_DOWNLOAD" text="Get Data"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PREVIOUS" text="Předchozí"/>
-			<button id="ID_SHAREMONKEY_NEXT" text="Další"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PRICES" text="Get Prices"/>
-			<button id="ID_SHAREMONKEY_COMPARE" text="Compare"/>
-			<button id="ID_SHAREMONKEY_BUY" text="Buy It"/>
-		</toolbar>
-		<toolbar name="WebServices.ShareMonkey.WithSave">
-			<button id="ID_SHAREMONKEY_DOWNLOAD" text="Get Data"/>
-			<button id="ID_SHAREMONKEY_SAVE" text="Uložit"/>
-			<control id="ID_SHAREMONKEY_SAVE_OPTION" text="Save Preview" width="100" checked="true"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PREVIOUS" text="Předchozí"/>
-			<button id="ID_SHAREMONKEY_NEXT" text="Další"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PRICES" text="Get Prices"/>
-			<button id="ID_SHAREMONKEY_COMPARE" text="Compare"/>
-			<button id="ID_SHAREMONKEY_BUY" text="Buy It"/>
-		</toolbar>
 		<toolbar name="WebServices.MusicBrainz">
 			<button id="ID_MUSICBRAINZ_MATCHES" text="View Album Matches"/>
 			<button id="ID_MUSICBRAINZ_ALBUMS" text="View All Albums"/>
@@ -1061,6 +1039,8 @@
 			<item id="ID_DOWNLOADS_COPY" text="Kopírovat _URI"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_HELP" text="_Nápověda..."/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Download">
 			<item id="ID_DOWNLOADS_LAUNCH_COPY" text="Previe_w File"/>
@@ -1087,9 +1067,12 @@
 				<item id="ID_DOWNLOADS_MOVE_DOWN" text="Přesunout _dolů"/>
 				<item id="ID_DOWNLOADS_BOOST" text="_Ignorovat omezení šířky pásma"/>
 			</menu>
+			<separator/>
 			<item id="ID_DOWNLOADS_HELP" text="_Nápověda..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_EDIT" text="Pokročilé _úpravy..."/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Source">
 			<item id="ID_TRANSFERS_CONNECT" text="_Přístup"/>
@@ -1107,6 +1090,8 @@
 			<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Smazat"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_FILE_DELETE" text="_Odstranit soubor"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Completed">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Otevřít nebo přehrát"/>
@@ -1117,6 +1102,8 @@
 			<separator/>
 			<item id="ID_DOWNLOADS_FILE_DELETE" text="_Odstranit soubor"/>
 			<item id="ID_DOWNLOADS_RATE" text="_Rychlost souboru..."/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Seeding">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Otevřít nebo přehrát"/>
@@ -1259,6 +1246,7 @@
 			<menu text="_Webové služby">
 				<item id="ID_LIBRARY_BITZI_WEB" text="Prohlížet _Bitzi Ticket"/>
 				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Stáhnout popisky"/>
+				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="Sp_ráva souborů">
 				<item id="ID_LIBRARY_RENAME" text="_Přejmenovat soubor"/>
@@ -1290,6 +1278,7 @@
 			<menu text="_Webové služby">
 				<item id="ID_LIBRARY_BITZI_WEB" text="Prohlížet _Bitzi Ticket"/>
 				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Stáhnout popisky"/>
+				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="Vytvořit soubor .torrent"/>
 			</menu>
@@ -1665,9 +1654,9 @@
 			</menu>
 		</menu>
 		<menu name="WebServices.List.Menu">
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Bitzi"/>
+			<item id="ID_LIBRARY_BITZI_WEB" text="Prohlížet _Bitzi Ticket"/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Stáhnout popisky"/>
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
-			<item id="ID_WEBSERVICES_SHAREMONKEY" text="_ShareMonkey"/>
 		</menu>
 	</menus>
 	<!-- Documents -->
@@ -3374,7 +3363,6 @@
 		<string id="20011" value="&amp;Vpřed"/>
 		<string id="20012" value="Ukončit"/>
 		<string id="20013" value="All"/>
-		<string id="20014" value="Tuto možnost využívá služba poskytovaná Bitzi.com která zjišťuje a sdílí informace o vybraných souborech.\n\nShareaza bude přenášet SHA1 hash pro označený soubor(y) v rámci dotazu poslaného databázi Bitzi. Pokud máte obavy o soukromí přečtěte si prohlášení Bitzi.com o ochraně osobních údajů.\n\nChcete pokračovat?"/>
 		<string id="20100" value="Připojuji"/>
 		<string id="20101" value="Žádám"/>
 		<string id="20102" value="Odezva"/>

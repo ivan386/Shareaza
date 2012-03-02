@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2012-02-29 19:32+0000\n"
+"POT-Creation-Date: 2012-03-02 16:08+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: (translation author)\n"
 "Language-Team: Shareaza Development Team\n"
@@ -292,11 +292,11 @@ msgstr ""
 msgid "Open File"
 msgstr ""
 
-#: button;id_media_previous button;id_sharemonkey_previous
+#: button;id_media_previous
 msgid "Previous"
 msgstr ""
 
-#: button;id_media_next button;id_sharemonkey_next string;20135
+#: button;id_media_next string;20135
 msgid "Next"
 msgstr ""
 
@@ -316,7 +316,7 @@ msgstr ""
 msgid "Clear"
 msgstr ""
 
-#: button;id_media_save button;id_sharemonkey_save
+#: button;id_media_save
 msgid "Save"
 msgstr ""
 
@@ -474,26 +474,6 @@ msgstr ""
 
 #: button;id_chat_priority
 msgid "Grant Priority"
-msgstr ""
-
-#: button;id_sharemonkey_download
-msgid "Get Data"
-msgstr ""
-
-#: button;id_sharemonkey_prices
-msgid "Get Prices"
-msgstr ""
-
-#: button;id_sharemonkey_compare
-msgid "Compare"
-msgstr ""
-
-#: button;id_sharemonkey_buy
-msgid "Buy It"
-msgstr ""
-
-#: control;id_sharemonkey_save_option
-msgid "Save Preview"
 msgstr ""
 
 #: button;id_musicbrainz_matches
@@ -960,7 +940,7 @@ msgstr ""
 msgid "_Web Services"
 msgstr ""
 
-#: csearchwnd.basic;30;item;id_library_bitzi_web csearchwnd;32;item;id_library_bitzi_web cbrowsehostwnd.basic;34;item;id_library_bitzi_web cbrowsehostwnd;36;item;id_library_bitzi_web chitmonitorwnd;38;item;id_library_bitzi_web clibraryfileview.physical.basic;41;item;id_library_bitzi_web clibraryfileview.physical;44;item;id_library_bitzi_web clibraryfileview.virtual.basic;47;item;id_library_bitzi_web clibraryfileview.virtual;50;item;id_library_bitzi_web
+#: csearchwnd.basic;30;item;id_library_bitzi_web csearchwnd;32;item;id_library_bitzi_web cbrowsehostwnd.basic;34;item;id_library_bitzi_web cbrowsehostwnd;36;item;id_library_bitzi_web chitmonitorwnd;38;item;id_library_bitzi_web clibraryfileview.physical.basic;41;item;id_library_bitzi_web clibraryfileview.physical;44;item;id_library_bitzi_web clibraryfileview.virtual.basic;47;item;id_library_bitzi_web clibraryfileview.virtual;50;item;id_library_bitzi_web webservices.list.menu;item;id_library_bitzi_web
 msgid "View _Bitzi Ticket"
 msgstr ""
 
@@ -1030,6 +1010,10 @@ msgstr ""
 
 #: cdownloadswnd.download.basic;item;id_downloads_help cdownloadswnd.download;item;id_downloads_help cdownloadswnd.seeding;item;id_downloads_help cdownloadswnd.nothing;item;id_downloads_help cuploadswnd.nothing;item;id_uploads_help
 msgid "_Help..."
+msgstr ""
+
+#: cdownloadswnd.download.basic;item;id_shell_menu cdownloadswnd.download;item;id_shell_menu cdownloadswnd.completed.basic;item;id_shell_menu cdownloadswnd.completed;item;id_shell_menu clibrarytree.physical.basic;item;id_shell_menu clibrarytree.physical;item;id_shell_menu clibraryfileview.physical;item;id_shell_menu clibraryfileview.virtual.basic;item;id_shell_menu clibraryfileview.virtual;item;id_shell_menu
+msgid "S_hell menu"
 msgstr ""
 
 #: cdownloadswnd.download;item;id_downloads_launch
@@ -1192,10 +1176,6 @@ msgstr ""
 msgid "Create ._torrent File"
 msgstr ""
 
-#: clibrarytree.physical.basic;item;id_shell_menu clibrarytree.physical;item;id_shell_menu clibraryfileview.physical;item;id_shell_menu clibraryfileview.virtual.basic;item;id_shell_menu clibraryfileview.virtual;item;id_shell_menu
-msgid "S_hell menu"
-msgstr ""
-
 #: clibrarytree.physical;item;id_library_scan
 msgid "S_can"
 msgstr ""
@@ -1232,8 +1212,12 @@ msgstr ""
 msgid "_Open"
 msgstr ""
 
-#: clibraryfileview.physical.basic;41;item;id_library_bitzi_download clibraryfileview.physical;44;item;id_library_bitzi_download clibraryfileview.virtual.basic;47;item;id_library_bitzi_download clibraryfileview.virtual;50;item;id_library_bitzi_download
+#: clibraryfileview.physical.basic;41;item;id_library_bitzi_download clibraryfileview.physical;44;item;id_library_bitzi_download clibraryfileview.virtual.basic;47;item;id_library_bitzi_download clibraryfileview.virtual;50;item;id_library_bitzi_download webservices.list.menu;item;id_library_bitzi_download
 msgid "_Download Metadata"
+msgstr ""
+
+#: clibraryfileview.physical.basic;41;item;id_webservices_musicbrainz clibraryfileview.physical;44;item;id_webservices_musicbrainz webservices.list.menu;item;id_webservices_musicbrainz
+msgid "_MusicBrainz"
 msgstr ""
 
 #: clibraryfileview.physical.basic;42 clibraryfileview.physical;45 clibraryfileview.virtual.basic;48 clibraryfileview.virtual;51
@@ -1690,18 +1674,6 @@ msgstr ""
 
 #: circuserlist;64;item;id_irc_bankickwhy
 msgid "Kick+Ban (why?)"
-msgstr ""
-
-#: webservices.list.menu;item;id_library_bitzi_download
-msgid "_Bitzi"
-msgstr ""
-
-#: webservices.list.menu;item;id_webservices_musicbrainz
-msgid "_MusicBrainz"
-msgstr ""
-
-#: webservices.list.menu;item;id_webservices_sharemonkey
-msgid "_ShareMonkey"
 msgstr ""
 
 #: chomeviewctrl;heading;1000
@@ -6482,10 +6454,6 @@ msgstr ""
 
 #: string;20013 cfolderpropertiesdlg;control;5
 msgid "All"
-msgstr ""
-
-#: string;20014
-msgid "This option uses services provided by ShareMonkey.com for recognising information about selected files.\\n\\nShareaza will transmit file details and your location in order to query the ShareMonkey database.  If you are concerned about privacy, you may wish to consult the ShareMonkey.com privacy policy.\\n\\nWould you like to proceed?"
 msgstr ""
 
 #: string;20101

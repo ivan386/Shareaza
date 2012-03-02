@@ -408,44 +408,57 @@ void CDownloadsWnd::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct)
 	AfxGetMainWnd()->SendMessage( WM_DRAWITEM, nIDCtl, (LPARAM)lpDrawItemStruct );
 }
 
+const static struct
+{
+	LPCTSTR szMenu;
+	UINT nDefaultID;
+}
+ContextMenus[] =
+{
+	{ _T("CDownloadsWnd.Source"), ID_TRANSFERS_CONNECT },
+	{ _T("CDownloadsWnd.Seeding"), ID_DOWNLOADS_LAUNCH_COMPLETE },
+	{ _T("CDownloadsWnd.Completed"),ID_DOWNLOADS_LAUNCH_COMPLETE },
+	{ _T("CDownloadsWnd.Download"), ID_DOWNLOADS_LAUNCH_COPY },
+	{ _T("CDownloadsWnd.Nothing"), ID_DOWNLOADS_HELP }
+};
+
 void CDownloadsWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 {
-	CSingleLock pLock( &Transfers.m_pSection, TRUE );
-	CDownloadSource* pSource;
-	CDownload* pDownload;
-
 	CPoint ptLocal( point );
 	m_wndDownloads.ScreenToClient( &ptLocal );
 	m_tSel = 0;
 
-	if ( m_wndDownloads.HitTest( ptLocal, &pDownload, &pSource, NULL, NULL ) )
+	int nMenu;
+	CStringList pList;
 	{
-		if ( pSource != NULL )
+		CSingleLock pLock( &Transfers.m_pSection, TRUE );
+
+		CDownloadSource* pSource;
+		CDownload* pDownload;
+		if ( m_wndDownloads.HitTest( ptLocal, &pDownload, &pSource, NULL, NULL ) )
 		{
-			pLock.Unlock();
-			Skin.TrackPopupMenu( _T("CDownloadsWnd.Source"), point, ID_TRANSFERS_CONNECT );
-			return;
+			if ( pDownload )
+			{
+				for ( DWORD i = 0; i < pDownload->GetFileCount(); ++i )
+				{
+					pList.AddTail( pDownload->GetPath( i ) );
+				}
+			}
+
+			if ( pSource )
+				nMenu = 0;
+			else if ( pDownload->IsSeeding() )
+				nMenu = 1;
+			else if ( pDownload->IsCompleted() )
+				nMenu = 2;
+			else
+				nMenu = 3;
 		}
-		else if ( pDownload->IsSeeding() )
-		{
-			pLock.Unlock();
-			Skin.TrackPopupMenu( _T("CDownloadsWnd.Seeding"), point, ID_DOWNLOADS_LAUNCH_COMPLETE );
-			return;
-		}
-		else if ( pDownload->IsCompleted() )
-		{
-			pLock.Unlock();
-			Skin.TrackPopupMenu( _T("CDownloadsWnd.Completed"), point, ID_DOWNLOADS_LAUNCH_COMPLETE );
-			return;
-		}
+		else
+			nMenu = 4;
 	}
 
-	if ( pDownload != NULL )
-		Skin.TrackPopupMenu( _T("CDownloadsWnd.Download"), point, ID_DOWNLOADS_LAUNCH_COPY );
-	else
-		Skin.TrackPopupMenu( _T("CDownloadsWnd.Nothing"), point, ID_DOWNLOADS_HELP );
-
-	pLock.Unlock();
+	Skin.TrackPopupMenu( ContextMenus[ nMenu ].szMenu, point, ContextMenus[ nMenu ].nDefaultID, pList );
 }
 
 BOOL CDownloadsWnd::PreTranslateMessage(MSG* pMsg)

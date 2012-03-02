@@ -446,28 +446,6 @@
 			<button id="ID_CHAT_DISCONNECT" text="Bağlantı kes"/>
 		</toolbar>
 		<!-- WEBSERVICES -->
-		<toolbar name="WebServices.ShareMonkey">
-			<button id="ID_SHAREMONKEY_DOWNLOAD" text="Bilgi istemi"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PREVIOUS" text="Önceki"/>
-			<button id="ID_SHAREMONKEY_NEXT" text="Sonraki"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PRICES" text="Fiyat bilgisi"/>
-			<button id="ID_SHAREMONKEY_COMPARE" text="Karşılaştır"/>
-			<button id="ID_SHAREMONKEY_BUY" text="Satın al"/>
-		</toolbar>
-		<toolbar name="WebServices.ShareMonkey.WithSave">
-			<button id="ID_SHAREMONKEY_DOWNLOAD" text="Bilgi istemi"/>
-			<button id="ID_SHAREMONKEY_SAVE" text="Kaydet"/>
-			<control id="ID_SHAREMONKEY_SAVE_OPTION" text="Ön İzlemeyi Kaydet" width="100" checked="true"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PREVIOUS" text="Önceki"/>
-			<button id="ID_SHAREMONKEY_NEXT" text="Sonraki"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PRICES" text="Fiyat bilgisi"/>
-			<button id="ID_SHAREMONKEY_COMPARE" text="Karşılaştır"/>
-			<button id="ID_SHAREMONKEY_BUY" text="Satın al"/>
-		</toolbar>
 		<toolbar name="WebServices.MusicBrainz">
 			<button id="ID_MUSICBRAINZ_MATCHES" text="Karşılık Gelen Albümlere Bak"/>
 			<button id="ID_MUSICBRAINZ_ALBUMS" text="Tüm Albümlere Bak"/>
@@ -1061,6 +1039,8 @@
 			<item id="ID_DOWNLOADS_COPY" text="Kopyala _URI"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_HELP" text="_Yardım..."/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="İş_letim Sistemi Menüsü"/>
 		</menu>
 		<menu name="CDownloadsWnd.Download">
 			<item id="ID_DOWNLOADS_LAUNCH_COPY" text="Previe_w File"/>
@@ -1087,9 +1067,12 @@
 				<item id="ID_DOWNLOADS_MOVE_DOWN" text="_Aşağı Taşı"/>
 				<item id="ID_DOWNLOADS_BOOST" text="Ya_sakları Yok Say"/>
 			</menu>
+			<separator/>
 			<item id="ID_DOWNLOADS_HELP" text="_Yardım..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_EDIT" text="İ_leri Düzenleme..."/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="İş_letim Sistemi Menüsü"/>
 		</menu>
 		<menu name="CDownloadsWnd.Source">
 			<item id="ID_TRANSFERS_CONNECT" text="_Erişim"/>
@@ -1107,6 +1090,8 @@
 			<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Temizle"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_FILE_DELETE" text="_Dosya Sil"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="İş_letim Sistemi Menüsü"/>
 		</menu>
 		<menu name="CDownloadsWnd.Completed">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Aç/Oynat"/>
@@ -1117,6 +1102,8 @@
 			<separator/>
 			<item id="ID_DOWNLOADS_FILE_DELETE" text="_Dosya Sil"/>
 			<item id="ID_DOWNLOADS_RATE" text="Dosya indirme _Hızı..."/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="İş_letim Sistemi Menüsü"/>
 		</menu>
 		<menu name="CDownloadsWnd.Seeding">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Aç/Oynat"/>
@@ -1259,6 +1246,7 @@
 			<menu text="_Web Servisleri">
 				<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Etiketi Göster"/>
 				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Veri İndir"/>
+				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="_Düzenle">
 				<item id="ID_LIBRARY_RENAME" text="_Dosya Adı Değiştir"/>
@@ -1290,6 +1278,7 @@
 			<menu text="_Web Servisleri">
 				<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Etiketi Göster"/>
 				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Veri İndir"/>
+				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="._torrent Dosyası Oluştur"/>
 			</menu>
@@ -1665,9 +1654,9 @@
 			</menu>
 		</menu>
 		<menu name="WebServices.List.Menu">
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Bitzi"/>
+			<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Etiketi Göster"/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Veri İndir"/>
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
-			<item id="ID_WEBSERVICES_SHAREMONKEY" text="_ShareMonkey"/>
 		</menu>
 	</menus>
 	<!-- Documents -->
@@ -3340,7 +3329,6 @@
 		<string id="20011" value="&amp;Sonraki"/>
 		<string id="20012" value="Sona erdir"/>
 		<string id="20013" value="Tümü"/>
-		<string id="20014" value="Bu seçeneklerle seçilen dosyada onaylanan ve paylaşılan bilgi için Bitzi.com tarafından sağlanan servisler kullanılır.\n\nShareaza Bitzi veritabanı sorgu düzeninde seçilen dosyalar için SHA1 hash kod gönderecek.Eğer gizlilikle ilgileniyorsan Bitzi.com gizlilik politikasını danışmak isteyebilirsin.\n\nİlerlemek istiyor musun?"/>
 		<string id="20100" value="Bağlanıyor"/>
 		<string id="20101" value="İstekte Bulunuluyor"/>
 		<string id="20102" value="Yanıt"/>

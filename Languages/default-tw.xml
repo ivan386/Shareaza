@@ -446,28 +446,6 @@
 			<button id="ID_CHAT_DISCONNECT" text="中斷連線"/>
 		</toolbar>
 		<!-- WEBSERVICES -->
-		<toolbar name="WebServices.ShareMonkey">
-			<button id="ID_SHAREMONKEY_DOWNLOAD" text="Get Data"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PREVIOUS" text="上一個"/>
-			<button id="ID_SHAREMONKEY_NEXT" text="下一個"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PRICES" text="Get Prices"/>
-			<button id="ID_SHAREMONKEY_COMPARE" text="Compare"/>
-			<button id="ID_SHAREMONKEY_BUY" text="Buy It"/>
-		</toolbar>
-		<toolbar name="WebServices.ShareMonkey.WithSave">
-			<button id="ID_SHAREMONKEY_DOWNLOAD" text="Get Data"/>
-			<button id="ID_SHAREMONKEY_SAVE" text="儲存"/>
-			<control id="ID_SHAREMONKEY_SAVE_OPTION" text="Save Preview" width="100" checked="true"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PREVIOUS" text="上一個"/>
-			<button id="ID_SHAREMONKEY_NEXT" text="下一個"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PRICES" text="Get Prices"/>
-			<button id="ID_SHAREMONKEY_COMPARE" text="Compare"/>
-			<button id="ID_SHAREMONKEY_BUY" text="Buy It"/>
-		</toolbar>
 		<toolbar name="WebServices.MusicBrainz">
 			<button id="ID_MUSICBRAINZ_MATCHES" text="View Album Matches"/>
 			<button id="ID_MUSICBRAINZ_ALBUMS" text="View All Albums"/>
@@ -1061,6 +1039,8 @@
 			<item id="ID_DOWNLOADS_COPY" text="複製 URI"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_HELP" text="說明..."/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Download">
 			<item id="ID_DOWNLOADS_LAUNCH_COPY" text="Previe_w File"/>
@@ -1087,9 +1067,12 @@
 				<item id="ID_DOWNLOADS_MOVE_DOWN" text="下移"/>
 				<item id="ID_DOWNLOADS_BOOST" text="忽略頻寬限制"/>
 			</menu>
+			<separator/>
 			<item id="ID_DOWNLOADS_HELP" text="說明..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_EDIT" text="進階編輯..."/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Source">
 			<item id="ID_TRANSFERS_CONNECT" text="存取"/>
@@ -1107,6 +1090,8 @@
 			<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="清除"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_FILE_DELETE" text="刪除檔案"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Completed">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="開啟或播放"/>
@@ -1117,6 +1102,8 @@
 			<separator/>
 			<item id="ID_DOWNLOADS_FILE_DELETE" text="刪除檔案"/>
 			<item id="ID_DOWNLOADS_RATE" text="為檔案評分..."/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Seeding">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="開啟或播放"/>
@@ -1259,6 +1246,7 @@
 			<menu text="網際網路服務">
 				<item id="ID_LIBRARY_BITZI_WEB" text="檢視 Bitzi 標籤"/>
 				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="下載解釋資料"/>
+				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="整理">
 				<item id="ID_LIBRARY_RENAME" text="重新命名檔案"/>
@@ -1290,6 +1278,7 @@
 			<menu text="網際網路服務">
 				<item id="ID_LIBRARY_BITZI_WEB" text="檢視 Bitzi 標籤"/>
 				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="下載解釋資料"/>
+				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="製作 .torrent 檔"/>
 			</menu>
@@ -1665,9 +1654,9 @@
 			</menu>
 		</menu>
 		<menu name="WebServices.List.Menu">
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Bitzi"/>
+			<item id="ID_LIBRARY_BITZI_WEB" text="檢視 Bitzi 標籤"/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="下載解釋資料"/>
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
-			<item id="ID_WEBSERVICES_SHAREMONKEY" text="_ShareMonkey"/>
 		</menu>
 	</menus>
 	<!-- Documents -->
@@ -3309,7 +3298,6 @@
 		<string id="20011" value="&amp;前进"/>
 		<string id="20012" value="Finish"/>
 		<string id="20013" value="所有的"/>
-		<string id="20014" value="This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\n\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database.  If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\n\nWould you like to proceed?"/>
 		<string id="20100" value="連線中"/>
 		<string id="20101" value="要求中"/>
 		<string id="20102" value="回應"/>

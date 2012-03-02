@@ -446,28 +446,6 @@
 			<button id="ID_CHAT_DISCONNECT" text="断开"/>
 		</toolbar>
 		<!-- WEBSERVICES -->
-		<toolbar name="WebServices.ShareMonkey">
-			<button id="ID_SHAREMONKEY_DOWNLOAD" text="获取数据"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PREVIOUS" text="上一个"/>
-			<button id="ID_SHAREMONKEY_NEXT" text="下一个"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PRICES" text="获取价格"/>
-			<button id="ID_SHAREMONKEY_COMPARE" text="比较"/>
-			<button id="ID_SHAREMONKEY_BUY" text="购买"/>
-		</toolbar>
-		<toolbar name="WebServices.ShareMonkey.WithSave">
-			<button id="ID_SHAREMONKEY_DOWNLOAD" text="获取数据"/>
-			<button id="ID_SHAREMONKEY_SAVE" text="保存"/>
-			<control id="ID_SHAREMONKEY_SAVE_OPTION" text="保存封面" width="100" checked="true"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PREVIOUS" text="上一个"/>
-			<button id="ID_SHAREMONKEY_NEXT" text="下一个"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PRICES" text="获取价格"/>
-			<button id="ID_SHAREMONKEY_COMPARE" text="比较"/>
-			<button id="ID_SHAREMONKEY_BUY" text="购买"/>
-		</toolbar>
 		<toolbar name="WebServices.MusicBrainz">
 			<button id="ID_MUSICBRAINZ_MATCHES" text="查看匹配的专辑"/>
 			<button id="ID_MUSICBRAINZ_ALBUMS" text="查看所有专辑"/>
@@ -1061,6 +1039,8 @@
 			<item id="ID_DOWNLOADS_COPY" text="复制链接(_U)"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_HELP" text="帮助(_H)..."/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="外部菜单(_H)"/>
 		</menu>
 		<menu name="CDownloadsWnd.Download">
 			<item id="ID_DOWNLOADS_LAUNCH_COPY" text="预览文件(_W)"/>
@@ -1087,9 +1067,12 @@
 				<item id="ID_DOWNLOADS_MOVE_DOWN" text="下移(_D)"/>
 				<item id="ID_DOWNLOADS_BOOST" text="忽略带宽限制(_I)"/>
 			</menu>
+			<separator/>
 			<item id="ID_DOWNLOADS_HELP" text="帮助(_H)..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_EDIT" text="属性(_P)"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="外部菜单(_H)"/>
 		</menu>
 		<menu name="CDownloadsWnd.Source">
 			<item id="ID_TRANSFERS_CONNECT" text="访问(_A)"/>
@@ -1107,6 +1090,8 @@
 			<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="清除(_C)"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_FILE_DELETE" text="删除文件(_D)"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="外部菜单(_H)"/>
 		</menu>
 		<menu name="CDownloadsWnd.Completed">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="打开或播放(_O)"/>
@@ -1117,6 +1102,8 @@
 			<separator/>
 			<item id="ID_DOWNLOADS_FILE_DELETE" text="删除文件(_D)"/>
 			<item id="ID_DOWNLOADS_RATE" text="文件评级(_R)..."/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="外部菜单(_H)"/>
 		</menu>
 		<menu name="CDownloadsWnd.Seeding">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="打开或播放(_O)"/>
@@ -1259,6 +1246,7 @@
 			<menu text="网页服务(_W)">
 				<item id="ID_LIBRARY_BITZI_WEB" text="查看 Bitzi 标签(_B)"/>
 				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="下载元数据(_D)"/>
+				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="MusicBrainz(_M)"/>
 			</menu>
 			<menu text="O_rganise">
 				<item id="ID_LIBRARY_RENAME" text="重命名文件(_R)"/>
@@ -1290,6 +1278,7 @@
 			<menu text="网页服务(_W)">
 				<item id="ID_LIBRARY_BITZI_WEB" text="查看 Bitzi 标签(_B)"/>
 				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="下载元数据(_D)"/>
+				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="MusicBrainz(_M)"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="创建种子文件(_T)"/>
 			</menu>
@@ -1665,9 +1654,9 @@
 			</menu>
 		</menu>
 		<menu name="WebServices.List.Menu">
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Bitzi(_B)"/>
+			<item id="ID_LIBRARY_BITZI_WEB" text="查看 Bitzi 标签(_B)"/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="下载元数据(_D)"/>
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="MusicBrainz(_M)"/>
-			<item id="ID_WEBSERVICES_SHAREMONKEY" text="ShareMonkey(_S)"/>
 		</menu>
 	</menus>
 	<!-- Documents -->
@@ -3353,7 +3342,6 @@
 		<string id="20011" value="&amp;前进"/>
 		<string id="20012" value="完成"/>
 		<string id="20013" value="所有"/>
-		<string id="20014" value="该选项使用 ShareMonkey.com 提供的服务来市别选中文件的信息。\n\nShareaza 将传送文件细节和您的位置为了查询 ShareMonkey 数据库。如果您担心您的隐私，您可以查阅 ShareMonkey.com 的隐私策略。\n\n您是否要继续？"/>
 		<string id="20100" value="连接中"/>
 		<string id="20101" value="请求中"/>
 		<string id="20102" value="回应"/>

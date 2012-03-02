@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2012-02-29 19:32+0000\n"
+"POT-Creation-Date: 2012-03-02 16:08+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -303,11 +303,11 @@ msgstr "调节音量"
 msgid "Open File"
 msgstr "打开文件"
 
-#: button;id_media_previous button;id_sharemonkey_previous
+#: button;id_media_previous
 msgid "Previous"
 msgstr "上一个"
 
-#: button;id_media_next button;id_sharemonkey_next string;20135
+#: button;id_media_next string;20135
 msgid "Next"
 msgstr "下一个"
 
@@ -328,7 +328,7 @@ msgstr "调整媒体文件的播放速度"
 msgid "Clear"
 msgstr "清除"
 
-#: button;id_media_save button;id_sharemonkey_save
+#: button;id_media_save
 msgid "Save"
 msgstr "保存"
 
@@ -489,26 +489,6 @@ msgstr "C"
 #: button;id_chat_priority
 msgid "Grant Priority"
 msgstr "准予优先权"
-
-#: button;id_sharemonkey_download
-msgid "Get Data"
-msgstr "获取数据"
-
-#: button;id_sharemonkey_prices
-msgid "Get Prices"
-msgstr "获取价格"
-
-#: button;id_sharemonkey_compare
-msgid "Compare"
-msgstr "比较"
-
-#: button;id_sharemonkey_buy
-msgid "Buy It"
-msgstr "购买"
-
-#: control;id_sharemonkey_save_option
-msgid "Save Preview"
-msgstr "保存封面"
 
 #: button;id_musicbrainz_matches
 msgid "View Album Matches"
@@ -1211,6 +1191,7 @@ msgstr "网页服务(_W)"
 #: clibraryfileview.physical;44;item;id_library_bitzi_web
 #: clibraryfileview.virtual.basic;47;item;id_library_bitzi_web
 #: clibraryfileview.virtual;50;item;id_library_bitzi_web
+#: webservices.list.menu;item;id_library_bitzi_web
 msgid "View _Bitzi Ticket"
 msgstr "查看 Bitzi 标签(_B)"
 
@@ -1306,6 +1287,18 @@ msgstr "查找更多资源(_F)"
 #: cuploadswnd.nothing;item;id_uploads_help
 msgid "_Help..."
 msgstr "帮助(_H)..."
+
+#: cdownloadswnd.download.basic;item;id_shell_menu
+#: cdownloadswnd.download;item;id_shell_menu
+#: cdownloadswnd.completed.basic;item;id_shell_menu
+#: cdownloadswnd.completed;item;id_shell_menu
+#: clibrarytree.physical.basic;item;id_shell_menu
+#: clibrarytree.physical;item;id_shell_menu
+#: clibraryfileview.physical;item;id_shell_menu
+#: clibraryfileview.virtual.basic;item;id_shell_menu
+#: clibraryfileview.virtual;item;id_shell_menu
+msgid "S_hell menu"
+msgstr "外部菜单(_H)"
 
 #: cdownloadswnd.download;item;id_downloads_launch
 msgid "Prev_iew Partial File"
@@ -1518,14 +1511,6 @@ msgstr "共享(_S)"
 msgid "Create ._torrent File"
 msgstr "创建种子文件(_T)"
 
-#: clibrarytree.physical.basic;item;id_shell_menu
-#: clibrarytree.physical;item;id_shell_menu
-#: clibraryfileview.physical;item;id_shell_menu
-#: clibraryfileview.virtual.basic;item;id_shell_menu
-#: clibraryfileview.virtual;item;id_shell_menu
-msgid "S_hell menu"
-msgstr "外部菜单(_H)"
-
 #: clibrarytree.physical;item;id_library_scan
 msgid "S_can"
 msgstr "扫描(_C)"
@@ -1580,8 +1565,15 @@ msgstr "打开(_O)"
 #: clibraryfileview.physical;44;item;id_library_bitzi_download
 #: clibraryfileview.virtual.basic;47;item;id_library_bitzi_download
 #: clibraryfileview.virtual;50;item;id_library_bitzi_download
+#: webservices.list.menu;item;id_library_bitzi_download
 msgid "_Download Metadata"
 msgstr "下载元数据(_D)"
+
+#: clibraryfileview.physical.basic;41;item;id_webservices_musicbrainz
+#: clibraryfileview.physical;44;item;id_webservices_musicbrainz
+#: webservices.list.menu;item;id_webservices_musicbrainz
+msgid "_MusicBrainz"
+msgstr "MusicBrainz(_M)"
 
 #: clibraryfileview.physical.basic;42 clibraryfileview.physical;45
 #: clibraryfileview.virtual.basic;48 clibraryfileview.virtual;51
@@ -2083,18 +2075,6 @@ msgstr "踢出并屏蔽"
 #: circuserlist;64;item;id_irc_bankickwhy
 msgid "Kick+Ban (why?)"
 msgstr "踢出并屏蔽 (为什么？)"
-
-#: webservices.list.menu;item;id_library_bitzi_download
-msgid "_Bitzi"
-msgstr "Bitzi(_B)"
-
-#: webservices.list.menu;item;id_webservices_musicbrainz
-msgid "_MusicBrainz"
-msgstr "MusicBrainz(_M)"
-
-#: webservices.list.menu;item;id_webservices_sharemonkey
-msgid "_ShareMonkey"
-msgstr "ShareMonkey(_S)"
 
 #: chomeviewctrl;heading;1000
 msgid "G E T   C O N N E C T E D"
@@ -7113,10 +7093,6 @@ msgstr "完成"
 msgid "All"
 msgstr "所有"
 
-#: string;20014
-msgid "This option uses services provided by ShareMonkey.com for recognising information about selected files.\\n\\nShareaza will transmit file details and your location in order to query the ShareMonkey database.  If you are concerned about privacy, you may wish to consult the ShareMonkey.com privacy policy.\\n\\nWould you like to proceed?"
-msgstr "该选项使用 ShareMonkey.com 提供的服务来市别选中文件的信息。\\n\\nShareaza 将传送文件细节和您的位置为了查询 ShareMonkey 数据库。如果您担心您的隐私，您可以查阅 ShareMonkey.com 的隐私策略。\\n\\n您是否要继续？"
-
 #: string;20101
 msgid "Requesting"
 msgstr "请求中"
@@ -9958,6 +9934,30 @@ msgstr "触发器"
 #: column;nextrun
 msgid "NextRun"
 msgstr "下次运行"
+
+#~ msgid "Get Data"
+#~ msgstr "获取数据"
+
+#~ msgid "Get Prices"
+#~ msgstr "获取价格"
+
+#~ msgid "Compare"
+#~ msgstr "比较"
+
+#~ msgid "Buy It"
+#~ msgstr "购买"
+
+#~ msgid "Save Preview"
+#~ msgstr "保存封面"
+
+#~ msgid "_Bitzi"
+#~ msgstr "Bitzi(_B)"
+
+#~ msgid "_ShareMonkey"
+#~ msgstr "ShareMonkey(_S)"
+
+#~ msgid "This option uses services provided by ShareMonkey.com for recognising information about selected files.\\n\\nShareaza will transmit file details and your location in order to query the ShareMonkey database.  If you are concerned about privacy, you may wish to consult the ShareMonkey.com privacy policy.\\n\\nWould you like to proceed?"
+#~ msgstr "该选项使用 ShareMonkey.com 提供的服务来市别选中文件的信息。\\n\\nShareaza 将传送文件细节和您的位置为了查询 ShareMonkey 数据库。如果您担心您的隐私，您可以查阅 ShareMonkey.com 的隐私策略。\\n\\n您是否要继续？"
 
 #~ msgid "Buy it and support the author"
 #~ msgstr "购买并支持作者"

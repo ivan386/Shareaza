@@ -446,28 +446,6 @@
 			<button id="ID_CHAT_DISCONNECT" text="Rozłącz"/>
 		</toolbar>
 		<!-- WEBSERVICES -->
-		<toolbar name="WebServices.ShareMonkey">
-			<button id="ID_SHAREMONKEY_DOWNLOAD" text="Pobierz dane"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PREVIOUS" text="Poprzedni"/>
-			<button id="ID_SHAREMONKEY_NEXT" text="Następny"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PRICES" text="Pobierz ceny"/>
-			<button id="ID_SHAREMONKEY_COMPARE" text="Porównaj"/>
-			<button id="ID_SHAREMONKEY_BUY" text="Kup to"/>
-		</toolbar>
-		<toolbar name="WebServices.ShareMonkey.WithSave">
-			<button id="ID_SHAREMONKEY_DOWNLOAD" text="Pobierz dane"/>
-			<button id="ID_SHAREMONKEY_SAVE" text="Zapisz"/>
-			<control id="ID_SHAREMONKEY_SAVE_OPTION" text="Zapisz podgląd" width="100" checked="true"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PREVIOUS" text="Poprzedni"/>
-			<button id="ID_SHAREMONKEY_NEXT" text="Następny"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PRICES" text="Pobierz ceny"/>
-			<button id="ID_SHAREMONKEY_COMPARE" text="Porównaj"/>
-			<button id="ID_SHAREMONKEY_BUY" text="Kup to"/>
-		</toolbar>
 		<toolbar name="WebServices.MusicBrainz">
 			<button id="ID_MUSICBRAINZ_MATCHES" text="View Album Matches"/>
 			<button id="ID_MUSICBRAINZ_ALBUMS" text="Widok wszystkich albumów"/>
@@ -1061,6 +1039,8 @@
 			<item id="ID_DOWNLOADS_COPY" text="Kopiuj _URI"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_HELP" text="Pomoc..."/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="menu interpretera poleceń (Shella)"/>
 		</menu>
 		<menu name="CDownloadsWnd.Download">
 			<item id="ID_DOWNLOADS_LAUNCH_COPY" text="Previe_w File"/>
@@ -1087,9 +1067,12 @@
 				<item id="ID_DOWNLOADS_MOVE_DOWN" text="Przenieś w dół"/>
 				<item id="ID_DOWNLOADS_BOOST" text="Ignoruj limit szerokości pasma"/>
 			</menu>
+			<separator/>
 			<item id="ID_DOWNLOADS_HELP" text="Pomoc..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_EDIT" text="Zaawansowana edycja... (właściwości?)"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="menu interpretera poleceń (Shella)"/>
 		</menu>
 		<menu name="CDownloadsWnd.Source">
 			<item id="ID_TRANSFERS_CONNECT" text="Przejmij (dostęp)"/>
@@ -1107,6 +1090,8 @@
 			<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Wyczyść"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_FILE_DELETE" text="Usuń plik"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="menu interpretera poleceń (Shella)"/>
 		</menu>
 		<menu name="CDownloadsWnd.Completed">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Otwórz lub odtwarzaj"/>
@@ -1117,6 +1102,8 @@
 			<separator/>
 			<item id="ID_DOWNLOADS_FILE_DELETE" text="Usuń plik"/>
 			<item id="ID_DOWNLOADS_RATE" text="Oceń plik"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="menu interpretera poleceń (Shella)"/>
 		</menu>
 		<menu name="CDownloadsWnd.Seeding">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Otwórz lub odtwarzaj"/>
@@ -1259,6 +1246,7 @@
 			<menu text="Usługi Web">
 				<item id="ID_LIBRARY_BITZI_WEB" text="Widok Bitzi Ticket"/>
 				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Pobierz Metadane"/>
+				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="Organizuj">
 				<item id="ID_LIBRARY_RENAME" text="Zmień nazwę pliku"/>
@@ -1290,6 +1278,7 @@
 			<menu text="Usługi Web">
 				<item id="ID_LIBRARY_BITZI_WEB" text="Widok Bitzi Ticket"/>
 				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Pobierz Metadane"/>
+				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="Stwórz plik .torrent"/>
 			</menu>
@@ -1665,9 +1654,9 @@
 			</menu>
 		</menu>
 		<menu name="WebServices.List.Menu">
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Bitzi"/>
+			<item id="ID_LIBRARY_BITZI_WEB" text="Widok Bitzi Ticket"/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Pobierz Metadane"/>
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
-			<item id="ID_WEBSERVICES_SHAREMONKEY" text="_ShareMonkey"/>
 		</menu>
 	</menus>
 	<!-- Documents -->
@@ -3373,7 +3362,6 @@
 		<string id="20011" value="&amp;Następny"/>
 		<string id="20012" value="Finisz"/>
 		<string id="20013" value="Wszystko"/>
-		<string id="20014" value="This option uses services provided by Bitzi.com for recognising and sharing information about selected files.\n\nShareaza will transmit the SHA1 hash code for the selected file(s) in order to query the Bitzi database.  If you are concerned about privacy, you may wish to consult the Bitzi.com privacy policy.\n\nWould you like to proceed?"/>
 		<string id="20100" value="Łączenie"/>
 		<string id="20101" value="Żądanie"/>
 		<string id="20102" value="Odpowiedź"/>

@@ -446,28 +446,6 @@
 			<button id="ID_CHAT_DISCONNECT" text="Se déconnecter"/>
 		</toolbar>
 		<!-- WEBSERVICES -->
-		<toolbar name="WebServices.ShareMonkey">
-			<button id="ID_SHAREMONKEY_DOWNLOAD" text="Informations"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PREVIOUS" text="Précédent"/>
-			<button id="ID_SHAREMONKEY_NEXT" text="Suivant"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PRICES" text="Prix"/>
-			<button id="ID_SHAREMONKEY_COMPARE" text="Comparer"/>
-			<button id="ID_SHAREMONKEY_BUY" text="Acheter"/>
-		</toolbar>
-		<toolbar name="WebServices.ShareMonkey.WithSave">
-			<button id="ID_SHAREMONKEY_DOWNLOAD" text="Informations"/>
-			<button id="ID_SHAREMONKEY_SAVE" text="Sauvegarder"/>
-			<control id="ID_SHAREMONKEY_SAVE_OPTION" text="Enregistrer la Prévisualisation" width="100" checked="true"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PREVIOUS" text="Précédent"/>
-			<button id="ID_SHAREMONKEY_NEXT" text="Suivant"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PRICES" text="Prix"/>
-			<button id="ID_SHAREMONKEY_COMPARE" text="Comparer"/>
-			<button id="ID_SHAREMONKEY_BUY" text="Acheter"/>
-		</toolbar>
 		<toolbar name="WebServices.MusicBrainz">
 			<button id="ID_MUSICBRAINZ_MATCHES" text="Voir les albums correspondants"/>
 			<button id="ID_MUSICBRAINZ_ALBUMS" text="Voir tous les albums"/>
@@ -1061,6 +1039,8 @@
 			<item id="ID_DOWNLOADS_COPY" text="Copier l'_URI"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_HELP" text="Ai_de..."/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="_Menu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Download">
 			<item id="ID_DOWNLOADS_LAUNCH_COPY" text="Previe_w File"/>
@@ -1087,9 +1067,12 @@
 				<item id="ID_DOWNLOADS_MOVE_DOWN" text="_Descendre d'un cran"/>
 				<item id="ID_DOWNLOADS_BOOST" text="_Ignorer la limitation de la bande passante"/>
 			</menu>
+			<separator/>
 			<item id="ID_DOWNLOADS_HELP" text="Ai_de..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_EDIT" text="_Propriétés"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="_Menu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Source">
 			<item id="ID_TRANSFERS_CONNECT" text="_Accéder"/>
@@ -1107,6 +1090,8 @@
 			<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Netto_yer"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_FILE_DELETE" text="_Supprimer le fichier"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="_Menu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Completed">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Ouvrir ou lire"/>
@@ -1117,6 +1102,8 @@
 			<separator/>
 			<item id="ID_DOWNLOADS_FILE_DELETE" text="_Supprimer le fichier"/>
 			<item id="ID_DOWNLOADS_RATE" text="É_valuer ce fichier..."/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="_Menu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Seeding">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Ouvrir ou lire"/>
@@ -1259,6 +1246,7 @@
 			<menu text="Services _Web">
 				<item id="ID_LIBRARY_BITZI_WEB" text="Voir le billet _Bitzi"/>
 				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Télécharger les méta_données"/>
+				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="Orga_niser">
 				<item id="ID_LIBRARY_RENAME" text="_Renommer le fichier"/>
@@ -1290,6 +1278,7 @@
 			<menu text="Services _Web">
 				<item id="ID_LIBRARY_BITZI_WEB" text="Voir le billet _Bitzi"/>
 				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Télécharger les méta_données"/>
+				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="Créer un fichier .torrent"/>
 			</menu>
@@ -1665,9 +1654,9 @@
 			</menu>
 		</menu>
 		<menu name="WebServices.List.Menu">
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Bitzi"/>
+			<item id="ID_LIBRARY_BITZI_WEB" text="Voir le billet _Bitzi"/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Télécharger les méta_données"/>
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
-			<item id="ID_WEBSERVICES_SHAREMONKEY" text="_ShareMonkey"/>
 		</menu>
 	</menus>
 	<!-- Documents -->
@@ -3371,7 +3360,6 @@
 		<string id="20011" value="&amp;Suivant"/>
 		<string id="20012" value="Terminer"/>
 		<string id="20013" value="Tout"/>
-		<string id="20014" value="Cette option utilise les services de Bitzi.com pour la reconnaissance et le partage de l'information sur les fichiers sélectionnés.\n\nShareaza va transmettre le code SHA1 de ce(s) fichier(s) pour interroger la base de donnée de Bitzi. Si vous êtes préoccupé par votre vie privée, consultez la politique de confidentialité de Bitzi.com.\n\nVoulez-vous continuer ?"/>
 		<string id="20100" value="Connexion"/>
 		<string id="20101" value="Requête"/>
 		<string id="20102" value="Réponse"/>

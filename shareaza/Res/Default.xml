@@ -1022,6 +1022,8 @@
 			<item id="ID_DOWNLOADS_COPY" text="Copy _URI..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_HELP" text="_Help..."/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Download">
 			<item id="ID_DOWNLOADS_LAUNCH_COPY" text="Previe_w File"/>
@@ -1048,9 +1050,12 @@
 				<item id="ID_DOWNLOADS_MOVE_DOWN" text="Move _Down"/>
 				<item id="ID_DOWNLOADS_BOOST" text="_Ignore Bandwidth Limit"/>
 			</menu>
+			<separator/>
 			<item id="ID_DOWNLOADS_HELP" text="_Help..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_EDIT" text="_Properties"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Source">
 			<item id="ID_TRANSFERS_CONNECT" text="_Access"/>
@@ -1068,6 +1073,8 @@
 			<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Clear"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_FILE_DELETE" text="_Delete File"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Completed">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Open or Play"/>
@@ -1078,6 +1085,8 @@
 			<separator/>
 			<item id="ID_DOWNLOADS_FILE_DELETE" text="_Delete File"/>
 			<item id="ID_DOWNLOADS_RATE" text="_Rate File..."/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Seeding">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Open or Play"/>
@@ -1220,6 +1229,7 @@
 			<menu text="_Web Services">
 				<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
 				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Download Metadata"/>
+				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="O_rganise">
 				<item id="ID_LIBRARY_RENAME" text="_Rename File"/>
@@ -1251,6 +1261,7 @@
 			<menu text="_Web Services">
 				<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
 				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Download Metadata"/>
+				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="Create ._torrent File"/>
 			</menu>
@@ -1617,7 +1628,8 @@
 			</menu>
 		</menu>
 		<menu name="WebServices.List.Menu">
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Bitzi"/>
+			<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Download Metadata"/>
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 		</menu>
 	</menus>

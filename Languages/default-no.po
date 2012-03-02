@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2012-02-29 19:32+0000\n"
+"POT-Creation-Date: 2012-03-02 16:08+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -303,11 +303,11 @@ msgstr "Juster volum"
 msgid "Open File"
 msgstr "Åpne fil"
 
-#: button;id_media_previous button;id_sharemonkey_previous
+#: button;id_media_previous
 msgid "Previous"
 msgstr "Tilbake"
 
-#: button;id_media_next button;id_sharemonkey_next string;20135
+#: button;id_media_next string;20135
 msgid "Next"
 msgstr "Neste"
 
@@ -328,7 +328,7 @@ msgstr "Juster hastighet"
 msgid "Clear"
 msgstr "Oppdater"
 
-#: button;id_media_save button;id_sharemonkey_save
+#: button;id_media_save
 msgid "Save"
 msgstr "Lagre"
 
@@ -489,26 +489,6 @@ msgstr "C"
 #: button;id_chat_priority
 msgid "Grant Priority"
 msgstr "Gi prioritet"
-
-#: button;id_sharemonkey_download
-msgid "Get Data"
-msgstr ""
-
-#: button;id_sharemonkey_prices
-msgid "Get Prices"
-msgstr ""
-
-#: button;id_sharemonkey_compare
-msgid "Compare"
-msgstr ""
-
-#: button;id_sharemonkey_buy
-msgid "Buy It"
-msgstr ""
-
-#: control;id_sharemonkey_save_option
-msgid "Save Preview"
-msgstr ""
 
 #: button;id_musicbrainz_matches
 msgid "View Album Matches"
@@ -1211,6 +1191,7 @@ msgstr "_Web søk"
 #: clibraryfileview.physical;44;item;id_library_bitzi_web
 #: clibraryfileview.virtual.basic;47;item;id_library_bitzi_web
 #: clibraryfileview.virtual;50;item;id_library_bitzi_web
+#: webservices.list.menu;item;id_library_bitzi_web
 msgid "View _Bitzi Ticket"
 msgstr "Søk med Bitzi Ticket"
 
@@ -1306,6 +1287,18 @@ msgstr "Finn flere kilder"
 #: cuploadswnd.nothing;item;id_uploads_help
 msgid "_Help..."
 msgstr "Hjelp..."
+
+#: cdownloadswnd.download.basic;item;id_shell_menu
+#: cdownloadswnd.download;item;id_shell_menu
+#: cdownloadswnd.completed.basic;item;id_shell_menu
+#: cdownloadswnd.completed;item;id_shell_menu
+#: clibrarytree.physical.basic;item;id_shell_menu
+#: clibrarytree.physical;item;id_shell_menu
+#: clibraryfileview.physical;item;id_shell_menu
+#: clibraryfileview.virtual.basic;item;id_shell_menu
+#: clibraryfileview.virtual;item;id_shell_menu
+msgid "S_hell menu"
+msgstr "S_hell menu"
 
 #: cdownloadswnd.download;item;id_downloads_launch
 msgid "Prev_iew Partial File"
@@ -1518,14 +1511,6 @@ msgstr "Delt"
 msgid "Create ._torrent File"
 msgstr "Lag .torrent"
 
-#: clibrarytree.physical.basic;item;id_shell_menu
-#: clibrarytree.physical;item;id_shell_menu
-#: clibraryfileview.physical;item;id_shell_menu
-#: clibraryfileview.virtual.basic;item;id_shell_menu
-#: clibraryfileview.virtual;item;id_shell_menu
-msgid "S_hell menu"
-msgstr "S_hell menu"
-
 #: clibrarytree.physical;item;id_library_scan
 msgid "S_can"
 msgstr "Skann"
@@ -1582,8 +1567,15 @@ msgstr "Åpne"
 #: clibraryfileview.physical;44;item;id_library_bitzi_download
 #: clibraryfileview.virtual.basic;47;item;id_library_bitzi_download
 #: clibraryfileview.virtual;50;item;id_library_bitzi_download
+#: webservices.list.menu;item;id_library_bitzi_download
 msgid "_Download Metadata"
 msgstr "Hent Metadata"
+
+#: clibraryfileview.physical.basic;41;item;id_webservices_musicbrainz
+#: clibraryfileview.physical;44;item;id_webservices_musicbrainz
+#: webservices.list.menu;item;id_webservices_musicbrainz
+msgid "_MusicBrainz"
+msgstr ""
 
 #: clibraryfileview.physical.basic;42 clibraryfileview.physical;45
 #: clibraryfileview.virtual.basic;48 clibraryfileview.virtual;51
@@ -2084,18 +2076,6 @@ msgstr ""
 
 #: circuserlist;64;item;id_irc_bankickwhy
 msgid "Kick+Ban (why?)"
-msgstr ""
-
-#: webservices.list.menu;item;id_library_bitzi_download
-msgid "_Bitzi"
-msgstr ""
-
-#: webservices.list.menu;item;id_webservices_musicbrainz
-msgid "_MusicBrainz"
-msgstr ""
-
-#: webservices.list.menu;item;id_webservices_sharemonkey
-msgid "_ShareMonkey"
 msgstr ""
 
 #: chomeviewctrl;heading;1000
@@ -7207,11 +7187,6 @@ msgstr ""
 msgid "All"
 msgstr "Match alle"
 
-#: string;20014
-#, fuzzy
-msgid "This option uses services provided by ShareMonkey.com for recognising information about selected files.\\n\\nShareaza will transmit file details and your location in order to query the ShareMonkey database.  If you are concerned about privacy, you may wish to consult the ShareMonkey.com privacy policy.\\n\\nWould you like to proceed?"
-msgstr "Dette valget bruker Bitzi.com for å finne informasjon om valgte filer.\\n\\nShareaza sender SHA1 hash koden til den valgte filen for å søke i Bitzi databasen. Hvis du er redd for å dele slik informasjon, kan du lese Bitzi.com's retningslinjer for personopplysninger.\\n\\nVil du fortsette?"
-
 #: string;20101
 msgid "Requesting"
 msgstr "Anmoder"
@@ -10064,6 +10039,10 @@ msgstr "TigerTree"
 #, fuzzy
 msgid "NextRun"
 msgstr "Neste"
+
+#, fuzzy
+#~ msgid "This option uses services provided by ShareMonkey.com for recognising information about selected files.\\n\\nShareaza will transmit file details and your location in order to query the ShareMonkey database.  If you are concerned about privacy, you may wish to consult the ShareMonkey.com privacy policy.\\n\\nWould you like to proceed?"
+#~ msgstr "Dette valget bruker Bitzi.com for å finne informasjon om valgte filer.\\n\\nShareaza sender SHA1 hash koden til den valgte filen for å søke i Bitzi databasen. Hvis du er redd for å dele slik informasjon, kan du lese Bitzi.com's retningslinjer for personopplysninger.\\n\\nVil du fortsette?"
 
 #, fuzzy
 #~ msgid "Search for matches"

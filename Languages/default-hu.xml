@@ -446,28 +446,6 @@
 			<button id="ID_CHAT_DISCONNECT" text="Disconnect"/>
 		</toolbar>
 		<!-- WEBSERVICES -->
-		<toolbar name="WebServices.ShareMonkey">
-			<button id="ID_SHAREMONKEY_DOWNLOAD" text="Adatok letöltése"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PREVIOUS" text="Előző"/>
-			<button id="ID_SHAREMONKEY_NEXT" text="Következő"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PRICES" text="Árak megtekintése"/>
-			<button id="ID_SHAREMONKEY_COMPARE" text="Összehasonlítás"/>
-			<button id="ID_SHAREMONKEY_BUY" text="Vásárlás"/>
-		</toolbar>
-		<toolbar name="WebServices.ShareMonkey.WithSave">
-			<button id="ID_SHAREMONKEY_DOWNLOAD" text="Adatok letöltése"/>
-			<button id="ID_SHAREMONKEY_SAVE" text="Mentés"/>
-			<control id="ID_SHAREMONKEY_SAVE_OPTION" text="Save Preview" width="100" checked="true"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PREVIOUS" text="Előző"/>
-			<button id="ID_SHAREMONKEY_NEXT" text="Következő"/>
-			<separator/>
-			<button id="ID_SHAREMONKEY_PRICES" text="Árak megtekintése"/>
-			<button id="ID_SHAREMONKEY_COMPARE" text="Összehasonlítás"/>
-			<button id="ID_SHAREMONKEY_BUY" text="Vásárlás"/>
-		</toolbar>
 		<toolbar name="WebServices.MusicBrainz">
 			<button id="ID_MUSICBRAINZ_MATCHES" text="Egyező albumok megtekintése"/>
 			<button id="ID_MUSICBRAINZ_ALBUMS" text="Minden album megtekintése"/>
@@ -1061,6 +1039,8 @@
 			<item id="ID_DOWNLOADS_COPY" text="_URI másolása"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_HELP" text="_Súgó..."/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Download">
 			<item id="ID_DOWNLOADS_LAUNCH_COPY" text="Previe_w File"/>
@@ -1087,9 +1067,12 @@
 				<item id="ID_DOWNLOADS_MOVE_DOWN" text="_Le"/>
 				<item id="ID_DOWNLOADS_BOOST" text="_Sávszél-korlátozás figyelmen kivül hagyása"/>
 			</menu>
+			<separator/>
 			<item id="ID_DOWNLOADS_HELP" text="_Súgó..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_EDIT" text="T_ulajdonságok"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Source">
 			<item id="ID_TRANSFERS_CONNECT" text="_Belépés"/>
@@ -1107,6 +1090,8 @@
 			<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Töröl"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_FILE_DELETE" text="_Fájl törlése"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Completed">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Megnyitás és Lejátszás"/>
@@ -1117,6 +1102,8 @@
 			<separator/>
 			<item id="ID_DOWNLOADS_FILE_DELETE" text="_Fájl törlése"/>
 			<item id="ID_DOWNLOADS_RATE" text="Fájl _osztályozása..."/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Seeding">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Megnyitás és Lejátszás"/>
@@ -1259,6 +1246,7 @@
 			<menu text="_Webszolgáltatások">
 				<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Ticket"/>
 				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Metaadat letöltése"/>
+				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
 			<menu text="_Rendezés">
 				<item id="ID_LIBRARY_RENAME" text="Fájl _átnevezése"/>
@@ -1290,6 +1278,7 @@
 			<menu text="_Webszolgáltatások">
 				<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Ticket"/>
 				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Metaadat letöltése"/>
+				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="._torrent fájl készítése"/>
 			</menu>
@@ -1665,9 +1654,9 @@
 			</menu>
 		</menu>
 		<menu name="WebServices.List.Menu">
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Bitzi"/>
+			<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Ticket"/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Metaadat letöltése"/>
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
-			<item id="ID_WEBSERVICES_SHAREMONKEY" text="_ShareMonkey"/>
 		</menu>
 	</menus>
 	<!-- Documents -->
@@ -3346,7 +3335,6 @@
 		<string id="20011" value="&amp;Tovább"/>
 		<string id="20012" value="Befejezve"/>
 		<string id="20013" value="Minden"/>
-		<string id="20014" value="Ez az opció a Bitzi.com fájlinformációs szolgáltatásait használja.\n\nA Shareaza a fájl SHA1 hash kódját elküldi a Bitzi adatbázisába. Ha nem bízik meg a Bitziben, akkor olvassa el a Bitzi.com adatvédelmi nyilatkozatát.\n\nTovább akar menni?"/>
 		<string id="20100" value="Kapcsolódás"/>
 		<string id="20101" value="Kérés"/>
 		<string id="20102" value="Válasz"/>
