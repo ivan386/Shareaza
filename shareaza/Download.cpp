@@ -1,7 +1,7 @@
 //
 // Download.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -102,7 +102,7 @@ void CDownload::Resume()
 	if ( IsCompleted() )
 		return;
 
-	if ( !IsPaused() )
+	if ( ! IsPaused() )
 	{
 		StartTrying();
 		return;
@@ -397,7 +397,7 @@ void CDownload::OnRun()
 
 	DWORD tNow = GetTickCount();
 
-	if ( !IsPaused() )
+	if ( ! IsPaused() )
 	{
 		if ( GetFileError() != ERROR_SUCCESS  )
 		{
@@ -410,7 +410,9 @@ void CDownload::OnRun()
 				OnDownloaded();
 		}
 		else if ( IsTrying() || IsSeeding() )
-		{	//This download is trying to download
+		{
+			// This download is trying to download
+			OpenFile();
 
 			//'Dead download' check- if download appears dead, give up and allow another to start.
 			if ( ! IsCompleted() && ( tNow - GetStartTimer() ) > ( 3 * 60 * 60 * 1000 )  )
@@ -473,29 +475,26 @@ void CDownload::OnRun()
 			} // if ( RunTorrent( tNow ) )
 
 			// Calculate the current downloading state
-			if( HasActiveTransfers() )
+			if ( HasActiveTransfers() )
 				m_bDownloading = true;
 		}
 		else if ( ! IsCompleted() && m_bVerify != TRI_TRUE )
 		{
+			// This is pending download
 			if ( Network.IsConnected() )
 			{
 				// We have extra regular downloads 'trying' so when a new slot
 				// is ready, a download has sources and is ready to go.
 				if ( Downloads.GetTryingCount() < ( Settings.Downloads.MaxFiles + Settings.Downloads.MaxFileSearches ) )
 				{
-					if ( IsTorrent() )
-					{
+					if ( ! IsTorrent() ||
 						// Torrents only try when 'ready to go'. (Reduce tracker load)
-						if ( Downloads.GetTryingCount( true ) < Settings.BitTorrent.DownloadTorrents )
-							Resume();
-					}
-					else
+						Downloads.GetTryingCount( true ) < Settings.BitTorrent.DownloadTorrents )
+					{
 						Resume();
+					}
 				}
 			}
-			else
-				ASSERT( !IsTrying() );
 		}
 	}
 

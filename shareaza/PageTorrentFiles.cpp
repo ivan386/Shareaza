@@ -1,7 +1,7 @@
 //
 // PageTorrentGeneral.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -77,8 +77,9 @@ BOOL CTorrentFilesPage::OnInitDialog()
 
 	CDownload* pDownload = ((CDownloadSheet*)GetParent())->GetDownload();
 	ASSERT( pDownload && pDownload->IsTorrent() );
-
-	bool bCompleted = pDownload->IsCompleted();
+	CComPtr< CFragmentedFile > pFragFile = pDownload->GetFile();
+	DWORD nCount = pFragFile ? pFragFile->GetCount() : 0;
+	bool bCompleted = pDownload->IsCompleted() || nCount < 2;
 
 	auto_ptr< CLibraryTipCtrl > pTip( new CLibraryTipCtrl );
 	pTip->Create( this, &Settings.Interface.TipDownloads );
@@ -106,22 +107,18 @@ BOOL CTorrentFilesPage::OnInitDialog()
 		END_COLUMN_MAP( m_wndFiles, 3 )
 	}
 
-	if ( CComPtr< CFragmentedFile > pFragFile = pDownload->GetFile() )
+	for ( DWORD i = 0; i < nCount; ++i )
 	{
-		for ( DWORD i = 0 ; i < pFragFile->GetCount() ; ++i )
-		{
-			LV_ITEM pItem = {};
-			pItem.mask		= LVIF_TEXT|LVIF_IMAGE|LVIF_PARAM;
-			pItem.iItem		= i;
-			pItem.lParam	= (LPARAM)pFragFile->GetAt( i );
-			pItem.iImage	= ShellIcons.Get( pFragFile->GetName( i ), 16 );
-			pItem.pszText	= (LPTSTR)(LPCTSTR)pFragFile->GetName( i );
-			pItem.iItem		= m_wndFiles.InsertItem( &pItem );
-			m_wndFiles.SetItemText( pItem.iItem, 1,
-				Settings.SmartVolume( pFragFile->GetLength( i ) ) );
-			if ( ! bCompleted )
-				m_wndFiles.SetColumnData( pItem.iItem, 3, pFragFile->GetPriority( i ) );
-		}
+		LV_ITEM pItem = {};
+		pItem.mask		= LVIF_TEXT|LVIF_IMAGE|LVIF_PARAM;
+		pItem.iItem		= i;
+		pItem.lParam	= (LPARAM)pFragFile->GetAt( i );
+		pItem.iImage	= ShellIcons.Get( pFragFile->GetName( i ), 16 );
+		pItem.pszText	= (LPTSTR)(LPCTSTR)pFragFile->GetName( i );
+		pItem.iItem		= m_wndFiles.InsertItem( &pItem );
+		m_wndFiles.SetItemText( pItem.iItem, 1, Settings.SmartVolume( pFragFile->GetLength( i ) ) );
+		if ( ! bCompleted )
+			m_wndFiles.SetColumnData( pItem.iItem, 3, pFragFile->GetPriority( i ) );
 	}
 
 	Update();
@@ -146,9 +143,13 @@ BOOL CTorrentFilesPage::OnApply()
 	{
 		if ( CComPtr< CFragmentedFile > pFragFile = pDownload->GetFile() )
 		{
-			for ( DWORD i = 0; i < pFragFile->GetCount(); ++i )
+			DWORD nCount = pFragFile ? pFragFile->GetCount() : 0;
+			if ( nCount > 1 )
 			{
-				pFragFile->SetPriority( i, m_wndFiles.GetColumnData( i, 3 ) );
+				for ( DWORD i = 0; i < nCount; ++i )
+				{
+					pFragFile->SetPriority( i, m_wndFiles.GetColumnData( i, 3 ) );
+				}
 			}
 		}
 	}

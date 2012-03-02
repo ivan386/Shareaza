@@ -1,7 +1,7 @@
 //
 // DownloadWithTiger.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -422,21 +422,15 @@ void CDownloadWithTiger::RunValidation()
 	if ( m_pTigerBlock == NULL && m_pHashsetBlock == NULL && m_pTorrentBlock == NULL )
 		return;
 
-	if ( ! OpenFile() )
+	if ( ! IsFileOpen() )
 		return;
 
-	if ( m_nVerifyHash > HASH_NULL && m_nVerifyBlock < 0xFFFFFFFF )
+	if ( ( m_nVerifyHash > HASH_NULL && m_nVerifyBlock < 0xFFFFFFFF ) ||
+		FindNewValidationBlock( HASH_TORRENT ) ||
+		FindNewValidationBlock( HASH_TIGERTREE ) ||
+		FindNewValidationBlock( HASH_ED2K ) )
 	{
 		ContinueValidation();
-	}
-	else
-	{
-		if ( FindNewValidationBlock( HASH_TORRENT ) ||
-			 FindNewValidationBlock( HASH_TIGERTREE ) ||
-			 FindNewValidationBlock( HASH_ED2K ) )
-		{
-			ContinueValidation();
-		}
 	}
 }
 
@@ -591,13 +585,8 @@ BOOL CDownloadWithTiger::FindNewValidationBlock(int nHash)
 
 void CDownloadWithTiger::ContinueValidation()
 {
-	CQuickLock oLock( m_pTigerSection );
-
 	ASSERT( m_nVerifyHash > HASH_NULL );
 	ASSERT( m_nVerifyBlock < 0xFFFFFFFF );
-
-	if ( ! OpenFile() )
-		return;
 
 	auto_array< BYTE > pChunk( new BYTE[ 256 * 1024ull ] );
 

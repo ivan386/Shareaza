@@ -1,7 +1,7 @@
 //
 // DownloadWithSearch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -105,7 +105,7 @@ void CDownloadWithSearch::RunSearch(DWORD tNow)
 		
 		m_tSearchCheck = tNow;
 		
-		if ( IsPaused() == FALSE && ( bFewSources || bDataStarve ) )
+		if ( bFewSources || bDataStarve )
 		{
 			StartAutomaticSearch();
 		}

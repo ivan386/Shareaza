@@ -410,10 +410,10 @@ BOOL CDownloadWithTorrent::SetTorrent(const CBTInfo* pTorrent)
 		HostCache.BitTorrent.Add( m_pTorrent.m_oNodes.GetNext( pos ) );
 	}
 
-	SetModified();
-
 	// Re-link
 	DownloadGroups.Link( static_cast< CDownload* >( this ) );
+
+	OpenFile();
 
 	return TRUE;
 }
@@ -426,20 +426,12 @@ bool CDownloadWithTorrent::RunTorrent(DWORD tNow)
 	if ( !Network.IsConnected() || !Settings.BitTorrent.EnableToday )
 		return true;
 
-	// Return if disk is full
-	if ( GetFileError() != ERROR_SUCCESS )
-		return false;
-
 	// Choke torrents every 10 seconds
 	if ( tNow > m_tTorrentChoke && tNow - m_tTorrentChoke >= 10000ul )
 		ChokeTorrent( tNow );
 
 	// Check if the torrent file exists and has been opened
-	if ( ! OpenFile() )
-		return false;
-
-	// Return if this download is waiting for a download task to finish
-	if ( IsTasking() )
+	if ( ! IsFileOpen() )
 		return false;
 
 	// Generate a peerid if there isn't one
@@ -452,12 +444,11 @@ bool CDownloadWithTorrent::RunTorrent(DWORD tNow)
 	DWORD nSourcesWanted = 0ul;
 
 	// Check if a tracker has already been locked onto
-	if ( !m_bTorrentStarted )
+	if ( ! m_bTorrentStarted )
 	{
 		// Check if download is active, isn't already waiting for a request
 		// reply and is allowed to try and contact this tracker
-		if ( !IsPaused() && ( IsTrying() || IsSeeding() )
-			&& !m_bTorrentRequested && tNow > m_tTorrentTracker )
+		if ( ! m_bTorrentRequested && ( tNow > m_tTorrentTracker ) )
 		{
 			// Get the # of sources that can be connected to
 			nSourcesCount = GetBTSourceCount( TRUE );
