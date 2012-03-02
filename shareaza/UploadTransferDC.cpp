@@ -1,7 +1,7 @@
 //
 // UploadTransferDC.cpp 
 //
-// Copyright (c) Shareaza Development Team, 2010-2011.
+// Copyright (c) Shareaza Development Team, 2010-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -652,7 +652,7 @@ void CUploadTransferDC::LibraryToFileList(const CString& strRoot, CBuffer& pXML)
 	CString strFileListing;
 	strFileListing.Format( _T("<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>\r\n")
 		_T("<FileListing Version=\"1\" Base=\"%s\" Generator=\"%s\">\r\n"),
-		CXMLNode::ValueToString( strRoot ), CXMLNode::ValueToString( theApp.m_sSmartAgent ) );
+		CXMLNode::ValueToString( strRoot ), CXMLNode::ValueToString( Settings.SmartAgent() ) );
 	pXML.Print( strFileListing, CP_UTF8 );
 
 	if ( strRoot == _T("/") )

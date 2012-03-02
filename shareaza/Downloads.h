@@ -1,7 +1,7 @@
 //
 // Downloads.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -49,6 +49,9 @@ public:
 	DWORD			m_nBandwidth;
 	DWORD			m_tLastConnect;
 	bool			m_bClosing;
+	QWORD			m_nComplete;				// The last complete size of incomplete downloads
+	QWORD			m_nTotal;					// The last total size of incomplete downloads
+
 private:
 	CList< CDownload* >	m_pList;
 	CMap< ULONG, ULONG, DWORD, DWORD > m_pHostLimits;

@@ -1574,11 +1574,49 @@ void CMainWnd::UpdateMessages()
 			Settings.SmartSpeed( CGraphItem::GetValue( GRC_TOTAL_BANDWIDTH_OUT ), bits ),
 			CGraphItem::GetValue( GRC_DOWNLOADS_TRANSFERS ),
 			CGraphItem::GetValue( GRC_UPLOADS_TRANSFERS ) );
+		strTip = Settings.SmartAgent() + _T("\r\n") + strTip;
 		
 		m_pTray.uFlags = NIF_TIP;
 		_tcsncpy( m_pTray.szTip, strTip, _countof( m_pTray.szTip ) - 1 );
 		m_pTray.szTip[ _countof( m_pTray.szTip ) - 1 ] = _T('\0');
 		m_bTrayIcon = Shell_NotifyIcon( NIM_MODIFY, &m_pTray );
+	}
+
+	// AppBar on Windows 7
+	if ( Windows.dwMajorVersion > 6 || ( Windows.dwMajorVersion == 6 && Windows.dwMinorVersion >= 1 ) )
+	{
+		static bool bProgressShown = false;
+
+		QWORD nTotal = Downloads.m_nTotal, nComplete = Downloads.m_nComplete;
+		if ( nTotal && nComplete != nTotal )
+		{
+			bProgressShown = true;
+
+			CComPtr< ITaskbarList3 > pTaskbar;
+			if ( SUCCEEDED( pTaskbar.CoCreateInstance( CLSID_TaskbarList ) ) )
+			{
+				pTaskbar->SetProgressState( GetSafeHwnd(), TBPF_NORMAL );
+				pTaskbar->SetProgressValue( GetSafeHwnd(), nComplete, nTotal );
+
+				CString sAppBarTip;
+				sAppBarTip.Format( _T("%s\r\n%s %.2f%%\r\n%s %s"), Settings.SmartAgent(),
+					LoadString( IDS_DLM_VOLUME_DOWNLOADED ), float( ( 10000 * nComplete ) / nTotal ) / 100.f,
+					LoadString( IDS_DLM_TOTAL_SPEED ), Settings.SmartSpeed( CGraphItem::GetValue( GRC_TOTAL_BANDWIDTH_IN ), bits ) );
+				pTaskbar->SetThumbnailTooltip( GetSafeHwnd(), sAppBarTip );
+			}
+		}
+		else if ( bProgressShown )
+		{
+			bProgressShown = false;
+
+			CComPtr< ITaskbarList3 > pTaskbar;
+			if ( SUCCEEDED( pTaskbar.CoCreateInstance( CLSID_TaskbarList ) ) )
+			{
+				pTaskbar->SetProgressState( GetSafeHwnd(), TBPF_NOPROGRESS );
+				pTaskbar->SetThumbnailTooltip( GetSafeHwnd(), Settings.SmartAgent() );
+			}
+		}
+
 	}
 }
 
