@@ -1,7 +1,7 @@
 //
 // RouteCache.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_ROUTECACHE_H__7FDD7D02_ABC8_4718_A985_C411BCE0D660__INCLUDED_)
-#define AFX_ROUTECACHE_H__7FDD7D02_ABC8_4718_A985_C411BCE0D660__INCLUDED_
-
 #pragma once
 
 class CNeighbour;
@@ -29,8 +26,9 @@ class CNeighbour;
 
 class CRouteCacheItem
 {
-// Attributes
 public:
+	CRouteCacheItem();
+
 	CRouteCacheItem*	m_pNext;
 	DWORD				m_tAdded;
 	Hashes::Guid		m_oGUID;
@@ -98,5 +96,3 @@ public:
 
 	CRouteCacheItem*	Lookup(const Hashes::Guid& oGUID, CNeighbour** ppNeighbour = NULL, SOCKADDR_IN* pEndpoint = NULL);
 };
-
-#endif // !defined(AFX_ROUTECACHE_H__7FDD7D02_ABC8_4718_A985_C411BCE0D660__INCLUDED_)

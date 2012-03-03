@@ -1,7 +1,7 @@
 //
 // RouteCache.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -21,9 +21,7 @@
 
 #include "StdAfx.h"
 #include "Shareaza.h"
-#include "Settings.h"
 #include "RouteCache.h"
-#include "Packet.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -40,14 +38,23 @@ const DWORD MIN_BUFFER_SIZE = 1024u;
 const DWORD MAX_BUFFER_SIZE = 40960u;
 const unsigned BUFFER_BLOCK_SIZE = 1024u;
 
+CRouteCacheItem::CRouteCacheItem()
+	: m_pNext		( NULL )
+	, m_tAdded		( 0 )
+	, m_oGUID		()
+	, m_pNeighbour	( NULL )
+	, m_pEndpoint	()
+{
+	m_pEndpoint.sin_family = AF_INET;
+}
 
 //////////////////////////////////////////////////////////////////////
 // CRouteCache construction
 
 CRouteCache::CRouteCache()
-	: m_nSeconds( 60 * 20 )
-	, m_pRecent( &m_pTable[0] )
-	, m_pHistory ( &m_pTable[1] )
+	: m_nSeconds	( 60 * 20 )
+	, m_pRecent		( &m_pTable[0] )
+	, m_pHistory	( &m_pTable[1] )
 {
 }
 
@@ -182,9 +189,13 @@ void CRouteCache::Clear()
 // CRouteCacheTable construction
 
 CRouteCacheTable::CRouteCacheTable()
-	: m_pBuffer( NULL )
-	, m_nBuffer( 0 )
-	, m_nUsed( 0 )
+	: m_pHash	()
+	, m_pFree	( NULL )
+	, m_pBuffer	( NULL )
+	, m_nBuffer	( 0 )
+	, m_nUsed	( 0 )
+	, m_tFirst	( 0 )
+	, m_tLast	( 0 )
 {
 	Clear();
 }
