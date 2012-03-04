@@ -53,10 +53,9 @@ static char THIS_FILE[]=__FILE__;
 // CHandshake construction
 
 CHandshake::CHandshake()
+	: m_bPushing( FALSE )
+	, m_nIndex	( 0 )
 {
-	// We did not connect to the remote computer as part of a push
-	m_bPushing = FALSE;
-
 	// Set pointers so the input and output bandwidth limits are read from the DWORD in settings
 	m_mInput.pLimit = m_mOutput.pLimit = &Settings.Bandwidth.Request;
 }

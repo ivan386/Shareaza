@@ -1090,7 +1090,8 @@ BOOL CNetwork::OnPush(const Hashes::Guid& oGUID, CConnection* pConnection)
 		CChildWnd* pChildWnd = NULL;
 		while ( ( pChildWnd = pMainWnd->m_pWindows.Find( NULL, pChildWnd ) ) != NULL )
 		{
-			pChildWnd->OnPush( oGUID, pConnection );
+			if ( pChildWnd->OnPush( oGUID, pConnection ) )
+				return TRUE;
 		}
 	}
 
