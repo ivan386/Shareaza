@@ -413,7 +413,7 @@ BOOL CDownloadWithTorrent::SetTorrent(const CBTInfo* pTorrent)
 	// Re-link
 	DownloadGroups.Link( static_cast< CDownload* >( this ) );
 
-	OpenFile();
+	SetModified();
 
 	return TRUE;
 }

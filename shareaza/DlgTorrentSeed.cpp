@@ -1,7 +1,7 @@
 //
 // DlgTorrentSeed.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -168,6 +168,8 @@ void CTorrentSeedDlg::OnDownload()
 		EndDialog( IDOK );
 		return;
 	}
+
+	pDownload->PrepareFile();
 
 	if ( ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0 &&
 		! Network.IsWellConnected() )
