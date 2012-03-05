@@ -4428,7 +4428,7 @@
 		<dialog name="CTorrentFilesPage" cookie="Sy" caption="檔案">
 			<control/>
 		</dialog>
-		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStSt" caption="伺服器">
+		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBu" caption="伺服器">
 			<control/>
 			<control/>
 			<control/>
@@ -4440,6 +4440,8 @@
 			<control caption="未完成:"/>
 			<control caption="Incomplete:"/>
 			<control caption="重新整理"/>
+			<control/>
+			<control/>
 		</dialog>
 		<dialog name="CDownloadGroupDlg" cookie="BuBuEdCoBuCoBuBuEdBuBuBuBuBuBu" caption="下載群組的屬性">
 			<control caption="確定"/>

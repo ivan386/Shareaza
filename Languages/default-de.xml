@@ -4487,7 +4487,7 @@
 		<dialog name="CTorrentFilesPage" cookie="Sy" caption="Dateien">
 			<control/>
 		</dialog>
-		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStSt" caption="Tracker">
+		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBu" caption="Tracker">
 			<control/>
 			<control/>
 			<control/>
@@ -4499,6 +4499,8 @@
 			<control caption="Vollständig (Seeds):"/>
 			<control caption="Unvollständig (Leecher):"/>
 			<control caption="Tracker-Modus:"/>
+			<control/>
+			<control/>
 		</dialog>
 		<dialog name="CDownloadGroupDlg" cookie="BuBuEdCoBuCoBuBuEdBuBuBuBuBuBu" caption="Downloadgruppen-Eigenschaften">
 			<control caption="OK"/>

@@ -814,6 +814,8 @@
 #define IDC_SCHEDULER_LIMITED_DC        1618
 #define IDC_SCHEDULER_LIMITED_BT        1619
 #define IDC_ANTIVIRUS                   1620
+#define IDC_TORRENT_TRACKERS_ADD        1621
+#define IDC_TORRENT_TRACKERS_DEL        1622
 #define IDS_FILTER_DELETE_CONFIRM       7000
 #define IDS_SCHEMAS                     7001
 #define IDS_MULTIPLE_VALUES             7002
@@ -1941,7 +1943,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        349
 #define _APS_NEXT_COMMAND_VALUE         33329
-#define _APS_NEXT_CONTROL_VALUE         1621
+#define _APS_NEXT_CONTROL_VALUE         1622
 #define _APS_NEXT_SYMED_VALUE           104
 #endif
 #endif

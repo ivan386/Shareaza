@@ -4490,7 +4490,7 @@
 		<dialog name="CTorrentFilesPage" cookie="Sy" caption="Fichiers">
 			<control/>
 		</dialog>
-		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStSt" caption="Traqueurs">
+		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBu" caption="Traqueurs">
 			<control/>
 			<control/>
 			<control/>
@@ -4502,6 +4502,8 @@
 			<control caption="Terminés (Seeds) :"/>
 			<control caption="Incomplet :"/>
 			<control caption="Mode du traqueur :"/>
+			<control/>
+			<control/>
 		</dialog>
 		<dialog name="CDownloadGroupDlg" cookie="BuBuEdCoBuCoBuBuEdBuBuBuBuBuBu" caption="Propriétés du groupe de téléchargement">
 			<control caption="Valider"/>

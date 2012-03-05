@@ -4487,7 +4487,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<dialog name="CTorrentFilesPage" cookie="Sy" caption="Filer">
 			<control/>
 		</dialog>
-		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStSt" caption="Trackers">
+		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBu" caption="Trackers">
 			<control/>
 			<control/>
 			<control/>
@@ -4499,6 +4499,8 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 			<control caption="Ofullständiga:"/>
 			<control caption="Incomplete:"/>
 			<control caption="_Uppdatera"/>
+			<control/>
+			<control/>
 		</dialog>
 		<dialog name="CDownloadGroupDlg" cookie="BuBuEdCoBuCoBuBuEdBuBuBuBuBuBu" caption="Egenskaper för nedladdningsgruppen">
 			<control caption="OK"/>

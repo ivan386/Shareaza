@@ -148,6 +148,7 @@ public:
 	BOOL		FinishBlockTest(DWORD nBlock);
 
 	int			AddTracker(const CBTTracker& oTracker);
+	void		RemoveAllTrackers();
 	void		SetTrackerAccess(DWORD tNow);
 	void		SetTrackerSucceeded(DWORD tNow);
 	void		SetTrackerRetry(DWORD tTime);

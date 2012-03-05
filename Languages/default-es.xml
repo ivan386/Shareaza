@@ -4488,7 +4488,7 @@ puede comenzar a transferir en cualquier momento.</text>
 		<dialog name="CTorrentFilesPage" cookie="Sy" caption="Archivos">
 			<control/>
 		</dialog>
-		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStSt" caption="Trackers(Rastreadores)">
+		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBu" caption="Trackers(Rastreadores)">
 			<control/>
 			<control/>
 			<control/>
@@ -4500,6 +4500,8 @@ puede comenzar a transferir en cualquier momento.</text>
 			<control caption="Completados (Seeds):"/>
 			<control caption="Incompleto:"/>
 			<control caption="Modo del tracker:"/>
+			<control/>
+			<control/>
 		</dialog>
 		<dialog name="CDownloadGroupDlg" cookie="BuBuEdCoBuCoBuBuEdBuBuBuBuBuBu" caption="Propiedades del Grupo de Descarga">
 			<control caption="Aceptar"/>

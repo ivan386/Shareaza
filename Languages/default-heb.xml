@@ -4495,7 +4495,7 @@
 		<dialog name="CTorrentFilesPage" cookie="Sy" caption="קבצים">
 			<control/>
 		</dialog>
-		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStSt" caption="Trackers">
+		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBu" caption="Trackers">
 			<control/>
 			<control/>
 			<control/>
@@ -4507,6 +4507,8 @@
 			<control caption="Incomplete:"/>
 			<control caption="Incomplete:"/>
 			<control caption="רענן"/>
+			<control/>
+			<control/>
 		</dialog>
 		<dialog name="CDownloadGroupDlg" cookie="BuBuEdCoBuCoBuBuEdBuBuBuBuBuBu" caption="הורד מאפייני קבוצה">
 			<control caption="אישור"/>

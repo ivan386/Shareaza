@@ -4484,7 +4484,7 @@
 		<dialog name="CTorrentFilesPage" cookie="Sy" caption="Failai">
 			<control/>
 		</dialog>
-		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStSt" caption="Sekliai">
+		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBu" caption="Sekliai">
 			<control/>
 			<control/>
 			<control/>
@@ -4496,6 +4496,8 @@
 			<control caption="Skleidėjų:"/>
 			<control caption="Siuntėjų:"/>
 			<control caption="Seklio veiksena:"/>
+			<control/>
+			<control/>
 		</dialog>
 		<dialog name="CDownloadGroupDlg" cookie="BuBuEdCoBuCoBuBuEdBuBuBuBuBuBu" caption="Atsisiuntimų grupės ypatybės">
 			<control caption="Gerai"/>

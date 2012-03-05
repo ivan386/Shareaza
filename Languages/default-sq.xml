@@ -4492,7 +4492,7 @@
 		<dialog name="CTorrentFilesPage" cookie="Sy" caption="Skeda">
 			<control/>
 		</dialog>
-		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStSt" caption="Gjurmues">
+		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBu" caption="Gjurmues">
 			<control/>
 			<control/>
 			<control/>
@@ -4504,6 +4504,8 @@
 			<control caption="Përfunduar (Fara):"/>
 			<control caption="Pa përfunduar:"/>
 			<control caption="Mënyra e Gjurmuesit:"/>
+			<control/>
+			<control/>
 		</dialog>
 		<dialog name="CDownloadGroupDlg" cookie="BuBuEdCoBuCoBuBuEdBuBuBuBuBuBu" caption="Vetitë e Grupit të Shkarkimit">
 			<control caption="OK"/>

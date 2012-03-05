@@ -4493,7 +4493,7 @@
 		<dialog name="CTorrentFilesPage" cookie="Sy" caption="Soubory">
 			<control/>
 		</dialog>
-		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStSt" caption="Trackery">
+		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBu" caption="Trackery">
 			<control/>
 			<control/>
 			<control/>
@@ -4505,6 +4505,8 @@
 			<control caption="Nedokončeno:"/>
 			<control caption="Incomplete:"/>
 			<control caption="_Obnovit"/>
+			<control/>
+			<control/>
 		</dialog>
 		<dialog name="CDownloadGroupDlg" cookie="BuBuEdCoBuCoBuBuEdBuBuBuBuBuBu" caption="Stažení vlastností skupiny">
 			<control caption="OK"/>

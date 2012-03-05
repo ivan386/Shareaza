@@ -4459,7 +4459,7 @@
 		<dialog name="CTorrentFilesPage" cookie="Sy" caption="Dosyalar">
 			<control/>
 		</dialog>
-		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStSt" caption="Trackers">
+		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBu" caption="Trackers">
 			<control/>
 			<control/>
 			<control/>
@@ -4471,6 +4471,8 @@
 			<control caption="Bitirilmemiş:"/>
 			<control caption="Incomplete:"/>
 			<control caption="T_azele"/>
+			<control/>
+			<control/>
 		</dialog>
 		<dialog name="CDownloadGroupDlg" cookie="BuBuEdCoBuCoBuBuEdBuBuBuBuBuBu" caption="İndirme Grup Özellikleri">
 			<control caption="Tamam"/>

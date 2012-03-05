@@ -1516,6 +1516,13 @@ int CBTInfo::AddTracker(const CBTTracker& oTracker)
 	return (int)m_oTrackers.Add( oTracker );
 }
 
+void CBTInfo::RemoveAllTrackers()
+{
+	m_nTrackerIndex = -1;
+	m_nTrackerMode = CBTInfo::tNull;
+	m_oTrackers.RemoveAll();
+}
+
 CString CBTInfo::GetTrackerHash() const
 {
 	// Get concatenated tracker URLs list sorted in alphabetical order

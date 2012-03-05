@@ -4485,7 +4485,7 @@
 		<dialog name="CTorrentFilesPage" cookie="Sy" caption="Failid">
 			<control/>
 		</dialog>
-		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStSt" caption="Jälitused">
+		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBu" caption="Jälitused">
 			<control/>
 			<control/>
 			<control/>
@@ -4497,6 +4497,8 @@
 			<control caption="Poolik:"/>
 			<control caption="Incomplete:"/>
 			<control caption="_Värskenda"/>
+			<control/>
+			<control/>
 		</dialog>
 		<dialog name="CDownloadGroupDlg" cookie="BuBuEdCoBuCoBuBuEdBuBuBuBuBuBu" caption="Allalaadimisgrupi Omadused">
 			<control caption="OK"/>

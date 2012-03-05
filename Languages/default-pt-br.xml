@@ -4496,7 +4496,7 @@ pasta dos arquivos baixados a sua biblioteca agora?"/>
 		<dialog name="CTorrentFilesPage" cookie="Sy" caption="Arquivos">
 			<control/>
 		</dialog>
-		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStSt" caption="Trackers">
+		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBu" caption="Trackers">
 			<control/>
 			<control/>
 			<control/>
@@ -4508,6 +4508,8 @@ pasta dos arquivos baixados a sua biblioteca agora?"/>
 			<control caption="Completados (Seeds):"/>
 			<control caption="Incompletos:"/>
 			<control caption="Modo Tracker:"/>
+			<control/>
+			<control/>
 		</dialog>
 		<dialog name="CDownloadGroupDlg" cookie="BuBuEdCoBuCoBuBuEdBuBuBuBuBuBu" caption="Propriedades do Grupo dos Downloads">
 			<control caption="OK"/>

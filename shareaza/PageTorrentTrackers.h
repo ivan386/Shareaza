@@ -36,15 +36,28 @@ public:
 	enum { IDD = IDD_TORRENT_TRACKERS };
 
 protected:
-	CString				m_sTracker;
+	CString				m_sOriginalTracker;
+	int					m_nOriginalMode;
+	CStringList			m_sOriginalTrackers;
+
+	CEdit				m_wndTracker;
 	CButton				m_wndRefresh;
+	CButton				m_wndAdd;
+	CButton				m_wndDel;
 	CEdit				m_wndComplete;
 	CEdit				m_wndIncomplete;
 	CComboBox			m_wndTrackerMode;
 	CListCtrl			m_wndTrackers;
+
 	DWORD				m_nComplete;
 	DWORD				m_nIncomplete;
 	CBTTrackerRequest*	m_pRequest;
+
+	void UpdateInterface();							// Updated interface
+	BOOL ApplyTracker();							// Apply settings to download
+	void InsertTracker();							// Insert new tracker
+	void EditTracker(int nItem, LPCTSTR szText);	// Set tracker new text
+	void SelectTracker(int nItem);					// Select this tracker as current one in single mode
 
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	virtual BOOL OnInitDialog();
@@ -54,9 +67,13 @@ protected:
 	afx_msg void OnTorrentRefresh();
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnDestroy();
-	afx_msg void OnEnChangeTorrentTracker();
 	afx_msg void OnNMClickTorrentTrackers(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnCbnSelchangeTorrentTrackermode();
+	afx_msg void OnLvnKeydownTorrentTrackers(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnBnClickedTorrentTrackersAdd();
+	afx_msg void OnBnClickedTorrentTrackersDel();
+	afx_msg void OnNMDblclkTorrentTrackers(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnLvnEndlabeleditTorrentTrackers(NMHDR *pNMHDR, LRESULT *pResult);
 
 	DECLARE_MESSAGE_MAP()
 };

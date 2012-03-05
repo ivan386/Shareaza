@@ -4472,7 +4472,7 @@
 		<dialog name="CTorrentFilesPage" cookie="Sy" caption="文件">
 			<control/>
 		</dialog>
-		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStSt" caption="Trackers">
+		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBu" caption="Trackers">
 			<control/>
 			<control/>
 			<control/>
@@ -4484,6 +4484,8 @@
 			<control caption="完整的 (种子):"/>
 			<control caption="不完整的:"/>
 			<control caption="Tracker 模式:"/>
+			<control/>
+			<control/>
 		</dialog>
 		<dialog name="CDownloadGroupDlg" cookie="BuBuEdCoBuCoBuBuEdBuBuBuBuBuBu" caption="下载组属性">
 			<control caption="确定"/>

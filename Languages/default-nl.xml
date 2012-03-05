@@ -4491,7 +4491,7 @@
 		<dialog name="CTorrentFilesPage" cookie="Sy" caption="Bestanden">
 			<control/>
 		</dialog>
-		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStSt" caption="Trackers">
+		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBu" caption="Trackers">
 			<control/>
 			<control/>
 			<control/>
@@ -4503,6 +4503,8 @@
 			<control caption="Incomplete:"/>
 			<control caption="Incompleet:"/>
 			<control caption="_Refresh"/>
+			<control/>
+			<control/>
 		</dialog>
 		<dialog name="CDownloadGroupDlg" cookie="BuBuEdCoBuCoBuBuEdBuBuBuBuBuBu" caption="Downloadgroep eigenschappen">
 			<control caption="OK"/>

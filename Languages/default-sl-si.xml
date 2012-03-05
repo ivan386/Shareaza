@@ -4487,7 +4487,7 @@
 		<dialog name="CTorrentFilesPage" cookie="Sy" caption="Datoteke">
 			<control/>
 		</dialog>
-		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStSt" caption="Sledilniki">
+		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBu" caption="Sledilniki">
 			<control/>
 			<control/>
 			<control/>
@@ -4499,6 +4499,8 @@
 			<control caption="Nedokončani:"/>
 			<control caption="Incomplete:"/>
 			<control caption="_Osveži"/>
+			<control/>
+			<control/>
 		</dialog>
 		<dialog name="CDownloadGroupDlg" cookie="BuBuEdCoBuCoBuBuEdBuBuBuBuBuBu" caption="Lastnosti prenosne skupine">
 			<control caption="V redu"/>

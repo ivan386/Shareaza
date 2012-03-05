@@ -4485,7 +4485,7 @@
 		<dialog name="CTorrentFilesPage" cookie="Sy" caption="ファイル">
 			<control/>
 		</dialog>
-		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStSt" caption="トラッカー">
+		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBu" caption="トラッカー">
 			<control/>
 			<control/>
 			<control/>
@@ -4497,6 +4497,8 @@
 			<control caption="未完了:"/>
 			<control caption="Incomplete:"/>
 			<control caption="更新(_R)"/>
+			<control/>
+			<control/>
 		</dialog>
 		<dialog name="CDownloadGroupDlg" cookie="BuBuEdCoBuCoBuBuEdBuBuBuBuBuBu" caption="ダウンロードグループプロパティ">
 			<control caption="OK"/>

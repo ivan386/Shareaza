@@ -4486,7 +4486,7 @@
 		<dialog name="CTorrentFilesPage" cookie="Sy" caption="Archivos">
 			<control/>
 		</dialog>
-		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStSt" caption="Trackers">
+		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBu" caption="Trackers">
 			<control/>
 			<control/>
 			<control/>
@@ -4498,6 +4498,8 @@
 			<control caption="Incompleto:"/>
 			<control caption="Incomplete:"/>
 			<control caption="_Actualizar"/>
+			<control/>
+			<control/>
 		</dialog>
 		<dialog name="CDownloadGroupDlg" cookie="BuBuEdCoBuCoBuBuEdBuBuBuBuBuBu" caption="Propiedades del Grupo de Descarga">
 			<control caption="Aceptar"/>
