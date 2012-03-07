@@ -1111,6 +1111,8 @@
 			<item id="ID_DOWNLOADS_HELP" text="_Ohje..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_EDIT" text="Torrentti _Info..."/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Nothing">
 			<item id="ID_DOWNLOADS_HELP" text="_Ohje..."/>

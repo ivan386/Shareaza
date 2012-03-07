@@ -1111,6 +1111,8 @@
 			<item id="ID_DOWNLOADS_HELP" text="_Ndihmë..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_EDIT" text="_Veti..."/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="Meny b_azë"/>
 		</menu>
 		<menu name="CDownloadsWnd.Nothing">
 			<item id="ID_DOWNLOADS_HELP" text="_Ndihmë..."/>

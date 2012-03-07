@@ -1111,6 +1111,8 @@
 			<item id="ID_DOWNLOADS_HELP" text="Hjelp..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_EDIT" text="_Informasjon om torrent..."/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Nothing">
 			<item id="ID_DOWNLOADS_HELP" text="Hjelp..."/>

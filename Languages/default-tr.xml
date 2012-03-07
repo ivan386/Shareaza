@@ -1111,6 +1111,8 @@
 			<item id="ID_DOWNLOADS_HELP" text="_Yardım..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_EDIT" text="İ_leri Düzenleme..."/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="İş_letim Sistemi Menüsü"/>
 		</menu>
 		<menu name="CDownloadsWnd.Nothing">
 			<item id="ID_DOWNLOADS_HELP" text="_Yardım..."/>

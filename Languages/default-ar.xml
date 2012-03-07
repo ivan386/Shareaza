@@ -1111,6 +1111,8 @@
 			<item id="ID_DOWNLOADS_HELP" text="_تعليمات..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_EDIT" text="_معلومات"/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="قائمة ال_قشرة"/>
 		</menu>
 		<menu name="CDownloadsWnd.Nothing">
 			<item id="ID_DOWNLOADS_HELP" text="_تعليمات..."/>

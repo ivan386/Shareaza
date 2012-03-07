@@ -1111,6 +1111,8 @@
 			<item id="ID_DOWNLOADS_HELP" text="_Справка..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_EDIT" text="_Свойства..."/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="Меню Windows"/>
 		</menu>
 		<menu name="CDownloadsWnd.Nothing">
 			<item id="ID_DOWNLOADS_HELP" text="_Справка..."/>

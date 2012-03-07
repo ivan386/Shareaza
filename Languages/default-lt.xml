@@ -1111,6 +1111,8 @@
 			<item id="ID_DOWNLOADS_HELP" text="Ži_nynas..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_EDIT" text="Sa_vybės..."/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="Aplinkos _meniu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Nothing">
 			<item id="ID_DOWNLOADS_HELP" text="Ži_nynas..."/>

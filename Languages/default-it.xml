@@ -1111,6 +1111,8 @@
 			<item id="ID_DOWNLOADS_HELP" text="Aiuto..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_EDIT" text="_Proprietà..."/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="Menu s_hell"/>
 		</menu>
 		<menu name="CDownloadsWnd.Nothing">
 			<item id="ID_DOWNLOADS_HELP" text="Aiuto..."/>

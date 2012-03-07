@@ -1111,6 +1111,8 @@
 			<item id="ID_DOWNLOADS_HELP" text="Pomoc..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_EDIT" text="Właściwości, Torrent Info..."/>
+			<separator/>
+			<item id="ID_SHELL_MENU" text="menu interpretera poleceń (Shella)"/>
 		</menu>
 		<menu name="CDownloadsWnd.Nothing">
 			<item id="ID_DOWNLOADS_HELP" text="Pomoc..."/>
