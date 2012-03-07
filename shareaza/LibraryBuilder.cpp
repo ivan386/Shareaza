@@ -1,7 +1,7 @@
 //
 // LibraryBuilder.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -587,15 +587,22 @@ bool CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile)
 	pFileHash->Finish();
 
 	// Get associated download (if any)
-	CSingleLock oTransfersLock( &Transfers.m_pSection, TRUE );
+	CSingleLock oTransfersLock( &Transfers.m_pSection );
+	for ( int i = 0; ! oTransfersLock.Lock( 100 ); ++i )
+	{
+		if ( i > 10 || m_bSkip )
+			return false;
+	}
 	CDownload* pDownload = Downloads.FindByPath( szPath );
 	if ( ! pDownload )
 		oTransfersLock.Unlock();
 
-	CSingleLock oLibraryLock( &Library.m_pSection, FALSE );
-	while ( ! oLibraryLock.Lock( 100 ) )
-		if ( m_bSkip )
+	CSingleLock oLibraryLock( &Library.m_pSection );
+	for ( int i = 0; ! oLibraryLock.Lock( 100 ); ++i )
+	{
+		if ( i > 10 || m_bSkip )
 			return false;
+	}
 
 	m_bSkip = true;
 
