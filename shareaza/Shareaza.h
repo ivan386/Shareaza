@@ -229,10 +229,10 @@ extern SYSTEM_INFO			System;						// System Information
 class CProgressDialog : public CComPtr< IProgressDialog >
 {
 public:
-	CProgressDialog(LPCTSTR szTitle);
+	CProgressDialog(LPCTSTR szTitle, DWORD dwFlags = PROGDLG_NOCANCEL | PROGDLG_AUTOTIME);
 	virtual ~CProgressDialog();
 
-	void Progress(LPCTSTR szText, DWORD nCompleted, DWORD nTotal);
+	void Progress(LPCTSTR szText, QWORD nCompleted, QWORD nTotal);
 };
 
 //

@@ -1,7 +1,7 @@
 //
 // DlgDeleteFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -148,6 +148,8 @@ void CDeleteFileDlg::OnDeleteAll()
 
 void CDeleteFileDlg::Apply(CLibraryFile* pFile)
 {
+	ASSUME_LOCK( Library.m_pSection );
+
 	if ( m_nRateValue > 0 || m_sComments.GetLength() > 0 )
 	{
 		if ( m_bCreateGhost )
@@ -166,9 +168,8 @@ void CDeleteFileDlg::Apply(CLibraryFile* pFile)
 	}
 	else if ( m_bCreateGhost )
 	{
-		CString strTransl;
+		CString strTransl = LoadString( IDS_LIBRARY_GHOST_FILE );
 		CString strUntransl = L"Ghost File";
-		LoadString( strTransl, IDS_LIBRARY_GHOST_FILE );
 		if ( strTransl == strUntransl )
 		{
 			pFile->m_sComments	= m_sComments = strUntransl;
@@ -182,37 +183,36 @@ void CDeleteFileDlg::Apply(CLibraryFile* pFile)
 	}
 }
 
-void CDeleteFileDlg::Create(CDownload* pDownload, BOOL bShare)
+void CDeleteFileDlg::Apply(CShareazaFile* pSrc, BOOL bShare)
 {
-	if ( ! pDownload->m_oSHA1 && ! pDownload->m_oTiger && ! pDownload->m_oED2K &&
-		 ! pDownload->m_oBTH && ! pDownload->m_oMD5 ) return;
+	ASSUME_LOCK( Library.m_pSection );
 
-	CSingleLock oLock( &Library.m_pSection );
-	if ( !oLock.Lock( 500 ) ) return;
+	if ( ! pSrc->m_oSHA1 && ! pSrc->m_oTiger && ! pSrc->m_oED2K &&
+		 ! pSrc->m_oBTH && ! pSrc->m_oMD5 ) return;
 
 	CLibraryFile* pFile = NULL;
 
-	if ( pFile == NULL && pDownload->m_oSHA1 )
-		pFile = LibraryMaps.LookupFileBySHA1( pDownload->m_oSHA1 );
-	if ( pFile == NULL && pDownload->m_oTiger )
-		pFile = LibraryMaps.LookupFileByTiger( pDownload->m_oTiger );
-	if ( pFile == NULL && pDownload->m_oED2K )
-		pFile = LibraryMaps.LookupFileByED2K( pDownload->m_oED2K );
-	if ( pFile == NULL && pDownload->m_oBTH )
-		pFile = LibraryMaps.LookupFileByBTH( pDownload->m_oBTH );
-	if ( pFile == NULL && pDownload->m_oMD5 )
-		pFile = LibraryMaps.LookupFileByMD5( pDownload->m_oMD5 );
+	if ( pFile == NULL && pSrc->m_oSHA1 )
+		pFile = LibraryMaps.LookupFileBySHA1( pSrc->m_oSHA1 );
+	if ( pFile == NULL && pSrc->m_oTiger )
+		pFile = LibraryMaps.LookupFileByTiger( pSrc->m_oTiger );
+	if ( pFile == NULL && pSrc->m_oED2K )
+		pFile = LibraryMaps.LookupFileByED2K( pSrc->m_oED2K );
+	if ( pFile == NULL && pSrc->m_oBTH )
+		pFile = LibraryMaps.LookupFileByBTH( pSrc->m_oBTH );
+	if ( pFile == NULL && pSrc->m_oMD5 )
+		pFile = LibraryMaps.LookupFileByMD5( pSrc->m_oMD5 );
 
 	if ( pFile == NULL && m_bCreateGhost &&
 		 ( m_nRateValue > 0 || m_sComments.GetLength() > 0 ) ) // The file is not completed
 	{
-		pFile = new CLibraryFile( NULL, pDownload->m_sName );
-		pFile->m_nSize		= pDownload->m_nSize;
-		pFile->m_oSHA1		= pDownload->m_oSHA1;
-		pFile->m_oTiger		= pDownload->m_oTiger;
-		pFile->m_oMD5		= pDownload->m_oMD5;
-		pFile->m_oED2K		= pDownload->m_oED2K;
-		pFile->m_oBTH		= pDownload->m_oBTH;
+		pFile = new CLibraryFile( NULL, pSrc->m_sName );
+		pFile->m_nSize		= pSrc->m_nSize;
+		pFile->m_oSHA1		= pSrc->m_oSHA1;
+		pFile->m_oTiger		= pSrc->m_oTiger;
+		pFile->m_oMD5		= pSrc->m_oMD5;
+		pFile->m_oED2K		= pSrc->m_oED2K;
+		pFile->m_oBTH		= pSrc->m_oBTH;
 		pFile->m_bShared	= bShare ? TRI_TRUE : TRI_FALSE;
 		pFile->Ghost();
 	}

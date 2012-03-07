@@ -2313,6 +2313,8 @@ BOOL CreateDirectory(LPCTSTR szPath)
 	
 void DeleteFiles(CStringList& pList)
 {
+	DWORD nTotal = pList.GetCount();
+
 	while ( ! pList.IsEmpty() )
 	{
 		CString strFirstPath = pList.GetHead();
@@ -2338,21 +2340,26 @@ void DeleteFiles(CStringList& pList)
 		if ( dlg.DoModal() != IDOK )
 			break;
 
+		CProgressDialog dlgProgress( LoadString( ID_LIBRARY_DELETE ) + _T("..") );
+
 		for ( INT_PTR nProcess = dlg.m_bAll ? pList.GetCount() : 1 ;
 			nProcess > 0 && pList.GetCount() > 0 ; nProcess-- )
 		{
 			CString strPath = pList.RemoveHead();
 
+			dlgProgress.Progress( strPath, nTotal - pList.GetCount(), nTotal );
+
 			{
 				CQuickLock pTransfersLock( Transfers.m_pSection ); // Can clear uploads and downloads
-				CQuickLock pLibraryLock( Library.m_pSection );
-
-				if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( strPath ) )
 				{
-					// It's library file
-					dlg.Apply( pFile );
-					pFile->Delete();
-					continue;
+					CQuickLock pLibraryLock( Library.m_pSection );
+					if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( strPath ) )
+					{
+						// It's library file
+						dlg.Apply( pFile );
+						pFile->Delete();
+						continue;
+					}
 				}
 			}
 
@@ -3064,13 +3071,13 @@ INT_PTR MsgBox(UINT nIDPrompt, UINT nType, UINT nIDHelp, DWORD* pnDefault, DWORD
 /////////////////////////////////////////////////////////////////////////////
 // CProgressDialog
 
-CProgressDialog::CProgressDialog(LPCTSTR szTitle)
+CProgressDialog::CProgressDialog(LPCTSTR szTitle, DWORD dwFlags)
 {
 	if ( SUCCEEDED( CoCreateInstance( CLSID_ProgressDialog ) ) )
 	{
 		p->SetTitle( CLIENT_NAME_T );
 		p->SetLine( 1, szTitle, FALSE, NULL );
-		p->StartProgressDialog( theApp.SafeMainWnd()->GetSafeHwnd(), NULL, PROGDLG_NOCANCEL | PROGDLG_AUTOTIME, NULL );
+		p->StartProgressDialog( theApp.SafeMainWnd()->GetSafeHwnd(), NULL, dwFlags, NULL );
 	}
 }
 
@@ -3082,11 +3089,11 @@ CProgressDialog::~CProgressDialog()
 	}
 }
 
-void CProgressDialog::Progress(LPCTSTR szText, DWORD nCompleted, DWORD nTotal)
+void CProgressDialog::Progress(LPCTSTR szText, QWORD nCompleted, QWORD nTotal)
 {
 	if ( p )
 	{
 		p->SetLine( 2,  szText, TRUE, NULL );
-		p->SetProgress( nCompleted, nTotal );
+		p->SetProgress64( nCompleted, nTotal );
 	}
 }

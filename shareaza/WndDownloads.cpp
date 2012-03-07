@@ -722,53 +722,69 @@ void CDownloadsWnd::OnUpdateDownloadsClear(CCmdUI* pCmdUI)
 
 void CDownloadsWnd::OnDownloadsClear()
 {
-	CSingleLock pLock( &Transfers.m_pSection, TRUE );
-	CList<CDownload*> pList;
-
-	for ( POSITION pos = Downloads.GetIterator() ; pos ; )
+	CList< CDownload* > pList;
 	{
-		CDownload* pDownload = Downloads.GetNext( pos );
-		if ( pDownload->m_bSelected ) pList.AddTail( pDownload );
+		CQuickLock pTransfersLock( Transfers.m_pSection );
+		for ( POSITION pos = Downloads.GetIterator() ; pos ; )
+		{
+			CDownload* pDownload = Downloads.GetNext( pos );
+			if ( pDownload->m_bSelected ) pList.AddTail( pDownload );
+		}
 	}
 
 	// If no downloads selected then process selected sources
 	if ( pList.IsEmpty() )
 		OnTransfersForget();
 
+	DWORD nTotal = pList.GetCount();
+
 	while ( ! pList.IsEmpty() )
 	{
-		CDownload* pDownload = pList.RemoveHead();
+		CDownload* pDownload = pList.GetHead();
 
-		if ( Downloads.Check( pDownload ) && ! pDownload->IsTasking() )
+		CDeleteFileDlg dlg;
+		dlg.m_bAll = ( pList.GetCount() > 1 );
+
 		{
-			if ( pDownload->IsPreviewVisible() )
+			CQuickLock pTransfersLock( Transfers.m_pSection ); // Can clear uploads and downloads
+			if ( ! Downloads.Check( pDownload ) || pDownload->IsTasking() || pDownload->IsPreviewVisible() )
 			{
-				// Can't
+				pList.RemoveHead();
+				continue;
 			}
-			else if ( pDownload->IsCompleted() )
+			else if ( pDownload->IsCompleted() || ! pDownload->IsStarted() )
 			{
+				pList.RemoveHead();
 				pDownload->Remove();
+				continue;
 			}
-			else if ( pDownload->IsStarted() )
+
+			dlg.m_sName = pDownload->m_sName;
+		}
+
+		if ( dlg.DoModal() != IDOK )
+			break;
+
+		CProgressDialog dlgProgress( LoadString( ID_DOWNLOADS_CLEAR ) + _T("..") );
+
+		for ( INT_PTR nProcess = dlg.m_bAll ? pList.GetCount() : 1 ;
+			nProcess > 0 && pList.GetCount() > 0 ; nProcess-- )
+		{
+			CDownload* pDownload = pList.RemoveHead();
+
+			CQuickLock pTransfersLock( Transfers.m_pSection ); // Can clear uploads and downloads
 			{
-				CDeleteFileDlg dlg;
-				dlg.m_sName = pDownload->m_sName;
-				bool bShared = pDownload->IsShared();
-
-				pLock.Unlock();
-				if ( dlg.DoModal() != IDOK )
-					break;
-				pLock.Lock();
-
-				if ( Downloads.Check( pDownload ) && ! pDownload->IsTasking() )
+				if ( Downloads.Check( pDownload ) && ! pDownload->IsTasking() && ! pDownload->IsPreviewVisible() )
 				{
-					dlg.Create( pDownload, bShared );
+					dlgProgress.Progress( pDownload->m_sName, nTotal - pList.GetCount(), nTotal );
+
+					if ( ! pDownload->IsCompleted() && pDownload->IsStarted() )
+					{
+						CQuickLock pLibraryLock( Library.m_pSection );
+						dlg.Apply( pDownload, pDownload->IsShared() );
+					}
 					pDownload->Remove();
 				}
-			}
-			else
-			{
-				pDownload->Remove();
 			}
 		}
 	}
@@ -787,40 +803,67 @@ void CDownloadsWnd::OnUpdateDownloadsClearIncomplete(CCmdUI *pCmdUI)
 
 void CDownloadsWnd::OnDownloadsClearIncomplete()
 {
-	CSingleLock pLock( &Transfers.m_pSection, TRUE );
-	CList<CDownload*> pList;
-
-	for ( POSITION pos = Downloads.GetIterator() ; pos ; )
+	CList< CDownload* > pList;
 	{
-		CDownload* pDownload = Downloads.GetNext( pos );
-		if ( pDownload->m_bSelected ) pList.AddTail( pDownload );
+		CQuickLock pTransfersLock( Transfers.m_pSection );
+
+		for ( POSITION pos = Downloads.GetIterator() ; pos ; )
+		{
+			CDownload* pDownload = Downloads.GetNext( pos );
+			if ( pDownload->m_bSelected ) pList.AddTail( pDownload );
+		}
 	}
+
+	DWORD nTotal = pList.GetCount();
 
 	while ( ! pList.IsEmpty() )
 	{
-		CDownload* pDownload = pList.RemoveHead();
+		CDownload* pDownload = pList.GetHead();
 
-		if ( Downloads.Check( pDownload ) )
+		CDeleteFileDlg dlg;
+		dlg.m_bAll = ( pList.GetCount() > 1 );
+
 		{
-			if ( ! pDownload->IsCompleted() && ! pDownload->IsPreviewVisible() )
+			CQuickLock pTransfersLock( Transfers.m_pSection ); // Can clear uploads and downloads
+
+			if ( ! Downloads.Check( pDownload ) || pDownload->IsTasking() || pDownload->IsPreviewVisible() || pDownload->IsCompleted() )
 			{
-				if ( pDownload->IsStarted() )
+				pList.RemoveHead();
+				continue;
+			}
+			else if ( ! pDownload->IsStarted() )
+			{
+				pList.RemoveHead();
+				pDownload->Remove();
+				continue;
+			}
+
+			dlg.m_sName = pDownload->m_sName;
+		}
+
+		if ( dlg.DoModal() != IDOK )
+			break;
+	
+		CProgressDialog dlgProgress( LoadString( ID_DOWNLOADS_CLEAR_INCOMPLETE ) + _T("..") );
+
+		for ( INT_PTR nProcess = dlg.m_bAll ? pList.GetCount() : 1 ;
+			nProcess > 0 && pList.GetCount() > 0 ; nProcess-- )
+		{
+			CDownload* pDownload = pList.RemoveHead();
+
+			CQuickLock pTransfersLock( Transfers.m_pSection ); // Can clear uploads and downloads
+			{
+				if ( Downloads.Check( pDownload ) && ! pDownload->IsTasking() && ! pDownload->IsPreviewVisible() && ! pDownload->IsCompleted() )
 				{
-					CDeleteFileDlg dlg;
-					dlg.m_sName = pDownload->m_sName;
-					bool bShared = pDownload->IsShared();
+					dlgProgress.Progress( pDownload->m_sName, nTotal - pList.GetCount(), nTotal );
 
-					pLock.Unlock();
-					if ( dlg.DoModal() != IDOK )
-						break;
-					pLock.Lock();
-
-					if ( Downloads.Check( pDownload ) )
-						dlg.Create( pDownload, bShared );
-				}
-
-				if ( Downloads.Check( pDownload ) && ! pDownload->IsTasking() )
+					if ( pDownload->IsStarted() )
+					{
+						CQuickLock pLibraryLock( Library.m_pSection );
+						dlg.Apply( pDownload, pDownload->IsShared() );
+					}
 					pDownload->Remove();
+				}
 			}
 		}
 	}

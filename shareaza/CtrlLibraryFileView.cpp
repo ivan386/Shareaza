@@ -378,64 +378,23 @@ void CLibraryFileView::OnUpdateLibraryDelete(CCmdUI* pCmdUI)
 
 void CLibraryFileView::OnLibraryDelete()
 {
-	CSingleLock pTransfersLock( &Transfers.m_pSection, TRUE ); // Can clear uploads and downloads
-	CSingleLock pLibraryLock( &Library.m_pSection, TRUE );
-	CLibraryListPtr pList( new CLibraryList() );
-
-	POSITION posSel = StartSelectedFileLoop();
-
-	while ( CLibraryFile* pFile = GetNextSelectedFile( posSel, FALSE, ! m_bGhostFolder ) )
+	CStringList pList;
 	{
-		pList->AddTail( pFile );
+		CSingleLock pLibraryLock( &Library.m_pSection, TRUE );
+
+		POSITION posSel = StartSelectedFileLoop();
+		while ( CLibraryFile* pFile = GetNextSelectedFile( posSel, FALSE, ! m_bGhostFolder ) )
+		{
+			if ( m_bGhostFolder )
+				pFile->Delete( TRUE );
+			else
+				pList.AddTail( pFile->GetPath() );
+		}
 	}
 
-	while ( ! pList->IsEmpty() )
-	{
-		CLibraryFile* pFile = Library.LookupFile( pList->GetHead(), FALSE, ! m_bGhostFolder );
-		if ( pFile == NULL )
-		{
-			pList->RemoveHead(); // Remove item from list to avoid endless loop
-			continue;
-		}
+	DeleteFiles( pList );
 
-		if ( m_bGhostFolder )
-		{
-			for ( INT_PTR nProcess = pList->GetCount() ; nProcess > 0 && pList->GetCount() > 0 ; nProcess-- )
-			{
-				if ( ( pFile = Library.LookupFile( pList->RemoveHead() ) ) != NULL )
-				{
-					pFile->Delete( TRUE );
-				}
-			}
-		}
-		else
-		{
-			CDeleteFileDlg dlg( this );
-			dlg.m_sName	= pFile->m_sName;
-			dlg.m_sComments = pFile->m_sComments;
-			dlg.m_nRateValue = pFile->m_nRating;
-			dlg.m_bAll	= pList->GetCount() > 1;
-
-			pLibraryLock.Unlock();
-			pTransfersLock.Unlock();
-
-			if ( dlg.DoModal() != IDOK ) break;
-
-			pTransfersLock.Lock();
-			pLibraryLock.Lock();
-
-			for ( INT_PTR nProcess = dlg.m_bAll ? pList->GetCount() : 1 ; nProcess > 0 && pList->GetCount() > 0 ; nProcess-- )
-			{
-				if ( ( pFile = Library.LookupFile( pList->RemoveHead(), FALSE, TRUE ) ) != NULL )
-				{
-					dlg.Apply( pFile );
-					pFile->Delete();
-				}
-			}
-		}
-
-		Library.Update( true );
-	}
+	Library.Update( true );
 }
 
 void CLibraryFileView::OnUpdateLibraryBitziWeb(CCmdUI* pCmdUI)
@@ -607,9 +566,10 @@ void CLibraryFileView::OnUpdateLibraryRefreshMetadata(CCmdUI* pCmdUI)
 
 void CLibraryFileView::OnLibraryRefreshMetadata()
 {
+	CProgressDialog dlgProgress( LoadString( ID_LIBRARY_REFRESH_METADATA ) + _T("...") );
+
 	CQuickLock pLock( Library.m_pSection );
 
-	CProgressDialog dlgProgress( LoadString( ID_LIBRARY_REFRESH_METADATA ) + _T("...") );
 	DWORD nCompleted = 0, nTotal = GetSelectedCount();
 
 	POSITION posSel = StartSelectedFileLoop();

@@ -1,7 +1,7 @@
 //
 // DlgDeleteFile.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -61,7 +61,7 @@ private:
 // Operations
 public:
 	void	Apply(CLibraryFile* pFile);
-	void	Create(CDownload* pDownload, BOOL bShare);
+	void	Apply(CShareazaFile* pSrc, BOOL bShare);
 
 // Implementation
 protected:

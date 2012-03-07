@@ -114,14 +114,15 @@ void CDecodeMetadataDlg::OnOK()
 {
 	UpdateData();
 
+	CProgressDialog dlgProgress( LoadString( ID_LIBRARY_REBUILD_ANSI ) + _T("..") );
+
+	DWORD nCompleted = 0, nTotal = m_pFiles.GetCount();
+
 	unsigned nCodePage = m_wndCodepages.GetCurSel();
 	nCodePage = ( nCodePage < _countof( codePages ) ) ? codePages[ nCodePage ] : 1252; // english
 
 	// close dialog and perform decoding in background
 	CSkinDialog::OnOK();
-
-	CProgressDialog dlgProgress( LoadString( ID_LIBRARY_REBUILD_ANSI ) + _T("...") );
-	DWORD nCompleted = 0, nTotal = m_pFiles.GetCount();
 
 	for ( POSITION posFiles = m_pFiles.GetHeadPosition() ; posFiles ; )
 	{
@@ -132,31 +133,33 @@ void CDecodeMetadataDlg::OnOK()
 		if ( m_pFiles.IsEmpty() )
 			break;
 
-		CLibraryFile* pFile = Library.LookupFile( nIndex );
-		if ( pFile && pFile->m_pMetadata && pFile->m_pSchema )
+		if ( CLibraryFile* pFile = Library.LookupFile( nIndex ) )
 		{
 			dlgProgress.Progress( pFile->GetPath(), nCompleted++, nTotal );
 
-			if ( CXMLElement* pXML = pFile->m_pMetadata->Clone() )
+			if (pFile->m_pMetadata && pFile->m_pSchema )
 			{
-				for ( POSITION posXML = pXML->GetAttributeIterator() ; posXML ; )
+				if ( CXMLElement* pXML = pFile->m_pMetadata->Clone() )
 				{
-					CXMLAttribute* pAttribute = pXML->GetNextAttribute( posXML );
+					for ( POSITION posXML = pXML->GetAttributeIterator() ; posXML ; )
+					{
+						CXMLAttribute* pAttribute = pXML->GetNextAttribute( posXML );
 
-					CString strAttribute = pAttribute->GetValue();
-					GetEncodedText( strAttribute, m_nMethod );
-					pAttribute->SetValue( strAttribute );
-				}
+						CString strAttribute = pAttribute->GetValue();
+						GetEncodedText( strAttribute, m_nMethod );
+						pAttribute->SetValue( strAttribute );
+					}
 
-				// make a clean copy of schema with namespace included
-				if ( CXMLElement* pContainer = pFile->m_pSchema->Instantiate( TRUE ) )
-				{
-					// append modified metadata
-					pContainer->AddElement( pXML );
-					// save metadata by creating XML file
-					pFile->SetMetadata( pContainer );
+					// make a clean copy of schema with namespace included
+					if ( CXMLElement* pContainer = pFile->m_pSchema->Instantiate( TRUE ) )
+					{
+						// append modified metadata
+						pContainer->AddElement( pXML );
+						// save metadata by creating XML file
+						pFile->SetMetadata( pContainer );
 
-					delete pContainer;
+						delete pContainer;
+					}
 				}
 			}
 		}
