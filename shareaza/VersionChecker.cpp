@@ -155,32 +155,41 @@ void CVersionChecker::OnRun()
 
 BOOL CVersionChecker::ExecuteRequest()
 {
-	m_pRequest.SetURL( Settings.VersionCheck.UpdateCheckURL
+	CString strURL = Settings.VersionCheck.UpdateCheckURL
 		+ _T("?Version=") + theApp.m_sVersion
 #ifdef _WIN64
 		+ _T("&Platform=Win64")
 #else
 		+ _T("&Platform=Win32")
 #endif
-	);
+	;
+	if ( ! m_pRequest.SetURL( strURL ) )
+		return FALSE;
+	
+	theApp.Message( MSG_DEBUG | MSG_FACILITY_OUTGOING, _T("[VersionChecker] Request: %s"), (LPCTSTR)strURL );
 
-	if ( ! m_pRequest.Execute( FALSE ) ) return FALSE;
+	if ( ! m_pRequest.Execute( false ) )
+		return FALSE;
 
 	int nStatusCode = m_pRequest.GetStatusCode();
-	if ( nStatusCode < 200 || nStatusCode > 299 ) return FALSE;
+	if ( nStatusCode < 200 || nStatusCode > 299 )
+		return FALSE;
 
-	CString strResponse = m_pRequest.GetResponseString();
-	for ( strResponse += '&' ; strResponse.GetLength() ; )
+	CString strOutput = m_pRequest.GetResponseString();
+
+	theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING, _T("[VersionChecker] Response: %s"), (LPCTSTR)strOutput );
+
+	for ( strOutput += '&' ; strOutput.GetLength() ; )
 	{
-		CString strItem	= strResponse.SpanExcluding( _T("&") );
-		strResponse		= strResponse.Mid( strItem.GetLength() + 1 );
+		CString strItem	= strOutput.SpanExcluding( _T("&") );
+		strOutput		= strOutput.Mid( strItem.GetLength() + 1 );
 
 		CString strKey = strItem.SpanExcluding( _T("=") );
-		if ( strKey.GetLength() == strItem.GetLength() ) continue;
-		strItem = URLDecode( strItem.Mid( strKey.GetLength() + 1 ) );
+		if ( strKey.GetLength() == strItem.GetLength() )
+			continue;
 
-		strItem.TrimLeft();
-		strItem.TrimRight();
+		strItem = URLDecode( strItem.Mid( strKey.GetLength() + 1 ) );
+		strItem.Trim();
 
 		m_pResponse.SetAt( strKey, strItem );
 	}
@@ -245,23 +254,28 @@ void CVersionChecker::ProcessResponse()
 	if ( m_pResponse.Lookup( _T("AddDiscovery"), strValue ) )
 	{
 		strValue.Trim();
+		theApp.Message( MSG_DEBUG, _T("[VersionChecker] %s = %s"), _T("AddDiscovery"), (LPCTSTR)strValue );
 		DiscoveryServices.Add( strValue, CDiscoveryService::dsWebCache );
 	}
 
 	if ( m_pResponse.Lookup( _T("AddDiscoveryUHC"), strValue ) )
 	{
 		strValue.Trim();
+		theApp.Message( MSG_DEBUG, _T("[VersionChecker] %s = %s"), _T("AddDiscoveryUHC"), (LPCTSTR)strValue );
 		DiscoveryServices.Add( strValue, CDiscoveryService::dsGnutella, PROTOCOL_G1 );
 	}
 
 	if ( m_pResponse.Lookup( _T("AddDiscoveryKHL"), strValue ) )
 	{
 		strValue.Trim();
+		theApp.Message( MSG_DEBUG, _T("[VersionChecker] %s = %s"), _T("AddDiscoveryKHL"), (LPCTSTR)strValue );
 		DiscoveryServices.Add( strValue, CDiscoveryService::dsGnutella, PROTOCOL_G2 );
 	}
 
 	if ( m_pResponse.Lookup( _T("NextCheck"), strValue ) )
 	{
+		strValue.Trim();
+		theApp.Message( MSG_DEBUG, _T("[VersionChecker] %s = %s"), _T("NextCheck"), (LPCTSTR)strValue );
 		_stscanf( strValue, _T("%lu"), &nDays );
 	}
 	

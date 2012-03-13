@@ -249,7 +249,7 @@ BOOL CDiscoveryServices::Add(CDiscoveryService* pService)
 		if ( m_pList.Find( pService ) == NULL )
 		{
 			// It's a new service, but we don't want more. We should delete it.
-			theApp.Message( MSG_DEBUG, _T("Maximum discovery service count reached- %s not added"), pService->m_sAddress );
+			theApp.Message( MSG_DEBUG, _T("[DiscoveryServices] Maximum discovery service count reached, %s not added"), pService->m_sAddress );
 			delete pService;
 			return FALSE;
 		}
@@ -431,7 +431,7 @@ BOOL CDiscoveryServices::Load()
 				ar.Abort();
 				pFile.Abort();
 				pException->Delete();
-				theApp.Message( MSG_ERROR, _T("Failed to load discovery service list: %s"), strFile );
+				theApp.Message( MSG_ERROR, _T("[DiscoveryServices] Failed to load discovery service list: %s"), strFile );
 			}
 			pFile.Close();
 		}
@@ -439,11 +439,11 @@ BOOL CDiscoveryServices::Load()
 		{
 			pFile.Abort();
 			pException->Delete();
-			theApp.Message( MSG_ERROR, _T("Failed to load discovery service list: %s"), strFile );
+			theApp.Message( MSG_ERROR, _T("[DiscoveryServices] Failed to load discovery service list: %s"), strFile );
 		}
 	}
 	else
-		theApp.Message( MSG_ERROR, _T("Failed to load discovery service list: %s"), strFile );
+		theApp.Message( MSG_ERROR, _T("[DiscoveryServices] Failed to load discovery service list: %s"), strFile );
 
 	// Check we have the minimum number of services (in case of file corruption, etc)
 	if ( ! EnoughServices() )
@@ -1155,7 +1155,6 @@ CDiscoveryService* CDiscoveryServices::GetRandomWebCache(PROTOCOLID nProtocol, B
 									pWebCaches.Add( pService );
 								break;
 							default:
-								theApp.Message( MSG_ERROR, _T("CDiscoveryServices::GetRandomWebCache() was passed an invalid protocol") );
 								ASSERT( FALSE );
 								return NULL;
 						}
@@ -1407,9 +1406,6 @@ BOOL CDiscoveryServices::RunWebCacheGet(BOOL bCaches)
 		if ( strLine.IsEmpty() )
 			continue;
 
-		theApp.Message( MSG_DEBUG, _T("GWebCache %s : %s"),
-			(LPCTSTR)m_pWebCache->m_sAddress, (LPCTSTR)strLine );
-
 		// Split line to parts
 		CArray< CString > oParts;
 		for ( CString strTmp = strLine; ! strTmp.IsEmpty(); )
@@ -1590,8 +1586,8 @@ BOOL CDiscoveryServices::RunWebCacheGet(BOOL bCaches)
 					// Usage here: Used to check if cache supports requested network.
 					if ( m_nLastQueryProtocol != PROTOCOL_G2 )
 					{
-						//Mystery pong received - possibly a hosted static webpage.
-						theApp.Message( MSG_ERROR, _T("GWebCache %s : PONG received when no ping was given"), (LPCTSTR)m_pWebCache->m_sAddress );
+						// Mystery pong received - possibly a hosted static web page
+						theApp.Message( MSG_DEBUG, _T("[DiscoveryServices] Mystery pong received when no ping was given : %s"), (LPCTSTR)m_pWebCache->m_sAddress );
 						return FALSE;
 					}
 					if ( oParts.GetCount() >= 3 )
@@ -1842,9 +1838,6 @@ BOOL CDiscoveryServices::RunWebCacheUpdate()
 		if ( strLine.IsEmpty() )
 			continue;
 
-		theApp.Message( MSG_DEBUG, _T("GWebCache(update) %s : %s"),
-			(LPCTSTR)m_pWebCache->m_sAddress, (LPCTSTR)strLine );
-
 		if ( _tcsstr( strLine, _T("OK") ) != NULL )
 		{
 			m_pWebCache->m_tUpdated = (DWORD)time( NULL );
@@ -1885,7 +1878,7 @@ BOOL CDiscoveryServices::RunWebCacheUpdate()
 }
 
 //////////////////////////////////////////////////////////////////////
-// CDiscoveryServices HTTP request controllor
+// CDiscoveryServices HTTP request
 
 BOOL CDiscoveryServices::SendWebCacheRequest(CString strURL, CString& strOutput)
 {
@@ -1894,10 +1887,18 @@ BOOL CDiscoveryServices::SendWebCacheRequest(CString strURL, CString& strOutput)
 	if ( ! m_pRequest.SetURL( strURL ) )
 		return FALSE;
 
+	theApp.Message( MSG_DEBUG | MSG_FACILITY_OUTGOING, _T("[DiscoveryServices] Request: %s"), (LPCTSTR)strURL );
+
 	if ( ! m_pRequest.Execute( false ) )
 		return FALSE;
 
+	int nStatusCode = m_pRequest.GetStatusCode();
+	if ( nStatusCode < 200 || nStatusCode > 299 )
+		return FALSE;
+
 	strOutput = m_pRequest.GetResponseString();
+
+	theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING, _T("[DiscoveryServices] Response: %s"), (LPCTSTR)strOutput );
 
 	return TRUE;
 }
