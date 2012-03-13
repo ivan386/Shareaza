@@ -1,7 +1,7 @@
 //
 // WndDiscovery.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -45,6 +45,8 @@ protected:
 	void			Update();
 	CDiscoveryService* GetItem(int nItem);
 	virtual void	OnSkinChange();
+
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
 
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnDestroy();

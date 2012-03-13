@@ -1,7 +1,7 @@
 //
 // WndDiscovery.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -384,6 +384,9 @@ void CDiscoveryWnd::OnUpdateDiscoveryRemove(CCmdUI* pCmdUI)
 
 void CDiscoveryWnd::OnDiscoveryRemove() 
 {
+	if ( m_wndList.GetSelectedCount() <= 0 )
+		return;
+
 	CSingleLock pLock( &Network.m_pSection, FALSE );
 	if ( ! pLock.Lock( 250 ) )
 		return;
@@ -475,7 +478,29 @@ void CDiscoveryWnd::OnDiscoveryAdd()
 
 void CDiscoveryWnd::OnCustomDrawList(NMHDR* /*pNMHDR*/, LRESULT* pResult)
 {
-	//NMLVCUSTOMDRAW* pDraw = (NMLVCUSTOMDRAW*)pNMHDR;
-
 	*pResult = CDRF_DODEFAULT;
+}
+
+BOOL CDiscoveryWnd::PreTranslateMessage(MSG* pMsg) 
+{
+	if ( pMsg->message == WM_KEYDOWN )
+	{
+		if ( pMsg->wParam == VK_DELETE )
+		{
+			PostMessage( WM_COMMAND, ID_DISCOVERY_REMOVE );
+			return TRUE;
+		}
+		else if ( pMsg->wParam == VK_INSERT )
+		{
+			PostMessage( WM_COMMAND, ID_DISCOVERY_ADD );
+			return TRUE;
+		}
+		else if ( pMsg->wParam == VK_RETURN )
+		{
+			PostMessage( WM_COMMAND, ID_DISCOVERY_EDIT );
+			return TRUE;
+		}
+	}
+
+	return CPanelWnd::PreTranslateMessage( pMsg );
 }
