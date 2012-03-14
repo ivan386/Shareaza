@@ -824,7 +824,7 @@ BOOL CDiscoveryServices::Update()
 	DWORD tNow = static_cast< DWORD >( time( NULL ) );
 
 	// Don't update too frequently
-	if ( tNow - m_tUpdated < Settings.Discovery.UpdatePeriod )
+	if ( tNow < Settings.Discovery.UpdatePeriod + m_tUpdated )
 		return FALSE;
 
 	if ( m_pRequest.IsPending() )
@@ -858,12 +858,12 @@ BOOL CDiscoveryServices::Update()
 	else											// No protocols active- no updates
 		return FALSE;
 
-	//*** ToDo: Ultrapeer mode hasn't been updated or tested in a long time
-
-	ASSERT ( ( nProtocol == PROTOCOL_G1 ) || ( nProtocol == PROTOCOL_G2 ) );
+	// TODO: Ultrapeer mode hasn't been updated or tested in a long time
 
 	// Must have at least 4 peers
+#ifndef LAN_MODE
 	if ( Neighbours.GetCount( nProtocol, -1, ntNode ) < 4 ) return FALSE;
+#endif // LAN_MODE
 
 	// Select a random webcache of the appropriate sort
 	CDiscoveryService* pService = GetRandomWebCache(nProtocol, TRUE, NULL, TRUE );
