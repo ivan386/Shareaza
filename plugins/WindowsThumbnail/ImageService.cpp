@@ -1,7 +1,7 @@
 //
 // ImageService.cpp : Implementation of CImageService
 //
-// Copyright (c) Nikolay Raspopov, 2009.
+// Copyright (c) Nikolay Raspopov, 2009-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -117,7 +117,7 @@ STDMETHODIMP CImageService::LoadFromFile (
 	/* [in,out] */ IMAGESERVICEDATA* pParams,
 	/* [out] */ SAFEARRAY** ppImage ) throw()
 {
-	ATLTRACE( _T("CImageService::LoadFromFile (\"%hs\", 0x%08x, 0x%08x)\n"), (LPCSTR)CT2A( sFile ), pParams, ppImage );
+	ATLTRACE( "CImageService::LoadFromFile (\"%s\", 0x%08x, 0x%08x)\n", (LPCSTR)CW2A( (LPCWSTR)sFile ), pParams, ppImage );
 
 	if ( ! pParams || ! ppImage )
 		return E_POINTER;
@@ -156,7 +156,7 @@ STDMETHODIMP CImageService::LoadFromMemory (
 	/* [in,out] */ IMAGESERVICEDATA* /*pParams*/,
 	/* [out] */ SAFEARRAY** /*ppImage*/ ) throw()
 {
-	ATLTRACENOTIMPL( _T("CImageService::LoadFromMemory") );
+	ATLTRACENOTIMPL( "CImageService::LoadFromMemory" );
 }
 
 STDMETHODIMP CImageService::SaveToFile (
@@ -164,7 +164,7 @@ STDMETHODIMP CImageService::SaveToFile (
 	/* [in,out] */ IMAGESERVICEDATA* /*pParams*/,
 	/* [in] */ SAFEARRAY* /*pImage*/) throw()
 {
-	ATLTRACENOTIMPL( _T("CImageService::SaveToFile") );
+	ATLTRACENOTIMPL( "CImageService::SaveToFile" );
 }
 
 STDMETHODIMP CImageService::SaveToMemory (
@@ -173,5 +173,5 @@ STDMETHODIMP CImageService::SaveToMemory (
 	/* [in,out] */ IMAGESERVICEDATA* /*pParams*/,
 	/* [in] */ SAFEARRAY* /*pImage*/) throw()
 {
-	ATLTRACENOTIMPL( _T("CImageService::SaveToMemory") );
+	ATLTRACENOTIMPL( "CImageService::SaveToMemory" );
 }

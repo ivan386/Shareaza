@@ -1,7 +1,7 @@
 //
 // GFLReader.cpp : Implementation of CGFLReader
 //
-// Copyright (c) Nikolay Raspopov, 2005-2010.
+// Copyright (c) Nikolay Raspopov, 2005-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // GFL Library, GFL SDK and XnView
@@ -53,9 +53,9 @@ HRESULT BitmapToSafeArray (SAFEARRAY** const ppImage, const IMAGESERVICEDATA* co
 				CopyMemory (dst, src, hGflBitmap->BytesPerLine);
 			SafeArrayUnaccessData (*ppImage);
 		} else
-			ATLTRACE ("SafeArrayAccessData error: 0x%08x\n", hr);
+			ATLTRACE( "SafeArrayAccessData error: 0x%08x\n", hr );
 	} else
-		ATLTRACE (L"SafeArrayCreateVector error: Out of memory\n");
+		ATLTRACE( "SafeArrayCreateVector error: Out of memory\n" );
 	return hr;
 }
 
@@ -64,10 +64,10 @@ STDMETHODIMP CGFLReader::LoadFromFile (
 	/* [in,out] */ IMAGESERVICEDATA* pParams,
 	/* [out] */ SAFEARRAY** ppImage )
 {
-	ATLTRACE( "LoadFromFile (\"%s\", 0x%08x, 0x%08x)\n", CW2A( sFile ), pParams, ppImage );
+	ATLTRACE( "CGFLReader::LoadFromFile (\"%s\", 0x%08x, 0x%08x)\n", (LPCSTR)CW2A( (LPCWSTR)sFile ), pParams, ppImage );
 
 	if (!pParams || !ppImage) {
-		ATLTRACE (L"LoadFromFile error: E_POINTER\n");
+		ATLTRACE( "LoadFromFile error: E_POINTER\n" );
 		return E_POINTER;
 	}
 
@@ -111,7 +111,7 @@ STDMETHODIMP CGFLReader::LoadFromFile (
 		}
 	} else {
 		hr = E_FAIL;
-		ATLTRACE( _T("gflGetFileInformation error: %s\n"), CA2T( gflGetErrorString( err ) ) );
+		ATLTRACE( "gflGetFileInformation error: %s\n", gflGetErrorString( err ) );
 	}
 
 	if (hGflBitmap)
@@ -133,7 +133,7 @@ STDMETHODIMP CGFLReader::LoadFromMemory (
 	/* [out] */ SAFEARRAY** ppImage )
 {
 	if (!pMemory || !pParams || !ppImage) {
-		ATLTRACE (L"LoadFromMemory error: E_POINTER\n");
+		ATLTRACE( "LoadFromMemory error: E_POINTER\n" );
 		return E_POINTER;
 	}
 
@@ -172,13 +172,13 @@ STDMETHODIMP CGFLReader::LoadFromMemory (
 				}
 			} else {
 				hr = E_FAIL;
-				ATLTRACE( _T("gflGetFileInformationFromMemory error: %s\n"), CA2T( gflGetErrorString( err ) ) );
+				ATLTRACE( "gflGetFileInformationFromMemory error: %s\n", gflGetErrorString( err ) );
 			}
 			SafeArrayUnaccessData (pMemory);
 		} else
-			ATLTRACE (L"SafeArrayAccessData error: 0x%08x\n", hr);
+			ATLTRACE( "SafeArrayAccessData error: 0x%08x\n", hr );
 	} else
-		ATLTRACE (L"SafeArrayGetUBound error: 0x%08x\n", hr);
+		ATLTRACE( "SafeArrayGetUBound error: 0x%08x\n", hr );
 
 	if (hGflBitmap)
 		gflFreeBitmap (hGflBitmap);
@@ -196,10 +196,10 @@ STDMETHODIMP CGFLReader::SaveToFile (
 	/* [in,out] */ IMAGESERVICEDATA* pParams,
 	/* [in] */ SAFEARRAY* pImage)
 {
-	ATLTRACE( _T("SaveToFile (\"%s\", 0x%08x, 0x%08x)\n"), CW2T( sFile ), pParams, pImage );
+	ATLTRACE( "SaveToFile (\"%s\", 0x%08x, 0x%08x)\n", (LPCSTR)CW2A( (LPCWSTR)sFile ), pParams, pImage );
 
 	if (!pParams || !pImage) {
-		ATLTRACE (L"SaveToFile error: E_POINTER\n");
+		ATLTRACE( "SaveToFile error: E_POINTER\n" );
 		return E_POINTER;
 	}
 
@@ -242,10 +242,10 @@ STDMETHODIMP CGFLReader::SaveToMemory (
 	/* [in,out] */ IMAGESERVICEDATA* pParams,
 	/* [in] */ SAFEARRAY* pImage)
 {
-	ATLTRACE( _T("SaveToMemory (\"%s\", 0x%08x, 0x%08x, 0x%08x)\n"), CW2T( sType ), ppMemory, pParams, pImage );
+	ATLTRACE( "SaveToMemory (\"%s\", 0x%08x, 0x%08x, 0x%08x)\n", (LPCSTR)CW2A( (LPCWSTR)sType ), ppMemory, pParams, pImage );
 
 	if (!ppMemory || !pParams || !pImage) {
-		ATLTRACE (L"CGFLReader::SaveToMemory error: E_POINTER\n");
+		ATLTRACE( "CGFLReader::SaveToMemory error: E_POINTER\n" );
 		return E_POINTER;
 	}
 

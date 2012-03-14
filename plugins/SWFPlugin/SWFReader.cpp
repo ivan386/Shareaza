@@ -1,7 +1,7 @@
 //
 // SWFReader.cpp : Implementation of CSWFReader
 //
-// Copyright (c) Nikolay Raspopov, 2005-2008.
+// Copyright (c) Nikolay Raspopov, 2005-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // GFL Library, GFL SDK and XnView
@@ -154,16 +154,16 @@ unsigned WINAPI LoadSWF (void* filename)
 									state = varResult.lVal;
 									switch (state) {
 										case 0:
-											ATLTRACE( _T("Loading\n") );
+											ATLTRACE( "Loading\n" );
 											break;
 										case 1:
-											ATLTRACE( _T("Uninitialized\n") );
+											ATLTRACE( "Uninitialized\n" );
 											break;
 										case 2:
-											ATLTRACE( _T("Loaded\n") );
+											ATLTRACE( "Loaded\n" );
 											break;
 										case 3:
-											ATLTRACE( _T("Interactive\n") );
+											ATLTRACE( "Interactive\n" );
 											break;
 										case 4:
 											// long get_TotalFrames ()
@@ -171,7 +171,7 @@ unsigned WINAPI LoadSWF (void* filename)
 											VariantInit (&varResult);	
 											pIDispatch->Invoke (0x7c, IID_NULL, 0, DISPATCH_PROPERTYGET,
 												&dispparams, &varResult, NULL, NULL);	
-											ATLTRACE( _T("Complete. Frames: %d\n"), varResult.lVal);
+											ATLTRACE( "Complete. Frames: %d\n", varResult.lVal);
 											// void GotoFrame (dwFrameNumber)
 											VariantInit (&varArg [0]);
 											varArg [0].vt = VT_I4;
@@ -183,7 +183,7 @@ unsigned WINAPI LoadSWF (void* filename)
 												&dispparams, &varResult, NULL, &nArgErr);												
 											break;
 										default:
-											ATLTRACE( _T("Unknown state (%d)\n"), state);
+											ATLTRACE( "Unknown state (%d)\n", state);
 									}
 								}
 								Sleep (0);
@@ -219,7 +219,7 @@ unsigned WINAPI LoadSWF (void* filename)
 		CoUninitialize ();
 	}
 	if (FAILED (hr)) {
-		ATLTRACE( _T("LoadSWF failed: 0x%08x\n"), hr);
+		ATLTRACE( "LoadSWF failed: 0x%08x\n", hr);
 		if (_Data) {
 			if (_Data->hBitmap)
 				DeleteObject (_Data->hBitmap);
@@ -235,7 +235,7 @@ STDMETHODIMP CSWFReader::LoadFromFile (
 	/* [in,out] */ IMAGESERVICEDATA* pParams,
 	/* [out] */ SAFEARRAY** ppImage )
 {
-	ATLTRACE( _T("SWFPlugin::LoadFromFile (\"%s\", 0x%08x, 0x%08x)\n"), sFile, pParams, ppImage);
+	ATLTRACE( "SWFPlugin::LoadFromFile (\"%s\", 0x%08x, 0x%08x)\n", (LPCSTR)CW2A( (LPCWSTR)sFile ), pParams, ppImage);
 
 	if (!pParams || !ppImage)
 		return E_POINTER;
@@ -305,7 +305,7 @@ STDMETHODIMP CSWFReader::LoadFromMemory (
 	/* [in,out] */ IMAGESERVICEDATA* /* pParams */,
 	/* [out] */ SAFEARRAY** /* ppImage */)
 {
-	ATLTRACENOTIMPL( _T("SWFPlugin::LoadFromMemory") );
+	ATLTRACENOTIMPL( "SWFPlugin::LoadFromMemory" );
 }
 
 STDMETHODIMP CSWFReader::SaveToFile (
@@ -313,7 +313,7 @@ STDMETHODIMP CSWFReader::SaveToFile (
 	/* [in,out] */ IMAGESERVICEDATA* /* pParams */,
 	/* [in] */ SAFEARRAY* /* pImage */)
 {
-	ATLTRACENOTIMPL( _T("SWFPlugin::SaveToFile") );
+	ATLTRACENOTIMPL( "SWFPlugin::SaveToFile" );
 }
 
 STDMETHODIMP CSWFReader::SaveToMemory (
@@ -322,5 +322,5 @@ STDMETHODIMP CSWFReader::SaveToMemory (
 	/* [in,out] */ IMAGESERVICEDATA* /* pParams */,
 	/* [in] */ SAFEARRAY* /* pImage */)
 {
-	ATLTRACENOTIMPL( _T("SWFPlugin::SaveToMemory") );
+	ATLTRACENOTIMPL( "SWFPlugin::SaveToMemory" );
 }
