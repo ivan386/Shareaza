@@ -674,20 +674,20 @@ STDMETHODIMP_(ULONG) CLibrary::XLibrary::AddRef()
 {
 	METHOD_PROLOGUE( CLibrary, Library )
 	pThis->m_pSection.Lock();
-	return pThis->ExternalAddRef();
+	return pThis->ComAddRef( this );
 }
 
 STDMETHODIMP_(ULONG) CLibrary::XLibrary::Release()
 {
 	METHOD_PROLOGUE( CLibrary, Library )
 	pThis->m_pSection.Unlock();
-	return pThis->ExternalRelease();
+	return pThis->ComRelease( this );
 }
 
 STDMETHODIMP CLibrary::XLibrary::QueryInterface(REFIID iid, LPVOID* ppvObj)
 {
 	METHOD_PROLOGUE( CLibrary, Library )
-	HRESULT hr = pThis->ExternalQueryInterface( &iid, ppvObj );
+	HRESULT hr = pThis->ComQueryInterface( this, iid, ppvObj );
 	if ( SUCCEEDED(hr) ) pThis->m_pSection.Lock();
 	return hr;
 }
@@ -704,7 +704,7 @@ STDMETHODIMP CLibrary::XLibrary::get_Library(ILibrary FAR* FAR* ppLibrary)
 	METHOD_PROLOGUE( CLibrary, Library )
 	if ( ppLibrary == NULL ) return E_INVALIDARG;
 	*ppLibrary = (ILibrary*)pThis->GetInterface( IID_ILibrary, TRUE );
-	return S_OK;
+	return *ppLibrary ? S_OK : E_NOINTERFACE;
 }
 
 STDMETHODIMP CLibrary::XLibrary::get_Folders(ILibraryFolders FAR* FAR* ppFolders)
@@ -712,7 +712,7 @@ STDMETHODIMP CLibrary::XLibrary::get_Folders(ILibraryFolders FAR* FAR* ppFolders
 	METHOD_PROLOGUE( CLibrary, Library )
 	if ( ppFolders == NULL ) return E_INVALIDARG;
 	*ppFolders = (ILibraryFolders*)pThis->GetInterface( IID_ILibraryFolders, TRUE );
-	return S_OK;
+	return *ppFolders ? S_OK : E_NOINTERFACE;
 }
 
 STDMETHODIMP CLibrary::XLibrary::get_Albums(IUnknown FAR* FAR* ppAlbums)
@@ -726,8 +726,8 @@ STDMETHODIMP CLibrary::XLibrary::get_Files(ILibraryFiles FAR* FAR* ppFiles)
 {
 	METHOD_PROLOGUE( CLibrary, Library )
 	if ( ppFiles == NULL ) return E_INVALIDARG;
-	*ppFiles = (ILibraryFiles*)pThis->GetInterface( IID_ILibraryFiles, TRUE );
-	return S_OK;
+	*ppFiles = (ILibraryFiles*)LibraryMaps.GetInterface( IID_ILibraryFiles, TRUE );
+	return *ppFiles ? S_OK : E_NOINTERFACE;
 }
 
 STDMETHODIMP CLibrary::XLibrary::FindByName(BSTR sName, ILibraryFile FAR* FAR* ppFile)
