@@ -756,26 +756,26 @@ BEGIN
     LTEXT           "You have selected %i file(s) to move to the following folder:",IDC_MESSAGE_MOVE,5,5,205,10,NOT WS_VISIBLE
 END
 
-IDD_URL_ACTION DIALOGEX 0, 0, 292, 124
+IDD_URL_ACTION DIALOGEX 0, 0, 331, 127
 STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Shareaza URI Manager"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    LTEXT           "You have clicked on a Shareaza-powered URI which links to the following content on the network:",IDC_MESSAGE_1,20,10,250,20,NOT WS_VISIBLE
-    LTEXT           "You have clicked on a Shareaza-powered URL which will connect you to the following host or server:",IDC_MESSAGE_2,20,10,250,20,NOT WS_VISIBLE
-    LTEXT           "You have clicked on a Shareaza-powered URI which will allow you to browse the shared files available on the following host:",IDC_MESSAGE_3,20,10,250,20,NOT WS_VISIBLE
+    LTEXT           "You have clicked on a Shareaza-powered URI which links to the following content on the network:",IDC_MESSAGE_1,7,7,317,20,NOT WS_VISIBLE
+    LTEXT           "You have clicked on a Shareaza-powered URL which will connect you to the following host or server:",IDC_MESSAGE_2,7,7,317,23,NOT WS_VISIBLE
+    LTEXT           "You have clicked on a Shareaza-powered URI which will allow you to browse the shared files available on the following host:",IDC_MESSAGE_3,7,7,317,23,NOT WS_VISIBLE
     LTEXT           "Filename:",IDC_URL_NAME_TITLE,25,35,35,12
-    EDITTEXT        IDC_URL_NAME_VALUE,65,35,205,12,ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
+    EDITTEXT        IDC_URL_NAME_VALUE,65,35,259,12,ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
     LTEXT           "URN:",IDC_URL_URN_TITLE,25,50,35,12
-    EDITTEXT        IDC_URL_URN_VALUE,65,50,205,12,ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
-    LTEXT           "Please select the action you would like Shareaza to take:",IDC_STATIC,20,68,250,10
-    DEFPUSHBUTTON   "&Download Now",IDC_URL_DOWNLOAD,10,84,65,16,WS_GROUP
-    PUSHBUTTON      "&Search for File",IDC_URL_SEARCH,80,84,65,16
-    PUSHBUTTON      "Cancel",IDCANCEL,215,84,65,16
+    EDITTEXT        IDC_URL_URN_VALUE,65,50,259,12,ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
+    LTEXT           "Please select the action you would like Shareaza to take:",IDC_STATIC,7,68,317,10
+    DEFPUSHBUTTON   "&Download Now",IDC_URL_DOWNLOAD,7,84,65,16,WS_GROUP
+    PUSHBUTTON      "&Search for File",IDC_URL_SEARCH,79,84,65,16
+    PUSHBUTTON      "Cancel",IDCANCEL,259,84,65,16
     CONTROL         "&Remember my selection next time",IDC_ALWAYS_OPEN,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,10,105,125,15
-    CONTROL         "Open a download &monitor window",IDC_NEW_WINDOW,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,155,105,125,15
-    LTEXT           "You have clicked on a Shareaza-powered URI which will add the following Discovery Service to your Discovery Services cache.",IDC_MESSAGE_4,20,10,250,20,NOT WS_VISIBLE
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,105,155,15
+    CONTROL         "Open a download &monitor window",IDC_NEW_WINDOW,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,169,105,155,15
+    LTEXT           "You have clicked on a Shareaza-powered URI which will add the following Discovery Service to your Discovery Services cache.",IDC_MESSAGE_4,7,7,317,23,NOT WS_VISIBLE
 END
 
 IDD_URL_COPY DIALOGEX 0, 0, 292, 119
@@ -2146,8 +2146,10 @@ BEGIN
     IDD_URL_ACTION, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 285
+        RIGHTMARGIN, 324
         TOPMARGIN, 7
+        BOTTOMMARGIN, 120
+        HORZGUIDE, 84
     END
 
     IDD_URL_COPY, DIALOG
