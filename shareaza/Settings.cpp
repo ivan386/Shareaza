@@ -612,9 +612,9 @@ void CSettings::Load()
 	}
 
 	if ( General.UserPath.IsEmpty() )
-		General.UserPath = theApp.GetAppDataFolder() + _T("\\Shareaza");
+		General.UserPath = theApp.GetAppDataFolder() + _T("\\") CLIENT_NAME_T;
 	if ( Downloads.IncompletePath.IsEmpty() )
-		Downloads.IncompletePath = theApp.GetLocalAppDataFolder() + _T("\\Shareaza\\Incomplete");
+		Downloads.IncompletePath = theApp.GetLocalAppDataFolder() + _T("\\") CLIENT_NAME_T _T("\\Incomplete");
 	if ( Downloads.CompletePath.IsEmpty() )
 		Downloads.CompletePath = theApp.GetDownloadsFolder();
 
@@ -670,7 +670,7 @@ void CSettings::Load()
 		{
 			// Delete old Shareaza installers
 			CFileFind ff;
-			BOOL res = ff.FindFile( Downloads.CompletePath + _T("\\Shareaza_*.exe") );
+			BOOL res = ff.FindFile( Downloads.CompletePath + _T("\\") CLIENT_NAME_T _T("_*.exe") );
 			while ( res )
 			{
 				res = ff.FindNextFile();
@@ -1408,7 +1408,7 @@ BOOL CSettings::CheckStartup()
 		_T("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run"), 0, KEY_QUERY_VALUE, &hKey )
 		!= ERROR_SUCCESS ) return FALSE;
 
-	bStartup = ( RegQueryValueEx( hKey, _T("Shareaza"), NULL, NULL, NULL, NULL ) == ERROR_SUCCESS );
+	bStartup = ( RegQueryValueEx( hKey, CLIENT_NAME_T, NULL, NULL, NULL, NULL ) == ERROR_SUCCESS );
 
 	RegCloseKey( hKey );
 
@@ -1427,12 +1427,12 @@ void CSettings::SetStartup(BOOL bStartup)
 	{
 		CString strCommand;
 		strCommand.Format( _T("\"%s\" -tray"), theApp.m_strBinaryPath );
-		RegSetValueEx( hKey, _T("Shareaza"), 0, REG_SZ, (const BYTE*)(LPCTSTR)strCommand,
+		RegSetValueEx( hKey, CLIENT_NAME_T, 0, REG_SZ, (const BYTE*)(LPCTSTR)strCommand,
 			( strCommand.GetLength() + 1 ) * sizeof(TCHAR) );
 	}
 	else
 	{
-		RegDeleteValue( hKey, _T("Shareaza") );
+		RegDeleteValue( hKey, CLIENT_NAME_T );
 	}
 
 	RegCloseKey( hKey );

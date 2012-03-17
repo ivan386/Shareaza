@@ -1,7 +1,7 @@
 //
 // Application.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -43,15 +43,12 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-IMPLEMENT_DYNCREATE(CApplication, CComObject)
+IMPLEMENT_DYNAMIC(CApplication, CComObject)
 
 // {E9B2EF9B-4A0C-451e-801F-257861B87FAD}
-IMPLEMENT_OLECREATE_FLAGS(CApplication, "Shareaza.Application",
+IMPLEMENT_OLECREATE_FLAGS(CApplication, CLIENT_NAME _T(".Application"),
 	afxRegFreeThreading|afxRegApartmentThreading,
 	0xe9b2ef9b, 0x4a0c, 0x451e, 0x80, 0x1f, 0x25, 0x78, 0x61, 0xb8, 0x7f, 0xad)
-
-BEGIN_MESSAGE_MAP(CApplication, CComObject)
-END_MESSAGE_MAP()
 
 BEGIN_INTERFACE_MAP(CApplication, CComObject)
 	INTERFACE_PART(CApplication, IID_IApplication, Application)

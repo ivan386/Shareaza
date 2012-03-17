@@ -2246,7 +2246,7 @@ void CShareazaApp::OnRename(LPCTSTR pszSource, LPCTSTR pszTarget)
 
 CDatabase* CShareazaApp::GetDatabase() const
 {
-	return new CDatabase( Settings.General.UserPath + _T("\\Data\\Shareaza.db3") );
+	return new CDatabase( Settings.General.UserPath + _T("\\Data\\") CLIENT_NAME_T _T(".db3") );
 }
 
 CString SafeFilename(CString strName, bool bPath)

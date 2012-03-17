@@ -1,7 +1,7 @@
 //
 // DDEServer.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -33,7 +33,7 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
-CDDEServer DDEServer( _T("Shareaza") );
+CDDEServer DDEServer( CLIENT_NAME_T );
 
 
 //////////////////////////////////////////////////////////////////////

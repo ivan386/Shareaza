@@ -275,18 +275,18 @@ void CDownloadMonitorDlg::OnTimer(UINT_PTR /*nIDEvent*/)
 	{
 		if ( Settings.General.LanguageRTL )
 		{
-			strText.Format( _T("%s %s %.2f%% : Shareaza"),
+			strText.Format( _T("%s %s %.2f%% - ") CLIENT_NAME_T,
 				(LPCTSTR)m_pDownload->m_sName, (LPCTSTR)strOf, m_pDownload->GetProgress() );
 		}
 		else
 		{
-			strText.Format( _T("%.2f%% %s %s : Shareaza"),
+			strText.Format( _T("%.2f%% %s %s - ") CLIENT_NAME_T,
 				m_pDownload->GetProgress(), (LPCTSTR)strOf, (LPCTSTR)m_pDownload->m_sName );
 		}
 	}
 	else
 	{
-		strText.Format( _T("%s : Shareaza"),
+		strText.Format( _T("%s - ") CLIENT_NAME_T,
 			(LPCTSTR)m_pDownload->m_sName );
 	}
 

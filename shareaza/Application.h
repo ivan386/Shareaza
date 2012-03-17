@@ -1,7 +1,7 @@
 //
 // Application.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -24,7 +24,7 @@
 
 class CApplication : public CComObject
 {
-	DECLARE_DYNCREATE(CApplication)
+	DECLARE_DYNAMIC(CApplication)
 
 public:
 	CApplication();
@@ -68,7 +68,6 @@ protected:
 		STDMETHOD(GetValue)(VARIANT* value);	// Pass as BSTR path (e.g. Gnutella2.EnableAlways, get back the actual value
 	END_INTERFACE_PART(Settings)
 
-	DECLARE_MESSAGE_MAP()
 	DECLARE_OLECREATE(CApplication)
 	DECLARE_INTERFACE_MAP()
 };

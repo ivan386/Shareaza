@@ -1,7 +1,7 @@
 //
 // WndHashProgressBar.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -85,7 +85,7 @@ void CHashProgressBar::Run()
 			{
 				CreateEx( WS_EX_LAYERED | WS_EX_TOPMOST | WS_EX_TOOLWINDOW,
 					AfxRegisterWndClass( CS_SAVEBITS ),
-					_T("Shareaza Hashing..."), WS_POPUP | WS_VISIBLE, 0, 0,
+					CLIENT_NAME_T _T(" Hashing..."), WS_POPUP | WS_VISIBLE, 0, 0,
 					WINDOW_WIDTH, WINDOW_HEIGHT, NULL, 0 );
 
 				m_nPerfectWidth = 0;

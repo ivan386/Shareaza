@@ -1,7 +1,7 @@
 //
 // WndMonitor.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -101,7 +101,7 @@ BOOL CRemoteWnd::Create(CMonitorBarCtrl* pMonitor)
 	m_pMonitor	= pMonitor;
 	m_pSkin		= NULL;
 
-	return CreateEx(	WS_EX_TOOLWINDOW, m_hClass, _T("Shareaza Remote"),
+	return CreateEx(	WS_EX_TOOLWINDOW, m_hClass, CLIENT_NAME_T _T(" Remote"),
 						WS_OVERLAPPED|WS_CLIPCHILDREN, 0, 0, 0, 0, NULL, 0 );
 }
 

@@ -1,7 +1,7 @@
 //
 // ShareazaDataSource.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -25,16 +25,16 @@ class CLibraryList;
 class CLibraryTreeItem;
 class CAlbumFolder;
 
-#define CF_SHAREAZA			_T("InShareazaDragLoop")
-#define CF_SHAREAZA_ALBUMS	_T("ShareazaAlbums")
-#define CF_SHAREAZA_FILES	_T("ShareazaFiles")
+#define CF_SHAREAZA			(_T("In") CLIENT_NAME_T _T("DragLoop"))
+#define CF_SHAREAZA_ALBUMS	(CLIENT_NAME_T _T("Albums"))
+#define CF_SHAREAZA_FILES	(CLIENT_NAME_T _T("Files"))
 
 /////////////////////////////////////////////////////////////////////////////
 // CShareazaDataSource
 
 class CShareazaDataSource : public CComObject
 {
-	DECLARE_DYNCREATE(CShareazaDataSource)
+	DECLARE_DYNAMIC(CShareazaDataSource)
 
 public:
 	CShareazaDataSource();
