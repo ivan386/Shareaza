@@ -1,7 +1,7 @@
 //
 // SharedFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -189,6 +189,80 @@ CString CLibraryFile::GetSearchName() const
 
 	ToLower( str );
 	return str;
+}
+
+CXMLElement* CLibraryFile::CreateXML(CXMLElement* pRoot, BOOL bSharedOnly, XmlType nType) const
+{
+	if ( bSharedOnly && ! IsShared() )
+		return NULL;
+
+	CXMLElement* pFile;
+
+	switch ( nType )
+	{
+	case xmlDC:
+		pFile = pRoot->AddElement( _T("file") );
+		if ( pFile )
+		{
+			pFile->AddAttribute( _T("name"), m_sName );
+			pFile->AddAttribute( _T("size"), m_nSize );
+			pFile->AddAttribute( _T("tth"), m_oTiger.toString() );
+		}
+		break;
+
+	default:
+		pFile = pRoot->AddElement( _T("file") );
+		if ( pFile )
+		{
+			if ( m_oSHA1 && m_oTiger )
+			{
+				pFile->AddElement( _T("id") )->SetValue( _T("urn:bitprint:") + m_oSHA1.toString() + _T('.') + m_oTiger.toString() );
+			}
+			else if ( m_oSHA1 )
+			{
+				pFile->AddElement( _T("id") )->SetValue( m_oSHA1.toUrn() );
+			}
+			else if ( m_oTiger )
+			{
+				pFile->AddElement( _T("id") )->SetValue( m_oTiger.toUrn() );
+			}
+
+			if ( m_oMD5 )
+			{
+				pFile->AddElement( _T("id") )->SetValue( m_oMD5.toUrn() );
+			}
+
+			if ( m_oED2K )
+			{
+				pFile->AddElement( _T("id") )->SetValue( m_oED2K.toUrn() );
+			}
+
+			if ( m_oBTH )
+			{
+				pFile->AddElement( _T("id") )->SetValue( m_oBTH.toUrn() );
+			}
+
+			if ( CXMLElement* pDescription = pFile->AddElement( _T("description") ) )
+			{
+				pDescription->AddElement( _T("name") )->SetValue( m_sName );
+
+				CString str;
+				str.Format( _T("%I64u"), GetSize() );
+				pDescription->AddElement( _T("size") )->SetValue( str );
+			}
+
+			if ( m_pMetadata && m_pSchema )
+			{
+				if ( CXMLElement* pMetadata = pFile->AddElement( _T("metadata") ) )
+				{
+					pMetadata->AddAttribute( _T("xmlns:s"), m_pSchema->GetURI() );
+					pMetadata->AddElement( m_pMetadata->Prefix( _T("s:") ) );
+				}
+			}
+		}
+	}
+
+	return pFile;
 }
 
 //////////////////////////////////////////////////////////////////////

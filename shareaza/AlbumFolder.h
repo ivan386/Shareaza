@@ -1,7 +1,7 @@
 //
 // AlbumFolder.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -89,7 +89,7 @@ public:
 	bool			OnFolderDelete(CAlbumFolder* pFolder);
 	void			OnFileDelete(CLibraryFile* pFile, BOOL bDeleteGhost = FALSE);
 	void			Clear();
-	CXMLElement*	CreateXML(BOOL bMetadataAll = FALSE) const;
+	CXMLElement*	CreateXML() const;
 
 protected:
 	CAlbumFolder*			m_pParent;

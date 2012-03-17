@@ -1,7 +1,7 @@
 //
 // UploadTransferDC.h 
 //
-// Copyright (c) Shareaza Development Team, 2010-2011.
+// Copyright (c) Shareaza Development Team, 2010-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -58,7 +58,4 @@ protected:
 	BOOL			RequestTigerTree(CLibraryFile* pFile, QWORD nOffset, QWORD nLength);
 	BOOL			RequestFile(CLibraryFile* pFile, QWORD nOffset, QWORD nLength);
 	BOOL			SendFile();
-	static void		LibraryToFileList(const CString& strRoot, CBuffer& pXML);
-	static void		FolderToFileList(const CLibraryFolder* pFolder, CBuffer& pXML);
-	static void		FileToFileList(const CLibraryFile* pFile, CBuffer& pXML);
 };

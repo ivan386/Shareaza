@@ -1,7 +1,7 @@
 //
 // XML.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -393,6 +393,28 @@ CXMLElement* CXMLElement::Clone(CXMLElement* pParent) const
 	return pClone;
 }
 
+CXMLElement* CXMLElement::Prefix(const CString& sPrefix, CXMLElement* pParent) const
+{
+	CXMLElement* pCloned = Clone( pParent );
+	if ( pCloned )
+	{
+		pCloned->SetName( sPrefix + pCloned->GetName() );
+
+		for ( POSITION pos = pCloned->GetElementIterator() ; pos ; )
+		{
+			CXMLElement* pNode = pCloned->GetNextElement( pos );
+			pNode->SetName( sPrefix + pNode->GetName() );
+		}
+
+		for ( POSITION pos = pCloned->GetAttributeIterator() ; pos ; )
+		{
+			CXMLAttribute* pNode = pCloned->GetNextAttribute( pos );
+			pNode->SetName( sPrefix + pNode->GetName() );
+		}
+	}
+	return pCloned;
+}
+
 //////////////////////////////////////////////////////////////////////
 // CXMLElement delete
 
@@ -421,16 +443,31 @@ void CXMLElement::DeleteAllAttributes()
 //////////////////////////////////////////////////////////////////////
 // CXMLElement to string
 
-CString CXMLElement::ToString(BOOL bHeader, BOOL bNewline) const
+CString CXMLElement::ToString(BOOL bHeader, BOOL bNewline, BOOL bEncoding, TRISTATE bSnadalone) const
 {
 	CString strXML;
 	strXML.Preallocate( 256 );
+
 	if ( bHeader )
-		strXML = _T("<?xml version=\"1.0\"?>");
-	if ( bNewline )
-		strXML.Append( _PT("\r\n") );
+	{
+		strXML = _T("<?xml version=\"1.0\"");
+		
+		if ( bEncoding )
+			strXML.Append( _PT(" encoding=\"utf-8\"") );
+
+		if ( bSnadalone == TRI_TRUE )
+			strXML.Append( _PT(" standalone=\"yes\"") );
+		else if ( bSnadalone == TRI_FALSE )
+			strXML.Append( _PT(" standalone=\"no\"") );
+		
+		strXML.Append( _PT("?>") );
+		
+		if ( bNewline )
+			strXML.Append( _PT("\r\n") );
+	}
+
 	ToString( strXML, bNewline );
-	ASSERT( strXML.GetLength() == int( _tcslen(strXML) ) );
+
 	return strXML;
 }
 
@@ -443,7 +480,7 @@ void CXMLElement::ToString(CString& strXML, BOOL bNewline) const
 	for ( ; pos ; )
 	{
 		strXML.AppendChar( _T(' ') );
-		CXMLAttribute* pAttribute = GetNextAttribute( pos );
+		const CXMLAttribute* pAttribute = GetNextAttribute( pos );
 		pAttribute->ToString( strXML );
 	}
 
@@ -452,16 +489,18 @@ void CXMLElement::ToString(CString& strXML, BOOL bNewline) const
 	if ( pos == NULL && m_sValue.IsEmpty() )
 	{
 		strXML.Append( _PT("/>") );
-		if ( bNewline ) strXML.Append( _PT("\r\n") );
+		if ( bNewline )
+			strXML.Append( _PT("\r\n") );
 		return;
 	}
 
 	strXML.AppendChar( _T('>') );
-	if ( bNewline && pos ) strXML.Append( _PT("\r\n") );
+	if ( bNewline && pos )
+		strXML.Append( _PT("\r\n") );
 
 	while ( pos )
 	{
-		CXMLElement* pElement = GetNextElement( pos );
+		const CXMLElement* pElement = GetNextElement( pos );
 		pElement->ToString( strXML, bNewline );
 	}
 
@@ -962,6 +1001,13 @@ CXMLAttribute* CXMLElement::AddAttribute(LPCTSTR pszName, LPCTSTR pszValue)
 	if ( pszValue ) pAttribute->SetValue( pszValue );
 
 	return pAttribute;
+}
+
+CXMLAttribute* CXMLElement::AddAttribute(LPCTSTR pszName, __int64 nValue)
+{
+	CString strValue;
+	strValue.Format( _T("%I64d"), nValue );
+	return AddAttribute( pszName, strValue );
 }
 
 CXMLAttribute* CXMLElement::AddAttribute(CXMLAttribute* pAttribute)

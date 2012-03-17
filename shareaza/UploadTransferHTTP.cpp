@@ -1,7 +1,7 @@
 //
 // UploadTransferHTTP.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,6 +22,7 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
+#include "LibraryFolders.h"
 #include "Uploads.h"
 #include "UploadFile.h"
 #include "UploadFiles.h"
@@ -69,7 +70,7 @@ CUploadTransferHTTP::CUploadTransferHTTP() :
 ,	m_bHead				( FALSE )
 ,	m_bConnectHdr		( FALSE )
 ,	m_bKeepAlive		( TRUE )
-,	m_bHostBrowse		( FALSE )
+,	m_nAccept			( 0 )
 ,	m_bDeflate			( FALSE )
 ,	m_bBackwards		( FALSE )
 ,	m_bRange			( FALSE )
@@ -165,13 +166,12 @@ BOOL CUploadTransferHTTP::ReadRequest()
 	m_bHead			= ( strLine.Left( 5 ) == _T("HEAD ") );
 	m_bConnectHdr	= FALSE;
 	m_bKeepAlive	= TRUE;
-	m_bHostBrowse	= FALSE;
+	m_nAccept		= 0;
 	m_bDeflate		= FALSE;
 	m_bBackwards	= FALSE;
 	m_bRange		= FALSE;
 	m_bQueueMe		= FALSE;
 	m_bNotShareaza  = FALSE;
-
 	m_bMetadata		= FALSE;
 	m_bTigerTree	= FALSE;
 	
@@ -224,9 +224,9 @@ BOOL CUploadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 	}
 	else if ( strHeader.CompareNoCase( _T("Accept") ) == 0 )
 	{
-		if ( _tcsistr( strValue, _T("application/x-gnutella-packets") ) ) m_bHostBrowse = 1;
-		if ( _tcsistr( strValue, _T("application/x-gnutella2") ) ) m_bHostBrowse = 2;
-		if ( _tcsistr( strValue, _T("application/x-shareaza") ) ) m_bHostBrowse = 2;
+		if ( _tcsistr( strValue, _T("application/x-gnutella-packets") ) ) m_nAccept = 1;
+		if ( _tcsistr( strValue, _T("application/x-gnutella2") ) ) m_nAccept = 2;
+		if ( _tcsistr( strValue, _T("application/x-shareaza") ) ) m_nAccept = 2;
 	}
 	else if ( strHeader.CompareNoCase( _T("Accept-Encoding") ) == 0 )
 	{
@@ -320,9 +320,14 @@ BOOL CUploadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 
 BOOL CUploadTransferHTTP::OnHeadersComplete()
 {
-	if ( Uploads.EnforcePerHostLimit( this, TRUE ) ) return FALSE;
-	
-	if ( Security.IsClientBanned( m_sUserAgent ) )
+	if ( Uploads.EnforcePerHostLimit( this, TRUE ) )
+	{
+		// Too many connections from same host
+		SendResponse( IDR_HTML_BUSY, TRUE );
+		theApp.Message( MSG_ERROR, IDS_UPLOAD_BUSY_HOST, (LPCTSTR)m_sName, (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
+		return TRUE;
+	}
+	else if ( Security.IsClientBanned( m_sUserAgent ) )
 	{
 		SendResponse( IDR_HTML_BROWSER );
 		theApp.Message( MSG_ERROR, _T("Client %s has a prohibited user agent \"%s\", banning"), (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
@@ -332,10 +337,6 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 	}
 	else if ( m_bClientExtended )
 	{
-		// Assume certain capabilities for various Shareaza versions
-		m_nGnutella |= 3;
-		if ( m_sUserAgent == _T("Shareaza 1.4.0.0") ) m_bQueueMe = TRUE;
-
 		// Check for non-shareaza clients spoofing a Shareaza user agent
 		if ( m_bNotShareaza )
 		{
@@ -345,6 +346,10 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 			Remove( FALSE );
 			return FALSE;
 		}
+
+		// Assume certain capabilities for various Shareaza versions
+		m_nGnutella |= 3;
+		if ( m_sUserAgent == _T("Shareaza 1.4.0.0") ) m_bQueueMe = TRUE;
 	}
 	else if ( _tcsistr( m_sUserAgent, _T("limewire") ) != NULL || // LimeWire(FrostWire)
 			  _tcsistr( m_sUserAgent, _T("phex") ) != NULL )
@@ -383,27 +388,24 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 
 		return TRUE;
 	}
-	else if ( m_sRequest == _T("/") || ::StartsWith( m_sRequest, _PT("/gnutella/browse/v1") ) )
+	else if ( m_sRequest == _T("/") || m_sRequest == _T("/gnutella/browse/v1") )
 	{
 		// Requests for "/" or the browse path are handled the same way
 		
-		if ( ( m_bHostBrowse == 1 && ! Settings.Community.ServeFiles ) ||
-			 ( m_bHostBrowse == 2 && ! Settings.Community.ServeProfile && ! Settings.Community.ServeFiles ) )
+		if ( m_nAccept == 0 && m_sRequest == _T("/") )
 		{
-			theApp.Message( MSG_ERROR, IDS_UPLOAD_BROWSE_DENIED, (LPCTSTR)m_sAddress );
-			m_bHostBrowse = FALSE;
-		}
-		
-		if ( m_bHostBrowse )
-		{
-			RequestHostBrowse();
-		}
-		else
-		{
-			theApp.Message( MSG_INFO, IDS_UPLOAD_ABOUT, (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
 			SendResponse( IDR_HTML_ABOUT );
+			theApp.Message( MSG_INFO, IDS_UPLOAD_ABOUT, (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
 		}
-		
+		else if ( ( m_nAccept == 0 && ! Settings.Community.ServeFiles ) ||
+				  ( m_nAccept == 1 && ! Settings.Community.ServeFiles ) ||
+				  ( m_nAccept == 2 && ! Settings.Community.ServeProfile && ! Settings.Community.ServeFiles ) ||
+				  ( ! RequestHostBrowse() ) )
+		{
+			SendResponse( IDR_HTML_ABOUT );
+			theApp.Message( MSG_ERROR, IDS_UPLOAD_BROWSE_DENIED, (LPCTSTR)m_sAddress );
+		}
+
 		return TRUE;
 	}
 	else if ( ::StartsWith( m_sRequest, _PT("/remote") ) )
@@ -419,43 +421,22 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 			return FALSE;
 		}
 	}
-	else if ( Security.IsAgentBlocked( m_sUserAgent ) )
+	else if ( ::StartsWith( m_sRequest, _PT("/gnutella/preview/v1?urn:") ) && Settings.Uploads.SharePreviews )
 	{
-		if ( m_sName.IsEmpty() ) m_sName = _T("file");
-		SendResponse( IDR_HTML_BROWSER );
-		theApp.Message( MSG_ERROR, IDS_UPLOAD_BROWSER, (LPCTSTR)m_sAddress, (LPCTSTR)m_sName );
-		Security.Complain( &m_pHost.sin_addr );
-		if ( m_sUserAgent.Find( _T("Mozilla") ) >= 0 ) return TRUE;
-		Remove( FALSE );
-		return FALSE;
-	}
-	else if ( IsNetworkDisabled() )
-	{
-		// Network isn't active- Check if we should send 404 or 403
+		LPCTSTR pszURN = (LPCTSTR)m_sRequest + 21;
 
-		if ( ::StartsWith( m_sRequest, _PT("/uri-res/N2R?urn:") ) )
+		CSingleLock oLock( &Library.m_pSection );
+		if ( oLock.Lock( 1000 ) )
 		{
-			LPCTSTR pszURN = (LPCTSTR)m_sRequest + 13;
-
-			CSingleLock oLock( &Library.m_pSection );
-			if ( oLock.Lock( 1000 ) )
-			{
-				if ( CLibraryFile* pFile = LibraryMaps.LookupFileByURN( pszURN, TRUE, TRUE ) )
-					SendResponse( IDR_HTML_DISABLED );
-				else
-					// Network is disabled, but we don't have the file anyway.
-					SendResponse( IDR_HTML_FILENOTFOUND );
-			}
-			else
-				SendResponse( IDR_HTML_BUSY );
+			if ( CLibraryFile* pShared = LibraryMaps.LookupFileByURN( pszURN, TRUE, TRUE ) )
+				return RequestPreview( pShared, oLock );
 		}
 		else
-			SendResponse( IDR_HTML_DISABLED );
-
-		theApp.Message( MSG_ERROR, IDS_UPLOAD_DISABLED, (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
-		Security.Ban( &m_pHost.sin_addr, ban30Mins, FALSE ); // Anti-hammer protection if client doesn't understand 403
-		Remove( FALSE );
-		return FALSE;
+		{
+			theApp.Message( MSG_ERROR, _T("Refusing request from %s, Library is busy."), (LPCTSTR)m_sAddress );
+			SendResponse( IDR_HTML_BUSY );
+			return TRUE;
+		}
 	}
 	else if ( ::StartsWith( m_sRequest, _PT("/gnutella/metadata/v1?urn:") ) && Settings.Uploads.ShareMetadata )
 	{
@@ -495,6 +476,44 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 					return RequestMetadata( pMetadata );
 			}
 		}
+	}
+	else if ( Security.IsAgentBlocked( m_sUserAgent ) )
+	{
+		if ( m_sName.IsEmpty() ) m_sName = _T("file");
+		SendResponse( IDR_HTML_BROWSER );
+		theApp.Message( MSG_ERROR, IDS_UPLOAD_BROWSER, (LPCTSTR)m_sAddress, (LPCTSTR)m_sName );
+		Security.Complain( &m_pHost.sin_addr );
+		if ( m_sUserAgent.Find( _T("Mozilla") ) >= 0 ) return TRUE;
+		Remove( FALSE );
+		return FALSE;
+	}
+	else if ( IsNetworkDisabled() )
+	{
+		// Network isn't active- Check if we should send 404 or 403
+
+		if ( ::StartsWith( m_sRequest, _PT("/uri-res/N2R?urn:") ) )
+		{
+			LPCTSTR pszURN = (LPCTSTR)m_sRequest + 13;
+
+			CSingleLock oLock( &Library.m_pSection );
+			if ( oLock.Lock( 1000 ) )
+			{
+				if ( CLibraryFile* pFile = LibraryMaps.LookupFileByURN( pszURN, TRUE, TRUE ) )
+					SendResponse( IDR_HTML_DISABLED );
+				else
+					// Network is disabled, but we don't have the file anyway.
+					SendResponse( IDR_HTML_FILENOTFOUND );
+			}
+			else
+				SendResponse( IDR_HTML_BUSY );
+		}
+		else
+			SendResponse( IDR_HTML_DISABLED );
+
+		theApp.Message( MSG_ERROR, IDS_UPLOAD_DISABLED, (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
+		Security.Ban( &m_pHost.sin_addr, ban30Mins, FALSE ); // Anti-hammer protection if client doesn't understand 403
+		Remove( FALSE );
+		return FALSE;
 	}
 	else if ( ::StartsWith( m_sRequest, _PT("/gnutella/tigertree/v3?urn:") ) && Settings.Uploads.ShareTiger )
 	{
@@ -570,23 +589,6 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 				return RequestTigerTreeDIME( pDownload->GetTigerTree(), nDepth,
 					bHashset ? pDownload->GetHashset() : NULL, FALSE );
 			}
-		}
-	}
-	else if ( ::StartsWith( m_sRequest, _PT("/gnutella/preview/v1?urn:") ) && Settings.Uploads.SharePreviews )
-	{
-		LPCTSTR pszURN = (LPCTSTR)m_sRequest + 21;
-
-		CSingleLock oLock( &Library.m_pSection );
-		if ( oLock.Lock( 1000 ) )
-		{
-			if ( CLibraryFile* pShared = LibraryMaps.LookupFileByURN( pszURN, TRUE, TRUE ) )
-				return RequestPreview( pShared, oLock );
-		}
-		else
-		{
-			theApp.Message( MSG_ERROR, _T("Refusing request from %s, Library is busy."), (LPCTSTR)m_sAddress );
-			SendResponse( IDR_HTML_BUSY );
-			return TRUE;
 		}
 	}
 	else if ( ::StartsWith( m_sRequest, _PT("/uri-res/N2R?urn:") ) )
@@ -1699,17 +1701,18 @@ BOOL CUploadTransferHTTP::RequestPreview(CLibraryFile* pFile, CSingleLock& oLibr
 BOOL CUploadTransferHTTP::RequestHostBrowse()
 {
 	CBuffer pBuffer;
-	
-	DWORD nExisting = static_cast< DWORD >( Uploads.GetCount( this, upsBrowse ) );
-	
-	if ( nExisting >= Settings.Uploads.PreviewTransfers )
-	{
-		theApp.Message( MSG_ERROR, IDS_UPLOAD_BROWSE_BUSY, (LPCTSTR)m_sAddress );
-		SendResponse( IDR_HTML_BUSY );
-		return TRUE;
-	}
 
-	if ( m_bHostBrowse < 2 )
+	if ( m_nAccept == 0 )
+	{
+		// Create library file list
+		CAutoPtr< CXMLElement > pXML( LibraryFolders.CreateXML( _T("/"), TRUE, xmlDefault ) );
+		if ( ! pXML )
+			// Out of memory
+			return FALSE;
+
+		pBuffer.Print( pXML->ToString( TRUE, TRUE, TRUE, TRI_TRUE ), CP_UTF8 );
+	}
+	else if ( m_nAccept == 1 )
 	{
 		if ( Settings.Community.ServeFiles )
 		{
@@ -1717,7 +1720,7 @@ BOOL CUploadTransferHTTP::RequestHostBrowse()
 			pSearch.Execute( 0 );
 		}
 	}
-	else
+	else if ( m_nAccept == 2 )
 	{
 		if ( Settings.Community.ServeProfile && MyProfile.IsValid() )
 		{
@@ -1755,11 +1758,15 @@ BOOL CUploadTransferHTTP::RequestHostBrowse()
 	Write( _P("HTTP/1.1 200 OK\r\n") );
 	SendDefaultHeaders();
 	
-	if ( m_bHostBrowse < 2 )
+	if ( m_nAccept == 0 )
+	{
+		Write( _P("Content-Type: text/xml\r\n") );
+	}
+	else if ( m_nAccept == 1 )
 	{
 		Write( _P("Content-Type: application/x-gnutella-packets\r\n") );
 	}
-	else
+	else if ( m_nAccept == 2 )
 	{
 		Write( _P("Content-Type: application/x-gnutella2\r\n") );
 	}

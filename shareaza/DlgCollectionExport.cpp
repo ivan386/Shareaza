@@ -1,7 +1,7 @@
 //
 // DlgCollectionExport.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -365,7 +365,7 @@ void CCollectionExportDlg::OnOK()
 
 	if ( m_pFolder && m_pFolder->GetFileCount() )
 	{
-		CXMLElement* pXML = m_pFolder->CreateXML( TRUE );
+		CXMLElement* pXML = m_pFolder->CreateXML();
 		CString strXML = pXML->ToString( TRUE, TRUE );
 		delete pXML;
 

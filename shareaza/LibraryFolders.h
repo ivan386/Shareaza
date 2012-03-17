@@ -1,7 +1,7 @@
 //
 // LibraryFolders.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -25,6 +25,13 @@ class CLibraryFolder;
 class CAlbumFolder;
 class CLibraryFile;
 class CCollectionFile;
+class CXMLElement;
+
+enum XmlType
+{
+	xmlDefault,		// Default
+	xmlDC			// DC++ file listing
+};
 
 
 class CLibraryFolders : public CComObject
@@ -43,6 +50,7 @@ protected:
 
 // Physical Folder Operations
 public:
+	CXMLElement*	CreateXML(LPCTSTR szRoot, BOOL bSharedOnly, XmlType nType) const;
 	POSITION		GetFolderIterator() const;
 	CLibraryFolder*	GetNextFolder(POSITION& pos) const;
 	INT_PTR			GetFolderCount() const { return m_pFolders.GetCount(); }

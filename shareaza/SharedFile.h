@@ -1,7 +1,7 @@
 //
 // SharedFile.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,16 +22,16 @@
 #pragma once
 
 #include "ShareazaFile.h"
+#include "LibraryFolders.h"
 #include "Schema.h"
 
-class CLibraryFolder;
-class CSharedSource;
-class CXMLElement;
-class CQuerySearch;
-class CLibraryDownload;
-class CTigerTree;
-class CED2K;
 class CDownload;
+class CED2K;
+class CLibraryDownload;
+class CQuerySearch;
+class CSharedSource;
+class CTigerTree;
+class CXMLElement;
 
 
 class CLibraryFile : public CShareazaFile
@@ -84,6 +84,7 @@ public:
 	// Get full path (folder + file name)
 	CString			GetPath() const;
 	CString			GetSearchName() const;
+	CXMLElement*	CreateXML(CXMLElement* pRoot, BOOL bSharedOnly, XmlType nType) const;
 	bool			IsShared(bool bIgnoreOverride = false) const;
 	void			SetShared(bool bShared, bool bOverride = false);
 	bool			IsPrivateTorrent() const;

@@ -68,6 +68,53 @@ CLibraryFolders::~CLibraryFolders()
 	delete m_pAlbumRoot;
 }
 
+CXMLElement* CLibraryFolders::CreateXML(LPCTSTR szRoot, BOOL bSharedOnly, XmlType nType) const
+{
+	CXMLElement* pRoot;
+
+	switch ( nType )
+	{
+	case xmlDC:
+		pRoot = new CXMLElement( NULL, _T("filelisting") );
+		if ( pRoot )
+		{
+			pRoot->AddAttribute( _T("version"), 1 );
+			pRoot->AddAttribute( _T("base"), szRoot );
+			pRoot->AddAttribute( _T("generator"), Settings.SmartAgent() );
+		}
+		break;
+
+	default:
+		pRoot = new CXMLElement( NULL, _T("folders") );
+		if ( pRoot )
+		{
+			pRoot->AddAttribute( _T("xmlns"), CSchema::uriFolder );
+		}
+	}
+
+	if ( ! pRoot )
+		// Out of memory
+		return NULL;
+
+	CSingleLock oLock( &Library.m_pSection, TRUE );
+
+	if ( _tcsicmp( szRoot, _T("/") ) == 0 )
+	{
+		// All folders
+		for ( POSITION pos = LibraryFolders.GetFolderIterator() ; pos ; )
+		{
+			LibraryFolders.GetNextFolder( pos )->CreateXML( pRoot, bSharedOnly, nType );
+		}
+	}
+	else if ( const CLibraryFolder* pFolder = LibraryFolders.GetFolderByName( szRoot ) )
+	{
+		// Specified folder
+		pFolder->CreateXML( pRoot, bSharedOnly, nType );
+	}
+
+	return pRoot;
+}
+
 //////////////////////////////////////////////////////////////////////
 // CLibraryFolders physical folder enumeration
 

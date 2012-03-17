@@ -1,7 +1,7 @@
 //
 // SharedFolder.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -21,8 +21,10 @@
 
 #pragma once
 
-class CLibraryFile;
+#include "LibraryFolders.h"
+
 class CLibraryList;
+class CXMLElement;
 
 
 class CLibraryFolder : public CComObject
@@ -58,6 +60,7 @@ protected:
 
 // Operations
 public:
+	CXMLElement*	CreateXML(CXMLElement* pRoot, BOOL bSharedOnly, XmlType nType) const;
 	POSITION		GetFolderIterator() const;
 	CLibraryFolder*	GetNextFolder(POSITION& pos) const;
 	CLibraryFolder*	GetFolderByName(LPCTSTR pszName) const;

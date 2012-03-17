@@ -1,7 +1,7 @@
 //
 // UploadTransferHTTP.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -45,7 +45,11 @@ protected:
 	BOOL		m_bHead;
 	BOOL		m_bConnectHdr;
 	BOOL		m_bKeepAlive;
-	BOOL		m_bHostBrowse;
+	// "Accept" header:
+	// 0 - unknown;
+	// 1 - Gnutella 1 (application/x-gnutella-packets);
+	// 2 - Gnutella 2 (application/x-gnutella2 or application/x-shareaza).
+	int			m_nAccept;
 	BOOL		m_bDeflate;
 	BOOL		m_bBackwards;
 	BOOL		m_bRange;

@@ -587,7 +587,12 @@ BOOL CUploadTransferDC::RequestFileList(BOOL bFile, BOOL bZip, const std::string
 	m_sName = ( bFile ? "/" : strFilename.c_str() );
 
 	// Create library file list
-	LibraryToFileList( m_sName, m_pXML );
+	CAutoPtr< CXMLElement > pXML( LibraryFolders.CreateXML( m_sName, TRUE, xmlDC ) );
+	if ( ! pXML )
+		// Out of memory
+		return FALSE;
+
+	m_pXML.Print( pXML->ToString( TRUE, TRUE, TRUE, TRI_TRUE ), CP_UTF8 );
 
 	// TODO: Implement partial request of file list
 	nOffset = 0;
@@ -597,10 +602,9 @@ BOOL CUploadTransferDC::RequestFileList(BOOL bFile, BOOL bZip, const std::string
 	{
 		// BZip it
 		if ( ! m_pXML.BZip() )
-		{
 			// Out of memory
 			return FALSE;
-		}
+
 		bZip = FALSE;
 		nLength = m_pXML.m_nLength;
 	}
@@ -609,10 +613,8 @@ BOOL CUploadTransferDC::RequestFileList(BOOL bFile, BOOL bZip, const std::string
 	{
 		// Zip it
 		if ( ! m_pXML.Deflate() )
-		{
 			// Out of memory
 			return FALSE;
-		}
 	}
 
 	m_nOffset = nOffset;
@@ -643,65 +645,4 @@ BOOL CUploadTransferDC::RequestFileList(BOOL bFile, BOOL bZip, const std::string
 	m_pXML.Clear();
 
 	return TRUE;
-}
-
-void CUploadTransferDC::LibraryToFileList(const CString& strRoot, CBuffer& pXML)
-{
-	CSingleLock oLock( &Library.m_pSection, TRUE );
-			
-	CString strFileListing;
-	strFileListing.Format( _T("<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>\r\n")
-		_T("<FileListing Version=\"1\" Base=\"%s\" Generator=\"%s\">\r\n"),
-		CXMLNode::ValueToString( strRoot ), CXMLNode::ValueToString( Settings.SmartAgent() ) );
-	pXML.Print( strFileListing, CP_UTF8 );
-
-	if ( strRoot == _T("/") )
-	{
-		// All folders
-		for ( POSITION pos = LibraryFolders.GetFolderIterator() ; pos ; )
-		{
-			FolderToFileList( LibraryFolders.GetNextFolder( pos ), pXML );
-		}
-	}
-	else if ( const CLibraryFolder* pFolder = LibraryFolders.GetFolderByName( strRoot ) )
-	{
-		// Specified folder
-		FolderToFileList( pFolder, pXML );
-	}
-
-	pXML.Add( _P("</FileListing>\r\n") );
-}
-
-void CUploadTransferDC::FolderToFileList(const CLibraryFolder* pFolder, CBuffer& pXML)
-{
-	if ( ! pFolder || ! pFolder->IsShared() )
-		return;
-
-	CString strFolder;
-	strFolder.Format( _T("<Directory Name=\"%s\">\r\n"),
-		CXMLNode::ValueToString( pFolder->m_sName ) );
-	pXML.Print( strFolder, CP_UTF8 );
-
-	for ( POSITION pos = pFolder->GetFolderIterator() ; pos ; )
-	{
-		FolderToFileList( pFolder->GetNextFolder( pos ), pXML );
-	}
-
-	for ( POSITION pos = pFolder->GetFileIterator() ; pos ; )
-	{
-		FileToFileList( pFolder->GetNextFile( pos ), pXML );
-	}
-
-	pXML.Add( _P("</Directory>\r\n") );
-}
-
-void CUploadTransferDC::FileToFileList(const CLibraryFile* pFile, CBuffer& pXML)
-{
-	if ( ! pFile || ! pFile->IsShared() )
-		return;
-
-	CString strFile;
-	strFile.Format( _T("<File Name=\"%s\" Size=\"%I64u\" TTH=\"%s\"/>\r\n"),
-		CXMLNode::ValueToString( pFile->m_sName ), pFile->m_nSize, pFile->m_oTiger.toString() );
-	pXML.Print( strFile, CP_UTF8 );
 }

@@ -1,7 +1,7 @@
 //
 // XML.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -77,9 +77,12 @@ protected:
 	CMap< CString, const CString&, CXMLAttribute*, CXMLAttribute* > m_pAttributes;
 
 	void			AddRecursiveWords(CString& strWords) const;
+	void			ToString(CString& strXML, BOOL bNewline) const;
 
 public:
 	CXMLElement*	Clone(CXMLElement* pParent = NULL) const;
+	// Clone element and then rename all elements and attributes by using specified prefix
+	CXMLElement*	Prefix(const CString& sPrefix, CXMLElement* pParent = NULL) const;
 	CXMLElement*	Detach();
 	CXMLElement*	AddElement(LPCTSTR pszName);
 	CXMLElement*	AddElement(CXMLElement* pElement);
@@ -92,6 +95,7 @@ public:
 	void			RemoveElement(CXMLElement* pElement);
 	void			DeleteAllElements();
 	CXMLAttribute*	AddAttribute(LPCTSTR pszName, LPCTSTR pszValue = NULL);
+	CXMLAttribute*	AddAttribute(LPCTSTR pszName, __int64 nValue);
 	CXMLAttribute*	AddAttribute(CXMLAttribute* pAttribute);
 	int				GetAttributeCount() const;
 	POSITION		GetAttributeIterator() const;
@@ -101,8 +105,7 @@ public:
 	void			RemoveAttribute(CXMLAttribute* pAttribute);
 	void			DeleteAttribute(LPCTSTR pszName);
 	void			DeleteAllAttributes();
-	CString			ToString(BOOL bHeader = FALSE, BOOL bNewline = FALSE) const;
-	void			ToString(CString& strXML, BOOL bNewline = FALSE) const;
+	CString			ToString(BOOL bHeader = FALSE, BOOL bNewline = FALSE, BOOL bEncoding = FALSE, TRISTATE bSnadalone = TRI_UNKNOWN) const;
 	BOOL			ParseString(LPCTSTR& strXML);
 	BOOL			Equals(CXMLElement* pXML) const;
 	// Add missing elements and attributes from pInput, preserve or overwrite existing

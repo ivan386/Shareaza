@@ -1,7 +1,7 @@
 //
 // XMLCOM.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -35,12 +35,12 @@ IMPLEMENT_DYNCREATE(CXMLCOM, CComObject)
 IMPLEMENT_DYNCREATE(CXMLCOMCol, CComObject)
 
 // {30FC662A-D72A-4f79-B63A-ACD4FBFE68A3}
-IMPLEMENT_OLECREATE_FLAGS(CXMLCOM, "Shareaza.XML",
+IMPLEMENT_OLECREATE_FLAGS(CXMLCOM, CLIENT_NAME _T(".XML"),
 	afxRegFreeThreading|afxRegApartmentThreading,
 	0x30fc662a, 0xd72a, 0x4f79, 0xb6, 0x3a, 0xac, 0xd4, 0xfb, 0xfe, 0x68, 0xa3)
 
 // {D73ABD28-3A2A-4e36-AD6F-2AA8F011FBE3}
-IMPLEMENT_OLECREATE_FLAGS(CXMLCOMCol, "Shareaza.XMLCollection",
+IMPLEMENT_OLECREATE_FLAGS(CXMLCOMCol, CLIENT_NAME _T(".XMLCollection"),
 	afxRegFreeThreading|afxRegApartmentThreading,
 	0xd73abd28, 0x3a2a, 0x4e36, 0xad, 0x6f, 0x2a, 0xa8, 0xf0, 0x11, 0xfb, 0xe3)
 

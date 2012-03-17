@@ -1,7 +1,7 @@
 //
 // SharedFolder.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -26,8 +26,10 @@
 #include "SharedFile.h"
 #include "Library.h"
 #include "LibraryDictionary.h"
+#include "LibraryFolders.h"
 #include "Application.h"
 #include "Skin.h"
+#include "XML.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -93,6 +95,47 @@ void CLibraryFolder::RenewGUID()
 {
 	CoCreateGuid( reinterpret_cast< GUID* > ( &*m_oGUID.begin() ) );
 	m_oGUID.validate();
+}
+
+CXMLElement* CLibraryFolder::CreateXML(CXMLElement* pRoot, BOOL bSharedOnly, XmlType nType) const
+{
+	if ( bSharedOnly && ! IsShared() )
+		return NULL;
+
+	CXMLElement* pFolder;
+
+	switch ( nType )
+	{
+	case xmlDC:
+		pFolder = pRoot->AddElement( _T("directory") );
+		if ( pFolder )
+		{
+			pFolder->AddAttribute( _T("name"), m_sName );
+		}
+		break;
+
+	default:
+		pFolder = pRoot->AddElement( _T("folder") );
+		if ( pFolder )
+		{
+			pFolder->AddAttribute( _T("name"), m_sName );
+		}
+	}
+
+	if ( pFolder )
+	{
+		for ( POSITION pos = GetFolderIterator() ; pos ; )
+		{
+			GetNextFolder( pos )->CreateXML( pFolder, bSharedOnly, nType );
+		}
+
+		for ( POSITION pos = GetFileIterator() ; pos ; )
+		{
+			GetNextFile( pos )->CreateXML( pFolder, bSharedOnly, nType );
+		}
+	}
+
+	return pFolder;
 }
 
 //////////////////////////////////////////////////////////////////////
