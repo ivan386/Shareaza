@@ -1,7 +1,7 @@
 //
 // ShareazaFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -321,61 +321,47 @@ STDMETHODIMP CShareazaFile::XShareazaFile::get_URN(BSTR sURN, BSTR FAR* psURN)
 {
 	METHOD_PROLOGUE( CShareazaFile, ShareazaFile )
 
-	if ( ! psURN )
-		return E_POINTER;
-
-	*psURN = NULL;
-
-	CString strURN = sURN;
+	CString strURN = sURN ? sURN : _T("");
 	CComBSTR bstrURN;
 
 	if ( strURN.IsEmpty() )
 	{
 		if ( pThis->m_oTiger && pThis->m_oSHA1 )
-			bstrURN = _T("urn:bitprint");
-		else if ( pThis->m_oTiger )
-			bstrURN = _T("urn:tree:tiger/");
+			bstrURN =  _T("urn:bitprint:") + pThis->m_oSHA1.toString() + _T('.') + pThis->m_oTiger.toString();
 		else if ( pThis->m_oSHA1 )
-			bstrURN = _T("urn:sha1");
-		else
-			return E_FAIL;
+			bstrURN = pThis->m_oSHA1.toUrn();
+		else if ( pThis->m_oTiger )
+			bstrURN = pThis->m_oTiger.toUrn();
+		else if ( pThis->m_oMD5 )
+			bstrURN = pThis->m_oMD5.toUrn();
+		else if ( pThis->m_oED2K )
+			bstrURN = pThis->m_oED2K.toUrn();
+		else if ( pThis->m_oBTH )
+			bstrURN = pThis->m_oBTH.toUrn();
 	}
-
-	if ( strURN.CompareNoCase( _T("urn:bitprint") ) == 0 )
+	else if ( strURN.CompareNoCase( _T("urn:bitprint") ) == 0 )
 	{
-		if ( !pThis->m_oSHA1 || ! pThis->m_oTiger ) return E_FAIL;
-		bstrURN	= _T("urn:bitprint:")
-				+ pThis->m_oSHA1.toString() + '.'
-				+ pThis->m_oTiger.toString();
+		if ( pThis->m_oSHA1 && pThis->m_oTiger ) bstrURN = _T("urn:bitprint:") + pThis->m_oSHA1.toString() + _T('.') + pThis->m_oTiger.toString();
 	}
 	else if ( strURN.CompareNoCase( _T("urn:sha1") ) == 0 )
 	{
-		if ( !pThis->m_oSHA1 ) return E_FAIL;
-		bstrURN = pThis->m_oSHA1.toUrn();
+		if ( pThis->m_oSHA1 ) bstrURN = pThis->m_oSHA1.toUrn();
 	}
 	else if ( strURN.CompareNoCase( _T("urn:tree:tiger/") ) == 0 )
 	{
-		if ( ! pThis->m_oTiger ) return E_FAIL;
-		bstrURN = pThis->m_oTiger.toUrn();
+		if ( pThis->m_oTiger ) bstrURN = pThis->m_oTiger.toUrn();
 	}
 	else if ( strURN.CompareNoCase( _T("urn:md5") ) == 0 )
 	{
-		if ( ! pThis->m_oMD5 ) return E_FAIL;
-		bstrURN = pThis->m_oMD5.toUrn();
+		if ( pThis->m_oMD5 ) bstrURN = pThis->m_oMD5.toUrn();
 	}
 	else if ( strURN.CompareNoCase( _T("urn:ed2k") ) == 0 )
 	{
-		if ( ! pThis->m_oED2K ) return E_FAIL;
-		bstrURN = pThis->m_oED2K.toUrn();
+		if ( pThis->m_oED2K ) bstrURN = pThis->m_oED2K.toUrn();
 	}
 	else if ( strURN.CompareNoCase( _T("urn:btih") ) == 0 )
 	{
-		if ( ! pThis->m_oBTH ) return E_FAIL;
-		bstrURN = pThis->m_oBTH.toUrn();
-	}
-	else
-	{
-		return E_FAIL;
+		if ( pThis->m_oBTH ) bstrURN = pThis->m_oBTH.toUrn();
 	}
 
 	*psURN = bstrURN.Detach();
@@ -386,11 +372,6 @@ STDMETHODIMP CShareazaFile::XShareazaFile::get_URN(BSTR sURN, BSTR FAR* psURN)
 STDMETHODIMP CShareazaFile::XShareazaFile::get_Hash(URN_TYPE nType, ENCODING nEncoding, BSTR FAR* psURN)
 {
 	METHOD_PROLOGUE( CShareazaFile, ShareazaFile )
-
-	if ( ! psURN )
-		return E_POINTER;
-
-	*psURN = NULL;
 
 	CComBSTR bstrURN;
 
@@ -411,7 +392,7 @@ STDMETHODIMP CShareazaFile::XShareazaFile::get_Hash(URN_TYPE nType, ENCODING nEn
 				bstrURN = pThis->m_oSHA1.toString< Hashes::base32Encoding >();
 				break;
 			default:
-				return E_INVALIDARG;
+				;
 			}
 		}
 		break;
@@ -431,7 +412,7 @@ STDMETHODIMP CShareazaFile::XShareazaFile::get_Hash(URN_TYPE nType, ENCODING nEn
 				bstrURN = pThis->m_oTiger.toString< Hashes::base32Encoding >();
 				break;
 			default:
-				return E_INVALIDARG;
+				;
 			}
 		}
 		break;
@@ -451,7 +432,7 @@ STDMETHODIMP CShareazaFile::XShareazaFile::get_Hash(URN_TYPE nType, ENCODING nEn
 				bstrURN = pThis->m_oED2K.toString< Hashes::base32Encoding >();
 				break;
 			default:
-				return E_INVALIDARG;
+				;
 			}
 		}
 		break;
@@ -471,7 +452,7 @@ STDMETHODIMP CShareazaFile::XShareazaFile::get_Hash(URN_TYPE nType, ENCODING nEn
 				bstrURN = pThis->m_oMD5.toString< Hashes::base32Encoding >();
 				break;
 			default:
-				return E_INVALIDARG;
+				;
 			}
 		}
 		break;
@@ -491,13 +472,13 @@ STDMETHODIMP CShareazaFile::XShareazaFile::get_Hash(URN_TYPE nType, ENCODING nEn
 				bstrURN = pThis->m_oBTH.toString< Hashes::base32Encoding >();
 				break;
 			default:
-				return E_INVALIDARG;
+				;
 			}
 		}
 		break;
 
 	default:
-		return E_INVALIDARG;
+		;
 	}
 
 	*psURN = bstrURN.Detach();

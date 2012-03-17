@@ -1,7 +1,7 @@
 //
 // LibraryMaps.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -867,7 +867,7 @@ STDMETHODIMP CLibraryMaps::XLibraryFiles::get_Library(ILibrary FAR* FAR* ppLibra
 {
 	METHOD_PROLOGUE( CLibraryMaps, LibraryFiles )
 	*ppLibrary = (ILibrary*)Library.GetInterface( IID_ILibrary, TRUE );
-	return S_OK;
+	return *ppLibrary ? S_OK : E_NOINTERFACE;
 }
 
 STDMETHODIMP CLibraryMaps::XLibraryFiles::get__NewEnum(IUnknown FAR* FAR* /*ppEnum*/)
@@ -879,10 +879,10 @@ STDMETHODIMP CLibraryMaps::XLibraryFiles::get__NewEnum(IUnknown FAR* FAR* /*ppEn
 STDMETHODIMP CLibraryMaps::XLibraryFiles::get_Item(VARIANT vIndex, ILibraryFile FAR* FAR* ppFile)
 {
 	METHOD_PROLOGUE( CLibraryMaps, LibraryFiles )
+	*ppFile = NULL;
+	CQuickLock oLock( Library.m_pSection );
 
 	CLibraryFile* pFile = NULL;
-	*ppFile = NULL;
-
 	if ( vIndex.vt == VT_BSTR )
 	{
 		CString strName( vIndex.bstrVal );
@@ -893,12 +893,8 @@ STDMETHODIMP CLibraryMaps::XLibraryFiles::get_Item(VARIANT vIndex, ILibraryFile 
 	}
 	else
 	{
-		VARIANT va;
-		VariantInit( &va );
-
-		if ( FAILED( VariantChangeType( &va, (VARIANT FAR*)&vIndex, 0, VT_I4 ) ) )
-			return E_INVALIDARG;
-		if ( va.lVal < 0 || va.lVal >= pThis->GetFileCount() )
+		CComVariant va( vIndex );
+		if ( FAILED( va.ChangeType( VT_I4 ) ) || va.lVal < 0 || va.lVal >= pThis->GetFileCount() )
 			return E_INVALIDARG;
 
 		for ( POSITION pos = pThis->GetFileIterator() ; pos ; )
@@ -911,12 +907,13 @@ STDMETHODIMP CLibraryMaps::XLibraryFiles::get_Item(VARIANT vIndex, ILibraryFile 
 
 	*ppFile = pFile ? (ILibraryFile*)pFile->GetInterface( IID_ILibraryFile, TRUE ) : NULL;
 
-	return S_OK;
+	return *ppFile ? S_OK : E_INVALIDARG;
 }
 
 STDMETHODIMP CLibraryMaps::XLibraryFiles::get_Count(LONG FAR* pnCount)
 {
 	METHOD_PROLOGUE( CLibraryMaps, LibraryFiles )
-	*pnCount = static_cast< int >( pThis->GetFileCount() );
+	CQuickLock oLock( Library.m_pSection );
+	*pnCount = static_cast< LONG >( pThis->GetFileCount() );
 	return S_OK;
 }
