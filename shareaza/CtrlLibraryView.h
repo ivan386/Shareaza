@@ -63,13 +63,14 @@ public:
 	virtual void				OnSkinChange() {}
 	virtual DWORD_PTR			HitTestIndex(const CPoint& point) const = 0;
 
+	CLibraryFrame*		GetFrame() const;
+	CLibraryTipCtrl*	GetToolTip() const;
+
 private:
 	CLibraryListPtr		m_pSelection;
 
 protected:
 	void				PostUpdate();
-	CLibraryFrame*		GetFrame() const;
-	CLibraryTipCtrl*	GetToolTip() const;
 	DWORD				GetFolderCookie() const;
 	CLibraryTreeItem*	GetFolderSelection() const;
 	CAlbumFolder*		GetSelectedAlbum(CLibraryTreeItem* pSel = NULL) const;
