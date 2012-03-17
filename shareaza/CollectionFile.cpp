@@ -1,7 +1,7 @@
 //
 // ColletionFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -160,13 +160,13 @@ CCollectionFile::File* CCollectionFile::FindFile(CLibraryFile* pShared, BOOL bAp
 /////////////////////////////////////////////////////////////////////////////
 // CCollectionFile get count
 
-int CCollectionFile::GetMissingCount()
+int CCollectionFile::GetMissingCount() const
 {
 	int nCount =0;
 
 	for ( POSITION pos = GetFileIterator() ; pos ; )
 	{
-		File* pFile = GetNextFile( pos );
+		const File* pFile = GetNextFile( pos );
 		if ( ! pFile->IsComplete() && ! pFile->IsDownloading() ) nCount++;
 	}
 
@@ -184,6 +184,9 @@ BOOL CCollectionFile::LoadShareaza(LPCTSTR pszFile)
 	CZIPFile::File* pFile = pZIP.GetFile( _T("Collection.xml"), TRUE );
 	if ( pFile == NULL )
 		return FALSE;
+
+	if ( pZIP.GetCount() == 1 )
+		m_nType = SimpleCollection;
 
 	auto_ptr< CBuffer > pBuffer ( pFile->Decompress() );
 	if ( ! pBuffer.get() )
