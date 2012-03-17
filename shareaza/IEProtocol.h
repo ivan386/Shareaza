@@ -1,7 +1,7 @@
 //
 // IEProtocol.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -29,32 +29,30 @@ class CZIPFile;
 // {18D11ED9-1264-48A1-9E14-20F2C633242B}
 class CIEProtocol : public CComObject
 {
-// Construction
+	DECLARE_DYNAMIC(CIEProtocol)
+
 public:
 	CIEProtocol();
 	virtual ~CIEProtocol();
 
-	DECLARE_DYNCREATE(CIEProtocol)
-
-// Operations
-public:
 	BOOL		Create();
 	void		Close();
 	HRESULT		OnRequest(LPCTSTR pszURL, CBuffer& oBuffer, CString& sMimeType, BOOL bParseOnly);
 	
-// Attributes
 protected:
 	static LPCWSTR					pszProtocols[];
 	CCriticalSection				m_pSection;
 	CComQIPtr< IInternetSession >	m_pSession;
 
-// Implementation
-protected:
+	// Loads file from zip-collection or simple collection itself
+	// p2p-col://{URN|SHA1}/{relative path inside zip}
 	HRESULT		OnRequestRAZACOL(LPCTSTR pszURL, CBuffer& oBuffer, CString& sMimeType, BOOL bParseOnly);
+
+	// Loads jpg-preview or file metadata
+	// p2p-file://{URN|SHA1}/{preview|meta}
 	HRESULT		OnRequestRAZAFILE(LPCTSTR pszURL, CBuffer& oBuffer, CString& sMimeType, BOOL bParseOnly);
 
 // COM
-protected:
 	BEGIN_INTERFACE_PART(ClassFactory, IClassFactory)
 		STDMETHOD(CreateInstance)(IUnknown* pUnkOuter, REFIID riid, void** ppvObject);
 		STDMETHOD(LockServer)(BOOL fLock);
@@ -68,26 +66,21 @@ protected:
 // {E1A67AE5-7041-4AE1-94F7-DE03EF759E27}
 class CIEProtocolRequest : public CComObject
 {
-// Construction
+	DECLARE_DYNAMIC(CIEProtocolRequest)
+
 public:
 	CIEProtocolRequest();
 	virtual ~CIEProtocolRequest();
 
-	DECLARE_DYNCREATE(CIEProtocolRequest)
-
-// Attributes
 protected:
 	CComPtr<IInternetProtocolSink>	m_pSink;
 	CString							m_strMimeType;	// Data MIME type
 	CBuffer							m_oBuffer;		// Requested data
 
-// Implementation
-protected:
 	HRESULT		OnStart(LPCTSTR pszURL, IInternetProtocolSink* pSink, IInternetBindInfo* pBindInfo, DWORD dwFlags);
 	HRESULT		OnRead(void* pv, ULONG cb, ULONG* pcbRead);
 
 // COM
-protected:
 	BEGIN_INTERFACE_PART(InternetProtocol, IInternetProtocol)
 		STDMETHOD(Abort)(HRESULT hrReason, DWORD dwOptions);
 		STDMETHOD(Continue)(PROTOCOLDATA *pProtocolData);
