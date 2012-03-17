@@ -1,7 +1,7 @@
 //
 // Uploads.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -32,7 +32,7 @@ class CUploads
 // Construction
 public:
 	CUploads();
-	virtual ~CUploads();
+	~CUploads();
 
 // Attributes
 public:
@@ -51,8 +51,8 @@ public:
 	DWORD		GetCount(CUploadTransfer* pExcept, int nState = -1) const;
 	DWORD		GetTorrentCount(int nState) const;
 public:
-	BOOL		AllowMoreTo(IN_ADDR* pAddress) const;
-	BOOL		CanUploadFileTo(IN_ADDR* pAddress, const CShareazaFile* pFile) const;
+	BOOL		AllowMoreTo(const IN_ADDR* pAddress) const;
+	BOOL		CanUploadFileTo(const IN_ADDR* pAddress, const CShareazaFile* pFile) const;
 	BOOL		EnforcePerHostLimit(CUploadTransfer* pUpload, BOOL bRequest = FALSE);
 public:
 	void		SetStable(DWORD nSpeed);

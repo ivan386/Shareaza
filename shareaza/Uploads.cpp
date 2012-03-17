@@ -180,26 +180,7 @@ DWORD CUploads::GetBandwidthLimit() const
 //////////////////////////////////////////////////////////////////////
 // CUploads per-host limiting
 
-BOOL CUploads::AllowMoreTo(IN_ADDR* pAddress) const
-{
-	DWORD nCount = 0;
-
-	for ( POSITION pos = GetIterator() ; pos ; )
-	{
-		CUploadTransfer* pUpload = GetNext( pos );
-
-		if ( pUpload->m_nState == upsUploading ||
-			 pUpload->m_nState == upsQueued )
-		{
-			if ( pUpload->m_pHost.sin_addr.S_un.S_addr == pAddress->S_un.S_addr )
-				nCount++;
-		}
-	}
-
-	return ( nCount <= Settings.Uploads.MaxPerHost );
-}
-
-BOOL CUploads::CanUploadFileTo(IN_ADDR* pAddress, const CShareazaFile* pFile) const
+BOOL CUploads::AllowMoreTo(const IN_ADDR* pAddress) const
 {
 	DWORD nCount = 0;
 
@@ -210,7 +191,26 @@ BOOL CUploads::CanUploadFileTo(IN_ADDR* pAddress, const CShareazaFile* pFile) co
 		if ( pUpload->m_nState == upsUploading ||
 			 pUpload->m_nState == upsQueued )
 		{
-			if ( pUpload->m_pHost.sin_addr.S_un.S_addr == pAddress->S_un.S_addr )
+			if ( pUpload->m_pHost.sin_addr.s_addr == pAddress->s_addr )
+				nCount++;
+		}
+	}
+
+	return ( nCount <= Settings.Uploads.MaxPerHost );
+}
+
+BOOL CUploads::CanUploadFileTo(const IN_ADDR* pAddress, const CShareazaFile* pFile) const
+{
+	DWORD nCount = 0;
+
+	for ( POSITION pos = GetIterator() ; pos ; )
+	{
+		const CUploadTransfer* pUpload = GetNext( pos );
+
+		if ( pUpload->m_nState == upsUploading ||
+			 pUpload->m_nState == upsQueued )
+		{
+			if ( pUpload->m_pHost.sin_addr.s_addr == pAddress->s_addr )
 			{
 				nCount++;
 
@@ -230,13 +230,13 @@ BOOL CUploads::EnforcePerHostLimit(CUploadTransfer* pHit, BOOL bRequest)
 
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
-		CUploadTransfer* pUpload = GetNext( pos );
+		const CUploadTransfer* pUpload = GetNext( pos );
 
 		if ( pUpload->m_nState == upsUploading ||
 			 pUpload->m_nState == upsQueued ||
 			 pUpload->m_nState == upsPreQueue )
 		{
-			if ( pUpload->m_pHost.sin_addr.S_un.S_addr == pHit->m_pHost.sin_addr.S_un.S_addr )
+			if ( pUpload->m_pHost.sin_addr.s_addr == pHit->m_pHost.sin_addr.s_addr )
 				nCount++;
 		}
 	}
@@ -255,7 +255,7 @@ BOOL CUploads::EnforcePerHostLimit(CUploadTransfer* pHit, BOOL bRequest)
 				 pUpload->m_nState == upsQueued ||
 				 pUpload->m_nState == upsPreQueue )
 			{
-				if ( pUpload != pHit && pUpload->m_pHost.sin_addr.S_un.S_addr == pHit->m_pHost.sin_addr.S_un.S_addr )
+				if ( pUpload != pHit && pUpload->m_pHost.sin_addr.s_addr == pHit->m_pHost.sin_addr.s_addr )
 				{
 					if ( bRequest && pUpload->m_pBaseFile == pHit->m_pBaseFile )
 					{
@@ -269,7 +269,9 @@ BOOL CUploads::EnforcePerHostLimit(CUploadTransfer* pHit, BOOL bRequest)
 			}
 		}
 
-		if ( pNewest == NULL ) break;
+		if ( pNewest == NULL )
+			// Drop current connection
+			return TRUE;
 
 		if ( bRequest )
 		{
@@ -277,23 +279,20 @@ BOOL CUploads::EnforcePerHostLimit(CUploadTransfer* pHit, BOOL bRequest)
 			{
 				UploadQueues.StealPosition( pHit, pNewest );
 
-				theApp.Message( MSG_ERROR, IDS_UPLOAD_DROPPED_OLDER,
-					(LPCTSTR)pNewest->m_sAddress );
-
+				theApp.Message( MSG_ERROR, IDS_UPLOAD_DROPPED_OLDER, (LPCTSTR)pNewest->m_sAddress );
 				pNewest->Close( FALSE );
+				nCount--;
 			}
 			else
-			{
-				return FALSE;
-			}
+				// Drop current connection
+				return TRUE;
 		}
 		else
 		{
 			theApp.Message( MSG_ERROR, IDS_UPLOAD_DROPPED_NEWER, (LPCTSTR)pNewest->m_sAddress );
 			pNewest->Close( FALSE );
+			nCount--;
 		}
-
-		nCount--;
 	}
 
 	return FALSE;
