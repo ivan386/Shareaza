@@ -20,6 +20,7 @@
 //
 
 #include "StdAfx.h"
+#include "Strings.h"
 #include "XML.h"
 
 #ifdef DEBUG_NEW
@@ -27,13 +28,6 @@
 static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
-
-// Produces two arguments divided by comma, where first argument is a string itself
-// and second argument is a string length without null terminator
-#define _P(x)	(x),((sizeof(x))/sizeof((x)[0])-1)
-#define _PT(x)	_P(_T(x))
-
-#define IsSpace(ch)	((ch) == _T(' ') || (ch) == _T('\t') || (ch) == _T('\r') || (ch) == _T('\n'))
 
 //////////////////////////////////////////////////////////////////////
 // CXMLNode construction
@@ -118,158 +112,6 @@ BOOL CXMLNode::ParseIdentifier(LPCTSTR& pszBase, CString& strIdentifier)
 	pszBase += nIdentifier;
 
 	return TRUE;
-}
-
-//////////////////////////////////////////////////////////////////////
-// CXMLNode string to value
-
-CString CXMLNode::StringToValue(LPCTSTR& pszXML, int nLength)
-{
-	CString strValue;
-
-	if ( ! nLength || ! *pszXML ) return strValue;
-
-	LPTSTR pszValue = strValue.GetBuffer( nLength + 4 );
-	LPTSTR pszOut = pszValue;
-
-	LPTSTR pszNull = (LPTSTR)pszXML + nLength;
-	TCHAR cNull = *pszNull;
-	*pszNull = 0;
-
-	while ( *pszXML && pszXML < pszNull )
-	{
-		if ( IsSpace( *pszXML ) && *pszXML != 0xa0 )	// Keep non-breaking space
-		{
-			if ( pszValue != pszOut ) *pszOut++ = ' ';
-			pszXML++;
-			while ( *pszXML && IsSpace( *pszXML ) && *pszXML != 0xa0 ) pszXML++;
-			if ( ! *pszXML || pszXML >= pszNull ) break;
-		}
-
-		if ( *pszXML == '&' )
-		{
-			pszXML++;
-			if ( ! *pszXML || pszXML >= pszNull ) break;
-
-			if ( _tcsnicmp( pszXML, _T("amp;"), 4 ) == 0 )
-			{
-				*pszOut++ = '&';
-				pszXML += 4;
-			}
-			else if ( _tcsnicmp( pszXML, _T("lt;"), 3 ) == 0 )
-			{
-				*pszOut++ = '<';
-				pszXML += 3;
-			}
-			else if ( _tcsnicmp( pszXML, _T("gt;"), 3 ) == 0 )
-			{
-				*pszOut++ = '>';
-				pszXML += 3;
-			}
-			else if ( _tcsnicmp( pszXML, _T("quot;"), 5 ) == 0 )
-			{
-				*pszOut++ = '\"';
-				pszXML += 5;
-			}
-			else if ( _tcsnicmp( pszXML, _T("apos;"), 5 ) == 0 )
-			{
-				*pszOut++ = '\'';
-				pszXML += 5;
-			}
-			else if ( _tcsnicmp( pszXML, _T("nbsp;"), 5 ) == 0 )
-			{
-				*pszOut++ = ' ';
-				pszXML += 5;
-			}
-			else if ( *pszXML == '#' )
-			{
-				int nChar;
-				pszXML++;
-				if ( ! *pszXML || pszXML >= pszNull || ! _istdigit( *pszXML ) ) break;
-
-				if ( _stscanf( pszXML, _T("%lu;"), &nChar ) == 1 )
-				{
-					*pszOut++ = (TCHAR)nChar;
-					while ( *pszXML && *pszXML != ';' ) pszXML++;
-					if ( ! *pszXML || pszXML >= pszNull ) break;
-					pszXML++;
-				}
-			}
-			else
-			{
-				*pszOut++ = '&';
-			}
-		}
-		else
-		{
-			*pszOut++ = *pszXML++;
-		}
-	}
-
-	ASSERT( pszNull == pszXML );
-	*pszNull = cNull;
-
-	ASSERT( pszOut - pszValue <= nLength );
-	strValue.ReleaseBuffer( (int)( pszOut - pszValue ) );
-
-	return strValue;
-}
-
-//////////////////////////////////////////////////////////////////////
-// CXMLNode value to string
-
-CString CXMLNode::ValueToString(const CString& strValue)
-{
-	bool bChanged = false;
-
-	CString strXML;
-	LPTSTR pszXML = strXML.GetBuffer( strValue.GetLength() * 8  + 1 );
-
-	for ( LPCTSTR pszValue = strValue ; *pszValue ; ++pszValue )
-	{
-		switch ( *pszValue )
-		{
-		case _T('&'):
-			_tcscpy( pszXML, _T("&amp;") );
-			pszXML += 5;
-			bChanged = true;
-			break;
-		case _T('<'):
-			_tcscpy( pszXML, _T("&lt;") );
-			pszXML += 4;
-			bChanged = true;
-			break;
-		case _T('>'):
-			_tcscpy( pszXML, _T("&gt;") );
-			pszXML += 4;
-			bChanged = true;
-			break;
-		case _T('\"'):
-			_tcscpy( pszXML, _T("&quot;") );
-			pszXML += 6;
-			bChanged = true;
-			break;
-		case _T('\''):
-			_tcscpy( pszXML, _T("&apos;") );
-			pszXML += 6;
-			bChanged = true;
-			break;
-		default:
-			if ( *pszValue < 32 || *pszValue > 127 )
-			{
-				pszXML += _stprintf_s( pszXML, 9, _T("&#%lu;"), *pszValue );
-				bChanged = true;
-			}
-			else
-				*pszXML++ = *pszValue;
-		}
-	}
-
-	*pszXML = 0;
-
-	strXML.ReleaseBuffer();
-
-	return bChanged ? strXML : strValue;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -504,7 +346,7 @@ void CXMLElement::ToString(CString& strXML, BOOL bNewline) const
 		pElement->ToString( strXML, bNewline );
 	}
 
-	strXML += ValueToString( m_sValue );
+	strXML += Escape( m_sValue );
 
 	strXML.Append( _PT("</") );
 	strXML.Append( m_sName );
@@ -654,7 +496,7 @@ BOOL CXMLElement::ParseString(LPCTSTR& strXML)
 				return FALSE;
 			if ( m_sValue.GetLength() && m_sValue.Right( 1 ) != ' ' )
 				m_sValue += ' ';
-			m_sValue += StringToValue( strXML, (int)( pszElement - strXML ) );
+			m_sValue += Unescape( strXML, (int)( pszElement - strXML ) );
 			pszElement += 3;
 			strXML = pszElement;
 		}
@@ -663,10 +505,8 @@ BOOL CXMLElement::ParseString(LPCTSTR& strXML)
 		{
 			if ( m_sValue.GetLength() && m_sValue.Right( 1 ) != ' ' )
 				m_sValue += ' ';
-			m_sValue += StringToValue( strXML, (int)( pszElement - strXML ) );
-			ASSERT( strXML == pszElement );
-			if ( strXML != pszElement )
-				return FALSE;
+			m_sValue += Unescape( strXML, (int)( pszElement - strXML ) );
+			strXML = pszElement;
 		}
 
 		if ( ParseMatch( strXML, strClose ) )
@@ -1043,7 +883,7 @@ CXMLAttribute* CXMLAttribute::Clone(CXMLElement* pParent) const
 
 void CXMLAttribute::ToString(CString& strXML) const
 {
-	strXML += m_sName + _T("=\"") + ValueToString( m_sValue ) + _T('\"');
+	strXML += m_sName + _T("=\"") + Escape( m_sValue ) + _T('\"');
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -1064,7 +904,8 @@ BOOL CXMLAttribute::ParseString(LPCTSTR& strXML)
 		if ( !pszQuote || *pszQuote != '\"' )
 			return FALSE;
 
-		m_sValue = StringToValue( strXML, (int)( pszQuote - strXML ) );
+		m_sValue = Unescape( strXML, (int)( pszQuote - strXML ) );
+		strXML = pszQuote;
 
 		return ParseMatch( strXML, _T("\"") );
 	}
@@ -1074,7 +915,8 @@ BOOL CXMLAttribute::ParseString(LPCTSTR& strXML)
 		if ( !pszQuote || *pszQuote != '\'' )
 			return FALSE;
 
-		m_sValue = StringToValue( strXML, (int)( pszQuote - strXML ) );
+		m_sValue = Unescape( strXML, (int)( pszQuote - strXML ) );
+		strXML = pszQuote;
 
 		return ParseMatch( strXML, _T("\'") );
 	}

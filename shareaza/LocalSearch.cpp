@@ -1,7 +1,7 @@
 //
 // LocalSearch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -633,7 +633,7 @@ void CLocalSearch::AddHitG2(CG2Packet* pPacket, CSchemaMap& /*pSchemas*/, CLibra
 					strComment.Format( _T("<comment rating=\"%i\">"), pFile->m_nRating - 1 );
 				else
 					strComment = _T("<comment>");
-				strComment += CXMLNode::ValueToString( pFile->m_sComments );
+				strComment += Escape( pFile->m_sComments );
 				if ( strComment.GetLength() > 2048 ) strComment = strComment.Left( 2048 );
 				strComment += _T("</comment>");
 				strComment.Replace( _T("\r\n"), _T("{n}") );

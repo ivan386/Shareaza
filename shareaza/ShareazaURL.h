@@ -99,9 +99,6 @@ protected:
 	BOOL	ParsePiolet(LPCTSTR pszURL);
 	BOOL	ParsePioletFile(LPCTSTR pszURL);
 
-	static LPCTSTR SkipSlashes(LPCTSTR pszURL, int nAdd = 0);
-	static void	SafeString(CString& strInput);
-
 // Registration Operations
 public:
 	static void	Register(BOOL bRegister = TRUE, BOOL bOnStartup = FALSE);

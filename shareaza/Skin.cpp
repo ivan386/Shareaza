@@ -1270,7 +1270,7 @@ BOOL CSkin::Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID, CToolTipCtrl*
 		strCaption.Replace( _T("\n"), _T("{n}") );
 		strCaption.Replace( _T("\r"), _T("") );
 		strCaption.Replace( _T("&"), _T("_") );
-		strCaption = CXMLNode::ValueToString( strCaption );
+		strCaption = Escape( strCaption );
 		pFile.WriteString( strCaption );
 
 		pFile.WriteString( _T("\">\n") );
@@ -1322,7 +1322,7 @@ BOOL CSkin::Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID, CToolTipCtrl*
 				strCaption.Replace( _T("\n"), _T("{n}") );
 				strCaption.Replace( _T("\r"), _T("") );
 				strCaption.Replace( _T("&"), _T("_") );
-				strCaption = CXMLNode::ValueToString( strCaption );
+				strCaption = Escape( strCaption );
 				pFile.WriteString( _T("\t\t\t<control caption=\"") );
 				pFile.WriteString( strCaption );
 				pFile.WriteString( _T("\"/>\n") );

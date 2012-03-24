@@ -1176,29 +1176,6 @@ BOOL CShareazaURL::ParseDiscovery(LPCTSTR pszURL, int nType)
 	return TRUE;
 }
 
-//////////////////////////////////////////////////////////////////////
-// CShareazaURL URL string helpers
-
-LPCTSTR CShareazaURL::SkipSlashes(LPCTSTR pszURL, int nAdd)
-{
-	for ( ; nAdd && *pszURL; --nAdd, ++pszURL );
-	while ( *pszURL == _T('/') ) pszURL++;
-	return pszURL;
-}
-
-void CShareazaURL::SafeString(CString& strInput)
-{
-	strInput.TrimLeft();
-	strInput.TrimRight();
-
-	for ( int nIndex = 0 ; nIndex < strInput.GetLength() ; nIndex++ )
-	{
-		TCHAR nChar = strInput.GetAt( nIndex );
-		if ( nChar < 32 )
-			strInput.SetAt( nIndex, '_' );
-	}
-}
-
 /////////////////////////////////////////////////////////////////////////////
 // CShareazaURL query constructor
 

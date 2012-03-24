@@ -969,3 +969,172 @@ void BuildWordTable(LPCTSTR pszWord, WordTable& oWords, WordTable& oNegWords)
 		}
 	}
 }
+
+LPCTSTR SkipSlashes(LPCTSTR pszURL, int nAdd)
+{
+	for ( ; nAdd && *pszURL; --nAdd, ++pszURL );
+	while ( *pszURL == _T('/') ) pszURL++;
+	return pszURL;
+}
+
+void SafeString(CString& strInput)
+{
+	strInput.TrimLeft();
+	strInput.TrimRight();
+
+	for ( int nIndex = 0 ; nIndex < strInput.GetLength() ; nIndex++ )
+	{
+		TCHAR nChar = strInput.GetAt( nIndex );
+		if ( nChar < 32 )
+			strInput.SetAt( nIndex, '_' );
+	}
+}
+
+CString Escape(const CString& strValue)
+{
+	bool bChanged = false;
+
+	CString strXML;
+	LPTSTR pszXML = strXML.GetBuffer( strValue.GetLength() * 8  + 1 );
+
+	for ( LPCTSTR pszValue = strValue ; *pszValue ; ++pszValue )
+	{
+		switch ( *pszValue )
+		{
+		case _T('&'):
+			_tcscpy( pszXML, _T("&amp;") );
+			pszXML += 5;
+			bChanged = true;
+			break;
+		case _T('<'):
+			_tcscpy( pszXML, _T("&lt;") );
+			pszXML += 4;
+			bChanged = true;
+			break;
+		case _T('>'):
+			_tcscpy( pszXML, _T("&gt;") );
+			pszXML += 4;
+			bChanged = true;
+			break;
+		case _T('\"'):
+			_tcscpy( pszXML, _T("&quot;") );
+			pszXML += 6;
+			bChanged = true;
+			break;
+		case _T('\''):
+			_tcscpy( pszXML, _T("&apos;") );
+			pszXML += 6;
+			bChanged = true;
+			break;
+		default:
+			if ( *pszValue < 32 || *pszValue > 127 )
+			{
+				pszXML += _stprintf_s( pszXML, 9, _T("&#%lu;"), *pszValue );
+				bChanged = true;
+			}
+			else
+				*pszXML++ = *pszValue;
+		}
+	}
+
+	*pszXML = 0;
+
+	strXML.ReleaseBuffer();
+
+	return bChanged ? strXML : strValue;
+}
+
+CString Unescape(LPCTSTR pszXML, int nLength)
+{
+	CString strValue;
+
+	if ( ! nLength || ! *pszXML )
+		return strValue;
+
+	if ( nLength < 0 )
+		nLength = (int)_tcslen( pszXML );
+
+	LPTSTR pszValue = strValue.GetBuffer( nLength + 4 );
+	LPTSTR pszOut = pszValue;
+	LPTSTR pszNull = (LPTSTR)pszXML + nLength;
+	TCHAR cNull = *pszNull;
+	*pszNull = 0;
+
+	while ( *pszXML && pszXML < pszNull )
+	{
+		if ( IsSpace( *pszXML ) && *pszXML != 0xa0 )	// Keep non-breaking space
+		{
+			if ( pszValue != pszOut ) *pszOut++ = ' ';
+			pszXML++;
+			while ( *pszXML && IsSpace( *pszXML ) && *pszXML != 0xa0 ) pszXML++;
+			if ( ! *pszXML || pszXML >= pszNull ) break;
+		}
+
+		if ( *pszXML == '&' )
+		{
+			pszXML++;
+			if ( ! *pszXML || pszXML >= pszNull ) break;
+
+			if ( _tcsnicmp( pszXML, _PT("amp;") ) == 0 )
+			{
+				*pszOut++ = '&';
+				pszXML += 4;
+			}
+			else if ( _tcsnicmp( pszXML, _PT("lt;") ) == 0 )
+			{
+				*pszOut++ = '<';
+				pszXML += 3;
+			}
+			else if ( _tcsnicmp( pszXML, _PT("gt;") ) == 0 )
+			{
+				*pszOut++ = '>';
+				pszXML += 3;
+			}
+			else if ( _tcsnicmp( pszXML, _PT("quot;") ) == 0 )
+			{
+				*pszOut++ = '\"';
+				pszXML += 5;
+			}
+			else if ( _tcsnicmp( pszXML, _PT("apos;") ) == 0 )
+			{
+				*pszOut++ = '\'';
+				pszXML += 5;
+			}
+			else if ( _tcsnicmp( pszXML, _PT("nbsp;") ) == 0 )
+			{
+				*pszOut++ = ' ';
+				pszXML += 5;
+			}
+			else if ( *pszXML == '#' )
+			{
+				int nChar;
+				pszXML++;
+				if ( ! *pszXML || pszXML >= pszNull || ! _istdigit( *pszXML ) ) break;
+
+				if ( _stscanf( pszXML, _T("%lu;"), &nChar ) == 1 )
+				{
+					*pszOut++ = (TCHAR)nChar;
+					while ( *pszXML && *pszXML != ';' ) pszXML++;
+					if ( ! *pszXML || pszXML >= pszNull ) break;
+					pszXML++;
+				}
+			}
+			else
+			{
+				*pszOut++ = '&';
+			}
+		}
+		else
+		{
+			*pszOut++ = *pszXML++;
+		}
+	}
+
+	ASSERT( pszNull == pszXML );
+	*pszNull = cNull;
+
+	ASSERT( pszOut - pszValue <= nLength );
+	strValue.ReleaseBuffer( (int)( pszOut - pszValue ) );
+
+	return strValue;
+}

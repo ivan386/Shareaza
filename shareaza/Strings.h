@@ -29,6 +29,8 @@
 #define _P(x)	(x),((sizeof(x))/sizeof((x)[0])-1)
 #define _PT(x)	_P(_T(x))
 
+#define IsSpace(ch)	((ch) == _T(' ') || (ch) == _T('\t') || (ch) == _T('\r') || (ch) == _T('\n'))
+
 bool IsCharacter(WCHAR nChar);
 bool IsHiragana(WCHAR nChar);
 bool IsKatakana(WCHAR nChar);
@@ -133,3 +135,15 @@ struct CompareWordEntries : public std::binary_function< WordEntry, WordEntry, b
 typedef std::set< WordEntry, CompareWordEntries > WordTable;
 
 void BuildWordTable(LPCTSTR pszWord, WordTable& oWords, WordTable& oNegWords);
+
+// Skip slashes starting from nAdd position
+LPCTSTR SkipSlashes(LPCTSTR pszURL, int nAdd = 0);
+
+// Replace all symbols with code less than space by underscore symbols
+void SafeString(CString& strInput);
+
+// Escape unsafe symbols
+CString Escape(const CString& strValue);
+
+// Unescape unsafe symbols
+CString Unescape(LPCTSTR pszXML, int nLength = -1);
