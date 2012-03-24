@@ -1,7 +1,7 @@
 //
 // ShellIcons.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -148,11 +148,11 @@ int CShellIcons::Get(LPCTSTR pszFile, int nSize)
 		return SHI_FILE;
 	strType.MakeLower();
 
+	// Test for individual icons
 	CString strFilename;
-	LPCTSTR pszFilename = PathFindFileName( pszFile );
-	if ( pszFilename != pszFile && ( strType == _T(".exe") ) )
+	if ( strType == _T(".exe") )
 	{
-		strFilename = pszFilename;
+		strFilename = pszFile;
 		strFilename.MakeLower();
 	}
 
@@ -163,60 +163,82 @@ int CShellIcons::Get(LPCTSTR pszFile, int nSize)
 	{
 		if ( pIndex->Lookup( strType, nIndex ) )
 			return nIndex;
-
-		Lookup( strType,
-			( ( nSize == 16 ) ? &hIcon : NULL ),
-			( ( nSize == 32 ) ? &hIcon : NULL ), NULL, NULL,
-			( ( nSize == 48 ) ? &hIcon : NULL ) );
 	}
 	else
 	{
 		if ( pIndex->Lookup( strFilename, nIndex ) )
 			return nIndex;
-	}
 
-	if ( ! hIcon && ! strFilename.IsEmpty() )
-	{
-		LoadIcon( pszFile,
+		LoadIcon( strFilename,
 				( ( nSize == 16 ) ? &hIcon : NULL ),
 				( ( nSize == 32 ) ? &hIcon : NULL ),
 				( ( nSize == 48 ) ? &hIcon : NULL ) );
 
-		if ( hIcon && Settings.General.LanguageRTL )
-			hIcon = CreateMirroredIcon( hIcon );
-	}
-
-	if ( ! hIcon && ! strFilename.IsEmpty() )
+		if ( ! hIcon )
 	{
 		if ( pIndex->Lookup( strType, nIndex ) )
 		{
 			pIndex->SetAt( strFilename, nIndex );
 			return nIndex;
 		}
+		}
+	}
 
+	HICON hShellIcon = NULL;
+	if ( ! hIcon )
+	{
+		SHFILEINFO sfi = {};
+		DWORD dwFlags = ( strFilename.IsEmpty() ? SHGFI_USEFILEATTRIBUTES : 0 ) | SHGFI_ICON | ( ( nSize == 16 ) ? SHGFI_SMALLICON : SHGFI_LARGEICON );
+		if ( SHGetFileInfo( ( strFilename.IsEmpty() ? strType : strFilename ), FILE_ATTRIBUTE_NORMAL, &sfi, sizeof( SHFILEINFO ), dwFlags ) )
+		{
+			dwFlags = ( nSize == 16 ) ? SHIL_SMALL : ( ( nSize == 32 ) ? SHIL_LARGE : SHIL_EXTRALARGE );
+			CComPtr< IImageList > pImageList;
+			if ( SUCCEEDED( SHGetImageList( dwFlags, IID_IImageList, (void**)&pImageList ) ) &&
+				 SUCCEEDED( pImageList->GetIcon( sfi.iIcon, ILD_NORMAL, &hShellIcon ) ) )
+			{
+				DestroyIcon( sfi.hIcon );
+			}
+			else
+				// Use previously loaded one
+				hShellIcon = sfi.hIcon;
+
+			if ( sfi.iIcon )
+			{
+				hIcon = hShellIcon;
+				hShellIcon = NULL;
+			}
+		}
+	}
+
+	if ( ! hIcon )
+	{
 		Lookup( strType,
 			( ( nSize == 16 ) ? &hIcon : NULL ),
 			( ( nSize == 32 ) ? &hIcon : NULL ), NULL, NULL,
 			( ( nSize == 48 ) ? &hIcon : NULL ) );
 	}
 
-	SHFILEINFO sfi = {};
-	if ( ! hIcon &&
-		SHGetFileInfo( pszFile, 0, &sfi, sizeof( SHFILEINFO ),
-			( strFilename.IsEmpty() ? SHGFI_USEFILEATTRIBUTES : 0 ) |
-			SHGFI_ICON | ( ( nSize == 16 ) ? SHGFI_SMALLICON : SHGFI_LARGEICON ) ) )
+	if ( hShellIcon )
 	{
-		hIcon = Settings.General.LanguageRTL ? CreateMirroredIcon( sfi.hIcon ) : sfi.hIcon;
+		if ( hIcon )
+			DestroyIcon( hShellIcon );
+		else
+			hIcon = hShellIcon;
 	}
 
 	nIndex = hIcon ? pImage->Add( hIcon ) : SHI_FILE;
 	pIndex->SetAt( ( strFilename.IsEmpty() ? strType : strFilename ), nIndex );
 
+#ifdef _DEBUG
+	ICONINFO ii = {};
+	GetIconInfo( hIcon, &ii );
+	BITMAP bi = {};
+	GetObject( ii.hbmColor, sizeof( bi ), &bi );
+	TRACE( "CShellIcons::Get %dx%d (real %dx%d %dbpp) icon #%d for %s\n", nSize, nSize, bi.bmWidth, bi.bmHeight, bi.bmBitsPixel, nIndex, (LPCSTR)CT2A( strFilename.IsEmpty() ? strType : strFilename ) );
+#endif // _DEBUG
+
 	if ( hIcon )
 		DestroyIcon( hIcon );
-
-	TRACE( _T("Got %dx%d icon %d for %s\n"),
-		nSize, nSize, nIndex, ( strFilename.IsEmpty() ? strType : strFilename ) );
 
 	return nIndex;
 }

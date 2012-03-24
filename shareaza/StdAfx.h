@@ -1,7 +1,7 @@
 //
 // StdAfx.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -123,6 +123,7 @@
 // WIN32
 //
 
+#include <CommonControls.h>	// IImageList interfaces
 #include <dde.h>			// DDE
 #include <ddeml.h>			// DDE
 #include <exdispid.h>		// Internet Explorer DISPIDs
