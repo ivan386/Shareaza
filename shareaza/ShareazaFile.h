@@ -1,7 +1,7 @@
 //
 // ShareazaFile.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -52,8 +52,11 @@ public:
 									*/
 	CString				m_sURL;		// Host if any
 
-	// Returns "urn:bitprint:SHA1.TIGER" or "urn:sha1:SHA1" or "urn:tree:tiger/:TIGER"
+	// Returns "urn:bitprint:SHA1.TIGER", "urn:sha1:SHA1" or "urn:tree:tiger/:TIGER" only (else empty string)
 	CString GetBitprint() const;
+
+	// Returns any available URNs
+	CString GetURN() const;
 
 	// Returns "sha1_SHA1", "ttr_TIGER" etc.
 	CString GetFilename() const;

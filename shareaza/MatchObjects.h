@@ -1,7 +1,7 @@
 //
 // MatchObjects.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -193,7 +193,6 @@ public:
 	BOOL		Check(CQueryHit* pHit) const;
 	BOOL		Expand(BOOL bExpand = TRUE);
 	inline int	Compare(CMatchFile* pFile) const;
-	CString		GetURN() const;
 	void		Serialize(CArchive& ar, int nVersion /* MATCHLIST_SER_VERSION */);
 	void		Ban(int nBanLength);	// Ban by hashes and by hit host IPs
 	

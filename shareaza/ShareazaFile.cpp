@@ -190,12 +190,26 @@ CString CShareazaFile::GetURL(const IN_ADDR& nAddress, WORD nPort) const
 
 CString CShareazaFile::GetBitprint() const
 {
+	if ( m_oSHA1 || m_oTiger )
+		return GetURN();
+	else
+		return CString();
+}
+
+CString CShareazaFile::GetURN() const
+{
 	if ( m_oSHA1 && m_oTiger )
-		return CString( _T("urn:bitprint:") ) + m_oSHA1.toString() + _T(".") + m_oTiger.toString();
+		return _T("urn:bitprint:") + m_oSHA1.toString() + _T('.') + m_oTiger.toString();
 	else if ( m_oSHA1 )
 		return m_oSHA1.toUrn();
 	else if ( m_oTiger )
 		return m_oTiger.toUrn();
+	else if ( m_oED2K )
+		return m_oED2K.toUrn();
+	else if ( m_oMD5 )
+		return m_oMD5.toUrn();
+	else if ( m_oBTH )
+		return m_oBTH.toUrn();
 	else
 		return CString();
 }
@@ -326,18 +340,7 @@ STDMETHODIMP CShareazaFile::XShareazaFile::get_URN(BSTR sURN, BSTR FAR* psURN)
 
 	if ( strURN.IsEmpty() )
 	{
-		if ( pThis->m_oTiger && pThis->m_oSHA1 )
-			bstrURN =  _T("urn:bitprint:") + pThis->m_oSHA1.toString() + _T('.') + pThis->m_oTiger.toString();
-		else if ( pThis->m_oSHA1 )
-			bstrURN = pThis->m_oSHA1.toUrn();
-		else if ( pThis->m_oTiger )
-			bstrURN = pThis->m_oTiger.toUrn();
-		else if ( pThis->m_oMD5 )
-			bstrURN = pThis->m_oMD5.toUrn();
-		else if ( pThis->m_oED2K )
-			bstrURN = pThis->m_oED2K.toUrn();
-		else if ( pThis->m_oBTH )
-			bstrURN = pThis->m_oBTH.toUrn();
+		bstrURN = pThis->GetURN();
 	}
 	else if ( strURN.CompareNoCase( _T("urn:bitprint") ) == 0 )
 	{

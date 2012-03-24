@@ -2027,43 +2027,6 @@ int CMatchFile::Compare(CMatchFile* pFile) const
 }
 
 //////////////////////////////////////////////////////////////////////
-// CMatchFile URN
-
-CString CMatchFile::GetURN() const
-{
-	CString strURN;
-
-	if ( m_oSHA1 && m_oTiger )
-	{
-		strURN	= _T("urn:bitprint:")
-				+ m_oSHA1.toString() + '.'
-				+ m_oTiger.toString();
-	}
-	else if ( m_oSHA1 )
-	{
-		strURN = m_oSHA1.toUrn();
-	}
-	else if ( m_oTiger )
-	{
-		strURN = m_oTiger.toUrn();
-	}
-	else if ( m_oED2K )
-	{
-		strURN = m_oED2K.toUrn();
-	}
-	else if ( m_oBTH )
-	{
-		strURN = m_oBTH.toUrn();
-	}
-	else if ( m_oMD5 )
-	{
-		strURN = m_oMD5.toUrn();
-	}
-
-	return strURN;
-}
-
-//////////////////////////////////////////////////////////////////////
 // CMatchFile serialize
 
 void CMatchFile::Serialize(CArchive& ar, int nVersion /* MATCHLIST_SER_VERSION */)
