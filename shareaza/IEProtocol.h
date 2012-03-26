@@ -45,12 +45,16 @@ protected:
 	CComQIPtr< IInternetSession >	m_pSession;
 
 	// Loads file from zip-collection or simple collection itself
-	// p2p-col://{URN|SHA1}/{relative path inside zip}
-	HRESULT		OnRequestRAZACOL(LPCTSTR pszURL, CBuffer& oBuffer, CString& sMimeType, BOOL bParseOnly);
+	// p2p-col:[//]{URN|SHA1}/{relative path inside zip}
+	HRESULT		OnRequestCollection(LPCTSTR pszURL, CBuffer& oBuffer, CString& sMimeType, BOOL bParseOnly);
 
-	// Loads jpg-preview or file metadata
-	// p2p-file://{URN|SHA1}/{preview|meta}
-	HRESULT		OnRequestRAZAFILE(LPCTSTR pszURL, CBuffer& oBuffer, CString& sMimeType, BOOL bParseOnly);
+	// Loads preview (JPG), file metadata (XML) or icon
+	// p2p-file:[//]{URN|SHA1}/{preview|meta|icon16|icon32|icon48}
+	HRESULT		OnRequestFile(LPCTSTR pszURL, CBuffer& oBuffer, CString& sMimeType, BOOL bParseOnly);
+
+	// Loads various application data
+	// p2p-app:[//]{history}
+	HRESULT		OnRequestApplication(LPCTSTR pszURL, CBuffer& oBuffer, CString& sMimeType, BOOL bParseOnly);
 
 // COM
 	BEGIN_INTERFACE_PART(ClassFactory, IClassFactory)

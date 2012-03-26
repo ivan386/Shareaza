@@ -2691,6 +2691,98 @@ bool ResourceRequest(const CString& strPath, CBuffer& pResponse, CString& sHeade
 	return ret;
 }
 
+BOOL SaveIcon(HICON hIcon, CBuffer& oBuffer, int colors)
+{
+	ASSERT( hIcon );
+	ASSERT( colors == -1 || colors == 1 || colors == 4 || colors == 8 || colors == 16 || colors == 24 || colors == 32 );
+
+	ICONINFO ii = {};
+	if ( ! GetIconInfo( hIcon, &ii ) )
+		return FALSE;
+
+	BITMAP biColor = {};
+	if ( GetObject( ii.hbmColor, sizeof( BITMAP ), &biColor ) != sizeof( BITMAP ) )
+		return FALSE;
+
+	int cx = biColor.bmWidth;
+	if ( colors == -1 )
+		colors = biColor.bmBitsPixel;
+	int palette = ( colors == 8 ) ? 256 : ( ( colors == 4 ) ? 16 : ( ( colors == 1 ) ? 2 : 0 ) );
+
+	CAutoVectorPtr< char >pHeader( new char[ sizeof( BITMAPINFOHEADER ) + sizeof( RGBQUAD ) * 256 ] );
+	if ( ! pHeader )
+		// Out of memory
+		return FALSE;
+	ZeroMemory( (char*)pHeader, sizeof( BITMAPINFOHEADER ) + sizeof( RGBQUAD ) * 256 );
+	BITMAPINFO& bih = *(BITMAPINFO*)(char*)pHeader;
+	bih.bmiHeader.biSize = sizeof( BITMAPINFOHEADER );
+	bih.bmiHeader.biWidth = bih.bmiHeader.biHeight = cx;
+	bih.bmiHeader.biPlanes = 1;
+
+	HDC hDC = GetDC( NULL );
+	if ( ! hDC )
+		return FALSE;
+	
+	// Calculate mask size
+	bih.bmiHeader.biBitCount = 1;
+	if ( ! GetDIBits( hDC, ii.hbmMask, 0, cx, NULL, &bih, DIB_RGB_COLORS ) )
+		return FALSE;
+	DWORD nImageSize = bih.bmiHeader.biSizeImage;
+
+	// Calculate image size
+	bih.bmiHeader.biBitCount = (WORD)colors;
+	if ( ! GetDIBits( hDC, ii.hbmColor, 0, cx, NULL, &bih, DIB_RGB_COLORS ) )
+		return FALSE;
+	nImageSize += bih.bmiHeader.biSizeImage;
+
+	CAutoVectorPtr< char >pBuffer( new char[ nImageSize ] );
+	if ( ! pBuffer )
+		// Out of memory
+		return FALSE;
+	ZeroMemory( (char*)pBuffer,  nImageSize );
+
+	// Get mask bits
+	bih.bmiHeader.biBitCount = 1;
+	if ( GetDIBits( hDC, ii.hbmMask, 0, cx, (char*)pBuffer + bih.bmiHeader.biSizeImage, &bih, DIB_RGB_COLORS ) != cx )
+		return FALSE;
+
+	// Get image bits
+	bih.bmiHeader.biBitCount = (WORD)colors;
+	if ( GetDIBits( hDC, ii.hbmColor, 0, cx, (char*)pBuffer, &bih, DIB_RGB_COLORS ) != cx )
+		return FALSE;
+
+	VERIFY( ReleaseDC( NULL, hDC ) == 1 );
+
+	// Fill icon file header
+	bih.bmiHeader.biHeight = cx * 2;
+	bih.bmiHeader.biSizeImage = nImageSize;
+	bih.bmiHeader.biClrUsed = bih.bmiHeader.biClrImportant = palette;
+	ICONDIR id =
+	{
+		0,
+		1,
+		1
+	};
+	ICONDIRENTRY ide =
+	{
+		( ( cx < 256 ) ? (BYTE)cx : 0 ),
+		( ( cx < 256 ) ? (BYTE)cx : 0 ),
+		( ( colors < 8 ) ? ( 1 << colors ) : 0 ),
+		0,
+		1,
+		(WORD)colors,
+		sizeof( BITMAPINFOHEADER ) + sizeof( RGBQUAD ) * palette + nImageSize,
+		sizeof( ICONDIR ) + sizeof( ICONDIRENTRY )
+	};
+
+	oBuffer.Add( &id, sizeof( ICONDIR ) );
+	oBuffer.Add( &ide, sizeof( ICONDIRENTRY ) );
+	oBuffer.Add( &bih, sizeof( BITMAPINFOHEADER ) + sizeof( RGBQUAD ) * palette );
+	oBuffer.Add( pBuffer, nImageSize );
+
+	return TRUE;
+}
+
 bool MarkFileAsDownload(const CString& sFilename)
 {
 	LPCTSTR pszExt = PathFindExtension( (LPCTSTR)sFilename );

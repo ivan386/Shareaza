@@ -21,12 +21,16 @@
 
 #include "StdAfx.h"
 #include "Shareaza.h"
+#include "Settings.h"
 #include "Buffer.h"
+#include "CoolInterface.h"
 #include "IEProtocol.h"
 #include "Library.h"
 #include "SharedFile.h"
+#include "ShellIcons.h"
 #include "AlbumFolder.h"
 #include "LibraryFolders.h"
+#include "LibraryHistory.h"
 #include "CollectionFile.h"
 #include "XML.h"
 #include "ZIPFile.h"
@@ -34,6 +38,7 @@
 #include "Connection.h"
 #include "ImageServices.h"
 #include "ImageFile.h"
+#include "Skin.h"
 #include "ThumbCache.h"
 
 #ifdef _DEBUG
@@ -73,7 +78,7 @@ END_INTERFACE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // Global Instance
 
-LPCWSTR	CIEProtocol::pszProtocols[]	= { L"p2p-col", L"p2p-file", NULL };
+LPCWSTR	CIEProtocol::pszProtocols[]	= { L"p2p-col", L"p2p-file", L"p2p-app", NULL };
 
 CIEProtocol IEProtocol;
 
@@ -176,8 +181,7 @@ CIEProtocolRequest::~CIEProtocolRequest()
 
 HRESULT CIEProtocolRequest::OnStart(LPCTSTR pszURL, IInternetProtocolSink* pSink, IInternetBindInfo* /*pBindInfo*/, DWORD dwFlags)
 {
-	HRESULT hr = IEProtocol.OnRequest( pszURL, m_oBuffer, m_strMimeType,
-		( dwFlags & PI_PARSE_URL ) != 0 );
+	HRESULT hr = IEProtocol.OnRequest( pszURL, m_oBuffer, m_strMimeType, ( dwFlags & PI_PARSE_URL ) != 0 );
 
 	if ( ( dwFlags & PI_PARSE_URL ) || ( hr == INET_E_INVALID_URL ) )
 	{
@@ -188,19 +192,18 @@ HRESULT CIEProtocolRequest::OnStart(LPCTSTR pszURL, IInternetProtocolSink* pSink
 
 	if ( SUCCEEDED( hr ) )
 	{
-		hr = m_pSink->ReportData( BSCF_FIRSTDATANOTIFICATION,
-			0, m_oBuffer.m_nLength );
-		ASSERT( SUCCEEDED( hr ) );
-
 		if ( m_strMimeType.GetLength() > 0 )
 		{
-			hr = m_pSink->ReportProgress( BINDSTATUS_MIMETYPEAVAILABLE,
-				CComBSTR( m_strMimeType ) );
+			hr = m_pSink->ReportProgress( BINDSTATUS_MIMETYPEAVAILABLE, CComBSTR( m_strMimeType ) );
+			ASSERT( SUCCEEDED( hr ) );
+			hr = m_pSink->ReportProgress( BINDSTATUS_VERIFIEDMIMETYPEAVAILABLE, CComBSTR( m_strMimeType ) );
 			ASSERT( SUCCEEDED( hr ) );
 		}
 
-		hr = m_pSink->ReportData( BSCF_LASTDATANOTIFICATION,
-			m_oBuffer.m_nLength, m_oBuffer.m_nLength );
+		hr = m_pSink->ReportData( BSCF_FIRSTDATANOTIFICATION, 0, m_oBuffer.m_nLength );
+		ASSERT( SUCCEEDED( hr ) );
+
+		hr = m_pSink->ReportData( BSCF_LASTDATANOTIFICATION, m_oBuffer.m_nLength, m_oBuffer.m_nLength );
 		ASSERT( SUCCEEDED( hr ) );
 
 		hr = m_pSink->ReportResult( S_OK, 200, NULL );
@@ -370,13 +373,17 @@ HRESULT CIEProtocol::OnRequest(LPCTSTR pszURL, CBuffer& oBuffer, CString& sMimeT
 
 	TRACE( _T("Requested URL: %s\n"), pszURL );
 
-	if ( _tcsnicmp( pszURL, _PT("p2p-col://") ) == 0 )
+	if ( _tcsnicmp( pszURL, _PT("p2p-col:") ) == 0 )
 	{
-		return OnRequestRAZACOL( pszURL + 10, oBuffer, sMimeType, bParseOnly );
+		return OnRequestCollection( SkipSlashes( pszURL, 8 ), oBuffer, sMimeType, bParseOnly );
 	}
-	else if ( _tcsnicmp( pszURL, _PT("p2p-file://") ) == 0 )
+	else if ( _tcsnicmp( pszURL, _PT("p2p-file:") ) == 0 )
 	{
-		return OnRequestRAZAFILE( pszURL + 11, oBuffer, sMimeType, bParseOnly );
+		return OnRequestFile( SkipSlashes( pszURL, 9 ), oBuffer, sMimeType, bParseOnly );
+	}
+	else if ( _tcsnicmp( pszURL, _PT("p2p-app:") ) == 0 )
+	{
+		return OnRequestApplication( SkipSlashes( pszURL, 8 ), oBuffer, sMimeType, bParseOnly );
 	}
 	else
 	{
@@ -384,10 +391,7 @@ HRESULT CIEProtocol::OnRequest(LPCTSTR pszURL, CBuffer& oBuffer, CString& sMimeT
 	}
 }
 
-/////////////////////////////////////////////////////////////////////////////
-// CIEProtocol request handler - "p2p-col"
-
-HRESULT CIEProtocol::OnRequestRAZACOL(LPCTSTR pszURL, CBuffer& oBuffer, CString& sMimeType, BOOL /*bParseOnly*/)
+HRESULT CIEProtocol::OnRequestCollection(LPCTSTR pszURL, CBuffer& oBuffer, CString& sMimeType, BOOL bParseOnly)
 {
 	CString strURL = pszURL;
 
@@ -400,7 +404,7 @@ HRESULT CIEProtocol::OnRequestRAZACOL(LPCTSTR pszURL, CBuffer& oBuffer, CString&
 
 	CSingleLock oLock( &Library.m_pSection, FALSE );
 	if ( ! oLock.Lock( 500 ) )
-		return INET_E_INVALID_URL;
+		return INET_E_OBJECT_NOT_FOUND;
 
 	if ( oSHA1 )
 	{
@@ -411,10 +415,13 @@ HRESULT CIEProtocol::OnRequestRAZACOL(LPCTSTR pszURL, CBuffer& oBuffer, CString&
 			CCollectionFile* pCollFile = pCollAlbum->GetCollection();
 			if ( pCollFile && pCollFile->IsType( CCollectionFile::SimpleCollection ) )
 			{
-				CString strBuffer;
-				pCollFile->Render( strBuffer );
-				oBuffer.Print( strBuffer, CP_UTF8 );
-				sMimeType = _T("text/html");
+				if ( ! bParseOnly )
+				{
+					CString strBuffer;
+					pCollFile->Render( strBuffer );
+					oBuffer.Print( strBuffer, CP_UTF8 );
+					sMimeType = _T("text/html");
+				}
 				return S_OK;
 			}
 		}
@@ -440,7 +447,7 @@ HRESULT CIEProtocol::OnRequestRAZACOL(LPCTSTR pszURL, CBuffer& oBuffer, CString&
 
 	CZIPFile oCollZIP;
 	if ( ! oCollZIP.Open( strCollPath ) )
-		return INET_E_INVALID_URL;
+		return INET_E_OBJECT_NOT_FOUND;
 
 	CString strPath = URLDecode( strURL.Mid( strURN.GetLength() + 1 ) );
 	bool bDir = strPath.IsEmpty() || ( strPath.GetAt( strPath.GetLength() - 1 ) == _T('/') );
@@ -464,17 +471,15 @@ HRESULT CIEProtocol::OnRequestRAZACOL(LPCTSTR pszURL, CBuffer& oBuffer, CString&
 	if ( ! pSource )
 		return INET_E_OBJECT_NOT_FOUND;
 
-	oBuffer.AddBuffer( pSource );
-
-	ShellIcons.Lookup( PathFindExtension( strFile ), NULL, NULL, NULL, &sMimeType );
-
+	if ( ! bParseOnly )
+	{
+		oBuffer.AddBuffer( pSource );
+		ShellIcons.Lookup( PathFindExtension( strFile ), NULL, NULL, NULL, &sMimeType );
+	}
 	return S_OK;
 }
 
-/////////////////////////////////////////////////////////////////////////////
-// CIEProtocol request handler - "p2p-file"
-
-HRESULT CIEProtocol::OnRequestRAZAFILE(LPCTSTR pszURL, CBuffer& oBuffer, CString& sMimeType, BOOL /*bParseOnly*/)
+HRESULT CIEProtocol::OnRequestFile(LPCTSTR pszURL, CBuffer& oBuffer, CString& sMimeType, BOOL bParseOnly)
 {
 	CString strURL = pszURL;
 
@@ -488,7 +493,7 @@ HRESULT CIEProtocol::OnRequestRAZAFILE(LPCTSTR pszURL, CBuffer& oBuffer, CString
 
 	CSingleLock oLock( &Library.m_pSection, FALSE );
 	if ( ! oLock.Lock( 500 ) )
-		return INET_E_INVALID_URL;
+		return INET_E_OBJECT_NOT_FOUND;
 
 	// Try to load as urn first
 	CLibraryFile* pFile = LibraryMaps.LookupFileByURN( strURN, FALSE, TRUE );
@@ -503,24 +508,30 @@ HRESULT CIEProtocol::OnRequestRAZAFILE(LPCTSTR pszURL, CBuffer& oBuffer, CString
 			return INET_E_INVALID_URL;
 	}
 
+	HRESULT ret = INET_E_INVALID_URL;
 	if ( strVerb.CompareNoCase( _T("preview") ) == 0 )
 	{
+		if ( bParseOnly )
+			return S_OK;
+
 		CImageFile pImage;
 		if ( CThumbCache::Cache( pFile->GetPath(), &pImage ) )
 		{
-			BYTE* pBuffer = NULL;
+			CAutoVectorPtr< BYTE > pBuffer;
 			DWORD nImageSize = 0;
-			if ( pImage.SaveToMemory( _T(".jpg"), 90, &pBuffer, &nImageSize ) )
+			if ( pImage.SaveToMemory( _T(".jpg"), 90, &pBuffer.m_p, &nImageSize ) )
 			{
 				oBuffer.Add( pBuffer, nImageSize );
-				delete [] pBuffer;
 				sMimeType = _T("image/jpeg");
-				return S_OK;
+				ret = S_OK;
 			}
 		}
 	}
 	else if ( strVerb.CompareNoCase( _T("meta") ) == 0 )
 	{
+		if ( bParseOnly )
+			return S_OK;
+
 		CString strXML;
 		if ( pFile->m_pMetadata )
 			strXML = pFile->m_pMetadata->ToString( TRUE, FALSE, TRUE );
@@ -528,6 +539,106 @@ HRESULT CIEProtocol::OnRequestRAZAFILE(LPCTSTR pszURL, CBuffer& oBuffer, CString
 			strXML = _T("<?xml version=\"1.0\"?>");
 		oBuffer.Print( strXML, CP_UTF8 );
 		sMimeType = _T("text/xml");
+		ret = S_OK;
+	}
+	else if ( strVerb.Left( 4 ).CompareNoCase( _T("icon") ) == 0 )
+	{
+		if ( bParseOnly )
+			return S_OK;
+
+		int cx = max( min( _tstoi( strVerb.Mid( 4 ) ), 256 ), 16 );
+		if ( HICON hIcon = ShellIcons.ExtractIcon( ShellIcons.Get( pFile->GetPath(), cx ), cx ) )
+		{
+			if ( SaveIcon( hIcon, oBuffer ) )
+			{
+				sMimeType = _T("image/x-icon");
+				ret = S_OK;
+			}
+			DeleteObject( hIcon );
+		}
+	}
+	return ret;
+}
+
+CString ToCSSColor(COLORREF rgb)
+{
+	CString strColor;
+	strColor.Format( _T("#%02x%02x%02x"), GetRValue( rgb ), GetGValue( rgb ), GetBValue( rgb ) );
+	return strColor;
+}
+
+HRESULT CIEProtocol::OnRequestApplication(LPCTSTR pszURL, CBuffer& oBuffer, CString& sMimeType, BOOL bParseOnly)
+{
+	if ( _tcsnicmp( pszURL, _PT("history") ) == 0 )
+	{
+		if ( bParseOnly )
+			return S_OK;
+
+		CString strXML;
+		strXML.Format( _T("<html>\n<head>\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n<style type=\"text/css\">\n")
+			_T("body { font-family: %s; font-size: %upx; margin: 0; padding: 0; background-color: %s; color: %s; }\n")
+			_T("h1 { font-size: 120%%; font-weight: bold; color: %s; background-color: %s; margin: 0; }\n")
+			_T("table { width: 100%%; font-size: 100%%; margin: 0; padding: 0; table-layout: fixed; }\n")
+			_T(".name0 { width: 41%%; background-color: %s; color: %s; cursor: hand; }\n")
+			_T(".time0 { width: 8%%; background-color: %s; text-align: right; }\n")
+			_T(".name1 { width: 41%%; background-color: %s; color: %s; cursor: hand; }\n")
+			_T(".time1 { width: 8%%; background-color: %s; text-align: right; }\n")
+			_T(".icon { width: 16px; height: 16px; border-style: none; }\n")
+			_T("</style>\n</head>\n<body onmousemove=\"window.external.hover(''); event.cancel\">\n<h1> %s </h1>\n<table>\n"),
+			/* body */ Settings.Fonts.DefaultFont, Settings.Fonts.FontSize, ToCSSColor( CoolInterface.m_crWindow ), ToCSSColor( CoolInterface.m_crDisabled ),
+			/* h1 */ ToCSSColor( Skin.m_crBannerText ) , ToCSSColor( Skin.m_crBannerBack ),
+			/* .name0 */ ToCSSColor( Skin.m_crSchemaRow[ 0 ] ), ToCSSColor( CoolInterface.m_crTextLink ),
+			/* .time0 */ ToCSSColor( Skin.m_crSchemaRow[ 0 ] ), 
+			/* .name1 */ ToCSSColor( Skin.m_crSchemaRow[ 1 ] ), ToCSSColor( CoolInterface.m_crTextLink ),
+			/* .time1 */ ToCSSColor( Skin.m_crSchemaRow[ 1 ] ), 
+			/* h1 */ Escape( LoadString( IDS_LIBPANEL_RECENT_ADDITIONS ) ) );
+
+		CSingleLock oLock( &Library.m_pSection, FALSE );
+		if ( ! oLock.Lock( 500 ) )
+			return INET_E_OBJECT_NOT_FOUND;
+
+		int nCount = 0;
+		for ( POSITION pos = LibraryHistory.GetIterator() ; pos ; )
+		{
+			const CLibraryRecent* pRecent = LibraryHistory.GetNext( pos );
+			if ( ! pRecent->m_pFile )
+				continue;
+
+			CString strURN = pRecent->m_pFile->GetURN();
+			if ( strURN.IsEmpty() )
+				continue;
+
+			CString sTime;
+			SYSTEMTIME tAdded;
+			FileTimeToSystemTime( &pRecent->m_tAdded, &tAdded );
+			SystemTimeToTzSpecificLocalTime( NULL, &tAdded, &tAdded );
+			GetDateFormat( LOCALE_USER_DEFAULT, NULL, &tAdded, _T("ddd',' MMM dd"), sTime.GetBuffer( 64 ), 64 );
+			sTime.ReleaseBuffer();
+
+			if ( ( nCount & 1 ) == 0 )
+				strXML += _T("<tr>");
+
+			strXML.AppendFormat(
+				_T("<td class=\"name%d\" onclick=\"window.external.display('%s');\" onmousemove=\"window.external.hover('%s'); window.event.cancelBubble = true;\">")
+				_T("<img class=\"icon\" src=\"p2p-file://%s/icon16\"> %s </a></td>")
+				_T("<td class=\"time%d\"> %s </td>"),
+				( nCount & 2 ) >> 1, Escape( strURN ), Escape( strURN ), Escape( strURN ), Escape( pRecent->m_pFile->m_sName ),
+				( nCount & 2 ) >> 1, Escape( sTime ) );
+
+			if ( ( nCount & 1 ) != 0 )
+				strXML += _T("</tr>\n");
+
+			nCount++;
+		}
+
+		if ( nCount && ( nCount & 1 ) != 0 )
+			strXML += _T("<td></td><td></td></tr>\n");
+
+		strXML += _T("</table>\n</body>\n</html>");
+
+		oBuffer.Print( strXML, CP_UTF8 );
+		sMimeType = _T("text/html");
+
 		return S_OK;
 	}
 

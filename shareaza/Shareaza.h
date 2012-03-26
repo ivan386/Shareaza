@@ -292,6 +292,9 @@ void PurgeDeletes();
 CString LoadHTML(HINSTANCE hInstance, UINT nResourceID);
 CString LoadRichHTML(UINT nResourceID, CString& strResponse, CShareazaFile* pFile = NULL);
 
+// Save icon in .ico-format to buffer
+BOOL SaveIcon(HICON hIcon, CBuffer& oBuffer, int colors = -1);
+
 // Loads well-known resource for HTTP-uploading
 bool ResourceRequest(const CString& strPath, CBuffer& pResponse, CString& sHeader);
 
