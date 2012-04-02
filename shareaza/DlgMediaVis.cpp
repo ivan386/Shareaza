@@ -1,7 +1,7 @@
 //
 // DlgMediaVis.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -113,7 +113,7 @@ void CMediaVisDlg::Enumerate()
 	HKEY hKey;
 
 	if ( RegOpenKeyEx( HKEY_CURRENT_USER,
-		_T(REGISTRY_KEY) _T("\\Plugins\\AudioVis"),
+		REGISTRY_KEY _T("\\Plugins\\AudioVis"),
 		NULL, KEY_READ, &hKey ) != ERROR_SUCCESS ) return;
 
 	for ( DWORD nKey = 0 ; ; nKey++ )

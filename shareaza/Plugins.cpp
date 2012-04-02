@@ -127,7 +127,7 @@ BOOL CPlugins::Register(const CString& sGeneralPath)
 void CPlugins::Enumerate()
 {
 	HUSKEY hKey = NULL;
-	if ( SHRegOpenUSKey( _T(REGISTRY_KEY) _T("\\Plugins\\General"),
+	if ( SHRegOpenUSKey( REGISTRY_KEY _T("\\Plugins\\General"),
 		KEY_READ, NULL, &hKey, FALSE ) != ERROR_SUCCESS )
 		return;
 
@@ -233,7 +233,7 @@ BOOL CPlugins::LookupEnable(REFCLSID pCLSID, LPCTSTR pszExt) const
 	CString strCLSID = Hashes::toGuid( pCLSID );
 
 	if ( ERROR_SUCCESS == RegOpenKeyEx( HKEY_CURRENT_USER,
-		_T(REGISTRY_KEY) _T("\\Plugins"), 0, KEY_ALL_ACCESS, &hPlugins ) )
+		REGISTRY_KEY _T("\\Plugins"), 0, KEY_ALL_ACCESS, &hPlugins ) )
 	{
 		DWORD nType = REG_SZ, nValue = 0;
 		if ( ERROR_SUCCESS == RegQueryValueEx( hPlugins, strCLSID, NULL, &nType, NULL, &nValue ) )

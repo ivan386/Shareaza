@@ -694,8 +694,6 @@ BOOL CShareazaURL::ParseShareaza(LPCTSTR pszURL)
 {
 	Clear();
 
-	pszURL = SkipSlashes( pszURL );
-
 	int nIP[4];
 
 	if ( _stscanf( pszURL, _T("%i.%i.%i.%i"), &nIP[0], &nIP[1], &nIP[2], &nIP[3] ) == 4 )
@@ -750,6 +748,14 @@ BOOL CShareazaURL::ParseShareaza(LPCTSTR pszURL)
 		}
 		return FALSE;
 	}
+	else if ( _tcsnicmp( pszURL, _T("command:"), 8 ) == 0 )
+	{
+		m_sName = pszURL + 8;
+		if ( m_sName.IsEmpty() )
+			return FALSE;
+		m_nAction = uriCommand;
+		return TRUE;
+	}
 	else
 	{
 		return ParseShareazaFile( pszURL );
@@ -763,6 +769,7 @@ BOOL CShareazaURL::ParseShareazaHost(LPCTSTR pszURL, BOOL bBrowse)
 {
 	m_sName = pszURL;
 	m_sName = m_sName.SpanExcluding( _T("/\\") );
+	m_nPort = protocolPorts[ PROTOCOL_G2 ];
 
 	int nPos = m_sName.Find( ':' );
 
@@ -1226,8 +1233,7 @@ void CShareazaURL::Register(BOOL bRegister, BOOL bOnStartup)
 {
 	if ( bRegister )
 	{
-		RegisterShellType( NULL, CLIENT_NAME_T, _T("URL:") CLIENT_NAME_T _T(" P2P"), NULL, CLIENT_NAME_T, _T("URL"), IDR_MAINFRAME );
-
+		RegisterShellType( NULL, CLIENT_NAME_T, _T("URL:") CLIENT_NAME_T _T(" Protocol"), NULL, CLIENT_NAME_T, _T("URL"), IDR_MAINFRAME );
 		RegisterMagnetHandler( CLIENT_NAME_T, CLIENT_NAME_T _T(" Peer to Peer"), CLIENT_NAME_T _T(" can automatically search for and download the selected content its peer-to-peer networks."), CLIENT_NAME_T, IDR_MAINFRAME );
 	}
 	else
@@ -1356,8 +1362,8 @@ BOOL CShareazaURL::RegisterShellType(LPCTSTR pszRoot, LPCTSTR pszProtocol, LPCTS
 									 LPCTSTR pszType, LPCTSTR pszApplication, LPCTSTR pszTopic,
 									 UINT nIDIcon, BOOL bOverwrite)
 {
-	HKEY hRootKey = AfxGetPerUserRegistration() ? HKEY_CURRENT_USER : HKEY_CLASSES_ROOT;
-	LPCTSTR szRootKey = AfxGetPerUserRegistration() ? _T("Software\\Classes") : _T("");
+	HKEY hRootKey = AfxGetPerUserRegistration() ? HKEY_CURRENT_USER : HKEY_LOCAL_MACHINE;
+	LPCTSTR szRootKey = _T("Software\\Classes");
 
 	HKEY hKey, hSub1, hSub2, hSub3, hSub4;
 	CString strValue;
@@ -1377,8 +1383,7 @@ BOOL CShareazaURL::RegisterShellType(LPCTSTR pszRoot, LPCTSTR pszProtocol, LPCTS
 		strSubKey += pszProtocol;
 	}
 
-	if ( RegCreateKeyEx( hRootKey, (LPCTSTR)strSubKey, 0, NULL, 0,
-		KEY_ALL_ACCESS, NULL, &hKey, &nDisposition ) )
+	if ( RegCreateKeyEx( hRootKey, (LPCTSTR)strSubKey, 0, NULL, 0, KEY_ALL_ACCESS, NULL, &hKey, &nDisposition ) )
 		return FALSE;
 
 	if ( nDisposition == REG_OPENED_EXISTING_KEY && ! bOverwrite )
@@ -1389,6 +1394,14 @@ BOOL CShareazaURL::RegisterShellType(LPCTSTR pszRoot, LPCTSTR pszProtocol, LPCTS
 
 	BOOL bProtocol = _tcsncmp( pszName, _T("URL:"), 4 ) == 0;
 
+	// Register protocol to "Default Programs"
+	if ( bProtocol )
+	{
+		CString strUrlAssociations = _T("Software\\Microsoft\\Windows\\Shell\\Associations\\UrlAssociations\\");
+		strUrlAssociations += pszProtocol;
+		SHSetValue( hRootKey, strUrlAssociations + _T("\\UserChoice"), _T("Progid"), REG_SZ, (LPBYTE)CLIENT_NAME_T, sizeof( CLIENT_NAME_T ) );
+	}
+
 	if ( ! pszRoot || _tcscmp( pszRoot, _T("Applications\\") CLIENT_NAME_T _T(".exe") ) != 0 )
 	{
 		RegSetValueEx( hKey, NULL, 0, REG_SZ, (LPBYTE)pszName,
@@ -1396,14 +1409,13 @@ BOOL CShareazaURL::RegisterShellType(LPCTSTR pszRoot, LPCTSTR pszProtocol, LPCTS
 
 		if ( bProtocol )
 		{
-			RegSetValueEx( hKey, _T("URL Protocol"), 0, REG_SZ, (LPBYTE)(LPCTSTR)strValue, sizeof(TCHAR) );
+			RegSetValueEx( hKey, _T("URL Protocol"), 0, REG_SZ, (LPBYTE)(LPCTSTR)_T(""), sizeof(TCHAR) );
 		}
 
 		if ( ! RegCreateKey( hKey, _T("DefaultIcon"), &hSub1 ) )
 		{
 			strValue = Skin.GetImagePath( nIDIcon );
-			RegSetValueEx( hSub1, NULL, 0, REG_SZ,
-				(LPBYTE)(LPCTSTR)strValue, sizeof(TCHAR) * ( strValue.GetLength() + 1 ) );
+			RegSetValueEx( hSub1, NULL, 0, REG_SZ, (LPBYTE)(LPCTSTR)strValue, sizeof(TCHAR) * ( strValue.GetLength() + 1 ) );
 			RegCloseKey( hSub1 );
 		}
 	}
@@ -1430,7 +1442,7 @@ BOOL CShareazaURL::RegisterShellType(LPCTSTR pszRoot, LPCTSTR pszProtocol, LPCTS
 
 			if ( ! RegCreateKey( hSub2, _T("ddeexec"), &hSub3 ) )
 			{
-				RegSetValueEx( hSub3, NULL, 0, REG_SZ, (LPBYTE)_T("%1"), sizeof(TCHAR) * 3 );
+				RegSetValueEx( hSub3, NULL, 0, REG_SZ, (LPBYTE)_T("%1"), sizeof( _T("%1") ) );
 
 				if ( ! RegCreateKey( hSub3, _T("Application"), &hSub4 ) )
 				{
@@ -1446,6 +1458,14 @@ BOOL CShareazaURL::RegisterShellType(LPCTSTR pszRoot, LPCTSTR pszProtocol, LPCTS
 					RegCloseKey( hSub4 );
 				}
 
+				if ( ! RegCreateKey( hSub3, _T("IfExec"), &hSub4 ) )
+				{
+					RegSetValueEx( hSub4, NULL, 0, REG_SZ, (LPBYTE)_T("*"), sizeof( _T("*") ) );
+					RegCloseKey( hSub4 );
+				}
+
+				RegSetValueEx( hSub3, _T("WindowClassName"), 0, REG_SZ, (LPBYTE)CLIENT_HWND, sizeof( CLIENT_HWND ) );
+
 				RegCloseKey( hSub3 );
 			}
 
@@ -1455,10 +1475,10 @@ BOOL CShareazaURL::RegisterShellType(LPCTSTR pszRoot, LPCTSTR pszProtocol, LPCTS
 		RegCloseKey( hSub1 );
 	}
 
-	if ( pszType != NULL && _tcsncmp( pszType, _T("."), 1 ) == 0 )
+	if ( pszType && *pszType == _T('.') )
 	{
-		BYTE pData[4] = { 0x00, 0x11, 0x21, 0x00 };
-		RegSetValueEx( hKey, _T("EditFlags"), 0, REG_BINARY, pData, 4 );
+		DWORD dwData = /* FTA_OpenIsSafe */ 0x00010000;	// FILETYPEATTRIBUTEFLAGS
+		RegSetValueEx( hKey, _T("EditFlags"), 0, REG_BINARY, (LPBYTE)&dwData, sizeof( dwData ) );
 	}
 
 	RegCloseKey( hKey );
@@ -1490,8 +1510,8 @@ BOOL CShareazaURL::RegisterShellType(LPCTSTR pszRoot, LPCTSTR pszProtocol, LPCTS
 
 BOOL CShareazaURL::UnregisterShellType(LPCTSTR pszRoot)
 {
-	HKEY hRootKey = AfxGetPerUserRegistration() ? HKEY_CURRENT_USER : HKEY_CLASSES_ROOT;
-	LPCTSTR szRootKey = AfxGetPerUserRegistration() ? _T("Software\\Classes") : _T("");
+	HKEY hRootKey = AfxGetPerUserRegistration() ? HKEY_CURRENT_USER : HKEY_LOCAL_MACHINE;
+	LPCTSTR szRootKey = _T("Software\\Classes");
 
 	CString strSubKey = szRootKey, strOldKey;
 	if ( pszRoot )
@@ -1499,6 +1519,21 @@ BOOL CShareazaURL::UnregisterShellType(LPCTSTR pszRoot)
 		if ( ! strSubKey.IsEmpty() )
 			strSubKey += _T("\\");
 		strSubKey += pszRoot;
+	}
+
+	// Deleting protocol from "Default Programs"
+	if ( pszRoot && *pszRoot != _T('.') )
+	{
+		CString strProgID;
+		CString strUrlAssociations = _T("Software\\Microsoft\\Windows\\Shell\\Associations\\UrlAssociations\\");
+		strUrlAssociations += pszRoot;
+		DWORD nType, nSize = MAX_PATH * sizeof( TCHAR );
+		LRESULT ret = SHGetValue( hRootKey, strUrlAssociations + _T("\\UserChoice"), _T("Progid"), &nType, strProgID.GetBuffer( MAX_PATH ), &nSize );
+		strProgID.ReleaseBuffer();
+		if ( ret == ERROR_SUCCESS && strProgID.CompareNoCase( CLIENT_NAME_T ) == 0 )
+		{
+			SHDeleteKey( hRootKey, strUrlAssociations );
+		}
 	}
 
 	BOOL bRegisteredUser = FALSE;
@@ -1568,45 +1603,15 @@ BOOL CShareazaURL::UnregisterShellType(LPCTSTR pszRoot)
 	{
 		if ( strOldKey.IsEmpty() )
 		{
-			DeleteKey( hRootKey, (LPCTSTR)strSubKey );
-			RegDeleteKey( hRootKey, (LPCTSTR)strSubKey );
+			SHDeleteKey( hRootKey, (LPCTSTR)strSubKey );
 		}
 		else
 		{
-			DeleteKey( hRootKey, (LPCTSTR)strOldKey );
-			RegDeleteKey( hRootKey, (LPCTSTR)strOldKey );
+			SHDeleteKey( hRootKey, (LPCTSTR)strOldKey );
 		}
 	}
 
 	return bRegisteredUser;
-}
-
-void CShareazaURL::DeleteKey(HKEY hParent, LPCTSTR pszKey)
-{
-	CArray< CString > pList;
-	HKEY hKey;
-
-	if ( RegOpenKeyEx( hParent, pszKey, 0, KEY_ALL_ACCESS, &hKey ) ) return;
-
-	for ( DWORD dwIndex = 0 ; ; dwIndex++ )
-	{
-		DWORD dwName = 64; // Input parameter in TCHARs
-		TCHAR szName[64];
-
-		LRESULT lResult = RegEnumKeyEx( hKey, dwIndex, szName, &dwName, NULL, NULL, 0, NULL );
-		if ( lResult != ERROR_SUCCESS ) break;
-
-		szName[ dwName ] = 0;
-		pList.Add( szName );
-		DeleteKey( hKey, szName );
-	}
-
-	for ( int nItem = 0 ; nItem < pList.GetSize() ; nItem++ )
-	{
-		RegDeleteKey( hKey, pList.GetAt( nItem ) );
-	}
-
-	RegCloseKey( hKey );
 }
 
 /////////////////////////////////////////////////////////////////////////////

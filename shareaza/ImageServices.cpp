@@ -1,7 +1,7 @@
 //
 // ImageServices.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -367,7 +367,7 @@ BOOL CImageServices::IsFileViewable(LPCTSTR pszPath)
 BOOL CImageServices::LookupUniversalPlugins(service_list& oList)
 {
 	HUSKEY hKey;
-	if ( SHRegOpenUSKey( _T(REGISTRY_KEY) _T("\\Plugins\\ImageService"),
+	if ( SHRegOpenUSKey( REGISTRY_KEY _T("\\Plugins\\ImageService"),
 		KEY_READ, NULL, &hKey, FALSE ) == ERROR_SUCCESS )
 	{
 		for ( DWORD nKey = 0 ; ; nKey++ )

@@ -1,7 +1,7 @@
 //
 // Registry.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -35,7 +35,7 @@ static char THIS_FILE[]=__FILE__;
 
 CString CRegistry::GetString(LPCTSTR pszSection, LPCTSTR pszName, LPCTSTR pszDefault, LPCTSTR pszSubKey, BOOL bIgnoreHKCU)
 {
-	CString strSection( pszSubKey ? pszSubKey : _T(REGISTRY_KEY) );
+	CString strSection( pszSubKey ? pszSubKey : REGISTRY_KEY );
 	if ( pszSection && *pszSection )
 	{
 		strSection += _T("\\");
@@ -65,7 +65,7 @@ CString CRegistry::GetString(LPCTSTR pszSection, LPCTSTR pszName, LPCTSTR pszDef
 
 DWORD CRegistry::GetDword(LPCTSTR pszSection, LPCTSTR pszName, DWORD nDefault, LPCTSTR pszSubKey)
 {
-	CString strSection( pszSubKey ? pszSubKey : _T(REGISTRY_KEY) );
+	CString strSection( pszSubKey ? pszSubKey : REGISTRY_KEY );
 	if ( pszSection && *pszSection )
 	{
 		strSection += _T("\\");
@@ -90,7 +90,7 @@ DWORD CRegistry::GetDword(LPCTSTR pszSection, LPCTSTR pszName, DWORD nDefault, L
 
 BOOL CRegistry::SetString(LPCTSTR pszSection, LPCTSTR pszName, LPCTSTR pszValue, LPCTSTR pszSubKey)
 {
-	CString strSection( pszSubKey ? pszSubKey : _T(REGISTRY_KEY) );
+	CString strSection( pszSubKey ? pszSubKey : REGISTRY_KEY );
 	if ( pszSection && *pszSection )
 	{
 		strSection += _T("\\");
@@ -108,7 +108,7 @@ BOOL CRegistry::SetString(LPCTSTR pszSection, LPCTSTR pszName, LPCTSTR pszValue,
 
 BOOL CRegistry::SetDword(LPCTSTR pszSection, LPCTSTR pszName, DWORD nValue, LPCTSTR pszSubKey)
 {
-	CString strSection( pszSubKey ? pszSubKey : _T(REGISTRY_KEY) );
+	CString strSection( pszSubKey ? pszSubKey : REGISTRY_KEY );
 	if ( pszSection && *pszSection )
 	{
 		strSection += _T("\\");

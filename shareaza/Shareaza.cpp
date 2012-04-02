@@ -90,13 +90,13 @@ const LPCTSTR RT_GZIP = _T("GZIP");
 /////////////////////////////////////////////////////////////////////////////
 // CShareazaCommandLineInfo
 
-CShareazaCommandLineInfo::CShareazaCommandLineInfo() :
-	m_bTray( FALSE ),
-	m_bNoSplash( FALSE ),
-	m_bNoAlphaWarning( FALSE ),
-	m_nGUIMode( -1 ),
-	m_bHelp( FALSE ),
-	m_bWait( FALSE )
+CShareazaCommandLineInfo::CShareazaCommandLineInfo()
+	: m_bTray			( FALSE )
+	, m_bNoSplash		( FALSE )
+	, m_bNoAlphaWarning	( FALSE )
+	, m_nGUIMode		( -1 )
+	, m_bHelp			( FALSE )
+	, m_bWait			( FALSE )
 {
 }
 
@@ -227,14 +227,13 @@ CShareazaApp::CShareazaApp() :
 	ZeroMemory( m_pBTVersion, sizeof( m_pBTVersion ) );
 
 // BugTrap http://www.intellesoft.net/
-	BT_SetAppName( _T(CLIENT_NAME) );
-	BT_SetFlags( BTF_INTERCEPTSUEF | BTF_SHOWADVANCEDUI | BTF_DESCRIBEERROR |
-		BTF_DETAILEDMODE | BTF_ATTACHREPORT | BTF_EDITMAIL );
+	BT_SetAppName( CLIENT_NAME_T );
+	BT_SetFlags( BTF_INTERCEPTSUEF | BTF_SHOWADVANCEDUI | BTF_DESCRIBEERROR | BTF_DETAILEDMODE | BTF_ATTACHREPORT | BTF_EDITMAIL );
 	BT_SetExitMode( BTEM_CONTINUESEARCH );
 	BT_SetDumpType( 0x00001851 /* MiniDumpWithDataSegs | MiniDumpScanMemory | MiniDumpWithIndirectlyReferencedMemory | MiniDumpWithFullMemoryInfo | MiniDumpWithThreadInfo */ );
 	BT_SetSupportEMail( _T("shareaza-bugtrap@lists.sourceforge.net") );
 	BT_SetSupportURL( WEB_SITE_T _T("?id=support") );
-	BT_AddRegFile( _T("settings.reg"), _T("HKEY_CURRENT_USER\\Software\\") _T(CLIENT_NAME) );
+	BT_AddRegFile( _T("settings.reg"), _T("HKEY_CURRENT_USER\\") REGISTRY_KEY );
 	BT_InstallSehFilter();
 	BT_SetTerminate();
 }
@@ -254,7 +253,7 @@ BOOL CShareazaApp::InitInstance()
 {
 	CWinApp::InitInstance();
 
-	SetRegistryKey( _T(CLIENT_NAME) );
+	SetRegistryKey( CLIENT_NAME_T );
 
 	AfxOleInit();									// Initializes OLE support for the application.
 	CoInitializeSecurity( NULL, -1, NULL, NULL, RPC_C_AUTHN_LEVEL_PKT, RPC_C_IMP_LEVEL_IMPERSONATE, NULL, EOAC_NONE, NULL );
@@ -561,14 +560,14 @@ BOOL CShareazaApp::ParseCommandLine()
 	HWND hwndFirst = NULL;
 	for (;;)
 	{
-		m_pMutex = CreateMutex( NULL, FALSE, _T("Global\\") _T(CLIENT_NAME) );
+		m_pMutex = CreateMutex( NULL, FALSE, _T("Global\\") CLIENT_NAME_T );
 		if ( m_pMutex != NULL )
 		{
 			if ( GetLastError() == ERROR_ALREADY_EXISTS )
 			{
 				CloseHandle( m_pMutex );
 				m_pMutex = NULL;
-				hwndFirst = FindWindow( _T(CLIENT_NAME) _T("MainWnd"), NULL );
+				hwndFirst = FindWindow( CLIENT_HWND, NULL );
 			}
 			else
 				// We are first!
@@ -767,18 +766,23 @@ BOOL CShareazaApp::OpenURL(LPCTSTR lpszFileName, BOOL bDoIt, BOOL bSilent)
 	if ( bDoIt && ! bSilent )
 		theApp.Message( MSG_NOTICE, IDS_URL_RECEIVED, lpszFileName );
 
-	auto_ptr< CShareazaURL > pURL( new CShareazaURL() );
-	if ( pURL.get() )
+	CAutoPtr< CShareazaURL > pURL( new CShareazaURL() );
+	if ( pURL && pURL->Parse( lpszFileName ) )
 	{
-		if ( pURL->Parse( lpszFileName ) )
+		if ( bDoIt )
 		{
-			if ( bDoIt )
+			if ( pURL->m_nAction == CShareazaURL::uriCommand )
 			{
-				PostMainWndMessage( WM_URL, (WPARAM)pURL.release() );
+				if ( pURL->m_sName == _T("download") )
+					PostMainWndMessage( WM_COMMAND, ID_TOOLS_DOWNLOAD );
+				else
+					return FALSE;
+			}
+			else
+				PostMainWndMessage( WM_URL, (WPARAM)pURL.Detach() );
 			}
 			return TRUE;
 		}
-	}
 
 	if ( bDoIt && ! bSilent )
 		theApp.Message( MSG_NOTICE, IDS_URL_PARSE_ERROR );
@@ -845,7 +849,8 @@ void CShareazaApp::InitResources()
 
 	BT_SetAppVersion( m_sVersionLong );
 
-	m_sSmartAgent = _T( CLIENT_NAME ) _T(" ");
+	m_sSmartAgent = CLIENT_NAME_T;
+	m_sSmartAgent += _T(" ");
 	m_sSmartAgent += m_sVersion;
 
 	m_pBTVersion[ 0 ] = BT_ID1;
@@ -2442,7 +2447,7 @@ void PurgeDeletes()
 {
 	HKEY hKey = NULL;
 	LSTATUS nResult = RegOpenKeyEx( HKEY_CURRENT_USER,
-		_T(REGISTRY_KEY) _T("\\Delete"), 0, KEY_ALL_ACCESS, &hKey );
+		REGISTRY_KEY _T("\\Delete"), 0, KEY_ALL_ACCESS, &hKey );
 	if ( ERROR_SUCCESS == nResult )
 	{
 		CList< CString > pRemove;

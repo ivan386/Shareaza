@@ -419,7 +419,11 @@ __int64 GetRandomNum<__int64>(const __int64& min, const __int64& max);
 #define CLIENT_NAME			"Shareaza"
 #define CLIENT_NAME_T		_T( CLIENT_NAME )
 
-#define REGISTRY_KEY		"Software\\Shareaza\\Shareaza"
+// Client's main window class name
+#define CLIENT_HWND			CLIENT_NAME_T _T("MainWnd")
+
+// Client's settings key
+#define REGISTRY_KEY		_T("Software\\") CLIENT_NAME_T _T("\\") CLIENT_NAME_T
 
 // Network ID stuff
 

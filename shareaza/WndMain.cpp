@@ -418,7 +418,7 @@ void CMainWnd::SaveState()
 
 BOOL CMainWnd::PreCreateWindow(CREATESTRUCT& cs)
 {
-	cs.lpszClass = _T(CLIENT_NAME) _T("MainWnd");
+	cs.lpszClass = CLIENT_HWND;
 
 	if ( cs.hInstance )
 	{
@@ -3206,7 +3206,7 @@ void CMainWnd::ShowTrayPopup(LPCTSTR szText, LPCTSTR szTitle, DWORD dwIcon, UINT
 		m_pTray.szInfoTitle[ _countof( m_pTray.szInfoTitle ) - 1 ] = _T('\0');
 	}
 	else
-		_tcscpy( m_pTray.szInfoTitle, _T(CLIENT_NAME) );
+		_tcscpy( m_pTray.szInfoTitle, CLIENT_NAME_T );
 
 	m_pTray.dwInfoFlags = dwIcon | ( theApp.m_bIsVistaOrNewer ? NIIF_LARGE_ICON : 0 );
 	m_pTray.uTimeout = uTimeout * 1000;   // convert time to ms

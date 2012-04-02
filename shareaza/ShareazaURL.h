@@ -36,7 +36,7 @@ public:
 
 	enum URI_TYPE
 	{
-		uriNull, uriSource, uriDownload, uriSearch, uriHost, uriBrowse, uriDiscovery
+		uriNull, uriSource, uriDownload, uriSearch, uriHost, uriBrowse, uriDiscovery, uriCommand
 	};
 
 	PROTOCOLID			m_nProtocol;
@@ -108,5 +108,4 @@ protected:
 		LPCTSTR pszName, LPCTSTR pszType, LPCTSTR pszApplication, LPCTSTR pszTopic, UINT nIDIcon, BOOL bOverwrite = TRUE);
 	static BOOL	RegisterMagnetHandler(LPCTSTR pszID, LPCTSTR pszName, LPCTSTR pszDescription, LPCTSTR pszApplication, UINT nIDIcon);
 	static BOOL	UnregisterShellType(LPCTSTR pszRoot);
-	static void DeleteKey(HKEY hParent, LPCTSTR pszKey);
 };

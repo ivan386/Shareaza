@@ -1,7 +1,7 @@
 //
 // PageSettingsPlugins.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -322,7 +322,7 @@ void CPluginsSettingsPage::EnumerateMiscPlugins()
 	HKEY hPlugins = NULL;
 
 	if ( ERROR_SUCCESS != RegOpenKeyEx( HKEY_CURRENT_USER,
-		_T(REGISTRY_KEY) _T("\\Plugins"), 0, KEY_READ, &hPlugins ) )
+		REGISTRY_KEY _T("\\Plugins"), 0, KEY_READ, &hPlugins ) )
 		return;
 
 	for ( DWORD nIndex = 0 ; ; nIndex++ )
@@ -351,7 +351,7 @@ void CPluginsSettingsPage::EnumerateMiscPlugins()
 void CPluginsSettingsPage::EnumerateMiscPlugins(LPCTSTR pszType, HKEY hRoot)
 {
 	CMap< CString, const CString&, CString, CString& >	pCLSIDs;
-	CString strPath = _T(REGISTRY_KEY) _T("\\Plugins");
+	CString strPath = REGISTRY_KEY _T("\\Plugins");
 
 	for ( DWORD nIndex = 0 ; ; nIndex++ )
 	{
