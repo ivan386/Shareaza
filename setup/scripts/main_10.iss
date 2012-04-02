@@ -2,8 +2,8 @@
 
 #include SourcePath + "..\..\build.h"
 
-#if VER < 0x05010700
-  #error Inno Setup version 5.1.7 or higher is needed for this script
+#if VER < 0x05030900
+  #error Inno Setup version 5.3.9 or higher is needed for this script
 #endif
 #if PREPROCVER < 0x05020000
   #error PreProcessor version 5.2.0.0 or higher is needed for this script
@@ -220,13 +220,13 @@ Source: "Data\DefaultSecurity.dat"; DestDir: "{userappdata}\Shareaza\Data"; Dest
 
 [Icons]
 ; Shareaza startmenu icons
-Name: "{group}\{#internal_name}"; Filename: "{app}\Shareaza.exe"; WorkingDir: "{app}"; Comment: "{cm:reg_apptitle}"
-Name: "{group}\TorrentWizard"; Filename: "{app}\TorrentWizard.exe"; WorkingDir: "{app}"; Comment: "Shareaza Torrent File Creator"
-Name: "{group}\GUI Mode\{#internal_name} ({cm:icons_basicmode})"; Filename: "{app}\Shareaza.exe"; Parameters: "-basic"; WorkingDir: "{app}"; Comment: "{cm:reg_apptitle}"
-Name: "{group}\GUI Mode\{#internal_name} ({cm:icons_tabbedmode})"; Filename: "{app}\Shareaza.exe"; Parameters: "-tabbed"; WorkingDir: "{app}"; Comment: "{cm:reg_apptitle}"
-Name: "{group}\GUI Mode\{#internal_name} ({cm:icons_windowedmode})"; Filename: "{app}\Shareaza.exe"; Parameters: "-windowed"; WorkingDir: "{app}"; Comment: "{cm:reg_apptitle}"
-Name: "{commondesktop}\{#internal_name}"; Filename: "{app}\Shareaza.exe"; WorkingDir: "{app}"; Comment: "{cm:reg_apptitle}"; Tasks: desktopicon
-Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\{#internal_name}"; Filename: "{app}\Shareaza.exe"; WorkingDir: "{app}"; Comment: "{cm:reg_apptitle}"; Tasks: quicklaunch
+Name: "{group}\{#internal_name}"; Filename: "{app}\Shareaza.exe"; WorkingDir: "{app}"; Comment: "{cm:reg_apptitle}"; AppUserModelID: "Shareaza"
+Name: "{group}\TorrentWizard"; Filename: "{app}\TorrentWizard.exe"; WorkingDir: "{app}"; Comment: "Shareaza Torrent File Creator"; AppUserModelID: "TorrentWizard"
+Name: "{group}\GUI Mode\{#internal_name} ({cm:icons_basicmode})"; Filename: "{app}\Shareaza.exe"; Parameters: "-basic"; WorkingDir: "{app}"; Comment: "{cm:reg_apptitle}"; AppUserModelID: "Shareaza"
+Name: "{group}\GUI Mode\{#internal_name} ({cm:icons_tabbedmode})"; Filename: "{app}\Shareaza.exe"; Parameters: "-tabbed"; WorkingDir: "{app}"; Comment: "{cm:reg_apptitle}"; AppUserModelID: "Shareaza"
+Name: "{group}\GUI Mode\{#internal_name} ({cm:icons_windowedmode})"; Filename: "{app}\Shareaza.exe"; Parameters: "-windowed"; WorkingDir: "{app}"; Comment: "{cm:reg_apptitle}"; AppUserModelID: "Shareaza"
+Name: "{commondesktop}\{#internal_name}"; Filename: "{app}\Shareaza.exe"; WorkingDir: "{app}"; Comment: "{cm:reg_apptitle}"; AppUserModelID: "Shareaza"; Tasks: desktopicon
+Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\{#internal_name}"; Filename: "{app}\Shareaza.exe"; WorkingDir: "{app}"; Comment: "{cm:reg_apptitle}"; AppUserModelID: "Shareaza"; Tasks: quicklaunch
 
 ; Other icons in user language
 Name: "{group}\{cm:icons_license}"; Filename: "{app}\Uninstall\license.rtf"; WorkingDir: "{app}\Uninstall"; Comment: "{cm:icons_license}"
