@@ -1,7 +1,7 @@
 //
 // DlgFileProperties.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -149,21 +149,12 @@ void CFilePropertiesDlg::Update()
 	}
 
 	m_sTiger = pFile->m_oTiger.toShortUrn();
-
-	CString strExt = pFile->m_sName;
-	int nPeriod = strExt.ReverseFind( '.' );
-	if ( nPeriod > 0 ) strExt = strExt.Mid( nPeriod );
-
-	CString strMIME, strText;
-	HICON hIcon;
-
-	if ( ShellIcons.Lookup( strExt, NULL, &hIcon, &m_sType, &strMIME ) ) m_wndIcon.SetIcon( hIcon );
-	if ( strMIME.GetLength() ) m_sType += _T(" (") + strMIME + _T(")");
+	m_wndIcon.SetIcon( ShellIcons.ExtractIcon( ShellIcons.Get( pFile->m_sName, 32 ), 32 ) );
+	m_sType = ShellIcons.GetTypeString( pFile->m_sName );
 
 	UpdateData( FALSE );
 
-	LoadString ( strText, IDS_SEARCH_NO_METADATA );
-	m_wndSchemas.m_sNoSchemaText = strText;
+	m_wndSchemas.m_sNoSchemaText = LoadString ( IDS_SEARCH_NO_METADATA );
 	m_wndSchemas.Load( pFile->m_pSchema ? (LPCTSTR)pFile->m_pSchema->GetURI() : NULL );
 
 	OnSelChangeSchemas();

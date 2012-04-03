@@ -1,7 +1,7 @@
 //
 // CtrlDownloadTip.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -612,32 +612,8 @@ void CDownloadTipCtrl::PrepareFileInfo(CShareazaFile* pDownload)
 	m_sURL.Empty();
 	m_sMD5.Empty();
 
-	int nPeriod = m_sName.ReverseFind( '.' );
-
-	m_sType.Empty();
-	m_nIcon = 0;
-
-	if ( nPeriod > 0 )
-	{
-		CString strType = m_sName.Mid( nPeriod );
-		CString strName, strMime;
-
-		ShellIcons.Lookup( strType, NULL, NULL, &strName, &strMime );
 		m_nIcon = ShellIcons.Get( m_sName, 32 );
-
-		if ( strName.GetLength() )
-		{
-			m_sType = strName;
-			if ( strMime.GetLength() ) m_sType += _T(" (") + strMime + _T(")");
-		}
-		else
-		{
-			m_sType = strType.Mid( 1 );
-		}
-	}
-
-	if ( m_sType.IsEmpty() )
-		LoadString( m_sType, IDS_STATUS_UNKNOWN );
+	m_sType = ShellIcons.GetTypeString( m_sName );
 }
 
 /////////////////////////////////////////////////////////////////////////////

@@ -1,7 +1,7 @@
 //
 // CtrlMatchTip.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -475,32 +475,8 @@ void CMatchTipCtrl::LoadFromHit()
 
 BOOL CMatchTipCtrl::LoadTypeInfo()
 {
-	int nPeriod = m_sName.ReverseFind( '.' );
-
-	m_sType.Empty();
-	m_nIcon = 0;
-
-	if ( nPeriod > 0 )
-	{
-		CString strType = m_sName.Mid( nPeriod );
-		CString strName, strMime;
-
-		ShellIcons.Lookup( strType, NULL, NULL, &strName, &strMime );
-		m_nIcon = ShellIcons.Get( strType, 32 );
-
-		if ( strName.GetLength() )
-		{
-			m_sType = strName;
-			if ( strMime.GetLength() ) m_sType += _T(" (") + strMime + _T(")");
-		}
-		else
-		{
-			m_sType = strType.Mid( 1 );
-		}
-	}
-
-	if ( m_sType.IsEmpty() ) m_sType = _T("Unknown");
-
+	m_nIcon = ShellIcons.Get( m_sName, 32 );
+	m_sType = ShellIcons.GetTypeString( m_sName );
 	return FALSE;
 }
 

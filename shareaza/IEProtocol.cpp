@@ -474,7 +474,7 @@ HRESULT CIEProtocol::OnRequestCollection(LPCTSTR pszURL, CBuffer& oBuffer, CStri
 	if ( ! bParseOnly )
 	{
 		oBuffer.AddBuffer( pSource );
-		ShellIcons.Lookup( PathFindExtension( strFile ), NULL, NULL, NULL, &sMimeType );
+		sMimeType = ShellIcons.GetMIME( PathFindExtension( strFile ) );
 	}
 	return S_OK;
 }

@@ -1,7 +1,7 @@
 //
 // ShellIcons.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -34,21 +34,28 @@ public:
 	int		Get(LPCTSTR pszFile, int nSize);
 	int		Add(HICON hIcon, int nSize);
 	HICON	ExtractIcon(int nIndex, int nSize);
-	BOOL	Lookup(LPCTSTR pszType, HICON* phSmallIcon, HICON* phLargeIcon, CString* psName, CString* psMIME, HICON* phHugeIcon = NULL);
 	CString	GetTypeString(LPCTSTR pszFile);
+	CString	GetMIME(LPCTSTR pszType);
+	CString	GetName(LPCTSTR pszType);
 	void	AttachTo(CListCtrl* const pList, int nSize) const;
 	void	AttachTo(CTreeCtrl* const pTree) const;
 	BOOL	Draw(CDC* pDC, int nIcon, int nSize, int nX, int nY, COLORREF crBack = CLR_NONE, BOOL bSelected = FALSE) const;
 
 private:
 	typedef CMap< CString, const CString&, int, int > CIconMap;
+	typedef CMap< CString, const CString&, CString, const CString& > CStringMap;
 
+	CCriticalSection	m_pSection;
 	CImageList		m_i16;
 	CImageList		m_i32;
 	CImageList		m_i48;
 	CIconMap		m_m16;
 	CIconMap		m_m32;
 	CIconMap		m_m48;
+	CStringMap			m_MIME;
+	CStringMap			m_Name;
+
+	BOOL	Lookup(LPCTSTR pszType, HICON* phSmallIcon, HICON* phLargeIcon, CString* psName, CString* psMIME, HICON* phHugeIcon);
 
 	CShellIcons(const CShellIcons&);
 	CShellIcons& operator=(const CShellIcons&);

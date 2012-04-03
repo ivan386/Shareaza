@@ -1148,22 +1148,9 @@ BOOL CUploadTransferHTTP::OpenFileSendHeaders()
 	
 	SendDefaultHeaders();
 	
-	CString strExt, strResponse;
+	Write( _T("Content-Type: ") + ShellIcons.GetMIME( PathFindExtension( m_sName ) ) + _T("\r\n") );
 	
-	int nType = m_sName.ReverseFind( '.' );
-	if ( nType > 0 ) strExt = m_sName.Mid( nType );
-	ShellIcons.Lookup( strExt, NULL, NULL, NULL, &strResponse );
-	
-	if ( strResponse.IsEmpty() )
-	{
-		Write( _P("Content-Type: application/x-binary\r\n") );
-	}
-	else
-	{
-		strResponse = _T("Content-Type: ") + strResponse + _T("\r\n");
-		Write( strResponse );
-	}
-	
+	CString strResponse;
 	strResponse.Format( _T("Content-Length: %I64u\r\n"), m_nLength );
 	Write( strResponse );
 	

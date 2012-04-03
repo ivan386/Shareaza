@@ -1,7 +1,7 @@
 //
 // FileExecutor.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -146,8 +146,7 @@ void CFileExecutor::DetectFileType(LPCTSTR pszFile, LPCTSTR szType, bool& bVideo
 	// Detect type by MIME "Content Type"
 	if ( ! bAudio && ! bVideo && ! bImage )
 	{
-		CString strMime;
-		ShellIcons.Lookup( szType, NULL, NULL, NULL, &strMime );
+		CString strMime = ShellIcons.GetMIME( szType );
 		if ( ! strMime.IsEmpty() )
 		{
 			CString strMimeMajor = strMime.SpanExcluding( _T("/") );
