@@ -101,6 +101,7 @@
 //
 
 #include <afxwin.h>			// MFC core and standard components
+#include <afxglobals.h>		// MFC afxGlobalData
 #include <afxcmn.h>			// MFC support for Windows Common Controls
 #include <afxdtctl.h>		// MFC date & time controls
 #include <afxext.h>			// MFC extensions
@@ -123,7 +124,7 @@
 // WIN32
 //
 
-#include <CommonControls.h>	// IImageList interfaces
+#include <commoncontrols.h>	// IImageList interfaces
 #include <dde.h>			// DDE
 #include <ddeml.h>			// DDE
 #include <exdispid.h>		// Internet Explorer DISPIDs
@@ -144,9 +145,9 @@
 #include <wininet.h>		// Internet
 #include <winioctl.h>		// Sparse files support
 #include <winsock2.h>		// Windows sockets V2
+#include <winsvc.h>			// Services (excluded by VC_EXTRALEAN)
 #include <ws2tcpip.h> 
 #include <wspiapi.h>
-#include <winsvc.h>			// Services (excluded by VC_EXTRALEAN)
 
 // Work-around for Microsoft double declaration
 #define _interlockedbittestandset _ms_set
@@ -187,7 +188,6 @@
 #include <boost/bind.hpp>
 #include <boost/bind/placeholders.hpp>
 #include <boost/checked_delete.hpp>
-#include <boost/cstdint.hpp>
 #include <boost/ptr_container/ptr_list.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/type_traits.hpp>

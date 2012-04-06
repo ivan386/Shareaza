@@ -1,7 +1,7 @@
 //
 // CtrlCoolTip.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -35,7 +35,6 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNAMIC(CCoolTipCtrl, CWnd)
 
 BEGIN_MESSAGE_MAP(CCoolTipCtrl, CWnd)
-	//{{AFX_MSG_MAP(CCoolTipCtrl)
 	ON_WM_CREATE()
 	ON_WM_DESTROY()
 	ON_WM_ERASEBKGND()
@@ -43,7 +42,6 @@ BEGIN_MESSAGE_MAP(CCoolTipCtrl, CWnd)
 	ON_WM_MOUSEMOVE()
 	ON_WM_KEYDOWN()
 	ON_WM_TIMER()
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 LPCTSTR CCoolTipCtrl::m_hClass = NULL;
@@ -66,7 +64,7 @@ CCoolTipCtrl::CCoolTipCtrl()
 	, m_tOpen	( 0 )
 {
 	if ( m_hClass == NULL )
-		m_hClass = AfxRegisterWndClass( CS_SAVEBITS );
+		m_hClass = AfxRegisterWndClass( CS_SAVEBITS | CS_DROPSHADOW );
 }
 
 CCoolTipCtrl::~CCoolTipCtrl()

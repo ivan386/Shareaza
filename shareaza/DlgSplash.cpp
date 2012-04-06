@@ -81,6 +81,8 @@ BOOL CSplashDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 
+	SetClassLongPtr( GetSafeHwnd(), GCL_STYLE, GetClassLongPtr( GetSafeHwnd(), GCL_STYLE ) | CS_SAVEBITS | CS_DROPSHADOW );
+
 	SetWindowText( m_sState );
 
 	CClientDC dcScreen( this );

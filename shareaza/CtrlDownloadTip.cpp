@@ -612,7 +612,7 @@ void CDownloadTipCtrl::PrepareFileInfo(CShareazaFile* pDownload)
 	m_sURL.Empty();
 	m_sMD5.Empty();
 
-		m_nIcon = ShellIcons.Get( m_sName, 32 );
+	m_nIcon = ShellIcons.Get( m_sName, 32 );
 	m_sType = ShellIcons.GetTypeString( m_sName );
 }
 

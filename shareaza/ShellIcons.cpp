@@ -183,12 +183,12 @@ int CShellIcons::Get(LPCTSTR pszFile, int nSize)
 				( ( nSize == 48 ) ? &hIcon : NULL ) );
 
 		if ( ! hIcon )
-	{
-		if ( pIndex->Lookup( strType, nIndex ) )
 		{
-			pIndex->SetAt( strFilename, nIndex );
-			return nIndex;
-		}
+			if ( pIndex->Lookup( strType, nIndex ) )
+			{
+				pIndex->SetAt( strFilename, nIndex );
+				return nIndex;
+			}
 		}
 	}
 
@@ -402,7 +402,7 @@ BOOL CShellIcons::Lookup(LPCTSTR pszType, HICON* phSmallIcon, HICON* phLargeIcon
 
 	if ( psName )
 	{
-		nResult = sizeof(TCHAR) * MAX_PATH;
+		nResult = sizeof( TCHAR ) * MAX_PATH;
 		if ( RegQueryValueEx( hKey, _T(""), NULL, &nType, (LPBYTE)szResult, &nResult ) == ERROR_SUCCESS )
 		{
 			szResult[ nResult / sizeof(TCHAR) ] = 0;

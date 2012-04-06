@@ -46,12 +46,12 @@ private:
 	typedef CMap< CString, const CString&, CString, const CString& > CStringMap;
 
 	CCriticalSection	m_pSection;
-	CImageList		m_i16;
-	CImageList		m_i32;
-	CImageList		m_i48;
-	CIconMap		m_m16;
-	CIconMap		m_m32;
-	CIconMap		m_m48;
+	CImageList			m_i16;
+	CImageList			m_i32;
+	CImageList			m_i48;
+	CIconMap			m_m16;
+	CIconMap			m_m32;
+	CIconMap			m_m48;
 	CStringMap			m_MIME;
 	CStringMap			m_Name;
 
