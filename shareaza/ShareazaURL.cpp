@@ -36,6 +36,8 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
+#define REG_NUMBER(x) REG_DWORD,((LPBYTE)&(x)),(sizeof(DWORD))
+#define REG_STRING(x) REG_SZ,((LPBYTE)(LPCTSTR)(x)),((DWORD)(sizeof(TCHAR)*(_tcslen((LPCTSTR)(x))+1)))
 
 //////////////////////////////////////////////////////////////////////
 // CShareazaURL construction
@@ -1233,12 +1235,13 @@ void CShareazaURL::Register(BOOL bRegister, BOOL bOnStartup)
 {
 	if ( bRegister )
 	{
-		RegisterShellType( NULL, CLIENT_NAME_T, _T("URL:") CLIENT_NAME_T _T(" Protocol"), NULL, CLIENT_NAME_T, _T("URL"), IDR_MAINFRAME );
+		RegisterShellType( NULL, _T("shareaza"), _T("URL:") CLIENT_NAME_T _T(" Protocol"), NULL, CLIENT_NAME_T, _T("URL"), IDR_MAINFRAME );
 		RegisterMagnetHandler( CLIENT_NAME_T, CLIENT_NAME_T _T(" Peer to Peer"), CLIENT_NAME_T _T(" can automatically search for and download the selected content its peer-to-peer networks."), CLIENT_NAME_T, IDR_MAINFRAME );
 	}
 	else
 	{
-		UnregisterShellType( CLIENT_NAME_T );
+		UnregisterShellType( _T("shareaza") );
+		UnregisterShellType( _T("Applications\\") CLIENT_NAME_T _T(".exe") );
 	}
 
 	if ( Settings.Web.Magnet && bRegister )
@@ -1311,18 +1314,15 @@ void CShareazaURL::Register(BOOL bRegister, BOOL bOnStartup)
 
 	if ( Settings.Web.Torrent && bRegister )
 	{
-		if ( ! bOnStartup || ! Settings.Live.FirstRun )
-		{
-			RegisterShellType( NULL, _T("bittorrent"), _T("TORRENT File"), _T(".torrent"),
-				CLIENT_NAME_T, _T("RAZAFORMAT"), IDR_MAINFRAME );
-			RegisterShellType( _T("Applications\\") CLIENT_NAME_T _T(".exe"), NULL, _T("TORRENT File"), _T(".torrent"),
-				CLIENT_NAME_T, _T("RAZAFORMAT"), IDR_MAINFRAME );
-		}
+		RegisterShellType( NULL, CLIENT_NAME_T _T(".Torrent"), CLIENT_NAME_T _T(" Torrent File"),
+			_T(".torrent"), CLIENT_NAME_T, _T("RAZAFORMAT"), IDR_MAINFRAME );
+		RegisterShellType( _T("Applications\\") CLIENT_NAME_T _T(".exe"), NULL, CLIENT_NAME_T _T(" Torrent File"),
+			_T(".torrent"), CLIENT_NAME_T, _T("RAZAFORMAT"), IDR_MAINFRAME );
 	}
 	else
 	{
 		UnregisterShellType( _T(".torrent") );
-		UnregisterShellType( _T("bittorrent") );
+		UnregisterShellType( CLIENT_NAME_T _T(".Torrent") );
 	}
 
 	if (  bRegister )
@@ -1331,24 +1331,23 @@ void CShareazaURL::Register(BOOL bRegister, BOOL bOnStartup)
 			_T(".co"), CLIENT_NAME_T, _T("RAZAFORMAT"), IDI_COLLECTION );
 		RegisterShellType( _T("Applications\\") CLIENT_NAME_T _T(".exe"), NULL, CLIENT_NAME_T _T(" Collection File"),
 			_T(".co"), CLIENT_NAME_T, _T("RAZAFORMAT"), IDI_COLLECTION );
+
 		RegisterShellType( NULL, CLIENT_NAME_T _T(".Collection"), CLIENT_NAME_T _T(" Collection File"),
 			_T(".collection"), CLIENT_NAME_T, _T("RAZAFORMAT"), IDI_COLLECTION );
 		RegisterShellType( _T("Applications\\") CLIENT_NAME_T _T(".exe"), NULL, CLIENT_NAME_T _T(" Collection File"),
 			_T(".collection"), CLIENT_NAME_T, _T("RAZAFORMAT"), IDI_COLLECTION );
 		
-		RegisterShellType( NULL, _T("eMule"), _T("eMule Collection File"),
+		RegisterShellType( NULL, CLIENT_NAME_T _T(".Collection"), CLIENT_NAME_T _T(" Collection File"),
 			_T(".emulecollection"), CLIENT_NAME_T, _T("RAZAFORMAT"), IDI_COLLECTION );
-		RegisterShellType( _T("Applications\\") CLIENT_NAME_T _T(".exe"), NULL, _T("eMule Collection File"),
+		RegisterShellType( _T("Applications\\") CLIENT_NAME_T _T(".exe"), NULL, CLIENT_NAME_T _T(" Collection File"),
 			_T(".emulecollection"), CLIENT_NAME_T, _T("RAZAFORMAT"), IDI_COLLECTION );
 	}
 	else
 	{
 		UnregisterShellType( _T(".co") );		
 		UnregisterShellType( _T(".collection") );
-		UnregisterShellType( CLIENT_NAME_T _T(".Collection") );
-
 		UnregisterShellType( _T(".emulecollection") );
-		UnregisterShellType( _T("eMule") );
+		UnregisterShellType( CLIENT_NAME_T _T(".Collection") );
 	}
 
 	if ( ! bOnStartup )
@@ -1383,7 +1382,7 @@ BOOL CShareazaURL::RegisterShellType(LPCTSTR pszRoot, LPCTSTR pszProtocol, LPCTS
 		strSubKey += pszProtocol;
 	}
 
-	if ( RegCreateKeyEx( hRootKey, (LPCTSTR)strSubKey, 0, NULL, 0, KEY_ALL_ACCESS, NULL, &hKey, &nDisposition ) )
+	if ( RegCreateKeyEx( hRootKey, (LPCTSTR)strSubKey, 0, NULL, 0, KEY_ALL_ACCESS, NULL, &hKey, &nDisposition ) != ERROR_SUCCESS )
 		return FALSE;
 
 	if ( nDisposition == REG_OPENED_EXISTING_KEY && ! bOverwrite )
@@ -1392,79 +1391,79 @@ BOOL CShareazaURL::RegisterShellType(LPCTSTR pszRoot, LPCTSTR pszProtocol, LPCTS
 		return FALSE;
 	}
 
-	BOOL bProtocol = _tcsncmp( pszName, _T("URL:"), 4 ) == 0;
+	BOOL bProtocol = _tcsnicmp( pszName, _T("URL:"), 4 ) == 0;
+	BOOL bApplication = pszRoot && _tcsicmp( pszRoot, _T("Applications\\") CLIENT_NAME_T _T(".exe") ) == 0;
 
 	// Register protocol to "Default Programs"
 	if ( bProtocol )
 	{
 		CString strUrlAssociations = _T("Software\\Microsoft\\Windows\\Shell\\Associations\\UrlAssociations\\");
 		strUrlAssociations += pszProtocol;
-		SHSetValue( hRootKey, strUrlAssociations + _T("\\UserChoice"), _T("Progid"), REG_SZ, (LPBYTE)CLIENT_NAME_T, sizeof( CLIENT_NAME_T ) );
+		SHSetValue( hRootKey, strUrlAssociations + _T("\\UserChoice"), _T("Progid"), REG_STRING( CLIENT_NAME_T ) );
 	}
 
-	if ( ! pszRoot || _tcscmp( pszRoot, _T("Applications\\") CLIENT_NAME_T _T(".exe") ) != 0 )
+	if ( ! bApplication )
 	{
-		RegSetValueEx( hKey, NULL, 0, REG_SZ, (LPBYTE)pszName,
-			static_cast< DWORD >( sizeof(TCHAR) * ( _tcslen( pszName ) + 1 ) ) );
+		RegSetValueEx( hKey, NULL, 0, REG_STRING( pszName ) );
 
 		if ( bProtocol )
 		{
-			RegSetValueEx( hKey, _T("URL Protocol"), 0, REG_SZ, (LPBYTE)(LPCTSTR)_T(""), sizeof(TCHAR) );
+			RegSetValueEx( hKey, _T("URL Protocol"), 0, REG_STRING( _T("") ) );
 		}
 
-		if ( ! RegCreateKey( hKey, _T("DefaultIcon"), &hSub1 ) )
+		if ( RegCreateKey( hKey, _T("DefaultIcon"), &hSub1 ) == ERROR_SUCCESS )
 		{
 			strValue = Skin.GetImagePath( nIDIcon );
-			RegSetValueEx( hSub1, NULL, 0, REG_SZ, (LPBYTE)(LPCTSTR)strValue, sizeof(TCHAR) * ( strValue.GetLength() + 1 ) );
+			RegSetValueEx( hSub1, NULL, 0, REG_STRING( strValue ) );
 			RegCloseKey( hSub1 );
 		}
 	}
 	else if ( pszType != NULL )
 	{
-		HKEY hKeySupported;
-		if ( ! RegCreateKey( hKey, _T("SupportedTypes"), &hKeySupported ) )
+		/*HKEY hKeySupported;
+		if ( RegCreateKey( hKey, _T("SupportedTypes"), &hKeySupported ) == ERROR_SUCCESS )
 		{
-			RegSetValueEx( hKeySupported, pszType, 0, REG_SZ, NULL, 0 );
+			RegSetValueEx( hKeySupported, pszType, 0, REG_NONE, NULL, 0 );
 			RegCloseKey( hKeySupported );
-		}
+		}*/
+
+		RegSetValueEx( hKey, _T("FriendlyAppName"), 0, REG_STRING( CLIENT_NAME_T ) );
 	}
 
-	if ( ! RegCreateKey( hKey, _T("shell"), &hSub1 ) )
+	if ( RegCreateKey( hKey, _T("shell"), &hSub1 ) == ERROR_SUCCESS )
 	{
-		if ( ! RegCreateKey( hSub1, _T("open"), &hSub2 ) )
+		if ( RegCreateKey( hSub1, _T("open"), &hSub2 ) == ERROR_SUCCESS )
 		{
-			if ( ! RegCreateKey( hSub2, _T("command"), &hSub3 ) )
+			if ( RegCreateKey( hSub2, _T("command"), &hSub3 ) == ERROR_SUCCESS )
 			{
-				strValue.Format( _T("\"%s\" \"%%%c\""), theApp.m_strBinaryPath, bProtocol ? 'L' : '1' );
-				RegSetValueEx( hSub3, NULL, 0, REG_SZ, (LPBYTE)(LPCTSTR)strValue, sizeof(TCHAR) * ( strValue.GetLength() + 1 ) );
+				strValue.Format( _T("\"%s\" \"%%%c\""), theApp.m_strBinaryPath, bProtocol ? _T('L') : _T('1') );
+				RegSetValueEx( hSub3, NULL, 0, REG_STRING( strValue ) );
 				RegCloseKey( hSub3 );
 			}
 
-			if ( ! RegCreateKey( hSub2, _T("ddeexec"), &hSub3 ) )
+			if ( RegCreateKey( hSub2, _T("ddeexec"), &hSub3 ) == ERROR_SUCCESS )
 			{
-				RegSetValueEx( hSub3, NULL, 0, REG_SZ, (LPBYTE)_T("%1"), sizeof( _T("%1") ) );
+				RegSetValueEx( hSub3, NULL, 0, REG_STRING( _T("%1") ) );
 
-				if ( ! RegCreateKey( hSub3, _T("Application"), &hSub4 ) )
+				if ( RegCreateKey( hSub3, _T("Application"), &hSub4 ) == ERROR_SUCCESS )
 				{
-					RegSetValueEx( hSub4, NULL, 0, REG_SZ, (LPBYTE)pszApplication,
-						static_cast< DWORD >( sizeof(TCHAR) * ( _tcslen( pszApplication ) + 1 ) ) );
+					RegSetValueEx( hSub4, NULL, 0, REG_STRING( pszApplication ) );
 					RegCloseKey( hSub4 );
 				}
 
-				if ( ! RegCreateKey( hSub3, _T("Topic"), &hSub4 ) )
+				if ( RegCreateKey( hSub3, _T("Topic"), &hSub4 ) == ERROR_SUCCESS )
 				{
-					RegSetValueEx( hSub4, NULL, 0, REG_SZ, (LPBYTE)pszTopic,
-						static_cast< DWORD >( sizeof(TCHAR) * ( _tcslen( pszTopic ) + 1 ) ) );
+					RegSetValueEx( hSub4, NULL, 0, REG_STRING( pszTopic ) );
 					RegCloseKey( hSub4 );
 				}
 
-				if ( ! RegCreateKey( hSub3, _T("IfExec"), &hSub4 ) )
+				if ( RegCreateKey( hSub3, _T("IfExec"), &hSub4 ) == ERROR_SUCCESS )
 				{
-					RegSetValueEx( hSub4, NULL, 0, REG_SZ, (LPBYTE)_T("*"), sizeof( _T("*") ) );
+					RegSetValueEx( hSub4, NULL, 0, REG_STRING( _T("*") ) );
 					RegCloseKey( hSub4 );
 				}
 
-				RegSetValueEx( hSub3, _T("WindowClassName"), 0, REG_SZ, (LPBYTE)CLIENT_HWND, sizeof( CLIENT_HWND ) );
+				RegSetValueEx( hSub3, _T("WindowClassName"), 0, REG_STRING( CLIENT_HWND ) );
 
 				RegCloseKey( hSub3 );
 			}
@@ -1475,15 +1474,25 @@ BOOL CShareazaURL::RegisterShellType(LPCTSTR pszRoot, LPCTSTR pszProtocol, LPCTS
 		RegCloseKey( hSub1 );
 	}
 
-	if ( pszType && *pszType == _T('.') )
+	if ( ! bApplication )
 	{
-		DWORD dwData = /* FTA_OpenIsSafe */ 0x00010000;	// FILETYPEATTRIBUTEFLAGS
-		RegSetValueEx( hKey, _T("EditFlags"), 0, REG_BINARY, (LPBYTE)&dwData, sizeof( dwData ) );
+		if ( pszType && *pszType == _T('.') )
+		{
+			DWORD dwData = /* FTA_OpenIsSafe */ 0x00010000;	// FILETYPEATTRIBUTEFLAGS
+			RegSetValueEx( hKey, _T("EditFlags"), 0, REG_NUMBER( dwData ) );
+			RegSetValueEx( hKey, _T("AppUserModelID"), 0, REG_STRING( CLIENT_NAME_T ) );
+		}
+		else if ( bProtocol )
+		{
+			DWORD dwData = /* FTA_Show */ 0x00000002;	// FILETYPEATTRIBUTEFLAGS
+			RegSetValueEx( hKey, _T("EditFlags"), 0, REG_NUMBER( dwData ) );
+			RegSetValueEx( hKey, _T("AppUserModelID"), 0, REG_STRING( CLIENT_NAME_T ) );
+		}
 	}
 
 	RegCloseKey( hKey );
 
-	if ( pszType != NULL && pszProtocol != NULL )
+	if ( pszType && pszProtocol )
 	{
 		strSubKey = szRootKey;
 		if ( pszRoot )
@@ -1496,11 +1505,16 @@ BOOL CShareazaURL::RegisterShellType(LPCTSTR pszRoot, LPCTSTR pszProtocol, LPCTS
 			strSubKey += _T("\\");
 		strSubKey += pszType;
 
-		if ( !	RegCreateKeyEx( hRootKey, (LPCTSTR)strSubKey, 0, NULL, 0,
-				KEY_ALL_ACCESS, NULL, &hKey, &nDisposition ) )
+		if ( RegCreateKeyEx( hRootKey, (LPCTSTR)strSubKey, 0, NULL, 0, KEY_ALL_ACCESS, NULL, &hKey, &nDisposition ) == ERROR_SUCCESS )
 		{
-			RegSetValueEx( hKey, NULL, 0, REG_SZ, (LPBYTE)pszProtocol,
-				static_cast< DWORD >( sizeof(TCHAR) * ( _tcslen( pszProtocol ) + 1 ) ) );
+			RegSetValueEx( hKey, NULL, 0, REG_STRING( pszProtocol ) );
+
+			if ( RegCreateKey( hKey, _T("OpenWithProgids"), &hSub1 ) == ERROR_SUCCESS )
+			{
+				RegSetValueEx( hSub1, pszProtocol, 0, REG_NONE, NULL, 0 );
+				RegCloseKey( hSub1 );
+			}
+
 			RegCloseKey( hKey );
 		}
 	}
@@ -1521,7 +1535,7 @@ BOOL CShareazaURL::UnregisterShellType(LPCTSTR pszRoot)
 		strSubKey += pszRoot;
 	}
 
-	// Deleting protocol from "Default Programs"
+	// Delete protocol from "Default Programs"
 	if ( pszRoot && *pszRoot != _T('.') )
 	{
 		CString strProgID;
@@ -1542,8 +1556,7 @@ BOOL CShareazaURL::UnregisterShellType(LPCTSTR pszRoot)
 	if ( pszRoot && *pszRoot == _T('.') )
 	{
 		// Get real key for file extension
-		if ( RegOpenKeyEx( hRootKey, strSubKey, 0,
-			KEY_QUERY_VALUE, &hKey ) == ERROR_SUCCESS )
+		if ( RegOpenKeyEx( hRootKey, strSubKey, 0, KEY_QUERY_VALUE, &hKey ) == ERROR_SUCCESS )
 		{
 			CString strPath;
 			DWORD dwType;
@@ -1564,8 +1577,7 @@ BOOL CShareazaURL::UnregisterShellType(LPCTSTR pszRoot)
 		}
 	}
 
-	if ( RegOpenKeyEx( hRootKey, strSubKey + _T("\\shell\\open\\command"), 0,
-		KEY_QUERY_VALUE, &hKey ) == ERROR_SUCCESS )
+	if ( RegOpenKeyEx( hRootKey, strSubKey + _T("\\shell\\open\\command"), 0, KEY_QUERY_VALUE, &hKey ) == ERROR_SUCCESS )
 	{
 		CString strPath;
 		DWORD dwType;
@@ -1582,8 +1594,7 @@ BOOL CShareazaURL::UnregisterShellType(LPCTSTR pszRoot)
 
 	if ( ! bRegisteredUser )
 	{
-		if ( RegOpenKeyEx( hRootKey, strSubKey + _T("\\shell\\open\\ddeexec\\Application"), 0,
-			KEY_QUERY_VALUE, &hKey ) == ERROR_SUCCESS )
+		if ( RegOpenKeyEx( hRootKey, strSubKey + _T("\\shell\\open\\ddeexec\\Application"), 0, KEY_QUERY_VALUE, &hKey ) == ERROR_SUCCESS )
 		{
 			CString strPath;
 			DWORD dwType;
@@ -1663,20 +1674,12 @@ BOOL CShareazaURL::RegisterMagnetHandler(LPCTSTR pszID, LPCTSTR pszName, LPCTSTR
 	strIcon = Skin.GetImagePath( nIDIcon );
 	strCommand.Format( _T("\"%s\" \"%%URL\""), theApp.m_strBinaryPath );
 
-	RegSetValueEx( hHandler, _T(""), 0, REG_SZ, (LPBYTE)pszName, static_cast< DWORD >( sizeof(TCHAR) * ( _tcslen( pszName ) + 1 ) ) );
-	RegSetValueEx( hHandler, _T("Description"), 0, REG_SZ,
-		(LPBYTE)pszDescription, static_cast< DWORD >( sizeof(TCHAR) * ( _tcslen( pszDescription ) + 1 ) ) );
-
-	RegSetValueEx( hHandler, _T("DefaultIcon"), 0, REG_SZ,
-		(LPBYTE)(LPCTSTR)strIcon, sizeof(TCHAR) * ( strIcon.GetLength() + 1 ) );
-
-	RegSetValueEx( hHandler, _T("ShellExecute"), 0, REG_SZ,
-		(LPBYTE)(LPCTSTR)strCommand, sizeof(TCHAR) * ( strCommand.GetLength() + 1 ) );
-
-	RegSetValueEx( hHandler, _T("DdeApplication"), 0, REG_SZ,
-		(LPBYTE)pszApplication, static_cast< DWORD >( sizeof(TCHAR) * ( _tcslen( pszApplication ) + 1 ) ) );
-
-	RegSetValueEx( hHandler, _T("DdeTopic"), 0, REG_SZ, (LPBYTE)_T("URL"), sizeof(TCHAR) * 4 );
+	RegSetValueEx( hHandler, _T(""), 0, REG_STRING( pszName ) );
+	RegSetValueEx( hHandler, _T("Description"), 0, REG_STRING( pszDescription ) );
+	RegSetValueEx( hHandler, _T("DefaultIcon"), 0, REG_STRING( strIcon ) );
+	RegSetValueEx( hHandler, _T("ShellExecute"), 0, REG_STRING( strCommand ) );
+	RegSetValueEx( hHandler, _T("DdeApplication"), 0, REG_STRING( pszApplication ) );
+	RegSetValueEx( hHandler, _T("DdeTopic"), 0, REG_STRING( _T("URL") ) );
 
 	RegCloseKey( hHandler );
 	RegCloseKey( hHandlers );

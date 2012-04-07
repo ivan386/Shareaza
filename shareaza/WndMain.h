@@ -90,6 +90,7 @@ protected:
 	BOOL				m_bTrayIcon;			// Is tray icon available?
 	BOOL				m_bTrayUpdate;			// Is tray data need to be updated?
 	NOTIFYICONDATA		m_pTray;				// Tray icon data
+	CComPtr< ITaskbarList3 > m_pTaskbar;		// Windows task bar
 	BOOL				m_bTimer;
 	CString				m_sMsgStatus;
 	DWORD				m_nAlpha;				// Main window transparency (0...255)

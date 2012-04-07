@@ -292,14 +292,14 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CMainWnd construction
 
-CMainWnd::CMainWnd() :
-	m_bTrayNotify ( FALSE ),
-	m_bTrayHide ( FALSE ),
-	m_bTrayIcon ( FALSE ),
-	m_bTrayUpdate( TRUE ),
-	m_bTimer ( FALSE ),
-	m_pSkin ( NULL ),
-	m_nAlpha ( 255 )
+CMainWnd::CMainWnd()
+	: m_bTrayNotify		( FALSE )
+	, m_bTrayHide		( FALSE )
+	, m_bTrayIcon		( FALSE )
+	, m_bTrayUpdate		( TRUE )
+	, m_bTimer			( FALSE )
+	, m_pSkin			( NULL )
+	, m_nAlpha			( 255 )
 {
 	ZeroMemory( &m_pTray, sizeof( NOTIFYICONDATA ) );
 	m_pTray.cbSize				= sizeof( NOTIFYICONDATA );
@@ -439,6 +439,10 @@ int CMainWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CMDIFrameWnd::OnCreate( lpCreateStruct ) == -1 )
 		return -1;
+
+	// Task Bar
+
+	m_pTaskbar.CoCreateInstance( CLSID_TaskbarList );
 
 	// Tray
 
@@ -654,6 +658,8 @@ void CMainWnd::OnClose()
 	if ( m_wndRemoteWnd.IsVisible() ) m_wndRemoteWnd.DestroyWindow();
 
 	m_brshDockbar.DeleteObject();
+
+	m_pTaskbar.Release();
 
 	// Destroy main window
 	CMDIFrameWnd::OnClose();
@@ -1315,6 +1321,8 @@ LRESULT CMainWnd::OnHandleCollection(WPARAM wParam, LPARAM /*lParam*/)
 	CString strPath( pszPath );
 	delete [] pszPath;
 
+	OpenFromTray();
+
 	if ( CLibraryWnd* pLibrary = (CLibraryWnd*)m_pWindows.Open( RUNTIME_CLASS(CLibraryWnd) ) )
 	{
 		pLibrary->OnCollection( strPath );
@@ -1482,7 +1490,7 @@ void CMainWnd::UpdateMessages()
 	// StatusBar
 	if ( IsForegroundWindow() )
 	{
-		CString strMessage;
+		CString strStatusbar, strOld;
 
 		QWORD nLocalVolume;
 		LibraryMaps.GetStatistics( NULL, &nLocalVolume );
@@ -1493,13 +1501,13 @@ void CMainWnd::UpdateMessages()
 			if ( Settings.General.GUIMode == GUI_BASIC )
 			{
 				// In the basic GUI, don't bother with mode details or neighbour count.
-				strMessage.Format( LoadString( IDS_STATUS_BAR_CONNECTED_SIMPLE ),
+				strStatusbar.Format( LoadString( IDS_STATUS_BAR_CONNECTED_SIMPLE ),
 					Settings.SmartVolume( nLocalVolume, KiloBytes ) );
 			}
 			else
 			{
 				// Display node type and number of neighbours
-				strMessage.Format( LoadString( Neighbours.IsG2Hub() ?
+				strStatusbar.Format( LoadString( Neighbours.IsG2Hub() ?
 					( Neighbours.IsG1Ultrapeer() ? IDS_STATUS_BAR_CONNECTED_HUB_UP : IDS_STATUS_BAR_CONNECTED_HUB ) :
 					( Neighbours.IsG1Ultrapeer() ? IDS_STATUS_BAR_CONNECTED_UP : IDS_STATUS_BAR_CONNECTED ) ),
 					Neighbours.GetStableCount(), Settings.SmartVolume( nLocalVolume, KiloBytes ) );
@@ -1513,56 +1521,44 @@ void CMainWnd::UpdateMessages()
 				! Settings.eDonkey.EnableToday &&
 				! Settings.DC.EnableToday )
 			{
-				strMessage.Format( LoadString( IDS_STATUS_BAR_CONNECTED_SIMPLE ),
+				strStatusbar.Format( LoadString( IDS_STATUS_BAR_CONNECTED_SIMPLE ),
 					Settings.SmartVolume( nLocalVolume, KiloBytes ) );
 			}
 			else
 				// Trying to connect
-				LoadString( strMessage, IDS_STATUS_BAR_CONNECTING );
+				strStatusbar = LoadString( IDS_STATUS_BAR_CONNECTING );
 		}
 		else
 			// Idle
-			LoadString( strMessage, IDS_STATUS_BAR_DISCONNECTED );
+			strStatusbar = LoadString( IDS_STATUS_BAR_DISCONNECTED );
 
 		if ( Settings.VersionCheck.Quote.GetLength() )
 		{
-			strMessage += _T("  ");
-			strMessage += Settings.VersionCheck.Quote;
+			strStatusbar += _T("  ");
+			strStatusbar += Settings.VersionCheck.Quote;
 		}
 
-		m_sMsgStatus = strMessage;
+		m_sMsgStatus = strStatusbar;
 
 		if ( m_nIDLastMessage == AFX_IDS_IDLEMESSAGE )
 		{
-			CString strOld;
 			m_wndStatusBar.GetPaneText( 0, strOld );
-			if ( strOld != m_sMsgStatus )
+			if ( strOld != strStatusbar )
 				m_wndStatusBar.SetPaneText( 0, m_sMsgStatus );
 		}
-	}
 
-	// StatusBar pane 1
-	if ( IsForegroundWindow() )
-	{
-		CString strStatusbar;
+		// StatusBar pane 1
 		strStatusbar.Format( LoadString( IDS_STATUS_BAR_BANDWIDTH ),
 			Settings.SmartSpeed( CGraphItem::GetValue( GRC_TOTAL_BANDWIDTH_IN ), bits ),
 			Settings.SmartSpeed( CGraphItem::GetValue( GRC_TOTAL_BANDWIDTH_OUT ), bits ),
 			CGraphItem::GetValue( GRC_DOWNLOADS_TRANSFERS ),
 			CGraphItem::GetValue( GRC_UPLOADS_TRANSFERS ) );
-
-		CString strOld;
 		m_wndStatusBar.GetPaneText( 1, strOld );
 		if ( strOld != strStatusbar )
 			m_wndStatusBar.SetPaneText( 1, strStatusbar );
-	}
 
-	// StatusBar pane 2
-	if ( IsForegroundWindow() )
-	{
-		CString strStatusbar( HostToString( &Network.m_pHost ) );	
-
-		CString strOld;
+		// StatusBar pane 2
+		strStatusbar = HostToString( &Network.m_pHost );
 		m_wndStatusBar.GetPaneText( 2, strOld );
 		if ( strOld != strStatusbar )
 			m_wndStatusBar.SetPaneText( 2, strStatusbar );
@@ -1581,48 +1577,34 @@ void CMainWnd::UpdateMessages()
 			CGraphItem::GetValue( GRC_DOWNLOADS_TRANSFERS ),
 			CGraphItem::GetValue( GRC_UPLOADS_TRANSFERS ) );
 		strTip = Settings.SmartAgent() + _T("\r\n") + strTip;
-		
+
 		m_pTray.uFlags = NIF_TIP;
 		_tcsncpy( m_pTray.szTip, strTip, _countof( m_pTray.szTip ) - 1 );
 		m_pTray.szTip[ _countof( m_pTray.szTip ) - 1 ] = _T('\0');
 		m_bTrayIcon = Shell_NotifyIcon( NIM_MODIFY, &m_pTray );
 	}
 
-	// AppBar on Windows 7
-	if ( Windows.dwMajorVersion > 6 || ( Windows.dwMajorVersion == 6 && Windows.dwMinorVersion >= 1 ) )
+	// Task Bar
+	if ( ! m_bTrayHide && m_pTaskbar )
 	{
-		static bool bProgressShown = false;
+		CString sAppBarTip;
+		HWND hWnd = GetSafeHwnd();
 
 		QWORD nTotal = Downloads.m_nTotal, nComplete = Downloads.m_nComplete;
 		if ( nTotal && nComplete != nTotal )
 		{
-			bProgressShown = true;
-
-			CComPtr< ITaskbarList3 > pTaskbar;
-			if ( SUCCEEDED( pTaskbar.CoCreateInstance( CLSID_TaskbarList ) ) )
-			{
-				pTaskbar->SetProgressState( GetSafeHwnd(), TBPF_NORMAL );
-				pTaskbar->SetProgressValue( GetSafeHwnd(), nComplete, nTotal );
-
-				CString sAppBarTip;
-				sAppBarTip.Format( _T("%s\r\n%s %.2f%%\r\n%s %s"), Settings.SmartAgent(),
-					LoadString( IDS_DLM_VOLUME_DOWNLOADED ), float( ( 10000 * nComplete ) / nTotal ) / 100.f,
-					LoadString( IDS_DLM_TOTAL_SPEED ), Settings.SmartSpeed( CGraphItem::GetValue( GRC_TOTAL_BANDWIDTH_IN ), bits ) );
-				pTaskbar->SetThumbnailTooltip( GetSafeHwnd(), sAppBarTip );
-			}
+			m_pTaskbar->SetProgressState( hWnd, TBPF_NORMAL );
+			m_pTaskbar->SetProgressValue( hWnd, nComplete, nTotal );
+			sAppBarTip.Format( _T("%s\r\n%s %.2f%%\r\n%s %s"), Settings.SmartAgent(),
+				LoadString( IDS_DLM_VOLUME_DOWNLOADED ), float( ( 10000 * nComplete ) / nTotal ) / 100.f,
+				LoadString( IDS_DLM_TOTAL_SPEED ), Settings.SmartSpeed( CGraphItem::GetValue( GRC_TOTAL_BANDWIDTH_IN ), bits ) );
 		}
-		else if ( bProgressShown )
+		else
 		{
-			bProgressShown = false;
-
-			CComPtr< ITaskbarList3 > pTaskbar;
-			if ( SUCCEEDED( pTaskbar.CoCreateInstance( CLSID_TaskbarList ) ) )
-			{
-				pTaskbar->SetProgressState( GetSafeHwnd(), TBPF_NOPROGRESS );
-				pTaskbar->SetThumbnailTooltip( GetSafeHwnd(), Settings.SmartAgent() );
-			}
+			m_pTaskbar->SetProgressState( hWnd, TBPF_NOPROGRESS );
+			sAppBarTip = Settings.SmartAgent();				
 		}
-
+		m_pTaskbar->SetThumbnailTooltip( hWnd, sAppBarTip );
 	}
 }
 
@@ -3147,7 +3129,7 @@ BOOL CMainWnd::OnDrop(IDataObject* pDataObj, DWORD /* grfKeyState */, POINT /* p
 			POSITION pos = oFiles.GetHeadPosition();
 			while ( pos && ! ( bAccepted && ! bDrop ) )
 			{
-				bAccepted = CShareazaApp::Open( oFiles.GetNext( pos ), bDrop ) || bAccepted;
+				bAccepted = theApp.Open( oFiles.GetNext( pos ), bDrop ) || bAccepted;
 			}
 			if ( bAccepted )
 				*pdwEffect = DROPEFFECT_COPY;
@@ -3160,7 +3142,7 @@ BOOL CMainWnd::OnDrop(IDataObject* pDataObj, DWORD /* grfKeyState */, POINT /* p
 		CString strURL;
 		if ( CShareazaDataSource::ObjectToURL( pDataObj, strURL ) == S_OK )
 		{
-			BOOL bAccepted = CShareazaApp::OpenURL( strURL, bDrop );
+			BOOL bAccepted = theApp.OpenURL( strURL, bDrop );
 			if ( bAccepted )
 				*pdwEffect = DROPEFFECT_LINK;
 			return bAccepted;
@@ -3259,7 +3241,7 @@ BOOL CMainWnd::OnCopyData(CWnd* /*pWnd*/, COPYDATASTRUCT* pCopyDataStruct)
 			break;
 
 		case COPYDATA_OPEN:
-			CShareazaApp::Open( CString( (LPCTSTR)pCopyDataStruct->lpData,
+			theApp.Open( CString( (LPCTSTR)pCopyDataStruct->lpData,
 				(int)( pCopyDataStruct->cbData / sizeof( TCHAR ) ) ), TRUE );
 		}
 	}

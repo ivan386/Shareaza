@@ -1,7 +1,7 @@
 //
 // WndSearch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -496,7 +496,7 @@ void CSearchWnd::OnSearchSearch()
 	// Check if user mistakenly pasted download link to search input box
 	CString sText;
 	m_wndPanel.m_boxSearch.m_wndSearch.GetWindowText( sText );
-	if ( CShareazaApp::OpenURL( sText, TRUE, TRUE ) )
+	if ( theApp.OpenURL( sText, TRUE, TRUE ) )
 	{
 		m_wndPanel.m_boxSearch.m_wndSearch.SetWindowText( _T("") );
 		return;

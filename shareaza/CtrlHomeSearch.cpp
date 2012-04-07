@@ -1,7 +1,7 @@
 //
 // CtrlHomeSearch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -259,7 +259,7 @@ void CHomeSearchCtrl::Search(bool bAutostart)
 	if ( _tcscmp ( strClear , strText ) == 0 ) return;
 
 	// Check if user mistakenly pasted download link to search input box
-	if ( CShareazaApp::OpenURL( strText, TRUE, TRUE ) )
+	if (theApp.OpenURL( strText, TRUE, TRUE ) )
 	{
 		m_wndText.SetWindowText( _T("") );
 		return;

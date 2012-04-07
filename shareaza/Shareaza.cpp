@@ -259,16 +259,18 @@ BOOL CShareazaApp::InitInstance()
 	CoInitializeSecurity( NULL, -1, NULL, NULL, RPC_C_AUTHN_LEVEL_PKT, RPC_C_IMP_LEVEL_IMPERSONATE, NULL, EOAC_NONE, NULL );
 //	m_pFontManager = new CFontManager();
 	AfxEnableControlContainer( /*m_pFontManager*/); // Enable support for containment of OLE controls.
-	InitResources();								// Loads theApp settings.
+	InitResources();			// Loads theApp settings.
+	Settings.Load();			// Loads settings. Depends on InitResources().
+
+	if ( m_pfnSetCurrentProcessExplicitAppUserModelID )
+		m_pfnSetCurrentProcessExplicitAppUserModelID( CLIENT_NAME_T );
 
 	if ( ! ParseCommandLine() )
 		return FALSE;
 
 	Register();					// Re-register Shareaza Type Library
-
 	LoadStdProfileSettings();	// Load MRU file list and last preview state.
 	EnableShellOpen();			// Enable open data files when user double-click the files from within the Windows File Manager.
-	Settings.Load();			// Loads settings. Depends on InitResources().
 
 	// Test and re-register plugins
 	CComPtr< IUnknown > pTest( Plugins.GetPlugin( _T("ImageService"), _T(".png") ) );
@@ -338,7 +340,7 @@ BOOL CShareazaApp::InitInstance()
 		 Settings.General.GUIMode != GUI_BASIC )
 		Settings.General.GUIMode = GUI_BASIC;
 
-	SplashStep( L"Network", ( ( m_cmdInfo.m_bNoSplash || ! m_cmdInfo.m_bShowSplash ) ? 0 : 17 ), false );
+	SplashStep( L"Network", ( ( m_cmdInfo.m_bNoSplash || ! m_cmdInfo.m_bShowSplash ) ? 0 : 16 ), false );
 		if ( ! Network.Init() )
 		{
 			SplashAbort();
@@ -348,8 +350,6 @@ BOOL CShareazaApp::InitInstance()
 	SplashStep( L"Database" );
 		PurgeDeletes();
 		CThumbCache::InitDatabase();
-	SplashStep( L"P2P URIs" );
-		CShareazaURL::Register( TRUE, TRUE );
 	SplashStep( L"Shell Icons" );
 		ShellIcons.Clear();
 	SplashStep( L"Metadata Schemas" );
@@ -643,11 +643,28 @@ BOOL CShareazaApp::Register()
 	COleObjectFactory::UpdateRegistryAll();
 	AfxOleRegisterTypeLib( AfxGetInstanceHandle(), LIBID_Shareaza );
 
+	CShareazaURL::Register( TRUE, TRUE );
+
+	//if ( Windows.dwMajorVersion > 6 || ( Windows.dwMajorVersion == 6 && Windows.dwMinorVersion >= 1 ) )
+	//{
+	//	CJumpList oTasks;
+	//	oTasks.ClearAllDestinations();
+	//	oTasks.AddKnownCategory( KDC_RECENT );
+	//	oTasks.AddTask( _T("shareaza:command:search"), _T(""), LoadString( IDS_SEARCH_TASK ) + _T("..."), theApp.m_strBinaryPath, - IDR_SEARCHFRAME );
+	//	oTasks.AddTask( _T("shareaza:command:download"), _T(""), LoadString( IDS_DOWNLOAD_TASK ) + _T("..."), theApp.m_strBinaryPath, - IDR_DOWNLOADSFRAME );
+	//}
+
 	return CWinApp::Register();
 }
 
 BOOL CShareazaApp::Unregister()
 {
+	//if ( Windows.dwMajorVersion > 6 || ( Windows.dwMajorVersion == 6 && Windows.dwMinorVersion >= 1 ) )
+	//{
+	//	CJumpList oTasks;
+	//	oTasks.ClearAllDestinations();
+	//}
+
 	CShareazaURL::Register( FALSE, TRUE );
 
 	AfxOleUnregisterTypeLib( LIBID_Shareaza );
@@ -699,12 +716,14 @@ BOOL CShareazaApp::OpenImport(LPCTSTR lpszFileName, BOOL bDoIt)
 	if ( ! bDoIt )
 		return TRUE;
 
+	AddToRecentFileList( lpszFileName );
+
 	const size_t nLen = _tcslen( lpszFileName ) + 1;
-	auto_array< TCHAR > pszPath( new TCHAR[ nLen ] );
-	if ( pszPath.get() )
+	CAutoVectorPtr< TCHAR > pszPath( new TCHAR[ nLen ] );
+	if ( pszPath )
 	{
-		_tcscpy_s( pszPath.get(), nLen, lpszFileName );
-		if ( PostMainWndMessage( WM_IMPORT, (WPARAM)pszPath.release() ) )
+		_tcscpy_s( pszPath, nLen, lpszFileName );
+		if ( PostMainWndMessage( WM_IMPORT, (WPARAM)pszPath.Detach() ) )
 			return TRUE;
 	}
 
@@ -723,7 +742,13 @@ BOOL CShareazaApp::OpenInternetShortcut(LPCTSTR lpszFileName, BOOL bDoIt)
 	BOOL bResult = ( GetPrivateProfileString( _T("InternetShortcut"), _T("URL"),
 		_T(""), sURL.GetBuffer( MAX_PATH ), MAX_PATH, lpszFileName ) > 3 );
 	sURL.ReleaseBuffer();
-	return bResult && sURL.GetLength() && OpenURL( sURL, bDoIt );
+	if ( ! bResult || sURL.IsEmpty() )
+		return FALSE;
+
+	if ( bDoIt )
+		AddToRecentFileList( lpszFileName );
+
+	return OpenURL( sURL, bDoIt );
 }
 
 BOOL CShareazaApp::OpenTorrent(LPCTSTR lpszFileName, BOOL bDoIt)
@@ -731,13 +756,15 @@ BOOL CShareazaApp::OpenTorrent(LPCTSTR lpszFileName, BOOL bDoIt)
 	if ( ! bDoIt )
 		return TRUE;
 
+	AddToRecentFileList( lpszFileName );
+
 	// Open torrent
 	const size_t nLen = _tcslen( lpszFileName ) + 1;
-	auto_array< TCHAR > pszPath( new TCHAR[ nLen ] );
-	if ( pszPath.get() )
+	CAutoVectorPtr< TCHAR > pszPath( new TCHAR[ nLen ] );
+	if ( pszPath )
 	{
-		_tcscpy_s( pszPath.get(), nLen, lpszFileName );
-		if ( PostMainWndMessage( WM_TORRENT, (WPARAM)pszPath.release() ) )
+		_tcscpy_s( pszPath, nLen, lpszFileName );
+		if ( PostMainWndMessage( WM_TORRENT, (WPARAM)pszPath.Detach() ) )
 			return TRUE;
 	}
 
@@ -749,12 +776,14 @@ BOOL CShareazaApp::OpenCollection(LPCTSTR lpszFileName, BOOL bDoIt)
 	if ( ! bDoIt )
 		return TRUE;
 
+	AddToRecentFileList( lpszFileName );
+
 	const size_t nLen = _tcslen( lpszFileName ) + 1;
-	auto_array< TCHAR > pszPath( new TCHAR[ nLen ] );
-	if ( pszPath.get() )
+	CAutoVectorPtr< TCHAR > pszPath( new TCHAR[ nLen ] );
+	if ( pszPath )
 	{
-		_tcscpy_s( pszPath.get(), nLen, lpszFileName );
-		if ( PostMainWndMessage( WM_COLLECTION, (WPARAM)pszPath.release() ) )
+		_tcscpy_s( pszPath, nLen, lpszFileName );
+		if ( PostMainWndMessage( WM_COLLECTION, (WPARAM)pszPath.Detach() ) )
 			return TRUE;
 	}
 
@@ -775,14 +804,16 @@ BOOL CShareazaApp::OpenURL(LPCTSTR lpszFileName, BOOL bDoIt, BOOL bSilent)
 			{
 				if ( pURL->m_sName == _T("download") )
 					PostMainWndMessage( WM_COMMAND, ID_TOOLS_DOWNLOAD );
+				else if ( pURL->m_sName == _T("search") )
+					PostMainWndMessage( WM_COMMAND, ID_NETWORK_SEARCH );
 				else
 					return FALSE;
 			}
 			else
 				PostMainWndMessage( WM_URL, (WPARAM)pURL.Detach() );
-			}
-			return TRUE;
 		}
+		return TRUE;
+	}
 
 	if ( bDoIt && ! bSilent )
 		theApp.Message( MSG_NOTICE, IDS_URL_PARSE_ERROR );
@@ -955,6 +986,7 @@ void CShareazaApp::InitResources()
 		(FARPROC&)m_pfnSHGetFolderPathW = GetProcAddress( m_hShell32, "SHGetFolderPathW" );
 		(FARPROC&)m_pfnSHGetKnownFolderPath = GetProcAddress( m_hShell32, "SHGetKnownFolderPath" );
 		(FARPROC&)m_pfnSHCreateItemFromParsingName = GetProcAddress( m_hShell32, "SHCreateItemFromParsingName" );
+		(FARPROC&)m_pfnSetCurrentProcessExplicitAppUserModelID = GetProcAddress( m_hShell32, "SetCurrentProcessExplicitAppUserModelID" );
 	}
 
 	if ( ( m_hUser32 = LoadLibrary( _T("user32.dll") ) ) != NULL )
@@ -2389,24 +2421,26 @@ BOOL DeleteFileEx(LPCTSTR szFileName, BOOL bShared, BOOL bToRecycleBin, BOOL bEn
 		len = lstrlen( szFileName );
 		bLong = FALSE;
 	}
-	auto_array< TCHAR > szPath( new TCHAR[ len + 1 ] );
+	CAutoVectorPtr< TCHAR > szPath( new TCHAR[ len + 1 ] );
+	if ( ! szPath )
+		return FALSE;
 	if ( bLong )
 	{
-		GetLongPathName( szFileName, szPath.get(), len );
+		GetLongPathName( szFileName, szPath, len );
 	}
 	else
 	{
-		lstrcpy( szPath.get(), szFileName );
+		lstrcpy( szPath, szFileName );
 	}
 	szPath[ len ] = 0;
 
 	if ( bShared )
 	{
 		// Stop uploads
-		theApp.OnRename( szPath.get(), NULL );
+		theApp.OnRename( szPath, NULL );
 	}
 
-	DWORD dwAttr = GetFileAttributes( szPath.get() );
+	DWORD dwAttr = GetFileAttributes( szPath );
 	if ( ( dwAttr != INVALID_FILE_ATTRIBUTES ) &&		// Filename exist
 		( dwAttr & FILE_ATTRIBUTE_DIRECTORY ) == 0 )	// Not a folder
 	{
@@ -2415,14 +2449,14 @@ BOOL DeleteFileEx(LPCTSTR szFileName, BOOL bShared, BOOL bToRecycleBin, BOOL bEn
 			SHFILEOPSTRUCT sfo = {};
 			sfo.hwnd = GetDesktopWindow();
 			sfo.wFunc = FO_DELETE;
-			sfo.pFrom = szPath.get();
+			sfo.pFrom = szPath;
 			sfo.fFlags = FOF_ALLOWUNDO | FOF_FILESONLY | FOF_NORECURSION | FOF_NO_UI;
 			SHFileOperation( &sfo );
 		}
 		else
-			DeleteFile( szPath.get() );
+			DeleteFile( szPath );
 
-		dwAttr = GetFileAttributes( szPath.get() );
+		dwAttr = GetFileAttributes( szPath );
 		if ( dwAttr != INVALID_FILE_ATTRIBUTES )
 		{
 			// File still exist
@@ -2431,14 +2465,14 @@ BOOL DeleteFileEx(LPCTSTR szFileName, BOOL bShared, BOOL bToRecycleBin, BOOL bEn
 				// Set delayed deletion
 				CString sJob;
 				sJob.Format( _T("%d%d"), bShared, bToRecycleBin );
-				theApp.WriteProfileString( _T("Delete"), szPath.get(), sJob );
+				theApp.WriteProfileString( _T("Delete"), szPath, sJob );
 			}
 			return FALSE;
 		}
 	}
 
 	// Cancel delayed deletion (if any)
-	theApp.WriteProfileString( _T("Delete"), szPath.get(), NULL );
+	theApp.WriteProfileString( _T("Delete"), szPath, NULL );
 
 	return TRUE;
 }

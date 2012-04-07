@@ -239,11 +239,11 @@ BOOL CDDEServer::Execute(LPCTSTR pszTopic, LPCTSTR pszMessage)
 
 	if ( _tcscmp( pszTopic, _T("URL") ) == 0 )
 	{
-		return CShareazaApp::OpenURL( pszMessage, TRUE );
+		return theApp.OpenURL( pszMessage, TRUE );
 	}
 	else if ( _tcscmp( pszTopic, _T("RAZAFORMAT") ) == 0 )
 	{
-		return CShareazaApp::Open( pszMessage, TRUE );
+		return theApp.Open( pszMessage, TRUE );
 	}
 
 	return FALSE;

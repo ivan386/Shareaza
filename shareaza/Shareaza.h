@@ -129,6 +129,7 @@ public:
 	HRESULT		(WINAPI *m_pfnSHGetFolderPathW)(__reserved HWND hwnd, __in int csidl, __in_opt HANDLE hToken, __in DWORD dwFlags, __out_ecount(MAX_PATH) LPWSTR pszPath);
 	HRESULT		(WINAPI *m_pfnSHGetKnownFolderPath)(__in REFKNOWNFOLDERID rfid, __in DWORD /* KNOWN_FOLDER_FLAG */ dwFlags, __in_opt HANDLE hToken, __deref_out PWSTR *ppszPath);
 	HRESULT		(WINAPI *m_pfnSHCreateItemFromParsingName)(__in PCWSTR pszPath, __in_opt IBindCtx *pbc, __in REFIID riid, __deref_out void **ppv);
+	HRESULT		(WINAPI *m_pfnSetCurrentProcessExplicitAppUserModelID)(__in PCWSTR pszAppID);
 
 	HINSTANCE			m_hUser32;
 	BOOL		(WINAPI *m_pfnChangeWindowMessageFilter)(UINT message, DWORD dwFlag);
@@ -169,19 +170,19 @@ public:
 	// Open file or url. Returns NULL always.
 	virtual CDocument*	OpenDocumentFile(LPCTSTR lpszFileName);
 	// Open file or url (generic function)
-	static BOOL			Open(LPCTSTR lpszFileName, BOOL bDoIt);
+	BOOL				Open(LPCTSTR lpszFileName, BOOL bDoIt);
 	// Open host list file
-	static BOOL			OpenImport(LPCTSTR lpszFileName, BOOL bDoIt);
+	BOOL				OpenImport(LPCTSTR lpszFileName, BOOL bDoIt);
 	// Open .lnk file
-	static BOOL			OpenShellShortcut(LPCTSTR lpszFileName, BOOL bDoIt);
+	BOOL				OpenShellShortcut(LPCTSTR lpszFileName, BOOL bDoIt);
 	// Open .url file
-	static BOOL			OpenInternetShortcut(LPCTSTR lpszFileName, BOOL bDoIt);
+	BOOL				OpenInternetShortcut(LPCTSTR lpszFileName, BOOL bDoIt);
 	// Open .torrent file
-	static BOOL			OpenTorrent(LPCTSTR lpszFileName, BOOL bDoIt);
+	BOOL				OpenTorrent(LPCTSTR lpszFileName, BOOL bDoIt);
 	// Open Shareaza, eMule or DC++ collection file
-	static BOOL			OpenCollection(LPCTSTR lpszFileName, BOOL bDoIt);
+	BOOL				OpenCollection(LPCTSTR lpszFileName, BOOL bDoIt);
 	// Open URL
-	static BOOL			OpenURL(LPCTSTR lpszFileName, BOOL bDoIt, BOOL bSilent = FALSE);
+	BOOL				OpenURL(LPCTSTR lpszFileName, BOOL bDoIt, BOOL bSilent = FALSE);
 
 	CString				GetWindowsFolder() const;
 	CString				GetProgramFilesFolder() const;
