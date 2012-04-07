@@ -80,7 +80,7 @@
     </Midl>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <CustomBuild Include="scripts\main_10.iss">
+    <CustomBuild Include="scripts\main.iss">
       <FileType>Document</FileType>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Performing Installer Build</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"%ProgramFiles%\Inno Setup 5\ISCC.exe" "%(FullPath)" "/dConfigurationName=$(Configuration)" "/dPlatformName=$(Platform)" /v9

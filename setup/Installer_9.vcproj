@@ -107,7 +107,7 @@
 	</References>
 	<Files>
 		<File
-			RelativePath=".\scripts\main_9.iss"
+			RelativePath=".\scripts\main.iss"
 			>
 			<FileConfiguration
 				Name="Debug|Win32"

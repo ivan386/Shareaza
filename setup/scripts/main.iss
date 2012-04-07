@@ -2,15 +2,27 @@
 
 #include SourcePath + "..\..\build.h"
 
-#if VER < 0x05010700
-  #error Inno Setup version 5.1.7 or higher is needed for this script
+#if VER < 0x05030900
+  #error Inno Setup version 5.3.9 or higher is needed for this script
 #endif
 #if PREPROCVER < 0x05020000
   #error PreProcessor version 5.2.0.0 or higher is needed for this script
 #endif
 
 ; Project definitions
-#define shareaza      SourcePath + "..\..\vc9\" + PlatformName + "\" + ConfigurationName + "\Shareaza.exe"
+#ifexist SourcePath + "..\..\vc9\" + PlatformName + "\" + ConfigurationName + "\Shareaza.exe"
+  #define Compiler "vc9"
+#endif
+#ifexist SourcePath + "..\..\vc10\" + PlatformName + "\" + ConfigurationName + "\Shareaza.exe"
+  #ifdef Compiler
+    #error Found a few Shareaza.exe files, you need to leave only one
+  #endif
+  #define Compiler "vc10"
+#endif
+#ifndef Compiler
+  #error No Shareaza.exe files are found, compile some
+#endif
+#define shareaza SourcePath + "..\..\" + Compiler + "\" + PlatformName + "\" + ConfigurationName + "\Shareaza.exe"
 #define internal_name GetStringFileInfo(shareaza, INTERNAL_NAME)
 #if ConfigurationName == "Debug"
   #define name internal_name + " Debug build"
@@ -90,74 +102,74 @@ Name: "resetdiscoveryhostcache"; Description: "{cm:tasks_resetdiscoveryhostcache
 
 [Files]
 ; Main files
-Source: "vc9\{#PlatformName}\{#ConfigurationName}\Shareaza.exe"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-Source: "vc9\{#PlatformName}\{#ConfigurationName}\Skin.exe"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-Source: "vc9\{#PlatformName}\{#ConfigurationName}\TorrentWizard.exe"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\Shareaza.exe"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\Skin.exe"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\TorrentWizard.exe"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 
 ; Save/Restore scripts
 Source: "setup\builds\SaveSettings.bat"; DestDir: "{app}"; DestName: "SaveSettings.bat";    Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist
 Source: "setup\builds\RestoreSettings.bat"; DestDir: "{app}"; DestName: "RestoreSettings.bat"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist
 
 ; ZLib
-Source: "vc9\{#PlatformName}\{#ConfigurationName}\zlibwapi.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\zlibwapi.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 
 ; BZLib
-Source: "vc9\{#PlatformName}\{#ConfigurationName}\bzlib.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\bzlib.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 
 ; BugTrap
-Source: "vc9\{#PlatformName}\{#ConfigurationName}\BugTrap.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-Source: "vc9\{#PlatformName}\{#ConfigurationName}\dbghelp.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\BugTrap.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\dbghelp.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 
 ; HashLib
-Source: "vc9\{#PlatformName}\{#ConfigurationName}\HashLib.dll"; DestDir: "{app}"; DestName: "HashLib.dll"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\HashLib.dll"; DestDir: "{app}"; DestName: "HashLib.dll"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 
 ; RegExp
-Source: "vc9\{#PlatformName}\{#ConfigurationName}\RegExp.dll"; DestDir: "{app}"; DestName: "RegExp.dll"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\RegExp.dll"; DestDir: "{app}"; DestName: "RegExp.dll"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 
 ; SQLite
-Source: "vc9\{#PlatformName}\{#ConfigurationName}\sqlite3.dll"; DestDir: "{app}"; DestName: "sqlite3.dll"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\sqlite3.dll"; DestDir: "{app}"; DestName: "sqlite3.dll"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 
 ; GeoIP
-Source: "vc9\{#PlatformName}\{#ConfigurationName}\GeoIP.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\GeoIP.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 Source: "GeoIP\GeoIP.dat"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 
 ; Plugins
-Source: "vc9\{#PlatformName}\{#ConfigurationName}\7ZipBuilder.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\7ZipBuilder.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
 #if PlatformName == "Win32"
-Source: "vc9\{#PlatformName}\{#ConfigurationName}\7zxa.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\7zxa.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 #elif PlatformName == "x64"
-Source: "vc9\{#PlatformName}\{#ConfigurationName}\7zxa64.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\7zxa64.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 #endif
-Source: "vc9\{#PlatformName}\{#ConfigurationName}\DocumentReader.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
-Source: "vc9\{#PlatformName}\{#ConfigurationName}\GFLImageServices.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
-Source: "vc9\{#PlatformName}\{#ConfigurationName}\libgfl340.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-Source: "vc9\{#PlatformName}\{#ConfigurationName}\GFLLibraryBuilder.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
-Source: "vc9\{#PlatformName}\{#ConfigurationName}\ImageViewer.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
-Source: "vc9\{#PlatformName}\{#ConfigurationName}\MediaImageServices.exe"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-Source: "vc9\{#PlatformName}\{#ConfigurationName}\MediaLibraryBuilder.exe"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-Source: "vc9\{#PlatformName}\{#ConfigurationName}\MediaPlayer.exe"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-Source: "vc9\{#PlatformName}\{#ConfigurationName}\Preview.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
-Source: "vc9\{#PlatformName}\{#ConfigurationName}\RARBuilder.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\DocumentReader.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\GFLImageServices.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\libgfl340.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\GFLLibraryBuilder.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\ImageViewer.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\MediaImageServices.exe"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\MediaLibraryBuilder.exe"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\MediaPlayer.exe"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\Preview.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\RARBuilder.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
 #if PlatformName == "Win32"
-Source: "vc9\{#PlatformName}\{#ConfigurationName}\unrar.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\unrar.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 #elif PlatformName == "x64"
-Source: "vc9\{#PlatformName}\{#ConfigurationName}\unrar64.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\unrar64.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 #endif
-Source: "vc9\{#PlatformName}\{#ConfigurationName}\RatDVDReader.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
-Source: "vc9\Win32\{#ConfigurationName}\RazaWebHook32.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly uninsrestartdelete sortfilesbyextension regserver noregerror
-Source: "vc9\x64\{#ConfigurationName}\RazaWebHook64.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly uninsrestartdelete sortfilesbyextension regserver noregerror
-Source: "vc9\{#PlatformName}\{#ConfigurationName}\SkinScanSKS.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
-Source: "vc9\{#PlatformName}\{#ConfigurationName}\SWFPlugin.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
-Source: "vc9\{#PlatformName}\{#ConfigurationName}\VirusTotal.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
-Source: "vc9\{#PlatformName}\{#ConfigurationName}\WindowsThumbnail.exe"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-Source: "vc9\{#PlatformName}\{#ConfigurationName}\ZIPBuilder.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\RatDVDReader.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "{#Compiler}\Win32\{#ConfigurationName}\RazaWebHook32.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly uninsrestartdelete sortfilesbyextension regserver noregerror
+Source: "{#Compiler}\x64\{#ConfigurationName}\RazaWebHook64.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly uninsrestartdelete sortfilesbyextension regserver noregerror
+Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\SkinScanSKS.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\SWFPlugin.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\VirusTotal.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\WindowsThumbnail.exe"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\ZIPBuilder.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
 
 ;--== Debug Databases ==--
 #if ConfigurationName == "Debug"
 
 ; Main files
-Source: "vc9\{#PlatformName}\{#ConfigurationName}\Shareaza.pdb"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-Source: "vc9\{#PlatformName}\{#ConfigurationName}\BugTrap.pdb"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\Shareaza.pdb"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\BugTrap.pdb"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 
 #endif
 
@@ -220,13 +232,13 @@ Source: "Data\DefaultSecurity.dat"; DestDir: "{userappdata}\Shareaza\Data"; Dest
 
 [Icons]
 ; Shareaza startmenu icons
-Name: "{group}\{#internal_name}"; Filename: "{app}\Shareaza.exe"; WorkingDir: "{app}"; Comment: "{cm:reg_apptitle}"
-Name: "{group}\TorrentWizard"; Filename: "{app}\TorrentWizard.exe"; WorkingDir: "{app}"; Comment: "Shareaza Torrent File Creator"
-Name: "{group}\GUI Mode\{#internal_name} ({cm:icons_basicmode})"; Filename: "{app}\Shareaza.exe"; Parameters: "-basic"; WorkingDir: "{app}"; Comment: "{cm:reg_apptitle}"
-Name: "{group}\GUI Mode\{#internal_name} ({cm:icons_tabbedmode})"; Filename: "{app}\Shareaza.exe"; Parameters: "-tabbed"; WorkingDir: "{app}"; Comment: "{cm:reg_apptitle}"
-Name: "{group}\GUI Mode\{#internal_name} ({cm:icons_windowedmode})"; Filename: "{app}\Shareaza.exe"; Parameters: "-windowed"; WorkingDir: "{app}"; Comment: "{cm:reg_apptitle}"
-Name: "{commondesktop}\{#internal_name}"; Filename: "{app}\Shareaza.exe"; WorkingDir: "{app}"; Comment: "{cm:reg_apptitle}"; Tasks: desktopicon
-Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\{#internal_name}"; Filename: "{app}\Shareaza.exe"; WorkingDir: "{app}"; Comment: "{cm:reg_apptitle}"; Tasks: quicklaunch
+Name: "{group}\{#internal_name}"; Filename: "{app}\Shareaza.exe"; WorkingDir: "{app}"; Comment: "{cm:reg_apptitle}"; AppUserModelID: "Shareaza"
+Name: "{group}\TorrentWizard"; Filename: "{app}\TorrentWizard.exe"; WorkingDir: "{app}"; Comment: "Shareaza Torrent File Creator"; AppUserModelID: "TorrentWizard"
+Name: "{group}\GUI Mode\{#internal_name} ({cm:icons_basicmode})"; Filename: "{app}\Shareaza.exe"; Parameters: "-basic"; WorkingDir: "{app}"; Comment: "{cm:reg_apptitle}"; AppUserModelID: "Shareaza"
+Name: "{group}\GUI Mode\{#internal_name} ({cm:icons_tabbedmode})"; Filename: "{app}\Shareaza.exe"; Parameters: "-tabbed"; WorkingDir: "{app}"; Comment: "{cm:reg_apptitle}"; AppUserModelID: "Shareaza"
+Name: "{group}\GUI Mode\{#internal_name} ({cm:icons_windowedmode})"; Filename: "{app}\Shareaza.exe"; Parameters: "-windowed"; WorkingDir: "{app}"; Comment: "{cm:reg_apptitle}"; AppUserModelID: "Shareaza"
+Name: "{commondesktop}\{#internal_name}"; Filename: "{app}\Shareaza.exe"; WorkingDir: "{app}"; Comment: "{cm:reg_apptitle}"; AppUserModelID: "Shareaza"; Tasks: desktopicon
+Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\{#internal_name}"; Filename: "{app}\Shareaza.exe"; WorkingDir: "{app}"; Comment: "{cm:reg_apptitle}"; AppUserModelID: "Shareaza"; Tasks: quicklaunch
 
 ; Other icons in user language
 Name: "{group}\{cm:icons_license}"; Filename: "{app}\Uninstall\license.rtf"; WorkingDir: "{app}\Uninstall"; Comment: "{cm:icons_license}"
@@ -294,7 +306,6 @@ Root: HKLM; Subkey: "SOFTWARE\Classes\.co"; Flags: dontcreatekey uninsdeletekey
 Root: HKLM; Subkey: "SOFTWARE\Classes\.collection"; Flags: dontcreatekey uninsdeletekey
 Root: HKLM; Subkey: "SOFTWARE\Classes\.emulecollection"; Flags: dontcreatekey uninsdeletekey
 Root: HKLM; Subkey: "SOFTWARE\Classes\.torrent"; Flags: dontcreatekey uninsdeletekey
-Root: HKLM; Subkey: "SOFTWARE\Classes\bittorrent"; Flags: dontcreatekey uninsdeletekey
 Root: HKLM; Subkey: "SOFTWARE\Classes\.sks"; Flags: dontcreatekey uninsdeletekey
 Root: HKLM; Subkey: "SOFTWARE\Classes\dchub"; Flags: dontcreatekey uninsdeletekey
 Root: HKLM; Subkey: "SOFTWARE\Classes\dcfile"; Flags: dontcreatekey uninsdeletekey
@@ -317,7 +328,6 @@ Root: HKCU; Subkey: "SOFTWARE\Classes\.co"; Flags: dontcreatekey uninsdeletekey
 Root: HKCU; Subkey: "SOFTWARE\Classes\.collection"; Flags: dontcreatekey uninsdeletekey
 Root: HKCU; Subkey: "SOFTWARE\Classes\.emulecollection"; Flags: dontcreatekey uninsdeletekey
 Root: HKCU; Subkey: "SOFTWARE\Classes\.torrent"; Flags: dontcreatekey uninsdeletekey
-Root: HKCU; Subkey: "SOFTWARE\Classes\bittorrent"; Flags: dontcreatekey uninsdeletekey
 Root: HKCU; Subkey: "SOFTWARE\Classes\.sks"; Flags: dontcreatekey uninsdeletekey
 Root: HKCU; Subkey: "SOFTWARE\Classes\dchub"; Flags: dontcreatekey uninsdeletekey
 Root: HKCU; Subkey: "SOFTWARE\Classes\dcfile"; Flags: dontcreatekey uninsdeletekey
@@ -386,10 +396,10 @@ Root: HKCU; SubKey: "Software\BHO Shareaza"; Flags: deletekey
 ; Set program default associations
 Root: HKLM; Subkey: "Software\Shareaza\Shareaza\Capabilities"; ValueType: string; ValueName: "ApplicationDescription"; ValueData: "{cm:reg_apptitle}" ; Flags: createvalueifdoesntexist uninsdeletekey
 
-Root: HKLM; Subkey: "Software\Shareaza\Shareaza\Capabilities\FileAssociations"; ValueType: string; ValueName: ".torrent"; ValueData: "bittorrent"; Flags: createvalueifdoesntexist uninsdeletevalue
+Root: HKLM; Subkey: "Software\Shareaza\Shareaza\Capabilities\FileAssociations"; ValueType: string; ValueName: ".torrent"; ValueData: "Shareaza.Torrent"; Flags: createvalueifdoesntexist uninsdeletevalue
 Root: HKLM; Subkey: "Software\Shareaza\Shareaza\Capabilities\FileAssociations"; ValueType: string; ValueName: ".co"; ValueData: "Shareaza.Collection"; Flags: createvalueifdoesntexist uninsdeletevalue
 Root: HKLM; Subkey: "Software\Shareaza\Shareaza\Capabilities\FileAssociations"; ValueType: string; ValueName: ".collection"; ValueData: "Shareaza.Collection"; Flags: createvalueifdoesntexist uninsdeletevalue
-Root: HKLM; Subkey: "Software\Shareaza\Shareaza\Capabilities\FileAssociations"; ValueType: string; ValueName: ".emulecollection"; ValueData: "eMule"; Flags: createvalueifdoesntexist uninsdeletevalue
+Root: HKLM; Subkey: "Software\Shareaza\Shareaza\Capabilities\FileAssociations"; ValueType: string; ValueName: ".emulecollection"; ValueData: "Shareaza.Collection"; Flags: createvalueifdoesntexist uninsdeletevalue
 
 Root: HKLM; Subkey: "Software\Shareaza\Shareaza\Capabilities\UrlAssociations"; ValueType: string; ValueName: "shareaza"; ValueData: "Shareaza"; Flags: createvalueifdoesntexist uninsdeletevalue
 Root: HKLM; Subkey: "Software\Shareaza\Shareaza\Capabilities\UrlAssociations"; ValueType: string; ValueName: "magnet"; ValueData: "Shareaza"; Flags: createvalueifdoesntexist uninsdeletevalue
