@@ -1,7 +1,7 @@
 //
 // PageSettingsTraffic.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,24 +22,29 @@
 #pragma once
 
 #include "WndSettingsPage.h"
+#include "CtrlFontCombo.h"
 
 class CSettingEdit;
 
 
 class CAdvancedSettingsPage : public CSettingsPage
 {
+	DECLARE_DYNCREATE(CAdvancedSettingsPage)
+
 public:
 	CAdvancedSettingsPage();
-	virtual ~CAdvancedSettingsPage();
 
-	DECLARE_DYNCREATE(CAdvancedSettingsPage)
 
 protected:
 	enum { IDD = IDD_SETTINGS_ADVANCED };
 
-	CSpinButtonCtrl	m_wndValueSpin;
-	CEdit			m_wndValue;
-	CListCtrl		m_wndList;
+	CSpinButtonCtrl		m_wndValueSpin;
+	CEdit				m_wndValue;
+	CListCtrl			m_wndList;
+	CFontCombo			m_wndFonts;
+	CButton				m_wndDefaultBtn;
+	CButton				m_wndBool;
+	bool				m_bUpdating;
 
 	void	AddSettings();				// Add settings to list
 	void	UpdateListItem(int nItem);	// Update list item
@@ -51,14 +56,16 @@ protected:
 	class EditItem
 	{
 	public:
-		EditItem(CSettings::Item* pItem);
+		EditItem(const CSettings::Item* pItem);
 
 		CSettings::Item*	m_pItem;	// Parent item
 		CString				m_sName;	// Item name
 		DWORD				m_nValue;	// Current value for DWORD
 		bool				m_bValue;	// Current value for bool
+		CString				m_sValue;	// Current value for CString
 		DWORD				m_nOriginalValue;	// Original value for DWORD
 		bool				m_bOriginalValue;	// Original value for bool
+		CString				m_sOriginalValue;	// Original value for CString
 
 		void	Update();				// Reload data from parent item
 		void	Commit();				// Commit data to parent item
@@ -77,5 +84,5 @@ protected:
 	afx_msg void OnColumnClickProperties(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnBnClickedDefaultValue();
 
-	DECLARE_MESSAGE_MAP()
+	DECLARE_MESSAGE_MAP()	
 };

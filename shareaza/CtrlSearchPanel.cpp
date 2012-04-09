@@ -1,7 +1,7 @@
 //
 // CtrlSearchPanel.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1018,7 +1018,7 @@ void CSearchSchemaBox::OnSize(UINT nType, int cx, int cy)
 
 CSearchResultsBox::CSearchResultsBox()
 {
-	Expand( theApp.GetProfileInt( _T("Settings"), _T("SearchPanelResults"), TRUE ) );
+	Expand( Settings.General.SearchPanelResults ? TRUE : FALSE );
 
 	m_bActive	= FALSE;
 	m_nFiles	= 0;
@@ -1131,6 +1131,6 @@ void CSearchResultsBox::DrawText(CDC* pDC, int nX, int nY, UINT nFlags, LPCTSTR 
 
 void CSearchResultsBox::OnExpanded(BOOL bOpen)
 {
-	theApp.WriteProfileInt( _T("Settings"), _T("SearchPanelResults"), bOpen );
+	Settings.General.SearchPanelResults = ( bOpen != FALSE );
 }
 

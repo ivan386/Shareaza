@@ -73,6 +73,7 @@ public:
 		bool		DialogScan;					// Set Skin engine to "dialog scan" mode. This produces "C:\Dialog.xml" file with dialog templates and disables dialog translation.
 		CString		LastSettingsPage;			// Last selected Settings dialog page
 		DWORD		LastSettingsIndex;			// Top item index of Advanced Settings list
+		bool		SearchPanelResults;			// Search Results Panel state (open or closed)
 	} General;
 
 	struct sVersionCheck
@@ -626,6 +627,11 @@ public:
 
 // Attributes : Item List
 public:
+	enum Type
+	{
+		setNull, setString, setFont
+	};
+
 	class Item
 	{
 	public:
@@ -645,7 +651,8 @@ public:
 			m_nMin( 0 ),
 			m_nMax( 1 ),
 			m_szSuffix( NULL ),
-			m_bHidden( bHidden )
+			m_bHidden( bHidden ),
+			m_nType( setNull )
 		{
 		}
 
@@ -665,7 +672,8 @@ public:
 			m_nMin( nMin ),
 			m_nMax( nMax ),
 			m_szSuffix( szSuffix ),
-			m_bHidden( bHidden )
+			m_bHidden( bHidden ),
+			m_nType( setNull )
 		{
 		}
 
@@ -685,11 +693,12 @@ public:
 			m_nMin( 0 ),
 			m_nMax( 0 ),
 			m_szSuffix( NULL ),
-			m_bHidden( bHidden )
+			m_bHidden( bHidden ),
+			m_nType( setNull )
 		{
 		}
 
-		inline Item(const LPCTSTR szSection, const LPCTSTR szName, CString* const pString, const LPCTSTR szDefault, const bool bHidden) throw() :
+		inline Item(const LPCTSTR szSection, const LPCTSTR szName, CString* const pString, const LPCTSTR szDefault, const bool bHidden, const Type nType) throw() :
 			m_szSection( szSection ),
 			m_szName( szName ),
 			m_pBool( NULL ),
@@ -705,7 +714,8 @@ public:
 			m_nMin( 0 ),
 			m_nMax( 0 ),
 			m_szSuffix( NULL ),
-			m_bHidden( bHidden )
+			m_bHidden( bHidden ),
+			m_nType( nType )
 		{
 		}
 
@@ -725,7 +735,8 @@ public:
 			m_nMin( 0 ),
 			m_nMax( 0 ),
 			m_szSuffix( NULL ),
-			m_bHidden( bHidden )
+			m_bHidden( bHidden ),
+			m_nType( setNull )
 		{
 		}
 
@@ -762,6 +773,8 @@ public:
 		const LPCTSTR		m_szSuffix;
 
 		const bool			m_bHidden;
+
+		const Type			m_nType;
 	};
 
 protected:
@@ -835,9 +848,9 @@ protected:
 		m_pItems.AddTail( new Item( szSection, szName, pDouble, dDefault, bHidden ) );
 	}
 
-	inline void Add(const LPCTSTR szSection, const LPCTSTR szName, CString* const pString, const LPCTSTR szDefault = NULL, const bool bHidden = false) throw()
+	inline void Add(const LPCTSTR szSection, const LPCTSTR szName, CString* const pString, const LPCTSTR szDefault = NULL, const bool bHidden = false, const Type nType = setString) throw()
 	{
-		m_pItems.AddTail( new Item( szSection, szName, pString, szDefault, bHidden ) );
+		m_pItems.AddTail( new Item( szSection, szName, pString, szDefault, bHidden, nType ) );
 	}
 
 	inline void Add(const LPCTSTR szSection, const LPCTSTR szName, string_set* const pSet, const LPCTSTR szDefault, const bool bHidden = false) throw()

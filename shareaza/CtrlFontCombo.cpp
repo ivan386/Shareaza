@@ -1,7 +1,7 @@
 //
 // CtrlFontCombo.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2008-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -42,19 +42,13 @@ CFontCombo::CFontCombo()
 	m_pImages.Create( IDB_FONT_SYMBOLS, SYMBOL_WIDTH, 2, RGB(255,255,255) );
 }
 
-CFontCombo::~CFontCombo()
-{
-}
-
 IMPLEMENT_DYNAMIC(CFontCombo, CComboBox)
 
 BEGIN_MESSAGE_MAP(CFontCombo, CComboBox)
-	//{{AFX_MSG_MAP(CFontCombo)
 	ON_WM_CREATE()
-	ON_MESSAGE(OCM_DRAWITEM, OnOcmDrawItem)
-	ON_CONTROL_REFLECT(CBN_DROPDOWN, OnDropdown)
+	ON_MESSAGE(OCM_DRAWITEM, &CFontCombo::OnOcmDrawItem)
+	ON_CONTROL_REFLECT(CBN_DROPDOWN, &CFontCombo::OnDropdown)
 	ON_WM_DESTROY()
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -247,6 +241,41 @@ BOOL CFontCombo::AddFont(const CString& strFontName)
 	return TRUE;
 }
 
+void CFontCombo::SelectFont(const CString& strFontName)
+{
+	int nIndex = FindString( -1, strFontName );
+	if ( nIndex != CB_ERR )
+	{
+		SetCurSel( nIndex );
+		m_sSelectedFont = strFontName;
+	}
+	else
+	{
+		nIndex = FindString( -1, Settings.Fonts.DefaultFont );
+		if ( nIndex != CB_ERR )
+		{
+			SetCurSel( nIndex );
+			if ( m_sSelectedFont.IsEmpty() )
+			{
+				m_sSelectedFont = Settings.Fonts.DefaultFont;
+			}
+		}
+		else
+			SetCurSel( 0 );
+	}
+}
+
+CString CFontCombo::GetSelectedFont() const
+{
+	CString strFontName;
+	int nIndex = GetCurSel();
+	if ( nIndex != CB_ERR )
+		GetLBText( nIndex, strFontName );
+	else
+		strFontName = Settings.Fonts.DefaultFont;
+	return strFontName;
+}
+
 void CFontCombo::SetFontHeight(int nNewHeight, BOOL bReinitialize)
 {
 	if ( nNewHeight == m_nFontHeight ) return;
@@ -254,16 +283,15 @@ void CFontCombo::SetFontHeight(int nNewHeight, BOOL bReinitialize)
 	if ( bReinitialize ) Initialize();
 }
 
-int CFontCombo::GetFontHeight()
+int CFontCombo::GetFontHeight() const
 {
 	return m_nFontHeight;
 }
 
 void CFontCombo::DeleteAllFonts()
 {
-	POSITION pos;
 	CString str;
-	for ( pos = m_pFonts.GetStartPosition() ; pos ; )
+	for ( POSITION pos = m_pFonts.GetStartPosition() ; pos ; )
 	{
 		CFont* pFont = NULL;
 		m_pFonts.GetNextAssoc( pos, str, (void*&)pFont );
@@ -281,43 +309,15 @@ void PASCAL DDX_FontCombo(CDataExchange* pDX, int nIDC, CString& strFontName)
 	_ASSERTE( hWndCtrl != NULL );
 
 	CFontCombo* pCombo = static_cast<CFontCombo*>(CWnd::FromHandle( hWndCtrl ));
-	// data from control
 
 	if ( pDX->m_bSaveAndValidate )
 	{
-		int nIndex = pCombo->GetCurSel();
-		if ( nIndex != CB_ERR )
-		{
-			pCombo->GetLBText( nIndex, strFontName );
-			pCombo->m_sSelectedFont = strFontName;
-		}
-		else
-			strFontName = Settings.Fonts.DefaultFont;
+		// data from control
+		strFontName = pCombo->m_sSelectedFont = pCombo->GetSelectedFont();
 	}
-	else //data to control
+	else
 	{
-		int nIndex = pCombo->FindString( -1, strFontName );
-		if ( nIndex != CB_ERR )
-		{
-			pCombo->SetCurSel( nIndex );
-			if ( pCombo->m_sSelectedFont.IsEmpty() )
-			{
-				pCombo->m_sSelectedFont = strFontName;
-			}
-		}
-		else
-		{
-			nIndex = pCombo->FindString( -1, Settings.Fonts.DefaultFont );
-			if ( nIndex != CB_ERR )
-			{
-				pCombo->SetCurSel( nIndex );
-				if ( pCombo->m_sSelectedFont.IsEmpty() )
-				{
-					pCombo->m_sSelectedFont = Settings.Fonts.DefaultFont;
-				}
-			}
-			else
-				pCombo->SetCurSel( 0 );
-		}
+		//data to control
+		pCombo->SelectFont( strFontName );
 	}
 }

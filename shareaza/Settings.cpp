@@ -113,6 +113,7 @@ void CSettings::Load()
 	Add( _T("Settings"), _T("TrayMinimise"), &General.TrayMinimise, false );
 	Add( _T("Settings"), _T("LastSettingsPage"), &General.LastSettingsPage );
 	Add( _T("Settings"), _T("LastSettingsIndex"), &General.LastSettingsIndex, 0 );
+	Add( _T("Settings"), _T("SearchPanelResults"), &General.SearchPanelResults, true );
 
 	Add( _T("VersionCheck"), _T("NextCheck"), &VersionCheck.NextCheck, 0 );
 	Add( _T("VersionCheck"), _T("Quote"), &VersionCheck.Quote );
@@ -129,7 +130,7 @@ void CSettings::Load()
 	Add( _T("Interface"), _T("AutoComplete"), &Interface.AutoComplete, true );
 	Add( _T("Interface"), _T("CoolMenuEnable"), &Interface.CoolMenuEnable, true );
 	Add( _T("Interface"), _T("LowResMode"), &Interface.LowResMode, false );
-	Add( _T("Interface"), _T("TipAlpha"), &Interface.TipAlpha, 230, 1, 0, 255 );
+	Add( _T("Interface"), _T("TipAlpha"), &Interface.TipAlpha, 255, 1, 0, 255 );
 	Add( _T("Interface"), _T("TipDelay"), &Interface.TipDelay, 600, 1, 100, 5000, _T(" ms") );
 	Add( _T("Interface"), _T("TipDownloads"), &Interface.TipDownloads, true );
 	Add( _T("Interface"), _T("TipLibrary"), &Interface.TipLibrary, true );
@@ -145,9 +146,9 @@ void CSettings::Load()
 	Add( _T("Toolbars"), _T("ShowRemote"), &Toolbars.ShowRemote, true );
 	Add( _T("Toolbars"), _T("ShowMonitor"), &Toolbars.ShowMonitor, true );
 
-	Add( _T("Fonts"), _T("DefaultFont"), &Fonts.DefaultFont );
-	Add( _T("Fonts"), _T("PacketDumpFont"), &Fonts.PacketDumpFont );
-	Add( _T("Fonts"), _T("SystemLogFont"), &Fonts.SystemLogFont );
+	Add( _T("Fonts"), _T("DefaultFont"), &Fonts.DefaultFont, NULL, false, setFont );
+	Add( _T("Fonts"), _T("PacketDumpFont"), &Fonts.PacketDumpFont, NULL, false, setFont );
+	Add( _T("Fonts"), _T("SystemLogFont"), &Fonts.SystemLogFont, NULL, false, setFont );
 	Add( _T("Fonts"), _T("FontSize"), &Fonts.FontSize, 11, 1, 8, 48, _T(" px") );
 
 	Add( _T("Library"), _T("CreateGhosts"), &Library.CreateGhosts, true );
@@ -580,7 +581,7 @@ void CSettings::Load()
 	Add( _T("IRC"), _T("Timestamp"), &IRC.Timestamp, true );
 	Add( _T("IRC"), _T("UserName"), &IRC.UserName, _T("razaIRC") );
 	Add( _T("IRC"), _T("RealName"), &IRC.RealName, _T("razaIRC") );
-	Add( _T("IRC"), _T("ScreenFont"), &IRC.ScreenFont );
+	Add( _T("IRC"), _T("ScreenFont"), &IRC.ScreenFont, NULL, false, setFont );
 
 	// Load settings
 	for ( POSITION pos = m_pItems.GetHeadPosition() ; pos ; )
