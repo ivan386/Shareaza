@@ -3335,6 +3335,8 @@
 		<string id="17513" value="Encoding error"/>
 		<string id="17514" value="Updating Bittorrent Downloads..."/>
 		<string id="17515" value="Converting Torrent:"/>
+		<string id="17516" value="Laai Lêer of Torrent Af"/>
+		<string id="17517" value="Nuwe Soektog"/>
 		<string id="18496" value="Jy het verandering in die naam-veld gemaak. Is jy seker jy wil die aflaai hernoem?"/>
 		<string id="18503" value="Is jy seker jy wil die huidige kontole-status vergeet? Alle afgelaaide data sal as onbetroubaar beskou word, en gestoorde hashtrees en hashsets sal skoongemaak word."/>
 		<string id="18504" value="Is jy seker jy wil alle bronne vergeet vir die geselekteerde aflaai?"/>
@@ -3817,7 +3819,7 @@
 			<control caption="_Verstel..."/>
 			<control caption="Kry meer"/>
 		</dialog>
-		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEd" caption="Gevorderd">
+		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEdBuCo" caption="Gevorderd">
 			<control/>
 			<control/>
 			<control/>
@@ -3825,6 +3827,8 @@
 			<control caption="Verstellings Eienskappe:"/>
 			<control caption="Waarde:"/>
 			<control caption="Beskrywing:"/>
+			<control/>
+			<control/>
 			<control/>
 		</dialog>
 		<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Oplaai Waglys Verstellings">

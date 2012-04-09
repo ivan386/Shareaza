@@ -3332,6 +3332,8 @@
 		<string id="17513" value="Chyba kódování"/>
 		<string id="17514" value="Updating Bittorrent Downloads..."/>
 		<string id="17515" value="Converting Torrent:"/>
+		<string id="17516" value="Stažení souboru/Torrentu"/>
+		<string id="17517" value="Nové hledání"/>
 		<string id="18496" value="Provedli jste změny v názvu. Opravdu chcete přejmenovat toto stahování?"/>
 		<string id="18503" value="Opravdu chcete zapomenout aktuální stav ověření? Všechna stažená data budou považována za nedůvěryhodná, a všechny dočasné ověřovací hash budou vymazány."/>
 		<string id="18504" value="Opravdu chcete zapomenout všechny zdroje pro označené stahování?"/>
@@ -3814,7 +3816,7 @@
 			<control caption="Na_stavení..."/>
 			<control caption="Stáhnout další"/>
 		</dialog>
-		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEd" caption="Pokročilé...">
+		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEdBuCo" caption="Pokročilé...">
 			<control/>
 			<control/>
 			<control/>
@@ -3822,6 +3824,8 @@
 			<control caption="Nastavení vlastností:"/>
 			<control caption="Hodnota:"/>
 			<control caption="Popis:"/>
+			<control/>
+			<control/>
 			<control/>
 		</dialog>
 		<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Vlastnosti fronty pro odesílání">

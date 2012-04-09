@@ -3331,6 +3331,8 @@
 		<string id="17513" value="Błąd (za)kodowania"/>
 		<string id="17514" value="Updating Bittorrent Downloads..."/>
 		<string id="17515" value="Converting Torrent:"/>
+		<string id="17516" value="Pobierz plik lub torrent"/>
+		<string id="17517" value="Nowe Szukanie"/>
 		<string id="18496" value="You have made changes to the name field.  Are you sure you want to rename this download?"/>
 		<string id="18503" value="Are you sure you want to forget the current verification status?  All downloaded data will be treated as untrusted, and cached hashtrees and hashsets will be flushed."/>
 		<string id="18504" value="Are you sure you want to forget all sources for the selected download?"/>
@@ -3813,7 +3815,7 @@
 			<control caption="Ustaw..."/>
 			<control caption="Zdobądź więcej"/>
 		</dialog>
-		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEd" caption="Zaawansowane">
+		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEdBuCo" caption="Zaawansowane">
 			<control/>
 			<control/>
 			<control/>
@@ -3821,6 +3823,8 @@
 			<control caption="Właściwości ustawienia:"/>
 			<control caption="Wartość:"/>
 			<control caption="Opis:"/>
+			<control/>
+			<control/>
 			<control/>
 		</dialog>
 		<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Właściwości kolejki wysyłań">

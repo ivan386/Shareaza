@@ -3328,6 +3328,8 @@
 		<string id="17513" value="Encoding error"/>
 		<string id="17514" value="Updating Bittorrent Downloads..."/>
 		<string id="17515" value="Converting Torrent:"/>
+		<string id="17516" value="تحميل ملف أو Torrent"/>
+		<string id="17517" value="بحث جديد"/>
 		<string id="18496" value="You have made changes to the name field.  Are you sure you want to rename this download?"/>
 		<string id="18503" value="Are you sure you want to forget the current verification status?  All downloaded data will be treated as untrusted, and cached hashtrees and hashsets will be flushed."/>
 		<string id="18504" value="Are you sure you want to forget all sources for the selected download?"/>
@@ -3810,7 +3812,7 @@
 			<control caption="_تثبيت..."/>
 			<control caption="أحضر المزيد"/>
 		</dialog>
-		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEd" caption="متقدم...">
+		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEdBuCo" caption="متقدم...">
 			<control/>
 			<control/>
 			<control/>
@@ -3818,6 +3820,8 @@
 			<control caption=":إعداد الخصائص"/>
 			<control caption=":القيمة"/>
 			<control caption=":نبذة عنه"/>
+			<control/>
+			<control/>
 			<control/>
 		</dialog>
 		<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="خصائص قائمة إنتظار الإرسال">

@@ -3334,6 +3334,8 @@
 		<string id="17513" value="Encoding error"/>
 		<string id="17514" value="Updating Bittorrent Downloads..."/>
 		<string id="17515" value="Converting Torrent:"/>
+		<string id="17516" value="הורד קובץ או טורנט"/>
+		<string id="17517" value="‪חיפוש חדש"/>
 		<string id="18496" value="‪You have made changes to the name field.  Are you sure you want to rename this download?"/>
 		<string id="18503" value="‪Are you sure you want to forget the current verification status?  All downloaded data will be treated as untrusted, and cached hashtrees and hashsets will be flushed."/>
 		<string id="18504" value="‪Are you sure you want to forget all sources for the selected download?"/>
@@ -3816,7 +3818,7 @@
 			<control caption="...התקנה"/>
 			<control caption=":מידע נוסף"/>
 		</dialog>
-		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEd" caption="מתקדם">
+		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEdBuCo" caption="מתקדם">
 			<control/>
 			<control/>
 			<control/>
@@ -3824,6 +3826,8 @@
 			<control caption=":ערך"/>
 			<control caption=":תיאור"/>
 			<control caption=":מידע נוסף"/>
+			<control/>
+			<control/>
 			<control/>
 		</dialog>
 		<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="מאפייני תורות העלאה">

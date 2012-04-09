@@ -3298,6 +3298,8 @@
 		<string id="17513" value="Kodlama hatası"/>
 		<string id="17514" value="Updating Bittorrent Downloads..."/>
 		<string id="17515" value="Converting Torrent:"/>
+		<string id="17516" value="İndirme Dosyası ya da Torrent"/>
+		<string id="17517" value="Yeni Arama"/>
 		<string id="18496" value="İsim alanında değişiklikler yaptınız. Bu indirme ismini değiştirmek istediğinize emin misiniz?"/>
 		<string id="18503" value="Güncel doğrulama durumlarını kaybetmek istediğinize emin misiniz? Tüm İndirme verilerine güvenilmeyecektir ve hashtrees-hashsets zulaları temizlenecektir."/>
 		<string id="18504" value="Seçilen indirme için bütün kaynakları kaybetmek istediğinize emin misiniz?"/>
@@ -3780,7 +3782,7 @@
 			<control caption="_Kur..."/>
 			<control caption="Dahası"/>
 		</dialog>
-		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEd" caption="Uygulandı">
+		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEdBuCo" caption="Uygulandı">
 			<control/>
 			<control/>
 			<control/>
@@ -3788,6 +3790,8 @@
 			<control caption="Özellik ayarları:"/>
 			<control caption="Değer:"/>
 			<control caption="Açıklama:"/>
+			<control/>
+			<control/>
 			<control/>
 		</dialog>
 		<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Sıra Aktarım Özellikleri">

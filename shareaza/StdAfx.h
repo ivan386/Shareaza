@@ -137,6 +137,8 @@
 #include <natupnp.h>		// NAT UPnP interfaces
 #include <netfw.h>			// Windows Firewall interfaces
 #include <powrprof.h>		// The power policy applicator
+#include <propkey.h>
+#include <propvarutil.h>
 #include <security.h>		// For security aware components
 #include <shlwapi.h>		// Windows Shell API
 #include <taskschd.h>		// Task Scheduler 2.0 interfaces

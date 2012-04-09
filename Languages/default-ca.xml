@@ -3319,6 +3319,8 @@
 		<string id="17513" value="Error de codificació"/>
 		<string id="17514" value="Updating Bittorrent Downloads..."/>
 		<string id="17515" value="Converting Torrent:"/>
+		<string id="17516" value="Descarrega arxiu o torrent"/>
+		<string id="17517" value="Nova cerca"/>
 		<string id="18496" value="Has canviat el Nom de l'arxiu.  ¿Estàs segur de canviar-lo?"/>
 		<string id="18503" value="Estàs segur/a d'oblidar l'estat actual de verificació? Tota la informació de la descàrrega serà tractada com insegur/a, per a tornar a verificar-la."/>
 		<string id="18504" value="Estàs segur/a d'oblidar totes les fonts d'aquesta descàrrega?"/>
@@ -3801,7 +3803,7 @@
 			<control caption="_Configura..."/>
 			<control caption="Obtén més..."/>
 		</dialog>
-		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEd" caption="Avançat">
+		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEdBuCo" caption="Avançat">
 			<control/>
 			<control/>
 			<control/>
@@ -3809,6 +3811,8 @@
 			<control caption="Configuració:"/>
 			<control caption="Valor:"/>
 			<control caption="Descripció:"/>
+			<control/>
+			<control/>
 			<control/>
 		</dialog>
 		<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Propietats de la cua de pujada">

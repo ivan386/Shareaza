@@ -3330,6 +3330,8 @@
 		<string id="17513" value="Encodeerings fout"/>
 		<string id="17514" value="Bittorrent Downloads Vernieuwen..."/>
 		<string id="17515" value="Torrent Converten:"/>
+		<string id="17516" value="Bestand/torrent downloaden"/>
+		<string id="17517" value="Nieuwe zoekopdracht"/>
 		<string id="18496" value="Je hebt de bestandsnaam aangepast. Weet je zeker dat je deze download wilt hernoemen?"/>
 		<string id="18503" value="Weet je zeker dat je de huidige verificatie status wilt vergeten? Alle gedownloade data zal als onbetrouwbaar worden beschouwd, en opgeslagen hashtrees en hashsets zullen worden verwijderd."/>
 		<string id="18504" value="Weet je zeker dat je alle bronnen wilt vergeten voor de geselecteerde download?"/>
@@ -3812,7 +3814,7 @@
 			<control caption="_Instellingen..."/>
 			<control caption="Meer..."/>
 		</dialog>
-		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEd" caption="Geadvanceerd">
+		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEdBuCo" caption="Geadvanceerd">
 			<control/>
 			<control/>
 			<control/>
@@ -3820,6 +3822,8 @@
 			<control caption="Eigenschappen van de instelling:"/>
 			<control caption="Waarde:"/>
 			<control caption="Beschrijving:"/>
+			<control/>
+			<control/>
 			<control/>
 		</dialog>
 		<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Eigenschappen van de uploadwachtrij">

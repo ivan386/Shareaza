@@ -3330,6 +3330,8 @@
 		<string id="17513" value="Σφάλμα κωδικοποίησης"/>
 		<string id="17514" value="Updating Bittorrent Downloads..."/>
 		<string id="17515" value="Converting Torrent:"/>
+		<string id="17516" value="Λήψη Αρχείου ή Torrent"/>
+		<string id="17517" value="Νέα Αναζήτηση"/>
 		<string id="18496" value="Αλλάξατε το όνομα του αρχείου. Είστε σίγουροι;"/>
 		<string id="18503" value="Θέλετε σίγουρα απολησμόνηση της τρέχουσας κατάστασης επαλήθευσης; Όλα τα ληφθέντα δεδομένα θα αντιμετωπιστούν ως αφερέγγυα και τα cached hashtrees και hashsets θα διαγραφούν!"/>
 		<string id="18504" value="Θέλετε σίγουρα απολησμόνηση όλων των πηγών των επιλεγμένων λήψεων;"/>
@@ -3812,7 +3814,7 @@
 			<control caption="_Εγκατάσταση..."/>
 			<control caption="Λήψη επιπλέων"/>
 		</dialog>
-		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEd" caption="Προχωρημένα">
+		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEdBuCo" caption="Προχωρημένα">
 			<control/>
 			<control/>
 			<control/>
@@ -3820,6 +3822,8 @@
 			<control caption="Εφαρμογή Τιμής:"/>
 			<control caption="Τιμή:"/>
 			<control caption="Περιγραφή:"/>
+			<control/>
+			<control/>
 			<control/>
 		</dialog>
 		<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Ιδιότητες Ουράς Αποστολών">

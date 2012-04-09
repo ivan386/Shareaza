@@ -3329,6 +3329,8 @@
 		<string id="17513" value="Erreur d'encodage"/>
 		<string id="17514" value="Mise à jour des téléchargements Bittorrent..."/>
 		<string id="17515" value="Conversion du Torrent :"/>
+		<string id="17516" value="Télécharger un fichier ou un Torrent"/>
+		<string id="17517" value="Nouvelle recherche"/>
 		<string id="18496" value="Vous avez fait des changements dans le champ « nom ». Êtes-vous certain de vouloir renommer ce téléchargement ?"/>
 		<string id="18503" value="Êtes-vous certain de vouloir oublier le statut de vérification actuel ? Toutes les données téléchargées seront considérées comme non-vérifiées, et les « hashtrees » et « hashsets » en cache seront nettoyés."/>
 		<string id="18504" value="Êtes-vous certain de vouloir oublier toutes les sources du téléchargement sélectionné ?"/>
@@ -3811,7 +3813,7 @@
 			<control caption="_Configurer..."/>
 			<control caption="Plus de thèmes"/>
 		</dialog>
-		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEd" caption="Avancée">
+		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEdBuCo" caption="Avancée">
 			<control/>
 			<control/>
 			<control/>
@@ -3819,6 +3821,8 @@
 			<control caption="Paramètres de la propriété :"/>
 			<control caption="Valeur :"/>
 			<control caption="Description :"/>
+			<control/>
+			<control/>
 			<control/>
 		</dialog>
 		<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Propriétés des files d'attente d'envois">

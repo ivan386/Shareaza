@@ -3311,6 +3311,8 @@
 		<string id="17513" value="编码错误"/>
 		<string id="17514" value="更新 BitTorrent 下载..."/>
 		<string id="17515" value="转换 Torrent:"/>
+		<string id="17516" value="下载文件或 Torrent"/>
+		<string id="17517" value="新建搜索"/>
 		<string id="18496" value="您在名称区域进行了变动。您确定要重命名下载吗？"/>
 		<string id="18503" value="您确定要忽略当前的验证状态吗？所有的已下载数据都将被认为未被信任的，并且缓存的 Hash 树和 Hash 设置都将被刷新。"/>
 		<string id="18504" value="您确定要忽略选定下载的所有资源吗？"/>
@@ -3793,7 +3795,7 @@
 			<control caption="安装(_S)..."/>
 			<control caption="获取更多"/>
 		</dialog>
-		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEd" caption="高级">
+		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEdBuCo" caption="高级">
 			<control/>
 			<control/>
 			<control/>
@@ -3801,6 +3803,8 @@
 			<control caption="设置属性:"/>
 			<control caption="赋值:"/>
 			<control caption="描述:"/>
+			<control/>
+			<control/>
 			<control/>
 		</dialog>
 		<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="上传队列属性">

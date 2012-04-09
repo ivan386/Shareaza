@@ -3346,6 +3346,8 @@
 		<string id="17513" value="Encoding error"/>
 		<string id="17514" value="Updating Bittorrent Downloads..."/>
 		<string id="17515" value="Converting Torrent:"/>
+		<string id="17516" value="Download File or Torrent"/>
+		<string id="17517" value="New Search"/>
 		<string id="18496" value="You have made changes to the name field. Are you sure you want to rename this download?"/>
 		<string id="18503" value="Are you sure you want to forget the current verification status? All downloaded data will be treated as untrusted, and cached hashtrees and hashsets will be flushed."/>
 		<string id="18504" value="Are you sure you want to forget all sources for the selected download?"/>
@@ -3828,7 +3830,7 @@
 			<control caption="_Setup..."/>
 			<control caption="Get More"/>
 		</dialog>
-		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEd" caption="Advanced">
+		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEdBuCo" caption="Advanced">
 			<control/>
 			<control/>
 			<control/>
@@ -3836,6 +3838,8 @@
 			<control caption="Setting Properties:"/>
 			<control caption="Value:"/>
 			<control caption="Description:"/>
+			<control/>
+			<control/>
 			<control/>
 		</dialog>
 		<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Upload Queue Properties">

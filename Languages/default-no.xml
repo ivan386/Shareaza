@@ -3325,6 +3325,8 @@
 		<string id="17513" value="Encoding error"/>
 		<string id="17514" value="Updating Bittorrent Downloads..."/>
 		<string id="17515" value="Converting Torrent:"/>
+		<string id="17516" value="Last ned fil eller torrent"/>
+		<string id="17517" value="Nytt søk"/>
 		<string id="18496" value="Du har gjort endringer i navnefeltet. Er du sikker på at du vil endre navnet på denne nedlastingen?"/>
 		<string id="18503" value="Er du sikker på at du vil glemme nåværende verifiseringsposisjon?  Alle data som blir lastet ned vil bli sett på som usikre og cachede hashtrees og hash-sets vil bli fjernet."/>
 		<string id="18504" value="Er du helt sikker på at du vil glemme alle kildene til denne nedlastingen?"/>
@@ -3807,7 +3809,7 @@
 			<control caption="_Innstaller..."/>
 			<control caption="Finn flere..."/>
 		</dialog>
-		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEd" caption="Avansert">
+		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEdBuCo" caption="Avansert">
 			<control/>
 			<control/>
 			<control/>
@@ -3815,6 +3817,8 @@
 			<control caption="Egenskaper:"/>
 			<control caption="Verdi:"/>
 			<control caption="Beskrivelse:"/>
+			<control/>
+			<control/>
 			<control/>
 		</dialog>
 		<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Egenskaper opplastings kø">

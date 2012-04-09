@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2012-03-07 10:18+0000\n"
+"POT-Creation-Date: 2012-04-09 15:38+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -87,7 +87,7 @@ msgstr "Netzwerk"
 msgid "Chat"
 msgstr "Chat"
 
-#: button;id_network_search
+#: button;id_network_search string;17517
 msgid "New Search"
 msgstr "Neue Suche"
 
@@ -6988,6 +6988,10 @@ msgstr "Aktualisiere Bittorrent-Downloads..."
 msgid "Converting Torrent:"
 msgstr "Konvertiere Torrent:"
 
+#: string;17516 dialog;cdownloaddlg
+msgid "Download File or Torrent"
+msgstr "Datei oder Torrent herunterladen"
+
 #: string;18496
 msgid "You have made changes to the name field. Are you sure you want to rename this download?"
 msgstr "Sie haben das Namensfeld geändert. Sind Sie sicher, dass Sie diesen Download umbenennen wollen?"
@@ -8797,10 +8801,6 @@ msgstr "Gnutella1 (auto)|Gnutella2 (auto)|eDonkey2000"
 #: cconnecttodlg;control;6
 msgid "_Suppress Ultrapeer"
 msgstr "_UP unterdrücken"
-
-#: dialog;cdownloaddlg
-msgid "Download File or Torrent"
-msgstr "Datei oder Torrent herunterladen"
 
 #: cdownloaddlg;control;2
 msgid "Downloading any file with Shareaza is easy.  Simply type or paste the URL or URI describing the file into the box below and press Enter."

@@ -3323,6 +3323,8 @@
 		<string id="17513" value="Kodavimo klaida"/>
 		<string id="17514" value="Atnaujinami BitTorrent atsisiuntimai..."/>
 		<string id="17515" value="Konvertuojamas torrent failas:"/>
+		<string id="17516" value="Parsisiųsti failą ar Torrent"/>
+		<string id="17517" value="Nauja paieška"/>
 		<string id="18496" value="Jūs pakeitėte vardą. Ar tikrai norite pervardinti šį parsisiunčiamą failą?"/>
 		<string id="18503" value="Ar tikrai norite, kad būtų užmiršta esamos patikros būklė? Visi parsisiųsti duomenys bus laikomi nepatikimais, o talpykla su maišų medžiais ir rinkiniais bus išvalyta."/>
 		<string id="18504" value="Ar tikrai norite, kad būtų užmiršti visi šaltiniai pažymėtam failui?"/>
@@ -3805,7 +3807,7 @@
 			<control caption="_Nustatyti..."/>
 			<control caption="Gauti daugiau"/>
 		</dialog>
-		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEd" caption="Išsamiau">
+		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEdBuCo" caption="Išsamiau">
 			<control/>
 			<control/>
 			<control/>
@@ -3813,6 +3815,8 @@
 			<control caption="Nuostatos ypatybės:"/>
 			<control caption="Reikšmė:"/>
 			<control caption="Aprašas:"/>
+			<control/>
+			<control/>
 			<control/>
 		</dialog>
 		<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Išsiuntimų eilės ypatybės">

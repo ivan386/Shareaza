@@ -3324,6 +3324,8 @@
 		<string id="17513" value="エンコードエラー"/>
 		<string id="17514" value="Updating Bittorrent Downloads..."/>
 		<string id="17515" value="Converting Torrent:"/>
+		<string id="17516" value="ファイル・Torrentダウンロード"/>
+		<string id="17517" value="新規検索"/>
 		<string id="18496" value="名前領域を変更しました。このダウンロードをリネームして宜しいですか?"/>
 		<string id="18503" value="現在の検証状況を消去してよろしいですか?　ダウンロードした全てのデータが未検証として扱われ、キャッシュされたハッシュツリーとハッシュセットはフラッシュされます"/>
 		<string id="18504" value="選択したダウンロードの全てのソースを消去してよろしいですか?"/>
@@ -3806,7 +3808,7 @@
 			<control caption="設定(_S)..."/>
 			<control caption="更に追加"/>
 		</dialog>
-		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEd" caption="高度">
+		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEdBuCo" caption="高度">
 			<control/>
 			<control/>
 			<control/>
@@ -3814,6 +3816,8 @@
 			<control caption="設定プロパティ:"/>
 			<control caption="値:"/>
 			<control caption="説明:"/>
+			<control/>
+			<control/>
 			<control/>
 		</dialog>
 		<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="アップロードキュープロパティ">

@@ -3330,6 +3330,8 @@
 		<string id="17513" value="Errore di codifica"/>
 		<string id="17514" value="Sto Aggiornando i Download Bittorrent..."/>
 		<string id="17515" value="Sto Convertendo il Torrent:"/>
+		<string id="17516" value="Scarica file o torrent"/>
+		<string id="17517" value="Nuova ricerca"/>
 		<string id="18496" value="Hai modificato il nome del file. Desideri rinominare questo download?"/>
 		<string id="18503" value="Desideri azzerare lo stato di verifica corrente? Tutti i dati scaricati verranno trattati come non sicuri, mentre gli hashtree e hashset verranno svuotati."/>
 		<string id="18504" value="Desideri rimuovere tutte le fonti del download selezionato?"/>
@@ -3812,7 +3814,7 @@
 			<control caption="_Installa..."/>
 			<control caption="Altre skin"/>
 		</dialog>
-		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEd" caption="Avanzato">
+		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEdBuCo" caption="Avanzato">
 			<control/>
 			<control/>
 			<control/>
@@ -3820,6 +3822,8 @@
 			<control caption="Regolazione delle proprietà:"/>
 			<control caption="Valore:"/>
 			<control caption="Descrizione:"/>
+			<control/>
+			<control/>
 			<control/>
 		</dialog>
 		<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Proprietà della coda di upload">

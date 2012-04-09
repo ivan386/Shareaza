@@ -207,6 +207,7 @@ protected:
 	virtual void		WinHelp(DWORD_PTR dwData, UINT nCmd = HELP_CONTEXT);
 	virtual BOOL		Register();
 	virtual BOOL		Unregister();
+	virtual void		AddToRecentFileList(LPCTSTR lpszPathName);
 
 	void				InitResources();	// Initialize Shareaza version, system info, load DLLs, etc.
 	void				InitFonts();		// Create default fonts
@@ -329,6 +330,9 @@ BOOL IsUserUsingFullscreen();
 
 // Start Windows service
 BOOL AreServiceHealthy(LPCTSTR szService);
+
+// Creates shell link
+IShellLink* CreateShellLink(LPCWSTR szTargetExecutablePath, LPCWSTR szCommandLineArgs, LPCWSTR szTitle, LPCWSTR szIconPath, int nIconIndex, LPCWSTR szDescription);
 
 struct CompareNums
 {

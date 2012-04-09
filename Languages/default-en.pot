@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2012-03-07 10:18+0000\n"
+"POT-Creation-Date: 2012-04-09 15:38+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: (translation author)\n"
 "Language-Team: Shareaza Development Team\n"
@@ -84,7 +84,7 @@ msgstr ""
 msgid "Chat"
 msgstr ""
 
-#: button;id_network_search
+#: button;id_network_search string;17517
 msgid "New Search"
 msgstr ""
 
@@ -6336,6 +6336,10 @@ msgstr ""
 msgid "Converting Torrent:"
 msgstr ""
 
+#: string;17516 dialog;cdownloaddlg
+msgid "Download File or Torrent"
+msgstr ""
+
 #: string;18496
 msgid "You have made changes to the name field. Are you sure you want to rename this download?"
 msgstr ""
@@ -8110,10 +8114,6 @@ msgstr ""
 
 #: cconnecttodlg;control;6
 msgid "_Suppress Ultrapeer"
-msgstr ""
-
-#: dialog;cdownloaddlg
-msgid "Download File or Torrent"
 msgstr ""
 
 #: cdownloaddlg;control;2

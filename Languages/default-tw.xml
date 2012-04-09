@@ -3267,6 +3267,8 @@
 		<string id="17513" value="編碼錯誤"/>
 		<string id="17514" value="Updating Bittorrent Downloads..."/>
 		<string id="17515" value="Converting Torrent:"/>
+		<string id="17516" value="下載檔案或 Torrent"/>
+		<string id="17517" value="新的搜尋"/>
 		<string id="18496" value="您已經更改了名稱欄位的記載. 您確定要重新命名這個下載嗎?"/>
 		<string id="18503" value="您確定要忽略目前的驗證狀態嗎? 所有已下載的資料將被視為不可靠, 而且快取的 hashtrees 以及 hashsets 將會被沖掉."/>
 		<string id="18504" value="您確定要忘卻選擇的下載的所有來源嗎?"/>
@@ -3749,7 +3751,7 @@
 			<control caption="設定..."/>
 			<control caption="更多外觀"/>
 		</dialog>
-		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEd" caption="進階">
+		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEdBuCo" caption="進階">
 			<control/>
 			<control/>
 			<control/>
@@ -3757,6 +3759,8 @@
 			<control caption="敘述:"/>
 			<control caption="設定的屬性:"/>
 			<control caption="敘述:"/>
+			<control/>
+			<control/>
 			<control/>
 		</dialog>
 		<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Upload Queue Properties">

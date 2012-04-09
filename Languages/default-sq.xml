@@ -3331,6 +3331,8 @@
 		<string id="17513" value="Gabim kodimi"/>
 		<string id="17514" value="Ridatim i Shkarkesave Bittorrent..."/>
 		<string id="17515" value="Konvertim i Torrentit:"/>
+		<string id="17516" value="Shkarkoni Skedë ose Torrent"/>
+		<string id="17517" value="Kërkim i Ri"/>
 		<string id="18496" value="Kryet ndryshime te fusha e emrit.  Je i sigurt për riemërtimin e shkarkesës?"/>
 		<string id="18503" value="Je i sigurt se do të harrosh statusin aktual të verifikimit?  Tërë të dhënat e shkarkuara do të trajtohen si të pabesueshme, dhe hash-pemët e depozituara do të shpërbëhen."/>
 		<string id="18504" value="Je i sigurt se do të harrosh tërë burimet për shkarkesën e zgjedhur?"/>
@@ -3813,7 +3815,7 @@
 			<control caption="_Ndërto..."/>
 			<control caption="Gjej më Shumë"/>
 		</dialog>
-		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEd" caption="Avancuar">
+		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEdBuCo" caption="Avancuar">
 			<control/>
 			<control/>
 			<control/>
@@ -3821,6 +3823,8 @@
 			<control caption="Vetitë e Vendosjes:"/>
 			<control caption="Vlera:"/>
 			<control caption="Përshkrimi:"/>
+			<control/>
+			<control/>
 			<control/>
 		</dialog>
 		<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Vetitë e Ngarkesës në Radhë">

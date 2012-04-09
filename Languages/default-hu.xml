@@ -3304,6 +3304,8 @@
 		<string id="17513" value="Karakterkódolási hiba"/>
 		<string id="17514" value="Updating Bittorrent Downloads..."/>
 		<string id="17515" value="Converting Torrent:"/>
+		<string id="17516" value="Torrent vagy fájl letöltése"/>
+		<string id="17517" value="Új keresés"/>
 		<string id="18496" value="Megváltoztatta a letöltés nevét. Biztos át akarja nevezni?"/>
 		<string id="18503" value="Biztos, hogy törölni akarja a jelenlegi azonosítási állapotot? Minden letöltés megbízhatatlan lesz és a hash értékek pedig törölve lesznek."/>
 		<string id="18504" value="Biztos, hogy a letöltés minden forrását törölni akarja?"/>
@@ -3786,7 +3788,7 @@
 			<control caption="_Beállít..."/>
 			<control caption="Többet akarok"/>
 		</dialog>
-		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEd" caption="Fejlett">
+		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEdBuCo" caption="Fejlett">
 			<control/>
 			<control/>
 			<control/>
@@ -3794,6 +3796,8 @@
 			<control caption="Tulajdonság"/>
 			<control caption="Érték:"/>
 			<control caption="Leírás:"/>
+			<control/>
+			<control/>
 			<control/>
 		</dialog>
 		<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Feltöltési sor beállításai">

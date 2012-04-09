@@ -3327,6 +3327,8 @@ puede comenzar a transferir en cualquier momento.</text>
 		<string id="17513" value="Error de codificación"/>
 		<string id="17514" value="Actualizando las descargas BitTorrent..."/>
 		<string id="17515" value="Convirtiendo Torrent:"/>
+		<string id="17516" value="Descargar Archivo O Torrent"/>
+		<string id="17517" value="Buscar"/>
 		<string id="18496" value="Ha cambiado el nombre del archivo. ¿Está seguro de renombrarlo?"/>
 		<string id="18503" value="¿Estás seguro de olvidar el estado actual de verificación? Toda la información de la descarga va a ser tratada como inseguro, para reverificarla."/>
 		<string id="18504" value="¿Estás seguro de olvidar todas las fuentes de esta descarga?"/>
@@ -3809,7 +3811,7 @@ puede comenzar a transferir en cualquier momento.</text>
 			<control caption="_Configurar..."/>
 			<control caption="Buscar más..."/>
 		</dialog>
-		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEd" caption="Avanzado">
+		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEdBuCo" caption="Avanzado">
 			<control/>
 			<control/>
 			<control/>
@@ -3817,6 +3819,8 @@ puede comenzar a transferir en cualquier momento.</text>
 			<control caption="Configuración:"/>
 			<control caption="Valor:"/>
 			<control caption="Descripción:"/>
+			<control/>
+			<control/>
 			<control/>
 		</dialog>
 		<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Propiedades de Cola de Subida">

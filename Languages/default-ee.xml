@@ -3324,6 +3324,8 @@
 		<string id="17513" value="Kodeerimisviga"/>
 		<string id="17514" value="Updating Bittorrent Downloads..."/>
 		<string id="17515" value="Converting Torrent:"/>
+		<string id="17516" value="Tõmba Fail või Torrent"/>
+		<string id="17517" value="Uus otsing"/>
 		<string id="18496" value="Sa oled teinud muutusi nimes.  Oled kindel, et tahad faili ümber nimetada?"/>
 		<string id="18503" value="Oled kindel, et tahad unustada praeguse kinnituse seisu? Kõiki allalaaditud andmeid käsitletakse kui ebausaldatavat ja kogu andmebaas ehitatakse uuesti."/>
 		<string id="18504" value="Oled kindel, et tahad selle allalaadimise allikad unustada?"/>
@@ -3806,7 +3808,7 @@
 			<control caption="_Seade..."/>
 			<control caption="Otsi lisa"/>
 		</dialog>
-		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEd" caption="Täpsemalt">
+		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEdBuCo" caption="Täpsemalt">
 			<control/>
 			<control/>
 			<control/>
@@ -3814,6 +3816,8 @@
 			<control caption="Kirjeldus:"/>
 			<control caption="Seadete Omadused:"/>
 			<control caption="Kirjeldus:"/>
+			<control/>
+			<control/>
 			<control/>
 		</dialog>
 		<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Üleslaadimisjärjekorra Omadused">

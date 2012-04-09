@@ -3326,6 +3326,8 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<string id="17513" value="Kodningsfel"/>
 		<string id="17514" value="Updating Bittorrent Downloads..."/>
 		<string id="17515" value="Converting Torrent:"/>
+		<string id="17516" value="Ladda ned fil eller Torrent"/>
+		<string id="17517" value="Ny sökning"/>
 		<string id="18496" value="Du har ändrat filnamnet. Är du säker på att du vill ändra namn på denna nedladdning?"/>
 		<string id="18503" value="Är du säker på att du vill glömma aktuell verifikationsstatus? All nedladdad data kommer att behandlas som opålitlig och cachade hashtrees och hashsets kommer att bli spolade."/>
 		<string id="18504" value="Är du säker på att du vill glömma alla källor för den valda nedladdningen?"/>
@@ -3808,7 +3810,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 			<control caption="_Inställningar…"/>
 			<control caption="Skaffa fler"/>
 		</dialog>
-		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEd" caption="Avancerat…">
+		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEdBuCo" caption="Avancerat…">
 			<control/>
 			<control/>
 			<control/>
@@ -3816,6 +3818,8 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 			<control caption="Egenskaper för inställning:"/>
 			<control caption="Värde:"/>
 			<control caption="Beskrivning:"/>
+			<control/>
+			<control/>
 			<control/>
 		</dialog>
 		<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Egenskaper för uppladdningskö">

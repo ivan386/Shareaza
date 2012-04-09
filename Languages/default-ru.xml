@@ -3328,6 +3328,8 @@
 		<string id="17513" value="Ошибка кодировки"/>
 		<string id="17514" value="Обновление загрузок BitTorrent..."/>
 		<string id="17515" value="Конвертирование Torrent'ов:"/>
+		<string id="17516" value="Загрузить файл или торрент"/>
+		<string id="17517" value="Новый поиск"/>
 		<string id="18496" value="Вы сделали изменения в поле имени.  Уверены, что хотите переименовать эту загрузку?"/>
 		<string id="18503" value="Уверены, что хотите забыть текущее состояние проверки?  Все загруженные данные будут считаться недостоверными, и все деревья и наборы хешов будут сброшены."/>
 		<string id="18504" value="Уверены, что хотите забыть все источники помеченной загрузки?"/>
@@ -3810,7 +3812,7 @@
 			<control caption="_Установки..."/>
 			<control caption="_Хочу ещё..."/>
 		</dialog>
-		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEd" caption="Дополнительно">
+		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEdBuCo" caption="Дополнительно">
 			<control/>
 			<control/>
 			<control/>
@@ -3818,6 +3820,8 @@
 			<control caption="Свойства установки:"/>
 			<control caption="Значение:"/>
 			<control caption="Описание:"/>
+			<control/>
+			<control/>
 			<control/>
 		</dialog>
 		<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Настройка очереди раздач">

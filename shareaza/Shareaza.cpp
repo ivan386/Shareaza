@@ -265,13 +265,6 @@ BOOL CShareazaApp::InitInstance()
 	if ( m_pfnSetCurrentProcessExplicitAppUserModelID )
 		m_pfnSetCurrentProcessExplicitAppUserModelID( CLIENT_NAME_T );
 
-	if ( ! ParseCommandLine() )
-		return FALSE;
-
-	Register();					// Re-register Shareaza Type Library
-	LoadStdProfileSettings();	// Load MRU file list and last preview state.
-	EnableShellOpen();			// Enable open data files when user double-click the files from within the Windows File Manager.
-
 	// Test and re-register plugins
 	CComPtr< IUnknown > pTest( Plugins.GetPlugin( _T("ImageService"), _T(".png") ) );
 	if ( Settings.Live.FirstRun || ! pTest )
@@ -285,6 +278,13 @@ BOOL CShareazaApp::InitInstance()
 
 	InitFonts();				// Loads default fonts. Depends on Settings.Load().
 	Skin.CreateDefault();		// Loads colors, fonts and language. Depends on InitFonts().
+
+	if ( ! ParseCommandLine() )
+		return FALSE;
+
+	Register();					// Re-register Shareaza Type Library
+	LoadStdProfileSettings();	// Load MRU file list and last preview state.
+	EnableShellOpen();			// Enable open data files when user double-click the files from within the Windows File Manager.
 
 	if ( m_cmdInfo.m_bHelp )
 	{
@@ -645,26 +645,52 @@ BOOL CShareazaApp::Register()
 
 	CShareazaURL::Register( TRUE, TRUE );
 
-	//if ( Windows.dwMajorVersion > 6 || ( Windows.dwMajorVersion == 6 && Windows.dwMinorVersion >= 1 ) )
-	//{
-	//	CJumpList oTasks;
-	//	oTasks.ClearAllDestinations();
-	//	oTasks.AddKnownCategory( KDC_RECENT );
-	//	oTasks.AddTask( _T("shareaza:command:search"), _T(""), LoadString( IDS_SEARCH_TASK ) + _T("..."), theApp.m_strBinaryPath, - IDR_SEARCHFRAME );
-	//	oTasks.AddTask( _T("shareaza:command:download"), _T(""), LoadString( IDS_DOWNLOAD_TASK ) + _T("..."), theApp.m_strBinaryPath, - IDR_DOWNLOADSFRAME );
-	//}
+	if ( Windows.dwMajorVersion > 6 || ( Windows.dwMajorVersion == 6 && Windows.dwMinorVersion >= 1 ) )
+	{
+		// For VS2010:
+		//	CJumpList oTasks;
+		//	oTasks.ClearAllDestinations();
+		//	oTasks.AddKnownCategory( KDC_RECENT );
+		//	oTasks.AddTask( _T("shareaza:command:search"), _T(""), LoadString( IDS_SEARCH_TASK ) + _T("..."), theApp.m_strBinaryPath, - IDR_SEARCHFRAME );
+		//	oTasks.AddTask( _T("shareaza:command:download"), _T(""), LoadString( IDS_DOWNLOAD_TASK ) + _T("..."), theApp.m_strBinaryPath, - IDR_DOWNLOADSFRAME );
+	
+		// For VS2008:
+		CComPtr< ICustomDestinationList > pList;
+		if ( SUCCEEDED( pList.CoCreateInstance( CLSID_DestinationList ) ) )
+		{
+			VERIFY( SUCCEEDED( pList->SetAppID( CLIENT_NAME_T ) ) );
+			UINT nMinSlots;
+			CComPtr< IObjectArray > pRemoved;
+			VERIFY( SUCCEEDED( pList->BeginList( &nMinSlots, IID_IObjectArray, (LPVOID*)&pRemoved ) ) );
+			VERIFY( SUCCEEDED( pList->AppendKnownCategory( KDC_RECENT ) ) );
+
+			CComPtr< IObjectCollection > pTasks;
+			if ( SUCCEEDED( pTasks.CoCreateInstance( CLSID_EnumerableObjectCollection ) ) )
+			{
+				CComPtr< IShellLink > pSearch = CreateShellLink( _T("shareaza:command:search"), _T(""),
+					LoadString( IDS_SEARCH_TASK ) + _T("..."), theApp.m_strBinaryPath, - IDR_SEARCHFRAME, _T("") );
+				ASSERT( pSearch );
+				if ( pSearch )
+					VERIFY( SUCCEEDED( pTasks->AddObject( pSearch ) ) );
+
+				CComPtr< IShellLink > pDownload = CreateShellLink( _T("shareaza:command:download"), _T(""),
+					LoadString( IDS_DOWNLOAD_TASK ) + _T("..."), theApp.m_strBinaryPath, - IDR_DOWNLOADSFRAME, _T("") );
+				ASSERT( pDownload );
+				if ( pDownload )
+					VERIFY( SUCCEEDED( pTasks->AddObject( pDownload ) ) );
+
+				VERIFY( SUCCEEDED( pList->AddUserTasks( pTasks ) ) );
+			}
+
+			VERIFY( SUCCEEDED( pList->CommitList() ) );
+		}
+	}
 
 	return CWinApp::Register();
 }
 
 BOOL CShareazaApp::Unregister()
 {
-	//if ( Windows.dwMajorVersion > 6 || ( Windows.dwMajorVersion == 6 && Windows.dwMinorVersion >= 1 ) )
-	//{
-	//	CJumpList oTasks;
-	//	oTasks.ClearAllDestinations();
-	//}
-
 	CShareazaURL::Register( FALSE, TRUE );
 
 	AfxOleUnregisterTypeLib( LIBID_Shareaza );
@@ -675,6 +701,27 @@ BOOL CShareazaApp::Unregister()
 	COleObjectFactory::UpdateRegistryAll( FALSE );
 
 	return TRUE; // Don't call CWinApp::Unregister(), it removes Shareaza settings
+}
+
+void CShareazaApp::AddToRecentFileList(LPCTSTR lpszPathName)
+{
+	CWinApp::AddToRecentFileList( lpszPathName );
+
+	if ( Windows.dwMajorVersion > 6 || ( Windows.dwMajorVersion == 6 && Windows.dwMinorVersion >= 1 ) )
+	{
+		// For VS2010: no need
+
+		// For VS2008:
+		if ( m_pfnSHCreateItemFromParsingName )
+		{
+			CComPtr< IShellItem > pItem;
+			if ( SUCCEEDED( m_pfnSHCreateItemFromParsingName( lpszPathName, NULL, IID_IShellItem, (LPVOID*)&pItem ) ) )
+			{
+				SHARDAPPIDINFO info = { pItem, CLIENT_NAME_T };
+				SHAddToRecentDocs( SHARD_APPIDINFO, &info );
+			}
+		}
+	}
 }
 
 CDocument* CShareazaApp::OpenDocumentFile(LPCTSTR lpszFileName)
@@ -3181,6 +3228,33 @@ BOOL AreServiceHealthy(LPCTSTR szService)
 	}
 
 	return bResult;
+}
+
+IShellLink* CreateShellLink(LPCWSTR szTargetExecutablePath, LPCWSTR szCommandLineArgs, LPCWSTR szTitle, LPCWSTR szIconPath, int nIconIndex, LPCWSTR szDescription)
+{
+	CComPtr< IShellLink > pLink;
+	if ( SUCCEEDED( pLink.CoCreateInstance( CLSID_ShellLink ) ) )
+	{
+		pLink->SetPath( szTargetExecutablePath );
+		pLink->SetArguments( szCommandLineArgs );
+		pLink->SetIconLocation( szIconPath, nIconIndex );
+		pLink->SetDescription( szDescription );
+
+		CComQIPtr< IPropertyStore > pProp( pLink );
+		if ( pProp )
+		{
+			PROPVARIANT var;
+			if ( SUCCEEDED( InitPropVariantFromString( szTitle, &var ) ) )
+			{
+				if ( SUCCEEDED( pProp->SetValue( PKEY_Title, var ) ) )
+				{
+					pProp->Commit();
+				}
+				PropVariantClear( &var );
+			}
+		}
+	}
+	return pLink.Detach();
 }
 
 INT_PTR MsgBox(LPCTSTR lpszText, UINT nType, UINT nIDHelp, DWORD* pnDefault, DWORD nTimer)

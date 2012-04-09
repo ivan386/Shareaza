@@ -3326,6 +3326,8 @@
 		<string id="17513" value="Napaka pri enkodiranju"/>
 		<string id="17514" value="Updating Bittorrent Downloads..."/>
 		<string id="17515" value="Converting Torrent:"/>
+		<string id="17516" value="Prenesi datoteko kot Torrent"/>
+		<string id="17517" value="Novo iskanje"/>
 		<string id="18496" value="Spremenili ste imensko polje. Ste prepričani, da želite preimenovati ta prenos?"/>
 		<string id="18503" value="Ste prepričani, da želite pozabiti trenutno preveritveni status?  Vsi prenešeni podatki se bodo smatrali, kot varni (trusted) in medpomnjeni izvečki (hashtrees oz. hashsets)se bodo pobrisali."/>
 		<string id="18504" value="Ste prepričani, da želite pozabiti vse vire za izbran prenos?"/>
@@ -3808,7 +3810,7 @@
 			<control caption="_Namestitev..."/>
 			<control caption="Več"/>
 		</dialog>
-		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEd" caption="Napredno">
+		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEdBuCo" caption="Napredno">
 			<control/>
 			<control/>
 			<control/>
@@ -3816,6 +3818,8 @@
 			<control caption="Nastavitve:"/>
 			<control caption="Vrednost:"/>
 			<control caption="Opis:"/>
+			<control/>
+			<control/>
 			<control/>
 		</dialog>
 		<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Lastnosti čakalne vrste za nalaganje">

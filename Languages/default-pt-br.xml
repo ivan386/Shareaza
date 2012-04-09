@@ -3335,6 +3335,8 @@ pasta dos arquivos baixados a sua biblioteca agora?"/>
 		<string id="17513" value="Erro de codificação"/>
 		<string id="17514" value="Atualizando os Downloads do Bittorrent..."/>
 		<string id="17515" value="Convertendo o Torrent:"/>
+		<string id="17516" value="Baixar Arquivo ou Torrent"/>
+		<string id="17517" value="Nova Busca"/>
 		<string id="18496" value="Você fez mudanças no nome de campo. Você tem certeza de que você quer renomear este download?"/>
 		<string id="18503" value="Você tem certeza de que você quer esquecer o status da verificação atual? Todos os dados baixados serão tratados como não confiáveis, e as árvores de hash armazenadas e hashsets serão descartados."/>
 		<string id="18504" value="Você tem certeza de que você quer esquecer todas as fontes para o download selecionado?"/>
@@ -3817,7 +3819,7 @@ pasta dos arquivos baixados a sua biblioteca agora?"/>
 			<control caption="_Configuração..."/>
 			<control caption="Obter Mais"/>
 		</dialog>
-		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEd" caption="Avançado">
+		<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEdBuCo" caption="Avançado">
 			<control/>
 			<control/>
 			<control/>
@@ -3825,6 +3827,8 @@ pasta dos arquivos baixados a sua biblioteca agora?"/>
 			<control caption="Propriedades da Configuração:"/>
 			<control caption="Valor:"/>
 			<control caption="Descrição:"/>
+			<control/>
+			<control/>
 			<control/>
 		</dialog>
 		<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Propriedades da Fila de Upload">
