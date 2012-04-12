@@ -1104,6 +1104,10 @@ void CShareazaApp::InitFonts()
 			&pMetrics, 0 );
 		Settings.Fonts.DefaultFont = pMetrics.lfMenuFont.lfFaceName;
 	}
+	if ( Settings.Fonts.DefaultFont.IsEmpty() )
+	{
+		Settings.Fonts.DefaultFont = _T("Tahoma");
+	}
 	if ( Settings.Fonts.SystemLogFont.IsEmpty() )
 	{
 		Settings.Fonts.SystemLogFont = Settings.Fonts.DefaultFont;

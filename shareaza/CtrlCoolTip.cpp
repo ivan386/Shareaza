@@ -64,7 +64,7 @@ CCoolTipCtrl::CCoolTipCtrl()
 	, m_tOpen	( 0 )
 {
 	if ( m_hClass == NULL )
-		m_hClass = AfxRegisterWndClass( CS_SAVEBITS | CS_DROPSHADOW );
+		m_hClass = AfxRegisterWndClass( CS_SAVEBITS | ( theApp.m_bIsWin2000 ? 0 : CS_DROPSHADOW ) );
 }
 
 CCoolTipCtrl::~CCoolTipCtrl()
