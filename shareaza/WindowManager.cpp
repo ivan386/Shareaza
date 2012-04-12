@@ -1,7 +1,7 @@
 //
 // WindowManager.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -373,10 +373,10 @@ void CWindowManager::LoadWindowStates()
 	case GUI_TABBED:
 		pDownloads = Open( RUNTIME_CLASS( CDownloadsWnd ) );
 		pUploads = Open( RUNTIME_CLASS( CUploadsWnd ) );
-		pUploads->m_pGroupParent = pDownloads;
+		if ( pUploads ) pUploads->m_pGroupParent = pDownloads;
 		pNeighbours = Open( RUNTIME_CLASS( CNeighboursWnd ) );
 		pSystem = Open( RUNTIME_CLASS( CSystemWnd ) );
-		pSystem->m_pGroupParent = pNeighbours;
+		if ( pSystem ) pSystem->m_pGroupParent = pNeighbours;
 		break;
 
 	case GUI_WINDOWED:
