@@ -197,6 +197,7 @@ CShareazaApp::CShareazaApp() :
 ,	m_pfnOpenThemeData		( NULL )
 ,	m_pfnCloseThemeData		( NULL )
 ,	m_pfnDrawThemeBackground( NULL )
+,	m_pfnGetThemeSysFont	( NULL )
 
 ,	m_hShlWapi				( NULL )
 ,	m_pfnAssocIsDangerous	( NULL )
@@ -204,6 +205,9 @@ CShareazaApp::CShareazaApp() :
 ,	m_hShell32				( NULL )
 ,	m_pfnSHGetFolderPathW	( NULL )
 ,	m_pfnSHGetKnownFolderPath( NULL )
+,	m_pfnSHCreateItemFromParsingName( NULL )
+,	m_pfnSetCurrentProcessExplicitAppUserModelID( NULL )
+,	m_pfnSHGetImageList		( NULL )
 
 ,	m_hUser32				( NULL )
 ,	m_pfnChangeWindowMessageFilter( NULL )
@@ -1034,6 +1038,7 @@ void CShareazaApp::InitResources()
 		(FARPROC&)m_pfnSHGetKnownFolderPath = GetProcAddress( m_hShell32, "SHGetKnownFolderPath" );
 		(FARPROC&)m_pfnSHCreateItemFromParsingName = GetProcAddress( m_hShell32, "SHCreateItemFromParsingName" );
 		(FARPROC&)m_pfnSetCurrentProcessExplicitAppUserModelID = GetProcAddress( m_hShell32, "SetCurrentProcessExplicitAppUserModelID" );
+		(FARPROC&)m_pfnSHGetImageList = GetProcAddress( m_hShell32, MAKEINTRESOURCEA(727) );
 	}
 
 	if ( ( m_hUser32 = LoadLibrary( _T("user32.dll") ) ) != NULL )

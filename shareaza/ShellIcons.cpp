@@ -20,6 +20,7 @@
 //
 
 #include "StdAfx.h"
+#include "Shareaza.h"
 #include "Settings.h"
 #include "CoolInterface.h"
 #include "ShellIcons.h"
@@ -201,7 +202,8 @@ int CShellIcons::Get(LPCTSTR pszFile, int nSize)
 		{
 			dwFlags = ( nSize == 16 ) ? SHIL_SMALL : ( ( nSize == 32 ) ? SHIL_LARGE : SHIL_EXTRALARGE );
 			CComPtr< IImageList > pImageList;
-			if ( SUCCEEDED( SHGetImageList( dwFlags, IID_IImageList, (void**)&pImageList ) ) &&
+			if ( theApp.m_pfnSHGetImageList &&
+				 SUCCEEDED( theApp.m_pfnSHGetImageList( dwFlags, IID_IImageList, (void**)&pImageList ) ) &&
 				 SUCCEEDED( pImageList->GetIcon( sfi.iIcon, ILD_NORMAL, &hShellIcon ) ) )
 			{
 				DestroyIcon( sfi.hIcon );
