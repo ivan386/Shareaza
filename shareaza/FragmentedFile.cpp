@@ -819,13 +819,13 @@ void CFragmentedFile::Serialize(CArchive& ar, int nVersion)
 
 BOOL CFragmentedFile::Write(QWORD nOffset, LPCVOID pData, QWORD nLength, QWORD* pnWritten)
 {
-	ASSERT_VALID( this );
-
 	if ( nLength == 0 )
 		// No data to write
 		return TRUE;
 
 	CQuickLock oLock( m_pSection );
+
+	ASSERT_VALID( this );
 
 	Fragments::Fragment oMatch( nOffset, nOffset + nLength );
 	Fragments::List::const_iterator_pair pMatches = m_oFList.equal_range( oMatch );
@@ -863,13 +863,13 @@ BOOL CFragmentedFile::Write(QWORD nOffset, LPCVOID pData, QWORD nLength, QWORD* 
 
 BOOL CFragmentedFile::Read(QWORD nOffset, LPVOID pData, QWORD nLength, QWORD* pnRead)
 {
-	ASSERT_VALID( this );
-
 	if ( nLength == 0 )
 		// No data to read
 		return TRUE;
 
 	CQuickLock oLock( m_pSection );
+
+	ASSERT_VALID( this );
 
 	if ( DoesRangeOverlap( nOffset, nLength ) )
 		// No data available yet
