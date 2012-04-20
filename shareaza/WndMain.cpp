@@ -1002,22 +1002,22 @@ void CMainWnd::DeleteTray()
 
 void CMainWnd::CloseToTray()
 {
-	static volatile bool bClosingToTray = false;	// Workaround for strange Win7 TaskBar lag
-	if ( bClosingToTray ) return;
-	bClosingToTray = true;
+	if ( ! IsIconic() )
+		ShowWindow( SW_MINIMIZE );
 
-	if ( ! IsIconic() ) { SendMessage( WM_SYSCOMMAND, SC_MINIMIZE ); }
-	if ( IsWindowVisible() ) ShowWindow( SW_HIDE );
+	if ( IsWindowVisible() )
+		ShowWindow( SW_HIDE );
 
 	m_bTrayHide = TRUE;
-
-	bClosingToTray = false;
 }
 
 void CMainWnd::OpenFromTray(int nShowCmd)
 {
-	if ( ! IsWindowVisible() ) ShowWindow( nShowCmd );
-	if ( IsIconic() ) SendMessage( WM_SYSCOMMAND, SC_RESTORE );
+	if ( ! IsWindowVisible() )
+		ShowWindow( nShowCmd );
+
+	if ( IsIconic() )
+		ShowWindow( SW_RESTORE );
 
 	SetForegroundWindow();
 	m_bTrayHide = FALSE;
