@@ -621,7 +621,7 @@ BOOL CShareazaURL::ParseMagnet(LPCTSTR pszURL)
 					else
 						m_sURL = strURL;
 				}
-				else if( _tcsicmp( strKey, _T("tr") ) == 0 )
+				else if( _tcsnicmp( strKey, _T("tr"), 2 ) == 0 ) // Compatibility hack: "&tr{any}="
 				{
 					pTorrent->SetTracker( strValue );
 				}
