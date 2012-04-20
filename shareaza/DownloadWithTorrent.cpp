@@ -430,10 +430,6 @@ bool CDownloadWithTorrent::RunTorrent(DWORD tNow)
 	if ( tNow > m_tTorrentChoke && tNow - m_tTorrentChoke >= 10000ul )
 		ChokeTorrent( tNow );
 
-	// Check if the torrent file exists and has been opened
-	if ( ! IsFileOpen() )
-		return false;
-
 	// Generate a peerid if there isn't one
 	if ( !m_pPeerID )
 		GenerateTorrentDownloadID();
@@ -925,11 +921,11 @@ void CDownloadWithTorrent::ChokeTorrent(DWORD tNow)
 
 BOOL CDownloadWithTorrent::FindMoreSources()
 {
-	if ( IsFileOpen() && m_bTorrentRequested )
+	if ( m_bTorrentRequested )
 	{
 		ASSERT( IsTorrent() );
 
-		if ( GetTickCount() - m_tTorrentSources > 15000 )
+		if ( GetTickCount() > m_tTorrentSources + 15000 )
 		{
 			SendUpdate( min( Settings.BitTorrent.DownloadConnections * 4ul, 100ul ) );
 			return TRUE;
