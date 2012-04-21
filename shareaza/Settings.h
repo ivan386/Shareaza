@@ -488,6 +488,7 @@ public:
 		bool		EnableDHT;					// Enable DHT protocol
 		DWORD		ConnectThrottle;			// Throttle for DHT request (sec)
 		DWORD		QueryHostDeadline;			// Time to wait for DHT reply (sec)
+		bool		AutoMerge;					// Automatically merge download with local files on start-up
 	} BitTorrent;
 
 	struct sDownloads

@@ -148,42 +148,45 @@ void CTorrentSeedDlg::OnDownload()
 {
 	CShareazaURL oURL( new CBTInfo ( m_pInfo ) );
 
-	CSingleLock oLibraryLock( &Library.m_pSection, TRUE );
+	CSingleLock pTransfersLock( &Transfers.m_pSection, TRUE );
+
+	{
+		CSingleLock oLibraryLock( &Library.m_pSection, TRUE );
 	
-	CExistingFileDlg::Action action = CExistingFileDlg::CheckExisting( &oURL );
-	if ( action == CExistingFileDlg::Cancel )
-		return;
-	else if ( action != CExistingFileDlg::Download )
-	{
-		EndDialog( IDOK );
-		return;
-	}
+		CExistingFileDlg::Action action = CExistingFileDlg::CheckExisting( &oURL );
+		if ( action == CExistingFileDlg::Cancel )
+			return;
+		else if ( action == CExistingFileDlg::Download )
+		{
+			if ( CDownload* pDownload = Downloads.Add( oURL ) )
+			{
+				pDownload->PrepareFile();
 
-	oLibraryLock.Unlock();
+				// Automatically merge download with local files on start-up
+				if ( Settings.BitTorrent.AutoMerge && pDownload->m_pTorrent.GetCount() > 1 )
+				{
+					CList< CString > oFiles;
+					for ( POSITION pos = pDownload->m_pTorrent.m_pFiles.GetHeadPosition() ; pos ; )
+					{
+						const CBTInfo::CBTFile* pBTFile = pDownload->m_pTorrent.m_pFiles.GetNext( pos );
+						if ( CLibraryFile* pFile = LibraryMaps.LookupFileByName( pBTFile->m_sPath, pBTFile->m_nSize, FALSE, TRUE ) )
+							oFiles.AddTail( pFile->GetPath() );
+					}
 
-	CDownload* pDownload = Downloads.Add( oURL );
+					if ( oFiles.GetCount() )
+						CDownloadTask::MergeFile( pDownload, &oFiles );
+				}
 
-	if ( pDownload == NULL )
-	{
-		EndDialog( IDOK );
-		return;
-	}
+				if ( ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0 && ! Network.IsWellConnected() )
+					Network.Connect( TRUE );
 
-	pDownload->PrepareFile();
+				if ( CMainWnd* pMainWnd = (CMainWnd*)AfxGetMainWnd() )
+					pMainWnd->m_pWindows.Open( RUNTIME_CLASS(CDownloadsWnd) );
 
-	if ( ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0 &&
-		! Network.IsWellConnected() )
-	{
-		Network.Connect( TRUE );
-	}
-
-	CMainWnd* pMainWnd = (CMainWnd*)AfxGetMainWnd();
-	pMainWnd->m_pWindows.Open( RUNTIME_CLASS(CDownloadsWnd) );
-
-	if ( Settings.Downloads.ShowMonitorURLs )
-	{
-		CSingleLock pTransfersLock( &Transfers.m_pSection, TRUE );
-		if ( Downloads.Check( pDownload ) ) pDownload->ShowMonitor( &pTransfersLock );
+				if ( Settings.Downloads.ShowMonitorURLs )
+					pDownload->ShowMonitor( &pTransfersLock );
+			}
+		}
 	}
 
 	EndDialog( IDOK );
