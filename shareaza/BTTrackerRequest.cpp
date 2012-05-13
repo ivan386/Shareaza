@@ -115,7 +115,7 @@ CBTTrackerPacket* CBTTrackerPacket::New(const BYTE* pBuffer, DWORD nLength)
 	}
 
 	DWORD nTransactionID = ntohl( ((DWORD*)pBuffer)[ 1 ] );
-	if ( ! TrackerRequests.Lookup( nTransactionID ) )
+	if ( ! TrackerRequests.Check( nTransactionID ) )
 	{
 		// Unknown transaction ID
 		return NULL;
@@ -219,28 +219,29 @@ BOOL CBTTrackerPacket::OnPacket(const SOCKADDR_IN* pHost)
 {
 	SmartDump( pHost, TRUE, FALSE );
 
-	CSingleLock oLock( &Transfers.m_pSection, FALSE );
-	if ( ! oLock.Lock( 250 ) )
-		return FALSE;
-
-	if ( CBTTrackerRequest* pRequest = TrackerRequests.Lookup( m_nTransactionID ) )
+	CAutoPtr< CBTTrackerRequest > pRequest( TrackerRequests.Lookup( m_nTransactionID ) );
+	if ( pRequest )
 	{
-		switch ( m_nAction )
+		CSingleLock oLock( &Transfers.m_pSection, FALSE );
+		if ( oLock.Lock( 250 ) )
 		{
-		case BTA_TRACKER_CONNECT:
-			return pRequest->OnConnect( this );
+			switch ( m_nAction )
+			{
+			case BTA_TRACKER_CONNECT:
+				return pRequest->OnConnect( this );
 
-		case BTA_TRACKER_ANNOUNCE:
-			return pRequest->OnAnnounce( this );
+			case BTA_TRACKER_ANNOUNCE:
+				return pRequest->OnAnnounce( this );
 
-		case BTA_TRACKER_SCRAPE:
-			return pRequest->OnScrape( this );
+			case BTA_TRACKER_SCRAPE:
+				return pRequest->OnScrape( this );
 
-		case BTA_TRACKER_ERROR:
-			return pRequest->OnError( this );
+			case BTA_TRACKER_ERROR:
+				return pRequest->OnError( this );
 
-		default:
-			ASSERT( FALSE );
+			default:
+				ASSERT( FALSE );
+			}
 		}
 	}
 
@@ -251,7 +252,8 @@ BOOL CBTTrackerPacket::OnPacket(const SOCKADDR_IN* pHost)
 // CBTTrackerRequest construction
 
 CBTTrackerRequest::CBTTrackerRequest(CDownload* pDownload, DWORD nEvent, DWORD nNumWant, CTrackerEvent* pOnTrackerEvent)
-	: m_bHTTP			( false )
+	: m_dwRef			( 1 )
+	, m_bHTTP			( false )
 	, m_pDownload		( pDownload )
 	, m_sName			( pDownload->GetDisplayName() )
 	, m_pCancel			( FALSE, TRUE )
@@ -363,12 +365,28 @@ CBTTrackerRequest::CBTTrackerRequest(CDownload* pDownload, DWORD nEvent, DWORD n
 
 CBTTrackerRequest::~CBTTrackerRequest()
 {
+	ASSERT( m_dwRef == 0 );
+
 	TrackerRequests.Remove( m_nTransactionID );
 
 	if ( m_pDownload )
 	{
 		m_pDownload->RemoveRequest( this );
 	}
+}
+
+ULONG CBTTrackerRequest::AddRef()
+{
+	return (ULONG)InterlockedIncrement( &m_dwRef );
+}
+
+ULONG CBTTrackerRequest::Release()
+{
+	ULONG ref_count = (ULONG)InterlockedDecrement( &m_dwRef );
+	if ( ref_count )
+		return ref_count;
+	delete this;
+	return 0;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -485,7 +503,7 @@ void CBTTrackerRequest::OnRun()
 		}
 	}
 
-	delete this;
+	Release();
 }
 
 void CBTTrackerRequest::OnTrackerEvent(bool bSuccess, LPCTSTR pszReason, LPCTSTR pszTip)
@@ -887,6 +905,7 @@ CBTTrackerRequests::CBTTrackerRequests()
 
 CBTTrackerRequests::~CBTTrackerRequests()
 {
+	ASSERT( m_pTrackerRequests.IsEmpty() );
 }
 
 DWORD CBTTrackerRequests::Add(CBTTrackerRequest* pRequest)
@@ -916,6 +935,14 @@ CBTTrackerRequest* CBTTrackerRequests::Lookup(DWORD nTransactionID) const
 	CQuickLock oLock( m_pSection );
 
 	CBTTrackerRequest* pRequest = NULL;
-	m_pTrackerRequests.Lookup( nTransactionID, pRequest );
+	if ( m_pTrackerRequests.Lookup( nTransactionID, pRequest ) )
+		pRequest->AddRef();
 	return pRequest;
+}
+
+BOOL CBTTrackerRequests::Check(DWORD nTransactionID) const
+{
+	CQuickLock oLock( m_pSection );
+
+	return ( m_pTrackerRequests.PLookup( nTransactionID ) != NULL );
 }

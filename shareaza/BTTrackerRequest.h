@@ -212,16 +212,17 @@ public:
 	virtual void OnTrackerEvent(bool bSuccess, LPCTSTR pszReason, LPCTSTR pszTip, CBTTrackerRequest* pEvent) = 0;
 };
 
-
 //
 // BitTorrent tracker request
 //
 
-class CBTTrackerRequest // TODO: Redo to smart object
+class CBTTrackerRequest
 {
 public:
 	CBTTrackerRequest(CDownload* pDownload, DWORD nEvent, DWORD nNumWant, CTrackerEvent* pOnTrackerEvent);
-	~CBTTrackerRequest();
+
+	ULONG	AddRef();
+	ULONG	Release();
 
 	DWORD						m_nSeeders;			// Scrape
 	DWORD						m_nDownloaded;		// Scrape
@@ -253,6 +254,7 @@ public:
 	BOOL OnError(CBTTrackerPacket* pPacket);
 
 protected:
+	volatile LONG				m_dwRef;			// Reference counter
 	bool						m_bHTTP;			// HTTP - TRUE, UDP - FALSE.
 	CString						m_sURL;				// Tracker URL
 	SOCKADDR_IN					m_pHost;			// Resolved tracker address (UDP)
@@ -266,6 +268,8 @@ protected:
 	CEvent						m_pCancel;			// Cancel flag
 	CTrackerEvent*				m_pOnTrackerEvent;	// Callback
 
+	virtual ~CBTTrackerRequest();
+
 	void ProcessHTTP();
 	void ProcessUDP();
 	void Process(const CBENode* pRoot);
@@ -273,6 +277,16 @@ protected:
 	void OnRun();
 	void OnTrackerEvent(bool bSuccess, LPCTSTR pszReason, LPCTSTR pszTip = NULL);
 };
+
+template<>
+inline void CAutoPtr< CBTTrackerRequest >::Free() throw()
+{
+	if ( m_p )
+	{
+		m_p->Release();
+		m_p = NULL;
+	}
+}
 
 //
 // BitTorrent Tracker request manager
@@ -287,6 +301,7 @@ public:
 	DWORD Add(CBTTrackerRequest* pRequest);
 	void Remove(DWORD nTransactionID);
 	CBTTrackerRequest* Lookup(DWORD nTransactionID) const;
+	BOOL Check(DWORD nTransactionID) const;
 
 protected:
 	typedef CMap< DWORD, DWORD, CBTTrackerRequest*, CBTTrackerRequest* > CBTTrackerRequestMap;
