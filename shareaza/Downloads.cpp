@@ -930,7 +930,7 @@ void CDownloads::OnRun()
 	// it to 4 times per second
 	if ( ( ( tNow - m_tBandwidthLastCalc ) < 250 ) && ( tNow > m_tBandwidthLastCalc ) )
 	{
-		// Just run the downloads, don't bother re-calulating bandwidth
+		// Just run the downloads, don't bother re-calculating bandwidth
 		++m_nRunCookie;
 
 		QWORD nComplete = 0, nTotal = 0;
@@ -938,7 +938,11 @@ void CDownloads::OnRun()
 		{
 			CDownload* pDownload = GetNext( pos );
 
-			if ( pDownload->m_nSize > 0 && pDownload->m_nSize < SIZE_UNKNOWN && ! pDownload->IsMoving() && ! pDownload->IsPaused() )
+			if (  pDownload->m_nSize > 0 &&
+				  pDownload->m_nSize < SIZE_UNKNOWN &&
+				! pDownload->IsMoving() &&
+				! pDownload->IsPaused() &&
+				! pDownload->IsSeeding() )
 			{
 				nComplete += pDownload->GetVolumeComplete();
 				nTotal += pDownload->m_nSize;
