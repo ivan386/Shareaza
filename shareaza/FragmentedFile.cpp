@@ -1,7 +1,7 @@
 //
 // FragmentedFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -189,9 +189,10 @@ BOOL CFragmentedFile::Open(LPCTSTR pszFile, QWORD nOffset, QWORD nLength,
 
 	CTransferFile* pFile = NULL;
 	QWORD nRealLength = SIZE_UNKNOWN;
-	for ( int nMethod = 0 ; nMethod < 2 ; ++nMethod )
+	CString& strPath = (*pItr).m_sPath;
+	for ( int nMethod = 0 ; ; ++nMethod )
 	{
-		pFile = TransferFiles.Open( (*pItr).m_sPath, bWrite );
+		pFile = TransferFiles.Open( strPath, bWrite );
 		if ( pFile )
 		{
 			m_nFileError = ERROR_SUCCESS;
@@ -215,18 +216,35 @@ BOOL CFragmentedFile::Open(LPCTSTR pszFile, QWORD nOffset, QWORD nLength,
 			// Do nothing for read only files
 			break;
 
-		CString strPath( pszFile );
-		switch( nMethod )
+		if ( nMethod == 0 )
 		{
-		case 0:
-			// Try to open file for write from current incomplete folder
-			// (in case of changed folder)
-			(*pItr).m_sPath = Settings.Downloads.IncompletePath +
-				strPath.Mid( strPath.ReverseFind( _T('\\') ) );
-			break;
+			// Try to open file from current incomplete folder (in case of changed folder)
+			CString strIncompletePath = Settings.Downloads.IncompletePath + _T("\\") + PathFindFileName( strPath );
+			if ( strIncompletePath.CompareNoCase( strPath ) != 0 )
+			{
+				strPath = strIncompletePath;
+				continue;
+			}
+			++nMethod;
+		}
+
+		if ( nMethod == 1 )
+		{
+			// Try to open file from same path as SD-file has
+			if ( m_pDownload )
+			{
+				CString strSdPath = m_pDownload->m_sPath.Left( m_pDownload->m_sPath.ReverseFind( _T('\\') ) + 1 ) + PathFindFileName( strPath );
+				if ( strSdPath.CompareNoCase( strPath ) != 0 )
+				{
+					strPath = strSdPath;
+					continue;
+				}
+			}
+			++nMethod;
+		}
 
 		// TODO: Other methods
-		}
+		break;
 	}
 
 	(*pItr).m_nSize = nLength;
@@ -267,7 +285,7 @@ BOOL CFragmentedFile::Open(CShareazaFile& oSHFile, BOOL bWrite)
 		strSource.Format( _T("%s\\%s.partial"),
 			(LPCTSTR)Settings.Downloads.IncompletePath, (LPCTSTR)sUniqueName );
 	}
-	else if ( GetFileAttributes( oSHFile.m_sPath ) != INVALID_FILE_ATTRIBUTES )
+	else if ( GetFileAttributes( CString( _T("\\\\?\\") ) + oSHFile.m_sPath ) != INVALID_FILE_ATTRIBUTES )
 	{
 		// Use specified file path
 		strSource = oSHFile.m_sPath;
