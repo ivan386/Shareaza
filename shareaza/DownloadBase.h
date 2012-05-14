@@ -1,7 +1,7 @@
 //
 // DownloadBase.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -42,8 +42,8 @@ public:
 
 	void			SetModified();
 	bool			IsModified() const;
-	// Set download safe name
-	bool			Rename(const CString& strName);
+	// Set download new (and safe) name
+	virtual bool	Rename(const CString& strName) = 0;
 	// Check if a task is already running
 	virtual bool	IsTasking() const;
 	// Check if a task is already running and its a moving task

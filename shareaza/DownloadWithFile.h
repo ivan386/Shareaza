@@ -1,7 +1,7 @@
 //
 // DownloadWithFile.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -75,6 +75,8 @@ public:
 	DWORD				GetFileError() const;
 	void				SetFileError(DWORD nFileError);
 	void				ClearFileError();
+	// Set download new (and safe) name
+	virtual bool		Rename(const CString& strName);
 	DWORD				MoveFile(LPCTSTR pszDestination, LPPROGRESS_ROUTINE lpProgressRoutine = NULL, LPVOID lpData = NULL);
 protected:
 	// Open files of this download

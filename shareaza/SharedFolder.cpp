@@ -442,7 +442,7 @@ BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 
 	if ( m_sPath.CompareNoCase( Settings.Downloads.IncompletePath ) == 0 ) return FALSE;
 
-	hSearch = FindFirstFile( m_sPath + _T("\\*.*"), &pFind );
+	hSearch = FindFirstFile( CString( _T("\\\\?\\") ) + m_sPath + _T("\\*.*"), &pFind );
 
 	pLock.Lock();
 	m_nScanCookie	= nScanCookie;

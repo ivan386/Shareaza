@@ -1,7 +1,7 @@
 //
 // DownloadTask.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -487,7 +487,7 @@ void CDownloadTask::RunMergeSingle(CDownload* pDownload, LPCTSTR szFilename, BOO
 
 BOOL CDownloadTask::CopyFile(HANDLE hSource, LPCTSTR pszTarget, QWORD nLength)
 {
-	HANDLE hTarget = CreateFile( pszTarget, GENERIC_WRITE,
+	HANDLE hTarget = CreateFile( CString( _T("\\\\?\\") ) + pszTarget, GENERIC_WRITE,
 		0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL|FILE_FLAG_SEQUENTIAL_SCAN, NULL );
 	m_nFileError = GetLastError();
 	VERIFY_FILE_ACCESS( hTarget, pszTarget )

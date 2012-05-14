@@ -1,7 +1,7 @@
 //
 // DownloadBase.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -114,25 +114,6 @@ bool CDownloadBase::IsModified() const
 void CDownloadBase::SetModified()
 {
 	++m_nCookie;
-}
-
-//////////////////////////////////////////////////////////////////////
-// CDownload control : rename
-
-bool CDownloadBase::Rename(const CString& strName)
-{
-	CString sNewName = SafeFilename( strName );
-
-	// Don't bother if renaming to same name.
-	if ( m_sName == sNewName )
-		return false;
-
-	// Set new name
-	m_sName = sNewName;
-
-	SetModified();
-
-	return true;
 }
 
 //////////////////////////////////////////////////////////////////////

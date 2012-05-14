@@ -2350,8 +2350,7 @@ CString SafeFilename(CString strName, bool bPath)
 	// Replace incompatible symbols
 	for ( ;; )
 	{
-		int nChar = strName.FindOneOf(
-			bPath ? _T("/:*?\"<>|") : _T("\\/:*?\"<>|") );
+		int nChar = strName.FindOneOf( bPath ? _T("/:*?\"<>|") : _T("\\/:*?\"<>|") );
 
 		if ( nChar == -1 )
 			break;
@@ -2359,18 +2358,7 @@ CString SafeFilename(CString strName, bool bPath)
 		strName.SetAt( nChar, _T('_') );
 	}
 
-	LPCTSTR szExt = PathFindExtension( strName );
-	int nExtLen = lstrlen( szExt );
-
-	// Limit maximum filepath length
-	int nMaxFilenameLength = MAX_PATH - 1 - max( max(
-		Settings.Downloads.IncompletePath.GetLength(),
-		Settings.Downloads.CompletePath.GetLength() ),
-		Settings.Downloads.TorrentPath.GetLength() );
-	if ( strName.GetLength() > nMaxFilenameLength )
-	{
-		strName = strName.Left( nMaxFilenameLength - nExtLen ) + strName.Right( nExtLen );
-	}
+	// Path length not limited since "\\?\" prefix used everywhere
 
 	return strName;
 }
@@ -2381,7 +2369,7 @@ BOOL CreateDirectory(LPCTSTR szPath)
 
 	DWORD dwAttr = ( strDir.GetLength() == 2 ) ?
 		// Disk only
-		GetFileAttributes( strDir + _T("\\") ) :
+		GetFileAttributes( CString( _T("\\\\?\\") ) + strDir + _T("\\") ) :
 		// Normal directory
 		GetFileAttributes( CString( _T("\\\\?\\") ) + strDir );
 	if ( ( dwAttr != INVALID_FILE_ATTRIBUTES ) &&
@@ -2466,15 +2454,16 @@ void DeleteFiles(CStringList& pList)
 BOOL DeleteFileEx(LPCTSTR szFileName, BOOL bShared, BOOL bToRecycleBin, BOOL bEnableDelayed)
 {
 	// Should be double zeroed long path
+	CString strFileName = CString( _T("\\\\?\\") ) + szFileName;
 	BOOL bLong;
-	DWORD len = GetLongPathName( szFileName, NULL, 0 );
+	DWORD len = GetLongPathName( strFileName, NULL, 0 );
 	if ( len )
 	{
 		bLong = TRUE;
 	}
 	else
 	{
-		len = lstrlen( szFileName );
+		len = lstrlen( strFileName );
 		bLong = FALSE;
 	}
 	CAutoVectorPtr< TCHAR > szPath( new TCHAR[ len + 1 ] );
@@ -2482,18 +2471,18 @@ BOOL DeleteFileEx(LPCTSTR szFileName, BOOL bShared, BOOL bToRecycleBin, BOOL bEn
 		return FALSE;
 	if ( bLong )
 	{
-		GetLongPathName( szFileName, szPath, len );
+		GetLongPathName( strFileName, szPath, len );
 	}
 	else
 	{
-		lstrcpy( szPath, szFileName );
+		lstrcpy( szPath, strFileName );
 	}
 	szPath[ len ] = 0;
 
 	if ( bShared )
 	{
 		// Stop uploads
-		theApp.OnRename( szPath, NULL );
+		theApp.OnRename( szPath + 4, NULL );
 	}
 
 	DWORD dwAttr = GetFileAttributes( szPath );
@@ -2505,7 +2494,7 @@ BOOL DeleteFileEx(LPCTSTR szFileName, BOOL bShared, BOOL bToRecycleBin, BOOL bEn
 			SHFILEOPSTRUCT sfo = {};
 			sfo.hwnd = GetDesktopWindow();
 			sfo.wFunc = FO_DELETE;
-			sfo.pFrom = szPath;
+			sfo.pFrom = szPath + 4;
 			sfo.fFlags = FOF_ALLOWUNDO | FOF_FILESONLY | FOF_NORECURSION | FOF_NO_UI;
 			SHFileOperation( &sfo );
 		}
@@ -2521,14 +2510,14 @@ BOOL DeleteFileEx(LPCTSTR szFileName, BOOL bShared, BOOL bToRecycleBin, BOOL bEn
 				// Set delayed deletion
 				CString sJob;
 				sJob.Format( _T("%d%d"), bShared, bToRecycleBin );
-				theApp.WriteProfileString( _T("Delete"), szPath, sJob );
+				theApp.WriteProfileString( _T("Delete"), szPath + 4, sJob );
 			}
 			return FALSE;
 		}
 	}
 
 	// Cancel delayed deletion (if any)
-	theApp.WriteProfileString( _T("Delete"), szPath, NULL );
+	theApp.WriteProfileString( _T("Delete"), szPath + 4, NULL );
 
 	return TRUE;
 }
@@ -2896,25 +2885,25 @@ bool MarkFileAsDownload(const CString& sFilename)
 
 		// Temporary clear R/O attribute
 		BOOL bChanged = FALSE;
-		DWORD dwOrigAttr = GetFileAttributes( sFilename );
+		DWORD dwOrigAttr = GetFileAttributes( CString( _T("\\\\?\\") ) + sFilename );
 		if ( dwOrigAttr != INVALID_FILE_ATTRIBUTES && ( dwOrigAttr & FILE_ATTRIBUTE_READONLY ) )
-			bChanged = SetFileAttributes( sFilename, dwOrigAttr & ~FILE_ATTRIBUTE_READONLY );
+			bChanged = SetFileAttributes( CString( _T("\\\\?\\") ) + sFilename, dwOrigAttr & ~FILE_ATTRIBUTE_READONLY );
 
-		HANDLE hStream = CreateFile( sFilename + _T(":Zone.Identifier"),
+		HANDLE hStream = CreateFile( CString( _T("\\\\?\\") ) + sFilename + _T(":Zone.Identifier"),
 			GENERIC_WRITE,
 			FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, NULL,
 			OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
 
 		if ( hStream == INVALID_HANDLE_VALUE )
 		{
-			HANDLE hFile = CreateFile( sFilename, GENERIC_WRITE,
+			HANDLE hFile = CreateFile( CString( _T("\\\\?\\") ) + sFilename, GENERIC_WRITE,
 				FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, NULL,
 				OPEN_EXISTING,
 				FILE_ATTRIBUTE_NORMAL | FILE_FLAG_BACKUP_SEMANTICS, NULL );
 
 			if ( hFile != INVALID_HANDLE_VALUE )
 			{
-				hStream = CreateFile( sFilename + _T(":Zone.Identifier"),
+				hStream = CreateFile( CString( _T("\\\\?\\") ) + sFilename + _T(":Zone.Identifier"),
 					GENERIC_WRITE,
 					FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
 					NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL );
@@ -2933,7 +2922,7 @@ bool MarkFileAsDownload(const CString& sFilename)
 			TRACE( "MarkFileAsDownload() : CreateFile \"%s\" error %d\n", (LPCSTR)CT2A( sFilename ), GetLastError() );
 
 		if ( bChanged )
-			SetFileAttributes( sFilename, dwOrigAttr );
+			SetFileAttributes( CString( _T("\\\\?\\") ) + sFilename, dwOrigAttr );
 	}
 	return bSuccess;
 }
@@ -2943,7 +2932,7 @@ bool LoadGUID(const CString& sFilename, Hashes::Guid& oGUID)
 	bool bSuccess = false;
 	if ( Settings.Library.UseFolderGUID )
 	{
-		HANDLE hFile = CreateFile( sFilename + _T(":") CLIENT_NAME_T _T(".GUID"),
+		HANDLE hFile = CreateFile( CString( _T("\\\\?\\") ) + sFilename + _T(":") CLIENT_NAME_T _T(".GUID"),
 			GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
 			NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
 		if ( hFile != INVALID_HANDLE_VALUE )
@@ -2970,25 +2959,25 @@ bool SaveGUID(const CString& sFilename, const Hashes::Guid& oGUID)
 	{
 		// Temporary clear R/O attribute
 		BOOL bChanged = FALSE;
-		DWORD dwOrigAttr = GetFileAttributes( sFilename );
+		DWORD dwOrigAttr = GetFileAttributes( CString( _T("\\\\?\\") ) + sFilename );
 		if ( dwOrigAttr != 0xffffffff && ( dwOrigAttr & FILE_ATTRIBUTE_READONLY ) )
-			bChanged = SetFileAttributes( sFilename, dwOrigAttr & ~FILE_ATTRIBUTE_READONLY );
+			bChanged = SetFileAttributes( CString( _T("\\\\?\\") ) + sFilename, dwOrigAttr & ~FILE_ATTRIBUTE_READONLY );
 
-		HANDLE hStream = CreateFile( sFilename + _T(":") CLIENT_NAME_T _T(".GUID"),
+		HANDLE hStream = CreateFile( CString( _T("\\\\?\\") ) + sFilename + _T(":") CLIENT_NAME_T _T(".GUID"),
 			GENERIC_WRITE,
 			FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, NULL,
 			OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
 
 		if ( hStream == INVALID_HANDLE_VALUE )
 		{
-			HANDLE hFile = CreateFile( sFilename, GENERIC_WRITE,
+			HANDLE hFile = CreateFile( CString( _T("\\\\?\\") ) + sFilename, GENERIC_WRITE,
 				FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, NULL,
 				OPEN_EXISTING,
 				FILE_ATTRIBUTE_NORMAL | FILE_FLAG_BACKUP_SEMANTICS, NULL );
 
 			if ( hFile != INVALID_HANDLE_VALUE )
 			{
-				hStream = CreateFile( sFilename + _T(":") CLIENT_NAME_T _T(".GUID"),
+				hStream = CreateFile( CString( _T("\\\\?\\") ) + sFilename + _T(":") CLIENT_NAME_T _T(".GUID"),
 					GENERIC_WRITE,
 					FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
 					NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL );
@@ -3005,7 +2994,7 @@ bool SaveGUID(const CString& sFilename, const Hashes::Guid& oGUID)
 		}
 
 		if ( bChanged )
-			SetFileAttributes( sFilename, dwOrigAttr );
+			SetFileAttributes( CString( _T("\\\\?\\") ) + sFilename, dwOrigAttr );
 	}
 	return bSuccess;
 }

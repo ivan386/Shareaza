@@ -399,7 +399,7 @@ void CLibraryBuilder::OnRun()
 				m_sPath = sPath;
 			}
 
-			HANDLE hFile = CreateFile( sPath, GENERIC_READ,
+			HANDLE hFile = CreateFile( CString( _T("\\\\?\\") ) + sPath, GENERIC_READ,
 				FILE_SHARE_READ | FILE_SHARE_DELETE, NULL,
 				OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL | FILE_FLAG_SEQUENTIAL_SCAN, NULL );
 			VERIFY_FILE_ACCESS( hFile, sPath )
@@ -1120,7 +1120,7 @@ bool CLibraryBuilder::RefreshMetadata(const CString& sPath)
 	theApp.Message( MSG_DEBUG, _T("Refreshing: %s"), (LPCTSTR)sPath );
 
 	bool bResult = false;
-	HANDLE hFile = CreateFile( sPath, GENERIC_READ,
+	HANDLE hFile = CreateFile( CString( _T("\\\\?\\") ) + sPath, GENERIC_READ,
 		 FILE_SHARE_READ | FILE_SHARE_DELETE, NULL,
 		 OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL | FILE_FLAG_SEQUENTIAL_SCAN, NULL );
 	VERIFY_FILE_ACCESS( hFile, sPath )

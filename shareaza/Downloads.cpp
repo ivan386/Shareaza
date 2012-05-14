@@ -1216,8 +1216,7 @@ void CDownloads::Load()
 	LoadFromCompoundFiles();
 
 	WIN32_FIND_DATA pFind = {};
-	HANDLE hSearch = FindFirstFile(
-		Settings.Downloads.IncompletePath + _T("\\*.sd"), &pFind );
+	HANDLE hSearch = FindFirstFile( CString( _T("\\\\?\\") ) + Settings.Downloads.IncompletePath + _T("\\*.sd"), &pFind );
 	if ( hSearch != INVALID_HANDLE_VALUE )
 	{
 		do
@@ -1404,20 +1403,15 @@ void CDownloads::SerializeCompound(CArchive& ar)
 
 void CDownloads::PurgePreviews()
 {
-	WIN32_FIND_DATA pFind;
-	HANDLE hSearch;
-	CString strPath;
-
-	strPath = Settings.Downloads.IncompletePath + _T("\\Preview of *.*");
-	hSearch = FindFirstFile( strPath, &pFind );
+	WIN32_FIND_DATA pFind = {};
+	HANDLE hSearch = FindFirstFile( CString( _T("\\\\?\\") ) + Settings.Downloads.IncompletePath + _T("\\Preview of *.*"), &pFind );
 	if ( hSearch == INVALID_HANDLE_VALUE ) return;
 
 	do
 	{
 		if ( _tcsnicmp( pFind.cFileName, _T("Preview of "), 11 ) == 0 )
 		{
-			strPath = Settings.Downloads.IncompletePath + '\\' + pFind.cFileName;
-			DeleteFileEx( strPath, FALSE, FALSE, TRUE );
+			DeleteFileEx( Settings.Downloads.IncompletePath + _T('\\') + pFind.cFileName, FALSE, FALSE, TRUE );
 		}
 	}
 	while ( FindNextFile( hSearch, &pFind ) );

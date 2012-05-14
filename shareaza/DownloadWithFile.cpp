@@ -1,7 +1,7 @@
 //
 // DownloadWithFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -242,6 +242,50 @@ void CDownloadWithFile::DeleteFile()
 	}
 
 	SetModified();
+}
+
+//////////////////////////////////////////////////////////////////////
+// CDownloadWithFile rename the file
+
+bool CDownloadWithFile::Rename(const CString& strName)
+{
+	CString strNewName = SafeFilename( strName );
+
+	// Don't bother if renaming to same name.
+	if ( m_sName == strNewName )
+		return false;
+
+	// Rename fragmented files
+	if ( m_pFile.get() )
+	{
+		const DWORD nCount = m_pFile->GetCount();
+		for( DWORD nIndex = 0; nIndex < nCount; ++nIndex )
+		{
+			CString strFragmentName = m_pFile->GetName( nIndex ), strLeftover;
+			if ( ! strFragmentName.IsEmpty() )
+			{
+				int nPos = strFragmentName.Find( _T('\\') );
+				if ( nPos != -1 )
+				{
+					strLeftover = strFragmentName.Mid( nPos );
+					strFragmentName = strFragmentName.Left( nPos );
+				}
+
+				if ( strFragmentName.CompareNoCase( m_sName ) == 0 )
+					strFragmentName = strNewName + strLeftover;
+				else
+					strFragmentName = strNewName + _T("\\") + strFragmentName + strLeftover;
+
+				m_pFile->SetName( nIndex, strFragmentName );
+			}
+		}
+	}
+
+	// Set new name
+	m_sName = strNewName;
+	SetModified();
+
+	return true;
 }
 
 // Move file(s) to destination. Returns 0 on success or file error number.
