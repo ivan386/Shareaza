@@ -1,7 +1,7 @@
 //
 // DownloadWithTransfers.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -32,6 +32,7 @@
 #include "DownloadTransferED2K.h"
 #include "DownloadTransferBT.h"
 #include "Network.h"
+#include "Neighbours.h"
 #include "EDClient.h"
 
 #ifdef _DEBUG
@@ -183,24 +184,21 @@ BOOL CDownloadWithTransfers::CanStartTransfers(DWORD tNow)
 {
 	if ( tNow == 0 ) tNow = GetTickCount();
 
-	if ( tNow - m_tTransferStart < 100 ) return FALSE;
+	if ( tNow - m_tTransferStart < 100 )
+		return FALSE;
 	m_tTransferStart = tNow;
 
 	// Make sure the network is ready
-	if ( ! Network.ReadyToTransfer( tNow ) ) return FALSE;
+	if ( ! Network.ReadyToTransfer( tNow ) )
+		return FALSE;
 
 	// Limit the connection rate
-	if ( Settings.Downloads.ConnectThrottle != 0 )
-	{
-		if ( tNow < Downloads.m_tLastConnect ) return FALSE;
-		if ( tNow - Downloads.m_tLastConnect <= Settings.Downloads.ConnectThrottle ) return FALSE;
-	}
+	if ( Settings.Downloads.ConnectThrottle && tNow <= Neighbours.LastConnect() + Settings.Downloads.ConnectThrottle )
+		return FALSE;
 
 	// Limit the amount of connecting (half-open) sources. (Very important for XP sp2)
 	if ( Downloads.GetConnectingTransferCount() >= Settings.Downloads.MaxConnectingSources )
-	{
 		return FALSE;
-	}
 
 	return TRUE;
 }

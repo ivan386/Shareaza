@@ -71,7 +71,6 @@ public:
 	BOOL			m_bAutoConnect;
 	volatile bool	m_bConnected;				// Network has finished initializing and is connected
 	DWORD			m_tStartedConnecting;		// The time Shareaza started trying to connect
-	DWORD			m_tLastConnect;				// The last time a neighbour connection attempt was made
 	DWORD			m_tLastED2KServerHop;		// The last time the ed2k server was changed
 	TRISTATE		m_bUPnPPortsForwarded;		// UPnP values are assigned when the discovery is complete
 

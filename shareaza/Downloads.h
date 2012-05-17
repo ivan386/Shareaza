@@ -47,7 +47,6 @@ public:
 	DWORD			m_tBandwidthAtMaxED2K;		// The last time all ed2k bandwidth was used
 	DWORD			m_nTransfers;
 	DWORD			m_nBandwidth;
-	DWORD			m_tLastConnect;
 	bool			m_bClosing;
 	QWORD			m_nComplete;				// The last complete size of incomplete downloads
 	QWORD			m_nTotal;					// The last total size of incomplete downloads

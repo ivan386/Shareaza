@@ -1,7 +1,7 @@
 //
 // GraphItem.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -257,10 +257,10 @@ QWORD CGraphItem::GetValue(const DWORD nCode, const float nMultiplier)
 		Network.m_pSection.Unlock();
 		break;
 	case GRC_GNUTELLA_BANDWIDTH_IN:
-		nValue = Neighbours.m_nBandwidthIn * 8;
+		nValue = Neighbours.BandwidthIn() * 8;
 		break;
 	case GRC_GNUTELLA_BANDWIDTH_OUT:
-		nValue = Neighbours.m_nBandwidthOut * 8;
+		nValue = Neighbours.BandwidthOut() * 8;
 		break;
 	case GRC_GNUTELLA_PACKETS_IN:
 		if ( ! Network.m_pSection.Lock( 20 ) ) break;
