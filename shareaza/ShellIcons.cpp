@@ -245,6 +245,8 @@ int CShellIcons::Get(LPCTSTR pszFile, int nSize)
 	BITMAP bi = {};
 	GetObject( ii.hbmColor, sizeof( bi ), &bi );
 	TRACE( "CShellIcons::Get %dx%d (real %dx%d %dbpp) icon #%d for %s\n", nSize, nSize, bi.bmWidth, bi.bmHeight, bi.bmBitsPixel, nIndex, (LPCSTR)CT2A( strFilename.IsEmpty() ? strType : strFilename ) );
+	if ( ii.hbmMask ) DeleteObject( ii.hbmMask );
+	if ( ii.hbmColor ) DeleteObject( ii.hbmColor );
 #endif // _DEBUG
 
 	if ( hIcon )
