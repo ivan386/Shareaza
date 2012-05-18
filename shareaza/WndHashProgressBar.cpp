@@ -146,6 +146,8 @@ void CHashProgressBar::Run()
 			m_nAlpha = nNewAlpha;
 			SetLayeredWindowAttributes( NULL, m_nAlpha, LWA_ALPHA );
 		}
+
+		dcClient.SelectStockObject( SYSTEM_FONT ); // GDI font leak fix
 	}
 }
 

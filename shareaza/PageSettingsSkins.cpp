@@ -1,7 +1,7 @@
 //
 // PageSettingsSkins.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -290,9 +290,9 @@ BOOL CSkinsSettingsPage::AddSkin(LPCTSTR pszPath, LPCTSTR pszName)
 	if ( strEmail.Find( '@' ) < 0 ) strEmail.Empty();
 
 	CLiveItem pItem( 7, 0 );
-	HICON hIcon;
-
-	if ( ExtractIconEx( strIcon, 0, NULL, &hIcon, 1 ) != NULL && hIcon != NULL )
+	HICON hIcon = NULL;
+	ExtractIconEx( strIcon, 0, NULL, &hIcon, 1 );
+	if ( hIcon )
 	{
 		pItem.SetImage( 0, m_gdiImageList.Add( hIcon ));
 		DestroyIcon( hIcon );

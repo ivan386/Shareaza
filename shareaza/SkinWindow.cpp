@@ -1250,7 +1250,8 @@ void CSkinWindow::Paint(CWnd* pWnd, TRISTATE bActive)
 
 	dc.BitBlt( 0, 0, rc.Width(), nCaptionHeight, pDC, 0, 0, SRCCOPY );
 
-	dc.SelectObject( GetStockObject( ANSI_VAR_FONT ) ); // Comctl32.dll font leak fix
+	dc.SelectStockObject( SYSTEM_FONT );  // GDI font leak fix
+	dc.SelectStockObject( NULL_BRUSH );	  // GDI brush leak fix
 }
 
 //////////////////////////////////////////////////////////////////////

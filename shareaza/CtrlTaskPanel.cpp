@@ -1,7 +1,7 @@
 //
 // CtrlTaskPanel.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -581,6 +581,8 @@ void CTaskBox::PaintBorders()
 		dc.Draw3dRect( &rc, CoolInterface.m_crTaskBoxCaptionBack,
 			CoolInterface.m_crTaskBoxCaptionBack );
 	}
+
+	dc.SelectStockObject( SYSTEM_FONT ); // GDI font leak fix
 }
 
 void CTaskBox::InvalidateNonclient()

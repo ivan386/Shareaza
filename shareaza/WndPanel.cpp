@@ -1,7 +1,7 @@
 //
 // WndPanel.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -247,6 +247,7 @@ void CPanelWnd::PaintCaption(CDC& dc)
 	dc.BitBlt( rc.left, rc.top, rc.Width(), rc.Height(), pBuffer, 0, 0, SRCCOPY );
 
 	dc.SelectStockObject( SYSTEM_FONT ); // GDI font leak fix
+	dc.SelectStockObject( NULL_BRUSH );	 // GDI brush leak fix
 }
 
 BOOL CPanelWnd::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)

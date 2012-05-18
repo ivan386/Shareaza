@@ -1,7 +1,7 @@
 //
 // CtrlMainTabBar.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -67,12 +67,12 @@ CMainTabBarCtrl::~CMainTabBarCtrl()
 		delete m_pItems.GetNext( pos );
 	}
 
-	if ( m_dcSkin.m_hDC != NULL )
+	if ( m_dcSkin.m_hDC )
 	{
-		if ( m_hOldSkin != NULL ) m_dcSkin.SelectObject( CBitmap::FromHandle( m_hOldSkin ) );
-		m_bmSkin.DeleteObject();
+		if ( m_hOldSkin ) m_dcSkin.SelectObject( CBitmap::FromHandle( m_hOldSkin ) );
 		m_dcSkin.DeleteDC();
 	}
+	if ( m_bmSkin.m_hObject ) m_bmSkin.DeleteObject();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -103,12 +103,12 @@ void CMainTabBarCtrl::OnSkinChange()
 		m_pItems.AddTail( new TabItem( this, _T("_ID_TAB_IRC") ) );
 	}
 
-	if ( m_dcSkin.m_hDC != NULL )
+	if ( m_dcSkin.m_hDC )
 	{
-		if ( m_hOldSkin != NULL ) m_dcSkin.SelectObject( CBitmap::FromHandle( m_hOldSkin ) );
-		m_bmSkin.DeleteObject();
+		if ( m_hOldSkin ) m_dcSkin.SelectObject( CBitmap::FromHandle( m_hOldSkin ) );
 		m_dcSkin.DeleteDC();
 	}
+	if ( m_bmSkin.m_hObject ) m_bmSkin.DeleteObject();
 
 	m_pSkin = Skin.GetWindowSkin( this );
 
