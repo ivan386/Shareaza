@@ -133,8 +133,9 @@ void CBuffer::Remove(const size_t nLength) throw()
 // Returns the number of bytes moved
 DWORD CBuffer::AddBuffer(CBuffer* pBuffer, const size_t nLength)
 {
-	ASSERT( pBuffer );
-	if ( pBuffer == NULL ) return 0;
+	ASSERT( pBuffer && pBuffer != this );
+	if ( pBuffer == NULL || pBuffer == this )
+		return 0;
 
 	// primitive overflow protection (relevant for 64bit)
 	if ( nLength > INT_MAX ) return 0;
@@ -156,8 +157,9 @@ DWORD CBuffer::AddBuffer(CBuffer* pBuffer, const size_t nLength)
 
 void CBuffer::Attach(CBuffer* pBuffer)
 {
-	ASSERT( pBuffer );
-	if ( pBuffer == NULL ) return;
+	ASSERT( pBuffer && pBuffer != this );
+	if ( pBuffer == NULL || pBuffer == this )
+		return;
 
 	if ( m_pBuffer ) free( m_pBuffer );
 	m_pBuffer = pBuffer->m_pBuffer;
@@ -509,7 +511,10 @@ BOOL CBuffer::Deflate(BOOL bIfSmaller)
 
 	// If compressing the data actually made it bigger, and we were told to watch for this happening
 	if ( bIfSmaller && nCompress >= m_nLength )
+	{
+		free( pCompress );
 		return FALSE;
+	}
 
 	if ( m_pBuffer ) free( m_pBuffer );
 	m_pBuffer = pCompress;

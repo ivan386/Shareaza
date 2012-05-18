@@ -139,9 +139,11 @@ public:
 	HINSTANCE			m_hGeoIP;
 	GeoIP*				m_pGeoIP;
 	typedef GeoIP* (*GeoIP_newFunc)(int);
+	typedef int (*GeoIP_cleanupFunc)(void);
 	typedef void (*GeoIP_deleteFunc)(GeoIP* gi);
 	typedef const char * (*GeoIP_country_code_by_ipnumFunc) (GeoIP* gi, unsigned long ipnum);
 	typedef const char * (*GeoIP_country_name_by_ipnumFunc) (GeoIP* gi, unsigned long ipnum);
+	GeoIP_cleanupFunc				m_pfnGeoIP_cleanup;
 	GeoIP_deleteFunc				m_pfnGeoIP_delete;
 	GeoIP_country_code_by_ipnumFunc	m_pfnGeoIP_country_code_by_ipnum;
 	GeoIP_country_name_by_ipnumFunc	m_pfnGeoIP_country_name_by_ipnum;

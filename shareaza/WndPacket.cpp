@@ -1,7 +1,7 @@
 //
 // WndPacket.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -112,7 +112,14 @@ CPacketWnd::CPacketWnd(CChildWnd* pOwner)
 
 CPacketWnd::~CPacketWnd()
 {
+	CSingleLock pLock( &m_pSection, TRUE );
+
+	m_bPaused = TRUE;
 	theApp.m_pPacketWnd = NULL;
+
+	for ( POSITION pos = m_pQueue.GetHeadPosition() ; pos ; )
+		delete m_pQueue.GetNext( pos );
+	m_pQueue.RemoveAll();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -151,20 +158,10 @@ int CPacketWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 void CPacketWnd::OnDestroy() 
 {
+	m_bPaused = TRUE;
 	theApp.m_pPacketWnd = NULL;
 
 	KillTimer( 2 );
-
-	CSingleLock pLock( &m_pSection, TRUE );
-	m_bPaused = TRUE;
-
-	for ( POSITION pos = m_pQueue.GetHeadPosition() ; pos ; )
-	{
-		delete m_pQueue.GetNext( pos );
-	}
-	m_pQueue.RemoveAll();
-
-	pLock.Unlock();
 
 	Settings.SaveList( _T("CPacketWnd"), &m_wndList );
 	SaveState( _T("CPacketWnd") );
@@ -278,8 +275,11 @@ void CPacketWnd::SmartDump(const CPacket* pPacket, const SOCKADDR_IN* pAddress, 
 	default:
 		;
 	}
-
-	CLiveItem* pItem = new CLiveItem( 8, bOutgoing );
+		
+	CAutoPtr< CLiveItem > pItem( new CLiveItem( 8, bOutgoing ) );
+	if ( ! pItem )
+		// Out of memory
+		return;
 
 	CTime pNow( CTime::GetCurrentTime() );
 	CString strNow;
@@ -304,9 +304,12 @@ void CPacketWnd::SmartDump(const CPacket* pPacket, const SOCKADDR_IN* pAddress, 
 		pItem->Set( 7, ((CG1Packet*)pPacket)->GetGUID() );
 	}
 
-	CSingleLock pLock( &m_pSection, TRUE );
+	CQuickLock pLock( m_pSection );
 
-	m_pQueue.AddTail( pItem );
+	if ( ! theApp.m_pPacketWnd )
+		return;
+
+	m_pQueue.AddTail( pItem.Detach() );
 }
 
 void CPacketWnd::OnTimer(UINT_PTR nIDEvent) 

@@ -1,7 +1,7 @@
 //
 // ZLib.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -35,6 +35,12 @@ static char THIS_FILE[]=__FILE__;
 
 auto_array< BYTE > CZLib::Compress(LPCVOID pInput, DWORD nInput, DWORD* pnOutput, DWORD nSuggest)
 {
+	if ( ! nInput )
+	{
+		*pnOutput = 0;
+		return auto_array< BYTE >();
+	}
+
 	*pnOutput = nSuggest ? nSuggest : compressBound( nInput );
 
 	// Allocate a new buffer of pnOutput bytes
@@ -46,8 +52,7 @@ auto_array< BYTE > CZLib::Compress(LPCVOID pInput, DWORD nInput, DWORD* pnOutput
 	}
 
 	// Compress the data at pInput into pBuffer, putting how many bytes it wrote under pnOutput
-	int nRes = compress2( pBuffer.get(), pnOutput, (const BYTE *)pInput, nInput,
-		Settings.Connection.ZLibCompressionLevel );
+	int nRes = compress2( pBuffer.get(), pnOutput, (const BYTE *)pInput, nInput, Settings.Connection.ZLibCompressionLevel );
 	if ( nRes != Z_OK )
 	{
 		// The compress function reported error
@@ -61,6 +66,12 @@ auto_array< BYTE > CZLib::Compress(LPCVOID pInput, DWORD nInput, DWORD* pnOutput
 
 BYTE* CZLib::Compress2(LPCVOID pInput, DWORD nInput, DWORD* pnOutput, DWORD nSuggest)
 {
+	if ( ! nInput )
+	{
+		*pnOutput = 0;
+		return NULL;
+	}
+
 	*pnOutput = nSuggest ? nSuggest : compressBound( nInput );
 
 	// Allocate a new buffer of pnOutput bytes
@@ -72,7 +83,7 @@ BYTE* CZLib::Compress2(LPCVOID pInput, DWORD nInput, DWORD* pnOutput, DWORD nSug
 	}
 
 	// Compress the data at pInput into pBuffer, putting how many bytes it wrote under pnOutput
-	int nRes = compress( pBuffer, pnOutput, (const BYTE *)pInput, nInput );
+	int nRes = compress2( pBuffer, pnOutput, (const BYTE *)pInput, nInput, Settings.Connection.ZLibCompressionLevel );
 	if ( nRes != Z_OK )
 	{
 		// The compress function reported error
@@ -136,7 +147,7 @@ BYTE* CZLib::Decompress2(LPCVOID pInput, DWORD nInput, DWORD* pnOutput)
 		// Uncompress the data from pInput into pBuffer, writing how big it is now in pnOutput
 		int nRes = uncompress( pBuffer, pnOutput, (const BYTE *)pInput, nInput );
 		if ( Z_OK == nRes )
-			break;
+			return pBuffer;
 
 		if ( Z_BUF_ERROR != nRes )
 		{
@@ -146,6 +157,4 @@ BYTE* CZLib::Decompress2(LPCVOID pInput, DWORD nInput, DWORD* pnOutput)
 			return NULL;
 		}
 	}
-
-	return pBuffer;
 }
