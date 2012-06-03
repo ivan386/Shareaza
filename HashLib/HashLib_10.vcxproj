@@ -162,6 +162,7 @@
       <WarningLevel>Level4</WarningLevel>
       <DisableSpecificWarnings>4986</DisableSpecificWarnings>
       <FunctionLevelLinking>true</FunctionLevelLinking>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

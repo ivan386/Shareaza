@@ -296,7 +296,7 @@ END
 
 VS_VERSION_INFO VERSIONINFO
  FILEVERSION 1,1,0,0
- PRODUCTVERSION 2,5,5,0
+ PRODUCTVERSION 2,6,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -318,7 +318,7 @@ BEGIN
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2003-2011. All rights reserved."
             VALUE "OriginalFilename", "TorrentWizard.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 5, 5, 0"
+            VALUE "ProductVersion", "2, 6, 0, 0"
         END
     END
     BLOCK "VarFileInfo"
