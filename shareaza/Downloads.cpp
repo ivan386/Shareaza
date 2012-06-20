@@ -154,6 +154,7 @@ CDownload* CDownloads::Add(CQueryHit* pHit, BOOL bAddToHead)
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 
 	CDownload* pDownload = NULL;
+	BOOL bNew = TRUE;
 
 	if ( pDownload == NULL && pHit->m_oSHA1 )
 		pDownload = FindBySHA1( pHit->m_oSHA1 );
@@ -166,25 +167,27 @@ CDownload* CDownloads::Add(CQueryHit* pHit, BOOL bAddToHead)
 	if ( pDownload == NULL && pHit->m_oMD5 )
 		pDownload = FindByMD5( pHit->m_oMD5 );
 
-	if ( pDownload != NULL )
+	if ( pDownload != NULL && ! pDownload->IsSeeding() )
 	{
-		theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_ALREADY, (LPCTSTR)pHit->m_sName );
+		theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_ALREADY, (LPCTSTR)pDownload->GetDisplayName() );
 
-		pDownload->AddSourceHit( pHit );
-
-		if ( pDownload->IsPaused() )
-			pDownload->Resume();
+		bNew = FALSE;
 	}
 	else
 	{
 		pDownload = Add( bAddToHead );
+		if ( ! pDownload )
+			return NULL;
+	}
 
-		pDownload->AddSourceHit( pHit, TRUE );
+	pDownload->AddSourceHit( pHit, bNew );
 
-		theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_ADDED,
-			(LPCTSTR)pDownload->GetDisplayName(), pDownload->GetSourceCount() );
+	if ( bNew )
+	{
+		theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_ADDED, (LPCTSTR)pDownload->GetDisplayName(), pDownload->GetEffectiveSourceCount() );
 
 		if ( pDownload->m_oSHA1 ) pDownload->m_bSHA1Trusted = true;
+		if ( pDownload->m_oTiger ) pDownload->m_bTigerTrusted = true;
 		if ( pDownload->m_oED2K ) pDownload->m_bED2KTrusted = true;
 		if ( pDownload->m_oBTH ) pDownload->m_bBTHTrusted = true;
 		if ( pDownload->m_oMD5 ) pDownload->m_bMD5Trusted = true;
@@ -206,6 +209,7 @@ CDownload* CDownloads::Add(CMatchFile* pFile, BOOL bAddToHead)
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 
 	CDownload* pDownload = NULL;
+	BOOL bNew = TRUE;
 
 	if ( pDownload == NULL && pFile->m_oSHA1 )
 		pDownload = FindBySHA1( pFile->m_oSHA1 );
@@ -218,25 +222,27 @@ CDownload* CDownloads::Add(CMatchFile* pFile, BOOL bAddToHead)
 	if ( pDownload == NULL && pFile->m_oMD5 )
 		pDownload = FindByMD5( pFile->m_oMD5 );
 
-	if ( pDownload != NULL )
+	if ( pDownload != NULL && ! pDownload->IsSeeding() )
 	{
-		theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_ALREADY, (LPCTSTR)pFile->m_sName );
+		theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_ALREADY, (LPCTSTR)pDownload->GetDisplayName() );
 
-		pFile->AddHitsToDownload( pDownload );
-
-		if ( pDownload->IsPaused() )
-			pDownload->Resume();
+		bNew = FALSE;
 	}
 	else
 	{
 		pDownload = Add( bAddToHead );
+		if ( ! pDownload )
+			return NULL;
+	}
 
-		pFile->AddHitsToDownload( pDownload, TRUE );
+	pDownload->AddSourceHit( pFile, bNew );
 
-		theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_ADDED,
-			(LPCTSTR)pDownload->GetDisplayName(), pDownload->GetSourceCount() );
+	if ( bNew )
+	{
+		theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_ADDED, (LPCTSTR)pDownload->GetDisplayName(), pDownload->GetEffectiveSourceCount() );
 
 		if ( pDownload->m_oSHA1 ) pDownload->m_bSHA1Trusted = true;
+		if ( pDownload->m_oTiger ) pDownload->m_bTigerTrusted = true;
 		if ( pDownload->m_oED2K ) pDownload->m_bED2KTrusted = true;
 		if ( pDownload->m_oBTH ) pDownload->m_bBTHTrusted = true;
 		if ( pDownload->m_oMD5 ) pDownload->m_bMD5Trusted = true;
@@ -256,7 +262,7 @@ CDownload* CDownloads::Add(CMatchFile* pFile, BOOL bAddToHead)
 //////////////////////////////////////////////////////////////////////
 // CDownloads add download from a URL
 
-CDownload* CDownloads::Add(const CShareazaURL& oURL)
+CDownload* CDownloads::Add(const CShareazaURL& oURL, BOOL bAddToHead)
 {
 	if ( oURL.m_nAction != CShareazaURL::uriDownload &&
 		 oURL.m_nAction != CShareazaURL::uriSource ) return NULL;
@@ -277,80 +283,37 @@ CDownload* CDownloads::Add(const CShareazaURL& oURL)
 	if ( pDownload == NULL && oURL.m_oMD5 )
 		pDownload = FindByMD5( oURL.m_oMD5 );
 
-	if ( pDownload != NULL && !pDownload->IsSeeding() )
+	if ( pDownload != NULL && ! pDownload->IsSeeding() )
 	{
-		theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_ALREADY,
-			(LPCTSTR)pDownload->GetDisplayName() );
+		theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_ALREADY, (LPCTSTR)pDownload->GetDisplayName() );
 
 		bNew = FALSE;
 	}
 	else
-		pDownload = Add();
-
-	if ( ! pDownload->m_oSHA1 && oURL.m_oSHA1 )
 	{
-		pDownload->m_oSHA1			= oURL.m_oSHA1;
-		pDownload->m_bSHA1Trusted = true;
-	}
-	if ( ! pDownload->m_oTiger && oURL.m_oTiger )
-	{
-		pDownload->m_oTiger			= oURL.m_oTiger;
-		pDownload->m_bTigerTrusted = true;
-	}
-	if ( ! pDownload->m_oED2K && oURL.m_oED2K )
-	{
-		pDownload->m_oED2K			= oURL.m_oED2K;
-		pDownload->m_bED2KTrusted = true;
-		pDownload->Share( TRUE );
-	}
-	if ( ! pDownload->m_oBTH && oURL.m_oBTH )
-	{
-		pDownload->m_oBTH			= oURL.m_oBTH;
-		pDownload->m_bBTHTrusted = true;
-		pDownload->Share( TRUE );
-	}
-	if ( ! pDownload->m_oMD5 && oURL.m_oMD5 )
-	{
-		pDownload->m_oMD5			= oURL.m_oMD5;
-		pDownload->m_bMD5Trusted = true;
-		pDownload->Share( TRUE );
+		pDownload = Add( bAddToHead );
+		if ( ! pDownload )
+			return NULL;
 	}
 
-	if ( ! pDownload->m_sName.GetLength() && oURL.m_sName.GetLength() )
-	{
-		pDownload->Rename( oURL.m_sName );
-	}
-
-	if ( pDownload->m_nSize == SIZE_UNKNOWN && oURL.m_bSize )
-	{
-		pDownload->m_nSize = oURL.m_nSize;
-	}
-
-	if ( oURL.m_sURL.GetLength() )
-	{
-		if ( ! pDownload->AddSourceURLs( oURL.m_sURL, FALSE ) && bNew )
-		{
-			if ( oURL.m_nAction == CShareazaURL::uriSource )
-			{
-				Remove( pDownload );
-				return NULL;
-			}
-		}
-	}
-
-	if ( oURL.m_pTorrent )
-	{
-		pDownload->SetTorrent( oURL.m_pTorrent );
-	}
+	pDownload->AddSourceHit( oURL, bNew );
 
 	if ( bNew )
 	{
-		theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_ADDED,
-			(LPCTSTR)pDownload->GetDisplayName(), pDownload->GetEffectiveSourceCount() );
+		theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_ADDED, (LPCTSTR)pDownload->GetDisplayName(), pDownload->GetEffectiveSourceCount() );
 
-		DownloadGroups.Link( pDownload );
-		Transfers.StartThread();
+		if ( pDownload->m_oSHA1 ) pDownload->m_bSHA1Trusted = true;
+		if ( pDownload->m_oTiger ) pDownload->m_bTigerTrusted = true;
+		if ( pDownload->m_oED2K ) pDownload->m_bED2KTrusted = true;
+		if ( pDownload->m_oBTH ) pDownload->m_bBTHTrusted = true;
+		if ( pDownload->m_oMD5 ) pDownload->m_bMD5Trusted = true;
 	}
+
+	DownloadGroups.Link( pDownload );
+	Transfers.StartThread();
+
+	if ( bAddToHead )
+		pDownload->Resume();
 
 	return pDownload;
 }
@@ -695,6 +658,8 @@ CDownload* CDownloads::FindByMD5(const Hashes::Md5Hash& oMD5, BOOL bSharedOnly) 
 
 CDownload* CDownloads::FindBySID(DWORD nSerID) const
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CDownload* pDownload = GetNext( pos );
@@ -706,10 +671,10 @@ CDownload* CDownloads::FindBySID(DWORD nSerID) const
 
 DWORD CDownloads::GetFreeSID()
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	for ( ;; )
 	{
-		CQuickLock pLock( Transfers.m_pSection );
-
 		DWORD nSerID = GetRandomNum( 0ui32, _UI32_MAX );
 		for ( POSITION pos = GetIterator() ; pos ; )
 		{
@@ -719,9 +684,6 @@ DWORD CDownloads::GetFreeSID()
 
 		if ( nSerID ) return nSerID;
 	}
-
-//	ASSERT( FALSE );
-//	return 0;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -1396,8 +1358,10 @@ void CDownloads::SerializeCompound(CArchive& ar)
 
 	for ( DWORD_PTR nCount = ar.ReadCount() ; nCount > 0 ; nCount-- )
 	{
-		CDownload* pDownload = Add();
-		pDownload->Serialize( ar, nVersion );
+		if ( CDownload* pDownload = Add() )
+		{
+			pDownload->Serialize( ar, nVersion );
+		}
 	}
 }
 

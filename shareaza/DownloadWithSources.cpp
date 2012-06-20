@@ -1,7 +1,7 @@
 //
 // DownloadWithSources.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -27,6 +27,7 @@
 #include "DownloadWithSources.h"
 #include "DownloadTransfer.h"
 #include "DownloadSource.h"
+#include "MatchObjects.h"
 #include "Network.h"
 #include "Neighbours.h"
 #include "Transfer.h"
@@ -245,10 +246,12 @@ void CDownloadWithSources::ClearSources()
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithSources add a query-hit source
 
-BOOL CDownloadWithSources::AddSourceHit(const CQueryHit* pHit, BOOL bForce)
+BOOL CDownloadWithSources::AddSource(const CShareazaFile* pHit, BOOL bForce)
 {
-	CQuickLock pLock( Transfers.m_pSection );
+	ASSUME_LOCK( Transfers.m_pSection );
 
+	BOOL bHitHasName = ( pHit->m_sName.GetLength() != 0 );
+	BOOL bHitHasSize = ( pHit->m_nSize != 0 && pHit->m_nSize != SIZE_UNKNOWN );
 	BOOL bHash = FALSE;
 	BOOL bUpdated = FALSE;
 	
@@ -285,15 +288,13 @@ BOOL CDownloadWithSources::AddSourceHit(const CQueryHit* pHit, BOOL bForce)
 	if ( ! bHash && ! bForce )
 	{
 		if ( Settings.General.HashIntegrity ) return FALSE;
-		
-		if ( m_sName.IsEmpty() || pHit->m_sName.IsEmpty() ) return FALSE;
-		if ( m_nSize == SIZE_UNKNOWN || ! pHit->m_bSize ) return FALSE;
-		
+		if ( m_sName.IsEmpty() || ! bHitHasName ) return FALSE;
+		if ( m_nSize == SIZE_UNKNOWN || ! bHitHasSize ) return FALSE;
 		if ( m_nSize != pHit->m_nSize ) return FALSE;
 		if ( m_sName.CompareNoCase( pHit->m_sName ) ) return FALSE;
 	}
 
-	if ( m_nSize != SIZE_UNKNOWN && pHit->m_bSize && m_nSize != pHit->m_nSize )
+	if ( m_nSize != SIZE_UNKNOWN && bHitHasSize && m_nSize != pHit->m_nSize )
 		return FALSE;
 
 	if ( !m_oSHA1 && pHit->m_oSHA1 )
@@ -321,29 +322,40 @@ BOOL CDownloadWithSources::AddSourceHit(const CQueryHit* pHit, BOOL bForce)
 		m_oMD5 = pHit->m_oMD5;
 		bUpdated = TRUE;
 	}
-	if ( m_nSize == SIZE_UNKNOWN && pHit->m_bSize )
+	if ( m_nSize == SIZE_UNKNOWN && bHitHasSize )
 	{
 		m_nSize = pHit->m_nSize;
 		bUpdated = TRUE;
 	}
-	if ( m_sName.IsEmpty() && pHit->m_sName.GetLength() )
+	if ( m_sName.IsEmpty() && bHitHasName )
 	{
 		Rename( pHit->m_sName );
 		bUpdated = TRUE;
 	}
-	
-	if ( Settings.Downloads.Metadata && m_pXML == NULL )
-	{
-		if ( pHit->m_pXML && pHit->m_pSchema )
-		{
-			m_pXML = pHit->m_pSchema->Instantiate( TRUE );
-			m_pXML->AddElement( pHit->m_pXML->Clone() );
-			pHit->m_pSchema->Validate( m_pXML, TRUE );
-		}
-	}
 
 	if ( bUpdated )
+	{
 		((CDownload*)this)->m_bUpdateSearch = TRUE;
+	
+		QueryHashMaster.Invalidate();
+	}
+
+	return TRUE;
+}
+
+BOOL CDownloadWithSources::AddSourceHit(const CQueryHit* pHit, BOOL bForce)
+{
+	CQuickLock oLock( Transfers.m_pSection );
+
+	if ( ! AddSource( pHit, bForce ) )
+		return FALSE;
+
+	if ( Settings.Downloads.Metadata && m_pXML == NULL && pHit->m_pXML && pHit->m_pSchema )
+	{
+		m_pXML = pHit->m_pSchema->Instantiate( TRUE );
+		m_pXML->AddElement( pHit->m_pXML->Clone() );
+		pHit->m_pSchema->Validate( m_pXML, TRUE );
+	}
 
 	/*
 	if ( pHit->m_nProtocol == PROTOCOL_ED2K )
@@ -354,7 +366,7 @@ BOOL CDownloadWithSources::AddSourceHit(const CQueryHit* pHit, BOOL bForce)
 	*/
 
 	// No URL, stop now with success
-	if ( ! pHit->m_sURL.IsEmpty() )
+	if ( pHit->m_sURL.GetLength() )
 	{	
 		if ( ! AddSourceInternal( new CDownloadSource( (CDownload*)this, pHit ) ) )
 		{
@@ -362,8 +374,58 @@ BOOL CDownloadWithSources::AddSourceHit(const CQueryHit* pHit, BOOL bForce)
 		}
 	}
 
-	if ( bUpdated )
-		QueryHashMaster.Invalidate();
+	return TRUE;
+}
+
+BOOL CDownloadWithSources::AddSourceHit(const CMatchFile* pMatchFile, BOOL bForce)
+{
+	BOOL bRet = FALSE;
+
+	// Best goes first if forced
+	const CQueryHit* pBestHit = pMatchFile->GetBest();
+	if ( bForce && pBestHit )
+	{
+		bRet = AddSourceHit( pBestHit, TRUE );
+	}
+
+	for ( const CQueryHit* pHit = pMatchFile->GetHits() ; pHit; pHit = pHit->m_pNext )
+	{
+		if ( bForce )
+		{
+			// Best already added
+			if ( pHit != pBestHit )
+			{
+				bRet = AddSourceHit( pHit, TRUE ) || bRet;
+			}
+		}
+		else
+		{
+			bRet = AddSourceHit( pHit, FALSE ) || bRet;
+		}
+	}
+
+	return bRet;
+}
+
+BOOL CDownloadWithSources::AddSourceHit(const CShareazaURL& oURL, BOOL bForce)
+{
+	CQuickLock oLock( Transfers.m_pSection );
+
+	if ( ! AddSource( &oURL, bForce ) )
+		return FALSE;
+
+	if ( oURL.m_pTorrent )
+	{
+		((CDownload*)this)->SetTorrent( oURL.m_pTorrent );
+	}
+
+	if ( oURL.m_sURL.GetLength() )
+	{
+		if ( ! AddSourceURLs( oURL.m_sURL ) )
+		{
+			return FALSE;
+		}
+	}
 
 	return TRUE;
 }
@@ -538,8 +600,6 @@ int CDownloadWithSources::AddSourceURLs(LPCTSTR pszURLs, BOOL bURN, BOOL bFailed
 		ClearSources();
 		return 0;
 	}
-	else if ( IsPaused() )
-		return 0;
 
 	int nCount = 0;
 

@@ -1,7 +1,7 @@
 //
 // DownloadWithSources.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -25,6 +25,8 @@
 
 class CDownloadSource;
 class CQueryHit;
+class CMatchFile;
+class CShareazaURL;
 class CXMLElement;
 
 class CFailedSource
@@ -83,6 +85,8 @@ public:
 	void				ClearFailedSources();
 	void				MergeMetadata(const CXMLElement* pXML);
 	BOOL				AddSourceHit(const CQueryHit* pHit, BOOL bForce = FALSE);
+	BOOL				AddSourceHit(const CMatchFile* pMatchFile, BOOL bForce = FALSE);
+	BOOL				AddSourceHit(const CShareazaURL& oURL, BOOL bForce = FALSE);
 	BOOL				AddSourceED2K(DWORD nClientID, WORD nClientPort, DWORD nServerIP, WORD nServerPort, const Hashes::Guid& oGUID);
     BOOL				AddSourceBT(const Hashes::BtGuid& oGUID, const IN_ADDR* pAddress, WORD nPort);
 	BOOL				AddSourceURL(LPCTSTR pszURL, BOOL bURN = FALSE, FILETIME* pLastSeen = NULL, int nRedirectionCount = 0, BOOL bFailed = FALSE);
@@ -103,6 +107,7 @@ public:
 	bool				HasMetadata() const;
 
 protected:
+	BOOL				AddSource(const CShareazaFile* pHit, BOOL bForce);
 	void				RemoveOverlappingSources(QWORD nOffset, QWORD nLength);
 	BOOL				AddSourceInternal(CDownloadSource* pSource);
 	void				SortSource(CDownloadSource* pSource, BOOL bTop);

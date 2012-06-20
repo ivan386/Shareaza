@@ -1,7 +1,7 @@
 //
 // WndBaseMatch.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -78,6 +78,8 @@ public:
 // Implementation
 protected:
 	virtual void	OnSkinChange();
+
+	void OnDownload(BOOL bAddToHead);
 
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnDestroy();

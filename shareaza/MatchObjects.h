@@ -292,7 +292,6 @@ public:
 	void		GetStatusTip(CString& sStatus, COLORREF& crStatus);
 
 	// Output some data
-	void		AddHitsToDownload(CDownload* pDownload, BOOL bForce = FALSE) const;
 	void		AddHitsToXML(CXMLElement* pXML) const;
 	CSchemaPtr	AddHitsToMetadata(CMetaList& oMetadata) const;
 	BOOL		AddHitsToPreviewURLs(CList < CString > & oPreviewURLs) const;
