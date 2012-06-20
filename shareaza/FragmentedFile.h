@@ -1,7 +1,7 @@
 //
 // FragmentedFile.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -154,13 +154,13 @@ protected:
 	// Get completed size of defined range (in bytes)
 	QWORD GetCompleted(QWORD nOffset, QWORD nLength) const;
 
+	// Open file from disk
+	BOOL	Open(LPCTSTR pszFile, QWORD nOffset = 0, QWORD nLength = SIZE_UNKNOWN, BOOL bWrite = FALSE, LPCTSTR pszName = NULL, int nPriority = prNormal );
+
 public:
 	void	SetDownload(const CDownload* pDownload);
-	// Open file from disk
-	BOOL	Open(LPCTSTR pszFile, QWORD nOffset = 0, QWORD nLength = SIZE_UNKNOWN,
-		BOOL bWrite = FALSE, LPCTSTR pszName = NULL, int nPriority = prNormal );
 	// Open file from disk or create file inside incomplete folder from library by hash
-	BOOL	Open(CShareazaFile& oSHFile, BOOL bWrite);
+	BOOL	Open(const CShareazaFile* pSHFile, BOOL bWrite);
 	// Open file from disk or create file inside incomplete folder file(s) from .torrent
 	BOOL	Open(const CBTInfo& oInfo, BOOL bWrite, CString& sErrorMessage);
 	ULONG	AddRef();

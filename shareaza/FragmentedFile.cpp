@@ -148,8 +148,7 @@ void CFragmentedFile::Dump(CDumpContext& dc) const
 //////////////////////////////////////////////////////////////////////
 // CFragmentedFile open
 
-BOOL CFragmentedFile::Open(LPCTSTR pszFile, QWORD nOffset, QWORD nLength,
-	BOOL bWrite, LPCTSTR pszName, int nPriority)
+BOOL CFragmentedFile::Open(LPCTSTR pszFile, QWORD nOffset, QWORD nLength, BOOL bWrite, LPCTSTR pszName, int nPriority)
 {
 	if ( ! pszFile || ! *pszFile )
 	{
@@ -269,10 +268,8 @@ BOOL CFragmentedFile::Open(LPCTSTR pszFile, QWORD nOffset, QWORD nLength,
 	return pFile && ( m_nFileError == ERROR_SUCCESS );
 }
 
-BOOL CFragmentedFile::Open(CShareazaFile& oSHFile, BOOL bWrite)
+BOOL CFragmentedFile::Open(const CShareazaFile* pSHFile, BOOL bWrite)
 {
-	CString sUniqueName = oSHFile.GetFilename();
-
 	CString strSource;
 	if ( ! m_oFile.empty() )
 	{
@@ -283,49 +280,37 @@ BOOL CFragmentedFile::Open(CShareazaFile& oSHFile, BOOL bWrite)
 	{
 		// Generate new filename (inside incomplete folder)
 		strSource.Format( _T("%s\\%s.partial"),
-			(LPCTSTR)Settings.Downloads.IncompletePath, (LPCTSTR)sUniqueName );
+			(LPCTSTR)Settings.Downloads.IncompletePath, (LPCTSTR)pSHFile->GetFilename() );
 	}
-	else if ( GetFileAttributes( CString( _T("\\\\?\\") ) + oSHFile.m_sPath ) != INVALID_FILE_ATTRIBUTES )
+	else if ( GetFileAttributes( CString( _T("\\\\?\\") ) + pSHFile->m_sPath ) != INVALID_FILE_ATTRIBUTES )
 	{
 		// Use specified file path
-		strSource = oSHFile.m_sPath;
+		strSource = pSHFile->m_sPath;
 	}
 	else
 	{
 		// Open existing file from library
 		CSingleLock oLock( &Library.m_pSection, TRUE );
-		if ( CLibraryFile* pFile = LibraryMaps.LookupFileByHash( &oSHFile, TRUE, TRUE ) )
+		if ( CLibraryFile* pFile = LibraryMaps.LookupFileByHash( pSHFile, FALSE, TRUE ) )
 		{
 			strSource = pFile->GetPath();
 		}
 	}
 
-	if ( oSHFile.m_sPath.IsEmpty() )
-	{
-		oSHFile.m_sPath = strSource;
-	}
-
-	if ( ! Open( strSource, 0, oSHFile.m_nSize, bWrite, oSHFile.m_sName ) )
+	if ( ! Open( strSource, 0, pSHFile->m_nSize, bWrite, pSHFile->m_sName ) )
 	{
 		CString strMessage;
-		strMessage.Format( LoadString( bWrite ? IDS_DOWNLOAD_FILE_CREATE_ERROR :
-			IDS_DOWNLOAD_FILE_OPEN_ERROR ), (LPCTSTR)strSource );
-		theApp.Message( MSG_ERROR, _T("%s %s"),
-			strMessage, (LPCTSTR)GetErrorString( m_nFileError ) );
-
+		strMessage.Format( LoadString( bWrite ? IDS_DOWNLOAD_FILE_CREATE_ERROR : IDS_DOWNLOAD_FILE_OPEN_ERROR ), (LPCTSTR)strSource );
+		theApp.Message( MSG_ERROR, _T("%s %s"), strMessage, (LPCTSTR)GetErrorString( m_nFileError ) );
 		Close();
 		return FALSE;
 	}
 
-	TRACE( _T("Fragmented File : Opened from disk \"%s\"\n"), sUniqueName );
-
 	return TRUE;
 }
 
-BOOL CFragmentedFile::Open(const CBTInfo& oInfo, const BOOL bWrite,
-	CString& strErrorMessage)
+BOOL CFragmentedFile::Open(const CBTInfo& oInfo, const BOOL bWrite, CString& strErrorMessage)
 {
-	CString sUniqueName = oInfo.GetFilename();
 	size_t i = 0;
 	const size_t nCount = m_oFile.size();
 	QWORD nOffset = 0;
@@ -345,7 +330,7 @@ BOOL CFragmentedFile::Open(const CBTInfo& oInfo, const BOOL bWrite,
 		{
 			// Generate new filename (inside incomplete folder)
 			strSource.Format( _T("%s\\%s_%u.partial"),
-				(LPCTSTR)Settings.Downloads.IncompletePath, (LPCTSTR)sUniqueName, (DWORD)i );
+				(LPCTSTR)Settings.Downloads.IncompletePath, (LPCTSTR)oInfo.GetFilename(), (DWORD)i );
 		}
 		else
 		{

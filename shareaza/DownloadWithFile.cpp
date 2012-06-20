@@ -172,7 +172,7 @@ BOOL CDownloadWithFile::OpenFile()
 			// TODO: Refactor m_sTorrentTrackerError
 			pThis->m_sTorrentTrackerError.Empty();
 
-			if ( m_pFile->Open( *this, ! IsCompleted() ) )
+			if ( m_pFile->Open( this, ! IsCompleted() ) )
 				return TRUE;
 		}
 
