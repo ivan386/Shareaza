@@ -2971,6 +2971,10 @@ bool SaveGUID(const CString& sFilename, const Hashes::Guid& oGUID)
 	bool bSuccess = false;
 	if ( Settings.Library.UseFolderGUID )
 	{
+		Hashes::Guid oCurrentGUID;
+		if ( LoadGUID( sFilename, oCurrentGUID ) && oCurrentGUID == oGUID )
+			return true;
+
 		// Temporary clear R/O attribute
 		BOOL bChanged = FALSE;
 		DWORD dwOrigAttr = GetFileAttributes( CString( _T("\\\\?\\") ) + sFilename );
