@@ -1,27 +1,109 @@
-; Input defines: ConfigurationName (Debug or Release), PlatformName (Win32, x64, etc.)
+;
+; main.iss
+;
+; Copyright (c) Shareaza Development Team, 2002-2012.
+; This file is part of SHAREAZA (shareaza.sourceforge.net)
+;
+; Shareaza is free software; you can redistribute it
+; and/or modify it under the terms of the GNU General Public License
+; as published by the Free Software Foundation; either version 2 of
+; the License, or (at your option) any later version.
+;
+; Shareaza is distributed in the hope that it will be useful,
+; but WITHOUT ANY WARRANTY; without even the implied warranty of
+; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+; GNU General Public License for more details.
+;
+; You should have received a copy of the GNU General Public License
+; along with Shareaza; if not, write to the Free Software
+; Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+;
 
-#include SourcePath + "..\..\build.h"
-
-#if VER < 0x05030900
-  #error Inno Setup version 5.3.9 or higher is needed for this script
+#if VER < 0x05050000
+  #error Inno Setup version 5.5.0 or higher is needed for this script
 #endif
-#if PREPROCVER < 0x05020000
-  #error PreProcessor version 5.2.0.0 or higher is needed for this script
+#if PREPROCVER < 0x05050000
+  #error Inno Setup PreProcessor version 5.5.0.0 or higher is needed for this script
+#endif
+#ifndef UNICODE
+  #error Inno Setup UNICODE version is needed for this script
 #endif
 
 ; Project definitions
-#ifexist SourcePath + "..\..\vc9\" + PlatformName + "\" + ConfigurationName + "\Shareaza.exe"
-  #define Compiler "vc9"
-#endif
-#ifexist SourcePath + "..\..\vc10\" + PlatformName + "\" + ConfigurationName + "\Shareaza.exe"
+#include SourcePath + "..\..\build.h"
+
+; Test for VS2010
+#ifexist SourcePath + "..\..\vc10\Win32\Release\Shareaza.exe"
   #ifdef Compiler
     #error Found a few Shareaza.exe files, you need to leave only one
   #endif
   #define Compiler "vc10"
+  #define PlatformName "Win32"
+  #define ConfigurationName "Release"
 #endif
+#ifexist SourcePath + "..\..\vc10\x64\Release\Shareaza.exe"
+  #ifdef Compiler
+    #error Found a few Shareaza.exe files, you need to leave only one
+  #endif
+  #define Compiler "vc10"
+  #define PlatformName "x64"
+  #define ConfigurationName "Release"
+#endif
+#ifexist SourcePath + "..\..\vc10\Win32\Debug\Shareaza.exe"
+  #ifdef Compiler
+    #error Found a few Shareaza.exe files, you need to leave only one
+  #endif
+  #define Compiler "vc10"
+  #define PlatformName "Win32"
+  #define ConfigurationName "Debug"
+#endif
+#ifexist SourcePath + "..\..\vc10\x64\Debug\Shareaza.exe"
+  #ifdef Compiler
+    #error Found a few Shareaza.exe files, you need to leave only one
+  #endif
+  #define Compiler "vc10"
+  #define PlatformName "x64"
+  #define ConfigurationName "Debug"
+#endif
+
+; Test for VS2008
+#ifexist SourcePath + "..\..\vc9\Win32\Release\Shareaza.exe"
+  #ifdef Compiler
+    #error Found a few Shareaza.exe files, you need to leave only one
+  #endif
+  #define Compiler "vc9"
+  #define PlatformName "Win32"
+  #define ConfigurationName "Release"
+#endif
+#ifexist SourcePath + "..\..\vc9\x64\Release\Shareaza.exe"
+  #ifdef Compiler
+    #error Found a few Shareaza.exe files, you need to leave only one
+  #endif
+  #define Compiler "vc9"
+  #define PlatformName "x64"
+  #define ConfigurationName "Release"
+#endif
+#ifexist SourcePath + "..\..\vc9\Win32\Debug\Shareaza.exe"
+  #ifdef Compiler
+    #error Found a few Shareaza.exe files, you need to leave only one
+  #endif
+  #define Compiler "vc9"
+  #define PlatformName "Win32"
+  #define ConfigurationName "Debug"
+#endif
+#ifexist SourcePath + "..\..\vc9\x64\Debug\Shareaza.exe"
+  #ifdef Compiler
+    #error Found a few Shareaza.exe files, you need to leave only one
+  #endif
+  #define Compiler "vc9"
+  #define PlatformName "x64"
+  #define ConfigurationName "Debug"
+#endif
+
 #ifndef Compiler
   #error No Shareaza.exe files are found, compile some
 #endif
+
 #define shareaza SourcePath + "..\..\" + Compiler + "\" + PlatformName + "\" + ConfigurationName + "\Shareaza.exe"
 #define internal_name GetStringFileInfo(shareaza, INTERNAL_NAME)
 #if ConfigurationName == "Debug"
@@ -56,6 +138,7 @@ OutputBaseFilename={#output_name}
 SolidCompression=yes
 Compression=lzma2/max
 InternalCompressLevel=max
+LZMAUseSeparateProcess=yes
 PrivilegesRequired=poweruser
 ShowLanguageDialog=yes
 LanguageDetectionMethod=locale
@@ -70,7 +153,7 @@ WizardSmallImageFile=setup\misc\corner_55x55.bmp
 ChangesAssociations=yes
 ChangesEnvironment=yes
 OutputManifestFile=Manifest_{#ConfigurationName}{#PlatformName}.txt
-MinVersion=0,5.0
+MinVersion=5.0
 #if PlatformName == "x64"
 ArchitecturesAllowed=x64
 ArchitecturesInstallIn64BitMode=x64
@@ -93,8 +176,8 @@ AppUpdatesURL=http://shareaza.sourceforge.net/?id=download
 Name: "language"; Description: "{cm:tasks_languages}";
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"
 Name: "quicklaunch"; Description: "{cm:CreateQuickLaunchIcon}"
-;Name: "firewall"; Description: "{cm:tasks_firewall}"; MinVersion: 0,5.01sp2
-Name: "upnp"; Description: "{cm:tasks_upnp}"; MinVersion: 0,5.01; Check: CanUserModifyServices; Flags: unchecked
+Name: "firewall"; Description: "{cm:tasks_firewall}"; MinVersion: 5.1sp2
+Name: "upnp"; Description: "{cm:tasks_upnp}"; MinVersion: 5.1; Check: CanUserModifyServices
 #if RELEASE_BUILD == 1
 Name: "deleteoldsetup"; Description: "{cm:tasks_deleteoldsetup}"; Check: EnableDeleteOldSetup
 #endif
@@ -546,18 +629,18 @@ var
   FirewallFailed: string;
   HasUserPrivileges: Boolean;
 
-// NT API functions for services
+{ NT API functions for services }
 Function OpenSCManager(lpMachineName, lpDatabaseName: string; dwDesiredAccess: cardinal): HANDLE;
-external 'OpenSCManagerA@advapi32.dll stdcall setuponly';
+external 'OpenSCManagerW@advapi32.dll stdcall setuponly';
 
 Function OpenService(hSCManager: HANDLE; lpServiceName: string; dwDesiredAccess: cardinal): HANDLE;
-external 'OpenServiceA@advapi32.dll stdcall setuponly';
+external 'OpenServiceW@advapi32.dll stdcall setuponly';
 
 Function CloseServiceHandle(hSCObject: HANDLE): Boolean;
 external 'CloseServiceHandle@advapi32.dll stdcall setuponly';
 
 Function StartNTService(hService: HANDLE; dwNumServiceArgs: cardinal; lpServiceArgVectors: cardinal): Boolean;
-external 'StartServiceA@advapi32.dll stdcall setuponly';
+external 'StartServiceW@advapi32.dll stdcall setuponly';
 
 Function QueryServiceStatus(hService: HANDLE; var ServiceStatus: SERVICE_STATUS): Boolean;
 external 'QueryServiceStatus@advapi32.dll stdcall setuponly';
@@ -565,7 +648,7 @@ external 'QueryServiceStatus@advapi32.dll stdcall setuponly';
 Function ChangeServiceConfig(hService: HANDLE; dwServiceType, dwStartType, dwErrorControl: cardinal;
                              lpBinaryPathName, lpLoadOrderGroup: string; lpdwTagId: cardinal;
                              lpDependencies, lpServiceStartName, lpPassword, lpDisplayName: string): Boolean;
-external 'ChangeServiceConfigA@advapi32.dll stdcall setuponly';
+external 'ChangeServiceConfigW@advapi32.dll stdcall setuponly';
 
 Function InnoSetupUsed(): boolean;
 Begin
@@ -577,7 +660,7 @@ Begin
     Result := RegKeyExists(HKEY_LOCAL_MACHINE, KeyLoc2);
 End;
 
-// check if the current install path exists
+{ check if the current install path exists }
 Function DoesPathExist(): boolean;
 Begin
     if RegQueryStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\Shareaza','', CurrentPath) then
@@ -590,7 +673,8 @@ End;
 Function OpenServiceManager(): HANDLE;
 begin
   Result := 0;
-  if (InstallOnThisVersion('0,5.01', '0,0') = irInstall) then
+  { Only for Windows XP and above }
+  if ( GetWindowsVersion >= $05010000 ) then
     Result := OpenSCManager('', 'ServicesActive', SC_MANAGER_ALL_ACCESS);
 end;
 
@@ -601,7 +685,8 @@ begin
   hSCManager := 0;
   Result := false;
   HasUserPrivileges := false;
-  if (InstallOnThisVersion('0,5.01', '0,0') = irInstall) then begin
+  { Only for Windows XP and above }
+  if ( GetWindowsVersion >= $05010000 ) then begin
     hSCManager := OpenSCManager('', 'ServicesActive', SC_MANAGER_ALL_ACCESS);
     if (hSCManager <> 0) then begin
       HasUserPrivileges := true;
@@ -719,7 +804,7 @@ Begin
   Installed := (RegValueExists(HKEY_LOCAL_MACHINE, KeyLoc1, KeyName) or RegValueExists(HKEY_LOCAL_MACHINE, KeyLoc2, KeyName)) and DoesPathExist();
   MalwareDetected := False;
 
-  // Malware check
+  { Malware check }
   Result := NOT MalwareCheck( ExpandConstant('{win}\vgraph.dll') );
   if Result then Begin Result := NOT MalwareCheck( ExpandConstant('{win}\Shareaza.exe') ); End;
   if Result then Begin Result := NOT MalwareCheck( ExpandConstant('{sys}\Shareaza.exe') ); End;
@@ -779,7 +864,8 @@ var
   Wnd: HWND;
 Begin
   if CurUninstallStep = usUninstall then begin
-    if InstallOnThisVersion('0,5.01sp2','0,0') = irInstall then begin
+    { Only for Windows XP and above }
+    if ( GetWindowsVersion >= $05010000 ) then begin
       try
         InstallFolder := ExpandConstant('{app}\Shareaza.exe');
         FirewallManager := CreateOleObject('HNetCfg.FwMgr');
@@ -846,7 +932,7 @@ begin
     Value := IsLanguageRTL(ExpandConstant('{language}'));
     RegWriteDWordValue(HKEY_CURRENT_USER, 'Software\Shareaza\Shareaza\Settings', 'LanguageRTL', StrToInt(Value));
     RegWriteStringValue(HKEY_CURRENT_USER, 'Software\Shareaza\Shareaza\Settings', 'Language', ExpandConstant('{language}'));
-    // Set default values for other users
+    { Set default values for other users }
     RegWriteDWordValue(HKEY_LOCAL_MACHINE, 'Software\Shareaza\Shareaza', 'DefaultLanguageRTL', StrToInt(Value));
     RegWriteStringValue(HKEY_LOCAL_MACHINE, 'Software\Shareaza\Shareaza', 'DefaultLanguage', ExpandConstant('{language}'));
   end;
@@ -902,15 +988,15 @@ Begin
         Success := false;
         if (IsServiceInstalled('SSDPSRV') and IsServiceInstalled('upnphost')) then begin
           if (not IsServiceRunning('SSDPSRV')) then begin
-            // change the startup type to manual if it was disabled;
-            // we don't need to start it since UPnP Device Host service depends on it;
-            // assuming that user didn't modify the dependencies manually.
-            // Note: probably, we could elevate user rights with AdjustTokenPrivileges(?)
+            { change the startup type to manual if it was disabled;
+              we don't need to start it since UPnP Device Host service depends on it;
+              assuming that user didn't modify the dependencies manually.
+              Note: probably, we could elevate user rights with AdjustTokenPrivileges(?) }
             Success := ChangeServiceStartup('SSDPSRV', SERVICE_DEMAND_START);
           end else
             Success := true;
           if (Success) then begin
-            // We succeeded to change the startup type, so we will change another service
+            { We succeeded to change the startup type, so we will change another service }
             Success := ChangeServiceStartup('upnphost', SERVICE_AUTO_START);
             if (Success and not IsServiceRunning('upnphost')) then
               StartService('upnphost');
@@ -921,7 +1007,8 @@ Begin
   End;
   if CurStep=ssInstall then begin
     if not IsTaskSelected('firewall') then begin
-      if InstallOnThisVersion('0,5.01sp2','0,0') = irInstall then begin
+      { Only for Windows XP and above }
+      if ( GetWindowsVersion >= $05010000 ) then begin
         try
           InstallFolder := ExpandConstant('{app}\Shareaza.exe');
           FirewallManager := CreateOleObject('HNetCfg.FwMgr');
@@ -933,7 +1020,7 @@ Begin
     End;
   End;
 
-  // Check if the needed paths exist otherwise delete it from the registry (They will be recreated later in the installation process)
+  { Check if the needed paths exist otherwise delete it from the registry (They will be recreated later in the installation process) }
   if CurStep=ssInstall then begin
     if RegQueryStringValue(HKEY_CURRENT_USER, 'SOFTWARE\Shareaza\Shareaza\Downloads', 'CompletePath', Path) and (not DirExists(Path)) then begin
       if not RegDeleteValue(HKEY_CURRENT_USER, 'SOFTWARE\Shareaza\Shareaza\Downloads', 'CompletePath') then begin
@@ -964,12 +1051,3 @@ End;
 #include "pages.iss"
 
 #expr SaveToFile(SourcePath + "..\builds\Preprocessed.iss")
-
-
-
-
-
-
-
-
-
