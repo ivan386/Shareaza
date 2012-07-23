@@ -1,7 +1,7 @@
 //
 // PageDownloadEdit.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -207,7 +207,7 @@ BOOL CDownloadEditPage::OnApply()
 	}
 
 	QWORD nNewSize = 0;
-    if ( _stscanf( m_sFileSize, _T("%I64i"), &nNewSize ) == 1 && nNewSize != pDownload->m_nSize )
+    if ( _stscanf( m_sFileSize, _T("%I64u"), &nNewSize ) == 1 && nNewSize != pDownload->m_nSize )
 	{
 		pLock.Unlock();
 		if ( AfxMessageBox( IDS_DOWNLOAD_EDIT_CHANGE_SIZE, MB_ICONQUESTION|MB_YESNO ) != IDYES ) return FALSE;
