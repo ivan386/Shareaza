@@ -16,10 +16,8 @@
 // Neutral resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NEU)
-#ifdef _WIN32
 LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
 #pragma code_page(1251)
-#endif //_WIN32
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -27,7 +25,7 @@ LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
 //
 
 #ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO 
+GUIDELINES DESIGNINFO
 BEGIN
     IDD_WELCOME_PAGE, DIALOG
     BEGIN
@@ -295,7 +293,7 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,1,0,0
+ FILEVERSION 1,2,0,0
  PRODUCTVERSION 2,6,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
@@ -313,12 +311,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Torrent Wizard"
-            VALUE "FileVersion", "1, 1, 0, 0"
+            VALUE "FileVersion", "1.2.0.0"
             VALUE "InternalName", "TorrentWizard"
-            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2003-2011. All rights reserved."
+            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2003-2012. All rights reserved."
             VALUE "OriginalFilename", "TorrentWizard.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 6, 0, 0"
+            VALUE "ProductVersion", "2.6.0.0"
         END
     END
     BLOCK "VarFileInfo"
@@ -333,7 +331,7 @@ END
 // String Table
 //
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_WELCOME_NEED_TYPE   "You have not selected the type of Torrent file you want to create.  Please select from one of the two options."
     IDS_SINGLE_NEED_FILE    "You have not selected a file to include in the Torrent.  Please click the Browse button and choose a file."
@@ -353,7 +351,7 @@ BEGIN
     IDS_OUTPUT_EXTENSION    "The Torrent filename you selected does not end with "".torrent"".  Would you like to add it automatically?"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDR_MAINFRAME           "Torrent Wizard"
 END

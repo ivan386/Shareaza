@@ -121,7 +121,7 @@
     <None Include="Res\Uninstall.ICO">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="..\shareaza\Res\Wizard.bmp">
+    <None Include="res\Wizard.bmp">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

@@ -1,7 +1,7 @@
 //
 // PageSingle.cpp
 //
-// Copyright (c) Shareaza Development Team, 2007-2011.
+// Copyright (c) Shareaza Development Team, 2007-2012.
 // This file is part of Shareaza Torrent Wizard (shareaza.sourceforge.net).
 //
 // Shareaza Torrent Wizard is free software; you can redistribute it
@@ -108,7 +108,7 @@ void CSinglePage::OnBrowseFile()
 
 void CSinglePage::Update()
 {
-	HANDLE hFile = CreateFile( m_sFileName, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, 0, NULL );
+	HANDLE hFile = CreateFile( CString( _T("\\\\?\\") ) + m_sFileName, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, 0, NULL );
 	
 	if ( hFile != INVALID_HANDLE_VALUE )
 	{
@@ -141,7 +141,7 @@ LRESULT CSinglePage::OnWizardNext()
 {
 	UpdateData();
 	
-	if ( m_sFileName.IsEmpty() || GetFileAttributes( m_sFileName ) == 0xFFFFFFFF )
+	if ( m_sFileName.IsEmpty() || GetFileAttributes( CString( _T("\\\\?\\") ) + m_sFileName ) == 0xFFFFFFFF )
 	{
 		AfxMessageBox( IDS_SINGLE_NEED_FILE, MB_ICONEXCLAMATION );
 		return -1;

@@ -1,7 +1,7 @@
 //
 // PageOutput.cpp
 //
-// Copyright (c) Shareaza Development Team, 2007-2011.
+// Copyright (c) Shareaza Development Team, 2007-2012.
 // This file is part of Shareaza Torrent Wizard (shareaza.sourceforge.net).
 //
 // Shareaza Torrent Wizard is free software; you can redistribute it
@@ -241,7 +241,7 @@ LRESULT COutputPage::OnWizardNext()
 		return -1;
 	}
 	
-	if ( GetFileAttributes( m_sFolder ) == 0xFFFFFFFF )
+	if ( GetFileAttributes( CString( _T("\\\\?\\") ) + m_sFolder ) == 0xFFFFFFFF )
 	{
 		CString strFormat, strMessage;
 		
@@ -251,7 +251,7 @@ LRESULT COutputPage::OnWizardNext()
 		if ( IDYES != AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) )
 			return -1;
 		
-		if ( ! CreateDirectory( m_sFolder, NULL ) )
+		if ( ! CreateDirectory( CString( _T("\\\\?\\") ) + m_sFolder, NULL ) )
 		{
 			strFormat.LoadString( IDS_OUTPUT_CANT_CREATE_FOLDER );
 			strMessage.Format( strFormat, (LPCTSTR)m_sFolder );
@@ -287,7 +287,7 @@ LRESULT COutputPage::OnWizardNext()
 	
 	CString strPath = m_sFolder + '\\' + m_sName;
 	
-	if ( GetFileAttributes( strPath ) != INVALID_FILE_ATTRIBUTES )
+	if ( GetFileAttributes( CString( _T("\\\\?\\") ) + strPath ) != INVALID_FILE_ATTRIBUTES )
 	{
 		CString strFormat, strMessage;
 		
@@ -297,7 +297,7 @@ LRESULT COutputPage::OnWizardNext()
 		if ( IDYES != AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) )
 			return -1;
 		
-		DeleteFile( strPath );
+		DeleteFile( CString( _T("\\\\?\\") ) + strPath );
 	}
 	
 	if ( m_wndFolders.FindStringExact( -1, m_sFolder ) < 0 )

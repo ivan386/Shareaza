@@ -1,7 +1,7 @@
 //
 // PagePackage.cpp
 //
-// Copyright (c) Shareaza Development Team, 2007-2011.
+// Copyright (c) Shareaza Development Team, 2007-2012.
 // This file is part of Shareaza Torrent Wizard (shareaza.sourceforge.net).
 //
 // Shareaza Torrent Wizard is free software; you can redistribute it
@@ -216,7 +216,7 @@ void CPackagePage::OnRemoveFile()
 
 void CPackagePage::AddFile(LPCTSTR pszFile)
 {
-	HANDLE hFile = CreateFile( pszFile, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, 0, NULL );
+	HANDLE hFile = CreateFile( CString( _T("\\\\?\\") ) + pszFile, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, 0, NULL );
 	
 	if ( hFile == INVALID_HANDLE_VALUE )
 	{
@@ -232,8 +232,7 @@ void CPackagePage::AddFile(LPCTSTR pszFile)
 	QWORD nSize = ( (QWORD)nHigh << 32 ) + (QWORD)nLow;
 	CloseHandle( hFile );
 	
-	SHFILEINFO pInfo;
-	ZeroMemory( &pInfo, sizeof(pInfo) );
+	SHFILEINFO pInfo = {};
 	
 	HIMAGELIST hIL = (HIMAGELIST)SHGetFileInfo( pszFile, 0, &pInfo, sizeof(pInfo),
 		SHGFI_SYSICONINDEX|SHGFI_SMALLICON );

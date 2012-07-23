@@ -1,7 +1,7 @@
 //
 // TorrentBuilder.cpp
 //
-// Copyright (c) Shareaza Development Team, 2007-2010.
+// Copyright (c) Shareaza Development Team, 2007-2012.
 // This file is part of Shareaza Torrent Wizard (shareaza.sourceforge.net).
 //
 // Shareaza Torrent Wizard is free software; you can redistribute it
@@ -39,26 +39,26 @@ END_MESSAGE_MAP()
 // CTorrentBuilder construction
 
 CTorrentBuilder::CTorrentBuilder()
-: m_bActive( FALSE )
-, m_bFinished ( FALSE )
-, m_bAbort( FALSE )
-, m_nTotalSize( 0 )
-, m_nTotalPos( 0 )
-, m_bSHA1( FALSE )
-, m_bED2K( FALSE )
-, m_bMD5( FALSE )
-, m_pFileSize( NULL )
-, m_pFileSHA1( NULL )
-, m_pFileED2K( NULL )
-, m_pFileMD5( NULL )
-, m_pPieceSHA1( NULL )
-, m_nPieceSize( 0 )
-, m_nPieceCount( 0 )
-, m_nPiecePos( 0 )
-, m_nPieceUsed( 0 )
-, m_bAutoPieces( TRUE )
-, m_pBuffer( NULL )
-, m_nBuffer( 0 )
+	: m_bActive( FALSE )
+	, m_bFinished ( FALSE )
+	, m_bAbort( FALSE )
+	, m_nTotalSize( 0 )
+	, m_nTotalPos( 0 )
+	, m_bSHA1( FALSE )
+	, m_bED2K( FALSE )
+	, m_bMD5( FALSE )
+	, m_pFileSize( NULL )
+	, m_pFileSHA1( NULL )
+	, m_pFileED2K( NULL )
+	, m_pFileMD5( NULL )
+	, m_pPieceSHA1( NULL )
+	, m_nPieceSize( 0 )
+	, m_nPieceCount( 0 )
+	, m_nPiecePos( 0 )
+	, m_nPieceUsed( 0 )
+	, m_bAutoPieces( TRUE )
+	, m_pBuffer( NULL )
+	, m_nBuffer( 0 )
 {
 	m_bAutoDelete = FALSE;
 }
@@ -312,7 +312,7 @@ BOOL CTorrentBuilder::ScanFiles()
 	{
 		CString strFile = m_pFiles.GetNext( pos );
 		
-		HANDLE hFile = CreateFile( strFile, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, 0, NULL );
+		HANDLE hFile = CreateFile( CString( _T("\\\\?\\") ) + strFile, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, 0, NULL );
 		
 		if ( hFile == INVALID_HANDLE_VALUE )
 		{
@@ -435,7 +435,7 @@ BOOL CTorrentBuilder::ProcessFile(DWORD nFile, LPCTSTR pszFile)
 	m_sThisFile = pszFile;
 	m_pSection.Unlock();
 	
-	HANDLE hFile = CreateFile( pszFile, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, 0, NULL );
+	HANDLE hFile = CreateFile( CString( _T("\\\\?\\") ) + pszFile, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, 0, NULL );
 	if ( hFile == INVALID_HANDLE_VALUE )
 		return FALSE;
 	
@@ -511,6 +511,10 @@ BOOL CTorrentBuilder::WriteOutput()
 	{
 		CBENode* pDate = pRoot.Add( "creation date" );
 		pDate->SetInt( (QWORD)time( NULL ) );
+	}
+	{
+		CBENode* pDate = pRoot.Add( "encoding" );
+		pDate->SetString( _T("UTF-8") );
 	}
 	CBENode* pInfo = pRoot.Add( "info" );	
 	{
@@ -656,7 +660,7 @@ BOOL CTorrentBuilder::WriteOutput()
 	CBuffer pOutput;
 	pRoot.Encode( &pOutput );
 	
-	HANDLE hFile = CreateFile( m_sOutput, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS,
+	HANDLE hFile = CreateFile( CString( _T("\\\\?\\") ) + m_sOutput, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS,
 		FILE_ATTRIBUTE_NORMAL, NULL );
 	
 	if ( hFile == INVALID_HANDLE_VALUE )

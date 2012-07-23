@@ -88,15 +88,10 @@ public:
 	// Trying codepages: nCodePage, m_nDefaultCP, OEM, ANSI, as-is
 	CString DecodeString(UINT nCodePage) const;
 
-	inline void SetString(LPCSTR psz)
+	inline void SetString(const CString& strInput)
 	{
-		SetString( psz, strlen(psz), TRUE );
-	}
-
-	inline void SetString(LPCWSTR psz)
-	{
-		CW2A pszASCII( psz );
-		SetString( (LPCSTR)pszASCII, strlen( (LPCSTR)pszASCII ), TRUE );
+		CStringA strInputUTF8 = UTF8Encode( strInput );
+		SetString( strInputUTF8, strInputUTF8.GetLength(), TRUE );
 	}
 
 	inline void SetString(LPCVOID pString, size_t nLength, BOOL bNull = FALSE)

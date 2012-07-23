@@ -289,7 +289,7 @@
     <None Include="res\TorrentWizard.ico" />
     <None Include="Res\TorrentWizard.rc2" />
     <None Include="Res\Uninstall.ICO" />
-    <None Include="..\shareaza\Res\Wizard.bmp" />
+    <None Include="res\Wizard.bmp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="TorrentWizard.rc" />
