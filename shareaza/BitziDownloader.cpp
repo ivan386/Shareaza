@@ -1,7 +1,7 @@
 //
 // BitziDownloader.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,13 +22,14 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
-#include "Library.h"
-#include "SharedFile.h"
-#include "XML.h"
-#include "Schema.h"
-#include "SchemaCache.h"
 #include "BitziDownloader.h"
 #include "DlgBitziDownload.h"
+#include "Library.h"
+#include "Network.h"
+#include "Schema.h"
+#include "SchemaCache.h"
+#include "SharedFile.h"
+#include "XML.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -82,9 +83,7 @@ BOOL CBitziDownloader::Start(CBitziDownloadDlg* pDlg)
 {
 	if ( m_hInternet != NULL ) return FALSE;
 
-	CString strAgent = Settings.SmartAgent();
-
-	m_hInternet = InternetOpen( strAgent, INTERNET_OPEN_TYPE_PRECONFIG, NULL, NULL, 0 );
+	m_hInternet = CNetwork::InternetOpen();
 	if ( ! m_hInternet ) return FALSE;
 
 	m_hSession	= NULL;

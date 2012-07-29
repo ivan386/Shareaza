@@ -533,7 +533,6 @@ void CBTTrackerRequest::ProcessHTTP()
 
 	m_pRequest->AddHeader( _T("Accept-Encoding"), _T("deflate, gzip") );
 	m_pRequest->EnableCookie( false );
-	m_pRequest->SetUserAgent( Settings.SmartAgent() );
 
 	bool bSuccess = m_pRequest->Execute( false );
 

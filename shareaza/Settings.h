@@ -864,7 +864,7 @@ protected:
 // Inlines
 public:
 	// CSettings configurable user agent (Client Name + Version)
-	CString SmartAgent() const throw() { return theApp.m_sSmartAgent; }
+	inline const CString& SmartAgent() const throw() { return theApp.m_sSmartAgent; }
 
 private:
 	CSettings(const CSettings&);

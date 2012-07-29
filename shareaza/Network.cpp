@@ -179,11 +179,25 @@ BOOL CNetwork::IsSelfIP(const IN_ADDR& nAddress) const
 	return ( m_pHostAddresses.Find( nAddress.s_addr ) != NULL );
 }
 
+HINTERNET CNetwork::InternetOpen()
+{
+	__try
+	{
+		return ::InternetOpen( Settings.SmartAgent(), INTERNET_OPEN_TYPE_PRECONFIG, NULL, NULL, 0 );
+	}
+	__except( EXCEPTION_EXECUTE_HANDLER )
+	{
+		// Something blocked WinAPI (for example application level firewall)
+	}
+
+	return NULL;
+}
+
 bool CNetwork::InternetConnect()
 {
 	__try
 	{
-		return ( InternetAttemptConnect( 0 ) == ERROR_SUCCESS );
+		return ( ::InternetAttemptConnect( 0 ) == ERROR_SUCCESS );
 	}
 	__except( EXCEPTION_EXECUTE_HANDLER )
 	{
@@ -199,7 +213,7 @@ bool CNetwork::IsAvailable() const
 
 	__try
 	{
-		if ( InternetGetConnectedState( &dwState, 0 ) )
+		if ( ::InternetGetConnectedState( &dwState, 0 ) )
 		{
 			if ( !( dwState & INTERNET_CONNECTION_OFFLINE ) )
 				return true;
@@ -656,14 +670,14 @@ bool CNetwork::PreRun()
 	if ( Settings.Connection.ForceConnectedState )
 	{
 		INTERNET_CONNECTED_INFO ici = {};
-		HINTERNET hInternet = InternetOpen( Settings.SmartAgent(), INTERNET_OPEN_TYPE_DIRECT, NULL, NULL, 0 );
+		HINTERNET hInternet = InternetOpen();
 
 		ici.dwConnectedState = INTERNET_STATE_CONNECTED;
 		InternetSetOption( hInternet, INTERNET_OPTION_CONNECTED_STATE, &ici, sizeof(ici) );
 		InternetCloseHandle( hInternet );
 	}
 
-	if ( !InternetConnect() )
+	if ( ! InternetConnect() )
 	{
 		theApp.Message( MSG_ERROR, _T("Internet connection attempt failed.") );
 		return false;

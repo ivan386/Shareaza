@@ -1,7 +1,7 @@
 //
 // HttpRequest.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -117,12 +117,6 @@ void CHttpRequest::AddHeader(LPCTSTR pszKey, LPCTSTR pszValue)
 	}
 }*/
 
-void CHttpRequest::SetUserAgent(LPCTSTR pszUserAgent)
-{
-	if ( IsPending() ) return;
-	m_sUserAgent = pszUserAgent;
-}
-
 void CHttpRequest::LimitContentLength(DWORD nLimit)
 {
 	if ( IsPending() ) return;
@@ -209,9 +203,6 @@ bool CHttpRequest::Execute(bool bBackground)
 		delete m_pResponse;
 	m_pResponse = NULL;
 
-	if ( m_sUserAgent.IsEmpty() )
-		m_sUserAgent = Settings.SmartAgent();
-
 	if ( ! BeginThread( "HTTPRequest" ) )
 		return false;
 
@@ -254,11 +245,10 @@ void CHttpRequest::Cancel()
 
 void CHttpRequest::OnRun()
 {
-	ASSERT( m_sUserAgent.GetLength() );
 	ASSERT( m_sURL.GetLength() );
 	ASSERT( m_pResponse == NULL );
 
-	m_hInternet = InternetOpen( m_sUserAgent, INTERNET_OPEN_TYPE_DIRECT, NULL, NULL, 0 );
+	m_hInternet = CNetwork::InternetOpen();
 	if ( m_hInternet )
 	{
 		HINTERNET hURL = CNetwork::InternetOpenUrl( m_hInternet, m_sURL,

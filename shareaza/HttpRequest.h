@@ -1,7 +1,7 @@
 //
 // HttpRequest.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -38,7 +38,6 @@ public:
 	void		Clear();
 	CString		GetURL() const;
 	BOOL		SetURL(LPCTSTR pszURL);
-	void		SetUserAgent(LPCTSTR pszUserAgent);
 	void		AddHeader(LPCTSTR pszKey, LPCTSTR pszValue);
 	void		SetPostData(LPCVOID pBody, DWORD nBody);
 	void		LimitContentLength(DWORD nLimit);
@@ -60,7 +59,6 @@ public:
 protected:
 	HINTERNET	m_hInternet;
 	CString		m_sURL;
-	CString		m_sUserAgent;
 	CString		m_sRequestHeaders;
 	DWORD		m_nLimit;
 	int			m_nStatusCode;
