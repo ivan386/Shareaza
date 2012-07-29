@@ -710,13 +710,10 @@ BOOL CShareazaApp::Unregister()
 
 void CShareazaApp::AddToRecentFileList(LPCTSTR lpszPathName)
 {
-	CWinApp::AddToRecentFileList( lpszPathName );
+	SHAddToRecentDocs( SHARD_PATHW, lpszPathName );
 
 	if ( Windows.dwMajorVersion > 6 || ( Windows.dwMajorVersion == 6 && Windows.dwMinorVersion >= 1 ) )
 	{
-		// For VS2010: no need
-
-		// For VS2008:
 		if ( m_pfnSHCreateItemFromParsingName )
 		{
 			CComPtr< IShellItem > pItem;
