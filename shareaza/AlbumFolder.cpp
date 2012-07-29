@@ -553,25 +553,25 @@ BOOL CAlbumFolder::MetaToFiles(BOOL bAggressive)
 
 	for ( POSITION pos = GetFileIterator() ; pos ; )
 	{
-		CLibraryFile* pFile	= GetNextFile( pos );
-		CSchemaPtr pSchema = pFile->m_pSchema;
+		CLibraryFile* pFile = GetNextFile( pos );
 
-		if ( pSchema == NULL ) continue;
-
-		if ( CSchemaChild* pChild = m_pSchema->GetContained( pSchema->GetURI() ) )
+		if ( pFile->m_pMetadata && pFile->m_pSchema )
 		{
-			CXMLElement* pXML = pFile->m_pMetadata->Clone();
+			if ( CSchemaChild* pChild = m_pSchema->GetContained( pFile->m_pSchema->GetURI() ) )
+			{
+				CXMLElement* pXML = pFile->m_pMetadata->Clone();
 
-			if ( pChild->MemberCopy( m_pXML, pXML, TRUE, bAggressive ) )
-			{
-				CXMLElement* pRoot = pSchema->Instantiate( TRUE );
-				pRoot->AddElement( pXML );
-				pFile->SetMetadata( pRoot );
-				delete pRoot;
-			}
-			else
-			{
-				delete pXML;
+				if ( pChild->MemberCopy( m_pXML, pXML, TRUE, bAggressive ) )
+				{
+					CXMLElement* pRoot = pFile->m_pSchema->Instantiate( TRUE );
+					pRoot->AddElement( pXML );
+					pFile->SetMetadata( pRoot );
+					delete pRoot;
+				}
+				else
+				{
+					delete pXML;
+				}
 			}
 		}
 	}

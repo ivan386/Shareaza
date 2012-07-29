@@ -1,7 +1,7 @@
 //
 // CtrlLibraryAlbumView.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1044,7 +1044,7 @@ BOOL CLibraryAlbumTrack::Update(CLibraryFile* pFile)
 	m_nBitrate	= 0;
 	m_sBitrate.Empty();
 	
-	if ( pFile->IsSchemaURI( CSchema::uriAudio ) )
+	if ( pFile->m_pMetadata && pFile->IsSchemaURI( CSchema::uriAudio ) )
 	{
 		CString str = pFile->m_pMetadata->GetAttributeValue( _T("track") );
 		LPCTSTR psz = str;
