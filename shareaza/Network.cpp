@@ -611,9 +611,6 @@ BOOL CNetwork::IsReserved(const IN_ADDR* pAddress) const
 	switch ( i1 )
 	{
 		case 0:         // 000/8 is IANA reserved
-		case 1:         // 001/8 is IANA reserved
-		case 2:         // 002/8 is IANA reserved
-		case 5:         // 005/8 is IANA reserved
 		case 6:         // USA Army ISC
 		case 7:         // used for BGP protocol
 		case 55:        // misc. USA Armed forces
