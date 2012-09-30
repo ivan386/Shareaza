@@ -609,8 +609,22 @@ static HRESULT SafeQueryContextMenu(IContextMenu* pContextMenu, HMENU hmenu, UIN
 	}
 }
 
-void CCoolMenu::DoExplorerMenu(HWND hwnd, const CStringList& oFiles, POINT point,
-	HMENU hMenu, HMENU hSubMenu, UINT nFlags)
+static UINT_PTR SafeTrackPopupMenu(HMENU hMenu, UINT nFlags, POINT point, HWND hWnd) throw()
+{
+	__try
+	{
+		::SetForegroundWindow( hWnd );
+		UINT_PTR nCmd = ::TrackPopupMenu( hMenu, nFlags, point.x, point.y, 0, hWnd, NULL );
+		::PostMessage( hWnd, WM_NULL, 0, 0 );
+		return nCmd;
+	}
+	__except( EXCEPTION_EXECUTE_HANDLER )
+	{
+		return 0;
+	}
+}
+
+void CCoolMenu::DoExplorerMenu(HWND hwnd, const CStringList& oFiles, POINT point, HMENU hMenu, HMENU hSubMenu, UINT nFlags)
 {
 	HRESULT hr = S_OK;
 	CComPtr< IContextMenu > pContextMenu1;
@@ -630,10 +644,7 @@ void CCoolMenu::DoExplorerMenu(HWND hwnd, const CStringList& oFiles, POINT point
 			pContextMenu1.QueryInterface( &m_pContextMenu3 );
 		}
 
-		::SetForegroundWindow( hwnd );
-		UINT_PTR nCmd = ::TrackPopupMenu( hMenu, TPM_RETURNCMD | nFlags,
-			point.x, point.y, 0, hwnd, NULL );
-		::PostMessage( hwnd, WM_NULL, 0, 0 );
+		UINT_PTR nCmd = SafeTrackPopupMenu( hMenu, TPM_RETURNCMD | nFlags, point, hwnd );
 
 		// If a command was selected from the shell menu, execute it.
 		if ( pContextMenu1 && nCmd >= ID_SHELL_MENU_MIN && nCmd <= ID_SHELL_MENU_MAX )
