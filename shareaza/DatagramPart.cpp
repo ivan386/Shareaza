@@ -1,7 +1,7 @@
 //
 // DatagramPart.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -37,11 +37,23 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CDatagramOut construction
 
-CDatagramOut::CDatagramOut() :
-	m_pBuffer( NULL ),
-	m_pLocked( NULL ),
-	m_nLocked( 0 ),
-	m_bAck( FALSE )
+CDatagramOut::CDatagramOut()
+	: m_pNextHash	( NULL )
+	, m_pPrevHash	( NULL )
+	, m_pNextTime	( NULL )
+	, m_pPrevTime	( NULL )
+	, m_pHost		()
+	, m_nSequence	( 0 )
+	, m_pBuffer		( NULL )
+	, m_pToken		( NULL )
+	, m_bCompressed ( FALSE )
+	, m_nPacket		( 0 )
+	, m_nCount		( 0 )
+	, m_nAcked		( 0 )
+	, m_pLocked		( NULL )
+	, m_nLocked		( 0 )
+	, m_tSent		( 0 )
+	, m_bAck		( FALSE )
 {
 }
 
@@ -53,7 +65,7 @@ CDatagramOut::~CDatagramOut()
 //////////////////////////////////////////////////////////////////////
 // CDatagramOut create
 
-void CDatagramOut::Create(const SOCKADDR_IN* pHost, CG2Packet* pPacket, WORD nSequence, CBuffer* pBuffer, BOOL bAck)
+void CDatagramOut::Create(const SOCKADDR_IN* pHost, const CG2Packet* pPacket, WORD nSequence, CBuffer* pBuffer, BOOL bAck)
 {
 	ASSERT( m_pBuffer == NULL );
 
@@ -88,7 +100,7 @@ void CDatagramOut::Create(const SOCKADDR_IN* pHost, CG2Packet* pPacket, WORD nSe
 		m_pBuffer->Insert( nOffset, &pHeader, sizeof(pHeader) );
 	}
 
-	if ( m_nLocked < m_nCount )
+	if ( ! m_pLocked || m_nLocked < m_nCount )
 	{
 		if ( m_pLocked ) delete [] m_pLocked;
 
@@ -106,6 +118,9 @@ void CDatagramOut::Create(const SOCKADDR_IN* pHost, CG2Packet* pPacket, WORD nSe
 
 BOOL CDatagramOut::GetPacket(DWORD tNow, BYTE** ppPacket, DWORD* pnPacket, BOOL bResend)
 {
+	if ( ! m_pLocked )
+		return FALSE;
+
     int nPart = 0;
 	for ( ; nPart < m_nCount ; nPart++ )
 	{
@@ -113,16 +128,19 @@ BOOL CDatagramOut::GetPacket(DWORD tNow, BYTE** ppPacket, DWORD* pnPacket, BOOL 
 		{
 			if ( bResend )
 			{
-				if ( tNow - m_pLocked[ nPart ] >= Settings.Gnutella2.UdpOutResend ) break;
+				if ( tNow - m_pLocked[ nPart ] >= Settings.Gnutella2.UdpOutResend )
+					break;
 			}
 			else
 			{
-				if ( m_pLocked[ nPart ] == 0 ) break;
+				if ( m_pLocked[ nPart ] == 0 )
+					break;
 			}
 		}
 	}
 
-	if ( nPart >= m_nCount ) return FALSE;
+	if ( nPart >= m_nCount )
+		return FALSE;
 
 	m_pLocked[ nPart ] = bResend ? tNow : 0xFFFFFFFF;
 
@@ -141,7 +159,7 @@ BOOL CDatagramOut::Acknowledge(BYTE nPart)
 {
 	if ( nPart > 0 && nPart <= m_nCount && m_nAcked > 0 )
 	{
-		if ( m_pLocked[ nPart - 1 ] < 0xFFFFFFFF )
+		if ( m_pLocked && m_pLocked[ nPart - 1 ] < 0xFFFFFFFF )
 		{
 			m_pLocked[ nPart - 1 ] = 0xFFFFFFFF;
 

@@ -1,7 +1,7 @@
 //
 // DatagramPart.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -27,35 +27,31 @@ class CG2Packet;
 
 class CDatagramOut
 {
-// Construction
 public:
 	CDatagramOut();
-	virtual ~CDatagramOut();
+	~CDatagramOut();
 
-// Attributes
-public:
 	CDatagramOut*	m_pNextHash;
 	CDatagramOut**	m_pPrevHash;
 	CDatagramOut*	m_pNextTime;
 	CDatagramOut*	m_pPrevTime;
-public:
+
 	SOCKADDR_IN		m_pHost;
 	WORD			m_nSequence;
 	CBuffer*		m_pBuffer;
 	LPVOID			m_pToken;
+	DWORD			m_tSent;
+	BOOL			m_bAck;
+
+	void	Create(const SOCKADDR_IN* pHost, const CG2Packet* pPacket, WORD nSequence, CBuffer* pBuffer, BOOL bAck);
+	BOOL	GetPacket(DWORD tNow, BYTE** ppPacket, DWORD* pnPacket, BOOL bResend);
+	BOOL	Acknowledge(BYTE nPart);
+
+protected:
 	BOOL			m_bCompressed;
 	DWORD			m_nPacket;
 	BYTE			m_nCount;
 	BYTE			m_nAcked;
 	DWORD*			m_pLocked;
 	BYTE			m_nLocked;
-	DWORD			m_tSent;
-	BOOL			m_bAck;
-
-// Operations
-public:
-	void	Create(const SOCKADDR_IN* pHost, CG2Packet* pPacket, WORD nSequence, CBuffer* pBuffer, BOOL bAck);
-	BOOL	GetPacket(DWORD tNow, BYTE** ppPacket, DWORD* pnPacket, BOOL bResend);
-	BOOL	Acknowledge(BYTE nPart);
-
 };
