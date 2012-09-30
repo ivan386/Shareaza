@@ -37,12 +37,16 @@ static char THIS_FILE[]=__FILE__;
 #define Kilo	( 1024 )
 #define Mega	( Kilo * 1024 )
 #define Giga	( Mega * 1024 )
-#define fKilo	( 1024.0f )
-#define fMega	( fKilo * 1024.0f )
-#define fGiga	( fMega * 1024.0f )
-#define fTera	( fGiga * 1024.0f )
-#define fPeta	( fTera * 1024.0f )
-#define fExa	( fPeta * 1024.0f )
+#define Tera	( Giga * 1024ui64 )
+#define Peta	( Tera * 1024ui64 )
+#define Exa		( Peta * 1024ui64 )
+
+#define fKilo	( 1024.0 )
+#define fMega	( fKilo * 1024.0 )
+#define fGiga	( fMega * 1024.0 )
+#define fTera	( fGiga * 1024.0 )
+#define fPeta	( fTera * 1024.0 )
+#define fExa	( fPeta * 1024.0 )
 
 CSettings Settings;
 
@@ -1497,12 +1501,9 @@ const CString CSettings::SmartSpeed(QWORD nVolume, int nVolumeUnits, bool bTrunc
 
 const CString CSettings::SmartVolume(QWORD nVolume, int nVolumeUnits, bool bTruncate) const
 {
-	CString strUnit( _T("B") );
+	LPCTSTR szUnit = ( ! General.RatesInBytes && nVolumeUnits == bits ) ? _T("b") : _T("B");
 	CString strVolume;
-	CString strTruncate( _T("%.0f") );
-
-	if ( !General.RatesInBytes && nVolumeUnits == bits )
-		strUnit = _T("b");
+	CString strTruncate( bTruncate ? _T("%.0f") : _T("%.2f") );
 
 	switch ( nVolumeUnits )
 	{
@@ -1511,14 +1512,12 @@ const CString CSettings::SmartVolume(QWORD nVolume, int nVolumeUnits, bool bTrun
 	case Bytes:
 		if ( nVolume < Kilo )						// bits - Bytes
 		{
-			strVolume.Format( _T("%I64u %s"), nVolume, strUnit );
+			strVolume.Format( _T("%I64u %s"), nVolume, szUnit );
 			break;
 		}
 		else if ( nVolume < 10 * Kilo )				// 10 Kilobits - KiloBytes
 		{
-			if ( !bTruncate )
-				strTruncate = _T("%.2f");
-			strVolume.Format( strTruncate + _T(" K%s"), nVolume / fKilo, strUnit );
+			strVolume.Format( strTruncate + _T(" K%s"), (double)nVolume / fKilo, szUnit );
 			break;
 		}
 
@@ -1529,25 +1528,23 @@ const CString CSettings::SmartVolume(QWORD nVolume, int nVolumeUnits, bool bTrun
 	case Kilobits:
 	case KiloBytes:
 		if ( nVolume < Kilo )			// Kilo
-			strVolume.Format( _T("%I64u K%s"), nVolume, strUnit );
-		else if ( nVolume < fMega )		// Mega
 		{
-			if ( !bTruncate )
-				strTruncate = _T("%.2f");
-			strVolume.Format( strTruncate + _T(" M%s"), nVolume / fKilo, strUnit );
+			strVolume.Format( _T("%I64u K%s"), nVolume, szUnit );
+		}
+		else if ( nVolume < Mega )		// Mega
+		{
+			strVolume.Format( strTruncate + _T(" M%s"), (double)nVolume / fKilo, szUnit );
 		}
 		else
 		{
-			if ( !bTruncate )
-				strTruncate = _T("%.2f");
-			if ( nVolume < fGiga )		// Giga
-				strVolume.Format( strTruncate + _T(" G%s"), nVolume / fMega, strUnit );
-			else if ( nVolume < fTera )	// Tera
-				strVolume.Format( strTruncate + _T(" T%s"), nVolume / fGiga, strUnit );
-			else if ( nVolume < fPeta )	// Peta
-				strVolume.Format( strTruncate + _T(" P%s"), nVolume / fTera, strUnit );
+			if ( nVolume < Giga )		// Giga
+				strVolume.Format( strTruncate + _T(" G%s"), (double)nVolume / fMega, szUnit );
+			else if ( nVolume < Tera )	// Tera
+				strVolume.Format( strTruncate + _T(" T%s"), (double)nVolume / fGiga, szUnit );
+			else if ( nVolume < Peta )	// Peta
+				strVolume.Format( strTruncate + _T(" P%s"), (double)nVolume / fTera, szUnit );
 			else						// Exa
-				strVolume.Format( strTruncate + _T(" E%s"), nVolume / fPeta, strUnit );
+				strVolume.Format( strTruncate + _T(" E%s"), (double)nVolume / fPeta, szUnit );
 		}
 	}
 
