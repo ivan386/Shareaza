@@ -1,7 +1,7 @@
 //
 // CtrlMediaFrame.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1689,31 +1689,32 @@ BOOL CMediaFrame::Prepare()
 
 	CWaitCursor pCursor;
 
-	m_pPlayer = Plugins.GetPlugin( _T("MediaPlayer"), _T("Default") );
-	if ( ! m_pPlayer )
+	CComQIPtr< IMediaPlayer > pPlayer ( Plugins.GetPlugin( _T("MediaPlayer"), _T("Default") ) );
+	if ( ! pPlayer )
 		return FALSE;
+	m_pPlayer = pPlayer;
 
 	ModifyStyleEx( WS_EX_LAYOUTRTL, 0, 0 );
 
-	hr = m_pPlayer->Create( (LONG_PTR)GetSafeHwnd() );
+	hr = pPlayer->Create( (LONG_PTR)GetSafeHwnd() );
 	if ( FAILED( hr ) )
 		return FALSE;
 
 	if ( Settings.General.LanguageRTL ) ModifyStyleEx( 0, WS_EX_LAYOUTRTL, 0 );
-	hr = m_pPlayer->SetZoom( Settings.MediaPlayer.Zoom );
+	hr = pPlayer->SetZoom( Settings.MediaPlayer.Zoom );
 	if ( FAILED( hr ) )
 		return FALSE;
 
-	hr = m_pPlayer->SetAspect( Settings.MediaPlayer.Aspect );
+	hr = pPlayer->SetAspect( Settings.MediaPlayer.Aspect );
 	if ( FAILED( hr ) )
 		return FALSE;
 
-	hr = m_pPlayer->SetVolume( m_bMute ? 0 : Settings.MediaPlayer.Volume );
+	hr = pPlayer->SetVolume( m_bMute ? 0 : Settings.MediaPlayer.Volume );
 	if ( FAILED( hr ) )
 		return FALSE;
 
 //	if ( m_bmLogo.m_hObject )
-//		hr = m_pPlayer->SetLogoBitmap( (HBITMAP)m_bmLogo.m_hObject );
+//		hr = pPlayer->SetLogoBitmap( (HBITMAP)m_bmLogo.m_hObject );
 
 	HINSTANCE hRes = AfxGetResourceHandle();
 	BOOL bSuccess = PrepareVis();
