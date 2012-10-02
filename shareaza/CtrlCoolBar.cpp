@@ -1,7 +1,7 @@
 //
 // CtrlCoolBar.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -63,20 +63,20 @@ END_MESSAGE_MAP()
 // CCoolBar construction
 
 CCoolBarCtrl::CCoolBarCtrl()
-	: m_bStretch( FALSE )
-	, m_nHeight( DEFAULT_HEIGHT )
-	, m_bGripper( FALSE )
-	, m_bBold( FALSE )
+	: m_bStretch	( FALSE )
+	, m_nHeight		( DEFAULT_HEIGHT )
+	, m_bGripper	( FALSE )
+	, m_bBold		( FALSE )
 	, m_bDragForward( FALSE )
-	, m_pSyncObject( NULL )
-	, m_dwHoverTime( 0 )
-	, m_bBuffered( FALSE )
-	, m_bMenuGray( FALSE )
-	, m_pDown( NULL )
-	, m_pHot( NULL )
-	, m_bTimer( FALSE )
-	, m_crBack( 0 )
-	, m_bRecalc( FALSE )
+	, m_pSyncObject	( NULL )
+	, m_dwHoverTime	( 0 )
+	, m_bBuffered	( FALSE )
+	, m_bMenuGray	( FALSE )
+	, m_pDown		( NULL )
+	, m_pHot		( NULL )
+	, m_bTimer		( FALSE )
+	, m_crBack		( 0 )
+	, m_bRecalc		( FALSE )
 	, m_bDropEnabled( FALSE )
 	, m_tLastUpdate	( 0 )
 {
@@ -804,7 +804,8 @@ void CCoolBarCtrl::OnTimer(UINT_PTR nIDEvent)
 		ScreenToClient( &point );
 		GetClientRect( &rcWindow );
 
-		if ( rcWindow.PtInRect( point ) && GetTopLevelParent()->IsWindowEnabled() )
+		CWnd* pParent;
+		if ( rcWindow.PtInRect( point ) && ( pParent = GetTopLevelParent() ) != NULL && pParent->IsWindowEnabled() )
 		{
 			CCoolBarItem* pItem = HitTest( point );
 
