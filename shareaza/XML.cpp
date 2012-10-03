@@ -658,8 +658,7 @@ BOOL CXMLElement::Merge(const CXMLElement* pInput, BOOL bOverwrite)
 	if ( this == pInput ) return TRUE;
 	if ( m_sName != pInput->m_sName ) return FALSE;
 
-	TRACE( _T("Merging XML:%sand XML:%s"),
-		ToString( FALSE, TRUE ), pInput->ToString( FALSE, TRUE ) );
+	TRACE( "Merging XML:%sand XML:%s", (LPCSTR)CT2A( ToString( FALSE, TRUE ) ), (LPCSTR)CT2A( pInput->ToString( FALSE, TRUE ) ) );
 
 	BOOL bChanged = FALSE;
 
@@ -698,7 +697,7 @@ BOOL CXMLElement::Merge(const CXMLElement* pInput, BOOL bOverwrite)
 
 	if ( bChanged )
 	{
-		TRACE( _T("resulting XML:%s\n"), ToString( FALSE, TRUE ) );
+		TRACE( "resulting XML:%s\n", (LPCSTR)CT2A( ToString( FALSE, TRUE ) ) );
 	}
 
 	return bChanged;

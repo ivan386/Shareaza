@@ -307,7 +307,7 @@ IUnknown* CPlugins::GetPlugin(LPCTSTR pszGroup, LPCTSTR pszType)
 				if ( SUCCEEDED( hr = pGITPlugin->m_pGIT.CopyTo( &pPlugin ) ) )
 					return pPlugin.Detach();
 			
-				TRACE( _T("Invalid plugin \"%s\"-\"%s\" %s\n"), pszGroup, pszType, (LPCTSTR)Hashes::toGuid( pCLSID ) );
+				TRACE( "Invalid plugin \"%s\"-\"%s\" %s\n", (LPCSTR)CT2A( pszGroup ), (LPCSTR)CT2A( pszType ), (LPCSTR)CT2A( Hashes::toGuid( pCLSID ) ) );
 			}
 
 			if ( i == 1 )
@@ -371,7 +371,7 @@ void CPlugins::OnRun()
 		{
 			delete pGITPlugin;
 
-			TRACE( _T("Dropped plugin %s\n"), (LPCTSTR)Hashes::toGuid( m_inCLSID ) );
+			TRACE( "Dropped plugin %s\n", (LPCSTR)CT2A( Hashes::toGuid( m_inCLSID ) ) );
 		}
 
 		m_pCache.SetAt( m_inCLSID, NULL );
@@ -388,7 +388,7 @@ void CPlugins::OnRun()
 			{
 				m_pCache.SetAt( m_inCLSID, pGITPlugin );
 
-				TRACE( _T("Created plugin %s\n"), (LPCTSTR)Hashes::toGuid( m_inCLSID ) );
+				TRACE( "Created plugin %s\n", (LPCSTR)CT2A( Hashes::toGuid( m_inCLSID ) ) );
 			}
 			else
 				delete pGITPlugin;
