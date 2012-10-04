@@ -1,7 +1,7 @@
 //
 // Player.cpp : Implementation of CPlayer
 //
-// Copyright (c) Nikolay Raspopov, 2009-2011.
+// Copyright (c) Nikolay Raspopov, 2009-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -566,6 +566,14 @@ STDMETHODIMP CPlayer::Play(void)
 	hr = m_pPlayer->get_controls( &pControls );
 	if ( FAILED( hr ) )
 		return hr;
+
+	VARIANT_BOOL bIsAvailable = VARIANT_FALSE;
+	hr = pControls->get_isAvailable( CComBSTR( L"play" ), &bIsAvailable );
+	if ( FAILED( hr ) )
+		return hr;
+
+	if ( ! bIsAvailable )
+		return E_NOTIMPL;
 
 	hr = pControls->play();
 	if ( hr != S_OK )

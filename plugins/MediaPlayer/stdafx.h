@@ -1,7 +1,7 @@
 //
 // stdafx.h
 //
-// Copyright (c) Nikolay Raspopov, 2009-2010.
+// Copyright (c) Nikolay Raspopov, 2009-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -24,7 +24,11 @@
 #define _WMP	// Define it to use Windows Media Player object otherwise DirectShow will be used
 
 #ifndef STRICT
-#define STRICT
+	#define STRICT
+#endif
+
+#ifndef _SECURE_ATL
+	#define _SECURE_ATL 1
 #endif
 
 #include "targetver.h"
@@ -39,6 +43,9 @@
 #define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS
 #define _ATL_CSTRING_NO_CRT
 #define _ATL_ALL_WARNINGS
+#define ATL_NO_ASSERT_ON_DESTROY_NONEXISTENT_WINDOW
+
+#define ISOLATION_AWARE_ENABLED 1
 
 #include "resource.h"
 
@@ -55,3 +62,13 @@
 #endif // _WMP
 
 using namespace ATL;
+
+#ifdef _UNICODE
+#if defined _M_IX86
+#pragma comment(linker,"/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='x86' publicKeyToken='6595b64144ccf1df' language='*'\"")
+#elif defined _M_X64
+#pragma comment(linker,"/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='amd64' publicKeyToken='6595b64144ccf1df' language='*'\"")
+#else
+#pragma comment(linker,"/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
+#endif
+#endif
