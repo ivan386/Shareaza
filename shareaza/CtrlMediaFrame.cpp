@@ -31,6 +31,8 @@
 #include "DlgSettingsManager.h"
 #include "DlgMediaVis.h"
 #include "CoolInterface.h"
+#include "WndMain.h"
+#include "WndMedia.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -55,6 +57,8 @@ static char THIS_FILE[]=__FILE__;
 
 #define VOLUME_KEY_MULTIPLIER 5
 
+IMPLEMENT_DYNAMIC(CLazySliderCtrl, CSliderCtrl)
+
 IMPLEMENT_DYNAMIC(CMediaFrame, CWnd)
 
 BEGIN_MESSAGE_MAP(CMediaFrame, CWnd)
@@ -68,6 +72,7 @@ BEGIN_MESSAGE_MAP(CMediaFrame, CWnd)
 	ON_WM_CLOSE()
 	ON_WM_SETCURSOR()
 	ON_WM_LBUTTONDOWN()
+	ON_WM_MBUTTONDOWN()
 	ON_WM_SYSCOMMAND()
 	ON_WM_LBUTTONDBLCLK()
 	ON_UPDATE_COMMAND_UI(ID_MEDIA_CLOSE, OnUpdateMediaClose)
@@ -107,7 +112,6 @@ BEGIN_MESSAGE_MAP(CMediaFrame, CWnd)
 	ON_COMMAND(ID_MEDIA_STATUS, OnMediaStatus)
 	ON_UPDATE_COMMAND_UI(ID_MEDIA_MUTE, OnUpdateMediaMute)
 	ON_COMMAND(ID_MEDIA_MUTE, OnMediaMute)
-	ON_NOTIFY(MLN_NEWCURRENT, IDC_MEDIA_PLAYLIST, OnNewCurrent)
 	ON_MESSAGE(WM_APPCOMMAND, OnMediaKey)
 END_MESSAGE_MAP()
 
@@ -121,51 +125,61 @@ END_MESSAGE_MAP()
 #define SPLIT_SIZE		6
 #define META_DELAY		10000
 #define TIME_FACTOR		1000000
+#define VOLUME_FACTOR	100
+#define SPEED_FACTOR	100
 #define ONE_SECOND		10000000
-
-CMediaFrame* CMediaFrame::g_pMediaFrame = NULL;
 
 
 /////////////////////////////////////////////////////////////////////////////
 // CMediaFrame construction
 
 CMediaFrame::CMediaFrame()
+	: m_nState			( smsNull )
+	, m_nLength			( 0 )
+	, m_nPosition		( 0 )
+	, m_nSpeed			( 1.0 )
+	, m_bMute			( FALSE )
+	, m_bThumbPlay		( FALSE )
+	, m_tLastPlay		( 0 )
+	, m_tMetadata		( 0 )
+	, m_bFullScreen		( FALSE )
+	, m_tBarTime		( 0 )
+	, m_ptCursor		()
+	, m_bListVisible	( Settings.MediaPlayer.ListVisible )
+	, m_bListWasVisible	( Settings.MediaPlayer.ListVisible )
+	, m_nListSize		( Settings.MediaPlayer.ListSize )
+	, m_bStatusVisible	( Settings.MediaPlayer.StatusVisible )
+	, m_rcVideo			()
+	, m_rcStatus		()
+	, m_bNoLogo			( VARIANT_FALSE )
+	, m_bScreenSaverEnabled( TRUE )
+	, m_nVidAC			( 0 )
+	, m_nVidDC			( 0 )
+	, m_nPowerSchemeId	( 0 )
+	, m_nScreenSaverTime( 0 )
+	, m_CurrentGP		()
+	, m_CurrentPP		()
 {
-	if ( g_pMediaFrame == NULL ) g_pMediaFrame = this;
-
-	m_nState			= smsNull;
-	m_bMute				= FALSE;
-	m_bThumbPlay		= FALSE;
-	m_bRepeat			= FALSE;
-	m_bLastMedia		= FALSE;
-	m_bLastNotPlayed	= FALSE;
-	m_bStopFlag			= FALSE;
-	m_bEnqueue			= FALSE;
-	m_tLastPlay			= 0;
-	m_tMetadata			= 0;
-	m_bNoLogo			= VARIANT_FALSE;
-	m_bFullScreen		= FALSE;
-	m_bListWasVisible   = Settings.MediaPlayer.ListVisible;
-	m_bListVisible		= Settings.MediaPlayer.ListVisible;
-	m_nListSize			= Settings.MediaPlayer.ListSize;
-	m_bStatusVisible	= Settings.MediaPlayer.StatusVisible;
-	m_rcVideo.SetRectEmpty();
-	m_rcStatus.SetRectEmpty();
-	m_bScreenSaverEnabled = TRUE;
-	m_nVidAC = m_nVidDC	= 0;
-	m_nPowerSchemeId	= 0;
-	m_nScreenSaverTime	= 0;
-	ZeroMemory( &m_CurrentGP, sizeof(GLOBAL_POWER_POLICY) );
-	ZeroMemory( &m_CurrentPP, sizeof(POWER_POLICY) );
-
-	UpdateNowPlaying(TRUE);
 }
 
 CMediaFrame::~CMediaFrame()
 {
-	UpdateNowPlaying(TRUE);
+}
 
-	if ( g_pMediaFrame == this ) g_pMediaFrame = NULL;
+CMediaFrame* CMediaFrame::GetMediaFrame()
+{
+	if ( CMainWnd* pMainWnd = theApp.SafeMainWnd() )
+	{
+		if ( CMediaWnd* pMediaWnd = static_cast< CMediaWnd* >( pMainWnd->m_pWindows.Find( RUNTIME_CLASS(CMediaWnd) ) ) )
+		{
+			if ( CMediaFrame* pMediaFrame = static_cast< CMediaFrame* >( pMediaWnd->GetWindow( GW_CHILD ) ) )
+			{
+				ASSERT_KINDOF( CMediaFrame, pMediaFrame );
+				return pMediaFrame;
+			}
+		}
+	}
+	return NULL;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -187,29 +201,33 @@ int CMediaFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	m_wndList.Create( this, IDC_MEDIA_PLAYLIST );
 
-	if ( ! m_wndListBar.Create( this, WS_CHILD|CBRS_NOALIGN, AFX_IDW_TOOLBAR ) ) return -1;
+	if ( ! m_wndListBar.Create( this, WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_CHILD | CBRS_NOALIGN, AFX_IDW_TOOLBAR ) ) return -1;
 	m_wndListBar.SetBarStyle( m_wndListBar.GetBarStyle() | CBRS_TOOLTIPS | CBRS_BORDER_TOP );
 	m_wndListBar.SetOwner( GetOwner() );
 
-	if ( ! m_wndToolBar.Create( this, WS_CHILD|WS_VISIBLE|CBRS_NOALIGN, AFX_IDW_TOOLBAR ) ) return -1;
+	if ( ! m_wndToolBar.Create( this, WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_CHILD | WS_VISIBLE| CBRS_NOALIGN, AFX_IDW_TOOLBAR ) ) return -1;
 	m_wndToolBar.SetBarStyle( m_wndToolBar.GetBarStyle() | CBRS_TOOLTIPS | CBRS_BORDER_TOP );
 	m_wndToolBar.SetOwner( GetOwner() );
 
-	m_wndPosition.Create( WS_CHILD|WS_TABSTOP|TBS_HORZ|TBS_NOTICKS|TBS_TOP,
+	m_wndPosition.Create( WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_CHILD | WS_TABSTOP | TBS_HORZ | TBS_NOTICKS | TBS_TOP,
 		rectDefault, &m_wndToolBar, ID_MEDIA_POSITION );
 	m_wndPosition.SetRange( 0, 0 );
 	m_wndPosition.SetPageSize( 0 );
 
-	m_wndSpeed.Create( WS_CHILD|WS_TABSTOP|TBS_HORZ|TBS_NOTICKS|TBS_TOP,
+	m_wndSpeed.Create( WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_CHILD | WS_TABSTOP | TBS_HORZ | TBS_NOTICKS | TBS_TOP,
 		rectDefault, &m_wndToolBar, ID_MEDIA_SPEED );
-	m_wndSpeed.SetRange( 0, 200 );
-	m_wndSpeed.SetTic( 0 );
+	m_wndSpeed.SetRange( 25, 400 );
+	m_wndSpeed.SetPageSize( 0 );
+	m_wndSpeed.SetTic( 25 );
+	m_wndSpeed.SetTic( 50 );
 	m_wndSpeed.SetTic( 100 );
 	m_wndSpeed.SetTic( 200 );
+	m_wndSpeed.SetTic( 400 );
 
-	m_wndVolume.Create( WS_CHILD|WS_TABSTOP|TBS_HORZ|TBS_NOTICKS|TBS_TOP,
+	m_wndVolume.Create( WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_CHILD | WS_TABSTOP | TBS_HORZ | TBS_NOTICKS | TBS_TOP,
 		rectDefault, &m_wndToolBar, ID_MEDIA_VOLUME );
 	m_wndVolume.SetRange( 0, 100 );
+	m_wndVolume.SetPageSize( 10 );
 	m_wndVolume.SetTic( 0 );
 	m_wndVolume.SetTic( 100 );
 
@@ -251,7 +269,7 @@ void CMediaFrame::OnDestroy()
 
 	Cleanup();
 
-	if ( ! m_bScreenSaverEnabled ) EnableScreenSaver();
+	EnableScreenSaver();
 
 	CWnd::OnDestroy();
 }
@@ -680,15 +698,15 @@ void CMediaFrame::PaintStatus(CDC& dc, CRect& rcBar)
 	if ( m_nState >= smsOpen )
 	{
 		CString strFormat;
-		LoadString( strFormat, IDS_GENERAL_OF );
-		strFormat = _T("%.2i:%.2i ") + strFormat + _T(" %.2i:%.2i");
+		strFormat = _T("%.2i:%.2i ") + LoadString( IDS_GENERAL_OF ) + _T(" %.2i:%.2i  x%.1f");
 		if ( Settings.General.LanguageRTL ) strFormat = _T("\x200F") + strFormat;
 
 		str.Format( strFormat,
 			(int)( ( m_nPosition / ONE_SECOND ) / 60 ),
 			(int)( ( m_nPosition / ONE_SECOND ) % 60 ),
 			(int)( ( m_nLength / ONE_SECOND ) / 60 ),
-			(int)( ( m_nLength / ONE_SECOND ) % 60 ) );
+			(int)( ( m_nLength / ONE_SECOND ) % 60 ),
+			m_nSpeed );
 
 		sz				= dc.GetTextExtent( str );
 		rcPart.right	= rcBar.right;
@@ -717,15 +735,15 @@ BOOL CMediaFrame::PaintStatusMicro(CDC& dc, CRect& rcBar)
 	if ( m_nState >= smsOpen )
 	{
 		CString strFormat;
-		LoadString( strFormat, IDS_GENERAL_OF );
-		strFormat = _T("%.2i:%.2i ") + strFormat + _T(" %.2i:%.2i");
+		strFormat = _T("%.2i:%.2i ") + LoadString( IDS_GENERAL_OF ) + _T(" %.2i:%.2i x%.1f");
 		if ( Settings.General.LanguageRTL ) strFormat = _T("\x200F") + strFormat;
 
 		str.Format( strFormat,
 			(int)( ( m_nPosition / ONE_SECOND ) / 60 ),
 			(int)( ( m_nPosition / ONE_SECOND ) % 60 ),
 			(int)( ( m_nLength / ONE_SECOND ) / 60 ),
-			(int)( ( m_nLength / ONE_SECOND ) % 60 ) );
+			(int)( ( m_nLength / ONE_SECOND ) % 60 ),
+			m_nSpeed );
 
 		sz				= pMemDC->GetTextExtent( str );
 		rcPart.right	= rcStatus.right;
@@ -898,6 +916,14 @@ void CMediaFrame::OnLButtonDown(UINT nFlags, CPoint point)
 	CWnd::OnLButtonDown( nFlags, point );
 }
 
+void CMediaFrame::OnMButtonDown(UINT nFlags, CPoint point)
+{
+	OnMediaFullScreen();
+
+
+	CWnd::OnMButtonDown( nFlags, point );
+}
+
 void CMediaFrame::OnLButtonDblClk(UINT nFlags, CPoint point)
 {
 	OnMediaFullScreen();
@@ -1066,75 +1092,20 @@ LRESULT CMediaFrame::OnMediaKey(WPARAM wParam, LPARAM lParam)
 /////////////////////////////////////////////////////////////////////////////
 // CMediaFrame thumb bars
 
-void CMediaFrame::OnHScroll(UINT nSBCode, UINT /* nPos */, CScrollBar* pScrollBar)
+void CMediaFrame::OnHScroll(UINT nSBCode, UINT /*nPos*/, CScrollBar* pScrollBar)
 {
-	HRESULT hr;
-
 	if ( pScrollBar == (CScrollBar*)&m_wndVolume )
 	{
-		double nVolume = (double)m_wndVolume.GetPos() / 100.0f;
+		double dOldVolume = Settings.MediaPlayer.Volume;
 
-		if ( nVolume != Settings.MediaPlayer.Volume )
-		{
-			Settings.MediaPlayer.Volume = nVolume;
-			if ( m_pPlayer )
-			{
-				hr = m_pPlayer->SetVolume( m_bMute ? 0 : Settings.MediaPlayer.Volume );
-				if ( FAILED( hr ) )
-				{
-					Cleanup( TRUE );
-					return;
-				}
-			}
-		}
-	}
-
-	if ( ! m_pPlayer )
-		return;
-
-	MediaState nState = smsNull;
-	hr = m_pPlayer->GetState( &nState );
-	if ( FAILED( hr ) )
-	{
-		Cleanup( TRUE );
-		return;
-	}
-	if ( nState < smsOpen )
-		return;
-
-	if ( pScrollBar == (CScrollBar*)&m_wndPosition )
-	{
-		LONGLONG nLength = 0;
-		hr = m_pPlayer->GetLength( &nLength );
-		if ( FAILED( hr ) )
-		{
-			Cleanup( TRUE );
-			return;
-		}
-		nLength /= TIME_FACTOR;
-
-		LONGLONG nPosition = 0;
-		hr = m_pPlayer->GetPosition( &nPosition );
-		if ( FAILED( hr ) )
-		{
-			Cleanup( TRUE );
-			return;
-		}
-		nPosition /= TIME_FACTOR;
-
+		double dNewVolume = dOldVolume;
 		switch ( nSBCode )
 		{
 		case TB_TOP:
-			nPosition = 0;
+			dNewVolume = 0.0;
 			break;
 		case TB_BOTTOM:
-			nPosition = nLength;
-			break;
-		case TB_LINEUP:
-			nPosition -= 5;
-			break;
-		case TB_LINEDOWN:
-			nPosition += 5;
+			dNewVolume = 1.0;
 			break;
 		case TB_PAGEUP:
 		case TB_PAGEDOWN:
@@ -1150,82 +1121,191 @@ void CMediaFrame::OnHScroll(UINT nSBCode, UINT /* nPos */, CScrollBar* pScrollBa
 				{
 					rc2.OffsetRect( rc1.left, rc1.top );
 					if ( pt.x <= rc2.left )
-						nPosition = 0;
+						dNewVolume = 0.0;
 					else if ( pt.x >= rc2.right )
-						nPosition = nLength;
+						dNewVolume = 1.0;
 					else
-						nPosition = (LONGLONG)( (double)( pt.x - rc2.left ) / (double)rc2.Width() * (double)nLength );
+						dNewVolume = (double)( pt.x - rc2.left ) / rc2.Width();
 				}
 			}
 			break;
 		case TB_THUMBPOSITION:
 		case TB_THUMBTRACK:
-			nPosition = m_wndPosition.GetPos();
+			dNewVolume = (double)m_wndVolume.GetPos() / VOLUME_FACTOR;
 			break;
 		}
 
-		if ( nState == smsOpen )
-			nPosition = 0;
-		if ( nPosition < 0 )
-			nPosition = 0;
-		if ( nPosition > nLength )
-			nPosition = nLength;
+		if ( dNewVolume < 0.0 )
+			dNewVolume = 0.0;
+		else if ( dNewVolume > 1.0 )
+			dNewVolume = 1.0;
 
-		if ( nState == smsPlaying )
+		if ( dNewVolume != dOldVolume )
 		{
-			hr = m_pPlayer->Pause();
-			if ( FAILED( hr ) )
-			{
-				Cleanup( TRUE );
-				return;
-			}
-			m_bThumbPlay = TRUE;
-		}
+			Settings.MediaPlayer.Volume = dNewVolume;
 
-		hr = m_pPlayer->SetPosition( nPosition * TIME_FACTOR );
-		if ( FAILED( hr ) )
-		{
-			Cleanup( TRUE );
-			return;
-		}
-		m_wndPosition.SetPos( (int)nPosition );
+			if ( m_pPlayer )
+				m_pPlayer->SetVolume( m_bMute ? 0 : dNewVolume );
 
-		if ( m_bThumbPlay && nSBCode == TB_ENDTRACK )
-		{
-			hr = m_pPlayer->Play();
-			if ( FAILED( hr ) )
-			{
-				Cleanup( TRUE );
-				return;
-			}
-			m_bThumbPlay = FALSE;
+			m_wndVolume.SetPos( (int)( dNewVolume * VOLUME_FACTOR ) );
 		}
 
 		UpdateState();
 		UpdateWindow();
+
+		return;
+	}
+
+	if ( ! m_pPlayer )
+		return;
+
+	MediaState nState = smsNull;
+	if ( FAILED( m_pPlayer->GetState( &nState ) ) )
+		return;
+
+	if ( nState < smsOpen )
+		return;
+
+	if ( pScrollBar == (CScrollBar*)&m_wndPosition )
+	{
+		LONGLONG nLength = 0;
+		if ( FAILED( m_pPlayer->GetLength( &nLength ) ) )
+			return;
+
+		LONGLONG nOldPosition = 0;
+		if ( FAILED( m_pPlayer->GetPosition( &nOldPosition ) ) )
+			return;
+
+		LONGLONG nNewPosition = nOldPosition;
+		switch ( nSBCode )
+		{
+		case TB_TOP:
+			nNewPosition = 0;
+			break;
+		case TB_BOTTOM:
+			nNewPosition = nLength;
+			break;
+		case TB_LINEUP:
+			nNewPosition = nOldPosition - 5 * TIME_FACTOR;
+			break;
+		case TB_LINEDOWN:
+			nNewPosition = nOldPosition + 5 * TIME_FACTOR;
+			break;
+		case TB_PAGEUP:
+		case TB_PAGEDOWN:
+			{
+				CRect rc1, rc2;
+				CPoint pt;
+
+				GetCursorPos( &pt );
+				pScrollBar->GetWindowRect( &rc1 );
+				((CSliderCtrl*)pScrollBar)->GetChannelRect( &rc2 );
+
+				if ( rc1.PtInRect( pt ) )
+				{
+					rc2.OffsetRect( rc1.left, rc1.top );
+					if ( pt.x <= rc2.left )
+						nNewPosition = 0;
+					else if ( pt.x >= rc2.right )
+						nNewPosition = nLength;
+					else
+						nNewPosition = ( ( pt.x - rc2.left ) * nLength ) / rc2.Width();
+				}
+			}
+			break;
+		case TB_THUMBPOSITION:
+		case TB_THUMBTRACK:
+			nNewPosition = (LONGLONG)m_wndPosition.GetPos() * TIME_FACTOR;
+			break;
+		}
+
+		if ( nState == smsOpen )
+			nNewPosition = 0;
+		else if ( nNewPosition < 0 )
+			nNewPosition = 0;
+		else if ( nNewPosition > nLength )
+			nNewPosition = nLength;
+	
+		if ( nState == smsPlaying )
+		{
+			m_bThumbPlay = TRUE;
+
+			m_pPlayer->Pause();
+		}
+
+		if ( nNewPosition != nOldPosition && nSBCode != TB_ENDTRACK )
+		{
+			if ( SUCCEEDED( m_pPlayer->SetPosition( nNewPosition ) ) )
+			{
+				m_wndPosition.SetPos( (int)( nNewPosition / TIME_FACTOR ) );
+			}
+		}
+
+		if ( m_bThumbPlay && nSBCode == TB_ENDTRACK && nState != smsPlaying )
+		{
+			m_bThumbPlay = FALSE;
+
+			m_pPlayer->Play();
+		}
 	}
 	else if ( pScrollBar == (CScrollBar*)&m_wndSpeed )
 	{
-		double nNewSpeed = (double)m_wndSpeed.GetPos() / 100.0f;
-		double nOldSpeed;
-
-		if ( nSBCode == TB_TOP || nSBCode == TB_BOTTOM )
-		{
-			nNewSpeed = 1.0f;
-			m_wndSpeed.SetPos( 100 );
-		}
-
-		hr = m_pPlayer->GetSpeed( &nOldSpeed );
-		if ( FAILED( hr ) )
-		{
-			Cleanup( TRUE );
+		double dOldSpeed = 0;
+		if ( FAILED( m_pPlayer->GetSpeed( &dOldSpeed ) ) )
 			return;
-		}
-		if ( nNewSpeed != nOldSpeed )
+
+		double dNewSpeed = dOldSpeed;
+		switch ( nSBCode )
 		{
-			m_pPlayer->SetSpeed( nNewSpeed );
+		case TB_TOP:
+			dNewSpeed = 0.25;
+			break;
+		case TB_BOTTOM:
+			dNewSpeed = 4.0;
+			break;
+		case TB_PAGEUP:
+		case TB_PAGEDOWN:
+			{
+				CRect rc1, rc2;
+				CPoint pt;
+
+				GetCursorPos( &pt );
+				pScrollBar->GetWindowRect( &rc1 );
+				((CSliderCtrl*)pScrollBar)->GetChannelRect( &rc2 );
+
+				if ( rc1.PtInRect( pt ) )
+				{
+					rc2.OffsetRect( rc1.left, rc1.top );
+					if ( pt.x <= rc2.left )
+						dNewSpeed = 0.0;
+					else if ( pt.x >= rc2.right )
+						dNewSpeed = 4.0;
+					else
+						dNewSpeed = (double)( pt.x - rc2.left ) / rc2.Width();
+				}
+			}
+			break;
+		case TB_THUMBPOSITION:
+		case TB_THUMBTRACK:
+			dNewSpeed = (double)m_wndSpeed.GetPos() / SPEED_FACTOR;
+			break;
+		}
+
+		if ( dNewSpeed < 0.25 )
+			dNewSpeed = 0.25;
+		else if ( dNewSpeed  > 4.0 )
+			dNewSpeed = 4.0;
+
+		if ( dNewSpeed != dOldSpeed  && nSBCode != TB_ENDTRACK )
+		{
+			if ( SUCCEEDED( m_pPlayer->SetSpeed( ( dNewSpeed > 0.5 && dNewSpeed < 1.5 ) ? 1.0 : dNewSpeed ) ) )
+			{
+				m_wndSpeed.SetPos( (int)( dNewSpeed * SPEED_FACTOR ) );
+			}
 		}
 	}
+
+	UpdateWindow();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1260,7 +1340,7 @@ void CMediaFrame::OnMediaPlay()
 		if ( m_wndList.GetCount() == 0 )
 			PostMessage( WM_COMMAND, ID_MEDIA_OPEN );
 		else
-			m_wndList.GetNext();
+			m_wndList.PlayNext();
 	}
 	else
 	{
@@ -1273,9 +1353,10 @@ void CMediaFrame::OnMediaPlay()
 				return;
 			}
 		}
-		if ( ! UpdateState() )
-			return;
 	}
+
+	if ( ! UpdateState() )
+		return;
 
 	UpdateNowPlaying();
 }
@@ -1303,11 +1384,9 @@ void CMediaFrame::OnMediaPause()
 		}
 	}
 
-	if ( ! UpdateState() )
-		return;
+	UpdateState();
 
-	if ( ! m_bScreenSaverEnabled )
-		EnableScreenSaver();
+	EnableScreenSaver();
 
 	UpdateNowPlaying(TRUE);
 }
@@ -1330,8 +1409,11 @@ void CMediaFrame::OnMediaStop()
 			return;
 		}
 	}
-	m_bStopFlag = TRUE;
+
 	m_wndList.Reset();
+
+	UpdateState();
+
 	EnableScreenSaver();
 
 	UpdateNowPlaying(TRUE);
@@ -1349,8 +1431,10 @@ void CMediaFrame::OnMediaFullScreen()
 
 void CMediaFrame::OnMediaZoom()
 {
-	CMenu* pMenu = Skin.GetMenu( _T("CMediaFrame.Zoom") );
-	m_wndToolBar.ThrowMenu( ID_MEDIA_ZOOM, pMenu );
+	if ( CMenu* pMenu = Skin.GetMenu( _T("CMediaFrame.Zoom") ) )
+	{
+		m_wndToolBar.ThrowMenu( ID_MEDIA_ZOOM, pMenu );
+	}
 }
 
 void CMediaFrame::OnUpdateMediaSizeFill(CCmdUI* pCmdUI)
@@ -1417,23 +1501,23 @@ void CMediaFrame::OnMediaAspectDefault()
 void CMediaFrame::OnUpdateMediaAspect43(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable( Settings.MediaPlayer.Zoom != smzDistort );
-	pCmdUI->SetCheck( fabs( Settings.MediaPlayer.Aspect - 4.0f/3.0f ) < 0.1f );
+	pCmdUI->SetCheck( fabs( Settings.MediaPlayer.Aspect - 4.0 / 3.0 ) < 0.1 );
 }
 
 void CMediaFrame::OnMediaAspect43()
 {
-	AspectTo( (4.0f/3.0f) );
+	AspectTo( 4.0 / 3.0 );
 }
 
 void CMediaFrame::OnUpdateMediaAspect169(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable( Settings.MediaPlayer.Zoom != smzDistort );
-	pCmdUI->SetCheck( fabs( Settings.MediaPlayer.Aspect - 16.0f/9.0f ) < 0.1f );
+	pCmdUI->SetCheck( fabs( Settings.MediaPlayer.Aspect - 16.0 / 9.0 ) < 0.1 );
 }
 
 void CMediaFrame::OnMediaAspect169()
 {
-	AspectTo( (16.0f/9.0f) );
+	AspectTo( 16.0 /9.0  );
 }
 
 void CMediaFrame::OnUpdateMediaPlaylist(CCmdUI* pCmdUI)
@@ -1487,30 +1571,22 @@ void CMediaFrame::OnUpdateMediaMute(CCmdUI* pCmdUI)
 
 void CMediaFrame::OnMediaMute()
 {
-	HRESULT hr;
-
 	m_bMute = ! m_bMute;
+
 	if ( m_pPlayer )
-	{
-		hr = m_pPlayer->SetVolume( m_bMute ? 0 : Settings.MediaPlayer.Volume );
-		if ( FAILED( hr ) )
-		{
-			Cleanup( TRUE );
-			return;
-		}
-	}
+		m_pPlayer->SetVolume( m_bMute ? 0 : Settings.MediaPlayer.Volume );
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // CMediaFrame public media operations
 
-BOOL CMediaFrame::PlayFile(LPCTSTR pszFile)
+BOOL CMediaFrame::PlayFile(LPCTSTR pszFile, BOOL bForcePlay)
 {
 	UpdateWindow();
 
 	DWORD tNow = GetTickCount();
 
-	if ( tNow - m_tLastPlay < 500 )
+	if ( ! bForcePlay && tNow < 500 + m_tLastPlay )
 	{
 		m_tLastPlay = tNow;
 		return EnqueueFile( pszFile );
@@ -1518,18 +1594,13 @@ BOOL CMediaFrame::PlayFile(LPCTSTR pszFile)
 	else
 	{
 		m_tLastPlay = tNow;
-		return m_wndList.Open( pszFile );
+		return m_wndList.Play( pszFile );
 	}
 }
 
 BOOL CMediaFrame::EnqueueFile(LPCTSTR pszFile)
 {
-	m_bEnqueue = TRUE;
-	BOOL bResult = m_wndList.Enqueue( pszFile, TRUE );
-	m_bLastMedia = FALSE;
-	m_bLastNotPlayed = TRUE;
-	m_bEnqueue = FALSE;
-	return bResult;
+	return ( m_wndList.Enqueue( pszFile ) != 0 );
 }
 
 void CMediaFrame::OnFileDelete(LPCTSTR pszFile)
@@ -1541,7 +1612,7 @@ void CMediaFrame::OnFileDelete(LPCTSTR pszFile)
 	}
 }
 
-float CMediaFrame::GetPosition()
+float CMediaFrame::GetPosition() const
 {
 	if ( m_pPlayer && m_nState >= smsOpen && m_nLength > 0 )
 	{
@@ -1553,13 +1624,13 @@ float CMediaFrame::GetPosition()
 	}
 }
 
-BOOL CMediaFrame::SeekTo(float nPosition)
+BOOL CMediaFrame::SeekTo(double dPosition)
 {
 	HRESULT hr;
 
 	if ( m_pPlayer && m_nState >= smsPaused && m_nLength > 0 )
 	{
-		m_nPosition = (LONGLONG)( nPosition * (float)m_nLength );
+		m_nPosition = (LONGLONG)( dPosition * m_nLength );
 		hr = m_pPlayer->SetPosition( m_nPosition );
 		if ( FAILED( hr ) )
 		{
@@ -1575,16 +1646,16 @@ BOOL CMediaFrame::SeekTo(float nPosition)
 	}
 }
 
-float CMediaFrame::GetVolume()
+float CMediaFrame::GetVolume() const
 {
 	return (float)Settings.MediaPlayer.Volume;
 }
 
-BOOL CMediaFrame::SetVolume(float nVolume)
+BOOL CMediaFrame::SetVolume(double dVolume)
 {
 	HRESULT hr;
 
-	Settings.MediaPlayer.Volume = (double)nVolume;
+	Settings.MediaPlayer.Volume = dVolume;
 	if ( m_pPlayer )
 	{
 		hr = m_pPlayer->SetVolume( m_bMute ? 0 : Settings.MediaPlayer.Volume );
@@ -1602,21 +1673,14 @@ BOOL CMediaFrame::SetVolume(float nVolume)
 
 void CMediaFrame::OffsetVolume(int nVolumeOffset)
 {
-	HRESULT hr;
-
 	KillTimer( 1 );
-	int nVolumeTick = max( min( m_wndVolume.GetPos() + nVolumeOffset, 100 ), 0 );
+	int nVolumeTick = max( min( m_wndVolume.GetPos() + nVolumeOffset, VOLUME_FACTOR ), 0 );
 	m_wndVolume.SetPos( nVolumeTick );
-	Settings.MediaPlayer.Volume = (double)nVolumeTick / 100.0f;
+	Settings.MediaPlayer.Volume = (double)nVolumeTick / VOLUME_FACTOR;
+
 	if ( m_pPlayer )
-	{
-		hr = m_pPlayer->SetVolume( Settings.MediaPlayer.Volume );
-		if ( FAILED( hr ) )
-		{
-			Cleanup( TRUE );
-			return;
-		}
-	}
+		m_pPlayer->SetVolume( Settings.MediaPlayer.Volume );
+
 	UpdateState();
 	SetTimer( 1, 200, NULL );
 }
@@ -1651,7 +1715,7 @@ void CMediaFrame::OffsetPosition(int nPositionOffset)
 			Cleanup( TRUE );
 			return;
 		}
-		nPos = max( min( nPos + nPositionOffset * TIME_FACTOR, nLen ), 0ll );
+		nPos = max( min( nPos + (LONGLONG)nPositionOffset * TIME_FACTOR, nLen ), 0ll );
 		hr = m_pPlayer->SetPosition( nPos );
 		if ( FAILED( hr ) )
 		{
@@ -1724,7 +1788,7 @@ BOOL CMediaFrame::Prepare()
 
 	OnSize( SIZE_INTERNAL, 0, 0 );
 
-	return UpdateState();
+	return TRUE;
 }
 
 BOOL CMediaFrame::PrepareVis()
@@ -1782,7 +1846,9 @@ BOOL CMediaFrame::PrepareVis()
 
 BOOL CMediaFrame::OpenFile(LPCTSTR pszFile)
 {
-	HRESULT hr;
+	CWaitCursor pCursor;
+
+	Cleanup();
 
 	if ( ! Prepare() )
 	{
@@ -1791,24 +1857,20 @@ BOOL CMediaFrame::OpenFile(LPCTSTR pszFile)
 		return FALSE;
 	}
 
-	if ( m_sFile == pszFile )
-		return UpdateState();
+	TRACE( "Playing file: %s\n", (LPCSTR)CT2A( pszFile ) );
 
-	CWaitCursor pCursor;
+	m_nState = smsNull;
 	m_sFile = pszFile;
 	m_pMetadata.Clear();
 
 	HINSTANCE hRes = AfxGetResourceHandle();
-	hr = PluginPlay( CComBSTR( pszFile ) );
+	HRESULT hr = PluginPlay( CComBSTR( pszFile ) );
 	AfxSetResourceHandle( hRes );
 	if ( FAILED( hr ) )
 	{
 		Cleanup( TRUE );
 		return FALSE;
 	}
-
-	if ( ! UpdateState() )
-		return FALSE;
 
 	pCursor.Restore();
 	m_tMetadata = GetTickCount();
@@ -1837,38 +1899,30 @@ BOOL CMediaFrame::OpenFile(LPCTSTR pszFile)
 
 	if ( hr != S_OK )
 	{
-		CString strMessage;
-		LoadString( strMessage, IDS_MEDIA_PARTIAL_RENDER );
-		m_pMetadata.Add( _T("Warning"), strMessage );
+		m_pMetadata.Add( _T("Warning"), LoadString( IDS_MEDIA_PARTIAL_RENDER ) );
 	}
 
 	m_bNoLogo = VARIANT_FALSE;
 	if ( m_pPlayer )
-	{
-		hr = m_pPlayer->IsWindowVisible( &m_bNoLogo );
-		if ( FAILED( hr ) )
-		{
-			Cleanup( TRUE );
-			return FALSE;
-		}
-	}
+		m_pPlayer->IsWindowVisible( &m_bNoLogo );
 
 	return TRUE;
 }
 
 HRESULT CMediaFrame::PluginPlay(BSTR bsFilePath)
 {
+	HRESULT hr;
 	__try
 	{
 		m_pPlayer->Close();
 
-		return m_pPlayer->Open( bsFilePath );
+		hr = m_pPlayer->Open( bsFilePath );
 	}
 	__except( EXCEPTION_EXECUTE_HANDLER )
 	{
-		Cleanup( TRUE );
-		return E_FAIL;
+		hr = E_FAIL;
 	}
+	return hr;
 }
 
 void CMediaFrame::ReportError()
@@ -1903,9 +1957,6 @@ void CMediaFrame::Cleanup(BOOL bUnexpected)
 		}
 		__except( EXCEPTION_EXECUTE_HANDLER )
 		{
-			// Some buggy visualizations crash Shareaza.
-			// Restore screen saver and power settings before
-			EnableScreenSaver();
 		}
 		m_pPlayer.Release();
 
@@ -1931,6 +1982,10 @@ void CMediaFrame::Cleanup(BOOL bUnexpected)
 	}
 
 	m_sFile.Empty();
+
+	EnableScreenSaver();
+
+	UpdateNowPlaying( TRUE );
 }
 
 void CMediaFrame::ZoomTo(MediaZoom nZoom)
@@ -1973,16 +2028,13 @@ BOOL CMediaFrame::UpdateState()
 
 	MediaState nOldState = m_nState;
 	m_nState = smsNull;
-
-	if ( m_pPlayer )
+	hr = m_pPlayer ? m_pPlayer->GetState( &m_nState ) : S_FALSE;
+	if ( FAILED( hr ) )
 	{
-		hr = m_pPlayer->GetState( &m_nState );
-		if ( FAILED( hr ) )
-		{
-			Cleanup( TRUE );
-			return FALSE;
-		}
+		Cleanup( TRUE );
+		return FALSE;
 	}
+
 	if ( m_pPlayer && m_nState >= smsOpen )
 	{
 		m_nLength = 0;
@@ -1992,8 +2044,6 @@ BOOL CMediaFrame::UpdateState()
 			Cleanup( TRUE );
 			return FALSE;
 		}
-		int nLength = (int)( m_nLength / TIME_FACTOR );
-
 		m_nPosition = 0;
 		hr = m_pPlayer ? m_pPlayer->GetPosition( &m_nPosition ) : E_FAIL;
 		if ( FAILED( hr ) )
@@ -2001,25 +2051,23 @@ BOOL CMediaFrame::UpdateState()
 			Cleanup( TRUE );
 			return FALSE;
 		}
-		int nPosition = (int)( m_nPosition / TIME_FACTOR );
-
+		m_wndPosition.SetRangeMax( (int)( m_nLength / TIME_FACTOR ) );
+		m_wndPosition.SetPos( (int)( m_nPosition / TIME_FACTOR ) );
 		if ( ! m_wndPosition.IsWindowEnabled() ) m_wndPosition.EnableWindow( TRUE );
-		m_wndPosition.SetRangeMax( (int)nLength );
-		m_wndPosition.SetPos( (int)nPosition );
 
-		double nSpeed = 1.0f;
-		hr = m_pPlayer ? m_pPlayer->GetSpeed( &nSpeed ) : E_FAIL;
+		m_nSpeed = 1.0;
+		hr = m_pPlayer ? m_pPlayer->GetSpeed( &m_nSpeed ) : E_FAIL;
 		if ( FAILED( hr ) )
 		{
 			Cleanup( TRUE );
 			return FALSE;
 		}
-		m_wndSpeed.SetPos( (int)( nSpeed * 100 ) );
+		m_wndSpeed.SetPos( (int)( m_nSpeed * SPEED_FACTOR ) );
 		if ( ! m_wndSpeed.IsWindowEnabled() ) m_wndSpeed.EnableWindow( TRUE );
 
 		if ( ! m_bMute )
 		{
-			Settings.MediaPlayer.Volume = 1.0f;
+			Settings.MediaPlayer.Volume = 1.0;
 			hr = m_pPlayer ? m_pPlayer->GetVolume( &Settings.MediaPlayer.Volume ) : E_FAIL;
 			if ( FAILED( hr ) )
 			{
@@ -2028,9 +2076,10 @@ BOOL CMediaFrame::UpdateState()
 			}
 		}
 
+		// Next track on playing and
 		if ( nOldState == smsPlaying && m_nState == smsOpen )
 		{
-			m_wndList.GetNext();
+			m_wndList.PlayNext();
 		}
 	}
 	else
@@ -2043,113 +2092,43 @@ BOOL CMediaFrame::UpdateState()
 		if ( m_wndSpeed.IsWindowEnabled() ) m_wndSpeed.EnableWindow( FALSE );
 	}
 
-	m_wndVolume.SetPos( (int)( Settings.MediaPlayer.Volume * 100 ) );
+	m_wndVolume.SetPos( (int)( Settings.MediaPlayer.Volume * VOLUME_FACTOR ) );
 
 	if ( m_bStatusVisible )
 	{
 		InvalidateRect( &m_rcStatus );
 	}
 
+	UpdateWindow();
+
 	return TRUE;
 }
 
-void CMediaFrame::OnNewCurrent(NMHDR* /*pNotify*/, LRESULT* pResult)
+void CMediaFrame::PlayCurrent()
 {
-	HRESULT hr;
-
-	int nCurrent = m_wndList.GetCurrent();
-	m_wndList.UpdateWindow();
-	m_bRepeat = Settings.MediaPlayer.Repeat;
-	m_bLastMedia = ( nCurrent == m_wndList.GetItemCount() - 1 );
-
-	if ( m_bStopFlag )
+	int nItem = m_wndList.GetCurrent();
+	if ( nItem < 0 )
 	{
-		m_bStopFlag = FALSE;
-		m_bLastNotPlayed = FALSE;
 		Cleanup();
-		if ( ! m_bScreenSaverEnabled ) EnableScreenSaver();
-		*pResult = 0;
 		return;
 	}
 
-	if ( nCurrent >= 0 ) // not the last in the list
+	m_wndList.SetPlayed( nItem );
+
+	if ( OpenFile( m_wndList.GetPath( nItem ) ) )
 	{
-		BOOL bPlayIt;
-		BOOL bCorrupted = FALSE;
-
-		if ( m_bEnqueue )
-			bPlayIt = FALSE;
-		else
+		if ( m_pPlayer && SUCCEEDED( m_pPlayer->Play() ) )
 		{
-			// Play when repeat is on or when whithin the playlist
-			bPlayIt = m_bRepeat || ! m_bLastMedia || m_bLastNotPlayed;
-			// The whole playlist was played and the list was reset
-			if ( ! m_bRepeat && m_bLastNotPlayed && ! m_bLastMedia )
-			{
-				if ( m_nState != smsPlaying )
-					bPlayIt = FALSE;
-				else // New file was clicked, clear the flag
-					m_bLastNotPlayed = FALSE;
-			}
-
-			if ( ! m_pPlayer || bPlayIt || m_wndList.GetItemCount() == 1 )
-			{
-				bPlayIt = TRUE;
-				bCorrupted = ! OpenFile( m_wndList.GetPath( nCurrent ) );
-			}
-		}
-
-		if ( m_pPlayer && bPlayIt && ! bCorrupted )
-		{
-			hr = m_pPlayer->Play();
-			if ( FAILED( hr ) )
-			{
-				Cleanup( TRUE );
-				return;
-			}
-			if ( m_bScreenSaverEnabled ) DisableScreenSaver();
-			// check if the last was not played; flag only when we are playing the file before it
-			if ( ! m_bLastNotPlayed )
-				m_bLastNotPlayed = ( nCurrent == m_wndList.GetItemCount() - 2 );
-			UpdateState();
-		}
-		else if ( m_pPlayer && bCorrupted ) // file was corrupted, move to the next file
-		{
-			nCurrent = m_wndList.GetNext( FALSE );
-			if ( m_wndList.GetItemCount() != 1 )
-				m_wndList.SetCurrent( nCurrent );
-			else
-				Cleanup(); //cleanup when no exception happened but the file couldn't be opened (png files)
+			UpdateNowPlaying();
+			return;
 		}
 		else
-		{
-			// reset list and cleanup
-			m_bLastNotPlayed = FALSE;
-			m_wndList.Reset( TRUE );
-			m_bStopFlag = FALSE;
-			Cleanup();
-		}
-	}
-	else if ( m_wndList.GetItemCount() > 0 ) // the list was reset; current file was set to -1
-	{
-		nCurrent = m_wndList.GetCurrent(); // get file #0
-
-		if ( m_pPlayer )
-		{
-			if ( ! m_bRepeat )
-				m_bStopFlag = TRUE;
-			else
-				nCurrent = m_wndList.GetNext( FALSE );
-			if ( ! m_bEnqueue )
-				m_wndList.SetCurrent( nCurrent );
-		}
+			TRACE( "Failed to play media file!\n" );
 	}
 	else
-		Cleanup();
+		TRACE( "Failed to open media file!\n" );
 
-	*pResult = 0;
-
-	UpdateNowPlaying();
+	Cleanup( TRUE );
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -2224,27 +2203,16 @@ void CMediaFrame::UpdateScreenSaverStatus(BOOL bWindowActive)
 
 void CMediaFrame::UpdateNowPlaying(BOOL bEmpty)
 {
-	if(bEmpty)
-		m_sNowPlaying = _T("");
+	if ( bEmpty )
+		m_sNowPlaying.Empty();
 	else
 	{
-		m_sNowPlaying = m_sFile;
-
 		// Strip path
-		LPCTSTR pszFileName = _tcsrchr( m_sNowPlaying, '\\' );
-		if ( pszFileName )
-		{
-			int nFileNameLen = static_cast< int >( _tcslen( pszFileName ) );
-			m_sNowPlaying = m_sNowPlaying.Right( nFileNameLen - 1 );
-		}
+		m_sNowPlaying = PathFindFileName( m_sFile );
 
 		// Strip extension
-		LPCTSTR pszExt = _tcsrchr( m_sNowPlaying, '.' );
-		if ( pszExt )
-		{
-			int nFileNameLen = static_cast< int >( pszExt - m_sNowPlaying );
-			m_sNowPlaying = m_sNowPlaying.Left( nFileNameLen );
-		}
+		LPCTSTR szFilename = m_sNowPlaying;
+		m_sNowPlaying = m_sNowPlaying.Left( PathFindExtension( szFilename ) - szFilename );
 	}
 
 	CRegistry::SetString( _T("MediaPlayer"), _T("NowPlaying"), m_sNowPlaying );

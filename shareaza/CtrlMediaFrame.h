@@ -1,7 +1,7 @@
 //
 // CtrlMediaFrame.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -26,13 +26,15 @@
 
 class CLazySliderCtrl : public CSliderCtrl
 {
+	DECLARE_DYNAMIC(CLazySliderCtrl)
+
 public:
 	CLazySliderCtrl() : m_nPos( -1 ), m_nMin( -1 ), m_nMax( -1 ) {}
+	virtual ~CLazySliderCtrl() {}
 
-	int GetPos() const
+	int GetPos()
 	{
-		if ( m_nPos == -1 )
-			m_nPos = CSliderCtrl::GetPos();
+		m_nPos = CSliderCtrl::GetPos();
 		return m_nPos;
 	}
 
@@ -45,6 +47,25 @@ public:
 		}
 	}
 
+	int GetRangeMax()
+	{
+		m_nMax = CSliderCtrl::GetRangeMax();
+		return m_nMax;
+	}
+
+	int GetRangeMin()
+	{
+		m_nMin = CSliderCtrl::GetRangeMin();
+		return m_nMin;
+	}
+
+	void GetRange(_Out_ int& nMin, _Out_ int& nMax)
+	{
+		GetRange( m_nMin, m_nMax );
+		nMin = m_nMin;
+		nMax = m_nMax;
+	}
+
 	void SetRange(_In_ int nMin, _In_ int nMax, _In_ BOOL bRedraw = FALSE)
 	{
 		if ( m_nMin != nMin || m_nMax != nMax )
@@ -54,9 +75,27 @@ public:
 			CSliderCtrl::SetRange( nMin, nMax, bRedraw );
 		}
 	}
+	
+	void SetRangeMax(_In_ int nMax, _In_ BOOL bRedraw = FALSE)
+	{
+		if ( m_nMax != nMax )
+		{
+			m_nMax = nMax;
+			CSliderCtrl::SetRangeMax( nMax, bRedraw );
+		}
+	}
+	
+	void SetRangeMin(_In_ int nMin, _In_ BOOL bRedraw = FALSE)
+	{
+		if ( m_nMin != nMin )
+		{
+			m_nMin = nMin;
+			CSliderCtrl::SetRangeMin( nMin, bRedraw );
+		}
+	}
 
 private:
-	mutable int m_nPos, m_nMin, m_nMax;
+	int m_nPos, m_nMin, m_nMax;
 };
 
 class CMediaFrame : public CWnd
@@ -67,7 +106,7 @@ public:
 	CMediaFrame();
 	virtual ~CMediaFrame();
 
-	static CMediaFrame* g_pMediaFrame;
+	static CMediaFrame* GetMediaFrame();
 
 	virtual BOOL Create(CWnd* pParentWnd);
 	virtual BOOL OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo);
@@ -75,13 +114,14 @@ public:
 
 	void	OnSkinChange();
 	void	OnUpdateCmdUI();
-	BOOL	PlayFile(LPCTSTR pszFile);
+	BOOL	PlayFile(LPCTSTR pszFile, BOOL bForcePlay);
 	BOOL	EnqueueFile(LPCTSTR pszFile);
+	void	PlayCurrent();
 	void	OnFileDelete(LPCTSTR pszFile);
-	float	GetPosition();
-	float	GetVolume();
-	BOOL	SeekTo(float nPosition);
-	BOOL	SetVolume(float nVolume);
+	float	GetPosition() const;
+	float	GetVolume() const;
+	BOOL	SeekTo(double dPosition);
+	BOOL	SetVolume(double dVolume);
 	void	OffsetVolume(int nVolumeOffset);
 	void	OffsetPosition(int nPositionOffset);
 	BOOL	PaintStatusMicro(CDC& dc, CRect& rcBar);
@@ -102,7 +142,7 @@ public:
 		return m_pPlayer ? m_nState : smsNull;
 	}
 
-	inline BOOL CMediaFrame::IsPlaying() const
+	inline BOOL IsPlaying() const
 	{
 		return m_pPlayer && m_nState == smsPlaying;
 	}
@@ -112,13 +152,9 @@ protected:
 	MediaState		m_nState;
 	LONGLONG		m_nLength;
 	LONGLONG		m_nPosition;
+	double			m_nSpeed;
 	BOOL			m_bMute;
 	BOOL			m_bThumbPlay;
-	BOOL			m_bRepeat;
-	BOOL			m_bLastMedia;
-	BOOL			m_bLastNotPlayed;
-	BOOL			m_bEnqueue;
-	BOOL			m_bStopFlag;
 	DWORD			m_tLastPlay;
 
 	CString			m_sFile;
@@ -179,6 +215,7 @@ protected:
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
 	afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+	afx_msg void OnMButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnLButtonDblClk(UINT nFlags, CPoint point);
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnClose();
@@ -220,7 +257,6 @@ protected:
 	afx_msg void OnMediaStatus();
 	afx_msg void OnUpdateMediaMute(CCmdUI* pCmdUI);
 	afx_msg void OnMediaMute();
-	afx_msg void OnNewCurrent(NMHDR* pNotify, LRESULT* pResult);
 	afx_msg LRESULT OnMediaKey(WPARAM wParam, LPARAM lParam);
 
 	DECLARE_MESSAGE_MAP()

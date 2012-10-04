@@ -542,7 +542,7 @@ void CRemoteWnd::PaintMedia(CDC* pDC)
 {
 	if ( m_bsMediaSeekTrack )
 	{
-		float nPosition = m_nMediaSeek >= 0 ? m_nMediaSeek : ( CMediaFrame::g_pMediaFrame != NULL ? CMediaFrame::g_pMediaFrame->GetPosition() : 0 );
+		float nPosition = m_nMediaSeek >= 0 ? m_nMediaSeek : ( CMediaFrame::GetMediaFrame() != NULL ? CMediaFrame::GetMediaFrame()->GetPosition() : 0 );
 		CRect rcTrack( &m_rcsMediaSeekTrack ), rcPart;
 
 		if ( m_bsMediaSeekTab )
@@ -611,14 +611,14 @@ void CRemoteWnd::PaintMedia(CDC* pDC)
 		}
 	}
 
-	if ( m_bsStatusText && CMediaFrame::g_pMediaFrame != NULL && ! m_bStatus )
+	if ( m_bsStatusText && CMediaFrame::GetMediaFrame() != NULL && ! m_bStatus )
 	{
-		m_bStatus |= CMediaFrame::g_pMediaFrame->PaintStatusMicro( *pDC, m_rcsStatusText );
+		m_bStatus |= CMediaFrame::GetMediaFrame()->PaintStatusMicro( *pDC, m_rcsStatusText );
 	}
 
-	if ( CMediaFrame::g_pMediaFrame != NULL )
+	if ( CMediaFrame::GetMediaFrame() != NULL )
 	{
-		MediaState nState = CMediaFrame::g_pMediaFrame->GetState();
+		MediaState nState = CMediaFrame::GetMediaFrame()->GetState();
 		int nImage = 0;
 
 		if ( nState >= smsPlaying )
@@ -722,7 +722,7 @@ BOOL CRemoteWnd::OnSetCursor(CWnd* /*pWnd*/, UINT /*nHitTest*/, UINT /*message*/
 	GetCursorPos( &point );
 	ScreenToClient( &point );
 
-	BOOL bAvailable = CMediaFrame::g_pMediaFrame != NULL;
+	BOOL bAvailable = CMediaFrame::GetMediaFrame() != NULL;
 
 	if ( m_bsScalerTrack && m_rcScalerTab.PtInRect( point ) )
 	{
@@ -955,7 +955,7 @@ void CRemoteWnd::TrackSeek()
 	CRect rcTrack( &m_rcsMediaSeekTrack );
 	CPoint point;
 
-	if ( CMediaFrame::g_pMediaFrame == NULL ) return;
+	if ( CMediaFrame::GetMediaFrame() == NULL ) return;
 
 	ClientToScreen( &rcTrack );
 	ClipCursor( &rcTrack );
@@ -984,6 +984,7 @@ void CRemoteWnd::TrackSeek()
 		if ( nPosition != m_nMediaSeek )
 		{
 			m_nMediaSeek = nPosition;
+			CMediaFrame::GetMediaFrame()->SeekTo( m_nMediaSeek );
 			Invalidate();
 		}
 	}
@@ -991,7 +992,6 @@ void CRemoteWnd::TrackSeek()
 	ReleaseCapture();
 	ClipCursor( NULL );
 
-	CMediaFrame::g_pMediaFrame->SeekTo( m_nMediaSeek );
 	m_nMediaSeek = -1;
 	Invalidate();
 }
@@ -1002,7 +1002,7 @@ void CRemoteWnd::TrackVol()
 	CRect rcTrack( &m_rcsMediaVolTrack );
 	CPoint point;
 
-	if ( CMediaFrame::g_pMediaFrame == NULL ) return;
+	if ( CMediaFrame::GetMediaFrame() == NULL ) return;
 
 	ClientToScreen( &rcTrack );
 	ClipCursor( &rcTrack );
@@ -1031,7 +1031,7 @@ void CRemoteWnd::TrackVol()
 		if ( nPosition != m_nMediaVol )
 		{
 			m_nMediaVol = nPosition;
-			CMediaFrame::g_pMediaFrame->SetVolume( m_nMediaVol );
+			CMediaFrame::GetMediaFrame()->SetVolume( m_nMediaVol );
 			Invalidate();
 		}
 	}

@@ -1,7 +1,7 @@
 //
 // CtrlMediaList.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -35,20 +35,25 @@ public:
 
 	virtual BOOL Create(CWnd* pParentWnd, UINT nID);
 
-	BOOL	Open(LPCTSTR pszFile);
-	BOOL	Enqueue(LPCTSTR pszFile, BOOL bStart = TRUE);
+	BOOL	Play(LPCTSTR pszFile);
+	int		Enqueue(LPCTSTR pszFile);
 	int		RecursiveEnqueue(LPCTSTR pszPath);
 	void	Remove(LPCTSTR pszFile);
 	BOOL	LoadTextList(LPCTSTR pszFile);
 	BOOL	SaveTextList(LPCTSTR pszFile);
-	int		GetCount();
+	int		GetCount() const;
+	int		GetCurrent() const;
+	BOOL	IsCurrent(int nItem) const;
+	void	SetCurrent(int nCurrent);
+	BOOL	IsPlayed(int nItem) const;
+	int		GetUnplayedCount() const;
+	void	SetPlayed(int nItem);
+	void	ClearPlayed();
 	void	Clear();
 	UINT	GetSelectedCount();
-	int		GetCurrent();
-	void	SetCurrent(int nCurrent);
-	int		GetNext(BOOL bSet = TRUE);
-	void	Reset(BOOL bNext = TRUE);
-	CString	GetPath(int nItem);
+	void	PlayNext();
+	void	Reset();
+	CString	GetPath(int nItem) const;
 	void	OnSkinChange();
 
 protected:
@@ -103,5 +108,3 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 };
-
-#define MLN_NEWCURRENT	101

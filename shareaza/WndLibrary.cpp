@@ -27,6 +27,7 @@
 #include "LibraryBuilder.h"
 #include "CollectionFile.h"
 #include "SharedFile.h"
+#include "WndMain.h"
 #include "WndLibrary.h"
 #include "SharedFolder.h"
 
@@ -46,8 +47,6 @@ BEGIN_MESSAGE_MAP(CLibraryWnd, CPanelWnd)
 	ON_WM_TIMER()
 END_MESSAGE_MAP()
 
-
-
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryWnd construction
 
@@ -62,6 +61,15 @@ CLibraryWnd::~CLibraryWnd()
 
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryWnd operations
+
+CLibraryWnd* CLibraryWnd::GetLibraryWindow(BOOL bToggle, BOOL bFocus)
+{
+	if ( CMainWnd* pMainWnd = theApp.SafeMainWnd() )
+	{
+		return static_cast< CLibraryWnd* >( pMainWnd->m_pWindows.Open( RUNTIME_CLASS(CLibraryWnd), bToggle, bFocus ) );
+	}
+	return NULL;
+}
 
 BOOL CLibraryWnd::Display(CLibraryFile* pFile)
 {

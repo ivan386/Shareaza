@@ -1,7 +1,7 @@
 //
 // WndMedia.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -24,6 +24,7 @@
 #include "Settings.h"
 #include "ImageServices.h"
 #include "Skin.h"
+#include "WndMain.h"
 #include "WndMedia.h"
 #include "CoolInterface.h"
 
@@ -36,7 +37,6 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_SERIAL(CMediaWnd, CPanelWnd, 1)
 
 BEGIN_MESSAGE_MAP(CMediaWnd, CPanelWnd)
-	//{{AFX_MSG_MAP(CMediaWnd)
 	ON_WM_CREATE()
 	ON_WM_DESTROY()
 	ON_WM_SIZE()
@@ -45,12 +45,10 @@ BEGIN_MESSAGE_MAP(CMediaWnd, CPanelWnd)
 	ON_WM_SETCURSOR()
 	ON_WM_SYSCOMMAND()
 	ON_WM_NCACTIVATE()
-	//}}AFX_MSG_MAP
 	ON_MESSAGE(WM_IDLEUPDATECMDUI, OnIdleUpdateCmdUI)
 	ON_MESSAGE(WM_APPCOMMAND, OnMediaKey)
 	ON_MESSAGE(WM_DEVMODECHANGE, OnDevModeChange)
 	ON_MESSAGE(WM_DISPLAYCHANGE, OnDisplayChange)
-	ON_MESSAGE(WM_ENQUEUEFILE, OnEnqueueFile)
 	ON_MESSAGE(WM_PLAYFILE, OnPlayFile)
 END_MESSAGE_MAP()
 
@@ -71,14 +69,23 @@ CMediaWnd::~CMediaWnd()
 /////////////////////////////////////////////////////////////////////////////
 // CMediaWnd operations
 
-BOOL CMediaWnd::PlayFile(LPCTSTR pszFile)
+CMediaWnd* CMediaWnd::GetMediaWindow(BOOL bToggle, BOOL bFocus)
 {
-	return m_wndFrame.PlayFile( pszFile );
+	if ( CMainWnd* pMainWnd = theApp.SafeMainWnd() )
+	{
+		return static_cast< CMediaWnd* >( pMainWnd->m_pWindows.Open( RUNTIME_CLASS(CMediaWnd), bToggle, bFocus ) );
+	}
+	return NULL;
 }
 
-BOOL CMediaWnd::EnqueueFile(LPCTSTR pszFile)
+void CMediaWnd::PlayFile(LPCTSTR pszFile, BOOL bForcePlay)
 {
-	return m_wndFrame.EnqueueFile( pszFile );
+	PostMessage( WM_PLAYFILE, (WPARAM)( bForcePlay ? TRI_TRUE : TRI_UNKNOWN ), (LPARAM)new CString( pszFile ) );
+}
+
+void CMediaWnd::EnqueueFile(LPCTSTR pszFile)
+{
+	PostMessage( WM_PLAYFILE, (WPARAM)TRI_FALSE, (LPARAM)new CString( pszFile ) );
 }
 
 BOOL CMediaWnd::IsPlaying()
@@ -241,11 +248,10 @@ BOOL CMediaWnd::OnDrop(IDataObject* pDataObj, DWORD /*grfKeyState*/, POINT ptScr
 			for ( POSITION pos = oFiles.GetHeadPosition() ; pos ; )
 			{
 				CString strFile = oFiles.GetNext( pos );
-				// Async enqueuing/playing of file to prevent locking in dialogs and so on
 				if ( bEnqueue )
-					PostMessage( WM_ENQUEUEFILE, 0, (LPARAM) new CString( strFile ) );
+					EnqueueFile( strFile );
 				else
-					PostMessage( WM_PLAYFILE, 0, (LPARAM) new CString( strFile ) );
+					PlayFile( strFile );
 			}
 			return TRUE;
 		}
@@ -255,16 +261,25 @@ BOOL CMediaWnd::OnDrop(IDataObject* pDataObj, DWORD /*grfKeyState*/, POINT ptScr
 	return FALSE;
 }
 
-LRESULT CMediaWnd::OnEnqueueFile(WPARAM /*wParam*/, LPARAM lParam)
+LRESULT CMediaWnd::OnPlayFile(WPARAM wParam, LPARAM lParam)
 {
-	m_wndFrame.EnqueueFile( *(CString*)lParam );
-	delete (CString*)lParam;
-	return 0;
-}
+	CAutoPtr< CString > psFile( (CString*)lParam );
+	TRISTATE bForcePlay = (TRISTATE)wParam;
 
-LRESULT CMediaWnd::OnPlayFile(WPARAM /*wParam*/, LPARAM lParam)
-{
-	m_wndFrame.PlayFile( *(CString*)lParam );
-	delete (CString*)lParam;
+	switch ( bForcePlay )
+	{
+	case TRI_UNKNOWN:
+		m_wndFrame.PlayFile( *psFile, FALSE );
+		break;
+
+	case TRI_TRUE:
+		m_wndFrame.PlayFile( *psFile, TRUE );
+		break;
+
+	case TRI_FALSE:
+		m_wndFrame.EnqueueFile( *psFile );
+		break;
+	}
+
 	return 0;
 }

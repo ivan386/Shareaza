@@ -1,7 +1,7 @@
 //
 // WndLibrary.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_WNDLIBRARY_H__050DF003_40AB_46A3_9FA4_6375D66008E1__INCLUDED_)
-#define AFX_WNDLIBRARY_H__050DF003_40AB_46A3_9FA4_6375D66008E1__INCLUDED_
-
 #pragma once
 
 #include "WndPanel.h"
@@ -33,48 +30,32 @@ class CAlbumFolder;
 
 class CLibraryWnd : public CPanelWnd
 {
-// Construction
+	DECLARE_SERIAL(CLibraryWnd)
+
 public:
 	CLibraryWnd();
 	virtual ~CLibraryWnd();
 
-	DECLARE_SERIAL(CLibraryWnd)
-
-// Attributes
-public:
 	CLibraryFrame		m_wndFrame;
 	DWORD				m_tLast;
 
-// Operations
-public:
+	// Open Library window
+	static CLibraryWnd*	GetLibraryWindow(BOOL bToggle = FALSE, BOOL bFocus = TRUE);
+
 	BOOL	Display(CLibraryFile* pFile);
 	BOOL	Display(CAlbumFolder* pFolder);
 	BOOL	OnCollection(const CString& sPath);
-public:
+
+protected:
 	virtual void OnSkinChange();
 	virtual HRESULT	GetGenericView(IGenericView** ppView);
-
-// Overrides
-public:
-	//{{AFX_VIRTUAL(CLibraryWnd)
-	public:
 	virtual BOOL OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo);
-	//}}AFX_VIRTUAL
 
-// Implementation
-protected:
-	//{{AFX_MSG(CLibraryWnd)
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnDestroy();
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnMDIActivate(BOOL bActivate, CWnd* pActivateWnd, CWnd* pDeactivateWnd);
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
-	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()
-
 };
-
-//{{AFX_INSERT_LOCATION}}
-
-#endif // !defined(AFX_WNDLIBRARY_H__050DF003_40AB_46A3_9FA4_6375D66008E1__INCLUDED_)

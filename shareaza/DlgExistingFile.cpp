@@ -1,7 +1,7 @@
 //
 // DlgExistingFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -86,18 +86,14 @@ CExistingFileDlg::Action CExistingFileDlg::CheckExisting(const CShareazaFile* pF
 
 	if ( dlg.m_nAction == 0 )
 	{
-		if ( CMainWnd* pMainWnd = theApp.SafeMainWnd() )
-		{	
-			if ( CLibraryWnd* pLibrary = (CLibraryWnd*)(
-				pMainWnd->m_pWindows.Open( RUNTIME_CLASS(CLibraryWnd) ) ) )
+		if ( CLibraryWnd* pLibrary = CLibraryWnd::GetLibraryWindow() )
+		{
+			pLock.Lock();
+			if ( CLibraryFile* pLibFile1 = Library.LookupFile( nIndex ) )
 			{
-				pLock.Lock();
-				if ( CLibraryFile* pLibFile1 = Library.LookupFile( nIndex ) )
-				{
-					pLibrary->Display( pLibFile1 );
-				}
-				pLock.Unlock();
+				pLibrary->Display( pLibFile1 );
 			}
+			pLock.Unlock();
 		}
 	}
 

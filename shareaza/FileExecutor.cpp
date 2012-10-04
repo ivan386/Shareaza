@@ -32,10 +32,7 @@
 #include "XML.h"
 
 #include "DlgTorrentSeed.h"
-
-#include "WindowManager.h"
 #include "WndLibrary.h"
-#include "WndMain.h"
 #include "WndMedia.h"
 
 #ifdef _DEBUG
@@ -110,22 +107,6 @@ int PathGetArgsIndex(const CString& str)
 		}
 		i = slash;
 	}
-}
-
-CMediaWnd* CFileExecutor::GetMediaWindow(BOOL bFocus)
-{
-	CMainWnd* pMainWnd = theApp.SafeMainWnd();
-	if ( pMainWnd == NULL ) return NULL;
-	if ( pMainWnd->IsKindOf( RUNTIME_CLASS(CMainWnd) ) == FALSE ) return NULL;
-	return (CMediaWnd*)pMainWnd->m_pWindows.Open( RUNTIME_CLASS(CMediaWnd), FALSE, bFocus );
-}
-
-CLibraryWnd* CFileExecutor::GetLibraryWindow()
-{
-	CMainWnd* pMainWnd = theApp.SafeMainWnd();
-	if ( pMainWnd == NULL ) return NULL;
-	if ( pMainWnd->IsKindOf( RUNTIME_CLASS(CMainWnd) ) == FALSE ) return NULL;
-	return (CLibraryWnd*)pMainWnd->m_pWindows.Open( RUNTIME_CLASS(CLibraryWnd), FALSE, TRUE );
 }
 
 void CFileExecutor::DetectFileType(LPCTSTR pszFile, LPCTSTR szType, bool& bVideo, bool& bAudio, bool& bImage)
@@ -327,7 +308,7 @@ BOOL CFileExecutor::Execute(LPCTSTR pszFile, LPCTSTR pszExt)
 		strType.GetLength() > 1 &&
 		IsIn( Settings.MediaPlayer.FileTypes, (LPCTSTR)strType + 1 ) )
 	{
-		if ( CMediaWnd* pWnd = GetMediaWindow( ! bAudio ) )
+		if ( CMediaWnd* pWnd = CMediaWnd::GetMediaWindow( FALSE, ! bAudio ) )
 		{
 			pWnd->PlayFile( pszFile );
 			return TRUE;
@@ -439,7 +420,7 @@ BOOL CFileExecutor::Enqueue(LPCTSTR pszFile, LPCTSTR pszExt)
 		strType.GetLength() > 1 &&
 		IsIn( Settings.MediaPlayer.FileTypes, (LPCTSTR)strType + 1 ) )
 	{
-		if ( CMediaWnd* pWnd = GetMediaWindow( FALSE ) )
+		if ( CMediaWnd* pWnd = CMediaWnd::GetMediaWindow( FALSE, FALSE ) )
 		{
 			pWnd->EnqueueFile( pszFile );
 			return TRUE;
