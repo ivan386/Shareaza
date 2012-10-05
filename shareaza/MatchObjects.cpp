@@ -2453,12 +2453,12 @@ void CMatchFile::GetStatusTip( CString& sStatus, COLORREF& crStatus)
 			}
 		}
 	}
-	else if ( m_bDownload || m_pBest->m_bDownload )
+	else if ( m_bDownload || ( m_pBest && m_pBest->m_bDownload ) )
 	{
 		LoadString( sStatus, IDS_TIP_EXISTS_DOWNLOAD );
 		crStatus = CoolInterface.m_crSearchQueued ;
 	}
-	else if ( m_pBest->m_bBogus || ! m_bOneValid )
+	else if ( ( m_pBest && m_pBest->m_bBogus ) || ! m_bOneValid )
 	{
 		LoadString( sStatus, IDS_TIP_BOGUS );
 		crStatus = CoolInterface.m_crTextAlert ;
