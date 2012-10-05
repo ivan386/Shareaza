@@ -7387,7 +7387,7 @@ msgstr "Falhou em carregar os schemas do metadata. Por favor reinstale o aplicat
 
 #: string;20248
 msgid "You selected %u files. Are you sure?"
-msgstr "Você selecionou %U arquivos. Você tem certeza?"
+msgstr "Você selecionou %u arquivos. Você tem certeza?"
 
 #: string;20249
 msgid "Off"

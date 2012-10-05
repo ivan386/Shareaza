@@ -3434,7 +3434,7 @@ pasta dos arquivos baixados a sua biblioteca agora?"/>
 		<string id="20245" value="Nova Pasta"/>
 		<string id="20246" value="Command-line options:\n\n-tray : Disable startup splash screen and send application to tray\n-nosplash : Disable startup splash screen\n-nowarn : Disable alpha (daily builds) version warning dialog\n-wait : Wait for other application instance exit\n\nInterface modes:\n\n-basic : Start application in Basic interface mode\n-tabbed : Start application in Tabbed interface mode\n-windowed : Start application in Windowed interface mode\n\nSystem options:\n\n-RegServer : Register internal components for everyone\n-UnRegServer : Un-register internal components for everyone\n-RegServerPerUser : Register internal components for current user\n-UnRegServerPerUser : Un-register internal components for current user"/>
 		<string id="20247" value="Falhou em carregar os schemas do metadata. Por favor reinstale o aplicativo."/>
-		<string id="20248" value="Você selecionou %U arquivos. Você tem certeza?"/>
+		<string id="20248" value="Você selecionou %u arquivos. Você tem certeza?"/>
 		<string id="20249" value="Desligado"/>
 		<string id="20250" value="Baixo"/>
 		<string id="20251" value="Normal"/>
