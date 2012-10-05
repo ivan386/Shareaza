@@ -122,6 +122,7 @@ public:
 	BOOL				Update();
 	BOOL				Execute(BOOL bDiscovery, PROTOCOLID nProtocol, USHORT nForceDiscovery);
 	void				Stop();
+	void				Clear();
 	BOOL				Execute(CDiscoveryService* pService, Mode nMode);
 	void				OnResolve(PROTOCOLID nProtocol, LPCTSTR szAddress, const IN_ADDR* pAddress = NULL, WORD nPort = 0);
 
@@ -129,7 +130,6 @@ protected:
 	void				Remove(CDiscoveryService* pService, BOOL bCheck = TRUE);
 	DWORD				GetCount(int nType = 0, PROTOCOLID nProtocol = PROTOCOL_NULL) const;
 	BOOL				CheckWebCacheValid(LPCTSTR pszAddress);
-	void				Clear();
 	int					ExecuteBootstraps( int nCount, BOOL bUDP = FALSE, PROTOCOLID nProtocol = PROTOCOL_NULL );
 	void				Serialize(CArchive& ar);
 	BOOL				RequestRandomService(PROTOCOLID nProtocol);	

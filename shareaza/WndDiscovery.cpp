@@ -290,7 +290,9 @@ void CDiscoveryWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 
 void CDiscoveryWnd::OnUpdateDiscoveryQuery(CCmdUI* pCmdUI) 
 {
-	if (  m_wndList.GetSelectedCount() == 1 )
+	CSingleLock pLock( &Network.m_pSection );
+
+	if (  m_wndList.GetSelectedCount() == 1 && pLock.Lock( 100 ) )
 	{
 		CDiscoveryService* pService = GetItem( m_wndList.GetNextItem( -1, LVIS_SELECTED ) );
 		if ( pService && pService->m_nType != CDiscoveryService::dsBlocked )

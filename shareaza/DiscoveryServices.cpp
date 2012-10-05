@@ -72,16 +72,22 @@ CDiscoveryServices::~CDiscoveryServices()
 
 POSITION CDiscoveryServices::GetIterator() const
 {
+	ASSUME_LOCK( Network.m_pSection );
+
 	return m_pList.GetHeadPosition();
 }
 
 CDiscoveryService* CDiscoveryServices::GetNext(POSITION& pos) const
 {
+	ASSUME_LOCK( Network.m_pSection );
+
 	return m_pList.GetNext( pos );
 }
 
 BOOL CDiscoveryServices::Check(CDiscoveryService* pService, CDiscoveryService::Type nType) const
 {
+	ASSUME_LOCK( Network.m_pSection );
+
 	if ( pService == NULL ) return FALSE;
 	if ( m_pList.Find( pService ) == NULL ) return FALSE;
 	return ( nType == CDiscoveryService::dsNull ) || ( pService->m_nType == nType );
@@ -89,6 +95,8 @@ BOOL CDiscoveryServices::Check(CDiscoveryService* pService, CDiscoveryService::T
 
 DWORD CDiscoveryServices::GetCount(int nType, PROTOCOLID nProtocol) const
 {
+	ASSUME_LOCK( Network.m_pSection );
+
 	DWORD nCount = 0;
 	CDiscoveryService* ptr;
 
@@ -241,6 +249,8 @@ BOOL CDiscoveryServices::Add(CDiscoveryService* pService)
 		pService->m_bGnutella1 = TRUE;
 	}
 
+	CQuickLock pLock( Network.m_pSection );
+
 	// Stop if we already have enough caches
 	if ( ( pService->m_bGnutella2 && ( GetCount( pService->m_nType, PROTOCOL_G2 ) >= Settings.Discovery.CacheCount ) ) ||
 		 ( pService->m_bGnutella1 && ( GetCount( pService->m_nType, PROTOCOL_G1 ) >= Settings.Discovery.CacheCount ) ) )
@@ -272,6 +282,8 @@ BOOL CDiscoveryServices::Add(CDiscoveryService* pService)
 
 void CDiscoveryServices::Remove(CDiscoveryService* pService, BOOL bCheck)
 {
+	ASSUME_LOCK( Network.m_pSection );
+
 	if ( POSITION pos = m_pList.Find( pService ) ) m_pList.RemoveAt( pos );
 	delete pService;
 
@@ -279,11 +291,15 @@ void CDiscoveryServices::Remove(CDiscoveryService* pService, BOOL bCheck)
 		CheckMinimumServices();
 }
 
-
 BOOL CDiscoveryServices::CheckWebCacheValid(LPCTSTR pszAddress)
 {
 	// Check it's long enough
-	if ( _tcsclen( pszAddress ) < 12 ) return FALSE;
+	if ( _tcsclen( pszAddress ) < 12 )
+		return FALSE;
+
+	CSingleLock pLock( &Network.m_pSection, FALSE );
+	if ( ! pLock.Lock( 250 ) )
+		return FALSE;
 
 	// Check it's not blocked
 	for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
@@ -349,6 +365,8 @@ DWORD CDiscoveryServices::LastExecute() const
 
 CDiscoveryService* CDiscoveryServices::GetByAddress(LPCTSTR pszAddress) const
 {
+	ASSUME_LOCK( Network.m_pSection );
+
 	for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
 	{
 		CDiscoveryService* pService = m_pList.GetNext( pos );
@@ -372,6 +390,8 @@ CDiscoveryService* CDiscoveryServices::GetByAddress(LPCTSTR pszAddress) const
 
 CDiscoveryService* CDiscoveryServices::GetByAddress(const IN_ADDR* pAddress, WORD nPort, CDiscoveryService::SubType nSubType )
 {
+	ASSUME_LOCK( Network.m_pSection );
+
 	for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
 	{
 		CDiscoveryService* pService = m_pList.GetNext( pos );
@@ -386,6 +406,8 @@ CDiscoveryService* CDiscoveryServices::GetByAddress(const IN_ADDR* pAddress, WOR
 
 void CDiscoveryServices::Clear()
 {
+	CQuickLock pLock( Network.m_pSection );
+
 	Stop();
 
 	for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
@@ -398,11 +420,11 @@ void CDiscoveryServices::Clear()
 
 void CDiscoveryServices::Stop()
 {
-	m_pRequest.Cancel();
-
-	CloseThread();
-
-	m_pRequest.Clear();
+	if ( IsThreadAlive() )
+	{
+		m_pRequest.Cancel();
+		CloseThread();
+	}
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -514,6 +536,8 @@ BOOL CDiscoveryServices::Save()
 
 void CDiscoveryServices::Serialize(CArchive& ar)
 {
+	ASSUME_LOCK( Network.m_pSection );
+
 	// History:
 	// 7 - Added m_nTotalHosts, m_nURLs, m_nTotalURLs and m_sPong (Coolg)
 	int nVersion = 7;
@@ -560,6 +584,10 @@ BOOL CDiscoveryServices::EnoughServices() const
 {
 	int nWebCacheCount = 0, nServerMetCount = 0;	// Types of services
 	int nG1Count = 0, nG2Count = 0;					// Protocols
+
+	CSingleLock pLock( &Network.m_pSection, FALSE );
+	if ( ! pLock.Lock( 250 ) )
+		return TRUE;
 
 	for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
 	{
@@ -644,30 +672,6 @@ void CDiscoveryServices::AddDefaults()
 			pException->Delete();
 		}
 	}
-
-	// If file can't be used or didn't have enough services, drop back to the the in-built list
-	if ( !EnoughServices() )
-	{
-		theApp.Message( MSG_ERROR, _T("Default discovery service load failed") );
-		/*
-		CString strServices;
-		strServices.LoadString( IDS_DISCOVERY_DEFAULTS );
-
-		for ( strServices += '\n' ; strServices.GetLength() ; )
-		{
-			CString strService = strServices.SpanExcluding( _T("\r\n") );
-			strServices = strServices.Mid( strService.GetLength() + 1 );
-
-			if ( strService.GetLength() > 0 )
-			{
-				if ( _tcsistr( strService, _T("server.met") ) == NULL )
-					Add( strService, CDiscoveryService::dsWebCache );
-				else
-					Add( strService, CDiscoveryService::dsServerMet, PROTOCOL_ED2K );
-			}
-		}
-		*/
-	}
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -675,6 +679,8 @@ void CDiscoveryServices::AddDefaults()
 
 void CDiscoveryServices::MergeURLs()
 {
+	ASSUME_LOCK( Network.m_pSection );
+
 	CArray< CDiscoveryService* > G1URLs, G2URLs, MultiURLs, OtherURLs;
 
 	//Building the arrays...
@@ -941,8 +947,6 @@ BOOL CDiscoveryServices::Execute(BOOL bDiscovery, PROTOCOLID nProtocol, USHORT n
 		if ( bEdRequired )
 			m_tMetQueried = tNow;	// Execute this maximum one time each 60 min only when the number of eDonkey servers is too low (Very important).
 
-		pLock.Unlock();
-
 		// Broadcast discovery
 		static bool bBroadcast = true;	// test, broadcast, cache, broadcast, cache, ...
 		bBroadcast = ! bBroadcast;
@@ -1012,7 +1016,12 @@ int CDiscoveryServices::ExecuteBootstraps(int nCount, BOOL bUDP, PROTOCOLID nPro
 			break;
 	}
 
-	if ( nCount < 1 ) return 0;
+	if ( nCount < 1 )
+		return 0;
+
+	CSingleLock pLock( &Network.m_pSection, FALSE );
+	if ( ! pLock.Lock( 250 ) )
+		return 0;
 
 	for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
 	{
@@ -1026,8 +1035,8 @@ int CDiscoveryServices::ExecuteBootstraps(int nCount, BOOL bUDP, PROTOCOLID nPro
 
 	for ( nSuccess = 0 ; nCount > 0 && pRandom.GetSize() > 0 ; )
 	{
-		INT_PTR nRandom( GetRandomNum< INT_PTR >( 0, pRandom.GetSize() - 1 ) );
-		CDiscoveryService* pService( pRandom.GetAt( nRandom ) );
+		INT_PTR nRandom = GetRandomNum< INT_PTR >( 0, pRandom.GetSize() - 1 );
+		CDiscoveryService* pService = pRandom.GetAt( nRandom );
 		pRandom.RemoveAt( nRandom );
 
 		if ( pService->ResolveGnutella() )
@@ -1074,6 +1083,8 @@ BOOL CDiscoveryServices::RequestRandomService(PROTOCOLID nProtocol)
 
 CDiscoveryService* CDiscoveryServices::GetRandomService(PROTOCOLID nProtocol)
 {
+	ASSUME_LOCK( Network.m_pSection );
+
 	CArray< CDiscoveryService* > pServices;
 	DWORD tNow = static_cast< DWORD >( time( NULL ) );
 
@@ -1128,7 +1139,10 @@ CDiscoveryService* CDiscoveryServices::GetRandomService(PROTOCOLID nProtocol)
 // CDiscoveryServices select a random webcache (For updates, etc)
 
 CDiscoveryService* CDiscoveryServices::GetRandomWebCache(PROTOCOLID nProtocol, BOOL bWorkingOnly, CDiscoveryService* pExclude, BOOL bForUpdate)
-{	// Select a random webcache (G1/G2 only)
+{
+	ASSUME_LOCK( Network.m_pSection );
+
+	// Select a random webcache (G1/G2 only)
 	CArray< CDiscoveryService* > pWebCaches;
 	DWORD tNow = static_cast< DWORD >( time( NULL ) );
 
@@ -1271,6 +1285,8 @@ BOOL CDiscoveryServices::RequestWebCache(CDiscoveryService* pService, Mode nMode
 	}
 
 	if ( m_pWebCache == NULL ) return FALSE;
+
+	m_pRequest.Clear();
 
 	return BeginThread( "Discovery" );
 }

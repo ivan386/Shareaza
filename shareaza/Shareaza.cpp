@@ -496,6 +496,7 @@ int CShareazaApp::ExitInstance()
 		}
 
 		SplashStep( L"Finalizing" );
+		DiscoveryServices.Clear();
 		HostCache.Clear();
 		Downloads.Clear( true );
 		Library.Clear();
