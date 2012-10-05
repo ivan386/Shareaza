@@ -64,7 +64,6 @@ CDiscoveryServices::CDiscoveryServices() :
 
 CDiscoveryServices::~CDiscoveryServices()
 {
-	Clear();
 }
 
 //////////////////////////////////////////////////////////////////////
