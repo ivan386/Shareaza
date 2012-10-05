@@ -1795,51 +1795,33 @@ BOOL CMediaFrame::PrepareVis()
 {
 	HRESULT hr;
 
-	if ( ! m_pPlayer ) return FALSE;
-
-	IAudioVisPlugin* pPlugin = NULL;
 	CLSID pCLSID;
-
 	if ( Hashes::fromGuid( Settings.MediaPlayer.VisCLSID, &pCLSID ) &&
 		 Plugins.LookupEnable( pCLSID ) )
 	{
-		hr = CoCreateInstance( pCLSID, NULL, CLSCTX_ALL, IID_IAudioVisPlugin,
-			(void**)&pPlugin );
-
-		if ( SUCCEEDED(hr) && pPlugin != NULL )
+		CComPtr< IAudioVisPlugin > pPlugin;
+		hr = pPlugin.CoCreateInstance( pCLSID );
+		if ( SUCCEEDED( hr ) && pPlugin )
 		{
 			if ( Settings.MediaPlayer.VisPath.GetLength() )
 			{
-				IWrappedPluginControl* pWrap = NULL;
-
-				hr = pPlugin->QueryInterface( IID_IWrappedPluginControl,
-					(void**)&pWrap );
-
-				if ( SUCCEEDED(hr) && pWrap != NULL )
+				CComQIPtr< IWrappedPluginControl > pWrap( pPlugin );
+				if ( pWrap )
 				{
 					hr = pWrap->Load( CComBSTR( Settings.MediaPlayer.VisPath ), 0 );
-					pWrap->Release();
-				}
-
-				if ( FAILED(hr) )
-				{
-					pPlugin->Release();
-					pPlugin = NULL;
+					if ( FAILED( hr ) )
+						return FALSE;
 				}
 			}
+				
+			hr = m_pPlayer ? m_pPlayer->SetPluginSize( Settings.MediaPlayer.VisSize ) : E_FAIL;
+			if ( FAILED( hr ) )
+				return FALSE;
+
+			if ( m_pPlayer )
+				m_pPlayer->SetPlugin( pPlugin );
 		}
 	}
-
-	hr = m_pPlayer->SetPluginSize( Settings.MediaPlayer.VisSize );
-	if ( FAILED( hr ) )
-	{
-		Cleanup( TRUE );
-		return FALSE;
-	}
-
-	hr = m_pPlayer->SetPlugin( pPlugin );
-
-	if ( pPlugin != NULL ) pPlugin->Release();
 
 	return TRUE;
 }
