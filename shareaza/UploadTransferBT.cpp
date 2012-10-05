@@ -1,7 +1,7 @@
 //
 // UploadTransferBT.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -324,7 +324,7 @@ BOOL CUploadTransferBT::ServeRequests()
 		m_oRequested.pop_front();
 	}
 	
-	if ( m_nLength != SIZE_UNKNOWN && m_nLength != 0 )
+	if ( m_nLength != SIZE_UNKNOWN && m_nLength != 0 && m_pDownload->m_pTorrent.m_nBlockSize != 0 )
 	{
 		if ( ! OpenFile() ) return FALSE;
 		
