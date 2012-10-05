@@ -1205,9 +1205,11 @@ void CDownloadWithSources::Serialize(CArchive& ar, int nVersion /* DOWNLOAD_SER_
 	
 	if ( ar.IsStoring() )
 	{
-		ar.WriteCount( GetCount() );
+		// Don't save more than 500 sources
+		DWORD_PTR nSources = min( GetCount(), 500 );
+		ar.WriteCount( nSources );
 		
-		for ( POSITION posSource = GetIterator() ; posSource ; )
+		for ( POSITION posSource = GetIterator() ; posSource && nSources ; nSources-- )
 		{
 			CDownloadSource* pSource = GetNext( posSource );
 
@@ -1222,7 +1224,9 @@ void CDownloadWithSources::Serialize(CArchive& ar, int nVersion /* DOWNLOAD_SER_
 		for ( DWORD_PTR nSources = ar.ReadCount() ; nSources ; nSources-- )
 		{
 			// Create new source
-			CDownloadSource* pSource = new CDownloadSource( (CDownload*)this );
+			CAutoPtr< CDownloadSource > pSource( new CDownloadSource( static_cast< CDownload* >( this ) ) );
+			if ( ! pSource )
+				AfxThrowMemoryException();
 
 			// Load details from disk
 			pSource->Serialize( ar, nVersion );
@@ -1235,8 +1239,9 @@ void CDownloadWithSources::Serialize(CArchive& ar, int nVersion /* DOWNLOAD_SER_
 					_stscanf( strURL, _T("%lu"), &pSource->m_pAddress.S_un.S_addr );
 			}
 
-			// Add to the list
-			InternalAdd( pSource );
+			// Add to the list no more than 500 sources
+			if ( nSources < 500 )
+				InternalAdd( pSource.Detach() );
 		}
 		
 		if ( ar.ReadCount() )
