@@ -990,6 +990,8 @@ void CSearchWnd::OnUpdateFilters(CCmdUI* pCmdUI)
 
 void CSearchWnd::OnFilters(UINT nID)
 {
+	CQuickLock pLock( m_pMatches->m_pSection );
+
 	int nFilter = nID - 3000;
 	if ( nFilter < 0 || (DWORD)nFilter > m_pMatches->m_pResultFilters->m_nFilters - 1 ) return;
 
