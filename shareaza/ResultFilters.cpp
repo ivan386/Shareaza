@@ -1,7 +1,7 @@
 //
 // ResultFilters.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -44,6 +44,8 @@ CResultFilters::~CResultFilters()
 
 void CResultFilters::Clear()
 {
+	CQuickLock oLock( m_pSection );
+
 	if ( m_pFilters )
 	{
 		for ( DWORD i = 0; i < m_nFilters; i++ )
@@ -55,6 +57,8 @@ void CResultFilters::Clear()
 
 	delete [] ( m_pFilters );
 	m_pFilters = NULL;
+	m_nFilters = 0;
+	m_nDefault = NONE;
 }
 
 void CResultFilters::Serialize(CArchive & ar)
@@ -86,9 +90,9 @@ void CResultFilters::Serialize(CArchive & ar)
 
 		for (DWORD i = 0; i < m_nFilters; i++)
 		{
-			CFilterOptions* pFilter = new CFilterOptions();
-			m_pFilters[ i ] = pFilter;
+			CAutoPtr< CFilterOptions > pFilter( new CFilterOptions() );
 			pFilter->Serialize( ar, nVersion);
+			m_pFilters[ i ] = pFilter.Detach();
 		}
 
 		ar >> m_nDefault;
@@ -97,6 +101,8 @@ void CResultFilters::Serialize(CArchive & ar)
 
 void CResultFilters::Add(CFilterOptions *pOptions)
 {
+	CQuickLock oLock( m_pSection );
+
 	CFilterOptions **pFilters = new CFilterOptions * [m_nFilters + 1];
 
 	CopyMemory(pFilters, m_pFilters, sizeof(CFilterOptions *) * m_nFilters);
@@ -109,8 +115,10 @@ void CResultFilters::Add(CFilterOptions *pOptions)
 }
 
 // Search for (first) filter with name strName, return index if found, -1 (NONE) otherwise
-int CResultFilters::Search(const CString& strName)
+int CResultFilters::Search(const CString& strName) const
 {
+	CQuickLock oLock( m_pSection );
+
 	for ( DWORD index = 0; index < m_nFilters; index++ )
 	{
 		if ( strName.Compare( m_pFilters[index]->m_sName ) == 0 )
@@ -123,6 +131,8 @@ int CResultFilters::Search(const CString& strName)
 
 void CResultFilters::Remove(DWORD index)
 {
+	CQuickLock oLock( m_pSection );
+
 	if ( index < m_nFilters )
 	{
 		delete m_pFilters[index];
@@ -138,6 +148,8 @@ void CResultFilters::Remove(DWORD index)
 
 BOOL CResultFilters::Load()
 {
+	CQuickLock oLock( m_pSection );
+
 	// Delete old content first
 	Clear();
 	
@@ -179,6 +191,8 @@ BOOL CResultFilters::Load()
 
 BOOL CResultFilters::Save()
 {
+	CQuickLock oLock( m_pSection );
+
 	CString strTemp = Settings.General.UserPath + _T("\\Data\\Filters.tmp");
 	CString strFile = Settings.General.UserPath + _T("\\Data\\Filters.dat");
 

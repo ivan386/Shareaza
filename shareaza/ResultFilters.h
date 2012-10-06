@@ -1,7 +1,7 @@
 //
 // ResultFilters.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -53,17 +53,21 @@ public:
 	CResultFilters();
 	~CResultFilters();
 
-	void Clear();
-	void Serialize(CArchive& ar);
 	void Add(CFilterOptions *pOptions);
 	void Remove(DWORD index);
 	BOOL Load();
 	BOOL Save();
-	int Search(const CString& strName);
+	int Search(const CString& strName) const;
 
 	DWORD				m_nFilters; // count of filter options
 	CFilterOptions **	m_pFilters; // the array of filter options
 	DWORD				m_nDefault; // the index of the default filter options
+
+private:
+	mutable CCriticalSection m_pSection;
+
+	void Clear();
+	void Serialize(CArchive& ar);
 };
 
 const DWORD NONE = ~0u;
