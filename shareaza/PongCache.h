@@ -1,7 +1,7 @@
 //
 // PongCache.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -28,10 +28,9 @@ class CG1Packet;
 
 class CPongCache
 {
-// Construction
 public:
 	CPongCache();
-	virtual ~CPongCache();
+	~CPongCache();
 
 //	POSITION	GetIterator() const;
 //	CPongItem*	GetNext(POSITION& pos) const;
@@ -40,8 +39,8 @@ public:
 	void		ClearNeighbour(CNeighbour* pNeighbour);
 	BOOL		ClearIfOld();
 	CPongItem*	Add(CNeighbour* pNeighbour, IN_ADDR* pAddress, WORD nPort, BYTE nHops, DWORD nFiles, DWORD nVolume);
-	CPongItem*	Lookup(CNeighbour* pNotFrom, BYTE nHops, CList< CPongItem* >* pIgnore);
-	CPongItem*	Lookup(CNeighbour* pFrom);
+	CPongItem*	Lookup(CNeighbour* pNotFrom, BYTE nHops, CList< CPongItem* >* pIgnore) const;
+	CPongItem*	Lookup(CNeighbour* pFrom) const;
 
 protected:
 	CList< CPongItem* >	m_pCache;
@@ -53,7 +52,6 @@ class CPongItem
 {
 public:
 	CPongItem(CNeighbour* pNeighbour, IN_ADDR* pAddress, WORD nPort, BYTE nHops, DWORD nFiles, DWORD nVolume);
-	virtual ~CPongItem();
 
 	CNeighbour*		m_pNeighbour;
 	IN_ADDR			m_pAddress;
@@ -62,5 +60,5 @@ public:
 	DWORD			m_nFiles;
 	DWORD			m_nVolume;
 
-	CG1Packet*		ToPacket(int nTTL, const Hashes::Guid& oGUID);
+	CG1Packet*		ToPacket(int nTTL, const Hashes::Guid& oGUID) const;
 };

@@ -1,7 +1,7 @@
 //
 // G1Neighbour.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -776,7 +776,7 @@ BOOL CG1Neighbour::OnPong(CG1Packet* pPacket)
 // Called by CNeighboursWithG1::OnG1Pong (do)
 // Takes a pointer to a CPongItem object (do)
 // If the pong is needed, sends it to the remote computer (do)
-void CG1Neighbour::OnNewPong(CPongItem* pPong)
+void CG1Neighbour::OnNewPong(const CPongItem* pPong)
 {
 	// If we need a pong with the number of hops that this one has (do)
 	if ( m_nPongNeeded[ pPong->m_nHops ] > 0 )

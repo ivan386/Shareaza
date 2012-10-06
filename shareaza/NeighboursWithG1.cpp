@@ -1,7 +1,7 @@
 //
 // NeighboursWithG1.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -180,7 +180,7 @@ void CNeighboursWithG1::OnG1Pong(CG1Neighbour* pFrom, IN_ADDR* pAddress, WORD nP
 	ASSUME_LOCK( Network.m_pSection );
 
 	// Add the information from the pong packet to the pong cache (do)
-	CPongItem* pPongCache = AddPong( pFrom, pAddress, nPort, nHops, nFiles, nVolume );
+	const CPongItem* pPongCache = AddPong( pFrom, pAddress, nPort, nHops, nFiles, nVolume );
 	if ( pPongCache == NULL )
 		return; // If Add didn't return a CPongItem, (do)
 
