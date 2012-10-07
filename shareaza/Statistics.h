@@ -1,7 +1,7 @@
 //
 // Statistics.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -80,11 +80,11 @@ public:
 	}
 	Ever, Today, Last, Current;
 
-	DWORD	m_tSeconds;
-
 	void	Update();
 
 protected:
+	QWORD	m_tSeconds;
+
 	static void Add(LPVOID pTarget, LPCVOID pSource, int nCount);
 };
 

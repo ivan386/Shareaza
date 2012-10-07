@@ -1,7 +1,7 @@
 //
 // Statistics.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -43,7 +43,7 @@ CStatistics::CStatistics()
 	ZeroMemory( &Ever, sizeof(Ever) );
 	ZeroMemory( &Current, sizeof(Current) );
 
-	m_tSeconds = 0;
+	m_tSeconds = GetMicroCount() / 1000;
 }
 
 CStatistics::~CStatistics()
@@ -55,17 +55,17 @@ CStatistics::~CStatistics()
 
 void CStatistics::Update()
 {
-	DWORD tNow = GetTickCount();
+	QWORD tNow = GetMicroCount() / 1000;	// ms
 
-	if ( tNow - m_tSeconds >= 1000 )
+	if ( tNow >= m_tSeconds + 1000 )
 	{
+		QWORD nElapsed = ( tNow - m_tSeconds ) / 1000; // s
 		if ( Network.IsWellConnected() )
 		{
-			Current.Timer.Connected ++;
-			if ( Neighbours.IsG2Hub() ) Current.Timer.Hub ++;
-			if ( Neighbours.IsG1Ultrapeer() ) Current.Timer.Ultrapeer ++;
+			Current.Timer.Connected += nElapsed;
+			if ( Neighbours.IsG2Hub() ) Current.Timer.Hub += nElapsed;
+			if ( Neighbours.IsG1Ultrapeer() ) Current.Timer.Ultrapeer += nElapsed;
 		}
-
 		m_tSeconds = tNow;
 	}
 
