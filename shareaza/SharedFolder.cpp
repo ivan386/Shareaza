@@ -835,60 +835,18 @@ void CLibraryFolder::Maintain(BOOL bAdd)
 	DWORD dwDesktopINIAttr = GetFileAttributes( sDesktopINI );
 	BOOL bPresent = ( dwDesktopINIAttr != INVALID_FILE_ATTRIBUTES );
 
-	// Check if this is our desktop.ini
-	BOOL bOur = FALSE;
-	if ( bPresent )
-	{
-		// Windows 2000/XP
-		CString sPath;
-		GetPrivateProfileString( _T(".ShellClassInfo"), _T("IconFile"), _T(""),
-			sPath.GetBuffer( MAX_PATH ), MAX_PATH, sDesktopINI );
-		sPath.ReleaseBuffer();
-		if ( sPath.IsEmpty() )
-		{
-			// Windows Vista
-			GetPrivateProfileString( _T(".ShellClassInfo"), _T("IconResource"), _T(""),
-				sPath.GetBuffer( MAX_PATH ), MAX_PATH, sDesktopINI );
-			sPath.ReleaseBuffer();
-			if ( sPath.IsEmpty() )
-			{
-				bPresent = FALSE;
-			}
-			else
-				bOur = ( sPath.CompareNoCase( sIconResource ) == 0 ) || ( sPath.MakeLower().Find( _T("shareaza") ) != -1 );
-		}
-		else
-			bOur = ( sPath.CompareNoCase( sIconFile ) == 0 ) || ( sPath.MakeLower().Find( _T("shareaza") ) != -1 );
-	}
-
 	if ( ! Settings.Library.UseCustomFolders )
 		bAdd = FALSE;
 
-	if ( bAdd && ( bOur || ! bPresent ) )
+	if ( bAdd && ! bPresent )
 	{
-		// Remove Hidden and System attributes
-		BOOL bChanged = FALSE;
-		if ( ( dwDesktopINIAttr != INVALID_FILE_ATTRIBUTES ) &&
-			 ( dwDesktopINIAttr & ( FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM ) ) )
-			bChanged = SetFileAttributes( sDesktopINI, dwDesktopINIAttr &
-				~( FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM | FILE_ATTRIBUTE_READONLY ) );
-
-		// Remove non-unicode file
+		// Unicode file
 		CFile file;
-		if ( file.Open( sDesktopINI, CFile::modeRead | CFile::shareDenyNone ) )
+		WORD wMark = 0xfeff;
+		if ( file.Open( sDesktopINI, CFile::modeCreate | CFile::modeWrite ) )
 		{
-			WORD wMark;
-			BOOL bUnicode = file.Read( &wMark, 2 ) == 2 && ( wMark == 0xfeff || wMark == 0xfffe );
+			file.Write( &wMark, 2 );
 			file.Close();
-			if ( ! bUnicode )
-			{
-				wMark = 0xfeff;
-				if ( file.Open( sDesktopINI, CFile::modeCreate | CFile::modeWrite ) )
-				{
-					file.Write( &wMark, 2 );
-					file.Close();
-				}
-			}
 		}
 
 		// Windows 2000/XP
@@ -900,20 +858,40 @@ void CLibraryFolder::Maintain(BOOL bAdd)
 		// Windows Vista
 		WritePrivateProfileString( _T(".ShellClassInfo"), _T("IconResource"), sIconResource, sDesktopINI );
 
-		if ( bChanged )
-			SetFileAttributes( sDesktopINI, dwDesktopINIAttr |
-				( FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM ) );
-
+		SetFileAttributes( sDesktopINI, dwDesktopINIAttr | FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM );
 		PathMakeSystemFolder( m_sPath );
 	}
-	else if ( bOur )
+	else if ( ! bAdd && bPresent  )
 	{
-		PathUnmakeSystemFolder( m_sPath );
+		// Check if this is our desktop.ini
+		BOOL bOur;
 
-		SetFileAttributes( sDesktopINI, dwDesktopINIAttr &
-			~( FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM | FILE_ATTRIBUTE_READONLY ) );
+		// Windows 2000/XP
+		CString sPath;
+		GetPrivateProfileString( _T(".ShellClassInfo"), _T("IconFile"), _T(""), sPath.GetBuffer( MAX_PATH ), MAX_PATH, sDesktopINI );
+		sPath.ReleaseBuffer();
+		sPath.Trim();
+		if ( ! sPath.IsEmpty() )
+			bOur = ( sPath.CompareNoCase( sIconFile ) == 0 ) || ( sPath.MakeLower().Find( _T("shareaza") ) != -1 );
+		else
+		{
+			// Windows Vista
+			GetPrivateProfileString( _T(".ShellClassInfo"), _T("IconResource"), _T(""), sPath.GetBuffer( MAX_PATH ), MAX_PATH, sDesktopINI );
+			sPath.ReleaseBuffer();
+			sPath.Trim();
+			if ( ! sPath.IsEmpty() )
+				bOur = ( sPath.CompareNoCase( sIconResource ) == 0 ) || ( sPath.MakeLower().Find( _T("shareaza") ) != -1 );
+			else
+				bOur = FALSE;
+		}
 
-		DeleteFileEx( sDesktopINI, FALSE, FALSE, FALSE );
+		if ( bOur )
+		{
+			PathUnmakeSystemFolder( m_sPath );
+			SetFileAttributes( sDesktopINI, dwDesktopINIAttr & ~( FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM | FILE_ATTRIBUTE_READONLY ) );
+
+			DeleteFileEx( sDesktopINI, FALSE, FALSE, FALSE );
+		}
 	}
 }
 
