@@ -1795,6 +1795,7 @@
 #define ID_TOOLS_PROFILE                33035
 #define ID_BROWSE_PROFILE               33036
 #define ID_BROWSE_FILES                 33037
+#define ID_LIBRARY_FILE_REBUILD         33038
 #define ID_MEDIA_VIS                    33040
 #define ID_SYSTEM_TEST                  33041
 #define ID_DOWNLOADS_LAUNCH_COMPLETE    33042

@@ -105,6 +105,8 @@ BEGIN_MESSAGE_MAP(CLibraryFileView, CLibraryView)
 	ON_COMMAND(ID_LIBRARY_CREATETORRENT, OnLibraryCreateTorrent)
 	ON_UPDATE_COMMAND_UI(ID_LIBRARY_REBUILD_ANSI, OnUpdateLibraryRebuildAnsi)
 	ON_COMMAND(ID_LIBRARY_REBUILD_ANSI, OnLibraryRebuildAnsi)
+	ON_UPDATE_COMMAND_UI(ID_LIBRARY_FILE_REBUILD, OnUpdateLibraryRebuild)
+	ON_COMMAND(ID_LIBRARY_FILE_REBUILD, OnLibraryRebuild)
 	ON_MESSAGE(WM_METADATA, OnServiceDone)
 END_MESSAGE_MAP()
 
@@ -399,7 +401,7 @@ void CLibraryFileView::OnLibraryDelete()
 
 void CLibraryFileView::OnUpdateLibraryBitziWeb(CCmdUI* pCmdUI)
 {
-	pCmdUI->Enable( GetSelectedCount() == 1 && Settings.WebServices.BitziWebSubmit.GetLength() );
+	pCmdUI->Enable( Settings.WebServices.BitziWebSubmit.GetLength() && GetSelectedCount() == 1 );
 }
 
 void CLibraryFileView::OnLibraryBitziWeb()
@@ -416,9 +418,7 @@ void CLibraryFileView::OnLibraryBitziWeb()
 
 void CLibraryFileView::OnUpdateLibraryCreateTorrent(CCmdUI* pCmdUI)
 {
-	pCmdUI->Enable( ! m_bGhostFolder &&
-		! Settings.BitTorrent.TorrentCreatorPath.IsEmpty() &&
-		GetSelectedCount() == 1 );
+	pCmdUI->Enable( ! m_bGhostFolder && Settings.BitTorrent.TorrentCreatorPath.GetLength() && GetSelectedCount() == 1 );
 }
 
 void CLibraryFileView::OnLibraryCreateTorrent()
@@ -448,54 +448,7 @@ void CLibraryFileView::OnLibraryCreateTorrent()
 
 void CLibraryFileView::OnUpdateLibraryRebuildAnsi(CCmdUI* pCmdUI)
 {
-	CQuickLock oLock( Library.m_pSection );
-
-	if ( m_bGhostFolder )
-	{
-		pCmdUI->Enable( FALSE );
-		return;
-	}
-
-	// Count only selected mp3's which have no custom metadata in XML format
-	INT_PTR nSelected = GetSelectedCount();
-	POSITION posSel = StartSelectedFileLoop();
-	while ( CLibraryFile* pFile = GetNextSelectedFile( posSel ) )
-	{
-		CString strExtension = pFile->m_sName.Right(3);
-		ToLower( strExtension );
-
-		BOOL bXmlPossiblyModified = FALSE;
-		if ( !pFile->m_bMetadataAuto )
-		{
-			WIN32_FIND_DATA fd = { 0 };
-			if ( GetFileAttributesEx( pFile->GetPath(), GetFileExInfoStandard, &fd ) )
-			{
-				ULARGE_INTEGER nMetaDataTime;
-				ULARGE_INTEGER nFileDataTime;
-
-				nFileDataTime.HighPart = fd.ftLastWriteTime.dwHighDateTime;
-				nFileDataTime.LowPart = fd.ftLastWriteTime.dwLowDateTime;
-				// Convert 100 ns into seconds
-				nFileDataTime.QuadPart /= 10000000;
-
-				nMetaDataTime.HighPart = pFile->m_pMetadataTime.dwHighDateTime;
-				nMetaDataTime.LowPart = pFile->m_pMetadataTime.dwLowDateTime;
-				nMetaDataTime.QuadPart /= 10000000;
-
-				// assume that XML was not modified during the first 10 sec. of creation
-				if ( nMetaDataTime.HighPart == nFileDataTime.HighPart &&
-					nMetaDataTime.LowPart - nFileDataTime.LowPart > 10 )
-					bXmlPossiblyModified = TRUE;
-			}
-		}
-		if ( ( strExtension != _T("mp3") && strExtension != _T("pdf") &&
-			   strExtension != _T("mpc") && strExtension != _T("mpp") &&
-			   strExtension != _T("mp+") && strExtension != _T("avi") )
-			 || bXmlPossiblyModified )
-			nSelected--;
-	}
-
-	pCmdUI->Enable( nSelected > 0 );
+	pCmdUI->Enable( ! m_bGhostFolder && GetSelectedCount() > 0 );
 }
 
 void CLibraryFileView::OnLibraryRebuildAnsi()
@@ -508,13 +461,7 @@ void CLibraryFileView::OnLibraryRebuildAnsi()
 
 	while ( CLibraryFile* pFile = GetNextSelectedFile( posSel ) )
 	{
-		CString strExtension = pFile->m_sName.Right(3);
-		ToLower( strExtension );
-
-		if ( strExtension == _T("mp3") || strExtension == _T("pdf") ||
-			 strExtension == _T("mpc") || strExtension == _T("mpp") ||
-			 strExtension == _T("mp+") || strExtension == _T("avi") )
-			dlg.AddFile( pFile );
+		dlg.AddFile( pFile );
 	}
 
 	pLock.Unlock();
@@ -523,12 +470,28 @@ void CLibraryFileView::OnLibraryRebuildAnsi()
 }
 
 
+void CLibraryFileView::OnUpdateLibraryRebuild(CCmdUI* pCmdUI)
+{
+	pCmdUI->Enable( ! m_bGhostFolder && GetSelectedCount() > 0 );
+}
+
+void CLibraryFileView::OnLibraryRebuild()
+{
+	CSingleLock pLock( &Library.m_pSection, TRUE );
+
+	POSITION posSel = StartSelectedFileLoop();
+
+	while ( CLibraryFile* pFile = GetNextSelectedFile( posSel ) )
+	{
+		pFile->Rebuild();
+	}
+
+	Library.Update( true );
+}
+
 void CLibraryFileView::OnUpdateLibraryBitziDownload(CCmdUI* pCmdUI)
 {
-	if ( m_bGhostFolder || m_bRequestingService )
-		pCmdUI->Enable( FALSE );
-	else
-		pCmdUI->Enable( GetSelectedCount() > 0 && Settings.WebServices.BitziXML.GetLength() );
+	pCmdUI->Enable( ! m_bGhostFolder && ! m_bRequestingService && Settings.WebServices.BitziXML.GetLength() && GetSelectedCount() > 0 );
 }
 
 void CLibraryFileView::OnLibraryBitziDownload()

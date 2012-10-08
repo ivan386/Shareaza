@@ -1196,7 +1196,7 @@
 			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Play _Album"/>
 			<item id="ID_LIBRARY_FOLDER_DELETE" text="_Delete"/>
 			<separator/>
-			<item id="ID_LIBRARY_REBUILD" text="_Rebuild"/>
+			<item id="ID_LIBRARY_REBUILD" text="Re_build"/>
 			<item id="ID_LIBRARY_EXPORT_COLLECTION" text="_Export Collection..."/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDER_NEW" text="_New Folder..."/>
@@ -1272,6 +1272,7 @@
 				<item id="ID_LIBRARY_MOVE" text="_Move Files..."/>
 				<item id="ID_LIBRARY_COPY" text="_Copy Files..."/>
 			</menu>
+			<item id="ID_LIBRARY_FILE_REBUILD" text="Re_build"/>
 			<item id="ID_LIBRARY_REBUILD_ANSI" text="_Localise Metadata"/>
 			<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata"/>
 			<separator/>
@@ -1347,6 +1348,7 @@
 				<item id="ID_LIBRARY_MOVE" text="_Move Files..."/>
 				<item id="ID_LIBRARY_COPY" text="_Copy Files..."/>
 			</menu>
+			<item id="ID_LIBRARY_FILE_REBUILD" text="Re_build"/>
 			<item id="ID_LIBRARY_REBUILD_ANSI" text="_Localise Metadata"/>
 			<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata"/>
 			<separator/>
@@ -2585,7 +2587,7 @@
 			<image id="ID_VIEW_SECURITY"/>
 			<image id="ID_VIEW_SCHEDULER" id1="ID_SCHEDULER_ADD"/>
 			<image id="ID_VIEW_HOSTS"/>
-			<image id="ID_VIEW_DISCOVERY" id1="ID_LIBRARY_REBUILD"/>
+			<image id="ID_VIEW_DISCOVERY" id1="ID_LIBRARY_REBUILD" id2="ID_LIBRARY_FILE_REBUILD"/>
 			<image id="ID_VIEW_TRAFFIC"/>
 			<image id="ID_VIEW_PACKETS"/>
 			<image id="ID_VIEW_SEARCH_MONITOR"/>

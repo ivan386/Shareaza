@@ -106,6 +106,8 @@ protected:
 	afx_msg void OnLibraryCreateTorrent();
 	afx_msg void OnUpdateLibraryRebuildAnsi(CCmdUI* pCmdUI);
 	afx_msg void OnLibraryRebuildAnsi();
+	afx_msg void OnUpdateLibraryRebuild(CCmdUI* pCmdUI);
+	afx_msg void OnLibraryRebuild();
 	afx_msg LRESULT OnServiceDone(WPARAM wParam, LPARAM lParam);
 
 	DECLARE_MESSAGE_MAP()

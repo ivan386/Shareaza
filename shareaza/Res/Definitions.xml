@@ -327,6 +327,7 @@
 	<resource code="33035" id="ID_TOOLS_PROFILE"/>
 	<resource code="33036" id="ID_BROWSE_PROFILE"/>
 	<resource code="33037" id="ID_BROWSE_FILES"/>
+	<resource code="33038" id="ID_LIBRARY_FILE_REBUILD"/>
 	<resource code="33040" id="ID_MEDIA_VIS"/>
 	<resource code="33041" id="ID_SYSTEM_TEST"/>
 	<resource code="33042" id="ID_DOWNLOADS_LAUNCH_COMPLETE"/>

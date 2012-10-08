@@ -2032,6 +2032,7 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 285
         TOPMARGIN, 7
+        BOTTOMMARGIN, 143
     END
 
     IDD_GRAPH_LIST, DIALOG
@@ -4704,6 +4705,7 @@ BEGIN
     ID_TOOLS_PROFILE        "Edit your user profile..."
     ID_BROWSE_PROFILE       "Browse the user's profile."
     ID_BROWSE_FILES         "View the user's shared files"
+    ID_LIBRARY_FILE_REBUILD "Rebuild metadata and hashes for the selected file(s)."
 END
 
 STRINGTABLE
