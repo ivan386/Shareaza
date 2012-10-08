@@ -427,8 +427,8 @@ print_hex(FILE *f, const unsigned char *buf, int buflen)
 
 #else
 
-#define debugf ATLTRACE
-#define debug_printable(x,y) ATLTRACE("%*s",y,x)
+#define debugf  __noop // ATLTRACE
+#define debug_printable(x,y) __noop // ATLTRACE("%*s",y,x)
 #define print_hex __noop
 
 #endif // DHT_DEBUG
