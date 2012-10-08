@@ -436,6 +436,8 @@ BOOL CLibraryFile::Rebuild()
 	m_oTiger.clear();
 	m_oMD5.clear();
 	m_oED2K.clear();
+	m_oBTH.clear();
+
 	m_nVirtualBase = m_nVirtualSize = 0;
 
 	if ( m_pMetadata && m_bMetadataAuto )
