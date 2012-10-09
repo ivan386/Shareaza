@@ -1,7 +1,7 @@
 //
 // PageSettingsLibrary.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -141,8 +141,7 @@ BOOL CLibrarySettingsPage::OnInitDialog()
 
 	m_wndCollectionFolder.SubclassDlgItem( IDC_COLLECTIONS_FOLDER, this );
 
-	m_wndRecentClear.EnableWindow( LibraryHistory.GetCount() > 0 ||
-		LibraryFolders.GetGhostCount() > 0 );
+	m_wndRecentClear.EnableWindow( TRUE );
 
 	return TRUE;
 }
@@ -216,6 +215,7 @@ void CLibrarySettingsPage::OnPrivateRemove()
 void CLibrarySettingsPage::OnRecentClear()
 {
 	CQuickLock oLock( Library.m_pSection );
+	Settings.ClearSearches();
 	LibraryHistory.Clear();
 	LibraryFolders.ClearGhosts();
 	Library.Update();

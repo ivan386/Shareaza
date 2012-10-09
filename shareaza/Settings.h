@@ -825,6 +825,7 @@ public:
 	DWORD	GetOutgoingBandwidth() const;																// Returns available outgoing bandwidth in KB/s
 	BOOL	CheckStartup();
 	void	SetStartup(BOOL bStartup);
+	void	ClearSearches();
 
 	bool	GetValue(LPCTSTR pszPath, VARIANT* value);
 

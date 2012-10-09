@@ -1444,6 +1444,19 @@ void CSettings::SetStartup(BOOL bStartup)
 	RegCloseKey( hKey );
 }
 
+void CSettings::ClearSearches()
+{
+	for ( int i = 0; ; i++ )
+	{
+		CString strEntry;
+		strEntry.Format( _T("Search.%.2i"), i + 1 );
+		CString strValue( theApp.GetProfileString( _T("Search"), strEntry ) );
+		if ( strValue.IsEmpty() )
+			break;
+		theApp.WriteProfileString( _T("Search"), strEntry, NULL );
+	}
+}
+
 //////////////////////////////////////////////////////////////////////
 // CSettings speed
 //
