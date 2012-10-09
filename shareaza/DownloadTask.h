@@ -1,7 +1,7 @@
 //
 // DownloadTask.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -89,7 +89,6 @@ protected:
 	void				RunPreviewRequest();
 	void				RunMerge();
 	void				RunMergeSingle(CDownload* pDownload, LPCTSTR szFilename, BOOL bMergeValidation, const Fragments::List& oMissedGaps);
-	BOOL				CopyFile(HANDLE hSource, LPCTSTR pszTarget, QWORD nLength);
 	void				CreatePathForFile(const CString& strBase, const CString& strPath);
 	BOOL				MakeBatchTorrent();
 	BOOL				CopyFileToBatch(HANDLE hSource, QWORD nOffset, QWORD nLength, LPCTSTR pszPath);
