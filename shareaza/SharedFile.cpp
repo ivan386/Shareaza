@@ -1071,8 +1071,6 @@ void CLibraryFile::Serialize(CArchive& ar, int nVersion)
 			m_oMD5.clear();
 			m_oED2K.clear();
 		}
-
-		Library.AddFile( this );
 	}
 }
 

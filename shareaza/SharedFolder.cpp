@@ -398,17 +398,18 @@ void CLibraryFolder::Serialize(CArchive& ar, int nVersion)
 
 		for ( ; nCount > 0 ; nCount-- )
 		{
-			CLibraryFile* pFile = new CLibraryFile( this );
-			if ( pFile == NULL )
-			{
-				break;
-			}
+			CAutoPtr< CLibraryFile > pFile( new CLibraryFile( this ) );
+			if ( ! pFile )
+				AfxThrowMemoryException();
+
 			pFile->Serialize( ar, nVersion );
 
 			m_pFiles.SetAt( pFile->GetNameLC(), pFile );
 
 			m_nFiles	++;
 			m_nVolume	+= pFile->m_nSize;
+
+			Library.AddFile( pFile.Detach() );
 		}
 	}
 }

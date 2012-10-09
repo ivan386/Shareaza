@@ -720,9 +720,7 @@ void CLibraryMaps::OnFileRemove(CLibraryFile* pFile)
 
 void CLibraryMaps::CullDeletedFiles(CLibraryFile* pMatch)
 {
-	CSingleLock oLock( &Library.m_pSection );
-	if ( ! oLock.Lock( 250 ) )
-		return;
+	ASSUME_LOCK( Library.m_pSection );
 
 	if ( CFileList* pList = LookupFilesByHash( pMatch, FALSE, FALSE, 0 ) )
 	{
@@ -838,16 +836,21 @@ void CLibraryMaps::Serialize2(CArchive& ar, int nVersion)
 
 		for ( POSITION pos = m_pDeleted.GetHeadPosition() ; pos ; )
 		{
-			CLibraryFile* pFile = const_cast< CLibraryFile* >( m_pDeleted.GetNext( pos ) );
-			pFile->Serialize( ar, nVersion );
+			m_pDeleted.GetNext( pos )->Serialize( ar, nVersion );
 		}
 	}
 	else
 	{
 		for ( DWORD_PTR nCount = ar.ReadCount() ; nCount > 0 ; nCount-- )
 		{
-			CLibraryFile* pFile = new CLibraryFile( NULL );
+			CAutoPtr< CLibraryFile > pFile( new CLibraryFile( NULL ) );
+			if ( ! pFile )
+				AfxThrowMemoryException();
+
 			pFile->Serialize( ar, nVersion );
+
+			if ( ! LibraryMaps.LookupFileByHash( pFile ) )
+				Library.AddFile( pFile.Detach() );
 		}
 	}
 }
