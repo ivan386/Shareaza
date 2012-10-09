@@ -70,7 +70,7 @@ private:
 public:
 	CXMLElement*		m_pXML;
 
-	CString				GetSourceURLs(CList< CString >* pState, int nMaximum, PROTOCOLID nProtocol, CDownloadSource* pExcept);
+	CString				GetSourceURLs(CList< CString >* pState = NULL, int nMaximum = 0, PROTOCOLID nProtocol = PROTOCOL_NULL, CDownloadSource* pExcept = NULL) const;
 	CString				GetTopFailedSources(int nMaximum, PROTOCOLID nProtocol);
 	DWORD				GetEffectiveSourceCount() const;
 	DWORD				GetSourceCount(BOOL bNoPush = FALSE, BOOL bSane = FALSE) const;

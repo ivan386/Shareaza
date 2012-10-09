@@ -293,73 +293,47 @@ DWORD CDownloadWithFile::MoveFile(LPCTSTR pszDestination, LPPROGRESS_ROUTINE lpP
 {
 	ASSERT( IsMoving() );
 
-	if ( ! m_pFile.get() )
-		return ERROR_FILE_NOT_FOUND;
-
-	const DWORD nCount = m_pFile->GetCount();
-	for( DWORD nIndex = 0; nIndex < nCount; ++nIndex )
+	DWORD ret = ERROR_SUCCESS;
+	if ( m_pFile.get() )
 	{
-		DWORD dwError = m_pFile->Move( nIndex, pszDestination, lpProgressRoutine, lpData );
-
-		if ( dwError != ERROR_SUCCESS )
+		DWORD nCount = m_pFile->GetCount();
+		for( DWORD nIndex = 0; nIndex < nCount; ++nIndex )
 		{
-			CString strMessage;
-			strMessage.Format( LoadString( IDS_DOWNLOAD_CANT_MOVE ),
-				GetDisplayName(), pszDestination );
-			theApp.Message( MSG_ERROR | MSG_TRAY, _T("%s %s"),
-				strMessage, GetErrorString( dwError ) );
-			return dwError;
-		}
+			ret = m_pFile->Move( nIndex, pszDestination, lpProgressRoutine, lpData );
+			if ( ret != ERROR_SUCCESS )
+				break;
 
-		// Save download every move
-		static_cast< CDownload* >( this )->Save();
+			// Save download every move
+			static_cast< CDownload* >( this )->Save();
 
-		const CString sPath = m_pFile->GetPath( nIndex );
+			CString sPath = m_pFile->GetPath( nIndex );
 
-		MarkFileAsDownload( sPath );
+			MarkFileAsDownload( sPath );
 
-		LibraryBuilder.RequestPriority( sPath );
+			LibraryBuilder.RequestPriority( sPath );
 
-		// TODO: Get hashes for all files of download
-		if ( nCount == 1 )
-		{
-			// Update with download hashes single-file download only
-			Hashes::Sha1ManagedHash		oSHA1( m_oSHA1 );
-			if ( m_bSHA1Trusted )		oSHA1.signalTrusted();
-			Hashes::TigerManagedHash	oTiger( m_oTiger );
-			if ( m_bTigerTrusted )		oTiger.signalTrusted();
-			Hashes::Ed2kManagedHash		oED2K( m_oED2K );
-			if ( m_bED2KTrusted )		oED2K.signalTrusted();
-			Hashes::BtManagedHash		oBTH( m_oBTH );
-			if ( m_bBTHTrusted )		oBTH.signalTrusted();
-			Hashes::Md5ManagedHash		oMD5( m_oMD5 );
-			if ( m_bMD5Trusted )		oMD5.signalTrusted();
-			LibraryHistory.Add( sPath, oSHA1, oTiger, oED2K, oBTH, oMD5,
-				GetSourceURLs( NULL, 0, PROTOCOL_NULL, NULL ) );
-		}
-		else
-		{
-			Hashes::Sha1ManagedHash		oSHA1;
-			Hashes::TigerManagedHash	oTiger;
-			Hashes::Ed2kManagedHash		oED2K;
-			Hashes::BtManagedHash		oBTH;
-			Hashes::Md5ManagedHash		oMD5;
-			LibraryHistory.Add( sPath, oSHA1, oTiger, oED2K, oBTH, oMD5 );
-		}
-
-		// Early metadata update
-		CSingleLock oLibraryLock( &Library.m_pSection, FALSE );
-		if ( oLibraryLock.Lock( 100 ) )
-		{
-			if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( sPath ) )
-				pFile->UpdateMetadata( static_cast< CDownload* >( this ) );
+			if ( nCount == 1 )
+			{
+				// Update with download hashes single-file download only
+				LibraryHistory.Add( sPath, static_cast< CDownload* >( this ) );
+			}
 		}
 	}
+	else
+		ret = ERROR_FILE_NOT_FOUND;
 
-	theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_MOVED,
-		(LPCTSTR)GetDisplayName(), (LPCTSTR)pszDestination );
+	if ( ret == ERROR_SUCCESS )
+		theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_MOVED, GetDisplayName(), pszDestination );
+	else
+	{
+		CString strMessage;
+		strMessage.Format( LoadString( IDS_DOWNLOAD_CANT_MOVE ), GetDisplayName(), pszDestination );
+		theApp.Message( MSG_ERROR | MSG_TRAY, _T("%s"), strMessage + _T(" ") + GetErrorString( ret ) );
+	}
 
-	return ERROR_SUCCESS;
+	ClearSources();
+
+	return ret;
 }
 
 BOOL CDownloadWithFile::FlushFile()

@@ -527,8 +527,6 @@ void CDownload::OnDownloaded()
 
 	CloseTransfers();
 
-	ClearSources();
-
 	// AppendMetadata();
 
 	if ( GetTaskType() == dtaskMergeFile || GetTaskType() == dtaskPreviewRequest )

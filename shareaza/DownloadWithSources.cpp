@@ -222,7 +222,7 @@ BOOL CDownloadWithSources::CheckSource(CDownloadSource* pCheck) const
 
 void CDownloadWithSources::ClearSources()
 {
-	ASSUME_LOCK( Transfers.m_pSection );
+	CQuickLock pLock( Transfers.m_pSection );
 
 	for ( POSITION posSource = GetIterator() ; posSource ; )
 	{
@@ -595,12 +595,6 @@ BOOL CDownloadWithSources::AddSourceURL(LPCTSTR pszURL, BOOL bURN, FILETIME* pLa
 
 int CDownloadWithSources::AddSourceURLs(LPCTSTR pszURLs, BOOL bURN, BOOL bFailed)
 {
-	if ( IsCompleted() || IsMoving() )
-	{
-		ClearSources();
-		return 0;
-	}
-
 	int nCount = 0;
 
 	CMapStringToFILETIME oUrls;
@@ -755,7 +749,7 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithSources query for URLs
 
-CString CDownloadWithSources::GetSourceURLs(CList< CString >* pState, int nMaximum, PROTOCOLID nProtocol, CDownloadSource* pExcept)
+CString CDownloadWithSources::GetSourceURLs(CList< CString >* pState, int nMaximum, PROTOCOLID nProtocol, CDownloadSource* pExcept) const
 {
 	CQuickLock pLock( Transfers.m_pSection );
 
@@ -766,8 +760,8 @@ CString CDownloadWithSources::GetSourceURLs(CList< CString >* pState, int nMaxim
 		CDownloadSource* pSource = GetNext( posSource );
 
 		if ( pSource != pExcept && pSource->m_bPushOnly == FALSE &&
-			 pSource->m_nFailures == 0 && pSource->m_bReadContent &&
-			 ( pSource->m_bSHA1 || pSource->m_bED2K || pSource->m_bBTH  || pSource->m_bMD5 ) &&
+			 ( ( pSource->m_nFailures == 0 && pSource->m_bReadContent ) || nProtocol == PROTOCOL_NULL ) &&
+			 ( pSource->m_bSHA1 || pSource->m_bTiger || pSource->m_bED2K || pSource->m_bBTH  || pSource->m_bMD5 ) &&
 			 ( pState == NULL || pState->Find( pSource->m_sURL ) == NULL ) )
 		{
 			// Only return appropriate sources

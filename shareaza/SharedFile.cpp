@@ -520,7 +520,7 @@ BOOL CLibraryFile::Delete(BOOL bDeleteGhost)
 //////////////////////////////////////////////////////////////////////
 // CLibraryFile metadata access
 
-void CLibraryFile::UpdateMetadata(CDownload* pDownload)
+void CLibraryFile::UpdateMetadata(const CDownload* pDownload)
 {
 	// Disable sharing of incomplete files
 	if ( pDownload->m_bVerify == TRI_FALSE )
@@ -542,10 +542,10 @@ void CLibraryFile::UpdateMetadata(CDownload* pDownload)
 		{
 			// Update existing
 			BOOL bMetadataAuto = m_bMetadataAuto;
-			if ( MergeMetadata( pDownload->m_pXML, FALSE ) )
+			if ( MergeMetadata( pDownload->m_pXML ) )
 			{
-				if ( bMetadataAuto )
-					m_bMetadataAuto = TRUE;
+				// Preserve flag
+				m_bMetadataAuto = bMetadataAuto;
 			}
 		}
 		else if ( CXMLElement* pBody = pDownload->m_pXML->GetFirstElement() )
@@ -636,6 +636,17 @@ BOOL CLibraryFile::SetMetadata(CXMLElement*& pXML, BOOL bMerge, BOOL bOverwrite)
 BOOL CLibraryFile::MergeMetadata(CXMLElement*& pXML, BOOL bOverwrite)
 {
 	return SetMetadata( pXML, TRUE, bOverwrite );
+}
+
+BOOL CLibraryFile::MergeMetadata(const CXMLElement* pXML)
+{
+	BOOL bResult = FALSE;
+	if ( CXMLElement* pCloned = pXML->Clone() )
+	{
+		bResult = SetMetadata( pCloned, TRUE, FALSE );
+		delete pCloned;
+	}
+	return bResult;
 }
 
 void CLibraryFile::ClearMetadata()
@@ -1217,38 +1228,32 @@ void CLibraryFile::Ghost()
 //////////////////////////////////////////////////////////////////////
 // CLibraryFile download verification
 
-BOOL CLibraryFile::OnVerifyDownload(
-	const Hashes::Sha1ManagedHash& oSHA1,
-	const Hashes::TigerManagedHash& oTiger,
-	const Hashes::Ed2kManagedHash& oED2K,
-	const Hashes::BtManagedHash& oBTH,
-	const Hashes::Md5ManagedHash& oMD5,
-	LPCTSTR pszSources)
+BOOL CLibraryFile::OnVerifyDownload(const CLibraryRecent* pRecent)
 {
 	ASSERT( IsAvailable() );
 	ASSERT( IsHashed() );
 
 	if ( Settings.Downloads.VerifyFiles && m_bVerify == TRI_UNKNOWN && m_nVirtualSize == 0 )
 	{
-		if ( (bool)m_oSHA1 && (bool)oSHA1 && oSHA1.isTrusted() )
+		if ( (bool)m_oSHA1 && (bool)pRecent->m_oSHA1 && pRecent->m_oSHA1.isTrusted() )
 		{
-			m_bVerify = ( m_oSHA1 == oSHA1 ) ? TRI_TRUE : TRI_FALSE;
+			m_bVerify = ( m_oSHA1 == pRecent->m_oSHA1 ) ? TRI_TRUE : TRI_FALSE;
 		}
-		if ( m_bVerify != TRI_FALSE && (bool)m_oTiger && (bool)oTiger && oTiger.isTrusted() )
+		if ( m_bVerify != TRI_FALSE && (bool)m_oTiger && (bool)pRecent->m_oTiger && pRecent->m_oTiger.isTrusted() )
 		{
-			m_bVerify = ( m_oTiger == oTiger ) ? TRI_TRUE : TRI_FALSE;
+			m_bVerify = ( m_oTiger == pRecent->m_oTiger ) ? TRI_TRUE : TRI_FALSE;
 		}
-		if ( m_bVerify != TRI_FALSE && (bool)m_oED2K && (bool)oED2K && oED2K.isTrusted() )
+		if ( m_bVerify != TRI_FALSE && (bool)m_oED2K && (bool)pRecent->m_oED2K && pRecent->m_oED2K.isTrusted() )
 		{
-			m_bVerify = ( m_oED2K == oED2K ) ? TRI_TRUE : TRI_FALSE;
+			m_bVerify = ( m_oED2K == pRecent->m_oED2K ) ? TRI_TRUE : TRI_FALSE;
 		}
-		if ( m_bVerify != TRI_FALSE && (bool)m_oMD5 && (bool)oMD5 && oMD5.isTrusted() )
+		if ( m_bVerify != TRI_FALSE && (bool)m_oMD5 && (bool)pRecent->m_oMD5 && pRecent->m_oMD5.isTrusted() )
 		{
-			m_bVerify = ( m_oMD5 == oMD5 ) ? TRI_TRUE : TRI_FALSE;
+			m_bVerify = ( m_oMD5 == pRecent->m_oMD5 ) ? TRI_TRUE : TRI_FALSE;
 		}
-		if ( m_bVerify != TRI_FALSE && (bool)m_oBTH && (bool)oBTH && oBTH.isTrusted() )
+		if ( m_bVerify != TRI_FALSE && (bool)m_oBTH && (bool)pRecent->m_oBTH && pRecent->m_oBTH.isTrusted() )
 		{
-			m_bVerify = ( m_oBTH == oBTH ) ? TRI_TRUE : TRI_FALSE;
+			m_bVerify = ( m_oBTH == pRecent->m_oBTH ) ? TRI_TRUE : TRI_FALSE;
 		}
 
 		if ( m_bVerify == TRI_TRUE )
@@ -1267,7 +1272,7 @@ BOOL CLibraryFile::OnVerifyDownload(
 		}
 	}
 
-	AddAlternateSources( pszSources );
+	AddAlternateSources( pRecent->m_sSources );
 
 	// Notify library plugins
 	if ( Plugins.OnNewFile( this ) )

@@ -723,17 +723,12 @@ BOOL CCollectionFile::File::ApplyMetadata(CLibraryFile* pShared)
 	ASSERT( m_pMetadata->GetFirstElement() != NULL );
 
 	// Merge metadata
-	if ( CXMLElement* pXML = m_pMetadata->Clone() )
+	BOOL bMetadataAuto = pShared->m_bMetadataAuto;
+	if ( pShared->MergeMetadata( m_pMetadata ) )
 	{
-		BOOL bMetadataAuto = pShared->m_bMetadataAuto;
-		BOOL res = pShared->MergeMetadata( pXML, FALSE );
-		delete pXML;
-		if ( res )
-		{
-			// Preserve flag
-			pShared->m_bMetadataAuto = bMetadataAuto;
-			return TRUE;
-		}
+		// Preserve flag
+		pShared->m_bMetadataAuto = bMetadataAuto;
+		return TRUE;
 	}
 
 	return FALSE;

@@ -1,7 +1,7 @@
 //
 // LibraryHistory.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,6 +22,7 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
+#include "Download.h"
 #include "Library.h"
 #include "LibraryHistory.h"
 #include "SharedFile.h"
@@ -124,6 +125,8 @@ BOOL CLibraryHistory::Check(CLibraryRecent* pRecent, int nScope) const
 
 CLibraryRecent* CLibraryHistory::GetByPath(LPCTSTR pszPath) const
 {
+	ASSUME_LOCK( Library.m_pSection );
+
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CLibraryRecent* pRecent = GetNext( pos );
@@ -137,24 +140,18 @@ CLibraryRecent* CLibraryHistory::GetByPath(LPCTSTR pszPath) const
 //////////////////////////////////////////////////////////////////////
 // CLibraryHistory add new download
 
-void CLibraryHistory::Add(
-	LPCTSTR pszPath,
-	const Hashes::Sha1ManagedHash& oSHA1,
-	const Hashes::TigerManagedHash& oTiger,
-	const Hashes::Ed2kManagedHash& oED2K,
-	const Hashes::BtManagedHash& oBTH,
-	const Hashes::Md5ManagedHash& oMD5,
-	LPCTSTR pszSources)
+void CLibraryHistory::Add(LPCTSTR pszPath, const CDownload* pDownload)
 {
 	CSingleLock pLock( &Library.m_pSection, TRUE );
 
 	CLibraryRecent* pRecent = GetByPath( pszPath );
 	if ( pRecent == NULL )
 	{
-		pRecent = new CLibraryRecent( pszPath, oSHA1, oTiger, oED2K, oBTH, oMD5, pszSources );
-		m_pList.AddHead( pRecent );
-
-		Prune();
+		if ( CLibraryRecent* pRecent = new CLibraryRecent( pszPath, pDownload ) )
+		{
+			m_pList.AddHead( pRecent );
+			Prune();
+		}
 	}
 }
 
@@ -165,12 +162,14 @@ void CLibraryHistory::Submit(CLibraryFile* pFile)
 {
 	CSingleLock pLock( &Library.m_pSection, TRUE );
 
-	CLibraryRecent* pRecent = GetByPath( pFile->GetPath() );
-	if ( pRecent )
+	if ( CLibraryRecent* pRecent = GetByPath( pFile->GetPath() ) )
 	{
-		pRecent->RunVerify( pFile );
+		if ( pRecent->m_pFile == NULL )
+		{
+			pRecent->m_pFile = pFile;
 
-		Prune();
+			pFile->OnVerifyDownload( pRecent );
+		}
 	}
 }
 
@@ -269,16 +268,11 @@ void CLibraryHistory::Serialize(CArchive& ar, int nVersion)
 
 		for ( nCount = ar.ReadCount() ; nCount > 0 ; nCount-- )
 		{
-			CLibraryRecent* pRecent = new CLibraryRecent();
+			CAutoPtr< CLibraryRecent > pRecent( new CLibraryRecent() );
 			pRecent->Serialize( ar, nVersion );
-
-			if ( pRecent->m_pFile != NULL )
+			if ( pRecent->m_pFile )
 			{
-				m_pList.AddTail( pRecent );
-			}
-			else
-			{
-				delete pRecent;
+				m_pList.AddTail( pRecent.Detach() );
 			}
 		}
 
@@ -309,37 +303,25 @@ CLibraryRecent::CLibraryRecent()
 	ZeroMemory( &m_tAdded, sizeof( m_tAdded ) );
 }
 
-CLibraryRecent::CLibraryRecent(
-	LPCTSTR pszPath,
-	const Hashes::Sha1ManagedHash& oSHA1,
-	const Hashes::TigerManagedHash& oTiger,
-	const Hashes::Ed2kManagedHash& oED2K,
-	const Hashes::BtManagedHash& oBTH,
-	const Hashes::Md5ManagedHash& oMD5,
-	LPCTSTR pszSources )
+CLibraryRecent::CLibraryRecent(LPCTSTR pszPath, const CDownload* pDownload)
 	: m_pFile		( NULL )
-	, m_sSources	( pszSources )
-	, m_oSHA1		( oSHA1 )
-	, m_oTiger		( oTiger )
-	, m_oED2K		( oED2K )
-	, m_oBTH		( oBTH )
-	, m_oMD5		( oMD5 )
+	, m_sPath		( pszPath )
 {
-	m_sPath = pszPath;
-
-	GetSystemTimeAsFileTime( &m_tAdded );	
-}
-
-//////////////////////////////////////////////////////////////////////
-// CLibraryRecent verification
-
-void CLibraryRecent::RunVerify(CLibraryFile* pFile)
-{
-	if ( m_pFile == NULL )
+	if ( pDownload )
 	{
-		m_pFile = pFile;
-		m_pFile->OnVerifyDownload( m_oSHA1, m_oTiger, m_oED2K, m_oBTH, m_oMD5, m_sSources );
+		Hashes::Sha1ManagedHash oSHA1( pDownload->m_oSHA1 );
+		if ( pDownload->m_bSHA1Trusted ) oSHA1.signalTrusted();
+		Hashes::TigerManagedHash oTiger( pDownload->m_oTiger );
+		if ( pDownload->m_bTigerTrusted ) oTiger.signalTrusted();
+		Hashes::Ed2kManagedHash oED2K( pDownload->m_oED2K );
+		if ( pDownload->m_bED2KTrusted ) oED2K.signalTrusted();
+		Hashes::BtManagedHash oBTH( pDownload->m_oBTH );
+		if ( pDownload->m_bBTHTrusted ) oBTH.signalTrusted();
+		Hashes::Md5ManagedHash oMD5( pDownload->m_oMD5 );
+		if ( pDownload->m_bMD5Trusted ) oMD5.signalTrusted();
+		m_sSources = pDownload->GetSourceURLs();
 	}
+	GetSystemTimeAsFileTime( &m_tAdded );	
 }
 
 //////////////////////////////////////////////////////////////////////

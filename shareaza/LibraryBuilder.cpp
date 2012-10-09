@@ -593,7 +593,7 @@ bool CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile)
 		if ( i > 10 || m_bSkip )
 			return false;
 	}
-	CDownload* pDownload = Downloads.FindByPath( szPath );
+	const CDownload* pDownload = Downloads.FindByPath( szPath );
 	if ( ! pDownload )
 		oTransfersLock.Unlock();
 
@@ -618,9 +618,11 @@ bool CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile)
 
 	pFileHash->CopyTo( pFile );
 
+	if ( pDownload )
+		pFile->UpdateMetadata( pDownload );
+
 	LibraryMaps.CullDeletedFiles( pFile );
-	LibraryHistory.Add( szPath, pFile->m_oSHA1, pFile->m_oTiger,
-		pFile->m_oED2K, pFile->m_oBTH, pFile->m_oMD5 );
+	LibraryHistory.Add( szPath, pDownload );
 
 	// child pornography check
 	if ( Settings.Search.AdultFilter &&
@@ -630,9 +632,6 @@ bool CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile)
 		pFile->m_bVerify = TRI_FALSE;
 		pFile->SetShared( false );
 	}
-
-	if ( pDownload )
-		pFile->UpdateMetadata( pDownload );
 
 	Library.AddFile( pFile );
 

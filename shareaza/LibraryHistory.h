@@ -1,7 +1,7 @@
 //
 // LibraryHistory.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -23,11 +23,12 @@
 
 #include "ShareazaFile.h"
 
+class CDownload;
 class CLibraryRecent;
 class CLibraryFile;
 
 
-class ATL_NO_VTABLE CLibraryHistory
+class CLibraryHistory
 {
 public:
 	CLibraryHistory();
@@ -52,14 +53,7 @@ public:
 	void			Clear();
 
 	BOOL			Check(CLibraryRecent* pRecent, int nScope = 0) const;
-    void			Add(
-						LPCTSTR pszPath,
-						const Hashes::Sha1ManagedHash& oSHA1,
-						const Hashes::TigerManagedHash& oTiger,
-						const Hashes::Ed2kManagedHash& oED2K,
-						const Hashes::BtManagedHash& oBTH,
-						const Hashes::Md5ManagedHash& oMD5,
-						LPCTSTR pszSources = _T(""));
+    void			Add(LPCTSTR pszPath, const CDownload* pDownload = NULL);
 	void			Submit(CLibraryFile* pFile);
 	void			OnFileDelete(CLibraryFile* pFile);
 	void			Serialize(CArchive& ar, int nVersion);
@@ -72,12 +66,13 @@ protected:
 };
 
 
-class CLibraryRecent : public CShareazaFile
+class CLibraryRecent
 {
 public:
 	FILETIME					m_tAdded;
 	CLibraryFile*				m_pFile;
 	CString						m_sSources;
+	CString						m_sPath;
     Hashes::Sha1ManagedHash		m_oSHA1;
     Hashes::TigerManagedHash	m_oTiger;
     Hashes::Md5ManagedHash		m_oMD5;
@@ -86,14 +81,7 @@ public:
 
 protected:
 	CLibraryRecent();
-    CLibraryRecent(
-		LPCTSTR pszPath,
-		const Hashes::Sha1ManagedHash& oSHA1,
-		const Hashes::TigerManagedHash&	oTiger,
-		const Hashes::Ed2kManagedHash& oED2K,
-		const Hashes::BtManagedHash& oBTH,
-		const Hashes::Md5ManagedHash& oMD5,
-		LPCTSTR pszSources);
+	CLibraryRecent(LPCTSTR pszPath, const CDownload* pDownload = NULL);
 
 	void	RunVerify(CLibraryFile* pFile);
 	void	Serialize(CArchive& ar, int nVersion);
