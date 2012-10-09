@@ -1190,7 +1190,7 @@ void CDownloadsWnd::OnDownloadsUrl()
 
 		if ( Downloads.Check( pDownload ) )
 		{
-			if ( ! pDownload->IsMoving() )
+			if ( ! pDownload->IsMoving() && ! pDownload->IsCompleted() )
 			{
 				CDownloadDlg dlg( NULL, pDownload );
 
@@ -1437,7 +1437,7 @@ void CDownloadsWnd::OnTransfersConnect()
 	{
 		CDownload* pDownload = Downloads.GetNext( pos );
 
-		if ( pDownload->IsMoving() )
+		if ( pDownload->IsMoving() || pDownload->IsCompleted() )
 			continue;
 
 		for ( POSITION posSource = pDownload->GetIterator(); posSource ; )

@@ -1,7 +1,7 @@
 //
 // EDClient.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1512,9 +1512,9 @@ BOOL CEDClient::OnFileStatusRequest(CEDPacket* pPacket)
 		WritePartStatus( pReply, pDownload );
 		m_nUpSize = pDownload->m_nSize;
 
-		if ( ! pDownload->IsMoving() )
+		if ( ! pDownload->IsMoving() && ! pDownload->IsCompleted() )
 			pDownload->AddSourceED2K( m_nClientID, htons( m_pHost.sin_port ),
-			m_pServer.sin_addr.S_un.S_addr, htons( m_pServer.sin_port ), m_oGUID );
+				m_pServer.sin_addr.S_un.S_addr, htons( m_pServer.sin_port ), m_oGUID );
 
 		Send( pReply );
 		return TRUE;
@@ -2195,7 +2195,8 @@ BOOL CEDClient::OnSourceAnswer(CEDPacket* pPacket)
 	if ( CDownload* pDownload = Downloads.FindByED2K( oHash ))
 	{
 		// Don't bother adding sources if this download has finished
-		if ( pDownload->IsMoving() ) return TRUE;
+		if ( pDownload->IsMoving() || pDownload->IsCompleted() )
+			return TRUE;
 
 		while ( nCount-- > 0 )
 		{

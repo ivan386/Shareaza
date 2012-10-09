@@ -61,7 +61,7 @@ public:
 	{
 	public:
 		// Find file on disk
-		CString	FindFile();
+		CString	FindFile() const;
 
 	private:
 		const CBTInfo*	m_pInfo;			// Parent torrent handler

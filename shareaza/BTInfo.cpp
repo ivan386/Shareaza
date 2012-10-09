@@ -106,9 +106,9 @@ CBTInfo::CBTFile::CBTFile(const CBTInfo* pInfo, const CBTFile* pBTFile)
 	}
 }
 
-CString	CBTInfo::CBTFile::FindFile()
+CString	CBTInfo::CBTFile::FindFile() const
 {
-	CSingleLock oLibraryLock( &Library.m_pSection, TRUE );
+	CQuickLock oLock( Library.m_pSection );
 
 	// Try find file by hash/size
 	CString strFile;
@@ -155,23 +155,6 @@ CString	CBTInfo::CBTFile::FindFile()
 				}
 			}
 		}
-	}
-
-	// Refill missed hashes
-	if ( ! pShared )
-		pShared = LibraryMaps.LookupFileByPath( strFile, FALSE, FALSE );
-	if ( pShared )
-	{
-		if ( ! m_oSHA1 && pShared->m_oSHA1 )
-			m_oSHA1 = pShared->m_oSHA1;
-		if ( ! m_oTiger && pShared->m_oTiger )
-			m_oTiger = pShared->m_oTiger;
-		if ( ! m_oED2K && pShared->m_oED2K )
-			m_oED2K = pShared->m_oED2K;
-		if ( ! m_oBTH && pShared->m_oBTH )
-			m_oBTH = pShared->m_oBTH;
-		if ( ! m_oMD5 && pShared->m_oMD5 )
-			m_oMD5 = pShared->m_oMD5;
 	}
 
 	return strFile;
