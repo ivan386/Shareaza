@@ -66,7 +66,6 @@ CDownloadTipCtrl::CDownloadTipCtrl()
 	, m_nHeaders	( 0 )
 	, m_nStatWidth	( 0 )
 	, m_bDrawGraph	( FALSE )
-	, m_bDrawError	( FALSE )
 {
 }
 
@@ -184,13 +183,22 @@ void CDownloadTipCtrl::OnCalcSize(CDC* pDC, CDownload* pDownload)
 	if ( pDownload->m_bTorrentTrackerError && pDownload->m_sTorrentTrackerError.GetLength() )
 	{
 		AddSize( pDC, pDownload->m_sTorrentTrackerError );
-		m_bDrawError = TRUE;
 		m_sz.cy += TIP_TEXTHEIGHT;
 		m_sz.cy += TIP_RULE;
 	}
-	else
-		m_bDrawError = FALSE;
 
+	// File error		
+	if ( pDownload->GetFileError() != ERROR_SUCCESS )
+	{
+		if ( pDownload->GetFileErrorString().GetLength() )
+		{
+			AddSize( pDC, pDownload->GetFileErrorString() );
+			m_sz.cy += TIP_TEXTHEIGHT;
+		}
+		AddSize( pDC, GetErrorString( pDownload->GetFileError() ) );
+		m_sz.cy += TIP_TEXTHEIGHT;
+		m_sz.cy += TIP_RULE;
+	}
 
 	if ( pDownload->IsTorrent() )
 	{	//Torrent ratio
@@ -428,9 +436,23 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 	}
 
 	// Draw the pop-up box
-	if ( m_bDrawError )
+	if ( pDownload->m_bTorrentTrackerError && pDownload->m_sTorrentTrackerError.GetLength() )
 	{	// Tracker error
 		DrawText( pDC, &pt, pDownload->m_sTorrentTrackerError, 3 );
+		pt.y += TIP_TEXTHEIGHT;
+		DrawRule( pDC, &pt );
+	}
+
+	if ( pDownload->GetFileError() != ERROR_SUCCESS )
+	{	// File error
+		COLORREF crOld = pDC->SetTextColor( CoolInterface.m_crTextAlert );
+		if ( pDownload->GetFileErrorString().GetLength() )
+		{
+			DrawText( pDC, &pt, pDownload->GetFileErrorString(), 3 );
+			pt.y += TIP_TEXTHEIGHT;
+		}
+		DrawText( pDC, &pt, GetErrorString( pDownload->GetFileError() ), 3 );
+		pDC->SetTextColor( crOld );
 		pt.y += TIP_TEXTHEIGHT;
 		DrawRule( pDC, &pt );
 	}

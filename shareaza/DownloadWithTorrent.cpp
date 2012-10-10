@@ -263,11 +263,10 @@ void CDownloadWithTorrent::Serialize(CArchive& ar, int nVersion)
 			ClearFile();
 
 			// Create a bunch of new empty files
-			CString sErrorMessage;
 			CComPtr< CFragmentedFile > pFragFile = GetFile();
 			if ( ! pFragFile )
 				AfxThrowMemoryException();
-			if ( ! pFragFile->Open( m_pTorrent, ! IsSeeding(), sErrorMessage ) )
+			if ( ! pFragFile->Open( m_pTorrent, ! IsSeeding() ) )
 				AfxThrowFileException( CFileException::genericException );
 
 			if ( ! IsSeeding() )
@@ -936,71 +935,6 @@ BOOL CDownloadWithTorrent::FindMoreSources()
 }
 
 //////////////////////////////////////////////////////////////////////
-// CDownloadWithTorrent seed
-
-BOOL CDownloadWithTorrent::SeedTorrent(CString& sErrorMessage)
-{
-	sErrorMessage.Empty();
-
-	if ( IsMoving() || IsCompleted() )
-		return FALSE;
-
-	ASSERT( IsFileOpen() == FALSE );
-	if ( IsFileOpen() )
-		return FALSE;
-
-	GenerateTorrentDownloadID();
-
-	CDownload* pDownload	= static_cast< CDownload* >( this );	// TODO: Fix bad inheritance
-	pDownload->m_bSeeding	= TRUE;
-	pDownload->m_bComplete	= true;
-	pDownload->m_tCompleted	= GetTickCount();
-	pDownload->m_bVerify	= TRI_TRUE;
-
-	memset( m_pTorrentBlock, TRI_TRUE, m_nTorrentBlock );
-	m_nTorrentSuccess = m_nTorrentBlock;
-
-	ASSERT( m_pTorrent.GetCount() );
-
-	auto_ptr< CFragmentedFile > pFragmentedFile( new CFragmentedFile );
-	if ( ! pFragmentedFile.get() ||
-		 ! pFragmentedFile->Open( m_pTorrent, FALSE, sErrorMessage ) )
-		return FALSE;
-
-	AttachFile( pFragmentedFile );
-
-	CBTInfo::CBTFile* pFile = m_pTorrent.m_pFiles.GetHead();
-	CString sPath = pFile->FindFile();
-	if ( m_pTorrent.GetCount() == 1 )
-	{
-		// Refill missed hashes for single-file torrent
-		if ( ! m_pTorrent.m_oSHA1 && pFile->m_oSHA1 )
-			m_pTorrent.m_oSHA1 = pFile->m_oSHA1;
-		if ( ! m_pTorrent.m_oTiger && pFile->m_oTiger )
-			m_pTorrent.m_oTiger = pFile->m_oTiger;
-		if ( ! m_pTorrent.m_oED2K && pFile->m_oED2K )
-			m_pTorrent.m_oED2K = pFile->m_oED2K;
-		if ( ! m_pTorrent.m_oMD5 && pFile->m_oMD5 )
-			m_pTorrent.m_oMD5 = pFile->m_oMD5;
-	}
-
-	// Refill missed hashes
-	if ( ! m_oSHA1 && m_pTorrent.m_oSHA1 )
-		m_oSHA1 = m_pTorrent.m_oSHA1;
-	if ( ! m_oTiger && m_pTorrent.m_oTiger )
-		 m_oTiger = m_pTorrent.m_oTiger;
-	if ( ! m_oED2K && m_pTorrent.m_oED2K )
-		m_oED2K = m_pTorrent.m_oED2K;
-	if ( ! m_oMD5 && m_pTorrent.m_oMD5 )
-		m_oMD5 = m_pTorrent.m_oMD5;
-
-	pDownload->MakeComplete();
-	pDownload->ResetVerification();
-
-	return TRUE;
-}
-
-//////////////////////////////////////////////////////////////////////
 // CDownloadWithTorrent Close
 
 void CDownloadWithTorrent::CloseTorrent()
@@ -1010,7 +944,6 @@ void CDownloadWithTorrent::CloseTorrent()
 
 	CloseTorrentUploads();
 }
-
 
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithTorrent stats

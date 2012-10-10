@@ -145,6 +145,7 @@ protected:
 	QWORD						m_nUnflushed;
 	Fragments::List				m_oFList;
 	DWORD						m_nFileError;
+	CString						m_sFileError;
 	volatile LONG				m_dwRef;
 	const CDownload*			m_pDownload;	// Reference download object (optional)
 
@@ -162,7 +163,7 @@ public:
 	// Open file from disk or create file inside incomplete folder from library by hash
 	BOOL	Open(const CShareazaFile* pSHFile, BOOL bWrite);
 	// Open file from disk or create file inside incomplete folder file(s) from .torrent
-	BOOL	Open(const CBTInfo& oInfo, BOOL bWrite, CString& sErrorMessage);
+	BOOL	Open(const CBTInfo& oInfo, BOOL bWrite);
 	ULONG	AddRef();
 	ULONG	Release();
 	// Close all subfiles
@@ -233,6 +234,11 @@ public:
 	inline DWORD GetFileError() const
 	{
 		return m_nFileError;
+	}
+
+	inline const CString& GetFileErrorString() const
+	{
+		return m_sFileError;
 	}
 
 	// Is file has size?

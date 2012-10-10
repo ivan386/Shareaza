@@ -163,7 +163,7 @@ void CTorrentSeedDlg::OnDownload()
 				pDownload->PrepareFile();
 
 				// Automatically merge download with local files on start-up
-				if ( Settings.BitTorrent.AutoMerge && pDownload->m_pTorrent.GetCount() > 1 )
+				if ( Settings.BitTorrent.AutoMerge )
 				{
 					CList< CString > oFiles;
 					for ( POSITION pos = pDownload->m_pTorrent.m_pFiles.GetHeadPosition() ; pos ; )
@@ -296,18 +296,15 @@ BOOL CTorrentSeedDlg::CreateDownload()
 		if ( Downloads.FindByBTH( m_pInfo.m_oBTH ) )
 		{
 			// Already seeding
-			CString strFormat;
-			LoadString(strFormat, IDS_BT_SEED_ALREADY );
-			m_sMessage.Format( strFormat, (LPCTSTR)m_pInfo.m_sName );
+			m_sMessage.Format( LoadString( IDS_BT_SEED_ALREADY ), (LPCTSTR)m_pInfo.m_sName );
 		}
 		else
 		{
 			if ( CDownload* pDownload = Downloads.Add( CShareazaURL( new CBTInfo( m_pInfo ) ) ) )
 			{
-				if ( pDownload->SeedTorrent( m_sMessage ) )
-				{
+				if ( pDownload->SeedTorrent() )
 					return TRUE;
-				}
+				m_sMessage = pDownload->GetFileErrorString() + _T(" ") + GetErrorString( pDownload->GetFileError() );
 				pDownload->Remove();
 			}
 		}
@@ -315,9 +312,7 @@ BOOL CTorrentSeedDlg::CreateDownload()
 
 	if ( m_sMessage.IsEmpty() )
 	{
-		CString strFormat;
-		LoadString(strFormat, IDS_BT_SEED_ERROR );
-		m_sMessage.Format( strFormat, (LPCTSTR)m_pInfo.m_sName );
+		m_sMessage.Format( LoadString( IDS_BT_SEED_ERROR ), (LPCTSTR)m_pInfo.m_sName );
 	}
 
 	return FALSE;

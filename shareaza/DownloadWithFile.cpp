@@ -131,66 +131,57 @@ DWORD CDownloadWithFile::GetFileError() const
 	return m_nFileError;
 }
 
+// Get more information about last file/disk operation error
+const CString& CDownloadWithFile::GetFileErrorString() const
+{
+	return m_sFileError;
+}
+
 // Set file/disk error status
-void CDownloadWithFile::SetFileError(DWORD nFileError)
+void CDownloadWithFile::SetFileError(DWORD nFileError, LPCTSTR szFileError)
 {
 	m_nFileError = nFileError;
+	m_sFileError = szFileError;
 }
 
 // Clear file/disk error status
 void CDownloadWithFile::ClearFileError()
 {
 	m_nFileError = ERROR_SUCCESS;
+	m_sFileError.Empty();
 }
 
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithFile open the file
 
-BOOL CDownloadWithFile::OpenFile()
+BOOL CDownloadWithFile::Open()
 {
-	if ( m_sName.IsEmpty() )
-		return TRUE;
-
-	if ( IsFileOpen() )
-		return TRUE;
-
-	SetModified();
-
-	CDownload* pThis = static_cast< CDownload* >( this );	// TODO: Fix bad inheritance
 	if ( m_pFile.get() )
 	{
 		ClearFileError();
 
-		if ( pThis->IsTorrent() )
-		{
-			CString sFoo;
-			if ( m_pFile->Open( pThis->m_pTorrent, ! IsCompleted(), sFoo ) )
-				return TRUE;
-		}
-		else
-		{
-			// TODO: Refactor m_sTorrentTrackerError
-			pThis->m_sTorrentTrackerError.Empty();
+		if ( m_pFile->Open( this, ! IsCompleted() ) )
+			return TRUE;
 
-			if ( m_pFile->Open( this, ! IsCompleted() ) )
-				return TRUE;
-		}
-
-		m_nFileError = m_pFile->GetFileError();
+		SetFileError( m_pFile->GetFileError(), m_pFile->GetFileErrorString() );
 	}
-	else if ( m_nSize != SIZE_UNKNOWN &&
-		! Downloads.IsSpaceAvailable( m_nSize, Downloads.dlPathIncomplete ) )
+	return FALSE;
+}
+
+//////////////////////////////////////////////////////////////////////
+// CDownloadWithFile open the file
+
+BOOL CDownloadWithFile::Open(const CBTInfo& pBTInfo)
+{
+	if ( m_pFile.get() )
 	{
-		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_DISK_SPACE,
-			m_sName, Settings.SmartVolume( m_nSize ) );
+		ClearFileError();
 
-		m_nFileError = ERROR_DISK_FULL;
+		if ( m_pFile->Open( pBTInfo, ! IsCompleted() ) )
+			return TRUE;
+
+		SetFileError( m_pFile->GetFileError(), m_pFile->GetFileErrorString() );
 	}
-
-	// TODO: Refactor m_sTorrentTrackerError
-	if ( m_nFileError != ERROR_SUCCESS )
-		pThis->m_sTorrentTrackerError = GetErrorString( m_nFileError );
-
 	return FALSE;
 }
 
@@ -210,14 +201,6 @@ void CDownloadWithFile::ClearFile()
 {
 	if ( m_pFile.get() )
 		m_pFile->Clear();
-}
-
-//////////////////////////////////////////////////////////////////////
-// CDownloadWithFile prepare file
-
-BOOL CDownloadWithFile::PrepareFile()
-{
-	return OpenFile() && m_pFile->GetRemaining() > 0;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -344,6 +327,11 @@ BOOL CDownloadWithFile::FlushFile()
 BOOL CDownloadWithFile::IsComplete() const
 {
 	return m_pFile.get() && m_pFile->IsComplete();
+}
+
+BOOL CDownloadWithFile::IsRemaining() const
+{
+	return ( IsFileOpen() && m_pFile->GetRemaining() > 0 );
 }
 
 BOOL CDownloadWithFile::ReadFile(QWORD nOffset, LPVOID pData, QWORD nLength, QWORD* pnRead)
@@ -559,7 +547,7 @@ QWORD CDownloadWithFile::EraseRange(QWORD nOffset, QWORD nLength)
 
 BOOL CDownloadWithFile::MakeComplete()
 {
-	return PrepareFile() && m_pFile->MakeComplete();
+	return m_pFile.get() && m_pFile->MakeComplete();
 }
 
 //////////////////////////////////////////////////////////////////////

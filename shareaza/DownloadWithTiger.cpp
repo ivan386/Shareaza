@@ -807,9 +807,6 @@ BOOL CDownloadWithTiger::IsRangeUsefulEnough(CDownloadTransfer* pTransfer, QWORD
 
 Fragments::List CDownloadWithTiger::GetPossibleFragments(const Fragments::List& oAvailable, Fragments::Fragment& oLargest)
 {
-	if ( ! PrepareFile() )
-		return Fragments::List( oAvailable.limit() );
-
 	Fragments::List oPossible( oAvailable );
 
 	if ( oAvailable.empty() )
@@ -840,7 +837,7 @@ BOOL CDownloadWithTiger::GetFragment(CDownloadTransfer* pTransfer)
 {
 	ASSUME_LOCK( Transfers.m_pSection );
 
-	if ( ! PrepareFile() )
+	if ( ! static_cast< CDownload* >( this ) ->PrepareFile() )
 		return NULL;
 
 	Fragments::Fragment oLargest( SIZE_UNKNOWN, SIZE_UNKNOWN );

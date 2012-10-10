@@ -69,7 +69,6 @@ private:
 public:
 	void			AddUpload(CUploadTransferBT* pUpload);
 	void			RemoveUpload(CUploadTransferBT* pUpload);
-	BOOL			SeedTorrent(CString& sErrorMessage);
 	bool			IsSeeding() const;
 	bool			IsTorrent() const;
 	bool			IsSingleFileTorrent() const;

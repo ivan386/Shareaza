@@ -270,6 +270,8 @@ BOOL CFragmentedFile::Open(LPCTSTR pszFile, QWORD nOffset, QWORD nLength, BOOL b
 
 BOOL CFragmentedFile::Open(const CShareazaFile* pSHFile, BOOL bWrite)
 {
+	m_sFileError.Empty();
+
 	CString strSource;
 	if ( ! m_oFile.empty() )
 	{
@@ -299,9 +301,9 @@ BOOL CFragmentedFile::Open(const CShareazaFile* pSHFile, BOOL bWrite)
 
 	if ( ! Open( strSource, 0, pSHFile->m_nSize, bWrite, pSHFile->m_sName ) )
 	{
-		CString strMessage;
-		strMessage.Format( LoadString( bWrite ? IDS_DOWNLOAD_FILE_CREATE_ERROR : IDS_DOWNLOAD_FILE_OPEN_ERROR ), (LPCTSTR)strSource );
-		theApp.Message( MSG_ERROR, _T("%s %s"), strMessage, (LPCTSTR)GetErrorString( m_nFileError ) );
+		m_sFileError.Format( LoadString( bWrite ? IDS_DOWNLOAD_FILE_CREATE_ERROR : IDS_DOWNLOAD_FILE_OPEN_ERROR ), (LPCTSTR)strSource );
+		theApp.Message( MSG_ERROR, _T("%s"), m_sFileError + _T(" ") + GetErrorString( m_nFileError ) );
+
 		Close();
 		return FALSE;
 	}
@@ -309,8 +311,10 @@ BOOL CFragmentedFile::Open(const CShareazaFile* pSHFile, BOOL bWrite)
 	return TRUE;
 }
 
-BOOL CFragmentedFile::Open(const CBTInfo& oInfo, const BOOL bWrite, CString& strErrorMessage)
+BOOL CFragmentedFile::Open(const CBTInfo& oInfo, BOOL bWrite)
 {
+	m_sFileError.Empty();
+
 	size_t i = 0;
 	const size_t nCount = m_oFile.size();
 	QWORD nOffset = 0;
@@ -340,14 +344,25 @@ BOOL CFragmentedFile::Open(const CBTInfo& oInfo, const BOOL bWrite, CString& str
 
 		if ( ! Open( strSource, nOffset, pBTFile->m_nSize, bWrite, pBTFile->m_sPath ) )
 		{
-			strErrorMessage.Format( LoadString( bWrite ? IDS_DOWNLOAD_FILE_CREATE_ERROR :
-				IDS_BT_SEED_SOURCE_LOST ), strSource );
-			strErrorMessage += _T(" ");
-			strErrorMessage += GetErrorString( m_nFileError );
-			theApp.Message( MSG_ERROR, _T("%s"), strErrorMessage );
+			m_sFileError.Format( LoadString( bWrite ? IDS_DOWNLOAD_FILE_CREATE_ERROR : IDS_BT_SEED_SOURCE_LOST ), (LPCTSTR)strSource );
+			theApp.Message( MSG_ERROR, _T("%s"), m_sFileError + _T(" ") + GetErrorString( m_nFileError ) );
 
 			Close();
 			return FALSE;
+		}
+
+		// Refill missed hashes
+		CQuickLock oLock( Library.m_pSection );
+		if ( const CLibraryFile* pLibraryFile = LibraryMaps.LookupFileByPath( strSource ) )
+		{
+			if ( ! pBTFile->m_oSHA1 && pLibraryFile->m_oSHA1 )
+				pBTFile->m_oSHA1 = pLibraryFile->m_oSHA1;
+			if ( ! pBTFile->m_oTiger && pLibraryFile->m_oTiger )
+				pBTFile->m_oTiger = pLibraryFile->m_oTiger;
+			if ( ! pBTFile->m_oED2K && pLibraryFile->m_oED2K )
+				pBTFile->m_oED2K = pLibraryFile->m_oED2K;
+			if ( ! pBTFile->m_oMD5 && pLibraryFile->m_oMD5 )
+				pBTFile->m_oMD5 = pLibraryFile->m_oMD5;
 		}
 
 		nOffset += pBTFile->m_nSize;

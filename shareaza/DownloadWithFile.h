@@ -39,6 +39,7 @@ public:
 private:
 	auto_ptr< CFragmentedFile >	m_pFile;// File(s)
 	DWORD			m_nFileError;		// Last file/disk error
+	CString			m_sFileError;		// More info about error
 
 // Operations
 public:
@@ -50,7 +51,7 @@ public:
 	BOOL				IsValid() const;
 	BOOL				IsFileOpen() const;
 	BOOL				IsComplete() const;
-	BOOL				PrepareFile();
+	BOOL				IsRemaining() const;
 	BOOL				IsPositionEmpty(QWORD nOffset);
 	BOOL				ClipUploadRange(QWORD nOffset, QWORD& nLength) const;
 	BOOL				GetRandomRange(QWORD& nOffset, QWORD& nLength) const;
@@ -73,14 +74,16 @@ public:
 	QWORD				GetCompleted(DWORD nIndex) const;
 	int					SelectFile(CSingleLock* pLock) const;
 	DWORD				GetFileError() const;
-	void				SetFileError(DWORD nFileError);
+	const CString&		GetFileErrorString() const;
+	void				SetFileError(DWORD nFileError, LPCTSTR szFileError);
 	void				ClearFileError();
 	// Set download new (and safe) name
 	virtual bool		Rename(const CString& strName);
 	DWORD				MoveFile(LPCTSTR pszDestination, LPPROGRESS_ROUTINE lpProgressRoutine = NULL, LPVOID lpData = NULL);
 protected:
 	// Open files of this download
-	BOOL				OpenFile();
+	BOOL				Open();
+	BOOL				Open(const CBTInfo& pBTInfo);
 	// Close files of this download
 	void				CloseFile();
 	// Close files of this download, clear its list but save all other data

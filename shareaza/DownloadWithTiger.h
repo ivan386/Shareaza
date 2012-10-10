@@ -86,11 +86,12 @@ public:
 	// Select a fragment for a transfer
 	BOOL		GetFragment(CDownloadTransfer* pTransfer);
 
-	// Get a list of possible download fragments
-	Fragments::List GetPossibleFragments(const Fragments::List& oAvailable, Fragments::Fragment& oLargest);
-
 protected:
 	bool		IsFullyVerified() const;
+
+	virtual void	Serialize(CArchive& ar, int nVersion);
+
+private:
 	DWORD		GetValidationCookie() const;
 	BOOL		FindNewValidationBlock(int nHash);
 	void		ContinueValidation();
@@ -101,7 +102,8 @@ protected:
 	// but rounded to nearest smallest hash block (torrent, tiger or ed2k)
 	Fragments::List GetHashableFragmentList() const;
 
-	virtual void	Serialize(CArchive& ar, int nVersion);
+	// Get a list of possible download fragments
+	Fragments::List GetPossibleFragments(const Fragments::List& oAvailable, Fragments::Fragment& oLargest);
 
 	friend class CEDClient; // AddSourceED2K && m_nHashsetBlock && m_pHashsetBlock
 	friend class CDownloadTipCtrl;

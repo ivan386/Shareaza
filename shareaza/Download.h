@@ -1,7 +1,7 @@
 //
 // Download.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -83,6 +83,10 @@ public:
 	BOOL		Launch(int nIndex, CSingleLock* pLock, BOOL bForceOriginal);
 	BOOL		Enqueue(int nIndex, CSingleLock* pLock);
 	void		OnTaskComplete(const CDownloadTask* pTask);
+	BOOL		OpenDownload();
+	BOOL		SeedTorrent();
+	BOOL		PrepareFile();
+
 private:
 	void		StartTrying();
 	void		StopTrying();
