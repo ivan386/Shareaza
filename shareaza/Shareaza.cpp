@@ -270,6 +270,9 @@ BOOL CShareazaApp::InitInstance()
 	if ( m_pfnSetCurrentProcessExplicitAppUserModelID )
 		m_pfnSetCurrentProcessExplicitAppUserModelID( CLIENT_NAME_T );
 
+	if ( ! ParseCommandLine() )
+		return FALSE;
+
 	// Test and re-register plugins
 	CComPtr< IUnknown > pTest( Plugins.GetPlugin( _T("ImageService"), _T(".png") ) );
 	if ( Settings.Live.FirstRun || ! pTest )
@@ -283,10 +286,6 @@ BOOL CShareazaApp::InitInstance()
 
 	InitFonts();				// Loads default fonts. Depends on Settings.Load().
 	Skin.CreateDefault();		// Loads colors, fonts and language. Depends on InitFonts().
-
-	if ( ! ParseCommandLine() )
-		return FALSE;
-
 	Register();					// Re-register Shareaza Type Library
 	LoadStdProfileSettings();	// Load MRU file list and last preview state.
 	EnableShellOpen();			// Enable open data files when user double-click the files from within the Windows File Manager.
@@ -1215,6 +1214,8 @@ void CShareazaApp::ShowStartupText()
 	if ( Machine::Supports3DNOWEXT() )
 		strCPU += _T(" 3DNowExt");
 	PrintMessage( MSG_INFO, strCPU );
+
+	PrintMessage( MSG_INFO, IsRunAsAdmin() ? _T("Running with administrative privileges.") : _T("Running without administrative privileges.") );
 }
 
 void CShareazaApp::SplashAbort()
@@ -1304,21 +1305,10 @@ void CShareazaApp::Message(WORD nType, LPCTSTR pszFormat, ...)
 
 void CShareazaApp::PrintMessage(WORD nType, const CString& strLog)
 {
-	/*if ( Settings.General.DebugLog )
-	{
-		// Default: "%APPDATA%\Shareaza\Shareaza.txt"
-		if ( INT_PTR nFile = BT_OpenLogFile( NULL, BTLF_STREAM ) )
-		{
-			if ( Settings.General.MaxDebugLogSize )
-				VERIFY( BT_SetLogSizeInBytes( nFile, Settings.General.MaxDebugLogSize ) );
-			VERIFY( BT_SetLogLevel( nFile, BTLL_VERBOSE ) );
-			VERIFY( BT_SetLogFlags( nFile, BTLF_SHOWLOGLEVEL |
-				( Settings.General.ShowTimestamp ? BTLF_SHOWTIMESTAMP : 0 ) ) );
-			VERIFY( BT_AppLogEntry( nFile,
-				(BUGTRAP_LOGLEVEL)( nType & MSG_SEVERITY_MASK + 1 ), strLog ) );
-			VERIFY( BT_CloseLogFile( nFile ) );
-		}
-	}*/
+	CAutoPtr< CLogMessage > pMsg( new CLogMessage( nType, strLog ) );
+	if ( ! pMsg )
+		// Out of memory
+		return;
 
 	CQuickLock pLock( m_csMessage );
 
@@ -1326,7 +1316,7 @@ void CShareazaApp::PrintMessage(WORD nType, const CString& strLog)
 	if ( m_oMessages.GetCount() >= 1000 )
 		delete m_oMessages.RemoveHead();
 
-	m_oMessages.AddTail( new CLogMessage( nType, strLog ) );
+	m_oMessages.AddTail( pMsg.Detach() );
 
 	if ( ! Settings.General.DebugLog )
 		return;
@@ -1620,23 +1610,15 @@ BOOL CShareazaApp::InternalURI(LPCTSTR pszURI)
 
 BOOL IsRunAsAdmin()
 {
+	BOOL bIsRunAsAdmin = FALSE;
 	PSID pAdministratorsGroup = NULL;
 	SID_IDENTIFIER_AUTHORITY NtAuthority = SECURITY_NT_AUTHORITY;
-	if ( ! AllocateAndInitializeSid( &NtAuthority, 2, SECURITY_BUILTIN_DOMAIN_RID,
-		DOMAIN_ALIAS_RID_ADMINS, 0, 0, 0, 0, 0, 0, &pAdministratorsGroup ) )
+	if ( AllocateAndInitializeSid( &NtAuthority, 2, SECURITY_BUILTIN_DOMAIN_RID, DOMAIN_ALIAS_RID_ADMINS, 0, 0, 0, 0, 0, 0, &pAdministratorsGroup ) )
 	{
-		return FALSE;
-	}
-
-	BOOL bIsRunAsAdmin = FALSE;
-	if ( ! CheckTokenMembership( NULL, pAdministratorsGroup, &bIsRunAsAdmin ) )
-	{
+		CheckTokenMembership( NULL, pAdministratorsGroup, &bIsRunAsAdmin );
 		FreeSid( pAdministratorsGroup );
-		return FALSE;
 	}
-
-	FreeSid( pAdministratorsGroup );
-    return bIsRunAsAdmin;
+	return bIsRunAsAdmin;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -3296,7 +3278,7 @@ CProgressDialog::CProgressDialog(LPCTSTR szTitle, DWORD dwFlags)
 	{
 		p->SetTitle( CLIENT_NAME_T );
 		p->SetLine( 1, szTitle, FALSE, NULL );
-		p->StartProgressDialog( theApp.SafeMainWnd()->GetSafeHwnd(), NULL, dwFlags, NULL );
+		p->StartProgressDialog( theApp.SafeMainWnd() ? theApp.SafeMainWnd()->GetSafeHwnd() : GetDesktopWindow(), NULL, dwFlags, NULL );
 	}
 }
 
@@ -3313,6 +3295,7 @@ void CProgressDialog::Progress(LPCTSTR szText, QWORD nCompleted, QWORD nTotal)
 	if ( p )
 	{
 		p->SetLine( 2,  szText, TRUE, NULL );
-		p->SetProgress64( nCompleted, nTotal );
+		if ( nCompleted || nTotal )
+			p->SetProgress64( nCompleted, nTotal );
 	}
 }

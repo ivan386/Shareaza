@@ -452,7 +452,7 @@ BOOL CDiscoveryServices::Load()
 				ar.Abort();
 				pFile.Abort();
 				pException->Delete();
-				theApp.Message( MSG_ERROR, _T("[DiscoveryServices] Failed to load discovery service list: %s"), strFile );
+				theApp.Message( MSG_ERROR, _T("Failed to load discovery service list: %s"), strFile );
 			}
 			pFile.Close();
 		}
@@ -460,11 +460,11 @@ BOOL CDiscoveryServices::Load()
 		{
 			pFile.Abort();
 			pException->Delete();
-			theApp.Message( MSG_ERROR, _T("[DiscoveryServices] Failed to load discovery service list: %s"), strFile );
+			theApp.Message( MSG_ERROR, _T("Failed to load discovery service list: %s"), strFile );
 		}
 	}
 	else
-		theApp.Message( MSG_ERROR, _T("[DiscoveryServices] Failed to load discovery service list: %s"), strFile );
+		theApp.Message( MSG_ERROR, _T("Failed to load discovery service list: %s"), strFile );
 
 	// Check we have the minimum number of services (in case of file corruption, etc)
 	if ( ! EnoughServices() )

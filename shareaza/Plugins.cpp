@@ -48,11 +48,8 @@ BOOL CPlugins::Register(const CString& sGeneralPath)
 {
 	Clear();
 
-	BOOL bError = FALSE;
-	CList< HINSTANCE > oModules; // Cache
-
+	DWORD nSucceeded = 0, nFailed = 0;
 	LPCTSTR szParam = AfxGetPerUserRegistration() ? _T("/RegServerPerUser") : _T("/RegServer");
-
 	CFileFind finder;
 	BOOL bWorking = finder.FindFile( sGeneralPath + _T("\\*.*") );
 	while ( bWorking )
@@ -84,41 +81,66 @@ BOOL CPlugins::Register(const CString& sGeneralPath)
 				}
 
 				if ( hr == S_OK )
+				{
+					nSucceeded++;
 					theApp.Message( MSG_NOTICE, _T("Registered plugin: %s"), sName );
+				}
 				else if ( FAILED( hr ) )
+				{
+					nFailed++;
 					theApp.Message( MSG_ERROR, _T("Failed to register plugin: %s : 0x%08x"), sName, hr );
+				}
 
-				oModules.AddTail( hDll );
+				FreeLibrary( hDll );
 			}
-			else
-				bError = TRUE;
 		}
 		else if ( sExt.CompareNoCase( _T(".exe") ) == 0 )
 		{
 			DWORD dwSize = GetFileVersionInfoSize( sPath, &dwSize );
-			auto_array< BYTE > pBuffer( new BYTE[ dwSize ] );
-			if ( GetFileVersionInfo( sPath, NULL, dwSize, pBuffer.get() ) )
+			CAutoVectorPtr< BYTE > pBuffer( new BYTE[ dwSize ] );
+			if ( pBuffer && GetFileVersionInfo( sPath, NULL, dwSize, pBuffer ) )
 			{
 				LPCWSTR pValue = NULL;
-				if ( VerQueryValue( pBuffer.get(),
-					_T("\\StringFileInfo\\000004b0\\SpecialBuild"),
-					(void**)&pValue, (UINT*)&dwSize ) &&
-					pValue && dwSize &&
-					_wcsicmp( pValue, _T("plugin") ) == 0 )
+				if ( VerQueryValue( pBuffer, _T("\\StringFileInfo\\000004b0\\SpecialBuild"), (void**)&pValue, (UINT*)&dwSize ) &&
+					pValue && dwSize && _wcsicmp( pValue, _T("plugin") ) == 0 )
 				{
-					if ( (DWORD_PTR)ShellExecute( NULL, NULL, sPath, szParam, NULL, SW_HIDE ) > 32 )
-						theApp.Message( MSG_NOTICE, _T("Registered plugin: %s"), sName );
+					SHELLEXECUTEINFO sei =
+					{
+						sizeof( SHELLEXECUTEINFO ),
+						SEE_MASK_NOCLOSEPROCESS,
+						NULL,
+						NULL,
+						sPath,
+						szParam,
+						sGeneralPath,
+						SW_HIDE
+					};
+					DWORD dwError = ERROR_INVALID_FUNCTION;
+					if ( ShellExecuteEx( &sei ) )
+					{
+						WaitForSingleObject( sei.hProcess, INFINITE );
+						GetExitCodeProcess( sei.hProcess, &dwError );
+						CloseHandle( sei.hProcess );
+					}
 					else
-						theApp.Message( MSG_ERROR, _T("Failed to register plugin: %s : 0x%08x"), sName, GetLastError() );
+						dwError = GetLastError();
+
+					if ( dwError == ERROR_SUCCESS )
+					{
+						nSucceeded++;
+						theApp.Message( MSG_NOTICE, _T("Registered plugin: %s"), sName );
+					}
+					else
+					{
+						nFailed++;
+						theApp.Message( MSG_ERROR, _T("Failed to register plugin: %s : 0x%08x"), sName, dwError );
+					}
 				}
 			}
 		}
 	}
 
-	for ( POSITION pos = oModules.GetHeadPosition(); pos; )
-		FreeLibrary( oModules.GetNext( pos ) );
-
-	return ! bError;
+	return ( nSucceeded != 0 && nFailed == 0 );
 }
 
 //////////////////////////////////////////////////////////////////////

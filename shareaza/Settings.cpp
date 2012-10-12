@@ -614,20 +614,40 @@ void CSettings::Load()
 	// Set default program and user paths
 	if ( General.Path.IsEmpty() || ! PathFileExists( General.Path ) )
 	{
-		General.Path = theApp.m_strBinaryPath.Left( theApp.m_strBinaryPath.ReverseFind( '\\' ) );
+		General.Path = theApp.GetProgramFilesFolder() + _T("\\") CLIENT_NAME_T;
+		if ( ! PathFileExists( General.Path ) )
+			General.Path = theApp.m_strBinaryPath.Left( theApp.m_strBinaryPath.ReverseFind( '\\' ) );
 	}
 
-	if ( General.UserPath.IsEmpty() )
+	if ( General.UserPath.IsEmpty() || ! CreateDirectory( General.UserPath + _T("\\Data") ) )
+	{
 		General.UserPath = theApp.GetAppDataFolder() + _T("\\") CLIENT_NAME_T;
-	if ( Downloads.IncompletePath.IsEmpty() )
-		Downloads.IncompletePath = theApp.GetLocalAppDataFolder() + _T("\\") CLIENT_NAME_T _T("\\Incomplete");
-	if ( Downloads.CompletePath.IsEmpty() )
-		Downloads.CompletePath = theApp.GetDownloadsFolder();
+		CreateDirectory( General.UserPath + _T("\\Data") );
+	}
 
-	if ( Downloads.TorrentPath.IsEmpty() )
+	if ( Downloads.IncompletePath.IsEmpty() || ! CreateDirectory( Downloads.IncompletePath ) )
+	{
+		Downloads.IncompletePath = theApp.GetLocalAppDataFolder() + _T("\\") CLIENT_NAME_T _T("\\Incomplete");
+		CreateDirectory( Downloads.IncompletePath );
+	}
+
+	if ( Downloads.CompletePath.IsEmpty() || ! CreateDirectory( Downloads.CompletePath ) )
+	{
+		Downloads.CompletePath = theApp.GetDownloadsFolder();
+		CreateDirectory( Downloads.CompletePath );
+	}
+
+	if ( Downloads.TorrentPath.IsEmpty() || ! CreateDirectory( Downloads.TorrentPath ) )
+	{
 		Downloads.TorrentPath = General.UserPath + _T("\\Torrents");
-	if ( Downloads.CollectionPath.IsEmpty() )
+		CreateDirectory( Downloads.TorrentPath );
+	}
+
+	if ( Downloads.CollectionPath.IsEmpty() || ! CreateDirectory( Downloads.CollectionPath ) )
+	{
 		Downloads.CollectionPath = General.UserPath + _T("\\Collections");
+		CreateDirectory( Downloads.CollectionPath );
+	}
 
 	CString sTorrent;
 	GetFullPathName( BitTorrent.TorrentCreatorPath, MAX_PATH, sTorrent.GetBuffer( MAX_PATH ), NULL );
@@ -657,14 +677,6 @@ void CSettings::Load()
 	eDonkey.EnableToday			= eDonkey.EnableAlways;
 	BitTorrent.EnableToday		= BitTorrent.EnableAlways;
 	DC.EnableToday				= DC.EnableAlways;
-
-	// Make sure some needed paths exist
-	CreateDirectory( General.Path + _T("\\Data") );
-	CreateDirectory( General.UserPath + _T("\\Data") );
-	CreateDirectory( Downloads.IncompletePath );
-	CreateDirectory( Downloads.CompletePath );
-	CreateDirectory( Downloads.TorrentPath );
-	CreateDirectory( Downloads.CollectionPath );
 
 	if ( General.Upgrade )
 	{

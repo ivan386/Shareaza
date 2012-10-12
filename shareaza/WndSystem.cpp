@@ -1,7 +1,7 @@
 //
 // WndSystem.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -103,9 +103,9 @@ void CSystemWnd::OnTimer(UINT_PTR /*nIDEvent*/)
 	// Max 200 lines per second
 	for ( int i = 0; i < 50 && ! theApp.m_oMessages.IsEmpty(); i++ )
 	{
-		CLogMessage* pMsg = theApp.m_oMessages.RemoveHead();
+		CAutoPtr< CLogMessage > pMsg( theApp.m_oMessages.RemoveHead() );
 
-		m_wndText.Add( pMsg->m_nType, pMsg->m_strLog );
+		m_wndText.Add( pMsg );
 
 		if ( ( pMsg->m_nType & MSG_TRAY ) == MSG_TRAY )
 		{
@@ -135,8 +135,6 @@ void CSystemWnd::OnTimer(UINT_PTR /*nIDEvent*/)
 				i = 50;
 			}
 		}
-
-		delete pMsg;
 	}
 }
 

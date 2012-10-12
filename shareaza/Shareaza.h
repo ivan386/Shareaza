@@ -36,13 +36,10 @@ class CSplashDlg;
 class __declspec(novtable) CLogMessage
 {
 public:
-	CLogMessage(WORD nType, const CString& strLog) :
-		m_strLog( strLog ),
-		m_nType( nType )
-	{
-	}
+	CLogMessage(WORD nType, const CString& strLog) : m_strLog( strLog ), m_nType( nType ), m_Time( CTime::GetCurrentTime() ) {}
 	CString m_strLog;
 	WORD	m_nType;
+	CTime	m_Time;
 };
 
 typedef CList< CLogMessage* > CLogMessageList;
@@ -237,7 +234,7 @@ public:
 	CProgressDialog(LPCTSTR szTitle, DWORD dwFlags = PROGDLG_NOCANCEL | PROGDLG_AUTOTIME);
 	virtual ~CProgressDialog();
 
-	void Progress(LPCTSTR szText, QWORD nCompleted, QWORD nTotal);
+	void Progress(LPCTSTR szText, QWORD nCompleted = 0, QWORD nTotal = 0);
 };
 
 //
