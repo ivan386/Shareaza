@@ -1999,6 +1999,8 @@ void CDiscoveryServices::OnResolve(PROTOCOLID nProtocol, LPCTSTR szAddress, cons
 		CString strAddress( ( nProtocol == PROTOCOL_G1 ) ? _T("uhc:") : _T("ukhl:") );
 		strAddress += szAddress;
 
+		CSingleLock pLock( &Network.m_pSection, TRUE );
+
 		CDiscoveryService* pService = GetByAddress( strAddress );
 		if ( pService == NULL )
 		{
