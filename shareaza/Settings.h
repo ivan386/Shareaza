@@ -324,7 +324,6 @@ public:
 		DWORD		DefaultUpdate;
 		DWORD		BootstrapCount;
 		DWORD		CacheCount;					// Limit ability to learn new caches
-		bool		EnableG1GWC;
 	} Discovery;
 
 	struct sGnutella

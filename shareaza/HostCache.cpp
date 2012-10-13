@@ -40,7 +40,6 @@ static char THIS_FILE[]=__FILE__;
 
 CHostCache HostCache;
 
-
 //////////////////////////////////////////////////////////////////////
 // CHostCache construction
 
@@ -350,7 +349,6 @@ void CHostCacheList::Clear()
 CHostCacheHostPtr CHostCacheList::Add(LPCTSTR pszHost, WORD nPort, DWORD tSeen, LPCTSTR pszVendor, DWORD nUptime, DWORD nCurrentLeaves, DWORD nLeafLimit)
 {
 	CString strHost( pszHost );
-
 	strHost.Trim();
 	int nPos = strHost.ReverseFind( _T(' ') );
 	if ( nPos > 0 )
@@ -359,6 +357,8 @@ CHostCacheHostPtr CHostCacheList::Add(LPCTSTR pszHost, WORD nPort, DWORD tSeen, 
 		strHost = strHost.Left( nPos );
 		strHost.TrimRight();
 		tSeen = TimeFromString( strTime );
+		if ( ! tSeen )
+			return NULL;
 	}
 
 	return Add( NULL, nPort, tSeen, pszVendor, nUptime, nCurrentLeaves, nLeafLimit, strHost );
