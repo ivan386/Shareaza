@@ -1,7 +1,7 @@
 //
 // DownloadTransferFTP.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -406,12 +406,15 @@ BOOL CDownloadTransferFTP::OnHeaderLine( CString& strHeader, CString& strValue )
 		{
 			m_LIST.m_sUserAgent = m_RETR.m_sUserAgent = m_sUserAgent =
 				m_pSource->m_sServer = strValue.Trim( _T(" \t\r\n-=_") );
-			if ( Security.IsAgentBlocked( m_sUserAgent ) )
+
+			// Empty User Agent is ok for secure FTP
+			if ( ! m_sUserAgent.IsEmpty() && Security.IsAgentBlocked( m_sUserAgent ) )
 			{
 				// Ban
 				Close( TRI_FALSE );
 				return FALSE;
 			}
+
 			// Sending login
 			m_FtpState = ftpUSER;
 			SetState( dtsRequesting );
