@@ -1042,6 +1042,13 @@ void CUploadTransferHTTP::SendFileHeaders()
 {
 	CString strHeader;
 
+	if ( ! m_sName.IsEmpty() )
+	{
+		Write( _P("Content-Disposition: attachment; filename=\"") );
+		Write( URLEncode( PathFindFileName( m_sName ) ) );
+		Write( _P("\"\r\n") );
+	}
+
 	if ( m_oSHA1 || m_oTiger )
 	{
 		Write( _P("X-Content-URN: ") );
@@ -1147,6 +1154,7 @@ BOOL CUploadTransferHTTP::OpenFileSendHeaders()
 		Write( _P("HTTP/1.1 200 OK\r\n") );
 	
 	SendDefaultHeaders();
+	SendFileHeaders();
 	
 	Write( _T("Content-Type: ") + ShellIcons.GetMIME( PathFindExtension( m_sName ) ) + _T("\r\n") );
 	
@@ -1164,9 +1172,7 @@ BOOL CUploadTransferHTTP::OpenFileSendHeaders()
 	{
 		Write( _P("Content-Encoding: backwards\r\n") );
 	}
-	
-	if ( HasHash() ) SendFileHeaders();
-	
+		
 	Write( _P("\r\n") );
 
 	LogOutgoing();
@@ -1590,11 +1596,11 @@ BOOL CUploadTransferHTTP::RequestPreview(CLibraryFile* pFile, CSingleLock& oLibr
 	
 	m_sName		= pFile->m_sName;
 	m_sPath		= pFile->GetPath();
-	m_oSHA1			= pFile->m_oSHA1;
-	m_oTiger		= pFile->m_oTiger;
-	m_oED2K			= pFile->m_oED2K;
-	m_oBTH			= pFile->m_oBTH;
-	m_oMD5			= pFile->m_oMD5;
+	m_oSHA1		= pFile->m_oSHA1;
+	m_oTiger	= pFile->m_oTiger;
+	m_oED2K		= pFile->m_oED2K;
+	m_oBTH		= pFile->m_oBTH;
+	m_oMD5		= pFile->m_oMD5;
 	
 	oLibraryLock.Unlock();
 	
