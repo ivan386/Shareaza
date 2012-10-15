@@ -289,15 +289,10 @@ BOOL CShareazaURL::ParseHTTP(LPCTSTR pszURL, BOOL bResolve)
 	{
 		m_nAction	= uriDownload;
 
-		int nPos = m_sPath.ReverseFind( '/' );
-		if ( nPos >= 0 )
+		CString sName( URLDecode( m_sPath.Mid( m_sPath.ReverseFind( '/' ) + 1 ).SpanExcluding( _T("?") ) ) );
+		if ( sName.GetLength() )
 		{
-			CString sName( URLDecode(
-				m_sPath.Mid( nPos + 1 ).SpanExcluding( _T("?") ) ) );
-			if ( sName.GetLength() )
-			{
-				m_sName = sName;
-			}
+			m_sName = sName;
 		}
 	}
 

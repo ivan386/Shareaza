@@ -421,7 +421,7 @@ BOOL CDownloadWithSources::AddSourceHit(const CShareazaURL& oURL, BOOL bForce)
 
 	if ( oURL.m_sURL.GetLength() )
 	{
-		if ( ! AddSourceURLs( oURL.m_sURL ) )
+		if ( ! AddSourceURL( oURL.m_sURL ) )
 		{
 			return FALSE;
 		}
