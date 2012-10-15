@@ -1,7 +1,7 @@
 //
 // FileFragments.hpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -43,11 +43,14 @@ public:
 
 public:
 	range_size_type limit() const { return m_limit; }
+
 	range_size_type length_sum() const { return m_length_sum; }
+
 	range_size_type missing() const { return limit() - length_sum(); }
+
 	void ensure(range_size_type limit)
 	{
-		m_limit = max( m_limit, limit );
+		m_limit = ( m_limit == SIZE_UNKNOWN ) ? limit : max( m_limit, limit );
 	}
 
 // the following functions have to be declared

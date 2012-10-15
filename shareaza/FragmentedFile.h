@@ -172,6 +172,8 @@ public:
 	void	Clear();
 	// Flush unsaved data to disk
 	BOOL	Flush();
+	// Set new file size
+	BOOL	SetSize(QWORD nSize);
 	BOOL	MakeComplete();
 	void	Serialize(CArchive& ar, int nVersion);
 	BOOL	EnsureWrite();

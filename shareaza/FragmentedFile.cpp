@@ -724,6 +724,41 @@ void CFragmentedFile::Clear()
 	m_oFile.clear();
 }
 
+BOOL CFragmentedFile::SetSize(QWORD nSize)
+{
+	CQuickLock oLock( m_pSection );
+
+	if ( m_oFile.empty() )
+		// File is not opened
+		return TRUE;
+
+	// Erase tail if any
+	if ( ! m_oFList.empty() )
+		m_oFList.erase( Fragments::Fragment( nSize, SIZE_UNKNOWN ) );
+
+	m_oFList.ensure( nSize );
+
+	QWORD nFileSize = 0;
+	for ( CVirtualFile::iterator i = m_oFile.begin(); i != m_oFile.end(); ++i )
+	{
+		CVirtualFilePart& file = (*i);
+
+		if ( file.m_nSize == SIZE_UNKNOWN )
+		{
+			ASSERT( nFileSize < nSize );	// Too short?
+			if ( nFileSize < nSize )
+				file.m_nSize = nSize - nFileSize;
+			ASSERT( ++i == m_oFile.end() ); // Last file only
+			break;
+		}
+		nFileSize += file.m_nSize;
+	}
+
+	ASSERT_VALID( this );
+
+	return TRUE;
+}
+
 //////////////////////////////////////////////////////////////////////
 // CFragmentedFile make complete
 

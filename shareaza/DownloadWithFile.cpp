@@ -542,6 +542,12 @@ QWORD CDownloadWithFile::EraseRange(QWORD nOffset, QWORD nLength)
 	return nCount;
 }
 
+BOOL CDownloadWithFile::SetSize(QWORD nSize)
+{
+	m_nSize = nSize;
+	return m_pFile.get() && m_pFile->SetSize( nSize );
+}
+
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithFile make the file appear complete
 

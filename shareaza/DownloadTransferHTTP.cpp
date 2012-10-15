@@ -1,7 +1,7 @@
 //
 // DownloadTransferHTTP.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -330,7 +330,7 @@ BOOL CDownloadTransferHTTP::SendRequest()
 	
 	if ( m_nOffset != SIZE_UNKNOWN && ! m_bTigerFetch && ! m_bMetaFetch )
 	{
-		if ( m_nOffset + m_nLength == m_pDownload->m_nSize )
+		if ( m_nLength == SIZE_UNKNOWN || m_nLength == 0 || m_nOffset + m_nLength == m_pDownload->m_nSize )
 		{
 			strLine.Format( _T("Range: bytes=%I64u-\r\n"), m_nOffset );
 		}
@@ -717,25 +717,29 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 	}
 	else if ( strHeader.CompareNoCase( _T("Content-Length") ) == 0 )
 	{
-		if ( _stscanf( strValue, _T("%I64i"), &m_nContentLength ) != 1 )
-			m_nContentLength = SIZE_UNKNOWN;
+		QWORD nTotal;
+		if ( _stscanf( strValue, _T("%I64u"), &nTotal ) == 1 && nTotal > 0 )
+		{
+			m_nContentLength = nTotal;
+		}
 	}
 	else if ( strHeader.CompareNoCase( _T("Content-Range") ) == 0 )
 	{
 		QWORD nFirst, nLast, nTotal;
-		if ( _stscanf( strValue, _T("bytes %I64i-%I64i/%I64i"), &nFirst, &nLast, &nTotal ) == 3 ||
-			 _stscanf( strValue, _T("bytes=%I64i-%I64i/%I64i"), &nFirst, &nLast, &nTotal ) == 3 )
+		if ( ( _stscanf( strValue, _T("bytes %I64u-%I64u/%I64u"), &nFirst, &nLast, &nTotal ) == 3 ||
+			   _stscanf( strValue, _T("bytes=%I64u-%I64u/%I64u"), &nFirst, &nLast, &nTotal ) == 3 ) &&
+			   nFirst <= nLast && nTotal > 0 && nLast < nTotal )
 		{
-			if ( m_pDownload->m_nSize == SIZE_UNKNOWN )
-			{
-				m_pDownload->m_nSize = nTotal;
-			}
-			else if ( m_bTigerFetch || m_bMetaFetch )
+			if ( m_bTigerFetch || m_bMetaFetch )
 			{
 				m_nOffset = nFirst;
 				m_nLength = nLast + 1 - nFirst;
 				if ( m_nContentLength == SIZE_UNKNOWN ) m_nContentLength = m_nLength;
 				return TRUE;
+			}
+			else if ( m_pDownload->m_nSize == SIZE_UNKNOWN )
+			{
+				m_pDownload->SetSize( nTotal );
 			}
 			else if ( m_pDownload->m_nSize != nTotal )
 			{
@@ -1024,48 +1028,17 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 		BOOL bIsP2P = m_pSource->m_bSHA1 || m_pSource->m_bTiger || m_pSource->m_bED2K || m_pSource->m_bMD5 || m_pSource->m_bBTH;
 
 		// Accept Content-Disposition only if the current display name is empty or if it came from Web Servers and the current display name is shorter than 13 chars (Is likely to be default.html, default.asp, etc.).
-		if ( m_pDownload->m_sName.GetLength() == 0 || ( !bIsP2P && m_pDownload->m_sName.GetLength() < 13 ) )
+		if ( m_pDownload->m_sName.IsEmpty() || ( ! bIsP2P && m_pDownload->m_sName.GetLength() < 13 ) )
 		{ 
-			CString strPhrase, strFilename;
 			int nPos = strValue.Find( _T("filename=") );
-
 			if ( nPos >= 0 )
 			{
 				// If exactly, it should follow RFC 2184 rules
-				strPhrase = URLDecode( strValue.Mid( nPos + 9 ) );
-				int nLength = strPhrase.GetLength();
-				strFilename = strPhrase.Mid( 1 , nLength - 2 );
+				CString strFilename = URLDecode( strValue.Mid( nPos + 9 ).Trim( _T("\" \t\r\n") ) );
 
 				// If the filenames contain an invalid character (because web servers or P2P clients are evil or because sometimes non-ascii chars, specially Japanese chars, are encoded as "?" (%3F) by a faulty coding)
-				if ( strFilename.Find( _T('\\') ) >= 0 || strFilename.Find( _T('/') ) >= 0 || strFilename.Find( _T(':') ) >= 0
-					|| strFilename.Find( _T('*') ) >= 0 || strFilename.Find( _T('?') ) >= 0 || strFilename.Find( _T('"') ) >= 0
-					|| strFilename.Find( _T('<') ) >= 0 || strFilename.Find( _T('>') ) >= 0 || strFilename.Find( _T('|') ) >= 0 )
-				{
-					// And if the source is only one, and it isn't a P2P client replace bad chars with _
-					if( m_pDownload->GetSourceCount() <= 1 && !bIsP2P )
-					{
-						strFilename.Replace( _T('\\'), _T('_') );
-						strFilename.Replace( _T('/'), _T('_') );
-						strFilename.Replace( _T(':'), _T('_') );
-						strFilename.Replace( _T('*'), _T('_') );
-						strFilename.Replace( _T('?'), _T('_') );
-						strFilename.Replace( _T('"'), _T('_') );
-						strFilename.Replace( _T('<'), _T('_') );
-						strFilename.Replace( _T('>'), _T('_') );
-						strFilename.Replace( _T('|'), _T('_') );
-					}
-					// Else ignore it, the name will be acquired in another way
-					else
-					{
-						strFilename = _T("");
-					}
-				}
-
-				if ( strFilename.GetLength() )
-				{
-					theApp.Message( MSG_DEBUG, _T("Content-Disposition filename: %s"), (LPCTSTR)strFilename);
+				if ( strFilename == SafeFilename( strFilename ) || ( m_pDownload->GetSourceCount() <= 1 && ! bIsP2P ) )
 					m_pDownload->Rename( strFilename );
-				}
 			}		
 		}
 	}	
@@ -1224,7 +1197,7 @@ BOOL CDownloadTransferHTTP::OnHeadersComplete()
 		{
 			if ( m_pDownload->m_nSize == SIZE_UNKNOWN )
 			{
-				m_pDownload->m_nSize = m_nContentLength;
+				m_pDownload->SetSize( m_nContentLength );
 			}
 			else if ( m_pDownload->m_nSize != m_nContentLength )
 			{
@@ -1336,7 +1309,7 @@ BOOL CDownloadTransferHTTP::ReadContent()
 								// Now file size is known
 								if ( m_pDownload->m_nSize == SIZE_UNKNOWN )
 								{
-									m_pDownload->m_nSize = m_nDownloaded;
+									m_pDownload->SetSize( m_nDownloaded );
 									m_pDownload->MakeComplete();
 								}
 							}
@@ -1677,7 +1650,7 @@ void CDownloadTransferHTTP::OnDropped()
 		m_pDownload->m_nSize == SIZE_UNKNOWN )
 	{
 		// Set file size as is
-		m_pDownload->m_nSize = m_nDownloaded;
+		m_pDownload->SetSize( m_nDownloaded );
 		m_pDownload->MakeComplete();
 		Close( TRI_TRUE );
 	}

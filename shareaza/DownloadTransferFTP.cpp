@@ -465,8 +465,8 @@ BOOL CDownloadTransferFTP::OnHeaderLine( CString& strHeader, CString& strValue )
 	case ftpSIZE:
 		if ( strHeader == _T("213") )			// SIZE reply
 		{
-			QWORD size = _tstoi64( strValue );
-			if ( size <= 0 )
+			QWORD nTotal;
+			if ( _stscanf( strValue, _T("%I64u"), &nTotal ) != 1 || nTotal == 0 )
 			{
 				// Wrong SIZE reply format
 				ASSERT( FALSE );
@@ -475,18 +475,17 @@ BOOL CDownloadTransferFTP::OnHeaderLine( CString& strHeader, CString& strValue )
 				return FALSE;
 			}
 			if ( m_pDownload->m_nSize == SIZE_UNKNOWN )
-				m_pDownload->m_nSize = size;
-			else
 			{
-				if ( m_pDownload->m_nSize != size )
-				{
-					// File size changed!
-					theApp.Message( MSG_ERROR, IDS_DOWNLOAD_WRONG_SIZE,
-						(LPCTSTR)m_sAddress, (LPCTSTR)m_pDownload->GetDisplayName() );
-					// Ban
-					Close( TRI_FALSE );
-					return FALSE;
-				}
+				m_pDownload->SetSize( nTotal );
+			}
+			else if ( m_pDownload->m_nSize != nTotal )
+			{
+				// File size changed!
+				theApp.Message( MSG_ERROR, IDS_DOWNLOAD_WRONG_SIZE,
+					(LPCTSTR)m_sAddress, (LPCTSTR)m_pDownload->GetDisplayName() );
+				// Ban
+				Close( TRI_FALSE );
+				return FALSE;
 			}
 			m_bSizeChecked = TRUE;
 
@@ -577,18 +576,17 @@ BOOL CDownloadTransferFTP::OnHeaderLine( CString& strHeader, CString& strValue )
 				return FALSE;
 			}
 			if ( m_pDownload->m_nSize == SIZE_UNKNOWN )
-				m_pDownload->m_nSize = size;
-			else
 			{
-				if ( m_pDownload->m_nSize != size )
-				{
-					// File size changed!
-					theApp.Message( MSG_ERROR, IDS_DOWNLOAD_WRONG_SIZE,
-						(LPCTSTR)m_sAddress, (LPCTSTR)m_pDownload->GetDisplayName() );
-					// Ban
-					Close( TRI_FALSE );
-					return FALSE;
-				}
+				m_pDownload->SetSize( size );
+			}
+			else if ( m_pDownload->m_nSize != size )
+			{
+				// File size changed!
+				theApp.Message( MSG_ERROR, IDS_DOWNLOAD_WRONG_SIZE,
+					(LPCTSTR)m_sAddress, (LPCTSTR)m_pDownload->GetDisplayName() );
+				// Ban
+				Close( TRI_FALSE );
+				return FALSE;
 			}
 			m_bSizeChecked = TRUE;
 

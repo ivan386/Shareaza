@@ -1,7 +1,7 @@
 //
 // DownloadTransferDC.cpp 
 //
-// Copyright (c) Shareaza Development Team, 2010-2011.
+// Copyright (c) Shareaza Development Team, 2010-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -294,7 +294,7 @@ BOOL CDownloadTransferDC::ReadContent()
 
 		if ( m_pDownload->m_nSize == SIZE_UNKNOWN )
 		{
-			m_pDownload->m_nSize = m_nLength;
+			m_pDownload->SetSize( m_nLength );
 			m_pDownload->MakeComplete();
 		}
 

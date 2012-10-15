@@ -58,6 +58,7 @@ public:
 	bool				GetAvailableRanges( CString& strRanges ) const;
 	BOOL				SubmitData(QWORD nOffset, LPBYTE pData, QWORD nLength);
 	QWORD				EraseRange(QWORD nOffset, QWORD nLength);
+	BOOL				SetSize(QWORD nSize);
 	BOOL				MakeComplete();
 	QWORD				InvalidateFileRange(QWORD nOffset, QWORD nLength);
 	// Get list of all fragments which must be downloaded
