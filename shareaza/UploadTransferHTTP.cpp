@@ -79,6 +79,7 @@ CUploadTransferHTTP::CUploadTransferHTTP() :
 ,	m_nGnutella			( 0 )
 ,	m_nReaskMultiplier	( 1 )
 ,	m_bTigerTree		( FALSE )
+,	m_bHashset			( FALSE )
 ,	m_bMetadata			( FALSE )
 {
 }
@@ -174,6 +175,7 @@ BOOL CUploadTransferHTTP::ReadRequest()
 	m_bNotShareaza  = FALSE;
 	m_bMetadata		= FALSE;
 	m_bTigerTree	= FALSE;
+	m_bHashset		= FALSE;
 	
 	m_sLocations.Empty();
 	m_sRanges.Empty();
@@ -721,6 +723,7 @@ BOOL CUploadTransferHTTP::RequestSharedFile(CLibraryFile* pFile, CSingleLock& oL
 	}
 
 	m_bTigerTree	= bool( m_oTiger );
+	m_bHashset		= bool( m_oED2K );
 	m_bMetadata		= ( pFile->m_pMetadata != NULL && ( pFile->m_bMetadataAuto == FALSE || pFile->m_nVirtualSize > 0 ) );
 
 	if ( ! HasHash() )
@@ -775,6 +778,7 @@ BOOL CUploadTransferHTTP::RequestPartialFile(CDownload* pDownload)
 	ASSERT( m_nFileBase == 0 );
 
 	m_bTigerTree	= ( m_oTiger && pDownload->GetTigerTree() != NULL );
+	m_bHashset		= ( m_oED2K && pDownload->GetHashset() != NULL );
 	m_bMetadata		= pDownload->HasMetadata();
 
 	if ( m_sLocations.GetLength() )
@@ -1079,11 +1083,10 @@ void CUploadTransferHTTP::SendFileHeaders()
 
 	if ( m_bTigerTree && Settings.Uploads.ShareTiger )
 	{
-		Write( _P("X-Thex-URI: /gnutella/thex/v1?") );
-		Write( m_oTiger.toUrn() );
-		Write( _P("&depth=9&ed2k=0;") );
-		Write(  m_oTiger.toString() );
-		Write( _P("\r\n") );
+		CString strTigerURL;
+		strTigerURL.Format( _T("X-Thex-URI: /gnutella/thex/v1?%s&depth=%u&ed2k=%u;%s\r\n"),
+			m_oTiger.toUrn(), Settings.Library.TigerHeight, ( m_bHashset ? 1 : 0 ), m_oTiger.toString() );
+		Write( strTigerURL );
 	}
 
 	if ( m_bMetadata )

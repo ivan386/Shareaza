@@ -62,7 +62,8 @@ protected:
 	// 3 - Mixed G1/G2
 	int			m_nGnutella;
 	int			m_nReaskMultiplier; //Last re-ask time multiplier used
-	BOOL		m_bTigerTree;
+	BOOL		m_bTigerTree;		// Is TigerTree hashset present?
+	BOOL		m_bHashset;			// Is eDonkey2000 hashset present?
 	BOOL		m_bMetadata;
 	CString		m_sLocations;
 	CString		m_sRanges;
