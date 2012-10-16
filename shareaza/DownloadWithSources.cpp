@@ -1183,8 +1183,6 @@ COLORREF CDownloadWithSources::GetSourceColour()
 		}
 	}
 
-	ASSERT( bGood );
-
 	return RGB( r, g ,b );
 }
 
