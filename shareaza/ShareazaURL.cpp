@@ -578,7 +578,7 @@ BOOL CShareazaURL::ParseMagnet(LPCTSTR pszURL)
 		if ( _tcsicmp( strKey, _T("xt") ) == 0 ||
 			 _tcsicmp( strKey, _T("xs") ) == 0 ||
 			 _tcsicmp( strKey, _T("as") ) == 0 ||
-			 _tcsicmp( strKey, _T("tr") ) == 0 )
+			 _tcsnicmp( strKey, _T("tr"), 2 ) == 0 ) // "tr=", "tr.1=", "tr.2="...
 		{
 			if ( StartsWith( strValue, _PT("urn:") ) ||
 				 StartsWith( strValue, _PT("sha1:") ) ||
@@ -616,7 +616,7 @@ BOOL CShareazaURL::ParseMagnet(LPCTSTR pszURL)
 					else
 						m_sURL = strURL;
 				}
-				else if( _tcsnicmp( strKey, _T("tr"), 2 ) == 0 ) // Compatibility hack: "&tr{any}="
+				else if( _tcsnicmp( strKey, _T("tr"), 2 ) == 0 ) // "tr=", "tr.1=", "tr.2="...
 				{
 					pTorrent->SetTracker( strValue );
 				}
