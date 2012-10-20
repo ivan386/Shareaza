@@ -1289,6 +1289,7 @@
 				<item id="ID_LIBRARY_MOVE" text="_Mover Archivo..."/>
 				<item id="ID_LIBRARY_COPY" text="_Copiar Archivo..."/>
 			</menu>
+			<item id="ID_LIBRARY_FILE_REBUILD" text="Re_hacer"/>
 			<item id="ID_LIBRARY_REBUILD_ANSI" text="_Ubicar Metadata"/>
 			<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata"/>
 			<separator/>
@@ -1364,6 +1365,7 @@
 				<item id="ID_LIBRARY_MOVE" text="_Mover Archivo..."/>
 				<item id="ID_LIBRARY_COPY" text="_Copiar Archivo..."/>
 			</menu>
+			<item id="ID_LIBRARY_FILE_REBUILD" text="Re_hacer"/>
 			<item id="ID_LIBRARY_REBUILD_ANSI" text="_Ubicar Metadata"/>
 			<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata"/>
 			<separator/>
@@ -2462,6 +2464,7 @@
 		<tip id="ID_LIBRARY_ENQUEUE" message="Agregar al reproductor de media."/>
 		<tip id="ID_LIBRARY_EXPLORE" message="Abrir las carpetas seleccionadas."/>
 		<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Exportar esta carpeta a un archivo de Colección..."/>
+		<tip id="ID_LIBRARY_FILE_REBUILD" message="Rebuild metadata and hashes for the selected file(s)."/>
 		<tip id="ID_LIBRARY_FOLDER_DELETE" message="Borrar la carpeta virtual o album."/>
 		<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Bajar todos los archivos de la Colección seleccionada."/>
 		<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Agregar los archivos seleccionados a la lista de reproducción."/>

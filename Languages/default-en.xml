@@ -1226,7 +1226,7 @@
 			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Play _Album"/>
 			<item id="ID_LIBRARY_FOLDER_DELETE" text="_Delete"/>
 			<separator/>
-			<item id="ID_LIBRARY_REBUILD" text="_Rebuild"/>
+			<item id="ID_LIBRARY_REBUILD" text="Re_build"/>
 			<item id="ID_LIBRARY_EXPORT_COLLECTION" text="_Export Collection..."/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDER_NEW" text="_New Folder..."/>
@@ -1302,6 +1302,7 @@
 				<item id="ID_LIBRARY_MOVE" text="_Move Files..."/>
 				<item id="ID_LIBRARY_COPY" text="_Copy Files..."/>
 			</menu>
+			<item id="ID_LIBRARY_FILE_REBUILD" text="Re_build"/>
 			<item id="ID_LIBRARY_REBUILD_ANSI" text="_Localise Metadata"/>
 			<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata"/>
 			<separator/>
@@ -1377,6 +1378,7 @@
 				<item id="ID_LIBRARY_MOVE" text="_Move Files..."/>
 				<item id="ID_LIBRARY_COPY" text="_Copy Files..."/>
 			</menu>
+			<item id="ID_LIBRARY_FILE_REBUILD" text="Re_build"/>
 			<item id="ID_LIBRARY_REBUILD_ANSI" text="_Localise Metadata"/>
 			<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata"/>
 			<separator/>
@@ -2483,6 +2485,7 @@
 		<tip id="ID_LIBRARY_ENQUEUE" message="Add the selected file(s) to your media playlist."/>
 		<tip id="ID_LIBRARY_EXPLORE" message="Open the selected folder(s)."/>
 		<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Export the selected album folder to collection files..."/>
+		<tip id="ID_LIBRARY_FILE_REBUILD" message="Rebuild metadata and hashes for the selected file(s)."/>
 		<tip id="ID_LIBRARY_FOLDER_DELETE" message="Delete the selected album folder."/>
 		<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Download all files in the selected collection."/>
 		<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Add every file in the selected album folder(s) to your playlist."/>

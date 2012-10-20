@@ -1289,6 +1289,7 @@
 				<item id="ID_LIBRARY_MOVE" text="_Premakni datoteke..."/>
 				<item id="ID_LIBRARY_COPY" text="_Kopiraj datoteke..."/>
 			</menu>
+			<item id="ID_LIBRARY_FILE_REBUILD" text="_Zgradi ponovno (rebuild)"/>
 			<item id="ID_LIBRARY_REBUILD_ANSI" text="_Lokaliziraj metapodatke"/>
 			<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata"/>
 			<separator/>
@@ -1364,6 +1365,7 @@
 				<item id="ID_LIBRARY_MOVE" text="_Premakni datoteke..."/>
 				<item id="ID_LIBRARY_COPY" text="_Kopiraj datoteke..."/>
 			</menu>
+			<item id="ID_LIBRARY_FILE_REBUILD" text="_Zgradi ponovno (rebuild)"/>
 			<item id="ID_LIBRARY_REBUILD_ANSI" text="_Lokaliziraj metapodatke"/>
 			<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata"/>
 			<separator/>
@@ -2463,6 +2465,7 @@
 		<tip id="ID_LIBRARY_ENQUEUE" message="Dodaj izbrane datoteke v predvajalni seznam."/>
 		<tip id="ID_LIBRARY_EXPLORE" message="Odpri izbrane mape."/>
 		<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Izvozi izbrano albumsko mapo v kolekcijsko datoteko..."/>
+		<tip id="ID_LIBRARY_FILE_REBUILD" message="Rebuild metadata and hashes for the selected file(s)."/>
 		<tip id="ID_LIBRARY_FOLDER_DELETE" message="Zbriši izbrano albumsko mapo."/>
 		<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Prenesi vse datoteke v izbranih kolekcijah."/>
 		<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Dodaj vse datoteke v izbranem albumu v predvajalni seznam."/>

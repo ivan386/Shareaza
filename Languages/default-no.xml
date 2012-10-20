@@ -1289,6 +1289,7 @@
 				<item id="ID_LIBRARY_MOVE" text="Flytt filer..."/>
 				<item id="ID_LIBRARY_COPY" text="Kopier filer..."/>
 			</menu>
+			<item id="ID_LIBRARY_FILE_REBUILD" text="Oppdater"/>
 			<item id="ID_LIBRARY_REBUILD_ANSI" text="Lokaliser metadata"/>
 			<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata"/>
 			<separator/>
@@ -1364,6 +1365,7 @@
 				<item id="ID_LIBRARY_MOVE" text="Flytt filer..."/>
 				<item id="ID_LIBRARY_COPY" text="Kopier filer..."/>
 			</menu>
+			<item id="ID_LIBRARY_FILE_REBUILD" text="Oppdater"/>
 			<item id="ID_LIBRARY_REBUILD_ANSI" text="Lokaliser metadata"/>
 			<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata"/>
 			<separator/>
@@ -2462,6 +2464,7 @@
 		<tip id="ID_LIBRARY_ENQUEUE" message="Legg til valgte filer i din spilleliste."/>
 		<tip id="ID_LIBRARY_EXPLORE" message="Åpne valgte mappe."/>
 		<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Lagre valgte mappe til en samle-fil..."/>
+		<tip id="ID_LIBRARY_FILE_REBUILD" message="Rebuild metadata and hashes for the selected file(s)."/>
 		<tip id="ID_LIBRARY_FOLDER_DELETE" message="Slett valgte mappe."/>
 		<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Last ned alle filene i valgte gruppe."/>
 		<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Legg til alle filene i valgte mappe til din spilleliste."/>

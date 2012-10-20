@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2012-04-09 15:38+0000\n"
+"POT-Creation-Date: 2012-10-20 07:41+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -1518,6 +1518,8 @@ msgstr "D_eursoek"
 
 #: clibrarytree.physical;item;id_library_rebuild
 #: clibrarytree.virtual;item;id_library_rebuild
+#: clibraryfileview.physical;item;id_library_file_rebuild
+#: clibraryfileview.virtual;item;id_library_file_rebuild
 msgid "Re_build"
 msgstr "_Herbou"
 
@@ -3692,6 +3694,10 @@ msgstr "Open die geselekteerde gids(e)."
 #: message;id_library_export_collection
 msgid "Export the selected album folder to collection files..."
 msgstr "Voer die geselekteerde albumgids na 'n versamelingslêer uit..."
+
+#: message;id_library_file_rebuild
+msgid "Rebuild metadata and hashes for the selected file(s)."
+msgstr ""
 
 #: message;id_library_folder_download
 msgid "Download all files in the selected collection."

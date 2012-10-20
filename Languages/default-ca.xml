@@ -1289,6 +1289,7 @@
 				<item id="ID_LIBRARY_MOVE" text="_Mou arxiu..."/>
 				<item id="ID_LIBRARY_COPY" text="_Copia arxiu..."/>
 			</menu>
+			<item id="ID_LIBRARY_FILE_REBUILD" text="Re_fés"/>
 			<item id="ID_LIBRARY_REBUILD_ANSI" text="_Localitza la metainformació"/>
 			<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata"/>
 			<separator/>
@@ -1364,6 +1365,7 @@
 				<item id="ID_LIBRARY_MOVE" text="_Mou arxiu..."/>
 				<item id="ID_LIBRARY_COPY" text="_Copia arxiu..."/>
 			</menu>
+			<item id="ID_LIBRARY_FILE_REBUILD" text="Re_fés"/>
 			<item id="ID_LIBRARY_REBUILD_ANSI" text="_Localitza la metainformació"/>
 			<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata"/>
 			<separator/>
@@ -2456,6 +2458,7 @@
 		<tip id="ID_LIBRARY_ENQUEUE" message="Afegeix al reproductor de multimèdia."/>
 		<tip id="ID_LIBRARY_EXPLORE" message="Obre les carpetes seleccionades."/>
 		<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Exporta aquesta carpeta a un arxiu de col·lecció..."/>
+		<tip id="ID_LIBRARY_FILE_REBUILD" message="Rebuild metadata and hashes for the selected file(s)."/>
 		<tip id="ID_LIBRARY_FOLDER_DELETE" message="Esborra l'àlbum seleccionat."/>
 		<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Baixa tots els arxius de la col·lecció seleccionada."/>
 		<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Afegeix els arxius seleccionats a la llista de reproducció."/>

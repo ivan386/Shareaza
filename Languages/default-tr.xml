@@ -1289,6 +1289,7 @@
 				<item id="ID_LIBRARY_MOVE" text="Dosyaları _Taşı..."/>
 				<item id="ID_LIBRARY_COPY" text="Dosyaları _Kopyala..."/>
 			</menu>
+			<item id="ID_LIBRARY_FILE_REBUILD" text="_Yenilenme"/>
 			<item id="ID_LIBRARY_REBUILD_ANSI" text="Sı_nırlı Veri"/>
 			<item id="ID_LIBRARY_REFRESH_METADATA" text="_Meta Verileri Tazele"/>
 			<separator/>
@@ -1364,6 +1365,7 @@
 				<item id="ID_LIBRARY_MOVE" text="Dosyaları _Taşı..."/>
 				<item id="ID_LIBRARY_COPY" text="Dosyaları _Kopyala..."/>
 			</menu>
+			<item id="ID_LIBRARY_FILE_REBUILD" text="_Yenilenme"/>
 			<item id="ID_LIBRARY_REBUILD_ANSI" text="Sı_nırlı Veri"/>
 			<item id="ID_LIBRARY_REFRESH_METADATA" text="_Meta Verileri Tazele"/>
 			<separator/>
@@ -2435,6 +2437,7 @@
 		<tip id="ID_LIBRARY_ENQUEUE" message="Seçilmiş dosyaları ortam oynatma listene ekle."/>
 		<tip id="ID_LIBRARY_EXPLORE" message="Seçilmiş dosyaları aç."/>
 		<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Seçilmiş albüm klasörlerini, bir kolleksiyon dosyasına gönder..."/>
+		<tip id="ID_LIBRARY_FILE_REBUILD" message="Rebuild metadata and hashes for the selected file(s)."/>
 		<tip id="ID_LIBRARY_FOLDER_DELETE" message="Seçilmiş albüm klasörlerini sil."/>
 		<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Kolleksiyondaki seçilmiş tüm dosyaları indir."/>
 		<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Seçilmiş albüm klasöründeki tüm dosyaları ortam oynatma listesine ekle."/>

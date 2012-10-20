@@ -1289,6 +1289,7 @@
 				<item id="ID_LIBRARY_MOVE" text="Datei(en) _verschieben..."/>
 				<item id="ID_LIBRARY_COPY" text="Datei(en) _kopieren..."/>
 			</menu>
+			<item id="ID_LIBRARY_FILE_REBUILD" text="Ne_u einlesen"/>
 			<item id="ID_LIBRARY_REBUILD_ANSI" text="_Metadaten lokalisieren"/>
 			<item id="ID_LIBRARY_REFRESH_METADATA" text="Metadaten _aktualisieren"/>
 			<separator/>
@@ -1364,6 +1365,7 @@
 				<item id="ID_LIBRARY_MOVE" text="Datei(en) _verschieben..."/>
 				<item id="ID_LIBRARY_COPY" text="Datei(en) _kopieren..."/>
 			</menu>
+			<item id="ID_LIBRARY_FILE_REBUILD" text="Ne_u einlesen"/>
 			<item id="ID_LIBRARY_REBUILD_ANSI" text="_Metadaten lokalisieren"/>
 			<item id="ID_LIBRARY_REFRESH_METADATA" text="Metadaten _aktualisieren"/>
 			<separator/>
@@ -2463,6 +2465,7 @@
 		<tip id="ID_LIBRARY_ENQUEUE" message="Die markierte(n) Datei(en) in die Wiedergabeliste aufnehmen."/>
 		<tip id="ID_LIBRARY_EXPLORE" message="Den / Die markierten Ordner öffnen."/>
 		<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Das markierte Album als Kollektion exportieren..."/>
+		<tip id="ID_LIBRARY_FILE_REBUILD" message="Rebuild metadata and hashes for the selected file(s)."/>
 		<tip id="ID_LIBRARY_FOLDER_DELETE" message="Das markierte Album löschen."/>
 		<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Alle Dateien der markierten Kollektion herunterladen."/>
 		<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Alle Dateien des markierten Albums zur Wiedergabeliste hinzufügen."/>

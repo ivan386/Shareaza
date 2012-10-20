@@ -1289,6 +1289,7 @@
 				<item id="ID_LIBRARY_MOVE" text="移动文件(_M)"/>
 				<item id="ID_LIBRARY_COPY" text="复制文件(_C)"/>
 			</menu>
+			<item id="ID_LIBRARY_FILE_REBUILD" text="重建(_B)"/>
 			<item id="ID_LIBRARY_REBUILD_ANSI" text="本地化元数据(_L)"/>
 			<item id="ID_LIBRARY_REFRESH_METADATA" text="刷新元数据(_R)"/>
 			<separator/>
@@ -1364,6 +1365,7 @@
 				<item id="ID_LIBRARY_MOVE" text="移动文件(_M)"/>
 				<item id="ID_LIBRARY_COPY" text="复制文件(_C)"/>
 			</menu>
+			<item id="ID_LIBRARY_FILE_REBUILD" text="重建(_B)"/>
 			<item id="ID_LIBRARY_REBUILD_ANSI" text="本地化元数据(_L)"/>
 			<item id="ID_LIBRARY_REFRESH_METADATA" text="刷新元数据(_R)"/>
 			<separator/>
@@ -2448,6 +2450,7 @@
 		<tip id="ID_LIBRARY_ENQUEUE" message="添加选定的文件到播放列表。"/>
 		<tip id="ID_LIBRARY_EXPLORE" message="打开选定的文件夹。"/>
 		<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="将选定的专辑文件夹导出到一个收集文件中..."/>
+		<tip id="ID_LIBRARY_FILE_REBUILD" message="Rebuild metadata and hashes for the selected file(s)."/>
 		<tip id="ID_LIBRARY_FOLDER_DELETE" message="删除选定的专辑文件夹。"/>
 		<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="下载选定收集中的所有文件。"/>
 		<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="添加选定专辑文件夹中所有文件到播放列表。"/>

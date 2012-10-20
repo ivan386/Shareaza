@@ -1289,6 +1289,7 @@
 				<item id="ID_LIBRARY_MOVE" text="_Déplacer les fichiers..."/>
 				<item id="ID_LIBRARY_COPY" text="_Copier les fichiers..."/>
 			</menu>
+			<item id="ID_LIBRARY_FILE_REBUILD" text="_Reconstruire"/>
 			<item id="ID_LIBRARY_REBUILD_ANSI" text="_Localiser les métadonnées"/>
 			<item id="ID_LIBRARY_REFRESH_METADATA" text="_Rafraîchir les métadonnées"/>
 			<separator/>
@@ -1364,6 +1365,7 @@
 				<item id="ID_LIBRARY_MOVE" text="_Déplacer les fichiers..."/>
 				<item id="ID_LIBRARY_COPY" text="_Copier les fichiers..."/>
 			</menu>
+			<item id="ID_LIBRARY_FILE_REBUILD" text="_Reconstruire"/>
 			<item id="ID_LIBRARY_REBUILD_ANSI" text="_Localiser les métadonnées"/>
 			<item id="ID_LIBRARY_REFRESH_METADATA" text="_Rafraîchir les métadonnées"/>
 			<separator/>
@@ -2466,6 +2468,7 @@
 		<tip id="ID_LIBRARY_ENQUEUE" message="Ajouter à votre liste de lecture cette sélection de fichiers."/>
 		<tip id="ID_LIBRARY_EXPLORE" message="Ouvrir cette sélection de dossiers."/>
 		<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Exporter le dossier « album » sélectionné dans un fichier collection..."/>
+		<tip id="ID_LIBRARY_FILE_REBUILD" message="Rebuild metadata and hashes for the selected file(s)."/>
 		<tip id="ID_LIBRARY_FOLDER_DELETE" message="Supprimer le dossier « album » sélectionné."/>
 		<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Télécharger tous les fichiers dans la collection sélectionnée."/>
 		<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Ajouter tous les fichiers de cette sélection de dossiers « album » à votre liste de lecture."/>

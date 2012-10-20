@@ -1289,6 +1289,7 @@
 				<item id="ID_LIBRARY_MOVE" text="Μετα_κίνηση Αρχείου..."/>
 				<item id="ID_LIBRARY_COPY" text="_Αντιγραφή Αρχείου..."/>
 			</menu>
+			<item id="ID_LIBRARY_FILE_REBUILD" text="Ανα_δόμηση"/>
 			<item id="ID_LIBRARY_REBUILD_ANSI" text="_Localise Metadata"/>
 			<item id="ID_LIBRARY_REFRESH_METADATA" text="_Ανανέωση Metadata"/>
 			<separator/>
@@ -1364,6 +1365,7 @@
 				<item id="ID_LIBRARY_MOVE" text="Μετα_κίνηση Αρχείου..."/>
 				<item id="ID_LIBRARY_COPY" text="_Αντιγραφή Αρχείου..."/>
 			</menu>
+			<item id="ID_LIBRARY_FILE_REBUILD" text="Ανα_δόμηση"/>
 			<item id="ID_LIBRARY_REBUILD_ANSI" text="_Localise Metadata"/>
 			<item id="ID_LIBRARY_REFRESH_METADATA" text="_Ανανέωση Metadata"/>
 			<separator/>
@@ -2467,6 +2469,7 @@
 		<tip id="ID_LIBRARY_ENQUEUE" message="Προσθήκη επιλεγμένων αρχείων στη Λίστα Αναπαραγωγής."/>
 		<tip id="ID_LIBRARY_EXPLORE" message="Άνοιγμα επιλεγμένων φακέλων."/>
 		<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Εξαγωγή επιλεγμένων album σε αρχεία συλλογής..."/>
+		<tip id="ID_LIBRARY_FILE_REBUILD" message="Rebuild metadata and hashes for the selected file(s)."/>
 		<tip id="ID_LIBRARY_FOLDER_DELETE" message="Διαγραφή επιλεγμένου album."/>
 		<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Λήψη όλων των αρχείων στην επιλεγμένη συλλογή."/>
 		<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Προσθήκη αρχείων επιλεγμένων album στη Λίστα Αναπαραγωγής."/>

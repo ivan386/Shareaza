@@ -1289,6 +1289,7 @@
 				<item id="ID_LIBRARY_MOVE" text="_Sposta i file..."/>
 				<item id="ID_LIBRARY_COPY" text="_Copia i file..."/>
 			</menu>
+			<item id="ID_LIBRARY_FILE_REBUILD" text="Ricos_truisci"/>
 			<item id="ID_LIBRARY_REBUILD_ANSI" text="_Localizza metadata"/>
 			<item id="ID_LIBRARY_REFRESH_METADATA" text="Aggiorna _metadata"/>
 			<separator/>
@@ -1364,6 +1365,7 @@
 				<item id="ID_LIBRARY_MOVE" text="_Sposta i file..."/>
 				<item id="ID_LIBRARY_COPY" text="_Copia i file..."/>
 			</menu>
+			<item id="ID_LIBRARY_FILE_REBUILD" text="Ricos_truisci"/>
 			<item id="ID_LIBRARY_REBUILD_ANSI" text="_Localizza metadata"/>
 			<item id="ID_LIBRARY_REFRESH_METADATA" text="Aggiorna _metadata"/>
 			<separator/>
@@ -2467,6 +2469,7 @@
 		<tip id="ID_LIBRARY_ENQUEUE" message="Aggiungi i file selezionati alla playlist."/>
 		<tip id="ID_LIBRARY_EXPLORE" message="Apri le cartelle selezionate."/>
 		<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Esporta la cartella album selezionata a file di collezione..."/>
+		<tip id="ID_LIBRARY_FILE_REBUILD" message="Rebuild metadata and hashes for the selected file(s)."/>
 		<tip id="ID_LIBRARY_FOLDER_DELETE" message="Elimina la cartella album selezionata."/>
 		<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Scarica tutti i file nella collezione selezionata."/>
 		<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Aggiungi ogni file della cartella selezionata nella playlist."/>

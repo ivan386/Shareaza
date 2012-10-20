@@ -1289,6 +1289,7 @@
 				<item id="ID_LIBRARY_MOVE" text="移動檔案..."/>
 				<item id="ID_LIBRARY_COPY" text="複製檔案..."/>
 			</menu>
+			<item id="ID_LIBRARY_FILE_REBUILD" text="重建"/>
 			<item id="ID_LIBRARY_REBUILD_ANSI" text="將解釋資料本地化"/>
 			<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata"/>
 			<separator/>
@@ -1364,6 +1365,7 @@
 				<item id="ID_LIBRARY_MOVE" text="移動檔案..."/>
 				<item id="ID_LIBRARY_COPY" text="複製檔案..."/>
 			</menu>
+			<item id="ID_LIBRARY_FILE_REBUILD" text="重建"/>
 			<item id="ID_LIBRARY_REBUILD_ANSI" text="將解釋資料本地化"/>
 			<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata"/>
 			<separator/>
@@ -2404,6 +2406,7 @@
 		<tip id="ID_LIBRARY_ENQUEUE" message="新增選擇的檔案至多媒體播放清單."/>
 		<tip id="ID_LIBRARY_EXPLORE" message="開啟選擇的資料夾."/>
 		<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="匯出選擇的專輯資料夾至一個組檔..."/>
+		<tip id="ID_LIBRARY_FILE_REBUILD" message="Rebuild metadata and hashes for the selected file(s)."/>
 		<tip id="ID_LIBRARY_FOLDER_DELETE" message="刪除選擇的專輯資料夾."/>
 		<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="下載選擇的組檔裡所有的檔案."/>
 		<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="新增選擇的專輯裡所有的檔案到您的播放清單."/>

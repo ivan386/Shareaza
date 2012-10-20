@@ -1289,6 +1289,7 @@
 				<item id="ID_LIBRARY_MOVE" text="‪_העבר קובץ"/>
 				<item id="ID_LIBRARY_COPY" text="‪העתק קובץ"/>
 			</menu>
+			<item id="ID_LIBRARY_FILE_REBUILD" text="‪בנה מחדש"/>
 			<item id="ID_LIBRARY_REBUILD_ANSI" text="‪מקומי Metadata שינוי"/>
 			<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata"/>
 			<separator/>
@@ -1364,6 +1365,7 @@
 				<item id="ID_LIBRARY_MOVE" text="‪_העבר קובץ"/>
 				<item id="ID_LIBRARY_COPY" text="‪העתק קובץ"/>
 			</menu>
+			<item id="ID_LIBRARY_FILE_REBUILD" text="‪בנה מחדש"/>
 			<item id="ID_LIBRARY_REBUILD_ANSI" text="‪מקומי Metadata שינוי"/>
 			<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata"/>
 			<separator/>
@@ -2471,6 +2473,7 @@
 		<tip id="ID_LIBRARY_ENQUEUE" message="הוסף את הקבצים הנבחרים לרשימת ההשמעה"/>
 		<tip id="ID_LIBRARY_EXPLORE" message="פתח את הספריות הנבחרות"/>
 		<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="יצא את תקיית האלבום הנבחר לקבצי אוסף..."/>
+		<tip id="ID_LIBRARY_FILE_REBUILD" message="Rebuild metadata and hashes for the selected file(s)."/>
 		<tip id="ID_LIBRARY_FOLDER_DELETE" message="מחק את תיקיית האלבום הנבחרת"/>
 		<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="הורד את כל הקבצים באוסף הנבחר"/>
 		<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="הוסף כל קובץ בתקית/ות האלבום הנבחרת/ות לרשימת השמע שלך."/>

@@ -1289,6 +1289,7 @@
 				<item id="ID_LIBRARY_MOVE" text="P_erkelti failus..."/>
 				<item id="ID_LIBRARY_COPY" text="_Kopijuoti failus..."/>
 			</menu>
+			<item id="ID_LIBRARY_FILE_REBUILD" text="Per_daryti"/>
 			<item id="ID_LIBRARY_REBUILD_ANSI" text="_Lokalizuoti meta duomenis"/>
 			<item id="ID_LIBRARY_REFRESH_METADATA" text="At_naujinti meta duomenis"/>
 			<separator/>
@@ -1364,6 +1365,7 @@
 				<item id="ID_LIBRARY_MOVE" text="P_erkelti failus..."/>
 				<item id="ID_LIBRARY_COPY" text="_Kopijuoti failus..."/>
 			</menu>
+			<item id="ID_LIBRARY_FILE_REBUILD" text="Per_daryti"/>
 			<item id="ID_LIBRARY_REBUILD_ANSI" text="_Lokalizuoti meta duomenis"/>
 			<item id="ID_LIBRARY_REFRESH_METADATA" text="At_naujinti meta duomenis"/>
 			<separator/>
@@ -2460,6 +2462,7 @@
 		<tip id="ID_LIBRARY_ENQUEUE" message="Įtraukti pasirinktą failą(-us) į grojaraštį."/>
 		<tip id="ID_LIBRARY_EXPLORE" message="Atverti pasirinktą aplanką(-us)."/>
 		<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Eksportuoti pasirinktą albumo aplanką į rinkinio failų komplektą..."/>
+		<tip id="ID_LIBRARY_FILE_REBUILD" message="Rebuild metadata and hashes for the selected file(s)."/>
 		<tip id="ID_LIBRARY_FOLDER_DELETE" message="Pašalinti pasirinktą albumo katalogą."/>
 		<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Parsisiųsti visus failus iš pasirinkto rinkinio."/>
 		<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Įtraukti visus failus iš pasirinkto albumo katalogo(-ų) į grojaraštį."/>

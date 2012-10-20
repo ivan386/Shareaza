@@ -1289,6 +1289,7 @@
 				<item id="ID_LIBRARY_MOVE" text="_Lëviz Skeda..."/>
 				<item id="ID_LIBRARY_COPY" text="_Kopjo Skeda..."/>
 			</menu>
+			<item id="ID_LIBRARY_FILE_REBUILD" text="Ri_ndërto"/>
 			<item id="ID_LIBRARY_REBUILD_ANSI" text="_Lokalizo Metadata"/>
 			<item id="ID_LIBRARY_REFRESH_METADATA" text="_Rifresko Metadata"/>
 			<separator/>
@@ -1364,6 +1365,7 @@
 				<item id="ID_LIBRARY_MOVE" text="_Lëviz Skeda..."/>
 				<item id="ID_LIBRARY_COPY" text="_Kopjo Skeda..."/>
 			</menu>
+			<item id="ID_LIBRARY_FILE_REBUILD" text="Ri_ndërto"/>
 			<item id="ID_LIBRARY_REBUILD_ANSI" text="_Lokalizo Metadata"/>
 			<item id="ID_LIBRARY_REFRESH_METADATA" text="_Rifresko Metadata"/>
 			<separator/>
@@ -2468,6 +2470,7 @@
 		<tip id="ID_LIBRARY_ENQUEUE" message="Shton skedën e zgjedhur në listën me mediat."/>
 		<tip id="ID_LIBRARY_EXPLORE" message="Hap dosjen e zgjedhur."/>
 		<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Eksporton dosjen e zgjedhur me albume tek një skedëkoleksion..."/>
+		<tip id="ID_LIBRARY_FILE_REBUILD" message="Rebuild metadata and hashes for the selected file(s)."/>
 		<tip id="ID_LIBRARY_FOLDER_DELETE" message="Fshin dosjen e zgjedhur me albume."/>
 		<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Shkarkon tërë skedat në koleksionin e zgjedhur."/>
 		<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Shton në listë çdo skedë në dosjen e zgjedhur me albume."/>

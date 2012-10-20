@@ -1289,6 +1289,7 @@
 				<item id="ID_LIBRARY_MOVE" text="P_řesunout soubory..."/>
 				<item id="ID_LIBRARY_COPY" text="_Kopírovat soubory..."/>
 			</menu>
+			<item id="ID_LIBRARY_FILE_REBUILD" text="O_bnovit"/>
 			<item id="ID_LIBRARY_REBUILD_ANSI" text="_Místní popisky"/>
 			<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata"/>
 			<separator/>
@@ -1364,6 +1365,7 @@
 				<item id="ID_LIBRARY_MOVE" text="P_řesunout soubory..."/>
 				<item id="ID_LIBRARY_COPY" text="_Kopírovat soubory..."/>
 			</menu>
+			<item id="ID_LIBRARY_FILE_REBUILD" text="O_bnovit"/>
 			<item id="ID_LIBRARY_REBUILD_ANSI" text="_Místní popisky"/>
 			<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata"/>
 			<separator/>
@@ -2469,6 +2471,7 @@
 		<tip id="ID_LIBRARY_ENQUEUE" message="Přidat vybraný soubor(y) do vašeho playlistu."/>
 		<tip id="ID_LIBRARY_EXPLORE" message="Otevřít označenou složku(y)."/>
 		<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Exportovat označené album do složky se sbírkou souborů..."/>
+		<tip id="ID_LIBRARY_FILE_REBUILD" message="Rebuild metadata and hashes for the selected file(s)."/>
 		<tip id="ID_LIBRARY_FOLDER_DELETE" message="Vymazat označené album ve složce."/>
 		<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Stáhnout všechny soubory v označené sbírce."/>
 		<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Přidat všechny soubory ve vybraném albu složky k vašemu playlistu."/>

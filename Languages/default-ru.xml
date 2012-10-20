@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
 	<!-- Manifest -->
-	<manifest name="Русский" author="dAbserver" updatedBy="Rolandas Rudomanskis, ryo-oh-ki" description="Shareaza Russian Skin File" link="http://shareaza.sourceforge.net/" email="ryo-oh-ki@narod.ru" version="2.5.5.0" type="Language" language="ru" prompt="Щелкните здесь для смены языка на Русский." dir="ltr"/>
+	<manifest name="Русский" author="dAbserver" updatedBy="Rolandas Rudomanskis, ryo-oh-ki" description="Shareaza Russian Skin File" link="http://shareaza.sourceforge.net/" email="raspopov@cherubicsoft.com" version="2.6.1.0" type="Language" language="ru" prompt="Щелкните здесь для смены языка на Русский." dir="ltr"/>
 	<!-- Toolbar Definitions -->
 	<toolbars>
 		<!-- MAIN WINDOW -->
@@ -1289,6 +1289,7 @@
 				<item id="ID_LIBRARY_MOVE" text="П_ереместить файлы..."/>
 				<item id="ID_LIBRARY_COPY" text="_Копировать файлы..."/>
 			</menu>
+			<item id="ID_LIBRARY_FILE_REBUILD" text="_Перестройка"/>
 			<item id="ID_LIBRARY_REBUILD_ANSI" text="_Локализировать метаданные"/>
 			<item id="ID_LIBRARY_REFRESH_METADATA" text="_Обновить метаданные"/>
 			<separator/>
@@ -1364,6 +1365,7 @@
 				<item id="ID_LIBRARY_MOVE" text="П_ереместить файлы..."/>
 				<item id="ID_LIBRARY_COPY" text="_Копировать файлы..."/>
 			</menu>
+			<item id="ID_LIBRARY_FILE_REBUILD" text="_Перестройка"/>
 			<item id="ID_LIBRARY_REBUILD_ANSI" text="_Локализировать метаданные"/>
 			<item id="ID_LIBRARY_REFRESH_METADATA" text="_Обновить метаданные"/>
 			<separator/>
@@ -2465,6 +2467,7 @@
 		<tip id="ID_LIBRARY_ENQUEUE" message="Добавить помеченный файл(ы) в Ваш список воспроизведения."/>
 		<tip id="ID_LIBRARY_EXPLORE" message="Открыть помеченную папку(и)."/>
 		<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Экспортировать помеченную папку альбома в файл коллекции..."/>
+		<tip id="ID_LIBRARY_FILE_REBUILD" message="Переделать мета данные и хешы помеченных файлов."/>
 		<tip id="ID_LIBRARY_FOLDER_DELETE" message="Удалить помеченную папку альбома."/>
 		<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Загрузить все файлы выбранной коллекции."/>
 		<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Добавить все файлы, находящиеся в помеченной папке(ах) альбома, в Ваш список воспроизведения."/>
@@ -2479,7 +2482,7 @@
 		<tip id="ID_LIBRARY_PANEL" message="Показывать или скрывать панель подробностей файлов."/>
 		<tip id="ID_LIBRARY_PARENT" message="Переместиться вверх в родиельскую папку."/>
 		<tip id="ID_LIBRARY_PROPERTIES" message="Просмотр и правка свойств помеченных файлов..."/>
-		<tip id="ID_LIBRARY_REBUILD" message="Переделать мета данные и хешы поменченных папок или файлов."/>
+		<tip id="ID_LIBRARY_REBUILD" message="Переделать мета данные и хешы помеченных папок или файлов."/>
 		<tip id="ID_LIBRARY_REBUILD_ANSI" message="Перекодировать мета данные на другой язык."/>
 		<tip id="ID_LIBRARY_REFRESH" message="Обновить вид хранилища."/>
 		<tip id="ID_LIBRARY_REFRESH_METADATA" message="Обновить метаданные"/>

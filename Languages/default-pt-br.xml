@@ -1289,6 +1289,7 @@
 				<item id="ID_LIBRARY_MOVE" text="_Mover Arquivos..."/>
 				<item id="ID_LIBRARY_COPY" text="_Copiar Arquivos..."/>
 			</menu>
+			<item id="ID_LIBRARY_FILE_REBUILD" text="Re_construir"/>
 			<item id="ID_LIBRARY_REBUILD_ANSI" text="_Localizar Metadata"/>
 			<item id="ID_LIBRARY_REFRESH_METADATA" text="_Atualizar Metadata"/>
 			<separator/>
@@ -1364,6 +1365,7 @@
 				<item id="ID_LIBRARY_MOVE" text="_Mover Arquivos..."/>
 				<item id="ID_LIBRARY_COPY" text="_Copiar Arquivos..."/>
 			</menu>
+			<item id="ID_LIBRARY_FILE_REBUILD" text="Re_construir"/>
 			<item id="ID_LIBRARY_REBUILD_ANSI" text="_Localizar Metadata"/>
 			<item id="ID_LIBRARY_REFRESH_METADATA" text="_Atualizar Metadata"/>
 			<separator/>
@@ -2468,6 +2470,7 @@ t		Alternativamente, você pode manualmente iniciar este download com o comando 
 		<tip id="ID_LIBRARY_ENQUEUE" message="Adicionar o(s) arquivo(s) selecionado(s) a sua lista de execuções de mídia."/>
 		<tip id="ID_LIBRARY_EXPLORE" message="Abrir a(s) pasta(s) selecionada(s)."/>
 		<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Exportar a pasta do álbum selecionado para os arquivos de coleção..."/>
+		<tip id="ID_LIBRARY_FILE_REBUILD" message="Rebuild metadata and hashes for the selected file(s)."/>
 		<tip id="ID_LIBRARY_FOLDER_DELETE" message="Apagar a pasta do álbum selecionada."/>
 		<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Baixar todos os arquivos na coleção selecionada."/>
 		<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Adicionar cada arquivo na pasta do álbum selecionado para a sua lista de execuções."/>

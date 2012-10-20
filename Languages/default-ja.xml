@@ -1289,6 +1289,7 @@
 				<item id="ID_LIBRARY_MOVE" text="ファイルを移動(_M)..."/>
 				<item id="ID_LIBRARY_COPY" text="ファイルをコピー(_C)..."/>
 			</menu>
+			<item id="ID_LIBRARY_FILE_REBUILD" text="再構成(_B)"/>
 			<item id="ID_LIBRARY_REBUILD_ANSI" text="メタデータをローカライズ(_L)"/>
 			<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata"/>
 			<separator/>
@@ -1364,6 +1365,7 @@
 				<item id="ID_LIBRARY_MOVE" text="ファイルを移動(_M)..."/>
 				<item id="ID_LIBRARY_COPY" text="ファイルをコピー(_C)..."/>
 			</menu>
+			<item id="ID_LIBRARY_FILE_REBUILD" text="再構成(_B)"/>
 			<item id="ID_LIBRARY_REBUILD_ANSI" text="メタデータをローカライズ(_L)"/>
 			<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata"/>
 			<separator/>
@@ -2461,6 +2463,7 @@
 		<tip id="ID_LIBRARY_ENQUEUE" message="選択したファイルをメディア再生リストに追加します"/>
 		<tip id="ID_LIBRARY_EXPLORE" message="選択したフォルダを開きます"/>
 		<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="選択したアルバムフォルダをコレクションファイルにエクスポートします..."/>
+		<tip id="ID_LIBRARY_FILE_REBUILD" message="Rebuild metadata and hashes for the selected file(s)."/>
 		<tip id="ID_LIBRARY_FOLDER_DELETE" message="選択したアルバムフォルダを削除します"/>
 		<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="選択したコレクション内の全てのファイルをダウンロードします"/>
 		<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="選択したアルバムフォルダ内の全てのファイルを再生リストに追加します"/>

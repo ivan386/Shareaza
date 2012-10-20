@@ -1289,6 +1289,7 @@
 				<item id="ID_LIBRARY_MOVE" text="_Liiguta Faili..."/>
 				<item id="ID_LIBRARY_COPY" text="_Kopeeri Fail..."/>
 			</menu>
+			<item id="ID_LIBRARY_FILE_REBUILD" text="_Taasloo sisu"/>
 			<item id="ID_LIBRARY_REBUILD_ANSI" text="_Kohanda Andmebaas"/>
 			<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata"/>
 			<separator/>
@@ -1364,6 +1365,7 @@
 				<item id="ID_LIBRARY_MOVE" text="_Liiguta Faili..."/>
 				<item id="ID_LIBRARY_COPY" text="_Kopeeri Fail..."/>
 			</menu>
+			<item id="ID_LIBRARY_FILE_REBUILD" text="_Taasloo sisu"/>
 			<item id="ID_LIBRARY_REBUILD_ANSI" text="_Kohanda Andmebaas"/>
 			<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata"/>
 			<separator/>
@@ -2461,6 +2463,7 @@
 		<tip id="ID_LIBRARY_ENQUEUE" message="Lisa valitud failid oma meedia playlisti."/>
 		<tip id="ID_LIBRARY_EXPLORE" message="Ava valitud kaust."/>
 		<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Ekspordi valitud Albumi kaust kollektsioonidesse..."/>
+		<tip id="ID_LIBRARY_FILE_REBUILD" message="Rebuild metadata and hashes for the selected file(s)."/>
 		<tip id="ID_LIBRARY_FOLDER_DELETE" message="Kustuta valitud Albumi kaust."/>
 		<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Tõmba kõik valitud failid."/>
 		<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Lisa kõik failid valitud kaustast oma playlisti."/>

@@ -1289,6 +1289,7 @@
 				<item id="ID_LIBRARY_MOVE" text="_Flytta filer…"/>
 				<item id="ID_LIBRARY_COPY" text="_Kopiera filer…"/>
 			</menu>
+			<item id="ID_LIBRARY_FILE_REBUILD" text="_Bygg upp igen"/>
 			<item id="ID_LIBRARY_REBUILD_ANSI" text="_Lokalisera metadata"/>
 			<item id="ID_LIBRARY_REFRESH_METADATA" text="_Uppdatera metadata"/>
 			<separator/>
@@ -1364,6 +1365,7 @@
 				<item id="ID_LIBRARY_MOVE" text="_Flytta filer…"/>
 				<item id="ID_LIBRARY_COPY" text="_Kopiera filer…"/>
 			</menu>
+			<item id="ID_LIBRARY_FILE_REBUILD" text="_Bygg upp igen"/>
 			<item id="ID_LIBRARY_REBUILD_ANSI" text="_Lokalisera metadata"/>
 			<item id="ID_LIBRARY_REFRESH_METADATA" text="_Uppdatera metadata"/>
 			<separator/>
@@ -2463,6 +2465,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<tip id="ID_LIBRARY_ENQUEUE" message="Lägg till de valda filerna till den spellista."/>
 		<tip id="ID_LIBRARY_EXPLORE" message="Öppna de valda mappen/mapparna."/>
 		<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Exportera den valda albummappen som en samlingsfil…"/>
+		<tip id="ID_LIBRARY_FILE_REBUILD" message="Rebuild metadata and hashes for the selected file(s)."/>
 		<tip id="ID_LIBRARY_FOLDER_DELETE" message="Radera de valda albummapparna."/>
 		<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Ladda ned alla filer i den valda samlingen."/>
 		<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Lägg till alla filer i de valda albummapparna till din spellista."/>

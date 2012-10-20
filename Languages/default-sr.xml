@@ -1289,6 +1289,7 @@
 				<item id="ID_LIBRARY_MOVE" text="Pre_mesti..."/>
 				<item id="ID_LIBRARY_COPY" text="Kopiraj Datoteke..."/>
 			</menu>
+			<item id="ID_LIBRARY_FILE_REBUILD" text="O_bnovi"/>
 			<item id="ID_LIBRARY_REBUILD_ANSI" text="_Lokalizuj Metadatu"/>
 			<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata"/>
 			<separator/>
@@ -1364,6 +1365,7 @@
 				<item id="ID_LIBRARY_MOVE" text="Pre_mesti..."/>
 				<item id="ID_LIBRARY_COPY" text="Kopiraj Datoteke..."/>
 			</menu>
+			<item id="ID_LIBRARY_FILE_REBUILD" text="O_bnovi"/>
 			<item id="ID_LIBRARY_REBUILD_ANSI" text="_Lokalizuj Metadatu"/>
 			<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata"/>
 			<separator/>
@@ -2463,6 +2465,7 @@
 		<tip id="ID_LIBRARY_ENQUEUE" message="Dodaj označeno u moju media playlistu."/>
 		<tip id="ID_LIBRARY_EXPLORE" message="Otvori odabranu(e) fasciklu(e)."/>
 		<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Sačuvaj označenu fasciklu albuma kao kolekciju..."/>
+		<tip id="ID_LIBRARY_FILE_REBUILD" message="Rebuild metadata and hashes for the selected file(s)."/>
 		<tip id="ID_LIBRARY_FOLDER_DELETE" message="Obriši odabranu fasciklu albuma."/>
 		<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Skini sve datoteke u odabranoj kolekciji."/>
 		<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Dodaj svaku datoteku u selektovanoj fascikli(ama) albuma na vasu playlistu(Sahereaza)."/>
