@@ -71,7 +71,7 @@ typedef struct
 	QWORD		downloaded;		// The number of byte you've downloaded in this session.
 	QWORD		left;			// The number of bytes you have left to download until you're finished.
 	QWORD		uploaded;		// The number of bytes you have uploaded in this session.
-	DWORD		event;			// The event, one of: none = 0; completed = 1; started = 2; stopped = 3.
+	DWORD		event;			// The event, one of: update = 0; completed = 1; started = 2; stopped = 3.
 	DWORD		ip;				// Your ip address. Set to 0 if you want the tracker to use the sender of this UDP packet.
 	DWORD		key;			// A unique key that is randomized by the client.
 	DWORD		num_want;		// The maximum number of peers you want in the reply. Use -1 for default.
@@ -128,11 +128,49 @@ typedef struct
 enum { BTA_TRACKER_CONNECT, BTA_TRACKER_ANNOUNCE, BTA_TRACKER_SCRAPE, BTA_TRACKER_ERROR };
 
 // BitTorrent UDP tracker events
-enum { BTE_TRACKER_UPDATE, BTE_TRACKER_COMPLETED, BTE_TRACKER_STARTED, BTE_TRACKER_STOPPED, BTE_TRACKER_SCRAPE };
+typedef enum { BTE_TRACKER_UPDATE, BTE_TRACKER_COMPLETED, BTE_TRACKER_STARTED, BTE_TRACKER_STOPPED, BTE_TRACKER_SCRAPE } BTTrackerEvent;
 
 
 #pragma pack(pop)		// 1
 #pragma warning(pop)	// C4200
+
+//
+// BitTorrent tracker source and source list
+//
+
+class CBTTrackerSource
+{
+public:
+	CBTTrackerSource()
+		: m_pPeerID	()
+		, m_pAddress()
+	{
+	}
+
+	CBTTrackerSource(const Hashes::BtGuid& pPeerID, const SOCKADDR_IN& pAddress)
+		: m_pPeerID	( pPeerID )
+		, m_pAddress( pAddress )
+	{
+	}
+
+	CBTTrackerSource(const CBTTrackerSource& source)
+		: m_pPeerID	( source.m_pPeerID )
+		, m_pAddress( source.m_pAddress )
+	{
+	}
+
+	CBTTrackerSource& operator=(const CBTTrackerSource& source)
+	{
+		m_pPeerID = source.m_pPeerID;
+		m_pAddress = source.m_pAddress;
+		return *this;
+	}
+
+	Hashes::BtGuid	m_pPeerID;
+	SOCKADDR_IN		m_pAddress;
+};
+
+typedef CList< CBTTrackerSource > CBTTrackerSourceList;
 
 //
 // BitTorrent tracker packet
@@ -219,34 +257,25 @@ public:
 class CBTTrackerRequest
 {
 public:
-	CBTTrackerRequest(CDownload* pDownload, DWORD nEvent, DWORD nNumWant, CTrackerEvent* pOnTrackerEvent);
-
 	ULONG	AddRef();
 	ULONG	Release();
+	
+	inline BTTrackerEvent GetEvent() const { return m_nEvent; }		// Tracker event (update, announce, etc.)
+	inline DWORD GetComplete() const { return m_nComplete; }		// Seeders
+	inline DWORD GetDownloaded() const { return m_nDownloaded; }	// Downloaded
+	inline DWORD GetIncomplete() const { return m_nIncomplete; }	// Leeches
 
-	DWORD						m_nSeeders;			// Scrape
-	DWORD						m_nDownloaded;		// Scrape
-	DWORD						m_nLeechers;		// Scrape
+	// Tracker request interval (in seconds)
+	inline DWORD GetInterval() const { return min( max( m_nInterval, 60ul * 2ul ), 60ul * 60ul ); }
+
+	// Retrieve peers
+	inline POSITION GetSources() const { return m_pSources.GetHeadPosition(); }
+	inline const CBTTrackerSource& GetNextSource(POSITION& rPosition) const { return m_pSources.GetNext( rPosition ); }
 
     static CString Escape(const Hashes::BtHash& oBTH);
     static CString Escape(const Hashes::BtGuid& oGUID);
 
-	inline void Cancel()
-	{
-		m_pOnTrackerEvent = NULL; // Disable notification
-
-		m_pCancel.SetEvent();
-
-		if ( m_pRequest )
-		{
-			m_pRequest->Cancel();
-		}
-	}
-
-	inline bool IsCanceled() const
-	{
-		return ( WaitForSingleObject( m_pCancel, 0 ) != WAIT_TIMEOUT );
-	}
+	void Cancel();
 
 	BOOL OnConnect(CBTTrackerPacket* pPacket);
 	BOOL OnAnnounce(CBTTrackerPacket* pPacket);
@@ -258,17 +287,30 @@ protected:
 	bool						m_bHTTP;			// HTTP - TRUE, UDP - FALSE.
 	CString						m_sURL;				// Tracker URL
 	SOCKADDR_IN					m_pHost;			// Resolved tracker address (UDP)
+	Hashes::BtHash				m_oBTH;				// BitTorrent Info Hash (Base32)
+	Hashes::BtGuid				m_pPeerID;			// Shareaza Peer ID
+	QWORD						m_nTorrentUploaded;
+	QWORD						m_nTorrentDownloaded;
+	QWORD						m_nTorrentLeft;
 	CDownload*					m_pDownload;		// Handle of owner download
 	CString						m_sName;			// Name of download
 	CAutoPtr< CHttpRequest >	m_pRequest;			// HTTP request object
-	DWORD						m_nEvent;			// Tracker event (update, announce, etc.)
+	BTTrackerEvent				m_nEvent;			// Tracker event (update, announce, etc.)
 	DWORD						m_nNumWant;			// Number of peers wanted
 	QWORD						m_nConnectionID;	// UDP tracker connection ID
 	DWORD						m_nTransactionID;	// UDP tracker transaction ID
 	CEvent						m_pCancel;			// Cancel flag
 	CTrackerEvent*				m_pOnTrackerEvent;	// Callback
+	DWORD						m_nComplete;		// Seeders
+	DWORD						m_nDownloaded;		// Downloaded
+	DWORD						m_nIncomplete;		// Leeches
+	DWORD						m_nInterval;		// Tracker request interval (in seconds)
+	CBTTrackerSourceList		m_pSources;			// Peers
 
+	CBTTrackerRequest(CDownload* pDownload, BTTrackerEvent nEvent, DWORD nNumWant, CTrackerEvent* pOnTrackerEvent);
 	virtual ~CBTTrackerRequest();
+
+	inline bool IsCanceled() const { return ( WaitForSingleObject( m_pCancel, 0 ) != WAIT_TIMEOUT ); }
 
 	void ProcessHTTP();
 	void ProcessUDP();
@@ -276,6 +318,12 @@ protected:
 	static UINT	ThreadStart(LPVOID pParam);
 	void OnRun();
 	void OnTrackerEvent(bool bSuccess, LPCTSTR pszReason, LPCTSTR pszTip = NULL);
+
+	friend class CBTTrackerRequests;
+
+private:
+	CBTTrackerRequest(const CBTTrackerRequest&);
+	CBTTrackerRequest& operator=(const CBTTrackerRequest&);
 };
 
 template<>
@@ -298,16 +346,29 @@ public:
 	CBTTrackerRequests();
 	~CBTTrackerRequests();
 
-	DWORD Add(CBTTrackerRequest* pRequest);
-	void Remove(DWORD nTransactionID);
+	// Create tracker request. Return: transaction ID (0 if error).
+	DWORD Request(CDownload* pDownload, BTTrackerEvent nEvent, DWORD nNumWant = 0, CTrackerEvent* pOnTrackerEvent = NULL);
+
 	CBTTrackerRequest* Lookup(DWORD nTransactionID) const;
+
 	BOOL Check(DWORD nTransactionID) const;
+
+	// Cancel tracker request
+	void Cancel(DWORD nTransactionID);
+
+	// Cancel all requests
+	void Clear();
 
 protected:
 	typedef CMap< DWORD, DWORD, CBTTrackerRequest*, CBTTrackerRequest* > CBTTrackerRequestMap;
 
 	mutable CCriticalSection	m_pSection;
 	CBTTrackerRequestMap		m_pTrackerRequests;	// Tracker ID to tracker pointer map
+
+	void Remove(DWORD nTransactionID);
+	CBTTrackerRequest* GetFirst() const;
+
+	friend class CBTTrackerRequest;
 };
 
 extern CBTTrackerRequests TrackerRequests;

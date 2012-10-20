@@ -63,7 +63,7 @@ CTorrentTrackersPage::CTorrentTrackersPage()
 	, m_nOriginalMode	( CBTInfo::tNull )
 	, m_nComplete		( 0 )
 	, m_nIncomplete		( 0 )
-	, m_pRequest		( NULL )
+	, m_nRequest		( NULL )
 {
 }
 
@@ -365,17 +365,7 @@ void CTorrentTrackersPage::OnDestroy()
 	KillTimer( 1 );
 
 	// Cancel unfinished yet request
-	if ( m_pRequest )
-	{
-		CDownloadSheet* pSheet = (CDownloadSheet*)GetParent();
-
-		CQuickLock oLock( Transfers.m_pSection );
-
-		if ( CDownload* pDownload = pSheet->GetDownload() )
-		{
-			pDownload->CancelRequest( m_pRequest );
-		}
-	}
+	TrackerRequests.Cancel( m_nRequest );
 
 	CPropertyPageAdv::OnDestroy();
 }
@@ -384,12 +374,12 @@ void CTorrentTrackersPage::OnTrackerEvent(bool bSuccess, LPCTSTR /*pszReason*/, 
 {
 	ASSUME_LOCK( Transfers.m_pSection );
 
-	m_pRequest = NULL; // Need no cancel
+	m_nRequest = 0; // Need no cancel
 
 	if ( bSuccess )
 	{
-		m_nComplete = pEvent->m_nSeeders;
-		m_nIncomplete = pEvent->m_nLeechers;
+		m_nComplete = pEvent->GetComplete();
+		m_nIncomplete = pEvent->GetIncomplete();
 	}
 
 	PostMessage( WM_TIMER, bSuccess ? 3 : 2 );
@@ -412,7 +402,7 @@ void CTorrentTrackersPage::OnTorrentRefresh()
 
 	m_wndRefresh.EnableWindow( FALSE );
 
-	m_pRequest = new CBTTrackerRequest( pDownload, BTE_TRACKER_SCRAPE, 0, this );
+	m_nRequest = TrackerRequests.Request( pDownload, BTE_TRACKER_SCRAPE, 0, this );
 }
 
 void CTorrentTrackersPage::OnTimer(UINT_PTR nIDEvent) 

@@ -24,6 +24,7 @@
 
 #include "BTClients.h"
 #include "BTInfo.h"
+#include "BTTrackerRequest.h"
 #include "CoolInterface.h"
 #include "DCClients.h"
 #include "DDEServer.h"
@@ -498,6 +499,7 @@ int CShareazaApp::ExitInstance()
 		DiscoveryServices.Clear();
 		HostCache.Clear();
 		Downloads.Clear( true );
+		TrackerRequests.Clear();
 		Library.Clear();
 		CoolMenu.Clear();
 		Network.Clear();

@@ -49,9 +49,9 @@ protected:
 	CComboBox			m_wndTrackerMode;
 	CListCtrl			m_wndTrackers;
 
-	DWORD				m_nComplete;
-	DWORD				m_nIncomplete;
-	CBTTrackerRequest*	m_pRequest;
+	DWORD				m_nComplete;				// Scrape request (Seeders)
+	DWORD				m_nIncomplete;				// Scrape request (Leechers)
+	DWORD				m_nRequest;					// Tracker request transaction ID
 
 	void UpdateInterface();							// Updated interface
 	BOOL ApplyTracker();							// Apply settings to download

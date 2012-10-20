@@ -62,9 +62,6 @@ private:
 	CList< CUploadTransferBT* >	m_pTorrentUploads;
 	DWORD						m_tTorrentChoke;
 
-	CList< CBTTrackerRequest* >	m_pRequests;		// In-process tracker requests
-	CMutex						m_pRequestsSection;	// m_pRequests guard
-
 // Operations
 public:
 	void			AddUpload(CUploadTransferBT* pUpload);
@@ -83,13 +80,6 @@ public:
 	BOOL			SetTorrent(const CBTInfo* pTorrent = NULL);
 	// Generate Peer ID
 	BOOL			GenerateTorrentDownloadID();
-	
-	// Add tracker request for counting
-	void			AddRequest(CBTTrackerRequest* pRequest);
-	// Remove tracker request
-	void			RemoveRequest(CBTTrackerRequest* pRequest);
-	// Cancel tracker request
-	void			CancelRequest(CBTTrackerRequest* pRequest);
 
 protected:
 	bool			RunTorrent(DWORD tNow);
