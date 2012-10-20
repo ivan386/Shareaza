@@ -296,10 +296,10 @@ CString URLEncode(LPCTSTR pszInputT)
 
 	// Set the null terminator in pszUTF8 to right where you think it should be, and point a new character pointer at it
 	pszUTF8[ nUTF8 - 1 ] = 0;
-	LPCSTR pszInput = pszUTF8;
+	const CHAR* __restrict pszInput = pszUTF8;
 
 	// Get the character buffer inside the output string, specifying how much larger to make it
-	LPTSTR pszOutput = strOutput.GetBuffer( static_cast< int >( ( nUTF8 - 1 ) * 3 + 1 ) ); // Times 3 in case every character gets encoded
+	TCHAR* __restrict pszOutput = strOutput.GetBuffer( static_cast< int >( ( nUTF8 - 1 ) * 3 + 1 ) ); // Times 3 in case every character gets encoded
 
 	// Loop for each character of input text
 	for ( ; *pszInput ; pszInput++ )
@@ -362,14 +362,14 @@ CString URLDecode(LPCTSTR pszInput)
 }
 
 // Decodes a properly formatted URI, then UTF-8 decodes it
-CString URLDecodeANSI(LPCTSTR pszInput)
+CString URLDecodeANSI(const TCHAR* __restrict pszInput)
 {
 	TCHAR szHex[3] = { 0, 0, 0 };	// A 3 character long array filled with 3 null terminators
 	CStringA strOutput;				// The output string, which starts out blank
 	int nHex;						// The hex code of the character we found
 
 	int nLength = (int)_tcslen( pszInput );
-	LPSTR pszOutput = strOutput.GetBuffer( nLength + 1 );
+	CHAR* __restrict pszOutput = strOutput.GetBuffer( nLength + 1 );
 
 	// Loop for each character of input text
 	for ( ; *pszInput ; pszInput++ )
@@ -452,14 +452,14 @@ CString URLDecodeANSI(LPCTSTR pszInput)
 }
 
 // Decodes encoded characters in a unicode string
-CString URLDecodeUnicode(LPCTSTR pszInput)
+CString URLDecodeUnicode(const TCHAR* __restrict pszInput)
 {
 	TCHAR szHex[3] = { 0, 0, 0 };	// A 3 character long array filled with 3 null terminators
 	CString strOutput;				// The output string, which starts out blank
 	int nHex;						// The hex code of the character we found
 
 	int nLength = (int)_tcslen( pszInput );
-	LPTSTR pszOutput = strOutput.GetBuffer( nLength + 1 );
+	TCHAR* __restrict pszOutput = strOutput.GetBuffer( nLength + 1 );
 
 	for ( ; *pszInput ; ++pszInput )
 	{
@@ -1044,7 +1044,7 @@ CString Escape(const CString& strValue)
 	return bChanged ? strXML : strValue;
 }
 
-CString Unescape(LPCTSTR pszXML, int nLength)
+CString Unescape(const TCHAR* __restrict pszXML, int nLength)
 {
 	CString strValue;
 
@@ -1054,26 +1054,24 @@ CString Unescape(LPCTSTR pszXML, int nLength)
 	if ( nLength < 0 )
 		nLength = (int)_tcslen( pszXML );
 
-	LPTSTR pszValue = strValue.GetBuffer( nLength + 4 );
-	LPTSTR pszOut = pszValue;
-	LPTSTR pszNull = (LPTSTR)pszXML + nLength;
-	TCHAR cNull = *pszNull;
-	*pszNull = 0;
+	TCHAR* __restrict pszValue = strValue.GetBuffer( nLength + 4 );
+	TCHAR* __restrict pszOut = pszValue;
+	const TCHAR* __restrict pszNull = pszXML + nLength;
 
-	while ( *pszXML && pszXML < pszNull )
+	while ( pszXML < pszNull && *pszXML )
 	{
 		if ( IsSpace( *pszXML ) && *pszXML != 0xa0 )	// Keep non-breaking space
 		{
 			if ( pszValue != pszOut ) *pszOut++ = ' ';
 			pszXML++;
 			while ( *pszXML && IsSpace( *pszXML ) && *pszXML != 0xa0 ) pszXML++;
-			if ( ! *pszXML || pszXML >= pszNull ) break;
+			if ( pszXML >= pszNull || ! *pszXML ) break;
 		}
 
 		if ( *pszXML == '&' )
 		{
 			pszXML++;
-			if ( ! *pszXML || pszXML >= pszNull ) break;
+			if ( pszXML >= pszNull || ! *pszXML ) break;
 
 			if ( _tcsnicmp( pszXML, _PT("amp;") ) == 0 )
 			{
@@ -1109,13 +1107,13 @@ CString Unescape(LPCTSTR pszXML, int nLength)
 			{
 				int nChar;
 				pszXML++;
-				if ( ! *pszXML || pszXML >= pszNull || ! _istdigit( *pszXML ) ) break;
+				if ( pszXML >= pszNull || ! *pszXML || ! _istdigit( *pszXML ) ) break;
 
 				if ( _stscanf( pszXML, _T("%lu;"), &nChar ) == 1 )
 				{
 					*pszOut++ = (TCHAR)nChar;
 					while ( *pszXML && *pszXML != ';' ) pszXML++;
-					if ( ! *pszXML || pszXML >= pszNull ) break;
+					if ( pszXML >= pszNull || ! *pszXML ) break;
 					pszXML++;
 				}
 			}
@@ -1131,8 +1129,6 @@ CString Unescape(LPCTSTR pszXML, int nLength)
 	}
 
 	ASSERT( pszNull == pszXML );
-	*pszNull = cNull;
-
 	ASSERT( pszOut - pszValue <= nLength );
 	strValue.ReleaseBuffer( (int)( pszOut - pszValue ) );
 

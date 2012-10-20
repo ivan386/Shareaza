@@ -85,10 +85,10 @@ CString URLDecode(__in_bcount(nInput) LPCSTR psInput, __in int nInput);
 CString URLDecode(__in const CStringA& strInput);
 
 // Decodes properly encoded URLs
-CString URLDecodeANSI(LPCTSTR pszInput);
+CString URLDecodeANSI(const TCHAR* __restrict pszInput);
 
 // Decodes URLs with extended characters
-CString URLDecodeUnicode(LPCTSTR pszInput);
+CString URLDecodeUnicode(const TCHAR* __restrict pszInput);
 
 // Case independent string search
 LPCTSTR _tcsistr(LPCTSTR pszString, LPCTSTR pszSubString);
@@ -146,4 +146,4 @@ void SafeString(CString& strInput);
 CString Escape(const CString& strValue);
 
 // Unescape unsafe symbols
-CString Unescape(LPCTSTR pszXML, int nLength = -1);
+CString Unescape(const TCHAR* __restrict pszXML, int nLength = -1);
