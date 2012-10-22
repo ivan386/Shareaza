@@ -1044,11 +1044,9 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 					else
 					{
 						// Get new date
-						int nChars = GetDateFormat( LOCALE_USER_DEFAULT, DATE_SHORTDATE,
-							&st, NULL, szBuffer, _countof( szBuffer ) );
+						int nChars = GetDateFormat( LOCALE_USER_DEFAULT, DATE_SHORTDATE, &st, NULL, szBuffer, _countof( szBuffer ) );
 						szBuffer[ nChars - 1 ] = _T(' ');
-						GetTimeFormat( LOCALE_USER_DEFAULT, 0,
-							&st, NULL, szBuffer + nChars, _countof( szBuffer ) );
+						GetTimeFormat( LOCALE_USER_DEFAULT, 0, &st, NULL, szBuffer + nChars, _countof( szBuffer ) - nChars );
 						pszText = szBuffer;
 
 						// Save to cache
