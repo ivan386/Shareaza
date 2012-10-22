@@ -33,7 +33,7 @@ class CPlugins : public CThreadImpl
 public:
 	CPlugins();
 
-	CCriticalSection	m_pSection;
+	CMutex		m_pSection;
 
 	// Register all plugins in this folder
 	BOOL		Register(const CString& sGeneralPath);
