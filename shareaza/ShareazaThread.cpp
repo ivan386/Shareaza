@@ -1,7 +1,7 @@
 //
 // ShareazaThread.cpp
 //
-// Copyright (c) Shareaza Development Team, 2008-2009.
+// Copyright (c) Shareaza Development Team, 2008-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -80,7 +80,15 @@ int CRazaThread::Run()
 		ret = CWinThread::Run();
 
 	if ( bCOM )
-		OleUninitialize();
+	{
+		__try
+		{
+			OleUninitialize();
+		}
+		__except( EXCEPTION_EXECUTE_HANDLER )
+		{
+		}
+	}
 
 	return ret;
 }
