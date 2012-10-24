@@ -799,9 +799,6 @@ void CLiveListCtrl::Apply()
 			++i;
 	}
 
-	// Tune virtual list
-	SetItemCountEx( (int)m_pItems.size() );
-
 	// Recreate index
 	m_pIndex.clear();
 	m_pIndex.reserve( m_pItems.size() );
@@ -812,6 +809,9 @@ void CLiveListCtrl::Apply()
 
 		m_pIndex.push_back( pItem );
 	}
+
+	// Tune virtual list
+	SetItemCountEx( (int)m_pItems.size() );
 
 	Sort();
 }
@@ -916,7 +916,6 @@ void CLiveListCtrl::OnLvnGetdispinfoW(NMHDR *pNMHDR, LRESULT *pResult)
 		return;
 
 	const CLiveItemPtr pItem = m_pIndex[ pDispInfo.iItem ];
-
 
 	if ( pDispInfo.mask & LVIF_TEXT )
 	{
