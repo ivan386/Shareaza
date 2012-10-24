@@ -1,7 +1,7 @@
 //
 // ThreadImpl.h
 //
-// Copyright (c) Shareaza Development Team, 2008-2009.
+// Copyright (c) Shareaza Development Team, 2008-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -28,10 +28,10 @@
 class CThreadImpl
 {
 public:
-	CThreadImpl() :
-		m_bCompleted( false ),
-		m_bThread( false ),
-		m_hThread( NULL )
+	CThreadImpl()
+		: m_bCompleted	( false )
+		, m_pCancel		( FALSE, TRUE )
+		, m_hThread		( NULL )
 	{
 	}
 	virtual ~CThreadImpl()
@@ -41,7 +41,7 @@ public:
 
 private:
 	volatile bool	m_bCompleted;	// TRUE - thread runs at least once
-	volatile bool	m_bThread;		// TRUE - enable thread; FALSE - terminate thread.
+	CEvent			m_pCancel;		// Thread cancel event (signaled if abort requested)
 	volatile HANDLE m_hThread;		// Thread handle
 	CEvent			m_pWakeup;		// Thread wakeup event (optional)
 
@@ -66,7 +66,7 @@ public:
 		if ( ! IsThreadAlive() )
 		{
 			m_bCompleted = false;	// Reset complete status
-			m_bThread = true;		// Enable thread run
+			m_pCancel.ResetEvent();	// Enable thread run
 			m_hThread = ::BeginThread( szName, ThreadStart, this, nPriority );
 		}
 		return ( m_hThread != NULL );
@@ -110,9 +110,10 @@ public:
 		return m_bCompleted;
 	}
 
-	inline bool IsThreadEnabled() const throw()
+	// Can thread continue?
+	inline bool IsThreadEnabled(DWORD dwTimeout = 0) const throw()
 	{
-		return m_bThread;
+		return ( WaitForSingleObject( m_pCancel, dwTimeout ) == WAIT_TIMEOUT );
 	}
 
 	inline bool IsThreadAlive() const throw()
@@ -122,7 +123,7 @@ public:
 
 	inline void Exit() throw()
 	{
-		m_bThread = false;
+		m_pCancel.SetEvent();
 	}
 
 	inline bool SetThreadPriority(int nPriority) throw()
