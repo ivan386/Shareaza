@@ -93,7 +93,7 @@ BOOL CFileMetadataPage::OnInitDialog()
 	{
 		CQuickLock oLock( Library.m_pSection );
 
-		for ( POSITION pos = pFiles->GetIterator() ; pos ; )
+		for ( POSITION pos = pFiles->GetHeadPosition() ; pos ; )
 		{
 			if ( CLibraryFile* pFile = pFiles->GetNextFile( pos ) )
 			{
@@ -125,7 +125,7 @@ BOOL CFileMetadataPage::OnInitDialog()
 		{
 			CQuickLock oLock( Library.m_pSection );
 
-			for ( POSITION pos1 = pFiles->GetIterator() ; pos1 ; )
+			for ( POSITION pos1 = pFiles->GetHeadPosition() ; pos1 ; )
 			{
 				if ( CLibraryFile* pFile = pFiles->GetNextFile( pos1 ) )
 				{
@@ -279,7 +279,7 @@ void CFileMetadataPage::OnOK()
 	{
 		CQuickLock oLock( Library.m_pSection );
 
-		for ( POSITION pos1 = pFiles->GetIterator() ; pos1 ; )
+		for ( POSITION pos1 = pFiles->GetHeadPosition() ; pos1 ; )
 		{
 			if ( CLibraryFile* pFile = pFiles->GetNextFile( pos1 ) )
 			{
@@ -309,7 +309,7 @@ void CFileMetadataPage::OnOK()
 	{
 		CQuickLock oLock( Library.m_pSection );
 
-		for ( POSITION pos1 = pFiles->GetIterator() ; pos1 ; )
+		for ( POSITION pos1 = pFiles->GetHeadPosition() ; pos1 ; )
 		{
 			if ( CLibraryFile* pFile = pFiles->GetNextFile( pos1 ) )
 			{

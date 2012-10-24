@@ -93,11 +93,6 @@ public:
 		return m_List.GetHeadPosition();
 	}
 
-	inline POSITION GetIterator() const
-	{
-		return m_List.GetHeadPosition();
-	}
-
 	inline POSITION GetTailPosition() const
 	{
 		return m_List.GetTailPosition();

@@ -117,7 +117,7 @@ BOOL CFileSharingPage::OnInitDialog()
 			CLibraryListPtr pList( GetList() );
 			if ( pList )
 			{
-				for ( POSITION pos = pList->GetIterator() ; pos ; )
+				for ( POSITION pos = pList->GetHeadPosition() ; pos ; )
 				{
 					if ( CLibraryFile* pFile = pList->GetNextFile( pos ) )
 					{
@@ -169,7 +169,7 @@ void CFileSharingPage::OnOK()
 	{
 		CQuickLock oLock( Library.m_pSection );
 
-		for ( POSITION pos = pList->GetIterator() ; pos ; )
+		for ( POSITION pos = pList->GetHeadPosition() ; pos ; )
 		{
 			if ( CLibraryFile* pFile = pList->GetNextFile( pos ) )
 			{
