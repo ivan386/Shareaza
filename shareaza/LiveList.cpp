@@ -1,7 +1,7 @@
 //
 // LiveList.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -908,27 +908,32 @@ UINT CLiveListCtrl::GetItemOverlayMask(int nItem) const
 
 void CLiveListCtrl::OnLvnGetdispinfoW(NMHDR *pNMHDR, LRESULT *pResult)
 {
-	LVITEM& pDispInfo = reinterpret_cast<NMLVDISPINFO*>(pNMHDR)->item;
+	LVITEM& pDispInfo = reinterpret_cast< NMLVDISPINFO* >( pNMHDR )->item;
 
-	ASSERT( pDispInfo.iItem >= 0 && pDispInfo.iItem < (int)m_pIndex.size() );
+	*pResult = 0;
 
-	CLiveItemPtr pItem = m_pIndex[ pDispInfo.iItem ];
+	if ( pDispInfo.iItem < 0 || pDispInfo.iItem >= (int)m_pIndex.size() )
+		return;
 
-	if ( ( pDispInfo.mask & LVIF_TEXT ) &&
-		pDispInfo.iSubItem >= 0 &&
-		pDispInfo.iSubItem < pItem->m_pColumn.GetSize() )
+	const CLiveItemPtr pItem = m_pIndex[ pDispInfo.iItem ];
+
+
+	if ( pDispInfo.mask & LVIF_TEXT )
 	{
-		wcsncpy_s( (LPWSTR)pDispInfo.pszText, pDispInfo.cchTextMax,
-			CT2CW( pItem->m_pColumn[ pDispInfo.iSubItem ] ),
-			pDispInfo.cchTextMax - 1 );
+		if ( pDispInfo.iSubItem >= 0 && pDispInfo.iSubItem < pItem->m_pColumn.GetSize() )
+		{
+			CString sText = pItem->m_pColumn.GetAt( pDispInfo.iSubItem );
+			wcsncpy_s( (LPWSTR)pDispInfo.pszText, pDispInfo.cchTextMax,
+				sText, pDispInfo.cchTextMax - 1 );
+		}
 	}
 
-	if ( pDispInfo.iSubItem >= 0 &&
-		pDispInfo.iSubItem < pItem->m_pColumn.GetSize() &&
-		pItem->m_nImage[ pDispInfo.iSubItem ] >= 0 )
+	if ( pDispInfo.mask & LVIF_IMAGE )
 	{
-		pDispInfo.mask |= LVIF_IMAGE;
-		pDispInfo.iImage = pItem->m_nImage[ pDispInfo.iSubItem ];
+		if ( pDispInfo.iSubItem >= 0 && pDispInfo.iSubItem < pItem->m_pColumn.GetSize() )
+		{
+			pDispInfo.iImage = pItem->m_nImage[ pDispInfo.iSubItem ];
+		}
 	}
 
 	if ( pDispInfo.mask & LVIF_STATE ) 
@@ -941,33 +946,35 @@ void CLiveListCtrl::OnLvnGetdispinfoW(NMHDR *pNMHDR, LRESULT *pResult)
 	{
 		pDispInfo.lParam = pItem->m_nParam;
 	}
-
-	*pResult = 0;
 }
 
 void CLiveListCtrl::OnLvnGetdispinfoA(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	LVITEM& pDispInfo = reinterpret_cast<NMLVDISPINFO*>(pNMHDR)->item;
 
-	ASSERT( pDispInfo.iItem >= 0 && pDispInfo.iItem < (int)m_pIndex.size() );
+	*pResult = 0;
 
-	CLiveItemPtr pItem = m_pIndex[ pDispInfo.iItem ];
+	if ( pDispInfo.iItem < 0 || pDispInfo.iItem >= (int)m_pIndex.size() )
+		return;
 
-	if ( ( pDispInfo.mask & LVIF_TEXT ) &&
-		pDispInfo.iSubItem >= 0 &&
-		pDispInfo.iSubItem < pItem->m_pColumn.GetSize() )
+	const CLiveItemPtr pItem = m_pIndex[ pDispInfo.iItem ];
+
+	if ( pDispInfo.mask & LVIF_TEXT )
 	{
-		strncpy_s( (LPSTR)pDispInfo.pszText, pDispInfo.cchTextMax,
-			(LPCSTR)CT2A( pItem->m_pColumn[ pDispInfo.iSubItem ] ),
-			pDispInfo.cchTextMax - 1 );
+		if ( pDispInfo.iSubItem >= 0 && pDispInfo.iSubItem < pItem->m_pColumn.GetSize() )
+		{
+			CString sText = pItem->m_pColumn.GetAt( pDispInfo.iSubItem );
+			WideCharToMultiByte( CP_ACP, 0, sText, -1,
+				(LPSTR)pDispInfo.pszText, pDispInfo.cchTextMax, NULL, NULL );
+		}
 	}
 
-	if ( pDispInfo.iSubItem >= 0 &&
-		 pDispInfo.iSubItem < pItem->m_pColumn.GetSize() &&
-		 pItem->m_nImage[ pDispInfo.iSubItem ] >= 0 )
+	if ( pDispInfo.mask & LVIF_IMAGE )
 	{
-		pDispInfo.mask |= LVIF_IMAGE;
-		pDispInfo.iImage = pItem->m_nImage[ pDispInfo.iSubItem ];
+		if ( pDispInfo.iSubItem >= 0 && pDispInfo.iSubItem < pItem->m_pColumn.GetSize() )
+		{
+			pDispInfo.iImage = pItem->m_nImage[ pDispInfo.iSubItem ];
+		}
 	}
 
 	if ( pDispInfo.mask & LVIF_STATE ) 
@@ -980,8 +987,6 @@ void CLiveListCtrl::OnLvnGetdispinfoA(NMHDR *pNMHDR, LRESULT *pResult)
 	{
 		pDispInfo.lParam = pItem->m_nParam;
 	}
-
-	*pResult = 0;
 }
 
 void CLiveListCtrl::OnLvnOdfinditemW(NMHDR * /*pNMHDR*/, LRESULT *pResult)

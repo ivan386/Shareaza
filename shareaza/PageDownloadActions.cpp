@@ -1,7 +1,7 @@
 //
 // PageDownloadActions.cpp
 //
-// Copyright (c) Shareaza Development Team, 2008-2011.
+// Copyright (c) Shareaza Development Team, 2008-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -331,7 +331,11 @@ void CDownloadActionsPage::OnMergeAndVerify()
 		OFN_HIDEREADONLY | OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST | OFN_NOCHANGEDIR |
 		OFN_ALLOWMULTISELECT, NULL, this );
 
-	CAutoPtr< TCHAR > szFiles( new TCHAR[ 2048 ] );
+	CAutoVectorPtr< TCHAR >szFiles( new TCHAR[ 2048 ] );
+	if ( ! szFiles )
+		// Out of memory
+		return;
+
 	*szFiles = 0;
 	dlgSelectFile.GetOFN().lpstrFile = szFiles;
 	dlgSelectFile.GetOFN().nMaxFile = 2048;

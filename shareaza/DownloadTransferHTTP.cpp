@@ -1395,11 +1395,15 @@ BOOL CDownloadTransferHTTP::ReadContent()
 
 		if ( m_bRecvBackwards )
 		{
-			BYTE* pBuffer = new BYTE[ nLength ];
+			CAutoVectorPtr< BYTE >pBuffer( new BYTE[ nLength ] );
+			if ( ! pBuffer )
+			{
+				// Out of memory
+				Close( TRI_TRUE );
+				return FALSE;
+			}
 			CBuffer::ReverseBuffer( pInput->m_pBuffer, pBuffer, nLength );
-			bSubmit = m_pDownload->SubmitData(
-				m_nOffset + m_nLength - m_nPosition - nLength, pBuffer, nLength );
-			delete [] pBuffer;
+			bSubmit = m_pDownload->SubmitData( m_nOffset + m_nLength - m_nPosition - nLength, pBuffer, nLength );
 		}
 		else
 		{

@@ -629,6 +629,10 @@ int CDownloadWithSources::AddSourceURLs(LPCTSTR pszURLs, BOOL bURN, BOOL bFailed
 
 BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 {
+	if ( ! pSource )
+		// Out of memory
+		return FALSE;
+
 	//Check/Reject if source is invalid
 	if ( ! pSource->m_bPushOnly )
 	{
@@ -939,9 +943,11 @@ void CDownloadWithSources::AddFailedSource(LPCTSTR pszUrl, bool bLocal, bool bOf
 
 	if ( LookupFailedSource( pszUrl ) == NULL )
 	{
-		CFailedSource* pBadSource = new CFailedSource( pszUrl, bLocal, bOffline );
-		m_pFailedSources.AddTail( pBadSource );
-		theApp.Message( MSG_DEBUG, L"Bad sources count for \"%s\": %i", m_sName, m_pFailedSources.GetCount() );
+		if ( CFailedSource* pBadSource = new CFailedSource( pszUrl, bLocal, bOffline ) )
+		{
+			m_pFailedSources.AddTail( pBadSource );
+			theApp.Message( MSG_DEBUG, L"Bad sources count for \"%s\": %i", m_sName, m_pFailedSources.GetCount() );
+		}
 	}
 }
 
@@ -1239,6 +1245,9 @@ void CDownloadWithSources::Serialize(CArchive& ar, int nVersion /* DOWNLOAD_SER_
 		if ( ar.ReadCount() )
 		{
 			m_pXML = new CXMLElement();
+			if ( ! m_pXML )
+				AfxThrowMemoryException();
+
 			m_pXML->Serialize( ar );
 		}
 	}

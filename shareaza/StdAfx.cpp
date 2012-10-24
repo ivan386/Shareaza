@@ -130,3 +130,19 @@ UINT GetBestHashTableSize(UINT nCount)
 	const UINT value  = ( nCount + nCount / 5 );
 	return * std::lower_bound( primes, last, value, std::less< UINT >() );	// + 20%
 }
+
+// Disable MFC exception if the memory allocation fails
+
+class NoThrowNew
+{
+public:
+	inline NoThrowNew() throw() { AfxSetNewHandler( &NoThrowNew::OutOfMemoryHandler ); }
+
+private:
+	static int AFX_CDECL OutOfMemoryHandler(size_t /* nSize */)
+	{
+		return 0;
+	}
+};
+
+NoThrowNew initNoThrowNew;

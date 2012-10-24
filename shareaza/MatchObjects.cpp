@@ -119,7 +119,7 @@ CMatchList::CMatchList(CBaseMatchWnd* pParent) : m_pParent( pParent )
 	m_pMapBTH	= new CMatchFile*[ MAP_SIZE ];
 	m_pMapMD5	= new CMatchFile*[ MAP_SIZE ];
 	m_pszFilter	= NULL;
-	m_pszRegexPattern = NULL;
+	m_strRegexPattern.Empty();
 	m_pColumns	= NULL;
 	m_nColumns	= 0;
 
@@ -141,7 +141,6 @@ CMatchList::~CMatchList()
 
 	delete [] m_pColumns;
 	delete [] m_pszFilter;
-	delete [] m_pszRegexPattern;
 
 	delete [] m_pMapED2K;
 	delete [] m_pMapTiger;
@@ -210,7 +209,7 @@ void CMatchList::AddHits(const CQueryHit* pHits, const CQuerySearch* pFilter)
 			Security.IsDenied( pNext ) ||
 			pNext->m_sName.IsEmpty() ||		// Empty name
 			pNext->m_nSize == 0 ||			// size is 0
-			pNext->m_nSize == SIZE_UNKNOWN )	// size is SIZE_UNKNOWN (0xFFFFFFFFFFFFFFFF). NOTE because of Gnutella without GGEP
+			pNext->m_nSize == SIZE_UNKNOWN )// size is SIZE_UNKNOWN (0xFFFFFFFFFFFFFFFF). NOTE because of Gnutella without GGEP
 											// "LF" extension can only handle up to 4GB-1B size(can be 2GB-1 depending on sign
 											// handling of the value), large files can have SIZE_UNKNOWN value if no GGEP "LF"
 											// was on QueryHit packet. but because of current implementation of list (always
@@ -221,6 +220,9 @@ void CMatchList::AddHits(const CQueryHit* pHits, const CQuerySearch* pFilter)
 		}
 
 		CQueryHit* pHit = new CQueryHit( *pNext );
+		if ( ! pHit )
+			// Out of memory
+			break;
 
 		pHit->m_bNew = m_bNew;
 
@@ -328,25 +330,38 @@ void CMatchList::AddHits(const CQueryHit* pHits, const CQuerySearch* pFilter)
 		{
 			// New file hit
 			pFile = new CMatchFile( this, pHit );
+			if ( ! pFile )
+			{
+				// Out of memory
+				delete pHit;
+				break;
+			}
+
 			pFile->m_bNew = m_bNew;
+
+			if ( m_nFiles + 1 > m_nBuffer )
+			{
+				if ( CMatchFile** pFiles = new CMatchFile*[ m_nBuffer + BUFFER_GROW ] )
+				{
+					if ( m_pFiles )
+					{
+						CopyMemory( pFiles, m_pFiles, m_nFiles * sizeof( CMatchFile* ) );
+						delete [] m_pFiles;
+					}
+					m_nBuffer += BUFFER_GROW;
+					m_pFiles = pFiles;
+				}
+				else
+				{
+					// Out of memory
+					delete pFile;
+					break;
+				}
+			}
 
 			pMap = m_pSizeMap + (DWORD)( pFile->m_nSize & 0xFF );
 			pFile->m_pNextSize = *pMap;
 			*pMap = pFile;
-
-			if ( m_nFiles + 1 > m_nBuffer )
-			{
-				m_nBuffer += BUFFER_GROW;
-				CMatchFile** pFiles = new CMatchFile*[ m_nBuffer ];
-
-				if ( m_pFiles )
-				{
-					CopyMemory( pFiles, m_pFiles, m_nFiles * sizeof( CMatchFile* ) );
-					delete [] m_pFiles;
-				}
-
-				m_pFiles = pFiles;
-			}
 
 			if ( m_nSortColumn >= 0 )
 			{
@@ -681,11 +696,7 @@ bool CMatchList::CreateRegExpFilter(CString strPattern, CString& strFilter)
 {
 	if ( strPattern.IsEmpty() )
 	{
-		if ( m_pszRegexPattern )
-		{
-			delete m_pszRegexPattern;
-			m_pszRegexPattern = NULL;
-		}
+		m_strRegexPattern.Empty();
 		return false;
 	}
 
@@ -768,12 +779,7 @@ bool CMatchList::CreateRegExpFilter(CString strPattern, CString& strFilter)
 
 	strFilter = strNewPattern;
 
-	if ( m_pszRegexPattern )
-		delete m_pszRegexPattern;
-
-	m_pszRegexPattern = new TCHAR[ strNewPattern.GetLength() + 1 ];
-	CopyMemory( m_pszRegexPattern, (LPCTSTR)strNewPattern,
-				sizeof(TCHAR) * ( strNewPattern.GetLength() + 1 ) );
+	m_strRegexPattern = strNewPattern;
 
 	return bReplaced;
 }
@@ -899,9 +905,9 @@ BOOL CMatchList::FilterHit(CQueryHit* pHit)
 			return FALSE;
 	}
 
-	if ( m_bRegExp && m_pszRegexPattern )
+	if ( m_bRegExp && ! m_strRegexPattern.IsEmpty() )
 	{
-		if ( RegExp::Match( m_pszRegexPattern, pHit->m_sName ) )
+		if ( RegExp::Match( m_strRegexPattern, pHit->m_sName ) )
 			return FALSE;
 	}
 

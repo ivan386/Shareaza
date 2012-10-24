@@ -289,7 +289,10 @@ CString URLEncode(LPCTSTR pszInputT)
 	if ( nUTF8 < 2 ) return strOutput;
 
 	// Make a new array of CHARs which is nUTF8 bytes long
-	LPSTR pszUTF8 = new CHAR[ static_cast< UINT>( nUTF8 ) ];
+	CAutoVectorPtr< CHAR >pszUTF8( new CHAR[ static_cast< UINT>( nUTF8 ) ] );
+	if ( ! pszUTF8 )
+		// Out of memory
+		return strOutput;
 
 	// Call WideCharToMultiByte again, this time it has the output buffer and will actually do the conversion
 	WideCharToMultiByte( CP_UTF8, 0, pszInputT, -1, pszUTF8, nUTF8, NULL, NULL );
@@ -323,10 +326,6 @@ CString URLEncode(LPCTSTR pszInputT)
 	// Null terminate the output text, and then close our direct manipulation of the string
 	*pszOutput = 0;
 	strOutput.ReleaseBuffer(); // This closes the string so Windows can again start managing its memory for us
-
-	// Free the memory we allocated with the new keyword above
-	delete [] pszUTF8;
-
 
 	// Return the URL-encoded, %20-filled text
 	return strOutput;
@@ -678,7 +677,11 @@ CString LoadFile(LPCTSTR pszPath)
 		// Too big file (> 4 MB)
 		return strXML;
 
-	BYTE* pBuf = new BYTE[ nByte ];
+	CAutoVectorPtr< BYTE >pBuf( new BYTE[ nByte ] );
+	if ( ! pBuf )
+		// Out of memory
+		return strXML;
+
 	try
 	{
 		pFile.Read( pBuf, nByte );
@@ -688,7 +691,6 @@ CString LoadFile(LPCTSTR pszPath)
 		// File read error
 		pFile.Abort();
 		pException->Delete();
-		delete [] pBuf;
 		return strXML;
 	}
 	pFile.Close();
@@ -727,7 +729,6 @@ CString LoadFile(LPCTSTR pszPath)
 
 		strXML = UTF8Decode( (LPCSTR)pByte, nByte );
 	}
-	delete [] pBuf;
 
 	return strXML;
 }
