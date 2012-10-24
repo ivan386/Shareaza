@@ -92,7 +92,7 @@ public:
 	BOOL				AddSourceURL(LPCTSTR pszURL, BOOL bURN = FALSE, FILETIME* pLastSeen = NULL, int nRedirectionCount = 0, BOOL bFailed = FALSE);
 	int					AddSourceURLs(LPCTSTR pszURLs, BOOL bURN = FALSE, BOOL bFailed = FALSE);
 	// Remove source from list, add it to failed sources if bBan == TRUE
-	void				RemoveSource(const CDownloadSource* pSource, BOOL bBan);
+	void				RemoveSource(CDownloadSource* pSource, BOOL bBan);
 
 	virtual BOOL		OnQueryHits(const CQueryHit* pHits);
 	virtual void		Serialize(CArchive& ar, int nVersion /* DOWNLOAD_SER_VERSION */);
@@ -113,9 +113,9 @@ protected:
 	void				SortSource(CDownloadSource* pSource, BOOL bTop);
 	void				SortSource(CDownloadSource* pSource);
 	// Add new source to list, updating counters
-	void				InternalAdd(const CDownloadSource* pSource);
+	void				InternalAdd(CDownloadSource* pSource);
 	// Remove existing source from list, updating counters
-	void				InternalRemove(const CDownloadSource* pSource);
+	void				InternalRemove(CDownloadSource* pSource);
 
 	void				VoteSource(LPCTSTR pszUrl, bool bPositively);
 };

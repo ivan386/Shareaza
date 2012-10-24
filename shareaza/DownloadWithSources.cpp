@@ -633,6 +633,13 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 		// Out of memory
 		return FALSE;
 
+	if ( GetEffectiveSourceCount() >= Settings.Downloads.SourcesWanted )
+	{
+		// Too many sources
+		delete pSource;
+		return FALSE;
+	}
+
 	//Check/Reject if source is invalid
 	if ( ! pSource->m_bPushOnly )
 	{
@@ -737,7 +744,7 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 					pG2Source->m_tAttempt = pSource->m_tAttempt;	// Set the same connection delay
 					pG2Source->m_nProtocol = PROTOCOL_HTTP;
 
-					InternalAdd( pG2Source );
+					AddSourceInternal( pG2Source );
 				}
 			}
 		}
@@ -1000,12 +1007,12 @@ void CDownloadWithSources::ClearFailedSources()
 	}
 }
 
-void CDownloadWithSources::InternalAdd(const CDownloadSource* pSource)
+void CDownloadWithSources::InternalAdd(CDownloadSource* pSource)
 {
 	ASSUME_LOCK( Transfers.m_pSection );
 
-	ASSERT( m_pSources.Find( const_cast< CDownloadSource* >( pSource ) ) == NULL );
-	m_pSources.AddTail( const_cast< CDownloadSource* >( pSource ) );
+	ASSERT( m_pSources.Find( pSource ) == NULL );
+	m_pSources.AddTail( pSource );
 
 	switch ( pSource->m_nProtocol )
 	{
@@ -1035,11 +1042,11 @@ void CDownloadWithSources::InternalAdd(const CDownloadSource* pSource)
 	}
 }
 
-void CDownloadWithSources::InternalRemove(const CDownloadSource* pSource)
+void CDownloadWithSources::InternalRemove(CDownloadSource* pSource)
 {
 	ASSUME_LOCK( Transfers.m_pSection );
 
-	POSITION posSource = m_pSources.Find( const_cast< CDownloadSource* >( pSource ) );
+	POSITION posSource = m_pSources.Find( pSource );
 	ASSERT( posSource != NULL );
 	m_pSources.RemoveAt( posSource );
 
@@ -1074,7 +1081,7 @@ void CDownloadWithSources::InternalRemove(const CDownloadSource* pSource)
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithSources remove a source
 
-void CDownloadWithSources::RemoveSource(const CDownloadSource* pSource, BOOL bBan)
+void CDownloadWithSources::RemoveSource(CDownloadSource* pSource, BOOL bBan)
 {
 	ASSUME_LOCK( Transfers.m_pSection );
 
@@ -1200,11 +1207,11 @@ void CDownloadWithSources::Serialize(CArchive& ar, int nVersion /* DOWNLOAD_SER_
 	CDownloadBase::Serialize( ar, nVersion );
 
 	CQuickLock pLock( Transfers.m_pSection );
-	
+
 	if ( ar.IsStoring() )
 	{
 		// Don't save more than 500 sources
-		DWORD_PTR nSources = min( GetCount(), 500 );
+		DWORD_PTR nSources = min( (DWORD_PTR)GetCount(), (DWORD_PTR)Settings.Downloads.SourcesWanted );
 		ar.WriteCount( nSources );
 		
 		for ( POSITION posSource = GetIterator() ; posSource && nSources ; nSources-- )
@@ -1238,7 +1245,7 @@ void CDownloadWithSources::Serialize(CArchive& ar, int nVersion /* DOWNLOAD_SER_
 			}
 
 			// Add to the list no more than 500 sources
-			if ( nSources < 500 )
+			if ( nSources < (DWORD_PTR)Settings.Downloads.SourcesWanted )
 				InternalAdd( pSource.Detach() );
 		}
 		

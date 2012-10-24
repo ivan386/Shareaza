@@ -1,7 +1,7 @@
 //
 // DownloadTransferBT.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -628,7 +628,7 @@ BOOL CDownloadTransferBT::OnSourceResponse(CBTPacket* pPacket)
 	
 	int nCount = 0;
 	
-	for ( int nPeer = 0 ; nPeer < pPeers->GetCount() ; nPeer++ )
+	for ( int nPeer = 0 ; nPeer < pPeers->GetCount() && m_pDownload->GetEffectiveSourceCount() < Settings.Downloads.SourcesWanted; nPeer++ )
 	{
 		const CBENode* pPeer = pPeers->GetNode( nPeer );
 		if ( ! pPeer->IsType( CBENode::beDict ) ) continue;
@@ -657,15 +657,12 @@ BOOL CDownloadTransferBT::OnSourceResponse(CBTPacket* pPacket)
 			const CBENode* pID = pPeer->GetNode( BT_DICT_PEER_ID );
 			if ( ! pID->IsType( CBENode::beString ) || pID->m_nValue != Hashes::BtGuid::byteCount )
 			{
-				nCount += m_pDownload->AddSourceBT( Hashes::BtGuid(),
-					&saPeer.sin_addr, htons( saPeer.sin_port ) );
+				nCount += m_pDownload->AddSourceBT( Hashes::BtGuid(), &saPeer.sin_addr, htons( saPeer.sin_port ) );
 			}
 			else
 			{
-				Hashes::BtGuid tmp( *static_cast< const Hashes::BtGuid::RawStorage* >(
-					pID->m_pValue ) );
-				nCount += m_pDownload->AddSourceBT( tmp,
-					&saPeer.sin_addr, htons( saPeer.sin_port ) );
+				Hashes::BtGuid tmp( *static_cast< const Hashes::BtGuid::RawStorage* >( pID->m_pValue ) );
+				nCount += m_pDownload->AddSourceBT( tmp, &saPeer.sin_addr, htons( saPeer.sin_port ) );
 			}
 		}
 	}

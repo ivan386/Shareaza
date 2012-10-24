@@ -517,7 +517,7 @@ void CSettings::Load()
 	Add( _T("Downloads"), _T("SimpleBar"), &Downloads.SimpleBar, false );
 	Add( _T("Downloads"), _T("SortColumns"), &Downloads.SortColumns, true );
 	Add( _T("Downloads"), _T("SortSources"), &Downloads.SortSources, true );
-	Add( _T("Downloads"), _T("SourcesWanted"), &Downloads.SourcesWanted, 500 );
+	Add( _T("Downloads"), _T("SourcesWanted"), &Downloads.SourcesWanted, 500, 1, 50, 5000 );
 	Add( _T("Downloads"), _T("SparseThreshold"), &Downloads.SparseThreshold, 8*Kilo, Kilo, 0, 256, _T(" MB") );
 	Add( _T("Downloads"), _T("StaggardStart"), &Downloads.StaggardStart, false );
 	Add( _T("Downloads"), _T("StartDroppingFailedSourcesNumber"), &Downloads.StartDroppingFailedSourcesNumber, 20, 1, 0, 50 );

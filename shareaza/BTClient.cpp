@@ -1353,7 +1353,10 @@ BOOL CBTClient::OnUtPex(CBTPacket* pPacket)
 		{
 			const BYTE* pPointer = (const BYTE*)pPeersAdd->m_pValue;
 
-			for ( int nPeer = (int)pPeersAdd->m_nValue / 6 ; nPeer > 0 ; nPeer --, pPointer += 6 )
+			for ( int nPeer = (int)pPeersAdd->m_nValue / 6 ; nPeer > 0 &&
+				// Too many sources
+				m_pDownload->GetEffectiveSourceCount() < Settings.Downloads.SourcesWanted;
+				nPeer --, pPointer += 6 )
 			{
 				const IN_ADDR* pAddress = (const IN_ADDR*)pPointer;
 				WORD nPort = *(const WORD*)( pPointer + 4 );

@@ -331,7 +331,7 @@ void CDHT::OnEvent(void* /*closure*/, int evt, const unsigned char* info_hash, c
 				if ( CDownload* pDownload = Downloads.FindByBTH( oHash ) )
 				{
 					size_t nCount = data_len / 6;
-					for ( size_t i = 0; i < nCount; ++i )
+					for ( size_t i = 0; i < nCount && pDownload->GetEffectiveSourceCount() < Settings.Downloads.SourcesWanted; ++i )
 					{
 						const char* p = &((const char*)data)[ i * 6 ];
 						pDownload->AddSourceBT( Hashes::BtGuid(), (IN_ADDR*)p, ntohs( *(WORD*)(p + 4) ) );
