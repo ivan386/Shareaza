@@ -1,7 +1,7 @@
 //
 // DownloadSource.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -96,7 +96,7 @@ public:
 	void		Serialize(CArchive& ar, int nVersion /* DOWNLOAD_SER_VERSION */);
 	BOOL		CanInitiate(BOOL bNetwork, BOOL bEstablished);
 	// Remove source from download, add it to failed sources if bBan == TRUE, and destroy source itself
-	void		Remove(BOOL bCloseTransfer = TRUE, BOOL bBan = FALSE);
+	void		Remove(BOOL bCloseTransfer = TRUE, BOOL bBan = FALSE, DWORD nRetryAfter = 0);
 	void		OnFailure(BOOL bNondestructive, DWORD nRetryAfter = 0);
 	DWORD		CalcFailureDelay(DWORD nRetryAfter = 0) const;
 	void		OnResume();
@@ -119,7 +119,7 @@ public:
 	COLORREF	GetColour();
 
 	// Close source transfer
-	void		Close();
+	void		Close(DWORD nRetryAfter = 0);
 
 	// Draw complete source or draw transfer bar only
 	void		Draw(CDC* pDC, CRect* prcBar, COLORREF crNatural);

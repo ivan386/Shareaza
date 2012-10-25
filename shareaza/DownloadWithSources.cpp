@@ -882,11 +882,21 @@ void CDownloadWithSources::RemoveOverlappingSources(QWORD nOffset, QWORD nLength
 		
 		if ( pSource->TouchedRange( nOffset, nLength ) )
 		{
-			theApp.Message( MSG_ERROR, IDS_DOWNLOAD_VERIFY_DROP,
-				(LPCTSTR)CString( inet_ntoa( pSource->m_pAddress ) ),
-				(LPCTSTR)pSource->m_sServer, (LPCTSTR)m_sName,
-				nOffset, nOffset + nLength - 1 );
-			pSource->Remove( TRUE, FALSE );
+			if ( GetTaskType() == dtaskMergeFile )
+			{
+				// Merging process can produce corrupted blocks
+				// Just retry connection after 30 seconds
+				pSource->m_nFailures = 0;
+				pSource->Close( 30 );
+			}
+			else
+			{
+				theApp.Message( MSG_ERROR, IDS_DOWNLOAD_VERIFY_DROP,
+					(LPCTSTR)CString( inet_ntoa( pSource->m_pAddress ) ),
+					(LPCTSTR)pSource->m_sServer, (LPCTSTR)m_sName,
+					nOffset, nOffset + nLength - 1 );
+				pSource->Remove( TRUE, FALSE );
+			}
 		}
 	}
 }
