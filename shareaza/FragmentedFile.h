@@ -21,8 +21,9 @@
 
 #pragma once
 
-#include "ShareazaFile.h"
+#include "DownloadTask.h"
 #include "FileFragments.hpp"
+#include "ShareazaFile.h"
 #include "TransferFile.h"
 
 class CShareazaFile;
@@ -180,7 +181,7 @@ public:
 	// Delete all subfiles
 	void	Delete();
 	// Move file to destination. Returns 0 on success or file error number.
-	DWORD	Move(DWORD nIndex, LPCTSTR pszDestination, LPPROGRESS_ROUTINE lpProgressRoutine = NULL, LPVOID lpData = NULL);
+	DWORD	Move(DWORD nIndex, LPCTSTR pszDestination, LPPROGRESS_ROUTINE lpProgressRoutine = NULL, CDownloadTask* pTask = NULL);
 	BOOL	Write(QWORD nOffset, LPCVOID pData, QWORD nLength, QWORD* pnWritten = NULL);
 	BOOL	Read(QWORD nOffset, LPVOID pData, QWORD nLength, QWORD* pnRead = NULL);
 	QWORD	InvalidateRange(QWORD nOffset, QWORD nLength);

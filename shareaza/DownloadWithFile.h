@@ -80,7 +80,8 @@ public:
 	void				ClearFileError();
 	// Set download new (and safe) name
 	virtual bool		Rename(const CString& strName);
-	DWORD				MoveFile(LPCTSTR pszDestination, LPPROGRESS_ROUTINE lpProgressRoutine = NULL, LPVOID lpData = NULL);
+	DWORD				MoveFile(LPCTSTR pszDestination, LPPROGRESS_ROUTINE lpProgressRoutine = NULL, CDownloadTask* pTask = NULL);
+
 protected:
 	// Open files of this download
 	BOOL				Open();

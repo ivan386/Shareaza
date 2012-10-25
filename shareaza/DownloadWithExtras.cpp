@@ -1,7 +1,7 @@
 //
 // DownloadWithExtras.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -49,7 +49,6 @@ CDownloadWithExtras::CDownloadWithExtras() :
 ,	m_nReviewCount			( 0 )
 
 ,	m_bWaitingPreview		( FALSE )
-,	m_bGotPreview			( FALSE )
 ,	m_bRemotePreviewCapable	( FALSE )
 {
 }
@@ -74,6 +73,11 @@ BOOL CDownloadWithExtras::PreviewFile(DWORD nIndex, CSingleLock* /* pLock */)
 	m_pPreviewWnd = new CFilePreviewDlg( this, nIndex );
 
 	return TRUE;
+}
+
+BOOL CDownloadWithExtras::GotPreview() const
+{
+	return ( GetFileAttributes( CString( _T("\\\\?\\") ) + m_sPath + _T(".png") ) != INVALID_FILE_ATTRIBUTES );
 }
 
 BOOL CDownloadWithExtras::IsPreviewVisible() const
@@ -420,7 +424,6 @@ void CDownloadWithExtras::OnPreviewRequestComplete(const CDownloadTask* pTask)
 			// Make it hidden, so the files won't be shared
 			SetFileAttributes( (LPCTSTR)strPath, FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM );
 			
-			m_bGotPreview = TRUE;
 			m_bWaitingPreview = TRUE;
 			return;
 		}

@@ -22,13 +22,13 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
-#include "FragmentedFile.h"
-#include "TransferFile.h"
 #include "BTInfo.h"
-#include "Library.h"
-#include "SharedFile.h"
 #include "DlgSelect.h"
 #include "Download.h"
+#include "FragmentedFile.h"
+#include "Library.h"
+#include "SharedFile.h"
+#include "TransferFile.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -595,7 +595,7 @@ void CFragmentedFile::Delete()
 	}
 }
 
-DWORD CFragmentedFile::Move(DWORD nIndex, LPCTSTR pszDestination, LPPROGRESS_ROUTINE lpProgressRoutine, LPVOID lpData)
+DWORD CFragmentedFile::Move(DWORD nIndex, LPCTSTR pszDestination, LPPROGRESS_ROUTINE lpProgressRoutine, CDownloadTask* pTask)
 {
 	CString sPath, sName;
 	bool bSkip;
@@ -646,7 +646,7 @@ DWORD CFragmentedFile::Move(DWORD nIndex, LPCTSTR pszDestination, LPPROGRESS_ROU
 		else
 			// Move/copy file using very long filenames
 			bSuccess = MoveFileWithProgress( CString( _T("\\\\?\\") ) + sPath,
-				CString( _T("\\\\?\\") ) + strTarget, lpProgressRoutine, lpData,
+				CString( _T("\\\\?\\") ) + strTarget, lpProgressRoutine, pTask,
 				MOVEFILE_REPLACE_EXISTING | MOVEFILE_COPY_ALLOWED | MOVEFILE_WRITE_THROUGH );
 
 		dwError = ::GetLastError();

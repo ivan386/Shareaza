@@ -365,7 +365,7 @@ void CDownloadsWnd::OnTimer(UINT_PTR nIDEvent)
 			for ( POSITION pos = Downloads.GetIterator() ; pos ; )
 			{
 				CDownload* pDownload = Downloads.GetNext( pos );
-				if ( pDownload->m_bGotPreview && pDownload->m_bWaitingPreview )
+				if ( pDownload->GotPreview() && pDownload->m_bWaitingPreview )
 				{
 					pDownload->m_bWaitingPreview = FALSE;
 					CString sPreview = pDownload->m_sPath + L".png";
@@ -650,7 +650,7 @@ void CDownloadsWnd::Prepare()
 
 		if ( pDownload->m_bSelected )
 		{
-			m_bSelRemotePreviewCapable = pDownload->m_bRemotePreviewCapable || pDownload->m_bGotPreview;
+			m_bSelRemotePreviewCapable = pDownload->m_bRemotePreviewCapable || pDownload->GotPreview();
 			bPreviewDone = TRUE;
 		}
 	}
@@ -967,7 +967,7 @@ void CDownloadsWnd::OnDownloadsRemotePreview()
 			continue;
 
 		// Check if the saved preview file is available first
-		if ( pDownload->m_bGotPreview )
+		if ( pDownload->GotPreview() )
 		{
 			// OnTimer event will launch it
 			pDownload->m_bWaitingPreview = TRUE;

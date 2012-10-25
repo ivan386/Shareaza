@@ -272,7 +272,7 @@ bool CDownloadWithFile::Rename(const CString& strName)
 }
 
 // Move file(s) to destination. Returns 0 on success or file error number.
-DWORD CDownloadWithFile::MoveFile(LPCTSTR pszDestination, LPPROGRESS_ROUTINE lpProgressRoutine, LPVOID lpData)
+DWORD CDownloadWithFile::MoveFile(LPCTSTR pszDestination, LPPROGRESS_ROUTINE lpProgressRoutine, CDownloadTask* pTask)
 {
 	ASSERT( IsMoving() );
 
@@ -282,7 +282,7 @@ DWORD CDownloadWithFile::MoveFile(LPCTSTR pszDestination, LPPROGRESS_ROUTINE lpP
 		DWORD nCount = m_pFile->GetCount();
 		for( DWORD nIndex = 0; nIndex < nCount; ++nIndex )
 		{
-			ret = m_pFile->Move( nIndex, pszDestination, lpProgressRoutine, lpData );
+			ret = m_pFile->Move( nIndex, pszDestination, lpProgressRoutine, pTask );
 			if ( ret != ERROR_SUCCESS )
 				break;
 

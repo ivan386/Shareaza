@@ -1,7 +1,7 @@
 //
 // DownloadWithExtras.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -75,11 +75,11 @@ protected:
 public:
 	BOOL				m_bRemotePreviewCapable;
 	BOOL				m_bWaitingPreview;	// The remote preview request was sent
-	BOOL				m_bGotPreview;
 
 // Operations
 public:
 	BOOL		PreviewFile(DWORD nIndex, CSingleLock* pLock);
+	BOOL		GotPreview() const;
 	BOOL		IsPreviewVisible() const;
 	BOOL		CanPreview(DWORD nIndex);
 	void		ShowMonitor(CSingleLock* pLock = NULL);

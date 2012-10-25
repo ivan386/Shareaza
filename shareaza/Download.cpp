@@ -793,7 +793,6 @@ BOOL CDownload::Load(LPCTSTR pszName)
 			Save();
 	}
 
-	m_bGotPreview = GetFileAttributes( CString( _T("\\\\?\\") ) + m_sPath + _T(".png") ) != INVALID_FILE_ATTRIBUTES;
 	m_nSaveCookie = m_nCookie;
 
 	return bSuccess;
