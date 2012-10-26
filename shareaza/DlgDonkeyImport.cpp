@@ -1,7 +1,7 @@
 //
 // DlgDonkeyImport.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -31,11 +31,9 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 BEGIN_MESSAGE_MAP(CDonkeyImportDlg, CSkinDialog)
-	//{{AFX_MSG_MAP(CDonkeyImportDlg)
 	ON_BN_CLICKED(IDC_IMPORT, OnImport)
 	ON_WM_TIMER()
 	ON_BN_CLICKED(IDC_CLOSE, OnClose)
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
@@ -45,19 +43,16 @@ END_MESSAGE_MAP()
 CDonkeyImportDlg::CDonkeyImportDlg(CWnd* pParent /*=NULL*/)
 	: CSkinDialog(CDonkeyImportDlg::IDD, pParent)
 {
-	//{{AFX_DATA_INIT(CDonkeyImportDlg)
-	//}}AFX_DATA_INIT
 }
 
 void CDonkeyImportDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CSkinDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CDonkeyImportDlg)
+
 	DDX_Control(pDX, IDC_CLOSE, m_wndClose);
 	DDX_Control(pDX, IDCANCEL, m_wndCancel);
 	DDX_Control(pDX, IDC_IMPORT, m_wndImport);
 	DDX_Control(pDX, IDC_LOG, m_wndLog);
-	//}}AFX_DATA_MAP
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -97,7 +92,7 @@ void CDonkeyImportDlg::OnCancel()
 
 void CDonkeyImportDlg::OnTimer(UINT_PTR /*nIDEvent*/)
 {
-	if ( ! m_pImporter.IsRunning() )
+	if ( ! m_pImporter.IsThreadAlive() )
 	{
 		KillTimer( 1 );
 		m_wndCancel.EnableWindow( FALSE );

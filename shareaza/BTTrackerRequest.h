@@ -22,12 +22,13 @@
 #pragma once
 
 #include "Packet.h"
-#include "HttpRequest.h"
+#include "ThreadImpl.h"
 
 class CBENode;
 class CBTTrackerPacket;
 class CBTTrackerRequest;
 class CDownload;
+class CHttpRequest;
 
 
 #pragma warning(push)
@@ -254,7 +255,7 @@ public:
 // BitTorrent tracker request
 //
 
-class CBTTrackerRequest
+class CBTTrackerRequest : public CThreadImpl
 {
 public:
 	ULONG	AddRef();
@@ -285,7 +286,7 @@ public:
 protected:
 	volatile LONG				m_dwRef;			// Reference counter
 	bool						m_bHTTP;			// HTTP - TRUE, UDP - FALSE.
-	CString						m_sURL;				// Tracker URL
+	CString						m_sURL;				// Tracker full URL
 	SOCKADDR_IN					m_pHost;			// Resolved tracker address (UDP)
 	Hashes::BtHash				m_oBTH;				// BitTorrent Info Hash (Base32)
 	Hashes::BtGuid				m_pPeerID;			// Shareaza Peer ID
@@ -294,12 +295,12 @@ protected:
 	QWORD						m_nTorrentLeft;
 	CDownload*					m_pDownload;		// Handle of owner download
 	CString						m_sName;			// Name of download
+	CString						m_sAddress;			// Tracker original URL
 	CAutoPtr< CHttpRequest >	m_pRequest;			// HTTP request object
 	BTTrackerEvent				m_nEvent;			// Tracker event (update, announce, etc.)
 	DWORD						m_nNumWant;			// Number of peers wanted
 	QWORD						m_nConnectionID;	// UDP tracker connection ID
 	DWORD						m_nTransactionID;	// UDP tracker transaction ID
-	CEvent						m_pCancel;			// Cancel flag
 	CTrackerEvent*				m_pOnTrackerEvent;	// Callback
 	DWORD						m_nComplete;		// Seeders
 	DWORD						m_nDownloaded;		// Downloaded
@@ -310,12 +311,9 @@ protected:
 	CBTTrackerRequest(CDownload* pDownload, BTTrackerEvent nEvent, DWORD nNumWant, CTrackerEvent* pOnTrackerEvent);
 	virtual ~CBTTrackerRequest();
 
-	inline bool IsCanceled() const { return ( WaitForSingleObject( m_pCancel, 0 ) != WAIT_TIMEOUT ); }
-
 	void ProcessHTTP();
 	void ProcessUDP();
 	void Process(const CBENode* pRoot);
-	static UINT	ThreadStart(LPVOID pParam);
 	void OnRun();
 	void OnTrackerEvent(bool bSuccess, LPCTSTR pszReason, LPCTSTR pszTip = NULL);
 

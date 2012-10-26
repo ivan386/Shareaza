@@ -1,7 +1,7 @@
 //
 // EDPartImporter.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -21,33 +21,26 @@
 
 #pragma once
 
-#include "ShareazaThread.h"
+#include "ThreadImpl.h"
 
 
-class CEDPartImporter : public CRazaThread
+class CEDPartImporter : public CThreadImpl
 {
 public:
 	CEDPartImporter();
 	virtual ~CEDPartImporter();
 
-	DECLARE_DYNAMIC(CEDPartImporter)
-
 	void	AddFolder(LPCTSTR pszFolder);
 	void	Start(CEdit* pCtrl);
 	void	Stop();
-	BOOL	IsRunning();
 
 protected:
 	CList< CString >	m_pFolders;
-	CEdit	*	m_pTextCtrl;
-	int			m_nCount;
+	CEdit*	m_pTextCtrl;
+	int		m_nCount;
 
 	void	ImportFolder(LPCTSTR pszPath);
 	BOOL	ImportFile(LPCTSTR pszPath, LPCTSTR pszFile);
-	BOOL	CopyFile(LPCTSTR pszSource, LPCTSTR pszTarget);
 	void	Message(UINT nMessageID, ...);
-
-	virtual int Run();
-
-	DECLARE_MESSAGE_MAP()
+	void	OnRun();
 };

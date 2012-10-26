@@ -22,30 +22,25 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
+#include "BTInfo.h"
 #include "Download.h"
-#include "Downloads.h"
-#include "DownloadTask.h"
 #include "DownloadGroups.h"
-#include "Transfers.h"
-#include "Uploads.h"
+#include "DownloadTask.h"
+#include "Downloads.h"
+#include "FragmentedFile.h"
+#include "HttpRequest.h"
 #include "Library.h"
 #include "LibraryFolders.h"
 #include "LibraryMaps.h"
 #include "SharedFile.h"
-#include "HttpRequest.h"
-#include "FragmentedFile.h"
-#include "BTInfo.h"
+#include "Transfers.h"
+#include "Uploads.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
 static char THIS_FILE[] = __FILE__;
 #endif
-
-IMPLEMENT_DYNAMIC(CDownloadTask, CRazaThread)
-
-BEGIN_MESSAGE_MAP(CDownloadTask, CRazaThread)
-END_MESSAGE_MAP()
 
 const DWORD BUFFER_SIZE = 2 * 1024 * 1024u;
 
@@ -60,7 +55,7 @@ void CDownloadTask::Copy(CDownload* pDownload)
 		// Out of memory
 		return;
 
-	pTask->CreateThread( "Download Task : Copy" );
+	pTask->BeginThread( "Download Task : Copy" );
 }
 
 void CDownloadTask::PreviewRequest(CDownload* pDownload, LPCTSTR szURL)
@@ -70,14 +65,16 @@ void CDownloadTask::PreviewRequest(CDownload* pDownload, LPCTSTR szURL)
 		// Out of memory
 		return;
 
-	pTask->m_sURL = szURL;
-	pTask->m_pRequest = new CHttpRequest();
-	pTask->m_pRequest->SetURL( pTask->m_sURL );
+	pTask->m_pRequest.Attach( new CHttpRequest() );
+	if ( ! pTask->m_pRequest )
+		// Out of memory
+		return;
+
+	pTask->m_pRequest->SetURL( szURL );
 	pTask->m_pRequest->AddHeader( _T("Accept"), _T("image/jpeg") );
 	pTask->m_pRequest->LimitContentLength( Settings.Search.MaxPreviewLength );
 
-	pTask->CreateThread( "Download Task : Preview" );
-
+	pTask->BeginThread( "Download Task : Preview" );
 }
 
 void CDownloadTask::MergeFile(CDownload* pDownload, CList< CString >* pFiles, BOOL bValidation, const Fragments::List* pGaps)
@@ -88,17 +85,15 @@ void CDownloadTask::MergeFile(CDownload* pDownload, CList< CString >* pFiles, BO
 		return;
 
 	pTask->m_oMergeFiles.AddTail( pFiles );
-
 	if ( pGaps )
 		pTask->m_oMergeGaps = *pGaps;
 	pTask->m_bMergeValidation = bValidation;
 
-	pTask->CreateThread( "Download Task : Merge" );
+	pTask->BeginThread( "Download Task : Merge" );
 }
 
 CDownloadTask::CDownloadTask(CDownload* pDownload, dtask nTask)
 	: m_nTask			( nTask )
-	, m_pRequest		( NULL )
 	, m_bSuccess		( false )
 	, m_sFilename		( pDownload->m_sPath )
 	, m_sDestination	( DownloadGroups.GetCompletedPath( pDownload ).TrimRight( _T("\\") ) )
@@ -108,7 +103,6 @@ CDownloadTask::CDownloadTask(CDownload* pDownload, dtask nTask)
 	, m_oMergeGaps		( pDownload->m_nSize )
 	, m_bMergeValidation( FALSE )
 	, m_posTorrentFile	( NULL )
-	, m_pEvent			( NULL )
 	, m_fProgress		( 0 )
 {
 	ASSERT( ! pDownload->IsTasking() );
@@ -118,28 +112,10 @@ CDownloadTask::CDownloadTask(CDownload* pDownload, dtask nTask)
 	{
 		m_posTorrentFile = pDownload->m_pTorrent.m_pFiles.GetHeadPosition();
 	}
-
-	m_bAutoDelete = TRUE;
 }
 
 CDownloadTask::~CDownloadTask()
 {
-	BOOL bCOM = SUCCEEDED( OleInitialize( NULL ) );
-
-	Transfers.m_pSection.Lock();
-
-	if ( Downloads.Check( m_pDownload ) )
-		m_pDownload->OnTaskComplete( this );
-
-	CEvent* pEvent = m_pEvent;
-	Transfers.m_pSection.Unlock();
-	if ( pEvent )
-		pEvent->SetEvent();
-
-	delete m_pRequest;
-
-	if ( bCOM )
-		OleUninitialize();
 }
 
 bool CDownloadTask::HasSucceeded() const
@@ -159,7 +135,7 @@ dtask CDownloadTask::GetTaskType() const
 
 CString CDownloadTask::GetRequest() const
 {
-	return m_sURL;
+	return m_pRequest ? m_pRequest->GetURL() : CString();
 }
 
 float CDownloadTask::GetProgress() const
@@ -172,25 +148,26 @@ float CDownloadTask::GetProgress() const
 
 void CDownloadTask::Abort()
 {
-	CEvent* pEvent = m_pEvent = new CEvent();
-	Transfers.m_pSection.Unlock();
-	WaitForSingleObject( *pEvent, INFINITE );
-	Transfers.m_pSection.Lock();
-	delete pEvent;
+	Exit();
+
+	if ( m_pRequest )
+	{
+		m_pRequest->Cancel();
+	}
+
+	CloseThread();
 }
 
 bool CDownloadTask::WasAborted() const
 {
-	return m_pEvent != NULL;
+	return ! IsThreadEnabled();
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // CDownloadTask run
 
-int CDownloadTask::Run()
+void CDownloadTask::OnRun()
 {
-	BOOL bCOM = SUCCEEDED( OleInitialize( NULL ) );
-
 	switch ( m_nTask )
 	{
 	case dtaskCopy:
@@ -209,10 +186,14 @@ int CDownloadTask::Run()
 		;
 	}
 
-	if ( bCOM )
-		OleUninitialize();
+	{
+		CQuickLock oLock( Transfers.m_pSection );
 
-	return 0;
+		if ( Downloads.Check( m_pDownload ) )
+			m_pDownload->OnTaskComplete( this );
+	}
+
+	delete this;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -266,8 +247,9 @@ void CDownloadTask::RunCopy()
 {
 	m_fProgress = 0;
 	m_nFileError = m_pDownload->MoveFile( m_sDestination, CopyProgressRoutine, this );
-	m_bSuccess = ( m_nFileError == ERROR_SUCCESS );
 	m_fProgress = 100.0f;
+
+	m_bSuccess = ( m_nFileError == ERROR_SUCCESS );
 }
 
 DWORD CALLBACK CDownloadTask::CopyProgressRoutine(LARGE_INTEGER TotalFileSize,
@@ -283,7 +265,7 @@ DWORD CALLBACK CDownloadTask::CopyProgressRoutine(LARGE_INTEGER TotalFileSize,
 	else
 		pThis->m_fProgress = 100.0f;
 
-	return ( pThis->m_pEvent == NULL ) ? PROGRESS_CONTINUE : PROGRESS_CANCEL;
+	return pThis->IsThreadEnabled() ? PROGRESS_CONTINUE : PROGRESS_CANCEL;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -291,217 +273,33 @@ DWORD CALLBACK CDownloadTask::CopyProgressRoutine(LARGE_INTEGER TotalFileSize,
 
 void CDownloadTask::RunPreviewRequest()
 {
-	m_pRequest->Execute( FALSE ); // without threading
-}
-
-void CDownloadTask::RunMerge()
-{
-	for ( POSITION pos = m_oMergeFiles.GetHeadPosition(); pos; )
-	{
-		RunMergeSingle( m_pDownload, m_oMergeFiles.GetNext( pos ), m_bMergeValidation, m_oMergeGaps );
-	}
-
-	m_bSuccess = true;
-}
-
-void CDownloadTask::RunMergeSingle(CDownload* pDownload, LPCTSTR szFilename, BOOL bMergeValidation, const Fragments::List& oMissedGaps)
-{
-	CAtlFile oSource;
-	oSource.Create( szFilename, GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_DELETE, OPEN_EXISTING );
-	VERIFY_FILE_ACCESS( oSource, szFilename )
-	if ( ! oSource )
-	{
-		// Source file open error
-		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_FILE_OPEN_ERROR, szFilename );
-		return;
-	}
-
-	QWORD qwSourceLength = 0;
-	oSource.GetSize( qwSourceLength );
-	if ( ! qwSourceLength )
-	{
-		// Empty source file
-		return;
-	}
-
-	CSingleLock pLock( &Transfers.m_pSection, TRUE );
-
-	if ( ! Downloads.Check( pDownload ) ||
-		  pDownload->IsCompleted() ||
-		  pDownload->IsMoving() )
-	{
-		// Download almost completed
-		return;
-	}
-
-	if (   bMergeValidation &&
-		   pDownload->NeedTigerTree() &&
-		   pDownload->NeedHashset() &&
-		 ! pDownload->IsTorrent() )
-	{
-		// No hashsets
-		return;
-	}
-
-	if ( ! pDownload->PrepareFile() )
-	{
-		// Destination file open error
-		return;
-	}
-
-	Fragments::List oList( pDownload->GetEmptyFragmentList() );
-	if ( ! oMissedGaps.empty() )
-	{
-		Fragments::List::const_iterator pItr = oMissedGaps.begin();
-		const Fragments::List::const_iterator pEnd = oMissedGaps.end();
-		for ( ; pItr != pEnd ; ++pItr )
-			oList.erase( *pItr );
-	}
-
-	if ( ! oList.size() )
-	{
-		// No available fragments
-		return;
-	}
-
-	QWORD qwSourceOffset = 0;
-	if ( pDownload->IsTorrent() && ! pDownload->IsSingleFileTorrent() )
-	{
-		CString sSourceName( PathFindFileName( szFilename ) );
-		BOOL bFound = FALSE;
-
-		// Try to calculate offset of file by names comparing
-		QWORD qwOffset = 0;
-		for ( POSITION pos = pDownload->m_pTorrent.m_pFiles.GetHeadPosition() ; pos ; )
-		{
-			CBTInfo::CBTFile* pFile = pDownload->m_pTorrent.m_pFiles.GetNext( pos );
-			CString sTargetName = PathFindFileName( pFile->m_sPath );
-			if ( sTargetName.CompareNoCase( sSourceName ) == 0 )
-			{
-				// Found
-				bFound = TRUE;
-				qwSourceOffset = qwOffset;
-				break;
-			}
-			qwOffset += pFile->m_nSize;
-		}
-		if ( ! bFound )
-		{
-			// Try to calculate offset of file by sizes comparing
-			qwOffset = 0;
-			for ( POSITION pos = pDownload->m_pTorrent.m_pFiles.GetHeadPosition() ; pos ; )
-			{
-				CBTInfo::CBTFile* pFile = pDownload->m_pTorrent.m_pFiles.GetNext( pos );
-				if ( pFile->m_nSize == qwSourceLength )
-				{
-					// Found
-					bFound = TRUE;
-					qwSourceOffset = qwOffset;
-					break;
-				}
-				qwOffset += pFile->m_nSize;
-			}
-		}
-	}
-
-	pLock.Unlock();
-
-	const DWORD nBufferLength = 256 * 1024;
-
-	// Read missing file fragments from selected file
-	auto_array< BYTE > Buf( new BYTE [ nBufferLength ] );
-	Fragments::List::const_iterator pItr = oList.begin();
-	const Fragments::List::const_iterator pEnd = oList.end();
-	for ( ; ! m_pEvent && pItr != pEnd ; ++pItr )
-	{
-		QWORD qwLength = pItr->end() - pItr->begin();
-		QWORD qwOffset = pItr->begin();
-
-		// Check for overlapped fragments
-		if ( qwOffset + qwLength <= qwSourceOffset ||
-			 qwSourceOffset + qwSourceLength <= qwOffset )
-		{
-			continue;
-		}
-
-		// Calculate overlapped range end offset
-		QWORD qwEnd = min( qwOffset + qwLength, qwSourceOffset + qwSourceLength );
-
-		// Calculate overlapped range start offset
-		qwOffset = max( qwOffset, qwSourceOffset );
-
-		// Calculate overlapped range length
-		qwLength = qwEnd - qwOffset;
-
-		// Calculate file offset if any
-		QWORD qwFileOffset = ( qwOffset > qwSourceOffset ) ? qwOffset - qwSourceOffset : 0;
-		if ( FAILED( oSource.Seek( qwFileOffset, FILE_BEGIN ) ) )
-			continue;
-
-		DWORD dwToRead;
-		while ( ( dwToRead = (DWORD)min( qwLength, (QWORD)nBufferLength ) ) != 0 && ! m_pEvent )
-		{
-			DWORD dwReaded = 0;
-			if ( SUCCEEDED( oSource.Read( Buf.get(), dwToRead, dwReaded ) ) && dwReaded )
-			{
-				pLock.Lock();
-
-				if ( ! Downloads.Check( pDownload ) || pDownload->IsCompleted() || pDownload->IsMoving() )
-				{
-					pLock.Unlock();
-					return;
-				}
-				pDownload->SubmitData( qwOffset, Buf.get(), (QWORD)dwReaded );
-
-				pLock.Unlock();
-
-				qwOffset += (QWORD) dwReaded;
-				qwLength -= (QWORD) dwReaded;
-			}
-			else
-			{
-				// File error or end of file. Not Fatal
-				break;
-			}
-		}
-
-		pLock.Lock();
-
-		if ( ! Downloads.Check( pDownload ) || pDownload->IsCompleted() || pDownload->IsMoving() )
-		{
-			pLock.Unlock();
-			return;
-		}
-
-		if ( bMergeValidation )
-			pDownload->RunValidation();
-
-		pDownload->SetModified();
-
-		pLock.Unlock();
-	}
+	m_bSuccess = m_pRequest->Execute( false ); // without threading
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// CDownloadTask path creator
+// CDownloadTask merge
 
-void CDownloadTask::CreatePathForFile(const CString& strBase, const CString& strPath)
+void CDownloadTask::RunMerge()
 {
-	CString strFolder = strBase + _T('\\') + strPath;
-	CreateDirectory( strFolder.Left( strFolder.ReverseFind( _T('\\') ) ) );
+	bool bSuccess = true;
+	for ( POSITION pos = m_oMergeFiles.GetHeadPosition(); IsThreadEnabled() && pos; )
+	{
+		bSuccess = m_pDownload->MergeFile( m_oMergeFiles.GetNext( pos ), m_bMergeValidation, m_oMergeGaps, this ) && bSuccess;
+	}
+
+	m_bSuccess = bSuccess;
 }
 
-CBuffer* CDownloadTask::IsPreviewAnswerValid() const
+CBuffer* CDownloadTask::IsPreviewAnswerValid(const Hashes::Sha1Hash& oRequestedSHA1) const
 {
-	if ( m_nTask != dtaskPreviewRequest || !m_pRequest->IsFinished() )
+	if ( m_nTask != dtaskPreviewRequest || ! m_pRequest->IsFinished() )
 		return NULL;
 
 	m_pRequest->GetStatusCode();
 
 	if ( m_pRequest->GetStatusSuccess() == FALSE )
 	{
-		theApp.Message( MSG_DEBUG, L"Preview failed: HTTP status code %i",
-			m_pRequest->GetStatusCode() );
+		theApp.Message( MSG_DEBUG, L"Preview failed: HTTP status code %i", m_pRequest->GetStatusCode() );
 		return NULL;
 	}
 
@@ -512,9 +310,9 @@ CBuffer* CDownloadTask::IsPreviewAnswerValid() const
 		Hashes::Sha1Hash oSHA1;
 		bool bValid = true;
 
-		if ( m_pDownload )
+		if ( oRequestedSHA1 )
 		{
-			if ( oSHA1.fromUrn( strURN ) && validAndUnequal( oSHA1, m_pDownload->m_oSHA1 ) )
+			if ( oSHA1.fromUrn( strURN ) && validAndUnequal( oSHA1, oRequestedSHA1 ) )
 				bValid = false;
 		}
 		else

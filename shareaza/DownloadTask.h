@@ -21,8 +21,8 @@
 
 #pragma once
 
-#include "ShareazaThread.h"
 #include "FileFragments.hpp"
+#include "ThreadImpl.h"
 
 class CDownload;
 class CHttpRequest;
@@ -38,10 +38,8 @@ enum dtask
 };
 
 
-class CDownloadTask : public CRazaThread
+class CDownloadTask : public CThreadImpl
 {
-	DECLARE_DYNAMIC(CDownloadTask)
-
 public:
 	static void			Copy(CDownload* pDownload);
 	static void			PreviewRequest(CDownload* pDownload, LPCTSTR szURL);
@@ -55,15 +53,14 @@ public:
 	CString				GetRequest() const;
 	// Get progress of current operation (0..100%)
 	float				GetProgress() const;
-	CBuffer*			IsPreviewAnswerValid() const;
+	CBuffer*			IsPreviewAnswerValid(const Hashes::Sha1Hash& oRequestedSHA1) const;
 
 protected:
 	CDownloadTask(CDownload* pDownload, dtask nTask);
 	virtual ~CDownloadTask();
 
 	dtask				m_nTask;
-	CString				m_sURL;				// Request URL
-	CHttpRequest*		m_pRequest;
+	CAutoPtr< CHttpRequest > m_pRequest;
 	bool				m_bSuccess;
 	CString				m_sFilename;
 	CString				m_sDestination;
@@ -74,7 +71,6 @@ protected:
 	Fragments::List		m_oMergeGaps;		// Missed ranges in source file
 	BOOL				m_bMergeValidation;	// Run validation after merging
 	POSITION			m_posTorrentFile;	// Torrent file list current position
-	CEvent*				m_pEvent;
 	float				m_fProgress;		// Progress of current operation (0..100%)
 
 	static DWORD CALLBACK CopyProgressRoutine(LARGE_INTEGER TotalFileSize,
@@ -83,17 +79,9 @@ protected:
 		DWORD dwCallbackReason, HANDLE hSourceFile, HANDLE hDestinationFile,
 		LPVOID lpData);
 
-	void				Construct(CDownload* pDownload);
 //	void				RunAllocate();
 	void				RunCopy();
 	void				RunPreviewRequest();
 	void				RunMerge();
-	void				RunMergeSingle(CDownload* pDownload, LPCTSTR szFilename, BOOL bMergeValidation, const Fragments::List& oMissedGaps);
-	void				CreatePathForFile(const CString& strBase, const CString& strPath);
-	BOOL				MakeBatchTorrent();
-	BOOL				CopyFileToBatch(HANDLE hSource, QWORD nOffset, QWORD nLength, LPCTSTR pszPath);
-
-	virtual int			Run();
-
-	DECLARE_MESSAGE_MAP()
+	void				OnRun();
 };

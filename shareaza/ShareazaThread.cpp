@@ -111,6 +111,9 @@ void CRazaThread::Add(CRazaThread* pThread, LPCSTR pszName)
 
 void CRazaThread::Remove(HANDLE hThread)
 {
+	if ( ! hThread )
+		return;
+
 	CSingleLock oLock( &m_ThreadMapSection, TRUE );
 
 	CThreadTag tag = { 0 };
@@ -205,25 +208,28 @@ void CloseThread(HANDLE* phThread, DWORD dwTimeout)
 		{
 			__try
 			{
-				::SetThreadPriority( *phThread, THREAD_PRIORITY_NORMAL );
-
-				while( *phThread )
+				if ( GetThreadId( *phThread ) != GetCurrentThreadId() )
 				{
-					SafeMessageLoop();
+					::SetThreadPriority( *phThread, THREAD_PRIORITY_NORMAL );
 
-					DWORD res = MsgWaitForMultipleObjects( 1, phThread,
-						FALSE, dwTimeout, QS_ALLINPUT | QS_ALLPOSTMESSAGE );
-					if ( res == WAIT_OBJECT_0 + 1 )
-						// Handle messages
-						continue;
-					else if ( res != WAIT_TIMEOUT )
-						// Handle signaled state or errors
-						break;
-					else
+					while( *phThread )
 					{
-						// Timeout
-						CRazaThread::Terminate( *phThread );
-						break;
+						SafeMessageLoop();
+
+						DWORD res = MsgWaitForMultipleObjects( 1, phThread,
+							FALSE, dwTimeout, QS_ALLINPUT | QS_ALLPOSTMESSAGE );
+						if ( res == WAIT_OBJECT_0 + 1 )
+							// Handle messages
+							continue;
+						else if ( res != WAIT_TIMEOUT )
+							// Handle signaled state or errors
+							break;
+						else
+						{
+							// Timeout
+							CRazaThread::Terminate( *phThread );
+							break;
+						}
 					}
 				}
 			}

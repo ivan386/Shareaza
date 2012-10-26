@@ -412,6 +412,155 @@ CED2K* CDownloadWithTiger::GetHashset()
 	return m_pHashset.IsAvailable() ? &m_pHashset : NULL;
 }
 
+bool CDownloadWithTiger::MergeFile(LPCTSTR szFilename, BOOL bMergeValidation, const Fragments::List& oMissedGaps, CDownloadTask* pTask)
+{
+	CAtlFile oSource;
+	oSource.Create( szFilename, GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_DELETE, OPEN_EXISTING );
+	VERIFY_FILE_ACCESS( oSource, szFilename )
+	if ( ! oSource )
+	{
+		// Source file open error
+		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_FILE_OPEN_ERROR, szFilename );
+		return false;
+	}
+
+	QWORD qwSourceLength = 0;
+	oSource.GetSize( qwSourceLength );
+	if ( ! qwSourceLength )
+	{
+		// Empty source file
+		return true;
+	}
+
+	if ( bMergeValidation && NeedTigerTree() && NeedHashset() && ! IsTorrent() )
+	{
+		// No hashsets
+		return true;
+	}
+
+	if ( ! static_cast< CDownload* >( this )->PrepareFile() )
+	{
+		// Destination file open error
+		return false;
+	}
+
+	Fragments::List oList( GetEmptyFragmentList() );
+	if ( ! oMissedGaps.empty() )
+	{
+		Fragments::List::const_iterator pItr = oMissedGaps.begin();
+		const Fragments::List::const_iterator pEnd = oMissedGaps.end();
+		for ( ; pItr != pEnd ; ++pItr )
+			oList.erase( *pItr );
+	}
+
+	if ( ! oList.size() )
+	{
+		// No available fragments
+		return true;
+	}
+
+	QWORD qwSourceOffset = 0;
+	if ( IsTorrent() && ! IsSingleFileTorrent() )
+	{
+		CString sSourceName( PathFindFileName( szFilename ) );
+		BOOL bFound = FALSE;
+
+		// Try to calculate offset of file by names comparing
+		QWORD qwOffset = 0;
+		for ( POSITION pos = m_pTorrent.m_pFiles.GetHeadPosition() ; pos ; )
+		{
+			CBTInfo::CBTFile* pFile = m_pTorrent.m_pFiles.GetNext( pos );
+			CString sTargetName = PathFindFileName( pFile->m_sPath );
+			if ( sTargetName.CompareNoCase( sSourceName ) == 0 )
+			{
+				// Found
+				bFound = TRUE;
+				qwSourceOffset = qwOffset;
+				break;
+			}
+			qwOffset += pFile->m_nSize;
+		}
+		if ( ! bFound )
+		{
+			// Try to calculate offset of file by sizes comparing
+			qwOffset = 0;
+			for ( POSITION pos = m_pTorrent.m_pFiles.GetHeadPosition() ; pos ; )
+			{
+				CBTInfo::CBTFile* pFile = m_pTorrent.m_pFiles.GetNext( pos );
+				if ( pFile->m_nSize == qwSourceLength )
+				{
+					// Found
+					bFound = TRUE;
+					qwSourceOffset = qwOffset;
+					break;
+				}
+				qwOffset += pFile->m_nSize;
+			}
+		}
+	}
+
+	const DWORD nBufferLength = 256 * 1024;
+
+	// Read missing file fragments from selected file
+	CAutoVectorPtr< BYTE >pBuf( new BYTE [ nBufferLength ] );
+	if ( ! pBuf )
+		return false;
+
+	Fragments::List::const_iterator pItr = oList.begin();
+	const Fragments::List::const_iterator pEnd = oList.end();
+	for ( ; pTask->IsThreadEnabled() && pItr != pEnd ; ++pItr )
+	{
+		QWORD qwLength = pItr->end() - pItr->begin();
+		QWORD qwOffset = pItr->begin();
+
+		// Check for overlapped fragments
+		if ( qwOffset + qwLength <= qwSourceOffset ||
+			 qwSourceOffset + qwSourceLength <= qwOffset )
+		{
+			continue;
+		}
+
+		// Calculate overlapped range end offset
+		QWORD qwEnd = min( qwOffset + qwLength, qwSourceOffset + qwSourceLength );
+
+		// Calculate overlapped range start offset
+		qwOffset = max( qwOffset, qwSourceOffset );
+
+		// Calculate overlapped range length
+		qwLength = qwEnd - qwOffset;
+
+		// Calculate file offset if any
+		QWORD qwFileOffset = ( qwOffset > qwSourceOffset ) ? qwOffset - qwSourceOffset : 0;
+		if ( FAILED( oSource.Seek( qwFileOffset, FILE_BEGIN ) ) )
+			continue;
+
+		DWORD dwToRead;
+		while ( ( dwToRead = (DWORD)min( qwLength, (QWORD)nBufferLength ) ) != 0 && pTask->IsThreadEnabled() )
+		{
+			DWORD dwReaded = 0;
+			if ( SUCCEEDED( oSource.Read( pBuf, dwToRead, dwReaded ) ) && dwReaded )
+			{
+				SubmitData( qwOffset, pBuf, (QWORD)dwReaded );
+
+				qwOffset += (QWORD) dwReaded;
+				qwLength -= (QWORD) dwReaded;
+			}
+			else
+			{
+				// File error or end of file. Not Fatal
+				break;
+			}
+		}
+
+		if ( bMergeValidation )
+			RunValidation();
+
+		SetModified();
+	}
+
+	return true;
+}
+
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithTiger run validation
 

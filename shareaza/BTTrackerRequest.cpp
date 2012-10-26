@@ -22,14 +22,15 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
-#include "Network.h"
 #include "BENode.h"
 #include "BTPacket.h"
 #include "BTTrackerRequest.h"
-#include "Transfers.h"
 #include "Datagrams.h"
-#include "Downloads.h"
 #include "Download.h"
+#include "Downloads.h"
+#include "HttpRequest.h"
+#include "Network.h"
+#include "Transfers.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -43,6 +44,15 @@ static LPCTSTR szEvents[] =
 	_T("completed"),						// BTE_TRACKER_COMPLETED
 	_T("started"),							// BTE_TRACKER_STARTED
 	_T("stopped")							// BTE_TRACKER_STOPPED
+};
+
+static LPCTSTR szEventInfo[] =
+{
+	_T("update tracker announce"),			// BTE_TRACKER_UPDATE
+	_T("completed tracker announce"),		// BTE_TRACKER_COMPLETED
+	_T("initial tracker announce"),			// BTE_TRACKER_STARTED
+	_T("final tracker announce"),			// BTE_TRACKER_STOPPED
+	_T("tracker scrape")					// BTE_TRACKER_SCRAPE
 };
 
 static const DWORD nMinResponseSize[] =
@@ -257,7 +267,7 @@ CBTTrackerRequest::CBTTrackerRequest(CDownload* pDownload, BTTrackerEvent nEvent
 	, m_nTorrentLeft		( pDownload->GetVolumeRemaining() )
 	, m_pDownload			( pDownload )
 	, m_sName				( pDownload->GetDisplayName() )
-	, m_pCancel				( FALSE, TRUE )
+	, m_sAddress			( pDownload->m_pTorrent.GetTrackerAddress() )
 	, m_nEvent				( nEvent )
 	, m_nNumWant			( nNumWant )
 	, m_nConnectionID		( 0 )
@@ -275,9 +285,7 @@ CBTTrackerRequest::CBTTrackerRequest(CDownload* pDownload, BTTrackerEvent nEvent
 	ZeroMemory( &m_pHost, sizeof( m_pHost ) );
 	m_pHost.sin_family = AF_INET;
 
-	CString strAddress = pDownload->m_pTorrent.GetTrackerAddress();
-
-	if ( StartsWith( strAddress, _PT("http:") ) )
+	if ( StartsWith( m_sAddress, _PT("http:") ) )
 	{
 		// Create the basic URL (http://wiki.theory.org/BitTorrentSpecification#Tracker_HTTP.2FHTTPS_Protocol)
 
@@ -285,11 +293,11 @@ CBTTrackerRequest::CBTTrackerRequest(CDownload* pDownload, BTTrackerEvent nEvent
 
 		if ( m_nEvent == BTE_TRACKER_SCRAPE )
 		{
-			if ( strAddress.Replace( _T("/announce"), _T("/scrape") ) == 1 )
+			if ( m_sAddress.Replace( _T("/announce"), _T("/scrape") ) == 1 )
 			{
 				m_sURL.Format( _T("%s%cinfo_hash=%s&peer_id=%s"),
-					(LPCTSTR)strAddress.TrimRight( _T('&') ),
-					( ( strAddress.Find( _T('?') ) != -1 ) ? _T('&') : _T('?') ),
+					(LPCTSTR)CString( m_sAddress ).TrimRight( _T('&') ),
+					( ( m_sAddress.Find( _T('?') ) != -1 ) ? _T('&') : _T('?') ),
 					(LPCTSTR)Escape( m_oBTH ),
 					(LPCTSTR)Escape( m_pPeerID ) );
 			}
@@ -301,8 +309,8 @@ CBTTrackerRequest::CBTTrackerRequest(CDownload* pDownload, BTTrackerEvent nEvent
 		else
 		{	
 			m_sURL.Format( _T("%s%cinfo_hash=%s&peer_id=%s&port=%u&uploaded=%I64u&downloaded=%I64u&left=%I64u&compact=1"),
-				(LPCTSTR)strAddress.TrimRight( _T('&') ),
-				( ( strAddress.Find( _T('?') ) != -1 ) ? _T('&') : _T('?') ),
+				(LPCTSTR)CString( m_sAddress ).TrimRight( _T('&') ),
+				( ( m_sAddress.Find( _T('?') ) != -1 ) ? _T('&') : _T('?') ),
 				(LPCTSTR)Escape( m_oBTH ),
 				(LPCTSTR)Escape( m_pPeerID ),
 				Network.GetPort(),
@@ -339,11 +347,11 @@ CBTTrackerRequest::CBTTrackerRequest(CDownload* pDownload, BTTrackerEvent nEvent
 			m_sURL += pDownload->m_sKey;
 		}	
 	}
-	else if ( StartsWith( strAddress, _PT("udp:") ) )
+	else if ( StartsWith( m_sAddress, _PT("udp:") ) )
 	{
 		// UDP Tracker Protocol for BitTorrent (http://bittorrent.org/beps/bep_0015.html)
 
-		m_sURL = strAddress.Mid( 4 ).Trim( _T("/") ); // Skip 'udp://'
+		m_sURL = m_sAddress.Mid( 4 ).Trim( _T("/") ); // Skip 'udp://'
 		int nSlash = m_sURL.Find( _T('/') );
 		if ( nSlash != -1 )
 		{
@@ -352,7 +360,7 @@ CBTTrackerRequest::CBTTrackerRequest(CDownload* pDownload, BTTrackerEvent nEvent
 	}
 	// else Unsupported protocol
 
-	BeginThread( "BT Tracker Request", ThreadStart, this );
+	BeginThread( "BT Tracker Request" );
 }
 
 CBTTrackerRequest::~CBTTrackerRequest()
@@ -445,73 +453,41 @@ void CBTTrackerRequest::Cancel()
 {
 	m_pOnTrackerEvent = NULL; // Disable notification
 
-	m_pCancel.SetEvent();
+	Exit();
 
 	if ( m_pRequest )
-	{
-		theApp.Message( MSG_DEBUG, _T("[BT] Canceled tracker request for %s"), m_sName );
-
 		m_pRequest->Cancel();
-	}
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // CBTTrackerRequest run
 
-UINT CBTTrackerRequest::ThreadStart(LPVOID pParam)
-{
-	( (CBTTrackerRequest*)pParam )->OnRun();
-
-	return 0;
-}
-
 void CBTTrackerRequest::OnRun()
 {
 	if ( ! m_sURL.IsEmpty() )
 	{
-		switch ( m_nEvent )
-		{
-		case BTE_TRACKER_STARTED:
-			theApp.Message( MSG_DEBUG, _T("[BT] Sending initial tracker announce for %s"), m_sName );
-			break;
-
-		case BTE_TRACKER_UPDATE:
-			theApp.Message( MSG_DEBUG, _T("[BT] Sending update tracker announce for %s"), m_sName );
-			break;
-
-		case BTE_TRACKER_COMPLETED:
-			theApp.Message( MSG_DEBUG, _T("[BT] Sending completed tracker announce for %s"), m_sName );
-			break;
-
-		case BTE_TRACKER_STOPPED:
-			theApp.Message( MSG_DEBUG, _T("[BT] Sending final tracker announce for %s"), m_sName );
-			break;
-
-		case BTE_TRACKER_SCRAPE:
-			theApp.Message( MSG_DEBUG, _T("[BT] Sending tracker scrape for %s"), m_sName );
-			break;
-		}
-
-		theApp.Message( MSG_DEBUG | MSG_FACILITY_OUTGOING, _T("[BT] Sending BitTorrent tracker request: %s"), m_sURL );
+		theApp.Message( MSG_DEBUG | MSG_FACILITY_OUTGOING, _T("[BT] Sending BitTorrent %s for \"%s\": %s"), szEventInfo[ m_nEvent ], m_sName, m_sAddress );
 
 		if ( m_bHTTP )
 			ProcessHTTP();
 		else
 			ProcessUDP();
 	}
+	else
+		theApp.Message( MSG_DEBUG, _T("[BT] BitTorrent %s for \"%s\" is not supported: %s"), szEventInfo[ m_nEvent ], m_sName, m_sAddress );
 
 	Release();
 }
 
 void CBTTrackerRequest::OnTrackerEvent(bool bSuccess, LPCTSTR pszReason, LPCTSTR pszTip)
 {
-	theApp.Message( ( bSuccess ? MSG_INFO : MSG_ERROR ), _T("%s (%s)"), pszReason, m_sName );
+	theApp.Message( ( bSuccess ? MSG_INFO : MSG_ERROR ), _T("%s \"%s\": %s"), pszReason, m_sName, m_sAddress );
 
 	if ( m_pOnTrackerEvent )
 	{
 		CSingleLock oLock( &Transfers.m_pSection, FALSE );
-		while ( ! oLock.Lock( 100 ) ) { if ( IsCanceled() ) return; }
-		if ( IsCanceled() || ! Downloads.Check( m_pDownload ) || ! m_pOnTrackerEvent ) return;
+		while ( ! oLock.Lock( 100 ) ) { if ( ! IsThreadEnabled() ) return; }
+		if ( ! IsThreadEnabled() || ! Downloads.Check( m_pDownload ) || ! m_pOnTrackerEvent ) return;
 
 		m_pOnTrackerEvent->OnTrackerEvent( bSuccess, pszReason, pszTip, this );
 	}
@@ -726,7 +702,7 @@ void CBTTrackerRequest::ProcessUDP()
 	if ( Datagrams.Send( &m_pHost, CBTTrackerPacket::New( BTA_TRACKER_CONNECT, m_nTransactionID, bt_connection_magic ) ) )
 	{
 		// Wait for UDP response from tracker
-		bSuccess = ( WaitForSingleObject( m_pCancel, Settings.Connection.TimeoutConnect ) == WAIT_OBJECT_0 );
+		bSuccess = ! IsThreadEnabled( Settings.Connection.TimeoutConnect ); // Success if Cancel() was called
 	}
 
 	if ( ! bSuccess )
@@ -864,6 +840,8 @@ void CBTTrackerRequests::Clear()
 			break;
 
 		pRequest->Cancel();
+
+		pRequest->CloseThread();
 	}
 }
 

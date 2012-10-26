@@ -415,7 +415,7 @@ void CDownloadWithExtras::OnPreviewRequestComplete(const CDownloadTask* pTask)
 		return;
 	CString strPath = m_sPath + _T(".png");
 
-	if ( CBuffer* pBuffer = pTask->IsPreviewAnswerValid() )
+	if ( CBuffer* pBuffer = pTask->IsPreviewAnswerValid( m_oSHA1 ) )
 	{
 		CImageFile pImage;
 		if ( pImage.LoadFromMemory( L".jpg", pBuffer->m_pBuffer, pBuffer->m_nLength, FALSE, TRUE ) &&
