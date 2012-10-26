@@ -4474,7 +4474,7 @@
 		<dialog name="CTorrentFilesPage" cookie="Sy" caption="Fájlok">
 			<control/>
 		</dialog>
-		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBu" caption="Trackerek">
+		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBuBu" caption="Trackerek">
 			<control/>
 			<control/>
 			<control/>
@@ -4486,6 +4486,7 @@
 			<control caption="Félkész:"/>
 			<control caption="Incomplete:"/>
 			<control caption="_Frissít"/>
+			<control/>
 			<control/>
 			<control/>
 		</dialog>

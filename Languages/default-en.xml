@@ -4516,7 +4516,7 @@
 		<dialog name="CTorrentFilesPage" cookie="Sy" caption="Files">
 			<control/>
 		</dialog>
-		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBu" caption="Trackers">
+		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBuBu" caption="Trackers">
 			<control/>
 			<control/>
 			<control/>
@@ -4528,6 +4528,7 @@
 			<control caption="Completed (Seeds):"/>
 			<control caption="Incomplete:"/>
 			<control caption="Tracker Mode:"/>
+			<control/>
 			<control/>
 			<control/>
 		</dialog>

@@ -4500,7 +4500,7 @@
 		<dialog name="CTorrentFilesPage" cookie="Sy" caption="File">
 			<control/>
 		</dialog>
-		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBu" caption="Tracker">
+		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBuBu" caption="Tracker">
 			<control/>
 			<control/>
 			<control/>
@@ -4512,6 +4512,7 @@
 			<control caption="Completi (condivisi):"/>
 			<control caption="Incompleti:"/>
 			<control caption="Modalità tracker:"/>
+			<control/>
 			<control/>
 			<control/>
 		</dialog>

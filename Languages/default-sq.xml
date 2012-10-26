@@ -4501,7 +4501,7 @@
 		<dialog name="CTorrentFilesPage" cookie="Sy" caption="Skeda">
 			<control/>
 		</dialog>
-		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBu" caption="Gjurmues">
+		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBuBu" caption="Gjurmues">
 			<control/>
 			<control/>
 			<control/>
@@ -4513,6 +4513,7 @@
 			<control caption="Përfunduar (Fara):"/>
 			<control caption="Pa përfunduar:"/>
 			<control caption="Mënyra e Gjurmuesit:"/>
+			<control/>
 			<control/>
 			<control/>
 		</dialog>

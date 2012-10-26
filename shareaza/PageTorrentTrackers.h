@@ -44,6 +44,7 @@ protected:
 	CButton				m_wndRefresh;
 	CButton				m_wndAdd;
 	CButton				m_wndDel;
+	CButton				m_wndRen;
 	CEdit				m_wndComplete;
 	CEdit				m_wndIncomplete;
 	CComboBox			m_wndTrackerMode;
@@ -72,6 +73,7 @@ protected:
 	afx_msg void OnLvnKeydownTorrentTrackers(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnBnClickedTorrentTrackersAdd();
 	afx_msg void OnBnClickedTorrentTrackersDel();
+	afx_msg void OnBnClickedTorrentTrackersRen();
 	afx_msg void OnNMDblclkTorrentTrackers(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnLvnEndlabeleditTorrentTrackers(NMHDR *pNMHDR, LRESULT *pResult);
 

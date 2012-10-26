@@ -4504,7 +4504,7 @@
 		<dialog name="CTorrentFilesPage" cookie="Sy" caption="קבצים">
 			<control/>
 		</dialog>
-		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBu" caption="Trackers">
+		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBuBu" caption="Trackers">
 			<control/>
 			<control/>
 			<control/>
@@ -4516,6 +4516,7 @@
 			<control caption="Incomplete:"/>
 			<control caption="Incomplete:"/>
 			<control caption="רענן"/>
+			<control/>
 			<control/>
 			<control/>
 		</dialog>

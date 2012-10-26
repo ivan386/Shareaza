@@ -4496,7 +4496,7 @@
 		<dialog name="CTorrentFilesPage" cookie="Sy" caption="Datoteke">
 			<control/>
 		</dialog>
-		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBu" caption="Sledilniki">
+		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBuBu" caption="Sledilniki">
 			<control/>
 			<control/>
 			<control/>
@@ -4508,6 +4508,7 @@
 			<control caption="Nedokončani:"/>
 			<control caption="Incomplete:"/>
 			<control caption="_Osveži"/>
+			<control/>
 			<control/>
 			<control/>
 		</dialog>

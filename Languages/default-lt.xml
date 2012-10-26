@@ -4493,7 +4493,7 @@
 		<dialog name="CTorrentFilesPage" cookie="Sy" caption="Failai">
 			<control/>
 		</dialog>
-		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBu" caption="Sekliai">
+		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBuBu" caption="Sekliai">
 			<control/>
 			<control/>
 			<control/>
@@ -4505,6 +4505,7 @@
 			<control caption="Skleidėjų:"/>
 			<control caption="Siuntėjų:"/>
 			<control caption="Seklio veiksena:"/>
+			<control/>
 			<control/>
 			<control/>
 		</dialog>

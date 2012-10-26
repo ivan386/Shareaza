@@ -816,6 +816,7 @@
 #define IDC_ANTIVIRUS                   1620
 #define IDC_TORRENT_TRACKERS_ADD        1621
 #define IDC_TORRENT_TRACKERS_DEL        1622
+#define IDC_TORRENT_TRACKERS_REN        1623
 #define IDC_FONT                        1624
 #define IDC_BOOL                        1625
 #define IDS_FILTER_DELETE_CONFIRM       7000

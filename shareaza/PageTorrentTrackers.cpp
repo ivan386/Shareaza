@@ -50,6 +50,7 @@ BEGIN_MESSAGE_MAP(CTorrentTrackersPage, CPropertyPageAdv)
 	ON_NOTIFY(LVN_KEYDOWN, IDC_TORRENT_TRACKERS, &CTorrentTrackersPage::OnLvnKeydownTorrentTrackers)
 	ON_BN_CLICKED(IDC_TORRENT_TRACKERS_ADD, &CTorrentTrackersPage::OnBnClickedTorrentTrackersAdd)
 	ON_BN_CLICKED(IDC_TORRENT_TRACKERS_DEL, &CTorrentTrackersPage::OnBnClickedTorrentTrackersDel)
+	ON_BN_CLICKED(IDC_TORRENT_TRACKERS_REN, &CTorrentTrackersPage::OnBnClickedTorrentTrackersRen)
 	ON_NOTIFY(NM_DBLCLK, IDC_TORRENT_TRACKERS, &CTorrentTrackersPage::OnNMDblclkTorrentTrackers)
 	ON_NOTIFY(LVN_ENDLABELEDIT, IDC_TORRENT_TRACKERS, &CTorrentTrackersPage::OnLvnEndlabeleditTorrentTrackers)
 END_MESSAGE_MAP()
@@ -75,6 +76,7 @@ void CTorrentTrackersPage::UpdateInterface()
 {
 	int nItem = m_wndTrackers.GetNextItem( -1, LVNI_SELECTED );
 	m_wndDel.EnableWindow( ( nItem != -1 ) );
+	m_wndRen.EnableWindow( ( nItem != -1 ) );
 
 	// Find item with current tracker ...
 	LVFINDINFO fi =
@@ -212,43 +214,55 @@ void CTorrentTrackersPage::InsertTracker()
 void CTorrentTrackersPage::EditTracker(int nItem, LPCTSTR szText)
 {
 	CString sEditedTracker = m_wndTrackers.GetItemText( nItem, 0 );
-	if ( szText )
+	if ( ! szText )
 	{
-		// User entered text
-		CString sNewTracker = szText;
-		if ( StartsWith( sNewTracker, _PT("http://") ) ||
-			 StartsWith( sNewTracker, _PT("udp://") ) )
+		// New item
+		LVFINDINFO fi =
 		{
-			// User entered correct tracker
-			LVFINDINFO fi =
-			{
-				LVFI_PARTIAL | LVFI_STRING,
-				sNewTracker
-			};
-			if ( m_wndTrackers.FindItem( &fi ) == -1 )
-			{
-				// User entered unique tracker
-				m_wndTrackers.SetItemText( nItem, 0, sNewTracker );
-			}
-			else
-			{
-				// Remove duplicate tracker
-				m_wndTrackers.DeleteItem( nItem );
-			}
+			LVFI_STRING,
+			sEditedTracker
+		};
+		int nDuplicate = m_wndTrackers.FindItem( &fi );
+		if ( nDuplicate != -1 && nDuplicate != nItem )
+		{
+			// Remove duplicate tracker
+			m_wndTrackers.DeleteItem( nItem );
 		}
+		return;
+	}
+
+	CString sNewTracker = szText;
+	sNewTracker.Trim();
+	if ( sNewTracker.IsEmpty() )
+	{
+		// Remove tracker
+		m_wndTrackers.DeleteItem( nItem );
+		return;
+	}
+
+	if ( sEditedTracker == sNewTracker )
+		// No changes
+		return;
+
+	// Fix URL
+	if ( ! StartsWith( sNewTracker, _PT("http://") ) && ! StartsWith( sNewTracker, _PT("udp://") ) )
+		sNewTracker = _T("http://") + sNewTracker;
+
+	LVFINDINFO fi =
+	{
+		LVFI_STRING,
+		sNewTracker
+	};
+	int nDuplicate = m_wndTrackers.FindItem( &fi );
+	if ( nDuplicate == -1 || nItem == nDuplicate )
+	{
+		// User entered unique tracker
+		m_wndTrackers.SetItemText( nItem, 0, sNewTracker );
 	}
 	else
 	{
 		// Remove duplicate tracker
-		LVFINDINFO fi =
-		{
-			LVFI_PARTIAL | LVFI_STRING,
-			sEditedTracker
-		};
-		if ( m_wndTrackers.FindItem( &fi ) != nItem )
-		{
-			m_wndTrackers.DeleteItem( nItem );
-		}
+		m_wndTrackers.DeleteItem( nItem );
 	}
 
 	UpdateInterface();
@@ -282,6 +296,7 @@ void CTorrentTrackersPage::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_TORRENT_TRACKERMODE, m_wndTrackerMode);
 	DDX_Control(pDX, IDC_TORRENT_TRACKERS_ADD, m_wndAdd);
 	DDX_Control(pDX, IDC_TORRENT_TRACKERS_DEL, m_wndDel);
+	DDX_Control(pDX, IDC_TORRENT_TRACKERS_REN, m_wndRen);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -292,8 +307,9 @@ BOOL CTorrentTrackersPage::OnInitDialog()
 	if ( ! CPropertyPageAdv::OnInitDialog() )
 		return FALSE;
 
-	m_wndAdd.SetIcon( CoolInterface.ExtractIcon( ID_MEDIA_ADD ) );
-	m_wndDel.SetIcon( CoolInterface.ExtractIcon( ID_MEDIA_REMOVE ) );
+	m_wndAdd.SetIcon( CoolInterface.ExtractIcon( ID_LIBRARY_ADD ) );
+	m_wndDel.SetIcon( CoolInterface.ExtractIcon( ID_LIBRARY_DELETE ) );
+	m_wndRen.SetIcon( CoolInterface.ExtractIcon( ID_LIBRARY_RENAME ) );
 
 	ASSUME_LOCK( Transfers.m_pSection );
 
@@ -496,6 +512,16 @@ void CTorrentTrackersPage::OnBnClickedTorrentTrackersDel()
 	{
 		m_wndTrackers.DeleteItem( nItem );
 		UpdateInterface();
+	}
+}
+
+void CTorrentTrackersPage::OnBnClickedTorrentTrackersRen()
+{
+	int nItem = m_wndTrackers.GetNextItem( -1, LVNI_SELECTED );
+	if ( nItem != -1 )
+	{
+		m_wndTrackers.SetFocus();
+		m_wndTrackers.EditLabel( nItem );
 	}
 }
 

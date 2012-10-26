@@ -4496,7 +4496,7 @@
 		<dialog name="CTorrentFilesPage" cookie="Sy" caption="Datoteke">
 			<control/>
 		</dialog>
-		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBu" caption="Trackers">
+		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBuBu" caption="Trackers">
 			<control/>
 			<control/>
 			<control/>
@@ -4508,6 +4508,7 @@
 			<control caption="Incomplete:"/>
 			<control caption="Incomplete:"/>
 			<control caption="_Refresh"/>
+			<control/>
 			<control/>
 			<control/>
 		</dialog>

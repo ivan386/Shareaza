@@ -4498,7 +4498,7 @@
 		<dialog name="CTorrentFilesPage" cookie="Sy" caption="الملفات">
 			<control/>
 		</dialog>
-		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBu" caption="المتتبعات">
+		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBuBu" caption="المتتبعات">
 			<control/>
 			<control/>
 			<control/>
@@ -4510,6 +4510,7 @@
 			<control caption="الغير مكتملة:"/>
 			<control caption="Incomplete:"/>
 			<control caption="ت_حديث"/>
+			<control/>
 			<control/>
 			<control/>
 		</dialog>

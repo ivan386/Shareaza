@@ -4489,7 +4489,7 @@
 		<dialog name="CTorrentFilesPage" cookie="Sy" caption="Arxius">
 			<control/>
 		</dialog>
-		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBu" caption="Trackers">
+		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBuBu" caption="Trackers">
 			<control/>
 			<control/>
 			<control/>
@@ -4501,6 +4501,7 @@
 			<control caption="Completats (Seeders):"/>
 			<control caption="Incomplets (Peers):"/>
 			<control caption="Mode del rastrejador:"/>
+			<control/>
 			<control/>
 			<control/>
 		</dialog>

@@ -4498,7 +4498,7 @@
 		<dialog name="CTorrentFilesPage" cookie="Sy" caption="Файлы">
 			<control/>
 		</dialog>
-		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBu" caption="Трекеры">
+		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBuBu" caption="Трекеры">
 			<control/>
 			<control/>
 			<control/>
@@ -4510,6 +4510,7 @@
 			<control caption="Полные (сиды):"/>
 			<control caption="Неполные:"/>
 			<control caption="Режим трекера:"/>
+			<control/>
 			<control/>
 			<control/>
 		</dialog>

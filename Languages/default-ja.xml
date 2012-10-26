@@ -4494,7 +4494,7 @@
 		<dialog name="CTorrentFilesPage" cookie="Sy" caption="ファイル">
 			<control/>
 		</dialog>
-		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBu" caption="トラッカー">
+		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBuBu" caption="トラッカー">
 			<control/>
 			<control/>
 			<control/>
@@ -4506,6 +4506,7 @@
 			<control caption="未完了:"/>
 			<control caption="Incomplete:"/>
 			<control caption="更新(_R)"/>
+			<control/>
 			<control/>
 			<control/>
 		</dialog>

@@ -4500,7 +4500,7 @@
 		<dialog name="CTorrentFilesPage" cookie="Sy" caption="Αρχεία">
 			<control/>
 		</dialog>
-		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBu" caption="Trackers">
+		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBuBu" caption="Trackers">
 			<control/>
 			<control/>
 			<control/>
@@ -4512,6 +4512,7 @@
 			<control caption="Ημιτελές:"/>
 			<control caption="Incomplete:"/>
 			<control caption="_Ανανέωση"/>
+			<control/>
 			<control/>
 			<control/>
 		</dialog>

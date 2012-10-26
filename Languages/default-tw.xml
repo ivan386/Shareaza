@@ -4437,7 +4437,7 @@
 		<dialog name="CTorrentFilesPage" cookie="Sy" caption="檔案">
 			<control/>
 		</dialog>
-		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBu" caption="伺服器">
+		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBuBu" caption="伺服器">
 			<control/>
 			<control/>
 			<control/>
@@ -4449,6 +4449,7 @@
 			<control caption="未完成:"/>
 			<control caption="Incomplete:"/>
 			<control caption="重新整理"/>
+			<control/>
 			<control/>
 			<control/>
 		</dialog>

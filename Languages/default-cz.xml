@@ -4502,7 +4502,7 @@
 		<dialog name="CTorrentFilesPage" cookie="Sy" caption="Soubory">
 			<control/>
 		</dialog>
-		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBu" caption="Trackery">
+		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBuBu" caption="Trackery">
 			<control/>
 			<control/>
 			<control/>
@@ -4514,6 +4514,7 @@
 			<control caption="Nedokončeno:"/>
 			<control caption="Incomplete:"/>
 			<control caption="_Obnovit"/>
+			<control/>
 			<control/>
 			<control/>
 		</dialog>

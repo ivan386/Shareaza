@@ -4501,7 +4501,7 @@
 		<dialog name="CTorrentFilesPage" cookie="Sy" caption="Pliki">
 			<control/>
 		</dialog>
-		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBu" caption="Trackery">
+		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBuBu" caption="Trackery">
 			<control/>
 			<control/>
 			<control/>
@@ -4513,6 +4513,7 @@
 			<control caption="Niekompletne:"/>
 			<control caption="Incomplete:"/>
 			<control caption="Odśwież"/>
+			<control/>
 			<control/>
 			<control/>
 		</dialog>

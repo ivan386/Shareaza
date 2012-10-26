@@ -4468,7 +4468,7 @@
 		<dialog name="CTorrentFilesPage" cookie="Sy" caption="Dosyalar">
 			<control/>
 		</dialog>
-		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBu" caption="Trackers">
+		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBuBu" caption="Trackers">
 			<control/>
 			<control/>
 			<control/>
@@ -4480,6 +4480,7 @@
 			<control caption="Bitirilmemiş:"/>
 			<control caption="Incomplete:"/>
 			<control caption="T_azele"/>
+			<control/>
 			<control/>
 			<control/>
 		</dialog>

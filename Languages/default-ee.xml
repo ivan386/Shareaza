@@ -4494,7 +4494,7 @@
 		<dialog name="CTorrentFilesPage" cookie="Sy" caption="Failid">
 			<control/>
 		</dialog>
-		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBu" caption="Jälitused">
+		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBuBu" caption="Jälitused">
 			<control/>
 			<control/>
 			<control/>
@@ -4506,6 +4506,7 @@
 			<control caption="Poolik:"/>
 			<control caption="Incomplete:"/>
 			<control caption="_Värskenda"/>
+			<control/>
 			<control/>
 			<control/>
 		</dialog>

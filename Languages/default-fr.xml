@@ -4499,7 +4499,7 @@
 		<dialog name="CTorrentFilesPage" cookie="Sy" caption="Fichiers">
 			<control/>
 		</dialog>
-		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBu" caption="Traqueurs">
+		<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStStBuBuBu" caption="Traqueurs">
 			<control/>
 			<control/>
 			<control/>
@@ -4511,6 +4511,7 @@
 			<control caption="Terminés (Seeds) :"/>
 			<control caption="Incomplet :"/>
 			<control caption="Mode du traqueur :"/>
+			<control/>
 			<control/>
 			<control/>
 		</dialog>
