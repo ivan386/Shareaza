@@ -84,12 +84,19 @@ BOOL CDatagrams::Listen()
 		return FALSE;
 
 	m_hSocket = socket( PF_INET, SOCK_DGRAM, IPPROTO_UDP );
-	if ( ! IsValid() )
-		return FALSE;
+	if ( ! IsValid() )	// Now, make sure it has been created
+	{
+		theApp.Message( MSG_ERROR, _T("Failed to create socket. (1st Try)") );
+		// Second attempt
+		m_hSocket = socket( PF_INET, SOCK_DGRAM, IPPROTO_UDP );
+		if ( ! IsValid() )
+		{
+			theApp.Message( MSG_ERROR, _T("Failed to create socket. (2nd Try)") );
+			return FALSE;
+		}
+	}
 
-	const BOOL bEnable = TRUE;
-	VERIFY( setsockopt( m_hSocket, SOL_SOCKET, SO_BROADCAST,
-		(char*)&bEnable, sizeof( bEnable ) ) == 0 );
+	VERIFY( setsockopt( m_hSocket, SOL_SOCKET, SO_BROADCAST, "\x01", 1 ) == 0 );
 
 	SOCKADDR_IN saHost;
 
@@ -101,8 +108,7 @@ BOOL CDatagrams::Listen()
 		else
 		{
 			// Set the exclusive address option
-			BOOL bVal = TRUE;
-			setsockopt( m_hSocket, SOL_SOCKET, SO_EXCLUSIVEADDRUSE, (char*)&bVal, sizeof(bVal) );
+			VERIFY( setsockopt( m_hSocket, SOL_SOCKET, SO_EXCLUSIVEADDRUSE, "\x01", 1 ) == 0 );
 		}
 	}
 	else if ( Network.Resolve( Settings.Connection.OutHost, Settings.Connection.InPort, &saHost ) )
@@ -117,8 +123,7 @@ BOOL CDatagrams::Listen()
 		else
 		{
 			// Set the exclusive address option
-			BOOL bVal = TRUE;
-			setsockopt( m_hSocket, SOL_SOCKET, SO_EXCLUSIVEADDRUSE, (char*)&bVal, sizeof(bVal) );
+			VERIFY( setsockopt( m_hSocket, SOL_SOCKET, SO_EXCLUSIVEADDRUSE, "\x01", 1 ) == 0 );
 		}
 	}
 
@@ -134,8 +139,7 @@ BOOL CDatagrams::Listen()
 
 	ip_mreq mr = {};
 	mr.imr_multiaddr.s_addr = inet_addr( DEFAULT_G1_MCAST_ADDRESS );
-	VERIFY( setsockopt( m_hSocket, IPPROTO_IP, IP_ADD_MEMBERSHIP,
-		(char FAR *)&mr, sizeof( mr ) ) == 0 );
+	VERIFY( setsockopt( m_hSocket, IPPROTO_IP, IP_ADD_MEMBERSHIP, (char*)&mr, sizeof( mr ) ) == 0 );
 
 	WSAEventSelect( m_hSocket, Network.GetWakeupEvent(), FD_READ );
 

@@ -79,24 +79,21 @@ BOOL CHandshakes::Listen()
 	// Make sure only one thread can execute the code of this method at a time
 	CSingleLock pLock( &m_pSection, TRUE ); // When the method exits, local pLock will be destructed, and the lock released
 
-	m_hSocket = socket(	// Create a socket
-		PF_INET,		// Specify the Internet address family
-		SOCK_STREAM,	// Use TCP and not UDP
-		IPPROTO_TCP );
+	m_hSocket = socket( PF_INET, SOCK_STREAM, IPPROTO_TCP );
 	if ( ! IsValid() )	// Now, make sure it has been created
 	{
 		theApp.Message( MSG_ERROR, _T("Failed to create socket. (1st Try)") );
 		// Second attempt
-		m_hSocket = socket(	// Create a socket
-			PF_INET,		// Specify the Internet address family
-			SOCK_STREAM,	// Use TCP and not UDP
-			IPPROTO_TCP );
+		m_hSocket = socket( PF_INET, SOCK_STREAM, IPPROTO_TCP );
 		if ( ! IsValid() )
 		{
 			theApp.Message( MSG_ERROR, _T("Failed to create socket. (2nd Try)") );
 			return FALSE;
 		}
 	}
+
+	// Disables the Nagle algorithm for send coalescing
+	VERIFY( setsockopt( m_hSocket, IPPROTO_TCP, TCP_NODELAY, "\x01", 1) == 0 );
 
 	// Get our computer's Internet IP address and port number from the network object
 	SOCKADDR_IN saListen = Network.m_pHost; // This is the address of our computer as visible to remote computers on the Internet
@@ -107,8 +104,7 @@ BOOL CHandshakes::Listen()
 	else
 	{
 		// Set the exclusive address option
-		BOOL bVal = TRUE;
-		setsockopt( m_hSocket, SOL_SOCKET, SO_EXCLUSIVEADDRUSE, (char*)&bVal, sizeof(bVal) );
+		VERIFY( setsockopt( m_hSocket, SOL_SOCKET, SO_EXCLUSIVEADDRUSE, "\x01", 1 ) == 0 );
 	}
 
 	// Loop to try 5 times since the socket might not be reused immediately
@@ -332,6 +328,12 @@ BOOL CHandshakes::AcceptConnection()
 	SOCKET hSocket = CNetwork::AcceptSocket( m_hSocket, &pHost, AcceptCheck );
 	if ( hSocket == INVALID_SOCKET )
 		return FALSE;
+	
+	// Disables the Nagle algorithm for send coalescing
+	VERIFY( setsockopt( hSocket, IPPROTO_TCP, TCP_NODELAY, "\x01", 1) == 0 );
+
+	// Allows the socket to be bound to an address that is already in use
+	VERIFY( setsockopt( m_hSocket, SOL_SOCKET, SO_REUSEADDR, "\x01", 1 ) == 0 );
 
 	Network.AcquireLocalAddress( hSocket );
 

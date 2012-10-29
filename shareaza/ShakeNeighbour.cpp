@@ -1471,12 +1471,7 @@ void CShakeNeighbour::OnHandshakeComplete()
 	if ( Settings.Connection.SendBuffer ) // By default, this is 2048, which is 2 KB of space
 	{
 		// Tell the socket to use a 2 KB buffer for sends
-		setsockopt(                                 // Set a socket option
-			m_hSocket,                              // The socket this CShakeNeighbour object inherited from CConnection
-			SOL_SOCKET,                             // Define this option at the socket level
-			SO_SNDBUF,                              // Specify the total per-socket buffer space reserved for sends
-			(LPSTR)&Settings.Connection.SendBuffer, // Use the value from Shareaza Settings, 2 KB by default
-			4 );                                    // SendBuffer is a DWORD, occupying 4 bytes of memory
+		setsockopt( m_hSocket, SOL_SOCKET, SO_SNDBUF, (char*)&Settings.Connection.SendBuffer, 4 );
 	}
 
 	// Make a pointer for a new object that will be a copy of this one, but in a different place on the CConnection inheritance tree

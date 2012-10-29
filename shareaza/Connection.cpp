@@ -191,17 +191,28 @@ BOOL CConnection::ConnectTo(const IN_ADDR* pAddress, WORD nPort)
 	UpdateCountry();
 
 	// Create a socket and store it in m_hSocket
-	m_hSocket = socket(
-		PF_INET,		// Normal IPv4, not IPv6
-		SOCK_STREAM,	// The two-way sequenced reliable byte streams of TCP, not the datagrams of UDP
-		IPPROTO_TCP );	// Again, we want TCP
+	m_hSocket = socket( PF_INET, SOCK_STREAM, IPPROTO_TCP );
+	if ( ! IsValid() )	// Now, make sure it has been created
+	{
+		theApp.Message( MSG_ERROR, _T("Failed to create socket. (1st Try)") );
+		// Second attempt
+		m_hSocket = socket( PF_INET, SOCK_STREAM, IPPROTO_TCP );
+		if ( ! IsValid() )
+		{
+			theApp.Message( MSG_ERROR, _T("Failed to create socket. (2nd Try)") );
+			return FALSE;
+		}
+	}
+
+	// Disables the Nagle algorithm for send coalescing
+	VERIFY( setsockopt( m_hSocket, IPPROTO_TCP, TCP_NODELAY, "\x01", 1 ) == 0 );
+
+	// Allows the socket to be bound to an address that is already in use
+	VERIFY( setsockopt( m_hSocket, SOL_SOCKET, SO_REUSEADDR, "\x01", 1 ) == 0 );
 
 	// Choose asynchronous, non-blocking reading and writing on our new socket
 	DWORD dwValue = 1;
-	ioctlsocket(	// Call Windows Sockets ioctlsocket to control the input/output mode of our new socket
-		m_hSocket,	// Give it our new socket
-		FIONBIO,	// Select the option for blocking i/o, should the program wait on read and write calls, or keep going?
-		&dwValue ); // Nonzero, it should keep going
+	ioctlsocket( m_hSocket, FIONBIO, &dwValue );
 
 	// If the OutHost string in connection settings has an IP address written in it
 	if ( Settings.Connection.OutHost.GetLength() )
