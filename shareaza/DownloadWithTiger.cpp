@@ -1038,23 +1038,17 @@ BOOL CDownloadWithTiger::GetFragment(CDownloadTransfer* pTransfer)
 			return TRUE;
 		}
 
-		if ( oLargest.size() < 32 )
-			return FALSE;
-
-		DWORD nOldSpeed	= pExisting->GetAverageSpeed();
-		DWORD nNewSpeed	= pTransfer->GetAverageSpeed();
+		QWORD nOldSpeed	= pExisting->GetAverageSpeed();
+		QWORD nNewSpeed	= pTransfer->GetAverageSpeed();
 		QWORD nLength	= oLargest.size() / 2;
 
-		if ( nOldSpeed > 5 && nNewSpeed > 5 )
-		{
-			nLength = oLargest.size() * nNewSpeed / ( nNewSpeed + nOldSpeed );
+		if ( nOldSpeed == 0 )
+			nLength = oLargest.size();
+		else if ( nNewSpeed )
+			nLength = ( oLargest.size() * nNewSpeed ) / ( nNewSpeed + nOldSpeed );
 
-			if ( oLargest.size() > 102400 )
-			{
-				nLength = max( nLength, 51200ull );
-				nLength = min( nLength, oLargest.size() - 51200ull );
-			}
-		}
+		if ( nLength == 0 )
+			nLength = 1;
 
 		if ( pExisting->m_bRecvBackwards )
 		{
