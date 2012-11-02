@@ -3101,18 +3101,17 @@ LRESULT CMainWnd::OnSanityCheck(WPARAM /*wParam*/, LPARAM /*lParam*/)
 
 LRESULT CMainWnd::OnNowUploading(WPARAM /*wParam*/, LPARAM lParam)
 {
-	CString* pFilename = (CString*)lParam;
-
-	CQuickLock oLock( Library.m_pSection );
-
-	if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( *pFilename ) )
+	CAutoPtr< CString > pFilename( (CString*)lParam );
+	if ( pFilename && ! pFilename->IsEmpty() )
 	{
-		pFile->m_nUploadsToday++;
-		pFile->m_nUploadsTotal++;
+		CQuickLock oLock( Library.m_pSection );
+
+		if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( *pFilename ) )
+		{
+			pFile->m_nUploadsToday++;
+			pFile->m_nUploadsTotal++;
+		}
 	}
-
-	delete pFilename;
-
 	return 0;
 }
 
