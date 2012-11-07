@@ -48,12 +48,13 @@ HRESULT CVideoReader::LoadFrame(IMediaDet* pDet, double total_time,
 	ULONG total_size = line_size * pParams->nHeight;
 	HRESULT hr = E_OUTOFMEMORY;
 	*ppImage = SafeArrayCreateVector (VT_UI1, 0, total_size);
-	if (*ppImage)
+	if ( *ppImage )
 	{
 		char* pDestination = NULL;
 		hr = SafeArrayAccessData (*ppImage, (void**) &pDestination);
 		if ( SUCCEEDED( hr ) )
 		{
+			hr = E_OUTOFMEMORY;
 			if ( char* buf = new char [ total_size + sizeof( BITMAPINFOHEADER ) ] )
 			{
 				// Getting 25% frame
@@ -66,9 +67,12 @@ HRESULT CVideoReader::LoadFrame(IMediaDet* pDet, double total_time,
 						CopyBitmap( pDestination, buf,
 							pParams->nWidth, pParams->nHeight, line_size );
 					}
+					else
+						ATLTRACE( "CVideoReader::LoadFrame : Failed to get 25%% frame!\n" );
 				}
 				__except ( EXCEPTION_EXECUTE_HANDLER )
 				{
+					ATLTRACE( "CVideoReader::LoadFrame : GetBitmapBits() exception!\n" );
 					hr = E_FAIL;
 				}
 				if ( FAILED( hr ) )
@@ -83,20 +87,28 @@ HRESULT CVideoReader::LoadFrame(IMediaDet* pDet, double total_time,
 							CopyBitmap( pDestination, buf,
 								pParams->nWidth, pParams->nHeight, line_size );
 						}
+						else
+							ATLTRACE( "CVideoReader::LoadFrame : Failed to get first frame!\n" );
 					}
 					__except ( EXCEPTION_EXECUTE_HANDLER )
 					{
+						ATLTRACE( "CVideoReader::LoadFrame : GetBitmapBits() exception!\n" );
 						hr = E_FAIL;
 					}
 				}
 				delete [] buf;
 			}
 			else
-				hr = E_OUTOFMEMORY;
+				ATLTRACE( "CVideoReader::LoadFrame : Out of memory!\n" );
 
 			SafeArrayUnaccessData (*ppImage);
 		}
+		else
+			ATLTRACE( "CVideoReader::LoadFrame : SafeArrayAccessData() out of memory!\n" );
 	}
+	else
+		ATLTRACE( "CVideoReader::LoadFrame : SafeArrayCreateVector() out of memory!\n" );
+
 	return hr;
 }
 
@@ -109,7 +121,7 @@ STDMETHODIMP CVideoReader::LoadFromFile (
 	/* [in,out] */ IMAGESERVICEDATA* pParams,
 	/* [out] */ SAFEARRAY** ppImage )
 {
-	ATLTRACE( "CVideoReader::LoadFromFile (\"%s\", 0x%08x, 0x%08x)\n", (LPCSTR)CW2A( (LPCWSTR)sFile ), pParams, ppImage);
+	ATLTRACE( "CVideoReader::LoadFromFile : Loading \"%s\"...\n", (LPCSTR)CW2A( (LPCWSTR)sFile ) );
 
 	if ( ! pParams || ! ppImage )
 		return E_POINTER;
@@ -126,6 +138,7 @@ STDMETHODIMP CVideoReader::LoadFromFile (
 		}
 		__except( GetExceptionCode() != EXCEPTION_CONTINUE_EXECUTION )
 		{
+			ATLTRACE( "CVideoReader::LoadFromFile : put_Filename() exception!\n" );
 			return E_FAIL;
 		}
 
@@ -234,20 +247,28 @@ STDMETHODIMP CVideoReader::LoadFromFile (
 							hr = LoadFrame( pDet, total_time, pParams, ppImage );
 						}
 					}
+					else
+						ATLTRACE( "CVideoReader::LoadFromFile : Cannot get stream length: 0x%08x\n", hr);
 				}
+				else
+				{
+					hr = E_INVALIDARG;
+					ATLTRACE( "CVideoReader::LoadFromFile : Video stream not found!\n" );
+				}
+
 				if ( mt.cbFormat )
 					CoTaskMemFree ( mt.pbFormat );
 				if ( mt.pUnk )
 					mt.pUnk->Release();
 			}
 			else
-				ATLTRACE( "Cannot get streams: 0x%08x\n", hr);
+				ATLTRACE( "CVideoReader::LoadFromFile : Cannot get streams: 0x%08x\n", hr);
 		}
 		else
-			ATLTRACE( "Cannot open file: 0x%08x\n", hr);
+			ATLTRACE( "CVideoReader::LoadFromFile : Cannot open file: 0x%08x\n", hr);
 	}
 	else
-		ATLTRACE( "Cannot create MediaDet object: 0x%08x\n", hr);
+		ATLTRACE( "CVideoReader::LoadFromFile : Cannot create MediaDet object: 0x%08x\n", hr);
 
 	if (FAILED (hr) && *ppImage)
 	{
