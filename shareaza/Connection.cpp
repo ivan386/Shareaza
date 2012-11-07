@@ -503,12 +503,43 @@ BOOL CConnection::OnRead()
 		&& *m_mInput.pLimit							// And that limit isn't 0
 		&& Settings.Live.BandwidthScale <= 100 )	// And the bandwidth scale isn't at MAX
 	{
-		// Work out what the bandwitdh limit is
+		// Work out what the bandwidth limit is
 		nLimit = m_mInput.CalculateLimit( tNow );
 	}
 
-	// Read from the socket and record the # bytes read
-	DWORD nTotal = m_pInput->Receive( m_hSocket, nLimit );
+	nLimit = min( nLimit, (DWORD)INT_MAX );
+
+	// Start the total at 0
+	DWORD nTotal = 0ul;
+
+	// Read bytes from the socket until the limit has run out
+	while ( nLimit )
+	{
+		// Limit nLength to the free buffer space or the maximum size of an int
+		DWORD nLength = m_pInput->GetBufferFree();
+
+		if ( nLength )
+			// Limit nLength to the speed limit
+			nLength = min( nLimit, nLength );
+		else
+			// Limit nLength to the maximum receive size
+			nLength = min( nLimit, 16384ul );	// Receive up to 16KB blocks from the socket
+
+		// Exit loop if the buffer isn't big enough to hold the data
+		if ( ! m_pInput->EnsureBuffer( nLength ) )
+			break;
+
+		// Read the bytes from the socket and record how many are actually read
+		int nRead = CNetwork::Recv( m_hSocket, (char*)m_pInput->GetDataEnd(), (int)nLength );
+
+		// Exit loop if nothing is left or an error occurs
+		if ( nRead <= 0 )
+			break;
+
+		m_pInput->m_nLength	+= nRead;	// Add to the buffer size
+		nTotal				+= nRead;	// Add to the total
+		nLimit				-= nRead;	// Adjust the limit
+	}
 
 	// Add the total to the statistics
 	Statistics.Current.Bandwidth.Incoming += nTotal;
@@ -548,8 +579,31 @@ BOOL CConnection::OnWrite()
 		nLimit = m_mOutput.CalculateLimit( tNow, Settings.Uploads.ThrottleMode == 0 );
 	}
 
-	// Read from the socket and record the # bytes sent
-	DWORD nTotal = m_pOutput->Send( m_hSocket, nLimit );
+	nLimit = min( min( nLimit, m_pOutput->GetCount() ), (DWORD)INT_MAX );
+
+	// Point to the data to write
+	const BYTE* pData = m_pOutput->GetData();
+
+	// Start the total at 0
+	DWORD nTotal = 0ul;
+
+	// Write bytes to the socket until our limit has run out
+	while ( nLimit )
+	{
+		// Send the bytes to the socket and record how many are actually sent
+		int nSend = CNetwork::Send( m_hSocket, (const char*)pData, (int)nLimit );
+
+		// Exit loop if nothing is left or an error occurs
+		if ( nSend <= 0 )
+			break;
+
+		pData	+= nSend;	// Move forward past the sent data
+		nTotal	+= nSend;	// Add to the total
+		nLimit	-= nSend;	// Adjust the limit
+	}
+
+	// Remove sent bytes from the buffer
+	m_pOutput->Remove( nTotal );
 
 	// Add the total to statistics
 	Statistics.Current.Bandwidth.Outgoing += nTotal;

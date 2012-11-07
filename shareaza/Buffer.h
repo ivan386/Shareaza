@@ -44,17 +44,19 @@ private:
 
 // Accessors
 public:
-	inline DWORD GetBufferSize() const { return m_nBuffer; }// Return the total size of the buffer
-	inline BYTE* GetData() const { return m_pBuffer; }		// Return a pointer to the start of the data in the buffer
-	inline DWORD GetCount() const { return m_nLength; }		// Return the filled size of the buffer
+	inline DWORD GetBufferSize() const { return m_nBuffer; }				// Return the total size of the buffer
+	inline BYTE* GetData() const { return m_pBuffer; }						// Return a pointer to the start of the data in the buffer
+	inline DWORD GetCount() const { return m_nLength; }						// Return the filled size of the buffer
+	inline BYTE* GetDataEnd() const { return m_pBuffer + m_nLength; }		// Return a pointer to the end of the data in the buffer
+	inline DWORD GetBufferFree() const { return m_nBuffer - m_nLength; }	// Return the unused #bytes in the buffer
 
 // Operations
 public:
-	void	Add(const void* pData, const size_t nLength) throw();					// Add data to the end of the buffer
-	void	Insert(const DWORD nOffset, const void* pData, const size_t nLength);	// Insert the data into the buffer
+	void	Add(const void* __restrict pData, const size_t nLength) throw();		// Add data to the end of the buffer
+	void	Insert(const DWORD nOffset, const void* __restrict pData, const size_t nLength);	// Insert the data into the buffer
 	void	Remove(const size_t nLength) throw();									// Removes data from the start of the buffer
 	DWORD	AddBuffer(CBuffer* pBuffer, const size_t nLength);						// Copy all or part of the data in another CBuffer object into this one
-	bool	EnsureBuffer(const size_t nLength) throw();								// Tell the buffer to prepare to recieve this number of additional bytes
+	bool	EnsureBuffer(const size_t nLength) throw();								// Tell the buffer to prepare to receive this number of additional bytes
 	void	AddReversed(const void* pData, const size_t nLength);					// Add data to this buffer, but with the bytes in reverse order
 	void	Attach(CBuffer* pBuffer);												// Get ownership of another CBuffer object data
 
@@ -72,12 +74,6 @@ public:
 	BOOL	Read(void* pData, const size_t nLength) throw();
 	BOOL    ReadLine(CString& strLine, BOOL bPeek = FALSE);		// Reads until "\r\n". Encoding detection.
 	BOOL    StartsWith(LPCSTR pszString, const size_t nLength, const BOOL bRemove = FALSE) throw();// Returns true if the buffer starts with this text
-
-	// Use the buffer with a socket
-#ifdef _WINSOCKAPI_
-	DWORD	Receive(SOCKET hSocket, DWORD nSpeedLimit = ~0ul);	// Move incoming data from the socket to this buffer
-	DWORD	Send(SOCKET hSocket, DWORD nSpeedLimit = ~0ul);		// Send the contents of this buffer to the computer on the far end of the socket
-#endif // _WINSOCKAPI_
 
 	// Use the buffer with the ZLib compression library
 #ifdef ZLIB_H
@@ -119,14 +115,8 @@ public:
 	// Add ASCII text to the start of this buffer, shifting everything else forward
 	void	Prefix(LPCSTR pszText, const size_t nLength) { Insert( 0, (void*)pszText, nLength ); }
 
-private:
-	BYTE*	GetDataEnd() const { return m_pBuffer + m_nLength; }	// Return a pointer to the end of the data in the buffer
-	size_t	GetBufferFree() const { return m_nBuffer - m_nLength; }	// Return the unused #bytes in the buffer
-
 // Statics
 public:
-	static const size_t	MAX_RECV_SIZE	= 1024ul * 16ul;	// Recieve up to 16KB blocks from the socket
-	static const size_t	ZLIB_CHUNK_SIZE	= 1024u;			// Chunk size for ZLib compression/decompression
 
 	// Static means you can call CBuffer::ReverseBuffer without having a CBuffer object at all
 	static void ReverseBuffer(const void* pInput, void* pOutput, size_t nLength);

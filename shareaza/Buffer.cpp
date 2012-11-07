@@ -38,11 +38,6 @@ static char THIS_FILE[]=__FILE__;
 #define BLOCK_SIZE  1024       // Change the allocated size of the buffer in 1 KB sized blocks
 #define BLOCK_MASK  0xFFFFFC00 // Aids in rounding to the next biggest KB of size
 
-#ifdef _WINSOCKAPI_
-static int Send(SOCKET s, const char* buf, int len) throw();
-static int Recv(SOCKET s, char* buf, int len) throw();
-#endif // _WINSOCKAPI_
-
 ///////////////////////////////////////////////////////////////////////////////
 // CBuffer construction
 
@@ -64,7 +59,7 @@ CBuffer::~CBuffer()
 // CBuffer add
 
 // Add data to the buffer
-void CBuffer::Add(const void* pData, const size_t nLength) throw()
+void CBuffer::Add(const void* __restrict pData, const size_t nLength) throw()
 {
 	// If the text is blank, don't do anything
 	if ( pData == NULL ) return;
@@ -83,7 +78,7 @@ void CBuffer::Add(const void* pData, const size_t nLength) throw()
 
 // Takes offset, a position in the memory block to insert some new memory at
 // Inserts the memory there, shifting anything after it further to the right
-void CBuffer::Insert(const DWORD nOffset, const void * pData, const size_t nLength)
+void CBuffer::Insert(const DWORD nOffset, const void* __restrict pData, const size_t nLength)
 {
 	ASSERT( pData );
 	if ( pData == NULL ) return;
@@ -369,127 +364,6 @@ BOOL CBuffer::StartsWith(LPCSTR pszString, const size_t nLength, const BOOL bRem
 	return TRUE;
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// CBuffer socket receive
-
-#ifdef _WINSOCKAPI_
-
-// Takes a handle to a socket
-// Reads in data from the socket, moving it into the buffer
-// Returns the number of bytes we got
-DWORD CBuffer::Receive(SOCKET hSocket, DWORD nSpeedLimit)
-{
-	// Start the total at 0
-	DWORD nTotal = 0ul;
-
-	// Read bytes from the socket until the limit has run out
-	while ( nSpeedLimit )
-	{
-		// Limit nLength to the free buffer space or the maximum size of an int
-		size_t nLength = min( GetBufferFree(), (size_t)INT_MAX );
-
-		if ( nLength )
-		{
-			// Limit nLength to the speed limit
-			nLength = min( nLength, (size_t)nSpeedLimit );
-		}
-		else
-		{
-			// Limit nLength to the maximum recieve size
-			nLength = min( (size_t)nSpeedLimit, MAX_RECV_SIZE );
-		}
-
-		// Exit loop if the buffer isn't big enough to hold the data
-		if ( !EnsureBuffer( nLength ) )
-			break;
-
-		// Point where the data is to be stored. This needs to be done after
-		// EnsureBuffer() is called as it may have changed the buffer
-		char* const pData = reinterpret_cast< char* >( GetDataEnd() );
-
-		// Read the bytes from the socket and record how many are actually read
-		const int nRead = ::Recv( hSocket, pData, static_cast< int >( nLength ) );
-
-		// Exit loop if nothing is left or an error occurs
-		if ( nRead <= 0 )
-			break;
-
-		m_nLength	+= nRead;	// Add to the buffer size
-		nTotal		+= nRead;	// Add to the total
-		nSpeedLimit	-= nRead;	// Adjust the limit
-	}
-
-	// Return the total #bytes read
-	return nTotal;
-}
-
-static int Recv(SOCKET s, char* buf, int len) throw()
-{
-	__try	// Fix against stupid firewalls like (iS3 Anti-Spyware or Norman Virus Control)
-	{
-		return recv( s, buf, len, 0 );
-	}
-	__except( EXCEPTION_EXECUTE_HANDLER )
-	{
-		return -1;
-	}
-}
-
-///////////////////////////////////////////////////////////////////////////////
-// CBuffer socket send
-
-// Send the data from the buffer to the socket
-// Returns the #bytes sent
-DWORD CBuffer::Send(SOCKET hSocket, DWORD nSpeedLimit)
-{
-	// Adjust limit if there isn't enough data to send
-	nSpeedLimit = static_cast< DWORD >( min( nSpeedLimit, m_nLength ) );
-
-	// Point to the data to write
-	const char* pData = reinterpret_cast< char* >( m_pBuffer );
-
-	// Start the total at 0
-	DWORD nTotal = 0ul;
-
-	// Write bytes to the socket until our limit has run out
-	while ( nSpeedLimit )
-	{
-		// Limit nLength to the speed limit or max int
-		int nLength = static_cast< int >( min( nSpeedLimit, static_cast< DWORD >( INT_MAX ) ) );
-
-		// Send the bytes to the socket and record how many are actually sent
-		nLength = ::Send( hSocket, pData, nLength );
-
-		// Exit loop if nothing is left or an error occurs
-		if ( nLength <= 0 )
-			break;
-
-		pData		+= nLength;	// Move forward past the sent data
-		nTotal		+= nLength;	// Add to the total
-		nSpeedLimit	-= nLength;	// Adjust the limit
-	}
-
-	// Remove sent bytes from the buffer
-	Remove( nTotal );
-
-	// Return the total #bytes sent
-	return nTotal;
-}
-
-static int Send(SOCKET s, const char* buf, int len) throw()
-{
-	__try	// Fix against stupid firewalls like (iS3 Anti-Spyware or Norman Virus Control)
-	{
-		return send( s, buf, len, 0 );
-	}
-	__except( EXCEPTION_EXECUTE_HANDLER )
-	{
-		return -1;
-	}
-}
-
-#endif // _WINSOCKAPI_
-
 //////////////////////////////////////////////////////////////////////
 // CBuffer deflate and inflate compression
 
@@ -704,7 +578,7 @@ bool CBuffer::InflateStreamTo(CBuffer& oBuffer, z_streamp& pStream, BOOL* pbEndO
 	do
 	{
 		// Limit nLength to the free buffer space or the maximum chunk size
-		size_t nLength = max( GetBufferFree(), ZLIB_CHUNK_SIZE );
+		size_t nLength = max( GetBufferFree(), 1024ul ); // Chunk size for ZLib compression/decompression
 
 		// Make sure the receiving buffer is large enough to hold at least 1KB
 		if ( ! oBuffer.EnsureBuffer( nLength ) )

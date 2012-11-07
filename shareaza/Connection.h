@@ -149,20 +149,18 @@ public:
 		m_pOutput->Print( strData, nCodePage );
 	}
 
-	inline DWORD Write(CBuffer* pBuffer) throw()
+	inline void Write(const CBuffer* pBuffer) throw()
 	{
 		CQuickLock oOutputLock( *m_pOutputSection );
 
-		return m_pOutput->AddBuffer( pBuffer );
+		m_pOutput->Add( pBuffer->m_pBuffer, pBuffer->m_nLength );
 	}
 
 	inline void Write(const CPacket* pPacket) throw()
 	{
 		CQuickLock oOutputLock( *m_pOutputSection );
 
-		CBuffer pBuffer;
-		pPacket->ToBuffer( &pBuffer );
-		Write( &pBuffer );
+		pPacket->ToBuffer( m_pOutput );
 	}
 
 	template
