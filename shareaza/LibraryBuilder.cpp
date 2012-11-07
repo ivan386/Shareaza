@@ -424,6 +424,7 @@ void CLibraryBuilder::OnRun()
 
 					ExtractPluginMetadata( nIndex, sPath );
 
+					CThumbCache::Delete( sPath );
 					CThumbCache::Cache( sPath );
 
 					// Done
@@ -1140,6 +1141,9 @@ bool CLibraryBuilder::RefreshMetadata(const CString& sPath)
 	}
 
 	bResult |= ExtractPluginMetadata( nIndex, sPath );
+
+	CThumbCache::Delete( sPath );
+	CThumbCache::Cache( sPath );
 
 	return bResult;
 }
