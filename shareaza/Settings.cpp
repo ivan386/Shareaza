@@ -417,7 +417,7 @@ void CSettings::Load()
 	Add( _T("eDonkey"), _T("ExtendedRequest"), &eDonkey.ExtendedRequest, 2, 1, 0, 2 );
 	Add( _T("eDonkey"), _T("FastConnect"), &eDonkey.FastConnect, false );
 	Add( _T("eDonkey"), _T("ForceHighID"), &eDonkey.ForceHighID, true );
-	Add( _T("eDonkey"), _T("FrameSize"), &eDonkey.FrameSize, 512*Kilo, Kilo, 1, 10*Kilo, _T(" KB") );
+	Add( _T("eDonkey"), _T("FrameSize"), &eDonkey.FrameSize, 10*Kilo, Kilo, 1, 10, _T(" KB") );
 	Add( _T("eDonkey"), _T("GetSourcesThrottle"), &eDonkey.GetSourcesThrottle, 8*60*60*1000, 60*60*1000, 1, 24, _T(" h") );
 	Add( _T("eDonkey"), _T("LargeFileSupport"), &eDonkey.LargeFileSupport, true );
 	Add( _T("eDonkey"), _T("LearnNewServers"), &eDonkey.LearnNewServers, false );
@@ -436,7 +436,7 @@ void CSettings::Load()
 	Add( _T("eDonkey"), _T("QueueRankThrottle"), &eDonkey.QueueRankThrottle, 2*60*1000, 1000, 60, 600, _T(" s") );
 	Add( _T("eDonkey"), _T("ReAskTime"), &eDonkey.ReAskTime, 29*60, 60, 20, 360, _T(" m") );
 	Add( _T("eDonkey"), _T("RequestPipe"), &eDonkey.RequestPipe, 3, 1, 1, 10 );
-	Add( _T("eDonkey"), _T("RequestSize"), &eDonkey.RequestSize, 90*Kilo, Kilo, 10, 1000, _T(" KB") );
+	Add( _T("eDonkey"), _T("RequestSize"), &eDonkey.RequestSize, 90*Kilo, Kilo, 10, Kilo, _T(" KB") );
 	Add( _T("eDonkey"), _T("SendPortServer"), &eDonkey.SendPortServer, false );
 	Add( _T("eDonkey"), _T("ServerListURL"), &eDonkey.ServerListURL, _T("http://peerates.net/servers.php") );
 	Add( _T("eDonkey"), _T("ServerWalk"), &eDonkey.ServerWalk, true );
