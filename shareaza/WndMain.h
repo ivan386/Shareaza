@@ -67,7 +67,7 @@ public:
 	}
 
 	// Show message in the tray
-	void		ShowTrayPopup(LPCTSTR szText, LPCTSTR szTitle = NULL, DWORD dwIcon = NIIF_INFO, UINT uTimeout = 15 /* seconds */);
+	void		ShowTrayPopup(const CString& sText, const CString& sTitle = CLIENT_NAME_T, DWORD dwIcon = NIIF_INFO, UINT uTimeout = 15 /* seconds */);
 
 	// Update tab and navigation bars
 	void		OnUpdateCmdUI();
@@ -111,6 +111,12 @@ protected:
 
 	void		AddTray();
 	void		DeleteTray();
+
+	// Snarl notifications - http://www.getsnarl.info/
+	int			SnarlCommand(LPCSTR szCommand);
+	bool		SnarlRegister();
+	void		SnarlUnregister();
+	bool		SnarlNotify(const CString& sText, const CString& sTitle, DWORD dwIcon, UINT uTimeout);
 
 	virtual BOOL Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, LPCTSTR lpszMenuName, DWORD dwExStyle, CCreateContext* pContext);
 	virtual BOOL OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext);

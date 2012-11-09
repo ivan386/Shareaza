@@ -130,7 +130,7 @@ void CSystemWnd::OnTimer(UINT_PTR /*nIDEvent*/)
 					nType = NIIF_INFO;
 					break;
 				}
-				pWnd->ShowTrayPopup( pMsg->m_strLog, NULL, nType );
+				pWnd->ShowTrayPopup( pMsg->m_strLog, CLIENT_NAME_T, nType );
 
 				i = 50;
 			}

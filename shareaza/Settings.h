@@ -104,6 +104,7 @@ public:
 		bool		TipUploads;
 		bool		TipNeighbours;
 		bool		TipMedia;
+		bool		Snarl;						// Use Snarl notifications - http://www.getsnarl.info/
 	} Interface;
 
 	struct sWindows

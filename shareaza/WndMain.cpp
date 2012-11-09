@@ -449,6 +449,8 @@ int CMainWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_pTray.hWnd = GetSafeHwnd();
 	m_pTray.hIcon = CoolInterface.ExtractIcon( IDR_MAINFRAME, FALSE );
 
+	SnarlRegister();
+
 	// Icon
 
 	SetIcon( CoolInterface.ExtractIcon( IDR_MAINFRAME, FALSE ), FALSE );
@@ -981,6 +983,7 @@ void CMainWnd::AddTray()
 		Shell_NotifyIcon( NIM_DELETE, &m_pTray );
 
 		m_pTray.uFlags = NIF_ICON | NIF_MESSAGE | NIF_TIP;
+
 		_tcsncpy( m_pTray.szTip, Settings.SmartAgent(), _countof( m_pTray.szTip ) - 1 );
 		m_pTray.szTip[ _countof( m_pTray.szTip ) - 1 ] = _T('\0');
 
@@ -1347,7 +1350,7 @@ LRESULT CMainWnd::OnVersionCheck(WPARAM wParam, LPARAM /*lParam*/)
 {
 	if ( wParam == VC_MESSAGE_AND_CONFIRM && VersionChecker.m_sMessage.GetLength() )
 	{
-		AfxMessageBox( VersionChecker.m_sMessage, MB_ICONINFORMATION );
+		AfxMessageBox( VersionChecker.m_sMessage, MB_ICONINFORMATION | MB_OK );
 	}
 
 	if ( wParam == VC_MESSAGE_AND_CONFIRM || wParam == VC_CONFIRM )
@@ -1364,10 +1367,11 @@ LRESULT CMainWnd::OnVersionCheck(WPARAM wParam, LPARAM /*lParam*/)
 		{
 			CString strMessage;
 			LoadString( strMessage, IDS_UPGRADE_NO_NEW );
+
+			ShowTrayPopup( strMessage );
+
 			if ( VersionChecker.IsVerbose() )
 				AfxMessageBox( strMessage, MB_ICONINFORMATION | MB_OK );
-			else
-				ShowTrayPopup( strMessage );
 		}
 	}
 
@@ -3160,9 +3164,70 @@ BOOL CMainWnd::OnDrop(IDataObject* pDataObj, DWORD /* grfKeyState */, POINT /* p
 	return FALSE;
 }
 
-void CMainWnd::ShowTrayPopup(LPCTSTR szText, LPCTSTR szTitle, DWORD dwIcon, UINT uTimeout)
+int CMainWnd::SnarlCommand(LPCSTR szCommand)
 {
-	if ( ! szText )
+	DWORD_PTR lResult = (DWORD_PTR)-1;
+	if ( HWND hWndSnarl = ::FindWindow( _T("w>Snarl"), _T("Snarl") ) )
+	{
+		const ULONG_PTR uSnarlMagic = 0x534e4c03;
+		COPYDATASTRUCT cds = { uSnarlMagic, strlen( szCommand ) + 1, (LPSTR)szCommand };
+		SendMessageTimeout( hWndSnarl, WM_COPYDATA, (WPARAM)GetCurrentProcessId(), (LPARAM)&cds, SMTO_ABORTIFHUNG, 1000, &lResult );
+	}
+	return (int)lResult;
+}
+
+bool CMainWnd::SnarlRegister()
+{
+	return Settings.Interface.Snarl && ( SnarlCommand( "register?app-sig=app/" CLIENT_NAME "&title=" CLIENT_NAME ) >= 0 );
+}
+
+void CMainWnd::SnarlUnregister()
+{
+	SnarlCommand( "unregister?app-sig=app/" CLIENT_NAME );
+}
+
+bool CMainWnd::SnarlNotify(const CString& sText, const CString& sTitle, DWORD dwIcon, UINT uTimeout)
+{
+	if ( ! SnarlRegister() )
+		return false;
+
+	CString sSafeTitle = sTitle;
+	sSafeTitle.Replace( _T("="), _T("==") );
+	sSafeTitle.Replace( _T("&"), _T("&&") );
+
+	CString sSafeText = sText;
+	sSafeText.Replace( _T("="), _T("==") );
+	sSafeText.Replace( _T("&"), _T("&&") );
+
+	CStringA sCommand;
+	sCommand.Format( "notify?app-sig=app/%s&timeout=%u&title=%s&text=%s",
+		CLIENT_NAME, uTimeout, UTF8Encode( sSafeTitle ), UTF8Encode( sSafeText ) );
+
+	switch ( dwIcon & NIIF_ICON_MASK )
+	{
+	case NIIF_INFO:
+		sCommand += "&icon=!system-info";
+		break;
+	case NIIF_WARNING:
+		sCommand += "&icon=!system-warning";
+		break;
+	case NIIF_ERROR:		
+		sCommand += "&icon=!system-critical";
+		break;
+	case NIIF_USER:
+		sCommand += "&icon=!message-new_message";
+		break;
+	}
+	return ( SnarlCommand( sCommand ) >= 0 );
+}
+
+void CMainWnd::ShowTrayPopup(const CString& sText, const CString& sTitle, DWORD dwIcon, UINT uTimeout)
+{
+	if ( sText.IsEmpty() )
+		return;
+
+	// Snarl notification
+	if ( SnarlNotify( sText, sTitle, dwIcon, uTimeout ) )
 		return;
 
 	// Show temporary notify icon
@@ -3176,11 +3241,11 @@ void CMainWnd::ShowTrayPopup(LPCTSTR szText, LPCTSTR szTitle, DWORD dwIcon, UINT
 
 	m_pTray.uFlags = NIF_INFO;
 
-	_tcsncpy( m_pTray.szInfo, szText, _countof( m_pTray.szInfo ) - 1 );
+	_tcsncpy( m_pTray.szInfo, sText, _countof( m_pTray.szInfo ) - 1 );
 	m_pTray.szInfo[ _countof( m_pTray.szInfo ) - 1 ] = _T('\0');
-	if ( lstrlen( szText ) >= _countof( m_pTray.szInfo ) - 1 )
+	if ( sText.GetLength() >= _countof( m_pTray.szInfo ) - 1 )
 	{
-		if ( szText[ _countof( m_pTray.szInfo ) - 1 ] != _T(' ') )
+		if ( sText[ _countof( m_pTray.szInfo ) - 1 ] != _T(' ') )
 		{
 			if ( LPTSTR pWordEnd = _tcsrchr( m_pTray.szInfo, _T(' ') ) )
 			{
@@ -3190,13 +3255,13 @@ void CMainWnd::ShowTrayPopup(LPCTSTR szText, LPCTSTR szTitle, DWORD dwIcon, UINT
 		}
 	}
 
-	if ( szTitle )
-	{
-		_tcsncpy( m_pTray.szInfoTitle, szTitle, _countof( m_pTray.szInfoTitle ) - 1 );
-		m_pTray.szInfoTitle[ _countof( m_pTray.szInfoTitle ) - 1 ] = _T('\0');
-	}
+	_tcsncpy( m_pTray.szInfoTitle, sTitle, _countof( m_pTray.szInfoTitle ) - 1 );
+	m_pTray.szInfoTitle[ _countof( m_pTray.szInfoTitle ) - 1 ] = _T('\0');
+
+	if ( ( dwIcon & NIIF_ICON_MASK ) == NIIF_USER )
+		m_pTray.hBalloonIcon = CoolInterface.ExtractIcon( IDI_USER, FALSE, theApp.m_bIsVistaOrNewer ? LVSIL_NORMAL : LVSIL_SMALL );
 	else
-		_tcscpy( m_pTray.szInfoTitle, CLIENT_NAME_T );
+		m_pTray.hBalloonIcon = NULL;
 
 	m_pTray.dwInfoFlags = dwIcon | ( theApp.m_bIsVistaOrNewer ? NIIF_LARGE_ICON : 0 );
 	m_pTray.uTimeout = uTimeout * 1000;   // convert time to ms
