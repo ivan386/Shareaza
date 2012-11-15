@@ -501,7 +501,7 @@ BOOL CUploadTransferED2K::ServeRequests()
 		ASSERT( m_nState == upsRequest || m_nState == upsUploading );
 		ASSERT( m_pBaseFile != NULL );
 
-		if ( ! IsFileOpen() && ! OpenFile() )
+		if ( ! OpenFile() )
 		{
 			theApp.Message( MSG_ERROR, IDS_UPLOAD_CANTOPEN, (LPCTSTR)m_sName, (LPCTSTR)m_sAddress );
 
@@ -514,7 +514,6 @@ BOOL CUploadTransferED2K::ServeRequests()
 			return FALSE;
 		}
 
-		ASSERT( m_pBaseFile->m_sPath.GetLength() );
 		PostMainWndMessage( WM_NOWUPLOADING, 0, (LPARAM)new CString( m_pBaseFile->m_sPath ) );
 
 		if ( ! StartNextRequest() )

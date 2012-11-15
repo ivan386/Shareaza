@@ -418,10 +418,10 @@ BOOL CUploadTransfer::RequestComplete(const CLibraryFile* pFile)
 {
 	ASSERT( pFile != NULL );
 
+	// Check all hashes except m_oBTH
 	if ( validAndUnequal( m_oSHA1, pFile->m_oSHA1 ) ) return FALSE;
 	if ( validAndUnequal( m_oTiger, pFile->m_oTiger ) ) return FALSE;
 	if ( validAndUnequal( m_oED2K, pFile->m_oED2K ) ) return FALSE;
-	if ( validAndUnequal( m_oBTH, pFile->m_oBTH ) ) return FALSE;
 	if ( validAndUnequal( m_oMD5, pFile->m_oMD5 ) ) return FALSE;
 
 	m_sName	= pFile->m_sName;
@@ -444,15 +444,14 @@ BOOL CUploadTransfer::RequestPartial(CDownload* pFile)
 {
 	ASSERT( pFile != NULL );
 
+	// Check all hashes except m_oBTH
 	if ( validAndUnequal( m_oSHA1, pFile->m_oSHA1 ) ) return FALSE;
 	if ( validAndUnequal( m_oTiger, pFile->m_oTiger ) ) return FALSE;
 	if ( validAndUnequal( m_oED2K, pFile->m_oED2K ) ) return FALSE;
-	if ( validAndUnequal( m_oBTH, pFile->m_oBTH ) ) return FALSE;
 	if ( validAndUnequal( m_oMD5, pFile->m_oMD5 ) ) return FALSE;
 
 	m_sName	= pFile->m_sName;
-	if ( ! pFile->IsTorrent() || pFile->IsSingleFileTorrent() )
-		m_sPath	= pFile->GetPath( 0 );
+	m_sPath.Empty();
 	m_nFileBase	= 0;
 	m_nSize	= pFile->m_nSize;
 	m_bFilePartial = TRUE;
@@ -460,8 +459,10 @@ BOOL CUploadTransfer::RequestPartial(CDownload* pFile)
 
 	// Try to get existing file object from download
 	auto_ptr< CFragmentedFile > pDownloadFile( pFile->GetFile() );
-	if ( pDownloadFile.get() )
-		AttachFile( pDownloadFile );
+	if ( ! pDownloadFile.get() )
+		return FALSE;
+
+	AttachFile( pDownloadFile );
 
 	if ( m_oSHA1 && !pFile->m_oSHA1 )
 	{
@@ -534,6 +535,9 @@ BOOL CUploadTransfer::IsFileOpen() const
 
 BOOL CUploadTransfer::OpenFile()
 {
+	if ( IsFileOpen() )
+		return TRUE;
+
 	auto_ptr< CFragmentedFile > pFile( new CFragmentedFile );
 	if ( pFile.get() && pFile->Open( this, FALSE ) )
 	{

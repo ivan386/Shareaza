@@ -1132,11 +1132,12 @@ void CUploadTransferHTTP::SendFileHeaders()
 
 BOOL CUploadTransferHTTP::OpenFileSendHeaders()
 {
-	if ( ! IsFileOpen() && ! OpenFile() )
+	if ( ! OpenFile() )
 	{
-		// If there's an error reading the file from disk
-		SendResponse( IDR_HTML_FILENOTFOUND );
 		theApp.Message( MSG_ERROR, IDS_UPLOAD_CANTOPEN, (LPCTSTR)m_sName, (LPCTSTR)m_sAddress );
+
+		SendResponse( IDR_HTML_FILENOTFOUND );
+
 		return TRUE;
 	}
 	
@@ -1224,7 +1225,7 @@ BOOL CUploadTransferHTTP::OnWrite()
 			return TRUE;
 		}
 		
-		QWORD nPacket = min( m_nLength - m_nPosition, 256 * 1024ull );
+		QWORD nPacket = min( m_nLength - m_nPosition, 1024000ull ); // 1000 KB
 		auto_array< BYTE > pBuffer( new BYTE[ nPacket ] );
 		
 		if ( m_bBackwards )
