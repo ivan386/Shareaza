@@ -1110,7 +1110,7 @@ CString Unescape(const TCHAR* __restrict pszXML, int nLength)
 				pszXML++;
 				if ( pszXML >= pszNull || ! *pszXML || ! _istdigit( *pszXML ) ) break;
 
-				if ( _stscanf( pszXML, _T("%lu;"), &nChar ) == 1 )
+				if ( _stscanf_s( pszXML, _T("%lu;"), &nChar ) == 1 )
 				{
 					*pszOut++ = (TCHAR)nChar;
 					while ( *pszXML && *pszXML != ';' ) pszXML++;

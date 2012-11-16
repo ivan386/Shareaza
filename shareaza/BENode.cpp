@@ -119,8 +119,12 @@ CBENode* CBENode::Add(LPCBYTE pKey, size_t nKey)
 		break;
 	}
 
-	auto_ptr< CBENode > pNew( new CBENode );
-	CBENode* pNew_ = pNew.get();
+	CAutoPtr< CBENode > pNew( new CBENode );
+	if ( ! pNew )
+		// Out of memory
+		return NULL;
+
+	CBENode* pNew_ = pNew;
 
 	size_t nValue = static_cast< size_t >( m_nValue );
 
@@ -128,44 +132,55 @@ CBENode* CBENode::Add(LPCBYTE pKey, size_t nKey)
 	{
 		// Overflow check
 		ASSERT( nValue + 1 <= SIZE_T_MAX );
-		auto_array< CBENode* > pList( new CBENode*[ nValue + 1 ] );
+		CAutoVectorPtr< CBENode* > pList( new CBENode*[ nValue + 1 ] );
+		if ( ! pList )
+			// Out of memory
+			return NULL;
 
 		if ( m_pValue )
 		{
 			// Overflow check
 			ASSERT( nValue * sizeof( CBENode* ) <= SIZE_T_MAX );
-			memcpy( pList.get(), m_pValue, nValue * sizeof( CBENode* ) );
+			memcpy( pList, m_pValue, nValue * sizeof( CBENode* ) );
 
 			delete [] (CBENode**)m_pValue;
 		}
 
-		pList[ nValue ] = pNew.release();
-		m_pValue = pList.release();
+		pList[ nValue ] = pNew.Detach();
+
+		m_pValue = pList.Detach();
 		++m_nValue;
 	}
 	else
 	{
 		// Overflow check
 		ASSERT( nValue * 2 + 2 <= SIZE_T_MAX );
-		auto_array< CBENode* > pList( new CBENode*[ nValue * 2 + 2 ] );
+		CAutoVectorPtr< CBENode* > pList( new CBENode*[ nValue * 2 + 2 ] );
+		if ( ! pList )
+			// Out of memory
+			return NULL;
 
 		if ( m_pValue )
 		{
 			// Overflow check
 			ASSERT( 2 * nValue * sizeof( CBENode* ) <= SIZE_T_MAX );
-			memcpy( pList.get(), m_pValue, 2 * nValue * sizeof( CBENode* ) );
+			memcpy( pList, m_pValue, 2 * nValue * sizeof( CBENode* ) );
 
 			delete [] (CBENode**)m_pValue;
 		}
 
-		auto_array< BYTE > pxKey( new BYTE[ nKey + 1 ] );
-		memcpy( pxKey.get(), pKey, nKey );
+		CAutoVectorPtr< BYTE > pxKey( new BYTE[ nKey + 1 ] );
+		if ( ! pxKey )
+			// Out of memory
+			return NULL;
+
+		memcpy( pxKey, pKey, nKey );
 		pxKey[ nKey ] = 0;
 
-		pList[ nValue * 2 ]		= pNew.release();
-		pList[ nValue * 2 + 1 ]	= (CBENode*)pxKey.release();
+		pList[ nValue * 2 ]		= pNew.Detach();
+		pList[ nValue * 2 + 1 ]	= (CBENode*)pxKey.Detach();
 
-		m_pValue = pList.release();
+		m_pValue = pList.Detach();
 		++m_nValue;
 	}
 
@@ -400,8 +415,8 @@ CBENode* CBENode::Decode(LPCBYTE pBuffer, DWORD nLength, DWORD *pnReaden)
 
 	try
 	{
-		auto_ptr< CBENode > pNode( new CBENode() );
-		if ( ! pNode.get() )
+		CAutoPtr< CBENode > pNode( new CBENode() );
+		if ( ! pNode )
 			// Out of memory
 			return NULL;
 
@@ -421,7 +436,7 @@ CBENode* CBENode::Decode(LPCBYTE pBuffer, DWORD nLength, DWORD *pnReaden)
 		if ( pnReaden )
 			*pnReaden = nLength - nInput;
 
-		return pNode.release();
+		return pNode.Detach();
 	}
 	catch ( CException* pException )
 	{

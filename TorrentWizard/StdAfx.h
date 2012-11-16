@@ -1,7 +1,7 @@
 //
 // StdAfx.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of Shareaza Torrent Wizard (shareaza.sourceforge.net).
 //
 // Shareaza Torrent Wizard is free software; you can redistribute it
@@ -23,29 +23,29 @@
 
 #include <sdkddkver.h>					// Setup versioning for windows SDK/DDK
 
-#define VC_EXTRALEAN					// Exclude rarely-used stuff from Windows headers
+#ifndef _SECURE_ATL
+#define _SECURE_ATL 1
+#endif
+
+#ifndef VC_EXTRALEAN
+#define VC_EXTRALEAN
+#endif
+
+#define WIN32_LEAN_AND_MEAN
 
 #define _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES 1		// Enable secure template overloads
 #define _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES_COUNT 1	// Enable secure template overloads
 
-#define BOOST_USE_WINDOWS_H
-#define BOOST_DISABLE_ASSERTS
-#ifndef _WIN64
-#define BOOST_BIND_ENABLE_STDCALL 1
-#define BOOST_MEM_FN_ENABLE_STDCALL 1
-#endif
+#define _ATL_NO_COM_SUPPORT					// Prevents ATL COM-related code from being compiled
+#define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS	// Makes certain ATL CString constructors explicit, preventing any unintentional conversions
 
 #include <afxwin.h>         // MFC core and standard components
 #include <afxext.h>         // MFC extensions
 #include <afxcmn.h>			// MFC support for Windows Common Controls
 #include <afxmt.h>			// MFC multithreading
+#include <atlbase.h>
 #include <shlobj.h>			// Shell objects
 #include <shlwapi.h>
-
-#include <boost\type_traits\is_same.hpp>
-#include <boost\checked_delete.hpp>
-#include "..\shareaza\augment\auto_ptr.hpp"
-#include "..\shareaza\augment\auto_array.hpp"
 
 #include "..\HashLib\HashLib.h"
 #include "..\Shareaza\Strings.h"
@@ -60,8 +60,6 @@ typedef unsigned __int64 QWORD;
 #ifndef OFN_ENABLESIZING
 	#define OFN_ENABLESIZING	0x00800000
 #endif
-
-using namespace augment;
 
 #ifdef _UNICODE
 #if defined _M_IX86
