@@ -135,6 +135,23 @@ public:
 	void					Serialize(CArchive& ar);
 	BOOL					CheckValid(bool bExpression = true);
 	void					PrepareCheck();
+
+	// Build a regular expression filter from the search query words.
+	// Returns an empty string if not applied or if the filter was invalid.
+	//
+	// Substitutes:
+	// <_> - inserts all query keywords;
+	// <1>..<9> - inserts query keyword number 1..9;
+	// <> - inserts next query keyword.
+	//
+	// For example regular expression:
+	//	.*(<2><1>)|(<_>).*
+	// for "music mp3" query will be converted to:
+	//	.*(mp3\s*music\s*)|(music\s*mp3\s*).*
+	//
+	// Note: \s* - matches any number of white-space symbols (including zero).
+	CString					BuildRegExp(const CString& strPattern) const;
+
 private:
 	BOOL					WriteHashesToEDPacket(CEDPacket* pPacket, BOOL bUDP) const;
 

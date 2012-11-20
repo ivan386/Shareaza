@@ -1,7 +1,7 @@
 //
 // DlgFilterSearch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -362,17 +362,17 @@ void CFilterSearchDlg::OnEnKillFocusMinMaxSize()
 
 void CFilterSearchDlg::OnClickedRegexp()
 {
-	m_bRegExp = !m_bRegExp;
+	m_bRegExp = ! m_bRegExp;
 	if ( m_bRegExp )
 	{
-		if ( m_sFilter.IsEmpty() || m_pMatches && !m_pMatches->m_bRegExp )
-			m_sFilter = L"^([^\\w]+(\\w+\\s*)+[^\\w]+)<_>([^\\w]+(\\w+\\s*|by)+[^\\w]+).*$";
+		if ( m_pMatches )
+			m_sFilter = m_pMatches->m_sRegexPattern;
 		else
 			m_sFilter.Empty();
 	}
 	else
 	{
-		if ( m_pMatches && !m_pMatches->m_bRegExp )
+		if ( m_pMatches )
 			m_sFilter = m_pMatches->m_sFilter;
 		else
 			m_sFilter.Empty();
@@ -382,8 +382,7 @@ void CFilterSearchDlg::OnClickedRegexp()
 
 	if ( m_sFilter.IsEmpty() && m_pMatches )
 	{
-		CString strTemp;
-		m_pMatches->CreateRegExpFilter( L"", strTemp );
+		m_pMatches->m_sRegexPattern.Empty();
 		return;
 	}
 
@@ -391,7 +390,7 @@ void CFilterSearchDlg::OnClickedRegexp()
 	{
 		if ( m_pMatches )
 		{
-			m_pMatches->CreateRegExpFilter( CString( m_sFilter ), m_sFilter );
+			m_sFilter = m_pMatches->CreateRegExpFilter( m_sFilter );
 			UpdateData( FALSE );
 		}
 

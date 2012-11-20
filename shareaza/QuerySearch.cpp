@@ -1966,3 +1966,82 @@ void CQuerySearch::SearchHelp()
 		nLastSearchHelp = 0;
 	}
 }
+
+CString CQuerySearch::BuildRegExp(const CString& strPattern) const
+{
+	bool bChanged = false;
+	CString strFilter;
+	int nTotal = 0;
+	for ( LPCTSTR pszPattern = strPattern; *pszPattern; ++pszPattern )
+	{
+		LPCTSTR pszLt = _tcschr( pszPattern, _T('<') );
+		if ( pszLt )
+		{
+			bChanged = true;
+
+			int nLength = pszLt - pszPattern;
+			if ( nLength )
+			{
+				strFilter.Append( pszPattern, nLength );
+			}
+
+			pszPattern = pszLt + 1;
+			bool bEnds = false;
+			bool bAll = ( *pszPattern == '_' );
+			for ( ; *pszPattern ; pszPattern++ )
+			{
+				if ( *pszPattern == '>' )
+				{
+					bEnds = true;
+					break;
+				}
+			}
+			if ( bEnds )
+			{
+				if ( bAll )
+				{
+					// Add all keywords at the "<_>" position
+					for ( CQuerySearch::const_iterator i = begin(); i != end(); ++i )
+					{
+						strFilter.AppendFormat( L"%s\\s*", 
+							CString( i->first, (int)( i->second ) ) );
+					}
+				}
+				else
+				{
+					pszPattern--; // Go back
+					int nNumber = 0;
+
+					// Numbers from 1 to 9, no more
+					if ( _stscanf( &pszPattern[0], L"%i", &nNumber ) != 1 )
+						nNumber = ++nTotal;
+
+					int nWord = 1;
+					for ( CQuerySearch::const_iterator i = begin(); i != end(); ++i, ++nWord )
+					{
+						if ( nWord == nNumber )
+						{
+							strFilter.AppendFormat( L"%s\\s*", 
+								CString( i->first, (int)( i->second ) ) );
+							break;
+						}
+					}
+					pszPattern++; // return to the last position
+				}
+			}
+			else
+			{
+				// no closing '>'
+				strFilter.Empty();
+				break;
+			}
+		}
+		else
+		{
+			strFilter += pszPattern;
+			break;
+		}
+	}
+
+	return bChanged ? strFilter : strPattern;
+}

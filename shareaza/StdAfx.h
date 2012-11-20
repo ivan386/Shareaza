@@ -167,17 +167,9 @@
 //
 
 #include <algorithm>
-#include <deque>
-#include <functional>
-#include <iterator>
-#include <limits>
 #include <list>
 #include <map>
-#include <memory>
-#include <new>
-#include <queue>
 #include <set>
-#include <stack>
 #include <string>
 #include <utility>
 #include <vector>
@@ -188,7 +180,6 @@
 
 #include <boost/array.hpp>
 #include <boost/bind.hpp>
-#include <boost/bind/placeholders.hpp>
 #include <boost/checked_delete.hpp>
 #include <boost/ptr_container/ptr_list.hpp>
 #include <boost/shared_ptr.hpp>

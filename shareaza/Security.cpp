@@ -1,7 +1,7 @@
 //
 // Security.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1316,93 +1316,7 @@ BOOL CSecureRule::Match(const CQuerySearch* pQuery, const CString& strContent) c
 	if ( m_nType != srContentRegExp || ! m_pContent )
 		return FALSE;
 
-	// Build a regular expression filter from the search query words.
-	// Returns an empty string if not applied or if the filter was invalid.
-	//
-	// Substitutes:
-	// <_> - inserts all query keywords;
-	// <1>..<9> - inserts query keyword number 1..9;
-	// <> - inserts next query keyword.
-	//
-	// For example regular expression:
-	//	.*(<2><1>)|(<_>).*
-	// for "music mp3" query will be converted to:
-	//	.*(mp3\s*music\s*)|(music\s*mp3\s*).*
-	//
-	// Note: \s* - matches any number of white-space symbols (including zero).
-
-	CString strFilter;
-	int nTotal = 0;
-	for ( LPCTSTR pszPattern = m_pContent; *pszPattern; ++pszPattern )
-	{
-		LPCTSTR pszLt = _tcschr( pszPattern, _T('<') );
-		if ( pszLt )
-		{
-			int nLength = pszLt - pszPattern;
-			if ( nLength )
-			{
-				strFilter.Append( pszPattern, nLength );
-			}
-
-			pszPattern = pszLt + 1;
-			bool bEnds = false;
-			bool bAll = ( *pszPattern == '_' );
-			for ( ; *pszPattern ; pszPattern++ )
-			{
-				if ( *pszPattern == '>' )
-				{
-					bEnds = true;
-					break;
-				}
-			}
-			if ( bEnds )
-			{
-				if ( bAll )
-				{
-					// Add all keywords at the "<_>" position
-					for ( CQuerySearch::const_iterator i = pQuery->begin();
-						i != pQuery->end(); ++i )
-					{
-						strFilter.AppendFormat( L"%s\\s*", 
-							CString( i->first, (int)( i->second ) ) );
-					}
-				}
-				else
-				{
-					pszPattern--; // Go back
-					int nNumber = 0;
-
-					// Numbers from 1 to 9, no more
-					if ( _stscanf( &pszPattern[0], L"%i", &nNumber ) != 1 )
-						nNumber = ++nTotal;
-
-					int nWord = 1;
-					for ( CQuerySearch::const_iterator i = pQuery->begin();
-						i != pQuery->end(); ++i, ++nWord )
-					{
-						if ( nWord == nNumber )
-						{
-							strFilter.AppendFormat( L"%s\\s*", 
-								CString( i->first, (int)( i->second ) ) );
-							break;
-						}
-					}
-					pszPattern++; // return to the last position
-				}
-			}
-			else
-			{
-				// no closing '>'
-				strFilter.Empty();
-				break;
-			}
-		}
-		else
-		{
-			strFilter += pszPattern;
-			break;
-		}
-	}
+	CString strFilter = pQuery->BuildRegExp( m_pContent );
 
 	if ( strFilter.IsEmpty() )
 		return FALSE;
