@@ -99,12 +99,12 @@ protected:
 	BOOL				ReadFile(QWORD nOffset, LPVOID pData, QWORD nLength, QWORD* pnRead = NULL);
 	BOOL				WriteFile(QWORD nOffset, LPCVOID pData, QWORD nLength, QWORD* pnWritten = NULL);
 	void				SerializeFile(CArchive& ar, int nVersion);
-	BOOL				OnVerify(LPCTSTR pszPath, BOOL bVerified);
+	// File was hashed and verified in the Library
+	virtual BOOL		OnVerify(const CLibraryFile* pFile, TRISTATE bVerified);
 
 	// Not supported
 //	BOOL				AppendMetadata();
 //	BOOL				AppendMetadataID3v1(HANDLE hFile, CXMLElement* pXML);
 
-protected:
 	virtual void	Serialize(CArchive& ar, int nVersion);
 };

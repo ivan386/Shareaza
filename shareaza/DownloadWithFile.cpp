@@ -712,12 +712,13 @@ void CDownloadWithFile::SerializeFile(CArchive& ar, int nVersion)
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithFile verification handler
 
-BOOL CDownloadWithFile::OnVerify(LPCTSTR pszPath, BOOL bVerified)
+BOOL CDownloadWithFile::OnVerify(const CLibraryFile* pFile, TRISTATE bVerified)
 {
-	if ( ! m_pFile.get() || ! m_pFile->FindByPath( pszPath ) )
+	if ( ! pFile || ! m_pFile.get() || ! m_pFile->FindByPath( pFile->GetPath() ) )
 		return FALSE;
 
-	m_bVerify = bVerified ? TRI_TRUE : TRI_FALSE;
+	if ( bVerified != TRI_UNKNOWN )
+		m_bVerify = bVerified;
 
 	SetModified();
 

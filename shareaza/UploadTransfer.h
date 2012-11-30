@@ -1,7 +1,7 @@
 //
 // UploadTransfer.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -92,7 +92,7 @@ protected:
 	BOOL		HashesFromURN(LPCTSTR pszURN);
 	void		ClearRequest();
 	BOOL		RequestComplete(const CLibraryFile* pFile);
-	BOOL		RequestPartial(CDownload* pFile);
+	BOOL		RequestPartial(CDownload* pDownload);
 	void		StartSending(int nState);
 	void		AllocateBaseFile();
 

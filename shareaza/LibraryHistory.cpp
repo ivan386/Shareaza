@@ -309,16 +309,16 @@ CLibraryRecent::CLibraryRecent(LPCTSTR pszPath, const CDownload* pDownload)
 {
 	if ( pDownload )
 	{
-		Hashes::Sha1ManagedHash oSHA1( pDownload->m_oSHA1 );
-		if ( pDownload->m_bSHA1Trusted ) oSHA1.signalTrusted();
-		Hashes::TigerManagedHash oTiger( pDownload->m_oTiger );
-		if ( pDownload->m_bTigerTrusted ) oTiger.signalTrusted();
-		Hashes::Ed2kManagedHash oED2K( pDownload->m_oED2K );
-		if ( pDownload->m_bED2KTrusted ) oED2K.signalTrusted();
-		Hashes::BtManagedHash oBTH( pDownload->m_oBTH );
-		if ( pDownload->m_bBTHTrusted ) oBTH.signalTrusted();
-		Hashes::Md5ManagedHash oMD5( pDownload->m_oMD5 );
-		if ( pDownload->m_bMD5Trusted ) oMD5.signalTrusted();
+		m_oSHA1 = pDownload->m_oSHA1;
+		if ( pDownload->m_bSHA1Trusted ) m_oSHA1.signalTrusted();
+		m_oTiger = pDownload->m_oTiger;
+		if ( pDownload->m_bTigerTrusted ) m_oTiger.signalTrusted();
+		m_oED2K = pDownload->m_oED2K;
+		if ( pDownload->m_bED2KTrusted ) m_oED2K.signalTrusted();
+		m_oBTH = pDownload->m_oBTH;
+		if ( pDownload->m_bBTHTrusted ) m_oBTH.signalTrusted();
+		m_oMD5 = pDownload->m_oMD5;
+		if ( pDownload->m_bMD5Trusted ) m_oMD5.signalTrusted();
 		m_sSources = pDownload->GetSourceURLs();
 	}
 	GetSystemTimeAsFileTime( &m_tAdded );	

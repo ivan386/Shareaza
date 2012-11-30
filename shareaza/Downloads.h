@@ -21,14 +21,15 @@
 
 #pragma once
 
+class CBuffer;
+class CConnection;
 class CDownload;
 class CDownloadSource;
-class CConnection;
-class CQueryHit;
-class CMatchFile;
-class CBuffer;
-class CShareazaURL;
 class CEDClient;
+class CLibraryFile;
+class CMatchFile;
+class CQueryHit;
+class CShareazaURL;
 
 
 class CDownloads
@@ -102,7 +103,8 @@ public:
 	void		OnRun();
 	BOOL		OnPush(const Hashes::Guid& oGUID, CConnection* pConnection);
 	bool		OnQueryHits(const CQueryHit* pHits);
-	void		OnVerify(LPCTSTR pszPath, BOOL bVerified);
+	// File was hashed and verified in the Library
+	void		OnVerify(const CLibraryFile* pFile, TRISTATE bVerified);
 	// Rename, delete or release downloading file.
 	// pszTarget == 0 - delete file; pszTarget == 1 - release file.
 	void		OnRename(LPCTSTR pszSource, LPCTSTR pszTarget);

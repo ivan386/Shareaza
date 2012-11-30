@@ -21,7 +21,7 @@
 
 #pragma once
 
-#include "ShareazaFile.h"
+#include "SharedFile.h"
 #include "DownloadTask.h"
 
 
@@ -54,6 +54,8 @@ public:
 
 	// Task callback
 	virtual void	OnTaskComplete(const CDownloadTask* pTask) = 0;
+	// File was hashed and verified in the Library
+	virtual BOOL	OnVerify(const CLibraryFile* pFile, TRISTATE bVerified) = 0;
 
 	dtask			GetTaskType() const;
 	void			SetTask(CDownloadTask* pTask);

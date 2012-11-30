@@ -1256,18 +1256,16 @@ BOOL CLibraryFile::OnVerifyDownload(const CLibraryRecent* pRecent)
 			m_bVerify = ( m_oBTH == pRecent->m_oBTH ) ? TRI_TRUE : TRI_FALSE;
 		}
 
+		Downloads.OnVerify( this, m_bVerify );
+
 		if ( m_bVerify == TRI_TRUE )
 		{
 			theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_VERIFY_SUCCESS, (LPCTSTR)m_sName );
-			Downloads.OnVerify( GetPath(), TRUE );
 		}
 		else if ( m_bVerify == TRI_FALSE )
 		{
 			m_bShared = TRI_FALSE;
-
 			theApp.Message( MSG_ERROR, IDS_DOWNLOAD_VERIFY_FAIL, (LPCTSTR)m_sName );
-			Downloads.OnVerify( GetPath(), FALSE );
-
 			return FALSE;
 		}
 	}

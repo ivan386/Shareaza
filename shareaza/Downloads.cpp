@@ -1140,14 +1140,14 @@ BOOL CDownloads::OnDonkeyCallback(CEDClient* pClient, CDownloadSource* pExcept)
 //////////////////////////////////////////////////////////////////////
 // CDownloads verification handler
 
-void CDownloads::OnVerify(LPCTSTR pszPath, BOOL bVerified)
+void CDownloads::OnVerify(const CLibraryFile* pFile, TRISTATE bVerified)
 {
 	CSingleLock pLock( &Transfers.m_pSection );
 	if ( ! pLock.Lock( 500 ) ) return;
 
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
-		if ( GetNext( pos )->OnVerify( pszPath, bVerified ) ) break;
+		if ( GetNext( pos )->OnVerify( pFile, bVerified ) ) break;
 	}
 }
 

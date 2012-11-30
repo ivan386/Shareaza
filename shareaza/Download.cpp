@@ -868,6 +868,28 @@ BOOL CDownload::Save(BOOL bFlush)
 	return bSuccess;
 }
 
+BOOL CDownload::OnVerify(const CLibraryFile* pFile, TRISTATE bVerified)
+{
+	ASSUME_LOCK( Library.m_pSection );
+
+	if ( ! CDownloadWithExtras::OnVerify( pFile, bVerified ) )
+		return FALSE;
+
+	if ( bVerified != TRI_FALSE && ( ! IsTorrent() || IsSingleFileTorrent() ) )
+	{
+		if ( ! m_oSHA1 && pFile->m_oSHA1 )
+			m_oSHA1 = pFile->m_oSHA1;
+		if ( ! m_oTiger && pFile->m_oTiger )
+			m_oTiger = pFile->m_oTiger;
+		if ( ! m_oED2K && pFile->m_oED2K )
+			m_oED2K = pFile->m_oED2K;
+		if ( ! m_oMD5 && pFile->m_oMD5 )
+			m_oMD5 = pFile->m_oMD5;
+	}
+
+	return TRUE;
+}
+
 //////////////////////////////////////////////////////////////////////
 // CDownload serialize
 
