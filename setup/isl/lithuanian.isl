@@ -138,7 +138,6 @@ SelectDirDesc=Kur turi bûti ádiegta „[name]“?
 SelectDirLabel3=Ádiegimo programa ádiegs „[name]“ á nurodytà katalogà.
 SelectDirBrowseLabel=Norëdami tæsti ádiegimà spauskite „Pirmyn“. Jei norite pasirinkti kità katalogà, spauskite „Nurodyti“.
 DiskSpaceMBLabel=Reikia maþiausiai [mb] MB laisvos vietos kietajame diske.
-ToUNCPathname=Ádiegimo programa negali ádiegti á UNC tipo katalogà. Jeigu bandote ádiegti programà tinkle, reikia sukurti tinkliná diskà ir nurodyti reikiamà katalogà.
 InvalidPath=Jûs privalote áraðyti pilnà kelià su disko raide; pavyzdþiui:%n%nC:\APP%n% ir negalima nurodyti UNC tipo katalogà:%n%n\\Serveris\share
 InvalidDrive=Diskas, kurá nurodëte, neegzistuoja arba yra neprieinamas. Praðome nurodyti kità diskà ir/arba katalogà.
 DiskSpaceWarningTitle=Nepakanka laisvos vietos diske

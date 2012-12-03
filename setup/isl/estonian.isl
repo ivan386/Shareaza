@@ -154,7 +154,6 @@ SelectDirDesc=Kuhu [name] paigaldada?
 SelectDirLabel3=Paigaldaja installib [name] järgnevasse kausta.
 SelectDirBrowseLabel=Jätkamiseks kliki Järgmine. Kui soovite valida teise kausta, klikkige Sirvi.
 DiskSpaceMBLabel=Programm vajab vähemalt [mb] MB kõvakettaruumi.
-ToUNCPathname=Paigaldaja ei saa paigaldada UNC kataloogi. Kui te üritate programmi võrku paigaldada, siis peate võrguketta enne määrama.
 InvalidPath=Te peate sisestama täis tee koos ketta nimega;
 InvalidDrive=Ketas või UNC share mille valisite, ei eksisteeri või pole ligipääsetav. Palun valige mõni teine.
 DiskSpaceWarningTitle=Liiga vähe ruumi kõvakettal

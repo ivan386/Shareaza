@@ -140,7 +140,6 @@ SelectDirDesc=Onde queres instalar [name]?
 SelectDirLabel3=O Instalador vai instalar [name] no seguinte cartafol.
 SelectDirBrowseLabel=Para continuar, preme Seguinte. Se queres seleccionar outro cartafol, preme Explorar.
 DiskSpaceMBLabel=O programa require polo menos [mb] MB de espazo ceibe no disco.
-ToUNCPathname=O Instalador non pode instala-lo programa nun nome de directorio UNC. Se estás tentando face-la instalación nunha rede, terás que asignar unha letra (D:, E:, F:, etc) ó disco de destiño.
 InvalidPath=Tés que introducir un enderezo completo con letra da unidade de disco; por exemplo:%n%nC:\Aplicación%n%nou ben unha ruta UNC do seguinte xeito:%n%n\\servidor\compartido
 InvalidDrive=O disco ou enderezo UNC de rede que seleccionaches non é accesible. Por favor, selecciona outro.
 DiskSpaceWarningTitle=Non hai Espazo dabondo no Disco

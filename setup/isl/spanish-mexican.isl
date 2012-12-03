@@ -142,7 +142,6 @@ SelectDirDesc=¿En dónde deberá instalarse [name]?
 SelectDirLabel3=[name] será instalado en la siguiente carpeta
 SelectDirBrowseLabel=Para continuar presiona "Siguiente". Si deseas seleccionar una carpeta diferente presiona "Navegar"
 DiskSpaceMBLabel=Se requiere de al menos [mb] MB de espacio disponible
-ToUNCPathname=No se puede instalar en la ruta de la "UNC". Si está intentando instalar a una red necesitará conectarse y dirigirse hacia dicha dirección
 InvalidPath=Debe introducir la ruta completa con la letra de la unidad; por ejemplo:%n%nC:\APP%n%no a una ruta UNC en la forma:%n%n\\servidor\recurso
 InvalidDrive=La unidad o recurso compartido UNC que seleccionó no existe o no está disponible. Por favor seleccione otro
 DiskSpaceWarningTitle=Espacio insuficiente en disco

@@ -136,7 +136,6 @@ SelectDirDesc=在哪里安装 [name]？
 SelectDirLabel3=安装程序将在以下文件夹安装 [name]。
 SelectDirBrowseLabel=点击 下一步 继续。欲改变安装文件夹，点击 浏览。
 DiskSpaceMBLabel=至少需要 [mb] MB 磁盘空间。
-ToUNCPathname=不能安装到一个UNC路径下。如果您试图安装到网络，您必须将其映射为网络磁盘。
 InvalidPath=你必须键入含盘符的全路径，例如：%n%nC:\APP%n%而不是一个这种形式的UNC路径：%n%n\\server\share
 InvalidDrive=你选择的磁盘或UNC share不存在或无法访问。请选择其它的。
 DiskSpaceWarningTitle=没有足够的磁盘空间。

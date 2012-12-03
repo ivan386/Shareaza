@@ -136,7 +136,6 @@ SelectDirDesc=Waar moet [naam] geinstalleer word?
 SelectDirLabel3=Die installeerder sal [name] installeer in die volgende gids.
 SelectDirBrowseLabel=Om voort te gaan, kliek Volgende. Indien u 'n ander gids wil kies, click Rondblaai.
 DiskSpaceMBLabel=Ten minste [mb] MB oop hardeskyf spasie word benodig.
-ToUNCPathname=Die installeerder kan nie installeer na 'n UNC gidsnaam nie. Indien u probeer om te installeer op 'n netwerk, sal u 'n netwerk aandrywer moet afbeeld.
 InvalidPath=U moet 'n volledige pad insleutel met 'n aandrywer letter; bv.:%n%nC:\APP%n%nof 'n UNC pad in die vorm:%n%n\\server\share
 InvalidDrive=Die aandrywer of UNC netwerk gids wat u gekies het bestaan nie of is nie toeganklik nie. Kies asb. 'n ander een.
 DiskSpaceWarningTitle=Onvoldoende Aandrywer Spasie

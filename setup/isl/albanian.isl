@@ -146,7 +146,6 @@ SelectDirDesc=Ku doni të instaloni [name]?
 SelectDirLabel3=Ndërtimi do të instalojë [name] në këtë dosje.
 SelectDirBrowseLabel=Për të vijuar, klikoni Tjetër. Nëse doni të zgjidhni një dosje ndryshe, klikoni Shfleto.
 DiskSpaceMBLabel=Kërkohet jo më pak se [mb] MB hapësirë e lirë e diskut.
-ToUNCPathname=Ndërtimi nuk mund të instalojë në një emër-shteg UNC. Nëse po provoni të instaloni në rrjet, duhet të zbuloni diskun e rrjetit.
 InvalidPath=Ju duhet të shkruani shtegun e plotë me shkronjën e diskut; për shembull:%n%nC:\APP%n%nose një shteg UNC sipas formës:%n%n\\server\share
 InvalidDrive=Disku ose shpërndarësi UNC që zgjodhët nuk ekziston ose nuk mund të hapet. Ju lutemi zgjidhni një tjetër.
 DiskSpaceWarningTitle=Hapësirë Disku e Pamjaftueshme

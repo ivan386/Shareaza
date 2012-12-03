@@ -149,7 +149,6 @@ SelectDirDesc=Unde ar trebui instalata aplicatia [name] ?
 SelectDirLabel3=Setup va instala aplicatia [name] in folder-ul de mai jos.
 SelectDirBrowseLabel=Pentru a continua, apasati <Inainte>. Daca doriti sa selectati un alt folder, apasati <Cautare>.
 DiskSpaceMBLabel=Cel putin [mb] MB spatiu liber este necesar pentru o instalare sigura.
-ToUNCPathname=Setup nu poate instala pe o cale descrisa UNC. Daca incercati sa instalati pe retea, trebuie mai intai sa asignati o litera de disc caii dorite utilizand c-da "map".
 InvalidPath=Trebuie sa introduceti o cale completa, cu litera de disc cu tot; de exemplu:%n%nC:\APP%n%nsau o definitie UNC in forma:%n%n\\server\share
 InvalidDrive=Discul sau definitia UNC partajata nu sunt accesibile sau nu exista. Faceti alta selectie.
 DiskSpaceWarningTitle=Nu exista suficient spatiu disc.
