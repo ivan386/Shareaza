@@ -1,7 +1,7 @@
 //
 // DownloadTransfer.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2012.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -304,12 +304,11 @@ void CDownloadTransfer::SetState(int nState)
 //////////////////////////////////////////////////////////////////////
 // CDownloadTransfer fragment size management
 
-void CDownloadTransfer::ChunkifyRequest(QWORD* pnOffset, QWORD* pnLength, DWORD nChunk, BOOL bVerifyLock)
+void CDownloadTransfer::ChunkifyRequest(QWORD* pnOffset, QWORD* pnLength, DWORD nChunk, BOOL bVerifyLock) const
 {
 	ASSUME_LOCK( Transfers.m_pSection );
 
 	ASSERT( pnOffset != NULL && pnLength != NULL );
-	ASSERT( m_pDownload->IsRangeUseful(*pnOffset, *pnLength) );
 
 	if ( m_pSource->m_bCloseConn ) return;
 
