@@ -1,7 +1,7 @@
 //
 // SharedFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -201,12 +201,12 @@ CXMLElement* CLibraryFile::CreateXML(CXMLElement* pRoot, BOOL bSharedOnly, XmlTy
 	switch ( nType )
 	{
 	case xmlDC:
-		pFile = pRoot->AddElement( _T("file") );
+		pFile = pRoot->AddElement( _T("File") );
 		if ( pFile )
 		{
-			pFile->AddAttribute( _T("name"), m_sName );
-			pFile->AddAttribute( _T("size"), m_nSize );
-			pFile->AddAttribute( _T("tth"), m_oTiger.toString() );
+			pFile->AddAttribute( _T("Name"), m_sName );
+			pFile->AddAttribute( _T("Size"), m_nSize );
+			pFile->AddAttribute( _T("TTH"), m_oTiger.toString() );
 		}
 		break;
 

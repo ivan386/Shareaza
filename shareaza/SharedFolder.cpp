@@ -1,7 +1,7 @@
 //
 // SharedFolder.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -107,10 +107,10 @@ CXMLElement* CLibraryFolder::CreateXML(CXMLElement* pRoot, BOOL bSharedOnly, Xml
 	switch ( nType )
 	{
 	case xmlDC:
-		pFolder = pRoot->AddElement( _T("directory") );
+		pFolder = pRoot->AddElement( _T("Directory") );
 		if ( pFolder )
 		{
-			pFolder->AddAttribute( _T("name"), m_sName );
+			pFolder->AddAttribute( _T("Name"), m_sName );
 		}
 		break;
 

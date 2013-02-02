@@ -1,7 +1,7 @@
 //
 // XML.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -52,7 +52,7 @@ public:
 	CXMLElement*	GetParent() const;
 	void			Delete();
 	CString			GetName() const;
-	void			SetName(LPCTSTR pszValue);
+	virtual void	SetName(LPCTSTR pszValue);
 	BOOL			IsNamed(LPCTSTR pszName) const;
 	CString			GetValue() const;
 	void			SetValue(LPCTSTR pszValue);
@@ -72,7 +72,7 @@ public:
 
 protected:
 	CList< CXMLElement* > m_pElements;
-	CMap< CString, const CString&, CXMLAttribute*, CXMLAttribute* > m_pAttributes;
+	CMap< CString, const CString&, CXMLAttribute*, CXMLAttribute* > m_pAttributes;	// Lowercased name of attribute  <-> attribute pointer
 
 	void			AddRecursiveWords(CString& strWords) const;
 	void			ToString(CString& strXML, BOOL bNewline) const;
@@ -105,7 +105,7 @@ public:
 	void			DeleteAllAttributes();
 	CString			ToString(BOOL bHeader = FALSE, BOOL bNewline = FALSE, BOOL bEncoding = FALSE, TRISTATE bSnadalone = TRI_UNKNOWN) const;
 	BOOL			ParseString(LPCTSTR& strXML);
-	BOOL			Equals(CXMLElement* pXML) const;
+	BOOL			Equals(const CXMLElement* pXML) const;
 	// Add missing elements and attributes from pInput, preserve or overwrite existing
 	BOOL			Merge(const CXMLElement* pInput, BOOL bOverwrite = FALSE);
 	CString			GetRecursiveWords() const;
@@ -131,8 +131,9 @@ public:
 	CXMLAttribute*	Clone(CXMLElement* pParent = NULL) const;
 	void			ToString(CString& strXML) const;
 	BOOL			ParseString(LPCTSTR& strXML);
-	BOOL			Equals(CXMLAttribute* pXML) const;
+	BOOL			Equals(const CXMLAttribute* pXML) const;
 	void			Serialize(CArchive& ar);
+	virtual void	SetName(LPCTSTR pszValue);
 };
 
 #include "XML.inl"

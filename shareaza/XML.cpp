@@ -1,7 +1,7 @@
 //
 // XML.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -32,15 +32,14 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CXMLNode construction
 
-CXMLNode::CXMLNode(CXMLElement* pParent, LPCTSTR pszName) :
-	m_nNode		( xmlNode )
-,	m_pParent	( pParent )
+CXMLNode::CXMLNode(CXMLElement* pParent, LPCTSTR pszName)
+	: m_nNode	( xmlNode )
+	, m_pParent	( pParent )
 {
 	if ( pszName )
 	{
 		ASSERT( *pszName );
 		m_sName = pszName;
-		m_sName.MakeLower();
 	}
 }
 
@@ -212,20 +211,21 @@ CXMLElement* CXMLElement::Clone(CXMLElement* pParent) const
 	{
 		CXMLAttribute* pAttribute = GetNextAttribute( pos )->Clone( pClone );
 		if ( ! pAttribute ) return NULL; // Out of memory
-		CString strName( pAttribute->m_sName );
-		strName.MakeLower();
+		
+		CString strNameLC( pAttribute->m_sName );
+		strNameLC.MakeLower();
 
 		// Delete the old attribute if one exists
 		CXMLAttribute* pExisting;
-		if ( pClone->m_pAttributes.Lookup( strName, pExisting ) )
+		if ( pClone->m_pAttributes.Lookup( strNameLC, pExisting ) )
 			delete pExisting;
 
-		pClone->m_pAttributes.SetAt( strName, pAttribute );
+		pClone->m_pAttributes.SetAt( strNameLC, pAttribute );
 	}
 
 	for ( POSITION pos = GetElementIterator() ; pos ; )
 	{
-		CXMLElement* pElement = GetNextElement( pos );
+		const CXMLElement* pElement = GetNextElement( pos );
 		pClone->m_pElements.AddTail( pElement->Clone( pClone ) );
 	}
 
@@ -273,7 +273,7 @@ void CXMLElement::DeleteAllAttributes()
 {
 	for ( POSITION pos = m_pAttributes.GetStartPosition() ; pos ; )
 	{
-		CXMLAttribute* pAttribute = NULL;
+		CXMLAttribute* pAttribute;
 		CString strName;
 
 		m_pAttributes.GetNextAssoc( pos, strName, pAttribute );
@@ -457,18 +457,17 @@ BOOL CXMLElement::ParseString(LPCTSTR& strXML)
 			return FALSE;
 
 		CXMLAttribute* pAttribute = new CXMLAttribute( this );
-
-		if ( pAttribute->ParseString( strXML ) )
+		if ( pAttribute && pAttribute->ParseString( strXML ) )
 		{
-			CString strName( pAttribute->m_sName );
-			strName.MakeLower();
+			CString strNameLC( pAttribute->m_sName );
+			strNameLC.MakeLower();
 
 			// Delete the old attribute if one exists
 			CXMLAttribute* pExisting;
-			if ( m_pAttributes.Lookup( strName, pExisting ) )
+			if ( m_pAttributes.Lookup( strNameLC, pExisting ) )
 				delete pExisting;
 
-			m_pAttributes.SetAt( strName, pAttribute );
+			m_pAttributes.SetAt( strNameLC, pAttribute );
 		}
 		else
 		{
@@ -587,8 +586,7 @@ CXMLElement* CXMLElement::FromBytes(BYTE* pByte, DWORD nByte, BOOL bHeader)
 
 CXMLElement* CXMLElement::FromFile(LPCTSTR pszPath, BOOL bHeader)
 {
-	HANDLE hFile = CreateFile(	pszPath, GENERIC_READ, FILE_SHARE_READ, NULL,
-								OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
+	HANDLE hFile = CreateFile(	pszPath, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
 
 	if ( hFile == INVALID_HANDLE_VALUE ) return NULL;
 
@@ -614,12 +612,12 @@ CXMLElement* CXMLElement::FromFile(HANDLE hFile, BOOL bHeader)
 //////////////////////////////////////////////////////////////////////
 // CXMLElement equality
 
-BOOL CXMLElement::Equals(CXMLElement* pXML) const
+BOOL CXMLElement::Equals(const CXMLElement* pXML) const
 {
 	if ( this == NULL || pXML == NULL ) return FALSE;
 	if ( pXML == this ) return TRUE;
 
-	if ( m_sName != pXML->m_sName ) return FALSE;
+	if ( m_sName.CompareNoCase( pXML->m_sName ) != 0 ) return FALSE;
 	if ( m_sValue != pXML->m_sValue ) return FALSE;
 
 	if ( GetAttributeCount() != pXML->GetAttributeCount() ) return FALSE;
@@ -627,8 +625,8 @@ BOOL CXMLElement::Equals(CXMLElement* pXML) const
 
 	for ( POSITION pos = GetAttributeIterator() ; pos ; )
 	{
-		CXMLAttribute* pAttribute1 = GetNextAttribute( pos );
-		CXMLAttribute* pAttribute2 = pXML->GetAttribute( pAttribute1->m_sName );
+		const CXMLAttribute* pAttribute1 = GetNextAttribute( pos );
+		const CXMLAttribute* pAttribute2 = pXML->GetAttribute( pAttribute1->m_sName );
 		if ( pAttribute2 == NULL ) return FALSE;
 		if ( ! pAttribute1->Equals( pAttribute2 ) ) return FALSE;
 	}
@@ -638,8 +636,8 @@ BOOL CXMLElement::Equals(CXMLElement* pXML) const
 
 	for ( ; pos1 && pos2 ; )
 	{
-		CXMLElement* pElement1 = GetNextElement( pos1 );
-		CXMLElement* pElement2 = pXML->GetNextElement( pos2 );
+		const CXMLElement* pElement1 = GetNextElement( pos1 );
+		const CXMLElement* pElement2 = pXML->GetNextElement( pos2 );
 		if ( pElement1 == NULL || pElement2 == NULL ) return FALSE;
 		if ( ! pElement1->Equals( pElement2 ) ) return FALSE;
 	}
@@ -656,7 +654,7 @@ BOOL CXMLElement::Merge(const CXMLElement* pInput, BOOL bOverwrite)
 {
 	if ( ! this || ! pInput ) return FALSE;
 	if ( this == pInput ) return TRUE;
-	if ( m_sName != pInput->m_sName ) return FALSE;
+	if ( m_sName.CompareNoCase( pInput->m_sName ) != 0 ) return FALSE;
 
 	TRACE( "Merging XML:%sand XML:%s", (LPCSTR)CT2A( ToString( FALSE, TRUE ) ), (LPCSTR)CT2A( pInput->ToString( FALSE, TRUE ) ) );
 
@@ -664,7 +662,7 @@ BOOL CXMLElement::Merge(const CXMLElement* pInput, BOOL bOverwrite)
 
 	for ( POSITION pos = pInput->GetElementIterator() ; pos ; )
 	{
-		CXMLElement* pElement	= pInput->GetNextElement( pos );
+		const CXMLElement* pElement	= pInput->GetNextElement( pos );
 		CXMLElement* pTarget	= GetElementByName( pElement->m_sName );
 
 		if ( pTarget == NULL )
@@ -680,7 +678,7 @@ BOOL CXMLElement::Merge(const CXMLElement* pInput, BOOL bOverwrite)
 
 	for ( POSITION pos = pInput->GetAttributeIterator() ; pos ; )
 	{
-		CXMLAttribute* pAttribute	= pInput->GetNextAttribute( pos );
+		const CXMLAttribute* pAttribute	= pInput->GetNextAttribute( pos );
 		CXMLAttribute* pTarget		= GetAttribute( pAttribute->m_sName );
 
 		if ( pTarget == NULL )
@@ -698,6 +696,10 @@ BOOL CXMLElement::Merge(const CXMLElement* pInput, BOOL bOverwrite)
 	if ( bChanged )
 	{
 		TRACE( "resulting XML:%s\n", (LPCSTR)CT2A( ToString( FALSE, TRUE ) ) );
+	}
+	else
+	{
+		TRACE( "resulting XML not changed.\n" );
 	}
 
 	return bChanged;
@@ -721,7 +723,7 @@ void CXMLElement::AddRecursiveWords(CString& strWords) const
 {
 	for ( POSITION pos = GetAttributeIterator() ; pos ; )
 	{
-		CXMLAttribute* pAttribute = GetNextAttribute( pos );
+		const CXMLAttribute* pAttribute = GetNextAttribute( pos );
 		CString strText = pAttribute->GetName();
 
 		if ( strText.Find( ':' ) >= 0 ) continue;
@@ -780,15 +782,15 @@ void CXMLElement::Serialize(CArchive& ar)
 				continue;
 			}
 
-			CString strName( pAttribute->m_sName );
-			strName.MakeLower();
+			CString strNameLC( pAttribute->m_sName );
+			strNameLC.MakeLower();
 
 			// Delete the old attribute if one exists
 			CXMLAttribute* pExisting;
-			if ( m_pAttributes.Lookup( strName, pExisting ) )
+			if ( m_pAttributes.Lookup( strNameLC, pExisting ) )
 				delete pExisting;
 
-			m_pAttributes.SetAt( strName, pAttribute );
+			m_pAttributes.SetAt( strNameLC, pAttribute );
 		}
 
 		for ( int nCount = (int)ar.ReadCount() ; nCount > 0 ; nCount-- )
@@ -826,15 +828,18 @@ CXMLAttribute* CXMLElement::AddAttribute(LPCTSTR pszName, LPCTSTR pszValue)
 	if ( ! pAttribute )
 	{
 		pAttribute = new CXMLAttribute( this, pszName );
-		CString strName( pszName );
-		strName.MakeLower();
+		if ( ! pAttribute )
+			return NULL;
+
+		CString strNameLC( pszName );
+		strNameLC.MakeLower();
 
 		// Delete the old attribute if one exists
 		CXMLAttribute* pExisting;
-		if ( m_pAttributes.Lookup( strName, pExisting ) )
+		if ( m_pAttributes.Lookup( strNameLC, pExisting ) )
 			delete pExisting;
 
-		m_pAttributes.SetAt( strName, pAttribute );
+		m_pAttributes.SetAt( strNameLC, pAttribute );
 	}
 
 	if ( pszValue ) pAttribute->SetValue( pszValue );
@@ -852,15 +857,17 @@ CXMLAttribute* CXMLElement::AddAttribute(LPCTSTR pszName, __int64 nValue)
 CXMLAttribute* CXMLElement::AddAttribute(CXMLAttribute* pAttribute)
 {
 	if ( pAttribute->m_pParent ) return NULL;
-	CString strName( pAttribute->m_sName );
-	strName.MakeLower();
+
+	CString strNameLC( pAttribute->m_sName );
+	strNameLC.MakeLower();
 
 	// Delete the old attribute if one exists
 	CXMLAttribute* pExisting;
-	if ( m_pAttributes.Lookup( strName, pExisting ) )
+	if ( m_pAttributes.Lookup( strNameLC, pExisting ) )
 		delete pExisting;
 
-	m_pAttributes.SetAt( pAttribute->m_sName, pAttribute );
+	m_pAttributes.SetAt( strNameLC, pAttribute );
+
 	pAttribute->m_pParent = this;
 	return pAttribute;
 }
@@ -928,12 +935,12 @@ BOOL CXMLAttribute::ParseString(LPCTSTR& strXML)
 //////////////////////////////////////////////////////////////////////
 // CXMLAttribute equality
 
-BOOL CXMLAttribute::Equals(CXMLAttribute* pXML) const
+BOOL CXMLAttribute::Equals(const CXMLAttribute* pXML) const
 {
 	if ( this == NULL || pXML == NULL ) return FALSE;
 	if ( pXML == this ) return TRUE;
 
-	if ( m_sName != pXML->m_sName ) return FALSE;
+	if ( m_sName.CompareNoCase( pXML->m_sName ) != 0 ) return FALSE;
 	if ( m_sValue != pXML->m_sValue ) return FALSE;
 
 	return TRUE;

@@ -1,7 +1,7 @@
 //
 // LibraryFolders.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -28,6 +28,7 @@
 #include "Application.h"
 #include "CollectionFile.h"
 #include "DlgHelp.h"
+#include "GProfile.h"
 #include "Settings.h"
 #include "Library.h"
 #include "LibraryMaps.h"
@@ -75,12 +76,14 @@ CXMLElement* CLibraryFolders::CreateXML(LPCTSTR szRoot, BOOL bSharedOnly, XmlTyp
 	switch ( nType )
 	{
 	case xmlDC:
-		pRoot = new CXMLElement( NULL, _T("filelisting") );
+		pRoot = new CXMLElement( NULL, _T("FileListing") );
 		if ( pRoot )
 		{
-			pRoot->AddAttribute( _T("version"), 1 );
-			pRoot->AddAttribute( _T("base"), szRoot );
-			pRoot->AddAttribute( _T("generator"), Settings.SmartAgent() );
+			pRoot->AddAttribute( _T("Version"), 1 );
+			pRoot->AddAttribute( _T("Base"), szRoot );
+			pRoot->AddAttribute( _T("Generator"), Settings.SmartAgent() );
+			Hashes::Guid oGUID( MyProfile.oGUID );
+			pRoot->AddAttribute( _T("CID"), oGUID.toString< Hashes::base32Encoding >() );
 		}
 		break;
 

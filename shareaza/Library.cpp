@@ -1,7 +1,7 @@
 //
 // Library.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -449,6 +449,15 @@ BOOL CLibrary::Load()
 BOOL CLibrary::Save()
 {
 	CSingleLock pLock( &m_pSection, TRUE );
+	
+	//CAutoPtr< CXMLElement > pXML( LibraryFolders.CreateXML( _T("/"), TRUE, xmlDC ) );
+	//CString strXML( pXML->ToString( TRUE, TRUE, TRUE, TRI_TRUE ) );
+	//CString strXMLFile;
+	//strXMLFile.Format( _T("%s\\Data\\files.xml"), (LPCTSTR)Settings.General.UserPath );
+	//CStdioFile pXMLFile;
+	//pXMLFile.Open( strXMLFile, CFile::modeWrite|CFile::modeCreate );
+	//pXMLFile.WriteString( strXML );
+	//pXMLFile.Close();
 
 	CString strFile;
 	strFile.Format( _T("%s\\Data\\Library%i.dat"),

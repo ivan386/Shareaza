@@ -1,7 +1,7 @@
 //
 // XML.inl
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -173,7 +173,7 @@ inline POSITION CXMLElement::GetAttributeIterator() const
 
 inline CXMLAttribute* CXMLElement::GetNextAttribute(POSITION& pos) const
 {
-	CXMLAttribute* pAttribute = NULL;
+	CXMLAttribute* pAttribute;
 	CString strName;
 	m_pAttributes.GetNextAssoc( pos, strName, pAttribute );
 	return pAttribute;
@@ -182,14 +182,16 @@ inline CXMLAttribute* CXMLElement::GetNextAttribute(POSITION& pos) const
 inline CXMLAttribute* CXMLElement::GetAttribute(LPCTSTR pszName) const
 {
 	ASSERT( pszName && *pszName );
-	CXMLAttribute* pAttribute = NULL;
-	return m_pAttributes.Lookup( CString( pszName ).MakeLower(), pAttribute ) ? pAttribute : NULL;
+	CXMLAttribute* pAttribute;
+	CString strNameLC( pszName );
+	strNameLC.MakeLower();
+	return m_pAttributes.Lookup( strNameLC, pAttribute ) ? pAttribute : NULL;
 }
 
 inline CString CXMLElement::GetAttributeValue(LPCTSTR pszName, LPCTSTR pszDefault) const
 {
 	ASSERT( pszName && *pszName );
-	if ( CXMLAttribute* pAttribute = GetAttribute( pszName ) )
+	if ( const CXMLAttribute* pAttribute = GetAttribute( pszName ) )
 		return pAttribute->m_sValue;
 	else if ( pszDefault )
 		return pszDefault;
@@ -199,7 +201,9 @@ inline CString CXMLElement::GetAttributeValue(LPCTSTR pszName, LPCTSTR pszDefaul
 
 inline void CXMLElement::RemoveAttribute(CXMLAttribute* pAttribute)
 {
-	m_pAttributes.RemoveKey( CString( pAttribute->m_sName ).MakeLower() );
+	CString strNameLC( pAttribute->m_sName );
+	strNameLC.MakeLower();
+	m_pAttributes.RemoveKey( strNameLC );
 }
 
 inline void CXMLElement::DeleteAttribute(LPCTSTR pszName)
@@ -207,4 +211,21 @@ inline void CXMLElement::DeleteAttribute(LPCTSTR pszName)
 	ASSERT( pszName && *pszName );
 	CXMLAttribute* pAttribute = GetAttribute( pszName );
 	if ( pAttribute ) pAttribute->Delete();
+}
+
+//////////////////////////////////////////////////////////////////////
+// CXMLAttribute name access
+
+inline void CXMLAttribute::SetName(LPCTSTR pszName)
+{
+	ASSERT( pszName && *pszName );
+	if ( CXMLElement* pParent = m_pParent )
+	{
+		pParent->RemoveAttribute( this );
+		m_pParent = NULL;
+		m_sName = pszName;
+		pParent->AddAttribute( this );
+	}
+	else
+		m_sName = pszName;
 }
