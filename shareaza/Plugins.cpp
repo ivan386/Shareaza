@@ -1,7 +1,7 @@
 //
 // Plugins.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -38,10 +38,10 @@ CPlugins Plugins;
 //////////////////////////////////////////////////////////////////////
 // CPlugins construction
 
-CPlugins::CPlugins() :
-	m_nCommandID( ID_PLUGIN_FIRST )
+CPlugins::CPlugins()
+	: m_nCommandID	( ID_PLUGIN_FIRST )
+	, m_inCLSID		( CLSID_NULL )
 {
-	ZeroMemory( &m_inCLSID, sizeof( m_inCLSID ) );
 }
 
 BOOL CPlugins::Register(const CString& sGeneralPath)
@@ -384,10 +384,13 @@ void CPlugins::OnRun()
 
 	while( IsThreadEnabled() )
 	{
-		Doze();
+		Doze( 1000 );
 
 		if ( ! IsThreadEnabled() )
 			break;
+
+		if ( m_inCLSID == CLSID_NULL )
+			continue;
 
 		CQuickLock oLock( m_pSection );
 
@@ -422,7 +425,7 @@ void CPlugins::OnRun()
 
 		AfxSetResourceHandle( hRes );
 
-		ZeroMemory( &m_inCLSID, sizeof( m_inCLSID ) );
+		m_inCLSID = CLSID_NULL;
 
 		m_pReady.SetEvent();
 	}

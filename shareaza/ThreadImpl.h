@@ -1,7 +1,7 @@
 //
 // ThreadImpl.h
 //
-// Copyright (c) Shareaza Development Team, 2008-2012.
+// Copyright (c) Shareaza Development Team, 2008-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -89,7 +89,7 @@ public:
 		return ( m_pWakeup.SetEvent() != FALSE );
 	}
 
-	inline void Doze(DWORD dwTimeout = INFINITE) throw()
+	inline void Doze(DWORD dwTimeout) throw()
 	{
 		SwitchToThread();
 		do

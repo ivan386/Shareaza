@@ -1,7 +1,7 @@
 //
 // CtrlLibraryTip.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -44,10 +44,8 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNAMIC(CLibraryTipCtrl, CCoolTipCtrl)
 
 BEGIN_MESSAGE_MAP(CLibraryTipCtrl, CCoolTipCtrl)
-	//{{AFX_MSG_MAP(CLibraryTipCtrl)
 	ON_WM_DESTROY()
 	ON_WM_TIMER()
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -343,7 +341,8 @@ void CLibraryTipCtrl::OnRun()
 {
 	while ( IsThreadEnabled() )
 	{
-		Doze();
+		Doze( 1000 );
+
 		if ( ! IsThreadEnabled() )
 			break;
 
@@ -351,8 +350,8 @@ void CLibraryTipCtrl::OnRun()
 		CString strPath = m_sPath;
 		m_pSection.Unlock();
 
-		if ( strPath.IsEmpty() ) // TODO: Make preview requests by hash
-			break;
+		if ( strPath.IsEmpty() )
+			continue;
 
 		CImageFile pFile;
 		if ( CThumbCache::Cache( strPath, &pFile ) )
@@ -371,4 +370,3 @@ void CLibraryTipCtrl::OnRun()
 		}
 	}
 }
-
