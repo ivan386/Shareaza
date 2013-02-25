@@ -1,7 +1,7 @@
 //
 // Shareaza.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -87,6 +87,17 @@ const LPCTSTR RT_PNG = _T("PNG");
 const LPCTSTR RT_GZIP = _T("GZIP");
 // double scaleX = 1;
 // double scaleY = 1;
+
+void AFXAPI AfxOleTermOrFreeLibSafe(BOOL bTerm, BOOL bJustRevoke)
+{
+	__try
+	{
+		AfxOleTermOrFreeLib( bTerm, bJustRevoke );
+	}
+	__except( EXCEPTION_EXECUTE_HANDLER )
+	{
+	}
+}
 
 /////////////////////////////////////////////////////////////////////////////
 // CShareazaCommandLineInfo
@@ -262,6 +273,7 @@ BOOL CShareazaApp::InitInstance()
 	SetRegistryKey( CLIENT_NAME_T );
 
 	AfxOleInit();									// Initializes OLE support for the application.
+	AfxGetThread()->m_lpfnOleTermOrFreeLib = AfxOleTermOrFreeLibSafe;
 	CoInitializeSecurity( NULL, -1, NULL, NULL, RPC_C_AUTHN_LEVEL_PKT, RPC_C_IMP_LEVEL_IMPERSONATE, NULL, EOAC_NONE, NULL );
 //	m_pFontManager = new CFontManager();
 	AfxEnableControlContainer( /*m_pFontManager*/); // Enable support for containment of OLE controls.
