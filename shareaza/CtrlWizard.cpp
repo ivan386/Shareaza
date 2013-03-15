@@ -1,7 +1,7 @@
 //
 // CtrlWizard.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -41,12 +41,14 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 IMPLEMENT_DYNAMIC(CWizardCtrl, CWnd)
+
 CWizardCtrl::CWizardCtrl()
+	: m_nCaptionWidth	( 160 )
+	, m_nItemHeight		( 32 )
+	, m_nScroll			( 0 )
+	, m_bShowBorder		( TRUE )
+	, m_bValid			( FALSE )
 {
-	m_nCaptionWidth	= 160;
-	m_nItemHeight	= 32;
-	m_nScroll		= 0;
-	m_bShowBorder	= TRUE;
 }
 
 CWizardCtrl::~CWizardCtrl()
@@ -56,23 +58,21 @@ CWizardCtrl::~CWizardCtrl()
 }
 
 BEGIN_MESSAGE_MAP(CWizardCtrl, CWnd)
-	//{{AFX_MSG_MAP(CWizardCtrl)
 	ON_WM_PAINT()
 	ON_WM_CREATE()
 	ON_WM_ERASEBKGND()
 	ON_WM_NCPAINT()
 	ON_WM_SETFOCUS()
 	ON_WM_VSCROLL()
-	ON_WM_SHOWWINDOW()
 	ON_BN_CLICKED(IDC_WIZARD_CONTROL, OnBtnPress)
 	ON_WM_DESTROY()
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 void CWizardCtrl::Clear()
 {
 	m_pCaptions.RemoveAll();
 	m_pFileDocs.RemoveAll();
+	m_pFilePaths.RemoveAll();
 	m_pItems.RemoveAll();
 	for ( INT_PTR nCount = 0 ; nCount < m_pControls.GetCount() ; nCount++ )
 	{
@@ -83,13 +83,16 @@ void CWizardCtrl::Clear()
 	m_pControls.RemoveAll();
 }
 
-BOOL CWizardCtrl::Create(DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID, LPCTSTR pszXMLPath, CAlbumFolder* pFolder)
+BOOL CWizardCtrl::Create(DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID, LPCTSTR pszXMLPath, const CAlbumFolder* pFolder)
 {
 	dwStyle |= WS_CHILD|WS_VSCROLL|WS_CLIPCHILDREN;
-	m_sXMLPath = pszXMLPath;
-	m_bValid = FALSE;
-	m_pFolder = pFolder;
-	return CWnd::Create( NULL, NULL, dwStyle, rect, pParentWnd, nID, NULL );
+
+	if ( ! CWnd::Create( NULL, NULL, dwStyle, rect, pParentWnd, nID, NULL ) )
+		return FALSE;
+
+	MakeAll( pszXMLPath, pFolder );
+
+	return TRUE;
 }
 
 void CWizardCtrl::OnPaint()
@@ -260,62 +263,61 @@ void CWizardCtrl::OnVScroll(UINT nSBCode, UINT /*nPos*/, CScrollBar* /*pScrollBa
 	ScrollBy( nDelta );
 }
 
-namespace
-{
 struct CompareFiles
 {
-	bool operator()(CLibraryFile* lhs, CLibraryFile* rhs) const
+	inline bool operator()(const CLibraryFile* lhs, const CLibraryFile* rhs) const
 	{
-		return lhs->m_sName < rhs->m_sName;
+		return lhs->m_sName.CompareNoCase( rhs->m_sName ) < 0;
 	}
 };
-}
 
-void CWizardCtrl::OnShowWindow(BOOL bShow, UINT /*nStatus*/)
+void CWizardCtrl::MakeAll(const CString& sXMLPath, const CAlbumFolder* pFolder)
 {
-	if ( bShow && m_pControls.IsEmpty() )
+	ASSUME_LOCK( Library.m_pSection );
+
+	CString strXML = LoadFile( sXMLPath );
+	if ( strXML.IsEmpty() )
+		return;
+		
+	CXMLElement* pBase = NULL;
+	pBase = CXMLElement::FromString( strXML, FALSE );
+
+	CollectFiles( pBase );
+	CollectImages( pBase );
+
+	// Sort Files
+	std::vector< const CLibraryFile* > pList;
+	pList.reserve( pFolder->GetFolderCount() );
+	for ( POSITION pos = pFolder->GetFileIterator(); pos; )
 	{
-		CString strXML = LoadFile( m_sXMLPath );
-		if ( strXML.IsEmpty() ) return;
-		
-		CXMLElement* pBase = NULL;
-		pBase = CXMLElement::FromString( strXML, FALSE );
-
-		CollectFiles( pBase );
-		CollectImages( pBase );
-
-		// Sort Files
-		// TODO: make sure all CLibraryFile*s remain valid throughout
-		CQuickLock oLibraryLock( Library.m_pSection );
-		std::vector< CLibraryFile* > pList;
-		pList.reserve( m_pFolder->GetFolderCount() );
-		for ( POSITION pos = m_pFolder->GetFileIterator(); pos; )
-		{
-			if ( CLibraryFile* pFile = m_pFolder->GetNextFile( pos ) )
-				pList.push_back( pFile );
-		}
-		std::sort( pList.begin(), pList.end(), CompareFiles() );
-
-		MakeControls( pBase, pList );
-		
-		if ( pBase ) delete pBase;
-		// in case when there was no multi-pickers in the XML 
-		// we need to prepare docs separately
-		if ( m_pFileDocs.GetCount() == 0 )
-		{
-			CString strTemplatePath = m_sXMLPath.Left( m_sXMLPath.ReverseFind( _T('\\') ) + 1 );
-			CString strOddTemplate = LoadFile( strTemplatePath + m_sOddFilePath );
-			CString strEvenTemplate = LoadFile( strTemplatePath + m_sEvenFilePath );
-
-			int nFileCount = 1;
-			for ( std::size_t pos = 0; pos != pList.size(); ++pos )
-			{
-				pList[ pos ]->PrepareDoc( ( nFileCount & 1 ) ?  strOddTemplate : strEvenTemplate, m_pFileDocs );
-				++nFileCount;
-			}
-		}
-		Layout();
+		if ( CLibraryFile* pFile = pFolder->GetNextFile( pos ) )
+			pList.push_back( pFile );
 	}
+	std::sort( pList.begin(), pList.end(), CompareFiles() );
+
+	MakeControls( sXMLPath, pBase, pList );
+		
+	if ( pBase )
+		delete pBase;
+
+	// in case when there was no multi-pickers in the XML
+	// we need to prepare docs separately
+	if ( m_pFileDocs.GetCount() == 0 )
+	{
+		CString strTemplatePath = sXMLPath.Left( sXMLPath.ReverseFind( _T('\\') ) + 1 );
+		CString strOddTemplate = LoadFile( strTemplatePath + m_sOddFilePath );
+		CString strEvenTemplate = LoadFile( strTemplatePath + m_sEvenFilePath );
+
+		int nFileCount = 1;
+		for ( std::size_t pos = 0; pos != pList.size(); ++pos )
+		{
+			m_pFilePaths.Add( pList[ pos ]->GetPath() );
+			pList[ pos ]->PrepareDoc( ( nFileCount & 1 ) ?  strOddTemplate : strEvenTemplate, m_pFileDocs );
+			++nFileCount;
+		}
+	}
+
+	Layout();
 	Invalidate();
 }
 
@@ -375,11 +377,11 @@ BOOL CWizardCtrl::CollectImages(CXMLElement* pBase)
 }
 
 // Here we create controls, captions and docs collections
-BOOL CWizardCtrl::MakeControls(CXMLElement* pBase, std::vector< CLibraryFile* > pList)
+BOOL CWizardCtrl::MakeControls(const CString& sXMLPath, CXMLElement* pBase, std::vector< const CLibraryFile* > pList)
 {
 	if ( pBase == NULL ) return FALSE;
 
-	CString strTemplatePath = m_sXMLPath.Left( m_sXMLPath.ReverseFind( _T('\\') ) + 1 );
+	CString strTemplatePath = sXMLPath.Left( sXMLPath.ReverseFind( _T('\\') ) + 1 );
 	CString strOddTemplate = LoadFile( strTemplatePath + m_sOddFilePath );
 	CString strEvenTemplate = LoadFile( strTemplatePath + m_sEvenFilePath );
 
@@ -482,7 +484,10 @@ BOOL CWizardCtrl::MakeControls(CXMLElement* pBase, std::vector< CLibraryFile* > 
 								if ( strType == "multi-filepicker" ) 
 								{
 									if ( nFileCount > m_pFileDocs.GetCount() )
+									{
+										m_pFilePaths.Add( pList[ pos ]->GetPath() );
 										pList[ pos ]->PrepareDoc( ( nFileCount & 1 ) ? strOddTemplate : strEvenTemplate, m_pFileDocs );
+									}
 								}
 								else break;
 							} // for

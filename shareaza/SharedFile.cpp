@@ -1294,7 +1294,7 @@ BOOL CLibraryFile::OnVerifyDownload(const CLibraryRecent* pRecent)
 	return TRUE;
 }
 
-BOOL CLibraryFile::PrepareDoc(LPCTSTR pszTemplate, CArray< CString >& oDocs)
+BOOL CLibraryFile::PrepareDoc(LPCTSTR pszTemplate, CArray< CString >& oDocs) const
 {
 	ASSUME_LOCK( Library.m_pSection );
 
@@ -1303,11 +1303,11 @@ BOOL CLibraryFile::PrepareDoc(LPCTSTR pszTemplate, CArray< CString >& oDocs)
 	if ( m_pMetadata && m_pSchema )
 	{
 		// Should be all meta data replacement
-		CXMLElement* pMetadata = m_pMetadata;
+		const CXMLElement* pMetadata = m_pMetadata;
 		for ( POSITION pos = pMetadata->GetAttributeIterator() ; pos ; )
 		{
 			CString str;
-			CXMLNode* pNode = pMetadata->GetNextAttribute( pos );
+			const CXMLNode* pNode = pMetadata->GetNextAttribute( pos );
 			str = pNode->GetName();
 			CString strReplace = pNode->GetValue();
 			if ( str == _T("seconds") || str == _T("minutes") )

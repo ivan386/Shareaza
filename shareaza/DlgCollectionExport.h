@@ -1,7 +1,7 @@
 //
 // DlgCollectionExport.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -21,11 +21,10 @@
 
 #pragma once
 
-#include "DlgSkinDialog.h"
 #include "CtrlWizard.h"
+#include "DlgSkinDialog.h"
 
 class CAlbumFolder;
-class CXMLElement;
 
 
 class CCollectionExportDlg : public CSkinDialog
@@ -33,29 +32,26 @@ class CCollectionExportDlg : public CSkinDialog
 	DECLARE_DYNAMIC(CCollectionExportDlg)
 
 public:
-	CCollectionExportDlg(CAlbumFolder* pFolder, CWnd* pParent = NULL);
+	CCollectionExportDlg(const CAlbumFolder* pFolder, CWnd* pParent = NULL);
 	virtual ~CCollectionExportDlg();
 	
 	enum { IDD = IDD_COLLECTION_EXPORT };
 
-	CButton	m_wndOK;
-	CStatic m_wndExplain;
-	CStatic m_wndLblAuthor;
-	CStatic m_wndLblName;
-	CStatic m_wndLblDesc;
-	CStatic m_wndGroupBox;
-	CButton	m_wndDelete;
-	CEdit	m_wndDesc;
-	CStatic	m_wndName;
-	CStatic	m_wndAuthor;
-	CListCtrl m_wndList;
-
-	void	EnumerateTemplates(LPCTSTR pszPath = NULL);
-	BOOL	AddTemplate(LPCTSTR pszPath, LPCTSTR pszName);
-	CString DirFromPath(LPCTSTR szPath);
-
 protected:
-	CAlbumFolder*	m_pFolder;
+	CButton			m_wndOK;
+	CStatic			m_wndExplain;
+	CStatic			m_wndLblAuthor;
+	CStatic			m_wndLblName;
+	CStatic			m_wndLblDesc;
+	CStatic			m_wndGroupBox;
+	CButton			m_wndDelete;
+	CEdit			m_wndDesc;
+	CStatic			m_wndName;
+	CStatic			m_wndAuthor;
+	CListCtrl		m_wndList;
+	const CAlbumFolder*	m_pFolder;
+	BOOL			m_bThumbnails;
+	CString			m_sXMLPath;
 	CImageList		m_gdiImageList;
 	int				m_nSelected;
 	int				m_nStep;
@@ -66,6 +62,14 @@ protected:
 	CString			m_sLblExplain1;
 	CString			m_sLblExplain2;
 	CWizardCtrl		m_wndWizard;
+
+	void	EnumerateTemplates(LPCTSTR pszPath = NULL);
+	BOOL	AddTemplate(LPCTSTR pszPath, LPCTSTR pszName);
+	CString DirFromPath(LPCTSTR szPath);
+	// the first wizard screen
+	BOOL	Step1();
+	// the second wizard screen
+	BOOL	Step2();
 
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	virtual void DoDataExchange(CDataExchange* pDX);

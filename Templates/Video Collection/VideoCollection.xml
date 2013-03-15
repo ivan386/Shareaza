@@ -60,7 +60,7 @@
 		<item id="6" type="colorpicker" value="Colorir fileiras pares" default="#FFFFFF"/>
 		<item id="7" type="colorpicker" value="Colorir fileiras ímpares" default="#E9EDEF"/>
 		<item id="8" type="textbox" value="Sobre o grupo de lançamento"/>
-		<item id="9" type="multi-filepicker" value="Imagem para o arquivo" default="imagens/Screenshot_Part.png"/>
+		<item id="9" type="multi-filepicker" value="Imagem para o arquivo" default="images/Screenshot_Part.png"/>
 	</text>
 	<text language="it">
 		<item id="1" type="textbox" value="Azione di apertura file" default="Apri file"/>

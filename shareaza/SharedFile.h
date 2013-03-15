@@ -1,7 +1,7 @@
 //
 // SharedFile.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -143,7 +143,7 @@ public:
 	// $meta:magnet$	- file magnet-link
 	// $meta:number$	- file number in string array
 	// Unknown variables will be replaced by "N/A" string.
-	BOOL			PrepareDoc(LPCTSTR pszTemplate, CArray< CString >& oDocs);
+	BOOL			PrepareDoc(LPCTSTR pszTemplate, CArray< CString >& oDocs) const;
 
 	inline CString GetNameLC() const
 	{
