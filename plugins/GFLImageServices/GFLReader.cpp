@@ -1,7 +1,7 @@
 //
 // GFLReader.cpp : Implementation of CGFLReader
 //
-// Copyright (c) Nikolay Raspopov, 2005-2012.
+// Copyright (c) Nikolay Raspopov, 2005-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // GFL Library, GFL SDK and XnView
@@ -104,7 +104,7 @@ STDMETHODIMP CGFLReader::LoadFromFile (
 				GFL_LOAD_FORCE_COLOR_MODEL;
 			prm.ColorModel = (inf.ComponentsPerPixel == 4) ? GFL_RGBA : GFL_RGB;
 			prm.FormatIndex = inf.FormatIndex;
-			hr = SAFEgflLoadBitmap ( CW2A( *pszPath ? pszPath : (LPCWSTR)sFile ), &hGflBitmap, &prm, &inf);
+			hr = SAFEgflLoadBitmap ( *pszPath ? pszPath : (LPCWSTR)sFile, &hGflBitmap, &prm, &inf);
 
 			if (SUCCEEDED (hr))
 				hr = BitmapToSafeArray (ppImage, pParams, hGflBitmap);
@@ -211,23 +211,25 @@ STDMETHODIMP CGFLReader::SaveToFile (
 	LONG nSource = 0;
 	HRESULT hr = SafeArrayGetUBound (pImage, 1, &nSource);
 	nSource++;
-	if (SUCCEEDED (hr)) {
+	if (SUCCEEDED (hr))
+	{
 		BYTE* pSource = NULL;
 		hr = SafeArrayAccessData (pImage, (void**) &pSource);
-		if (SUCCEEDED (hr)) {
+		if (SUCCEEDED (hr))
+		{
 			hr = E_OUTOFMEMORY;
 			GFL_BITMAP* hGflBitmap = gflAllockBitmapEx (
 				(pParams->nComponents == 4) ? GFL_RGBA : GFL_RGB,
 				pParams->nWidth, pParams->nHeight, 8, 4, NULL);
-			if (hGflBitmap) {
-				ATLASSERT (nSource == (((pParams->nWidth * pParams->nComponents) + 3) & (-4)) *
-					pParams->nHeight);
+			if (hGflBitmap)
+			{
+				ATLASSERT (nSource == (((pParams->nWidth * pParams->nComponents) + 3) & (-4)) * pParams->nHeight);
 				CopyMemory (hGflBitmap->Data, pSource, nSource);
-				GFL_SAVE_PARAMS params;
+				GFL_SAVE_PARAMS params = {};
 				gflGetDefaultSaveParams (&params);
 				params.FormatIndex = GetFormatIndexByExt (ext);
 				params.Quality = (GFL_INT16) pParams->nQuality;
-				hr = SAFEgflSaveBitmap (CW2A (sFile), hGflBitmap, &params);
+				hr = SAFEgflSaveBitmap( sFile, hGflBitmap, &params );
 				gflFreeBitmap (hGflBitmap);
 			}
 			SafeArrayUnaccessData (pImage);

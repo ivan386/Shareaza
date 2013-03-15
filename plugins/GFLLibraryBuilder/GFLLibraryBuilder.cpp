@@ -1,7 +1,7 @@
 //
 // GFLLibraryBuilder.cpp : Implementation of DLL Exports.
 //
-// Copyright (c) Nikolay Raspopov, 2005.
+// Copyright (c) Nikolay Raspopov, 2005-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // GFL Library, GFL SDK and XnView
@@ -45,22 +45,22 @@ inline void FillExtMap ()
 	CString tmp;
 	_ExtMap.RemoveAll ();
 	GFL_INT32 count = gflGetNumberOfFormat ();
-	ATLTRACE( _T("Total %d formats:\n"), count );
+	ATLTRACE( "Total %d formats:\n", count );
 	for (GFL_INT32 i = 0; i < count; ++i) {
 		GFL_FORMAT_INFORMATION info;
 		GFL_ERROR err = gflGetFormatInformationByIndex (i, &info);
 		if (err == GFL_NO_ERROR && (info.Status & GFL_READ)) {
 			CString name (info.Name);
 			CString desc (info.Description);
-			ATLTRACE( _T("%3d. %7s %32s :"), i, name, desc );
+			ATLTRACE( "%3d. %7s %32s :", i, info.Name, info.Description );
 			for (GFL_UINT32 j = 0; j < info.NumberOfExtension; ++j) {
 				CString ext (info.Extension [j]);
-				ext = ext.MakeLower ();
-				ATLTRACE( _T(" .%s"), ext );
+				ext.MakeLower ();
+				ATLTRACE( " .%s", ext );
 				if (!_ExtMap.Lookup (ext, tmp))
 					_ExtMap.SetAt (ext, name);
 			}
-			ATLTRACE( _T("\n") );
+			ATLTRACE( "\n" );
 		}
 	}
 }
@@ -72,7 +72,7 @@ BOOL SafeGFLInit() throw()
 		// Library initialization
 		if ( gflLibraryInit () != GFL_NO_ERROR )
 		{
-			ATLTRACE (_T("gflLibraryInit failed\n"));
+			ATLTRACE ("gflLibraryInit failed\n");
 			return FALSE;
 		}
 		gflEnableLZW( GFL_TRUE );
@@ -81,7 +81,7 @@ BOOL SafeGFLInit() throw()
 	}
 	__except ( EXCEPTION_EXECUTE_HANDLER )
 	{
-		ATLTRACE (_T("Exception in DLL_PROCESS_ATTACH\n"));
+		ATLTRACE ("Exception in DLL_PROCESS_ATTACH\n");
 		return FALSE;
 	}
 }
@@ -94,7 +94,7 @@ void SafeGFLExit() throw()
 	}
 	__except ( EXCEPTION_EXECUTE_HANDLER )
 	{
-		ATLTRACE (_T("Exception in DLL_PROCESS_DETACH\n"));
+		ATLTRACE ("Exception in DLL_PROCESS_DETACH\n");
 	}
 }
 
@@ -116,7 +116,7 @@ extern "C" BOOL WINAPI DllMain (HINSTANCE hInstance, DWORD dwReason, LPVOID lpRe
 	}
 	else
 	{
-		ATLTRACE (_T("FALSE in _AtlModule.DllMain () call\n"));
+		ATLTRACE ("FALSE in _AtlModule.DllMain () call\n");
 		return FALSE;
 	}
 }
@@ -142,7 +142,7 @@ STDAPI DllRegisterServer(void)
 		_ExtMap.GetNextAssoc (pos, ext, tmp);
 		if ( ext == _T("pdf") || ext == _T("ps") || ext == _T("eps") || ext == _T("vst") ) continue;
 		ext.Insert (0, _T('.'));
-		ATLTRACE (_T("Add %s\n"), ext);
+		ATLTRACE ("Add %s\n", CT2A( ext ));
 		SHSetValue (HKEY_CURRENT_USER, REG_LIBRARYBUILDER_KEY, ext, REG_SZ,
 			_T("{6C9E61BE-E58F-4AE1-A304-6FF1D183804C}"),
 			38 * sizeof (TCHAR));
@@ -162,7 +162,7 @@ STDAPI DllUnregisterServer(void)
 		_ExtMap.GetNextAssoc (pos, ext, tmp);
 		if ( ext == _T("pdf") || ext == _T("ps") || ext == _T("eps") || ext == _T("vst") ) continue;
 		ext.Insert (0, _T('.'));
-		ATLTRACE (_T("Remove %s\n"), ext);
+		ATLTRACE ("Remove %s\n", CT2A(ext));
 		SHDeleteValue (HKEY_CURRENT_USER, REG_LIBRARYBUILDER_KEY, ext);
 	}
 

@@ -1,7 +1,7 @@
 //
 // GFLImageServices.cpp : Implementation of DLL Exports.
 //
-// Copyright (c) Nikolay Raspopov, 2005.
+// Copyright (c) Nikolay Raspopov, 2005-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // GFL Library, GFL SDK and XnView
@@ -45,22 +45,25 @@ inline void FillExtMap ()
 	CString tmp;
 	_ExtMap.RemoveAll ();
 	GFL_INT32 count = gflGetNumberOfFormat ();
-	ATLTRACE( _T("Total %d formats:\n"), count );
-	for (GFL_INT32 i = 0; i < count; ++i) {
+	ATLTRACE( "Total %d formats:\n", count );
+	for (GFL_INT32 i = 0; i < count; ++i)
+	{
 		GFL_FORMAT_INFORMATION info;
 		GFL_ERROR err = gflGetFormatInformationByIndex (i, &info);
-		if (err == GFL_NO_ERROR && (info.Status & GFL_READ)) {
+		if (err == GFL_NO_ERROR && (info.Status & GFL_READ))
+		{
 			CString name (info.Name);
 			CString desc (info.Description);
-			ATLTRACE( _T("%3d. %7s %32s :"), i, name, desc );
-			for (GFL_UINT32 j = 0; j < info.NumberOfExtension; ++j) {
+			ATLTRACE( "%3d. %7s %32s :", i, info.Name, info.Description );
+			for (GFL_UINT32 j = 0; j < info.NumberOfExtension; ++j)
+			{
 				CString ext (info.Extension [j]);
-				ext = ext.MakeLower ();
-				ATLTRACE( _T(" .%s"), ext );
+				ext.MakeLower ();
+				ATLTRACE( " .%s", info.Extension [j] );
 				if (!_ExtMap.Lookup (ext, tmp))
 					_ExtMap.SetAt (ext, name);
 			}
-			ATLTRACE( _T("\n") );
+			ATLTRACE( "\n" );
 		}
 	}
 }
@@ -72,7 +75,7 @@ BOOL SafeGFLInit() throw()
 		// Library initialization
 		if ( gflLibraryInit () != GFL_NO_ERROR )
 		{
-			ATLTRACE (_T("gflLibraryInit failed\n"));
+			ATLTRACE ( "gflLibraryInit failed\n" );
 			return FALSE;
 		}
 		gflEnableLZW( GFL_TRUE );
@@ -81,7 +84,7 @@ BOOL SafeGFLInit() throw()
 	}
 	__except ( EXCEPTION_EXECUTE_HANDLER )
 	{
-		ATLTRACE (_T("Exception in DLL_PROCESS_ATTACH\n"));
+		ATLTRACE ( "Exception in DLL_PROCESS_ATTACH\n" );
 		return FALSE;
 	}
 }
@@ -94,7 +97,7 @@ void SafeGFLExit() throw()
 	}
 	__except ( EXCEPTION_EXECUTE_HANDLER )
 	{
-		ATLTRACE (_T("Exception in DLL_PROCESS_DETACH\n"));
+		ATLTRACE ( "Exception in DLL_PROCESS_DETACH\n" );
 	}
 }
 
@@ -116,7 +119,7 @@ extern "C" BOOL WINAPI DllMain (HINSTANCE hInstance, DWORD dwReason, LPVOID lpRe
 	}
 	else
 	{
-		ATLTRACE (_T("FALSE in _AtlModule.DllMain () call\n"));
+		ATLTRACE ( "FALSE in _AtlModule.DllMain () call\n");
 		return FALSE;
 	}
 }
@@ -142,7 +145,7 @@ STDAPI DllRegisterServer(void)
 		_ExtMap.GetNextAssoc (pos, ext, tmp);
 		if ( ext == _T("vst") ) continue;
 		ext.Insert (0, _T('.'));
-		ATLTRACE (_T("Add %s\n"), ext);
+		ATLTRACE ( "Add %s\n", CT2A( ext ) );
 		SHSetValue (HKEY_CURRENT_USER, REG_IMAGESERVICE_KEY, ext, REG_SZ,
 			_T("{FF5FCD00-2C20-49D8-84F6-888D2E2C95DA}"),
 			38 * sizeof (TCHAR));
@@ -162,7 +165,7 @@ STDAPI DllUnregisterServer(void)
 		_ExtMap.GetNextAssoc (pos, ext, tmp);
 		if ( ext == _T("vst") ) continue;
 		ext.Insert (0, _T('.'));
-		ATLTRACE (_T("Remove %s\n"), ext);
+		ATLTRACE ( "Remove %s\n", CT2A( ext ) );
 		SHDeleteValue (HKEY_CURRENT_USER, REG_IMAGESERVICE_KEY, ext);
 	}
 
@@ -198,18 +201,18 @@ STDAPI DllInstall(BOOL bInstall, LPCWSTR pszCmdLine)
 	return hr;
 }
 
-HRESULT SAFEgflLoadBitmap (const char * filename, GFL_BITMAP **bitmap, const GFL_LOAD_PARAMS *params, GFL_FILE_INFORMATION *info) throw ()
+HRESULT SAFEgflLoadBitmap (LPCWSTR filename, GFL_BITMAP **bitmap, const GFL_LOAD_PARAMS *params, GFL_FILE_INFORMATION *info) throw ()
 {
 	HRESULT hr = E_FAIL;
 	__try {
-		GFL_ERROR err = gflLoadBitmap (filename, bitmap, params, info);
+		GFL_ERROR err = gflLoadBitmapW (filename, bitmap, params, info);
 		if (err == GFL_NO_ERROR)
 			hr = S_OK;
 		else {
-			ATLTRACE (L"gflLoadBitmap() error : %s\n", CA2T (gflGetErrorString (err)));
+			ATLTRACE ("gflLoadBitmap() error : %s\n", gflGetErrorString (err));
 		}
 	} __except (EXCEPTION_EXECUTE_HANDLER) {
-		ATLTRACE (L"gflLoadBitmap() exception\n");
+		ATLTRACE ("gflLoadBitmap() exception\n");
 	}
 	return hr;
 }
@@ -222,10 +225,10 @@ HRESULT SAFEgflLoadBitmapFromMemory (const GFL_UINT8 * data, GFL_UINT32 data_len
 		if (err == GFL_NO_ERROR)
 			hr = S_OK;
 		else {
-			ATLTRACE (L"gflLoadBitmapFromMemory() error : %s\n", CA2T (gflGetErrorString (err)));
+			ATLTRACE ("gflLoadBitmapFromMemory() error : %s\n", gflGetErrorString (err));
 		}
 	} __except (EXCEPTION_EXECUTE_HANDLER) {
-		ATLTRACE (L"gflLoadBitmapFromMemory() exception\n");
+		ATLTRACE ("gflLoadBitmapFromMemory() exception\n");
 	}
 	return hr;
 }
@@ -238,26 +241,26 @@ HRESULT SAFEgflSaveBitmapIntoMemory (GFL_UINT8 ** data, GFL_UINT32 * data_length
 		if (err == GFL_NO_ERROR)
 			hr = S_OK;
 		else {
-			ATLTRACE (L"gflSaveBitmapIntoMemory() error : %s\n", CA2T (gflGetErrorString (err)));
+			ATLTRACE ("gflSaveBitmapIntoMemory() error : %s\n", gflGetErrorString (err));
 		}
 	} __except (EXCEPTION_EXECUTE_HANDLER) {
-		ATLTRACE (L"gflSaveBitmapIntoMemory() exception\n");
+		ATLTRACE ("gflSaveBitmapIntoMemory() exception\n");
 	}
 	return hr;
 }
 
-HRESULT SAFEgflSaveBitmap (char *filename, const GFL_BITMAP *bitmap, const GFL_SAVE_PARAMS *params) throw ()
+HRESULT SAFEgflSaveBitmap (LPCWSTR filename, const GFL_BITMAP *bitmap, const GFL_SAVE_PARAMS *params) throw ()
 {
 	HRESULT hr = E_FAIL;
 	__try {
-		GFL_ERROR err = gflSaveBitmap (filename, bitmap, params);
+		GFL_ERROR err = gflSaveBitmapW ( (wchar_t*)filename, bitmap, params);
 		if (err == GFL_NO_ERROR)
 			hr = S_OK;
 		else {
-			ATLTRACE (L"gflSaveBitmap() error : %s\n", CA2T (gflGetErrorString (err)));
+			ATLTRACE ( "gflSaveBitmap() error : %s\n", gflGetErrorString (err));
 		}
 	} __except (EXCEPTION_EXECUTE_HANDLER) {
-		ATLTRACE (L"gflSaveBitmap() exception\n");
+		ATLTRACE ("gflSaveBitmap() exception\n");
 	}
 	return hr;
 }
