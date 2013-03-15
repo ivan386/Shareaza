@@ -354,19 +354,23 @@ void CLibraryTipCtrl::OnRun()
 			continue;
 
 		CImageFile pFile;
-		if ( CThumbCache::Cache( strPath, &pFile ) )
+		BOOL bSuccess = CThumbCache::Cache( strPath, &pFile );
+
+		m_pSection.Lock();
+
+		if ( m_bmThumb.m_hObject ) m_bmThumb.DeleteObject();
+
+		if ( m_sPath == strPath )
 		{
-			m_pSection.Lock();
-
-			if ( m_bmThumb.m_hObject ) m_bmThumb.DeleteObject();
-
-			if ( m_sPath == strPath )
+			m_sPath.Empty();
+			
+			if ( bSuccess )
 			{
 				m_bmThumb.Attach( pFile.CreateBitmap() );
 				Invalidate();
 			}
-
-			m_pSection.Unlock();
 		}
+
+		m_pSection.Unlock();
 	}
 }
