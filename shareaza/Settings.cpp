@@ -706,7 +706,20 @@ void CSettings::Load()
 
 	// Set interface
 	Interface.LowResMode		= ! ( GetSystemMetrics( SM_CYSCREEN ) > 600 );
-	if ( Live.FirstRun ) Search.AdvancedPanel = ! Interface.LowResMode;
+	if ( Live.FirstRun )
+	{
+		Search.AdvancedPanel = ! Interface.LowResMode;
+
+		if ( IsDefault( &General.Language ) )
+		{
+			CString strDefaultLanguage = CRegistry::GetString( NULL, _T("DefaultLanguage") );
+			if ( ! strDefaultLanguage.IsEmpty() )
+			{
+				General.Language = strDefaultLanguage;
+				General.LanguageRTL = CRegistry::GetDword( NULL, _T("DefaultLanguageRTL") ) != 0;
+			}
+		}
+	}
 
 	// Reset certain network variables if bandwidth is too low
 	// Set ed2k and G1
