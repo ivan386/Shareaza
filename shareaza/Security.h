@@ -1,7 +1,7 @@
 //
 // Security.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -21,11 +21,7 @@
 
 #pragma once
 
-class CLiveList;
-class CShareazaFile;
-class CSecureRule;
-class CQuerySearch;
-class CXMLElement;
+#include "SecureRule.h"
 
 
 #define SECURITY_SER_VERSION	5
@@ -116,50 +112,6 @@ protected:
 	CXMLElement*	ToXML(BOOL bRules = TRUE);
 	BOOL			FromXML(CXMLElement* pXML);
 	void			Serialize(CArchive& ar);
-};
-
-class CSecureRule
-{
-public:
-	CSecureRule(BOOL bCreate = TRUE);
-	CSecureRule(const CSecureRule& pRule);
-	CSecureRule& operator=(const CSecureRule& pRule);
-	~CSecureRule();
-
-	typedef enum { srAddress, srContentAny, srContentAll, srContentRegExp } RuleType;
-	enum { srNull, srAccept, srDeny };
-	enum { srIndefinite = 0, srSession = 1 };
-
-	RuleType	m_nType;
-	BYTE		m_nAction;
-	CString		m_sComment;
-	GUID		m_pGUID;
-	DWORD		m_nExpire;
-	DWORD		m_nToday;
-	DWORD		m_nEver;
-	BYTE		m_nIP[4];
-	BYTE		m_nMask[4];
-	TCHAR*		m_pContent;
-	DWORD		m_nContentLength;
-
-	void			Remove();
-	void			Reset();
-	void			MaskFix();
-	BOOL			IsExpired(DWORD nNow, BOOL bSession = FALSE) const;
-	BOOL			Match(const IN_ADDR* pAddress) const;
-	BOOL			Match(LPCTSTR pszContent) const;
-	BOOL			Match(const CShareazaFile* pFile) const;
-	BOOL			Match(const CQuerySearch* pQuery, const CString& strContent) const;
-	void			SetContentWords(const CString& strContent);
-	CString			GetContentWords() const;
-	void			Serialize(CArchive& ar, int nVersion);
-	CXMLElement*	ToXML();
-	BOOL			FromXML(CXMLElement* pXML);
-	CString			ToGnucleusString() const;
-	BOOL			FromGnucleusString(CString& str);
-
-	// Adds new item to CLiveList object
-	void			ToList(CLiveList* pLiveList, int nCount, DWORD tNow) const;
 };
 
 // An adult filter class, used in searches, chat, etc

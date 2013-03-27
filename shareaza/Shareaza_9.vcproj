@@ -954,6 +954,10 @@
 				>
 			</File>
 			<File
+				RelativePath="SecureRule.cpp"
+				>
+			</File>
+			<File
 				RelativePath="Security.cpp"
 				>
 			</File>
@@ -2604,6 +2608,10 @@
 			</File>
 			<File
 				RelativePath="SearchManager.h"
+				>
+			</File>
+			<File
+				RelativePath="SecureRule.h"
 				>
 			</File>
 			<File
