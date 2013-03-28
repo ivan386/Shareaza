@@ -390,7 +390,10 @@ void CPlugins::OnRun()
 			break;
 
 		if ( m_inCLSID == CLSID_NULL )
+		{
+			m_pReady.PulseEvent();
 			continue;
+		}
 
 		CQuickLock oLock( m_pSection );
 
