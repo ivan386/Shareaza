@@ -1,7 +1,7 @@
 //
 // DownloadTransferDC.cpp 
 //
-// Copyright (c) Shareaza Development Team, 2010-2012.
+// Copyright (c) Shareaza Development Team, 2010-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -135,7 +135,7 @@ DWORD CDownloadTransferDC::GetMeasuredSpeed()
 	return m_pClient->m_mInput.nMeasure;
 }
 
-BOOL CDownloadTransferDC::SubtractRequested(Fragments::List& ppFragments)
+BOOL CDownloadTransferDC::SubtractRequested(Fragments::List& ppFragments) const
 {
 	if ( m_nOffset != SIZE_UNKNOWN && m_nLength != SIZE_UNKNOWN &&
 		( m_nState == dtsRequesting || m_nState == dtsDownloading ) )

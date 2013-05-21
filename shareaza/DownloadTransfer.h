@@ -1,7 +1,7 @@
 //
 // DownloadTransfer.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -56,11 +56,16 @@ protected:
 	CTimeAverage< DWORD, 2000 >	m_AverageSpeed;
 	BYTE*				m_pAvailable;
 
+	DWORD				m_tSourceRequest;		// When source request was last sent (ms)
+	Fragments::Queue	m_oRequested;			// List of requested fragments (eDonkey2K and BitTorrent)
+
 // Operations
 public:
 	void				SetState(int nState);
 	CDownload*			GetDownload() const;	// Get owner download
 	CDownloadSource*	GetSource() const;		// Get associated source
+	void				DrawStateBar(CDC* pDC, CRect* prcBar, COLORREF crFill, bool bTop = false) const;
+
 protected:
 	void				ChunkifyRequest(QWORD* pnOffset, QWORD* pnLength, DWORD nChunk, BOOL bVerifyLock) const;
 	bool				SelectFragment(const Fragments::List& oPossible, QWORD& nOffset, QWORD& nLength, bool bEndGame = false) const;
@@ -76,7 +81,7 @@ public:
 	virtual void	Boost();
 	virtual DWORD	GetAverageSpeed();
 	virtual DWORD	GetMeasuredSpeed();
-	virtual BOOL	SubtractRequested(Fragments::List& ppFragments) = 0;
+	virtual BOOL	SubtractRequested(Fragments::List& ppFragments) const = 0;
 	virtual bool	UnrequestRange(QWORD /*nOffset*/, QWORD /*nLength*/);
 	virtual CString	GetStateText(BOOL bLong);
 	virtual BOOL	OnRun();

@@ -1,7 +1,7 @@
 //
 // DownloadTransferHTTP.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -75,7 +75,7 @@ public:
 	virtual void	Close(TRISTATE bKeepSource, DWORD nRetryAfter = 0);
 	virtual void	Boost();
 	virtual DWORD	GetAverageSpeed();
-	virtual BOOL	SubtractRequested(Fragments::List& ppFragments);
+	virtual BOOL	SubtractRequested(Fragments::List& ppFragments) const;
 	virtual BOOL	OnRun();
 
 protected:

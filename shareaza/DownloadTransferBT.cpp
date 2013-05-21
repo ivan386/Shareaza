@@ -1,7 +1,7 @@
 //
 // DownloadTransferBT.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -52,7 +52,6 @@ CDownloadTransferBT::CDownloadTransferBT(CDownloadSource* pSource, CBTClient* pC
 	, m_nAvailable		( 0 )
 	, m_bAvailable		( FALSE )
 	, m_tRunThrottle	( 0 )
-	, m_tSourceRequest	( GetTickCount() )
 {
 	ASSUME_LOCK( Transfers.m_pSection );
 
@@ -209,16 +208,16 @@ BOOL CDownloadTransferBT::OnRun()
 		ShowInterest();
 		if ( m_nState == dtsTorrent || m_nState == dtsRequesting || m_nState == dtsDownloading )
 		{
-			if ( !SendFragmentRequests() )
-				return FALSE;
+			SendFragmentRequests();
 		}
 	}
 
-	if ( tNow >= m_tSourceRequest + Settings.BitTorrent.SourceExchangePeriod * 60 * 1000 )
+	if ( ( m_pDownload->GetSourceCount() < Settings.Downloads.SourcesWanted ) &&
+		 ( tNow >= m_tSourceRequest + Settings.BitTorrent.SourceExchangePeriod * 60 * 1000 ) )
 	{
-		m_pClient->SendSourceRequest();
-
 		m_tSourceRequest = tNow;
+
+		m_pClient->SendSourceRequest();
 	}
 
 	return CDownloadTransfer::OnRun();
@@ -370,6 +369,8 @@ BOOL CDownloadTransferBT::OnHave(CBTPacket* pPacket)
 
 void CDownloadTransferBT::ShowInterest()
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	BOOL bInterested = FALSE;
 
 	// TODO: Use an algorithm similar to CDownloadWithTiger::FindNext.., rather
@@ -417,6 +418,8 @@ void CDownloadTransferBT::ShowInterest()
 
 BOOL CDownloadTransferBT::OnChoked(CBTPacket* /*pPacket*/)
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	if ( m_bChoked )
 		return TRUE;
 
@@ -441,6 +444,8 @@ BOOL CDownloadTransferBT::OnChoked(CBTPacket* /*pPacket*/)
 
 BOOL CDownloadTransferBT::OnUnchoked(CBTPacket* /*pPacket*/)
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	m_bChoked = FALSE;
 	SetState( dtsTorrent );
 	m_oRequested.clear();
@@ -486,7 +491,7 @@ bool CDownloadTransferBT::SendFragmentRequests()
 
 	if ( ! m_pDownload->m_bTorrentEndgame )
 	{
-		for ( CDownloadTransfer* pTransfer = m_pDownload->GetFirstTransfer() ; pTransfer && !oPossible.empty() ; pTransfer = pTransfer->m_pDlNext )
+		for ( const CDownloadTransfer* pTransfer = m_pDownload->GetFirstTransfer() ; pTransfer && !oPossible.empty() ; pTransfer = pTransfer->m_pDlNext )
 		{
 			pTransfer->SubtractRequested( oPossible );
 		}
@@ -547,16 +552,21 @@ bool CDownloadTransferBT::SendFragmentRequests()
 //////////////////////////////////////////////////////////////////////
 // CDownloadTransferBT multi-source fragment handling
 
-BOOL CDownloadTransferBT::SubtractRequested(Fragments::List& ppFragments)
+BOOL CDownloadTransferBT::SubtractRequested(Fragments::List& ppFragments) const
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	if ( m_oRequested.empty() || m_bChoked ) 
 		return FALSE;
+
 	ppFragments.erase( m_oRequested.begin(), m_oRequested.end() );
 	return TRUE;
 }
 
 bool CDownloadTransferBT::UnrequestRange(QWORD nOffset, QWORD nLength)
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	if ( m_oRequested.empty() ) 
 		return false;
 

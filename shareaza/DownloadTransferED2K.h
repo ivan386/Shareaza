@@ -1,7 +1,7 @@
 //
 // DownloadTransferED2K.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -37,9 +37,7 @@ public:
 public:
 	CEDClient*		m_pClient;
 	bool			m_bHashset;
-	DWORD			m_tSources;				//When source request was last sent
 	DWORD			m_tRanking;				//When queue ranking was last received
-	Fragments::Queue m_oRequested;
 	bool			m_bUDP;
 protected:
 	LPVOID			m_pInflatePtr;
@@ -79,7 +77,7 @@ public:
 	virtual void	Close(TRISTATE bKeepSource, DWORD nRetryAfter = 0);
 	virtual void	Boost();
 	virtual DWORD	GetMeasuredSpeed();
-	virtual BOOL	SubtractRequested(Fragments::List& ppFragments);
+	virtual BOOL	SubtractRequested(Fragments::List& ppFragments) const;
 	virtual BOOL	OnRun();
 	virtual BOOL	OnConnected();
 	virtual void	OnDropped();

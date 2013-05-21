@@ -1,7 +1,7 @@
 //
 // DownloadTransferBT.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -42,9 +42,7 @@ public:
 public:
 	DWORD			m_nAvailable;
 	BOOL			m_bAvailable;
-	Fragments::Queue m_oRequested;
 	DWORD			m_tRunThrottle;
-	DWORD			m_tSourceRequest;
 
 // Operations
 public:
@@ -67,7 +65,7 @@ public:
 	virtual CString	GetStateText(BOOL bLong);
 	virtual BOOL	OnRun();
 	virtual BOOL	OnConnected();
-	virtual BOOL	SubtractRequested(Fragments::List& ppFragments);
+	virtual BOOL	SubtractRequested(Fragments::List& ppFragments) const;
 	virtual bool	UnrequestRange(QWORD nOffset, QWORD nLength);
 protected:
 	virtual bool	SendFragmentRequests();

@@ -1,7 +1,7 @@
 //
 // DownloadWithTiger.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -956,6 +956,8 @@ BOOL CDownloadWithTiger::IsRangeUsefulEnough(CDownloadTransfer* pTransfer, QWORD
 
 Fragments::List CDownloadWithTiger::GetPossibleFragments(const Fragments::List& oAvailable, Fragments::Fragment& oLargest)
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	Fragments::List oPossible( oAvailable );
 
 	if ( oAvailable.empty() )
@@ -973,8 +975,7 @@ Fragments::List CDownloadWithTiger::GetPossibleFragments(const Fragments::List& 
 
 	oLargest = *oPossible.largest_range();
 
-	for ( CDownloadTransfer* pTransfer = GetFirstTransfer();
-		! oPossible.empty() && pTransfer; pTransfer = pTransfer->m_pDlNext )
+	for ( const CDownloadTransfer* pTransfer = GetFirstTransfer(); ! oPossible.empty() && pTransfer; pTransfer = pTransfer->m_pDlNext )
 	{
 		pTransfer->SubtractRequested( oPossible );
 	}
@@ -991,8 +992,7 @@ BOOL CDownloadWithTiger::GetFragment(CDownloadTransfer* pTransfer)
 
 	Fragments::Fragment oLargest( SIZE_UNKNOWN, SIZE_UNKNOWN );
 
-	Fragments::List oPossible = GetPossibleFragments(
-		pTransfer->GetSource()->m_oAvailable, oLargest );
+	Fragments::List oPossible = GetPossibleFragments( pTransfer->GetSource()->m_oAvailable, oLargest );
 
 	if ( oLargest.begin() == SIZE_UNKNOWN )
 	{

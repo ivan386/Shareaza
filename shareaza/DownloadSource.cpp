@@ -1,7 +1,7 @@
 //
 // DownloadSource.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1024,44 +1024,7 @@ void CDownloadSource::Draw(CDC* pDC, CRect* prcBar, COLORREF crNatural)
 
 	if ( ! IsIdle() )
 	{
-		CFragmentBar::DrawStateBar( pDC, prcBar, m_pDownload->m_nSize,
-			m_pTransfer->m_nOffset, m_pTransfer->m_nLength,
-			CoolInterface.m_crFragmentRequest, true );
-
-		switch( GetTransferProtocol() )
-		{
-		case PROTOCOL_ED2K:
-		{
-			Fragments::Queue::const_iterator pItr
-				= static_cast< CDownloadTransferED2K* >( m_pTransfer )->m_oRequested.begin();
-			const Fragments::Queue::const_iterator pEnd
-				= static_cast< CDownloadTransferED2K* >( m_pTransfer )->m_oRequested.end();
-			for ( ; pItr != pEnd ; ++pItr )
-			{
-				CFragmentBar::DrawStateBar( pDC, prcBar, m_pDownload->m_nSize,
-					pItr->begin(), pItr->size(), CoolInterface.m_crFragmentRequest, true );
-			}
-			break;
-		}
-
-		case PROTOCOL_BT:
-		{
-			Fragments::Queue::const_iterator pItr
-				= static_cast< CDownloadTransferBT* >( m_pTransfer )->m_oRequested.begin();
-			const Fragments::Queue::const_iterator pEnd
-				= static_cast< CDownloadTransferBT* >( m_pTransfer )->m_oRequested.end();
-			for ( ; pItr != pEnd ; ++pItr )
-			{
-				CFragmentBar::DrawStateBar( pDC, prcBar, m_pDownload->m_nSize,
-					pItr->begin(), pItr->size(), CoolInterface.m_crFragmentRequest, true );
-			}
-			break;
-		}
-
-		default:
-			// Do nothing more
-			;
-		}
+		m_pTransfer->DrawStateBar( pDC, prcBar, CoolInterface.m_crFragmentRequest, true );
 	}
 
 	Draw( pDC, prcBar );

@@ -1,7 +1,7 @@
 //
 // DownloadTransfer.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -26,6 +26,7 @@
 #include "Downloads.h"
 #include "DownloadSource.h"
 #include "DownloadTransfer.h"
+#include "FragmentBar.h"
 #include "FragmentedFile.h"
 #include "Network.h"
 #include "Buffer.h"
@@ -55,6 +56,7 @@ CDownloadTransfer::CDownloadTransfer(CDownloadSource* pSource, PROTOCOLID nProto
 	, m_pDownload		( pSource->m_pDownload )
 	, m_pSource			( pSource )
 	, m_pAvailable		( NULL )
+	, m_tSourceRequest	( 0ul )
 {
 	ASSUME_LOCK( Transfers.m_pSection );
 
@@ -68,6 +70,19 @@ CDownloadTransfer::~CDownloadTransfer()
 	ASSERT( m_pSource == NULL );
 
 	delete m_pAvailable;
+}
+
+void CDownloadTransfer::DrawStateBar(CDC* pDC, CRect* prcBar, COLORREF crFill, bool bTop) const
+{
+	CFragmentBar::DrawStateBar( pDC, prcBar, m_pDownload->m_nSize, m_nOffset, m_nLength, crFill, bTop );
+
+	if ( m_nProtocol == PROTOCOL_ED2K || m_nProtocol == PROTOCOL_BT )
+	{
+		for ( Fragments::Queue::const_iterator pItr = m_oRequested.begin(); pItr != m_oRequested.end(); ++pItr )
+		{
+			CFragmentBar::DrawStateBar( pDC, prcBar, m_pDownload->m_nSize, pItr->begin(), pItr->size(), crFill, bTop );
+		}
+	}
 }
 
 //////////////////////////////////////////////////////////////////////

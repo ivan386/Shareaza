@@ -1,7 +1,7 @@
 //
 // DownloadTransferFTP.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -36,7 +36,7 @@ public:
 	virtual void	Close(TRISTATE bKeepSource = TRI_TRUE, DWORD nRetryAfter = FTP_RETRY_DELAY);
 	virtual void	Boost();
 	virtual DWORD	GetMeasuredSpeed();
-	virtual BOOL	SubtractRequested(Fragments::List& ppFragments);
+	virtual BOOL	SubtractRequested(Fragments::List& ppFragments) const;
 	virtual BOOL	OnRun();
 	virtual BOOL	OnRead();
 	virtual BOOL	OnConnected();

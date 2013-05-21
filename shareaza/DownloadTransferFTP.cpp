@@ -1,7 +1,7 @@
 //
 // DownloadTransferFTP.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -260,7 +260,7 @@ BOOL CDownloadTransferFTP::StartNextFragment()
 //////////////////////////////////////////////////////////////////////
 // CDownloadTransferFTP subtract pending requests
 
-BOOL CDownloadTransferFTP::SubtractRequested(Fragments::List& ppFragments)
+BOOL CDownloadTransferFTP::SubtractRequested(Fragments::List& ppFragments) const
 {
 	if ( m_nOffset < SIZE_UNKNOWN && m_nLength < SIZE_UNKNOWN )
 	{
