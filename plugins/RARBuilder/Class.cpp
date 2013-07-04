@@ -1,7 +1,7 @@
 //
 // Class.cpp : Implementation of CClass
 //
-// Copyright (c) Shareaza Development Team, 2007.
+// Copyright (c) Shareaza Development Team, 2007-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,8 +22,8 @@
 #include "StdAfx.h"
 #include "Class.h"
 
-#define MAX_SIZE_FILES		80
-#define MAX_SIZE_FOLDERS	80
+#define MAX_SIZE_FILES		128
+#define MAX_SIZE_FOLDERS	128
 #define MAX_SIZE_COMMENTS	256
 
 class ATL_NO_VTABLE CRarHandler
@@ -59,8 +59,7 @@ STDMETHODIMP CRARBuilder::Process (
 	if ( ! pXML )
 		return E_POINTER;
 
-	if ( ! fnRAROpenArchiveEx || ! fnRARCloseArchive || ! fnRARReadHeaderEx ||
-		! fnRARProcessFileW )
+	if ( ! fnRAROpenArchiveEx || ! fnRARCloseArchive || ! fnRARReadHeaderEx || ! fnRARProcessFileW )
 		// Unrar.dll not loaded
 		return E_NOTIMPL;
 
@@ -69,24 +68,22 @@ STDMETHODIMP CRARBuilder::Process (
 	if ( FAILED( hr ) )
 		return hr;
 	CComPtr <ISXMLElement> pXMLRootElement;
-	hr = pISXMLRootElements->Create (CComBSTR ("archives"), &pXMLRootElement);
+	hr = pISXMLRootElements->Create (CComBSTR( L"archives" ), &pXMLRootElement);
 	if ( FAILED( hr ) )
 		return hr;
 	CComPtr <ISXMLAttributes> pISXMLRootAttributes;
 	hr = pXMLRootElement->get_Attributes(&pISXMLRootAttributes);
 	if ( FAILED( hr ) )
 		return hr;
-	pISXMLRootAttributes->Add (CComBSTR ("xmlns:xsi"),
-		CComBSTR ("http://www.w3.org/2001/XMLSchema-instance"));
-	pISXMLRootAttributes->Add (CComBSTR ("xsi:noNamespaceSchemaLocation"),
-		CComBSTR ("http://www.shareaza.com/schemas/archive.xsd"));
+	pISXMLRootAttributes->Add( CComBSTR( L"xmlns:xsi"), CComBSTR( L"http://www.w3.org/2001/XMLSchema-instance" ) );
+	pISXMLRootAttributes->Add( CComBSTR( L"xsi:noNamespaceSchemaLocation" ), CComBSTR( L"http://www.shareaza.com/schemas/archive.xsd" ) );
 
 	CComPtr <ISXMLElements> pISXMLElements;
 	hr = pXMLRootElement->get_Elements(&pISXMLElements);
 	if ( FAILED( hr ) )
 		return hr;
 	CComPtr <ISXMLElement> pXMLElement;
-	hr = pISXMLElements->Create (CComBSTR ("archive"), &pXMLElement);
+	hr = pISXMLElements->Create (CComBSTR( L"archive" ), &pXMLElement);
 	if ( FAILED( hr ) )
 		return hr;
 	CComPtr <ISXMLAttributes> pISXMLAttributes;
@@ -110,15 +107,16 @@ STDMETHODIMP CRARBuilder::Process (
 	oad.OpenMode = RAR_OM_LIST;
 
 	CRarHandler oArchive( &oad );
+	CAtlMap< CString, CString > oFolderList;
 
 	switch( oad.OpenResult )
 	{
 	// Success
-	case 0:
+	case ERAR_SUCCESS:
 		switch( oad.CmtState )
 		{
 		// Comments not present
-		case 0:
+		case ERAR_SUCCESS:
 			break;
 
 		// Comments read completely
@@ -126,7 +124,7 @@ STDMETHODIMP CRARBuilder::Process (
 
 		// Buffer too small, comments not completely read
 		case ERAR_SMALL_BUF:
-			szCmtBuf[ MAX_SIZE_COMMENTS - 1 ] = '\0';
+			szCmtBuf[ MAX_SIZE_COMMENTS - 1 ] = _T('\0');
 			strComment = szCmtBuf;
 			strComment.Replace( _T('\r'), _T(' ') );
 			strComment.Replace( _T('\n'), _T(' ') );
@@ -149,35 +147,63 @@ STDMETHODIMP CRARBuilder::Process (
 			return E_FAIL;
 		}
 
-		if ( ( oad.Flags & 0x0080 ) )
+		if ( ( oad.Flags & RAR_HEAD_ENCRYPTED ) )
 			// Block headers are encrypted
 			bEncrypted = true;
 
 		// List all files
-		for( int nResult = 0; nResult == 0; )
+		for( int nResult = ERAR_SUCCESS; nResult == ERAR_SUCCESS; )
 		{
 			RARHeaderDataEx hd = {};  
 			nResult = fnRARReadHeaderEx( oArchive, &hd );
 			switch ( nResult )
 			{
 			// Success
-			case 0:
+			case ERAR_SUCCESS:
 			{
+				if ( ( hd.Flags & RAR_FILE_ENCRYPTED ) )
+					// File is encrypted
+					bEncrypted = true;
+
+				bool bFolder = false;
 				CString strName( hd.FileNameW );
+
+				// Get golder names from paths
+				for ( int i = 0;; )
+				{
+					CString strPart = strName.Tokenize( _T("\\"), i );
+					if ( strPart.IsEmpty() )
+						break;
+					if ( i + 1 >= strName.GetLength() )
+					{
+						// Last part
+						break;
+					}
+					else
+					{
+						CString strPartLC = strPart;
+						strPartLC.MakeLower();
+						oFolderList.SetAt( strPartLC, strPart );
+					}
+				}
 				int nBackSlashPos = strName.ReverseFind( _T('\\') );
+				if ( nBackSlashPos == strName.GetLength() - 1 )
+				{
+					bFolder = true;
+					strName = strName.Left( nBackSlashPos );
+					nBackSlashPos = strName.ReverseFind( _T('\\') );
+				}
 				if ( nBackSlashPos >= 0 )
 					strName = strName.Mid( nBackSlashPos + 1 );
 
-				if ( ( hd.Flags & 0xe0 ) == 0xe0 )
+				if ( ( hd.Flags & RAR_FILE_DIRECTORY ) == RAR_FILE_DIRECTORY )
+					bFolder = true;
+
+				if ( bFolder )
 				{
-					if ( strFolders.GetLength() + strName.GetLength() <= MAX_SIZE_FOLDERS - 5 )
-					{
-						if ( strFolders.GetLength() )
-							strFolders += _T(", ");
-						strFolders += strName;
-					}
-					else
-						bMoreFolders = true;
+					CString strPartLC = strName;
+					strPartLC.MakeLower();
+					oFolderList.SetAt( strPartLC, strName );
 				}
 				else
 				{
@@ -191,10 +217,6 @@ STDMETHODIMP CRARBuilder::Process (
 						bMoreFiles = true;
 
 					nUnpackedSize += hd.UnpSize;
-
-					if ( ( hd.Flags & 0x04 ) )
-						// File encrypted with password
-						bEncrypted = true;
 				}
 				break;
 			}
@@ -217,14 +239,14 @@ STDMETHODIMP CRARBuilder::Process (
 				return E_FAIL;
 			}
 
-			if ( nResult != 0 )
+			if ( nResult != ERAR_SUCCESS )
 				break;
 
 			nResult = fnRARProcessFileW( oArchive, RAR_SKIP, NULL, NULL );
 			switch ( nResult )
 			{
 			// Success
-			case 0:
+			case ERAR_SUCCESS:
 				break;
 
 			// File CRC error
@@ -254,31 +276,47 @@ STDMETHODIMP CRARBuilder::Process (
 			}
 		}
 
+		for ( POSITION pos = oFolderList.GetStartPosition(); pos; )
+		{
+			CString strName = oFolderList.GetNextValue( pos );
+			if ( strFolders.GetLength() + strName.GetLength() <= MAX_SIZE_FOLDERS - 5 )
+			{
+				if ( strFolders.GetLength() )
+					strFolders += _T(", ");
+				strFolders += strName;
+			}
+			else
+			{
+				bMoreFolders = true;
+				break;
+			}
+		}
+
 		if ( strFiles.GetLength() )
 		{
 			if ( bMoreFiles )
 				strFiles += _T(", ...");
-			pISXMLAttributes->Add( CComBSTR( "files" ), CComBSTR( strFiles ) );
+			pISXMLAttributes->Add( CComBSTR( L"files" ), CComBSTR( strFiles ) );
 		}
 
 		if ( strFolders.GetLength() )
 		{
 			if ( bMoreFolders )
 				strFolders += _T(", ...");
-			pISXMLAttributes->Add( CComBSTR( "folders" ), CComBSTR( strFolders ) );
+			pISXMLAttributes->Add( CComBSTR( L"folders" ), CComBSTR( strFolders ) );
 		}
 	
 		if ( strComment.GetLength() )
-			pISXMLAttributes->Add( CComBSTR( "comments" ), CComBSTR( strComment ) );
+			pISXMLAttributes->Add( CComBSTR( L"comments" ), CComBSTR( strComment ) );
 	
 		if ( bEncrypted )
-			pISXMLAttributes->Add( CComBSTR( "encrypted" ), CComBSTR( "true" ) );
+			pISXMLAttributes->Add( CComBSTR( L"encrypted" ), CComBSTR( L"true" ) );
 
 		if ( nUnpackedSize )
 		{
 			CString strUnpackedSize;
 			strUnpackedSize.Format( _T("%I64u"), nUnpackedSize );
-			pISXMLAttributes->Add( CComBSTR( "unpackedsize" ), CComBSTR( strUnpackedSize ) );
+			pISXMLAttributes->Add( CComBSTR( L"unpackedsize" ), CComBSTR( strUnpackedSize ) );
 		}
 
 		return S_OK;

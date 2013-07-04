@@ -3,7 +3,7 @@
 // or project specific include files that are used frequently,
 // but are changed infrequently
 //
-// Copyright (c) Shareaza Development Team, 2007.
+// Copyright (c) Shareaza Development Team, 2007-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -23,30 +23,55 @@
 
 #pragma once
 
-#define _CRT_SECURE_NO_DEPRECATE
+#include <SDKDDKVer.h>
+
 #define STRICT
-#define _WIN32_DCOM
+
+#ifndef _SECURE_ATL
+	#define _SECURE_ATL	1
+#endif
+
 #define _ATL_FREE_THREADED
 #define _ATL_NO_AUTOMATIC_NAMESPACE
 #define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS
 #define _ATL_CSTRING_NO_CRT
 #define _ATL_ALL_WARNINGS
 
-#pragma warning( push, 0 )
+#define ISOLATION_AWARE_ENABLED 1
+
+#include "resource.h"
 
 #include <atlbase.h>
 #include <atlcom.h>
 #include <atlstr.h>
-
-using namespace ATL;
-
-#pragma warning( pop )
+#include <atlcoll.h>
 
 #pragma pack(push,1)
 
 #include "unrar.h"
 
 #pragma pack(pop)
+
+// RAROpenArchiveDataEx::Flags
+
+#define RAR_HEAD_VOLUME_ATTR	0x0001	// Volume attribute (archive volume)
+#define RAR_HEAD_COMMENT		0x0002	// Archive comment present
+#define RAR_HEAD_LOCKED			0x0004	// Archive lock attribute
+#define RAR_HEAD_SOLID			0x0008	// Solid attribute (solid archive)
+#define RAR_HEAD_NEW_NAMING		0x0010	// New volume naming scheme (‘volname.partN.rar’)
+#define RAR_HEAD_AUTH			0x0020	// Authenticity information present
+#define RAR_HEAD_RECOVERY		0x0040	// Recovery record present
+#define RAR_HEAD_ENCRYPTED		0x0080	// Block headers are encrypted
+#define RAR_HEAD_FIRST_VOLUME	0x0100	// First volume (set only by RAR 3.0 and later)
+
+// RARHeaderDataEx::Flags
+
+#define RAR_FILE_PREVIOUS		0x01	// file continued from previous volume
+#define RAR_FILE_NEXT			0x02	// file continued on next volume
+#define RAR_FILE_ENCRYPTED		0x04	// file encrypted with password
+#define RAR_FILE_COMMENT		0x08	// file comment present
+#define RAR_FILE_SOLID			0x10	// compression of previous files is used (solid flag)
+#define RAR_FILE_DIRECTORY		0xe0	// file is directory
 
 typedef HANDLE (PASCAL *tRAROpenArchiveEx)(struct RAROpenArchiveDataEx *ArchiveData);
 typedef int    (PASCAL *tRARCloseArchive)(HANDLE hArcData);
@@ -57,3 +82,15 @@ extern tRAROpenArchiveEx fnRAROpenArchiveEx;
 extern tRARCloseArchive fnRARCloseArchive;
 extern tRARReadHeaderEx fnRARReadHeaderEx;
 extern tRARProcessFileW fnRARProcessFileW;
+
+using namespace ATL;
+
+#ifdef _UNICODE
+#if defined _M_IX86
+#pragma comment(linker,"/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='x86' publicKeyToken='6595b64144ccf1df' language='*'\"")
+#elif defined _M_X64
+#pragma comment(linker,"/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='amd64' publicKeyToken='6595b64144ccf1df' language='*'\"")
+#else
+#pragma comment(linker,"/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
+#endif
+#endif
