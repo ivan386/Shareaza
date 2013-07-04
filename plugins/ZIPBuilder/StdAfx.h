@@ -3,7 +3,7 @@
 // or project specific include files that are used frequently,
 // but are changed infrequently
 //
-// Copyright (c) Shareaza Development Team, 2007.
+// Copyright (c) Shareaza Development Team, 2007-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -23,24 +23,44 @@
 
 #pragma once
 
-#define _CRT_SECURE_NO_DEPRECATE
+
+#include <SDKDDKVer.h>
+
 #define STRICT
-#define _WIN32_DCOM
+
+#ifndef _SECURE_ATL
+	#define _SECURE_ATL	1
+#endif
+
 #define _ATL_FREE_THREADED
 #define _ATL_NO_AUTOMATIC_NAMESPACE
 #define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS
 #define _ATL_CSTRING_NO_CRT
 #define _ATL_ALL_WARNINGS
 
-#pragma warning( push, 0 )
+#define ISOLATION_AWARE_ENABLED 1
+
+#include "resource.h"
 
 #include <atlbase.h>
 #include <atlcom.h>
 #include <atlstr.h>
+#include <atlcoll.h>
+
+#pragma pack(push,1)
+
+#include <unzip.h>
+
+#pragma pack(pop)
 
 using namespace ATL;
 
-#define ZLIB_WINAPI
-#include <unzip.h>
-
-#pragma warning( pop )
+#ifdef _UNICODE
+#if defined _M_IX86
+#pragma comment(linker,"/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='x86' publicKeyToken='6595b64144ccf1df' language='*'\"")
+#elif defined _M_X64
+#pragma comment(linker,"/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='amd64' publicKeyToken='6595b64144ccf1df' language='*'\"")
+#else
+#pragma comment(linker,"/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
+#endif
+#endif

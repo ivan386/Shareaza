@@ -1,7 +1,7 @@
 //
 // Class.cpp : Implementation of CClass
 //
-// Copyright (c) Shareaza Development Team, 2007.
+// Copyright (c) Shareaza Development Team, 2007-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,8 +22,8 @@
 #include "StdAfx.h"
 #include "Class.h"
 
-#define MAX_SIZE_FILES		80
-#define MAX_SIZE_FOLDERS	80
+#define MAX_SIZE_FILES		128
+#define MAX_SIZE_FOLDERS	128
 #define MAX_SIZE_COMMENTS	256
 
 class ATL_NO_VTABLE CZipHandler
@@ -77,17 +77,15 @@ STDMETHODIMP CZIPBuilder::Process (
 	hr = pXMLRootElement->get_Attributes(&pISXMLRootAttributes);
 	if ( FAILED( hr ) )
 		return hr;
-	pISXMLRootAttributes->Add (CComBSTR ("xmlns:xsi"),
-		CComBSTR ("http://www.w3.org/2001/XMLSchema-instance"));
-	pISXMLRootAttributes->Add (CComBSTR ("xsi:noNamespaceSchemaLocation"),
-		CComBSTR ("http://www.shareaza.com/schemas/archive.xsd"));
+	pISXMLRootAttributes->Add( CComBSTR( L"xmlns:xsi"), CComBSTR( L"http://www.w3.org/2001/XMLSchema-instance" ) );
+	pISXMLRootAttributes->Add( CComBSTR( L"xsi:noNamespaceSchemaLocation" ), CComBSTR( L"http://www.shareaza.com/schemas/archive.xsd" ) );
 
 	CComPtr <ISXMLElements> pISXMLElements;
 	hr = pXMLRootElement->get_Elements(&pISXMLElements);
 	if ( FAILED( hr ) )
 		return hr;
 	CComPtr <ISXMLElement> pXMLElement;
-	hr = pISXMLElements->Create (CComBSTR ("archive"), &pXMLElement);
+	hr = pISXMLElements->Create (CComBSTR( L"archive" ), &pXMLElement);
 	if ( FAILED( hr ) )
 		return hr;
 	CComPtr <ISXMLAttributes> pISXMLAttributes;
@@ -95,11 +93,11 @@ STDMETHODIMP CZIPBuilder::Process (
 	if ( FAILED( hr ) )
 		return hr;
 
-	CString sFiles;					// Plain list of archive files
+	CString strFiles;				// Plain list of archive files
 	bool bMoreFiles = false;		// More files than listed in sFiles
-	CString sFolders;				// Plain list of archive folders
+	CString strFolders;				// Plain list of archive folders
 	bool bMoreFolders = false;		// More folders than listed in sFolders
-	CString sComment;				// Archive comments
+	CString strComment;				// Archive comments
 	bool bEncrypted = false;		// Archive itself or selective files are encrypted
 	ULONGLONG nUnpackedSize = 0;	// Total size of unpacked files
 
@@ -126,13 +124,15 @@ STDMETHODIMP CZIPBuilder::Process (
 		}
 		else
 		{
-			szCmtBuf[ MAX_SIZE_COMMENTS - 1 ] = '\0';
-			sComment = szCmtBuf;
-			sComment.Replace( _T('\r'), _T(' ') );
-			sComment.Replace( _T('\n'), _T(' ') );
-			sComment.Replace( _T("  "), _T(" ") );
+			szCmtBuf[ MAX_SIZE_COMMENTS - 1 ] = _T('\0');
+			strComment = szCmtBuf;
+			strComment.Replace( _T('\r'), _T(' ') );
+			strComment.Replace( _T('\n'), _T(' ') );
+			strComment.Replace( _T("  "), _T(" ") );
 		}
 	}
+
+	CAtlMap< CString, CString > oFolderList;
 
 	for ( UINT nFile = 0; nFile < pDir.number_entry; nFile++ )
 	{
@@ -156,39 +156,52 @@ STDMETHODIMP CZIPBuilder::Process (
 			bEncrypted = true;
 
 		bool bFolder = false;
+		CString strName( szFile );
 
-		CString sName( szFile );
-		int n = sName.ReverseFind( _T('/') );
-		if ( n == sName.GetLength() - 1 )
+		// Get golder names from paths
+		for ( int i = 0;; )
+		{
+			CString strPart = strName.Tokenize( _T("/"), i );
+			if ( strPart.IsEmpty() )
+				break;
+			if ( i + 1 >= strName.GetLength() )
+			{
+				// Last part
+				break;
+			}
+			else
+			{
+				CString strPartLC = strPart;
+				strPartLC.MakeLower();
+				oFolderList.SetAt( strPartLC, strPart );
+			}
+		}
+		int nBackSlashPos = strName.ReverseFind( _T('/') );
+		if ( nBackSlashPos == strName.GetLength() - 1 )
 		{
 			bFolder = true;
-			sName = sName.Left( n );
-			n = sName.ReverseFind( _T('/') );
+			strName = strName.Left( nBackSlashPos );
+			nBackSlashPos = strName.ReverseFind( _T('/') );
 		}
-		if ( n >= 0 )
-			sName = sName.Mid( n + 1 );
+		if ( nBackSlashPos >= 0 )
+			strName = strName.Mid( nBackSlashPos + 1 );
 
 		if ( ( pInfo.external_fa & FILE_ATTRIBUTE_DIRECTORY ) )
 			bFolder = true;
 
 		if ( bFolder )
 		{
-			if ( sFolders.GetLength() + sName.GetLength() <= MAX_SIZE_FOLDERS - 5 )
-			{
-				if ( sFolders.GetLength() )
-					sFolders += _T(", ");
-				sFolders += sName;
-			}
-			else
-				bMoreFolders = true;
+			CString strPartLC = strName;
+			strPartLC.MakeLower();
+			oFolderList.SetAt( strPartLC, strName );
 		}
 		else
 		{
-			if ( sFiles.GetLength() + sName.GetLength() <= MAX_SIZE_FILES - 5 )
+			if ( strFiles.GetLength() + strName.GetLength() <= MAX_SIZE_FILES - 5 )
 			{
-				if ( sFiles.GetLength() )
-					sFiles += _T(", ");
-				sFiles += sName;
+				if ( strFiles.GetLength() )
+					strFiles += _T(", ");
+				strFiles += strName;
 			}
 			else
 				bMoreFiles = true;
@@ -197,31 +210,47 @@ STDMETHODIMP CZIPBuilder::Process (
 		}
 	}
 
-	if ( sFiles.GetLength() )
+	for ( POSITION pos = oFolderList.GetStartPosition(); pos; )
+	{
+		CString strName = oFolderList.GetNextValue( pos );
+		if ( strFolders.GetLength() + strName.GetLength() <= MAX_SIZE_FOLDERS - 5 )
+		{
+			if ( strFolders.GetLength() )
+				strFolders += _T(", ");
+			strFolders += strName;
+		}
+		else
+		{
+			bMoreFolders = true;
+			break;
+		}
+	}
+
+	if ( strFiles.GetLength() )
 	{
 		if ( bMoreFiles )
-			sFiles += _T(", ...");
-		pISXMLAttributes->Add( CComBSTR( "files" ), CComBSTR( sFiles ) );
+			strFiles += _T(", ...");
+		pISXMLAttributes->Add( CComBSTR( L"files" ), CComBSTR( strFiles ) );
 	}
 
-	if ( sFolders.GetLength() )
+	if ( strFolders.GetLength() )
 	{
 		if ( bMoreFolders )
-			sFolders += _T(", ...");
-		pISXMLAttributes->Add( CComBSTR( "folders" ), CComBSTR( sFolders ) );
+			strFolders += _T(", ...");
+		pISXMLAttributes->Add( CComBSTR( L"folders" ), CComBSTR( strFolders ) );
 	}
 
-	if ( sComment.GetLength() )
-		pISXMLAttributes->Add( CComBSTR( "comments" ), CComBSTR( sComment ) );
+	if ( strComment.GetLength() )
+		pISXMLAttributes->Add( CComBSTR( L"comments" ), CComBSTR( strComment ) );
 
 	if ( bEncrypted )
-		pISXMLAttributes->Add( CComBSTR( "encrypted" ), CComBSTR( "true" ) );
+		pISXMLAttributes->Add( CComBSTR( L"encrypted" ), CComBSTR( L"true" ) );
 
 	if ( nUnpackedSize )
 	{
-		CString sTmp;
-		sTmp.Format( _T("%I64u"), nUnpackedSize );
-		pISXMLAttributes->Add( CComBSTR( "unpackedsize" ), CComBSTR( sTmp ) );
+		CString strTmp;
+		strTmp.Format( _T("%I64u"), nUnpackedSize );
+		pISXMLAttributes->Add( CComBSTR( L"unpackedsize" ), CComBSTR( strTmp ) );
 	}
 
 	return S_OK;
