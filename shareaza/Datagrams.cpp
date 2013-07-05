@@ -139,7 +139,7 @@ BOOL CDatagrams::Listen()
 
 	ip_mreq mr = {};
 	mr.imr_multiaddr.s_addr = inet_addr( DEFAULT_G1_MCAST_ADDRESS );
-	VERIFY( setsockopt( m_hSocket, IPPROTO_IP, IP_ADD_MEMBERSHIP, (char*)&mr, sizeof( mr ) ) == 0 );
+	setsockopt( m_hSocket, IPPROTO_IP, IP_ADD_MEMBERSHIP, (char*)&mr, sizeof( mr ) );
 
 	WSAEventSelect( m_hSocket, Network.GetWakeupEvent(), FD_READ );
 
