@@ -1,7 +1,7 @@
 //
 // ChatSession.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -851,8 +851,6 @@ BOOL CChatSession::OnCaptchaResult(CEDPacket* pPacket)
 
 BOOL CChatSession::ReadG1()
 {
-	ASSERT( m_nProtocol == PROTOCOL_G1 );
-
 	CString strLine;
 
 	while ( Read( strLine, FALSE ) )
@@ -921,8 +919,6 @@ void CChatSession::Send(CG2Packet* pPacket)
 
 BOOL CChatSession::ReadG2()
 {
-	ASSERT( m_nProtocol == PROTOCOL_G2 );
-
 	CLockedBuffer pInput( GetInput() );
 
 	BOOL bSuccess = TRUE;
