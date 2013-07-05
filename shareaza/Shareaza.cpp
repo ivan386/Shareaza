@@ -434,7 +434,25 @@ BOOL CShareazaApp::InitInstance()
 		}
 	SplashStep( L"GUI" );
 		if ( m_cmdInfo.m_bTray ) WriteProfileInt( _T("Windows"), _T("CMainWnd.ShowCmd"), 0 );
-		new CMainWnd();
+		TRY
+			m_pMainWnd = new CMainWnd();
+			if ( m_pMainWnd )
+			{
+				// Bypass CMDIFrameWnd::LoadFrame
+				if ( ((CMainWnd*)m_pMainWnd)->CFrameWnd::LoadFrame( IDR_MAINFRAME, WS_OVERLAPPEDWINDOW ) )
+				{
+					m_pSafeWnd = m_pMainWnd;
+				}
+			}
+		CATCH_ALL(e)
+			// Out of resources
+		END_CATCH_ALL
+		if ( ! m_pSafeWnd )
+		{
+			SplashAbort();
+			AfxMessageBox( _T("Failed to initialize GUI."), MB_ICONHAND | MB_OK );
+			return FALSE;
+		}
 		CoolMenu.EnableHook();
 		if ( m_cmdInfo.m_bTray )
 		{
@@ -1461,7 +1479,7 @@ void CShareazaApp::LoadCountry()
 		m_pfnGeoIP_country_code_by_ipnum = (GeoIP_country_code_by_ipnumFunc)GetProcAddress( m_hGeoIP, "GeoIP_country_code_by_ipnum" );
 		m_pfnGeoIP_country_name_by_ipnum = (GeoIP_country_name_by_ipnumFunc)GetProcAddress( m_hGeoIP, "GeoIP_country_name_by_ipnum" );
 		if ( pfnGeoIP_new )
-			m_pGeoIP = pfnGeoIP_new( GEOIP_MEMORY_CACHE );
+			m_pGeoIP = pfnGeoIP_new( GEOIP_MEMORY_CACHE | GEOIP_INDEX_CACHE );
 	}
 }
 

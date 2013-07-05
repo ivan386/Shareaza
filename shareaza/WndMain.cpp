@@ -1,7 +1,7 @@
 //
 // WndMain.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -305,13 +305,6 @@ CMainWnd::CMainWnd()
 	m_pTray.cbSize				= sizeof( NOTIFYICONDATA );
 	m_pTray.uCallbackMessage	= WM_TRAY;
 	m_pTray.uVersion			= NOTIFYICON_VERSION; // NOTIFYICON_VERSION_4;
-
-	theApp.m_pMainWnd = this;
-
-	// Bypass CMDIFrameWnd::LoadFrame
-	VERIFY( CFrameWnd::LoadFrame( IDR_MAINFRAME, WS_OVERLAPPEDWINDOW ) );
-
-	theApp.m_pSafeWnd = this;
 }
 
 BOOL CMainWnd::Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD dwStyle,
