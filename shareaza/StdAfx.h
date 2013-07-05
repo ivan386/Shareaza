@@ -190,6 +190,7 @@
 // Standard headers
 //
 
+#define BZ_NO_STDIO
 #include "../bzlib/bzlib.h"
 #include "../zlib/zlib.h"
 
