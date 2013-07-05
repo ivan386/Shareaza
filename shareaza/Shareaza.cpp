@@ -1479,7 +1479,7 @@ void CShareazaApp::LoadCountry()
 		m_pfnGeoIP_country_code_by_ipnum = (GeoIP_country_code_by_ipnumFunc)GetProcAddress( m_hGeoIP, "GeoIP_country_code_by_ipnum" );
 		m_pfnGeoIP_country_name_by_ipnum = (GeoIP_country_name_by_ipnumFunc)GetProcAddress( m_hGeoIP, "GeoIP_country_name_by_ipnum" );
 		if ( pfnGeoIP_new )
-			m_pGeoIP = pfnGeoIP_new( GEOIP_MEMORY_CACHE | GEOIP_INDEX_CACHE );
+			m_pGeoIP = pfnGeoIP_new( GEOIP_MEMORY_CACHE );
 	}
 }
 
