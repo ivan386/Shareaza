@@ -437,18 +437,16 @@ CString CLibraryFolder::GetRelativeName() const
 
 BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 {
-	CSingleLock pLock( &Library.m_pSection );
+	ASSUME_LOCK( Library.m_pSection );
+
+	if ( m_sPath.CompareNoCase( Settings.Downloads.IncompletePath ) == 0 )
+		return FALSE;
+
 	WIN32_FIND_DATA pFind;
-	HANDLE hSearch;
+	HANDLE hSearch = FindFirstFile( CString( _T("\\\\?\\") ) + m_sPath + _T("\\*.*"), &pFind );
 
-	if ( m_sPath.CompareNoCase( Settings.Downloads.IncompletePath ) == 0 ) return FALSE;
-
-	hSearch = FindFirstFile( CString( _T("\\\\?\\") ) + m_sPath + _T("\\*.*"), &pFind );
-
-	pLock.Lock();
 	m_nScanCookie	= nScanCookie;
 	nScanCookie		= Library.GetScanCookie();
-	pLock.Unlock();
 
 	BOOL bChanged = FALSE;
 
@@ -456,8 +454,8 @@ BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 	{
 		do
 		{
-			if ( CLibrary::IsBadFile( pFind.cFileName, m_sPath,
-				pFind.dwFileAttributes )  ) continue;
+			if ( CLibrary::IsBadFile( pFind.cFileName, m_sPath, pFind.dwFileAttributes )  )
+				continue;
 
 			if ( pFind.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY )
 			{
@@ -469,24 +467,20 @@ BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 
 					if ( pFolder->m_sName.CompareNoCase( pFind.cFileName ) )
 					{
-						pLock.Lock();
 						m_pFolders.RemoveKey( pFolder->m_sNameLC );
 						pFolder->OnDelete();
 						pFolder = new CLibraryFolder( this, m_sPath + _T("\\") + pFind.cFileName );
 						m_pFolders.SetAt( pFolder->m_sNameLC, pFolder );
 						bChanged = TRUE;
 						m_nUpdateCookie++;
-						pLock.Unlock();
 					}
 				}
 				else
 				{
 					pFolder = new CLibraryFolder( this, m_sPath + _T("\\") + pFind.cFileName );
-					pLock.Lock();
 					m_pFolders.SetAt( pFolder->m_sNameLC, pFolder );
 					bChanged = TRUE;
 					m_nUpdateCookie++;
-					pLock.Unlock();
 				}
 
 				if ( pFolder->ThreadScan( nScanCookie ) )
@@ -497,8 +491,6 @@ BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 			}
 			else
 			{
-				pLock.Lock();
-
 				BOOL bNew;
 				CLibraryFile* pFile = AddFile( pFind.cFileName, bNew );
 				if ( ! bNew )
@@ -515,13 +507,10 @@ BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 				else
 					bChanged = TRUE;
 
-				pLock.Unlock();
-
 				QWORD nLongSize = (QWORD)pFind.nFileSizeLow |
 					( (QWORD)pFind.nFileSizeHigh << 32 );
 
-				if ( pFile->ThreadScan( pLock, nScanCookie, nLongSize,
-					&pFind.ftLastWriteTime ) )
+				if ( pFile->ThreadScan( nScanCookie, nLongSize, &pFind.ftLastWriteTime ) )
 					bChanged = TRUE;
 
 				m_nVolume += pFile->m_nSize;
@@ -533,8 +522,6 @@ BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 	}
 
 	if ( ! Library.IsThreadEnabled() ) return FALSE;
-
-	pLock.Lock();
 
 	for ( POSITION pos = GetFolderIterator() ; pos ; )
 	{
@@ -563,8 +550,6 @@ BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 			bChanged = TRUE;
 		}
 	}
-
-	pLock.Unlock();
 
 	return bChanged;
 }

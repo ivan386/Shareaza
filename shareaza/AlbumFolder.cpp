@@ -1,7 +1,7 @@
 //
 // AlbumFolder.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -234,6 +234,8 @@ CAlbumFolder* CAlbumFolder::FindCollection(const Hashes::Sha1Hash& oSHA1)
 
 CAlbumFolder* CAlbumFolder::FindFolder(const Hashes::Guid& oGUID)
 {
+	ASSUME_LOCK( Library.m_pSection );
+
 	if ( m_oGUID == oGUID )
 	{
 		// Its me!
@@ -426,7 +428,10 @@ void CAlbumFolder::OnFileDelete(CLibraryFile* pFile, BOOL bDeleteGhost)
 
 const CAlbumFolder* CAlbumFolder::FindFile(const CLibraryFile* pFile) const
 {
-	if ( m_pFiles.Find( const_cast< CLibraryFile* >( pFile ) ) != NULL ) return this;
+	ASSUME_LOCK( Library.m_pSection );
+
+	if ( m_pFiles.Find( const_cast< CLibraryFile* >( pFile ) ) != NULL )
+		return this;
 
 	POSITION pos = GetFolderIterator();
 	const CAlbumFolder* pFirst = pos ? GetNextFolder( pos ) : NULL;
@@ -1197,6 +1202,8 @@ BOOL CAlbumFolder::OrganiseFile(CLibraryFile* pFile)
 
 void CAlbumFolder::Serialize(CArchive& ar, int nVersion)
 {
+	ASSUME_LOCK( Library.m_pSection );
+
 	if ( ar.IsStoring() )
 	{
 		ar << m_sSchemaURI;

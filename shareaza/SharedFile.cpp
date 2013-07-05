@@ -1088,16 +1088,15 @@ void CLibraryFile::Serialize(CArchive& ar, int nVersion)
 //////////////////////////////////////////////////////////////////////
 // CLibraryFile threaded scan
 
-BOOL CLibraryFile::ThreadScan(CSingleLock& pLock, DWORD nScanCookie, QWORD nSize, FILETIME* pTime/*, LPCTSTR pszMetaData*/)
+BOOL CLibraryFile::ThreadScan(DWORD nScanCookie, QWORD nSize, FILETIME* pTime/*, LPCTSTR pszMetaData*/)
 {
+	ASSUME_LOCK( Library.m_pSection );
 	ASSERT( m_pFolder );
 
 	m_nScanCookie = nScanCookie;
 
 	if ( m_nSize != nSize || CompareFileTime( &m_pTime, pTime ) != 0 )
 	{
-		pLock.Lock();
-
 		Library.RemoveFile( this );
 
 		CopyMemory( &m_pTime, pTime, sizeof(FILETIME) );
@@ -1109,8 +1108,6 @@ BOOL CLibraryFile::ThreadScan(CSingleLock& pLock, DWORD nScanCookie, QWORD nSize
 		m_oED2K.clear();
 
 		Library.AddFile( this );
-
-		pLock.Unlock();
 
 		m_nUpdateCookie++;
 

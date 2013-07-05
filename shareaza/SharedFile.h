@@ -168,7 +168,7 @@ protected:
 	DWORD			m_tCreateTime;	// Cached network wide file creation time (seconds, as time())
 
 	void			Serialize(CArchive& ar, int nVersion);
-	BOOL			ThreadScan(CSingleLock& pLock, DWORD nScanCookie, QWORD nSize, FILETIME* pTime/*, LPCTSTR pszMetaData*/);
+	BOOL			ThreadScan(DWORD nScanCookie, QWORD nSize, FILETIME* pTime/*, LPCTSTR pszMetaData*/);
 	void			OnDelete(BOOL bDeleteGhost = FALSE, TRISTATE bCreateGhost = TRI_UNKNOWN);
 	void			Ghost();
 
