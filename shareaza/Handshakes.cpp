@@ -330,10 +330,10 @@ BOOL CHandshakes::AcceptConnection()
 		return FALSE;
 	
 	// Disables the Nagle algorithm for send coalescing
-	VERIFY( setsockopt( hSocket, IPPROTO_TCP, TCP_NODELAY, "\x01", 1) == 0 );
+	setsockopt( hSocket, IPPROTO_TCP, TCP_NODELAY, "\x01", 1 );
 
 	// Allows the socket to be bound to an address that is already in use
-	VERIFY( setsockopt( m_hSocket, SOL_SOCKET, SO_REUSEADDR, "\x01", 1 ) == 0 );
+	setsockopt( m_hSocket, SOL_SOCKET, SO_REUSEADDR, "\x01", 1 );
 
 	Network.AcquireLocalAddress( hSocket );
 
