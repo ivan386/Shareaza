@@ -481,6 +481,8 @@ BOOL CShareazaApp::InitInstance()
 
 	ProcessShellCommand( m_cmdInfo );
 
+	Settings.Save();
+
 	return TRUE;
 }
 

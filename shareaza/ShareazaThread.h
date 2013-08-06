@@ -1,7 +1,7 @@
 //
 // ShareazaThread.h
 //
-// Copyright (c) Shareaza Development Team, 2008-2009.
+// Copyright (c) Shareaza Development Team, 2008-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -70,6 +70,6 @@ void SetThreadName(DWORD dwThreadID, LPCSTR szThreadName);
 
 HANDLE BeginThread(LPCSTR pszName, AFX_THREADPROC pfnThreadProc,
 				   LPVOID pParam, int nPriority = THREAD_PRIORITY_NORMAL, UINT nStackSize = 0,
-				   DWORD dwCreateFlags = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL);
+				   DWORD dwCreateFlags = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL, DWORD* pnThreadID = NULL);
 
-void CloseThread(HANDLE* phThread, DWORD dwTimeout = ALMOST_INFINITE);
+void CloseThread(HANDLE phThread, DWORD dwTimeout = ALMOST_INFINITE);

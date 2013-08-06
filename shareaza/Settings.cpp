@@ -773,8 +773,6 @@ void CSettings::Load()
 
 	if ( Live.FirstRun )
 		OnChangeConnectionSpeed();	// This helps if the QuickStart Wizard is skipped.
-
-	Save();
 }
 
 void CSettings::Save(BOOL bShutdown)

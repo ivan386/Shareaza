@@ -1,7 +1,7 @@
 //
 // ShareazaThread.cpp
 //
-// Copyright (c) Shareaza Development Team, 2008-2012.
+// Copyright (c) Shareaza Development Team, 2008-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -188,48 +188,47 @@ void SetThreadName(DWORD dwThreadID, LPCSTR szThreadName)
 
 HANDLE BeginThread(LPCSTR pszName, AFX_THREADPROC pfnThreadProc,
 	LPVOID pParam, int nPriority, UINT nStackSize, DWORD dwCreateFlags,
-	LPSECURITY_ATTRIBUTES lpSecurityAttrs)
+	LPSECURITY_ATTRIBUTES lpSecurityAttrs, DWORD* pnThreadID)
 {
 	CRazaThread* pThread = new CRazaThread( pfnThreadProc, pParam );
 	ASSERT_VALID( pThread );
 	if ( pThread )
 	{
-		return pThread->CreateThread( pszName, nPriority, dwCreateFlags, nStackSize,
-			lpSecurityAttrs );
+		HANDLE hThread = pThread->CreateThread( pszName, nPriority, dwCreateFlags, nStackSize, lpSecurityAttrs );
+		if ( pnThreadID )
+			*pnThreadID = pThread->m_nThreadID;
+		return hThread;
 	}
 	return NULL;
 }
 
-void CloseThread(HANDLE* phThread, DWORD dwTimeout)
+void CloseThread(HANDLE hThread, DWORD dwTimeout)
 {
 	__try
 	{
-		if ( *phThread )
+		if ( hThread )
 		{
 			__try
 			{
-				if ( GetThreadId( *phThread ) != GetCurrentThreadId() )
+				DWORD dwExitCode;
+				while(  GetExitCodeThread( hThread, &dwExitCode ) && dwExitCode == STILL_ACTIVE )
 				{
-					::SetThreadPriority( *phThread, THREAD_PRIORITY_NORMAL );
+					::SetThreadPriority( hThread, THREAD_PRIORITY_NORMAL );
 
-					while( *phThread )
+					SafeMessageLoop();
+
+					DWORD res = MsgWaitForMultipleObjects( 1, &hThread, FALSE, dwTimeout, QS_ALLINPUT | QS_ALLPOSTMESSAGE );
+					if ( res == WAIT_OBJECT_0 + 1 )
+						// Handle messages
+						continue;
+					else if ( res != WAIT_TIMEOUT )
+						// Handle signaled state or errors
+						break;
+					else
 					{
-						SafeMessageLoop();
-
-						DWORD res = MsgWaitForMultipleObjects( 1, phThread,
-							FALSE, dwTimeout, QS_ALLINPUT | QS_ALLPOSTMESSAGE );
-						if ( res == WAIT_OBJECT_0 + 1 )
-							// Handle messages
-							continue;
-						else if ( res != WAIT_TIMEOUT )
-							// Handle signaled state or errors
-							break;
-						else
-						{
-							// Timeout
-							CRazaThread::Terminate( *phThread );
-							break;
-						}
+						// Timeout
+						CRazaThread::Terminate( hThread );
+						break;
 					}
 				}
 			}
@@ -238,9 +237,7 @@ void CloseThread(HANDLE* phThread, DWORD dwTimeout)
 				// Thread already ended
 			}
 
-			CRazaThread::Remove( *phThread );
-
-			*phThread = NULL;
+			CRazaThread::Remove( hThread );
 		}
 	}
 	__except( EXCEPTION_EXECUTE_HANDLER )

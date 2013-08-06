@@ -1,7 +1,7 @@
 //
 // WindowManager.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -342,7 +342,9 @@ void CWindowManager::SetGUIMode(int nMode, BOOL bSaveState)
 	Close();
 
 	Settings.General.GUIMode = nMode;
-	Settings.Save();
+
+	if ( bSaveState )
+		Settings.Save();
 
 	LoadSearchWindows();
 	LoadBrowseHostWindows();
