@@ -1,7 +1,7 @@
 //
 // WndBrowseHost.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -166,10 +166,10 @@ void CBrowseHostWnd::OnSize(UINT nType, int cx, int cy)
 	rc.top += 64;
 	rc.bottom -= 28;
 
-	m_wndHeader.SetWindowPos( NULL, rc.left, 0, rc.Width(), rc.top, SWP_NOZORDER );
-	m_wndToolBar.SetWindowPos( NULL, rc.left, rc.bottom, rc.Width(), 28, SWP_NOZORDER );
-	m_wndProfile.SetWindowPos( NULL, rc.left, rc.top, rc.Width(), rc.Height(), SWP_NOZORDER );
-	m_wndFrame.SetWindowPos( NULL, rc.left, rc.top, rc.Width(), rc.Height(), SWP_NOZORDER );
+	if ( ::IsWindow( m_wndHeader.GetSafeHwnd() ) ) m_wndHeader.SetWindowPos( NULL, rc.left, 0, rc.Width(), rc.top, SWP_NOZORDER );
+	if ( ::IsWindow( m_wndToolBar.GetSafeHwnd() ) ) m_wndToolBar.SetWindowPos( NULL, rc.left, rc.bottom, rc.Width(), 28, SWP_NOZORDER );
+	if ( ::IsWindow( m_wndProfile.GetSafeHwnd() ) ) m_wndProfile.SetWindowPos( NULL, rc.left, rc.top, rc.Width(), rc.Height(), SWP_NOZORDER );
+	if ( ::IsWindow( m_wndFrame.GetSafeHwnd() ) ) m_wndFrame.SetWindowPos( NULL, rc.left, rc.top, rc.Width(), rc.Height(), SWP_NOZORDER );
 }
 
 void CBrowseHostWnd::OnContextMenu(CWnd* pWnd, CPoint point)
