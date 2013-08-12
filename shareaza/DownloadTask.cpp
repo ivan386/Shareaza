@@ -1,7 +1,7 @@
 //
 // DownloadTask.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -29,6 +29,8 @@
 #include "Downloads.h"
 #include "FragmentedFile.h"
 #include "HttpRequest.h"
+#include "ImageServices.h"
+#include "ImageFile.h"
 #include "Library.h"
 #include "LibraryFolders.h"
 #include "LibraryMaps.h"
@@ -42,80 +44,86 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-const DWORD BUFFER_SIZE = 2 * 1024 * 1024u;
-
 
 /////////////////////////////////////////////////////////////////////////////
 // CDownloadTask construction
 
-void CDownloadTask::Copy(CDownload* pDownload)
-{
-	CDownloadTask* pTask = new CDownloadTask( pDownload, dtaskCopy );
-	if ( ! pTask )
-		// Out of memory
-		return;
-
-	pTask->BeginThread( "Download Task : Copy" );
-}
-
-void CDownloadTask::PreviewRequest(CDownload* pDownload, LPCTSTR szURL)
-{
-	CDownloadTask* pTask = new CDownloadTask( pDownload, dtaskPreviewRequest );
-	if ( ! pTask )
-		// Out of memory
-		return;
-
-	pTask->m_pRequest.Attach( new CHttpRequest() );
-	if ( ! pTask->m_pRequest )
-		// Out of memory
-		return;
-
-	pTask->m_pRequest->SetURL( szURL );
-	pTask->m_pRequest->AddHeader( _T("Accept"), _T("image/jpeg") );
-	pTask->m_pRequest->LimitContentLength( Settings.Search.MaxPreviewLength );
-
-	pTask->BeginThread( "Download Task : Preview" );
-}
-
-void CDownloadTask::MergeFile(CDownload* pDownload, CList< CString >* pFiles, BOOL bValidation, const Fragments::List* pGaps)
-{
-	CDownloadTask* pTask = new CDownloadTask( pDownload, dtaskMergeFile );
-	if ( ! pTask )
-		// Out of memory
-		return;
-
-	pTask->m_oMergeFiles.AddTail( pFiles );
-	if ( pGaps )
-		pTask->m_oMergeGaps = *pGaps;
-	pTask->m_bMergeValidation = bValidation;
-
-	pTask->BeginThread( "Download Task : Merge" );
-}
-
-CDownloadTask::CDownloadTask(CDownload* pDownload, dtask nTask)
-	: m_nTask			( nTask )
+CDownloadTask::CDownloadTask(CDownload* pDownload)
+	: m_pDownload		( pDownload )
+	, m_nTask			( dtaskNone )
 	, m_bSuccess		( false )
-	, m_sFilename		( pDownload->m_sPath )
-	, m_sDestination	( DownloadGroups.GetCompletedPath( pDownload ).TrimRight( _T("\\") ) )
 	, m_nFileError		( NO_ERROR )
-	, m_pDownload		( pDownload )
-	, m_nSize			( pDownload->m_nSize )
-	, m_oMergeGaps		( pDownload->m_nSize )
 	, m_bMergeValidation( FALSE )
-	, m_posTorrentFile	( NULL )
 	, m_fProgress		( 0 )
+	, m_oMergeGaps		( 0 )
 {
-	ASSERT( ! pDownload->IsTasking() );
-	pDownload->SetTask( this );
-
-	if ( pDownload->IsTorrent() )
-	{
-		m_posTorrentFile = pDownload->m_pTorrent.m_pFiles.GetHeadPosition();
-	}
 }
 
 CDownloadTask::~CDownloadTask()
 {
+	Abort();
+}
+
+void CDownloadTask::Construct(dtask nTask)
+{
+	ASSERT_VALID( m_pDownload );
+	ASSERT( m_nTask == dtaskNone );
+	ASSERT( ! IsThreadAlive() );
+
+	m_nTask = nTask;
+	m_pRequest.Free();
+	m_bSuccess = false;
+	m_sDestination.Empty();
+	m_nFileError = NO_ERROR;
+	m_oMergeFiles.RemoveAll();
+	m_bMergeValidation = FALSE;
+	m_fProgress = 0;
+}
+
+void CDownloadTask::Allocate()
+{
+	Construct( dtaskAllocate );
+
+	VERIFY( BeginThread( "Download Task : Allocate" ) );
+}
+
+void CDownloadTask::Copy()
+{
+	Construct( dtaskCopy );
+
+	m_sDestination = DownloadGroups.GetCompletedPath( m_pDownload ).TrimRight( _T("\\") );
+
+	VERIFY( BeginThread( "Download Task : Copy" ) );
+}
+
+void CDownloadTask::PreviewRequest(LPCTSTR szURL)
+{
+	Construct( dtaskPreviewRequest );
+
+	m_pRequest.Attach( new CHttpRequest() );
+	if ( ! m_pRequest )
+		// Out of memory
+		return;
+
+	m_pRequest->SetURL( szURL );
+	m_pRequest->AddHeader( _T("Accept"), _T("image/jpeg") );
+	m_pRequest->LimitContentLength( Settings.Search.MaxPreviewLength );
+
+	VERIFY( BeginThread( "Download Task : Preview" ) );
+}
+
+void CDownloadTask::MergeFile(CList< CString >* pFiles, BOOL bValidation, const Fragments::List* pGaps)
+{
+	Construct( dtaskMergeFile );
+
+	m_oMergeFiles.AddTail( pFiles );
+	if ( pGaps )
+		m_oMergeGaps = *pGaps;
+	else
+		m_oMergeGaps = Fragments::List( m_pDownload->m_nSize );
+	m_bMergeValidation = bValidation;
+
+	VERIFY( BeginThread( "Download Task : Merge" ) );
 }
 
 bool CDownloadTask::HasSucceeded() const
@@ -148,6 +156,9 @@ float CDownloadTask::GetProgress() const
 
 void CDownloadTask::Abort()
 {
+	if ( m_nTask == dtaskNone )
+		return;
+
 	Exit();
 
 	if ( m_pRequest )
@@ -156,11 +167,8 @@ void CDownloadTask::Abort()
 	}
 
 	CloseThread();
-}
 
-bool CDownloadTask::WasAborted() const
-{
-	return ! IsThreadEnabled();
+	m_nTask = dtaskNone;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -170,6 +178,10 @@ void CDownloadTask::OnRun()
 {
 	switch ( m_nTask )
 	{
+	case dtaskAllocate:
+		RunAllocate();
+		break;
+
 	case dtaskCopy:
 		RunCopy();
 		break;
@@ -186,26 +198,21 @@ void CDownloadTask::OnRun()
 		;
 	}
 
-	{
-		CQuickLock oLock( Transfers.m_pSection );
-
-		if ( Downloads.Check( m_pDownload ) )
-			m_pDownload->OnTaskComplete( this );
-	}
-
-	delete this;
+	m_nTask = dtaskNone;
+	m_fProgress = 0;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // CDownloadTask allocate
 
-/*void CDownloadTask::RunAllocate()
+void CDownloadTask::RunAllocate()
 {
-	HANDLE hFile = CreateFile( m_sFilename, GENERIC_WRITE,
+	HANDLE hFile = CreateFile( m_pDownload->m_sPath, GENERIC_WRITE,
 		FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
-		NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL|FILE_FLAG_SEQUENTIAL_SCAN, NULL );
-	VERIFY_FILE_ACCESS( hFile, m_sFilename )
-	if ( hFile == INVALID_HANDLE_VALUE ) return;
+		NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL | FILE_FLAG_SEQUENTIAL_SCAN, NULL );
+	VERIFY_FILE_ACCESS( hFile, m_pDownload->m_sPath )
+	if ( hFile == INVALID_HANDLE_VALUE )
+		return;
 
 	if ( GetFileSize( hFile, NULL ) != 0 )
 	{
@@ -213,22 +220,22 @@ void CDownloadTask::OnRun()
 		return;
 	}
 
-	if ( Settings.Downloads.SparseThreshold > 0 &&
-		 m_nSize != SIZE_UNKNOWN &&
-		 m_nSize >= Settings.Downloads.SparseThreshold * 1024 )
+	if ( Settings.Downloads.SparseThreshold &&
+		 m_pDownload->m_nSize != SIZE_UNKNOWN &&
+		 m_pDownload->m_nSize >= Settings.Downloads.SparseThreshold * 1024 )
 	{
 		DWORD dwOut = 0;
 		if ( ! DeviceIoControl( hFile, FSCTL_SET_SPARSE, NULL, 0, NULL, 0, &dwOut, NULL ) )
 		{
 			DWORD nError = GetLastError();
-			theApp.Message( MSG_ERROR, _T("Unable to set sparse file: \"%s\", Win32 error %x."), m_sFilename, nError );
+			theApp.Message( MSG_ERROR, _T("Unable to set sparse file: \"%s\", Win32 error %x."), m_pDownload->m_sPath, nError );
 		}
 	}
 
-	if ( m_nSize > 0 && m_nSize != SIZE_UNKNOWN )
+	if ( m_pDownload->m_nSize > 0 && m_pDownload->m_nSize != SIZE_UNKNOWN )
 	{
-		DWORD nOffsetLow	= (DWORD)( ( m_nSize - 1 ) & 0x00000000FFFFFFFF );
-		DWORD nOffsetHigh	= (DWORD)( ( ( m_nSize - 1 ) & 0xFFFFFFFF00000000 ) >> 32 );
+		DWORD nOffsetLow	= (DWORD)( ( m_pDownload->m_nSize - 1 ) & 0x00000000FFFFFFFF );
+		DWORD nOffsetHigh	= (DWORD)( ( ( m_pDownload->m_nSize - 1 ) & 0xFFFFFFFF00000000 ) >> 32 );
 		SetFilePointer( hFile, nOffsetLow, (PLONG)&nOffsetHigh, FILE_BEGIN );
 
 		BYTE bZero = 0;
@@ -237,19 +244,27 @@ void CDownloadTask::OnRun()
 	}
 
 	CloseHandle( hFile );
-	m_bSuccess = TRUE;
-}*/
+
+	m_bSuccess = true;
+}
 
 /////////////////////////////////////////////////////////////////////////////
 // CDownloadTask simple copy
 
 void CDownloadTask::RunCopy()
 {
-	m_fProgress = 0;
 	m_nFileError = m_pDownload->MoveFile( m_sDestination, CopyProgressRoutine, this );
-	m_fProgress = 100.0f;
 
 	m_bSuccess = ( m_nFileError == ERROR_SUCCESS );
+
+	// Check if task was aborted
+	if ( IsThreadEnabled() )
+	{
+		if ( m_bSuccess )
+			m_pDownload->OnMoved();
+		else
+			m_pDownload->SetFileError( GetFileError(), _T("") );
+	}
 }
 
 DWORD CALLBACK CDownloadTask::CopyProgressRoutine(LARGE_INTEGER TotalFileSize,
@@ -260,7 +275,7 @@ DWORD CALLBACK CDownloadTask::CopyProgressRoutine(LARGE_INTEGER TotalFileSize,
 {
 	CDownloadTask* pThis = (CDownloadTask*)lpData;
 
-	if ( TotalFileSize.QuadPart) 
+	if ( TotalFileSize.QuadPart ) 
 		pThis->m_fProgress = (float)( TotalBytesTransferred.QuadPart * 100 ) / (float)TotalFileSize.QuadPart;
 	else
 		pThis->m_fProgress = 100.0f;
@@ -274,20 +289,28 @@ DWORD CALLBACK CDownloadTask::CopyProgressRoutine(LARGE_INTEGER TotalFileSize,
 void CDownloadTask::RunPreviewRequest()
 {
 	m_bSuccess = m_pRequest->Execute( false ); // without threading
-}
 
-/////////////////////////////////////////////////////////////////////////////
-// CDownloadTask merge
-
-void CDownloadTask::RunMerge()
-{
-	bool bSuccess = true;
-	for ( POSITION pos = m_oMergeFiles.GetHeadPosition(); IsThreadEnabled() && pos; )
+	// Check if task was aborted
+	if ( IsThreadEnabled() )
 	{
-		bSuccess = m_pDownload->MergeFile( m_oMergeFiles.GetNext( pos ), m_bMergeValidation, m_oMergeGaps, this ) && bSuccess;
+		// Save downloaded preview as png-file
+		const CString strPath = m_pDownload->m_sPath + _T(".png");
+		CImageFile pImage;
+		CBuffer* pBuffer = IsPreviewAnswerValid( m_pDownload->m_oSHA1 );
+		if ( pBuffer && pBuffer->m_pBuffer && pBuffer->m_nLength &&
+			 pImage.LoadFromMemory( _T(".jpg"), pBuffer->m_pBuffer, pBuffer->m_nLength, FALSE, TRUE ) &&
+			 pImage.SaveToFile( (LPCTSTR)strPath, 100 ) )
+		{
+			// Make it hidden, so the files won't be shared
+			SetFileAttributes( (LPCTSTR)strPath, FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM );
+		}
+		else
+		{
+			// Failed
+			m_pDownload->m_bWaitingPreview = FALSE;
+			theApp.Message( MSG_ERROR, IDS_SEARCH_DETAILS_PREVIEW_FAILED, (LPCTSTR)GetRequest() );
+		}
 	}
-
-	m_bSuccess = bSuccess;
 }
 
 CBuffer* CDownloadTask::IsPreviewAnswerValid(const Hashes::Sha1Hash& oRequestedSHA1) const
@@ -303,8 +326,7 @@ CBuffer* CDownloadTask::IsPreviewAnswerValid(const Hashes::Sha1Hash& oRequestedS
 		return NULL;
 	}
 
-	CString strURN = m_pRequest->GetHeader( L"X-Previewed-URN" );
-
+	const CString strURN = m_pRequest->GetHeader( L"X-Previewed-URN" );
 	if ( strURN.GetLength() )
 	{
 		Hashes::Sha1Hash oSHA1;
@@ -317,21 +339,17 @@ CBuffer* CDownloadTask::IsPreviewAnswerValid(const Hashes::Sha1Hash& oRequestedS
 		}
 		else
 		{
-			CSingleLock oLock( &Library.m_pSection, TRUE );
-			CLibraryFile* pFile = LibraryMaps.LookupFileBySHA1( oSHA1 );
-			if ( pFile == NULL )
+			if ( ! LibraryMaps.LookupFileBySHA1( oSHA1 ) )
 				bValid = false;
-			oLock.Unlock();
 		}
-		if ( !bValid )
+		if ( ! bValid )
 		{
 			theApp.Message( MSG_DEBUG, L"Preview failed: wrong URN." );
 			return NULL;
 		}
 	}
 
-	CString strMIME = m_pRequest->GetHeader( L"Content-Type" );
-
+	const CString strMIME = m_pRequest->GetHeader( L"Content-Type" );
 	if ( strMIME.CompareNoCase( L"image/jpeg" ) != 0 )
 	{
 		theApp.Message( MSG_DEBUG, L"Preview failed: unacceptable content type." );
@@ -339,4 +357,18 @@ CBuffer* CDownloadTask::IsPreviewAnswerValid(const Hashes::Sha1Hash& oRequestedS
 	}
 
 	return m_pRequest->GetResponseBuffer();
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// CDownloadTask merge
+
+void CDownloadTask::RunMerge()
+{
+	bool bSuccess = true;
+	for ( POSITION pos = m_oMergeFiles.GetHeadPosition(); IsThreadEnabled() && pos; )
+	{
+		bSuccess = m_pDownload->RunMergeFile( m_oMergeFiles.GetNext( pos ), m_bMergeValidation, m_oMergeGaps, this ) && bSuccess;
+	}
+
+	m_bSuccess = bSuccess;
 }

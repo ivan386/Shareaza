@@ -1,7 +1,7 @@
 //
 // WndDownloads.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1008,8 +1008,7 @@ void CDownloadsWnd::OnDownloadsRemotePreview()
 							(LPCTSTR)CString( inet_ntoa( pSource->m_pAddress ) ), pSource->m_nPort,
 							(LPCTSTR)pDownload->m_oSHA1.toUrn() );
 					}
-					CDownloadTask::PreviewRequest( pDownload, pSource->m_sPreview );
-					pDownload->m_bWaitingPreview = TRUE;
+					pDownload->PreviewRequest( pSource->m_sPreview );
 					pSource->m_bPreviewRequestSent = TRUE;
 					break;
 				}

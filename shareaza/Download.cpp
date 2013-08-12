@@ -1,7 +1,7 @@
 //
 // Download.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -66,6 +66,7 @@ CDownload::CDownload() :
 ,	m_tSaved		( 0 )
 ,	m_tBegan		( 0 )
 ,	m_bDownloading	( false )
+,	m_pTask			( this )
 {
 }
 
@@ -73,6 +74,55 @@ CDownload::~CDownload()
 {
 	AbortTask();
 	DownloadGroups.Unlink( this );
+}
+
+float CDownload::GetProgress() const
+{
+	return IsMoving() ? m_pTask.GetProgress() : CDownloadWithExtras::GetProgress();
+}
+
+//////////////////////////////////////////////////////////////////////
+// CDownload check if a task is already running
+
+bool CDownload::IsTasking() const
+{
+	return ( m_pTask.GetTaskType() != dtaskNone );
+}
+
+bool CDownload::IsMoving() const
+{
+	return ( m_pTask.GetTaskType() == dtaskCopy );
+}
+
+dtask CDownload::GetTaskType() const
+{
+	return m_pTask.GetTaskType();
+}
+
+void CDownload::AbortTask()
+{
+	m_pTask.Abort();
+}
+
+void CDownload::Allocate()
+{
+	m_pTask.Allocate();
+}
+
+void CDownload::Copy()
+{
+	m_pTask.Copy();
+}
+
+void CDownload::PreviewRequest(LPCTSTR szURL)
+{
+	m_pTask.PreviewRequest( szURL );
+	m_bWaitingPreview = TRUE;
+}
+
+void CDownload::MergeFile(CList< CString >* pFiles, BOOL bValidation, const Fragments::List* pGaps)
+{
+	m_pTask.MergeFile( pFiles, bValidation, pGaps );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -534,31 +584,7 @@ void CDownload::OnDownloaded()
 		AbortTask();
 	}
 
-	CDownloadTask::Copy( this );
-}
-
-//////////////////////////////////////////////////////////////////////
-// CDownload task completion
-
-void CDownload::OnTaskComplete(const CDownloadTask* pTask)
-{
-	SetTask( NULL );
-
-	// Check if task was aborted
-	if ( pTask->WasAborted() )
-		return;
-
-	if ( pTask->GetTaskType() == dtaskPreviewRequest )
-	{
-		OnPreviewRequestComplete( pTask );
-	}
-	else if ( pTask->GetTaskType() == dtaskCopy )
-	{
-		if ( ! pTask->HasSucceeded() )
-			SetFileError( pTask->GetFileError(), _T("") );
-		else
-			OnMoved();
-	}
+	m_pTask.Copy();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -566,6 +592,8 @@ void CDownload::OnTaskComplete(const CDownloadTask* pTask)
 
 void CDownload::OnMoved()
 {
+	CSingleLock pTransfersLock( &Transfers.m_pSection, TRUE );
+
 	// We just completed torrent
 	if ( IsTorrent() )
 	{

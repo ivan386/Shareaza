@@ -355,7 +355,6 @@ QWORD CDownloadWithFile::InvalidateFileRange(QWORD nOffset, QWORD nLength)
 float CDownloadWithFile::GetProgress() const
 {
 	if ( m_nSize == 0 || m_nSize == SIZE_UNKNOWN ) return 0;
-	if ( IsMoving() ) return m_pTask->GetProgress();
 	QWORD nComplete = GetVolumeComplete();
 	if ( m_nSize == nComplete ) return 100.0f;
 	return float( nComplete * 10000 / m_nSize ) / 100.0f;
@@ -521,12 +520,14 @@ BOOL CDownloadWithFile::SubmitData(QWORD nOffset, LPBYTE pData, QWORD nLength)
 	if ( static_cast< CDownload* >( this )->IsTorrent() )	// HACK: Only do this for BitTorrent
 															// TODO: Fix bad inheritance
 	{
-		CQuickLock oLock( Transfers.m_pSection );
-
-		for ( CDownloadTransfer* pTransfer = GetFirstTransfer() ; pTransfer ; pTransfer = pTransfer->m_pDlNext )
+		CSingleLock oLock( &Transfers.m_pSection );
+		if ( oLock.Lock( 250 ) )
 		{
-			if ( pTransfer->m_nProtocol == PROTOCOL_BT )
-				pTransfer->UnrequestRange( nOffset, nLength );
+			for ( CDownloadTransfer* pTransfer = GetFirstTransfer() ; pTransfer ; pTransfer = pTransfer->m_pDlNext )
+			{
+				if ( pTransfer->m_nProtocol == PROTOCOL_BT )
+					pTransfer->UnrequestRange( nOffset, nLength );
+			}
 		}
 	}
 

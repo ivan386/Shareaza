@@ -1,7 +1,7 @@
 //
 // Download.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -36,6 +36,7 @@
 
 #include "DownloadWithExtras.h"
 
+
 class CDownload : public CDownloadWithExtras
 {
 // Construction
@@ -62,6 +63,8 @@ private:
 								// searching, etc). 0 means has not tried this session.
 	bool		m_bDownloading;	// This is used to store if a download is downloading. (Performance tweak)
 								// You should count the transfers if you need a 100% current answer.
+	CDownloadTask	m_pTask;
+
 // Operations
 public:
 	void		Pause(BOOL bRealPause = TRUE);
@@ -82,26 +85,52 @@ public:
 	void		ForceComplete();
 	BOOL		Launch(int nIndex, CSingleLock* pLock, BOOL bForceOriginal);
 	BOOL		Enqueue(int nIndex, CSingleLock* pLock);
-	void		OnTaskComplete(const CDownloadTask* pTask);
 	BOOL		OpenDownload();
 	BOOL		SeedTorrent();
 	BOOL		PrepareFile();
+
+	void		Allocate();
+	void		Copy();
+	void		PreviewRequest( LPCTSTR szURL);
+	void		MergeFile(CList< CString >* pFiles, BOOL bValidation = TRUE, const Fragments::List* pGaps = NULL);
 
 private:
 	void		StartTrying();
 	void		StopTrying();
 	DWORD		GetStartTimer() const;
 	void		OnDownloaded();
-	void		OnMoved();
 	void		SerializeOld(CArchive& ar, int nVersion /* DOWNLOAD_SER_VERSION */);
+
+	// Cancel currently running task
+	void		AbortTask();
 
 // Overrides
 public:
-	virtual bool	IsPaused(bool bRealState = false) const;
+	// Return currently running task
+	virtual dtask	GetTaskType() const;
+
+	// Statistics
+	virtual float	GetProgress() const;
+
+	// Check if a task is already running
+	virtual bool	IsTasking() const;
+
+	// Check if a task is already running and its a moving task
+	virtual bool	IsMoving() const;
+
 	virtual bool	IsCompleted() const;
-	virtual bool	IsTrying() const;		//Is the download currently trying to download?
+
+	virtual bool	IsPaused(bool bRealState = false) const;
+
+	// Is the download currently trying to download?
+	virtual bool	IsTrying() const;
+
+	// File was moved to the Library
+	virtual void	OnMoved();
+
 	// File was hashed and verified in the Library
 	virtual BOOL	OnVerify(const CLibraryFile* pFile, TRISTATE bVerified);
+
 	virtual void	Serialize(CArchive& ar, int nVersion /* DOWNLOAD_SER_VERSION */);
 
 	friend class CDownloadTransfer;		// GetVerifyLength

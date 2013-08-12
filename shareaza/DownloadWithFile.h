@@ -1,7 +1,7 @@
 //
 // DownloadWithFile.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -43,7 +43,7 @@ private:
 
 // Operations
 public:
-	float				GetProgress() const;
+	virtual float		GetProgress() const;
 	QWORD				GetVolumeComplete() const;
 	QWORD				GetVolumeRemaining() const;
 	DWORD				GetTimeRemaining() const;

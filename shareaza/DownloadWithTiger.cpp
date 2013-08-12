@@ -412,7 +412,7 @@ CED2K* CDownloadWithTiger::GetHashset()
 	return m_pHashset.IsAvailable() ? &m_pHashset : NULL;
 }
 
-bool CDownloadWithTiger::MergeFile(LPCTSTR szFilename, BOOL bMergeValidation, const Fragments::List& oMissedGaps, CDownloadTask* pTask)
+bool CDownloadWithTiger::RunMergeFile(LPCTSTR szFilename, BOOL bMergeValidation, const Fragments::List& oMissedGaps, CDownloadTask* pTask)
 {
 	CAtlFile oSource;
 	oSource.Create( szFilename, GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_DELETE, OPEN_EXISTING );

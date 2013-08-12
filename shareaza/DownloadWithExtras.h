@@ -1,7 +1,7 @@
 //
 // DownloadWithExtras.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -25,7 +25,7 @@
 
 class CDownloadMonitorDlg;
 class CFilePreviewDlg;
-class CDownloadTask;
+
 
 // CDownloadReview stores a review of a download. It can be either a G2 review, copied from the
 // search, or an ed2k review recieved during download.
@@ -91,7 +91,6 @@ public:
 	void		DeleteReview(CDownloadReview* pReview);
 	int			GetReviewCount() const { return m_nReviewCount; }
 	int			GetReviewAverage() const;
-	void		OnPreviewRequestComplete(const CDownloadTask* pTask);
 protected:
 	virtual void Serialize(CArchive& ar, int nVersion);
 public:

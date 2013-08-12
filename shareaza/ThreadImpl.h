@@ -29,19 +29,18 @@ class CThreadImpl
 {
 public:
 	CThreadImpl()
-		: m_bCompleted	( false )
-		, m_pCancel		( FALSE, TRUE )
+		: m_pCancel		( FALSE, TRUE )
 		, m_hThread		( NULL )
 		, m_nThreadID	( 0 )
 	{
 	}
+
 	virtual ~CThreadImpl()
 	{
 		CloseThread();
 	}
 
 private:
-	volatile bool	m_bCompleted;	// TRUE - thread runs at least once
 	CEvent			m_pCancel;		// Thread cancel event (signaled if abort requested)
 	HANDLE			m_hThread;		// Thread handle
 	DWORD			m_nThreadID;	// Thread ID
@@ -51,7 +50,6 @@ private:
 	{
 		CThreadImpl* pThis = reinterpret_cast< CThreadImpl* >( pParam );
 		pThis->OnRun();
-		pThis->m_bCompleted = true;	// Set complete status
 		pThis->m_hThread = NULL;
 		return 0;
 	}
@@ -62,22 +60,21 @@ private:
 protected:
 	virtual void OnRun() = 0;
 
-public:
 	inline bool BeginThread(LPCSTR szName = NULL, int nPriority = THREAD_PRIORITY_NORMAL) throw()
 	{
 		if ( ! IsThreadAlive() )
 		{
-			m_bCompleted = false;	// Reset complete status
 			m_pCancel.ResetEvent();	// Enable thread run
 			m_hThread = ::BeginThread( szName, ThreadStart, this, nPriority, 0, 0, NULL, &m_nThreadID );
 		}
 		return ( m_hThread != NULL );
 	}
 
+public:
 	inline void CloseThread(DWORD dwTimeout = ALMOST_INFINITE) throw()
 	{
-		Exit();		// Ask thread for exit
-		Wakeup();	// Wakeup thread if any
+		m_pCancel.SetEvent();	// Ask thread for exit
+		m_pWakeup.SetEvent();	// Wakeup thread if any
 		if ( m_nThreadID != GetCurrentThreadId() )
 		{
 			::CloseThread( m_hThread, dwTimeout );
@@ -113,11 +110,6 @@ public:
 	inline HANDLE GetWakeupEvent() const throw()
 	{
 		return m_pWakeup;
-	}
-
-	inline bool IsThreadCompleted() const throw()
-	{
-		return m_bCompleted;
 	}
 
 	// Can thread continue?

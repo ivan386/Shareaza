@@ -1,7 +1,7 @@
 //
 // DlgFileCopy.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -55,6 +55,7 @@ protected:
 	DWORD				m_nCookie;
 	BOOL				m_bCancel;
 	int					m_nFileProg;
+	bool				m_bCompleted;
 
 protected:
 	void		StartOperation();

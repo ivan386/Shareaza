@@ -1,7 +1,7 @@
 //
 // DownloadWithExtras.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -27,9 +27,7 @@
 #include "DlgFilePreview.h"
 #include "DlgDownloadMonitor.h"
 #include "Plugins.h"
-#include "DownloadTask.h"
-#include "ImageServices.h"
-#include "ImageFile.h"
+
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -402,34 +400,6 @@ void CDownloadWithExtras::Serialize(CArchive& ar, int nVersion)
 			}
 		}
 	}
-}
-
-//////////////////////////////////////////////////////////////////////
-// CDownload preview saver
-
-void CDownloadWithExtras::OnPreviewRequestComplete(const CDownloadTask* pTask)
-{
-	m_bWaitingPreview = FALSE;
-
-	if ( m_sPath.IsEmpty() )
-		return;
-	CString strPath = m_sPath + _T(".png");
-
-	if ( CBuffer* pBuffer = pTask->IsPreviewAnswerValid( m_oSHA1 ) )
-	{
-		CImageFile pImage;
-		if ( pImage.LoadFromMemory( L".jpg", pBuffer->m_pBuffer, pBuffer->m_nLength, FALSE, TRUE ) &&
-			 pImage.SaveToFile( (LPCTSTR)strPath, 100 ) )
-		{
-			// Make it hidden, so the files won't be shared
-			SetFileAttributes( (LPCTSTR)strPath, FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM );
-			
-			m_bWaitingPreview = TRUE;
-			return;
-		}
-	}
-
-	theApp.Message( MSG_ERROR, IDS_SEARCH_DETAILS_PREVIEW_FAILED, (LPCTSTR)pTask->GetRequest() );
 }
 
 //////////////////////////////////////////////////////////////////////

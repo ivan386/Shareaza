@@ -1,7 +1,7 @@
 //
 // DownloadBase.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -21,10 +21,7 @@
 
 #include "StdAfx.h"
 #include "Shareaza.h"
-#include "Settings.h"
-#include "Downloads.h"
 #include "DownloadBase.h"
-#include "DownloadTask.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -45,62 +42,11 @@ CDownloadBase::CDownloadBase() :
 ,	m_bMD5Trusted		( false )
 ,	m_nCookie			( 1 )
 ,	m_nSaveCookie		( 0 )
-,	m_pTask				( NULL )
 {
 }
 
 CDownloadBase::~CDownloadBase()
 {
-}
-
-//////////////////////////////////////////////////////////////////////
-// CDownloadBase check if a task is already running
-
-bool CDownloadBase::IsTasking() const
-{
-	return ( m_pTask != NULL );
-}
-
-bool CDownloadBase::IsMoving() const
-{
-	return ( GetTaskType() == dtaskCopy );
-}
-
-//////////////////////////////////////////////////////////////////////
-// CDownloadBase set a new running task
-
-void CDownloadBase::SetTask(CDownloadTask* pTask)
-{
-	m_pTask = pTask;
-}
-
-//////////////////////////////////////////////////////////////////////
-// CDownloadBase return currently running task
-
-dtask CDownloadBase::GetTaskType() const
-{
-	return m_pTask ? m_pTask->GetTaskType() : dtaskNone;
-}
-
-//////////////////////////////////////////////////////////////////////
-// CDownloadBase check if a task is the same as the currently running one
-
-bool CDownloadBase::CheckTask(CDownloadTask* pTask) const
-{
-	return ( m_pTask == pTask );
-}
-
-//////////////////////////////////////////////////////////////////////
-// CDownloadBase cancel currently running task
-
-void CDownloadBase::AbortTask()
-{
-	if ( ! IsTasking() )
-		return;
-
-	m_pTask->Abort();
-
-	m_pTask = NULL;
 }
 
 //////////////////////////////////////////////////////////////////////

@@ -1,7 +1,7 @@
 //
 // DownloadBase.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -42,30 +42,38 @@ public:
 
 	void			SetModified();
 	bool			IsModified() const;
+
 	// Set download new (and safe) name
 	virtual bool	Rename(const CString& strName) = 0;
+
+	// Return currently running task
+	virtual dtask	GetTaskType() const = 0;
+
+	// Statistics
+	virtual float	GetProgress() const = 0;
+
 	// Check if a task is already running
-	virtual bool	IsTasking() const;
+	virtual bool	IsTasking() const = 0;
+
 	// Check if a task is already running and its a moving task
-	virtual bool	IsMoving() const;
+	virtual bool	IsMoving() const = 0;
+
 	virtual bool	IsCompleted() const = 0;
+
 	virtual bool	IsPaused(bool bRealState = false) const = 0;
+
+	// Is the download currently trying to download?
 	virtual bool	IsTrying() const = 0;
 
-	// Task callback
-	virtual void	OnTaskComplete(const CDownloadTask* pTask) = 0;
+	// File was moved to the Library
+	virtual void	OnMoved() = 0;
+
 	// File was hashed and verified in the Library
 	virtual BOOL	OnVerify(const CLibraryFile* pFile, TRISTATE bVerified) = 0;
-
-	dtask			GetTaskType() const;
-	void			SetTask(CDownloadTask* pTask);
-	bool			CheckTask(CDownloadTask* pTask) const;
-	void			AbortTask();
 
 protected:
 	int				m_nCookie;
 	int				m_nSaveCookie;
-	CDownloadTask*	m_pTask;
 
 	virtual void	Serialize(CArchive& ar, int nVersion);
 };

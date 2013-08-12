@@ -1,7 +1,7 @@
 //
 // PageDownloadActions.cpp
 //
-// Copyright (c) Shareaza Development Team, 2008-2012.
+// Copyright (c) Shareaza Development Team, 2008-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -374,7 +374,7 @@ void CDownloadActionsPage::OnMergeAndVerify()
 
 	if ( oFiles.GetCount() )
 	{
-		CDownloadTask::MergeFile( pDownload, &oFiles );
+		pDownload->MergeFile( &oFiles );
 	}
 }
 

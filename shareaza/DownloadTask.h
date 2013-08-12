@@ -1,7 +1,7 @@
 //
 // DownloadTask.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -41,13 +41,16 @@ enum dtask
 class CDownloadTask : public CThreadImpl
 {
 public:
-	static void			Copy(CDownload* pDownload);
-	static void			PreviewRequest(CDownload* pDownload, LPCTSTR szURL);
-	static void			MergeFile(CDownload* pDownload, CList< CString >* pFiles, BOOL bValidation = TRUE, const Fragments::List* pGaps = NULL);
+	CDownloadTask(CDownload* pDownload);
+	virtual ~CDownloadTask();
+
+	void				Allocate();
+	void				Copy();
+	void				PreviewRequest(LPCTSTR szURL);
+	void				MergeFile(CList< CString >* pFiles, BOOL bValidation, const Fragments::List* pGaps);
 
 	bool				HasSucceeded() const;
 	void				Abort();
-	bool				WasAborted() const;
 	DWORD				GetFileError() const;
 	dtask				GetTaskType() const;
 	CString				GetRequest() const;
@@ -55,23 +58,19 @@ public:
 	float				GetProgress() const;
 	CBuffer*			IsPreviewAnswerValid(const Hashes::Sha1Hash& oRequestedSHA1) const;
 
-protected:
-	CDownloadTask(CDownload* pDownload, dtask nTask);
-	virtual ~CDownloadTask();
-
+private:
+	CDownload*			m_pDownload;
 	dtask				m_nTask;
 	CAutoPtr< CHttpRequest > m_pRequest;
 	bool				m_bSuccess;
-	CString				m_sFilename;
 	CString				m_sDestination;
 	DWORD				m_nFileError;
-	CDownload*			m_pDownload;
-	QWORD				m_nSize;
 	CList< CString >	m_oMergeFiles;		// Source filenames
 	Fragments::List		m_oMergeGaps;		// Missed ranges in source file
 	BOOL				m_bMergeValidation;	// Run validation after merging
-	POSITION			m_posTorrentFile;	// Torrent file list current position
 	float				m_fProgress;		// Progress of current operation (0..100%)
+
+	void				Construct(dtask nTask);
 
 	static DWORD CALLBACK CopyProgressRoutine(LARGE_INTEGER TotalFileSize,
 		LARGE_INTEGER TotalBytesTransferred, LARGE_INTEGER StreamSize,
@@ -79,7 +78,7 @@ protected:
 		DWORD dwCallbackReason, HANDLE hSourceFile, HANDLE hDestinationFile,
 		LPVOID lpData);
 
-//	void				RunAllocate();
+	void				RunAllocate();
 	void				RunCopy();
 	void				RunPreviewRequest();
 	void				RunMerge();

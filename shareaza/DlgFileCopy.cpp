@@ -1,7 +1,7 @@
 //
 // DlgFileCopy.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -38,28 +38,27 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 BEGIN_MESSAGE_MAP(CFileCopyDlg, CSkinDialog)
-	//{{AFX_MSG_MAP(CFileCopyDlg)
 	ON_WM_TIMER()
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
 /////////////////////////////////////////////////////////////////////////////
 // CFileCopyDlg dialog
 
-CFileCopyDlg::CFileCopyDlg(CWnd* pParent, BOOL bMove) :
-	CSkinDialog(CFileCopyDlg::IDD, pParent),
-	m_bMove( bMove ),
-	m_nCookie( 0 ),
-	m_bCancel( FALSE ),
-	m_nFileProg( 0 )
+CFileCopyDlg::CFileCopyDlg(CWnd* pParent, BOOL bMove)
+	: CSkinDialog(CFileCopyDlg::IDD, pParent)
+	, m_bMove		( bMove )
+	, m_nCookie		( 0 )
+	, m_bCancel		( FALSE )
+	, m_nFileProg	( 0 )
+	, m_bCompleted	( false )
 {
 }
 
 void CFileCopyDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CSkinDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CFileCopyDlg)
+
 	DDX_Control(pDX, IDC_MESSAGE_MOVE, m_wndMove);
 	DDX_Control(pDX, IDC_MESSAGE_COPY, m_wndCopy);
 	DDX_Control(pDX, IDC_FILE_NAME, m_wndFileName);
@@ -68,7 +67,6 @@ void CFileCopyDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDOK, m_wndOK);
 	DDX_Control(pDX, IDC_PROGRESS, m_wndProgress);
 	DDX_Control(pDX, IDC_PLACEHOLDER, m_wndPlaceholder);
-	//}}AFX_DATA_MAP
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -127,7 +125,7 @@ BOOL CFileCopyDlg::OnInitDialog()
 
 void CFileCopyDlg::OnTimer(UINT_PTR /*nIDEvent*/)
 {
-	if ( IsThreadCompleted() )
+	if ( m_bCompleted )
 	{
 		StopOperation();
 		PostMessage( WM_COMMAND, IDCANCEL );
@@ -207,6 +205,7 @@ void CFileCopyDlg::StartOperation()
 	m_wndProgress.SetPos( 0 );
 
 	m_bCancel = FALSE;
+	m_bCompleted = false;
 	BeginThread( "DlgFileCopy" );
 }
 
@@ -216,12 +215,10 @@ void CFileCopyDlg::StopOperation()
 
 	CWaitCursor pCursor;
 
+	m_bCancel = TRUE;
 	CloseThread();
 
-	//m_wndCancel.SetWindowText( _T("&Close") );
-	CString sText;
-	LoadString ( sText, IDS_GENERAL_CLOSE );
-	m_wndCancel.SetWindowText( sText );
+	m_wndCancel.SetWindowText( LoadString( IDS_GENERAL_CLOSE ) );
 	m_wndProgress.EnableWindow( FALSE );
 }
 
@@ -329,6 +326,8 @@ void CFileCopyDlg::OnRun()
 		//
 */
 	}
+
+	m_bCompleted = true;
 }
 
 //////////////////////////////////////////////////////////////////////
