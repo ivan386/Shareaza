@@ -1,7 +1,7 @@
 //
 // CtrlLibraryTreeView.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -300,6 +300,11 @@ BOOL CLibraryTreeView::Select(CLibraryTreeItem* pItem, TRISTATE bSelect, BOOL bI
 
 	if ( pItem->m_bSelected )
 	{
+		for ( CLibraryTreeItem* pRootItem = pItem->parent(); pRootItem; pRootItem = pRootItem->parent() )
+		{
+			Expand( pRootItem, TRI_TRUE, FALSE );
+		}
+
 		if ( m_bVirtual )
 			m_pFocusedObject[ 1 ] = pItem ? pItem->m_pVirtual : NULL;
 		else

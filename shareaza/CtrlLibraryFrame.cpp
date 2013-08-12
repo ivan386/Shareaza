@@ -1,7 +1,7 @@
 //
 // CtrlLibraryFrame.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -176,6 +176,8 @@ int CLibraryFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndTree.Create( this );
 	m_wndHeader.Create( this );
 	m_wndViewTip.Create( this, &Settings.Interface.TipLibrary );
+
+	Update( TRUE );
 
 	return 0;
 }
