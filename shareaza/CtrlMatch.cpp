@@ -1,7 +1,7 @@
 //
 // CtrlMatch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -76,28 +76,26 @@ END_MESSAGE_MAP()
 // CMatchCtrl construction
 
 CMatchCtrl::CMatchCtrl()
-{
-	m_pMatches		= NULL;
-	m_sType			= _T("Search");
-	
-	m_pSchema		= NULL;
-	m_nTopIndex		= 0;
-	m_nHitIndex		= 0;
-	m_nBottomIndex	= 0xFFFFFFFF;
-	m_nFocus		= 0xFFFFFFFF;
-	m_nPageCount	= 1;
-	m_nCurrentWidth	= 0;
-	m_nMessage		= 0;
-	m_bSearchLink	= FALSE;
-	m_bTips			= TRUE;
-	m_pLastSelectedFile = NULL;
-	m_pLastSelectedHit = NULL;
+	: m_pMatches			( NULL )
+	, m_sType				( _T("Search") )
+	, m_pSchema				( NULL )
+	, m_nTopIndex			( 0 )
+	, m_nHitIndex			( 0 )
+	, m_nBottomIndex		( 0xFFFFFFFF )
+	, m_nFocus				( 0xFFFFFFFF )
+	, m_nPageCount			( 1 )
+	, m_nCurrentWidth		( 0 )
+	, m_nCacheItems			( 0 )
+	, m_nTrailWidth			( 0 )
+	, m_bSearchLink			( FALSE )
+	, m_bTips				( TRUE )
+	, m_nScrollWheelLines	( 3 )
+	, m_pLastSelectedFile	( NULL )
+	, m_pLastSelectedHit	( NULL )
 
+{
 	// Try to get the number of lines to scroll when the mouse wheel is rotated
-	if( !SystemParametersInfo ( SPI_GETWHEELSCROLLLINES, 0, &m_nScrollWheelLines, 0) )
-	{
-		m_nScrollWheelLines = 3;
-	}
+	SystemParametersInfo( SPI_GETWHEELSCROLLLINES, 0, &m_nScrollWheelLines, 0 );
 }
 
 CMatchCtrl::~CMatchCtrl()
@@ -298,28 +296,19 @@ void CMatchCtrl::SetSortColumn(int nColumn, BOOL bDirection)
 
 void CMatchCtrl::SetMessage(UINT nMessageID, BOOL bLink)
 {
-	CString strCurrentText;
-	Skin.LoadString( strCurrentText, m_nMessage );
-
-	if ( nMessageID == m_nMessage && m_bSearchLink == bLink && strCurrentText == m_sMessage ) return;
-	
-	m_bSearchLink = bLink;
-	
-	m_nMessage = nMessageID;
-	m_sMessage = strCurrentText;
-	
-	if ( m_nCacheItems == 0 ) Invalidate();
+	SetMessage( LoadString( nMessageID ), bLink );
 }
 
 void CMatchCtrl::SetMessage(LPCTSTR pszMessage, BOOL bLink)
 {
-	if ( m_sMessage == pszMessage && m_bSearchLink == bLink ) return;
+	if ( m_bSearchLink == bLink && m_sMessage == pszMessage )
+		return;
 	
 	m_bSearchLink = bLink;
-	m_nMessage = 0;
 	m_sMessage = pszMessage;
 	
-	if ( m_nCacheItems == 0 ) Invalidate();
+	if ( m_nCacheItems == 0 )
+		Invalidate();
 }
 
 void CMatchCtrl::EnableTips(BOOL bTips)
@@ -1306,8 +1295,7 @@ void CMatchCtrl::DrawEmptyMessage(CDC& dc, CRect& rcClient)
 
 	if ( m_bSearchLink )
 	{
-		CString strText;
-		Skin.LoadString( strText, IDS_SEARCH_AGAIN );
+		const CString strText = LoadString( IDS_SEARCH_AGAIN );
 
 		rcText.OffsetRect( 0, rcText.Height() );
 

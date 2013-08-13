@@ -1,7 +1,7 @@
 //
 // WndSearch.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -65,7 +65,7 @@ protected:
 	typedef List::const_reverse_iterator const_reverse_iterator;
 
 	CSearchPanel		m_wndPanel;
-	BOOL				m_bPanel;
+	BOOL				m_bPanel;			// Show search panel
 	BOOL				m_bSetFocus;
 	CSearchDetailPanel	m_wndDetails;
 	BOOL				m_bDetails;

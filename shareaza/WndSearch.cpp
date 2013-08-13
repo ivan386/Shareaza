@@ -1,7 +1,7 @@
 //
 // WndSearch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -208,7 +208,7 @@ void CSearchWnd::OnSize(UINT nType, int cx, int cy)
 
 	if ( ! (m_bPaused||m_bWaitMore) ) rc.top += STATUS_HEIGHT;
 
-	m_wndToolBar.SetWindowPos( NULL, rc.left, rc.bottom - TOOLBAR_HEIGHT, rc.Width(), TOOLBAR_HEIGHT, SWP_NOZORDER );
+	if ( ::IsWindow( m_wndToolBar.GetSafeHwnd() ) ) m_wndToolBar.SetWindowPos( NULL, rc.left, rc.bottom - TOOLBAR_HEIGHT, rc.Width(), TOOLBAR_HEIGHT, SWP_NOZORDER );
 	rc.bottom -= TOOLBAR_HEIGHT;
 
 	if ( m_bDetails )
@@ -502,6 +502,7 @@ void CSearchWnd::OnSearchSearch()
 		return;
 	}
 
+	// Ask whether to clear previous searches.
 	if ( m_pMatches->m_nFiles > 0 )
 	{
 		if ( MsgBox( IDS_SEARCH_CLEAR_PREVIOUS, MB_ICONQUESTION | MB_YESNO, 0,
@@ -776,6 +777,14 @@ void CSearchWnd::UpdateMessages()
 				pManaged->m_nHits = m_pMatches->m_nFilteredHits;
 			}
 		}
+		
+		// Check for Hub/Leaf cache size changes
+		if ( m_nCacheHubs != pManaged->m_nHubs ||
+			 m_nCacheLeaves != pManaged->m_nLeaves )
+		{
+			m_nCacheHubs = pManaged->m_nHubs;
+			m_nCacheLeaves = pManaged->m_nLeaves;
+		}
 	}
 
 	CString strOld;
@@ -785,16 +794,6 @@ void CSearchWnd::UpdateMessages()
 	{
 		SetWindowText( strCaption );
 		m_sCaption = strCaption;
-	}
-
-	if ( pManaged )
-	{
-		if ( m_nCacheHubs != pManaged->m_nHubs ||
-			 m_nCacheLeaves != pManaged->m_nLeaves )
-		{
-			m_nCacheHubs = pManaged->m_nHubs;
-			m_nCacheLeaves = pManaged->m_nLeaves;
-		}
 	}
 
 	m_wndPanel.ShowStatus( ! m_bPaused, !m_bWaitMore,

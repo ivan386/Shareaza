@@ -59,7 +59,6 @@ protected:
 	int				m_nCurrentWidth;
 	DWORD			m_nCacheItems;
 	int				m_nTrailWidth;
-	UINT			m_nMessage;
 	CString			m_sMessage;
 	BOOL			m_bSearchLink;
 	CBitmap			m_bmSortAsc;
