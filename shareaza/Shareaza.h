@@ -170,7 +170,9 @@ public:
 	// Open file or url. Returns NULL always.
 	virtual CDocument*	OpenDocumentFile(LPCTSTR lpszFileName);
 	// Open file or url (generic function)
-	BOOL				Open(LPCTSTR lpszFileName, BOOL bDoIt);
+	BOOL				Open(LPCTSTR lpszFileName, BOOL bDoIt, BOOL bDispay = FALSE);
+	// Show file in Library
+	BOOL				DisplayFile(LPCTSTR lpszFileName, BOOL bDoIt);
 	// Open host list file
 	BOOL				OpenImport(LPCTSTR lpszFileName, BOOL bDoIt);
 	// Open .lnk file

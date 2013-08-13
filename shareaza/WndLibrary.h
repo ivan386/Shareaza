@@ -1,7 +1,7 @@
 //
 // WndLibrary.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -42,8 +42,8 @@ public:
 	// Open Library window
 	static CLibraryWnd*	GetLibraryWindow(BOOL bToggle = FALSE, BOOL bFocus = TRUE);
 
-	BOOL	Display(CLibraryFile* pFile);
-	BOOL	Display(CAlbumFolder* pFolder);
+	BOOL	Display(const CLibraryFile* pFile);
+	BOOL	Display(const CAlbumFolder* pFolder);
 	BOOL	OnCollection(const CString& sPath);
 
 protected:

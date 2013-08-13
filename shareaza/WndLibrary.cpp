@@ -1,7 +1,7 @@
 //
 // WndLibrary.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -71,14 +71,30 @@ CLibraryWnd* CLibraryWnd::GetLibraryWindow(BOOL bToggle, BOOL bFocus)
 	return NULL;
 }
 
-BOOL CLibraryWnd::Display(CLibraryFile* pFile)
+BOOL CLibraryWnd::Display(const CLibraryFile* pFile)
 {
-	return m_wndFrame.Display( pFile );
+	if ( CMainWnd* pMainWnd = theApp.SafeMainWnd() )
+	{
+		pMainWnd->OpenFromTray();
+
+		m_wndFrame.Update( TRUE );
+
+		return m_wndFrame.Display( pFile );
+	}
+	return FALSE;
 }
 
-BOOL CLibraryWnd::Display(CAlbumFolder* pFolder)
+BOOL CLibraryWnd::Display(const CAlbumFolder* pFolder)
 {
-	return m_wndFrame.Display( pFolder );
+	if ( CMainWnd* pMainWnd = theApp.SafeMainWnd() )
+	{
+		pMainWnd->OpenFromTray();
+
+		m_wndFrame.Update( TRUE );
+
+		return m_wndFrame.Display( pFolder );
+	}
+	return FALSE;
 }
 
 /////////////////////////////////////////////////////////////////////////////

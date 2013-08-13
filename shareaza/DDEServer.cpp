@@ -1,7 +1,7 @@
 //
 // DDEServer.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -243,7 +243,7 @@ BOOL CDDEServer::Execute(LPCTSTR pszTopic, LPCTSTR pszMessage)
 	}
 	else if ( _tcscmp( pszTopic, _T("RAZAFORMAT") ) == 0 )
 	{
-		return theApp.Open( pszMessage, TRUE );
+		return theApp.Open( pszMessage, TRUE, TRUE );
 	}
 
 	return FALSE;

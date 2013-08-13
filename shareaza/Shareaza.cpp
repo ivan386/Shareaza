@@ -68,6 +68,7 @@
 #include "DlgHelp.h"
 #include "DlgSplash.h"
 
+#include "WndLibrary.h"
 #include "WndMain.h"
 #include "WndMedia.h"
 #include "WndPacket.h"
@@ -767,7 +768,7 @@ CDocument* CShareazaApp::OpenDocumentFile(LPCTSTR lpszFileName)
 	return NULL;
 }
 
-BOOL CShareazaApp::Open(LPCTSTR lpszFileName, BOOL bDoIt)
+BOOL CShareazaApp::Open(LPCTSTR lpszFileName, BOOL bDoIt, BOOL bDisplay)
 {
 	size_t nLength = _tcslen( lpszFileName );
 	if (      nLength > 8  && ! _tcsicmp( lpszFileName + nLength - 8,  _T(".torrent") ) )
@@ -790,8 +791,28 @@ BOOL CShareazaApp::Open(LPCTSTR lpszFileName, BOOL bDoIt)
 		return OpenImport( lpszFileName, bDoIt );
 	else if ( nLength > 4  && ! _tcsicmp( lpszFileName + nLength - 4,  _T(".lnk") ) )
 		return OpenShellShortcut( lpszFileName, bDoIt );
-	else
-		return OpenURL( lpszFileName, bDoIt );
+	else if ( bDisplay && DisplayFile( lpszFileName, bDoIt ) )
+		return TRUE;
+
+	return OpenURL( lpszFileName, bDoIt );
+}
+
+BOOL CShareazaApp::DisplayFile(LPCTSTR lpszFileName, BOOL bDoIt)
+{
+	CSingleLock pLibraryLock( &Library.m_pSection, TRUE );
+	if ( CLibraryFile* pLibFile = LibraryMaps.LookupFileByPath( lpszFileName ) )
+	{
+		if ( bDoIt )
+		{
+			if ( CLibraryWnd* pLibrary = CLibraryWnd::GetLibraryWindow() )
+			{
+				pLibrary->Display( pLibFile );
+			}
+		}
+		return TRUE;
+	}
+
+	return FALSE;
 }
 
 BOOL CShareazaApp::OpenImport(LPCTSTR lpszFileName, BOOL bDoIt)
