@@ -1,7 +1,7 @@
 //
 // UploadQueue.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -119,9 +119,9 @@ public:
 		return m_nCapacity <= GetQueuedCount();
 	}
 
-	inline bool IsActive(CUploadTransfer* const pUpload) const
+	inline bool IsActive(const CUploadTransfer* pUpload) const
 	{
-		return m_pActive.Find( pUpload ) != NULL;
+		return m_pActive.Find( (CUploadTransfer*)pUpload ) != NULL;
 	}
 
 	inline DWORD GetMeasuredSpeed() const

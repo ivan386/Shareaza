@@ -1,7 +1,7 @@
 //
 // WndUploads.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -257,11 +257,11 @@ void CUploadsWnd::OnMDIActivate(BOOL bActivate, CWnd* pActivateWnd, CWnd* pDeact
 	if ( bActivate ) m_wndUploads.SetFocus();
 }
 
-BOOL CUploadsWnd::IsSelected(CUploadFile* pFile)
+BOOL CUploadsWnd::IsSelected(const CUploadFile* pFile) const
 {
 	if ( ! pFile->m_bSelected ) return FALSE;
 
-	if ( CUploadTransfer* pTransfer = pFile->GetActive() )
+	if ( const CUploadTransfer* pTransfer = pFile->GetActive() )
 	{
 		if ( pTransfer->m_nProtocol == PROTOCOL_BT )
 		{
@@ -480,7 +480,11 @@ void CUploadsWnd::OnUploadsLaunch()
 			pTransfersLock.Unlock();
 
 			CSingleLock pLibraryLock( &Library.m_pSection, TRUE );
-			if ( CLibraryFile* pLibFile = LibraryMaps.LookupFileByHash( &oFile ) )
+
+			const CLibraryFile* pLibFile = LibraryMaps.LookupFileByHash( &oFile );
+			if ( ! pLibFile )
+				pLibFile = LibraryMaps.LookupFileByPath( oFile.m_sPath );
+			if ( pLibFile )
 			{
 				if ( CLibraryWnd* pLibrary = CLibraryWnd::GetLibraryWindow() )
 				{

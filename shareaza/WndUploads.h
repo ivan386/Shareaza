@@ -1,7 +1,7 @@
 //
 // WndUploads.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_WNDUPLOADS_H__1067A4F9_E488_4037_BA97_04B1C6EB46B4__INCLUDED_)
-#define AFX_WNDUPLOADS_H__1067A4F9_E488_4037_BA97_04B1C6EB46B4__INCLUDED_
-
 #pragma once
 
 #include "WndPanel.h"
@@ -38,19 +35,16 @@ public:
 	DECLARE_SERIAL(CUploadsWnd)
 
 // Operations
-public:
 	virtual void	OnSkinChange();
+
 protected:
-	inline BOOL		IsSelected(CUploadFile* pFile);
+	inline BOOL		IsSelected(const CUploadFile* pFile) const;
 	void			Prepare();
 
 // Attributes
-public:
 	CUploadsCtrl	m_wndUploads;
 	CCoolBarCtrl	m_wndToolBar;
-protected:
 	DWORD			m_tLastUpdate;
-protected:
 	DWORD			m_tSel;
 	BOOL			m_bSelFile;
 	BOOL			m_bSelUpload;
@@ -60,13 +54,9 @@ protected:
 	BOOL			m_bSelBrowse;
 	BOOL			m_bSelSourceAcceptConnections;
 
-// Overrides
-public:
 	virtual BOOL OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo);
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 
-// Implementation
-protected:
 	DECLARE_MESSAGE_MAP()
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnDestroy();
@@ -104,11 +94,8 @@ protected:
 	afx_msg void OnUpdateUploadsFilterHistory(CCmdUI* pCmdUI);
 	afx_msg void OnUploadsFilterHistory();
 	afx_msg void OnUploadsFilterMenu();
-public:
 	afx_msg void OnUpdateUploadsFilterTorrent(CCmdUI *pCmdUI);
 	afx_msg void OnUploadsFilterTorrent();
 };
 
 #define IDC_UPLOADS		100
-
-#endif // !defined(AFX_WNDUPLOADS_H__1067A4F9_E488_4037_BA97_04B1C6EB46B4__INCLUDED_)
