@@ -83,7 +83,7 @@ void CHashProgressBar::Run()
 		{
 			try
 			{
-				CreateEx( WS_EX_LAYERED | WS_EX_TOPMOST | WS_EX_TOOLWINDOW,
+				CreateEx( WS_EX_LAYERED | WS_EX_TOPMOST | WS_EX_TOOLWINDOW | WS_EX_NOACTIVATE,
 					AfxRegisterWndClass( CS_SAVEBITS ),
 					CLIENT_NAME_T _T(" Hashing..."), WS_POPUP | WS_VISIBLE, 0, 0,
 					WINDOW_WIDTH, WINDOW_HEIGHT, NULL, 0 );
