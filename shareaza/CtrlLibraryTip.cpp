@@ -331,7 +331,10 @@ void CLibraryTipCtrl::OnDestroy()
 
 void CLibraryTipCtrl::StopThread()
 {
-	CloseThread();
+	if ( IsThreadAlive() )
+	{
+		CloseThread();
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////

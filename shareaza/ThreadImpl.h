@@ -32,6 +32,7 @@ public:
 		: m_pCancel		( FALSE, TRUE )
 		, m_hThread		( NULL )
 		, m_nThreadID	( 0 )
+		, m_bCanceling	( FALSE )
 	{
 	}
 
@@ -42,9 +43,10 @@ public:
 
 private:
 	CEvent			m_pCancel;		// Thread cancel event (signaled if abort requested)
-	HANDLE			m_hThread;		// Thread handle
+	volatile HANDLE	m_hThread;		// Thread handle
 	DWORD			m_nThreadID;	// Thread ID
 	CEvent			m_pWakeup;		// Thread wakeup event (optional)
+	volatile LONG	m_bCanceling;	// Thread is canceling
 
 	static UINT ThreadStart(LPVOID pParam)
 	{
@@ -75,19 +77,27 @@ public:
 	{
 		m_pCancel.SetEvent();	// Ask thread for exit
 		m_pWakeup.SetEvent();	// Wakeup thread if any
-		if ( m_nThreadID != GetCurrentThreadId() )
+		if ( ! InterlockedCompareExchange( &m_bCanceling, TRUE, FALSE ) )
 		{
-			::CloseThread( m_hThread, dwTimeout );
-			m_hThread = NULL;
+			if ( m_nThreadID != GetCurrentThreadId() )
+			{
+				::CloseThread( m_hThread, dwTimeout );
+				m_hThread = NULL;
+			}
+			InterlockedExchange( &m_bCanceling, FALSE );
 		}
 	}
 
 	inline void Wait() throw()
 	{
-		if ( m_nThreadID != GetCurrentThreadId() )
+		if ( ! InterlockedCompareExchange( &m_bCanceling, TRUE, FALSE ) )
 		{
-			::CloseThread( m_hThread, INFINITE );
-			m_hThread = NULL;
+			if ( m_nThreadID != GetCurrentThreadId() )
+			{
+				::CloseThread( m_hThread, INFINITE );
+				m_hThread = NULL;
+			}
+			InterlockedExchange( &m_bCanceling, FALSE );
 		}
 	}
 
