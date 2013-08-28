@@ -53,7 +53,7 @@ private:
 	QWORD		m_nVerifyLength;
 	DWORD		m_tVerifyLast;
 
-	mutable CCriticalSection	m_pTigerSection;
+	mutable CMutexEx			m_pTigerSection;
 
 	mutable QWORD				m_nWFLCookie;		// Wanted fragment list cookie
 	mutable Fragments::List		m_oWFLCache;		// Wanted fragment list cache
