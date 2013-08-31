@@ -68,12 +68,12 @@ BEGIN
         BEGIN
             VALUE "Comments", "Compacts RTF files to speed up opening"
             VALUE "FileDescription", "RTF File Compacter"
-            VALUE "FileVersion", "1, 0, 0, 1"
+            VALUE "FileVersion", "1.0.0.1"
             VALUE "InternalName", "RTFCompact"
             VALUE "LegalCopyright", "Copyright (C) Rolandas Rudomanskis, 2006"
             VALUE "OriginalFilename", "RTFCompact.exe"
             VALUE "ProductName", "RTF File Compacter"
-            VALUE "ProductVersion", "1, 0, 0, 1"
+            VALUE "ProductVersion", "1.0.0.1"
         END
     END
     BLOCK "VarFileInfo"

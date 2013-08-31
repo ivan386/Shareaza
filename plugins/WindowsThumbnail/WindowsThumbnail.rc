@@ -31,7 +31,7 @@ LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
 
 VS_VERSION_INFO VERSIONINFO
  FILEVERSION 1,1,0,0
- PRODUCTVERSION 2,6,0,0
+ PRODUCTVERSION 2,7,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x21L
@@ -49,12 +49,12 @@ BEGIN
             VALUE "Comments", "Uses Windows thumbnails as Shareaza thumbnails."
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Windows Thumbnail plugin for Shareaza"
-            VALUE "FileVersion", "1, 1, 0, 0"
+            VALUE "FileVersion", "1.1.0.0"
             VALUE "InternalName", "WindowsThumbnail.exe"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2009-2010. All rights reserved."
             VALUE "OriginalFilename", "WindowsThumbnail.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 6, 0, 0"
+            VALUE "ProductVersion", "2.7.0.0"
             VALUE "SpecialBuild", "plugin"
         END
     END

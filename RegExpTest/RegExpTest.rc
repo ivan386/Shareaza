@@ -62,7 +62,7 @@ END
 
 VS_VERSION_INFO VERSIONINFO
  FILEVERSION 1,0,0,2
- PRODUCTVERSION 2,5,3,0
+ PRODUCTVERSION 2,7,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -79,12 +79,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "RegExpTest"
-            VALUE "FileVersion", "1, 0, 0, 2"
+            VALUE "FileVersion", "1.0.0.2"
             VALUE "InternalName", "RegExpTest"
-            VALUE "LegalCopyright", "Shareaza Development Team"
+            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2011. All rights reserved."
             VALUE "OriginalFilename", "RegExpTest.exe"
-            VALUE "ProductName", "RegExpTest"
-            VALUE "ProductVersion", "2, 5, 3, 0"
+            VALUE "ProductName", "Shareaza"
+            VALUE "ProductVersion", "2.7.0.0"
         END
     END
     BLOCK "VarFileInfo"

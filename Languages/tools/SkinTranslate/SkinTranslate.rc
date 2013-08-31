@@ -28,7 +28,7 @@ LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
 
 VS_VERSION_INFO VERSIONINFO
  FILEVERSION 1,0,0,2
- PRODUCTVERSION 1,0,0,2
+ PRODUCTVERSION 2,7,0,0
  FILEFLAGSMASK 0x17L
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -45,12 +45,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Skin translate utility"
-            VALUE "FileVersion", "1, 0, 0, 2"
+            VALUE "FileVersion", "1.0.0.2"
             VALUE "InternalName", "SkinTranslate"
-            VALUE "LegalCopyright", "Copyright (C) Nikolay Raspopov, 2009-2011."
+            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2009-2011. All rights reserved."
             VALUE "OriginalFilename", "SkinTranslate.exe"
-            VALUE "ProductName", "Skin translate utility"
-            VALUE "ProductVersion", "1, 0, 0, 2"
+            VALUE "ProductName", "Shareaza"
+            VALUE "ProductVersion", "2.7.0.0"
         END
     END
     BLOCK "VarFileInfo"
