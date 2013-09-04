@@ -1,7 +1,7 @@
 //
 // BTInfo.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1094,10 +1094,25 @@ BOOL CBTInfo::LoadTorrentTree(const CBENode* pRoot)
 
 			if ( const CBENode* pSHA1 = pFile->GetNode( "sha1" ) )
 			{
-				if ( ! pSHA1->IsType( CBENode::beString ) ||
-					   pSHA1->m_nValue != Hashes::Sha1Hash::byteCount ) return FALSE;
-				pBTFile->m_oSHA1 =
-					*static_cast< Hashes::Sha1Hash::RawStorage* >( pSHA1->m_pValue );
+				if ( ! pSHA1->IsType( CBENode::beString ) )
+				{
+					return FALSE;
+				}
+				else if ( pSHA1->m_nValue == Hashes::Sha1Hash::byteCount )
+				{
+					pBTFile->m_oSHA1 =
+						*static_cast< const Hashes::Sha1Hash::RawStorage* >( pSHA1->m_pValue );
+				}
+				else if ( pSHA1->m_nValue == Hashes::Sha1Hash::byteCount * 2 )
+				{
+					CStringA tmp;
+					tmp.Append( (const char*)pSHA1->m_pValue, (int)pSHA1->m_nValue );
+					pBTFile->m_oSHA1.fromString( CA2W( tmp ) );
+				}
+				else
+				{
+					return FALSE;
+				}
 			}
 
 			if ( const CBENode* pED2K = pFile->GetNode( "ed2k" ) )
