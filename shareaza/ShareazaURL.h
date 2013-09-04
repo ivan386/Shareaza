@@ -1,7 +1,7 @@
 //
 // ShareazaURL.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -86,7 +86,7 @@ protected:
 	// URL
 	//	shareaza:[//]url:{nested_url}
 	BOOL	ParseShareaza(LPCTSTR pszURL);
-	BOOL	ParseShareazaHost(LPCTSTR pszURL, BOOL bBrowse = FALSE);
+	BOOL	ParseShareazaHost(LPCTSTR pszURL, BOOL bBrowse = FALSE, PROTOCOLID nProtocol = PROTOCOL_G2);
 	BOOL	ParseShareazaFile(LPCTSTR pszURL);
 	BOOL	ParseDiscovery(LPCTSTR pszURL, int nType);
 	// ed2k://|file|{name}|{size}|{md4_hash}|/

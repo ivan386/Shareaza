@@ -1,7 +1,7 @@
 //
 // ShareazaURL.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -465,11 +465,7 @@ BOOL CShareazaURL::ParseDCHub(LPCTSTR pszURL, BOOL bResolve)
 	{
 		// Short version - hub address only
 		m_sAddress.Empty();
-		m_nPort = protocolPorts[ PROTOCOL_DC ];
-		if ( ! ParseShareazaHost( pszURL ) )
-			return FALSE;
-		m_nProtocol = PROTOCOL_DC;
-		return TRUE;
+		return ParseShareazaHost( pszURL, FALSE, PROTOCOL_DC );
 	}
 
 	// Full version - file URL
@@ -735,12 +731,9 @@ BOOL CShareazaURL::ParseShareaza(LPCTSTR pszURL)
 	}
 	else if ( _tcsnicmp( pszURL, _T("btnode:"), 7 ) == 0 )
 	{
-		m_nPort = protocolPorts[ PROTOCOL_BT ];
-		if ( ParseShareazaHost( SkipSlashes( pszURL, 7 ) ) )
+		if ( ParseShareazaHost( SkipSlashes( pszURL, 7 ), FALSE, PROTOCOL_BT ) )
 		{
 			m_sAddress.Format( _T("%s:%u"), m_sName, m_nPort );
-			m_nProtocol = PROTOCOL_BT;
-			m_nAction	= uriHost;
 			return TRUE;
 		}
 		return FALSE;
@@ -762,11 +755,11 @@ BOOL CShareazaURL::ParseShareaza(LPCTSTR pszURL)
 //////////////////////////////////////////////////////////////////////
 // CShareazaURL parse Shareaza host URL
 
-BOOL CShareazaURL::ParseShareazaHost(LPCTSTR pszURL, BOOL bBrowse)
+BOOL CShareazaURL::ParseShareazaHost(LPCTSTR pszURL, BOOL bBrowse, PROTOCOLID nProtocol)
 {
 	m_sName = pszURL;
 	m_sName = m_sName.SpanExcluding( _T("/\\") );
-	m_nPort = protocolPorts[ PROTOCOL_G2 ];
+	m_nPort = protocolPorts[ nProtocol ];
 
 	int nPos = m_sName.Find( ':' );
 
@@ -786,7 +779,7 @@ BOOL CShareazaURL::ParseShareazaHost(LPCTSTR pszURL, BOOL bBrowse)
 	m_sName.TrimLeft();
 	m_sName.TrimRight();
 
-	m_nProtocol = PROTOCOL_G2;
+	m_nProtocol = nProtocol;
 	m_nAction = bBrowse ? uriBrowse : uriHost;
 
 	return m_sName.GetLength();
