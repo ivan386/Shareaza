@@ -1,7 +1,7 @@
 //
 // Builder.cpp : Implementation of CBuilder
 //
-// Copyright (c) Nikolay Raspopov, 2005-2007.
+// Copyright (c) Nikolay Raspopov, 2005-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -120,8 +120,10 @@ HRESULT CBuilder::SafeProcess(BSTR sFile, ISXMLElement* pXML)
 				}
 				if (bFound)
 				{
-					VIDEOINFOHEADER *pVih = (VIDEOINFOHEADER*)mt.pbFormat;
-					CString codec;
+					const VIDEOINFOHEADER *pVih = (const VIDEOINFOHEADER*)mt.pbFormat;
+					
+					// TODO: This is video format not a codec
+					/*CString codec;
 					if (mt.subtype == MEDIASUBTYPE_Y41P)
 					{
 						codec = _T("MPEG");
@@ -184,8 +186,7 @@ HRESULT CBuilder::SafeProcess(BSTR sFile, ISXMLElement* pXML)
 #endif // _DEBUG
 						codec = _T("Unknown");
 					}
-
-					pISXMLAttributes->Add (CComBSTR ("codec"), CComBSTR (codec));
+					pISXMLAttributes->Add (CComBSTR ("codec"), CComBSTR (codec));*/
 
 					int nWidth = pVih->bmiHeader.biWidth;
 					int nHeight = pVih->bmiHeader.biHeight;				    
