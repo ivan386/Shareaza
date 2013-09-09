@@ -1,7 +1,7 @@
 //
 // LibraryBuilderInternals.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -966,38 +966,37 @@ bool CLibraryBuilderInternals::ScanMP3Frame(CXMLElement* pXML, HANDLE hFile, DWO
 
 bool CLibraryBuilderInternals::ReadVersion(DWORD nIndex, LPCTSTR pszPath)
 {
-	DWORD dwSize = GetFileVersionInfoSize( (LPTSTR)pszPath, &dwSize );
-	if ( dwSize <= 152 )
-		return false;
-
-	auto_array< BYTE > pBuffer( new BYTE[ dwSize ] );
-
-	if ( !GetFileVersionInfo( (LPTSTR)pszPath, NULL, dwSize, pBuffer.get() ) )
-		return false;
-
-	DWORD nLangId = GetBestLanguageId( pBuffer.get() );
-
 	auto_ptr< CXMLElement > pXML( new CXMLElement( NULL, _T("application") ) );
+	if ( pXML.get() )
+	{
+		if ( DWORD dwSize = GetFileVersionInfoSize( (LPTSTR)pszPath, &dwSize ) )
+		{
+			pXML->AddAttribute( _T("os"), _T("Windows") );
 
-	pXML->AddAttribute( _T("os"), _T("Windows") );
+			auto_array< BYTE > pBuffer( new BYTE[ dwSize ] );
+			if ( pBuffer.get() && GetFileVersionInfo( (LPTSTR)pszPath, NULL, dwSize, pBuffer.get() ) )
+			{
+				const DWORD nLangId = GetBestLanguageId( pBuffer.get() );
 
-	bool bOur = false;
-	bOur |= CopyVersionField( pXML.get(), _T("title"), pBuffer.get(), _T("ProductName"), nLangId );
-			CopyVersionField( pXML.get(), _T("version"), pBuffer.get(), _T("ProductVersion"), nLangId, true );
-	bOur |= CopyVersionField( pXML.get(), _T("fileDescription"), pBuffer.get(), _T("FileDescription"), nLangId );
-			CopyVersionField( pXML.get(), _T("fileVersion"), pBuffer.get(), _T("FileVersion"), nLangId, true );
-	bOur |= CopyVersionField( pXML.get(), _T("originalFileName"), pBuffer.get(), _T("OriginalFilename"), nLangId );
-	bOur |= CopyVersionField( pXML.get(), _T("company"), pBuffer.get(), _T("CompanyName"), nLangId );
-	bOur |= CopyVersionField( pXML.get(), _T("copyright"), pBuffer.get(), _T("LegalCopyright"), nLangId );
-	bOur |= CopyVersionField( pXML.get(), _T("comments"), pBuffer.get(), _T("comments"), nLangId );
+				bool bOur = false;
+				bOur |= CopyVersionField( pXML.get(), _T("title"), pBuffer.get(), _T("ProductName"), nLangId );
+						CopyVersionField( pXML.get(), _T("version"), pBuffer.get(), _T("ProductVersion"), nLangId, true );
+				bOur |= CopyVersionField( pXML.get(), _T("fileDescription"), pBuffer.get(), _T("FileDescription"), nLangId );
+						CopyVersionField( pXML.get(), _T("fileVersion"), pBuffer.get(), _T("FileVersion"), nLangId, true );
+				bOur |= CopyVersionField( pXML.get(), _T("originalFileName"), pBuffer.get(), _T("OriginalFilename"), nLangId );
+				bOur |= CopyVersionField( pXML.get(), _T("company"), pBuffer.get(), _T("CompanyName"), nLangId );
+				bOur |= CopyVersionField( pXML.get(), _T("copyright"), pBuffer.get(), _T("LegalCopyright"), nLangId );
+				bOur |= CopyVersionField( pXML.get(), _T("comments"), pBuffer.get(), _T("comments"), nLangId );
 
-	//LPCTSTR pszExt = PathFindExtension( pszPath );
-	//if ( bOur && pszExt && _tcscmp( pszExt, L".exe" ) == 0 /*&& ValidateManifest( pszPath )*/ )
-	//{
-	//	// TODO: mark the file as validated OR otherwise submit corrupted OR delete metadata?
-	//}
-
-	LibraryBuilder.SubmitMetadata( nIndex, CSchema::uriApplication, pXML.release() );
+				//LPCTSTR pszExt = PathFindExtension( pszPath );
+				//if ( bOur && pszExt && _tcscmp( pszExt, L".exe" ) == 0 /*&& ValidateManifest( pszPath )*/ )
+				//{
+				//	// TODO: mark the file as validated OR otherwise submit corrupted OR delete metadata?
+				//}
+			}
+		}
+		LibraryBuilder.SubmitMetadata( nIndex, CSchema::uriApplication, pXML.release() );
+	}
 	return true;
 }
 
@@ -1012,10 +1011,7 @@ bool CLibraryBuilderInternals::CopyVersionField(CXMLElement* pXML, LPCTSTR pszAt
 
 	if ( bCommaToDot )
 	{
-		for ( int nPos = -1 ; ( nPos = strValue.Find( _T(", ") ) ) >= 0 ; )
-		{
-			strValue = strValue.Left( nPos ) + '.' + strValue.Mid( nPos + 2 );
-		}
+		strValue.Replace( _T(", "), _T(".") );
 	}
 
 	pXML->AddAttribute( pszAttribute, strValue );
@@ -1044,19 +1040,17 @@ bool CLibraryBuilderInternals::CopyVersionField(CXMLElement* pXML, LPCTSTR pszAt
 
 CString CLibraryBuilderInternals::GetVersionKey(BYTE* pBuffer, LPCTSTR pszKey, DWORD nLangId)
 {
-	CString strKey, strValue;
-
+	CString strKey;
 	strKey.Format( L"\\StringFileInfo\\%04x%04x\\", nLangId & 0x0000FFFF, ( nLangId & 0xFFFF0000 ) >> 16 );
 	strKey += pszKey;
 
 	BYTE* pValue = NULL;
 	DWORD dwSize = 0;
 
-	if ( !VerQueryValue( pBuffer, (LPTSTR)(LPCTSTR)strKey, (void**)&pValue, (UINT*)&dwSize ) )
-		return strValue;
+	if ( ! VerQueryValue( pBuffer, (LPTSTR)(LPCTSTR)strKey, (void**)&pValue, (UINT*)&dwSize ) )
+		return CString();
 
-	strValue = (LPCTSTR)pValue;
-
+	CString strValue = (LPCTSTR)pValue;
 	return strValue.Trim();
 }
 
