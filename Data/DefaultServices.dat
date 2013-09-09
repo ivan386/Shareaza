@@ -1,23 +1,10 @@
-M http://cache.leite.us/
-M http://gofoxy.net/gwc/cgi-bin/fc
-M http://gwc.gofoxy.net:2108/gwc/cgi-bin/fc
-M http://gwc.marksieklucki.com/skulls.php
-M http://gwebcache.ns1.net/
 M http://tenafly5k.com/gwc/skulls.php
-M http://witch.frodoslair.net/gwc/Beacon2/gwc.php
 
 2 http://cache.ce3c.be/
 2 http://cache.trillinux.org/g2/bazooka.php
-2 http://cache.wru.pl/skulls.php
-2 http://cache2.leite.us/
 2 http://dkac.trillinux.org/dkac/dkac.php
 2 http://htmlhell.com/
-2 http://gwc.agrocampmt.com.br/skulls.php
 2 http://gwc.dyndns.info:28960/gwc.php
-2 http://gwc2.wodi.org/skulls.php
-2 http://karma.cloud.bishopston.net:33559/
-2 http://midian.jayl.de/g2/bazooka.php
-2 http://silvers.zyns.com/gwc/dkac.php
 
 1 http://beacon.numberzero.org/gwc.php
 
@@ -25,7 +12,21 @@ U uhc:yin.cloud.bishopston.net:33558
 
 D http://peerates.net/servers.php
 D http://www.gruk.org/server.met
+D http://upd.emule-security.org/server.met
 
+X http://silvers.zyns.com/gwc/dkac.php
+X http://midian.jayl.de/g2/bazooka.php
+X http://karma.cloud.bishopston.net:33559/
+X http://gwc2.wodi.org/skulls.php
+X http://gwc.agrocampmt.com.br/skulls.php
+X http://cache.wru.pl/skulls.php
+X http://witch.frodoslair.net/gwc/Beacon2/gwc.php
+X http://gwebcache.ns1.net/
+X http://gwc.marksieklucki.com/skulls.php
+X http://gwc.gofoxy.net:2108/gwc/cgi-bin/fc
+X http://gofoxy.net/gwc/cgi-bin/fc
+X http://cache.leite.us/
+X http://cache2.leite.us/
 X http://bootdesu.appspot.com/
 X http://cache.trillinux.org.nyud.net:8090/g2/bazooka.php
 X http://fascination77.free.fr/cachechu/
