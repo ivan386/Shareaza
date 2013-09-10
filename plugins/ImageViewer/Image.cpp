@@ -289,7 +289,7 @@ BOOL CImage::Load(LPCTSTR pszPath)
 	
 	// Open the file
 	
-	HANDLE hFile = CreateFile( pszPath, GENERIC_READ, FILE_SHARE_READ|FILE_SHARE_WRITE,
+	HANDLE hFile = CreateFile( CString( _T("\\\\?\\") ) + pszPath, GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
 		NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
 	
 	// Make sure it worked
@@ -314,18 +314,14 @@ BOOL CImage::Load(LPCTSTR pszPath)
 
 	// Setup the IMAGESERVICEDATA structure
 	
-	IMAGESERVICEDATA pParams;
-	ZeroMemory( &pParams, sizeof(pParams) );
-	
+	IMAGESERVICEDATA pParams = {};	
 	pParams.cbSize		= sizeof(pParams);
 	pParams.nFlags		= IMAGESERVICE_PARTIAL_IN;	// Partial images okay
 	
 	// Ask the ImageService to load from file handle
 	
 	SAFEARRAY* pArray = NULL;
-	BSTR sFile = SysAllocString (CT2CW (pszPath));
-	HRESULT hr = pService->LoadFromFile( sFile, &pParams, &pArray );
-	SysFreeString (sFile);
+	HRESULT hr = pService->LoadFromFile( CComBSTR( CString( _T("\\\\?\\") ) + pszPath ), &pParams, &pArray );
 	
 	// Check the result
 	
@@ -375,9 +371,8 @@ BOOL CImage::Load(LPCTSTR pszPath)
 					LPCTSTR pszType = _tcsrchr( pszPath, '.' );
 					if ( pszType == NULL ) return FALSE;
 					
-					BSTR bstrType = SysAllocString ( CT2CW( pszType ) );
-					hr = pService->LoadFromMemory( bstrType, pInput, &pParams, &pArray );
-					SysFreeString( bstrType );
+					hr = pService->LoadFromMemory( CComBSTR( pszType ), pInput, &pParams, &pArray );
+
 					SafeArrayDestroy( pInput );
 				}
 				

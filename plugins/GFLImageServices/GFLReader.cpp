@@ -79,12 +79,12 @@ STDMETHODIMP CGFLReader::LoadFromFile (
 	GFL_FILE_INFORMATION inf = { 0 };
 	WCHAR pszPath[MAX_PATH] = { 0 };
 
-	GFL_ERROR err = gflGetFileInformation (CW2A(sFile), -1, &inf);
+	GFL_ERROR err = gflGetFileInformationW( (LPCWSTR)sFile, -1, &inf );
 
 	if ( err != GFL_NO_ERROR )
 	{
-		if ( GetShortPathNameW( sFile, pszPath, MAX_PATH ) )
-			err = gflGetFileInformation (CW2A(pszPath), -1, &inf);
+		if ( GetShortPathNameW( (LPCWSTR)sFile, pszPath, MAX_PATH ) )
+			err = gflGetFileInformationW( pszPath, -1, &inf );
 		else err = GFL_ERROR_FILE_OPEN;
 	}
 	if (err == GFL_NO_ERROR)
@@ -111,7 +111,7 @@ STDMETHODIMP CGFLReader::LoadFromFile (
 		}
 	} else {
 		hr = E_FAIL;
-		ATLTRACE( "gflGetFileInformation error: %s\n", gflGetErrorString( err ) );
+		ATLTRACE( "gflGetFileInformationW error: %s\n", gflGetErrorString( err ) );
 	}
 
 	if (hGflBitmap)

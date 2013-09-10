@@ -25,7 +25,7 @@ LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,2,0,1
+ FILEVERSION 1,2,0,2
  PRODUCTVERSION 2,7,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
@@ -44,7 +44,7 @@ BEGIN
             VALUE "Comments", "Extract previews from images of insane amount of formats."
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "GFL Image Service Plugin"
-            VALUE "FileVersion", "1.2.0.1"
+            VALUE "FileVersion", "1.2.0.2"
             VALUE "InternalName", "GFLImageServices"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2005-2013. All rights reserved."
             VALUE "OriginalFilename", "GFLImageServices.dll"

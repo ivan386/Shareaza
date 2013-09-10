@@ -13,13 +13,11 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// English (U.S.) resources
+// English (United States) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
-#ifdef _WIN32
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 #pragma code_page(1252)
-#endif //_WIN32
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -46,7 +44,7 @@ END
 
 #endif    // APSTUDIO_INVOKED
 
-#endif    // English (U.S.) resources
+#endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
 
 
@@ -54,10 +52,8 @@ END
 // English (Australia) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENA)
-#ifdef _WIN32
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_AUS
 #pragma code_page(1252)
-#endif //_WIN32
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -65,7 +61,7 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_AUS
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,2,2,0
+ FILEVERSION 1,2,3,0
  PRODUCTVERSION 2,7,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
@@ -84,9 +80,9 @@ BEGIN
             VALUE "Comments", "Show images."
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Image Viewer Plugin"
-            VALUE "FileVersion", "1.2.2.0"
+            VALUE "FileVersion", "1.2.3.0"
             VALUE "InternalName", "ImageViewer"
-            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2010. All rights reserved."
+            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2013. All rights reserved."
             VALUE "OriginalFilename", "ImageViewer.dll"
             VALUE "ProductName", "Shareaza"
             VALUE "ProductVersion", "2.7.0.0"
@@ -141,7 +137,7 @@ IDB_COMMANDS            BITMAP                  "Commands.bmp"
 // String Table
 //
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_PROJNAME            "ImageViewer"
     IDS_ABOUT               "Shareaza Image Viewer Plugin\nCopyright © Shareaza Development Team, 2002-2007."
