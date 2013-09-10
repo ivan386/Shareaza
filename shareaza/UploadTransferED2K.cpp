@@ -136,8 +136,13 @@ BOOL CUploadTransferED2K::Request(const Hashes::Ed2kHash& oED2K)
 
 	AllocateBaseFile();
 
-	theApp.Message( MSG_NOTICE, IDS_UPLOAD_FILE,
-		(LPCTSTR)m_sName, (LPCTSTR)m_sAddress );
+	if ( m_pBaseFile->m_nRequests++ == 0 )
+	{
+		theApp.Message( MSG_NOTICE, IDS_UPLOAD_FILE,
+			(LPCTSTR)m_sName, (LPCTSTR)m_sAddress );
+
+		PostMainWndMessage( WM_NOWUPLOADING, 0, (LPARAM)new CString( m_pBaseFile->m_sPath ) );
+	}
 
 	m_nRanking = -1;
 	return CheckRanking();
@@ -510,8 +515,6 @@ BOOL CUploadTransferED2K::ServeRequests()
 			return FALSE;
 		}
 
-		PostMainWndMessage( WM_NOWUPLOADING, 0, (LPARAM)new CString( m_pBaseFile->m_sPath ) );
-
 		if ( ! StartNextRequest() )
 			return FALSE;
 	}
@@ -562,32 +565,27 @@ BOOL CUploadTransferED2K::StartNextRequest()
 		m_oRequested.pop_front();
 	}
 
-	if ( m_nLength < SIZE_UNKNOWN )
-	{
-		if ( !Settings.eDonkey.EnableToday && Settings.Connection.RequireForTransfers )
-		{
-			Send( CEDPacket::New( ED2K_C2C_FILENOTFOUND ) );
-			Cleanup();
-			Close();
-			return FALSE;
-		}
-
-		m_nState	= upsUploading;
-		m_tContent	= m_pClient->m_mOutput.tLast = GetTickCount();
-
-		theApp.Message( MSG_INFO, IDS_UPLOAD_CONTENT,
-			m_nOffset, m_nOffset + m_nLength - 1,
-			(LPCTSTR)m_sName, (LPCTSTR)m_sAddress,
-			(LPCTSTR)m_sUserAgent );
-
+	if ( m_nLength == SIZE_UNKNOWN )
+		// Waiting for new requests
 		return TRUE;
-	}
-	else
+	
+	if ( !Settings.eDonkey.EnableToday && Settings.Connection.RequireForTransfers )
 	{
-		m_nState = upsRequest;
-		m_tRequest = GetTickCount();
-		return TRUE;
+		Send( CEDPacket::New( ED2K_C2C_FILENOTFOUND ) );
+		Cleanup();
+		Close();
+		return FALSE;
 	}
+
+	m_nState	= upsUploading;
+	m_tContent	= m_pClient->m_mOutput.tLast = GetTickCount();
+
+	theApp.Message( MSG_INFO, IDS_UPLOAD_CONTENT,
+		m_nOffset, m_nOffset + m_nLength - 1,
+		(LPCTSTR)m_sName, (LPCTSTR)m_sAddress,
+		(LPCTSTR)m_sUserAgent );
+
+	return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////
