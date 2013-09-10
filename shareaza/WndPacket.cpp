@@ -1,7 +1,7 @@
 //
 // WndPacket.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -261,16 +261,19 @@ void CPacketWnd::SmartDump(const CPacket* pPacket, const SOCKADDR_IN* pAddress, 
 		// TODO: Filter ED2K packets
 		if ( ! m_bTypeED )
 			return;
+		break;
 
 	case PROTOCOL_BT:
 		// TODO: Filter BitTorrent packets
 		if ( ! m_bTypeBT )
 			return;
+		break;
 
 	case PROTOCOL_DC:
 		// TODO: Filter DC++ packets
 		if ( ! m_bTypeDC )
 			return;
+		break;
 
 	default:
 		;
