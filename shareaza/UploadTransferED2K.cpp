@@ -1,7 +1,7 @@
 //
 // UploadTransferED2K.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -161,10 +161,6 @@ void CUploadTransferED2K::Close(UINT nError)
 		{
 			Send( CEDPacket::New( ED2K_C2C_FINISHUPLOAD ) );
 		}
-
-		CEDPacket* pPacket = CEDPacket::New( ED2K_C2C_FILENOTFOUND );
-		pPacket->Write( m_oED2K );
-		Send( pPacket );
 	}
 
 	Cleanup();
@@ -588,10 +584,9 @@ BOOL CUploadTransferED2K::StartNextRequest()
 	}
 	else
 	{
-		Send( CEDPacket::New( ED2K_C2C_FINISHUPLOAD ) );
-		Cleanup();
-		Close( IDS_UPLOAD_DROPPED );
-		return FALSE;
+		m_nState = upsRequest;
+		m_tRequest = GetTickCount();
+		return TRUE;
 	}
 }
 
@@ -615,11 +610,12 @@ BOOL CUploadTransferED2K::DispatchNextChunk()
 		QWORD nChunk = min( nPacket, (QWORD)Settings.eDonkey.FrameSize );
 		QWORD nOffset = m_nOffset + m_nPosition;
 		bool bI64Offset =	( nOffset & 0xffffffff00000000 ) || ( ( nOffset + nChunk ) & 0xffffffff00000000 );
-#if 0
+#if 1
 		// Use packet form
+		CEDPacket* pPacket;
 		if ( bI64Offset )
 		{
-			CEDPacket* pPacket = CEDPacket::New( ED2K_C2C_SENDINGPART_I64, ED2K_PROTOCOL_EMULE );
+			pPacket = CEDPacket::New( ED2K_C2C_SENDINGPART_I64, ED2K_PROTOCOL_EMULE );
 			if ( ! pPacket )
 				// Out of memory
 				return FALSE;
@@ -629,21 +625,10 @@ BOOL CUploadTransferED2K::DispatchNextChunk()
 			pPacket->WriteLongLE( ( nOffset & 0xffffffff00000000 ) >> 32 );
 			pPacket->WriteLongLE( ( nOffset + nChunk ) & 0x00000000ffffffff );
 			pPacket->WriteLongLE( ( ( nOffset + nChunk ) & 0xffffffff00000000 ) >> 32);
-
-			if ( ! ReadFile( m_nFileBase + nOffset, pPacket->GetWritePointer( nChunk ), nChunk, &nChunk ) || nChunk == 0 )
-			{
-				// File error
-				pPacket->Release();
-				return FALSE;
-			}
-
-			pPacket->m_nLength = sizeof(MD4) + 16 + nChunk;
-
-			Send( pPacket );
 		}
 		else
 		{
-			CEDPacket* pPacket = CEDPacket::New( ED2K_C2C_SENDINGPART );
+			pPacket = CEDPacket::New( ED2K_C2C_SENDINGPART );
 			if ( ! pPacket )
 				// Out of memory
 				return FALSE;
@@ -651,18 +636,14 @@ BOOL CUploadTransferED2K::DispatchNextChunk()
 			pPacket->Write( m_oED2K );
 			pPacket->WriteLongLE( nOffset );
 			pPacket->WriteLongLE( nOffset + nChunk );
-
-			if ( ! ReadFile( m_nFileBase + nOffset, pPacket->GetWritePointer( nChunk ), nChunk, &nChunk ) || nChunk == 0 )
-			{
-				// File error
-				pPacket->Release();
-				return FALSE;
-			}
-
-			pPacket->m_nLength = sizeof(MD4) + 8 + nChunk;
-
-			Send( pPacket );
 		}
+		if ( ! ReadFile( m_nFileBase + nOffset, pPacket->WriteGetPointer( nChunk ), nChunk, &nChunk ) || nChunk == 0 )
+		{
+			// File error
+			pPacket->Release();
+			return FALSE;
+		}
+		Send( pPacket );
 #else
 		// Raw write
 		CBuffer pBuffer;
@@ -717,7 +698,7 @@ BOOL CUploadTransferED2K::DispatchNextChunk()
 		Statistics.Current.Uploads.Volume += ( nChunk / 1024 );
 	}
 
-	m_pClient->Send( NULL );
+	//m_pClient->Send( NULL );
 
 	return TRUE;
 }
