@@ -1,7 +1,7 @@
 //
 // BTTrackerRequest.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -153,7 +153,7 @@ CBTTrackerPacket* CBTTrackerPacket::New(const BYTE* pBuffer, DWORD nLength)
 //////////////////////////////////////////////////////////////////////
 // CBTTrackerPacket serialize
 
-void CBTTrackerPacket::ToBuffer(CBuffer* pBuffer, bool /*bTCP*/) const
+void CBTTrackerPacket::ToBuffer(CBuffer* pBuffer, bool /*bTCP*/)
 {
 	pBuffer->AddReversed( &m_nConnectionID, sizeof( m_nConnectionID ) );
 	pBuffer->AddReversed( &m_nAction, sizeof( m_nAction ) );
@@ -177,11 +177,6 @@ CBTTrackerPacket* CBTTrackerPacket::ReadBuffer(CBuffer* pBuffer)
 
 //////////////////////////////////////////////////////////////////////
 // CBTTrackerPacket debugging
-
-void CBTTrackerPacket::SmartDump(const SOCKADDR_IN* pAddress, BOOL bUDP, BOOL bOutgoing, DWORD_PTR nNeighbourUnique) const
-{
-	CPacket::SmartDump( pAddress, bUDP, bOutgoing, nNeighbourUnique );
-}
 
 CString CBTTrackerPacket::GetType() const
 {

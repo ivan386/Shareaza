@@ -1,7 +1,7 @@
 //
 // DatagramPart.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -43,7 +43,7 @@ public:
 	DWORD			m_tSent;
 	BOOL			m_bAck;
 
-	void	Create(const SOCKADDR_IN* pHost, const CG2Packet* pPacket, WORD nSequence, CBuffer* pBuffer, BOOL bAck);
+	void	Create(const SOCKADDR_IN* pHost, CG2Packet* pPacket, WORD nSequence, CBuffer* pBuffer, BOOL bAck);
 	BOOL	GetPacket(DWORD tNow, BYTE** ppPacket, DWORD* pnPacket, BOOL bResend);
 	BOOL	Acknowledge(BYTE nPart);
 

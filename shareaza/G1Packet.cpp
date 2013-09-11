@@ -1,7 +1,7 @@
 //
 // G1Packet.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -218,7 +218,7 @@ CString CG1Packet::GetGUID() const
 
 // Takes a pointer to a buffer
 // Writes this Gnutella packet into it, composing a Gnutella packet header and then adding the payload from the packet's buffer
-void CG1Packet::ToBuffer(CBuffer* pBuffer, bool /*bTCP*/) const
+void CG1Packet::ToBuffer(CBuffer* pBuffer, bool /*bTCP*/)
 {
 	// Compose a Gnutella packet header with values from this CG1Packet object
 	GNUTELLAPACKET pHeader;						// Make a local GNUTELLAPACKET structure called pHeader

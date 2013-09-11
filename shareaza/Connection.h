@@ -1,7 +1,7 @@
 //
 // Connection.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -156,7 +156,7 @@ public:
 		m_pOutput->Add( pBuffer->m_pBuffer, pBuffer->m_nLength );
 	}
 
-	inline void Write(const CPacket* pPacket) throw()
+	inline void Write(CPacket* pPacket) throw()
 	{
 		CQuickLock oOutputLock( *m_pOutputSection );
 

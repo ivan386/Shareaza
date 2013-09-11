@@ -1,7 +1,7 @@
 //
 // DCPacket.h
 //
-// Copyright (c) Shareaza Development Team, 2010-2011.
+// Copyright (c) Shareaza Development Team, 2010-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -35,7 +35,7 @@ public:
 	virtual CString ToHex()   const;
 	virtual CString ToASCII() const;
 	virtual void Reset();
-	virtual void ToBuffer(CBuffer* pBuffer, bool bTCP = true) const;
+	virtual void ToBuffer(CBuffer* pBuffer, bool bTCP = true);
 	static	CDCPacket*	ReadBuffer(CBuffer* pBuffer);
 
 #ifdef _DEBUG

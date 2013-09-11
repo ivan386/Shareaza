@@ -1,7 +1,7 @@
 //
 // EDClients.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -606,7 +606,7 @@ void CEDClients::OnServerStatus(const SOCKADDR_IN* /*pHost*/, CEDPacket* pPacket
 // Send a server status request
 void CEDClients::RequestServerStatus(IN_ADDR* pHost, WORD nPort)
 {
-	CEDPacket* pPacket = CEDPacket::New( ED2K_C2SG_SERVERSTATUSREQUEST, ED2K_PROTOCOL_EDONKEY );
+	CEDPacket* pPacket = CEDPacket::New( ED2K_C2SG_SERVERSTATUSREQUEST );
 
 	m_nLastServerKey = 0x55AA0000 + GetRandomNum( 0ui16, _UI16_MAX );
 	pPacket->WriteLongLE( m_nLastServerKey );

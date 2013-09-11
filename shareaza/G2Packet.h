@@ -1,7 +1,7 @@
 //
 // G2Packet.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -236,7 +236,7 @@ public:
 	virtual CString	ReadString(DWORD nMaximum = 0xFFFFFFFF);
 	virtual void	WriteString(LPCTSTR pszString, BOOL bNull = TRUE);
 	virtual int		GetStringLen(LPCTSTR pszString) const;
-	virtual void	ToBuffer(CBuffer* pBuffer, bool bTCP = true) const;
+	virtual void	ToBuffer(CBuffer* pBuffer, bool bTCP = true);
 
 #ifdef _DEBUG
 	virtual void	Debug(LPCTSTR pszReason) const;

@@ -1,7 +1,7 @@
 //
 // EDPacket.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -63,6 +63,8 @@ typedef struct
 typedef struct
 {
 	DWORD	nType;
+	BYTE	nProtocol;							// ED2K_PROTOCOL_EDONKEY or ED2K_PROTOCOL_EMULE
+	BOOL	bServer;							// TRUE : client <-> server, FALSE : client <-> client
 	LPCTSTR	pszName;
 } ED2K_PACKET_DESC;
 
@@ -104,6 +106,7 @@ protected:
 public:
 	BYTE	m_nEdProtocol;
 	BYTE	m_nType;
+	BOOL	m_bDeflate;		// Deflate packet before sending
 	
 // Operations
 public:
@@ -111,16 +114,15 @@ public:
 	void				WriteEDString(LPCTSTR psz, BOOL bUnicode);
 	CString				ReadLongEDString(BOOL bUnicode);
 	void				WriteLongEDString(LPCTSTR psz, BOOL bUnicode);
-	void				WriteFile(const CShareazaFile* pFile, QWORD nSize,
-		const CEDClient* pClient, const CEDNeighbour* pServer = NULL,
-		bool bPartial = false);
+	void				WriteFile(const CShareazaFile* pFile, QWORD nSize, const CEDClient* pClient, const CEDNeighbour* pServer = NULL, bool bPartial = false);
 	BOOL				Deflate();
 	BOOL				Inflate();
 
 	virtual void		Reset();
-	virtual	void		ToBuffer(CBuffer* pBuffer, bool bTCP = true) const;
+	virtual	void		ToBuffer(CBuffer* pBuffer, bool bTCP = true);
 	static	CEDPacket*	ReadBuffer(CBuffer* pBuffer);
 	virtual CString		GetType() const;
+	virtual CString		ToASCII() const;
 
 #ifdef _DEBUG
 	virtual void		Debug(LPCTSTR pszReason) const;
@@ -130,7 +132,7 @@ public:
 
 // Packet Types
 protected:
-	static ED2K_PACKET_DESC m_pszTypes[];
+	static const ED2K_PACKET_DESC m_pszTypes[];
 
 // Packet Pool
 protected:
@@ -214,23 +216,23 @@ inline void CEDPacket::CEDPacketPool::FreePoolImpl(CPacket* pPacket)
 }
 
 // Client - Server, Local (TCP)
-#define ED2K_C2S_LOGINREQUEST			0x01
-#define ED2K_C2S_GETSERVERLIST			0x14
-#define	ED2K_C2S_OFFERFILES				0x15
-#define ED2K_C2S_SEARCHREQUEST			0x16
-#define ED2K_C2S_SEARCHUSER				0x1a
-#define ED2K_C2S_GETSOURCES				0x19
-#define ED2K_C2S_CALLBACKREQUEST		0x1C
-#define ED2K_C2S_MORERESULTS			0x21
-#define ED2K_S2C_REJECTED				0x05
-#define ED2K_S2C_SERVERMESSAGE			0x38
-#define ED2K_S2C_IDCHANGE				0x40
-#define ED2K_S2C_SERVERLIST				0x32
-#define ED2K_S2C_SEARCHRESULTS			0x33
-#define ED2K_S2C_FOUNDSOURCES			0x42
-#define	ED2K_S2C_SERVERSTATUS			0x34
-#define ED2K_S2C_SERVERIDENT			0x41
-#define ED2K_S2C_CALLBACKREQUESTED		0x35
+#define ED2K_C2S_LOGINREQUEST			0x01	// <HASH 16><ID 4><PORT 2><1 Tag_set{NICK,EMULEVER,PORT}>
+#define ED2K_C2S_GETSERVERLIST			0x14	// client -> server
+#define	ED2K_C2S_OFFERFILES				0x15	// <count 4>(<HASH 16><ID 4><PORT 2><1 Tag_set>)[count]
+#define ED2K_C2S_SEARCHREQUEST			0x16	// <Query_Tree>
+#define ED2K_C2S_SEARCHUSER				0x1a	// <Query_Tree>
+#define ED2K_C2S_GETSOURCES				0x19	// <HASH 16>
+#define ED2K_C2S_CALLBACKREQUEST		0x1C	// <ID 4>
+#define ED2K_C2S_MORERESULTS			0x21	//
+#define ED2K_S2C_REJECTED				0x05	//
+#define ED2K_S2C_SERVERMESSAGE			0x38	// <len 2><Message len>
+#define ED2K_S2C_IDCHANGE				0x40	// <NEW_ID 4><server_flags 4><primary_tcp_port 4 (unused)><client_IP_address 4>
+#define ED2K_S2C_SERVERLIST				0x32	// <count 1>(<IP 4><PORT 2>)[count] server -> client
+#define ED2K_S2C_SEARCHRESULTS			0x33	// <count 4>(<HASH 16><ID 4><PORT 2><1 Tag_set>)[count]
+#define ED2K_S2C_FOUNDSOURCES			0x42	// <HASH 16><count 1>(<ID 4><PORT 2>)[count]
+#define	ED2K_S2C_SERVERSTATUS			0x34	// <USER 4><FILES 4>
+#define ED2K_S2C_SERVERIDENT			0x41	// <HASH 16><IP 4><PORT 2>{1 TAG_SET}
+#define ED2K_S2C_CALLBACKREQUESTED		0x35	// <IP 4><PORT 2>
 
 // Client - Server, Global (UDP)
 #define ED2K_C2SG_SEARCHREQUEST3		0x90
@@ -247,30 +249,30 @@ inline void CEDPacket::CEDPacketPool::FreePoolImpl(CPacket* pPacket)
 
 // Client - Client, TCP
 #define ED2K_C2C_HELLO					0x01	// 0x10<HASH 16><ID 4><PORT 2><1 Tag_set>
-#define ED2K_C2C_HELLOANSWER			0x4C
-#define ED2K_C2C_FILEREQUEST			0x58
-#define ED2K_C2C_FILEREQANSWER			0x59
-#define ED2K_C2C_FILENOTFOUND			0x48
-#define ED2K_C2C_FILESTATUS				0x50
-#define ED2K_C2C_QUEUEREQUEST			0x54
-#define ED2K_C2C_QUEUERELEASE			0x56
-#define ED2K_C2C_QUEUERANK				0x5C
-#define ED2K_C2C_STARTUPLOAD			0x55
-#define ED2K_C2C_FINISHUPLOAD			0x57
-#define ED2K_C2C_REQUESTPARTS			0x47
-#define ED2K_C2C_SENDINGPART			0x46
-#define ED2K_C2C_FILESTATUSREQUEST		0x4F
-#define ED2K_C2C_HASHSETREQUEST			0x51
-#define ED2K_C2C_HASHSETANSWER			0x52
-#define ED2K_C2C_ASKSHAREDFILES			0x4A
-#define ED2K_C2C_ASKSHAREDFILESANSWER	0x4B
-#define ED2K_C2C_MESSAGE				0x4E
+#define ED2K_C2C_HELLOANSWER			0x4C	// <HASH 16><ID 4><PORT 2><1 Tag_set><SERVER_IP 4><SERVER_PORT 2>
+#define ED2K_C2C_FILEREQUEST			0x58	// <HASH 16>
+#define ED2K_C2C_FILEREQANSWER			0x59	// <HASH 16><len 2><NAME len>
+#define ED2K_C2C_FILENOTFOUND			0x48	// <HASH 16>
+#define ED2K_C2C_FILESTATUS				0x50	// <HASH 16><count 2><status(bit array) len:((count+7)/8)>
+#define ED2K_C2C_QUEUEREQUEST			0x54	// <HASH 16>
+#define ED2K_C2C_QUEUERELEASE			0x56	//
+#define ED2K_C2C_QUEUERANK				0x5C	// <wert  4> (slot index of the request)
+#define ED2K_C2C_STARTUPLOAD			0x55	//
+#define ED2K_C2C_FINISHUPLOAD			0x57	// No more file data available
+#define ED2K_C2C_REQUESTPARTS			0x47	// <HASH 16><von[3] 4*3><bis[3] 4*3>
+#define ED2K_C2C_SENDINGPART			0x46	// <HASH 16><von 4><bis 4><Daten len:(von-bis)>
+#define ED2K_C2C_FILESTATUSREQUEST		0x4F	// <HASH 16>
+#define ED2K_C2C_HASHSETREQUEST			0x51	// <HASH 16>
+#define ED2K_C2C_HASHSETANSWER			0x52	// <count 2><HASH[count] 16*count>
+#define ED2K_C2C_ASKSHAREDFILES			0x4A	//
+#define ED2K_C2C_ASKSHAREDFILESANSWER	0x4B	// <count 4>(<HASH 16><ID 4><PORT 2><1 Tag_set>)[count]
+#define ED2K_C2C_MESSAGE				0x4E	// <len 2><Message len>
 #define ED2K_C2C_CHANGECLIENTID			0x4D	// <New client ID 4><New server IP 4>
-#define ED2K_C2C_ASKSHAREDDIRS			0x5D    // (null)
+#define ED2K_C2C_ASKSHAREDDIRS			0x5D    //
 #define ED2K_C2C_ASKSHAREDDIRSANSWER	0x5F    // <count 4>(<len 2><Directory len>)[count]
 #define ED2K_C2C_VIEWSHAREDDIR			0x5E    // <len 2><Directory len>
 #define ED2K_C2C_VIEWSHAREDDIRANSWER	0x60	// <len 2><Directory len><count 4>(<HASH 16><ID 4><PORT 2><1 Tag_set>)[count]
-#define ED2K_C2C_ASKSHAREDDIRSDENIED	0x61    // (null)
+#define ED2K_C2C_ASKSHAREDDIRSDENIED	0x61    //
 
 // eMule Client - Client TCP
 #define	ED2K_C2C_EMULEINFO				0x01	//
@@ -345,6 +347,21 @@ inline void CEDPacket::CEDPacketPool::FreePoolImpl(CPacket* pPacket)
 #define ED2K_SERVER_TCP_64BITSIZE		0x00000100
 #define ED2K_SERVER_TCP_TCPOBFUSCATION	0x00000400
 
+inline CString GetED2KServerFlags(DWORD nTCPFlags)
+{
+	CString strServerFlags;
+	strServerFlags.Format( _T( "0x%08x ->%s%s%s%s%s%s%s%s" ), nTCPFlags,
+		( ( nTCPFlags & ED2K_SERVER_TCP_DEFLATE )			? _T(" Deflate") : _T("") ),
+		( ( nTCPFlags & ED2K_SERVER_TCP_SMALLTAGS )			? _T(" NewTags") : _T("") ),
+		( ( nTCPFlags & ED2K_SERVER_TCP_UNICODE )			? _T(" Unicode") : _T("") ),
+		( ( nTCPFlags & ED2K_SERVER_TCP_GETSOURCES2 )		? _T(" GetSources2") : _T("") ),
+		( ( nTCPFlags & ED2K_SERVER_TCP_RELATEDSEARCH )		? _T(" RelatedSearch") : _T("") ),
+		( ( nTCPFlags & ED2K_SERVER_TCP_TYPETAGINTEGER )	? _T(" TypeTagInteger") : _T("") ),
+		( ( nTCPFlags & ED2K_SERVER_TCP_64BITSIZE )			? _T(" LargeFiles") : _T("") ),
+		( ( nTCPFlags & ED2K_SERVER_TCP_TCPOBFUSCATION )	? _T(" TcpObfscation") : _T("") ) );
+	return strServerFlags;
+}
+
 // Server UDP flags for ED2K_S2CG_SERVERSTATUS (server capabilities)
 #define	ED2K_SERVER_UDP_GETSOURCES		0x00000001
 #define	ED2K_SERVER_UDP_GETFILES		0x00000002
@@ -384,7 +401,10 @@ public:
 	void	Write(CEDPacket* pPacket, BOOL bUnicode = FALSE, BOOL bSmallTags = FALSE);
 	BOOL	Read(CEDPacket* pPacket, BOOL bUnicode = FALSE);
 	BOOL	Read(CFile* pFile);
-	
+
+	CString ToString() const;
+	static CString ToString(const BYTE* pData, DWORD nLength);
+
 // Inlines
 public:
 	inline BOOL Check(BYTE nKey, BYTE nType) const

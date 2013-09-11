@@ -1,7 +1,7 @@
 //
 // EDNeighbour.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -111,6 +111,8 @@ BOOL CEDNeighbour::Send(CPacket* pPacket, BOOL bRelease, BOOL /*bBuffered*/)
 	if ( ( m_nState == nrsHandshake1 || m_nState >= nrsConnected ) &&
 		 pPacket->m_nProtocol == PROTOCOL_ED2K )
 	{
+		pPacket->SmartDump( &m_pHost, FALSE, TRUE, (DWORD_PTR)this );
+
 		m_nOutputCount++;
 		Statistics.Current.eDonkey.Outgoing++;
 
@@ -120,8 +122,6 @@ BOOL CEDNeighbour::Send(CPacket* pPacket, BOOL bRelease, BOOL /*bBuffered*/)
 			Write( pPacket );
 
 		QueueRun();
-
-		pPacket->SmartDump( &m_pHost, FALSE, TRUE, (DWORD_PTR)this );
 
 		bSuccess = TRUE;
 	}
@@ -387,19 +387,7 @@ BOOL CEDNeighbour::OnIdChange(CEDPacket* pPacket)
 		}
 	}
 
-	CString strServerFlags;
-	strServerFlags.Format(
-		_T( "Server Flags 0x%08x -> Zlib: %s, Short Tags: %s, Unicode: %s, GetSources2: %s, Related Search: %s, Int type tags: %s, 64 bit size: %s, TCP obfscation: %s" ),
-		m_nTCPFlags,
-		( ( m_nTCPFlags & ED2K_SERVER_TCP_DEFLATE ) ? _T("Yes") : _T("No") ),
-		( ( m_nTCPFlags & ED2K_SERVER_TCP_SMALLTAGS ) ? _T("Yes") : _T("No") ),
-		( ( m_nTCPFlags & ED2K_SERVER_TCP_UNICODE ) ? _T("Yes") : _T("No") ),
-		( ( m_nTCPFlags & ED2K_SERVER_TCP_GETSOURCES2 ) ? _T("Yes") : _T("No") ),
-		( ( m_nTCPFlags & ED2K_SERVER_TCP_RELATEDSEARCH ) ? _T("Yes") : _T("No") ),
-		( ( m_nTCPFlags & ED2K_SERVER_TCP_TYPETAGINTEGER ) ? _T("Yes") : _T("No") ),
-		( ( m_nTCPFlags & ED2K_SERVER_TCP_64BITSIZE ) ? _T("Yes") : _T("No") ),
-		( ( m_nTCPFlags & ED2K_SERVER_TCP_TCPOBFUSCATION ) ? _T("Yes") : _T("No") ) );
-	theApp.Message( MSG_DEBUG, strServerFlags );
+	theApp.Message( MSG_DEBUG, _T("Server Flags: ") + GetED2KServerFlags( m_nTCPFlags ) );
 
 	return TRUE;
 }
@@ -724,8 +712,8 @@ void CEDNeighbour::SendSharedFiles()
 
 	*(DWORD*)pPacket->m_pBuffer = m_nFilesSent;	// Correct the number of files sent
 
-	if ( bDeflate )
-		pPacket->Deflate();	// ZLIB compress if available
+	// Compress if the server supports it
+	pPacket->m_bDeflate = bDeflate;
 
 	Send( pPacket );	// Send the packet
 }
@@ -751,8 +739,7 @@ BOOL CEDNeighbour::SendSharedDownload(CDownload* pDownload)
 	pPacket->WriteFile( pDownload, pDownload->m_nSize, NULL, this, true );
 
 	// Compress if the server supports it
-	if ( bDeflate )
-		pPacket->Deflate();
+	pPacket->m_bDeflate = bDeflate;
 
 	Send( pPacket );
 

@@ -1233,7 +1233,7 @@ BOOL CChatSession::SendPrivateMessage(bool bAction, const CString& strText)
 		CString strMessage = strText.Left( ED2K_MESSAGE_MAX - 50 );
 
 		// Create an ed2k packet holding the message
-		if ( CEDPacket* pPacket = CEDPacket::New( ED2K_C2C_MESSAGE, ED2K_PROTOCOL_EDONKEY ) )
+		if ( CEDPacket* pPacket = CEDPacket::New( ED2K_C2C_MESSAGE ) )
 		{
 			if ( m_bUnicode )
 			{

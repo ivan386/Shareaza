@@ -1,7 +1,7 @@
 //
 // G2Packet.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -413,7 +413,7 @@ int CG2Packet::GetStringLen(LPCTSTR pszString) const
 //////////////////////////////////////////////////////////////////////
 // CG2Packet to buffer
 
-void CG2Packet::ToBuffer(CBuffer* pBuffer, bool /*bTCP*/) const
+void CG2Packet::ToBuffer(CBuffer* pBuffer, bool /*bTCP*/)
 {
 	ASSERT( G2_TYPE_LEN( m_nType ) > 0 );
 

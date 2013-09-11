@@ -1,7 +1,7 @@
 //
 // EDPacket.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -51,6 +51,7 @@ CEDPacket::CEDPacket()
 	: CPacket		( PROTOCOL_ED2K )
 	, m_nEdProtocol	( 0 )
 	, m_nType		( 0 )
+	, m_bDeflate	( FALSE )
 {
 }
 
@@ -61,6 +62,10 @@ CEDPacket::~CEDPacket()
 void CEDPacket::Reset()
 {
 	CPacket::Reset();
+
+	m_nEdProtocol	= 0;
+	m_nType			= 0;
+	m_bDeflate		= FALSE;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -295,8 +300,15 @@ void CEDPacket::WriteFile(const CShareazaFile* pShareazaFile, QWORD nSize,
 //////////////////////////////////////////////////////////////////////
 // CEDPacket buffers
 
-void CEDPacket::ToBuffer(CBuffer* pBuffer, bool bTCP) const
+void CEDPacket::ToBuffer(CBuffer* pBuffer, bool bTCP)
 {
+	// ZLIB compress if available
+	if ( m_bDeflate )
+	{
+		m_bDeflate = FALSE;
+		Deflate();
+	}
+
 	if ( bTCP )
 	{
 		ED2K_TCP_HEADER pHeader = { m_nEdProtocol, m_nLength + 1, m_nType };
@@ -394,14 +406,214 @@ BOOL CEDPacket::Inflate()
 
 CString CEDPacket::GetType() const
 {
-	for ( ED2K_PACKET_DESC* pType = m_pszTypes ; pType->nType ; pType++ )
+	const BOOL bServer = ( m_nNeighbourUnique != NULL );
+	for ( const ED2K_PACKET_DESC* pType = m_pszTypes ; pType->nType ; pType++ )
 	{
-		if ( pType->nType == m_nType ) return pType->pszName;
+		if (  pType->nType == m_nType && pType->nProtocol == m_nEdProtocol &&  pType->bServer == bServer )
+			return pType->pszName;
 	}
 
 	CString tmp;
 	tmp.Format( _T("0x%x"), int( m_nType ) );
 	return tmp;
+}
+
+CString CEDPacket::ToASCII() const
+{
+	CString strOutput;
+
+	const BOOL bServer = ( m_nNeighbourUnique != NULL );
+	if ( bServer )
+	{
+		switch ( m_nType )
+		{
+		case ED2K_C2S_LOGINREQUEST:
+		case ED2K_S2C_SERVERIDENT:
+			{
+				const int nLen = ( m_bOutgoing || m_nType == ED2K_S2C_SERVERIDENT ) ? 0 : 1;
+				const Hashes::Guid oGUID( *(Hashes::Guid::RawStorage*)( m_pBuffer + nLen ));
+				const IN_ADDR& nIP = *(IN_ADDR*)( m_pBuffer + nLen + 16 );
+				const WORD& nPort = *(WORD*)( m_pBuffer + nLen + 16 + 4 );
+				strOutput.Format( _T("guid: %s, ip: %s, port: %u, tags: %s"), oGUID.toString(), (LPCTSTR)CString( inet_ntoa( nIP ) ), nPort,
+					CEDTag::ToString( m_pBuffer + nLen + 16 + 4 + 2, m_nLength - ( nLen + 16 + 4 + 2 ) ) );
+			}
+			break;
+
+		case ED2K_C2S_GETSOURCES:
+			{
+				const Hashes::Ed2kHash oMD4( *(Hashes::Ed2kHash::RawStorage*)m_pBuffer );
+				strOutput.Format( _T("hash: %s"), oMD4.toString() );
+			}
+			break;
+
+		case ED2K_S2C_IDCHANGE:
+			{
+				const IN_ADDR& nIP = *(IN_ADDR*)( m_pBuffer );
+				const DWORD& nFlags = *(DWORD*)( m_pBuffer + 4 );
+				strOutput.Format( _T("new ip: %s, flags: %s"), (LPCTSTR)CString( inet_ntoa( nIP ) ), GetED2KServerFlags( nFlags ) );
+			}
+			break;
+
+		case ED2K_S2C_SERVERMESSAGE:
+			{
+				const WORD& nLen = *(WORD*)( m_pBuffer );
+				strOutput.Format( _T("\"%s\" (%u bytes)"), (LPCTSTR)UTF8Decode( (char*)m_pBuffer + 2, nLen ), nLen );
+			}
+			break;
+
+		case ED2K_C2S_OFFERFILES:
+			{
+				const DWORD& nCount = *(DWORD*)( m_pBuffer );
+				strOutput.Format( _T("files sent: %u"), nCount );
+			}
+			break;
+
+		case ED2K_S2C_SERVERSTATUS:
+			{
+				const DWORD& nUsers = *(DWORD*)( m_pBuffer );
+				const DWORD& nFiles = *(DWORD*)( m_pBuffer + 4 );
+				strOutput.Format( _T("users: %u, files: %u"), nUsers, nFiles );
+			}
+			break;
+		}
+	}
+	else
+	{
+		if ( m_nEdProtocol == ED2K_PROTOCOL_EDONKEY )
+		{
+			switch ( m_nType )
+			{
+			case ED2K_C2C_HELLO:
+			case ED2K_C2C_HELLOANSWER:
+				{
+					const int nLen = ( m_nType == ED2K_C2C_HELLOANSWER ) ? 0 : 1;
+					const Hashes::Guid oGUID( *(Hashes::Guid::RawStorage*)(m_pBuffer + nLen) );
+					const IN_ADDR& nIP = *(IN_ADDR*)( m_pBuffer + nLen + 16 );
+					const WORD& nPort = *(WORD*)( m_pBuffer + nLen + 16 + 4 );
+					strOutput.Format( _T("guid: %s, ip: %s, port: %u, tags: %s"), oGUID.toString(), (LPCTSTR)CString( inet_ntoa( nIP ) ), nPort,
+						CEDTag::ToString( m_pBuffer + nLen + 16 + 4 + 2, m_nLength - ( nLen + 16 + 4 + 2 ) ) );
+				}
+				break;
+
+			case ED2K_C2C_MESSAGE:
+			case ED2K_C2C_VIEWSHAREDDIR:
+			case ED2K_C2C_VIEWSHAREDDIRANSWER:
+				{
+					const WORD& nLen = *(WORD*)( m_pBuffer );
+					strOutput.Format( _T("\"%s\" (%u bytes)"), (LPCTSTR)UTF8Decode( (char*)m_pBuffer + 2, nLen ), nLen );
+				}
+				break;
+
+			case ED2K_C2C_FILEREQANSWER:
+				{
+					const Hashes::Ed2kHash oMD4( *(Hashes::Ed2kHash::RawStorage*)m_pBuffer );
+					const WORD& nLen = *(WORD*)( m_pBuffer + Hashes::Ed2kHash::byteCount );
+					strOutput.Format( _T("hash: %s, name: \"%s\" (%u bytes)"), oMD4.toString(), (LPCTSTR)UTF8Decode( (char*)m_pBuffer + Hashes::Ed2kHash::byteCount + 2, nLen ), nLen );
+				}
+				break;
+
+			case ED2K_C2C_FILENOTFOUND:
+			case ED2K_C2C_FILEREQUEST:
+			case ED2K_C2C_QUEUEREQUEST:
+			case ED2K_C2C_FILESTATUSREQUEST:
+			case ED2K_C2C_HASHSETREQUEST:
+				{
+					const Hashes::Ed2kHash oMD4( *(Hashes::Ed2kHash::RawStorage*)m_pBuffer );
+					strOutput.Format( _T("hash: %s"), oMD4.toString() );
+				}
+				break;
+
+			case ED2K_C2C_FILESTATUS:
+			case ED2K_C2C_HASHSETANSWER:
+				{
+					const Hashes::Ed2kHash oMD4( *(Hashes::Ed2kHash::RawStorage*)m_pBuffer );
+					const WORD& nBlocks = *(const WORD*)( m_pBuffer + Hashes::Ed2kHash::byteCount );
+					strOutput.Format( _T("hash: %s, blocks: %u"), oMD4.toString(), nBlocks );
+				}
+				break;
+
+			case ED2K_C2C_ASKSHAREDDIRSANSWER:
+				{
+					const DWORD& nDirs = *(const DWORD*)( m_pBuffer );
+					strOutput.Format( _T("dirs: %u"), nDirs );
+				}
+				break;
+
+			case ED2K_C2C_REQUESTPARTS:
+				{
+					const Hashes::Ed2kHash oMD4( *(Hashes::Ed2kHash::RawStorage*)m_pBuffer );
+					const DWORD* offset = (const DWORD*)( m_pBuffer + Hashes::Ed2kHash::byteCount );
+					strOutput.Format( _T("hash: %s, offsets: %u-%u, %u-%u, %u-%u"), oMD4.toString(), offset[0], offset[3], offset[1], offset[4], offset[2], offset[5] );
+				}
+				break;
+
+			case ED2K_C2C_SENDINGPART:
+				{
+					const Hashes::Ed2kHash oMD4( *(Hashes::Ed2kHash::RawStorage*)m_pBuffer );
+					const DWORD* offset = (const DWORD*)( m_pBuffer + Hashes::Ed2kHash::byteCount );
+					strOutput.Format( _T("hash: %s, offsets: %u, length: %u bytes"), oMD4.toString(), offset[0], offset[1] - offset[0] );
+				}
+				break;
+			}
+		}
+		else if ( m_nEdProtocol == ED2K_PROTOCOL_EMULE )
+		{
+			switch ( m_nType )
+			{
+			case ED2K_C2C_FILEDESC:
+				{
+					const Hashes::Ed2kHash oMD4( *(Hashes::Ed2kHash::RawStorage*)m_pBuffer );
+					const WORD& nLen = *(WORD*)( m_pBuffer + 16 );
+					strOutput.Format( _T("hash: %s, desc: \"%s\" (%u bytes)"), (LPCTSTR)UTF8Decode( (char*)m_pBuffer + 16 + 2, nLen ), nLen );
+				}
+				break;
+
+			case ED2K_C2C_REQUESTSOURCES:
+			case ED2K_C2C_REQUESTPREVIEW:
+				{
+					const Hashes::Ed2kHash oMD4( *(Hashes::Ed2kHash::RawStorage*)m_pBuffer );
+					strOutput.Format( _T("hash: %s"), oMD4.toString() );
+				}
+				break;
+
+			case ED2K_C2C_REQUESTPARTS_I64:
+				{
+					const Hashes::Ed2kHash oMD4( *(Hashes::Ed2kHash::RawStorage*)m_pBuffer );
+					const QWORD* offset = (const QWORD*)( m_pBuffer + Hashes::Ed2kHash::byteCount );
+					strOutput.Format( _T("hash: %s, offsets: %I64u-%I64u, %I64u-%I64u, %I64u-%I64u"), oMD4.toString(), offset[0], offset[3], offset[1], offset[4], offset[2], offset[5] );
+				}
+				break;
+
+			case ED2K_C2C_COMPRESSEDPART:
+				{
+					const Hashes::Ed2kHash oMD4( *(Hashes::Ed2kHash::RawStorage*)m_pBuffer );
+					const DWORD& offset = *(const DWORD*)( m_pBuffer + Hashes::Ed2kHash::byteCount );
+					const DWORD& length = *(const DWORD*)( m_pBuffer + Hashes::Ed2kHash::byteCount + 4 );
+					strOutput.Format( _T("hash: %s, offset: %u, length: %u bytes"), oMD4.toString(), offset, length );
+				}
+				break;
+
+			case ED2K_C2C_COMPRESSEDPART_I64:
+				{
+					const Hashes::Ed2kHash oMD4( *(Hashes::Ed2kHash::RawStorage*)m_pBuffer );
+					const QWORD& offset = *(const QWORD*)( m_pBuffer + Hashes::Ed2kHash::byteCount );
+					const DWORD& length = *(const DWORD*)( m_pBuffer + Hashes::Ed2kHash::byteCount + 8 );
+					strOutput.Format( _T("hash: %s, offset: %I64u, length: %u bytes"), oMD4.toString(), offset, length );
+				}
+				break;
+
+			case ED2K_C2C_SENDINGPART_I64:
+				{
+					const Hashes::Ed2kHash oMD4( *(Hashes::Ed2kHash::RawStorage*)m_pBuffer );
+					const QWORD* offset = (const QWORD*)( m_pBuffer + Hashes::Ed2kHash::byteCount );
+					strOutput.Format( _T("hash: %s, offsets: %I64u, length: %I64u bytes"), oMD4.toString(), offset[0], offset[1] - offset[0] );
+				}
+				break;
+			}
+		}
+	}
+
+	return strOutput.IsEmpty() ? CPacket::ToASCII() :strOutput;
 }
 
 #ifdef _DEBUG
@@ -497,6 +709,101 @@ void CEDTag::Clear()
 	m_sKey.Empty();
 	m_sValue.Empty();
 	m_oValue.clear();
+}
+
+CString CEDTag::ToString() const
+{
+	CString strOutput;
+
+	strOutput.Format( _T("[0x%02x]{"), m_nType );
+
+	if ( m_sKey.IsEmpty() )
+	{
+		switch ( m_nKey )
+		{
+		case 0x01:
+			strOutput += _T("name");
+			break;
+
+		case 0x0B:
+			strOutput += _T("info");
+			break;
+
+		case 0x11:
+			strOutput += _T("version");
+			break;
+
+		case 0xF9:
+			strOutput += _T("ports");
+			break;
+
+		case 0xFA:
+			strOutput += _T("features1");
+			break;
+
+		case 0xFE:
+			strOutput += _T("features2");
+			break;
+
+		case 0xFB:
+			strOutput += _T("client");
+			break;
+
+		case 0x20:
+			strOutput += _T("flags");
+			break;
+
+		default:
+			strOutput.AppendFormat( _T("0x%02x"), m_nKey );
+		}
+	}
+	else
+		strOutput +=  m_sKey;
+
+	strOutput += _T('=');
+
+	switch ( m_nType )
+	{
+	case ED2K_TAG_HASH:
+		strOutput += m_oValue.toString();
+		break;
+
+	case ED2K_TAG_STRING:
+		strOutput += _T('\"') + m_sValue + _T('\"');
+		break;
+
+	case ED2K_TAG_INT:
+		if ( m_nKey == 0xFB )
+			strOutput.AppendFormat( _T("%u.%u.%u.%u"), (BYTE)( m_nValue >> 17 ) & 0x7f, (BYTE)( m_nValue >> 10 ) & 0x7f, (BYTE)( m_nValue >> 7 ) & 0x7, (BYTE)m_nValue & 0x7f );
+		else
+			strOutput.AppendFormat( _T("0x%I64x"), m_nValue );
+		break;
+	}
+
+	strOutput += _T("} ");
+
+	return strOutput;
+}
+
+CString CEDTag::ToString(const BYTE* pData, DWORD nLength)
+{
+	CString strOutput;
+	if ( pData && nLength )
+	{
+		if ( CEDPacket* pTempPacket = CEDPacket::New( (BYTE)0 ) )
+		{
+			pTempPacket->Write( pData, nLength );
+			for ( DWORD nTags = pTempPacket->ReadLongLE(); nTags > 0 && pTempPacket->GetRemaining() > 1; --nTags )
+			{
+				CEDTag pTag;
+				if ( ! pTag.Read( pTempPacket, TRUE ) )
+					break;
+				strOutput += pTag.ToString();
+			}
+			pTempPacket->Release();
+		}
+	}
+	return strOutput;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -872,70 +1179,75 @@ BOOL CEDPacket::OnPacket(const SOCKADDR_IN* pHost)
 //////////////////////////////////////////////////////////////////////
 // CEDPacket packet type index
 
-ED2K_PACKET_DESC CEDPacket::m_pszTypes[] =
+const ED2K_PACKET_DESC CEDPacket::m_pszTypes[] =
 {
-	{ ED2K_C2S_LOGINREQUEST,		_T("Hello") },
-	{ ED2K_C2S_GETSERVERLIST,		_T("GetServerList") },
-	{ ED2K_C2S_OFFERFILES,			_T("ShareFiles") },
-	{ ED2K_C2S_SEARCHREQUEST,		_T("Search") },
-	{ ED2K_C2S_SEARCHUSER,			_T("Browse") },
-	{ ED2K_C2S_GETSOURCES,			_T("Find Source 1") },
-	{ ED2K_C2S_CALLBACKREQUEST,		_T("Push1") },
-	{ ED2K_C2S_MORERESULTS,			_T("Continue") },
-	{ ED2K_S2C_REJECTED,			_T("Rejected") },
-	{ ED2K_S2C_SERVERMESSAGE,		_T("Message") },
-	{ ED2K_S2C_IDCHANGE,			_T("ClientID") },
-	{ ED2K_S2C_SERVERLIST,			_T("ServerList") },
-	{ ED2K_S2C_SEARCHRESULTS,		_T("Results") },
-	{ ED2K_S2C_FOUNDSOURCES,		_T("Sources") },
-	{ ED2K_S2C_SERVERSTATUS,		_T("Status") },
-	{ ED2K_S2C_SERVERIDENT,			_T("Identity") },
-	{ ED2K_S2C_CALLBACKREQUESTED,	_T("Push2") },
+	{ ED2K_C2S_LOGINREQUEST,		ED2K_PROTOCOL_EDONKEY,	TRUE,	_T("Hello") },
+	{ ED2K_C2S_GETSERVERLIST,		ED2K_PROTOCOL_EDONKEY,	TRUE,	_T("GetServerList") },
+	{ ED2K_C2S_OFFERFILES,			ED2K_PROTOCOL_EDONKEY,	TRUE,	_T("ShareFiles") },
+	{ ED2K_C2S_SEARCHREQUEST,		ED2K_PROTOCOL_EDONKEY,	TRUE,	_T("Search") },
+	{ ED2K_C2S_SEARCHUSER,			ED2K_PROTOCOL_EDONKEY,	TRUE,	_T("Browse") },
+	{ ED2K_C2S_GETSOURCES,			ED2K_PROTOCOL_EDONKEY,	TRUE,	_T("FindSource") },
+	{ ED2K_C2S_CALLBACKREQUEST,		ED2K_PROTOCOL_EDONKEY,	TRUE,	_T("PushRequest") },
+	{ ED2K_C2S_MORERESULTS,			ED2K_PROTOCOL_EDONKEY,	TRUE,	_T("Continue") },
+	{ ED2K_S2C_REJECTED,			ED2K_PROTOCOL_EDONKEY,	TRUE,	_T("Rejected") },
+	{ ED2K_S2C_SERVERMESSAGE,		ED2K_PROTOCOL_EDONKEY,	TRUE,	_T("ServerMessage") },
+	{ ED2K_S2C_IDCHANGE,			ED2K_PROTOCOL_EDONKEY,	TRUE,	_T("ClientID") },
+	{ ED2K_S2C_SERVERLIST,			ED2K_PROTOCOL_EDONKEY,	TRUE,	_T("ServerList") },
+	{ ED2K_S2C_SEARCHRESULTS,		ED2K_PROTOCOL_EDONKEY,	TRUE,	_T("Results") },
+	{ ED2K_S2C_FOUNDSOURCES,		ED2K_PROTOCOL_EDONKEY,	TRUE,	_T("Sources") },
+	{ ED2K_S2C_SERVERSTATUS,		ED2K_PROTOCOL_EDONKEY,	TRUE,	_T("ServerStatus") },
+	{ ED2K_S2C_SERVERIDENT,			ED2K_PROTOCOL_EDONKEY,	TRUE,	_T("Identity") },
+	{ ED2K_S2C_CALLBACKREQUESTED,	ED2K_PROTOCOL_EDONKEY,	TRUE,	_T("PushAnswer") },
 
-	{ ED2K_C2SG_SERVERSTATUSREQUEST,_T("GetStatus") },
-	{ ED2K_S2CG_SERVERSTATUS,		_T("Status") },
-	{ ED2K_C2SG_SEARCHREQUEST,		_T("Search 1") },
-	{ ED2K_C2SG_SEARCHREQUEST2,		_T("Search 2") },
-	{ ED2K_C2SG_SEARCHREQUEST3,		_T("Search 3") },
-	{ ED2K_S2CG_SEARCHRESULT,		_T("Result") },
-	{ ED2K_C2SG_GETSOURCES,			_T("Find Source 1") },
-	{ ED2K_C2SG_GETSOURCES2,		_T("Find Source 2") },
-	{ ED2K_S2CG_FOUNDSOURCES,		_T("Sources") },
-	{ ED2K_C2SG_CALLBACKREQUEST,	_T("Push1") },
+	{ ED2K_C2SG_SERVERSTATUSREQUEST,ED2K_PROTOCOL_EDONKEY,	TRUE,	_T("GetStatus") },
+	{ ED2K_S2CG_SERVERSTATUS,		ED2K_PROTOCOL_EDONKEY,	TRUE,	_T("Status") },
+	{ ED2K_C2SG_SEARCHREQUEST,		ED2K_PROTOCOL_EDONKEY,	TRUE,	_T("Search 1") },
+	{ ED2K_C2SG_SEARCHREQUEST2,		ED2K_PROTOCOL_EDONKEY,	TRUE,	_T("Search 2") },
+	{ ED2K_C2SG_SEARCHREQUEST3,		ED2K_PROTOCOL_EDONKEY,	TRUE,	_T("Search 3") },
+	{ ED2K_S2CG_SEARCHRESULT,		ED2K_PROTOCOL_EDONKEY,	TRUE,	_T("Result") },
+	{ ED2K_C2SG_GETSOURCES,			ED2K_PROTOCOL_EDONKEY,	TRUE,	_T("FindSource") },
+	{ ED2K_C2SG_GETSOURCES2,		ED2K_PROTOCOL_EDONKEY,	TRUE,	_T("FindSource2") },
+	{ ED2K_S2CG_FOUNDSOURCES,		ED2K_PROTOCOL_EDONKEY,	TRUE,	_T("Sources") },
+	{ ED2K_C2SG_CALLBACKREQUEST,	ED2K_PROTOCOL_EDONKEY,	TRUE,	_T("PushRequest") },
 
-//	{ ED2K_C2C_HELLO,				_T("Handshake 1") },
-	{ ED2K_C2C_HELLOANSWER,			_T("Hello Answer") },
-	{ ED2K_C2C_FILEREQUEST,			_T("FileRequest") },
-	{ ED2K_C2C_FILEREQANSWER,		_T("FileName") },
-	{ ED2K_C2C_FILENOTFOUND,		_T("FileNotFound") },
-	{ ED2K_C2C_FILESTATUS,			_T("FileStatus") },
-	{ ED2K_C2C_QUEUEREQUEST,		_T("EnqueueMe") },
-	{ ED2K_C2C_QUEUERELEASE,		_T("DequeueMe") },
-	{ ED2K_C2C_QUEUERANK,			_T("QueueRank") },
-	{ ED2K_C2C_STARTUPLOAD,			_T("StartUpload") },
-	{ ED2K_C2C_FINISHUPLOAD,		_T("UploadFinished") },
-	{ ED2K_C2C_REQUESTPARTS,		_T("RequestFrag") },
-	{ ED2K_C2C_SENDINGPART,			_T("Fragment") },
-	{ ED2K_C2C_FILESTATUSREQUEST,	_T("GetStatus") },
-	{ ED2K_C2C_HASHSETREQUEST,		_T("GetHashset") },
-	{ ED2K_C2C_HASHSETANSWER,		_T("Hashset") },
-	{ ED2K_C2C_ASKSHAREDFILES,		_T("Browse") },
-	{ ED2K_C2C_ASKSHAREDFILESANSWER,_T("BrowseResp") },
-	{ ED2K_C2C_MESSAGE,				_T("Message") },
+	{ ED2K_C2C_HELLO,				ED2K_PROTOCOL_EDONKEY,	FALSE,	_T("Hello") },
+	{ ED2K_C2C_HELLOANSWER,			ED2K_PROTOCOL_EDONKEY,	FALSE,	_T("Hello Answer") },
+	{ ED2K_C2C_FILEREQUEST,			ED2K_PROTOCOL_EDONKEY,	FALSE,	_T("FileRequest") },
+	{ ED2K_C2C_FILEREQANSWER,		ED2K_PROTOCOL_EDONKEY,	FALSE,	_T("FileName") },
+	{ ED2K_C2C_FILENOTFOUND,		ED2K_PROTOCOL_EDONKEY,	FALSE,	_T("FileNotFound") },
+	{ ED2K_C2C_FILESTATUS,			ED2K_PROTOCOL_EDONKEY,	FALSE,	_T("FileStatus") },
+	{ ED2K_C2C_QUEUEREQUEST,		ED2K_PROTOCOL_EDONKEY,	FALSE,	_T("EnqueueMe") },
+	{ ED2K_C2C_QUEUERELEASE,		ED2K_PROTOCOL_EDONKEY,	FALSE,	_T("DequeueMe") },
+	{ ED2K_C2C_QUEUERANK,			ED2K_PROTOCOL_EDONKEY,	FALSE,	_T("QueueRank") },
+	{ ED2K_C2C_STARTUPLOAD,			ED2K_PROTOCOL_EDONKEY,	FALSE,	_T("StartUpload") },
+	{ ED2K_C2C_FINISHUPLOAD,		ED2K_PROTOCOL_EDONKEY,	FALSE,	_T("UploadFinished") },
+	{ ED2K_C2C_REQUESTPARTS,		ED2K_PROTOCOL_EDONKEY,	FALSE,	_T("RequestFrag") },
+	{ ED2K_C2C_SENDINGPART,			ED2K_PROTOCOL_EDONKEY,	FALSE,	_T("Fragment") },
+	{ ED2K_C2C_FILESTATUSREQUEST,	ED2K_PROTOCOL_EDONKEY,	FALSE,	_T("GetStatus") },
+	{ ED2K_C2C_HASHSETREQUEST,		ED2K_PROTOCOL_EDONKEY,	FALSE,	_T("GetHashset") },
+	{ ED2K_C2C_HASHSETANSWER,		ED2K_PROTOCOL_EDONKEY,	FALSE,	_T("Hashset") },
+	{ ED2K_C2C_ASKSHAREDFILES,		ED2K_PROTOCOL_EDONKEY,	FALSE,	_T("BrowseFiles") },
+	{ ED2K_C2C_ASKSHAREDFILESANSWER,ED2K_PROTOCOL_EDONKEY,	FALSE,	_T("BrowseFilesAnswer") },
+	{ ED2K_C2C_MESSAGE,				ED2K_PROTOCOL_EDONKEY,	FALSE,	_T("Message") },
+	{ ED2K_C2C_ASKSHAREDDIRS,		ED2K_PROTOCOL_EDONKEY,	FALSE,	_T("BrowseDirs") },
+	{ ED2K_C2C_ASKSHAREDDIRSANSWER,	ED2K_PROTOCOL_EDONKEY,	FALSE,	_T("BrowseDirsAnswer") },
+	{ ED2K_C2C_ASKSHAREDDIRSDENIED,	ED2K_PROTOCOL_EDONKEY,	FALSE,	_T("BrowseDirsDenied") },
+	{ ED2K_C2C_VIEWSHAREDDIR,		ED2K_PROTOCOL_EDONKEY,	FALSE,	_T("ViewDirs") },
+	{ ED2K_C2C_VIEWSHAREDDIRANSWER,	ED2K_PROTOCOL_EDONKEY,	FALSE,	_T("ViewDirsAnswer") },
 
 // eMule Client - Client TCP
-	{ ED2K_C2C_COMPRESSEDPART,		_T("CompFragment") },
-	{ ED2K_C2C_QUEUERANKING,		_T("QueueRanking") },
-	{ ED2K_C2C_FILEDESC,			_T("FileDescription") },
-	{ ED2K_C2C_REQUESTSOURCES,		_T("RequestSources") },
-	{ ED2K_C2C_ANSWERSOURCES,		_T("Sources") },
-	{ ED2K_C2C_REQUESTPREVIEW,		_T("Request Preview") },
-	{ ED2K_C2C_PREVIEWANWSER,		_T("Preview") },
+	{ ED2K_C2C_COMPRESSEDPART,		ED2K_PROTOCOL_EMULE,	FALSE,	_T("CompFragment") },
+	{ ED2K_C2C_QUEUERANKING,		ED2K_PROTOCOL_EMULE,	FALSE,	_T("QueueRanking") },
+	{ ED2K_C2C_FILEDESC,			ED2K_PROTOCOL_EMULE,	FALSE,	_T("FileDescription") },
+	{ ED2K_C2C_REQUESTSOURCES,		ED2K_PROTOCOL_EMULE,	FALSE,	_T("RequestSources") },
+	{ ED2K_C2C_ANSWERSOURCES,		ED2K_PROTOCOL_EMULE,	FALSE,	_T("Sources") },
+	{ ED2K_C2C_REQUESTPREVIEW,		ED2K_PROTOCOL_EMULE,	FALSE,	_T("Request Preview") },
+	{ ED2K_C2C_PREVIEWANWSER,		ED2K_PROTOCOL_EMULE,	FALSE,	_T("Preview") },
 
 // eMule Client - Client TCP (64Bit LargeFile support)
-	{ ED2K_C2C_COMPRESSEDPART_I64,	_T("CompFragment64") },
-	{ ED2K_C2C_REQUESTPARTS_I64,	_T("RequestFrag64") },
-	{ ED2K_C2C_SENDINGPART_I64,		_T("Fragment64") },
+	{ ED2K_C2C_COMPRESSEDPART_I64,	ED2K_PROTOCOL_EMULE,	FALSE,	_T("CompFragment64") },
+	{ ED2K_C2C_REQUESTPARTS_I64,	ED2K_PROTOCOL_EMULE,	FALSE,	_T("RequestFrag64") },
+	{ ED2K_C2C_SENDINGPART_I64,		ED2K_PROTOCOL_EMULE,	FALSE,	_T("Fragment64") },
 
-	{ 0, NULL }
+	{ 0,							ED2K_PROTOCOL_EDONKEY,	FALSE,	NULL }
 };

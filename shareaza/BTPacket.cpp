@@ -1,7 +1,7 @@
 //
 // BTPacket.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -416,7 +416,7 @@ bool CBTPacket::HasEncodedData() const
 //////////////////////////////////////////////////////////////////////
 // CBTPacket serialize
 
-void CBTPacket::ToBuffer(CBuffer* pBuffer, bool /*bTCP*/) const
+void CBTPacket::ToBuffer(CBuffer* pBuffer, bool /*bTCP*/)
 {
 	if ( m_nType == BT_PACKET_KEEPALIVE )
 	{
@@ -525,7 +525,7 @@ CBTPacket* CBTPacket::ReadBuffer(CBuffer* pBuffer)
 
 //////////////////////////////////////////////////////////////////////
 // CBTPacket debugging
-void CBTPacket::SmartDump(const SOCKADDR_IN* pAddress, BOOL bUDP, BOOL bOutgoing, DWORD_PTR nNeighbourUnique) const
+void CBTPacket::SmartDump(const SOCKADDR_IN* pAddress, BOOL bUDP, BOOL bOutgoing, DWORD_PTR nNeighbourUnique)
 {
 	switch ( m_nType )
 	{

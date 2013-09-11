@@ -1,7 +1,7 @@
 //
 // Packet.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -56,6 +56,9 @@ CPacket::CPacket(PROTOCOLID nProtocol)
 	, m_nPosition  ( 0 )
 	// Assume the bytes of the packet are in big endian order
 	, m_bBigEndian ( TRUE )
+	, m_bUDP	   ( FALSE )
+	, m_bOutgoing  ( FALSE )
+	, m_nNeighbourUnique	( NULL )
 {
 }
 
@@ -80,6 +83,9 @@ void CPacket::Reset()
 	m_nLength    = 0;
 	m_nPosition  = 0;
 	m_bBigEndian = TRUE;
+	m_bUDP		 = FALSE;
+	m_bOutgoing	 = FALSE;
+	m_nNeighbourUnique = NULL;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -429,8 +435,12 @@ void CPacket::Debug(LPCTSTR pszReason) const
 
 // Takes a CNeighbour object, an IP address without a port number, and true if we are sending the packet, false if we received it
 // Gives this packet and related objects to each window in the tab bar for them to process it
-void CPacket::SmartDump(const SOCKADDR_IN* pAddress, BOOL bUDP, BOOL bOutgoing, DWORD_PTR nNeighbourUnique) const
+void CPacket::SmartDump(const SOCKADDR_IN* pAddress, BOOL bUDP, BOOL bOutgoing, DWORD_PTR nNeighbourUnique)
 {
+	m_bUDP = bUDP;
+	m_bOutgoing = bOutgoing;
+	m_nNeighbourUnique = nNeighbourUnique;
+
 	if ( theApp.m_pPacketWnd )
 	{
 		theApp.m_pPacketWnd->SmartDump( this, pAddress, bUDP, bOutgoing, nNeighbourUnique );

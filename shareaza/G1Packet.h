@@ -1,7 +1,7 @@
 //
 // G1Packet.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -78,7 +78,7 @@ public:
 	CString         GetGUID() const;
 
 	virtual void	Reset();
-	virtual void    ToBuffer(CBuffer* pBuffer, bool bTCP = true) const; // Adds the Gnutella packet header and payload into the given CBuffer object
+	virtual void    ToBuffer(CBuffer* pBuffer, bool bTCP = true); // Adds the Gnutella packet header and payload into the given CBuffer object
 
 #ifdef _DEBUG
 	// Record information about the packet for debugging purposes

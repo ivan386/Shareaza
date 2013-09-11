@@ -1,7 +1,7 @@
 //
 // BTTrackerRequest.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -189,9 +189,8 @@ public:
 	QWORD	m_nConnectionID;
 
 	virtual void		Reset();
-	virtual	void		ToBuffer(CBuffer* pBuffer, bool bTCP = true) const;
+	virtual	void		ToBuffer(CBuffer* pBuffer, bool bTCP = true);
 	static	CBTTrackerPacket*	ReadBuffer(CBuffer* pBuffer);
-	virtual void		SmartDump(const SOCKADDR_IN* pAddress, BOOL bUDP, BOOL bOutgoing, DWORD_PTR nNeighbourUnique = 0) const;
 	virtual CString		GetType() const;
 	virtual CString		ToHex()   const;
 	virtual CString		ToASCII() const;

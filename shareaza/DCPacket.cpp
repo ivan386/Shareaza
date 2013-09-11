@@ -1,7 +1,7 @@
 //
 // DCPacket.cpp
 //
-// Copyright (c) Shareaza Development Team, 2010-2011.
+// Copyright (c) Shareaza Development Team, 2010-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -153,7 +153,7 @@ void CDCPacket::Reset()
 	CPacket::Reset();
 }
 
-void CDCPacket::ToBuffer(CBuffer* pBuffer, bool /*bTCP*/) const
+void CDCPacket::ToBuffer(CBuffer* pBuffer, bool /*bTCP*/)
 {
 	ASSERT( m_pBuffer && m_nLength );
 
