@@ -409,7 +409,7 @@ CString CEDPacket::GetType() const
 	const BOOL bServer = ( m_nNeighbourUnique != NULL );
 	for ( const ED2K_PACKET_DESC* pType = m_pszTypes ; pType->nType ; pType++ )
 	{
-		if (  pType->nType == m_nType && pType->nProtocol == m_nEdProtocol &&  pType->bServer == bServer )
+		if ( pType->nType == m_nType && pType->bServer == bServer && ( pType->nProtocol == m_nEdProtocol || bServer ) )
 			return pType->pszName;
 	}
 
