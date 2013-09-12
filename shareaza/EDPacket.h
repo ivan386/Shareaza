@@ -465,7 +465,8 @@ public:
 #define	ED2K_CT_BUDDYIP				0xFC	// BUDDY IP
 #define	ED2K_CT_BUDDYUDP			0xFD	// BUDDY Port (hi word - not used, low word - UDP port)
 #define	ED2K_CT_MOREFEATUREVERSIONS	0xFE	// <uint32> Features 2:
-											// 19 Reserved
+											// 18 Reserved
+											//  1 Supports new FileIdentifiers/MultipacketExt2
 											//  1 Direct UDP Callback. Direct callback is only possible if connected to kad, tcp firewalled and verified UDP open (for example on a full cone NAT)
 											//  1 Supports Captcha
 											//  1 Supports SourceExachnge2 Packets, ignores SX1 Packet Version
@@ -473,7 +474,7 @@ public:
 											//  1 Requests CryptLayer
 											//  1 Supports CryptLayer
 											//  1 Reserved (ModBit)
-											//  1 Ext Multipacket (Hash+Size instead of Hash)
+											//  1 Ext Multipacket (Hash+Size instead of Hash) - deprecated with FileIdentifiers/MultipacketExt2
 											//  1 Large Files (includes support for 64bit tags)
 											//  4 Kad Version - will go up to version 15 only (may need to add another field at some point in the future)
 #define	ED2K_CT_UNKNOWN3			0xFF
