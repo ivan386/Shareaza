@@ -293,7 +293,7 @@ void CSettings::Load()
 	Add( _T("Connection"), _T("OutHost"), &Connection.OutHost );
 	Add( _T("Connection"), _T("RandomPort"), &Connection.RandomPort, false );
 	Add( _T("Connection"), _T("RequireForTransfers"), &Connection.RequireForTransfers, true );
-	Add( _T("Connection"), _T("SendBuffer"), &Connection.SendBuffer, 2*Kilo, 1, 64, 10*Kilo );
+	Add( _T("Connection"), _T("SendBuffer"), &Connection.SendBuffer, 8*Kilo, 1, 0, 64*Kilo, _T(" B") );
 	Add( _T("Connection"), _T("SkipWANIPSetup"), &Connection.SkipWANIPSetup, false );
 	Add( _T("Connection"), _T("SkipWANPPPSetup"), &Connection.SkipWANPPPSetup, false );
 	Add( _T("Connection"), _T("SlowConnect"), &Connection.SlowConnect, false );
@@ -418,7 +418,7 @@ void CSettings::Load()
 	Add( _T("eDonkey"), _T("ExtendedRequest"), &eDonkey.ExtendedRequest, 2, 1, 0, 2 );
 	Add( _T("eDonkey"), _T("FastConnect"), &eDonkey.FastConnect, false );
 	Add( _T("eDonkey"), _T("ForceHighID"), &eDonkey.ForceHighID, true );
-	Add( _T("eDonkey"), _T("FrameSize"), &eDonkey.FrameSize, 10*Kilo, Kilo, 1, 10, _T(" KB") );
+	Add( _T("eDonkey"), _T("FrameSize"), &eDonkey.FrameSize, 10*Kilo, Kilo, 1, Kilo, _T(" KB") );
 	Add( _T("eDonkey"), _T("GetSourcesThrottle"), &eDonkey.GetSourcesThrottle, 8*60*60*1000, 60*60*1000, 1, 24, _T(" h") );
 	Add( _T("eDonkey"), _T("LargeFileSupport"), &eDonkey.LargeFileSupport, true );
 	Add( _T("eDonkey"), _T("LearnNewServers"), &eDonkey.LearnNewServers, false );

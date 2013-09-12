@@ -1,7 +1,7 @@
 //
 // ShakeNeighbour.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1468,9 +1468,8 @@ void CShakeNeighbour::OnHandshakeComplete()
 	if ( m_bDeflateAccept ) m_pZOutput = new CBuffer(); // The remote computer said "Accept-Encoding: deflate", make a buffer for data to compress before sending
 
 	// If Shareaza Settings specify a size for the send buffer
-	if ( Settings.Connection.SendBuffer ) // By default, this is 2048, which is 2 KB of space
+	if ( Settings.Connection.SendBuffer )
 	{
-		// Tell the socket to use a 2 KB buffer for sends
 		setsockopt( m_hSocket, SOL_SOCKET, SO_SNDBUF, (char*)&Settings.Connection.SendBuffer, 4 );
 	}
 

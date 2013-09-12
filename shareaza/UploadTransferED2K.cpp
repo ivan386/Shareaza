@@ -535,6 +535,7 @@ BOOL CUploadTransferED2K::ServeRequests()
 		}
 		else
 		{
+			Send( CEDPacket::New( ED2K_C2C_FINISHUPLOAD ) );
 			Cleanup();
 			Close();
 			return FALSE;
@@ -571,7 +572,7 @@ BOOL CUploadTransferED2K::StartNextRequest()
 	
 	if ( !Settings.eDonkey.EnableToday && Settings.Connection.RequireForTransfers )
 	{
-		Send( CEDPacket::New( ED2K_C2C_FILENOTFOUND ) );
+		Send( CEDPacket::New( ED2K_C2C_FINISHUPLOAD ) );
 		Cleanup();
 		Close();
 		return FALSE;
@@ -602,6 +603,8 @@ BOOL CUploadTransferED2K::DispatchNextChunk()
 	ASSERT( m_nPosition < m_nLength );
 
 	QWORD nPacket = min( m_nLength - m_nPosition, 1024000ull ); // 1000 KB
+
+	Statistics.Current.Uploads.Volume += ( nPacket / 1024 );
 
 	while ( nPacket )
 	{
@@ -692,8 +695,6 @@ BOOL CUploadTransferED2K::DispatchNextChunk()
 		nPacket -= nChunk;
 		m_nPosition += nChunk;
 		m_nUploaded += nChunk;
-
-		Statistics.Current.Uploads.Volume += ( nChunk / 1024 );
 	}
 
 	//m_pClient->Send( NULL );
