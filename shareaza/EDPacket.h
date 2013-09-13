@@ -446,7 +446,9 @@ public:
 #define	ED2K_CT_PORT				0x0F
 #define ED2K_CT_VERSION				0x11
 #define ED2K_CT_SERVER_FLAGS		0x20	// Tell server about compression, new tags, unicode
-#define ED2K_CT_MODVERSION			0x55	// MOD version
+#define ED2K_CT_MODVERSION			0x55	// <string>/<uint32> MOD version or number
+#define ED2K_CT_LAN_PEER			0xED	// <uint32> Local LAN IP (easyMule)
+#define ED2K_CT_SUPPORT_VCNT		0xEE	// <uint32> Equal to magic 0x1489e90c if supports NAT traverse (easyMule)
 #define ED2K_CT_EMULECOMPAT_OPTIONS	0xEF	// <uint32> Clients (aMule and Hydranode) options:
 											//  1 Operative System Info (ED2K_ET_OS_INFO)
 											//	1 Value-based-type int tags (experimental!)

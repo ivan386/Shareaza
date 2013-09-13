@@ -988,6 +988,14 @@ BOOL CEDClient::OnHello(CEDPacket* pPacket)
 		case ED2K_CT_UNKNOWN3:
 		case ED2K_CT_EMULECOMPAT_OPTIONS:
 			break;
+		case ED2K_CT_LAN_PEER:
+			// easyMule
+			if ( ! m_nEmCompatible ) m_nEmCompatible = 8;
+			break;
+		case ED2K_CT_SUPPORT_VCNT:
+			// easyMule
+			if ( ! m_nEmCompatible ) m_nEmCompatible = 8;
+			break;
 		default:
 			if ( _tcsicmp( pTag.m_sKey, _T("pr") ) == 0 )
 			{
@@ -1224,6 +1232,7 @@ void CEDClient::DetermineUserAgent()
 					( ( m_nSoftwareVersion >>  7 ) & 0x07 ) );
 				break;
 			case 4:		// Shareaza alpha/beta/mod/fork versions
+			case 40:	// Shareaza
 				if ( m_bEmAICH )
 				{
 					if ( m_sUserAgent.IsEmpty() )								// Banned by Security Rules (Shareaza Leecher Mod)
@@ -1232,7 +1241,6 @@ void CEDClient::DetermineUserAgent()
 							( ( m_nSoftwareVersion >>  7 ) &0x07 ), ( ( m_nSoftwareVersion ) &0x7F ) );
 					break;
 				}
-
 				// This is a Shareaza beta build. Note that the 2nd last number (Beta build #) may be
 				// truncated, since it's only 3 bits.
 				m_sUserAgent.Format( _T("Shareaza %u.%u.%u.%u"),
@@ -1241,6 +1249,11 @@ void CEDClient::DetermineUserAgent()
 				break;
 			case 5:
 				m_sUserAgent.Format( _T("ePlus %u.%u%c"),
+					( ( m_nSoftwareVersion >> 17 ) & 0x7F ), ( ( m_nSoftwareVersion >> 10 ) & 0x7F ),
+					( ( m_nSoftwareVersion >>  7 ) & 0x07 ) + 'a' );
+				break;
+			case 8:
+				m_sUserAgent.AppendFormat( _T("easyMule %u.%u%c"),
 					( ( m_nSoftwareVersion >> 17 ) & 0x7F ), ( ( m_nSoftwareVersion >> 10 ) & 0x7F ),
 					( ( m_nSoftwareVersion >>  7 ) & 0x07 ) + 'a' );
 				break;
@@ -1256,21 +1269,6 @@ void CEDClient::DetermineUserAgent()
 				m_sUserAgent.Format( _T("Lphant %u.%u%c"),
 					( ( m_nSoftwareVersion >> 17 ) & 0x7F ), ( ( m_nSoftwareVersion >> 10 ) & 0x7F ),
 					( ( m_nSoftwareVersion >>  7 ) & 0x07 ) + 'a' );
-				break;
-			case 40:		// Shareaza
-				if ( m_bEmAICH )
-				{
-					if ( m_sUserAgent.IsEmpty() )
-						m_sUserAgent.Format( _T("eMule mod (40) %u.%u.%u.%u"),
-							( ( m_nSoftwareVersion >> 17 ) &0x7F ), ( ( m_nSoftwareVersion >> 10 ) &0x7F ),
-							( ( m_nSoftwareVersion >>  7 ) &0x07 ), ( ( m_nSoftwareVersion ) &0x7F ) );
-					break;
-				}
-
-				//Note- 2nd last number (Beta build #) may be truncated, since it's only 3 bits.
-				m_sUserAgent.Format( _T("Shareaza %u.%u.%u.%u"),
-					( ( m_nSoftwareVersion >> 17 ) &0x7F ), ( ( m_nSoftwareVersion >> 10 ) &0x7F ),
-					( ( m_nSoftwareVersion >>  7 ) &0x07 ), ( ( m_nSoftwareVersion ) &0x7F ) );
 				break;
 			case 80:		// PeerProject
 				//Note- 2nd last number (Beta build #) may be truncated, since it's only 3 bits.
@@ -1319,6 +1317,7 @@ void CEDClient::DetermineUserAgent()
 					m_sUserAgent.Format( _T("aMule v0.%u%u"), m_nEmVersion >> 4, m_nEmVersion & 15 );
 					break;
 				case 4:		// Shareaza alpha/beta/mod/fork versions
+				case 40:	// Shareaza
 					if ( m_bEmAICH )
 					{
 						if ( m_sUserAgent.IsEmpty() )
@@ -1332,15 +1331,6 @@ void CEDClient::DetermineUserAgent()
 					break;
 				case 20:
 					m_sUserAgent.Format( _T("Lphant v0.%u%u"), m_nEmVersion >> 4, m_nEmVersion & 15 );
-					break;
-				case 40:		// Shareaza
-					if ( m_bEmAICH )
-					{
-						if ( m_sUserAgent.IsEmpty() )
-							m_sUserAgent.Format( _T("eMule mod (40) v%u"), m_nEmVersion );
-						break;
-					}
-					m_sUserAgent = _T("Shareaza");
 					break;
 				case 80:		// PeerProject
 					m_sUserAgent = _T("PeerProject");
