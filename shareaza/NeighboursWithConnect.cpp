@@ -1,7 +1,7 @@
 //
 // NeighboursWithConnect.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -944,11 +944,13 @@ void CNeighboursWithConnect::Maintain()
 			else if ( pNeighbour->m_nNodeType != ntLeaf )
 			{
 				// If we've been connected for more than 8 seconds
-				if ( tTimer > pNeighbour->m_tConnected + 8000 )
+				if ( pNeighbour->m_nProtocol == PROTOCOL_ED2K || pNeighbour->m_nProtocol == PROTOCOL_DC || tTimer > pNeighbour->m_tConnected + 8000 )
 				{
 					// Count one more hub for this connection's protocol
 					nCount[ pNeighbour->m_nProtocol ][ ntHub ]++;
 				}
+				else
+					nCount[ pNeighbour->m_nProtocol ][ ntNode ]++;
 
 			} // We must be a hub, and this connection must be down to a leaf
 			else
@@ -958,7 +960,7 @@ void CNeighboursWithConnect::Maintain()
 			}
 
 		} // We're still going through the handshake with this remote computer
-		else if ( pNeighbour->m_nState < nrsConnected )
+		else
 		{
 			// Count one more connection in the 0 column for this protocol
 			nCount[ pNeighbour->m_nProtocol ][ ntNode ]++;
