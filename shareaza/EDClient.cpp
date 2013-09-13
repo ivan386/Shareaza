@@ -1,7 +1,7 @@
 //
 // EDClient.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -312,14 +312,14 @@ void CEDClient::Send(CPacket* pPacket, BOOL bRelease)
 			pPacket->SmartDump( &m_pHost, FALSE, TRUE );
 
 			Write( pPacket );
-			OnWrite();
+			QueueRun();
 		}
 
 		if ( bRelease ) pPacket->Release();
 	}
 	else if ( IsValid() )
 	{
-		OnWrite();
+		QueueRun();
 	}
 }
 
@@ -986,6 +986,7 @@ BOOL CEDClient::OnHello(CEDPacket* pPacket)
 		case ED2K_CT_BUDDYIP:
 		case ED2K_CT_BUDDYUDP:
 		case ED2K_CT_UNKNOWN3:
+		case ED2K_CT_EMULECOMPAT_OPTIONS:
 			break;
 		default:
 			if ( _tcsicmp( pTag.m_sKey, _T("pr") ) == 0 )
@@ -1137,6 +1138,7 @@ BOOL CEDClient::OnEmuleInfo(CEDPacket* pPacket)
 			if ( pTag.m_nType == ED2K_TAG_INT ) m_nEmCompatible = (DWORD)pTag.m_nValue;
 			break;
 		case ED2K_ET_FEATURES:		// We don't use these
+		case ED2K_ET_OS_INFO:
 			break;
 		case ED2K_CT_MODVERSION:	// Some clients send this here
 			if ( m_nEmCompatible == ED2K_CLIENT_UNKNOWN )

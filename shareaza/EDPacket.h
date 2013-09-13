@@ -447,6 +447,9 @@ public:
 #define ED2K_CT_VERSION				0x11
 #define ED2K_CT_SERVER_FLAGS		0x20	// Tell server about compression, new tags, unicode
 #define ED2K_CT_MODVERSION			0x55	// MOD version
+#define ED2K_CT_EMULECOMPAT_OPTIONS	0xEF	// <uint32> Clients (aMule and Hydranode) options:
+											//  1 Operative System Info (ED2K_ET_OS_INFO)
+											//	1 Value-based-type int tags (experimental!)
 #define	ED2K_CT_UDPPORTS			0xF9	// Ports used for UDP (hi word - KAD port, low word - UDP port)	
 #define	ED2K_CT_FEATUREVERSIONS		0xFA	// <uint32> Features 1:
 											//  3 AICH Version (0 = not supported)
@@ -544,6 +547,7 @@ public:
 #define ED2K_ET_L2HAC				0x3E	// L2HAC
 #define ED2K_ET_MOD_FEATURESET		0x54	// [Bloodymad Featureset]
 #define ED2K_ET_MOD_VERSION			0x55	// Mod ver Generic String
+#define ED2K_ET_OS_INFO				0x94	// <string> OS Information (aMule and Hydranode)
 #define ED2K_ET_MOD_PLUS			0x99	// To avoid conflicts with ET_TAROD_VERSION recognized by lugdunum srvers
 
 // Max files (Hash + Size) in a getsources packet
