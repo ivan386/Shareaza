@@ -65,6 +65,7 @@ typedef struct
 	DWORD	nType;
 	BYTE	nProtocol;							// ED2K_PROTOCOL_EDONKEY or ED2K_PROTOCOL_EMULE
 	BOOL	bServer;							// TRUE : client <-> server, FALSE : client <-> client
+	BOOL	bUDP;								// TRUE: UDP, FALSE: TCP
 	LPCTSTR	pszName;
 } ED2K_PACKET_DESC;
 
@@ -235,17 +236,24 @@ inline void CEDPacket::CEDPacketPool::FreePoolImpl(CPacket* pPacket)
 #define ED2K_S2C_CALLBACKREQUESTED		0x35	// <IP 4><PORT 2>
 
 // Client - Server, Global (UDP)
-#define ED2K_C2SG_SEARCHREQUEST3		0x90
-#define ED2K_C2SG_SEARCHREQUEST2		0x92
-#define ED2K_C2SG_GETSOURCES2			0x94
-#define ED2K_C2SG_SERVERSTATUSREQUEST	0x96
-#define	ED2K_S2CG_SERVERSTATUS			0x97
-#define ED2K_C2SG_SEARCHREQUEST			0x98
-#define ED2K_S2CG_SEARCHRESULT			0x99
-#define ED2K_C2SG_GETSOURCES			0x9A
-#define ED2K_S2CG_FOUNDSOURCES			0x9B
-#define ED2K_C2SG_CALLBACKREQUEST		0x9C
-#define ED2K_S2CG_CALLBACKFAIL			0x9E
+#define ED2K_C2SG_SEARCHREQUEST3		0x90	// <1 tag set><search_tree>
+#define ED2K_C2SG_SEARCHREQUEST2		0x92	// <search_tree>
+#define ED2K_C2SG_GETSOURCES2			0x94	// <HASH 16><FILESIZE 4>, largefiles only: <HASH 16><FILESIZE 4(0)><FILESIZE 8>
+#define ED2K_C2SG_SERVERSTATUSREQUEST	0x96	// <challenge 4>
+#define	ED2K_S2CG_SERVERSTATUS			0x97	// <challenge 4><USER 4><FILES 4>[<MAX_USERS 4>[<FILES_SOFT_LIMIT 4><FILES_HARD_LIMIT 4>[<UDP_FLAGS 4>[<LOW_ID_USERS 4>[<UDP_OBF_PORT 2><TCP_OBF_PORT 2><UDP_KEY 4>]]]]]
+#define ED2K_C2SG_SEARCHREQUEST			0x98	// <search_tree>
+#define ED2K_S2CG_SEARCHRESULT			0x99	//
+#define ED2K_C2SG_GETSOURCES			0x9A	// <HASH 16>
+#define ED2K_S2CG_FOUNDSOURCES			0x9B	//
+#define ED2K_C2SG_CALLBACKREQUEST		0x9C	// <IP 4><PORT 2><client_ID 4>
+#define ED2K_S2CG_CALLBACKFAIL			0x9E	// <ID 4>
+#define	ED2K_C2SG_LIST_REQ				0xA0	// <IP 4><PORT 2>
+#define ED2K_S2CG_LIST_RES				0xA1	// <count 1> (<ip 4><port 2>)[count]
+#define ED2K_C2SG_DESC_REQ				0xA2	// old: (null), new: <challenge 4>
+#define ED2K_S2CG_DESC_RES				0xA3	// old: <name_len 2><name name_len><desc_len 2 desc_en>, new: <challenge 4><taglist>
+#define ED2K_C2SG_LIST_REQ2				0xA4	//
+
+#define INV_SERV_DESC_LEN				0xF0FF	// used as an 'invalid' string len for new ED2K_C2SG_DESC_REQ/ED2K_S2CG_DESC_RES
 
 // Client - Client, TCP
 #define ED2K_C2C_HELLO					0x01	// 0x10<HASH 16><ID 4><PORT 2><1 Tag_set>
@@ -274,7 +282,7 @@ inline void CEDPacket::CEDPacketPool::FreePoolImpl(CPacket* pPacket)
 #define ED2K_C2C_VIEWSHAREDDIRANSWER	0x60	// <len 2><Directory len><count 4>(<HASH 16><ID 4><PORT 2><1 Tag_set>)[count]
 #define ED2K_C2C_ASKSHAREDDIRSDENIED	0x61    //
 
-// eMule Client - Client TCP
+// eMule Client - Client, TCP
 #define	ED2K_C2C_EMULEINFO				0x01	//
 #define	ED2K_C2C_EMULEINFOANSWER		0x02	//
 #define ED2K_C2C_COMPRESSEDPART			0x40	// <HASH 16><von 4><size 4><Daten len:size>
@@ -317,7 +325,7 @@ inline void CEDPacket::CEDPacketPool::FreePoolImpl(CPacket* pPacket)
 #define ED2K_C2C_HASHSETREQUEST2		0xB1	// <FileIdentifier><Options 1>
 #define ED2K_C2C_HASHSETANSWER2			0xB2	// <FileIdentifier><Options 1>[<HashSets> Options]
 
-// Client - Client, UDP
+// eMule Client - Client, UDP
 #define ED2K_C2C_UDP_REASKFILEPING		0x90	// <HASH 16>
 #define ED2K_C2C_UDP_REASKACK			0x91	// <RANG 2>
 #define ED2K_C2C_UDP_FILENOTFOUND		0x92	// (null)
@@ -347,7 +355,7 @@ inline void CEDPacket::CEDPacketPool::FreePoolImpl(CPacket* pPacket)
 #define ED2K_SERVER_TCP_64BITSIZE		0x00000100
 #define ED2K_SERVER_TCP_TCPOBFUSCATION	0x00000400
 
-inline CString GetED2KServerFlags(DWORD nTCPFlags)
+inline CString GetED2KServerTCPFlags(DWORD nTCPFlags)
 {
 	CString strServerFlags;
 	strServerFlags.Format( _T( "0x%08x ->%s%s%s%s%s%s%s%s" ), nTCPFlags,
@@ -372,6 +380,20 @@ inline CString GetED2KServerFlags(DWORD nTCPFlags)
 #define ED2K_SERVER_UDP_UDPOBFUSCATION	0x00000200
 #define ED2K_SERVER_UDP_TCPOBFUSCATION	0x00000400
 
+inline CString GetED2KServerUDPFlags(DWORD nUDPFlags)
+{
+	CString strServerFlags;
+	strServerFlags.Format( _T( "0x%08x -> %s%s%s%s%s%s%s%s" ), nUDPFlags,
+		( ( nUDPFlags & ED2K_SERVER_UDP_GETSOURCES )		? _T(" GetSources1") : _T("") ),
+		( ( nUDPFlags & ED2K_SERVER_UDP_GETFILES )			? _T(" GetFiles") : _T("") ),
+		( ( nUDPFlags & ED2K_SERVER_UDP_NEWTAGS )			? _T(" NewTags") : _T("") ),
+		( ( nUDPFlags & ED2K_SERVER_UDP_UNICODE )			? _T(" Unicode") : _T("") ),
+		( ( nUDPFlags & ED2K_SERVER_UDP_GETSOURCES2 )		? _T(" GetSources2") : _T("") ),
+		( ( nUDPFlags & ED2K_SERVER_UDP_64BITSIZE )			? _T(" LargeFiles") : _T("") ),
+		( ( nUDPFlags & ED2K_SERVER_UDP_UDPOBFUSCATION )	? _T(" UdpObfscation") : _T("") ),
+		( ( nUDPFlags & ED2K_SERVER_UDP_TCPOBFUSCATION )	? _T(" TcpObfscation") : _T("") ) );
+	return strServerFlags;
+}
 
 class CEDTag
 {
