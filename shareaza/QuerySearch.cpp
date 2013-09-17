@@ -1,7 +1,7 @@
 //
 // QuerySearch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -449,7 +449,7 @@ CG2Packet* CQuerySearch::ToG2Packet(SOCKADDR_IN* pUDP, DWORD nKey) const
 
 CEDPacket* CQuerySearch::ToEDPacket(BOOL bUDP, DWORD nServerFlags) const
 {
-	BOOL bUTF8, bGetS2;
+	BOOL bUTF8, bGetS2, bLargeFiles;
 
 	CEDPacket* pPacket = NULL;
 
@@ -459,11 +459,13 @@ CEDPacket* CQuerySearch::ToEDPacket(BOOL bUDP, DWORD nServerFlags) const
 	{
 		bUTF8 = nServerFlags & ED2K_SERVER_UDP_UNICODE;
 		bGetS2 = nServerFlags & ED2K_SERVER_UDP_GETSOURCES2;
+		bLargeFiles = nServerFlags & ED2K_SERVER_UDP_64BITSIZE;
 	}
 	else
 	{
 		bUTF8 = nServerFlags & ED2K_SERVER_TCP_UNICODE;
 		bGetS2 = nServerFlags & ED2K_SERVER_TCP_GETSOURCES2;
+		bLargeFiles = nServerFlags & ED2K_SERVER_TCP_64BITSIZE;
 	}
 
 	if ( m_oED2K )
@@ -480,18 +482,24 @@ CEDPacket* CQuerySearch::ToEDPacket(BOOL bUDP, DWORD nServerFlags) const
 			// Don't need the size- use GETSOURCES
 
 			// For newer servers, send the file size if it's valid (and not over 4GB)
-			if ( ( bGetS2 ) && ( m_nMinSize == m_nMaxSize ) && ( m_nMaxSize < 0xFFFFFFFF ) )
+			if ( bGetS2 && m_nMinSize == m_nMaxSize && ( m_nMaxSize < 0xFFFFFFFF || bLargeFiles ) && m_nMaxSize != SIZE_UNKNOWN )
 			{
-				// theApp.Message( MSG_DEBUG, ( _T("Creating multi-hash capable GetSources2 for: ") + m_oED2K.toString() ) );
-
 				// Newer server, send size as well as hash
 				pPacket = CEDPacket::New( bUDP ? ED2K_C2SG_GETSOURCES2 : ED2K_C2S_GETSOURCES );
-				// Add the hash/size this packet is for
 				pPacket->Write( m_oED2K );
-				pPacket->WriteLongLE( (DWORD)m_nMaxSize );
-				// Add any other hashes that need to be searched for.
-				WriteHashesToEDPacket( pPacket, bUDP );
+				if ( bLargeFiles )
+				{
+					pPacket->WriteLongLE( 0 );
+					pPacket->WriteLongLE( m_nMaxSize & 0x00000000ffffffff );
+					pPacket->WriteLongLE( ( m_nMaxSize & 0xffffffff00000000 ) >> 32 );
+				}
+				else
+				{
+					pPacket->WriteLongLE( (DWORD)m_nMaxSize );
+				}
 
+				// Add any other hashes that need to be searched for.
+				WriteHashesToEDPacket( pPacket, bUDP, bLargeFiles );
 			}
 			else
 			{
@@ -567,10 +575,8 @@ CEDPacket* CQuerySearch::ToEDPacket(BOOL bUDP, DWORD nServerFlags) const
 	return pPacket;
 }
 
-BOOL CQuerySearch::WriteHashesToEDPacket(CEDPacket* pPacket, BOOL bUDP) const
+BOOL CQuerySearch::WriteHashesToEDPacket(CEDPacket* pPacket, BOOL bUDP, BOOL bLargeFiles) const
 {
-	ASSERT ( ( pPacket->m_nType == bUDP ) ? ED2K_C2SG_GETSOURCES2 : ED2K_C2S_GETSOURCES );
-
 	CSingleLock pLock( &Transfers.m_pSection );
 	if ( ! pLock.Lock( 250 ) ) return FALSE;
 
@@ -585,7 +591,7 @@ BOOL CQuerySearch::WriteHashesToEDPacket(CEDPacket* pPacket, BOOL bUDP) const
 		// Basic check
 		if ( pDownload->m_oED2K &&					// Must have an ed2k hash
 			 pDownload->IsTrying() &&				// Must be active
-			 pDownload->m_nSize < 0xFFFFFFFF &&		// Must have a valid size
+			 pDownload->m_nSize != SIZE_UNKNOWN && ( pDownload->m_nSize < 0xFFFFFFFF || bLargeFiles ) &&		// Must have a valid size
 			 pDownload->IsCompleted() == false &&	// Must not be complete
 			 pDownload->NeedHashset() == FALSE &&	// Must have hashset
 			 validAndUnequal( pDownload->m_oED2K, m_oED2K ) )// Must not be already added to packet
@@ -605,7 +611,17 @@ BOOL CQuerySearch::WriteHashesToEDPacket(CEDPacket* pPacket, BOOL bUDP) const
 					{
 						// Add the hash/size for this download
 						pPacket->Write( pDownload->m_oED2K );
-						pPacket->WriteLongLE( (DWORD)pDownload->m_nSize );
+						if ( bLargeFiles )
+						{
+							pPacket->WriteLongLE( 0 );
+							pPacket->WriteLongLE( pDownload->m_nSize & 0x00000000ffffffff );
+							pPacket->WriteLongLE( ( pDownload->m_nSize & 0xffffffff00000000 ) >> 32 );
+						}
+						else
+						{
+							pPacket->WriteLongLE( (DWORD)pDownload->m_nSize );
+						}
+
 						if ( bUDP )
 							pDownload->m_tLastED2KGlobal = tNow;
 						else

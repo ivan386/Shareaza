@@ -1,7 +1,7 @@
 //
 // QuerySearch.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -153,7 +153,7 @@ public:
 	CString					BuildRegExp(const CString& strPattern) const;
 
 private:
-	BOOL					WriteHashesToEDPacket(CEDPacket* pPacket, BOOL bUDP) const;
+	BOOL					WriteHashesToEDPacket(CEDPacket* pPacket, BOOL bUDP, BOOL bLargeFiles) const;
 
 // Utilities
 public:
