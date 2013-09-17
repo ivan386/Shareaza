@@ -242,9 +242,9 @@ inline void CEDPacket::CEDPacketPool::FreePoolImpl(CPacket* pPacket)
 #define ED2K_C2SG_SERVERSTATUSREQUEST	0x96	// <challenge 4>
 #define	ED2K_S2CG_SERVERSTATUS			0x97	// <challenge 4><USER 4><FILES 4>[<MAX_USERS 4>[<FILES_SOFT_LIMIT 4><FILES_HARD_LIMIT 4>[<UDP_FLAGS 4>[<LOW_ID_USERS 4>[<UDP_OBF_PORT 2><TCP_OBF_PORT 2><UDP_KEY 4>]]]]]
 #define ED2K_C2SG_SEARCHREQUEST			0x98	// <search_tree>
-#define ED2K_S2CG_SEARCHRESULT			0x99	//
+#define ED2K_S2CG_SEARCHRESULT			0x99	// <HASH 16><IP 4><PORT 2><1 Tag_set>
 #define ED2K_C2SG_GETSOURCES			0x9A	// <HASH 16>
-#define ED2K_S2CG_FOUNDSOURCES			0x9B	//
+#define ED2K_S2CG_FOUNDSOURCES			0x9B	// <HASH 16><count 1>(<ID 4><PORT 2>)[count]
 #define ED2K_C2SG_CALLBACKREQUEST		0x9C	// <IP 4><PORT 2><client_ID 4>
 #define ED2K_S2CG_CALLBACKFAIL			0x9E	// <ID 4>
 #define	ED2K_C2SG_LIST_REQ				0xA0	// <IP 4><PORT 2>

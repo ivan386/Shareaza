@@ -478,6 +478,16 @@ CString CEDPacket::ToASCII() const
 				}
 				break;
 
+			case ED2K_S2CG_SEARCHRESULT:
+				{
+					const Hashes::Ed2kHash oMD4( *(Hashes::Ed2kHash::RawStorage*)( m_pBuffer + 4 ));
+					const IN_ADDR& nID = *(IN_ADDR*)( m_pBuffer + 4 + Hashes::Ed2kHash::byteCount );
+					const WORD& nPort = *(WORD*)( m_pBuffer + 4 + Hashes::Ed2kHash::byteCount + 4 );
+					strOutput.AppendFormat( _T("hash: %s, id: %u, port: %u, tags: %s"), oMD4.toString(), nID, nPort,
+						CEDTag::ToString( m_pBuffer + 4 + Hashes::Ed2kHash::byteCount + 4 + 2, m_nLength - ( 4 + Hashes::Ed2kHash::byteCount + 4 + 2 ) ) );
+				}
+				break;
+
 			case ED2K_C2SG_GETSOURCES2:
 				{
 					const Hashes::Ed2kHash oMD4( *(Hashes::Ed2kHash::RawStorage*)m_pBuffer );
@@ -496,6 +506,20 @@ CString CEDPacket::ToASCII() const
 				{
 					const Hashes::Ed2kHash oMD4( *(Hashes::Ed2kHash::RawStorage*)m_pBuffer );
 					strOutput.Format( _T("hash: %s"), oMD4.toString() );
+				}
+				break;
+
+			case ED2K_S2CG_FOUNDSOURCES:
+				{
+					const Hashes::Ed2kHash oMD4( *(Hashes::Ed2kHash::RawStorage*)m_pBuffer );
+					const BYTE& nCount = *(BYTE*)( m_pBuffer + Hashes::Ed2kHash::byteCount );
+					strOutput.Format( _T("hash: %s, number: %u"), oMD4.toString(), nCount );
+					if ( nCount )
+					{
+						const IN_ADDR& nID = *(IN_ADDR*)( m_pBuffer + Hashes::Ed2kHash::byteCount + 1 );
+						const WORD& nPort = *(WORD*)( m_pBuffer + Hashes::Ed2kHash::byteCount + 1 + 4 );
+						strOutput.AppendFormat( _T(" -> id: %u, port: %u"), nID, nPort );
+					}
 				}
 				break;
 			}
@@ -536,6 +560,12 @@ CString CEDPacket::ToASCII() const
 					const Hashes::Ed2kHash oMD4( *(Hashes::Ed2kHash::RawStorage*)m_pBuffer );
 					const BYTE& nCount = *(BYTE*)( m_pBuffer + Hashes::Ed2kHash::byteCount );
 					strOutput.Format( _T("hash: %s, number: %u"), oMD4.toString(), nCount );
+					if ( nCount )
+					{
+						const IN_ADDR& nID = *(IN_ADDR*)( m_pBuffer + Hashes::Ed2kHash::byteCount + 1 );
+						const WORD& nPort = *(WORD*)( m_pBuffer + Hashes::Ed2kHash::byteCount + 1 + 4 );
+						strOutput.AppendFormat( _T(" -> id: %u, port: %u"), nID, nPort );
+					}
 				}
 				break;
 
@@ -559,6 +589,16 @@ CString CEDPacket::ToASCII() const
 				{
 					const DWORD& nCount = *(DWORD*)( m_pBuffer );
 					strOutput.Format( _T("number: %u"), nCount );
+					if ( nCount )
+					{
+						// First hit only
+						const Hashes::Ed2kHash oMD4( *(Hashes::Ed2kHash::RawStorage*)( m_pBuffer + 4 ));
+						const IN_ADDR& nID = *(IN_ADDR*)( m_pBuffer + 4 + Hashes::Ed2kHash::byteCount );
+						const WORD& nPort = *(WORD*)( m_pBuffer + 4 + Hashes::Ed2kHash::byteCount + 4 );
+						strOutput.AppendFormat( _T(" -> hash: %s, id: %u, port: %u, tags: %s%s"), oMD4.toString(), nID, nPort,
+							CEDTag::ToString( m_pBuffer + 4 + Hashes::Ed2kHash::byteCount + 4 + 2, m_nLength - ( 4 + Hashes::Ed2kHash::byteCount + 4 + 2 ) ),
+							( nCount > 1 ) ? _T("...") : _T("") );
+					}
 				}
 				break;
 
@@ -852,35 +892,46 @@ CString CEDTag::ToString() const
 	{
 		switch ( m_nKey )
 		{
-		case 0x01:
+		case ED2K_CT_NAME:
 			strOutput += _T("name");
 			break;
 
-		case 0x0B:
+		case ED2K_FT_FILESIZE:
+			strOutput += _T("size");
+
+		case ED2K_FT_DESCRIPTION:
 			strOutput += _T("info");
 			break;
 
-		case 0x11:
+		case ED2K_FT_SOURCES:
+			strOutput += _T("sources");
+			break;
+
+		case ED2K_FT_COMPLETE_SOURCES:
+			strOutput += _T("complete");
+			break;
+
+		case ED2K_CT_VERSION:
 			strOutput += _T("version");
 			break;
 
-		case 0xF9:
+		case ED2K_CT_UDPPORTS:
 			strOutput += _T("ports");
 			break;
 
-		case 0xFA:
+		case ED2K_CT_FEATUREVERSIONS:
 			strOutput += _T("features1");
 			break;
 
-		case 0xFE:
+		case ED2K_CT_MOREFEATUREVERSIONS:
 			strOutput += _T("features2");
 			break;
 
-		case 0xFB:
+		case ED2K_CT_SOFTWAREVERSION:
 			strOutput += _T("client");
 			break;
 
-		case 0x20:
+		case ED2K_CT_SERVER_FLAGS:
 			strOutput += _T("flags");
 			break;
 
