@@ -292,6 +292,9 @@ void CDHT::OnEvent(void* /*closure*/, int evt, const unsigned char* info_hash, c
 	case DHT_EVENT_REPLY:
 		if ( data_len == sizeof( SOCKADDR_IN ) )
 		{
+			// Assume UDP is stable
+			Datagrams.SetStable();
+
 			const SOCKADDR_IN* pHost = (const SOCKADDR_IN*)data;
 
 			CQuickLock oLock( HostCache.BitTorrent.m_pSection );
