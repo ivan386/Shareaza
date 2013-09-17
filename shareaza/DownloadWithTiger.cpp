@@ -400,7 +400,7 @@ BOOL CDownloadWithTiger::SetHashset(BYTE* pSource, DWORD nSource)
 	theApp.Message( MSG_INFO, IDS_DOWNLOAD_HASHSET_READY,
 		GetDisplayName(), Settings.SmartVolume( ED2K_PART_SIZE ) );
 
-	Neighbours.SendDonkeyDownload( static_cast< CDownload * >( this ) );
+	Neighbours.SendDonkeyDownload( this );
 
 	return TRUE;
 }

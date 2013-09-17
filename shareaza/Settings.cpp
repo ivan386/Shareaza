@@ -443,7 +443,7 @@ void CSettings::Load()
 	Add( _T("eDonkey"), _T("ServerWalk"), &eDonkey.ServerWalk, true );
 	Add( _T("eDonkey"), _T("SourceThrottle"), &eDonkey.SourceThrottle, 1000, 1, 250, 5000, _T(" ms") );
 	Add( _T("eDonkey"), _T("StatsGlobalThrottle"), &eDonkey.StatsGlobalThrottle, 30*60*1000, 60*1000, 30, 120, _T(" m") );
-	Add( _T("eDonkey"), _T("StatsServerThrottle"), &eDonkey.StatsServerThrottle, 7*24*60*60, 24*60*60, 7, 28, _T(" d") );
+	Add( _T("eDonkey"), _T("StatsServerThrottle"), &eDonkey.StatsServerThrottle, 4*60*60, 60, 1, 7*24*60, _T(" m") );
 
 	Add( _T("DC"), _T("DequeueTime"), &DC.DequeueTime, 5*60*1000, 1000, 2*60, 60*60, _T(" s") );
 	Add( _T("DC"), _T("EnableAlways"), &DC.EnableAlways, false );

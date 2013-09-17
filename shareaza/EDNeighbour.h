@@ -1,7 +1,7 @@
 //
 // EDNeighbour.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -24,7 +24,7 @@
 #include "Neighbour.h"
 
 class CEDPacket;
-class CDownload;
+class CDownloadWithTiger;
 
 
 class CEDNeighbour : public CNeighbour
@@ -47,7 +47,7 @@ public:
 
 // Operations
 public:
-	BOOL	SendSharedDownload(CDownload* pDownload);
+	BOOL	SendSharedDownload(const CDownloadWithTiger* pDownload);
 	DWORD	GetID() const;
 private:
 	BOOL	OnPacket(CEDPacket* pPacket);
@@ -57,11 +57,12 @@ private:
 	BOOL	OnServerList(CEDPacket* pPacket);
 	BOOL	OnServerStatus(CEDPacket* pPacket);
 	BOOL	OnServerIdent(CEDPacket* pPacket);
-	bool	OnCallbackRequested(CEDPacket* pPacket);
+	BOOL	OnCallbackRequested(CEDPacket* pPacket);
 	BOOL	OnSearchResults(CEDPacket* pPacket);
 	BOOL	OnFoundSources(CEDPacket* pPacket);
-	void	SendSharedFiles();
+	BOOL	SendSharedFiles();
 	bool	IsGoodSize(QWORD nFileSize) const;			// Is file has good size for current ed2k-server?
+	BOOL	SendLogin();
 
 // Overrides
 public:

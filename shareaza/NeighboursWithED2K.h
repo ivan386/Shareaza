@@ -1,7 +1,7 @@
 //
 // NeighboursWithED2K.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,10 +22,6 @@
 // Add methods helpful for eDonkey2000 that look at the list of neighbours
 // http://shareazasecurity.be/wiki/index.php?title=Developers.Code.CNeighboursWithED2K
 
-// Make the compiler only include the lines here once, this is the same thing as pragma once
-#if !defined(AFX_NEIGHBOURSWITHED2K_H__0165D8B7_0351_4EF7_B669_73D0072F5107__INCLUDED_)
-#define AFX_NEIGHBOURSWITHED2K_H__0165D8B7_0351_4EF7_B669_73D0072F5107__INCLUDED_
-
 // Only include the lines beneath this one once
 #pragma once
 
@@ -34,7 +30,7 @@
 
 // Tell the compiler these classes exist, and it will find out more about them soon
 class CEDNeighbour;
-class CDownload;
+class CDownloadWithTiger;
 
 // Add methods helpful for eDonkey2000 that use the list of connected neighbours
 class CNeighboursWithED2K : public CNeighboursWithG2 // Continue the inheritance column CNeighbours : CNeighboursWithConnect : Routing : ED2K : G2 : G1 : CNeighboursBase
@@ -44,13 +40,14 @@ protected:
 	virtual ~CNeighboursWithED2K();
 
 public:
+	virtual void OnRun();
 
 	// Get an eDonkey2000 neighbour from the list that's through the handshake and has a client ID
 	CEDNeighbour* GetDonkeyServer() const;
 
 	// Do things to all the eDonkey2000 computers we're connected to
 	void CloseDonkeys();                           // Disconnect from all the eDonkey2000 computers we're connected to
-	void SendDonkeyDownload(CDownload* pDownload); // Tell all the connected eDonkey2000 computers about pDownload
+	void SendDonkeyDownload(const CDownloadWithTiger* pDownload); // Tell all the connected eDonkey2000 computers about pDownload
 
 	// Send eDonkey2000 packets
 	BOOL PushDonkey(DWORD nClientID, const IN_ADDR& pServerAddress, WORD nServerPort); // Send a callback request packet
@@ -58,11 +55,9 @@ public:
 
 // Classes that inherit from this one can get to protected members, but unrelated classes can't
 protected:
-
 	// Hash arrays used by FindDonkeySources
 	DWORD            m_tEDSources[256]; // 256 MD4 hashes
     Hashes::Ed2kHash m_oEDSources[256];
-};
 
-// End the group of lines to only include once, pragma once doesn't require an endif at the bottom
-#endif // !defined(AFX_NEIGHBOURSWITHED2K_H__0165D8B7_0351_4EF7_B669_73D0072F5107__INCLUDED_)
+	void RunGlobalStatsRequests();
+};

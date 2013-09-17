@@ -1,7 +1,7 @@
 //
 // NeighboursWithED2K.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,14 +22,15 @@
 // Add methods helpful for eDonkey2000 that look at the list of neighbours
 // http://shareazasecurity.be/wiki/index.php?title=Developers.Code.CNeighboursWithED2K
 
-// Copy in the contents of these files here before compiling
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "NeighboursWithED2K.h"
 #include "EDNeighbour.h"
 #include "EDPacket.h"
 #include "Datagrams.h"
+#include "HostCache.h"
 #include "Network.h"
+#include "Settings.h"
 
 // If we are compiling in debug mode, replace the text "THIS_FILE" in the code with the name of this file
 #ifdef _DEBUG
@@ -52,6 +53,50 @@ CNeighboursWithED2K::CNeighboursWithED2K() :
 // CNeighboursWithED2K doesn't add anything to the CNeighbours inheritance column that needs to be cleaned up
 CNeighboursWithED2K::~CNeighboursWithED2K()
 {
+}
+
+void CNeighboursWithED2K::OnRun()
+{
+	CNeighboursWithG2::OnRun();
+
+	if ( Settings.eDonkey.EnableToday && Settings.eDonkey.ServerWalk && Network.IsConnected() )
+	{
+		RunGlobalStatsRequests();
+	}
+}
+
+//////////////////////////////////////////////////////////////////////
+// CNeighboursWithED2K send/time out UDP global server status packets
+
+void CNeighboursWithED2K::RunGlobalStatsRequests()
+{
+	DWORD tSecs	= static_cast< DWORD >( time( NULL ) );
+
+	CQuickLock oLock( HostCache.eDonkey.m_pSection );
+
+	// Loop through servers in the host cache
+	for ( CHostCacheIterator i = HostCache.eDonkey.Begin() ; i != HostCache.eDonkey.End(); ++i )
+	{
+		CHostCacheHostPtr pHost = (*i);
+
+		// Check if this server could be asked for stats
+		if ( pHost->CanQuery( tSecs ) && ( tSecs > pHost->m_tStats + Settings.eDonkey.StatsServerThrottle ) )
+		{
+			pHost->m_tStats = tSecs;
+			pHost->m_tAck = Network.IsFirewalled( CHECK_UDP ) ? 0 : GetTickCount();		// Don't count failures when UDP status is uncertain
+			pHost->m_nKeyValue = 0x55AA0000 + GetRandomNum( 0ui16, _UI16_MAX );
+			pHost->m_nUDPPort = pHost->m_nPort + 4;
+
+			theApp.Message( MSG_INFO, _T("Sending status request to eDonkey server %s:%u"), (LPCTSTR)CString( inet_ntoa( pHost->m_pAddress ) ), pHost->m_nUDPPort );
+
+			if ( CEDPacket* pPacket = CEDPacket::New( ED2K_C2SG_SERVERSTATUSREQUEST ) )
+			{
+				pPacket->WriteLongLE( pHost->m_nKeyValue );
+				Datagrams.Send( &pHost->m_pAddress, pHost->m_nUDPPort, pPacket );
+			}
+			return;
+		}
+	}
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -110,7 +155,7 @@ void CNeighboursWithED2K::CloseDonkeys()
 
 // Takes a pointer to a CDownload object (do)
 // Tells all the eDonkey2000 computers we're connected to about it
-void CNeighboursWithED2K::SendDonkeyDownload(CDownload* pDownload)
+void CNeighboursWithED2K::SendDonkeyDownload(const CDownloadWithTiger* pDownload)
 {
 	CSingleLock pLock( &Network.m_pSection, TRUE );
 

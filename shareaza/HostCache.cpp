@@ -1,7 +1,7 @@
 //
 // HostCache.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -672,6 +672,17 @@ void CHostCacheList::PruneOldHosts(DWORD tNow)
 			if ( pHost->m_tAck && tNow > pHost->m_tAck + Settings.BitTorrent.QueryHostDeadline )
 			{
 				pHost->m_tAck = 0;
+
+				m_nCookie++;
+				pHost->m_nFailures++;
+			}
+			break;
+
+		case PROTOCOL_ED2K:
+			if ( pHost->m_tAck && tNow > pHost->m_tAck + Settings.Connection.TimeoutHandshake )
+			{
+				pHost->m_tAck = 0;
+				pHost->m_tFailure = pHost->m_tStats;
 
 				m_nCookie++;
 				pHost->m_nFailures++;
@@ -1415,6 +1426,9 @@ bool CHostCacheHost::Update(WORD nPort, DWORD tSeen, LPCTSTR pszVendor, DWORD nU
 	if ( nPort )
 	{
 		m_nUDPPort = m_nPort = nPort;
+
+		if ( m_nProtocol == PROTOCOL_ED2K )
+			m_nUDPPort += 4;
 	}
 
 	DWORD tNow = static_cast< DWORD >( time( NULL ) );
@@ -1611,6 +1625,9 @@ bool CHostCacheHost::CanQuery(DWORD tNow) const
 		if ( ! Settings.eDonkey.EnableToday ) return false;
 
 		if ( ! Settings.eDonkey.ServerWalk ) return false;
+
+		// Must not be waiting for an ack
+		if ( 0 != m_tAck ) return false;
 
 		// Retry After
 		if ( 0 != m_tRetryAfter && tNow < m_tRetryAfter ) return false;
