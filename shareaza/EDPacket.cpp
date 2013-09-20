@@ -43,6 +43,131 @@ static char THIS_FILE[]=__FILE__;
 
 CEDPacket::CEDPacketPool CEDPacket::POOL;
 
+// Packet Types
+
+class CEDPacketTypes
+{
+public:
+	inline CEDPacketTypes() throw()
+	{
+		static const struct
+		{
+			BYTE	nType;
+			BYTE	nProtocol;							// ED2K_PROTOCOL_EDONKEY or ED2K_PROTOCOL_EMULE
+			BOOL	bServer;							// TRUE : client <-> server, FALSE : client <-> client
+			BOOL	bUDP;								// TRUE: UDP, FALSE: TCP
+			LPCTSTR	pszName;
+		}
+		pszTypes[] =
+		{
+		// Client - Server, Local (TCP)
+			{ ED2K_C2S_LOGINREQUEST,		ED2K_PROTOCOL_EDONKEY,	TRUE,	FALSE,	_T("LoginRequest") },
+			{ ED2K_C2S_GETSERVERLIST,		ED2K_PROTOCOL_EDONKEY,	TRUE,	FALSE,	_T("GetServerList") },
+			{ ED2K_C2S_OFFERFILES,			ED2K_PROTOCOL_EDONKEY,	TRUE,	FALSE,	_T("ShareFiles") },
+			{ ED2K_C2S_SEARCHREQUEST,		ED2K_PROTOCOL_EDONKEY,	TRUE,	FALSE,	_T("SearchRequest") },
+			{ ED2K_C2S_SEARCHUSER,			ED2K_PROTOCOL_EDONKEY,	TRUE,	FALSE,	_T("Browse") },
+			{ ED2K_C2S_GETSOURCES,			ED2K_PROTOCOL_EDONKEY,	TRUE,	FALSE,	_T("FindSource") },
+			{ ED2K_C2S_CALLBACKREQUEST,		ED2K_PROTOCOL_EDONKEY,	TRUE,	FALSE,	_T("PushRequest") },
+			{ ED2K_C2S_MORERESULTS,			ED2K_PROTOCOL_EDONKEY,	TRUE,	FALSE,	_T("MoreResults") },
+			{ ED2K_S2C_REJECTED,			ED2K_PROTOCOL_EDONKEY,	TRUE,	FALSE,	_T("Rejected") },
+			{ ED2K_S2C_SERVERMESSAGE,		ED2K_PROTOCOL_EDONKEY,	TRUE,	FALSE,	_T("ServerMessage") },
+			{ ED2K_S2C_IDCHANGE,			ED2K_PROTOCOL_EDONKEY,	TRUE,	FALSE,	_T("IdChange") },
+			{ ED2K_S2C_SERVERLIST,			ED2K_PROTOCOL_EDONKEY,	TRUE,	FALSE,	_T("ServerList") },
+			{ ED2K_S2C_SEARCHRESULTS,		ED2K_PROTOCOL_EDONKEY,	TRUE,	FALSE,	_T("SearchResults") },
+			{ ED2K_S2C_FOUNDSOURCES,		ED2K_PROTOCOL_EDONKEY,	TRUE,	FALSE,	_T("FoundSources") },
+			{ ED2K_S2C_SERVERSTATUS,		ED2K_PROTOCOL_EDONKEY,	TRUE,	FALSE,	_T("ServerStatus") },
+			{ ED2K_S2C_SERVERIDENT,			ED2K_PROTOCOL_EDONKEY,	TRUE,	FALSE,	_T("ServerIdent") },
+			{ ED2K_S2C_CALLBACKREQUESTED,	ED2K_PROTOCOL_EDONKEY,	TRUE,	FALSE,	_T("PushAnswer") },
+
+		// Client - Server, Global (UDP)
+			{ ED2K_C2SG_SERVERSTATUSREQUEST,ED2K_PROTOCOL_EDONKEY,	TRUE,	TRUE,	_T("StatusRequest") },
+			{ ED2K_S2CG_SERVERSTATUS,		ED2K_PROTOCOL_EDONKEY,	TRUE,	TRUE,	_T("ServerStatus") },
+			{ ED2K_C2SG_SEARCHREQUEST,		ED2K_PROTOCOL_EDONKEY,	TRUE,	TRUE,	_T("SearchRequest") },
+			{ ED2K_C2SG_SEARCHREQUEST2,		ED2K_PROTOCOL_EDONKEY,	TRUE,	TRUE,	_T("SearchRequest2") },
+			{ ED2K_C2SG_SEARCHREQUEST3,		ED2K_PROTOCOL_EDONKEY,	TRUE,	TRUE,	_T("SearchRequest3") },
+			{ ED2K_S2CG_SEARCHRESULT,		ED2K_PROTOCOL_EDONKEY,	TRUE,	TRUE,	_T("SearchResult") },
+			{ ED2K_C2SG_GETSOURCES,			ED2K_PROTOCOL_EDONKEY,	TRUE,	TRUE,	_T("FindSource") },
+			{ ED2K_C2SG_GETSOURCES2,		ED2K_PROTOCOL_EDONKEY,	TRUE,	TRUE,	_T("FindSource2") },
+			{ ED2K_S2CG_FOUNDSOURCES,		ED2K_PROTOCOL_EDONKEY,	TRUE,	TRUE,	_T("FoundSources") },
+			{ ED2K_C2SG_CALLBACKREQUEST,	ED2K_PROTOCOL_EDONKEY,	TRUE,	TRUE,	_T("PushRequest") },
+			{ ED2K_S2CG_CALLBACKFAIL,		ED2K_PROTOCOL_EDONKEY,	TRUE,	TRUE,	_T("PushFail") },
+			{ ED2K_C2SG_LIST_REQ,			ED2K_PROTOCOL_EDONKEY,	TRUE,	TRUE,	_T("ListRequest") },
+			{ ED2K_S2CG_LIST_RES,			ED2K_PROTOCOL_EDONKEY,	TRUE,	TRUE,	_T("ListAnswer") },
+			{ ED2K_C2SG_DESC_REQ,			ED2K_PROTOCOL_EDONKEY,	TRUE,	TRUE,	_T("InfoRequest") },
+			{ ED2K_S2CG_DESC_RES,			ED2K_PROTOCOL_EDONKEY,	TRUE,	TRUE,	_T("InfoAnswer") },
+			{ ED2K_C2SG_LIST_REQ2,			ED2K_PROTOCOL_EDONKEY,	TRUE,	TRUE,	_T("ListRequest2") },
+
+		// Client - Client, TCP
+			{ ED2K_C2C_HELLO,				ED2K_PROTOCOL_EDONKEY,	FALSE,	FALSE,	_T("Hello") },
+			{ ED2K_C2C_HELLOANSWER,			ED2K_PROTOCOL_EDONKEY,	FALSE,	FALSE,	_T("HelloAnswer") },
+			{ ED2K_C2C_FILEREQUEST,			ED2K_PROTOCOL_EDONKEY,	FALSE,	FALSE,	_T("FileRequest") },
+			{ ED2K_C2C_FILEREQANSWER,		ED2K_PROTOCOL_EDONKEY,	FALSE,	FALSE,	_T("FileName") },
+			{ ED2K_C2C_FILENOTFOUND,		ED2K_PROTOCOL_EDONKEY,	FALSE,	FALSE,	_T("FileNotFound") },
+			{ ED2K_C2C_FILESTATUS,			ED2K_PROTOCOL_EDONKEY,	FALSE,	FALSE,	_T("FileStatus") },
+			{ ED2K_C2C_QUEUEREQUEST,		ED2K_PROTOCOL_EDONKEY,	FALSE,	FALSE,	_T("EnqueueMe") },
+			{ ED2K_C2C_QUEUERELEASE,		ED2K_PROTOCOL_EDONKEY,	FALSE,	FALSE,	_T("DequeueMe") },
+			{ ED2K_C2C_QUEUERANK,			ED2K_PROTOCOL_EDONKEY,	FALSE,	FALSE,	_T("QueueRank") },
+			{ ED2K_C2C_STARTUPLOAD,			ED2K_PROTOCOL_EDONKEY,	FALSE,	FALSE,	_T("StartUpload") },
+			{ ED2K_C2C_FINISHUPLOAD,		ED2K_PROTOCOL_EDONKEY,	FALSE,	FALSE,	_T("UploadFinished") },
+			{ ED2K_C2C_REQUESTPARTS,		ED2K_PROTOCOL_EDONKEY,	FALSE,	FALSE,	_T("RequestFrag") },
+			{ ED2K_C2C_SENDINGPART,			ED2K_PROTOCOL_EDONKEY,	FALSE,	FALSE,	_T("Fragment") },
+			{ ED2K_C2C_FILESTATUSREQUEST,	ED2K_PROTOCOL_EDONKEY,	FALSE,	FALSE,	_T("GetStatus") },
+			{ ED2K_C2C_HASHSETREQUEST,		ED2K_PROTOCOL_EDONKEY,	FALSE,	FALSE,	_T("GetHashset") },
+			{ ED2K_C2C_HASHSETANSWER,		ED2K_PROTOCOL_EDONKEY,	FALSE,	FALSE,	_T("Hashset") },
+			{ ED2K_C2C_ASKSHAREDFILES,		ED2K_PROTOCOL_EDONKEY,	FALSE,	FALSE,	_T("BrowseFiles") },
+			{ ED2K_C2C_ASKSHAREDFILESANSWER,ED2K_PROTOCOL_EDONKEY,	FALSE,	FALSE,	_T("BrowseFilesAnswer") },
+			{ ED2K_C2C_MESSAGE,				ED2K_PROTOCOL_EDONKEY,	FALSE,	FALSE,	_T("Message") },
+			{ ED2K_C2C_ASKSHAREDDIRS,		ED2K_PROTOCOL_EDONKEY,	FALSE,	FALSE,	_T("BrowseDirs") },
+			{ ED2K_C2C_ASKSHAREDDIRSANSWER,	ED2K_PROTOCOL_EDONKEY,	FALSE,	FALSE,	_T("BrowseDirsAnswer") },
+			{ ED2K_C2C_ASKSHAREDDIRSDENIED,	ED2K_PROTOCOL_EDONKEY,	FALSE,	FALSE,	_T("BrowseDirsDenied") },
+			{ ED2K_C2C_VIEWSHAREDDIR,		ED2K_PROTOCOL_EDONKEY,	FALSE,	FALSE,	_T("ViewDirs") },
+			{ ED2K_C2C_VIEWSHAREDDIRANSWER,	ED2K_PROTOCOL_EDONKEY,	FALSE,	FALSE,	_T("ViewDirsAnswer") },
+
+		// eMule Client - Client, TCP
+			{ ED2K_C2C_EMULEINFO,			ED2K_PROTOCOL_EMULE,	FALSE,	FALSE,	_T("eMuleInfo") },
+			{ ED2K_C2C_EMULEINFOANSWER,		ED2K_PROTOCOL_EMULE,	FALSE,	FALSE,	_T("eMuleInfoAnswer") },
+			{ ED2K_C2C_COMPRESSEDPART,		ED2K_PROTOCOL_EMULE,	FALSE,	FALSE,	_T("CompFragment") },
+			{ ED2K_C2C_QUEUERANKING,		ED2K_PROTOCOL_EMULE,	FALSE,	FALSE,	_T("QueueRanking") },
+			{ ED2K_C2C_FILEDESC,			ED2K_PROTOCOL_EMULE,	FALSE,	FALSE,	_T("FileDescription") },
+			{ ED2K_C2C_REQUESTSOURCES,		ED2K_PROTOCOL_EMULE,	FALSE,	FALSE,	_T("RequestSources") },
+			{ ED2K_C2C_ANSWERSOURCES,		ED2K_PROTOCOL_EMULE,	FALSE,	FALSE,	_T("Sources") },
+			{ ED2K_C2C_REQUESTPREVIEW,		ED2K_PROTOCOL_EMULE,	FALSE,	FALSE,	_T("RequestPreview") },
+			{ ED2K_C2C_PREVIEWANWSER,		ED2K_PROTOCOL_EMULE,	FALSE,	FALSE,	_T("Preview") },
+			{ ED2K_C2C_COMPRESSEDPART_I64,	ED2K_PROTOCOL_EMULE,	FALSE,	FALSE,	_T("CompFragment64") },
+			{ ED2K_C2C_REQUESTPARTS_I64,	ED2K_PROTOCOL_EMULE,	FALSE,	FALSE,	_T("RequestFrag64") },
+			{ ED2K_C2C_SENDINGPART_I64,		ED2K_PROTOCOL_EMULE,	FALSE,	FALSE,	_T("Fragment64") },
+
+		// Client - Client, UDP
+			{ ED2K_C2C_UDP_REASKFILEPING,	ED2K_PROTOCOL_EMULE,	FALSE,	TRUE,	_T("Re-AskFile") },
+			{ ED2K_C2C_UDP_REASKACK,		ED2K_PROTOCOL_EMULE,	FALSE,	TRUE,	_T("Re-AskAnswer") },
+			{ ED2K_C2C_UDP_FILENOTFOUND,	ED2K_PROTOCOL_EMULE,	FALSE,	TRUE,	_T("FileNotFound") },
+			{ ED2K_C2C_UDP_QUEUEFULL,		ED2K_PROTOCOL_EMULE,	FALSE,	TRUE,	_T("QueueFull") },
+			{ ED2K_C2C_UDP_REASKCALLBACKUDP,  ED2K_PROTOCOL_EMULE,	FALSE,	TRUE,	_T("Re-AskCallback") },
+			{ ED2K_C2C_UDP_DIRECTCALLBACKREQ, ED2K_PROTOCOL_EMULE,	FALSE,	TRUE,	_T("DirectCallback") },
+			{ ED2K_C2C_UDP_PORTTEST,		ED2K_PROTOCOL_EMULE,	FALSE,	TRUE,	_T("PortTest") }
+		};
+
+		m_oTypes.InitHashTable( GetBestHashTableSize( _countof( pszTypes ) ) );
+
+		for ( int i = 0; i < _countof( pszTypes ); ++i )
+		{
+			m_oTypes.SetAt( MAKEDWORD( MAKEWORD( pszTypes[ i ].nType, pszTypes[ i ].nProtocol ), MAKEWORD( pszTypes[ i ].bUDP, pszTypes[ i ].bServer ) ), pszTypes[ i ].pszName );
+		}
+	}
+
+	inline CString GetAt(BYTE nType, BYTE nProtocol, BOOL bUDP, BOOL bServer) const throw()
+	{
+		CString sType;
+		if ( ! m_oTypes.Lookup( MAKEDWORD( MAKEWORD( nType, ( ( bServer && nProtocol == ED2K_PROTOCOL_EMULE ) ? ED2K_PROTOCOL_EDONKEY : nProtocol ) ), MAKEWORD( bUDP, bServer ) ), sType ) )
+			sType.Format( _T("0x%02x-0x%02x"), nType, nProtocol );
+		return sType;
+	}
+
+private:
+	CMap< DWORD, DWORD, CString, const CString& > m_oTypes;
+};
+
+static const CEDPacketTypes PacketTypes;
 
 //////////////////////////////////////////////////////////////////////
 // CEDPacket construction
@@ -407,15 +532,7 @@ BOOL CEDPacket::Inflate()
 CString CEDPacket::GetType() const
 {
 	const BOOL bServer = ( m_nNeighbourUnique != NULL ) || ( m_bUDP && m_nEdProtocol == ED2K_PROTOCOL_EDONKEY );
-	for ( const ED2K_PACKET_DESC* pType = m_pszTypes ; pType->nType ; pType++ )
-	{
-		if ( pType->nType == m_nType && pType->bServer == bServer && pType->bUDP == m_bUDP && ( pType->nProtocol == m_nEdProtocol || bServer ) )
-			return pType->pszName;
-	}
-
-	CString tmp;
-	tmp.Format( _T("0x%x"), int( m_nType ) );
-	return tmp;
+	return PacketTypes.GetAt( m_nType, m_nEdProtocol, m_bUDP, bServer );
 }
 
 CString CEDPacket::ToASCII() const
@@ -430,71 +547,74 @@ CString CEDPacket::ToASCII() const
 			switch ( m_nType )
 			{
 			case ED2K_C2SG_SERVERSTATUSREQUEST:
+				if ( m_nLength >= 4 )
 				{
-					const DWORD& nChallenge = *(DWORD*)( m_pBuffer );
-					strOutput.Format( _T("challenge: 0x%08x"), nChallenge );
+					const DWORD& nChallenge = *(const DWORD*)( m_pBuffer );
+					strOutput.Format( _T("id: 0x%08x"), nChallenge );
 				}
 				break;
 
 			case ED2K_S2CG_SERVERSTATUS:
+				if ( m_nLength >= 4 )
 				{
-					const DWORD& nChallenge = *(DWORD*)( m_pBuffer );
-					strOutput.Format( _T("challenge: 0x%08x"), nChallenge );
-					const DWORD nLen = GetRemaining();
-					if ( nLen >= 12 )
+					const DWORD& nChallenge = *(const DWORD*)( m_pBuffer );
+					strOutput.Format( _T("id: 0x%08x"), nChallenge );
+					if ( m_nLength >= 12 )
 					{
-						const DWORD& nUsers = *(DWORD*)( m_pBuffer + 4 );
-						const DWORD& nFiles = *(DWORD*)( m_pBuffer + 8 );
+						const DWORD& nUsers = *(const DWORD*)( m_pBuffer + 4 );
+						const DWORD& nFiles = *(const DWORD*)( m_pBuffer + 8 );
 						strOutput.AppendFormat( _T(", users: %u, files: %u"), nUsers, nFiles );
-					}
-					if ( nLen >= 16 )
-					{
-						const DWORD& nMaxUsers = *(DWORD*)( m_pBuffer + 12 );
-						strOutput.AppendFormat( _T(", max users: %u"), nMaxUsers );
-					}
-					if ( nLen >= 24 )
-					{
-						const DWORD& nSoftLimit = *(DWORD*)( m_pBuffer + 16 );
-						const DWORD& nHardLimit = *(DWORD*)( m_pBuffer + 20 );
-						strOutput.AppendFormat( _T(", soft limit: %u, hard limit: %u"), nSoftLimit, nHardLimit );
-					}
-					if ( nLen >= 28 )
-					{
-						const DWORD& nUDPFlags = *(DWORD*)( m_pBuffer + 24 );
-						strOutput.AppendFormat( _T(", udp flags: %s"), GetED2KServerUDPFlags( nUDPFlags ) );
-					}
-					if ( nLen >= 32 )
-					{
-						const DWORD& nLowID = *(DWORD*)( m_pBuffer + 28 );
-						strOutput.AppendFormat( _T(", low id: %u"), nLowID );
-					}
-					if ( nLen >= 40 )
-					{
-						const WORD& nUDPPort = *(WORD*)( m_pBuffer + 32 );
-						const WORD& nTCPPort = *(WORD*)( m_pBuffer + 34 );
-						const DWORD& nKey = *(DWORD*)( m_pBuffer + 36 );
-						strOutput.AppendFormat( _T(", udp obf.port: %u, tcp obf.port: %u, server key: 0x%08x"), nUDPPort, nTCPPort, nKey );
+						if ( m_nLength >= 16 )
+						{
+							const DWORD& nMaxUsers = *(const DWORD*)( m_pBuffer + 12 );
+							strOutput.AppendFormat( _T(", max users: %u"), nMaxUsers );
+							if ( m_nLength >= 24 )
+							{
+								const DWORD& nSoftLimit = *(const DWORD*)( m_pBuffer + 16 );
+								const DWORD& nHardLimit = *(const DWORD*)( m_pBuffer + 20 );
+								strOutput.AppendFormat( _T(", soft limit: %u, hard limit: %u"), nSoftLimit, nHardLimit );
+								if ( m_nLength >= 28 )
+								{
+									const DWORD& nUDPFlags = *(const DWORD*)( m_pBuffer + 24 );
+									strOutput.AppendFormat( _T(", udp flags: %s"), GetED2KServerUDPFlags( nUDPFlags ) );
+									if ( m_nLength >= 32 )
+									{
+										const DWORD& nLowID = *(const DWORD*)( m_pBuffer + 28 );
+										strOutput.AppendFormat( _T(", low id: %u"), nLowID );
+										if ( m_nLength >= 40 )
+										{
+											const WORD& nUDPPort = *(const WORD*)( m_pBuffer + 32 );
+											const WORD& nTCPPort = *(const WORD*)( m_pBuffer + 34 );
+											const DWORD& nKey = *(const DWORD*)( m_pBuffer + 36 );
+											strOutput.AppendFormat( _T(", udp obf.port: %u, tcp obf.port: %u, server key: 0x%08x"), nUDPPort, nTCPPort, nKey );
+										}
+									}
+								}
+							}
+						}
 					}
 				}
 				break;
 
 			case ED2K_S2CG_SEARCHRESULT:
+				if ( m_nLength >= Hashes::Ed2kHash::byteCount + 4 + 2 + 4 )
 				{
-					const Hashes::Ed2kHash oMD4( *(Hashes::Ed2kHash::RawStorage*)( m_pBuffer + 4 ));
-					const IN_ADDR& nID = *(IN_ADDR*)( m_pBuffer + 4 + Hashes::Ed2kHash::byteCount );
-					const WORD& nPort = *(WORD*)( m_pBuffer + 4 + Hashes::Ed2kHash::byteCount + 4 );
+					const Hashes::Ed2kHash oMD4( *(const Hashes::Ed2kHash::RawStorage*)( m_pBuffer ));
+					const IN_ADDR& nID = *(const IN_ADDR*)( m_pBuffer+ Hashes::Ed2kHash::byteCount );
+					const WORD& nPort = *(const WORD*)( m_pBuffer + Hashes::Ed2kHash::byteCount + 4 );
 					strOutput.AppendFormat( _T("hash: %s, id: %u, port: %u, tags: %s"), oMD4.toString(), nID, nPort,
-						CEDTag::ToString( m_pBuffer + 4 + Hashes::Ed2kHash::byteCount + 4 + 2, m_nLength - ( 4 + Hashes::Ed2kHash::byteCount + 4 + 2 ) ) );
+						CEDTag::ToString( m_pBuffer + Hashes::Ed2kHash::byteCount + 4 + 2, m_nLength - ( Hashes::Ed2kHash::byteCount + 4 + 2 ) ) );
 				}
 				break;
 
 			case ED2K_C2SG_GETSOURCES2:
+				if ( m_nLength >= Hashes::Ed2kHash::byteCount + 4 )
 				{
-					const Hashes::Ed2kHash oMD4( *(Hashes::Ed2kHash::RawStorage*)m_pBuffer );
-					const DWORD& nSize = *(DWORD*)( m_pBuffer + Hashes::Ed2kHash::byteCount );
-					if ( nSize == 0 )
+					const Hashes::Ed2kHash oMD4( *(const Hashes::Ed2kHash::RawStorage*)m_pBuffer );
+					const DWORD& nSize = *(const DWORD*)( m_pBuffer + Hashes::Ed2kHash::byteCount );
+					if ( nSize == 0 && m_nLength >= Hashes::Ed2kHash::byteCount + 4 + 8 )
 					{
-						const QWORD& nSize64 = *(QWORD*)( m_pBuffer + Hashes::Ed2kHash::byteCount + 4 );
+						const QWORD& nSize64 = *(const QWORD*)( m_pBuffer + Hashes::Ed2kHash::byteCount + 4 );
 						strOutput.Format( _T("hash: %s, size: %I64u"), oMD4.toString(), nSize64 );
 					}
 					else
@@ -503,21 +623,23 @@ CString CEDPacket::ToASCII() const
 				break;
 
 			case ED2K_C2SG_GETSOURCES:
+				if ( m_nLength >= Hashes::Ed2kHash::byteCount )
 				{
-					const Hashes::Ed2kHash oMD4( *(Hashes::Ed2kHash::RawStorage*)m_pBuffer );
+					const Hashes::Ed2kHash oMD4( *(const Hashes::Ed2kHash::RawStorage*)m_pBuffer );
 					strOutput.Format( _T("hash: %s"), oMD4.toString() );
 				}
 				break;
 
 			case ED2K_S2CG_FOUNDSOURCES:
+				if ( m_nLength >= Hashes::Ed2kHash::byteCount + 1 )
 				{
-					const Hashes::Ed2kHash oMD4( *(Hashes::Ed2kHash::RawStorage*)m_pBuffer );
-					const BYTE& nCount = *(BYTE*)( m_pBuffer + Hashes::Ed2kHash::byteCount );
+					const Hashes::Ed2kHash oMD4( *(const Hashes::Ed2kHash::RawStorage*)m_pBuffer );
+					const BYTE& nCount = *(const BYTE*)( m_pBuffer + Hashes::Ed2kHash::byteCount );
 					strOutput.Format( _T("hash: %s, number: %u"), oMD4.toString(), nCount );
-					if ( nCount )
+					if ( nCount && m_nLength >= Hashes::Ed2kHash::byteCount + 1 + 4 + 2 )
 					{
-						const IN_ADDR& nID = *(IN_ADDR*)( m_pBuffer + Hashes::Ed2kHash::byteCount + 1 );
-						const WORD& nPort = *(WORD*)( m_pBuffer + Hashes::Ed2kHash::byteCount + 1 + 4 );
+						const IN_ADDR& nID = *(const IN_ADDR*)( m_pBuffer + Hashes::Ed2kHash::byteCount + 1 );
+						const WORD& nPort = *(const WORD*)( m_pBuffer + Hashes::Ed2kHash::byteCount + 1 + 4 );
 						strOutput.AppendFormat( _T(" -> id: %u, port: %u"), nID, nPort );
 					}
 				}
@@ -529,72 +651,118 @@ CString CEDPacket::ToASCII() const
 			switch ( m_nType )
 			{
 			case ED2K_C2S_LOGINREQUEST:
+				if ( m_nLength >= Hashes::Guid::byteCount + 4 + 2 + 4 )
 				{
-					const Hashes::Guid oGUID( *(Hashes::Guid::RawStorage*)( m_pBuffer ));
-					const DWORD& nClientID = *(DWORD*)( m_pBuffer + Hashes::Guid::byteCount );
-					const WORD& nPort = *(WORD*)( m_pBuffer + Hashes::Guid::byteCount + 4 );
+					const Hashes::Guid oGUID( *(const Hashes::Guid::RawStorage*)( m_pBuffer ));
+					const DWORD& nClientID = *(const DWORD*)( m_pBuffer + Hashes::Guid::byteCount );
+					const WORD& nPort = *(const WORD*)( m_pBuffer + Hashes::Guid::byteCount + 4 );
 					strOutput.Format( _T("guid: %s, id: %u, port: %u, tags: %s"), oGUID.toString(), nClientID, nPort,
 						CEDTag::ToString( m_pBuffer + Hashes::Guid::byteCount + 4 + 2, m_nLength - ( Hashes::Guid::byteCount + 4 + 2 ) ) );
 				}
 				break;
 
 			case ED2K_S2C_SERVERIDENT:
+				if ( m_nLength >= Hashes::Guid::byteCount + 4 + 2 + 4 )
 				{
-					const Hashes::Guid oGUID( *(Hashes::Guid::RawStorage*)( m_pBuffer ));
-					const IN_ADDR& nIP = *(IN_ADDR*)( m_pBuffer + Hashes::Guid::byteCount );
-					const WORD& nPort = *(WORD*)( m_pBuffer + Hashes::Guid::byteCount + 4 );
+					const Hashes::Guid oGUID( *(const Hashes::Guid::RawStorage*)( m_pBuffer ));
+					const IN_ADDR& nIP = *(const IN_ADDR*)( m_pBuffer + Hashes::Guid::byteCount );
+					const WORD& nPort = *(const WORD*)( m_pBuffer + Hashes::Guid::byteCount + 4 );
 					strOutput.Format( _T("guid: %s, address: %s:%u, tags: %s"), oGUID.toString(), (LPCTSTR)CString( inet_ntoa( nIP ) ), nPort,
 						CEDTag::ToString( m_pBuffer + Hashes::Guid::byteCount + 4 + 2, m_nLength - ( Hashes::Guid::byteCount + 4 + 2 ) ) );
 				}
 				break;
 
-			case ED2K_C2S_GETSOURCES:
+			case ED2K_C2S_CALLBACKREQUEST:
+				if ( m_nLength >= 4 )
 				{
-					const Hashes::Ed2kHash oMD4( *(Hashes::Ed2kHash::RawStorage*)m_pBuffer );
+					const DWORD& nID = *(const DWORD*)( m_pBuffer );
+					strOutput.Format( _T("id: %u"), nID );
+				}
+				break;
+
+			case ED2K_S2C_CALLBACKREQUESTED:
+				if ( m_nLength >= 4 + 2 )
+				{
+					const IN_ADDR& nIP = *(const IN_ADDR*)( m_pBuffer );
+					const WORD& nPort = *(const WORD*)( m_pBuffer + 4 );
+					strOutput.Format( _T("address: %s:%u"), (LPCTSTR)CString( inet_ntoa( nIP ) ), nPort );
+				}
+				break;
+
+			case ED2K_C2S_GETSOURCES:
+				if ( m_nLength >= Hashes::Ed2kHash::byteCount )
+				{
+					const Hashes::Ed2kHash oMD4( *(const Hashes::Ed2kHash::RawStorage*)m_pBuffer );
 					strOutput.Format( _T("hash: %s"), oMD4.toString() );
 				}
 				break;
 
 			case ED2K_S2C_FOUNDSOURCES:
+				if ( m_nLength >= Hashes::Ed2kHash::byteCount + 1 )
 				{
-					const Hashes::Ed2kHash oMD4( *(Hashes::Ed2kHash::RawStorage*)m_pBuffer );
-					const BYTE& nCount = *(BYTE*)( m_pBuffer + Hashes::Ed2kHash::byteCount );
+					const Hashes::Ed2kHash oMD4( *(const Hashes::Ed2kHash::RawStorage*)m_pBuffer );
+					const BYTE& nCount = *(const BYTE*)( m_pBuffer + Hashes::Ed2kHash::byteCount );
 					strOutput.Format( _T("hash: %s, number: %u"), oMD4.toString(), nCount );
-					if ( nCount )
+					if ( nCount && m_nLength >= Hashes::Ed2kHash::byteCount + 1 + 4 + 2 )
 					{
-						const IN_ADDR& nID = *(IN_ADDR*)( m_pBuffer + Hashes::Ed2kHash::byteCount + 1 );
-						const WORD& nPort = *(WORD*)( m_pBuffer + Hashes::Ed2kHash::byteCount + 1 + 4 );
+						const IN_ADDR& nID = *(const IN_ADDR*)( m_pBuffer + Hashes::Ed2kHash::byteCount + 1 );
+						const WORD& nPort = *(const WORD*)( m_pBuffer + Hashes::Ed2kHash::byteCount + 1 + 4 );
 						strOutput.AppendFormat( _T(" -> id: %u, port: %u"), nID, nPort );
 					}
 				}
 				break;
 
 			case ED2K_S2C_IDCHANGE:
+				if ( m_nLength >= 4 )
 				{
-					const DWORD& nClientID = *(DWORD*)( m_pBuffer );
-					const DWORD& nFlags = *(DWORD*)( m_pBuffer + 4 );
-					strOutput.Format( _T("new id: %u, tcp flags: %s"), nClientID, GetED2KServerTCPFlags( nFlags ) );
+					const DWORD& nClientID = *(const DWORD*)( m_pBuffer );
+					strOutput.Format( _T("new id: %u"), nClientID );
+					if ( m_nLength >= 8 )
+					{
+						const DWORD& nFlags = *(const DWORD*)( m_pBuffer + 4 );
+						strOutput.AppendFormat( _T(", tcp flags: %s"), GetED2KServerTCPFlags( nFlags ) );
+						if ( m_nLength >= 12 )
+						{
+							const DWORD& nTCPPort = *(const DWORD*)( m_pBuffer + 8 );
+							strOutput.AppendFormat( _T(", tcp port: %u"), nTCPPort );
+							if ( m_nLength >= 16 )
+							{
+								const DWORD& nIP = *(const DWORD*)( m_pBuffer + 12 );
+								strOutput.AppendFormat( _T(", client ip: %u"), nIP );
+							}
+						}
+					}
+				}
+				break;
+
+			case ED2K_S2C_SERVERLIST:
+				if ( m_nLength >= 1 )
+				{
+					const BYTE& nCount = *(const BYTE*)( m_pBuffer );
+					strOutput.Format( _T("count: %u"), nCount );
 				}
 				break;
 
 			case ED2K_S2C_SERVERMESSAGE:
+				if ( m_nLength >= 4 )
 				{
-					const WORD& nLen = *(WORD*)( m_pBuffer );
+					const WORD& nLen = *(const WORD*)( m_pBuffer );
 					strOutput.Format( _T("\"%s\" (%u bytes)"), (LPCTSTR)UTF8Decode( (char*)m_pBuffer + 2, nLen ), nLen );
 				}
 				break;
 
 			case ED2K_S2C_SEARCHRESULTS:
 			case ED2K_C2S_OFFERFILES:
+				if ( m_nLength >= 4 )
 				{
 					const DWORD& nCount = *(DWORD*)( m_pBuffer );
 					strOutput.Format( _T("number: %u"), nCount );
-					if ( nCount )
+					if ( nCount && m_nLength >= 4 + Hashes::Ed2kHash::byteCount + 4 + 2 + 4 )
 					{
 						// First hit only
-						const Hashes::Ed2kHash oMD4( *(Hashes::Ed2kHash::RawStorage*)( m_pBuffer + 4 ));
-						const IN_ADDR& nID = *(IN_ADDR*)( m_pBuffer + 4 + Hashes::Ed2kHash::byteCount );
-						const WORD& nPort = *(WORD*)( m_pBuffer + 4 + Hashes::Ed2kHash::byteCount + 4 );
+						const Hashes::Ed2kHash oMD4( *(const Hashes::Ed2kHash::RawStorage*)( m_pBuffer + 4 ));
+						const IN_ADDR& nID = *(const IN_ADDR*)( m_pBuffer + 4 + Hashes::Ed2kHash::byteCount );
+						const WORD& nPort = *(const WORD*)( m_pBuffer + 4 + Hashes::Ed2kHash::byteCount + 4 );
 						strOutput.AppendFormat( _T(" -> hash: %s, id: %u, port: %u, tags: %s%s"), oMD4.toString(), nID, nPort,
 							CEDTag::ToString( m_pBuffer + 4 + Hashes::Ed2kHash::byteCount + 4 + 2, m_nLength - ( 4 + Hashes::Ed2kHash::byteCount + 4 + 2 ) ),
 							( nCount > 1 ) ? _T("...") : _T("") );
@@ -603,9 +771,10 @@ CString CEDPacket::ToASCII() const
 				break;
 
 			case ED2K_S2C_SERVERSTATUS:
+				if ( m_nLength >= 4 + 4 )
 				{
-					const DWORD& nUsers = *(DWORD*)( m_pBuffer );
-					const DWORD& nFiles = *(DWORD*)( m_pBuffer + 4 );
+					const DWORD& nUsers = *(const DWORD*)( m_pBuffer );
+					const DWORD& nFiles = *(const DWORD*)( m_pBuffer + 4 );
 					strOutput.Format( _T("users: %u, files: %u"), nUsers, nFiles );
 				}
 				break;
@@ -619,9 +788,19 @@ CString CEDPacket::ToASCII() const
 			switch ( m_nType )
 			{
 			case ED2K_C2C_UDP_REASKFILEPING:
+				if ( m_nLength >= Hashes::Ed2kHash::byteCount )
 				{
-					const Hashes::Ed2kHash oMD4( *(Hashes::Ed2kHash::RawStorage*)m_pBuffer );
+					const Hashes::Ed2kHash oMD4( *(const Hashes::Ed2kHash::RawStorage*)m_pBuffer );
 					strOutput.Format( _T("hash: %s"), oMD4.toString() );
+				}
+				break;
+
+			case ED2K_C2C_UDP_REASKACK:
+				if ( m_nLength >= 2 + 2 )
+				{
+					const WORD& position = *(const WORD*)( m_pBuffer );
+					const WORD& length = *(const WORD*)( m_pBuffer + 2 );
+					strOutput.Format( _T("position: %u, length: %u"), position, length );
 				}
 				break;
 			}
@@ -633,22 +812,24 @@ CString CEDPacket::ToASCII() const
 				switch ( m_nType )
 				{
 				case ED2K_C2C_HELLO:
+					if ( m_nLength >= 1 + Hashes::Guid::byteCount + 4 + 2 + 4 )
 					{
-						const Hashes::Guid oGUID( *(Hashes::Guid::RawStorage*)(m_pBuffer + 1) );
-						const DWORD& nClientID = *(DWORD*)( m_pBuffer + 1 + Hashes::Guid::byteCount );
-						const WORD& nPort = *(WORD*)( m_pBuffer + 1 + Hashes::Guid::byteCount + 4 );
+						const Hashes::Guid oGUID( *(const Hashes::Guid::RawStorage*)(m_pBuffer + 1) );
+						const DWORD& nClientID = *(const DWORD*)( m_pBuffer + 1 + Hashes::Guid::byteCount );
+						const WORD& nPort = *(const WORD*)( m_pBuffer + 1 + Hashes::Guid::byteCount + 4 );
 						strOutput.Format( _T("guid: %s, id: %u, port: %u, tags: %s"), oGUID.toString(), nClientID, nPort,
 							CEDTag::ToString( m_pBuffer + 1 + Hashes::Guid::byteCount + 4 + 2, m_nLength - ( 1 + Hashes::Guid::byteCount + 4 + 2 ) ) );
 					}
 					break;
 
 				case ED2K_C2C_HELLOANSWER:
+					if ( m_nLength >= Hashes::Guid::byteCount + 4 + 2 + 4 + 2 + 4 )
 					{
-						const Hashes::Guid oGUID( *(Hashes::Guid::RawStorage*)(m_pBuffer) );
-						const DWORD& nClientID = *(DWORD*)( m_pBuffer + Hashes::Guid::byteCount );
-						const WORD& nPort = *(WORD*)( m_pBuffer + Hashes::Guid::byteCount + 4 );
-						const IN_ADDR& nServerIP = *(IN_ADDR*)( m_pBuffer + m_nLength - 2 - 4 );
-						const WORD& nServerPort = *(WORD*)( m_pBuffer + m_nLength - 2 );
+						const Hashes::Guid oGUID( *(const Hashes::Guid::RawStorage*)(m_pBuffer) );
+						const DWORD& nClientID = *(const DWORD*)( m_pBuffer + Hashes::Guid::byteCount );
+						const WORD& nPort = *(const WORD*)( m_pBuffer + Hashes::Guid::byteCount + 4 );
+						const IN_ADDR& nServerIP = *(const IN_ADDR*)( m_pBuffer + m_nLength - 2 - 4 );
+						const WORD& nServerPort = *(const WORD*)( m_pBuffer + m_nLength - 2 );
 						strOutput.Format( _T("guid: %s, id: %u, port: %u, tags: %s, server: %s:%u"), oGUID.toString(), nClientID, nPort,
 							CEDTag::ToString( m_pBuffer + Hashes::Guid::byteCount + 4 + 2, m_nLength - ( Hashes::Guid::byteCount + 4 + 2 ) ),
 							(LPCTSTR)CString( inet_ntoa( nServerIP ) ), nServerPort );
@@ -658,17 +839,25 @@ CString CEDPacket::ToASCII() const
 				case ED2K_C2C_MESSAGE:
 				case ED2K_C2C_VIEWSHAREDDIR:
 				case ED2K_C2C_VIEWSHAREDDIRANSWER:
+					if ( m_nLength >= 2 )
 					{
-						const WORD& nLen = *(WORD*)( m_pBuffer );
-						strOutput.Format( _T("\"%s\" (%u bytes)"), (LPCTSTR)UTF8Decode( (char*)m_pBuffer + 2, nLen ), nLen );
+						const WORD& nLen = *(const WORD*)( m_pBuffer );
+						if ( m_nLength >= 2u + nLen )
+						{
+							strOutput.Format( _T("\"%s\" (%u bytes)"), (LPCTSTR)UTF8Decode( (char*)m_pBuffer + 2, nLen ), nLen );
+						}
 					}
 					break;
 
 				case ED2K_C2C_FILEREQANSWER:
+					if ( m_nLength >= Hashes::Ed2kHash::byteCount + 2 )
 					{
-						const Hashes::Ed2kHash oMD4( *(Hashes::Ed2kHash::RawStorage*)m_pBuffer );
-						const WORD& nLen = *(WORD*)( m_pBuffer + Hashes::Ed2kHash::byteCount );
-						strOutput.Format( _T("hash: %s, name: \"%s\" (%u bytes)"), oMD4.toString(), (LPCTSTR)UTF8Decode( (char*)m_pBuffer + Hashes::Ed2kHash::byteCount + 2, nLen ), nLen );
+						const Hashes::Ed2kHash oMD4( *(const Hashes::Ed2kHash::RawStorage*)m_pBuffer );
+						const WORD& nLen = *(const WORD*)( m_pBuffer + Hashes::Ed2kHash::byteCount );
+						if ( m_nLength >= Hashes::Ed2kHash::byteCount + 2u + nLen )
+						{
+							strOutput.Format( _T("hash: %s, name: \"%s\" (%u bytes)"), oMD4.toString(), (LPCTSTR)UTF8Decode( (char*)m_pBuffer + Hashes::Ed2kHash::byteCount + 2, nLen ), nLen );
+						}
 					}
 					break;
 
@@ -677,16 +866,18 @@ CString CEDPacket::ToASCII() const
 				case ED2K_C2C_QUEUEREQUEST:
 				case ED2K_C2C_FILESTATUSREQUEST:
 				case ED2K_C2C_HASHSETREQUEST:
+					if ( m_nLength >= Hashes::Ed2kHash::byteCount )
 					{
-						const Hashes::Ed2kHash oMD4( *(Hashes::Ed2kHash::RawStorage*)m_pBuffer );
+						const Hashes::Ed2kHash oMD4( *(const Hashes::Ed2kHash::RawStorage*)m_pBuffer );
 						strOutput.Format( _T("hash: %s"), oMD4.toString() );
 					}
 					break;
 
 				case ED2K_C2C_FILESTATUS:
 				case ED2K_C2C_HASHSETANSWER:
+					if ( m_nLength >= Hashes::Ed2kHash::byteCount + 2 )
 					{
-						const Hashes::Ed2kHash oMD4( *(Hashes::Ed2kHash::RawStorage*)m_pBuffer );
+						const Hashes::Ed2kHash oMD4( *(const Hashes::Ed2kHash::RawStorage*)m_pBuffer );
 						const WORD& nBlocks = *(const WORD*)( m_pBuffer + Hashes::Ed2kHash::byteCount );
 						strOutput.Format( _T("hash: %s, blocks: %u"), oMD4.toString(), nBlocks );
 					}
@@ -695,6 +886,7 @@ CString CEDPacket::ToASCII() const
 				case ED2K_C2C_ASKSHAREDFILESANSWER:
 				case ED2K_C2C_ASKSHAREDDIRSANSWER:
 				case ED2K_C2C_QUEUERANK:
+					if ( m_nLength >= 4 )
 					{
 						const DWORD& nCount = *(const DWORD*)( m_pBuffer );
 						strOutput.Format( _T("number: %u"), nCount );
@@ -702,16 +894,18 @@ CString CEDPacket::ToASCII() const
 					break;
 
 				case ED2K_C2C_REQUESTPARTS:
+					if ( m_nLength >= Hashes::Ed2kHash::byteCount + 4 * 6 )
 					{
-						const Hashes::Ed2kHash oMD4( *(Hashes::Ed2kHash::RawStorage*)m_pBuffer );
+						const Hashes::Ed2kHash oMD4( *(const Hashes::Ed2kHash::RawStorage*)m_pBuffer );
 						const DWORD* offset = (const DWORD*)( m_pBuffer + Hashes::Ed2kHash::byteCount );
 						strOutput.Format( _T("hash: %s, offsets: %u-%u, %u-%u, %u-%u"), oMD4.toString(), offset[0], offset[3], offset[1], offset[4], offset[2], offset[5] );
 					}
 					break;
 
 				case ED2K_C2C_SENDINGPART:
+					if ( m_nLength >= Hashes::Ed2kHash::byteCount + 4 * 2 )
 					{
-						const Hashes::Ed2kHash oMD4( *(Hashes::Ed2kHash::RawStorage*)m_pBuffer );
+						const Hashes::Ed2kHash oMD4( *(const Hashes::Ed2kHash::RawStorage*)m_pBuffer );
 						const DWORD* offset = (const DWORD*)( m_pBuffer + Hashes::Ed2kHash::byteCount );
 						strOutput.Format( _T("hash: %s, offsets: %u, length: %u bytes"), oMD4.toString(), offset[0], offset[1] - offset[0] );
 					}
@@ -722,7 +916,19 @@ CString CEDPacket::ToASCII() const
 			{
 				switch ( m_nType )
 				{
+				case ED2K_C2C_EMULEINFO:
+				case ED2K_C2C_EMULEINFOANSWER:
+					if ( m_nLength >= 1 + 1 + 4 )
+					{
+						const BYTE& nVers = *(const BYTE*)( m_pBuffer );
+						const BYTE& nProto = *(const BYTE*)( m_pBuffer + 1 );
+						strOutput.Format( _T("version: %u, protocol: %u, tags: %s"), nVers, nProto,
+							CEDTag::ToString( m_pBuffer + 1 + 1, m_nLength - ( 1 + 1 ) ) );
+					}
+					break;
+
 				case ED2K_C2C_QUEUERANKING:
+					if ( m_nLength >= 2 + 2 )
 					{
 						const WORD& position = *(const WORD*)( m_pBuffer );
 						const WORD& length = *(const WORD*)( m_pBuffer + 2 );
@@ -731,32 +937,39 @@ CString CEDPacket::ToASCII() const
 					break;
 
 				case ED2K_C2C_FILEDESC:
+					if ( m_nLength >= Hashes::Ed2kHash::byteCount + 2 )
 					{
-						const Hashes::Ed2kHash oMD4( *(Hashes::Ed2kHash::RawStorage*)m_pBuffer );
-						const WORD& nLen = *(WORD*)( m_pBuffer + 16 );
-						strOutput.Format( _T("hash: %s, desc: \"%s\" (%u bytes)"), (LPCTSTR)UTF8Decode( (char*)m_pBuffer + 16 + 2, nLen ), nLen );
+						const Hashes::Ed2kHash oMD4( *(const Hashes::Ed2kHash::RawStorage*)m_pBuffer );
+						const WORD& nLen = *(const WORD*)( m_pBuffer + 16 );
+						if ( m_nLength >= Hashes::Ed2kHash::byteCount + 2 + nLen )
+						{
+							strOutput.Format( _T("hash: %s, desc: \"%s\" (%u bytes)"), (LPCTSTR)UTF8Decode( (char*)m_pBuffer + 16 + 2, nLen ), nLen );
+						}
 					}
 					break;
 
 				case ED2K_C2C_REQUESTSOURCES:
 				case ED2K_C2C_REQUESTPREVIEW:
+					if ( m_nLength >= Hashes::Ed2kHash::byteCount )
 					{
-						const Hashes::Ed2kHash oMD4( *(Hashes::Ed2kHash::RawStorage*)m_pBuffer );
+						const Hashes::Ed2kHash oMD4( *(const Hashes::Ed2kHash::RawStorage*)m_pBuffer );
 						strOutput.Format( _T("hash: %s"), oMD4.toString() );
 					}
 					break;
 
 				case ED2K_C2C_REQUESTPARTS_I64:
+					if ( m_nLength >= Hashes::Ed2kHash::byteCount + 8 * 6 )
 					{
-						const Hashes::Ed2kHash oMD4( *(Hashes::Ed2kHash::RawStorage*)m_pBuffer );
+						const Hashes::Ed2kHash oMD4( *(const Hashes::Ed2kHash::RawStorage*)m_pBuffer );
 						const QWORD* offset = (const QWORD*)( m_pBuffer + Hashes::Ed2kHash::byteCount );
 						strOutput.Format( _T("hash: %s, offsets: %I64u-%I64u, %I64u-%I64u, %I64u-%I64u"), oMD4.toString(), offset[0], offset[3], offset[1], offset[4], offset[2], offset[5] );
 					}
 					break;
 
 				case ED2K_C2C_COMPRESSEDPART:
+					if ( m_nLength >= Hashes::Ed2kHash::byteCount + 4 + 4 )
 					{
-						const Hashes::Ed2kHash oMD4( *(Hashes::Ed2kHash::RawStorage*)m_pBuffer );
+						const Hashes::Ed2kHash oMD4( *(const Hashes::Ed2kHash::RawStorage*)m_pBuffer );
 						const DWORD& offset = *(const DWORD*)( m_pBuffer + Hashes::Ed2kHash::byteCount );
 						const DWORD& length = *(const DWORD*)( m_pBuffer + Hashes::Ed2kHash::byteCount + 4 );
 						strOutput.Format( _T("hash: %s, offset: %u, length: %u bytes"), oMD4.toString(), offset, length );
@@ -764,8 +977,9 @@ CString CEDPacket::ToASCII() const
 					break;
 
 				case ED2K_C2C_COMPRESSEDPART_I64:
+					if ( m_nLength >= Hashes::Ed2kHash::byteCount + 8 + 4 )
 					{
-						const Hashes::Ed2kHash oMD4( *(Hashes::Ed2kHash::RawStorage*)m_pBuffer );
+						const Hashes::Ed2kHash oMD4( *(const Hashes::Ed2kHash::RawStorage*)m_pBuffer );
 						const QWORD& offset = *(const QWORD*)( m_pBuffer + Hashes::Ed2kHash::byteCount );
 						const DWORD& length = *(const DWORD*)( m_pBuffer + Hashes::Ed2kHash::byteCount + 8 );
 						strOutput.Format( _T("hash: %s, offset: %I64u, length: %u bytes"), oMD4.toString(), offset, length );
@@ -773,8 +987,9 @@ CString CEDPacket::ToASCII() const
 					break;
 
 				case ED2K_C2C_SENDINGPART_I64:
+					if ( m_nLength >= Hashes::Ed2kHash::byteCount + 8 * 2 )
 					{
-						const Hashes::Ed2kHash oMD4( *(Hashes::Ed2kHash::RawStorage*)m_pBuffer );
+						const Hashes::Ed2kHash oMD4( *(const Hashes::Ed2kHash::RawStorage*)m_pBuffer );
 						const QWORD* offset = (const QWORD*)( m_pBuffer + Hashes::Ed2kHash::byteCount );
 						strOutput.Format( _T("hash: %s, offsets: %I64u, length: %I64u bytes"), oMD4.toString(), offset[0], offset[1] - offset[0] );
 					}
@@ -1357,95 +1572,3 @@ BOOL CEDPacket::OnPacket(const SOCKADDR_IN* pHost)
 
 	return FALSE;
 }
-
-//////////////////////////////////////////////////////////////////////
-// CEDPacket packet type index
-
-const ED2K_PACKET_DESC CEDPacket::m_pszTypes[] =
-{
-// Client - Server, Local (TCP)
-	{ ED2K_C2S_LOGINREQUEST,		ED2K_PROTOCOL_EDONKEY,	TRUE,	FALSE,	_T("LoginRequest") },
-	{ ED2K_C2S_GETSERVERLIST,		ED2K_PROTOCOL_EDONKEY,	TRUE,	FALSE,	_T("GetServerList") },
-	{ ED2K_C2S_OFFERFILES,			ED2K_PROTOCOL_EDONKEY,	TRUE,	FALSE,	_T("ShareFiles") },
-	{ ED2K_C2S_SEARCHREQUEST,		ED2K_PROTOCOL_EDONKEY,	TRUE,	FALSE,	_T("SearchRequest") },
-	{ ED2K_C2S_SEARCHUSER,			ED2K_PROTOCOL_EDONKEY,	TRUE,	FALSE,	_T("Browse") },
-	{ ED2K_C2S_GETSOURCES,			ED2K_PROTOCOL_EDONKEY,	TRUE,	FALSE,	_T("FindSource") },
-	{ ED2K_C2S_CALLBACKREQUEST,		ED2K_PROTOCOL_EDONKEY,	TRUE,	FALSE,	_T("PushRequest") },
-	{ ED2K_C2S_MORERESULTS,			ED2K_PROTOCOL_EDONKEY,	TRUE,	FALSE,	_T("MoreResults") },
-	{ ED2K_S2C_REJECTED,			ED2K_PROTOCOL_EDONKEY,	TRUE,	FALSE,	_T("Rejected") },
-	{ ED2K_S2C_SERVERMESSAGE,		ED2K_PROTOCOL_EDONKEY,	TRUE,	FALSE,	_T("ServerMessage") },
-	{ ED2K_S2C_IDCHANGE,			ED2K_PROTOCOL_EDONKEY,	TRUE,	FALSE,	_T("IdChange") },
-	{ ED2K_S2C_SERVERLIST,			ED2K_PROTOCOL_EDONKEY,	TRUE,	FALSE,	_T("ServerList") },
-	{ ED2K_S2C_SEARCHRESULTS,		ED2K_PROTOCOL_EDONKEY,	TRUE,	FALSE,	_T("SearchResults") },
-	{ ED2K_S2C_FOUNDSOURCES,		ED2K_PROTOCOL_EDONKEY,	TRUE,	FALSE,	_T("FoundSources") },
-	{ ED2K_S2C_SERVERSTATUS,		ED2K_PROTOCOL_EDONKEY,	TRUE,	FALSE,	_T("ServerStatus") },
-	{ ED2K_S2C_SERVERIDENT,			ED2K_PROTOCOL_EDONKEY,	TRUE,	FALSE,	_T("ServerIdent") },
-	{ ED2K_S2C_CALLBACKREQUESTED,	ED2K_PROTOCOL_EDONKEY,	TRUE,	FALSE,	_T("PushAnswer") },
-
-// Client - Server, Global (UDP)
-	{ ED2K_C2SG_SERVERSTATUSREQUEST,ED2K_PROTOCOL_EDONKEY,	TRUE,	TRUE,	_T("StatusRequest") },
-	{ ED2K_S2CG_SERVERSTATUS,		ED2K_PROTOCOL_EDONKEY,	TRUE,	TRUE,	_T("ServerStatus") },
-	{ ED2K_C2SG_SEARCHREQUEST,		ED2K_PROTOCOL_EDONKEY,	TRUE,	TRUE,	_T("SearchRequest") },
-	{ ED2K_C2SG_SEARCHREQUEST2,		ED2K_PROTOCOL_EDONKEY,	TRUE,	TRUE,	_T("SearchRequest2") },
-	{ ED2K_C2SG_SEARCHREQUEST3,		ED2K_PROTOCOL_EDONKEY,	TRUE,	TRUE,	_T("SearchRequest3") },
-	{ ED2K_S2CG_SEARCHRESULT,		ED2K_PROTOCOL_EDONKEY,	TRUE,	TRUE,	_T("SearchResult") },
-	{ ED2K_C2SG_GETSOURCES,			ED2K_PROTOCOL_EDONKEY,	TRUE,	TRUE,	_T("FindSource") },
-	{ ED2K_C2SG_GETSOURCES2,		ED2K_PROTOCOL_EDONKEY,	TRUE,	TRUE,	_T("FindSource2") },
-	{ ED2K_S2CG_FOUNDSOURCES,		ED2K_PROTOCOL_EDONKEY,	TRUE,	TRUE,	_T("FoundSources") },
-	{ ED2K_C2SG_CALLBACKREQUEST,	ED2K_PROTOCOL_EDONKEY,	TRUE,	TRUE,	_T("PushRequest") },
-	{ ED2K_S2CG_CALLBACKFAIL,		ED2K_PROTOCOL_EDONKEY,	TRUE,	TRUE,	_T("PushFail") },
-	{ ED2K_C2SG_LIST_REQ,			ED2K_PROTOCOL_EDONKEY,	TRUE,	TRUE,	_T("ListRequest") },
-	{ ED2K_S2CG_LIST_RES,			ED2K_PROTOCOL_EDONKEY,	TRUE,	TRUE,	_T("ListAnswer") },
-	{ ED2K_C2SG_DESC_REQ,			ED2K_PROTOCOL_EDONKEY,	TRUE,	TRUE,	_T("InfoRequest") },
-	{ ED2K_S2CG_DESC_RES,			ED2K_PROTOCOL_EDONKEY,	TRUE,	TRUE,	_T("InfoAnswer") },
-	{ ED2K_C2SG_LIST_REQ2,			ED2K_PROTOCOL_EDONKEY,	TRUE,	TRUE,	_T("ListRequest2") },
-
-// Client - Client, TCP
-	{ ED2K_C2C_HELLO,				ED2K_PROTOCOL_EDONKEY,	FALSE,	FALSE,	_T("Hello") },
-	{ ED2K_C2C_HELLOANSWER,			ED2K_PROTOCOL_EDONKEY,	FALSE,	FALSE,	_T("HelloAnswer") },
-	{ ED2K_C2C_FILEREQUEST,			ED2K_PROTOCOL_EDONKEY,	FALSE,	FALSE,	_T("FileRequest") },
-	{ ED2K_C2C_FILEREQANSWER,		ED2K_PROTOCOL_EDONKEY,	FALSE,	FALSE,	_T("FileName") },
-	{ ED2K_C2C_FILENOTFOUND,		ED2K_PROTOCOL_EDONKEY,	FALSE,	FALSE,	_T("FileNotFound") },
-	{ ED2K_C2C_FILESTATUS,			ED2K_PROTOCOL_EDONKEY,	FALSE,	FALSE,	_T("FileStatus") },
-	{ ED2K_C2C_QUEUEREQUEST,		ED2K_PROTOCOL_EDONKEY,	FALSE,	FALSE,	_T("EnqueueMe") },
-	{ ED2K_C2C_QUEUERELEASE,		ED2K_PROTOCOL_EDONKEY,	FALSE,	FALSE,	_T("DequeueMe") },
-	{ ED2K_C2C_QUEUERANK,			ED2K_PROTOCOL_EDONKEY,	FALSE,	FALSE,	_T("QueueRank") },
-	{ ED2K_C2C_STARTUPLOAD,			ED2K_PROTOCOL_EDONKEY,	FALSE,	FALSE,	_T("StartUpload") },
-	{ ED2K_C2C_FINISHUPLOAD,		ED2K_PROTOCOL_EDONKEY,	FALSE,	FALSE,	_T("UploadFinished") },
-	{ ED2K_C2C_REQUESTPARTS,		ED2K_PROTOCOL_EDONKEY,	FALSE,	FALSE,	_T("RequestFrag") },
-	{ ED2K_C2C_SENDINGPART,			ED2K_PROTOCOL_EDONKEY,	FALSE,	FALSE,	_T("Fragment") },
-	{ ED2K_C2C_FILESTATUSREQUEST,	ED2K_PROTOCOL_EDONKEY,	FALSE,	FALSE,	_T("GetStatus") },
-	{ ED2K_C2C_HASHSETREQUEST,		ED2K_PROTOCOL_EDONKEY,	FALSE,	FALSE,	_T("GetHashset") },
-	{ ED2K_C2C_HASHSETANSWER,		ED2K_PROTOCOL_EDONKEY,	FALSE,	FALSE,	_T("Hashset") },
-	{ ED2K_C2C_ASKSHAREDFILES,		ED2K_PROTOCOL_EDONKEY,	FALSE,	FALSE,	_T("BrowseFiles") },
-	{ ED2K_C2C_ASKSHAREDFILESANSWER,ED2K_PROTOCOL_EDONKEY,	FALSE,	FALSE,	_T("BrowseFilesAnswer") },
-	{ ED2K_C2C_MESSAGE,				ED2K_PROTOCOL_EDONKEY,	FALSE,	FALSE,	_T("Message") },
-	{ ED2K_C2C_ASKSHAREDDIRS,		ED2K_PROTOCOL_EDONKEY,	FALSE,	FALSE,	_T("BrowseDirs") },
-	{ ED2K_C2C_ASKSHAREDDIRSANSWER,	ED2K_PROTOCOL_EDONKEY,	FALSE,	FALSE,	_T("BrowseDirsAnswer") },
-	{ ED2K_C2C_ASKSHAREDDIRSDENIED,	ED2K_PROTOCOL_EDONKEY,	FALSE,	FALSE,	_T("BrowseDirsDenied") },
-	{ ED2K_C2C_VIEWSHAREDDIR,		ED2K_PROTOCOL_EDONKEY,	FALSE,	FALSE,	_T("ViewDirs") },
-	{ ED2K_C2C_VIEWSHAREDDIRANSWER,	ED2K_PROTOCOL_EDONKEY,	FALSE,	FALSE,	_T("ViewDirsAnswer") },
-
-// eMule Client - Client, TCP
-	{ ED2K_C2C_COMPRESSEDPART,		ED2K_PROTOCOL_EMULE,	FALSE,	FALSE,	_T("CompFragment") },
-	{ ED2K_C2C_QUEUERANKING,		ED2K_PROTOCOL_EMULE,	FALSE,	FALSE,	_T("QueueRanking") },
-	{ ED2K_C2C_FILEDESC,			ED2K_PROTOCOL_EMULE,	FALSE,	FALSE,	_T("FileDescription") },
-	{ ED2K_C2C_REQUESTSOURCES,		ED2K_PROTOCOL_EMULE,	FALSE,	FALSE,	_T("RequestSources") },
-	{ ED2K_C2C_ANSWERSOURCES,		ED2K_PROTOCOL_EMULE,	FALSE,	FALSE,	_T("Sources") },
-	{ ED2K_C2C_REQUESTPREVIEW,		ED2K_PROTOCOL_EMULE,	FALSE,	FALSE,	_T("RequestPreview") },
-	{ ED2K_C2C_PREVIEWANWSER,		ED2K_PROTOCOL_EMULE,	FALSE,	FALSE,	_T("Preview") },
-	{ ED2K_C2C_COMPRESSEDPART_I64,	ED2K_PROTOCOL_EMULE,	FALSE,	FALSE,	_T("CompFragment64") },
-	{ ED2K_C2C_REQUESTPARTS_I64,	ED2K_PROTOCOL_EMULE,	FALSE,	FALSE,	_T("RequestFrag64") },
-	{ ED2K_C2C_SENDINGPART_I64,		ED2K_PROTOCOL_EMULE,	FALSE,	FALSE,	_T("Fragment64") },
-
-// Client - Client, UDP
-	{ ED2K_C2C_UDP_REASKFILEPING,	ED2K_PROTOCOL_EMULE,	FALSE,	TRUE,	_T("Re-AskFile") },
-	{ ED2K_C2C_UDP_REASKACK,		ED2K_PROTOCOL_EMULE,	FALSE,	TRUE,	_T("Re-AskAnswer") },
-	{ ED2K_C2C_UDP_FILENOTFOUND,	ED2K_PROTOCOL_EMULE,	FALSE,	TRUE,	_T("FileNotFound") },
-	{ ED2K_C2C_UDP_QUEUEFULL,		ED2K_PROTOCOL_EMULE,	FALSE,	TRUE,	_T("QueueFull") },
-	{ ED2K_C2C_UDP_REASKCALLBACKUDP,  ED2K_PROTOCOL_EMULE,	FALSE,	TRUE,	_T("Re-AskCallback") },
-	{ ED2K_C2C_UDP_DIRECTCALLBACKREQ, ED2K_PROTOCOL_EMULE,	FALSE,	TRUE,	_T("DirectCallback") },
-	{ ED2K_C2C_UDP_PORTTEST,		ED2K_PROTOCOL_EMULE,	FALSE,	TRUE,	_T("PortTest") },
-
-	{ 0,							ED2K_PROTOCOL_EDONKEY,	FALSE,	FALSE,	NULL }
-};

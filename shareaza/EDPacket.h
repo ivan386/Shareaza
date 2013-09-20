@@ -60,15 +60,6 @@ typedef struct
 
 #pragma pack()
 
-typedef struct
-{
-	DWORD	nType;
-	BYTE	nProtocol;							// ED2K_PROTOCOL_EDONKEY or ED2K_PROTOCOL_EMULE
-	BOOL	bServer;							// TRUE : client <-> server, FALSE : client <-> client
-	BOOL	bUDP;								// TRUE: UDP, FALSE: TCP
-	LPCTSTR	pszName;
-} ED2K_PACKET_DESC;
-
 #define	ED2K_VERSION					0x3D
 
 // Protocols
@@ -130,10 +121,6 @@ public:
 #endif // _DEBUG
 
 	inline static bool IsLowID(DWORD nID) { return nID > 0 && nID < 16777216; }
-
-// Packet Types
-protected:
-	static const ED2K_PACKET_DESC m_pszTypes[];
 
 // Packet Pool
 protected:
