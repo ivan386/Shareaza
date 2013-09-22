@@ -365,14 +365,16 @@ CString	CPacket::GetType() const // Saying const indicates this method doesn't c
 CString CPacket::ToHex() const
 {
 	// Setup the alphabet to use when endoing each byte in two hexadecimal characters, 0-9 and A-F
-	LPCTSTR pszHex = _T("0123456789ABCDEF");
+	const LPCTSTR pszHex = _T("0123456789ABCDEF");
+
+	const DWORD nLength = min( m_nLength, 84ul );
 
 	// Make a string and open it to write the characters in it directly, for speed
 	CString strDump;
-	LPTSTR pszDump = strDump.GetBuffer( m_nLength * 3 ); // Each byte will become 3 characters
+	LPTSTR pszDump = strDump.GetBuffer( nLength * 3 + 4 ); // Each byte will become 3 characters
 
 	// Loop i down each byte in the packet
-	for ( DWORD i = 0 ; i < m_nLength ; i++ )
+	for ( DWORD i = 0 ; i < nLength ; i++ )
 	{
 		// Copy the byte at i into an integer called nChar
 		int nChar = m_pBuffer[i];
@@ -385,6 +387,13 @@ CString CPacket::ToHex() const
 		*pszDump++ = pszHex[ nChar & 0x0F ];
 	}
 
+	if ( nLength < m_nLength )
+	{
+		*pszDump++ = '.';
+		*pszDump++ = '.';
+		*pszDump++ = '.';
+	}
+
 	// Write a null terminator beyond the characters we wrote, close direct memory access to the string, and return it
 	*pszDump = 0;
 	strDump.ReleaseBuffer();
@@ -395,24 +404,33 @@ CString CPacket::ToHex() const
 // Returns a string like "abc..fgh.i"
 CString CPacket::ToASCII() const
 {
+	const DWORD nLength = min( m_nLength, 252ul );
+
 	// Make a string and get direct access to its memory buffer
-	CStringA strDump;
-	LPSTR pszDump = strDump.GetBuffer( m_nLength + 1 ); // We'll write a character for each byte, and 1 more for the null terminator
+	CString strDump;
+	LPTSTR pszDump = strDump.GetBuffer( nLength + 4 ); // We'll write a character for each byte, and 1 more for the null terminator
 
 	// Loop i down each byte in the packet
-	for ( DWORD i = 0 ; i < m_nLength ; i++ )
+	for ( DWORD i = 0 ; i < nLength ; i++ )
 	{
 		// Copy the byte at i into an integer called nChar
 		int nChar = m_pBuffer[i];
 
 		// If the byte is 32 or greater, read it as an ASCII character and copy that character into the string
-		*pszDump++ = CHAR( nChar >= 32 ? nChar : '.' ); // If it's 0-31, copy in a period instead
+		*pszDump++ = TCHAR( nChar >= 32 ? nChar : '.' ); // If it's 0-31, copy in a period instead
+	}
+
+	if ( nLength < m_nLength )
+	{
+		*pszDump++ = '.';
+		*pszDump++ = '.';
+		*pszDump++ = '.';
 	}
 
 	// Write a null terminator beyond the characters we wrote, close direct memory access to the string, and return it
 	*pszDump = 0;
 	strDump.ReleaseBuffer();
-	return (LPCTSTR)CA2CT( (LPCSTR)strDump );
+	return strDump;
 }
 
 //////////////////////////////////////////////////////////////////////
