@@ -1,7 +1,7 @@
 //
 // DlgURLCopy.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,8 +22,7 @@
 #pragma once
 
 #include "DlgSkinDialog.h"
-
-class CShareazaFile;
+#include "ShareazaFile.h"
 
 
 class CURLCopyDlg : public CSkinDialog
@@ -45,7 +44,7 @@ protected:
 	CString					m_sHost;
 	CString					m_sMagnet;
 	CString					m_sED2K;
-	const CShareazaFile*	m_pFile;
+	CShareazaFile			m_pFile;
 
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	virtual BOOL OnInitDialog();

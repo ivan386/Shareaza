@@ -1,7 +1,7 @@
 //
 // DlgURLCopy.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -21,7 +21,6 @@
 
 #include "StdAfx.h"
 #include "Shareaza.h"
-#include "ShareazaFile.h"
 #include "CoolInterface.h"
 #include "DlgURLCopy.h"
 #include "Download.h"
@@ -69,7 +68,7 @@ void CURLCopyDlg::DoDataExchange(CDataExchange* pDX)
 void CURLCopyDlg::Add(const CShareazaFile* pFile)
 {
 	ASSERT( pFile != NULL );
-	m_pFile = pFile;
+	m_pFile = *pFile;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -81,7 +80,7 @@ BOOL CURLCopyDlg::OnInitDialog()
 
 	SkinMe( NULL, IDI_WEB_URL );
 	
-	m_wndIncludeSelf.ShowWindow( ( Network.IsListening() && m_pFile->m_sURL.IsEmpty() )
+	m_wndIncludeSelf.ShowWindow( ( Network.IsListening() && m_pFile.m_sURL.IsEmpty() )
 		? SW_SHOW : SW_HIDE );
 
 	OnIncludeSelf();
@@ -95,83 +94,104 @@ void CURLCopyDlg::OnIncludeSelf()
 
 	BOOL bIncludeSelf = m_wndIncludeSelf.GetCheck();
 
-	CString strURN, strIncludeSelfURN, strTemp;
+	CString strURN, strIncludeSelfURN;
 
-	if ( m_pFile->m_oTiger && m_pFile->m_oSHA1 )
+	// Use contents of .torrent-file instead of file itself
+	CBTInfo pTorrent;
+	if ( _tcsicmp( PathFindExtension( m_pFile.m_sName ), _T(".torrent") ) == 0 && pTorrent.LoadTorrentFile( m_pFile.m_sPath + _T("\\") + m_pFile.m_sName ) )
 	{
-		strURN	= _T("xt=urn:bitprint:")
-				+ m_pFile->m_oSHA1.toString() + '.'
-				+ m_pFile->m_oTiger.toString();
-	}
-	else if ( m_pFile->m_oSHA1 )
-	{
-		strURN = _T("xt=") + m_pFile->m_oSHA1.toUrn();
-	}
-	else if ( m_pFile->m_oTiger )
-	{
-		strURN = _T("xt=") + m_pFile->m_oTiger.toUrn();
+		m_pFile = pTorrent;
 	}
 
-	if ( m_pFile->m_oED2K )
+	if ( m_pFile.m_oTiger && m_pFile.m_oSHA1 )
 	{
-		strTemp = _T("xt=") + m_pFile->m_oED2K.toUrn();
+		strURN = _T("xt=urn:bitprint:") + m_pFile.m_oSHA1.toString() + _T('.') + m_pFile.m_oTiger.toString();
+	}
+	else if ( m_pFile.m_oSHA1 )
+	{
+		strURN = _T("xt=") + m_pFile.m_oSHA1.toUrn();
+	}
+	else if ( m_pFile.m_oTiger )
+	{
+		strURN = _T("xt=") + m_pFile.m_oTiger.toUrn();
+	}
+
+	if ( m_pFile.m_oED2K )
+	{
 		if ( strURN.GetLength() ) strURN += _T("&");
-		strURN += strTemp;
+		strURN += _T("xt=") + m_pFile.m_oED2K.toUrn();
 	}
 
-	if ( m_pFile->m_oMD5 && ! m_pFile->m_oTiger && ! m_pFile->m_oSHA1 && ! m_pFile->m_oED2K )
+	if ( m_pFile.m_oMD5 && ! m_pFile.m_oTiger && ! m_pFile.m_oSHA1 && ! m_pFile.m_oED2K )
 	{
-		strTemp = _T("xt=") + m_pFile->m_oMD5.toUrn();
 		if ( strURN.GetLength() ) strURN += _T("&");
-		strURN += strTemp;
+		strURN += _T("xt=") + m_pFile.m_oMD5.toUrn();
 	}
 
-	if ( m_pFile->m_oBTH && ! m_pFile->m_oTiger && ! m_pFile->m_oSHA1 && ! m_pFile->m_oED2K && ! m_pFile->m_oMD5 )
+	if ( m_pFile.m_oBTH )
 	{
-		strTemp = _T("xt=") + m_pFile->m_oBTH.toUrn();
 		if ( strURN.GetLength() ) strURN += _T("&");
-		strURN += strTemp;
-		
-		CSingleLock oLock( &Transfers.m_pSection, TRUE );
-		if ( CDownload* pDownload = Downloads.FindByBTH( m_pFile->m_oBTH ) )
-		{
-			if ( pDownload->IsTorrent() )
-			{
-				CString sTracker = URLEncode( pDownload->m_pTorrent.GetTrackerAddress() );
-				if ( sTracker.GetLength() )
-				{
-					strURN += _T("&tr=") + sTracker;
-				}
-			}
-		}
+		strURN += _T("xt=") + m_pFile.m_oBTH.toUrn();
 	}
 
 	m_sMagnet = strURN;
 
-	if ( m_pFile->m_nSize != 0 && m_pFile->m_nSize != SIZE_UNKNOWN )
+	if ( m_pFile.m_nSize != 0 && m_pFile.m_nSize != SIZE_UNKNOWN )
 	{
-		CString strSize;
-
-		strSize.Format( _T("xl=%I64u"), m_pFile->m_nSize );
-
 		if ( m_sMagnet.GetLength() ) m_sMagnet += _T("&");
-		m_sMagnet += strSize;
+		m_sMagnet.AppendFormat( _T("xl=%I64u"), m_pFile.m_nSize );
 	}
 
-	if ( m_pFile->m_sName.GetLength() )
+	if ( m_pFile.m_sName.GetLength() )
 	{
-		CString strName = URLEncode( m_pFile->m_sName );
-
 		if ( m_sMagnet.GetLength() ) m_sMagnet += _T("&");
 		if ( strURN.GetLength() )
-			m_sMagnet += _T("dn=") + strName;
+			m_sMagnet += _T("dn=");
 		else
-			m_sMagnet += _T("kt=") + strName;
+			m_sMagnet += _T("kt=");
+		m_sMagnet += URLEncode( m_pFile.m_sName );
+	}
+	
+	if ( m_pFile.m_oBTH )
+	{
+		CString sTracker;
+
+		if ( pTorrent.IsAvailable() )
+		{
+			for ( int i = 0; i < pTorrent.GetTrackerCount(); ++i )
+			{
+				if ( sTracker.GetLength() ) sTracker += _T("&");
+				sTracker += _T("tr=") + URLEncode( pTorrent.GetTrackerAddress( i ) );
+			}
+		}
+
+		if ( sTracker.IsEmpty() )
+		{
+			CSingleLock oLock( &Transfers.m_pSection, TRUE );
+
+			if ( const CDownload* pDownload = Downloads.FindByBTH( m_pFile.m_oBTH ) )
+			{
+				if ( pDownload->IsTorrent() )
+				{
+					for ( int i = 0; i < pDownload->m_pTorrent.GetTrackerCount(); ++i )
+					{
+						if ( sTracker.GetLength() ) sTracker += _T("&");
+						sTracker += _T("tr=") + URLEncode( pDownload->m_pTorrent.GetTrackerAddress( i ) );
+					}
+				}
+			}
+		}
+
+		if ( sTracker.GetLength() )
+		{
+			if ( m_sMagnet.GetLength() ) m_sMagnet += _T("&");
+			m_sMagnet += sTracker;
+		}
 	}
 
 	m_sMagnet = _T("magnet:?") + m_sMagnet;
 
-	CString strSelf = m_pFile->GetURL( Network.m_pHost.sin_addr,
+	CString strSelf = m_pFile.GetURL( Network.m_pHost.sin_addr,
 		htons( Network.m_pHost.sin_port ) );
 
 	if ( bIncludeSelf )
@@ -181,18 +201,18 @@ void CURLCopyDlg::OnIncludeSelf()
 	}
 	else
 	{
-		if ( m_pFile->m_sURL.GetLength() )
-			m_sMagnet += _T("&xs=") + URLEncode( m_pFile->m_sURL );
+		if ( m_pFile.m_sURL.GetLength() )
+			m_sMagnet += _T("&xs=") + URLEncode( m_pFile.m_sURL );
 	}
 
-	if ( m_pFile->m_oED2K &&
-		( m_pFile->m_nSize != 0 && m_pFile->m_nSize != SIZE_UNKNOWN ) &&
-		m_pFile->m_sName.GetLength() )
+	if ( m_pFile.m_oED2K &&
+		( m_pFile.m_nSize != 0 && m_pFile.m_nSize != SIZE_UNKNOWN ) &&
+		m_pFile.m_sName.GetLength() )
 	{
 		m_sED2K.Format( _T("ed2k://|file|%s|%I64u|%s|/"),
-			(LPCTSTR)URLEncode( m_pFile->m_sName ),
-			m_pFile->m_nSize,
-			(LPCTSTR)m_pFile->m_oED2K.toString() );
+			(LPCTSTR)URLEncode( m_pFile.m_sName ),
+			m_pFile.m_nSize,
+			(LPCTSTR)m_pFile.m_oED2K.toString() );
 
 		if ( bIncludeSelf )
 		{
@@ -204,9 +224,9 @@ void CURLCopyDlg::OnIncludeSelf()
 	{
 		m_sHost = strSelf;
 	}
-	else if ( m_pFile->m_sURL.GetLength() )
+	else if ( m_pFile.m_sURL.GetLength() )
 	{
-		m_sHost = m_pFile->m_sURL;
+		m_sHost = m_pFile.m_sURL;
 	}
 	else
 	{
