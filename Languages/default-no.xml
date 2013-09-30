@@ -1108,6 +1108,9 @@
 		<menu name="CDownloadsWnd.Seeding">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Åpne eller spill av"/>
 			<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Stopp spreding"/>
+			<separator/>
+			<item id="ID_DOWNLOADS_COPY" text="Kopier URI"/>
+			<separator/>
 			<item id="ID_DOWNLOADS_HELP" text="Hjelp..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_EDIT" text="_Informasjon om torrent..."/>

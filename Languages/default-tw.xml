@@ -1108,6 +1108,9 @@
 		<menu name="CDownloadsWnd.Seeding">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="開啟或播放"/>
 			<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="停止做種"/>
+			<separator/>
+			<item id="ID_DOWNLOADS_COPY" text="複製 URI"/>
+			<separator/>
 			<item id="ID_DOWNLOADS_HELP" text="說明..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_EDIT" text="_Torrent 資訊..."/>

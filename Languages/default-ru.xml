@@ -1108,6 +1108,9 @@
 		<menu name="CDownloadsWnd.Seeding">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Открыть"/>
 			<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="У_брать"/>
+			<separator/>
+			<item id="ID_DOWNLOADS_COPY" text="_Копировать ссылку..."/>
+			<separator/>
 			<item id="ID_DOWNLOADS_HELP" text="_Справка..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_EDIT" text="_Свойства..."/>

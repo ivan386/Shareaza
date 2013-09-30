@@ -1108,6 +1108,9 @@
 		<menu name="CDownloadsWnd.Seeding">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Ava"/>
 			<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Lõpeta Jagamine"/>
+			<separator/>
+			<item id="ID_DOWNLOADS_COPY" text="Kopeeri _URI"/>
+			<separator/>
 			<item id="ID_DOWNLOADS_HELP" text="_Abi..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_EDIT" text="_Info..."/>

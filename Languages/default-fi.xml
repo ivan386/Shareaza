@@ -1108,6 +1108,9 @@
 		<menu name="CDownloadsWnd.Seeding">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Avaa tai Toista"/>
 			<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Lopeta Jako"/>
+			<separator/>
+			<item id="ID_DOWNLOADS_COPY" text="Kopioi _URI"/>
+			<separator/>
 			<item id="ID_DOWNLOADS_HELP" text="_Ohje..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_EDIT" text="Torrentti _Info..."/>

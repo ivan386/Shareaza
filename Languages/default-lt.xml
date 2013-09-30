@@ -1108,6 +1108,9 @@
 		<menu name="CDownloadsWnd.Seeding">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="A_tverti ar vykdyti"/>
 			<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Nutraukti skleidimą"/>
+			<separator/>
+			<item id="ID_DOWNLOADS_COPY" text="Kopijuoti _nuorodą..."/>
+			<separator/>
 			<item id="ID_DOWNLOADS_HELP" text="Ži_nynas..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_EDIT" text="Sa_vybės..."/>

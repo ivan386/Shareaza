@@ -1108,6 +1108,9 @@
 		<menu name="CDownloadsWnd.Seeding">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Otevřít nebo přehrát"/>
 			<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Za_stavit Seedování"/>
+			<separator/>
+			<item id="ID_DOWNLOADS_COPY" text="Kopírovat _URI"/>
+			<separator/>
 			<item id="ID_DOWNLOADS_HELP" text="_Nápověda..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_EDIT" text="_Vlastnosti..."/>

@@ -2,10 +2,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2012-10-20 07:41+0000\n"
+"POT-Creation-Date: 2013-09-30 15:56+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1091,6 +1092,7 @@ msgstr "_Letöltés"
 #: cdownloadswnd.download;39;item;id_downloads_copy
 #: cdownloadswnd.source;item;id_downloads_copy
 #: cdownloadswnd.completed;item;id_downloads_copy
+#: cdownloadswnd.seeding;item;id_downloads_copy
 #: clibraryfileview.physical.basic;item;id_library_url
 #: clibraryfileview.physical;item;id_library_url
 #: clibraryfileview.virtual.basic;item;id_library_url

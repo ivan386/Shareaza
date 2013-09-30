@@ -1121,6 +1121,9 @@
 		<menu name="CDownloadsWnd.Seeding">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Open or Play"/>
 			<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Stop Seeding"/>
+			<separator/>
+			<item id="ID_DOWNLOADS_COPY" text="Copy _URI..."/>
+			<separator/>
 			<item id="ID_DOWNLOADS_HELP" text="_Help..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_EDIT" text="_Properties..."/>

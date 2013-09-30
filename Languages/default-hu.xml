@@ -1108,6 +1108,9 @@
 		<menu name="CDownloadsWnd.Seeding">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Megnyitás és Lejátszás"/>
 			<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Seedelés leállítása"/>
+			<separator/>
+			<item id="ID_DOWNLOADS_COPY" text="_URI másolása"/>
+			<separator/>
 			<item id="ID_DOWNLOADS_HELP" text="_Súgó..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_EDIT" text="_Torrent infó..."/>

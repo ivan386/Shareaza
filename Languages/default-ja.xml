@@ -1108,6 +1108,9 @@
 		<menu name="CDownloadsWnd.Seeding">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="開く・再生(_O)"/>
 			<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="シード停止(_S)"/>
+			<separator/>
+			<item id="ID_DOWNLOADS_COPY" text="URIをコピー(_U)"/>
+			<separator/>
 			<item id="ID_DOWNLOADS_HELP" text="ヘルプ(_H)..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_EDIT" text="Torrent情報(_I)..."/>

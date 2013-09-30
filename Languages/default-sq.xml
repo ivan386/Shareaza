@@ -1108,6 +1108,9 @@
 		<menu name="CDownloadsWnd.Seeding">
 			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Hape ose Luaje"/>
 			<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Ndale Mbjelljen"/>
+			<separator/>
+			<item id="ID_DOWNLOADS_COPY" text="Kopjo _URIn"/>
+			<separator/>
 			<item id="ID_DOWNLOADS_HELP" text="_Ndihmë..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_EDIT" text="_Veti..."/>
