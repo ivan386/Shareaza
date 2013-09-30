@@ -1,7 +1,7 @@
 //
 // DlgURLExport.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,13 +19,11 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_DLGURLEXPORT_H__1B69A614_F171_4EE4_925E_FEDBBAF13A0D__INCLUDED_)
-#define AFX_DLGURLEXPORT_H__1B69A614_F171_4EE4_925E_FEDBBAF13A0D__INCLUDED_
-
 #pragma once
 
 #include "DlgSkinDialog.h"
 #include "ShareazaFile.h"
+
 
 class CURLExportDlg : public CSkinDialog
 {
@@ -34,8 +32,13 @@ class CURLExportDlg : public CSkinDialog
 public:
 	CURLExportDlg(CWnd* pParent = NULL);
 
-public:
 	enum { IDD = IDD_URL_EXPORT };
+
+	void		Add(const CShareazaFile* pFile);
+
+	static void	MakeURL(CShareazaFile pFile, CString& strLine);
+
+protected:
 	CButton			m_wndSave;
 	CButton			m_wndCopy;
 	CProgressCtrl	m_wndProgress;
@@ -44,16 +47,11 @@ public:
 	CEdit			m_wndFormat;
 	CStatic			m_wndMessage;
 	CString			m_sFormat;
-
-	void		Add(const CShareazaFile* pFile);
-
-protected:
-	CList< const CShareazaFile* >	m_pFiles;
-
-	void		MakeURL(const CShareazaFile* pFile, CString& strLine);
+	CList< CShareazaFile >	m_pFiles;
 
 	virtual void DoDataExchange(CDataExchange* pDX);
 	virtual BOOL OnInitDialog();
+
 	afx_msg void OnCloseUpUrlToken();
 	afx_msg void OnSelChangeUrlPreset();
 	afx_msg void OnKillFocusUrlPreset();
@@ -61,7 +59,4 @@ protected:
 	afx_msg void OnCopy();
 
 	DECLARE_MESSAGE_MAP()
-
 };
-
-#endif // !defined(AFX_DLGURLEXPORT_H__1B69A614_F171_4EE4_925E_FEDBBAF13A0D__INCLUDED_)

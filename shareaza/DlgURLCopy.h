@@ -38,6 +38,12 @@ public:
 
 	static BOOL	SetClipboardText(CString& strText);
 
+	// Gathers more information about file (including trackers list)
+	static void Resolve(CShareazaFile& pFile, CString& sTracker);
+
+	// Gathers more information about file (including trackers list) and returns magnet-link
+	static CString CreateMagnet(CShareazaFile& pFile);
+
 protected:
 	CButton					m_wndIncludeSelf;
 	CStatic					m_wndMessage;

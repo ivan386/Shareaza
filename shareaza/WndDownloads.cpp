@@ -1250,43 +1250,30 @@ void CDownloadsWnd::OnUpdateDownloadsCopy(CCmdUI* pCmdUI)
 
 void CDownloadsWnd::OnDownloadsCopy()
 {
-	CSingleLock pLock( &Transfers.m_pSection, TRUE );
-	CList<CShareazaFile*> pList;
+	CList< CShareazaFile > pList;
 
-	for ( POSITION pos = Downloads.GetIterator() ; pos ; )
 	{
-		CDownload* pDownload = Downloads.GetNext( pos );
-		if ( pDownload->m_bSelected && Downloads.Check( pDownload ) && ( pDownload->m_oSHA1 || pDownload->m_oTiger || pDownload->m_oED2K || pDownload->m_oBTH || pDownload->m_oMD5 || pDownload->m_sName.GetLength() ) )
+		CQuickLock pLock( Transfers.m_pSection );
+
+		for ( POSITION pos = Downloads.GetIterator() ; pos ; )
 		{
-			CShareazaFile* pFile = new CShareazaFile();
-			pFile->m_sName		= pDownload->m_sName;
-			pFile->m_oSHA1		= pDownload->m_oSHA1;
-			pFile->m_oTiger		= pDownload->m_oTiger;
-			pFile->m_oED2K		= pDownload->m_oED2K;
-			pFile->m_oBTH		= pDownload->m_oBTH;
-			pFile->m_oMD5		= pDownload->m_oMD5;
-			pFile->m_nSize		= pDownload->m_nSize;
+			CDownload* pDownload = Downloads.GetNext( pos );
 
-			pList.AddTail( pFile );
-		}
-
-		for ( POSITION posSource = pDownload->GetIterator(); posSource ; )
-		{
-			CDownloadSource* pSource = pDownload->GetNext( posSource );
-
-			if ( pSource->m_bSelected )
+			if ( pDownload->m_bSelected && Downloads.Check( pDownload ) && ( pDownload->m_oSHA1 || pDownload->m_oTiger || pDownload->m_oED2K || pDownload->m_oBTH || pDownload->m_oMD5 || pDownload->m_sName.GetLength() ) )
 			{
-				CShareazaFile* pFile = new CShareazaFile();
-				pFile->m_sName		= pDownload->m_sName;
-				pFile->m_oSHA1		= pDownload->m_oSHA1;
-				pFile->m_oTiger		= pDownload->m_oTiger;
-				pFile->m_oED2K		= pDownload->m_oED2K;
-				pFile->m_oBTH		= pDownload->m_oBTH;
-				pFile->m_oMD5		= pDownload->m_oMD5;
-				pFile->m_nSize		= pDownload->m_nSize;
-				pFile->m_sURL		= pSource->m_sURL;
+				pList.AddTail( *pDownload );
+			}
 
-				pList.AddTail( pFile );
+			for ( POSITION posSource = pDownload->GetIterator(); posSource ; )
+			{
+				const CDownloadSource* pSource = pDownload->GetNext( posSource );
+
+				if ( pSource->m_bSelected )
+				{
+					CShareazaFile pFile = *pDownload;
+					pFile.m_sURL = pSource->m_sURL;
+					pList.AddTail( pFile );
+				}
 			}
 		}
 	}
@@ -1294,30 +1281,18 @@ void CDownloadsWnd::OnDownloadsCopy()
 	if ( pList.GetCount() == 1 )
 	{
 		CURLCopyDlg dlg;
-		POSITION pos = pList.GetHeadPosition();
-		CShareazaFile* pFile = pList.GetNext( pos );
-		dlg.Add( pFile );
+		dlg.Add( &pList.GetHead() );
 		dlg.DoModal();
 	}
 	else if ( pList.GetCount() > 1 )
 	{
 		CURLExportDlg dlg;
-
-		POSITION pos = pList.GetHeadPosition();
-		while ( pos )
+		for ( POSITION pos = pList.GetHeadPosition(); pos; )
 		{
-			CShareazaFile* pFile = pList.GetNext( pos );
-			dlg.Add( pFile );
+			dlg.Add( &pList.GetNext( pos ) );
 		}
 		dlg.DoModal();
 	}
-
-	for ( POSITION pos = pList.GetHeadPosition() ; pos ; )
-	{
-		CShareazaFile* pFile = pList.GetNext( pos );
-		delete pFile;
-	}
-	pList.RemoveAll();
 }
 
 void CDownloadsWnd::OnUpdateDownloadsShare(CCmdUI* pCmdUI)

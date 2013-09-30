@@ -1,7 +1,7 @@
 //
 // Downloads.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -222,7 +222,7 @@ CDownload* CDownloads::Add(CMatchFile* pFile, BOOL bAddToHead)
 	if ( pDownload == NULL && pFile->m_oMD5 )
 		pDownload = FindByMD5( pFile->m_oMD5 );
 
-	if ( pDownload != NULL && ! pDownload->IsSeeding() )
+	if ( pDownload )
 	{
 		theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_ALREADY, (LPCTSTR)pDownload->GetDisplayName() );
 
@@ -283,7 +283,7 @@ CDownload* CDownloads::Add(const CShareazaURL& oURL, BOOL bAddToHead)
 	if ( pDownload == NULL && oURL.m_oMD5 )
 		pDownload = FindByMD5( oURL.m_oMD5 );
 
-	if ( pDownload != NULL && ! pDownload->IsSeeding() )
+	if ( pDownload )
 	{
 		theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_ALREADY, (LPCTSTR)pDownload->GetDisplayName() );
 
