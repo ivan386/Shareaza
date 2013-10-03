@@ -1,7 +1,7 @@
 //
 // Settings.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -271,7 +271,7 @@ public:
 		DWORD		TimeoutTraffic;
 		DWORD		SendBuffer;
 		bool		RequireForTransfers;		// Only upload/download to connected networks
-		DWORD		ConnectThrottle;			// Delay between connection attempts. (Neighbour connections)
+		DWORD		ConnectThrottle;			// Delay between connection attempts to neighbors (milliseconds)
 		DWORD		FailurePenalty;				// Delay after connection failure (seconds, default = 300) (Neighbour connections)
 		DWORD		FailureLimit;				// Max allowed connection failures (default = 3) (Neighbour connections)
 		bool		DetectConnectionLoss;		// Detect loss of internet connection
@@ -340,7 +340,7 @@ public:
 		DWORD		RouteCache;					// Life time of node route (seconds)
 		DWORD		HostCacheSize;				// Number of hosts of each type in Host cache
 		DWORD		HostCacheView;
-		DWORD		ConnectThrottle;			// Delay between connection attempts for same host (milliseconds)
+		DWORD		ConnectThrottle;			// Delay between connection attempts for same host (sec)
 		bool		SpecifyProtocol;			// Specify G1 or G2 when initiating a connection
 	} Gnutella;
 
@@ -415,7 +415,7 @@ public:
 		bool		EnableToday;
 		bool		EnableAlways;
 		bool		FastConnect;				// Try connecting to 2 servers to get online faster
-		bool		ForceHighID;				// Reconnect if low-id. (once only)
+		bool		ForceHighID;				// Reconnect if low-id
 		DWORD		NumServers;					// 1
 		DWORD		MaxLinks;					// Max ed2k client links
 		DWORD		MaxResults;

@@ -25,21 +25,23 @@
 // Only include the lines beneath this one once
 #pragma once
 
-// Copy in the contents of these files here before compiling
 #include "NeighboursWithG2.h"
 
-// Tell the compiler these classes exist, and it will find out more about them soon
 class CEDNeighbour;
 class CDownloadWithTiger;
+
 
 // Add methods helpful for eDonkey2000 that use the list of connected neighbours
 class CNeighboursWithED2K : public CNeighboursWithG2 // Continue the inheritance column CNeighbours : CNeighboursWithConnect : Routing : ED2K : G2 : G1 : CNeighboursBase
 {
 protected:
-	CNeighboursWithED2K(); // Zero the memory of the sources arrays
+	CNeighboursWithED2K();
 	virtual ~CNeighboursWithED2K();
 
 public:
+	DWORD				m_tLastED2KServerHop;	// The last time the ed2k server was changed due low ID (ticks)
+	DWORD				m_nLowIDCount;			// Counts the amount of ed2k server low IDs we got (resets on high ID)
+
 	virtual void OnRun();
 
 	// Get an eDonkey2000 neighbour from the list that's through the handshake and has a client ID
@@ -56,8 +58,8 @@ public:
 // Classes that inherit from this one can get to protected members, but unrelated classes can't
 protected:
 	// Hash arrays used by FindDonkeySources
-	DWORD            m_tEDSources[256]; // 256 MD4 hashes
-    Hashes::Ed2kHash m_oEDSources[256];
+	DWORD				m_tEDSources[256];		// 256 MD4 hashes
+    Hashes::Ed2kHash	m_oEDSources[256];
 
 	void RunGlobalStatsRequests();
 };

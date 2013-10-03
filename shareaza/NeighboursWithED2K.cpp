@@ -32,7 +32,6 @@
 #include "Network.h"
 #include "Settings.h"
 
-// If we are compiling in debug mode, replace the text "THIS_FILE" in the code with the name of this file
 #ifdef _DEBUG
 #undef THIS_FILE
 static char THIS_FILE[]=__FILE__;
@@ -42,15 +41,14 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CNeighboursWithED2K construction
 
-// CNeighboursWithED2K adds two arrays that need to be filled with 0s when the program creates its CNeighbours object
-CNeighboursWithED2K::CNeighboursWithED2K() :
-// Zero the memory of the sources array
-	m_tEDSources()
-,	m_oEDSources()
+CNeighboursWithED2K::CNeighboursWithED2K()
+	: m_tEDSources			()
+	, m_oEDSources			()
+	, m_tLastED2KServerHop	( 0 )
+	, m_nLowIDCount			( 0 )
 {
 }
 
-// CNeighboursWithED2K doesn't add anything to the CNeighbours inheritance column that needs to be cleaned up
 CNeighboursWithED2K::~CNeighboursWithED2K()
 {
 }

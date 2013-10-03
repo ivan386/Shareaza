@@ -157,9 +157,10 @@ BOOL CEDNeighbour::OnRun()
 		{
 			// We got a low ID when we should have gotten a high ID.
 			// Most likely, the user's router needs to get a few UDP packets before it opens up.
-			if ( tNow - Network.m_tLastED2KServerHop > 10 * 60 * 1000 )
+			if ( tNow - Neighbours.m_tLastED2KServerHop > ( Neighbours.m_nLowIDCount + 1 ) * 10 * 60 * 1000 )	// 10 minutes x attempts
 			{
-				Network.m_tLastED2KServerHop = tNow;
+				Neighbours.m_tLastED2KServerHop = tNow;
+				Neighbours.m_nLowIDCount++;
 
 				// Try another server.
 				theApp.Message( MSG_DEBUG, _T("eDonkey server %s fake low ID detected."), (LPCTSTR)m_sAddress );
@@ -347,6 +348,8 @@ BOOL CEDNeighbour::OnIdChange(CEDPacket* pPacket)
 
 	if ( ! CEDPacket::IsLowID( m_nClientID ) )
 	{
+		Neighbours.m_nLowIDCount = 0;
+
 		IN_ADDR pMyAddress;
 		pMyAddress.s_addr = m_nClientID;
 		Network.AcquireLocalAddress( pMyAddress );

@@ -1,7 +1,7 @@
 //
 // Network.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -71,7 +71,6 @@ public:
 	BOOL			m_bAutoConnect;
 	volatile bool	m_bConnected;				// Network has finished initializing and is connected
 	DWORD			m_tStartedConnecting;		// The time Shareaza started trying to connect
-	DWORD			m_tLastED2KServerHop;		// The last time the ed2k server was changed
 	TRISTATE		m_bUPnPPortsForwarded;		// UPnP values are assigned when the discovery is complete
 
 protected:

@@ -1,7 +1,7 @@
 //
 // Network.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -119,7 +119,6 @@ CNetwork::CNetwork()
 	, m_bAutoConnect		( FALSE )
 	, m_bConnected			( false )
 	, m_tStartedConnecting	( 0 )
-	, m_tLastED2KServerHop	( 0 )
 	, m_nSequence			( 0 )
 	, m_bUPnPPortsForwarded	( TRI_UNKNOWN )
 	, m_nUPnPExternalAddress()
