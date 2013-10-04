@@ -1,7 +1,7 @@
 //
 // WndSearchMonitor.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -39,7 +39,7 @@ protected:
 	CLiveListSizer		m_pSizer;
 	BOOL				m_bPaused;
 	CList< CLiveItem* >	m_pQueue;
-	CCriticalSection	m_pSection;
+	CMutexEx			m_pSection;
 
 	virtual void	OnQuerySearch(const CQuerySearch* pSearch);
 	virtual void	OnSkinChange();

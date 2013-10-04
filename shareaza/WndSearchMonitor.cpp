@@ -1,7 +1,7 @@
 //
 // WndSearchMonitor.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -106,16 +106,17 @@ void CSearchMonitorWnd::OnDestroy()
 {
 	KillTimer( 2 );
 
-	CSingleLock pLock( &m_pSection, TRUE );
-	m_bPaused = TRUE;
-
-	for ( POSITION pos = m_pQueue.GetHeadPosition() ; pos ; )
 	{
-		delete m_pQueue.GetNext( pos );
-	}
-	m_pQueue.RemoveAll();
+		CSingleLock pLock( &m_pSection, TRUE );
 
-	pLock.Unlock();
+		m_bPaused = TRUE;
+
+		for ( POSITION pos = m_pQueue.GetHeadPosition() ; pos ; )
+		{
+			delete m_pQueue.GetNext( pos );
+		}
+		m_pQueue.RemoveAll();
+	}
 
 	Settings.SaveList( _T("CSearchMonitorWnd"), &m_wndList );
 	SaveState( _T("CSearchMonitorWnd") );
@@ -207,11 +208,15 @@ void CSearchMonitorWnd::OnDblClkList(NMHDR* /*pNotifyStruct*/, LRESULT *pResult)
 
 void CSearchMonitorWnd::OnQuerySearch(const CQuerySearch* pSearch)
 {
-	if ( m_bPaused || m_hWnd == NULL ) return;
+	if ( m_bPaused || m_hWnd == NULL )
+		return;
 
-	CSingleLock pLock( &m_pSection, TRUE );
+	CSingleLock pLock( &m_pSection );
+	if ( ! pLock.Lock( 250 ) )
+		return;
 
-	if ( m_bPaused ) return;
+	if ( m_bPaused )
+		return;
 
 	CLiveItem* pItem = new CLiveItem( 4, NULL );
 
@@ -283,16 +288,20 @@ void CSearchMonitorWnd::OnTimer(UINT_PTR nIDEvent)
 
 	BOOL bScroll = m_wndList.GetTopIndex() + m_wndList.GetCountPerPage() >= m_wndList.GetItemCount();
 
-	CSingleLock pLock( &m_pSection );
-
 	for (;;)
 	{
-		pLock.Lock();
+		CLiveItem* pItem;
 
-		if ( m_pQueue.GetCount() == 0 ) break;
-		CLiveItem* pItem = m_pQueue.RemoveHead();
+		{
+			CSingleLock pLock( &m_pSection );
+			if ( ! pLock.Lock( 250 ) )
+				break;
 
-		pLock.Unlock();
+			if ( m_pQueue.GetCount() == 0 )
+				break;
+
+			pItem = m_pQueue.RemoveHead();
+		}
 
 		if ( (DWORD)m_wndList.GetItemCount() >= Settings.Search.MonitorQueue && Settings.Search.MonitorQueue > 0 )
 		{
@@ -314,8 +323,6 @@ void CSearchMonitorWnd::OnUpdateSecurityBan(CCmdUI* pCmdUI)
 
 void CSearchMonitorWnd::OnSecurityBan()
 {
-	CSingleLock pLock( &m_pSection, TRUE );
-
 	int nItem = m_wndList.GetNextItem( -1, LVNI_SELECTED );
 	if ( nItem >= 0 )
 	{
@@ -336,8 +343,6 @@ void CSearchMonitorWnd::OnUpdateBrowseLaunch(CCmdUI* pCmdUI)
 
 void CSearchMonitorWnd::OnBrowseLaunch()
 {
-	CSingleLock pLock( &m_pSection, TRUE );
-
 	int nItem = m_wndList.GetNextItem( -1, LVNI_SELECTED );
 	if ( nItem >= 0 )
 	{
