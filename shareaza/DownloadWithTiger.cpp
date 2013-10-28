@@ -996,7 +996,12 @@ BOOL CDownloadWithTiger::GetFragment(CDownloadTransfer* pTransfer)
 
 	if ( ! oPossible.empty() )
 	{
-		Fragments::List::const_iterator pRandom = oPossible.begin()->begin() == 0
+		CDownload* pDownload = static_cast< CDownload* >( this );
+		QWORD nNonRandomEnd = pDownload->GetNonRandomEnd();
+
+		QWORD nBegin = oPossible.begin()->begin();
+		Fragments::List::const_iterator pRandom = (nBegin == 0
+			|| nBegin < nNonRandomEnd )
 			? oPossible.begin()
 			: oPossible.random_range();
 

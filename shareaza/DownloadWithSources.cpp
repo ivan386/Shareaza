@@ -327,6 +327,10 @@ BOOL CDownloadWithSources::AddSource(const CShareazaFile* pHit, BOOL bForce)
 		m_nSize = pHit->m_nSize;
 		bUpdated = TRUE;
 	}
+	if ( m_nBitrate == 0 && (pHit->m_nBitrate > 0) )
+	{
+		m_nBitrate = pHit->m_nBitrate;
+	}
 	if ( m_sName.IsEmpty() && bHitHasName )
 	{
 		Rename( pHit->m_sName );
@@ -355,6 +359,23 @@ BOOL CDownloadWithSources::AddSourceHit(const CQueryHit* pHit, BOOL bForce)
 		m_pXML = pHit->m_pSchema->Instantiate( TRUE );
 		m_pXML->AddElement( pHit->m_pXML->Clone() );
 		pHit->m_pSchema->Validate( m_pXML, TRUE );
+	}
+
+	if ( m_nBitrate == 0 && pHit->m_pXML && pHit->m_pSchema ){
+		QWORD nLength = 0;
+		CString sMinutes = pHit->m_pXML->GetAttributeValue(L"minutes");
+		CString sSeconds = pHit->m_pXML->GetAttributeValue(L"seconds");
+		if (!sMinutes.IsEmpty())
+		{
+			double nMins = 0.0;
+			_stscanf( sMinutes, _T("%lf"), &nMins );
+			nLength = (QWORD)( nMins * (double)60 );	// Convert to seconds
+		}
+		if (!sSeconds.IsEmpty())
+			_stscanf( sSeconds, _T("%I64i"), &nLength );
+		
+		if (m_nSize > 0 && nLength > 0)
+			m_nBitrate = (m_nSize / nLength) * 8;
 	}
 
 	/*

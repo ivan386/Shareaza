@@ -651,6 +651,12 @@ BOOL CShareazaURL::ParseMagnet(LPCTSTR pszURL)
 		{
 			pTorrent->SetNode( strValue );
 		}
+		else if ( _tcsicmp( strKey, _T("br") ) == 0 )
+		{
+			QWORD nBitrate;
+			if ( _stscanf( strValue, _T("%I64i"), &nBitrate ) == 1 )
+				m_nBitrate = nBitrate;
+		}
 	}
 
 	if ( m_oBTH && ! m_pTorrent )

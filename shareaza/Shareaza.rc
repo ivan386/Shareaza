@@ -1653,7 +1653,7 @@ BEGIN
     LTEXT           "WARNING: This dialog provides advanced download editing features for power users which if used incorrectly can and probably will cause corruption.",IDC_STATIC,7,7,286,18
     GROUPBOX        "Filename and Si&ze:",IDC_STATIC,7,28,286,69
     LTEXT           "Filename:",IDC_STATIC,14,41,64,10
-    RTEXT           "File size (Byte):",IDC_STATIC,14,60,206,11
+    RTEXT           "File size (Byte):",IDC_STATIC,145,60,75,11
     GROUPBOX        "&URNs:",IDC_STATIC,7,100,286,113
     RTEXT           "Trusted",IDC_STATIC,14,109,272,11
     LTEXT           "SHA1:",IDC_STATIC,14,122,45,12,SS_CENTERIMAGE
@@ -1661,6 +1661,8 @@ BEGIN
     LTEXT           "ED2K:",IDC_STATIC,14,158,45,12,SS_CENTERIMAGE
     LTEXT           "MD5:",IDC_STATIC,14,176,45,12,SS_CENTERIMAGE
     LTEXT           "BitTorrent:",IDC_STATIC,14,194,45,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_BITRATE,80,60,64,12,ES_RIGHT | ES_AUTOHSCROLL
+    LTEXT           "Bitrate:",IDC_STATIC,14,60,62,11
 END
 
 IDD_SETTINGS_REMOTE DIALOGEX 0, 0, 282, 220

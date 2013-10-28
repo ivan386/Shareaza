@@ -38,6 +38,7 @@ public:
 	QWORD				m_nSize;	/* Size if any
 									 (there is no size if it equal to 0 or SIZE_UNKNOWN)
 									*/
+	QWORD               m_nBitrate;  // Non random download speed
 	Hashes::Sha1Hash	m_oSHA1;	// SHA1 (Base32)
 	Hashes::TigerHash	m_oTiger;	// TigerTree Root Hash (Base32)
 	Hashes::Ed2kHash	m_oED2K;	// ED2K (MD4, Base16)

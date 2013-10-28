@@ -59,7 +59,8 @@ BEGIN_INTERFACE_MAP(CShareazaFile, CComObject)
 END_INTERFACE_MAP()
 
 CShareazaFile::CShareazaFile() :
-	m_nSize( SIZE_UNKNOWN )
+	m_nSize( SIZE_UNKNOWN ),
+	m_nBitrate( 0 )
 {
 	EnableDispatch( IID_IShareazaFile );
 }
@@ -67,6 +68,7 @@ CShareazaFile::CShareazaFile() :
 CShareazaFile::CShareazaFile(const CShareazaFile& pFile) :
 	m_sName( pFile.m_sName ),
 	m_nSize( pFile.m_nSize ),
+	m_nBitrate( pFile.m_nBitrate ),
 	m_oSHA1( pFile.m_oSHA1 ),
 	m_oTiger( pFile.m_oTiger ),
 	m_oED2K( pFile.m_oED2K ),
@@ -82,6 +84,7 @@ CShareazaFile& CShareazaFile::operator=(const CShareazaFile& pFile)
 {
 	m_sName = pFile.m_sName;
 	m_nSize = pFile.m_nSize;
+	m_nBitrate = pFile.m_nBitrate;
 	m_oSHA1 = pFile.m_oSHA1;
 	m_oTiger = pFile.m_oTiger;
 	m_oED2K = pFile.m_oED2K;

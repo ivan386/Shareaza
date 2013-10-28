@@ -628,6 +628,7 @@
 #define IDC_TRUST_TIGER                 1422
 #define IDC_TRUST_ED2K                  1423
 #define IDC_PROFILE_ICQ                 1424
+#define IDC_BITRATE                     1626
 #define IDC_TORRENT_TRACKERMODE         1425
 #define IDC_ASSOCIATIONS                1426
 #define IDC_SHARE_OVERRIDE_1            1427

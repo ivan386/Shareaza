@@ -1102,6 +1102,21 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 				rcCell.DeflateRect( 1, 1 );
 				dc.Draw3dRect( &rcCell, crBack, crBack );
 				rcCell.DeflateRect( 0, 1 );
+				
+				QWORD NonRandomEnd = pDownload->GetNonRandomEnd()+1;
+
+				if ( NonRandomEnd > 0 && pDownload->m_nSize > 0)
+				{
+					if ( NonRandomEnd > pDownload->m_nSize )
+						NonRandomEnd = pDownload->m_nSize;
+
+					CRect rect(rcCell);
+					rect.DeflateRect( 1, 1 );
+					rect.left += ((rect.Width() - 2) * NonRandomEnd) / pDownload->m_nSize;
+					rect.right = rect.left + 2;
+					dc.FillSolidRect(&rect, RGB( 0, 255, 0 ));
+					dc.ExcludeClipRect(&rect);
+				}
 
 				if ( Settings.Downloads.SimpleBar )
 				{
@@ -1127,8 +1142,13 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 			if ( pDownload->IsTrying() )
 			{
 				DWORD nSpeed = pDownload->GetAverageSpeed();
-				if ( nSpeed )
-					strText = Settings.SmartSpeed( nSpeed );
+				DWORD nRealSpeed = pDownload->GetRealSpeed();
+
+				if ( nSpeed && nRealSpeed )
+					strText.Format( _T("%s (%s)"),
+									Settings.SmartSpeed( nSpeed ),
+									Settings.SmartSpeed( nRealSpeed ) );
+									
 			}
 			break;
 

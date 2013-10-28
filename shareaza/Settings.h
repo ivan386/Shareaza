@@ -514,6 +514,7 @@ public:
 		DWORD		StarveGiveUp;				// How long (in hours) before Shareaza will give up and try another download if it gets no data. (+ 0-9 h, depending on sources)
 		DWORD		RetryDelay;
 		DWORD		PushTimeout;
+		DWORD		MediaBuffer;
 		bool		StaggardStart;
 		bool		AllowBackwards;				// Permit download to run in reverse when appropriate
 		DWORD		ChunkSize;

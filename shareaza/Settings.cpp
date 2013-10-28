@@ -502,6 +502,7 @@ void CSettings::Load()
 	Add( _T("Downloads"), _T("MaxReviews"), &Downloads.MaxReviews, 64, 1, 0, 256 );
 	Add( _T("Downloads"), _T("MaxTransfers"), &Downloads.MaxTransfers, 100, 1, 1, 250 );
 	Add( _T("Downloads"), _T("Metadata"), &Downloads.Metadata, true );
+	Add( _T("Downloads"), _T("MediaBuffer"), &Downloads.MediaBuffer, 20*1000, 1000, 0, 180, _T(" s")  );
 	Add( _T("Downloads"), _T("MinSources"), &Downloads.MinSources, 1, 1, 0, 6 );
 	Add( _T("Downloads"), _T("NeverDrop"), &Downloads.NeverDrop, false );
 	Add( _T("Downloads"), _T("PushTimeout"), &Downloads.PushTimeout, 45*1000, 1000, 5, 180, _T(" s") );

@@ -277,6 +277,23 @@ void CDownload::StartTrying()
 
 	Downloads.StartTrying( IsTorrent() );
 	m_tBegan = GetTickCount();
+	m_nCompletedAtBegan = GetVolumeComplete();
+}
+
+QWORD CDownload::GetRealSpeed()
+{
+	if ( m_tBegan > 0 )
+		return ( GetVolumeComplete() - m_nCompletedAtBegan ) * 1000 / ( GetTickCount() - m_tBegan );
+	return 0;
+}
+
+QWORD CDownload::GetNonRandomEnd()
+{
+	QWORD nSpeed = ( m_nBitrate / 8 );
+	
+	if ( Settings.Downloads.MediaBuffer && m_tBegan > 0 && ( GetRealSpeed() > nSpeed || GetAverageSpeed() > nSpeed ))
+		return m_nCompletedAtBegan + (( ( GetTickCount() - m_tBegan + Settings.Downloads.MediaBuffer ) / 1000 ) * ( m_nBitrate / 8 ));
+	return 0;
 }
 
 //////////////////////////////////////////////////////////////////////
