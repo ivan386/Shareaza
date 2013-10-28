@@ -417,9 +417,7 @@ HRESULT CIEProtocol::OnRequestCollection(LPCTSTR pszURL, CBuffer& oBuffer, CStri
 			{
 				if ( ! bParseOnly )
 				{
-					CString strBuffer;
-					pCollFile->Render( strBuffer );
-					oBuffer.Print( strBuffer, CP_UTF8 );
+					pCollFile->Render( oBuffer );
 					sMimeType = _T("text/html");
 				}
 				return S_OK;

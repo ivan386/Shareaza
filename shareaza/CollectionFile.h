@@ -69,7 +69,7 @@ public:
 public:
 	BOOL		Open(LPCTSTR lpszFileName);
 	void		Close();
-	void		Render(CString& strBuffer) const; // Render file list as HTML
+	void		Render(CBuffer& strBuffer) const; // Render file list as HTML
 
 	File*		FindByURN(LPCTSTR pszURN);
 	File*		FindFile(CLibraryFile* pShared, BOOL bApply = FALSE);

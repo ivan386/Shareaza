@@ -475,25 +475,27 @@ CXMLElement* CCollectionFile::CloneMetadata(CXMLElement* pMetadata)
 	return pMetadata;
 }
 
-void CCollectionFile::Render(CString& strBuffer) const
+void CCollectionFile::Render(CBuffer& strBuffer) const
 {
-	strBuffer.Preallocate( GetFileCount() * 128 + 256 );
 
-	strBuffer.Format( _T("<html>\n<head>\n")
+	CString sHead;
+
+	sHead.Format( _T("<html>\n<head>\n")
 		_T("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"/>\n")
 		_T("<title>%s</title>\n")
 		_T("<style type=\"text/css\">\n")
-		_T("body  { margin: 0px; padding: 0px; background-color: #ffffff; color: #000000; font-family: %s; font-size: %upx; }\n")
-		_T("h1    { text-align: left; color: #ffffff; height: 64px; margin: 0px; padding: 20px; font-size: 10pt; font-weight: bold; background-image: url(res://shareaza.exe/#2/#221); }\n")
-		_T("table { font-size: 8pt; width: 100%%; }\n")
-		_T("td    { background-color: #e0e8f0; padding: 4px; }\n")
+		_T("body  { display: table; margin: 0px; padding: 0px; background-color: #ffffff; color: #000000; font-family: %s; font-size: %upx; }\n")
+		_T("h1    { display: table-caption; text-align: left; color: #ffffff; height: 64px; margin: 0px; padding: 20px; font-size: 10pt; font-weight: bold; background-image: url(res://shareaza.exe/#2/#221); }\n")
+		_T("a {display: table-row; font-size: 8pt; width: 100%%; }\n")
+		_T("span    {display: table-col; background-color: #e0e8f0; padding: 4px; }\n")
 		_T(".num  { width: 40px; text-align: center; }\n")
 		_T(".url  { text-align: left; cursor: hand; }\n")
 		_T(".size { width: 100px; text-align: center; }\n")
-		_T("</style>\n</head>\n<body>\n<h1>%s</h1>\n<table>\n"),
+		_T("</style>\n</head>\n<body>\n<h1>%s</h1>\n"),
 		(LPCTSTR)GetTitle(),
 		(LPCTSTR)Settings.Fonts.DefaultFont, Settings.Fonts.FontSize,
 		(LPCTSTR)GetTitle() );
+	strBuffer.Print(sHead, CP_UTF8);
 
 	DWORD i = 1;
 	for ( POSITION pos = GetFileIterator(); pos; ++i )
@@ -523,15 +525,19 @@ void CCollectionFile::Render(CString& strBuffer) const
 		}
 
 		CString strTemp;
-		strTemp.Format( _T("<tr><td class=\"num\">%u</td>")
-			_T("<td class=\"url\" onclick=\"if ( ! window.external.open('%s') ) window.external.download('%s');\" onmouseover=\"window.external.hover('%s');\" onmouseout=\"window.external.hover('');\">%s</td>")
-			_T("<td class=\"size\">%s</td></tr>\n"),
-			i, (LPCTSTR)strURN, (LPCTSTR)strURN, (LPCTSTR)strURN, (LPCTSTR)pFile->m_sName,
+		strTemp.Format( _T("<a href=\"magnet:?xt=%s&br=%u&dn=%s\"><span class=\"num\">%u</span>")
+			_T("<span class=\"url\" >%s</span>")
+			_T("<span class=\"size\">%s</span></a>\n"),
+			(LPCTSTR)strURN, pFile->m_nBitrate, URLEncode( pFile->m_sName ) , i, (LPCTSTR)pFile->m_sName,
 			(LPCTSTR)Settings.SmartVolume( pFile->m_nSize ) );
-		strBuffer += strTemp;
+
+		strBuffer.Print(strTemp, CP_UTF8);
 	}
 
-	strBuffer += _T("</table>\n</body>\n</html>");
+
+	CString strFoot = _T("</body>\n</html>");
+
+	strBuffer.Print(strFoot, CP_UTF8); 
  }
 
 /////////////////////////////////////////////////////////////////////////////
