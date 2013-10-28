@@ -435,7 +435,7 @@ int CMainWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	// Task Bar
 
-	m_pTaskbar.CoCreateInstance( CLSID_TaskbarList );
+//	m_pTaskbar.CoCreateInstance( CLSID_TaskbarList );
 
 	// Tray
 
@@ -654,7 +654,7 @@ void CMainWnd::OnClose()
 
 	m_brshDockbar.DeleteObject();
 
-	m_pTaskbar.Release();
+//	m_pTaskbar.Release();
 
 	// Destroy main window
 	CMDIFrameWnd::OnClose();
@@ -1581,7 +1581,7 @@ void CMainWnd::UpdateMessages()
 		m_bTrayIcon = Shell_NotifyIcon( NIM_MODIFY, &m_pTray );
 	}
 
-	// Task Bar
+	/*/ Task Bar
 	if ( ! m_bTrayHide && m_pTaskbar )
 	{
 		CString sAppBarTip;
@@ -1603,6 +1603,7 @@ void CMainWnd::UpdateMessages()
 		}
 		m_pTaskbar->SetThumbnailTooltip( hWnd, sAppBarTip );
 	}
+	//*/
 }
 
 // This function runs some basic checks that everything is okay- disks, directories, local network is

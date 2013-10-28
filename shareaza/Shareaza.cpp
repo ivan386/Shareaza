@@ -694,7 +694,7 @@ BOOL CShareazaApp::Register()
 		//	oTasks.AddTask( _T("shareaza:command:search"), _T(""), LoadString( IDS_SEARCH_TASK ) + _T("..."), theApp.m_strBinaryPath, - IDR_SEARCHFRAME );
 		//	oTasks.AddTask( _T("shareaza:command:download"), _T(""), LoadString( IDS_DOWNLOAD_TASK ) + _T("..."), theApp.m_strBinaryPath, - IDR_DOWNLOADSFRAME );
 	
-		// For VS2008:
+		/*/ For VS2008:
 		CComPtr< ICustomDestinationList > pList;
 		if ( SUCCEEDED( pList.CoCreateInstance( CLSID_DestinationList ) ) )
 		{
@@ -724,6 +724,7 @@ BOOL CShareazaApp::Register()
 
 			VERIFY( SUCCEEDED( pList->CommitList() ) );
 		}
+		//*/
 	}
 
 	return CWinApp::Register();
@@ -747,6 +748,7 @@ void CShareazaApp::AddToRecentFileList(LPCTSTR lpszPathName)
 {
 	SHAddToRecentDocs( SHARD_PATHW, lpszPathName );
 
+/*/ 
 	if ( Windows.dwMajorVersion > 6 || ( Windows.dwMajorVersion == 6 && Windows.dwMinorVersion >= 1 ) )
 	{
 		if ( m_pfnSHCreateItemFromParsingName )
@@ -759,6 +761,7 @@ void CShareazaApp::AddToRecentFileList(LPCTSTR lpszPathName)
 			}
 		}
 	}
+//*/
 }
 
 CDocument* CShareazaApp::OpenDocumentFile(LPCTSTR lpszFileName)
