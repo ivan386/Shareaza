@@ -1,0 +1,25 @@
+﻿
+<!-- searchTop -->
+										<li class="active" style="border-bottom: 1px solid #000;"><a class="noline" href="?id=0">New Search</a></li>
+								</ul>
+
+<div style="border: 1px #000 solid;padding: 5px;" id="content">
+	<div id="functions"><a href="?id=<%= search_id %>&amp;refresh=<%= random %>">Refresh page</a> - 
+<%? searching %>
+												<a href="?id=<%= search_id %>&amp;stop=1"><b>Stop Searching</b></a> -
+<%?%>
+												<a href="?close=<%= search_id %>">Close Search</a>
+	</div>
+										<form method="get" action="">
+		<div id="filters">
+											<input type="hidden" name="id" value="<%= search_id %>" />
+											<input type="hidden" name="setfilter" value="1" />
+											<label>Filter:</label>
+											<input type="text" name="filter" value="<%= search_filter %>" size="20" />
+											<input type="submit" value="Filter" />
+		</div>
+										</form>
+										<br />
+<table>
+	<tr>
+<!--/searchTop-->

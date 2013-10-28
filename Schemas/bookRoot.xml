@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
+Shareaza Catalan Schemas File translated by Daniel Olivares Giménez; Equip de traduccions de FeshoCAT
+Shareaza Chinese Simplified Schemas File translated by Sanley; John
+Shareaza Chinese Traditional Schemas File translated by James Bond
+Shareaza Czech Schemas File translated by Odin
+Shareaza German Schemas File translated by Spooky; jlh; OldDeath
+Shareaza Estonian Schemas File translated by Janza
+Shareaza Spanish Schemas File translated by Unknown
+Shareaza Spanish (Mexico) Schemas File translated by Help
+Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
+Shareaza Greek Schemas File translated by erimitis
+Shareaza Hebrew Schemas File translated by _peer_ (H.L)
+Shareaza Croatian Schemas File translated by Biza
+Shareaza Hungarian Schemas File translated by Yuri
+Shareaza Italian Schemas File translated by ale5000
+Shareaza Japanese Schemas File translated by DukeDog; CyberBob
+Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
+Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); Jonne; Neglacio
+Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
+Shareaza Portuguese (Brasil) Schemas File translated by Lukas Taves (LightHeaven); Felipe
+Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
+Shareaza Slovenian Schemas File translated by Martin McDowell
+Shareaza Albanian Schemas File translated by Besmir Godole
+Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Swedish Schemas File translated by Marcus Ehrenlans; Printz; DanielB
+Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
+-->
+
+<schemaDescriptor location="http://www.shareaza.com/schemas/bookRoot.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
+
+       <object type="folder" availability="system"/>
+       <titles>
+               <title language="en">Book:My Books</title>
+               <title language="af">Boek:My Boeke</title>
+               <title language="ca">Llibre: Els meus llibres</title>
+               <title language="chs">&#160;书籍:我的书籍</title>
+               <title language="cht">書籍:我的書籍</title>
+               <title language="cz">Knihy:Moje knihy</title>
+               <title language="de">Buch:Eigene Bücher</title>
+               <title language="ee">Raamat:Minu Raamatud</title>
+               <title language="es">Libro: Todos mis libros</title>
+               <title language="es-mx">Libro: Todos mis libros</title>
+               <title language="fr">Livres:Mes livres</title>
+               <title language="gr">Βιβλίο:Βιβλία</title>
+               <title language="heb">&#160;ספר:הספרים שלי</title>
+               <title language="hr">Knjiga:Moje Knjige</title>
+               <title language="hu">Könyv: Könyvek</title>
+               <title language="it">Libro:Libri</title>
+               <title language="ja">&#160;書籍: マイ･ブック</title>
+               <title language="lt">Knyga:Mano knygos</title>
+               <title language="nl">Boek:Mijn Boeken</title>
+               <title language="no">Bok: mine bøker</title>
+               <title language="pt-br">Livro: Meus Livros</title>
+               <title language="ru">&#160;Книга: Мои книги</title>
+               <title language="sl-SI">Knjiga:Moje knjige</title>
+               <title language="sq">Libri:Libri Im</title>
+               <title language="sr">Knjiga:Moje Knjige</title>
+               <title language="sv">Bok: Mina böcker</title>
+               <title language="tr">Kitap: Kitaplarım</title>
+       </titles>
+       <images>
+               <icon path="bookFolder.ico"/>
+       </images>
+       <members>
+               <member name="title" search="none">
+                       <display defaultColumn="true"/>
+                       <title language="en">Title</title>
+                       <title language="af">Titel</title>
+                       <title language="ca">Títol</title>
+                       <title language="chs">标题</title>
+                       <title language="cht">標題</title>
+                       <title language="cz">Název</title>
+                       <title language="de">Titel</title>
+                       <title language="ee">Pealkiri</title>
+                       <title language="es">Título</title>
+                       <title language="es-mx">Título</title>
+                       <title language="fr">Titre</title>
+                       <title language="gr">Τίτλος</title>
+                       <title language="heb">כותרת</title>
+                       <title language="hr">Naslov</title>
+                       <title language="hu">Cím</title>
+                       <title language="it">Titolo</title>
+                       <title language="ja">タイトル</title>
+                       <title language="lt">Pavadinimas</title>
+                       <title language="nl">Titel</title>
+                       <title language="no">Tittel</title>
+                       <title language="pt-br">Título</title>
+                       <title language="ru">Название</title>
+                       <title language="sl-SI">Naslov</title>
+                       <title language="sq">Titulli</title>
+                       <title language="sr">Naslov</title>
+                       <title language="sv">Titel</title>
+                       <title language="tr">Başlık</title>
+               </member>
+       </members>
+       <contains>
+               <object type="folder" location="http://www.shareaza.com/schemas/bookAll.xsd"/>
+       </contains>
+       <headerContent version="1.0">
+               <title language="en">Welcome to My Books!</title>
+               <title language="af">Welkom by My Boeke!</title>
+               <title language="ca">Benvingut als meus llibres!</title>
+               <title language="chs">欢迎来到我的书籍！</title>
+               <title language="cht">歡迎來到我的書籍!</title>
+               <title language="cz">Moje knihy</title>
+               <title language="de">Willkommen bei Eigene Bücher!</title>
+               <title language="ee">Teretulemast  Minu Raamatutesse!</title>
+               <title language="es">¡Bienvenido a Mis Libros!</title>
+               <title language="es-mx">¡Bienvenido a Mis Libros!</title>
+               <title language="fr">Bienvenue dans Mes livres!</title>
+               <title language="gr">Καλώς ήρθατε στα Βιβλία!</title>
+               <title language="heb">ברוך הבא לספרים שלי!</title>
+               <title language="hr">Dobrodošli Među Vaše Knjige!</title>
+               <title language="hu">Üdvözöllek a Könyvek mappában!</title>
+               <title language="it">Benvenuto nei Libri!</title>
+               <title language="ja">マイ･ブックへようこそ</title>
+               <title language="lt">Sveiki apsilankę „Mano knygose“!</title>
+               <title language="nl">Welkom bij Mijn Boeken!</title>
+               <title language="no">Velkommen til mine bøker</title>
+               <title language="pt-br">Bem-vindo aos Meus Livros!</title>
+               <title language="ru">Добро пожаловать в Ваши книги!</title>
+               <title language="sl-SI">Dobrodošli v mojih knjigah!</title>
+               <title language="sq">Mirë se erdhët në Librat Tuaj!</title>
+               <title language="sr">Dobrodošli Među Vaše Knjige!</title>
+               <title language="sv">Välkommen till mina böcker!</title>
+               <title language="tr">Kitaplarıma Hoşgeldiniz!</title>
+               <subtitle language="en">These folders contain all of your books.</subtitle>
+               <subtitle language="af">Hierdie gidse bevat al jou boeke.</subtitle>
+               <subtitle language="ca">Aquestes carpetes contenen tots els teus llibres</subtitle>
+               <subtitle language="chs">这些文件夹包含您所有的书籍。</subtitle>
+               <subtitle language="cht">這些資料夾包含了您所有的書籍.</subtitle>
+               <subtitle language="cz">Tyto složky obsahují všechny knihy v knihovně.</subtitle>
+               <subtitle language="de">Diese Ordner enthalten alle Ihre Bücher.</subtitle>
+               <subtitle language="ee">Need kaustad sisaldavad kõiki sinu Raamatuid</subtitle>
+               <subtitle language="es">Estas carpetas contienen todos tus libros</subtitle>
+               <subtitle language="es-mx">Estas carpetas contienen todos tus libros</subtitle>
+               <subtitle language="fr">Ce dossier contient tous vos livres.</subtitle>
+               <subtitle language="gr">Αυτός ο φάκελος περιέχει όλα τα αρχεία βιβλίων.</subtitle>
+               <subtitle language="heb">ספרייה זו מכילה את כל הספרים שלך</subtitle>
+               <subtitle language="hr">Ove mape sadrže sve vaše knjige.</subtitle>
+               <subtitle language="hu">Ez a mappa könyveket tartalmaz.</subtitle>
+               <subtitle language="it">Queste cartelle contengono tutti i tuoi libri.</subtitle>
+               <subtitle language="ja">これらのフォルダーにはライブラリー内に所有している全ての書籍が収録されています</subtitle>
+               <subtitle language="lt">Šiuose kataloguose yra visos Jūsų knygos.</subtitle>
+               <subtitle language="nl">Deze mappen bevatten al je boeken.</subtitle>
+               <subtitle language="no">Disse mappene inneholder alle dine bøker</subtitle>
+               <subtitle language="pt-br">Estas pastas contém todos os seus livros.</subtitle>
+               <subtitle language="ru">Эти папки отображают все Ваши книги.</subtitle>
+               <subtitle language="sl-SI">Te mape vsebujejo vse knjige.</subtitle>
+               <subtitle language="sq">Këto dosje përmbajnë gjithë librat tuaj.</subtitle>
+               <subtitle language="sr">Ove fascikle sadrže sve vaše knjige.</subtitle>
+               <subtitle language="sv">Denna mapp innehåller alla böcker.</subtitle>
+               <subtitle language="tr">Bu klasörler tüm kitaplarınızı içerir.</subtitle>
+       </headerContent>
+
+</schemaDescriptor>

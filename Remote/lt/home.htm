@@ -1,0 +1,51 @@
+﻿		<!-- tabs -->
+		<div class="poetry">
+			<ul class="tabs">
+				<li class="active"><a href="home" class="noline">Pradžia</a></li>
+				<li class="inactive"><a href="search" class="noline">Paieška</a></li>
+				<li class="inactive"><a href="downloads" class="noline">Atsisiuntimai</a></li>
+				<li class="inactive"><a href="uploads" class="noline">Išsiuntimai</a></li>
+				<li class="inactive"><a href="network" class="noline">Tinklai</a></li>
+			</ul>
+		</div>
+		<!-- /tabs -->
+<!-- main body -->
+		<div id="frame">
+			<p>Sveiki! Čia <b>„Shareaza“ nuotolinė prieiga.</b></p> <p>Ši konsolė leidžia pilnai valdyti paieškas, atsisiuntimus, išsiuntimus ir tinklų susijungimus.</p>
+			<div style="float: right; width: 40em;">
+				<h3>Pradėti siųstis:</h3>
+				<div style="text-align: right;">
+					<form method="get" action="newsearch">
+						<div>
+							<label>Greita paieška:</label>
+							<input type="text" name="search" size="20" />
+							<select name="schema">
+								<option value="">Bet kokio tipo</option>
+								<option value="http://www.shareaza.com/schemas/application.xsd">Programa</option>
+								<option value="http://www.limewire.com/schemas/audio.xsd">Audio</option>
+								<option value="http://www.shareaza.com/schemas/bittorent.xsd">BitTorrent</option>
+								<option value="http://www.limewire.com/schemas/book.xsd">Knyga</option>
+								<option value="http://www.shareaza.com/schemas/collection.xsd">Rinkinys</option>
+								<option value="http://www.shareaza.com/schemas/image.xsd">Paveikslėlis</option>
+								<option value="http://www.shareaza.com/schemas/presentation.xsd">Pateiktis</option>
+								<option value="http://www.shareaza.com/schemas/rom.xsd">ROM atvaizdis</option>
+								<option value="http://www.shareaza.com/schemas/shareazaSkin.xsd">Apvalkalas</option>
+								<option value="http://www.shareaza.com/schemas/sourceCode.xsd">Pirminis kodas</option>
+								<option value="http://www.shareaza.com/schemas/spreadsheet.xsd">Skaičiuoklė</option>
+								<option value="http://www.shareaza.com/schemas/subtitle.xsd">Subtitrai</option>
+								<option value="http://www.limewire.com/schemas/video.xsd">Vaizdo įrašai</option>
+								<option value="http://www.shareaza.com/schemas/wordProcessing.xsd">Dokumentas</option>
+							</select>
+							<input type="submit" value="Pirmyn" />
+						</div>
+					</form><br/>
+					<form method="get" action="newdownload">
+						<div>
+							<label>Magnet/Torrent atsisiuntimas:</label>
+							<input type="text" name="uri" size="35" />
+							<input type="submit" value="Pirmyn" />
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>

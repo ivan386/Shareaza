@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<schema targetNamespace="http://www.shareaza.com/schemas/shareazaSkin.xsd" version="1.0" xmlns="http://www.w3.org/2001/XMLSchema">
+
+	<element name="shareazaSkins">
+		<complexType>
+			<element name="shareazaSkin" type="skinType" minOccurs="1" maxOccurs="unbounded"/>
+		</complexType>
+	</element>
+	
+	<complexType name="skinType">
+		<all>
+			<attribute name="name" type="string"/>
+			<attribute name="author" type="string"/>
+			<attribute name="link" type="uriReference"/>
+			<attribute name="email" type="string"/>
+			<attribute name="version" type="decimal"/>
+			<attribute name="type">
+				<simpleType base="string">
+					<enumeration value="Skin"/>
+					<enumeration value="Language"/>
+				</simpleType>
+			</attribute>
+			<attribute name="language" type="string"/>
+			<attribute name="description" type="string"/>
+			<attribute name="comments" type="string"/>
+		</all>
+	</complexType>
+
+</schema>
+

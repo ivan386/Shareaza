@@ -1,0 +1,25 @@
+﻿					<h4><%= network_caption %></h4>
+<%? !network_connected %>
+					<p>
+					Šis tinklas <strong>nėra</strong> įgalintas -
+					<a href="?connect=<%= network_id %>"><strong>Jungtis prie <%= network_caption %></strong></a>
+					</p>
+<%?%><%? network_connected %>
+					<p>
+					Šis tinklas yra įgalintas -
+					<a href="?disconnect=<%= network_id %>"><strong>Atsijungti nuo <%= network_caption %></strong></a>
+					</p>
+				<div class="centertable">
+					<table>
+						<tr>
+							<th>Adresas</th>
+							<th>Laikas</th>
+							<th>Paketų</th>
+							<th>Greitaveika</th>
+							<th>Viso</th>
+							<th>Veiksena</th>
+							<th>Atšakų</th>
+							<th>Naudotojo agentas</th>
+							<th></th>
+						</tr>
+<%?%>

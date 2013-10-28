@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
+Shareaza Catalan Schemas File translated by Daniel Olivares Giménez; Equip de traduccions de FeshoCAT
+Shareaza Chinese Simplified Schemas File translated by Sanley; John
+Shareaza Chinese Traditional Schemas File translated by James Bond
+Shareaza Czech Schemas File translated by Odin
+Shareaza German Schemas File translated by Spooky; jlh; OldDeath
+Shareaza Estonian Schemas File translated by Janza
+Shareaza Spanish Schemas File translated by Unknown
+Shareaza Spanish (Mexico) Schemas File translated by Help
+Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
+Shareaza Greek Schemas File translated by erimitis
+Shareaza Hebrew Schemas File translated by _peer_ (H.L)
+Shareaza Croatian Schemas File translated by Biza
+Shareaza Hungarian Schemas File translated by Yuri
+Shareaza Italian Schemas File translated by ale5000
+Shareaza Japanese Schemas File translated by DukeDog; CyberBob
+Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
+Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); Jonne; Neglacio
+Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
+Shareaza Portuguese (Brasil) Schemas File translated by Lukas Taves (LightHeaven); Felipe
+Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
+Shareaza Slovenian Schemas File translated by Martin McDowell
+Shareaza Albanian Schemas File translated by Besmir Godole
+Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Swedish Schemas File translated by Marcus Ehrenlans; Printz; DanielB
+Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
+-->
+
+<schemaDescriptor location="http://www.shareaza.com/schemas/videoRoot.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
+
+       <object type="folder" availability="system"/>
+       <titles>
+               <title language="en">Video:My Video</title>
+               <title language="af">Video:My Video</title>
+               <title language="ca">Vídeo: Els meus vídeos</title>
+               <title language="chs">&#160;视频:我的视频</title>
+               <title language="cht">影像:我的影像</title>
+               <title language="cz">Videa:Moje videa</title>
+               <title language="de">Video:Eigene Videos</title>
+               <title language="ee">Video:Minu Videod</title>
+               <title language="es">Video:Mis Videos</title>
+               <title language="es-mx">Video:Mis Videos</title>
+               <title language="fr">Vidéo:Mes vidéos</title>
+               <title language="gr">Video:Video</title>
+               <title language="heb">&#160;וידאו:הסרטים שלי</title>
+               <title language="hr">Film:Moji Filmovi</title>
+               <title language="hu">Videó: Saját videó</title>
+               <title language="it">Video:Video</title>
+               <title language="ja">&#160;動画: マイ･ビデオ</title>
+               <title language="lt">Video:Mano vaizdo įrašai</title>
+               <title language="nl">Video:Mijn Video's</title>
+               <title language="no">Video: mine videoer</title>
+               <title language="pt-br">Vídeo: Meus Vídeos</title>
+               <title language="ru">&#160;Видео: Мои видео</title>
+               <title language="sl-SI">Video:Moj video</title>
+               <title language="sq">Video:Video Ime</title>
+               <title language="sr">Film:Moji Filmovi</title>
+               <title language="sv">Video: Min video</title>
+               <title language="tr">Video: Videolarım</title>
+       </titles>
+       <images>
+               <icon path="videoFolder.ico"/>
+       </images>
+       <members>
+               <member name="title" search="generic">
+                       <display defaultColumn="true"/>
+                       <title language="en">Title</title>
+                       <title language="af">Titel</title>
+                       <title language="ca">Títol</title>
+                       <title language="chs">标题</title>
+                       <title language="cht">標題</title>
+                       <title language="cz">Název</title>
+                       <title language="de">Titel</title>
+                       <title language="ee">Pealkiri</title>
+                       <title language="es">Título</title>
+                       <title language="es-mx">Título</title>
+                       <title language="fr">Titre</title>
+                       <title language="gr">Τίτλος</title>
+                       <title language="heb">כותרת</title>
+                       <title language="hr">Naslov</title>
+                       <title language="hu">Cím</title>
+                       <title language="it">Titolo</title>
+                       <title language="ja">タイトル</title>
+                       <title language="lt">Pavadinimas</title>
+                       <title language="nl">Titel</title>
+                       <title language="no">Tittel</title>
+                       <title language="pt-br">Título</title>
+                       <title language="ru">Название</title>
+                       <title language="sl-SI">Naslov</title>
+                       <title language="sq">Titulli</title>
+                       <title language="sr">Naslov</title>
+                       <title language="sv">Titel</title>
+                       <title language="tr">Başlık</title>
+               </member>
+       </members>
+       <contains>
+               <object type="folder" location="http://www.shareaza.com/schemas/videoFilmCollection.xsd"/>
+               <object type="folder" location="http://www.shareaza.com/schemas/videoMusicCollection.xsd"/>
+               <object type="folder" location="http://www.shareaza.com/schemas/videoSeriesCollection.xsd"/>
+       </contains>
+       <headerContent version="1.0">
+               <title language="en">Welcome to My Video!</title>
+               <title language="af">Welkom by My Video's!</title>
+               <title language="ca">Benvingut/da als meus vídeos!</title>
+               <title language="chs">欢迎来到我的视频！</title>
+               <title language="cht">歡迎來到我的影像!</title>
+               <title language="cz">Moje videa</title>
+               <title language="de">Willkommen bei Eigene Videos!</title>
+               <title language="ee">Teretulemast  Minu Videotesse!</title>
+               <title language="es">¡Bienvenido a Mis Videos!</title>
+               <title language="es-mx">¡Bienvenido a Mis Videos!</title>
+               <title language="fr">Bienvenue dans Mes vidéos!</title>
+               <title language="gr">Καλώς ήρθατε στα Video!</title>
+               <title language="heb">ברוך הבא לוידאו שלי!</title>
+               <title language="hr">Dobrodošli Među Vaše Filmove</title>
+               <title language="hu">Üdvözöllek Videók mappában!</title>
+               <title language="it">Benvenuto nei Video!</title>
+               <title language="ja">マイ･ビデオへようこそ</title>
+               <title language="lt">Sveiki apsilankę „Mano vaizdo įrašuose“!</title>
+               <title language="nl">Welkom bij Mijn Video's!</title>
+               <title language="no">Velkommen til mine videoer</title>
+               <title language="pt-br">Bem-vindo aos Meus Vídeos!</title>
+               <title language="ru">Добро пожаловать в Ваши видео!</title>
+               <title language="sl-SI">Dobrodošli v mojem videu!</title>
+               <title language="sq">Mirë se erdhët në Videot Tuaja!</title>
+               <title language="sr">Dobrodošli Među Vaše Filmove</title>
+               <title language="sv">Välkommen till min video!</title>
+               <title language="tr">Videolarıma Hoşgeldiniz!</title>
+               <subtitle language="en">These folders contain all of the video files in your library, divided into films, TV shows and music videos.  Open a folder below to continue.</subtitle>
+               <subtitle language="af">Hierdie gidse bevat al die videolêers in jou biblioteek, verdeel volgens films, TV programme en musiek video's. Open 'n gids hieronder om voort te gaan.</subtitle>
+               <subtitle language="ca">Aquestes carpetes contenen tots els arxius de vídeo de la col·lecció, dividit en films, xous de TV i vídeos musicals. Obreu una carpeta per a continuar.</subtitle>
+               <subtitle language="chs">这些文件夹包括您收藏中的所有视频，分为电影，电视演出和电视音乐。打开下面的文件夹可进行查看。</subtitle>
+               <subtitle language="cht">這些資料夾包含了在您的收藏中所有的影像檔案, 分割的電影, TV 演出和音樂影像.  在下面開啟一個資料夾來繼續.</subtitle>
+               <subtitle language="cz">Tyto složky obsahují všechny videa v knihovně roztříděné na filmy, hudební videa a TV seriály. Pokračujte kliknutím na složku.</subtitle>
+               <subtitle language="de">Diese Ordner enthalten alle Videodateien Ihrer Bibliothek, aufgeteilt in Filme, Fernsehserien und Musikvideos. Öffnen Sie einen Ordner, um fortzufahren.</subtitle>
+               <subtitle language="ee">Need kaustad sisaldavad kõiki sinu raamatukogus asuvaid videofaile. Need on jagatud filmideks, tv šoudeks ja muusika videodeks. Jätkamiseks ava allolev kaust</subtitle>
+               <subtitle language="es">Estas carpetas contienen todos los archivos de video de tu librería, dividido en filmes, Shows de TV y videos de música. Abra una carpeta para continuar</subtitle>
+               <subtitle language="es-mx">Estas carpetas contienen todos los archivos de video de tu librería, dividido en filmes, Shows de TV y videos de música. Abra una carpeta para continuar</subtitle>
+               <subtitle language="fr">Ce dossier contient toutes les vidéos de votre bibliothèque, organisées dans les dossiers films, séries TV et clips vidéos.  Ouvrez un sous-dossier pour continuer.</subtitle>
+               <subtitle language="gr">Αυτός ο φάκελος περιέχει όλα τα αρχεία video, οργανωμένα ανά ταινία, τηλεοπτική σειρά και video-clip.</subtitle>
+               <subtitle language="heb">הספריות הללו מכילות כל הוידאו בספרייה שלך, מאורגנים לפי סרט, טלוויזיה וקליפים פתח ספרייה מתחת כדי להמשיך</subtitle>
+               <subtitle language="hr">Ove mape sadrže sve video zapise iz vaše kolekcije posložene kao cjelovečernji filmovi, Tv emisije i spotovi.</subtitle>
+               <subtitle language="hu">Ez a mappa filmekre, TV műsorokra és klipekre bontva tartalmazza az összes videót.</subtitle>
+               <subtitle language="it">Queste cartelle contengono tutti i video della tua libreria, divisi in film, show TV e video musicali.  Apri una cartella qui sotto per continuare.</subtitle>
+               <subtitle language="ja">これらのフォルダーにはライブラリー内に所有している全てのビデオファイルを映画、テレビ番組及び音楽ビデオに分類して収録しています</subtitle>
+               <subtitle language="lt">Šiuose kataloguose yra visi Jūsų kolekcijos vaizdo failai, suskirstyti į filmus, TV šou ir muzikinius klipus. Tęskite atverdami žemiau esantį katalogą.</subtitle>
+               <subtitle language="nl">Deze mappen bevatten alle videobestanden uit je bibliotheek, verdeeld onder films, TV series en muziekvideo's.  Open een map hieronder om verder te gaan.</subtitle>
+               <subtitle language="no">Disse mappene inneholder alle dine videofiler, delt inn i film, TV-show, og musikkvideo. Åpne en mappe for å forsette.</subtitle>
+               <subtitle language="pt-br">Estas pastas contém todas os vídeos da sua biblioteca, divididos em filmes, Shows de TV, e clipes musicais. Abra uma pasta abaixo para continuar.</subtitle>
+               <subtitle language="ru">Эти папки отображают все видео подразделенные на фильмы, ТВ шоу и музыкальные видео.</subtitle>
+               <subtitle language="sl-SI">Te mape vsebujejo vse video datoteke v vaši knjižnici razdeljene v filme, TV oddaje in glasbene videje. Odprite mapo spodaj za nadaljevanje.</subtitle>
+               <subtitle language="sq">Këto dosje përmbajnë gjithë videot në librarinë tuaj, ndarë në filma, shfaqje TV dhe video muzikore.  Që të vijoni, hapni një dosje më poshtë.</subtitle>
+               <subtitle language="sr">Ove fascikle sadrže sve video zapise iz vaše kolekcije složene kao celovečernji filmovi, Tv emisije i spotovi.</subtitle>
+               <subtitle language="sv">Denna mapp innehåller alla videofiler i ditt bibliotek, uppdelad i filmer, TV-program och musikvideor. Öppna en mapp nedanför för att fortsätta.</subtitle>
+               <subtitle language="tr">Bu klasörler arşivinizdeki tüm video dosyalarını, filmlerden bölümleri, TV şovları ve klipleri içermektedir. Devam etmek için bir klasör açınız.</subtitle>
+       </headerContent>
+
+</schemaDescriptor>

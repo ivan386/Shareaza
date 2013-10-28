@@ -1,0 +1,26 @@
+HKCR
+{
+	ForceRemove GFLImageServices.GFLReader.1 = s 'GFL Image Services'
+	{
+		CLSID = s '{FF5FCD00-2C20-49D8-84F6-888D2E2C95DA}'
+	}
+	ForceRemove GFLImageServices.GFLReader = s 'GFL Image Services'
+	{
+		CLSID = s '{FF5FCD00-2C20-49D8-84F6-888D2E2C95DA}'
+		CurVer = s 'GFLImageServices.GFLReader.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {FF5FCD00-2C20-49D8-84F6-888D2E2C95DA} = s 'GFL Image Services'
+		{
+			ProgID = s 'GFLImageServices.GFLReader.1'
+			VersionIndependentProgID = s 'GFLImageServices.GFLReader'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{FCCC9C8C-45EF-4EB4-8AB1-5235585A631D}'
+		}
+	}
+}

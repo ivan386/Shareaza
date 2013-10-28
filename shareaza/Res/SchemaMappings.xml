@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Mappings for local schema changes, for getting metadata from other vendors and for backward compatibility -->
+<schemaMappings xmlns="http://www.shareaza.com/schemas/SchemaMappings.xsd" version="1.0">
+    <schemaMapping sourceURI="http://www.limewire.com/schemas/book.xsd">
+    	<target uri="http://www.shareaza.com/schemas/wordProcessing.xsd">
+    		<attribute from="publisher" to="copyright"/>
+    		<attribute from="edition" to="revision"/>
+    		<attribute from="description" to="abstract"/>
+    	</target>
+    	<target uri="http://www.shareaza.com/schemas/spreadsheet.xsd">
+    		<attribute from="publisher" to="copyright"/>
+    		<attribute from="edition" to="revision"/>
+    		<attribute from="description" to="abstract"/>
+   	</target>
+    </schemaMapping>
+    <schemaMapping sourceURI="http://www.shareaza.com/schemas/wordProcessing.xsd">
+    	<target uri="http://www.limewire.com/schemas/book.xsd">
+    		<attribute from="copyright" to="publisher"/>
+    		<attribute from="revision" to="edition"/>
+    		<attribute from="abstract" to="description"/>
+    	</target>
+    </schemaMapping>
+    <schemaMapping sourceURI="http://www.shareaza.com/schemas/spreadsheet.xsd">
+    	<target uri="http://www.limewire.com/schemas/book.xsd">
+    		<attribute from="copyright" to="publisher"/>
+    		<attribute from="revision" to="edition"/>
+    		<attribute from="abstract" to="description"/>
+    	</target>
+    </schemaMapping>
+    <schemaMapping sourceURI="http://www.shareaza.com/schemas/rom.xsd">
+    	<target uri="http://www.shareaza.com/schemas/application.xsd">
+    		<attribute from="system" to="OS"/>
+    		<attribute from="comments" to="releaseNotes"/>
+    	</target>
+    </schemaMapping>
+    <schemaMapping sourceURI="http://www.shareaza.com/schemas/application.xsd">
+    	<target uri="http://www.shareaza.com/schemas/rom.xsd">
+    		<attribute from="OS" to="system"/>
+    		<attribute from="releaseNotes" to="comments"/>
+    	</target>
+    	<target uri="http://www.limewire.com/schemas/application.xsd">
+    		<attribute from="title" to="name"/>
+    		<attribute from="company" to="publisher"/>
+    		<attribute from="OS" to="platform"/>
+    		<attribute from="copyright" to="licensetype"/>
+    	</target>
+    </schemaMapping>
+    <schemaMapping sourceURI="http://www.limewire.com/schemas/application.xsd">
+    	<target uri="http://www.shareaza.com/schemas/application.xsd">
+    		<attribute from="name" to="title"/>
+    		<attribute from="publisher" to="company"/>
+    		<attribute from="platform" to="OS"/>
+    		<attribute from="licensetype" to="copyright"/>
+    	</target>
+    </schemaMapping>
+    <schemaMapping sourceURI="http://www.shareaza.com/schemas/image.xsd">
+    	<target uri="http://www.limewire.com/schemas/image.xsd">
+    		<attribute from="author" to="artist"/>
+    		<attribute from="copyright" to="licensetype"/>
+    	</target>
+    </schemaMapping>
+    <schemaMapping sourceURI="http://www.limewire.com/schemas/image.xsd">
+    	<target uri="http://www.shareaza.com/schemas/image.xsd">
+    		<attribute from="artist" to="author"/>
+    		<attribute from="licensetype" to="copyright"/>
+    	</target>
+    </schemaMapping>
+    <schemaMapping sourceURI="http://www.shareaza.com/schemas/wordProcessing.xsd">
+    	<target uri="http://www.limewire.com/schemas/document.xsd">
+    		<attribute from="subject" to="topic"/>
+    		<attribute from="copyright" to="licensetype"/>
+    	</target>
+    </schemaMapping>
+    <schemaMapping sourceURI="http://www.limewire.com/schemas/document.xsd">
+    	<target uri="http://www.shareaza.com/schemas/wordProcessing.xsd">
+    		<attribute from="topic" to="subject"/>
+    		<attribute from="licensetype" to="copyright"/>
+    	</target>
+    </schemaMapping>
+    <!-- Backward compatibility -->
+    <schemaMapping sourceURI="http://www.limewire.com/schemas/audio.xsd">
+    	<target uri="http://www.limewire.com/schemas/audio.xsd">
+    		<attribute from="licensetype" to="copyright"/>
+    		<attribute from="copyright" to="licensetype"/>
+    		<!-- <attribute from="comments" to=""/> -->
+    	</target>
+    </schemaMapping>
+    <schemaMapping sourceURI="http://www.limewire.com/schemas/video.xsd">
+    	<target uri="http://www.limewire.com/schemas/video.xsd">
+    		<attribute from="length" to="minutes"/>
+    		<attribute from="minutes" to="length"/>
+    		<attribute from="licensetype" to="copyright"/>
+    		<attribute from="copyright" to="licensetype"/>
+    		<!-- <attribute from="comments" to=""/> -->
+    		<!-- <attribute from="bitrate" to=""/> -->
+    	</target>
+    </schemaMapping>
+</schemaMappings>

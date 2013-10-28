@@ -1,0 +1,19 @@
+﻿										<li class="active"><a class="noline" href="?id=0">Nieuwe zoekopdracht</a></li>
+								</ul>
+<div style="border: 1px #000 solid;padding: 5px;">
+	<p>Typ een zoekterm in de box hieronder om een nieuwe zoekopdracht te beginnen en klik op <strong>Start zoeken</strong>. Als je de zoektocht wil beperken tot een bepaald bestandstype, selecteer deze dan in de lijst (aanbevolen).</p>
+
+	<form method="get" action="newsearch">
+		<div style="text-align:right; width: 30em;">
+			<label>Zoek naar:</label>
+				<input type="text" name="search" class="regularinput" /><br/>
+				<label>Bestandstype:</label>
+
+				<select name="schema" class="regularinput">
+					<option value="">Alle bestandstypen</option>
+					<%= schema_option_list %>
+				</select><br />
+
+				<input type="submit" value="Start zoeken" />
+		</div>
+	</form>

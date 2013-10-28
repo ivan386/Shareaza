@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<schema targetNamespace="http://www.shareaza.com/schemas/videoSeries.xsd" xmlns="http://www.w3.org/2001/XMLSchema">
+  
+  <element name="videoSerieses">
+	<complexType>
+		<element name="videoSeries" type="seriesType" minOccurs="1" maxOccurs="unbounded"/>
+	</complexType>
+  </element>     
+  <complexType name="seriesType">
+	<all>
+		<attribute name="name" type="string"/>
+		<attribute name="series" type="string"/>
+		<attribute name="producer" type="string"/>
+		<attribute name="studio" type="string"/>
+		<attribute name="stars" type="string"/>
+		<attribute name="language">
+			<simpleType base="string">
+				<enumeration value="Danish"/>
+				<enumeration value="English"/>
+				<enumeration value="French"/>
+				<enumeration value="German"/>
+				<enumeration value="Italian"/>
+				<enumeration value="Korean"/>
+				<enumeration value="Japanese"/>
+				<enumeration value="Mandarin"/>
+				<enumeration value="Russian"/>
+				<enumeration value="Spanish"/>
+			</simpleType>
+		</attribute>
+		<attribute name="subtitles">
+			<simpleType base="string">
+				<enumeration value="Danish"/>
+				<enumeration value="English"/>
+				<enumeration value="French"/>
+				<enumeration value="German"/>
+				<enumeration value="Italian"/>
+				<enumeration value="Korean"/>
+				<enumeration value="Japanese"/>
+				<enumeration value="Mandarin"/>
+				<enumeration value="Russian"/>
+				<enumeration value="Spanish"/>
+			</simpleType>
+		</attribute>
+		<attribute name="type">
+			<simpleType base="string">
+				<enumeration value="Film"/>
+				<enumeration value="TV Series Episode"/>
+				<enumeration value="TV Series Episode Clip"/>
+				<enumeration value="Anime Series Episode"/>
+				<enumeration value="Anime Series Episode Clip"/>
+				<enumeration value="Anime Music Video"/>
+				<enumeration value="Music Video"/>
+				<enumeration value="Commercial"/>
+				<enumeration value="Movie Trailer"/>
+				<enumeration value="Video Game Trailer"/>
+				<enumeration value="Video Game Clip"/>
+				<enumeration value="Movie Clip"/>
+				<enumeration value="Video Clip"/>
+				<enumeration value="VHS Movie"/>
+				<enumeration value="DVD Movie"/>
+				<enumeration value="Adult Film"/>
+				<enumeration value="Adult Film Clip"/>
+			</simpleType>
+		</attribute>
+		<attribute name="rating">
+			<simpleType base="string">
+				<enumeration value="G"/>
+				<enumeration value="PG"/>
+				<enumeration value="PG-13"/>
+				<enumeration value="R"/>
+				<enumeration value="NC-17"/>
+				<enumeration value="NR"/>
+				<enumeration value="Adult"/>
+				<enumeration value="TV-Y"/>
+				<enumeration value="TV-Y7"/>
+				<enumeration value="TV-Y7-FV"/>
+				<enumeration value="TV-G"/>
+				<enumeration value="TV-PG"/>
+				<enumeration value="TV-14"/>
+				<enumeration value="TV-MA"/>
+			</simpleType>
+		</attribute>
+		<attribute name="source">
+			<simpleType base="string">
+				<enumeration value="Cam"/>
+				<enumeration value="DVD Screener"/>
+				<enumeration value="VHS Screener"/>
+				<enumeration value="DVD"/>
+				<enumeration value="VHS"/>
+				<enumeration value="TV Rip"/>
+				<enumeration value="Telesync"/>
+				<enumeration value="Telesine"/>
+				<enumeration value="Workprint"/>
+				<enumeration value="Asian Silver"/>
+				<enumeration value="DivX Re-Encode"/>
+				<enumeration value="SVCD Re-Encode"/>
+				<enumeration value="VCD Re-Encode"/>
+				<enumeration value="Other"/>
+				<enumeration value="Unknown"/>
+			</simpleType>
+		</attribute>
+		<attribute name="description">
+			<simpleType base="string">
+				<maxInclusive value="1024"/>
+			</simpleType>
+		</attribute>
+		<attribute name="qualitynotes" type="string"/>
+		<attribute name="distributer" type="string"/>
+		<attribute name="distributerLink" type="uriReference"/>
+		<attribute name="releasegroup" type="string"/>
+		<attribute name="releasegroupLink" type="uriReference"/>
+		<attribute name="keywords" type="string"/>
+		<attribute name="link" type="uriReference"/>
+		<attribute name="collector" type="string"/>
+		<attribute name="comments" type="string"/>
+	</all>
+  </complexType>
+  
+</schema>

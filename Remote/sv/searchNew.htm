@@ -1,0 +1,19 @@
+﻿										<li class="active"><a class="noline" href="?id=0">Ny sökning</a></li>
+								</ul>
+<div style="border: 1px #000 solid;padding: 5px;">
+	<p>För att starta en ny sökning, skriv din sökterm i sökrutan och klicka på <strong>Börja sökning</strong>. Om du vill begränsa sökningen till en viss filtyp, välj den från listan (rekommenderas).</p>
+
+	<form method="get" action="newsearch">
+		<div style="text-align:right; width: 30em;">
+			<label>Sök efter:</label>
+				<input type="text" name="search" class="regularinput" /><br/>
+				<label>Filtyp:</label>
+
+				<select name="schema" class="regularinput">
+					<option value="">Alla filtyper</option>
+					<%= schema_option_list %>
+				</select><br />
+
+				<input type="submit" value="Börja sökning" />
+		</div>
+	</form>

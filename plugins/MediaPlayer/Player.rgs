@@ -1,0 +1,43 @@
+HKCR
+{
+	ForceRemove Shareaza.MediaPlayer.1 = s 'Shareaza Media Player'
+	{
+		CLSID = s '{3DC28AA6-A597-4E03-96DF-ADA19155B0BE}'
+	}
+	ForceRemove Shareaza.MediaPlayer = s 'Shareaza Media Player'
+	{
+		CLSID = s '{3DC28AA6-A597-4E03-96DF-ADA19155B0BE}'
+		CurVer = s 'Shareaza.MediaPlayer.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {3DC28AA6-A597-4E03-96DF-ADA19155B0BE} = s 'Shareaza Media Player'
+		{
+			ProgID = s 'Shareaza.MediaPlayer.1'
+			VersionIndependentProgID = s 'Shareaza.MediaPlayer'
+			LocalServer32 = s '%MODULE%'
+			ForceRemove 'Programmable'
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{4E7B260F-E3A4-42DD-89D8-E0372158626E}'
+		}
+	}
+}
+HKCU
+{
+	NoRemove Software
+	{
+		NoRemove Shareaza
+		{
+			NoRemove Shareaza
+			{
+				NoRemove Plugins
+				{
+					NoRemove MediaPlayer
+					{
+						ForceRemove val 'Default' = s '{3DC28AA6-A597-4E03-96DF-ADA19155B0BE}'
+					}
+				}
+			}
+		}
+	}
+}

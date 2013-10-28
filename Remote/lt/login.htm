@@ -1,0 +1,33 @@
+﻿<!-- tabs -->
+		<div class="poetry">
+			<ul class="tabs">
+				<li class="inactive">Pradžia</li>
+				<li class="inactive">Paieška</li>
+				<li class="inactive">Atsisiuntimai</li>
+				<li class="inactive">Išsiuntimai</li>
+				<li class="inactive">Tinklai</li>
+			</ul>
+		</div>
+<!-- /tabs -->
+<!-- main body -->
+		<div class="poetry" id="frame">
+			<div class="padding left">
+				Sveiki! Čia <b>„Shareaza“ nuotolinė prieiga.</b> Jei ši „Shareaza“ kopija veikia jūsų kompiuteryje, įveskite savo nuotolinės prieigos naudotojo vardą bei slaptažodį ir paspauskite <b>Įėjimas</b>.
+			</div>
+
+			<div class="poetry" style="color: red; font-weight: bold; height: 3em;">
+				<%? failure %>	Suvestas naudotojo vardas ar slaptažodis yra neteisingas. Bandykite dar kartą.<%?%>
+			</div>
+
+			<form method="get" action="">
+				<div style="text-align: right; width: 24em; margin: 0 auto;">
+					<input type="hidden" name="submit" value="1" />
+					<label>Naudotojo vardas:</label>
+					<input type="text" name="username" size="20" /><br />
+					<label>Slaptažodis:</label>
+					<input type="password" name="password" size="20" /><br />
+					<input type="submit" value="Įvesti" />
+				</div>
+			</form>
+		</div>
+<!-- /main body -->

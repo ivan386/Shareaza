@@ -1,0 +1,22 @@
+﻿										<li class="active"><a class="noline" href="?id=0">Новый поиск</a></li>
+								</ul>
+<div style="border: 1px #000 solid;padding: 5px;">
+			<p>Чтобы начать поиск, введите искомое в поле ниже и нажмите <strong>Начать 
+				поиск</strong>. Если нужно ограничить поиск типом файла - 
+			выберите его из списка (рекомендуется).</p>
+	
+	<div style="text-align:right; width: 30em;">		
+		<form method="get" action="newsearch">
+
+			<label>Искать:</label>
+					<input type="text" name="search" class="regularinput" /><br />
+			<label>Тип файла:</label>
+					
+						<select name="schema" class="regularinput">
+							<option value="">Любой тип файла</option>
+							<%= schema_option_list %>
+						</select>
+				<br />
+						<input type="submit" value="Начать поиск">
+		</form>
+	</div>

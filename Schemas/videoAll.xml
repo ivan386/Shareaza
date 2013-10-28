@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
+Shareaza Catalan Schemas File translated by Daniel Olivares Giménez; Equip de traduccions de FeshoCAT
+Shareaza Chinese Simplified Schemas File translated by Sanley; John
+Shareaza Chinese Traditional Schemas File translated by James Bond
+Shareaza Czech Schemas File translated by Odin
+Shareaza German Schemas File translated by Spooky; jlh; OldDeath
+Shareaza Estonian Schemas File translated by Janza
+Shareaza Spanish Schemas File translated by Unknown
+Shareaza Spanish (Mexico) Schemas File translated by Help
+Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
+Shareaza Greek Schemas File translated by erimitis
+Shareaza Hebrew Schemas File translated by _peer_ (H.L)
+Shareaza Croatian Schemas File translated by Biza
+Shareaza Hungarian Schemas File translated by Yuri
+Shareaza Italian Schemas File translated by ale5000
+Shareaza Japanese Schemas File translated by DukeDog; CyberBob
+Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
+Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); Jonne; Neglacio
+Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
+Shareaza Portuguese (Brasil) Schemas File translated by Lukas Taves (LightHeaven); Felipe
+Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
+Shareaza Slovenian Schemas File translated by Martin McDowell
+Shareaza Albanian Schemas File translated by Besmir Godole
+Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Swedish Schemas File translated by Marcus Ehrenlans; Printz; DanielB
+Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
+-->
+
+<schemaDescriptor location="http://www.shareaza.com/schemas/videoAll.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
+
+       <object type="folder" availability="system"/>
+       <titles>
+               <title language="en">Video:All Video</title>
+               <title language="af">Video:Alle Video</title>
+               <title language="ca">Vídeo: Tots els vídeos</title>
+               <title language="chs">&#160;视频:所有视频</title>
+               <title language="cht">影像:所有影像</title>
+               <title language="cz">Videa:Všechna videa</title>
+               <title language="de">Video:Alle Videos</title>
+               <title language="ee">Video:Kõik Videod</title>
+               <title language="es">Video:Todos los videos</title>
+               <title language="es-mx">Video:Todos los videos</title>
+               <title language="fr">Vidéo:Toutes les vidéos</title>
+               <title language="gr">Video:Όλα τα Video</title>
+               <title language="heb">&#160;וידאו:כל הסרטים</title>
+               <title language="hr">Film:Svi Filmovi</title>
+               <title language="hu">Videó: Minden videó</title>
+               <title language="it">Video:Tutti i video</title>
+               <title language="ja">&#160;動画: 全ての動画</title>
+               <title language="lt">Video:Visi vaizdo įrašai</title>
+               <title language="nl">Video:Alle Video's</title>
+               <title language="no">Video: alle videoer</title>
+               <title language="pt-br">Vídeo: Todos os Vídeos</title>
+               <title language="ru">&#160;Видео: Все видео</title>
+               <title language="sl-SI">Video:Vsi videji</title>
+               <title language="sq">Video:Gjithë Videot</title>
+               <title language="sr">Film:Svi Filmovi</title>
+               <title language="sv">Video: All video</title>
+               <title language="tr">Video: Tüm Videolar</title>
+       </titles>
+       <images>
+               <icon path="videoFolder.ico"/>
+       </images>
+       <members>
+               <member name="title" search="generic">
+                       <display defaultColumn="true"/>
+                       <title language="en">Title</title>
+                       <title language="af">Titel</title>
+                       <title language="ca">Títol</title>
+                       <title language="chs">标题</title>
+                       <title language="cht">標題</title>
+                       <title language="cz">Název</title>
+                       <title language="de">Titel</title>
+                       <title language="ee">Pealkiri</title>
+                       <title language="es">Título</title>
+                       <title language="es-mx">Título</title>
+                       <title language="fr">Titre</title>
+                       <title language="gr">Τίτλος</title>
+                       <title language="heb">כותרת</title>
+                       <title language="hr">Naslov</title>
+                       <title language="hu">Cím</title>
+                       <title language="it">Titolo</title>
+                       <title language="ja">タイトル</title>
+                       <title language="lt">Pavadinimas</title>
+                       <title language="nl">Titel</title>
+                       <title language="no">Tittel</title>
+                       <title language="pt-br">Título</title>
+                       <title language="ru">Название</title>
+                       <title language="sl-SI">Naslov</title>
+                       <title language="sq">Titulli</title>
+                       <title language="sr">Naslov</title>
+                       <title language="sv">Titel</title>
+                       <title language="tr">Başlık</title>
+               </member>
+       </members>
+       <contains>
+               <object type="file" location="http://www.limewire.com/schemas/video.xsd"/>
+       </contains>
+       <headerContent version="1.0">
+               <title language="en">All Video</title>
+               <title language="af">Alle Video</title>
+               <title language="ca">Tots els vídeos</title>
+               <title language="chs">所有视频</title>
+               <title language="cht">所有影像</title>
+               <title language="cz">Všechny videa</title>
+               <title language="de">Alle Videos</title>
+               <title language="ee">Kõik Videod</title>
+               <title language="es">Todos los videos</title>
+               <title language="es-mx">Todos los videos</title>
+               <title language="fr">Toutes les vidéos</title>
+               <title language="gr">Όλα τα Video</title>
+               <title language="heb">כל הוידאו</title>
+               <title language="hr">Svi Filmovi</title>
+               <title language="hu">Minden videó</title>
+               <title language="it">Tutti i video</title>
+               <title language="ja">動画</title>
+               <title language="lt">Visi vaizdo įrašai</title>
+               <title language="nl">Alle Video's</title>
+               <title language="no">All video</title>
+               <title language="pt-br">Todos os Vídeos</title>
+               <title language="ru">Все видео</title>
+               <title language="sl-SI">Vsi videji</title>
+               <title language="sq">Gjithë Videot</title>
+               <title language="sr">Svi Filmovi</title>
+               <title language="sv">All video</title>
+               <title language="tr">Tüm Videolar</title>
+               <subtitle language="en">This folder contains every video file in your library.</subtitle>
+               <subtitle language="af">Hierdie gids bevat alle videolêers in jou biblioteek.</subtitle>
+               <subtitle language="ca">Aquesta carpeta conté tots els arxius de vídeo de la teva col·lecció.</subtitle>
+               <subtitle language="chs">此文件夹包含您收藏中的所有视频。</subtitle>
+               <subtitle language="cht">這個資料夾包含了在您的收藏中所有的影像檔案.</subtitle>
+               <subtitle language="cz">Tato složka obsahuje všechna videa v knihovně.</subtitle>
+               <subtitle language="de">Dieser Ordner enthält alle Videos Ihrer Bibliothek.</subtitle>
+               <subtitle language="ee">See kaust sisaldab kõiki sinu raamatukogus asuvaid videoid.</subtitle>
+               <subtitle language="es">Esta carpeta contiene todos los archivos de video de tu librería.</subtitle>
+               <subtitle language="es-mx">Esta carpeta contiene todos los archivos de video de tu librería.</subtitle>
+               <subtitle language="fr">Ce dossier contient toutes les vidéo de votre bibliothèque.</subtitle>
+               <subtitle language="gr">Αυτός ο φάκελος περιέχει όλα τα αρχεία video.</subtitle>
+               <subtitle language="heb">ספרייה זו מכילה את כל קבצי הוידאו שבספרייה שלך</subtitle>
+               <subtitle language="hr">Ova mapa sadrži sve video snimke u vašoj kolekciji.</subtitle>
+               <subtitle language="hu">Ez a mappa minden videófájlt tartalmaz.</subtitle>
+               <subtitle language="it">Questa cartella contiene tutti i video della tua libreria.</subtitle>
+               <subtitle language="ja">このフォルダーにはライブラリー内ーにある全ての動画が収録されます</subtitle>
+               <subtitle language="lt">Šiame kataloge yra visi Jūsų kolekcijos vaizdo failai.</subtitle>
+               <subtitle language="nl">Deze map bevat elk videobestand uit je bibliotheek.</subtitle>
+               <subtitle language="no">Denne mappen inneholder alle videofilene i mine filer</subtitle>
+               <subtitle language="pt-br">Esta pasta contém cada arquivo de vídeo na sua biblioteca.</subtitle>
+               <subtitle language="ru">Эта папка отображает каждый видео файл в Вашем хранилище.</subtitle>
+               <subtitle language="sl-SI">Ta mapa vsebuje vsako video datoteko v vaši knjižnici.</subtitle>
+               <subtitle language="sq">Kjo dosje përmban skedat filmike në librarinë tuaj.</subtitle>
+               <subtitle language="sr">Ova fascikla sadrži sve video snimke u vašoj kolekciji.</subtitle>
+               <subtitle language="sv">Denna mapp innehåller alla videofiler som du har i ditt bibliotek.</subtitle>
+               <subtitle language="tr">Bu klasör arşivinizdeki her video dosyasını içerir.</subtitle>
+       </headerContent>
+       <viewContent version="1.0" preferredView="CLibraryThumbView"/>
+
+</schemaDescriptor>

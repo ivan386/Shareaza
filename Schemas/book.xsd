@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<schema targetNamespace="http://www.limewire.com/schemas/book.xsd" xmlns="http://www.w3.org/2001/XMLSchema">
+ 
+	 <mapping>
+		<network name="ed2k" value="Doc"/>
+	</mapping>
+ 
+  <element name="books">
+    <complexType>
+	  <element name="book" type="bookType" minOccurs="1" maxOccurs="unbounded"/>
+    </complexType>
+  </element>
+  <complexType name="bookType">
+    <all>
+      <attribute name="title" type="string"/>
+      <attribute name="author" type="string"/>
+      <attribute name="publisher" type="string"/>
+      <attribute name="edition" type="short"/>
+      <attribute name="description">
+        <simpleType base="string">
+          <maxInclusive value="1024"/>
+        </simpleType>
+      </attribute>
+      <attribute name="genre">
+        <simpleType base="string">
+          <enumeration value="Arts &amp; Photograhy"/>
+          <enumeration value="Biographies &amp; Memoirs"/>
+          <enumeration value="Business &amp; Investing"/>
+          <enumeration value="Calendars"/>
+          <enumeration value="Children's Books"/>
+          <enumeration value="Comics"/>
+          <enumeration value="Computers &amp; Internet"/>
+          <enumeration value="Cooking, Food &amp; Wine"/>
+          <enumeration value="Entertainment"/>
+          <enumeration value="Gay &amp; Lesbian"/>
+          <enumeration value="Health &amp; Fitness"/>
+          <enumeration value="History"/>
+          <enumeration value="Home &amp; Garden"/>
+          <enumeration value="Horror"/>
+          <enumeration value="Literature &amp; Fiction"/>
+          <enumeration value="Mind &amp; Body"/>
+          <enumeration value="Mystery &amp; Thrillers"/>
+          <enumeration value="Nonfiction"/>
+          <enumeration value="Outdoors &amp; Nature"/>
+          <enumeration value="Parenting &amp; Families"/>
+          <enumeration value="Professional &amp; Technical"/>
+          <enumeration value="Reference"/>
+          <enumeration value="Religion &amp; Spirituality"/>
+          <enumeration value="Romance"/>
+          <enumeration value="Science"/>
+          <enumeration value="Science Fiction &amp; Fantasy"/>
+          <enumeration value="Sheet Music &amp; Scores"/>
+          <enumeration value="Sports"/>
+          <enumeration value="Teens"/>
+          <enumeration value="Travel"/>
+        </simpleType>
+      </attribute>
+      <attribute name="type">
+        <simpleType base="string">
+          <enumeration value="Book"/>
+          <enumeration value="Magazine"/>
+          <enumeration value="Article"/>
+        </simpleType>
+      </attribute>
+      <attribute name="format">
+        <simpleType base="string">
+          <enumeration value="Adobe Reader"/>
+          <enumeration value="Compiled HTML Help"/>
+          <enumeration value="Image"/>
+          <enumeration value="Microsoft Reader"/>
+          <enumeration value="PDF"/>
+          <enumeration value="Pocket PDF"/>
+          <enumeration value="Text"/>
+        </simpleType>
+      </attribute>  
+      <attribute name="subject" type="string"/>
+      <attribute name="keywords" type="string"/>
+      <attribute name="pages" type="int"/>
+      <attribute name="year" type="year"/>
+		<attribute name="language">
+			<simpleType base="string">
+				<enumeration value="Danish"/>
+				<enumeration value="English"/>
+				<enumeration value="French"/>
+				<enumeration value="German"/>
+				<enumeration value="Italian"/>
+				<enumeration value="Korean"/>
+				<enumeration value="Japanese"/>
+				<enumeration value="Mandarin"/>
+				<enumeration value="Russian"/>
+				<enumeration value="Spanish"/>
+			</simpleType>
+		</attribute>
+      <attribute name="ISBN">
+        <simpleType base="string">
+          <pattern value="\d{10}"/>
+        </simpleType>
+      </attribute>
+      <attribute name="length" type="decimal"/>
+      <attribute name="width" type="decimal"/>
+      <attribute name="height" type="decimal"/>
+      <attribute name="back">
+        <simpleType base="string">
+          <enumeration value="Digital"/>
+          <enumeration value="Hardback"/>
+          <enumeration value="Paperback"/>
+        </simpleType>
+      </attribute>
+      <attribute name="qualitynotes" type="string"/>
+      <attribute name="releaseDate" type="string"/>
+      <attribute name="distributer" type="string"/>
+      <attribute name="distributerLink" type="uriReference"/>
+      <attribute name="releasegroup" type="string"/>
+      <attribute name="releasegroupLink" type="uriReference"/>
+      <attribute name="link" type="uriReference"/>
+    </all>
+  </complexType>
+</schema>

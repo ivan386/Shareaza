@@ -1,0 +1,51 @@
+﻿		<!-- tabs -->
+		<div class="poetry">
+			<ul class="tabs">
+				<li class="active"><a href="home" class="noline">Pagina iniziale</a></li>
+				<li class="inactive"><a href="search" class="noline">Cerca</a></li>
+				<li class="inactive"><a href="downloads" class="noline">Download</a></li>
+				<li class="inactive"><a href="uploads" class="noline">Upload</a></li>
+				<li class="inactive"><a href="network" class="noline">Reti</a></li>
+			</ul>
+		</div>
+		<!-- /tabs -->
+<!-- main body -->
+		<div id="frame">
+			<p>Benvenuto nell'<b>Interfaccia web di Shareaza.</b></p> <p>Questa interfaccia web ti permette di controllare le ricerche, i download, gli upload e la connessione alla rete.</p>
+			<div style="float: right; width: 40em;">
+				<h3>Inizia il download:</h3>
+				<div style="text-align: right;">
+					<form method="get" action="newsearch">
+						<div>
+							<label>Ricerca veloce:</label>
+							<input type="text" name="search" size="20" />
+							<select name="schema">
+								<option value="">Qualsiasi file</option>
+								<option value="http://www.shareaza.com/schemas/application.xsd">Applicazione</option>
+								<option value="http://www.limewire.com/schemas/audio.xsd">Audio</option>
+								<option value="http://www.shareaza.com/schemas/bittorent.xsd">BitTorrent</option>
+								<option value="http://www.limewire.com/schemas/book.xsd">Libro</option>
+								<option value="http://www.shareaza.com/schemas/collection.xsd">Collezione</option>
+								<option value="http://www.shareaza.com/schemas/image.xsd">Immagine</option>
+								<option value="http://www.shareaza.com/schemas/presentation.xsd">Presentazione</option>
+								<option value="http://www.shareaza.com/schemas/rom.xsd">Immagine della ROM</option>
+								<option value="http://www.shareaza.com/schemas/shareazaSkin.xsd">Skin</option>
+								<option value="http://www.shareaza.com/schemas/sourceCode.xsd">Codice sorgente</option>
+								<option value="http://www.shareaza.com/schemas/spreadsheet.xsd">Foglio elettronico</option>
+								<option value="http://www.shareaza.com/schemas/subtitle.xsd">Sottotitoli</option>
+								<option value="http://www.limewire.com/schemas/video.xsd">Video</option>
+								<option value="http://www.shareaza.com/schemas/wordProcessing.xsd">Documento di testo</option>
+							</select>
+							<input type="submit" value="Vai" />
+						</div>
+					</form><br/>
+					<form method="get" action="newdownload">
+						<div>
+							<label>Scarica magnet/torrent:</label>
+							<input type="text" name="uri" size="35" />
+							<input type="submit" value="Vai" />
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>

@@ -1,0 +1,36 @@
+﻿<!-- tabs -->
+		<div class="poetry">
+			<ul class="tabs">
+				<li class="inactive">Kezdőlap</li>
+				<li class="inactive">Keresés</li>
+				<li class="inactive">Letöltések</li>
+				<li class="inactive">Feltöltések</li>
+				<li class="inactive">Hálózat</li>
+			</ul>
+		</div>
+<!-- /tabs -->
+<!-- main body -->
+		<div class="poetry" id="frame">
+					<div class="padding left">
+						Üdvözlöm a <b>Shareaza távoli webes elérés</b> felületen.
+						Ha ez az ön Shareaza kliensének a címe, akkor kérem adja meg 
+						a felhasználói nevét és jelszavát, majd kattintson a <b>Belépés</b> gombra.
+					</div>
+					
+					<div class="poetry" style="color: red; font-weight: bold; height: 3em;">
+					<%? failure %>	Hibás felhasználói név vagy jelszó.
+						Kérem, próbálja meg újra.<%?%>
+					</div>
+					
+					<div style="text-align: right; width: 24em; margin: 0 auto;">
+					<form method="get" action="">
+					<input type="hidden" name="submit" value="1">
+						<label>Felhasználói név:</label>
+						<input type="text" name="username" size="20" /><br />
+						<label>Jelszó:</label>
+						<input type="password" name="password" size="20" ID="Text1" /><br />
+								<input type="submit" value="Belépés">
+					</form>
+					</div>
+	</div>
+<!-- /main body -->

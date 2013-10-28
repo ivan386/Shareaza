@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Document:Word Processing XML Schema Framework; 1.4; Jonathan C. Nilson -->
+<!-- Original by Higgy -->
+
+<schema targetNamespace="http://www.shareaza.com/schemas/wordProcessing.xsd" version="1.0" xmlns="http://www.w3.org/2001/XMLSchema">
+
+	<mapping>
+		<network name="ed2k" value="Doc"/>
+	</mapping>
+
+	<element name="wordprocessings">
+		<complexType>
+			<element name="wordprocessing" type="wordprocessingType" minOccurs="1" maxOccurs="unbounded"/>
+		</complexType>
+	</element>     
+	
+	<complexType name="wordprocessingType">
+		<all>
+			<attribute name="title" type="string"/>
+			<attribute name="author" type="string"/>
+			<attribute name="subject" type="string"/>
+			<attribute name="language">
+				<simpleType base="string">
+					<enumeration value="Danish"/>
+					<enumeration value="English"/>
+					<enumeration value="French"/>
+					<enumeration value="German"/>
+					<enumeration value="Italian"/>
+					<enumeration value="Korean"/>
+					<enumeration value="Japanese"/>
+					<enumeration value="Mandarin"/>
+					<enumeration value="Russian"/>
+					<enumeration value="Spanish"/>
+				</simpleType>
+			</attribute>
+			<attribute name="keywords" type="string"/>
+			<attribute name="abstract" type="string"/>
+			<attribute name="initials" type="string"/>
+			<attribute name="copyright" type="string"/>
+			<attribute name="version" type="string"/>
+			<attribute name="revision" type="string"/>
+
+			<attribute name="type">
+				<simpleType base="string">
+					<enumeration value="Article"/>
+					<enumeration value="Book"/>
+					<enumeration value="Catalog"/>
+					<enumeration value="Diary"/>
+					<enumeration value="Essay"/>
+					<enumeration value="List"/>
+					<enumeration value="Lyrics"/>
+					<enumeration value="Joke"/>
+					<enumeration value="Journal"/>
+					<enumeration value="Manual"/>
+					<enumeration value="Music"/>
+					<enumeration value="Novel"/>
+					<enumeration value="Poetry"/>
+					<enumeration value="Quote"/>
+					<enumeration value="Recipe"/>
+					<enumeration value="Script"/>
+					<enumeration value="Short Story"/>
+				</simpleType>
+			</attribute>
+
+			<attribute name="format">
+				<simpleType base="string">
+					<enumeration value="Adobe Acrobat PDF"/>
+					<enumeration value="Adobe FrameMaker"/>
+					<enumeration value="ANSI Text"/>
+					<enumeration value="ANSI Delimited Text"/>
+					<enumeration value="ANSI Generic Word Processor"/>
+					<enumeration value="Applix Asterix"/>
+					<enumeration value="ASCII Text"/>
+					<enumeration value="ASCII Delimited Text"/>
+					<enumeration value="ASCII Generic Word Processor"/>
+					<enumeration value="Claris Works"/>
+					<enumeration value="Claris Works Win 3 Document"/>
+					<enumeration value="Claris Works Data"/>
+					<enumeration value="Compiled HTML Help"/>
+					<enumeration value="Corel WordPerfect"/>
+					<enumeration value="Corel WordPerfect Compound File"/>
+					<enumeration value="DEC WPS-Plus (WPL)"/>
+					<enumeration value="DEC WPS-Plus (DX)"/>
+					<enumeration value="DECx"/>
+					<enumeration value="DisplayWrite"/>
+					<enumeration value="DisplayWrite (TXT)"/>
+					<enumeration value="Emrite"/>
+					<enumeration value="Enable"/>
+					<enumeration value="First Choice"/>
+					<enumeration value="Framework"/>
+					<enumeration value="HP Word/PC"/>
+					<enumeration value="HTML"/>
+					<enumeration value="IBM 1403 Line Printer"/>
+					<enumeration value="IBM DCA FFT"/>
+					<enumeration value="IBM DCA RFT"/>
+					<enumeration value="IBM Display Write"/>
+					<enumeration value="IBM Writing Assistant"/>
+					<enumeration value="JustSystems Ichitaro"/>
+					<enumeration value="JustWrite"/>
+					<enumeration value="Legacy"/>
+					<enumeration value="Lotus AMI"/>
+					<enumeration value="Lotus AMI Professional"/>
+					<enumeration value="Lotus Manuscript"/>
+					<enumeration value="Lotus WordPro"/>
+					<enumeration value="MacWrite II"/>
+					<enumeration value="MASS-11"/>
+					<enumeration value="Microsoft Reader"/>
+					<enumeration value="Microsoft Windows Write"/>
+					<enumeration value="Microsoft Word"/>
+					<enumeration value="Microsoft WordPad"/>
+					<enumeration value="Microsoft Works"/>
+					<enumeration value="MultiMate"/>
+					<enumeration value="Navy DIF Standard"/>
+					<enumeration value="Nota Bene"/>
+					<enumeration value="Novell Perfect Works"/>
+					<enumeration value="Novell WordPerfect"/>
+					<enumeration value="Office Writer"/>
+					<enumeration value="OpenDocument Text"/>
+					<enumeration value="OpenDocument Text Template"/>
+					<enumeration value="OpenOffice.org 1.0 Text Document"/>
+					<enumeration value="OpenOffice.org 1.0 Text Document Template"/>
+					<enumeration value="Palm Document"/>
+					<enumeration value="PC-File Letter"/>
+					<enumeration value="PC-File+ Letter"/>
+					<enumeration value="PerfectWorks"/>
+					<enumeration value="PFS:Write"/>
+					<enumeration value="PostScript Writer"/>
+					<enumeration value="Professional Write"/>
+					<enumeration value="Professional Write Plus"/>
+					<enumeration value="Q&#38;A"/>
+					<enumeration value="Q&#38;A Write"/>
+					<enumeration value="Rich Text Format"/>
+					<enumeration value="RTF Help File"/>
+					<enumeration value="RTF Japanese"/>
+					<enumeration value="Samna Word"/>
+					<enumeration value="SmartWare II"/>
+					<enumeration value="Spreadsheet DIF"/>
+					<enumeration value="Sprint"/>
+					<enumeration value="Sun StarOffice Writer"/>
+					<enumeration value="Sun StarOffice Writer Template"/>
+					<enumeration value="Total Word"/>
+					<enumeration value="Volkswriter"/>
+					<enumeration value="Unicode"/>
+					<enumeration value="Uniplex II Plus"/>
+					<enumeration value="Wang PC (IWP)"/>
+					<enumeration value="Wang OIS/VS Comm"/>
+					<enumeration value="Wang WITA"/>
+					<enumeration value="WML"/>
+					<enumeration value="WordMARC"/>
+					<enumeration value="WordStar"/>
+					<enumeration value="WordStar 2000"/>
+					<enumeration value="XyWrite III Plus"/>
+				</simpleType>
+			</attribute>
+
+		        <attribute name="formatVersion" type="string"/>
+			<attribute name="pages" type="int"/>
+		        <attribute name="link" type="uriReference"/>
+			<attribute name="comments">
+				<simpleType base="string">
+					<maxInclusive value="100"/>
+				</simpleType>
+			</attribute>
+		</all>
+	</complexType>
+
+</schema>
+
+
+
+
+

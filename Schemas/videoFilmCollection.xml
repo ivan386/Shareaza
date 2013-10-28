@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
+Shareaza Catalan Schemas File translated by Daniel Olivares Giménez; Equip de traduccions de FeshoCAT
+Shareaza Chinese Simplified Schemas File translated by Sanley; John
+Shareaza Chinese Traditional Schemas File translated by James Bond
+Shareaza Czech Schemas File translated by Odin
+Shareaza German Schemas File translated by Spooky; jlh; OldDeath
+Shareaza Estonian Schemas File translated by Janza
+Shareaza Spanish Schemas File translated by Unknown
+Shareaza Spanish (Mexico) Schemas File translated by Help
+Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
+Shareaza Greek Schemas File translated by erimitis
+Shareaza Hebrew Schemas File translated by _peer_ (H.L)
+Shareaza Croatian Schemas File translated by Biza
+Shareaza Hungarian Schemas File translated by Yuri
+Shareaza Italian Schemas File translated by ale5000
+Shareaza Japanese Schemas File translated by DukeDog; CyberBob
+Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
+Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); Jonne; Neglacio
+Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
+Shareaza Portuguese (Brasil) Schemas File translated by Lukas Taves (LightHeaven); Felipe
+Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
+Shareaza Slovenian Schemas File translated by Martin McDowell
+Shareaza Albanian Schemas File translated by Besmir Godole
+Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Swedish Schemas File translated by Marcus Ehrenlans; Printz; DanielB
+Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
+-->
+
+<schemaDescriptor location="http://www.shareaza.com/schemas/videoFilmCollection.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
+
+       <object type="folder" availability="system"/>
+       <titles>
+               <title language="en">Video:Films</title>
+               <title language="af">Video:Films</title>
+               <title language="ca">Vídeo: Pel·lícules</title>
+               <title language="chs">&#160;视频:电影作品</title>
+               <title language="cht">影像:電影</title>
+               <title language="cz">Vidaa:Filmy</title>
+               <title language="de">Video:Filme</title>
+               <title language="ee">Video:Filmid</title>
+               <title language="es">Vvideo: Filmes</title>
+               <title language="es-mx">Vvideo: Filmes</title>
+               <title language="fr">Vidéo:Films</title>
+               <title language="gr">Video:Όλες οι Ταινίες</title>
+               <title language="heb">&#160;וידאו:סרטים</title>
+               <title language="hr">Film:Dugometražni</title>
+               <title language="hu">Videó: Filmek</title>
+               <title language="it">Video:Film</title>
+               <title language="ja">&#160;動画: 映画</title>
+               <title language="lt">Video:Filmai</title>
+               <title language="nl">Video:Films</title>
+               <title language="no">Video: filmer</title>
+               <title language="pt-br">Vídeo: Filmes</title>
+               <title language="ru">&#160;Видео: Фильмы</title>
+               <title language="sl-SI">Video:Filmi</title>
+               <title language="sq">Video:Filmat</title>
+               <title language="sr">Film:Dugometražni</title>
+               <title language="sv">Video: Filmer</title>
+               <title language="tr">Video: Filmler</title>
+       </titles>
+       <images>
+               <icon path="videoFolder.ico"/>
+       </images>
+       <members>
+               <member name="title" search="generic">
+                       <display defaultColumn="true"/>
+                       <title language="en">Title</title>
+                       <title language="af">Titel</title>
+                       <title language="ca">Títol</title>
+                       <title language="chs">标题</title>
+                       <title language="cht">標題</title>
+                       <title language="cz">Název</title>
+                       <title language="de">Titel</title>
+                       <title language="ee">Pealkiri</title>
+                       <title language="es">Título</title>
+                       <title language="es-mx">Título</title>
+                       <title language="fr">Titre</title>
+                       <title language="gr">Τίτλος</title>
+                       <title language="heb">כותרת</title>
+                       <title language="hr">Naslov</title>
+                       <title language="hu">Cím</title>
+                       <title language="it">Titolo</title>
+                       <title language="ja">タイトル</title>
+                       <title language="lt">Pavadinimas</title>
+                       <title language="nl">Titel</title>
+                       <title language="no">Tittel</title>
+                       <title language="pt-br">Título</title>
+                       <title language="ru">Название</title>
+                       <title language="sl-SI">Naslov</title>
+                       <title language="sq">Titulli</title>
+                       <title language="sr">Naslov</title>
+                       <title language="sv">Titel</title>
+                       <title language="tr">Başlık</title>
+               </member>
+       </members>
+       <contains>
+               <object type="folder" location="http://www.shareaza.com/schemas/videoFilm.xsd"/>
+       </contains>
+       <headerContent version="1.0">
+               <title language="en">Films</title>
+               <title language="af">Films</title>
+               <title language="ca">Pel·lícules</title>
+               <title language="chs">电影</title>
+               <title language="cht">電影</title>
+               <title language="cz">Filmy</title>
+               <title language="de">Filme</title>
+               <title language="ee">Filmid</title>
+               <title language="es">Filmes</title>
+               <title language="es-mx">Filmes</title>
+               <title language="fr">Filmes</title>
+               <title language="gr">Ταινίες</title>
+               <title language="heb">סרטים</title>
+               <title language="hr">Film</title>
+               <title language="hu">Filmek</title>
+               <title language="it">Film</title>
+               <title language="ja">映画</title>
+               <title language="lt">Filmai</title>
+               <title language="nl">Films</title>
+               <title language="no">Filmer</title>
+               <title language="pt-br">Filmes</title>
+               <title language="ru">Фильмы</title>
+               <title language="sl-SI">Filmi</title>
+               <title language="sq">Filmat</title>
+               <title language="sr">Film</title>
+               <title language="sv">Filmer</title>
+               <title language="tr">Filmler</title>
+               <subtitle language="en">This folder contains a list films you have in your library.</subtitle>
+               <subtitle language="af">Hierdie gids bevat 'n lys van die films wat jy die jou biblioteek het.</subtitle>
+               <subtitle language="ca">Aquesta carpeta conté tots els films que tens en la teva col·lecció.</subtitle>
+               <subtitle language="chs">此文件夹包含您收藏中电影的清单。</subtitle>
+               <subtitle language="cht">這個資料夾包含了在您的收藏中一個電影清單.</subtitle>
+               <subtitle language="cz">Tyto složky obsahují všechny filmy  v knihovně.</subtitle>
+               <subtitle language="de">Dieser Ordner enthält eine Liste aller Filme Ihrer Bibliothek.</subtitle>
+               <subtitle language="ee">See kaust sisaldab nimekirja filmidest sinu raamatukogus.</subtitle>
+               <subtitle language="es">Esta carpeta contiene todos los filmes que tienes en tu librería.</subtitle>
+               <subtitle language="es-mx">Esta carpeta contiene todos los filmes que tienes en tu librería.</subtitle>
+               <subtitle language="fr">Ce dossier contient tous les films de votre bibliothèque.</subtitle>
+               <subtitle language="gr">Αυτός ο φάκελος περιέχει όσα αρχεία video μπορούν να οργανωθούν ανά ταινία.</subtitle>
+               <subtitle language="heb">ספרייה זו מכילה רשימה של הסרטים שבספרייה שלך</subtitle>
+               <subtitle language="hr">Ova mapa sadrži popis filmova koje imate u kolekciji.</subtitle>
+               <subtitle language="hu">Ez a mappa filmeket tartalmaz.</subtitle>
+               <subtitle language="it">Questa cartella contiene la lista dei film che hai nella libreria.</subtitle>
+               <subtitle language="ja">このフォルダーにはライブラリー内にある映画の一覧があります</subtitle>
+               <subtitle language="lt">Šiame kataloge pateikiamas Jūsų kolekcijos filmų sąrašas.</subtitle>
+               <subtitle language="nl">Deze map bevat een lijst van films die je in je bibliotheek hebt.</subtitle>
+               <subtitle language="no">Disse mappene inneholder alle dine filmer</subtitle>
+               <subtitle language="pt-br">Esta pasta contém todos os filmes presentes na sua biblioteca.</subtitle>
+               <subtitle language="ru">Эта папка отображает список фильмов в Вашем хранилище.</subtitle>
+               <subtitle language="sl-SI">Ta mapa vsebuje seznam filmov v vaši knjižnici.</subtitle>
+               <subtitle language="sq">Kjo dosje përmban një listë me filmat që janë në librarinë tuaj.</subtitle>
+               <subtitle language="sr">Ova fascikla sadrži popis filmova koje imate u kolekciji.</subtitle>
+               <subtitle language="sv">Denna mapp innehåller en lista över filmer som du har i ditt bibliotek.</subtitle>
+               <subtitle language="tr">Bu klasör arşivinizdeki filmlerin bir listesini içerir.</subtitle>
+       </headerContent>
+
+</schemaDescriptor>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<schema targetNamespace="http://www.shareaza.com/schemas/ghostFolder.xsd" xmlns="http://www.w3.org/2001/XMLSchema">
+  
+  <element name="ghostFolders">
+	<complexType>
+		<element name="ghostFolder" type="ghostType" minOccurs="1" maxOccurs="1"/>
+	</complexType>
+  </element>     
+  <complexType name="ghostType">
+	<all>
+		<attribute name="title" type="string"/>
+	</all>
+  </complexType>
+  
+</schema>

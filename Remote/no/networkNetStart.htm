@@ -1,0 +1,24 @@
+					<h4><%= network_caption %></h4>
+<%? !network_connected %>
+					<p style="font-size: 7pt;">
+					Dette nettverket er av -
+                    <a href="?connect=<%= network_id %>"><b>koble til</b></a>
+					</p>
+<%?%><%? network_connected %>
+					<p style="font-size: 7pt;">
+					Dette nettverket er p&aring; -
+                    <a href="?disconnect=<%= network_id %>"><b>koble i fra</b></a>
+					</p>
+					<table width="100%" cellspacing="0" style="border-collapse: collapse;">
+						<tr>
+							<td class="viewheader">Adresse</td>
+							<td class="viewheader" align="center">Tid</td>
+							<td class="viewheader" align="center">Packets</td>
+							<td class="viewheader" align="center">B&aring;ndbredde</td>
+							<td class="viewheader" align="center">Total</td>
+							<td class="viewheader" align="center">Modus</td>
+							<td class="viewheader" align="center">Kilder</td>
+							<td class="viewheader">Program</td>
+							<td class="viewheader"></td>
+						</tr>
+<%?%>

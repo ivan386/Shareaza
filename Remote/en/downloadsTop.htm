@@ -1,0 +1,33 @@
+﻿
+<!-- downloadsTop-->
+</ul>
+<div  id="content">
+	<div id="functions"><a href="?refresh=<%= random %>">Refresh page</a></div>
+		<form method="get" action="">
+			<div id="filters">
+				<input type="hidden" name="filter_set" value="1" />
+				<b>Filter:</b>
+				<input type="checkbox" id="filter_active" name="filter_active" value="1" <%= filter_active %> />
+				<label for="filter_active">Active</label>
+				<input type="checkbox" id="filter_queued" name="filter_queued" value="1" <%= filter_queued %> />
+				<label for="filter_queued">Queued</label>
+				<input type="checkbox" id="filter_sources" name="filter_sources" value="1" <%= filter_sources %> />
+				<label for="filter_sources">No sources</label>
+				<input type="checkbox" id="filter_paused" name="filter_paused" value="1" <%= filter_paused %> />
+				<label for="filter_paused">Paused</label>
+				<input type="checkbox" id="filter_show_all" name="filter_show_all" value="1" <%= filter_show_all %> />
+				<label for="filter_show_all">Show all sources</label>
+				<input type="submit" value=" Set " /><br/>
+			</div>
+		</form><br/>
+<table>
+	<tr>
+				<th>Filename</th>
+				<th>Size</th>
+				<th>Progress</th>
+				<th>Speed</th>
+				<th>Sources</th>
+				<th>Status</th>
+				<th>Options</th>
+			</tr>
+<!-- /downloadsTop-->

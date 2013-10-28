@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FictionBookReader", "FictionBookReader.csproj", "{34DA4861-3E1A-4295-8647-3E7655B3C7EA}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "FbReaderInstaller", "FbReaderInstaller.vdproj", "{6AADB87C-C6D3-4C51-A5F9-7249355E80C7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{34DA4861-3E1A-4295-8647-3E7655B3C7EA}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{34DA4861-3E1A-4295-8647-3E7655B3C7EA}.Debug|Win32.Build.0 = Debug|Any CPU
+		{34DA4861-3E1A-4295-8647-3E7655B3C7EA}.Release|Win32.ActiveCfg = Release|Any CPU
+		{34DA4861-3E1A-4295-8647-3E7655B3C7EA}.Release|Win32.Build.0 = Release|Any CPU
+		{6AADB87C-C6D3-4C51-A5F9-7249355E80C7}.Debug|Win32.ActiveCfg = Debug
+		{6AADB87C-C6D3-4C51-A5F9-7249355E80C7}.Debug|Win32.Build.0 = Debug
+		{6AADB87C-C6D3-4C51-A5F9-7249355E80C7}.Release|Win32.ActiveCfg = Release
+		{6AADB87C-C6D3-4C51-A5F9-7249355E80C7}.Release|Win32.Build.0 = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

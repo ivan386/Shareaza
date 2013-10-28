@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
+Shareaza Catalan Schemas File translated by Daniel Olivares Giménez; Equip de traduccions de FeshoCAT
+Shareaza Chinese Simplified Schemas File translated by Sanley; John
+Shareaza Chinese Traditional Schemas File translated by James Bond
+Shareaza Czech Schemas File translated by Odin
+Shareaza German Schemas File translated by Spooky; jlh; OldDeath
+Shareaza Estonian Schemas File translated by Janza
+Shareaza Spanish Schemas File translated by Unknown
+Shareaza Spanish (Mexico) Schemas File translated by Help
+Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
+Shareaza Greek Schemas File translated by erimitis
+Shareaza Hebrew Schemas File translated by _peer_ (H.L)
+Shareaza Croatian Schemas File translated by Biza
+Shareaza Hungarian Schemas File translated by Yuri
+Shareaza Italian Schemas File translated by ale5000
+Shareaza Japanese Schemas File translated by DukeDog; CyberBob
+Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
+Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); Jonne; Neglacio
+Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
+Shareaza Portuguese (Brasil) Schemas File translated by Lukas Taves (LightHeaven); Felipe
+Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
+Shareaza Slovenian Schemas File translated by Martin McDowell
+Shareaza Albanian Schemas File translated by Besmir Godole
+Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Swedish Schemas File translated by Marcus Ehrenlans; Printz; DanielB
+Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
+-->
+
+<schemaDescriptor location="http://www.shareaza.com/schemas/musicRoot.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
+
+       <object type="folder" availability="system"/>
+       <titles>
+               <title language="en">Music:My Music</title>
+               <title language="af">Musiek:My Musiek</title>
+               <title language="ca">Musica: La meva música</title>
+               <title language="chs">&#160;音乐:我的音乐</title>
+               <title language="cht">音樂:我的音樂</title>
+               <title language="cz">Hudba:Moje hudba</title>
+               <title language="de">Musik:Eigene Musik</title>
+               <title language="ee">Muusika:Minu Muusika</title>
+               <title language="es">Musica: Mi Música</title>
+               <title language="es-mx">Musica: Mi Música</title>
+               <title language="fr">Musique:Ma musique</title>
+               <title language="gr">Μουσική:Μουσική</title>
+               <title language="heb">&#160;שירים:המוזיקה שלי</title>
+               <title language="hr">Muzika:Moje Pjesme</title>
+               <title language="hu">Zene: Zenék</title>
+               <title language="it">Musica:Musica</title>
+               <title language="ja">&#160;音楽: マイ･ミュージック</title>
+               <title language="lt">Muzika:Mano muzika</title>
+               <title language="nl">Muziek:Mijn Muziek</title>
+               <title language="no">Musikk: min musikk</title>
+               <title language="pt-br">Música: Minhas Músicas</title>
+               <title language="ru">&#160;Музыка: Моя музыка</title>
+               <title language="sl-SI">Glasba:Moja glasba</title>
+               <title language="sq">Muzikë:Muzika Ime</title>
+               <title language="sr">Muzika:Moje Pesme</title>
+               <title language="sv">Musik: Min musik</title>
+               <title language="tr">Müzik: Müziğim</title>
+       </titles>
+       <images>
+               <icon path="musicFolder.ico"/>
+       </images>
+       <members>
+               <member name="title" search="none">
+                       <display defaultColumn="true"/>
+                       <title language="en">Title</title>
+                       <title language="af">Titel</title>
+                       <title language="ca">Títol</title>
+                       <title language="chs">标题</title>
+                       <title language="cht">標題</title>
+                       <title language="cz">Název</title>
+                       <title language="de">Titel</title>
+                       <title language="ee">Pealkiri</title>
+                       <title language="es">Título</title>
+                       <title language="es-mx">Título</title>
+                       <title language="fr">Titre</title>
+                       <title language="gr">Τίτλος</title>
+                       <title language="heb">כותרת</title>
+                       <title language="hr">Naslov</title>
+                       <title language="hu">Cím</title>
+                       <title language="it">Titolo</title>
+                       <title language="ja">タイトル</title>
+                       <title language="lt">Pavadinimas</title>
+                       <title language="nl">Titel</title>
+                       <title language="no">Tittel</title>
+                       <title language="pt-br">Título</title>
+                       <title language="ru">Название</title>
+                       <title language="sl-SI">Naslov</title>
+                       <title language="sq">Titulli</title>
+                       <title language="sr">Naslov</title>
+                       <title language="sv">Titel</title>
+                       <title language="tr">Başlık</title>
+               </member>
+       </members>
+       <contains>
+               <object type="folder" location="http://www.shareaza.com/schemas/musicAlbumCollection.xsd"/>
+               <object type="folder" location="http://www.shareaza.com/schemas/musicArtistCollection.xsd"/>
+               <object type="folder" location="http://www.shareaza.com/schemas/musicGenreCollection.xsd"/>
+       </contains>
+       <headerContent version="1.0">
+               <title language="en">Welcome to My Music!</title>
+               <title language="af">Welkom by My Musiek!</title>
+               <title language="ca">Benvingut/da a la meva música</title>
+               <title language="chs">欢迎来到我的音乐！</title>
+               <title language="cht">歡迎來到我的音樂!</title>
+               <title language="cz">Moje hudba</title>
+               <title language="de">Willkommen bei Eigene Musik!</title>
+               <title language="ee">Teretulemast  Minu Muusikasse!</title>
+               <title language="es">¡Bienvenido a Mi Música</title>
+               <title language="es-mx">¡Bienvenido a Mi Música</title>
+               <title language="fr">Bienvenue dans Ma musique!</title>
+               <title language="gr">Καλώς ήρθατε στη Μουσική!</title>
+               <title language="heb">ברוך הבא למוזיקה שלי!</title>
+               <title language="hr">Dobrodošli Među Vaše Pjesme</title>
+               <title language="hu">Üdvözöllek a Zenék mappában!</title>
+               <title language="it">Benvenuto nella Musica!</title>
+               <title language="ja">マイ･ミュージックへようこそ</title>
+               <title language="lt">Sveiki apsilankę „Mano muzikoje“!</title>
+               <title language="nl">Welkom bij Mijn Muziek!</title>
+               <title language="no">Velkommen til min musikk</title>
+               <title language="pt-br">Bem-vindo as Minhas Músicas!</title>
+               <title language="ru">Добро пожаловать в Вашу музыку!</title>
+               <title language="sl-SI">Dobrodošli v moji glasbi!</title>
+               <title language="sq">Mirë se erdhët në Muzikën Tuaj!</title>
+               <title language="sr">Dobrodošli Među Vaše Pesme</title>
+               <title language="sv">Välkommen till min musik!</title>
+               <title language="tr">Müziklerime Hoşgeldiniz!</title>
+               <subtitle language="en">These folders contain all of the music in your library, organised by album, by artist and by genre.  Open a folder below to continue.</subtitle>
+               <subtitle language="af">Hierdie gidse bevat al die musiek in jou biblioteek, georganiseer volgens album, kunstenaar en genre. Open 'n gids hieronder om voort te gaan.</subtitle>
+               <subtitle language="ca">Aquestes carpetes contenen tota la música de la teva col·lecció, organitzada per àlbum, per artista i per gènere. Obre una carpeta per a continuar.</subtitle>
+               <subtitle language="chs">这些文件夹包括您收藏中的所有音乐，按专辑，艺术家和流派进行排列。打开下面的文件夹可进行查看。</subtitle>
+               <subtitle language="cht">這些資料夾包含了在您的收藏中所有的音樂, 由專輯, 藝人和流派組織.  在下面開啟一個資料夾來繼續.</subtitle>
+               <subtitle language="cz">Tyto složky obsahují všechnu hudubu v knihovně roztříděnou podle alba, autora a žánru. Pokračujte kliknutím na složku</subtitle>
+               <subtitle language="de">Diese Ordner enthalten alle Musik Ihrer Bibliothek, geordnet nach Album, Künstler und Genre. Öffnen Sie einen Ordner, um fortzufahren.</subtitle>
+               <subtitle language="ee">Need kaustad sisaldavad kõiki sinu raamatukogus asuvaid laule, albumi, artisti ja stiilide järgi organiseeritult. Jätkamiseks ava allolev kaust.</subtitle>
+               <subtitle language="es">Estas carpetas contienen toda tu música de tu librería, organizadas por album, por artista y por género. Abra una carpeta para continuar</subtitle>
+               <subtitle language="es-mx">Estas carpetas contienen toda tu música de tu librería, organizadas por album, por artista y por género. Abra una carpeta para continuar</subtitle>
+               <subtitle language="fr">Ce dossier contient toutes les musiques de votre bibliothèque, organisées par album, par artiste et par genre.  Ouvrez un sous-dossier pour continuer.</subtitle>
+               <subtitle language="gr">Αυτός ο φάκελος περιέχει όλα τα αρχεία μουσικής, οργανωμένα ανά album, καλλιτέχνη και είδος μουσικής.</subtitle>
+               <subtitle language="heb">הספריות הללו מכילות כל המוזיקה בספרייה שלך, מאורגנים לפי אלבום, אמן וז'אנר פתח ספרייה מתחת כדי להמשיך</subtitle>
+               <subtitle language="hr">Ove mape sadrže svu muziku iz vaše kolekcije posloženu po albumima, izvođaču i žanru.</subtitle>
+               <subtitle language="hu">Ez a mappa albumokra, előadókra és műfajokra bontva tartalmazza az összes zenét.</subtitle>
+               <subtitle language="it">Queste cartelle contengono tutta la musica della tua libreria, organizzata per album, per artista e per genere.  Apri una cartella qui sotto per continuare.</subtitle>
+               <subtitle language="ja">これらのフォルダーにはライブラリー内に所有している全ての音楽をアルバム・アーティスト･ジャンルごとに整理して収録しています</subtitle>
+               <subtitle language="lt">Šiuose kataloguose yra visa Jūsų kolekcijos muzika, surūšiuota pagal albumus, atlikėjus ir žanrus/stilius. Tęskite atverdami žemiau esantį katalogą.</subtitle>
+               <subtitle language="nl">Deze mappen bevatten alle muziek uit je bibliotheek, georganiseerd per album, per artiest en per genre.  Open een map hieronder om verder te gaan.</subtitle>
+               <subtitle language="no">Disse mappene inneholder alle dine musikkfiler, organisert etter album, artist og sjanger. Åpne en mappe for å fortsette.</subtitle>
+               <subtitle language="pt-br">Estas pastas contém todas as músicas da sua biblioteca, organizadas por álbum, artista e gênero. Abra uma pasta abaixo para continuar.</subtitle>
+               <subtitle language="ru">Эти папки отображают всю музыку организованную по альбомам, артистам и стилям.</subtitle>
+               <subtitle language="sl-SI">Te mape vsebujejo vso glasbo v vaši knjižnici, urejeno po albumu, izvajalcu in žanru. Odprite mapo spodaj za nadaljevanje.</subtitle>
+               <subtitle language="sq">Këto dosje përmbajnë gjithë muzikën në librarinë tuaj, organizuar sipas albumeve, artistëve dhe gjinisë.  Hapni një nga dosjet më poshtë.</subtitle>
+               <subtitle language="sr">Ove fascikle sadrže svu muziku iz vaše kolekcije složenu po albumima, izvođaču i žanru.</subtitle>
+               <subtitle language="sv">Denna mapp innehåller all musik i ditt bibliotek, organiserad efter album, artist och genre. Öppna en mapp nedanför för att fortsätta.</subtitle>
+               <subtitle language="tr">Bu klasörler arşivinizdeki albüme, sanatçıya ve tarza  göre düzenlenmiş tüm müzikleri içermektedir. Devam etmek için aşağıdan bir klasörü açınız.</subtitle>
+       </headerContent>
+
+</schemaDescriptor>

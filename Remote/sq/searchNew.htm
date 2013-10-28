@@ -1,0 +1,19 @@
+﻿										<li class="active"><a class="noline" href="?id=0">Kërkim i ri</a></li>
+								</ul>
+<div style="border: 1px #000 solid;padding: 5px;">
+	<p>Për të nisur një kërkim të ri, shkruani termin e kërkuar në kutinë më poshtë dhe klikoni <strong>Nise Kërkimin</strong>. Nëse doni që kërkimi të kufizohet në një lloj të caktuar skede, zgjidheni atë në listë (rekomandohet).</p>
+
+	<form method="get" action="newsearch">
+		<div style="text-align:right; width: 30em;">
+			<label>Kërko për:</label>
+				<input type="text" name="search" class="regularinput" /><br/>
+				<label>Lloji i skedës:</label>
+
+				<select name="schema" class="regularinput">
+					<option value="">Çdolloj Skede</option>
+					<%= schema_option_list %>
+				</select><br />
+
+				<input type="submit" value="Nise Kërkimin" />
+		</div>
+	</form>

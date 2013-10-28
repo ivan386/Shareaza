@@ -1,0 +1,36 @@
+﻿<!-- tabs -->
+		<div class="poetry">
+			<ul class="tabs">
+				<li class="inactive">Домой</li>
+				<li class="inactive">Поиск</li>
+				<li class="inactive">Загрузки</li>
+				<li class="inactive">Выгрузки</li>
+				<li class="inactive">Сети</li>
+			</ul>
+		</div>
+<!-- /tabs -->
+<!-- main body -->
+		<div class="poetry" id="frame">
+					<div class="padding left">
+						Приветствуем в <b>Shareaza Удаленный Доступ</b>.
+						Если эта копия Shareaza запущена на Вашем компьютере - введите 
+						Ваше имя пользователя и пароль для Удаленного Доступа и нажмите <b>Войти</b>.
+					</div>
+					
+					<div class="poetry" style="color: red; font-weight: bold; height: 3em;">
+					<%? failure %>	Имя ползователя и/или пароль неверны.
+						Попробуйте снова.<%?%>
+					</div>
+					
+					<div style="text-align: right; width: 24em; margin: 0 auto;">
+					<form method="get" action="">
+					<input type="hidden" name="submit" value="1">
+						<label>Имя ползователя:</label>
+						<input type="text" name="username" size="20" /><br />
+						<label>Пароль:</label>
+						<input type="password" name="password" size="20" ID="Text1" /><br />
+								<input type="submit" value="Войти">
+					</form>
+					</div>
+	</div>
+<!-- /main body -->

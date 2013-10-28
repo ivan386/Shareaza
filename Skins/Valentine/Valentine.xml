@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
+<manifest
+	name="Valentine's Day"
+	author="Ryo-oh-ki"
+	link="http://en.wikipedia.org/wiki/Valentine's_Day"
+	email="ryo-oh-ki@narod.ru"
+	Description="Skin for Valentine's Day"
+	version="1.0"
+	type="Skin"/>
+<watermarks>
+	<watermark target="CHomeViewCtrl.Header1" path="Valentine.png"/>
+</watermarks>
+</skin>

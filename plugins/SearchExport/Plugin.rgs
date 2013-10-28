@@ -1,0 +1,46 @@
+HKCR
+{
+	ForceRemove SearchExport.Plugin.1 = s 'Search Export plugin for Shareaza'
+	{
+		CLSID = s '{DF7CED9C-198A-4acd-A42F-BB34EAA15C02}'
+	}
+	ForceRemove SearchExport.Plugin = s 'Search Export plugin for Shareaza'
+	{
+		CLSID = s '{DF7CED9C-198A-4acd-A42F-BB34EAA15C02}'
+		CurVer = s 'SearchExport.Plugin.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {DF7CED9C-198A-4acd-A42F-BB34EAA15C02} = s 'Search Export plugin for Shareaza'
+		{
+			ProgID = s 'SearchExport.Plugin.1'
+			VersionIndependentProgID = s 'SearchExport.Plugin'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{44BF6E4B-B782-4752-B004-CF3260C27730}'
+		}
+	}
+}
+HKCU
+{
+	NoRemove Software
+	{
+		NoRemove Shareaza
+		{
+			NoRemove Shareaza
+			{
+				NoRemove Plugins
+				{
+					NoRemove General
+					{
+						ForceRemove val 'Search Export plugin for Shareaza' = s '{DF7CED9C-198A-4acd-A42F-BB34EAA15C02}'
+					}
+					ForceRemove val '{DF7CED9C-198A-4acd-A42F-BB34EAA15C02}' = s ''
+				}
+			}
+		}
+	}
+}

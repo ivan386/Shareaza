@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<schema targetNamespace="http://www.shareaza.com/schemas/folder.xsd" xmlns="http://www.w3.org/2001/XMLSchema">
+	
+	<element name="folders">
+		<complexType>
+			<element name="folder" type="folderType" minOccurs="1" maxOccurs="unbounded"/>
+		</complexType>
+	</element>     
+	<complexType name="folderType">
+		<all>
+			<attribute name="title" type="string"/>
+			<attribute name="description" type="string"/>
+			<attribute name="collector" type="string"/>
+			<attribute name="comments">
+				<simpleType base="string">
+					<maxInclusive value="1024"/>
+				</simpleType>
+			</attribute>
+		</all>
+	</complexType>
+	
+</schema>

@@ -1,0 +1,98 @@
+﻿body
+{
+	margin: 0px;
+	padding: 0px;
+	background-color: #ffffff;
+	color: #000000;
+	text-align: center;		/*	CENTERS .page DIV IN IE 7/8 WHICH IGNORES MARGIN AUTO	*/
+}
+body,td,th {
+	font-family: Tahoma, Verdana, Arial, sans-serif;
+	font-size: 12px; 
+}
+body.imgheader {
+	background-image:url(/header_2.png);
+	background-repeat:repeat-x;
+}
+.imgheader img {
+	position: absolute;
+	left:0px;
+	top: 0px;
+}
+h3 {
+	font-size: 12px;
+	padding:0px;
+	margin:0px;
+}
+h3.darkgray {
+	background-color: #CCCCCC;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	border: 1px solid #999999;
+	text-align: center;
+}
+p {
+	margin:0px;
+	margin-bottom: 10px;
+	padding:4px;
+	background-color: #F7F7F7;
+	border: 1px solid #999999;
+	border-top:0px;
+}
+.page
+{
+	margin-top: 172px;
+	width: 780px;
+	margin-left: auto;		/* 	THIS CENTERS IN NON-IE BROWSERS WHICH IGNORE TEXT-ALIGN	*/
+	margin-right: auto;
+	text-align: left;
+}
+.nodeinfo
+{
+	border: 0px;
+	border-bottom: solid #999999 1px;
+}
+th
+{
+	border-bottom: solid #999999 1px;
+	padding-bottom: 8px;
+	background-color: #ffffff;
+}
+.lcol
+{
+	border-left: solid #999999 1px;
+}
+.rcol
+{
+	border-right: solid #999999 1px;
+}
+table.nodeinfo tr td
+{
+	background-color: #F7F7F7;
+	padding: 11px 0 10px 12px;
+	text-align: center;
+	font-size: 8pt;
+}
+ul {
+	list-style-type: none;
+	margin:0px;
+	padding:0px;
+	margin-bottom: 40px;
+}
+li {
+	float: left;
+	display: block;
+	width: 386px;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	border: 1px solid #999999;
+	margin-right: 4px;
+	margin-top:2px;
+	text-align: center;
+}
+.col1_4 {
+	width: 170px;
+}
+col2_3 {
+	width: 100px;
+}

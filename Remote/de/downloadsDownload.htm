@@ -1,0 +1,32 @@
+﻿									<tr>
+<%? download_is_expanded %>
+										<td class="filename"><div title="<%= download_filename %>"><a class="noline" href="?modify_id=<%= download_id %>&amp;modify_action=collapse">-</a> <%= download_filename %></div></td>
+<%?%><%? download_is_collapsed %>
+										<td class="filename"><div title="<%= download_filename %>"><a class="noline" href="?modify_id=<%= download_id %>&amp;modify_action=expand">+</a> <%= download_filename %></div></td>
+<%?%><%? !download_is_expanded %><%? !download_is_collapsed %>
+										<td class="filename"><div title="<%= download_filename %>"><%= download_filename %></div></td>
+<%?%><%?%>
+										<td><%= download_size %></td>
+										<td height="16">
+											<div class="progcontainer">
+												<div class="progbar" style="width:<%= download_percent %>%;"></div>
+												<div class="progprocent"><%= download_percent %>%</div>
+											</div>
+										
+										</td>
+										<td><%= download_speed %></td>
+										<td><%= download_sources %></td>
+										<td><%= download_status %></td>
+										<td>
+<%? download_is_complete %>
+											<a href="?modify_id=<%= download_id %>&amp;modify_action=clear" title="clear the download from the list (this will not delete your file)">Entfernen</a>
+<%?%><%? !download_is_complete %>
+<%? download_is_paused %>
+											<a href="?modify_id=<%= download_id %>&amp;modify_action=resume">Starte</a> -
+<%?%><%? !download_is_paused %>
+											<a href="?modify_id=<%= download_id %>&amp;modify_action=pause">Pause</a> -
+<%?%>										<a href="?modify_id=<%= download_id %>&amp;modify_action=more_sources">Mehr Quellen</a> -
+											<a href="?modify_id=<%= download_id %>&amp;modify_action=cancel">Abbrechen</a>
+<%?%>
+										</td>
+									</tr>

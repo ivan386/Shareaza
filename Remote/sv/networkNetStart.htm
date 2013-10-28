@@ -1,0 +1,25 @@
+﻿					<h4><%= network_caption %></h4>
+<%? !network_connected %>
+					<p>
+					Detta nätverk är <strong>inte</strong> aktiverat -
+					<a href="?connect=<%= network_id %>"><strong>Anslut till <%= network_caption %></strong></a>
+					</p>
+<%?%><%? network_connected %>
+					<p>
+					Detta nätverk är aktiverat -
+					<a href="?disconnect=<%= network_id %>"><strong>Inaktivera <%= network_caption %></strong></a>
+					</p>
+				<div class="centertable">
+					<table>
+						<tr>
+							<th>Adress</th>
+							<th>Tid</th>
+							<th>Paket</th>
+							<th>Bandbredd</th>
+							<th>Totalt</th>
+							<th>Läge</th>
+							<th>Löv</th>
+							<th>Användarklient</th>
+							<th></th>
+						</tr>
+<%?%>

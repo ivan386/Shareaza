@@ -1,0 +1,26 @@
+﻿
+<!-- searchTop -->
+										<li class="active"><a class="noline" href="?id=0">Új keresés</a></li>
+								</ul>
+
+<div style="border: 1px #000 solid;padding: 5px;" id="content">
+	<div id="functions"><a href="?id=<%= search_id %>&amp;refresh=<%= random %>">Lap frissítése</a> - 
+<%? searching %>
+												<a href="?id=<%= search_id %>&amp;stop=1"><b>Keresés leállítása</b></a> -
+<%?%>
+												<a href="?close=<%= search_id %>">Keresés bezárása</a>
+	</div>
+		<div id="filters">
+										<form method="get" action="">
+											<input type="hidden" name="id" value="<%= search_id %>" />
+											<input type="hidden" name="setfilter" value="1" />
+											<label>Szűrő:</label>
+											<input type="text" name="filter" value="<%= search_filter %>" size="20" />
+											<input type="submit" value="Szűrés" />
+
+										</form>
+		</div>
+										<br />
+<table>
+	<tr>
+<!--/searchTop-->

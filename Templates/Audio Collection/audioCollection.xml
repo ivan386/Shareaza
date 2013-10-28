@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<template xmlns="http://www.shareaza.com/schemas/Template.xsd" version="1.0">
+<manifest	name="Audio Collection"
+			author="Tom Higginson"
+			version="1.2"
+			link="http://shareaza.sourceforge.net/"
+			description="Audio collection export template."
+			icon="audio.ico"
+/>
+<files>
+	<file type="main" path="audio.tpl"/>
+	<file type="evenfile" path="audioEven.tpl"/>
+	<file type="oddfile" path="audioOdd.tpl"/>
+</files>
+<images>
+	<image path="bar_on.gif"/>
+	<image path="bar_off.gif"/>
+</images>
+<wizardText>
+	<text language="ja">
+		<item id="1" type="textbox" value="コレクションタイトル"/>
+		<item id="2" type="textbox" value="”開く”の表示" default="開く"/>
+		<item id="3" type="textbox" value="ダウンロード中の表示" default="ダウンロード中"/>
+		<item id="4" type="textbox" value="”ダウンロード”の表示" default="今すぐダウンロード"/>
+		<item id="6" type="textbox" value="Webリソースの説明"/>
+		<item id="7" type="colorpicker" value="遇数行の色" default="#FFFFFF"/>
+		<item id="8" type="colorpicker" value="奇数行の色" default="#E9EDEF"/>
+	</text>
+	<text language="lt">
+		<item id="1" type="textbox" value="Rinkinio pavadinimas"/>
+		<item id="2" type="textbox" value="Atveriant failą" default="Atverti failą"/>
+		<item id="3" type="textbox" value="Failui siunčiantis" default="Siunčiama"/>
+		<item id="4" type="textbox" value="Atsisiuntimo veiksmas" default="Atsisiųsti dabar"/>
+		<item id="6" type="textbox" value="Web resurso aprašymas"/>
+		<item id="7" type="colorpicker" value="Lyginių eilučių spalva" default="#FFFFFF"/>
+		<item id="8" type="colorpicker" value="Nelyginių eilučių spalva" default="#E9EDEF"/>
+	</text>
+	<text language="pt-br">
+		<item id="1" type="textbox" value="Título da coleção"/>
+		<item id="2" type="textbox" value="Ao abrir arquivo" default="Abrir Arquivo"/>
+		<item id="3" type="textbox" value="Enquanto baixando" default="Baixando"/>
+		<item id="4" type="textbox" value="Ação de download" default="Baixar Agora"/>
+		<item id="6" type="textbox" value="Descrição de Recurso da Rede"/>
+		<item id="7" type="colorpicker" value="Colorir fileiras ímpares" default="#FFFFFF"/>
+		<item id="8" type="colorpicker" value="Colorir fileiras pares" default="#E9EDEF"/>
+	</text>
+	<!-- It's better to place english translation at the end to exit data collection immediately when language specific data already loaded -->
+	<text language="en">
+		<item id="1" type="textbox" value="Collection title"/>
+		<item id="2" type="textbox" value="File opening action" default="Open File"/>
+		<item id="3" type="textbox" value="While downloading" default="Downloading"/>
+		<item id="4" type="textbox" value="Download action" default="Download Now"/>
+		<item id="6" type="textbox" value="Description of Web Resource"/>
+		<item id="7" type="colorpicker" value="Color for even rows" default="#FFFFFF"/>
+		<item id="8" type="colorpicker" value="Color for odd rows" default="#E9EDEF"/>
+	</text>
+</wizardText>
+</template>

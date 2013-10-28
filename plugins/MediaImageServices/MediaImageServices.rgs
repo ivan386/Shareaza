@@ -1,0 +1,11 @@
+HKCR
+{
+	NoRemove AppID
+	{
+		'%APPID%' = s 'MediaImageServices'
+		'MediaImageServices.exe'
+		{
+			val AppID = s '%APPID%'
+		}
+	}
+}

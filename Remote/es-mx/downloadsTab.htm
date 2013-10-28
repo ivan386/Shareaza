@@ -1,0 +1,6 @@
+<%? group_selected %>
+										<td class="tabsel" nowrap><a class="tab" href="?group_exclusive=<%= group_id %>"><%= group_caption %></a><a class="tab" href="?group_deselect=<%= group_id %>">*</a></td>
+<%?%><%? !group_selected %>
+										<td class="tab" nowrap><a class="tab" href="?group_exclusive=<%= group_id %>"><%= group_caption %></a><a class="tab" href="?group_select=<%= group_id %>">*</a></td>
+<%?%>
+										<td class="tabfil">&nbsp;</td>

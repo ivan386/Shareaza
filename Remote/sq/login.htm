@@ -1,0 +1,33 @@
+﻿<!-- tabs -->
+		<div class="poetry">
+			<ul class="tabs">
+				<li class="inactive">Shtëpi</li>
+				<li class="inactive">Kërko</li>
+				<li class="inactive">Shkarkesat</li>
+				<li class="inactive">Ngarkesat</li>
+				<li class="inactive">Rrjetet</li>
+			</ul>
+		</div>
+<!-- /tabs -->
+<!-- main body -->
+		<div class="poetry" id="frame">
+			<div class="padding left">
+				Mirë se erdhët në <b>Ndërfaqen e Rrjetit të Shareaza-s.</b> Nëse kjo adresë është e klientit tuaj me Shareaza, ju lutemi shkruani emrin e përdoruesit dhe fjalëkalimin, dhe klikoni butonin <b>Hyr</b>.
+			</div>
+
+			<div class="poetry" style="color: red; font-weight: bold; height: 3em;">
+				<%? failure %>	Emri i përdoruesit ose fjalëkalimi është jokorrekt, ju lutemi provoni përsëri.<%?%>
+			</div>
+
+			<form method="get" action="">
+				<div style="text-align: right; width: 24em; margin: 0 auto;">
+					<input type="hidden" name="submit" value="1" />
+					<label>Përdoruesi:</label>
+					<input type="text" name="username" size="20" /><br />
+					<label>Fjalëkalimi:</label>
+					<input type="password" name="password" size="20" /><br />
+					<input type="submit" value="Hyr" />
+				</div>
+			</form>
+		</div>
+<!-- /main body -->

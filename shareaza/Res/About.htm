@@ -1,0 +1,46 @@
+200 OK
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><% SmartAgent %> : Node Information</title>
+<meta name="robots" content="noindex, nofollow" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<link rel="stylesheet" type="text/css" href="/style.css" />
+</head>
+<body class="imgheader">
+<div class="page">
+<img src="/header_1.png" width="624" height="172" alt="<% Client %>" />
+
+<h3 class="darkgray">This node is powered by <a href="http://shareaza.sourceforge.net/?id=download"><% SmartAgent %></a></h3>
+<ul>
+	<li><a href="gnutella:browse:<% ListenIP %>">Browse this node in <% Client %></a></li>
+	<li style="margin-right: 0px;"><a href="/remote/">Remotely access this node</a></li>
+</ul>
+
+<h3 class="darkgray">What Is <a href="http://shareaza.sourceforge.net/"><% Client %></a>?</h3>
+<p><% Client %> is a peer-to-peer client for Windows that allows you to download any file-type found on several popular P2P networks. <% Client %> is <strong>FREE</strong> and contains <strong>NO</strong> spyware or third-party products.</p>
+
+<table width="100%" cellspacing="0" class="nodeinfo">
+<tr>
+	<th class="col1_4" align="center" valign="top">Neighbor Address</th>
+	<th class="col2_3" align="center" valign="top">Uptime</th>
+	<th class="col2_3" align="center" valign="top">Mode</th>
+	<th class="col1_4" align="center" valign="top">User Agent</th>
+	<th align="center" valign="top">&nbsp;</th>
+</tr>	
+<% Neighbours 
+<tr>
+	<td class="lcol"><a href="gnutella:host:%s:%lu">%s:%lu</a></td>
+	<td>%i:%.2i:%.2i</td>
+	<td>%s</td>
+	<td>%s</td>
+	<td class="rcol"><a href="http://%s:%lu/">Browse</a></td>
+</tr> 
+%>
+</table>
+
+</div>
+</body>
+</html>

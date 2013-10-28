@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+   ================================================================
+   | Blue Moon 2.3 by ogg123  <oggvorbis123@hotmail.com> |
+   ================================================================
+   | You may edit this, and re-distribute, but please leave all
+   | commenting attached; you see.... I finally cleaned it up!  :p
+
+-->
+
+<skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
+
+
+<!-- MANIFEST -->
+<manifest	name="Blue Moon"
+			author="ogg123"
+			description=""
+			link="http://shareaza.sf.net/"
+			version="2.41"
+			type="Skin"
+			language="en"
+			/>
+
+
+<!-- FONTS -->
+<fonts>
+ 	 <import path="HOOG0553.ttf"/>
+  	 <font name="System.Plain"  face="Arial" size="10" weight="bold"/>
+  	 <font name="System.Bold"   face="Arial" size="10" weight="bold"/>
+   	 <font name="Panel.Caption" face="Arial" size="10" weight="bold"/>
+</fonts>
+
+
+<!-- GLOBAL COLOUR CHANGES -->
+<colourScheme>
+		<colour name="System.Base.Midtone"          value="D3D3D3"/>
+		<colour name="System.Back.Selected"         value="E3E3E3"/>
+		<colour name="System.Back.Checked.Selected" value="B9B9B9"/>
+		<colour name="System.Margin"                value="808080"/>
+		<colour name="System.Shadow"                value="D6D4D7"/>
+		<colour name="System.Disabled"              value="808080"/>
+		<colour name="System.Border"                value="808080"/>
+		<colour name="System.Text"                  value="000000"/>
+		<colour name="Dialog.Back"                  value="DBDBDB"/>
+		<colour name="ToolTip.Back"                 value="DBDBDB"/>
+		<colour name="ToolTip.Text"                 value="000000"/>
+		<colour name="TaskPanel.Back"               value="565656"/>
+		<colour name="TaskBox.Caption.Back"         value="151515"/>
+		<colour name="TaskBox.Caption.Text"         value="FFFFFF"/>
+		<colour name="TaskBox.Primary.Text"         value="FFFFFF"/>
+		<colour name="TaskBox.Caption.Hover"        value="2AA6FF"/>
+		<colour name="TaskBox.Client"               value="FEFEFE"/>
+        	<colour name="Banner.back"		        value="363636"/>
+</colourScheme>
+
+
+<!-- COMMAND BAR WATERMARKS -->
+<watermarks>
+		<watermark target="CCoolMenu" path="DropDownMenu.bmp"/>
+		<watermark target="CCoolMenuBar" path="Toolbar.bmp"/>
+		<watermark target="CWndTabBar" path="Toolbar3.bmp"/>
+		<watermark target="CMainWnd.Toolbar" path="Toolbar2.bmp"/>
+		<watermark target="CMonitorBar" path="Toolbar2.bmp"/>
+		<watermark target="CSearchWnd.Panel.Toolbar" path="SearchToolbar.bmp"/>
+		<watermark target="CSearchPanel.Footer" path="SearchPanel.bmp"/>
+		<watermark target="CHomePanel.Footer" path="SearchPanel.bmp"/>
+		<watermark target="CHomeBox" path="InfoBox.bmp"/>
+		<watermark target="CHomeDownloadsBox.Caption" path="InfoBox.bmp"/>
+		<watermark target="CHomeLibraryBox.Caption" path="InfoBox.bmp"/>
+		<watermark target="CHomeConnectionBox.Caption" path="InfoBox.bmp"/>
+		<watermark target="CHomeUploadsBox.Caption" path="InfoBox.bmp"/>
+		<watermark target="CHomeTorrentsBox.Caption" path="InfoBox.bmp"/>
+		<watermark target="CSearchInputBox.Caption" path="InfoBox.bmp"/>
+		<watermark target="CSearchResultsBox.Caption" path="InfoBox.bmp"/>
+		<watermark target="CSearchSchemaBox.Caption" path="InfoBox.bmp"/>
+		<watermark target="CSearchAdvancedBox.Caption" path="InfoBox.bmp"/>
+</watermarks>
+
+
+<windowSkins>
+	<!-- MAIN WINDOW -->
+	<windowSkin>
+	
+		<image path="MainWindow.bmp"/>
+		<target window="CMainWnd"/>
+						
+		<parts>
+			<part name="TopLeft"        rect="26,3,128,29"/>
+			<part name="TopLeftIA"        rect="26,35,128,29"/>
+			<part name="Top"            rect="159,3,7,29"/>
+			<part name="TopIA"            rect="159,35,7,29"/>
+			<part name="TopRight"       rect="170,3,104,29"/>
+			<part name="TopRightIA"       rect="170,35,104,29"/>
+			<part name="LeftTop"          rect="4,45,7,22"/>
+			<part name="Left"           rect="4,69,7,201" mode="stretch"/>
+			<part name="RightTop"          rect="14,45,7,22"/>
+			<part name="Right"          rect="14,69,7,201" mode="stretch"/>
+			<part name="Bottom"         rect="24,271,6,7"/>
+			<part name="BottomLeft"       rect="4,271,19,7"/>
+			<part name="BottomRight"     rect="31,271,19,7"/>
+			
+
+			<part name="MinimiseHover"  rect="238,87,26,21"/>
+			<part name="MinimiseDown"   rect="238,108,26,21"/>
+			<part name="MaximiseHover"  rect="264,87,26,21"/>
+			<part name="MaximiseDown"   rect="264,108,26,21"/>
+			<part name="CloseHover"     rect="289,87,26,21"/>
+			<part name="CloseDown"      rect="289,108,26,21"/>
+		</parts>
+		
+		<anchors>
+			<anchor name="Close"        rect="-36,4,26,21"/>
+			<anchor name="Maximise"     rect="-61,4,26,21"/>
+			<anchor name="Minimise"     rect="-87,4,26,21"/>
+		</anchors>
+			
+		<maximiseCrop rect="0,0,0,0"/>
+
+		<region>
+			<shape type="rectangle" rect="0,0,-1,-1"/>
+			<shape type="rectangle" rect="0,-1,2,-3" size="13,100" combine="diff"/>
+			<shape type="rectangle" rect="0,-1,1,-4" size="13,100" combine="diff"/>
+			<shape type="rectangle" rect="0,-1,3,-2" size="13,100" combine="diff"/>
+			<shape type="rectangle" rect="-1,-1,-3,-4" size="13,100" combine="diff"/>
+			<shape type="rectangle" rect="-1,-1,-2,-5" size="13,100" combine="diff"/>
+			<shape type="rectangle" rect="-1,-1,-4,-3" size="13,100" combine="diff"/>
+			<shape type="rectangle" rect="128,0,-106,3" size="13,100" combine="diff"/>
+			<shape type="rectangle" rect="127,3,-105,4" size="13,100" combine="diff"/>
+		</region>
+
+	</windowSkin>
+
+
+	<!-- DOWNLOAD MONITOR WINDOW -->
+	<windowSkin>
+	
+		<image path="MainWindow.bmp"/>
+		<target window="CDownloadMonitorDlg"/>
+						
+		<parts>
+			<part name="TopLeft"        rect="26,131,237,29"/>
+			<part name="TopLeftIA"        rect="26,163,237,29"/>
+			<part name="Top"            rect="268,131,13,29"/>
+			<part name="TopRight"       rect="185,3,89,29"/>
+			<part name="TopRightIA"       rect="185,35,89,29"/>
+			<part name="LeftTop"          rect="4,45,7,22"/>
+			<part name="Left"           rect="4,69,7,201" mode="stretch"/>
+			<part name="RightTop"          rect="14,45,7,22"/>
+			<part name="Right"          rect="14,69,7,201" mode="stretch"/>
+			<part name="Bottom"         rect="24,271,6,7"/>
+			<part name="BottomLeft"       rect="4,271,19,7"/>
+			<part name="BottomRight"     rect="31,271,19,7"/>
+			
+			
+			<part name="MinimiseHover"  rect="238,87,26,21"/>
+			<part name="MinimiseDown"   rect="238,108,26,21"/>
+			<part name="MaximiseHover"  rect="264,87,26,21"/>
+			<part name="MaximiseDown"   rect="264,108,26,21"/>
+			<part name="CloseHover"     rect="289,87,26,21"/>
+			<part name="CloseDown"      rect="289,108,26,21"/>
+		</parts>
+		
+		<anchors>
+			<anchor name="Close"        rect="-36,4,26,21"/>
+			<anchor name="Maximise"     rect="-61,4,26,21"/>
+			<anchor name="Minimise"     rect="-87,4,26,21"/>
+		</anchors>
+			
+		<caption align="center"  rect="21,5,208,20" colour="FFFFFF" outlinecolour="152743" fontSize="8" fontFace="Hooge 05_53" inactiveColour="C7E5FF"/>		
+
+		<region>
+			<shape type="rectangle" rect="0,0,-1,-1"/>
+			<shape type="rectangle" rect="0,-1,2,-3" size="13,100" combine="diff"/>
+			<shape type="rectangle" rect="0,-1,1,-4" size="13,100" combine="diff"/>
+			<shape type="rectangle" rect="0,-1,3,-2" size="13,100" combine="diff"/>
+			<shape type="rectangle" rect="-1,-1,-3,-4" size="13,100" combine="diff"/>
+			<shape type="rectangle" rect="-1,-1,-2,-5" size="13,100" combine="diff"/>
+			<shape type="rectangle" rect="-1,-1,-4,-3" size="13,100" combine="diff"/>
+		</region>
+
+	</windowSkin>
+
+
+	<!-- SETTINGS & DIALOGS (pop-up) WINDOWS -->
+	<windowSkin>
+	
+		<image path="MainWindow.bmp"/>
+		<target window="CSettingsSheet"/>
+		<target window="CDialog"/>
+
+		<parts>
+			<part name="TopLeft"        rect="26,67,206,29"/>
+			<part name="TopLeftIA"        rect="26,99,206,29"/>
+			<part name="Top"            rect="268,131,13,29"/>
+			<part name="TopRight"       rect="174,195,89,29"/>
+			<part name="TopRightIA"       rect="174,224,89,29"/>
+			<part name="LeftTop"          rect="4,45,7,22"/>
+			<part name="Left"           rect="4,69,7,201" mode="stretch"/>
+			<part name="RightTop"          rect="14,45,7,22"/>
+			<part name="Right"          rect="14,69,7,201" mode="stretch"/>
+			<part name="Bottom"         rect="24,271,6,7"/>
+			<part name="BottomLeft"       rect="4,271,19,7"/>
+			<part name="BottomRight"     rect="31,271,19,7"/>
+
+
+			<part name="CloseHover"     rect="289,87,26,21"/>
+			<part name="CloseDown"      rect="289,108,26,21"/>
+		</parts>
+		
+		<anchors>
+			<anchor name="Close"        rect="-36,4,26,21"/>
+		</anchors>
+
+		<caption align="center" rect="21,5,178,20" colour="FFFFFF" outlinecolour="152743" fontSize="8" fontFace="Hooge 05_53" inactiveColour="C7E5FF"/>	
+
+		<region>
+			<shape type="rectangle" rect="0,0,-1,-1"/>
+			<shape type="rectangle" rect="0,-1,2,-3" size="13,100" combine="diff"/>
+			<shape type="rectangle" rect="0,-1,1,-4" size="13,100" combine="diff"/>
+			<shape type="rectangle" rect="0,-1,3,-2" size="13,100" combine="diff"/>
+			<shape type="rectangle" rect="-1,-1,-3,-4" size="13,100" combine="diff"/>
+			<shape type="rectangle" rect="-1,-1,-2,-5" size="13,100" combine="diff"/>
+			<shape type="rectangle" rect="-1,-1,-4,-3" size="13,100" combine="diff"/>
+		</region>
+
+	</windowSkin>
+
+
+	<!-- CHILD WINDOW (pop-ups that stay within the main window) -->
+	<windowSkin>
+	
+		<image path="MainWindow.bmp"/>
+		<target window="CChildWnd"/>
+				
+		<parts>
+			<part name="TopLeft"        rect="26,67,206,29"/>
+			<part name="TopLeftIA"        rect="26,99,206,29"/>
+			<part name="Top"            rect="268,131,13,29"/>
+			<part name="TopRight"       rect="185,3,89,29"/>
+			<part name="TopRightIA"       rect="185,35,89,29"/>
+			<part name="LeftTop"          rect="4,45,7,22"/>
+			<part name="Left"           rect="4,69,7,201" mode="stretch"/>
+			<part name="RightTop"          rect="14,45,7,22"/>
+			<part name="Right"          rect="14,69,7,201" mode="stretch"/>
+			<part name="Bottom"         rect="24,271,6,7"/>
+			<part name="BottomLeft"       rect="4,271,19,7"/>
+			<part name="BottomRight"     rect="31,271,19,7"/>
+			
+			
+			<part name="MinimiseHover"  rect="238,87,26,21"/>
+			<part name="MinimiseDown"   rect="238,108,26,21"/>
+			<part name="MaximiseHover"  rect="264,87,26,21"/>
+			<part name="MaximiseDown"   rect="264,108,26,21"/>
+			<part name="CloseHover"     rect="289,87,26,21"/>
+			<part name="CloseDown"      rect="289,108,26,21"/>
+		</parts>
+		
+		<anchors>
+			<anchor name="Close"        rect="-36,4,26,21"/>
+			<anchor name="Maximise"     rect="-61,4,26,21"/>
+			<anchor name="Minimise"     rect="-87,4,26,21"/>
+		</anchors>
+			
+		<caption align="center" rect="21,5,178,20" colour="FFFFFF" outlinecolour="152743" fontSize="8" fontFace="Hooge 05_53" inactiveColour="C7E5FF"/>		
+
+		<region>
+			<shape type="rectangle" rect="0,0,-1,-1"/>
+			<shape type="rectangle" rect="0,-1,2,-3" size="13,100" combine="diff"/>
+			<shape type="rectangle" rect="0,-1,1,-4" size="13,100" combine="diff"/>
+			<shape type="rectangle" rect="0,-1,3,-2" size="13,100" combine="diff"/>
+			<shape type="rectangle" rect="-1,-1,-3,-4" size="13,100" combine="diff"/>
+			<shape type="rectangle" rect="-1,-1,-2,-5" size="13,100" combine="diff"/>
+			<shape type="rectangle" rect="-1,-1,-4,-3" size="13,100" combine="diff"/>
+		</region>
+
+	</windowSkin>
+
+
+	<!-- WINDOW PANELS -->
+	<windowSkin>
+
+		<image path="WindowPanel.bmp"/>
+		<target window="CHomeWnd.Panel"/>
+		<target window="CLibraryWnd.Panel"/>
+		<target window="CDownloadsWnd.Panel"/>
+		<target window="CNeighboursWnd.Panel"/>
+
+		<parts>
+			<part name="TopLeft" rect="1,23,129,21"/>
+			<part name="Top" rect="130,23,10,21"/>
+		</parts>
+
+		<caption rect="14,0,208,20" fontFace="hooge 05_53" fontSize="8" colour="FFFFFF" inactivecolour="FFFFFF" outlinecolour="000000"/>
+
+
+	</windowSkin>
+
+
+	<windowSkin>
+
+		<image path="WindowPanel.bmp"/>
+		<target window="CUploadsWnd.Panel"/>
+		<target window="CSystemWnd.Panel"/>
+
+		<parts>
+			<part name="TopLeft" rect="1,22,129,22"/>
+			<part name="Top" rect="130,22,10,22"/>
+		</parts>
+
+		<caption rect="14,1,208,20" fontFace="hooge 05_53" fontSize="8" colour="FFFFFF" inactivecolour="FFFFFF" outlinecolour="000000"/>
+
+	</windowSkin>
+
+
+	<windowSkin>
+
+		<image path="WindowPanel.bmp"/>
+		<target window="CChildWnd.Panel"/>
+
+		<parts>
+			<part name="TopLeft" rect="1,23,129,21"/>
+			<part name="Top" rect="130,23,10,21"/>
+			<part name="Close" rect="11,51,35,7"/>
+			<part name="CloseHover" rect="75,51,35,7"/>
+			<part name="CloseDown" rect="139,51,35,7"/>
+		</parts>
+
+		<anchors>
+			<anchor name="Close" rect="-49,7,61,21"/>
+		</anchors>
+
+		<caption rect="14,0,208,20" fontFace="hooge 05_53" fontSize="8" colour="FFFFFF" inactivecolour="FFFFFF" outlinecolour="000000"/>
+
+	</windowSkin>
+</windowSkins>
+
+
+
+
+<!-- BELOW ARE TARGETS TO CHANGE THE LOOK AND LAYOUT OF BUTTONS  -->
+
+
+
+<!-- ICONS (only edit/remove to skin the icons) -->
+<commandImages>
+	<bitmap path="Icons_TabBar.bmp">
+		<image id="ID_TAB_HOME" id1="ID_LIBRARY_VIEW"/>
+		<image id="ID_TAB_LIBRARY"/>
+		<image id="ID_TAB_NETWORK"/>
+		<image id="ID_TAB_TRANSFERS"/>
+		<image id="ID_TAB_MEDIA"/>
+	</bitmap>
+	<bitmap path="Icons_Window.bmp">
+		<image id="WINDOW_HOME"/>
+		<image id="WINDOW_SYSTEM"/>
+		<image id="WINDOW_NEIGHBOURS" id1="ID_NETWORK_CONNECT_TO" id2="ID_VIEW_NEIGHBOURS"/>
+		<image id="WINDOW_DOWNLOADS"/>
+		<image id="WINDOW_LIBRARY"/>
+		<image id="WINDOW_UPLOADS"/>
+		<image id="WINDOW_CHAT" id1="ID_HELP_CHAT"/>
+		<image id="WINDOW_SECURITY" id1="ID_SECURITY_ADD" id2="ID_DOWNLOADS_FILE_UNSAFE"/>
+		<image id="WINDOW_BROWSEHOST" id1="ID_BROWSE_FILES"/>
+		<image id="WINDOW_MEDIA"/>
+		<image id="ID_WINDOW_CASCADE"/>
+		<image id="ID_WINDOW_TILE_HORZ"/>
+		<image id="ID_WINDOW_TILE_VERT"/>
+	</bitmap>
+	<bitmap path="Icons_1.bmp">
+		<image id="ID_VIEW_DOWNLOADS" id1="ID_SECURITY_IMPORT"/>
+		<image id="ID_VIEW_UPLOADS" id1="ID_SECURITY_EXPORT" id2="ID_LIBRARY_UNLINK" id3="ID_LIBRARY_PARENT"/>
+		<image id="ID_VIEW_LIBRARY"/>
+		<image id="ID_VIEW_SECURITY"/>
+		<image id="ID_TOOLS_DOWNLOAD" id1="ID_HELP_WEB_1" id2="ID_DISCOVERY_BROWSE" id3="ID_DOWNLOADS_URL" id4="ID_HELP_WEB_2"/>
+		<image id="ID_TOOLS_SETTINGS" id1="ID_VIEW_SYSTEM"/>
+		<image id="ID_TOOLS_LANGUAGE" id1="ID_LIBRARY_RENAME"/>
+		<image id="ID_TOOLS_WIZARD"/> 
+		<image id="ID_TOOLS_SKIN"/> 
+		<image id="ID_TOOLS_PROFILE"/>
+	</bitmap>
+	<bitmap path="Icons_2.bmp">
+		<image id="ID_SEARCH_CHAT" id1="ID_TRANSFERS_CHAT" id2="ID_UPLOADS_CHAT" id3="ID_NEIGHBOURS_CHAT"/>
+		<image id="ID_BROWSE_LAUNCH" id1="ID_LIBRARY_FOLDERS"/>
+		<image id="ID_DOWNLOADS_SOURCES" id1="ID_LIBRARY_URL" id2="ID_HELP_WEB_2" id3="ID_HELP_FORUMS" id4="ID_HELP_FAQ"/>
+		<image id="ID_LIBRARY_PROPERTIES" id1="ID_DOWNLOADS_SETTINGS" id2="ID_UPLOADS_SETTINGS" id3="ID_NEIGHBOURS_SETTINGS"/>
+		<image id="ID_VIEW_MEDIA"/>
+	</bitmap>
+	<bitmap path="Icons_3.bmp">
+		<image id="ID_NETWORK_BROWSE_TO" id1="ID_BROWSE_SHARED"/>
+		<image id="ID_SEARCH_COPY" id1="ID_NEIGHBOURS_COPY" id2="ID_DOWNLOADS_SOURCES"/>
+		<image id="ID_MEDIA_CLOSE"/>
+		<image id="ID_MEDIA_PAUSE"/>
+		<image id="ID_MEDIA_PLAY" id1="ID_MEDIA_SELECT"/>
+		<image id="ID_MEDIA_STOP"/>
+		<image id="ID_MEDIA_PREVIOUS"/>
+		<image id="ID_MEDIA_NEXT"/>
+		<image id="ID_MEDIA_SETTINGS"/>
+		<image id="ID_MEDIA_FULLSCREEN"/>
+		<image id="ID_MEDIA_PLAYLIST"/>
+		<image id="ID_MEDIA_OPEN"/>
+		<image id="ID_MEDIA_RANDOM"/>	
+		<image id="ID_MEDIA_REPEAT"/>
+		<image id="ID_DOWNLOADS_MONITOR" id1="ID_DOWNLOADS_TORRENT_INFO"  id2="ID_TRAFFIC_WINDOW"/>
+		<image id="ID_MEDIA_SAVE"/>
+		<image id="ID_MEDIA_ZOOM"/>
+		<image id="ID_DOWNLOADS_LAUNCH_COPY" id1="ID_DOWNLOADS_LAUNCH_COMPLETE"/>
+		<image id="ID_DOWNLOADS_LAUNCH" id1="ID_UPLOADS_LAUNCH" id2="ID_LIBRARY_LAUNCH" id3="ID_LIBRARY_LAUNCH_FILE"/>
+		<image id="ID_BROWSE_PROFILE"/>
+		<image id="ID_DOWNLOADS_ENQUEUE" id1="ID_LIBRARY_ENQUEUE" id2="ID_LIBRARY_FOLDER_ENQUEUE"/>
+		<image id="ID_LIBRARY_BITZI_WEB"/>
+		<image id="ID_LIBRARY_PROPERTIES" id1="ID_SECURITY_EDIT" id2="ID_DISCOVERY_EDIT"/>
+		<image id="ID_LIBRARY_MOVE"/>
+		<image id="ID_LIBRARY_COPY"/>
+		<image id="ID_SEARCH_FILTER"/>
+		<image id="ID_DOWNLOADS_CLEAR_COMPLETED" id1="ID_UPLOADS_CLEAR_COMPLETED"/>
+		<image id="ID_HELP_HOMEPAGE" id1="WINDOW_MAIN"/>
+		<image id="ID_LIBRARY_FOLDER_NEW" id1="ID_LIBRARY_ADD"/>
+		<image id="ID_LIBRARY_ALBUM_OPEN"/>
+		<image id="ID_LIBRARY_EXPLORE"/>
+		<image id="ID_MEDIA_REMOVE"/>
+		<image id="ID_MEDIA_ADD" id1="ID_MEDIA_ADD_FOLDER"/>
+		<image id="ID_MEDIA_CLEAR"/>
+		<image id="ID_HELP_WEB_3" id1="ID_DOWNLOADS_COPY"/>
+		<image id="ID_CHAT_BROWSE"/>
+		<image id="ID_CHAT_SEND_FILE"/>
+		<image id="ID_CHAT_PRIORITY"/>
+		<image id="ID_TRAY_OPEN"/>
+	</bitmap>
+</commandImages>
+</skin>

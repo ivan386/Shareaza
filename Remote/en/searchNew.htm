@@ -1,0 +1,19 @@
+﻿										<li class="active"><a class="noline" href="?id=0">New Search</a></li>
+								</ul>
+<div style="border: 1px #000 solid;padding: 5px;">
+	<p>To start a new search, type your search term in the box below and click <strong>Start search</strong>. If you want to restrict your search to a particular file type, select it from the list (recommended).</p>
+
+	<form method="get" action="newsearch">
+		<div style="text-align:right; width: 30em;">
+			<label>Search for:</label>
+				<input type="text" name="search" class="regularinput" /><br/>
+				<label>File type:</label>
+
+				<select name="schema" class="regularinput">
+					<option value="">Any File Type</option>
+					<%= schema_option_list %>
+				</select><br />
+
+				<input type="submit" value="Start Search" />
+		</div>
+	</form>

@@ -1,0 +1,27 @@
+// DocumentReader.idl : IDL source for DocumentReader
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (DocumentReader.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+import "Shareaza.idl";
+
+[
+	uuid(607C3F69-850D-4413-A81A-CF1C849BF387),
+	version(1.0),
+	helpstring("DocumentReader 1.0 Type Library")
+]
+library DocumentReaderLib
+{
+	importlib("stdole2.tlb");
+	[
+		uuid(E9F51B1E-DB0F-4EEE-9B36-46151994C715),
+	]
+	coclass DocReader
+	{
+		[default] interface ILibraryBuilderPlugin;
+		interface IImageServicePlugin;
+	};
+};

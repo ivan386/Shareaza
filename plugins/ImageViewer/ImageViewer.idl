@@ -1,0 +1,35 @@
+//
+// ImageViewer.idl
+//
+// This software is released into the public domain. You are free to
+// redistribute and modify without any restrictions.
+// This file is part of SHAREAZA (shareaza.sourceforge.net), original author Michael Stokes. 
+//
+
+import "oaidl.idl";
+import "ocidl.idl";
+import "Shareaza.idl";
+
+[
+	uuid(2696CE9F-423F-4901-A109-0C85E6430266),
+	version(1.0),
+	helpstring("Shareaza Image Viewer Plugin Type Library")
+]
+library ImageViewerLib
+{
+	importlib("stdole2.tlb");
+		
+	[
+		uuid(2EE9D739-7726-41cf-8F18-4B1B8763BC63),
+		helpstring("Image Viewer Plugin")
+	]
+	coclass ImageViewerPlugin
+	{
+		[default] interface IGeneralPlugin;
+		interface IExecutePlugin;
+		interface ICommandPlugin;
+	};
+
+	interface IImageServicePlugin;
+};
+

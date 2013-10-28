@@ -1,0 +1,33 @@
+﻿
+<!-- downloadsTop-->
+</ul>
+<div  id="content">
+	<div id="functions"><a href="?refresh=<%= random %>">Uppdatera sidan</a></div>
+		<form method="get" action="">
+			<div id="filters">
+				<input type="hidden" name="filter_set" value="1" />
+				<b>Filter:</b>
+				<input type="checkbox" id="filter_active" name="filter_active" value="1" <%= filter_active %> />
+				<label for="filter_active">Aktiv</label>
+				<input type="checkbox" id="filter_queued" name="filter_queued" value="1" <%= filter_queued %> />
+				<label for="filter_queued">Kölagd</label>
+				<input type="checkbox" id="filter_sources" name="filter_sources" value="1" <%= filter_sources %> />
+				<label for="filter_sources">Inga källor</label>
+				<input type="checkbox" id="filter_paused" name="filter_paused" value="1" <%= filter_paused %> />
+				<label for="filter_paused">Pausad</label>
+				<input type="checkbox" id="filter_show_all" name="filter_show_all" value="1" <%= filter_show_all %> />
+				<label for="filter_show_all">Visa alla källor</label>
+				<input type="submit" value=" Välj " /><br/>
+			</div>
+		</form><br/>
+<table>
+	<tr>
+				<th>Filnamn</th>
+				<th>Storlek</th>
+				<th>Förlopp</th>
+				<th>Hastighet</th>
+				<th>Källor</th>
+				<th>Status</th>
+				<th>Alternativ</th>
+			</tr>
+<!-- /downloadsTop-->

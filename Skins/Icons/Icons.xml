@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
+<manifest	name="Icons"
+			author="Ryo-oh-ki"
+			description="Icons!"
+			link="http://shareaza.sf.net/"
+			email="ryo-oh-ki@narod.ru"
+			version="0.1"
+			type="Skin"
+			language="en"
+			/>
+<commandImages>
+  <!--
+  Load icon from resource: res="icon ID"
+   or
+  Load icon from file: path="icon full file path[,icon index|,-icon ID]"
+  
+  Icon ID: id="icon ID"
+  Icon sizes: types="[16][,32][,48]", default: types="16"
+  Enable RTL support (mirroring icon when RTL-layout active): rtl="0|1", default: rtl="0"
+  -->
+
+  <!-- Example 1: Loading collection icon (244) from resources as download icon (136) -->
+	<icon path="..\..\Shareaza.exe,-244" id="136" types="16,32,48" rtl="0"/>
+
+  <!-- Example 2: Loading collection icon (244) from file -->
+  <icon path="CollectionVista.ico" id="244" types="16,32,48" rtl="0"/>
+
+</commandImages>
+</skin>

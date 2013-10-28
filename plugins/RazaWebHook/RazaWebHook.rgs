@@ -1,0 +1,15 @@
+HKCR
+{
+	NoRemove AppID
+	{
+		'%APPID%' = s 'RazaWebHook'
+		'RazaWebHook32.dll'
+		{
+			val AppID = s '%APPID%'
+		}
+		'RazaWebHook64.dll'
+		{
+			val AppID = s '%APPID%'
+		}
+	}
+}

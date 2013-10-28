@@ -1,0 +1,33 @@
+﻿
+<!-- downloadsTop-->
+</ul>
+<div  id="content">
+	<div id="functions"><a href="?refresh=<%= random %>">Ricarica pagina</a></div>
+		<form method="get" action="">
+			<div id="filters">
+				<input type="hidden" name="filter_set" value="1" />
+				<b>Filtro:</b>
+				<input type="checkbox" id="filter_active" name="filter_active" value="1" <%= filter_active %> />
+				<label for="filter_active">Attivo</label>
+				<input type="checkbox" id="filter_queued" name="filter_queued" value="1" <%= filter_queued %> />
+				<label for="filter_queued">Accodato</label>
+				<input type="checkbox" id="filter_sources" name="filter_sources" value="1" <%= filter_sources %> />
+				<label for="filter_sources">Nessuna fonte</label>
+				<input type="checkbox" id="filter_paused" name="filter_paused" value="1" <%= filter_paused %> />
+				<label for="filter_paused">In pausa</label>
+				<input type="checkbox" id="filter_show_all" name="filter_show_all" value="1" <%= filter_show_all %> />
+				<label for="filter_show_all">Mostra tutte le fonti</label>
+				<input type="submit" value=" Imposta " /><br/>
+			</div>
+		</form><br/>
+<table>
+	<tr>
+				<th>Nome del file</th>
+				<th>Dimensione</th>
+				<th>Progresso</th>
+				<th>Velocità</th>
+				<th>Fonti</th>
+				<th>Stato</th>
+				<th>Opzioni</th>
+			</tr>
+<!-- /downloadsTop-->

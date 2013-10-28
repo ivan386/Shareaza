@@ -1,0 +1,252 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
+Shareaza Catalan Schemas File translated by Daniel Olivares Giménez; Equip de traduccions de FeshoCAT
+Shareaza Chinese Simplified Schemas File translated by Sanley; John
+Shareaza Chinese Traditional Schemas File translated by James Bond
+Shareaza Czech Schemas File translated by Odin
+Shareaza German Schemas File translated by Spooky; jlh; OldDeath
+Shareaza Estonian Schemas File translated by Janza
+Shareaza Spanish Schemas File translated by Unknown
+Shareaza Spanish (Mexico) Schemas File translated by Help
+Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
+Shareaza Greek Schemas File translated by erimitis
+Shareaza Hebrew Schemas File translated by _peer_ (H.L)
+Shareaza Croatian Schemas File translated by Biza
+Shareaza Hungarian Schemas File translated by Yuri
+Shareaza Italian Schemas File translated by ale5000
+Shareaza Japanese Schemas File translated by DukeDog; CyberBob
+Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
+Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); Jonne; Neglacio
+Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
+Shareaza Portuguese (Brasil) Schemas File translated by Lukas Taves (LightHeaven); Felipe
+Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
+Shareaza Slovenian Schemas File translated by Martin McDowell
+Shareaza Albanian Schemas File translated by Besmir Godole
+Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Swedish Schemas File translated by Marcus Ehrenlans; Printz; DanielB
+Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
+-->
+
+<schemaDescriptor location="http://www.shareaza.com/schemas/musicGenre.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
+
+       <object type="folder" availability="default"/>
+       <titles>
+               <title language="en">Music Genre</title>
+               <title language="af">Musiek Genre</title>
+               <title language="ca">Gènere musical</title>
+               <title language="chs">流派</title>
+               <title language="cht">音樂-類型</title>
+               <title language="cz">Žánr hudby</title>
+               <title language="de">Musikgenre</title>
+               <title language="ee">Muusika Stiil</title>
+               <title language="es">Género de Música</title>
+               <title language="es-mx">Género de Música</title>
+               <title language="fr">Genre musical</title>
+               <title language="gr">Μουσικό Είδος</title>
+               <title language="heb">&#160;מוזיקה ז'אנר</title>
+               <title language="hr">Muzika Žanr</title>
+               <title language="hu">Zene műfaj</title>
+               <title language="it">Genere musicale</title>
+               <title language="ja">&#160;音楽 ジャンル</title>
+               <title language="lt">Muzikos stilius</title>
+               <title language="nl">Muziek Genre</title>
+               <title language="no">Musikksjanger</title>
+               <title language="pt-br">Gênero Musical</title>
+               <title language="ru">&#160;Стиль музыки</title>
+               <title language="sl-SI">Glasbeni žanr</title>
+               <title language="sq">Gjinia e Muzikës</title>
+               <title language="sr">Muzika Žanr</title>
+               <title language="sv">Musikgenre</title>
+               <title language="tr">Müzik Tarzı</title>
+       </titles>
+       <images>
+               <icon path="musicFolder.ico"/>
+       </images>
+       <members>
+               <member name="name">
+                       <display defaultColumn="true"/>
+                       <title language="en">Title</title>
+                       <title language="af">Titel</title>
+                       <title language="ca">Títol</title>
+                       <title language="chs">标题</title>
+                       <title language="cht">標題</title>
+                       <title language="cz">Název</title>
+                       <title language="de">Titel</title>
+                       <title language="ee">Pealkiri</title>
+                       <title language="es">Título</title>
+                       <title language="es-mx">Título</title>
+                       <title language="fr">Titre</title>
+                       <title language="gr">Τίτλος</title>
+                       <title language="heb">כותרת</title>
+                       <title language="hr">Naslov</title>
+                       <title language="hu">Cím</title>
+                       <title language="it">Titolo</title>
+                       <title language="ja">タイトル</title>
+                       <title language="lt">Pavadinimas</title>
+                       <title language="nl">Titel</title>
+                       <title language="no">Tittel</title>
+                       <title language="pt-br">Título</title>
+                       <title language="ru">Название</title>
+                       <title language="sl-SI">Naslov</title>
+                       <title language="sq">Titulli</title>
+                       <title language="sr">Naslov</title>
+                       <title language="sv">Titel</title>
+                       <title language="tr">Başlık</title>
+               </member>
+               <member name="description" search="none">
+                       <title language="en">Description</title>
+                       <title language="af">Beskrywing</title>
+                       <title language="ca">Descripció</title>
+                       <title language="chs">描述</title>
+                       <title language="cht">描述</title>
+                       <title language="cz">Popis</title>
+                       <title language="de">Beschreibung</title>
+                       <title language="ee">Kirjeldus</title>
+                       <title language="es">Descripción</title>
+                       <title language="es-mx">Descripción</title>
+                       <title language="fr">Description</title>
+                       <title language="gr">Περιγραφή</title>
+                       <title language="heb">תיאור</title>
+                       <title language="hr">Opis</title>
+                       <title language="hu">Leírás</title>
+                       <title language="it">Descrizione</title>
+                       <title language="ja">詳細</title>
+                       <title language="lt">Aprašas</title>
+                       <title language="nl">Omschrijving</title>
+                       <title language="no">Beskrivelse</title>
+                       <title language="pt-br">Descrição</title>
+                       <title language="ru">Описание</title>
+                       <title language="sl-SI">Opis</title>
+                       <title language="sq">Përshkrimi</title>
+                       <title language="sr">Opis</title>
+                       <title language="sv">Beskrivning</title>
+                       <title language="tr">Tanımlama</title>
+               </member>
+               <member name="collector" search="indexed">
+                       <title language="en">Collector</title>
+                       <title language="af">Versamelaar</title>
+                       <title language="ca">Col·lector</title>
+                       <title language="chs">收藏者</title>
+                       <title language="cht">美術品收藏者</title>
+                       <title language="cz">Sběratel</title>
+                       <title language="de">Sammler</title>
+                       <title language="ee">Koguja</title>
+                       <title language="es">Colector</title>
+                       <title language="es-mx">Colector</title>
+                       <title language="fr">Collecteur</title>
+                       <title language="gr">Συλλέκτης</title>
+                       <title language="heb">שם יוצר האוסף</title>
+                       <title language="hr">Sakupio</title>
+                       <title language="hu">Gyűjtő</title>
+                       <title language="it">Raccoglitore</title>
+                       <title language="ja">コレクター</title>
+                       <title language="lt">Kolekcionierius</title>
+                       <title language="nl">Samensteller</title>
+                       <title language="no">Samler</title>
+                       <title language="pt-br">Colecionador</title>
+                       <title language="ru">Коллекционер</title>
+                       <title language="sl-SI">Kolektor</title>
+                       <title language="sq">Koleksionuesi</title>
+                       <title language="sr">Sakupio</title>
+                       <title language="sv">Samlare</title>
+                       <title language="tr">Koleksiyoncu</title>
+               </member>
+               <member name="comments">
+                       <title language="en">Comments</title>
+                       <title language="af">Kommentaar</title>
+                       <title language="ca">Comentaris</title>
+                       <title language="chs">注释</title>
+                       <title language="cht">注釋</title>
+                       <title language="cz">Komentáře</title>
+                       <title language="de">Kommentar</title>
+                       <title language="ee">Arvamused</title>
+                       <title language="es">Comentarios</title>
+                       <title language="es-mx">Comentarios</title>
+                       <title language="fr">Commentaires</title>
+                       <title language="gr">Σχόλια</title>
+                       <title language="heb">הערות</title>
+                       <title language="hr">Komentari</title>
+                       <title language="hu">Megjegyzés</title>
+                       <title language="it">Commenti</title>
+                       <title language="ja">コメント</title>
+                       <title language="lt">Komentarai</title>
+                       <title language="nl">Opmerkingen</title>
+                       <title language="no">Kommentar</title>
+                       <title language="pt-br">Comentários</title>
+                       <title language="ru">Коментарии</title>
+                       <title language="sl-SI">Komentarji</title>
+                       <title language="sq">Komente</title>
+                       <title language="sr">Komentari</title>
+                       <title language="sv">Kommentarer</title>
+                       <title language="tr">Yorumlar</title>
+               </member>
+       </members>
+       <extends>
+               <schema location="http://www.shareaza.com/schemas/folder.xsd"/>
+       </extends>
+       <contains>
+               <object type="file" location="http://www.limewire.com/schemas/audio.xsd">
+                       <identity local="name" remote="genre" compare="exact"/>
+               </object>
+       </contains>
+       <headerContent version="1.0">
+               <title language="en">{name} Music</title>
+               <title language="af">{name} Musiek</title>
+               <title language="ca">{name} Música</title>
+               <title language="chs">{name} 音乐</title>
+               <title language="cht">{name} 音樂</title>
+               <title language="cz">{name} Hudba</title>
+               <title language="de">{name} Musik</title>
+               <title language="ee">{name} Muusika</title>
+               <title language="es">{name} Música</title>
+               <title language="es-mx">{name} Música</title>
+               <title language="fr">Musique {name}</title>
+               <title language="gr">{name} Μουσική</title>
+               <title language="heb">שירים של {name}</title>
+               <title language="hr">{name} - Muzika</title>
+               <title language="hu">{name} Zene</title>
+               <title language="it">Musica {name}</title>
+               <title language="ja">{name} 音楽</title>
+               <title language="lt">{name} muzika</title>
+               <title language="nl">{name} Muziek</title>
+               <title language="no">{name} Musikk</title>
+               <title language="pt-br">{name} - Música</title>
+               <title language="ru">Музыка {name}</title>
+               <title language="sl-SI">{name} Glasba</title>
+               <title language="sq">{name} Muzikë</title>
+               <title language="sr">{name} - Muzika</title>
+               <title language="sv">{name} musik</title>
+               <title language="tr">{name} Müzik</title>
+               <subtitle language="en">This folder contains all of your music which falls into the {name} genre.</subtitle>
+               <subtitle language="af">Hierdie gids bevat al jou musiek wat in die {name} genre val.</subtitle>
+               <subtitle language="ca">Aquesta carpeta conté musica que és del gènere {name}</subtitle>
+               <subtitle language="chs">此文件夹中包含了流派为 {name} 的音乐。</subtitle>
+               <subtitle language="cht">這個資料夾包含了您所有以 {name} 流派的音樂.</subtitle>
+               <subtitle language="cz">Tato složka obsahuje všechnu hudbu z žánru {name}.</subtitle>
+               <subtitle language="de">Dieser Ordner enthält alle Audiodateien des Genres {name}.</subtitle>
+               <subtitle language="ee">See kaust sisaldab muusikat, mis on {name} stiilist</subtitle>
+               <subtitle language="es">Esta carpeta contiene musica que es del Género {name}</subtitle>
+               <subtitle language="es-mx">Esta carpeta contiene musica que es del Género {name}</subtitle>
+               <subtitle language="fr">Ce dossier contient toutes les musiques {name} de votre bibliothèque.</subtitle>
+               <subtitle language="gr">Αυτός ο φάκελος περιέχει μουσική είδους {name}.</subtitle>
+               <subtitle language="heb">ספרייה זו מכילה רשימה של המוזיקה שלך שמתאימה לז'אנר {name}</subtitle>
+               <subtitle language="hr">Ova mapa sadrži sve vaše pjesme koje spadaju u {name} žanr.</subtitle>
+               <subtitle language="hu">Ez a mappa a(z) {name} műfaj zenéit tartalmazza.</subtitle>
+               <subtitle language="it">Questa cartella contiene tutta la musica che cade nel genere {name}.</subtitle>
+               <subtitle language="ja">このフォルダーにはあなたの所有する "{name}" に属する音楽が収録されています</subtitle>
+               <subtitle language="lt">Šiame kataloge yra visa Jūsų muzika, priklausanti „{name}“ žanrui/stiliui.</subtitle>
+               <subtitle language="nl">Deze map bevat al je muziek die valt onder het genre {name}.</subtitle>
+               <subtitle language="no">Denne mappen inneholder all musikk som faller inn i {name}-sjangeren.</subtitle>
+               <subtitle language="pt-br">Esta pasta contém todas as suas músicas que caem no gênero: {name}.</subtitle>
+               <subtitle language="ru">Эта папка отображает всю музыку стиля {name}.</subtitle>
+               <subtitle language="sl-SI">Ta mapa vsebuje vso vašo glasbo, ki sodi v žanr {name}.</subtitle>
+               <subtitle language="sq">Kjo dosje përmban gjithë muzikën e gjinisë {name}.</subtitle>
+               <subtitle language="sr">Ova fascikla sadrži sve vaše pesme koje spadaju u {name} žanr.</subtitle>
+               <subtitle language="sv">Denna mapp innehåller all musik som tillhör genren {name}.</subtitle>
+               <subtitle language="tr">Bu klasör {name} tarzının tüm müziklerini içerir.</subtitle>
+       </headerContent>
+       <viewContent version="1.0" preferredView="CLibraryAlbumView"/>
+
+</schemaDescriptor>

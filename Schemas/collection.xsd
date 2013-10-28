@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<schema targetNamespace="http://www.shareaza.com/schemas/collection.xsd" version="1.0" xmlns="http://www.w3.org/2001/XMLSchema">
+
+	<element name="collections">
+		<complexType>
+			<element name="collection" type="collectionType" minOccurs="1" maxOccurs="unbounded"/>
+		</complexType>
+	</element>
+	<complexType name="collectionType">
+	
+		<attribute name="title" type="string"/>
+		<attribute name="version" type="string"/>
+		<attribute name="fileDescription" type="string"/>
+		<attribute name="releaseNotes" type="string"/>
+		<attribute name="fileVersion" type="string"/>
+		<attribute name="originalFileName" type="string"/>
+		<attribute name="company" type="string"/>
+		<attribute name="copyright" type="string"/>
+				
+		<attribute name="type">
+			<simpleType base="string">
+				<enumeration value="Book"/>
+			    <enumeration value="Development"/>
+			    <enumeration value="Document"/>
+				<enumeration value="Entertainment"/>
+				<enumeration value="Game"/>
+				<enumeration value="Image"/>
+				<enumeration value="Internet"/>
+				<enumeration value="Music"/>
+				<enumeration value="Operating System"/>
+				<enumeration value="Productivity"/>
+				<enumeration value="System Tool"/>
+				<enumeration value="Utility"/>
+				<enumeration value="Video"/>
+			</simpleType>
+		</attribute>
+		<attribute name="archive">
+			<simpleType base="string">
+				<enumeration value="ZIP"/>
+				<enumeration value="RAR"/>
+				<enumeration value="ACE"/>
+			</simpleType>
+		</attribute>
+		<attribute name="OS">
+			<simpleType base="string">
+				<enumeration value="Windows"/>
+				<enumeration value="Windows 95/98/Me"/>
+				<enumeration value="Windows NT/2000/XP"/>
+				<enumeration value="Windows CE"/>
+				<enumeration value="Windows Mobile"/>
+				<enumeration value="MacOS"/>
+				<enumeration value="Linux/FreeBSD"/>
+				<enumeration value="UNIX"/>
+				<enumeration value="Palm OS"/>
+				<enumeration value="Symbian OS"/>
+				<enumeration value="EPOC"/>
+				<enumeration value="OSE"/>
+			</simpleType>
+		</attribute>
+		<attribute name="language">
+			<simpleType base="string">
+				<enumeration value="Danish"/>
+				<enumeration value="English"/>
+				<enumeration value="French"/>
+				<enumeration value="German"/>
+				<enumeration value="Italian"/>
+				<enumeration value="Korean"/>
+				<enumeration value="Japanese"/>
+				<enumeration value="Mandarin"/>
+				<enumeration value="Russian"/>
+				<enumeration value="Spanish"/>
+			</simpleType>
+		</attribute>
+		<attribute name="keywords" type="string"/>
+		<attribute name="releaseDate" type="string"/>
+		<attribute name="distributer" type="string"/>
+		<attribute name="distributerLink" type="uriReference"/>
+		<attribute name="releasegroup" type="string"/>
+		<attribute name="releasegroupLink" type="uriReference"/>
+		<attribute name="link" type="uriReference"/>
+	</complexType>
+</schema>
+

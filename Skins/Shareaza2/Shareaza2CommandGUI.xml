@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
+
+<manifest	name="Shareaza 2.0 - Command GUI"
+			author="Michael Stokes"
+			description="Adds a more modern command GUI look to the Shareaza 2.0 skin."
+			link="http://shareaza.sf.net/"
+			email="contact@shareaza.com"
+			version="1.0"
+			type="skin"
+			language="en"
+			/>
+
+<colourScheme>
+	<colour name="System.Base.Window" value="FFFFFF"/>
+	<colour name="System.Base.Highlight" value="316AC5"/>
+	<colour name="System.Base.Text" value="000000"/>
+	<colour name="System.Base.Midtone" value="F0F0FF"/>
+	<colour name="System.Back.Selected" value="F5F5FF"/>
+	<colour name="System.Back.Checked" value="FFFFFF"/>
+	<colour name="System.Back.Checked.Selected" value="F5F5FF"/>
+	<colour name="System.Margin" value="E9E9FF"/>
+	<colour name="System.Shadow" value="C4CAE5"/>
+	<colour name="System.Disabled" value="A4AAC5"/>
+	<colour name="Dialog.Back" value="FAFAFF"/>
+	<colour name="ToolTip.Back" value="FAFAFF"/>
+	<colour name="ToolTip.Text" value="000080"/>
+	<colour name="ToolTip.Border" value="8080FF"/>
+</colourScheme>
+
+<watermarks>
+	<watermark target="CCoolMenu" path="MenuSkin.bmp"/>
+</watermarks>
+
+</skin>

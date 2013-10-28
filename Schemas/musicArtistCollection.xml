@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
+Shareaza Catalan Schemas File translated by Daniel Olivares Giménez; Equip de traduccions de FeshoCAT
+Shareaza Chinese Simplified Schemas File translated by Sanley; John
+Shareaza Chinese Traditional Schemas File translated by James Bond
+Shareaza Czech Schemas File translated by Odin
+Shareaza German Schemas File translated by Spooky; jlh; OldDeath
+Shareaza Estonian Schemas File translated by Janza
+Shareaza Spanish Schemas File translated by Unknown
+Shareaza Spanish (Mexico) Schemas File translated by Help
+Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
+Shareaza Greek Schemas File translated by erimitis
+Shareaza Hebrew Schemas File translated by _peer_ (H.L)
+Shareaza Croatian Schemas File translated by Biza
+Shareaza Hungarian Schemas File translated by Yuri
+Shareaza Italian Schemas File translated by ale5000
+Shareaza Japanese Schemas File translated by DukeDog; CyberBob
+Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
+Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); Jonne; Neglacio
+Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
+Shareaza Portuguese (Brasil) Schemas File translated by Lukas Taves (LightHeaven); Felipe
+Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
+Shareaza Slovenian Schemas File translated by Martin McDowell
+Shareaza Albanian Schemas File translated by Besmir Godole
+Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Swedish Schemas File translated by Marcus Ehrenlans; Printz; DanielB
+Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
+-->
+
+<schemaDescriptor location="http://www.shareaza.com/schemas/musicArtistCollection.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
+
+       <object type="folder" availability="system"/>
+       <titles>
+               <title language="en">Music:By Artist</title>
+               <title language="af">Musiek:Volgens Kunstenaar</title>
+               <title language="ca">Música: per artista</title>
+               <title language="chs">&#160;音乐:按 - 艺人</title>
+               <title language="cht">音樂:由-藝人</title>
+               <title language="cz">Hudba:Podle autora</title>
+               <title language="de">Musik:Nach Künstler</title>
+               <title language="ee">Muusika:Artistid</title>
+               <title language="es">Música: Por Artista</title>
+               <title language="es-mx">Música: Por Artista</title>
+               <title language="fr">Musique:Par artiste</title>
+               <title language="gr">Μουσική:Ανά Καλλιτέχνη</title>
+               <title language="heb">&#160;שירים:לפי אמן</title>
+               <title language="hr">Muzika:Po Izvođaču</title>
+               <title language="hu">Zene: Előadó szerint</title>
+               <title language="it">Musica:Per artista</title>
+               <title language="ja">&#160;音楽: アーティスト別</title>
+               <title language="lt">Muzika:Pagal atlikėjus</title>
+               <title language="nl">Muziek:Per Artiest</title>
+               <title language="no">Musikk: per artist</title>
+               <title language="pt-br">Música: Por Artista</title>
+               <title language="ru">&#160;Музыка: По артистам</title>
+               <title language="sl-SI">Glasba:Po izvajalcu</title>
+               <title language="sq">Muzikë:Sipas Artistit</title>
+               <title language="sr">Muzika:Po Izvođaču</title>
+               <title language="sv">Musik: Efter artist</title>
+               <title language="tr">Müzik: Sanatçıdan</title>
+       </titles>
+       <members>
+               <member name="title" search="none">
+                       <display defaultColumn="true"/>
+                       <title language="en">Title</title>
+                       <title language="af">Titel</title>
+                       <title language="ca">Títol</title>
+                       <title language="chs">标题</title>
+                       <title language="cht">標題</title>
+                       <title language="cz">Název</title>
+                       <title language="de">Titel</title>
+                       <title language="ee">Pealkiri</title>
+                       <title language="es">Título</title>
+                       <title language="es-mx">Título</title>
+                       <title language="fr">Titre</title>
+                       <title language="gr">Τίτλος</title>
+                       <title language="heb">כותרת</title>
+                       <title language="hr">Naslov</title>
+                       <title language="hu">Cím</title>
+                       <title language="it">Titolo</title>
+                       <title language="ja">タイトル</title>
+                       <title language="lt">Pavadinimas</title>
+                       <title language="nl">Titel</title>
+                       <title language="no">Tittel</title>
+                       <title language="pt-br">Título</title>
+                       <title language="ru">Название</title>
+                       <title language="sl-SI">Naslov</title>
+                       <title language="sq">Titulli</title>
+                       <title language="sr">Naslov</title>
+                       <title language="sv">Titel</title>
+                       <title language="tr">Başlık</title>
+               </member>
+       </members>
+       <images>
+               <icon path="musicFolder.ico"/>
+       </images>
+       <contains>
+               <object type="folder" location="http://www.shareaza.com/schemas/musicArtist.xsd"/>
+       </contains>
+       <headerContent version="1.0">
+               <title language="en">Music By Artist</title>
+               <title language="af">Musiek Volgens Kunstenaar</title>
+               <title language="ca">Música per artista</title>
+               <title language="chs">音乐 按艺术家</title>
+               <title language="cht">音樂-由-藝人</title>
+               <title language="cz">Hudba podle autora</title>
+               <title language="de">Musik nach Künstler</title>
+               <title language="ee">Muusika Artistid</title>
+               <title language="es">Música por Artista</title>
+               <title language="es-mx">Música por Artista</title>
+               <title language="fr">Musique par artiste</title>
+               <title language="gr">Μουσική Ανά Καλλιτέχνη</title>
+               <title language="heb">מוזיקה לפי אמן</title>
+               <title language="hr">Muzika Po Izvođaču</title>
+               <title language="hu">Zene előadó szerint</title>
+               <title language="it">Musica per artista</title>
+               <title language="ja">&#160;音楽: アーティスト別</title>
+               <title language="lt">Muzika pagal atlikėjus</title>
+               <title language="nl">Muziek Per Artiest</title>
+               <title language="no">Musikk per artist</title>
+               <title language="pt-br">Música por Artista</title>
+               <title language="ru">Музыка по артистам</title>
+               <title language="sl-SI">Glasba Po izvajalcu</title>
+               <title language="sq">Musikë Sipas Artistit</title>
+               <title language="sr">Muzika Po Izvođaču</title>
+               <title language="sv">Musik efter artist</title>
+               <title language="tr">Sanatçıdan Müzik</title>
+               <subtitle language="en">This folder contains a list of the artists in your music library.</subtitle>
+               <subtitle language="af">Hierdie gids bevat 'n lys van die kunstenaars wat jy in jou biblioteek het.</subtitle>
+               <subtitle language="ca">Aquesta carpeta conté una llista d'artistes de la teva col·lecció de música.</subtitle>
+               <subtitle language="chs">此文件夹包含您收藏中艺术家的清单。</subtitle>
+               <subtitle language="cht">這個資料夾包含了在您的音樂收藏中一個藝人清單.</subtitle>
+               <subtitle language="cz">Tato složka obsahuje seznam autorů, jejichž díla máte v knihovně.</subtitle>
+               <subtitle language="de">Dieser Ordner enthält eine Liste der Künstler in Ihrer Musikbibliothek.</subtitle>
+               <subtitle language="ee">See kaust sisaldab nimekirja Esitajatest sinu raamatukogus</subtitle>
+               <subtitle language="es">Esta carpeta contiene una lista de artistas de tu librería de música.</subtitle>
+               <subtitle language="es-mx">Esta carpeta contiene una lista de artistas de tu librería de música.</subtitle>
+               <subtitle language="fr">Ce dossier contient tous les artistes de votre bibliothèque musicale.</subtitle>
+               <subtitle language="gr">Αυτός ο φάκελος περιέχει όσα μουσικά αρχεία μπορούν να οργανωθούν ανά καλλιτέχνη.</subtitle>
+               <subtitle language="heb">ספרייה זו מכילה רשימה של האמנים שבספריית מוזיקה שלך</subtitle>
+               <subtitle language="hr">Ova mapa sadrži popis izvođača koje imate u muzičkoj kolekciji.</subtitle>
+               <subtitle language="hu">Ez a mappa előadóat tartalmaz.</subtitle>
+               <subtitle language="it">Questa cartella contiene la lista degli artisti nella tua libreria.</subtitle>
+               <subtitle language="ja">このフォルダーにはライブラリー内にあるアーティストの一覧があります</subtitle>
+               <subtitle language="lt">Šiame kataloge pateikiamas Jūsų muzikinės kolekcijos atlikėjų sąrašas.</subtitle>
+               <subtitle language="nl">Deze map bevat een lijst met artiesten uit je muziekbibliotheek.</subtitle>
+               <subtitle language="no">Denne mappen inneholder en liste over artister i mine filer</subtitle>
+               <subtitle language="pt-br">Esta pasta contém uma lista dos artistas na sua biblioteca.</subtitle>
+               <subtitle language="ru">Эта папка отображает список артистов найденных в музыкальных файлах Вашего хранилища.</subtitle>
+               <subtitle language="sl-SI">Ta mapa vsebuje seznam izvajalcev v vaši glasbeni knjižnici.</subtitle>
+               <subtitle language="sq">Kjo dosje përmban një listë me artistët në librarinë tuaj me muzikë.</subtitle>
+               <subtitle language="sr">Ova fascikla sadrži popis izvođača koje imate u muzičkoj kolekciji.</subtitle>
+               <subtitle language="sv">Denna mapp innehåller en lista över artister som du har i ditt bibliotek.</subtitle>
+               <subtitle language="tr">Bu klasör müzik arşivinizdeki sanatçıların bir listesini içerir.</subtitle>
+       </headerContent>
+
+</schemaDescriptor>

@@ -1,0 +1,41 @@
+//
+// GFLLibraryBuilder.idl : IDL source for GFLLibraryBuilder
+//
+// Copyright (c) Nikolay Raspopov, 2005.
+// This file is part of SHAREAZA (shareaza.sourceforge.net)
+//
+// Shareaza is free software; you can redistribute it
+// and/or modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2 of
+// the License, or (at your option) any later version.
+//
+// Shareaza is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Shareaza; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+//
+
+import "oaidl.idl";
+import "ocidl.idl";
+import "Shareaza.idl";
+
+[
+	uuid(7B8046FF-0D3A-4D85-9424-7DFCCD1BCA45),
+	version(1.0),
+	helpstring("GFLLibraryBuilder 1.0 Type Library")
+]
+library GFLLibraryBuilderLib
+{
+	importlib("stdole2.tlb");
+	[
+		uuid(6C9E61BE-E58F-4AE1-A304-6FF1D183804C)
+	]
+	coclass Builder
+	{
+		[default] interface ILibraryBuilderPlugin;
+	};
+};

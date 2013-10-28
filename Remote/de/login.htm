@@ -1,0 +1,34 @@
+﻿<!-- tabs -->
+		<div class="poetry">
+			<ul class="tabs">
+				<li class="inactive">Home</li>
+				<li class="inactive">Suchen</li>
+				<li class="inactive">Downloads</li>
+				<li class="inactive">Uploads</li>
+				<li class="inactive">Netzwerk</li>
+			</ul>
+		</div>
+<!-- /tabs -->
+<!-- main body -->
+		<div class="poetry" id="frame">
+					<div class="padding left">
+						Willkommen beim <b>Shareaza Remote Access.</b>
+						Falls dieser Shareaza-Client auf ihrem PC läuft, geben Sie bitte ihren Benutzernamen und das Passwort für den Remote Access ein und klicken Sie dann auf <b>Login</b>.
+					</div>
+					
+					<div class="poetry" style="color: red; font-weight: bold; height: 3em;">
+					<%? failure %>	Der Benutzername oder das Passwort das Sie eingegeben haben ist falsch, Bitte versuchen Sie es noch einmal.<%?%>
+					</div>
+					
+					<div style="text-align: right; width: 24em; margin: 0 auto;">
+					<form method="get" action="">
+					<input type="hidden" name="submit" value="1">
+						<label>Benutzername:</label>
+						<input type="text" name="username" size="20" /><br />
+						<label>Passwort:</label>
+						<input type="password" name="password" size="20" ID="Text1" /><br />
+								<input type="submit" value="Login">
+					</form>
+					</div>
+	</div>
+<!-- /main body -->

@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html><head><title>Shareaza Web Hook</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" language="javascript">
+function AddLink(url)
+{
+	var hook=new ActiveXObject("Shareaza.RazaWebHook.1");
+	if(hook==null)
+		alert("Shareaza not properly installed!\r\nPlease install Shareaza again.");
+	else
+		hook.AddLink(url);
+}
+function OnContextMenu()
+{
+	var srcEvent=external.menuArguments.event;
+	var EventElement;
+	if(typeof(srcEvent.clientX)=="undefined")
+		EventElement=external.menuArguments.document.elementFromPoint(srcEvent.pointerX,srcEvent.pointerY);
+	else
+		EventElement=external.menuArguments.document.elementFromPoint(srcEvent.clientX,srcEvent.clientY);
+	if(srcEvent.type=="MenuExtAnchor")
+	{
+		var srcAnchor=EventElement;
+		while(typeof(srcAnchor)=="HTMLAnchorElement")
+		{
+			srcAnchor=srcAnchor.parentElement;
+		}
+		AddLink(srcAnchor.href);
+	}
+	else if(srcEvent.type=="MenuExtImage")
+	{
+		if(typeof(EventElement)=="HTMLAreaElement")
+			AddLink(EventElement.href);
+		else
+		{
+			var srcImage=EventElement;
+			var srcAnchor=srcImage.parentElement;
+			while(typeof(srcAnchor)=="HTMLAnchorElement")
+			{
+				srcAnchor=srcAnchor.parentElement;
+				if(typeof(srcAnchor)=="undefined")
+				{
+					AddLink(srcImage.href);
+					break;
+				}
+			}
+			AddLink(srcAnchor.href);
+		}
+	}
+	else if(srcEvent.type=="MenuExtUnknown")
+	{
+		var srcAnchor=EventElement;
+		if(srcAnchor!=null && srcAnchor.tagName!=null && srcAnchor.tagName.toLowerCase()=="a")
+	        AddLink(srcAnchor.href);
+	    else
+	    {
+	        while(srcAnchor!=null && srcAnchor.tagName!=null && srcAnchor.tagName.toLowerCase()!="a")
+	        {
+	            srcAnchor = srcAnchor.parentElement;
+	            if(srcAnchor!=null && srcAnchor.tagName!=null && srcAnchor.tagName.toLowerCase()=="a")
+	            {
+	                AddLink(srcAnchor.href);
+	                return;
+	            }
+	        }
+	        if(EventElement!=null && EventElement.tagName!=null && EventElement.tagName.toLowerCase()=="img")
+	            AddLink(EventElement.href);
+	        else
+	            AddLink(external.menuArguments.location.href);
+	    }
+	}
+}
+OnContextMenu();
+</script></head><body></body></html>

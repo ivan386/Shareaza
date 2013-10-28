@@ -1,0 +1,25 @@
+﻿					<h4><%= network_caption %></h4>
+<%? !network_connected %>
+					<p>
+					Эта сеть <strong>не</strong> включена -
+					<a href="?connect=<%= network_id %>"><strong>Соединиться с <%= network_caption %></strong></a>
+					</p>
+<%?%><%? network_connected %>
+					<p>
+					Эта сеть включена -
+					<a href="?disconnect=<%= network_id %>"><strong>Отключить <%= network_caption %></strong></a>
+					</p>
+				<div class="centertable">
+					<table>
+						<tr>
+							<th>Адрес</th>
+							<th>Время</th>
+							<th>Пакеты</th>
+							<th>Полоса пропускания</th>
+							<th>Всего</th>
+							<th>Режим</th>
+							<th>Ветвей</th>
+							<th>Юзер-Агент</th>
+							<th></th>
+						</tr>
+<%?%>

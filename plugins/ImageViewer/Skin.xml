@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
+
+<menus replace="false">
+	<menu name="ImageViewer_Context">
+		<item id="ImageViewer_BestFit" text="_Best Fit"/>
+		<item id="ImageViewer_ActualSize" text="_Actual Size"/>
+		<separator/>
+		<item id="ImageViewer_Refresh" text="_Refresh"/>
+		<separator/>
+		<item id="ImageViewer_Close" text="_Close"/>
+	</menu>
+</menus>
+
+<toolbars replace="false">
+	<toolbar name="ImageViewer_Toolbar">
+		<button id="ImageViewer_BestFit" text="Best Fit"/>
+		<button id="ImageViewer_ActualSize" text="Actual Size"/>
+		<separator/>
+		<button id="ImageViewer_Refresh" text="Refresh"/>
+		<separator/>
+		<button id="ImageViewer_Close" text="Close"/>
+	</toolbar>
+</toolbars>
+
+<commandImages replace="false">
+	<bitmap id="204">
+		<image id="ImageViewer_BestFit"/>
+		<image id="ImageViewer_ActualSize"/>
+		<image id="ImageViewer_Refresh"/>
+		<image id="ImageViewer_Close"/>
+	</bitmap>
+</commandImages>
+
+<commandTips replace="false">
+	<tip id="ImageViewer_BestFit" message="Resize the image to fit within the window."/>
+	<tip id="ImageViewer_ActualSize" message="Show the image at its natural size."/>
+	<tip id="ImageViewer_Refresh" message="Refresh the image."/>
+	<tip id="ImageViewer_Close" message="Close the image viewer window."/>
+</commandTips>
+
+</skin>
+

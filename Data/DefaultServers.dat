@@ -1,0 +1,22 @@
+#
+# Shareaza default servers list
+#
+# Format: [P]Type Host[:Port] [Seen]
+# P    - Priority server flag (optional)
+# Type - Server type: 'L' - Gnutella 1 hub, 'G' - Gnutella 2 hub, 'B' - BitTorrent node,
+#        'E' or ' ' - eDonkey 2000 server, 'K' - Kademila node, 'D' - DC++ hub.
+# Host - Server address (IP or DNS)
+# Port - Server port (optional)
+# Seen - Server last seen time (optional)
+#
+# Example:
+# PG 192.168.0.1:6346                     - Priority Gnutella 2 hub
+# G  192.168.0.2:6346                     - Regular Gnutella 2 hub
+# PD 192.168.0.3:411 2002-04-30T08:30Z    - Priority DC++ hub with last seen time
+#
+
+# DHT Bootstraping
+B router.bittorrent.com:6881
+B router.utorrent.com:6881
+B dht.transmissionbt.com:6881
+B dht.aelitis.com:6881

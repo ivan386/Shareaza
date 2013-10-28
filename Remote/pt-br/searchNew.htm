@@ -1,0 +1,19 @@
+﻿										<li class="active"><a class="noline" href="?id=0">Nova Busca</a></li>
+								</ul>
+<div style="border: 1px #000 solid;padding: 5px;">
+	<p>Para iniciar uma nova busca, digite o seu termo na caixa abaixo e clique <strong>Iniciar Busca</strong>. Se você quer restringir a sua busca a um tipo particular de arquivo, selecione-o da lista (recomendado).</p>
+
+	<form method="get" action="newsearch">
+		<div style="text-align:right; width: 30em;">
+			<label>Procurar por:</label>
+				<input type="text" name="search" class="regularinput" /><br/>
+				<label>Tipo de arquivo:</label>
+
+				<select name="schema" class="regularinput">
+					<option value="">Qualquer tipo de arquivo</option>
+					<%= schema_option_list %>
+				</select><br />
+
+				<input type="submit" value="Iniciar Busca" />
+		</div>
+	</form>

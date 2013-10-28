@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0"> 
+      <!-- Release 1.2 -->
+      <manifest	name="OJStreak"
+			author="RocketX"
+			description="My Original Design dunked in OJ for a bright new look!"
+			link="http://shareaza.sf.net/"
+			version="1.21"
+			type="Skin"
+			language="en"
+			/>
+      <fonts> 
+        <font name="Panel.Caption" face="Arial" size="12" weight="bold"/>
+	  </fonts>
+      <!-- Colour scheme -->
+      <colourScheme> 
+        <colour name="System.Base.Window"           value="FFFFFF"/>        <!-- main window bg / menu selected hovers -->
+        <colour name="System.Base.Midtone"          value="E6E6E6"/>        <!-- main bars bg (toolbars) -->
+        <colour name="System.Back.Selected"         value="D9D9D9"/>        <!-- menu / unselected hovers -->
+        <colour name="System.Back.Checked.Selected" value="FFFFFF"/>        <!-- menu / checked hovers / mouse downs -->
+        <colour name="System.Margin"                value="7C7E7C"/>
+        <colour name="Panel.Caption.Text"           value="000000"/>        <!-- area header text colour (if needed) -->
+        <colour name="Panel.Caption.Back"           value="000000"/>        <!-- area header bg colour (if needed) -->
+        <colour name="TaskPanel.Back"               value="EEEEEE"/>        <!-- side panel bg / search corner bg (E6E6E6)-->
+        <colour name="System.Shadow"                value="D6D4D7"/>        <!-- menu icon mouseover hovers -->
+        <colour name="System.Border"                value="7C7E7C"/>        <!-- menu hover border colour -->
+        <colour name="System.Disabled"              value="7C7E7C"/>        <!-- item inactive/disabled colour -->
+        <colour name="System.Text"                  value="000000"/>        <!-- active menu / item text colour -->
+        <colour name="Dialog.Back"                  value="E6E6E6"/>        <!-- raza settings bg colour -->
+        <colour name="ToolTip.Back"                 value="F7F7F7"/>        <!-- transfers tool tip bg colour -->
+        <colour name="ToolTip.Text"                 value="000000"/>        <!-- transfers tool tip text colour -->
+        <colour name="TaskBox.Primary.Back"         value="DDDDDD"/>        <!-- side panel (header colour if applic) -->
+        <colour name="TaskBox.Primary.Text"         value="000000"/>        <!-- side panel (primary caption colour) -->
+        <colour name="TaskBox.Caption.Back"         value="EB9956"/>        <!-- side panel (border) -->
+        <colour name="TaskBox.Caption.Text"         value="000000"/>        <!-- side panel (secondary caption colour) -->
+        <colour name="TaskBox.Caption.Hover"        value="333333"/>        <!-- side panel (caption hover colour) -->
+        <colour name="TaskBox.Client"               value="FEFEFE"/>        <!-- search panel (bg) ? -->
+      </colourScheme>
+      <!-- Command bar watermarks -->
+      <watermarks> 
+        <watermark target="CCoolMenu" path="sts_watermark.bmp"/>
+        <watermark target="CSearchPanel" path="sts_sidebg.bmp" />
+        <watermark target="CHomeDownloadsBox.Caption" path="sts_obox.bmp"/>
+        <watermark target="CHomeLibraryBox.Caption" path="sts_obox.bmp"/>
+        <watermark target="CHomeConnectionBox.Caption" path="sts_obox.bmp"/>
+        <watermark target="CHomeTorrentsBox.Caption" path="sts_obox.bmp"/>	<!-- Added as of 2.0.0.13+ -->
+        <watermark target="CHomeUploadsBox.Caption" path="sts_obox.bmp"/>
+        <watermark target="CSearchInputBox.Caption" path="sts_obox.bmp"/>    <!-- search -->
+        <watermark target="CSearchResultsBox.Caption" path="sts_obox.bmp"/>  <!-- results -->
+        <watermark target="CSearchSchemaBox.Caption" path="sts_obox.bmp"/>   <!-- application -->
+        <watermark target="CSearchAdvancedBox.Caption" path="sts_obox.bmp"/>   <!-- advanced panel -->
+      </watermarks>
+      <!-- Window skins -->
+      <windowSkins> 
+        <!-- Main window -->
+        <windowSkin> 
+          <target window="CMainWnd"/>
+          <image path="OJStreak.bmp"/>
+          <maximiseCrop rect="0,0,0,0"/>
+          <parts> 
+            <part name="TopLeft"     rect="0,0,150,38"/>
+            <part name="TopLeftIA"   rect="0,63,150,38"/>
+            <part name="Top"         rect="150,0,75,38"/>
+            <part name="TopRight"    rect="207,0,88,38"/>
+            <part name="Left"        rect="0,38,11,4"/>
+            <part name="Right"       rect="283,38,12,4"/>
+            <part name="BottomLeft"  rect="0,119,11,12"/>
+            <part name="Bottom"      rect="22,119,53,12"/>
+            <part name="BottomRight" rect="283,119,12,12"/>
+            <part name="MinimiseHover" rect="206,42,17,17"/>
+            <part name="MinimiseDown"  rect="241,42,17,17"/>
+            <part name="MaximiseHover" rect="172,42,17,17"/>
+            <part name="MaximiseDown"  rect="189,42,17,17"/>
+            <part name="CloseHover"    rect="222,41,19,19"/>
+            <part name="CloseDown"     rect="259,41,19,19"/>
+          </parts>
+          <anchors> 
+            <anchor name="System"   rect="10,10,16,16"/> 
+            <anchor name="Mirror"   rect="20,98,0,22"/>
+            <anchor name="Minimise" rect="-70,10,17,17"/> 
+            <anchor name="Maximise" rect="-49,10,17,17"/> 
+            <anchor name="Close"    rect="-29,9,19,19"/> </anchors>
+          <region> 
+            <shape type="rectangle" rect="0,35,-1,-1"/>
+            <shape type="roundRect" rect="0,0,-1,-1" size="35,35" combine="or"/>
+            <shape type="roundRect" rect="0,0,-1,-1" size="10,10" combine="and"/>
+          </region>
+        </windowSkin>
+        <!-- Compact resizable windows -->
+        <windowSkin> 
+          <target window="CChildWnd"/>
+          <image path="OJStreak.bmp"/>
+          <parts> 
+            <part name="TopLeft"     rect="0,133,38,30"/>
+            <part name="TopLeftIA"   rect="0,133,38,30"/>
+            <part name="Top"         rect="137,133,30,30"/>
+            <part name="TopRight"    rect="235,133,60,30"/>
+            <part name="Left"        rect="0,173,11,30"/>
+            <part name="Right"       rect="283,165,12,54"/>
+            <part name="BottomLeft"  rect="0,220,11,13"/>
+            <part name="Bottom"      rect="22,220,25,13"/>
+            <part name="BottomRight" rect="283,220,12,13"/>
+            <part name="MinimiseDown" rect="206,42,17,17"/>
+            <part name="MinimiseHover"  rect="241,42,17,17"/>
+            <part name="MaximiseDown" rect="172,42,17,17"/>
+            <part name="MaximiseHover"  rect="189,42,17,17"/>
+            <part name="CloseDown"    rect="222,41,19,19"/>
+            <part name="CloseHover"     rect="259,41,19,19"/>
+          </parts>
+          <anchors> 
+            <anchor name="Icon"     rect="11,8,16,16"/> 
+            <anchor name="System"   rect="11,8,16,16"/> 
+            <anchor name="Minimise" rect="-61,4,14,16"/> 
+            <anchor name="Maximise" rect="-42,4,14,16"/> 
+            <anchor name="Close"    rect="-24,3,14,16"/> </anchors>
+          <region> 
+            <shape type="rectangle" rect="0,10,-1,-1"/>
+            <shape type="roundRect" rect="0,0,-1,-1" size="10,10" combine="or"/>
+            <shape type="roundRect" rect="0,0,-1,-1" size="10,10" combine="and"/>
+          </region>
+          <caption align="left" rect="40,-3,320,33" fontFace="Arial" fontSize="11" colour="333333" inactivecolour="999999" />
+        </windowSkin>
+        <windowSkin> 
+          <image path="stb_top.bmp"/>
+          <target window="CHomeWnd.Panel"/>
+          <target window="CLibraryWnd.Panel"/>
+          <target window="CDownloadsWnd.Panel"/>
+          <target window="CNeighboursWnd.Panel"/>
+          <parts> 
+            <part name="Top" rect="26,2,26,35"/>
+          </parts>
+          <caption align="left" rect="15,-4,500,40" outlineColour="FFFFFF" fontFace="Arial" fontSize="16" colour="333333" inactivecolour="666666" />
+        </windowSkin>
+        <windowSkin> 
+          <image path="stb_top.bmp"/>
+          <target window="CUploadsWnd.Panel"/>
+          <target window="CSystemWnd.Panel"/>
+          <parts> 
+            <part name="Top" rect="26,0,26,37"/>
+          </parts>
+          <caption align="left" rect="15,-3,500,40" outlineColour="FFFFFF" fontFace="Arial" fontSize="16" colour="333333" inactivecolour="666666" />
+        </windowSkin>
+		<!-- Media and Search -->
+        <windowSkin> 
+          <image path="stb_top.bmp"/>
+          <target window="CMediaWnd.Panel"/>
+          <target window="CSearchWnd.Panel"/>
+          <parts> 
+            <part name="Top" rect="26,2,26,35"/>
+            <part name="Close" rect="52,12,40,14"/>
+            <part name="CloseDown" rect="91,12,41,16"/>
+            <part name="CloseHover" rect="91,12,41,16"/>
+          </parts>
+          <anchors> 
+            <anchor name="Close" rect="-50,10,39,14"/>
+		 </anchors>
+          <caption align="left" rect="15,-4,500,40" outlineColour="FFFFFF" fontFace="Arial" fontSize="16" colour="333333" inactivecolour="666666" />
+        </windowSkin>
+
+        <windowSkin> 
+          <image path="stb_top.bmp"/>
+          <target window="CChildWnd.Panel"/>
+          <parts> 
+            <part name="Top" rect="26,2,26,35"/>
+            <part name="Close" rect="52,12,40,14"/>
+            <part name="CloseDown" rect="91,12,41,16"/>
+            <part name="CloseHover" rect="91,12,41,16"/>
+          </parts>
+          <anchors> 
+			<anchor name="Close" rect="-50,10,39,14"/>
+		 </anchors>
+          <caption align="left" rect="15,-3,500,40" outlineColour="FFFFFF" fontFace="Arial" fontSize="16" colour="333333" inactivecolour="666666" />
+        </windowSkin>
+        <!-- Dialogs and property sheets -->
+        <windowSkin> 
+          <target window="CDialog"/>
+          <target window="CSettingsSheet"/>
+          <image path="OJStreak.bmp" type="image"/>
+          <parts> 
+            <part name="TopLeft"     rect="0,133,38,30"/>
+            <part name="TopLeftIA"   rect="0,133,38,30"/>
+            <part name="Top"         rect="137,133,30,30"/>
+            <part name="TopRight"    rect="200,163,83,30"/>
+            <part name="Left"        rect="0,173,11,30"/>
+            <part name="Right"       rect="283,165,12,54"/>
+            <part name="BottomLeft"  rect="0,220,11,13"/>
+            <part name="Bottom"      rect="22,220,25,13"/>
+            <part name="BottomRight" rect="283,220,12,13"/>
+            <part name="CloseDown"    rect="222,41,19,19"/>
+            <part name="CloseHover"   rect="259,41,19,19"/>
+          </parts>
+          <anchors> 
+            <anchor name="Icon"     rect="11,8,16,16"/> 
+            <anchor name="System"   rect="11,8,16,16"/> 
+            <anchor name="Close"    rect="-24,3,14,16"/>
+		  </anchors>
+          <region> 
+            <shape type="rectangle" rect="0,10,-1,-1"/>
+            <shape type="roundRect" rect="0,0,-1,-1" size="10,10" combine="or"/>
+            <shape type="roundRect" rect="0,0,-1,-1" size="10,10" combine="and"/>
+          </region>
+		  <caption align="left" rect="40,-3,320,33" fontFace="Arial" fontSize="12" colour="333333" inactivecolour="999999" />
+		</windowSkin>
+        <windowSkin> 
+		  <image path="OJStreak.bmp" type="image"/>
+          <target window="CDownloadMonitorDlg"/>
+          <parts> 
+            <part name="TopLeft"     rect="0,133,38,30"/>
+            <part name="TopLeftIA"   rect="0,133,38,30"/>
+            <part name="Top"         rect="137,133,30,30"/>
+            <part name="TopRight"    rect="174,133,60,30"/>
+            <part name="Left"        rect="0,173,11,30"/>
+            <part name="Right"       rect="283,165,12,54"/>
+            <part name="BottomLeft"  rect="0,220,11,13"/>
+            <part name="Bottom"      rect="22,220,25,13"/>
+            <part name="BottomRight" rect="283,220,12,13"/>
+            <part name="MinimiseDown" rect="206,42,17,17"/>
+            <part name="MinimiseHover"  rect="241,42,17,17"/>
+            <part name="MaximiseDown" rect="134,42,17,17"/>
+            <part name="MaximiseHover"  rect="153,42,17,17"/>
+            <part name="CloseDown"    rect="222,41,19,19"/>
+            <part name="CloseHover"     rect="259,41,19,19"/>
+          </parts>
+          <anchors> 
+            <anchor name="Icon"     rect="11,8,16,16"/> 
+            <anchor name="System"   rect="11,8,16,16"/> 
+            <anchor name="Minimise" rect="-42,4,14,16"/> 
+            <anchor name="Maximise" rect="-61,4,14,16"/> 
+            <anchor name="Close"    rect="-24,3,14,16"/> </anchors>
+          <region> 
+            <shape type="rectangle" rect="0,10,-1,-1"/>
+            <shape type="roundRect" rect="0,0,-1,-1" size="10,10" combine="or"/>
+            <shape type="roundRect" rect="0,0,-1,-1" size="10,10" combine="and"/>
+          </region>
+          <caption align="left" rect="40,-3,320,33" fontFace="Arial" fontSize="12" colour="333333" inactivecolour="999999" />
+        </windowSkin>
+      </windowSkins>
+    </skin>

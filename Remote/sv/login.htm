@@ -1,0 +1,33 @@
+﻿<!-- tabs -->
+		<div class="poetry">
+			<ul class="tabs">
+				<li class="inactive">Hem</li>
+				<li class="inactive">Sök</li>
+				<li class="inactive">Nedladdningar</li>
+				<li class="inactive">Uppladdningar</li>
+				<li class="inactive">Nätverk</li>
+			</ul>
+		</div>
+<!-- /tabs -->
+<!-- main body -->
+		<div class="poetry" id="frame">
+			<div class="padding left">
+				Välkommen till <b>Shareazas Webbgränssnitt. </b>Om detta är adressen till din Shareazaklient, skriv ditt användarnamn och lösenord och klicka på <b>Logga in</b> knappen.
+			</div>
+
+			<div class="poetry" style="color: red; font-weight: bold; height: 3em;">
+				<%? failure %>	Användarnamnet eller lösenordet var felaktigt, försök igen.<%?%>
+			</div>
+
+			<form method="get" action="">
+				<div style="text-align: right; width: 24em; margin: 0 auto;">
+					<input type="hidden" name="submit" value="1" />
+					<label>Användarnamn:</label>
+					<input type="text" name="username" size="20" /><br />
+					<label>Lösenord:</label>
+					<input type="password" name="password" size="20" /><br />
+					<input type="submit" value="Logga in" />
+				</div>
+			</form>
+		</div>
+<!-- /main body -->

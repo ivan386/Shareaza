@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
+
+<manifest	name="Shareaza 2.0"
+			author="Michael Stokes"
+			description="Shareaza 2.0"
+			link="http://shareaza.sf.net/"
+			email="contact@shareaza.com"
+			version="1.0"
+			type="skin"
+			language="en"
+			/>
+
+<windowSkins>
+	
+	<windowSkin>
+		
+		<image path="Frames.bmp"/>
+		<target window="CMainWnd"/>
+		
+		<parts>
+			<part name="TopLeft"		rect="0,66,115,22"/>
+			<part name="Top"			rect="8,44,106,22"/>
+			<part name="TopRight"		rect="0,0,115,22"/>
+			<part name="Left"			rect="115,0,4,88"/>
+			<part name="Right"			rect="119,0,4,88"/>
+			<part name="BottomLeft"		rect="115,88,4,4"/>
+			<part name="Bottom"			rect="0,88,115,4"/>
+			<part name="BottomRight"	rect="119,88,4,4"/>
+			
+			<part name="MinimiseHover"	rect="0,92,15,15"/>
+			<part name="MaximiseHover"	rect="15,92,15,15"/>
+			<part name="CloseHover"		rect="30,92,15,15"/>
+			<part name="MinimiseDown"	rect="45,92,15,15"/>
+			<part name="MaximiseDown"	rect="60,92,15,15"/>
+			<part name="CloseDown"		rect="75,92,15,15"/>
+		</parts>
+		
+		<anchors>
+			<anchor name="System"		rect="1,1,20,20"/>
+			<anchor name="Close"		rect="-18,4,15,15"/>
+			<anchor name="Maximise"		rect="-35,4,15,15"/>
+			<anchor name="Minimise"		rect="-51,4,15,15"/>
+		</anchors>
+		
+	</windowSkin>
+	
+	<windowSkin>
+		
+		<image path="Frames.bmp"/>
+		<target window="CChildWnd"/>
+		
+		<parts>
+			<part name="TopLeft"		rect="0,44,115,22"/>
+			<part name="Top"			rect="8,44,106,22"/>
+			<part name="TopRight"		rect="0,0,115,22"/>
+			<part name="Left"			rect="115,0,4,88"/>
+			<part name="Right"			rect="119,0,4,88"/>
+			<part name="BottomLeft"		rect="115,88,4,4"/>
+			<part name="Bottom"			rect="0,88,115,4"/>
+			<part name="BottomRight"	rect="119,88,4,4"/>
+			
+			<part name="MinimiseHover"	rect="0,92,15,15"/>
+			<part name="MaximiseHover"	rect="15,92,15,15"/>
+			<part name="CloseHover"		rect="30,92,15,15"/>
+			<part name="MinimiseDown"	rect="45,92,15,15"/>
+			<part name="MaximiseDown"	rect="60,92,15,15"/>
+			<part name="CloseDown"		rect="75,92,15,15"/>
+		</parts>
+		
+		<anchors>
+			<anchor name="System"		rect="1,1,20,20"/>
+			<anchor name="Icon"			rect="4,3,16,16"/>
+			<anchor name="Close"		rect="-18,4,15,15"/>
+			<anchor name="Maximise"		rect="-35,4,15,15"/>
+			<anchor name="Minimise"		rect="-51,4,15,15"/>
+		</anchors>
+		
+		<caption rect="22,1,-120,20" fontFace="Trechebet MS" fontSize="110pt" caps="uppercase" colour="FFFFFF" inactiveColour="CCCCFF" outlineColour="000080"/>
+		
+	</windowSkin>
+	
+	<windowSkin>
+		
+		<image path="Frames.bmp"/>
+		<target window="CPanelWnd.Panel"/>
+		
+		<parts>
+			<part name="TopLeft"		rect="0,44,115,22"/>
+			<part name="Top"			rect="8,44,106,22"/>
+			<part name="TopRight"		rect="0,22,115,22"/>
+			
+			<part name="CloseHover"		rect="30,92,15,15"/>
+			<part name="CloseDown"		rect="75,92,15,15"/>
+		</parts>
+		
+		<anchors>
+			<anchor name="System"		rect="1,1,20,20"/>
+			<anchor name="Icon"			rect="4,3,16,16"/>
+			<anchor name="Close"		rect="-18,4,15,15"/>
+		</anchors>
+		
+		<caption rect="22,1,-120,20" fontFace="Trechebet MS" fontSize="110pt" caps="uppercase" colour="FFFFFF" inactiveColour="FFFFFF" outlineColour="000080"/>
+		
+	</windowSkin>
+	
+	<windowSkin>
+		
+		<image path="Frames.bmp"/>
+		<target window="CDownloadMonitorDlg"/>
+		
+		<parts>
+			<part name="TopLeft"		rect="0,44,115,22"/>
+			<part name="Top"			rect="8,44,106,22"/>
+			<part name="TopRight"		rect="0,0,115,22"/>
+			<part name="Left"			rect="115,0,4,88"/>
+			<part name="Right"			rect="119,0,4,88"/>
+			<part name="BottomLeft"		rect="115,88,4,4"/>
+			<part name="Bottom"			rect="0,88,115,4"/>
+			<part name="BottomRight"	rect="119,88,4,4"/>
+			
+			<part name="MinimiseHover"	rect="0,92,15,15"/>
+			<part name="MaximiseHover"	rect="15,92,15,15"/>
+			<part name="CloseHover"		rect="30,92,15,15"/>
+			<part name="MinimiseDown"	rect="45,92,15,15"/>
+			<part name="MaximiseDown"	rect="60,92,15,15"/>
+			<part name="CloseDown"		rect="75,92,15,15"/>
+		</parts>
+		
+		<anchors>
+			<anchor name="System"		rect="1,1,20,20"/>
+			<anchor name="Icon"			rect="4,3,16,16"/>
+			<anchor name="Close"		rect="-18,4,15,15"/>
+			<anchor name="Maximise"		rect="-35,4,15,15"/>
+			<anchor name="Minimise"		rect="-51,4,15,15"/>
+		</anchors>
+		
+		<caption rect="22,1,-120,20" fontFace="Trechebet MS" fontSize="110pt" caps="uppercase" colour="FFFFFF" inactiveColour="CCCCFF" outlineColour="000080"/>
+		
+	</windowSkin>
+	
+	<windowSkin>
+		
+		<image path="Frames.bmp"/>
+		<target window="CDialog"/>
+		
+		<parts>
+			<part name="TopLeft"		rect="0,44,115,22"/>
+			<part name="Top"			rect="8,44,106,22"/>
+			<part name="TopRight"		rect="0,22,115,22"/>
+			<part name="Left"			rect="115,0,4,88"/>
+			<part name="Right"			rect="119,0,4,88"/>
+			<part name="BottomLeft"		rect="115,88,4,4"/>
+			<part name="Bottom"			rect="0,88,115,4"/>
+			<part name="BottomRight"	rect="119,88,4,4"/>
+			
+			<part name="CloseHover"		rect="30,92,15,15"/>
+			<part name="CloseDown"		rect="75,92,15,15"/>
+		</parts>
+		
+		<anchors>
+			<anchor name="System"		rect="1,1,20,20"/>
+			<anchor name="Icon"			rect="4,3,16,16"/>
+			<anchor name="Close"		rect="-18,4,15,15"/>
+		</anchors>
+		
+		<caption rect="22,1,-120,20" fontFace="Trechebet MS" fontSize="110pt" caps="uppercase" colour="FFFFFF" inactiveColour="CCCCFF" outlineColour="000080"/>
+		
+	</windowSkin>
+	
+</windowSkins>
+
+</skin>

@@ -1,0 +1,51 @@
+﻿		<!-- tabs -->
+		<div class="poetry">
+			<ul class="tabs">
+				<li class="active"><a href="home" class="noline">首页</a></li>
+				<li class="inactive"><a href="search" class="noline">搜索</a></li>
+				<li class="inactive"><a href="downloads" class="noline">下载</a></li>
+				<li class="inactive"><a href="uploads" class="noline">上传</a></li>
+				<li class="inactive"><a href="network" class="noline">网络</a></li>
+			</ul>
+		</div>
+		<!-- /tabs -->
+<!-- main body -->
+		<div id="frame">
+			<p>欢迎来到 <b>Shareaza 远程访问。</b></p> <p>该网络界面允许您控制搜索、下载、上传和网络连接。</p>
+			<div style="float: right; width: 40em;">
+				<h3>开始下载:</h3>
+				<div style="text-align: right;">
+					<form method="get" action="newsearch">
+						<div>
+							<label>快速搜索:</label>
+							<input type="text" name="search" size="20" />
+							<select name="schema">
+								<option value="">任何文件类型</option>
+								<option value="http://www.shareaza.com/schemas/application.xsd">程序</option>
+								<option value="http://www.limewire.com/schemas/audio.xsd">音频</option>
+								<option value="http://www.shareaza.com/schemas/bittorent.xsd">BitTorrent</option>
+								<option value="http://www.limewire.com/schemas/book.xsd">书籍</option>
+								<option value="http://www.shareaza.com/schemas/collection.xsd">Collection</option>
+								<option value="http://www.shareaza.com/schemas/image.xsd">图片</option>
+								<option value="http://www.shareaza.com/schemas/presentation.xsd">介绍</option>
+								<option value="http://www.shareaza.com/schemas/rom.xsd">ROM 镜像</option>
+								<option value="http://www.shareaza.com/schemas/shareazaSkin.xsd">皮肤</option>
+								<option value="http://www.shareaza.com/schemas/sourceCode.xsd">源代码</option>
+								<option value="http://www.shareaza.com/schemas/spreadsheet.xsd">电子表格</option>
+								<option value="http://www.shareaza.com/schemas/subtitle.xsd">字幕</option>
+								<option value="http://www.limewire.com/schemas/video.xsd">视频</option>
+								<option value="http://www.shareaza.com/schemas/wordProcessing.xsd">字符处理</option>
+							</select>
+							<input type="submit" value="开始" />
+						</div>
+					</form><br/>
+					<form method="get" action="newdownload">
+						<div>
+							<label>磁力/种子下载:</label>
+							<input type="text" name="uri" size="35" />
+							<input type="submit" value="开始" />
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>

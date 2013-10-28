@@ -1,0 +1,51 @@
+﻿		<!-- tabs -->
+		<div class="poetry">
+			<ul class="tabs">
+				<li class="active"><a href="home" class="noline">Αρχική</a></li>
+				<li class="inactive"><a href="search" class="noline">Αναζήτηση</a></li>
+				<li class="inactive"><a href="downloads" class="noline">Λήψεις</a></li>
+				<li class="inactive"><a href="uploads" class="noline">Αποστολές</a></li>
+				<li class="inactive"><a href="network" class="noline">Δίκτυα</a></li>
+			</ul>
+		</div>
+		<!-- /tabs -->
+<!-- main body -->
+		<div id="frame">
+			<p>Καλώς ήρθατε στο <b>Περιβάλλον Ιστού του Shareaza.</b></p> <p>Αυτό το περιβάλλον δίνει τη δυνατότητα διαχείρισης των αναζητήσεων, λήψεων, αποστολών και δικτύων.</p>
+			<div style="float: right; width: 40em;">
+				<h3>Έναρξη λήψης:</h3>
+				<div style="text-align: right;">
+					<form method="get" action="newsearch">
+						<div>
+							<label>Αναζήτηση:</label>
+							<input type="text" name="search" size="20" />
+							<select name="schema">
+								<option value="">Οτιδήποτε</option>
+								<option value="http://www.shareaza.com/schemas/application.xsd">Εφαρμογή</option>
+								<option value="http://www.limewire.com/schemas/audio.xsd">Ήχος</option>
+								<option value="http://www.shareaza.com/schemas/bittorent.xsd">BitTorrent</option>
+								<option value="http://www.limewire.com/schemas/book.xsd">Βιβλίο</option>
+								<option value="http://www.shareaza.com/schemas/collection.xsd">Συλλογή</option>
+								<option value="http://www.shareaza.com/schemas/image.xsd">Εικόνα</option>
+								<option value="http://www.shareaza.com/schemas/presentation.xsd">Παρουσίαση</option>
+								<option value="http://www.shareaza.com/schemas/rom.xsd">Εικόνα ROM</option>
+								<option value="http://www.shareaza.com/schemas/shareazaSkin.xsd">Φλοιός</option>
+								<option value="http://www.shareaza.com/schemas/sourceCode.xsd">Πηγαίος Κώδικας</option>
+								<option value="http://www.shareaza.com/schemas/spreadsheet.xsd">Λογιστικό Φύλλο</option>
+								<option value="http://www.shareaza.com/schemas/subtitle.xsd">Υπότιτλοι</option>
+								<option value="http://www.limewire.com/schemas/video.xsd">Video</option>
+								<option value="http://www.shareaza.com/schemas/wordProcessing.xsd">Έγγραφο</option>
+							</select>
+							<input type="submit" value="Πάμε" />
+						</div>
+					</form><br/>
+					<form method="get" action="newdownload">
+						<div>
+							<label>Λήψη Magnet/Torrent:</label>
+							<input type="text" name="uri" size="35" />
+							<input type="submit" value="Πάμε" />
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>

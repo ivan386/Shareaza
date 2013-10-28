@@ -1,0 +1,50 @@
+//
+// SWFPlugin.idl : IDL source for SWFPlugin
+//
+// Copyright (c) Nikolay Raspopov, 2005.
+// This file is part of SHAREAZA (shareaza.sourceforge.net)
+//
+// Shareaza is free software; you can redistribute it
+// and/or modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2 of
+// the License, or (at your option) any later version.
+//
+// Shareaza is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Shareaza; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+//
+
+import "oaidl.idl";
+import "ocidl.idl";
+import "Shareaza.idl";
+
+[
+	uuid(6820AC10-8EE8-439B-9CB6-B17029025978),
+	version(1.0),
+	helpstring("SWF Plugin 1.0 Type Library")
+]
+library SWFPluginLib
+{
+	importlib("stdole2.tlb");
+	[
+		uuid(FC4D8F69-0B18-49BB-8AB7-87EB77AA1A9D),
+		helpstring("SWF Image Services")
+	]
+	coclass SWFReader
+	{
+		[default] interface IImageServicePlugin;
+	};
+	[
+		uuid(B978F591-5137-4612-873A-DC2081BAD6CD),
+		helpstring("SWF Library Builder")
+	]
+	coclass SWFBuilder
+	{
+		[default] interface ILibraryBuilderPlugin;
+	};
+};

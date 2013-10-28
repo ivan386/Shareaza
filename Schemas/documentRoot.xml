@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
+Shareaza Catalan Schemas File translated by Daniel Olivares Giménez; Equip de traduccions de FeshoCAT
+Shareaza Chinese Simplified Schemas File translated by Sanley; John
+Shareaza Chinese Traditional Schemas File translated by James Bond
+Shareaza Czech Schemas File translated by Odin
+Shareaza German Schemas File translated by Spooky; jlh; OldDeath
+Shareaza Estonian Schemas File translated by Janza
+Shareaza Spanish Schemas File translated by Unknown
+Shareaza Spanish (Mexico) Schemas File translated by Help
+Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
+Shareaza Greek Schemas File translated by erimitis
+Shareaza Hebrew Schemas File translated by _peer_ (H.L)
+Shareaza Croatian Schemas File translated by Biza
+Shareaza Hungarian Schemas File translated by Yuri
+Shareaza Italian Schemas File translated by ale5000
+Shareaza Japanese Schemas File translated by DukeDog; CyberBob
+Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
+Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); Jonne; Neglacio
+Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
+Shareaza Portuguese (Brasil) Schemas File translated by Lukas Taves (LightHeaven); Felipe
+Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
+Shareaza Slovenian Schemas File translated by Martin McDowell
+Shareaza Albanian Schemas File translated by Besmir Godole
+Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Swedish Schemas File translated by Marcus Ehrenlans; Printz; DanielB
+Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
+-->
+
+<schemaDescriptor location="http://www.shareaza.com/schemas/documentRoot.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
+
+       <object type="folder" availability="system"/>
+       <titles>
+               <title language="en">Document:My Documents</title>
+               <title language="af">Dokument:My Dokumente</title>
+               <title language="ca">Documents: Els meus documents</title>
+               <title language="chs">&#160;文档:我的文档</title>
+               <title language="cht">文件: 我的文件</title>
+               <title language="cz">Dokumenty:Moje dokumenty</title>
+               <title language="de">Dokumente:Eigene Dokumente</title>
+               <title language="ee">Dokument:Minu Dokumendid</title>
+               <title language="es">Documento:Mis Documentos</title>
+               <title language="es-mx">Documento:Mis Documentos</title>
+               <title language="fr">Document:Mes Documents</title>
+               <title language="gr">Έγγραφα:Έγγραφα</title>
+               <title language="heb">&#160;מסמך:המסמכים שלי</title>
+               <title language="hr">Dokument:Moji Dokumenti</title>
+               <title language="hu">Dokumentum: Dokumentumok</title>
+               <title language="it">Documento:Documenti</title>
+               <title language="ja">&#160;文章: マイ･ドキュメント</title>
+               <title language="lt">Dokumentas:Mano dokumentai</title>
+               <title language="nl">Document:Mijn Documenten</title>
+               <title language="no">Dokument: Mine dokumenter</title>
+               <title language="pt-br">Documento: Meus Documentos</title>
+               <title language="ru">&#160;Документ:&#160;Мои документы</title>
+               <title language="sl-SI">Dokument:Moji dokumenti</title>
+               <title language="sq">Dokumenti:Dokumenti Im</title>
+               <title language="sr">Dokument:Moji Dokumenti</title>
+               <title language="sv">Dokument: Mina dokument</title>
+               <title language="tr">Doküman: Dokümanlarım</title>
+       </titles>
+       <images>
+               <icon path="documentFolder.ico"/>
+       </images>
+       <members>
+               <member name="title" search="none">
+                       <display defaultColumn="true"/>
+                       <title language="en">Title</title>
+                       <title language="af">Titel</title>
+                       <title language="ca">Títol</title>
+                       <title language="chs">标题</title>
+                       <title language="cht">標題</title>
+                       <title language="cz">Název</title>
+                       <title language="de">Titel</title>
+                       <title language="ee">Pealkiri</title>
+                       <title language="es">Título</title>
+                       <title language="es-mx">Título</title>
+                       <title language="fr">Titre</title>
+                       <title language="gr">Τίτλος</title>
+                       <title language="heb">כותרת</title>
+                       <title language="hr">Naslov</title>
+                       <title language="hu">Cím</title>
+                       <title language="it">Titolo</title>
+                       <title language="ja">タイトル</title>
+                       <title language="lt">Pavadinimas</title>
+                       <title language="nl">Titel</title>
+                       <title language="no">Tittel</title>
+                       <title language="pt-br">Título</title>
+                       <title language="ru">Название</title>
+                       <title language="sl-SI">Naslov</title>
+                       <title language="sq">Titulli</title>
+                       <title language="sr">Naslov</title>
+                       <title language="sv">Titel</title>
+                       <title language="tr">Başlık</title>
+               </member>
+       </members>
+       <contains>
+               <object type="folder" location="http://www.shareaza.com/schemas/documentAll.xsd"/>
+       </contains>
+       <headerContent version="1.0">
+               <title language="en">Welcome to My Documents!</title>
+               <title language="af">Welkom by My Dokumente!</title>
+               <title language="ca">Benvingut/da als meus documents!</title>
+               <title language="chs">欢迎来到我的文档！</title>
+               <title language="cht">歡迎來到我的文件!</title>
+               <title language="cz">Moje dokumenty</title>
+               <title language="de">Willkommen in Eigene Dokumente!</title>
+               <title language="ee">Teretulemast   Minu Dokumentidesse!</title>
+               <title language="es">¡Bienvenido a Mis documentos!</title>
+               <title language="es-mx">¡Bienvenido a Mis documentos!</title>
+               <title language="fr">Bienvenue dans Mes Documents!</title>
+               <title language="gr">Καλώς ήρθατε στα Έγγραφα!</title>
+               <title language="heb">ברוך הבא למסמכים שלי!</title>
+               <title language="hr">Dobrodošli Među Vaše Dokumente!</title>
+               <title language="hu">Üdvözöllek a Dokumentumok mappában!</title>
+               <title language="it">Benvenuto nei Documenti!</title>
+               <title language="ja">マイ･ドキュメントへようこそ</title>
+               <title language="lt">Sveiki apsilankę&#160;„Mano dokumentuose“!</title>
+               <title language="nl">Welkom bij Mijn Documenten!</title>
+               <title language="no">Velkommen til Mine dokumenter!</title>
+               <title language="pt-br">Bem-Vindo aos Meus Documentos!</title>
+               <title language="ru">Добро пожаловать в Ваши документы!</title>
+               <title language="sl-SI">Dobrodošli v mojih dokumentih!</title>
+               <title language="sq">Mirë se erdhët në Dokumentet Tuaja!</title>
+               <title language="sr">Dobrodošli Među Vaše Dokumente!</title>
+               <title language="sv">Välkommen till Mina dokument!</title>
+               <title language="tr">Dokümanlarıma Hoşgeldiniz!</title>
+               <subtitle language="en">These folders contain all of your documents.</subtitle>
+               <subtitle language="af">Hierdie gidse bevat al jou dokumente.</subtitle>
+               <subtitle language="ca">Aquestes carpetes contenen tots els teus documents.</subtitle>
+               <subtitle language="chs">这些文件夹包含您所有的文档。</subtitle>
+               <subtitle language="cht">這些文件夾包含您所有的文件</subtitle>
+               <subtitle language="cz">Tyto složky obsahují všechny dokumenty v knihovně.</subtitle>
+               <subtitle language="de">Diese Ordner enthalten alle Ihre Dokumente.</subtitle>
+               <subtitle language="ee">Need kaustad sisaldavad kõiki sinu Dokumente</subtitle>
+               <subtitle language="es">Estas carpetas contienen todos tus documentos.</subtitle>
+               <subtitle language="es-mx">Estas carpetas contienen todos tus documentos.</subtitle>
+               <subtitle language="fr">Ces dossiers contiennent tous vos documents.</subtitle>
+               <subtitle language="gr">Αυτός ο φάκελος περιέχει όλα τα έγγραφα.</subtitle>
+               <subtitle language="heb">ספרייה זו מכילה את כל המסמכים שלך</subtitle>
+               <subtitle language="hr">Ove mape sadrže sve vaše dokumente.</subtitle>
+               <subtitle language="hu">Ez a mappa dokumentumokat tartalmaz.</subtitle>
+               <subtitle language="it">Queste cartelle contengono tutti i tuoi documenti.</subtitle>
+               <subtitle language="ja">これらのフォルダーにはライブラリー内に所有している文章が収録されています</subtitle>
+               <subtitle language="lt">Šiuose kataloguose yra visi Jūsų kolekcijos dokumentai.</subtitle>
+               <subtitle language="nl">Deze mappen bevatten al je documenten.</subtitle>
+               <subtitle language="no">Disse mappene inneholder alle dine dokumenter.</subtitle>
+               <subtitle language="pt-br">Estas pastas contém todos os seus documentos.</subtitle>
+               <subtitle language="ru">Эти папки отображают все Ваши документы.</subtitle>
+               <subtitle language="sl-SI">Te mape vsebujejo vse dokumente.</subtitle>
+               <subtitle language="sq">Këto dosje përmbajnë gjithë dokumentet tuaja.</subtitle>
+               <subtitle language="sr">Ove fascile sadrže sve vaše dokumente.</subtitle>
+               <subtitle language="sv">Denna mapp innehåller alla dina dokument.</subtitle>
+               <subtitle language="tr">Bu klasörler tüm dokümanlarınızı içerir.</subtitle>
+       </headerContent>
+
+</schemaDescriptor>

@@ -1,0 +1,33 @@
+﻿<!-- tabs -->
+		<div class="poetry">
+			<ul class="tabs">
+				<li class="inactive">Domů</li>
+				<li class="inactive">Hledání</li>
+				<li class="inactive">Stahování</li>
+				<li class="inactive">Odesílání</li>
+				<li class="inactive">Sítě</li>
+			</ul>
+		</div>
+<!-- /tabs -->
+<!-- main body -->
+		<div class="poetry" id="frame">
+			<div class="padding left">
+				Vítejte ve <b>webovém rozhraní Shareaza.</b> Pokud je toto vaše instalace Shareazy, tak zadejte svůj login a heslo a klikněte na tlačítko <b>Přihlásit se</b>.
+			</div>
+
+			<div class="poetry" style="color: red; font-weight: bold; height: 3em;">
+				<%? failure %>	Zadali jste nesprávný login nebo heslo, zkuste to prosím znovu.<%?%>
+			</div>
+
+			<form method="get" action="">
+				<div style="text-align: right; width: 24em; margin: 0 auto;">
+					<input type="hidden" name="submit" value="1" />
+					<label>Login:</label>
+					<input type="text" name="username" size="20" /><br />
+					<label>Heslo:</label>
+					<input type="password" name="password" size="20" /><br />
+					<input type="submit" value="Přihlásit se" />
+				</div>
+			</form>
+		</div>
+<!-- /main body -->

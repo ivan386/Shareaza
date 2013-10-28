@@ -1,0 +1,32 @@
+﻿									<tr>
+<%? download_is_expanded %>
+										<td class="filename"><div title="<%= download_filename %>"><a class="noline" href="?modify_id=<%= download_id %>&amp;modify_action=collapse">-</a> <%= download_filename %></div></td>
+<%?%><%? download_is_collapsed %>
+										<td class="filename"><div title="<%= download_filename %>"><a class="noline" href="?modify_id=<%= download_id %>&amp;modify_action=expand">+</a> <%= download_filename %></div></td>
+<%?%><%? !download_is_expanded %><%? !download_is_collapsed %>
+										<td class="filename"><div title="<%= download_filename %>"><%= download_filename %></div></td>
+<%?%><%?%>
+										<td><%= download_size %></td>
+										<td>
+											<div class="progcontainer">
+												<div class="progbar" style="width:<%= download_percent %>%;"></div>
+												<div class="progprocent"><%= download_percent %>%</div>
+											</div>
+										
+										</td>
+										<td><%= download_speed %></td>
+										<td><%= download_sources %></td>
+										<td><%= download_status %></td>
+										<td>
+<%? download_is_complete %>
+											<a href="?modify_id=<%= download_id %>&amp;modify_action=clear" title="Pašalinti failą iš atsiuntimų sąrašo (tai neištrins failo)">Valyti</a>
+<%?%><%? !download_is_complete %>
+<%? download_is_paused %>
+											<a href="?modify_id=<%= download_id %>&amp;modify_action=resume">Tęsti</a> -
+<%?%><%? !download_is_paused %>
+											<a href="?modify_id=<%= download_id %>&amp;modify_action=pause">Pristabdyti</a> -
+<%?%>										<a href="?modify_id=<%= download_id %>&amp;modify_action=more_sources">Daugiau šaltinių</a> -
+											<a href="?modify_id=<%= download_id %>&amp;modify_action=cancel">Atšaukti</a>
+<%?%>
+										</td>
+									</tr>

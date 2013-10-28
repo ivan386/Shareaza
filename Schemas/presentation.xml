@@ -1,0 +1,532 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- Document:Presentation XML Framework; v1.4; Jonathan C. Nilson -->
+
+<!--
+Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
+Shareaza Catalan Schemas File translated by Daniel Olivares Giménez; Equip de traduccions de FeshoCAT
+Shareaza Chinese Simplified Schemas File translated by Sanley; John
+Shareaza Chinese Traditional Schemas File translated by James Bond
+Shareaza Czech Schemas File translated by Odin
+Shareaza German Schemas File translated by Spooky; jlh
+Shareaza Estonian Schemas File translated by Janza
+Shareaza Spanish Schemas File translated by Unknown
+Shareaza Spanish (Mexico) Schemas File translated by Help
+Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
+Shareaza Greek Schemas File translated by erimitis
+Shareaza Hebrew Schemas File translated by _peer_ (H.L)
+Shareaza Croatian Schemas File translated by Biza
+Shareaza Hungarian Schemas File translated by Yuri
+Shareaza Italian Schemas File translated by ale5000
+Shareaza Japanese Schemas File translated by DukeDog; CyberBob
+Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
+Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); Jonne; Neglacio
+Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
+Shareaza Portuguese (Brasil) Schemas File translated by Lukas Taves (LightHeaven); Felipe
+Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
+Shareaza Slovenian Schemas File translated by Martin McDowell
+Shareaza Albanian Schemas File translated by Besmir Godole
+Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Swedish Schemas File translated by Marcus Ehrenlans; Printz; DanielB
+Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
+-->
+
+<schemaDescriptor location="http://www.shareaza.com/schemas/presentation.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
+       <object type="file" availability="advanced"/>
+       <titles>
+               <title language="en">Presentation</title>
+               <title language="af">Aanbieding</title>
+               <title language="ca">Presentació</title>
+               <title language="chs">介绍</title>
+               <title language="cht">文件:介紹</title>
+               <title language="cz">Prezentace</title>
+               <title language="de">Präsentation</title>
+               <title language="ee">Esitlus</title>
+               <title language="es">Presentación</title>
+               <title language="es-mx">Presentación</title>
+               <title language="fr">Présentation</title>
+               <title language="gr">Παρουσίαση</title>
+               <title language="heb">תצוגה</title>
+               <title language="hr">Prezentacija</title>
+               <title language="hu">Előadás</title>
+               <title language="it">Presentazione</title>
+               <title language="ja">プレゼンテーション</title>
+               <title language="lt">Pateiktis</title>
+               <title language="nl">Presentatie</title>
+               <title language="no">Presentasjon</title>
+               <title language="pt-br">Apresentação</title>
+               <title language="ru">&#160;Презентация</title>
+               <title language="sl-SI">Prezentacija</title>
+               <title language="sq">Prezantimi</title>
+               <title language="sr">Prezentacija</title>
+               <title language="sv">Presentation</title>
+               <title language="tr">Tanıtım</title>
+       </titles>
+       <members>
+               <member name="title" search="generic">
+                       <display defaultColumn="true"/>
+                       <title language="en">Title</title>
+                       <title language="af">Titel</title>
+                       <title language="ca">Títol</title>
+                       <title language="chs">标题</title>
+                       <title language="cht">標題</title>
+                       <title language="cz">Název</title>
+                       <title language="de">Titel</title>
+                       <title language="ee">Pealkiri</title>
+                       <title language="es">Título</title>
+                       <title language="es-mx">Título</title>
+                       <title language="fr">Titre</title>
+                       <title language="gr">Τίτλος</title>
+                       <title language="heb">כותרת</title>
+                       <title language="hr">Naslov</title>
+                       <title language="hu">Cím</title>
+                       <title language="it">Titolo</title>
+                       <title language="ja">タイトル</title>
+                       <title language="lt">Pavadinimas</title>
+                       <title language="nl">Titel</title>
+                       <title language="no">Tittel</title>
+                       <title language="pt-br">Título</title>
+                       <title language="ru">Название</title>
+                       <title language="sl-SI">Naslov</title>
+                       <title language="sq">Titulli</title>
+                       <title language="sr">Naslov</title>
+                       <title language="sv">Titel</title>
+                       <title language="tr">Başlık</title>
+               </member>
+               <member name="author" search="generic">
+                       <display defaultColumn="true"/>
+                       <title language="en">Author</title>
+                       <title language="af">Outeur</title>
+                       <title language="ca">Autor</title>
+                       <title language="chs">作者</title>
+                       <title language="cht">作者</title>
+                       <title language="cz">Autor</title>
+                       <title language="de">Autor</title>
+                       <title language="ee">Autor</title>
+                       <title language="es">Autor</title>
+                       <title language="es-mx">Autor</title>
+                       <title language="fr">Auteur</title>
+                       <title language="gr">Συγγραφέας</title>
+                       <title language="heb">מחבר</title>
+                       <title language="hr">Autor</title>
+                       <title language="hu">Szerző</title>
+                       <title language="it">Autore</title>
+                       <title language="ja">著者</title>
+                       <title language="lt">Autorius</title>
+                       <title language="nl">Auteur</title>
+                       <title language="no">Forfatter</title>
+                       <title language="pt-br">Autor</title>
+                       <title language="ru">Автор</title>
+                       <title language="sl-SI">Avtor</title>
+                       <title language="sq">Autori</title>
+                       <title language="sr">Autor</title>
+                       <title language="sv">Författare</title>
+                       <title language="tr">Yazar</title>
+               </member>
+               <member name="subject">
+                       <title language="en">Subject</title>
+                       <title language="af">Onderwerp</title>
+                       <title language="ca">Subjecte</title>
+                       <title language="chs">主题</title>
+                       <title language="cht">主題</title>
+                       <title language="cz">Předmět</title>
+                       <title language="de">Thema</title>
+                       <title language="ee">Teema</title>
+                       <title language="es">Sujeto</title>
+                       <title language="es-mx">Sujeto</title>
+                       <title language="fr">Sujet</title>
+                       <title language="gr">Θέμα</title>
+                       <title language="heb">נושא</title>
+                       <title language="hr">Tema</title>
+                       <title language="hu">Tárgy</title>
+                       <title language="it">Oggetto</title>
+                       <title language="ja">主題</title>
+                       <title language="lt">Tema</title>
+                       <title language="nl">Onderwerp</title>
+                       <title language="no">Tema</title>
+                       <title language="pt-br">Assunto</title>
+                       <title language="ru">Тема</title>
+                       <title language="sl-SI">Zadeva</title>
+                       <title language="sq">Tema</title>
+                       <title language="sr">Tema</title>
+                       <title language="sv">Ämne</title>
+                       <title language="tr">Konu</title>
+               </member>
+               <member name="language" search="indexed">
+                       <display defaultColumn="true"/>
+                       <title language="en">Language</title>
+                       <title language="af">Taal</title>
+                       <title language="ca">Idioma</title>
+                       <title language="chs">语言</title>
+                       <title language="cht">語言</title>
+                       <title language="cz">Jazyk</title>
+                       <title language="de">Sprache</title>
+                       <title language="ee">Keel</title>
+                       <title language="es">Lenguaje</title>
+                       <title language="es-mx">Lenguaje</title>
+                       <title language="fr">Langue</title>
+                       <title language="gr">Γλώσσα</title>
+                       <title language="heb">שפה</title>
+                       <title language="hr">Jezik</title>
+                       <title language="hu">Nyelv</title>
+                       <title language="it">Lingua</title>
+                       <title language="ja">言語</title>
+                       <title language="lt">Kalba</title>
+                       <title language="nl">Taal</title>
+                       <title language="no">Språk</title>
+                       <title language="pt-br">Idioma</title>
+                       <title language="ru">Язык</title>
+                       <title language="sl-SI">Jezik</title>
+                       <title language="sq">Gjuhë</title>
+                       <title language="sr">Jezik</title>
+                       <title language="sv">Språk</title>
+                       <title language="tr">Dil</title>
+               </member>
+               <member name="keywords">
+                       <display defaultColumn="true"/>
+                       <title language="en">Keywords</title>
+                       <title language="af">Sleutelwoorde</title>
+                       <title language="ca">Paraules clau</title>
+                       <title language="chs">关键词</title>
+                       <title language="cht">關鍵字</title>
+                       <title language="cz">Klíčová slova</title>
+                       <title language="de">Schlüsselwörter</title>
+                       <title language="ee">Võtmesõnad</title>
+                       <title language="es">Palabras Clave</title>
+                       <title language="es-mx">Palabras Clave</title>
+                       <title language="fr">Mots clés</title>
+                       <title language="gr">Λέξεις Κλειδιά</title>
+                       <title language="heb">מילים לזיהוי</title>
+                       <title language="hr">Ključne Riječi</title>
+                       <title language="hu">Kulcsszavak</title>
+                       <title language="it">Parole chiave</title>
+                       <title language="ja">キーワード</title>
+                       <title language="lt">Raktažodžiai</title>
+                       <title language="nl">Sleutelwoorden</title>
+                       <title language="no">Nøkkelord</title>
+                       <title language="pt-br">Palavras-chave</title>
+                       <title language="ru">Ключ. слова</title>
+                       <title language="sl-SI">Ključne besede</title>
+                       <title language="sq">Fjalët Kyçe</title>
+                       <title language="sr">Ključne Reči</title>
+                       <title language="sv">Nyckelord</title>
+                       <title language="tr">Anahtar Kelimeler</title>
+               </member>
+               <member name="abstract">
+                       <display defaultColumn="true"/>
+                       <title language="en">Abstract</title>
+                       <title language="af">Abstrak</title>
+                       <title language="ca">Abstracte</title>
+                       <title language="chs">抽象</title>
+                       <title language="cht">抽象的</title>
+                       <title language="cz">Anotace</title>
+                       <title language="de">Zusammenfassung</title>
+                       <title language="ee">Abstraktne</title>
+                       <title language="es">Abstracto</title>
+                       <title language="es-mx">Abstracto</title>
+                       <title language="fr">Extrait</title>
+                       <title language="gr">Σύνοψη</title>
+                       <title language="heb">תקציר</title>
+                       <title language="hr">Abstrakt</title>
+                       <title language="hu">Összesítés</title>
+                       <title language="it">Riassunto</title>
+                       <title language="ja">概要</title>
+                       <title language="lt">Santrauka</title>
+                       <title language="nl">Samenvatting</title>
+                       <title language="no">Abstrakt</title>
+                       <title language="pt-br">Abstrato</title>
+                       <title language="ru">Содержание</title>
+                       <title language="sl-SI">Povzetek</title>
+                       <title language="sq">Abstrakte</title>
+                       <title language="sr">Abstrakt</title>
+                       <title language="sv">Sammanfattning</title>
+                       <title language="tr">Özet</title>
+               </member>
+               <member name="initials">
+                       <title language="en">Initials</title>
+                       <title language="af">Voorletters</title>
+                       <title language="ca">Inicials</title>
+                       <title language="chs">首字</title>
+                       <title language="cht">字首</title>
+                       <title language="cz">Iniciály</title>
+                       <title language="de">Initialen</title>
+                       <title language="ee">Initsiaalid</title>
+                       <title language="es">Iniciales</title>
+                       <title language="es-mx">Iniciales</title>
+                       <title language="fr">Initiales</title>
+                       <title language="gr">Αρχικά</title>
+                       <title language="heb">הערות</title>
+                       <title language="hr">Inicijali</title>
+                       <title language="hu">Aláírás</title>
+                       <title language="it">Iniziali</title>
+                       <title language="ja">イニシャル</title>
+                       <title language="lt">Inicialai</title>
+                       <title language="nl">Initialen</title>
+                       <title language="no">Initialer</title>
+                       <title language="pt-br">Iniciais</title>
+                       <title language="ru">Инициалы</title>
+                       <title language="sl-SI">Začetnice</title>
+                       <title language="sq">Inicialet</title>
+                       <title language="sr">Inicijali</title>
+                       <title language="sv">Initialer</title>
+                       <title language="tr">İlkler</title>
+               </member>
+               <member name="copyright">
+                       <title language="en">Copyright</title>
+                       <title language="af">Kopiereg</title>
+                       <title language="ca">Copyright</title>
+                       <title language="chs">版权</title>
+                       <title language="cht">版權</title>
+                       <title language="cz">Autorská práva</title>
+                       <title language="de">Copyright</title>
+                       <title language="ee">Autorikaitse</title>
+                       <title language="es">Copyright</title>
+                       <title language="es-mx">Copyright</title>
+                       <title language="fr">Copyright</title>
+                       <title language="gr">Πνευματικά Δικαιώματα</title>
+                       <title language="heb">זכויות יוצרים</title>
+                       <title language="hr">Prava</title>
+                       <title language="hu">Copyright</title>
+                       <title language="it">Diritti d'autore</title>
+                       <title language="ja">著作権</title>
+                       <title language="lt">Autorių teisės</title>
+                       <title language="nl">Copyright</title>
+                       <title language="no">Kopibeskyttelse</title>
+                       <title language="pt-br">Direitos de Cópia</title>
+                       <title language="ru">Автор. права</title>
+                       <title language="sl-SI">Avtorska pravica</title>
+                       <title language="sq">Copyright</title>
+                       <title language="sr">Prava</title>
+                       <title language="sv">Upphovsrätt</title>
+                       <title language="tr">Telif Hakkı</title>
+               </member>
+               <member name="version">
+                       <display defaultColumn="true"/>
+                       <title language="en">Version</title>
+                       <title language="af">Weergawe</title>
+                       <title language="ca">Versió</title>
+                       <title language="chs">版本</title>
+                       <title language="cht">版本</title>
+                       <title language="cz">Verze</title>
+                       <title language="de">Version</title>
+                       <title language="ee">Versioon</title>
+                       <title language="es">Versión</title>
+                       <title language="es-mx">Versión</title>
+                       <title language="fr">Version</title>
+                       <title language="gr">Έκδοση</title>
+                       <title language="heb">גרסא</title>
+                       <title language="hr">Verzija</title>
+                       <title language="hu">Verzió</title>
+                       <title language="it">Versione</title>
+                       <title language="ja">バージョン</title>
+                       <title language="lt">Versija</title>
+                       <title language="nl">Versie</title>
+                       <title language="no">Versjon</title>
+                       <title language="pt-br">Versão</title>
+                       <title language="ru">Версия</title>
+                       <title language="sl-SI">Različica</title>
+                       <title language="sq">Versioni</title>
+                       <title language="sr">Verzija</title>
+                       <title language="sv">Version</title>
+                       <title language="tr">Versiyon</title>
+               </member>
+               <member name="revision">
+                       <title language="en">Revision</title>
+                       <title language="af">Hersiening</title>
+                       <title language="ca">Revisió</title>
+                       <title language="chs">修订版</title>
+                       <title language="cht">校訂</title>
+                       <title language="cz">Revize:</title>
+                       <title language="de">Revision</title>
+                       <title language="ee">Läbivaatus</title>
+                       <title language="es">Revision</title>
+                       <title language="es-mx">Revision</title>
+                       <title language="fr">Révision</title>
+                       <title language="gr">Αναθεώρηση</title>
+                       <title language="heb">Revision</title>
+                       <title language="hr">Revizija</title>
+                       <title language="hu">Javított kiadás</title>
+                       <title language="it">Revisione</title>
+                       <title language="ja">改訂</title>
+                       <title language="lt">Revizija</title>
+                       <title language="nl">Revisie</title>
+                       <title language="no">Revisjon</title>
+                       <title language="pt-br">Revisão</title>
+                       <title language="ru">Ревизия</title>
+                       <title language="sl-SI">Revizija</title>
+                       <title language="sq">Rishikimi</title>
+                       <title language="sr">Revizija</title>
+                       <title language="sv">Revision</title>
+                       <title language="tr">Düzenleme</title>
+               </member>
+               <member name="format">
+                       <display defaultColumn="true"/>
+                       <title language="en">Format</title>
+                       <title language="af">Formaat</title>
+                       <title language="ca">Format</title>
+                       <title language="chs">格式</title>
+                       <title language="cht">格式</title>
+                       <title language="cz">Formát</title>
+                       <title language="de">Format</title>
+                       <title language="ee">Formaat</title>
+                       <title language="es">Formato</title>
+                       <title language="es-mx">Formato</title>
+                       <title language="fr">Format</title>
+                       <title language="gr">Μορφή</title>
+                       <title language="heb">תבנית</title>
+                       <title language="hr">Format</title>
+                       <title language="hu">Formátum</title>
+                       <title language="it">Formato</title>
+                       <title language="ja">形式</title>
+                       <title language="lt">Formatas</title>
+                       <title language="nl">Formaat</title>
+                       <title language="no">Format</title>
+                       <title language="pt-br">Formato</title>
+                       <title language="ru">Формат</title>
+                       <title language="sl-SI">Oblika</title>
+                       <title language="sq">Formati</title>
+                       <title language="sr">Format</title>
+                       <title language="sv">Format</title>
+                       <title language="tr">Biçim</title>
+               </member>
+               <member name="formatversion">
+                       <title language="en">Format Version</title>
+                       <title language="af">Formaat Weerg.</title>
+                       <title language="ca">Versió del format</title>
+                       <title language="chs">格式版本</title>
+                       <title language="cht">格式版本</title>
+                       <title language="cz">Verze formátu</title>
+                       <title language="de">Formatversion</title>
+                       <title language="ee">Formaadi Versioon</title>
+                       <title language="es">Versión del Formato</title>
+                       <title language="es-mx">Versión del Formato</title>
+                       <title language="fr">Version du format</title>
+                       <title language="gr">Έκδοση Μορφής</title>
+                       <title language="heb">גרסאת תבנית</title>
+                       <title language="hr">Verzija Formata</title>
+                       <title language="hu">Formátum verziója</title>
+                       <title language="it">Versione formato</title>
+                       <title language="ja">形式バージョン</title>
+                       <title language="lt">Formato versija</title>
+                       <title language="nl">Formaatsversie</title>
+                       <title language="no">Formatversjon</title>
+                       <title language="pt-br">Versão do Formato</title>
+                       <title language="ru">Версия формата</title>
+                       <title language="sl-SI">Različica oblike</title>
+                       <title language="sq">Versioni i Formatit</title>
+                       <title language="sr">Verzija Formata</title>
+                       <title language="sv">Formatversion</title>
+                       <title language="tr">Biçim Versiyonu</title>
+               </member>
+               <member name="slides">
+                       <title language="en">Slides</title>
+                       <title language="af">Skyfies</title>
+                       <title language="ca">Diapositives</title>
+                       <title language="chs">幻灯片</title>
+                       <title language="cht">滑道</title>
+                       <title language="cz">Slajdy</title>
+                       <title language="de">Folien</title>
+                       <title language="ee">Diapositiiv</title>
+                       <title language="es">Slides</title>
+                       <title language="es-mx">Slides</title>
+                       <title language="fr">Diapositives</title>
+                       <title language="gr">Διαφάνειες</title>
+                       <title language="heb">Slides</title>
+                       <title language="hr">Slides</title>
+                       <title language="hu">Dia</title>
+                       <title language="it">Diapositive</title>
+                       <title language="ja">スライド</title>
+                       <title language="lt">Skaidrių</title>
+                       <title language="nl">Diavoorstelling</title>
+                       <title language="no">Lysbilder</title>
+                       <title language="pt-br">Slides</title>
+                       <title language="ru">Слайды</title>
+                       <title language="sl-SI">Diapozitiv</title>
+                       <title language="sq">Shinat</title>
+                       <title language="sr">Slides</title>
+                       <title language="sv">Diabilder</title>
+                       <title language="tr">Slaytlar</title>
+               </member>
+               <member name="link">
+                       <display defaultColumn="true"/>
+                       <title language="en">Link</title>
+                       <title language="af">Skakel</title>
+                       <title language="ca">Enllaç</title>
+                       <title language="chs">链接</title>
+                       <title language="cht">連結</title>
+                       <title language="cz">Odkaz</title>
+                       <title language="de">Link</title>
+                       <title language="ee">Link</title>
+                       <title language="es">Link</title>
+                       <title language="es-mx">Link</title>
+                       <title language="fr">Lien</title>
+                       <title language="gr">Σύνδεσμος</title>
+                       <title language="heb">קישור</title>
+                       <title language="hr">Link</title>
+                       <title language="hu">Link</title>
+                       <title language="it">Link</title>
+                       <title language="ja">リンク</title>
+                       <title language="lt">Nuoroda</title>
+                       <title language="nl">Link</title>
+                       <title language="no">Link</title>
+                       <title language="pt-br">Link</title>
+                       <title language="ru">Ссылка</title>
+                       <title language="sl-SI">Povezava</title>
+                       <title language="sq">Linku</title>
+                       <title language="sr">Link</title>
+                       <title language="sv">Länk</title>
+                       <title language="tr">Bağlantı</title>
+               </member>
+               <member name="comments">
+                       <display defaultColumn="true"/>
+                       <title language="en">Comments</title>
+                       <title language="af">Kommentaar</title>
+                       <title language="ca">Comentaris</title>
+                       <title language="chs">注释</title>
+                       <title language="cht">注釋</title>
+                       <title language="cz">Komentáře</title>
+                       <title language="de">Kommentar</title>
+                       <title language="ee">Arvamused</title>
+                       <title language="es">Comentarios</title>
+                       <title language="es-mx">Comentarios</title>
+                       <title language="fr">Commentaires</title>
+                       <title language="gr">Σχόλια</title>
+                       <title language="heb">הערות</title>
+                       <title language="hr">Komentari</title>
+                       <title language="hu">Megjegyzés</title>
+                       <title language="it">Commenti</title>
+                       <title language="ja">コメント</title>
+                       <title language="lt">Komentarai</title>
+                       <title language="nl">Opmerkingen</title>
+                       <title language="no">Kommentar</title>
+                       <title language="pt-br">Comentários</title>
+                       <title language="ru">Коментарии</title>
+                       <title language="sl-SI">Komentarji</title>
+                       <title language="sq">Komente</title>
+                       <title language="sr">Komentari</title>
+                       <title language="sv">Kommentarer</title>
+                       <title language="tr">Yorumlar</title>
+               </member>
+       </members>
+       <typeFilter>
+               <type extension="exe"/>
+               <type extension="fla"/>
+               <type extension="htm"/>
+               <type extension="html"/>
+               <type extension="odp"/>
+               <type extension="otp"/>
+               <type extension="mpp"/>
+               <type extension="mpt"/>
+               <type extension="pdf"/>
+               <type extension="potx"/>
+               <type extension="ppt"/>
+               <type extension="pptx"/>
+               <type extension="sda"/>
+               <type extension="sdd"/>
+               <type extension="shw"/>
+               <type extension="sti"/>
+               <type extension="swf"/>
+               <type extension="sxi"/>
+               <type extension="vsd"/>
+               <type extension="vst"/>
+       </typeFilter>
+</schemaDescriptor>

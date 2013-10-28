@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<schema targetNamespace="http://www.shareaza.com/schemas/subtitle.xsd" xmlns="http://www.w3.org/2001/XMLSchema">
+
+	<element name="subtitles">
+		<complexType>
+			<element name="subtitle" type="subtitleType" minOccurs="1" maxOccurs="unbounded"/>
+		</complexType>
+	</element>
+
+	<complexType name="subtitleType">
+		<all>
+			<attribute name="title" type="string"/>
+			<attribute name="episodenumber" type="string"/>
+			<attribute name="seriesnumber" type="string"/>
+			<attribute name="description">
+				<simpleType base="string">
+					<maxInclusive value="1024"/>
+				</simpleType>
+			</attribute>
+			<attribute name="realdescription">
+				<simpleType base="string">
+					<maxInclusive value="1024"/>
+				</simpleType>
+			</attribute>
+			<attribute name="language">
+				<simpleType base="string">
+					<enumeration value="Danish"/>
+					<enumeration value="English"/>
+					<enumeration value="French"/>
+					<enumeration value="German"/>
+					<enumeration value="Italian"/>
+					<enumeration value="Korean"/>
+					<enumeration value="Japanese"/>
+					<enumeration value="Mandarin"/>
+					<enumeration value="Russian"/>
+					<enumeration value="Spanish"/>
+				</simpleType>
+			</attribute>
+			<attribute name="imdbLink" type="uriReference"/>
+			<attribute name="minutes" type="decimal"/>
+			<attribute name="year" type="year"/>
+			<attribute name="partNumber" type="int"/>
+			<attribute name="partCount" type="int"/>
+			<attribute name="quality">
+				<simpleType base="string">
+					<enumeration value="Very Good"/>
+					<enumeration value="Good"/>
+					<enumeration value="Standard"/>
+					<enumeration value="Poor"/>
+					<enumeration value="Very Poor"/>
+				</simpleType>
+			</attribute>
+			<attribute name="qualityNotes" type="string"/>
+			<attribute name="releaseDate" type="string"/>
+			<attribute name="distributer" type="string"/>
+			<attribute name="distributerLink" type="uriReference"/>
+			<attribute name="releasegroup" type="string"/>
+			<attribute name="releasegroupLink" type="uriReference"/>
+			<attribute name="keywords" type="string"/>
+			<attribute name="link" type="uriReference"/>
+		</all>
+	</complexType>
+
+</schema>

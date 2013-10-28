@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ROM Image XML Framework; v1.3; Jonathan C. Nilson -->
+
+<schema targetNamespace="http://www.shareaza.com/schemas/rom.xsd" xmlns="http://www.w3.org/2001/XMLSchema">
+
+	<mapping>
+		<network name="ed2k" value="Pro"/>
+	</mapping>
+
+	<element name="roms">
+		<complexType>
+			<element name="rom" type="romType" minOccurs="1" maxOccurs="unbounded"/>
+		</complexType>
+	</element>
+  
+	<complexType name="romType">
+		<all>
+			<attribute name="title" type="string"/>
+			<attribute name="company" type="string"/>
+			<attribute name="system">
+				<simpleType base="string">
+					<enumeration value="Apple"/>
+					<enumeration value="Apple II"/>
+					<enumeration value="Apple IIe"/>
+					<enumeration value="Atari 2600"/>
+					<enumeration value="Atari 5200"/>
+					<enumeration value="Atari 7800"/>
+					<enumeration value="Atari Lynx"/>
+					<enumeration value="Atari Jaguar"/>
+					<enumeration value="Atari ST"/>
+					<enumeration value="Bandai Wonderswan"/>
+					<enumeration value="Bandai Wonderswan Color"/>
+					<enumeration value="Capcom CPS-1"/>
+					<enumeration value="Capcom ZN-1"/>
+					<enumeration value="Capcom ZN-2"/>
+					<enumeration value="Coleco ColecoVision"/>
+					<enumeration value="Commodore Amiga"/>
+					<enumeration value="Commodore C64"/>
+					<enumeration value="GCE Vectrex"/>
+					<enumeration value="Mame"/>
+					<enumeration value="Mattel Intellivision"/>
+					<enumeration value="Memotech MTX"/>
+					<enumeration value="MSX 1"/>
+					<enumeration value="MSX 2"/>
+					<enumeration value="NEC Super Grafx"/>
+					<enumeration value="NEC Turbo Grafx 16"/>
+					<enumeration value="Nintendo 64"/>
+					<enumeration value="Nintendo Entertainment System"/>
+					<enumeration value="Nintendo GameBoy"/>
+					<enumeration value="Nintendo GameBoy Advance"/>
+					<enumeration value="Nintendo GameBoy Color"/>
+					<enumeration value="Nintendo Virtual Boy"/>
+					<enumeration value="Oric"/>
+					<enumeration value="Sega 32X"/>
+					<enumeration value="Sega CD"/>
+					<enumeration value="Sega Game Gear"/>
+					<enumeration value="Sega Genesis"/>
+					<enumeration value="Sega Master System"/>
+					<enumeration value="Sega SG-1000"/>
+					<enumeration value="Sega SG-3000"/>
+					<enumeration value="Sega System 16"/>
+					<enumeration value="Sharp X68000"/>
+					<enumeration value="Sinclair Spectrum"/>
+					<enumeration value="SNK NeoGeo"/>
+					<enumeration value="SNK NeoGeo Pocket"/>
+					<enumeration value="SNK NeoGeo Pocket Color"/>
+					<enumeration value="Sony Playstation"/>
+					<enumeration value="Super Nintendo"/>
+					<enumeration value="Tandy Color Computer"/>
+					<enumeration value="Thomson MO5"/>
+					<enumeration value="Turbo Grafix 16"/>
+					<enumeration value="VTech VZx00"/>
+					<enumeration value="Watara Supervision"/>
+				</simpleType>
+			</attribute>
+			<attribute name="type">
+				<simpleType base="string">
+					<enumeration value="Action"/>
+					<enumeration value="Adventure"/>
+					<enumeration value="Board"/>
+					<enumeration value="Card"/>
+					<enumeration value="Dice"/>
+					<enumeration value="Demo"/>
+					<enumeration value="Educational"/>
+					<enumeration value="Fighting"/>
+					<enumeration value="Interactive Fiction"/>
+					<enumeration value="Music &#38; Dance"/>
+					<enumeration value="Outdoors"/>
+					<enumeration value="Pinball"/>
+					<enumeration value="Puzzle"/>
+					<enumeration value="Racing"/>
+					<enumeration value="Role Playing"/>
+					<enumeration value="Shooter"/>
+					<enumeration value="Simulation"/>
+					<enumeration value="Sports"/>
+					<enumeration value="Strategy"/>
+					<enumeration value="Test"/>
+					<enumeration value="Trivia"/>
+					<enumeration value="Word"/>
+					<enumeration value="Adult"/>
+					<enumeration value="Other"/>
+				</simpleType>
+			</attribute>
+			<attribute name="year" type="year"/>
+			<attribute name="language">
+				<simpleType base="string">
+					<enumeration value="Danish"/>
+					<enumeration value="English"/>
+					<enumeration value="French"/>
+					<enumeration value="German"/>
+					<enumeration value="Italian"/>
+					<enumeration value="Korean"/>
+					<enumeration value="Japanese"/>
+					<enumeration value="Mandarin"/>
+					<enumeration value="Russian"/>
+					<enumeration value="Spanish"/>
+				</simpleType>
+			</attribute>
+			<attribute name="rating">
+				<simpleType base="string">
+					<enumeration value="EC"/>
+					<enumeration value="K-A"/>
+					<enumeration value="E"/>
+					<enumeration value="T"/>
+					<enumeration value="M"/>
+					<enumeration value="AO"/>
+					<enumeration value="RP"/>
+				</simpleType>
+			</attribute>
+			<attribute name="price" type="string"/>
+			<attribute name="link" type="uriReference"/>
+			<attribute name="comments">
+				<simpleType base="string">
+					<maxInclusive value="100"/>
+				</simpleType>
+			</attribute>
+		</all>
+	</complexType>
+
+</schema>

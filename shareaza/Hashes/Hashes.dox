@@ -1,0 +1,215 @@
+////////////////////////////////////////////////////////////////////////////////
+//                                                                            //
+// Hashes/Hashes.dox                                                          //
+//                                                                            //
+// Copyright (C) 2005 Shareaza Development Team.                              //
+// This file is part of SHAREAZA (shareaza.sourceforge.net).                          //
+//                                                                            //
+// Shareaza is free software; you can redistribute it                         //
+// and/or modify it under the terms of the GNU General Public License         //
+// as published by the Free Software Foundation; either version 2 of          //
+// the License, or (at your option) any later version.                        //
+//                                                                            //
+// Shareaza is distributed in the hope that it will be useful,                //
+// but WITHOUT ANY WARRANTY; without even the implied warranty of             //
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                       //
+// See the GNU General Public License for more details.                       //
+//                                                                            //
+// You should have received a copy of the GNU General Public License          //
+// along with Shareaza; if not, write to the                                  //
+// Free Software Foundation, Inc,                                             //
+// 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA                    //
+//                                                                            //
+////////////////////////////////////////////////////////////////////////////////
+
+//! \page hashtemplate Hash Template
+//! \section hashtemplatedesign Design
+//!
+//! \todo explain policy based design here
+//!
+//! \section hashpoliciespage Hash Policies
+//!
+//! \subsection hashdescriptorpage Hash Descriptor
+//!
+//! A Hash Descriptor is a class containing typedefs and static members
+//! describing the basic properties of a hash type.
+//!
+//! The following members shall be defined:
+//!
+//! <table><tr>
+//!   <td>\a WordType</td>
+//!   <td>This member shall be a definition of the underlying word type of a
+//!       hash.</td>
+//! </tr><tr>
+//!   <td>\a wordCount</td>
+//!   <td>This static integral constant shall contain the number of words
+//!       constituting a hash value.</td>
+//! </tr><tr>
+//!   <td>\a byteCount</td>
+//!   <td>This static integral constant shall contain the number of bytes
+//!       constituting a hash value - the following equation must hold:\n
+//!       \a byteCount = \a wordCount * \c sizeof( \a WordType ).</td>
+//! </tr><tr>
+//!   <td>\a numUrns</td>
+//!   <td>This static integral constant shall be the number of known urn
+//!       prefixes of urns that may contain this type of hash.</td>
+//! </tr><tr>
+//!   <td>\a urns</td>
+//!   <td>A static const array of Hashes::UrnString descriptors having
+//!       \a numUrns elements. Shall be omitted if and only if \a numUrns is 0.
+//!       </td>
+//! </tr><tr>
+//!   <td>\a encoding</td>
+//!   <td>This enumeration constant of type Hashes::Encoding shall define the
+//!       default conversion to and from Strings.</td>
+//! </tr><tr>
+//!   <td>\a RawStorage</td>
+//!   <td>An uchar boost::array of size byteCount. Useful when casting against a
+//!       byte stream or as substructure when padding must be avoided.</td>
+//! </tr><tr>
+//!   <td>\a AlignedStorage</td>
+//!   <td>A WordType boost::array of size wordCount. Useful when casting
+//!       similar to RawStorage. Used to define aligned storage and in
+//!       blacklists.</td>
+//! </tr><tr>
+//!   <td>\a blacklist</td>
+//!   <td>A static container of AlignedStorage to hold samples of bad hashes
+//!       used globally.
+//!       \warning Being static without access control this container must
+//!                not be modified during execution, load only once at program
+//!                start.
+//!       \note Refer to it only with qualified ids, this name may be hidden
+//!             by other policies (Hashes::Policies::LocalCheck)</td>
+//! </tr></table>
+//!
+//! The following Hash Descriptors are defined:\n
+//! Hashes::Policies::BtGuidDescriptor, Hashes::Policies::Ed2kDescriptor,
+//! Hashes::Policies::GuidDescriptor, Hashes::Policies::Md5Descriptor,
+//! Hashes::Policies::Sha1Descriptor, Hashes::Policies::TigerDescriptor
+//!
+//!
+//! \subsection hashstoragepoliciespage Storage Policy
+//!
+//! A Storage Policy is a class template that provides means to store and access
+//! the content of a hash.
+//!
+//! \param DescriptorT A model of \ref hashdescriptorpage "Hash Descriptor".
+//!
+//! Each model of Storage Policy shall be derived publicly from its template
+//! parameter and shall have the following public members and typedefs:
+//!
+//! <table><tr>
+//!   <td>\a Descriptor</td>
+//!   <td>This type shall be a typedef for DescriptorT.</td>
+//! </tr><tr>
+//!   <td>\a iterator</td>
+//!   <td>A model of STL random access iterator providing access to the hash
+//!       value.</td>
+//! </tr><tr>
+//!   <td>\a const_iterator</td>
+//!   <td>A model of STL random access iterator providing const access to the
+//!       hash value.</td>
+//! </tr><tr>
+//!   <td>\c void \a clear()</td>
+//!   <td>This shall have the same effects as assigning a default constructed
+//!       model of Storage Policy would have.</td>
+//! </tr><tr>
+//!   <td>uchar& \c operator[](size_t)</td>
+//!   <td>Shall provide bytewise access to the hash value</td>
+//! </tr><tr>
+//!   <td>\c const uchar& \c operator[](size_t) \c const</td>
+//!   <td>const overload</td>
+//! </tr><tr>
+//!   <td>\a iterator \a begin()</td>
+//!   <td>Returns begin of the hash array, similar to STL containers.</td>
+//! </tr><tr>
+//!   <td>\a const_iterator \a begin() \c const</td>
+//!   <td>const overload</td>
+//! </tr><tr>
+//!   <td>\a iterator \a end()</td>
+//!   <td>Returns end of the hash array, similar to STL containers.</td>
+//! </tr><tr>
+//!   <td>\a const_iterator \a end() \c const</td>
+//!   <td>const overload</td>
+//! </tr></table>
+//!
+//! The following Storage Policies are defined:
+//!
+//! Hashes::Policies::NoInit, Hashes::Policies::ZeroInit
+//!
+//! \note Any correct piece of code should work with either policy.
+//!       Hashes::Policies::ZeroInit is provided primarily as a debugging aid.
+//!
+//!
+//! \subsection hashcheckingpoliciespage Checking Policy
+//!
+//! A Checking Policy provides a member function to compare the current hash
+//! value against some known bad values.
+//!
+//! \param StoragePolicyT An instance of a model of
+//!                       \ref hashstoragepoliciespage "Storage Policy".
+//!
+//! Each model of Checking Policy shall be derived publicly from its template
+//! parameter and shall have the following public members and typedefs:
+//!
+//! <table><tr>
+//!   <td>\a StoragePolicy</td>
+//!   <td>This type shall be a typedef for StoragePolicyT.</td>
+//! </tr><tr>
+//!   <td>\c bool \a check() \c const</td>
+//!   <td>This member function checks the current hash value. If this value is
+//!       found to be bad (it matches a known bad value) the function fails and
+//!       returns \c false. Otherwise the function succeeds and returns \c true.
+//!       </td>
+//! </tr></table>
+//!
+//! The following Checking Policies are defined:
+//!
+//! Hashes::Policies::NoCheck, Hashes::Policies::ZeroCheck,
+//! Hashes::Policies::GlobalCheck, Hashes::Policies::LocalCheck
+//!
+//!
+//! \subsection hashvalidationpoliciespage Validation Policy
+//!
+//! A Validation Policy provides means to store information about the validity
+//! of a given hash value.\n
+//! Because of to the way hashes are created, any hash value may specify a
+//! resource. There is no null value that could be used to signal an unknown
+//! value. In cases, where a hash may sometimes be \e unknown, it is necessary
+//! to attach a flag to that hash to signal this \e unknown condition. This is
+//! the purpose of the Validation policy. In addition, because there is no way
+//! to reconstruct a file given a hash alone, there are situations, when we know
+//! a hash but can't be certain that it actually specifies the resource we are
+//! interested in. Hashes::Policies::ExtendedValidation provides means to deal
+//! with such cases.
+//!
+//! \param CheckingPolicyT An instance of a model of
+//!                        \ref hashcheckingpoliciespage "Checking Policy".
+//!
+//! Each model of Validation Policy shall be derived publicly from its
+//! template parameter and shall have the following public members and typedefs:
+//!
+//! <table><tr>
+//!   <td>\a CheckingPolicy</td>
+//!   <td>This type shall be a typedef for CheckingPolicyT.</td>
+//! </tr><tr>
+//!   <td>\c void \a clear()</td>
+//!   <td>This hides the the memberfunction inherited indirectly.
+//!       It shall clear any flags and call the inherited function in turn.
+//!       Again its effect shall be the same as assigning a default
+//!       constructed object.</td>
+//! </tr><tr>
+//!   <td>\c bool \a validate()</td>
+//!   <td>This member function calls the inherited function \a check() and,
+//!       depending on its outcome, sets or clears the valid flag. Returns
+//!       the result of \a check().</td>
+//! </tr><tr>
+//!   <td>\c bool \a isValid() \c const</td>
+//!   <td>This member function returns the state of the valid flag.</td>
+//! </tr></table>
+//!
+//! Some Validation Policies may define additional public members.
+//! The following Validation Policies are defined:
+//!
+//! Hashes::Policies::NoValidation, Hashes::Policies::BasicValidation,
+//! Hashes::Policies::ExtendedValidation

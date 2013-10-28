@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<schema targetNamespace="http://www.shareaza.com/schemas/imageAlbum.xsd" xmlns="http://www.w3.org/2001/XMLSchema">
+	
+	<element name="imageAlbums">
+		<complexType>
+			<element name="imageAlbum" type="imageAlbumType" minOccurs="1" maxOccurs="unbounded"/>
+		</complexType>
+	</element>     
+	<complexType name="imageAlbumType">
+		<all>
+			<attribute name="title" type="string"/>
+			<attribute name="description" type="string"/>
+      
+			<attribute name="type">
+				<simpleType base="string">
+					<enumeration value="Photograph"/>
+					<enumeration value="Painting"/>
+					<enumeration value="Diagram"/>
+					<enumeration value="Illustration"/>
+					<enumeration value="Cartoon"/>
+					<enumeration value="Rendering"/>
+					<enumeration value="Adult"/>
+				</simpleType>
+			</attribute>
+	
+			<attribute name="rating">
+				<simpleType base="string">
+					<enumeration value="G"/>
+					<enumeration value="PG"/>
+					<enumeration value="PG-13"/>
+					<enumeration value="R"/>
+					<enumeration value="NC-17"/>
+					<enumeration value="NR"/>
+				</simpleType>
+			</attribute>
+
+			<attribute name="collector" type="string"/>
+			<attribute name="distributer" type="string"/>
+			<attribute name="distributerLink" type="uriReference"/>
+			<attribute name="releasegroup" type="string"/>
+			<attribute name="releasegroupLink" type="uriReference"/>
+			<attribute name="keywords" type="string"/>
+		</all>
+	</complexType>
+	
+</schema>

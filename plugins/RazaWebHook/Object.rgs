@@ -1,0 +1,74 @@
+HKCR
+{
+	ForceRemove Shareaza.RazaWebHook.1 = s 'Shareaza Web Download Hook'
+	{
+		CLSID = s '{0EEDB912-C5FA-486F-8334-57288578C627}'
+	}
+	ForceRemove Shareaza.RazaWebHook = s 'Shareaza Web Download Hook'
+	{
+		CLSID = s '{0EEDB912-C5FA-486F-8334-57288578C627}'
+		CurVer = s 'Shareaza.RazaWebHook.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {0EEDB912-C5FA-486F-8334-57288578C627} = s 'Shareaza Web Download Hook'
+		{
+			ProgID = s 'Shareaza.RazaWebHook.1'
+			VersionIndependentProgID = s 'Shareaza.RazaWebHook'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{3403F6D8-9584-4231-A988-2B4E96527962}'
+			'Implemented Categories'
+			{
+				'{7DD95801-9882-11CF-9FA9-00AA006C42C4}'
+				'{7DD95802-9882-11CF-9FA9-00AA006C42C4}'
+				'{0DE86A58-2BAA-11CF-A229-00AA003D7352}'
+			}
+		}
+	}
+}
+HKLM
+{
+	NoRemove Software
+	{
+		NoRemove Microsoft
+		{
+			NoRemove Windows
+			{
+				NoRemove CurrentVersion
+				{
+					NoRemove Explorer
+					{
+						NoRemove 'Browser Helper Objects'
+						{
+							ForceRemove {0EEDB912-C5FA-486F-8334-57288578C627}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+HKCU
+{
+	NoRemove Software
+	{
+		NoRemove Microsoft
+		{
+			NoRemove 'Internet Explorer'
+			{
+				NoRemove MenuExt
+				{
+					ForceRemove 'Download with &Shareaza' = s 'res://%MODULE%/3000'
+					{
+						val Contexts = d 34
+					}
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,51 @@
+﻿		<!-- tabs -->
+		<div class="poetry">
+			<ul class="tabs">
+				<li class="active"><a href="home" class="noline">Domů</a></li>
+				<li class="inactive"><a href="search" class="noline">Hledání</a></li>
+				<li class="inactive"><a href="downloads" class="noline">Stahování</a></li>
+				<li class="inactive"><a href="uploads" class="noline">Odesílání</a></li>
+				<li class="inactive"><a href="network" class="noline">Sítě</a></li>
+			</ul>
+		</div>
+		<!-- /tabs -->
+<!-- main body -->
+		<div id="frame">
+			<p>Vítejte ve <b>webovém rozhraní Shareaza.</b></p> <p>Můžete zde ovládat síťová připojení, stahování a vyhledávat nové soubory.</p>
+			<div style="float: right; width: 40em;">
+				<h3>Stáhnout</h3>
+				<div style="text-align: right;">
+					<form method="get" action="newsearch">
+						<div>
+							<label>Rychlé hledání:</label>
+							<input type="text" name="search" size="20" />
+							<select name="schema">
+								<option value="">Jakýkoliv soubor</option>
+								<option value="http://www.shareaza.com/schemas/application.xsd">Aplikace</option>
+								<option value="http://www.limewire.com/schemas/audio.xsd">Zvuk</option>
+								<option value="http://www.shareaza.com/schemas/bittorent.xsd">BitTorrent</option>
+								<option value="http://www.limewire.com/schemas/book.xsd">Kniha</option>
+								<option value="http://www.shareaza.com/schemas/collection.xsd">Sbírka</option>
+								<option value="http://www.shareaza.com/schemas/image.xsd">Obrázek</option>
+								<option value="http://www.shareaza.com/schemas/presentation.xsd">Prezentace</option>
+								<option value="http://www.shareaza.com/schemas/rom.xsd">ROM Image</option>
+								<option value="http://www.shareaza.com/schemas/shareazaSkin.xsd">Skin</option>
+								<option value="http://www.shareaza.com/schemas/sourceCode.xsd">Zdrojový kód</option>
+								<option value="http://www.shareaza.com/schemas/spreadsheet.xsd">Tabulka</option>
+								<option value="http://www.shareaza.com/schemas/subtitle.xsd">Titulky</option>
+								<option value="http://www.limewire.com/schemas/video.xsd">Video</option>
+								<option value="http://www.shareaza.com/schemas/wordProcessing.xsd">Textový soubor</option>
+							</select>
+							<input type="submit" value="Ok" />
+						</div>
+					</form><br/>
+					<form method="get" action="newdownload">
+						<div>
+							<label>stažení Magnet/Torrent:</label>
+							<input type="text" name="uri" size="35" />
+							<input type="submit" value="Ok" />
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>

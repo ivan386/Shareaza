@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Body element, don't touch -->
+<skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
+
+<!-- Manifest -->
+<manifest	name="Clean Blue"
+			author="Michael Stokes"
+			updatedBy="dcat"
+			description="A sexy, clean blue theme"
+			link="http://shareaza.sf.net/"
+			version="1.1"
+			type="Skin"
+			/>
+
+<!-- Colour scheme -->
+<colourScheme>
+	<colour name="System.Base.Window" value="FFFFFF"/>
+	<colour name="System.Base.Highlight" value="316AC5"/>
+	<colour name="System.Base.Text" value="000000"/>
+	<colour name="System.Base.Midtone" value="F0F0FF"/>
+	<colour name="System.Back.Selected" value="F5F5FF"/>
+	<colour name="System.Back.Checked.Selected" value="C4CAF5"/>
+	<colour name="System.Margin" value="F7F7FF"/>
+	<colour name="System.Shadow" value="C4CAE5"/>
+	<colour name="System.Disabled" value="A4AAC5"/>
+	<colour name="Dialog.Back" value="FAFAFF"/>
+	<colour name="ToolTip.Back" value="FAFAFF"/>
+	<colour name="ToolTip.Text" value="000080"/>
+	<colour name="ToolTip.Border" value="8080FF"/>
+  
+	<colour name="TaskPanel.Back"               value="AAAAFF"/>
+	<colour name="TaskBox.Primary.Back"         value="CCCCFF"/>
+	<colour name="TaskBox.Primary.Text"         value="404080"/>
+	<colour name="TaskBox.Caption.Back"         value="CCCCFF"/>
+	<colour name="TaskBox.Caption.Text"         value="404080"/>
+	<colour name="TaskBox.Caption.Hover"        value="2020C0"/>
+	<colour name="TaskBox.Client"               value="FEFEFE"/>
+</colourScheme>
+
+<!-- Watermarks -->
+<watermarks>
+	<watermark target="CCoolMenu" path="MenuSkin.bmp"/>
+</watermarks>
+
+<!-- Window skins -->
+<windowSkins>
+
+	<!-- Main window -->
+	<windowSkin>
+	
+		<image path="CleanBlue.bmp"/>
+		<target window="CMainWnd"/>
+		<target window="CDownloadMonitorDlg"/>
+						
+		<parts>
+			<part name="TopLeft" rect="0,0,1,17"/>
+			<part name="Top" rect="1,0,86,17"/>
+			<part name="TopRight" rect="87,0,41,17"/>
+			<part name="Left" rect="0,17,1,111"/>
+			<part name="Right" rect="0,17,1,111"/>
+			<part name="Bottom" rect="0,0,128,1"/>
+			
+			<part name="MinimiseHover" rect="95,22,11,11"/>
+			<part name="MinimiseDown" rect="62,22,11,11"/>
+			<part name="MaximiseHover" rect="106,22,11,11"/>
+			<part name="MaximiseDown" rect="73,22,11,11"/>
+			<part name="CloseHover" rect="117,22,11,11"/>
+			<part name="CloseDown" rect="84,22,11,11"/>
+		</parts>
+		
+		<anchors>
+			<anchor name="System" rect="1,1,15,15"/>
+			<anchor name="Close" rect="-14,3,11,11"/>
+			<anchor name="Maximise" rect="-27,3,11,11"/>
+			<anchor name="Minimise" rect="-40,3,11,11"/>
+		</anchors>
+		
+		<caption rect="2,1,-43,14" fontFace="Tahoma" fontSize="10" fontWeight="800" caps="1" colour="404080" inactiveColour="C0C0FF"/>
+		
+	</windowSkin>
+
+	<!-- Child windows -->
+	<windowSkin>
+	
+		<image path="CleanBlue.bmp"/>
+		<target window="CChildWnd"/>
+						
+		<parts>
+			<part name="TopLeft" rect="0,0,1,17"/>
+			<part name="Top" rect="1,0,86,17"/>
+			<part name="TopRight" rect="87,0,41,17"/>
+			<part name="Left" rect="0,17,1,111"/>
+			<part name="Right" rect="0,17,1,111"/>
+			<part name="Bottom" rect="0,0,128,1"/>
+			
+			<part name="MinimiseHover" rect="95,22,11,11"/>
+			<part name="MinimiseDown" rect="62,22,11,11"/>
+			<part name="MaximiseHover" rect="106,22,11,11"/>
+			<part name="MaximiseDown" rect="73,22,11,11"/>
+			<part name="CloseHover" rect="117,22,11,11"/>
+			<part name="CloseDown" rect="84,22,11,11"/>
+		</parts>
+		
+		<anchors>
+			<anchor name="Icon" rect="2,1,16,16"/>
+			<anchor name="System" rect="1,1,15,15"/>
+			<anchor name="Close" rect="-14,3,11,11"/>
+			<anchor name="Maximise" rect="-27,3,11,11"/>
+			<anchor name="Minimise" rect="-40,3,11,11"/>
+		</anchors>
+
+		<caption rect="19,1,-43,14" fontFace="Tahoma" fontSize="10" fontWeight="800" caps="1" colour="404080" inactiveColour="C0C0FF"/>
+		
+	</windowSkin>
+
+	<!-- Panel windows -->
+	<windowSkin>
+		<image path="CleanBlue.bmp"/>
+		<target window="CSearchWnd.Panel"/>
+		<target window="CBrowseHostWnd.Panel"/>
+		<target window="CMediaWnd.Panel"/>
+		<parts>
+			<part name="Top" rect="1,34,113,19"/>
+			<part name="TopRight" rect="114,34,14,19"/>
+			<part name="CloseHover" rect="117,22,11,11"/>
+			<part name="CloseDown" rect="84,22,11,11"/>
+		</parts>
+		<anchors>
+			<anchor name="Icon" rect="1,1,20,19"/>
+			<anchor name="Close" rect="-14,4,11,11"/>
+		</anchors>
+		<caption rect="20,0,-43,18" fontFace="Tahoma" fontSize="10" fontWeight="800" caps="1" colour="404080" inactiveColour="404080"/>
+	</windowSkin>
+	<windowSkin>
+		<image path="CleanBlue.bmp"/>
+		<target window="CChildWnd.Panel"/>
+		<parts>
+			<part name="Top" rect="1,34,113,19"/>
+		</parts>
+		<anchors>
+			<anchor name="Icon" rect="1,1,20,19"/>
+		</anchors>
+		<caption rect="20,0,-43,18" fontFace="Tahoma" fontSize="10" fontWeight="800" caps="1" colour="404080" inactiveColour="404080"/>
+	</windowSkin>
+	<windowSkin>
+		<image path="CleanBlue.bmp"/>
+		<target window="CUploadsWnd.Panel"/>
+		<target window="CSystemWnd.Panel"/>
+		<parts>
+			<part name="Top" rect="1,33,113,20"/>
+		</parts>
+		<anchors>
+			<anchor name="Icon" rect="2,2,20,20"/>
+		</anchors>
+		<caption rect="20,1,-43,18" fontFace="Tahoma" fontSize="10" fontWeight="800" caps="1" colour="404080" inactiveColour="404080"/>
+	</windowSkin>
+	
+	<!-- Popup Windows -->
+	<windowSkin>
+		<image path="CleanBlue.bmp"/>
+		<target window="CDialog"/>
+		<target window="CSettingsSheet"/>
+		<parts>
+			<part name="TopLeft" rect="0,53,20,20"/>
+			<part name="Top" rect="20,53,68,20"/>
+			<part name="TopRight" rect="113,53,15,20"/>
+			<part name="Left" rect="0,17,1,111"/>
+			<part name="Right" rect="0,17,1,111"/>
+			<part name="Bottom" rect="0,0,128,1"/>
+			<part name="CloseHover" rect="117,22,11,11"/>
+			<part name="CloseDown" rect="84,22,11,11"/>
+		</parts>
+		<anchors>
+			<anchor name="Icon" rect="2,2,20,20"/>
+			<anchor name="System" rect="1,1,15,15"/>
+			<anchor name="Close" rect="-14,6,11,11"/>
+		</anchors>
+		<caption rect="21,4,-43,15" fontFace="Tahoma" fontSize="10" fontWeight="800" caps="1" colour="404080" inactiveColour="C0C0FF"/>
+		<region>
+			<shape type="rectangle" rect="0,3,-1,-1"/>
+			<shape type="rectangle" rect="0,0,20,3" combine="or"/>
+		</region>
+	</windowSkin>
+
+</windowSkins>
+
+</skin>

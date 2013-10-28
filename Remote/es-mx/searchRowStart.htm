@@ -1,0 +1,10 @@
+									<tr>
+<%? row_collapsed %>
+										<td class="viewrow"><a class="emblink" href="?id=<%= search_id %>&expcol=<%= row_urn %>&expand=1"><b>+</b></a> <a href="?id=<%= search_id %>&download=<%= row_urn %>"><%= row_filename %></a></td>
+<%?%><%? row_expanded %>
+										<td class="viewrow"><a class="emblink" href="?id=<%= search_id %>&expcol=<%= row_urn %>&collapse=1"><b>-</b></a> <a href="?id=<%= search_id %>&download=<%= row_urn %>"><%= row_filename %></a></td>
+<%?%><%? row_source %>
+										<td class="viewrow">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= row_filename %></td>
+<%?%><%? !row_collapsed %><%? !row_expanded %><%? !row_source %>
+										<td class="viewrow"><a href="?id=<%= search_id %>&download=<%= row_urn %>"><%= row_filename %></a></td>
+<%?%><%?%><%?%>

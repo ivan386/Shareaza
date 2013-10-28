@@ -1,0 +1,48 @@
+﻿		<!-- tabs -->
+		<div class="poetry">
+			<ul class="tabs">
+				<li class="active"><a href="home" class="noline">Домой</a></li>
+				<li class="inactive"><a href="search" class="noline">Поиск</a></li>
+				<li class="inactive"><a href="downloads" class="noline">Загрузки</a></li>
+				<li class="inactive"><a href="uploads" class="noline">Выгрузки</a></li>
+				<li class="inactive"><a href="network" class="noline">Сети</a></li>
+			</ul>
+		</div>
+		<!-- /tabs -->
+<!-- main body -->
+		<div id="frame">
+			<p>Приветствуем в <b>Shareaza Удаленный Доступ</b>.</p>
+			<p>Эта веб консоль позволяет полностью управлять процессами поиска, загрузками, выгрузками и соединениями сетей.</p>
+			<div style="float: right; width: 40em;">
+				<h3>Начинайте загружать:</h3>
+				<div style="text-align: right;">
+				<form method="get" action="newsearch" ID="Form1">
+					<label>Быстрый поиск:</label>
+					<input type="text" name="search" size="20">
+					<select name="schema">
+						<option value="">Любой тип файла</option>
+						<option value="http://www.limewire.com/schemas/audio.xsd">Аудио</option>
+						<option value="http://www.limewire.com/schemas/video.xsd">Видео</option>
+						<option value="http://www.shareaza.com/schemas/sourceCode.xsd">Исходный код</option>
+						<option value="http://www.shareaza.com/schemas/image.xsd">Картинка</option>
+						<option value="http://www.limewire.com/schemas/book.xsd">Книга</option>
+						<option value="http://www.shareaza.com/schemas/collection.xsd">Коллекция</option>
+						<option value="http://www.shareaza.com/schemas/rom.xsd">Образ ROM</option>
+						<option value="http://www.shareaza.com/schemas/presentation.xsd">Презентация</option>
+						<option value="http://www.shareaza.com/schemas/application.xsd">Приложение</option>
+						<option value="http://www.shareaza.com/schemas/subtitle.xsd">Субтитры</option>
+						<option value="http://www.shareaza.com/schemas/spreadsheet.xsd">Таблица</option>
+						<option value="http://www.shareaza.com/schemas/bittorent.xsd">Торрент</option>
+						<option value="http://www.shareaza.com/schemas/wordProcessing.xsd">Форматир. текст</option>
+						<option value="http://www.shareaza.com/schemas/shareazaSkin.xsd">Шкурка</option>
+					</select>
+					<input type="submit" value="Вперёд">
+				</form><br />
+				<form method="get" action="newdownload" ID="Form2">
+					<label>Загрузить Magnet/Torrent:</label>
+					<input type="text" name="uri" size="35">
+					<input type="submit" value="Вперёд">
+				</form>
+				</div>
+			</div>
+		</div>

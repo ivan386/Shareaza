@@ -1,0 +1,25 @@
+﻿<!-- uploadsQueueStart -->
+<%? !queue_expanded %>
+					<h4><a class="noline" href="?queue_expand=<%= queue_id %>">+ <%= queue_caption %></a>
+<%? queue_transfers %>
+					(<%= queue_transfers %> aktiv / <%= queue_queued %> kölagda, använder <%= queue_bandwidth %>)
+<%?%>
+					</h4>
+<%?%><%? queue_expanded %>
+					<h4><a class="noline" href="?queue_collapse=<%= queue_id %>">- <%= queue_caption %></a>
+<%? queue_transfers %>
+					(<%= queue_transfers %> aktiv / <%= queue_queued %> kölagda, använder <%= queue_bandwidth %>)
+<%?%>
+					</h4>
+				<div class="centertable">
+					<table>
+						<tr>
+							<th>Fil</th>
+							<th>Användare</th>
+							<th>Storlek</th>
+							<th>Hastighet</th>
+							<th>Användarklient</th>
+							<th></th>
+						</tr>
+<%?%>
+<!-- /uploadsQueueStart -->

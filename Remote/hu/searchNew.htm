@@ -1,0 +1,22 @@
+﻿										<li class="active"><a class="noline" href="?id=0">Új keresés</a></li>
+								</ul>
+<div style="border: 1px #000 solid;padding: 5px;">
+			<p>A keresés indításához írja be a keresendő kifejezést és kattintson a <strong>Keresés 
+				</strong> gombra. Ha le szeretné szűkíteni a keresét egy bizonyos fájltípusra, 
+			akkor válasszon a fájltípus listából (ajánlott).</p>
+	
+	<div style="text-align:right; width: 30em;">		
+		<form method="get" action="newsearch">
+
+			<label>Keresendő kifejezés:</label>
+					<input type="text" name="search" class="regularinput" /><br />
+			<label>Fájltípus:</label>
+					
+						<select name="schema" class="regularinput">
+							<option value="">Bármilyen</option>
+							<%= schema_option_list %>
+						</select>
+				<br />
+						<input type="submit" value="Keresés">
+		</form>
+	</div>

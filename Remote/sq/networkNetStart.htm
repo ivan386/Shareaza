@@ -1,0 +1,25 @@
+﻿					<h4><%= network_caption %></h4>
+<%? !network_connected %>
+					<p>
+					Ky rrjet <strong>nuk është</strong> aktivizuar -
+					<a href="?connect=<%= network_id %>"><strong>Lidhu me <%= network_caption %></strong></a>
+					</p>
+<%?%><%? network_connected %>
+					<p>
+					Ky rrjet është aktivizuar -
+					<a href="?disconnect=<%= network_id %>"><strong>Çaktivizo <%= network_caption %></strong></a>
+					</p>
+				<div class="centertable">
+					<table>
+						<tr>
+							<th>Adresa</th>
+							<th>Ora</th>
+							<th>Paketat</th>
+							<th>Shtrirja e bandës</th>
+							<th>Totali</th>
+							<th>Mënyra</th>
+							<th>Gjethet</th>
+							<th>Agjenti Përdorues</th>
+							<th></th>
+						</tr>
+<%?%>

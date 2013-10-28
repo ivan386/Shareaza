@@ -1,0 +1,194 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
+Shareaza Catalan Schemas File translated by Daniel Olivares Giménez; Equip de traduccions de FeshoCAT
+Shareaza Chinese Simplified Schemas File translated by Sanley; John
+Shareaza Chinese Traditional Schemas File translated by James Bond
+Shareaza Czech Schemas File translated by Odin
+Shareaza German Schemas File translated by Spooky; jlh
+Shareaza Estonian Schemas File translated by Janza
+Shareaza Spanish Schemas File translated by Unknown
+Shareaza Spanish (Mexico) Schemas File translated by Help
+Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
+Shareaza Greek Schemas File translated by erimitis
+Shareaza Hebrew Schemas File translated by _peer_ (H.L)
+Shareaza Croatian Schemas File translated by Biza
+Shareaza Hungarian Schemas File translated by Yuri
+Shareaza Italian Schemas File translated by ale5000
+Shareaza Japanese Schemas File translated by DukeDog; CyberBob
+Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
+Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); Jonne; Neglacio
+Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
+Shareaza Portuguese (Brasil) Schemas File translated by Lukas Taves (LightHeaven); Felipe
+Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
+Shareaza Slovenian Schemas File translated by Martin McDowell
+Shareaza Albanian Schemas File translated by Besmir Godole
+Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Swedish Schemas File translated by Marcus Ehrenlans; Printz; DanielB
+Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
+-->
+
+<schemaDescriptor location="http://www.shareaza.com/schemas/folder.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
+
+       <object type="folder" availability="default"/>
+       <titles>
+               <title language="en">Folder</title>
+               <title language="af">Gids</title>
+               <title language="ca">Carpeta</title>
+               <title language="chs">文件夹</title>
+               <title language="cht">資料夾</title>
+               <title language="cz">Složka</title>
+               <title language="de">Ordner</title>
+               <title language="ee">Kaust</title>
+               <title language="es">Carpeta</title>
+               <title language="es-mx">Carpeta</title>
+               <title language="fr">Dossier</title>
+               <title language="gr">Φάκελος</title>
+               <title language="heb">&#160;ספריה</title>
+               <title language="hr">Mapa</title>
+               <title language="hu">Mappa</title>
+               <title language="it">Cartella</title>
+               <title language="ja">フォルダー</title>
+               <title language="lt">Katalogas</title>
+               <title language="nl">Map</title>
+               <title language="no">Mappe</title>
+               <title language="pt-br">Pasta</title>
+               <title language="ru">&#160;Папка</title>
+               <title language="sl-SI">Mapa</title>
+               <title language="sq">Dosja</title>
+               <title language="sr">Fascikla</title>
+               <title language="sv">Mapp</title>
+               <title language="tr">Klasörler</title>
+       </titles>
+       <images>
+               <icon path="folder.ico"/>
+       </images>
+       <members>
+               <member name="title" search="generic">
+                       <title language="en">Title</title>
+                       <title language="af">Titel</title>
+                       <title language="ca">Títol</title>
+                       <title language="chs">标题</title>
+                       <title language="cht">標題</title>
+                       <title language="cz">Název</title>
+                       <title language="de">Titel</title>
+                       <title language="ee">Pealkiri</title>
+                       <title language="es">Título</title>
+                       <title language="es-mx">Título</title>
+                       <title language="fr">Titre</title>
+                       <title language="gr">Τίτλος</title>
+                       <title language="heb">כותרת</title>
+                       <title language="hr">Naslov</title>
+                       <title language="hu">Cím</title>
+                       <title language="it">Titolo</title>
+                       <title language="ja">タイトル</title>
+                       <title language="lt">Pavadinimas</title>
+                       <title language="nl">Titel</title>
+                       <title language="no">Tittel</title>
+                       <title language="pt-br">Título</title>
+                       <title language="ru">Название</title>
+                       <title language="sl-SI">Naslov</title>
+                       <title language="sq">Titulli</title>
+                       <title language="sr">Naslov</title>
+                       <title language="sv">Titel</title>
+                       <title language="tr">Başlık</title>
+               </member>
+               <member name="description" search="none">
+                       <title language="en">Description</title>
+                       <title language="af">Beskrywing</title>
+                       <title language="ca">Descripció</title>
+                       <title language="chs">描述</title>
+                       <title language="cht">描述</title>
+                       <title language="cz">Popis</title>
+                       <title language="de">Beschreibung</title>
+                       <title language="ee">Kirjeldus</title>
+                       <title language="es">Descripción</title>
+                       <title language="es-mx">Descripción</title>
+                       <title language="fr">Description</title>
+                       <title language="gr">Περιγραφή</title>
+                       <title language="heb">תיאור</title>
+                       <title language="hr">Opis</title>
+                       <title language="hu">Leírás</title>
+                       <title language="it">Descrizione</title>
+                       <title language="ja">詳細</title>
+                       <title language="lt">Aprašas</title>
+                       <title language="nl">Omschrijving</title>
+                       <title language="no">Beskrivelse</title>
+                       <title language="pt-br">Descrição</title>
+                       <title language="ru">Описание</title>
+                       <title language="sl-SI">Opis</title>
+                       <title language="sq">Përshkrimi</title>
+                       <title language="sr">Opis</title>
+                       <title language="sv">Beskrivning</title>
+                       <title language="tr">Tanımlama</title>
+               </member>
+               <member name="collector" search="indexed">
+                       <title language="en">Collector</title>
+                       <title language="af">Versamelaar</title>
+                       <title language="ca">Col·lector</title>
+                       <title language="chs">收藏者</title>
+                       <title language="cht">美術品收藏者</title>
+                       <title language="cz">Sběratel</title>
+                       <title language="de">Sammler</title>
+                       <title language="ee">Koguja</title>
+                       <title language="es">Colector</title>
+                       <title language="es-mx">Colector</title>
+                       <title language="fr">Collecteur</title>
+                       <title language="gr">Συλλέκτης</title>
+                       <title language="heb">שם יוצר האוסף</title>
+                       <title language="hr">Sakupio</title>
+                       <title language="hu">Gyűjtő</title>
+                       <title language="it">Raccoglitore</title>
+                       <title language="ja">コレクター</title>
+                       <title language="lt">Kolekcionierius</title>
+                       <title language="nl">Samensteller</title>
+                       <title language="no">Samler</title>
+                       <title language="pt-br">Colecionador</title>
+                       <title language="ru">Коллекционер</title>
+                       <title language="sl-SI">Kolektor</title>
+                       <title language="sq">Koleksionuesi</title>
+                       <title language="sr">Sakupio</title>
+                       <title language="sv">Samlare</title>
+                       <title language="tr">Koleksiyoncu</title>
+               </member>
+               <member name="comments">
+                       <title language="en">Comments</title>
+                       <title language="af">Kommentaar</title>
+                       <title language="ca">Comentaris</title>
+                       <title language="chs">注释</title>
+                       <title language="cht">注釋</title>
+                       <title language="cz">Komentáře</title>
+                       <title language="de">Kommentar</title>
+                       <title language="ee">Arvamused</title>
+                       <title language="es">Comentarios</title>
+                       <title language="es-mx">Comentarios</title>
+                       <title language="fr">Commentaires</title>
+                       <title language="gr">Σχόλια</title>
+                       <title language="heb">הערות</title>
+                       <title language="hr">Komentari</title>
+                       <title language="hu">Megjegyzés</title>
+                       <title language="it">Commenti</title>
+                       <title language="ja">コメント</title>
+                       <title language="lt">Komentarai</title>
+                       <title language="nl">Opmerkingen</title>
+                       <title language="no">Kommentar</title>
+                       <title language="pt-br">Comentários</title>
+                       <title language="ru">Коментарии</title>
+                       <title language="sl-SI">Komentarji</title>
+                       <title language="sq">Komente</title>
+                       <title language="sr">Komentari</title>
+                       <title language="sv">Kommentarer</title>
+                       <title language="tr">Yorumlar</title>
+               </member>
+       </members>
+       <contains>
+               <object type="folder" location="http://www.shareaza.com/schemas/folder.xsd"/>
+               <object type="file" location="http://www.shareaza.com/schemas/file.xsd"/>
+       </contains>
+       <headerContent version="1.0">
+               <title>{title}</title>
+               <subtitle>{description}</subtitle>
+       </headerContent>
+
+</schemaDescriptor>

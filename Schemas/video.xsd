@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<schema targetNamespace="http://www.limewire.com/schemas/video.xsd" xmlns="http://www.w3.org/2001/XMLSchema">
+
+	<mapping>
+		<network name="ed2k" value="Video"/>
+	</mapping>
+
+	<element name="videos">
+		<complexType>
+			<element name="video" type="videoType" minOccurs="1" maxOccurs="unbounded"/>
+		</complexType>
+	</element>
+
+	<complexType name="videoType">
+		<all>
+			<attribute name="title" type="string"/>
+			<attribute name="type">
+     		<simpleType base="string">
+				<enumeration value="Film"/>
+				<enumeration value="Film Clip"/>
+				<enumeration value="TV Series Episode"/>
+				<enumeration value="TV Series Episode Clip"/>
+				<enumeration value="Anime Series Episode"/>
+				<enumeration value="Anime Series Episode Clip"/>
+				<enumeration value="Anime Film"/>
+				<enumeration value="Anime Music Video"/>
+				<enumeration value="Music Video"/>
+				<enumeration value="Commercial"/>
+				<enumeration value="Movie Trailer"/>
+				<enumeration value="Video Game Trailer"/>
+				<enumeration value="Video Game Clip"/>
+				<enumeration value="Movie Clip"/>
+				<enumeration value="Video Clip"/>
+				<enumeration value="VHS Movie"/>
+				<enumeration value="DVD Movie"/>
+				<enumeration value="Adult Film"/>
+				<enumeration value="Adult Film Clip"/>
+    	 	</simpleType>
+			</attribute>
+			<attribute name="series" type="string"/>
+			<attribute name="genre">
+    		<simpleType base="string">
+				<enumeration value="Action"/>
+				<enumeration value="Adventure"/>
+				<enumeration value="Animation"/>
+				<enumeration value="Comedy"/>
+				<enumeration value="Crime"/>
+				<enumeration value="Documentary"/>
+				<enumeration value="Drama"/>
+				<enumeration value="Family"/>
+				<enumeration value="Fantasy"/>
+				<enumeration value="Film-Noir"/>
+				<enumeration value="Horror"/>
+				<enumeration value="Musical"/>
+				<enumeration value="Mystery"/>
+				<enumeration value="Romance"/>
+				<enumeration value="Sci-Fi"/>
+				<enumeration value="Thriller"/>
+				<enumeration value="War"/>
+				<enumeration value="Western"/>
+				<enumeration value="Other"/>
+      			</simpleType>
+			</attribute>
+			<attribute name="episodenumber" type="string"/>
+			<attribute name="seriesnumber" type="string"/>
+			<attribute name="airDate" type="string"/>
+			<attribute name="description">
+				<simpleType base="string">
+					<maxInclusive value="1024"/>
+				</simpleType>
+			</attribute>
+			<attribute name="realdescription">
+				<simpleType base="string">
+					<maxInclusive value="1024"/>
+				</simpleType>
+			</attribute>
+			<attribute name="language">
+				<simpleType base="string">
+					<enumeration value="Danish"/>
+					<enumeration value="English"/>
+					<enumeration value="French"/>
+					<enumeration value="German"/>
+					<enumeration value="Italian"/>
+					<enumeration value="Korean"/>
+					<enumeration value="Japanese"/>
+					<enumeration value="Mandarin"/>
+					<enumeration value="Russian"/>
+					<enumeration value="Spanish"/>
+				</simpleType>
+			</attribute>
+			<attribute name="source">
+				<simpleType base="string">
+					<enumeration value="Cam"/>
+					<enumeration value="DVD Screener"/>
+					<enumeration value="VHS Screener"/>
+					<enumeration value="DVD"/>
+					<enumeration value="VHS"/>
+					<enumeration value="TV Rip"/>
+					<enumeration value="Telesync"/>
+					<enumeration value="Telesine"/>
+					<enumeration value="Workprint"/>
+					<enumeration value="Asian Silver"/>
+					<enumeration value="DivX Re-Encode"/>
+					<enumeration value="SVCD Re-Encode"/>
+					<enumeration value="VCD Re-Encode"/>
+				</simpleType>
+			</attribute>
+			<attribute name="director" type="string"/>
+			<attribute name="producer" type="string" minOccurs="0" maxOccurs="2"/>
+			<attribute name="studio" type="string" minOccurs="0" maxOccurs="1"/>
+			<attribute name="stars" type="string" minOccurs="0" maxOccurs="3"/>
+			<attribute name="imdbLink" type="uriReference"/>
+			<attribute name="minutes" type="decimal"/>
+			<attribute name="width" type="int" minOccurs="1" maxOccurs="64000"/>
+			<attribute name="height" type="int" minOccurs="1" maxOccurs="48000"/>
+			<attribute name="codec" type="string"/>
+			<attribute name="year" type="year"/>
+			<attribute name="artist" type="string"/>
+			<attribute name="frameRate" type="decimal"/>
+			<attribute name="copyright" type="string"/>
+			<attribute name="subtitles">
+				<simpleType base="string">
+					<enumeration value="Danish"/>
+					<enumeration value="English"/>
+					<enumeration value="French"/>
+					<enumeration value="German"/>
+					<enumeration value="Italian"/>
+					<enumeration value="Korean"/>
+					<enumeration value="Japanese"/>
+					<enumeration value="Mandarin"/>
+					<enumeration value="Russian"/>
+					<enumeration value="Spanish"/>
+				</simpleType>
+			</attribute>
+
+			<attribute name="rating">
+				<simpleType base="string">
+					<enumeration value="G"/>
+					<enumeration value="PG"/>
+					<enumeration value="PG-13"/>
+					<enumeration value="R"/>
+					<enumeration value="NC-17"/>
+					<enumeration value="NR"/>
+					<enumeration value="Adult"/>
+					<enumeration value="TV-Y"/>
+					<enumeration value="TV-Y7"/>
+					<enumeration value="TV-Y7-FV"/>
+					<enumeration value="TV-G"/>
+					<enumeration value="TV-PG"/>
+					<enumeration value="TV-14"/>
+					<enumeration value="TV-MA"/>
+				</simpleType>
+			</attribute>
+
+			<attribute name="partNumber" type="int"/>
+			<attribute name="partCount" type="int"/>
+			<attribute name="standard">
+				<simpleType base="string">
+					<enumeration value="Uberstandard"/>
+				</simpleType>
+			</attribute>
+			<attribute name="quality">
+				<simpleType base="string">
+					<enumeration value="Very Good"/>
+					<enumeration value="Good"/>
+					<enumeration value="Standard"/>
+					<enumeration value="Poor"/>
+					<enumeration value="Very Poor"/>
+				</simpleType>
+			</attribute>
+			<attribute name="qualityNotes" type="string"/>
+			<attribute name="releaseDate" type="string"/>
+			<attribute name="distributer" type="string"/>
+			<attribute name="distributerLink" type="uriReference"/>
+			<attribute name="releasegroup" type="string"/>
+			<attribute name="releasegroupLink" type="uriReference"/>
+			<attribute name="keywords" type="string"/>
+			<attribute name="link" type="uriReference"/>
+			<attribute name="DRM" type="boolean"/>
+		</all>
+	</complexType>
+
+</schema>

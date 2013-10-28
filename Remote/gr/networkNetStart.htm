@@ -1,0 +1,25 @@
+﻿					<h4><%= network_caption %></h4>
+<%? !network_connected %>
+					<p>
+					Αυτό το δίκτυο <strong>δεν</strong> είναι ενεργό -
+					<a href="?connect=<%= network_id %>"><strong>Σύνδεση στο <%= network_caption %></strong></a>
+					</p>
+<%?%><%? network_connected %>
+					<p>
+					Αυτό το δίκτυο είναι ενεργό -
+					<a href="?disconnect=<%= network_id %>"><strong>Απενεργοποίηση <%= network_caption %></strong></a>
+					</p>
+				<div class="centertable">
+					<table>
+						<tr>
+							<th>Διεύθυνση</th>
+							<th>Διάρκεια</th>
+							<th>Πακέτα</th>
+							<th>Εύρος Ζώνης</th>
+							<th>Σύνολο</th>
+							<th>Λειτουργία</th>
+							<th>Φύλλα</th>
+							<th>Πρόγραμμα</th>
+							<th></th>
+						</tr>
+<%?%>

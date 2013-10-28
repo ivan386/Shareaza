@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+	<head>
+		<title>Shareaza P2P Remote Access</title>
+		<style>
+			body,div,span,p,td { font-family: Verdana; font-size: 10pt; }
+			a:hover { color: red; }
+			a.tab { text-decoration: none; }
+			td.tab { width: 80px; padding: 1px 8px 1px 8px; border-style: solid; border-width: 1px 1px 1px 1px; border-color: gray; text-align: center; background: #E0E0E0; color: gray; }
+			td.tabsel { width: 80px; padding: 1px 8px 1px 8px; border-style: solid; border-width: 1px 1px 0px 1px; border-color: gray; text-align: center; background: white; font-weight: bold; }
+			td.tabfil { border-style: solid; border-width: 0px 0px 1px 0px; border-color: gray; width: 5px; }
+			td.tabedg { border-style: solid; border-width: 0px 0px 1px 0px; border-color: gray; }
+			td.frame { padding: 16px; border-style: solid; border-width: 0px 1px 1px 1px; border-color: gray; }
+		</style>
+	</head>
+	<body leftmargin="0" rightmargin="0" topmargin="0" bgcolor="white" text="black" link="blue" vlink="blue" alink="blue">
+		<img src="banner.png" width="331" height="88" alt="Shareaza P2P">
+		<table width="95%" align="center" cellspacing="0" cellpadding="0">
+			<tr>
+				<td align="center">
+					<table width="100%" cellspacing="0">
+						<tr>
+							<td class="tabedg">&nbsp;</td>
+							<td class="tab">Home</td>
+							<td class="tabfil">&nbsp;</td>
+							<td class="tab">Search</td>
+							<td class="tabfil">&nbsp;</td>
+							<td class="tab">Downloads</td>
+							<td class="tabfil">&nbsp;</td>
+							<td class="tab">Uploads</td>
+							<td class="tabfil">&nbsp;</td>
+							<td class="tab">Network</td>
+							<td class="tabedg">&nbsp;</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td class="frame">
+					<div>
+						Welcome to <b>Shareaza Remote Access</b>.</b>
+						If this copy of Shareaza is running on your PC, please
+						type your remote access username and password, then click <b>Login</b>.
+					</div>
+					<%? failure %>
+					<div align="center" style="color: red; font-weight: bold;">
+						<br>
+						The username and password you typed were incorrect.
+						<br>
+						Please try again.
+					</div>
+					<%?%>
+					<form method="get">
+					<input type="hidden" name="submit" value="1">
+					<table align="center">
+						<tr>
+							<td>Username:</td>
+							<td><input type="text" name="username" size="20"></td>
+						</tr>
+						<tr>
+							<td>Password:</td>
+							<td><input type="password" name="password" size="20" ID="Text1"></td>
+						</tr>
+						<tr>
+							<td colspan="2" align="center">
+								<input type="submit" value="Login">
+							</td>
+						</tr>
+					</table>
+					</form>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>

@@ -1,0 +1,25 @@
+﻿<!-- uploadsQueueStart -->
+<%? !queue_expanded %>
+					<h4><a class="noline" href="?queue_expand=<%= queue_id %>">+ <%= queue_caption %></a>
+<%? queue_transfers %>
+					(<%= queue_transfers %> active / <%= queue_queued %> na fila, usando <%= queue_bandwidth %>)
+<%?%>
+					</h4>
+<%?%><%? queue_expanded %>
+					<h4><a class="noline" href="?queue_collapse=<%= queue_id %>">- <%= queue_caption %></a>
+<%? queue_transfers %>
+					(<%= queue_transfers %> active / <%= queue_queued %> na fila, usando <%= queue_bandwidth %>)
+<%?%>
+					</h4>
+				<div class="centertable">
+					<table>
+						<tr>
+							<th>Arquivo</th>
+							<th>Usuário</th>
+							<th>Tamanho</th>
+							<th>Velocidade</th>
+							<th>Usuário-Agente</th>
+							<th></th>
+						</tr>
+<%?%>
+<!-- /uploadsQueueStart -->

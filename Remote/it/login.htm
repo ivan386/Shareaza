@@ -1,0 +1,33 @@
+﻿<!-- tabs -->
+		<div class="poetry">
+			<ul class="tabs">
+				<li class="inactive">Pagina iniziale</li>
+				<li class="inactive">Cerca</li>
+				<li class="inactive">Download</li>
+				<li class="inactive">Upload</li>
+				<li class="inactive">Reti</li>
+			</ul>
+		</div>
+<!-- /tabs -->
+<!-- main body -->
+		<div class="poetry" id="frame">
+			<div class="padding left">
+				Benvenuto nell'<b>Interfaccia web di Shareaza.</b> Se questa copia di Shareaza è in esecuzione sul tuo PC, immetti i relativi username e password, poi clicca su <b>Login</b>.
+			</div>
+
+			<div class="poetry" style="color: red; font-weight: bold; height: 3em;">
+				<%? failure %>	Il nome utente o la password immessi non sono corretti, riprova ancora.<%?%>
+			</div>
+
+			<form method="get" action="">
+				<div style="text-align: right; width: 24em; margin: 0 auto;">
+					<input type="hidden" name="submit" value="1" />
+					<label>Nome utente:</label>
+					<input type="text" name="username" size="20" /><br />
+					<label>Password:</label>
+					<input type="password" name="password" size="20" /><br />
+					<input type="submit" value="Login" />
+				</div>
+			</form>
+		</div>
+<!-- /main body -->

@@ -1,0 +1,33 @@
+<!-- tabs -->
+		<div class="poetry">
+			<ul class="tabs">
+				<li class="inactive">Accueil</li>
+				<li class="inactive">Recherche</li>
+				<li class="inactive">T&eacute;l&eacute;chargements</li>
+				<li class="inactive">Envois</li>
+				<li class="inactive">R&eacute;seaux</li>
+			</ul>
+		</div>
+<!-- /tabs -->
+<!-- main body -->
+		<div class="poetry" id="frame">
+					<div class="padding left">
+						Bienvenue dans l'<b>Acc&egrave;s &agrave; Distance Shareaza</b>.
+						Si cette copie de Shareaza est en cours d'&eacute;x&eacute;cution sur votre PC, merci de taper vos nom d'utilisateur et mot de passe, puis de cliquez sur <b>Enregistrement</b>.
+					<div class="poetry" style="color: red; font-weight: bold; height: 3em;">
+					<%? failure %>
+						Le nom d'utilisateur et le mot de passe que vous avez entr&eacute;s sont incorrects.<br>Merci d'essayer &agrave; nouveau.<%?%>
+					</div>
+
+					<div style="text-align: right; width: 24em; margin: 0 auto;">
+					<form method="get" action="">
+					<input type="hidden" name="submit" value="1">
+						<label>Nom d'utilisateur:</label>
+						<input type="text" name="username" size="20" /><br />
+						<label>Mot de passe:</label>
+						<input type="password" name="password" size="20" ID="Text1" /><br />
+								<input type="submit" value="Enregistrement">
+					</form>
+					</div>
+	</div>
+<!-- /main body -->

@@ -1,0 +1,19 @@
+﻿										<li class="active"><a class="noline" href="?id=0">Nové hledání</a></li>
+								</ul>
+<div style="border: 1px #000 solid;padding: 5px;">
+	<p>Zadejte klíčová slova pro hledání do následujícího pole a klikněte na tlačítko<strong>Vyhledat</strong>. Pokud víte jaký typ soboru hledáte vyberte také typ souboru z nabídky.</p>
+
+	<form method="get" action="newsearch">
+		<div style="text-align:right; width: 30em;">
+			<label>Hledat:</label>
+				<input type="text" name="search" class="regularinput" /><br/>
+				<label>Typ soubru:</label>
+
+				<select name="schema" class="regularinput">
+					<option value="">Jakýkoliv soubor</option>
+					<%= schema_option_list %>
+				</select><br />
+
+				<input type="submit" value="Vyhledat" />
+		</div>
+	</form>

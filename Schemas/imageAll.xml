@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
+Shareaza Catalan Schemas File translated by Daniel Olivares Giménez; Equip de traduccions de FeshoCAT
+Shareaza Chinese Simplified Schemas File translated by Sanley; John
+Shareaza Chinese Traditional Schemas File translated by James Bond
+Shareaza Czech Schemas File translated by Odin
+Shareaza German Schemas File translated by Spooky; jlh; OldDeath
+Shareaza Estonian Schemas File translated by Janza
+Shareaza Spanish Schemas File translated by Unknown
+Shareaza Spanish (Mexico) Schemas File translated by Help
+Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
+Shareaza Greek Schemas File translated by erimitis
+Shareaza Hebrew Schemas File translated by _peer_ (H.L)
+Shareaza Croatian Schemas File translated by Biza
+Shareaza Hungarian Schemas File translated by Yuri
+Shareaza Italian Schemas File translated by ale5000
+Shareaza Japanese Schemas File translated by DukeDog; CyberBob
+Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
+Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); Jonne; Neglacio
+Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
+Shareaza Portuguese (Brasil) Schemas File translated by Lukas Taves (LightHeaven); Felipe
+Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
+Shareaza Slovenian Schemas File translated by Martin McDowell
+Shareaza Albanian Schemas File translated by Besmir Godole
+Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Swedish Schemas File translated by Marcus Ehrenlans; Printz; DanielB
+Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
+-->
+
+<schemaDescriptor location="http://www.shareaza.com/schemas/imageAll.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
+
+       <object type="folder" availability="system"/>
+       <titles>
+               <title language="en">Image:All Images</title>
+               <title language="af">Prent:Alle Prente</title>
+               <title language="ca">Imatge: Totes les imatges</title>
+               <title language="chs">&#160;图片:所有图片</title>
+               <title language="cht">圖片:所有圖片</title>
+               <title language="cz">Obrázky:Všechny obrázky</title>
+               <title language="de">Bild:Alle Bilder</title>
+               <title language="ee">Pilt:Kõik Pildid</title>
+               <title language="es">Imagen: Todas las Imágenes</title>
+               <title language="es-mx">Imagen: Todas las Imágenes</title>
+               <title language="fr">Image:Toutes les images</title>
+               <title language="gr">Εικόνα:Όλες οι Εικόνες</title>
+               <title language="heb">&#160;תמונה:כל התמונות</title>
+               <title language="hr">Slike:Sve Slike</title>
+               <title language="hu">Kép: Minden kép</title>
+               <title language="it">Immagine:Tutte le immagini</title>
+               <title language="ja">&#160;静止画像: 全ての静止画像</title>
+               <title language="lt">Paveikslėlis:Visi paveikslėliai</title>
+               <title language="nl">Afbeelding:Alle Afbeeldingen</title>
+               <title language="no">Bilde: alle bilder</title>
+               <title language="pt-br">Imagem: Todas as Imagens</title>
+               <title language="ru">&#160;Картинка: Все картинки</title>
+               <title language="sl-SI">Podoba:Vse podobe</title>
+               <title language="sq">Figurë:Gjithë Figurat</title>
+               <title language="sr">Slike:Sve Slike</title>
+               <title language="sv">Bild: Alla bilder</title>
+               <title language="tr">Görüntü: Tüm Görüntüler</title>
+       </titles>
+       <images>
+               <icon path="imageFolder.ico"/>
+       </images>
+       <members>
+               <member name="title" search="none">
+                       <display defaultColumn="true"/>
+                       <title language="en">Title</title>
+                       <title language="af">Titel</title>
+                       <title language="ca">Títol</title>
+                       <title language="chs">标题</title>
+                       <title language="cht">標題</title>
+                       <title language="cz">Název</title>
+                       <title language="de">Titel</title>
+                       <title language="ee">Pealkiri</title>
+                       <title language="es">Título</title>
+                       <title language="es-mx">Título</title>
+                       <title language="fr">Titre</title>
+                       <title language="gr">Τίτλος</title>
+                       <title language="heb">כותרת</title>
+                       <title language="hr">Naslov</title>
+                       <title language="hu">Cím</title>
+                       <title language="it">Titolo</title>
+                       <title language="ja">タイトル</title>
+                       <title language="lt">Pavadinimas</title>
+                       <title language="nl">Titel</title>
+                       <title language="no">Tittel</title>
+                       <title language="pt-br">Título</title>
+                       <title language="ru">Название</title>
+                       <title language="sl-SI">Naslov</title>
+                       <title language="sq">Titulli</title>
+                       <title language="sr">Naslov</title>
+                       <title language="sv">Titel</title>
+                       <title language="tr">Başlık</title>
+               </member>
+       </members>
+       <contains>
+               <object type="file" location="http://www.shareaza.com/schemas/image.xsd"/>
+       </contains>
+       <headerContent version="1.0">
+               <title language="en">All Images</title>
+               <title language="af">Alle Prente</title>
+               <title language="ca">Totes les imatges</title>
+               <title language="chs">所有图片</title>
+               <title language="cht">所有圖片</title>
+               <title language="cz">Všechny obrázky</title>
+               <title language="de">Alle Bilder</title>
+               <title language="ee">Kõik Pildid</title>
+               <title language="es">Todas las imágenes</title>
+               <title language="es-mx">Todas las imágenes</title>
+               <title language="fr">Toutes les images</title>
+               <title language="gr">Όλες οι Εικόνες</title>
+               <title language="heb">כל התמונות</title>
+               <title language="hr">Sve Slike</title>
+               <title language="hu">Minden kép</title>
+               <title language="it">Tutte le immagini</title>
+               <title language="ja">静止画像</title>
+               <title language="lt">Visi paveikslėliai</title>
+               <title language="nl">Alle Afbeeldingen</title>
+               <title language="no">Alle bilder</title>
+               <title language="pt-br">Todas as Imagens</title>
+               <title language="ru">Все картинки</title>
+               <title language="sl-SI">Vse slike</title>
+               <title language="sq">Gjithë Figurat</title>
+               <title language="sr">Sve Slike</title>
+               <title language="sv">Alla bilder</title>
+               <title language="tr">Tüm Görüntüler</title>
+               <subtitle language="en">This folder contains every image file in your library.</subtitle>
+               <subtitle language="af">Hierdie gids bevat alle prentlêers in jou biblioteek.</subtitle>
+               <subtitle language="ca">Aquesta carpeta conté totes les imatges de la teva col·lecció.</subtitle>
+               <subtitle language="chs">此文件夹包含您收藏中的所有图片。</subtitle>
+               <subtitle language="cht">這個資料夾包含了在您的收藏中所有的圖片檔案.</subtitle>
+               <subtitle language="cz">Tato složka obsahuje všechny obrázky v knihovně.</subtitle>
+               <subtitle language="de">Dieser Ordner enthält alle Bilder Ihrer Bibliothek.</subtitle>
+               <subtitle language="ee">See kaust sisaldab kõiki sinu raamatukogus olevaid pilte.</subtitle>
+               <subtitle language="es">Esta carpeta contiene todas las imágenes de tu librería.</subtitle>
+               <subtitle language="es-mx">Esta carpeta contiene todas las imágenes de tu librería.</subtitle>
+               <subtitle language="fr">Ce dossier contient toutes les images de votre bibliothèque.</subtitle>
+               <subtitle language="gr">Αυτός ο φάκελος περιέχει όλα τα αρχεία εικόνων.</subtitle>
+               <subtitle language="heb">ספרייה זו מכילה את כל קבצי התמונה שבספרייה שלך</subtitle>
+               <subtitle language="hr">Ova mapa sadrži sve slike u vašoj kolekciji.</subtitle>
+               <subtitle language="hu">Ez a mappa minden képfájlt tartalmaz.</subtitle>
+               <subtitle language="it">Questa cartella contiene tutte le immagini della tua libreria.</subtitle>
+               <subtitle language="ja">このフォルダーにはライブラリー内ーにある全ての静止画像が収録されます</subtitle>
+               <subtitle language="lt">Šiame kataloge yra visi Jūsų kolekcijos paveikslėliai.</subtitle>
+               <subtitle language="nl">Deze map bevat elke afbeelding uit je bibliotheek.</subtitle>
+               <subtitle language="no">Denne mappen inneholder alle bildene i mine filer</subtitle>
+               <subtitle language="pt-br">Esta pasta contém cada arquivo de imagem na sua biblioteca.</subtitle>
+               <subtitle language="ru">Эта папка отображает каждую картинку в Вашем хранилище.</subtitle>
+               <subtitle language="sl-SI">Ta mapa vsebuje vse podobe (datoteke) v vaši knjižnici.</subtitle>
+               <subtitle language="sq">Kjo dosje përmban skedat imazhe në librarinë tuaj.</subtitle>
+               <subtitle language="sr">Ova fascikla sadrži sve slike u vašoj kolekciji.</subtitle>
+               <subtitle language="sv">Denna mapp innehåller alla bildfiler som du har i ditt bibliotek.</subtitle>
+               <subtitle language="tr">Bu klasör arşivinizdeki her görüntü dosyasını içerir.</subtitle>
+       </headerContent>
+       <viewContent version="1.0" preferredView="CLibraryThumbView"/>
+
+</schemaDescriptor>

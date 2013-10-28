@@ -1,0 +1,33 @@
+﻿
+<!-- downloadsTop-->
+</ul>
+<div  id="content">
+	<div id="functions"><a href="?refresh=<%= random %>">Atnaujinti pateiktį</a></div>
+		<form method="get" action="">
+			<div id="filters">
+				<input type="hidden" name="filter_set" value="1" />
+				<b>Filtras:</b>
+				<input type="checkbox" id="filter_active" name="filter_active" value="1" <%= filter_active %> />
+				<label for="filter_active">Aktyvūs</label>
+				<input type="checkbox" id="filter_queued" name="filter_queued" value="1" <%= filter_queued %> />
+				<label for="filter_queued">Eilėje</label>
+				<input type="checkbox" id="filter_sources" name="filter_sources" value="1" <%= filter_sources %> />
+				<label for="filter_sources">Be šaltinių</label>
+				<input type="checkbox" id="filter_paused" name="filter_paused" value="1" <%= filter_paused %> />
+				<label for="filter_paused">Pristabdyta</label>
+				<input type="checkbox" id="filter_show_all" name="filter_show_all" value="1" <%= filter_show_all %> />
+				<label for="filter_show_all">Rodyti viską</label>
+				<input type="submit" value=" Nustatyti " /><br/>
+			</div>
+		</form><br/>
+<table>
+	<tr>
+				<th>Failas</th>
+				<th>Dydis</th>
+				<th>Eiga</th>
+				<th>Sparta</th>
+				<th>Šaltiniai</th>
+				<th>Būklė</th>
+				<th>Valdikliai</th>
+			</tr>
+<!-- /downloadsTop-->

@@ -1,0 +1,51 @@
+﻿		<!-- tabs -->
+		<div class="poetry">
+			<ul class="tabs">
+				<li class="active"><a href="home" class="noline">Home</a></li>
+				<li class="inactive"><a href="search" class="noline">Procurar</a></li>
+				<li class="inactive"><a href="downloads" class="noline">Downloads</a></li>
+				<li class="inactive"><a href="uploads" class="noline">Uploads</a></li>
+				<li class="inactive"><a href="network" class="noline">Redes</a></li>
+			</ul>
+		</div>
+		<!-- /tabs -->
+<!-- main body -->
+		<div id="frame">
+			<p>Bem-Vindo a <b>Interface Web do Shareaza.</b></p> <p>Esta interface web permite a você controlar as buscas, downloads, uploads e conexões de rede.</p>
+			<div style="float: right; width: 40em;">
+				<h3>Iniciar o Download:</h3>
+				<div style="text-align: right;">
+					<form method="get" action="newsearch">
+						<div>
+							<label>Busca rápida</label>
+							<input type="text" name="search" size="20" />
+							<select name="schema">
+								<option value="">Qualquer arquivo</option>
+								<option value="http://www.shareaza.com/schemas/application.xsd">Aplicação</option>
+								<option value="http://www.limewire.com/schemas/audio.xsd">Áudio</option>
+								<option value="http://www.shareaza.com/schemas/bittorent.xsd">BitTorrent</option>
+								<option value="http://www.limewire.com/schemas/book.xsd">Livro</option>
+								<option value="http://www.shareaza.com/schemas/collection.xsd">Coleção</option>
+								<option value="http://www.shareaza.com/schemas/image.xsd">Imagem</option>
+								<option value="http://www.shareaza.com/schemas/presentation.xsd">Apresentação</option>
+								<option value="http://www.shareaza.com/schemas/rom.xsd">Imagem de ROM</option>
+								<option value="http://www.shareaza.com/schemas/shareazaSkin.xsd">Skin</option>
+								<option value="http://www.shareaza.com/schemas/sourceCode.xsd">Código Fonte</option>
+								<option value="http://www.shareaza.com/schemas/spreadsheet.xsd">Spreadsheet</option>
+								<option value="http://www.shareaza.com/schemas/subtitle.xsd">Legenda</option>
+								<option value="http://www.limewire.com/schemas/video.xsd">Vídeo</option>
+								<option value="http://www.shareaza.com/schemas/wordProcessing.xsd">Processamento de Palavras</option>
+							</select>
+							<input type="submit" value="Ir" />
+						</div>
+					</form><br/>
+					<form method="get" action="newdownload">
+						<div>
+							<label>Baixar Magnet/Torrent</label>
+							<input type="text" name="uri" size="35" />
+							<input type="submit" value="Ir" />
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>

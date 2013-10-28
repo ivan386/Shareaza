@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
+<manifest	name="NavBar"
+			author="Ryo-oh-ki"
+			description="NavBar!"
+			link="http://shareaza.sf.net/"
+			email="ryo-oh-ki@narod.ru"
+			version="0.1"
+			type="Skin"
+			language="en"
+			/>
+
+	<!--
+	NavBar options
+	
+	Offset button text from left/top edge: offset="X,Y", default: offset="0,0"
+	Convert button text to uppercase or lowercase: mode="upper|lower", default: mode=""
+	-->
+	<navbar offset="0,0" mode="upper"/>
+
+	<!--
+	NavBar colours and effects
+	
+	Buttons text main color: "navbar.text", default: "" - no text
+	Buttons text shadow color: "navbar.shadow", default: "" - no shadow
+	Buttons text outline color: "navbar.outline", default: "" - no outline
+	
+	Optional Button States:
+	Navbar.Text.Up
+	Navbar.Text.Down
+	Navbar.Text.Hover
+	Navbar.Text.Checked
+	Navbar.Shadow.Up
+	Navbar.Shadow.Down
+	Navbar.Shadow.Hover
+	Navbar.Shadow.Checked
+	Navbar.Outline.Up
+	Navbar.Outline.Down
+	Navbar.Outline.Hover
+	Navbar.Outline.Checked
+	-->
+
+	<colourScheme>
+		<colour name="navbar.text" value="400000"/>
+		<colour name="navbar.shadow" value="808080"/>
+		<colour name="navbar.outline" value="ff4040"/>
+	</colourScheme>
+
+	<!--
+	NavBar font
+	
+	Load font only for this language: language="en", default: language="" - every language
+	Font face: face="fffff", no default
+	Font size: size="nnn", default: size="11" (px)
+	Font weight: weight="nnn|bold", default: weight="400". "bold" is "700".
+	-->
+	<fonts>
+		<font name="navbar.caption" language="" face="Courier New" size="14" weight="bold"/>
+	</fonts>
+
+</skin>

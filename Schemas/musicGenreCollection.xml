@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
+Shareaza Catalan Schemas File translated by Daniel Olivares Giménez; Equip de traduccions de FeshoCAT
+Shareaza Chinese Simplified Schemas File translated by Sanley; John
+Shareaza Chinese Traditional Schemas File translated by James Bond
+Shareaza Czech Schemas File translated by Odin
+Shareaza German Schemas File translated by Spooky; jlh; OldDeath
+Shareaza Estonian Schemas File translated by Janza
+Shareaza Spanish Schemas File translated by Unknown
+Shareaza Spanish (Mexico) Schemas File translated by Help
+Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
+Shareaza Greek Schemas File translated by erimitis
+Shareaza Hebrew Schemas File translated by _peer_ (H.L)
+Shareaza Croatian Schemas File translated by Biza
+Shareaza Hungarian Schemas File translated by Yuri
+Shareaza Italian Schemas File translated by ale5000
+Shareaza Japanese Schemas File translated by DukeDog; CyberBob
+Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
+Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); Jonne; Neglacio
+Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
+Shareaza Portuguese (Brasil) Schemas File translated by Lukas Taves (LightHeaven); Felipe
+Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
+Shareaza Slovenian Schemas File translated by Martin McDowell
+Shareaza Albanian Schemas File translated by Besmir Godole
+Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Swedish Schemas File translated by Marcus Ehrenlans; Printz; DanielB
+Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
+-->
+
+<schemaDescriptor location="http://www.shareaza.com/schemas/musicGenreCollection.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
+
+       <object type="folder" availability="system"/>
+       <titles>
+               <title language="en">Music:By Genre</title>
+               <title language="af">Musiek:Volgens Genre</title>
+               <title language="ca">Música: per gènere</title>
+               <title language="chs">&#160;音乐:按 - 流派</title>
+               <title language="cht">音樂:由-類型</title>
+               <title language="cz">Hudba:Podle žánru</title>
+               <title language="de">Musik:Nach Genre</title>
+               <title language="ee">Muusika:Stiilid</title>
+               <title language="es">Música: Por Género</title>
+               <title language="es-mx">Música: Por Género</title>
+               <title language="fr">Musique:Par genre</title>
+               <title language="gr">Μουσική:Ανά Είδος</title>
+               <title language="heb">&#160;שירים:לפי ז'אנר</title>
+               <title language="hr">Muzika:Po Žanru</title>
+               <title language="hu">Zene: Műfaj szerint</title>
+               <title language="it">Musica:Per genere</title>
+               <title language="ja">&#160;音楽: ジャンル別</title>
+               <title language="lt">Muzika:Pagal stilių</title>
+               <title language="nl">Muziek:Per Genre</title>
+               <title language="no">Musikk: per sjanger</title>
+               <title language="pt-br">Música: Por Gênero</title>
+               <title language="ru">&#160;Музыка: По стилям</title>
+               <title language="sl-SI">Glasba:Po žanru</title>
+               <title language="sq">Muzikë:Sipas Gjinisë</title>
+               <title language="sr">Muzika:Po Žanru</title>
+               <title language="sv">Musik: Efter genre</title>
+               <title language="tr">Müzük:Tarzdan</title>
+       </titles>
+       <images>
+               <icon path="musicFolder.ico"/>
+       </images>
+       <members>
+               <member name="title" search="none">
+                       <display defaultColumn="true"/>
+                       <title language="en">Title</title>
+                       <title language="af">Titel</title>
+                       <title language="ca">Títol</title>
+                       <title language="chs">标题</title>
+                       <title language="cht">標題</title>
+                       <title language="cz">Název</title>
+                       <title language="de">Titel</title>
+                       <title language="ee">Pealkiri</title>
+                       <title language="es">Título</title>
+                       <title language="es-mx">Título</title>
+                       <title language="fr">Titre</title>
+                       <title language="gr">Τίτλος</title>
+                       <title language="heb">כותרת</title>
+                       <title language="hr">Naslov</title>
+                       <title language="hu">Cím</title>
+                       <title language="it">Titolo</title>
+                       <title language="ja">タイトル</title>
+                       <title language="lt">Pavadinimas</title>
+                       <title language="nl">Titel</title>
+                       <title language="no">Tittel</title>
+                       <title language="pt-br">Título</title>
+                       <title language="ru">Название</title>
+                       <title language="sl-SI">Naslov</title>
+                       <title language="sq">Titulli</title>
+                       <title language="sr">Naslov</title>
+                       <title language="sv">Titel</title>
+                       <title language="tr">Başlık</title>
+               </member>
+       </members>
+       <contains>
+               <object type="folder" location="http://www.shareaza.com/schemas/musicGenre.xsd"/>
+       </contains>
+       <headerContent version="1.0">
+               <title language="en">Music By Genre</title>
+               <title language="af">Musiek Volgens Genre</title>
+               <title language="ca">Música per gènere</title>
+               <title language="chs">音乐 按流派</title>
+               <title language="cht">音樂-由-類型</title>
+               <title language="cz">Hudba podle žánru</title>
+               <title language="de">Musik nach Genre</title>
+               <title language="ee">Muusika Stiilid</title>
+               <title language="es">Música por Género</title>
+               <title language="es-mx">Música por Género</title>
+               <title language="fr">Musique par genre</title>
+               <title language="gr">Μουσική Ανά Είδος</title>
+               <title language="heb">מוזיקה לפי ז'אנר</title>
+               <title language="hr">Muzika Po Žanru</title>
+               <title language="hu">Zene műfaj szerint</title>
+               <title language="it">Musica per genere</title>
+               <title language="ja">&#160;音楽: ジャンル別</title>
+               <title language="lt">Muzika pagal stilių</title>
+               <title language="nl">Muziek Per Genre</title>
+               <title language="no">Musikk per sjanger</title>
+               <title language="pt-br">Música por Gênero</title>
+               <title language="ru">Музыка по стилям</title>
+               <title language="sl-SI">Glasba Po žanru</title>
+               <title language="sq">Muzikë Sipas Gjinisë</title>
+               <title language="sr">Muzika Po Žanru</title>
+               <title language="sv">Musik efter genre</title>
+               <title language="tr">Aynı Tarz Müzik</title>
+               <subtitle language="en">This folder contains a list of musical genres found in your library.</subtitle>
+               <subtitle language="af">Hierdie gids bevat 'n lys van die musiek genres wat jy in jou biblioteek het.</subtitle>
+               <subtitle language="ca">Aquesta carpeta conté una llista de gèneres musicals trobats en la teva col·lecció.</subtitle>
+               <subtitle language="chs">此文件夹包含您收藏中音乐流派的清单。</subtitle>
+               <subtitle language="cht">這個資料夾包含了在您的收藏中一個發現的音樂流派清單.</subtitle>
+               <subtitle language="cz">Tato složka obsahuje seznam hudebních žánrů, které máte v knihovně.</subtitle>
+               <subtitle language="de">Dieser Ordner enthält eine Liste aller Musikgenres in Ihrer Bibliothek.</subtitle>
+               <subtitle language="ee">See kaust sisaldab nimekirja muusikastiilidest sinu raamatukogus</subtitle>
+               <subtitle language="es">Esta carpeta contiene una lista de géneros musicales encontrados en tu librería.</subtitle>
+               <subtitle language="es-mx">Esta carpeta contiene una lista de géneros musicales encontrados en tu librería.</subtitle>
+               <subtitle language="fr">Ce dossier contient la liste des genres musicaux trouvés dans votre bibliothèque.</subtitle>
+               <subtitle language="gr">Αυτός ο φάκελος περιέχει όσα μουσικά αρχεία μπορούν να οργανωθούν ανά είδος μουσικής.</subtitle>
+               <subtitle language="heb">ספרייה זו מכילה רשימה של סוגי המוזיקה שבספרייה שלך</subtitle>
+               <subtitle language="hr">Ova mapa sadrži popis muzičkih žanrova u kolekciji.</subtitle>
+               <subtitle language="hu">Ez a mappa zenei műfajokat tartalmaz.</subtitle>
+               <subtitle language="it">Questa cartella contiene la lista dei generi musicali trovati nella tua libreria.</subtitle>
+               <subtitle language="ja">このフォルダーにはライブラリー内にあるジャンルの一覧があります</subtitle>
+               <subtitle language="lt">Šiame kataloge pateikiamas muzikinių žanrų/stilių, aptiktų Jūsų kolekcijoje, sąrašas.</subtitle>
+               <subtitle language="nl">Deze map bevat een lijst met muziekgenres die je in je bibliotheek hebt.</subtitle>
+               <subtitle language="no">Denne mappen inneholder en liste over musikksjangrer som finnes i mine filer</subtitle>
+               <subtitle language="pt-br">Esta pasta contém todos os gêneros musicais presentes na sua biblioteca.</subtitle>
+               <subtitle language="ru">Эта папка отображает список музыкальных стилей найденных в файлах Вашего хранилища.</subtitle>
+               <subtitle language="sl-SI">Ta mapa vsebuje seznam najdenih glasbenih žanrov v vaši knjižnici.</subtitle>
+               <subtitle language="sq">Kjo dosje përmban një listë me gjinitë e muzikës që gjenden në librarinë tuaj.</subtitle>
+               <subtitle language="sr">Ova fascikla sadrži popis muzičkih žanrova u kolekciji.</subtitle>
+               <subtitle language="sv">Denna mapp innehåller en lista över musikgenrer som du har i ditt bibliotek.</subtitle>
+               <subtitle language="tr">Bu klasör arşivinizdeki müzik tarzlarınınn bir listesini içerir.</subtitle>
+       </headerContent>
+
+</schemaDescriptor>

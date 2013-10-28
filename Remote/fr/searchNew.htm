@@ -1,0 +1,20 @@
+										<li class="active"><a class="noline" href="?id=0">Nouvelle recherche</a></li>
+								</ul>
+<div style="border: 1px #000 solid;padding: 5px;">
+Pour commencer une nouvelle recherche, tapez des mots-cl&eacute;s ci-dessous puis cliquez sur <strong>Rechercher</strong>. Si vous voulez restreindre votre recherche &agrave; un type de fichier en particulier, s&eacute;lectionnez-le dans la liste.
+	
+	<div style="text-align:right; width: 30em;">		
+		<form method="get" action="newsearch">
+
+			<label>Recherche:</label>
+					<input type="text" name="search" class="regularinput" /><br />
+			<label>Type de fichier:</label>
+					
+						<select name="schema" class="regularinput">
+							<option value="">G&eacute;n&eacute;ral</option>
+							<%= schema_option_list %>
+						</select>
+				<br />
+						<input type="submit" value="Rechercher">
+		</form>
+	</div>

@@ -1,0 +1,22 @@
+<%? !queue_expanded %>
+					<h4><a class="emblink" href="?queue_expand=<%= queue_id %>">+ <%= queue_caption %></a>
+<%? queue_transfers %>
+					<small>(<%= queue_transfers %> activo / <%= queue_queued %> pausado, subiendo a <%= queue_bandwidth %>)</small>
+<%?%>
+					</h4>
+<%?%><%? queue_expanded %>
+					<h4><a class="emblink" href="?queue_collapse=<%= queue_id %>">- <%= queue_caption %></a>
+<%? queue_transfers %>
+					<small>(<%= queue_transfers %> activo / <%= queue_queued %> pausado, subiendo a <%= queue_bandwidth %>)</small>
+<%?%>
+					</h4>
+					<table width="100%" cellspacing="0" style="border-collapse: collapse;">
+						<tr>
+							<td class="viewheader">Archivo</td>
+							<td class="viewheader">Usuario</td>
+							<td class="viewheader" align="center">Tama&#241;o</td>
+							<td class="viewheader" align="center">Velocidad</td>
+							<td class="viewheader">Cliente</td>
+							<td class="viewheader"></td>
+						</tr>
+<%?%>

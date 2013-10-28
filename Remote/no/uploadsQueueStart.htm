@@ -1,0 +1,24 @@
+<%? !queue_expanded %>
+					<h4><a class="emblink" href="?queue_expand=<%= queue_id %>">+ <%= queue_caption %></a>
+<%? queue_transfers %>
+					<small>(<%= queue_transfers %> aktiv&nbsp; / <%= queue_queued %> 
+                    i k&oslash;, bruker)</small>
+<%?%>
+					</h4>
+<%?%><%? queue_expanded %>
+					<h4><a class="emblink" href="?queue_collapse=<%= queue_id %>">- <%= queue_caption %></a>
+<%? queue_transfers %>
+					<small>(<%= queue_transfers %> aktiv&nbsp; / <%= queue_queued %> 
+                    i k&oslash;, bruker)</small>
+<%?%>
+					</h4>
+					<table width="100%" cellspacing="0" style="border-collapse: collapse;">
+						<tr>
+							<td class="viewheader">Fil</td>
+							<td class="viewheader">Bruker</td>
+							<td class="viewheader" align="center">St&oslash;rrelse</td>
+							<td class="viewheader" align="center">Hastighet</td>
+							<td class="viewheader">Program</td>
+							<td class="viewheader"></td>
+						</tr>
+<%?%>

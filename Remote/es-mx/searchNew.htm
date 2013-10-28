@@ -1,0 +1,35 @@
+<td class="tabsel">Nueva B&#250;squeda</td>
+<td class="tabedg">&nbsp;</td>
+</tr> </table> </td> </tr>
+<tr>
+	<td class="frame">
+		<div>
+			Para iniciar una nueva b&#250;squeda, escribe tu b&#250;squeda en el cuadro siguiente y haz click en <b>Iniciar 
+				B&#250;squeda</b>. Si quiere restringir su b&#250;squeda a un tipo de archivo en espec&#237;fico, 
+			selecci&#243;nelo de la lista.
+		</div>
+		<form method="get" action="newsearch">
+			<table align="center">
+				<tr>
+					<td>Buscar:</td>
+					<td><input type="text" name="search" size="30"></td>
+				</tr>
+				<tr>
+					<td>Tipo de archivo:</td>
+					<td>
+						<select name="schema">
+							<option value="">Cualquier tipo de archivo</option>
+							<%= schema_option_list %>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center">
+						<input type="submit" value="Iniciar B&#250;squeda">
+					</td>
+				</tr>
+			</table>
+		</form>

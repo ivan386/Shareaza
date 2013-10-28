@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<schema targetNamespace="http://www.shareaza.com/schemas/bittorrent.xsd" xmlns="http://www.w3.org/2001/XMLSchema">
+
+	<element name="torrents">
+		<complexType>
+			<element name="torrent" type="torrentType" minOccurs="1" maxOccurs="unbounded"/>
+		</complexType>
+	</element>
+  
+	<complexType name="torrentType">
+		<all>
+			<attribute name="hash" type="string"/>
+			<attribute name="tracker" type="uriReference"/>
+			<attribute name="encoding" type="string"/>
+			<attribute name="creationdate" type="string"/>
+			<attribute name="createdby" type="string"/>
+			<attribute name="comments">
+				<simpleType base="string">
+					<maxInclusive value="1024"/>
+				</simpleType>
+			</attribute>
+			<attribute name="privateflag">
+				<simpleType base="boolean"/>
+			</attribute>
+		</all>
+	</complexType>
+
+</schema>

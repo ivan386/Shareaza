@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
+Shareaza Catalan Schemas File translated by Daniel Olivares Giménez; Equip de traduccions de FeshoCAT
+Shareaza Chinese Simplified Schemas File translated by Sanley; John
+Shareaza Chinese Traditional Schemas File translated by James Bond
+Shareaza Czech Schemas File translated by Odin
+Shareaza German Schemas File translated by Spooky; jlh; OldDeath
+Shareaza Estonian Schemas File translated by Janza
+Shareaza Spanish Schemas File translated by Unknown
+Shareaza Spanish (Mexico) Schemas File translated by Help
+Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
+Shareaza Greek Schemas File translated by erimitis
+Shareaza Hebrew Schemas File translated by _peer_ (H.L)
+Shareaza Croatian Schemas File translated by Biza
+Shareaza Hungarian Schemas File translated by Yuri
+Shareaza Italian Schemas File translated by ale5000
+Shareaza Japanese Schemas File translated by DukeDog; CyberBob
+Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
+Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); Jonne; Neglacio
+Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
+Shareaza Portuguese (Brasil) Schemas File translated by Lukas Taves (LightHeaven); Felipe
+Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
+Shareaza Slovenian Schemas File translated by Martin McDowell
+Shareaza Albanian Schemas File translated by Besmir Godole
+Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Swedish Schemas File translated by Marcus Ehrenlans; Printz; DanielB
+Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
+-->
+
+<schemaDescriptor location="http://www.shareaza.com/schemas/ghostFolder.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
+
+       <object type="folder" availability="system" private="true"/>
+       <titles>
+              <title language="en">General:Ghost Files</title>
+              <title language="af">General:Ghost Files</title>
+              <title language="ca">General: Arxius fantasmes</title>
+              <title language="chs">&#160;常规:回收文件</title>
+              <title language="cht">General:Ghost Files</title>
+              <title language="cz">Obecné:Smazané soubory</title>
+              <title language="de">Allgemein:Geister-Dateien</title>
+              <title language="ee">Üldine:Varifailid</title>
+              <title language="es">General:Ghost Files</title>
+              <title language="es-mx">General:Ghost Files</title>
+              <title language="fr">Général:Fichiers ghost</title>
+              <title language="gr">Γενικά:Αρχεία Φαντάσματα</title>
+              <title language="heb">General:Ghost Files</title>
+              <title language="hr">General:Ghost Files</title>
+              <title language="hu">Általános: Szellemfájlok</title>
+              <title language="it">Generale:File fantasma</title>
+              <title language="ja">&#160;一般: ゴースト･ファイル</title>
+              <title language="lt">Bendra:Šešėliniai failai</title>
+              <title language="nl">Algemeen:Ghost bestanden</title>
+              <title language="no">General:Ghost Files</title>
+              <title language="pt-br">Geral: Arquivos Ghost</title>
+              <title language="ru">&#160;Основное: Теневые файлы</title>
+              <title language="sl-SI">Splošno:Navidezne datoteke</title>
+              <title language="sq">Përgjithësi:Skedat Fantazmë</title>
+              <title language="sr">General:Ghost Files</title>
+              <title language="sv">Generellt: skuggfiler</title>
+              <title language="tr">Genel: Niteliksiz Dosyalar</title>
+        </titles>
+       <images>
+               <icon path="ghostFolder.ico"/>
+       </images>
+       <members>
+               <member name="title" search="none">
+                       <display defaultColumn="true"/>
+                       <title language="en">Title</title>
+                       <title language="af">Titel</title>
+                       <title language="ca">Títol</title>
+                       <title language="chs">标题</title>
+                       <title language="cht">標題</title>
+                       <title language="cz">Název</title>
+                       <title language="de">Titel</title>
+                       <title language="ee">Pealkiri</title>
+                       <title language="es">Título</title>
+                       <title language="es-mx">Título</title>
+                       <title language="fr">Titre</title>
+                       <title language="gr">Τίτλος</title>
+                       <title language="heb">כותרת</title>
+                       <title language="hr">Naslov</title>
+                       <title language="hu">Cím</title>
+                       <title language="it">Titolo</title>
+                       <title language="ja">タイトル</title>
+                       <title language="lt">Pavadinimas</title>
+                       <title language="nl">Titel</title>
+                       <title language="no">Tittel</title>
+                       <title language="pt-br">Título</title>
+                       <title language="ru">Название</title>
+                       <title language="sl-SI">Naslov</title>
+                       <title language="sq">Titulli</title>
+                       <title language="sr">Naslov</title>
+                       <title language="sv">Titel</title>
+                       <title language="tr">Başlık</title>
+               </member>
+       </members>
+       <headerContent version="1.0">
+               <title language="en">Ghost Files</title>
+               <title language="af">Ghost Files</title>
+               <title language="ca">Arxius fantasma</title>
+               <title language="chs">回收文件</title>
+               <title language="cht">鬼檔案</title>
+               <title language="cz">Smazané soubory</title>
+               <title language="de">Geister-Dateien</title>
+               <title language="ee">Varifailid</title>
+               <title language="es">Ghost Files</title>
+               <title language="es-mx">Ghost Files</title>
+               <title language="fr">Fichiers ghost</title>
+               <title language="gr">Αρχεία Φαντάσματα</title>
+               <title language="heb">Ghost Files</title>
+               <title language="hr">Ghost Files</title>
+               <title language="hu">Szellemfájlok</title>
+               <title language="it">File fantasma</title>
+               <title language="ja">ゴースト･ファイル</title>
+               <title language="lt">Šešėlinės bylos</title>
+               <title language="nl">Ghost Bestanden</title>
+               <title language="no">Ghost Files</title>
+               <title language="pt-br">Arquivos Ghost</title>
+               <title language="ru">Теневые файлы</title>
+               <title language="sl-SI">Navidezne datoteke</title>
+               <title language="sq">Skedat Fantazmë</title>
+               <title language="sr">Ghost Files</title>
+               <title language="sv">Skuggfiler</title>
+               <title language="tr">Niteliksiz Dosyalar</title>
+               <subtitle language="en">This folder contains every file which you've deleted from the Library.</subtitle>
+               <subtitle language="af">This folder contains every file which you've deleted from the Library.</subtitle>
+               <subtitle language="ca">Aquesta carpeta conté els arxius esborrats de la teva col·lecció.</subtitle>
+               <subtitle language="chs">此文件夹包含了所有您从收藏夹删除的文件。</subtitle>
+               <subtitle language="cht">這個資料夾包含所有您從收藏刪除的檔案</subtitle>
+               <subtitle language="cz">Tato složka obsahuje seznam souborů vymazaných z knihovny.</subtitle>
+               <subtitle language="de">Dieser Ordner enthält Informationen über alle aus der Bibliothek gelöschten Dateien, die Sie kommentiert oder bewertet haben.</subtitle>
+               <subtitle language="ee">See kaust sisaldab kõiki faile, mis sa oled oma Raamatukogust ära kustutanud.</subtitle>
+               <subtitle language="es">This folder contains every file which you've deleted from the Library.</subtitle>
+               <subtitle language="es-mx">This folder contains every file which you've deleted from the Library.</subtitle>
+               <subtitle language="fr">Ce dossier contient des informations pour les fichiers supprimer de votre bibliothèque</subtitle>
+               <subtitle language="gr">Αυτός ο φάκελος περιέχει πληροφορίες για αρχεία που διαγράψατε.</subtitle>
+               <subtitle language="heb">This folder contains every file which you've deleted from the Library.</subtitle>
+               <subtitle language="hr">This folder contains every file which you've deleted from the Library.</subtitle>
+               <subtitle language="hu">Ez a mappa a Könyvtárból törölt fájlokat tartalmazza.</subtitle>
+               <subtitle language="it">Questa cartella contiene tutti i file che hai cancellato dalla libreria.</subtitle>
+               <subtitle language="ja">このフォルダーには全てのライブラリーからコメント付で削除されたファイルが収録されています（ファイル自体は存在いたしません）</subtitle>
+               <subtitle language="lt">Šiame aplanke yra visi failai, kuriuos Jūs kažkada ištrynėte iš savo kolekcijos.</subtitle>
+               <subtitle language="nl">Deze map bevat elk bestand dat je hebt verwijderd uit de bibliotheek.</subtitle>
+               <subtitle language="no">This folder contains every file which you've deleted from the Library.</subtitle>
+               <subtitle language="pt-br">Esta pasta contém cada arquivo o qual você apagou da Biblioteca.</subtitle>
+               <subtitle language="ru">Эта папка отображает каждый файл, который Вы удалили с хранилища.</subtitle>
+               <subtitle language="sl-SI">Ta mapa vsebuje vse datoteke, ki ste jih brisali iz vaše knjižnice.</subtitle>
+               <subtitle language="sq">Kjo dosje përmban skedat që janë fshirë nga Libraria.</subtitle>
+               <subtitle language="sr">This folder contains every file which you've deleted from the Library.</subtitle>
+               <subtitle language="sv">Denna mapp innehåller varje fil som du har raderat från din samling.</subtitle>
+               <subtitle language="tr">Bu klasör kütüphaneden sildiğiniz tüm dosyaları içerir.</subtitle>
+     </headerContent>
+     <viewContent version="1.0" preferredView="CLibraryDetailView"/>
+
+</schemaDescriptor>

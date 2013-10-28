@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
+Shareaza Catalan Schemas File translated by Daniel Olivares Giménez; Equip de traduccions de FeshoCAT
+Shareaza Chinese Simplified Schemas File translated by Sanley; John
+Shareaza Chinese Traditional Schemas File translated by James Bond
+Shareaza Czech Schemas File translated by Odin
+Shareaza German Schemas File translated by Spooky; jlh; OldDeath
+Shareaza Estonian Schemas File translated by Janza
+Shareaza Spanish Schemas File translated by Unknown
+Shareaza Spanish (Mexico) Schemas File translated by Help
+Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
+Shareaza Greek Schemas File translated by erimitis
+Shareaza Hebrew Schemas File translated by _peer_ (H.L)
+Shareaza Croatian Schemas File translated by Biza
+Shareaza Hungarian Schemas File translated by Yuri
+Shareaza Italian Schemas File translated by ale5000
+Shareaza Japanese Schemas File translated by DukeDog; CyberBob
+Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
+Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); Jonne; Neglacio
+Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
+Shareaza Portuguese (Brasil) Schemas File translated by Lukas Taves (LightHeaven); Felipe
+Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
+Shareaza Slovenian Schemas File translated by Martin McDowell
+Shareaza Albanian Schemas File translated by Besmir Godole
+Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Swedish Schemas File translated by Marcus Ehrenlans; Printz; DanielB
+Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
+-->
+
+<schemaDescriptor location="http://www.shareaza.com/schemas/collectionsFolder.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
+
+       <object type="folder" availability="system"/>
+       <titles>
+              <title language="en">Collections:My Collections</title>
+              <title language="af">Versamelings:My Versamelings</title>
+              <title language="ca">Col·leccions: Les meves col·leccions</title>
+              <title language="chs">&#160;收藏:我的收藏</title>
+              <title language="cht">收藏:我的收藏</title>
+              <title language="cz">Sbírky:Moje sbírky</title>
+              <title language="de">Kollektionen:Eigene Kollektionen</title>
+              <title language="ee">Kollektsioon:Minu Kollektsioonid</title>
+              <title language="es">Colecciones: Mis Colecciones</title>
+              <title language="es-mx">Colecciones: Mis Colecciones</title>
+              <title language="fr">Collections:Mes collections</title>
+              <title language="gr">Συλλογές:Συλλογές</title>
+              <title language="heb">&#160;אוספים:האוספים שלי</title>
+              <title language="hr">Kolekcija:Moja Kolekcija</title>
+              <title language="hu">Gyűjtemény: Gyűjtemények</title>
+              <title language="it">Collezioni:Collezioni</title>
+              <title language="ja">&#160;コレクション: マイ･コレクション</title>
+              <title language="lt">Rinkiniai:Mano rinkiniai</title>
+              <title language="nl">Verzameling:Mijn Verzamelingen</title>
+              <title language="no">Samlinger: mine samlinger</title>
+              <title language="pt-br">Coleções: Minhas Coleções</title>
+              <title language="ru">&#160;Коллекции: Мои коллекции</title>
+              <title language="sl-SI">Kolekcije:Moje kolekcije</title>
+              <title language="sq">Koleksione:Koleksionet e Mia</title>
+              <title language="sr">Kolekcija:Moja Kolekcija</title>
+              <title language="sv">Samlingar: Mina samlingar</title>
+              <title language="tr">Koleksiyonlar: Koleksiyonlarım</title>
+       </titles>
+       <images>
+               <icon path="collectionsFolder.ico"/>
+       </images>
+       <members>
+               <member name="title" search="none">
+                       <display defaultColumn="true"/>
+                       <title language="en">Title</title>
+                       <title language="af">Titel</title>
+                       <title language="ca">Títol</title>
+                       <title language="chs">标题</title>
+                       <title language="cht">標題</title>
+                       <title language="cz">Název</title>
+                       <title language="de">Titel</title>
+                       <title language="ee">Pealkiri</title>
+                       <title language="es">Título</title>
+                       <title language="es-mx">Título</title>
+                       <title language="fr">Titre</title>
+                       <title language="gr">Τίτλος</title>
+                       <title language="heb">כותרת</title>
+                       <title language="hr">Naslov</title>
+                       <title language="hu">Cím</title>
+                       <title language="it">Titolo</title>
+                       <title language="ja">タイトル</title>
+                       <title language="lt">Pavadinimas</title>
+                       <title language="nl">Titel</title>
+                       <title language="no">Tittel</title>
+                       <title language="pt-br">Título</title>
+                       <title language="ru">Название</title>
+                       <title language="sl-SI">Naslov</title>
+                       <title language="sq">Titulli</title>
+                       <title language="sr">Naslov</title>
+                       <title language="sv">Titel</title>
+                       <title language="tr">Başlık</title>
+               </member>
+       </members>
+       <headerContent version="1.0">
+               <title language="en">My Collections</title>
+               <title language="af">My Versamelings</title>
+               <title language="ca">Les meves col·leccions</title>
+               <title language="chs">我的收集</title>
+               <title language="cht">我的收藏</title>
+               <title language="cz">Moje sbírky</title>
+               <title language="de">Eigene Kollektionen</title>
+               <title language="ee">Minu Kollektsioonid</title>
+               <title language="es">Mis Colecciones</title>
+               <title language="es-mx">Mis Colecciones</title>
+               <title language="fr">Mes collections</title>
+               <title language="gr">Συλλογές</title>
+               <title language="heb">האוספים שלי</title>
+               <title language="hr">Moja Kolekcija</title>
+               <title language="hu">Saját gyűjtemény</title>
+               <title language="it">Collezioni</title>
+               <title language="ja">マイ･コレクション</title>
+               <title language="lt">Mano rinkiniai</title>
+               <title language="nl">Mijn Verzamelingen</title>
+               <title language="no">Mine samlinger</title>
+               <title language="pt-br">Minhas Coleções</title>
+               <title language="ru">Мои коллекции</title>
+               <title language="sl-SI">Moje kolekcije</title>
+               <title language="sq">Koleksioni Im</title>
+               <title language="sr">Moja Kolekcija</title>
+               <title language="sv">Mina samlingar</title>
+               <title language="tr">Koleksiyonlarım</title>
+               <subtitle language="en">This folder contains any rich File Collections in your library.</subtitle>
+               <subtitle language="af">Hierdie gids bevat enige ryk Versamelingslêers in jou biblioteek.</subtitle>
+               <subtitle language="ca">Aquesta carpeta conté qualsevol arxiu de col·leccions de la teva col·lecció.</subtitle>
+               <subtitle language="chs">此文件夹包含您库中的任何文件收藏。</subtitle>
+               <subtitle language="cht">這個資料夾包含了在您的收藏中何任的豐富檔案收藏.</subtitle>
+               <subtitle language="cz">Tato složka obsahuje všechny sbírky v knihovně.</subtitle>
+               <subtitle language="de">Dieser Ordner enthält alle Kollektionen Ihrer Bibliothek.</subtitle>
+               <subtitle language="ee">See kaust sisaldab kõiki sinu raamatukogus olevaid Failide Kollektsioone.</subtitle>
+               <subtitle language="es">Esta carpeta contiene cualquier archivo de Colecciones de tu librería.</subtitle>
+               <subtitle language="es-mx">Esta carpeta contiene cualquier archivo de Colecciones de tu librería.</subtitle>
+               <subtitle language="fr">Ce dossier contient tous les fichier de collection de votre bibliothèque.</subtitle>
+               <subtitle language="gr">Αυτός ο φάκελος περιέχει τις Συλλογές Αρχείων.</subtitle>
+               <subtitle language="heb">ספרייה זו מכילה את כל האוספים שבספרייה שלך</subtitle>
+               <subtitle language="hr">Ove mapa sadrži sve vaše rich File datoteke u vašoj kolekciji</subtitle>
+               <subtitle language="hu">Ez a mappa gyűjteményfájlokat tartalmaz.</subtitle>
+               <subtitle language="it">Questa cartella contiene tutte le collezioni di file della tua libreria.</subtitle>
+               <subtitle language="ja">このフォルダーにはライブラリー内にあるリッチファイルコレクションが収録されています</subtitle>
+               <subtitle language="lt">Šiame kataloge yra patalpinti  raiškiojo formato rinkiniai, esantys Jūsų kolekcijoje.</subtitle>
+               <subtitle language="nl">Deze map bevat alle rijke bestandscollecties uit je bibliotheek.</subtitle>
+               <subtitle language="no">Denne mappen inneholde en hvilken som helst filsamling i mine filer.</subtitle>
+               <subtitle language="pt-br">Esta pasta contém todas as coleções da sua biblioteca.</subtitle>
+               <subtitle language="ru">Эта папка отображает все файлы коллекций (.collection) в Вашем хранилище.</subtitle>
+               <subtitle language="sl-SI">Ta mapa vsebuje katerokoli kolekcijo bogatih (rich) datotek v vaši knjižnici.</subtitle>
+               <subtitle language="sq">Kjo dosje përmban skedat me Koleksionet në librarinë tuaj.</subtitle>
+               <subtitle language="sr">Ove fascikla sadrži sve vaše rich File datoteke u vašoj kolekciji.</subtitle>
+               <subtitle language="sv">Denna mapp innehåller alla filsamlingar som du har i ditt bibliotek.</subtitle>
+               <subtitle language="tr">Bu klasör arşivinizdeki TV serilerinin bir listesini içerir.</subtitle>
+       </headerContent>
+
+</schemaDescriptor>

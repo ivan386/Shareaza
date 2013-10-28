@@ -1,0 +1,27 @@
+﻿									<tr>
+<%? download_is_expanded %>
+										<td class="viewrow"><a class="emblink" href="?modify_id=<%= download_id %>&modify_action=collapse"><b>-</b></a> <%= download_filename %></td>
+<%?%><%? download_is_collapsed %>
+										<td class="viewrow"><a class="emblink" href="?modify_id=<%= download_id %>&modify_action=expand"><b>+</b></a> <%= download_filename %></td>
+<%?%><%? !download_is_expanded %><%? !download_is_collapsed %>
+										<td class="viewrow"><%= download_filename %></td>
+<%?%><%?%>
+										<td nowrap class="viewrow" align="center"><%= download_size %></td>
+										<td nowrap class="viewrow" align="center" style="padding: 0px;"><table width="100%" height="16" border="0" cellspacing="0" cellpadding="0"><tr><td bgcolor="#0000FF" width="<%= download_percent %>%"></td><td width="<%= download_percent_inverse %>%"></td></tr></table></td>
+										<td nowrap class="viewrow" align="center"><%= download_speed %></td>
+										<td nowrap class="viewrow" align="center"><%= download_sources %></td>
+										<td nowrap class="viewrow" align="center"><%= download_status %></td>
+										<td nowrap class="viewrow" align="center">
+<%? download_is_complete %>
+											<a href="?modify_id=<%= download_id %>&modify_action=clear">クリア</a>
+<%?%><%? !download_is_complete %>
+<%? download_is_paused %>
+											<a href="?modify_id=<%= download_id %>&modify_action=resume">再開</a> -
+<%?%><%? !download_is_paused %>
+											<a href="?modify_id=<%= download_id %>&modify_action=pause">一時停止</a> -
+											<a href="?modify_id=<%= download_id %>&modify_action=more_sources">追加ソース</a> -
+<%?%>
+											<a href="?modify_id=<%= download_id %>&modify_action=cancel">キャンセル</a>
+<%?%>
+										</td>
+									</tr>

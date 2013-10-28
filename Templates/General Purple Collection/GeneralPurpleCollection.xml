@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<template xmlns="http://www.shareaza.com/schemas/Template.xsd" version="1.0">
+<manifest	name="General Purple"
+			author="CyberBob"
+			version="0.1"
+			link="http://shareaza.sourceforge.net/"
+			email="mylene@plum.freemail.ne.jp"
+			description="This template is for general files - not Specific to any kind of collection"
+			icon="favourites.ico"
+/>
+<files>
+	<file type="main" path="GeneralPurpleCollection.tpl"/>
+	<file type="evenfile" path="GeneralPurpleCollectionRow.tpl"/>
+	<file type="oddfile" path="GeneralPurpleCollectionRow.tpl"/>
+</files>
+<images>
+	<image path="icon.gif"/>
+	<image path="bar_on.gif"/>
+	<image path="bar_off.gif"/>
+</images>
+<wizardText>
+	<text language="ja">
+		<item id="1" type="textbox" value="タイトル"/>
+		<item id="2" type="textbox" value="説明／詳細"/>
+		<item id="3" type="textbox" value="リリースノート"/>
+		<item id="4" type="textbox" value="”開く”の表示" default="開く"/>
+		<item id="5" type="textbox" value="ダウンロード中の表示" default="ダウンロード中"/>
+		<item id="6" type="textbox" value="”ダウンロード”の表示" default="今すぐダウンロード"/>
+	</text>
+	<text language="lt">
+		<item id="1" type="textbox" value="Rinkinio pavadinimas"/>
+		<item id="2" type="textbox" value="Rinkinio aprašas"/>
+		<item id="3" type="textbox" value="Apie laidą"/>
+		<item id="4" type="textbox" value="Atveriant bylą" default="Atverti bylą"/>
+		<item id="5" type="textbox" value="Bylai siunčiantis" default="Siunčiama"/>
+		<item id="6" type="textbox" value="Atsisiuntimo veiksmas" default="Atsisiųsti dabar"/>
+	</text>
+	<text language="ru">
+		<item id="1" type="textbox" value="Название коллекции"/>
+		<item id="2" type="textbox" value="Описание коллекции"/>
+		<item id="3" type="textbox" value="Об издании"/>
+		<item id="4" type="textbox" value="При открытии файла" default="Открыть файл"/>
+		<item id="5" type="textbox" value="При загрузке файла" default="Загружается"/>
+		<item id="6" type="textbox" value="Действие для загрузки" default="Загрузить сейчас"/>
+	</text>
+	<text language="pt-br">
+		<item id="1" type="textbox" value="Título da Coleção"/>
+		<item id="2" type="textbox" value="Descrição da Coleção"/>
+		<item id="3" type="textbox" value="Nota de Lançamento"/>
+		<item id="4" type="textbox" value="Ação ao abrir arquivo" default="Abrir Arquivo"/>
+		<item id="5" type="textbox" value="Enquanto baixando" default="Baixando"/>
+		<item id="6" type="textbox" value="Ação de download" default="Baixar Agora"/>
+	</text>
+	<!-- It's better to place english translation at the end to exit data collection immediately when language specific data already loaded -->
+	<text language="en">
+		<item id="1" type="textbox" value="Collection Title"/>
+		<item id="2" type="textbox" value="Collection Description"/>
+		<item id="3" type="textbox" value="Release Note"/>
+		<item id="4" type="textbox" value="File opening action" default="Open File"/>
+		<item id="5" type="textbox" value="While downloading" default="Downloading"/>
+		<item id="6" type="textbox" value="Download action" default="Download Now"/>
+	</text>
+</wizardText>
+</template>

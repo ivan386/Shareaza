@@ -1,0 +1,20 @@
+			h3	{margin-top:0px; padding-top: 0px;font-size: 12px;}
+			h4	{margin-top:1em; padding-top: 2px; width:35em; border-top:1px dotted #333;font-family: verdana;font-size: 8pt;}
+			.progcontainer {width:100%; height:14px;text-align: left; white-space: nowrap;}
+			.progbar {float: left; background: #9999FF; white-space: nowrap; height: 100%;margin-bottom: -1.3em;}
+			.progprocent{float: right; width: 100%; text-align: center; height: 0px;position: relative; top: 0em; z-index: 1; font-weight: 700;}
+			table	{padding: 0px; margin: 0px;border-collapse: collapse;width: 90%;}
+			td.filename	{white-space: normal;overflow: hidden; width: 50%;}
+			td.filename div	{overflow: hidden; height:13px; width: 100%;}
+			td	{white-space: nowrap; background: #fff; border: 1px #bbb solid; padding: 2px;}
+			th { padding: 2px; white-space: nowrap; text-align: center; font-size: 11px;}		
+			.noline	{ text-decoration: none;}
+			.regularinput	{width:15em; margin-bottom: 3px;}
+			.bold {font-weight: 800;}
+			.centertable {text-align: center; padding: 0px 5px 0px 5px;}
+			.centertable table {text-align: left;margin-left: auto;margin-right: auto;}
+			#content{text-align: center;border: 1px #000 solid;padding: 5px;}
+			#content table{text-align: left;margin-left: auto;margin-right: auto;}
+			#filters{text-align: left;}
+			#functions{float: right;}
+			.tabs a {color:blue;}

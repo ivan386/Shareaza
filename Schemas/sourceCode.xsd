@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Source Code XML Framework; v1.1; Jonathan C. Nilson -->
+
+<schema targetNamespace="http://www.shareaza.com/schemas/sourceCode.xsd" version="1.0" xmlns="http://www.w3.org/2001/XMLSchema">
+
+	<mapping>
+		<network name="ed2k" value="Doc"/>
+	</mapping>
+
+	<element name="sourcecodes">
+		<complexType>
+			<element name="sourcecode" type="sourcecodeType" minOccurs="1" maxOccurs="unbounded"/>
+		</complexType>
+	</element>     
+	
+	<complexType name="sourcecodeType">
+		<all>
+			<attribute name="title" type="string"/>
+			<attribute name="author" type="string"/>
+			<attribute name="company" type="string"/>
+			<attribute name="subject" type="string"/>
+			<attribute name="keywords" type="string"/>
+			<attribute name="abstract" type="string"/>
+			<attribute name="copyright" type="string"/>
+			<attribute name="version" type="string"/>
+			<attribute name="revision" type="string"/>
+
+			<attribute name="language">
+				<simpleType base="string">
+					<enumeration value="ABC"/>
+					<enumeration value="ADS"/>
+					<enumeration value="APL*PLUS"/>
+					<enumeration value="ASP"/>
+					<enumeration value="ASP.NET"/>
+					<enumeration value="ASP.NET Webservices"/>
+					<enumeration value="Assembly (x86)"/>
+					<enumeration value="Assembly (SPARC)"/>
+					<enumeration value="AWK"/>
+					<enumeration value="Batch Processing"/>
+					<enumeration value="BASIC"/>
+					<enumeration value="Brief Macro"/>
+					<enumeration value="C"/>
+					<enumeration value="C++"/>
+					<enumeration value="C++ Assembly"/>
+					<enumeration value="CFML"/>
+					<enumeration value="Clean"/>
+					<enumeration value="ClipX RLIB RHELP"/>
+					<enumeration value="COBOL"/>
+					<enumeration value="D"/>
+					<enumeration value="Delphi"/>
+					<enumeration value="Dialect"/>
+					<enumeration value="Encirq \PL"/>
+					<enumeration value="Euphoria"/>
+					<enumeration value="Ferite"/>
+					<enumeration value="FORTRAN"/>
+					<enumeration value="FoxPro"/>
+					<enumeration value="Geoworks UI Compiler"/>
+					<enumeration value="HTML"/>
+					<enumeration value="Informix 4GL"/>
+					<enumeration value="Ingres Embedded SQL/C"/>
+					<enumeration value="J Interpretor Script"/>
+					<enumeration value="Java"/>
+					<enumeration value="J++"/>
+					<enumeration value="J#"/>
+					<enumeration value="Oracle"/>
+					<enumeration value="Ox Object-Oriented Matrix"/>
+					<enumeration value="Paradox"/>
+					<enumeration value="Pascal"/>
+					<enumeration value="Perl"/>
+					<enumeration value="PHP"/>
+					<enumeration value="PowerBASIC"/>
+					<enumeration value="Procomm Plus Script"/>
+					<enumeration value="Psion Organiser"/>
+					<enumeration value="PYTHON Script"/>
+					<enumeration value="Realizer"/>
+					<enumeration value="Redhat Linux RPM"/>
+					<enumeration value="Scheme"/>
+					<enumeration value="Shell Script"/>
+					<enumeration value="Source Safe"/>
+					<enumeration value="Sphinx C--"/>
+					<enumeration value="Swat Compiled Tood Command Language"/>
+					<enumeration value="Tads"/>
+					<enumeration value="Tamarack ArtiScan Driver"/>
+					<enumeration value="Tea Template"/>
+					<enumeration value="Triangle Digital Services"/>
+					<enumeration value="True BASIC"/>
+					<enumeration value="Turbo Pascal"/>
+					<enumeration value="Turing Programming Language"/>
+					<enumeration value="VAX/VMS"/>
+					<enumeration value="Visual BASIC"/>
+					<enumeration value="Visual BASIC Script"/>
+					<enumeration value="Visual C"/>
+					<enumeration value="Visual C++"/>
+					<enumeration value="Visual C#"/>
+					<enumeration value="Visual Studio Solution"/>
+					<enumeration value="VoiceXML"/>
+					<enumeration value="Website Content"/>
+					<enumeration value="XML"/>
+					<enumeration value="YaBasic"/>
+					<enumeration value="Zortech C++"/>
+				</simpleType>
+			</attribute>
+	
+			<attribute name="languageVersion" type="string"/>
+			<attribute name="license" type="string"/>
+			<attribute name="OS" type="string"/>
+		        <attribute name="link" type="uriReference"/>
+			<attribute name="comments">
+				<simpleType base="string">
+					<maxInclusive value="100"/>
+				</simpleType>
+			</attribute>
+		</all>
+	</complexType>
+
+</schema>

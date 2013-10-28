@@ -1,0 +1,34 @@
+﻿<td class="tabsel">新規検索</td>
+<td class="tabedg">&nbsp;</td>
+</tr> </table> </td> </tr>
+<tr>
+	<td class="frame">
+		<div>
+			検索を開始するにはキーワードを下のボックス内に入力して<b>検索開始</b>をクリックして下さい。<BR>
+			検索結果を特定のファイルの種類に制限したいなら、リストからそれを選択して下さい。
+		</div>
+		<form method="get" action="newsearch">
+			<table align="center">
+				<tr>
+					<td>検索:</td>
+					<td><input type="text" name="search" size="30"></td>
+				</tr>
+				<tr>
+					<td>ファイルの種類:</td>
+					<td>
+						<select name="schema">
+							<option value="">全てのファイルタイプ</option>
+							<%= schema_option_list %>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center">
+						<input type="submit" value="検索開始">
+					</td>
+				</tr>
+			</table>
+		</form>

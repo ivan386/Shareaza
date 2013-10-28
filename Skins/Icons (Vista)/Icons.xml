@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
+<manifest 
+  name="Icons (Vista)"
+  author="SkinVista"
+  description="Windows Vista Shell Icon Set"
+  link="http://shareaza.sf.net/"
+  email="Contact@ShareazaProject.com"
+  version="1.0"
+  type="Skin"
+  language="en"
+/>
+
+<commandImages>
+ <icon id="244" path="CollectionVista.ico" types="16,32,48" rtl="0"/>
+ <icon id="236" path="ClipboardVista.ico"  types="16,32" rtl="0"/>
+ <icon id="237" path="PaintbrushesVista.ico" types="16,32" rtl="0"/>
+ <icon id="147" path="HelpVista.ico" types="16,32" rtl="0"/>
+ <icon id="134" path="SearchVista.ico" types="16,32" rtl="0"/>
+ <icon id="136" path="DownloadsVista.ico" types="32" rtl="0"/>
+ <icon id="252" path="FirewalledVista.ico" types="16,32" rtl="0"/>
+ <icon id="301" path="TickClosed.ico" types="16" rtl="0"/>
+ <icon id="302" path="TickOpened.ico" types="16" rtl="0"/>
+ <icon id="307" path="TickClosedHover.ico" types="16" rtl="0"/>
+ <icon id="308" path="TickOpenedHover.ico" types="16" rtl="0"/>
+ <icon id="317" path="StarVista.ico" types="16" rtl="0"/>
+
+<bitmap path="ShellBaseVista.bmp" mask="00FF00">
+ <image id="IDI_FILE"/>
+ <image />
+ <image />
+ <image id="IDI_TICK"/>
+ <image id="IDI_BUSY"/>
+ <image />
+ <image id="IDI_UNSTABLE"/>
+ <image id="IDI_EXECUTABLE"/>
+ <image id="IDI_COMPUTER"/>
+ <image id="IDI_BROWSE"/>
+ <image id="IDI_FOLDER_CLOSED"/>
+ <image id="IDI_FOLDER_OPEN"/>
+ <image id="IDI_LOCKED"/>
+ <image id="IDI_PREVIEW"/>
+ <image id="IDI_STAR"/>
+ <image id="IDI_COLLECTION_MASK"/>
+ <image id="IDI_FAKE"/>
+ <image id="IDI_RATING_FAKE"/>
+ <image id="IDI_RATING_AVERAGE"/>
+ <image id="IDI_RATING_GOOD"/>
+ <image id="IDI_PARTIAL"/>
+ <image id="IDI_CHEVRON"/>
+ <!--image id="IDI_COMMERCIAL"-->
+</bitmap>
+</commandImages>
+</skin>
+
+
+ <!--
+ Alternative Loading From Resources:
+ <icon id="236" path="..\..\Shareaza.exe,-244" types="16,32,48" rtl="0"/>
+ -->

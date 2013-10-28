@@ -1,0 +1,85 @@
+==========================================================================
+Setup Command Line Parameters:
+(brackets indicate things you need to fill in.) (Don't type the brackets.)
+
+/SILENT, /VERYSILENT
+	Instructs Setup to be silent or very silent. When Setup is silent the wizard and the background window are not displayed but the installation progress window is. When a setup is very silent this installation progress window is not displayed. Everything else is normal so for example error messages during installation are displayed and the startup prompt is. If a restart is necessary and the '/NORESTART' command isn't used (see below) and Setup is silent, it will display a "Reboot now?" message box. If it's very silent it will reboot without asking.
+
+/SUPPRESSMSGBOXES
+	Instructs Setup to suppress message boxes. Only has an effect when combined with '/SILENT' and '/VERYSILENT'. The default response in situations where there's a choice is:
+	•Yes in a 'Keep newer file?' situation.
+	•No in a 'File exists, confirm overwrite.' situation.
+	•Abort in Abort/Retry situations.
+	•Cancel in Retry/Cancel situations.
+	•Yes (=continue) in a DiskSpaceWarning/DirExists/DirDoesntExist/NoUninstallWarning/ExitSetupMessage/ConfirmUninstall situation.
+	•Yes (=restart) in a FinishedRestartMessage/UninstalledAndNeedsRestart situation.
+
+/LOG
+	Causes Setup to create a log file in the user's TEMP directory detailing file installation. This can be a helpful debugging aid. For example, if you suspect a file isn't being replaced when you believe it should be (or vice versa), the log file will tell you if the file was really skipped, and why. The log file is created with a unique name based on the current date. It will not overwrite or append to existing files. The information contained in the log file is technical in nature and therefore not intended to be understandable by end users. Nor is it designed to be machine-parseable; the format of the file is subject to change without notice.
+
+/LOG="filename"
+	Same as /LOG, except it allows you to specify a fixed path/filename to use for the log file. If a file with the specified name already exists it will be overwritten. If the file cannot be created, Setup will abort with an error message.
+
+/NOCANCEL
+	Prevents the user from cancelling during the installation process, by disabling the Cancel button and ignoring clicks on the close button. Useful along with '/SILENT' or '/VERYSILENT'.
+
+/NORESTART
+	Prevents Setup from restarting the system following a successful installation, or after a Preparing to Install failure that requests a restart. Typically used along with /SILENT or /VERYSILENT.
+
+/RESTARTEXITCODE=exit code
+	Specifies a custom exit code that Setup is to return when the system needs to be restarted following a successful installation. (By default, 0 is returned in this case.) Typically used along with /NORESTART.
+
+/CLOSEAPPLICATIONS
+	Instructs Setup to close applications using files that need to be updated by Setup if possible.
+
+/NOCLOSEAPPLICATIONS
+	Prevents Setup from closing applications using files that need to be updated by Setup. If /CLOSEAPPLICATIONS was also used, this command line parameter is ignored.
+
+/RESTARTAPPLICATIONS
+	Instructs Setup to restart applications if possible. If Setup didn't close these applications (for example because /NOCLOSEAPPLICATIONS was used), this command line parameter is ignored.
+
+/NORESTARTAPPLICATIONS
+	Prevents Setup from restarting applications. If /RESTARTAPPLICATIONS was also used, this command line parameter is ignored.
+
+/LOADINF="filename"
+	Instructs Setup to load the settings from the specified file after having checked the command line. This file can be prepared using the '/SAVEINF=' command as explained below. Don't forget to use quotes if the filename contains spaces.
+
+/SAVEINF="filename"
+	Instructs Setup to save installation settings to the specified file. Don't forget to use quotes if the filename contains spaces.
+
+/LANG=language
+	Specifies the language to use. When a valid /LANG parameter is used, the Select Language dialog will be suppressed. Look in languages.iss to find valid names. Examples: en nl lt.
+
+/DIR="x:\dirname"
+	Overrides the default directory name displayed on the Select Destination Location wizard page. A fully qualified pathname must be specified. May include an "expand:" prefix which instructs Setup to expand any constants in the name. For example: '/DIR=expand:{pf}\My Program'.
+
+/GROUP="folder name"
+	Overrides the default folder name displayed on the Select Start Menu Folder wizard page. May include an "expand:" prefix, see '/DIR='.
+
+/NOICONS
+	Instructs Setup to initially check the Don't create a Start Menu folder check box on the Select Start Menu Folder wizard page.
+
+/SETTINGS="[path\filename]"
+	Path to ini file to overwrite some settings. Example ini file:
+	[Locations]
+	UserPath=C:\Documents and Settings\All Users\Application Data\Shareaza
+	Path=C:\Program Files\Shareaza
+
+==========================================================================
+Uninstall Command Line Parameters:
+(brackets indicate things you need to fill in.) (Don't type the brackets.)
+
+/SILENT, /VERYSILENT
+	When specified, the uninstaller will not ask the user for startup confirmation or display a message stating that uninstall is complete. Shared files that are no longer in use are deleted automatically without prompting. Any critical error messages will still be shown on the screen. When '/VERYSILENT' is specified, the uninstallation progress window is not displayed. If a restart is necessary and the '/NORESTART' command isn't used (see below) and '/VERYSILENT' is specified, the uninstaller will reboot without asking.
+
+/SUPPRESSMSGBOXES
+	Instructs the uninstaller to suppress message boxes. Only has an effect when combined with '/SILENT' and '/VERYSILENT'. See '/SUPPRESSMSGBOXES' under Setup Command Line Parameters for more details.
+
+/LOG
+	Causes Uninstall to create a log file in the user's TEMP directory detailing file uninstallation. This can be a helpful debugging aid. The log file is created with a unique name based on the current date. It will not overwrite or append to existing files. The information contained in the log file is technical in nature and therefore not intended to be understandable by end users. Nor is it designed to be machine-parseable; the format of the file is subject to change without notice.
+
+/LOG="filename"
+	Same as /LOG, except it allows you to specify a fixed path/filename to use for the log file. If a file with the specified name already exists it will be overwritten. If the file cannot be created, Uninstall will abort with an error message.
+
+/NORESTART
+	Instructs the uninstaller not to reboot even if it's necessary.

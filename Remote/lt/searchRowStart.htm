@@ -1,0 +1,12 @@
+﻿<!-- searchRowStart-->
+									<tr>
+<%? row_collapsed %>
+										<td class="filename"><div title="<%= row_filename %>"><a class="noline" href="?id=<%= search_id %>&amp;expcol=<%= row_urn %>&amp;expand=1">+</a> <a class="noline" href="?id=<%= search_id %>&amp;download=<%= row_urn %>"><%= row_filename %></a></div></td>
+<%?%><%? row_expanded %>
+										<td class="filename"><div title="<%= row_filename %>"><a class="noline" href="?id=<%= search_id %>&amp;expcol=<%= row_urn %>&amp;collapse=1">-</a> <a class="noline" href="?id=<%= search_id %>&amp;download=<%= row_urn %>"><%= row_filename %></a></div></td>
+<%?%><%? row_source %>
+										<td class="filename"><div title="<%= row_filename %>">&nbsp;&nbsp;&nbsp;<%= row_filename %></div></td>
+<%?%><%? !row_collapsed %><%? !row_expanded %><%? !row_source %>
+										<td class="filename"><div title="<%= row_filename %>"><a class="noline" href="?id=<%= search_id %>&amp;download=<%= row_urn %>"><%= row_filename %></a></div></td>
+<%?%><%?%><%?%>
+<!--/searchRowStart-->

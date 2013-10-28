@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Document:Spreadsheet XML Framework; 1.4; Jonathan C. Nilson -->
+
+<schema targetNamespace="http://www.shareaza.com/schemas/spreadsheet.xsd" version="1.0" xmlns="http://www.w3.org/2001/XMLSchema">
+
+	<mapping>
+		<network name="ed2k" value="Doc"/>
+	</mapping>
+
+	<element name="spreadsheets">
+		<complexType>
+			<element name="spreadsheet" type="spreadsheetType" minOccurs="1" maxOccurs="unbounded"/>
+		</complexType>
+	</element>     
+	
+	<complexType name="spreadsheetType">
+		<all>
+			<attribute name="title" type="string"/>
+			<attribute name="author" type="string"/>
+			<attribute name="subject" type="string"/>
+			<attribute name="language">
+				<simpleType base="string">
+					<enumeration value="Danish"/>
+					<enumeration value="English"/>
+					<enumeration value="French"/>
+					<enumeration value="German"/>
+					<enumeration value="Italian"/>
+					<enumeration value="Korean"/>
+					<enumeration value="Japanese"/>
+					<enumeration value="Mandarin"/>
+					<enumeration value="Russian"/>
+					<enumeration value="Spanish"/>
+				</simpleType>
+			</attribute>
+			<attribute name="keywords" type="string"/>
+			<attribute name="abstract" type="string"/>
+			<attribute name="initials" type="string"/>
+			<attribute name="copyright" type="string"/>
+			<attribute name="version" type="string"/>
+			<attribute name="revision" type="string"/>
+
+			<attribute name="type">
+				<simpleType base="string">
+					<enumeration value="Catalog"/>
+					<enumeration value="Finances"/>
+					<enumeration value="Inventory"/>
+					<enumeration value="List"/>
+				</simpleType>
+			</attribute>
+
+			<attribute name="format">
+				<simpleType base="string">
+					<enumeration value="Adobe Acrobat PDF"/>
+					<enumeration value="ANSI Text"/>
+					<enumeration value="ANSI Delimited Text"/>
+					<enumeration value="ANSI Generic Word Processor"/>
+					<enumeration value="ASCII Text"/>
+					<enumeration value="ASCII Delimited Text"/>
+					<enumeration value="ASCII Generic Word Processor"/>
+					<enumeration value="Corel Quattro Pro"/>
+					<enumeration value="Microsoft Excel"/>
+					<enumeration value="Lotus 123"/>
+					<enumeration value="Navy DIF Standard"/>
+					<enumeration value="Novell Quattro Pro"/>
+					<enumeration value="OpenDocument Spreadsheet"/>
+					<enumeration value="OpenDocument Spreadsheet Template"/>
+					<enumeration value="OpenOffice.org 1.0 Spreadsheet"/>
+					<enumeration value="OpenOffice.org 1.0 Spreadsheet Template"/>
+					<enumeration value="Spreadsheet DIF"/>
+					<enumeration value="Sun StarOffice Calc"/>
+					<enumeration value="Sun StarOffice Calc Template"/>
+				</simpleType>
+			</attribute>
+
+			<attribute name="formatVersion" type="string"/>
+			<attribute name="records" type="long"/>
+		        <attribute name="link" type="uriReference"/>
+			<attribute name="comments">
+				<simpleType base="string">
+					<maxInclusive value="100"/>
+				</simpleType>
+			</attribute>
+		</all>
+	</complexType>
+
+</schema>
+
+
+
+
+

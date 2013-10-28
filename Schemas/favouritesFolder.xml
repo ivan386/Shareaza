@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
+Shareaza Catalan Schemas File translated by Daniel Olivares Giménez; Equip de traduccions de FeshoCAT
+Shareaza Chinese Simplified Schemas File translated by Sanley; John
+Shareaza Chinese Traditional Schemas File translated by James Bond
+Shareaza Czech Schemas File translated by Odin
+Shareaza German Schemas File translated by Spooky; jlh; OldDeath
+Shareaza Estonian Schemas File translated by Janza
+Shareaza Spanish Schemas File translated by Unknown
+Shareaza Spanish (Mexico) Schemas File translated by Help
+Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
+Shareaza Greek Schemas File translated by erimitis
+Shareaza Hebrew Schemas File translated by _peer_ (H.L)
+Shareaza Croatian Schemas File translated by Biza
+Shareaza Hungarian Schemas File translated by Yuri
+Shareaza Italian Schemas File translated by ale5000
+Shareaza Japanese Schemas File translated by DukeDog; CyberBob
+Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
+Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); Jonne; Neglacio
+Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
+Shareaza Portuguese (Brasil) Schemas File translated by Lukas Taves (LightHeaven); Felipe
+Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
+Shareaza Slovenian Schemas File translated by Martin McDowell
+Shareaza Albanian Schemas File translated by Besmir Godole
+Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Swedish Schemas File translated by Marcus Ehrenlans; Printz; DanielB
+Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
+-->
+
+<schemaDescriptor location="http://www.shareaza.com/schemas/favouritesFolder.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
+
+       <object type="folder" availability="system"/>
+       <titles>
+               <title language="en">Favourites:Favourites</title>
+               <title language="af">Gunstelinge:Gunstelinge</title>
+               <title language="ca">Favorits: Favorits</title>
+               <title language="chs">&#160;最爱:我的最爱</title>
+               <title language="cht">喜愛的:喜愛的</title>
+               <title language="cz">Oblíbené:Oblíbené</title>
+               <title language="de">Favoriten:Favoriten</title>
+               <title language="ee">Lemmik:Lemmikud</title>
+               <title language="es">Favoritos: Favoritos</title>
+               <title language="es-mx">Favoritos: Favoritos</title>
+               <title language="fr">Favoris:Favoris</title>
+               <title language="gr">Αγαπημένα:Αγαπημένα</title>
+               <title language="heb">&#160;מועדפים:מועדפים</title>
+               <title language="hr">Favoriti:Favoriti</title>
+               <title language="hu">Kedvencek: Kedvencek</title>
+               <title language="it">Preferiti:Preferiti</title>
+               <title language="ja">&#160;お気に入り: お気に入り</title>
+               <title language="lt">Mėgiamybės:Mėgiamybės</title>
+               <title language="nl">Favorieten:Favorieten</title>
+               <title language="no">Favoritter: favoritter</title>
+               <title language="pt-br">Favoritos: Favoritos</title>
+               <title language="ru">&#160;Избранное: Избранное</title>
+               <title language="sl-SI">Zaznamki:Zaznamki</title>
+               <title language="sq">Favoritet:Favoritet</title>
+               <title language="sr">Favoriti:Favoriti</title>
+               <title language="sv">Favoriter: Favoriter</title>
+               <title language="tr">Favoriler: Favoriler</title>
+       </titles>
+       <images>
+               <icon path="favourites.ico"/>
+       </images>
+       <members>
+               <member name="title" search="none">
+                       <display defaultColumn="true"/>
+                       <title language="en">Title</title>
+                       <title language="af">Titel</title>
+                       <title language="ca">Títol</title>
+                       <title language="chs">标题</title>
+                       <title language="cht">標題</title>
+                       <title language="cz">Název</title>
+                       <title language="de">Titel</title>
+                       <title language="ee">Pealkiri</title>
+                       <title language="es">Título</title>
+                       <title language="es-mx">Título</title>
+                       <title language="fr">Titre</title>
+                       <title language="gr">Τίτλος</title>
+                       <title language="heb">כותרת</title>
+                       <title language="hr">Naslov</title>
+                       <title language="hu">Cím</title>
+                       <title language="it">Titolo</title>
+                       <title language="ja">タイトル</title>
+                       <title language="lt">Pavadinimas</title>
+                       <title language="nl">Titel</title>
+                       <title language="no">Tittel</title>
+                       <title language="pt-br">Título</title>
+                       <title language="ru">Название</title>
+                       <title language="sl-SI">Naslov</title>
+                       <title language="sq">Titulli</title>
+                       <title language="sr">Naslov</title>
+                       <title language="sv">Titel</title>
+                       <title language="tr">Başlık</title>
+               </member>
+               <member name="description">
+                       <title language="en">Description</title>
+                       <title language="af">Beskrywing</title>
+                       <title language="ca">Descripció</title>
+                       <title language="chs">描述</title>
+                       <title language="cht">描述</title>
+                       <title language="cz">Popis</title>
+                       <title language="de">Beschreibung</title>
+                       <title language="ee">Kirjeldus</title>
+                       <title language="es">Descripción</title>
+                       <title language="es-mx">Descripción</title>
+                       <title language="fr">Description</title>
+                       <title language="gr">Περιγραφή</title>
+                       <title language="heb">תיאור</title>
+                       <title language="hr">Opis</title>
+                       <title language="hu">Leírás</title>
+                       <title language="it">Descrizione</title>
+                       <title language="ja">詳細</title>
+                       <title language="lt">Aprašas</title>
+                       <title language="nl">Omschrijving</title>
+                       <title language="no">Beskrivelse</title>
+                       <title language="pt-br">Descrição</title>
+                       <title language="ru">Описание</title>
+                       <title language="sl-SI">Opis</title>
+                       <title language="sq">Përshkrimi</title>
+                       <title language="sr">Opis</title>
+                       <title language="sv">Beskrivning</title>
+                       <title language="tr">Tanımlama</title>
+               </member>
+       </members>
+       <headerContent version="1.0">
+               <title language="en">My Favourite Files</title>
+               <title language="af">My Gunsteling Lêers</title>
+               <title language="ca">Els meus arxius favorits</title>
+               <title language="chs">我最喜欢的文件</title>
+               <title language="cht">我的最愛檔案</title>
+               <title language="cz">Moje oblíbené</title>
+               <title language="de">Meine Favoriten</title>
+               <title language="ee">Minu Lemmikfailid</title>
+               <title language="es">Mis Archivos Favoritos</title>
+               <title language="es-mx">Mis Archivos Favoritos</title>
+               <title language="fr">Mes fichiers favoris</title>
+               <title language="gr">Αγαπημένα Αρχεία</title>
+               <title language="heb">הקבצים המועדפים שלי</title>
+               <title language="hr">Moje Omiljene Datateke</title>
+               <title language="hu">Kedvenc fájlok</title>
+               <title language="it">I miei file preferiti</title>
+               <title language="ja">お気に入り</title>
+               <title language="lt">Mano mėgiami failai</title>
+               <title language="nl">Mijn Favoriete Bestanden</title>
+               <title language="no">Mine favorittfiler</title>
+               <title language="pt-br">Meus Arquivos Favoritos</title>
+               <title language="ru">Мои избранные файлы</title>
+               <title language="sl-SI">Moje priljubljene datoteke</title>
+               <title language="sq">Skedat e Mia Favorite</title>
+               <title language="sr">Moje Omiljene Datateke</title>
+               <title language="sv">Mina favoritfiler</title>
+               <title language="tr">Favori Dosyalarım</title>
+               <subtitle language="en">This folder contains favourite files which Shareaza will recommend to other users who browse your collection.</subtitle>
+               <subtitle language="af">Hierdie gids bevat gunsteling lêers wat Shareaza aan ander gebruikers sal aanbeveel wat deur jou versameling blaai.</subtitle>
+               <subtitle language="ca">Aquesta carpeta conté arxius favorits que Shareaza recomana a altres usuaris que naveguen per la teva col·lecció</subtitle>
+               <subtitle language="chs">此文件夹中包含了您向浏览您的收藏那个的用户所推荐的您最喜欢的文件。</subtitle>
+               <subtitle language="cht">這個資料夾包含了最愛的檔案 Shareaza 將推薦給其他瀏覽您收藏的使用者.</subtitle>
+               <subtitle language="cz">Tato složka obsahuje vaše oblíbené položky, které bude Shareaza doporučovat ostatním uživatelům, kteří si prohlíží vaše sdílené soubory.</subtitle>
+               <subtitle language="de">Dieser Ordner enthält Dateien, die anderen Benutzern beim Durchsuchen Ihrer Freigaben empfohlen werden.</subtitle>
+               <subtitle language="ee">See kaust sisaldab sinu Lemmik faile, mida Shareaza soovitab sinu profiili vaatajatele.</subtitle>
+               <subtitle language="es">Esta carpeta contiene archivos favoritos que Shareaza recomienda a otros usuarios que navegan por tu librería</subtitle>
+               <subtitle language="es-mx">Esta carpeta contiene archivos favoritos que Shareaza recomienda a otros usuarios que navegan por tu librería</subtitle>
+               <subtitle language="fr">Ce dossier contient les fichiers que Shareaza va recommander aux autres utilisateurs.</subtitle>
+               <subtitle language="gr">Αυτός ο φάκελος περιέχει τα αγαπημένα αρχεία, τα οποία και συστείνονται σε όσους χρήστες περιηγούνται τα αρχεία σας.</subtitle>
+               <subtitle language="heb">ספרייה זו מכילה קבצים מועדפים ששרזה תמליץ עליהם למשתמשים שיצפו בפרופיל שלך</subtitle>
+               <subtitle language="hr">Ova mapa sadrži vaše favorite koje preporučate ostalima.</subtitle>
+               <subtitle language="hu">Ez a mappa a kedvenc fájlokat tartalmazza, amit a Shareaza a fájllistát lekérőknek ajánlani fog.</subtitle>
+               <subtitle language="it">Questa cartella contiene i file preferiti che Shareaza raccomanderà agli utenti che esamineranno la tua collezione.</subtitle>
+               <subtitle language="ja">このフォルダーにはライブラリー内にある映画の一覧があります</subtitle>
+               <subtitle language="lt">Šiame kataloge yra failai, kuriuos „Shareaza“ rekomenduos kitiems vartotojams, naršantiems Jūsų kolekcijoje.</subtitle>
+               <subtitle language="nl">Deze map bevat favoriete bestanden die Shareaza zal aanbevelen aan andere gebruikers die je verzameling doorzoeken.</subtitle>
+               <subtitle language="no">Denne mappen inneholder dine favoritter, som Shareaza vil anbefale til andre brukere som utforsker mine samlinger</subtitle>
+               <subtitle language="pt-br">Esta pasta contém os arquivos favoritos os quais o Shareaza recomendará para os outros usuários que navegarem pela sua coleção.</subtitle>
+               <subtitle language="ru">Эта папка отображает избранные файлы, они также видны смотрящим Ваш профиль.</subtitle>
+               <subtitle language="sl-SI">Ta mapa vsebuje priljubljene datoteke, ki jih bo Shareaza priporočila drugim uporabnikom, ki brskajo po vaši kolekciji.</subtitle>
+               <subtitle language="sq">Kjo dosje përmban skedat favorite që Shareaza i rekomandon te përdoruesit që shfletojnë koleksionin tuaj.</subtitle>
+               <subtitle language="sr">Ova fascikla sadrži vaše favorite koje preporučujete ostalima.</subtitle>
+               <subtitle language="sv">Denna mapp innehåller favoritfiler som Shareaza kommer att rekommendera till andra användare som visar din filsamling.</subtitle>
+               <subtitle language="tr">Bu klasör Sheraza'nın senin koleksiyonunu inceleyen diğer kullanıcılara önereceği favori dosyaları içerir.</subtitle>
+       </headerContent>
+
+</schemaDescriptor>

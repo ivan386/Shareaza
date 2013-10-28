@@ -1,0 +1,33 @@
+﻿<!-- tabs -->
+		<div class="poetry">
+			<ul class="tabs">
+				<li class="inactive">Home</li>
+				<li class="inactive">Zoeken</li>
+				<li class="inactive">Downloads</li>
+				<li class="inactive">Uploads</li>
+				<li class="inactive">Netwerk</li>
+			</ul>
+		</div>
+<!-- /tabs -->
+<!-- main body -->
+		<div class="poetry" id="frame">
+			<div class="padding left">
+				Welkom bij de <b>the Shareaza Web Interface</b>. Als dit jouw Shareaza client adres is, voer dan je gebruikersnaam en wachtwoord in, en druk op de <b>Login</b>-knop.
+			</div>
+
+			<div class="poetry" style="color: red; font-weight: bold; height: 3em;">
+				<%? failure %>	De gebruikersnaam of het wachtwoord was incorrect, probeer het opnieuw.<%?%>
+			</div>
+
+			<form method="get" action="">
+				<div style="text-align: right; width: 24em; margin: 0 auto;">
+					<input type="hidden" name="submit" value="1" />
+					<label>Gebruikersnaam:</label>
+					<input type="text" name="username" size="20" /><br />
+					<label>Wachtwoord:</label>
+					<input type="password" name="password" size="20" /><br />
+					<input type="submit" value="Login" />
+				</div>
+			</form>
+		</div>
+<!-- /main body -->

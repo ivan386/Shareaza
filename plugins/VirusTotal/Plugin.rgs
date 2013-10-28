@@ -1,0 +1,46 @@
+HKCR
+{
+	ForceRemove VirusTotal.Plugin.1 = s 'VirusTotal Plugin'
+	{
+		CLSID = s '{76F13243-9F62-4241-AC07-3B359BBE4EC5}'
+	}
+	ForceRemove VirusTotal.Plugin = s 'VirusTotal Plugin'
+	{
+		CLSID = s '{76F13243-9F62-4241-AC07-3B359BBE4EC5}'
+		CurVer = s 'VirusTotal.Plugin.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {76F13243-9F62-4241-AC07-3B359BBE4EC5} = s 'VirusTotal Plugin'
+		{
+			ProgID = s 'VirusTotal.Plugin.1'
+			VersionIndependentProgID = s 'VirusTotal.Plugin'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{ABC45D7F-EF52-4E5C-986A-93674FE3BBCC}'
+		}
+	}
+}
+HKCU
+{
+	NoRemove Software
+	{
+		NoRemove Shareaza
+		{
+			NoRemove Shareaza
+			{
+				NoRemove Plugins
+				{
+					NoRemove General
+					{
+						ForceRemove val 'VirusTotal Plugin' = s '{76F13243-9F62-4241-AC07-3B359BBE4EC5}'
+					}
+					ForceRemove val '{76F13243-9F62-4241-AC07-3B359BBE4EC5}' = s ''
+				}
+			}
+		}
+	}
+}

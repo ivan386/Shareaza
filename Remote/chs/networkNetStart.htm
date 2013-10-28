@@ -1,0 +1,25 @@
+﻿					<h4><%= network_caption %></h4>
+<%? !network_connected %>
+					<p>
+					此网络<strong>未</strong>启用 -
+					<a href="?connect=<%= network_id %>"><strong>连接到 <%= network_caption %></strong></a>
+					</p>
+<%?%><%? network_connected %>
+					<p>
+					此网络已启用 -
+					<a href="?disconnect=<%= network_id %>"><strong>禁用 <%= network_caption %></strong></a>
+					</p>
+				<div class="centertable">
+					<table>
+						<tr>
+							<th>地址</th>
+							<th>时间</th>
+							<th>数据包</th>
+							<th>带宽</th>
+							<th>总计</th>
+							<th>模式</th>
+							<th>叶</th>
+							<th>用户代理</th>
+							<th></th>
+						</tr>
+<%?%>

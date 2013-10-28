@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
+Shareaza Catalan Schemas File translated by Daniel Olivares Giménez; Equip de traduccions de FeshoCAT
+Shareaza Chinese Simplified Schemas File translated by Sanley; John
+Shareaza Chinese Traditional Schemas File translated by James Bond
+Shareaza Czech Schemas File translated by Odin
+Shareaza German Schemas File translated by Spooky; jlh; OldDeath
+Shareaza Estonian Schemas File translated by Janza
+Shareaza Spanish Schemas File translated by Unknown
+Shareaza Spanish (Mexico) Schemas File translated by Help
+Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
+Shareaza Greek Schemas File translated by erimitis
+Shareaza Hebrew Schemas File translated by _peer_ (H.L)
+Shareaza Croatian Schemas File translated by Biza
+Shareaza Hungarian Schemas File translated by Yuri
+Shareaza Italian Schemas File translated by ale5000
+Shareaza Japanese Schemas File translated by DukeDog; CyberBob
+Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
+Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); Jonne; Neglacio
+Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
+Shareaza Portuguese (Brasil) Schemas File translated by Lukas Taves (LightHeaven); Felipe
+Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
+Shareaza Slovenian Schemas File translated by Martin McDowell
+Shareaza Albanian Schemas File translated by Besmir Godole
+Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Swedish Schemas File translated by Marcus Ehrenlans; Printz; DanielB
+Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
+-->
+
+<schemaDescriptor location="http://www.shareaza.com/schemas/allFiles.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
+
+       <object type="folder" availability="system"/>
+       <titles>
+               <title language="en">General:All Files</title>
+               <title language="af">Algemeen:Alle Lêers</title>
+               <title language="ca">General: Tots els arxius</title>
+               <title language="chs">&#160;常规:所有文件</title>
+               <title language="cht">一般:所有檔案</title>
+               <title language="cz">Obecné:Všechny soubory</title>
+               <title language="de">Allgemein:Alle Dateien</title>
+               <title language="ee">Üldine:Kõik Failid</title>
+               <title language="es">General: Todos los archivos</title>
+               <title language="es-mx">General: Todos los archivos</title>
+               <title language="fr">Général:Tous les fichiers</title>
+               <title language="gr">Γενικά:Όλα τα Αρχεία</title>
+               <title language="heb">&#160;כללי:כל הקבצים</title>
+               <title language="hr">Općenito:Sve Datoteke</title>
+               <title language="hu">Általános: Minden fájl</title>
+               <title language="it">Generale:Tutti i file</title>
+               <title language="ja">&#160;一般: 全てのファイル</title>
+               <title language="lt">Bendra:Visi failai</title>
+               <title language="nl">Algemeen:Alle Bestanden</title>
+               <title language="no">Generelt: alle filer</title>
+               <title language="pt-br">Geral: Todos os Arquivos</title>
+               <title language="ru">&#160;Основное: Все файлы</title>
+               <title language="sl-SI">Splošno:Vse datoteke</title>
+               <title language="sq">Përgjithësi:Gjithë Skedat</title>
+               <title language="sr">Opšte:Sve Datoteke</title>
+               <title language="sv">Generellt: Alla filer</title>
+               <title language="tr">Genel: Tüm Dosyalar</title>
+        </titles>
+       <images>
+               <icon path="allfilesFolder.ico"/>
+       </images>
+       <members>
+               <member name="title" search="none">
+                       <display defaultColumn="true"/>
+                       <title language="en">Title</title>
+                       <title language="af">Titel</title>
+                       <title language="ca">Títol</title>
+                       <title language="chs">标题</title>
+                       <title language="cht">標題</title>
+                       <title language="cz">Název</title>
+                       <title language="de">Titel</title>
+                       <title language="ee">Pealkiri</title>
+                       <title language="es">Título</title>
+                       <title language="es-mx">Título</title>
+                       <title language="fr">Titre</title>
+                       <title language="gr">Τίτλος</title>
+                       <title language="heb">כותרת</title>
+                       <title language="hr">Naslov</title>
+                       <title language="hu">Cím</title>
+                       <title language="it">Titolo</title>
+                       <title language="ja">タイトル</title>
+                       <title language="lt">Pavadinimas</title>
+                       <title language="nl">Titel</title>
+                       <title language="no">Tittel</title>
+                       <title language="pt-br">Título</title>
+                       <title language="ru">Название</title>
+                       <title language="sl-SI">Naslov</title>
+                       <title language="sq">Titulli</title>
+                       <title language="sr">Naslov</title>
+                       <title language="sv">Titel</title>
+                       <title language="tr">Başlık</title>
+               </member>
+       </members>
+       <headerContent version="1.0">
+               <title language="en">All Files</title>
+               <title language="af">Alle Lêers</title>
+               <title language="ca">Tots els arxius</title>
+               <title language="chs">所有文件</title>
+               <title language="cht">所有檔案</title>
+               <title language="cz">Všechny soubory</title>
+               <title language="de">Alle Dateien</title>
+               <title language="ee">Kõik Failid</title>
+               <title language="es">Todos los archivos</title>
+               <title language="es-mx">Todos los archivos</title>
+               <title language="fr">Tous les fichiers</title>
+               <title language="gr">Όλα τα Αρχεία</title>
+               <title language="heb">כל הקבצים</title>
+               <title language="hr">Sve Datoteke</title>
+               <title language="hu">Minden fájl</title>
+               <title language="it">Tutti i file</title>
+               <title language="ja">全てのファイル</title>
+               <title language="lt">Visos bylos</title>
+               <title language="nl">Alle Bestanden</title>
+               <title language="no">Alle filer</title>
+               <title language="pt-br">Todos os Arquivos</title>
+               <title language="ru">Все файлы</title>
+               <title language="sl-SI">Vse datoteke</title>
+               <title language="sq">Gjithë Skedat</title>
+               <title language="sr">Sve Datoteke</title>
+               <title language="sv">Alla filer</title>
+               <title language="tr">Tüm Dosyalar</title>
+               <subtitle language="en">This folder contains every file in your library.</subtitle>
+               <subtitle language="af">Hierdie gids bevat alle lêers in jou biblioteek.</subtitle>
+               <subtitle language="ca">Aquesta carpeta conté tots els arxius de la teva col·lecció.</subtitle>
+               <subtitle language="chs">此文件夹包含您收藏中的所有文件。</subtitle>
+               <subtitle language="cht">這個資料夾包含了在您的收藏中所有的檔案.</subtitle>
+               <subtitle language="cz">Tato složka obsahuje úplně všechny soubory v knihovně.</subtitle>
+               <subtitle language="de">Dieser Ordner enthält alle Dateien Ihrer Bibliothek.</subtitle>
+               <subtitle language="ee">See kaust sisaldab kõiki sinu raamatukogus olevaid faile.</subtitle>
+               <subtitle language="es">Esta carpeta contiene todos los archivos de tu librería.</subtitle>
+               <subtitle language="es-mx">Esta carpeta contiene todos los archivos de tu librería.</subtitle>
+               <subtitle language="fr">Ce dossier contient tous les fichiers de votre bibliothèque.</subtitle>
+               <subtitle language="gr">Αυτός ο φάκελος περιέχει όλα τα αρχεία της Βιβλιοθήκης.</subtitle>
+               <subtitle language="heb">ספרייה זו מכילה את כל הקבצים שבספרייה שלך</subtitle>
+               <subtitle language="hr">Ova mapa sadrži sve datoteke u vašoj kolekciji.</subtitle>
+               <subtitle language="hu">Ez a mappa minden  fájlt tartalmaz.</subtitle>
+               <subtitle language="it">Questa cartella contiene tutti i file della tua libreria.</subtitle>
+               <subtitle language="ja">このフォルダーにはライブラリー内ーにある全てのファイルが収録されています</subtitle>
+               <subtitle language="lt">Šiame kataloge yra visi Jūsų kolekcijos failai.</subtitle>
+               <subtitle language="nl">Deze map bevat elk bestand uit je bibliotheek.</subtitle>
+               <subtitle language="no">Denne mappen inneholder alle filene i mine filer</subtitle>
+               <subtitle language="pt-br">Esta pasta contém todos os arquivos na sua biblioteca.</subtitle>
+               <subtitle language="ru">Эта папка отображает каждый файл в Вашем хранилище.</subtitle>
+               <subtitle language="sl-SI">Ta mapa vsebuje vse datoteke v vaši knjižnici.</subtitle>
+               <subtitle language="sq">Kjo dosje përmban skedat në librarinë tuaj.</subtitle>
+               <subtitle language="sr">Ova fascikla sadrži sve datoteke u vašoj kolekciji.</subtitle>
+               <subtitle language="sv">Denna mapp innehåller alla filer som du har i ditt bibliotek.</subtitle>
+               <subtitle language="tr">Bu klasör arşivinizdeki her dosyayı içerir.</subtitle>
+     </headerContent>
+       <viewContent version="1.0" preferredView="CLibraryDetailView"/>
+
+</schemaDescriptor>

@@ -1,0 +1,56 @@
+		<table width="95%" align="center" cellspacing="0" cellpadding="0">
+			<tr>
+				<td align="center">
+					<table width="100%" cellspacing="0">
+						<tr>
+							<td class="tabedg">&nbsp;</td>
+							<td class="tab">Hjem</td>
+							<td class="tabfil">&nbsp;</td>
+							<td class="tab">S&oslash;k</td>
+							<td class="tabfil">&nbsp;</td>
+							<td class="tab">Downloads</td>
+							<td class="tabfil">&nbsp;</td>
+							<td class="tab">Uploads</td>
+							<td class="tabfil">&nbsp;</td>
+							<td class="tab">Nettverk</td>
+							<td class="tabedg">&nbsp;</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td class="frame">
+					<div>
+						Velkommen til <b>Shareaza Fjern Konsoll</b>.</b> Hvis Shareaza 
+                        er startet p&aring; din PC, vennligst skriv inn brukernavn og 
+                        passord, og klikk <b>Logg inn</b>.
+					</div>
+					<%? failure %>
+					<div align="center" style="color: red; font-weight: bold;">
+						<br>
+						Brukernavnet og passordet var innkorrekt.
+						<br>
+						Vennligst pr&oslash;v på ny.
+					</div>
+					<%?%>
+					<form method="get">
+					<input type="hidden" name="submit" value="1">
+					<table align="center">
+						<tr>
+							<td>Brukernavn:</td>
+							<td><input type="text" name="username" size="20"></td>
+						</tr>
+						<tr>
+							<td>Passord:</td>
+							<td><input type="password" name="password" size="20" ID="Text1"></td>
+						</tr>
+						<tr>
+							<td colspan="2" align="center">
+								<input type="submit" value="Logg inn">
+							</td>
+						</tr>
+					</table>
+					</form>
+				</td>
+			</tr>
+		</table>

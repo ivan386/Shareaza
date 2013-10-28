@@ -1,0 +1,25 @@
+﻿					<h4><%= network_caption %></h4>
+<%? !network_connected %>
+					<p>
+					Questa rete <strong>non</strong> è attivata -
+					<a href="?connect=<%= network_id %>"><strong>Connetti a <%= network_caption %></strong></a>
+					</p>
+<%?%><%? network_connected %>
+					<p>
+					Questa rete è attivata -
+					<a href="?disconnect=<%= network_id %>"><strong>Disabilita <%= network_caption %></strong></a>
+					</p>
+				<div class="centertable">
+					<table>
+						<tr>
+							<th>Indirizzo</th>
+							<th>Ora</th>
+							<th>Pacchetti</th>
+							<th>Larghezza di banda</th>
+							<th>Totale</th>
+							<th>Modalità</th>
+							<th>Leaf</th>
+							<th>User-agent</th>
+							<th></th>
+						</tr>
+<%?%>

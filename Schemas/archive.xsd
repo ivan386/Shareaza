@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<schema targetNamespace="http://www.shareaza.com/schemas/archive.xsd" xmlns="http://www.w3.org/2001/XMLSchema">
+
+	<element name="archives">
+		<complexType>
+			<element name="archive" type="archiveType" minOccurs="1" maxOccurs="unbounded"/>
+		</complexType>
+	</element>
+  
+	<complexType name="archiveType">
+		<all>
+			<attribute name="title" type="string"/>
+			<attribute name="folders" type="string"/>
+			<attribute name="files" type="string"/>
+			<attribute name="comments">
+				<simpleType base="string">
+					<maxInclusive value="256"/>
+				</simpleType>
+			</attribute>
+			<attribute name="archive" type="string"/>
+			<attribute name="keywords" type="string"/>
+			<attribute name="encrypted" type="boolean"/>
+			<attribute name="unpackedsize" type="string"/>
+		</all>
+	</complexType>
+
+</schema>

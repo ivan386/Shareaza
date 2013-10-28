@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template xmlns="http://www.shareaza.com/schemas/Template.xsd" version="1.0">
+<manifest	name="Basic Collection"
+			author="Tom Higginson"
+			version="0.6"
+			link="http://shareaza.sourceforge.net/"
+			email="higgy@soundnet.co.uk"
+			description="A .collection can be edited just like a webpage - this template creates a .htm file is just something to get you started. Be creative and have fun!"
+			icon="audio.ico"
+			thumbnails="true"
+/>
+<files>
+	<file type="main" path="basic.tpl"/>
+	<file type="evenfile" path="basicRow.tpl"/>
+	<file type="oddfile" path="basicRow.tpl"/>
+</files>
+</template>

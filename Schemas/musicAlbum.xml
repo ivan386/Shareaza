@@ -1,0 +1,767 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
+Shareaza Catalan Schemas File translated by Daniel Olivares Giménez; Equip de traduccions de FeshoCAT
+Shareaza Chinese Simplified Schemas File translated by Sanley; John
+Shareaza Chinese Traditional Schemas File translated by James Bond
+Shareaza Czech Schemas File translated by Odin
+Shareaza German Schemas File translated by Spooky; jlh; OldDeath
+Shareaza Estonian Schemas File translated by Janza
+Shareaza Spanish Schemas File translated by Unknown
+Shareaza Spanish (Mexico) Schemas File translated by Help
+Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
+Shareaza Greek Schemas File translated by erimitis
+Shareaza Hebrew Schemas File translated by _peer_ (H.L)
+Shareaza Croatian Schemas File translated by Biza
+Shareaza Hungarian Schemas File translated by Yuri
+Shareaza Italian Schemas File translated by ale5000
+Shareaza Japanese Schemas File translated by DukeDog; CyberBob
+Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
+Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); Jonne; Neglacio
+Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
+Shareaza Portuguese (Brasil) Schemas File translated by Lukas Taves (LightHeaven); Felipe
+Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
+Shareaza Slovenian Schemas File translated by Martin McDowell
+Shareaza Albanian Schemas File translated by Besmir Godole
+Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Swedish Schemas File translated by Marcus Ehrenlans; Printz; DanielB
+Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
+-->
+
+<schemaDescriptor location="http://www.shareaza.com/schemas/musicAlbum.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
+
+       <object type="folder" availability="default"/>
+       <titles>
+               <title language="en">Music Album</title>
+               <title language="af">Musiek Album</title>
+               <title language="ca">Àlbum</title>
+               <title language="chs">音乐专辑</title>
+               <title language="cht">音樂專輯</title>
+               <title language="cz">Hudební album</title>
+               <title language="de">Musikalbum</title>
+               <title language="ee">Muusika Album</title>
+               <title language="es">Album de Música</title>
+               <title language="es-mx">Album de Música</title>
+               <title language="fr">Album Musical</title>
+               <title language="gr">Μουσικό Album</title>
+               <title language="heb">&#160;אלבום מוזיקה</title>
+               <title language="hr">Album Pjesma</title>
+               <title language="hu">Zenei album</title>
+               <title language="it">Album di musica</title>
+               <title language="ja">&#160;音楽 アルバム</title>
+               <title language="lt">Muzikinis albumas</title>
+               <title language="nl">Muziek Album</title>
+               <title language="no">Musikkalbum</title>
+               <title language="pt-br">Álbum de Músicas</title>
+               <title language="ru">&#160;Альбом музыки</title>
+               <title language="sl-SI">Glasbeni album</title>
+               <title language="sq">Albumi i Muzikës</title>
+               <title language="sr">Album Pesma</title>
+               <title language="sv">Musikalbum</title>
+               <title language="tr">Müzik Albümü</title>
+       </titles>
+       <images>
+               <icon path="musicDisk.ico"/>
+       </images>
+       <members>
+               <member name="title" search="generic">
+                       <display defaultColumn="true"/>
+                       <title language="en">Title</title>
+                       <title language="af">Titel</title>
+                       <title language="ca">Títol</title>
+                       <title language="chs">标题</title>
+                       <title language="cht">標題</title>
+                       <title language="cz">Název</title>
+                       <title language="de">Titel</title>
+                       <title language="ee">Pealkiri</title>
+                       <title language="es">Título</title>
+                       <title language="es-mx">Título</title>
+                       <title language="fr">Titre</title>
+                       <title language="gr">Τίτλος</title>
+                       <title language="heb">כותרת</title>
+                       <title language="hr">Naslov</title>
+                       <title language="hu">Cím</title>
+                       <title language="it">Titolo</title>
+                       <title language="ja">タイトル</title>
+                       <title language="lt">Pavadinimas</title>
+                       <title language="nl">Titel</title>
+                       <title language="no">Tittel</title>
+                       <title language="pt-br">Título</title>
+                       <title language="ru">Название</title>
+                       <title language="sl-SI">Naslov</title>
+                       <title language="sq">Titulli</title>
+                       <title language="sr">Naslov</title>
+                       <title language="sv">Titel</title>
+                       <title language="tr">Başlık</title>
+               </member>
+               <member name="artist" search="generic">
+                       <display defaultColumn="true"/>
+                       <link location="http://www.shareaza.com/schemas/musicArtist.xsd" remote="name"/>
+                       <title language="en">Artist</title>
+                       <title language="af">Kunstenaar</title>
+                       <title language="ca">Artista</title>
+                       <title language="chs">艺术家</title>
+                       <title language="cht">藝人</title>
+                       <title language="cz">Autor</title>
+                       <title language="de">Künstler</title>
+                       <title language="ee">Artist</title>
+                       <title language="es">Artista</title>
+                       <title language="es-mx">Artista</title>
+                       <title language="fr">Artiste</title>
+                       <title language="gr">Καλλιτέχνης</title>
+                       <title language="heb">אמן</title>
+                       <title language="hr">Izvođač</title>
+                       <title language="hu">Előadó</title>
+                       <title language="it">Artista</title>
+                       <title language="ja">アーティスト</title>
+                       <title language="lt">Atlikėjas</title>
+                       <title language="nl">Artiest</title>
+                       <title language="no">Artist</title>
+                       <title language="pt-br">Artista</title>
+                       <title language="ru">Артист</title>
+                       <title language="sl-SI">Izvajalec</title>
+                       <title language="sq">Artisti</title>
+                       <title language="sr">Izvođač</title>
+                       <title language="sv">Artist</title>
+                       <title language="tr">Sanatçı</title>
+               </member>
+               <member name="genre" search="generic">
+                       <display defaultColumn="true"/>
+                       <link location="http://www.shareaza.com/schemas/musicGenre.xsd" remote="name"/>
+                       <title language="en">Genre</title>
+                       <title language="af">Genre</title>
+                       <title language="ca">Gènere</title>
+                       <title language="chs">流派</title>
+                       <title language="cht">類型</title>
+                       <title language="cz">Žánr</title>
+                       <title language="de">Genre</title>
+                       <title language="ee">Zanr</title>
+                       <title language="es">Género</title>
+                       <title language="es-mx">Género</title>
+                       <title language="fr">Genre</title>
+                       <title language="gr">Φύλο</title>
+                       <title language="heb">ז'אנר</title>
+                       <title language="hr">Žanr</title>
+                       <title language="hu">Műfaj</title>
+                       <title language="it">Genere</title>
+                       <title language="ja">ジャンル</title>
+                       <title language="lt">Žanras/Stilius</title>
+                       <title language="nl">Genre</title>
+                       <title language="no">Sjanger</title>
+                       <title language="pt-br">Gênero</title>
+                       <title language="ru">Жанр</title>
+                       <title language="sl-SI">Žanr</title>
+                       <title language="sq">Gjini</title>
+                       <title language="sr">Žanr</title>
+                       <title language="sv">Genre</title>
+                       <title language="tr">Tarz</title>
+               </member>
+               <member name="tracks" search="none">
+                       <title language="en">Tracks</title>
+                       <title language="af">Snitte</title>
+                       <title language="ca">Pistes</title>
+                       <title language="chs">音轨</title>
+                       <title language="cht">音軌</title>
+                       <title language="cz">Stopy</title>
+                       <title language="de">Titel</title>
+                       <title language="ee">Rajad</title>
+                       <title language="es">Pista</title>
+                       <title language="es-mx">Pista</title>
+                       <title language="fr">Pistes</title>
+                       <title language="gr">Κομμάτια</title>
+                       <title language="heb">רצועות</title>
+                       <title language="hr">Pjesme</title>
+                       <title language="hu">Szám</title>
+                       <title language="it">Tracce</title>
+                       <title language="ja">トラック数</title>
+                       <title language="lt">Takelių</title>
+                       <title language="nl">Nummers</title>
+                       <title language="no">Spor</title>
+                       <title language="pt-br">Faixas</title>
+                       <title language="ru">Треки</title>
+                       <title language="sl-SI">Steze</title>
+                       <title language="sq">Kolonat</title>
+                       <title language="sr">Pesme</title>
+                       <title language="sv">Spår</title>
+                       <title language="tr">İzler</title>
+               </member>
+               <member name="disks" search="none">
+                       <title language="en">Disks</title>
+                       <title language="af">Skywe</title>
+                       <title language="ca">Discos</title>
+                       <title language="chs">碟片</title>
+                       <title language="cht">磁碟</title>
+                       <title language="cz">Disky</title>
+                       <title language="de">CDs</title>
+                       <title language="ee">Plaadid</title>
+                       <title language="es">Disco</title>
+                       <title language="es-mx">Disco</title>
+                       <title language="fr">Disques</title>
+                       <title language="gr">Δίσκοι</title>
+                       <title language="heb">דיסקים</title>
+                       <title language="hr">Diskovi</title>
+                       <title language="hu">Lemez</title>
+                       <title language="it">Dischi</title>
+                       <title language="ja">ディスク数</title>
+                       <title language="lt">Plokštelių</title>
+                       <title language="nl">Schijven</title>
+                       <title language="no">Plater</title>
+                       <title language="pt-br">Discos</title>
+                       <title language="ru">Диски</title>
+                       <title language="sl-SI">Zgoščenke</title>
+                       <title language="sq">Disqet</title>
+                       <title language="sr">Diskovi</title>
+                       <title language="sv">Skivor</title>
+                       <title language="tr">Diskler</title>
+               </member>
+               <member name="label">
+                       <title language="en">Label</title>
+                       <title language="af">CD Maatskappy</title>
+                       <title language="ca">Etiqueta</title>
+                       <title language="chs">标签</title>
+                       <title language="cht">標籤</title>
+                       <title language="cz">Popis</title>
+                       <title language="de">Etikett</title>
+                       <title language="ee">Silt</title>
+                       <title language="es">Etiqueta</title>
+                       <title language="es-mx">Etiqueta</title>
+                       <title language="fr">Étiquette</title>
+                       <title language="gr">Μάρκα</title>
+                       <title language="heb">לבל</title>
+                       <title language="hr">Oznaka</title>
+                       <title language="hu">Címke</title>
+                       <title language="it">Etichetta</title>
+                       <title language="ja">ラベル</title>
+                       <title language="lt">Etiketė</title>
+                       <title language="nl">Platenmaatschappij</title>
+                       <title language="no">Merke</title>
+                       <title language="pt-br">Rótulo</title>
+                       <title language="ru">Этикетка</title>
+                       <title language="sl-SI">Label</title>
+                       <title language="sq">Etiketa</title>
+                       <title language="sr">Oznaka</title>
+                       <title language="sv">Etikett</title>
+                       <title language="tr">Etiket</title>
+               </member>
+               <member name="source">
+                       <title language="en">Source</title>
+                       <title language="af">Bron</title>
+                       <title language="ca">Font</title>
+                       <title language="chs">来源</title>
+                       <title language="cht">來源</title>
+                       <title language="cz">Zdroj</title>
+                       <title language="de">Quelle</title>
+                       <title language="ee">Allikas</title>
+                       <title language="es">Fuente</title>
+                       <title language="es-mx">Fuente</title>
+                       <title language="fr">Source</title>
+                       <title language="gr">Πηγή</title>
+                       <title language="heb">מקור</title>
+                       <title language="hr">Izvor</title>
+                       <title language="hu">Forrás</title>
+                       <title language="it">Fonte</title>
+                       <title language="ja">ソース</title>
+                       <title language="lt">Šaltinis</title>
+                       <title language="nl">Bron</title>
+                       <title language="no">Kilde</title>
+                       <title language="pt-br">Fonte</title>
+                       <title language="ru">Источник</title>
+                       <title language="sl-SI">Vir</title>
+                       <title language="sq">Burimi</title>
+                       <title language="sr">Izvor</title>
+                       <title language="sv">Källor</title>
+                       <title language="tr">Kaynak</title>
+               </member>
+               <member name="type" search="indexed">
+                       <title language="en">Type</title>
+                       <title language="af">Tipe</title>
+                       <title language="ca">Tipus</title>
+                       <title language="chs">类型</title>
+                       <title language="cht">類型</title>
+                       <title language="cz">Typ</title>
+                       <title language="de">Typ</title>
+                       <title language="ee">Tüüp</title>
+                       <title language="es">Arte</title>
+                       <title language="es-mx">Arte</title>
+                       <title language="fr">Type</title>
+                       <title language="gr">Τύπος</title>
+                       <title language="heb">סוג</title>
+                       <title language="hr">Vrsta</title>
+                       <title language="hu">Típus</title>
+                       <title language="it">Tipo</title>
+                       <title language="ja">種類</title>
+                       <title language="lt">Tipas</title>
+                       <title language="nl">Type</title>
+                       <title language="no">Type</title>
+                       <title language="pt-br">Tipo</title>
+                       <title language="ru">Тип</title>
+                       <title language="sl-SI">Tip</title>
+                       <title language="sq">Lloji</title>
+                       <title language="sr">Vrsta</title>
+                       <title language="sv">Typ</title>
+                       <title language="tr">Tip</title>
+               </member>
+               <member name="TotalTime" search="indexed">
+                       <title language="en">Total Time</title>
+                       <title language="af">Totale Tydsduur</title>
+                       <title language="ca">Temps total</title>
+                       <title language="chs">总时间</title>
+                       <title language="cht">總計時間</title>
+                       <title language="cz">Celkový čas</title>
+                       <title language="de">Gesamtdauer</title>
+                       <title language="ee">Aeg Kokku</title>
+                       <title language="es">Tiempo Total</title>
+                       <title language="es-mx">Tiempo Total</title>
+                       <title language="fr">Durée totale</title>
+                       <title language="gr">Συνολική Διάρκεια</title>
+                       <title language="heb">זמן כולל</title>
+                       <title language="hr">Vrijeme Trajanja</title>
+                       <title language="hu">Teljes idő</title>
+                       <title language="it">Tempo complessivo</title>
+                       <title language="ja">総合時間</title>
+                       <title language="lt">Bendra trukmė</title>
+                       <title language="nl">Totale Tijd</title>
+                       <title language="no">Total tid</title>
+                       <title language="pt-br">Tempo Total</title>
+                       <title language="ru">Время всего</title>
+                       <title language="sl-SI">Celoten čas</title>
+                       <title language="sq">Koha Totale</title>
+                       <title language="sr">Vreme Trajanja</title>
+                       <title language="sv">Total tid</title>
+                       <title language="tr">Toplam Süre</title>
+               </member>
+               <member name="language" search="indexed">
+                       <display defaultColumn="true"/>
+                       <title language="en">Language</title>
+                       <title language="af">Taal</title>
+                       <title language="ca">Idioma</title>
+                       <title language="chs">语言</title>
+                       <title language="cht">語言</title>
+                       <title language="cz">Jazyk</title>
+                       <title language="de">Sprache</title>
+                       <title language="ee">Keel</title>
+                       <title language="es">Lenguaje</title>
+                       <title language="es-mx">Lenguaje</title>
+                       <title language="fr">Langue</title>
+                       <title language="gr">Γλώσσα</title>
+                       <title language="heb">שפה</title>
+                       <title language="hr">Jezik</title>
+                       <title language="hu">Nyelv</title>
+                       <title language="it">Lingua</title>
+                       <title language="ja">言語</title>
+                       <title language="lt">Kalba</title>
+                       <title language="nl">Taal</title>
+                       <title language="no">Språk</title>
+                       <title language="pt-br">Idioma</title>
+                       <title language="ru">Язык</title>
+                       <title language="sl-SI">Jezik</title>
+                       <title language="sq">Gjuhë</title>
+                       <title language="sr">Jezik</title>
+                       <title language="sv">Språk</title>
+                       <title language="tr">Dil</title>
+               </member>
+               <member name="completeness" search="none">
+                       <title language="en">Completeness</title>
+                       <title language="af">Volledigheid</title>
+                       <title language="ca">Completat</title>
+                       <title language="chs">完全</title>
+                       <title language="cht">完全</title>
+                       <title language="cz">Úplnost</title>
+                       <title language="de">Vollständigkeit</title>
+                       <title language="ee">Täielikkus</title>
+                       <title language="es">Lo completo</title>
+                       <title language="es-mx">Lo completo</title>
+                       <title language="fr">Complet</title>
+                       <title language="gr">Πληρότητα</title>
+                       <title language="heb">שלמות</title>
+                       <title language="hr">Popunjeno</title>
+                       <title language="hu">Teljesség</title>
+                       <title language="it">Integrità</title>
+                       <title language="ja">完成度</title>
+                       <title language="lt">Pilnumas</title>
+                       <title language="nl">Volledigheid</title>
+                       <title language="no">Helhet</title>
+                       <title language="pt-br">Completado</title>
+                       <title language="ru">Полнота</title>
+                       <title language="sl-SI">Kompletnost</title>
+                       <title language="sq">Plotësia</title>
+                       <title language="sr">Popunjeno</title>
+                       <title language="sv">Fullständighet</title>
+                       <title language="tr">Tamamlık</title>
+               </member>
+               <member name="EncoderUsed" search="indexed">
+                       <title language="en">Encoder Used</title>
+                       <title language="af">Enkodeerder Gebruik</title>
+                       <title language="ca">Codificador emprat</title>
+                       <title language="chs">使用编码</title>
+                       <title language="cht">使用的編碼器</title>
+                       <title language="cz">Zakódováno:</title>
+                       <title language="de">Benutzter Encoder</title>
+                       <title language="ee">Kasutatud Kodeerija</title>
+                       <title language="es">Encoder Usado</title>
+                       <title language="es-mx">Encoder Usado</title>
+                       <title language="fr">Encodeur utilisé</title>
+                       <title language="gr">Κωδικοποιητής</title>
+                       <title language="heb">המקודד שנעשה בו שימוש</title>
+                       <title language="hr">Korišteni Encoder</title>
+                       <title language="hu">Felhasznált enkódoló</title>
+                       <title language="it">Encoder usato</title>
+                       <title language="ja">使用エンコーダー</title>
+                       <title language="lt">Naudotas koduoklis</title>
+                       <title language="nl">Gebruikte encodeerder</title>
+                       <title language="no">Brukt omkoder</title>
+                       <title language="pt-br">Codificador Usado</title>
+                       <title language="ru">Перекодировщик</title>
+                       <title language="sl-SI">Uporabljen enkoder</title>
+                       <title language="sq">Koduesi i Përdorur</title>
+                       <title language="sr">Korišteni Encoder</title>
+                       <title language="sv">Omkodare använd</title>
+                       <title language="tr">Kullanılan Kodlayıcı</title>
+               </member>
+               <member name="bitrate" search="indexed">
+                       <title language="en">Bitrate</title>
+                       <title language="af">Bistempo</title>
+                       <title language="ca">Bits per segon</title>
+                       <title language="chs">位速</title>
+                       <title language="cht">位元率</title>
+                       <title language="cz">Bitrate</title>
+                       <title language="de">Bitrate</title>
+                       <title language="ee">Bitrate</title>
+                       <title language="es">Bitrate</title>
+                       <title language="es-mx">Bitrate</title>
+                       <title language="fr">Fréquence</title>
+                       <title language="gr">Δειγματοληψία</title>
+                       <title language="heb">קצב סיביות</title>
+                       <title language="hr">Bitrate</title>
+                       <title language="hu">Bitráta</title>
+                       <title language="it">Velocità in bit</title>
+                       <title language="ja">ビットレート</title>
+                       <title language="lt">Bitratas</title>
+                       <title language="nl">Frequentie</title>
+                       <title language="no">Bitrate</title>
+                       <title language="pt-br">Bitrate</title>
+                       <title language="ru">Битрейт</title>
+                       <title language="sl-SI">Bitna hitrost</title>
+                       <title language="sq">Bitrate</title>
+                       <title language="sr">Gustina Zapisa</title>
+                       <title language="sv">Bithastighet</title>
+                       <title language="tr">Bitrate</title>
+               </member>
+               <member name="SampleRate" search="indexed">
+                       <title language="en">Sample Rate</title>
+                       <title language="af">Klanktempo</title>
+                       <title language="ca">Tasa de mostra (rate)</title>
+                       <title language="chs">采样率</title>
+                       <title language="cht">取樣率</title>
+                       <title language="cz">Vzorkovací frekvence</title>
+                       <title language="de">Abtastrate</title>
+                       <title language="ee">Sagedus</title>
+                       <title language="es">Sample Rate</title>
+                       <title language="es-mx">Sample Rate</title>
+                       <title language="fr">Échantillonnage</title>
+                       <title language="gr">Δειγματοληψία</title>
+                       <title language="heb">קצב דגימה</title>
+                       <title language="hr">Sample Rate</title>
+                       <title language="hu">Mintavétel</title>
+                       <title language="it">Frequenza</title>
+                       <title language="ja">サンプリング・レート</title>
+                       <title language="lt">Išrankos dažnis</title>
+                       <title language="nl">Sample Rate</title>
+                       <title language="no">Sample rate</title>
+                       <title language="pt-br">Taxa de Sample</title>
+                       <title language="ru">Ср. битрейт</title>
+                       <title language="sl-SI">Vzorčna hitrost</title>
+                       <title language="sq">Raporti Modelues</title>
+                       <title language="sr">Sample Rate</title>
+                       <title language="sv">Samplingsfrekvens</title>
+                       <title language="tr">Örnekler</title>
+               </member>
+               <member name="description">
+                       <title language="en">Description</title>
+                       <title language="af">Beskrywing</title>
+                       <title language="ca">Descripció</title>
+                       <title language="chs">描述</title>
+                       <title language="cht">描述</title>
+                       <title language="cz">Popis</title>
+                       <title language="de">Beschreibung</title>
+                       <title language="ee">Kirjeldus</title>
+                       <title language="es">Descripción</title>
+                       <title language="es-mx">Descripción</title>
+                       <title language="fr">Description</title>
+                       <title language="gr">Περιγραφή</title>
+                       <title language="heb">תיאור</title>
+                       <title language="hr">Opis</title>
+                       <title language="hu">Leírás</title>
+                       <title language="it">Descrizione</title>
+                       <title language="ja">詳細</title>
+                       <title language="lt">Aprašas</title>
+                       <title language="nl">Omschrijving</title>
+                       <title language="no">Beskrivelse</title>
+                       <title language="pt-br">Descrição</title>
+                       <title language="ru">Описание</title>
+                       <title language="sl-SI">Opis</title>
+                       <title language="sq">Përshkrimi</title>
+                       <title language="sr">Opis</title>
+                       <title language="sv">Beskrivning</title>
+                       <title language="tr">Tanımlama</title>
+               </member>
+               <member name="collector" search="indexed">
+                       <title language="en">Collector</title>
+                       <title language="af">Versamelaar</title>
+                       <title language="ca">Col·lector</title>
+                       <title language="chs">收藏者</title>
+                       <title language="cht">美術品收藏者</title>
+                       <title language="cz">Sběratel</title>
+                       <title language="de">Sammler</title>
+                       <title language="ee">Koguja</title>
+                       <title language="es">Colector</title>
+                       <title language="es-mx">Colector</title>
+                       <title language="fr">Collecteur</title>
+                       <title language="gr">Συλλέκτης</title>
+                       <title language="heb">שם יוצר האוסף</title>
+                       <title language="hr">Sakupio</title>
+                       <title language="hu">Gyűjtő</title>
+                       <title language="it">Raccoglitore</title>
+                       <title language="ja">コレクター</title>
+                       <title language="lt">Kolekcionierius</title>
+                       <title language="nl">Samensteller</title>
+                       <title language="no">Samler</title>
+                       <title language="pt-br">Colecionador</title>
+                       <title language="ru">Коллекционер</title>
+                       <title language="sl-SI">Kolektor</title>
+                       <title language="sq">Koleksionuesi</title>
+                       <title language="sr">Sakupio</title>
+                       <title language="sv">Samlare</title>
+                       <title language="tr">Koleksiyoncu</title>
+               </member>
+               <member name="qualitynotes">
+                       <title language="en">Quality Notes</title>
+                       <title language="af">Kwaliteit Notas</title>
+                       <title language="ca">Notes de qualitat</title>
+                       <title language="chs">质量备注</title>
+                       <title language="cht">品質注解</title>
+                       <title language="cz">Poznámky ke kvalitě</title>
+                       <title language="de">Qualitätshinweise</title>
+                       <title language="ee">Kvaliteeid Märkmed</title>
+                       <title language="es">Notas de Calidad</title>
+                       <title language="es-mx">Notas de Calidad</title>
+                       <title language="fr">Notes sur la qualité</title>
+                       <title language="gr">Σημειώσεις περί Ποιότητας</title>
+                       <title language="heb">הערות לגבי איכות</title>
+                       <title language="hr">O Kvaliteti</title>
+                       <title language="hu">Megjegyzés</title>
+                       <title language="it">Note di qualità</title>
+                       <title language="ja">品質説明</title>
+                       <title language="lt">Apie kokybę</title>
+                       <title language="nl">Kwaliteitsaantekeningen</title>
+                       <title language="no">Kvalitetsnotat</title>
+                       <title language="pt-br">Notas de Qualidade</title>
+                       <title language="ru">Прим. о качестве</title>
+                       <title language="sl-SI">Opomba kakovosti</title>
+                       <title language="sq">Shënimet mbi Cilësinë</title>
+                       <title language="sr">O Kvalitetu</title>
+                       <title language="sv">Kvalitetsanteckningar</title>
+                       <title language="tr">Kalite Notları</title>
+               </member>
+               <member name="Distributer" search="indexed">
+                       <title language="en">Distributer</title>
+                       <title language="af">Verspreider</title>
+                       <title language="ca">Distribuïdor</title>
+                       <title language="chs">内容提供商</title>
+                       <title language="cht">經銷商</title>
+                       <title language="cz">Distributor</title>
+                       <title language="de">Herausgeber</title>
+                       <title language="ee">Levitaja</title>
+                       <title language="es">Distribuidor</title>
+                       <title language="es-mx">Distribuidor</title>
+                       <title language="fr">Distributeur</title>
+                       <title language="gr">Διανομέας</title>
+                       <title language="heb">מפיץ</title>
+                       <title language="hr">Distributer</title>
+                       <title language="hu">Árusító</title>
+                       <title language="it">Distributore</title>
+                       <title language="ja">配布者</title>
+                       <title language="lt">Distributorius</title>
+                       <title language="nl">Distributeerder</title>
+                       <title language="no">Distributør</title>
+                       <title language="pt-br">Distribuidor</title>
+                       <title language="ru">Дистрибьютер</title>
+                       <title language="sl-SI">Distributer</title>
+                       <title language="sq">Distributori</title>
+                       <title language="sr">Distributer</title>
+                       <title language="sv">Distributör</title>
+                       <title language="tr">Dağıtıcı</title>
+               </member>
+               <member name="DistributerLink">
+                       <title language="en">Distributer Link</title>
+                       <title language="af">Verspreider Skakel</title>
+                       <title language="ca">Enllaç del distribuïdor</title>
+                       <title language="chs">促销链接</title>
+                       <title language="cht">經銷商連結</title>
+                       <title language="cz">Odkaz na distributora</title>
+                       <title language="de">Link des Herausgebers</title>
+                       <title language="ee">Levitaja Link</title>
+                       <title language="es">Link del Distribuidor</title>
+                       <title language="es-mx">Link del Distribuidor</title>
+                       <title language="fr">Lien du distributeur</title>
+                       <title language="gr">Ιστοσελίδα Διανομέα</title>
+                       <title language="heb">קישור למפיץ</title>
+                       <title language="hr">Link na Distributera</title>
+                       <title language="hu">Árusító linkje</title>
+                       <title language="it">Link del distributore</title>
+                       <title language="ja">配布者リンク</title>
+                       <title language="lt">Distrib. nuoroda</title>
+                       <title language="nl">Link naar Distributeerder</title>
+                       <title language="no">Distributørlink</title>
+                       <title language="pt-br">Link do Distribuidor</title>
+                       <title language="ru">Ссылка агента</title>
+                       <title language="sl-SI">Povezava distributerja</title>
+                       <title language="sq">Linku i Distributorit</title>
+                       <title language="sr">Link na Distributera</title>
+                       <title language="sv">Distributionslänk</title>
+                       <title language="tr">Dağıtıcı Bağlantısı</title>
+               </member>
+               <member name="Releasegroup" search="indexed">
+                       <title language="en">Release Group</title>
+                       <title language="af">Uitgewers Groep</title>
+                       <title language="ca">Grup de publicació</title>
+                       <title language="chs">发行组织</title>
+                       <title language="cht">釋放團體</title>
+                       <title language="cz">Vydala skupina:</title>
+                       <title language="de">Releasegruppe</title>
+                       <title language="ee">Väljalaske Grupp</title>
+                       <title language="es">Release Group</title>
+                       <title language="es-mx">Release Group</title>
+                       <title language="fr">Groupe de diffusion</title>
+                       <title language="gr">Ομάδα Δημοσίευσης</title>
+                       <title language="heb">קבוצת שחרור</title>
+                       <title language="hr">Grupa Objavljivača</title>
+                       <title language="hu">Kiadó csapat</title>
+                       <title language="it">Gruppo di rilascio</title>
+                       <title language="ja">配布グループ</title>
+                       <title language="lt">Leidimo grupė</title>
+                       <title language="nl">Distributiegroep</title>
+                       <title language="no">Releasegruppe</title>
+                       <title language="pt-br">Grupo de Lançamento</title>
+                       <title language="ru">Релиз группа</title>
+                       <title language="sl-SI">Skupina izdaje</title>
+                       <title language="sq">Grupi Lëshues</title>
+                       <title language="sr">Grupa Objavljivača</title>
+                       <title language="sv">Lanseringsgrupp</title>
+                       <title language="tr">Yayın Grubu</title>
+               </member>
+               <member name="ReleasegroupLink">
+                       <title language="en">Release Group Link</title>
+                       <title language="af">Uitgewers Skakel</title>
+                       <title language="ca">Drecera del publicador</title>
+                       <title language="chs">发行组织链接</title>
+                       <title language="cht">釋放團體連結</title>
+                       <title language="cz">Odkaz na vydavatele:</title>
+                       <title language="de">Link der Releasegruppe</title>
+                       <title language="ee">Väljalaske Grupi Link</title>
+                       <title language="es">Release Group Link</title>
+                       <title language="es-mx">Release Group Link</title>
+                       <title language="fr">Lien du gr. de diffusion</title>
+                       <title language="gr">Ιστοσελίδα Ομάδας Δημοσίευσης</title>
+                       <title language="heb">קישור לקבוצת שחרור</title>
+                       <title language="hr">Link na Grupu Objavljivača</title>
+                       <title language="hu">Kiadó csapat linkje</title>
+                       <title language="it">Link gruppo di rilascio</title>
+                       <title language="ja">配布グループリンク</title>
+                       <title language="lt">Leid. gr. nuoroda</title>
+                       <title language="nl">Link van distributiegroep</title>
+                       <title language="no">Releasegruppe-link</title>
+                       <title language="pt-br">Link do Grupo</title>
+                       <title language="ru">Ссылка группы</title>
+                       <title language="sl-SI">Povezava skupine izdaje</title>
+                       <title language="sq">Linku i Grupit Lëshues</title>
+                       <title language="sr">Link na Grupu Objavljivača</title>
+                       <title language="sv">Lanseringsgrupplänk</title>
+                       <title language="tr">Yayın Grubu Bağlantısı</title>
+               </member>
+               <member name="year" search="none">
+                       <title language="en">Year</title>
+                       <title language="af">Jaar</title>
+                       <title language="ca">Any</title>
+                       <title language="chs">年份</title>
+                       <title language="cht">年份</title>
+                       <title language="cz">Rok</title>
+                       <title language="de">Jahr</title>
+                       <title language="ee">Aasta</title>
+                       <title language="es">Año</title>
+                       <title language="es-mx">Año</title>
+                       <title language="fr">Année</title>
+                       <title language="gr">Έτος</title>
+                       <title language="heb">שנה</title>
+                       <title language="hr">Godina</title>
+                       <title language="hu">Év</title>
+                       <title language="it">Anno</title>
+                       <title language="ja">年</title>
+                       <title language="lt">Metai</title>
+                       <title language="nl">Jaar</title>
+                       <title language="no">År</title>
+                       <title language="pt-br">Ano</title>
+                       <title language="ru">Год</title>
+                       <title language="sl-SI">Leto</title>
+                       <title language="sq">Viti</title>
+                       <title language="sr">Godina</title>
+                       <title language="sv">År</title>
+                       <title language="tr">Yıl</title>
+               </member>
+               <member name="link" search="none">
+                       <title language="en">Link</title>
+                       <title language="af">Skakel</title>
+                       <title language="ca">Enllaç</title>
+                       <title language="chs">链接</title>
+                       <title language="cht">連結</title>
+                       <title language="cz">Odkaz</title>
+                       <title language="de">Link</title>
+                       <title language="ee">Link</title>
+                       <title language="es">Link</title>
+                       <title language="es-mx">Link</title>
+                       <title language="fr">Lien</title>
+                       <title language="gr">Σύνδεσμος</title>
+                       <title language="heb">קישור</title>
+                       <title language="hr">Link</title>
+                       <title language="hu">Link</title>
+                       <title language="it">Link</title>
+                       <title language="ja">リンク</title>
+                       <title language="lt">Nuoroda</title>
+                       <title language="nl">Link</title>
+                       <title language="no">Link</title>
+                       <title language="pt-br">Link</title>
+                       <title language="ru">Ссылка</title>
+                       <title language="sl-SI">Povezava</title>
+                       <title language="sq">Linku</title>
+                       <title language="sr">Link</title>
+                       <title language="sv">Länk</title>
+                       <title language="tr">Bağlantı</title>
+               </member>
+       </members>
+       <extends>
+               <schema location="http://www.shareaza.com/schemas/folder.xsd"/>
+       </extends>
+       <contains>
+               <object type="file" location="http://www.limewire.com/schemas/audio.xsd">
+                       <identity local="title" remote="album" compare="loose"/>
+                       <shared local="artist" remote="artist"/>
+                       <shared local="year" remote="year"/>
+                       <shared local="genre" remote="genre"/>
+                       <shared local="type" remote="type"/>
+                       <shared local="language" remote="language"/>
+                       <shared local="source" remote="source"/>
+                       <shared local="description" remote="description"/>
+                       <shared local="qualitynotes" remote="qualitynotes"/>
+               </object>
+       </contains>
+       <headerContent version="1.0">
+               <title>{title}</title>
+               <subtitle>{artist} ({year})</subtitle>
+       </headerContent>
+       <viewContent version="1.0" preferredView="CLibraryAlbumView">
+               <tileLine1>{artist}</tileLine1>
+               <tileLine2>{year}</tileLine2>
+       </viewContent>
+
+</schemaDescriptor>

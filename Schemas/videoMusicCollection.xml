@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
+Shareaza Catalan Schemas File translated by Daniel Olivares Giménez; Equip de traduccions de FeshoCAT
+Shareaza Chinese Simplified Schemas File translated by Sanley; John
+Shareaza Chinese Traditional Schemas File translated by James Bond
+Shareaza Czech Schemas File translated by Odin
+Shareaza German Schemas File translated by Spooky; jlh
+Shareaza Estonian Schemas File translated by Janza
+Shareaza Spanish Schemas File translated by Unknown
+Shareaza Spanish (Mexico) Schemas File translated by Help
+Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
+Shareaza Greek Schemas File translated by erimitis
+Shareaza Hebrew Schemas File translated by _peer_ (H.L)
+Shareaza Croatian Schemas File translated by Biza
+Shareaza Hungarian Schemas File translated by Yuri
+Shareaza Italian Schemas File translated by ale5000
+Shareaza Japanese Schemas File translated by DukeDog; CyberBob
+Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
+Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); Jonne; Neglacio
+Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
+Shareaza Portuguese (Brasil) Schemas File translated by Lukas Taves (LightHeaven); Felipe
+Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
+Shareaza Slovenian Schemas File translated by Martin McDowell
+Shareaza Albanian Schemas File translated by Besmir Godole
+Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Swedish Schemas File translated by Marcus Ehrenlans; Printz; DanielB
+Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
+-->
+
+<schemaDescriptor location="http://www.shareaza.com/schemas/videoMusicCollection.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
+
+       <object type="folder" availability="system"/>
+       <titles>
+               <title language="en">Video:Music Videos</title>
+               <title language="af">Video:Musiek Video's</title>
+               <title language="ca">Vídeo: Vídeos musicals</title>
+               <title language="chs">&#160;视频:音乐视频</title>
+               <title language="cht">影像:音樂影像</title>
+               <title language="cz">Videa:Hudební filmy</title>
+               <title language="de">Video:Musikvideos</title>
+               <title language="ee">Video:Muusika Videod</title>
+               <title language="es">Video: Videos de Música</title>
+               <title language="es-mx">Video: Videos de Música</title>
+               <title language="fr">Vidéo:Clips vidéos</title>
+               <title language="gr">Video:Video-clips</title>
+               <title language="heb">&#160;וידאו:קליפים</title>
+               <title language="hr">Film:Spotovi</title>
+               <title language="hu">Videó: Klipek</title>
+               <title language="it">Video:Video musicali</title>
+               <title language="ja">&#160;動画: ミュージック･ビデオ</title>
+               <title language="lt">Video:Muzikiniai klipai</title>
+               <title language="nl">Video:Muziekvideo's</title>
+               <title language="no">Video: musikk video</title>
+               <title language="pt-br">Vídeo: Clipes Musicais</title>
+               <title language="ru">&#160;Видео: Музыкальные видео</title>
+               <title language="sl-SI">Video:Glasbeni videji</title>
+               <title language="sq">Video:Videot Muzikore</title>
+               <title language="sr">Film:Spotovi</title>
+               <title language="sv">Video: Musikvideor</title>
+               <title language="tr">Video: Klipler</title>
+       </titles>
+       <images>
+               <icon path="videoFolder.ico"/>
+       </images>
+       <members>
+               <member name="title" search="generic">
+                       <display defaultColumn="true"/>
+                       <title language="en">Title</title>
+                       <title language="af">Titel</title>
+                       <title language="ca">Títol</title>
+                       <title language="chs">标题</title>
+                       <title language="cht">標題</title>
+                       <title language="cz">Název</title>
+                       <title language="de">Titel</title>
+                       <title language="ee">Pealkiri</title>
+                       <title language="es">Título</title>
+                       <title language="es-mx">Título</title>
+                       <title language="fr">Titre</title>
+                       <title language="gr">Τίτλος</title>
+                       <title language="heb">כותרת</title>
+                       <title language="hr">Naslov</title>
+                       <title language="hu">Cím</title>
+                       <title language="it">Titolo</title>
+                       <title language="ja">タイトル</title>
+                       <title language="lt">Pavadinimas</title>
+                       <title language="nl">Titel</title>
+                       <title language="no">Tittel</title>
+                       <title language="pt-br">Título</title>
+                       <title language="ru">Название</title>
+                       <title language="sl-SI">Naslov</title>
+                       <title language="sq">Titulli</title>
+                       <title language="sr">Naslov</title>
+                       <title language="sv">Titel</title>
+                       <title language="tr">Başlık</title>
+               </member>
+       </members>
+       <contains>
+               <object type="file" location="http://www.limewire.com/schemas/video.xsd"/>
+       </contains>
+       <headerContent version="1.0">
+               <title language="en">Music Videos</title>
+               <title language="af">Musiek Video's</title>
+               <title language="ca">Vídeos musicals</title>
+               <title language="chs">音乐视频</title>
+               <title language="cht">音樂-影像</title>
+               <title language="cz">Hudební video</title>
+               <title language="de">Musikvideos</title>
+               <title language="ee">Muusikavideod</title>
+               <title language="es">Videos de Música</title>
+               <title language="es-mx">Videos de Música</title>
+               <title language="fr">Clips vidéos</title>
+               <title language="gr">Video-clips</title>
+               <title language="heb">וידאו קליפים</title>
+               <title language="hr">Spotovi</title>
+               <title language="hu">Zene videó</title>
+               <title language="it">Video musicali</title>
+               <title language="ja">&#160;音楽ビデオ</title>
+               <title language="lt">Muzikiniai klipai</title>
+               <title language="nl">Muziek Video's</title>
+               <title language="no">Musikkvideo</title>
+               <title language="pt-br">Clipes Musicais</title>
+               <title language="ru">Музыкальные видео</title>
+               <title language="sl-SI">Glasbeni videji</title>
+               <title language="sq">Videot e Muzikës</title>
+               <title language="sr">Spotovi</title>
+               <title language="sv">Musikvideo</title>
+               <title language="tr">Klipler</title>
+               <subtitle language="en">This folder contains music videos.</subtitle>
+               <subtitle language="af">Hierdie gids bevat musiek video's.</subtitle>
+               <subtitle language="ca">Aquesta carpeta conté vídeos musicals.</subtitle>
+               <subtitle language="chs">此文件夹包括音乐电视。</subtitle>
+               <subtitle language="cht">這個資料夾包含了音樂影像.</subtitle>
+               <subtitle language="cz">Tato složka obsahuje hudební videa.</subtitle>
+               <subtitle language="de">Dieser Ordner enthält Musikvideos.</subtitle>
+               <subtitle language="ee">See kaust sisaldab muusika videosid.</subtitle>
+               <subtitle language="es">Esta carpeta contiene videos de música</subtitle>
+               <subtitle language="es-mx">Esta carpeta contiene videos de música</subtitle>
+               <subtitle language="fr">Ce dossier contient tous les clips vidéos de votre bibliothèque.</subtitle>
+               <subtitle language="gr">Αυτός ο φάκελος περιέχει όσα αρχεία video μπορούν να οργανωθούν ανά video-clip.</subtitle>
+               <subtitle language="heb">ספרייה זו מכילה קליפים</subtitle>
+               <subtitle language="hr">Ova mapa sadrži vaše spotove.</subtitle>
+               <subtitle language="hu">Ez a mappa zenei fájlokat tartalmaz.</subtitle>
+               <subtitle language="it">Questa cartella contiene video musicali.</subtitle>
+               <subtitle language="ja">このフォルダーには音楽･ビデオが収録されています</subtitle>
+               <subtitle language="lt">Šiame kataloge yra muzikiniai klipai.</subtitle>
+               <subtitle language="nl">Deze map bevat alle muziekvideo's uit je bibliotheek.</subtitle>
+               <subtitle language="no">Denne mappen inneholder musikkvideoer</subtitle>
+               <subtitle language="pt-br">Esta pasta contém os clipes musicais.</subtitle>
+               <subtitle language="ru">Эта папка отображает каждое музыкальное видео в Вашем хранилище.</subtitle>
+               <subtitle language="sl-SI">Ta mapa vsebuje glasbene videje.</subtitle>
+               <subtitle language="sq">Kjo dosje përmban videot muzikore.</subtitle>
+               <subtitle language="sr">Ova fascikla sadrži vaše spotove.</subtitle>
+               <subtitle language="sv">Denna mapp innehåller musikvideor.</subtitle>
+               <subtitle language="tr">Bu klasör müzik videolarını içerir.</subtitle>
+       </headerContent>
+
+</schemaDescriptor>

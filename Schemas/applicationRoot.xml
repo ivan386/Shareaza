@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
+Shareaza Catalan Schemas File translated by Daniel Olivares Giménez; Equip de traduccions de FeshoCAT
+Shareaza Chinese Simplified Schemas File translated by Sanley; John
+Shareaza Chinese Traditional Schemas File translated by James Bond
+Shareaza Czech Schemas File translated by Odin
+Shareaza German Schemas File translated by Spooky; jlh; OldDeath
+Shareaza Estonian Schemas File translated by Janza
+Shareaza Spanish Schemas File translated by Unknown
+Shareaza Spanish (Mexico) Schemas File translated by Help
+Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
+Shareaza Greek Schemas File translated by erimitis
+Shareaza Hebrew Schemas File translated by _peer_ (H.L)
+Shareaza Croatian Schemas File translated by Biza
+Shareaza Hungarian Schemas File translated by Yuri
+Shareaza Italian Schemas File translated by ale5000
+Shareaza Japanese Schemas File translated by DukeDog; CyberBob
+Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
+Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); Jonne; Neglacio
+Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
+Shareaza Portuguese (Brasil) Schemas File translated by Lukas Taves (LightHeaven); Felipe
+Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
+Shareaza Slovenian Schemas File translated by Martin McDowell
+Shareaza Albanian Schemas File translated by Besmir Godole
+Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Swedish Schemas File translated by Marcus Ehrenlans; Printz; DanielB
+Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
+-->
+
+<schemaDescriptor location="http://www.shareaza.com/schemas/applicationRoot.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
+
+       <object type="folder" availability="system"/>
+       <titles>
+               <title language="en">Application:My Applications</title>
+               <title language="af">Program:My Programme</title>
+               <title language="ca">Aplicacions: Les meves aplicacions</title>
+               <title language="chs">&#160;程序:我的程序</title>
+               <title language="cht">應用程式:我的應用程式</title>
+               <title language="cz">Aplikace:Moje aplikace</title>
+               <title language="de">Anwendung:Eigene Anwendungen</title>
+               <title language="ee">Programm:Minu Programmid</title>
+               <title language="es">Aplicación: Todas mis aplicaciones</title>
+               <title language="es-mx">Aplicación: Todas mis aplicaciones</title>
+               <title language="fr">Application:Mes applications</title>
+               <title language="gr">Εφαρμογή:Εφαρμογές</title>
+               <title language="heb">&#160;תוכנה:התוכניות שלי</title>
+               <title language="hr">Program:Svi Programi</title>
+               <title language="hu">Program: Programok</title>
+               <title language="it">Applicazione:Applicazioni</title>
+               <title language="ja">&#160;アプリケーション: マイ･アプリケーション</title>
+               <title language="lt">Programa:Mano programos</title>
+               <title language="nl">Programma:Mijn Programma's</title>
+               <title language="no">Program: mine programmer</title>
+               <title language="pt-br">Aplicativo: Meus Aplicativos</title>
+               <title language="ru">&#160;Приложение: Мои приложения</title>
+               <title language="sl-SI">Program:Moji programi</title>
+               <title language="sq">Aplikm:Aplikimet e Mia</title>
+               <title language="sr">Program:Svi Programi</title>
+               <title language="sv">Applikation: Mina applikationer</title>
+               <title language="tr">Uygulama: Uygulamalarım</title>
+       </titles>
+       <images>
+               <icon path="applicationFolder.ico"/>
+       </images>
+       <members>
+               <member name="title" search="none">
+                       <display defaultColumn="true"/>
+                       <title language="en">Title</title>
+                       <title language="af">Titel</title>
+                       <title language="ca">Títol</title>
+                       <title language="chs">标题</title>
+                       <title language="cht">標題</title>
+                       <title language="cz">Název</title>
+                       <title language="de">Titel</title>
+                       <title language="ee">Pealkiri</title>
+                       <title language="es">Título</title>
+                       <title language="es-mx">Título</title>
+                       <title language="fr">Titre</title>
+                       <title language="gr">Τίτλος</title>
+                       <title language="heb">כותרת</title>
+                       <title language="hr">Naslov</title>
+                       <title language="hu">Cím</title>
+                       <title language="it">Titolo</title>
+                       <title language="ja">タイトル</title>
+                       <title language="lt">Pavadinimas</title>
+                       <title language="nl">Titel</title>
+                       <title language="no">Tittel</title>
+                       <title language="pt-br">Título</title>
+                       <title language="ru">Название</title>
+                       <title language="sl-SI">Naslov</title>
+                       <title language="sq">Titulli</title>
+                       <title language="sr">Naslov</title>
+                       <title language="sv">Titel</title>
+                       <title language="tr">Başlık</title>
+               </member>
+       </members>
+       <contains>
+               <object type="folder" location="http://www.shareaza.com/schemas/applicationAll.xsd"/>
+       </contains>
+       <headerContent version="1.0">
+               <title language="en">Welcome to My Applications!</title>
+               <title language="af">Welkom by My Programme!</title>
+               <title language="ca">Benvingut/da a les meves aplicacions!</title>
+               <title language="chs">欢迎来到我的程序！</title>
+               <title language="cht">歡迎來到我的應用程式!</title>
+               <title language="cz">Moje aplikace</title>
+               <title language="de">Willkommen bei Eigene Anwendungen!</title>
+               <title language="ee">Teretulemast  Minu Programmidesse!</title>
+               <title language="es">¡Bienvenido a Mis Aplicaciones!</title>
+               <title language="es-mx">¡Bienvenido a Mis Aplicaciones!</title>
+               <title language="fr">Bienvenue dans Mes applications!</title>
+               <title language="gr">Καλώς ήρθατε στις Εφαρμογές!</title>
+               <title language="heb">ברוך הבא לתוכניות שלי!</title>
+               <title language="hr">Dobrodošli Među Vaše Programe!</title>
+               <title language="hu">Üdvözöllek a Programok mappában!</title>
+               <title language="it">Benvenuto nelle Applicazioni!</title>
+               <title language="ja">マイ･アプリケーションへようこそ</title>
+               <title language="lt">Sveiki apsilankę „Mano programose“!</title>
+               <title language="nl">Welkom bij Mijn Programma's!</title>
+               <title language="no">Velkommen til mine programmer</title>
+               <title language="pt-br">Bem-vindo aos Meus Aplicativos!</title>
+               <title language="ru">Добро пожаловать в Ваши приложения!</title>
+               <title language="sl-SI">Dobrodošli v mojih programih!</title>
+               <title language="sq">Mirë se erdhët në Aplikimet Tuaja!</title>
+               <title language="sr">Dobrodošli Među Vaše Programe!</title>
+               <title language="sv">Välkommen till mina program!</title>
+               <title language="tr">Uygulamalarıma Hoşgeldiniz!</title>
+               <subtitle language="en">These folders contain all of your application files.</subtitle>
+               <subtitle language="af">Hierdie gidse bevat al jou programlêers.</subtitle>
+               <subtitle language="ca">Aquesta carpeta conté totes les aplicacions.</subtitle>
+               <subtitle language="chs">这些文件夹包含您所有的程序。</subtitle>
+               <subtitle language="cht">這些資料夾包含了您所有的應用程式檔案.</subtitle>
+               <subtitle language="cz">Tyto složky obsahují všechny aplikace v knihovně.</subtitle>
+               <subtitle language="de">Diese Ordner enthalten alle Ihre Anwendungen.</subtitle>
+               <subtitle language="ee">Need kaustad sisaldavad kõiki sinu Programme</subtitle>
+               <subtitle language="es">Esta carpeta contiene todos los archivos de programas</subtitle>
+               <subtitle language="es-mx">Esta carpeta contiene todos los archivos de programas</subtitle>
+               <subtitle language="fr">Ce dossier contient toutes les applications.</subtitle>
+               <subtitle language="gr">Αυτός ο φάκελος περιέχει όλα τα αρχεία εφαρμογών.</subtitle>
+               <subtitle language="heb">הספריות הללו מכילות את כל קבצי התוכניות שלך</subtitle>
+               <subtitle language="hr">Ove mape sadrže sve vaše programe.</subtitle>
+               <subtitle language="hu">Ez a mappa programokat tartalmaz.</subtitle>
+               <subtitle language="it">Queste cartelle contengono tutte le tue applicazioni.</subtitle>
+               <subtitle language="ja">これらのフォルダーにはライブラリー内に所有している全てのアプリケーションが収録されています</subtitle>
+               <subtitle language="lt">Šiuose kataloguose yra visos Jūsų programos.</subtitle>
+               <subtitle language="nl">Deze mappen bevatten al je programmabestanden.</subtitle>
+               <subtitle language="no">Disse mappene inneholder alle dine programmer</subtitle>
+               <subtitle language="pt-br">Estas pastas contém todos os arquivos dos seus aplicativos.</subtitle>
+               <subtitle language="ru">Эти папки отображают все Ваши приложения.</subtitle>
+               <subtitle language="sl-SI">Te mape vsebujejo vse programske datoteke.</subtitle>
+               <subtitle language="sq">Këto dosje përmbajnë gjithë skedat tuaja aplikuese.</subtitle>
+               <subtitle language="sr">Ove fascikle sadrže sve vaše programe.</subtitle>
+               <subtitle language="sv">Denna mapp innehåller alla applikationsfiler.</subtitle>
+               <subtitle language="tr">Bu klasörler tüm uygulama dosyalarınızı içerir.</subtitle>
+       </headerContent>
+
+</schemaDescriptor>

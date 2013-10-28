@@ -1,0 +1,25 @@
+﻿<!-- uploadsQueueStart -->
+<%? !queue_expanded %>
+					<h4><a class="noline" href="?queue_expand=<%= queue_id %>">+ <%= queue_caption %></a>
+<%? queue_transfers %>
+					(<%= queue_transfers %> aktív / <%= queue_queued %> sorbanáll, Sebesség: <%= queue_bandwidth %>)
+<%?%>
+					</h4>
+<%?%><%? queue_expanded %>
+					<h4><a class="noline" href="?queue_collapse=<%= queue_id %>">- <%= queue_caption %></a>
+<%? queue_transfers %>
+					(<%= queue_transfers %> aktív / <%= queue_queued %> sorbanáll, Sebesség: <%= queue_bandwidth %>)
+<%?%>
+					</h4>
+				<div class="centertable">
+					<table>
+						<tr>
+							<th>Fájl</th>
+							<th>Felhasználó</th>
+							<th>Méret</th>
+							<th>Sebesség</th>
+							<th>Kliensprogram</th>
+							<th></th>
+						</tr>
+<%?%>
+<!-- /uploadsQueueStart -->

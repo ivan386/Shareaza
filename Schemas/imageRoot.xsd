@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<schema targetNamespace="http://www.shareaza.com/schemas/imageRoot.xsd" xmlns="http://www.w3.org/2001/XMLSchema">
+	
+	<element name="imageRoots">
+		<complexType>
+			<element name="imageRoot" type="imageRootType" minOccurs="1" maxOccurs="unbounded"/>
+		</complexType>
+	</element>     
+	<complexType name="imageRootType">
+		<all>
+			<attribute name="title" type="string"/>
+		</all>
+	</complexType>
+	
+</schema>

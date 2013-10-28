@@ -1,0 +1,41 @@
+//
+// 7ZipBuilder.idl : IDL source for 7ZipBuilder
+//
+// Copyright (c) Shareaza Development Team, 2007.
+// This file is part of SHAREAZA (shareaza.sourceforge.net)
+//
+// Shareaza is free software; you can redistribute it
+// and/or modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2 of
+// the License, or (at your option) any later version.
+//
+// Shareaza is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Shareaza; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+//
+
+import "oaidl.idl";
+import "ocidl.idl";
+import "Shareaza.idl";
+
+[
+	uuid(2975FA55-CDD5-41AE-8120-EB82E1BF9826),
+	version(1.0),
+	helpstring("7ZipBuilder 1.0 Type Library")
+]
+library SevenZipBuilderLib
+{
+	importlib("stdole2.tlb");
+	[
+		uuid(B69F80CD-FB15-45E8-B359-92A41CC571A7)
+	]
+	coclass SevenZipBuilder
+	{
+		[default] interface ILibraryBuilderPlugin;
+	};
+};

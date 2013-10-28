@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
+<manifest	name="No Banner"
+			author="Ryo-oh-ki"
+			description="Turning off dialog's built-in banner."
+			link="http://shareaza.sf.net/"
+			email="ryo-oh-ki@narod.ru"
+			version="0.1"
+			type="Skin"
+			language="en"
+			/>
+<watermarks>
+  <watermark target="Banner" path=""/>
+</watermarks>
+</skin>

@@ -1,0 +1,496 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- ROM Image XML Framework; v1.3; Jonathan C. Nilson -->
+
+<!--
+Shareaza Afrikaans Schemas File translated by Johann van der Walt (Thesage)
+Shareaza Catalan Schemas File translated by Daniel Olivares Giménez; Equip de traduccions de FeshoCAT
+Shareaza Chinese Simplified Schemas File translated by Sanley; John
+Shareaza Chinese Traditional Schemas File translated by James Bond
+Shareaza Czech Schemas File translated by Odin
+Shareaza German Schemas File translated by Spooky; jlh; OldDeath
+Shareaza Estonian Schemas File translated by Janza
+Shareaza Spanish Schemas File translated by Unknown
+Shareaza Spanish (Mexico) Schemas File translated by Help
+Shareaza French Schemas File translated by Antoine Martin-Lalande (Sensi)
+Shareaza Greek Schemas File translated by erimitis
+Shareaza Hebrew Schemas File translated by _peer_ (H.L)
+Shareaza Croatian Schemas File translated by Biza
+Shareaza Hungarian Schemas File translated by Yuri
+Shareaza Italian Schemas File translated by ale5000
+Shareaza Japanese Schemas File translated by DukeDog; CyberBob
+Shareaza Lithuanian Schemas File translated by Rolandas Rudomanskis
+Shareaza Dutch Schemas File translated by Jan-Willem Koornwinder (thurstydog); Jonne; Neglacio
+Shareaza Norwegian Schemas File translated by Tom Seland (seli); vnmartinsen
+Shareaza Portuguese (Brasil) Schemas File translated by Lukas Taves (LightHeaven); Felipe
+Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
+Shareaza Slovenian Schemas File translated by Martin McDowell
+Shareaza Albanian Schemas File translated by Besmir Godole
+Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Swedish Schemas File translated by Marcus Ehrenlans; Printz; DanielB
+Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
+-->
+
+<schemaDescriptor location="http://www.shareaza.com/schemas/rom.xsd" xmlns="http://www.shareaza.com/schemas/SchemaDescriptor.xsd">
+
+       <object type="file" availability="advanced"/>
+       <titles>
+               <title language="en">ROM Image</title>
+               <title language="af">ROM / CD Afdruk</title>
+               <title language="ca">Imatge ROM</title>
+               <title language="chs">ROM 镜像</title>
+               <title language="cht">ROM 影像</title>
+               <title language="cz">ROM Image</title>
+               <title language="de">ROM-Image</title>
+               <title language="ee">ROM Pilt</title>
+               <title language="es">ROM Image</title>
+               <title language="es-mx">ROM Image</title>
+               <title language="fr">Image ROM</title>
+               <title language="gr">Εικόνα ROM</title>
+               <title language="heb">תמונת ROM</title>
+               <title language="hr">ROM Image</title>
+               <title language="hu">Image fájl</title>
+               <title language="it">Immagine della ROM</title>
+               <title language="ja">ROM イメージ</title>
+               <title language="lt">ROM atvaizdis</title>
+               <title language="nl">ROM Afbeelding</title>
+               <title language="no">ROM image</title>
+               <title language="pt-br">Imagem de ROM</title>
+               <title language="ru">Образ ROM</title>
+               <title language="sl-SI">ROM slika</title>
+               <title language="sq">Imazh ROM</title>
+               <title language="sr">ROM Image</title>
+               <title language="sv">ROM-avbild</title>
+               <title language="tr">ROM Görüntü</title>
+       </titles>
+       <members>
+               <member name="title" search="generic">
+                       <display defaultColumn="true"/>
+                       <title language="en">Title</title>
+                       <title language="af">Titel</title>
+                       <title language="ca">Títol</title>
+                       <title language="chs">标题</title>
+                       <title language="cht">標題</title>
+                       <title language="cz">Název</title>
+                       <title language="de">Titel</title>
+                       <title language="ee">Pealkiri</title>
+                       <title language="es">Título</title>
+                       <title language="es-mx">Título</title>
+                       <title language="fr">Titre</title>
+                       <title language="gr">Τίτλος</title>
+                       <title language="heb">כותרת</title>
+                       <title language="hr">Naslov</title>
+                       <title language="hu">Cím</title>
+                       <title language="it">Titolo</title>
+                       <title language="ja">タイトル</title>
+                       <title language="lt">Pavadinimas</title>
+                       <title language="nl">Titel</title>
+                       <title language="no">Tittel</title>
+                       <title language="pt-br">Título</title>
+                       <title language="ru">Название</title>
+                       <title language="sl-SI">Naslov</title>
+                       <title language="sq">Titulli</title>
+                       <title language="sr">Naslov</title>
+                       <title language="sv">Titel</title>
+                       <title language="tr">Başlık</title>
+               </member>
+               <member name="company" search="generic">
+                       <display defaultColumn="true"/>
+                       <title language="en">Company</title>
+                       <title language="af">Maatskappy</title>
+                       <title language="ca">Companyia</title>
+                       <title language="chs">公司</title>
+                       <title language="cht">公司</title>
+                       <title language="cz">Spolešnost</title>
+                       <title language="de">Firma</title>
+                       <title language="ee">Firma</title>
+                       <title language="es">Compañia</title>
+                       <title language="es-mx">Compañia</title>
+                       <title language="fr">Compagnie</title>
+                       <title language="gr">Εταιρία</title>
+                       <title language="heb">חברה</title>
+                       <title language="hr">Proizvođač</title>
+                       <title language="hu">Cég</title>
+                       <title language="it">Società</title>
+                       <title language="ja">会社名</title>
+                       <title language="lt">Kompanija</title>
+                       <title language="nl">Bedrijf</title>
+                       <title language="no">Firma</title>
+                       <title language="pt-br">Companhia</title>
+                       <title language="ru">Компания</title>
+                       <title language="sl-SI">Tvrdka</title>
+                       <title language="sq">Kompania</title>
+                       <title language="sr">Proizvođač</title>
+                       <title language="sv">Företag</title>
+                       <title language="tr">Şirket</title>
+               </member>
+               <member name="system">
+                       <display defaultColumn="true"/>
+                       <title language="en">System</title>
+                       <title language="af">Stelsel</title>
+                       <title language="ca">Sistema</title>
+                       <title language="chs">系统</title>
+                       <title language="cht">系統</title>
+                       <title language="cz">System</title>
+                       <title language="de">System</title>
+                       <title language="ee">Süsteem</title>
+                       <title language="es">Sistema</title>
+                       <title language="es-mx">Sistema</title>
+                       <title language="fr">Système</title>
+                       <title language="gr">Σύστημα</title>
+                       <title language="heb">מערכת</title>
+                       <title language="hr">Sistem</title>
+                       <title language="hu">Rendszer</title>
+                       <title language="it">Sistema</title>
+                       <title language="ja">システム</title>
+                       <title language="lt">Sistema</title>
+                       <title language="nl">Systeem</title>
+                       <title language="no">System</title>
+                       <title language="pt-br">Sistema</title>
+                       <title language="ru">Система</title>
+                       <title language="sl-SI">Sistem</title>
+                       <title language="sq">Sistemi</title>
+                       <title language="sr">Sistem</title>
+                       <title language="sv">System</title>
+                       <title language="tr">Sistem</title>
+               </member>
+               <member name="year">
+                       <title language="en">Year</title>
+                       <title language="af">Jaar</title>
+                       <title language="ca">Any</title>
+                       <title language="chs">年份</title>
+                       <title language="cht">年份</title>
+                       <title language="cz">Rok</title>
+                       <title language="de">Jahr</title>
+                       <title language="ee">Aasta</title>
+                       <title language="es">Año</title>
+                       <title language="es-mx">Año</title>
+                       <title language="fr">Année</title>
+                       <title language="gr">Έτος</title>
+                       <title language="heb">שנה</title>
+                       <title language="hr">Godina</title>
+                       <title language="hu">Év</title>
+                       <title language="it">Anno</title>
+                       <title language="ja">年</title>
+                       <title language="lt">Metai</title>
+                       <title language="nl">Jaar</title>
+                       <title language="no">År</title>
+                       <title language="pt-br">Ano</title>
+                       <title language="ru">Год</title>
+                       <title language="sl-SI">Leto</title>
+                       <title language="sq">Viti</title>
+                       <title language="sr">Godina</title>
+                       <title language="sv">År</title>
+                       <title language="tr">Yıl</title>
+               </member>
+               <member name="type">
+                       <title language="en">Type</title>
+                       <title language="af">Tipe</title>
+                       <title language="ca">Tipus</title>
+                       <title language="chs">类型</title>
+                       <title language="cht">類型</title>
+                       <title language="cz">Typ</title>
+                       <title language="de">Typ</title>
+                       <title language="ee">Tüüp</title>
+                       <title language="es">Arte</title>
+                       <title language="es-mx">Arte</title>
+                       <title language="fr">Type</title>
+                       <title language="gr">Τύπος</title>
+                       <title language="heb">סוג</title>
+                       <title language="hr">Vrsta</title>
+                       <title language="hu">Típus</title>
+                       <title language="it">Tipo</title>
+                       <title language="ja">種類</title>
+                       <title language="lt">Tipas</title>
+                       <title language="nl">Type</title>
+                       <title language="no">Type</title>
+                       <title language="pt-br">Tipo</title>
+                       <title language="ru">Тип</title>
+                       <title language="sl-SI">Tip</title>
+                       <title language="sq">Lloji</title>
+                       <title language="sr">Vrsta</title>
+                       <title language="sv">Typ</title>
+                       <title language="tr">Tip</title>
+               </member>
+               <member name="language" search="indexed">
+                       <display defaultColumn="true"/>
+                       <title language="en">Language</title>
+                       <title language="af">Taal</title>
+                       <title language="ca">Idioma</title>
+                       <title language="chs">语言</title>
+                       <title language="cht">語言</title>
+                       <title language="cz">Jazyk</title>
+                       <title language="de">Sprache</title>
+                       <title language="ee">Keel</title>
+                       <title language="es">Lenguaje</title>
+                       <title language="es-mx">Lenguaje</title>
+                       <title language="fr">Langue</title>
+                       <title language="gr">Γλώσσα</title>
+                       <title language="heb">שפה</title>
+                       <title language="hr">Jezik</title>
+                       <title language="hu">Nyelv</title>
+                       <title language="it">Lingua</title>
+                       <title language="ja">言語</title>
+                       <title language="lt">Kalba</title>
+                       <title language="nl">Taal</title>
+                       <title language="no">Språk</title>
+                       <title language="pt-br">Idioma</title>
+                       <title language="ru">Язык</title>
+                       <title language="sl-SI">Jezik</title>
+                       <title language="sq">Gjuhë</title>
+                       <title language="sr">Jezik</title>
+                       <title language="sv">Språk</title>
+                       <title language="tr">Dil</title>
+               </member>
+               <member name="rating">
+                       <title language="en">Rating</title>
+                       <title language="af">Gradering</title>
+                       <title language="ca">Valoració</title>
+                       <title language="chs">分级</title>
+                       <title language="cht">評價</title>
+                       <title language="cz">Hodnocení</title>
+                       <title language="de">FSK</title>
+                       <title language="ee">Hinnang</title>
+                       <title language="es">Rating</title>
+                       <title language="es-mx">Rating</title>
+                       <title language="fr">Estimation</title>
+                       <title language="gr">Βαθμολόγηση</title>
+                       <title language="heb">דירוג</title>
+                       <title language="hr">Ocjena</title>
+                       <title language="hu">Osztályzat</title>
+                       <title language="it">Valutazione</title>
+                       <title language="ja">年齢指定</title>
+                       <title language="lt">Vertinimas</title>
+                       <title language="nl">Beoordeling</title>
+                       <title language="no">Vurdering</title>
+                       <title language="pt-br">Classificação</title>
+                       <title language="ru">Райтинг</title>
+                       <title language="sl-SI">Ocena</title>
+                       <title language="sq">Vlerësimi</title>
+                       <title language="sr">Ocena</title>
+                       <title language="sv">Betyg</title>
+                       <title language="tr">Değerlendirme</title>
+               </member>
+               <member name="price">
+                       <title language="en">Price</title>
+                       <title language="af">Prys</title>
+                       <title language="ca">Preu</title>
+                       <title language="chs">价格</title>
+                       <title language="cht">價格</title>
+                       <title language="cz">Cena</title>
+                       <title language="de">Preis</title>
+                       <title language="ee">Hind</title>
+                       <title language="es">Precio</title>
+                       <title language="es-mx">Precio</title>
+                       <title language="fr">Prix</title>
+                       <title language="gr">Τιμή</title>
+                       <title language="heb">מחיר</title>
+                       <title language="hr">Cijena</title>
+                       <title language="hu">Ár</title>
+                       <title language="it">Prezzo</title>
+                       <title language="ja">価格</title>
+                       <title language="lt">Kaina</title>
+                       <title language="nl">Prijs</title>
+                       <title language="no">Pris</title>
+                       <title language="pt-br">Preço</title>
+                       <title language="ru">Цена</title>
+                       <title language="sl-SI">Cena</title>
+                       <title language="sq">Çmimi</title>
+                       <title language="sr">Cena</title>
+                       <title language="sv">Pris</title>
+                       <title language="tr">Fiyat</title>
+               </member>
+               <member name="link">
+                       <title language="en">Link</title>
+                       <title language="af">Skakel</title>
+                       <title language="ca">Enllaç</title>
+                       <title language="chs">链接</title>
+                       <title language="cht">連結</title>
+                       <title language="cz">Odkaz</title>
+                       <title language="de">Link</title>
+                       <title language="ee">Link</title>
+                       <title language="es">Link</title>
+                       <title language="es-mx">Link</title>
+                       <title language="fr">Lien</title>
+                       <title language="gr">Σύνδεσμος</title>
+                       <title language="heb">קישור</title>
+                       <title language="hr">Link</title>
+                       <title language="hu">Link</title>
+                       <title language="it">Link</title>
+                       <title language="ja">リンク</title>
+                       <title language="lt">Nuoroda</title>
+                       <title language="nl">Link</title>
+                       <title language="no">Link</title>
+                       <title language="pt-br">Link</title>
+                       <title language="ru">Ссылка</title>
+                       <title language="sl-SI">Povezava</title>
+                       <title language="sq">Linku</title>
+                       <title language="sr">Link</title>
+                       <title language="sv">Länk</title>
+                       <title language="tr">Bağlantı</title>
+               </member>
+               <member name="comments">
+                       <title language="en">Comments</title>
+                       <title language="af">Kommentaar</title>
+                       <title language="ca">Comentaris</title>
+                       <title language="chs">注释</title>
+                       <title language="cht">注釋</title>
+                       <title language="cz">Komentáře</title>
+                       <title language="de">Kommentar</title>
+                       <title language="ee">Arvamused</title>
+                       <title language="es">Comentarios</title>
+                       <title language="es-mx">Comentarios</title>
+                       <title language="fr">Commentaires</title>
+                       <title language="gr">Σχόλια</title>
+                       <title language="heb">הערות</title>
+                       <title language="hr">Komentari</title>
+                       <title language="hu">Megjegyzés</title>
+                       <title language="it">Commenti</title>
+                       <title language="ja">コメント</title>
+                       <title language="lt">Komentarai</title>
+                       <title language="nl">Opmerkingen</title>
+                       <title language="no">Kommentar</title>
+                       <title language="pt-br">Comentários</title>
+                       <title language="ru">Коментарии</title>
+                       <title language="sl-SI">Komentarji</title>
+                       <title language="sq">Komente</title>
+                       <title language="sr">Komentari</title>
+                       <title language="sv">Kommentarer</title>
+                       <title language="tr">Yorumlar</title>
+               </member>
+       </members>
+       <typeFilter>
+               <type extension="261a"/>
+               <type extension="32x"/>
+               <type extension="a21"/>
+               <type extension="a26"/>
+               <type extension="a52"/>
+               <type extension="a78"/>
+               <type extension="adf"/>
+               <type extension="agb"/>
+               <type extension="ajz"/>
+               <type extension="ami"/>
+               <type extension="aos"/>
+               <type extension="ash"/>
+               <type extension="ashdisc"/>
+               <type extension="awd"/>
+               <type extension="b5i"/>
+               <type extension="b5t"/>
+               <type extension="bas"/>
+               <type extension="bin"/>
+               <type extension="bio"/>
+               <type extension="bwt"/>
+               <type extension="boy"/>
+               <type extension="c2d"/>
+               <type extension="cal"/>
+               <type extension="cas"/>
+               <type extension="ccc"/>
+               <type extension="ccd"/>
+               <type extension="cd"/>
+               <type extension="cdi"/>
+               <type extension="cdr"/>
+               <type extension="cgb"/>
+               <type extension="cif"/>
+               <type extension="cmi"/>
+               <type extension="cso"/>
+               <type extension="cue"/>
+               <type extension="d64"/>
+               <type extension="daa"/>
+               <type extension="dax"/>
+               <type extension="dis"/>
+               <type extension="dlf"/>
+               <type extension="dmg"/>
+               <type extension="dms"/>
+               <type extension="dsk"/>
+               <type extension="dwn"/>
+               <type extension="efi"/>
+               <type extension="exb"/>
+               <type extension="f2"/>
+               <type extension="f3"/>
+               <type extension="fig"/>
+               <type extension="fir"/>
+               <type extension="fmb"/>
+               <type extension="fw"/>
+               <type extension="fwi"/>
+               <type extension="gb"/>
+               <type extension="gba"/>
+               <type extension="gbc"/>
+               <type extension="gcd"/>
+               <type extension="gg"/>
+               <type extension="gi"/>
+               <type extension="gsv"/>
+               <type extension="hdf"/>
+               <type extension="hfs"/>
+               <type extension="img"/>
+               <type extension="int"/>
+               <type extension="iso"/>
+               <type extension="lnx"/>
+               <type extension="lyx"/>
+               <type extension="jag"/>
+               <type extension="md"/>
+               <type extension="mdf"/>
+               <type extension="mds"/>
+               <type extension="mi4"/>
+               <type extension="mo5"/>
+               <type extension="mtb"/>
+               <type extension="mtx"/>
+               <type extension="mx1"/>
+               <type extension="mx2"/>
+               <type extension="nes"/>
+               <type extension="n64"/>
+               <type extension="ngc"/>
+               <type extension="ngp"/>
+               <type extension="npc"/>
+               <type extension="nrg"/>
+               <type extension="nv3"/>
+               <type extension="nvram"/>
+               <type extension="o"/>
+               <type extension="orc"/>
+               <type extension="p01"/>
+               <type extension="p2i"/>
+               <type extension="pbp"/>
+               <type extension="pcd"/>
+               <type extension="pce"/>
+               <type extension="pdi"/>
+               <type extension="ppn"/>
+               <type extension="psh"/>
+               <type extension="pxi"/>
+               <type extension="rom"/>
+               <type extension="sc"/>
+               <type extension="sfc"/>
+               <type extension="sg"/>
+               <type extension="sgb"/>
+               <type extension="sgx"/>
+               <type extension="smc"/>
+               <type extension="smd"/>
+               <type extension="sms"/>
+               <type extension="st"/>
+               <type extension="swc"/>
+               <type extension="sv"/>
+               <type extension="t"/>
+               <type extension="t64"/>
+               <type extension="tap"/>
+               <type extension="tao"/>
+               <type extension="tgx"/>
+               <type extension="toast"/>
+               <type extension="u64"/>
+               <type extension="uc"/>
+               <type extension="v64"/>
+               <type extension="vb"/>
+               <type extension="vc4"/>
+               <type extension="vcd"/>
+               <type extension="vec"/>
+               <type extension="vex"/>
+               <type extension="vhd"/>
+               <type extension="vmx"/>
+               <type extension="vmdk"/>
+               <type extension="vz"/>
+               <type extension="wph"/>
+               <type extension="ws"/>
+               <type extension="wsc"/>
+               <type extension="xdf"/>
+               <type extension="xfc"/>
+               <type extension="xdsl"/>
+               <type extension="z64"/>
+       </typeFilter>
+
+</schemaDescriptor>

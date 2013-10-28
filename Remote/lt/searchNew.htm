@@ -1,0 +1,19 @@
+﻿										<li class="active"><a class="noline" href="?id=0">Nauja paieška</a></li>
+								</ul>
+<div style="border: 1px #000 solid;padding: 5px;">
+	<p>Naujos paieškos vykdymui įrašykite ieškinį į žemiau esantį laukelį ir paspauskite <strong>Pradėti paiešką</strong>. Jei norite apriboti paiešką kokiu nors failo tipu, pasirinkite jį iš sąrašo (rekomenduojama).</p>
+
+	<form method="get" action="newsearch">
+		<div style="text-align:right; width: 30em;">
+			<label>Ko ieškoti:</label>
+				<input type="text" name="search" class="regularinput" /><br/>
+				<label>Failo tipas:</label>
+
+				<select name="schema" class="regularinput">
+					<option value="">Bet kokio tipo</option>
+					<%= schema_option_list %>
+				</select><br />
+
+				<input type="submit" value="Pradėti paiešką" />
+		</div>
+	</form>

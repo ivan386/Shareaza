@@ -1,0 +1,48 @@
+HKCR
+{
+	Shareaza.PreviewPlugin.1 = s 'Shareaza Preview Plugin'
+	{
+		CLSID = s '{0F74BA53-C842-4CB5-B388-DD5663F62479}'
+	}
+	Shareaza.PreviewPlugin = s 'Shareaza Preview Plugin'
+	{
+		CLSID = s '{0F74BA53-C842-4CB5-B388-DD5663F62479}'
+		CurVer = s 'Shareaza.PreviewPlugin.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {0F74BA53-C842-4CB5-B388-DD5663F62479} = s 'Shareaza Preview Plugin'
+		{
+			ProgID = s 'Shareaza.PreviewPlugin.1'
+			VersionIndependentProgID = s 'Shareaza.PreviewPlugin'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			'TypeLib' = s '{9DB3D2BA-C333-4691-AFDC-52279AF2D71F}'
+		}
+	}
+}
+HKCU
+{
+	NoRemove Software
+	{
+		NoRemove Shareaza
+		{
+			NoRemove Shareaza
+			{
+				NoRemove Plugins
+				{
+					NoRemove DownloadPreview
+					{
+					}
+					NoRemove General
+					{
+						val 'Shareaza Preview Plugin' = s '{0F74BA53-C842-4CB5-B388-DD5663F62479}'
+					}
+				}
+			}
+		}
+	}
+}

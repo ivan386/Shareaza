@@ -1,0 +1,25 @@
+﻿					<h4><%= network_caption %></h4>
+<%? !network_connected %>
+					<p>
+					<strong>Nem</strong> kapcsolódik a hálózathoz. -
+					<a href="?connect=<%= network_id %>"><strong>Kapcsolódás: <%= network_caption %></strong></a>
+					</p>
+<%?%><%? network_connected %>
+					<p>
+					Kapcsolódva a hálózathoz. -
+					<a href="?disconnect=<%= network_id %>"><strong>Lekapcsolódás: <%= network_caption %></strong></a>
+					</p>
+				<div class="centertable">
+					<table>
+						<tr>
+							<th>Cím</th>
+							<th>Idő</th>
+							<th>Csomagok</th>
+							<th>Sávszél</th>
+							<th>Teljes forgalom</th>
+							<th>Mód</th>
+							<th>Leafek</th>
+							<th>Kliensprogram</th>
+							<th></th>
+						</tr>
+<%?%>

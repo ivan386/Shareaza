@@ -1,0 +1,51 @@
+﻿		<!-- tabs -->
+		<div class="poetry">
+			<ul class="tabs">
+				<li class="active"><a href="home" class="noline">Hem</a></li>
+				<li class="inactive"><a href="search" class="noline">Sök</a></li>
+				<li class="inactive"><a href="downloads" class="noline">Nedladdningar</a></li>
+				<li class="inactive"><a href="uploads" class="noline">Uppladdningar</a></li>
+				<li class="inactive"><a href="network" class="noline">Nätverk</a></li>
+			</ul>
+		</div>
+		<!-- /tabs -->
+<!-- main body -->
+		<div id="frame">
+			<p>Välkommen till <b>Shareazas webbgränssnitt. </b></p><p>Detta webbgränssnitt låter dig kontrollera sökningar, nedladdningar, uppladdningar och nätverksanslutningar.</p>
+			<div style="float: right; width: 40em;">
+				<h3>Börja ladda ner:</h3>
+				<div style="text-align: right;">
+					<form method="get" action="newsearch">
+						<div>
+							<label>Snabbsökning:</label>
+							<input type="text" name="search" size="20" />
+							<select name="schema">
+								<option value="">Alla filer</option>
+								<option value="http://www.shareaza.com/schemas/application.xsd">Applikation</option>
+								<option value="http://www.limewire.com/schemas/audio.xsd">Ljud</option>
+								<option value="http://www.shareaza.com/schemas/bittorent.xsd">BitTorrent</option>
+								<option value="http://www.limewire.com/schemas/book.xsd">Bok</option>
+								<option value="http://www.shareaza.com/schemas/collection.xsd">Samling</option>
+								<option value="http://www.shareaza.com/schemas/image.xsd">Bild</option>
+								<option value="http://www.shareaza.com/schemas/presentation.xsd">Presentation</option>
+								<option value="http://www.shareaza.com/schemas/rom.xsd">ROM-avbild</option>
+								<option value="http://www.shareaza.com/schemas/shareazaSkin.xsd">Skinn</option>
+								<option value="http://www.shareaza.com/schemas/sourceCode.xsd">Källkod</option>
+								<option value="http://www.shareaza.com/schemas/spreadsheet.xsd">Kalkylark</option>
+								<option value="http://www.shareaza.com/schemas/subtitle.xsd">Undertext</option>
+								<option value="http://www.limewire.com/schemas/video.xsd">Video</option>
+								<option value="http://www.shareaza.com/schemas/wordProcessing.xsd">Ordbehandling</option>
+							</select>
+							<input type="submit" value="Gå" />
+						</div>
+					</form><br/>
+					<form method="get" action="newdownload">
+						<div>
+							<label>Magnet/torrent nedladdning:</label>
+							<input type="text" name="uri" size="35" />
+							<input type="submit" value="Gå" />
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>

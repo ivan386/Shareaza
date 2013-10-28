@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<schema targetNamespace="http://www.shareaza.com/schemas/image.xsd" version="1.0" xmlns="http://www.w3.org/2001/XMLSchema">
+
+	<mapping>
+		<network name="ed2k" value="Image"/>
+	</mapping>
+	
+	<element name="images">
+		<complexType>
+			<element name="image" type="imageType" minOccurs="1" maxOccurs="unbounded"/>
+		</complexType>
+	</element>     
+	
+	<complexType name="imageType">
+		<all>
+			<attribute name="title" type="string"/>
+			<attribute name="author" type="string"/>
+			<attribute name="subject" type="string"/>
+			<attribute name="copyright" type="string"/>
+			<attribute name="description">
+				<simpleType base="string">
+					<maxInclusive value="1024"/>
+				</simpleType>
+			</attribute>
+			<attribute name="width" type="int" minOccurs="1" maxOccurs="64000"/>
+			<attribute name="height" type="int" minOccurs="1" maxOccurs="48000"/>
+			<attribute name="colors">
+				<simpleType base="string">
+					<enumeration value="Greyscale"/>
+					<enumeration value="16"/>
+					<enumeration value="256"/>
+					<enumeration value="64K"/>
+					<enumeration value="16.7M"/>
+				</simpleType>
+			</attribute>
+			<attribute name="type">
+				<simpleType base="string">
+					<enumeration value="Photograph"/>
+					<enumeration value="Painting"/>
+					<enumeration value="Diagram"/>
+					<enumeration value="Illustration"/>
+					<enumeration value="Cartoon"/>
+					<enumeration value="Rendering"/>
+					<enumeration value="Desktop Wallpaper"/>
+				</simpleType>
+			</attribute>
+			<attribute name="rating">
+				<simpleType base="string">
+					<enumeration value="G"/>
+					<enumeration value="PG"/>
+					<enumeration value="PG-13"/>
+					<enumeration value="R"/>
+					<enumeration value="NC-17"/>
+					<enumeration value="NR"/>
+					<enumeration value="Adult"/>
+				</simpleType>
+			</attribute>
+			<attribute name="distributer" type="string"/>
+			<attribute name="distributerLink" type="uriReference"/>
+			<attribute name="releasegroup" type="string"/>
+			<attribute name="releasegroupLink" type="uriReference"/>
+			<attribute name="keywords" type="string"/>
+	        	<attribute name="link" type="uriReference"/>
+		</all>
+	</complexType>
+
+</schema>
