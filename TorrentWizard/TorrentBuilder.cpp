@@ -47,10 +47,12 @@ CTorrentBuilder::CTorrentBuilder()
 	, m_bSHA1( FALSE )
 	, m_bED2K( FALSE )
 	, m_bMD5( FALSE )
+	, m_bTTH( FALSE )
 	, m_pFileSize( NULL )
 	, m_pFileSHA1( NULL )
 	, m_pFileED2K( NULL )
 	, m_pFileMD5( NULL )
+	, m_pFileTTH( NULL )
 	, m_pPieceSHA1( NULL )
 	, m_nPieceSize( 0 )
 	, m_nPieceCount( 0 )
@@ -88,11 +90,12 @@ void CTorrentBuilder::SetPieceSize(int nPieceIndex)
 		m_nPieceSize = 1 << ( nPieceIndex + 15 );
 }
 
-void CTorrentBuilder::Enable(BOOL bSHA1, BOOL bED2K, BOOL bMD5)
+void CTorrentBuilder::Enable(BOOL bSHA1, BOOL bED2K, BOOL bMD5, BOOL  bTTH)
 {
 	m_bSHA1 = bSHA1;
 	m_bED2K = bED2K;
 	m_bMD5 = bMD5;
+	m_bTTH = bTTH;
 }
 
 BOOL CTorrentBuilder::SetOutputFile(LPCTSTR pszPath)
@@ -255,6 +258,7 @@ int CTorrentBuilder::Run()
 		m_pFileSHA1		= NULL;
 		m_pFileED2K		= NULL;
 		m_pFileMD5		= NULL;
+		m_pFileTTH		= NULL;
 		m_pPieceSHA1	= NULL;
 		m_pSection.Unlock();
 	}
@@ -278,6 +282,8 @@ int CTorrentBuilder::Run()
 		m_pFileMD5		= NULL;
 		delete [] m_pFileED2K;
 		m_pFileED2K		= NULL;
+		delete [] m_pFileTTH;
+		m_pFileTTH		= NULL;
 		delete [] m_pFileSHA1;
 		m_pFileSHA1		= NULL;
 		delete [] m_pFileSize;
@@ -363,9 +369,6 @@ BOOL CTorrentBuilder::ScanFiles()
 
 BOOL CTorrentBuilder::ProcessFiles()
 {
-	if ( m_bSHA1 ) m_oDataSHA1.Reset();
-	if ( m_bED2K ) m_oDataED2K.BeginFile( m_nTotalSize );
-	if ( m_bMD5 ) m_oDataMD5.Reset();
 	m_oPieceSHA1.Reset();
 
 	m_nPieceUsed	= 0;
@@ -383,6 +386,10 @@ BOOL CTorrentBuilder::ProcessFiles()
 	delete [] m_pFileED2K;
 	m_pFileED2K = NULL;
 	if ( m_bED2K ) m_pFileED2K	= new CED2K[ m_pFiles.GetCount() ];
+
+	delete [] m_pFileTTH;
+	m_pFileTTH = NULL;
+	if ( m_bTTH ) m_pFileTTH	= new CTigerTree[ m_pFiles.GetCount() ];
 	
 	delete [] m_pFileMD5;
 	m_pFileMD5 = NULL;
@@ -413,10 +420,6 @@ BOOL CTorrentBuilder::ProcessFiles()
 		m_pPieceSHA1[ m_nPiecePos++ ] = m_oPieceSHA1;
 	}
 	
-	if ( m_bSHA1 ) m_oDataSHA1.Finish();
-	if ( m_bED2K ) m_oDataED2K.FinishFile();
-	if ( m_bMD5 ) m_oDataMD5.Finish();
-	
 	return ( m_bAbort == FALSE );
 }
 
@@ -439,6 +442,7 @@ BOOL CTorrentBuilder::ProcessFile(DWORD nFile, LPCTSTR pszFile)
 
 	if ( m_bSHA1 ) m_pFileSHA1[ nFile ].Reset();
 	if ( m_bED2K ) m_pFileED2K[ nFile ].BeginFile( nSize );
+	if ( m_bTTH ) m_pFileTTH[ nFile ].BeginFile( 1, nSize );
 	if ( m_bMD5 ) m_pFileMD5[ nFile ].Reset();
 	
 	while ( nSize > 0 && ! m_bAbort )
@@ -456,22 +460,17 @@ BOOL CTorrentBuilder::ProcessFile(DWORD nFile, LPCTSTR pszFile)
 		m_nPieceUsed += nRead;
 		
 		if ( m_bSHA1 )
-		{
-			m_oDataSHA1.Add( m_pBuffer, nRead );
 			m_pFileSHA1[ nFile ].Add( m_pBuffer, nRead );
-		}
 
 		if ( m_bED2K )
-		{
-			m_oDataED2K.AddToFile( m_pBuffer, nRead );
 			m_pFileED2K[ nFile ].AddToFile( m_pBuffer, nRead );
-		}
+
+		if ( m_bTTH )
+			m_pFileTTH[ nFile ].AddToFile( m_pBuffer, nRead );
+
 
 		if ( m_bMD5 )
-		{
-			m_oDataMD5.Add( m_pBuffer, nRead );
 			m_pFileMD5[ nFile ].Add( m_pBuffer, nRead );
-		}
 
 		if ( m_nPieceUsed >= m_nPieceSize )
 		{
@@ -484,6 +483,7 @@ BOOL CTorrentBuilder::ProcessFile(DWORD nFile, LPCTSTR pszFile)
 
 	if ( m_bSHA1 ) m_pFileSHA1[ nFile ].Finish();
 	if ( m_bED2K ) m_pFileED2K[ nFile ].FinishFile();
+	if ( m_bTTH ) m_pFileTTH[ nFile ].FinishFile();
 	if ( m_bMD5 ) m_pFileMD5[ nFile ].Finish();
 
 	CloseHandle( hFile );
@@ -551,6 +551,13 @@ BOOL CTorrentBuilder::WriteOutput()
 			m_pFileED2K[ 0 ].GetRoot( (uchar*)&pFileED2K[ 0 ] );
 			CBENode* pED2K = pInfo->Add( "ed2k" );
 			pED2K->SetString( &pFileED2K, sizeof CMD4::Digest );
+		}
+		if ( m_bTTH )
+		{
+			CTigerTree::TigerTreeDigest pFileTTH;
+			m_pFileTTH[ 0 ].GetRoot( (uchar*)&pFileTTH[ 0 ] );
+			CBENode* pTTH = pInfo->Add( "tiger" );
+			pTTH->SetString( &pFileTTH, sizeof CTigerTree::TigerTreeDigest );
 		}
 		if ( m_bMD5 )
 		{
@@ -630,6 +637,13 @@ BOOL CTorrentBuilder::WriteOutput()
 				m_pFileED2K[ nFile ].GetRoot( (uchar*)&pFileED2K[ 0 ] );
 				CBENode* pED2K = pFile->Add( "ed2k" );
 				pED2K->SetString( &pFileED2K, sizeof CMD4::Digest );
+			}
+			if ( m_bTTH )
+			{
+				CTigerTree::TigerTreeDigest pFileTTH;
+				m_pFileTTH[ nFile ].GetRoot( (uchar*)&pFileTTH[ 0 ] );
+				CBENode* pTTH = pFile->Add( "tiger" );
+				pTTH->SetString( &pFileTTH, sizeof CTigerTree::TigerTreeDigest );
 			}
 			if ( m_bMD5 )
 			{
