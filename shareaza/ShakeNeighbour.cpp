@@ -64,7 +64,8 @@ CShakeNeighbour::CShakeNeighbour() : CNeighbour( PROTOCOL_NULL ), // Call the CN
 	m_bCanDeflate( Neighbours.IsG2Leaf() ?
 		( Settings.Gnutella.DeflateHub2Hub || Settings.Gnutella.DeflateLeaf2Hub ) :
 		( Settings.Gnutella.DeflateHub2Hub || Settings.Gnutella.DeflateHub2Leaf ) ),
-	m_bDelayClose(FALSE)
+	m_bDelayClose(FALSE),
+	m_nHereIsTheBug ( 0 )
 {
 }
 
