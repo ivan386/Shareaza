@@ -44,7 +44,9 @@ static char THIS_FILE[]=__FILE__;
 CBuffer::CBuffer() :
 	m_pNext		( NULL )	// This object isn't in a list yet
 ,	m_pBuffer	( NULL )	// No memory block has been allocated for this object yet
-,	m_nBuffer	( 0 )		// The size of the memory block is 0
+,	m_pMBlock	( NULL )	
+,	m_nRemoved	( 0 )
+,	m_nMBlock	( 0 )		// The size of the memory block is 0
 ,	m_nLength	( 0 )		// No bytes have been written here yet
 {
 }
@@ -52,7 +54,26 @@ CBuffer::CBuffer() :
 CBuffer::~CBuffer()
 {
 	// If the member variable points to some memory, free it
-	if ( m_pBuffer ) free( m_pBuffer );
+	if ( m_pMBlock ) free( m_pMBlock );
+}
+
+void CBuffer::SetTo(BYTE* pData, DWORD nSize)
+{
+	if ( m_pMBlock ) free( m_pMBlock );
+	m_pMBlock = m_pBuffer = pData;
+	m_nMBlock = m_nLength = nSize;
+	m_nRemoved = 0;
+}
+
+void CBuffer::Align()
+{
+	ASSERT( m_pMBlock + m_nRemoved == m_pBuffer );
+	if ( m_nRemoved > 0 )
+	{
+		MoveMemory( m_pMBlock, m_pBuffer, m_nLength );
+		m_pBuffer = m_pMBlock;
+		m_nRemoved = 0;
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -111,12 +132,14 @@ void CBuffer::Remove(const size_t nLength) throw()
 	if ( nLength >= m_nLength )
 	{
 		ASSERT( nLength == m_nLength );
-		m_nLength = 0;
+		Clear();
 	}
 	else if ( nLength )
 	{
+		ASSERT( m_pMBlock + m_nRemoved == m_pBuffer );
 		m_nLength -= static_cast< DWORD >( nLength );
-		MoveMemory( m_pBuffer, m_pBuffer + nLength, m_nLength );
+		m_nRemoved += static_cast< DWORD >( nLength );
+		m_pBuffer = m_pMBlock + m_nRemoved; // Move pointer not memory
 	}
 }
 
@@ -135,19 +158,13 @@ DWORD CBuffer::AddBuffer(CBuffer* pBuffer, const size_t nLength)
 	// primitive overflow protection (relevant for 64bit)
 	if ( nLength > INT_MAX ) return 0;
 
+	size_t nMinLength = min( (size_t) pBuffer->m_nLength, nLength );
+
 	// If the call specified a length, use it, otherwise use the length of pBuffer
-	if( pBuffer->m_nLength < nLength )
-	{
-		Add( pBuffer->m_pBuffer, pBuffer->m_nLength );	// Copy the memory across
-		pBuffer->Clear();								// Remove the memory from the source buffer
-		return pBuffer->m_nLength;						// Report how many bytes we moved
-	}
-	else
-	{
-		Add( pBuffer->m_pBuffer, nLength );				// Copy the memory across
-		pBuffer->Remove( nLength );						// Remove the memory from the source buffer
-		return static_cast< DWORD >( nLength );			// Report how many bytes we moved
-	}
+	Add( pBuffer->m_pBuffer, nMinLength );				// Copy the memory across
+	pBuffer->Remove( nMinLength );						// Remove the memory from the source buffer
+	return nMinLength;		// Report how many bytes we moved
+	
 }
 
 void CBuffer::Attach(CBuffer* pBuffer)
@@ -156,15 +173,13 @@ void CBuffer::Attach(CBuffer* pBuffer)
 	if ( pBuffer == NULL || pBuffer == this )
 		return;
 
-	if ( m_pBuffer ) free( m_pBuffer );
-	m_pBuffer = pBuffer->m_pBuffer;
-	pBuffer->m_pBuffer = NULL;
-
-	m_nBuffer = pBuffer->m_nBuffer;
-	pBuffer->m_nBuffer = 0;
-
+	SetTo( pBuffer->m_pMBlock, pBuffer->m_nMBlock );
 	m_nLength = pBuffer->m_nLength;
-	pBuffer->m_nLength = 0;
+	m_nRemoved = pBuffer->m_nRemoved;
+
+	pBuffer->m_pMBlock = pBuffer->m_pBuffer = NULL;
+	pBuffer->m_nMBlock = pBuffer->m_nLength = 0;
+	pBuffer->m_nRemoved = 0;
 }
 
 // Takes a pointer to some memory, and the number of bytes we can read there
@@ -189,41 +204,56 @@ void CBuffer::AddReversed(const void *pData, const size_t nLength)
 bool CBuffer::EnsureBuffer(const size_t nLength) throw()
 {
 	// Limit buffer size to a signed int. This is the most that can be sent/received from a socket in one call.
-	if ( nLength > 0xffffffff - m_nBuffer ) return false;
+	if ( nLength > 0xffffffff - m_nMBlock ) return false;
 
 	// If the size of the buffer minus the size filled is bigger than or big enough for the given length, do nothing
-	if ( m_nBuffer - m_nLength >= nLength )
+	if ( m_nMBlock - m_nLength >= nLength )
 	{
 		// There is enough room to write nLength bytes without allocating anything
+		
+		if ( GetBufferFree() < nLength )
+			Align();
 
 		// If the buffer is larger than 512 KB, but what it needs to hold is less than 256 KB
-		if ( m_nBuffer > 0x80000 && m_nLength + nLength < 0x40000 )
+		if ( m_nMBlock > 0x80000 && m_nLength + nLength < 0x40000 )
 		{
+			Align();
 			// Reallocate it to make it half as big
-			const DWORD nBuffer = 0x40000;
-			BYTE* pBuffer = (BYTE*)realloc( m_pBuffer, nBuffer ); // This may move the block, returning a different pointer
-			if ( ! pBuffer )
+			const DWORD nMBlock = 0x40000;
+			BYTE* pMBlock = (BYTE*)realloc( m_pMBlock, nMBlock ); // This may move the block, returning a different pointer
+			if ( ! pMBlock )
 				// Out of memory - original block is left unchanged. It's ok.
 				return true;
-			m_nBuffer = nBuffer;
-			m_pBuffer = pBuffer;
+
+			m_nMBlock = nMBlock;
+			m_pMBlock = m_pBuffer = pMBlock;
+			
 		}
 		return true;
 	}
 
-	// Make m_nBuffer the size of what's written plus what's requested
-	DWORD nBuffer = m_nLength + static_cast< DWORD >( nLength );
+	Align();
+
+	// Make m_nMBlock the size of what's written plus what's requested
+	DWORD nMBlock = m_nLength + static_cast< DWORD >( nLength );
+
+	// Take more if nMBlock not big enough.
+	// To reduce the number of calls to realloc.
+	if ( ( nMBlock -  m_nMBlock ) < ( m_nMBlock / 16 ) )
+		nMBlock = m_nMBlock + m_nMBlock / 16;
 
 	// Round that up to the nearest multiple of 1024, or 1 KB
-	nBuffer = ( nBuffer + BLOCK_SIZE - 1 ) & BLOCK_MASK;
+	nMBlock = ( nMBlock + BLOCK_SIZE - 1 ) & BLOCK_MASK;
 
 	// Reallocate the memory block to this size
-	BYTE* pBuffer = (BYTE*)realloc( m_pBuffer, nBuffer ); // May return a different pointer
-	if ( ! pBuffer ) 
+	BYTE* pMBlock = (BYTE*)realloc( m_pMBlock, nMBlock ); // May return a different pointer
+	if ( ! pMBlock ) 
 		// Out of memory - original block is left unchanged. Error.
 		return false;
-	m_nBuffer = nBuffer;
-	m_pBuffer = pBuffer;
+
+	m_nMBlock = nMBlock;
+	m_pMBlock = m_pBuffer = pMBlock;
+	
 	return true;
 }
 
@@ -390,9 +420,7 @@ BOOL CBuffer::Deflate(BOOL bIfSmaller)
 		return FALSE;
 	}
 
-	if ( m_pBuffer ) free( m_pBuffer );
-	m_pBuffer = pCompress;
-	m_nBuffer = m_nLength = nCompress;
+	SetTo( pCompress, nCompress );
 
 	return TRUE;
 }
@@ -409,9 +437,7 @@ BOOL CBuffer::Inflate()
 	if ( ! pCompress )
 		return FALSE;
 
-	if ( m_pBuffer ) free( m_pBuffer );
-	m_pBuffer = pCompress;
-	m_nBuffer = m_nLength = nCompress;
+	SetTo( pCompress, nCompress );
 
 	return TRUE;
 }

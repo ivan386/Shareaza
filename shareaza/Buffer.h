@@ -33,22 +33,24 @@ public:
 	~CBuffer();
 
 	CBuffer*	m_pNext;	// A pointer to the next CBuffer object, letting them be linked together in a list
-	BYTE*		m_pBuffer;	// The block of allocated memory
+	BYTE*		m_pBuffer;	// A pointer to ( m_pMBlock + m_nRemoved )
 	DWORD		m_nLength;	// The #bytes written into the block
 
 private:
-	DWORD		m_nBuffer;	// The size of the allocated block
+	DWORD		m_nRemoved; // The #bytes removed from the block
+	BYTE*		m_pMBlock;	// The block of allocated memory
+	DWORD		m_nMBlock;	// The size of the allocated block
 
 	CBuffer(const CBuffer&);
 	CBuffer& operator=(const CBuffer&);
 
 // Accessors
 public:
-	inline DWORD GetBufferSize() const { return m_nBuffer; }				// Return the total size of the buffer
+	inline DWORD GetBufferSize() const { return m_nMBlock - m_nRemoved; }				// Return the total size of the buffer
 	inline BYTE* GetData() const { return m_pBuffer; }						// Return a pointer to the start of the data in the buffer
 	inline DWORD GetCount() const { return m_nLength; }						// Return the filled size of the buffer
 	inline BYTE* GetDataEnd() const { return m_pBuffer + m_nLength; }		// Return a pointer to the end of the data in the buffer
-	inline DWORD GetBufferFree() const { return m_nBuffer - m_nLength; }	// Return the unused #bytes in the buffer
+	inline DWORD GetBufferFree() const { return m_nMBlock - ( m_nLength + m_nRemoved ); }	// Return the unused #bytes in the buffer
 
 // Operations
 public:
@@ -99,6 +101,8 @@ public:
 	// Clears the memory from the buffer
 	inline void	Clear() throw()
 	{
+		m_pBuffer = m_pMBlock;
+		m_nRemoved = 0;
 		m_nLength = 0;
 	}
 
@@ -120,4 +124,7 @@ public:
 
 	// Static means you can call CBuffer::ReverseBuffer without having a CBuffer object at all
 	static void ReverseBuffer(const void* pInput, void* pOutput, size_t nLength);
+private:
+	void SetTo(BYTE* pData, DWORD nSize);
+	void Align();
 };
