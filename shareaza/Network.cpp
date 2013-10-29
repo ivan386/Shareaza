@@ -719,13 +719,13 @@ bool CNetwork::PreRun()
 		InternetSetOption( hInternet, INTERNET_OPTION_CONNECTED_STATE, &ici, sizeof(ici) );
 		InternetCloseHandle( hInternet );
 	}
-
+/*
 	if ( ! InternetConnect() )
 	{
 		theApp.Message( MSG_ERROR, _T("Internet connection attempt failed.") );
 		return false;
 	}
-
+*/
 	m_bConnected = true;
 
 	Resolve( Settings.Connection.InHost, Settings.Connection.InPort, &m_pHost );
