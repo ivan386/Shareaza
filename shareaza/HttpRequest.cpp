@@ -248,10 +248,10 @@ void CHttpRequest::OnRun()
 	ASSERT( m_sURL.GetLength() );
 	ASSERT( m_pResponse == NULL );
 
-	m_hInternet = CNetwork::InternetOpen();
+	m_hInternet = CNetwork::CNInternetOpen();
 	if ( m_hInternet )
 	{
-		HINTERNET hURL = CNetwork::InternetOpenUrl( m_hInternet, m_sURL,
+		HINTERNET hURL = CNetwork::CNInternetOpenUrl( m_hInternet, m_sURL,
 			m_sRequestHeaders, m_sRequestHeaders.GetLength(),
 			INTERNET_FLAG_KEEP_CONNECTION | INTERNET_FLAG_RELOAD |
 			INTERNET_FLAG_PRAGMA_NOCACHE | INTERNET_FLAG_NO_CACHE_WRITE |

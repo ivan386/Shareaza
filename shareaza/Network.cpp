@@ -222,7 +222,7 @@ BOOL CNetwork::IsSelfIP(const IN_ADDR& nAddress) const
 	return ( m_pHostAddresses.Find( nAddress.s_addr ) != NULL );
 }
 
-HINTERNET CNetwork::InternetOpen()
+HINTERNET CNetwork::CNInternetOpen()
 {
 	__try
 	{
@@ -236,7 +236,7 @@ HINTERNET CNetwork::InternetOpen()
 	return NULL;
 }
 
-bool CNetwork::InternetConnect()
+bool CNetwork::CNInternetConnect()
 {
 	__try
 	{
@@ -713,7 +713,7 @@ bool CNetwork::PreRun()
 	if ( Settings.Connection.ForceConnectedState )
 	{
 		INTERNET_CONNECTED_INFO ici = {};
-		HINTERNET hInternet = InternetOpen();
+		HINTERNET hInternet = CNInternetOpen();
 
 		ici.dwConnectedState = INTERNET_STATE_CONNECTED;
 		InternetSetOption( hInternet, INTERNET_OPTION_CONNECTED_STATE, &ici, sizeof(ici) );
@@ -1450,7 +1450,7 @@ int CNetwork::RecvFrom(SOCKET s, char* buf, int len, SOCKADDR_IN* pFrom)
 	}
 }
 
-HINTERNET CNetwork::InternetOpenUrl(HINTERNET hInternet, LPCWSTR lpszUrl, LPCWSTR lpszHeaders, DWORD dwHeadersLength, DWORD dwFlags)
+HINTERNET CNetwork::CNInternetOpenUrl(HINTERNET hInternet, LPCWSTR lpszUrl, LPCWSTR lpszHeaders, DWORD dwHeadersLength, DWORD dwFlags)
 {
 	__try	// Fix against stupid firewalls like (iS3 Anti-Spyware or Norman Virus Control)
 	{
