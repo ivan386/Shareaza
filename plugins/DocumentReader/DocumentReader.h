@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 7.00.0500 */
-/* at Thu Oct 24 01:07:59 2013
+/* at Tue Oct 29 22:12:36 2013
  */
 /* Compiler settings for .\DocumentReader.idl:
     Oicf, W1, Zp8, env=Win64 (32b run)
