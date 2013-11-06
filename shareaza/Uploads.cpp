@@ -1,7 +1,7 @@
 //
 // Uploads.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -67,6 +67,8 @@ CUploads::~CUploads()
 
 void CUploads::Clear(BOOL bMessage)
 {
+	CQuickLock oTransfersLock( Transfers.m_pSection );
+
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		GetNext( pos )->Remove( bMessage );
