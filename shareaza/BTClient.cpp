@@ -1319,10 +1319,9 @@ void CBTClient::SendUtPex(DWORD tConnectedAfter)
 
 		if ( nFalgInBytePos == 0 )
 		{
-			DWORD nLength = nPeersCount / 4 + 1;
-			pAddedFalgsBuffer.EnsureBuffer( nLength );
-			pAddedFalgsBuffer.m_nLength = nLength;
-			pnFlagsByte = &pAddedFalgsBuffer.m_pBuffer[nLength - 1];
+			pAddedFalgsBuffer.EnsureBuffer( 1 );
+			pnFlagsByte = pAddedFalgsBuffer.GetDataEnd();
+			pAddedFalgsBuffer.m_nLength += 1;
 			*pnFlagsByte = 0;
 		}
 
@@ -1334,8 +1333,8 @@ void CBTClient::SendUtPex(DWORD tConnectedAfter)
 		CBTPacket* pResponse = CBTPacket::New( BT_PACKET_EXTENSION, m_nUtPexID );
 		CBENode* pRoot = pResponse->m_pNode.get();
 
-		pRoot->Add( BT_DICT_ADDED )->SetString( pAddedBuffer.m_pBuffer, pAddedBuffer.m_nLength );
-		pRoot->Add( BT_DICT_ADDED_F )->SetString( pAddedFalgsBuffer.m_pBuffer, pAddedFalgsBuffer.m_nLength );
+		pRoot->Add( BT_DICT_ADDED )->SetString( pAddedBuffer.GetData(), pAddedBuffer.GetCount() );
+		pRoot->Add( BT_DICT_ADDED_F )->SetString( pAddedFalgsBuffer.GetData(), pAddedFalgsBuffer.GetCount() );
 
 		Send( pResponse );
 	}
