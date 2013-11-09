@@ -294,3 +294,5 @@ pip-log.txt
 /plugins/7ZipBuilder/Shareaza.h
 /plugins/7ZipBuilder/7ZipBuilder.h
 /shareaza/ShareazaOM.h
+
+/shareaza/revision.h
