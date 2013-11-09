@@ -1,7 +1,7 @@
 //
 // UploadTransfer.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2013.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,6 +22,7 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
+#include "Transfers.h"
 #include "Uploads.h"
 #include "UploadFile.h"
 #include "UploadFiles.h"
@@ -101,6 +102,8 @@ void CUploadTransfer::Remove(BOOL bMessage)
 
 void CUploadTransfer::Close(UINT nError)
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	if ( m_nState == upsNull ) return;
 	m_nState = upsNull;
 
