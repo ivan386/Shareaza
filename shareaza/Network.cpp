@@ -720,11 +720,13 @@ bool CNetwork::PreRun()
 		InternetCloseHandle( hInternet );
 	}
 
+#ifndef _WIN64
 	if ( ! CNInternetConnect() )
 	{
 		theApp.Message( MSG_ERROR, _T("Internet connection attempt failed.") );
 		return false;
 	}
+#endif
 
 	m_bConnected = true;
 
