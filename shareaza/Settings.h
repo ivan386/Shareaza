@@ -286,6 +286,7 @@ public:
 		bool		SkipWANPPPSetup;			// Skip WANPPPConn1 device setup (UPnP)
 		bool		SkipWANIPSetup;				// Skip WANIPConn1 device setup (UPnP)
 		DWORD		ZLibCompressionLevel;		// ZLib compression level: 0(none/fastest)..9(best/slowest)
+		CString		IgnoreCountry;
 	} Connection;
 
 	struct sBandwidth

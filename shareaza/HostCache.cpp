@@ -422,6 +422,9 @@ CHostCacheHostPtr CHostCacheList::Add(const IN_ADDR* pAddress, WORD nPort, DWORD
 		pHost = Find( szAddress );
 	if ( ! pHost )
 	{
+		if (Security.IsIgnoreCountry(theApp.GetCountryCode( *pAddress )))
+			return NULL;
+
 		// Create new host
 		pHost = new CHostCacheHost( m_nProtocol );
 		if ( pHost )
