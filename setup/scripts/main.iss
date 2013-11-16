@@ -1,7 +1,7 @@
 ;
 ; main.iss
 ;
-; Copyright (c) Shareaza Development Team, 2002-2012.
+; Copyright (c) Shareaza Development Team, 2002-2013.
 ; This file is part of SHAREAZA (shareaza.sourceforge.net)
 ;
 ; Shareaza is free software; you can redistribute it
@@ -171,6 +171,12 @@ AppCopyright=Copyright © {#Publisher}. All rights reserved.
 AppPublisherURL=http://shareaza.sourceforge.net/
 AppSupportURL=http://shareaza.sourceforge.net/?id=support
 AppUpdatesURL=http://shareaza.sourceforge.net/?id=download
+
+#if Compiler == "vc10"
+  #if ConfigurationName == "Release"
+    #include SourcePath + "..\..\vc10\vcredist\vcredist.iss"
+  #endif
+#endif
 
 [Tasks]
 Name: "language"; Description: "{cm:tasks_languages}";
