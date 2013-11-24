@@ -192,7 +192,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <SetChecksum>true</SetChecksum>
       <TargetMachine>MachineX86</TargetMachine>
-      <DelayLoadDLLs>version.dll;msimg32.dll;comdlg32.dll;comctl32.dll;winspool.drv;advapi32.dll;shell32.dll;shlwapi.dll;ole32.dll;oleaut32.dll;oleacc.dll;oledlg.dll;ws2_32.dll;gdiplus.dll;imm32.dll;winmm.dll</DelayLoadDLLs>
+      <DelayLoadDLLs>version.dll;shell32.dll;shlwapi.dll;ws2_32.dll</DelayLoadDLLs>
     </Link>
     <Manifest />
     <Bscmake>
@@ -231,7 +231,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <SetChecksum>true</SetChecksum>
       <TargetMachine>MachineX64</TargetMachine>
-      <DelayLoadDLLs>version.dll;msimg32.dll;comdlg32.dll;comctl32.dll;winspool.drv;advapi32.dll;shell32.dll;shlwapi.dll;ole32.dll;oleaut32.dll;oleacc.dll;oledlg.dll;ws2_32.dll;gdiplus.dll;imm32.dll;winmm.dll</DelayLoadDLLs>
+      <DelayLoadDLLs>version.dll;shell32.dll;shlwapi.dll;ws2_32.dll</DelayLoadDLLs>
     </Link>
     <Manifest />
     <Bscmake>
