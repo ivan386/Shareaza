@@ -3163,7 +3163,7 @@ int CMainWnd::SnarlCommand(LPCSTR szCommand)
 	if ( HWND hWndSnarl = ::FindWindow( _T("w>Snarl"), _T("Snarl") ) )
 	{
 		const ULONG_PTR uSnarlMagic = 0x534e4c03;
-		COPYDATASTRUCT cds = { uSnarlMagic, strlen( szCommand ) + 1, (LPSTR)szCommand };
+		COPYDATASTRUCT cds = { uSnarlMagic, (DWORD)strlen( szCommand ) + 1, (LPSTR)szCommand };
 		SendMessageTimeout( hWndSnarl, WM_COPYDATA, (WPARAM)GetCurrentProcessId(), (LPARAM)&cds, SMTO_ABORTIFHUNG, 1000, &lResult );
 	}
 	return (int)lResult;
