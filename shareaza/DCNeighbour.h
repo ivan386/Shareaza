@@ -49,6 +49,7 @@ public:
 
 	CString			m_sNick;		// User nick on this hub
 	BOOL			m_bNickValid;	// User nick was accepted
+	in_addr			m_nMyAddress;	// IP on this hub
 	BOOL			m_bExtended;	// Using extended protocol
 	CStringList		m_oFeatures;	// Remote client supported features
 

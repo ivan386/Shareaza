@@ -357,6 +357,7 @@ BOOL CManagedSearch::ExecuteNeighbours(const DWORD tTicks, const DWORD tSecs)
 			m_pSearch->m_pMyHub = pDCNeighbour->m_pHost;
 			m_pSearch->m_sMyHub = pDCNeighbour->m_sServerName;
 			m_pSearch->m_sMyNick = pDCNeighbour->m_sNick;
+			m_pSearch->m_nMyAddress = pDCNeighbour->m_nMyAddress;
 			pPacket = m_pSearch->ToDCPacket();
 		}
 
