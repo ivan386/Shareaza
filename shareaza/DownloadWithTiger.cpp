@@ -997,13 +997,17 @@ BOOL CDownloadWithTiger::GetFragment(CDownloadTransfer* pTransfer)
 	if ( ! oPossible.empty() )
 	{
 		CDownload* pDownload = static_cast< CDownload* >( this );
-		QWORD nNonRandomEnd = pDownload->GetNonRandomEnd();
-
-		QWORD nBegin = oPossible.begin()->begin();
-		Fragments::List::const_iterator pRandom = (nBegin == 0
-			|| nBegin < nNonRandomEnd )
-			? oPossible.begin()
-			: oPossible.random_range();
+		Fragments::List::const_iterator pRandom = oPossible.random_range();
+		
+		if ( oPossible.begin()->begin() <= Settings.Downloads.ChunkStrap )
+			pRandom = oPossible.begin();
+		else if ( oPossible.last_range()->end() >= pDownload->GetSize() - Settings.Downloads.ChunkStrap)
+		{
+			pRandom = oPossible.last_range();
+			pTransfer->m_bWantBackwards	= TRUE;
+		}
+		else if ( oPossible.begin()->begin() < pDownload->GetNonRandomEnd() )
+			pRandom = oPossible.begin();
 
 		pTransfer->m_nOffset = pRandom->begin();
 		pTransfer->m_nLength = pRandom->size();

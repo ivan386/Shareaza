@@ -289,10 +289,10 @@ QWORD CDownload::GetRealSpeed()
 
 QWORD CDownload::GetNonRandomEnd()
 {
-	QWORD nSpeed = ( m_nBitrate / 8 );
+	QWORD nByterate = ( m_nBitrate / 8 );
 	
-	if ( Settings.Downloads.MediaBuffer && m_tBegan > 0 && ( GetRealSpeed() > nSpeed || GetAverageSpeed() > nSpeed ))
-		return m_nCompletedAtBegan + (( ( GetTickCount() - m_tBegan + Settings.Downloads.MediaBuffer ) / 1000 ) * ( m_nBitrate / 8 ));
+	if ( Settings.Downloads.MediaBuffer && m_tBegan > 0 && ( GetRealSpeed() > nByterate || GetAverageSpeed() > nByterate ))
+		return m_nCompletedAtBegan + ( ( ( GetTickCount() - m_tBegan + Settings.Downloads.MediaBuffer ) / 1000 ) * nByterate );
 	return 0;
 }
 
