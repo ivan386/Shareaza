@@ -100,6 +100,7 @@
     <Link>
       <AdditionalDependencies>ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <DelayLoadDLLs>ws2_32.dll</DelayLoadDLLs>
     </Link>
     <PreBuildEvent>
       <Command>
@@ -133,6 +134,7 @@
       <AdditionalDependencies>ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <TargetMachine>MachineX64</TargetMachine>
+      <DelayLoadDLLs>ws2_32.dll</DelayLoadDLLs>
     </Link>
     <PreBuildEvent>
       <Command>
@@ -161,7 +163,7 @@
       <StringPooling>true</StringPooling>
       <ExceptionHandling>
       </ExceptionHandling>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
@@ -172,6 +174,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <SetChecksum>true</SetChecksum>
       <TargetMachine>MachineX86</TargetMachine>
+      <DelayLoadDLLs>ws2_32.dll</DelayLoadDLLs>
     </Link>
     <PreBuildEvent>
       <Command>
@@ -200,7 +203,7 @@
       <StringPooling>true</StringPooling>
       <ExceptionHandling>
       </ExceptionHandling>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <FunctionLevelLinking>true</FunctionLevelLinking>
     </ClCompile>
@@ -210,6 +213,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <SetChecksum>true</SetChecksum>
       <TargetMachine>MachineX64</TargetMachine>
+      <DelayLoadDLLs>ws2_32.dll</DelayLoadDLLs>
     </Link>
     <PreBuildEvent>
       <Command>

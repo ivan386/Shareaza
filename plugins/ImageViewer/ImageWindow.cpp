@@ -786,7 +786,7 @@ void CImageWindow::OnFirst()
 
 	LPCTSTR szFile = m_sFile;
 	LPCTSTR szFileName = PathFindFileName( szFile );
-	CString sSearchDir = m_sFile.Left( szFileName - szFile );
+	CString sSearchDir = m_sFile.Left( (int)( szFileName - szFile ) );
 
 	WIN32_FIND_DATA wfd = {};
 	HANDLE hFind = FindFirstFile( sSearchDir + _T("*.*"), &wfd );
@@ -818,7 +818,7 @@ void CImageWindow::OnLast()
 
 	LPCTSTR szFile = m_sFile;
 	LPCTSTR szFileName = PathFindFileName( szFile );
-	CString sSearchDir = m_sFile.Left( szFileName - szFile );
+	CString sSearchDir = m_sFile.Left( (int)( szFileName - szFile ) );
 
 	WIN32_FIND_DATA wfd = {};
 	HANDLE hFind = FindFirstFile( sSearchDir + _T("*.*"), &wfd );
@@ -855,7 +855,7 @@ void CImageWindow::OnNext()
 
 	LPCTSTR szFile = m_sFile;
 	LPCTSTR szFileName = PathFindFileName( szFile );
-	CString sSearchDir = m_sFile.Left( szFileName - szFile );
+	CString sSearchDir = m_sFile.Left( (int)( szFileName - szFile ) );
 
 	WIN32_FIND_DATA wfd = {};
 	HANDLE hFind = FindFirstFile( sSearchDir + _T("*.*"), &wfd );
@@ -895,7 +895,7 @@ void CImageWindow::OnPrevious()
 
 	LPCTSTR szFile = m_sFile;
 	LPCTSTR szFileName = PathFindFileName( szFile );
-	CString sSearchDir = m_sFile.Left( szFileName - szFile );
+	CString sSearchDir = m_sFile.Left( (int)( szFileName - szFile ) );
 
 	WIN32_FIND_DATA wfd = {};
 	HANDLE hFind = FindFirstFile( sSearchDir + _T("*.*"), &wfd );

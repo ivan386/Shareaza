@@ -1,7 +1,7 @@
 ;
 ; main.iss
 ;
-; Copyright (c) Shareaza Development Team, 2002-2012.
+; Copyright (c) Shareaza Development Team, 2002-2013.
 ; This file is part of SHAREAZA (shareaza.sourceforge.net)
 ;
 ; Shareaza is free software; you can redistribute it
@@ -107,7 +107,11 @@
 #define shareaza SourcePath + "..\..\" + Compiler + "\" + PlatformName + "\" + ConfigurationName + "\Shareaza.exe"
 #define internal_name GetStringFileInfo(shareaza, INTERNAL_NAME)
 #if ConfigurationName == "Debug"
-  #define name internal_name + " Debug build"
+  #ifdef REVISION
+    #define name internal_name + " Debug build (" + REVISION + ")"
+  #else
+    #define name internal_name + " Debug build"
+  #endif
 #else
   #define name internal_name
 #endif
@@ -116,10 +120,14 @@
 #define Description   internal_name + " Ultimate File Sharing"
 #define date          GetDateTimeString('yyyy/mm/dd', '-', '')
 
-#if RELEASE_BUILD == 1
+#if Str(RELEASE_BUILD) == "1" && ConfigurationName == "Release"
   #define output_name internal_name + "_" + version + "_" + PlatformName
 #else
-  #define output_name internal_name + "_" + version + "_" + PlatformName + "_" + ConfigurationName + "_" + date
+  #ifdef REVISION
+    #define output_name internal_name + "_" + version + "_" + PlatformName + "_" + ConfigurationName + "_" + REVISION + "_" + date
+  #else
+    #define output_name internal_name + "_" + version + "_" + PlatformName + "_" + ConfigurationName + "_" + date
+  #endif
 #endif
 
 [Setup]
@@ -172,13 +180,19 @@ AppPublisherURL=http://shareaza.sourceforge.net/
 AppSupportURL=http://shareaza.sourceforge.net/?id=support
 AppUpdatesURL=http://shareaza.sourceforge.net/?id=download
 
+#if Compiler == "vc10"
+  #if ConfigurationName == "Release"
+    #include SourcePath + "..\..\vc10\vcredist\vcredist.iss"
+  #endif
+#endif
+
 [Tasks]
 Name: "language"; Description: "{cm:tasks_languages}";
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"
 Name: "quicklaunch"; Description: "{cm:CreateQuickLaunchIcon}"
 Name: "firewall"; Description: "{cm:tasks_firewall}"; MinVersion: 5.1sp2
 Name: "upnp"; Description: "{cm:tasks_upnp}"; MinVersion: 5.1; Check: CanUserModifyServices
-#if RELEASE_BUILD == 1
+#if Str(RELEASE_BUILD) == "1"
 Name: "deleteoldsetup"; Description: "{cm:tasks_deleteoldsetup}"; Check: EnableDeleteOldSetup
 #endif
 Name: "resetdiscoveryhostcache"; Description: "{cm:tasks_resetdiscoveryhostcache}"; Flags: unchecked
