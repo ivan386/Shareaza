@@ -1,7 +1,7 @@
 //
 // PageFinished.cpp
 //
-// Copyright (c) Shareaza Development Team, 2007-2011.
+// Copyright (c) Shareaza Development Team, 2007-2014.
 // This file is part of Shareaza Torrent Wizard (shareaza.sourceforge.net).
 //
 // Shareaza Torrent Wizard is free software; you can redistribute it
@@ -114,10 +114,12 @@ void CFinishedPage::Start()
 
 	GET_PAGE( CTrackerPage, pTracker );
 	m_pBuilder->AddTrackerURL( pTracker->m_sTracker );
-		
+	m_pBuilder->SetPrivate( pTracker->m_bPrivate );
+
 	GET_PAGE( CCommentPage, pComment );
 	m_pBuilder->SetComment( pComment->m_sComment );
-		
+	m_pBuilder->SetSource( pComment->m_sSource );
+
 	GET_PAGE( CWelcomePage, pWelcome );
 		
 	if ( pWelcome->m_nType == 0 )

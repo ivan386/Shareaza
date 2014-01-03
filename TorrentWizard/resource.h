@@ -44,6 +44,8 @@
 #define IDC_TORRENT_SEED                1030
 #define IDC_CHECK_ED2K                  1031
 #define IDC_CHECK_MD5                   1032
+#define IDC_PRIVATE                     1033
+#define IDC_SOURCE                      1034
 #define IDS_WELCOME_NEED_TYPE           8000
 #define IDS_SINGLE_NEED_FILE            8001
 #define IDS_PACKAGE_NEED_FILES          8002
@@ -67,7 +69,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        133
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1033
+#define _APS_NEXT_CONTROL_VALUE         1035
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
