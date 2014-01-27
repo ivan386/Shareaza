@@ -4369,18 +4369,21 @@
 			<control caption="http://shareaza.sourceforge.net/"/>
 			<control caption="OK"/>
 		</dialog>
-		<dialog name="CExistingFileDlg" cookie="StStStStBuBuBuBuBuStSt" caption="Загрузка имеющегося файла">
-			<control/>
-			<control/>
-			<control/>
-			<control caption="У Вас уже есть этот файл в хранилище.  Что бы Вы хотели сделать?"/>
+		<dialog name="CExistingFileDlg" cookie="BuBuBuBuBuStStStStStStBuSt" caption="Загрузка имеющегося файла">
+			<control caption="OK"/>
+			<control caption="Отмена"/>
 			<control caption="Показать мне это файл в хранилище"/>
 			<control caption="Загрузить файл снова"/>
 			<control caption="Не загружать этот файл"/>
-			<control caption="OK"/>
-			<control caption="Отмена"/>
-			<control caption="Вы уже загружали этот файл и удалили его.  Что бы Вы хотели сделать?"/>
+			<control/>
+			<control/>
+			<control/>
+			<control caption="У Вас уже есть этот файл в хранилище. Что бы Вы хотели сделать?"/>
+			<control caption="Вы уже загружали этот файл и удалили его. Что бы Вы хотели сделать?"/>
 			<control caption="Внимание!!! Найденны дубликаты. Злоумышленные программы могут заразить Ваше хранилище. Проверьте, что это Вы загрузили или поместили этот файл. Иначе, закройте Shareaza и просканируйте Ваш компьютер."/>
+			<control/>
+			<control/>
+			<control/>
 		</dialog>
 		<dialog name="CCloseModeDlg" cookie="StBuBuBuBuBu" caption="Кнопка «Закрыть»">
 			<control caption="Это - первый раз, когда Вы щелкнули кнопку «Закрыть» Shareaza.  Выберите, какое действие Shareaza должна выполнять когда Вы её щелкаете:"/>

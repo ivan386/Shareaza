@@ -4373,18 +4373,21 @@
 			<control caption="http://shareaza.sourceforge.net/"/>
 			<control caption="OK"/>
 		</dialog>
-		<dialog name="CExistingFileDlg" cookie="StStStStBuBuBuBuBuStSt" caption="Soubor již existuje">
+		<dialog name="CExistingFileDlg" cookie="BuBuBuBuBuStStStStStStBuSt" caption="Soubor již existuje">
+			<control caption="OK"/>
+			<control caption="Zrušit"/>
+			<control caption="Ukázat mi soubor z knihovny"/>
+			<control caption="Stáhnout znovu tento soubor"/>
+			<control caption="Nestahovat tento soubor"/>
 			<control/>
 			<control/>
 			<control/>
 			<control caption="Tento soubor již máte v knihovně. Co chcete udělat?"/>
-			<control caption="Ukázat mi soubor z knihovny"/>
-			<control caption="Stáhnout znovu tento soubor"/>
-			<control caption="Nestahovat tento soubor"/>
-			<control caption="OK"/>
-			<control caption="Zrušit"/>
 			<control caption="Tento soubor jste již jednou stáhli a smazali. Co chcete udělat?"/>
 			<control caption="Pozor!!! Byl nalezeno více kopií téhož souboru. Je možné že se nějaký program snaží infikovat knihovnu virem. Ujistěte se, že jste tento soubor chtěli stáhnout, nebo, že jste jej do knihovny umístili ručně. Pokud ne, pak ukončetě Shareazu a spusťte anitvirovou kontrolu."/>
+			<control/>
+			<control/>
+			<control/>
 		</dialog>
 		<dialog name="CCloseModeDlg" cookie="StBuBuBuBuBu" caption="Tlačítko Zavřít">
 			<control caption="Je to poprvé co jste kliknuli na tlačítko Zavřít program Shareaza. Prosím zvolte si akci kterou Shareaza provede, když příště kliknete na tlačítko Zavřít:"/>

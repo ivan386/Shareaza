@@ -4365,18 +4365,21 @@
 			<control caption="http://shareaza.sourceforge.net/"/>
 			<control caption="OK"/>
 		</dialog>
-		<dialog name="CExistingFileDlg" cookie="StStStStBuBuBuBuBuStSt" caption="既存ファイル">
+		<dialog name="CExistingFileDlg" cookie="BuBuBuBuBuStStStStStStBuSt" caption="既存ファイル">
+			<control caption="OK"/>
+			<control caption="キャンセル"/>
+			<control caption="ライブラリ内のファイルを表示する"/>
+			<control caption="ファイルのダウンロードをやり直す"/>
+			<control caption="このファイルをダウンロードしない"/>
 			<control/>
 			<control/>
 			<control/>
 			<control caption="ライブラリ内に既に同じファイルが存在します。どうしますか?"/>
-			<control caption="ライブラリ内のファイルを表示する"/>
-			<control caption="ファイルのダウンロードをやり直す"/>
-			<control caption="このファイルをダウンロードしない"/>
-			<control caption="OK"/>
-			<control caption="キャンセル"/>
 			<control caption="あなたは以前このファイルをダウンロードして、削除したことがあります。どうしますか?"/>
 			<control caption="警告!!! ファイルのコピーが検出されました。 いくつかの悪意のあるソフトウェアがあなたのライブラリを汚染させる可能性があります。 あなたがこのファイルをダウンロードしたか手動でライブラリに追加したかどうかを必ず確認して下さい。 もし記憶に無ければ直ちにShareazaを終了させ、コンピュータをアンチウイルスプログラムでスキャンして下さい。"/>
+			<control/>
+			<control/>
+			<control/>
 		</dialog>
 		<dialog name="CCloseModeDlg" cookie="StBuBuBuBuBu" caption="終了ボタン">
 			<control caption="初めてShareazaの終了ボタンをクリックしました。 次回から終了ボタンをクリックした時にShareazaがどういう挙動をするかを選択して下さい:"/>

@@ -1,7 +1,7 @@
 //
 // TorrentBuilder.cpp
 //
-// Copyright (c) Shareaza Development Team, 2007-2012.
+// Copyright (c) Shareaza Development Team, 2007-2014.
 // This file is part of Shareaza Torrent Wizard (shareaza.sourceforge.net).
 //
 // Shareaza Torrent Wizard is free software; you can redistribute it
@@ -42,6 +42,7 @@ CTorrentBuilder::CTorrentBuilder()
 	: m_bActive( FALSE )
 	, m_bFinished ( FALSE )
 	, m_bAbort( FALSE )
+	, m_bPrivate( FALSE )
 	, m_nTotalSize( 0 )
 	, m_nTotalPos( 0 )
 	, m_bSHA1( FALSE )
@@ -139,6 +140,22 @@ BOOL CTorrentBuilder::SetComment(LPCTSTR pszComment)
 	CSingleLock pLock( &m_pSection, TRUE );
 	if ( m_bActive ) return FALSE;
 	m_sComment = pszComment;
+	return TRUE;
+}
+
+BOOL CTorrentBuilder::SetSource(LPCTSTR pszSource)
+{
+	CSingleLock pLock( &m_pSection, TRUE );
+	if ( m_bActive ) return FALSE;
+	m_sSource = pszSource;
+	return TRUE;
+}
+
+BOOL CTorrentBuilder::SetPrivate(BOOL bPrivate)
+{
+	CSingleLock pLock( &m_pSection, TRUE );
+	if ( m_bActive ) return FALSE;
+	m_bPrivate = bPrivate;
 	return TRUE;
 }
 
@@ -497,166 +514,174 @@ BOOL CTorrentBuilder::ProcessFile(DWORD nFile, LPCTSTR pszFile)
 BOOL CTorrentBuilder::WriteOutput()
 {
 	CBENode pRoot;
+
+	// Keys in sorted order
+
 	if ( m_sTracker.GetLength() > 0 )
 	{
-		CBENode* pAnnounce = pRoot.Add( "announce" );
-		pAnnounce->SetString( m_sTracker );
+		pRoot.Add( "announce" )->SetString( m_sTracker );
 	}
+
+	if ( m_sComment.GetLength() > 0 )
 	{
-		CBENode* pDate = pRoot.Add( "creation date" );
-		pDate->SetInt( (QWORD)time( NULL ) );
+		pRoot.Add( "comment" )->SetString( m_sComment );
 	}
+
+	pRoot.Add( "created by" )->SetString( _T("TorrentWizard ") + theApp.m_sVersion );
+
+	pRoot.Add( "creation date" )->SetInt( (QWORD)time( NULL ) );
+
+	pRoot.Add( "encoding" )->SetString( _T("UTF-8") );
+
+	if ( CBENode* pInfo = pRoot.Add( "info" ) )
 	{
-		CBENode* pDate = pRoot.Add( "encoding" );
-		pDate->SetString( _T("UTF-8") );
-	}
-	CBENode* pInfo = pRoot.Add( "info" );	
-	{
-		CBENode* pPL = pInfo->Add( "piece length" );
-		pPL->SetInt( m_nPieceSize );
-	}
-	{
-		CSHA::Digest* pPieceSHA1 = new CSHA::Digest[ m_nPieceCount ];
-		for ( DWORD i = 0 ; i < m_nPieceCount; ++i )
-			m_pPieceSHA1[ i ].GetHash( (uchar*)&pPieceSHA1[ i ][ 0 ] );
-		CBENode* pPieces = pInfo->Add( "pieces" );
-		pPieces->SetString( pPieceSHA1, m_nPieceCount * sizeof CSHA::Digest );
-		delete [] pPieceSHA1;
-	}
-	
-	CString strFirst = m_pFiles.GetHead();
-	
-	if ( m_pFiles.GetCount() == 1 )
-	{
-		int nPos = strFirst.ReverseFind( '\\' );
-		if ( nPos >= 0 ) strFirst = strFirst.Mid( nPos + 1 );
+		CString strFirst = m_pFiles.GetHead();
+		if ( m_pFiles.GetCount() == 1 )
 		{
-			CBENode* pLength = pInfo->Add( "length" );
-			pLength->SetInt( m_nTotalSize );
-		}		
-		{
-			CBENode* pName = pInfo->Add( "name" );
-			pName->SetString( strFirst );
-		}
-		if ( m_bSHA1 )
-		{
-			CSHA::Digest pFileSHA1;
-			m_pFileSHA1[ 0 ].GetHash( (uchar*)&pFileSHA1[ 0 ] );
-			CBENode* pSHA1 = pInfo->Add( "sha1" );
-			pSHA1->SetString( &pFileSHA1, sizeof CSHA::Digest );
-		}
-		if ( m_bED2K )
-		{
-			CMD4::Digest pFileED2K;
-			m_pFileED2K[ 0 ].GetRoot( (uchar*)&pFileED2K[ 0 ] );
-			CBENode* pED2K = pInfo->Add( "ed2k" );
-			pED2K->SetString( &pFileED2K, sizeof CMD4::Digest );
-		}
-		if ( m_bMD5 )
-		{
-			CMD5::Digest pFileMD5;
-			m_pFileMD5[ 0 ].GetHash( (uchar*)&pFileMD5[ 0 ] );
-			CBENode* pMD5 = pInfo->Add( "md5sum" );
-			pMD5->SetString( &pFileMD5, sizeof CMD5::Digest );
-		}
-	}
-	else
-	{
-		{
-			CBENode* pName = pInfo->Add( "name" );
-			pName->SetString( m_sName );
-		}	
-		CBENode* pFiles = pInfo->Add( "files" );
-		int nCommonPath = 32000;
-		int nFile = 0;		
-		POSITION pos = m_pFiles.GetHeadPosition();
-		for ( ; pos ; nFile++ )
-		{
-			CString strThis = m_pFiles.GetNext( pos );
-			
-			if ( nFile == 0 ) continue;
-			
-			LPCTSTR pszFirst	= strFirst;
-			LPCTSTR pszThis		= strThis;
-			
-			for ( int nPos = 0, nSlash = 0 ; nPos < nCommonPath ; nPos++ )
-			{
-				if ( pszThis[nPos] != pszFirst[nPos] ||
-					 pszThis[nPos] == 0 || pszFirst[nPos] == 0 )
-				{
-					nCommonPath = nSlash;
-					break;
-				}
-				else if ( pszThis[nPos] == '\\' )
-				{
-					nSlash = nPos;
-				}
-			}
-		}
-		nCommonPath ++;
-		pos = m_pFiles.GetHeadPosition();
-		for ( nFile = 0 ; pos ; nFile++ )
-		{
-			CString strFile = m_pFiles.GetNext( pos );
-			CBENode* pFile = pFiles->Add( NULL, NULL );
-			{
-				CBENode* pLength = pFile->Add( "length" );
-				pLength->SetInt( m_pFileSize[ nFile ] );
-			}
-			{
-				CBENode* pPath = pFile->Add( "path" );
-				strFile = strFile.Mid( nCommonPath );			
-				while ( strFile.GetLength() )
-				{
-					CString strPart = strFile.SpanExcluding( _T("\\/") );
-					if ( strPart.IsEmpty() ) break;
-					
-					pPath->Add( NULL, NULL )->SetString( strPart );
-					
-					strFile = strFile.Mid( strPart.GetLength() );
-					if ( strFile.GetLength() ) strFile = strFile.Mid( 1 );
-				}
-			}
-			if ( m_bSHA1 )
-			{
-				CSHA::Digest pFileSHA1;
-				m_pFileSHA1[ nFile ].GetHash( (uchar*)&pFileSHA1[ 0 ] );
-				CBENode* pSHA1 = pFile->Add( "sha1" );
-				pSHA1->SetString( &pFileSHA1, sizeof CSHA::Digest );
-			}
+			int nPos = strFirst.ReverseFind( '\\' );
+			if ( nPos >= 0 ) strFirst = strFirst.Mid( nPos + 1 );
+		
 			if ( m_bED2K )
 			{
 				CMD4::Digest pFileED2K;
-				m_pFileED2K[ nFile ].GetRoot( (uchar*)&pFileED2K[ 0 ] );
-				CBENode* pED2K = pFile->Add( "ed2k" );
-				pED2K->SetString( &pFileED2K, sizeof CMD4::Digest );
+				m_pFileED2K[ 0 ].GetRoot( (uchar*)&pFileED2K[ 0 ] );
+				pInfo->Add( "ed2k" )->SetString( &pFileED2K, sizeof CMD4::Digest );
 			}
+
+			pInfo->Add( "length" )->SetInt( m_nTotalSize );
+
 			if ( m_bMD5 )
 			{
 				CMD5::Digest pFileMD5;
-				m_pFileMD5[ nFile ].GetHash( (uchar*)&pFileMD5[ 0 ] );
-				CBENode* pMD5 = pFile->Add( "md5sum" );
-				pMD5->SetString( &pFileMD5, sizeof CMD5::Digest );
+				m_pFileMD5[ 0 ].GetHash( (uchar*)&pFileMD5[ 0 ] );
+				pInfo->Add( "md5sum" )->SetString( &pFileMD5, sizeof CMD5::Digest );
 			}
+
+			pInfo->Add( "name" )->SetString( strFirst );
+
+			pInfo->Add( "piece length" )->SetInt( m_nPieceSize );
+
+			{
+				CAutoVectorPtr< CSHA::Digest > pPieceSHA1( new CSHA::Digest[ m_nPieceCount ] );
+				for ( DWORD i = 0 ; i < m_nPieceCount; ++i )
+					m_pPieceSHA1[ i ].GetHash( (uchar*)&pPieceSHA1[ i ][ 0 ] );
+				pInfo->Add( "pieces" )->SetString( pPieceSHA1, m_nPieceCount * sizeof CSHA::Digest );
+			}
+
+			if ( m_bPrivate )
+				pInfo->Add( "private" )->SetInt( 1 );
+
+			if ( m_bSHA1 )
+			{
+				CSHA::Digest pFileSHA1;
+				m_pFileSHA1[ 0 ].GetHash( (uchar*)&pFileSHA1[ 0 ] );
+				pInfo->Add( "sha1" )->SetString( &pFileSHA1, sizeof CSHA::Digest );
+			}
+
+			if ( ! m_sSource.IsEmpty() )
+				pInfo->Add( "source" )->SetString( m_sSource );
+		}
+		else
+		{
+			if ( CBENode* pFiles = pInfo->Add( "files" ) )
+			{
+				int nCommonPath = 32000;
+				int nFile = 0;		
+				POSITION pos = m_pFiles.GetHeadPosition();
+				for ( ; pos ; nFile++ )
+				{
+					CString strThis = m_pFiles.GetNext( pos );
+			
+					if ( nFile == 0 )
+						continue;
+			
+					LPCTSTR pszFirst	= strFirst;
+					LPCTSTR pszThis		= strThis;
+			
+					for ( int nPos = 0, nSlash = 0 ; nPos < nCommonPath ; nPos++ )
+					{
+						if ( pszThis[nPos] != pszFirst[nPos] ||
+							 pszThis[nPos] == 0 || pszFirst[nPos] == 0 )
+						{
+							nCommonPath = nSlash;
+							break;
+						}
+						else if ( pszThis[nPos] == '\\' )
+						{
+							nSlash = nPos;
+						}
+					}
+				}
+				nCommonPath ++;
+				pos = m_pFiles.GetHeadPosition();
+				for ( nFile = 0 ; pos ; nFile++ )
+				{
+					if ( CBENode* pFile = pFiles->Add() )
+					{
+						if ( m_bED2K )
+						{
+							CMD4::Digest pFileED2K;
+							m_pFileED2K[ nFile ].GetRoot( (uchar*)&pFileED2K[ 0 ] );
+							pFile->Add( "ed2k" )->SetString( &pFileED2K, sizeof CMD4::Digest );
+						}
+
+						pFile->Add( "length" )->SetInt( m_pFileSize[ nFile ] );
+
+						if ( m_bMD5 )
+						{
+							CMD5::Digest pFileMD5;
+							m_pFileMD5[ nFile ].GetHash( (uchar*)&pFileMD5[ 0 ] );
+							pFile->Add( "md5sum" )->SetString( &pFileMD5, sizeof CMD5::Digest );
+						}
+				
+						if ( CBENode* pPath = pFile->Add( "path" ) )
+						{
+							CString strFile = m_pFiles.GetNext( pos );
+							strFile = strFile.Mid( nCommonPath );
+							while ( strFile.GetLength() )
+							{
+								CString strPart = strFile.SpanExcluding( _T("\\/") );
+								if ( strPart.IsEmpty() )
+									break;
+								pPath->Add()->SetString( strPart );					
+								strFile = strFile.Mid( strPart.GetLength() );
+								if ( strFile.GetLength() ) strFile = strFile.Mid( 1 );
+							}
+						}
+
+						if ( m_bSHA1 )
+						{
+							CSHA::Digest pFileSHA1;
+							m_pFileSHA1[ nFile ].GetHash( (uchar*)&pFileSHA1[ 0 ] );
+							pFile->Add( "sha1" )->SetString( &pFileSHA1, sizeof CSHA::Digest );
+						}
+					}
+				}
+			}
+
+			pInfo->Add( "name" )->SetString( m_sName );
+
+			pInfo->Add( "piece length" )->SetInt( m_nPieceSize );
+
+			{
+				CAutoVectorPtr< CSHA::Digest > pPieceSHA1( new CSHA::Digest[ m_nPieceCount ] );
+				for ( DWORD i = 0 ; i < m_nPieceCount; ++i )
+					m_pPieceSHA1[ i ].GetHash( (uchar*)&pPieceSHA1[ i ][ 0 ] );
+				pInfo->Add( "pieces" )->SetString( pPieceSHA1, m_nPieceCount * sizeof CSHA::Digest );
+			}
+
+			if ( m_bPrivate )
+				pInfo->Add( "private" )->SetInt( 1 );
+
+			if ( ! m_sSource.IsEmpty() )
+				pInfo->Add( "source" )->SetString( m_sSource );
 		}
 	}
-	{
-		CBENode* pAgent = pRoot.Add( "created by" );
-		CString strAgent = _T("TorrentWizard ") + theApp.m_sVersion;
-		pAgent->SetString( strAgent );
-	}	
-	if ( m_sComment.GetLength() > 0 )
-	{
-		CBENode* pComment = pRoot.Add( "comment" );
-		pComment->SetString( m_sComment );
-	}
-	
+
 	CBuffer pOutput;
 	pRoot.Encode( &pOutput );
 	
-	HANDLE hFile = CreateFile( CString( _T("\\\\?\\") ) + m_sOutput, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS,
-		FILE_ATTRIBUTE_NORMAL, NULL );
-	
+	HANDLE hFile = CreateFile( CString( _T("\\\\?\\") ) + m_sOutput, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL );
 	if ( hFile == INVALID_HANDLE_VALUE )
 	{
 		m_pSection.Lock();

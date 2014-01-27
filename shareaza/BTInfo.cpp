@@ -1,7 +1,7 @@
 //
 // BTInfo.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -905,12 +905,16 @@ BOOL CBTInfo::LoadTorrentTree(const CBENode* pRoot)
 		if ( ! pSHA1->IsType( CBENode::beString ) || pSHA1->m_nValue != Hashes::Sha1Hash::byteCount ) return FALSE;
 		m_oSHA1 = *static_cast< const Hashes::BtHash::RawStorage* >( pSHA1->m_pValue );
 	}
-	else if ( const CBENode* pSHA1Base16 = pInfo->GetNode( "filehash" ) )
-	{
-		if ( ! pSHA1Base16->IsType( CBENode::beString ) ||
-			pSHA1Base16->m_nValue != Hashes::BtGuid::byteCount ) return FALSE;
-		m_oSHA1 = *static_cast< const Hashes::BtGuid::RawStorage* >( pSHA1Base16->m_pValue );
-	}
+
+	// TODO: BitComet LT-Seeding - http://wiki.bitcomet.com/long-term_seeding
+	// Long-Term-seeding protocol is proprietary property belonging to the BitComet Development team.
+	// Looks like changed SHA1.
+	//if ( const CBENode* pSHA1Base16 = pInfo->GetNode( "filehash" ) )
+	//{
+	//	if ( ! pSHA1Base16->IsType( CBENode::beString ) ||
+	//		pSHA1Base16->m_nValue != Hashes::BtGuid::byteCount ) return FALSE;
+	//	m_oSHA1 = *static_cast< const Hashes::BtGuid::RawStorage* >( pSHA1Base16->m_pValue );
+	//}
 
 	if ( const CBENode* pED2K = pInfo->GetNode( "ed2k" ) )
 	{

@@ -4308,18 +4308,21 @@
 			<control caption="http://shareaza.sourceforge.net/"/>
 			<control caption="確定"/>
 		</dialog>
-		<dialog name="CExistingFileDlg" cookie="StStStStBuBuBuBuBuStSt" caption="現存的檔案">
+		<dialog name="CExistingFileDlg" cookie="BuBuBuBuBuStStStStStStBuSt" caption="現存的檔案">
+			<control caption="確定"/>
+			<control caption="取消"/>
+			<control caption="在我的收藏顯示這個檔案"/>
+			<control caption="再次下載這個檔案"/>
+			<control caption="不要下載這個檔案"/>
 			<control/>
 			<control/>
 			<control/>
 			<control caption="你的檔案收藏已經有這個檔案了. 您的決定是?"/>
-			<control caption="在我的收藏顯示這個檔案"/>
-			<control caption="再次下載這個檔案"/>
-			<control caption="不要下載這個檔案"/>
-			<control caption="確定"/>
-			<control caption="取消"/>
 			<control caption="您曾經下載過並且刪除這個檔案.  請問你要如何處理?"/>
 			<control caption="警告！检测到重复文件.一些恶意软件可能感染您的收藏.请确认您是手动下载或存放此文件.否则，请关闭 Shareaza 并用杀毒软件扫描您的电脑."/>
+			<control/>
+			<control/>
+			<control/>
 		</dialog>
 		<dialog name="CCloseModeDlg" cookie="StBuBuBuBuBu" caption="關閉鈕">
 			<control caption="本次是您第一次點選 Shareaza 的關閉鈕. 從現在開始, 請問您點選關閉鈕後, 想要做什麼動作:"/>

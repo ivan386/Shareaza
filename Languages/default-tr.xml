@@ -4339,18 +4339,21 @@
 			<control caption="http://shareaza.sourceforge.net/"/>
 			<control caption="Tamam"/>
 		</dialog>
-		<dialog name="CExistingFileDlg" cookie="StStStStBuBuBuBuBuStSt" caption="Mevcut Dosya">
+		<dialog name="CExistingFileDlg" cookie="BuBuBuBuBuStStStStStStBuSt" caption="Mevcut Dosya">
+			<control caption="Tamam"/>
+			<control caption="İptal"/>
+			<control caption="Kütüphanemdeki dosyaları göster"/>
+			<control caption="Bu dosyayı tekrar indir"/>
+			<control caption="Bu dosyayı indirme"/>
 			<control/>
 			<control/>
 			<control/>
 			<control caption="Zaten kütüphanenizde bu dosyaya sahipsiniz. Ne yapmak istersiniz?"/>
-			<control caption="Kütüphanemdeki dosyaları göster"/>
-			<control caption="Bu dosyayı tekrar indir"/>
-			<control caption="Bu dosyayı indirme"/>
-			<control caption="Tamam"/>
-			<control caption="İptal"/>
 			<control caption="Bu dosyayı daha önce indirdiniz ve sildiniz. Ne yapmak istersiniz?"/>
 			<control caption="Uyarı!!! Kopya - eş dosyalar tespit edilmiştir. Bazı kötücül yazılımlar kütüphanenizdeki dosyalara bulaşabilir. Bu dosyayı indirdiğinizden ya da sizin koyduğunuzdan emin olun. Aksi takdirde Shareaza'yı kapatıp bilgisayarınızı bir antivirüs programıyla tarayın."/>
+			<control/>
+			<control/>
+			<control/>
 		</dialog>
 		<dialog name="CCloseModeDlg" cookie="StBuBuBuBuBu" caption="Kapat Düğmesi">
 			<control caption="Bu Shareaza'nın kapat butonuna ilk basışınızdır. Lütfen bundan böyle bu butona bastığınızda Shareaza'nın yapmasını istediğiniz faaliyeti seçiniz:"/>

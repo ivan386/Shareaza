@@ -1,7 +1,7 @@
 //
 // DlgExistingFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -53,7 +53,7 @@ CExistingFileDlg::Action CExistingFileDlg::CheckExisting(const CShareazaURL* pUR
 	{
 		for ( POSITION pos = pURL->m_pTorrent->m_pFiles.GetHeadPosition() ; pos ; )
 		{
-			CBTInfo::CBTFile* pBTFile = pURL->m_pTorrent->m_pFiles.GetNext( pos );
+			const CBTInfo::CBTFile* pBTFile = pURL->m_pTorrent->m_pFiles.GetNext( pos );
 
 			return CheckExisting( static_cast< const CShareazaFile* >( pBTFile ), bInteracive );
 		}
@@ -69,14 +69,14 @@ CExistingFileDlg::Action CExistingFileDlg::CheckExisting(const CShareazaFile* pF
 	if ( ! pLock.Lock( 1000 ) )
 		return Download;
 
-	CLibraryFile* pLibFile = LibraryMaps.LookupFileByHash( pFile );
+	const CLibraryFile* pLibFile = LibraryMaps.LookupFileByHash( pFile );
 	if ( pLibFile == NULL )
 		return Download;
 
 	if ( ! bInteracive )
 		return ShowInLibrary;
 
-	DWORD nIndex = pLibFile->m_nIndex;
+	const DWORD nIndex = pLibFile->m_nIndex;
 
 	CExistingFileDlg dlg( pLibFile );
 
@@ -88,12 +88,13 @@ CExistingFileDlg::Action CExistingFileDlg::CheckExisting(const CShareazaFile* pF
 	{
 		if ( CLibraryWnd* pLibrary = CLibraryWnd::GetLibraryWindow() )
 		{
-			pLock.Lock();
-			if ( CLibraryFile* pLibFile1 = Library.LookupFile( nIndex ) )
+			if ( pLock.Lock( 1000 ) )
 			{
-				pLibrary->Display( pLibFile1 );
+				if ( const CLibraryFile* pLibFile1 = Library.LookupFile( nIndex ) )
+				{
+					pLibrary->Display( pLibFile1 );
+				}
 			}
-			pLock.Unlock();
 		}
 	}
 
@@ -103,41 +104,19 @@ CExistingFileDlg::Action CExistingFileDlg::CheckExisting(const CShareazaFile* pF
 /////////////////////////////////////////////////////////////////////////////
 // CExistingFileDlg dialog
 
-CExistingFileDlg::CExistingFileDlg(const CLibraryFile* pFile, CWnd* pParent, bool bDuplicateSearch)
-:	CSkinDialog( CExistingFileDlg::IDD, pParent )
-,	m_nAction( 0 )
+CExistingFileDlg::CExistingFileDlg(const CLibraryFile* pFile, CWnd* pParent)
+	: CSkinDialog	( CExistingFileDlg::IDD, pParent )
+	, m_nAction		( 0 )
+	, m_sName		( pFile->m_sName )
+	, m_sURN		( pFile->GetURN() )
+	, m_sComments	( pFile->m_sComments )
+	, m_bAvailable	( pFile->IsAvailable() ? TRI_FALSE : TRI_UNKNOWN )
 {
-	m_sName = pFile->m_sName;
-
-	if ( !bDuplicateSearch )
-	{
-		if ( pFile->m_oSHA1 && pFile->m_oTiger )
-		{
-			m_sURN	= _T("bitprint:") + pFile->m_oSHA1.toString()
-				+ '.' + pFile->m_oTiger.toString();
-		}
-		else if ( pFile->m_oSHA1 )
-		{
-			m_sURN = pFile->m_oSHA1.toString();
-		}
-		else if ( pFile->m_oTiger )
-		{
-			m_sURN = pFile->m_oTiger.toUrn();
-		}
-
-		m_sComments		= pFile->m_sComments;
-		m_bAvailable	= pFile->IsAvailable() ? TRI_FALSE : TRI_UNKNOWN;
-	}
-	else if ( pFile->m_oMD5 )
-	{
-		m_sURN = pFile->m_oMD5.toUrn();
-		m_bAvailable	= TRI_TRUE;
-	}
 }
 
 INT_PTR CExistingFileDlg::DoModal()
 {
-	INT_PTR ret = CSkinDialog::DoModal();
+	const INT_PTR ret = CSkinDialog::DoModal();
 	if ( ret != IDOK )
 		m_nAction = 3;
 	return ret;

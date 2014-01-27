@@ -4365,18 +4365,21 @@
 			<control caption="http://shareaza.sourceforge.net/"/>
 			<control caption="OK"/>
 		</dialog>
-		<dialog name="CExistingFileDlg" cookie="StStStStBuBuBuBuBuStSt" caption="Postojeća Datoteka">
+		<dialog name="CExistingFileDlg" cookie="BuBuBuBuBuStStStStStStBuSt" caption="Postojeća Datoteka">
+			<control caption="OK"/>
+			<control caption="Odustani"/>
+			<control caption="Pokaži mi datoteku u mojoj kolekciji"/>
+			<control caption="Ponovno skini"/>
+			<control caption="Nemoj skinuti, to već imam"/>
 			<control/>
 			<control/>
 			<control/>
 			<control caption="Ovu datoteku već imate u vašoj kolekciji.Što želite učiniti?"/>
-			<control caption="Pokaži mi datoteku u mojoj kolekciji"/>
-			<control caption="Ponovno skini"/>
-			<control caption="Nemoj skinuti, to već imam"/>
-			<control caption="OK"/>
-			<control caption="Odustani"/>
 			<control caption="Ovu datoteku ste već skinuli, pa obrisali.  Što želite učiniti?"/>
 			<control caption="Warning!!! Duplicate files detected. Some malicious software may infect your Library. Make sure that you downloaded this file or placed it manually. Otherwise, shutdown Shareaza and scan your computer with an antivirus program."/>
+			<control/>
+			<control/>
+			<control/>
 		</dialog>
 		<dialog name="CCloseModeDlg" cookie="StBuBuBuBuBu" caption="Zatvaranje">
 			<control caption="Ovo je prvi puta da zatvarate Shareazu.Molim da odaberete što će Shareaza učiniti kada ubuduće kliknete na zatvori:"/>

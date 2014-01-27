@@ -4368,18 +4368,21 @@ puede comenzar a transferir en cualquier momento.</text>
 			<control caption="http://shareaza.sourceforge.net/"/>
 			<control caption="Aceptar"/>
 		</dialog>
-		<dialog name="CExistingFileDlg" cookie="StStStStBuBuBuBuBuStSt" caption="El archivo ya existe">
+		<dialog name="CExistingFileDlg" cookie="BuBuBuBuBuStStStStStStBuSt" caption="El archivo ya existe">
+			<control caption="Aceptar"/>
+			<control caption="Cancelar"/>
+			<control caption="Mostrarlo en Mi Colección"/>
+			<control caption="Descargarlo de nuevo"/>
+			<control caption="Nada, dejar el archivo original"/>
 			<control/>
 			<control/>
 			<control/>
 			<control caption="Este archivo ya está en Mi Colección.  ¿Qué quiere hacer?"/>
-			<control caption="Mostrarlo en Mi Colección"/>
-			<control caption="Descargarlo de nuevo"/>
-			<control caption="Nada, dejar el archivo original"/>
-			<control caption="Aceptar"/>
-			<control caption="Cancelar"/>
 			<control caption="Ya has descargado y borrado este archivo antes.  ¿Qué deseas hacer?"/>
 			<control caption="¡¡¡Advertencia!!! Se han detectado archivos duplicados. Un programa malicioso puede afectar a tu librería. Asegurate de que te descargaste o pusiste este archivo manualmente. De otra forma, cierra Shareaza y escanea tu computadora con un antivirus."/>
+			<control/>
+			<control/>
+			<control/>
 		</dialog>
 		<dialog name="CCloseModeDlg" cookie="StBuBuBuBuBu" caption="Botón de cerrar">
 			<control caption="Esta es la primera vez que el botón de cerrar ha sido apretado. Por favor seleccione la acción deseada a efectuar, cada vez que se presione este botón:"/>

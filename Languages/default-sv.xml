@@ -4367,18 +4367,21 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 			<control caption="http://shareaza.sourceforge.net/"/>
 			<control caption="OK"/>
 		</dialog>
-		<dialog name="CExistingFileDlg" cookie="StStStStBuBuBuBuBuStSt" caption="Eisterande fil">
+		<dialog name="CExistingFileDlg" cookie="BuBuBuBuBuStStStStStStBuSt" caption="Eisterande fil">
+			<control caption="OK"/>
+			<control caption="Avbryt"/>
+			<control caption="Visa filen i mitt bibliotek"/>
+			<control caption="Ladda ned filen igen"/>
+			<control caption="Ladda inte ned filen"/>
 			<control/>
 			<control/>
 			<control/>
 			<control caption="Du har redan denna fil i ditt bibliotek. Vad vill du göra?"/>
-			<control caption="Visa filen i mitt bibliotek"/>
-			<control caption="Ladda ned filen igen"/>
-			<control caption="Ladda inte ned filen"/>
-			<control caption="OK"/>
-			<control caption="Avbryt"/>
 			<control caption="Du har tidigare laddat ned och raderat denna fil. Vad vill du göra?"/>
 			<control caption="Varning!!! Dubbla filer upptcktes. Skadlig programvara kan infektera ditt bibliotek. Om du inte har laddat ner eller flyttat den h�r filen sj�lv, st�ng Shareaza och skanna datorn med ett antivirusprogram."/>
+			<control/>
+			<control/>
+			<control/>
 		</dialog>
 		<dialog name="CCloseModeDlg" cookie="StBuBuBuBuBu" caption="Stängkommandot">
 			<control caption="Detta är första gången du har valt Shareazas stängkommando. Välj den handling du vill att Shareaza ska utföra när du väljer stängkommandot från och med nu."/>

@@ -4376,18 +4376,21 @@ pasta dos arquivos baixados a sua biblioteca agora?"/>
 			<control caption="http://shareaza.sourceforge.net/"/>
 			<control caption="OK"/>
 		</dialog>
-		<dialog name="CExistingFileDlg" cookie="StStStStBuBuBuBuBuStSt" caption="Arquivo Existente">
+		<dialog name="CExistingFileDlg" cookie="BuBuBuBuBuStStStStStStBuSt" caption="Arquivo Existente">
+			<control caption="OK"/>
+			<control caption="Cancelar"/>
+			<control caption="Mostre-me o arquivo na minha biblioteca"/>
+			<control caption="Baixar o arquivo novamente"/>
+			<control caption="Não baixar este arquivo"/>
 			<control/>
 			<control/>
 			<control/>
 			<control caption="Você já tem este arquivo na sua biblioteca de arquivos. O que você gostaria de fazer?"/>
-			<control caption="Mostre-me o arquivo na minha biblioteca"/>
-			<control caption="Baixar o arquivo novamente"/>
-			<control caption="Não baixar este arquivo"/>
-			<control caption="OK"/>
-			<control caption="Cancelar"/>
 			<control caption="Você já baixou e deletou este arquivo antes. O que você gostaria de fazer?"/>
 			<control caption="Aviso!!! Arquivos duplicados detectados. Algum software malicioso pode ter infectado sua biblioteca. Tenha certeza de que você baixou este arquivo ou colocou-o manualmente. De outro modo, feche o Shareaza e scaneie o seu computador com um programa anti-vírus."/>
+			<control/>
+			<control/>
+			<control/>
 		</dialog>
 		<dialog name="CCloseModeDlg" cookie="StBuBuBuBuBu" caption="Botão Fechar">
 			<control caption="Esta é a primeira vez que você clicou no botão de fechar do Shareaza. Por favor escolha qual ação que você gostaria que o Shareaza tomasse quando clicar no botão fechar de agora em diante:"/>

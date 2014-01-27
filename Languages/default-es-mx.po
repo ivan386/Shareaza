@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2013-09-30 15:56+0000\n"
+"POT-Creation-Date: 2014-01-27 13:47+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -7396,7 +7396,7 @@ msgstr "Ratio"
 #: cfolderpropertiesdlg;control;7 cgraphlistdlg;control;16
 #: cgraphitemdlg;control;1 cschemacolumnsdlg;control;3
 #: csecureruledlg;control;33 csharemanagerdlg;control;5 cpromotedlg;control;7
-#: cexistingfiledlg;control;8 cclosemodedlg;control;5
+#: cexistingfiledlg;control;1 cclosemodedlg;control;5
 #: cdonkeyserversdlg;control;4 cdownloadgroupdlg;control;1
 #: cmediavisdlg;control;5 cdownloadreviewdlg;control;1
 #: cdecodemetadatadlg;control;8 circinputdlg;control;2
@@ -7412,7 +7412,7 @@ msgstr "Aceptar"
 #: cschemacolumnsdlg;control;4 csecureruledlg;control;34
 #: csharemanagerdlg;control;6 curlcopydlg;control;6 curlexportdlg;control;10
 #: curlactiondlg;control;11 cbitzidownloaddlg;control;4
-#: cfilepreviewdlg;control;6 cexistingfiledlg;control;9
+#: cfilepreviewdlg;control;6 cexistingfiledlg;control;2
 #: cclosemodedlg;control;6 cdonkeyserversdlg;control;5
 #: cdeletefiledlg;control;5 ctorrentseeddlg;control;4
 #: cdownloadgroupdlg;control;2 cmediavisdlg;control;6
@@ -9456,21 +9456,21 @@ msgstr "Es la última vez que este mensaje va aparecer"
 msgid "Existing File"
 msgstr "El archivo ya existe"
 
-#: cexistingfiledlg;control;4
-msgid "You already have this file in your file library. What would you like to do?"
-msgstr "Este archivo ya está en Mi Colección.  ¿Qué quiere hacer?"
-
-#: cexistingfiledlg;control;5
+#: cexistingfiledlg;control;3
 msgid "Show me the file in my library"
 msgstr "Ubicarlo en Mi Colección"
 
-#: cexistingfiledlg;control;6
+#: cexistingfiledlg;control;4
 msgid "Download the file again"
 msgstr "Descargarlo de nuevo"
 
-#: cexistingfiledlg;control;7
+#: cexistingfiledlg;control;5
 msgid "Don't download this file"
 msgstr "Nada, dejar el archivo original"
+
+#: cexistingfiledlg;control;9
+msgid "You already have this file in your file library. What would you like to do?"
+msgstr "Este archivo ya está en Mi Colección.  ¿Qué quiere hacer?"
 
 #: cexistingfiledlg;control;10
 msgid "You have downloaded and deleted this file before. What would you like to do?"

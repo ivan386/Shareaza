@@ -4375,18 +4375,21 @@
 			<control caption="http://shareaza.sourceforge.net/"/>
 			<control caption="אישור"/>
 		</dialog>
-		<dialog name="CExistingFileDlg" cookie="StStStStBuBuBuBuBuStSt" caption="קובץ קיים">
+		<dialog name="CExistingFileDlg" cookie="BuBuBuBuBuStStStStStStBuSt" caption="קובץ קיים">
+			<control caption="אישור"/>
+			<control caption="ביטול"/>
+			<control caption="הצג לי את הקובץ שבספריה שלי"/>
+			<control caption="הורד את הקובץ שנית"/>
+			<control caption="אל תוריד את הקובץ"/>
 			<control/>
 			<control/>
 			<control/>
 			<control caption="?כבר יש לך את הקובץ בספרייתך, מה תרצה לעשות"/>
-			<control caption="הצג לי את הקובץ שבספריה שלי"/>
-			<control caption="הורד את הקובץ שנית"/>
-			<control caption="אל תוריד את הקובץ"/>
-			<control caption="אישור"/>
-			<control caption="ביטול"/>
 			<control caption="?הורדת ומחקת את קובץ זה בעבר. מה תרצה לעשות"/>
 			<control caption="אזהרה!!! התגלו קבצים משוכפלים. ייתכן ותוכנה זדונית תפגע בספרייה שלך. וודא שהורגת את הקובץ הזה או שמת אותו באופן ידני. אחרת, סגור את שרזה וסרוק את מחשבך עם תוכנת אנטי-וירוס."/>
+			<control/>
+			<control/>
+			<control/>
 		</dialog>
 		<dialog name="CCloseModeDlg" cookie="StBuBuBuBuBu" caption="כפתור סגירה">
 			<control caption="זוהי הפעם הראשונה בה לחצת על לחצן הסגירה של שרזה. אנא בחר את הפעולה אותה תרצה ששרזה תעשה בכל פעם שתלחץ על כפתור זה מעכשיו והלאה"/>

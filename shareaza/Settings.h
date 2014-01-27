@@ -1,7 +1,7 @@
 //
 // Settings.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -156,7 +156,6 @@ public:
 		DWORD		HighPriorityHashing;		// desired speed in MB/s when hashing with hi priority
 		DWORD		LowPriorityHashing;			// desired speed in MB/s when hashing with low priority
 		DWORD		MaxMaliciousFileSize;		// Size for which to trigger malicious software search
-		string_set	MaliciousTypes;				// Malicious software file extensions
 		bool		UseFolderGUID;				// Save/Load folder GUID using NTFS stream
 		bool		MarkFileAsDownload;			// Mark downloaded file using NTFS stream as Internet Explorer
 		bool		UseCustomFolders;			// Use desktop.ini
@@ -612,8 +611,6 @@ public:
 		bool		LoadWindowState;
 		bool		AutoClose;
 		bool		FirstRun;					// Is this the first time Shareaza is being run?
-		CString		LastDuplicateHash;			// Stores the hash of the file about which the warning was shown
-		bool		MaliciousWarning;			// Is the warning dialog opened?
 	} Live;
 
 	struct sExperimental

@@ -1,7 +1,7 @@
 //
 // PageComment.h : header file
 //
-// Copyright (c) Shareaza Development Team, 2007-2011.
+// Copyright (c) Shareaza Development Team, 2007-2014.
 // This file is part of Shareaza Torrent Wizard (shareaza.sourceforge.net).
 //
 // Shareaza Torrent Wizard is free software; you can redistribute it
@@ -26,21 +26,25 @@
 
 class CCommentPage : public CWizardPage
 {
+	DECLARE_DYNCREATE(CCommentPage)
+
 public:
 	CCommentPage();
-
-	DECLARE_DYNCREATE(CCommentPage)
 
 	enum { IDD = IDD_COMMENT_PAGE };
 
 	CString	m_sComment;
+	CString m_sSource;
 
+protected:
+	void SaveComments();
+
+	virtual BOOL OnInitDialog();
 	virtual void OnReset();
 	virtual BOOL OnSetActive();
 	virtual LRESULT OnWizardBack();
 	virtual LRESULT OnWizardNext();
 
-protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 
 	DECLARE_MESSAGE_MAP()

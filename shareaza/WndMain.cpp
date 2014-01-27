@@ -1,7 +1,7 @@
 //
 // WndMain.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1720,13 +1720,6 @@ void CMainWnd::LocalSystemChecks()
 		if ( ( ! Settings.eDonkey.MetAutoQuery ) && ( HostCache.eDonkey.CountHosts(TRUE) < 1 ) )
 			PostMessage( WM_COMMAND, ID_HELP_DONKEYSERVERS );
 	}
-
-	// Check for duplicates if LibraryBuilder finished hashing during startup
-	// Happens when Library*.dat files are not saved and Shareaza crashed
-	// In this case all files are re-added and we can find malicious duplicates
-	if ( !Settings.Live.LastDuplicateHash.IsEmpty() &&
-		 !Settings.Live.MaliciousWarning )
-		Library.CheckDuplicates( Settings.Live.LastDuplicateHash );
 }
 
 /////////////////////////////////////////////////////////////////////////////
