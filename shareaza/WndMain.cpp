@@ -1,7 +1,7 @@
 //
 // WndMain.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1721,13 +1721,6 @@ void CMainWnd::LocalSystemChecks()
 		if ( ( ! Settings.eDonkey.MetAutoQuery ) && ( HostCache.eDonkey.CountHosts(TRUE) < 1 ) )
 			PostMessage( WM_COMMAND, ID_HELP_DONKEYSERVERS );
 	}
-
-	// Check for duplicates if LibraryBuilder finished hashing during startup
-	// Happens when Library*.dat files are not saved and Shareaza crashed
-	// In this case all files are re-added and we can find malicious duplicates
-	if ( !Settings.Live.LastDuplicateHash.IsEmpty() &&
-		 !Settings.Live.MaliciousWarning )
-		Library.CheckDuplicates( Settings.Live.LastDuplicateHash );
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -3164,7 +3157,7 @@ int CMainWnd::SnarlCommand(LPCSTR szCommand)
 	if ( HWND hWndSnarl = ::FindWindow( _T("w>Snarl"), _T("Snarl") ) )
 	{
 		const ULONG_PTR uSnarlMagic = 0x534e4c03;
-		COPYDATASTRUCT cds = { uSnarlMagic, strlen( szCommand ) + 1, (LPSTR)szCommand };
+		COPYDATASTRUCT cds = { uSnarlMagic, (DWORD)strlen( szCommand ) + 1, (LPSTR)szCommand };
 		SendMessageTimeout( hWndSnarl, WM_COPYDATA, (WPARAM)GetCurrentProcessId(), (LPARAM)&cds, SMTO_ABORTIFHUNG, 1000, &lResult );
 	}
 	return (int)lResult;

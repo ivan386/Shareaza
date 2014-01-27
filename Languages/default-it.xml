@@ -4371,18 +4371,21 @@
 			<control caption="http://shareaza.sourceforge.net/"/>
 			<control caption="OK"/>
 		</dialog>
-		<dialog name="CExistingFileDlg" cookie="StStStStBuBuBuBuBuStSt" caption="Download di un file esistente">
+		<dialog name="CExistingFileDlg" cookie="BuBuBuBuBuStStStStStStBuSt" caption="Download di un file esistente">
+			<control caption="OK"/>
+			<control caption="Annulla"/>
+			<control caption="Mostrami il file nella libreria"/>
+			<control caption="Scarica il file di nuovo"/>
+			<control caption="Non scaricare questo file"/>
 			<control/>
 			<control/>
 			<control/>
 			<control caption="Questo file è già presente nella tua libreria. Cosa desideri fare?"/>
-			<control caption="Mostrami il file nella libreria"/>
-			<control caption="Scarica il file di nuovo"/>
-			<control caption="Non scaricare questo file"/>
-			<control caption="OK"/>
-			<control caption="Annulla"/>
 			<control caption="Hai scaricato ed eliminato questo file precedentemente. Cosa desideri fare?"/>
 			<control caption="Avvertimento!!! Rilevati file duplicati. Un software malevolo potrebbe aver infettato la tua libreria. Assicurati di aver scaricato o messo manualmente questo file. Altrimenti, chiudi Shareaza e scansiona il tuo computer con un antivirus."/>
+			<control/>
+			<control/>
+			<control/>
 		</dialog>
 		<dialog name="CCloseModeDlg" cookie="StBuBuBuBuBu" caption="Pulsante di chiusura">
 			<control caption="Questa è la prima volta che clicchi sul pulsante di chiusura di Shareaza. Scegli l'azione che deve eseguire Shareaza quando clicchi sul pulsante di chiusura:"/>

@@ -4376,18 +4376,21 @@
 			<control caption="http://shareaza.sourceforge.net/"/>
 			<control caption="OK"/>
 		</dialog>
-		<dialog name="CExistingFileDlg" cookie="StStStStBuBuBuBuBuStSt" caption="Aflaai van bestaande lêer">
+		<dialog name="CExistingFileDlg" cookie="BuBuBuBuBuStStStStStStBuSt" caption="Aflaai van bestaande lêer">
+			<control caption="OK"/>
+			<control caption="Kanselleer"/>
+			<control caption="Wys my die lêer in my biblioteek"/>
+			<control caption="Laai die lêer weer af"/>
+			<control caption="Moet nie die lêer aflaai nie"/>
 			<control/>
 			<control/>
 			<control/>
 			<control caption="Jy het hierdie lêer alreeds in jou biblioteek.  Wat wil jy graag doen?"/>
-			<control caption="Wys my die lêer in my biblioteek"/>
-			<control caption="Laai die lêer weer af"/>
-			<control caption="Moet nie die lêer aflaai nie"/>
-			<control caption="OK"/>
-			<control caption="Kanselleer"/>
 			<control caption="Jy het hierdie lêer voorheen afgelaai en geskrap.  Wat wil jy graag doen?"/>
 			<control caption="Warning!!! Duplicate files detected. Some malicious software may infect your Library. Make sure that you downloaded this file or placed it manually. Otherwise, shutdown Shareaza and scan your computer with an antivirus program."/>
+			<control/>
+			<control/>
+			<control/>
 		</dialog>
 		<dialog name="CCloseModeDlg" cookie="StBuBuBuBuBu" caption="Sluitingsknoppie">
 			<control caption="Hierdie is die eerste keer wat jy Shareaza se sluitingsknoppie gekliek het.  Kies asseblief watter aksie jy wil hê Shareaza moet uitvoer as jy die sluitingsknoppie in die vervolg kliek:"/>

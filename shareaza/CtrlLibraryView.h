@@ -1,7 +1,7 @@
 //
 // CtrlLibraryView.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -56,7 +56,7 @@ public:
 	virtual BOOL				Select(DWORD nObject);
 	virtual void				SelectAll() = 0;
 	virtual void				CacheSelection();
-	virtual CLibraryListItem	DropHitTest(const CPoint& point);
+	virtual CLibraryListItem	DropHitTest(const CPoint& point) const;
 	virtual CLibraryListItem	GetFolder() const;
 	virtual void				StartDragging(const CPoint& ptMouse);
 	virtual HBITMAP				CreateDragImage(const CPoint& ptMouse, CPoint& ptMiddle);

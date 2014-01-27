@@ -1,18 +1,12 @@
-; *** Inno Setup version 5.5.0+ Greek messages ***
+; *** Inno Setup version 5.5.3+ Greek messages ***
 ;
 ; Note: When translating this text, do not add periods (.) to the end of
 ; messages that didn't have them already, because on those messages Inno
 ; Setup adds the periods automatically (appending a period would result in
 ; two periods being displayed).
 ;
-; Originally translated by Anastasis Chatzioglou
-;                          http://anasto.go.to, baldycom@hotmail.com
+; Originally translated by Anastasis Chatzioglou, baldycom@hotmail.com
 ; Updated by XhmikosR [XhmikosR, my_nickname at yahoo dot com]
-; 29th October 2011 [XhmikosR]:
-;   various cleanup and minor updates
-; 30th May 2012/1st June 2012 [XhmikosR]:
-;   updated strings for Inno Setup 5.5.0, updated older untranslated strings;
-;   the translation should be complete now
 ;
 
 [LangOptions]
@@ -111,7 +105,7 @@ NewFolderName=Νέος φάκελος
 
 ; *** "Welcome" wizard page
 WelcomeLabel1=Καλωσορίσατε στην εγκατάσταση του [name]
-WelcomeLabel2=Θα γίνει εγκατάσταση του [name/ver] στον υπολογιστή σας.%n%nΠριν συνεχίσετε σας συνιστούμε να κλείσετε κάθε άλλη εφαρμογή πριν συνεχίσετε.
+WelcomeLabel2=Θα γίνει εγκατάσταση του [name/ver] στον υπολογιστή σας.%n%nΣας συνιστούμε να κλείσετε κάθε άλλη εφαρμογή πριν συνεχίσετε.
 
 ; *** "Password" wizard page
 WizardPassword=Εισαγωγή Κωδικού
@@ -214,6 +208,7 @@ ApplicationsFound=Οι ακόλουθες εφαρμογές χρησιμοποιούν αρχεία τα οποία πρέπει να
 ApplicationsFound2=Οι ακόλουθες εφαρμογές χρησιμοποιούν αρχεία τα οποία πρέπει να ενημερωθούν από την Εγκατάσταση. Προτείνεται να επιτρέψετε στην Εγκατάσταση να κλείσει αυτές τις εφαρμογές αυτόματα. Μετά την ολοκλήρωση της διαδικασίας, η Εγκατάσταση θα προσπαθήσει να επανεκκινήσει τις εφαρμογές.
 CloseApplications=&Αυτόματο κλείσιμο των εφαρμογών
 DontCloseApplications=&Χωρίς κλείσιμο των εφαρμογών
+ErrorCloseApplications=Η Εγκατάσταση απέτυχε να κλείσει αυτόματα όλες τις εφαρμογές. Προτείνεται να κλείσετε όλες τις εφαρμογές που χρησιμοποιούν αρχεία τα οποία πρέπει να ενημερωθούν από την Εγκατάσταση προτού συνεχίσετε.
 
 ; *** "Installing" wizard page
 WizardInstalling=Πρόοδος Εγκατάστασης
@@ -330,12 +325,12 @@ ShutdownBlockReasonUninstallingApp=Απεγκατάσταση του %1.
 
 NameAndVersion=%1 έκδοση %2
 AdditionalIcons=Επιπλέον εικονίδια:
-CreateDesktopIcon=Δημιουργία ενός &εικονιδίου στην επιφάνεια εργασίας
-CreateQuickLaunchIcon=Δημιουργία ενός εικονιδίου στη &Γρήγορη Εκκίνηση
+CreateDesktopIcon=Δημιουργία &εικονιδίου στην επιφάνεια εργασίας
+CreateQuickLaunchIcon=Δημιουργία εικονιδίου στη &Γρήγορη Εκκίνηση
 ProgramOnTheWeb=Το %1 στο Internet
 UninstallProgram=Απεγκατάσταση του %1
 LaunchProgram=Εκκίνηση του %1
-AssocFileExtension=%Αντιστοίχιση του %1 με την %2 επέκταση αρχείου
+AssocFileExtension=&Αντιστοίχιση του %1 με την %2 επέκταση αρχείου
 AssocingFileExtension=Γίνεται αντιστοίχηση του %1 με την %2 επέκταση αρχείου...
 AutoStartProgramGroupDescription=Εκκίνηση:
 AutoStartProgram=Αυτόματη εκκίνηση του %1

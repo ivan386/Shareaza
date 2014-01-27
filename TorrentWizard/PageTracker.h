@@ -1,7 +1,7 @@
 //
 // PageTracker.h
 //
-// Copyright (c) Shareaza Development Team, 2007-2009.
+// Copyright (c) Shareaza Development Team, 2007-2014.
 // This file is part of Shareaza Torrent Wizard (shareaza.sourceforge.net).
 //
 // Shareaza Torrent Wizard is free software; you can redistribute it
@@ -34,6 +34,7 @@ public:
 	enum { IDD = IDD_TRACKER_PAGE };
 
 	CString		m_sTracker;
+	BOOL		m_bPrivate;
 
 protected:
 	CComboBox	m_wndTracker;

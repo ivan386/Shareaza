@@ -1,7 +1,7 @@
 //
 // CtrlLibraryView.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -153,7 +153,7 @@ void CLibraryView::CacheSelection()
 {
 }
 
-CLibraryListItem CLibraryView::DropHitTest( const CPoint& /*point*/ )
+CLibraryListItem CLibraryView::DropHitTest(const CPoint& /*point*/) const
 {
 	return CLibraryListItem();
 }

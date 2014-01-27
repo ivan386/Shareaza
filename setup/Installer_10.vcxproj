@@ -83,16 +83,16 @@
     <CustomBuild Include="scripts\main.iss">
       <FileType>Document</FileType>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Performing Installer Build</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"%ProgramFiles%\Inno Setup 5\ISCC.exe" "%(FullPath)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"%ProgramFiles%\Inno Setup 5\ISCC.exe" $(ISCCOPTIONS) "%(FullPath)"</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\builds\Preprocessed.iss;%(Outputs)</Outputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Installer Build</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"%ProgramFiles%\Inno Setup 5\ISCC.exe" "%(FullPath)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"%ProgramFiles%\Inno Setup 5\ISCC.exe" $(ISCCOPTIONS) "%(FullPath)"</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\builds\Preprocessed.iss;%(Outputs)</Outputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Performing Installer Build</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"%ProgramFiles%\Inno Setup 5\ISCC.exe" "%(FullPath)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"%ProgramFiles%\Inno Setup 5\ISCC.exe" $(ISCCOPTIONS) "%(FullPath)"</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\builds\Preprocessed.iss;%(Outputs)</Outputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing Installer Build</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"%ProgramFiles%\Inno Setup 5\ISCC.exe" "%(FullPath)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"%ProgramFiles%\Inno Setup 5\ISCC.exe" $(ISCCOPTIONS) "%(FullPath)"</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\builds\Preprocessed.iss;%(Outputs)</Outputs>
     </CustomBuild>
     <None Include="scripts\readme.txt" />

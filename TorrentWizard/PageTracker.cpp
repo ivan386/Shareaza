@@ -1,7 +1,7 @@
 //
 // PageTracker.cpp
 //
-// Copyright (c) Shareaza Development Team, 2007-2012.
+// Copyright (c) Shareaza Development Team, 2007-2014.
 // This file is part of Shareaza Torrent Wizard (shareaza.sourceforge.net).
 //
 // Shareaza Torrent Wizard is free software; you can redistribute it
@@ -33,7 +33,6 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNCREATE(CTrackerPage, CWizardPage)
 
 BEGIN_MESSAGE_MAP(CTrackerPage, CWizardPage)
-	ON_BN_CLICKED(IDC_CLEAR_TRACKERS, &CTrackerPage::OnClearTrackers)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -41,6 +40,7 @@ END_MESSAGE_MAP()
 
 CTrackerPage::CTrackerPage()
 	: CWizardPage(CTrackerPage::IDD, _T("tracker"))
+	, m_bPrivate(FALSE)
 {
 }
 
@@ -50,6 +50,7 @@ void CTrackerPage::DoDataExchange(CDataExchange* pDX)
 
 	DDX_Control(pDX, IDC_TRACKER, m_wndTracker);
 	DDX_CBString(pDX, IDC_TRACKER, m_sTracker);
+	DDX_Check(pDX, IDC_PRIVATE, m_bPrivate);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -74,6 +75,8 @@ BOOL CTrackerPage::OnInitDialog()
 	{
 		m_sTracker = _T("udp://tracker.openbittorrent.com:80");
 	}
+
+	m_bPrivate = ( theApp.GetProfileInt( _T("Trackers"), _T("Private"), FALSE ) != FALSE );
 
 	UpdateData( FALSE );
 
@@ -100,8 +103,11 @@ BOOL CTrackerPage::OnSetActive()
 void CTrackerPage::OnClearTrackers() 
 {
 	theApp.WriteProfileInt( _T("Trackers"), _T("Count"), 0 );
+
 	m_sTracker.Empty();
+
 	UpdateData( FALSE );
+
 	m_wndTracker.ResetContent();
 	m_wndTracker.SetFocus();
 }
@@ -148,6 +154,8 @@ void CTrackerPage::SaveTrackers()
 		theApp.WriteProfileInt( _T("Trackers"), _T("Count"), nCount );
 		theApp.WriteProfileString( _T("Trackers"), strName, m_sTracker );
 	}
-	
+
 	theApp.WriteProfileString( _T("Trackers"), _T("Last"), m_sTracker );
+
+	theApp.WriteProfileInt( _T("Trackers"), _T("Private"), m_bPrivate );
 }

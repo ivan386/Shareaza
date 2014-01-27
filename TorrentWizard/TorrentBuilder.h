@@ -1,7 +1,7 @@
 //
 // TorrentBuilder.h
 //
-// Copyright (c) Shareaza Development Team, 2007.
+// Copyright (c) Shareaza Development Team, 2007-2014.
 // This file is part of Shareaza Torrent Wizard (shareaza.sourceforge.net).
 //
 // Shareaza Torrent Wizard is free software; you can redistribute it
@@ -40,6 +40,8 @@ public:
 	BOOL	AddFile(LPCTSTR pszPath);
 	BOOL	AddTrackerURL(LPCTSTR pszURL);
 	BOOL	SetComment(LPCTSTR pszComment);
+	BOOL	SetSource(LPCTSTR pszSource);
+	BOOL	SetPrivate(BOOL bPrivate);
 public:
 	BOOL	Start();
 	void	Stop();
@@ -65,7 +67,9 @@ protected:
 	CString				m_sName;
 	CString				m_sOutput;
 	CString				m_sTracker;
+	BOOL				m_bPrivate;
 	CString				m_sComment;
+	CString				m_sSource;
 	CStringList			m_pFiles;
 	CString				m_sThisFile;
 	QWORD				m_nTotalSize;

@@ -4367,18 +4367,21 @@
 			<control caption="http://shareaza.sourceforge.net/"/>
 			<control caption="OK"/>
 		</dialog>
-		<dialog name="CExistingFileDlg" cookie="StStStStBuBuBuBuBuStSt" caption="Vorhandene Datei herunterladen">
+		<dialog name="CExistingFileDlg" cookie="BuBuBuBuBuStStStStStStBuSt" caption="Vorhandene Datei herunterladen">
+			<control caption="OK"/>
+			<control caption="Abbrechen"/>
+			<control caption="Datei in meiner Bibliothek anzeigen"/>
+			<control caption="Datei erneut herunterladen"/>
+			<control caption="Nicht herunterladen"/>
 			<control/>
 			<control/>
 			<control/>
 			<control caption="Diese Datei befindet sich bereits in Ihrer Bibliothek. Was möchten Sie tun?"/>
-			<control caption="Datei in meiner Bibliothek anzeigen"/>
-			<control caption="Datei erneut herunterladen"/>
-			<control caption="Nicht herunterladen"/>
-			<control caption="OK"/>
-			<control caption="Abbrechen"/>
 			<control caption="Sie haben diese Datei schon einmal heruntergeladen und gelöscht. Was möchten Sie tun?"/>
 			<control caption="Achtung!!! Mehrfach-Dateien erkannt! Bösartige Programme könnten Ihre Bibliothek infiziert haben. Stellen Sie sicher dass Sie diese Dateien selbst heruntergeladen oder in Ihrer Bibliothek eingefügt haben. Ist dem nicht so überprüfen Sie ihren Computer mit einem Anitivirenprogramm."/>
+			<control/>
+			<control/>
+			<control/>
 		</dialog>
 		<dialog name="CCloseModeDlg" cookie="StBuBuBuBuBu" caption="Schließen">
 			<control caption="Sie haben zum ersten Mal auf das Schließen-Symbol geklickt. Bitte wählen Sie die Aktion aus, die in Zukunft bei einem Klick auf das Schließen-Symbol ausgefûhrt werden soll:"/>
