@@ -1,7 +1,7 @@
 //
 // LibraryBuilder.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -241,8 +241,7 @@ void CLibraryBuilder::Skip(DWORD nIndex)
 
 		FILETIME ftCurrentTime;
 		GetSystemTimeAsFileTime( &ftCurrentTime );
-		fi.nNextAccessTime = MAKEQWORD( ftCurrentTime.dwLowDateTime,
-			ftCurrentTime.dwHighDateTime ) + 50000000;	// + 5 sec
+		fi.nNextAccessTime = MAKEQWORD( ftCurrentTime.dwLowDateTime, ftCurrentTime.dwHighDateTime ) + 50000000ui64;	// + 5 sec
 
 		m_pFiles.push_back( fi );
 	}
@@ -256,6 +255,10 @@ DWORD CLibraryBuilder::GetNextFileToHash(CString& sPath)
 	DWORD nIndex = 0;
 	sPath.Empty();
 
+	FILETIME ftCurrentTime;
+	GetSystemTimeAsFileTime( &ftCurrentTime );
+	const QWORD nCurrentTime = MAKEQWORD( ftCurrentTime.dwLowDateTime, ftCurrentTime.dwHighDateTime );
+
 	CSingleLock oLock( &m_pSection );
 	if ( oLock.Lock( 100 ) )
 	{
@@ -267,10 +270,6 @@ DWORD CLibraryBuilder::GetNextFileToHash(CString& sPath)
 		else
 		{
 			// Get next candidate
-			FILETIME ftCurrentTime;
-			GetSystemTimeAsFileTime( &ftCurrentTime );
-			QWORD nCurrentTime = MAKEQWORD( ftCurrentTime.dwLowDateTime,
-				ftCurrentTime.dwHighDateTime );
 			for ( CFileInfoList::iterator i = m_pFiles.begin(); i != m_pFiles.end(); ++i )
 			{
 				if ( (*i).nNextAccessTime < nCurrentTime )
@@ -312,12 +311,23 @@ DWORD CLibraryBuilder::GetNextFileToHash(CString& sPath)
 			if ( GetFileAttributesEx( sPath, GetFileExInfoStandard, &wfad ) )
 			{
 				int nSlash = sPath.ReverseFind( _T('\\') );
-				if ( CLibrary::IsBadFile( sPath.Mid( nSlash + 1 ), sPath.Left( nSlash ),
-					wfad.dwFileAttributes ) )
+				if ( CLibrary::IsBadFile( sPath.Mid( nSlash + 1 ), sPath.Left( nSlash ), wfad.dwFileAttributes ) )
 				{
 					// Remove bad file
 					Remove( nIndex );
 					nIndex = 0;
+				}
+				else
+				{
+					const QWORD nLastWriteTime = MAKEQWORD( wfad.ftLastWriteTime.dwLowDateTime, wfad.ftLastWriteTime.dwHighDateTime );
+					const QWORD nCreationTime = MAKEQWORD( wfad.ftCreationTime.dwLowDateTime, wfad.ftCreationTime.dwHighDateTime );
+					if ( ( nLastWriteTime < nCurrentTime && nCurrentTime - nLastWriteTime < 50000000ui64 ) ||
+						 ( nCreationTime  < nCurrentTime && nCurrentTime - nCreationTime  < 50000000ui64 ) )	// 5 seconds
+					{
+						// Skip too fresh file
+						Skip( nIndex );
+						nIndex = 0;
+					}
 				}
 			}
 			else
@@ -327,13 +337,14 @@ DWORD CLibraryBuilder::GetNextFileToHash(CString& sPath)
 				{
 					// Remove if error is fatal
 					Remove( nIndex );
+					nIndex = 0;
 				}
 				else
 				{
 					// Ignore if error is not fatal (for example access violation)
 					Skip( nIndex );
+					nIndex = 0;
 				}
-				nIndex = 0;
 			}
 		}
 	}
