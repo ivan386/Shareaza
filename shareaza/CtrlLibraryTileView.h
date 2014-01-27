@@ -1,7 +1,7 @@
 //
 // CtrlLibraryTileView.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -23,18 +23,29 @@
 
 #include "CtrlLibraryView.h"
 
-class CAlbumFolder;
-
 
 class CLibraryTileItem
 {
 public:
 	CLibraryTileItem(CAlbumFolder* pFolder)
-		: m_pAlbum( pFolder ), m_nCookie( ~0ul ), m_bSelected()
+		: m_pAlbum		( pFolder )
+		, m_nCookie		( ~0ul )
+		, m_nIcon32		( -1 )
+		, m_nIcon48		( -1 )
+		, m_bSelected	( false )
+		, m_bCollection	( false )
 	{
 		Update();
 	}
 
+	bool			m_bSelected;
+
+	bool	Update();
+	void	Paint(CDC* pDC, const CRect& rcBlock, CDC* pMemDC);
+	CAlbumFolder*	GetAlbum() const	{ return LibraryFolders.CheckAlbum( m_pAlbum ) ? m_pAlbum : NULL; }
+	const CString&	GetTitle() const	{ return m_sTitle; }
+
+protected:
 	CAlbumFolder*	m_pAlbum;
 	DWORD			m_nCookie;
 	CString			m_sTitle;
@@ -42,13 +53,8 @@ public:
 	CString			m_sSubtitle2;
 	int				m_nIcon32;
 	int				m_nIcon48;
-	bool			m_bSelected;
 	bool			m_bCollection;
 
-	bool	Update();
-	void	Paint(CDC* pDC, const CRect& rcBlock, CDC* pMemDC);
-
-protected:
 	void	DrawText(CDC* pDC, const CRect* prcClip, int nX, int nY, const CString& strText, CRect* prcUnion = NULL);
 };
 
@@ -97,15 +103,15 @@ protected:
 	virtual void		Update();
 	virtual BOOL		Select(DWORD nObject);
 	virtual void		SelectAll();
-	virtual CLibraryListItem DropHitTest(const CPoint& point);
+	virtual CLibraryListItem DropHitTest(const CPoint& point) const;
 	virtual HBITMAP		CreateDragImage(const CPoint& ptMouse, CPoint& ptMiddle);
 
 	void				clear();
 //	int					GetTileIndex(CLibraryTileItem* pTile) const;
-	bool				Select(iterator pTile, TRISTATE bSelect = TRI_TRUE);
-	bool				DeselectAll(iterator pTile);
-	bool				DeselectAll();
-	bool				SelectTo(iterator pTile);
+	BOOL				Select(iterator pTile, TRISTATE bSelect = TRI_TRUE);
+	BOOL				DeselectAll(iterator pTile);
+	BOOL				DeselectAll();
+	BOOL				SelectTo(iterator pTile);
 	void				SelectTo(int nDelta);
 	void				Highlight(iterator pTile);
 
@@ -113,13 +119,14 @@ protected:
 	{
 		bool operator()(const CLibraryTileItem& lhs, const CLibraryTileItem& rhs) const
 		{
-			return _tcsicoll( lhs.m_sTitle, rhs.m_sTitle ) < 0;
+			return _tcsicoll( lhs.GetTitle(), rhs.GetTitle() ) < 0;
 		}
 	};
 
 	void				UpdateScroll();
 	void				ScrollBy(int nDelta);
 	void				ScrollTo(int nDelta);
+	const_iterator		HitTest(const CPoint& point) const;
 	iterator			HitTest(const CPoint& point);
 	virtual DWORD_PTR	HitTestIndex(const CPoint& point) const;
 	bool				GetItemRect(iterator pTile, CRect* pRect);
