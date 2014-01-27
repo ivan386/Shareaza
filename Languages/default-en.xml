@@ -4387,18 +4387,21 @@
 			<control caption="http://shareaza.sourceforge.net/"/>
 			<control caption="OK"/>
 		</dialog>
-		<dialog name="CExistingFileDlg" cookie="StStStStBuBuBuBuBuStSt" caption="Existing File">
+		<dialog name="CExistingFileDlg" cookie="BuBuBuBuBuStStStStStStBuSt" caption="Existing File">
+			<control caption="OK"/>
+			<control caption="Cancel"/>
+			<control caption="Show me the file in my library"/>
+			<control caption="Download the file again"/>
+			<control caption="Don't download this file"/>
 			<control/>
 			<control/>
 			<control/>
 			<control caption="You already have this file in your file library. What would you like to do?"/>
-			<control caption="Show me the file in my library"/>
-			<control caption="Download the file again"/>
-			<control caption="Don't download this file"/>
-			<control caption="OK"/>
-			<control caption="Cancel"/>
 			<control caption="You have downloaded and deleted this file before. What would you like to do?"/>
 			<control caption="Warning!!! Duplicate files detected. Some malicious software may infect your Library. Make sure that you downloaded this file or placed it manually. Otherwise, shutdown Shareaza and scan your computer with an antivirus program."/>
+			<control/>
+			<control/>
+			<control/>
 		</dialog>
 		<dialog name="CCloseModeDlg" cookie="StBuBuBuBuBu" caption="Close Button">
 			<control caption="This is the first time you have clicked Shareaza's close button. Please choose what action you would like Shareaza to take when clicking the close button from now on:"/>

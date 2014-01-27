@@ -4371,18 +4371,21 @@
 			<control caption="http://shareaza.sourceforge.net/"/>
 			<control caption="OK"/>
 		</dialog>
-		<dialog name="CExistingFileDlg" cookie="StStStStBuBuBuBuBuStSt" caption="Προϋπάρχοντα Αρχεία">
+		<dialog name="CExistingFileDlg" cookie="BuBuBuBuBuStStStStStStBuSt" caption="Προϋπάρχοντα Αρχεία">
+			<control caption="OK"/>
+			<control caption="Άκυρο"/>
+			<control caption="Μετάβαση στο αρχείο στη Βιβλιοθήκη"/>
+			<control caption="Λήψη του αρχείου ξανά"/>
+			<control caption="Μη λήψη του αρχείου"/>
 			<control/>
 			<control/>
 			<control/>
 			<control caption="Έχετε ήδη αυτό το αρχείο στη Βιβλιοθήκη. Τι θέλετε να κάνετε;"/>
-			<control caption="Μετάβαση στο αρχείο στη Βιβλιοθήκη"/>
-			<control caption="Λήψη του αρχείου ξανά"/>
-			<control caption="Μη λήψη του αρχείου"/>
-			<control caption="OK"/>
-			<control caption="Άκυρο"/>
 			<control caption="Έχετε λάβει και διαγράψει αυτό το αρχείο παλαιότερα. Τι θέλετε να κάνετε;"/>
 			<control caption="Προειδοποίηση!!! Εντοπισμός πανομοιότυπου αρχείου. Κάποιο κακόβουλο λογισμικό ίσως μολύνει τη Βιβλιοθήκη. Εξετάστε μήπως εσείς λάβατε αυτό το αρχείο ή το προσθέσατε χειροκίνητα. Αν όχι, τερματίστε το Shareaza και σαρώστε τον υπολογιστή σας με ένα αντιβιοτικό πρόγραμμα."/>
+			<control/>
+			<control/>
+			<control/>
 		</dialog>
 		<dialog name="CCloseModeDlg" cookie="StBuBuBuBuBu" caption="Κουμπί Κλεισίματος">
 			<control caption="Αυτή είναι η πρώτη φορά που κάνατε κλικ στο κουμπί κλεισίματος του Shareaza. Παρακαλώ διαλέξτε την ενέργεια αυτού του κουμπιού από δω και στο εξής:"/>

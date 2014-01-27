@@ -4345,18 +4345,21 @@
 			<control caption="http://shareaza.sourceforge.net/"/>
 			<control caption="OK"/>
 		</dialog>
-		<dialog name="CExistingFileDlg" cookie="StStStStBuBuBuBuBuStSt" caption="Létező fájl letöltése">
+		<dialog name="CExistingFileDlg" cookie="BuBuBuBuBuStStStStStStBuSt" caption="Létező fájl letöltése">
+			<control caption="OK"/>
+			<control caption="Mégse"/>
+			<control caption="Mutassa meg a fájlt a Könyvtárban"/>
+			<control caption="Töltse le újra"/>
+			<control caption="Ne töltse le"/>
 			<control/>
 			<control/>
 			<control/>
 			<control caption="Már rendelkezik egy ilyen fájllal. Mi legyen?"/>
-			<control caption="Mutassa meg a fájlt a Könyvtárban"/>
-			<control caption="Töltse le újra"/>
-			<control caption="Ne töltse le"/>
-			<control caption="OK"/>
-			<control caption="Mégse"/>
 			<control caption="Egyszer már letöltötte és utána törölte ezt a fájlt. Mi legyen?"/>
 			<control caption="Figyelem! Két egyforma fájlt találtam! Néhány kártékony program megfertőzheti a megosztását. Bizonyosodjon meg róla, hogy ön duplázta meg a fájlt.. Ha nem ön volt, zárja be a Shareazát és futtasson le egy vírusellenőrzést."/>
+			<control/>
+			<control/>
+			<control/>
 		</dialog>
 		<dialog name="CCloseModeDlg" cookie="StBuBuBuBuBu" caption="Bezárás gomb">
 			<control caption="Ez az első alkalom, hogy a Bezárás gombra kattintott. Ezentúl mit csináljon a Shareaza?"/>

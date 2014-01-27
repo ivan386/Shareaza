@@ -1,7 +1,7 @@
 //
 // Library.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -91,14 +91,10 @@ public:
 
 // File and Folder Operations
 public:
-	void			CheckDuplicates(LPCTSTR pszMD5Hash) const;
 	CLibraryFile*	LookupFile(DWORD_PTR nIndex, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE) const;
 	CAlbumFolder*	GetAlbumRoot();
 	void			AddFile(CLibraryFile* pFile);
 	void			RemoveFile(CLibraryFile* pFile);
-
-protected:
-	void			CheckDuplicates(const CLibraryFile* pFile, bool bForce = false) const;
 
 // General Operations
 public:

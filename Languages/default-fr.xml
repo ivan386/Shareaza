@@ -4370,18 +4370,21 @@
 			<control caption="http://shareaza.sourceforge.net/"/>
 			<control caption="Valider"/>
 		</dialog>
-		<dialog name="CExistingFileDlg" cookie="StStStStBuBuBuBuBuStSt" caption="Téléchargement d'un fichier existant">
+		<dialog name="CExistingFileDlg" cookie="BuBuBuBuBuStStStStStStBuSt" caption="Téléchargement d'un fichier existant">
+			<control caption="Valider"/>
+			<control caption="Annuler"/>
+			<control caption="Voir le fichier de ma bibliothèque"/>
+			<control caption="Télécharger le fichier à nouveau"/>
+			<control caption="Ne pas télécharger ce fichier"/>
 			<control/>
 			<control/>
 			<control/>
 			<control caption="Ce fichier est déjà présent dans votre bibliothèque. Que voulez-vous faire ?"/>
-			<control caption="Voir le fichier de ma bibliothèque"/>
-			<control caption="Télécharger le fichier à nouveau"/>
-			<control caption="Ne pas télécharger ce fichier"/>
-			<control caption="Valider"/>
-			<control caption="Annuler"/>
 			<control caption="Vous avez déjà téléchargé puis supprimé ce fichier. Que voulez-vous faire ?"/>
 			<control caption="Attention ! ! ! Fichiers multiples détectés. Il existe des logiciels malveillants qui peuvent infecter vos dossiers. Soyez certain que vous connaissez bien ces fichiers. Sinon, fermer Shareaza et scannez votre système avec un logiciel antivirus/antispyware."/>
+			<control/>
+			<control/>
+			<control/>
 		</dialog>
 		<dialog name="CCloseModeDlg" cookie="StBuBuBuBuBu" caption="Bouton Fermer">
 			<control caption="C'est la première fois que vous cliquez sur le bouton « Quitter ». Sélectionnez ce que Shareaza doit faire lorsque vous cliquerez sur ce même bouton à l'avenir:"/>

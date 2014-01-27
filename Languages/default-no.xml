@@ -4366,18 +4366,21 @@
 			<control caption="http://shareaza.sourceforge.net/"/>
 			<control caption="OK"/>
 		</dialog>
-		<dialog name="CExistingFileDlg" cookie="StStStStBuBuBuBuBuStSt" caption="Laste ned fil på nytt">
+		<dialog name="CExistingFileDlg" cookie="BuBuBuBuBuStStStStStStBuSt" caption="Laste ned fil på nytt">
+			<control caption="OK"/>
+			<control caption="Avbryt"/>
+			<control caption="Vis filen i mine filer"/>
+			<control caption="Last ned filen på nytt"/>
+			<control caption="Ikke last ned denne filen"/>
 			<control/>
 			<control/>
 			<control/>
 			<control caption="Du har allerede denne filen i mine filer. Hva vil du gjøre?"/>
-			<control caption="Vis filen i mine filer"/>
-			<control caption="Last ned filen på nytt"/>
-			<control caption="Ikke last ned denne filen"/>
-			<control caption="OK"/>
-			<control caption="Avbryt"/>
 			<control caption="Du har lastet ned og slettet denne filen før. Hva vil du gjøre?"/>
 			<control caption="Warning!!! Duplicate files detected. Some malicious software may infect your Library. Make sure that you downloaded this file or placed it manually. Otherwise, shutdown Shareaza and scan your computer with an antivirus program."/>
+			<control/>
+			<control/>
+			<control/>
 		</dialog>
 		<dialog name="CCloseModeDlg" cookie="StBuBuBuBuBu" caption="Lukkeknapp">
 			<control caption="Dette er første gang du bruker Shareaza's lukkeknapp.  Vennligst velg hva Shareaza skal gjøre når du trykker på lukk knappen fra nå av:"/>

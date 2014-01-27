@@ -4372,18 +4372,21 @@
 			<control caption="http://shareaza.sourceforge.net/"/>
 			<control caption="OK"/>
 		</dialog>
-		<dialog name="CExistingFileDlg" cookie="StStStStBuBuBuBuBuStSt" caption="Skedë Ekzistuese">
+		<dialog name="CExistingFileDlg" cookie="BuBuBuBuBuStStStStStStBuSt" caption="Skedë Ekzistuese">
+			<control caption="OK"/>
+			<control caption="Anulo"/>
+			<control caption="Më trego skedën në librarinë time"/>
+			<control caption="Shkarko skedën përsëri"/>
+			<control caption="Mos e shkarko skedën"/>
 			<control/>
 			<control/>
 			<control/>
 			<control caption="Kjo skedë ndodhet që më parë në librarinë tënde të skedave. Çfarë mendon të bësh?"/>
-			<control caption="Më trego skedën në librarinë time"/>
-			<control caption="Shkarko skedën përsëri"/>
-			<control caption="Mos e shkarko skedën"/>
-			<control caption="OK"/>
-			<control caption="Anulo"/>
 			<control caption="Këtë skedë e ke shkarkuar dhe e ke fshirë më parë. Çfarë mendon të bësh?"/>
 			<control caption="Kujdes!!! Diktohet një skedë dyfishe. Një softuer keqbërës mund të infektojë Librarinë tënde. Sigurohu që këtë skedë e ke shkarkuar dhe vendosur vetë. Përndryshe, mbylle Shareaza-n dhe skano kompjuterin me një antivirus."/>
+			<control/>
+			<control/>
+			<control/>
 		</dialog>
 		<dialog name="CCloseModeDlg" cookie="StBuBuBuBuBu" caption="Butoni i Mbylljes">
 			<control caption="Kjo është hera e parë që klikon butonin e mbylljes në Shareaza. Të lutem zgjidhe si të sillet Shareaza kur e bën këtë tani e tutje:"/>

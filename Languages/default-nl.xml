@@ -4368,18 +4368,21 @@
 			<control caption="http://shareaza.sourceforge.net/"/>
 			<control caption="OK"/>
 		</dialog>
-		<dialog name="CExistingFileDlg" cookie="StStStStBuBuBuBuBuStSt" caption="Bestaand bestand downloaden">
+		<dialog name="CExistingFileDlg" cookie="BuBuBuBuBuStStStStStStBuSt" caption="Bestaand bestand downloaden">
+			<control caption="OK"/>
+			<control caption="Annuleren"/>
+			<control caption="Het bestand laten zien in mijn bibliotheek"/>
+			<control caption="Het bestand opnieuw downloaden"/>
+			<control caption="Het bestand niet downloaden"/>
 			<control/>
 			<control/>
 			<control/>
 			<control caption="Dit bestand komt al voor in je bibliotheek. Wat wil je doen?"/>
-			<control caption="Het bestand laten zien in mijn bibliotheek"/>
-			<control caption="Het bestand opnieuw downloaden"/>
-			<control caption="Het bestand niet downloaden"/>
-			<control caption="OK"/>
-			<control caption="Annuleren"/>
 			<control caption="Je hebt dit bestand al een keer gedownload en verwijderd. Wat wil je doen?"/>
 			<control caption="Waarschuwing!!! Dubbele bestanden gevonden. Misschien heeft malafide software heeft je bibliotheek gewijzigd. Wees er zeker van dat je dit bestand werkelijk hebt. Anders, sluit Shareaza en scan je computer met beveiligingssoftware."/>
+			<control/>
+			<control/>
+			<control/>
 		</dialog>
 		<dialog name="CCloseModeDlg" cookie="StBuBuBuBuBu" caption="Afsluiten knop">
 			<control caption="Dit is de eerste keer dat je op de afsluitknop van Shareaza gedrukt hebt. Selecteer welke actie Shareaza vanaf nu zou moeten uitvoeren wanneer op de afsluitknop gedrukt wordt:"/>

@@ -1371,22 +1371,24 @@ BEGIN
     DEFPUSHBUTTON   "OK",IDOK,245,135,39,14
 END
 
-IDD_EXISTING_FILE DIALOGEX 0, 0, 292, 142
+IDD_EXISTING_FILE DIALOGEX 0, 0, 292, 176
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Existing File"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    CONTROL         "filename goes here",IDC_FILE_NAME,"Static",SS_LEFTNOWORDWRAP | SS_WORDELLIPSIS | WS_GROUP,15,10,260,10
-    CONTROL         "urn goes here",IDC_FILE_URN,"Static",SS_LEFTNOWORDWRAP | SS_WORDELLIPSIS | WS_GROUP,15,21,260,10
-    CONTROL         "comments go here",IDC_FILE_COMMENTS,"Static",SS_LEFTNOWORDWRAP | SS_WORDELLIPSIS | WS_GROUP,15,32,260,10
-    LTEXT           "You already have this file in your library.  What would you like to do?",IDC_MESSAGE_AVAILABLE,15,48,260,18
-    CONTROL         "Show me the file in my library",IDC_ACTION_0,"Button",BS_AUTORADIOBUTTON | WS_GROUP,28,76,250,10
-    CONTROL         "Download the file again",IDC_ACTION_1,"Button",BS_AUTORADIOBUTTON,28,91,250,10
-    CONTROL         "Don't download this file",IDC_ACTION_2,"Button",BS_AUTORADIOBUTTON,28,106,250,10
-    DEFPUSHBUTTON   "OK",IDOK,158,119,60,16,WS_GROUP
-    PUSHBUTTON      "Cancel",IDCANCEL,225,119,60,16
-    LTEXT           "You have downloaded and deleted this file before.  What would you like to do?",IDC_MESSAGE_DELETED,15,48,260,18
-    LTEXT           "Warning!!! Duplicate files detected. Some malicious software may infect your Library. Make sure that you downloaded this file or placed it manually. Otherwise, shutdown Shareaza and scan your computer with an antivirus program.",IDC_MESSAGE_DUPLICATES,15,44,262,28
+    DEFPUSHBUTTON   "OK",IDOK,158,153,60,16,WS_GROUP
+    PUSHBUTTON      "Cancel",IDCANCEL,225,153,60,16
+    CONTROL         "Show me the file in my library",IDC_ACTION_0,"Button",BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP,28,102,247,10
+    CONTROL         "Download the file again",IDC_ACTION_1,"Button",BS_AUTORADIOBUTTON | WS_TABSTOP,28,115,247,10
+    CONTROL         "Don't download this file",IDC_ACTION_2,"Button",BS_AUTORADIOBUTTON | WS_TABSTOP,28,128,247,10
+    CONTROL         "filename goes here",IDC_FILE_NAME,"Static",SS_LEFTNOWORDWRAP | SS_WORDELLIPSIS | WS_GROUP,8,7,278,10
+    CONTROL         "urn goes here",IDC_FILE_URN,"Static",SS_LEFTNOWORDWRAP | SS_WORDELLIPSIS | WS_GROUP,8,18,278,10
+    CONTROL         "comments go here",IDC_FILE_COMMENTS,"Static",SS_LEFTNOWORDWRAP | SS_WORDELLIPSIS | WS_GROUP,8,29,278,10
+    LTEXT           "You already have this file in your file library. What would you like to do?",IDC_MESSAGE_AVAILABLE,7,48,278,43
+    LTEXT           "You have downloaded and deleted this file before. What would you like to do?",IDC_MESSAGE_DELETED,7,48,278,43
+    LTEXT           "Warning!!! Duplicate files detected. Some malicious software may infect your Library. Make sure that you downloaded this file or placed it manually. Otherwise, shutdown Shareaza and scan your computer with an antivirus program.",IDC_MESSAGE_DUPLICATES,7,48,278,43
+    GROUPBOX        "",IDC_STATIC,7,91,278,55
+    CONTROL         "",IDC_STATIC,"Static",SS_ETCHEDHORZ,1,42,291,1
 END
 
 IDD_CLOSE_MODE DIALOGEX 0, 0, 292, 120
@@ -2430,7 +2432,9 @@ BEGIN
     BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 285
+        VERTGUIDE, 275
         TOPMARGIN, 7
+        BOTTOMMARGIN, 169
     END
 
     IDD_CLOSE_MODE, DIALOG

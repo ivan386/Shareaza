@@ -4360,18 +4360,21 @@
 			<control caption="http://shareaza.sourceforge.net/"/>
 			<control caption="Accepta"/>
 		</dialog>
-		<dialog name="CExistingFileDlg" cookie="StStStStBuBuBuBuBuStSt" caption="L'arxiu ja existeix">
+		<dialog name="CExistingFileDlg" cookie="BuBuBuBuBuStStStStStStBuSt" caption="L'arxiu ja existeix">
+			<control caption="Accepta"/>
+			<control caption="Cancel·la"/>
+			<control caption="Localitza'l en la col·lecció"/>
+			<control caption="Descarrega'l de nou"/>
+			<control caption="Res, deixa l'arxiu original"/>
 			<control/>
 			<control/>
 			<control/>
 			<control caption="Aquest arxiu ja hi és a la col·lecció. Què vols fer?"/>
-			<control caption="Localitza'l en la col·lecció"/>
-			<control caption="Descarrega'l de nou"/>
-			<control caption="Res, deixa l'arxiu original"/>
-			<control caption="Accepta"/>
-			<control caption="Cancel·la"/>
 			<control caption="Ja has descarregat i esborrat aquest arxiu anteriorment.  Qué vols fer?"/>
 			<control caption="Atenció!! S'han detectat arxius duplicats. Potser algun programa maliciós hagi infectat la teva col·lecció. Assegura't que has sigut tu. Si no és així, tanca el Shareaza i escaneja els teus discos durs amb un programa antivíric."/>
+			<control/>
+			<control/>
+			<control/>
 		</dialog>
 		<dialog name="CCloseModeDlg" cookie="StBuBuBuBuBu" caption="Botó de tancament">
 			<control caption="Aquesta és la primera vegada que el botó de tancar ha estat premut. Per favor, selecciona l'acció desitjada a efectuar cada vegada que aquest botó sigui premut:"/>

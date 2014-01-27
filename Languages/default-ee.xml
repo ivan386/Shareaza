@@ -4365,18 +4365,21 @@
 			<control caption="http://shareaza.sourceforge.net/"/>
 			<control caption="OK"/>
 		</dialog>
-		<dialog name="CExistingFileDlg" cookie="StStStStBuBuBuBuBuStSt" caption="Olemasolev Fail">
+		<dialog name="CExistingFileDlg" cookie="BuBuBuBuBuStStStStStStBuSt" caption="Olemasolev Fail">
+			<control caption="OK"/>
+			<control caption="Tühista"/>
+			<control caption="Näita seda faili Raamatukogus"/>
+			<control caption="Tõmba see fail uuesti"/>
+			<control caption="Ära tõmba seda faili"/>
 			<control/>
 			<control/>
 			<control/>
 			<control caption="See fail on sul juba Raamatukogus olemas.  Mida sa soovid teha?"/>
-			<control caption="Näita seda faili Raamatukogus"/>
-			<control caption="Tõmba see fail uuesti"/>
-			<control caption="Ära tõmba seda faili"/>
-			<control caption="OK"/>
-			<control caption="Tühista"/>
 			<control caption="Sa oled varem selle faili juba tõmmanud ja siis kustutanud.  Mida sa soovid edasi teha?"/>
 			<control caption="Warning!!! Duplicate files detected. Some malicious software may infect your Library. Make sure that you downloaded this file or placed it manually. Otherwise, shutdown Shareaza and scan your computer with an antivirus program."/>
+			<control/>
+			<control/>
+			<control/>
 		</dialog>
 		<dialog name="CCloseModeDlg" cookie="StBuBuBuBuBu" caption="Sule Nupp">
 			<control caption="See on esimene kord kui oled Shareaza sule nuppu klikkinud.  Palun vali, mida Shareaza peaks tegema:"/>
