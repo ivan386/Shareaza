@@ -4352,18 +4352,21 @@
 			<control caption="Shareaza 以用户至上！"/>
 			<control caption="确定"/>
 		</dialog>
-		<dialog name="CExistingFileDlg" cookie="StStStStBuBuBuBuBuStSt" caption="文件已存在">
-			<control/>
-			<control/>
-			<control/>
-			<control caption="您的收藏中已经存在此文件。您希望怎样做？"/>
+		<dialog name="CExistingFileDlg" cookie="BuBuBuBuBuStStStStStStBuSt" caption="文件已存在">
+			<control caption="确定"/>
+			<control caption="取消"/>
 			<control caption="您的收藏中已经存在此文件。您希望怎样做？"/>
 			<control caption="显示收藏中的这个文件"/>
 			<control caption="重新下载此文件"/>
-			<control caption="确定"/>
-			<control caption="取消"/>
+			<control/>
+			<control/>
+			<control/>
+			<control caption="您的收藏中已经存在此文件。您希望怎样做？"/>
 			<control caption="取消"/>
 			<control caption="您曾经下载并且删除此文件。您打算怎么做？"/>
+			<control/>
+			<control/>
+			<control/>
 		</dialog>
 		<dialog name="CCloseModeDlg" cookie="StBuBuBuBuBu" caption="关闭按钮">
 			<control caption="这是您第一次点击 Shareaza 的关闭按钮。请选择以后点击关闭按钮时要完成的操作:"/>

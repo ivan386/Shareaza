@@ -1,7 +1,7 @@
 //
 // PageComment.cpp
 //
-// Copyright (c) Shareaza Development Team, 2007-2011.
+// Copyright (c) Shareaza Development Team, 2007-2014.
 // This file is part of Shareaza Torrent Wizard (shareaza.sourceforge.net).
 //
 // Shareaza Torrent Wizard is free software; you can redistribute it
@@ -48,10 +48,23 @@ void CCommentPage::DoDataExchange(CDataExchange* pDX)
 	CWizardPage::DoDataExchange(pDX);
 
 	DDX_Text(pDX, IDC_COMMENT, m_sComment);
+	DDX_Text(pDX, IDC_SOURCE, m_sSource);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // CCommentPage message handlers
+
+BOOL CCommentPage::OnInitDialog() 
+{
+	CWizardPage::OnInitDialog();
+
+	m_sComment = theApp.GetProfileString( _T("Comments"), _T("Comment") );
+	m_sSource = theApp.GetProfileString( _T("Comments"), _T("Source") );
+
+	UpdateData( FALSE );
+
+	return TRUE;
+}
 
 void CCommentPage::OnReset() 
 {
@@ -76,10 +89,22 @@ BOOL CCommentPage::OnSetActive()
 
 LRESULT CCommentPage::OnWizardBack() 
 {
+	SaveComments();
+
 	return IDD_TRACKER_PAGE;
 }
 
 LRESULT CCommentPage::OnWizardNext() 
 {
+	SaveComments();
+
 	return IDD_OUTPUT_PAGE;
+}
+
+void CCommentPage::SaveComments()
+{
+	UpdateData();
+
+	theApp.WriteProfileString( _T("Comments"), _T("Comment"), m_sComment );
+	theApp.WriteProfileString( _T("Comments"), _T("Source"), m_sSource );
 }

@@ -1,7 +1,7 @@
 //
 // CtrlLibraryTileView.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -78,7 +78,7 @@ CLibraryTileView::CLibraryTileView()
 
 void CLibraryTileView::clear()
 {
-	CSingleLock oLock( &Library.m_pSection, TRUE );
+	CSingleLock( &Library.m_pSection, TRUE );
 
 	m_oList.clear();
 
@@ -124,6 +124,7 @@ int CLibraryTileView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 void CLibraryTileView::OnDestroy()
 {
 	clear();
+
 	CLibraryView::OnDestroy();
 }
 
@@ -144,7 +145,12 @@ BOOL CLibraryTileView::CheckAvailable(CLibraryTreeItem* pSel)
 
 void CLibraryTileView::Update()
 {
-	CSingleLock oLock( &Library.m_pSection, TRUE );
+	CSingleLock oLock( &Library.m_pSection );
+	if ( ! oLock.Lock( 100 ) )
+	{
+		Invalidate();
+		return;
+	}
 
 	CLibraryTreeItem* pFolders	= GetFolderSelection();
 	CAlbumFolder* pFolder		= NULL;
@@ -155,9 +161,7 @@ void CLibraryTileView::Update()
 	}
 	else
 	{
-		if (	pFolders == NULL || pFolders->m_pSelNext != NULL ||
-				pFolders->m_pVirtual == NULL ||
-				pFolders->m_pVirtual->GetFileCount() > 0 )
+		if ( pFolders->m_pSelNext != NULL || pFolders->m_pVirtual->GetFileCount() > 0 )
 		{
 			if ( !empty() )
 			{
@@ -176,10 +180,11 @@ void CLibraryTileView::Update()
 
 	for ( iterator pTile = begin(); pTile != end(); )
 	{
-		if ( pFolder && pFolder->CheckFolder( pTile->m_pAlbum ) )
+		CAlbumFolder* pAlbum = pTile->GetAlbum();
+		if ( pAlbum && pAlbum->GetParent() == pFolder )
 		{
 			bChanged = pTile->Update() || bChanged;
-			pTile->m_pAlbum->m_nListCookie = nCookie;
+			pAlbum->m_nListCookie = nCookie;
 			++pTile;
 		}
 		else
@@ -240,7 +245,9 @@ BOOL CLibraryTileView::Select(DWORD /*nObject*/)
 
 void CLibraryTileView::SelectAll()
 {
-	CSingleLock oLock( &Library.m_pSection, TRUE );
+	CSingleLock oLock( &Library.m_pSection );
+	if ( ! oLock.Lock( 100 ) )
+		return;
 
 	for ( iterator pItem = begin(); pItem != end(); ++pItem )
 	{
@@ -267,9 +274,15 @@ int CLibraryTileView::GetTileIndex(CLibraryTileItem* pTile) const
 	return -1;
 }*/
 
-bool CLibraryTileView::Select(iterator pTile, TRISTATE bSelect)
+BOOL CLibraryTileView::Select(iterator pTile, TRISTATE bSelect)
 {
-	CSingleLock oLock( &Library.m_pSection, TRUE );
+	CSingleLock oLock( &Library.m_pSection );
+	if ( ! oLock.Lock( 100 ) )
+		return FALSE;
+
+	CAlbumFolder* pAlbum = pTile->GetAlbum();
+	if ( ! pAlbum )
+		return FALSE;
 
 	switch ( bSelect )
 	{
@@ -290,23 +303,25 @@ bool CLibraryTileView::Select(iterator pTile, TRISTATE bSelect)
 	{
 		m_nSelected++;
 		m_oSelTile.push_back( pTile );
-		SelAdd( pTile->m_pAlbum );
+		SelAdd( pAlbum );
 	}
 	else
 	{
 		m_nSelected--;
-		SelRemove( pTile->m_pAlbum );
+		SelRemove( pAlbum );
 		m_oSelTile.remove( pTile );
 	}
 
 	return TRUE;
 }
 
-bool CLibraryTileView::DeselectAll(iterator pTile)
+BOOL CLibraryTileView::DeselectAll(iterator pTile)
 {
-	CSingleLock oLock( &Library.m_pSection, TRUE );
+	CSingleLock oLock( &Library.m_pSection );
+	if ( ! oLock.Lock( 100 ) )
+		return FALSE;
 
-	bool bChanged = false;
+	BOOL bChanged = FALSE;
 
 	for ( iterator pItem = begin(); pItem != end(); ++pItem )
 	{
@@ -319,14 +334,14 @@ bool CLibraryTileView::DeselectAll(iterator pTile)
 	return bChanged;
 }
 
-bool CLibraryTileView::DeselectAll()
+BOOL CLibraryTileView::DeselectAll()
 {
 	return DeselectAll( end() );
 }
 
-bool CLibraryTileView::SelectTo(iterator pTile)
+BOOL CLibraryTileView::SelectTo(iterator pTile)
 {
-	bool bChanged = false;
+	BOOL bChanged = FALSE;
 
 	if ( pTile != end() )
 	{
@@ -358,7 +373,7 @@ bool CLibraryTileView::SelectTo(iterator pTile)
 					for ( ; pFocus != pFirst; ++pFocus ) Select( pFocus, TRI_TRUE );
 				}
 
-				bChanged = true;
+				bChanged = TRUE;
 			}
 			else
 			{
@@ -388,9 +403,12 @@ bool CLibraryTileView::SelectTo(iterator pTile)
 
 void CLibraryTileView::SelectTo(int nDelta)
 {
-	CSingleLock oLock( &Library.m_pSection, TRUE );
+	CSingleLock oLock( &Library.m_pSection );
+	if ( ! oLock.Lock( 100 ) )
+		return;
 
-	if ( empty() ) return;
+	if ( empty() )
+		return;
 
 	iterator pFocus = m_pFocus;
 
@@ -439,8 +457,6 @@ void CLibraryTileView::OnSize(UINT nType, int cx, int cy)
 {
 	CLibraryView::OnSize( nType, cx, cy );
 
-	CSingleLock oLock( &Library.m_pSection, TRUE );
-
 	m_nColumns	= cx / m_szBlock.cx;
 	m_nRows		= cy / m_szBlock.cy + 1;
 
@@ -451,11 +467,14 @@ void CLibraryTileView::OnSize(UINT nType, int cx, int cy)
 
 void CLibraryTileView::UpdateScroll()
 {
-	CSingleLock oLock( &Library.m_pSection, TRUE );
+	if ( m_nColumns == 0 )
+		return;
 
-	if ( m_nColumns == 0 ) return;
+	CSingleLock oLock( &Library.m_pSection );
+	if ( ! oLock.Lock( 100 ) )
+		return;
 
-	SCROLLINFO pInfo;
+	SCROLLINFO pInfo = {};
 	CRect rc;
 
 	GetClientRect( &rc );
@@ -474,8 +493,6 @@ void CLibraryTileView::UpdateScroll()
 
 void CLibraryTileView::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* /*pScrollBar*/)
 {
-	CSingleLock oLock( &Library.m_pSection, TRUE );
-
 	CRect rc;
 	GetClientRect( &rc );
 
@@ -486,22 +503,28 @@ void CLibraryTileView::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* /*pScrollB
 	case SB_BOTTOM:
 		ScrollTo( 0xFFFFFF );
 		break;
+
 	case SB_LINEDOWN:
 		ScrollBy( 32 );
 		break;
+
 	case SB_LINEUP:
 		ScrollBy( -32 );
 		break;
+
 	case SB_PAGEDOWN:
 		ScrollBy( rc.Height() );
 		break;
+
 	case SB_PAGEUP:
 		ScrollBy( -rc.Height() );
 		break;
+
 	case SB_THUMBPOSITION:
 	case SB_THUMBTRACK:
 		ScrollTo( nPos );
 		break;
+
 	case SB_TOP:
 		ScrollTo( 0 );
 		break;
@@ -513,34 +536,29 @@ BOOL CLibraryTileView::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 	if ( CLibraryView::OnMouseWheel( nFlags, zDelta, pt ) )
 		return TRUE;
 
-	CSingleLock oLock( &Library.m_pSection, TRUE );
-
 	ScrollBy( zDelta * -m_szBlock.cy / WHEEL_DELTA / 2 );
+
 	return TRUE;
 }
 
 void CLibraryTileView::ScrollBy(int nDelta)
 {
-	CSingleLock oLock( &Library.m_pSection, TRUE );
-
 	ScrollTo( max( 0, m_nScroll + nDelta ) );
 }
 
 void CLibraryTileView::ScrollTo(int nPosition)
 {
-	CSingleLock oLock( &Library.m_pSection, TRUE );
-
-	if ( nPosition == m_nScroll ) return;
+	if ( nPosition == m_nScroll )
+		return;
 	m_nScroll = nPosition;
 
 	UpdateScroll();
+
 	RedrawWindow( NULL, NULL, RDW_INVALIDATE );
 }
 
 void CLibraryTileView::OnPaint()
 {
-	CSingleLock oLock( &Library.m_pSection, TRUE );
-
 	CPaintDC dc( this );
 
 	CDC* pBuffer = CoolInterface.GetBuffer( dc, m_szBlock );
@@ -558,24 +576,62 @@ void CLibraryTileView::OnPaint()
 	GetClientRect( &rcClient );
 	CPoint pt( rcClient.left, rcClient.top - m_nScroll );
 
-	for ( iterator pTile = begin(); pTile != end() && pt.y < rcClient.bottom ; ++pTile )
+	CSingleLock oLock( &Library.m_pSection );
+	if ( oLock.Lock( 100 ) )
+	{
+		for ( iterator pTile = begin(); pTile != end() && pt.y < rcClient.bottom ; ++pTile )
+		{
+			CRect rcBlock( pt.x, pt.y, pt.x + m_szBlock.cx, pt.y + m_szBlock.cy );
+
+			if ( rcBlock.bottom >= rcClient.top && dc.RectVisible( &rcBlock ) )
+			{
+				pBuffer->FillSolidRect( &rcBuffer, CoolInterface.m_crWindow );
+				bool bSelected = pTile->m_bSelected;
+				CAlbumFolder* pAlbum = pTile->GetAlbum();
+				if ( pAlbum && m_oDropItem == CLibraryListItem ( pAlbum ) )
+				{
+					pTile->m_bSelected = true;
+				}
+				pTile->Paint( pBuffer, rcBuffer, &dcMem );
+				pTile->m_bSelected = bSelected;
+				dc.BitBlt( rcBlock.left, rcBlock.top, m_szBlock.cx, m_szBlock.cy,
+					pBuffer, 0, 0, SRCCOPY );
+				dc.ExcludeClipRect( &rcBlock );
+			}
+
+			pt.x += m_szBlock.cx;
+
+			if ( pt.x + m_szBlock.cx > rcClient.right )
+			{
+				pt.x = rcClient.left;
+				pt.y += m_szBlock.cy;
+			}
+		}
+	}
+	else
+	{
+		Invalidate( FALSE );
+	}
+
+	pBuffer->SelectObject( pOldFont );
+	dc.FillSolidRect( &rcClient, CoolInterface.m_crWindow );
+}
+
+CLibraryTileView::const_iterator CLibraryTileView::HitTest(const CPoint& point) const
+{
+	ASSUME_LOCK( Library.m_pSection );
+
+	CRect rcClient;
+	GetClientRect( &rcClient );
+
+	CPoint pt( rcClient.left, rcClient.top - m_nScroll );
+
+	for ( const_iterator pTile = begin(); pTile != end() && pt.y < rcClient.bottom ; ++pTile )
 	{
 		CRect rcBlock( pt.x, pt.y, pt.x + m_szBlock.cx, pt.y + m_szBlock.cy );
 
-		if ( rcBlock.bottom >= rcClient.top && dc.RectVisible( &rcBlock ) )
-		{
-			pBuffer->FillSolidRect( &rcBuffer, CoolInterface.m_crWindow );
-			bool bSelected = pTile->m_bSelected;
-			if ( m_oDropItem == CLibraryListItem ( pTile->m_pAlbum ) )
-			{
-				pTile->m_bSelected = true;
-			}
-			pTile->Paint( pBuffer, rcBuffer, &dcMem );
-			pTile->m_bSelected = bSelected;
-			dc.BitBlt( rcBlock.left, rcBlock.top, m_szBlock.cx, m_szBlock.cy,
-				pBuffer, 0, 0, SRCCOPY );
-			dc.ExcludeClipRect( &rcBlock );
-		}
+		if ( rcBlock.PtInRect( point ) )
+			return pTile;
 
 		pt.x += m_szBlock.cx;
 
@@ -586,13 +642,12 @@ void CLibraryTileView::OnPaint()
 		}
 	}
 
-	pBuffer->SelectObject( pOldFont );
-	dc.FillSolidRect( &rcClient, CoolInterface.m_crWindow );
+	return end();
 }
 
 CLibraryTileView::iterator CLibraryTileView::HitTest(const CPoint& point)
 {
-	CSingleLock oLock( &Library.m_pSection, TRUE );
+	ASSUME_LOCK( Library.m_pSection );
 
 	CRect rcClient;
 	GetClientRect( &rcClient );
@@ -603,7 +658,8 @@ CLibraryTileView::iterator CLibraryTileView::HitTest(const CPoint& point)
 	{
 		CRect rcBlock( pt.x, pt.y, pt.x + m_szBlock.cx, pt.y + m_szBlock.cy );
 
-		if ( rcBlock.PtInRect( point ) ) return pTile;
+		if ( rcBlock.PtInRect( point ) )
+			return pTile;
 
 		pt.x += m_szBlock.cx;
 
@@ -619,25 +675,29 @@ CLibraryTileView::iterator CLibraryTileView::HitTest(const CPoint& point)
 
 DWORD_PTR CLibraryTileView::HitTestIndex(const CPoint& point) const
 {
-	const_iterator pTile = const_cast< CLibraryTileView* >( this )->HitTest( point );
-	return ( pTile != end() ) ? (DWORD_PTR)pTile->m_pAlbum : 0;
-}
-
-CLibraryListItem CLibraryTileView::DropHitTest( const CPoint& point )
-{
-	CSingleLock oLock( &Library.m_pSection, TRUE );
+	CSingleLock oLock( &Library.m_pSection );
+	if ( ! oLock.Lock( 100 ) )
+		return NULL;
 
 	const_iterator pTile = HitTest( point );
-	if ( pTile != end() )
-	{
-		return pTile->m_pAlbum;
-	}
-	return CLibraryListItem();
+	return ( pTile != end() ) ? (DWORD_PTR)pTile->GetAlbum() : NULL;
+}
+
+CLibraryListItem CLibraryTileView::DropHitTest(const CPoint& point) const
+{
+	CSingleLock oLock( &Library.m_pSection );
+	if ( ! oLock.Lock( 100 ) )
+		return CLibraryListItem();
+
+	const_iterator pTile = HitTest( point );
+	return ( pTile != end() ) ? CLibraryListItem( pTile->GetAlbum() ) : CLibraryListItem();
 }
 
 bool CLibraryTileView::GetItemRect(iterator pTile, CRect* pRect)
 {
-	CSingleLock oLock( &Library.m_pSection, TRUE );
+	CSingleLock oLock( &Library.m_pSection );
+	if ( ! oLock.Lock( 100 ) )
+		return false;
 
 	CRect rcClient;
 	GetClientRect( &rcClient );
@@ -668,27 +728,27 @@ bool CLibraryTileView::GetItemRect(iterator pTile, CRect* pRect)
 
 void CLibraryTileView::OnLButtonDown(UINT nFlags, CPoint point)
 {
-	CSingleLock oLock( &Library.m_pSection, TRUE );
+	CSingleLock oLock( &Library.m_pSection );
+	if ( oLock.Lock( 100 ) )
+	{
+		iterator pHit = HitTest( point );
 
-	iterator pHit = HitTest( point );
+		if ( SelectTo( pHit ) ) Invalidate();
 
-	if ( SelectTo( pHit ) ) Invalidate();
+		if ( pHit != end() && ( nFlags & MK_RBUTTON ) == 0 )
+		{
+			m_bDrag = TRUE;
+			m_ptDrag = point;
+		}
+	}
 
 	SetFocus();
-
-	if ( pHit != end() && ( nFlags & MK_RBUTTON ) == 0 )
-	{
-		m_bDrag = TRUE;
-		m_ptDrag = point;
-	}
 
 	CLibraryView::OnLButtonDown( nFlags, point );
 }
 
 void CLibraryTileView::OnMouseMove(UINT nFlags, CPoint point)
 {
-	CSingleLock oLock( &Library.m_pSection, TRUE );
-
 	if ( m_bDrag && ( nFlags & MK_LBUTTON ) )
 	{
 		CSize szDiff = point - m_ptDrag;
@@ -696,7 +756,12 @@ void CLibraryTileView::OnMouseMove(UINT nFlags, CPoint point)
 		if ( abs( szDiff.cx ) > 5 || abs( szDiff.cy ) > 5 )
 		{
 			m_bDrag = FALSE;
-			StartDragging( point );
+
+			CSingleLock oLock( &Library.m_pSection );
+			if ( oLock.Lock( 100 ) )
+			{
+				StartDragging( point );
+			}
 		}
 	}
 	else
@@ -705,9 +770,11 @@ void CLibraryTileView::OnMouseMove(UINT nFlags, CPoint point)
 	CLibraryView::OnMouseMove( nFlags, point );
 }
 
-void CLibraryTileView::OnLButtonUp(UINT nFlags, CPoint /*point*/)
+void CLibraryTileView::OnLButtonUp(UINT nFlags, CPoint point)
 {
-	CSingleLock oLock( &Library.m_pSection, TRUE );
+	CSingleLock oLock( &Library.m_pSection );
+	if ( ! oLock.Lock( 100 ) )
+		return;
 
 	m_bDrag = FALSE;
 
@@ -715,20 +782,26 @@ void CLibraryTileView::OnLButtonUp(UINT nFlags, CPoint /*point*/)
 	{
 		if ( DeselectAll( m_pFocus ) ) Invalidate();
 	}
+
+	CLibraryView::OnLButtonUp( nFlags, point );
 }
 
-void CLibraryTileView::OnLButtonDblClk(UINT /*nFlags*/, CPoint /*point*/)
+void CLibraryTileView::OnLButtonDblClk(UINT nFlags, CPoint point)
 {
-	SendMessage( WM_COMMAND, ID_LIBRARY_ALBUM_OPEN );
+	PostMessage( WM_COMMAND, ID_LIBRARY_ALBUM_OPEN );
+
+	CLibraryView::OnLButtonDblClk( nFlags, point );
 }
 
 void CLibraryTileView::OnRButtonDown(UINT nFlags, CPoint point)
 {
-	CSingleLock oLock( &Library.m_pSection, TRUE );
+	CSingleLock oLock( &Library.m_pSection );
+	if ( oLock.Lock( 100 ) )
+	{
+		iterator pHit = HitTest( point );
 
-	iterator pHit = HitTest( point );
-
-	if ( SelectTo( pHit ) ) Invalidate();
+		if ( SelectTo( pHit ) ) Invalidate();
+	}
 
 	SetFocus();
 
@@ -737,40 +810,48 @@ void CLibraryTileView::OnRButtonDown(UINT nFlags, CPoint point)
 
 void CLibraryTileView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
-	CSingleLock oLock( &Library.m_pSection, TRUE );
-
 	switch ( nChar )
 	{
 	case VK_LEFT:
 		SelectTo( - 1 );
 		break;
+
 	case VK_RIGHT:
 		SelectTo( 1 );
 		break;
+
 	case VK_UP:
 		SelectTo( -m_nColumns );
 		break;
+
 	case VK_DOWN:
 		SelectTo( m_nColumns );
 		break;
+
 	case VK_PRIOR:
 		SelectTo( m_nRows * -m_nColumns );
 		break;
+
 	case VK_NEXT:
 		ScrollBy( m_nRows * m_nColumns );
 		break;
+
 	case VK_HOME:
 		SelectTo( -(int)size() );
 		break;
+
 	case VK_END:
 		SelectTo( (int)size() );
 		break;
+
 	case VK_RETURN:
 		PostMessage( WM_COMMAND, ID_LIBRARY_ALBUM_OPEN );
 		break;
+
 	case VK_INSERT:
 		GetParent()->PostMessage( WM_COMMAND, ID_LIBRARY_FOLDER_NEW );
 		break;
+
 	case VK_DELETE:
 		PostMessage( WM_COMMAND, ID_LIBRARY_ALBUM_DELETE );
 		break;
@@ -781,27 +862,29 @@ void CLibraryTileView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 
 void CLibraryTileView::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
-	CSingleLock oLock( &Library.m_pSection, TRUE );
-
-	if ( _istalnum( TCHAR( nChar ) ) )
+	CSingleLock oLock( &Library.m_pSection );
+	if ( oLock.Lock( 100 ) )
 	{
-		iterator pStart = m_pFocus;
-
-		for ( int nLoop = 0 ; nLoop < 2 ; nLoop++ )
+		if ( _istalnum( TCHAR( nChar ) ) )
 		{
-			for ( iterator pChild = begin(); pChild != end(); ++pChild )
+			iterator pStart = m_pFocus;
+
+			for ( int nLoop = 0 ; nLoop < 2 ; nLoop++ )
 			{
-				if ( pStart != end() )
+				for ( iterator pChild = begin(); pChild != end(); ++pChild )
 				{
-					if ( pStart == pChild ) pStart = end();
-				}
-				else if ( toupper( pChild->m_sTitle.GetAt( 0 ) ) == toupper( (int)nChar ) )
-				{
-					DeselectAll( m_pFocus = pChild );
-					Select( m_pFocus, TRI_TRUE );
-					Highlight( m_pFocus );
-					Invalidate();
-					return;
+					if ( pStart != end() )
+					{
+						if ( pStart == pChild ) pStart = end();
+					}
+					else if ( toupper( pChild->GetTitle().GetAt( 0 ) ) == toupper( (int)nChar ) )
+					{
+						DeselectAll( m_pFocus = pChild );
+						Select( m_pFocus, TRI_TRUE );
+						Highlight( m_pFocus );
+						Invalidate();
+						return;
+					}
 				}
 			}
 		}
@@ -815,7 +898,7 @@ void CLibraryTileView::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
 
 HBITMAP CLibraryTileView::CreateDragImage(const CPoint& ptMouse, CPoint& ptMiddle)
 {
-	CSingleLock oLock( &Library.m_pSection, TRUE );
+	ASSUME_LOCK( Library.m_pSection );
 
 	CRect rcClient, rcOne, rcAll( 32000, 32000, -32000, -32000 );
 
@@ -902,7 +985,10 @@ HBITMAP CLibraryTileView::CreateDragImage(const CPoint& ptMouse, CPoint& ptMiddl
 
 bool CLibraryTileItem::Update()
 {
-	if ( m_pAlbum->m_nUpdateCookie == m_nCookie ) return false;
+	ASSUME_LOCK( Library.m_pSection );
+
+	if ( m_pAlbum->m_nUpdateCookie == m_nCookie )
+		return false;
 
 	m_nCookie		= m_pAlbum->m_nUpdateCookie;
 	m_sTitle		= m_pAlbum->m_sName;
@@ -1037,8 +1123,20 @@ void CLibraryTileView::OnUpdateLibraryAlbumOpen(CCmdUI* pCmdUI)
 
 void CLibraryTileView::OnLibraryAlbumOpen()
 {
-	if ( m_oSelTile.empty() ) return;
-	GetFrame()->Display( m_oSelTile.front()->m_pAlbum );
+	CSingleLock oLock( &Library.m_pSection );
+	if ( ! oLock.Lock( 100 ) )
+	{
+		// Retry
+		PostMessage( WM_COMMAND, ID_LIBRARY_ALBUM_OPEN );
+		return;
+	}
+
+	if ( m_oSelTile.empty() )
+		return;
+
+	const_iterator pTile = m_oSelTile.front();
+
+	GetFrame()->Display( pTile->GetAlbum() );
 }
 
 void CLibraryTileView::OnUpdateLibraryAlbumDelete(CCmdUI* pCmdUI)
@@ -1048,33 +1146,40 @@ void CLibraryTileView::OnUpdateLibraryAlbumDelete(CCmdUI* pCmdUI)
 
 void CLibraryTileView::OnLibraryAlbumDelete()
 {
-	if ( m_nSelected == 0 ) return;
+	if ( m_nSelected == 0 )
+		return;
 
 	CString strFormat, strMessage;
 	Skin.LoadString( strFormat, IDS_LIBRARY_FOLDER_DELETE );
 	strMessage.Format( strFormat, m_nSelected );
 
-	if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_OKCANCEL ) != IDOK ) return;
+	if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_OKCANCEL ) != IDOK )
+		return;
 
+	CSingleLock oLock( &Library.m_pSection );
+	if ( ! oLock.Lock( 100 ) )
 	{
-		CQuickLock oLock( Library.m_pSection );
-
-		CLibraryTreeItem* pItem = GetFrame()->GetFolderSelection();
-
-		for ( std::list< iterator >::iterator pTile = m_oSelTile.begin(); pTile != m_oSelTile.end(); ++pTile )
-		{
-			CAlbumFolder* pFolder = ( *pTile )->m_pAlbum;
-			if ( LibraryFolders.CheckAlbum( pFolder ) )
-			{
-				if ( pItem && pFolder == pItem->m_pVirtual )
-				{
-					GetParent()->SendMessage( WM_COMMAND, ID_LIBRARY_PARENT );
-				}
-				pFolder->Delete();
-			}
-		}
-		clear();
+		// Retry
+		PostMessage( WM_COMMAND, ID_LIBRARY_ALBUM_DELETE );
+		return;
 	}
+
+	CLibraryTreeItem* pItem = GetFrame()->GetFolderSelection();
+
+	for ( std::list< iterator >::iterator pSelTile = m_oSelTile.begin(); pSelTile != m_oSelTile.end(); ++pSelTile )
+	{
+		const_iterator pTile = ( *pSelTile );
+		if ( CAlbumFolder* pFolder = pTile->GetAlbum() )
+		{
+			if ( pItem && pFolder == pItem->m_pVirtual )
+			{
+				GetParent()->SendMessage( WM_COMMAND, ID_LIBRARY_PARENT );
+			}
+			pFolder->Delete();
+		}
+	}
+	clear();
+
 	PostUpdate();
 }
 
@@ -1085,13 +1190,35 @@ void CLibraryTileView::OnUpdateLibraryAlbumProperties(CCmdUI* pCmdUI)
 
 void CLibraryTileView::OnLibraryAlbumProperties()
 {
-	if ( m_oSelTile.empty() ) return;
-	iterator pItem = m_oSelTile.front();
+	CSingleLock oLock( &Library.m_pSection );
+	if ( ! oLock.Lock( 100 ) )
+	{
+		// Retry
+		PostMessage( WM_COMMAND, ID_LIBRARY_ALBUM_PROPERTIES );
+		return;
+	}
 
-	CAlbumFolder* pFolder = pItem->m_pAlbum;
-	CFolderPropertiesDlg dlg( NULL, pFolder );
+	if ( m_oSelTile.empty() )
+		return;
 
-	if ( dlg.DoModal() == IDOK ) GetFrame()->Display( pFolder );
+	const_iterator pTile = m_oSelTile.front();
+	if ( CAlbumFolder* pFolder = pTile->GetAlbum() )
+	{
+		CFolderPropertiesDlg dlg( NULL, pFolder );
+
+		oLock.Unlock();
+
+		if ( dlg.DoModal() == IDOK )
+		{
+			if ( oLock.Lock( 100 ) )
+			{
+				if ( CAlbumFolder* pFolder = pTile->GetAlbum() )
+				{
+					GetFrame()->Display( pFolder );
+				}
+			}
+		}
+	}
 }
 
 UINT CLibraryTileView::OnGetDlgCode()

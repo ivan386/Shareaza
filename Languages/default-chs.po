@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shareaza\n"
 "Report-Msgid-Bugs-To: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
-"POT-Creation-Date: 2013-09-30 15:56+0000\n"
+"POT-Creation-Date: 2014-01-27 13:47+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ryo-oh-ki <ryo-oh-ki@narod.ru>\n"
 "Language-Team: Shareaza Development Team\n"
@@ -7300,7 +7300,7 @@ msgstr "分级"
 #: cfolderpropertiesdlg;control;7 cgraphlistdlg;control;16
 #: cgraphitemdlg;control;1 cschemacolumnsdlg;control;3
 #: csecureruledlg;control;33 csharemanagerdlg;control;5 cpromotedlg;control;7
-#: cexistingfiledlg;control;8 cclosemodedlg;control;5
+#: cexistingfiledlg;control;1 cclosemodedlg;control;5
 #: cdonkeyserversdlg;control;4 cdownloadgroupdlg;control;1
 #: cmediavisdlg;control;5 cdownloadreviewdlg;control;1
 #: cdecodemetadatadlg;control;8 circinputdlg;control;2
@@ -7316,7 +7316,7 @@ msgstr "确定"
 #: cschemacolumnsdlg;control;4 csecureruledlg;control;34
 #: csharemanagerdlg;control;6 curlcopydlg;control;6 curlexportdlg;control;10
 #: curlactiondlg;control;11 cbitzidownloaddlg;control;4
-#: cfilepreviewdlg;control;6 cexistingfiledlg;control;9
+#: cfilepreviewdlg;control;6 cexistingfiledlg;control;2
 #: cclosemodedlg;control;6 cdonkeyserversdlg;control;5
 #: cdeletefiledlg;control;5 ctorrentseeddlg;control;4
 #: cdownloadgroupdlg;control;2 cmediavisdlg;control;6
@@ -9352,21 +9352,21 @@ msgstr "如果您知道有人打算使用 Shareaza ，无论他们是新用户�
 msgid "Existing File"
 msgstr "文件已存在"
 
-#: cexistingfiledlg;control;4
-msgid "You already have this file in your file library. What would you like to do?"
-msgstr "您的收藏中已经存在此文件。您希望怎样做？"
-
-#: cexistingfiledlg;control;5
+#: cexistingfiledlg;control;3
 msgid "Show me the file in my library"
 msgstr "您的收藏中已经存在此文件。您希望怎样做？"
 
-#: cexistingfiledlg;control;6
+#: cexistingfiledlg;control;4
 msgid "Download the file again"
 msgstr "显示收藏中的这个文件"
 
-#: cexistingfiledlg;control;7
+#: cexistingfiledlg;control;5
 msgid "Don't download this file"
 msgstr "重新下载此文件"
+
+#: cexistingfiledlg;control;9
+msgid "You already have this file in your file library. What would you like to do?"
+msgstr "您的收藏中已经存在此文件。您希望怎样做？"
 
 #: cexistingfiledlg;control;10
 msgid "You have downloaded and deleted this file before. What would you like to do?"

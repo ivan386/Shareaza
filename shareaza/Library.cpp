@@ -1,7 +1,7 @@
 //
 // Library.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -112,7 +112,7 @@ void CLibrary::AddFile(CLibraryFile* pFile)
 			{
 				pFile->m_bNewFile = FALSE;
 
-				CheckDuplicates( pFile ); // check for duplicates
+				// TODO: May be some security and anti-virus checks?
 			}
 		}
 		else
@@ -135,97 +135,6 @@ void CLibrary::RemoveFile(CLibraryFile* pFile)
 	if ( pFile->m_nIndex )
 	{
 		LibraryDictionary.RemoveFile( *pFile );
-	}
-}
-
-void CLibrary::CheckDuplicates(const CLibraryFile* pFile, bool bForce) const
-{
-	ASSUME_LOCK( m_pSection );
-
-	long nCount = 0;
-
-	// malicious software are usually small, we won't search duplicates
-	if ( pFile->m_nSize < 32 ||
-		 pFile->m_nSize > Settings.Library.MaxMaliciousFileSize * 1024 )
-		 return;
-
-	LPCTSTR pszExt = _tcsrchr( pFile->m_sName, _T('.') );
-	if ( ! pszExt )
-		return;
-	if ( ! IsIn( Settings.Library.MaliciousTypes, ++pszExt ) )
-		return;
-
-	for ( POSITION pos = LibraryMaps.GetFileIterator() ; pos ; )
-	{
-		const CLibraryFile* pExisting = LibraryMaps.GetNextFile( pos );
-
-		if ( *pFile == *pExisting )
-			nCount++;
-	}
-
-	if ( nCount >= 5 ) // if more than 4 the same files, it's suspicious
-	{
-		if ( Settings.Live.LastDuplicateHash == pFile->m_oMD5.toString() && !bForce )
-		{
-			// we already warned about the same file
-			return;
-		}
-		Settings.Live.LastDuplicateHash = pFile->m_oMD5.toString();
-		if ( !theApp.m_bLive ) return;
-
-		// warn the user
-		CExistingFileDlg dlg( pFile, NULL, true );
-		Settings.Live.MaliciousWarning = TRUE;
-
-		dlg.DoModal();
-
-		switch ( dlg.GetResult() )
-		{
-		case CExistingFileDlg::ShowInLibrary:
-			if ( CMainWnd* pMainWnd = (CMainWnd*)AfxGetMainWnd() )
-			{
-				CString strHash = L"urn:md5:" + Settings.Live.LastDuplicateHash;
-				int nLen = strHash.GetLength() + 1;
-				LPTSTR pszHash = new TCHAR[ nLen ];
-
-				CopyMemory( pszHash, strHash.GetBuffer(), sizeof(TCHAR) * nLen );
-				pMainWnd->PostMessage( WM_LIBRARYSEARCH, (WPARAM)pszHash );
-			}
-			break;
-
-		case CExistingFileDlg::Cancel:
-			Settings.Live.LastDuplicateHash.Empty();
-			break;
-
-		default:
-			;
-		}
-		Settings.Live.MaliciousWarning = FALSE;
-	}
-	else
-		Settings.Live.LastDuplicateHash.Empty();
-}
-
-void CLibrary::CheckDuplicates(LPCTSTR pszMD5Hash) const
-{
-	Hashes::Md5Hash oMD5;
-	oMD5.fromString( pszMD5Hash );
-
-	if ( oMD5 )
-	{
-		CSingleLock oLock( &m_pSection );
-		if ( ! oLock.Lock( 250 ) )
-			return;
-
-		if ( CLibraryFile* pFile = LibraryMaps.LookupFileByMD5( oMD5, FALSE, TRUE ) )
-		{
-			CheckDuplicates( pFile, true );
-		}
-		else
-		{
-			Settings.Live.LastDuplicateHash.Empty();
-			Settings.Live.MaliciousWarning = FALSE;
-		}
 	}
 }
 

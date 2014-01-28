@@ -4372,18 +4372,21 @@
 			<control caption="http://shareaza.sourceforge.net/"/>
 			<control caption="OK"/>
 		</dialog>
-		<dialog name="CExistingFileDlg" cookie="StStStStBuBuBuBuBuStSt" caption="Plik istnieje">
+		<dialog name="CExistingFileDlg" cookie="BuBuBuBuBuStStStStStStBuSt" caption="Plik istnieje">
+			<control caption="OK"/>
+			<control caption="Anuluj"/>
+			<control caption="Pokaż mi pliki w mojej bibliotece"/>
+			<control caption="Ściągnij plik jeszcze raz"/>
+			<control caption="Nie ściągaj tego pliku"/>
 			<control/>
 			<control/>
 			<control/>
 			<control caption="Masz już ten plik w bibliotece.  Co chciałbyś zrobić?"/>
-			<control caption="Pokaż mi pliki w mojej bibliotece"/>
-			<control caption="Ściągnij plik jeszcze raz"/>
-			<control caption="Nie ściągaj tego pliku"/>
-			<control caption="OK"/>
-			<control caption="Anuluj"/>
 			<control caption="Już sciągnąłeś ten plik, ale go usunąłeś. Co chciałbyś zrobić?"/>
 			<control caption="Ostrzeżenie! Wykryto zduplikowane pliki. Jakiś złośliwy software mógł zainfekować Twoją Bibliotekę. Upewnij się, że to Ty pobrałeś ten plik lub umieściłeś go ręcznie. W kazdym innym wypadku, zamknij Shareazę i przeskanuj swój komputer programem antywirusowym!"/>
+			<control/>
+			<control/>
+			<control/>
 		</dialog>
 		<dialog name="CCloseModeDlg" cookie="StBuBuBuBuBu" caption="Przycisk Zamknij">
 			<control caption="Po raz pierwszy kliknąłeś przycisk zamykający Shareazę. Proszę wybierz, co odtąd Shareaza ma zrobić gdy klikniesz ten przycisk:"/>

@@ -4364,18 +4364,21 @@
 			<control caption="http://shareaza.sourceforge.net/"/>
 			<control caption="Gerai"/>
 		</dialog>
-		<dialog name="CExistingFileDlg" cookie="StStStStBuBuBuBuBuStSt" caption="Esamo failo parsisiuntimas">
+		<dialog name="CExistingFileDlg" cookie="BuBuBuBuBuStStStStStStBuSt" caption="Esamo failo parsisiuntimas">
+			<control caption="Gerai"/>
+			<control caption="Atšaukti"/>
+			<control caption="Parodyti failą mano kolekcijoje"/>
+			<control caption="Parsisiųsti failą dar kartą"/>
+			<control caption="Nesisiųsti šio failo"/>
 			<control/>
 			<control/>
 			<control/>
 			<control caption="Jūs jau turite šį failą savo kolekcijoje. Ką Jūs norėtumėte daryti?"/>
-			<control caption="Parodyti failą mano kolekcijoje"/>
-			<control caption="Parsisiųsti failą dar kartą"/>
-			<control caption="Nesisiųsti šio failo"/>
-			<control caption="Gerai"/>
-			<control caption="Atšaukti"/>
 			<control caption="Jūs buvote anksčiau parsisiuntę ir ištrynėte šį failą. Ką norite daryti?"/>
 			<control caption="Dėmesio!!! Aptikti vienodi failai. Kai kurios kenkėjiškos programos gali užkrėsti Jūsų kolekciją. Įsitikinkite, jog Jūs tikrai atsisiuntėte šį failą ar įtraukėte į savo kolekciją. Jei ne, baikite darbą ir praskenuokite failus su antivirusine programa."/>
+			<control/>
+			<control/>
+			<control/>
 		</dialog>
 		<dialog name="CCloseModeDlg" cookie="StBuBuBuBuBu" caption="Mygtukas „Užverti“">
 			<control caption="Tai pirmas kartas, kai Jūs paspaudėte „Shareaza“ programos mygtuką „Užverti“. Pasirinkite, ką „Shareaza“ turėtų atlikti nuo šio momento ir ateityje:"/>
