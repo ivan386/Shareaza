@@ -4369,18 +4369,21 @@
 			<control caption="http://shareaza.sourceforge.net/"/>
 			<control caption="حسنا"/>
 		</dialog>
-		<dialog name="CExistingFileDlg" cookie="StStStStBuBuBuBuBuStSt" caption="ملف موجود">
+		<dialog name="CExistingFileDlg" cookie="BuBuBuBuBuStStStStStStBuSt" caption="ملف موجود">
+			<control caption="حسنا"/>
+			<control caption="إلغاء الأمر"/>
+			<control caption="إظهار الملف في مكتبتي"/>
+			<control caption="تحميل الملف مرة ثانية"/>
+			<control caption="عدم تحميل هذا الملف"/>
 			<control/>
 			<control/>
 			<control/>
 			<control caption="عندك هذا الملف في مكتبتك . ماذا تريد أن تعمل ؟"/>
-			<control caption="إظهار الملف في مكتبتي"/>
-			<control caption="تحميل الملف مرة ثانية"/>
-			<control caption="عدم تحميل هذا الملف"/>
-			<control caption="حسنا"/>
-			<control caption="إلغاء الأمر"/>
 			<control caption="أنت حملت و حذفت هذا الملف من قبل . ماذا تريد أن تعمل ؟"/>
 			<control caption="تحذير!!! تم إكتشاف ملفات مكررة . بعض البرامج الضارة قد تصيب مكتبتك . تأكد من أنك حملت هذا الملف أو وضعته يدويا . و إلا أغلق Shareaza و افحص كمبيوترك بمضاد الفيروسات"/>
+			<control/>
+			<control/>
+			<control/>
 		</dialog>
 		<dialog name="CCloseModeDlg" cookie="StBuBuBuBuBu" caption="زر الإغلاق">
 			<control caption="هذه اول مره تضغط على زر الإغلاق . رجاء تحديد ماذا تريد انت تعمل لكي يتم تطبيقه على جميع الاحوال:"/>
