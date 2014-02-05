@@ -85,43 +85,37 @@ void CFileHash::CopyTo(CLibraryFile* pFile) const
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilder construction
 
-CLibraryBuilder::CLibraryBuilder() :
-	m_bPriority( false ),
-	m_nReaded( 0 ),
-	m_nElapsed( 0 ),
-	m_nProgress( 0 ),
-	m_bSkip( false )
+CLibraryBuilder::CLibraryBuilder()
+	: m_bPriority	( false )
+	, m_nReaded		( 0 )
+	, m_nElapsed	( 0 )
+	, m_nProgress	( 0 )
+	, m_oSkip		( FALSE, TRUE, NULL, NULL )
 {
 	QueryPerformanceFrequency( &m_nFreq );
 	QueryPerformanceCounter( &m_nLastCall );
 }
 
-CLibraryBuilder::~CLibraryBuilder()
-{
-}
-
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilder add and remove
 
-bool CLibraryBuilder::Add(CLibraryFile* pFile)
+bool CLibraryBuilder::Add(const CLibraryFile* pFile)
 {
-	ASSERT( pFile->m_nIndex );
+	const DWORD nIndex = pFile->m_nIndex;
+	const CString sPath = pFile->GetPath();
 
 	if ( pFile->IsReadable() )
 	{
 		CQuickLock pLock( m_pSection );
 
 		// Check queue
-		if ( std::find( m_pFiles.begin(), m_pFiles.end(), pFile->m_nIndex ) == m_pFiles.end() )
+		if ( std::find( m_pFiles.begin(), m_pFiles.end(), nIndex ) == m_pFiles.end() )
 		{
 			// Check current file
-			if ( m_sPath.CompareNoCase( pFile->GetPath() ) )
+			if ( m_sPath.CompareNoCase( sPath ) != 0 )
 			{
-				m_pFiles.push_back( pFile->m_nIndex );
-
-				BeginThread( "LibraryBuilder", m_bPriority ?
-					THREAD_PRIORITY_BELOW_NORMAL : THREAD_PRIORITY_IDLE );
-
+				m_pFiles.push_back( nIndex );
+				BeginThread( "LibraryBuilder", m_bPriority ? THREAD_PRIORITY_BELOW_NORMAL : THREAD_PRIORITY_IDLE );
 				return true;
 			}
 		}
@@ -143,18 +137,26 @@ void CLibraryBuilder::Remove(DWORD nIndex)
 	}
 }
 
-void CLibraryBuilder::Remove(CLibraryFile* pFile)
+void CLibraryBuilder::Remove(const CLibraryFile* pFile)
 {
+	const CString sPath = pFile->GetPath();
+
 	// Remove file from queue
 	Remove( pFile->m_nIndex );
 
 	// Remove currently hashing file
-	if ( ! GetCurrent().CompareNoCase( pFile->GetPath() ) && ! m_bSkip )
+	for (;;)
 	{
-		m_bSkip = true;
+		{
+			CQuickLock oLock( m_pSection );
 
-		while ( m_bSkip )
-			Sleep( 100 );
+			if ( m_nProgress == 100 || m_sPath.CompareNoCase( sPath ) != 0 )
+				break;
+
+			m_oSkip.SetEvent();
+		}
+
+		Sleep( 100 );
 	}
 }
 
@@ -162,23 +164,33 @@ void CLibraryBuilder::Remove(LPCTSTR szPath)
 {
 	DWORD nIndex = 0;
 
-	if ( GetRemaining() )
 	{
-		CQuickLock oLibraryLock( Library.m_pSection );
-
-		if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( szPath ) )
-			nIndex = pFile->m_nIndex;
+		CSingleLock oLibraryLock( &Library.m_pSection );
+		if ( oLibraryLock.Lock( 100 ) )
+		{
+			if ( const CLibraryFile* pFile = LibraryMaps.LookupFileByPath( szPath ) )
+			{
+				nIndex = pFile->m_nIndex;
+			}
+		}
 	}
 
+	// Remove file from queue
 	Remove( nIndex );
 
 	// Remove currently hashing file
-	if ( ! GetCurrent().CompareNoCase( szPath ) && ! m_bSkip )
+	for (;;)
 	{
-		m_bSkip = true;
+		{
+			CQuickLock oLock( m_pSection );
 
-		while ( m_bSkip )
-			Sleep( 100 );
+			if ( m_nProgress == 100 || m_sPath.CompareNoCase( szPath ) != 0 )
+				break;
+
+			m_oSkip.SetEvent();
+		}
+
+		Sleep( 100 );
 	}
 }
 
@@ -205,15 +217,22 @@ void CLibraryBuilder::RequestPriority(LPCTSTR pszPath)
 	ASSERT( pszPath );
 
 	DWORD nIndex = 0;
+
 	{
-		CQuickLock oLibraryLock( Library.m_pSection );
-		CLibraryFile* pFile = LibraryMaps.LookupFileByPath( pszPath );
-		if ( pFile )
-			nIndex = pFile->m_nIndex;
+		CSingleLock oLibraryLock( &Library.m_pSection );
+		if ( oLibraryLock.Lock( 100 ) )
+		{
+			if ( const CLibraryFile* pFile = LibraryMaps.LookupFileByPath( pszPath ) )
+			{
+				nIndex = pFile->m_nIndex;
+			}
+		}
 	}
+
 	if ( nIndex )
 	{
 		CQuickLock oLock( m_pSection );
+
 		CFileInfoList::iterator i = std::find( m_pFiles.begin(), m_pFiles.end(), nIndex );
 		if ( i != m_pFiles.end() )
 		{
@@ -250,18 +269,18 @@ void CLibraryBuilder::Skip(DWORD nIndex)
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilder get best file to hash
 
-DWORD CLibraryBuilder::GetNextFileToHash(CString& sPath)
+DWORD CLibraryBuilder::GetNextFileToHash()
 {
 	DWORD nIndex = 0;
-	sPath.Empty();
+	CString sPath;
 
 	FILETIME ftCurrentTime;
 	GetSystemTimeAsFileTime( &ftCurrentTime );
 	const QWORD nCurrentTime = MAKEQWORD( ftCurrentTime.dwLowDateTime, ftCurrentTime.dwHighDateTime );
 
-	CSingleLock oLock( &m_pSection );
-	if ( oLock.Lock( 100 ) )
 	{
+		CQuickLock oLock( m_pSection );
+
 		if ( m_pFiles.empty() )
 		{
 			// No files left
@@ -270,6 +289,7 @@ DWORD CLibraryBuilder::GetNextFileToHash(CString& sPath)
 		else
 		{
 			// Get next candidate
+			nIndex = m_pFiles.front().nIndex;
 			for ( CFileInfoList::iterator i = m_pFiles.begin(); i != m_pFiles.end(); ++i )
 			{
 				if ( (*i).nNextAccessTime < nCurrentTime )
@@ -279,7 +299,6 @@ DWORD CLibraryBuilder::GetNextFileToHash(CString& sPath)
 				}
 			}
 		}
-		oLock.Unlock();
 	}
 
 	if ( nIndex )
@@ -287,14 +306,14 @@ DWORD CLibraryBuilder::GetNextFileToHash(CString& sPath)
 		CSingleLock oLibraryLock( &Library.m_pSection );
 		if ( oLibraryLock.Lock( 100 ) )
 		{
-			CLibraryFile* pFile = LibraryMaps.LookupFile( nIndex );
+			const CLibraryFile* pFile = LibraryMaps.LookupFile( nIndex );
 			if ( pFile )
 			{
 				sPath = pFile->GetPath();
 			}
 			oLibraryLock.Unlock();
 
-			if ( !pFile )
+			if ( ! pFile )
 			{
 				// Unknown file
 				Remove( nIndex );
@@ -349,6 +368,9 @@ DWORD CLibraryBuilder::GetNextFileToHash(CString& sPath)
 		}
 	}
 
+	CQuickLock oLock( m_pSection );
+	m_sPath = sPath;
+
 	return nIndex;
 }
 
@@ -400,50 +422,42 @@ void CLibraryBuilder::OnRun()
 			continue;
 		}
 
-		CString sPath;
-		DWORD nIndex = GetNextFileToHash( sPath );
-
-		if ( nIndex )
+		if ( DWORD nIndex = GetNextFileToHash() )
 		{
-			{
-				CQuickLock pLock( m_pSection );
-				m_sPath = sPath;
-			}
-
-			HANDLE hFile = CreateFile( CString( _T("\\\\?\\") ) + sPath, GENERIC_READ,
+			HANDLE hFile = CreateFile( CString( _T("\\\\?\\") ) + m_sPath, GENERIC_READ,
 				FILE_SHARE_READ | FILE_SHARE_DELETE, NULL,
 				OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL | FILE_FLAG_SEQUENTIAL_SCAN, NULL );
-			VERIFY_FILE_ACCESS( hFile, sPath )
+			VERIFY_FILE_ACCESS( hFile, m_sPath )
 			if ( hFile != INVALID_HANDLE_VALUE )
 			{
-				theApp.Message( MSG_DEBUG, _T("Hashing: %s"), (LPCTSTR)sPath );
+				theApp.Message( MSG_DEBUG, _T("Hashing: %s"), (LPCTSTR)m_sPath );
 
 				// ToDo: We need MD5 hash of the audio file without tags...
-				if ( HashFile( sPath, hFile ) )
+				if ( HashFile( m_sPath, hFile ) )
 				{
 					nAttempts = 0;
 					SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
 
 					try
 					{
-						ExtractMetadata( nIndex, sPath, hFile );
+						ExtractMetadata( nIndex, m_sPath, hFile );
 					}
 					catch ( CException* pException )
 					{
 						pException->Delete();
 					}
 
-					ExtractPluginMetadata( nIndex, sPath );
+					ExtractPluginMetadata( nIndex, m_sPath );
 
-					CThumbCache::Delete( sPath );
-					CThumbCache::Cache( sPath );
+					CThumbCache::Delete( m_sPath );
+					CThumbCache::Cache( m_sPath );
 
 					// Done
 					Remove( nIndex );
 				}
 				else
 				{
-					if ( ++nAttempts > 5 || m_bSkip )
+					if ( ++nAttempts > 5 || IsSkipped() )
 					{
 						Remove( nIndex );
 						nAttempts = 0;
@@ -462,7 +476,7 @@ void CLibraryBuilder::OnRun()
 					Remove( nIndex );
 				else
 				{
-					if ( ++nAttempts > 5 || m_bSkip )
+					if ( ++nAttempts > 5 || IsSkipped() )
 					{
 						Remove( nIndex );
 						nAttempts = 0;
@@ -476,7 +490,7 @@ void CLibraryBuilder::OnRun()
 				CQuickLock pLock( m_pSection );
 				m_sPath.Empty();
 				m_nProgress = 0;
-				m_bSkip = false;
+				m_oSkip.ResetEvent();
 			}
 		}
 	}
@@ -537,7 +551,7 @@ bool CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile)
 			m_nProgress = static_cast< DWORD >( nResult );
 		}
 
-		if ( ! IsThreadEnabled() || m_bSkip )
+		if ( ! IsThreadEnabled() || IsSkipped() )
 			break;
 
 		// Exit loop on read error
@@ -602,7 +616,7 @@ bool CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile)
 	CSingleLock oTransfersLock( &Transfers.m_pSection );
 	for ( int i = 0; ! oTransfersLock.Lock( 100 ); ++i )
 	{
-		if ( i > 10 || m_bSkip )
+		if ( i > 10 || IsSkipped() )
 			return false;
 	}
 	const CDownload* pDownload = Downloads.FindByPath( szPath );
@@ -612,11 +626,9 @@ bool CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile)
 	CSingleLock oLibraryLock( &Library.m_pSection );
 	for ( int i = 0; ! oLibraryLock.Lock( 100 ); ++i )
 	{
-		if ( i > 10 || m_bSkip )
+		if ( i > 10 || IsSkipped() )
 			return false;
 	}
-
-	m_bSkip = true;
 
 	CLibraryFile* pFile = LibraryMaps.LookupFileByPath( szPath );
 	if ( ! pFile )

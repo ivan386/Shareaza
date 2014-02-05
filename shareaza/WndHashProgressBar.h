@@ -1,7 +1,7 @@
 //
 // WndHashProgressBar.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -32,9 +32,9 @@ public:
 	void		Run();
 
 protected:
-	CString		m_sCurrent;				// Name of file currently hashing
-	size_t		m_nRemaining;
-	float		m_nPercentage;
+	CString		m_sCurrent;				// Hashing filename
+	size_t		m_nRemaining;			// Hashing queue size
+	DWORD		m_nPercentage;			// Hashing file progress (0..100%)
 	DWORD		m_nLastShow;			// Time of last update
 	int			m_nPerfectWidth;		// Window perfect width for text fitting
 	BYTE		m_nAlpha;
