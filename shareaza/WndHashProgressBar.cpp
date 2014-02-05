@@ -1,7 +1,7 @@
 //
 // WndHashProgressBar.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -75,8 +75,7 @@ void CHashProgressBar::Run()
 		if ( ! sCurrent.IsEmpty() )
 			m_sCurrent = sCurrent;
 		m_nRemaining = nRemaining;
-		m_nPercentage = LibraryBuilder.GetProgress() / 100.0f;
-		if ( m_nPercentage < 0 || m_nPercentage > 1 ) m_nPercentage = 1;
+		m_nPercentage = min( LibraryBuilder.GetProgress(), 100ul );
 		m_nLastShow = GetTickCount();
 
 		if ( m_hWnd == NULL )
@@ -247,17 +246,17 @@ void CHashProgressBar::Draw(CDC* pDC)
 	dc.SelectObject( pOld );
 
 	// Progress bar
-	CRect rcProgress = rcClient;
-	rcProgress.DeflateRect( 1, 1 );
-	rcProgress.top = rcProgress.bottom - 3;
-
-	rcProgress.right = rcProgress.left +
-		(LONG)( ( rcProgress.Width() - 1 ) * m_nPercentage ) + 1;
-	dc.Draw3dRect( &rcProgress, CoolInterface.m_crTipBorder, CoolInterface.m_crTipBorder );
+	if ( m_nPercentage > 0 )
+	{
+		CRect rcProgress = rcClient;
+		rcProgress.DeflateRect( 1, 1 );
+		rcProgress.top = rcProgress.bottom - 3;
+		rcProgress.right = rcProgress.left + (LONG)( ( ( rcProgress.Width() - 1 ) * m_nPercentage ) / 100 ) + 1;
+		dc.Draw3dRect( &rcProgress, CoolInterface.m_crTipBorder, CoolInterface.m_crTipBorder );
+	}
 
 	rcClient.InflateRect( 1, 1 );
-	pDC->BitBlt( rcClient.left, rcClient.top, rcClient.Width(), rcClient.Height(),
-		&dc, 0, 0, SRCCOPY );
+	pDC->BitBlt( rcClient.left, rcClient.top, rcClient.Width(), rcClient.Height(), &dc, 0, 0, SRCCOPY );
 
 	dc.SelectObject( pOldBitmap );
 

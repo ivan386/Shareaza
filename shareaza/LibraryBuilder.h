@@ -1,7 +1,7 @@
 //
 // LibraryBuilder.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -51,14 +51,11 @@ class CLibraryBuilder :
 {
 public:
 	CLibraryBuilder();
-	virtual ~CLibraryBuilder();
 
-	bool		Add(CLibraryFile* pFile);			// Add file to list
-	void		Remove(DWORD nIndex);				// Remove file from list
+	bool		Add(const CLibraryFile* pFile);		// Add file to list
 	void		Remove(LPCTSTR szPath);				// Remove file from list
-	void		Remove(CLibraryFile* pFile);		// Remove file from list
+	void		Remove(const CLibraryFile* pFile);	// Remove file from list
 	void		RequestPriority(LPCTSTR pszPath);	// Place file to the begin of list
-	void		Skip(DWORD nIndex);					// Move file to the end of list
 	void		StopThread();
 	void		BoostPriority(bool bPriority);
 	bool		GetBoostPriority() const;
@@ -104,11 +101,13 @@ private:
 	LARGE_INTEGER				m_nFreq;			// (Hz)
 	QWORD						m_nReaded;			// (bytes)
 	__int64						m_nElapsed;			// (mks)
-	volatile bool				m_bSkip;			// Request to skip hashing file
+	CEvent						m_oSkip;			// Request to skip hashing file
 
+	void		Remove(DWORD nIndex);				// Remove file from list
+	void		Skip(DWORD nIndex);					// Move file to the end of list
 	// Get next file from list doing all possible tests
-	// Returns 0 if no file available, sets m_bThread = false if no files left.
-	DWORD		GetNextFileToHash(CString& sPath);
+	// Returns 0 if no file available, sets m_sPath to current file and m_bThread to false if no files left.
+	DWORD		GetNextFileToHash();
 	void		OnRun();
 	bool		HashFile(LPCTSTR szPath, HANDLE hFile);
 	bool		DetectVirtualFile(LPCTSTR szPath, HANDLE hFile, QWORD& nOffset, QWORD& nLength);
@@ -118,6 +117,8 @@ private:
 	bool		DetectVirtualAPEHeader(HANDLE hFile, QWORD& nOffset, QWORD& nLength);
 	bool		DetectVirtualAPEFooter(HANDLE hFile, QWORD& nOffset, QWORD& nLength);
 	bool		DetectVirtualLyrics(HANDLE hFile, QWORD& nOffset, QWORD& nLength);
+
+	inline bool	IsSkipped() { return WaitForSingleObject( m_oSkip, 0 ) != WAIT_TIMEOUT; }
 
 	inline int	GetVbrHeaderOffset(int nId, int nMode)
 	{

@@ -469,7 +469,7 @@
 		</menu>
 		<!-- CHILD POPUP MENU -->
 		<menu name="Child">
-			<item id="ID_CHILD_MAXIMISE" text="V_olledig scherm"/>
+			<item id="ID_CHILD_MAXIMISE" text="Volledig _scherm"/>
 			<separator/>
 			<item id="ID_CHILD_RESTORE" text="_Herstellen"/>
 			<item id="ID_CHILD_MINIMISE" text="_Minimaliseren"/>
@@ -549,7 +549,7 @@
 					-->
 				</menu>
 				<separator/>
-				<item id="ID_HELP_VERSION_CHECK" text="_Check Version"/>
+				<item id="ID_HELP_VERSION_CHECK" text="_Controleer versie"/>
 				<separator/>
 				<item id="ID_HELP_ABOUT" text="_Over Shareaza..."/>
 			</menu>
@@ -656,7 +656,7 @@
 					-->
 				</menu>
 				<separator/>
-				<item id="ID_HELP_VERSION_CHECK" text="_Check Version"/>
+				<item id="ID_HELP_VERSION_CHECK" text="_Controleer versie"/>
 				<separator/>
 				<item id="ID_HELP_ABOUT" text="_Over Shareaza..."/>
 			</menu>
@@ -721,7 +721,7 @@
 				<item id="ID_TOOLS_SETTINGS" text="Shareaza _instellingen..." shortcut="Ctrl+P"/>
 			</menu>
 			<menu text="_Venster">
-				<item id="ID_WINDOW_CASCADE" text="V_olledig scherm"/>
+				<item id="ID_WINDOW_CASCADE" text="Volledig _scherm"/>
 				<item id="ID_WINDOW_TILE_HORZ" text="_Horizontaal indelen"/>
 				<item id="ID_WINDOW_TILE_VERT" text="Verticaal _indelen"/>
 				<separator/>
@@ -755,7 +755,7 @@
 					-->
 				</menu>
 				<separator/>
-				<item id="ID_HELP_VERSION_CHECK" text="_Check Version"/>
+				<item id="ID_HELP_VERSION_CHECK" text="_Controleer versie"/>
 				<separator/>
 				<item id="ID_HELP_ABOUT" text="_Over Shareaza..."/>
 			</menu>
@@ -1030,7 +1030,7 @@
 			<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="R_emote Voorvertoning"/>
 			<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_Bekijk commentaar"/>
 			<separator/>
-			<item id="ID_DOWNLOADS_RESUME" text="_Hervatten"/>
+			<item id="ID_DOWNLOADS_RESUME" text="He_rvatten"/>
 			<item id="ID_DOWNLOADS_PAUSE" text="_Pauzeren"/>
 			<item id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="_Afbreken"/>
 			<separator/>
@@ -1049,7 +1049,7 @@
 			<item id="ID_DOWNLOADS_ENQUEUE" text="Toevoegen aan _afspeellijst"/>
 			<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_Bekijk commentaar"/>
 			<separator/>
-			<item id="ID_DOWNLOADS_RESUME" text="_Hervatten"/>
+			<item id="ID_DOWNLOADS_RESUME" text="He_rvatten"/>
 			<item id="ID_DOWNLOADS_PAUSE" text="_Pauzeren"/>
 			<item id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="_Afbreken"/>
 			<separator/>
@@ -1085,7 +1085,7 @@
 			<item id="ID_TRANSFERS_FORGET" text="_Vergeten"/>
 		</menu>
 		<menu name="CDownloadsWnd.Completed.Basic">
-			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Openen of afspelen"/>
+			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Openen of af_spelen"/>
 			<item id="ID_DOWNLOADS_ENQUEUE" text="Toevoegen aan _afspeellijst"/>
 			<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Wissen"/>
 			<separator/>
@@ -1094,7 +1094,7 @@
 			<item id="ID_SHELL_MENU" text="C_ontextmenu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Completed">
-			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Openen of afspelen"/>
+			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Openen of af_spelen"/>
 			<item id="ID_DOWNLOADS_ENQUEUE" text="Toevoegen aan _afspeellijst"/>
 			<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Wissen"/>
 			<separator/>
@@ -1106,7 +1106,7 @@
 			<item id="ID_SHELL_MENU" text="C_ontextmenu"/>
 		</menu>
 		<menu name="CDownloadsWnd.Seeding">
-			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Openen of afspelen"/>
+			<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Openen of af_spelen"/>
 			<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Stop het _delen"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_COPY" text="_URI kopiëren..."/>
@@ -1123,7 +1123,7 @@
 			<item id="ID_DOWNLOADS_AUTO_CLEAR" text="_Automatisch wissen"/>
 		</menu>
 		<menu name="CDownloadTabBar">
-			<item id="ID_DOWNLOAD_GROUP_RESUME" text="Alles _hervatten"/>
+			<item id="ID_DOWNLOAD_GROUP_RESUME" text="Alles he_rvatten"/>
 			<item id="ID_DOWNLOAD_GROUP_PAUSE" text="Alles _pauzeren"/>
 			<item id="ID_DOWNLOAD_GROUP_CLEAR" text="Alles _wissen"/>
 			<separator/>
@@ -1159,7 +1159,7 @@
 			<item id="ID_SECURITY_BAN" text="Gebruiker ver_bannen"/>
 		</menu>
 		<menu name="CUploadsWnd.Queue">
-			<item id="ID_UPLOADS_EDIT_QUEUE" text="_Wachtrij instellingen"/>
+			<item id="ID_UPLOADS_EDIT_QUEUE" text="Wacht_rij instellingen"/>
 			<item id="ID_UPLOADS_CLEAR_COMPLETED" text="Wi_s voltooide bestanden"/>
 			<item id="ID_UPLOADS_AUTO_CLEAR" text="_Automatisch wissen"/>
 		</menu>
@@ -1196,7 +1196,7 @@
 			<item id="ID_LIBRARY_SHARED_FOLDER" text="_Delen"/>
 			<separator/>
 			<item id="ID_LIBRARY_SCAN" text="_Scannen"/>
-			<item id="ID_LIBRARY_REBUILD" text="Opnieuw _berekenen"/>
+			<item id="ID_LIBRARY_REBUILD" text="O_pnieuw berekenen"/>
 			<item id="ID_LIBRARY_FOLDERS" text="_Bestanden delen..."/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDER_CREATETORRENT" text="_Torrent bestand maken"/>
@@ -1210,19 +1210,19 @@
 			<item id="ID_LIBRARY_FOLDER_DELETE" text="Ver_wijderen"/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="Bestands _eigenschappen"/>
-			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="Album _eigenschappen"/>
+			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="Album e_igenschappen"/>
 		</menu>
 		<menu name="CLibraryTree.Virtual">
 			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Album _afspelen"/>
 			<item id="ID_LIBRARY_FOLDER_DELETE" text="Ver_wijderen"/>
 			<separator/>
-			<item id="ID_LIBRARY_REBUILD" text="Opnieuw _berekenen"/>
+			<item id="ID_LIBRARY_REBUILD" text="O_pnieuw berekenen"/>
 			<item id="ID_LIBRARY_EXPORT_COLLECTION" text="Verzameling e_xporteren..."/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDER_NEW" text="_Nieuwe map..."/>
 			<separator/>
 			<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="Bestands _eigenschappen"/>
-			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="Album _eigenschappen"/>
+			<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="Album e_igenschappen"/>
 		</menu>
 		<!-- LIBRARY VIEWS -->
 		<menu name="CLibraryTileView">
@@ -1232,7 +1232,7 @@
 			<item id="ID_LIBRARY_ALBUM_PROPERTIES" text="_Geavanceerde Eigenschappen"/>
 		</menu>
 		<menu name="CLibraryFileView.Physical.Basic">
-			<item id="ID_LIBRARY_LAUNCH" text="_Openen of afspelen"/>
+			<item id="ID_LIBRARY_LAUNCH" text="Openen of af_spelen"/>
 			<item id="ID_LIBRARY_ENQUEUE" text="Toevoegen aan _afspeellijst"/>
 			<separator/>
 			<item id="ID_LIBRARY_SHARED_FILE" text="_Delen"/>
@@ -1250,10 +1250,10 @@
 			</menu>
 			<menu text="_Internetdiensten">
 				<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Ticket bekijken"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Metadata downloaden"/>
+				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Metadata _downloaden"/>
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 			</menu>
-			<menu text="_Organiseren">
+			<menu text="O_rganiseren">
 				<item id="ID_LIBRARY_RENAME" text="Bestand _hernoemen"/>
 				<item id="ID_LIBRARY_MOVE" text="Bestanden ver_plaatsen..."/>
 				<item id="ID_LIBRARY_COPY" text="Bestanden _kopiëren..."/>
@@ -1264,7 +1264,7 @@
 			<item id="ID_LIBRARY_PROPERTIES" text="_Geavanceerde Eigenschappen"/>
 		</menu>
 		<menu name="CLibraryFileView.Physical">
-			<item id="ID_LIBRARY_LAUNCH" text="_Openen of afspelen"/>
+			<item id="ID_LIBRARY_LAUNCH" text="Openen of af_spelen"/>
 			<item id="ID_LIBRARY_ENQUEUE" text="Toevoegen aan _afspeellijst"/>
 			<separator/>
 			<item id="ID_LIBRARY_SHARED_FILE" text="_Delen"/>
@@ -1282,17 +1282,17 @@
 			</menu>
 			<menu text="_Internetdiensten">
 				<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Ticket bekijken"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Metadata downloaden"/>
+				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Metadata _downloaden"/>
 				<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="_Torrent bestand maken"/>
 			</menu>
-			<menu text="_Organiseren">
+			<menu text="O_rganiseren">
 				<item id="ID_LIBRARY_RENAME" text="Bestand _hernoemen"/>
 				<item id="ID_LIBRARY_MOVE" text="Bestanden ver_plaatsen..."/>
 				<item id="ID_LIBRARY_COPY" text="Bestanden _kopiëren..."/>
 			</menu>
-			<item id="ID_LIBRARY_FILE_REBUILD" text="Opnieuw _berekenen"/>
+			<item id="ID_LIBRARY_FILE_REBUILD" text="O_pnieuw berekenen"/>
 			<item id="ID_LIBRARY_REBUILD_ANSI" text="_Lokaliseer metadata"/>
 			<item id="ID_LIBRARY_REFRESH_METADATA" text="_Vernieuw metadata"/>
 			<separator/>
@@ -1303,7 +1303,7 @@
 			<item id="ID_LIBRARY_PROPERTIES" text="_Geavanceerde Eigenschappen"/>
 		</menu>
 		<menu name="CLibraryFileView.Virtual.Basic">
-			<item id="ID_LIBRARY_LAUNCH" text="_Openen of afspelen"/>
+			<item id="ID_LIBRARY_LAUNCH" text="Openen of af_spelen"/>
 			<item id="ID_LIBRARY_ENQUEUE" text="Toevoegen aan _afspeellijst"/>
 			<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Album _afspelen"/>
 			<separator/>
@@ -1322,9 +1322,9 @@
 			</menu>
 			<menu text="_Internetdiensten">
 				<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Ticket bekijken"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Metadata downloaden"/>
+				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Metadata _downloaden"/>
 			</menu>
-			<menu text="_Organiseren">
+			<menu text="O_rganiseren">
 				<item id="ID_LIBRARY_RENAME" text="Bestand _hernoemen"/>
 				<item id="ID_LIBRARY_UNLINK" text="_Bestanden verwijderen"/>
 				<separator/>
@@ -1339,7 +1339,7 @@
 			<item id="ID_LIBRARY_PROPERTIES" text="_Geavanceerde Eigenschappen"/>
 		</menu>
 		<menu name="CLibraryFileView.Virtual">
-			<item id="ID_LIBRARY_LAUNCH" text="_Openen of afspelen"/>
+			<item id="ID_LIBRARY_LAUNCH" text="Openen of af_spelen"/>
 			<item id="ID_LIBRARY_ENQUEUE" text="Toevoegen aan _afspeellijst"/>
 			<separator/>
 			<item id="ID_LIBRARY_SHARED_FILE" text="_Delen"/>
@@ -1357,18 +1357,18 @@
 			</menu>
 			<menu text="_Internetdiensten">
 				<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Ticket bekijken"/>
-				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Metadata downloaden"/>
+				<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Metadata _downloaden"/>
 				<separator/>
 				<item id="ID_LIBRARY_CREATETORRENT" text="_Torrent bestand maken"/>
 			</menu>
-			<menu text="_Organiseren">
+			<menu text="O_rganiseren">
 				<item id="ID_LIBRARY_UNLINK" text="_Bestanden verwijderen"/>
 				<separator/>
 				<item id="ID_LIBRARY_RENAME" text="Bestand _hernoemen"/>
 				<item id="ID_LIBRARY_MOVE" text="Bestanden ver_plaatsen..."/>
 				<item id="ID_LIBRARY_COPY" text="Bestanden _kopiëren..."/>
 			</menu>
-			<item id="ID_LIBRARY_FILE_REBUILD" text="Opnieuw _berekenen"/>
+			<item id="ID_LIBRARY_FILE_REBUILD" text="O_pnieuw berekenen"/>
 			<item id="ID_LIBRARY_REBUILD_ANSI" text="_Lokaliseer metadata"/>
 			<item id="ID_LIBRARY_REFRESH_METADATA" text="_Vernieuw metadata"/>
 			<separator/>
@@ -1389,7 +1389,7 @@
 			<menu text="Afspeel_lijst">
 				<item id="ID_MEDIA_PREVIOUS" text="V_orige"/>
 				<item id="ID_MEDIA_NEXT" text="_Volgende"/>
-				<item id="ID_MEDIA_RANDOM" text="_Willekeurige volgorde"/>
+				<item id="ID_MEDIA_RANDOM" text="Willekeu_rige volgorde"/>
 				<item id="ID_MEDIA_REPEAT" text="_Herhalen"/>
 				<separator/>
 				<item id="ID_MEDIA_PLAYLIST" text="Afspeel_lijst tonen"/>
@@ -1405,7 +1405,7 @@
 				<item id="ID_MEDIA_ASPECT_4_3" text="_4:3 ratio (TV)"/>
 				<item id="ID_MEDIA_ASPECT_16_9" text="_16:9 (film)"/>
 				<separator/>
-				<item id="ID_MEDIA_FULLSCREEN" text="V_olledig scherm"/>
+				<item id="ID_MEDIA_FULLSCREEN" text="Volledig _scherm"/>
 			</menu>
 			<menu text="_Instellingen">
 				<item id="ID_MEDIA_VIS" text="_Visualisatie uitkiezen..."/>
@@ -1427,7 +1427,7 @@
 			<menu text="Afspeel_lijst">
 				<item id="ID_MEDIA_PREVIOUS" text="V_orige"/>
 				<item id="ID_MEDIA_NEXT" text="_Volgende"/>
-				<item id="ID_MEDIA_RANDOM" text="_Willekeurige volgorde"/>
+				<item id="ID_MEDIA_RANDOM" text="Willekeu_rige volgorde"/>
 				<item id="ID_MEDIA_REPEAT" text="_Herhalen"/>
 				<separator/>
 				<item id="ID_MEDIA_PLAYLIST" text="Afspeel_lijst tonen"/>
@@ -1443,7 +1443,7 @@
 				<item id="ID_MEDIA_ASPECT_4_3" text="_4:3 ratio (TV)"/>
 				<item id="ID_MEDIA_ASPECT_16_9" text="_16:9 (film)"/>
 				<separator/>
-				<item id="ID_MEDIA_FULLSCREEN" text="V_olledig scherm"/>
+				<item id="ID_MEDIA_FULLSCREEN" text="Volledig _scherm"/>
 			</menu>
 			<menu text="_Instellingen">
 				<item id="ID_MEDIA_VIS" text="_Visualisatie uitkiezen..."/>
@@ -1470,17 +1470,17 @@
 			<item id="ID_MEDIA_RATE" text="Bestand _beoordelen..."/>
 			<item id="ID_MEDIA_PROPERTIES" text="_Eigenschappen..."/>
 			<separator/>
-			<item id="ID_MEDIA_ADD" text="_Bestand toevoegen..."/>
+			<item id="ID_MEDIA_ADD" text="Bestand _toevoegen..."/>
 			<item id="ID_MEDIA_ADD_FOLDER" text="_Map toevoegen..."/>
 			<item id="ID_MEDIA_REMOVE" text="Ver_wijderen"/>
 			<separator/>
-			<item id="ID_MEDIA_RANDOM" text="_Willekeurige volgorde"/>
+			<item id="ID_MEDIA_RANDOM" text="Willekeu_rige volgorde"/>
 			<item id="ID_MEDIA_REPEAT" text="_Herhalingsmode"/>
 			<separator/>
 			<item id="ID_MEDIA_OPEN" text="Afspeellijst _openen..."/>
 			<item id="ID_MEDIA_SAVE" text="Afspeellijst op_slaan..."/>
 			<item id="ID_MEDIA_EXPORT_COLLECTION" text="Verzameling e_xporteren..."/>
-			<item id="ID_MEDIA_CLEAR" text="Afspeellijst _wissen"/>
+			<item id="ID_MEDIA_CLEAR" text="Afspeellijst w_issen"/>
 			<separator/>
 			<item id="ID_MEDIA_PLAYLIST" text="Afspeel_lijst tonen"/>
 		</menu>
@@ -1517,7 +1517,7 @@
 			<separator/>
 			<item id="ID_NEIGHBOURS_COPY" text="_URI kopiëren"/>
 			<separator/>
-			<menu text="_Monitor">
+			<menu text="_Netwerken">
 				<item id="ID_NETWORK_CONNECT" text="_Verbinden"/>
 				<item id="ID_NETWORK_DISCONNECT" text="_Verbinding verbreken"/>
 				<separator/>
@@ -1595,8 +1595,8 @@
 			<separator/>
 			<item id="ID_DISCOVERY_BROWSE" text="_Statistieken bekijken"/>
 			<separator/>
-			<item id="ID_DISCOVERY_GNUTELLA" text="Toon _bootstraps"/>
-			<item id="ID_DISCOVERY_WEBCACHE" text="Toon _GWebCaches"/>
+			<item id="ID_DISCOVERY_GNUTELLA" text="Toon bootstra_ps"/>
+			<item id="ID_DISCOVERY_WEBCACHE" text="Toon GWeb_Caches"/>
 			<item id="ID_DISCOVERY_SERVERMET" text="Toon ser_ver.met's"/>
 			<separator/>
 			<item id="ID_DISCOVERY_ADD" text="Service _toevoegen..."/>
@@ -1647,11 +1647,11 @@
 			<separator/>
 			<menu text="Controle">
 				<item id="ID_IRC_IGNORE" text="_Negeren"/>
-				<item id="ID_IRC_UNIGNORE" text="_Niet Negeren"/>
+				<item id="ID_IRC_UNIGNORE" text="N_iet Negeren"/>
 				<item id="ID_IRC_OP" text="_Toelaten"/>
 				<item id="ID_IRC_DEOP" text="Niet _meer toelaten"/>
 				<item id="ID_IRC_VOICE" text="_Stem"/>
-				<item id="ID_IRC_DEVOICE" text="_Ontstem"/>
+				<item id="ID_IRC_DEVOICE" text="Ontst_em"/>
 				<item id="ID_IRC_KICK" text="_Kick"/>
 				<item id="ID_IRC_KICKWHY" text="Kick (waarom?)"/>
 				<item id="ID_IRC_BAN" text="_Ban"/>
@@ -1662,7 +1662,7 @@
 		</menu>
 		<menu name="WebServices.List.Menu">
 			<item id="ID_LIBRARY_BITZI_WEB" text="_Bitzi Ticket bekijken"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Metadata downloaden"/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Metadata _downloaden"/>
 			<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 		</menu>
 	</menus>
@@ -2247,7 +2247,7 @@
 			<text>, of om software te downloaden om de torrent te herstellen.</text>
 		</document>
 		<document name="GeneralHelp.DonkeyServerList">
-			<text format="b">De eDonkey Serverlijst is leeg.</text>
+			<text format="b">De eDonkey serverlijst is leeg.</text>
 			<newline gap="8"/>
 			<text>Er zijn geen servers in je eDonkey serverlijst. Je moet een recente
 		serverlijst hebben om te kunnen verbinden met ED2K.</text>
@@ -2410,8 +2410,8 @@
 		<tip id="ID_DOWNLOADS_LAUNCH_COMPLETE" message="De geselecteerde bestanden openen of afspelen."/>
 		<tip id="ID_DOWNLOADS_LAUNCH_COPY" message="Slimme voorvertoning van de geselecteerde download(s)."/>
 		<tip id="ID_DOWNLOADS_MONITOR" message="Open een download monitor venster voor deze download..."/>
-		<tip id="ID_DOWNLOADS_MOVE_DOWN" message="Geef de geselecteerde downloads een lagere voorkeur."/>
-		<tip id="ID_DOWNLOADS_MOVE_UP" message="Geef de geselecteerde downloads een hogere voorkeur."/>
+		<tip id="ID_DOWNLOADS_MOVE_DOWN" message="Geef de geselecteerde downloads een lagere prioriteit."/>
+		<tip id="ID_DOWNLOADS_MOVE_UP" message="Geef de geselecteerde downloads een hogere prioriteit."/>
 		<tip id="ID_DOWNLOADS_PAUSE" message="De geselecteerde downloads pauzeren."/>
 		<tip id="ID_DOWNLOADS_RATE" message="Beoordeel de geselecteerde download."/>
 		<tip id="ID_DOWNLOADS_REMOTE_PREVIEW" message="Download voorvertoon afbeelding van de geselecteerde download."/>
@@ -2446,7 +2446,7 @@
 		<tip id="ID_HOSTCACHE_CONNECT" message="Verbinden met de geselecteerde gastheren."/>
 		<tip id="ID_HOSTCACHE_DC_CACHE" message="DC++ gecachete hubs tonen."/>
 		<tip id="ID_HOSTCACHE_DISCONNECT" message="De verbinding verbreken met de geselecteerde gastheren."/>
-		<tip id="ID_HOSTCACHE_ED2K_CACHE" message="Toon eDonkey Servers."/>
+		<tip id="ID_HOSTCACHE_ED2K_CACHE" message="Toon eDonkey servers."/>
 		<tip id="ID_HOSTCACHE_ED2K_DOWNLOAD" message="Download een eDonkey &quot;server.met&quot; bestand..."/>
 		<tip id="ID_HOSTCACHE_G1_CACHE" message="Gnutella1 gecachete gastheren tonen."/>
 		<tip id="ID_HOSTCACHE_G2_CACHE" message="Gnutella2 gecachete gastheren tonen."/>
@@ -2737,7 +2737,7 @@
 		<string id="8002" value="Bestandseigenschappen"/>
 		<string id="8003" value="Profiel aanpassen"/>
 		<string id="8004" value="!Welkom bij Shareaza (version)!\n.\nShareaza is volledig gratis software.\nGebruik het alsjeblieft verantwoord en respecteer intellectuele eigendomsrechten.\n."/>
-		<string id="8005" value=" (bezig met afsluiten na verkeer)"/>
+		<string id="8005" value="(bezig met afsluiten na verkeer)"/>
 		<string id="8006" value="Je bent niet verbonden. Klik op &quot;verbinden&quot;."/>
 		<string id="8007" value="Er zijn geen actieve zoekopdrachten. Klik hier om naar bestanden te zoeken."/>
 		<string id="8008" value="Shareaza is klaar met het downloaden van versie (%s). Wil je nu upgraden?\n\nAls je Ja kiest, zal Shareaza tijdelijk worden afgesloten terwijl de upgrade wordt geïnstalleerd."/>
@@ -3164,7 +3164,7 @@
 		<string id="16810" value="jaar oud"/>
 		<string id="16811" value="Automatisch"/>
 		<string id="16813" value="Even wachten: Discovery services aan het vernieuwen..."/>
-		<string id="16814" value="Even wachten: De eDonkey server lijst aan het vernieuwen..."/>
+		<string id="16814" value="Even wachten: De eDonkey serverlijst aan het vernieuwen..."/>
 		<string id="16815" value="De UPnP Device Host Service loopt niet. Deze dienst is nodig om de setup te kunnen doen.\nJe moet het opstarttype van de service op automatisch zetten."/>
 		<string id="16816" value="Het eDonkey netwerk gebruikt grote wachtrijen met grote wachttijden. Door de maximum rijpositie te beperken zal je mogelijk problemen ondervinden om downloads te laten beginnen.\nWeet je zeker dat je de maximale rijpositie wilt beperken?"/>
 		<string id="16817" value="Windows ondersteunt geen bestandslocatie met meer dan 256 karakters.\nSelecteer een map met een kortere bestandslocatie."/>
@@ -3237,8 +3237,8 @@
 		<string id="17103" value="Gnutella2: Hub-naar-hub verbinding"/>
 		<string id="17104" value="Gnutella2: Leaf-naar-hub verbinding"/>
 		<string id="17105" value="Gnutella2: Hub-naar-leaf verbinding"/>
-		<string id="17106" value="eDonkey Server verbinding (LOWID: %lu)"/>
-		<string id="17107" value="eDonkey Server verbinding"/>
+		<string id="17106" value="eDonkey server verbinding (LOWID: %lu)"/>
+		<string id="17107" value="eDonkey server verbinding"/>
 		<string id="17108" value="Handshake"/>
 		<string id="17109" value="Inkomend"/>
 		<string id="17110" value="Uitgaand"/>
@@ -3259,18 +3259,18 @@
 		<string id="17125" value="G2 Peer"/>
 		<string id="17126" value="G2 Hub"/>
 		<string id="17127" value="G2 Leaf"/>
-		<string id="17128" value="eDonkey Server"/>
+		<string id="17128" value="eDonkey server"/>
 		<string id="17129" value="eDonkey (LowID)"/>
 		<string id="17130" value="eDonkey (HighID)"/>
 		<string id="17131" value="DC++ Hub Connectie"/>
-		<string id="17216" value="Verbinding met eDonkey Server &quot;%s&quot; wordt aangemaakt..."/>
-		<string id="17217" value="Verbonden met eDonkey Server %s, bezig met handshaking..."/>
+		<string id="17216" value="Verbinding met eDonkey server &quot;%s&quot; wordt aangemaakt..."/>
+		<string id="17217" value="Verbonden met eDonkey server %s, bezig met handshaking..."/>
 		<string id="17218" value="ED2K [%s] %s"/>
-		<string id="17219" value="eDonkey Server %s weigerde de verbinding."/>
-		<string id="17220" value="eDonkey Server %s online, cliënt ID is %lu."/>
-		<string id="17221" value="eDonkey Server %s veranderde onze cliënt ID van %lu naar %lu."/>
-		<string id="17222" value="eDonkey Server %s identificeerde zichzelf als &quot;%s&quot;."/>
-		<string id="17223" value="eDonkey Server %s weigerde de verbinding."/>
+		<string id="17219" value="eDonkey server %s weigerde de verbinding."/>
+		<string id="17220" value="eDonkey server %s online, cliënt ID is %lu."/>
+		<string id="17221" value="eDonkey server %s veranderde onze cliënt ID van %lu naar %lu."/>
+		<string id="17222" value="eDonkey server %s identificeerde zichzelf als &quot;%s&quot;."/>
+		<string id="17223" value="eDonkey server %s weigerde de verbinding."/>
 		<string id="17224" value="Fout opgetreden bij handshaking met eDonkey cliënt %s."/>
 		<string id="17225" value="eDonkey cliënt verbinding met %s is gesloten."/>
 		<string id="17226" value="Een verkeerd geformatteerd eDonkey pakket is ontvangen van %s (id=%x)."/>
@@ -3369,7 +3369,7 @@
 		<string id="20012" value="Beëindig"/>
 		<string id="20013" value="Alles"/>
 		<string id="20100" value="Verbinden"/>
-		<string id="20101" value="Verzoeken"/>
+		<string id="20101" value="Aanvragen"/>
 		<string id="20102" value="Antwoord"/>
 		<string id="20103" value="Downloaden"/>
 		<string id="20104" value="Tiger-tree"/>
@@ -3412,7 +3412,7 @@
 		<string id="20213" value="Gemiddeld"/>
 		<string id="20214" value="Goed"/>
 		<string id="20215" value="Erg goed"/>
-		<string id="20216" value="Perfect"/>
+		<string id="20216" value="Uitstekend"/>
 		<string id="20217" value="Kies de eMule gedeeltelijke(.part) map:"/>
 		<string id="20230" value="#"/>
 		<string id="20231" value="Titel"/>
@@ -3660,7 +3660,7 @@
 			<control caption="_Opties:"/>
 			<control caption="Deel gedeeltelijke downloads"/>
 			<control caption="Limiteer delen in hubmode"/>
-			<control caption="Deel nieuwe voorvertoningen"/>
+			<control caption="Deel voorvertoningen"/>
 			<control caption="Limiet per gastheer:"/>
 			<control/>
 			<control/>
@@ -3668,12 +3668,12 @@
 			<control/>
 			<control caption="+"/>
 			<control caption="-"/>
-			<control caption="_Bandbreedte:"/>
+			<control caption="B_andbreedte:"/>
 			<control caption="Limiet:"/>
 			<control/>
 			<control caption="Mode:"/>
 			<control caption="Maximaal|Gemiddeld"/>
-			<control caption="_Wachtrijen:"/>
+			<control caption="Wacht_rijen:"/>
 			<control/>
 			<control caption="_Nieuw..."/>
 			<control caption="_Bewerken..."/>
@@ -3757,11 +3757,11 @@
 			<control caption="_Globaal Zoeken:"/>
 			<control caption="Stop met zoeken na:"/>
 			<control caption="zoekresultaten."/>
-			<control caption="_eDonkey Connecties:"/>
+			<control caption="eDonkey _connecties:"/>
 			<control caption="Verbindt met niet meer dan:"/>
 			<control caption="andere eDonkey cliënten."/>
 			<control caption="eDonkey _tools:"/>
-			<control caption="eDonkey Serverlijst downloaden van het internet:"/>
+			<control caption="eDonkey serverlijst downloaden van het internet:"/>
 		</dialog>
 		<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsEdmsBuEdmsBuBuEdBuEdBuEdBuBuBuStStStStBu" caption="BitTorrent">
 			<control caption="Altijd verbinden met BitTorrent"/>
@@ -3771,10 +3771,10 @@
 			<control/>
 			<control/>
 			<control/>
-			<control caption="Wis gedownloade torrents     Wanneer deze deelverhouding is bereikt:"/>
+			<control caption="Wis gedownloade torrents     Als de deelverhouding is:"/>
 			<control/>
 			<control/>
-			<control caption=" Verkies torrent bronnen"/>
+			<control caption="Verkies torrent bronnen"/>
 			<control caption="Activeer EndGame Mode bij het afronden van torrents"/>
 			<control/>
 			<control/>
@@ -3783,7 +3783,7 @@
 			<control/>
 			<control caption="_BitTorrent Netwerk:"/>
 			<control caption="_Download verbindingen:"/>
-			<control caption="_Bewaar torrents hier:"/>
+			<control caption="Bewaar torrents _hier:"/>
 			<control caption="Torrents tegelijkertijd"/>
 			<control caption="cliënt verbindingen"/>
 			<control caption="%"/>
@@ -4042,7 +4042,7 @@
 			<control/>
 		</dialog>
 		<dialog name="CCertificateProfilePage" cookie="StBuStStStStBu" caption="Certificaat">
-			<control caption="Gnutella gebruikers worden geïdentificeerd aan de hand van een globaal unieke ID en een corresponderend publiek en privaat sleutelpaar. Normaal gesproken is het niet nodig om een nieuwe ID te genereren, Shareaza voorziet echter in deze optie voor gevorderde gebruikers."/>
+			<control caption="Gnutella gebruikers worden geïdentificeerd aan de hand van een globaal unieke ID en een corresponderend publiek en privaat sleutelpaar. Normaal gesproken is het niet nodig om een nieuwe ID te genereren, Shareaza voorziet echter in deze optie voor ervaren gebruikers."/>
 			<control caption="_Globaal unieke identificatiecertificaat:"/>
 			<control caption="GUID:"/>
 			<control/>
@@ -4079,7 +4079,7 @@
 			<control caption="Annuleren"/>
 		</dialog>
 		<dialog name="CFilterSearchDlg" cookie="BuEdBuStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuBuBuCoBuBuBuBuBu" caption="Filter resultaten">
-			<control caption="Alleen resultaten tonen die deze _woorden bevatten:"/>
+			<control caption="_Alleen resultaten tonen die deze woorden bevatten:"/>
 			<control/>
 			<control caption="Reg. Exp."/>
 			<control caption="( je kunt ook woorden uitsluiten met &quot;-woord&quot; )"/>
@@ -4219,7 +4219,7 @@
 			<control caption="_Toevoegen..."/>
 			<control caption="_Bewerken..."/>
 			<control caption="Ver_wijderen"/>
-			<control caption="_Weergave:"/>
+			<control caption="Weer_gave:"/>
 			<control caption="Raster"/>
 			<control caption="Verticale as"/>
 			<control caption="Legenda"/>
@@ -4242,7 +4242,7 @@
 			<control/>
 			<control caption="Eenheden:"/>
 			<control/>
-			<control caption="_Weergave:"/>
+			<control caption="Weer_gave:"/>
 			<control caption="Selecteer kleur..."/>
 			<control/>
 			<control caption="Ver_wijderen"/>
@@ -4352,7 +4352,7 @@
 		</dialog>
 		<dialog name="CWarningsDlg" cookie="StStStStStStBu" caption="Shareaza respecteert zijn gebruikers">
 			<control caption="Wist je al dat Shareaza een 100% gratis product is?"/>
-			<control caption="Shareaza bevat GEEN ENKELE &quot;spyware&quot;, &quot;adware&quot; of andere verpakte/verborgen software. Het laat GEEN advertenties of &quot;popups&quot; zien, niets daarvan.{n}{n}Als je ooit een advertentie of &quot;popup&quot; krijgt tijdens het gebruiken van Shareaza, kun je er gegarandeerd vanuit gaan dat ze NIET afkomstig zijn van dit programma."/>
+			<control caption="Shareaza bevat GEEN  &quot;spyware&quot;, &quot;adware&quot; of andere verpakte/verborgen software. Het laat GEEN advertenties of &quot;popups&quot; zien, niets daarvan.{n}{n}Als je ooit een advertentie of &quot;popup&quot; krijgt tijdens het gebruiken van Shareaza, kun je er gegarandeerd van uitgaan dat ze NIET afkomstig zijn van dit programma."/>
 			<control caption="Helaas komt een heleboel andere software met ongewenste adware of spyware, dus als je iets verdachts ziet doe je er goed aan om je PC na te kijken met een programma dat reclame of spyware verwijdert."/>
 			<control caption="Als het goed is heb je niets hoeven te betalen voor Shareaza. Het kan door iedereen gratis worden gedownload vanaf http://shareaza.sourceforge.net/. Als je toch iemand hebt moeten betalen voor Shareaza, moet je meteen een volledige terugbetaling eisen."/>
 			<control caption="Shareaza respecteert zijn gebruikers!"/>
@@ -4393,7 +4393,7 @@
 			<control caption="Annuleren"/>
 		</dialog>
 		<dialog name="CDonkeyServersDlg" cookie="StEdmsBuBu" caption="Server.met bestand downloaden">
-			<control caption="Je kunt een eDonkey Server.met bestand downloaden van het internet om je lokale lijst met servers te vernieuwen."/>
+			<control caption="Je kunt een eDonkey server.met bestand downloaden van het internet om je lokale lijst met servers te vernieuwen."/>
 			<control/>
 			<control/>
 			<control caption="OK"/>
@@ -4447,7 +4447,7 @@
 			<control/>
 			<control/>
 			<control/>
-			<control caption="WAARSCHUWING: Dit dialoogvenster voorziet geavanceerde download wijzigingsfuncties voor ervaren gebruikers welke indien incorrect ingesteld zijn kunnen leiden tot corruptie van downloads."/>
+			<control caption="Waarschuwing: Dit zijn geavanceerde download wijzigingsfuncties die bij verkeerd instellen kunnen leiden tot corruptie van downloads."/>
 			<control caption="Bestandsnaam en Groot_te:"/>
 			<control caption="Bestandsnaam:"/>
 			<control caption="Bestandsgrootte (Byte):"/>
@@ -4472,7 +4472,7 @@
 			<control caption="Data _Verwijderaar:"/>
 			<control caption="Byte bereik:"/>
 			<control caption="t/m"/>
-			<control caption="WAARSCHUWING: Dit dialoogvenster voorziet geavanceerde download wijzigingsfuncties voor ervaren gebruikers welke indien incorrect ingesteld zijn kunnen leiden tot corruptie van downloads."/>
+			<control caption="Waarschuwing: Dit zijn geavanceerde download wijzigingsfuncties die bij verkeerd instellen kunnen leiden tot corruptie van downloads."/>
 		</dialog>
 		<dialog name="CTorrentSeedDlg" cookie="StBuBuBuStms" caption="Torrentbestand openen">
 			<control caption="Je hebt een BitTorrent bestand geopend. Wil je de inhoud ervan downloaden of het opnieuw delen?"/>
@@ -4534,7 +4534,7 @@
 			<control caption="_Naam:"/>
 			<control caption="_Filters:"/>
 			<control caption="_Map voor de voltooide bestanden:"/>
-			<control caption="_Bestandstype (schema):"/>
+			<control caption="Bestandstype (_schema):"/>
 		</dialog>
 		<dialog name="CMediaVisDlg" cookie="BuSyCoBuBuBu" caption="Visualisatie selecteren">
 			<control caption="Selecteer een audiovisualisatie uit de lijst:"/>
