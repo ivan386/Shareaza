@@ -1,7 +1,7 @@
 //
 // DownloadWithTorrent.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -210,8 +210,8 @@ void CDownloadWithTorrent::Serialize(CArchive& ar, int nVersion)
 			ClearFile();
 
 			// Create a bunch of new empty files
-			CComPtr< CFragmentedFile > pFragFile = GetFile();
-			if ( ! pFragFile )
+			auto_ptr< CFragmentedFile > pFragFile( GetFile() );
+			if ( ! pFragFile.get() )
 				AfxThrowMemoryException();
 			if ( ! pFragFile->Open( m_pTorrent, ! IsSeeding() ) )
 				AfxThrowFileException( CFileException::genericException );
