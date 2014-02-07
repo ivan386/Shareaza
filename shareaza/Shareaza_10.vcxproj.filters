@@ -1143,6 +1143,9 @@
     <ClCompile Include="SecureRule.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="AntiVirus.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Midl Include="Shareaza.idl">
@@ -2296,6 +2299,9 @@
       <Filter>Header Files\Windows</Filter>
     </ClInclude>
     <ClInclude Include="SecureRule.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AntiVirus.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

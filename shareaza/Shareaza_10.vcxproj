@@ -297,6 +297,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AlbumFolder.cpp" />
+    <ClCompile Include="AntiVirus.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="AutocompleteEdit.cpp" />
     <ClCompile Include="BENode.cpp" />
@@ -713,6 +714,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AlbumFolder.h" />
+    <ClInclude Include="AntiVirus.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="AutocompleteEdit.h" />
     <ClInclude Include="BENode.h" />

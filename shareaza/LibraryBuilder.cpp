@@ -22,6 +22,7 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
+#include "AntiVirus.h"
 #include "SharedFile.h"
 #include "Library.h"
 #include "LibraryBuilder.h"
@@ -648,10 +649,13 @@ bool CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile)
 	LibraryMaps.CullDeletedFiles( pFile );
 	LibraryHistory.Add( szPath, pDownload );
 
+	
+	// Scan for viruses
+	if ( ! AntiVirus.Scan( pFile->GetPath() ) ||
 	// child pornography check
-	if ( Settings.Search.AdultFilter &&
+		( Settings.Search.AdultFilter &&
 		( AdultFilter.IsChildPornography( pFile->GetSearchName() ) ||
-		AdultFilter.IsChildPornography( pFile->GetMetadataWords() ) ) )
+		  AdultFilter.IsChildPornography( pFile->GetMetadataWords() ) ) ) )
 	{
 		pFile->m_bVerify = TRI_FALSE;
 		pFile->SetShared( false );
