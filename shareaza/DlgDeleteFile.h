@@ -1,7 +1,7 @@
 //
 // DlgDeleteFile.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,7 +22,6 @@
 #pragma once
 
 #include "DlgSkinDialog.h"
-#include "afxwin.h"
 
 class CDownload;
 class CLibraryFile;
@@ -75,5 +74,7 @@ protected:
 	afx_msg void OnCbnChangeGhostRating();
 	afx_msg void OnChangeComments();
 	afx_msg void OnClickedCreateGhost();
+	afx_msg void OnCbnDropdownOptions();
+
 	DECLARE_MESSAGE_MAP()
 };

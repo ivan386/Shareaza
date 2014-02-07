@@ -1,7 +1,7 @@
 //
 // WndSettingsSheet.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -68,13 +68,12 @@ public:
 	INT_PTR			GetPageCount() const;
 	CSettingsPage*	GetActivePage() const;
 	BOOL			SetActivePage(CSettingsPage* pPage);
-	BOOL			SetActivePage(int nPage);
 	BOOL			IsModified() const;
 	void			SetModified(BOOL bChanged = TRUE);
 	INT_PTR			DoModal();
 protected:
 	void			BuildTree();
-	BOOL			CreatePage(CSettingsPage* pPage);
+	BOOL			CreatePage(const CRect& rc, CSettingsPage* pPage);
 	virtual void	DoPaint(CDC& dc);
 
 // Overrides

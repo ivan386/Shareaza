@@ -1,7 +1,7 @@
 //
 // DlgSelect.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -46,6 +46,7 @@ void CSelectDialog::DoDataExchange(CDataExchange* pDX)
 }
 
 BEGIN_MESSAGE_MAP(CSelectDialog, CSkinDialog)
+	ON_CBN_DROPDOWN(IDC_FILE_LIST, &CSelectDialog::OnCbnDropdownList)
 END_MESSAGE_MAP()
 
 // CSelectDialog message handlers
@@ -58,32 +59,15 @@ BOOL CSelectDialog::OnInitDialog()
 
 	m_ListCtrl.SetExtendedUI();
 
-	int dx = m_ListCtrl.GetHorizontalExtent();
-	CDC* pDC = m_ListCtrl.GetDC();
-	CFont* pFont = m_ListCtrl.GetFont();
-	CFont* pOldFont = pDC->SelectObject( pFont );
-	CSize sz;
-	TEXTMETRIC tm = {};
-	pDC->GetTextMetrics( &tm );
 	int select = 0;
 	for ( POSITION pos = m_List.GetHeadPosition(); pos; )
 	{
-		CItem it = m_List.GetNext( pos );
-		int index = m_ListCtrl.AddString( it.m_sItem );
+		const CItem it = m_List.GetNext( pos );
+		const int index = m_ListCtrl.AddString( it.m_sItem );
 		m_ListCtrl.SetItemData( index, it.m_nData );
 		if ( it.m_nData == m_nData )
 			select = index;
-		sz = pDC->GetTextExtent( it.m_sItem );
-		sz.cx += tm.tmAveCharWidth;
-		if ( sz.cx > dx )
-			dx = sz.cx;
 	}
-	pDC->SelectObject( pOldFont );
-	m_ListCtrl.ReleaseDC( pDC );
-
-	dx += GetSystemMetrics( SM_CXVSCROLL ) + 2 * GetSystemMetrics( SM_CXEDGE );
-	m_ListCtrl.SetHorizontalExtent( dx );
-	m_ListCtrl.SetDroppedWidth( dx );
 
 	m_ListCtrl.SetCurSel( select );
 
@@ -102,4 +86,9 @@ void CSelectDialog::OnCancel()
 	m_nData = m_ListCtrl.GetItemData( m_ListCtrl.GetCurSel() );
 
 	CSkinDialog::OnCancel();
+}
+
+void CSelectDialog::OnCbnDropdownList()
+{
+	RecalcDropWidth( &m_ListCtrl );
 }
