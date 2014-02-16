@@ -1,7 +1,7 @@
 //
 // ShakeNeighbour.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -595,7 +595,7 @@ BOOL CShakeNeighbour::ReadResponse()
 	if ( ! Read( strLine ) ) return TRUE; // The line is still arriving, return true to try this method again
 	if ( strLine.GetLength() > HTTP_HEADER_MAX_LINE ) strLine = _T("#LINE_TOO_LONG#"); // Make sure the line isn't too long
 
-	if ( m_bInitiated ) theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING, _T("%s >> HANDSHAKE: %s"), (LPCTSTR)m_sAddress, (LPCTSTR)strLine ); // Report handshake lines
+	theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING, _T("%s >> HANDSHAKE: %s"), (LPCTSTR)m_sAddress, (LPCTSTR)strLine ); // Report handshake lines
 
 	// If we initiated the connection to the remote computer, and now it's responding with "GNUTELLA OK"
 	if ( strLine == _T("GNUTELLA OK") && m_bInitiated )
@@ -612,12 +612,9 @@ BOOL CShakeNeighbour::ReadResponse()
 		if ( strLine != _T("GNUTELLA/0.6 200 OK") )
 		{
 			// Clip out just the part that says why we were rejected, document it, and set the state to rejected
-			strLine = strLine.Mid( 13 );
+			strLine = strLine.Mid( 13, 3 );
 			m_nState = nrsRejected; // Set the neighbour state in this CShakeNeighbour object to rejected
-			if ( strLine == _T("503 Not Good Leaf") ||
-				 strLine == _T("503 We're Leaves") ||
-				 strLine == _T("503 Service unavailable") ||
-				 strLine == _T("503 Shielded leaf node") )
+			if ( strLine == _T("503") )
 			{
 				m_bDelayClose = TRUE;
 			}

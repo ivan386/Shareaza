@@ -1,7 +1,7 @@
 //
 // NeighboursWithRouting.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -61,7 +61,9 @@ void CNeighboursWithRouting::Connect()
 int CNeighboursWithRouting::Broadcast(CPacket* pPacket, CNeighbour* pExcept, BOOL bGGEP)
 {
 	// Have this thread get exclusive access to the network object (do)
-	CSingleLock pLock( &Network.m_pSection, TRUE ); // When this method returns, pLock will go out of scope and release access
+	CSingleLock pLock( &Network.m_pSection ); // When this method returns, pLock will go out of scope and release access
+	if ( ! pLock.Lock( 100 ) )
+		return 0;
 
 	// Count how many neighbours we will send this packet to
 	int nCount = 0;

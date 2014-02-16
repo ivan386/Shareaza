@@ -1,7 +1,7 @@
 //
 // NeighboursWithConnect.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -111,7 +111,9 @@ CNeighbour* CNeighboursWithConnect::ConnectTo(
 	if ( bAutomatic && Network.IsFirewalledAddress( &pAddress, TRUE ) )
 		return NULL;
 	
-	CSingleLock pLock( &Network.m_pSection, TRUE );
+	CSingleLock pLock( &Network.m_pSection );
+	if ( ! pLock.Lock( 100 ) )
+		return NULL;
 
 	// If the list of connected computers already has this IP address
 	if ( Get( pAddress ) )
@@ -226,28 +228,25 @@ CNeighbour* CNeighboursWithConnect::ConnectTo(
 BOOL CNeighboursWithConnect::OnAccept(CConnection* pConnection)
 {
 	CSingleLock pLock( &Network.m_pSection );
-	if ( pLock.Lock( 250 ) )
+	if ( ! pLock.Lock( 100 ) )
+		// Try later
+		return TRUE;
+
+	if ( Neighbours.Get( pConnection->m_pHost.sin_addr ) )
 	{
-		if ( Neighbours.Get( pConnection->m_pHost.sin_addr ) )
-		{
-			pConnection->Write( _P("GNUTELLA/0.6 503 Duplicate connection\r\n\r\n") );
-			pConnection->LogOutgoing();
-			pConnection->DelayClose( IDS_CONNECTION_ALREADY_REFUSE );
-			return TRUE;
-		}
-
-		if ( CShakeNeighbour* pNeighbour = new CShakeNeighbour() )
-		{
-			pNeighbour->AttachTo( pConnection );
-			return FALSE;
-		}
+		pConnection->Write( _P("GNUTELLA/0.6 503 Duplicate connection\r\n\r\n") );
+		pConnection->LogOutgoing();
+		pConnection->DelayClose( IDS_CONNECTION_ALREADY_REFUSE );
+		return TRUE;
 	}
-	else
-		theApp.Message( MSG_ERROR, _T("Rejecting %s connection from %s, network core overloaded."), _T("neighbour"), (LPCTSTR)pConnection->m_sAddress );
 
-	pConnection->Write( _P("GNUTELLA/0.6 503 Busy\r\n\r\n") );
-	pConnection->LogOutgoing();
-	pConnection->DelayClose( IDS_CONNECTION_CLOSED );
+	if ( CShakeNeighbour* pNeighbour = new CShakeNeighbour() )
+	{
+		pNeighbour->AttachTo( pConnection );
+		return FALSE;
+	}
+
+	// Out of memory
 	return TRUE;
 }
 
