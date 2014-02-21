@@ -1428,6 +1428,8 @@ BOOL CShakeNeighbour::OnHeadersCompleteG1()
 // Creates a new GC1Neighbour or CG2Neighbour object based on this one, and deletes this one
 void CShakeNeighbour::OnHandshakeComplete()
 {
+	m_bAutoDelete = FALSE;
+
 	// Remove this CShakeNeighbour object from the list of them the neighbours object keeps
 	Neighbours.Remove( this );
 
