@@ -1146,6 +1146,9 @@
     <ClCompile Include="AntiVirus.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DlgHex.cpp">
+      <Filter>Source Files\Dialogs</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Midl Include="Shareaza.idl">
@@ -2303,6 +2306,9 @@
     </ClInclude>
     <ClInclude Include="AntiVirus.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgHex.h">
+      <Filter>Header Files\Dialogs</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

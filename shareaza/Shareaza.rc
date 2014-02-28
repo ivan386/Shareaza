@@ -1927,6 +1927,16 @@ BEGIN
                     "msctls_progress32",WS_BORDER,8,78,234,10
 END
 
+IDD_DEBUG_HEX DIALOGEX 0, 0, 316, 184
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Enter hexadecimal string"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,183,161,60,16
+    PUSHBUTTON      "Cancel",IDCANCEL,249,161,60,16
+    EDITTEXT        IDC_EDIT_HEX,7,7,302,146,ES_MULTILINE | ES_AUTOVSCROLL | ES_WANTRETURN | WS_VSCROLL
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -2701,6 +2711,14 @@ BEGIN
         HORZGUIDE, 72
         HORZGUIDE, 78
         HORZGUIDE, 88
+    END
+
+    IDD_DEBUG_HEX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 309
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 177
     END
 END
 #endif    // APSTUDIO_INVOKED

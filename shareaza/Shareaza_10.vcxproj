@@ -329,6 +329,7 @@
     <ClCompile Include="DCPacket.cpp" />
     <ClCompile Include="DDEServer.cpp" />
     <ClCompile Include="DiscoveryServices.cpp" />
+    <ClCompile Include="DlgHex.cpp" />
     <ClCompile Include="Download.cpp" />
     <ClCompile Include="DownloadBase.cpp" />
     <ClCompile Include="DownloadGroup.cpp" />
@@ -746,6 +747,7 @@
     <ClInclude Include="DCPacket.h" />
     <ClInclude Include="DDEServer.h" />
     <ClInclude Include="DiscoveryServices.h" />
+    <ClInclude Include="DlgHex.h" />
     <ClInclude Include="Download.h" />
     <ClInclude Include="DownloadBase.h" />
     <ClInclude Include="DownloadGroup.h" />
