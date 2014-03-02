@@ -520,7 +520,7 @@ msgstr "_Venster sluiten"
 #: cmediaframe.basic;53;item;id_media_fullscreen
 #: cmediaframe;56;item;id_media_fullscreen
 msgid "_Full Screen"
-msgstr "V_olledig scherm"
+msgstr "Volledig _scherm"
 
 #: child;item;id_child_restore
 msgid "_Restore"
@@ -836,7 +836,7 @@ msgstr "Shareaza S_kin Site"
 #: cmainwnd.tabbed;15;item;id_help_version_check
 #: cmainwnd.windowed;23;item;id_help_version_check
 msgid "Check for new _version"
-msgstr "_Check Version"
+msgstr "_Controleer versie"
 
 #: cmainwnd.basic;6;item;id_help_about cmainwnd.tabbed;15;item;id_help_about
 #: cmainwnd.windowed;23;item;id_help_about
@@ -1265,7 +1265,7 @@ msgstr "_Bekijk commentaar"
 #: cdownloadswnd.download.basic;item;id_downloads_resume
 #: cdownloadswnd.download;item;id_downloads_resume
 msgid "_Resume Download"
-msgstr "_Hervatten"
+msgstr "He_rvatten"
 
 #: cdownloadswnd.download.basic;item;id_downloads_pause
 #: cdownloadswnd.download;item;id_downloads_pause
@@ -1370,7 +1370,7 @@ msgstr "_Vergeten"
 #: clibraryfileview.virtual.basic;item;id_library_launch
 #: clibraryfileview.virtual;item;id_library_launch
 msgid "_Open or Play"
-msgstr "_Openen of afspelen"
+msgstr "Openen of af_spelen"
 
 #: cdownloadswnd.completed.basic;item;id_downloads_clear_complete
 #: cdownloadswnd.completed;item;id_downloads_clear_complete
@@ -1411,7 +1411,7 @@ msgstr "_Automatisch wissen"
 
 #: cdownloadtabbar;item;id_download_group_resume
 msgid "_Resume All"
-msgstr "Alles _hervatten"
+msgstr "Alles he_rvatten"
 
 #: cdownloadtabbar;item;id_download_group_pause
 msgid "P_ause All"
@@ -1466,7 +1466,7 @@ msgstr "Nu _starten"
 
 #: cuploadswnd.queue;item;id_uploads_edit_queue
 msgid "_Queue Settings"
-msgstr "_Wachtrij instellingen"
+msgstr "Wacht_rij instellingen"
 
 #: cuploadswnd.filter;item;id_uploads_filter_queued
 msgid "Show _Queued"
@@ -1523,7 +1523,7 @@ msgstr "_Scannen"
 #: clibraryfileview.physical;item;id_library_file_rebuild
 #: clibraryfileview.virtual;item;id_library_file_rebuild
 msgid "Re_build"
-msgstr "Opnieuw _berekenen"
+msgstr "O_pnieuw berekenen"
 
 #: clibrarytree.physical;item;id_library_folder_file_properties
 #: clibrarytree.virtual.basic;item;id_library_folder_file_properties
@@ -1551,7 +1551,7 @@ msgstr "Ver_wijderen"
 #: clibrarytree.virtual.basic;item;id_library_folder_properties
 #: clibrarytree.virtual;item;id_library_folder_properties
 msgid "Album _Properties"
-msgstr "Album _eigenschappen"
+msgstr "Album e_igenschappen"
 
 #: clibrarytree.virtual;item;id_library_export_collection
 #: cmedialist;item;id_media_export_collection
@@ -1572,7 +1572,7 @@ msgstr "_Openen"
 #: clibraryfileview.virtual;50;item;id_library_bitzi_download
 #: webservices.list.menu;item;id_library_bitzi_download
 msgid "_Download Metadata"
-msgstr "_Metadata downloaden"
+msgstr "Metadata _downloaden"
 
 #: clibraryfileview.physical.basic;41;item;id_webservices_musicbrainz
 #: clibraryfileview.physical;44;item;id_webservices_musicbrainz
@@ -1583,7 +1583,7 @@ msgstr "_MusicBrainz"
 #: clibraryfileview.physical.basic;42 clibraryfileview.physical;45
 #: clibraryfileview.virtual.basic;48 clibraryfileview.virtual;51
 msgid "O_rganise"
-msgstr "_Organiseren"
+msgstr "O_rganiseren"
 
 #: clibraryfileview.physical.basic;42;item;id_library_rename
 #: clibraryfileview.physical;45;item;id_library_rename
@@ -1663,7 +1663,7 @@ msgstr "_Volgende"
 #: cmediaframe.basic;52;item;id_media_random
 #: cmediaframe;55;item;id_media_random
 msgid "_Random"
-msgstr "_Willekeurige volgorde"
+msgstr "Willekeu_rige volgorde"
 
 #: cmediaframe.basic;52;item;id_media_repeat
 #: cmediaframe;55;item;id_media_repeat
@@ -1753,7 +1753,7 @@ msgstr "Bestand sl_uiten"
 
 #: cmedialist;item;id_media_add
 msgid "_Add File..."
-msgstr "_Bestand toevoegen..."
+msgstr "Bestand _toevoegen..."
 
 #: cmedialist;item;id_media_add_folder
 msgid "Add _Folder..."
@@ -1761,7 +1761,7 @@ msgstr "_Map toevoegen..."
 
 #: cmedialist;item;id_media_random
 msgid "Ra_ndom Mode"
-msgstr "_Willekeurige volgorde"
+msgstr "Willekeu_rige volgorde"
 
 #: cmedialist;item;id_media_repeat
 msgid "Rep_eat Mode"
@@ -1777,7 +1777,7 @@ msgstr "Afspeellijst op_slaan..."
 
 #: cmedialist;item;id_media_clear
 msgid "_Clear Playlist"
-msgstr "Afspeellijst _wissen"
+msgstr "Afspeellijst w_issen"
 
 #: csystemwnd;58
 msgid "_Verbose Mode"
@@ -1818,7 +1818,7 @@ msgstr "_Wis buffer"
 
 #: cneighbourswnd;59
 msgid "_Networks"
-msgstr "_Monitor"
+msgstr "_Netwerken"
 
 #: cneighbourswnd;59;item;id_network_g2
 msgid "_Gnutella2"
@@ -1942,11 +1942,11 @@ msgstr "_Statistieken bekijken"
 
 #: cdiscoverywnd;item;id_discovery_gnutella
 msgid "Show _Bootstraps"
-msgstr "Toon _bootstraps"
+msgstr "Toon bootstra_ps"
 
 #: cdiscoverywnd;item;id_discovery_webcache
 msgid "Show _GWebCaches"
-msgstr "Toon _GWebCaches"
+msgstr "Toon GWeb_Caches"
 
 #: cdiscoverywnd;item;id_discovery_servermet
 msgid "Show Ser_ver.met's"
@@ -2039,7 +2039,7 @@ msgstr "_Negeren"
 
 #: circuserlist;64;item;id_irc_unignore
 msgid "_Unignore"
-msgstr "_Niet Negeren"
+msgstr "N_iet Negeren"
 
 #: circuserlist;64;item;id_irc_op
 msgid "_Op"
@@ -2055,7 +2055,7 @@ msgstr "_Stem"
 
 #: circuserlist;64;item;id_irc_devoice
 msgid "D_evoice"
-msgstr "_Ontstem"
+msgstr "Ontst_em"
 
 #: circuserlist;64;item;id_irc_kick
 msgid "_Kick"
@@ -2937,7 +2937,7 @@ msgstr ", of om software te downloaden om de torrent te herstellen."
 
 #: generalhelp.donkeyserverlist;text;1
 msgid "Your eDonkey server list is empty"
-msgstr "De eDonkey Serverlijst is leeg."
+msgstr "De eDonkey serverlijst is leeg."
 
 #: generalhelp.donkeyserverlist;text;2
 msgid ""
@@ -3423,11 +3423,11 @@ msgstr "Open een download monitor venster voor deze download..."
 
 #: message;id_downloads_move_down
 msgid "Move the selected download(s) down the priority list."
-msgstr "Geef de geselecteerde downloads een lagere voorkeur."
+msgstr "Geef de geselecteerde downloads een lagere prioriteit."
 
 #: message;id_downloads_move_up
 msgid "Move the selected download(s) up the priority list."
-msgstr "Geef de geselecteerde downloads een hogere voorkeur."
+msgstr "Geef de geselecteerde downloads een hogere prioriteit."
 
 #: message;id_downloads_pause
 msgid "Pause the selected download(s)."
@@ -3548,7 +3548,7 @@ msgstr "De verbinding verbreken met de geselecteerde gastheren."
 
 #: message;id_hostcache_ed2k_cache
 msgid "Show eDonkey servers."
-msgstr "Toon eDonkey Servers."
+msgstr "Toon eDonkey servers."
 
 #: message;id_hostcache_ed2k_download
 msgid "Download an eDonkey \"server.met\" file..."
@@ -4673,7 +4673,7 @@ msgstr "!Welkom bij Shareaza (version)!\\n.\\nShareaza is volledig gratis softwa
 
 #: string;8005
 msgid "(closing after transfers)"
-msgstr " (bezig met afsluiten na verkeer)"
+msgstr "(bezig met afsluiten na verkeer)"
 
 #: string;8006
 msgid "You're not connected. Click the Connect button to get started."
@@ -6334,7 +6334,7 @@ msgstr "Even wachten: Discovery services aan het vernieuwen..."
 
 #: string;16814
 msgid "Please wait: Updating eDonkey server list..."
-msgstr "Even wachten: De eDonkey server lijst aan het vernieuwen..."
+msgstr "Even wachten: De eDonkey serverlijst aan het vernieuwen..."
 
 #: string;16815
 msgid "UPnP Device Host Service is not running. This service is required to perform the setup.\\nYou need to set the startup type of the service to automatic."
@@ -6618,11 +6618,11 @@ msgstr "Gnutella2: Hub-naar-leaf verbinding"
 
 #: string;17106
 msgid "eDonkey Server Connection (LOWID: %lu)"
-msgstr "eDonkey Server verbinding (LOWID: %lu)"
+msgstr "eDonkey server verbinding (LOWID: %lu)"
 
 #: string;17107
 msgid "eDonkey Server Connection"
-msgstr "eDonkey Server verbinding"
+msgstr "eDonkey server verbinding"
 
 #: string;17108
 msgid "Handshake"
@@ -6706,7 +6706,7 @@ msgstr "G2 Leaf"
 
 #: string;17128
 msgid "eDonkey Server"
-msgstr "eDonkey Server"
+msgstr "eDonkey server"
 
 #: string;17129
 msgid "eDonkey (LowID)"
@@ -6722,11 +6722,11 @@ msgstr "DC++ Hub Connectie"
 
 #: string;17216
 msgid "Initiating connection to eDonkey server at %s..."
-msgstr "Verbinding met eDonkey Server \"%s\" wordt aangemaakt..."
+msgstr "Verbinding met eDonkey server \"%s\" wordt aangemaakt..."
 
 #: string;17217
 msgid "Connected to eDonkey server %s, handshaking..."
-msgstr "Verbonden met eDonkey Server %s, bezig met handshaking..."
+msgstr "Verbonden met eDonkey server %s, bezig met handshaking..."
 
 #: string;17218
 msgid "ED2K[%s] %s"
@@ -6734,23 +6734,23 @@ msgstr "ED2K [%s] %s"
 
 #: string;17219
 msgid "eDonkey server %s refused connection."
-msgstr "eDonkey Server %s weigerde de verbinding."
+msgstr "eDonkey server %s weigerde de verbinding."
 
 #: string;17220
 msgid "eDonkey server %s online, client ID is %lu."
-msgstr "eDonkey Server %s online, cliënt ID is %lu."
+msgstr "eDonkey server %s online, cliënt ID is %lu."
 
 #: string;17221
 msgid "eDonkey server %s changed our client ID from %lu to %lu."
-msgstr "eDonkey Server %s veranderde onze cliënt ID van %lu naar %lu."
+msgstr "eDonkey server %s veranderde onze cliënt ID van %lu naar %lu."
 
 #: string;17222
 msgid "eDonkey server %s identified itself as \"%s\"."
-msgstr "eDonkey Server %s identificeerde zichzelf als \"%s\"."
+msgstr "eDonkey server %s identificeerde zichzelf als \"%s\"."
 
 #: string;17223
 msgid "eDonkey server %s rejected the connection."
-msgstr "eDonkey Server %s weigerde de verbinding."
+msgstr "eDonkey server %s weigerde de verbinding."
 
 #: string;17224
 msgid "Error exchanging handshake with eDonkey client %s."
@@ -7126,7 +7126,7 @@ msgstr "Alles"
 
 #: string;20101
 msgid "Requesting"
-msgstr "Verzoeken"
+msgstr "Aanvragen"
 
 #: string;20102
 msgid "Response"
@@ -7278,7 +7278,7 @@ msgstr "Erg goed"
 
 #: string;20216
 msgid "Excellent"
-msgstr "Perfect"
+msgstr "Uitstekend"
 
 #: string;20217
 msgid "Select the eDonkey/eMule temp folder:"
@@ -7899,7 +7899,7 @@ msgstr "Limiteer delen in hubmode"
 
 #: cuploadssettingspage;control;4
 msgid "Share preview files"
-msgstr "Deel nieuwe voorvertoningen"
+msgstr "Deel voorvertoningen"
 
 #: cuploadssettingspage;control;5
 msgid "Limit per unique host:"
@@ -7919,7 +7919,7 @@ msgstr "-"
 
 #: cuploadssettingspage;control;12
 msgid "_Bandwidth:"
-msgstr "_Bandbreedte:"
+msgstr "B_andbreedte:"
 
 #: cuploadssettingspage;control;13
 msgid "Limit:"
@@ -7935,7 +7935,7 @@ msgstr "Maximaal|Gemiddeld"
 
 #: cuploadssettingspage;control;17
 msgid "_Queues:"
-msgstr "_Wachtrijen:"
+msgstr "Wacht_rijen:"
 
 #: cuploadssettingspage;control;19
 msgid "_New..."
@@ -8159,7 +8159,7 @@ msgstr "zoekresultaten."
 
 #: cdonkeysettingspage;control;14
 msgid "_Client Link Connections:"
-msgstr "_eDonkey Connecties:"
+msgstr "eDonkey _connecties:"
 
 #: cdonkeysettingspage;control;15
 msgid "Connect to no more than:"
@@ -8175,7 +8175,7 @@ msgstr "eDonkey _tools:"
 
 #: cdonkeysettingspage;control;18
 msgid "Download eDonkey server list from the web:"
-msgstr "eDonkey Serverlijst downloaden van het internet:"
+msgstr "eDonkey serverlijst downloaden van het internet:"
 
 #: cbittorrentsettingspage;control;1
 msgid "Always connect to BitTorrent"
@@ -8191,11 +8191,11 @@ msgstr "Inschakelen BitTorrent DHT"
 
 #: cbittorrentsettingspage;control;8
 msgid "Clear downloaded torrents     When the share ratio reaches:"
-msgstr "Wis gedownloade torrents     Wanneer deze deelverhouding is bereikt:"
+msgstr "Wis gedownloade torrents     Als de deelverhouding is:"
 
 #: cbittorrentsettingspage;control;11
 msgid "Prefer torrent sources"
-msgstr " Verkies torrent bronnen"
+msgstr "Verkies torrent bronnen"
 
 #: cbittorrentsettingspage;control;12
 msgid "Enable EndGame mode when completing torrents"
@@ -8211,7 +8211,7 @@ msgstr "_Download verbindingen:"
 
 #: cbittorrentsettingspage;control;20
 msgid "_Store Torrents Here:"
-msgstr "_Bewaar torrents hier:"
+msgstr "Bewaar torrents _hier:"
 
 #: cbittorrentsettingspage;control;21
 msgid "Torrents at once"
@@ -8772,7 +8772,7 @@ msgstr "Certificaat"
 
 #: ccertificateprofilepage;control;1
 msgid "Users are identified by a globally unique identifier and a corresponding public and private key pair.  Normally there is no need to generate a new ID, however Shareaza provides this option for advanced users."
-msgstr "Gnutella gebruikers worden geïdentificeerd aan de hand van een globaal unieke ID en een corresponderend publiek en privaat sleutelpaar. Normaal gesproken is het niet nodig om een nieuwe ID te genereren, Shareaza voorziet echter in deze optie voor gevorderde gebruikers."
+msgstr "Gnutella gebruikers worden geïdentificeerd aan de hand van een globaal unieke ID en een corresponderend publiek en privaat sleutelpaar. Normaal gesproken is het niet nodig om een nieuwe ID te genereren, Shareaza voorziet echter in deze optie voor ervaren gebruikers."
 
 #: ccertificateprofilepage;control;2
 msgid "_Globally Unique Identification Certificate:"
@@ -8840,7 +8840,7 @@ msgstr "Filter resultaten"
 
 #: cfiltersearchdlg;control;1
 msgid "Only show matches which include the _words:"
-msgstr "Alleen resultaten tonen die deze _woorden bevatten:"
+msgstr "_Alleen resultaten tonen die deze woorden bevatten:"
 
 #: cfiltersearchdlg;control;3 csecureruledlg;control;21
 msgid "Reg. Exp."
@@ -9076,7 +9076,7 @@ msgstr "Grafieken"
 
 #: cgraphlistdlg;control;5
 msgid "_Show:"
-msgstr "_Weergave:"
+msgstr "Weer_gave:"
 
 #: cgraphlistdlg;control;6
 msgid "Grid Lines"
@@ -9120,7 +9120,7 @@ msgstr "Eenheden:"
 
 #: cgraphitemdlg;control;9
 msgid "_Display:"
-msgstr "_Weergave:"
+msgstr "Weer_gave:"
 
 #: cgraphitemdlg;control;10
 msgid "Select Colour..."
@@ -9324,7 +9324,7 @@ msgstr "Wist je al dat Shareaza een 100% gratis product is?"
 
 #: cwarningsdlg;control;2
 msgid "Shareaza does NOT contain ANY \"spyware\", \"adware\" or other bundled software. It does NOT display any advertisements or \"popups\", ever.{n}{n}If you ever see advertising or \"popups\" while using Shareaza, be assured that they are NOT coming from this program."
-msgstr "Shareaza bevat GEEN ENKELE \"spyware\", \"adware\" of andere verpakte/verborgen software. Het laat GEEN advertenties of \"popups\" zien, niets daarvan.{n}{n}Als je ooit een advertentie of \"popup\" krijgt tijdens het gebruiken van Shareaza, kun je er gegarandeerd vanuit gaan dat ze NIET afkomstig zijn van dit programma."
+msgstr "Shareaza bevat GEEN  \"spyware\", \"adware\" of andere verpakte/verborgen software. Het laat GEEN advertenties of \"popups\" zien, niets daarvan.{n}{n}Als je ooit een advertentie of \"popup\" krijgt tijdens het gebruiken van Shareaza, kun je er gegarandeerd van uitgaan dat ze NIET afkomstig zijn van dit programma."
 
 #: cwarningsdlg;control;3
 msgid "Unfortunately a lot of other software does come with undesirable adware or spyware, so if you see something suspicious you may wish to check your PC with an advertising or spyware removal program."
@@ -9420,7 +9420,7 @@ msgstr "Server.met bestand downloaden"
 
 #: cdonkeyserversdlg;control;1
 msgid "You can download an eDonkey server.met file from the web to refresh your local list of servers."
-msgstr "Je kunt een eDonkey Server.met bestand downloaden van het internet om je lokale lijst met servers te vernieuwen."
+msgstr "Je kunt een eDonkey server.met bestand downloaden van het internet om je lokale lijst met servers te vernieuwen."
 
 #: cdeletefiledlg;control;1
 msgid "Are you sure that you want to delete:"
@@ -9480,7 +9480,7 @@ msgstr "_Annuleren"
 
 #: cdownloadeditpage;control;14 cdownloadactionspage;control;13
 msgid "WARNING: This dialog provides advanced download editing features for power users which if used incorrectly can and probably will cause corruption."
-msgstr "WAARSCHUWING: Dit dialoogvenster voorziet geavanceerde download wijzigingsfuncties voor ervaren gebruikers welke indien incorrect ingesteld zijn kunnen leiden tot corruptie van downloads."
+msgstr "Waarschuwing: Dit zijn geavanceerde download wijzigingsfuncties die bij verkeerd instellen kunnen leiden tot corruptie van downloads."
 
 #: cdownloadeditpage;control;15
 msgid "Filename and Si_ze:"
@@ -9652,7 +9652,7 @@ msgstr "_Map voor de voltooide bestanden:"
 
 #: cdownloadgroupdlg;control;15
 msgid "_Type of file:"
-msgstr "_Bestandstype (schema):"
+msgstr "Bestandstype (_schema):"
 
 #: dialog;cmediavisdlg
 msgid "Select Visualisation"

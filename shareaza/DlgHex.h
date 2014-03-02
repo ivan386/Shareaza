@@ -1,7 +1,7 @@
 //
-// WndHashProgressBar.h
+// DlgHex.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2014.
+// Copyright (c) Shareaza Development Team, 2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -21,32 +21,29 @@
 
 #pragma once
 
+#include "DlgSkinDialog.h"
+#include "Buffer.h"
 
-class CHashProgressBar : public CWnd
+
+class CHexDlg : public CSkinDialog
 {
-	DECLARE_DYNCREATE(CHashProgressBar)
+	DECLARE_DYNAMIC(CHexDlg)
 
 public:
-	CHashProgressBar();
+	CHexDlg(CWnd* pParent = NULL);   // standard constructor
+	virtual ~CHexDlg();
 
-	void		Run();
+	enum { IDD = IDD_DEBUG_HEX };
+
+	CBuffer* GetData() { return &m_pBuffer; }
 
 protected:
-	CString		m_sCurrent;				// Hashing filename
-	size_t		m_nRemaining;			// Hashing queue size
-	DWORD		m_nPercentage;			// Hashing file progress (0..100%)
-	DWORD		m_nLastShow;			// Time of last update
-	int			m_nPerfectWidth;		// Window perfect width for text fitting
-	BYTE		m_nAlpha;
+	CString m_sHex;
+	CBuffer m_pBuffer;
 
-	void		Draw(CDC* pDC);			// Redraw window and calculate perfect width
-
-	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
-	afx_msg void OnDestroy();
-	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
-	afx_msg void OnTimer(UINT_PTR nIDEvent);
-	afx_msg void OnPaint();
-	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+	virtual BOOL OnInitDialog();
+	virtual void OnOK();
 
 	DECLARE_MESSAGE_MAP()
 };

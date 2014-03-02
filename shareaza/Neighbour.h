@@ -1,7 +1,7 @@
 //
 // Neighbour.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -141,6 +141,8 @@ public:
 	virtual DWORD	GetUserCount() const { return 0; }
 	// Returns hub/server leaf/user limit
 	virtual DWORD	GetUserLimit() const { return 0; }
+	// Process packets from input buffer
+	virtual BOOL	ProcessPackets(CBuffer* /*pInput*/) { return TRUE; }
 
 protected:
 	virtual BOOL OnRun();

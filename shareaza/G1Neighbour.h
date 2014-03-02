@@ -1,7 +1,7 @@
 //
 // G1Neighbour.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -80,6 +80,8 @@ public:
 
 	// Push packet
 	void SendG2Push(const Hashes::Guid& oGUID, CPacket* pPacket);
+
+	virtual BOOL	ProcessPackets(CBuffer* pInput);
 
 protected:
 
