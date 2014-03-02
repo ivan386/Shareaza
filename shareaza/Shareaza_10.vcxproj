@@ -297,6 +297,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AlbumFolder.cpp" />
+    <ClCompile Include="AntiVirus.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="AutocompleteEdit.cpp" />
     <ClCompile Include="BENode.cpp" />
@@ -328,6 +329,7 @@
     <ClCompile Include="DCPacket.cpp" />
     <ClCompile Include="DDEServer.cpp" />
     <ClCompile Include="DiscoveryServices.cpp" />
+    <ClCompile Include="DlgHex.cpp" />
     <ClCompile Include="Download.cpp" />
     <ClCompile Include="DownloadBase.cpp" />
     <ClCompile Include="DownloadGroup.cpp" />
@@ -713,6 +715,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AlbumFolder.h" />
+    <ClInclude Include="AntiVirus.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="AutocompleteEdit.h" />
     <ClInclude Include="BENode.h" />
@@ -744,6 +747,7 @@
     <ClInclude Include="DCPacket.h" />
     <ClInclude Include="DDEServer.h" />
     <ClInclude Include="DiscoveryServices.h" />
+    <ClInclude Include="DlgHex.h" />
     <ClInclude Include="Download.h" />
     <ClInclude Include="DownloadBase.h" />
     <ClInclude Include="DownloadGroup.h" />

@@ -1,7 +1,7 @@
 //
 // PageSettingsDownloads.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,17 +22,12 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
+#include "AntiVirus.h"
 #include "Library.h"
 #include "LibraryFolders.h"
 #include "SharedFolder.h"
 #include "Skin.h"
 #include "PageSettingsDownloads.h"
-
-// AntiVirus interfaces
-#define AVVENDOR
-#pragma warning ( disable : 4201 )
-#include <initguid.h>
-#include <msoav.h>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -46,6 +41,8 @@ BEGIN_MESSAGE_MAP(CDownloadsSettingsPage, CSettingsPage)
 	ON_BN_CLICKED(IDC_DOWNLOADS_BROWSE, &CDownloadsSettingsPage::OnDownloadsBrowse)
 	ON_BN_CLICKED(IDC_INCOMPLETE_BROWSE, &CDownloadsSettingsPage::OnIncompleteBrowse)
 	ON_WM_SHOWWINDOW()
+	ON_WM_DESTROY()
+	ON_CBN_DROPDOWN(IDC_ANTIVIRUS, &CDownloadsSettingsPage::OnCbnDropdownAntivirus)
 END_MESSAGE_MAP()
 
 
@@ -53,15 +50,11 @@ END_MESSAGE_MAP()
 // CDownloadsSettingsPage property page
 
 CDownloadsSettingsPage::CDownloadsSettingsPage()
-:	CSettingsPage(CDownloadsSettingsPage::IDD)
-,	m_nMaxDownFiles		( 0 )
-,	m_nMaxFileTransfers	( 0 )
-,	m_nMaxDownTransfers	( 0 )
-,	m_bRequireConnect	( FALSE )
-{
-}
-
-CDownloadsSettingsPage::~CDownloadsSettingsPage()
+	: CSettingsPage			( CDownloadsSettingsPage::IDD )
+	, m_nMaxDownFiles		( 0 )
+	, m_nMaxFileTransfers	( 0 )
+	, m_nMaxDownTransfers	( 0 )
+	, m_bRequireConnect		( FALSE )
 {
 }
 
@@ -106,40 +99,8 @@ BOOL CDownloadsSettingsPage::OnInitDialog()
 	Settings.SetRange( &Settings.Downloads.MaxTransfers, m_wndMaxDownTransfers );
 	Settings.SetRange( &Settings.Downloads.MaxFileTransfers, m_wndMaxFileTransfers );
 
-	/*CComPtr< ICatInformation > pInfo;
-	HRESULT hr = pInfo.CoCreateInstance( CLSID_StdComponentCategoriesMgr );
-	if ( SUCCEEDED( hr ) )
-	{
-		const CATID IDs[ 1 ] = { CATID_MSOfficeAntiVirus };
-        CComPtr< IEnumCLSID > pEnum;
-        hr = pInfo->EnumClassesOfCategories( 1, IDs, 0, NULL, &pEnum );
-		if ( SUCCEEDED( hr ) )
-		{
-			CLSID clsid;
-			while ( pEnum->Next( 1, &clsid, NULL ) == S_OK )
-			{
-				CComPtr< IOfficeAntiVirus > pAntivirus;
-				hr = ::CoCreateInstance( clsid, NULL, CLSCTX_ALL, IID_IOfficeAntiVirus, (void**)&pAntivirus );
-				if ( SUCCEEDED( hr ) )
-				{
-					HKEY hClass = NULL;
-					if ( ERROR_SUCCESS == RegOpenKeyEx( HKEY_CLASSES_ROOT,
-						_T("CLSID\\") + Hashes::toGuid( clsid, true ), 0, KEY_READ, &hClass ) )
-					{
-						TCHAR szValue[ MAX_PATH ] = {};
-						DWORD nValue = sizeof( szValue ), nType = REG_SZ;
-						if ( ERROR_SUCCESS == RegQueryValueEx( hClass, NULL, NULL, &nType,
-							(LPBYTE)szValue, &nValue ) )
-						{
-							m_wndAntiVirus.AddString( szValue );
-						}
-						RegCloseKey( hClass );
-					}
-				}
-			}
-		}
-	}*/
-	m_wndAntiVirus.EnableWindow( FALSE );
+	// Enum available anti-viruses
+	AntiVirus.Enum( m_wndAntiVirus );
 
 	m_wndDownloadsPath.SetIcon( IDI_BROWSE );
 	m_wndIncompletePath.SetIcon( IDI_BROWSE );
@@ -253,10 +214,12 @@ BOOL CDownloadsSettingsPage::OnKillActive()
 
 void CDownloadsSettingsPage::OnOK()
 {
-	DWORD nQueueLimit = 0;
 	UpdateData( TRUE );
 
+	AntiVirus.UpdateData( m_wndAntiVirus );
+
 	// Figure out what the text in the queue limit box means
+	DWORD nQueueLimit = 0;
 	if ( IsLimited( m_sQueueLimit ) )
 	{
 		// Max queue is limited, calculate number
@@ -429,4 +392,16 @@ bool CDownloadsSettingsPage::IsLimited(CString& strText) const
 	return ! ( ( strText.GetLength() == 0 ) ||
 		( _tcsistr( strText, _T("MAX") ) != NULL ) ||
 		( _tcsistr( strText, _T("NONE") ) != NULL ) );
+}
+
+void CDownloadsSettingsPage::OnDestroy()
+{
+	AntiVirus.Free( m_wndAntiVirus );
+
+	CSettingsPage::OnDestroy();
+}
+
+void CDownloadsSettingsPage::OnCbnDropdownAntivirus()
+{
+	RecalcDropWidth( &m_wndAntiVirus );
 }

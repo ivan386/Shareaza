@@ -1,7 +1,7 @@
 //
 // CtrlFontCombo.cpp
 //
-// Copyright (c) Shareaza Development Team, 2008-2012.
+// Copyright (c) Shareaza Development Team, 2008-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -126,28 +126,7 @@ void CFontCombo::OnDestroy()
 
 void CFontCombo::OnDropdown()
 {
-	int nNumEntries = GetCount();
-	int nWidth = 0;
-	CString str;
-
-	CClientDC dc( this );
-	int nSave = dc.SaveDC();
-	dc.SelectObject( GetFont() );
-
-	int nScrollWidth = GetSystemMetrics( SM_CXVSCROLL );
-	for ( int nEntry = 0 ; nEntry < nNumEntries ; nEntry++ )
-	{
-		GetLBText( nEntry, str );
-		int nLength = dc.GetTextExtent( str ).cx + nScrollWidth + SYMBOL_WIDTH;
-		nWidth = max( nWidth, nLength );
-	}
-
-	nWidth += SYMBOL_WIDTH;
-	// Add margin space to the calculations
-	nWidth += dc.GetTextExtent( _T("0") ).cx;
-
-	dc.RestoreDC( nSave );
-	SetDroppedWidth( nWidth );
+	RecalcDropWidth( this, SYMBOL_WIDTH * 2 );
 }
 
 LRESULT CFontCombo::OnOcmDrawItem(WPARAM /*wParam*/, LPARAM lParam)

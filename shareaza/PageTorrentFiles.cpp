@@ -1,7 +1,7 @@
 //
 // PageTorrentGeneral.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -77,8 +77,8 @@ BOOL CTorrentFilesPage::OnInitDialog()
 
 	CDownload* pDownload = ((CDownloadSheet*)GetParent())->GetDownload();
 	ASSERT( pDownload && pDownload->IsTorrent() );
-	CComPtr< CFragmentedFile > pFragFile = pDownload->GetFile();
-	DWORD nCount = pFragFile ? pFragFile->GetCount() : 0;
+	auto_ptr< CFragmentedFile > pFragFile( pDownload->GetFile() );
+	DWORD nCount = pFragFile.get() ? pFragFile->GetCount() : 0;
 	bool bCompleted = pDownload->IsCompleted() || nCount < 2;
 
 	auto_ptr< CLibraryTipCtrl > pTip( new CLibraryTipCtrl );
@@ -141,9 +141,10 @@ BOOL CTorrentFilesPage::OnApply()
 
 	if ( ! pDownload->IsCompleted() )
 	{
-		if ( CComPtr< CFragmentedFile > pFragFile = pDownload->GetFile() )
+		auto_ptr< CFragmentedFile > pFragFile( pDownload->GetFile() );
+		if ( pFragFile.get() )
 		{
-			DWORD nCount = pFragFile ? pFragFile->GetCount() : 0;
+			DWORD nCount = pFragFile->GetCount();
 			if ( nCount > 1 )
 			{
 				for ( DWORD i = 0; i < nCount; ++i )
@@ -178,7 +179,8 @@ void CTorrentFilesPage::Update()
 		// Invalid download
 		return;
 
-	if ( CComPtr< CFragmentedFile > pFragFile = pDownload->GetFile() )
+	auto_ptr< CFragmentedFile > pFragFile( pDownload->GetFile() );
+	if ( pFragFile.get() )
 	{
 		for ( DWORD i = 0 ; i < pFragFile->GetCount() ; ++i )
 		{

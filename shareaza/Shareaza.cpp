@@ -1,7 +1,7 @@
 //
 // Shareaza.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1856,31 +1856,32 @@ CString	TimeToString(FILETIME* pTime)
 
 /////////////////////////////////////////////////////////////////////////////
 // Automatic dropdown list width adjustment (to fit translations)
-// Use in ON_CBN_DROPDOWN events
+// Use in CBN_DROPDOWN events
 
-void RecalcDropWidth(CComboBox* pWnd)
+void RecalcDropWidth(CComboBox* pWnd, int nMargin)
 {
-	// Reset the dropped width
-	int nNumEntries = pWnd->GetCount();
 	int nWidth = 0;
+
+	CDC* pDC = pWnd->GetDC();
+	CFont* pOldFont = pDC->SelectObject( pWnd->GetFont() );
+
+	TEXTMETRIC tm;
+	pDC->GetTextMetrics( &tm );
+
 	CString str;
-
-	CClientDC dc( pWnd );
-	int nSave = dc.SaveDC();
-	dc.SelectObject( pWnd->GetFont() );
-
-	int nScrollWidth = GetSystemMetrics( SM_CXVSCROLL );
-	for ( int nEntry = 0; nEntry < nNumEntries; nEntry++ )
+	const int nNumEntries = pWnd->GetCount();
+	for ( int nEntry = 0; nEntry < nNumEntries; ++nEntry )
 	{
 		pWnd->GetLBText( nEntry, str );
-		int nLength = dc.GetTextExtent( str ).cx + nScrollWidth;
-		nWidth = max( nWidth, nLength );
+		nWidth = max( nWidth, pDC->GetTextExtent( str ).cx );
 	}
 
-	// Add margin space to the calculations
-	nWidth += dc.GetTextExtent( _T("0") ).cx;
+	pDC->SelectObject( pOldFont );
+	pWnd->ReleaseDC( pDC );
 
-	dc.RestoreDC( nSave );
+	// Add margin space to the calculations
+	nWidth += tm.tmAveCharWidth + ::GetSystemMetrics( SM_CXVSCROLL ) + 2 * ::GetSystemMetrics( SM_CXEDGE ) + nMargin;
+
 	pWnd->SetDroppedWidth( nWidth );
 }
 

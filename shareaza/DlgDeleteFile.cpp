@@ -1,7 +1,7 @@
 //
 // DlgDeleteFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -43,11 +43,12 @@ BEGIN_MESSAGE_MAP(CDeleteFileDlg, CSkinDialog)
 	ON_WM_CTLCOLOR()
 	ON_WM_MEASUREITEM()
 	ON_WM_DRAWITEM()
-	ON_CBN_SELCHANGE(IDC_DELETE_OPTIONS, OnCbnChangeOptions)
-	ON_BN_CLICKED(IDC_DELETE_ALL, OnDeleteAll)
-	ON_CBN_SELCHANGE(IDC_GHOST_RATING, OnCbnChangeGhostRating)
-	ON_EN_CHANGE(IDC_RATE_COMMENTS, OnChangeComments)
-	ON_BN_CLICKED(IDC_CREATE_GHOST, OnClickedCreateGhost)
+	ON_CBN_SELCHANGE(IDC_DELETE_OPTIONS, &CDeleteFileDlg::OnCbnChangeOptions)
+	ON_BN_CLICKED(IDC_DELETE_ALL, &CDeleteFileDlg::OnDeleteAll)
+	ON_CBN_SELCHANGE(IDC_GHOST_RATING, &CDeleteFileDlg::OnCbnChangeGhostRating)
+	ON_EN_CHANGE(IDC_RATE_COMMENTS, &CDeleteFileDlg::OnChangeComments)
+	ON_BN_CLICKED(IDC_CREATE_GHOST, &CDeleteFileDlg::OnClickedCreateGhost)
+	ON_CBN_DROPDOWN(IDC_DELETE_OPTIONS, &CDeleteFileDlg::OnCbnDropdownOptions)
 END_MESSAGE_MAP()
 
 
@@ -98,7 +99,6 @@ BOOL CDeleteFileDlg::OnInitDialog()
 
 	UpdateData( FALSE );
 
-	RecalcDropWidth( &m_wndOptions );
 	m_sOriginalComments = m_sComments;
 	m_nOriginalRating = m_nRateValue;
 
@@ -369,7 +369,6 @@ void CDeleteFileDlg::OnChangeComments()
 	UpdateData( FALSE );
 }
 
-
 void CDeleteFileDlg::OnClickedCreateGhost()
 {
 	m_bCreateGhost = !m_bCreateGhost;
@@ -379,4 +378,9 @@ void CDeleteFileDlg::OnClickedCreateGhost()
 	m_wndPrompt.EnableWindow( m_bCreateGhost && m_nOption > 0 );
 	m_wndPrompt.Invalidate();
 	UpdateData( FALSE );
+}
+
+void CDeleteFileDlg::OnCbnDropdownOptions()
+{
+	RecalcDropWidth( &m_wndOptions );
 }
