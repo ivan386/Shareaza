@@ -1,7 +1,7 @@
 //
 // ChatCore.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -77,31 +77,27 @@ BOOL CChatCore::Check(CChatSession* pSession) const
 
 BOOL CChatCore::OnAccept(CConnection* pConnection)
 {
+	CSingleLock pLock( &m_pSection );
+	if ( ! pLock.Lock( 100 ) )
+		// Try later
+		return TRUE;
+
 	if ( ! Settings.Community.ChatEnable || ! MyProfile.IsValid() )
 	{
 		theApp.Message( MSG_ERROR, _T("Rejecting incoming connection from %s, chat disabled."), (LPCTSTR)pConnection->m_sAddress );
-
 		pConnection->Write( _P("CHAT/0.2 503 Unavailable\r\n\r\n") );
 		pConnection->LogOutgoing();
 		pConnection->DelayClose( IDS_CONNECTION_CLOSED );
 		return TRUE;
 	}
 
-	CSingleLock pLock( &m_pSection );
-	if ( pLock.Lock( 250 ) )
+	if ( CChatSession* pSession = new CChatSession( PROTOCOL_NULL ) )
 	{
-		if ( CChatSession* pSession = new CChatSession( PROTOCOL_NULL ) )
-		{
-			pSession->AttachTo( pConnection );
-			return FALSE;
-		}
+		pSession->AttachTo( pConnection );
+		return FALSE;
 	}
-	else
-		theApp.Message( MSG_ERROR, _T("Rejecting %s connection from %s, network core overloaded."), _T("chat"), (LPCTSTR)pConnection->m_sAddress );
 
-	pConnection->Write( _P("CHAT/0.2 503 Busy\r\n\r\n") );
-	pConnection->LogOutgoing();
-	pConnection->DelayClose( IDS_CONNECTION_CLOSED );
+	// Out of memory
 	return TRUE;
 }
 

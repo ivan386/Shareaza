@@ -1,7 +1,7 @@
 //
 // QuerySearch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -424,12 +424,13 @@ CG2Packet* CQuerySearch::ToG2Packet(SOCKADDR_IN* pUDP, DWORD nKey) const
 
 	if ( m_bWantURL || m_bWantDN || m_bWantXML || m_bWantCOM || m_bWantPFS )
 	{
+		// NOTE: For compatibility reasons must include ending zero byte!
 		pPacket->WritePacket( G2_PACKET_INTEREST,
 			( m_bWantURL ? 4 : 0 ) + ( m_bWantDN ? 3 : 0 ) + ( m_bWantXML ? 3 : 0 ) +
 			( m_bWantCOM ? 4 : 0 ) + ( m_bWantPFS ? 4 : 0 ) );
 
 		if ( m_bWantURL ) pPacket->WriteString( "URL" );
-		if ( m_bWantDN ) pPacket->WriteString( "DN" );
+		if ( m_bWantDN )  pPacket->WriteString( "DN" );
 		if ( m_bWantXML ) pPacket->WriteString( "MD" );
 		if ( m_bWantCOM ) pPacket->WriteString( "COM" );
 		if ( m_bWantPFS ) pPacket->WriteString( "PFS" );
@@ -1024,14 +1025,18 @@ BOOL CQuerySearch::ReadG2Packet(CG2Packet* pPacket, const SOCKADDR_IN* pEndpoint
 			while ( nLength > 0 )
 			{
 				CString str = pPacket->ReadString( nLength );
-				nLength -= str.GetLength() + 1;
-
-				if ( str == _T("URL") )			m_bWantURL = TRUE;
+				if      ( str == _T("URL") )	m_bWantURL = TRUE;
 				else if ( str == _T("DN") )		m_bWantDN = TRUE;
 				else if ( str == _T("SZ") )		m_bWantDN = TRUE;	// Hack
 				else if ( str == _T("MD") )		m_bWantXML = TRUE;
 				else if ( str == _T("COM") )	m_bWantCOM = TRUE;
 				else if ( str == _T("PFS") )	m_bWantPFS = TRUE;
+				// TODO: Implement /QH2/H/ALT - Alternate Locations
+				// else if ( str == _T("A") )	m_bWantALT = TRUE;
+
+				if ( str.GetLength() + 1 >= (int)nLength )
+					break;
+				nLength -= str.GetLength() + 1;
 			}
 		}
 		else if ( nType == G2_PACKET_URN )

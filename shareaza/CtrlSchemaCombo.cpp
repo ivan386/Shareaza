@@ -1,7 +1,7 @@
 //
 // CtrlSchemaCombo.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -359,6 +359,8 @@ BOOL CSchemaCombo::PreTranslateMessage(MSG* pMsg)
 void CSchemaCombo::OnDropDown()
 {
 	m_sPreDrop = GetSelectedURI();
+
+	RecalcDropWidth( this, 16 );
 }
 
 /////////////////////////////////////////////////////////////////////////////

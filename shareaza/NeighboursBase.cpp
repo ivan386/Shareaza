@@ -1,7 +1,7 @@
 //
 // NeighboursBase.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -127,8 +127,8 @@ CNeighbour* CNeighboursBase::GetNewest(PROTOCOLID nProtocol, int nState, int nNo
 // Counts the number of neighbours in the list that match these criteria, pass -1 to count them all
 DWORD CNeighboursBase::GetCount(PROTOCOLID nProtocol, int nState, int nNodeType) const
 {
-	CSingleLock pLock( &Network.m_pSection, FALSE );
-	if ( ! pLock.Lock( 200 ) )
+	CSingleLock pLock( &Network.m_pSection );
+	if ( ! pLock.Lock( 100 ) )
 		return 0;
 
 	DWORD nCount = 0;
@@ -214,12 +214,15 @@ void CNeighboursBase::Close()
 // Calls DoRun on neighbours in the list, and totals statistics from them
 void CNeighboursBase::OnRun()
 {
+	// Spend here no more than 100 ms at once
+	DWORD nStop = GetTickCount() + 100;
+
 	// Have the loop test each neighbour's run cookie count against the next number
 	m_nRunCookie++;			// The first time this runs, it will take the value from 5 to 6
 	bool bUpdated = true;	// Indicate if stats were updated
 
 	// Loop until all updates have been processed
-	while ( bUpdated )
+	while ( bUpdated && GetTickCount() < nStop )
 	{
 		// Make sure this thread is the only one accessing the network object
 		CSingleLock pLock( &Network.m_pSection );

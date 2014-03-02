@@ -74,6 +74,7 @@ public:
 		CString		LastSettingsPage;			// Last selected Settings dialog page
 		DWORD		LastSettingsIndex;			// Top item index of Advanced Settings list
 		bool		SearchPanelResults;			// Search Results Panel state (open or closed)
+		CString		AntiVirus;					// Anti-virus path or CLSID
 	} General;
 
 	struct sVersionCheck

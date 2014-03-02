@@ -1,7 +1,7 @@
 //
 // WndSettingsPage.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -37,7 +37,7 @@ public:
 	CString			m_sCaption;		// Dialog caption
 	BOOL			m_bGroup;
 
-	BOOL			Create(CRect& rcPage, CWnd* pSheetWnd);
+	BOOL			Create(const CRect& rcPage, CWnd* pSheetWnd);
 	BOOL			LoadDefaultCaption();
 	CSettingsPage*	GetPage(CRuntimeClass* pClass) const;
 
