@@ -1,7 +1,7 @@
 //
 // Handshake.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -251,6 +251,16 @@ BOOL CHandshake::OnRead()
 		return TRUE; // Keep trying to sort the handshake
 	}
 
+	if ( StartsWith( _P("GNUTELLA") ) )
+	{
+		// Gnutella handshake
+		return Neighbours.OnAccept( this );
+	}
+	else if ( StartsWith( _P("CHAT") ) )
+	{
+		return ChatCore.OnAccept( this );
+	}
+
 	// Record this handshake line as an application message
 	theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING, _T("%s >> HANDSHAKE: %s"), (LPCTSTR)m_sAddress, (LPCTSTR)strLine );
 
@@ -261,11 +271,6 @@ BOOL CHandshake::OnRead()
 		// The remote computer wants a file from us, accept the connection as an upload
 		return Uploads.OnAccept( this );
 	}
-	else if ( StartsWith( _P("GNUTELLA") ) )
-	{
-		// Gnutella handshake
-		return Neighbours.OnAccept( this );
-	}
 	else if ( StartsWith( _P("PUSH ") ) )
 	{
 		// Gnutella2-style push
@@ -275,10 +280,6 @@ BOOL CHandshake::OnRead()
 	{
 		// Gnutella giv
 		return OnAcceptGive();
-	}
-	else if ( StartsWith( _P("CHAT") ) )
-	{
-		return ChatCore.OnAccept( this );
 	}
 	else
 	{

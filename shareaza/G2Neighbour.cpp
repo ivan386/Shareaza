@@ -1,7 +1,7 @@
 //
 // G2Neighbour.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -285,6 +285,15 @@ BOOL CG2Neighbour::ProcessPackets()
 
 	CBuffer* pInput = m_pZInput ? m_pZInput : pInputLocked;
 
+	if ( ProcessPackets( pInput ) )
+		return TRUE;
+
+	Close( 0 );
+	return FALSE;
+}
+
+BOOL CG2Neighbour::ProcessPackets(CBuffer* pInput)
+{
 	BOOL bSuccess = TRUE;
 	while ( bSuccess && pInput->m_nLength )
 	{
@@ -350,11 +359,7 @@ BOOL CG2Neighbour::ProcessPackets()
 		pInput->Remove( nLength + nLenLen + nTypeLen + 2 );
 	}
 
-	if ( bSuccess )
-		return TRUE;
-
-	Close( 0 );
-	return FALSE;
+	return bSuccess;
 }
 
 //////////////////////////////////////////////////////////////////////

@@ -116,6 +116,7 @@ void CSettings::Load()
 	Add( _T("Settings"), _T("LastSettingsPage"), &General.LastSettingsPage );
 	Add( _T("Settings"), _T("LastSettingsIndex"), &General.LastSettingsIndex, 0 );
 	Add( _T("Settings"), _T("SearchPanelResults"), &General.SearchPanelResults, true );
+	Add( _T("Settings"), _T("AntiVirus"), &General.AntiVirus, _T("") );
 
 	Add( _T("VersionCheck"), _T("NextCheck"), &VersionCheck.NextCheck, 0 );
 	Add( _T("VersionCheck"), _T("Quote"), &VersionCheck.Quote );

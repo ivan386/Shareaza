@@ -1,7 +1,7 @@
 //
 // CtrlHomeSearch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -48,10 +48,10 @@ BEGIN_MESSAGE_MAP(CHomeSearchCtrl, CWnd)
 	ON_WM_CREATE()
 	ON_WM_SIZE()
 	ON_WM_PAINT()
-	ON_CBN_CLOSEUP(IDC_SEARCH_TEXT, OnCloseUpText)
-	ON_CBN_SELCHANGE(IDC_SEARCH_TEXT, OnSelChangeText)
-	ON_COMMAND(IDC_SEARCH_START, OnSearchStart)
-	ON_COMMAND(IDC_SEARCH_ADVANCED, OnSearchAdvanced)
+	ON_CBN_CLOSEUP(IDC_SEARCH_TEXT, &CHomeSearchCtrl::OnCloseUpText)
+	ON_CBN_SELCHANGE(IDC_SEARCH_TEXT, &CHomeSearchCtrl::OnSelChangeText)
+	ON_COMMAND(IDC_SEARCH_START, &CHomeSearchCtrl::OnSearchStart)
+	ON_COMMAND(IDC_SEARCH_ADVANCED, &CHomeSearchCtrl::OnSearchAdvanced)
 END_MESSAGE_MAP()
 
 
@@ -94,7 +94,6 @@ int CHomeSearchCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if ( ! m_wndSchema.Create( WS_CHILD|WS_VISIBLE|WS_TABSTOP, rc, this, IDC_SCHEMAS ) )
 		return -1;
 
-	m_wndSchema.SetDroppedWidth( SCHEMA_WIDTH );
 	LoadString( m_wndSchema.m_sNoSchemaText, IDS_SEARCH_PANEL_AFT );
 	m_wndSchema.Load( Settings.Search.LastSchemaURI );
 

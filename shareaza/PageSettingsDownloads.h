@@ -1,7 +1,7 @@
 //
 // PageSettingsDownloads.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -31,7 +31,6 @@ class CDownloadsSettingsPage : public CSettingsPage
 
 public:
 	CDownloadsSettingsPage();
-	virtual ~CDownloadsSettingsPage();
 
 	enum { IDD = IDD_SETTINGS_DOWNLOADS };
 
@@ -67,6 +66,8 @@ protected:
 	afx_msg void OnDownloadsBrowse();
 	afx_msg void OnIncompleteBrowse();
 	afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);
+	afx_msg void OnDestroy();
+	afx_msg void OnCbnDropdownAntivirus();
 
 	DECLARE_MESSAGE_MAP()
 };

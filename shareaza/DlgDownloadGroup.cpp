@@ -1,7 +1,7 @@
 //
 // DlgDownloadGroup.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -86,7 +86,6 @@ BOOL CDownloadGroupDlg::OnInitDialog()
 
 	SkinMe( _T("CDownloadGroupDlg") );
 
-	m_wndSchemas.SetDroppedWidth( 200 );
 	LoadString( m_wndSchemas.m_sNoSchemaText, IDS_SEARCH_PANEL_AFT );
 	m_wndSchemas.Load( m_pGroup->m_sSchemaURI );
 	m_sOldSchemaURI = m_pGroup->m_sSchemaURI;

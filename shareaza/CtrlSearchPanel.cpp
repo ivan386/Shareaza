@@ -1,7 +1,7 @@
 //
 // CtrlSearchPanel.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -524,7 +524,6 @@ int CSearchInputBox::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	
 	if ( ! m_wndSchemas.Create( WS_TABSTOP, rc, this, IDC_SCHEMAS ) ) return -1;
 	
-	m_wndSchemas.SetDroppedWidth( 200 );
 	LoadString( m_wndSchemas.m_sNoSchemaText, IDS_SEARCH_PANEL_AFT );
 	m_wndSchemas.Load( Settings.Search.LastSchemaURI );
 

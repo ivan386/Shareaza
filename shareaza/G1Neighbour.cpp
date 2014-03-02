@@ -1,7 +1,7 @@
 //
 // G1Neighbour.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -256,7 +256,17 @@ BOOL CG1Neighbour::ProcessPackets()
 
 	// Point pInput at the buffer that has readable data from the remote computer
 	CBuffer* pInput = m_pZInput ? m_pZInput : pInputLocked;
+	
+	if ( ProcessPackets( pInput ) )
+		return TRUE;
 
+	// Something in the loop set bSuccess to false
+	Close( 0 );   // Close the connection to this remote computer
+	return FALSE; // Report error
+}
+
+BOOL CG1Neighbour::ProcessPackets(CBuffer* pInput)
+{
 	// Start out with bSuccess true and loop until it gets set to false
 	BOOL bSuccess = TRUE;
 	for ( ; bSuccess ; ) // This is the same thing as while ( bSuccess )
@@ -290,12 +300,7 @@ BOOL CG1Neighbour::ProcessPackets()
 		pInput->Remove( nLength );
 	}
 
-	// If the loop read all the packets from the input buffer without an error, report success
-	if ( bSuccess ) return TRUE;
-
-	// Something in the loop set bSuccess to false
-	Close( 0 );   // Close the connection to this remote computer
-	return FALSE; // Report error
+	return bSuccess;
 }
 
 //////////////////////////////////////////////////////////////////////

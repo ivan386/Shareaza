@@ -1,7 +1,7 @@
 //
 // WndSettingsSheet.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -133,6 +133,8 @@ CSettingsPage* CSettingsSheet::GetActivePage() const
 
 BOOL CSettingsSheet::SetActivePage(CSettingsPage* pPage)
 {
+	CWaitCursor wc;
+
 	if ( m_hWnd == NULL )
 	{
 		m_pFirst = pPage;
@@ -147,9 +149,17 @@ BOOL CSettingsSheet::SetActivePage(CSettingsPage* pPage)
 		m_pPage = NULL;
 	}
 
+	CRect rc( 0, GetBannerHeight(), 0, 0 );
+	rc.left		+= m_nListWidth + m_nListMargin;
+	rc.right	= rc.left + m_szPages.cx;
+	rc.bottom	= rc.top  + m_szPages.cy;
+
+	InvalidateRect( &rc );
+	UpdateWindow();
+
 	if ( pPage )
 	{
-		if ( pPage->m_hWnd == NULL && ! CreatePage( pPage ) )
+		if ( pPage->m_hWnd == NULL && ! CreatePage( rc, pPage ) )
 			return FALSE;
 		if ( ! pPage->OnSetActive() )
 			return FALSE;
@@ -157,13 +167,9 @@ BOOL CSettingsSheet::SetActivePage(CSettingsPage* pPage)
 
 	m_pPage = pPage;
 
-	if ( ! pPage )
+	if ( ! m_pPage )
 		return FALSE;
 
-	CRect rc( 0, GetBannerHeight(), 0, 0 );
-	rc.left		+= m_nListWidth + m_nListMargin;
-	rc.right	= rc.left + m_szPages.cx;
-	rc.bottom	= rc.top  + m_szPages.cy;
 	m_pPage->MoveWindow( rc );
 
 	m_pPage->ShowWindow( SW_SHOW );
@@ -198,11 +204,6 @@ BOOL CSettingsSheet::SetActivePage(CSettingsPage* pPage)
 	}
 
 	return TRUE;
-}
-
-BOOL CSettingsSheet::SetActivePage(int nPage)
-{
-	return SetActivePage( GetPage( nPage ) );
 }
 
 BOOL CSettingsSheet::IsModified() const
@@ -351,14 +352,8 @@ BOOL CSettingsSheet::SkinMe(LPCTSTR pszSkin, UINT nIcon, BOOL bLanguage)
 	return CSkinDialog::SkinMe( pszSkin, nIcon, bLanguage );
 }
 
-BOOL CSettingsSheet::CreatePage(CSettingsPage* pPage)
+BOOL CSettingsSheet::CreatePage(const CRect& rc, CSettingsPage* pPage)
 {
-	CRect rc( 0, GetBannerHeight() + 2, 0, 0 );
-
-	rc.left		+= m_nListWidth + m_nListMargin;
-	rc.right	= rc.left + m_szPages.cx;
-	rc.bottom	= rc.top  + m_szPages.cy;
-
 	if ( ! pPage->Create( rc, this ) )
 		return FALSE;
 

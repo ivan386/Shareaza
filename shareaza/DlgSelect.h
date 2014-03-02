@@ -1,7 +1,7 @@
 //
 // DlgSelect.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -70,6 +70,8 @@ protected:
 	virtual void OnOK();
 	virtual void OnCancel();
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+
+	afx_msg void OnCbnDropdownList();
 
 	DECLARE_MESSAGE_MAP()
 };

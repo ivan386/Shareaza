@@ -1,7 +1,7 @@
 //
 // FragmentedFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -105,6 +105,9 @@ ULONG CFragmentedFile::AddRef()
 
 ULONG CFragmentedFile::Release()
 {
+	if ( m_dwRef == 0 )
+		return 0;
+
 	ULONG ref_count = (ULONG)InterlockedDecrement( &m_dwRef );
 	if ( ref_count )
 		return ref_count;

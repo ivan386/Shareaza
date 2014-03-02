@@ -1,7 +1,7 @@
 //
 // WndNeighbours.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -26,6 +26,7 @@
 #include "ChatWindows.h"
 #include "CoolInterface.h"
 #include "DCNeighbour.h"
+#include "DlgHex.h"
 #include "DlgSettingsManager.h"
 #include "DlgURLCopy.h"
 #include "EDNeighbour.h"
@@ -650,6 +651,35 @@ BOOL CNeighboursWnd::PreTranslateMessage(MSG* pMsg)
 	if ( pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_TAB )
 	{
 		GetManager()->Open( RUNTIME_CLASS(CSystemWnd) );
+		return TRUE;
+	}
+	// Ctrl+H
+	else if ( pMsg->message == WM_KEYDOWN && pMsg->wParam == 'H' && ( GetAsyncKeyState( VK_CONTROL ) & 0x8000 ) )
+	{
+		CSingleLock pLock( &Network.m_pSection, TRUE );
+		if ( CNeighbour* pNeighbour = GetItem( m_wndList.GetNextItem( -1, LVNI_SELECTED ) ) )
+		{
+			pLock.Unlock();
+
+			CHexDlg dlg;
+			if ( dlg.DoModal() == IDOK )
+			{
+				pLock.Lock();
+
+				BOOL bResult = pNeighbour->ProcessPackets( dlg.GetData() );
+				
+				pLock.Unlock();
+
+				if ( bResult )
+				{
+					AfxMessageBox( _T("Packet was successfully processed.") );
+				}
+				else
+				{
+					AfxMessageBox( _T("Packet was rejected.") );
+				}
+			}
+		}
 		return TRUE;
 	}
 

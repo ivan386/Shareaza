@@ -162,8 +162,8 @@ ID_NETWORK_DC           ICON                    "Res\\Network_DC.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,7,1,1
- PRODUCTVERSION 2,7,1,1
+ FILEVERSION 2,7,2,0
+ PRODUCTVERSION 2,7,2,0
  FILEFLAGSMASK 0x1fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -181,12 +181,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2.7.1.1"
+            VALUE "FileVersion", "2.7.2.0"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2014. All rights reserved."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2.7.1.1"
+            VALUE "ProductVersion", "2.7.2.0"
         END
     END
     BLOCK "VarFileInfo"
@@ -1929,6 +1929,16 @@ BEGIN
                     "msctls_progress32",WS_BORDER,8,78,234,10
 END
 
+IDD_DEBUG_HEX DIALOGEX 0, 0, 316, 184
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Enter hexadecimal string"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,183,161,60,16
+    PUSHBUTTON      "Cancel",IDCANCEL,249,161,60,16
+    EDITTEXT        IDC_EDIT_HEX,7,7,302,146,ES_MULTILINE | ES_AUTOVSCROLL | ES_WANTRETURN | WS_VSCROLL
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -2703,6 +2713,14 @@ BEGIN
         HORZGUIDE, 72
         HORZGUIDE, 78
         HORZGUIDE, 88
+    END
+
+    IDD_DEBUG_HEX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 309
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 177
     END
 END
 #endif    // APSTUDIO_INVOKED
