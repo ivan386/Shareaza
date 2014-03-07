@@ -282,13 +282,17 @@ void CDownload::StartTrying()
 
 QWORD CDownload::GetRealSpeed()
 {
-	if ( m_tBegan > 0 )
-		return ( GetVolumeComplete() - m_nCompletedAtBegan ) * 1000 / ( GetTickCount() - m_tBegan );
+	DWORD tTime = GetTickCount() - m_tBegan;
+	if ( tTime > 0 )
+		return ( GetVolumeComplete() - m_nCompletedAtBegan ) * 1000 / tTime;
 	return 0;
 }
 
 QWORD CDownload::GetNonRandomEnd()
 {
+	if ( m_nBitrate < 8 )
+		return 0;
+
 	QWORD nByterate = ( m_nBitrate / 8 );
 	
 	if ( Settings.Downloads.MediaBuffer && m_tBegan > 0 && ( GetRealSpeed() > nByterate || GetAverageSpeed() > nByterate ))
