@@ -1,7 +1,7 @@
 //
 // DCNeighbour.cpp
 //
-// Copyright (c) Shareaza Development Team, 2010-2011.
+// Copyright (c) Shareaza Development Team, 2010-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -145,52 +145,65 @@ BOOL CDCNeighbour::ConnectTo(const IN_ADDR* pAddress, WORD nPort, BOOL bAutomati
 
 BOOL CDCNeighbour::OnRead()
 {
-	if ( ! CNeighbour::OnRead() )
+	CNeighbour::OnRead();
+
+	return ProcessPackets();
+}
+
+BOOL CDCNeighbour::ProcessPackets()
+{
+	CLockedBuffer pInputLocked( GetInput() );
+
+	if ( m_pZInput )
+	{
+		if ( m_pZInput->m_nLength == 0 )
+		{
+			if ( m_bZInputEOS )
+			{
+				// Got "End of Stream" so turn decompression off
+				m_bZInputEOS = FALSE;
+				if ( m_pZSInput )
+					m_pZInput->InflateStreamCleanup( m_pZSInput );
+				delete m_pZInput;
+				m_pZInput = NULL;
+			}
+			return TRUE;
+		}
+	}
+
+	CBuffer* pInput = m_pZInput ? m_pZInput : pInputLocked;
+
+	return ProcessPackets( pInput );
+}
+
+BOOL CDCNeighbour::ProcessPackets(CBuffer* pInput)
+{
+	if ( ! pInput )
 		return FALSE;
 
-	for ( ;; )
+	BOOL bSuccess = TRUE;
+
+	while ( CDCPacket* pPacket = CDCPacket::ReadBuffer( pInput ) )
 	{
-		CDCPacket* pPacket;
+		try
 		{
-			CLockedBuffer pInputLocked( GetInput() );
-
-			if ( m_pZInput )
-			{
-				if ( m_pZInput->m_nLength == 0 )
-				{
-					if ( m_bZInputEOS )
-					{
-						// Got "End of Stream" so turn decompression off
-						m_bZInputEOS = FALSE;
-						if ( m_pZSInput )
-							m_pZInput->InflateStreamCleanup( m_pZSInput );
-						delete m_pZInput;
-						m_pZInput = NULL;
-					}
-					return TRUE;
-				}
-
-				pPacket = CDCPacket::ReadBuffer( m_pZInput );
-			}
-			else
-				pPacket = CDCPacket::ReadBuffer( pInputLocked );
+			bSuccess = OnPacket( pPacket );
+		}
+		catch ( CException* pException )
+		{
+			pException->Delete();
 		}
 
-		if ( ! pPacket )
-			return TRUE;
-
-		pPacket->SmartDump( &m_pHost, FALSE, FALSE, (DWORD_PTR)this );
-
-		m_nInputCount++;
-		m_tLastPacket = GetTickCount();
-
-		BOOL bResult = OnPacket( pPacket );
-
 		pPacket->Release();
+		if ( ! bSuccess )
+			break;
 
-		if ( ! bResult )
-			return FALSE;
+		if ( m_pZInput && m_pZInput != pInput )
+			// Compression just turned on
+			break;
 	}
+
+	return bSuccess;
 }
 
 BOOL CDCNeighbour::Send(CPacket* pPacket, BOOL bRelease, BOOL /*bBuffered*/)
@@ -292,6 +305,11 @@ void CDCNeighbour::OnDropped()
 
 BOOL CDCNeighbour::OnPacket(CDCPacket* pPacket)
 {
+	pPacket->SmartDump( &m_pHost, FALSE, FALSE, (DWORD_PTR)this );
+
+	m_nInputCount++;
+	m_tLastPacket = GetTickCount();
+
 	if ( pPacket->m_nLength < 2  )
 	{
 		return OnPing();

@@ -81,7 +81,8 @@ public:
 	// Push packet
 	void SendG2Push(const Hashes::Guid& oGUID, CPacket* pPacket);
 
-	virtual BOOL	ProcessPackets(CBuffer* pInput);
+	// Process packets from specified buffer
+	virtual BOOL ProcessPackets(CBuffer* pInput);
 
 protected:
 
@@ -92,8 +93,9 @@ protected:
 
 protected:
 
-	// Read and respond to packets from the remote computer
-	BOOL ProcessPackets();             // Cuts up the recieved data into packets, and calls OnPacket for each one
+	// Process packets from internal input buffer
+	virtual BOOL ProcessPackets();
+
 	BOOL OnPacket(CG1Packet* pPacket); // Sorts the packet and calls one of the methods below
 
 	// Ping and pong packets

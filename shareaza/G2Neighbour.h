@@ -40,6 +40,8 @@ public:
 	virtual BOOL	SendQuery(const CQuerySearch* pSearch, CPacket* pPacket, BOOL bLocal);
 	virtual DWORD	GetUserCount() const { return m_nLeafCount; }
 	virtual DWORD	GetUserLimit() const { return m_nLeafLimit; }
+
+	// Process packets from specified buffer
 	virtual BOOL	ProcessPackets(CBuffer* pInput);
 
 	BOOL			OnPing(CG2Packet* pPacket, BOOL bTCP = TRUE);
@@ -108,5 +110,7 @@ protected:
 	virtual BOOL	OnRun();
 
 	void			SendStartups();
-	BOOL			ProcessPackets();
+
+	// Process packets from internal input buffer
+	virtual BOOL	ProcessPackets();
 };

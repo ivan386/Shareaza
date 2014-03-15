@@ -1,7 +1,7 @@
 //
 // DCNeighbour.h
 //
-// Copyright (c) Shareaza Development Team, 2010-2011.
+// Copyright (c) Shareaza Development Team, 2010-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -38,6 +38,9 @@ public:
 	virtual BOOL	Send(CPacket* pPacket, BOOL bRelease = TRUE, BOOL bBuffered = FALSE);
 	virtual DWORD	GetUserCount() const { return m_oUsers.GetCount(); }
 
+	// Process packets from input buffer
+	virtual BOOL	ProcessPackets(CBuffer* pInput);
+
 	// Send $ConnectToMe command
 	BOOL			ConnectToMe(const CString& sNick);
 
@@ -60,6 +63,9 @@ protected:
 	virtual BOOL	OnConnected();
 	virtual void	OnDropped();
 	virtual BOOL	OnRead();
+
+	// Process packets from internal input buffer
+	virtual BOOL	ProcessPackets();
 
 	// Got DC++ command
 	BOOL			OnPacket(CDCPacket* pPacket);
