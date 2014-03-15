@@ -422,6 +422,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\AntiVirus.cpp"
+				>
+			</File>
+			<File
 				RelativePath="Application.cpp"
 				>
 			</File>
@@ -1549,6 +1553,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\DlgHex.cpp"
+					>
+				</File>
+				<File
 					RelativePath="DlgHitColumns.cpp"
 					>
 				</File>
@@ -2052,6 +2060,10 @@
 			>
 			<File
 				RelativePath="AlbumFolder.h"
+				>
+			</File>
+			<File
+				RelativePath=".\AntiVirus.h"
 				>
 			</File>
 			<File
@@ -3251,6 +3263,10 @@
 				</File>
 				<File
 					RelativePath="DlgHelp.h"
+					>
+				</File>
+				<File
+					RelativePath=".\DlgHex.h"
 					>
 				</File>
 				<File
