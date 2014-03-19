@@ -267,6 +267,9 @@ BOOL CG1Neighbour::ProcessPackets()
 
 BOOL CG1Neighbour::ProcessPackets(CBuffer* pInput)
 {
+	if ( ! pInput )
+		return FALSE;
+
 	// Start out with bSuccess true and loop until it gets set to false
 	BOOL bSuccess = TRUE;
 	for ( ; bSuccess ; ) // This is the same thing as while ( bSuccess )

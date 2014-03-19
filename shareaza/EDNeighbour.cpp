@@ -1,7 +1,7 @@
 //
 // EDNeighbour.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -211,14 +211,28 @@ void CEDNeighbour::OnDropped()
 
 BOOL CEDNeighbour::OnRead()
 {
-	BOOL bSuccess = TRUE;
+	CNeighbour::OnRead();
 
-	if ( ! CNeighbour::OnRead() )
+	return ProcessPackets();
+}
+
+BOOL CEDNeighbour::ProcessPackets()
+{
+	CLockedBuffer pInputLocked( GetInput() );
+
+	CBuffer* pInput = m_pZInput ? m_pZInput : pInputLocked;
+	
+	return ProcessPackets( pInput );
+}
+
+BOOL CEDNeighbour::ProcessPackets(CBuffer* pInput)
+{
+	if ( ! pInput )
 		return FALSE;
 
-	CLockedBuffer pInput( GetInput() );
+	BOOL bSuccess = TRUE;
 
-	while ( CEDPacket* pPacket = CEDPacket::ReadBuffer( m_pZInput ? m_pZInput : pInput ) )
+	while ( CEDPacket* pPacket = CEDPacket::ReadBuffer( pInput ) )
 	{
 		try
 		{
@@ -230,7 +244,8 @@ BOOL CEDNeighbour::OnRead()
 		}
 
 		pPacket->Release();
-		if ( ! bSuccess ) break;
+		if ( ! bSuccess )
+			break;
 	}
 
 	return bSuccess;
