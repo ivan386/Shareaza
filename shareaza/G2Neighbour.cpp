@@ -116,6 +116,7 @@ CG2Neighbour::~CG2Neighbour()
 BOOL CG2Neighbour::OnRead()
 {
 	CNeighbour::OnRead();
+
 	return ProcessPackets();
 }
 
@@ -294,6 +295,9 @@ BOOL CG2Neighbour::ProcessPackets()
 
 BOOL CG2Neighbour::ProcessPackets(CBuffer* pInput)
 {
+	if ( ! pInput )
+		return FALSE;
+
 	BOOL bSuccess = TRUE;
 	while ( bSuccess && pInput->m_nLength )
 	{
