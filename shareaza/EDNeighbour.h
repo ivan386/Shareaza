@@ -1,7 +1,7 @@
 //
 // EDNeighbour.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -70,7 +70,14 @@ public:
 	virtual BOOL	Send(CPacket* pPacket, BOOL bRelease = TRUE, BOOL bBuffered = FALSE);
 	virtual DWORD	GetUserCount() const { return m_nUserCount; }
 	virtual DWORD	GetUserLimit() const { return m_nUserLimit; }
+
+	// Process packets from input buffer
+	virtual BOOL	ProcessPackets(CBuffer* pInput);
+
 protected:
+	// Process packets from internal input buffer
+	virtual BOOL	ProcessPackets();
+
 	virtual BOOL	SendQuery(const CQuerySearch* pSearch, CPacket* pPacket, BOOL bLocal);
 	virtual BOOL	OnRun();
 	virtual BOOL	OnConnected();
