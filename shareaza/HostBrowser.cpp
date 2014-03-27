@@ -1,7 +1,7 @@
 //
 // HostBrowser.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -230,8 +230,7 @@ void CHostBrowser::Stop(BOOL bCompleted)
 		CTransfer::Close();
 	}
 
-	if ( m_pInflate )
-		GetInput()->InflateStreamCleanup( m_pInflate );
+	CBuffer::InflateStreamCleanup( m_pInflate );
 }
 
 BOOL CHostBrowser::IsBrowsing() const
