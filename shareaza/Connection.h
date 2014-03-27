@@ -1,7 +1,7 @@
 //
 // Connection.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -83,7 +83,7 @@ public:
 // Operations
 public:
 	// Exchange data with the other computer, measure bandwidth, and work with headers
-	BOOL DoRun();			// Communicate with the other computer, reading and writing everything we can right now
+	virtual BOOL DoRun();	// Communicate with the other computer, reading and writing everything we can right now
 	void QueueRun();		// (do) may no longer be in use
 	void Measure();			// Measure the bandwidth, setting nMeasure in the bandwidth meters for each direction
 	void MeasureIn();		// Measure the incoming bandwidth, setting nMeasure in the bandwidth meter

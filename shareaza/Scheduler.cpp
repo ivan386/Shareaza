@@ -1,7 +1,7 @@
 //
 // Scheduler.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -48,36 +48,26 @@ void CScheduler::Execute(const CString& sTaskData)
 			Settings.Gnutella1.EnableToday = true;
 		else if ( nDisabled & 1 )
 			Settings.Gnutella1.EnableToday = false;
-		else
-			Settings.Gnutella1.EnableToday = Settings.Gnutella1.EnableAlways;
 		
 		if ( nEnabled & 2 )
 			Settings.Gnutella2.EnableToday = true;
 		else if ( nDisabled & 2 )
 			Settings.Gnutella2.EnableToday = false;
-		else
-			Settings.Gnutella2.EnableToday = Settings.Gnutella2.EnableAlways;
 		
 		if ( nEnabled & 4 )
 			Settings.eDonkey.EnableToday = true;
 		else if ( nDisabled & 4 )
 			Settings.eDonkey.EnableToday = false;
-		else
-			Settings.eDonkey.EnableToday = Settings.eDonkey.EnableAlways;
 		
 		if ( nEnabled & 8 )
 			Settings.DC.EnableToday = true;
 		else if ( nDisabled & 8 )
 			Settings.DC.EnableToday = false;
-		else
-			Settings.DC.EnableToday = Settings.DC.EnableAlways;
 		
 		if ( nEnabled & 16 )
 			Settings.BitTorrent.EnableToday = true;
 		else if ( nDisabled & 16 )
 			Settings.BitTorrent.EnableToday = false;
-		else
-			Settings.BitTorrent.EnableToday = Settings.BitTorrent.EnableAlways;
 	}
 	
 	switch ( nAction )

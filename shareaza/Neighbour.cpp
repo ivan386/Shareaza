@@ -1,7 +1,7 @@
 //
 // Neighbour.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -161,17 +161,10 @@ CNeighbour::CNeighbour(PROTOCOLID nProtocol, CNeighbour* pBase)
 // Delete this CNeighbour object
 CNeighbour::~CNeighbour()
 {
-	// If m_pZSOutput isn't NULL, we are probably in the middle of a zlib compression operation
-	if ( z_streamp pStream = (z_streamp)m_pZSOutput ) // This is correctly assignment, not comparison, in an if statement
-	{
-		// End the compression and delete the pStream object
-		deflateEnd( pStream );
-		delete pStream;
-	}
+	ASSERT( Neighbours.Get( (DWORD_PTR)this ) == NULL );
 
-	// Same thing, except for decompressing input
-	if ( m_pZSInput )
-		m_pZInput->InflateStreamCleanup( m_pZSInput );
+	CBuffer::DeflateStreamCleanup( m_pZSOutput );
+	CBuffer::InflateStreamCleanup( m_pZSInput );
 
 	// If any of these objects exist, delete them
 	if ( m_pProfile )			delete m_pProfile;
@@ -390,17 +383,16 @@ BOOL CNeighbour::OnWrite()
 	// Start or continue using zlib with m_pZSInput and pStream pointers
 	BOOL bNew = ( m_pZSOutput == NULL );		// Make bNew true if zlib compression isn't setup yet
 	if ( bNew ) m_pZSOutput = new z_stream;		// Create a new z_stream structure and point m_pZSOutput and pStream at it
-	z_streamp pStream = (z_streamp)m_pZSOutput;
 
 	// If we are starting to use zlib now
 	if ( bNew )
 	{
 		// Zero the z_stream structure and set it up for compression
-		ZeroMemory( pStream, sizeof(z_stream) );
-		if ( deflateInit( pStream, Settings.Connection.ZLibCompressionLevel ) != Z_OK )
+		ZeroMemory( m_pZSOutput, sizeof(z_stream) );
+		if ( deflateInit( m_pZSOutput, Settings.Connection.ZLibCompressionLevel ) != Z_OK )
 		{
 			// There was an error setting up zlib, clean up and leave now
-			delete pStream;
+			delete m_pZSOutput;
 			delete m_pZOutput;
 			m_pZOutput = NULL;
 			m_pZSOutput = NULL;
@@ -424,29 +416,29 @@ BOOL CNeighbour::OnWrite()
 
 	// Loop until all the data in ZOutput has been compressed into Output
 	while ( ( m_pZOutput->m_nLength && ! pOutput->m_nLength )	// ZOutput has data to compress and Output is empty
-		|| pStream->avail_out == 0 )							// Or, zlib says it has no more room left (do)
+		|| m_pZSOutput->avail_out == 0 )							// Or, zlib says it has no more room left (do)
 	{
 		// Make sure the output buffer is 1 KB (do)
 		if ( !pOutput->EnsureBuffer( 1024u ) )
 			return FALSE;
 
 		// Tell zlib where the data to compress is, and where it should put the compressed data
-		pStream->next_in	= m_pZOutput->m_pBuffer; // Start next_in and avail_in on the data in ZOutput
-		pStream->avail_in	= m_pZOutput->m_nLength;
-		pStream->next_out	= pOutput->m_pBuffer + pOutput->m_nLength; // Start next_out and avail_out on the empty space in Output
-		pStream->avail_out	= pOutput->GetBufferSize() - pOutput->m_nLength;
+		m_pZSOutput->next_in	= m_pZOutput->m_pBuffer; // Start next_in and avail_in on the data in ZOutput
+		m_pZSOutput->avail_in	= m_pZOutput->m_nLength;
+		m_pZSOutput->next_out	= pOutput->m_pBuffer + pOutput->m_nLength; // Start next_out and avail_out on the empty space in Output
+		m_pZSOutput->avail_out	= pOutput->GetBufferSize() - pOutput->m_nLength;
 
 		// Call zlib inflate to decompress the contents of m_pInput into the end of m_pZInput
-		deflate( pStream, m_bZFlush ? Z_SYNC_FLUSH : Z_NO_FLUSH ); // Zlib adjusts next in, avail in, next out, and avail out to record what it did
+		CBuffer::Deflate( m_pZSOutput, m_bZFlush ? Z_SYNC_FLUSH : Z_NO_FLUSH ); // Zlib adjusts next in, avail in, next out, and avail out to record what it did
 
 		// Add the number of uncompressed bytes that zlib compressed to the m_nZOutput count
-		m_nZOutput += m_pZOutput->m_nLength - pStream->avail_in;
+		m_nZOutput += m_pZOutput->m_nLength - m_pZSOutput->avail_in;
 
 		// Remove the chunk that zlib compressed from the start of ZOutput
-		m_pZOutput->Remove( m_pZOutput->m_nLength - pStream->avail_in );
+		m_pZOutput->Remove( m_pZOutput->m_nLength - m_pZSOutput->avail_in );
 
 		// Set nOutput to the size of the new compressed block in the output buffer between the data already there, and the empty space afterwards
-		int nOutput = ( pOutput->GetBufferSize() - pOutput->m_nLength ) - pStream->avail_out;
+		int nOutput = ( pOutput->GetBufferSize() - pOutput->m_nLength ) - m_pZSOutput->avail_out;
 
 		// Zlib compressed something
 		if ( nOutput )
