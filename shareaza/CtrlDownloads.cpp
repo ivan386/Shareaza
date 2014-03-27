@@ -1103,33 +1103,35 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 				dc.Draw3dRect( &rcCell, crBack, crBack );
 				rcCell.DeflateRect( 0, 1 );
 				
-				QWORD NonRandomEnd = pDownload->GetNonRandomEnd()+1;
+				if ( Settings.Downloads.SimpleBar )
+					dc.Draw3dRect( &rcCell, crBorderSimple, crBorderSimple );
+				else
+					dc.Draw3dRect( &rcCell, crBorder, crBorder );
+
+				
+
+				QWORD NonRandomEnd = pDownload->GetNonRandomEnd();
 
 				if ( NonRandomEnd > 0 && pDownload->m_nSize > 0)
 				{
-					if ( NonRandomEnd > pDownload->m_nSize )
-						NonRandomEnd = pDownload->m_nSize;
-
 					CRect rect(rcCell);
-					rect.DeflateRect( 1, 1 );
-					rect.left += ((rect.Width() - 2) * NonRandomEnd) / pDownload->m_nSize;
-					rect.right = rect.left + 2;
-					dc.FillSolidRect(&rect, RGB( 0, 255, 0 ));
-					dc.ExcludeClipRect(&rect);
+
+					if ( NonRandomEnd > pDownload->m_nSize )
+						rect.left += rect.Width() - 3;
+					else
+						rect.left += ((rect.Width() - 3) * NonRandomEnd) / pDownload->m_nSize;
+					rect.right = rect.left + 3;
+					rect.InflateRect(0, 2);
+					dc.FillSolidRect(&rect, crBorder);
 				}
+
+				rcCell.DeflateRect( 1, 1 );
 
 				if ( Settings.Downloads.SimpleBar )
-				{
-					dc.Draw3dRect( &rcCell, crBorderSimple, crBorderSimple );
-					rcCell.DeflateRect( 1, 1 );
 					CFragmentBar::DrawDownloadSimple( &dc, &rcCell, pDownload, crNatural );
-				}
 				else
-				{
-					dc.Draw3dRect( &rcCell, crBorder, crBorder );
-					rcCell.DeflateRect( 1, 1 );
 					CFragmentBar::DrawDownload( &dc, &rcCell, pDownload, crNatural );
-				}
+				
 			}
 			else if ( ( pDownload->m_nSize < SIZE_UNKNOWN ) && ( pDownload->m_nSize > 0 ) )
 				if ( rcCell.Width() > 50 )
