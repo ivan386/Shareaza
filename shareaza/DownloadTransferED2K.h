@@ -1,7 +1,7 @@
 //
 // DownloadTransferED2K.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,6 +22,7 @@
 #pragma once
 
 #include "DownloadTransfer.h"
+#include "zlib.h"
 
 class CEDClient;
 class CEDPacket;
@@ -40,7 +41,7 @@ public:
 	DWORD			m_tRanking;				//When queue ranking was last received
 	bool			m_bUDP;
 protected:
-	LPVOID			m_pInflatePtr;
+	z_streamp		m_pInflatePtr;
 	CBuffer*		m_pInflateBuffer;
 	QWORD			m_nInflateOffset;
 	QWORD			m_nInflateLength;

@@ -1,7 +1,7 @@
 //
 // Buffer.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -491,9 +491,10 @@ BOOL CBuffer::Ungzip()
 		}
 
 		// Setup a z_stream structure to perform a raw inflate
-		z_stream pStream = { 0 };
+		CAutoPtr< z_stream > pStream ( new z_stream );
+		ZeroMemory( pStream, sizeof( z_stream ) );
 		if ( Z_OK != inflateInit2(	// Initialize a stream inflation with more options than just inflateInit
-			&pStream,				// Stream structure to initialize
+			pStream,				// Stream structure to initialize
 			-MAX_WBITS ) )			// Window bits value of -15 to perform a raw inflate
 		{
 			// The Zlib function inflateInit2 returned something other than Z_OK, report error
@@ -501,13 +502,13 @@ BOOL CBuffer::Ungzip()
 		}
 
 		// Tell the z_stream structure where to work
-		pStream.next_in   = m_pBuffer;									// Decompress the memory here
-		pStream.avail_in  = static_cast< uInt >( m_nLength );			// There is this much of it
-		pStream.next_out  = pOutput.m_pBuffer;							// Write decompressed data here
-		pStream.avail_out = static_cast< uInt >( pOutput.GetBufferSize() );	// Tell ZLib it has this much space, it makes this smaller to show how much space is left
+		pStream->next_in   = m_pBuffer;									// Decompress the memory here
+		pStream->avail_in  = static_cast< uInt >( m_nLength );			// There is this much of it
+		pStream->next_out  = pOutput.m_pBuffer;							// Write decompressed data here
+		pStream->avail_out = static_cast< uInt >( pOutput.GetBufferSize() );	// Tell ZLib it has this much space, it makes this smaller to show how much space is left
 
 		// Call ZLib inflate to decompress all the data, and see if it returns Z_STREAM_END
-		int nRes = inflate( &pStream, Z_FINISH );
+		int nRes = Inflate( pStream, Z_FINISH );
 
 		// The inflate call returned Z_STREAM_END
 		if ( Z_STREAM_END == nRes )
@@ -516,25 +517,49 @@ BOOL CBuffer::Ungzip()
 			Clear();                   // Record there are no bytes stored here, doesn't change the allocated block size
 			Add(pOutput.m_pBuffer,     // Add the memory at the start of the output buffer
 				pOutput.GetBufferSize()      // The amount of space the buffer had when we gave it to Zlib
-				- pStream.avail_out ); // Minus the amount it said it left, this is the number of bytes it wrote
+				- pStream->avail_out ); // Minus the amount it said it left, this is the number of bytes it wrote
 
 			// Close ZLib and report success
-			inflateEnd( &pStream );
+			inflateEnd( pStream );
 			return TRUE;
 		}
 		// Buffer too small
 		else if ( Z_BUF_ERROR == nRes )
 		{
 			nLength *= 2;
-			inflateEnd( &pStream );
+			inflateEnd( pStream );
 		}
 		// The inflate call returned something else
 		else
 		{
 			// Close ZLib and report error
-			inflateEnd( &pStream );
+			inflateEnd( pStream );
 			return FALSE;
 		}
+	}
+}
+
+int CBuffer::Inflate(z_streamp pStream, int nFlush)
+{
+	__try
+	{
+		return inflate( pStream, nFlush );
+	}
+	__except( EXCEPTION_EXECUTE_HANDLER )
+	{
+		return Z_STREAM_ERROR;
+	}
+}
+
+int CBuffer::Deflate(z_streamp pStream, int nFlush)
+{
+	__try
+	{
+		return deflate( pStream, nFlush );
+	}
+	__except( EXCEPTION_EXECUTE_HANDLER )
+	{
+		return Z_STREAM_ERROR;
 	}
 }
 
@@ -591,11 +616,7 @@ bool CBuffer::InflateStreamTo(CBuffer& oBuffer, z_streamp& pStream, BOOL* pbEndO
 													// decompress data to
 
 		// Call ZLib inflate to decompress all the available data
-		nResult = inflate( pStream, Z_SYNC_FLUSH );
-
-		// This shouldn't happen, but check to make sure the stream state
-		// hasn't been damaged from somewhere else
-		ASSERT( nResult != Z_STREAM_ERROR );
+		nResult = Inflate( pStream, Z_SYNC_FLUSH );
 
 		switch ( nResult )
 		{
@@ -635,12 +656,36 @@ bool CBuffer::InflateStreamTo(CBuffer& oBuffer, z_streamp& pStream, BOOL* pbEndO
 	return ( nResult == Z_OK || nResult == Z_STREAM_END );
 }
 
-// Close the inflate stream and free memory structures
-void CBuffer::InflateStreamCleanup( z_streamp& pStream ) const
+void CBuffer::InflateStreamCleanup(z_streamp& pStream)
 {
-	inflateEnd( pStream );	// Close the stream
-	delete pStream;			// Delete the z_stream structure
-	pStream = NULL;			// Null the pointer
+	if ( pStream )
+	{
+		__try
+		{
+			inflateEnd( pStream );	// Close the stream
+		}
+		__except( EXCEPTION_EXECUTE_HANDLER )
+		{
+		}
+		delete pStream;
+		pStream = NULL;
+	}
+}
+
+void CBuffer::DeflateStreamCleanup(z_streamp& pStream)
+{
+	if ( pStream )
+	{
+		__try
+		{
+			deflateEnd( pStream );	// Close the stream
+		}
+		__except( EXCEPTION_EXECUTE_HANDLER )
+		{
+		}
+		delete pStream;
+		pStream = NULL;
+	}
 }
 
 #endif // ZLIB_H

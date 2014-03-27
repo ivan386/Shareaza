@@ -1,7 +1,7 @@
 //
 // Buffer.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -80,7 +80,10 @@ public:
 	BOOL	Deflate(BOOL bIfSmaller = FALSE);						// Compress the data in this buffer
 	BOOL	Inflate();												// Decompress the data in this buffer in place
 	bool	InflateStreamTo(CBuffer& oBuffer, z_streamp& pStream, BOOL* bEndOfStream = NULL);	// Decompress the data in this buffer into another buffer
-	void	InflateStreamCleanup(z_streamp& pStream) const;			// Stop stream decompression and cleanup
+	static int Inflate(z_streamp pStream, int nFlush);				// Safe version of inflate()
+	static int Deflate(z_streamp pStream, int nFlush);				// Safe version of deflate()
+	static void	InflateStreamCleanup(z_streamp& pStream);			// Stop stream decompression and cleanup
+	static void	DeflateStreamCleanup(z_streamp& pStream);			// Stop stream compression and cleanup
 	BOOL	Ungzip();												// Delete the gzip header and then remove the compression
 #endif // ZLIB_H
 
