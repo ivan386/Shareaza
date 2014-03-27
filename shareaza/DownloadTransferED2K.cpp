@@ -1,7 +1,7 @@
 //
 // DownloadTransferED2K.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -567,15 +567,9 @@ BOOL CDownloadTransferED2K::OnCompressedPart(CEDPacket* pPacket)
 	QWORD nBaseOffset = pPacket->ReadLongLE();
 	QWORD nBaseLength = pPacket->ReadLongLE();
 
-	z_streamp pStream = (z_streamp)m_pInflatePtr;
-
 	if ( m_pInflatePtr == NULL || m_nInflateOffset != nBaseOffset || m_nInflateLength != nBaseLength )
 	{
-		if ( pStream != NULL )
-		{
-			inflateEnd( pStream );
-			delete pStream;
-		}
+		CBuffer::InflateStreamCleanup( m_pInflatePtr );
 
 		m_nInflateOffset	= nBaseOffset;
 		m_nInflateLength	= nBaseLength;
@@ -584,12 +578,11 @@ BOOL CDownloadTransferED2K::OnCompressedPart(CEDPacket* pPacket)
 		m_pInflateBuffer->Clear();
 
 		m_pInflatePtr = new z_stream;
-		pStream = (z_streamp)m_pInflatePtr;
-		ZeroMemory( pStream, sizeof(z_stream) );
+		ZeroMemory( m_pInflatePtr, sizeof(z_stream) );
 
-		if ( inflateInit( pStream ) != Z_OK )
+		if ( inflateInit( m_pInflatePtr ) != Z_OK )
 		{
-			delete pStream;
+			delete m_pInflatePtr;
 			m_pInflatePtr = NULL;
 
 			theApp.Message( MSG_ERROR, IDS_DOWNLOAD_INFLATE_ERROR,
@@ -606,20 +599,20 @@ BOOL CDownloadTransferED2K::OnCompressedPart(CEDPacket* pPacket)
 
 	if ( m_pInflateBuffer->m_nLength > 0 && m_nInflateRead < m_nInflateLength )
 	{
-		pStream->next_in	= m_pInflateBuffer->m_pBuffer;
-		pStream->avail_in	= m_pInflateBuffer->m_nLength;
+		m_pInflatePtr->next_in	= m_pInflateBuffer->m_pBuffer;
+		m_pInflatePtr->avail_in	= m_pInflateBuffer->m_nLength;
 
 		do
 		{
-			pStream->next_out	= pBuffer.get();
-			pStream->avail_out	= BUFFER_SIZE;
+			m_pInflatePtr->next_out		= pBuffer.get();
+			m_pInflatePtr->avail_out	= BUFFER_SIZE;
 
-			inflate( pStream, Z_SYNC_FLUSH );
+			CBuffer::Inflate( m_pInflatePtr, Z_SYNC_FLUSH );
 
-			if ( pStream->avail_out < BUFFER_SIZE )
+			if ( m_pInflatePtr->avail_out < BUFFER_SIZE )
 			{
 				QWORD nOffset = m_nInflateOffset + m_nInflateWritten;
-				QWORD nLength = BUFFER_SIZE - pStream->avail_out;
+				QWORD nLength = BUFFER_SIZE - m_pInflatePtr->avail_out;
 
 				m_pDownload->SubmitData( nOffset, pBuffer.get(), nLength );
 
@@ -632,20 +625,18 @@ BOOL CDownloadTransferED2K::OnCompressedPart(CEDPacket* pPacket)
 				m_nInflateWritten += nLength;
 			}
 		}
-		while ( pStream->avail_out == 0 );
+		while ( m_pInflatePtr->avail_out == 0 );
 
-		if ( pStream->avail_in < m_pInflateBuffer->m_nLength )
+		if ( m_pInflatePtr->avail_in < m_pInflateBuffer->m_nLength )
 		{
-			m_nInflateRead += ( m_pInflateBuffer->m_nLength - pStream->avail_in );
-			m_pInflateBuffer->Remove( m_pInflateBuffer->m_nLength - pStream->avail_in );
+			m_nInflateRead += ( m_pInflateBuffer->m_nLength - m_pInflatePtr->avail_in );
+			m_pInflateBuffer->Remove( m_pInflateBuffer->m_nLength - m_pInflatePtr->avail_in );
 		}
 	}
 
 	if ( m_nInflateRead >= m_nInflateLength )
 	{
-		inflateEnd( pStream );
-		delete pStream;
-		m_pInflatePtr = NULL;
+		CBuffer::InflateStreamCleanup( m_pInflatePtr );
 		m_pInflateBuffer->Clear();
 	}
 
@@ -942,13 +933,8 @@ void CDownloadTransferED2K::ClearRequests()
 {
 	m_oRequested.clear();
 	
-	if ( z_streamp pStream = (z_streamp)m_pInflatePtr )
-	{
-		inflateEnd( pStream );
-		delete pStream;
-		m_pInflatePtr = NULL;
-		m_pInflateBuffer->Clear();
-	}
+	CBuffer::InflateStreamCleanup( m_pInflatePtr );
+	m_pInflateBuffer->Clear();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -1119,15 +1105,9 @@ BOOL CDownloadTransferED2K::OnCompressedPart64(CEDPacket* pPacket)
 	QWORD	nBaseLength = pPacket->ReadLongLE();	// Length of compressed data is 32bit
 
 
-	z_streamp pStream = (z_streamp)m_pInflatePtr;
-
 	if ( m_pInflatePtr == NULL || m_nInflateOffset != nBaseOffset || m_nInflateLength != nBaseLength )
 	{
-		if ( pStream != NULL )
-		{
-			inflateEnd( pStream );
-			delete pStream;
-		}
+		CBuffer::InflateStreamCleanup( m_pInflatePtr );
 
 		m_nInflateOffset	= nBaseOffset;
 		m_nInflateLength	= nBaseLength;
@@ -1136,12 +1116,11 @@ BOOL CDownloadTransferED2K::OnCompressedPart64(CEDPacket* pPacket)
 		m_pInflateBuffer->Clear();
 
 		m_pInflatePtr = new z_stream;
-		pStream = (z_streamp)m_pInflatePtr;
-		ZeroMemory( pStream, sizeof(z_stream) );
+		ZeroMemory( m_pInflatePtr, sizeof(z_stream) );
 
-		if ( inflateInit( pStream ) != Z_OK )
+		if ( inflateInit( m_pInflatePtr ) != Z_OK )
 		{
-			delete pStream;
+			delete m_pInflatePtr;
 			m_pInflatePtr = NULL;
 
 			theApp.Message( MSG_ERROR, IDS_DOWNLOAD_INFLATE_ERROR,
@@ -1158,20 +1137,20 @@ BOOL CDownloadTransferED2K::OnCompressedPart64(CEDPacket* pPacket)
 
 	if ( m_pInflateBuffer->m_nLength > 0 && m_nInflateRead < m_nInflateLength )
 	{
-		pStream->next_in	= m_pInflateBuffer->m_pBuffer;
-		pStream->avail_in	= m_pInflateBuffer->m_nLength;
+		m_pInflatePtr->next_in	= m_pInflateBuffer->m_pBuffer;
+		m_pInflatePtr->avail_in	= m_pInflateBuffer->m_nLength;
 
 		do
 		{
-			pStream->next_out	= pBuffer.get();
-			pStream->avail_out	= BUFFER_SIZE;
+			m_pInflatePtr->next_out		= pBuffer.get();
+			m_pInflatePtr->avail_out	= BUFFER_SIZE;
 
-			inflate( pStream, Z_SYNC_FLUSH );
+			CBuffer::Inflate( m_pInflatePtr, Z_SYNC_FLUSH );
 
-			if ( pStream->avail_out < BUFFER_SIZE )
+			if ( m_pInflatePtr->avail_out < BUFFER_SIZE )
 			{
 				QWORD nOffset = m_nInflateOffset + m_nInflateWritten;
-				QWORD nLength = BUFFER_SIZE - pStream->avail_out;
+				QWORD nLength = BUFFER_SIZE - m_pInflatePtr->avail_out;
 
 				m_pDownload->SubmitData( nOffset, pBuffer.get(), nLength );
 
@@ -1184,20 +1163,18 @@ BOOL CDownloadTransferED2K::OnCompressedPart64(CEDPacket* pPacket)
 				m_nInflateWritten += nLength;
 			}
 		}
-		while ( pStream->avail_out == 0 );
+		while ( m_pInflatePtr->avail_out == 0 );
 
-		if ( pStream->avail_in < m_pInflateBuffer->m_nLength )
+		if ( m_pInflatePtr->avail_in < m_pInflateBuffer->m_nLength )
 		{
-			m_nInflateRead += ( m_pInflateBuffer->m_nLength - pStream->avail_in );
-			m_pInflateBuffer->Remove( m_pInflateBuffer->m_nLength - pStream->avail_in );
+			m_nInflateRead += ( m_pInflateBuffer->m_nLength - m_pInflatePtr->avail_in );
+			m_pInflateBuffer->Remove( m_pInflateBuffer->m_nLength - m_pInflatePtr->avail_in );
 		}
 	}
 
 	if ( m_nInflateRead >= m_nInflateLength )
 	{
-		inflateEnd( pStream );
-		delete pStream;
-		m_pInflatePtr = NULL;
+		CBuffer::InflateStreamCleanup( m_pInflatePtr );
 		m_pInflateBuffer->Clear();
 	}
 

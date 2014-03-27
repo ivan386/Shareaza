@@ -1,7 +1,7 @@
 //
 // ZIPFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2010.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -391,9 +391,9 @@ CBuffer* CZIPFile::File::Decompress()
 	if ( m_nSize > 32*1024*1024 )
 		return NULL;
 
-	z_stream pStream;
+	CAutoPtr< z_stream > pStream( new z_stream );
 
-	if ( ! PrepareToDecompress( &pStream ) )
+	if ( ! PrepareToDecompress( pStream ) )
 		return NULL;
 
 	auto_ptr< CBuffer > pTarget( new CBuffer() );
@@ -421,26 +421,26 @@ CBuffer* CZIPFile::File::Decompress()
 
 	if ( nSource != (DWORD)m_nCompressedSize )
 	{
-		inflateEnd( &pStream );
+		inflateEnd( pStream );
 		return NULL;
 	}
 
 	pTarget->EnsureBuffer( (DWORD)m_nSize );
 	pTarget->m_nLength = (DWORD)m_nSize;
 
-	pStream.next_in		= pSource.get();
-	pStream.avail_in	= (DWORD)m_nCompressedSize;
-	pStream.next_out	= pTarget->m_pBuffer;
-	pStream.avail_out	= pTarget->m_nLength;
+	pStream->next_in	= pSource.get();
+	pStream->avail_in	= (DWORD)m_nCompressedSize;
+	pStream->next_out	= pTarget->m_pBuffer;
+	pStream->avail_out	= pTarget->m_nLength;
 
-	inflate( &pStream, Z_FINISH );
+	CBuffer::Inflate( pStream, Z_FINISH );
 
-	if ( pStream.avail_out != 0 )
+	if ( pStream->avail_out != 0 )
 	{
 		pTarget.reset();
 	}
 
-	inflateEnd( &pStream );
+	inflateEnd( pStream );
 
 	return pTarget.release();
 }
@@ -458,8 +458,9 @@ BOOL CZIPFile::File::Extract(LPCTSTR pszFile)
 	if ( hFile == INVALID_HANDLE_VALUE )
 		return FALSE;
 
-	z_stream pStream;
-	if ( ! PrepareToDecompress( &pStream ) )
+	CAutoPtr< z_stream > pStream( new z_stream );
+
+	if ( ! PrepareToDecompress( pStream ) )
 		return FALSE;
 
 	QWORD nCompressed = 0, nUncompressed = 0;
@@ -472,36 +473,36 @@ BOOL CZIPFile::File::Extract(LPCTSTR pszFile)
 		while ( pBufferIn.get() && pBufferOut.get() &&
 			( nCompressed < m_nCompressedSize || nUncompressed < m_nSize ) )
 		{
-			if ( pStream.avail_in == 0 )
+			if ( pStream->avail_in == 0 )
 			{
-				pStream.avail_in	= (uInt)min( m_nCompressedSize - nCompressed, (QWORD)BUFFER_IN_SIZE );
-				pStream.next_in		= pBufferIn.get();
+				pStream->avail_in	= (uInt)min( m_nCompressedSize - nCompressed, (QWORD)BUFFER_IN_SIZE );
+				pStream->next_in	= pBufferIn.get();
 
 				DWORD nRead = 0;
-				if ( ! ReadFile( m_pZIP->m_hFile, pBufferIn.get(), pStream.avail_in, &nRead, NULL ) )
+				if ( ! ReadFile( m_pZIP->m_hFile, pBufferIn.get(), pStream->avail_in, &nRead, NULL ) )
 					break;
-				if ( nRead != pStream.avail_in )
+				if ( nRead != pStream->avail_in )
 					break;
 				nCompressed += nRead;
 			}
 
-			pStream.avail_out	= BUFFER_OUT_SIZE;
-			pStream.next_out	= pBufferOut.get();
+			pStream->avail_out	= BUFFER_OUT_SIZE;
+			pStream->next_out	= pBufferOut.get();
 
-			/*int nInflate =*/ inflate( &pStream, Z_SYNC_FLUSH );
+			CBuffer::Inflate( pStream, Z_SYNC_FLUSH );
 
-			if ( pStream.avail_out < BUFFER_OUT_SIZE )
+			if ( pStream->avail_out < BUFFER_OUT_SIZE )
 			{
-				DWORD nWrite = BUFFER_OUT_SIZE - pStream.avail_out;
+				DWORD nWrite = BUFFER_OUT_SIZE - pStream->avail_out;
 				if ( ! WriteFile( hFile, pBufferOut.get(), nWrite, &nWrite, NULL ) )
 					break;
-				if ( nWrite != BUFFER_OUT_SIZE - pStream.avail_out )
+				if ( nWrite != BUFFER_OUT_SIZE - pStream->avail_out )
 					break;
 				nUncompressed += nWrite;
 			}
 		}
 
-		inflateEnd( &pStream );
+		inflateEnd( pStream );
 	}
 	else
 	{
