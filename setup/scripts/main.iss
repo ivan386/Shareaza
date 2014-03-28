@@ -230,6 +230,9 @@ Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\sqlite3.dll"; DestDir:
 Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\GeoIP.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 Source: "GeoIP\GeoIP.dat"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 
+; MiniUPnPc
+Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\MiniUPnPc.dll"; DestDir: "{app}"; DestName: "MiniUPnPc.dll"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+
 ; Plugins
 Source: "{#Compiler}\{#PlatformName}\{#ConfigurationName}\7ZipBuilder.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
 #if PlatformName == "Win32"

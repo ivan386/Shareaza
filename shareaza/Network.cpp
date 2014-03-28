@@ -1,7 +1,7 @@
 //
 // Network.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -46,11 +46,15 @@
 #include "Settings.h"
 #include "Statistics.h"
 #include "Transfers.h"
-#include "UPnPFinder.h"
 #include "WndHitMonitor.h"
 #include "WndMain.h"
 #include "WndSearch.h"
 #include "WndSearchMonitor.h"
+
+#include "MiniUPnP.h"		// UPnP tier 0 - MiniUPnPc library
+#include "UPnPNAT.h"		// UPnP tier 1 - Windows modern
+#include "UPnPFinder.h"		// UPnP tier 2 - Windows legacy
+#define UPNP_MAX		2	// UPnP max tier number (0,1,2)
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -104,8 +108,6 @@ inline bool IsValidDomain(LPCTSTR pszHost)
 
 CNetwork Network;
 
-IMPLEMENT_DYNCREATE(CNetwork, CComObject)
-
 //////////////////////////////////////////////////////////////////////
 // CNetwork construction
 
@@ -113,15 +115,14 @@ CNetwork::CNetwork()
 	: NodeRoute				( new CRouteCache() )
 	, QueryRoute			( new CRouteCache() )
 	, QueryKeys				( new CQueryKeys() )
-	, UPnPFinder			( new CUPnPFinder() )
+	, UPnPFinder			( NULL )
 	, Firewall				( new CFirewall() )
 	, m_pHost				()
 	, m_bAutoConnect		( FALSE )
 	, m_bConnected			( false )
 	, m_tStartedConnecting	( 0 )
-	, m_nSequence			( 0 )
+	, m_nUPnPTier			( 0 )
 	, m_bUPnPPortsForwarded	( TRI_UNKNOWN )
-	, m_nUPnPExternalAddress()
 	, m_tUPnPMap			( 0 )
 {
 	m_pHost.sin_family = AF_INET;
@@ -209,11 +210,6 @@ BOOL CNetwork::IsSelfIP(const IN_ADDR& nAddress) const
 		return TRUE;
 	}
 	if ( nAddress.s_net == 127 )
-	{
-		return TRUE;
-	}
-	if ( m_nUPnPExternalAddress.s_addr != INADDR_NONE &&
-		 m_nUPnPExternalAddress.s_addr == nAddress.s_addr )
 	{
 		return TRUE;
 	}
@@ -448,7 +444,7 @@ BOOL CNetwork::AcquireLocalAddress(SOCKET hSocket)
 	return AcquireLocalAddress( pAddress.sin_addr );
 }
 
-BOOL CNetwork::AcquireLocalAddress(LPCTSTR pszHeader)
+BOOL CNetwork::AcquireLocalAddress(LPCTSTR pszHeader, WORD nPort)
 {
 	int nIPb1, nIPb2, nIPb3, nIPb4;
 	if ( _stscanf( pszHeader, _T("%i.%i.%i.%i"), &nIPb1, &nIPb2, &nIPb3, &nIPb4 ) != 4 ||
@@ -463,11 +459,16 @@ BOOL CNetwork::AcquireLocalAddress(LPCTSTR pszHeader)
 	pAddress.S_un.S_un_b.s_b2 = (BYTE)nIPb2;
 	pAddress.S_un.S_un_b.s_b3 = (BYTE)nIPb3;
 	pAddress.S_un.S_un_b.s_b4 = (BYTE)nIPb4;
-	return AcquireLocalAddress( pAddress );
+	return AcquireLocalAddress( pAddress, nPort );
 }
 
-BOOL CNetwork::AcquireLocalAddress(const IN_ADDR& pAddress)
+BOOL CNetwork::AcquireLocalAddress(const IN_ADDR& pAddress, WORD nPort)
 {
+	if ( nPort )
+	{
+		m_pHost.sin_port = htons( nPort );
+	}
+
 	if ( pAddress.s_addr == INADDR_ANY ||
 		 pAddress.s_addr == INADDR_NONE )
 		return FALSE;
@@ -728,12 +729,10 @@ bool CNetwork::PreRun()
 
 	m_bConnected = true;
 
-	Resolve( Settings.Connection.InHost, Settings.Connection.InPort, &m_pHost );
-
 	// Get host name
 	gethostname( m_sHostName.GetBuffer( 255 ), 255 );
 	m_sHostName.ReleaseBuffer();
-
+					
 	// Get all IPs
 	if ( hostent* h = gethostbyname( m_sHostName ) )
 	{
@@ -743,8 +742,7 @@ bool CNetwork::PreRun()
 		}
 	}
 
-	// Map ports using NAT UPnP and Control Point UPnP methods and acquire external IP on success
-	MapPorts();
+	Resolve( Settings.Connection.InHost, Settings.Connection.InPort, &m_pHost );
 
 	if ( /*IsFirewalled()*/Settings.Connection.FirewallState == CONNECTION_FIREWALLED ) // Temp disable
 		theApp.Message( MSG_INFO, IDS_NETWORK_FIREWALLED );
@@ -763,28 +761,16 @@ bool CNetwork::PreRun()
 			(LPCTSTR)Settings.Connection.OutHost );
 	}
 
-	if ( ! Handshakes.Listen() || ! Datagrams.Listen() )
-	{
-		theApp.Message( MSG_ERROR, _T("The connection process is failed.") );
-		return false;
-	}
-
-	Neighbours.Connect();
-
-	NodeRoute->SetDuration( Settings.Gnutella.RouteCache );
-	QueryRoute->SetDuration( Settings.Gnutella.RouteCache );
-
-	Neighbours.IsG2HubCapable( FALSE, TRUE );
-	Neighbours.IsG1UltrapeerCapable( FALSE, TRUE );
-
-	// It will check if it is needed inside the function
-	DiscoveryServices.Execute( TRUE, PROTOCOL_NULL, FALSE );
+	// Map ports using NAT UPnP and Control Point UPnP methods and acquire external IP on success
+	MapPorts();
 
 	return true;
 }
 
 void CNetwork::OnRun()
 {
+	bool bListen = false;
+
 	if ( PreRun() )
 	{
 		while ( IsThreadEnabled() )
@@ -803,18 +789,53 @@ void CNetwork::OnRun()
 				continue;
 			}
 
-			// Refresh UPnP port mappings
 			DWORD tNow = GetTickCount();
-			if ( Settings.Connection.EnableUPnP &&
-				 tNow > m_tUPnPMap + Settings.Connection.UPnPRefreshTime )
+			if ( Settings.Connection.EnableUPnP )
 			{
-				MapPorts();
-				continue;
+				if ( m_bUPnPPortsForwarded == TRI_FALSE )
+				{
+					// Try another UPnP tier
+					if ( m_nUPnPTier < UPNP_MAX )
+					{
+						++m_nUPnPTier;
+						UPnPFinder.Free();
+						MapPorts();
+						continue;
+					}
+				}
+
+				// Refresh UPnP port mappings
+				if ( tNow > m_tUPnPMap + Settings.Connection.UPnPRefreshTime )
+				{
+					MapPorts();
+					continue;
+				}
 			}
 
 			CSingleLock oLock( &m_pSection, FALSE );
 			if ( oLock.Lock( 100 ) )
 			{
+				if ( ! bListen )
+				{
+					bListen = true;
+
+					if ( ! Handshakes.Listen() || ! Datagrams.Listen() )
+					{
+						theApp.Message( MSG_ERROR, _T("The connection process is failed.") );
+						break;
+					}
+					Neighbours.Connect();
+
+					NodeRoute->SetDuration( Settings.Gnutella.RouteCache );
+					QueryRoute->SetDuration( Settings.Gnutella.RouteCache );
+
+					Neighbours.IsG2HubCapable( FALSE, TRUE );
+					Neighbours.IsG1UltrapeerCapable( FALSE, TRUE );
+
+					// It will check if it is needed inside the function
+					DiscoveryServices.Execute( TRUE, PROTOCOL_NULL, FALSE );
+				}
+
 				Datagrams.OnRun();
 				SearchManager.OnRun();
 				QueryHashMaster.Build();
@@ -822,6 +843,8 @@ void CNetwork::OnRun()
 
 				oLock.Unlock();
 			}
+			else if ( ! bListen )
+				continue;
 
 			Neighbours.OnRun();
 
@@ -855,7 +878,12 @@ void CNetwork::PostRun()
 
 	DiscoveryServices.Stop();
 
+	if ( m_bUPnPPortsForwarded == TRI_FALSE )
+	{
+		m_nUPnPTier = 0;
+	}
 	DeletePorts();
+	UPnPFinder.Free();
 
 	CQuickLock oHALock( m_pHASection );
 	m_pHostAddresses.RemoveAll();
@@ -1475,8 +1503,6 @@ void CNetwork::Cleanup()
 
 void CNetwork::MapPorts()
 {
-	HRESULT hr;
-
 	m_tUPnPMap = GetTickCount();
 
 	if ( ! Settings.Connection.EnableUPnP )
@@ -1485,194 +1511,52 @@ void CNetwork::MapPorts()
 	m_bUPnPPortsForwarded = TRI_UNKNOWN;
 
 	// UPnP Device Host Service
-	if ( ! AreServiceHealthy( _T("upnphost") ) )
-	{
-		theApp.Message( MSG_ERROR, L"UPnP Device Host and SSDP Discovery services are not running, skipping UPnP setup." );
-		m_bUPnPPortsForwarded = TRI_FALSE;
-		return;
-	}
+	AreServiceHealthy( _T("upnphost") );
 
 	// Simple Service Discovery Protocol Service
 	AreServiceHealthy( _T("SSDPSRV") );
 
-	BOOL bSuccess = FALSE;
-
-	// (Re)Create an instance of the NAT UPnP
-	theApp.Message( MSG_INFO, L"Trying to setup port mappings using NAT UPnP...");
-	m_pNatManager.Release();
-	m_pNat.Release();
-	hr = m_pNat.CoCreateInstance( __uuidof( UPnPNAT ) );
-	if ( SUCCEEDED( hr ) && m_pNat )
+	if ( ! UPnPFinder )
 	{
-		// Retrieve the NAT manager interface and register callbacks
-		hr = m_pNat->get_NATEventManager( &m_pNatManager );
-		if ( SUCCEEDED( hr ) && m_pNatManager )
+		if ( m_nUPnPTier > UPNP_MAX )
+			m_nUPnPTier = 0;
+
+		switch ( m_nUPnPTier )
 		{
-			m_pNatManager->put_ExternalIPAddressCallback(
-				GetInterface( IID_INATExternalIPAddressCallback ) );
-			m_pNatManager->put_NumberOfEntriesCallback(
-				GetInterface( IID_INATNumberOfEntriesCallback ) );
-
-			// Retrieve the mappings collection
-			CComPtr< IStaticPortMappingCollection >	pCollection;
-			for ( int i = 0; i < 5; ++i )
-			{
-				pCollection.Release();
-				hr = m_pNat->get_StaticPortMappingCollection( &pCollection );
-				if ( SUCCEEDED( hr ) && pCollection )
-					break;
-				Sleep( 1000 );
-			}
-			if ( SUCCEEDED( hr ) && pCollection )
-			{
-				// Retrieve local IP address
-				ULONG ulOutBufLen = sizeof( IP_ADAPTER_INFO );
-				auto_array< char > pAdapterInfo( new char[ ulOutBufLen ] );
-				ULONG ret = GetAdaptersInfo( (PIP_ADAPTER_INFO)pAdapterInfo.get(), &ulOutBufLen );
-				if ( ret == ERROR_BUFFER_OVERFLOW )
-				{
-					pAdapterInfo.reset( new char[ ulOutBufLen ] );
-					ret = GetAdaptersInfo( (PIP_ADAPTER_INFO)pAdapterInfo.get(), &ulOutBufLen );
-				}
-				if ( ret == NO_ERROR )
-				{
-					IP_ADAPTER_INFO& pInfo = *(PIP_ADAPTER_INFO)pAdapterInfo.get();
-					CString strLocalIP( (LPCSTR)( pInfo.IpAddressList.IpAddress.String ) );
-
-					DWORD nPort = Settings.Connection.InPort;
-					bool bRandomPort = Settings.Connection.RandomPort;
-
-					if ( nPort == 0 ) // random port
-						nPort = Network.RandomPort();
-
-					// Try five times to map both ports
-					for ( int i = 0; i < 5; ++i )
-					{
-						bSuccess = MapPort( pCollection, strLocalIP, nPort, L"TCP", CLIENT_NAME_T ) &&
-							MapPort( pCollection, strLocalIP, nPort, L"UDP", CLIENT_NAME_T );
-						if ( bSuccess )
-						{
-							Settings.Connection.InPort = nPort;
-							Settings.Connection.RandomPort = bRandomPort;
-							break;
-						}
-						Sleep( 200 );
-
-						// Change port to random
-						nPort = Network.RandomPort();
-						bRandomPort = true;
-					}
-				}
-			}
+		case 0:
+			UPnPFinder.Attach( new CMiniUPnP() );
+			break;
+		case 1:
+			UPnPFinder.Attach( new CUPnPNAT() );
+			break;
+		case 2:
+			UPnPFinder.Attach( new CUPnPFinder() );
+			break;
 		}
 	}
 
-	if ( bSuccess )
+	if ( UPnPFinder )
 	{
-		OnMapSuccess();
+		theApp.Message( MSG_INFO, _T("Trying to setup port mappings (tier %u)..."), m_nUPnPTier );
+		UPnPFinder->StartDiscovery();
 	}
-	else
-	{
-		// Using Control Point UPnP methods
-		theApp.Message( MSG_INFO, L"Trying to setup port mappings using Control Point UPnP...");
-
-		if ( UPnPFinder )
-			UPnPFinder->StartDiscovery();
-	}
-}
-
-BOOL CNetwork::MapPort(IStaticPortMappingCollection* pCollection, LPCWSTR szLocalIP, long nPort, LPCWSTR szProtocol, LPCWSTR szDescription)
-{
-	HRESULT hr;
-
-	// Retrieving existing mapping
-	CComPtr< IStaticPortMapping > pMapping;
-	hr = pCollection->get_Item( nPort, CComBSTR( szProtocol ), &pMapping );
-	if ( FAILED( hr ) || ! pMapping )
-	{
-		// Create new mapping
-		hr = pCollection->Add( nPort, CComBSTR( szProtocol ), nPort, CComBSTR( szLocalIP ),
-			VARIANT_TRUE, CComBSTR( szDescription ), &pMapping );
-		if ( FAILED( hr ) || ! pMapping )
-			return FALSE;
-	}
-
-	// Checking port number
-	long nInternalPort = 0;
-	hr = pMapping->get_InternalPort( &nInternalPort );
-	if ( FAILED( hr ) || nInternalPort != nPort )
-	{
-		hr = pMapping->EditInternalPort( nPort );
-		if ( FAILED( hr ) )
-			return FALSE;
-	}
-
-	// Checking enable state
-	VARIANT_BOOL bEnabled = VARIANT_FALSE;
-	hr = pMapping->get_Enabled( &bEnabled );
-	if ( FAILED( hr ) || bEnabled == VARIANT_FALSE )
-	{
-		hr = pMapping->Enable( VARIANT_TRUE );
-		if ( FAILED( hr ) )
-			return FALSE;
-	}
-
-	return TRUE;
 }
 
 void CNetwork::DeletePorts()
 {
-	HRESULT hr;
+	if ( UPnPFinder )
+		UPnPFinder->StopAsyncFind();
 
-	if ( Settings.Connection.DeleteUPnPPorts && Settings.Connection.InPort )
-	{
-		if ( m_pNat )
-		{
-			// Retrieve the mappings collection
-			CComPtr< IStaticPortMappingCollection >	pCollection;
-			hr = m_pNat->get_StaticPortMappingCollection( &pCollection );
-			if ( SUCCEEDED( hr ) && pCollection )
-			{
-				// Unmap
-				pCollection->Remove( Settings.Connection.InPort, CComBSTR( L"TCP" ) );
-				pCollection->Remove( Settings.Connection.InPort, CComBSTR( L"UDP" ) );
-			}
-		}
+	if ( UPnPFinder && Settings.Connection.DeleteUPnPPorts && Settings.Connection.InPort )
+		UPnPFinder->DeletePorts();
 
-		// Legacy way
-		if ( UPnPFinder )
-		{
-			UPnPFinder->StopAsyncFind();
-			UPnPFinder->DeletePorts();
-		}
-	}
-
-	m_nUPnPExternalAddress.s_addr = INADDR_ANY;
 	m_bUPnPPortsForwarded = TRI_UNKNOWN;
 	m_tUPnPMap = 0;
-
-	m_pNatManager.Release();
-	m_pNat.Release();
-}
-
-void CNetwork::OnNewExternalIPAddress(const IN_ADDR& pAddress)
-{
-	if ( pAddress.s_addr != INADDR_ANY &&
-		 pAddress.s_addr != INADDR_NONE &&
-		 pAddress.s_addr != m_nUPnPExternalAddress.s_addr )
-	{
-		theApp.Message( MSG_INFO, _T("UPnP gateway device reports external IP address: %s"),
-			(LPCTSTR)CA2CT( inet_ntoa( pAddress ) ) );
-
-		m_nUPnPExternalAddress = pAddress;
-
-		AcquireLocalAddress( pAddress );
-	}
 }
 
 void CNetwork::OnMapSuccess()
 {
-	theApp.Message( MSG_INFO, _T("UPnP port mapping succeeded.") );
+	theApp.Message( MSG_INFO, _T("UPnP port mapping succeeded (tier %u)."), m_nUPnPTier );
 
 	m_bUPnPPortsForwarded = TRI_TRUE;
 	m_tUPnPMap = GetTickCount();
@@ -1680,44 +1564,8 @@ void CNetwork::OnMapSuccess()
 
 void CNetwork::OnMapFailed()
 {
-	theApp.Message( MSG_ERROR, _T("UPnP port mapping failed.") );
+	theApp.Message( MSG_ERROR, _T("UPnP port mapping failed (tier %u)."), m_nUPnPTier );
 
 	m_bUPnPPortsForwarded = TRI_FALSE;
 	m_tUPnPMap = GetTickCount();
-}
-
-BEGIN_INTERFACE_MAP( CNetwork, CComObject )
-	INTERFACE_PART( CNetwork, IID_INATNumberOfEntriesCallback, NATNumberOfEntriesCallback )
-	INTERFACE_PART( CNetwork, IID_INATExternalIPAddressCallback, NATExternalIPAddressCallback )
-END_INTERFACE_MAP()
-
-IMPLEMENT_UNKNOWN( CNetwork, NATNumberOfEntriesCallback )
-
-STDMETHODIMP CNetwork::XNATNumberOfEntriesCallback::NewNumberOfEntries(/* [in] */ long /* lNewNumberOfEntries */)
-{
-	METHOD_PROLOGUE( CNetwork, NATNumberOfEntriesCallback )
-
-	TRACE( _T("[UPnP] Got new number of entries\n") );
-
-	DWORD tNow = GetTickCount();
-	if ( tNow > pThis->m_tUPnPMap + 5*1000 )	// 5 sec delay to avoid self-notification
-	{
-		pThis->m_tUPnPMap = 0;	// Force port mappings
-	}
-
-	return S_OK;
-}
-
-IMPLEMENT_UNKNOWN( CNetwork, NATExternalIPAddressCallback )
-
-STDMETHODIMP CNetwork::XNATExternalIPAddressCallback::NewExternalIPAddress(/* [in] */ BSTR bstrNewExternalIPAddress)
-{
-	METHOD_PROLOGUE( CNetwork, NATExternalIPAddressCallback )
-
-	IN_ADDR pAddress;
-	pAddress.s_addr = inet_addr( (LPCSTR)CW2A( (LPCWSTR)bstrNewExternalIPAddress ) );
-
-	pThis->OnNewExternalIPAddress( pAddress );
-
-	return S_OK;
 }

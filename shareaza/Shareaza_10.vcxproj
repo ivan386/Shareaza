@@ -398,6 +398,7 @@
     <ClCompile Include="MatchListView.cpp" />
     <ClCompile Include="MatchObjects.cpp" />
     <ClCompile Include="MetaList.cpp" />
+    <ClCompile Include="MiniUPnP.cpp" />
     <ClCompile Include="Neighbour.cpp" />
     <ClCompile Include="Neighbours.cpp" />
     <ClCompile Include="NeighboursBase.cpp" />
@@ -496,6 +497,7 @@
     <ClCompile Include="UploadTransferED2K.cpp" />
     <ClCompile Include="UploadTransferHTTP.cpp" />
     <ClCompile Include="UPnPFinder.cpp" />
+    <ClCompile Include="UPnPNAT.cpp" />
     <ClCompile Include="VendorCache.cpp" />
     <ClCompile Include="VersionChecker.cpp" />
     <ClCompile Include="WindowManager.cpp" />
@@ -818,6 +820,7 @@
     <ClInclude Include="MatchListView.h" />
     <ClInclude Include="MatchObjects.h" />
     <ClInclude Include="MetaList.h" />
+    <ClInclude Include="MiniUPnP.h" />
     <ClInclude Include="MinMax.hpp" />
     <ClInclude Include="Neighbour.h" />
     <ClInclude Include="Neighbours.h" />
@@ -891,7 +894,9 @@
     <ClInclude Include="UploadTransferDC.h" />
     <ClInclude Include="UploadTransferED2K.h" />
     <ClInclude Include="UploadTransferHTTP.h" />
+    <ClInclude Include="UPnP.h" />
     <ClInclude Include="UPnPFinder.h" />
+    <ClInclude Include="UPnPNAT.h" />
     <ClInclude Include="VendorCache.h" />
     <ClInclude Include="VersionChecker.h" />
     <ClInclude Include="WindowManager.h" />

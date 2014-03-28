@@ -1,7 +1,7 @@
 //
 // Network.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -34,7 +34,7 @@ class CQueryHit;
 class CQueryKeys;
 class CQuerySearch;
 class CRouteCache;
-class CUPnPFinder;
+class CUPnP;
 
 
 enum // It is used from CNetwork::IsFirewalled
@@ -50,10 +50,8 @@ enum // AsyncResolver command
 	RESOLVE_DISCOVERY			// Resolve and update discovery services
 };
 
-class CNetwork : public CComObject, public CThreadImpl
+class CNetwork : public CThreadImpl
 {
-	DECLARE_DYNCREATE(CNetwork)
-
 public:
 	CNetwork();
 	~CNetwork();
@@ -63,7 +61,7 @@ public:
 	CAutoPtr< CRouteCache >	NodeRoute;
 	CAutoPtr< CRouteCache >	QueryRoute;
 	CAutoPtr< CQueryKeys >	QueryKeys;
-	CAutoPtr< CUPnPFinder >	UPnPFinder;			// Control Point UPnP
+	CAutoPtr< CUPnP >		UPnPFinder;			// UPnP
 	CAutoPtr< CFirewall >	Firewall;			// Windows Firewall
 
 	CMutexEx		m_pSection;
@@ -77,10 +75,8 @@ protected:
 	CStringA		m_sHostName;
 	mutable CCriticalSection	m_pHASection;
 	CList< ULONG >	m_pHostAddresses;
-	DWORD			m_nSequence;
-	CComPtr< IUPnPNAT >			m_pNat;			// NAT UPnP
-	CComPtr< INATEventManager >	m_pNatManager;	// NAT Manager interface
-	IN_ADDR			m_nUPnPExternalAddress;		// UPnP current external address
+
+	DWORD			m_nUPnPTier;				// UPnP tier number (0..UPNP_MAX)
 	DWORD			m_tUPnPMap;					// Time of last UPnP port mapping
 
 	typedef struct
@@ -183,8 +179,6 @@ protected:
 	void MapPorts();
 	// Remove TCP and UDP port mappings
 	void DeletePorts();
-	// Create port mapping
-	static BOOL MapPort(IStaticPortMappingCollection* pCollection, LPCWSTR szLocalIP, long nPort, LPCWSTR szProtocol, LPCWSTR szDescription);
 
 // Operations
 public:
@@ -207,8 +201,8 @@ public:
 	void		Disconnect();
 	BOOL		ConnectTo(LPCTSTR pszAddress, int nPort = 0, PROTOCOLID nProtocol = PROTOCOL_NULL, BOOL bNoUltraPeer = FALSE);
 	BOOL		AcquireLocalAddress(SOCKET hSocket);
-	BOOL		AcquireLocalAddress(LPCTSTR pszHeader);
-	BOOL		AcquireLocalAddress(const IN_ADDR& pAddress);
+	BOOL		AcquireLocalAddress(LPCTSTR pszHeader, WORD nPort = 0);
+	BOOL		AcquireLocalAddress(const IN_ADDR& pAddress, WORD nPort = 0);
 	static BOOL	Resolve(LPCTSTR pszHost, int nPort, SOCKADDR_IN* pHost, BOOL bNames = TRUE);
 	BOOL		AsyncResolve(LPCTSTR pszAddress, WORD nPort, PROTOCOLID nProtocol, BYTE nCommand);
 	// Pending network name resolves queue size
@@ -254,28 +248,13 @@ public:
 	static void Cleanup();
 
 	// Update TCP/UDP port mappings using UPnP
-	void UpdatePortMapping()
-	{
-		m_tUPnPMap = 0;
-	}
-	// Got new external IP address. Called by UPnP-services
-	void OnNewExternalIPAddress(const IN_ADDR& pAddress);
+	void UpdatePortMapping() { m_tUPnPMap = 0; }
+	// Retrieve last port mapping time
+	DWORD GetPortMappingTime() const { return m_tUPnPMap; }
 	// UPnP success (called by UPnP-services)
 	void OnMapSuccess();
 	// UPnP error (called by UPnP-services)
 	void OnMapFailed();
-
-	// INATNumberOfEntriesCallback interface
-	BEGIN_INTERFACE_PART(NATNumberOfEntriesCallback, INATNumberOfEntriesCallback)
-		STDMETHOD(NewNumberOfEntries)(/* [in] */ long lNewNumberOfEntries);
-	END_INTERFACE_PART(NATNumberOfEntriesCallback)
-
-	// INATExternalIPAddressCallback interface
-	BEGIN_INTERFACE_PART(NATExternalIPAddressCallback, INATExternalIPAddressCallback)
-		STDMETHOD(NewExternalIPAddress)(/* [in] */ BSTR bstrNewExternalIPAddress);
-	END_INTERFACE_PART(NATExternalIPAddressCallback)
-
-	DECLARE_INTERFACE_MAP()
 
 	friend class CHandshakes;
 	friend class CNeighbours;

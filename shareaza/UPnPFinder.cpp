@@ -64,7 +64,7 @@ bool CUPnPFinder::Init()
 	return m_bInited;
 }
 
-FinderPointer CUPnPFinder::CreateFinderInstance() throw()
+CUPnPFinder::FinderPointer CUPnPFinder::CreateFinderInstance() throw()
 {
 	FinderPointer pNewDeviceFinder;
 	if ( FAILED( pNewDeviceFinder.CoCreateInstance( CLSID_UPnPDeviceFinder ) ) )
@@ -77,6 +77,8 @@ FinderPointer CUPnPFinder::CreateFinderInstance() throw()
 
 CUPnPFinder::~CUPnPFinder()
 {
+	StopAsyncFind();
+
 	m_pDevices.clear();
 	m_pServices.clear();
 }
@@ -89,7 +91,7 @@ void CUPnPFinder::ProcessAsyncFind(BSTR bsSearchType) throw()
 	// We have to start the AsyncFind.
 	if ( ! m_pDeviceFinderCallback || ! m_pDeviceFinder )
 	{
-		theApp.Message( MSG_ERROR, L"UPnP is not available." );
+		Network.OnMapFailed();
 		return;
 	}
 
@@ -102,10 +104,9 @@ void CUPnPFinder::ProcessAsyncFind(BSTR bsSearchType) throw()
 	{
 		hr = E_FAIL;
 	}
-
 	if ( FAILED( hr ) )
 	{
-		theApp.Message( MSG_ERROR, L"UPnP is not available." );
+		Network.OnMapFailed();
 		return;
 	}
 
@@ -120,7 +121,6 @@ void CUPnPFinder::ProcessAsyncFind(BSTR bsSearchType) throw()
 	{
 		hr = E_FAIL;
 	}
-
 	if ( FAILED( hr ) )
 	{
 		__try
@@ -130,9 +130,14 @@ void CUPnPFinder::ProcessAsyncFind(BSTR bsSearchType) throw()
 		__except( EXCEPTION_EXECUTE_HANDLER )
 		{
 		}
-
 		m_bAsyncFindRunning = false;
+		Network.OnMapFailed();
 	}
+}
+
+void CUPnPFinder::StartDiscovery()
+{
+	StartDiscovery( false );
 }
 
 // Helper function for stopping the async find if proceeding
@@ -143,7 +148,13 @@ void CUPnPFinder::StopAsyncFind()
 
 	if ( m_bInited && IsAsyncFindRunning() )
 	{
-		m_pDeviceFinder->CancelAsyncFind( m_nAsyncFindHandle );
+		__try
+		{
+			m_pDeviceFinder->CancelAsyncFind( m_nAsyncFindHandle );
+		}
+		__except( EXCEPTION_EXECUTE_HANDLER )
+		{
+		}
 	}
 
 	if ( m_bSecondTry )
@@ -497,6 +508,26 @@ void CUPnPFinder::DeletePorts()
 	std::for_each( m_pServices.begin(), m_pServices.end(), boost::bind( &CUPnPFinder::DeleteExistingPortMappings, this, _1 ) );
 }
 
+bool CUPnPFinder::IsAsyncFindRunning()
+{
+	if ( m_pDeviceFinder && m_bAsyncFindRunning )
+	{
+		if ( GetTickCount() > m_tLastEvent + 20 * 1000 ) // Timeout 20 seconds
+		{
+			__try
+			{
+				m_pDeviceFinder->CancelAsyncFind( m_nAsyncFindHandle );
+			}
+			__except( EXCEPTION_EXECUTE_HANDLER )
+			{
+			}
+			m_bAsyncFindRunning = false;
+			Network.OnMapFailed();
+		}
+	}
+	return m_bAsyncFindRunning;
+}
+
 // Finds a local IP address routable from UPnP device
 CString CUPnPFinder::GetLocalRoutableIP(ServicePointer pService)
 {
@@ -544,13 +575,16 @@ CString CUPnPFinder::GetLocalRoutableIP(ServicePointer pService)
 		if ( ipAddr->table[ nIf ].dwIndex == nInterfaceIndex )
 		{
 			strLocalIP = inet_ntoa( *(IN_ADDR*)&ipAddr->table[ nIf ].dwAddr );
-			Network.OnNewExternalIPAddress( *(IN_ADDR*)&ip );
 			break;
 		}
 	}
 
 	if ( ! strLocalIP.IsEmpty() && ! strExternalIP.IsEmpty() )
+	{
 		theApp.Message( MSG_INFO, L"UPnP route: %s->%s", strLocalIP, strExternalIP );
+
+		Network.AcquireLocalAddress( strExternalIP );
+	}
 
 	return strLocalIP;
 }
@@ -704,7 +738,6 @@ void CUPnPFinder::CreatePortMappings(ServicePointer pService)
 	// Assuming that the user doesn't use several devices
 
 	m_bAsyncFindRunning = false;
-
 	Network.OnMapSuccess();
 }
 
@@ -1068,9 +1101,9 @@ HRESULT CServiceCallback::StateVariableChanged(IUPnPService* pService,
 
 	HRESULT hr = pService->get_Id( &bsServiceId );
 	if ( FAILED( hr ) )
-		return UPnPMessage( hr );
+		return CUPnPFinder::UPnPMessage( hr );
 	if ( FAILED( hr = VariantChangeType( &varValue, &varValue, VARIANT_ALPHABOOL, VT_BSTR ) ) )
-		return UPnPMessage( hr );
+		return CUPnPFinder::UPnPMessage( hr );
 
 	CString strValue( varValue.bstrVal );
 
@@ -1080,9 +1113,7 @@ HRESULT CServiceCallback::StateVariableChanged(IUPnPService* pService,
 	{
 		if ( _wcsicmp( pszStateVarName, L"ExternalIPAddress" ) == 0 )
 		{
-			IN_ADDR pAddress;
-			pAddress.s_addr = inet_addr( CT2A( strValue.Trim() ) );
-			Network.OnNewExternalIPAddress( pAddress );
+			Network.AcquireLocalAddress( strValue.Trim() );
 		}
 	}
 
@@ -1104,13 +1135,13 @@ HRESULT CServiceCallback::ServiceInstanceDied(IUPnPService* pService)
 		return hr;
 	}
 
-	return UPnPMessage( hr );
+	return CUPnPFinder::UPnPMessage( hr );
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Prints the appropriate UPnP error text
 
-CString translateUPnPResult(HRESULT hr)
+CString CUPnPFinder::translateUPnPResult(HRESULT hr)
 {
 	static std::map<HRESULT, std::string> messages;
 
@@ -1148,7 +1179,7 @@ CString translateUPnPResult(HRESULT hr)
 	return CString( messages[ hr ].c_str() );
 }
 
-HRESULT UPnPMessage(HRESULT hr)
+HRESULT CUPnPFinder::UPnPMessage(HRESULT hr)
 {
 	CString strError = translateUPnPResult( hr );
 	if ( ! strError.IsEmpty() )
