@@ -512,7 +512,7 @@ bool CUPnPFinder::IsAsyncFindRunning()
 {
 	if ( m_pDeviceFinder && m_bAsyncFindRunning )
 	{
-		if ( GetTickCount() > m_tLastEvent + 20 * 1000 ) // Timeout 20 seconds
+		if ( GetTickCount() > m_tLastEvent + Settings.Connection.UPnPTimeout )
 		{
 			__try
 			{

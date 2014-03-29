@@ -31,8 +31,6 @@
 #include "..\MiniUPnPc\miniupnpc\upnpcommands.h"
 #pragma comment( lib, "miniupnpc" )
 
-#define UPNP_DEVICE_DELAY	3000	// The maximum time for waiting any device response (in millisecond)
-
 #ifdef _DEBUG
 #undef THIS_FILE
 static char THIS_FILE[]=__FILE__;
@@ -99,7 +97,7 @@ void CMiniUPnP::OnRun()
 	BOOL bSuccess = FALSE;
 
 	int error = 0;
-	if ( UPNPDev* pDevList = upnpDiscover( UPNP_DEVICE_DELAY, NULL, NULL, 0, 0, &error ) )
+	if ( UPNPDev* pDevList = upnpDiscover( Settings.Connection.UPnPTimeout, NULL, NULL, 0, 0, &error ) )
 	{
 		for ( UPNPDev* pDevice = pDevList; ! bSuccess && pDevice && IsThreadEnabled(); pDevice = pDevice->pNext )
 		{
