@@ -175,11 +175,6 @@ protected:
 	void		OnRun();
 	void		PostRun();
 
-	// Create TCP and UDP port mappings
-	void MapPorts();
-	// Remove TCP and UDP port mappings
-	void DeletePorts();
-
 // Operations
 public:
 	// Initialize network: Windows Sockets, Windows Firewall, UPnP NAT.
@@ -247,10 +242,10 @@ public:
 	// Safe way to call WSACleanup
 	static void Cleanup();
 
-	// Update TCP/UDP port mappings using UPnP
-	void UpdatePortMapping() { m_tUPnPMap = 0; }
-	// Retrieve last port mapping time
-	DWORD GetPortMappingTime() const { return m_tUPnPMap; }
+	// Create TCP and UDP port mappings
+	void MapPorts();
+	// Remove TCP and UDP port mappings
+	void DeletePorts();
 	// UPnP success (called by UPnP-services)
 	void OnMapSuccess();
 	// UPnP error (called by UPnP-services)
