@@ -30,4 +30,4 @@ exit /b 1
 :work
 
 del /q %dst% 2>nul
-%zip% a -y -mx=9 %dst% %src%\Shareaza.pdb %src%\BugTrap.pdb
+%zip% a -y -mx=9 %dst% %src%\*.pdb
