@@ -1,7 +1,7 @@
 #ifndef MINIUPNPCSTRINGS_H_INCLUDED
 #define MINIUPNPCSTRINGS_H_INCLUDED
 
-#define OS_STRING "Shareaza/2.7.3.0"
+#define OS_STRING "Shareaza/2.7"
 #define MINIUPNPC_VERSION_STRING "1.9"
 
 #endif
