@@ -286,11 +286,7 @@ BOOL CG2Neighbour::ProcessPackets()
 
 	CBuffer* pInput = m_pZInput ? m_pZInput : pInputLocked;
 
-	if ( ProcessPackets( pInput ) )
-		return TRUE;
-
-	Close( 0 );
-	return FALSE;
+	return ProcessPackets( pInput );
 }
 
 BOOL CG2Neighbour::ProcessPackets(CBuffer* pInput)
@@ -363,7 +359,11 @@ BOOL CG2Neighbour::ProcessPackets(CBuffer* pInput)
 		pInput->Remove( nLength + nLenLen + nTypeLen + 2 );
 	}
 
-	return bSuccess;
+	if ( bSuccess )
+		return TRUE;
+
+	Close( 0 );
+	return FALSE;
 }
 
 //////////////////////////////////////////////////////////////////////

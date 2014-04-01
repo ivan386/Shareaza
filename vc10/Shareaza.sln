@@ -11,6 +11,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Shareaza", "..\shareaza\Sha
 	ProjectSection(ProjectDependencies) = postProject
 		{A14F5E46-C04C-4F32-9985-2E15819A722A} = {A14F5E46-C04C-4F32-9985-2E15819A722A}
 		{71284D5B-49F0-46FA-9C8B-C887C119738D} = {71284D5B-49F0-46FA-9C8B-C887C119738D}
+		{D6C8A99E-E770-4D48-BE97-AA3CF262EE8B} = {D6C8A99E-E770-4D48-BE97-AA3CF262EE8B}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RARBuilder", "..\plugins\RARBuilder\RARBuilder_10.vcxproj", "{F801DAD7-F08D-48EF-B0DF-6B120377E835}"
@@ -38,6 +39,11 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TorrentWizard", "..\TorrentWizard\TorrentWizard_10.vcxproj", "{F02EDE36-E2AC-40E8-B6DC-76B1D53F9A5A}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Installer", "..\setup\Installer_10.vcxproj", "{3D7C87D6-A044-4334-8BB4-3B88B4E1757D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A14F5E46-C04C-4F32-9985-2E15819A722A} = {A14F5E46-C04C-4F32-9985-2E15819A722A}
+		{71284D5B-49F0-46FA-9C8B-C887C119738D} = {71284D5B-49F0-46FA-9C8B-C887C119738D}
+		{D6C8A99E-E770-4D48-BE97-AA3CF262EE8B} = {D6C8A99E-E770-4D48-BE97-AA3CF262EE8B}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "zlibwapi", "..\zlib\zlibwapi_10.vcxproj", "{39F34F2C-D42A-41D2-A0BC-54D7972E2BC5}"
 EndProject
@@ -66,6 +72,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RegExp", "..\RegExp\RegExp_10.vcxproj", "{71284D5B-49F0-46FA-9C8B-C887C119738D}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "bzlib", "..\bzlib\bzlib_10.vcxproj", "{A14F5E46-C04C-4F32-9985-2E15819A722A}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MiniUPnPc", "..\MiniUPnPc\MiniUPnPc.vcxproj", "{D6C8A99E-E770-4D48-BE97-AA3CF262EE8B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -315,6 +323,14 @@ Global
 		{A14F5E46-C04C-4F32-9985-2E15819A722A}.Release|Win32.Build.0 = Release|Win32
 		{A14F5E46-C04C-4F32-9985-2E15819A722A}.Release|x64.ActiveCfg = Release|x64
 		{A14F5E46-C04C-4F32-9985-2E15819A722A}.Release|x64.Build.0 = Release|x64
+		{D6C8A99E-E770-4D48-BE97-AA3CF262EE8B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D6C8A99E-E770-4D48-BE97-AA3CF262EE8B}.Debug|Win32.Build.0 = Debug|Win32
+		{D6C8A99E-E770-4D48-BE97-AA3CF262EE8B}.Debug|x64.ActiveCfg = Debug|x64
+		{D6C8A99E-E770-4D48-BE97-AA3CF262EE8B}.Debug|x64.Build.0 = Debug|x64
+		{D6C8A99E-E770-4D48-BE97-AA3CF262EE8B}.Release|Win32.ActiveCfg = Release|Win32
+		{D6C8A99E-E770-4D48-BE97-AA3CF262EE8B}.Release|Win32.Build.0 = Release|Win32
+		{D6C8A99E-E770-4D48-BE97-AA3CF262EE8B}.Release|x64.ActiveCfg = Release|x64
+		{D6C8A99E-E770-4D48-BE97-AA3CF262EE8B}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
