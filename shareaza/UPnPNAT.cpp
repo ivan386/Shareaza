@@ -137,7 +137,7 @@ void CUPnPNAT::OnRun()
 				WORD nPort = (WORD)Settings.Connection.InPort;
 				bool bRandomPort = Settings.Connection.RandomPort;
 
-				if ( nPort == 0 || bRandomPort ) // random port
+				if ( nPort == 0 ) // random port
 					nPort = Network.RandomPort();
 
 				// Try to map both ports
