@@ -1,7 +1,7 @@
 //
 // Downloads.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -88,6 +88,7 @@ public:
 	BOOL		Reorder(CDownload* pDownload, CDownload* pBefore);
 	QWORD		GetAmountDownloadedFrom(IN_ADDR* pAddress);
 
+	CDownload*	FindBySDName(const CString& sSDName) const;
 	CDownload*	FindByPath(const CString& sPath) const;
 	CDownload*	FindByURN(LPCTSTR pszURN, BOOL bSharedOnly = FALSE) const;
 	CDownload*	FindBySHA1(const Hashes::Sha1Hash& oSHA1, BOOL bSharedOnly = FALSE) const;
@@ -98,7 +99,10 @@ public:
 	CDownload*	FindBySID(DWORD nSerID) const;
 	DWORD		GetFreeSID();
 
+	// Load all available .sd-files from Incomplete folder
 	void		Load();
+	// Load specified .sd-file
+	CDownload*	Load(const CString& strPath);
 	void		Save(BOOL bForce = TRUE);
 	void		OnRun();
 	BOOL		OnPush(const Hashes::Guid& oGUID, CConnection* pConnection);

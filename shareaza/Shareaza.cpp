@@ -31,6 +31,7 @@
 #include "DiscoveryServices.h"
 #include "DlgDeleteFile.h"
 #include "DlgMessage.h"
+#include "Download.h"
 #include "DownloadGroups.h"
 #include "Downloads.h"
 #include "EDClients.h"
@@ -773,6 +774,8 @@ BOOL CShareazaApp::Open(LPCTSTR lpszFileName, BOOL bDoIt, BOOL bDisplay)
 	size_t nLength = _tcslen( lpszFileName );
 	if (      nLength > 8  && ! _tcsicmp( lpszFileName + nLength - 8,  _T(".torrent") ) )
 		return OpenTorrent( lpszFileName, bDoIt );
+	else if ( nLength > 3  && ! _tcsicmp( lpszFileName + nLength - 3,  _T(".sd") ) )
+		return OpenDownload( lpszFileName, bDoIt );
 	else if ( nLength > 3  && ! _tcsicmp( lpszFileName + nLength - 3,  _T(".co") ) )
 		return OpenCollection( lpszFileName, bDoIt );
 	else if ( nLength > 11 && ! _tcsicmp( lpszFileName + nLength - 11, _T(".collection") ) )
@@ -923,6 +926,46 @@ BOOL CShareazaApp::OpenURL(LPCTSTR lpszFileName, BOOL bDoIt, BOOL bSilent)
 		theApp.Message( MSG_NOTICE, IDS_URL_PARSE_ERROR );
 
 	return FALSE;
+}
+
+BOOL CShareazaApp::OpenDownload(LPCTSTR lpszFileName, BOOL bDoIt)
+{
+	if ( ! bDoIt )
+		return TRUE;
+
+	CString strFileName = lpszFileName;
+	GetLongPathName( lpszFileName, strFileName.GetBuffer( MAX_PATH * 2 ), MAX_PATH * 2 );
+	strFileName.ReleaseBuffer();
+
+	const CString strSDName = PathFindFileName( strFileName );
+
+	CSingleLock pLock( &Transfers.m_pSection, TRUE );
+
+	// Check for already loaded file
+	if ( Downloads.FindBySDName( strSDName ) == NULL )
+	{
+		// Load a new one
+		if ( CDownload* pDownload = Downloads.Load( lpszFileName ) )
+		{
+			// Save download to Incomplete folder
+			pDownload->m_sPath = Settings.Downloads.IncompletePath + _T("\\") + strSDName;
+			if ( pDownload->Save( TRUE ) )
+			{
+				// Rename old file
+				::MoveFileEx( _T("\\\\?\\") + strFileName, _T("\\\\?\\") + strFileName + _T(".sav"), MOVEFILE_REPLACE_EXISTING | MOVEFILE_WRITE_THROUGH );
+				
+				theApp.Message( MSG_NOTICE, _T("Download file \"%s\" has been successfully loaded and saved as \"%s\"."), (LPCTSTR)strFileName, (LPCTSTR)pDownload->m_sPath );
+			}
+			else
+				theApp.Message( MSG_ERROR, _T("Failed to save download file \"%s\" as \"%s\"."), (LPCTSTR)strFileName, (LPCTSTR)pDownload->m_sPath );
+		}
+		else
+			theApp.Message( MSG_ERROR, _T("Failed to load download file \"%s\"."), (LPCTSTR)strFileName );
+	}
+	else
+		theApp.Message( MSG_WARNING, _T("Download file already loaded \"%s\"."), (LPCTSTR)strFileName );
+
+	return TRUE;
 }
 
 /////////////////////////////////////////////////////////////////////////////

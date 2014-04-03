@@ -1,7 +1,7 @@
 //
 // Download.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -768,7 +768,7 @@ BOOL CDownload::Load(LPCTSTR pszName)
 
 	BOOL bSuccess = FALSE;
 	CFile pFile;
-	if ( pFile.Open( m_sPath, CFile::modeRead ) )
+	if ( pFile.Open( _T("\\\\?\\") + m_sPath, CFile::modeRead ) )
 	{
 		TRY
 		{
@@ -793,7 +793,7 @@ BOOL CDownload::Load(LPCTSTR pszName)
 		pFile.Close();
 	}
 
-	if ( ! bSuccess && pFile.Open( m_sPath + _T(".sav"), CFile::modeRead ) )
+	if ( ! bSuccess && pFile.Open( _T("\\\\?\\") + m_sPath + _T(".sav"), CFile::modeRead ) )
 	{
 		TRY
 		{
@@ -848,7 +848,7 @@ BOOL CDownload::Save(BOOL bFlush)
 	DeleteFileEx( m_sPath + _T(".sav"), FALSE, FALSE, FALSE );
 
 	CFile pFile;
-	if ( ! pFile.Open( m_sPath + _T(".sav"),
+	if ( ! pFile.Open( _T("\\\\?\\") + m_sPath + _T(".sav"),
 		CFile::modeReadWrite|CFile::modeCreate|CFile::osWriteThrough ) )
 		return FALSE;
 

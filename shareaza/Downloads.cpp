@@ -1,7 +1,7 @@
 //
 // Downloads.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -522,6 +522,19 @@ bool CDownloads::CheckActive(CDownload* pDownload, int nScope) const
 	}
 
 	return false;
+}
+
+CDownload* CDownloads::FindBySDName(const CString& sSDName) const
+{
+	ASSUME_LOCK( Transfers.m_pSection );
+
+	for ( POSITION pos = GetIterator() ; pos ; )
+	{
+		CDownload* pDownload = GetNext( pos );
+		if ( sSDName.CompareNoCase( PathFindFileName( pDownload->m_sPath ) ) == 0 )
+			return pDownload;
+	}
+	return NULL;
 }
 
 CDownload* CDownloads::FindByPath(const CString& sPath) const
@@ -1180,43 +1193,15 @@ void CDownloads::Load()
 	DownloadGroups.CreateDefault();
 	LoadFromCompoundFiles();
 
+	const CString strRootPath = Settings.Downloads.IncompletePath + _T("\\");
+
 	WIN32_FIND_DATA pFind = {};
-	HANDLE hSearch = FindFirstFile( CString( _T("\\\\?\\") ) + Settings.Downloads.IncompletePath + _T("\\*.sd"), &pFind );
+	HANDLE hSearch = FindFirstFile( _T("\\\\?\\") + strRootPath + _T("*.sd"), &pFind );
 	if ( hSearch != INVALID_HANDLE_VALUE )
 	{
 		do
 		{
-			CString strPath;
-			strPath.Format( _T("%s\\%s"),
-				(LPCTSTR)Settings.Downloads.IncompletePath, pFind.cFileName );
-
-			CDownload* pDownload = new CDownload();
-			if ( pDownload->Load( strPath ) )
-			{
-				if ( pDownload->IsSeeding() )
-				{
-					if ( ! Settings.BitTorrent.AutoSeed )
-					{
-						theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_REMOVE, pDownload->m_sName );
-						DeleteFileEx( strPath, FALSE, TRUE, TRUE );
-						DeleteFileEx( strPath + _T(".sav"), FALSE, FALSE, TRUE );
-						DeleteFileEx( strPath + _T(".png"), FALSE, FALSE, TRUE );
-						continue;
-					}
-					pDownload->m_bComplete = true;
-					pDownload->m_bVerify = TRI_TRUE;
-				}
-				m_pList.AddTail( pDownload );
-			}
-			else
-			{
-				theApp.Message( MSG_ERROR, IDS_DOWNLOAD_REMOVE,
-					( pDownload->m_sName.IsEmpty() ? strPath : pDownload->m_sName ) );
-				DeleteFileEx( strPath, FALSE, TRUE, TRUE );
-				DeleteFileEx( strPath + _T(".sav"), FALSE, FALSE, TRUE );
-				DeleteFileEx( strPath + _T(".png"), FALSE, FALSE, TRUE );
-				delete pDownload;
-			}
+			Load( strRootPath + pFind.cFileName );
 		}
 		while ( FindNextFile( hSearch, &pFind ) );
 
@@ -1226,6 +1211,39 @@ void CDownloads::Load()
 	Save( FALSE );
 	DownloadGroups.Load();
 	Transfers.StartThread();
+}
+
+CDownload* CDownloads::Load(const CString& strPath)
+{
+	ASSUME_LOCK( Transfers.m_pSection );
+
+	CAutoPtr< CDownload > pDownload ( new CDownload() );
+	if ( pDownload->Load( strPath ) )
+	{
+		if ( pDownload->IsSeeding() )
+		{
+			if ( ! Settings.BitTorrent.AutoSeed )
+			{
+				theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_REMOVE, pDownload->m_sName );
+				DeleteFileEx( strPath, FALSE, TRUE, TRUE );
+				DeleteFileEx( strPath + _T(".sav"), FALSE, FALSE, TRUE );
+				DeleteFileEx( strPath + _T(".png"), FALSE, FALSE, TRUE );
+				return NULL;
+			}
+			pDownload->m_bComplete = true;
+			pDownload->m_bVerify = TRI_TRUE;
+		}
+		m_pList.AddTail( pDownload );
+		return pDownload.Detach();
+	}
+	else
+	{
+		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_REMOVE, ( pDownload->m_sName.IsEmpty() ? strPath : pDownload->m_sName ) );
+		DeleteFileEx( strPath, FALSE, TRUE, TRUE );
+		DeleteFileEx( strPath + _T(".sav"), FALSE, FALSE, TRUE );
+		DeleteFileEx( strPath + _T(".png"), FALSE, FALSE, TRUE );
+		return NULL;
+	}
 }
 
 void CDownloads::Save(BOOL bForce)
