@@ -306,7 +306,13 @@ void CConnectionSettingsPage::OnOK()
 		}
 	}
 
-	if ( nOldInPort != Settings.Connection.InPort || bOldEnableUPnP != Settings.Connection.EnableUPnP )
+	if ( nOldInPort != Settings.Connection.InPort )
+	{
+		CWaitCursor wc;
+		Network.Disconnect();
+		Network.Connect( TRUE );
+	}
+	else if ( bOldEnableUPnP != Settings.Connection.EnableUPnP )
 	{
 		Network.DeletePorts();
 	}
