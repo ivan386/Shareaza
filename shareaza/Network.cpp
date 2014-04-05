@@ -51,7 +51,7 @@
 #include "WndSearch.h"
 #include "WndSearchMonitor.h"
 
-#include "MiniUPnP.h"		// UPnP tier 0 - MiniUPnPc library
+//#include "MiniUPnP.h"		// UPnP tier 0 - MiniUPnPc library
 #include "UPnPNAT.h"		// UPnP tier 1 - Windows modern
 #include "UPnPFinder.h"		// UPnP tier 2 - Windows legacy
 #define UPNP_MAX		2	// UPnP max tier number (0,1,2)
@@ -1524,7 +1524,7 @@ void CNetwork::MapPorts()
 		switch ( m_nUPnPTier )
 		{
 		case 0:
-			UPnPFinder.Attach( new CMiniUPnP() );
+			//UPnPFinder.Attach( new CMiniUPnP() );
 			break;
 		case 1:
 			UPnPFinder.Attach( new CUPnPNAT() );
