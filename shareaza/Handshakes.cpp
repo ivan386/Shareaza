@@ -157,9 +157,7 @@ BOOL CHandshakes::Listen()
 	if ( bBound )
 	{
 		// Report that we are now listening on our IP address
-		theApp.Message( MSG_INFO, IDS_NETWORK_LISTENING_TCP,
-			(LPCTSTR)CString( inet_ntoa( Network.m_pHost.sin_addr ) ),
-			htons( Network.m_pHost.sin_port ) );
+		theApp.Message( MSG_INFO, IDS_NETWORK_LISTENING_TCP, (LPCTSTR)CString( inet_ntoa( saListen.sin_addr ) ), htons( saListen.sin_port ) );
 	}
 
 	// Create a new thread to run the ThreadStart method, passing it a pointer to this C

@@ -254,15 +254,9 @@ BOOL CG1Neighbour::ProcessPackets()
 {
 	CLockedBuffer pInputLocked( GetInput() );
 
-	// Point pInput at the buffer that has readable data from the remote computer
 	CBuffer* pInput = m_pZInput ? m_pZInput : pInputLocked;
 	
-	if ( ProcessPackets( pInput ) )
-		return TRUE;
-
-	// Something in the loop set bSuccess to false
-	Close( 0 );   // Close the connection to this remote computer
-	return FALSE; // Report error
+	return ProcessPackets( pInput );
 }
 
 BOOL CG1Neighbour::ProcessPackets(CBuffer* pInput)
@@ -303,7 +297,12 @@ BOOL CG1Neighbour::ProcessPackets(CBuffer* pInput)
 		pInput->Remove( nLength );
 	}
 
-	return bSuccess;
+	// If the loop read all the packets from the input buffer without an error, report success
+	if ( bSuccess ) return TRUE;
+
+	// Something in the loop set bSuccess to false
+	Close( 0 );   // Close the connection to this remote computer
+	return FALSE; // Report error
 }
 
 //////////////////////////////////////////////////////////////////////
