@@ -1,7 +1,7 @@
 //
 // Datagrams.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -81,30 +81,29 @@ CDatagrams::~CDatagrams()
 BOOL CDatagrams::Listen()
 {
 	if ( IsValid() )
-		return FALSE;
+		return TRUE;
 
 	m_hSocket = socket( PF_INET, SOCK_DGRAM, IPPROTO_UDP );
 	if ( ! IsValid() )	// Now, make sure it has been created
 	{
-		theApp.Message( MSG_ERROR, _T("Failed to create socket. (1st Try)") );
+		theApp.Message( MSG_ERROR, _T("Failed to create UDP socket. (1st Try)") );
 		// Second attempt
 		m_hSocket = socket( PF_INET, SOCK_DGRAM, IPPROTO_UDP );
 		if ( ! IsValid() )
 		{
-			theApp.Message( MSG_ERROR, _T("Failed to create socket. (2nd Try)") );
+			theApp.Message( MSG_ERROR, _T("Failed to create UDP socket. (2nd Try)") );
 			return FALSE;
 		}
 	}
 
 	VERIFY( setsockopt( m_hSocket, SOL_SOCKET, SO_BROADCAST, "\x01", 1 ) == 0 );
 
-	SOCKADDR_IN saHost;
-
+	SOCKADDR_IN saHost = {};
 	if ( Network.Resolve( Settings.Connection.InHost, Settings.Connection.InPort, &saHost ) )
 	{
 		// Inbound resolved
 		if ( ! Settings.Connection.InBind ) 
-			saHost.sin_addr.S_un.S_addr = 0;
+			saHost.sin_addr.s_addr = INADDR_ANY;
 		else
 		{
 			// Set the exclusive address option
@@ -119,7 +118,7 @@ BOOL CDatagrams::Listen()
 	{
 		saHost = Network.m_pHost;
 		if ( ! Settings.Connection.InBind ) 
-			saHost.sin_addr.S_un.S_addr = 0;
+			saHost.sin_addr.s_addr = INADDR_ANY;
 		else
 		{
 			// Set the exclusive address option
@@ -127,11 +126,24 @@ BOOL CDatagrams::Listen()
 		}
 	}
 
-	if ( bind( m_hSocket, (SOCKADDR*)&saHost, sizeof(saHost) ) == 0 )
+	// First attempt to bind socket
+	if ( bind( m_hSocket, (SOCKADDR*)&saHost, sizeof( saHost ) ) != 0 )
 	{
-		theApp.Message( MSG_INFO, IDS_NETWORK_LISTENING_UDP,
-			(LPCTSTR)CString( inet_ntoa( saHost.sin_addr ) ), htons( saHost.sin_port ) );
+		theApp.Message( MSG_ERROR, IDS_NETWORK_CANT_LISTEN, (LPCTSTR)CString( inet_ntoa( saHost.sin_addr ) ), htons( saHost.sin_port ) );
+
+		if ( saHost.sin_addr.s_addr == INADDR_ANY )
+			return FALSE;
+
+		// Second attempt to bind socket
+		saHost.sin_addr.s_addr = INADDR_ANY;
+		if ( bind( m_hSocket, (SOCKADDR*)&saHost, sizeof( saHost ) ) != 0 )
+		{
+			theApp.Message( MSG_ERROR, IDS_NETWORK_CANT_LISTEN, (LPCTSTR)CString( inet_ntoa( saHost.sin_addr ) ), htons( saHost.sin_port ) );
+			return FALSE;
+		}
 	}
+	
+	theApp.Message( MSG_INFO, IDS_NETWORK_LISTENING_UDP, (LPCTSTR)CString( inet_ntoa( saHost.sin_addr ) ), htons( saHost.sin_port ) );
 
 	// Multi-cast ports:
 	// eD2K: 224.0.0.1:5000

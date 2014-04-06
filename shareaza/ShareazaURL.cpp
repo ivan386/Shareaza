@@ -1,7 +1,7 @@
 //
 // ShareazaURL.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2013.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1310,6 +1310,19 @@ void CShareazaURL::Register(BOOL bRegister, BOOL bOnStartup)
 		UnregisterShellType( CLIENT_NAME_T _T(".Torrent") );
 	}
 
+	if ( bRegister )
+	{
+		RegisterShellType( NULL, CLIENT_NAME_T _T(".Download"), CLIENT_NAME_T _T(" Download File"),
+			_T(".sd"), CLIENT_NAME_T, _T("RAZAFORMAT"), IDR_MAINFRAME );
+		RegisterShellType( _T("Applications\\") CLIENT_NAME_T _T(".exe"), NULL, CLIENT_NAME_T _T(" Download File"),
+			_T(".sd"), CLIENT_NAME_T, _T("RAZAFORMAT"), IDR_MAINFRAME );
+	}
+	else
+	{
+		UnregisterShellType( _T(".sd") );
+		UnregisterShellType( CLIENT_NAME_T _T(".Download") );
+	}
+
 	if (  bRegister )
 	{
 		RegisterShellType( NULL, CLIENT_NAME_T _T(".Collection"), CLIENT_NAME_T _T(" Collection File"),
@@ -1405,12 +1418,12 @@ BOOL CShareazaURL::RegisterShellType(LPCTSTR pszRoot, LPCTSTR pszProtocol, LPCTS
 	}
 	else if ( pszType != NULL )
 	{
-		/*HKEY hKeySupported;
+		HKEY hKeySupported;
 		if ( RegCreateKey( hKey, _T("SupportedTypes"), &hKeySupported ) == ERROR_SUCCESS )
 		{
 			RegSetValueEx( hKeySupported, pszType, 0, REG_NONE, NULL, 0 );
 			RegCloseKey( hKeySupported );
-		}*/
+		}
 
 		RegSetValueEx( hKey, _T("FriendlyAppName"), 0, REG_STRING( CLIENT_NAME_T ) );
 	}
