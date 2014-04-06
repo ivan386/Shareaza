@@ -1182,6 +1182,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\UPnPNAT.cpp"
+				>
+			</File>
+			<File
 				RelativePath="VendorCache.cpp"
 				>
 			</File>
