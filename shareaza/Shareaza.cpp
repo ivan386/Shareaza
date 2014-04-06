@@ -1026,7 +1026,7 @@ void CShareazaApp::InitResources()
 #ifdef LAN_MODE
 		_T(" LAN")
 #endif		
-		_T(" (r") _T(__REVISION__) _T(" ") + m_sBuildDate + _T(")");
+		_T(" (r") _T(__REVISION__) _T("i ") + m_sBuildDate + _T(")");
 
 	BT_SetAppVersion( m_sVersionLong );
 
