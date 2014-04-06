@@ -189,66 +189,52 @@ BOOL CFragmentedFile::Open(LPCTSTR pszFile, QWORD nOffset, QWORD nLength, BOOL b
 			return ! bWrite || (*pItr).m_pFile->EnsureWrite();
 	}
 
-	CTransferFile* pFile = NULL;
-	QWORD nRealLength = SIZE_UNKNOWN;
+	// Guess existing path
 	CString& strPath = (*pItr).m_sPath;
-	for ( int nMethod = 0 ; ; ++nMethod )
+	if ( GetFileAttributes( _T("\\\\?\\") + strPath ) == INVALID_FILE_ATTRIBUTES )
 	{
-		pFile = TransferFiles.Open( strPath, bWrite );
-		if ( pFile )
+		const CString strFileName = PathFindFileName( strPath );
+		if ( GetFileAttributes( _T("\\\\?\\") + Settings.Downloads.IncompletePath + _T("\\") + strFileName ) == INVALID_FILE_ATTRIBUTES )
 		{
-			m_nFileError = ERROR_SUCCESS;
-			nRealLength = pFile->GetSize();
-			if ( pFile->IsExists() && nLength == SIZE_UNKNOWN )
+			const CString strSDPath = m_pDownload->m_sPath.Left( m_pDownload->m_sPath.ReverseFind( _T('\\') ) );
+			if ( GetFileAttributes( _T("\\\\?\\") + strSDPath + _T("\\") + strFileName ) == INVALID_FILE_ATTRIBUTES )
 			{
-				nLength = nRealLength;
+				// Use as is
 			}
-			else if ( ! pFile->IsWritable() && nRealLength != nLength )
+			else
 			{
-				// Wrong file
-				pFile->Release();
-				pFile = NULL;
-				m_nFileError = ERROR_FILE_INVALID;
+				strPath = strSDPath + _T("\\") + strFileName;
 			}
-			break;
 		}
-
-		m_nFileError = ::GetLastError();
-		if ( ! bWrite )
-			// Do nothing for read only files
-			break;
-
-		if ( nMethod == 0 )
+		else
 		{
-			// Try to open file from current incomplete folder (in case of changed folder)
-			CString strIncompletePath = Settings.Downloads.IncompletePath + _T("\\") + PathFindFileName( strPath );
-			if ( strIncompletePath.CompareNoCase( strPath ) != 0 )
-			{
-				strPath = strIncompletePath;
-				continue;
-			}
-			++nMethod;
+			strPath = Settings.Downloads.IncompletePath + _T("\\") + strFileName;
 		}
-
-		if ( nMethod == 1 )
-		{
-			// Try to open file from same path as SD-file has
-			if ( m_pDownload )
-			{
-				CString strSdPath = m_pDownload->m_sPath.Left( m_pDownload->m_sPath.ReverseFind( _T('\\') ) + 1 ) + PathFindFileName( strPath );
-				if ( strSdPath.CompareNoCase( strPath ) != 0 )
-				{
-					strPath = strSdPath;
-					continue;
-				}
-			}
-			++nMethod;
-		}
-
-		// TODO: Other methods
-		break;
 	}
 
+	QWORD nRealLength = SIZE_UNKNOWN;
+	CTransferFile* pFile = TransferFiles.Open( strPath, bWrite );
+	if ( pFile )
+	{
+		m_nFileError = ERROR_SUCCESS;
+		nRealLength = pFile->GetSize();
+		if ( pFile->IsExists() && nLength == SIZE_UNKNOWN )
+		{
+			nLength = nRealLength;
+		}
+		else if ( ! pFile->IsWritable() && nRealLength != nLength )
+		{
+			// Wrong file
+			pFile->Release();
+			pFile = NULL;
+			m_nFileError = ERROR_FILE_INVALID;
+		}
+	}
+	else
+	{
+		// File error
+		m_nFileError = ::GetLastError();
+	}
 	(*pItr).m_nSize = nLength;
 	(*pItr).m_pFile = pFile;
 

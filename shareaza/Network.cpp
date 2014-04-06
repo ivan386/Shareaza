@@ -742,6 +742,9 @@ bool CNetwork::PreRun()
 		}
 	}
 
+	if ( Settings.Connection.InPort == 0 ) // random port
+		Settings.Connection.InPort = Network.RandomPort();
+
 	Resolve( Settings.Connection.InHost, Settings.Connection.InPort, &m_pHost );
 
 	if ( /*IsFirewalled()*/Settings.Connection.FirewallState == CONNECTION_FIREWALLED ) // Temp disable
@@ -817,13 +820,25 @@ void CNetwork::OnRun()
 			{
 				if ( ! bListen )
 				{
-					bListen = true;
-
 					if ( ! Handshakes.Listen() || ! Datagrams.Listen() )
 					{
-						theApp.Message( MSG_ERROR, _T("The connection process is failed.") );
-						break;
+						Datagrams.Disconnect();
+						Handshakes.Disconnect();
+
+						DeletePorts();
+			
+						// Change port to random
+						Settings.Connection.InPort = Network.RandomPort();
+
+						oLock.Unlock();
+
+						Sleep( 1000 );
+
+						continue;
 					}
+
+					bListen = true;
+
 					Neighbours.Connect();
 
 					NodeRoute->SetDuration( Settings.Gnutella.RouteCache );
@@ -1547,7 +1562,7 @@ void CNetwork::DeletePorts()
 	if ( UPnPFinder )
 		UPnPFinder->StopAsyncFind();
 
-	if ( UPnPFinder && Settings.Connection.DeleteUPnPPorts && Settings.Connection.InPort )
+	if ( UPnPFinder && Settings.Connection.DeleteUPnPPorts )
 		UPnPFinder->DeletePorts();
 
 	m_bUPnPPortsForwarded = TRI_UNKNOWN;

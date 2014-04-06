@@ -185,6 +185,8 @@ public:
 	BOOL				OpenCollection(LPCTSTR lpszFileName, BOOL bDoIt);
 	// Open URL
 	BOOL				OpenURL(LPCTSTR lpszFileName, BOOL bDoIt, BOOL bSilent = FALSE);
+	// Open Shareaza Download file
+	BOOL				OpenDownload(LPCTSTR lpszFileName, BOOL bDoIt);
 
 	CString				GetWindowsFolder() const;
 	CString				GetProgramFilesFolder() const;

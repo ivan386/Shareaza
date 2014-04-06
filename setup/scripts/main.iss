@@ -1,7 +1,7 @@
 ;
 ; main.iss
 ;
-; Copyright (c) Shareaza Development Team, 2002-2013.
+; Copyright (c) Shareaza Development Team, 2002-2014.
 ; This file is part of SHAREAZA (shareaza.sourceforge.net)
 ;
 ; Shareaza is free software; you can redistribute it
@@ -402,6 +402,7 @@ Root: HKCU; Subkey: "Software\Shareaza"; Flags: dontcreatekey uninsdeletekey
 Root: HKU; Subkey: ".DEFAULT\Software\Shareaza"; Flags: dontcreatekey uninsdeletekey
 Root: HKCU; Subkey: "Software\Microsoft\Windows\CurrentVersion\Run"; ValueName: "Shareaza"; Flags: dontcreatekey uninsdeletevalue
 
+Root: HKLM; Subkey: "SOFTWARE\Classes\.sd"; Flags: dontcreatekey uninsdeletekey
 Root: HKLM; Subkey: "SOFTWARE\Classes\.co"; Flags: dontcreatekey uninsdeletekey
 Root: HKLM; Subkey: "SOFTWARE\Classes\.collection"; Flags: dontcreatekey uninsdeletekey
 Root: HKLM; Subkey: "SOFTWARE\Classes\.emulecollection"; Flags: dontcreatekey uninsdeletekey
@@ -424,6 +425,7 @@ Root: HKLM; Subkey: "SOFTWARE\Classes\shareaza*"; Flags: dontcreatekey uninsdele
 Root: HKLM; Subkey: "SOFTWARE\Classes\Applications\Shareaza.exe"; Flags: dontcreatekey uninsdeletekey
 Root: HKLM; Subkey: "SOFTWARE\Classes\Applications\skin.exe"; Flags: dontcreatekey uninsdeletekey
 
+Root: HKCU; Subkey: "SOFTWARE\Classes\.sd"; Flags: dontcreatekey uninsdeletekey
 Root: HKCU; Subkey: "SOFTWARE\Classes\.co"; Flags: dontcreatekey uninsdeletekey
 Root: HKCU; Subkey: "SOFTWARE\Classes\.collection"; Flags: dontcreatekey uninsdeletekey
 Root: HKCU; Subkey: "SOFTWARE\Classes\.emulecollection"; Flags: dontcreatekey uninsdeletekey
@@ -497,6 +499,7 @@ Root: HKCU; SubKey: "Software\BHO Shareaza"; Flags: deletekey
 Root: HKLM; Subkey: "Software\Shareaza\Shareaza\Capabilities"; ValueType: string; ValueName: "ApplicationDescription"; ValueData: "{cm:reg_apptitle}" ; Flags: createvalueifdoesntexist uninsdeletekey
 
 Root: HKLM; Subkey: "Software\Shareaza\Shareaza\Capabilities\FileAssociations"; ValueType: string; ValueName: ".torrent"; ValueData: "Shareaza.Torrent"; Flags: createvalueifdoesntexist uninsdeletevalue
+Root: HKLM; Subkey: "Software\Shareaza\Shareaza\Capabilities\FileAssociations"; ValueType: string; ValueName: ".sd"; ValueData: "Shareaza.Download"; Flags: createvalueifdoesntexist uninsdeletevalue
 Root: HKLM; Subkey: "Software\Shareaza\Shareaza\Capabilities\FileAssociations"; ValueType: string; ValueName: ".co"; ValueData: "Shareaza.Collection"; Flags: createvalueifdoesntexist uninsdeletevalue
 Root: HKLM; Subkey: "Software\Shareaza\Shareaza\Capabilities\FileAssociations"; ValueType: string; ValueName: ".collection"; ValueData: "Shareaza.Collection"; Flags: createvalueifdoesntexist uninsdeletevalue
 Root: HKLM; Subkey: "Software\Shareaza\Shareaza\Capabilities\FileAssociations"; ValueType: string; ValueName: ".emulecollection"; ValueData: "Shareaza.Collection"; Flags: createvalueifdoesntexist uninsdeletevalue

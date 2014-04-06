@@ -1,7 +1,7 @@
 //
 // Handshakes.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -67,14 +67,8 @@ CHandshakes::~CHandshakes()
 // Returns true if we're listening, false if it didn't work
 BOOL CHandshakes::Listen()
 {
-	// Setup m_hSocket as a new TCP socket
-	if ( IsValid() )	// Make sure the socket hasn't been created yet
-	{
-		theApp.Message( MSG_ERROR, _T("Re-connection too fast, waiting 2 seconds.") );
-		Sleep(2000);					// Too fast re-connection after disconnection, wait 2 sec
-		if ( IsValid() )
-			return FALSE;
-	}
+	if ( IsValid() )
+		return TRUE;
 
 	// Make sure only one thread can execute the code of this method at a time
 	CSingleLock pLock( &m_pSection, TRUE ); // When the method exits, local pLock will be destructed, and the lock released
@@ -82,12 +76,12 @@ BOOL CHandshakes::Listen()
 	m_hSocket = socket( PF_INET, SOCK_STREAM, IPPROTO_TCP );
 	if ( ! IsValid() )	// Now, make sure it has been created
 	{
-		theApp.Message( MSG_ERROR, _T("Failed to create socket. (1st Try)") );
+		theApp.Message( MSG_ERROR, _T("Failed to create TCP socket. (1st Try)") );
 		// Second attempt
 		m_hSocket = socket( PF_INET, SOCK_STREAM, IPPROTO_TCP );
 		if ( ! IsValid() )
 		{
-			theApp.Message( MSG_ERROR, _T("Failed to create socket. (2nd Try)") );
+			theApp.Message( MSG_ERROR, _T("Failed to create TCP socket. (2nd Try)") );
 			return FALSE;
 		}
 	}
@@ -96,49 +90,36 @@ BOOL CHandshakes::Listen()
 	VERIFY( setsockopt( m_hSocket, IPPROTO_TCP, TCP_NODELAY, "\x01", 1) == 0 );
 
 	// Get our computer's Internet IP address and port number from the network object
-	SOCKADDR_IN saListen = Network.m_pHost; // This is the address of our computer as visible to remote computers on the Internet
+	SOCKADDR_IN saHost = Network.m_pHost; // This is the address of our computer as visible to remote computers on the Internet
 
 	// If the program connection settings disallow binding, zero the 4 bytes of the IP address
 	if ( ! Settings.Connection.InBind ) 
-		saListen.sin_addr.s_addr = INADDR_ANY; // s_addr is the IP address formatted as a single u_long
+		saHost.sin_addr.s_addr = INADDR_ANY; // s_addr is the IP address formatted as a single u_long
 	else
 	{
 		// Set the exclusive address option
 		VERIFY( setsockopt( m_hSocket, SOL_SOCKET, SO_EXCLUSIVEADDRUSE, "\x01", 1 ) == 0 );
 	}
 
-	// Loop to try 5 times since the socket might not be reused immediately
-	BOOL bBound = FALSE; // We're not bound to this socket yet
-	for ( int nAttempt = 0 ; nAttempt < 5 ; nAttempt++ )
+	// First attempt to bind socket
+	if ( bind( m_hSocket, (SOCKADDR*)&saHost, sizeof( saHost ) ) != 0 )
 	{
-		// Bind our IP address to the socket, Windows Firewall may pop a message to the user when a program calls bind
-		bBound = bind(				// Call bind to associate our local address wiht this socket
-			m_hSocket,				// The socket in this CHandshakes object
-			(SOCKADDR*)&saListen,	// Our Internet IP address, the one we want to listen on, and how big it is
-			sizeof(saListen)
-			) == 0;					// If bind succeeds, it returns 0, and bBound becomes true
-		if ( bBound ) break;		// We're done trying to bind, leave the loop
+		theApp.Message( MSG_ERROR, IDS_NETWORK_CANT_LISTEN, (LPCTSTR)CString( inet_ntoa( saHost.sin_addr ) ), htons( saHost.sin_port ) );
 
-		// Record that we weren't able to listen on this port
-		theApp.Message( MSG_ERROR, IDS_NETWORK_CANT_LISTEN, (LPCTSTR)CString( inet_ntoa( saListen.sin_addr ) ), htons( saListen.sin_port ) );
+		if ( saHost.sin_addr.s_addr == INADDR_ANY )
+			return FALSE;
 
-		// If this is not our first attempt
-		if ( nAttempt )
+		// Second attempt to bind socket
+		saHost.sin_addr.s_addr = INADDR_ANY;
+		if ( bind( m_hSocket, (SOCKADDR*)&saHost, sizeof( saHost ) ) != 0 )
 		{
-			if ( Network.m_bUPnPPortsForwarded != TRI_TRUE )
-			{
-				int nPort = Network.RandomPort();
-				Network.m_pHost.sin_port = saListen.sin_port = htons( u_short( nPort ) );
-			}
-		}
-		else // This is still our first time here in this loop
-		{
-			// We set s_addr to INADDR_ANY, which allows it to be any IP address,
-			// since we don’t really care about the IP address if we are just telling
-			// WinSock which port we want our side of the connection to be.
-			saListen.sin_addr.s_addr = INADDR_ANY;
+			theApp.Message( MSG_ERROR, IDS_NETWORK_CANT_LISTEN, (LPCTSTR)CString( inet_ntoa( saHost.sin_addr ) ), htons( saHost.sin_port ) );
+			return FALSE;
 		}
 	}
+
+	// Report that we are now listening on our IP address
+	theApp.Message( MSG_INFO, IDS_NETWORK_LISTENING_TCP, (LPCTSTR)CString( inet_ntoa( saHost.sin_addr ) ), htons( saHost.sin_port ) );
 
 	// Set it up so that when a remote computer connects to us, the m_pWakeup event is fired
 	WSAEventSelect(		// Specify an event object to associate with the specified set of FD_XXX network events
@@ -152,13 +133,6 @@ BOOL CHandshakes::Listen()
 		256 );		// Maximum length of the queue of pending connections, let 256 computers try to call us at once (do)
 
 	Network.AcquireLocalAddress( m_hSocket );
-
-	// If we were able to bind the socket to our local address
-	if ( bBound )
-	{
-		// Report that we are now listening on our IP address
-		theApp.Message( MSG_INFO, IDS_NETWORK_LISTENING_TCP, (LPCTSTR)CString( inet_ntoa( saListen.sin_addr ) ), htons( saListen.sin_port ) );
-	}
 
 	// Create a new thread to run the ThreadStart method, passing it a pointer to this C
 	return BeginThread( "Handshakes" );
