@@ -1,0 +1,2 @@
+1. Download this file: http://www.rarlab.com/rar/UnRARDLL.exe
+2. Unpack next files to Shareaza sources: unrar.h, unrar.dll and x64\unrar64.dll
