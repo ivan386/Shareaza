@@ -25,7 +25,7 @@ LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 3,7,17,0
+ FILEVERSION 3,8,4,3
  PRODUCTVERSION 2,7,4,0
  FILEFLAGSMASK 0x17L
 #ifdef _DEBUG
@@ -43,9 +43,9 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "SQLite3 Library"
-            VALUE "FileVersion", "3.7.17.0"
+            VALUE "FileVersion", "3.8.4.3"
             VALUE "InternalName", "sqlite3"
-            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2008-2013. All rights reserved."
+            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2001-2014. All rights reserved."
             VALUE "OriginalFilename", "sqlite3.dll"
             VALUE "ProductName", "Shareaza"
             VALUE "ProductVersion", "2.7.4.0"
