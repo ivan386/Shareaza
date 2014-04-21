@@ -382,7 +382,7 @@ HPROPSHEETPAGE CScheduleTaskPage::Create(BOOL bWizard)
 		psp.dwFlags |= PSP_USEHEADERSUBTITLE;
 	}
 	PreProcessPageTemplate( psp, bWizard );
-	return AfxCreatePropertySheetPage( &psp );
+	return CreatePropertySheetPage( &psp );
 }
 
 BOOL CScheduleTaskPage::OnInitDialog() 

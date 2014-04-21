@@ -983,7 +983,7 @@ bool CLibraryBuilder::DetectVirtualLAME(HANDLE hFile, QWORD& nOffset, QWORD& nLe
     else
         nSampleRate = samplerate_table[ nId ][ nSampleRateIndex ];
 	int nFrameSize = ( ( nId + 1 ) * 72000 * nBitrate ) / nSampleRate;
-	if ( nFrameSize > nLength )
+	if ( nFrameSize > (int)nLength )
 		return false;
  
 	int nVbrHeaderOffset = GetVbrHeaderOffset( nId, nMode );
