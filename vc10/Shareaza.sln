@@ -73,7 +73,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RegExp", "..\RegExp\RegExp_
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "bzlib", "..\bzlib\bzlib_10.vcxproj", "{A14F5E46-C04C-4F32-9985-2E15819A722A}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MiniUPnPc", "..\MiniUPnPc\MiniUPnPc.vcxproj", "{D6C8A99E-E770-4D48-BE97-AA3CF262EE8B}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MiniUPnPc", "..\MiniUPnPc\MiniUPnPc_10.vcxproj", "{D6C8A99E-E770-4D48-BE97-AA3CF262EE8B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

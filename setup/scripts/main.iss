@@ -66,36 +66,36 @@
   #define ConfigurationName "Debug"
 #endif
 
-; Test for VS2008
-#ifexist SourcePath + "..\..\vc9\Win32\Release\Shareaza.exe"
+; Test for VS2013
+#ifexist SourcePath + "..\..\vc12\Win32\Release\Shareaza.exe"
   #ifdef Compiler
     #error Found a few Shareaza.exe files, you need to leave only one
   #endif
-  #define Compiler "vc9"
+  #define Compiler "vc12"
   #define PlatformName "Win32"
   #define ConfigurationName "Release"
 #endif
-#ifexist SourcePath + "..\..\vc9\x64\Release\Shareaza.exe"
+#ifexist SourcePath + "..\..\vc12\x64\Release\Shareaza.exe"
   #ifdef Compiler
     #error Found a few Shareaza.exe files, you need to leave only one
   #endif
-  #define Compiler "vc9"
+  #define Compiler "vc12"
   #define PlatformName "x64"
   #define ConfigurationName "Release"
 #endif
-#ifexist SourcePath + "..\..\vc9\Win32\Debug\Shareaza.exe"
+#ifexist SourcePath + "..\..\vc12\Win32\Debug\Shareaza.exe"
   #ifdef Compiler
     #error Found a few Shareaza.exe files, you need to leave only one
   #endif
-  #define Compiler "vc9"
+  #define Compiler "vc12"
   #define PlatformName "Win32"
   #define ConfigurationName "Debug"
 #endif
-#ifexist SourcePath + "..\..\vc9\x64\Debug\Shareaza.exe"
+#ifexist SourcePath + "..\..\vc12\x64\Debug\Shareaza.exe"
   #ifdef Compiler
     #error Found a few Shareaza.exe files, you need to leave only one
   #endif
-  #define Compiler "vc9"
+  #define Compiler "vc12"
   #define PlatformName "x64"
   #define ConfigurationName "Debug"
 #endif

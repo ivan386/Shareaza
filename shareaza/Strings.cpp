@@ -1,7 +1,7 @@
 //
 // Strings.cpp
 //
-// Copyright (c) Shareaza Development Team, 2010-2012.
+// Copyright (c) Shareaza Development Team, 2010-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -996,53 +996,71 @@ CString Escape(const CString& strValue)
 	bool bChanged = false;
 
 	CString strXML;
-	LPTSTR pszXML = strXML.GetBuffer( strValue.GetLength() * 8  + 1 );
+	int nXMLLength = strValue.GetLength() * 8 + 1;
+	LPTSTR pszXML = strXML.GetBuffer( nXMLLength );
 
-	for ( LPCTSTR pszValue = strValue ; *pszValue ; ++pszValue )
+	for ( LPCTSTR pszValue = strValue ; nXMLLength > 1 && *pszValue ; ++pszValue )
 	{
 		switch ( *pszValue )
 		{
 		case _T('&'):
-			_tcscpy( pszXML, _T("&amp;") );
+			_tcscpy_s( pszXML, nXMLLength, _T("&amp;") );
 			pszXML += 5;
+			nXMLLength -= 5;
 			bChanged = true;
 			break;
 		case _T('<'):
-			_tcscpy( pszXML, _T("&lt;") );
+			_tcscpy_s( pszXML, nXMLLength, _T( "&lt;" ) );
 			pszXML += 4;
+			nXMLLength -= 4;
 			bChanged = true;
 			break;
 		case _T('>'):
-			_tcscpy( pszXML, _T("&gt;") );
+			_tcscpy_s( pszXML, nXMLLength, _T( "&gt;" ) );
 			pszXML += 4;
+			nXMLLength -= 4;
 			bChanged = true;
 			break;
 		case _T('\"'):
-			_tcscpy( pszXML, _T("&quot;") );
+			_tcscpy_s( pszXML, nXMLLength, _T("&quot;") );
 			pszXML += 6;
+			nXMLLength -= 6;
 			bChanged = true;
 			break;
 		case _T('\''):
-			_tcscpy( pszXML, _T("&apos;") );
+			_tcscpy_s( pszXML, nXMLLength, _T("&apos;") );
 			pszXML += 6;
+			nXMLLength -= 6;
 			bChanged = true;
 			break;
 		default:
 			if ( *pszValue < 32 || *pszValue > 127 )
 			{
-				pszXML += _stprintf_s( pszXML, 9, _T("&#%lu;"), *pszValue );
+				int n = _stprintf_s( pszXML, nXMLLength, _T("&#%lu;"), *pszValue );
+				pszXML += n;
+				nXMLLength -= n;
 				bChanged = true;
 			}
 			else
+			{
 				*pszXML++ = *pszValue;
+				nXMLLength--;
+			}
 		}
 	}
 
 	*pszXML = 0;
 
-	strXML.ReleaseBuffer();
-
-	return bChanged ? strXML : strValue;
+	if ( bChanged )
+	{
+		strXML.ReleaseBuffer();
+		return strXML;
+	}
+	else
+	{
+		strXML.ReleaseBufferSetLength( 0 );
+		return strValue;
+	}
 }
 
 CString Unescape(const TCHAR* __restrict pszXML, int nLength)

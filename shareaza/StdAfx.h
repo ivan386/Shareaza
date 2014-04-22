@@ -1,7 +1,7 @@
 //
 // StdAfx.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -139,6 +139,7 @@
 #include <powrprof.h>		// The power policy applicator
 #include <propkey.h>
 #include <propvarutil.h>
+#include <ras.h>
 #include <security.h>		// For security aware components
 #include <shlwapi.h>		// Windows Shell API
 #include <taskschd.h>		// Task Scheduler 2.0 interfaces

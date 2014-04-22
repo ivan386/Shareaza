@@ -3258,7 +3258,11 @@ void CMainWnd::ShowTrayPopup(const CString& sText, const CString& sTitle, DWORD 
 	m_pTray.szInfoTitle[ 0 ] = _T('\0');
 }
 
+#if _MSC_VER >= 1800 // Microsoft Visual Studio 2013
+UINT CMainWnd::OnPowerBroadcast(UINT nPowerEvent, LPARAM nEventData)
+#else
 UINT CMainWnd::OnPowerBroadcast(UINT nPowerEvent, UINT nEventData)
+#endif
 {
 	static bool bWasConnected = false;
 
