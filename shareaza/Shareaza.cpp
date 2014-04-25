@@ -191,8 +191,6 @@ CShareazaApp::CShareazaApp() :
 ,	m_bInteractive			( false )
 ,	m_bLive					( false )
 ,	m_bClosing				( false )
-,	m_bIsServer				( false )
-,	m_bIsWin2000			( false )
 ,	m_bIsVistaOrNewer		( false )
 ,	m_bLimitedConnections	( true )
 ,	m_bMenuWasVisible		( FALSE )
@@ -748,16 +746,14 @@ void CShareazaApp::AddToRecentFileList(LPCTSTR lpszPathName)
 {
 	SHAddToRecentDocs( SHARD_PATHW, lpszPathName );
 
-	if ( Windows.dwMajorVersion > 6 || ( Windows.dwMajorVersion == 6 && Windows.dwMinorVersion >= 1 ) )
+
+	if ( m_pfnSHCreateItemFromParsingName )
 	{
-		if ( m_pfnSHCreateItemFromParsingName )
+		CComPtr< IShellItem > pItem;
+		if ( SUCCEEDED( m_pfnSHCreateItemFromParsingName( lpszPathName, NULL, IID_IShellItem, (LPVOID*)&pItem ) ) )
 		{
-			CComPtr< IShellItem > pItem;
-			if ( SUCCEEDED( m_pfnSHCreateItemFromParsingName( lpszPathName, NULL, IID_IShellItem, (LPVOID*)&pItem ) ) )
-			{
-				SHARDAPPIDINFO info = { pItem, CLIENT_NAME_T };
-				SHAddToRecentDocs( SHARD_APPIDINFO, &info );
-			}
+			SHARDAPPIDINFO info = { pItem, CLIENT_NAME_T };
+			SHAddToRecentDocs( SHARD_APPIDINFO, &info );
 		}
 	}
 }
@@ -1036,9 +1032,6 @@ void CShareazaApp::InitResources()
 	m_pBTVersion[ 2 ] = (BYTE)m_nVersion[ 0 ];
 	m_pBTVersion[ 3 ] = (BYTE)m_nVersion[ 1 ];
 
-	// Determine if it's a server
-	m_bIsServer = Windows.wProductType != VER_NT_WORKSTATION;
-
 	// Most supported windows versions have network limiting
 	m_bLimitedConnections = true;
 	TCHAR* sp = _tcsstr( Windows.szCSDVersion, _T("Service Pack") );
@@ -1046,9 +1039,7 @@ void CShareazaApp::InitResources()
 	// Set some variables for different Windows OSes
 	if ( Windows.dwMajorVersion == 5 )
 	{
-		if ( Windows.dwMinorVersion == 0 )		// Windows 2000
-			m_bIsWin2000 = true;
-		else if ( Windows.dwMinorVersion == 1 )	// Windows XP
+		if ( Windows.dwMinorVersion == 1 )	// Windows XP
 		{
 			// 10 Half-open concurrent TCP connections limit was introduced in SP2
 			// Windows Server will never compare this value though.

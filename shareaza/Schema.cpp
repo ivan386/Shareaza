@@ -1,7 +1,7 @@
 //
 // Schema.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2011.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -181,10 +181,7 @@ BOOL CSchema::Load(LPCTSTR pszFile)
 
 	m_sIcon = m_sIcon.Left( m_sIcon.GetLength() - 4 );
 	m_sIcon += _T("XP.ico");
-
-	//LoadIcon() causes bad registry reads
-	//CCoolInterface::IsNewWindows() caused several reapeat ones.
-	if ( theApp.m_bIsWin2000 || ! LoadIcon() )
+	if ( ! LoadIcon() )
 	{
 		m_sIcon = m_sIcon.Left( m_sIcon.GetLength() - 6 );
 		m_sIcon += _T(".ico");

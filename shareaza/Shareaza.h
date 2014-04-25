@@ -92,8 +92,6 @@ public:
 	volatile bool		m_bInteractive;				// Shareaza begins initialization
 	volatile bool		m_bLive;					// Shareaza fully initialized
 	volatile bool		m_bClosing;					// Shareaza begins closing
-	bool				m_bIsServer;				// Is OS a Server version
-	bool				m_bIsWin2000;				// Is OS Windows 2000
 	bool				m_bIsVistaOrNewer;			// Is OS Vista or newer
 	bool				m_bLimitedConnections;		// Networking is limited (XP SP2)
 	BOOL				m_bMenuWasVisible;			// For the menus in media player window

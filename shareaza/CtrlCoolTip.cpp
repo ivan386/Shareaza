@@ -1,7 +1,7 @@
 //
 // CtrlCoolTip.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -64,7 +64,7 @@ CCoolTipCtrl::CCoolTipCtrl()
 	, m_tOpen	( 0 )
 {
 	if ( m_hClass == NULL )
-		m_hClass = AfxRegisterWndClass( CS_SAVEBITS | ( theApp.m_bIsWin2000 ? 0 : CS_DROPSHADOW ) );
+		m_hClass = AfxRegisterWndClass( CS_SAVEBITS | CS_DROPSHADOW );
 }
 
 CCoolTipCtrl::~CCoolTipCtrl()

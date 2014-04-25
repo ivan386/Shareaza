@@ -1,7 +1,7 @@
 //
 // WndPanel.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2012.
+// Copyright (c) Shareaza Development Team, 2002-2014.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -82,7 +82,7 @@ void CPanelWnd::OnSkinChange()
 
 void CPanelWnd::OnSize(UINT nType, int cx, int cy)
 {
-	if ( m_bPanelMode && ! m_pSkin && ! theApp.m_bIsWin2000 && ! IsIconic() )
+	if ( m_bPanelMode && ! m_pSkin && ! IsIconic() )
 	{
 		CRect rc;
 		GetWindowRect( &rc );
