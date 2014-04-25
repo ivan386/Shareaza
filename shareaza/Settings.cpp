@@ -747,13 +747,6 @@ void CSettings::Load()
 	// Temporary until G1 ultrapeer has been updated
 	Gnutella1.ClientMode = MODE_LEAF;
 
-	// UPnP is not supported on servers
-	if ( theApp.m_bIsServer )
-	{
-		Connection.EnableUPnP = false;
-		Connection.DeleteUPnPPorts = false;
-	}
-
 	// UPnP will setup a random port, so we need to reset values after it sets Connection.InPort
 	if ( Connection.RandomPort )
 		Connection.InPort = 0;
