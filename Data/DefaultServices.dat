@@ -4,7 +4,7 @@ M http://tenafly5k.com/gwc/skulls.php
 2 http://cache.trillinux.org/g2/bazooka.php
 2 http://dkac.trillinux.org/dkac/dkac.php
 2 http://htmlhell.com/
-2 http://gwc.dyndns.info:28960/gwc.php
+2 http://cache.peernix.com/gwc.php
 
 1 http://beacon.numberzero.org/gwc.php
 
@@ -14,6 +14,7 @@ D http://peerates.net/servers.php
 D http://www.gruk.org/server.met
 D http://upd.emule-security.org/server.met
 
+X http://gwc.dyndns.info:28960/gwc.php
 X http://silvers.zyns.com/gwc/dkac.php
 X http://midian.jayl.de/g2/bazooka.php
 X http://karma.cloud.bishopston.net:33559/
